@@ -94,7 +94,7 @@ static char *R_ExpandFileName_unix(char *s, char *buff)
     char *p;
 
     if(s[0] != '~') return s;
-    if(strlen(s) > 1 && s[1] != "/") return s;
+    if(strlen(s) > 1 && s[1] != '/') return s;
     if(HaveHOME < 0) {
 	p = getenv("HOME");
 	if(p && strlen(p) && (strlen(p) < PATH_MAX)) {
