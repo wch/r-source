@@ -446,7 +446,7 @@ SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
 		CHAR(STRING(sep)[0]),
 		"help", CHAR(STRING(sep)[0]),
 		CHAR(STRING(indexname)[0]));
-	if ((fp = fopen(linebuf, "rt")) != NULL){
+	if ((fp = R_fopen(R_ExpandFileName(linebuf), "rt")) != NULL){
 	    while (filbuf(linebuf, fp)) {
 		if(strncmp(linebuf, topicbuf, ltopicbuf) == 0) {
 		    p = &linebuf[ltopicbuf - 1];
