@@ -190,6 +190,7 @@ BUG FIXES
     o	file.append() was opening all files in text mode: mattered
 	on Windows and classic Macintosh. (PR#1085)
 
+    o   f[]<-g  now works for factor f
 
 
 	**************************************************

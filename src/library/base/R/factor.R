@@ -147,7 +147,10 @@ Ops.factor <- function(e1, e2)
     if (any(is.na(m) & !is.na(value)))
 	warning("invalid factor level, NAs generated")
     class(x) <- NULL
-    x[i] <- m
+    if (missing(i)) 
+	x[] <- m
+    else
+        x[i] <- m
     attr(x,"levels") <- lx
     class(x) <- cx
     x
