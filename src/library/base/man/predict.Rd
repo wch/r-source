@@ -1,14 +1,14 @@
 \name{predict}
 \title{Model Predictions}
 \usage{
-predict(object, \dots)
+predict        (object, \dots)
+predict.default(object, \dots)
 }
 \alias{predict}
 \alias{predict.default}
 \arguments{
 \item{object}{a model object for which prediction is desired.}
-\item{\dots}{additional arguments affecting the predictions
-produced.}
+\item{\dots}{additional arguments affecting the predictions produced.}
 }
 \description{
 \code{predict} is a generic function used
@@ -28,5 +28,10 @@ particular methods for details of what is produced by that method.
 }
 \seealso{
 \code{\link{predict.lm}}.
+}
+\examples{
+## All the "predict" methods available in your current search() path:
+for(fn in methods("predict"))
+   cat(fn,":\n\t",deparse(args(get(fn))),"\n")
 }
 \keyword{methods}
