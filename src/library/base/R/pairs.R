@@ -76,7 +76,7 @@ function (x, labels, panel = points, ..., main = NULL, oma = NULL,
           diag.panel = NULL, text.panel = textPanel,
           label.pos = 0.5 + has.diag/3,
           cex.labels = NULL, font.labels = 1,
-          row1attop = TRUE)
+          row1attop = TRUE, gap=1)
 {
     textPanel <-
         function(x = 0.5, y = 0.5, txt, cex, font)
@@ -110,7 +110,7 @@ function (x, labels, panel = points, ..., main = NULL, oma = NULL,
         oma <- c(4, 4, 4, 4)
         if (!is.null(main)) oma[3] <- 6
     }
-    opar <- par(mfrow = c(nc, nc), mar = rep(0.5, 4), oma = oma)
+    opar <- par(mfrow = c(nc, nc), mar = rep(gap/2, 4), oma = oma)
     on.exit(par(opar))
 
     for (i in if(row1attop) 1:nc else nc:1)
