@@ -25,8 +25,6 @@ USER-VISIBLE CHANGES
     o	formatC has new arguments (see below) and formatC(*, d = <dig>)
 	is no longer valid and must be written as formatC(*, digits = <dig>).
 
-[Changes to NA strings are currently in progress:
-
     o	"NA" is no longer automatically coerced to a missing value
 	for a character string.  Use as.character(NA) where a missing
 	value is required, and test via is.na(x) not x == "NA".
@@ -37,13 +35,16 @@ USER-VISIBLE CHANGES
 	amongst quoted character strings, and `<NA>' if amongst
 	unquoted character strings.
 
-	text.default() omits missing string values (rather than
-	plotting "NA").
+	axis() and text.default() omit missing values of their
+	`labels' argument (rather than plotting "NA").
 
 	Missing character strings are treated as missing much more
 	consistently, e.g. in logical comparisons and in sorts.
 	identical() now differentiates "NA" from the missing string.
-]
+
+****    This last change breaks several packages: look on CRAN for
+	updates.
+
 
 NEW FEATURES
 
@@ -56,7 +57,7 @@ NEW FEATURES
     o	New function findInterval() {using new C entry point
 	findInterval, see below}.
 
-    o	Add function logb(), same as log() but for S-PLUS
+    o	Added function logb(), same as log() but for S-PLUS
 	compatibility (where log now has only one argument).
 
     o	scan() can have NULL elements in `what', useful to save space

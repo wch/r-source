@@ -404,6 +404,7 @@ static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 #endif
 
 /* define NASTRING to have NA_STRING treated as missing */
+#define NASTRING
 
 static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 {
