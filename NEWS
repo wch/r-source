@@ -171,7 +171,7 @@ NEW FEATURES
 
     o	split.screen() now works for multiple devices at once.
 
-    o   Package stats4 exports generics for AIC and BIC.
+    o   Package stats4 exports generics for AIC() and BIC().
 
     o   The Mac OS X version now produces an R framework for easier linking
 	of R into other programs.  As a result, R.app is now relocatable.
@@ -183,6 +183,13 @@ NEW FEATURES
 
     o   rep.default(0-length-vector, length.out=n) now gives a vector
 	of length n and not length 0, for compatibility with S.
+
+	If both `each' and `length.out' have been specified, it now
+	recycles rather than fills with NAs for S compatibility.
+
+	If both `times' and `length.out' have been specified, `times'
+	is now ignored for S compatibility.  (Previously padding with
+	NAs was used.)
 
     o   array() and matrix() now allow 0-length `data' arguments for
 	compatibility with S.

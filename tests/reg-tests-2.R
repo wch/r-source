@@ -1168,3 +1168,7 @@ matrix(complex(0), 1, 2)
 matrix(list(), 1, 2)
 ## did not work < 1.9.0
 
+
+## S compatibility change in 1.9.0
+rep(1:2, each=3, length=12)
+## used to pad with NAs.

@@ -3,7 +3,6 @@ function(data = NA, dim = length(data), dimnames = NULL)
 {
     data <- as.vector(data)
     vl <- prod(dim)
-    le <- length(data)
     if(length(data) != vl)
         data <- rep(data, length.out=vl)
     if(length(dim))

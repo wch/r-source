@@ -3616,3 +3616,8 @@ NULL
 > ## did not work < 1.9.0
 > 
 > 
+> ## S compatibility change in 1.9.0
+> rep(1:2, each=3, length=12)
+ [1] 1 1 1 2 2 2 1 1 1 2 2 2
+> ## used to pad with NAs.
+> 

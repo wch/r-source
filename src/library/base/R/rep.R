@@ -5,11 +5,13 @@ rep.default <- function(x, times, length.out, each, ...)
     if (length(x) == 0)
         return(if(missing(length.out)) x else x[seq(len=length.out)])
     if (!missing(each)) {
-        x <- .Internal(rep(x, .Internal(rep(each, length(x)))))
+        tm <- .Internal(rep(each, length(x)))
+        nm <- names(x)
+        x <- .Internal(rep(x, tm))
+        if(!is.null(nm)) names(x) <- .Internal(rep(nm, tm))
         if(missing(length.out) && missing(times)) return(x)
-        if(missing(times)) times <- 1
     }
-    if (missing(times))
+    if (!missing(length.out)) # takes precedence over times
 	times <- ceiling(length.out/length(x))
     r <- .Internal(rep(x, times))
     if(!is.null(nm <- names(x))) names(r) <- .Internal(rep(nm, times))
