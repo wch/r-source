@@ -863,7 +863,7 @@ excluded by default.
 @c From 1.8.0 on, the build code removes exclude files itself, rather
 @c than relying on tar for doing do, when building *source* packages.
 @c @quotation
-@c @strong{Note:} file exclusion does not work correctly with @acronym{GNU}
+@c @strong{Note}: file exclusion does not work correctly with @acronym{GNU}
 @c @code{tar} 1.13 but does work with later versions (e.g., version
 @c 1.13.17).
 @c @end quotation
@@ -875,14 +875,14 @@ obtain more information about the usage of the @R{} package builder.
 binary distributions.
 
 @quotation
-@strong{Note:} @code{R CMD check} and @code{R CMD build} run @R{} with
+@strong{Note}: @code{R CMD check} and @code{R CMD build} run @R{} with
 @option{--vanilla}, so none of the user's startup files are read.  If
 you need @env{R_LIBS} set (to find packages in a non-standard library)
 you will need to set it in the environment.
 @end quotation
 
 @quotation
-@strong{Note to Windows users:} @code{R CMD check} and @code{R CMD build}
+@strong{Note to Windows users}: @code{R CMD check} and @code{R CMD build}
 work well under Windows NT4/2000/XP but may not work correctly on Windows
 95/98/ME because of problems with some versions of Perl on those limited
 OSes.  Experiences vary.
@@ -3338,7 +3338,7 @@ The usual @R{} object modes are given in the table.
 
 @noindent
 Among the important internal @code{SEXPTYPE}s are @code{LANGSXP},
-@code{CHARSXP} etc.  (@strong{Note:} although it is possible to return
+@code{CHARSXP} etc.  (@strong{Note}: although it is possible to return
 objects of internal types, it is unsafe to do so as assumptions are
 made about how they are handled which may be violated at user-level
 evaluation.)
@@ -4754,7 +4754,7 @@ can be used from C++ code.  Some others need to be included within an
 @R{} header files.
 
 @quotation
-@strong{Note:} Because @R{} re-maps many of its external names to avoid
+@strong{Note}: Because @R{} re-maps many of its external names to avoid
 clashes with user code, it is @emph{essential} to include the
 appropriate header files when using these entry points.
 @end quotation

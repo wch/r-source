@@ -2550,14 +2550,14 @@ to @code{detach}, but it is much safer to always use a name, for example
 by @code{detach(lentils)} or @code{detach("lentils")}
 
 @quotation
-@strong{NOTE}: With the current release of @R{} the search path can
+@strong{Note}: With the current release of @R{} the search path can
 contain at most 20 items.  Avoid attaching the same data frame more than
 once.  Always detach the data frame as soon as you have finished using
 its variables.
 @end quotation
 
 @quotation
-@strong{NOTE}: With the current release of @R{} lists and data frames
+@strong{Note}: With the current release of @R{} lists and data frames
 can only be attached at position 2 or above.  It is not possible to
 directly assign into an attached list or data frame (thus, to some
 extent they are static).
@@ -3399,7 +3399,7 @@ category.  This is a useful function, mostly used in connection with
 boxplots.  See the @code{help} facility for further details.)
 
 @quotation
-@strong{WARNING}: @code{for()} loops are used in @R{} code much less
+@strong{Warning}: @code{for()} loops are used in @R{} code much less
 often than in compiled languages.  Code that takes a `whole object' view
 is likely to be both clearer and faster in @R{}.
 @end quotation
