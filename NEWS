@@ -22,6 +22,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   model.frame with subset and only one column fixed
+
     o	boxplot(<data.frame>) now works again.
 
     o	dyn.load(..) failing gives more informative error message.
