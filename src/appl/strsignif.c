@@ -140,9 +140,9 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 	else
 	    strcat(form, *format);
 #ifdef DEBUG
-	fprintf(stderr, "strsignif.c: form=«%s», wid=%d, dig=%d\n",
+	fprintf(stderr, "strsignif.c: form='%s', wid=%d, dig=%d\n",
 		form, wid, dig);
-	if(do_fg) fprintf(stderr, "\t\"fg\": f0=«%s».", f0);
+	if(do_fg) fprintf(stderr, "\t\"fg\": f0='%s'.", f0);
 #endif
 	if (strcmp("double", *type) == 0) {
 	    if(do_fg) /* do smart "f" : */
