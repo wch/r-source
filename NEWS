@@ -168,12 +168,15 @@ BUG FIXES
     o	stats:::as.dendrogram.hclust() is documented and no longer re-sorts
 	the two children at each node.	This fixes as.dendrogram(hh) for
 	the case where hh is a "reordered" hclust object.
+	plot.dendrogram(x) now draw leaves 'x' more sensibly.
+	reorder.dendrogram() now results in a dendrogram with correct
+	"midpoint"s, and hence reordered dendrograms are plotted correctly.
 
     o	heatmap(*, labRow=., labCol=.) now also reorders the labels when
 	specified---not only when using default labels.
 
     o   Copying lattice (grid) output to another device now works again
-        (There were intermittent problems in 1.9.0 - PR#6915, #6947/8.)  
+        (There were intermittent problems in 1.9.0 - PR#6915, #6947/8.)
 
     o	hist() uses a more robust choice of its 'diddle' factor, used
 	to detect if an observation is on a bin boundary.  (PR#6931)
@@ -181,7 +184,7 @@ BUG FIXES
     o	jitter(x) now returns x when length(x) == 0.
 
     o	Under some rare circumstances the locale-specific tables used by
-	the perl=TRUE option to grep etc were being corrupted and so 
+	the perl=TRUE option to grep etc were being corrupted and so
 	matches were missed.
 
 

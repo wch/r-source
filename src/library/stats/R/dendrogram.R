@@ -5,7 +5,7 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 {
     stopifnot(length(object$order) > 0)
     if (is.null(object$labels))
-	object$labels <- (1:length(object$order))
+	object$labels <- 1:length(object$order)
     z <- list()
     nMerge <- length(oHgt <- object$height)
     if (nMerge != nrow(object$merge))
@@ -19,7 +19,7 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 	if (all(neg)) {			# two leaves
 	    zk <- as.list(-x)
 	    attr(zk, "members") <- two
-	    attr(zk, "midpoint") <- 0.5
+	    attr(zk, "midpoint") <- 0.5 # mean( c(0,1) )
 	    objlabels <- object$labels[-x]
 	    attr(zk[[1]], "label") <- objlabels[1]
 	    attr(zk[[2]], "label") <- objlabels[2]
@@ -30,7 +30,7 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 	else if (any(neg)) {		# one leaf, one node
 	    X <- as.character(x)
 	    ## Originally had "x <- sort(..) above => leaf always left, x[1];
-            ## don't want to assume this
+	    ## don't want to assume this
 	    isL <- x[1] < 0 ## is leaf left?
 	    zk <-
 		if(isL) list(-x[1], z[[X[2]]])
@@ -82,28 +82,28 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 
 midcache.dendrogram <- function (x, type = "hclust")
 {
-    ## Recompute the  "midpoint" attributes of a dendrogram, e.g. after reorder().
+    ## Recompute "midpoint" attributes of a dendrogram, e.g. after reorder().
 
     type <- match.arg(type) ## currently only "hclust"
     if( !inherits(x, "dendrogram") )
-        stop("we require a dendrogram")
-    setmid <- function(x, type) {
-        if(isLeaf(x))# no "midpoint"
-            return(x)
-        k <- length(x)
-        if(k < 1)
-            stop("dendrogram node with non-positive #{branches}")
-        if(type == "hclust" && k != 2)
-            warning("midcache()ing of non-binary dendrograms may be buggy")
-        r <- x # incl. attributes!
-
-        ## for(j in 1:k) {  r[[j]] <- remid(x[[j]]) .... }
-        r[[1]] <- setmid(x[[1]], type)
-        r[[2]] <- setmid(x[[2]], type)
-
-        attr(r, "midpoint") <- (.memberDend(x[[1]]) +
-                                .midDend(x[[1]]) + .midDend(x[[2]])) / 2
-        r
+	stop("we require a dendrogram")
+    setmid <- function(d, type) {
+	if(isLeaf(d))# no "midpoint"
+	    return(d)
+	k <- length(d)
+	if(k < 1)
+	    stop("dendrogram node with non-positive #{branches}")
+	r <- d # incl. attributes!
+	midS <- 0
+	for(j in 1:k) {
+	    r[[j]] <- setmid(d[[j]], type)
+	    midS <- midS + .midDend(r[[j]])
+	}
+	if(type == "hclust" && k != 2)
+	    warning("midcache() of non-binary dendrograms only partly implemented")
+	## compatible to as.dendrogram.hclust() {MM: but doubtful}
+	attr(r, "midpoint") <- (.memberDend(d[[1]]) + midS) / 2
+	r
     }
     setmid(x, type=type)
 }
@@ -126,14 +126,14 @@ print.dendrogram <- function(x, digits = getOption("digits"), ...)
 
 str.dendrogram <-
 function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
-          wid = getOption("width"), nest.lev = 0, indent.str = "", ...)
+	  wid = getOption("width"), nest.lev = 0, indent.str = "", ...)
 {
     ## FIXME: `wid' argument is currently disregarded
     pasteLis <- function(lis, dropNam, sep = " = ") {
 	## drop uninteresting "attributes" here
 	lis <- lis[!(names(lis) %in% dropNam)]
-        fl <- sapply(lis, format, digits=digits.d, wid=wid)
-        paste(paste(names(fl), fl, sep=sep), collapse = ", ")
+	fl <- sapply(lis, format, digits=digits.d, wid=wid)
+	paste(paste(names(fl), fl, sep=sep), collapse = ", ")
     }
 
     nind <- nchar(istr <- indent.str)
@@ -143,15 +143,15 @@ function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
 
     nAt <- names(at <- attributes(object))
     memb <- at[["members"]]
-    hgt  <- at[["height"]]
+    hgt	 <- at[["height"]]
     if(!isLeaf(object)) {
 	le <- length(object)
-        if(give.attr) {
-            if(nchar(at <- pasteLis(at, c("class", "height", "members"))))
-                at <- paste(",", at)
-        }
+	if(give.attr) {
+	    if(nchar(at <- pasteLis(at, c("class", "height", "members"))))
+		at <- paste(",", at)
+	}
 	cat("[dendrogram w/ ", le, " branches and ", memb, " members at h = ",
-            format(hgt, digits=digits.d), if(give.attr) at, "]\n", sep="")
+	    format(hgt, digits=digits.d), if(give.attr) at, "]\n", sep="")
 	if (max.level==0 || nest.lev < max.level) {
 	    for(i in 1:le) {
 		##cat(indent.str, nam.ob[i], ":", sep="")
@@ -169,9 +169,9 @@ function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
 	if(any.at) cat("(h=",format(hgt, digits=digits.d))
 	if(memb != 1) #MM: when can this happen?
 	    cat(if(any.at)", " else {any.at <- TRUE; "("}, "memb= ",memb,sep="")
-        at <- pasteLis(at, c("class", "height", "members", "leaf", "label"))
-        if(any.at || nchar(at)) cat(if(!any.at)"(", at, ")")
-        cat("\n")
+	at <- pasteLis(at, c("class", "height", "members", "leaf", "label"))
+	if(any.at || nchar(at)) cat(if(!any.at)"(", at, ")")
+	cat("\n")
     }
 }
 
@@ -192,8 +192,8 @@ function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
 ## {probably don't change, just print a warning ..}
 plot.dendrogram <-
     function (x, type = c("rectangle", "triangle"), center = FALSE,
-	      edge.root = !is.null(attr(x, "edgetext")), nodePar = NULL,
-	      xaxt="n", yaxt="s",
+	      edge.root = isLeaf(x) || !is.null(attr(x, "edgetext")),
+	      nodePar = NULL, xaxt="n", yaxt="s",
 	      edgePar = list(), leaflab= c("perpendicular", "textlike", "none"),
 	      xlab = "", ylab = "", horiz = FALSE, frame.plot = FALSE, ...)
 {
@@ -201,7 +201,7 @@ plot.dendrogram <-
     leaflab <- match.arg(leaflab)
     hgt <- attr(x, "height")
     if (edge.root && is.logical(edge.root))
-	edge.root <- 0.0625 * hgt
+	edge.root <- 0.0625 * if(isLeaf(x)) 1 else hgt
     mem.x <- .memberDend(x)
     yTop <- hgt + edge.root
     if(center) { x1 <- 0.5 ; x2 <- mem.x + 0.5 }
@@ -233,7 +233,7 @@ plot.dendrogram <-
 ### the work horse: plot node (if pch) and lines to all children
 plotNode <-
     function(x1, x2, subtree, type, center, leaflab,
-             nodePar, edgePar, horiz = FALSE)
+	     nodePar, edgePar, horiz = FALSE)
 {
     inner <- !isLeaf(subtree) && x1 != x2
     yTop <- attr(subtree, "height")
@@ -255,7 +255,7 @@ plotNode <-
     Xtract <- function(nam, L, default, indx)
 	rep(if(any(nam == names(L))) L[[nam]] else default, length.out = indx)[indx]
     asTxt <- function(x) # to allow 'plotmath' labels:
-        if(is.character(x) || is.expression(x)) x else as.character(x)
+	if(is.character(x) || is.expression(x)) x else as.character(x)
 
     if(!is.null(nPar)) { ## draw this node
 	i <- if(inner || hasP) 1 else 2 # only 1 node specific par
@@ -286,7 +286,7 @@ plotNode <-
 	}
 	for (k in 1:length(subtree)) {
 	    child <- subtree[[k]]
-	    ## draw lines to the children and draw themselves recursively
+	    ## draw lines to the children and draw them recursively
 	    yBot <- attr(child, "height")
 	    if (getOption("verbose")) cat("ch.", k, "@ h=", yBot, "; ")
 	    if (is.null(yBot))
@@ -339,7 +339,7 @@ plotNode <-
 		    my <- (yTop + yBot)/2
 		}
 		## Both for "triangle" and "rectangle" : Diamond + Text
-                hlm <- hlm+ 0.6*vlm+ c(0,2*vlm,0)# + vlm => constant shape ">"
+		hlm <- hlm+ 0.6*vlm+ c(0,2*vlm,0)# + vlm => constant shape ">"
 		polygon(c(mx - hlm, mx + hlm),
 			c(my - vlm, my, my + vlm, my + vlm, my, my - vlm),
 			col = "white")
@@ -423,14 +423,14 @@ isLeaf <- function(object) (is.logical(L <- attr(object, "leaf"))) && L
 ## *Not* a method (yet):
 order.dendrogram <- function(x) {
     if( !inherits(x, "dendrogram") )
-        stop("order.dendrogram requires a dendrogram")
+	stop("order.dendrogram requires a dendrogram")
     unlist(x)
 }
 
 ##RG's first version -- for posterity
 # order.dendrogram <- function(x) {
 #    if( !inherits(x, "dendrogram") )
-#       stop("order.dendrogram requires a dendrogram")
+#	stop("order.dendrogram requires a dendrogram")
 #    ord <- function(x) {
 #      if( isLeaf(x) ) return(x[1])
 #      return(c(ord(x[[1]]), ord(x[[2]])))
@@ -443,30 +443,29 @@ reorder <- function(x, ...) UseMethod("reorder")
 reorder.dendrogram <- function(x, wts, ...)
 {
     if( !inherits(x, "dendrogram") )
-        stop("we require a dendrogram")
+	stop("we require a dendrogram")
     oV <- function(x, wts) {
-        if( isLeaf(x) ) {
-            attr(x, "value") <- wts[x[1]]
-            return(x)
-        }
-###--- FIXME: This works only for binary dendrograms !!!
-
-        if(length(x) != 2)
-            stop("reorder()ing of non-binary dendrograms not yet implemented")
-        ## recurse:
-        left  <- oV(x[[1]], wts)
-        right <- oV(x[[2]], wts)
-        lV <- attr(left, "value")
-        rV <- attr(right, "value")
-        attr(x, "value") <- lV+rV
-        if( lV > rV ) {
-            x[[1]] <- right
-            x[[2]] <- left
-        } else {
-            x[[1]] <- left
-            x[[2]] <- right
-        }
-        x
+	if( isLeaf(x) ) {
+	    attr(x, "value") <- wts[x[1]]
+	    return(x)
+	}
+###--- FIXME: This works only for binary dendrograms !
+	if(length(x) != 2)
+	    stop("reorder()ing of non-binary dendrograms not yet implemented")
+	## insert/compute 'wts' recursively down the branches:
+	left  <- oV(x[[1]], wts)
+	right <- oV(x[[2]], wts)
+	lV <- attr(left, "value")
+	rV <- attr(right, "value")
+	attr(x, "value") <- lV+rV
+	if( lV > rV ) {
+	    x[[1]] <- right
+	    x[[2]] <- left
+	} else {
+	    x[[1]] <- left
+	    x[[2]] <- right
+	}
+	x
     }
     midcache.dendrogram( oV(x, wts) )
 }
@@ -480,21 +479,21 @@ rev.dendrogram <- function(x) {
 	stop("dendrogram non-leaf node with non-positive #{branches}")
     r <- x # incl. attributes!
     for(j in 1:k) ## recurse
- 	r[[j]] <- rev(x[[k+1-j]])
+	r[[j]] <- rev(x[[k+1-j]])
     midcache.dendrogram( r )
 }
 
 ## original Andy Liaw; modified RG, MM :
 heatmap <-
 function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
-          distfun = dist, hclustfun = hclust, add.expr,
-          symm = FALSE, revC = identical(Colv, "Rowv"),
+	  distfun = dist, hclustfun = hclust, add.expr,
+	  symm = FALSE, revC = identical(Colv, "Rowv"),
 	  scale = c("row", "column", "none"), na.rm=TRUE,
 	  margins = c(5, 5), ColSideColors, RowSideColors,
-          cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
-          labRow = NULL, labCol = NULL, main = NULL, xlab = NULL, ylab = NULL,
-          keep.dendro = FALSE,
-          verbose = getOption("verbose"), ...)
+	  cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
+	  labRow = NULL, labCol = NULL, main = NULL, xlab = NULL, ylab = NULL,
+	  keep.dendro = FALSE,
+	  verbose = getOption("verbose"), ...)
 {
     scale <- if(symm && missing(scale)) "none" else match.arg(scale)
     if(length(di <- dim(x)) != 2 || !is.numeric(x))
@@ -551,13 +550,13 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     x <- x[rowInd, colInd]
 
     labRow <-
-        if(is.null(labRow))
-            if(is.null(rownames(x))) (1:nr)[rowInd] else rownames(x)
-        else labRow[rowInd]
+	if(is.null(labRow))
+	    if(is.null(rownames(x))) (1:nr)[rowInd] else rownames(x)
+	else labRow[rowInd]
     labCol <-
-        if(is.null(labCol))
-            if(is.null(colnames(x))) (1:nc)[colInd] else colnames(x)
-        else labCol[colInd]
+	if(is.null(labCol))
+	    if(is.null(colnames(x))) (1:nc)[colInd] else colnames(x)
+	else labCol[colInd]
 
     if(scale == "row") {
 	x <- sweep(x, 1, rowMeans(x, na.rm = na.rm))
@@ -588,8 +587,8 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     }
     lmat[is.na(lmat)] <- 0
     if(verbose) {
-        cat("layout: widths = ", lwid, ", heights = ", lhei,"; lmat=\n")
-        print(lmat)
+	cat("layout: widths = ", lwid, ", heights = ", lhei,"; lmat=\n")
+	print(lmat)
     }
 
     ## Graphics `output' -----------------------
@@ -634,13 +633,13 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 
     par(mar = c(0, 0, if(!is.null(main)) 1 else 0, margins[2]))
     if(doCdend)
-	plot(ddc,               axes = FALSE, xaxs = "i", leaflab = "none")
+	plot(ddc,		axes = FALSE, xaxs = "i", leaflab = "none")
     else if(!is.null(main)) frame()
 
     ## title
     if(!is.null(main)) title(main, cex.main = 1.5*op[["cex.main"]])
 
     invisible(list(rowInd = rowInd, colInd = colInd,
-                   Rowv = if(keep.dendro && doRdend) ddr,
-                   Colv = if(keep.dendro && doCdend) ddc ))
+		   Rowv = if(keep.dendro && doRdend) ddr,
+		   Colv = if(keep.dendro && doCdend) ddc ))
 }
