@@ -462,6 +462,14 @@ Subject: completeSubclasses() methods bug
 From: colin@colinsmith.org
 Date: Tue, 2 Sep 2003 22:15:26 +0200 (MET DST)
 ..methods package
+* PR# 4525 *
+Subject: Problem in 'methods' package
+From: feferraz@linux.ime.usp.br
+Date: Sat, 11 Oct 2003 08:20:46 +0200 (MET DST)
+* PR# 4561 *
+Subject: Infinite recursion in getGeneric
+From: Saikat DebRoy <saikat@stat.wisc.edu>
+Date: Mon, 13 Oct 2003 12:17:11 -0400
 
 Directory:  Low-level
 
@@ -488,6 +496,10 @@ Date: Tue, 6 Aug 2002 16:57:54 +0800
 Subject: [R] CTRL-C suspends echo of shell (R versions 1.6.0 and 1.6.1)
 From: Wolfram Fischer - Z/I/M <wolfram@fischer-zim.ch>
 Date: Mon, 4 Nov 2002 10:18:48 +0100
+* PR# 4582 *
+Subject: NA %*% 0 == 0
+From: hosking@watson.ibm.com
+Date: Tue, 14 Oct 2003 21:44:09 +0200 (MET DST)
 
 Directory:  Macintosh
 
@@ -654,6 +666,10 @@ From: rgrubbfink@cox.net
 Date: Wed, 30 Apr 2003 22:33:24 +0200 (MET DST)
 ..Looks like an AIX bug, not an R one.
 ..Other people have succeeded on AIX 5.1.
+* PR# 4295 *
+Subject: Bugs compiling R-1.7.1 with Intel compilers icc and ifc
+From: <CanisMaior@web.de>
+Date: Thu, 25 Sep 2003 11:26:09 +0200
 
 Directory:  TooMuchAtOnce
 
@@ -735,10 +751,6 @@ Date: Wed, 17 Sep 2003 17:13:23 +0200 (MET DST)
 Subject: Calling C fn crashes
 From: ashenfluff@yahoo.com
 Date: Wed, 24 Sep 2003 17:54:21 +0200 (MET DST)
-* PR# 4295 *
-Subject: Bugs compiling R-1.7.1 with Intel compilers icc and ifc
-From: <CanisMaior@web.de>
-Date: Thu, 25 Sep 2003 11:26:09 +0200
 * PR# 4329 *
 Subject: (fwd) package inst directory copied too early?
 From: Duncan Murdoch <dmurdoch@pair.com>
@@ -755,11 +767,96 @@ Date: Wed, 01 Oct 2003 07:45:41 +1200
 Subject: 
 From: "Raoul Grasman" <R.P.P.P.Grasman@uva.nl>
 Date: Tue, 7 Oct 2003 17:05:56 +0200
+..det() gives wrong answer rather than error for complex matrices.
 * PR# 4459 *
 Subject: Redhat 7.2 gcc optimisation 
 From: Paul Murrell <p.murrell@auckland.ac.nz>
 Date: Wed, 08 Oct 2003 15:28:11 +1300
-* PR# 4460 *
-Subject: Unpredictable EPS->PDF rotation
-From: Arni Magnusson <arnima@u.washington.edu>
-Date: Tue, 7 Oct 2003 20:01:42 -0700 (PDT)
+* PR# 4474 *
+Subject: Memmory Bugs
+From: "Eric R. Riehl" <eriehl@email.unc.edu>
+Date: Wed, 8 Oct 2003 14:30:57 -0400 (EDT)
+* PR# 4486 *
+Subject: Recursive indexing can cause R-1.8.0 (and R-1.7.1) to segment fault
+From: anaximander@gmx.de
+Date: Thu, 9 Oct 2003 22:34:38 +0200 (MEST)
+* PR# 4558 *
+Subject: R1.8.0 : seq.POSIXt() problems
+From: "Marsland, John" <John.Marsland@CommerzbankIB.com>
+Date: Mon, 13 Oct 2003 09:51:38 +0100
+* PR# 4611 *
+Subject: blackboagd booky
+From: "Joseph Salter" <mgy03mg@charter.net>
+Date: Thu, 16 Oct 03 17:03:20 GMT
+* PR# 4612 *
+Subject: Don't consolidate it! Don't reduce it ifdexnh
+From: "Zane Mercado" <caurnust@keromail.com>
+Date: Fri, 17 Oct 2003 05:42:20 -0400
+* PR# 4613 *
+Subject: The World's Most Effective Penis Pill Is Now Available! (id: 2k9h2p6p8m)
+From: "Frances Melvin" <f14zzduib@acmenet.net>
+Date: Fri, 17 Oct 2003 00:57:59 GMT
+* PR# 4614 *
+Subject: Reply Soon
+From: "Jerry Williams" <jerrywilli2000@yahoo.com>
+Date: Fri, 17 Oct 2003 08:42:36 +0200
+* PR# 4615 *
+Subject: Reply Soon
+From: "Jerry Williams" <jerrywilli2000@yahoo.com>
+Date: Fri, 17 Oct 2003 09:21:58 +0200
+* PR# 4616 *
+Subject: AWARD  NOTIFICATION
+From: Luckyday  International  BV <globallotterynl@netscape.net>
+Date: Fri, 17 Oct 2003 02:34:36 +0200
+* PR# 4617 *
+Subject: Wë Havë üS Licënsed Döctörs evmvjonu
+From: Reilly <kishitet@usermail.com>
+Date: Thu, 16 Oct 2003 22:35:18 -0400
+* PR# 4618 *
+Subject:               PARTNERSHIP
+From: CYRIL  KONNEH <cyrilkonneh@netscape.net>
+Date: Fri, 17 Oct 2003 07:05:42 +0200
+* PR# 4619 *
+Subject: s- .Lose Weight Now with Phentermine, Adipex, Bontril, Prescribed Online, shipped to Your Door zm piq hyebr  
+From: "Maryann Rosario" <t71zzaqic@smtp.secureserver.net>
+Date: Fri, 17 Oct 03 13:29:04 GMT
+* PR# 4620 *
+Subject: Help us get rid of spam for good!accordion
+From: "Delia Lawrence" <lvvyv67@postmark.net>
+Date: Fri, 17 Oct 2003 07:50:11 GMT
+* PR# 4621 *
+Subject: Everyone should know this. fm s uz
+From: "Arturo Sanderson" <095czmojl@yahoo.com>
+Date: Fri, 17 Oct 2003 09:19:34 +0400
+* PR# 4622 *
+Subject: PLEASE TREAT AS ABSOLUTELY CONFIDENTIAL
+From: Iwendi James <iwendijames02@123.com>
+Date: Fri, 17 Oct 2003 09:21:51 -0300
+* PR# 4623 *
+Subject: Bus error
+From: ehsaliba@uncc.edu
+Date: Fri, 17 Oct 2003 15:41:07 +0200 (MET DST)
+* PR# 4624 *
+Subject: GARRY LOPEZ.
+From: "MR. GARRY LOPEZ." <garrylopez2000@hotmal.com>
+Date: Fri, 17 Oct 2003 16:15:57 +0430
+* PR# 4625 *
+Subject: For Teachers, Students, Church Pianists and Worship Leaders - r-bugs@biostat.ku.dk
+From: "FALL 2003 IMPROVISIONAL WORKSHOP " <*@wwdg.com>
+Date: Fri, 17 Oct 03 19:12:16 GMT
+* PR# 4626 *
+Subject: $$$!!$$$$ zozexlzvijfjjzrw
+From: "ismail elsa" <a12@uwindsor.ca>
+Date: Sat, 18 Oct 03 02:46:00 GMT
+* PR# 4627 *
+Subject: Sr Free ebay course  agent
+From: "Bennie Mccall" <sev569tntd@yahoo.ca>
+Date: Sat, 18 Oct 03 00:14:24 GMT
+* PR# 4628 *
+Subject: Copy Your DVD to CD!!!! kfqwlwsurx oawmyhcmm
+From: "Duncan Hatcher" <lkzqkvyz@aol.com>
+Date: Sat, 18 Oct 03 01:11:18 GMT
+* PR# 4629 *
+Subject: Order your meds online, next day delivery igr  pve snobjri
+From: "Sandy Granger" <vteknkf@aol.com>
+Date: Fri, 17 Oct 03 19:01:35 GMT
