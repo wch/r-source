@@ -105,8 +105,8 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
 			 ann=par("ann"), axes=TRUE, frame.plot=axes,
 			 panel.first=NULL, panel.last=NULL,
 			 col=par("fg"), bg=NA, pch=par("pch"),
-			 cex=par("cex"), lty=par("lty"), lwd=par("lwd"),
-			 asp=NA, ...)
+			 cex=par("cex"), lty=par("lty"), lab=par("lab"),
+                         lwd=par("lwd"), asp=NA, ...)
 {
     xlabel <- if (!missing(x)) deparse(substitute(x))	else NULL
     ylabel <- if (!missing(y)) deparse(substitute(y))	else NULL

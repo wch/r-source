@@ -41,6 +41,9 @@ quote(expr)
     appropriate base mode.
 }
 \note{
+    Substitute works on a purely lexical basis. There is no guarantee
+    that the resulting expression makes any sense.
+    
     Substituting and quoting often causes confusion when the argument is
     \code{expression(...)}. The result is a call to the
     \code{\link{expression}} constructor function and needs to be evaluated
@@ -55,6 +58,8 @@ c(mode(s.s), typeof(s.s)) #   (the same)
 # but:
 (e.s.e <- eval(s.e))          #>  expression(1 + b)
 c(mode(e.s.e), typeof(e.s.e)) #  "expression", "expression"
+
+substitute(x <- x + 1, list(x=1)) # nonsense
 
 myplot <- function(x, y)
         plot(x, y, xlab=deparse(substitute(x)),

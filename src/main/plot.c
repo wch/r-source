@@ -1577,7 +1577,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     txt = CAR(args);
-    if (LENGTH(txt) <= 0)
+    if (isNull(txt) || LENGTH(txt) <= 0)
 	errorcall(call, "zero length \"text\" specified\n");
     args = CDR(args);
 

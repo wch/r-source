@@ -92,7 +92,7 @@ influence.measures <- function(lm.obj)
 	result <- cbind(absmat[, 1:k] > 1, # |dfbetas| > 1
 			absmat[, k + 1] > 3 * sqrt(k/(n - k)), # |dffit| > ..
 			abs(1 - infmat[, k + 2]) > (3*k)/(n - k),# |1-cov.r| >..
-			pf(infmat[, k + 3], k, n - k) > 0.9,# P[cook.d..] > .9
+			pf(infmat[, k + 3], k, n - k) > 0.5,# "P[cook.d..]" > .5
 			infmat[, k + 4] > (3 * k)/n) # hat > 3k/n
 	dimnames(result) <- dimnames(infmat)
 	result

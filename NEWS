@@ -31,9 +31,16 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	save.image() ignored dot-names. (esp. .First())
+
+    o   lab= argument to plot() misinterpreted by axis() via ... passing
+
+    o	NULL labels in text() caused segfault
+
     o   matrix(f,...) with f a factor now coerces to character
 
-    o   documentation errors for substitute and is.vector 
+    o   documentation errors for substitute and is.vector, minor fixups for
+        trig and nlm 
 
     o	Background colours are set properly on X11 devices with 
 	colortype="pseudo": sometimes they were not allocated separately.
@@ -47,7 +54,8 @@ BUG FIXES
     o	in some cases one could get nonblack color instead of
 	black on 2nd x11() window
 
-    o	influence.measures(.) $ is.inf was wrong.
+    o	influence.measures(.) $ is.influential was wrong on the 
+	cooks.distance.
 
     o	printing of complex NaN/Inf was wrong as well.
 
