@@ -28,7 +28,7 @@ all:
 	@if test -d $(srcdir)/data; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
 	  $(INSTALL_DATA) `ls $(srcdir)/data/[a-z]*` \
-	    $(top_builddir)/library/base/data; \
+	    $(top_builddir)/library/$(pkg)/data; \
 	fi
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \
