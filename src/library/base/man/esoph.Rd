@@ -9,7 +9,7 @@
     \tab \tab \tab 3  45-54 \cr
     \tab \tab \tab 4  55-64 \cr
     \tab \tab \tab 5  65-74 \cr
-    \tab \tab \tab 6  75+ \cr 
+    \tab \tab \tab 6  75+ \cr
     [,2] \tab "alcgp" \tab Alcohol consumption \tab 1   0-39 gm/day \cr
     \tab \tab \tab 2  40-79 \cr
     \tab \tab \tab 3  80-119 \cr
@@ -26,9 +26,16 @@
  "Statistical Methods in Cancer Research.
   1: The Analysis of Case-control studies"; IARC Lyon.
 }
-\description{Data from a case-control study of (o)esophageal cancer in Ile-et-Vilaine,
-France.
-
-
+\author{Thomas Lumley}
+\description{Data from a case-control study of (o)esophageal cancer in
+  Ile-et-Vilaine, France.
+}
+\examples{
+data(esoph)
+summary(esoph)
+attach(esoph)
+table(alcgp, agegp, tobgp)
+detach()
+%%- really, we'd want to see a glm / gee (?) model! [MM]
 }
 \keyword{datasets}
