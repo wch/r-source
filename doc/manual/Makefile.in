@@ -89,6 +89,17 @@ docs: html
 	fi
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2PDF) $<
 
+## we have to be careful not to install a local R-admin.html made prior to
+## texinfo 4.7, as doc/html/SearchEngine.html links to it.
+## So use that in the sources if we can -- it is not in the svn archive.
+## There are no cross-references, external or not.
+R-admin.html:
+	if test -f "$(top_srcdir)/doc/html/R-admin.html" ; then \
+	  cp "$(top_srcdir)/doc/html/R-admin.html" R-admin.html ; \
+	else \
+	  $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@ ; \
+	fi
+
 dvi: refman.dvi $(OBJECTS_DVI)
 refman.dvi: $(refman_DEPENDENCIES) stamp-refman-dvi
 	@if test "$(LATEX)" = false; then \
