@@ -6,74 +6,45 @@ srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
 top_builddir = ../..
+subdir = tests/Examples
 
 include $(top_builddir)/Makeconf
-
-CleanMe = .RData sink-examp.txt
 
 R = $(top_builddir)/bin/R --no-init-file --no-save --no-restore --vsize 6
 Rbase = $(top_builddir)/library/base/R/base
 Rbinary = $(top_builddir)/bin/R.binary
 
-Rd_BASEDIR = $(top_srcdir)/src/library/base/man
-EXAMPLES = $(shell cd $(Rd_BASEDIR); ls *.Rd | sed 's/Rd$$/R/g')
+all: Makefile test-Examples
 
-##- Uncomment one of the 2 'Rd_files' defs -- depending on your 'make' version
-##--- <<<<<< CONFIGURE should do this >>>>>>
-##-- Sun make
-# Rd_files:sh = ../../etc/Rd.files
-##-- GNU make
-# Rd_files := $(shell $(rRHOME)/etc/Rd.files)
-#this has PATH prepended: Rd_files := $(wildcard $(MANbaseDIR)/*.Rd)
-#________in future_______  (for ALL 'make' versions)
-# FAILS: has directory/. _AND_ is not expanded
-#Rd_files = $(MANbaseDIR)/*.Rd
-#
-#R_src = $(Rd_files:%.Rd=%.R)
-#________in future_______: (FAILS!)
-#R_src = $(Rd_files:$(MANbaseDIR)/%.Rd=%.R)
-
-
-##--------------------------------- TARGETS ------------------------------
-
-all: test-Examples
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
 
 test-Examples: All-Ex.Rout
 
-#All-Ex.Rout: All-Ex.R $(Rbinary) $(Rbase)
 All-Ex.Rout: All-Ex.R R-exe
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Running all help() examples ..."
 	$(R) < $< > $@
 
-All-Ex.R: $(EXAMPLES)
+All-Ex.R: $(top_builddir)/library/base/R-ex/*.R
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Massaging examples into $@ ..."
-	@-$(srcdir)/massage-Examples $(EXAMPLES) > $@
+	@-$(srcdir)/massage-Examples $^ > $@
 
-%.R: $(Rd_BASEDIR)/%.Rd
-	@RHOME=`cd $(top_builddir); pwd`; export RHOME; \
-	   $${RHOME}/bin/Rdconv -t example $< > $@
-	@-echo $@
+$(top_builddir)/library/base/R-ex/%.R: $(top_srcdir)/src/library/base/man/%.Rd
+	(cd $(top_builddir)/src/library && \
+	  $(MAKE) PKGS=base stamp-examples)
 
 R-exe:
-	-(cd $(top_builddir); $(MAKE) R)
-
-##-- The `show-*' are just for testing purposes:
-show-R:
-	@-echo "R = \`$(R)'"
-show-Rd:
-	@-echo "Rd files [sources of help() files]:"
-	@-echo $(Rd_FILES)
-show-Ex:
-	@-echo "Examples [targets of help() files]:"
-	@-echo $(EXAMPLES)
+	-(cd $(top_builddir) && $(MAKE) R)
 
 mostlyclean: clean
 clean:
 	@rm -f *.Rd* *.ps *.tex *.dat* data foo*
 distclean: clean
-	@rm -f *.R $(CleanMe) Makefile
+	@rm -f *.R .RData sink-examp.txt Makefile
 maintainer-clean: distclean
