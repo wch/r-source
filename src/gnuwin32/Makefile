@@ -7,7 +7,6 @@ HELP = YES
 WINHELP = CHM# NO, CHM, BOTH
 
 LEA_MALLOC=YES
-#USE_LIBXML=YES
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -44,18 +43,6 @@ PKGCLEAN = $(foreach i,$(ALLPACKAGES),pkgclean-$i)
 ifdef LEA_MALLOC
 extra-CFLAGS+=-DLEA_MALLOC
 OBJS-EXTRA=malloc.o
-endif
-
-ifdef USE_LIBXML
-INET=USE_LIBXML
-else
-INET=USE_WININET
-endif
-
-ifdef USE_WININET
-R-DLLLIBS+=-lwininet
-OPTEXTRA=-DUSE_WININET
-#OPTEXTRA=-DUSE_WININET_ASYNC
 endif
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
@@ -249,7 +236,7 @@ distclean veryclean: clean
 	-$(MAKE) -C installer ISdistclean
 
 cleanwin:
-	$(RM) *.o *.exe *.dll *.a *~ \#*\# *.zip R.def R.exp1 \
+	$(RM) *.o *.exe *.dll *.a *~ \#*\# rw*.zip R.def R.exp1 \
 	   .RData .Rhistory Makedeps *.d
 	$(MAKE) -C graphapp clean
 	$(MAKE) -C fixed clean
