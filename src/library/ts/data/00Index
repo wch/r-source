@@ -4,10 +4,10 @@ beaver2
 deaths		time-series on UK lung deaths 1974-9 from Diggle (1990)
 mdeaths, fdeaths  as above, for males and females
 drivers		time series on UK road deaths of drivers from Harvey (1989)
-finance         daily closing prices of major European stock indices, 1991-1998.
-lh		 dataset on luteinizing hormone from Diggle (1990)
+finance         daily closing prices of major European stock indices, 1991-8
+lh		dataset on luteinizing hormone from Diggle (1990)
 nottem		time-series of temperatures in Nottingham, 1920-1939
-sales		sales data with leading indicator.
-sunspot.year 	yearly sunspot data, 1700-1988.
-sunspot.month	monthly sunspot data, 1749-1997.
-treering        yearly tree ring data, -6000-1979.
+sales		sales data with leading indicator
+sunspot.year 	yearly sunspot data, 1700-1988
+sunspot.month	monthly sunspot data, 1749-1997
+treering        yearly tree ring data, -6000-1979

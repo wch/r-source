@@ -1,11 +1,15 @@
 \name{spectrum}
 \alias{spectrum}
 \alias{plot.spec}
+\alias{plot.spec.coherency}
+\alias{plot.spec.phase}
 \alias{spec}
 \title{Spectral Density Estimation}
 \usage{
 spectrum(x, method=c("pgram","ar"), plot = TRUE, ...)
-plot.spec(spec.obj, add=FALSE, ci=0.95, log=TRUE, ...)
+plot.spec(spec.obj, add=FALSE, ci=0.95, log=TRUE, ci.col="blue", ...)
+plot.spec.coherency(spec.obj, ci=0.95, ci.lty = 3, ci.col="blue", ...)
+plot.spec.phase(spec.obj, ci=0.95, ci.lty = 3, ci.col="blue", ...)
 }
 \arguments{
  \item{x}{A time series.}
@@ -23,18 +27,23 @@ plot.spec(spec.obj, add=FALSE, ci=0.95, log=TRUE, ...)
     existing plot.}
 
 \item{ci}{Coverage probability for confidence interval. Plotting of the
-    confidence bar is suppressed if \code{ci} <= 0.}
+    confidence bar is omitted if \code{ci} <= 0.}
 
 \item{log}{If true, plot on log10 (decibel) scale.}
+
+\item{ci.col}{Colour for plotting confidence bar.}
 
 \item{\dots}{Further graphical parameters.}
 }
 \description{
 The \code{spectrum} function estimates the spectral density of a
-time series. This is just a wrapper function which calls the methods
+time series. This is a wrapper function which calls the methods
 \code{\link{spec.pgram}} and \code{\link{spec.ar}}.
 
-The generic function \code{plot} has a method for \code{spec} objects.
+The generic function \code{plot} has a method for \code{spec} objects:
+for mutivariate time series it plots the marginal spectra of the series and
+\code{plot.spec.coherency} and \code{plot.spec.phase} give pairs plots
+of coherency and phase of the cross-spectra.
 }
 \value{
   An object of class \code{spec}, which is a list containing at
@@ -53,15 +62,19 @@ The generic function \code{plot} has a method for \code{spec} objects.
      time series a matrix containing the cross-spectrum phase between
      different series. The format is the same as \code{coh}.}
   \item{series}{The name of the time series.}
+  \item{snames}{For multivariate input, the names of the component series.}
   \item{method}{The method used to calculate the spectrum.}
-
 }
 \details{
     The spectrum here is defined with divisor 2*\pi*frequency(x),
     following S-PLUS. This makes the spectral density a density over the
     range \code{(-frequency(x)/2, +frequency(x)/2]}, whereas a more
     common scaling is 2*\pi and range (-0.5, 0.5]
-    (e.g. Bloomfield) or 1 and range (-\pi, \pi]. 
+    (e.g. Bloomfield) or 1 and range (-\pi, \pi].
+
+    If available, a confidence interval will be plotted by
+    \code{plot.spec}: this is asymmetric, and the width of the centre
+    mark indicates the equivalent bandwidth.
 }
 \note{
 The default plot for \code{spec} objects is quite complex, including an
@@ -83,6 +96,7 @@ all be overridden by supplying the appropriate graphical parameters.
 \seealso{\code{\link{spec.pgram}}}
 
 \examples{
+## Examples from Venables & Ripley
 ## spec.pgram
 par(mfrow=c(2,2))
 data(lh)

@@ -64,6 +64,7 @@ fitting the AR model.
 \examples{
 data(lh)
 ar(lh)
+
 data(sunspot)
 ar(sunspot.year)
 }

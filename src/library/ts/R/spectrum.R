@@ -56,9 +56,12 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
     freq <- seq(0, 0.5, length = n.freq)
     if (nser == 1) {
         coh <- phase <- NULL
-        cs <- outer(freq, 1:order, function(x, y) cos(2*pi*x*y)) %*% x$ar
-        sn <- outer(freq, 1:order, function(x, y) sin(2*pi*x*y)) %*% x$ar
-        spec <- x$var.pred/(2*pi*xfreq*((1 - cs)^2 + sn^2))
+        if(order > 1) {
+            cs <- outer(freq, 1:order, function(x, y) cos(2*pi*x*y)) %*% x$ar
+            sn <- outer(freq, 1:order, function(x, y) sin(2*pi*x*y)) %*% x$ar
+            spec <- x$var.pred/(2*pi*xfreq*((1 - cs)^2 + sn^2))
+        } else
+            spec <- rep(x$var.pred/(2*pi*xfreq), length(freq))
     } else .NotYetImplemented()
     spg.out <- list(freq = freq, spec = spec, coh = coh, phase = phase,
                     n.used = nrow(x), series = series,
@@ -84,7 +87,9 @@ spec.pgram <-
     x <- as.matrix(x)
     N <- nrow(x)
     nser <- ncol(x)
-    if(!is.null(spans)) kernel <- modified.daniell.kernel(spans %/% 2)
+    if(!is.null(spans)) # allow user to mistake order of args
+        if(is.kernel(spans)) kernel <- spans
+        else kernel <- modified.daniell.kernel(spans %/% 2)
     if(!is.null(kernel) && !is.kernel(kernel))
         stop("must specify spans or a valid kernel")
     if (detrend) {
@@ -98,8 +103,9 @@ spec.pgram <-
     }
     x <- spec.taper(x, taper)
     ## to correct for tapering: Bloomfield (1976, p. 194)
-    u2 <- (1 - (5/8)*taper)
-    u4 <- (1 - (93/128)*taper)
+    ## Total taper is taper*2
+    u2 <- (1 - (5/8)*taper*2)
+    u4 <- (1 - (93/128)*taper*2)
     if (pad > 0) {
         x <- rbind(x, matrix(0, nrow = N * pad, ncol = ncol(x)))
         N <- nrow(x)
@@ -109,40 +115,43 @@ spec.pgram <-
     N <- nrow(x)
     Nspec <- floor(N/2)
     freq <- seq(from = xfreq/N, by = xfreq/N, length = Nspec)
-    xfft <- mvfft(x)[2:(N - 1), , drop = FALSE]
-    pgram <- array(NA, dim = c(nrow(x) - 2, ncol(x), ncol(x)))
+    xfft <- mvfft(x)
+    pgram <- array(NA, dim = c(N, ncol(x), ncol(x)))
     for (i in 1:ncol(x)) {
         for (j in 1:ncol(x)) {
             pgram[, i, j] <- xfft[, i] * Conj(xfft[, j])/(N*2*pi*xfreq)
         }
     }
-    if(length(spans) > 0) {
-        filter.list <- vector("list", length(spans))
-        for (i in 1:length(spans)) {
-            m <- floor(spans[i]/2)
-            spans[i] <- 2 * m + 1
-            filter.list[[i]] <-
-                if (m > 0) c(0.5, rep(1, 2 * m - 1), 0.5)/(2 * m) else 1
-        }
-        filter <- filter.list[[1]]
-        if (length(spans) > 1)
-            for (i in 2:length(spans)) filter <- convolve(filter.list[[i]],
-                                                          filter, type="open")
-        if (length(filter) > 1) {
-            ndiff <- nrow(pgram) - length(filter)
-            m <- floor(length(filter)/2)
-            if (ndiff < 0)
-                stop("filter too long!")
-            else for (i in 1:ncol(x)) for (j in 1:ncol(x)) {
-                pgram[, i, j] <- convolve(pgram[, i, j],
-                                          c(filter[(m + 1):(2 * m + 1)],
-                                            rep(0, ndiff), filter[1:m]))
-            }
-        }
-        df <- 2/(sum(filter^2) * u4/u2^2)
-        m <- floor(length(filter)/2)
-        bandwidth <- sqrt(sum((1/12 + (-m:m)^2) * filter)) * xfreq/N
-    } else if(!is.null(kernel)) {
+    ## value at zero is invalid as mean has been removed, so interpolate
+    pgram[1, i, j] <- 0.5*(pgram[2, i, j] + pgram[N, i, j])
+#     if(length(spans) > 0) {
+#         filter.list <- vector("list", length(spans))
+#         for (i in 1:length(spans)) {
+#             m <- floor(spans[i]/2)
+#             spans[i] <- 2 * m + 1
+#             filter.list[[i]] <-
+#                 if (m > 0) c(0.5, rep(1, 2 * m - 1), 0.5)/(2 * m) else 1
+#         }
+#         filter <- filter.list[[1]]
+#         if (length(spans) > 1)
+#             for (i in 2:length(spans)) filter <- convolve(filter.list[[i]],
+#                                                           filter, type="open")
+#         if (length(filter) > 1) {
+#             ndiff <- nrow(pgram) - length(filter)
+#             m <- floor(length(filter)/2)
+#             if (ndiff < 0)
+#                 stop("filter too long!")
+#             else for (i in 1:ncol(x)) for (j in 1:ncol(x)) {
+#                 pgram[, i, j] <- convolve(pgram[, i, j],
+#                                           c(filter[(m + 1):(2 * m + 1)],
+#                                             rep(0, ndiff), filter[1:m]))
+#             }
+#         }
+#         df <- 2/(sum(filter^2) * u4/u2^2)
+#         m <- floor(length(filter)/2)
+#         bandwidth <- sqrt(sum((1/12 + (-m:m)^2) * filter)) * xfreq/N
+#    } else if(!is.null(kernel)) {
+    if(!is.null(kernel)) {
         for (i in 1:ncol(x)) for (j in 1:ncol(x))
                 pgram[, i, j] <- apply.kernel(pgram[, i, j], kernel,
                                               circular = TRUE)
@@ -152,6 +161,7 @@ spec.pgram <-
         df <- 2/(u4/u2^2)
         bandwidth <- sqrt(1/12) * xfreq/N
     }
+    pgram <- pgram[1:Nspec,,, drop=FALSE]
     spec <- matrix(NA, nrow = Nspec, ncol = nser)
     for (i in 1:nser) spec[, i] <- Re(pgram[1:Nspec, i, i])
     if (nser == 1) {
@@ -173,7 +183,7 @@ spec.pgram <-
         list(freq = freq, spec = spec, coh = coh, phase = phase,
              kernel = kernel, df = df,
              bandwidth = bandwidth, n.used = nrow(x),
-             series = series,
+             series = series, snames = colnames(x),
              method = ifelse(!is.null(kernel), "Smoothed Periodogram",
                              "Raw Periodogram"),
              taper = taper, pad = pad, detrend = detrend, demean = demean)
@@ -188,48 +198,150 @@ plot.spec <-
     function (x, add = FALSE, ci = 0.95, log = TRUE,
               xlab = "frequency",
               ylab = if(log) "spectrum (dB)" else "spectrum",
-              type = "l", main = NULL, sub = NULL, ...)
+              type = "l", ci.col="blue", main = NULL, sub = NULL, ...)
 {
+    spec.ci <- function (spec.obj, coverage = 0.95)
+    {
+        ## A utility function for plot.spec which calculates the confidence
+        ## interval (centred around zero). We use a conditional argument to
+        ## ensure that the ci always contains zero.
+
+        if (coverage < 0 || coverage >= 1)
+            stop("coverage probability out of range [0,1)")
+        tail <- (1 - coverage)
+        df <- spec.obj$df
+        upper.quantile <- 1 - tail * (1 - pchisq(df, df))
+        lower.quantile <- tail * pchisq(df, df)
+        -10 * log10(qchisq(c(upper.quantile, lower.quantile), df)/df)
+    }
+
     if(log) x$spec <- 10 * log10(x$spec)
-    matplot(x$freq, x$spec, xlab = xlab, ylab = ylab, type = type,
-        add = add, ...)
-    is.ar <- !is.na(pmatch("AR", x$method))
-    if (ci <= 0 || add || !log || is.ar) {
-        #No confidence limits
-        ci.text <- ""
-    }
-    else {
-        # The position of the error bar has no meaning: only the width
-        # and height. It is positioned in the top right hand corner.
-        #
-        conf.lim <- spec.ci(x, coverage = ci)
-        conf.y <- max(x$spec) - conf.lim[2]
-        conf.x <- max(x$freq) - x$bandwidth
-        lines(rep(conf.x, 2), conf.y + conf.lim)
-        lines(conf.x + c(-0.5, 0.5) * x$bandwidth, rep(conf.y,
-            2))
-        ci.text <- paste("95% C.I. is (", paste(format(conf.lim,
+    if(add) {
+        matplot(x$freq, x$spec, type = type, add=TRUE, ...)
+    } else {
+        matplot(x$freq, x$spec, xlab = xlab, ylab = ylab, type = type, ...)
+        is.ar <- !is.na(pmatch("AR", x$method))
+        if (ci <= 0 || !log || is.ar) {
+            ## No confidence limits
+            ci.text <- ""
+        } else {
+            ## The position of the error bar has no meaning: only the width
+            ## and height. It is positioned in the top right hand corner.
+            ##
+            conf.lim <- spec.ci(x, coverage = ci)
+            conf.y <- max(x$spec) - conf.lim[2]
+            conf.x <- max(x$freq) - x$bandwidth
+            lines(rep(conf.x, 2), conf.y + conf.lim, col=ci.col)
+            lines(conf.x + c(-0.5, 0.5) * x$bandwidth, rep(conf.y, 2),
+                  col=ci.col)
+            ci.text <- paste(",  95% C.I. is (", paste(format(conf.lim,
             digits = 3), collapse = ","), ")dB")
+        }
+        if (is.null(main))
+            main <- paste(paste("Series:", x$series), x$method, sep = "\n")
+        if (is.null(sub) && !is.ar)
+             sub <- paste("bandwidth = ", format(x$bandwidth, digits = 3),
+                         ci.text, sep="")
+        title(main = main, sub = sub)
     }
-    if (is.null(main))
-        main <- paste(paste("Series:", x$series), x$method, sep = "\n")
-    if (is.null(sub) && !is.ar)
-        sub <- paste("bandwidth=", format(x$bandwidth, digits = 3), ci.text)
-    title(main = main, sub = sub)
     invisible(x)
 }
 
-spec.ci <- function (spec.obj, coverage = 0.95)
+## based on code in Venables & Ripley
+plot.spec.coherency <-
+    function(x, ci = 0.95,
+             xlab = "frequency", ylab = "squared coherency", ylim=c(0,1),
+             type = "l", main = NULL, ci.lty = 3, ci.col="blue", ...)
 {
-    # A utility function for plot.spec which calculates the confidence
-    # interval (centred around zero). We use a conditional argument to
-    # ensure that the ci always contains zero.
-    #
-    if (coverage < 0 || coverage >= 1)
-        stop("coverage probability out of range [0,1)")
-    df <- spec.obj$df
-    limits <- numeric(2)
-    upper.quantile <- 1 - (1 - coverage) * (1 - pchisq(df, df))
-    lower.quantile <- (1 - coverage) * pchisq(df, df)
-    -10 * log10(qchisq(c(upper.quantile, lower.quantile), df)/df)
+    nser <- NCOL(x$spec)
+    ## Formulae from Bloomfield (1976, p.225)
+    gg <- 2/x$df
+    se <- sqrt(gg/2)
+    z <- -qnorm((1-ci)/2)
+    if (is.null(main))
+        main <- paste(paste("Series:", x$series),
+                      "Squared Coherency", sep = " --  ")
+    if(nser == 2) {
+        plot(x$freq, x$coh, type=type, xlab=xlab, ylab=ylab, ylim=ylim, ...)
+        coh <- sqrt(x$coh)
+        lines(x$freq, (tanh(atanh(coh) + z*se))^2, lty=ci.lty, col=ci.col)
+        lines(x$freq, (pmax(0, tanh(atanh(coh) - z*se)))^2,
+              lty=ci.lty, col=ci.col)
+        title(main)
+    } else {
+        opar <- par(mfrow = c(nser, nser), mar = c(1.5, 1.5, 0.5, 0.5),
+                    oma = c(4, 4, 6, 4))
+        on.exit(par(opar))
+        frame()
+        for (j in 2:nser) for (i in 1:(j-1)) {
+            par(mfg=c(j-1,i, nser-1, nser-1))
+            ind <- i + (j - 1) * (j - 2)/2
+            plot(x$freq, x$coh[, ind], type=type, ylim=ylim, axes=FALSE,
+                 xlab="", ylab="", ...)
+            coh <- sqrt(x$coh[, ind])
+            lines(x$freq, (tanh(atanh(coh) + z*se))^2, lty=ci.lty, col=ci.col)
+            lines(x$freq, (pmax(0, tanh(atanh(coh) - z*se)))^2,
+                  lty=ci.lty, col=ci.col)
+            box()
+            if (i == 1) {
+                axis(2, xpd = NA)
+                title(ylab=x$snames[j], xpd = NA)
+            }
+            if (j == nser) {
+                axis(1, xpd = NA)
+                title(xlab=x$snames[i], xpd = NA)
+            }
+            mtext(main, 3, 3, TRUE, 0.5,
+                  cex = par("cex.main"), font = par("font.main"))
+        }
+    }
+}
+
+plot.spec.phase <-
+    function(x, ci = 0.95,
+             xlab = "frequency", ylab = "phase", ylim=c(-pi, pi),
+             type = "l", main = NULL, ci.lty = 3, ci.col="blue", ...)
+{
+    nser <- NCOL(x$spec)
+    ## Formulae from Bloomfield (1976, p.225)
+    gg <- 2/x$df
+    if (is.null(main))
+        main <- paste(paste("Series:", x$series),
+                      "Phase spectrum", sep = "  -- ")
+    if(nser == 2) {
+        plot(x$freq, x$phase, type=type, xlab=xlab, ylab=ylab, ylim=ylim, ...)
+        coh <- sqrt(x$coh)
+        cl <- asin( pmin( 0.9999, qt(ci, 2/gg-2)*
+                         sqrt(gg*(coh^{-2} - 1)/(2*(1-gg)) ) ) )
+        lines(x$freq, x$phase + cl, lty=ci.lty, col=ci.col)
+        lines(x$freq, x$phase - cl, lty=ci.lty, col=ci.col)
+        title(main)
+    } else {
+        opar <- par(mfrow = c(nser, nser), mar = c(1.5, 1.5, 0.5, 0.5),
+                    oma = c(4, 4, 6, 4))
+        on.exit(par(opar))
+        frame()
+        for (j in 2:nser) for (i in 1:(j-1)) {
+            par(mfg=c(j-1,i, nser-1, nser-1))
+            ind <- i + (j - 1) * (j - 2)/2
+            plot(x$freq, x$phase[, ind], type=type, ylim=ylim, axes=FALSE,
+                 xlab="", ylab="", ...)
+            coh <- sqrt(x$coh[, ind])
+            cl <- asin( pmin( 0.9999, qt(ci, 2/gg-2)*
+                             sqrt(gg*(coh^{-2} - 1)/(2*(1-gg)) ) ) )
+            lines(x$freq, x$phase[, ind] + cl, lty=ci.lty, col=ci.col)
+            lines(x$freq, x$phase[, ind] - cl, lty=ci.lty, col=ci.col)
+            box()
+            if (i == 1) {
+                axis(2, xpd = NA)
+                title(ylab=x$snames[j], xpd = NA)
+            }
+            if (j == nser) {
+                axis(1, xpd = NA)
+                title(xlab=x$snames[i], xpd = NA)
+            }
+            mtext(main, 3, 3, TRUE, 0.5,
+                  cex = par("cex.main"), font = par("font.main"))
+        }
+    }
 }

@@ -29,6 +29,7 @@ Functions in package ts:
 acf		Autocovariance and autocorrelation function
 ar              Wrapper for autoregression estimation functions
 ar.yw           Estimate autoregression model by solving Yule-Walker equations
+Box.test	Box-Pierce and Ljung-Box tests of independence
 cpgram		Plot cumulative periodogram of univariate time series
 cycle		Create time series giving the positions in a cycle 
 		   of a time series
@@ -36,12 +37,15 @@ deltat		Return time interval between observations
 embed           Embedding a time series
 filter		Linear filtering on a time series
 kernel          Smoothing kernel objects (and Daniell, Fejer and 
-                   Dirichlet kernels)
+                   (modified) Dirichlet kernels)
 lag		Compute lagged version of time series
 na.omit.ts	na.omit method for time series
 pacf		Partial autocorrelation function
 plot.acf        Plot autocorrelation function
 plot.spec       Plot spectral density estimate
+plot.spec.coherency
+plot.spec.phase
+PP.test		Phillips-Perron test for unit root
 spec.ar	        Estimate spectral density by autoregression
 spec.pgram      Estimate spectral density from periodogram
 spec.taper      Taper by cosine bell
@@ -53,8 +57,7 @@ ts.union	Bind time series as multivariate ts over their total time base
 TO DO
 
 ar.burg		maybe
-arima.forecast
-arima.mle
+arima fitting and forecasting.
 
 
 Datasets in base R:
@@ -71,4 +74,16 @@ uspop		Populations Recorded by the US Census
 Datasets in package ts:
 ----------------------
 
-See data(package=ts)
+accdeaths       US accidental deaths 1973-8
+beaver1         time series of body temperatures of two beavers
+beaver2
+deaths          time-series on UK lung deaths 1974-9 from Diggle (1990)
+mdeaths, fdeaths  as above, for males and females
+drivers         time series on UK road deaths of drivers from Harvey (1989)
+finance         daily closing prices of major European stock indices, 1991-1998
+lh              dataset on luteinizing hormone from Diggle (1990)
+nottem		time-series of temperatures in Nottingham, 1920-1939
+sales		sales data with leading indicator
+sunspot.year	yearly sunspot data, 1700-1988
+sunspot.month	monthly sunspot data, 1749-1997
+treering	yearly tree ring data, -6000-1979

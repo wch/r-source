@@ -36,6 +36,11 @@ spec.pgram(x, spans=NULL, kernel, taper=0.1, demean=FALSE, detrend=TRUE,
     length is a highly composite number in order to help the Fast Fourier
     Transform. This is controlled by the \code{fast} and not the \code{pad}
     argument.
+
+    The periodogram at zero is in theory zero as the mean of the series
+    is removed (but this may be affected by tapering): it is replaced by
+    an interpolation of adjacent values during smoothing, and no value
+    is returned for that frequency.
 }
 \value{
    An object of class \code{\link{spec}} with the following additional
@@ -64,11 +69,13 @@ spec.pgram(x, spans=NULL, kernel, taper=0.1, demean=FALSE, detrend=TRUE,
 	Statistics with S-PLUS.} Second edition. Springer. (Especially
         pp. 437-442.)
 }
-\author{Originally Martyn Plummer; kernel smoothing by Adrian Trapetti,
+\author{Originally Martyn Plummer; kernel smoothing by Adrian Trapletti,
     synthesis by B.D. Ripley}
 \seealso{\code{\link{spectrum}}, \code{\link{spec.taper}},
     \code{\link{plot.spec}}, \code{\link{fft}}}
+
 \examples{
+## Examples from Venables & Ripley
 data(deaths)
 spectrum(deaths)
 spectrum(deaths, spans=c(3,5))
@@ -77,44 +84,23 @@ spectrum(mdeaths, spans=c(3,3))
 spectrum(fdeaths, spans=c(3,3))
 
 ## bivariate example
-mfdeaths.spc <- spec.pgram(ts.union(mdeaths, fdeaths), 
-   spans=c(3,3))
-plot(mfdeaths.spc)  # plot both marginal spectra
+mfdeaths.spc <- spec.pgram(ts.union(mdeaths, fdeaths), spans=c(3,3))
+# plots marginal spectra
 
-# plot coherency
-plot(mfdeaths.spc$freq, mfdeaths.spc$coh, type="l", 
-   ylim=c(0,1), xlab="coherency", ylab="")
-gg <- 2/mfdeaths.spc$df
-se <- sqrt(gg/2)
-lines(mfdeaths.spc$freq, tanh(atanh(mfdeaths.spc$coh) + 
-   1.96*se), lty=3)
-lines(mfdeaths.spc$freq, tanh(atanh(mfdeaths.spc$coh) - 
-   1.96*se), lty=3)
-#plot phase
-plot(mfdeaths.spc$freq, mfdeaths.spc$phase, type="l", 
-   ylim=c(-pi, pi), xlab="phase spectrum", ylab="")
-cl <- asin( pmin( 0.9999, qt(0.95, 2/gg-2)*
-   sqrt(gg*(mfdeaths.spc$coh^{-2} - 1)/(2*(1-gg)) ) ) )
-lines(mfdeaths.spc$freq, mfdeaths.spc$phase + cl, lty=3)
-lines(mfdeaths.spc$freq, mfdeaths.spc$phase - cl, lty=3)
+# plot coherency and phase
+plot.spec.coherency(mfdeaths.spc)
+plot.spec.phase(mfdeaths.spc)
 
 ## now impose a lack of alignment
 mfdeaths.spc <- spec.pgram(ts.intersect(mdeaths, lag(fdeaths, 4)),
-   spans=c(3,3))
-plot(mfdeaths.spc$freq, mfdeaths.spc$coh, type="l", 
-   ylim=c(0,1), xlab="coherency", ylab="")
-gg <- 2/mfdeaths.spc$df
-se <- sqrt(gg/2)
-lines(mfdeaths.spc$freq, tanh(atanh(mfdeaths.spc$coh) + 
-   1.96*se), lty=3)
-lines(mfdeaths.spc$freq, tanh(atanh(mfdeaths.spc$coh) - 
-   1.96*se), lty=3)
-phase <- (mfdeaths.spc$phase + pi)%%(2*pi) - pi
-plot(mfdeaths.spc$freq, phase, type="l", 
-   ylim=c(-pi, pi), xlab="phase spectrum", ylab="")
-cl <- asin( pmin( 0.9999, qt(0.95, 2/gg-2)*
-   sqrt(gg*(mfdeaths.spc$coh^{-2} - 1)/(2*(1-gg)) ) ) )
-lines(mfdeaths.spc$freq, phase + cl, lty=3)
-lines(mfdeaths.spc$freq, phase - cl, lty=3)
+   spans=c(3,3), plot=FALSE)
+plot.spec.coherency(mfdeaths.spc)
+plot.spec.phase(mfdeaths.spc)
+
+data(finance)
+finance.spc <- spectrum(finance, kernel=daniell.kernel(c(30,50)), plot=FALSE)
+plot(finance.spc)
+plot.spec.coherency(finance.spc)
+plot.spec.phase(finance.spc)
 }
 \keyword{ts}

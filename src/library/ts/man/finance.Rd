@@ -11,14 +11,13 @@ data (finance)
   The object is of class \code{"ts"}.
 }
 \description{
-  Contains the daily closing prices of major European stock indices: 
-  Germany DAX (Ibis), Switzerland SMI, France CAC,
-  and UK FTSE. The data are sampled in
-  business time, i.e., weekends and holidays 
-  are omitted.
+   Contains the daily closing prices of major European stock indices:
+   Germany DAX (Ibis), Switzerland SMI, France CAC, and UK FTSE. The data
+   are sampled in business time, i.e., weekends and holidays are omitted.
 }
+
 \source{
-  The data is kindly provided by Erste Bank AG, Vienna, Austria.
+  The data were kindly provided by Erste Bank AG, Vienna, Austria.
 }
 \keyword{datasets}
 

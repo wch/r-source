@@ -25,7 +25,7 @@ plot.acf(acf.obj, ci, ...)
 
  \item{na.action}{function to be called to handle missing values.}
 
- \item{acf.obj}{an object of class \code{acf}}
+ \item{acf.obj}{an object of class \code{acf}.}
 
  \item{ci}{coverage probability for confidence interval. Plotting of the
      confidence interval is suppressed if \code{ci} <= 0.}
@@ -60,7 +60,7 @@ plot.acf(acf.obj, ci, ...)
   \item{snames}{The series names for multivariate time series.}
 }
 \author{Original: Paul Gilbert, Martyn Plummer.  Extensive modifications and
-univariate case of pacf by B.D. Ripley.}
+univariate case of \code{pacf} by B.D. Ripley.}
 
 \note{The confidence interval plotted in \code{plot.acf} is based on
 an \emph{uncorrelated} series and should be treated with appropriate
@@ -69,6 +69,7 @@ caution.}
 %\seealso{\code{\link{ar.yw}}}
 
 \examples{
+## Examples from Venables & Ripley
 data(lh)
 acf(lh)
 acf(lh, type="covariance")
