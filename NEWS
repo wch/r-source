@@ -119,6 +119,10 @@ BUG FIXES
     o   The return value for par() was incorrectly documented, and in
 	consequence cpgram() was not re-setting "pty".
 
+    o   package.dependencies printed unnecessary debugging messages
+	(version comparison), these have been removed.
+
+
 
 	**************************************************
 	*						 *

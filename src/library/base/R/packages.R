@@ -196,7 +196,6 @@ package.dependencies <- function(x, check=FALSE)
                               R.version$minor, '" ', 
                               deps[[k]][ok,2], ' "',
                               deps[[k]][ok,3], '"', sep="")
-                    cat(comptext, "\n")
                 }
                 z[k] <- eval(parse(text=comptext))
             }
