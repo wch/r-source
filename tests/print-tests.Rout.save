@@ -1,6 +1,6 @@
 
-R : Copyright 1998, The R Development Core Team
-Version 0.63.0 Unstable (November 13, 1998)
+R : Copyright 1999, The R Development Core Team
+Version 0.65.0 Under development (unstable) (June 23, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -10,7 +10,8 @@ R is a collaborative project with many contributors.
 Type	"?contributors" for a list.
 
 Type	"demo()" for some demos, "help()" for on-line help, or
-	"help.start()" for a HTML browser interface to help.
+    	"help.start()" for a HTML browser interface to help.
+Type	"q()" to quit R.
 
 > #### Testing print(), format()	and the like --- mainly with numeric()
 > ####
@@ -280,11 +281,9 @@ Type	"demo()" for some demos, "help()" for on-line help, or
 > tx <- unique(outer(-1:1,c(.1,1e-3,1e-7)))# 7 values  (out of 9)
 > tx <- unique(sort(c(outer(umach,1+tx))))# 11 values  (out of 14)
 > tx <- tx[is.finite(tx)] #-- all kept
-> txp <- tx[tx >= 1]#-- Positive exponent -- 4 values
-> txp
+> (txp <- tx[tx >= 1])#-- Positive exponent -- 4 values
 [1] 1.617924e+308 1.795895e+308 1.797693e+308 1.797693e+308
-> txn <- tx[tx <	1]#-- Negative exponent -- 7 values
-> txn
+> (txn <- tx[tx <	 1])#-- Negative exponent -- 7 values
 [1] 2.002566e-308 2.222849e-308 2.225074e-308 2.225074e-308 2.225074e-308 2.227299e-308 2.447581e-308
 > 
 > ##------ Use  Emacs screen width 134 ;	Courier 12 ----
@@ -394,4 +393,44 @@ dig= 11 : [1] 1.6179238214e+308 1.7958954417e+308 1.7976929551e+308 1.7976931348
 [4,] d    j    p    v   
 [5,] e    k    q    w   
 [6,] f    l    r    x   
+> 
+> ##--- Complex matrices and named vectors :
+> 
+> x0 <- x <- c(1+1i, 1.2 + 10i)
+> names(x) <- c("a","b")
+> x
+      a       b 
+1.0+ 1i 1.2+10i
+> (xx <-	rbind(x,  2*x))
+        a       b
+[1,] 1+1i 1.2+10i
+[2,] 2+2i 2.4+20i
+> 	rbind(x0, 2*x0)
+     [,1]    [,2]
+[1,] 1+1i 1.2+10i
+[2,] 2+2i 2.4+20i
+> x[4:6] <- c(Inf,Inf*c(-1,1i))
+> x  + pi
+            a             b                                                         
+4.141593+  1i 4.341593+ 10i            NA      Inf+  0i     -Inf+NaNi      NaN+Infi
+> matrix(x + pi, 2)
+             [,1]   [,2]      [,3]
+[1,] 4.141593+1i     NA -Inf+NaNi
+[2,] 4.341593+10i Inf+0i  NaN+Infi
+> matrix(x + 1i*pi, 3)
+               [,1]           [,2]
+[1,] 1.0+4.141593i  Inf+3.141593i
+[2,] 1.2+13.141593i -Inf    +NaNi
+[3,]             NA  NaN    +Infi
+> xx + pi
+               a            b
+[1,] 4.141593+1i 4.341593+10i
+[2,] 5.141593+2i 5.541593+20i
+> t(cbind(xx, xx+ 1i*c(1,pi)))
+     [,1]           [,2]
+a 1.0+1i 2.0+2.000000i
+b 1.2+10i 2.4+20.000000i
+a 1.0+2i 2.0+5.141593i
+b 1.2+11i 2.4+23.141593i
+> 
 > 
