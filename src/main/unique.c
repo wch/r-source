@@ -373,12 +373,23 @@ SEXP match(SEXP table, SEXP x, int nmatch)
 /* Partial Matching of Strings */
 /* Fully S Compatible version. */
 
+/* Hmm, this was not all S compatible!  The desired behaviour is:
+ * First do exact matches, and mark elements as used as they are matched
+ *   unless dup_ok is true.
+ * Then do partial matching, from left to right, using up the table
+ *   unless dup_ok is true.  Multiple partial matches are ignored.
+ * Empty strings are unmatched                        BDR 2000/2/16
+ */
+
 SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, input, target;
-    int i, j, k, match, n_input, n_target, match_count, temp, dups_ok;
-    checkArity(op, args);
+    int i, j, k, mtch, n_input, n_target, mtch_count, temp, dups_ok;
+    int * used;
+    char *vmax;
 
+    checkArity(op, args);
+    vmax = vmaxget();
     input = CAR(args);
     n_input = LENGTH(input);
     target = CADR(args);
@@ -390,32 +401,73 @@ SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(input) || !isString(target))
 	errorcall(call, "argument is not of mode character");
 
+    used = (int *) R_alloc(n_target, sizeof(int));
+    for (j = 0; j < n_target; j++) used[j] = 0;
     ans = allocVector(INTSXP, n_input);
-
+    for (i = 0; i < n_input; i++) INTEGER(ans)[i] = 0;
+ 
+    /* First pass, exact matching */
     for (i = 0; i < n_input; i++) {
 	temp = strlen(CHAR(STRING(input)[i]));
-	match = 0;
-	match_count = 0;
+	if (temp == 0) continue;
+	for (j = 0; j < n_target; j++) {
+	    if (!dups_ok && used[j]) continue;
+	    k = strcmp(CHAR(STRING(input)[i]), CHAR(STRING(target)[j]));
+	    if (k == 0) {
+		used[j] = 1;
+		INTEGER(ans)[i] = j + 1;
+		break;
+	    }
+	}
+    }
+    /* Second pass, partial matching */   
+    for (i = 0; i < n_input; i++) {
+	if (INTEGER(ans)[i]) continue;
+	temp = strlen(CHAR(STRING(input)[i]));
+	if (temp == 0) continue;
+	mtch = 0;
+	mtch_count = 0;
+	for (j = 0; j < n_target; j++) {
+	    if (!dups_ok && used[j]) continue;
+	    k = strncmp(CHAR(STRING(input)[i]), CHAR(STRING(target)[j]), temp);
+	    if (k == 0) {
+		mtch = j + 1;
+		mtch_count++;
+	    }
+	}
+	if (mtch > 0 && mtch_count == 1) {
+	    used[mtch - 1] = 1;
+	    INTEGER(ans)[i] = mtch;
+	}
+    }
+
+#ifdef OLD_PMATCH
+    for (i = 0; i < n_input; i++) {
+	temp = strlen(CHAR(STRING(input)[i]));
+	mtch = 0;
+	mtch_count = 0;
 	if (temp) {
 	    for (j = 0; j < n_target; j++) {
 		k = strncmp(CHAR(STRING(input)[i]),
 			    CHAR(STRING(target)[j]), temp);
 		if (k == 0) {
-		    match = j + 1;
+		    mtch = j + 1;
 		    if (dups_ok ||
 			strlen(CHAR(STRING(target)[j])) == temp)
 			/* This is odd, effectively sets dups.ok
-			 * for perfect matches, but that's what
+			 * for perfect mtches, but that's what
 			 * Splus 3.4 does  --pd
 			 */
 			break;
-		    if (match_count++ && !dups_ok)
-			match = 0;
+		    if (mtch_count++ && !dups_ok)
+			mtch = 0;
 		}
 	    }
 	}
-	INTEGER(ans)[i] = match;
+	INTEGER(ans)[i] = mtch;
     }
+#endif
+    vmaxset(vmax);
     return ans;
 }
 

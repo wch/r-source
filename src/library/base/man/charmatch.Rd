@@ -14,15 +14,20 @@ charmatch(x, table, nomatch = NA)
   among those of its second.
 }
 \details{
-  If there is a unique match then the index
-  of the matching value is returned; if multiple matches are found then
-  \code{0} is returned and if no match is found then \code{NA} is
-  returned.
-
+  Exact matches are preferred to partial matches (those where the value
+  to be matched has an exact match to the initial part of the target,
+  but the target is longer).
+    
+  If there is a single exact match or no exact match and a unique
+  partial match then the index of the matching value is returned; if 
+  multiple exact or multiple partial matches are found then \code{0} is
+  returned and if no match is found then \code{NA} is returned.
+}
+\author{
   This function is based on a C function written by Terry Therneau.
 }
 \seealso{
-  \code{\link{match}} \code{\link{pmatch}}.
+  \code{\link{match}},  \code{\link{pmatch}}.
 }
 \examples{
 charmatch("", "")                             # returns 1

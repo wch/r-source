@@ -87,6 +87,12 @@ NEW FEATURES
         argument can no longer be given as a positional argument but
         must be given in keyword form.
 
+    o   The behaviour of pmatch() has been changed to be S-compatible:
+	in particular the meaning of duplicates.ok=TRUE has changed.
+	The help for pmatch and charmatch now gives more precise
+	descriptions, including of their differences.
+
+
 BUG FIXES
 
     o   (0.99.0a) The internal code for strsplit no longer destroys
@@ -125,7 +131,8 @@ BUG FIXES
     o	list.files now skips non-existent/unreadable directories with
 	a warning, rather that failing with an error.
 
-    o	Lots of help examples now tidy up the files they created.
+    o	Lots of help examples now tidy up the files they created, and
+	detach data frames and libraries they attach.
 
     o	library(help=foo) lists only contents of first version if
 	multiple matches are found on lib.loc.
@@ -136,7 +143,9 @@ BUG FIXES
 
     o   rpois sometimes had problems with mu=0, now special-cased
 
-    o   --nsize and --vsize arguments to R CMD check now work
+    o   Rare memory overrun in rpois fixed.
+
+    o   --nsize and --vsize arguments to R CMD check now work.
 
     o   plot.stepfun had renamed the dispatch argument and used the
         original name "x" for a different argument which broke on the
@@ -165,7 +174,12 @@ BUG FIXES
 
     o   Old (pre-0.63.1) .Random.seed would cause problems if used.
 
-    o   Rare memory overrun in rpois fixed.
+    o   Row indexing of data.frames by characters (e.g. y["ab", ])
+	was wrong, as pmatch was not S-compatible.
+
+    o   Contour labels used to be rounded to integers.
+
+
 
 	**************************************************
 	*						 *
