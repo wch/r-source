@@ -912,3 +912,13 @@ a <- matrix( c(NA, "a", "b", "10",
 print(a, right=TRUE, na.print=" ")
 print(a, right=TRUE, na.print="----")
 ## misaligned in 1.7.0
+
+
+## assigning factors to dimnames
+A <- matrix(1:4, 2)
+aa <- factor(letters[1:2])
+dimnames(A) <- list(aa, NULL)
+A
+dimnames(A)
+## 1.7.0 gave internal codes as display and dimnames()
+## 1.7.1beta gave NAs via dimnames()
