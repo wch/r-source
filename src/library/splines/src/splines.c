@@ -39,6 +39,11 @@ typedef struct spl_struct {
 	*a;			/* scratch array */
 } *splPTR;
 
+/* Exports */
+SEXP spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs);
+SEXP spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv);
+
+
 static void			/* free storage from a spl_struct */
 splFree(splPTR this)
 {
@@ -48,9 +53,9 @@ splFree(splPTR this)
     Free(this);
 }
 
-static int			/* set sp->curs to the index of the first
-				   knot position > x.   Special handling
-				   for x == sp->knots[sp->nknots - sp-order + 1] */
+/* set sp->curs to the index of the first knot position > x.
+   Special handling for x == sp->knots[sp->nknots - sp-order + 1] */
+static int 
 set_cursor(splPTR sp, double x)
 {
     int i;
@@ -121,7 +126,7 @@ evaluate(splPTR sp, double x, int nder)
 }  
   
 SEXP
-spline_value(SEXP knots,  SEXP coeff, SEXP order, SEXP x, SEXP deriv)
+spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv)
 {
     SEXP val;
     splPTR sp;
@@ -213,18 +218,4 @@ spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
     setAttrib(val, install("Offsets"), offsets);
     UNPROTECT(6);
     return val;
-}
-
-void lin_interp(double *x, double *y, double *x0, double *y0, int *nvals)
-{
-  int n = *nvals;
-  double *firstx = x;
-
-  while(n--) {
-    while (*x < *x0) {x++; y++;}
-    if (x > firstx) {x--; y--;}
-    if (*x > *x0) *y0++ = *y + (*(y+1) - *y)*(*x0 - *x)/(*(x+1) - *x);
-    else *y0++ = *y;
-    x0++;
-  }
 }
