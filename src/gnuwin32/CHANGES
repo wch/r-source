@@ -7,8 +7,9 @@ See the file NEWS for changes that affect all versions of R.
 rw1061
 ======
 
-Dependencies were not being generated properly in packages using C++.
+Changed titles on help windows so topic name shows when minimized.
 
+Dependencies were not being generated properly in packages using C++.
 
 
 rw1060
