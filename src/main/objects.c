@@ -253,7 +253,7 @@ if (nargs < 0)
     return R_NilValue; /* NOT Used */
 }
 
-/* 
+/*
    fixcall: fixes up the call when arguments to the function may
    have changed; for now we only worry about tagged args, appending
    them if they are not already there
@@ -261,13 +261,13 @@ if (nargs < 0)
 
 static SEXP fixcall(SEXP call, SEXP args)
 {
-    SEXP s, t, u;
+    SEXP s, t;
     int found;
 
     for( t = args; t != R_NilValue; t=CDR(t) ) {
 	if( TAG(t) != R_NilValue ) {
 		found = 0;
-		for(s=call; CDR(s) != R_NilValue; s=CDR(s)) 
+		for(s=call; CDR(s) != R_NilValue; s=CDR(s))
 			if( TAG(CDR(s)) == TAG(t) )
 				found = 1;
 		if( !found ) {
@@ -329,20 +329,20 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(TAG(t)==R_DotsSymbol) i=length(CAR(t));
     }
     if(i) {   /* we need to expand out the dots */
-        PROTECT(t = allocList(i+length(actuals)-1));
-        for( s=actuals, m=t; s!=R_NilValue; s=CDR(s),m=CDR(m) ) {
-           if(TYPEOF(CAR(s)) == DOTSXP) {
-                i=1;
-                for(a=CAR(s); a!=R_NilValue; a=CDR(a), i++, m=CDR(m) ) {
-                   sprintf(tbuf,"..%d",i);
-                   TAG(m)= mkSYMSXP(mkChar(tbuf), R_UnboundValue);
-                   CAR(m)=CAR(a);
-                }
-           }
-           else {
-                TAG(m)=TAG(s);
-                CAR(m)=CAR(s);
-           }
+	PROTECT(t = allocList(i+length(actuals)-1));
+	for( s=actuals, m=t; s!=R_NilValue; s=CDR(s),m=CDR(m) ) {
+	   if(TYPEOF(CAR(s)) == DOTSXP) {
+		i=1;
+		for(a=CAR(s); a!=R_NilValue; a=CDR(a), i++, m=CDR(m) ) {
+		   sprintf(tbuf,"..%d",i);
+		   TAG(m)= mkSYMSXP(mkChar(tbuf), R_UnboundValue);
+		   CAR(m)=CAR(a);
+		}
+	   }
+	   else {
+		TAG(m)=TAG(s);
+		CAR(m)=CAR(s);
+	   }
        }
        actuals=t;
        UNPROTECT(1);
@@ -367,7 +367,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		CAR(t) = mkPROMISE(TAG(m), cptr->cloenv);
 		break;
-           }
+	   }
     }
     /*
       Now see if there were any other arguments passed in
