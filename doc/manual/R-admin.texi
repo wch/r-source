@@ -1684,15 +1684,21 @@ example, in environment variable @env{LIBS}).
 @node Alpha/OSF1, Alpha/FreeBSD, IRIX, Platform notes
 @subsection Alpha/OSF1
 
-@R{} has been built successfully on an Alpha running OSF1 V4.0 using
-@command{gcc}/@command{g77} and @command{cc}/@command{f77}.  Mixing
-@command{cc} and @command{g77} fails to configure.  The
+@R{} has been built successfully on an Alpha running OSF1 V4.0 / V5.1
+using @command{gcc}/@command{g77} and @command{cc}/@command{f77}.
+Mixing @command{cc} and @command{g77} fails to configure.  The
 @command{configure} option @option{--without-blas} was used since the
 native blas seems not to have been built with the flags needed to
-suppress @code{SIGFPE}'s.  Currently @R{} does not set a signal handler for
-@code{SIGFPE} on platforms that support @acronym{IEEE} arithmetic, so
-these are fatal.
+suppress @code{SIGFPE}'s.  Currently @R{} does not set a signal handler
+for @code{SIGFPE} on platforms that support @acronym{IEEE} arithmetic,
+so these are fatal.
 
+At some point in the past using @command{cc} required @option{-std1} to
+be set so @samp{__STDC__} was defined.  As far as we know this is no
+longer needed, and @command{configure} no longer sets it, but it does
+set @option{-ieee_with_inexact} for the C compiler and @option{-fpe3}
+for the Fortran compiler (and @option{-mieee-with-inexact} and
+@option{-mieee} for @command{gcc}/@command{g77}).
 
 @node Alpha/FreeBSD, AIX, Alpha/OSF1, Platform notes
 @subsection Alpha/FreeBSD

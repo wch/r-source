@@ -27,11 +27,14 @@ BUG FIXES
 
     o   dlogis() gave NaN not 0 for large negative arguments.
 
+    o   Building on Alpha OSF/1 no longer forces the C flag -std1,
+	which appears to be no longer needed.  (PR#7257)
+
 
 
         *********************************************************
         *                                                       *
-        *       News of 1.x.y is in file `ONEWS'                *
+        *       News of 1.x.y and 2.0.0 is in file `ONEWS'      *
         *       News of 1.0.0 and earlier is in file `OONEWS'   *
         *                                                       *
         *********************************************************
