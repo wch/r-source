@@ -566,9 +566,10 @@ cacheGenericsMetaData <- function(generics, attach = TRUE, where, package) {
                     next
                 }
             }
-            ## else, this is a primitive generic, so the assertion is that we
-            ## found methods for it, or for one of its group generics.  So go
-            ## ahead and turn method dispatch on
+            else
+              ## this is a primitive generic.  In current (1.7.1) code, we need to force
+              ## the collection of methods during the library() call.
+              getAllMethods(f, fdef)
         }
         ## find the function.  It may be a generic, but will be a primitive
         ## if the internal C code is being used to dispatch methods for primitives.
