@@ -15,15 +15,15 @@
 % \alias{RweaveLatexRuncode}
 % \alias{RweaveLatexWritedoc}
 % \alias{RweaveLatexFinish}
-% \alias{RweaveLatexOptions}
+\alias{RweaveLatexOptions}
 % \alias{RweaveChunkPrefix}
 % \alias{RweaveEvalWithOpt}
 % \alias{RtangleRuncode}
-% \alias{RtangleWritedoc}
+\alias{RtangleWritedoc}
 % \alias{RtangleFinish}
 % \alias{SweaveGetSyntax}
 \alias{buildVignettes}
-% \alias{pkgVignettes}
+\alias{pkgVignettes}
 % \alias{Rdpp}
 % \alias{Rdinfo}
 % \alias{Rdcontents}
