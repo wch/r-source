@@ -2,6 +2,8 @@
 
 NEW FEATURES
 
+    o   which(.) has a new 'arr.ind' argument allowing for array indices.
+
     o   New functions {d,p,q,r}signrank for the Wilcoxon signed rank
 	distribution.
 
@@ -14,7 +16,7 @@ NEW FEATURES
 	Short-style option `-V' obsolete.
 
     o   Added bug.report() to generate & send bug reports from
-        within R. 
+        within R.
 
     o   The PostScript device driver now uses the ISO Latin1 font
 	encoding.  This should allow Western Europeans to render
@@ -62,6 +64,19 @@ BUG FIXES
 
     o   Fixes and restructuring to name generation in connection with
 	unlist() and c().
+
+(BUG FIXES to non-released 0.62.4)
+
+    o   0i ^ 2  now gives  0+0i as it should.
+
+    o   ppoints() now behaves like S, and has additional argument 'a'
+
+    o   seq(1,6,by=3) and similar "by" calls now work okay
+
+    o   mahalanobis(.) now fixed; does *NOT* have default arguments for
+	center and cov anymore.
+
+    o   diag(.) doesn't return non-sensical dimnames anymore.
 
 
 		CHANGES IN R VERSION 0.62.3
