@@ -54,7 +54,7 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
   represented in a numeric matrix.
 
   If the table has no columns the rownames will be written if
-  \code{row=TRUE}, and vice versa.
+  \code{row.names=TRUE}, and vice versa.
 }
 
 \seealso{
