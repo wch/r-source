@@ -11,6 +11,9 @@
 
 NEW FEATURES
 
+    o	New standard package `lqs' for resistant regression and
+	covariance estimation, contributed by B. D. Ripley.
+
     o	new functions match.fun() and kronecker() [by Jonathan Rougier]
 
     o	par(las = 3) is a new option.
