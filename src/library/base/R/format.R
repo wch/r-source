@@ -28,7 +28,7 @@ format.default <- function(x, trim = FALSE, digits = NULL,
 				.Internal(format(unlist(x), trim=trim))),
 			 paste, collapse=", "),
 	   call=, expression=, "function"=, "(" = deparse(x),
-	   ##else: numeric, complex, character, ??? :
+	   ##else: numeric, complex, ??? :
 	   structure(.Internal(format(x, trim = trim)), names=names(x)))
 }
 
@@ -206,11 +206,11 @@ format.data.frame <- function(x, ..., justify = "none")
 
 format.AsIs <- function(x, width = 12, ...)
 {
-     n <- length(x)
-     rvec <- rep(NA,n)
-     for( i in 1:n )
-         rvec[i] <- toString(x[[i]], width, ...)
-     return(format.char(rvec, flag="+"))
+    if(is.character(x)) return(format.default(x, ...))
+    n <- length(x)
+    rvec <- rep(NA, n)
+    for(i in 1:n)
+        rvec[i] <- toString(x[[i]], width, ...)
+#    return(format.char(rvec, flag = "+"))
+    format.default(rvec, justify = "right")
 }
-
-

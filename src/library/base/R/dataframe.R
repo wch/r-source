@@ -840,7 +840,8 @@ print.data.frame <-
 	    op <- options(digits = digits)
 	    on.exit(options(op))
 	}
-	print.matrix(format(x), ..., quote = quote, right = right)
+        ## avoiding picking up e.g. format.AsIs
+	print.matrix(format.data.frame(x), ..., quote = quote, right = right)
     }
     invisible(x)
 }
