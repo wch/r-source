@@ -64,7 +64,7 @@ double R_FileMtime(char *path)
 {
     struct stat sb;
     if (stat(R_ExpandFileName(path), &sb) != 0)
-	error(_("cannot determine file modification time of %s"), path);
+	error(_("cannot determine file modification time of '%s'"), path);
     return sb.st_mtime;
 }
 #else
@@ -140,11 +140,11 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(pattern))
         errorcall(call, _("invalid filename pattern"));
     if (!isString(tempdir))
-        errorcall(call, _("invalid tempdir"));
+        errorcall(call, _("invalid 'tempdir'"));
     if (n1 < 1)
-	errorcall(call, _("no pattern"));
+	errorcall(call, _("no 'pattern'"));
     if (n2 < 1)
-	errorcall(call, _("no tempdir"));
+	errorcall(call, _("no 'tempdir'"));
     slen = (n1 > n2) ? n1 : n2;
     PROTECT(ans = allocVector(STRSXP, slen));
     for(i = 0; i < slen; i++) {

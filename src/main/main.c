@@ -851,7 +851,7 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     int ask=SA_DEFAULT, status, runLast;
 
     if(R_BrowseLevel) {
-	warning(_("can't quit from browser"));
+	warning(_("cannot quit from browser"));
 	return R_NilValue;
     }
     if( !isString(CAR(args)) )
@@ -868,15 +868,15 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if( !strcmp(tmp, "default") )
 	ask = SA_DEFAULT;
     else
-	errorcall(call, _("unrecognized value of save"));
+	errorcall(call, _("unrecognized value of 'save'"));
     status = asInteger(CADR(args));
     if (status == NA_INTEGER) {
-        warningcall(call, _("invalid status, 0 assumed"));
+        warningcall(call, _("invalid 'status', 0 assumed"));
 	runLast = 0;
     }
     runLast = asLogical(CADDR(args));
     if (runLast == NA_LOGICAL) {
-        warningcall(call, _("invalid runLast, FALSE assumed"));
+        warningcall(call, _("invalid 'runLast', FALSE assumed"));
 	runLast = 0;
     }
     /* run the .Last function. If it gives an error, will drop back to main

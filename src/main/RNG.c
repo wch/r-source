@@ -309,7 +309,7 @@ void GetRNGstate()
 		error(_(".Random.seed[1] = 5 but no user-supplied generator"));
 	    break;
 	default:
-	    error(_(".Random.seed[1] is NOT a valid RNG kind (code)"));
+	    error(_(".Random.seed[1] is not a valid RNG kind (code)"));
 	}
 	RNG_kind = newRNG; N01_kind = newN01;
 	len_seed = RNG_Table[RNG_kind].n_seed;

@@ -92,23 +92,23 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     xmin = asReal(CAR(args));
     if (!R_FINITE(xmin))
-	errorcall(call, _("invalid xmin value"));
+	errorcall(call, _("invalid 'xmin' value"));
     args = CDR(args);
 
     /* xmax */
 
     xmax = asReal(CAR(args));
     if (!R_FINITE(xmax))
-	errorcall(call, _("invalid xmax value"));
+	errorcall(call, _("invalid 'xmax' value"));
     if (xmin >= xmax)
-	errorcall(call, _("xmin not less than xmax"));
+	errorcall(call, _("'xmin' not less than 'xmax'"));
     args = CDR(args);
 
     /* tol */
 
     tol = asReal(CAR(args));
     if (!R_FINITE(tol) || tol <= 0.0)
-	errorcall(call, _("invalid tol value"));
+	errorcall(call, _("invalid 'tol' value"));
 
     info.R_env = rho;
     PROTECT(info.R_fcall = lang2(v, R_NilValue));
@@ -178,29 +178,29 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     xmin = asReal(CAR(args));
     if (!R_FINITE(xmin))
-	errorcall(call, _("invalid xmin value"));
+	errorcall(call, _("invalid 'xmin' value"));
     args = CDR(args);
 
     /* xmax */
 
     xmax = asReal(CAR(args));
     if (!R_FINITE(xmax))
-	errorcall(call, _("invalid xmax value"));
+	errorcall(call, _("invalid 'xmax' value"));
     if (xmin >= xmax)
-	errorcall(call, _("xmin not less than xmax"));
+	errorcall(call, _("'xmin' not less than 'xmax'"));
     args = CDR(args);
 
     /* tol */
 
     tol = asReal(CAR(args));
     if (!R_FINITE(tol) || tol <= 0.0)
-	errorcall(call, _("invalid tol value"));
+	errorcall(call, _("invalid 'tol' value"));
     args = CDR(args);
 
     /* maxiter */
     iter = asInteger(CAR(args));
     if (iter <= 0)
-	errorcall(call, _("maxiter must be positive"));
+	errorcall(call, _("'maxiter' must be positive"));
 
     info.R_env = rho;
     PROTECT(info.R_fcall = lang2(v, R_NilValue)); /* the info used in fcn2() */
@@ -342,7 +342,7 @@ static void fcn(int n, const double x[], double *f, function_info
 				/* calculate for a new value of x */
     s = CADR(R_fcall);
     for (i = 0; i < n; i++) {
-	if (!R_FINITE(x[i])) error(_("non-finite value supplied by nlm"));
+	if (!R_FINITE(x[i])) error(_("non-finite value supplied by 'nlm'"));
 	REAL(s)[i] = x[i];
     }
     s = eval(state->R_fcall, state->R_env);

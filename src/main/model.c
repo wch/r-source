@@ -1147,7 +1147,7 @@ static SEXP ExpandDots(SEXP object, SEXP value)
     else return object;
 
  badformula:
-    error(_("invalid formula in update"));
+    error(_("invalid formula in 'update'"));
     return R_NilValue; /*NOTREACHED*/
 }
 
@@ -1307,7 +1307,7 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (VECTOR_ELT(dots, i) == R_NilValue)
 	    continue;
 	if(strlen(CHAR(STRING_ELT(dotnames, i))) + 3 > 256)
-	    error(_("overlong names in %s"), CHAR(STRING_ELT(dotnames, i)));
+	    error(_("overlong names in '%s'"), CHAR(STRING_ELT(dotnames, i)));
 	sprintf(buf, "(%s)", CHAR(STRING_ELT(dotnames, i)));
 	SET_VECTOR_ELT(data, nvars + j, VECTOR_ELT(dots, i));
 	SET_STRING_ELT(names, nvars + j,  mkChar(buf));
@@ -1556,7 +1556,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nVar = nrows(factors);
 	nterms = ncols(factors);
     }
-    else errorcall(call, _("invalid terms argument"));
+    else errorcall(call, _("invalid 'terms' argument"));
 
     /* Get the variable names from the factor matrix */
 
@@ -1564,7 +1564,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(factors) > 0) {
 	if (length(vnames) < 1 ||
 	    (nVar - intrcept > 0 && !isString(VECTOR_ELT(vnames, 0))))
-	    errorcall(call, _("invalid terms argument"));
+	    errorcall(call, _("invalid 'terms' argument"));
 	vnames = VECTOR_ELT(vnames, 0);
     }
 
@@ -1718,7 +1718,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nc = 0;
     for (j = 0; j < nterms; j++) {
 	if (j == rhs_response) {
-	    warning(_("the response appeared on the rhs and was dropped"));
+	    warning(_("the response appeared on the right-hand side and was dropped"));
 	    INTEGER(count)[j] = 0;  /* need this initialised */
 	    continue;
 	}

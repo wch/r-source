@@ -159,7 +159,7 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
     case 3:
 	nsmall = asInteger(CADDR(args));
 	if (nsmall == NA_INTEGER || nsmall < 0 || nsmall > 20)
-	    errorcall(call, _("invalid ;nsmall' argument"));
+	    errorcall(call, _("invalid 'nsmall' argument"));
 	/* drop through */
     case 2:
 	trim = asLogical(CADR(args));

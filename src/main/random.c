@@ -404,7 +404,7 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (k == NA_INTEGER || k < 0)
 	errorcall(call, _("invalid second argument"));
     if (!replace && k > n)
-	errorcall(call, _("cannot take a sample larger than the population\n when replace = FALSE"));
+	errorcall(call, _("cannot take a sample larger than the population\n when 'replace = FALSE'"));
     GetRNGstate();
     PROTECT(y = allocVector(INTSXP, k));
     if (!isNull(prob)) {

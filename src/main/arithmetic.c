@@ -406,7 +406,7 @@ SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     if (xts || yts) {
 	if (xts && yts) {
 	    if (!tsConform(x, y))
-		errorcall(lcall, _("Non-conformable time-series"));
+		errorcall(lcall, _("non-conformable time-series"));
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
 	    PROTECT(class = getAttrib(x, R_ClassSymbol));
 	}
@@ -492,7 +492,7 @@ SEXP R_unary(SEXP call, SEXP op, SEXP s1)
     case CPLXSXP:
 	return complex_unary(PRIMVAL(op), s1);
     default:
-	errorcall(call, _("Invalid argument to unary operator"));
+	errorcall(call, _("invalid argument to unary operator"));
     }
     return s1;			/* never used; to keep -Wall happy */
 }
@@ -901,7 +901,7 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 46: return MATH1(gamma_cody);
 
     default:
-	errorcall(call, _("unimplemented real function (of 1 argument)"));
+	errorcall(call, _("unimplemented real function of 1 argument"));
     }
     return s;			/* never used; to keep -Wall happy */
 }

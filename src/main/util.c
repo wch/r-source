@@ -722,9 +722,9 @@ void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t)
 
     for (i = 0; TypeTable[i].str; i++) {
 	if (TypeTable[i].type == t)
-	    error(_("unimplemented type '%s' in %s\n"), TypeTable[i].str, s);
+	    error(_("unimplemented type '%s' in '%s'\n"), TypeTable[i].str, s);
     }
-    error(_("unimplemented type (%d) in %s\n"), t, s);
+    error(_("unimplemented type (%d) in '%s'\n"), t, s);
 }
 
 void UNIMPLEMENTED_TYPE(char *s, SEXP x)

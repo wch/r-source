@@ -172,7 +172,7 @@ SEXP do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
     hash = asInteger(CAR(args));
     enclos = CADR(args);
     if( !isEnvironment(enclos) )
-	errorcall(call, _("enclos needs to be an environment"));
+	errorcall(call, _("'enclos' must be an environment"));
 
     if( hash )
 	return R_NewHashedEnv(enclos);
@@ -197,7 +197,7 @@ SEXP do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( !isEnvironment(CAR(args)) )
 	errorcall(call, _("argument is not an environment"));
     if( !isEnvironment(CADR(args)) )
-	errorcall(call, _("parent is not an environment"));
+	errorcall(call, _("'parent' is not an environment"));
 
     SET_ENCLOS(CAR(args), CADR(args));
 
@@ -278,7 +278,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     sepr = CAR(args);
     if (!isString(sepr))
-	errorcall(call, _("invalid sep= specification"));
+	errorcall(call, _("invalid 'sep=' specification"));
     nlsep = 0;
     for (i = 0; i < LENGTH(sepr); i++)
 	if (strstr(CHAR(STRING_ELT(sepr, i)), "\n")) nlsep = 1;
@@ -472,7 +472,7 @@ SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
     len = asVecSize(CADR(args));
     s = coerceVector(CAR(args), STRSXP);
     if (length(s) == 0)
-	error(_("vector: zero-length type argument"));
+	error(_("vector: zero-length 'type' argument"));
     mode = str2type(CHAR(STRING_ELT(s, 0)));
     if (mode == -1 && streql(CHAR(STRING_ELT(s, 0)), "double"))
 	mode = REALSXP;
@@ -623,7 +623,7 @@ SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
        error(_("length<- invalid second argument"));
     len = asVecSize(CADR(args));
     if (len == NA_INTEGER)
-       error(_("length<- missing value for length"));
+       error(_("length<- missing value for 'length'"));
     return lengthgets(x, len);
 }
 
@@ -654,7 +654,7 @@ static SEXP switchList(SEXP el, SEXP rho)
 	return h;
     }
     else {
-	error(_("invalid parameter in switch"));
+	error(_("invalid parameter in switch()"));
 	return R_NilValue;/* for -Wall */
     }
 }

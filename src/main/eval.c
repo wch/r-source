@@ -339,9 +339,9 @@ _("evaluation nested too deeply: infinite recursion / options(expressions=)?"));
 	/* if ..d is missing then ddfindVar will signal */
 	else if (tmp == R_MissingArg && !DDVAL(e) ) {
 	    char *n = CHAR(PRINTNAME(e));
-	    if(*n) error(_("Argument \"%s\" is missing, with no default"),
+	    if(*n) error(_("argument \"%s\" is missing, with no default"),
 			 CHAR(PRINTNAME(e)));
-	    else error(_("Argument is missing, with no default"));
+	    else error(_("argument is missing, with no default"));
 	}
 	else if (TYPEOF(tmp) == PROMSXP) {
 	    PROTECT(tmp);
@@ -709,7 +709,7 @@ SEXP R_execMethod(SEXP op, SEXP rho)
 	int missing;
 	loc = R_findVarLocInFrame(rho,symbol);
 	if(loc == NULL)
-	    error(_("Could not find symbol \"%s\" in environment of the generic function"),
+	    error(_("could not find symbol \"%s\" in environment of the generic function"),
 		  CHAR(PRINTNAME(symbol)));
 	missing = R_GetVarLocMISSING(loc);
 	val = R_GetVarLocValue(loc);
@@ -1228,7 +1228,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (TYPEOF(CAR(expr)) != SYMSXP)
 	    error(_("invalid function in complex assignment"));
 	if(strlen(CHAR(PRINTNAME(CAR(expr)))) + 3 > 32)
-	    error(_("overlong name in %s"), CHAR(PRINTNAME(CAR(expr))));
+	    error(_("overlong name in '%s'"), CHAR(PRINTNAME(CAR(expr))));
 	sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
 	tmp = install(buf);
 	UNPROTECT(1);
@@ -1246,7 +1246,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (TYPEOF(CAR(expr)) != SYMSXP)
 	error(_("invalid function in complex assignment"));
     if(strlen(CHAR(PRINTNAME(CAR(expr)))) + 3 > 32)
-	error(_("overlong name in %s"), CHAR(PRINTNAME(CAR(expr))));
+	error(_("overlong name in '%s'"), CHAR(PRINTNAME(CAR(expr))));
     sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
     R_SetVarLocValue(tmploc, CAR(lhs));
     PROTECT(tmp = mkPROMISE(CADR(args), rho));
@@ -1335,7 +1335,7 @@ SEXP do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	else if (isLanguage(CAR(args)))
 	    return applydefine(call, op, args, rho);
-	else error(_("invalid assignment lhs"));
+	else error(_("invalid assignment left-hand side"));
 
     default:
 	UNIMPLEMENTED("do_set");
@@ -2471,8 +2471,8 @@ typedef int BCODE;
     error(_("Object \"%s\" not found"), CHAR(PRINTNAME(symbol))); \
   else if (value == R_MissingArg) { \
     char *n = CHAR(PRINTNAME(symbol)); \
-    if(*n) error(_("Argument \"%s\" is missing, with no default"), n); \
-    else error(_("Argument is missing, with no default")); \
+    if(*n) error(_("argument \"%s\" is missing, with no default"), n); \
+    else error(_("argument is missing, with no default")); \
   } \
   else if (TYPEOF(value) == PROMSXP) { \
     value = forcePromise(value); \
@@ -3466,7 +3466,7 @@ SEXP do_loadfile(SEXP call, SEXP op, SEXP args, SEXP env)
 
     fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file,0))), "rb");
     if (!fp)
-	errorcall(call, _("unable to open file for loading"));
+	errorcall(call, _("unable to open 'file'"));
     s = R_LoadFromFile(fp, 0);
     fclose(fp);
 
@@ -3487,7 +3487,7 @@ SEXP do_savefile(SEXP call, SEXP op, SEXP args, SEXP env)
 
     fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(CADR(args), 0))), "wb");
     if (!fp)
-	errorcall(call, _("unable to open file"));
+	errorcall(call, _("unable to open 'file'"));
 
     R_SaveToFileV(CAR(args), fp, INTEGER(CADDR(args))[0], 0);
 

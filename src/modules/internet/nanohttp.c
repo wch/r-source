@@ -404,9 +404,9 @@ RxmlNanoHTTPScanProxy(const char *URL)
 	proxyPort = 0;
 	}*/
     if (URL == NULL)
-	RxmlMessage(0, _("Removing HTTP proxy info"));
+	RxmlMessage(0, _("removing HTTP proxy info"));
     else
-	RxmlMessage(1, _("Using HTTP proxy %s"), URL);
+	RxmlMessage(1, _("using HTTP proxy '%s'"), URL);
     if (URL == NULL) return;
     buf[indx] = 0;
     while (*cur != 0) {
@@ -1273,7 +1273,7 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
 
     if ((ctxt->location != NULL) && (ctxt->returnValue >= 300) &&
         (ctxt->returnValue < 400)) {
-	RxmlMessage(1, _("Redirect to: %s"), ctxt->location);
+	RxmlMessage(1, _("redirect to: '%s'"), ctxt->location);
 	while (RxmlNanoHTTPRecv(ctxt)) ;
         if (nbRedirects < XML_NANO_HTTP_MAX_REDIR) {
 	    nbRedirects++;
@@ -1282,7 +1282,7 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
 	    goto retry;
 	}
 	RxmlNanoHTTPFreeCtxt(ctxt);
-	RxmlMessage(2, _("Too many redirects, aborting ..."));
+	RxmlMessage(2, _("too many redirects, aborting ..."));
 	return(NULL);
 
     }

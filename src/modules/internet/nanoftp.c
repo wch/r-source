@@ -369,9 +369,9 @@ RxmlNanoFTPScanProxy(const char *URL) {
 	proxyPort = 0;
 	}*/
     if (URL == NULL)
-	RxmlMessage(0, _("Removing FTP proxy info"));
+	RxmlMessage(0, _("removing FTP proxy info"));
     else
-	RxmlMessage(1, _("Using FTP proxy %s"), URL);
+	RxmlMessage(1, _("using FTP proxy '%s'"), URL);
     if (URL == NULL) return;
     buf[indx] = 0;
     while (*cur != 0) {
@@ -833,7 +833,7 @@ RxmlNanoFTPConnect(void *ctx) {
                 sizeof(struct sockaddr_in)) < 0) {
         closesocket(ctxt->controlFd); ctxt->controlFd = -1;
         ctxt->controlFd = -1;
-	RxmlMessage(1, _("Failed to connect to server"));
+	RxmlMessage(1, _("failed to connect to server"));
 	return(-1);
     }
 
@@ -844,7 +844,7 @@ RxmlNanoFTPConnect(void *ctx) {
     if (res != 2) {
         closesocket(ctxt->controlFd); ctxt->controlFd = -1;
         ctxt->controlFd = -1;
-	RxmlMessage(1, _("Failed to get response from server"));
+	RxmlMessage(1, _("failed to get response from server"));
 	return(-1);
     }
 
@@ -1179,7 +1179,7 @@ RxmlNanoFTPGetConnection(void *ctx) {
 	memcpy(&dataAddr.sin_addr, &ad[0], 4);
 	memcpy(&dataAddr.sin_port, &ad[4], 2);
 	if (connect(ctxt->dataFd, (struct sockaddr *) &dataAddr, dataAddrLen) < 0) {
-	    RxmlMessage(2, _("Failed to create a data connection"));
+	    RxmlMessage(2, _("failed to create a data connection"));
 	    closesocket(ctxt->dataFd); ctxt->dataFd = -1;
 	    return (-1);
 	}
@@ -1187,14 +1187,14 @@ RxmlNanoFTPGetConnection(void *ctx) {
         getsockname(ctxt->dataFd, (struct sockaddr *) &dataAddr, &dataAddrLen);
 	dataAddr.sin_port = 0;
 	if (bind(ctxt->dataFd, (struct sockaddr *) &dataAddr, dataAddrLen) < 0) {
-	    RxmlMessage(2, _("Failed to bind a port"));
+	    RxmlMessage(2, _("failed to bind a port"));
 	    closesocket(ctxt->dataFd); ctxt->dataFd = -1;
 	    return (-1);
 	}
         getsockname(ctxt->dataFd, (struct sockaddr *) &dataAddr, &dataAddrLen);
 
 	if (listen(ctxt->dataFd, 1) < 0) {
-	    RxmlMessage(2, _("Could not listen on port %d"),
+	    RxmlMessage(2, _("could not listen on port %d"),
 			ntohs(dataAddr.sin_port));
 	    closesocket(ctxt->dataFd); ctxt->dataFd = -1;
 	    return (-1);

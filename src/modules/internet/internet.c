@@ -903,7 +903,7 @@ void R_init_internet(DllInfo *info)
     R_InternetRoutines *tmp;
     tmp = (R_InternetRoutines*) malloc(sizeof(R_InternetRoutines));
     if(!tmp) {
-	error(_("Cannot allocate memory for InternetRoutines structure"));
+	error(_("cannot allocate memory for InternetRoutines structure"));
 	return;
     }
 

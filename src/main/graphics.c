@@ -301,7 +301,7 @@ static double yDevtoCharUnits(double y, DevDesc *dd)
 
 static void BadUnitsError(char *where)
 {
-    error(_("Bad units specified in %s, please report!"), where);
+    error(_("bad units specified in %s, please report!"), where);
 }
 
 /* GConvertXUnits() and GConvertYUnits() convert
@@ -1815,13 +1815,13 @@ DevDesc *GNewPlot(Rboolean recording)
 
     Rf_dpptr(dd)->valid = Rf_gpptr(dd)->valid = FALSE;
     if (!validOuterMargins(dd)) {
-	G_ERR_MSG(_("Outer margins too large (fig.region too small)"));
+	G_ERR_MSG(_("outer margins too large (fig.region too small)"));
     } else if (!validFigureRegion(dd)) {
-	G_ERR_MSG(_("Figure region too large"));
+	G_ERR_MSG(_("figure region too large"));
     } else if (!validFigureMargins(dd)) {
-	G_ERR_MSG(_("Figure margins too large"));
+	G_ERR_MSG(_("figure margins too large"));
     } else if (!validPlotRegion(dd)) {
-	G_ERR_MSG(_("Plot region too large"));
+	G_ERR_MSG(_("plot region too large"));
     } else {
 	Rf_dpptr(dd)->valid = Rf_gpptr(dd)->valid = TRUE;
 	/*
@@ -1867,7 +1867,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	max = log10(max);
     }
     if(!R_FINITE(min) || !R_FINITE(max)) {
-	warning(_("Nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"),
+	warning(_("nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"),
 		min, max, axis, log);
 	if(!R_FINITE(min)) min = - .45 * DBL_MAX;
 	if(!R_FINITE(max)) max = + .45 * DBL_MAX;
@@ -4019,7 +4019,7 @@ static unsigned int hexdigit(int digit)
     if('0' <= digit && digit <= '9') return digit - '0';
     if('A' <= digit && digit <= 'F') return 10 + digit - 'A';
     if('a' <= digit && digit <= 'f') return 10 + digit - 'a';
-    /*else */ error(_("invalid hex digit in color or lty"));
+    /*else */ error(_("invalid hex digit in 'color' or 'lty'"));
     return digit; /* never occurs (-Wall) */
 }
 
@@ -4255,7 +4255,7 @@ Rboolean isNAcol(SEXP col, int index, int ncol)
 	else if (isReal(col))
 	    result = !R_FINITE(REAL(col)[index % ncol]);
 	else
-	    error(_("Invalid colour"));
+	    error(_("Invalid color"));
     }
     return result;
 }
@@ -4464,7 +4464,7 @@ DevDesc* CurrentDevice(void)
 	if (isString(defdev) && length(defdev) > 0)
 	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
 	else
-	    error(_("No active or default device"));
+	    error(_("no active or default device"));
 	eval(defdev, R_GlobalEnv);
 	UNPROTECT(1);
     }

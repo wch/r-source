@@ -284,7 +284,7 @@ SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	v = LENGTH(value);
 	if (!isString(value) || v == 0)
-	    errorcall(call, _("invalid rhs in substr<-()"));
+	    errorcall(call, _("invalid right-hand side in substr<-()"));
 
 	for (i = 0; i < len; i++) {
 	    if (STRING_ELT(x, i) == NA_STRING ||
@@ -734,7 +734,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
     n = length(arg);
     allow_ = asLogical(CADR(args));
     if(allow_ == NA_LOGICAL)
-	errorcall(call, _("invalid value of allow_"));
+	errorcall(call, _("invalid value of 'allow_'"));
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0 ; i < n ; i++) {
 	this = CHAR(STRING_ELT(arg, i));
@@ -1562,7 +1562,7 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(c_old == '\0')
 		break;
 	    else if(c_new == '\0')
-		errorcall(call, _("old is longer than new"));
+		errorcall(call, _("'old' is longer than 'new'"));
 	    else
 		xtable[c_old] = c_new;
 	}
@@ -1623,7 +1623,7 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(c_old == '\0')
 		break;
 	    else if(c_new == '\0')
-		errorcall(call, _("old is longer than new"));
+		errorcall(call, _("'old' is longer than 'new'"));
 	    else
 		xtable[c_old] = c_new;
 	}
@@ -1722,7 +1722,7 @@ do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 		    warn = TRUE; break;
 		}
 	if(warn)
-	    warning(_("Use of agrep() in a UTF-8 locale may only work for ASCII strings"));
+	    warning(_("use of agrep() in a UTF-8 locale may only work for ASCII strings"));
     }
 #endif
 

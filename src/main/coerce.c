@@ -402,7 +402,7 @@ static SEXP coerceToSymbol(SEXP v)
     SEXP ans = R_NilValue;
     int warn = 0;
     if (length(v) <= 0)
-	error(_("Invalid data of mode \"%s\" (too short)"),
+	error(_("invalid data of mode \"%s\" (too short)"),
 	      CHAR(type2str(TYPEOF(v))));
     PROTECT(v);
     switch(TYPEOF(v)) {
@@ -880,7 +880,7 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
 	}
     }
     else
-	error(_("pairlist object cannot be coerced to %s"),
+	error(_("'pairlist' object cannot be coerced to '%s'"),
 	      CHAR(type2str(type)));
 
     /* If any tags are non-null then we */
@@ -966,7 +966,7 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 	}
     }
     else
-	error(_("(list) object cannot be coerced to %s"),
+	error(_("(list) object cannot be coerced to '%s'"),
 	      CHAR(type2str(type)));
 
     names = getAttrib(v, R_NamesSymbol);
@@ -1888,7 +1888,7 @@ SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( cptr->cloenv == rho )
     	call = eval(call, cptr->sysparent);
     else
-        error(_("do.call: couldn't find parent environment"));
+        error(_("do.call: could not find parent environment"));
     UNPROTECT(1);
     return call;
 }
@@ -2066,7 +2066,7 @@ SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	setAttrib(obj, R_ClassSymbol, value);
     else if(length(value) == 0) {
 	UNPROTECT(nProtect); nProtect = 0;
-	error(_("Invalid replacement object to be a class string"));
+	error(_("invalid replacement object to be a class string"));
     }
     else {
 	char *valueString, *classString; int whichType;
@@ -2100,13 +2100,13 @@ SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	 * R_data_class */
 	else if(!strcmp("matrix", valueString)) {
 	    if(length(getAttrib(obj, R_DimSymbol)) != 2)
-	        error(_("Invalid to set the class to matrix unless the dimension attribute is of length 2 (was %d)"),
+	        error(_("invalid to set the class to matrix unless the dimension attribute is of length 2 (was %d)"),
 		 length(getAttrib(obj, R_DimSymbol)));
 	    setAttrib(obj, R_ClassSymbol, R_NilValue);
 	}
 	else if(!strcmp("array", valueString)) {
 	    if(length(getAttrib(obj, R_DimSymbol))<= 0)
-	        error(_("Can't set class to \"array\" unless the dimension attribute has length > 0"));
+	        error(_("cannot set class to \"array\" unless the dimension attribute has length > 0"));
 	    setAttrib(obj, R_ClassSymbol, R_NilValue);
 	}
 	else { /* set the class but don't do the coercion; that's

@@ -382,10 +382,10 @@ SEXP FixupVFont(SEXP vfont) {
 	int i;
 	PROTECT(vf = coerceVector(vfont, INTSXP));
 	if (length(vf) != 2)
-	    error(_("Invalid vfont value"));
+	    error(_("invalid 'vfont' value"));
 	typeface = INTEGER(vf)[0];
 	if (typeface < 0 || typeface > 7)
-	    error(_("Invalid vfont value [typeface]"));
+	    error(_("invalid 'vfont' value [typeface]"));
 	/* For each of the typefaces {0..7}, there are several fontindices
 	   available; how many depends on the typeface.
 	   The possible combinations are "given" in ./g_fontdb.c
@@ -409,7 +409,7 @@ SEXP FixupVFont(SEXP vfont) {
 	}
 	fontindex = INTEGER(vf)[1];
 	if (fontindex < minindex || fontindex > maxindex)
-	    error(_("Invalid vfont value [fontindex]"));
+	    error(_("invalid 'vfont' value [fontindex]"));
 	ans = allocVector(INTSXP, 2);
 	for (i=0; i<2; i++)
 	    INTEGER(ans)[i] = INTEGER(vf)[i];
@@ -582,12 +582,12 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 
     xlim = CAR(args);
     if (!isNumeric(xlim) || LENGTH(xlim) != 2)
-	errorcall(call, _("invalid xlim"));
+	errorcall(call, _("invalid 'xlim'"));
     args = CDR(args);
 
     ylim = CAR(args);
     if (!isNumeric(ylim) || LENGTH(ylim) != 2)
-	errorcall(call, _("invalid ylim"));
+	errorcall(call, _("invalid 'ylim'"));
     args = CDR(args);
 
     logscale = FALSE;
@@ -618,25 +618,25 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (isInteger(xlim)) {
 	if (INTEGER(xlim)[0] == NA_INTEGER || INTEGER(xlim)[1] == NA_INTEGER)
-	    errorcall(call, _("NAs not allowed in xlim"));
+	    errorcall(call, _("NAs not allowed in 'xlim'"));
 	xmin = INTEGER(xlim)[0];
 	xmax = INTEGER(xlim)[1];
     }
     else {
 	if (!R_FINITE(REAL(xlim)[0]) || !R_FINITE(REAL(xlim)[1]))
-	    errorcall(call, _("need finite xlim values"));
+	    errorcall(call, _("need finite 'xlim' values"));
 	xmin = REAL(xlim)[0];
 	xmax = REAL(xlim)[1];
     }
     if (isInteger(ylim)) {
 	if (INTEGER(ylim)[0] == NA_INTEGER || INTEGER(ylim)[1] == NA_INTEGER)
-	    errorcall(call, _("NAs not allowed in ylim"));
+	    errorcall(call, _("NAs not allowed in 'ylim'"));
 	ymin = INTEGER(ylim)[0];
 	ymax = INTEGER(ylim)[1];
     }
     else {
 	if (!R_FINITE(REAL(ylim)[0]) || !R_FINITE(REAL(ylim)[1]))
-	    errorcall(call, _("need finite ylim values"));
+	    errorcall(call, _("need finite 'ylim' values"));
 	ymin = REAL(ylim)[0];
 	ymax = REAL(ylim)[1];
     }
@@ -1102,7 +1102,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	else if (!isExpression(lab))
 	    lab = labelformat(lab);
 	if (length(at) != length(lab))
-	    errorcall(call, _("location and label lengths differ, %d != %d"),
+	    errorcall(call, _("'at' and 'label' lengths differ, %d != %d"),
 		      length(at), length(lab));
     }
     PROTECT(lab);
@@ -1459,7 +1459,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     else							\
 	errorcall(call, _("invalid plotting structure"));		\
     if (LENGTH(sx) != LENGTH(sy))				\
-	error(_("x and y lengths differ in %s()"), subname);	\
+	error(_("'x' and 'y' lengths differ in %s()"), subname);	\
     n = LENGTH(sx);						\
     args = CDR(args)
 

@@ -64,11 +64,11 @@ SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 
     line = (char *) malloc(MAXELTSIZE);
     if(!line)
-	error(_("Could not allocate memory for read.dcf"));
+	error(_("could not allocate memory for read.dcf"));
     buflen = 100;
     buf = (char *) malloc(buflen);
     if(!buf)
-	error(_("Could not allocate memory for read.dcf"));
+	error(_("could not allocate memory for read.dcf"));
     nret = 20;
     /* it is easier if we first have a record per column */
     PROTECT (retval = allocMatrixNA(STRSXP, LENGTH(what), nret));
@@ -109,7 +109,7 @@ SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(buflen < need) {
 		    buf = (char *) realloc(buf, need);
 		    if(!buf)
-			error(_("Could not allocate memory for read.dcf"));
+			error(_("could not allocate memory for read.dcf"));
 		    buflen = need;
 		}
 		strcpy(buf,CHAR(STRING_ELT(retval, lastm+nwhat*k)));
@@ -158,7 +158,7 @@ SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			if(buflen < need){
 			    buf = (char *) realloc(buf, need);
 			    if(!buf)
-				error(_("Could not allocate memory for read.dcf"));
+				error(_("could not allocate memory for read.dcf"));
 			    buflen = need;
 			}
 			strncpy(buf, line, Rf_strchr(line, ':')-line);

@@ -1949,7 +1949,7 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_TAG(t, install(CHAR(STRING_ELT(CAR(args), j))));
 	SETCAR(t, findVar(TAG(t), source));
 	if (CAR(t) == R_UnboundValue)
-	    error(_("Object '%s' not found"), CHAR(PRINTNAME(TAG(t))));
+	    error(_("object '%s' not found"), CHAR(PRINTNAME(TAG(t))));
     }
 
     R_SaveToFileV(s, fp, INTEGER(CADDR(args))[0], version);
@@ -2231,7 +2231,7 @@ SEXP do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_TAG(t, install(CHAR(STRING_ELT(list, j))));
 	SETCAR(t, findVar(TAG(t), source));
 	if (CAR(t) == R_UnboundValue)
-	    error(_("Object '%s' not found"), CHAR(PRINTNAME(TAG(t))));
+	    error(_("object '%s' not found"), CHAR(PRINTNAME(TAG(t))));
     }
 
     R_Serialize(s, &out);

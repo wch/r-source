@@ -728,9 +728,9 @@ SEXP do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 	n = LENGTH(CAR(args));
     for (ap = args; ap != R_NilValue; ap = CDR(ap), narg++) {
 	if (!isVector(CAR(ap)))
-	    errorcall(call, _("Argument %d is not a vector"), narg + 1);
+	    errorcall(call, _("argument %d is not a vector"), narg + 1);
 	if (LENGTH(CAR(ap)) != n)
-	    errorcall(call, _("Argument lengths differ"));
+	    errorcall(call, _("argument lengths differ"));
     }
     ans = allocVector(INTSXP, n);
     if (n != 0) {
@@ -759,7 +759,7 @@ SEXP do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_NilValue;
     x = CAR(args);
     if (!isVectorAtomic(x))
-	errorcall(call, _("Argument is not an atomic vector"));
+	errorcall(call, _("argument is not an atomic vector"));
     if(TYPEOF(x) == RAWSXP)
 	errorcall(call, _("raw vectors cannot be sorted"));
     n = LENGTH(x);

@@ -943,7 +943,7 @@ void WrongArgCount(const char *s)
 
 void UNIMPLEMENTED(const char *s)
 {
-    error(_("Unimplemented feature in %s"), s);
+    error(_("unimplemented feature in %s"), s);
 }
 
 /* ERROR_.. codes in Errormsg.h */

@@ -558,7 +558,7 @@ DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
     p = Rf_strrchr(dpath, FILESEP[0]);
     if(!p) p = dpath; else p++;
     if(strlen(p) < PATH_MAX) strcpy(DLLname, p);
-    else error(_("DLLname %s is too long"), p);
+    else error(_("DLLname '%s' is too long"), p);
 
     /* remove SHLIB_EXT if present */
     p = DLLname + strlen(DLLname) - strlen(SHLIB_EXT);

@@ -98,7 +98,7 @@ extract_one(unzFile uf, char *dest, char *filename, SEXP names, int *nnames)
 	fout = R_fopen(outname, "wb");
 	if (!fout) {
 	    unzCloseCurrentFile(uf);
-	    error(_("cannot open file %s"), outname);
+	    error(_("cannot open file '%s'"), outname);
 	    return 3;		/* not reached */
 	}
 	while (1) {
@@ -179,19 +179,19 @@ do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     ntopics = length(fn);
     if (ntopics > 0) {
 	if (!isString(fn) || ntopics > 500)
-	    errorcall(call, _("invalid topics argument"));
+	    errorcall(call, _("invalid 'topics' argument"));
 	for (i = 0; i < ntopics; i++)
 	    topics[i] = CHAR(STRING_ELT(fn, i));
     }
     args = CDR(args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	errorcall(call, _("invalid destination argument"));
+	errorcall(call, _("invalid 'destination' argument"));
     p = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
     if (strlen(p) > PATH_MAX - 1)
-	errorcall(call, _("destination is too long"));
+	errorcall(call, _("'destination' is too long"));
     strcpy(dest, p);
     if(!R_FileExists(dest))
-	errorcall(call, _("destination does not exist"));
+	errorcall(call, _("'destination' does not exist"));
     
     if(ntopics > 0)
 	PROTECT(names = allocVector(STRSXP, ntopics));

@@ -68,7 +68,7 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     snc = CADDR(args);
     byrow = asLogical(CADR(CDDR(args)));
     if (byrow == NA_INTEGER)
-	error(_("matrix: invalid byrow value"));
+	error(_("matrix: invalid 'byrow' value"));
 
     /* R wrapper does as.vector
     if (isVector(vals) || isList(vals)) {
@@ -83,16 +83,16 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     lendat = length(vals);
     nr = asInteger(snr);
     if (nr == NA_INTEGER) /* This is < 0 */
-	error(_("matrix: invalid nrow value (too large or NA)"));
+	error(_("matrix: invalid 'nrow value' (too large or NA)"));
     if (nr < 0)
-	error(_("matrix: invalid nrow value (< 0)"));
+	error(_("matrix: invalid 'nrow' value (< 0)"));
     nc = asInteger(snc);
     if (nc < 0)
-	error(_("matrix: invalid ncol value (< 0)"));
+	error(_("matrix: invalid 'ncol' value (< 0)"));
     if (nc == NA_INTEGER)
-	error(_("matrix: invalid ncol value (too large or NA)"));
+	error(_("matrix: invalid 'ncol' value (too large or NA)"));
     if (nc < 0)
-	error(_("matrix: invalid ncol value (< 0)"));
+	error(_("matrix: invalid 'ncol' value (< 0)"));
 
     if(lendat > 0 ) {
 	if (lendat > 1 && (nr * nc) % lendat != 0) {
@@ -340,7 +340,7 @@ SEXP do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_len_t len;
 
     if (length(args) != 1)
-	error(_("incorrect number of args to length"));
+	error(_("incorrect number of args to 'length'"));
 
     if( isObject(CAR(args)) && DispatchOrEval(call, op, "length", args,
 					      rho, &ans, 0, 1))
@@ -359,9 +359,9 @@ SEXP do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, j, nr, nc;
 
     if (length(args) != 1)
-	error(_("incorrect number of args to row/col"));
+	error(_("incorrect number of arguments to 'row/col'"));
     if (!isMatrix(CAR(args)))
-	error(_("a matrix is required as arg to row/col"));
+	error(_("a matrix is required as argument to 'row/col'"));
 
     nr = nrows(CAR(args));
     nc = ncols(CAR(args));
@@ -1025,10 +1025,10 @@ SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     p = asInteger(CAR(args)); args = CDR(args);
     NaRm = asLogical(CAR(args));
     if (n == NA_INTEGER || n <= 0)
-	errorcall(call, _("invalid value of n"));
+	errorcall(call, _("invalid value of 'n'"));
     if (p == NA_INTEGER || p <= 0)
-	errorcall(call, _("invalid value of p"));
-    if (NaRm == NA_LOGICAL) errorcall(call, _("invalid value of na.rm"));
+	errorcall(call, _("invalid value of 'p'"));
+    if (NaRm == NA_LOGICAL) errorcall(call, _("invalid value of 'na.rm'"));
     keepNA = !NaRm;
 
     OP = PRIMVAL(op);

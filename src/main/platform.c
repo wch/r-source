@@ -218,11 +218,11 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isString(fn) || (n = length(fn)) < 1)
 	errorcall(call, _("invalid filename specification"));
     if (!isString(hd) || length(hd) != n)
-	errorcall(call, _("invalid headers"));
+	errorcall(call, _("invalid 'headers'"));
     if (!isString(tl))
-	errorcall(call, _("invalid title"));
+	errorcall(call, _("invalid 'title'"));
     if (!isString(pg))
-        errorcall(call, _("invalid pager specification"));
+        errorcall(call, _("invalid 'pager' specification"));
     f = (char**)R_alloc(n, sizeof(char*));
     h = (char**)R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
@@ -271,7 +271,7 @@ SEXP do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     n = length(fn);
     if (!isString(ed))
-	errorcall(call, _("invalid editor specification"));
+	errorcall(call, _("invalid 'editor' specification"));
     if (n > 0) {
 	if (!isString(fn))
 	    errorcall(call, _("invalid filename specification"));
@@ -516,14 +516,14 @@ SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if (TYPEOF(CAR(args)) != STRSXP || LENGTH(CAR(args)) != 1)
-	error(_("source must be a single string"));
+	error(_("'source' must be a single string"));
     p = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
     if (strlen(p) >= PATH_MAX - 1)
 	error(_("expanded source name too long"));
     strncpy(from, p, PATH_MAX - 1);
 
     if (TYPEOF(CADR(args)) != STRSXP || LENGTH(CADR(args)) != 1)
-	error(_("destination must be a single string"));
+	error(_("'destination' must be a single string"));
     p = R_ExpandFileName(CHAR(STRING_ELT(CADR(args), 0)));
     if (strlen(p) >= PATH_MAX - 1)
 	error(_("expanded destination name too long"));
@@ -707,7 +707,7 @@ static void count_files(char *dnp, int *count,
     if (strlen(dnp) >= PATH_MAX)  /* should not happen! */
 	error(_("directory/folder path name too long"));
     if ((dir = opendir(dnp)) == NULL) {
-	warning(_("list.files: %s is not a readable directory"), dnp);
+	warning(_("list.files: '%s' is not a readable directory"), dnp);
     } else {
 	while ((de = readdir(dir))) {
 	    if (allfiles || !R_HiddenFile(de->d_name)) {
@@ -789,7 +789,7 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     d = CAR(args);  args = CDR(args);
     if (!isString(d))
-	errorcall(call, _("invalid directory argument"));
+	errorcall(call, _("invalid 'directory' argument"));
     p = CAR(args);  args = CDR(args);
     pattern = 0;
     if (isString(p) && length(p) >= 1 && STRING_ELT(p, 0) != R_NilValue)
@@ -847,7 +847,7 @@ SEXP do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, nfile;
     checkArity(op, args);
     if (!isString(file = CAR(args)))
-        errorcall(call, _("invalid file argument"));
+        errorcall(call, _("invalid 'file' argument"));
     nfile = length(file);
     ans = allocVector(LGLSXP, nfile);
     for(i = 0; i < nfile; i++) {
@@ -974,10 +974,10 @@ SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn))
-        errorcall(call, _("invalid names argument"));
+        errorcall(call, _("invalid 'names' argument"));
     n = length(fn);
     mode = asInteger(CADR(args));
-    if(mode < 0 || mode > 7) error(_("invalid mode value"));
+    if(mode < 0 || mode > 7) error(_("invalid 'mode' value"));
     modemask = 0;
     if (mode & 1) modemask |= X_OK;
     if (mode & 2) modemask |= W_OK;
@@ -1151,7 +1151,7 @@ SEXP do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn))
-        errorcall(call, _("invalid path argument"));
+        errorcall(call, _("invalid 'path' argument"));
     n = length(fn);
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++)
@@ -1317,7 +1317,7 @@ SEXP do_nsl(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if(!isString(CAR(args)) || length(CAR(args)) != 1)
-	error(_("hostname must be a character vector of length 1"));
+	error(_("'hostname' must be a character vector of length 1"));
     name = CHAR(STRING_ELT(CAR(args), 0));
 
     hp = gethostbyname(name);
@@ -1368,7 +1368,7 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     path = CAR(args);
     if (!isString(path) || length(path) != 1)
-	errorcall(call, _("invalid path argument"));
+	errorcall(call, _("invalid 'path' argument"));
     show = asLogical(CADR(args));
     if(show == NA_LOGICAL) show = 0;
     recursive = asLogical(CADDR(args));
@@ -1403,7 +1403,7 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     path = CAR(args);
     if (!isString(path) || length(path) != 1)
-	errorcall(call, _("invalid path argument"));
+	errorcall(call, _("invalid 'path' argument"));
     show = asLogical(CADR(args));
     if(show == NA_LOGICAL) show = 0;
     recursive = asLogical(CADDR(args));

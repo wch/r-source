@@ -84,7 +84,7 @@ GEDevDesc* GEcreateDevDesc(NewDevDesc* dev)
      */
     int i;
     if (!dd)
-	error(_("Not enough memory to allocate device (in addDevice)"));
+	error(_("not enough memory to allocate device (in addDevice)"));
     for (i=0; i<MAX_GRAPHICS_SYSTEMS; i++)
 	dd->gesd[i] = NULL;
     dd->newDevStruct = 1;
@@ -183,7 +183,7 @@ void GEregisterSystem(GEcallback cb, int *systemRegisterIndex) {
      */
     DevDesc *dd;
     if (numGraphicsSystems + 1 == MAX_GRAPHICS_SYSTEMS)
-	error(_("Too many graphics systems registered"));
+	error(_("too many graphics systems registered"));
     /* Set the system register index so that, if there are existing
      * devices, it will know where to put the system-specific
      * information in those devices
@@ -233,7 +233,7 @@ void GEunregisterSystem(int registerIndex)
     /* safety check if called before Ginit() */
     if(registerIndex < 0) return;
     if (numGraphicsSystems == 0)
-	error(_("No graphics system to unregister"));
+	error(_("no graphics system to unregister"));
     /* Run through the existing devices and remove the information
      * from any GEDevDesc's
      */
@@ -1563,7 +1563,7 @@ static int VFontFaceCode(int familycode, int fontface) {
 	    /*
 	     * Other font faces just too wacky so throw an error
 	     */
-	    error(_("Font face %d not supported for font family %s"),
+	    error(_("font face %d not supported for font family '%s'"),
 		  fontface, VFontTable[familycode].name);
 	}
     }
@@ -1765,7 +1765,7 @@ void GEText(double x, double y, char *str,
 void GEMode(int mode, GEDevDesc *dd)
 {
     if (NoDevices())
-	error(_("No graphics device is active"));
+	error(_("no graphics device is active"));
     dd->dev->mode(mode, dd->dev);
 }
 
@@ -2109,7 +2109,7 @@ void GEPretty(double *lo, double *up, int *ndiv)
     if(*lo == R_PosInf || *up == R_PosInf ||
        *lo == R_NegInf || *up == R_NegInf ||
        !R_FINITE(*up - *lo)) {
-	error(_("Infinite axis extents [GEPretty(%g,%g,%d)]"), *lo, *up, *ndiv);
+	error(_("infinite axis extents [GEPretty(%g,%g,%d)]"), *lo, *up, *ndiv);
 	return;/*-Wall*/
     }
 
@@ -2621,7 +2621,7 @@ SEXP do_recordGraphics(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->recordGraphics = record;
     if (GErecording(call, dd)) {
 	if (!GEcheckState(dd))
-	    error(_("Invalid graphics state"));
+	    error(_("invalid graphics state"));
 	GErecordGraphicOperation(op, args, dd);
     }
     UNPROTECT(3);

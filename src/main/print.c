@@ -169,13 +169,13 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (R_print.digits == NA_INTEGER ||
 	    R_print.digits < R_MIN_DIGITS_OPT ||
 	    R_print.digits > R_MAX_DIGITS_OPT)
-		errorcall(call, _("invalid digits argument"));
+		errorcall(call, _("invalid 'digits' argument"));
     }
     args = CDR(args);
 
     R_print.quote = asLogical(CAR(args));
     if(R_print.quote == NA_LOGICAL)
-	errorcall(call, _("invalid quote argument"));
+	errorcall(call, _("invalid 'quote' argument"));
     args = CDR(args);
 
     naprint = CAR(args);
@@ -197,12 +197,12 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     R_print.right = asLogical(CAR(args));
     if(R_print.right == NA_LOGICAL)
-	errorcall(call, _("invalid right argument"));
+	errorcall(call, _("invalid 'right' argument"));
     args = CDR(args);
 
     tryS4 = asLogical(CAR(args));
     if(tryS4 == NA_LOGICAL)
-	errorcall(call, _("invalid tryS4 internal argument"));
+	errorcall(call, _("invalid 'tryS4' internal argument"));
 
     if(tryS4 && isObject(x) && isMethodsDispatchOn()) {
 	SEXP class = getAttrib(x, R_ClassSymbol);
@@ -882,5 +882,5 @@ void F77_NAME(xerbla)(char *srname, int *info)
     char buf[7];
     strncpy(buf, srname, 6);
     buf[6] = '\0';
-    error(_("LAPACK routine %6s gave error code %d"), buf, -(*info));
+    error(_("LAPACK routine '%6s' gave error code %d"), buf, -(*info));
 }

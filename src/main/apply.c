@@ -75,7 +75,7 @@ SEXP do_apply(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     X = CAR(args); args = CDR(args);
     if(!isMatrix(X))
-	errorcall(call, _("First arg is not a matrix"));
+	errorcall(call, _("first argument is not a matrix"));
     Xd = getAttrib(X, R_DimSymbol);
     nr = INTEGER(Xd)[0];
     nc = INTEGER(Xd)[1];

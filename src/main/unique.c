@@ -751,7 +751,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (TYPEOF(funcall) != LANGSXP) {
 	b = deparse1(funcall, 1, SIMPLEDEPARSE);
-	errorcall(call, _("%s is not a valid call"), CHAR(STRING_ELT(b, 0)));
+	errorcall(call, _("'%s' is not a valid call"), CHAR(STRING_ELT(b, 0)));
     }
 
     /* Get the function definition */
@@ -952,7 +952,7 @@ SEXP Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg)
 	}
 	break;
     default:
-	error(_("non-numeric matrix in rowsum(): this can't happen"));
+	error(_("non-numeric matrix in rowsum(): this cannot happen"));
     }
 
     UNPROTECT(2); /*HashTable, matches*/
@@ -1008,7 +1008,7 @@ SEXP Rrowsum_df(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg)
 	    break;
 
 	default:
-	    error(_("this can't happen"));
+	    error(_("this cannot happen"));
 	}
     }
     namesgets(ans,getAttrib(x,R_NamesSymbol));

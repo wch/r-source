@@ -77,7 +77,7 @@ int NextConnection()
     for(i = 3; i < NCONNECTIONS; i++)
 	if(!Connections[i]) break;
     if(i >= NCONNECTIONS)
-	error(_("All connections are in use"));
+	error(_("all connections are in use"));
     return i;
 }
 
@@ -138,7 +138,7 @@ void set_iconv(Rconnection con)
 	char *ob = con->oconvbuff;
 	tmp = Riconv_open("", con->encname);
 	if(tmp != (void *)-1) con->inconv = tmp;
-	else error(_("conversion from encoding %s is unsupported"), 
+	else error(_("conversion from encoding '%s' is unsupported"), 
 		   con->encname);
 	con->EOF_signalled = FALSE;
 	/* initialize state, and prepare any initial bytes */
@@ -150,7 +150,7 @@ void set_iconv(Rconnection con)
 	char *ob = con->init_out;
 	tmp = Riconv_open(con->encname, "");
 	if(tmp != (void *)-1) con->outconv = tmp;
-	else error(_("conversion to encoding %s is unsupported"),
+	else error(_("conversion to encoding '%s' is unsupported"),
 		   con->encname);
 	/* initialize state, and prepare any initial bytes */
 	Riconv(tmp, NULL, NULL, &ob, &onb);
@@ -2864,10 +2864,10 @@ static SEXP readFixedString(Rconnection con, int len)
 	    clen = utf8clen(*p++);
 	    if(clen > 1) {
 		m = con->read(p, sizeof(char), clen - 1, con);
-		if(m < clen - 1) error(_("invalid UTF-8 input in readChar"));
+		if(m < clen - 1) error(_("invalid UTF-8 input in readChar()"));
 		p += clen - 1;
 		if((int)mbrtowc(NULL, q, clen, NULL) < 0)
-		    error(_("invalid UTF-8 input in readChar"));
+		    error(_("invalid UTF-8 input in readChar()"));
 	    }
 	}
 	pos = p - buf;
@@ -3181,7 +3181,7 @@ SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
     icon = asInteger(CAR(args));
     closeOnExit = asLogical(CADR(args));
     if(closeOnExit == NA_LOGICAL)
-	error(_("invalid value for closeOnExit"));
+	error(_("invalid value for 'closeOnExit'"));
     errcon = asLogical(CADDR(args));
     if(errcon == NA_LOGICAL) error(_("invalid value for 'type'"));
     tee = asLogical(CADDDR(args));
@@ -3511,7 +3511,7 @@ static void gzcon_close(Rconnection con)
 	    if (len != 0) {
 		if (icon->write(priv->outbuf, 1, len, icon) != len) {
 		    priv->z_err = Z_ERRNO;
-		    error(_("writing error whilst flushing gzcon connection"));
+		    error(_("writing error whilst flushing 'gzcon' connection"));
 		}
 		priv->s.next_out = priv->outbuf;
 		priv->s.avail_out = Z_BUFSIZE;
@@ -3636,7 +3636,7 @@ static size_t gzcon_write(const void *ptr, size_t size, size_t nitems,
             priv->s.next_out = priv->outbuf;
             if (icon->write(priv->outbuf, 1, Z_BUFSIZE, icon) != Z_BUFSIZE) {
                 priv->z_err = Z_ERRNO;
-		warning(_("write error on gzcon connection"));
+		warning(_("write error on 'gzcon' connection"));
                 break;
             }
             priv->s.avail_out = Z_BUFSIZE;
@@ -3686,18 +3686,18 @@ SEXP do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
     new = (Rconnection) malloc(sizeof(struct Rconn));
-    if(!new) error(_("allocation of gzcon connection failed"));
+    if(!new) error(_("allocation of 'gzcon' connection failed"));
     new->class = (char *) malloc(strlen("gzcon") + 1);
     if(!new->class) {
 	free(new);
-	error(_("allocation of gzcon connection failed"));
+	error(_("allocation of 'gzcon' connection failed"));
     }
     strcpy(new->class, "gzcon");
     sprintf(description, "gzcon(%s)", incon->description);
     new->description = (char *) malloc(strlen(description) + 1);
     if(!new->description) {
 	free(new->class); free(new);
-	error(_("allocation of gzcon connection failed"));
+	error(_("allocation of 'gzcon' connection failed"));
     }
     init_con(new, description, mode);
     new->text = FALSE;
@@ -3711,7 +3711,7 @@ SEXP do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     new->private = (void *) malloc(sizeof(struct gzconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
-	error(_("allocation of gzcon connection failed"));
+	error(_("allocation of 'gzcon' connection failed"));
     }
     ((Rgzconn)(new->private))->con = incon;
     ((Rgzconn)(new->private))->cp = level;

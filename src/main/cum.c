@@ -164,7 +164,7 @@ SEXP do_cum(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return cummin(t,s);
 	    break;
 	default:
-	    errorcall(call, _("Unknown cumxxxx function"));
+	    errorcall(call, _("unknown cumxxx function"));
 	}
     }
     return R_NilValue; /* for -Wall */

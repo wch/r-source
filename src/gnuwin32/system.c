@@ -506,7 +506,8 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 		    runcmd(buf, 0, 1, "");
 		}
 	    } else {
-		snprintf(buf, 1024, _("file.show(): file %s does not exist\n"),
+		snprintf(buf, 1024,
+			 _("file.show(): file '%s' does not exist\n"),
 			 file[i]);
 		warning(buf);
 	    }
@@ -876,7 +877,7 @@ int cmdlineoptions(int ac, char **av)
 	    } else if(!strcmp(*av, "--args")) {
 		break;
 	    } else {
-		snprintf(s, 1024, _("WARNING: unknown option %s\n"), *av);
+		snprintf(s, 1024, _("WARNING: unknown option '%s'\n"), *av);
 		R_ShowMessage(s);
 	    }
 	} else {
