@@ -1,9 +1,9 @@
 # Makefile for R for Windows Installers
 
 include ../MkRules
-include ../../../share/make/vars.mk
-
 R_HOME = ../../..
+include $(R_HOME)/share/make/vars.mk
+
 RPREFIX = $(shell perl ../fixed/rwver.pl $(R_HOME)/VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
 
@@ -28,7 +28,7 @@ imagedir:
 	$(MKDIR) -p $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
 # morley.tab is needed for R-intro Appendix A
-	$(CP) -p ../../library/base/data/morley.tab $(RPREFIX)/library/base/data
+	$(CP) -p $(RHOME)/src/library/base/data/morley.tab $(RPREFIX)/library/base/data
 	$(RM) $(RPREFIX)/*/Makefile.in
 	$(MKDIR) -p $(RPREFIX)/etc
 	$(CP) -p $(foreach i,$(ETC_FILES),$(R_HOME)/etc/$i) $(RPREFIX)/etc

@@ -5,6 +5,7 @@ R_HOME=../..
 ## keep these in step with ./Makefile.in
 SRC_HEADERS = R.h S.h Rdefines.h Rdevices.h Rgraphics.h Rinternals.h
 OBJ_HEADERS = Rconfig.h Rmath.h Rversion.h
+GW32_HEADERS = config.h psignal.h
 
 all: fixh
 	@echo 'installing C headers'
@@ -14,8 +15,14 @@ all: fixh
 
 version: Rversion.h
 
-fixh: $(OBJ_HEADERS)
+fixh: $(GW32_HEADERS) $(OBJ_HEADERS)
 	@$(ECHO) done > fixh
+
+config.h: ../gnuwin32/fixed/h/config.h
+	@cp $< $@
+
+psignal.h: ../gnuwin32/fixed/h/psignal.h
+	@cp $< $@
 
 Rconfig.h: config.h $(R_HOME)/tools/GETCONFIG
 	@$(SED) -e 1d $(R_HOME)/tools/GETCONFIG > GC

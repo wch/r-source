@@ -77,6 +77,7 @@ front-ends/Rpwd.exe:
 rbuild:
 	@$(MAKE) --no-print-directory fixfiles
 	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
+	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
 	@$(MAKE) --no-print-directory makeMakedeps
 	@$(MAKE) --no-print-directory libRblas.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll libR.a
@@ -168,7 +169,7 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 ../extra/zlib/libz.a:
 	$(MAKE) --no-print-directory -C ../extra/zlib -f Makefile.win
 
-../extra/pcre/libRpcre.a:
+../extra/pcre/libpcre.a:
 	$(MAKE) --no-print-directory -C ../extra/pcre -f Makefile.win
 
 ../extra/bzip2/libbz2.a:
