@@ -690,6 +690,7 @@ static SEXP OffsetToNode(int offset)
 
 static void DataSave(SEXP s, FILE *fp)
 {
+  BEGIN_SUSPEND_INTERRUPTS {
     int i, j, k, l, n;
 
     /* compute the storage requirements */
@@ -854,6 +855,10 @@ static void DataSave(SEXP s, FILE *fp)
     OutNewline(fp);
 
     OutTerm(fp);
+
+    /* unmark again to preserver the invariant */
+    unmarkPhase();
+  } END_SUSPEND_INTERRUPTS;
 }
 
 static void RestoreSEXP(SEXP s, FILE *fp)
