@@ -286,7 +286,6 @@ FILE* R_OpenFile1(char *file)
 {
     FILE*                fp;
    
-    
     fp = R_fopen(file, "r");
 
     return fp;
@@ -312,11 +311,20 @@ static char R_DefHistFile[FILENAME_MAX];
 
 void GetHomeLocation(void);
 
+static char curdir[MAC_FILE_SIZE];
+
 void GetHomeLocation(void)
 {
     R_HomeLocation[0] = '\0';
     getcwd(R_HomeLocation,MAC_FILE_SIZE); 
     R_HomeLocation[strlen(R_HomeLocation)-1]='\0';
+#ifdef __MRC__
+    if( RunningOnCarbonX()) {
+     ConvertHFSPathToUnixPath(R_HomeLocation, (char *)&curdir) ;
+     bsd_chdir(curdir);
+    }
+#endif
+    
 }
 
 char *R_HomeDir()
