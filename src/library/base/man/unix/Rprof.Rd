@@ -24,8 +24,8 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02)
   another or the same file.
   
   Profiling works by writing out the call stack every \code{interval}
-  seconds, to the file specified.  The Perl script \code{R CMD Rprof}
-  can be used to process the output file to produce a summary of the
+  seconds, to the file specified. Either the \code{\link{summaryRprof}}
+  function or the Perl script \code{R CMD Rprof} can be used to process the output file to produce a summary of the
   usage; use \code{R CMD Rprof --help} for usage information.
 }
 \note{
@@ -41,6 +41,8 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02)
   The chapter on ``Tidying and profiling R code'' in ``Writing \R
   Extensions'' (see the \file{doc/manual} subdirectory of the \R source
   tree).
+
+  \code{\link{summaryRprof}}
 }
 \examples{
 \dontrun{Rprof()

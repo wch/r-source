@@ -120,6 +120,9 @@ NEW FEATURES
     o	rgb() has a new `maxColorValue' argument, allowing r,g,b in [0,M],
 	particularly in {0:255} efficiently and non-error-prone.
 
+    o   summaryRprof() provides the functionality of R CMD Rprof in R
+	code, though more slowly
+
 
 DEPRECATED & DEFUNCT
 
