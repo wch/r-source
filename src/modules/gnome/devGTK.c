@@ -371,7 +371,7 @@ static gint expose_event(GtkWidget *widget, GdkEventExpose *event, gpointer data
 		    event->area.x, event->area.y, event->area.x, event->area.y,
 		    event->area.width, event->area.height);
 
-    GEHandleEvent(GE_Redraw, dd);
+    GEHandleEvent(GE_Redraw, dd, R_NilValue);
 
     return FALSE;
 }
