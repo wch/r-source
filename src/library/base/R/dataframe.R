@@ -55,8 +55,8 @@ dimnames.data.frame <- function(x) list(attr(x,"row.names"), names(x))
        || d[[1]] != length(value[[1]])
        || d[[2]] != length(value[[2]]))
 	stop("invalid dimnames given for data frame")
-    attr(x, "row.names") <- as.character(value[[1]])
-    attr(x, "names") <- as.character(value[[2]])
+    row.names(x) <- as.character(value[[1]]) # checks validity
+    names(x) <- as.character(value[[2]])
     x
 }
 

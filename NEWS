@@ -28,10 +28,10 @@ NEW FEATURES
 	entire rows.  (Related to PR#6846.)
 
 	boxplot() and bxp() now obey global 'par' settings and also
-	allow to specify graphical options in much detail, compatibly to
-	S-PLUS (fulfilling wishlist entry PR#6832) thanks to contributions
-	from Arni Magnusson.  For consistency, 'boxwex' is not an explicit
-	argument anymore.
+	allow to specify graphical options in much detail, compatibly
+	with S-PLUS (fulfilling wishlist entry PR#6832) thanks to
+	contributions from Arni Magnusson.  For consistency, 'boxwex'
+	is not an explicit argument anymore.
 
     o	The 'formula' method for pairs() has a 'na.action' argument,
 	defaulting to na.pass(), rather than the value of
@@ -116,8 +116,11 @@ INSTALLATION CHANGES
 
 BUG FIXES
 
-    o	rbind.data.frame() dropped names/rownames from columns in all but
-	the first data frame.
+    o	rbind.data.frame() dropped names/rownames from columns in all
+	but the first data frame.
+
+    o	The dimnames<- method for data.frames was not checking the
+	validity of the row names.
 
 
 
