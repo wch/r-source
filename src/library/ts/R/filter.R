@@ -40,7 +40,7 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
                          as.integer(n),
                          as.double(filter),
                          as.integer(nfilt),
-                         out=as.double(c(init[, i], double(n))),
+                         out=as.double(c(rev(init[, i]), double(n))),
                          NAOK=TRUE, PACKAGE="ts")$out[-(1:nfilt)]
     }
     y <- drop(y)

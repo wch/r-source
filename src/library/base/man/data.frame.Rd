@@ -37,9 +37,9 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
   generic function, methods can be written to change the behaviour of
   arguments according to their classes: \R comes with many such methods.
   Character variables passed to \code{data.frame} are converted to
-  factor columns unless protected by \code{\link{I}}.
-  If a list or data frame or matrix is passed to \code{data.frame}
-  it is as if each column had been passed as a separate argument.
+  factor columns unless protected by \code{\link{I}}.  If a list or data
+  frame or matrix is passed to \code{data.frame} it is as if each
+  component or column had been passed as a separate argument.
 
   Objects passed to \code{data.frame} should have the same number of
   rows, but atomic vectors, factors and character vectors protected by
