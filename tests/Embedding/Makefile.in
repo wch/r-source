@@ -27,12 +27,12 @@ SOURCES_C = \
 HEADERS = embeddedRCall.h
 PROGRAMS = Rtest Rplot Rpostscript Rerror RNamedCall RParseEval Rpackage tryEval
 
-# <FIXME>
-# Currently Rshutdown.c is not used.
+## <FIXME>
+## Currently Rshutdown.c is not used.
 DISTFILES = Makefile.in index.html \
   $(SOURCES_R) $(SOURCES_C) $(HEADERS) \
   Rshutdown.c
-# </FIXME>
+## </FIXME>
 
 R_CMD_LINK = $(top_builddir)/bin/R CMD LINK $(CC)
 LIBR = -L`cd $(top_builddir) && $(GETWD)`/bin -lR

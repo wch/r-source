@@ -16,7 +16,7 @@ DISTFILES = INDEX TITLE DESCRIPTION.in Makefile.in
 pkg = base
 
 all: Makefile DESCRIPTION
-	@echo "building package \`$(pkg)'"
+	@echo "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  cat $(srcdir)/R/*.R $(srcdir)/R/unix/*.R >> $${f}; \
@@ -54,7 +54,7 @@ DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 mostlyclean: clean
 clean:
 distclean:
-	@rm -f Makefile DESCRIPTION
+	-@rm -f Makefile DESCRIPTION
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

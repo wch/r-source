@@ -41,21 +41,16 @@ HEADERS = \
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SOURCES) $(HEADERS)
 
-## FIXME:
-## Change to `R_gnome.la' when using libtool for shlibs.
-## Remove when using automake ... also fix install then.
+## <FIXME>
+## Change to 'R_gnome.la' when using libtool for shlibs.
+## Remove when using automake ... also fix target 'install' then.
 R_gnome_la = R_gnome$(SHLIB_EXT)
 ## </FIXME>
 Rexecmodulesdir_LTLIBRARIES = $(R_gnome_la)
 R_gnome_la_SOURCES = $(SOURCES)
 R_gnome_la_OBJECTS = $(OBJECTS)
 @USE_LIBTOOL_TRUE@R_gnome_la_LDFLAGS = -avoid-version -rpath $(Rexecmodulesdir) -module
-## FIXME:
-## This used to have `-lm' hard-wired, but note that we test for it at
-## configure time.  The default automake rule would add $(LIBS) anyway,
-## so hopefully we can remove the `-lm' ...
 R_gnome_la_LIBADD = $(ALL_GNOME_LIBS) $(ALL_X_LIBS) $(R_XTRA_LIBS) $(LIBR)
-## </FIXME>
 
 all: Makefile Makedeps R
 
@@ -74,7 +69,8 @@ R: Makefile
 
 $(R_gnome_la): $(R_gnome_la_OBJECTS) $(R_gnome_la_DEPENDENCIES)
 	$(SHLIB_LINK) -o $@ $(R_gnome_la_LDFLAGS) $(R_gnome_la_OBJECTS) $(R_gnome_la_LIBADD) $(LIBS)
-## FIXME: Not sure of we want to do this ...
+## <FIXME>
+## Not sure of we want to do this ...
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
 ## </FIXME>
 

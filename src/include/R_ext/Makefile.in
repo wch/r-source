@@ -27,6 +27,9 @@ DISTFILES = Makefile.in $(R_EXT_HEADERS) \
 ## </FIXME>
 TIMESTAMPS = $(R_EXT_HEADERS:.h=.ts)
 
+CLEANFILES = stamp-R $(TIMESTAMPS)
+DISTCLEANFILES = Makefile
+
 .SUFFIXES:
 .SUFFIXES: .h .ts
 
@@ -57,9 +60,9 @@ uninstall:
 
 mostlyclean: clean
 clean:
-	@rm -f stamp-R $(TIMESTAMPS)
+	-@test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 distclean: clean
-	@rm -f Makefile
+	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 maintainer-clean: distclean
 
 TAGS info dvi check:

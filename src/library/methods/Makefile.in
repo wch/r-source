@@ -15,7 +15,7 @@ DISTFILES = LICENSE INDEX TITLE DESCRIPTION.in Makefile.in
 pkg = methods
 
 all: Makefile DESCRIPTION
-	@echo "building package \`$(pkg)'"
+	@echo "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  cat `ls $(srcdir)/R/*.R` > $${f}; \
@@ -60,16 +60,16 @@ $(top_builddir)/library/$(pkg)/R/$(pkg): $(top_srcdir)/share/R/firstlib.R
 	@cp $(top_srcdir)/share/R/firstlib.R $@
 
 $(top_builddir)/library/$(pkg)/R/all.rda: all.R
-	@echo "dumping R code in package \`$(pkg)'"
+	@echo "dumping R code in package '$(pkg)'"
 	@$(top_builddir)/bin/R --vanilla --slave < all.R
 
 mostlyclean: clean
 clean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
-	@rm -f all.R
+	-@rm -f all.R
 distclean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
-	@rm -f Makefile DESCRIPTION
+	-@rm -f Makefile DESCRIPTION
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

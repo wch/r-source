@@ -48,7 +48,7 @@ R:
 .R.Rout:
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ];     then cp -p $@     $@.bak  ; fi
-	@echo @ECHO_N@ "running code in \`$<' ...@ECHO_C@"
+	@echo @ECHO_N@ "running code in '$<' ...@ECHO_C@"
 	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
 	@echo "@ECHO_T@ OK"
 
@@ -62,7 +62,7 @@ $(EX_IN): FORCE
 	      cp -p $@ $@.bak; \
 	    fi; \
 	  fi; \
-	  echo "collecting examples for package \`$${pkg}' ..."; \
+	  echo "collecting examples for package '$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
 	    OPTS="--txt --example" $(MAKE) R_PKGS="$${pkg}" DOCS); \
 	  f=$${TMPDIR-/tmp}/R$$$$; \
@@ -82,9 +82,9 @@ base-Ex.Rout: $(top_builddir)/modules/vfonts$(SHLIB_EXT)
 
 mostlyclean: clean
 clean:
-	@rm -f *.R *.Rout *.Rd* *.ps *.tex *.dat* data foo* Makedeps
+	-@rm -f *.R *.Rout *.Rd* *.ps *.tex *.dat* data foo* Makedeps
 distclean: clean
-	@rm -f *.R*bak *.R*bakk .RData sink-examp.txt Makefile
+	-@rm -f *.R*bak *.R*bakk .RData sink-examp.txt Makefile
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

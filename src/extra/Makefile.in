@@ -30,14 +30,14 @@ R: Makefile
 
 mostlyclean: clean
 clean:
-	@list='$(EXTRA_LIBS)'; for d in $${list}; do \
+	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 distclean: clean
-	@list='$(EXTRA_LIBS)'; for d in $${list}; do \
+	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
-	@rm -f Makefile
+	-@rm -f Makefile
 maintainer-clean: distclean
 
 install install-strip uninstall TAGS info dvi check:

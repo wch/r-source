@@ -10,9 +10,11 @@ subdir = src/appl
 
 include $(top_builddir)/Makeconf
 
+## <NOTE>
 ## All functions/subroutines to be called via .C() or .Fortran() must
-## also have an entry in `./ROUTINES' in order to be ``pre-dyn.loaded'';
-## see `../unix/dynload.c'.
+## also have an entry in @file{./ROUTINES} in order to be 'pre-dyn.loaded';
+## see @file{../unix/dynload.c}.
+## </NOTE>
 
 SOURCES_C = \
 	approx.c \
@@ -49,11 +51,11 @@ noinst_LIBRARIES = libappl.a
 libappl_a_SOURCES = $(SOURCES)
 libappl_a_OBJECTS = $(OBJECTS)
 
-## FIXME:
+## <FIXME>
 ## We most likely will not want a separate shared library.
 ## If we have a final decision, remove libappl.la target.
-## </FIXME>
 noinst_LTLIBRARIES = libappl.la
+## </FIXME>
 libappl_la_SOURCES = $(SOURCES)
 libappl_la_OBJECTS = $(OBJECTS:.o=.lo)
 @USE_LIBTOOL_TRUE@libappl_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)

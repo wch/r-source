@@ -38,12 +38,13 @@ R: $(SCRIPTS_B) R.fe
 
 $(SCRIPTS_B): $(top_builddir)/config.status
 
-# NOTE: the front-end shell script now (2000-08-02) also contains the
-# version information.  As we keep this information outside configure
-# (as otherwise developers would have to reconfigure and hence rebuild
-# every day), we now first create `R.sh' from `R.sh.in' via configure,
-# and then use sed to create the front end (`R.fe') which gets installed
-# as `R'.
+## <NOTE>
+## The front-end shell script now (2000-08-02) also contains the version
+## information.  As we keep this information outside configure (as
+## otherwise developers would have to reconfigure and hence rebuild
+## every day), we now first create 'R.sh' from 'R.sh.in' via configure,
+## and then use sed to create the front end ('R.fe') which gets
+## installed as 'R'.
 R.sh: $(srcdir)/R.sh.in $(top_builddir)/config.status
 R.fe: R.sh $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@echo "creating $(subdir)/$@"
@@ -54,6 +55,7 @@ R.fe: R.sh $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	       s@REPLACE_BY_VERSION@$${v}@; \
 	       s@REPLACE_BY_YEAR@$${y}@" < R.sh > $@)
 	@chmod +x $@
+## </NOTE>
 
 $(top_builddir)/libtool:
 	@(cd $(@D); $(MAKE) $(@F))
@@ -89,7 +91,7 @@ uninstall:
 mostlyclean: clean
 clean:
 distclean:
-	@rm -f Makefile R.fe R.sh $(SCRIPTS_B)
+	-@rm -f Makefile R.fe R.sh $(SCRIPTS_B)
 maintainer-clean: distclean
 
 TAGS info dvi check:

@@ -18,7 +18,7 @@ OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 
 SHLIB = $(pkg)@SHLIB_EXT@
 
-## FIXME:
+## <FIXME>
 ## We should really add FLIBS to SHLIB_LIBADD, but we need to include
 ## the shlib Makeconf at a later stage, and its default value would
 ## override our setting.

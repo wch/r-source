@@ -16,7 +16,7 @@ DISTFILES = INDEX TITLE DESCRIPTION.in Makefile.in
 pkg = ctest
 
 all: Makefile DESCRIPTION
-	@echo "building package \`$(pkg)'"
+	@echo "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  cat `ls $(srcdir)/R/*.R` > $${f}; \
@@ -59,7 +59,7 @@ clean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
 distclean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
-	@rm -f Makefile DESCRIPTION
+	-@rm -f Makefile DESCRIPTION
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

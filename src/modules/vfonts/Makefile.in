@@ -21,9 +21,9 @@ DISTFILES = \
 	Makefile.in Makefile.mac Makefile.win $(SOURCES) $(HEADERS) \
 	dllversion.rc vfonts.mcp.hqx
 
-## FIXME:
-## Change to `vfonts.la' when using libtool for shlibs.
-## Remove when using automake ... also fix install then.
+## <FIXME>
+## Change to 'vfonts.la' when using libtool for shlibs.
+## Remove when using automake ... also fix target 'install' then.
 vfonts_la = vfonts$(SHLIB_EXT)
 ## </FIXME>
 Rexecmodulesdir_LTLIBRARIES = $(vfonts_la)
@@ -49,7 +49,8 @@ R: Makefile
 
 $(vfonts_la): $(vfonts_la_OBJECTS) $(vfonts_la_DEPENDENCIES)
 	$(SHLIB_LINK) -o $@ $(vfonts_la_LDFLAGS) $(vfonts_la_OBJECTS) $(vfonts_la_LIBADD) $(LIBS)
-## FIXME: Not sure if we want to do this ...
+## <FIXME>
+## Not sure if we want to do this ...
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
 ## </FIXME>
 

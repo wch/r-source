@@ -66,7 +66,7 @@ clean:
 	  rm -f $(INSTFILES); \
 	fi
 distclean: clean
-	@rm -f Makefile
+	-@rm -f Makefile
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

@@ -82,11 +82,11 @@ distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
-	@rm -f Makefile
+	-@rm -f Makefile
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use; it"
 	@echo "deletes files that may need special rules to rebuild"
-	@rm -f $(srcdir)/R.1
+	-@rm -f $(srcdir)/R.1
 
 maintainer-build: $(srcdir)/R.1 windocs
 $(srcdir)/R.1: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/VERSION $(top_srcdir)/date-stamp $(top_srcdir)/src/scripts/R.sh.in $(srcdir)/R.aux

@@ -17,6 +17,9 @@ DISTFILES = Makefile.in $(SOURCES)
 
 EXPORTFILE = @USE_EXPORTFILE_TRUE@ R.exp
 
+CLEANFILES = $(EXPORTFILE)
+DISTCLEANFILES = $(OBJECTS) Makefile
+
 all: Makefile R
 
 .SUFFIXES:
@@ -56,9 +59,9 @@ uninstall:
 
 mostlyclean: clean
 clean:
-	@-test -z "$(EXPORTFILE)" || rm -f $(EXPORTFILE)
+	-@test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 distclean: clean
-	@rm -f $(OBJECTS) Makefile
+	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

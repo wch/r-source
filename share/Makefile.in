@@ -89,7 +89,7 @@ clean:
 	  rm -rf $(SUBDIRS); \
 	fi
 distclean:
-	@rm -f Makefile
+	-@rm -f Makefile
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

@@ -26,9 +26,10 @@ INSTFILES = \
 	SearchObject.html
 DISTFILES = Makefile.in $(SOURCES_JAVA) $(INSTFILES)
 
-OBJECTS = \
-	SearchEngine.html \
-	index.txt
+OBJECTS = SearchEngine.html index.txt
+
+CLEANFILES = $(OBJECTS)
+DISTCLEANFILES = Makefile
 
 .SUFFIXES:
 .SUFFIXES: .class .java
@@ -54,11 +55,13 @@ SearchEngine.html: \
 	@-$(PERL) $(top_srcdir)/tools/keywords2html.pl \
 	  $(top_srcdir)/doc/KEYWORDS.db >> $@
 	@cat $(srcdir)/SearchEngine-foot.html >> $@
-## FIXME:
+## <FIXME>
 ## This is created via
 ##   (cd $(top_builddir)/src/library && make DOCS)
 index.txt:
 	@touch $@
+## so we need to remove it ...
+## </FIXME>
 
 install: install-message installdirs install-sources
 	@for f in $(OBJECTS); do \
@@ -83,9 +86,9 @@ clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(INSTFILES); \
 	fi
-	@rm -f $(OBJECTS)
+	-@test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 distclean: clean
-	@rm -f Makefile
+	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

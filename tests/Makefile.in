@@ -114,30 +114,30 @@ Makedeps: Makefile
 FORCE:
 
 .Rin.R:
-	@echo "creating \`$@'"
+	@echo "creating '$@'"
 	@$(R) < $< > /dev/null
 
 .R.Rout:
 	@rm -f $@ $@.fail
-	@echo @ECHO_N@ "running code in \`$<' ...@ECHO_C@"
+	@echo @ECHO_N@ "running code in '$<' ...@ECHO_C@"
 	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
 	@echo "@ECHO_T@ OK"
 	@if [ -f $(srcdir)/$@.save ] ; then \
 	  mv $@ $@.fail; \
 	  echo @ECHO_N@ \
-	    "comparing \`$@' to \`$(srcdir)/$@.save' ...@ECHO_C@"; \
+	    "comparing '$@' to '$(srcdir)/$@.save' ...@ECHO_C@"; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
 	  mv $@.fail $@; \
 	  echo "@ECHO_T@ OK"; \
 	fi
 
 .R.Rout-gct:
-	@echo "running gctorture() + \`$<'"
+	@echo "running gctorture() + '$<'"
 	@(echo '.ptime <- proc.time(); gctorture()' ; \
 	  cat $< $(srcdir)/gct-foot.R) | $(R) > $@
 	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
 	  if test ! -r $$Ro ; then $(MAKE) $$Ro ; fi; \
-	  echo @ECHO_N@ "comparing \`$@' to \`$$Ro' ...@ECHO_C@"; \
+	  echo @ECHO_N@ "comparing '$@' to '$$Ro' ...@ECHO_C@"; \
 	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $$Ro  1 || exit 1; \
 	  mv $@.fail $@; \
 	  echo "@ECHO_T@ OK"
@@ -190,7 +190,7 @@ test-DocArgs:
 	@echo "checking whether arguments from usage are documented"
 	@for p in $(R_PKGS); do \
 	  out="package"; \
-	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
+	  echo @ECHO_N@ "$${out} '$${p}' ...@ECHO_C@"; \
 	  out=`(echo "library(tools)"; \
                 echo "checkDocArgs(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
@@ -207,7 +207,7 @@ test-DocStyle:
 	@echo "checking usages for method documentation style"
 	@for p in $(R_PKGS); do \
 	  out="package"; \
-	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
+	  echo @ECHO_N@ "$${out} '$${p}' ...@ECHO_C@"; \
 	  out=`(echo "library(tools)"; \
 	        echo "checkDocStyle(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
@@ -224,7 +224,7 @@ test-FF:
 	@echo "checking foreign function calls"
 	@for p in $(R_PKGS); do \
 	  out="package"; \
-	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
+	  echo @ECHO_N@ "$${out} '$${p}' ...@ECHO_C@"; \
 	  out=`(echo "library(tools)"; \
 	        echo "checkFF(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d; /^loading/d'`; \
@@ -239,7 +239,7 @@ test-Methods:
 	@echo "checking generic/method consistency"
 	@for p in $(R_PKGS); do \
 	  out="package"; \
-	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
+	  echo @ECHO_N@ "$${out} '$${p}' ...@ECHO_C@"; \
 	  out=`(echo "library(tools)"; \
 	        echo "checkMethods(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
@@ -256,7 +256,7 @@ test-codoc:
 	@echo "checking code/documentation mismatches"
 	@for p in $(R_PKGS); do \
 	  out="package"; \
-	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
+	  echo @ECHO_N@ "$${out} '$${p}' ...@ECHO_C@"; \
 	  out=`(echo "library(tools)"; \
 	        echo "codoc(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d; /^Using/d'`; \
@@ -273,7 +273,7 @@ test-undoc:
 	@echo "checking undocumented objects"
 	@for p in $(R_PKGS); do \
 	  out="package"; \
-	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
+	  echo @ECHO_N@ "$${out} '$${p}' ...@ECHO_C@"; \
 	  out=`(echo "library(tools)"; \
 	        echo "undoc(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d; /^character/d'`; \
@@ -291,15 +291,15 @@ stamp-R: $(top_builddir)/bin/R.bin $(top_builddir)/library/base/R/base
 
 mostlyclean: clean
 clean:
-	@-(cd Examples; $(MAKE) $@)
-	@-(cd Embedding; $(MAKE) $@)
-	@rm -f stamp-R Makedeps Rplot* Rprof.out *.Rd data dumpdata.R \
+	-@(cd Examples; $(MAKE) $@)
+	-@(cd Embedding; $(MAKE) $@)
+	-@rm -f stamp-R Makedeps Rplot* Rprof.out *.Rd data dumpdata.R \
 	  reg-plot.ps
-	@rm -rf anRpackage
+	-@rm -rf anRpackage
 distclean: clean
-	@-(cd Examples; $(MAKE) $@)
-	@-(cd Embedding; $(MAKE) $@)
-	@rm -f Makefile $(test-out) $(test-src-auto) .RData
+	-@(cd Examples; $(MAKE) $@)
+	-@(cd Embedding; $(MAKE) $@)
+	-@rm -f Makefile $(test-out) $(test-src-auto) .RData
 maintainer-clean: distclean
 
 R install install-strip uninstall TAGS info dvi:

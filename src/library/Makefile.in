@@ -21,7 +21,7 @@ PKGS = $(R_PKGS)
 ## Need to use R CMD to ensure that R_HOME is set (or do this ourselves).
 ## Need to go through Rcmd rather than just call $(PERL) to ensure that
 ## PERL5LIB/PERLLIB are set appropriately (or do this ourselves).
-## See e.g. `src/gnuwin32/help/Makefile'.
+## See e.g. @file{src/gnuwin32/help/Makefile}.
 R_CMD_BUILD_HELP = $(top_builddir)/bin/R CMD perl $(top_srcdir)/share/perl/build-help.pl
 R_CMD_RD2CONTENTS = $(top_builddir)/bin/R CMD perl $(top_srcdir)/share/perl/Rd2contents.pl --os=unix
 ## </NOTE>
@@ -91,12 +91,12 @@ clean:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	@rm -f stamp-*
+	-@rm -f stamp-*
 distclean:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	@rm -f Makefile
+	-@rm -f Makefile
 maintainer-clean: distclean
 
 TAGS info dvi check:

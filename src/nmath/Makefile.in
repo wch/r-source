@@ -10,7 +10,8 @@ subdir = src/nmath
 
 include $(top_builddir)/Makeconf
 
-## NOTE: Keep these in sync with ./standalone/Makefile.in and *.win !
+## <NOTE>
+## Keep these in sync with ./standalone/Makefile.in and *.win!
 SOURCES = \
 	mlutils.c \
 	d1mach.c i1mach.c \
@@ -45,6 +46,7 @@ SOURCES = \
 	ptukey.c qtukey.c \
 	wilcox.c \
 	signrank.c
+## </NOTE>
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
 HEADERS = bessel.h dpq.h nmath.h
@@ -58,7 +60,7 @@ noinst_LIBRARIES = libnmath.a
 libnmath_a_SOURCES = $(SOURCES)
 libnmath_a_OBJECTS = $(OBJECTS)
 
-## FIXME:
+## <FIXME>
 ## We most likely will not want a separate shared library.
 ## If we have a final decision, remove libnmath.la target.
 ## </FIXME>

@@ -35,19 +35,19 @@ SOURCES_C = \
 	subassign.c subscript.c subset.c summary.c \
 	unique.c util.c \
 	version.c vfonts.c
-
 SOURCES_F = \
 	xxxpr.f
-## <FIXME>
-## Need better names ...
-EXTRA_SOURCES_C = alloca.c acosh.c asinh.c atanh.c snprintf.c strdup.c vsnprintf.c
-## </FIXME>
+EXTRA_SOURCES_C = \
+	alloca.c acosh.c asinh.c atanh.c \
+	snprintf.c strdup.c \
+	vsnprintf.c
 DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 HEADERS = \
 	Rregex.h Rstrptime.h \
-	arithmetic.h
+	arithmetic.h \
+	unzip.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win \
@@ -57,14 +57,14 @@ DISTFILES = Makefile.in Makefile.win \
 	$(SOURCES_F) \
 	gram.y
 
-## these are build with CPICFLAGS so safe to use in libR.so
+## these are built with CPICFLAGS so safe to use in libR.so
 ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
 ## use an explicit library: there might be an unsatisfactory -lz around
 R_ZLIBS = @BUILD_ZLIB_TRUE@ ../extra/zlib/libz.a
 R_XDR = @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
 
 ## <FIXME>
-## Names in here should use `$(top_builddir)' instead ...
+## Names in here should use '$(top_builddir)' instead ...
 RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a $(R_XDR)
 ## </FIXME>
 
@@ -83,8 +83,8 @@ R_bin_DEPENDENCIES = @LIBOBJS@ @ALLOCA@ $(RLIBS) @USE_EXPORTFILE_TRUE@ $(top_bui
 ## </NOTE>
 
 ## <FIXME>
-## Change to `libR.la' when using libtool for shlibs.
-## Remove when using automake ... also fix install then.
+## Change to 'libR.la' when using libtool for shlibs.
+## Remove when using automake ... also fix target 'install' then.
 libR_la = libR$(LIBR_EXT)
 ## </FIXME>
 Rexeclib_LTLIBRARIES = $(libR_la)
@@ -190,7 +190,7 @@ distclean: clean
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use; it"
 	@echo "deletes files that may need special rules to rebuild"
-	@rm -f $(srcdir)/gram.c
+	@-rm -f $(srcdir)/gram.c
 
 tags: TAGS
 TAGS: $(SOURCES) $(EXTRA_SOURCES_C) $(HEADERS)

@@ -26,11 +26,11 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	README Makefile.in Makefile.mac Makefile.win \
 	dllversion.rc $(HEADERS) $(SOURCES_C) \
-	double.f cmplx.f cmplxblas.f lapack.mcp.hqx
+	blas2.f cmplx.f cmplxblas.f double.f lapack.mcp.hqx
 
-## FIXME:
-## Change to `lapack.la' when using libtool for shlibs.
-## Remove when using automake ... also fix install then.
+## <FIXME>
+## Change to 'lapack.la' when using libtool for shlibs.
+## Remove when using automake ... also fix target 'install' then.
 lapack_la = lapack$(SHLIB_EXT)
 ## </FIXME>
 Rexecmodulesdir_LTLIBRARIES = $(lapack_la)
@@ -56,7 +56,8 @@ R: Makefile
 
 $(lapack_la): $(lapack_la_OBJECTS) $(lapack_la_DEPENDENCIES)
 	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) @BLAS_LIBS@ $(FLIBS) $(LIBS)
-## FIXME: Not sure of we want to do this ...
+## <FIXME>
+## Not sure of we want to do this ...
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
 ## </FIXME>
 

@@ -24,14 +24,14 @@ INSTFILES = \
 	template.html \
 	thanks.html
 ## </FIXME>
-## FIXME:
-## build-help really should not create package.html in *this* directory.
-CLEANFILES = packages.html packages-foot.html
-## </FIXME>
 DISTFILES = Makefile.in $(INSTFILES) index-default.html R-admin.html
 SUBDIRS = search
-
 OBJECTS = index.html
+## <FIXME>
+## build-help really should not create packages.html in *this* directory.
+CLEANFILES = packages.html packages-foot.html $(OBJECTS)
+## </FIXME>
+DISTCLEANFILES = Makefile
 
 all: Makefile R
 
@@ -87,12 +87,12 @@ clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(INSTFILES); \
 	fi
-	@rm -f $(CLEANFILES) $(OBJECTS)
+	-@test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	@rm -f Makefile
+	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

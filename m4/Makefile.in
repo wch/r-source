@@ -29,7 +29,7 @@ R: Makefile
 mostlyclean: clean
 clean:
 distclean: clean
-	@rm -f Makefile
+	-@rm -f Makefile
 maintainer-clean: distclean
 
 install install-strip uninstall TAGS info dvi check:
