@@ -51,13 +51,6 @@ BEWARE: you do need the *Windows* port and not the Cygwin one.
 zip and unzip from the Info-ZIP project (http://www.info-zip.org and
 mirrors, and included in our tools.zip).
 
-PCRE from ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/ or
-http://pcre.sourceforge.net/src/.  Unpack this (we used
-pcre-3.9.tar.bz2) and copy the files into src/extra/pcre.
-
-bzip2-1.0.2 from http://sources.redhat.com/bzip2.  Unpack this and
-copy the files into src/extra/bzip2.
-
 
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, currently available for download at
