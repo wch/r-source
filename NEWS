@@ -9,6 +9,13 @@
 		CHANGES IN R VERSION 1.7.2
 
 
+NEW FEATURES
+
+    o	R CMD check accepts "ORPHANED" as package maintainer. Package
+        maintainers can now officially orphanize a package, i.e.,
+        resign from maintaining a package.
+	
+
 BUG FIXES
 
     o	cut.POSIXt() now passes on ... to cut.default(), as documented.
