@@ -9,7 +9,7 @@
 \usage{
 \method{plot}{histogram}(x, freq = equidist, density = NULL, angle = 45,
                col = NULL, border = par("fg"), lty = NULL,
-               main = paste("Histogram of", x$xname),
+               main = paste("Histogram of", paste(x$xname, collapse="\n")),
                sub = NULL, xlab = x$xname, ylab,
                xlim = range(x$breaks), ylim = NULL,
                axes = TRUE, labels = FALSE, add = FALSE, \dots)

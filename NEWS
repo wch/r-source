@@ -364,6 +364,9 @@ BUG FIXES
     o	data.matrix() now warns if applied to a data frame with
 	classed columns.
 
+    o	Plotting histograms where the expression used to deparse to
+	multiple lines now gives a sensible title.  (PR#7421)
+
 
 
 		CHANGES IN R VERSION 2.0.1

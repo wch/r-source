@@ -12,7 +12,7 @@ hist.default <-
 {
     if (!is.numeric(x))
 	stop("`x' must be numeric")
-    xname <- deparse(substitute(x))
+    xname <- paste(deparse(substitute(x), 500), collapse="\n")
     n <- length(x <- x[is.finite(x)])
     use.br <- !missing(breaks)
     if(use.br) {
@@ -117,7 +117,8 @@ hist.default <-
 plot.histogram <-
     function (x, freq = equidist, density = NULL, angle = 45,
 	      col = NULL, border = par("fg"), lty = NULL,
-	      main = paste("Histogram of", x$xname), sub = NULL,
+	      main = paste("Histogram of", paste(x$xname, collapse="\n")),
+              sub = NULL,
 	      xlab = x$xname, ylab,
 	      xlim = range(x$breaks), ylim = NULL,
 	      axes = TRUE, labels = FALSE, add = FALSE, ...)
