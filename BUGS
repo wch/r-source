@@ -395,3 +395,19 @@ Date: Wed, 9 Jan 2002 13:24:16 -0000
 Subject: typo in R Install/Admin manual version 1.4.0
 From: "David Kane  <David Kane" <a296180@mica.fmr.com>
 Date: Wed, 9 Jan 2002 13:29:38 -0500
+* PR# 1252 *
+Subject: Concrete vibrator
+From: chinavibrator<hnayzd@public.ayptt.ha.cn>
+Date: Thu, 10 Jan 2002 16:57:05 +0800 (CST)
+* PR# 1253 *
+Subject: Concrete vibrator
+From: chinavibrator<hnayzd@public.ayptt.ha.cn>
+Date: Thu, 10 Jan 2002 16:57:58 +0800 (CST)
+* PR# 1254 *
+Subject: round(10000000000)
+From: o.christensen@lancaster.ac.uk
+Date: Thu, 10 Jan 2002 20:35:43 +0100 (MET)
+* PR# 1255 *
+Subject: Size of type double in object type dist
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Thu, 10 Jan 2002 20:35:36 +0100 (CET)
