@@ -130,8 +130,8 @@ NEW FEATURES
 	PR#7409), and tries harder to return a value in range when it is.
 
     o	splines::splineDesign() now allows to evaluate a B-spline basis
-	everywhere instead of just inside the "inner" knots, by setting the
-	new argument `outer.ok = TRUE'.
+	everywhere instead of just inside the "inner" knots, by
+	setting the new argument `outer.ok = TRUE'.
 
     o	plot.data.frame() tries harder to produce sensible plots for
 	non-numeric data frames with one or two columns.
@@ -203,7 +203,7 @@ NEW FEATURES
 	Previously only \n and \r were interpreted, and then only
 	within quoted strings when no separator was supplied.
 
-    o	gsub/sub have a new 'fixed' method.
+    o	gsub/sub() have a new 'fixed' method.
 
 
 INTERNATIONALIZATION
@@ -352,8 +352,7 @@ INSTALLATION CHANGES
 
     o	[Experimental!]
 	New configure option --enable-utf8 to enable support for
-	UTF-8 locales.	[Does little as yet, and feasibility on the
-	current platform is unchecked as yet.]
+	UTF-8 locales.
 
     o	R_XTRA_[CF]FLAGS are now used during the configuration tests,
 	and [CF]PICFLAGS if --enable-R-shlib was specified.  This
@@ -380,7 +379,7 @@ INSTALLATION CHANGES
 	afm files are now in package grDevices.
 
     o	R is now linked against ncurses/termlib/termcap only if
-	readline is specified (the default) and requires it.
+	readline is specified (the default) and that requires it.
 
 
 PACKAGE INSTALLATION CHANGES
@@ -391,11 +390,14 @@ PACKAGE INSTALLATION CHANGES
 	found.	The argument 'CRAN' is still accepted, but deprecated.
 
 	install.packages() on Unix can now install from local .tar.gz
-	files via repos = NULL (as it long has done on Windows).
+	files via repos = NULL (as has long been done on Windows).
 
 	install.packages() no longer asks if downloaded packages
 	should be deleted: they will be deleted at the end of the
 	session anyway (and can be deleted by the user at any time).
+
+	If the repository provides the information, install.packages()
+	will now accept the name of a package in a bundle.
 
     o	New function new.packages() to report uninstalled packages
 	available at the requested repositories.  This also reports
@@ -412,7 +414,7 @@ PACKAGE INSTALLATION CHANGES
     o	remove.packages() can now remove bundles.
 
     o	The Contains: field of the DESCRIPTION file of package bundles
-	is now installed, so later checks can find out if the package
+	is now installed, so later checks can find out if the bundle
 	is complete.
 
     o	packageStatus() is now built on top of *.packages, and gains a
@@ -464,7 +466,7 @@ BUG FIXES
     o	R CMD check was confused by a trailing / on a package name.
 
     o	write.table() was writing incorrect column names if the data
-	frame contained matrix-like columns.
+	frame contained any matrix-like columns.
 
     o	write.table() was not quoting row names for a 0-column x.
 
