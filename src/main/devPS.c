@@ -1949,7 +1949,6 @@ static int XF_SetLty(int lty)
 {
     switch(lty) {
     case LTY_SOLID:
-    case 1: /* "solid" */
 	return 0;
     case LTY_DASHED:
 	return 1;
@@ -2130,7 +2129,7 @@ innerXFigDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     if(pointsize < 6.0) pointsize = 6.0;
     if(pointsize > pd->maxpointsize) pointsize = pd->maxpointsize;
     dd->startps = pointsize;
-    dd->startlty = 1;
+    dd->startlty = LTY_SOLID;
     dd->startfont = 1;
     dd->startfill = pd->bg;
     dd->startcol = pd->col;
