@@ -803,19 +803,15 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6448 *
-Subject: cor( x, y , method = "spearman" ) incorrect if any( is.na(c( x, y
-From: <cberry@tajo.ucsd.edu>
-Date: Tue, 20 Jan 2004 15:16:19 -0800 (PST)
-* PR# 6449 *
-Subject: enablers Info regarding vigra
-From: "Stakou" <godHinman@MetalMail.com>
-Date: Fri, 02 May 1980 22:56:16 +0300
-* PR# 6450 *
-Subject: Re: Wed, 21 Jan 2004 09:15:25 -0500
-From: "Your OEM Shop" <DiRc@knsi.com>
-Date: Wed, 21 Jan 2004 09:15:25 -0500
 * PR# 6451 *
 Subject: [g]sub behaviour with NA
 From: jonathan-rbugs@swintons.net
 Date: Wed, 21 Jan 2004 17:36:06 +0100 (CET)
+* PR# 6453 *
+Subject: stem plot problem with the mtcars data
+From: lianglim@stt.msu.edu
+Date: Thu, 22 Jan 2004 19:21:40 +0100 (CET)
+* PR# 6454 *
+Subject: Let The Company Work For You, r-bugs 
+From: Angeline <gwerravia@afreeinternet.com>
+Date: Thu, 22 Jan 2004 22:06:04 +0100 (CET)
