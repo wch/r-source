@@ -28,28 +28,26 @@ terms <- function(x, ...) UseMethod("terms")
 terms.default <- function(x) x$terms
 terms.terms <- function(x, ...) x
 print.terms <- function(x) print.default(unclass(x))
-"delete.response" <- function (termobj)
+delete.response <- function (termobj)
 {
-        intercept <- if (attr(termobj, "intercept"))
-                "1"
-        else "0"
-        terms(reformulate(c(attr(termobj, "term.labels"), intercept),
-                NULL), specials = names(attr(termobj, "specials")))
+	intercept <- if (attr(termobj, "intercept")) "1" else "0"
+	terms(reformulate(c(attr(termobj, "term.labels"), intercept), NULL),
+              specials = names(attr(termobj, "specials")))
 }
 
 reformulate <- function (termlabels, response=NULL)
 {
+	termtext <- paste(termlabels, collapse="+")
 	if (is.null(response)){
-		termtext <- paste("~", paste(termlabels, collapse="+"),collapse="")
-		termobj <- eval(parse(text=termtext)[[1]])
+		termtext <- paste("~", termtext, collapse="")
+		eval(parse(text=termtext)[[1]])
 	}
 	else {
-		termtext <- paste("response", "~", paste(termlabels, collapse="+"),
-			collapse="")
+		termtext <- paste("response", "~", termtext, collapse="")
 		termobj <- eval(parse(text=termtext)[[1]])
 		termobj[[2]] <- response
+                termobj
 	}
-	termobj
 }
 
 drop.terms <-function(termobj, dropx=NULL, keep.response=FALSE)
@@ -66,10 +64,10 @@ drop.terms <-function(termobj, dropx=NULL, keep.response=FALSE)
 terms.formula <-
 function (x, specials = NULL, abb = NULL, data = NULL, keep.order = FALSE)
 {
-        if(!is.null(data) && !is.environment(data) && !is.data.frame(data))
+	if(!is.null(data) && !is.environment(data) && !is.data.frame(data))
 		data <- as.data.frame(data)
 	new.specials <- unique(c(specials, "offset"))
-	terms <- .Internal(terms.formula(x, new.specials, abb, data, keep.order))
+	terms <-.Internal(terms.formula(x, new.specials, abb, data, keep.order))
 	offsets <- attr(terms,"specials")$offset
 	if(!is.null(offsets)) {
 		names <- dimnames(attr(terms,"factors"))[[1]][offsets]
@@ -174,32 +172,33 @@ model.offset <- function(x) {
 	if(length(offsets) > 0) {
 		ans <- 0
 		for(i in offsets) ans <- ans+x[[i]]
-                ans
+		ans
 	}
 	else NULL
 }
 
-model.matrix <- function(x, ...) UseMethod("model.matrix")
+model.matrix <- function(object, ...) UseMethod("model.matrix")
 model.matrix.default <- function(formula, data, contrasts = NULL)
 {
-        t <- terms(formula)
-        if (missing(data))
-                data <- eval(attr(t, "variables"), sys.frame(sys.parent()))
-        contrasts.spec <- contrasts
-        rm(contrasts)
-        if (!is.null(contrasts.spec)) {
-                if (!is.list(contrasts.spec))
-                        stop("invalid contrasts")
-                if (is.null(names(contrasts.spec)))
-                        stop("invalid contrasts argument")
-                for (nn in names(contrasts.spec)) {
-                        if (is.na(match(nn, names(data))))
-                                warning(paste("Variable", nn,
-                                 "absent, contrast ignored"))
-                        else contrasts(data[[nn]]) <- contrasts.spec[[nn]]
-                }
-        }
-        .Internal(model.matrix(t, data))
+ t <- terms(formula)
+ if (missing(data))
+	data <- eval(attr(t, "variables"), sys.frame(sys.parent()))
+ contrastsL <- contrasts
+ rm(contrasts)
+ if (!is.null(contrastsL)) {
+	namD <- names(data)
+	if (!is.list(contrastsL))
+		stop("invalid contrasts")
+	if (is.null(namC <- names(contrastsL)))
+		stop("invalid contrasts argument")
+	for (nn in namC) {
+		if (is.na(ni <- match(nn, namD)))
+                	warning(paste("Variable", nn,
+                                      "absent, contrast ignored"))
+		else contrasts(data[[ni]]) <- contrastsL[[nn]]
+	}
+ }
+ .Internal(model.matrix(t, data))
 }
 
 model.response <- function(data, type="numeric")
@@ -246,7 +245,7 @@ update <- function(x, ...) UseMethod("update")
 
 is.empty.model<-function (x)
 {
-        tt <- terms(x)
-        (length(attr(tt, "factors")) == 0) & (attr(tt, "intercept")==0)
+	tt <- terms(x)
+	(length(attr(tt, "factors")) == 0) & (attr(tt, "intercept")==0)
 }
 
