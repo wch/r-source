@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.4-11, 2002-01-30
+Version 1.4-12, 2002-01-31
 Kurt Hornik
 
 
@@ -1535,6 +1535,9 @@ works, was published in the Journal of Statistical Software
 
 *panel*
      Functions and datasets for fitting models to Panel data.
+
+*pastecs*
+     Package for Analysis of Space-Time Ecological Series.
 
 *pcurve*
      Fits a principal curve to a numeric multivariate dataset in arbitrary
