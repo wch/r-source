@@ -1,0 +1,105 @@
+
+Macintosh version
+=================
+
+system.c
+
+	Copyright (C) 1998--1999  Tiki Wan, Ross Ihaka
+
+dir/FullPath.[ch]
+
+	Copyright © 1995-1996 Apple Computer, Inc.
+	All rights reserved.
+
+	You may incorporate this sample code into your applications without
+	restriction, though the sample code has been provided "AS IS" and the
+	responsibility for its operation is 100% yours.  However, what you are
+	not permitted to do is to redistribute the source as "DSC Sample Code"
+	after having made changes. If you're going to re-distribute the source,
+	we require that you make it clear in the source that the code was
+	descended from Apple Sample Code, but that you've made changes.
+
+
+extra/RFLaunch.[ch]
+extra/TFLaunch.[ch]
+
+	Copyright © 1999 by Apple Computer, Inc.
+	All rights reserved worldwide.
+
+	Conditions as previous item.
+
+unzip/source/*
+
+	Copyright (c) various dates Info-ZIP.  All rights reserved.
+	See the file unzip/src/LICENSE.
+
+
+Files from the WASTE library
+----------------------------
+
+Conditions for the usage of version 2.0 of the WASTE library are given
+at http://www.merzwaren.com/waste/#legalese as follows:
+
+    You are free to develop, use and distribute to end users binaries
+    built using the WASTE 2.0 static libraries, at no cost. Moreover, you
+    are free to use and distribute to end users the WASTELib shared
+    library, as included in the standard distribution, at no cost.
+
+    On the other hand, use of the source code in commercial applications
+    requires a source code licensing fee of $100, which entitles you to
+    incorporate the source code in your own software and modify it
+    according to your own needs.
+
+    This license is non-exclusive and non-transferable and does not allow
+    you to re-distribute the source code to third parties, either in its
+    original form or in any modified form. Also, the old WASTE 1.3
+    licensing conditions still apply, so:
+
+    All WASTE-using applications must include the following credit line in
+    their about box and/or documentation:
+
+	    WASTE Text Engine © 1993-2000 Marco Piovanelli 
+
+    I have the right to request one fully registered complimentary copy of
+    the finished application. 
+
+    Use of source code in freeware applications is free. Shareware with a
+    single user license costing up to $10 is considered freeware with
+    respect to this license, whereas shareware costing more than $10 is
+    treated as commercial software.
+
+Regretably, we are at present unable to ascertain which version of
+WASTE the following files came from:
+
+RIntf.h
+gui/DialogUtils.c
+gui/LongControls.c
+gui/R_Event.c
+gui/RFiles.c
+gui/RInit.c
+gui/RMenus.c
+gui/RScripting.c
+gui/RWindows.c
+gui/WEDrags.c
+waste/WETabHooks.h
+waste/WETabs.h
+
+	Copyright © 1993-1998 Marco Piovanelli
+	All Rights Reserved
+
+gui/SmartScroll.[ch]
+	Copyright © 1996, 1997 by Marc Moini, portions by 
+	Marc Menschenfreund, Alessandro Levi Montalcini and Mark Shirley
+
+gui/RFiles.c
+	Based in part on code in the Apple MoreFiles collection:
+	Copyright © 1992-1994 Apple Computer, Inc.
+	All rights reserved.
+
+waste/CarbonCompatibility.[ch]
+waste/WASTE.h
+waste/WEDemo.h
+waste/WEObjectHandlers.[ch]
+
+	Copyright © 1993-2000 Marco Piovanelli
+	All Rights Reserved
