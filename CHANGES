@@ -210,6 +210,10 @@ NEW FEATURES
 
 BUG FIXES (many of which resulted from the added features...)
 
+    o	title() now handles main=, sub=, xlab=, ylab= with embedded
+	newlines correctly.  This is partly a change in title and
+	partly a change in the underlying graphics code.
+
     o	min(.), max(.), sum(.)	now return integer for integer arguments.
 
     o	which(.) now returns integer.
