@@ -190,6 +190,10 @@ BUG FIXES
     o   fisher.test() could crash due to integer overflow on some
 	large problems. (PR#1662)
 
+    o   The substitution code for strptime (used e.g. on Windows)
+	cached the month names and so did not recognise locale changes
+	during an R session, as used by get.hist.quote{tseries}.
+	Caching has been supressed.  (PR#1116)
 
 
 
