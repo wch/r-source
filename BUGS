@@ -735,18 +735,10 @@ Date: Wed, 17 Sep 2003 17:13:23 +0200 (MET DST)
 Subject: Calling C fn crashes
 From: ashenfluff@yahoo.com
 Date: Wed, 24 Sep 2003 17:54:21 +0200 (MET DST)
-* PR# 4289 *
-Subject: tkinsert
-From: <Mark.Bravington@csiro.au>
-Date: Thu, 25 Sep 2003 15:16:54 +1000
 * PR# 4295 *
 Subject: Bugs compiling R-1.7.1 with Intel compilers icc and ifc
 From: <CanisMaior@web.de>
 Date: Thu, 25 Sep 2003 11:26:09 +0200
-* PR# 4297 *
-Subject: Documentation of ``Extract'' re. drop argument
-From: David Meyer <david.meyer@ci.tuwien.ac.at>
-Date: Thu, 25 Sep 2003 13:09:15 +0200
 * PR# 4329 *
 Subject: (fwd) package inst directory copied too early?
 From: Duncan Murdoch <dmurdoch@pair.com>
@@ -759,13 +751,3 @@ Date: Tue, 30 Sep 2003 19:28:27 +0200 (CEST)
 Subject: Re: [Rd] another dump/source problem?
 From: Ross Ihaka <ihaka@stat.auckland.ac.nz>
 Date: Wed, 01 Oct 2003 07:45:41 +1200
-* PR# 4398 *
-Subject: Leaving 'Package:' out of description deletes entire library
-From: ellis@stat.harvard.edu
-Date: Fri, 3 Oct 2003 03:32:58 +0200 (MET DST)
-* PR# 4437 *
-Subject: Put a smile on someones face today
-From: "eCardica.com" <newsletter06@ecardica.net>
-Date: Mon, 06 Oct 03 20:38:46 GMT
-* PR# 4438 *
-Date: Mon, 6 Oct 2003 22:04:03 +0200 (added by postmaster@virgilio.it)
