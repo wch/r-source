@@ -29,9 +29,9 @@ xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
         if(verbose) cat("parsing ", sQuote(f), "\n", sep="")
         strings <- character()
         for(e in parse(file = f)) find_strings(e)
-        ## string leading and trailing white space
-        strings <- sub("^[ \t]*", "", strings)
-        strings <- sub("[ \t]*$", "", strings)
+        ## strip leading and trailing white space
+        strings <- sub("^[ \t\n]*", "", strings)
+        strings <- sub("[ \t\n]*$", "", strings)
         out[[f]] <- structure(unique(strings), class="xgettext")
     }
 

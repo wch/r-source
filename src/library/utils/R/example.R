@@ -9,7 +9,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     INDICES <- .find.package(package, lib.loc, verbose = verbose)
     file <- index.search(topic, INDICES, "AnIndex", "R-ex")
     if(file == "") {
-	warning("No help file found for ", sQuote(topic))
+	warning("no help file found for ", sQuote(topic))
 	return(invisible())
     }
     packagePath <- dirname(dirname(file))

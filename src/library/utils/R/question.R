@@ -44,12 +44,12 @@ topicName <- function(type, topic)
         f <- as.character(f)
     if(!.isMethodsDispatchOn() || !isGeneric(f, where = where)) {
         if(!is.character(f) || length(f) != 1)
-            stop("The object of class ", dQuote(class(f)),
+            stop("the object of class ", dQuote(class(f)),
                  " in the function call ", dQuote(deparse(expr)),
                  " could not be used as a documentation topic")
         h <- .tryHelp(f)
         if(inherits(h, "try-error"))
-            stop("No methods for ", sQuote(f),
+            stop("no methods for ", sQuote(f),
                  " and no documentation for it as a function")
     }
     else {
@@ -80,7 +80,7 @@ topicName <- function(type, topic)
                 if(doEval || !simple) {
                     argVal <- try(eval(argExpr, envir))
                     if(is(argVal, "try-error"))
-                        stop("Error in trying to evaluate the expression for argument ",
+                        stop("error in trying to evaluate the expression for argument ",
                              sQuote(arg), " (", deparse(argExpr), ")")
                     elNamed(sigClasses, arg) <- class(argVal)
                 }
@@ -92,14 +92,14 @@ topicName <- function(type, topic)
         if(is(method, "MethodDefinition"))
             sigClasses <- method@defined
         else
-            warning("No method defined for function \"", sQuote(f),
+            warning("no method defined for function ", sQuote(f),
                     " and signature ",
                     paste(sigNames, " = ", dQuote(sigClasses), sep = "",
                           collapse = ", "))
         topic <- topicName("method", c(f,sigClasses))
         h <- .tryHelp(topic)
         if(is(h, "try-error"))
-            stop("No documentation for function ", sQuote(f),
+            stop("no documentation for function ", sQuote(f),
                  " and signature ",
                  paste(sigNames, " = ", dQuote(sigClasses), sep = "",
                        collapse = ", "))

@@ -244,11 +244,11 @@ citation <- function(package="base", lib.loc = NULL)
               )
 
     if(is.null(desc$Date)){
-        warning("No date field in DESCRIPTION of package ",
+        warning("no date field in DESCRIPTION of package ",
                 sQuote(package), "\n")
     }
     else if(length(z$year)==0){
-        warning("Could not determine year for ",
+        warning("could not determine year for ",
                 sQuote(package), " from package DESCRIPTION\n")
     }
 
