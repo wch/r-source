@@ -274,7 +274,7 @@ function(dir, outDir)
     docsDir <- file.path(dir, "man")
     if(!file_test("-d", docsDir)) return(invisible())
 
-    dataDir <- file.path(dir, "data")
+    dataDir <- file.path(outDir, "data")
     outDir <- file_path_as_absolute(outDir)
     ## <FIXME>
     ## Not clear whether we should use the basename of the directory we
