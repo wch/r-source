@@ -107,7 +107,6 @@
 #define Memcpy(p,q,n)  memcpy( p, q, (size_t)( (n) * sizeof(*p) ) )
 
 /* S Like Fortran Interface */
-
 /* These may not be adequate everywhere. Convex had _ prepending common
    blocks, and some compilers may need to specify Fortran linkage */
 

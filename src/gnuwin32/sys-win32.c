@@ -95,57 +95,12 @@ char *R_ExpandFileName(char *s)
  *  7) PLATFORM DEPENDENT FUNCTIONS
  */
 
-#include <windows.h>
-SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    int i, j;
-    char *s;
-    char *e;
-    SEXP ans;
-
-    char *envir;
-
-    checkArity(op, args);
-
-    if (!isString(CAR(args)))
-	errorcall(call, "wrong type for argument");
-
-    i = LENGTH(CAR(args));
-    if (i == 0) {
-	envir = (char *) GetEnvironmentStrings();
-	for (i = 0, e = envir; strlen(e) > 0; i++, e += strlen(e)+1);
-	PROTECT(ans = allocVector(STRSXP, i));
-	for (i = 0, e = envir; strlen(e) > 0; i++, e += strlen(e)+1) {
-	    STRING(ans)[i] = mkChar(e);
-	}
-	FreeEnvironmentStrings(envir);
-    } else {
-	PROTECT(ans = allocVector(STRSXP, i));
-	for (j = 0; j < i; j++) {
-	    s = getenv(CHAR(STRING(CAR(args))[j]));
-	    if (s == NULL)
-		STRING(ans)[j] = mkChar("");
-	    else
-		STRING(ans)[j] = mkChar(s);
-	}
-    }
-    UNPROTECT(1);
-    return (ans);
-}
-
-SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP rval;
-
-    rval = allocVector(LGLSXP, 1);
-    LOGICAL(rval)[0] = R_Interactive;
-    return rval;
-}
-
 SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     return mkString("Win32");
 }
+
+#include <windows.h>
 
 #ifdef HAVE_TIMES
 
