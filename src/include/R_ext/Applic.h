@@ -185,7 +185,7 @@ void optif0(int nr, int n, double *x, fcn_p fcn, void *state,
 typedef double (*D_fp)();
 typedef /* Subroutine */ int (*S_fp)();
 
-/* ../appl/blas.f */
+/* ../appl/blas.f ---> see also ./Linpack.h - "extern"s all of BLAS+Linpack*/
 double F77_SYMBOL(dasum)(int *n, double *dx, int *incx);
 int F77_SYMBOL(daxpy)(int *n, double *da, double *dx, int *incx,
 		      double *dy, int *incy);

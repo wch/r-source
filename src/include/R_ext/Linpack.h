@@ -22,6 +22,8 @@
 
 #include "Rconfig.h"		/* for F77_SYMBOL */
 
+/*-- use "extern" below, since declarations are already in ./Applic.h : */
+
 	/* Double Precision Blas */
 
 extern double F77_SYMBOL(dasum)(int*, double*, int*);
@@ -82,3 +84,7 @@ extern int F77_SYMBOL(dspfa)(double*, int*, int*, int*);
 extern int F77_SYMBOL(dspsl)(double*, int*, int*, double*);
 
 #endif
+
+
+
+
