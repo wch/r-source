@@ -95,19 +95,6 @@ stopifnot(as.character(m1[,1]) == as.character(m2[,1]),
 
 ## "R core" is missing from authors and appears only here :
 merge(authors, books, by.x = "surname", by.y = "name", all = TRUE)
-
-\testonly{
- b2 <- books; names(b2)[1] <- names(authors)[1]
-
- merge(authors, b2, all.x = TRUE)
- merge(authors, b2, all.y = TRUE)
-
- ## empty d.f. :
- merge(authors, b2[7,])
- 			 
- merge(authors, b2[7,], all.y = TRUE)
- merge(authors, b2[7,], all.x = TRUE)
-}
 }
 \keyword{array}
 \keyword{manip}

@@ -156,15 +156,6 @@ Sys.time() - 3600             # an hour ago
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in GMT
 format(.leap.seconds)         # all 22 leapseconds in your timezone
-
-%% `advanced' examples:
-\testonly{
-str(.leap.seconds)
-
-## Wouldn't we want a  diff.POSIXt()  method ?
-(dls <- .leap.seconds[-1] - .leap.seconds[-22])
-table(dls)
-}
 }
 \keyword{utilities}
 \keyword{chron}

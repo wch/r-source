@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-02-03)
+Version 1.7.0 Under development (unstable) (2003-02-04)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -394,6 +394,34 @@ numeric(0)
      [,1] [,2] [,3] [,4]
 > ## end of moved from diag.Rd
 > 
+> ## format
+> ## handling of quotes
+> zz <- data.frame(a=I("abc"), b=I("def\"gh"))
+> format(zz)
+    a      b
+1 abc def"gh
+> for(i in c(1:5,10,15:17,20)) cat(i,":\t",format(pi,digits=i),"\n")
+1 :	 3 
+2 :	 3.1 
+3 :	 3.14 
+4 :	 3.142 
+5 :	 3.1416 
+10 :	 3.141592654 
+15 :	 3.14159265358979 
+16 :	 3.141592653589793 
+17 :	 3.141592653589793 
+20 :	 3.141592653589793 
+> 
+> p <- c(47,13,2,.1,.023,.0045, 1e-100)/1000
+> format.pval(p)
+[1] "0.0470"  "0.0130"  "0.0020"  "0.0001"  "2.3e-05" "4.5e-06" "< 2e-16"
+> format.pval(p / 0.9)
+[1] "0.05222222" "0.01444444" "0.00222222" "0.00011111" "2.5556e-05"
+[6] "5.0000e-06" "< 2.22e-16"
+> format.pval(p / 0.9, dig=3)
+[1] "0.052222" "0.014444" "0.002222" "0.000111" "2.56e-05" "5.00e-06" "< 2e-16" 
+> ## end of moved from format.Rd
+> 
 > ## kronecker
 > fred <- matrix(1:12, 3, 4, dimnames=list(LETTERS[1:3], LETTERS[4:7]))
 > bill <- c("happy" = 100, "sad" = 1000)
@@ -582,6 +610,59 @@ C: 828000 672000 816000  960000 1104000
 C: 864000 720000 864000 1008000 1152000
 
 > ## end of moved from kronecker.Rd
+> 
+> ## merge
+> authors <- data.frame(
++     surname = c("Tukey", "Venables", "Tierney", "Ripley", "McNeil"),
++     nationality = c("US", "Australia", "US", "UK", "Australia"),
++     deceased = c("yes", rep("no", 4)))
+> books <- data.frame(
++     name = c("Tukey", "Venables", "Tierney",
++              "Ripley", "Ripley", "McNeil", "R Core"),
++     title = c("Exploratory Data Analysis",
++               "Modern Applied Statistics ...",
++               "LISP-STAT",
++               "Spatial Statistics", "Stochastic Simulation",
++               "Interactive Data Analysis",
++               "An Introduction to R"),
++     other.author = c(NA, "Ripley", NA, NA, NA, NA,
++                      "Venables & Smith"))
+> b2 <- books; names(b2)[1] <- names(authors)[1]
+> 
+> merge(authors, b2, all.x = TRUE)
+   surname nationality deceased                         title other.author
+1   McNeil   Australia       no     Interactive Data Analysis         <NA>
+2   Ripley          UK       no            Spatial Statistics         <NA>
+3   Ripley          UK       no         Stochastic Simulation         <NA>
+4  Tierney          US       no                     LISP-STAT         <NA>
+5    Tukey          US      yes     Exploratory Data Analysis         <NA>
+6 Venables   Australia       no Modern Applied Statistics ...       Ripley
+> merge(authors, b2, all.y = TRUE)
+   surname nationality deceased                         title     other.author
+1   McNeil   Australia       no     Interactive Data Analysis             <NA>
+2   Ripley          UK       no            Spatial Statistics             <NA>
+3   Ripley          UK       no         Stochastic Simulation             <NA>
+4  Tierney          US       no                     LISP-STAT             <NA>
+5    Tukey          US      yes     Exploratory Data Analysis             <NA>
+6 Venables   Australia       no Modern Applied Statistics ...           Ripley
+7   R Core        <NA>     <NA>          An Introduction to R Venables & Smith
+> 
+> ## empty d.f. :
+> merge(authors, b2[7,])
+[1] surname      nationality  deceased     title        other.author
+<0 rows> (or 0-length row.names)
+> 
+> merge(authors, b2[7,], all.y = TRUE)
+  surname nationality deceased                title     other.author
+1  R Core        <NA>     <NA> An Introduction to R Venables & Smith
+> merge(authors, b2[7,], all.x = TRUE)
+   surname nationality deceased title other.author
+1   McNeil   Australia       no  <NA>         <NA>
+2   Ripley          UK       no  <NA>         <NA>
+3  Tierney          US       no  <NA>         <NA>
+4    Tukey          US      yes  <NA>         <NA>
+5 Venables   Australia       no  <NA>         <NA>
+> ## end of moved from merge.Rd
 > 
 > ## NA
 > is.na(c(1,NA))

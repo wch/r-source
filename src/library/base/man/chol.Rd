@@ -74,40 +74,24 @@ La.chol(x)
 ( m <- matrix(c(5,1,1,3),2,2) )
 ( cm <- chol(m) )
 t(cm) \%*\% cm  #-- = 'm'
-all(abs(m  -  t(cm) \%*\% cm) < 100* .Machine$double.eps) # TRUE
 ( Lcm <- La.chol(m) )
-crossprod(Lcm)
-all(abs(m - crossprod(Lcm))  < 100* .Machine$double.eps) # TRUE
-\testonly{# check with pivoting
-( cm <- chol(m, TRUE) )
-t(cm) \%*\% cm  #-- = 'm'
-all(abs(m  -  t(cm) \%*\% cm) < 100* .Machine$double.eps) # TRUE}
-
-x <- matrix(c(1:5, (1:5)^2), 5, 2)
-m <- crossprod(x)
-Q <- chol(m)
-all.equal(t(Q) \%*\% Q, m) # TRUE
-
-Q <- chol(m, pivot = TRUE)
-pivot <- attr(Q, "pivot")
-oo <- order(pivot)
-all.equal(t(Q[, oo]) \%*\% Q[, oo], m) # TRUE
-all.equal(t(Q) \%*\% Q, m[pivot, pivot]) # TRUE
+crossprod(Lcm)  #-- = 'm'
 
 # now for something positive semi-definite
-x <- cbind(x, x[, 1]+3*x[, 2])
+x <- matrix(c(1:5, (1:5)^2), 5, 2)
+x <- cbind(x, x[, 1] + 3*x[, 2])
 m <- crossprod(x)
 qr(m)$rank # is 2, as it should be
 
 # chol() may fail, depending on numerical rounding:
 # chol() unlike qr() does not use a tolerance.
-test <- try(Q <- chol(m))     
+try(chol(m))
 
 (Q <- chol(m, pivot = TRUE)) # NB wrong rank here ... see Warning section.
+## we can use this by
 pivot <- attr(Q, "pivot")
 oo <- order(pivot)
-all.equal(t(Q[, oo]) \%*\% Q[, oo], m) # TRUE
-all.equal(t(Q) \%*\% Q, m[pivot, pivot]) # TRUE
+t(Q[, oo]) \%*\% Q[, oo] # recover m
 }
 \keyword{algebra}
 \keyword{array}

@@ -71,14 +71,6 @@ var(1:5,1:5)# 2.5
 ## Two simple vectors
 cor(1:10,2:11)# == 1
 
-\testonly{
- stopifnot(  is.na(var(1)),
-           !is.nan(var(1)))
-
- zz <- c(-1.30167, -0.4957, -1.46749, 0.46927)
- r <- cor(zz,zz); r - 1
- stopifnot(r <= 1) # fails in R <= 1.3.x, for versions of Linux and Solaris
-}
 ## Correlation Matrix of Multivariate sample:
 data(longley)
 (Cl <- cor(longley))
@@ -90,9 +82,7 @@ data(swiss)
 C1 <- cov(swiss)
 range(eigen(C1, only=TRUE)$val) # 6.19  1921
 swiss[1,2] <- swiss[7,3] <- swiss[25,5] <- NA # create 3 "missing"
-\dontrun{
- C2 <- cov(swiss) # Error: missing obs...
-}
+try(cov(swiss)) # Error: missing obs...
 C2 <- cov(swiss, use = "complete")
 range(eigen(C2, only=TRUE)$val) # 6.46  1930
 C3 <- cov(swiss, use = "pairwise")

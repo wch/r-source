@@ -31,22 +31,16 @@ col2rgb("peachpuff")
 col2rgb(c(blu = "royalblue", reddish = "tomato")) # names kept
 
 col2rgb(1:8)# the ones from the palette() :
-pp <- palette(); names(pp) <- pp # add & use names :
-stopifnot(col2rgb(1:8) ==
-    print(col2rgb(pp)))
 
 col2rgb(paste("gold", 1:4, sep=""))
 
-stopifnot(col2rgb("#08a0ff") == c(8, 160, 255))
+col2rgb("#08a0ff")
 ## all three kind of colors mixed :
 col2rgb(c(red="red", palette= 1:3, hex="#abcdef"))
 
 ##-- NON-INTRODUCTORY examples --
 
 grC <- col2rgb(paste("gray",0:100,sep=""))
-stopifnot(grC["red",] == grC["green",],
-          grC["red",] == grC["blue",],
-          grC["red", 1:4] == c(0,3,5,8))
 table(print(diff(grC["red",])))# `2' or `3': almost equidistant
 ## The `named' grays are in between {"slate gray" is not gray, strictly}
 col2rgb(c(g66="gray66", darkg= "dark gray", g67="gray67",

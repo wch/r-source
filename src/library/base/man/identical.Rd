@@ -65,7 +65,8 @@ identical(x, y)
 identical(1, NULL) ## FALSE -- don't try this with ==
 identical(1, 1.)   ## TRUE in R (both are stored as doubles)
 identical(1, as.integer(1)) ## FALSE, stored as different types
-\testonly{x <- 1.; y <- .99999999999}
+
+x <- 1.0; y <- 0.99999999999
 ## how to test for object equality allowing for numeric fuzz
 identical(all.equal(x, y), TRUE)
 ## If all.equal thinks the objects are different, it returns a

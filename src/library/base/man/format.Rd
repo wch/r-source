@@ -121,25 +121,10 @@ prettyNum(r, big.mark = "'", decimal.mark = ",")
 
 (dd <- sapply(1:10, function(i)paste((9:0)[1:i],collapse="")))
 prettyNum(dd, big.mark="'")
-\testonly{
- np <- nchar(pd <- prettyNum(dd, big.mark="'"))
- stopifnot(sapply(0:2, function(m)
-           all(grep("'", substr(pd, 1, np - 4*m)) == (4+3*m):10)))
-}
 
 pN <- pnorm(1:7, lower=FALSE)
 cbind(format (pN, small.mark = " ", digits = 15))
 cbind(formatC(pN, small.mark = " ", digits = 17, format = "f"))
-
-## handling of quotes
-zz <- data.frame(a=I("abc"), b=I("def\"gh"))
-format(zz)
-\testonly{for(i in c(1:5,10,15:17,20)) cat(i,":\t",format(pi,digits=i),"\n")
-}
-p <- c(47,13,2,.1,.023,.0045, 1e-100)/1000
-format.pval(p)
-format.pval(p / 0.9)
-format.pval(p / 0.9, dig=3)
 }
 \keyword{character}
 \keyword{print}

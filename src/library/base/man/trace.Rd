@@ -155,7 +155,6 @@ tracingState(on)
   constructing general expressions.
 }
 \examples{
-
 \testonly{ hasMethods <- .isMethodsDispatchOn()}
 
 f <- function(x, y) {
@@ -183,60 +182,7 @@ trace("as.matrix", recover)
 
 untrace(c("f", "as.matrix"))
 
-\testonly{
-
-
-f <- function(x, y) { c(x,y)}
-
-xy <- 0
-
-trace(f, quote(x <- c(1, x)), exit = quote(xy <<- x), print = FALSE)
-
-fxy <- f(2,3)
-
-stopifnot(identical(fxy, c(1,2,3)))
-stopifnot(identical(xy, c(1,2)))
-
-untrace(f)
-
-## a generic and its methods
-
-setGeneric("f")
-
-setMethod("f", c("character", "character"), function(x,  y) paste(x,y))
-
-## trace the generic
-trace("f", quote(x <- c("A", x)), exit = quote(xy <<- c(x, "Z")), print = FALSE)
-
-## should work for any method
-
-stopifnot(identical(f(4,5), c("A",4,5)))
-stopifnot(identical(xy, c("A", 4, "Z")))
-
-stopifnot(identical(f("B", "C"), paste(c("A","B"), "C")))
-stopifnot(identical(xy, c("A", "B", "Z")))
-
-## trace a method
-
-trace("f", sig = c("character", "character"), quote(x <- c(x, "D")),
-      exit = quote(xy <<- xyy <<- c(x, "W")), print = FALSE)
-
-stopifnot(identical(f("B", "C"), paste(c("A","B","D"), "C")))
-stopifnot(identical(xy, c("A", "B", "D", "W")))
-stopifnot(identical(xy, xyy))
-
-## but the default method is unchanged
-
-stopifnot(identical(f(4,5), c("A",4,5)))
-stopifnot(identical(xy, c("A", 4, "Z")))
-
-removeGeneric("f")
-
-if(!hasMethods)
-   detach("package:methods")
-
-}
-
+if(!hasMethods) detach("package:methods")
 }
 \keyword{programming}
 \keyword{debugging}

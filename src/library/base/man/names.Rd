@@ -37,7 +37,7 @@ names(x) <- value
   there is evaluated as \code{z <- "names<-"(z, "[<-"(names(z), 3, "c2"))}.
 }
 \examples{
-\testonly{data(islands)}
+data(islands)
 # print the names attribute of the islands data set
 names(islands)
 

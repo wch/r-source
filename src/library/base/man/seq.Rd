@@ -65,12 +65,6 @@ seq(1,9, by = 2) # match
 seq(1,9, by = pi)# stay below
 seq(1,6, by = 3)
 seq(1.575, 5.125, by=0.05)
-stopifnot(
- 3 == seq(3,3,  by=pi),
- 3 == seq(3,3.1,by=pi),
- seq(1,6,by=3) == c(1,4),
- seq(10,4.05,by=-3) == c(10,7)
-)
 
 for (x in list(NULL, letters[1:6], list(1,pi)))
   cat("x=",deparse(x),";  seq(along = x):",seq(along = x),"\n")

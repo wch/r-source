@@ -45,9 +45,9 @@ and \code{\link{\%*\%}} for usual matrix multiplication.}
 \examples{
 # simple scalar multiplication
 ( M <- matrix(1:6, ncol=2) )
-stopifnot(kronecker(4, M)==4 * M)
+kronecker(4, M)
 # Block diagonal matrix:
-stopifnot(kronecker(diag(1, 3), M) == diag(1, 3) \%x\% M)
+kronecker(diag(1, 3), M)
 
 # ask for dimnames
 

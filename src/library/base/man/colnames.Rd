@@ -31,12 +31,12 @@ colnames(x) <- namevector
 }
 \examples{
 m0 <- matrix(NA, 4, 0)
-m2 <- cbind(1,1:4)
 rownames(m0)
 \testonly{
         rownames(m0, do.NULL = FALSE)
         colnames(m0, do.NULL = FALSE)
 }
+m2 <- cbind(1,1:4)
 colnames(m2, do.NULL = FALSE)
 colnames(m2) <- c("x","Y")
 rownames(m2) <- rownames(m2, do.NULL = FALSE, prefix = "Obs.")

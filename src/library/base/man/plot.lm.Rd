@@ -98,12 +98,6 @@ plot(lm.SR, panel = function(x,y) panel.smooth(x, y, span = 1))
 
 par(mfrow=c(2,1))# same oma as above
 plot(lm.SR, which = 1:2, sub.caption = "Saving Rates, n=50, p=5")
-\testonly{% which=4 failed in R 1.0.1
- par(mfrow=c(1,1), oma= rep(0,4))
- data(longley)
- summary(lm.fm2 <- lm(Employed ~ . - Population - GNP.deflator, data = longley))
- for(wh in 1:4) plot(lm.fm2, which = wh)
-}
 }
 \keyword{hplot}
 \keyword{regression}

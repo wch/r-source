@@ -86,6 +86,18 @@ diag(z) <- numeric(0)
 z
 ## end of moved from diag.Rd
 
+## format
+## handling of quotes
+zz <- data.frame(a=I("abc"), b=I("def\"gh"))
+format(zz)
+for(i in c(1:5,10,15:17,20)) cat(i,":\t",format(pi,digits=i),"\n")
+
+p <- c(47,13,2,.1,.023,.0045, 1e-100)/1000
+format.pval(p)
+format.pval(p / 0.9)
+format.pval(p / 0.9, dig=3)
+## end of moved from format.Rd
+
 ## kronecker
 fred <- matrix(1:12, 3, 4, dimnames=list(LETTERS[1:3], LETTERS[4:7]))
 bill <- c("happy" = 100, "sad" = 1000)
@@ -112,6 +124,34 @@ kronecker(fred, bill, make=TRUE)
 fred <- outer(fred, c("frequentist"=4, "bayesian"=4000))
 kronecker(fred, bill, make=TRUE)
 ## end of moved from kronecker.Rd
+
+## merge
+authors <- data.frame(
+    surname = c("Tukey", "Venables", "Tierney", "Ripley", "McNeil"),
+    nationality = c("US", "Australia", "US", "UK", "Australia"),
+    deceased = c("yes", rep("no", 4)))
+books <- data.frame(
+    name = c("Tukey", "Venables", "Tierney",
+             "Ripley", "Ripley", "McNeil", "R Core"),
+    title = c("Exploratory Data Analysis",
+              "Modern Applied Statistics ...",
+              "LISP-STAT",
+              "Spatial Statistics", "Stochastic Simulation",
+              "Interactive Data Analysis",
+              "An Introduction to R"),
+    other.author = c(NA, "Ripley", NA, NA, NA, NA,
+                     "Venables & Smith"))
+b2 <- books; names(b2)[1] <- names(authors)[1]
+
+merge(authors, b2, all.x = TRUE)
+merge(authors, b2, all.y = TRUE)
+
+## empty d.f. :
+merge(authors, b2[7,])
+
+merge(authors, b2[7,], all.y = TRUE)
+merge(authors, b2[7,], all.x = TRUE)
+## end of moved from merge.Rd
 
 ## NA
 is.na(c(1,NA))

@@ -63,30 +63,13 @@ dmultinom(x, size = NULL, prob, log = FALSE)
 \examples{
 rmultinom(10, size = 12, prob=c(0.1,0.2,0.8))
 
-N <- 20
 pr <- c(1,3,6,10) # normalization not necessary for generation
-set.seed(153)
-rr <- rmultinom(5000, N, prob = pr)
-stopifnot(all(colSums(rr) == N))
-(m <- rowMeans(rr))
-all.equal(m, N * pr/sum(pr)) # rel.error ~0.003
+rmultinom(10, 20, prob = pr)
 
-(Pr <- dmultinom(c(0,0,3), prob = c(1, 1, 14)))
-all.equal(Pr, dbinom(3, 3, p = 14/16))
-
+## all possible outcomes of Multinom(N = 3, K = 3)
 X <- t(as.matrix(expand.grid(0:3, 0:3))); X <- X[, colSums(X) <= 3]
 X <- rbind(X, 3:3 - colSums(X)); dimnames(X) <- list(letters[1:3], NULL)
-X ## all possible outcomes of Multinom(N = 3, K = 3)
-%% For the user:
-\dontrun{
-sum(apply(X, 2, function(x) dmultinom(x, prob = c(1,2,5))))# == 1
-}
-%% For the tester:
-\testonly{
-for(p in list(c(1,2,5), 1:3, 3:1, 2:0, 0:2, c(1,2,1), c(0,0,1))) {
-  px <- apply(X, 2, function(x) dmultinom(x, prob = p))
-  stopifnot(identical(TRUE, all.equal(sum(px), 1)))
-}
-}
+X
+round(apply(X, 2, function(x) dmultinom(x, prob = c(1,2,5))), 3)
 }
 \keyword{distribution}

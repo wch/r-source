@@ -47,11 +47,10 @@ duplicated.array(x, incomparables = FALSE, MARGIN = 1, ...)
 x <- c(9:20, 1:5, 3:7, 0:8)
 ## extract unique elements
 (xu <- x[!duplicated(x)])
-stopifnot(xu == unique(x), # but unique(x) is more efficient
-          0:20 == sort(x[!duplicated(x)]))
+## xu == unique(x) but unique(x) is more efficient
 
 data(iris)
-stopifnot(duplicated(iris)[143] == TRUE)
+duplicated(iris)[140:143]
 
 data(iris3)
 duplicated(iris3, MARGIN = c(1, 3))

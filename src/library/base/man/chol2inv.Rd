@@ -35,9 +35,7 @@ La.chol2inv(x, size = ncol(x))
 \seealso{\code{\link{chol}}, \code{\link{solve}}.}
 \examples{
 cma <- chol(ma  <- cbind(1, 1:3, c(1,3,7)))
-t(cma) \%*\% cma # = ma
-all.equal(diag(3), ma \%*\% chol2inv(cma))
-all.equal(diag(3), ma \%*\% La.chol2inv(cma))
+ma \%*\% chol2inv(cma)
 }
 \keyword{algebra}
 \keyword{array}

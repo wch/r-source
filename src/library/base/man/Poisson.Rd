@@ -67,6 +67,5 @@ x <- seq(-0.01, 5, 0.01)
 plot(x, ppois(x, 1), type="s", ylab="F(x)", main="Poisson(1) CDF")
 plot(x, pbinom(x, 100, 0.01),type="s", ylab="F(x)",
      main="Binomial(100, 0.01) CDF")
-\testonly{dpois(c(0, 1, 0.17, 0.77), 1)}
 }
 \keyword{distribution}

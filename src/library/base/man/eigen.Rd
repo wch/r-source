@@ -101,38 +101,6 @@ eigen(print(cbind(c(0,1i), c(-1i,0))))# Hermite ==> real Eigen values
 eigen(cbind( 1,3:1,1:3))
 eigen(cbind(-1,c(1:2,0),0:2)) # complex values
 
-Meps <- .Machine$double.eps
-set.seed(321, kind = "default")  # force a particular seed
-m <- matrix(round(rnorm(25),3), 5,5)
-sm <- m + t(m) #- symmetric matrix
-em <- eigen(sm); V <- em$vect
-print(lam <- em$values) # ordered DEcreasingly
-
-stopifnot(
- abs(sm \%*\% V - V \%*\% diag(lam))          < 60*Meps,
- abs(sm       - V \%*\% diag(lam) \%*\% t(V)) < 60*Meps)
-
-##------- Symmetric = FALSE:  -- different to above : ---
-
-em <- eigen(sm, symmetric = FALSE); V2 <- em$vect
-print(lam2 <- em$values) # ordered decreasingly in ABSolute value !
-print(i <- rev(order(lam2)))
-stopifnot(abs(lam - lam2[i]) < 60 * Meps)
-
-zapsmall(Diag <- t(V2) \%*\% V2)
-stopifnot( abs(1- diag(Diag)) < 60*Meps)
-
-stopifnot(abs(sm \%*\% V2 - V2 \%*\% diag(lam2))            < 60*Meps,
-          abs(sm         - V2 \%*\% diag(lam2) \%*\% t(V2)) < 60*Meps)
-
-## Re-ordered as with symmetric:
-sV <- V2[,i]
-slam <- lam2[i]
-all(abs(sm \%*\% sV -  sV \%*\% diag(slam))             < 60*Meps)
-all(abs(sm        -  sV \%*\% diag(slam) \%*\% t(sV)) < 60*Meps)
-## sV  *is* now equal to V  -- up to sign (+-) and rounding errors
-all(abs(c(1 - abs(sV / V)))       <     1000*Meps) # TRUE (P ~ 0.95)
-
 }
 \keyword{algebra}
 \keyword{array}

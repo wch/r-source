@@ -26,24 +26,4 @@ arc-cosine, arc-sine, arc-tangent.
 \code{\link{cos}}, \code{\link{sin}}, \code{\link{tan}},
 \code{\link{acos}}, \code{\link{asin}}, \code{\link{atan}}.
 }
-\examples{
-Ceps <- .Machine$double.eps # ``Computer epsilon''
-x <- seq(-3, 3, len=200)
-stopifnot(
- abs(cosh(x) - (exp(x) + exp(-x))/2) < 20*Ceps,
- abs(sinh(x) - (exp(x) - exp(-x))/2) < 20*Ceps,
- Mod(cosh(x) - cos(1i*x))	< 20*Ceps,
- Mod(sinh(x) - sin(1i*x)/1i) 	< 20*Ceps,
- abs(tanh(x)*cosh(x) - sinh(x)) < 20*Ceps
-)
-
-## Inverse:
-all(abs(asinh(sinh(x)) - x) < 10*Ceps)
-x[abs(acosh(cosh(x)) - abs(x)) > 100*Ceps] #- imprecise for small x
-all(abs(atanh(tanh(x)) - x) < 100*Ceps)
-
-all(abs(asinh(x) - log(x + sqrt(x^2 + 1))) < 10*Ceps)
-cx <- cosh(x)
-all(abs(acosh(cx) - log(cx + sqrt(cx^2 - 1))) < 1000*Ceps)
-}
 \keyword{math}

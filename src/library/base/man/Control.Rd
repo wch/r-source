@@ -44,9 +44,6 @@ next
 }
 \examples{
 for(i in 1:5) print(1:i)
-\testonly{% after feature freeze for 1.5.0, i.e. testing only for 1.6.0:
- if(as.numeric(R.version$major)*10 + as.numeric(R.version$minor) >= 16)
-}
 for(n in c(2,5,10,20,50)) {
    x <- rnorm(n)
    cat(n,":", sum(x^2),"\n")

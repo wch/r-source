@@ -19,9 +19,9 @@ upper.tri(x, diag = FALSE)
   \code{\link{matrix}}.
 }
 \examples{
-m2 <- ma <- matrix(1:20, 4, 5)
+(m2 <- matrix(1:20, 4, 5))
+lower.tri(m2)
 m2[lower.tri(m2)] <- NA
 m2
-stopifnot(lower.tri(ma) == !upper.tri(ma, diag=TRUE))
 }
 \keyword{array}
