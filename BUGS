@@ -219,10 +219,14 @@ none
 
 Directory:  incoming
 
-* PR# 695 *
-Subject:  Cautionary tale about c 
-From: J.C.Rougier@durham.ac.uk
-Date: Fri, 13 Oct 2000 15:57:27 +0100 (BST)
+* PR# 696 *
+Subject: sys.xxx documentation
+From: pperkins@ucsd.edu
+Date: Sat, 14 Oct 2000 08:10:09 +0200 (MET DST)
+* PR# 653 *
+Subject: bug in spline()?
+From: Ian White <imsw@holyrood.ed.ac.uk>
+Date: Mon, 4 Sep 2000 12:29:26 +0100 (BST)
 * PR# 652 *
 Subject: R INSTALL *.tgz fails (minor docs/feature bug)
 From: RPO <bobbyo@speakeasy.org>
@@ -231,14 +235,18 @@ Date: Sat, 2 Sep 2000 13:34:22 -0700 (PDT)
 Subject: diff.default / diff.ts in wrong package bug
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 21 Aug 2000 18:28:36 +0200 (CEST)
+* PR# 656 *
+Subject: .Random.seed resetting
+From: lej25@statslab.cam.ac.uk
+Date: Mon, 11 Sep 2000 13:13:27 +0200 (MET DST)
 * PR# 655 *
 Subject: Installing R from source 
 From: jniesch@gwdg.de
 Date: Fri, 8 Sep 2000 11:40:00 +0200 (MET DST)
-* PR# 653 *
-Subject: bug in spline()?
-From: Ian White <imsw@holyrood.ed.ac.uk>
-Date: Mon, 4 Sep 2000 12:29:26 +0100 (BST)
+* PR# 662 *
+Subject: phantom(0) doesn't do what I expect it to [plotmath]
+From: M.B.Gillies@pharm.uu.nl
+Date: Mon, 18 Sep 2000 14:20:37 +0200 (MET DST)
 * PR# 660 *
 Subject: identify.default ignores any setting of cex.
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
@@ -247,18 +255,18 @@ Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
 Subject: PR 640 (diff.default computes an incorrect starting time)
 From: Laimonis Kavalieris <lkavalieris@maths.otago.ac.nz>
 Date: Wed, 13 Sep 2000 13:44:38 +0000
-* PR# 656 *
-Subject: .Random.seed resetting
-From: lej25@statslab.cam.ac.uk
-Date: Mon, 11 Sep 2000 13:13:27 +0200 (MET DST)
+* PR# 665 *
+Subject: "[.data.frame" forgets about "AsIs"
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Thu, 21 Sep 2000 10:18:46 +0200
 * PR# 663 *
 Subject: bug.report("unused argument(s) crash R when options(error=quote
 From: zivan.karaman@limagrain.com
 Date: Tue, 19 Sep 2000 13:51:33 +0200
-* PR# 662 *
-Subject: phantom(0) doesn't do what I expect it to [plotmath]
-From: M.B.Gillies@pharm.uu.nl
-Date: Mon, 18 Sep 2000 14:20:37 +0200 (MET DST)
+* PR# 668 *
+Subject: eval functions...
+From: aprasad@fs.fed.us
+Date: Fri, 22 Sep 2000 22:30:58 +0200 (MET DST)
 * PR# 667 *
 Subject: (sem assunto)
 From: rangearo@ufu.br (Paulo Roberto Rangearo Peres)
@@ -267,26 +275,6 @@ Date: Thu, 21 Sep 2000 15:27:53 -0300
 Subject: width in options()
 From: aprasad@fs.fed.us
 Date: Thu, 21 Sep 2000 17:46:25 +0200 (MET DST)
-* PR# 665 *
-Subject: "[.data.frame" forgets about "AsIs"
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Thu, 21 Sep 2000 10:18:46 +0200
-* PR# 669 *
-Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 25 Sep 2000 10:17:15 +0200
-* PR# 668 *
-Subject: eval functions...
-From: aprasad@fs.fed.us
-Date: Fri, 22 Sep 2000 22:30:58 +0200 (MET DST)
-* PR# 672 *
-Subject: R 1.1.0: scan
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Wed, 27 Sep 2000 11:45:34 +0200 (CEST)
-* PR# 671 *
-Subject:  bounds violations, infinite loops in optim/L-BFGS-B 
-From: bolker@zoo.ufl.edu
-Date: Tue, 26 Sep 2000 10:17:27 -0400
 * PR# 670 *
 Subject: Returned mail: User unknown
 Subject: Notification: incoming/664
@@ -303,36 +291,30 @@ Date: Mon, 25 Sep 2000 12:28:31 +0200
 Date: Thu, 21 Sep 2000 04:45:10 +0200
 Date: Thu, 21 Sep 2000 04:45:09 +0200
 Date: Mon, 18 Sep 2000 14:33:36 +1100
-* PR# 674 *
-Subject: all.equal.list() sometimes fails with unnamed and named components
-From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
-Date: Fri, 29 Sep 2000 14:20:47 -0700 (PDT)
+* PR# 669 *
+Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 25 Sep 2000 10:17:15 +0200
 * PR# 673 *
 Subject:  pretty not covering the range properly 
 From: David Paul McLaughlin <david@orion-10.cs.byu.edu>
 Date: Fri, 25 Aug 2000 14:16:42 -0400
-* PR# 677 *
-Subject: R build on i86pc Solaris 2.7
-From: albrecht.gebhardt@uni-klu.ac.at
-Date: Mon, 2 Oct 2000 17:52:46 +0200 (MET DST)
-* PR# 676 *
-Subject: documentation error for deriv; MASS scripts ch8;
-From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
-Date: Mon, 02 Oct 2000 11:23:19 -0400
+* PR# 672 *
+Subject: R 1.1.0: scan
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Wed, 27 Sep 2000 11:45:34 +0200 (CEST)
+* PR# 671 *
+Subject:  bounds violations, infinite loops in optim/L-BFGS-B 
+From: bolker@zoo.ufl.edu
+Date: Tue, 26 Sep 2000 10:17:27 -0400
 * PR# 675 *
 Subject: several documentation problems
 From: sws96srb@met.rdg.ac.uk
 Date: Mon, 2 Oct 2000 14:24:37 +0200 (MET DST)
-* PR# 680 *
-Subject: Returned mail: User unknown
-Subject: Notification: incoming/678
-Subject: typo in documentation for read.table
-From: Mail Delivery Subsystem <MAILER-DAEMON@biostat.ku.dk>
-From: R-bugs@biostat.ku.dk
-From: htang@hpl.hp.com
-Date: Tue, 3 Oct 2000 08:34:25 +0200
-Date: Tue, 3 Oct 2000 08:34:25 +0200
-Date: Mon, 2 Oct 2000 19:58:55 +0200 (MET DST)
+* PR# 674 *
+Subject: all.equal.list() sometimes fails with unnamed and named components
+From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
+Date: Fri, 29 Sep 2000 14:20:47 -0700 (PDT)
 * PR# 679 *
 Subject: Returned mail: User unknown
 Subject: Notification: incoming/678
@@ -343,22 +325,48 @@ From: htang@hpl.hp.com
 Date: Tue, 3 Oct 2000 08:34:25 +0200
 Date: Tue, 3 Oct 2000 08:34:24 +0200
 Date: Mon, 2 Oct 2000 19:58:55 +0200 (MET DST)
-* PR# 682 *
-Subject: This mail was found after problem with mailserver Oct 3rd - postmaster@hh.umu.se
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 03 Oct 2000 11:57:32 +0200
+* PR# 677 *
+Subject: R build on i86pc Solaris 2.7
+From: albrecht.gebhardt@uni-klu.ac.at
+Date: Mon, 2 Oct 2000 17:52:46 +0200 (MET DST)
+* PR# 676 *
+Subject: documentation error for deriv; MASS scripts ch8;
+From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
+Date: Mon, 02 Oct 2000 11:23:19 -0400
 * PR# 681 *
 Subject: This mail was found after problem with mailserver Oct 3rd - postmaster@hh.umu.se
 From: maechler@stat.math.ethz.ch
 Date: Tue, 3 Oct 2000 11:16:59 +0200 (MET DST)
-* PR# 685 *
-Subject: documentation bug in readline()
-From: Peter Perkins <pperkins@ucsd.edu>
-Date: Fri, 06 Oct 2000 19:09:31 -0700
+* PR# 680 *
+Subject: Returned mail: User unknown
+Subject: Notification: incoming/678
+Subject: typo in documentation for read.table
+From: Mail Delivery Subsystem <MAILER-DAEMON@biostat.ku.dk>
+From: R-bugs@biostat.ku.dk
+From: htang@hpl.hp.com
+Date: Tue, 3 Oct 2000 08:34:25 +0200
+Date: Tue, 3 Oct 2000 08:34:25 +0200
+Date: Mon, 2 Oct 2000 19:58:55 +0200 (MET DST)
 * PR# 684 *
 Subject: gamma and lgamma functions
 From: Jim Lindsey <james.lindsey@luc.ac.be>
 Date: Wed, 4 Oct 2000 13:59:21 +0200 (MET DST)
+* PR# 682 *
+Subject: This mail was found after problem with mailserver Oct 3rd - postmaster@hh.umu.se
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 03 Oct 2000 11:57:32 +0200
+* PR# 686 *
+Subject: inquiry
+From: <bench1@onenetnow.com>
+Date: Mon, 9 Oct 2000 00:23:53
+* PR# 685 *
+Subject: documentation bug in readline()
+From: Peter Perkins <pperkins@ucsd.edu>
+Date: Fri, 06 Oct 2000 19:09:31 -0700
+* PR# 689 *
+Subject: Documentation problem for ecdf
+From: Kurt.Hornik@ci.tuwien.ac.at
+Date: Tue, 10 Oct 2000 18:32:46 +0200 (MET DST)
 * PR# 688 *
 Subject:  Unreliable example in ?layout 
 From: J.C.Rougier@durham.ac.uk
@@ -367,31 +375,27 @@ Date: Tue, 10 Oct 2000 08:48:10 +0100 (BST)
 Subject:  cmdscale documentation 
 From: J.C.Rougier@durham.ac.uk
 Date: Mon, 9 Oct 2000 10:23:20 +0100 (BST)
-* PR# 686 *
-Subject: inquiry
-From: <bench1@onenetnow.com>
-Date: Mon, 9 Oct 2000 00:23:53
-* PR# 690 *
-Subject: Bug?
-From: "Armando Mateus Ferreira" <td2mafea@uco.es>
-Date: Wed, 11 Oct 2000 11:21:19 +0200
-* PR# 689 *
-Subject: Documentation problem for ecdf
-From: Kurt.Hornik@ci.tuwien.ac.at
-Date: Tue, 10 Oct 2000 18:32:46 +0200 (MET DST)
-* PR# 692 *
-Subject: documentation bug in grep
-From: pperkins@ucsd.edu
-Date: Wed, 11 Oct 2000 19:25:03 +0200 (MET DST)
 * PR# 691 *
 Subject: invalid regular expression after many grep's
 From: jutans@utans.u-net.com
 Date: Wed, 11 Oct 2000 17:10:29 +0200 (MET DST)
-* PR# 694 *
-Subject:  syntax confusion with function/non-function objects 
-From: J.C.Rougier@durham.ac.uk
-Date: Fri, 13 Oct 2000 12:07:41 +0100 (BST)
+* PR# 690 *
+Subject: Bug?
+From: "Armando Mateus Ferreira" <td2mafea@uco.es>
+Date: Wed, 11 Oct 2000 11:21:19 +0200
 * PR# 693 *
 Subject:  Bug report
 From: "Amaratunga, Rohith" <Rohith.Amaratunga@dsto.defence.gov.au>
 Date: Thu, 12 Oct 2000 14:08:31 +1100
+* PR# 692 *
+Subject: documentation bug in grep
+From: pperkins@ucsd.edu
+Date: Wed, 11 Oct 2000 19:25:03 +0200 (MET DST)
+* PR# 695 *
+Subject:  Cautionary tale about c 
+From: J.C.Rougier@durham.ac.uk
+Date: Fri, 13 Oct 2000 15:57:27 +0100 (BST)
+* PR# 694 *
+Subject:  syntax confusion with function/non-function objects 
+From: J.C.Rougier@durham.ac.uk
+Date: Fri, 13 Oct 2000 12:07:41 +0100 (BST)
