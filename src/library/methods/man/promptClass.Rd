@@ -6,23 +6,27 @@
   minimal markup for Rd processing; no QA facilities at present.
 }
 \usage{
-promptClass(clName, filename, type = "class", where)
+promptClass(clName, filename, type = "class", keywords = "classes", where)
 }
 \arguments{
-  \item{clName}{a character string naming the class to be documented.}
-  \item{filename}{Usually, the filename on which the documentation
-    shell should be written.  By default it is the topic name for the
-    class documentation, followed by \code{".Rd"}. See the example
-    below.  The argument can also be any writable \link{connection}.}
-  \item{type}{The documentation type to be declared in the output file.}
-  \item{where}{where to look for the definition of the class and of
-    methods that use it.  By default, the function searches for the
-    class definition on the currently attached databases.}
-}
-\details{
-  The class definition is found on the search list.  Using that
-  definition, information about classes extended and slots is
-  determined.
+  \item{clName}{ character string naming the class to be documented. }
+  \item{filename}{ Usually, the filename on which the documentation
+      shell should be written.  By default it is the topic name for
+      the class documentation, followed by ".Rd". See the example
+      below.  The argument can also be any writable
+      \link{connection}.}
+  \item{type}{The documentation type to be declared in the output
+      file.}
+  \item{keywords}{The keywords to include in the shell of the
+      documentation.  The keyword \code{"classes"} should be one of
+      them.  }
+  \item{where}{ where to look for the definition of the class and of
+      methods that use it.  By default, the function searches for the
+      class definition on the currently attached databases.  } }
+  \details{ 
+    The class definition is found on the search list.  Using
+    that definition, information about classes extended and slots is
+    determined.
 
   In addition, the currently available generics with methods for this
   class are found (using \code{\link{getGenerics}}).  Note that these

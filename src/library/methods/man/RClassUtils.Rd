@@ -129,8 +129,7 @@ tryNew(Class)
 
 empty.dump()
 
-showClass(Class, complete=TRUE, printTo=stdout(),
-         propertiesAreCalled="Properties")
+showClass(Class, complete=TRUE, propertiesAreCalled="Properties")
 
 showExtends(ext, printTo = stdout())
 
@@ -401,8 +400,8 @@ validSlotNames(names)
     \item{\code{showExtends}:}{ 
       Print the elements of the list of extensions.  
       
-      Also used to print extensions recorded in the opposite direction,
-      via a subclass list.
+      (Used also by \code{\link{promptClass}} to get the list of what
+      and how for the extensions.)
     }
     
     \item{\code{print.environment}, \code{showNonVector}:}{

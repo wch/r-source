@@ -33,6 +33,8 @@
 \alias{missingArg}
 \alias{balanceMethodsList}
 \alias{sigToEnv}
+\alias{rematchDefinition}
+\alias{unRematchDefinition}
 \alias{.valueClassTest}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
@@ -103,6 +105,9 @@ missingArg(symbol, envir = parent.frame())
 balanceMethodsList(mlist, args, check = TRUE)
 
 sigToEnv(signature)
+
+rematchDefinition(definition, generic, mnames, fnames)
+unRematchDefinition(definition)
 
 }
 \section{Summary of Functions}{
@@ -319,8 +324,18 @@ sigToEnv(signature)
       \code{\link{selectMethod}}.
     }
       
-    \item{\code{.saveImage}:}{Flag, used in dynamically initializing the
-      methods package from \code{.First.lib}}.
-  }
+}
+\item{\code{.saveImage}:}{Flag, used in dynamically initializing the
+    methods package from \code{.First.lib}}
+}
+\item{\code{rematchDefinition}, \code{unRematchDefinition}:}{
+  If the specified method in a call to \code{\link{setMethod}}
+  specializes the argument list (by replacing \dots), then
+  \code{rematchDefinition} constructs the actual method stored.
+  Using knowledge of how \code{rematchDefinition} works,
+  \code{unRematchDefinition}
+ reverses the procedure; if given a function or method definition that
+ does not correspond to this form, it just returns its argument.
+}
 }
 \keyword{internal}
