@@ -582,7 +582,7 @@ FUNTAB R_FunTab[] =
 #ifdef Win32
 {"X11",		do_devga,	0,	111,	4,	PP_FUNCALL},
 #else
-{"X11",		do_X11,		0,	111,	5,	PP_FUNCALL},
+{"X11",		do_X11,		0,	111,	7,	PP_FUNCALL},
 #endif
 {"PS",		do_PS,		0,	111,	9,	PP_FUNCALL},
 {"PicTeX",	do_PicTeX,	0,	111,	6,	PP_FUNCALL},

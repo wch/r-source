@@ -199,14 +199,19 @@ SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
  *  width	= width in inches
  *  height	= height in inches
  *  ps		= pointsize
+ *  gamma       = gamma correction
+ *  colormodel  = color model
  */
 SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DevDesc *dd;
-    char *display, *vmax;
+    char *display, *vmax, *cname;
     double height, width, ps, gamma;
+    int colormodel, maxcubesize;
     gcall = call;
     vmax = vmaxget();
+
+    /* Decode the arguments */
     display = SaveString(CAR(args), 0); args = CDR(args);
     width = asReal(CAR(args));	args = CDR(args);
     height = asReal(CAR(args)); args = CDR(args);
@@ -216,13 +221,37 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     gamma = asReal(CAR(args)); args = CDR(args);
     if (gamma < 0 || gamma > 100)
 	errorcall(call, "invalid gamma value");
+
+    if (!isString(CAR(args)) || length(CAR(args)) < 1)
+	error("invalid colortype passed to X11 driver\n");
+    cname = CHAR(STRING(CAR(args))[0]);
+    if (strcmp(cname, "mono") == 0)
+	colormodel = 0;
+    else if (strcmp(cname, "gray") == 0 || strcmp(cname, "grey") == 0)
+	colormodel = 1;
+    else if (strcmp(cname, "pseudo.cube") == 0)
+	colormodel = 2;
+    else if (strcmp(cname, "pseudo") == 0)
+	colormodel = 3;
+    else if (strcmp(cname, "true") == 0)
+	colormodel = 4;
+    else {
+	warning("unknown X11 color/colour model -- using monochrome\n");
+	colormodel = 0;
+    }
+    args = CDR(args);
+    maxcubesize = asInteger(CAR(args));
+    if (maxcubesize < 1 || maxcubesize > 256)
+        maxcubesize = 256;
+	    
     /* Allocate and initialize the device driver data */
-    if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
+    if (!(dd = (DevDesc*)malloc(sizeof(DevDesc))))
 	return 0;
     /* Do this for early redraw attempts */
     dd->displayList = R_NilValue;
     GInit(&dd->dp);
-    if (!X11DeviceDriver(dd, display, width, height, ps, gamma)) {
+    if (!X11DeviceDriver(dd, display, width, height, ps, gamma, colormodel,
+                         maxcubesize)) {
 	free(dd);
 	errorcall(call, "unable to start device X11\n");
     }

@@ -31,6 +31,13 @@
 #include "devX11.h"
 #include "rotated.h"/* 'Public' routines from here */
 
+/* These are the currently supported device "models" */
+#define MONOCHROME    0
+#define GRAYSCALE     1
+#define PSEUDOCOLOR1  2
+#define PSEUDOCOLOR2  3
+#define TRUECOLOR     4
+
 	/********************************************************/
 	/* This device driver has been documented so that it be	*/
 	/* used as a template for new drivers			*/
@@ -103,6 +110,8 @@ static Window rootwin;				/* Root Window */
 static Visual *visual;				/* Visual */
 static int depth;				/* Pixmap depth */
 static int class;                               /* Visual class */
+static int model;                               /* User color model */
+static int maxcubesize;                         /* Max colorcube size */
 static XSetWindowAttributes attributes;		/* Window attributes */
 static Colormap colormap;                       /* Default color map */
 static int blackpixel;				/* Black */
@@ -146,7 +155,7 @@ static void   X11_Line(double, double, double, double, int, DevDesc*);
 static int    X11_Locator(double*, double*, DevDesc*);
 static void   X11_Mode(int, DevDesc*);
 static void   X11_NewPage(DevDesc*);
-static int    X11_Open(DevDesc*, x11Desc*, char*, double, double, double);
+static int    X11_Open(DevDesc*, x11Desc*, char*, double, double, double, int, int);
 static void   X11_Polygon(int, double*, double*, int, int, int, DevDesc*);
 static void   X11_Polyline(int, double*, double*, int, DevDesc*);
 static void   X11_Rect(double, double, double, double, int, int, int, DevDesc*);
@@ -187,27 +196,34 @@ static int PaletteSize;
 static int RedLevels, GreenLevels, BlueLevels;
 
 
-/* Code To Handle Monochome Displays */
-/* See: Foley & van Damm */
+/* Monochome Displays : Compute pixel values by converting */
+/* RGB values to luminance and then thresholding. */
+/* See: Foley & van Damm. */
+
+static void SetupMonochrome()
+{
+    depth = 1;
+}
+
 static unsigned GetMonochromePixel(int r, int g, int b)
 {
-    /* Convert to Luminance */   
-    int gray = (0.299 * r + 0.587 * g + 0.114 * b);
-    if (gray > 127)
+    if ((int)(0.299 * r + 0.587 * g + 0.114 * b) > 127)
 	return WhitePixel(display, screen);
     else
 	return BlackPixel(display, screen);
 }
 
+
+/* Grayscale Displays : Compute pixel values by converting */
+/* RGB values to luminance.  See: Foley & van Damm. */
+
 static unsigned GetGrayScalePixel(int r, int g, int b)
 {
-    /* Convert to Luminance */   
     unsigned int d, dmin = 0xFFFFFFFF;
     unsigned int dr;
-    unsigned int pixel;
     int i, imin;
+    unsigned int pixel = 0;  /* -Wall */
     int gray = (0.299 * r + 0.587 * g + 0.114 * b) + 0.0001;
-    pixel = 0;			/* -Wall */
     for (i = 0; i < PaletteSize; i++) {
 	dr = (RPalette[i].red - gray);
 	d = dr * dr;
@@ -220,8 +236,6 @@ static unsigned GetGrayScalePixel(int r, int g, int b)
     return pixel;
 }
 
-
-/* Code To Handle Grayscale Displays */
 static int GetGrayPalette(Display *display, Colormap cmap, int n)
 {
     int status, i, m;
@@ -258,11 +272,19 @@ static int GetGrayPalette(Display *display, Colormap cmap, int n)
 static void SetupGrayScale()
 {
     PaletteSize = 0;
+    if (depth > 8)
+	depth = 8;
     if (GetGrayPalette(display, colormap, 1 << depth) == 0)
 	depth = 1;
 }
 
-/* Code To Handle PseudoColor Displays */
+/* PseudoColor Displays : There are two strategies here. */
+/* 1) allocate a standard color cube and match colors */
+/* within that based on (weighted) distances in RGB space. */
+/* 2) allocate colors exactly as they are requested until */
+/* all color cells are used.  Fail with an error message */
+/* when this happens. */
+
 static int RGBlevels[][3] = {  /* PseudoColor Palettes */
     { 8, 8, 4 },
     { 6, 7, 6 },    
@@ -331,21 +353,28 @@ static int GetColorPalette(Display *dpy, Colormap cmap, int nr, int ng, int nb)
 
 static void SetupPseudoColor()
 {
-    int i;
+    int i, size;
     PaletteSize = 0;
-    for (i = 0; i < NRGBlevels; i++)
-	if (GetColorPalette(display, colormap,
-			    RGBlevels[i][0],
-			    RGBlevels[i][1],
-			    RGBlevels[i][2]))
-	    break;
-    if (PaletteSize == 0) {
-	warning("X11 driver unable to obtain color cube\n");
-	depth = 1;
+    if (model == PSEUDOCOLOR1) {
+	for (i = 0; i < NRGBlevels; i++) {
+            size = RGBlevels[i][0] * RGBlevels[i][1] * RGBlevels[i][2];
+	    if (size < maxcubesize && GetColorPalette(display, colormap,
+				RGBlevels[i][0],
+				RGBlevels[i][1],
+				RGBlevels[i][2]))
+		break;
+        }
+	if (PaletteSize == 0) {
+	    warning("X11 driver unable to obtain color cube\n");
+	    depth = 1;
+	}
+    }
+    else {
+	PaletteSize = 0;
     }
 }
 
-static unsigned int GetPseudoColorPixel(int r, int g, int b)
+static unsigned int GetPseudoColor1Pixel(int r, int g, int b)
 {
     unsigned int d, dmin = 0xFFFFFFFF;
     unsigned int dr, dg, db;
@@ -366,7 +395,42 @@ static unsigned int GetPseudoColorPixel(int r, int g, int b)
     return pixel;
 }
 
-/* Code To Handle Truecolor Displays */
+static unsigned int GetPseudoColor2Pixel(int r, int g, int b)
+{
+    XColor newxcolor;
+    int i;
+    /* Search for previously allocated color */
+    for (i = 0; i < PaletteSize ; i++) {
+	if (r == RPalette[i].red &&
+	    g == RPalette[i].green &&
+	    b == RPalette[i].blue) return XPalette[i].pixel;
+    }
+    /* Attempt to allocate a new color */
+    XPalette[PaletteSize].red   = pow(r / 255.0, RedGamma) * 0xffff;
+    XPalette[PaletteSize].green = pow(g / 255.0, GreenGamma) * 0xffff;
+    XPalette[PaletteSize].blue  = pow(b / 255.0, BlueGamma) * 0xffff;
+    if (PaletteSize == 256 ||
+	XAllocColor(display, colormap, &XPalette[PaletteSize]) == 0) {
+	REprintf("Error: X11 cannot allocate additional graphics colors.\n");
+	error("Consider using colortype=\"pseudo.cube\" or \"gray\".\n");
+    }
+    RPalette[PaletteSize].red = r;
+    RPalette[PaletteSize].green = g;
+    RPalette[PaletteSize].blue = b;
+    PaletteSize++;
+    return XPalette[PaletteSize - 1].pixel;
+}
+
+static unsigned int GetPseudoColorPixel(int r, int g, int b)
+{
+    if (model == PSEUDOCOLOR1)
+	return GetPseudoColor1Pixel(r, g, b);
+    else
+	return GetPseudoColor2Pixel(r, g, b);
+}
+
+/* Truecolor Displays : Allocate the colors as they are requested */
+
 static unsigned int RMask, RShift;
 static unsigned int GMask, GShift;
 static unsigned int BMask, BShift;
@@ -392,51 +456,87 @@ static unsigned GetTrueColorPixel(int r, int g, int b)
 	(((b * BMask) / 255) << BShift);
 }
 
+/* Interface for General Visual */
 
 unsigned int GetX11Pixel(int r, int g, int b)
 {
-    if (depth > 1) {
-	switch(class) {
-	case StaticGray:
-	case GrayScale:
-	    return GetGrayScalePixel(r, g, b);
-	case PseudoColor:
-	    return GetPseudoColorPixel(r, g, b);
-	case TrueColor:
-	    return GetTrueColorPixel(r, g, b);
-	default:
-	    printf("Unknown Visual\n");
-	    return 0;
-	}
-    }
-    else
+    switch(model) {
+    case MONOCHROME:
 	return GetMonochromePixel(r, g, b);
+    case GRAYSCALE:
+	return GetGrayScalePixel(r, g, b);
+    case PSEUDOCOLOR1:
+    case PSEUDOCOLOR2:
+	return GetPseudoColorPixel(r, g, b);
+    case TRUECOLOR:
+	return GetTrueColorPixel(r, g, b);
+    default:
+	printf("Unknown Visual\n");
+    }
+    return 0;
 }
 
-int SetupX11Color()
+static void FreeX11Colors()
 {
-    if (depth > 1) {
-	switch (class) {
-	case StaticGray:
-	case GrayScale:
+    int i;
+    if (model == PSEUDOCOLOR2 && class == PseudoColor) {
+	for (i = 0; i < PaletteSize; i++)
+	    XFreeColors(display, colormap, &(XPalette[i].pixel), 1, 0);
+	PaletteSize = 0;
+    }
+}
+
+static int SetupX11Color()
+{
+    if (depth <= 1) {
+	/* On monchome displays we must use black/white */
+	model = MONOCHROME;
+	SetupMonochrome();
+    }
+    else if (class ==  StaticGray || class == GrayScale) {
+	if (model == MONOCHROME)
+	    SetupMonochrome();
+	else {
+	    model = GRAYSCALE;
 	    SetupGrayScale();
-	    break;
-	case StaticColor:
-	    depth = 1;
-	    break;
-	case PseudoColor:
-	    SetupPseudoColor();
-	    break;
-	case TrueColor:
-	    SetupTrueColor();
-	    break;
-	case DirectColor:
-	    depth = 1;
-	    break;
-	default:
-	    printf("Unknown Visual\n");
-	    return 0;
 	}
+    }
+    else if (class == StaticColor) {
+	/* FIXME : Currently revert to mono. */
+	/* Should do the real thing. */
+	model = MONOCHROME;
+	SetupMonochrome();
+    }
+    else if (class ==  PseudoColor) {
+	if (model == MONOCHROME)
+	    SetupMonochrome();
+	else if (model == GRAYSCALE)
+	    SetupGrayScale();
+	else {
+	    if (model == TRUECOLOR)
+		model = PSEUDOCOLOR2;
+	    SetupPseudoColor(model);
+	}
+    }
+    else if (class == TrueColor) {
+	if (model == MONOCHROME)
+	    SetupMonochrome();
+	else if (model == GRAYSCALE)
+	    SetupGrayScale();
+	else if (model == PSEUDOCOLOR1 || model == PSEUDOCOLOR2)
+	    SetupPseudoColor(model);
+	else
+	    SetupTrueColor();
+    }
+    else if (class == DirectColor) {
+	/* FIXME : Currently revert to mono. */
+	/* Should do the real thing. */
+	model = MONOCHROME;
+	SetupMonochrome();
+    }
+    else {
+	printf("Unknown Visual\n");
+	return 0;
     }
     whitepixel = GetX11Pixel(255, 255, 255);
     blackpixel = GetX11Pixel(0, 0, 0);
@@ -777,7 +877,8 @@ static void SetLinetype(int newlty, double nlwd, DevDesc *dd)
 	/********************************************************/
 
 static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
-                    double w, double h, double gamma)
+                    double w, double h, double gamma,
+		    int colormodel, int maxcube)
 {
     /* if have to bail out with "error" then must */
     /* free(dd) and free(xd) */
@@ -804,7 +905,9 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
 	visual = DefaultVisual(display, screen);
 	colormap = DefaultColormap(display, screen);
 	class = visual->class;
-	SetupX11Color(display, screen, rootwin, visual);
+	model = colormodel;
+        maxcubesize = maxcube;
+	SetupX11Color();
 	devPtrContext = XUniqueContext();
 	displayOpen = 1;
     }
@@ -820,9 +923,9 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
     xd->fg =  dd->dp.fg	 = R_RGB(0, 0, 0);
     xd->col = dd->dp.col = xd->fg;
 
-    /* Try to create a simple window */
-    /* Want to know about exposures */
-    /* and window-resizes and locations */
+    /* Try to create a simple window. */
+    /* We want to know about exposures */
+    /* and window-resizes and locations. */
 
     attributes.background_pixel = whitepixel;
     attributes.border_pixel = blackpixel;
@@ -1013,6 +1116,7 @@ static void X11_NewPage(DevDesc *dd)
 {
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
+    FreeX11Colors();
     if(xd->bg != dd->dp.bg) {
 	xd->bg = dd->dp.bg;
 	whitepixel = GetX11Pixel(R_RED(xd->bg),R_GREEN(xd->bg),R_BLUE(xd->bg));
@@ -1472,31 +1576,39 @@ static void X11_Hold(DevDesc *dd)
 	/********************************************************/
 
 
-	/*  X11 Device Driver Arguments		*/
-	/*    1)  display name			*/
-	/*    2)  width (inches)		*/
-	/*    3)  height (inches)		*/
-	/*    4)  base pointsize		*/
-	/*    5)  gamma correction factor	*/
+        /*  X11 Device Driver Arguments		*/
+        /*    1)  display name			*/
+        /*    2)  width (inches)		*/
+        /*    3)  height (inches)		*/
+        /*    4)  base pointsize		*/
+        /*    5)  gamma correction factor	*/
+        /*    6)  colormodel                    */
+        /*          0 = mono,                   */
+        /*          1 = gray,                   */
+        /*          2 = color,                  */
+        /*          3 = old color.              */
 
-int X11DeviceDriver(DevDesc *dd, char *display,
-		    double width, double height,
-		    double pointsize, double gamma)
+
+int X11DeviceDriver(DevDesc *dd,
+		    char *display,
+		    double width,
+		    double height,
+		    double pointsize,
+		    double gamma,
+		    int colormodel,
+                    int maxcube)
 {
-    /* if need to bail out with some sort of "error" then */
-    /* must free(xd) */
-
     int ps;
     x11Desc *xd;
 
     /* allocate new device description */
-    if (!(xd = (x11Desc *) malloc(sizeof(x11Desc))))
+    if (!(xd = (x11Desc*)malloc(sizeof(x11Desc))))
 	return 0;
 
-    /* from here on, if need to bail out with "error", must also */
-    /* free(xd) */
+    /* From here on, if we need to bail out with "error", */
+    /* then we must also free(xd). */
 
-    /*	Font will load at first use  */
+    /*	Font will load at first use.  */
 
     ps = pointsize;
     if(ps < 6 || ps > 24) ps = 12;
@@ -1508,12 +1620,12 @@ int X11DeviceDriver(DevDesc *dd, char *display,
 
     /*	Start the Device Driver and Hardcopy.  */
 
-    if (!X11_Open(dd, xd, display, width, height, gamma)) {
+    if (!X11_Open(dd, xd, display, width, height, gamma, colormodel, maxcube)) {
 	free(xd);
 	return 0;
     }
 
-    /*	Set up Data Structures	*/
+    /*	Set up Data Structures. */
 
     dd->dp.open = X11_Open;
     dd->dp.close = X11_Close;
@@ -1534,13 +1646,14 @@ int X11DeviceDriver(DevDesc *dd, char *display,
     dd->dp.hold = X11_Hold;
     dd->dp.metricInfo = X11_MetricInfo;
 
-    /* set graphics parameters that must be set by device driver */
+    /* Set required graphics parameters. */
+
     /* Window Dimensions in Pixels */
 
     dd->dp.left = 0;			/* left */
-    dd->dp.right = xd->windowWidth;		/* right */
+    dd->dp.right = xd->windowWidth;	/* right */
     dd->dp.bottom = xd->windowHeight;	/* bottom */
-    dd->dp.top = 0;				/* top */
+    dd->dp.top = 0;			/* top */
 
     /* Nominal Character Sizes in Pixels */
 
