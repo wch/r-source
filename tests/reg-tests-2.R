@@ -1044,3 +1044,18 @@ meth2gen <- function(cl)
 meth2gen("data.frame")
 meth2gen("dendrogram")
 ## --> the output may need somewhat frequent updating..
+
+
+## subsetting a 1D array lost the dimensions
+x <- array(1:5, dim=c(5))
+dim(x)
+dim(x[, drop=TRUE])
+dim(x[2:3])
+dim(x[2])
+dim(x[2, drop=FALSE])
+dimnames(x) <- list(some=letters[1:5])
+x[]
+x[2:3]
+x[2]
+x[2, drop=FALSE]
+## both dim and dimnames lost in 1.8.0
