@@ -147,6 +147,7 @@ double  bd0(double, double);
 /* Consider adding these two to the API (Rmath.h): */
 double	dbinom_raw(double, double, double, double, int);
 double	dpois_raw (double, double, int);
+double  pnchisq_raw(double, double, double, double, int);
 
 int	i1mach(int);
 

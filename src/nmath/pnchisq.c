@@ -21,12 +21,6 @@
 
 double pnchisq(double x, double f, double theta, int lower_tail, int log_p)
 {
-    double ans, lam, u, v, x2, f2, t, term, bound, f_x_2n, f_2n;
-    int n, flag;
-
-    const static double errmax = 1e-12;
-    const static int itrmax = 10000;/*FIXME: should depend on errmax and theta*/
-
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(f) || ISNAN(theta))
 	return x + f + theta;
@@ -36,10 +30,17 @@ double pnchisq(double x, double f, double theta, int lower_tail, int log_p)
 
     if (f < 0. || theta < 0.) ML_ERR_return_NAN;
 
-    if (x <= 0.)
-	return R_DT_0;
-    if(!R_FINITE(x))
-	return R_DT_1;
+    return (R_DT_val(pnchisq_raw(x, f, theta, 1e-12, 10000)));
+}
+
+double pnchisq_raw(double x, double f, double theta, 
+		   double errmax, int itrmax)
+{
+    double ans, lam, u, v, x2, f2, t, term, bound, f_x_2n, f_2n;
+    int n, flag;
+
+    if (x <= 0.)	return 0.;
+    if(!R_FINITE(x))	return 1.;
 
     lam = .5 * theta;
 #ifdef DEBUG_pnch
@@ -115,5 +116,5 @@ L_End:
 #ifdef DEBUG_pnch
     REprintf("\tL_End: n=%d; term=%12g; bound=%12g\n",n,term,bound);
 #endif
-    return R_DT_val(ans);
+    return (ans);
 }
