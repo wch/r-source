@@ -12,7 +12,7 @@ function(formula, data=NULL, weights, subset, na.action, model = FALSE,
     mf <- match.call(expand.dots=FALSE)
     mf$model <- mf$span <- mf$enp.target <- mf$degree <-
 	mf$parametric <- mf$drop.square <- mf$normalize <- mf$family <-
-	    mf$control <- mf$... <- NULL
+	    mf$method <- mf$control <- mf$... <- NULL
     mf[[1]] <- as.name("model.frame")
     mf <- eval(mf, parent.frame())
     if (match.arg(method) == "model.frame") return(mf)
