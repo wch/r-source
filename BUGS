@@ -64,6 +64,41 @@ none
 
 Directory:  Graphics
 
+* PR# 823 *
+Subject: adjustment of expressions with mtext(..., las=2)
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Wed, 24 Jan 2001 20:12:43 +0100
+* PR# 660 *
+Subject: identify.default ignores any setting of cex.
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
+* PR# 202 *
+Subject: persp box occlusion bug
+From: wsi@gcal.ac.uk
+Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
+--The persp algorithm does not apply the occlusion rules to the frame, 
+--which is always plotted first. 
+--A bug, but not very simple to fix.
+* PR# 750 *
+Subject: abline() does not obey "xpd" (clipping rules)
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 27 Nov 2000 18:27:11 +0100
+* PR# 726 *
+Subject: par(las=.)  gives wrong "adj" for mtext()
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 7 Nov 2000 13:03:58 +0100
+* PR# 791 *
+Subject:  par(lab= *) / axis(*) bug 
+From: maechler@stat.math.ethz.ch
+Date: Fri, 22 Dec 2000 10:59:26 +0100
+* PR# 776 *
+Subject: strwidth does not take font into account
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
+* PR# 820 *
+Subject: interaction.plot
+From: "Mark M. Span" <span@psy.uva.nl>
+Date: Mon, 22 Jan 2001 10:47:39 +0100
 * PR# 816 *
 Subject: dotplot: character size of labels
 From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
@@ -79,33 +114,6 @@ Date: Thu, 18 Jan 2001 14:54:32 +0100
 --
 --dd->gp.cexbase unlike, for example, do_plot_xy and anything to do with cexbase
 --needs extreme care.
-* PR# 202 *
-Subject: persp box occlusion bug
-From: wsi@gcal.ac.uk
-Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
---The persp algorithm does not apply the occlusion rules to the frame, 
---which is always plotted first. 
---A bug, but not very simple to fix.
-* PR# 726 *
-Subject: par(las=.)  gives wrong "adj" for mtext()
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 7 Nov 2000 13:03:58 +0100
-* PR# 660 *
-Subject: identify.default ignores any setting of cex.
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
-* PR# 791 *
-Subject:  par(lab= *) / axis(*) bug 
-From: maechler@stat.math.ethz.ch
-Date: Fri, 22 Dec 2000 10:59:26 +0100
-* PR# 776 *
-Subject: strwidth does not take font into account
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
-* PR# 750 *
-Subject: abline() does not obey "xpd" (clipping rules)
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 27 Nov 2000 18:27:11 +0100
 
 Directory:  In-Out
 
@@ -169,6 +177,18 @@ Date: Tue, 14 Mar 2000 10:32:43 +0100 (MET)
 
 Directory:  System-specific
 
+* PR# 822 *
+Subject: Re: Sys.time dumps core at start-up
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Tue, 23 Jan 2001 19:56:32 +0100 (CET)
+--part of 821
+* PR# 821 *
+Subject: Sys.time dumps core at start-up
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Tue, 23 Jan 2001 19:44:28 +0100 (CET)
+--See also 822, which shows the segfault is in strftime.c.
+--From other correspondence, this is on RH5.0: we can't
+--reproduce it on RH6.2 or anywhere else.
 * PR# 808 *
 Subject: Time zone
 From: Herve Morin <morin@mat.ulaval.ca>
@@ -197,15 +217,7 @@ none
 
 Directory:  incoming
 
-* PR# 822 *
-Subject: Re: Sys.time dumps core at start-up
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Tue, 23 Jan 2001 19:56:32 +0100 (CET)
-* PR# 821 *
-Subject: Sys.time dumps core at start-up
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Tue, 23 Jan 2001 19:44:28 +0100 (CET)
-* PR# 820 *
-Subject: interaction.plot
-From: "Mark M. Span" <span@psy.uva.nl>
-Date: Mon, 22 Jan 2001 10:47:39 +0100
+* PR# 824 *
+Subject: trouble with netCDF 
+From: jasont@indigoindustrial.co.nz
+Date: Thu, 25 Jan 2001 12:00:39 +1300
