@@ -14,7 +14,9 @@ rt(n, df)
 \item{x,q}{vector of quantiles.}
 \item{p}{vector of probabilities.}
 \item{n}{number of observations to generate.}
-\item{df,ncp}{degrees of freedom and non-centrality parameter.}
+\item{df}{degrees of freedom.}
+\item{ncp}{non-centrality parameter \eqn{\delta};
+    currently \code{ncp <= 37.62}.}
 }
 \description{
   These functions provide information about the t distribution with
@@ -22,13 +24,43 @@ rt(n, df)
   \code{ncp}).  \code{dt} gives the density, \code{pt}
   gives the distribution function, \code{qt} gives the quantile function
   and \code{rt} generates random deviates.
-
-  The t distribution with \code{df} \eqn{= n} degrees of freedom has density
+}
+\details{
+  The \eqn{t} distribution with \code{df} \eqn{= n} degrees of freedom
+  has density 
   \deqn{
     f(x) = \frac{\Gamma ((n+1)/2)}{\sqrt{\pi n} \Gamma (n/2)}
     (1 + x^2/n)^{-(n+1)/2}%
   }{f(x) = Gamma((n+1)/2) / (sqrt(n pi) Gamma(n/2)) (1 + x^2/n)^-((n+1)/2)}
   for all real \eqn{x}.
+
+  The general \emph{non-central} \eqn{t}
+  with parameters \eqn{(\nu,\delta)}{(df,Del)} \code{= (df, ncp)}
+  is defined as a the distribution of 
+  \eqn{T_{\nu}(\delta) := \frac{U + \delta}{\chi_{\nu}/\sqrt{\nu}}}{%
+      T(df,Del) := (U + Del) / (Chi(df) / sqrt(df)) }
+  where \eqn{U} and \eqn{\chi_{\nu}}{Chi(df)}  are independent random
+  variables, \eqn{U \sim {\cal N}(0,1)}{U \~ N(0,1)}, and
+%%fails  \eqn{{\chi_{\nu}}^2}{(Chi(df))^2} 
+  \eqn{\chi^2_\nu}{Chi(df)^2} 
+  is chi-squared, see \code{\link{pchisqr}}.
+  
+  The most used applications are power calculations for \eqn{t}-tests:\cr
+  Let \eqn{T= \frac{\bar{X} - \mu_0}{S/\sqrt{n}}}{T= (mX - m0) / (S/sqrt(n))}
+  where
+  \eqn{\bar{X}}{mX} is the \code{\link{mean}} and \eqn{S} the sample standard
+  deviation (\code{\link{sd}}) of \eqn{X_1,X_2,\dots,X_n} which are i.i.d.
+%%fails \eqn{{\cal N}(\mu,\sigma^2)}{N(mu,sigma^2)}
+        \eqn{       N(\mu,\sigma^2)}{N(mu,sigma^2)}.
+  Then \eqn{T} is distributed as non-centrally \eqn{t} with
+  \code{df}\eqn{= n-1} 
+  degrees of freedom and \bold{n}on-\bold{c}entrality \bold{p}arameter
+  \code{ncp}\eqn{= \mu - \mu_0}{= mu - m0}.
+}
+\references{
+    Lenth, R. V. (1989). \emph{Algorithm AS 243} --
+    Cumulative distribution function of the non-central \eqn{t} distribution,
+    \emph{Appl.\ Statist.} \bold{38}, 185--189.
 }
 \seealso{
   \code{\link{df}} for the F distribution.
