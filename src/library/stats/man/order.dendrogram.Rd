@@ -14,6 +14,7 @@ order.dendrogram(x)
 }
 \arguments{
   \item{x, object}{a dendrogram (see \code{\link{as.dendrogram}}).}
+  \item{\dots}{additional arguments}
 }
 \details{
   The indices or labels for the leaves in left to right order are retrieved.
