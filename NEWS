@@ -213,6 +213,8 @@ NEW FEATURES
     o	If present in the package, a function .Last.lib will be called
 	when a package is detached.
 
+    o	provide() is now deprecated.
+
 
 BUG FIXES
 

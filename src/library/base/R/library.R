@@ -177,10 +177,8 @@ require <- function(package, quietly = FALSE, warn.conflicts = TRUE,
                     keep.source = getOption("keep.source.pkgs"))
 {
     package <- as.character(substitute(package)) # allowing "require(eda)"
-    if (!exists(".Provided", inherits = TRUE))
-	assign(".Provided", character(0), envir = .GlobalEnv)
-    if (is.na(match(paste("package", package, sep = ":"), search()))
-	&& is.na(match(package, .Provided))) {
+    if (is.na(match(paste("package", package, sep = ":"), search())))
+        if(!exists(".Provided") || is.na(match(package, .Provided))) {
 	if (!quietly)
 	    cat("Loading required package:", package, "\n")
 	library(package, char = TRUE, logical = TRUE,
@@ -188,23 +186,6 @@ require <- function(package, quietly = FALSE, warn.conflicts = TRUE,
     }
     else
 	TRUE
-}
-
-provide <- function(package) {
-    if (!exists(".Provided", inherits = TRUE))
-	assign(".Provided", character(0), envir = .GlobalEnv)
-    if (missing(package))
-	.Provided
-    else {
-	package <- as.character(substitute(package))
-	if (is.na(match(package, .packages())) &&
-	    is.na(match(package, .Provided))) {
-	    assign(".Provided", c(package, .Provided), envir = .GlobalEnv)
-	    TRUE
-	}
-	else
-	    FALSE
-    }
 }
 
 .packages <- function(all.available = FALSE, lib.loc = .lib.loc) {

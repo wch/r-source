@@ -6,7 +6,6 @@ library(package, help = NULL, lib.loc = .lib.loc,
         warn.conflicts = TRUE, keep.source = getOption("keep.source.pkgs"))
 require(package, quietly = FALSE, warn.conflicts = TRUE,
         keep.source = getOption("keep.source.pkgs"))
-provide(package)
 
 .First.lib(libname, pkgname)
 .Last.lib(libpath)
@@ -15,18 +14,15 @@ provide(package)
 .path.package(package = .packages())
 .lib.loc
 .Library
-.Provided
 .Autoloaded
 }
 \alias{library}
-\alias{provide}
 \alias{require}
 \alias{R_LIBS}
 \alias{.Autoloaded}
 \alias{.First.lib}
 \alias{.Last.lib}
 \alias{.Library}
-\alias{.Provided}
 \alias{.packages}
 \alias{.path.package}
 \alias{.lib.loc}
@@ -67,20 +63,10 @@ provide(package)
   inside other functions; it returns \code{FALSE} and optionally gives a
   warning, rather than giving an error, if the package does not exist.
   Both functions check and update the list of currently loaded packages
-  and do not reload code that is already loaded.  \code{require} also
-  checks the list \code{.Provided}.
+  and do not reload code that is already loaded.
 
   For large packages, setting \code{keep.source = FALSE} may save quite
   a bit of memory.
-
-  \code{provide} allows code to register the names of packages that it
-  encompasses.  The
-  argument is stored in the list \code{.Provided}.  \code{provide}
-  returns \code{FALSE} if the package was already present in
-  \code{.Provided} or among the packages in \code{search()}.  The main
-  use for \code{provide} is when multiple packages share code.  This is
-  most likely when the code implements features present in S(-PLUS) but
-  not in \R.
 
   If \code{library} is called with no \code{package} or \code{help}
   argument, it gives a list of all available packages in \code{lib.loc}
@@ -164,7 +150,6 @@ library(eda)                # load package "eda"
 require(eda)                # the same
 (.packages())		    # "eda", too
 .path.package()
-.Provided	# often empty
 .Autoloaded     # maybe "ctest"
 
 .lib.loc
