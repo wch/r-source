@@ -20,18 +20,41 @@ getGraphicsEvent(prompt = "Waiting for input",
 \details{
 This function allows user input from some graphics devices (currently
 only the Windows screen display).  When called, event handlers may be 
-installed to respond to events involving the mouse or keyboard.  The 
-mouse event handlers should be functions with header \code{function(buttons, x, y)},
-and the keyboard event handler should be a function with header
-\code{function(key)} (not implemented yet).  The coordinates \code{x}
-and \code{y} will be 
+installed to respond to events involving the mouse or keyboard.  
+
+The mouse event handlers should be functions with header 
+\code{function(buttons, x, y)}.  The coordinates \code{x}
+and \code{y} will be passed to mouse event handlers in device independent
+coordinates (i.e. the lower left corner of the window is \code{(0,0)}, 
+the upper right is \code{(1,1)}).  The \code{buttons} argument 
+will be a vector listing the buttons
+that are pressed at the time of the event, with 0 for left, 1 for middle, and 2 
+for right.
+
+The keyboard event handler should be a function with header
+\code{function(key)}.  A single element character vector will be passed
+to this handler, corresponding to the key press.  Shift and other modifier
+keys will have been processed, so \code{shift-a} will be passed as
+\code{"A"}.  The following special keys may also be passed to the handler:
+\itemize{
+     \item Control keys, passed as \code{"Ctrl-A"}, etc.
+     \item Navigation keys, passed as one of \code{"Left", "Up", "Right", "Down",
+     "PgUp", "PgDn", "End", "Home"}
+     \item Edit keys, passed as one of \code{"Ins", "Del"}
+     \item Function keys, passed as one of \code{"F1", "F2", ...}
+}
 
 The event handlers are standard R functions, and will be executed in
 an environment as though they had been called directly from \code{getGraphicsEvent}.
 
-Events will be collected until one of the event handlers returns a non-\code{NULL}
-value, which will be returned as the value of \code{getGraphicsEvent},
-or the user interrupts the function from the console.
+Events will be processed until
+\itemize{
+     \item one of the event handlers returns
+a non-\code{NULL} value which will be returned as the value of
+\code{getGraphicsEvent}, or 
+      \item the user interrupts the function from the
+console.
+}
 }
 \value{
 A non-\code{NULL} value returned from one of the event handlers.
@@ -51,10 +74,15 @@ A non-\code{NULL} value returned from one of the event handlers.
 	NULL
     }
     
+    keybd <- function(key) {
+	cat("Key <", key, ">\n", sep = "")
+    }
+    
     plot(0:1, 0:1, type='n')
     getGraphicsEvent("Click on upper right to quit",
                      onMouseDown = mousedown,
-                     onMouseMove = mousemove)
+                     onMouseMove = mousemove,
+                     onKeybd = keybd)
 }
 }
 \keyword{ iplot }% at least one, from doc/KEYWORDS

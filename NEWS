@@ -145,8 +145,8 @@ NEW FEATURES
 
     o	A new function getGraphicsEvent() has been added which will allow
 	mouse or keyboard input from a graphics device. (NB: currently
-	only mouse input in the Windows screen device has been
-	implemented.  This should improve before the 2.1.0 release..) 
+	only the Windows screen device supports this function.  This 
+	should improve before the 2.1.0 release..) 
 
     o	%% now warns if its accuracy is likely to be affected by lack
 	of precision (as in 1e18 %% 11, the unrealistic expectation of

@@ -1281,10 +1281,35 @@ static void menufix(control m)
     HelpExpose(m, getrect(xd->gawin));
 }
 
+static R_KeyName getKeyName(int key) 
+{
+    if (F1 <= key && key <= F10) return knF1 + key - F1 ;
+    else switch (key) {
+	case LEFT: return knLEFT;
+	case UP:   return knUP;
+	case RIGHT:return knRIGHT;
+	case DOWN: return knDOWN;
+	case PGUP: return knPGUP;
+	case PGDN: return knPGDN;
+	case END:  return knEND;
+	case HOME: return knHOME;
+	case INS:  return knINS;
+	case DEL:  return knDEL;	
+	default:   return knUNKNOWN;
+    }
+}    
+    			     
 static void CHelpKeyIn(control w, int key)
 {
     NewDevDesc *dd = (NewDevDesc *) getdata(w);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
+    
+    R_KeyName keyname;
+    
+    if (dd->gettingEvent && dd->keybdHandler) {
+    	keyname = getKeyName(key);
+    	if (keyname > knUNKNOWN) doKeybd(dd, keyname);
+    }
 
     if (xd->replaying) return;
     switch (key) {
@@ -1305,31 +1330,44 @@ static void CHelpKeyIn(control w, int key)
 
 extern Rboolean UserBreak;
 
-static void NHelpKeyIn(control w,int key)
+static void NHelpKeyIn(control w, int key)
 {
+    char keyname[7];
+    
     NewDevDesc *dd = (NewDevDesc *) getdata(w);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
-
-    if (xd->replaying) return;
-    switch (key) {
-      case '\n':  /* ENTER has been translated to newline */
-        xd->enterkey = TRUE;
-	return;
-      case ESC:
-        UserBreak = TRUE;
-        return;
+    
+    if (dd->gettingEvent && dd->keybdHandler) {
+	if (0 < key && key < 32) {
+	    strcpy(keyname, "ctrl- ");
+	    keyname[5] = (char) (key + 'A' - 1);
+    	} else {
+    	    keyname[0] = (char) key;
+	    keyname[1] = '\0';
+	}
+	doKeybd2(dd, keyname);
+    } else {
+	if (xd->replaying) return;
+	switch (key) {
+	  case '\n':  /* ENTER has been translated to newline */
+	    xd->enterkey = TRUE;
+	    return;
+	  case ESC:
+	    UserBreak = TRUE;
+	    return;
+	}
+	if (ggetkeystate() != CtrlKey)
+	    return;
+	key = 'A' + key - 1;
+	if (key == 'C')
+	    menuclpbm(xd->mclpbm);
+	if (dd->displayList == R_NilValue)
+	    return;
+	if (key == 'W')
+	    menuclpwm(xd->mclpwm);
+	else if (key == 'P')
+	    menuprint(xd->mprint);
     }
-    if (ggetkeystate() != CtrlKey)
-        return;
-    key = 'A' + key - 1;
-    if (key == 'C')
-	menuclpbm(xd->mclpbm);
-    if (dd->displayList == R_NilValue)
-	return;
-    if (key == 'W')
-	menuclpwm(xd->mclpwm);
-    else if (key == 'P')
-	menuprint(xd->mprint);
 }
 
 static void mbarf(control m)
@@ -1651,7 +1689,7 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     dd->canGenMouseDown = TRUE;
     dd->canGenMouseMove = TRUE;
     dd->canGenMouseUp = TRUE;
-    dd->canGenKeybd = FALSE;
+    dd->canGenKeybd = TRUE;
 
     return 1;
 }

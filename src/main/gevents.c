@@ -76,7 +76,7 @@ SEXP do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
     
     onKeybd = CAR(args);
     if (TYPEOF(onKeybd) == NILSXP) onKeybd = NULL;
-    else if (!nd->canGenKeybd) errorcall(call, "onMouseUp not supported");
+    else if (!nd->canGenKeybd) errorcall(call, "onKeybd not supported");
     else if (TYPEOF(onKeybd) != CLOSXP) errorcall(call, "invalid onKeybd callback");
     nd->keybdHandler = onKeybd;
     
@@ -133,4 +133,34 @@ void doMouseUp(NewDevDesc *dd, int buttons, double x, double y)
 void doMouseMove(NewDevDesc *dd, int buttons, double x, double y)
 {
     if (dd->mouseMoveHandler) doMouseEvent(dd->mouseMoveHandler, dd, buttons, x, y);
+}
+
+static char * keynames[] = {"Left", "Up", "Right", "Down",
+    			 "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10",
+    			 "F11","F12",
+    			 "PgUp", "PgDn", "End", "Home", "Ins", "Del"};
+
+void doKeybd(NewDevDesc *dd, R_KeyName rkey)
+{
+    doKeybd2(dd, keynames[rkey]);
+}
+
+void doKeybd2(NewDevDesc *dd, char *keyname)
+{
+    SEXP skey, temp;
+    
+    if (dd->keybdHandler) {
+    
+    	dd->gettingEvent = FALSE; /* avoid recursive calls */
+    
+    	PROTECT(skey = allocVector(STRSXP, 1));
+    	SET_STRING_ELT(skey, 0, mkChar(keyname));
+    
+    	PROTECT(temp = lang2(dd->keybdHandler, skey));
+    	dd->eventResult = eval(temp, dd->eventRho);
+    	UNPROTECT(2);
+    	R_FlushConsole();
+    
+    	dd->gettingEvent = TRUE;
+    }
 }

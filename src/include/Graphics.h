@@ -433,8 +433,18 @@ SEXP Rf_displayList(DevDesc *dd);
 
 /* Graphics events */
 
+/* These give the indices of some known keys */    
+
+typedef enum {knUNKNOWN = -1,
+              knLEFT = 0, knUP, knRIGHT, knDOWN,
+              knF1, knF2, knF3, knF4, knF5, knF6, knF7, knF8, knF9, knF10,
+              knF11, knF12,
+              knPGUP, knPGDN, knEND, knHOME, knINS, knDEL} R_KeyName;
+
 void doMouseDown(NewDevDesc *dd, int buttons, double x, double y);
 void doMouseUp  (NewDevDesc *dd, int buttons, double x, double y);
 void doMouseMove(NewDevDesc *dd, int buttons, double x, double y);
+void doKeybd	(NewDevDesc *dd, R_KeyName rkey);
+void doKeybd2	(NewDevDesc *dd, char *keyname);
 
 #endif /* GRAPHICS_H_ */
