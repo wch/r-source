@@ -155,11 +155,10 @@ to create a copy of the source tree specified by @var{module} in the
 subdirectory @file{R} of the current directory, where @var{module}
 specifies one of the four existing flavors of the R sources, and can be
 one of @samp{r-release} (current released version), @samp{r-patched}
-(patched released version), and @samp{r-devel} (development version,
-less stable), and @samp{r-ng} (next generation, unstable).  The rsync
-trees are created directly from the master CVS archive and are updated
-hourly.  The @option{-C} option in the @command{rsync} command is to
-cause it to skip the CVS directories.  Further information on
+(patched released version), and @samp{r-devel} (development version).
+The rsync trees are created directly from the master CVS archive and are
+updated hourly.  The @option{-C} option in the @command{rsync} command
+is to cause it to skip the CVS directories.  Further information on
 @command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
 
 
