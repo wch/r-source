@@ -75,7 +75,7 @@ install.packages(pkgs, lib, repos = CRAN,
     as returned by \code{CRAN.packages}.}
   \item{lib}{character vector giving the library directories where to
     install the packages.  Recycled as needed.}
-  \item{ask}{logical indicating to ask before packages are actually
+  \item{ask}{logical indicating to ask user before packages are actually
     downloaded and installed.}
   \item{installWithVers}{If \code{TRUE}, will invoke the install of the
     package such that it can be referenced by package version.}
@@ -119,9 +119,9 @@ install.packages(pkgs, lib, repos = CRAN,
 
   The main function of the bundle is \code{update.packages}.  First a
   list of all packages found in \code{lib.loc} is created and compared
-  with the packages available at the repostories.  Packages with a newer
-  version are reported and for each one the user can specify if it should be
-  updated.
+  with the packages available at the repostories.  If \code{ask = TRUE}
+  (the default) packages with a newer version are reported and for each
+  one the user can specify if it should be updated.
 #ifdef unix
   If so, the package sources are downloaded from the repositories and
   installed in the respective library path (or \code{instlib}
@@ -166,13 +166,13 @@ install.packages(pkgs, lib, repos = CRAN,
   with one row per package/bundle, row names the package names and
   column names \code{"Package"}, \code{"Version"}, \code{"Priority"},
   \code{"Bundle"}, \code{"Depends"}, \code{"Imports"}, \code{"Suggests"}
-  and \code{"Contains"}.
+  \code{"Contains"} and \code{"Repository"}.
 
   For \code{old.packages}, \code{NULL} or a matrix with one row per
   package/bundle and column names \code{"Package"}, \code{"LibPath"},
-  \code{"Installed"} and \code{"Repository"}.  (The last two columns are
-  version numbers.)
-
+  \code{"Installed"} (the version), \code{"Built"}, \code{"ReposVer"} and
+  \code{"Repository"}.
+  
   For \code{new.packages} a character vector of package/bundle names.
 
   For \code{download.packages}, a two-column matrix of names and

@@ -27,6 +27,16 @@ CRAN.packages <- function(CRAN = getOption("CRAN"), method,
                           contriburl = contrib.url(CRAN))
     available.packages(contriburl = contriburl, method = method)
 
+
+## unexported helper function
+simplifyRepos <- function(repos)
+{
+    tail <- substring(contrib.url("---"), 4)
+    ind <- regexpr(tail, repos, fixed=TRUE)
+    ind <- ifelse(ind > 0, ind-1, nchar(repos))
+    substr(repos, 1, ind)
+}
+
 update.packages <- function(lib.loc = NULL, repos = CRAN,
                             contriburl = contrib.url(repos),
                             CRAN = getOption("CRAN"),
@@ -51,12 +61,17 @@ update.packages <- function(lib.loc = NULL, repos = CRAN,
         for(k in 1:nrow(old)){
             cat(old[k, "Package"], ":\n",
                 "Version", old[k, "Installed"],
-                "in", old[k, "LibPath"],
-                if(checkBuilt) paste("built under", old[k, "Built"]),
+                "installed in", old[k, "LibPath"],
+                if(checkBuilt) paste("built under R", old[k, "Built"]),
                 "\n",
-                "Version", old[k, "Repository"], "on repository")
+                "Version", old[k, "ReposVer"], "available at",
+                simplifyRepos(old[k, "Repository"]))
             cat("\n")
-            answer <- substr(readline("Update (y/N)?  "), 1, 1)
+            answer <- substr(readline("Update (y/N/c)?  "), 1, 1)
+            if(answer == "c" | answer == "c") {
+                cat("cancelled by user\n")
+                return(invisible())
+            }
             if(answer == "y" | answer == "Y")
                 update <- rbind(update, old[k,])
         }
@@ -90,22 +105,22 @@ old.packages <- function(lib.loc = NULL, repos = CRAN,
     if(is.null(available))
         available <- CRAN.packages(contriburl = contriburl, method = method)
 
-    ## for bundles it is sufficient to install the first package
+    ## For bundles it is sufficient to install the first package
     ## contained in the bundle, as this will install the complete bundle
     ## However, a bundle might be installed in more than one place.
-    for(b in unique(instp[,"Bundle"])){
+    for(b in unique(instp[, "Bundle"])){
         if(!is.na(b))
-            for (w in unique(instp[,"LibPath"])) {
-                ok <- which(instp[,"Bundle"] == b & instp[,"LibPath"] == w)
+            for (w in unique(instp[, "LibPath"])) {
+                ok <- which(instp[, "Bundle"] == b & instp[, "LibPath"] == w)
                 if(length(ok) > 1) instp <- instp[-ok[-1], ]
             }
     }
 
     ## for packages contained in bundles use bundle names from now on
-    ok <- !is.na(instp[,"Bundle"])
-    instp[ok,"Package"] <- instp[ok,"Bundle"]
-    ok <- !is.na(available[,"Bundle"])
-    available[ok,"Package"] <- available[ok,"Bundle"]
+    ok <- !is.na(instp[, "Bundle"])
+    instp[ok, "Package"] <- instp[ok, "Bundle"]
+    ok <- !is.na(available[, "Bundle"])
+    available[ok, "Package"] <- available[ok, "Bundle"]
 
     update <- NULL
 
@@ -115,12 +130,12 @@ old.packages <- function(lib.loc = NULL, repos = CRAN,
         if (instp[k, "Priority"] %in% "base") next
         z <- match(instp[k, "Package"], available[,"Package"])
         if(is.na(z)) next
-        onCran <- available[z, ]
-        ## OK if Built: is missing (which it should not be)
+        onRepos <- available[z, ]
+        ## works OK if Built: is missing (which it should not be)
 	if((!checkBuilt || package_version(instp[k, "Built"]) >= minorR) &&
-           package_version(onCran["Version"]) <=
+           package_version(onRepos["Version"]) <=
            package_version(instp[k, "Version"])) next
-        deps <- onCran["Depends"]
+        deps <- onRepos["Depends"]
         if(!is.na(deps)) {
             Rdeps <- tools:::.split_dependencies(deps)[["R"]]
             if(length(Rdeps) > 1) {
@@ -129,11 +144,12 @@ old.packages <- function(lib.loc = NULL, repos = CRAN,
                 if(!res) next
             }
         }
-        update <- rbind(update, c(instp[k, c(1:3,8)], onCran["Version"]))
+        update <- rbind(update, c(instp[k, c(1:3,8)], onRepos["Version"],
+                                  onRepos["Repository"]))
     }
     if(!is.null(update))
         colnames(update) <- c("Package", "LibPath", "Installed", "Built",
-                              "Repository")
+                              "ReposVer", "Repository")
     update
 }
 
@@ -149,8 +165,8 @@ new.packages <- function(lib.loc = NULL, repos = CRAN,
         stop("no installed.packages for (invalid?) lib.loc=", lib.loc)
     if(is.null(available))
         available <- CRAN.packages(contriburl = contriburl, method = method)
-    ## for packages contained in bundles use bundle names from now on
-    ## we don't have enough information to know if they are complete,
+    ## For packages contained in bundles use bundle names from now on.
+    ## We don't have enough information to know if they are complete,
     ## as they may be out of date and the contents may have changed
     ok <- !is.na(instp[,"Bundle"])
     instp[ok,"Package"] <- instp[ok,"Bundle"]
@@ -250,7 +266,7 @@ compareVersion <- function(a, b)
     if(length(b) > length(a)) return(-1) else return(0)
 }
 
-## private functions
+## ------------- private functions --------------------
 .find_bundles <- function(available)
 {
     ## Sort out bundles. Returns a named list of character vectors
