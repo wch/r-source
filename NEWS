@@ -43,6 +43,11 @@ BUG FIXES
 	two or more partial matches before the exact match in the list
 	of attributes.
 
+    o	Rdconv now creates direct HTML hyperlinks when linking to
+	documentation in the same package.  The code now ensures that
+	links which can be resolved within the package are so resolved,
+	even when there are possible resolutions in other packages.
+
 
 
 		CHANGES IN R VERSION 1.6.1

@@ -34,6 +34,9 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02)
   CPU time, for if \code{readline()} is waiting for input, that counts
   (on Windows, but not on Unix).
 }
+\note{
+  Using \code{Rcmd Rprof} needs Windows Perl to be installed.
+}
 \seealso{
   The chapter on ``Tidying and profiling R code'' in ``Writing \R
   Extensions'' (see the \file{doc/manual} subdirectory of the \R source

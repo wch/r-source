@@ -8,12 +8,16 @@
     be absolute or relative.} 
 }
 \description{
-    Use \code{Rcmd REMOVE pkgs} to remove the packages in \code{pkgs} from
-    the default library tree (which is rooted at
-    \file{\$R\_HOME/library}).
+  Use \code{Rcmd REMOVE pkgs} to remove the packages in \code{pkgs} from
+  the default library tree (which is rooted at
+  \file{\$R\_HOME/library}).
 
-    To remove from the library tree \code{lib} instead of the default
-    one, use \code{Rcmd REMOVE -l lib pkgs}.
+  To remove from the library tree \code{lib} instead of the default
+  one, use \code{Rcmd REMOVE -l lib pkgs}.
+}
+\details{
+  Windows Perl and the files for installing from source packages need to
+  be installed.  
 }
 \seealso{
   \code{\link{INSTALL}}
