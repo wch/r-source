@@ -1461,7 +1461,7 @@ static void gc_start_timing(void)
 static void gc_end_timing(void)
 {
 #ifdef HAVE_TIMES
-  double times[4], delta;
+  double times[5], delta;
   R_getProcTime(times);
   delta = R_getClockIncrement();
 
