@@ -374,6 +374,8 @@ function(dir, outDir)
             stop(paste("cannot copy", sQuote(pdffile), "to",
                        sQuote(outVignetteDir)))
     }
+    ## need to change out of this dir before we delete it, at least on Windows
+    setwd(cwd)
     unlink(buildDir, recursive = TRUE)
     invisible()
 }

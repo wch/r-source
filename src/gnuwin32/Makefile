@@ -444,6 +444,7 @@ else
 	  fi; \
 	done
 endif
+	@rm -rf .vignettes # force cleanup
 
 ## ===================== Maintainer targets ========================
 
