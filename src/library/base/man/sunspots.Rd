@@ -1,21 +1,22 @@
 \name{sunspots}
 \alias{sunspots}
-\title{Monthly Mean Relative Sunspot Numbers}
+\title{Monthly Sunspot Numbers, 1749--1983}
 \usage{data(sunspots)}
 \description{
-    Monthly sunspot numbers from 1749 to 1983. Collected at Swiss
-    Federal Observatory, Zurich until 1960, then Tokyo Astronomical
-    Observatory.
+  Monthly mean relative sunspot numbers from 1749 to 1983.  Collected at Swiss
+  Federal Observatory, Zurich until 1960, then Tokyo Astronomical
+  Observatory.
 }
 \format{
-    A time series of monthly data from 1749 to 1983.
+  A time series of monthly data from 1749 to 1983.
 }
 \source{
-    Andrews, D. F. and Herzberg, A. M. (1985)
-    \emph{Data: A Collection of Problems from Many Fields for the
-        Student and Research Worker}.
-    New York: Springer-Verlag.
+  Andrews, D. F. and Herzberg, A. M. (1985)
+  \emph{Data: A Collection of Problems from Many Fields for the
+    Student and Research Worker}.
+  New York: Springer-Verlag.
 }
+\seealso{\code{\link[ts]{sunspot.month}} has a longer (and a bit different) series.}
 \examples{
 data(sunspots)
 plot(sunspots, main = "sunspots data", xlab = "Year",
