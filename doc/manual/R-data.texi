@@ -96,7 +96,7 @@ principal authors of the packages mentioned are
 @item @pkg{netCDF} @tab Thomas Lumley
 @item @pkg{RmSQL} @tab  Torsten Hothorn
 @item @pkg{RMySQL} @tab David James and Saikat DebRoy
-@item @pkg{RODBC} @tab Michael Lapsley
+@item @pkg{RODBC} @tab Michael Lapsley and Brian Ripley
 @item @pkg{RSPerl} @tab Duncan Temple Lang
 @item @pkg{RPgSQL} @tab Timothy Keitt
 @item @pkg{RSPython} @tab Duncan Temple Lang
@@ -1036,38 +1036,263 @@ conversion issues from the user.
 @node R interface packages,  , Overview of RDBMSs, Relational databases
 @section R interface packages
 
-There are four packages available on @acronym{CRAN} to help @R{}
+There are several packages available on @acronym{CRAN} to help @R{}
 communicate with DBMSs.  They provide different levels of abstraction.
 Some provide means to copy whole data frames to and from databases.  All
 have functions to select data within the database via @acronym{SQL}
 queries, and (except @pkg{RmSQL}) to retrieve the result as a whole as a
 data frame or in pieces (usually as groups of rows, but @pkg{RPgSQL} can
-retrieve columns).  All except @pkg{RODBC} are (currently) tied to one
-DBMS.
+retrieve columns).  
+
+All except @pkg{RODBC} are tied to one DBMS, but work is in progress
+towards a unified `front-end' package @pkg{DBI}
+(@uref{http://developer.r-project.org/db}) in conjuction with a
+`back-end', the most developed of which is @pkg{RMySQL}.  Also on CRAN
+are the back-ends @pkg{ROracle} and @pkg{RSQLite} (which works with the
+included DBMS @code{SQLite}, @uref{http://www.hwaci.com/sw/sqlite}).
 
 
 @menu
-* RPgSQL::                      
+* DBI / RMySQL::                
 * RODBC::                       
-* RMySQL::                      
+* RPgSQL::                      
 * RmSQL::                       
 @end menu
 
-@node RPgSQL, RODBC, R interface packages, R interface packages
+
+@node DBI / RMySQL, RODBC, R interface packages, R interface packages
+@subsection Packages DBI and  RMySQL
+@cindex MySQL database system
+
+Package @pkg{RMySQL} on @acronym{CRAN} provides an interface to the
+MySQL database system (see @uref{http://www.mysql.com} and Dubois,
+2000.).  The description here applies to version @code{0.5-0}: earlier
+versions had a substantially different interface.  The current version
+requires the @pkg{DBI} package, and this description will apply with
+minor changes to all the other back-ends to @pkg{DBI}.
+
+
+MySQL exists on Unix/Linux and Windows: as from version 3.23.x (Jan 2001)
+it is released under GPL.  MySQL is a `light and lean' database.  (It
+preserves the case of names where the operating file system is
+case-sensitive, so not on Windows.)  Package @pkg{RMySQL} has been used
+on both Linux and Windows.
+
+@findex dbDriver
+@findex dbConnect
+@findex dbDisconnect
+The call @code{dbDriver("MySQL")} returns a database connection
+manager object, and then a call to @code{dbConnect} opens a database
+connection which can subsequently be closed by a call to the generic
+function @code{dbDisconnect}.
+Use @code{dbDriver("Oracle")} or @code{dbDriver("SQLite")} with those
+DBMSs and @pkg{ROracle} or @pkg{RSQLite} respectively.
+
+@findex dbSendQuery
+@findex dbClearResult
+@findex dbGetQuery
+@acronym{SQL} queries can be sent by either @code{dbSendQuery} or
+@code{dbGetQuery}.  @code{dbGetquery} sends the query and retrieves the
+results as a data frame.  @code{dbSendQuery} sends the query and returns
+an object of class inheriting from @code{"DBIResult"} which can be used
+to retrieve the results, and subsequently used in a call to
+@code{dbClearResult} to remove the result.
+
+@findex fetch
+Function @code{fetch} is used to retrieve some or all of the rows in the
+query result, as a list.  The function @code{dbHasCompleted} indicates if
+all the rows have been fetched, and @code{dbGetRowCount} returns the
+number of rows in the result.
+
+@findex dbReadTable
+@findex dbWriteTable
+@findex dbExistsTable
+@findex dbRemoveTable
+These are convenient interfaces to read/write/test/delete tables in the
+database.  @code{dbReadTable} and @code{dbWriteTable} copy to and from
+an @R{} data frame, mapping the row names of the data frame to the field
+@code{row_names} in the @code{MySQL} table.
+
+@smallexample
+> library(RMySQL) # will load DBI as well
+## open a connection to a MySQL database
+> con <- dbConnect(dbDriver("MySQL"), dbname = "test")
+## list the tables in the database
+> dbListTables(con)
+## load a data frame into the database, deleting any existing copy
+> data(USArrests)
+> dbWriteTable(con, "arrests", USArrests, overwrite = TRUE)
+TRUE
+> dbListTables(con)
+[1] "arrests"
+## get the whole table
+> dbReadTable(con, "arrests")
+               Murder Assault UrbanPop Rape
+Alabama          13.2     236       58 21.2
+Alaska           10.0     263       48 44.5
+Arizona           8.1     294       80 31.0
+Arkansas          8.8     190       50 19.5
+...
+## Select from the loaded table: all on one line
+> dbGetQuery(con, "select row_names, Murder from arrests 
+                   where Rape > 30 order by Murder")
+   row_names Murder
+1   Colorado    7.9
+2    Arizona    8.1
+3 California    9.0
+4     Alaska   10.0
+5 New Mexico   11.4
+6   Michigan   12.1
+7     Nevada   12.2
+8    Florida   15.4
+> dbRemoveTable(con, "arrests")
+> dbDisconnect(con)
+@end smallexample
+
+@node RODBC, RPgSQL, DBI / RMySQL, R interface packages
+@subsection Package RODBC
+@cindex ODBC
+@cindex Open Database Connectivity
+
+Package @pkg{RODBC} on @acronym{CRAN} provides an interface to database
+sources supporting an @acronym{ODBC} interface.  This is very widely
+available, and allows the same @R{} code to access different database
+systems.  @pkg{RODBC} runs on both Linux and Windows, and many database
+systems provide support for @acronym{ODBC}, including most of those on
+Windows (such as Microsoft Access), and MySQL, Oracle and PostgreSQL on
+Unix/Linux.
+
+On Windows ODBC support is normally installed, and current versions are
+available from @uref{http://www.microsoft.com/data/odbc/} as part of MDAC.
+On Unix/Linux you will need an @acronym{ODBC} Driver Manager such as
+unixODBC (@uref{http://www.unixODBC.org}) or iOBDC
+(@uref{http://www.iODBC.org}) and an installed driver for your database
+system.  The FreeODBC project (@uref{http://www.jepstone.net/FreeODBC/})
+is a repository of information related to @acronym{ODBC}.
+
+Two groups of interface functions are provided.  The @code{odbc*} group
+provide a low-level interface to the basic @acronym{ODBC} functions: see
+the help page (@code{?RODBC}) for details.  The @code{sql*} group
+provide an interface between @R{} data frames and @acronym{SQL} tables.
+
+@findex odbcConnect
+@findex odbcDriverConnect
+@findex odbcClose
+@findex close
+@findex sqlTables
+Up to 16 simultaneous connections are possible.  A connection is opened
+by a call to @code{odbcConnect} or @code{odbcDriverConnect} (which on
+Windows allows a database to be selected via dialog boxes) which returns
+a handle used for subsequent access to the database.  A connection is
+closed by @code{close} or @code{odbcClose}.  Details of the tables on a
+connection can be found using @code{sqlTables}.
+
+@findex sqlFetch
+@findex sqlSave
+Function @code{sqlSave} copies an @R{} data frame to a table in the
+database, and @code{sqlFetch} copies a table in the database to an @R{}
+data frame.
+
+@findex sqlQuery
+@findex sqlCopy
+@findex odbcQuery
+@findex sqlGetResults
+@findex odbcFetchRows
+An @acronym{SQL} query can be sent to the database by a call to
+@code{sqlQuery}.  This returns the result in an @R{} data frame.
+(@code{sqlCopy} sends a query to the database and saves the result as a
+table in the database.)  A finer level of control is attained by first
+calling @code{odbcQuery} and then @code{sqlGetResults} to fetch the
+results.  The latter can be used within a loop to retrieve a limited
+number of rows at a time.
+
+@cindex PostgreSQL database system
+Here is an example using PostgreSQL, for which the @acronym{ODBC} driver
+maps column and data frame names to lower case.  We use a database
+@code{testdb} we created earlier, and had the DSN (data source name) set
+up in @file{~/.odbc.ini} under @code{unixODBC}.  Exactly the same code
+worked using MyODBC to access a MySQL database under Linux or Windows
+(where MySQL also maps names to lowercase).  Under Windows,
+@acronym{DSN}s are set up in the @acronym{ODBC} applet in the Control
+Panel (`Data Sources (ODBC)' in the `Administrative Tools' section on
+2000/XP).
+@cindex MySQL database system
+
+@smallexample
+> library(RODBC)
+## tell it to map names to l/case
+> channel <- odbcConnect("testdb", uid="ripley", case="tolower")
+## load a data frame into the database
+> data(USArrests)
+> sqlSave(channel, USArrests, rownames = "state")
+> rm(USArrests)
+## list the tables in the database
+> sqlTables(channel)
+  TABLE_QUALIFIER TABLE_OWNER TABLE_NAME TABLE_TYPE REMARKS
+1                              usarrests      TABLE        
+## list it
+> sqlFetch(channel, "USArrests", rownames = "state")
+               murder assault urbanpop rape
+Alabama          13.2     236       58 21.2
+Alaska           10.0     263       48 44.5
+    ...
+## an SQL query, originally on one line
+> sqlQuery(channel, "select state, murder from USArrests
+           where rape > 30 order by murder")
+       state murder
+1 Colorado      7.9
+2 Arizona       8.1
+3 California    9.0
+4 Alaska       10.0
+5 New Mexico   11.4
+6 Michigan     12.1
+7 Nevada       12.2
+8 Florida      15.4
+## remove the table
+> sqlDrop(channel, "USArrests")
+## close the connection
+> odbcClose(channel)
+@end smallexample
+
+As a simple example of using @acronym{ODBC} under Windows with a Excel
+spreadsheet, suppose that an @acronym{DSN} for spreadsheet
+@file{bdr.xls} has been set up in the Control Panel.  Then we can read
+from the spreadsheet by
+@smallexample
+> library(RODBC)
+> channel <- odbcConnect("bdr.xls")
+## list the spreadsheets
+> sqlTables(channel)
+  TABLE_CAT TABLE_SCHEM        TABLE_NAME   TABLE_TYPE REMARKS
+1 C:\\bdr            NA           Sheet1$ SYSTEM TABLE      NA
+2 C:\\bdr            NA           Sheet2$ SYSTEM TABLE      NA
+3 C:\\bdr            NA           Sheet3$ SYSTEM TABLE      NA
+4 C:\\bdr            NA Sheet1$Print_Area        TABLE      NA
+## retrieve the contents of sheet 1, by either of
+> sh1 <- sqlFetch(channel, "Sheet1")
+> sh1 <- sqlQuery(channel, "select * from [Sheet1$]")
+@end smallexample
+@noindent
+Notice that the specification of the table is different from the name
+returned by @code{sqlTables}: as from version 0.9-1 @code{sqlFetch} is
+able to map the differences.
+
+The ODBC interface to Excel spreadsheets is read-only; you cannot alter
+the spreadsheet data.
+
+@node RPgSQL, RmSQL, RODBC, R interface packages
 @subsection Package RPgSQL
 @cindex PostgreSQL database system
 
-Package @pkg{RPgSQL} at @uref{http://rpgsql.sourceforge.net/} and on
-@acronym{CRAN} provides an interface to @uref{http://www.postgresql.org,
-PostgreSQL}.
+Package @pkg{RPgSQL} at @uref{http://rpgsql.sourceforge.net/} and in the
+@code{Devel} area on @acronym{CRAN} provides an interface to
+@uref{http://www.postgresql.org, PostgreSQL}.  Development appears to
+have ceased.
 
 PostgreSQL is described by its developers as `the most advanced open
 source database server' (Momjian, 2000).  It would appear to be buildable
 for most Unix-alike OSes and Windows (under Cygwin or U/Win).
 PostgreSQL has most of the features of the commercial RDBMSs.
-
-@pkg{RPgSQL} is the most mature and comprehensive of these RDBMS
-interfaces.
 
 @findex db.connect
 @findex db.read.table
@@ -1172,217 +1397,7 @@ restored provided we preserve that field in the query.
 @pkg{RPgSQL} provides means to extend its mapping between @R{} classes
 within a data frame and PostgreSQL types.
 
-
-@node RODBC, RMySQL, RPgSQL, R interface packages
-@subsection Package RODBC
-@cindex ODBC
-@cindex Open Database Connectivity
-
-Package @pkg{RODBC} on @acronym{CRAN} provides an interface to database
-sources supporting an @acronym{ODBC} interface.  This is very widely
-available, and allows the same @R{} code to access different database
-systems.  @pkg{RODBC} runs on both Linux and Windows, and many database
-systems provide support @acronym{ODBC}, including most of those on
-Windows (such as Microsoft Access), and MySQL, Oracle and PostgreSQL on
-Unix/Linux.
-
-You will need an @acronym{ODBC} Driver Manager such as unixODBC
-(@uref{http://www.unixODBC.org}) or iOBDC (@uref{http://www.iODBC.org})
-on Unix/Linux, and an installed driver for your database system.  The
-FreeODBC project (@uref{http://www.jepstone.net/FreeODBC/}) is a
-repository of information related to @acronym{ODBC}.
-
-Two groups of interface functions are provided.  The @code{odbc*} group
-provide a low-level interface to the basic @acronym{ODBC} functions: see
-the help page (@code{?RODBC}) for details.  The @code{sql*} group
-provide an interface between @R{} data frames and @acronym{SQL} tables.
-
-@findex odbcConnect
-@findex odbcClose
-@findex sqlTables
-Up to 16 simultaneous connections are possible.  A connection is opened
-by a call to @code{odbcConnect} which returns a handle used for
-subsequent access to the database.  A connection is closed by
-@code{odbcClose}.  Details of the tables on a connection can be found
-using @code{sqlTables}.
-
-@findex sqlFetch
-@findex sqlSave
-Function @code{sqlSave} copies an @R{} data frame to a table in the
-database, and @code{sqlFetch} copies a table in the database to an @R{}
-data frame.
-
-@findex sqlQuery
-@findex sqlCopy
-@findex odbcQuery
-@findex sqlGetResults
-@findex odbcFetchRows
-An @acronym{SQL} query can be sent to the database by a call to
-@code{sqlQuery}.  This returns the result in an @R{} data frame.
-(@code{sqlCopy} sends a query to the database and saves the result as a
-table in the database.)  A finer level of control is attained by first
-calling @code{odbcQuery} and then @code{sqlGetResults} to fetch the
-results.  The latter can be used within a loop to retrieve a limited
-number of rows at a time.  @code{sqlGetResults} by default returns a
-data frame, but the raw results can also be obtained as a character
-matrix.
-
-@cindex PostgreSQL database system
-Here is an example using PostgreSQL, for which the @acronym{ODBC} driver
-maps column and data frame names to lower case.  We use a database
-@code{testdb} we created earlier, and had the DSN (data source name) set
-up in @file{~/.odbc.ini} under @code{unixODBC}.  Exactly the same code
-worked using MyODBC to access a MySQL database under Linux or Windows NT
-(where MySQL also maps names to lowercase).  Under Windows,
-@acronym{DSN}s are set up in the @acronym{ODBC} applet in the Control
-Panel.
-@cindex MySQL database system
-
-@smallexample
-> library(RODBC)
-## tell it to map names to l/case
-> channel <- odbcConnect("testdb", uid="ripley", case="tolower")
-## load a data frame into the database
-> data(USArrests)
-> sqlSave(channel, USArrests, rownames="state")
-> rm(USArrests)
-## list the tables in the database
-> sqlTables(channel)
-  TABLE_QUALIFIER TABLE_OWNER TABLE_NAME TABLE_TYPE REMARKS
-1                              usarrests      TABLE        
-## list it
-> sqlFetch(channel, "USArrests", rownames = TRUE)
-               murder assault urbanpop rape
-Alabama          13.2     236       58 21.2
-Alaska           10.0     263       48 44.5
-    ...
-## an SQL query, originally on one line
-> sqlQuery(channel, "select state, murder from USArrests
-           where rape > 30 order by murder")
-       state murder
-1 Colorado      7.9
-2 Arizona       8.1
-3 California    9.0
-4 Alaska       10.0
-5 New Mexico   11.4
-6 Michigan     12.1
-7 Nevada       12.2
-8 Florida      15.4
-## remove the table
-> sqlDrop(channel, "USArrests")
-## close the connection
-> odbcClose(channel)
-@end smallexample
-
-As a simple example of using @acronym{ODBC} with a Excel spreadsheet,
-suppose that an @acronym{DSN} for spreadsheet @file{bdr.xls}
-has been set up in the Control Panel.  Then we can read from the
-spreadsheet by
-@smallexample
-> library(RODBC)
-> channel <- odbcConnect("bdr.xls")
-## list the spreadsheets
-> sqlTables(channel)
-  TABLE_CAT TABLE_SCHEM        TABLE_NAME   TABLE_TYPE REMARKS
-1 C:\\bdr            NA           Sheet1$ SYSTEM TABLE      NA
-2 C:\\bdr            NA           Sheet2$ SYSTEM TABLE      NA
-3 C:\\bdr            NA           Sheet3$ SYSTEM TABLE      NA
-4 C:\\bdr            NA Sheet1$Print_Area        TABLE      NA
-## retrieve the contents of sheet 1
-> sh1 <- sqlQuery(channel, "select * from [Sheet1$]")
-@end smallexample
-@noindent
-Notice that the specification of the table is different from the name
-returned by @code{sqlTables}: as from version 0.9-1 @code{sqlFetch} is
-able to map the differences.
-
-@node RMySQL, RmSQL, RODBC, R interface packages
-@subsection Package RMySQL
-@cindex MySQL database system
-
-Package @pkg{RMySQL} on @acronym{CRAN} provides an interface to the
-MySQL database system (see @uref{http://www.mysql.com} and Dubois,
-2000.).  The description here applies to version @code{0.5-0}: earlier
-versions had a substantially different interface.  The current version
-requires the @pkg{DBI} package.
-
-
-MySQL exists on Unix/Linux and Windows: as from version 3.23.x (Jan 2001)
-it is released under GPL.  MySQL is a `light and lean' database.  (It
-preserves the case of names where the operating file system is
-case-sensitive, so not on Windows.)  Package @pkg{RMySQL} has been used
-on both Linux and Windows.
-
-@findex dbDriver
-@findex dbConnect
-@findex dbDisconnect
-The call @code{dbDriver("MySQL")} returns a database connection
-manager object, and then a call to @code{dbConnect} opens a database
-connection which can subsequently be closed by a call to the generic
-function @code{dbDisconnect}.
-
-@findex dbSendQuery
-@findex dbClearResult
-@findex dbGetQuery
-@acronym{SQL} queries can be sent by either @code{dbSendQuery} or
-@code{dbGetQuery}.  @code{dbGetquery} sends the query and retrieves the
-results as a data frame.  @code{dbSendQuery} sends the query and returns
-an object of class inheriting from @code{"DBIResult"} which can be used
-to retrieve the results, and subsequently used in a call to
-@code{dbClearResult} to remove the result.
-
-@findex fetch
-Function @code{fetch} is used to retrieve some or all of the rows in the
-query result, as a list.  The function @code{dbHasCompleted} indicates if
-all the rows have been fetched, and @code{dbGetRowCount} returns the
-number of rows in the result.
-
-@findex dbReadTable
-@findex dbWriteTable
-@findex dbExistsTable
-@findex dbRemoveTable
-These are convenient interfaces to read/write/test/delete tables in the
-database.  @code{dbReadTable} and @code{dbWriteTable} copy to and from
-an @R{} data frame, mapping the row names of the data frame to the field
-@code{row_names} in the @code{MySQL} table.
-
-@smallexample
-> library(RMySQL)
-## open a connection to a MySQL database
-> con <- dbConnect(dbDriver("MySQL"), dbname = "test")
-## list the tables in the database
-> dbListTables(con)
-## load a data frame into the database, deleting any existing copy
-> data(USArrests)
-> dbWriteTable(con, "arrests", USArrests, overwrite = TRUE)
-TRUE
-> dbListTables(con)
-[1] "arrests"
-## get the whole table
-> dbReadTable(con, "arrests")
-               Murder Assault UrbanPop Rape
-Alabama          13.2     236       58 21.2
-Alaska           10.0     263       48 44.5
-Arizona           8.1     294       80 31.0
-Arkansas          8.8     190       50 19.5
-...
-## Select from the loaded table: all on one line
-> dbGetQuery(con, "select row_names, Murder from arrests 
-                   where Rape > 30 order by Murder")
-   row_names Murder
-1   Colorado    7.9
-2    Arizona    8.1
-3 California    9.0
-4     Alaska   10.0
-5 New Mexico   11.4
-6   Michigan   12.1
-7     Nevada   12.2
-8    Florida   15.4
-> dbRemoveTable(con, "arrests")
-> dbDisconnect(con)
-@end smallexample
-
-@node RmSQL,  , RMySQL, R interface packages
+@node RmSQL,  , RPgSQL, R interface packages
 @subsection Package RmSQL
 @cindex Mini SQL database system
 
@@ -1580,9 +1595,11 @@ you found it in.   There are generic functions @code{open} and
 @code{close} with methods to explicitly open and close connections.
 
 @findex gzfile
+@findex bzfile
 @cindex Compressed files
 Files compressed via the algorithm used by @code{gzip} can be used as
-connections created by the function @code{gzfile}.
+connections created by the function @code{gzfile}, whereas files
+compressed by @code{bzip2} can be used via @code{bzfile}.
 
 @cindex Terminal connections
 @findex stdin
