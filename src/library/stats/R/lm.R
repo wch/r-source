@@ -270,8 +270,8 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
 	stop("invalid \'lm\' object:  no terms nor qr component")
     n <- NROW(Qr$qr)
     rdf <- n - p
-    if(rdf != z$df.residual)
-        warning("inconsistent residual degrees of freedom. -- please report!")
+    if(is.na(z$df.residual) || rdf != z$df.residual)
+        warning("residual degrees of freedom in object suggest this is not an \"lm\" fit")
     p1 <- 1:p
     ## do not want missing values substituted here
     r <- z$residuals

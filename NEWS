@@ -722,6 +722,9 @@ BUG FIXES
     o	x <- 2^(0:1000);    plot(x, x^.9, type="l", log="xy")# and
 	x <- 2^-(1070:170); plot(x, x^.9, type="l", log="xy")# now both work
 
+    o	summary.lm asked for a report on a reasonable occurrence, but
+	the check failed to take account of NAs.
+
 
 
 
