@@ -17,6 +17,9 @@ diag(x) <- value
 \arguments{
   \item{x}{a matrix, vector or 1D array.}
   \item{nrow, ncol}{Optional dimensions for the result.}
+  \item{value}{either a single value or a vector of length equal to that
+    of the current diagonal.  Should be of a mode which can be coerced
+    to that of \code{x}.}
 }
 \value{
   If \code{x} is a matrix then \code{diag(x)} returns the diagonal of

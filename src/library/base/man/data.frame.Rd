@@ -42,7 +42,7 @@ as.data.frame(x, row.names = NULL, optional = FALSE)
 is.data.frame(x)
 
 row.names(x)
-row.names(x) <- names
+row.names(x) <- value
 }
 \arguments{
   \item{\dots}{these arguments are of either the form \code{value} or
@@ -59,6 +59,9 @@ row.names(x) <- names
   \item{optional}{logical. If \code{TRUE}, setting row names is
     optional.}
   \item{x}{object of class \code{data.frame}.}
+  \item{value}{a vector with the same length as the number of rows of
+    \code{x}, to be coerced to character.  Duplicated or missing values
+    are not allowed.}
 }
 \value{
   For \code{data.frame(.)} a data frame, a matrix-like stucture whose
