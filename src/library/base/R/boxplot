@@ -78,18 +78,18 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 		nmax <- max(nmax,z[[i]]$n)
 		limits <- range(limits, z[[i]]$stats, z[[i]]$out)
 	}
-	if(!is.null(width)) {
-		if(length(width) != n | any(is.na(width)) | any(width <= 0))
+	if (!is.null(width)) {
+		if (length(width) != n | any(is.na(width)) | any(width <= 0)) 
 			stop("invalid boxplot widths")
-		width <- 0.8*width/max(width)
+		width <- 0.8 * width/max(width)
 	}
-	else if(varwidth) {
-		width <- 0.8*sqrt(z[[i]]$n/nmax)
+	else if (varwidth) {
+		width <- 0.8 * sqrt(unlist(lapply(z, "[[", "n"))/nmax)
 	}
-	if(is.null(width)) {
-		if(n == 1) width <- 0.4
-		else width <- rep(0.8,n)
+	else if (n == 1) {
+		width <- 0.4
 	}
+	else width <- rep(0.8, n)
 	plot.new()
 	plot.window(xlim=c(0.5,n+0.5), ylim=limits, log=log)
 	for(i in 1:n) {
