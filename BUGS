@@ -540,19 +540,7 @@ Date: Tue, 16 Jul 2002 16:59:22 -0400
 Subject: read.table bug
 From: mmcstephen@cogstate.com
 Date: Fri, 19 Jul 2002 05:11:59 +0200 (MET DST)
-* PR# 1821 *
-Subject: Contents
-From: r-devel-request <r-devel-request@stat.math.ethz.ch>
-Date: Tue, 23 Jul 2002 01:25:22 +0900
-* PR# 1822 *
-Subject: Attributes are restored. The set of factor
-From: h-masao <h-masao@ezweb.ne.jp>
-Date: Tue, 23 Jul 2002 01:41:41 +0900
-* PR# 1823 *
-Subject: Some questions
-From: tazi-shin <tazi-shin@jp-t.ne.jp>
-Date: Tue, 23 Jul 2002 02:32:44 +0900
-* PR# 1824 *
-Subject: Contents
-From: sup <sup@yun.co.jp>
-Date: Tue, 23 Jul 2002 02:48:57 +0900
+* PR# 1825 *
+Subject: bug in R-1.5.1 for Mac OS X installer
+From: Kow Kuroda <kkuroda@crl.ucsd.edu>
+Date: Mon, 22 Jul 2002 16:40:26 -0700
