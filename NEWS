@@ -68,6 +68,12 @@ BUG FIXES
     o   A long-standing bug leading to inaccuracy in polyroot() has been
         fixed (PR#751)
 
+    o   A very old bug with eval() not handling a numeric `envir' argument
+        according to specifications has been fixed. [This in particular
+        broke ported S-PLUS code that used eval(..., sys.parent())]. Also,
+	eval() now checks that a numeric `envir' has length one to prevent
+        accidental passing of matrices instead of data frames.
+
 
 		CHANGES IN R VERSION 1.3.0
 

@@ -1312,7 +1312,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP encl;
     volatile SEXP expr, env, tmp;
 
-    int nback;
+    int frame;
     RCNTXT cntxt;
 
     checkArity(op, args);
@@ -1336,13 +1336,12 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case INTSXP:
     case REALSXP:
-	nback = asInteger(env);
-	if (nback==NA_INTEGER)
+	if (length(env) != 1) 
+	    errorcall(call,"numeric envir arg not of length one");
+	frame = asInteger(env);
+	if (frame == NA_INTEGER)
 	    errorcall(call,"invalid environment");
-	if (nback > 0 )
-	    nback -= framedepth(R_GlobalContext);
-	nback = -nback;
-	PROTECT(env = R_sysframe(nback,R_GlobalContext));
+	PROTECT(env = R_sysframe(frame, R_GlobalContext));
 	break;
     default:
 	errorcall(call, "invalid second argument");
