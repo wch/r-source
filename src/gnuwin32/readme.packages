@@ -65,6 +65,8 @@ must edit MkRules and set BUILD=CYGWIN.)
 
 BEWARE: if you have Norton Anti-Virus you may need to disable it.
 
+BEWARE: Don't expect this to work is the path to RHOME contains spaces.
+
 Then
 
 	cd RHOME\src\gnuwin32
