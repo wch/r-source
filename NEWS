@@ -87,9 +87,13 @@ BUG FIXES
         workspace to be restored, but the variable contains an empty
         environment on reload.
 
-    o  density(x) now works also when IQR(x) == 0.
-       density(x, window=...) now works [S compatibility].
+    o   density(x) now works also when IQR(x) == 0.
+        density(x, window=...) now works [S compatibility].
 
+    o   prevent points from being plotted if pch, cex, or col are NA.
+        Does not apply to bg on pch 21--25 (where NA means
+        "transparent") because it would require fixes at the driver
+        level.
 
 
 		CHANGES IN R VERSION 0.90.0
