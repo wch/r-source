@@ -1,7 +1,7 @@
 \name{Palettes}
 \title{Color Palettes}
 \usage{
-function (n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n, gamma = 1)
+rainbow(n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n, gamma = 1)
 heat.colors(n)
 terrain.colors(n)
 topo.colors(n)
@@ -22,8 +22,9 @@ topo.colors(n)
 These functions create a vector of \code{n} ``contiguous'' colors.
 Conceptually, all of these functions actually use (parts of) a line
 cut out of the 3-dimensional color space, parametrized by
-\code{\link{hsv}(r,g,b)}.
-Equispaced hues in RGB space tend to cluster at
+\code{\link{hsv}(h,s,v, gamma)}, where \code{gamma}\eqn{=1} for the
+\emph{foo}\code{.colors} function, and hence,
+equispaced hues in RGB space tend to cluster at
 the red, green and blue primaries.
 
 Some applications such as contouring require a palette
@@ -55,11 +56,11 @@ i <- 1:n
 d <- n/20; dy <- 2*d; j <- n\%/\%4
 plot(i,i+d, type='n', main=paste("color palettes;  n=",n))
 rect(i-.5,     dy, i+.4,   j, col=rainbow(n, start=.7, end=.1))
-text(2*j,    j+dy/4, "rainbow(n, start= .7, end= .1)")
+text(2*j,    j+dy/4,		 "rainbow(n, start=.7, end=.1)")
 rect(i-.5,   j+dy, i+.4, 2*j, col=heat.colors(n))
-text(2*j,  2*j+dy/4, "heat.colors(n)")
+text(2*j,  2*j+dy/4,		 "heat.colors(n)")
 rect(i-.5, 2*j+dy, i+.4, 3*j, col=terrain.colors(n))
-text(2*j,  3*j+dy/4, "terrain.colors(n)")
+text(2*j,  3*j+dy/4,		 "terrain.colors(n)")
 rect(i-.5, 3*j+dy, i+.4, 4*j, col=topo.colors(n))
-text(2*j,  4*j+dy/4, "topo.colors(n)")
+text(2*j,  4*j+dy/4,		 "topo.colors(n)")
 }
