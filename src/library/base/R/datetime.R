@@ -462,7 +462,7 @@ Summary.difftime <- function (x, ..., na.rm = FALSE)
 seq.POSIXt <-
     function(from, to, by, length.out = NULL, along.with = NULL, ...)
 {
-    if (missing(from)) stop("`from` must be specified")
+    if (missing(from)) stop("`from' must be specified")
     if (!inherits(from, "POSIXt")) stop("`from' must be a POSIXt object")
         if(length(as.POSIXct(from)) != 1) stop("`from' must be of length 1")
     if (!missing(to)) {

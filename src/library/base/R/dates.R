@@ -189,7 +189,7 @@ mean.Date <- function (x, ...)
 
 seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
 {
-    if (missing(from)) stop("`from` must be specified")
+    if (missing(from)) stop("`from' must be specified")
     if (!inherits(from, "Date")) stop("`from' must be a Date object")
         if(length(as.Date(from)) != 1) stop("`from' must be of length 1")
     if (!missing(to)) {
