@@ -1036,7 +1036,6 @@ int winaddmenuitem(char * item, char * menu, char * action, char *errmsg)
     return 0;
 }
 
-#define NEW
 int windelmenu(char * menu, char *errmsg)
 {
     int i, j;
@@ -1048,7 +1047,6 @@ int windelmenu(char * menu, char *errmsg)
 	strcpy(errmsg, "menu does not exist");
 	return 3;
     }
-#ifdef NEW
     remove_menu_item(usermenus[i]);
     nmenus--;
     for(j = i; j < nmenus; j++) {
@@ -1056,9 +1054,6 @@ int windelmenu(char * menu, char *errmsg)
 	strcpy(usermenunames[j], usermenunames[j+1]);
     }
     show(RConsole);
-#else
-    error("cannot currently delete menus");
-#endif
     return 0;
 }
 
