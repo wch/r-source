@@ -59,7 +59,7 @@ $(srcdir)/config.h.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/stamp-h.in
 $(srcdir)/stamp-h.in: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/configure.ac $(top_srcdir)/aclocal.m4
 	@cd $(top_srcdir) && $(AUTOHEADER)
 	@echo timestamp > $@ 2> /dev/null
-Rconfig.h: config.h
+Rconfig.h: config.h $(top_srcdir)/tools/GETCONFIG
 	@$(SHELL) $(top_srcdir)/tools/GETCONFIG > $@
 Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@$(SHELL) $(top_srcdir)/tools/GETVERSION > $@
