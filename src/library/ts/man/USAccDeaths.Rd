@@ -1,8 +1,8 @@
 % file USAccDeaths.Rd
 % copyright (C) 1994-9 W. N. Venables and B. D. Ripley
 %
-\name{USAccdeaths}
-\alias{USAccdeaths}
+\name{USAccDeaths}
+\alias{USAccDeaths}
 \title{
     Accidental Deaths in the US 1973--1978
 }
