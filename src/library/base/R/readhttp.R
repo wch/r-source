@@ -3,8 +3,8 @@ copy.url<-function(url,port=80,error.is.fatal=TRUE,check.MIME.type=TRUE,file=tem
 	urlel<-strsplit(url,"/")[[1]]
 	if (urlel[1]!="http:")
 		stop("Not an http:// URL")
-	host<-urlel[2]
-	rurl<-paste(c("",urlel[-(1:2)]),collapse="/")
+	host<-urlel[3]
+	rurl<-paste(c("",urlel[-(1:3)]),collapse="/")
 	a<-make.socket(host,port=port)
 	on.exit(close.socket(a))
 	headreq<-paste("HEAD",rurl, "HTTP/1.0\r\nConnection: Keep-Alive\r\nAccept: text/plain\r\n\r\n")

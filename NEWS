@@ -78,6 +78,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   strsplit fix broke copy.url. 
+
     o	0 ^ -1 == Inf  &  min(NA,NaN) is NA now always
 
     o	R CMD xxx sets $R_HOME/bin to be first in PATH
