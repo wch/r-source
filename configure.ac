@@ -1379,12 +1379,35 @@ LIBS="${LIBS1} ${LIBS2}"
 ## <FIXME>
 ## This should not be necessary when using libtool for linking.
 ## In any case, is this really good enough?
+## On Linux, do not add the ld.so system directories '/lib' and
+## '/usr/lib', so that the entries from '/etc/ld.so.conf' are not
+## shadowed (otherwise, e.g. optimized ATLAS libs would not be used).
+case "${host_os}" in
+  linux*)
+    r_ld_library_defaults="/usr/lib:/lib"
+    ;;
+  *)
+    r_ld_library_defaults=
+    ;;
+esac
 for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
            ${TCLTK_LIBS} ${GNOME_LIBS}; do
   case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
-      R_SH_VAR_ADD(R_LD_LIBRARY_PATH, [${lib}], [${PATH_SEPARATOR}])
+      r_want_lib=true
+      ## Do not add something twice, or default paths.
+      r_save_IFS="${IFS}"; IFS="${PATH_SEPARATOR}"
+      for dir in ${R_LD_LIBRARY_PATH}${IFS}${r_ld_library_defaults}; do
+        if test x"${dir}" = x"${lib}"; then
+           r_want_lib=false
+           break
+        fi
+      done
+      IFS="${r_save_IFS}"
+      if test x"${r_want_lib}" = xtrue; then
+        R_SH_VAR_ADD(R_LD_LIBRARY_PATH, [${lib}], [${PATH_SEPARATOR}])
+      fi
       ;;
   esac
 done
