@@ -141,7 +141,7 @@ static void cat_printsep(SEXP sep, int ntot)
 
 SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP a, objs, file, fill, sepr, labs, s;
+    SEXP objs, file, fill, sepr, labs, s;
     FILE *savefp;
     int havefile, append;
     int w, i, iobj, n, nobjs, pwidth, width, sepw, lablen, ntot, nlsep, nlines;
@@ -190,6 +190,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (append == NA_LOGICAL)
 	errorcall(call, "invalid append specification\n");
 
+    savefp = NULL;		/* -Wall */
     if (strlen(CHAR(STRING(file)[0])) > 0) {
 	savefp = R_Outputfile;
 	if (append)
@@ -220,7 +221,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    cat_printsep(sepr, 0);
 	n = length(s);
 	if (n > 0) {
-	    if (labs != R_NilValue && a == objs) {
+	    if (labs != R_NilValue && (iobj == 0)) {
 		Rprintf("%s ", CHAR(STRING(labs)[nlines]));
 		width += strlen(CHAR(STRING(labs)[nlines % lablen])) + 1;
 		nlines++;
@@ -234,7 +235,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    w = strlen(p);
 	    cat_sepwidth(sepr, &sepw, ntot);
-	    if (a != objs && (width + w + sepw > pwidth)) {
+	    if ((iobj > 0) && (width + w + sepw > pwidth)) {
 		cat_newline(labs, &width, lablen, nlines);
 		nlines++;
 	    }
