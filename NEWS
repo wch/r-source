@@ -28,6 +28,11 @@ NEW FEATURES
     o   `Rcomplex' is preferred to `complex' (a future reserved word
 	in C) for R complex objects passed to C.
 
+    o   new function dir.create() for platform-independence.
+
+    o   help.search() creates a database for faster searching later in
+	the R session.
+
 
 BUG FIXES
 
