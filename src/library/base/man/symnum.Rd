@@ -8,11 +8,11 @@
 symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
        symbols=c(" ", ".", ",", "+", "*", "B"),
        legend = length(symbols) >= 3,
-       na="?", eps=1e-5,
-       corr = missing(cutpoints), show.max = if(corr) "1", show.min = NULL,
-       abbr.colnames = length(dimnames(ans)[[2]]),
+       na = "?", eps = 1e-5, corr = missing(cutpoints),
+       show.max = if(corr) "1", show.min = NULL,
+       abbr.colnames = has.colnames,
        lower.triangular = corr & is.matrix(x),
-       diag.lower.tri = corr & !is.null(show.max))
+       diag.lower.tri   = corr & !is.null(show.max))
 }
 \arguments{
   \item{x}{numeric or logical vector or array.}
