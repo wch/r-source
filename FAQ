@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-18, 2003-11-23
+Version 1.8-19, 2003-11-26
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1837,6 +1837,11 @@ distributions of R.)
      The finished classifier will consist of a classification tree with one
      such k-nn classifier in each leaf.
 
+*labstatR*
+     Functions for the book "Laboratorio di statistica con R" by S. M.
+     Iacus and G. Masarotto, 2002, McGraw-Hill.  Function names and
+     documentation in Italian.
+
 *lars*
      Least Angle Regression, Lasso and Forward Stagewise: efficient
      procedures for fitting an entire lasso sequence with the cost of a
@@ -2152,6 +2157,10 @@ distributions of R.)
 *relimp*
      Functions to facilitate inference on the relative importance of
      predictors in a linear or generalized linear model.
+
+*rgdal*
+     Provides bindings to Frank Warmerdam's Geospatial Data Abstraction
+     Library (GDAL).
 
 *rgenoud*
      R version of GENetic Optimization Using Derivatives.

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-18, @value{FAQ-YEAR}-11-23
+@set FAQ-VERSION 1.8-19, @value{FAQ-YEAR}-11-26
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -440,17 +440,17 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-11-23:
+@c Linux binaries as of 2003-11-26:
 @c
 @c debian    woody i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
 @c           sarge i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
 @c mandrake  9.0   i386  1.8.0  Michele Alzetta <mikalzet@libero.it>
 @c           9.1   i386  1.8.0  Michele Alzetta <mikalzet@libero.it>
-@c redhat    7.x   i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
-@c           8.x   i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
-@c           9     i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
+@c redhat    7.x   i386  1.8.1  Martyn Plummer <plummer@iarc.fr>
+@c           8.x   i386  1.8.1  Martyn Plummer <plummer@iarc.fr>
+@c           9     i386  1.8.1  Martyn Plummer <plummer@iarc.fr>
 @c suse      7.3   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           8.0   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.0   i386  1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.1   i386  1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.2   i386  1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           9.0   i386  1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
@@ -2016,6 +2016,10 @@ backwards selection), and choose scaling (from among no scaling, scaling
 each column by its SD, or scaling each column by its MAD).  The finished
 classifier will consist of a classification tree with one such
 @math{k}-nn classifier in each leaf.
+@item labstatR
+Functions for the book ``Laboratorio di statistica con R'' by
+S. M. Iacus and G. Masarotto, 2002, McGraw-Hill.  Function names and
+documentation in Italian.
 @item lars
 Least Angle Regression, Lasso and Forward Stagewise: efficient
 procedures for fitting an entire lasso sequence with the cost of a
@@ -2260,6 +2264,9 @@ Breiman's random forest classifier.
 @item relimp
 Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model.
+@item rgdal
+Provides bindings to Frank Warmerdam's Geospatial Data Abstraction 
+Library (GDAL).
 @item rgenoud
 R version of GENetic Optimization Using Derivatives.
 @item rimage
