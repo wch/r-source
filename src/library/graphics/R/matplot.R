@@ -25,7 +25,7 @@ matplot <- function(x, y, type = "p",
     ylabel <- if (!missing(y)) deparse(substitute(y))
     ##
     if(missing(x)) {
-	if(missing(y)) stop("Must specify at least one of 'x' and 'y'")
+	if(missing(y)) stop("must specify at least one of 'x' and 'y'")
 	else x <- 1:NROW(y)
     } else if(missing(y)) {
 	y <- x;		ylabel <- xlabel

@@ -31,7 +31,7 @@ function (x = seq(0, 1, len = nrow(z)),
         x <- x$x
     }
     if (any(diff(x) <= 0) || any(diff(y) <= 0))
-        stop("increasing x and y values expected")
+        stop("increasing 'x' and 'y' values expected")
 
     mar.orig <- (par.orig <- par(c("mar","las","mfrow")))$mar
     on.exit(par(par.orig))

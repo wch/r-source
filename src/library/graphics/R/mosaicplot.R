@@ -154,9 +154,9 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     if(dimd == 0 || any(dx == 0))
         stop("'x' must not have 0 dimensionality")
     if(length(list(...)))
-        warning("extra argument(s) ",
-                paste(sQuote(names(list(...))), collapse = ", "),
-                " will be disregarded")
+        warning(gettextf("extra argument(s) %s will be disregarded",
+                         paste(sQuote(names(list(...))), collapse = ", ")),
+                domain = NA)
     ##-- Set up 'Ind' matrix : to contain indices and data
     Ind <- 1:dx[1]
     if(dimd > 1) {
@@ -186,7 +186,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         if(is.logical(shade))
             shade <- c(2, 4)
         else if(any(shade <= 0) || length(shade) > 5)
-            stop("invalid shade specification")
+            stop("invalid 'shade' specification")
         extended <- TRUE
         shade <- sort(shade)
         breaks <- c(-Inf, - rev(shade), 0, shade, Inf)
@@ -229,7 +229,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     }
     if (!is.null(sort)) {
         if(length(sort) != dimd)
-            stop("length(sort) does not conform to dim(x)")
+            stop("length of 'sort' does not conform to 'dim(x)'")
         ## Sort columns.
         Ind[,1:dimd] <- Ind[,sort]
         off <- off[sort]

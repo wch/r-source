@@ -8,7 +8,7 @@ dev2bitmap <- function(file, type="png256", height=6, width=6, res=72,
     if(is.null(gsexe) || nchar(gsexe) == 0) {
         gsexe <- "gs"
         rc <- system(paste(gsexe, "-help > /dev/null"))
-        if(rc != 0) stop("sorry, gs cannot be found")
+        if(rc != 0) stop("sorry, 'gs' cannot be found")
     }
     gshelp <- system(paste(gsexe, "-help"), intern=TRUE)
     st <- grep("^Available", gshelp)
@@ -16,8 +16,10 @@ dev2bitmap <- function(file, type="png256", height=6, width=6, res=72,
     gsdevs <- gshelp[(st+1):(en-1)]
     devs <- c(strsplit(gsdevs, " "), recursive=TRUE)
     if(match(type, devs, 0) == 0)
-        stop("device ", type, " is not available\n",
-             "Available devices are", paste(gsdevs, collapse="\n"))
+        stop(gettextf("device '%s' is not available\n", type),
+             gettextf("Available devices are %s",
+                      paste(gsdevs, collapse="\n")),
+             domain = NA)
     if(missing(pointsize)) pointsize <- 1.5*min(width, height)
     tmp <- tempfile("Rbit")
     on.exit(unlink(tmp))
@@ -49,7 +51,7 @@ bitmap <- function(file, type="png256", height=6, width=6, res=72,
     if(is.null(gsexe) || nchar(gsexe) == 0) {
         gsexe <- "gs"
         rc <- system(paste(gsexe, "-help > /dev/null"))
-        if(rc != 0) stop("sorry, gs cannot be found")
+        if(rc != 0) stop("sorry, 'gs' cannot be found")
     }
     gshelp <- system(paste(gsexe, "-help"), intern=TRUE)
     st <- grep("^Available", gshelp)
@@ -57,8 +59,10 @@ bitmap <- function(file, type="png256", height=6, width=6, res=72,
     gsdevs <- gshelp[(st+1):(en-1)]
     devs <- c(strsplit(gsdevs, " "), recursive=TRUE)
     if(match(type, devs, 0) == 0)
-        stop("device ", type, " is not available\n",
-             "Available devices are", paste(gsdevs, collapse="\n"))
+        stop(gettextf("device '%s' is not available\n", type),
+             gettextf("Available devices are %s",
+                      paste(gsdevs, collapse="\n")),
+             domain = NA)
     if(missing(pointsize)) pointsize <- 1.5*min(width, height)
     cmd <- paste("|", gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
                  " -r", res,

@@ -66,7 +66,7 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
     if(is.null(text.width))
 	text.width <- max(strwidth(legend, units="user", cex=cex))
     else if(!is.numeric(text.width) || text.width < 0)
-	stop("text.width must be numeric, >= 0")
+	stop("'text.width' must be numeric, >= 0")
 
     xc <- Cex * xinch(cin[1], warn.log=FALSE)# [uses par("usr") and "pin"]
     yc <- Cex * yinch(cin[2], warn.log=FALSE)

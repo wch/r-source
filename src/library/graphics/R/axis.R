@@ -26,7 +26,7 @@ axTicks <- function(side, axp=NULL, usr=NULL, log=NULL) {
     else if(!is.logical(log) || any(is.na(log))) stop("invalid 'log'")
     if(log && axp[3] > 0) { ## special log-scale axp[]
         if(!any((iC <- as.integer(axp[3])) == 1:3))
-            stop("invalid positive axp[3]")
+            stop("invalid positive 'axp[3]'")
         if(is.null(usr)) usr <- par("usr")[if(is.x) 1:2 else 3:4]
         else if(!is.numeric(usr) || length(usr) != 2) stop("invalid 'usr'")
         ii <- round(log10(axp[1:2]))

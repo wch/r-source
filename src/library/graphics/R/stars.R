@@ -20,9 +20,9 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
     if (is.data.frame(x))
 	x <- data.matrix(x)
     else if (!is.matrix(x))
-	stop("x must be a matrix or a data frame")
+	stop("'x' must be a matrix or a data frame")
     if (!is.numeric(x))
-	stop("data in x must be numeric")
+	stop("data in 'x' must be numeric")
 
     n.loc <- nrow(x)
     n.seg <- ncol(x)
@@ -53,9 +53,9 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
             if (is.data.frame(locations))
                 locations <- data.matrix(locations)
             if (!is.matrix(locations) || ncol(locations) != 2)
-                stop("locations must be a 2-column matrix.")
+                stop("'locations' must be a 2-column matrix.")
             if (n.loc != nrow(locations))
-                stop("number of rows of locations and x must be equal.")
+                stop("number of rows of 'locations' and 'x' must be equal.")
         }
         if(missing(flip.labels) || !is.logical(flip.labels))
             flip.labels <- FALSE # have no grid
@@ -73,7 +73,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 	    seq(0, pi, length=n.seg)
 
     if (length(angles) != n.seg)
-	stop("length(angles) must be the same as ncol(x)")
+	stop("length of 'angles' must equal 'ncol(x)'")
 
     ## Missing values are treated as 0
     if (scale) {

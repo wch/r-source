@@ -33,7 +33,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     ##   as detailed above.
 
     if(!is.array(x))
-        stop("x must be an array")
+        stop("'x' must be an array")
     if(length(dim(x)) == 2) {
         x <- if(is.null(dimnames(x)))
             array(x, c(dim(x), 1))
@@ -41,7 +41,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
             array(x, c(dim(x), 1), c(dimnames(x), list(NULL)))
     }
     if(length(dim(x)) != 3)
-        stop("x must be 2- or 3-dimensional")
+        stop("'x' must be 2- or 3-dimensional")
     if(any(dim(x)[1:2] != 2))
         stop("table for each stratum must be 2 by 2")
     dnx <- dimnames(x)
@@ -60,7 +60,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
 
     if(!((length(conf.level) == 1) && is.finite(conf.level) &&
          (conf.level >= 0) && (conf.level < 1)))
-        stop("conf.level must be a single number between 0 and 1")
+        stop("'conf.level' must be a single number between 0 and 1")
     if(conf.level == 0)
         conf.level <- FALSE
 
@@ -105,7 +105,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
             else if(margin %in% c(1, 2))
                 y <- prop.table(tab, margin)
             else
-                stop("incorrect margin specification")
+                stop("incorrect 'margin' specification")
         }
         else if(std == "ind.max")
             y <- tab / max(tab)

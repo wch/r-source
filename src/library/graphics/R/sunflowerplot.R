@@ -29,7 +29,7 @@ sunflowerplot <-
         number <- diff(c((1:n)[first], n + 1))
     } else {
         if(length(number) != n)
-            stop("number must have same length as x and y")
+            stop("'number' must have same length as 'x' and 'y'")
         np <- number > 0
         x <- xy$x[np]
         y <- xy$y[np]

@@ -48,7 +48,7 @@ plot.design <-
     fname <- deparse(substitute(fun))
     fun <- match.fun(fun)
     if (!(is.data.frame(x) | inherits(x,"formula")))
-	stop("x must be a dataframe or a formula")
+	stop("'x' must be a dataframe or a formula")
 
     ## case 'switch' :
     if(is.data.frame(x)) {
@@ -65,7 +65,7 @@ plot.design <-
 	    ynames <- y
 	    y <- data.frame(x[,y])
 	    if(sum(sapply(y, is.numeric)) != ncol(y)) {
-		stop("a variable in y is not numeric")
+		stop("a variable in 'y' is not numeric")
 	    }
 	    x <- x[,sapply(x, is.factor)]
 	    xnames <- names(x)
