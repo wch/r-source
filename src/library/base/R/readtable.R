@@ -22,11 +22,12 @@ read.table <-
 	header <- TRUE
 
     if (header) { # read in the header
-	col.names <- scan(file, what="", sep=sep, quote=quote, nlines=1,
-			  quiet=TRUE, skip=skip, strip.white=TRUE)
-	skip <- skip + 1
+        colnm <- scan(file, what="", sep=sep, quote=quote, nlines=1,
+                      quiet=TRUE, skip=skip, strip.white=TRUE)
+        skip <- skip + 1
 	row.lens <- row.lens[-1]
 	nlines <- nlines - 1
+        if(missing(col.names)) col.names <- colnm
     } else if (missing(col.names))
 	col.names <- paste("V", 1:max(row.lens), sep="")
 
