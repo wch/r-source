@@ -16,7 +16,7 @@ default method.
 }
 \value{
   The ``NA action'' which should be applied to \code{x} whenever
-  \code{NA}s are not desired.
+  \code{\link{NA}}s are not desired.
 }
 \seealso{
 \code{\link{options}("na.action")}, \code{\link{na.omit}}, \code{\link{na.fail}}
