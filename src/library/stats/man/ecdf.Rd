@@ -28,9 +28,9 @@ ecdf(x)
 }
 \details{
   The e.c.d.f. (empirical cumulative distribution function)
-  \eqn{F_n}{Fn} is a step
-  function with jump \eqn{1/n} at each observation (possibly with
-  multiple jumps at one place if there are ties).
+  \eqn{F_n}{Fn} is a step function with jump \eqn{1/n} at each
+  observation (possibly with multiple jumps at one place if there are
+  ties).  Missing values are ignored.
 
   For observations
   \code{x}\eqn{= (}\eqn{x_1,x_2}{x1,x2}, \ldots \eqn{x_n)}{xn)},

@@ -141,6 +141,8 @@ BUG FIXES
 	spline() and splinefun() now also work with missing values by
 	omiting them.
 
+    o   ecdf() was failing on inputs containing NAs. (Part of PR#7292)
+
 
 
 	*********************************************************
