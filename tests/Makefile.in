@@ -11,16 +11,19 @@ subdir = tests
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+test-src-gct = \
+	eval-etc.R \
+	simple-true.R
 test-src-strict-1 = \
+	$(test-src-gct) \
 	arith-true.R \
 	arith.R \
 	d-p-q-r-tests.R \
-	eval-etc.R \
 	is-things.R \
 	lm-tests.R \
 	primitive-funs.R \
-	method-dispatch.R \
-	simple-true.R
+	method-dispatch.R
+
 test-src-strict-auto = \
 	isas-tests.R
 test-src-sloppy-1 = \
@@ -44,7 +47,8 @@ test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
-test-out-gct = eval-etc.Rout-gct
+test-out-gct = $(test-src-gct:.R=.Rout-gct)
+
 test-out = $(test-src:.R=.Rout) $(test-out-gct)
 
 .SUFFIXES:
@@ -89,10 +93,12 @@ FORCE:
 
 .R.Rout-gct:
 	@echo "running gctorture() + \`$<'"
-	@echo 'gctorture()'| cat - $< | $(R) > $@
+	@(echo '.ptime <- proc.time(); gctorture()' ; cat $< ;\
+	  echo 'cat("Time used {gctorture()}:", proc.time() - .ptime, "\n")')\
+	 | $(R) > $@
 	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; $(MAKE) $$Ro ;\
 	  echo @ECHO_N@ "comparing \`$@' to \`$$Ro' ...@ECHO_C@"; \
-	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $$Ro $(RVAL_IF_DIFF) || exit 1; \
+	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $$Ro  1 || exit 1; \
 	  mv $@.fail $@; \
 	  echo "@ECHO_T@ OK"
 
