@@ -1,13 +1,4 @@
 
-# This should be the only grid global variable(?)
-# It contains the list of state structures corresponding to the
-# state for each device.
-# The state structures are stored in here so that they do not
-# get garbage collected.
-.GRID.STATE <- vector("list", 64)
-## 64 comes from the maximum number of R devices allowed to be open at
-## one time, see R_MaxDevices in Graphics.h.
-
 # FIXME:  all grid functions should check that .grid.started is TRUE
 .grid.loaded <- FALSE
 

@@ -2,6 +2,16 @@
 ## assigned here to protect from GC, but otherwise unused at R level
 .GridEvalEnv <- new.env()
 
+# This should be the only grid global variable(?)
+# It contains the list of state structures corresponding to the
+# state for each device.
+# The state structures are stored in here so that they do not
+# get garbage collected.
+assign(".GRID.STATE", vector("list", 64), envir = .GridEvalEnv)
+## 64 comes from the maximum number of R devices allowed to be open at
+## one time, see R_MaxDevices in Graphics.h.
+
+
 .onLoad <- function(lib, pkg)
 {
     library.dynam( "grid", pkg, lib )

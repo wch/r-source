@@ -72,9 +72,10 @@ SEXP L_initGrid(SEXP GridEvalEnv)
 SEXP L_killGrid() 
 {
     GEunregisterSystem(gridRegisterIndex);
-    /* FIXME: Should "remove" the variable, not just NULL it
+    /* This variable lives in an environment that goes away with the
+       namespace, and this is only called on .onUnload.
      */
-    setSymbolValue(".GRID.STATE", R_NilValue);
+    /* setSymbolValue(".GRID.STATE", R_NilValue); */
     return R_NilValue;
 }
 
