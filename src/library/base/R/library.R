@@ -152,7 +152,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 "has been moved back to package", sQuote("MASS"), "\n")
             have.VR <- "package:MASS" %in% search()
             if(!have.VR) {
-                if(require(MASS, quietly=TRUE))
+                if(require("MASS", quietly=TRUE))
                     cat("Package", sQuote("MASS"),
                         "has now been loaded\n")
                 else {
