@@ -1097,6 +1097,8 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	GSavePars();
 
+	GP->xpd = xpd;
+
 	GMode(1);
 	for (i = 0; i < n; i++) {
 		xx = xt(x[i % n]);
