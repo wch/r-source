@@ -304,6 +304,9 @@ BUG FIXES
 	returning character information, so in particular `*' was
 	wrongly centred as a plotting symbol.
 
+    o	The x11() device no longer crashes R if a font is not found,
+	and will warn if there is a size mismatch of more than 10%.
+
 
 
 		CHANGES IN R VERSION 1.0.1
