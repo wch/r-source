@@ -1,7 +1,7 @@
 La.eigen <- function (x, symmetric, only.values = FALSE,
                       method = c("dsyevr", "dsyev"))
 {
-    if(!is.numeric(x) && !is.complex(x))
+    if(!(typeof(x) %in% c("double","complex")))
 	stop("argument to La.eigen must be numeric or complex")
     method <- match.arg(method)
     if(is.complex(x) && method == "dsyevr") {
