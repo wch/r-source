@@ -709,6 +709,38 @@ static SEXP CreateGrad(SEXP names)
     return p;
 }
 
+static SEXP CreateHess(SEXP names)
+{
+    SEXP p, q, data, dim, dimnames;
+    int i, n;
+    n = length(names);
+    PROTECT(dimnames = lang4(R_NilValue, R_NilValue, R_NilValue, R_NilValue));
+    SETCAR(dimnames, install("list"));
+    p = install("c");
+    PROTECT(q = allocList(n));
+    SETCADDR(dimnames, LCONS(p, q));
+    UNPROTECT(1);
+    for(i=0 ; i<n ; i++) {
+	SETCAR(q, allocVector(STRSXP, 1));
+	SET_STRING_ELT(CAR(q), 0, STRING_ELT(names, i));
+	q = CDR(q);
+    }
+    SETCADDDR(dimnames, duplicate(CADDR(dimnames)));
+    PROTECT(dim = lang4(R_NilValue, R_NilValue, R_NilValue,R_NilValue));
+    SETCAR(dim, install("c"));
+    SETCADR(dim, lang2(install("length"), install(".value")));
+    SETCADDR(dim, allocVector(REALSXP, 1));
+    REAL(CADDR(dim))[0] = length(names);
+    SETCADDDR(dim, allocVector(REALSXP, 1));    
+    REAL(CADDDR(dim))[0] = length(names);
+    PROTECT(data = allocVector(REALSXP, 1));
+    REAL(data)[0] = 0;
+    PROTECT(p = lang4(install("array"), data, dim, dimnames));
+    p = lang3(install("<-"), install(".hessian"), p);
+    UNPROTECT(4);
+    return p;
+}
+
 static SEXP DerivAssign(SEXP name, SEXP expr)
 {
     SEXP ans, newname;
@@ -716,6 +748,44 @@ static SEXP DerivAssign(SEXP name, SEXP expr)
     PROTECT(newname = allocVector(STRSXP, 1));
     SET_STRING_ELT(newname, 0, name);
     SETCADR(ans, lang4(install("["), install(".grad"), R_MissingArg, newname));
+    UNPROTECT(2);
+    return ans;
+}
+
+static SEXP lang5(SEXP s, SEXP t, SEXP u, SEXP v, SEXP w)
+{
+    PROTECT(s);
+    s = LCONS(s, list4(t, u, v, w));
+    UNPROTECT(1);
+    return s;
+}
+
+static SEXP HessAssign1(SEXP name, SEXP expr)
+{
+    SEXP ans, newname;
+    PROTECT(ans = lang3(install("<-"), R_NilValue, expr));
+    PROTECT(newname = allocVector(STRSXP, 1));
+    SET_STRING_ELT(newname, 0, name);
+    SETCADR(ans, lang5(install("["), install(".hessian"), R_MissingArg,
+		       newname, newname));
+    UNPROTECT(2);
+    return ans;
+}
+
+static SEXP HessAssign2(SEXP name1, SEXP name2, SEXP expr)
+{
+    SEXP ans, newname1, newname2;
+    PROTECT(newname1 = allocVector(STRSXP, 1));
+    PROTECT(newname2 = allocVector(STRSXP, 1));
+    SET_STRING_ELT(newname1, 0, name1);
+    SET_STRING_ELT(newname2, 0, name2);
+    ans = lang3(install("<-"),
+		lang5(install("["), install(".hessian"), R_MissingArg,
+		      newname1, newname2),
+		lang3(install("<-"),
+		      lang5(install("["), install(".hessian"), R_MissingArg,
+			    newname2, newname1),
+		      expr));
     UNPROTECT(2);
     return ans;
 }
@@ -732,6 +802,16 @@ static SEXP AddGrad()
     return ans;
 }
 
+static SEXP AddHess()
+{
+    SEXP ans;
+    PROTECT(ans = mkString("hessian"));
+    PROTECT(ans = lang3(install("attr"), install(".value"), ans));
+    ans = lang3(install("<-"), ans, install(".hessian"));
+    UNPROTECT(2);
+    return ans;
+}
+
 static SEXP Prune(SEXP lst)
 {
     if (lst == R_NilValue)
@@ -744,9 +824,9 @@ static SEXP Prune(SEXP lst)
 
 SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, expr, funarg, names;
-    int f_index, *d_index;
-    int i, nexpr, nderiv=0;
+    SEXP ans, ans2, expr, funarg, names;
+    int f_index, *d_index, *d2_index;
+    int i, j, k, nexpr, nderiv=0, hessian;
     char *vmax;
     checkArity(op, args);
     vmax = vmaxget();
@@ -765,15 +845,29 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(tag) || length(tag) < 1
 	|| length(STRING_ELT(tag, 0)) < 1 || length(STRING_ELT(tag, 0)) > 60)
 	errorcall(call, "invalid tag");
+    args = CDR(args);
+    hessian = asLogical(CAR(args));
     /* NOTE: FindSubexprs is destructive, hence the duplication */
     PROTECT(ans = duplicate(expr));
     f_index = FindSubexprs(ans);
     UNPROTECT(1);
     d_index = (int*)R_alloc(nderiv, sizeof(int));
-    for(i=0 ; i<nderiv ; i++) {
+    d2_index = (int*)R_alloc((nderiv * (1 + nderiv))/2, sizeof(int));
+    for(i=0, k=0; i<nderiv ; i++) {
 	PROTECT(ans = duplicate(expr));
 	PROTECT(ans = D(ans, install(CHAR(STRING_ELT(names, i)))));
-	d_index[i] = FindSubexprs(ans);
+	ans2 = duplicate(ans);	/* keep a temporary copy */
+	d_index[i] = FindSubexprs(ans); /* examine the derivative first */
+	ans = duplicate(ans2);	/* restore the copy */
+	if (hessian) {
+	    for(j = i; j < nderiv; j++) {
+		PROTECT(ans2 = duplicate(ans));
+		PROTECT(ans2 = D(ans2, install(CHAR(STRING_ELT(names, j)))));
+		d2_index[k] = FindSubexprs(ans2);
+		k++;
+		UNPROTECT(2);
+	    }
+	}
 	UNPROTECT(2);
     }
     nexpr = length(exprlist) - 1;
@@ -786,19 +880,43 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
     }
     Accumulate2(R_NilValue);
-    for (i = 0 ; i < nderiv ; i++) {
+    if (hessian) { Accumulate2(R_NilValue); }
+    for (i = 0, k = 0; i < nderiv ; i++) {
 	if (d_index[i]) {
 	    Accumulate2(MakeVariable(d_index[i]));
-	}
-	else {
+	    if (hessian) {
+		PROTECT(ans = duplicate(expr));
+		PROTECT(ans = D(ans, install(CHAR(STRING_ELT(names, i)))));
+		for (j = i; j < nderiv; j++) {
+		    if (d2_index[k]) {
+			Accumulate2(MakeVariable(d2_index[k]));
+		    } else {
+			PROTECT(ans2 = duplicate(ans));
+			PROTECT(ans2 = D(ans2,
+					 install(CHAR(STRING_ELT(names, j)))));
+			Accumulate2(ans2);
+			UNPROTECT(2);
+		    }
+		    k++;
+		}
+		UNPROTECT(2);
+	    }
+	} else {			/* the first derivative is a constant */
 	    PROTECT(ans = duplicate(expr));
 	    PROTECT(ans = D(ans, install(CHAR(STRING_ELT(names, i)))));
 	    Accumulate2(ans);
 	    UNPROTECT(2);
+	    if (hessian) {
+		for (j = i; j < nderiv; j++) { /* hessians are skipped */
+		    Accumulate2(R_MissingArg); /* these are placeholders */
+		    k++;
+		}
+	    }
 	}
     }
     Accumulate2(R_NilValue);
     Accumulate2(R_NilValue);
+    if (hessian) { Accumulate2(R_NilValue); }
 
     i = 0;
     ans = CDR(exprlist);
@@ -817,14 +935,32 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     /* .grad <- ... */
     SETCAR(ans, CreateGrad(names));
     ans = CDR(ans);
+    /* .hessian <- ... */
+    if (hessian) { SETCAR(ans, CreateHess(names)); ans = CDR(ans); }
     /* .grad[, "..."] <- ... */
-    for (i = 0 ; i < nderiv ; i++) {
+    for (i = 0; i < nderiv ; i++) {
 	SETCAR(ans, DerivAssign(STRING_ELT(names, i), AddParens(CAR(ans))));
 	ans = CDR(ans);
+	if (hessian) {
+	    for (j = i; j < nderiv; j++) {
+		if (CAR(ans) != R_MissingArg) {
+		    if (i == j) {
+			SETCAR(ans, HessAssign1(STRING_ELT(names, i),
+						AddParens(CAR(ans))));
+		    } else {
+			SETCAR(ans, HessAssign2(STRING_ELT(names, i),
+						STRING_ELT(names, j),
+						AddParens(CAR(ans))));
+		    }
+		}
+		ans = CDR(ans);
+	    }
+	}
     }
     /* attr(.value, "gradient") <- .grad */
     SETCAR(ans, AddGrad());
     ans = CDR(ans);
+    if (hessian) { SETCAR(ans, AddHess()); ans = CDR(ans); }
     /* .value */
     SETCAR(ans, install(".value"));
     /* Prune the expression list */
