@@ -45,7 +45,7 @@ umask 022
 # get the full path names to all packages contained in $1
 # modifies PKGS
 get_packages () {
-  if grep -q -s "^Contains:" "${1}/DESCRIPTION"; then
+  if grep -s "^Contains:" "${1}/DESCRIPTION"; then
     BUNDLEPKG=`grep -s "^Contains:" "${1}/DESCRIPTION" | \
       sed "s/^Contains://; s/,/ /g"`
     for p in ${BUNDLEPKG}; do
