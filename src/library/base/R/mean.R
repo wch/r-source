@@ -9,7 +9,7 @@ mean.default <- function(x, trim = 0, na.rm = FALSE, ...)
     if (na.rm)
 	x <- x[!is.na(x)]
     trim <- trim[1]
-    n <- length(c(x, recursive=TRUE)) # for data.frame
+    n <- length(x)
     if(trim > 0 && n > 0) {
 	if(is.complex(x))
 	    stop("trimmed means are not defined for complex data")
