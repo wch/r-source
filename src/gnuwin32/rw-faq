@@ -132,7 +132,9 @@ It depends what you want to print.
    * You can print the graphics window from its menu or by using
      `dev.print()'.
 
-   * You can print from the R console or pager by `File | Print'.
+   * You can print from the R console or pager by `File | Print'.  (As
+     of `rw1020' this will print the selection if there is one,
+     otherwise the whole console or pager contents.)
 
    * You can print help files from the pager or HTML browser.
 
@@ -199,8 +201,8 @@ compiling from source, get `rwXxxxsp.zip' from the distribution (see
 Q1.1) and unpack it in `rwXxxx'. Then `cd src\gnuwin32' and read
 `README.packages'. You will need to collect and install several tools
 to use this. Once you have done so, installation is easy: just run
-`make pkg-pkgname'. To check the package (run all the examples on its
-help pages) use `make pkgcheck-pkgname'.
+`Rcmd INSTALL pkgname'. To check the package (run all the examples on
+its help pages and in its test suite, if any) use `Rcmd check pkgname'.
 
 3.2 I don't have permission to write to the `rwXxxx/library' directory.
 =======================================================================
@@ -211,7 +213,7 @@ variable `.lib.loc' in your `.Rprofile' or when running R.
 
 Suppose your packages are installed in `p:\mylibs'. Then you can EITHER
 
-     set R_LIBS to p:\mylibs
+     set the environment variable R_LIBS to p:\mylibs
 
 OR put in the `.Rprofile' in the working directory or your home
 directory
@@ -239,9 +241,6 @@ or your home directory, for example
 
 The order of precedence is the command line (flags before variables)
 then `.Renviron' then the inherited environment.
-
-You can also build packages from anywhere to anywhere, but may be
-simpler to install a private copy of R to do the building.
 
 3.3 The packages I installed do not appear in the HTML help system.
 ===================================================================
@@ -496,10 +495,9 @@ You need to do two things:
 
 (b) Include the C++ libraries in the link to make the DLL. Suppose
 `X.cc' contains your C++ code, and `X_main.cc' is the wrapper, as in
-the example in `_Writing R Extensions_'. Then build the DLL by
-(`gcc-2.95')
+the example in `_Writing R Extensions_'. Then build the DLL by (`gcc')
 
-     .../bin/Rcmd SHLIB X.cc X_main.cc
+     ...\bin\Rcmd SHLIB X.cc X_main.cc
 
 or (VC++, which requires extension `.cpp')
 
@@ -551,5 +549,5 @@ then `R_ProcessEvents()'.
 
 
 
-Last edited 2000 June 10 by Brian Ripley <ripley@stats.ox.ac.uk>
+Last edited 2000 August 22 by Brian Ripley <ripley@stats.ox.ac.uk>
 

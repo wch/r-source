@@ -168,6 +168,8 @@ files used by R are relative to the starting directory, so setting the
 <li>You can print the graphics window from its menu or by using
 <code>dev.print()</code>. 
 <li>You can print from the R console or pager by <code>File | Print</code>. 
+(As of <code>rw1020</code> this will print the selection if there is one,
+otherwise the whole console or pager contents.) 
 <li>You can print help files from the pager or HTML browser. 
 <li>If you have configured <code>RHOME\bin\helpPRINT.bat</code> and have
 latex installed you can print help files by <code>help(fn_name, offline=TRUE)</code>. 
@@ -242,8 +244,9 @@ compiling from source, get <code>rwXxxxsp.zip</code> from the distribution
 (see Q1.1) and unpack it in <code>rwXxxx</code>. Then <code>cd src\gnuwin32</code>
 and read <code>README.packages</code>. You will need to collect and install
 several tools to use this. Once you have done so, installation is easy:
-just run <code>make pkg-pkgname</code>. To check the package (run all the examples
-on its help pages) use <code>make pkgcheck-pkgname</code>.
+just run <code>Rcmd INSTALL pkgname</code>. To check the package (run all the
+examples on its help pages and in its test suite, if any) use <code>Rcmd
+check pkgname</code>.
 
 <a name="I%20don't%20have%20permission%20to%20write%20to%20the%20rwXxxx%2flibrary%20directory"></a>
 
@@ -255,7 +258,7 @@ R variable <code>.lib.loc</code> in your <code>.Rprofile</code> or when running 
 
 <p>Suppose your packages are installed in <code>p:\mylibs</code>. Then you can EITHER
 
-<pre>set R_LIBS to p:\mylibs
+<pre>set the environment variable R_LIBS to p:\mylibs
 </pre>
 
 <p>OR put in the <code>.Rprofile</code> in the working directory or your home directory
@@ -287,9 +290,6 @@ R_NSIZE=400k
 
 <p>The order of precedence is the command line (flags before variables)
 then <code>.Renviron</code> then the inherited environment.
-
-<p>You can also build packages from anywhere to anywhere, but may be
-simpler to install a private copy of R to do the building.
 
 <a name="The%20packages%20I%20installed%20do%20not%20appear%20in%20the%20HTML%20help%20system"></a>
 
@@ -587,9 +587,9 @@ version of <code>gdb</code>
 <p>(b) Include the C++ libraries in the link to make the DLL. Suppose
 <code>X.cc</code> contains your C++ code, and <code>X_main.cc</code> is the wrapper,
 as in the example in `<em>Writing R Extensions</em>'. Then build the DLL by
-(<code>gcc-2.95</code>)
+(<code>gcc</code>)
 
-<pre>.../bin/Rcmd SHLIB X.cc X_main.cc
+<pre>...\bin\Rcmd SHLIB X.cc X_main.cc
 </pre>
 
 <p>or (VC++, which requires extension <code>.cpp</code>)
@@ -647,7 +647,7 @@ If you want output to be updated on the console, call
 
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 June 10 by Brian Ripley
+Last edited 2000 August 22 by Brian Ripley
 <code><a href="mailto:ripley@stats.ox.ac.uk">ripley@stats.ox.ac.uk</a></code>
 </address>
 

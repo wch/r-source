@@ -181,6 +181,8 @@ It depends what you want to print.
 @item You can print the graphics window from its menu or by using
 @code{dev.print()}.
 @item You can print from the R console or pager by @code{File | Print}.
+(As of @code{rw1020} this will print the selection if there is one,
+otherwise the whole console or pager contents.)
 @item You can print help files from the pager or HTML browser.
 @item If you have configured @code{RHOME\bin\helpPRINT.bat} and have
 latex installed you can print help files by @code{help(fn_name, offline=TRUE)}.
@@ -258,8 +260,9 @@ compiling from source, get @code{rwXxxxsp.zip} from the distribution
 (see Q1.1) and unpack it in @code{rwXxxx}. Then @code{cd src\gnuwin32}
 and read @code{README.packages}. You will need to collect and install
 several tools to use this. Once you have done so, installation is easy:
-just run @code{make pkg-pkgname}. To check the package (run all the examples
-on its help pages) use @code{make pkgcheck-pkgname}.
+just run @code{Rcmd INSTALL pkgname}. To check the package (run all the
+examples on its help pages and in its test suite, if any) use @code{Rcmd
+check pkgname}.
 
 @node I don't have permission to write to the rwXxxx/library directory, The packages I installed do not appear in the HTML help system, Can I install packages (libraries) in this version?, Packages
 @section I don't have permission to write to the @file{rwXxxx/library} directory.
@@ -271,7 +274,7 @@ R variable @code{.lib.loc} in your @file{.Rprofile} or when running R.
 Suppose your packages are installed in @code{p:\mylibs}. Then you can EITHER
 
 @example
-set R_LIBS to p:\mylibs
+set the environment variable R_LIBS to p:\mylibs
 @end example
 @noindent
 OR put in the @code{.Rprofile} in the working directory or your home directory
@@ -307,9 +310,6 @@ R_NSIZE=400k
 
 The order of precedence is the command line (flags before variables)
 then @file{.Renviron} then the inherited environment.
-
-You can also build packages from anywhere to anywhere, but may be
-simpler to install a private copy of R to do the building.
 
 
 @node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the rwXxxx/library directory, Packages
@@ -629,10 +629,10 @@ You need to do two things:
 (b) Include the C++ libraries in the link to make the DLL. Suppose
 @file{X.cc} contains your C++ code, and @file{X_main.cc} is the wrapper,
 as in the example in `@emph{Writing R Extensions}'. Then build the DLL by
-(@code{gcc-2.95})
+(@code{gcc})
 
 @example
-.../bin/Rcmd SHLIB X.cc X_main.cc
+...\bin\Rcmd SHLIB X.cc X_main.cc
 @end example
 @noindent
 or (VC++, which requires extension @code{.cpp})
@@ -693,14 +693,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 June 10 by Brian Ripley
+Last edited 2000 August 22 by Brian Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2000 June 10 by Brian Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2000 August 22 by Brian Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

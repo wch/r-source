@@ -19,28 +19,30 @@ current links at http://www.stats.ox.ac.uk/pub/Rtools/.
 Collect the tools
 -----------------
 
-We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
-from http://www.mingw.org/ or
-ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32.  You will also
-need suitable versions of at least make, sh, cat, cp, cut, diff, echo,
-egrep, expr, g(awk), grep, ls, mkdir, mv, rm, sed, touch; we use those
-from the cygwin distribution
+You will need suitable versions of at least make, sh, cat, cp, cut,
+diff, echo, egrep, expr, g(awk), grep, ls, mkdir, mv, rm, sed, touch;
+we use those from the cygwin distribution
 (http://sources.redhat.com/cygwin/mirrors.html) or (gzip, tar,
 makeinfo, texindex) compiled from the sources.  We have packaged a set
 at http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
 
-BEWARE: `Native' ports of make are not suitable (including that at the
-mingw32 site), nor is the make dated 18-Jan-2000 in the Cygwin 1.1 net
-release.  There have been problems with earlier versions of the
-cygwin1.dll and we have used 1.1.4. To avoid frustration, please use
-our tool set.
+BEWARE: `Native' ports of make are _not_ suitable (including that at
+the mingw32 site), and the 18 Jan 2000 cygwin port of make crashes
+when building packages.  There are also problems with several earlier
+versions of the cygwin1.dll and we have used version 1.1.4.  To avoid
+frustration, please use our tool set.
 
-It may also be possible to use the compilers from the cygwin 1.1
+
+We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
+from http://www.mingw.org/ or
+ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. (The `portal'
+gives more precise instructions.)  
+
+It may also be possible to use the compilers from the cygwin 1.1 net
 release with the -mno-cygwin flag.  (You will need the cygwin*, gcc*
-and binutils* bundles.)  As of R 1.1.0 it is no longer possible to
-build R with the cygwin-b20.1 release.  You will need to ensure that
-you have only one version of cygwin1.dll in your path (and there is
-one in our tools distribution).
+and binutils* bundles. You will need to ensure that you have only one
+version of cygwin1.dll in your path, and there is one in our tools
+distribution.)  You can no longer use earlier versions of cygwin.
 
 We have also successfully used the variant of mingw32 that uses the
 MSVCRT run-time system.  Be aware that many Windows 95 machines do not
@@ -49,15 +51,15 @@ have MSVCRT.DLL installed.
 perl5, available via http://www.activestate.com/Products/ActivePerl/
 
 zip and unzip from the Info-ZIP project (http://www.info-zip.org and
-mirrors).
+mirrors, and included in our tools.zip).
 
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, available for download at 
-http://msdn.microsoft.com/workshop/author/htmlhelp.
+http://msdn.microsoft.com/workshop/author/htmlhelp/.
 
-If you want to make Windows (.hlp) files you will need a Windows help
-compiler, preferably hcrtf.exe. This has been available for download at
-ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe.
+If you want to make Window help files you will need hcrtf.exe from a
+Windows compiler installation (this has been available for download at
+ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe).
 
 All of these need to be installed and in your path, and the
 appropriate environment variables set.
@@ -197,8 +199,13 @@ makeinfo 4.0 (included in our tool set). Then
 
 will make the info files.
 
-There is no provision to make DVI versions of the manuals, although
-../../doc/manuals/Makefile.win could easily be edited to do so.
+To make DVI versions of the manuals use
+
+	cd ../../doc/manuals
+	make -f Makefile.win dvi
+
+(assuming you have tex and latex installed and in your path).
+
 
 The fptex distribution of TeX (from
 ftp://ftp.ese-metz.fr/pub/tex/win32-beta/fptex-0.4beta1/ at present)
