@@ -32,7 +32,8 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val);
 
 /* from main/objects.c */
 SEXP R_deferred_default_method();
-SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef, SEXP mlist);
+SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef, 
+		       SEXP mlist);
 SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist);
 void R_set_quick_method_check(R_stdGen_ptr_t); 
 
@@ -95,10 +96,13 @@ void R_initMethodDispatch()
 
     /* some special lists of primitive skeleton calls */
     R_PreserveObject(R_short_skeletons =
-		     findVar(Rf_install(".ShortPrimitiveSkeletons"), R_GlobalEnv));
+		     findVar(Rf_install(".ShortPrimitiveSkeletons"), 
+			     R_GlobalEnv));
     R_PreserveObject(R_empty_skeletons =
-		     findVar(Rf_install(".EmptyPrimitiveSkeletons"), R_GlobalEnv));
-    if(R_short_skeletons == R_UnboundValue || R_empty_skeletons == R_UnboundValue)
+		     findVar(Rf_install(".EmptyPrimitiveSkeletons"), 
+			     R_GlobalEnv));
+    if(R_short_skeletons == R_UnboundValue || 
+       R_empty_skeletons == R_UnboundValue)
 	error("Couldn't find the skeleton calls for methods (package  detached?): expect very bad things to happen");
     f_x_i_skeleton = VECTOR_ELT(R_short_skeletons, 0);
     fgets_x_i_skeleton = VECTOR_ELT(R_short_skeletons, 1);
@@ -111,22 +115,24 @@ void R_initMethodDispatch()
    unlike the attr function in R, this does NOT do partial
    matching. Also, no special interpretations are made
    (e.g. "names", "dim", or other reserved attribute names). */
-static SEXP R_get_attr(SEXP obj, char *what) {
-  SEXP alist;
-  for (alist = ATTRIB(obj); alist != R_NilValue; alist = CDR(alist)) {
-    SEXP tmp = TAG(alist);
-    if(!strcmp(CHAR(PRINTNAME(tmp)), what))
-      return(CAR(alist));
-  }
-  return(R_NilValue);
+static SEXP R_get_attr(SEXP obj, char *what) 
+{
+    SEXP alist;
+    for (alist = ATTRIB(obj); alist != R_NilValue; alist = CDR(alist)) {
+	SEXP tmp = TAG(alist);
+	if(!strcmp(CHAR(PRINTNAME(tmp)), what))
+	    return(CAR(alist));
+    }
+    return(R_NilValue);
 }
 
+#ifdef UNUSED
 /* return a symbol containing mode (well, actually, typeof) obj */
 static SEXP R_mode(SEXP obj)
 {
     return type2symbol(TYPEOF(obj));
 }
-
+#endif
 
 /* the  SEXP for the data.class string (roughly, the green book class function) */
 
@@ -150,11 +156,13 @@ static SEXP R_element_named(SEXP obj, char * what)
 	return VECTOR_ELT(obj, offset);
 }
 
+#ifdef UNUSED
 static SEXP R_insert_element(SEXP mlist, char * what, SEXP object)
 {
     SEXP sym = install(what);
     return R_subassign3_dflt(R_NilValue, mlist, sym, object);
 }
+#endif
 
 /*  */
 static SEXP ov_mlists[50], ov_methods[50];
@@ -210,24 +218,24 @@ static SEXP R_find_method(SEXP mlist, char *class, SEXP fname)
 
 SEXP R_quick_method_check(SEXP args, SEXP mlist)
 {
-  /* Match the list of (evaluated) args to the methods list. */
-  SEXP object, class_obj, methods, value;
-  char *class;
-  if(!mlist)
-    return R_NilValue;
-  methods = R_get_attr(mlist, "allMethods");
-  if(methods == R_NilValue)
+    /* Match the list of (evaluated) args to the methods list. */
+    SEXP object, methods, value;
+    char *class;
+    if(!mlist)
+	return R_NilValue;
+    methods = R_get_attr(mlist, "allMethods");
+    if(methods == R_NilValue)
     {  return R_NilValue;}
-  while(!isNull(args) && !isNull(methods)) {
-    object = CAR(args); args = CDR(args);
-    class = CHAR(asChar(R_data_class(object, TRUE)));
-    value = R_element_named(methods, class);
-    if(isNull(value) || isFunction(value))
-      return value;
-    /* continue matching args down the tree */
-    methods = value;
-  }
-  return(R_NilValue);
+    while(!isNull(args) && !isNull(methods)) {
+	object = CAR(args); args = CDR(args);
+	class = CHAR(asChar(R_data_class(object, TRUE)));
+	value = R_element_named(methods, class);
+	if(isNull(value) || isFunction(value))
+	    return value;
+	/* continue matching args down the tree */
+	methods = value;
+    }
+    return(R_NilValue);
 }
 
 /* call some S language functions */
@@ -533,58 +541,59 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 	PROTECT(mlist); nprotect++;
 	f = do_dispatch(fname, ev, mlist, TRUE, TRUE);
 	if(isNull(f)) {
-	  /* call the S language code to do a search with inheritance */
-	  SEXP value;
-	  SEXP deflt, prev_fun, op; int prim_case, firstCall;
-	  value = getOverride(mlist);
-	  firstCall = value == R_NilValue; prim_case = FALSE;
-	  /* Avoid recursive loop in searching for a method.
-	     Two cases:  the original function is a primitive (and
-	     then the default method is forced to be also); or
-	     the original function is a closure */
-	  if(firstCall) {
-	    deflt = R_find_method(mlist, "ANY", fname);
-	    prim_case = isPrimitive(deflt);
-	    if(prim_case) {
-	      op = deflt;
-	      /* just shut off dispatching of methods for this op */
-	      PROTECT(prev_fun = 
-		      do_set_prim_method(deflt, "clear", NULL, NULL)); nprotect++;
-	      /* TO DO:  use context control to ensure the restores in
-		 case of an error */
-	    }
-	    else {
-	      if(deflt == R_NilValue)
-		deflt = R_MissingArg; /* a fixed value indicating no default
-				       */
-	      setOverride(mlist, deflt);
-	      /* call the S function, it returns a revised MethodsList
-		 object, and also stores the revised MethodsList in the
-		 methods metadata.
-	      */
-	      R_assign_to_method_metadata(fsym, get_skeleton(fsym,
-							     R_NilValue));
-	    }
-	    PROTECT(value = R_S_MethodsListSelect(fname, ev, mlist, f_env)); nprotect++;
+	    /* call the S language code to do a search with inheritance */
+	    SEXP value;
+	    SEXP deflt, prev_fun = R_NilValue, op = R_NilValue; 
+	    Rboolean prim_case, firstCall;
+	    value = getOverride(mlist);
+	    firstCall = (value == R_NilValue); prim_case = FALSE;
+	    /* Avoid recursive loop in searching for a method.
+	       Two cases:  the original function is a primitive (and
+	       then the default method is forced to be also); or
+	       the original function is a closure */
 	    if(firstCall) {
-	      if(prim_case) {
-		do_set_prim_method(op, "reset", prev_fun, NULL);
-	      }
-	      else {
-		R_assign_to_method_metadata(fsym, fdef);
-		R_clear_method_selection(); /* to be safe.
-				     The S language code is supposed
-				     to clear also. */
-	      }
+		deflt = R_find_method(mlist, "ANY", fname);
+		prim_case = isPrimitive(deflt);
+		if(prim_case) {
+		    op = deflt;
+		    /* just shut off dispatching of methods for this op */
+		    PROTECT(prev_fun = 
+			    do_set_prim_method(deflt, "clear", NULL, NULL)); nprotect++;
+		    /* TO DO:  use context control to ensure the restores in
+		       case of an error */
+		}
+		else {
+		    if(deflt == R_NilValue)
+			deflt = R_MissingArg; /* a fixed value indicating no default
+					       */
+		    setOverride(mlist, deflt);
+		    /* call the S function, it returns a revised MethodsList
+		       object, and also stores the revised MethodsList in the
+		       methods metadata.
+		    */
+		    R_assign_to_method_metadata(fsym, get_skeleton(fsym,
+								   R_NilValue));
+		}
+		PROTECT(value = R_S_MethodsListSelect(fname, ev, mlist, f_env)); nprotect++;
+		if(firstCall) {
+		    if(prim_case) {
+			do_set_prim_method(op, "reset", prev_fun, NULL);
+		    }
+		    else {
+			R_assign_to_method_metadata(fsym, fdef);
+			R_clear_method_selection(); /* to be safe.
+						       The S language code is supposed
+						       to clear also. */
+		    }
+		}
+		if(isNull(value))
+		    error("No direct or inherited method for function \"%s\" for this call",
+			  CHAR_STAR(fname));
+		mlist = value;
+		/* now look again.  This time the necessary method should
+		   have been inserted in the MethodsList object */
+		f = do_dispatch(fname, ev, mlist, FALSE, TRUE);
 	    }
-	    if(isNull(value))
-	      error("No direct or inherited method for function \"%s\" for this call",
-		    CHAR_STAR(fname));
-	    mlist = value;
-	    /* now look again.  This time the necessary method should
-	       have been inserted in the MethodsList object */
-	    f = do_dispatch(fname, ev, mlist, FALSE, TRUE);
-	  }
 	}
     }
     val = R_NilValue;
@@ -609,8 +618,8 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 	    if(prim_case)
 		call = nonstandard_primitive(prim_case, call, f, ev);
 	    else
-		/* the skeleton is almost surely a call to the same primitive, but we
-		   don't need to assume that. */
+		/* the skeleton is almost surely a call to the same primitive, 
+		   but we don't need to assume that. */
 		SETCAR(call, f);
 	    PROTECT(call); nprotect++;
 	    val =  eval(call, ev);
@@ -627,15 +636,15 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 
 SEXP R_selectMethod(SEXP fname, SEXP ev, SEXP mlist)
 {
-  return do_dispatch(fname, ev, mlist, TRUE, FALSE);
+    return do_dispatch(fname, ev, mlist, TRUE, FALSE);
 }
 
 static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 			int evalArgs)
 {
     char *arg_name, *class;
-    SEXP arg_slot, arg_sym, arg, method, value, child;
-    int inherited, nprotect = 0;
+    SEXP arg_slot, arg_sym, arg, method, value = R_NilValue;
+    int nprotect = 0;
     PROTECT(arg_slot = R_get_attr(mlist, "argument")); nprotect++;
     if(arg_slot == R_NilValue) {
 	error("methods list had no \"argument\" slot");
@@ -707,8 +716,8 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 
 SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef)
 {
-  SEXP mlist;
-  mlist = R_get_from_f_env(R_get_function_env(fundef, fname),
-				   s_dot_Methods, fname);
-  return R_set_prim_method(fname, op, code_vec, fundef, mlist);
+    SEXP mlist;
+    mlist = R_get_from_f_env(R_get_function_env(fundef, fname),
+			     s_dot_Methods, fname);
+    return R_set_prim_method(fname, op, code_vec, fundef, mlist);
 }

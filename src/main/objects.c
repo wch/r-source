@@ -847,41 +847,46 @@ SEXP do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 */
 static R_stdGen_ptr_t R_standardGeneric_ptr = 0;
 
-R_stdGen_ptr_t R_get_standardGeneric_ptr() {
-  return R_standardGeneric_ptr;
+R_stdGen_ptr_t R_get_standardGeneric_ptr() 
+{
+    return R_standardGeneric_ptr;
 }
 
-R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t val) {
-  R_stdGen_ptr_t old = R_standardGeneric_ptr;
-  R_standardGeneric_ptr = val;
-  return old;
+R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t val) 
+{
+    R_stdGen_ptr_t old = R_standardGeneric_ptr;
+    R_standardGeneric_ptr = val;
+    return old;
 }
 
-static SEXP dispatchNonGeneric(SEXP name, SEXP env) {
-  /* dispatch the non-generic definition of `name'.  Used to trap
-     calls to standardGeneric during the loading of the methods package */
-  SEXP e, value, rho, fun, symbol, dot_Generic;
-  RCNTXT *cptr;
-  /* find a non-generic function */
-  symbol = install(CHAR(asChar(name)));
-  dot_Generic = install(".Generic");
-  for(rho = ENCLOS(env); rho != R_NilValue && isEnvironment(rho);rho = ENCLOS(rho)) {
-    fun = findVarInFrame(rho, symbol);
-    if(fun == R_UnboundValue) continue;
-    switch(TYPEOF(fun)) {
-    case BUILTINSXP:  case SPECIALSXP: break;
-    case CLOSXP:
-      value = findVarInFrame(CLOENV(fun), dot_Generic);
-      if(value == R_UnboundValue) break;
-      /*in all other cases, go on to the parent environment */
+static SEXP dispatchNonGeneric(SEXP name, SEXP env) 
+{
+    /* dispatch the non-generic definition of `name'.  Used to trap
+       calls to standardGeneric during the loading of the methods package */
+    SEXP e, value, rho, fun, symbol, dot_Generic;
+    RCNTXT *cptr;
+    /* find a non-generic function */
+    symbol = install(CHAR(asChar(name)));
+    dot_Generic = install(".Generic");
+    for(rho = ENCLOS(env); rho != R_NilValue && isEnvironment(rho);
+	rho = ENCLOS(rho)) {
+	fun = findVarInFrame(rho, symbol);
+	if(fun == R_UnboundValue) continue;
+	switch(TYPEOF(fun)) {
+	case BUILTINSXP:  case SPECIALSXP: break;
+	case CLOSXP:
+	    value = findVarInFrame(CLOENV(fun), dot_Generic);
+	    if(value == R_UnboundValue) break;
+	    /*in all other cases, go on to the parent environment */
+	}
+	fun = R_UnboundValue;
     }
-    fun = R_UnboundValue;
-  }
-  fun = SYMVALUE(symbol);
-  if(fun == R_UnboundValue)
-    error("Unable to find a non-generic version of function \"%s\"", CHAR(asChar(name)));
-  cptr = R_GlobalContext;
-  /* check this is the right context */
+    fun = SYMVALUE(symbol);
+    if(fun == R_UnboundValue)
+	error("Unable to find a non-generic version of function \"%s\"", 
+	      CHAR(asChar(name)));
+    cptr = R_GlobalContext;
+    /* check this is the right context */
     while (cptr != R_ToplevelContext) {
 	if (cptr->callflag & CTXT_FUNCTION )
 	    if (cptr->cloenv == env)
@@ -889,48 +894,48 @@ static SEXP dispatchNonGeneric(SEXP name, SEXP env) {
 	cptr = cptr->nextcontext;
     }
   
-  PROTECT(e = duplicate(R_syscall(0, cptr)));
-  SETCAR(e, fun);
-  /* evaluate a call the non-generic with the same arguments and from
-     the same environment as the call to the generic version */
-  value = eval(e, cptr->sysparent);
-  UNPROTECT(1);
-  return value;
+    PROTECT(e = duplicate(R_syscall(0, cptr)));
+    SETCAR(e, fun);
+    /* evaluate a call the non-generic with the same arguments and from
+       the same environment as the call to the generic version */
+    value = eval(e, cptr->sysparent);
+    UNPROTECT(1);
+    return value;
 }
 
 #ifdef UNUSED
 static void load_methods_package()
 {
-  SEXP e;
-  R_set_standardGeneric_ptr(dispatchNonGeneric);
-  PROTECT(e = allocVector(LANGSXP, 2));
-  SETCAR(e, install("library"));
-  SETCAR(CDR(e), install("methods"));
-  eval(e, R_GlobalEnv);
-  UNPROTECT(1);
+    SEXP e;
+    R_set_standardGeneric_ptr(dispatchNonGeneric);
+    PROTECT(e = allocVector(LANGSXP, 2));
+    SETCAR(e, install("library"));
+    SETCAR(CDR(e), install("methods"));
+    eval(e, R_GlobalEnv);
+    UNPROTECT(1);
 }
 #endif
 
 SEXP do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-  SEXP arg, value; R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr();
-  if(!ptr) {
-    warning("standardGeneric called before the methods package has been attached (will be ignored)");
-    R_set_standardGeneric_ptr(dispatchNonGeneric);
-    /*    load_methods_package(); */
-    ptr = R_get_standardGeneric_ptr();
-    /* if(!ptr || ptr == dispatchNonGeneric)
-      error("Something went wrong:  the internal pointer for
-      standardGeneric was not set"); */
-  }
-  checkArity(op, args);
+    SEXP arg, value; R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr();
+    if(!ptr) {
+	warning("standardGeneric called before the methods package has been attached (will be ignored)");
+	R_set_standardGeneric_ptr(dispatchNonGeneric);
+	/*    load_methods_package(); */
+	ptr = R_get_standardGeneric_ptr();
+	/* if(!ptr || ptr == dispatchNonGeneric)
+	   error("Something went wrong:  the internal pointer for
+	   standardGeneric was not set"); */
+    }
+    checkArity(op, args);
 
-  PROTECT(arg = CAR(args));
+    PROTECT(arg = CAR(args));
 
-  value = (*ptr)(arg, env);
+    value = (*ptr)(arg, env);
   
-  UNPROTECT(1);
-  return value;
+    UNPROTECT(1);
+    return value;
 }
 
 static int maxMethodsOffset = 0, curMaxOffset;
@@ -944,75 +949,75 @@ static SEXP *prim_mlist;
 SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
 		       SEXP mlist)
 {
-  char *code_string;
-  if(!isValidString(code_vec))
-    error("Argument \"code\" must be a character string");
-  code_string = CHAR(asChar(code_vec));
-  do_set_prim_method(op, code_string, fundef, mlist);
-  return(fname);
+    char *code_string;
+    if(!isValidString(code_vec))
+	error("Argument \"code\" must be a character string");
+    code_string = CHAR(asChar(code_vec));
+    do_set_prim_method(op, code_string, fundef, mlist);
+    return(fname);
 }
 
 SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
 {
-  int offset; prim_methods_t code; SEXP value;
-  switch(code_string[0]) {
-  case 'c': /* clear */
-    code = NO_METHODS; break;
-  case 'r': /* reset */
-    code = NEEDS_RESET; break;
-  case 's': /* set */
-    code = HAS_METHODS; break;
-  default:
-    error("Invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", or \"set\"", code_string);
-  }
-  switch(TYPEOF(op)) {
-  case BUILTINSXP: case SPECIALSXP:
-    offset = PRIMOFFSET(op);
-    break;
-  default: error("Invalid object: must be a primitive function");
-  }
-  if(offset >= maxMethodsOffset) {
-    int n;
-    n = offset;
-    if(n < DEFAULT_N_PRIM_METHODS)
-      n = DEFAULT_N_PRIM_METHODS;
-    if(n < 2*maxMethodsOffset)
-      n = 2 * maxMethodsOffset;
-    if(prim_methods) {
-      prim_methods = Realloc(prim_methods, n, prim_methods_t);
-      prim_generics = Realloc(prim_generics, n, SEXP);
-      prim_mlist = Realloc(prim_mlist, n, SEXP);
-   }
-    else {
-      prim_methods = Calloc(n, prim_methods_t);
-      prim_generics = Calloc(n, SEXP);
-      prim_mlist = Calloc(n, SEXP);
+    int offset=0; prim_methods_t code; SEXP value;
+    switch(code_string[0]) {
+    case 'c': /* clear */
+	code = NO_METHODS; break;
+    case 'r': /* reset */
+	code = NEEDS_RESET; break;
+    case 's': /* set */
+	code = HAS_METHODS; break;
+    default:
+	error("Invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", or \"set\"", code_string);
     }
-    maxMethodsOffset = n;
-  }
-  if(offset > curMaxOffset)
-    curMaxOffset = offset;
-  prim_methods[offset] = code;
-  /* store a preserved pointer to the generic function if there is not
-     one there currently.  Unpreserve it if no more methods, but don't
-     replace it otherwise:  the generic definition is not allowed to
-     change while it's still defined! */
-  value = prim_generics[offset];
-  if(code == NO_METHODS && prim_generics[offset]) {
-    R_ReleaseObject(prim_generics[offset]);
-    prim_generics[offset] = 0;
-  }
-  else if(fundef && !prim_generics[offset]) {
-    SEXP env;
-    R_PreserveObject(fundef);
-    if(TYPEOF(fundef) != CLOSXP)
-      error("The formal definition of a primitive generic must be a  function object (got type %s)",
-	    type2str(TYPEOF(fundef)));
-    prim_generics[offset] = fundef;
-    if(mlist)
-      prim_mlist[offset] = mlist;
-  }
-  return value;
+    switch(TYPEOF(op)) {
+    case BUILTINSXP: case SPECIALSXP:
+	offset = PRIMOFFSET(op);
+	break;
+    default: 
+	error("Invalid object: must be a primitive function");
+    }
+    if(offset >= maxMethodsOffset) {
+	int n;
+	n = offset;
+	if(n < DEFAULT_N_PRIM_METHODS)
+	    n = DEFAULT_N_PRIM_METHODS;
+	if(n < 2*maxMethodsOffset)
+	    n = 2 * maxMethodsOffset;
+	if(prim_methods) {
+	    prim_methods = Realloc(prim_methods, n, prim_methods_t);
+	    prim_generics = Realloc(prim_generics, n, SEXP);
+	    prim_mlist = Realloc(prim_mlist, n, SEXP);
+	}
+	else {
+	    prim_methods = Calloc(n, prim_methods_t);
+	    prim_generics = Calloc(n, SEXP);
+	    prim_mlist = Calloc(n, SEXP);
+	}
+	maxMethodsOffset = n;
+    }
+    if(offset > curMaxOffset)
+	curMaxOffset = offset;
+    prim_methods[offset] = code;
+    /* store a preserved pointer to the generic function if there is not
+       one there currently.  Unpreserve it if no more methods, but don't
+       replace it otherwise:  the generic definition is not allowed to
+       change while it's still defined! */
+    value = prim_generics[offset];
+    if(code == NO_METHODS && prim_generics[offset]) {
+	R_ReleaseObject(prim_generics[offset]);
+	prim_generics[offset] = 0;
+    }
+    else if(fundef && !prim_generics[offset]) {
+	R_PreserveObject(fundef);
+	if(TYPEOF(fundef) != CLOSXP)
+	    error("The formal definition of a primitive generic must be a function object (got type %s)",
+		  type2str(TYPEOF(fundef)));
+	prim_generics[offset] = fundef;
+	if(mlist)
+	    prim_mlist[offset] = mlist;
+    }
+    return value;
 }
 
 /* Could there be methods for this op?  Checks
@@ -1020,30 +1025,30 @@ SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
    whether methods are currently defined for this op. */
 int R_has_methods(SEXP op)
 {
-  R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr(); int offset;
-  if(!ptr || ptr == dispatchNonGeneric)
-     return(0);
-  offset = PRIMOFFSET(op);
-  if(offset > curMaxOffset || prim_methods[offset] == NO_METHODS
-     || prim_methods[offset] == SUPPRESSED)
-    return(0);
-  return(1);
+    R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr(); int offset;
+    if(!ptr || ptr == dispatchNonGeneric)
+	return(0);
+    offset = PRIMOFFSET(op);
+    if(offset > curMaxOffset || prim_methods[offset] == NO_METHODS
+       || prim_methods[offset] == SUPPRESSED)
+	return(0);
+    return(1);
 }
 
 static SEXP deferred_default_object;
 
 SEXP R_deferred_default_method()
 {
-  if(!deferred_default_object)
-    deferred_default_object = install("__Deferred_Default_Marker__");
-  return(deferred_default_object);
+    if(!deferred_default_object)
+	deferred_default_object = install("__Deferred_Default_Marker__");
+    return(deferred_default_object);
 }
 
 
 static R_stdGen_ptr_t quick_method_check_ptr = NULL;
 void R_set_quick_method_check(R_stdGen_ptr_t value)
 {
-  quick_method_check_ptr = value;
+    quick_method_check_ptr = value;
 }
 /* try to dispatch the formal method for this primitive op, by calling
    the stored generic function corresponding to the op.  Requires that
@@ -1052,33 +1057,33 @@ void R_set_quick_method_check(R_stdGen_ptr_t value)
 SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args, 
 			 SEXP rho, SEXP x)
 {
-  SEXP fundef, value; int offset; prim_methods_t current;
-  offset = PRIMOFFSET(op);
-  if(offset < 0 || offset > curMaxOffset)
-    error("Invalid primitive operation given for dispatch");
-  current = prim_methods[offset];
-  if(current == NO_METHODS || current == SUPPRESSED)
-    return(NULL);
-  fundef = prim_generics[offset];
-  if(!fundef || TYPEOF(fundef) != CLOSXP)
-    error("Internal error:  stored generic for \"%s\" was not a function",
-	  PRIMNAME(op));
-  if(quick_method_check_ptr) {
-    value = (*quick_method_check_ptr)(args, prim_mlist[offset]);
-    if(isPrimitive(value))
-      return(NULL);
-    if(isFunction(value))
-      /* found a method, call it */
-      return applyClosure(call, value, args, rho, R_NilValue);
-    /* else, need to perform full method search */
-  }
-  prim_methods[offset] = SUPPRESSED;
-  /* To do:  arrange for the setting to be restored in case of an
-     error in method search */
-  value = applyClosure(call, fundef, args, rho, R_NilValue);
-  prim_methods[offset] = current;
-  if(value == deferred_default_object)
-    return NULL;
-  else
-    return value;
+    SEXP fundef, value; int offset; prim_methods_t current;
+    offset = PRIMOFFSET(op);
+    if(offset < 0 || offset > curMaxOffset)
+	error("Invalid primitive operation given for dispatch");
+    current = prim_methods[offset];
+    if(current == NO_METHODS || current == SUPPRESSED)
+	return(NULL);
+    fundef = prim_generics[offset];
+    if(!fundef || TYPEOF(fundef) != CLOSXP)
+	error("Internal error:  stored generic for \"%s\" was not a function",
+	      PRIMNAME(op));
+    if(quick_method_check_ptr) {
+	value = (*quick_method_check_ptr)(args, prim_mlist[offset]);
+	if(isPrimitive(value))
+	    return(NULL);
+	if(isFunction(value))
+	    /* found a method, call it */
+	    return applyClosure(call, value, args, rho, R_NilValue);
+	/* else, need to perform full method search */
+    }
+    prim_methods[offset] = SUPPRESSED;
+    /* To do:  arrange for the setting to be restored in case of an
+       error in method search */
+    value = applyClosure(call, fundef, args, rho, R_NilValue);
+    prim_methods[offset] = current;
+    if(value == deferred_default_object)
+	return NULL;
+    else
+	return value;
 }
