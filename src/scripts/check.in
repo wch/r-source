@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.135 $ ';
+my $revision = ' $Revision: 1.136 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -1395,7 +1395,7 @@ sub check_pkg {
 		## </NOTE>
 		if(R_system($cmd)) {
 		    $log->error();
-		    $log->print("Could not create DVI version.\n");
+		    $log->print("LaTeX errors when creating DVI version.\n");
 		    $log->print("This typically indicates Rd problems.\n");
 		    exit(1);
 		}
@@ -1411,7 +1411,7 @@ sub check_pkg {
 		$cmd .= " $pkgdir";
 		if(R_system($cmd)) {
 		    $log->error();
-		    $log->print("Could not create DVI version.\n");
+		    $log->print("LaTeX errors when creating DVI version.\n");
 		    $log->print("This typically indicates Rd problems.\n");
 		    exit(1);
 		}

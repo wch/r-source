@@ -290,6 +290,9 @@ BUG FIXES
     o	Matrices were printed mis-aligned if right=TRUE and na.print
 	was specified.  (PR#3058)
 
+    o   R CMD check gives now a clearer message when latex produces
+        errors on the package manual (PR#3070).
+
 
 
 		CHANGES IN R VERSION 1.7.0
