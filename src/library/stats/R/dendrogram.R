@@ -200,10 +200,10 @@ function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
 plot.dendrogram <-
     function (x, type = c("rectangle", "triangle"), center = FALSE,
 	      edge.root = is.leaf(x) || !is.null(attr(x, "edgetext")),
-	      nodePar = NULL, xaxt="n", yaxt="s",
-	      edgePar = list(), leaflab= c("perpendicular", "textlike", "none"),
-              dLeaf = NULL, xlab = "", ylab = "",
-              horiz = FALSE, frame.plot = FALSE, ...)
+	      nodePar = NULL, edgePar = list(),
+	      leaflab = c("perpendicular", "textlike", "none"), dLeaf = NULL,
+	      xlab = "", ylab = "", xaxt="n", yaxt="s",
+	      horiz = FALSE, frame.plot = FALSE, ...)
 {
     type <- match.arg(type)
     leaflab <- match.arg(leaflab)

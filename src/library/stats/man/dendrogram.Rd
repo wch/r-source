@@ -28,7 +28,9 @@ as.dendrogram(object, \dots)
 
 \method{plot}{dendrogram}(x, type = c("rectangle", "triangle"),
       center = FALSE, edge.root = is.leaf(x) || !is.null(attr(x,"edgetext")),
-      nodePar = NULL, edgePar = list(), xlab = "", ylab = "",
+      nodePar = NULL, edgePar = list(),
+      leaflab = c("perpendicular", "textlike", "none"), dLeaf = NULL,
+      xlab = "", ylab = "", xaxt = "n", yaxt = "s",
       horiz = FALSE, frame.plot = FALSE, \dots)
 
 \method{cut}{dendrogram}(x, h, \dots)
@@ -70,21 +72,26 @@ is.leaf(object)
     color.  As with \code{nodePar}, each can have length two for
     differentiating leaves and inner nodes.
   }
-  \item{horiz}{logical indicating if the dendrogram should be draw
+  \item{leaflab}{a string specifying how leaves are labeled.  The
+    default \code{"perpendicular"} write text vertically (by default).\cr
+    \code{"textlike"} writes text horizontally (in a rectangle), and \cr
+    \code{"none"} suppresses leaf labels.}
+  \item{dLeaf}{a number specifying the \bold{d}istance in user
+    coordinates between the tip of a leaf and its label.  If \code{NULL}
+    as per default, 3/4 of a letter width or height is used.}
+  \item{horiz}{logical indicating if the dendrogram should be drawn
     \emph{horizontally} or not.}
   \item{frame.plot}{logical indicating if a box around the plot should
     be drawn, see \code{\link{plot.default}}.}
   \item{h}{height at which the tree is cut.}
-  \item{\dots, xlab, ylab}{graphical parameters, or arguments for
+  \item{\dots, xlab, ylab, xaxt, yaxt}{graphical parameters, or arguments for
     other methods.}
   \item{digits}{integer specifiying the precision for printing, see
     \code{\link{print.default}}.}
   \item{max.level, digits.d, give.attr, wid, nest.lev, indent.str}{%
     arguments to \code{str}, see \code{\link{str.default}()}.  Note that
-    %% by default, \code{max.level = 2}, only the first two levels are
-    %% displayed by \code{str()} and that
-    \code{give.attr = FALSE} still
-    shows \code{height} and \code{members} attributes for each node.}
+    \code{give.attr = FALSE} still shows \code{height} and \code{members}
+    attributes for each node.}
   \item{stem}{a string used for \code{str()} specifying the \emph{stem}
     to use for each dendrogram branch.}
 }
@@ -154,7 +161,8 @@ is.leaf(object)
 \examples{
 hc <- hclust(dist(USArrests), "ave")
 (dend1 <- as.dendrogram(hc)) # "print()" method
-str(dend1) # "str()" method
+str(dend1)          # "str()" method
+str(dend1, max = 2) # only the first two sub-levels
 
 op <- par(mfrow= c(2,2), mar = c(5,2,1,4))
 plot(dend1)
