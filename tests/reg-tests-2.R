@@ -261,6 +261,7 @@ x <- y <- unlist(as.list(
 save(x, ascii=T, file=(fn <- tempfile()))
 load(fn)
 all(x==y)
+unlink(fn)
 ## 1.3.1 had trouble with \
 
 
