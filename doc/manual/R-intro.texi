@@ -3282,7 +3282,7 @@ cannot compute correct p-values with ties in: ks.test(A, B)
 @end example
 
 @node Loops and conditional execution, Writing your own functions, Probability distributions, Top
-@chapter More language features.  Loops and conditional execution
+@chapter Grouping, loops and conditional execution
 @cindex Loops and conditional execution
 
 @menu
