@@ -143,7 +143,7 @@ static int R_PageReleaseFreq = 1;
    levels are adjusted up or down, though not below the minimal
    values, to maintain heap occupancy within a specified range.  When
    the number of nodes in use reaches R_NGrowFrac * R_NSize, the value
-   of R_NSize is incremented by R_NGrowFrac.  When the number of nodes
+   of R_NSize is incremented by R_NGrowIncr.  When the number of nodes
    in use falls below R_NShrinkFrac, R_NSize is decremented by
    R_NShrinkIncr.  Analogous values are used for the vector heap. */
 static double R_NGrowFrac = 0.70;
@@ -997,7 +997,8 @@ SEXP do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP value;
-    int ogc;
+    int ogc, onsize=R_NSize, ovsize=R_VSize;
+
     checkArity(op, args);
     ogc = gc_reporting;
     gc_reporting = asLogical(CAR(args));
@@ -1005,16 +1006,16 @@ SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
     num_old_gens_to_collect = NUM_OLD_GENERATIONS;
     R_gc();
     gc_reporting = ogc;
-    /*- now return the [used , total ] for cells and heap */
+    /*- now return the [used , gc trigger size] for cells and heap */
     PROTECT(value = allocVector(INTSXP, 8));
-    INTEGER(value)[0] = R_NSize - R_Collected;
-    INTEGER(value)[1] = R_VSize - VHEAP_FREE();
+    INTEGER(value)[0] = onsize - R_Collected;
+    INTEGER(value)[1] = ovsize - VHEAP_FREE();
     INTEGER(value)[4] = R_NSize;
     INTEGER(value)[5] = R_VSize;
     /* next four are in 0.1Mb, rounded up */
-    INTEGER(value)[2] = 10.0 * (R_NSize - R_Collected)/1048576.0 * 
+    INTEGER(value)[2] = 10.0 * (onsize - R_Collected)/1048576.0 * 
 	sizeof(SEXPREC) + 0.999;
-    INTEGER(value)[3] = 10.0 * (R_VSize - VHEAP_FREE())/131072.0 + 0.999;
+    INTEGER(value)[3] = 10.0 * (ovsize - VHEAP_FREE())/131072.0 + 0.999;
     INTEGER(value)[6] = 10.0 * R_NSize/1048576.0 * sizeof(SEXPREC) + 0.999;
     INTEGER(value)[7] = 10.0 * R_VSize/131072.0 + 0.999;
 #else
