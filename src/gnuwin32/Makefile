@@ -77,7 +77,6 @@ front-ends/Rpwd.exe:
 ## watch out: R.dll and Rblas.dll depend on each other.
 rbuild:
 	@$(MAKE) --no-print-directory fixfiles
-	@$(MAKE) --no-print-directory rlibs
 	@$(MAKE) --no-print-directory makeMakedeps
 	@$(MAKE) --no-print-directory libRblas.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll libR.a
@@ -107,8 +106,8 @@ rpackage: ../../library/R.css
 
 rlibs:
 	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
-	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS_M)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
+	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS_M)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ./graphapp
 	$(MAKE) --no-print-directory -C ./getline
 	$(MAKE) --no-print-directory -C ../extra/xdr -f Makefile.win

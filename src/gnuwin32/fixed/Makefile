@@ -33,7 +33,7 @@ Rmath.h: ../../include/Rmath.h0.in ../../../VERSION
 	  -e  's/@RMATH_HAVE_WORKING_LOG1P@/# define HAVE_WORKING_LOG1P 1/' \
 	  -e "s/@PACKAGE_VERSION@/`sed 's/\([^ ]*\).*/\1/' < ../../../VERSION`/" $< > $@
 ../../include/Rmath.h: Rmath.h
-	sh ../../../tools/copy-if-change $< $@
+	@sh ../../../tools/copy-if-change $< $@
 
 ../../../bin/massage-Examples: ../../../share/perl/massage-Examples.pl
 	$(SED) -e 's/"contr.poly")/"contr.poly"), pager="console"/' $< > $@
@@ -89,7 +89,7 @@ clean:
 	$(RM) *~ */*~ fixhtml fixh fixbin fixetc fixshare
 
 distclean: clean
-	$(RM) -f ../../../tools/GV
+	$(RM) -f Rmath.h ../../../tools/GV
 
 ../../../doc/html/search/SearchEngine.html: ../../../doc/html/search/SearchEngine-head.html ../../../doc/html/search/SearchEngine-foot.html ../../../doc/KEYWORDS.db
 	(cd ../../../doc; \
