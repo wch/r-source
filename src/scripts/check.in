@@ -20,10 +20,6 @@
 
 # Send any bug reports to r-bugs@r-project.org
 
-## <FIXME>
-## This is not portable: has system().
-## </FIXME>
-
 use Cwd;
 use File::Basename;
 use File::Copy;
@@ -41,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.114 $ ';
+my $revision = ' $Revision: 1.115 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -221,7 +217,8 @@ foreach my $pkg (@ARGV) {
 	}
 	if($opt_install) {
 	    print("\n");
-	    if(system("${R::Vars::R_CMD} INSTALL -l $library $pkgdir")) {
+	    my $cmd = "${R::Vars::R_CMD} INSTALL -l $library $pkgdir";
+	    if(R_system($cmd)) {
 		$log->error();
 		$log->print("Installation failed.\n");
 		exit(1);
@@ -308,6 +305,13 @@ sub check_pkg {
 	$log->checking("for sufficient/correct file permissions");
 	my @badfiles = ();
 	my @excludepatterns = R::Utils::get_exclude_patterns();
+	## <FIXME>
+	## This is not right for bundles where the build ignore pattern
+	## file is in the top-level bundle dir.  We could fix this by
+	## using '../.Rbuildignore' instead, but then
+	##   find(\&findWrongPermsA, ".");
+	##   find(\&findWrongPermsB, ".");
+	## are wrong because the exclude patterns are relative to '..'.
 	if(-f "./.Rbuildignore") {
 	    open(RBUILDIGNORE, "./.Rbuildignore");
 	    while(<RBUILDIGNORE>) {
@@ -316,6 +320,7 @@ sub check_pkg {
 	    }
 	    close(RBUILDIGNORE);
 	}
+	## </FIXME>
 
 	## Phase A.  Directories at least 755, files at least 644.
 	sub findWrongPermsA {
@@ -481,8 +486,9 @@ sub check_pkg {
 	exit(1);
     }
 
-    ## Optional entries in DESCRIPTION which must be correct if present:
+    ## Optional entries in DESCRIPTION:
     ##   Depends.
+    ## These must be correct if present.
 
     if($description->{"Depends"}) {
 	my @dependencies = split(/\,/, $description->{"Depends"});
@@ -544,6 +550,7 @@ sub check_pkg {
     }
 
     ## Check contents of directory 'inst'.
+
     if(-d "inst") {
 	$log->checking("contents of directory 'inst'");
 	my @R_system_subdirs = ("R", "data", "demo", "exec", "man",
@@ -1019,10 +1026,15 @@ sub check_pkg {
         if(-e &file_path($Rexdir, "Rex.zip")) {
             $iszipped = 1;
 	    my $UNZIP = &R_getenv("R_UNZIPCMD", "unzip -q");
-            system(join(" ",
+	    $cmd = join(" ",
 			("$UNZIP",
 			 &file_path($Rexdir, "Rex.zip"),
-			 " -d $Rexdir")));
+			 " -d $Rexdir"));
+	    ## <FIXME>
+	    ## Should do something if this fails ...
+	    R_system($cmd);
+	    ## </FIXME>
+
         }
         if($WINDOWS) {
             ## avoid Rcmd as line may be too long after expansion.
@@ -1121,7 +1133,7 @@ sub check_pkg {
             $makevars = " -f Makevars";
         }
         print "\n";
-        if(system("$R::Vars::MAKE $makefiles $makevars")) {
+        if(R_system("${R::Vars::MAKE} $makefiles $makevars")) {
             $log->error();
             exit(1);
         }
@@ -1189,9 +1201,17 @@ sub check_pkg {
 	    $log->result("OK");
 	    if($HAVE_LATEX) {
 		$log->checking("${pkgname}-manual.tex");
-		print "\n";
-		if(R_system("${R::Vars::LATEX} ${pkgname}-manual")) {
-		    $log->error();
+		## <NOTE>
+		## We suppress all output from running LaTeX.
+		## We could also write stdout to a tempfile and replay
+		## this in case of problems.  But does this really help?
+		my $cmd = "${R::Vars::LATEX} ${pkgname}-manual >/dev/null";
+		$cmd .= " 2>&1" if($R::Vars::OSTYPE eq "unix");
+		## </NOTE>
+		if(R_system($cmd)) {
+		    $log-error();
+		    $log->print("Could not create DVI version.\n");
+		    $log->print("This typically indicates Rd problems.\n");
 		    exit(1);
 		}
 		$log->result("OK");
@@ -1200,15 +1220,12 @@ sub check_pkg {
 	else {
 	    if($HAVE_LATEX) {
 		$log->checking("DVI version of manual");
-		my $Rd2dvi_opts = "--no-preview -o ${pkgname}-manual.dvi";
-		## <FIXME>
-		## Surely there is a better way?
-		$Rd2dvi_opts .= ">/dev/null 2>&1"
-		  if($R::Vars::OSTYPE eq "unix");
-		## </FIXME>
-		if(R_system("${R::Vars::R_CMD} Rd2dvi " .
-			    "${Rd2dvi_opts} $pkgdir")) {
-		    $log->error();
+		my $cmd = "${R::Vars::R_CMD} Rd2dvi --no-preview " .
+		  "-o ${pkgname}-manual.dvi >/dev/null";
+		$cmd .= " 2>&1" if($R::Vars::OSTYPE eq "unix");
+		$cmd .= " $pkgdir";
+		if(R_system($cmd)) {
+		    $log-error();
 		    $log->print("Could not create DVI version.\n");
 		    $log->print("This typically indicates Rd problems.\n");
 		    exit(1);
