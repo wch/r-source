@@ -41,6 +41,7 @@ BUG FIXES
 
     o	princomp() now works when some eigenvalues are tiny negatives.
 
+    o   SearchEngine.html was not installed when builddir != srcdir.
 
 		CHANGES IN R VERSION 1.1.0
 
