@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.4-22, 2002-03-08
+Version 1.4-23, 2002-03-11
 Kurt Hornik
 
 
@@ -1273,6 +1273,10 @@ works, was published in the Journal of Statistical Software
      Johnson distributions, normal scores and generalized hypergeometric
      distributions).
 
+*VLMC*
+     Functions, classes & methods for estimation, prediction, and simulation
+     (bootstrap) of VLMC (Variable Length Markov Chain) models.
+
 *XML*
      Facilities for reading XML documents and DTDs.
 
@@ -1703,6 +1707,11 @@ works, was published in the Journal of Statistical Software
 
 *strucchange*
      Various tests on structural change in linear regression models.
+
+*subselect*
+     A collection of functions which assess the quality of variable subsets
+     as surrogates for a full data set, and search for subsets which are
+     optimal under various criteria.
 
 *survival*
      Functions for survival analysis, including penalised likelihood.
