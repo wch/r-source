@@ -11,6 +11,8 @@
 
 NEW FEATURES
 
+    o   The symbols() function is now implemented.
+
     o	attach() now works for R data files.
 
     o	R (under Unix) can be sent SIGUSR1 to quit and save or SIGUSR2

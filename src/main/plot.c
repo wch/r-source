@@ -3114,3 +3114,310 @@ SEXP do_setGPar(SEXP call, SEXP op, SEXP args, SEXP env)
     copyGPar((GPar *) INTEGER(GP), &dd->dpSaved);    
     return R_NilValue;
 }
+
+void SymbolSize(double *x, int n, double *xmax, double *xmin)
+{
+    int i;
+    *xmax = -DBL_MAX;
+    *xmin =  DBL_MAX;
+    for(i = 0; i < n; i++)
+        if (R_FINITE(x[i])) {
+	    if (*xmax < x[i]) *xmax = x[i];
+	    if (*xmin > x[i]) *xmin = x[i];
+        }
+}
+
+CheckSymbolPar(SEXP call, SEXP p, int *nr, int *nc)
+{
+    SEXP dim = getAttrib(p, R_DimSymbol);
+    switch(length(dim)) {
+    case 0:
+	*nr = LENGTH(p);
+	*nc = 1;
+	break;
+    case 1:
+	*nr = INTEGER(dim)[0];
+	*nc = 1;
+	break;
+    case 2:
+	*nr = INTEGER(dim)[0];
+	*nc = INTEGER(dim)[1];
+	break;
+    default:
+	*nr = 0;
+	*nc = 0;
+    }
+    if (*nr == 0 || *nc == 0)
+	errorcall(call, "invalid symbol parameter vector");
+}
+
+do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x, y, p, fg, bg;
+    double pmax, pmin, inches, rx, ry;
+    int i, j, nr, nc, nbg, nfg, type;
+    double xx, yy, p0, p1, p2, p3, p4;
+    double *pp, *xp, *yp;
+    char *vmax;
+    int units;
+
+    SEXP originalArgs = args;
+    DevDesc *dd = CurrentDevice();
+    GCheckState(dd);
+
+    if (length(args) < 7)
+	errorcall(call, "insufficient arguments");
+
+    x = PROTECT(coerceVector(CAR(args), REALSXP)); args = CDR(args);
+    y = PROTECT(coerceVector(CAR(args), REALSXP)); args = CDR(args);
+    if (!isNumeric(x) || !isNumeric(y) || length(x) <= 0 || LENGTH(x) <= 0)
+        errorcall(call, "invalid symbol coordinates");
+
+    type = asInteger(CAR(args)); args = CDR(args);
+
+    p = PROTECT(coerceVector(CAR(args), REALSXP)); args = CDR(args);
+    CheckSymbolPar(call, p, &nr, &nc);
+    if (LENGTH(x) != nr || LENGTH(y) != nr)
+	errorcall(call, "x/y/parameter length mismatch");
+
+    inches = asReal(CAR(args)); args = CDR(args);
+    if (!R_FINITE(inches) || inches < 0)
+	inches = 0;
+
+    PROTECT(bg = FixupCol(CAR(args), NA_INTEGER)); args = CDR(args);
+    nbg = LENGTH(bg);
+
+    PROTECT(fg = FixupCol(CAR(args), NA_INTEGER)); args = CDR(args);
+    nfg = LENGTH(fg);
+
+    GSavePars(dd);
+    ProcessInlinePars(args, dd);
+
+    GMode(1, dd);
+    switch (type) {
+    case 1: /* circles */
+	if (nc != 1)
+	    errorcall(call, "invalid circle data");
+	SymbolSize(REAL(p), nr, &pmax, &pmin);
+	if (pmin > pmin || pmin < 0)
+	    errorcall(call, "invalid symbol parameter");
+	for (i = 0; i < nr; i++) {
+	    if (R_FINITE(REAL(x)[i]) && R_FINITE(REAL(y)[i])
+		&& R_FINITE(REAL(p)[i])) {
+		rx = REAL(p)[i];
+		if (inches > 0)
+		    rx = (rx / pmax) * inches;
+		else
+		    rx = GConvertXUnits(rx, USER, INCHES, dd);
+		GCircle(REAL(x)[i], REAL(y)[i],	USER, rx,
+			INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg],	dd);
+	    }
+	}
+	break;
+    case 2: /* squares */
+	if (nc != 1)
+	    errorcall(call, "invalid square data");
+	SymbolSize(REAL(p), nr, &pmax, &pmin);
+	if (pmin > pmin || pmin < 0)
+	    errorcall(call, "invalid symbol parameter");
+	units = DEVICE;
+	for (i = 0; i < nr; i++) {
+	    if (R_FINITE(REAL(x)[i]) && R_FINITE(REAL(y)[i])
+		&& R_FINITE(REAL(p)[i])) {
+		p0 = REAL(p)[i];
+		xx = REAL(x)[i];
+		yy = REAL(y)[i];
+		GConvert(&xx, &yy, USER, units, dd);
+		if (inches > 0) {
+		    p0 = p0 / pmax * inches;
+		    rx = GConvertXUnits(0.5 * p0, INCHES, units, dd);
+		    ry = GConvertYUnits(0.5 * p0, INCHES, units, dd);
+		}
+		else {
+		    rx = GConvertXUnits(0.5 * p0, USER, units, dd);
+		    ry = GConvertYUnits(0.5 * p0, USER, units, dd);
+		}
+		GRect(xx - rx, yy - rx, xx + rx, yy + rx, units,
+		      INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
+
+	    }
+	}
+	break;
+    case 3: /* rectangles */
+	if (nc != 2)
+	    errorcall(call, "invalid square data");
+	SymbolSize(REAL(p), 2 * nr, &pmax, &pmin);
+	if (pmin > pmax || pmin < 0)
+	    errorcall(call, "invalid symbol parameter");
+	for (i = 0; i < nr; i++) {
+	    if (R_FINITE(REAL(x)[i]) && R_FINITE(REAL(y)[i])
+		&& R_FINITE(REAL(p)[i]) && R_FINITE(REAL(p)[i+nr])) {
+		xx = REAL(x)[i];
+		yy = REAL(y)[i];
+		GConvert(&xx, &yy, USER, DEVICE, dd);
+		p0 = REAL(p)[i];
+		p1 = REAL(p)[i+nr];
+		if (inches > 0) {
+		    p0 = p0 / pmax * inches;
+		    p1 = p1 / pmax * inches;
+		    rx = GConvertXUnits(0.5 * p0, INCHES, DEVICE, dd);
+		    ry = GConvertYUnits(0.5 * p1, INCHES, DEVICE, dd);
+		}
+		else {
+		    rx = GConvertXUnits(0.5 * p0, USER, DEVICE, dd);
+		    ry = GConvertYUnits(0.5 * p1, USER, DEVICE, dd);
+		}
+		GRect(xx - rx, yy - ry, xx + rx, yy + ry, DEVICE,
+		      INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
+
+	    }
+	}
+	break;
+    case 4: /* stars */
+	if (nc < 3)
+	    errorcall(call, "invalid stars data");
+	SymbolSize(REAL(p), nc, &pmax, &pmin);
+	if (pmin > pmax || pmin < 0)
+	    errorcall(call, "invalid symbol parameter");
+	vmax = vmaxget();
+	pp = (double*)R_alloc(nc, sizeof(double));
+	xp = (double*)R_alloc(nc, sizeof(double));
+	yp = (double*)R_alloc(nc, sizeof(double));
+	p1 = 2.0 * M_PI / nc;
+	for (i = 0; i < nr; i++) {
+	    xx = REAL(x)[i];
+	    yy = REAL(y)[i];
+	    if (R_FINITE(xx) && R_FINITE(yy)) {
+		GConvert(&xx, &yy, USER, NDC, dd);
+		if (inches > 0) {
+		    for(j = 0; j < nc; j++) {
+			p0 = REAL(p)[i + j * nr];
+			if (!R_FINITE(p0)) p0 = 0;
+			pp[j] = (p0 / pmax) * inches;
+		    }
+		}
+		else {
+		    for(j = 0; j < nc; j++) {
+			p0 = REAL(p)[i + j * nr];
+			if (!R_FINITE(p0)) p0 = 0;
+			pp[j] =  GConvertXUnits(p0, USER, INCHES, dd);
+		    }
+		}
+		for(j = 0; j < nc; j++) {
+		    xp[j] = GConvertXUnits(pp[j] * cos(j * p1),
+					   INCHES, NDC, dd) + xx;
+		    yp[j] = GConvertYUnits(pp[j] * sin(j * p1),
+					   INCHES, NDC, dd) + yy;
+		}
+		GPolygon(nc, xp, yp, NDC,
+			 INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
+	    }
+	}
+	vmaxset(vmax);
+	break;
+    case 5: /* thermometers */
+	if (nc != 3 && nc != 4)
+	    errorcall(call, "invalid thermometer data");
+	SymbolSize(REAL(p), 2 * nr, &pmax, &pmin);
+	if (pmin > pmax || pmin < 0)
+	    errorcall(call, "invalid symbol parameter");
+	for (i = 0; i < nr; i++) {
+	    xx = REAL(x)[i];
+	    yy = REAL(y)[i];
+	    if (R_FINITE(xx) && R_FINITE(yy)) {
+		p0 = REAL(p)[i];
+		p1 = REAL(p)[i + nr];
+		p2 = REAL(p)[i + 2 * nr];
+		if (nc == 4) 
+		    p3 = REAL(p)[i + 3 * nr];
+		else
+		    p3 = 0;
+		if (R_FINITE(p0) && R_FINITE(p0)
+		    && R_FINITE(p0) && R_FINITE(p0)) {
+		    if (p2 < 0) p2 = 0;
+		    if (p2 > 1) p2 = 1;
+		    if (p3 < 0) p3 = 0;
+		    if (p3 > 1) p3 = 1;
+		    GConvert(&xx, &yy, USER, NDC, dd);
+		    if (inches > 0) {
+			p0 = p0 / pmax * inches;
+			p1 = p1 / pmax * inches;
+			rx = GConvertXUnits(0.5 * p0, INCHES, NDC, dd);
+			ry = GConvertYUnits(0.5 * p1, INCHES, NDC, dd);
+		    }
+		    else {
+			rx = GConvertXUnits(0.5 * p0, USER, NDC, dd);
+			ry = GConvertYUnits(0.5 * p1, USER, NDC, dd);
+		    }	
+		    GRect(xx - rx, yy - ry, xx + rx, yy + ry, NDC,
+			  INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
+		    GRect(xx - rx,  yy - (1 - 2 * p2) * ry,
+			  xx + rx,  yy - (1 - 2 * p3) * ry,
+			  NDC,
+			  INTEGER(fg)[i%nfg], INTEGER(fg)[i%nfg], dd);
+		    GLine(xx - rx, yy, xx - 1.5 * rx, yy, NDC, dd);
+		    GLine(xx + rx, yy, xx + 1.5 * rx, yy, NDC, dd);
+
+		}
+	    }
+	}
+	break;
+    case 6: /* boxplots */
+	if (nc != 5)
+	    errorcall(call, "invalid boxplot data");
+	SymbolSize(REAL(p), 5 * nr, &pmax, &pmin);
+	if (pmin > pmax)
+	    errorcall(call, "invalid symbol parameter");
+	for (i = 0; i < nr; i++) {
+	    xx = REAL(x)[i];
+	    yy = REAL(y)[i];
+	    if (R_FINITE(xx) && R_FINITE(yy)) {
+		p0 = REAL(p)[i];
+		p1 = REAL(p)[i + nr];
+		p2 = REAL(p)[i + 2 * nr];
+		p3 = REAL(p)[i + 3 * nr];
+		p4 = REAL(p)[i + 4 * nr];
+		if (R_FINITE(p0) && R_FINITE(p1)
+		        && R_FINITE(p2) && R_FINITE(p3) && R_FINITE(p4)) {
+		    GConvert(&xx, &yy, USER, NDC, dd);
+		    if (inches > 0) {
+			p0 = (p0 / pmax) * inches;
+			p1 = (p1 / pmax) * inches;
+			p2 = (p2 / pmax) * inches;
+			p3 = (p2 / pmax) * inches;
+			p0 = GConvertXUnits(p0, INCHES, NDC, dd);
+			p1 = GConvertYUnits(p1, INCHES, NDC, dd);
+			p2 = GConvertYUnits(p2, INCHES, NDC, dd);
+			p3 = GConvertYUnits(p3, INCHES, NDC, dd);
+		    }
+		    else {
+			p0 = GConvertXUnits(p0, USER, NDC, dd);
+			p1 = GConvertYUnits(p1, USER, NDC, dd);
+			p2 = GConvertYUnits(p2, USER, NDC, dd);
+			p3 = GConvertYUnits(p3, USER, NDC, dd);
+		    }
+		    rx = 0.5 * p0;
+		    ry = 0.5 * p1;
+		    p4 = (1 - p4) * (yy - ry) + p4 * (yy + ry);
+		    /* Box */
+		    GRect(xx - rx, yy - ry, xx + rx, yy + ry, NDC,
+			  INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
+		    /* Median */
+		    GLine(xx - rx, p4, xx + rx, p4, NDC, dd);
+		    /* Lower Whisker */
+		    GLine(xx, yy - ry, xx, yy - ry - p2, NDC, dd);
+		    /* Upper Whisker */
+		    GLine(xx, yy + ry, xx, yy + ry + p3, NDC, dd);
+		}
+	    }
+	}
+	break;
+    default:
+	errorcall(call, "invalid symbol type");
+    }
+    GMode(0, dd);
+    GRestorePars(dd);
+    if (call != R_NilValue)
+	recordGraphicOperation(op, originalArgs, dd);
+    UNPROTECT(5);
+}

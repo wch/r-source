@@ -77,6 +77,7 @@ SEXP do_flatContour(SEXP, SEXP, SEXP, SEXP);
 SEXP do_filledcontour(SEXP, SEXP, SEXP, SEXP);
 SEXP do_restart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_primitive(SEXP, SEXP, SEXP, SEXP);
+SEXP do_symbols(SEXP, SEXP, SEXP, SEXP);
 
 FUNTAB R_FunTab[] =
 {
@@ -676,6 +677,7 @@ FUNTAB R_FunTab[] =
 {"playDL",	do_playDL,	0,	111,	1,	PP_FUNCALL},
 {"getGPar",	do_getGPar,	0,	111,	0,	PP_FUNCALL},
 {"setGPar",	do_setGPar,	0,	111,	1,	PP_FUNCALL},
+{"symbols",	do_symbols,	0,	111,	-1,	PP_FUNCALL},
 
 /* Objects */
 

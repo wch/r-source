@@ -14,7 +14,7 @@ symbols(\dots)
   \item{arg}{an argument of a function that is not yet used.}
 }
 %------ PLEASE: put \alias{.} here for  EACH !
-\alias{symbols}
+%done\alias{symbols}
 %done\alias{plot.lm}
 \description{
   In order to pinpoint missing functionality, the \R core team uses
