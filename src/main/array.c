@@ -153,7 +153,7 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 		for (j = 0; j < nc; j++)
 		    RAW(snr)[i + j * nr] = 0;
 	    break;
-	default: 
+	default:
 	    /* don't fill with anything */
 	    ;
 	}
@@ -395,7 +395,7 @@ static void matprod(double *x, int nrx, int ncx,
 	 */
 	for (i = 0; i < nrx*ncx; i++)
 	    if (ISNAN(x[i])) {have_na = TRUE; break;}
-	if (!have_na) 
+	if (!have_na)
 	    for (i = 0; i < nry*ncy; i++)
 		if (ISNAN(y[i])) {have_na = TRUE; break;}
 	if (have_na) {
@@ -564,7 +564,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ncx = 1;
 	    }
 	}
-	else {
+	else { /* crossprod */
 	    if (LENGTH(x) == nry) {	/* x is a row vector */
 		nrx = LENGTH(x);
 		ncx = 1;
@@ -599,6 +599,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nry = INTEGER(ydims)[0];
 	ncy = INTEGER(ydims)[1];
     }
+    /* nr[ow](.) and nc[ol](.) are now defined for x and y */
 
     if (PRIMVAL(op) == 0) {
 	if (ncx != nry)
@@ -616,7 +617,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     SETCAR(args, coerceVector(CAR(args), mode));
     SETCADR(args, coerceVector(CADR(args), mode));
 
-    if (PRIMVAL(op) == 0) {		       	/* op == 0 : matprod() */
+    if (PRIMVAL(op) == 0) {			/* op == 0 : matprod() */
 
 	PROTECT(ans = allocMatrix(mode, nrx, ncy));
 	if (mode == CPLXSXP)
@@ -630,33 +631,49 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 
 	if (xdims != R_NilValue || ydims != R_NilValue) {
-	    SEXP dimnames, dimnamesnames, dn;
+	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue;
+
+	    /* allocate dimnames and dimnamesnames */
+
 	    PROTECT(dimnames = allocVector(VECSXP, 2));
 	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
 	    if (xdims != R_NilValue) {
-		if (ldx == 2 || ncx ==1) {
-		    dn = getAttrib(xdims, R_NamesSymbol);
+		if (ldx == 2 || ncx == 1) {
 		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 0));
-		    if(!isNull(dn))
-			SET_STRING_ELT(dimnamesnames, 0, STRING_ELT(dn, 0));
+		    dnx = getAttrib(xdims, R_NamesSymbol);
+		    if(!isNull(dnx))
+			SET_STRING_ELT(dimnamesnames, 0, STRING_ELT(dnx, 0));
 		}
 	    }
-	    if (ydims != R_NilValue) {
-		if (ldy == 2 ){
-		    dn = getAttrib(ydims, R_NamesSymbol);
-		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 1));
-		    if(!isNull(dn))
-			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dn, 1));
-		} else if (nry == 1) {
-		    dn = getAttrib(ydims, R_NamesSymbol);
-		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 0));
-		    if(!isNull(dn))
-			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dn, 0));
-		}
-	    }
-	    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);
-	    setAttrib(ans, R_DimNamesSymbol, dimnames);
-	    UNPROTECT(2);
+
+#define YDIMS_ET_CETERA
+	    if (ydims != R_NilValue) {						\
+		if (ldy == 2) {							\
+		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 1));		\
+		    dny = getAttrib(ydims, R_NamesSymbol);			\
+		    if(!isNull(dny))						\
+			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 1));	\
+		} else if (nry == 1) {						\
+		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 0));		\
+		    dny = getAttrib(ydims, R_NamesSymbol);			\
+		    if(!isNull(dny))						\
+			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 0));	\
+		}								\
+	    }									\
+										\
+	    /* We sometimes attach a dimnames attribute				\
+	     * whose elements are all NULL ...					\
+	     * This is ugly but causes no real damage.				\
+	     * Now (2.1.0 ff), we don't anymore: */				\
+	    if (VECTOR_ELT(dimnames,0) != R_NilValue ||				\
+		VECTOR_ELT(dimnames,1) != R_NilValue) {				\
+		if (dnx != R_NilValue || dny != R_NilValue)			\
+		    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);		\
+		setAttrib(ans, R_DimNamesSymbol, dimnames);			\
+	    }									\
+	    UNPROTECT(2)
+
+	    YDIMS_ET_CETERA;
 	}
     }
 
@@ -692,57 +709,39 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(dimnames = allocVector(VECSXP, 2));
 	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
 
-            /* There was a bug here.  The second element of a */
-            /* dimnames list was being accessed for a 1-d array. */
-            /* I have just excluded the use of dimnames in this */
-            /* case. - ihaka Sep 30, 2003. */
-
 	    if (xdims != R_NilValue) {
-                if (ldx == 2) {
-		    dnx = getAttrib(xdims, R_NamesSymbol);
+		if (ldx == 2) {/* not nrx==1 : .. fixed, ihaka 2003-09-30 */
 		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 1));
+		    dnx = getAttrib(xdims, R_NamesSymbol);
 		    if(!isNull(dnx))
 			SET_STRING_ELT(dimnamesnames, 0, STRING_ELT(dnx, 1));
 		}
 	    }
 
-	    if (ydims != R_NilValue) {
-                if (ldy == 2) {
-		    dny = getAttrib(ydims, R_NamesSymbol);
-		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 1));
-		    if(!isNull(dny))
-			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 1));
-		}
-	    }
-
-            /* We sometimes attach a dimnames attribute */
-            /* whose elements are all NULL ... */
-            /* Thus is ugly but causes no real damage. */
-	    
-	    if (!isNull(dnx) || !isNull(dny))
-		setAttrib(dimnames, R_NamesSymbol, dimnamesnames);
-	    setAttrib(ans, R_DimNamesSymbol, dimnames);
-	    UNPROTECT(2);
+	    YDIMS_ET_CETERA;
 	}
     }
     UNPROTECT(3);
     return ans;
 }
+#undef YDIMS_ET_CETERA
+
 
 SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, r, dims, dimnames, dimnamesnames=R_NilValue,
 	ndimnamesnames, rnames, cnames;
-    int i, len = 0, ncol=0, nrow=0;
+    int i, ldim, len = 0, ncol=0, nrow=0;
 
     checkArity(op, args);
     a = CAR(args);
 
     if (isVector(a)) {
 	dims = getAttrib(a, R_DimSymbol);
+	ldim = length(dims);
 	rnames = R_NilValue;
 	cnames = R_NilValue;
-	switch(length(dims)) {
+	switch(ldim) {
 	case 0:
 	    nrow = len = length(a);
 	    ncol = 1;
@@ -751,9 +750,11 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1:
 	    nrow = len = length(a);
 	    ncol = 1;
-	    rnames = getAttrib(a, R_DimNamesSymbol);
-	    if (rnames != R_NilValue)
-		rnames = VECTOR_ELT(rnames, 0);
+	    dimnames = getAttrib(a, R_DimNamesSymbol);
+	    if (dimnames != R_NilValue) {
+		rnames = VECTOR_ELT(dimnames, 0);
+		dimnamesnames = getAttrib(dimnames, R_NamesSymbol);
+	    }
 	    break;
 	case 2:
 	    ncol = ncols(a);
@@ -816,7 +817,9 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(!isNull(dimnamesnames)) {
 	    PROTECT(ndimnamesnames = allocVector(VECSXP, 2));
 	    SET_STRING_ELT(ndimnamesnames, 1, STRING_ELT(dimnamesnames, 0));
-	    SET_STRING_ELT(ndimnamesnames, 0, STRING_ELT(dimnamesnames, 1));
+	    SET_STRING_ELT(ndimnamesnames, 0,
+			   (ldim == 2) ? STRING_ELT(dimnamesnames, 1):
+			   R_BlankString);
 	    setAttrib(dimnames, R_NamesSymbol, ndimnamesnames);
 	    UNPROTECT(1);
 	}
@@ -1080,16 +1083,16 @@ SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	/* reverse summation order to improve cache hits */
 	if (type == REALSXP) {
-	    double *rans = REAL(ans), *ra = rans, *cnt = NULL, *c;
+	    double *rans = REAL(ans), *ra = rans, *Cnt = NULL, *c;
 	    rx = REAL(x);
-	    if (!keepNA && OP == 3) cnt = Calloc(n, double);
+	    if (!keepNA && OP == 3) Cnt = Calloc(n, double);
 	    for (ra = rans, i = 0; i < n; i++) *ra++ = 0.0;
 	    for (j = 0; j < p; j++) {
 		ra = rans;
 		if (keepNA)
 		    for (i = 0; i < n; i++) *ra++ += *rx++;
 		else
-		    for (c = cnt, i = 0; i < n; i++, ra++, rx++, c++)
+		    for (c = Cnt, i = 0; i < n; i++, ra++, rx++, c++)
 			if (!ISNAN(*rx)) {
 			    *ra += *rx;
 			    if (OP == 3) (*c)++;
@@ -1100,9 +1103,9 @@ SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    for (ra = rans, i = 0; i < n; i++)
 			*ra++ /= p;
 		else {
-		    for (ra = rans, c = cnt, i = 0; i < n; i++, c++)
+		    for (ra = rans, c = Cnt, i = 0; i < n; i++, c++)
 			if (*c > 0) *ra++ /= *c; else *ra++ = NA_REAL;
-		    Free(cnt);
+		    Free(Cnt);
 		}
 	    }
 	    UNPROTECT(1);

@@ -3411,3 +3411,42 @@ for(x in c("F", "FALSE", "T", "TRUE", "NA")) {
 all(list())
 any(list())
 ## all failed in 2.0.1 with 'incorrect argument type'
+
+##---- named dimnames of  %*% and crossprod() -- matrices and 1-d arrays:
+tst1 <- function(m) {
+    stopifnot(identical(t(m) %*%  (m), crossprod(m)))
+    stopifnot(identical(m    %*% t(m), crossprod(t(m))))
+}
+tst2 <- function(x, y=x) {
+    stopifnot(identical(t(x) %*% (y),(crossprod(x,y) ->  C)))
+    stopifnot(identical(t(y) %*% (x),(crossprod(y,x) -> tC)))
+    stopifnot(identical(tC, t(C)))
+}
+
+{m1 <- array(1:2,1:2); dimnames(m1) <- list(D1="A", D2=c("a","b")); m1}
+tst1(m1)
+m2 <- m1; names(dimnames(m2)) <- c("", "d2"); tst1(m2)
+m3 <- m1; names(dimnames(m3)) <- c("", "")  ; tst1(m3)
+m4 <- m1; names(dimnames(m4)) <- NULL       ; tst1(m4)
+
+tst2(m1,m2)
+tst2(m1,m3)
+tst2(m1,m4)
+tst2(m2,m3)
+tst2(m2,m4)
+tst2(m3,m4)
+
+## 2) Now the 'same' with 1-d arrays:
+a1 <- m1; dim(a1) <- length(a1); dimnames(a1) <- dimnames(m1)[2]; a1 # named dn
+a2 <- a1; names(dimnames(a2)) <- NULL ; a2 # unnamed dn
+a3 <- a1; dimnames(a3) <- NULL ; a3 # no dn
+stopifnot(identical(dimnames(t(a1))[2], dimnames(a1)))
+## in version <= 2.0.1,  t(.) was loosing names of dimnames()
+tst1(a1)# failed in 2.0.1 ("twice")
+tst1(a2)# failed in 2.0.1
+tst1(a3)# ok
+## these all three failed in (2.0.1) for more than one reason:
+tst2(a1,a2)
+tst2(a1,a3)
+tst2(a2,a3)
+## end {testing named dimnames for %*% and crossprod()}

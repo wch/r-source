@@ -1500,10 +1500,9 @@ x    1  2
 > data <- data.frame(weight, group)
 > fit <- lm(cbind(w=weight, w2=weight^2) ~ group, data=data)
 > predict(fit, newdata=data[1:2, ])
-   
-        w       w2
-  1 5.032 25.62702
-  2 5.032 25.62702
+      w       w2
+1 5.032 25.62702
+2 5.032 25.62702
 > ## was 20 rows in R <= 1.4.0
 > 
 > 

@@ -146,27 +146,27 @@ NEW FEATURES
 
     o	Hashing has been tweaked to use half as much memory as before.
 
-    o   Readline is not used for tilde expansion when R is run with
-	--no-readline, nor from embedded applications.  Then "~name"
+    o	Readline is not used for tilde expansion when R is run with
+	--no-readline, nor from embedded applications.	Then "~name"
 	is no longer expanded, but "~" still is.
 
-    o   scan() arranges to share storage of duplicated character
+    o	scan() arranges to share storage of duplicated character
 	strings read in: this can dramatically reduce the memory
 	requirements for large character vectors which will
 	subsequently be turned into factors with relatively few
-	levels.  For a million items this halved the time and reduced
+	levels.	 For a million items this halved the time and reduced
 	storage by a factor of 20.
 
-    o   There is a new version for write.table() which is implemented in C.  
+    o	There is a new version for write.table() which is implemented in C.
 	For simple matrices and data frames this is several times
-	faster than before, and uses negligible memory compared to the 
+	faster than before, and uses negligible memory compared to the
 	object size.
 
 	The old version (which no longer coerces a matrix to a data
 	frame and then back to a matrix) is available for now as
 	write.table0().
 
-    o   New convenience wrappers write.csv() and write.csv2().  
+    o	New convenience wrappers write.csv() and write.csv2().
 
 
 UTILITIES
@@ -238,7 +238,7 @@ DEPRECATED & DEFUNCT
 
     o	Capabilities "bzip2", "GNOME, "libz" and "PCRE" are defunct.
 
-    o	The undocumented use of UseMethod() with no argument was 
+    o	The undocumented use of UseMethod() with no argument was
 	deprecated in 2.0.1 and is now regarded as an error.
 
     o	Capability "IEEE754" is deprecated.
@@ -278,7 +278,7 @@ INSTALLATION CHANGES
     o	The C code for most of the graphics device drivers and their
 	afm files are now in package grDevices.
 
-    o	R is now linked against ncurses/termlib/termcap only if 
+    o	R is now linked against ncurses/termlib/termcap only if
 	readline is specified (the default) and requires it.
 
 
@@ -367,7 +367,11 @@ BUG FIXES
 
     o	write.table() was not quoting row names for a 0-column x.
 
+    o	t(x)'s default method now also preserves names(dimnames(x)) for 1D
+	arrays 'x'.
 
+    o	r <- a %*% b no longer produces names(dimnames(r)) == c("","")
+	unless when a or b has named dimnames.
 
 
 	**************************************************
