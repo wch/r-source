@@ -14,7 +14,7 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
                 character(0)
         files
     }
-    
+
     if(missing(dir))
         stop("no package directory given")
     if(!file.exists(dir))
@@ -25,7 +25,7 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
     if(!file.exists(docsDir <- file.path(dir, "man")))
         stop(paste("directory", fQuote(dir),
                    "does not contain Rd sources"))
-    
+
     FILES <- NULL
     if(!keep.tempfiles)
         on.exit(unlink(FILES))
@@ -50,7 +50,11 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
         files <- c(files, listFilesWithExts(docsOSDir, docsExts))
     file.create(docsFile)
     for(f in files) {
-        stub <- system(paste("R CMD extract-usage", f), intern = TRUE)
+        stub <- if(.Platform$OS.type == "windows")
+            system(paste("Rcmd extract-usage", f), intern = TRUE,
+                   invisible = TRUE)
+        else
+            system(paste("R CMD extract-usage", f), intern = TRUE)
         cat(stub, sep = "\n", file = docsFile, append = TRUE)
     }
 
