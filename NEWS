@@ -631,6 +631,9 @@ BUG FIXES
 
     o   rect(lty = "blank") was incorrectly drawing with a dashed line.
 
+    o   type.convert() was not reporting incorrectly formatting complex 
+	inputs. (PR#1477)
+
 
 
 	**************************************************
