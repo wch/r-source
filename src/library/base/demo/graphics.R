@@ -1,3 +1,5 @@
+if(dev.cur() <= 1) get(getOption("device"))()
+
 opar <- par(ask = interactive() &&
             (.Device %in% c("X11", "GTK", "windows", "Macintosh")))
 # For source
