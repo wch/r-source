@@ -73,7 +73,7 @@ double R_maximum(double *, int, int, int, int);
 double R_manhattan(double *, int, int, int, int);
 double R_canberra(double *, int, int, int, int);
 double R_dist_binary(double *, int, int, int, int);
-enum { EUCLIDEAN, MAXIMUM, MANHATTAN, CANBERRA, BINARY };/* == 0,1,... */
+enum { EUCLIDEAN=1, MAXIMUM, MANHATTAN, CANBERRA, BINARY };/* == 1,2,... */
 void R_distance(double *, int *, int *, double *, int *, int *);
 
 /* eigen.c */
