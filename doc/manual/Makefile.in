@@ -410,13 +410,6 @@ $(top_srcdir)/doc/html/resources.html: @MAINTAINER_MODE_TRUE@ $(srcdir)/resource
 	  exit 1; \
 	fi
 	$(TEXI2HTML) --no-headers $(srcdir)/resources.texi -o $@
-$(top_srcdir)/doc/html/R-admin.html: @MAINTAINER_MODE_TRUE@ $(srcdir)/R-admin.texi $(texiincludes)
-	@if test "$(MAKEINFO)" = false; then \
-	  echo "ERROR: 'makeinfo' v4 needed but missing on your system."; \
-	  exit 1; \
-	fi
-	$(TEXI2HTML) --no-headers --number-sections -I$(srcdir) \
-	  $(srcdir)/R-admin.texi -o $@
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
@@ -429,3 +422,10 @@ distdir: $(DISTFILES)
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
+	@if test "$(MAKEINFO)" = false; then \
+	  echo "ERROR: 'makeinfo' v4 needed but missing on your system."; \
+	  exit 1; \
+	fi
+#	$(distdir)/doc/html has already been created
+	$(TEXI2HTML) --no-headers --number-sections \
+	  $(srcdir)/R-admin.texi -o $(distdir)/../html/R-admin.html

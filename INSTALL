@@ -6,13 +6,14 @@ This document concerns building and installing R from sources.  Pre-made
 binaries are made available for some systems with varying regularity and
 can be obtained from CRAN (see the RESOURCES file).
 
-For building on Windows 9x/ME/NT/2000 see the file `src/gnuwin32/INSTALL'.
+For building on Windows see the file `src/gnuwin32/INSTALL'.
 
 The main source of information on installation is the `R Installation
 and Administration Manual', an HTML copy of which is available as file
 `doc/html/R-admin.html'.  Please read that before installing R.  But
 if you are impatient, read on but please refer to the manual to
-resolve any problems.
+resolve any problems.  (If you obtained R using Subversion, the manual
+is at doc/manual/R-admin.texi.)
 
 
 SIMPLE COMPILATION

@@ -21,7 +21,7 @@ INSTFILES = \
 	template.html \
 	thanks.html
 ## </FIXME>
-DISTFILES = Makefile.in $(INSTFILES) index-default.html R-admin.html
+DISTFILES = Makefile.in $(INSTFILES) index-default.html
 SUBDIRS = search
 OBJECTS = index.html
 ## <FIXME>
