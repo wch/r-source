@@ -235,7 +235,7 @@ sub mark_brackets {
 		    "mismatched or missing braces")
 	  && $complete_text =~ /{([^{}]*)}/s) {
 	my $id = $NB . ++$max_bracket . $BN;
-	die "too many pairs of braces in this file" 
+	die "too many pairs of braces in this file"
 	  if $max_bracket > $MAXLOOPS;
 	$complete_text =~ s/{([^{}]*)}/$id$1$id/s;
 	print STDERR "." if $debug;
@@ -946,8 +946,8 @@ sub code2html {
 	}
     }
 
-    $text = replace_addnl_command($text, "dontrun", 
-				  "## Don't run: ", "## End Don't run");
+    $text = replace_addnl_command($text, "dontrun",
+				  "## Not run: ", "## End(Not run)");
     $text = drop_full_command($text, "testonly");
     $text = drop_full_command($text, "dontshow");
     $text =~ s/\\\\/\\/go;
@@ -1440,8 +1440,8 @@ sub code2txt {
     $text =~ s/\\dots/.../go;
 
     $text = undefine_command($text, "link");
-    $text = replace_addnl_command($text, "dontrun", 
-				  "## Don't run: ", "## End Don't run");
+    $text = replace_addnl_command($text, "dontrun",
+				  "## Not run: ", "## End(Not run)");
     $text = drop_full_command($text, "testonly");
     $text = drop_full_command($text, "dontshow");
 
@@ -2132,8 +2132,8 @@ sub code2nroff {
     $text =~ s/\\n/\\\\n/g;
 
     $text = undefine_command($text, "link");
-    $text = replace_addnl_command($text, "dontrun", 
-				  "## Don't run: ", "## End Don't run");
+    $text = replace_addnl_command($text, "dontrun",
+				  "## Not run: ", "## End(Not run)");
     $text = drop_full_command($text, "testonly");
     $text = drop_full_command($text, "dontshow");
 
@@ -2263,13 +2263,13 @@ sub code2examp {
 
     $text = undefine_command($text, "link");
 
-    $text = replace_prepend_command($text, "dontshow", "## Don't show: ", 
-				    "## End Don't show", "");
-    $text = replace_prepend_command($text, "testonly", "## Don't show:", 
-				    "## End Don't show", "");
+    $text = replace_prepend_command($text, "dontshow",
+				    "## Don't show: ", "## End Don't show", "");
+    $text = replace_prepend_command($text, "testonly",
+				    "## Don't show:", "## End Don't show", "");
 
-    $text = replace_prepend_command($text, "dontrun","## Don't run: ", 
-				    "## End Don't run",
+    $text = replace_prepend_command($text, "dontrun",
+				    "## Not run: ", "## End(Not run)",
 				    "##D ");
     $text =~ s/\\\\/\\/g;
 
@@ -2432,8 +2432,8 @@ sub code2latex {
     } else {
 	$text = undefine_command($text, "link");
     }
-    $text = replace_addnl_command($text, "dontrun", 
-				  "## Don't run: ", "## End Don't run");
+    $text = replace_addnl_command($text, "dontrun",
+				  "## Not run: ", "## End(Not run)");
     $text = drop_full_command($text, "testonly");
     $text = drop_full_command($text, "dontshow");
 
@@ -2882,8 +2882,8 @@ sub code2Ssgm {
 	    s/\\link(\[.*\])?$id.*$id/<s-function name="$arg">$arg<\/s-function>/s;
     }
 
-    $text = replace_addnl_command($text, "dontrun", 
-				  "## Don't run: ", "## End Don't run");
+    $text = replace_addnl_command($text, "dontrun",
+				  "## Not run: ", "## End(Not run)");
     $text = drop_full_command($text, "testonly");
     $text = drop_full_command($text, "dontshow");
     $text =~ s/\\\\/\\/go;
