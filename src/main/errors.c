@@ -332,7 +332,8 @@ static void cleanup_PrintWarnings(void *data)
 void PrintWarnings(void)
 {
     int i;
-    SEXP names, s, t, header;
+    char *header;
+    SEXP names, s, t;
     RCNTXT cntxt;
 
     if (R_CollectWarnings == 0)
