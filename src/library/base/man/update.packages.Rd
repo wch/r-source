@@ -112,6 +112,6 @@ install.packages(pkgs, lib, available = NULL,
   \code{\link{INSTALL}}, \code{\link{REMOVE}},
 #endif
   \code{\link{library}}, \code{\link{.packages}},
-  \code{\link{parse.dcf}, \code{\link{download.file}}}
+  \code{\link{parse.dcf}}, \code{\link{download.file}}
 }
 \keyword{utilities}
