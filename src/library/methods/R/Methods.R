@@ -271,7 +271,7 @@ setMethod <-
     else {
         where <- as.environment(where)
         gwhere <- .genEnv(f, where)
-        fdef <- getGeneric(f, where = if(is.null(gwhere)) where else gwhere)
+        fdef <- getGeneric(f, where = if(identical(gwhere, baseenv())) where else gwhere)
     }
     if(.lockedForMethods(fdef, where))
         stop("The environment \"", getPackageName(where),

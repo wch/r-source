@@ -5,7 +5,7 @@
         fromPackage <- getPackageName(where)
     }
     else fromPackage <- ""
-    whereF <- NULL
+    whereF <- baseenv()
     pname <- character()
     def <- NULL
     if(is.function(what)) {
@@ -121,7 +121,7 @@
     else {
         ## arrange for setMethod to put the new method in the generic
         ## but NOT to assign the methods list object (binding is ignored)
-        setMethod(fdef, signature, newFun, where = NULL)
+        setMethod(fdef, signature, newFun, where = baseenv())
     }
     if(!global) {
         action <- if(untrace)"Untracing" else "Tracing"
@@ -363,16 +363,12 @@ trySilent <- function(expr) {
         whereF <- findFunction(what, where = where)
         if(length(whereF)>0)
             whereF <- whereF[[1]]
-        else return(list(pname = pname, whereF = NULL))
+        else return(list(pname = pname, whereF = baseenv()))
     }
     else {
         whereF <- .genEnv(what, where)
     }
-    if(is.null(whereF)) { ## stupid convention that NULL == base package
-        whereF <- .BaseNamespaceEnv
-        pname <- "base"
-    }
-    else if(!is.null(attr(whereF, "name")))
+    if(!is.null(attr(whereF, "name")))
         pname <- gsub("^.*:", "", attr(whereF, "name"))
     else if(isNamespace(whereF))
         pname <- .searchNamespaceNames(whereF)

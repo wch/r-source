@@ -324,9 +324,9 @@ setAs <-
             warning("Methods currently exist for coercing from \"", from,
                     "\" to \"", to, "\"; they will be replaced.")
         if(prevCoerce)
-            setMethod(cdef, sig, NULL, where = NULL)
+            setMethod(cdef, sig, NULL, where = baseenv())
         if(prevRepl)
-            setMethod(rdef, sig, NULL, where = NULL)
+            setMethod(rdef, sig, NULL, where = baseenv())
         TRUE
     }
     else

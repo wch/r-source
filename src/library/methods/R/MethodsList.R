@@ -412,7 +412,7 @@ matchSignature <-
   ## arguments of `fun', and return a vector of all the classes in the order specified
   ## by the signature slot of the generic.  The classes not specified by `signature
   ##' will be `"ANY"' in the value.
-  function(signature, fun, where = NULL)
+  function(signature, fun, where = baseenv())
 {
     if(!is(fun, "genericFunction"))
         stop("Trying to match a method signature to an object (of class \"",
