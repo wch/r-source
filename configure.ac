@@ -808,7 +808,8 @@ case "${host_os}" in
     esac
     shlib_cxxldflags="${shlib_ldflags}"
     ;;
-  freebsd[[3-4]].*)
+  freebsd*)
+    ## Only sure for FreeBSD 3 and above.
     main_ldflags="-export-dynamic"
     shlib_ldflags="-shared"
     ;;
