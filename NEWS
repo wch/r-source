@@ -7,6 +7,13 @@
 
 NEW FEATURES
 
+    o	The handling of q()/quit()/EOF has been changed, with a new option
+	"default".  In interactive use this asks unless --save or --no-save
+	has been specified: if these are specified they set the default.
+
+    o	Limited capability for tilde expansion of file names even without
+	readline.
+
     o	New environment variables `R_HISTFILE' and `R_HISTSIZE' for the
 	name and size of the history file.
 
