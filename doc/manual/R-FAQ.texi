@@ -1888,6 +1888,8 @@ Creating random fields using various methods.
 @item Rcmdr
 A platform-independent basic-statistics GUI (graphical user interface)
 for R, based on the @strong{tcltk} package.
+@item ResistorArray
+Electrical properties of resistor networks.
 @item Rlab
 Functions and data sets for the NCSU ST370 class.
 @c <COMMENT>
