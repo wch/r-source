@@ -376,7 +376,8 @@ enum {
 	kMenuFile,
 	kMenuEdit,
 	kMenuTools,
-	kMenuWindows
+	kMenuWindows,
+	kMenuConfig
 };
 
 /*	Apple Menu items
@@ -393,7 +394,7 @@ enum {
 	kItemOpen		 =  4,
 	kItemEditFile	 =  5,
 	kItemShow		 =  6,
-	kItemLoadW        =  8,
+	kItemLoadW       =  8,
 	kItemSaveWSAs	 =  9,
     kItemPageSetup   = 11,
 	kItemPrint       = 12,
@@ -432,6 +433,13 @@ enum {
 	kItemResetDir    =  13,
 	kItemShowLibrary =  15,
 	kItemShowData	 =  16
+};
+
+/*	Config menu items
+*/
+enum {
+    kItemAllowInterrupt =  1,
+	kItemOnOpenSource	=  2
 };
 
 

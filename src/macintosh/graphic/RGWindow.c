@@ -31,13 +31,15 @@ extern SInt16		Edit_Window;
 extern WindowPtr	Graphic_Window[MAX_NUM_G_WIN + 1];
 extern SInt16		Current_Window;
 extern Graphic_Ref	gGReference[MAX_NUM_G_WIN + 1];
-
+extern Boolean		OnOpenSource;
+extern Boolean      Interrupt;
 extern SInt16       Help_Window;
 extern WindowPtr    Help_Windows[MAX_NUM_H_WIN + 1];
 extern WindowPtr    Edit_Windows[MAX_NUM_E_WIN + 1];
 extern char   		wTitle[265], mTitle[265];
 
 void			doWindowsMenu(SInt16 menuItem);
+void 			doConfigMenu(SInt16 menuItem);
 void			doActivate(EventRecord*);
 void			doActivateWindow(WindowPtr,Boolean);
 Boolean			EqualNumString(Str255 Str1, Str255 Str2, SInt16 Num);
@@ -194,6 +196,47 @@ void doWindowsMenu(SInt16 menuItem)
     }
 }
 
+/* doWindowsMenu
+ */
+void doConfigMenu(SInt16 menuItem)
+{
+    WindowPtr windowPtr;
+    SInt16 i;
+    Str255 Cur_Title, Menu_Title;
+    MenuHandle windowsMenu;
+    Boolean EqString=FALSE;
+    
+    windowsMenu = GetMenuHandle(kMenuWindows);
+   
+    switch(menuItem){
+    
+    case kItemOnOpenSource:
+    if(OnOpenSource){
+      OnOpenSource = FALSE;
+      CheckMenuItem(windowsMenu, kItemOnOpenSource, false);
+    }
+    else{
+      OnOpenSource = TRUE;
+      CheckMenuItem(windowsMenu, kItemOnOpenSource, true);
+    }  
+    break;
+    
+    case kItemAllowInterrupt:
+    if(Interrupt){
+      Interrupt = FALSE;
+      CheckMenuItem(windowsMenu, kItemAllowInterrupt, false);
+    }
+    else{
+      Interrupt = TRUE;
+      CheckMenuItem(windowsMenu, kItemAllowInterrupt, true);
+    }  
+    break;
+    
+    default:
+    break;
+    }
+  
+}
 
 /* Get_Graphic_Window:
    Using the WinIndex to query the Window Ptr.
