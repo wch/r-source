@@ -34,7 +34,9 @@
 # define R_NO_REMAP 1
 #endif
 
+#ifndef HAVE_LOG1P
 @RMATH_HAVE_LOG1P@
+#endif
 
 #include <errno.h>
 #include <limits.h>
