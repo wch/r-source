@@ -1,4 +1,4 @@
-\name{class_MethodsList}
+\name{classMethodsList}
 \alias{class_MethodsList}
 \non_function{}
 \title{Class MethodsList, Representation of Methods for a Generic Function }
