@@ -246,7 +246,9 @@ test-codoc:
 	       $(R) -q | sed '/^>/d; /^Using/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \
+	    echo; \
 	    echo "$${out}"; \
+	    echo; \
 	  else \
 	    echo "@ECHO_T@ OK"; \
 	  fi; \
