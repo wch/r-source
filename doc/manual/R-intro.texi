@@ -6408,7 +6408,7 @@ directory (in that order) and sources it.
 
 @item
 It also loads a saved image from @file{.RData} if there is one (unless
-@option{--no-restore} was specified).
+@option{--no-restore} or @option{--no-restore-data} was specified).
 
 @item
 Finally, if a function @code{.First} exists, it is executed.  This
@@ -6462,9 +6462,11 @@ Do not read the user's profile at startup.
 
 @item --restore
 @itemx --no-restore
+@itemx --no-restore-data
 Control whether saved images (file @file{.Rdata} in the directory where
 @R{} was started) should be restored at startup or not.
-The default is to restore.
+The default is to restore. (@option{--no-restore} implies all the specific
+@option{--no-restore-*} options.)
 
 @item --no-restore-history
 Control whether the history file (normally file @file{.Rhistory} in the
@@ -6474,8 +6476,7 @@ The default is to restore.
 
 @item --vanilla
 Combine @option{--no-save}, @option{--no-environ}
-@option{--no-site-file}, @option{--no-init-file}, 
-@option{--no-restore} and @option{--no-restore-history}
+@option{--no-site-file}, @option{--no-init-file} and @option{--no-restore}.
 
 @item --no-readline
 Turn off command-line editing via @strong{readline}.  This is useful
@@ -6629,7 +6630,7 @@ directory (in that order) and sources it.
 
 @item
 It also loads a saved image from @file{.RData} if there is one (unless
-@option{--no-restore} was specified).
+@option{--no-restore} or @option{--no-restore-data} was specified).
 
 @item
 Finally, if a function @code{.First} exists, it is executed.  This
@@ -6669,11 +6670,6 @@ session.  If neither is given in an interactive session, the user is
 asked for the desired behavior when ending the session with @kbd{q()};
 in batch mode, one of these must be specified.
 
-@item --restore
-@itemx --no-restore
-Control whether saved images (file @file{.Rdata} in the directory where
-@R{} was started) should be restored (this is the default) or not.
-
 @item --no-site-file
 Suppress reading of the site-wide startup profile
 
@@ -6683,18 +6679,46 @@ Suppress reading of the directory or user's @file{.Rprofile} file.
 @item --no-environ
 Suppress reading of @file{.Renviron}.
 
+@item --restore
+@itemx --no-restore
+@itemx --no-restore-data
+Control whether saved images (file @file{.Rdata} in the directory where
+@R{} was started) should be restored at startup or not.
+The default is to restore. (@option{--no-restore} implies all the specific
+@option{--no-restore-*} options.)
+
+@item --no-restore-history
+Control whether the history file (normally file @file{.Rhistory} in the
+directory where @R{} was started, but can be set by the environment
+variable @var{R_HISTFILE}) should be restored at startup or not.
+The default is to restore.
+
 @item --vanilla
 Combine @option{--no-save}, @option{--no-restore},
 @option{--no-site-file}, @option{--no-init-file} and
 @option{--no-environ}.
 
-@item -q
-@itemx --quiet
+@item --vsize=@var{N}
+Specify the amount of memory used for variable size objects by setting
+the ``vector heap'' size to @var{N} bytes.  Here, @var{N} must either be
+an integer or an integer ending with @samp{M}, @samp{K}, or @samp{k},
+meaning `Mega' (2^20), (computer) `Kilo' (2^10), or regular `kilo'
+(1000).
+
+@item --nsize=@var{N}
+Specify the amount of memory used for fixed size objects by setting the
+number of ``cons cells'' to @var{N}.  See option @option{--vsize} for
+details on @var{N}.
+
+@item --quiet
 @itemx --silent
+@itemx -q
 Don't print startup message.
 
 @item --slave
-Make @R{} run as quietly as possible.
+Make @R{} run as quietly as possible, and in particular set @R{}'s
+option @code{verbose} to @code{TRUE}.  @R{} code uses this option to
+control the printing of diagnostic messages.
 
 @item --verbose
 Print more information about progress.

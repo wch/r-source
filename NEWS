@@ -64,6 +64,10 @@ NEW FEATURES
 
     o	New command-line option --no-restore-history implied by --vanilla.
 
+    o	Command-line option --restore is now --no-restore-data and
+	--no-restore implies --no-restory-* (currently `data' and
+	`history').
+
     o	The `mode' argument of exists() and get() is interpreted
 	as mode(x) rather than typeof(x), following S.
 

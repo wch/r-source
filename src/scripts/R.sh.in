@@ -81,10 +81,11 @@ Options:
   --no-site-file        Don't read the site-wide Rprofile
   --no-init-file        Don't read the .Rprofile or ~/.Rprofile files
   --restore             Do restore previously saved data sets at startup
-  --no-restore          Don't restore them
+  --no-restore-data     Don't restore previously saved data sets
   --no-restore-history  Don't restore the R history file
+  --no-restore          Don't restore anything
   --vanilla		Combine --no-save, --no-restore, --no-site-file,
-			--no-init-file, --no-restore-history and --no-environ
+			--no-init-file and --no-environ
   --no-readline         Don't use readline for command-line editing
   --vsize=N             Set vector heap size to N bytes; \`4M' = 4 MegaB
   --nsize=N             Set number of cons cells to N

@@ -24,7 +24,7 @@
   home directory (in that order) and sources it.
 
   It also loads a saved image from \file{.RData} if there is one
-  (unless \code{--no-restore} was specified).
+  (unless \code{--no-restore-data} was specified, or \code{--no-restore}).
 
   Finally, if a function \code{.First} exists, it is executed as
   \code{.First()}.
@@ -34,10 +34,11 @@
 
   The commands history is read from the file specified by the
   environment variable \code{R_HISTFILE} (default \code{.Rhistory})
-  unless \code{--no-restore-history} was specified.
+  unless \code{--no-restore-history} was specified (or
+  \code{--no-restore}).
 
   The command-line flag \code{--vanilla} implies \code{--no-init-file},
-  \code{--no-restore},  \code{--no-restore-history} and \code{--no-environ}.
+  \code{--no-restore},  \code{--no-restore} and \code{--no-environ}.
 }
 \seealso{
   \code{\link{.Last}} for final actions before termination.
