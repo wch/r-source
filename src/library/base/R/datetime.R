@@ -311,12 +311,12 @@ mean.POSIXlt <- function (x, ...)
     as.POSIXlt(mean(as.POSIXct(x), ...))
 
 difftime <-
-    function(t1, t2, tz = "",
+    function(time1, time2, tz = "",
              units = c("auto", "secs", "mins", "hours", "days"))
 {
-    t1 <- as.POSIXct(t1, tz = tz)
-    t2 <- as.POSIXct(t2, tz = tz)
-    z <- unclass(t1) - unclass(t2)
+    time1 <- as.POSIXct(time1, tz = tz)
+    time2 <- as.POSIXct(time2, tz = tz)
+    z <- unclass(time1) - unclass(time2)
     zz <- min(abs(z))
     if(units == "auto") {
         if(zz < 60) units <- "secs"
