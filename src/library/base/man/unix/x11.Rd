@@ -10,7 +10,8 @@
 \usage{
 X11(display = "", width = 7, height = 7, pointsize = 12,
     gamma = 1, colortype = getOption("X11colortype"),
-    maxcubesize = 256, canvas = "white")
+    maxcubesize = 256, canvas = "white",
+    fonts = getOption("X11fonts"))
 }
 \arguments{
   \item{display}{the display on which the graphics window will appear.
@@ -32,6 +33,9 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
     cube allocated for pseudocolor devices.}
   \item{canvas}{color.  The color of the canvas, which is visible only
     when the background color is transparent.}
+  \item{fonts}{X11 font description strings into which weight, slant and
+    size will be substituted.  There are two, the first for fonts 1 to 4
+    and the second for font 5, the symbol font.}
 }
 \details{
   By default, an X11 device will use the best color rendering

@@ -257,6 +257,10 @@ getOption(x)
     \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
       and \code{identify} be confirmed by a bell.  Default \code{TRUE}.
       Honoured at least on \code{X11} and \code{windows} devices.}
+#ifdef unix
+    \item{\code{X11fonts}{character vector of length 2. See \code{\link{X11}}.
+    }
+#endif
   }
 
   The default settings of some of these options are
