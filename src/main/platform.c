@@ -634,7 +634,7 @@ SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (STRING_ELT(fn, i) != R_NilValue && 
 	    stat(R_ExpandFileName(CHAR(STRING_ELT(fn, i))), &sb) == 0) {
 	    INTEGER(fsize)[i] = (int) sb.st_size;
-	    LOGICAL(isdir)[i] = (int) sb.st_mode & S_IFDIR;
+	    LOGICAL(isdir)[i] = (sb.st_mode & S_IFDIR) > 0;
 	    INTEGER(mode)[i]  = (int) sb.st_mode & 0007777;
 	    REAL(mtime)[i] = (double) sb.st_mtime;
 	    REAL(ctime)[i] = (double) sb.st_ctime;
