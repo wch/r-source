@@ -2,13 +2,14 @@
 
 # ${RHOME}/etc/INSTALL for installing add-on packages
 # Usage:
-#	R INSTALL [-help/+help] [-html/+html] [-latex/+latex]
+#	R INSTALL [(+|-)debug] [-help/+help] [-html/+html] [-latex/+latex]
 #                 [+docs/-docs] pkg [lib]
-
 
 IHELP=y
 IHTML=y
 ILATEX=y
+if [ "$1" = "+debug" ]; then shift; DEBUG=y; fi
+if [ "$1" = "-debug" ]; then shift; DEBUG=y; fi
 if [ "$1" = "+help" ]; then shift; IHELP=y; fi
 if [ "$1" = "-help" ]; then shift; IHELP=;  fi
 if [ "$1" = "+html" ]; then shift; IHTML=y; fi
@@ -58,38 +59,39 @@ cd ${pkg}
 pkg=`basename ${pkg}`
 
 echo "Installing package \`${pkg}' ..."
+##DEBUG me: set -x -v
 
 if test -d ${src}
 then
     echo "libs"
     (cd ${src}; make CC="@CC@" CFLAGS="@CFLAGS@ @PICFLAGS@ -I${RHOME}/include" SHLIBLDFLAGS="@SHLIBLDFLAGS@" FC="@FC@" FFLAGS="@FFLAGS@ @FPICFLAGS@")
-    mkdir ${lib}/${pkg}/libs
+    test -d ${lib}/${pkg}/libs || mkdir ${lib}/${pkg}/libs
     cp ${src}/*.so ${lib}/${pkg}/libs
 fi
 
 if test -d R
 then
     echo "R"
-    mkdir ${lib}/${pkg}/R
+    test -d ${lib}/${pkg}/R || mkdir ${lib}/${pkg}/R
     cat R/[a-z]* > ${lib}/${pkg}/R/${pkg}
 elif test -d funs
 then
     echo "funs"
-    mkdir ${lib}/${pkg}/R
+    test -d ${lib}/${pkg}/R || mkdir ${lib}/${pkg}/R
     cat funs/[a-z]* > ${lib}/${pkg}/R/${pkg}
 fi
 
 if test -d data
 then
     echo "data"
-    mkdir ${lib}/${pkg}/data
+    test -d ${lib}/${pkg}/data || mkdir ${lib}/${pkg}/data
     cp data/* ${lib}/${pkg}/data
 fi
 
 if test -d exec
 then
     echo "exec"
-    mkdir ${lib}/${pkg}/exec
+    test -d ${lib}/${pkg}/exec || mkdir ${lib}/${pkg}/exec
     cp exec/* ${lib}/${pkg}/exec
     chmod 755 ${lib}/${pkg}/exec/*
 fi
@@ -115,7 +117,7 @@ NO_PERL5="@NO_PERL5@"
 if [ "$IHELP" -o "$IHTML" -o "$ILATEX" ]
 then
 	echo
-else 
+else
 	exit 0
 fi
 
@@ -125,7 +127,7 @@ then
 else
     echo "No man pages found in package \`${pkg}'"
     exit 0
-fi    
+fi
 
 if [ "$NO_PERL5" ]
 then
@@ -141,12 +143,15 @@ then
 
     exit 0
 fi
-    
-BUILDHELPOPTS=""
+
+if [ "$DEBUG" ]
+then BUILDHELPOPTS="--debug"
+else BUILDHELPOPTS=""
+fi
 
 if [ "$IHELP" ]
 then
-    BUILDHELPOPTS="--nroff"
+    BUILDHELPOPTS="${BUILDHELPOPTS} --nroff"
 fi
 
 if [ "$IHTML" ]
@@ -159,8 +164,11 @@ then
     BUILDHELPOPTS="${BUILDHELPOPTS} --latex"
 fi
 
+if [ "$DEBUG" ]
+then echo "now '${RHOME}/etc/build-help ${BUILDHELPOPTS} ../${pkg} ${lib}'"
+fi
 ${RHOME}/etc/build-help ${BUILDHELPOPTS} ../${pkg} ${lib}
 
-echo "DONE"
+echo "DONE (INSTALL)"
 
 
