@@ -33,7 +33,7 @@ R:
 	  cat */TITLE > LibIndex 2> /dev/null)
 
 docs:
-	@echo "building all documentation (help, HTML, LaTeX, examples)"
+	@echo "building all R object docs (help, HTML, LaTeX, examples)"
 	@$(MAKE) DOCS
 	@R_HOME=`cd $(top_builddir); pwd`; export R_HOME; \
 	  $${R_HOME}/bin/build-help --htmllists
@@ -53,6 +53,10 @@ $(top_builddir)/library/LibIndex:
 	@if [ ! -f $@ ]; then touch $@; fi
 
 DOCS:
+	@if @NO_PERL5@; then \
+	  echo "you need Perl version 5 to build the R object docs"; \
+	  exit 1; \
+	fi
 	@for pkg in $(R_PKGS); do \
 	  R_HOME=`cd $(top_builddir); pwd`; export R_HOME; \
 	  $${R_HOME}/bin/build-help $${OPTS} $(srcdir)/$${pkg}; \
