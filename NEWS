@@ -74,7 +74,8 @@ NEW FEATURES
     o   On some OSes (including Windows and those using glibc)
 	strptime() does not validate dates correctly, so we have added
 	extra code to do so.  However, this cannot correct scanning
-	errors in the OS's strptime.
+	errors in the OS's strptime (although we have been able to
+	correct this in the code used on Windows).
 
 
 UTILITIES
