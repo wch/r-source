@@ -26,6 +26,10 @@ detach(name, pos = 2)
   The attached database is returned invisibly, either as
   \code{\link{data.frame}} or as \code{\link{list}}.
 }
+\note{
+  You cannot detach either the workspace (position 1) or the \code{base}
+  package (the last item in the search list).
+}
 \seealso{
   \code{\link{attach}}, \code{\link{library}}, \code{\link{search}},
   \code{\link{objects}}.

@@ -432,9 +432,11 @@ res <- type.convert("12345689012")
 stopifnot(typeof(res) == "double")
 ##  Comments: was integer in 1.4.0
 
+
 ## La.eigen() segfault
 e1 <- La.eigen(m <- matrix(1:9,3))
 stopifnot(e1$values == La.eigen(m, only.values = TRUE)$values)
+
 
 ## Patrick Connelly 2001-01-22, prediction with offsets failed
 ## a simpler example
@@ -459,6 +461,10 @@ p2 <- predict(fit, se = TRUE)  ## failed < 1.4.1
 p3 <- predict(fit, newdata = DF)
 p4 <- predict(fit, newdata = DF, se = TRUE)
 stopifnot(all.equal(p1, p2$fit), all.equal(p1, p3), all.equal(p2, p4))
+
+
+## PR 1271  detach("package:base") crashes R.
+try(detach("package:base"))
 
 
 ## This example last ##

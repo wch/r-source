@@ -83,6 +83,8 @@ BUG FIXES
     o	predict(glm.object, se.fit = TRUE) was failing if the fit
 	involved an offset.
 
+    o	detach() on package:base would crash R. (PR#1271)
+
 
 
 		CHANGES IN R VERSION 1.4.0
