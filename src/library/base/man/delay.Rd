@@ -19,7 +19,7 @@ for evaluation purposes.
 }
 \value{
 A \emph{promise} to evaluate the expression.
-The value which is retuned by \code{delay} can be assigned
+The value which is returned by \code{delay} can be assigned
 without forcing its evaluation, but any further accesses
 will cause evaluation.
 }
