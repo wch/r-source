@@ -3,9 +3,11 @@ include ../MkRules
 ifdef DEBUG
   OPTFLAGS=-g
   LINKFLAGS=
+  DLLFLAGS=
 else
   OPTFLAGS=-O2 -Wall -pedantic
   LINKFLAGS=-s
+  DLLFLAGS=-s
 endif
 CFLAGS=$(OPTFLAGS) -I../../include
 

@@ -76,9 +76,11 @@ files you need. You will need at least the files
 
       rw0xxxb.zip rw0xxxh.zip
 
-and will probably want rw0xxxw.zip (the HTML format help files). Optionally,
-you can also download rw0xxxl.zip (the LaTeX format help files, used for
-offline printing), and the installer, rwinst.exe.
+and will probably want rw0xxxch.zip (the Compiled HTML format help
+files) or rw0xxxwh.zip (the Windows help files) or rw0xxxw.zip (the
+HTML format help files) . Optionally, you can also download
+rw0xxxl.zip (the LaTeX format help files, used for offline printing),
+and the installer, rwinst.exe.
 
 
 1.2) How do I install R for Windows?

@@ -90,4 +90,4 @@ parse.description <- function(desc)
 \seealso{
     \code{\link{library}}, \code{\link{.packages}}
 }
-\keyword{utility}
+\keyword{utilities}

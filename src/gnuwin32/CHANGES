@@ -51,6 +51,12 @@ works better with Emacs).
 The rounding code has been re-written to be more accurate and to round
 to even as documented.
 
+The rw-FAQ is linked into the HTML help system.
+
+We believe the problems with re-sizing windows (especially on Windows 9x)
+have been solved.
+
+
 
 rw0650
 ======
@@ -96,7 +102,7 @@ ${HOMEDRIVE}${HOMEPATH}\rest if those variables are set.
 Using rterm either interactively or with --ess will be more responsive and
 use much less CPU time when waiting for input.  Interruptions by Ctrl-Break
 or (under --ess, for use by ESS) Ctrl-C should happen immediately and be 
-handled correctly.
+handled correctly. [On NT: problems with Win 98 were corrected for rw0651.]
 
 The installer can now install correctly in a top-level directory (e.g.
 C:\), fixing a bug in the unzip code used.
