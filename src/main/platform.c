@@ -319,6 +319,7 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 	warning("pattern specification is not available in \"list.files\"\n");
 #endif
+    count = 0;
     for (i = 0; i < ndir ; i++) {
 	dnp = R_ExpandFileName(CHAR(STRING(d)[i]));
 	if (strlen(dnp) >= DIRNAMEBUFSIZE)
@@ -326,7 +327,6 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 	strcpy(dirname, dnp);
 	if ((dir = opendir(dirname)) == NULL)
 	    errorcall(call, "invalid directory/folder name\n");
-	count = 0;
 	while (de = readdir(dir)) {
 	    if (allfiles || !R_HiddenFile(de->d_name))
 #ifdef HAVE_REGCOMP
