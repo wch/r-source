@@ -95,6 +95,9 @@ BUG FIXES
 	and objects cannot be extended beyond that number of row.
 	(PR#2962)
 
+    o   A bug could produce apparent loops in method selection when
+        inheritance was restricted (used for the as() function).
+
 
 
 		CHANGES IN R VERSION 1.7.0
