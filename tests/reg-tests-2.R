@@ -874,3 +874,9 @@ if(require(MASS)) {
 ## failed in 1.6.2
 
 str(array(1))# not a scalar
+
+## na.print="" shouldn't apply to (dim)names!
+(tf <- table(ff <- factor(c(1:2,NA,2), exclude=NULL)))
+identical(levels(ff), dimnames(tf)[[1]])
+str(levels(ff))
+## not quite ok previous to 1.7.0
