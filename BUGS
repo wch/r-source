@@ -348,6 +348,10 @@ Directory:  Macintosh
 Subject: Multiple macintosh() graphics devices
 From: d.orme@ic.ac.uk
 Date: Wed, 20 Feb 2002 16:41:27 +0100 (MET)
+* PR# 1338 *
+Subject: Setting working directory
+From: jmf@atmiserv.com
+Date: Fri, 1 Mar 2002 16:19:56 +0100 (MET)
 
 Directory:  Misc
 
@@ -469,43 +473,7 @@ Date: Tue, 26 Feb 2002 15:13:04 -0500
 Subject: Bug in glm.fit?
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
 Date: Wed, 27 Feb 2002 16:15:24 +0800 (WST)
-* PR# 1332 *
-Subject: Bug in julian()
-From: Michael.Jacob@bruker-axs.de
-Date: Thu, 28 Feb 2002 10:57:39 +0100 (MET)
 * PR# 1333 *
 Subject: Failed file("foo", "r") keeps file open?
 From: hb@maths.lth.se
 Date: Thu, 28 Feb 2002 17:20:02 +0100 (MET)
-* PR# 1334 *
-Subject: pweibull.c
-From: terra@diku.dk
-Date: Thu, 28 Feb 2002 21:48:18 +0100 (MET)
-* PR# 1335 *
-Subject: pexp.c
-From: terra@diku.dk
-Date: Thu, 28 Feb 2002 21:54:28 +0100 (MET)
-* PR# 1336 *
-Subject: Weakness in Knuth-TAOCP RNG (fwd)
-From: Frederic Schutz <schutz@wehi.EDU.AU>
-Date: Fri, 1 Mar 2002 17:05:55 +1100 (EST)
-* PR# 1337 *
-Subject: (±¤°?)±??? 10´?°? ???? °??? ?????® ...
-From: maza772001@yahoo.com
-Date: 02 Mar 2002 00:18:15 +0900
-* PR# 1338 *
-Subject: Setting working directory
-From: jmf@atmiserv.com
-Date: Fri, 1 Mar 2002 16:19:56 +0100 (MET)
-* PR# 1339 *
-Subject: GNU tar does not ignore files in .Rbuildignore
-From: daven@llnl.gov
-Date: Sat, 2 Mar 2002 01:19:26 +0100 (MET)
-* PR# 1340 *
-Subject: (±¤°?)±??? 10´?°? ???? °??? ?????® ...
-From: maza772001@yahoo.com
-Date: 02 Mar 2002 15:15:23 +0900
-* PR# 1341 *
-Subject: Congratulations
-From: riccardo <riccardo@cindy.com>
-Date: Sat,  2 Mar 2002 17:19:21 +0100 (CET)
