@@ -9,16 +9,17 @@ case "${ARG}" in
     RHOME)
 	echo ${RHOME}; exit 0 ;;
     CMD)
-	shift; PATH="${PATH}:${RHOME}/bin" exec "$@" ;;
+	shift; PATH="${PATH}:${RHOME}/bin" exec "${@}" ;;
     BATCH|COMPILE|INSTALL|REMOVE|SHLIB)
-	shift; exec sh "${RHOME}/bin/${ARG}" "$@" ;;
+	shift; exec sh "${RHOME}/bin/${ARG}" "${@}" ;;
     -d|--debugger)
-        deb="$2"; shift;shift; args="$@"
-        if [ -n "$args" ];then 
-	  echo "*** Further command line arguments ('$args') disregarded, while using debugger $deb"
-	  echo "*** (maybe use 'run $args'  from *inside* $deb" ; echo ''
+        deb="${2}"; shift 2; args="${@}"
+        if test -n "${args}"; then 
+	  echo "*** Further command line arguments (\`$args') disregarded"
+	  echo "*** (maybe use \`run ${args}'  from *inside* ${deb}"
+	  echo ""
 	fi
-	exec $deb ${RHOME}/bin/R.binary;;
+	exec ${deb} ${RHOME}/bin/R.binary ;;
     -h|--help|-\?)
 	cat <<_EOF_
 
@@ -35,10 +36,11 @@ Options:
   --no-site-file            Don't read the site-wide Rprofile.
   --no-init-file            Don't read the .Rprofile or ~/.Rprofile files.
   --vanilla		    = --no-save, no-restore, no-site-file, no-init-file
-  --vsize N                 Set vector heap size to N bytes; "4M" = 4 MegaB.
+  --vsize N                 Set vector heap size to N bytes; \`4M' = 4 MegaB.
   --nsize N                 Set number of cons cells to N. ___See ?Memory___
   -h, --help, -?            Print short help message and exit.
-  -q, --quiet, --silent     Make R run as quietly as possible.
+  -q, --quiet, --silent     Don't print startup message.
+  --slave                   Make R run as quietly as possible.
   --version                 Print version info and exit.
   --verbose                 Print more information about progress.
   -d NAME, --debugger NAME  Run R through debugger NAME.
@@ -54,7 +56,7 @@ Rcommands:
   Rd2dvi, Rd2txt
    ...
 
-Report bugs to R-bugs@biostat.ku.dk."
+Report bugs to R-bugs@biostat.ku.dk.
 
 _EOF_
 	exit 0 ;;
@@ -75,10 +77,10 @@ export R_PAPERSIZE
 R_PRINTCMD=${R_PRINTCMD:-@R_PRINTCMD@}
 export R_PRINTCMD
 
-R_LATEXCMD=${R_LATEXCMD:-@LATEX@}
-R_DVIPSCMD=${R_DVIPSCMD:-@DVIPS@}
+R_LATEXCMD=${R_LATEXCMD:-${LATEX:-@LATEX@}}
+R_DVIPSCMD=${R_DVIPSCMD:-${DVIPS:-@DVIPS@}}
 export R_LATEXCMD R_DVIPSCMD
 
 [ -f ${HOME}/.Renviron ] && . ${HOME}/.Renviron
 
-exec ${RHOME}/bin/R.binary @R_BATCHSAVE@ "$@"
+exec ${RHOME}/bin/R.binary @R_BATCHSAVE@ "${@}"
