@@ -3485,7 +3485,7 @@ void GArrow(double xfrom, double yfrom, double xto, double yto, int coords,
 /* Draw a box about one of several regions:  box(which) */
 void GBox(int which, DevDesc *dd)
 {
-    double x[6], y[6];
+    double x[7], y[7];
     if (which == 1) {/* plot */
 	x[0] = dd->gp.plt[0]; y[0] = dd->gp.plt[2];/* <- , __ */
 	x[1] = dd->gp.plt[1]; y[1] = dd->gp.plt[2];/* -> , __ */
@@ -3493,6 +3493,7 @@ void GBox(int which, DevDesc *dd)
 	x[3] = dd->gp.plt[0]; y[3] = dd->gp.plt[3];/* <- , ^  */
 	x[4] = x[0];	      y[4] = y[0];	   /* <- , __ */
 	x[5] = x[1];	      y[5] = y[1];	   /* -> , __ */
+	x[6] = x[2];	      y[6] = y[2];	   /* -> , __ */
     }
     else {/* "figure", "inner", or "outer" */
 	x[0] = 0.; y[0] = 0.;
@@ -3521,6 +3522,10 @@ void GBox(int which, DevDesc *dd)
 	    break;
 	case ']':/* new */
 	    GPolyline(4, x, y, NFC, dd);
+	    break;
+	case 'u':
+	case 'U':
+	    GPolyline(4, x+3, y+3, NFC, dd);
 	    break;
 	case 'n':
 	case 'N': /* nothing */

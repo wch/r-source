@@ -170,6 +170,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	case '7':
 	case 'c': case 'C': case '[':
 	case ']':
+	case 'u': case 'U':
 	case 'n':
 	    dd->dp.bty = dd->gp.bty = ix;
 	    break;
@@ -837,6 +838,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	case '7':
 	case 'c': case 'C': case '[':
 	case ']':
+	case 'u': case 'U':
 	case 'n':
 	    dd->gp.bty = ix;
 	    break;

@@ -65,9 +65,9 @@ par(\dots, no.readonly = FALSE)
     description of how colors are specified is given below.}
   \item{bty}{A character string which determined the type of box which
     is drawn about plots.  If \code{bty} is one of \code{"o"},
-    \code{"l"}, \code{"7"}, \code{"c"}, or \code{"]"} the resulting box
-    resembles the corresponding upper case letter.  A value of
-    \code{"n"} suppresses the box.}
+    \code{"l"}, \code{"7"}, \code{"c"}, \code{"u"}, or \code{"]"}
+    the resulting box resembles the corresponding upper case letter.
+    A value of \code{"n"} suppresses the box.}
   \item{cex}{A numerical value giving the amount by which plotting text
     and symbols should be scaled relative to the default.}
   \item{cex.axis}{The magnification to be used for axis annotation
