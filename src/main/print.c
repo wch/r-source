@@ -168,7 +168,8 @@ static printList(SEXP s)
 	SEXP dims, t, newcall;
 	char *pbuf, *ptag;
 
-	if((dims = getAttrib(s, R_DimSymbol)) != R_NilValue) {
+	if((dims = getAttrib(s, R_DimSymbol)) != R_NilValue
+	  && length(dims) > 1) {
 		PROTECT(dims);
 		PROTECT(t = allocArray(STRSXP, dims));
 		setAttrib(t, R_DimNamesSymbol, getAttrib(s, R_DimNamesSymbol));
@@ -214,6 +215,7 @@ static printList(SEXP s)
 			printMatrix(t, 0, dims, 0);
 		else
 			printArray(t, 0);
+		UNPROTECT(2);
 	}
 	else {
 		i = 1;

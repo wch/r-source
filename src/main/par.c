@@ -314,7 +314,7 @@ static int Specify(char *what, SEXP value)
 		nonnegIntCheck(INTEGER(value)[0], what);
 		DP->lab[0] = GP->lab[0] = INTEGER(value)[0];
 		DP->lab[1] = GP->lab[1] = INTEGER(value)[1];
-		DP->lab[2] = GP->lab[2] = INTEGER(value)[1];
+		DP->lab[2] = GP->lab[2] = INTEGER(value)[2];
 	}
 	else if (streql(what, "las")) {
 		lengthCheck(what, value, 1);

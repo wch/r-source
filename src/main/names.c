@@ -111,8 +111,8 @@ FUNTAB R_FunTab[] =
 
 /* Logic Related Functions */
 
-{"all",		do_logic3,	1,	1,	-1,	PP_FUNCALL,	0},
-{"any",		do_logic3,	2,	1,	-1,	PP_FUNCALL,	0},
+{"all",		do_logic3,	1,	11,	-1,	PP_FUNCALL,	0},
+{"any",		do_logic3,	2,	11,	-1,	PP_FUNCALL,	0},
 
 
 /* Vectors, Matrices and Arrays */

@@ -443,7 +443,7 @@ SEXP do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(NAMED(CAR(args)) > 2) CAR(args) = duplicate(CAR(args));
 	if( isFrame(CAR(args)) ) {
 		if( !isList(CADR(args)) )
-			errorcall(call,"wrong argument type for new dimnames\n");
+			errorcall(call,"invalid argument type for new dimnames\n");
 		switch( length(CADR(args)) ) {
 		case 0:
 			setAttrib(CAR(args), R_RowNamesSymbol, R_NilValue);
@@ -457,15 +457,14 @@ SEXP do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 			errorcall(call,"wrong length for new dimnames\n");
 		}
 	}
-	else
-		setAttrib(CAR(args), R_DimNamesSymbol, CADR(args));
+	else setAttrib(CAR(args), R_DimNamesSymbol, CADR(args));
 	return CAR(args);
 }
 
 SEXP dimnamesgets(SEXP vec, SEXP val)
 {
 	SEXP dims, top;
-	int k, i;
+	int i, k, n;
 
 	PROTECT(vec);
 	PROTECT(val);
@@ -504,6 +503,12 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 		val = CDR(val);
 	}
 	installAttrib(vec, R_DimNamesSymbol, top);
+	if(isList(vec) && k == 1) {
+		top = CAR(top);
+		i = 0;
+		for(val=vec ; !isNull(val) ; val=CDR(val))
+			TAG(val) = install(CHAR(STRING(top)[i++]));
+	}
 	UNPROTECT(2);
 	return (vec);
 }

@@ -259,12 +259,14 @@ static int haveNA;
 
 SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	SEXP s, t;
-	int count;
+	SEXP ans, s, t;
+	int count, narm;
 
-	if( DispatchGroup("Summary",call, op, args, env, &s) )
+	if(DispatchGroup("Summary", call, op, args, env, &s))
 		return s;
 
+	ans = matchArg(R_NaRmSymbol, &args);
+	narm = asLogical(ans);
 	haveTrue = 0;
 	haveFalse = 0;
 	haveNA = 0;
@@ -283,6 +285,7 @@ SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 			errorcall(call, "incorrect argument type\n");
 	}
 	s = allocVector(LGLSXP, 1L);
+	if(narm) haveNA = 0;
 	if (PRIMVAL(op) == 1) {				/* ALL */
 		if (count == 0)
 			LOGICAL(s)[0] = 1;

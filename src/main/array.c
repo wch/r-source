@@ -109,9 +109,7 @@ SEXP do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 		UNPROTECT(2);
 		return ans;
 	}
-	else
-		error("bad arguments to array\n");
-	/*NOTREACHED*/
+	else error("bad arguments to array\n");
 }
 
 SEXP allocArray(SEXPTYPE mode, SEXP dims)

@@ -575,18 +575,30 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	checkArity(op, args);
 
-	/* set up the default environment */
+	/* Grab the environment off the first arg */
+	/* for use as the default environment. */
+	/* TODO: Don't we have a better way of doing this */
+	/* using sys.xxx now? */
+
 	rval = findVar(CAR(args), rho);
 	if (TYPEOF(rval) == PROMSXP)
 		genv = PRENV(rval);
 
+	/* Now we can evaluate the arguments */
+
 	args = evalList(args, rho);
+
+	/* The first arg is the object name */
+	/* It must be present and a string */
 
 	if (!isString(CAR(args)) || length(CAR(args)) < 1
 	    || strlen(CHAR(STRING(CAR(args))[0])) == 0)
 		errorcall(call, "invalid first argument\n");
 	else
 		t1 = install(CHAR(STRING(CAR(args))[0]));
+
+	/* Now we get the where= argument */
+
 	if (CADR(args) != R_NilValue) {
 		if (TYPEOF(CADR(args)) == REALSXP || TYPEOF(CADR(args)) == INTSXP) {
 			where = asInteger(CADR(args));
@@ -597,6 +609,9 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 		else
 			genv = CADR(args);
 	}
+
+	/* The mode of the object being sought */
+
 	if (isString(CAR(CDDR(args)))) {
 		if(!strcmp(CHAR(STRING(CAR(CDDR(args)))[0]),"function"))
 			gmode = FUNSXP;
@@ -609,12 +624,16 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 		errorcall(call,"invalid inherits argument\n");
 
+		/* Search for the object */
 	rval = findVar1(t1, genv, gmode, ginherits);
 
 	if (PRIMVAL(op)) {	/* we have a get */
 		if (rval == R_UnboundValue)
 			errorcall(call,"variable \"%s\" was not found\n", CHAR(PRINTNAME(t1)));
-		rval = eval(rval, genv);
+		/* We need to evaluate if it is a promise */
+
+		if(TYPEOF(rval) == PROMSXP)
+			rval = eval(rval, genv);
 		NAMED(rval) = 1;
 		return rval;
 	}

@@ -448,6 +448,7 @@ SEXP do_asmatrixdf(SEXP call, SEXP op, SEXP args, SEXP env)
 					else
 						REAL(ans)[k++] = INTEGER(cx)[i];
 				}
+				break;
 			case REALSXP:
 				for(i=0 ; i<LENGTH(cx) ; i++)
 					REAL(ans)[k++] = REAL(cx)[i];
