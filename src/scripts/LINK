@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# ${R_HOME}/bin/LINK
+
+args=
+largs=
+Largs=
+rpath=
+
+for arg in ${*}; do
+  case "${arg}" in
+    -l*)
+      largs="${largs} ${arg}"
+      ;;
+    -L*)
+      Largs="${Largs} ${arg}"
+      arg=`echo "${arg}" | sed -e 's/^-L//'`
+      rpath="${rpath}:${arg}"
+      ;;
+    *)
+      args="${args} ${arg}"
+      ;;
+  esac
+done
+
+LD_RUN_PATH="${rpath}"
+export LD_RUN_PATH
+exec ${args} ${Largs} ${largs}
