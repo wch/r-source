@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998	      Robert Gentleman, Ross Ihaka and the R core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,9 +18,6 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/* FIXME:
-   This is a partial CODE DOUBLING  of  ../library/mva/src/dist.c !!
-*/
 #include <float.h>
 #include "Arith.h"
 #include "Error.h"
@@ -96,7 +94,7 @@ double canberra(double *x, int nr, int nc, int i1, int i2)
     dist = 0;
     for(j=0 ; j<nc ; j++) {
 	if(FINITE(x[i1]) && FINITE(x[i2])) {
-	    dist += fabs(x[i1] - x[i2])/(x[i1] + x[i2]);
+	    dist += fabs(x[i1] - x[i2])/fabs(x[i1] + x[i2]);
 	    count++;
 	}
 	i1 += nr;
@@ -161,7 +159,7 @@ void distance(double *x, int *nr, int *nc, double *d, int *diag, int *method)
 	error("distance(): invalid distance\n");
     }
 
-    dc = *diag ? 0 : 1; /* do we exclude the diagonal */
+    dc = (*diag) ? 1 : 0; /* do we exclude the diagonal */
     ij = 0;
     for(j=0 ; j <= *nr ; j++)
 	for(i=j+dc ; i < *nr ; i++)
