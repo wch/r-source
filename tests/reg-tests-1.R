@@ -3064,8 +3064,11 @@ hE2 <- hEU; ii <- c(5,9:11, 13, 15:18); hE2$merge[ii,] <- hEU$merge[ii, 2:1]
 hE2$order <- as.integer(c(1,19,9,12,14,2,15,8,13,16,17,21,6,3,11,4,18,5,10,7,20))
 ##N stopifnot(identical(hE1, hE2))
 d1 <- as.dendrogram(hE2)
-stopifnot(order.dendrogram(d1) == hE2$order)
+stopifnot(order.dendrogram(d1) == hE2$order,
+          identical(d1, rev(rev(d1))))
 ## not true in 1.9.0
+
+
 
 ### end of tests added in 1.9.1 ###
 
