@@ -410,3 +410,7 @@ Date: Fri, 26 Oct 2001 15:27:56 -0400
 Subject: psignrank and pwilcox null pointer deref
 From: charlie@stat.umn.edu
 Date: Fri, 26 Oct 2001 23:50:07 +0200 (MET DST)
+* PR# 1150 *
+Subject: wilcox.test point estimates perverse
+From: Charles Geyer <charlie@oak.stat.umn.edu>
+Date: Fri, 26 Oct 2001 18:09:37 -0500
