@@ -77,16 +77,19 @@ endif
 	find $(RPREFIX) -name .svn -prune -exec rm -rf \{\} \;
 
 md5sums:
+	@echo "adding MD5 checksums"
 	@(cd $(RPREFIX); echo "tools:::.installMD5sums(\".\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
 	  ../../../../bin/Rterm.exe --vanilla --slave)
 
-R.iss Rsmall.iss: JRins.pl imagedir md5sums
+fixups:
 	rm -rf $(RPREFIX)/library/*/man
 	$(CAT) $(RPREFIX)/library/*/CONTENTS >  \
 	  $(RPREFIX)/doc/html/search/index.txt
 	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave LC_COLLATE=C
 	$(CP) -pr $(R_HOME)/Tcl $(RPREFIX)
+
+R.iss Rsmall.iss: JRins.pl imagedir fixups md5sums
 	perl JRins.pl $(RPREFIX) 
 
 $(RPREFIX).exe: R.iss

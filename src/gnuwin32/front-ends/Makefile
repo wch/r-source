@@ -14,7 +14,8 @@ CFLAGS=$(OPTFLAGS) -I../../include
 
 all: $(R_HOME)/bin/Rgui.exe $(R_HOME)/bin/Rterm.exe \
      $(R_HOME)/bin/Rcmd.exe  $(R_HOME)/bin/RSetReg.exe  \
-     $(R_HOME)/bin/Rproxy.dll $(R_HOME)/bin/R.exe
+     $(R_HOME)/bin/Rproxy.dll $(R_HOME)/bin/R.exe \
+     $(R_HOME)/bin/md5check.exe
 
 $(R_HOME)/bin/Rgui.exe: Rgui.exe
 	$(MKDIR) -p $(R_HOME)/bin
@@ -33,6 +34,10 @@ $(R_HOME)/bin/RSetReg.exe: RSetReg.exe
 	$(CP) $^ $@
 
 $(R_HOME)/bin/R.exe: R.exe
+	$(MKDIR) -p $(R_HOME)/bin
+	$(CP) $^ $@	
+
+$(R_HOME)/bin/md5check.exe: md5check.exe
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) $^ $@	
 
@@ -56,6 +61,9 @@ Rcmd.exe: rcmd.o ../rhome.o rcico.o rcmdfn.o
 R.exe: R.o ../rhome.o rcico.o rcmdfn.o
 
 RSetReg.exe: RSetReg.o ../rhome.o rcico.o
+
+md5check-CFLAGS=-I../../../include -I../../library/tools/src
+md5check.exe : md5check.o ../../library/tools/src/md5.o
 
 Rpwd:
 	$(MAKE) -C ../../include -f Makefile.win version

@@ -23,7 +23,7 @@ Added function getWindowsHandle().
 The windows() device has a new 'bg' argument to set the background
 colour (which still defaults to "transparent").
 
-C headers files are now installed into R_HOME/include rather than
+The C headers files are now installed into R_HOME/include rather than
 R_HOME/src/include (as on Unix).
 
 choose.files() now expands '~' to the user's home directory, as 
@@ -39,10 +39,8 @@ Rcmd INSTALL now does a `safe installation': it moves away any
 existing installation of the packages, and moves them back if it
 fails.  In any case, a failed installation is removed.  Bundles are
 processed differently, by combining the DESCRIPTION and DESCRIPTION.in
-files and processing each package separately.
-
-Installation of a bundle now fails as soon as installing any component
-package fails.
+files and processing each package separately.  Installation of a
+bundle now fails as soon as installing any component package fails.
 
 winMenuAdd() and winMenuAddItem() now allow addition of menu items to
 the console and graphics windows and their popup menus.  Repeated
@@ -59,6 +57,14 @@ Cross-building of packages is now done by the XINSTALL script.
 
 bringToTop() in MDI mode now brings the whole MDI frame to the top
 before raising the chosen window within it.
+
+There is a new utility to check that the installation.  Open a Command
+Prompt/MS-DOS window, cd to the top of the installation (where the
+READMEs are) and run
+
+	bin\md5check MD5
+
+Any changed files will be reported (but not any missing ones).
 
 
 
