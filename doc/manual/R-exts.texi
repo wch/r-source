@@ -50,15 +50,15 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 @node Top, Acknowledgements, (dir), (dir)
 
 @menu
-* Acknowledgements::            
-* Creating R packages::         
-* Writing R documentation::     
-* System and foreign language interfaces::  
-* The R API::                   
-* R (internal) programming miscellania::  
-* R coding standards::          
-* Function and variable index::  
-* Concept index::               
+* Acknowledgements::
+* Creating R packages::
+* Writing R documentation::
+* System and foreign language interfaces::
+* The R API::
+* R (internal) programming miscellania::
+* R coding standards::
+* Function and variable index::
+* Concept index::
 @end menu
 
 @node Acknowledgements, Creating R packages, Top, Top
@@ -79,10 +79,10 @@ documentation as needed.  The @R{} distribution provides several
 packages, such as @pkg{eda}, @pkg{mva}, and @pkg{stepfun}.
 
 @menu
-* Package structure::           
-* Configure and cleanup::       
-* Checking and building packages::  
-* Submitting a package to CRAN::  
+* Package structure::
+* Configure and cleanup::
+* Checking and building packages::
+* Submitting a package to CRAN::
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -97,10 +97,10 @@ also contain script files @file{configure} and @file{cleanup} which are
 executed before and after installation, @xref{Configure and cleanup}.
 
 @menu
-* The DESCRIPTION file::        
-* Other files::                 
-* Package subdirectories::      
-* Package bundles::             
+* The DESCRIPTION file::
+* Other files::
+* Package subdirectories::
+* Package bundles::
 @end menu
 
 @node The DESCRIPTION file, Other files, Package structure, Package structure
@@ -507,15 +507,15 @@ main archive.
 @cindex Documentation, writing
 
 @menu
-* Rd format::                   
-* Sectioning::                  
-* Marking text::                
-* Lists and tables::            
-* Cross-references::            
-* Mathematics::                 
-* Insertions::                  
-* Platform-specific sections::  
-* Processing Rd format::        
+* Rd format::
+* Sectioning::
+* Marking text::
+* Lists and tables::
+* Cross-references::
+* Mathematics::
+* Insertions::
+* Platform-specific sections::
+* Processing Rd format::
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation, Writing R documentation
@@ -1153,15 +1153,15 @@ installed).
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::     
-* Interface functions .C and .Fortran::  
-* dyn.load and dyn.unload::     
-* Creating shared libraries::   
-* Interfacing C++ code::        
-* Handling R objects in C::     
-* Interface functions .Call and .External::  
-* Evaluating R expressions from C::  
-* Debugging::                   
+* Operating system access::
+* Interface functions .C and .Fortran::
+* dyn.load and dyn.unload::
+* Creating shared libraries::
+* Interfacing C++ code::
+* Handling R objects in C::
+* Interface functions .Call and .External::
+* Evaluating R expressions from C::
+* Debugging::
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -1621,14 +1621,14 @@ needed.  As in interpreted @R{} code, much use is made of coercion to
 force the variant object to the right type.
 
 @menu
-* Garbage Collection::          
-* Allocating storage::          
-* Details of R types::          
-* Attributes::                  
-* Classes::                     
-* Handling lists::              
-* Finding and setting variables::  
-* Changes in R version 1.2::    
+* Garbage Collection::
+* Allocating storage::
+* Details of R types::
+* Attributes::
+* Classes::
+* Handling lists::
+* Finding and setting variables::
+* Changes in R version 1.2::
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -2105,7 +2105,7 @@ To convert existing code, use the following replacements.
 @item @code{foo = STRING(bar)[i]} @tab @code{foo = STRING_ELT(bar, i)}
 @item @code{STRING(foo)[j] = bar} @tab @code{SET_STRING_ELT(foo, j, bar)}
 
-@end multitable 
+@end multitable
 @end quotation
 
 The new garbage collector requires that all assignments into fields
@@ -2155,9 +2155,9 @@ based on the interface of the same name in @Sl{} version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::               
-* Calling .External::           
-* Missing and special values::  
+* Calling .Call::
+* Calling .External::
+* Missing and special values::
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -2773,8 +2773,8 @@ compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 
 
 @menu
-* Finding entry points::        
-* Inspecting R objects::        
+* Finding entry points::
+* Inspecting R objects::
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging, Debugging
@@ -2941,19 +2941,19 @@ $7 = 5
 @chapter The R API: entry points for C code
 
 @menu
-* Memory allocation::           
-* Error handling::              
-* Random numbers::              
-* Missing and IEEE values::     
-* Printing::                    
-* Calling C from Fortran and vice versa::  
-* Numerical analysis subroutines::  
-* Distribution functions::      
-* Mathematical Utilities::      
-* Mathematical Constants::      
-* Utility functions::           
-* Version information::         
-* Standalone Mathlib::          
+* Memory allocation::
+* Error handling::
+* Random numbers::
+* Missing and IEEE values::
+* Printing::
+* Calling C from Fortran and vice versa::
+* Numerical analysis subroutines::
+* Distribution functions::
+* Mathematical Utilities::
+* Mathematical Constants::
+* Utility functions::
+* Version information::
+* Standalone Mathlib::
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -2990,8 +2990,8 @@ appropriate header files when using these entry points.
 @cindex Memory allocation from C
 
 @menu
-* Transient::                   
-* User-controlled::             
+* Transient::
+* User-controlled::
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -3306,8 +3306,8 @@ double rnorm(double @var{mu}, double @var{sigma});
 @noindent
 That is, the first argument gives the position for the density and CDF
 and probability for the quantile function, followed by the
-distribution's parameters.  Argument @var{lower_tail} should be @code{1}
-(or @code{LTRUE}) for normal use, but can be @code{0} (or @code{LFALSE})
+distribution's parameters.  Argument @var{lower_tail} should be @code{TRUE}
+(or @code{1}) for normal use, but can be @code{FALSE} (or @code{0})
 if the probability of the upper tail is desired or specified.
 
 Note that you directly get the cumulative (or ``integrated'')
@@ -3315,7 +3315,7 @@ Note that you directly get the cumulative (or ``integrated'')
 F(t))}, by using
 
 @example
-- p@var{dist}(t, ..., /*lower_tail = */ LFALSE, /* give_log = */ LTRUE)
+- p@var{dist}(t, ..., /*lower_tail = */ FALSE, /* give_log = */ TRUE)
 @end example
 
 @noindent
@@ -3520,10 +3520,12 @@ use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
 @end multitable
 @end quotation
 
-There are a set of constants (for example @code{PI}, @code{DOUBLE_EPS})
-defined in the included header @file{R_ext/Constants.h}, mainly for
-compatibility with @Sl{}.
-
+@findex TRUE
+@findex FALSE
+There are a set of constants (for example @code{TRUE}, @code{FALSE},
+@code{PI}, @code{DOUBLE_EPS}) defined in the included header
+@file{R_ext/Constants.h}, the latter two mainly for compatibility with @Sl{}.
+Note that @code{TRUE} and @code{FALSE} are of type @code{Rboolean}
 
 @node Utility functions, Version information, Mathematical Constants, The R API
 @section Utility functions
@@ -3636,8 +3638,8 @@ to set its seeds).
 @appendix R (internal) programming miscellania
 
 @menu
-* .Internal and .Primitive::    
-* Testing R code::              
+* .Internal and .Primitive::
+* Testing R code::
 @end menu
 
 @node .Internal and .Primitive, Testing R code, R (internal) programming miscellania, R (internal) programming miscellania

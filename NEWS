@@ -150,6 +150,7 @@ NEW FEATURES
     o	plot.function() and curve() now take xlim as default for (from,to)
 	if the former is specified.
 
+    o	C API : Rboolean type with TRUE & FALSE enum constants.
 
 BUG FIXES
 
