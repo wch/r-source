@@ -573,16 +573,14 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	/* Now we get the where= argument */
 
-	if (CADR(args) != R_NilValue) {
-		if (TYPEOF(CADR(args)) == REALSXP || TYPEOF(CADR(args)) == INTSXP) {
-			where = asInteger(CADR(args));
-			genv = R_sysframe(where,R_GlobalContext);
-		}
-		else if (TYPEOF(CADR(args)) != ENVSXP)
-			errorcall(call,"invalid envir argument\n");
-		else
-			genv = CADR(args);
+	if (TYPEOF(CADR(args)) == REALSXP || TYPEOF(CADR(args)) == INTSXP) {
+		where = asInteger(CADR(args));
+		genv = R_sysframe(where,R_GlobalContext);
 	}
+	else if (TYPEOF(CADR(args)) == ENVSXP || CADR(args) == R_NilValue)
+		genv = CADR(args);
+	else
+		errorcall(call,"invalid envir argument\n");
 
 	/* The mode of the object being sought */
 
