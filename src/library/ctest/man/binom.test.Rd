@@ -7,7 +7,8 @@
   number \code{x} of successes observed.
 }
 \usage{
-binom.test(x, n, p = 0.5, alternative = "two.sided")
+binom.test(x, n, p = 0.5, alternative = "two.sided",
+           conf.level = 0.95)
 }
 \arguments{
   \item{x}{number of successes.}
@@ -16,12 +17,15 @@ binom.test(x, n, p = 0.5, alternative = "two.sided")
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.
     You can specify just the initial letter.}
+  \item{conf.level}{confidence level for the returned confidence
+    interval.}
 }
 \value{
   A list with class \code{"htest"} containing the following components:
   \item{statistic}{the number of successes, \code{x}.}
   \item{parameter}{the number of trials, \code{n}.}
   \item{p.value}{the p-value of the test.}
+  \item{conf.int}{a confidence interval for the probability of success.}
   \item{null.value}{the probability of success under the null,
     \code{p}.}
   \item{alternative}{a character string describing the alternative
