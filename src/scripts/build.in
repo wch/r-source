@@ -42,7 +42,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.37 $ ';
+my $revision = ' $Revision: 1.38 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -363,7 +363,7 @@ sub buildVignetteIndex {
 	    or die("Error: cannot open '$file' for reading");
 	my @text = <SNWFILE>;
 	@text = split(/\n\s*\%+\s*\\VignetteIndexEntry\{/,
-		      join("\n", @text));
+		      "\n" . join("\n", @text));
 	if($#text >= 1) {
 	    $delimcurly->match("\{" . $text[1]);
 	    $file = basename($file, (".rnw", ".Rnw", ".snw", ".Snw"));
