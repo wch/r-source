@@ -145,7 +145,11 @@ Subject: screen can't go back to (split) screen with log="y" plot
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 30 Jan 2001 00:39:41 -0500
 --Still there. Suggested fix included in followups, but we didn't get around to
---try it in time for 1.2.3
+--try it in time for 1.2.3.
+--
+--Fix doesn't work. One problem is that the opar<-par();par(opar) idiom updates
+--xaxp before xlog, and the new value of xaxp may only be valid under the new
+--value of xlog.
 * PR# 865 *
 Subject:  axis(...,las=1) breaks postscript code in certain cases 
 From: maechler@stat.math.ethz.ch
@@ -159,6 +163,10 @@ Date: Tue, 27 Feb 2001 10:00:30 +0100 (MET)
 --
 --Added note and example to help file to explain how to annotate
 --filled contour.  Paul 24/5/01
+* PR# 940 *
+Subject: GCircle(): fails for non-clippable devices under certain circumstances (see below)
+From: "Thomas Hoffmann" <thoffman@zappa.sax.de>
+Date: Tue, 15 May 01 23:34:17 +0100
 * PR# 916 *
 Subject:  par(mgp) bug 
 From: paul@stat.auckland.ac.nz
@@ -167,14 +175,6 @@ Date: Fri, 20 Apr 2001 08:33:45 +1200 (NZST)
 Subject: axis(adj=anything) has no effect
 From: jhallman@frb.gov
 Date: Wed, 28 Mar 2001 20:51:05 +0200 (MET DST)
-* PR# 940 *
-Subject: GCircle(): fails for non-clippable devices under certain circumstances (see below)
-From: "Thomas Hoffmann" <thoffman@zappa.sax.de>
-Date: Tue, 15 May 01 23:34:17 +0100
-* PR# 932 *
-Subject: scoping error in xy.coords
-From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
-Date: Fri, 04 May 2001 11:20:57 -0400
 
 Directory:  In-Out
 
@@ -219,10 +219,7 @@ Date: Mon, 25 Sep 2000 10:17:15 +0200
 
 Directory:  Low-level
 
-* PR# 505 *
-Subject: interrupted save 
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
+none
 
 Directory:  Misc
 
@@ -230,10 +227,7 @@ none
 
 Directory:  Models
 
-* PR# 862 *
-Subject: Wrong sign for Pearson residuals
-From: faraway@umich.edu
-Date: Mon, 5 Mar 2001 18:04:34 +0100 (MET)
+none
 
 Directory:  Startup
 
@@ -330,31 +324,11 @@ Directory:  incoming
 Subject: error in dbeta
 From: pwolf@wiwi.uni-bielefeld.de
 Date: Wed, 6 Jun 2001 18:31:30 +0200 (MET DST)
-* PR# 953 *
-Subject: bugs in deriv(*, *, function.arg = ) 
-Subject: PROTECT() bugs in deriv(*, *, function.arg = ) 
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 28 May 2001 10:44:59 +0200
-Date: Mon, 16 Apr 2001 21:02:10 +0200
---The second bug is a missing PROTECT. 
-* PR# 956 *
-Subject: unbelievable parser bug
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 29 May 2001 14:25:00 +0200
-* PR# 955 *
-Subject: argument names in generic print functions
-From: Richard Beare <Richard.Beare@cmis.csiro.au>
-Date: Tue, 29 May 2001 09:49:06 +1000
-* PR# 969 *
-Subject: error in make install-info
-From: Paulo Justiniano Ribeiro Jr <p.ribeiro@lancaster.ac.uk>
-Date: Tue, 5 Jun 2001 18:43:13 +0100 (BST)
 * PR# 968 *
 Subject: a bug?
 From: Michael Lavine <michael@stat.duke.edu>
 Date: Tue, 5 Jun 2001 10:15:13 -0400
-* PR# 967 *
-Subject: boxplot.stats() returns wrong value for n
-From: gregory_r_warnes@groton.pfizer.com
-Date: Mon, 4 Jun 2001 19:29:02 +0200 (MET DST)
+* PR# 956 *
+Subject: unbelievable parser bug
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 29 May 2001 14:25:00 +0200
