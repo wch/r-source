@@ -264,7 +264,7 @@ NEW FEATURES
 
     o	model.frame() now calls na.action with the terms attribute
 	set on the data frame (needed to distiguish the response,
-	 for example).
+	for example).
 
     o   print.htest() can now handle test names that are longer than
         one line 
@@ -273,6 +273,9 @@ NEW FEATURES
 	(formerly in packages survival5 and MASS, also used in rpart).
 	Also na.exclude(), a variant on na.omit() that is handled
 	differently by naresid() and napredict().
+
+	The default, lm and glm methods for fitted, residuals, predict
+	and weights make use of these.
 
     o	New argument `nsmall' to format.default(), for S-PLUS
 	compatibility (and used in various packages).
