@@ -1,8 +1,8 @@
 \name{lm}
 \title{Fitting Linear Models}
 \usage{
-lm(formula, data, subset, weights, na.action=na.omit,
-   method="qr", model=TRUE, singular.ok = TRUE)
+lm(formula, data = list(), subset, weights, na.action=na.omit,
+   method="qr", model=TRUE, singular.ok = TRUE, \dots)
 
 anova(lm.obj, \dots)
 summary(lm.obj, correlation = FALSE)
