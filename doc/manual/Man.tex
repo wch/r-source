@@ -6,17 +6,21 @@
 \sloppy{}
 
 \begin{document}\pagenumbering{roman}
-\paragraph*{Note:}
-This is material from a preliminary draft of the \R\ manual and is
-\begin{center}
-  Copyright 1994, 1995, 1996, 1997  \\ by Robert Gentleman and Ross Ihaka.
-\end{center}
 
-{ \ } %- for the clearpage .. if there's nothing else on the page ..
-\clearpage %-- mainly for ``2 pages on 1'' printing
+\title{\fbox{\Huge The \R\ Manual}}
+\date{\vspace*{15ex}\textsc{\small\input{Version}}}
+\author{\textbf{Note:}
+  This is material from a preliminary draft of the \R\ manual and is \\[1ex]
+  Copyright 1994, 1995, 1996 \\ by Robert Gentleman and Ross Ihaka. \\[1.5ex]
+  Copyright 1997 \\ by Robert Gentleman and Ross Ihaka and the \R\ core team.
+}
+\maketitle
+\cleardoublepage%-- for ``2 pages on 1'' printing (make Manbooks)
+
 \pagenumbering{roman}
 \tableofcontents
-\clearpage
+\cleardoublepage
+
 \pagenumbering{arabic}
 
 \appendix
