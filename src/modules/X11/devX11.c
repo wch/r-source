@@ -836,7 +836,7 @@ static void SetColor(int color, NewDevDesc *dd)
 }
 
 static int gcToX11lend(R_GE_lineend lend) {
-    int newend;
+    int newend = CapRound; /* -Wall */
     switch (lend) {
     case GE_ROUND_CAP:
         newend = CapRound;
@@ -854,7 +854,7 @@ static int gcToX11lend(R_GE_lineend lend) {
 }
 
 static int gcToX11ljoin(R_GE_lineend ljoin) {
-    int newjoin;
+    int newjoin = JoinRound; /* -Wall */
     switch (ljoin) {
     case GE_ROUND_JOIN:
         newjoin = JoinRound;
@@ -2132,7 +2132,10 @@ extern SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho);
 
 static int in_R_X11_access(void)
 {
+    char *p;
+
     if (displayOpen) return TRUE;
+    if(!(p = getenv("DISPLAY"))) return FALSE;    
     if ((display = XOpenDisplay(NULL)) == NULL) {
 	return FALSE;
     } else {
