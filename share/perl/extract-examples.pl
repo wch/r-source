@@ -25,7 +25,7 @@ use R::Rdtools;
 use R::Utils;
 use R::Vars;
 
-my $revision = ' $Revision: 1.1 $ ';
+my $revision = ' $Revision: 1.1.10.1 $ ';
 my $version;
 my $name;
 
@@ -42,7 +42,7 @@ Extract examples from the Rd source file FILE, writing results to OUT.
 Options:
   -h, --help            print short help message and exit
   -v, --version         print version info and exit
-      --os=NAME         use OS type NAME (unix, mac or windows)
+      --os=NAME         use OS type NAME (unix or windows)
       --OS=NAME         the same as '--os'
   -V, --verbose         print more information about progress
 

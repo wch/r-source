@@ -27,7 +27,7 @@ use R::Rdconv;
 use R::Utils;
 use R::Vars;
 
-my $revision = ' $Revision: 1.24 $ ';
+my $revision = ' $Revision: 1.24.6.1 $ ';
 my $version;
 my $name;
 
@@ -97,7 +97,7 @@ Options:
   -d, --debug		turn on debugging (increase verbosity)
   -t, --type=TYPE	convert to format TYPE
   -o, --output=OUT	use 'OUT' as the output file
-      --os=NAME		use OS subdir 'NAME' (unix, mac or windows)
+      --os=NAME		use OS subdir 'NAME' (unix or windows)
       --OS=NAME		the same as '--os'
 
 Possible format specifications are 'txt' (plain text), 'html', 'latex',

@@ -8,7 +8,7 @@
 
 R_PAPERSIZE=${R_PAPERSIZE-a4}
 
-revision='$Revision: 1.16 $'
+revision='$Revision: 1.16.6.1 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi.sh ${version}
 
@@ -33,7 +33,7 @@ Options:
       --debug		turn on shell debugging (set -x)
       --no-clean	do not remove created temporary files
       --no-preview	do not preview generated output file
-      --os=NAME		use OS subdir 'NAME' (unix, mac or windows)
+      --os=NAME		use OS subdir 'NAME' (unix or windows)
       --OS=NAME		the same as '--os'
   -o, --output=FILE	write output to FILE
       --pdf		generate PDF output
