@@ -5,6 +5,17 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 0.64.2
+
+NEW FEATURES
+
+BUG FIXES
+
+    o	dput(), dump() and deparse()  now always use DBL_DIG (=15) digits
+	for numeric formatting.
+
+
+
 		CHANGES IN R VERSION 0.64.1
 
 NEW FEATURES
