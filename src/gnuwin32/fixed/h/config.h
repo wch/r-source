@@ -150,7 +150,8 @@ double atanh(double);
 
 /* IPC stuff */
 #undef HAVE_BSD_NETWORKING
-#define HAVE_POPEN 1
+/* have popen, but it is said not to work in Windows applications */
+#undef HAVE_POPEN
 
 /* Some platforms other than ELF drop the leading _ */
 #undef HAVE_NO_SYMBOL_UNDERSCORE
