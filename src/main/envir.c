@@ -491,8 +491,6 @@ void InitGlobalEnv()
 
 static SEXP RemoveFromList(SEXP thing, SEXP list, int *found)
 {
-  SEXP value;
-
   if (list == R_NilValue) {
     *found = 0;
     return R_NilValue;
