@@ -395,3 +395,11 @@ Date: Thu, 29 Nov 2001 11:38:15 -0500
 Subject: a patch to tapply
 From: Vadim Ogranovich <vograno@arbitrade.com>
 Date: Thu, 29 Nov 2001 14:48:35 -0600
+* PR# 1190 *
+Subject: bug in rbinom?
+From: viele@ms.uky.edu
+Date: Sun, 2 Dec 2001 01:27:53 +0100 (MET)
+* PR# 1191 *
+Subject: I have visited BUGS.R-PROJECT.ORG and noticed that ...
+From: "Vanessa Lintner" <reply@seekercenter.net>
+Date: Sun, 2 Dec 2001 15:56:41 +0800
