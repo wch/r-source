@@ -980,14 +980,24 @@ of compilers and support libraries.
 @subsection MacOS X
 
 You can build @R{} as a Unix application on MacOS X.  You will need the
-DevTools, @command{f2c}
-(@uref{ftp://netlib.bell-labs.com/netlib/f2c.tar}@footnote{compile with
-@command{c++} or comment out @code{sigcatch(0)} in line 520 of
-@file{main.c}}) and the @code{dlcompat} libraries@footnote{e.g.@:
-@uref{http://fink.sourceforge.net/files/dlcompat-20010123.tar.gz}}.
-
-You will also need to install a X sub-system or configure with
+DevTools, @command{f2c} or @command{g77}, and the @code{dlcompat}
+library.  You will also need to install a X sub-system or configure with
 @option{--without-x}.
+
+@command{f2c}, @command{g77}, the @code{dlcompat} library, and X server
+and support libraries are available from the Fink project
+(@uref{http://fink.sourceforge.net}).  At the time of writing
+@command{f2c} and @command{g77} were not available as part of the Fink
+binary distribution and needed to be installed directly; for example for
+@command{g77} use
+@smallexample
+fink install g77
+@end smallexample
+
+Fink prefers to install in @code{/sw} so @code{CPPFLAGS}, @code{LDFLAGS}
+need to be set accordingly.  If you want to use Tcl/Tk, also available
+from Fink, then you will also need to use the @command{configure}
+options to specify the Tcl and Tk config locations.
 
 
 @node Solaris, HPUX, MacOS X, Platform notes
