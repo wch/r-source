@@ -16,7 +16,7 @@ platforms.  See below for details.
 GETTING AND UNPACKING THE SOURCES
 
 The simplest way is to download the most recent R-x.yy.z.tgz package,
-and unpack them with 
+and unpack them with
 
 	tar xvfz R-x.yy.z.tgz
 
@@ -65,20 +65,20 @@ want to install the complete R tree to, e.g., /usr/local/lib/R, see
 section INSTALLATION below.
 
 You do not necessarily have to build R in the top-level source
-directory (say, TOP_SRCDIR).  To build in BUILDDIR, cd there and run 
+directory (say, TOP_SRCDIR).  To build in BUILDDIR, cd there and run
 
 	TOP_SRCDIR/configure
 	make
 
-and so on, as described further below.  This has the advantage of always
+and so on, as described further below.	This has the advantage of always
 keeping your source tree `clean'.
 
 If you need or want to set certain configure variables to something
 other than their default, you can do that by either editing the file
 `config.site' or on the command line as
 
-	VAR="..." ./configure              # Bourne shell compatibles
-	(setenv VAR "..."; ./configure)    # C shell
+	VAR="..." ./configure		   # Bourne shell compatibles
+	(setenv VAR "..."; ./configure)	   # C shell
 
 One common variable to change is R_PAPERSIZE, which defaults to a4, not
 letter.
@@ -89,8 +89,9 @@ CPPFLAGS (for header files), respectively, to specify these locations.
 
 Make will also build plain text help pages as well as HTML and LaTeX
 versions of the documentation (the three kinds can also be generated
-separately using make help, make html and make latex).  Note that as
-of R version 0.60, you need Perl version 5 to build the documentation.
+separately using make help, make html and make latex).	Note that you need
+Perl version 5, available via http://www.perl.com/CPAN/ports, to build the
+documentation.
 If this is not available on your system, you can obtain precompiled
 documentation files via the `doc/pre-formatted-help' directory of the
 Comprehensive R Archive Network (CRAN), see the file `RESOURCES' for
@@ -131,9 +132,9 @@ in the status message that is displayed at the end of configure.
 
 USING MAKE
 
-To compile R, you currently most likely need GNU make.  (To be more
+To compile R, you currently most likely need GNU make.	(To be more
 precise, you need a version of make which accepts shell wildcards in
-dependencies.)  On Solaris 2.6 in particular, you need a version of
+dependencies.)	On Solaris 2.6 in particular, you need a version of
 GNU make different from 3.77 (the current one); 3.76.1 works fine.
 
 
@@ -144,7 +145,7 @@ converter.  The default is to search for f77, g77, fort77, f90, xlf,
 cf77, and fc (in that order), and then for f2c, and use whichever is
 found first; if none is found, R cannot be compiled.  The search
 mechanism can be changed using the `--with-g77', `--with-f77', and
-`--with-f2c' command line options to configure.  If your FORTRAN
+`--with-f2c' command line options to configure.	 If your FORTRAN
 compiler is in a non-standard location, you should set the enviroment
 variable PATH accordingly before running configure.
 
@@ -160,7 +161,7 @@ hardware/os platform.
 
  1. Floating Point Arithmetic: R supports the POSIX, SVID and IEEE
     models for floating point arithmetic.  The POSIX and SVID models
-    provide no problems.  The IEEE model however can be a pain.  The
+    provide no problems.  The IEEE model however can be a pain.	 The
     problem is that there is no agreement on how to set the signalling
     behavior;  sgi/irix and linux require no special action, freebsd
     requires a call to (the macro) fpsetmask(0) and osf1v3.2 requires
