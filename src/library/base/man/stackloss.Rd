@@ -4,16 +4,16 @@
 \alias{stackloss}
 \format{A data frame with  21 observations on 4 variables.
   \tabular{rlll}{
-    [,1] \tab x1 \tab Air.Flow    \tab Flow of cooling air\cr
-    [,2] \tab x2 \tab Water.Temp  \tab Cooling Water Inlet\cr
-    \tab \tab \tab Temperature\cr
-    [,3] \tab x3 \tab Acid.Conc.  \tab Concentration of acid\cr
-    \tab \tab \tab [per 1000, minus 500]\cr
-    [,4] \tab y \tab stack.loss  \tab Stack loss\cr
+    [,1] \tab x1 \tab Air.Flow	 \tab Flow of cooling air\cr
+    [,2] \tab x2 \tab Water.Temp \tab Cooling Water Inlet\cr
+	 \tab	 \tab		 \tab Temperature\cr
+    [,3] \tab x3 \tab Acid.Conc. \tab Concentration of acid\cr
+	 \tab	 \tab		 \tab [per 1000, minus 500]\cr
+    [,4] \tab y \tab stack.loss	 \tab Stack loss\cr
   }
 }
 \source{Brownlee, K.A. (1960, 2nd ed. 1965)
- Statistical Theory and Methodology in Science and Engineering;
+ \emph{Statistical Theory and Methodology in Science and Engineering};
  John Wiley, NY;  pp. 491--500
 }
 \description{(Brownlee, cited by Dodge, slightly reformatted by MM):
@@ -43,3 +43,4 @@ data(stackloss)
 summary(lm.stack <- lm(stack.loss ~ stack.x))
 }
 \keyword{datasets}
+
