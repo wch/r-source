@@ -26,7 +26,11 @@ all: Makefile DESCRIPTION
 	  fi; \
 	  $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg))
-	@for f in COPYRIGHTS INDEX NAMESPACE SOURCES; do \
+	@if test @use_tcltk@ = yes; then \
+	  $(INSTALL_DATA) $(srcdir)/NAMESPACE \
+	    $(top_builddir)/library/$(pkg); \
+	fi;
+	@for f in COPYRIGHTS INDEX SOURCES; do \
 	  if test -f $(srcdir)/$${f}; then \
 	    $(INSTALL_DATA) $(srcdir)/$${f} \
 	      $(top_builddir)/library/$(pkg); \
