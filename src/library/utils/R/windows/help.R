@@ -1,171 +1,205 @@
 help <-
-    function(topic, offline = FALSE, package = NULL,
-             lib.loc = NULL, verbose = getOption("verbose"),
-             try.all.packages = getOption("help.try.all.packages"),
-             chmhelp = getOption("chmhelp"), htmlhelp = getOption("htmlhelp"),
-             pager = getOption("pager"))
+function(topic, offline = FALSE, package = NULL, lib.loc = NULL,
+         verbose = getOption("verbose"),
+         try.all.packages = getOption("help.try.all.packages"),
+         chmhelp = getOption("chmhelp"),
+         htmlhelp = getOption("htmlhelp"),
+         pager = getOption("pager"))
 {
-    chmhelp <- is.logical(chmhelp) && chmhelp
-    htmlhelp <- !chmhelp && is.logical(htmlhelp) && htmlhelp
-    if (!missing(package))
-        if (is.name(y <- substitute(package)))
+    if(!missing(package))
+        if(is.name(y <- substitute(package)))
             package <- as.character(y)
-    if (!missing(topic)) {
-        if (!is.character(topic)) topic <- deparse(substitute(topic))
-        # for cmd/help ..
-        if (!is.na(match(topic, c("+", "-", "*", "/", "^", "%%"))))
-            topic <- "Arithmetic"
-        else if (!is.na(match(topic, c("<", ">", "<=", ">=", "==", "!="))))
-            topic <- "Comparison"
-        else if (!is.na(match(topic, c("[", "[[", "$"))))
-            topic <- "Extract"
-        else if (!is.na(match(topic, c("&", "&&", "|", "||", "!"))))
-            topic <- "Logic"
-        else if (!is.na(match(topic, c("%*%"))))
-            topic <- "matmult"
-        type <- if(offline) "latex" else if (htmlhelp) "html" else "help"
-        INDICES <- .find.package(package, lib.loc, verbose = verbose)
-        file <- index.search(topic, INDICES, "AnIndex", type)
-        if (length(file) && file != "") {
-            if (verbose)
-                cat("\t\t\t\t\t\tHelp file name `", sub(".*/", "", file),
-                    ".Rd'\n", sep = "")
-            if (!offline) {
-                if(chmhelp) {
-                    chm.dll <- file.path(R.home(), "bin", "Rchtml.dll")
-                    if(!file.exists(chm.dll))
-                        stop("Compiled HTML is not installed")
-                    if(!is.loaded(symbol.C("Rchtml")))
-                        dyn.load(chm.dll)
-                    topic <- sub("(.*/help/)([^/]*)$", "\\2", file)
-                    wfile <- sub("/help/([^/]*)$", "", file)
-                    thispkg <- sub(".*/([^/]*)$", "\\1", wfile)
-                    thispkg <- sub("_.*$", "", thispkg)
-                    hlpfile <- paste(wfile, "/chtml/", thispkg, ".chm",
-                                     sep = "")
-                    if(verbose) print(hlpfile)
-                    if(file.exists(hlpfile)) {
-                        err <- .C("Rchtml", hlpfile, topic,
-                                  err = integer(1), PACKAGE = "")$err
-                        if(err) stop("CHM file could not be displayed")
-                        if(verbose)
-                            cat("help() for `", topic,
-                                "' is shown in Compiled HTML\n",
-                                sep="")
-                        return(invisible())
-                    } else {
-                       if(verbose)
-                           cat("No `", thispkg, ".chm' is available\n", sep="")
-                        file <- index.search(topic, INDICES, "AnIndex", "help")
-                    }
-                }
-                if(htmlhelp) {
-                    file <- chartr("/", "\\", file)
-                    if(file.exists(file)) {
-                        browseURL(file)
-                        cat("help() for `", topic, "' is shown in browser\n",
-                            sep="")
-                        return(invisible())
-                    } else {
-                        if(verbose)
-                            cat("no HTML help for `", topic,
-                                "' is available\n", sep = "")
-                        file <- index.search(topic, INDICES, "AnIndex", "help")
-                    }
-                }
-                ## experimental code
-                zfile <- zip.file.extract(file, "Rhelp.zip")
-                ## end of experimental code
-                if(file.exists(zfile))
-                    file.show(zfile, title = paste("`", topic, "' help", sep=""),
-                              delete.file = (zfile!=file), pager = pager)
-                else
-                    stop(paste("The help file for `", topic, "' is missing",
-                               sep = ""))
-                return(invisible())
+
+    ## If no topic was given ...
+    if(missing(topic)) {
+        if(!missing(package))           # "Help" on package.
+            return(library(help = package, lib.loc = lib.loc,
+                           character.only = TRUE))
+        if(!missing(lib.loc))           # "Help" on library.
+            return(library(lib.loc = lib.loc))
+        return(help("help", package = "utils", lib.loc = .Library))
+    }
+
+    ischar <- try(is.character(topic), silent = TRUE)
+    if(inherits(ischar, "try-error")) ischar <- FALSE
+    if(!ischar) topic <- deparse(substitute(topic))
+
+    type <- if(offline)
+        "latex"
+    else if(is.logical(chmhelp) && !is.na(chmhelp) && chmhelp)
+        "chm"
+    else if(is.logical(htmlhelp) && !is.na(htmlhelp) && htmlhelp)
+        "html"
+    else
+        "help"
+
+    ## Note that index.search() (currently?) only returns the first
+    ## match for the given sequence of indices, and returns the empty
+    ## string in case of no match.
+    paths <- sapply(.find.package(package, lib.loc, verbose = verbose),
+                    function(p) index.search(topic, p, "AnIndex", type))
+    paths <- paths[paths != ""]
+
+    tried_all_packages <- FALSE
+    if(!length(paths)
+       && is.logical(try.all.packages) && !is.na(try.all.packages)
+       && try.all.packages && missing(package) && missing(lib.loc)) {
+        ## Try all the remaining packages.
+        lib.loc <- .libPaths()
+        packages <- .packages(all.available = TRUE, lib.loc = lib.loc)
+        packages <- packages[is.na(match(packages, .packages()))]
+        for(lib in lib.loc) {
+            ## <FIXME>
+            ## Why does this loop over packages *inside* the loop
+            ## over libraries?
+            for(pkg in packages) {
+                dir <- system.file(package = pkg, lib.loc = lib)
+                paths <- c(paths,
+                           index.search(topic, dir, "AnIndex", "help"))
             }
-            else {
-                ## experimental code
-                zfile <- zip.file.extract(file, "Rhelp.zip")
-                if(zfile != file) on.exit(unlink(zfile))
-                ## end of experimental code
-                if(file.exists(zfile)) {
-                    FILE <- "Rdoc"
-                    tFILE <- paste(FILE, ".tex", sep="")
-                    cat("\\documentclass[",
-                        getOption("papersize"),
-                        "paper]{article}",
-                        "\n",
-                        "\\usepackage[",
-                        if(nchar(opt <- Sys.getenv("R_RD4DVI"))) opt else "ae",
-                        "]{Rd}",
-                        "\n",
-                        "\\InputIfFileExists{Rhelp.cfg}{}{}\n",
-                        "\\begin{document}\n",
-                        file = tFILE, sep = "")
-                    file.append(tFILE, zfile)
-                    cat("\\end{document}\n", file = tFILE, append = TRUE)
-                    cmd <- paste('"',
-                                 paste(R.home(), "bin", "helpPRINT", sep="/"),
-                                 '"', sep="")
-                    texpath <- chartr("\\", "/",
-                                      file.path(R.home(), "share", "texmf"))
-                    system(paste(cmd, FILE, topic, texpath), wait = FALSE)
-                    return(invisible())
-                }
-                else
-                    stop(paste("No offline documentation for", topic,
-                               "is available"))
-            }
+            ## </FIXME>
         }
-        else {
-            if(is.null(try.all.packages) || !is.logical(try.all.packages))
-                try.all.packages <- FALSE
-            if(try.all.packages && missing(package) && missing(lib.loc)) {
-                ## try all the remaining packages
-                lib.loc <- .libPaths()
-                packages <- .packages(all.available = TRUE, lib.loc = lib.loc)
-                packages <- packages[is.na(match(packages, .packages()))]
-                pkgs <- libs <- character(0)
-                for (lib in lib.loc)
-                    for (pkg in packages) {
-                        INDEX <- system.file(package = pkg, lib.loc = lib)
-                        file <- index.search(topic, INDEX, "AnIndex", "help")
-                        if(length(file) && file != "") {
-                            pkgs <- c(pkgs, pkg)
-                            libs <- c(libs, lib)
-                        }
-                    }
-                if(length(pkgs) == 1) {
-                    cat("  topic `", topic, "' is not in any loaded package\n",
-                        "  but can be found in package `", pkgs,
-                        "' in library `", libs, "'\n", sep = "")
-                } else if(length(pkgs) > 1) {
-                    cat("  topic `", topic, "' is not in any loaded package\n",
-                        "  but can be found in the following packages:\n\n",
-                        sep="")
-                    A <- cbind(package=pkgs, library=libs)
-                    rownames(A) <- 1:nrow(A)
-                    print(A, quote=FALSE)
-                } else {
-                    stop(paste("No documentation for `", topic,
-                               "' in specified packages and libraries:\n",
-                               "  you could try `help.search(\"", topic,
-                               "\")'",
-                               sep = ""))
-                }
-            } else {
-                    stop(paste("No documentation for `", topic,
-                               "' in specified packages and libraries:\n",
-                               "  you could try `help.search(\"", topic,
-                               "\")'",
-                               sep = ""))
-            }
+        paths <- paths[paths != ""]
+        tried_all_packages <- TRUE
+    }
+
+    attributes(paths) <-
+        list(call = match.call(), pager = pager, topic = topic,
+             tried_all_packages = tried_all_packages, type = type)
+    class(paths) <- "help_files_with_topic"
+    paths
+}
+
+print.help_files_with_topic <-
+function(x, ...)
+{
+    topic <- attr(x, "topic")
+    paths <- as.character(x)
+    if(!length(paths)) {
+        writeLines(c(paste("No documentation for", sQuote(topic),
+                           "in specified packages and libraries:"),
+                     paste("you could try",
+                           sQuote(paste("help.search(",
+                                        dQuote(topic), ")",
+                                        sep = "")))))
+        return(invisible(x))
+    }
+    if(attr(x, "tried_all_packages")) {
+        paths <- unique(dirname(dirname(paths)))
+        msg <- paste("Help for topic", sQuote(topic),
+                     "is not in any loaded package but can be found",
+                     "in the following packages:")
+        writeLines(c(strwrap(msg), "",
+                     paste(" ",
+                           formatDL(c("Package", basename(paths)),
+                                    c("Library", dirname(paths)),
+                                    indent = 22))))
+    }
+    else {
+        if(length(paths) > 1) {
+            file <- paths[1]
+            msg <- paste("Help on topic", sQuote(topic),
+                         "was found in the following packages:")
+            paths <- dirname(dirname(paths))
+            writeLines(c(strwrap(msg), "",
+                         paste(" ",
+                               formatDL(c("Package", basename(paths)),
+                                        c("Library", dirname(paths)),
+                                        indent = 22)),
+                         "\nUsing the first match ..."))
+        }
+        else
+            file <- paths
+        type <- attr(x, "type")
+        if(type == "html") {
+            if(file.exists(file))
+                .show_help_on_topic_as_HTML(file, topic)
+            else
+                stop(paste("No HTML help for ", sQuote(topic),
+                           " is available:\n",
+                           "corresponding file is missing.",
+                           sep = ""))
+        }
+        else if(type == "chm") {
+            chm.dll <- file.path(R.home(), "bin", "Rchtml.dll")
+            if(!file.exists(chm.dll))
+                stop("Compiled HTML is not installed")
+            if(!is.loaded(symbol.C("Rchtml")))
+                dyn.load(chm.dll)
+            wfile <- sub("/chm/([^/]*)$", "", file)
+            thispkg <- sub(".*/([^/]*)/chm/([^/]*)$", "\\1", file)
+            thispkg <- sub("_.*$", "", thispkg) # versioned installs.
+            hlpfile <- paste(wfile, "/chtml/", thispkg, ".chm", sep = "")
+            if(file.exists(hlpfile)) {
+                err <- .C("Rchtml", hlpfile, topic,
+                          err = integer(1), PACKAGE = "")$err
+                if(err) stop("CHM file could not be displayed")
+            } else
+                stop(paste("No CHM help for ", sQuote(topic),
+                           " is available:\n",
+                           "corresponding file is missing.",
+                           sep = ""))
+        }
+        else if(type == "help") {
+            zfile <- zip.file.extract(file, "Rhelp.zip")
+            if(file.exists(zfile))
+                file.show(zfile,
+                          title = paste("R Help on", sQuote(topic)),
+                          delete.file = (zfile != file),
+                          pager = attr(x, "pager"))
+            else
+                stop(paste("No text help for", sQuote(topic),
+                           " is available:\n",
+                           "corresponding file is missing.",
+                           sep = ""))
+        }
+        else if(type == "latex") {
+            zfile <- zip.file.extract(file, "Rhelp.zip")
+            if(zfile != file) on.exit(unlink(zfile))
+            if(file.exists(zfile))
+                .show_help_on_topic_offline(zfile, topic)
+            else
+                stop(paste("No offline help for ", sQuote(topic),
+                           " is available:\n",
+                           "corresponding file is missing.",
+                           sep = ""))
         }
     }
-    else if (!missing(package))
-        library(help = package, lib.loc = lib.loc, character.only = TRUE)
-    else if (!missing(lib.loc))
-        library(lib.loc = lib.loc)
-    else help("help", package = "utils", lib.loc = .Library)
+
+    invisible(x)
+}
+
+.show_help_on_topic_as_HTML <-
+function(file, topic)
+{
+    browseURL(file)
+    writeLines(paste("Help for", sQuote(topic), "is shown in the browser"))
+    return(invisible())
+}
+
+.show_help_on_topic_offline <-
+function(file, topic)
+{
+    FILE <- "Rdoc" # must be in the current dir
+    con <- paste(FILE, ".tex", sep = "")
+    cat("\\documentclass[",
+        getOption("papersize"),
+        "paper]{article}",
+        "\n",
+        "\\usepackage[",
+        if(nchar(opt <- Sys.getenv("R_RD4DVI"))) opt else "ae",
+        "]{Rd}",
+        "\n",
+        "\\InputIfFileExists{Rhelp.cfg}{}{}\n",
+        "\\begin{document}\n",
+        file = con, sep = "")
+    file.append(con, file)
+    cat("\\end{document}\n", file = con, append = TRUE)
+    cmd <- paste('"',
+                 paste(R.home(), "bin", "helpPRINT", sep="/"),
+                 '"', sep="")
+    texpath <- chartr("\\", "/",
+                      file.path(R.home(), "share", "texmf"))
+    system(paste(cmd, FILE, topic, texpath), wait = FALSE)
+    return(invisible())
 }

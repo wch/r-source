@@ -41,6 +41,7 @@ S3method(print, citation)
 S3method(print, citationList)
 S3method(print, getAnywhere)
 S3method(print, hsearch)
+S3method(print, "help_files_with_topic")
 S3method(print, MethodsFunction)
 S3method(print, packageStatus)
 S3method(print, socket)
@@ -64,7 +65,6 @@ export(Rtangle, RtangleSetup, RweaveLatex, RweaveLatexSetup, Stangle,
 
 if(tools:::.OStype() == "unix") {
 export(nsl)
-S3method("print", "help_files_with_topic")
 }
 
 if(tools:::.OStype() == "windows") {
