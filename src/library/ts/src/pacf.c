@@ -264,10 +264,13 @@ void arimatoma(int *arma, double *params, double *psi, int *npsi)
 
     /* Invert: Harvey 1993, p. 117) */
     for(i = 0; i < *npsi; i++) {
-	tmp = phi[i];
-	for(j = 1; j < ip; j ++) {
-	    if(j >= i) break;
-	    tmp += phi[j] * psi[j - i - 1];
+	tmp = 0.0;
+	for(j = 0; j < ip; j ++) {
+	    if(j == i){
+		tmp += phi[j]; /* implied 1 on psi */
+		break;
+	    }
+	    tmp += phi[j] * psi[i - j - 1];
 	}
 	if(i < iq) tmp += theta[i];
 	psi[i] = tmp;
