@@ -22,25 +22,27 @@
 #endif
 
 #include <Rinternals.h>
-#include <Rgraphics.h>  
+#include <Rgraphics.h>
 #include <Rdevices.h>
 #include <R_ext/GraphicsDevice.h>
 #include <R_ext/GraphicsEngine.h>
 
+#include "grDevices.h"
+
 static Rboolean nullDeviceDriver(NewDevDesc *dev);
 
-void GEnullDevice() 
+void GEnullDevice()
 {
     NewDevDesc *dev = NULL;
     GEDevDesc *dd;
 
     R_CheckDeviceAvailable();
     if (!(dev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc))))
-       error("unable to start NULL device");
+       error(_("unable to start NULL device"));
     dev->displayList = R_NilValue;
     if (!nullDeviceDriver(dev)) {
        free(dev);
-       error("unable to start NULL device");
+       error(_("unable to start NULL device"));
     }
     gsetVar(install(".Device"), mkString("NULL"), R_NilValue);
     dd = GEcreateDevDesc(dev);
@@ -55,11 +57,11 @@ static void NULL_Line(double x1, double y1, double x2, double y2,
                       R_GE_gcontext *gc,
                       NewDevDesc *dev) {
 }
-static void NULL_Polygon(int n, double *x, double *y, 
+static void NULL_Polygon(int n, double *x, double *y,
                          R_GE_gcontext *gc,
                          NewDevDesc *dev) {
 }
-static void NULL_Polyline(int n, double *x, double *y, 
+static void NULL_Polyline(int n, double *x, double *y,
                           R_GE_gcontext *gc,
                           NewDevDesc *dev) {
 }
@@ -67,7 +69,7 @@ static void NULL_Rect(double x0, double y0, double x1, double y1,
                       R_GE_gcontext *gc,
                       NewDevDesc *dev) {
 }
-static void NULL_Text(double x, double y, char *str, 
+static void NULL_Text(double x, double y, char *str,
                       double rot, double hadj,
                       R_GE_gcontext *gc,
                       NewDevDesc *dev) {
@@ -82,7 +84,7 @@ static Rboolean NULL_Open(NewDevDesc *dev) {
 }
 static void NULL_Activate(NewDevDesc *dev) {
 }
-static void NULL_Clip(double x0, double x1, double y0, double y1, 
+static void NULL_Clip(double x0, double x1, double y0, double y1,
                       NewDevDesc *dev) {
 }
 static void NULL_Deactivate(NewDevDesc *dev) {
@@ -108,7 +110,7 @@ static void NULL_Size(double *left, double *right,
     *bottom = dev->bottom;
     *top = dev->top;
 }
-static double NULL_StrWidth(char *str, 
+static double NULL_StrWidth(char *str,
                             R_GE_gcontext *gc,
                             NewDevDesc *dev) {
     return 0.0;
@@ -122,9 +124,9 @@ static void NULL_dot(NewDevDesc *dev) {
 static void NULL_Hold(NewDevDesc *dev) {
 }
 
-static Rboolean nullDeviceDriver(NewDevDesc *dev) {	 
+static Rboolean nullDeviceDriver(NewDevDesc *dev) {
     dev->deviceSpecific = NULL;
-    /* 
+    /*
      * Device functions
      */
     dev->open = NULL_Open;
@@ -148,19 +150,19 @@ static Rboolean nullDeviceDriver(NewDevDesc *dev) {
     /*
      * Initial graphical settings
      */
-    dev->startfont = 1; 
+    dev->startfont = 1;
     dev->startps = 10;
     dev->startcol = R_RGB(0, 0, 0);
     dev->startfill = R_TRANWHITE;
-    dev->startlty = LTY_SOLID; 
+    dev->startlty = LTY_SOLID;
     dev->startgamma = 1;
-    /* 
+    /*
      * Start device
      */
     if(!NULL_Open(dev)) {
         return FALSE;
     }
-    /* 
+    /*
      * Device physical characteristics
      */
     dev->left = 0;
@@ -174,14 +176,14 @@ static Rboolean nullDeviceDriver(NewDevDesc *dev) {
     dev->yLineBias = 0.1;
     dev->ipr[0] = 1.0/72;
     dev->ipr[1] = 1.0/72;
-    /* 
-     * Device capabilities 
+    /*
+     * Device capabilities
      */
     dev->canResizePlot= FALSE;
     dev->canChangeFont= FALSE;
     dev->canRotateText= TRUE;
     dev->canResizeText= TRUE;
-    dev->canClip = TRUE; 
+    dev->canClip = TRUE;
     dev->canHAdj = 2;
     dev->canChangeGamma = FALSE;
     dev->displayListOn = TRUE;

@@ -528,7 +528,7 @@ static char *SaveFontSpec(SEXP sxp, int offset)
 {
     char *s;
     if(!isString(sxp) || length(sxp) <= offset)
-	error("Invalid font specification");
+	error(_("Invalid font specification"));
     s = R_alloc(strlen(CHAR(STRING_ELT(sxp, offset)))+1, sizeof(char));
     strcpy(s, CHAR(STRING_ELT(sxp, offset)));
     return s;
@@ -567,7 +567,7 @@ static char* translateFontFamily(char* family) {
 	    }
 	}
 	if (!found)
-	    warning("Font family not found in Windows font database");
+	    warning(_("Font family not found in Windows font database"));
     }
     UNPROTECT(4);
     return result;
@@ -693,7 +693,7 @@ static void SetLineStyle(R_GE_gcontext *gc, NewDevDesc *dd)
 	xd->lend = PS_ENDCAP_SQUARE;
 	break;
     default:
-	error("Invalid line end");
+	error(_("Invalid line end"));
     }
     switch (gc->ljoin) {
     case GE_ROUND_JOIN:
@@ -706,7 +706,7 @@ static void SetLineStyle(R_GE_gcontext *gc, NewDevDesc *dd)
 	xd->ljoin = PS_JOIN_BEVEL;
 	break;
     default:
-	error("Invalid line join");
+	error(_("Invalid line join"));
     }
 
     xd->lmitre = gc->lmitre;
@@ -1666,7 +1666,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
     xd->bgcolor = xd->canvascolor = GArgb(canvascolor, gamma);
     xd->outcolor = myGetSysColor(COLOR_APPWORKSPACE);
     xd->rescale_factor = 1.0;
-    xd->fast = 1;  /* Use `cosmetic pens' if available */
+    xd->fast = 1;  /* Use 'cosmetic pens' if available */
     xd->xshift = xd->yshift = 0;
     xd->npage = 0;
     if (!dsp[0]) {
@@ -1682,11 +1682,11 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	xd->bg = dd->startfill = canvascolor;
 	/* was R_RGB(255, 255, 255); white */
         xd->kind = (dsp[0]=='p') ? PNG : BMP;
-	if(strlen(dsp+4) >= 512) error("filename too long in %s() call",
+	if(strlen(dsp+4) >= 512) error(_("filename too long in %s() call"),
 				       (dsp[0]=='p') ? "png" : "bmp");
 	strcpy(xd->filename, dsp+4);
 	if (!Load_Rbitmap_Dll()) {
-	    warning("Unable to load Rbitmap.dll");
+	    warning(_("Unable to load Rbitmap.dll"));
 	    return FALSE;
 	}
 	/*
@@ -1695,13 +1695,13 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	  if required depth > 1
 	*/
 	if ((xd->gawin = newbitmap(w, h, 256)) == NULL) {
-	    warning("Unable to allocate bitmap");
+	    warning(_("Unable to allocate bitmap"));
 	    return FALSE;
 	}
 	snprintf(buf, 600, xd->filename, 1);
 	if ((xd->fp = fopen(buf, "wb")) == NULL) {
 	    del(xd->gawin);
-	    warning("Unable to open file `%s' for writing", buf);
+	    warning(_("Unable to open file '%s' for writing"), buf);
 	    return FALSE;
 	}
     } else if (!strncmp(dsp, "jpeg:", 5)) {
@@ -1711,22 +1711,22 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
         xd->kind = JPEG;
 	if (!p) return FALSE;
 	if (!Load_Rbitmap_Dll()) {
-	    warning("Unable to load Rbitmap.dll");
+	    warning(_("Unable to load Rbitmap.dll"));
 	    return FALSE;
 	}
 	*p = '\0';
 	xd->quality = atoi(&dsp[5]);
 	*p = ':' ;
-	if(strlen(p+1) >= 512) error("filename too long in jpeg() call");
+	if(strlen(p+1) >= 512) error(_("filename too long in jpeg() call"));
 	strcpy(xd->filename, p+1);
 	if((xd->gawin = newbitmap(w, h, 256)) == NULL) {
-	    warning("Unable to allocate bitmap");
+	    warning(_("Unable to allocate bitmap"));
 	    return FALSE;
 	}
 	snprintf(buf, 600, xd->filename, 1);
 	if ((xd->fp = fopen(buf, "wb")) == NULL) {
 	    del(xd->gawin);
-	    warning("Unable to open file `%s' for writing", buf);
+	    warning(_("Unable to open file '%s' for writing"), buf);
 	    return FALSE;
 	}
     } else {
@@ -1744,7 +1744,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	if (strncmp(dsp, s, ls) || (dsp[ls] && (dsp[ls] != ':')))
 	    return FALSE;
 	if(ld > ls && strlen(&dsp[ls + 1]) >= 512)
-	    error("filename too long in win.metafile() call");
+	    error(_("filename too long in win.metafile() call"));
 	strcpy(xd->filename, (ld > ls) ? &dsp[ls + 1] : "");
 	snprintf(buf, 600, xd->filename, 1);
 	xd->w = MM_PER_INCH * w;
@@ -1754,9 +1754,9 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	xd->fast = 0; /* use scalable line widths */
 	if (!xd->gawin) {
 	    if(ld > ls)
-		warning("Unable to open metafile `%s' for writing", buf);
+		warning(_("Unable to open metafile '%s' for writing"), buf);
 	    else
-		warning("Unable to open clipboard to write metafile");
+		warning(_("Unable to open clipboard to write metafile"));
 	    return FALSE;
 	}
     }
@@ -1766,7 +1766,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
     else
       xd->wanteddpi = xd->truedpi;
     if (!SetBaseFont(xd)) {
-	warning("can't find any fonts");
+	warning(_("can't find any fonts"));
 	del(xd->gawin);
 	if (xd->kind == SCREEN) del(xd->bm);
 	return FALSE;
@@ -1991,7 +1991,7 @@ static void GA_NewPage(R_GE_gcontext *gc,
     if ((xd->kind == METAFILE) && xd->needsave) {
 	char buf[600];
 	if (strlen(xd->filename) == 0)
-	    error("A clipboard metafile can store only one figure.");
+	    error(_("A clipboard metafile can store only one figure."));
 	else {
 	    del(xd->gawin);
 	    snprintf(buf, 600, xd->filename, xd->npage);
@@ -2004,7 +2004,7 @@ static void GA_NewPage(R_GE_gcontext *gc,
 	SaveAsBitmap(dd, xd->res_dpi);
 	snprintf(buf, 600, xd->filename, xd->npage);
 	if ((xd->fp = fopen(buf, "wb")) == NULL)
-	    error("Unable to open file `%s' for writing", buf);
+	    error(_("Unable to open file '%s' for writing"), buf);
     }
     if (xd->kind == SCREEN) {
         if(xd->buffered) SHOW;
@@ -2625,7 +2625,7 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 	    xd->timeafter = INTEGER(timeouts)[0];
 	    xd->timesince = INTEGER(timeouts)[1];
 	} else {
-	    warning("option `windowsTimeouts' should be integer");
+	    warning(_("option 'windowsTimeouts' should be integer"));
 	    xd->timeafter = 100;
 	    xd->timesince = 500;
 	}
@@ -2646,17 +2646,17 @@ SEXP savePlot(SEXP args)
     args = CDR(args); /* skip entry point name */
     device = asInteger(CAR(args));
     if(device < 1 || device > NumDevices())
-	error("invalid device number in savePlot");
+	error(_("invalid device number in savePlot"));
     dd = ((GEDevDesc*) GetDevice(device - 1))->dev;
-    if(!dd) error("invalid device in savePlot");
+    if(!dd) error(_("invalid device in savePlot"));
     filename = CADR(args);
     if (!isString(filename) || LENGTH(filename) != 1)
-	error("invalid filename argument in savePlot");
+	error(_("invalid filename argument in savePlot"));
     fn = CHAR(STRING_ELT(filename, 0));
     fixslash(fn);
     type = CADDR(args);
     if (!isString(type) || LENGTH(type) != 1)
-	error("invalid type argument in savePlot");
+	error(_("invalid type argument in savePlot"));
     tp = CHAR(STRING_ELT(type, 0));
 
     if(!strcmp(tp, "png")) {
@@ -2678,7 +2678,7 @@ SEXP savePlot(SEXP args)
     } else if (!strcmp(tp, "pdf")) {
 	SaveAsPDF(dd, fn);
     } else
-	error("unknown type in savePlot");
+	error(_("unknown type in savePlot"));
     return R_NilValue;
 }
 
@@ -2753,7 +2753,7 @@ static void SaveAsBitmap(NewDevDesc *dd, int res)
 			    privategetpixel2, 0, xd->fp, res);
 	    free(data);
 	} else
-	    warning("processing of the plot ran out of memory");
+	    warning(_("processing of the plot ran out of memory"));
 	fclose(xd->fp);
     }
     gsetcliprect(xd->gawin, r);
@@ -2789,7 +2789,7 @@ static void SaveAsPng(NewDevDesc *dd,char *fn)
 		    privategetpixel2, 0, fp, 0, 0) ;
 	free(data);
     } else
-	warning("processing of the plot ran out of memory");
+	warning(_("processing of the plot ran out of memory"));
     gsetcliprect(xd->bm, r);
     fclose(fp);
 }
@@ -2821,7 +2821,7 @@ static void SaveAsJpeg(NewDevDesc *dd,int quality,char *fn)
 		     privategetpixel2, 0, quality, fp, 0) ;
 	free(data);
     } else
-	warning("processing of the plot ran out of memory");
+	warning(_("processing of the plot ran out of memory"));
     gsetcliprect(xd->bm, r);
     fclose(fp);
 }
@@ -2856,7 +2856,7 @@ static void SaveAsBmp(NewDevDesc *dd,char *fn)
 		    privategetpixel2, 0, fp, 0) ;
 	free(data);
     } else
-	warning("processing of the plot ran out of memory");
+	warning(_("processing of the plot ran out of memory"));
     gsetcliprect(xd->bm, r);
     fclose(fp);
 }
@@ -2881,16 +2881,16 @@ SEXP devga(SEXP args)
     height = asReal(CAR(args));
     args = CDR(args);
     if (width <= 0 || height <= 0)
-	error("invalid width or height in devga");
+	error(_("invalid width or height in devWindows"));
     ps = asReal(CAR(args));
     args = CDR(args);
     recording = asLogical(CAR(args));
     if (recording == NA_LOGICAL)
-	error("invalid value of 'recording' in devga");
+	error(_("invalid value of 'recording' in devWindows"));
     args = CDR(args);
     resize = asInteger(CAR(args));
     if (resize == NA_INTEGER)
-	error("invalid value of 'resize' in devga");
+	error(_("invalid value of 'resize' in devWindows"));
     args = CDR(args);
     xpinch = asReal(CAR(args));
     args = CDR(args);
@@ -2898,7 +2898,7 @@ SEXP devga(SEXP args)
     args = CDR(args);
     sc = CAR(args);
     if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
-	error("invalid value of 'canvas' in devga");
+	error(_("invalid value of 'canvas' in devWindows"));
     canvas = RGBpar(sc, 0);
     args = CDR(args);
     gamma = asReal(CAR(args));
@@ -2909,13 +2909,13 @@ SEXP devga(SEXP args)
     args = CDR(args);
     buffered = asLogical(CAR(args));
     if (buffered == NA_LOGICAL)
-	error("invalid value of 'buffered' in devga");
+	error(_("invalid value of 'buffered' in devWindows"));
     args = CDR(args);
     psenv = CAR(args);
     args = CDR(args);
     sc = CAR(args);
     if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
-	error("invalid value of 'bg' in devga");
+	error(_("invalid value of 'bg' in devWindows"));
     bg = RGBpar(sc, 0);
     
     R_CheckDeviceAvailable();
@@ -2934,7 +2934,7 @@ SEXP devga(SEXP args)
 			    (Rboolean)recording, resize, bg, canvas, gamma,
 			    xpos, ypos, (Rboolean)buffered, psenv)) {
 	    free(dev);
-	    error("unable to start device devga");
+	    error(_("unable to start device devWindows"));
 	}
 	gsetVar(install(".Device"),
 		mkString(display[0] ? display : "windows"), R_NilValue);
@@ -3002,7 +3002,8 @@ static SEXP GA_getEvent(SEXP eventRho, char* prompt)
 
     xd = dd->dev->deviceSpecific;
     
-    if (xd->eventRho) error("recursive getGraphicsEvent not supported");
+    if (xd->eventRho) 
+	error(_("recursive use of getGraphicsEvent not supported"));
     xd->eventRho = eventRho;
     
     dd->dev->gettingEvent = TRUE;

@@ -27,6 +27,16 @@ void Renctest(char **x)
     Rprintf("'%s', nbytes = %d\n", x[0], strlen(x[0]));
 }
 
+void tools_init(char **path)
+{
+#ifdef ENABLE_NLS
+    char localedir[PATH_MAX];
+
+    strcpy(localedir, path[0]);
+    strcat(localedir, "/po");
+    bindtextdomain("tools", localedir);
+#endif   
+}
 
 static const R_CallMethodDef callMethods[] = {
     {"delim_match", (DL_FUNC) &delim_match, 2},
@@ -36,6 +46,7 @@ static const R_CallMethodDef callMethods[] = {
 
 static const R_CMethodDef CEntries[]  = {
     {"Renctest", (DL_FUNC) &Renctest, 1},
+    {"tools_init", (DL_FUNC) &tools_init, 1},
     {NULL, NULL, 0}
 };
 

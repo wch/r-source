@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004   The R Development Core Team.
+ *  Copyright (C) 2004-5   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,15 @@
  */
 
 #include <Rinternals.h>
+#include <Rinternals.h>
+
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("grDevices", String)
+#else
+#define _(String) (String)
+#endif
+
 SEXP PicTeX(SEXP);
 
 SEXP PostScript(SEXP);
