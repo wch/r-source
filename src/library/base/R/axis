@@ -1,4 +1,4 @@
-axis <- function (which, at, labels = TRUE, ...) 
+axis <- function (which, at, labels = TRUE, ...)
 {
  if (which%%2 == 1) {
 	axp <- par("xaxp")
@@ -31,17 +31,18 @@ axis <- function (which, at, labels = TRUE, ...)
 	else (usr[1] <= at & at <= usr[2])
  }
  if(any(ind)) {
-	labels <- if (is.logical(labels)) {
+	op <- options(digits=7); on.exit(options(op))
+	labels <-
+	  if (is.logical(labels)) {
 		if (labels) {
-			if (!log) 
+			if (!log)
 				at[abs(at/(max(at) - min(at))) < 0.001] <- 0
 			format(at, trim = T)
 		}
 		else rep("", length(at))
-	}
-	else if(is.expression(labels))
+	  } else if(is.expression(labels))
 		labels
-	else
+	  else
 		format(labels, trim = T)
 	.Internal(axis(which, as.double(at[ind]), as.char.or.expr(labels[ind]),
 		       ...))
