@@ -87,7 +87,7 @@ void xbufgrow(xbuf p, xlong dim, xint ms)
 {
     void *ret, *ret2;
     int i, change;
-    
+
     if(dim > p->dim) {
 	ret = realloc(p->b, dim + 1);
 	if(ret) {
@@ -112,7 +112,7 @@ void xbufgrow(xbuf p, xlong dim, xint ms)
     }
 }
 
-void xbufdel(xbuf p) 
+void xbufdel(xbuf p)
 {
    if (!p) return;
    free(p->s);
@@ -380,6 +380,7 @@ FBEGIN
     int i, ll, wd, maxwd = 0;
 
     ll = min(NUMLINES, ROWS);
+    if(!BM) FVOIDRETURN;     /* This is a workaround for PR#1711.  BM should never be null here */
     gfillrect(BM, p->bg, getrect(BM));
     if(!ll) FVOIDRETURN;
     for (i = 0; i < ll; i++) {
@@ -729,7 +730,7 @@ FBEGIN
 	case 'V':
 	case 'Y':
 	    if(p->kind == PAGER) {
-		consolecopy(c); 
+		consolecopy(c);
 		if (CharacterMode == RGui) consolepaste(RConsole);
 	    }
 	    else consolepaste(c);
@@ -1110,7 +1111,7 @@ FBEGIN
     if (pos < 0) {
 	pos = -pos - 1 ;
 	if (FC != pos) setfirstcol(c, pos);
-    } else 
+    } else
         if (FV != pos) setfirstvisible(c, pos);
 FVOIDEND
 
@@ -1227,7 +1228,7 @@ setconsoleoptions(char *fnname,int fnsty, int fnpoints,
 
 void consoleprint(console c)
 FBEGIN
-    
+
     printer lpr;
     int cc, rr, fh, cl, cp, clinp, i;
     int top, left;
@@ -1302,8 +1303,8 @@ FBEGIN
 	    if (cp > 1) nextpage(lpr);
 	    gdrawstr(lpr, f, Black, pt(left, top), title);
 	    sprintf(msg, "Page %d", cp++);
-	    gdrawstr(lpr, f, Black, 
-                     pt(cc - gstrwidth(lpr, f, msg) - 1, top), 
+	    gdrawstr(lpr, f, Black,
+                     pt(cc - gstrwidth(lpr, f, msg) - 1, top),
 		     msg);
 	    clinp = top + 2 * fh;
 	}
@@ -1345,7 +1346,7 @@ FBEGIN
     char *s, buf[1024];
 
     setuserfilter("Text files (*.txt)\0*.txt\0All files (*.*)\0*.*\0\0");
-    if(p->sel) 
+    if(p->sel)
         fn = askfilesave("Save selection to", "lastsave.txt");
     else
         fn = askfilesave("Save console contents to", "lastsave.txt");
