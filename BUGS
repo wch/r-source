@@ -36,6 +36,10 @@ Date: Thu, 13 Jun 2002 16:35:59 -0300 (ADT)
 ..Strange interaction between "Marsaglia-Multicarry" generator and
 .."Kinderman-Ramage" 
 ..method for normal variates. Apparently, switching either of them will help.
+* PR# 2214 *
+Subject: qgamma precision
+From: terra@diku.dk
+Date: Fri, 25 Oct 2002 16:50:17 +0200 (MET DST)
 
 Directory:  Add-ons
 
@@ -118,6 +122,12 @@ Date: Tue, 3 Sep 2002 13:13:17 +0200 (MET DST)
 Subject: SJava 0.65, Sample Java files are missing
 From: grimm.heinz@rcc.ch
 Date: Tue, 3 Sep 2002 13:24:30 +0200 (MET DST)
+* PR# 2003 *
+Subject: rhome.c: getRHOME() fails, if R is called from SJava
+From: grimm.heinz@rcc.ch
+Date: Wed, 11 Sep 2002 15:17:53 +0200 (MET DST)
+..This is a bug in SJava.  RHOME is not supposed to be used,
+..but R_HOME is supposed to be set.
 * PR# 2173 *
 Subject: xlim in plot.survfit() [with a discussion on "..."]
 From: jerome@hivnet.ubc.ca
@@ -498,6 +508,11 @@ Date: Thu, 1 Aug 2002 19:01:59 +0200 (MET DST)
 ..  d$calls <- d$fitted + d$res[i]
 ..  coef(update(fit, data=d))
 ..}
+* PR# 2206 *
+Subject: model.matrix (via predict)
+From: Glenn.Stone@csiro.au
+Date: Thu, 24 Oct 2002 06:33:02 +0200 (MET DST)
+..strange model used!
 
 Directory:  Startup
 
@@ -597,10 +612,6 @@ Subject: svd() very slow for wide matrix X but not for t(X)
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Tue, 9 Jul 2002 11:39:15 -0400 
 ..Doesn't happen with the now preferred La.svd.
-* PR# 2003 *
-Subject: rhome.c: getRHOME() fails, if R is called from SJava
-From: grimm.heinz@rcc.ch
-Date: Wed, 11 Sep 2002 15:17:53 +0200 (MET DST)
 * PR# 2018 *
 Subject: missing data in stripchart
 From: baron@CATTELL.psych.upenn.edu
@@ -609,15 +620,6 @@ Date: Sat, 14 Sep 2002 19:35:32 +0200 (MET DST)
 Subject: p.s. regarding stripchart missing-data report
 From: Jonathan Baron <baron@cattell.psych.upenn.edu>
 Date: Sat, 14 Sep 2002 13:48:34 -0400
-* PR# 2023 *
-Subject: mosaicplot enhancements
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Mon, 16 Sep 2002 12:00:26 +0200
-* PR# 2033 *
-Subject: switch
-From: rwehrens@sci.kun.nl
-Date: Tue, 17 Sep 2002 23:25:39 +0200 (MET DST)
-..not a bug; but worth a documentation hint
 * PR# 2094 *
 Subject: Mean and var inconsistency
 From: Kevin.Wright@pioneer.com
@@ -628,87 +630,3 @@ From: hb@maths.lth.se
 Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
 ..Not a bug, but perhaps a useful feature: should the attributes of environments
 ..be copied on assignment?
-* PR# 2197 *
-Subject:  Minor changes in ?class 
-From: j.c.rougier@durham.ac.uk
-Date: Tue, 22 Oct 2002 16:46:38 +0100
-* PR# 2198 *
-Subject: 인터넷 아르바이트 모집(구인광고)
-From: 현대캐피탈 <capitalo@lycos.co.kr>
-Date: Wed, 23 Oct 2002 01:16:51 +0900
-* PR# 2199 *
-Subject: negative numbers in R plots in Illustrator 8 (and higher?)
-From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
-Date: Tue, 22 Oct 2002 18:14:31 +0200
-* PR# 2200 *
-Subject: =?ks_c_5601-1987?B?W7GksO1dIL7ux9Cxs8DnILy8sOggxse4xSAxwKcgxeXF9bnMv6G8rSC5q7fhu/nHwyBDRLimILq4s7u15biztM+02S4=?=
-From: =?ks_c_5601-1987?B?xeXF9bnM?= <hyun10310@kornet.net>
-Date: Wed, 23 Oct 2002 03:19:26 +0900
-* PR# 2201 *
-Subject: =?ks_c_5601-1987?B?W7GksO1dIL7ux9Cxs8DnILy8sOggxse4xSAxwKcgxeXF9bnMv6G8rSC5q7fhu/nHwyBDRLimILq4s7u15biztM+02S4=?=
-From: =?ks_c_5601-1987?B?xeXF9bnM?= <hyun10310@kornet.net>
-Date: Wed, 23 Oct 2002 03:19:23 +0900
-* PR# 2202 *
-Subject: [광고] 아직도 주식 투자해서 손해를 보세요? 무료 상담 가능~
-From: 주식정보 <dhdt38nbdhdtydkfhiufhj@hotmail.com>
-Date: Wed, 23 Oct 2002 09:08:33 +0900
-* PR# 2203 *
-Subject: 요즘 화끈한 성인동영상만 모은 자료실공개[성인광고]
-From: x양 <freezoneplus@yahoo.co.kr>
-Date: Wed, 23 Oct 2002 13:03:05 +0900
-* PR# 2204 *
-Subject: Happy Allhallowmas
-From: snw <snw@st-and.ac.uk>
-Date: Wed, 23 Oct 2002 00:08:50 -0500
-* PR# 2205 *
-Subject: Maritime News (Week 43)
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Thu, 24 Oct 2002 07:15:12 +0900
-* PR# 2206 *
-Subject: model.matrix (via predict)
-From: Glenn.Stone@csiro.au
-Date: Thu, 24 Oct 2002 06:33:02 +0200 (MET DST)
-* PR# 2207 *
-Subject: crash report
-From: Ross Darnell <rdarnell@shrs.uq.edu.au>
-Date: 24 Oct 2002 17:54:07 +1000
-* PR# 2208 *
-Subject: Contents
-From: synapse <synapse@snapweb.com>
-Date: Thu, 24 Oct 2002 04:19:59 -0500
-* PR# 2209 *
-Subject: Function scale
-From: Lucas Antoine <lucas@toulouse.inra.fr>
-Date: Thu, 24 Oct 2002 14:51:34 +0200 (MET DST)
-* PR# 2210 *
-Subject: [광고] 김치냉장고를 구입하시면 덤으로 하나 더 드립니다.
-From: 혼수정보 <dhdt38nbdhdtydkfhiufhj@hotmail.com>
-Date: Fri, 25 Oct 2002 03:43:56 +0900
-* PR# 2211 *
-Subject: (광고) 여우같은 당신을 위한 카드 '여우카드'/늑대같은 당신을 위한 카드 '현대M카드'탄생!
-From: 현대카드<hyun10310@kornet.net>
-Date: Fri, 25 Oct 2002 06:36:14 +0900
-* PR# 2212 *
-Subject: Lower monthly payments. (5Al)
-From: Rzeczycki Mis <RzeczyckiMis@webcrawler.com>
-Date: Thu, 17 Oct 2002 10:53:13 -0400
-* PR# 2213 *
-Subject: Love Music? Come work with us!
-From: custservice7113w83@aol.com
-Date: Fri, 25 Oct 0102 22:03:32 -1000
-* PR# 2214 *
-Subject: qgamma precision
-From: terra@diku.dk
-Date: Fri, 25 Oct 2002 16:50:17 +0200 (MET DST)
-* PR# 2215 *
-Subject: (광고)꼭! 필요한 사람에게만 미친영어샘플 드립니다.
-From: 배송담당자 <ohmyenglish@korea.com>
-Date: Sat, 26 Oct 2002 01:58:22 +0900
-* PR# 2216 *
-Subject: ls() without variables, which begins with a point
-From: frank.kroll@uni-bielefeld.de
-Date: Sat, 26 Oct 2002 12:48:12 +0200 (MET DST)
-* PR# 2217 *
-Subject: 암환자의 희망(장기생존자)을 간절히 찾습니다.
-From: 암환자가족을 사랑하는 시민연대 <ohmyenglish@korea.com>
-Date: Sat, 26 Oct 2002 22:54:18 +0900
