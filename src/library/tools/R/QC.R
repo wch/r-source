@@ -1637,7 +1637,7 @@ function(package, dir, file, lib.loc = NULL,
     if(useSaveImage) {
         if(verbose) writeLines("loading saved image ...")
         codeEnv <- new.env()
-        load(file, envir = codeEnv)
+        .tryQuietly(load(file, envir = codeEnv))
         exprs <- lapply(ls(envir = codeEnv, all.names = TRUE),
                         function(f) {
                             f <- get(f, envir = codeEnv)
