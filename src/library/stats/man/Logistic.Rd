@@ -5,6 +5,7 @@
 \alias{qlogis}
 \alias{rlogis}
 \title{The Logistic Distribution}
+\concept{logit}
 \concept{sigmoid}
 \description{
   Density, distribution function, quantile function and random
@@ -51,6 +52,10 @@ rlogis(n, location = 0, scale = 1)
   \eqn{\pi^2/3 \sigma^2}{pi^2 /3 s^2}.
 }
 \note{
+  \code{qlogis(p)} is the same as the well known \sQuote{\emph{logit}}
+  function, \eqn{logit(p) = \log(p/(1-p))}, and \code{plogis(x)} has
+  consequently been called the \dQuote{inverse logit}.
+
   The distribution function is a rescaled hyperbolic tangent,
   \code{plogis(x) == (1+ \link{tanh}(x/2))/2}, and it is called
   \emph{sigmoid function} in contexts such as neural networks.
