@@ -196,7 +196,7 @@ installed:
 	glib
 	glib-devel
 
-You will need also libglade 0.3 or later.  For more information on
+You will need also libglade 0.5 or later.  For more information on
 libglade and to download the source, see
 http://www.daa.com.au/~james/gnome/.
 
