@@ -319,7 +319,11 @@ par(\dots, no.readonly = FALSE)
   where each of the pairs \code{RR}, \code{GG}, \code{BB} consist of two
   hexadecimal digits giving a value in the range \code{00} to \code{FF}.
   Colors can also be specified by giving an index into a small table of
-  colors. This provides compatibility with S.
+  colors, the \code{\link{palette}}.  This provides compatibility with S.
+
+  Additionally, \code{"transparent"} or (integer) \code{0} is
+  \emph{transparent}, useful for filled areas (such as the background!),
+  and just invisible for things like lines or text.
 
   The functions \code{rgb}, \code{hsv}, \code{gray} and \code{rainbow}
   provide additional ways of generating colors.}
