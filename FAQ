@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-02-22
+Version 2.0.2005-02-24
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1268,6 +1268,10 @@ distributions of R.)
 
 *Bhat*
      Functions for general likelihood exploration (MLE, MCMC, CIs).
+
+*Bolstad*
+     Functions and data sets for the book "Introduction to Bayesian
+     Statistics" by W. M. Bolstad, 2004, John Wiley and Sons.
 
 *BradleyTerry*
      Specify and fit the Bradley-Terry model and structured versions.
@@ -2691,6 +2695,9 @@ distributions of R.)
      The Penn World Table providing purchasing power parity and national
      income accounts converted to international prices for 168 countries for
      some or all of the years 1950-2000.
+
+*pvclust*
+     Hierarchical clustering with p-value.
 
 *qcc*
      Quality Control Charts.  Shewhart quality control charts for
