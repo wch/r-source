@@ -69,7 +69,7 @@ typedef struct textconn {
     char save; /* pushback */
 } *Rtextconn;
 
-#define LAST_LINE_LEN 256
+#define LAST_LINE_LEN 8096
 typedef struct outtextconn {
     int len;  /* number of lines */
     SEXP namesymbol;
