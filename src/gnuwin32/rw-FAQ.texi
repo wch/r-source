@@ -689,9 +689,9 @@ Suppose your packages are installed in @code{p:\myRlib}.  Then you can
 EITHER
 
 @example
-set the environment variable R_LIBS to p:\myRlib
+set the environment variable R_LIBS to p:\myRlib before starting R
 @end example
-@noindent
+
 OR use a package by, e.g.
 
 @example
