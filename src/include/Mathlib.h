@@ -327,7 +327,7 @@ double	ptukey(double, double, double, double);
 double	qtukey(double, double, double, double);
 double	rtukey(double, double, double);
 
-	/* Wilcoxon Distribution */
+/* Wilcoxon Rank Sum Distribution */
 
 #define WILCOX_MMAX 50
 #define WILCOX_NMAX 50
@@ -335,5 +335,13 @@ double dwilcox(double, double, double);
 double pwilcox(double, double, double);
 double qwilcox(double, double, double);
 double rwilcox(double, double);
+
+/* Wilcoxon Signed Rank Distribution */
+
+#define SIGNRANK_NMAX 50
+double dsignrank(double, double);
+double psignrank(double, double);
+double qsignrank(double, double);
+double rsignrank(double);
 
 #endif

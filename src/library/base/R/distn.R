@@ -122,3 +122,8 @@ dwilcox <- function(x, m, n) .Internal(dwilcox(x, m, n))
 pwilcox <- function(q, m, n) .Internal(pwilcox(q, m, n))
 qwilcox <- function(p, m, n) .Internal(qwilcox(p, m, n))
 rwilcox <- function(nn, m, n) .Internal(rwilcox(nn, m, n))
+
+dsignrank <- function(x, n) .Internal(dsignrank(x, n))
+psignrank <- function(q, n) .Internal(psignrank(q, n))
+qsignrank <- function(p, n) .Internal(qsignrank(p, n))
+rsignrank <- function(nn, n) .Internal(rsignrank(nn, n))
