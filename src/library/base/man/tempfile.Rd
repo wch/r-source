@@ -29,6 +29,7 @@ fun <- function() {
   }
   structure(v, names = n)
 }
-fun()
+\testonly{str(fun())}
+\dontrun{     fun()}
 }
 \keyword{file}
