@@ -66,7 +66,6 @@ static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 	    R_Visible = 0;
 	    R_EvalDepth = 0;
 	    PROTECT(R_CurrentExpr);
-	    R_Busy(1);
 	    R_CurrentExpr = eval(R_CurrentExpr, rho);
 	    SYMVALUE(R_LastvalueSymbol) = R_CurrentExpr;
 	    UNPROTECT(1);
