@@ -18,6 +18,7 @@
 \alias{registerS3methods}
 \alias{.__S3MethodsTable__.}
 \alias{.mergeExportMethods}
+\alias{.knownS3Generics}
 \usage{
 asNamespace(ns, base.OK = TRUE)
 getNamespaceInfo(ns, which)
@@ -34,6 +35,7 @@ registerS3method(genname, class, method, envir = parent.frame())
 registerS3methods(info, package, env)
 setNamespaceInfo(ns, which, val)
 .mergeExportMethods(new, ns)
+.knownS3Generics
 }
 
 \arguments{

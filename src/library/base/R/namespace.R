@@ -584,11 +584,6 @@ namespaceImportMethods <- function(self, ns, vars) {
 
 importIntoEnv <- function(impenv, impnames, expenv, expnames) {
     exports <- getNamespaceInfo(expenv, "exports")
-#    getInternalExportName <- function(name, ns) {
-#        if (! exists(name, env = exports, inherits = FALSE))
-#            stop(paste(name, "is not an exported object"))
-#        get(name, env = exports, inherits = FALSE)
-#    }
     ex <- .Internal(ls(exports, TRUE))
     if(!all(expnames %in% ex)) {
         miss <- expnames[! expnames %in% ex]
@@ -597,7 +592,6 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
              sQuote(paste("namespace", getNamespaceName(expenv), sep=";"))
              )
     }
-#    expnames <- unlist(lapply(expnames, getInternalExportName, expenv))
     expnames <- unlist(lapply(expnames, get, env = exports, inherits = FALSE))
     if (is.null(impnames)) impnames <- character(0)
     if (is.null(expnames)) expnames <- character(0)
@@ -621,11 +615,8 @@ namespaceExport <- function(ns, vars) {
                 warning(paste("previous export(s)",
                               paste(sQuote(info[notex, 3]), collapse=", "),
                               "are being replaced"), call. = FALSE)
-            for (i in seq(along = new)) {
-#                if (exists(expnames[i], env = exports, inherits = FALSE))
-#                    warning("replacing previous export:", expnames[i])
+            for (i in seq(along = new))
                 assign(expnames[i], intnames[i], env = exports)
-            }
         }
         makeImportExportNames <- function(spec) {
             old <- as.character(spec)
@@ -636,9 +627,6 @@ namespaceExport <- function(ns, vars) {
             old
         }
         new <- makeImportExportNames(unique(vars))
-#         if (any(duplicated(new)))
-#             stop("duplicate export names ",
-#              paste(new[duplicated(new)], collapse=", "))
         ## calling exists each time is too slow, so do two phases
         undef <- new[! new %in% .Internal(ls(ns, TRUE))]
         undef <- undef[! sapply(undef, exists, env = ns)]
@@ -837,9 +825,10 @@ registerS3methods <- function(info, package, env)
         ## the base namespace, so we start the search at the imports
         ## environment, parent.env(envir), which is followed by the
         ## base namespace.  (We have already looked in the namespace.)
-#        defenv <- if(!is.na(w <- .knownS3Generics[genname])) asNamespace(w)
-#        else
-        defenv <- if(any(genname == groupGenerics)) .BaseNamespaceEnv
+        ## However, in case they have not been imported, we first
+        ## look up where some commonly used generics are (including the
+        ## group generics).
+        defenv <- if(!is.na(w <- .knownS3Generics[genname])) asNamespace(w)
         else {
             if(!exists(genname, envir = parent.env(envir)))
                 stop("object ", sQuote(genname),
@@ -847,7 +836,7 @@ registerS3methods <- function(info, package, env)
                      sQuote(package), call. = FALSE)
             genfun <- get(genname, envir = parent.env(envir))
             if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction")) {
-                genfun <- methods::finalDefaultMethod(methods::getMethods(genname))@.Data
+                genfun <- methods::slot(genfun, "default")@methods$ANY
                 warning("found an S4 version of ", sQuote(genname),
                         " so it has not been imported correctly", call.=FALSE)
             }
@@ -861,7 +850,6 @@ registerS3methods <- function(info, package, env)
         assign(nm, wrap(method, envir), envir = table)
     }
 
-    groupGenerics <- c("Math", "Ops",  "Summary", "Complex")
     n <- NROW(info)
     if(n == 0) return()
     methname <- paste(info[,1], info[,2], sep=".")
