@@ -189,6 +189,10 @@ NEW FEATURES
 	is.symbol & is.name() are now identical too, by definition;
 	before, they were identical by implementation.
 
+    o	coplot() has new option subscripts=TRUE to pass the indices
+	to the panel function.
+
+
 
 BUG FIXES
 
@@ -269,6 +273,10 @@ BUG FIXES
 	test option when the scale was estimated.
 
     o	rgeom(, prob=1) gives 0 rather than NA
+
+    o	The xlab and ylab in coplot() now set the x and y axis labels,
+	as in S.  Supply a second component to label the conditioning
+	variables.
 
 
 

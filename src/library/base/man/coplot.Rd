@@ -3,8 +3,9 @@
 \usage{
 coplot(formula, data, given.values, panel = points, rows, columns,
        show.given = TRUE, col = par("fg"), pch = par("pch"),
-       xlab = paste("Given :", a.name),
-       ylab = paste("Given :", b.name),
+       xlab = c(x.name, paste("Given :", a.name)),
+       ylab = c(y.name, paste("Given :", b.name)),
+       subscripts = FALSE,
        number = 6, overlap = 0.5, \dots)
 co.intervals(x, number = 6, overlap = 0.5)
 }
@@ -34,7 +35,7 @@ co.intervals(x, number = 6, overlap = 0.5)
     the result of \code{co.intervals(..)} can be used directly as
     \code{given.values} argument.
   }
-  \item{panel}{a \code{\link{function}(x,y, col, pch, \dots)}
+  \item{panel}{a \code{\link{function}(x, y, col, pch, \dots)}
       which gives the action to be carried out in
       each panel of the display.  The default is \code{points}.}
   \item{rows}{the panels of the plot are laid out in a \code{rows} by
@@ -48,8 +49,15 @@ co.intervals(x, number = 6, overlap = 0.5)
     short, the values are recycled.}
   \item{pch}{a vector of plotting symbols or characters.  If too short,
     the values are recycled.}
-  \item{xlab}{character; label to use for the 1st conditioning variable.}
-  \item{ylab}{character; label to use for the 2nd conditioning variable.}
+  \item{xlab}{character; labels to use for the x axis and the
+    first conditioning variable.  If only one label is given, it is used
+    for the x axis and the default label is used for the conditioning
+    variable.}
+  \item{ylab}{character; labels to use for the y axis and any
+    second conditioning variable.}
+  \item{subscripts}{logical: if true the panel function is given an additional
+    (third) argument \code{subscripts} giving the subscripts of the data
+    passed to that panel.}
   \item{number}{integer; the number of conditioning intervals,
     possibly of length 2 for x and y direction.}
   \item{overlap}{numeric < 1; the fraction of overlap of the
