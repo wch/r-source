@@ -14,10 +14,10 @@ c        interest. the  k  b-splines whose support contains the interval
 c               (t(left), t(left+1))
 c        are to be considered.
 c  a s s u m p t i o n  - - -  it is assumed that
-c               t(left) .lt. t(left+1)
+c               t(left) < t(left+1)
 c        division by zero will result otherwise (in  b s p l v b ).
 c        also, the output is as advertised only if
-c               t(left) .le. x .le. t(left+1) .
+c               t(left) <= x <= t(left+1) .
 c  nderiv   an integer indicating that values of b-splines and their
 c        derivatives up to but not including the  nderiv-th  are asked
 c        for. ( nderiv  is replaced internally by the integer in (1,k)
@@ -91,10 +91,10 @@ c
 c        for j=1,...,k, construct b-coeffs of  (m-1)st  derivative of
 c        b-splines from those for preceding derivative by differencing
 c        and store again in  a(.,j) . the fact that  a(i,j) = 0  for
-c        i .lt. j  is used.sed.
+c        i < j  is used.sed.
          do 25 ldummy=1,kp1mm
             factor = fkp1mm/(t(il+kp1mm) - t(il))
-c           the assumption that t(left).lt.t(left+1) makes denominator
+c           the assumption that t(left) < t(left+1) makes denominator
 c           in  factor  nonzero.
             do 24 j=1,i
    24          a(i,j) = (a(i,j) - a(i-1,j))*factor
@@ -107,7 +107,7 @@ c        i-th b-spline (of interest here) at  x , and store in
 c        dbiatx(i,m). storage of this value over the value of a b-spline
 c        of order m there is safe since the remaining b-spline derivat-
 c        ive of the same order do not use this value due to the fact
-c        that  a(j,i) = 0  for j .lt. i .
+c        that  a(j,i) = 0  for j < i .
    30    do 40 i=1,k
             sum = 0.
             jlow = max0(i,m)
@@ -129,9 +129,10 @@ c  with knot sequence  t .
 c
 c******  i n p u t  ******
 c  t.....knot sequence, of length  left + jout  , assumed to be nonde-
-c        creasing.  a s s u m p t i o n . . . .
-c                       t(left)  .lt.  t(left + 1)   .
-c   d i v i s i o n  b y  z e r o  will result if  t(left) = t(left+1)
+c        creasing.
+c    a s s u m p t i o n  :  t(left)  <  t(left + 1) 
+c    d i v i s i o n  b y  z e r o  will result if  t(left) = t(left+1)
+c
 c  jhigh,
 c  index.....integers which determine the order  jout = max(jhigh,
 c        (j+1)*(index-1))  of the b-splines whose values at  x  are to
@@ -149,13 +150,13 @@ c        are, on entry, as they were on exit at the previous call.
 c           in particular, if  jhigh = 0, then  jout = j+1, i.e., just
 c        the next column of b-spline values is generated.
 c
-c  w a r n i n g . . .  the restriction   jout .le. jmax (= 20)  is im-
-c        posed arbitrarily by the dimension statement for  deltal  and
+c  w a r n i n g . . .  the restriction   jout <= jmax (= 20)  is 
+c        imposed arbitrarily by the dimension statement for  deltal and
 c        deltar  below, but is  n o w h e r e  c h e c k e d  for .
 c
 c  x.....the point at which the b-splines are to be evaluated.
 c  left.....an integer chosen (usually) so that
-c                  t(left) .le. x .le. t(left+1)  .
+c                  t(left) <= x <= t(left+1)  .
 c
 c******  o u t p u t  ******
 c  biatx.....array of length  jout , with  biatx(i)  containing the val-
@@ -166,19 +167,19 @@ c
 c******  m e t h o d  ******
 c  the recurrence relation
 c
-c                       x - t(i)              t(i+j+1) - x
-c     b(i,j+1)(x)  =  -----------b(i,j)(x) + ---------------b(i+1,j)(x)
-c                     t(i+j)-t(i)            t(i+j+1)-t(i+1)
+c                       x - t(i)               t(i+j+1) - x
+c     b(i,j+1)(x)  =  ----------- b(i,j)(x) + --------------- b(i+1,j)(x)
+c                     t(i+j)-t(i)             t(i+j+1)-t(i+1)
 c
-c  is used (repeatedly) to generate the (j+1)-vector  b(left-j,j+1)(x),
-c  ...,b(left,j+1)(x)  from the j-vector  b(left-j+1,j)(x),...,
-c  b(left,j)(x), storing the new values in  biatx  over the old. the
-c  facts that
-c            b(i,1) = 1  if  t(i) .le. x .lt. t(i+1)
+c  is used (repeatedly) to generate the 
+c  (j+1)-vector  b(left-j,j+1)(x),...,b(left,j+1)(x)  
+c  from the j-vector  b(left-j+1,j)(x),...,b(left,j)(x), 
+c  storing the new values in  biatx  over the old.  the facts that
+c            b(i,1) = 1         if  t(i) <= x < t(i+1)
 c  and that
-c            b(i,j)(x) = 0  unless  t(i) .le. x .lt. t(i+j)
-c  are used. the particular organization of the calculations follows al-
-c  gorithm  (8)  in chapter x of the text.
+c            b(i,j)(x) = 0  unless  t(i) <= x < t(i+j)
+c  are used. the particular organization of the calculations follows 
+c  algorithm (8)  in chapter x of the text.
 c
 
 C Arguments

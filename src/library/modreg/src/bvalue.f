@@ -1,10 +1,9 @@
       double precision function bvalue(t,lent,bcoef,n,k,x,jderiv)
-c      implicit none
 
-calls  interv
+c Calculates value at  x  of  jderiv-th derivative of spline from b-repr.
+c The spline is taken to be continuous from the right.
 c
-calculates value at  x  of  jderiv-th derivative of spline from b-repr.
-c  the spline is taken to be continuous from the right.
+C calls  interv
 c
 c******  i n p u t ******
 c  t, bcoef, n, k......forms the b-representation of the spline  f  to
@@ -15,7 +14,7 @@ c  n.....length of  bcoef  and dimension of s(k,t),
 c        a s s u m e d  positive .
 c  k.....order of the spline .
 c
-c  w a r n i n g . . .   the restriction  k .le. kmax (=20)  is imposed
+c  w a r n i n g . . .   the restriction  k <= kmax (=20)  is imposed
 c        arbitrarily by the dimension statement for  aj, dm, dm  below,
 c        but is  n o w h e r e  c h e c k e d  for.
 c
@@ -31,16 +30,16 @@ c     the nontrivial knot interval  (t(i),t(i+1))  containing  x  is lo-
 c  cated with the aid of  interv . the  k  b-coeffs of  f  relevant for
 c  this interval are then obtained from  bcoef (or taken to be zero if
 c  not explicitly available) and are then differenced  jderiv  times to
-c  obtain the b-coeffs of  (d**jderiv)f  relevant for that interval.
+c  obtain the b-coeffs of  (d^jderiv)f  relevant for that interval.
 c  precisely, with  j = jderiv, we have from x.(12) of the text that
 c
-c     (d**j)f  =  sum ( bcoef(.,j)*b(.,k-j,t) )
+c     (d^j)f  =  sum ( bcoef(.,j)*b(.,k-j,t) )
 c
 c  where
 c                   / bcoef(.),                     ,  j .eq. 0
 c                   /
 c    bcoef(.,j)  =  / bcoef(.,j-1) - bcoef(.-1,j-1)
-c                   / ----------------------------- ,  j .gt. 0
+c                   / ----------------------------- ,  j > 0
 c                   /    (t(.+k-j) - t(.))/(k-j)
 c
 c     then, we use repeatedly the fact that
@@ -51,9 +50,9 @@ c                 (x - t(.))*a(.) + (t(.+m-1) - x)*a(.-1)
 c    a(.,x)  =    ---------------------------------------
 c                 (x - t(.))      + (t(.+m-1) - x)
 c
-c  to write  (d**j)f(x)  eventually as a linear combination of b-splines
+c  to write  (d^j)f(x)  eventually as a linear combination of b-splines
 c  of order  1 , and the coefficient for  b(i,1,t)(x)  must then
-c  be the desired number  (d**j)f(x). (see x.(17)-(19) of text).
+c  be the desired number  (d^j)f(x). (see x.(17)-(19) of text).
 c
 C Arguments
       integer lent, n,k, jderiv
@@ -76,8 +75,8 @@ C Local Variables
       bvalue = 0.
       if (jderiv .ge. k)                go to 99
 c
-c  *** find  i  s.t.  1 .le. i .lt. n+k  and  t(i) .lt. t(i+1) and
-c      t(i) .le. x .lt. t(i+1) . if no such i can be found,  x  lies
+c  *** find  i  s.t.  1 <= i < n+k  and  t(i) < t(i+1) and
+c      t(i) <= x < t(i+1) . if no such i can be found,  x  lies
 c      outside the support of  the spline  f  and  bvalue = 0.
 c      (the asymmetry in this choice of  i  makes  f  rightcontinuous)
       if( (x.ne.t(n+1)) .or. (t(n+1).ne.t(n+k)) )  go to 700
@@ -122,7 +121,7 @@ c
                                         go to 20
    18 do 19 j=1,km1
 C the following if() happens; e.g. in   pp <- predict(cars.spl, xx)
-c-       if( (i+j) .gt.lent) write(6,9911) i+j,lent
+c-       if( (i+j) .gt. lent) write(6,9911) i+j,lent
 c-  9911         format(' i+j, lent ',2(i6,1x))
          dp(j) = t(i+j) - x
    19 continue
@@ -158,9 +157,9 @@ c
       end
 
       subroutine interv ( xt, lxt, x, left, mflag )
-c      implicit none
+      implicit none
 
-computes  left = max( i ; 1 .le. i .le. lxt  .and.  xt(i) .le. x )  .
+c computes  left = max( i ; 1 <= i <= lxt  .and.  xt(i) <= x )  .
 c
 c******  i n p u t  ******
 c  xt.....a double sequence, of length  lxt , assumed to be nondecreasing
@@ -171,13 +170,13 @@ c
 c******  o u t p u t  ******
 c  left, mflag.....both integers, whose value is
 c
-c   1     -1      if               x .lt.  xt(1)
-c   i      0      if   xt(i)  .le. x .lt. xt(i+1)
-c  lxt     1      if  xt(lxt) .le. x
+c   1     -1      if               x <  xt(1)
+c   i      0      if   xt(i)  <= x < xt(i+1)
+c  lxt     1      if  xt(lxt) <= x
 c
 c        in particular,  mflag = 0 is the 'usual' case.  mflag .ne. 0
 c        indicates that  x  lies outside the halfopen interval
-c        xt(1) .le. y .lt. xt(lxt) . the asymmetric treatment of the
+c        xt(1) <= y < xt(lxt) . the asymmetric treatment of the
 c        interval is due to the decision to make all pp functions cont-
 c        inuous from the right.
 c
@@ -187,13 +186,13 @@ c  it is called repeatedly, with  x  taken from an increasing or decrea-
 c  sing sequence. this will happen, e.g., when a pp function is to be
 c  graphed. the first guess for  left  is therefore taken to be the val-
 c  ue returned at the previous call and stored in the  l o c a l  varia-
-c  ble  ilo . a first check ascertains that  ilo .lt. lxt (this is nec-
+c  ble  ilo . a first check ascertains that  ilo < lxt (this is nec-
 c  essary since the present call may have nothing to do with the previ-
-c  ous call). then, if  xt(ilo) .le. x .lt. xt(ilo+1), we set  left =
+c  ous call). then, if  xt(ilo) <= x < xt(ilo+1), we set  left =
 c  ilo  and are done after just three comparisons.
 c     otherwise, we repeatedly double the difference  istep = ihi - ilo
 c  while also moving  ilo  and  ihi  in the direction of  x , until
-c                      xt(ilo) .le. x .lt. xt(ihi) ,
+c                      xt(ilo) <= x < xt(ihi) ,
 c  after which we use bisection to get, in addition, ilo+1 = ihi .
 c  left = ilo  is then returned.
 c
@@ -211,7 +210,7 @@ c
    20 if (x .ge. xt(ihi))               go to 40
       if (x .ge. xt(ilo))               go to 100
 c
-c              **** now x .lt. xt(ilo) . decrease  ilo  to capture  x .
+c              **** now x < xt(ilo) . decrease  ilo  to capture  x .
    30 istep = 1
    31    ihi = ilo
          ilo = ihi - istep
@@ -222,7 +221,7 @@ c              **** now x .lt. xt(ilo) . decrease  ilo  to capture  x .
    35 ilo = 1
       if (x .lt. xt(1))                 go to 90
                                         go to 50
-c              **** now x .ge. xt(ihi) . increase  ihi  to capture  x .
+c              **** now x >= xt(ihi) . increase  ihi  to capture  x .
    40 istep = 1
    41    ilo = ihi
          ihi = ilo + istep
@@ -233,7 +232,7 @@ c              **** now x .ge. xt(ihi) . increase  ihi  to capture  x .
    45 if (x .ge. xt(lxt))               go to 110
       ihi = lxt
 c
-c           **** now xt(ilo) .le. x .lt. xt(ihi) . narrow the interval.
+c           **** now xt(ilo) <= x < xt(ihi) . narrow the interval.
    50 middle = (ilo + ihi)/2
       if (middle .eq. ilo)              go to 100
 c     note. it is assumed that middle = ilo in case ihi = ilo+1 .
