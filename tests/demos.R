@@ -2,12 +2,11 @@
 .ptime <- proc.time()
 .Random.seed <- c(0,rep(7654, 3))
 
-## Currently only do `base', but others make sense, not tcltk though :
-
-## Drop these for strict testing {and add them to \testonly{.} examples
+## Drop these for strict testing {and add them to (\testonly{.}) examples
 ## in ../src/library/base/man/demo.Rd }:
 dont <- list(base = c("nlm", "lm.glm")
              )
+## don't take tcltk here
 for(pkg in c("base", "eda")) {
 
     demos <- list.files(file.path(system.file(package = pkg), "demo"),
