@@ -1,3 +1,28 @@
+/*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include <gnome.h>
 
 #include "Defn.h"
@@ -8,8 +33,6 @@
 
 #define CURSOR		GDK_CROSSHAIR		/* Default cursor */
 #define MM_PER_INCH	25.4			/* mm -> inch conversion */
-
-/* FIXME: font handling */
 
 typedef struct {
     /* R Graphics Parameters */
@@ -35,7 +58,7 @@ typedef struct {
     GtkWidget *drawing;
 
     GdkGC *wgc;
-    GdkColor *gcol_bg;
+    GdkColor gcol_bg;
     GdkRectangle clip;
     GdkCursor *gcursor;
   
@@ -109,44 +132,42 @@ struct _FontMetricCache {
   gint max_width;
 };
 
+static GdkFont *RGTKLoadFont(char *font)
+{
+    GdkFont *tmp_font;
+
+    tmp_font = g_hash_table_lookup(font_htab, (gpointer) font);
+
+    if(tmp_font == NULL) {
+        tmp_font = gdk_font_load(font);
+
+        if(tmp_font != NULL) {
+            g_hash_table_insert(font_htab, (gpointer) g_strdup(font), (gpointer) tmp_font);
+        }
+    }
+
+    return tmp_font;
+}
+
 static gint SetBaseFont(gtkDesc *gtkd)
 {
-  GdkFont *tmp_font;
-
   gtkd->fontface = 1;
   gtkd->fontsize = 12;
   gtkd->usefixed = 0;
 
-  if(font_htab == NULL)
-    font_htab = g_hash_table_new(g_str_hash, g_str_equal);
+  if(font_htab == NULL) {
+      font_htab = g_hash_table_new(g_str_hash, g_str_equal);
+  }
 
   fontname = g_strdup_printf(fontname_R6, weight[0], slant[0], gtkd->fontsize * 10);
-
-  tmp_font = g_hash_table_lookup(font_htab, (gpointer) fontname);
-  if(tmp_font == NULL) {
-    gtkd->font = gdk_font_load(fontname);
-    if(gtkd->font != NULL)
-      g_hash_table_insert(font_htab, (gpointer) fontname, (gpointer) gtkd->font);
-  }
-  else
-    gtkd->font = tmp_font;
+  gtkd->font = RGTKLoadFont(fontname);
+  g_free(fontname);
 
   if(gtkd->font != NULL)
     return 1;
 
   gtkd->usefixed = 1;
-  fontname = fixedname;
-
-  tmp_font = g_hash_table_lookup(font_htab, (gpointer) fontname);
-  if(tmp_font == NULL) {
-    gtkd->font = gdk_font_load(fontname);
-    if(gtkd->font != NULL)
-      g_hash_table_insert(font_htab, (gpointer) fontname, (gpointer) gtkd->font);
-  }
-  else {
-    gtkd->font = tmp_font;
-    g_free(fontname);
-  }
+  gtkd->font = RGTKLoadFont(fixedname);
 
   if(gtkd->font != NULL)
     return 1;
@@ -183,17 +204,11 @@ static void SetFont(DevDesc *dd, gint face, gint size)
 				 slant[((face-1)/2)%2],
 				 10 * size);
       
-    tmp_font = g_hash_table_lookup(font_htab, (gpointer) fontname);
+    tmp_font = RGTKLoadFont(fontname);
+    g_free(fontname);
 
-    if(tmp_font == NULL) {
-      gtkd->font = gdk_font_load(fontname);
-
-      if(gtkd->font != NULL)
-	g_hash_table_insert(font_htab, (gpointer) fontname, (gpointer) gtkd->font);
-    }
-    else {
-      gtkd->font = tmp_font;
-      g_free(fontname);
+    if(tmp_font != NULL) {
+        gtkd->font = tmp_font;
     }
   }
 }
@@ -207,9 +222,9 @@ static void SetColor(GdkColor *gcol, int color)
   red = R_RED(color);
   green = R_GREEN(color);
   blue = R_BLUE(color);
-  gcol->red = red * 257;
-  gcol->green = green * 257;
-  gcol->blue = blue * 257;
+  gcol->red = 0;
+  gcol->green = 0;
+  gcol->blue = 0;
   gcol->pixel = gdk_rgb_xpixel_from_rgb((red << 16)|(green << 8)|(blue));
 }
 
@@ -285,7 +300,7 @@ static gint realize_event(GtkWidget *widget, gpointer data)
   gdk_window_set_cursor(gtkd->drawing->window, gtkd->gcursor);
 
   /* set window bg */
-  gdk_window_set_background(gtkd->drawing->window, gtkd->gcol_bg);
+  gdk_window_set_background(gtkd->drawing->window, &gtkd->gcol_bg);
 
   return FALSE;
 }
@@ -381,15 +396,15 @@ static int GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
 
   gint iw, ih;
 
-  /* initialise colour */
-  gdk_rgb_init();
-  gtk_widget_push_visual(gdk_rgb_get_visual());
-  gtk_widget_push_colormap(gdk_rgb_get_cmap());
-
   /* initialise pointers */
   gtkd->drawing = NULL;
   gtkd->wgc = NULL;
   gtkd->gcursor = NULL;
+
+  /* initialise colour */
+  gdk_rgb_init();
+  gtk_widget_push_visual(gdk_rgb_get_visual());
+  gtk_widget_push_colormap(gdk_rgb_get_cmap());
 
   /* create window etc */
   gtkd->windowWidth = iw = w / pixelWidth();
@@ -415,8 +430,7 @@ static int GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
 
   /* setup background color */
   gtkd->bg = dd->dp.bg = R_RGB(255, 255, 255);
-  gtkd->gcol_bg = gdk_color_copy(&bg);
-  SetColor(gtkd->gcol_bg, gtkd->bg);
+  SetColor(&gtkd->gcol_bg, gtkd->bg);
 
   /* place and realize the drawing area */
   gnome_app_set_contents(GNOME_APP(gtkd->window), gtkd->drawing);
@@ -432,14 +446,14 @@ static int GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
 
   /* show everything */
   gtk_widget_show_all(gtkd->window);
-
-  /* let other widgets use the default settings */
-  gtk_widget_pop_visual();
-  gtk_widget_pop_colormap();
-
+  
   /* initialise line params */
   gtkd->lty = -1;
   gtkd->lwd = -1;
+
+  /* let other widgets use the default colour settings */
+  gtk_widget_pop_visual();
+  gtk_widget_pop_colormap();
 
   /* Set base font */
   if(!SetBaseFont(gtkd)) {
@@ -537,9 +551,9 @@ static void GTK_NewPage(DevDesc *dd)
   g_return_if_fail(GTK_IS_DRAWING_AREA(gtkd->drawing));
 
   if(gtkd->bg != dd->dp.bg) {
-    SetColor(gtkd->gcol_bg, dd->dp.bg);
+    SetColor(&gtkd->gcol_bg, dd->dp.bg);
     gtkd->bg = dd->dp.bg;
-    gdk_window_set_background(gtkd->drawing->window, gtkd->gcol_bg);
+    gdk_window_set_background(gtkd->drawing->window, &gtkd->gcol_bg);
   }
 
   gdk_window_clear(gtkd->drawing->window);
@@ -802,6 +816,12 @@ static void GTK_Text(double x, double y, int coords,
     y -= -xc * x1 * sin(deg2rad * rot) -
       yc * y1 * cos(deg2rad * rot);
   }
+
+  /* FIXME: rotation */
+  gdk_draw_text(gtkd->drawing->window,
+                gtkd->font, gtkd->wgc,
+                (gint) x, (gint) y,
+                str, strlen(str));
 
   /*  gdk_draw_text_rot(gtkd->drawing->window,
 		    gtkd->font, gtkd->wgc, 
