@@ -902,6 +902,57 @@ static SEXP modqr_qy_real(SEXP Q, SEXP Bin, SEXP trans)
     return B;
 }
 
+static SEXP moddet_ge_real(SEXP Ain, SEXP logarithm)
+{
+    int i, n, *Adims, info, *jpvt, sign, useLog;
+    double *work, tmp;
+    double modulus;
+    SEXP val, nm,  tau, rank, A;
+
+    if (!(isMatrix(Ain) && isReal(Ain)))
+	error("A must be a real matrix");
+    PROTECT(A = duplicate(Ain));
+    Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
+    n = Adims[0];
+    if (Adims[1] != n)
+	error("A must be a square matrix");
+    jpvt = (int *) R_alloc(n, sizeof(int));
+    F77_CALL(dgetrf)(&n, &n, REAL(A), &n, jpvt, &info);
+    if (info != 0)
+	error("error code %d from Lapack routine dgetrf", info);
+    sign = 1;
+    for (i = 0; i < n; i++) if (jpvt[i] != (i + 1))
+	sign = -sign;
+    useLog = LOGICAL(coerceVector(logarithm, LGLSXP))[0];
+    if (useLog) {
+	modulus = 0.0;
+	for (i = 0; i < n; i++) {
+	    double dii = REAL(A)[i*(n + 1)]; /* ith diagonal element */
+	    modulus += log(abs(dii));
+	    if (dii < 0) sign = -sign;
+	}
+    } else {
+	modulus = 1.0;
+	for (i = 0; i < n; i++)
+	    modulus *= REAL(A)[i*(n + 1)];
+	if (modulus < 0) {
+	    modulus = -modulus;
+	    sign = -sign;
+	}
+    }
+    val = PROTECT(allocVector(VECSXP, 2));
+    nm = PROTECT(allocVector(STRSXP, 2));
+    SET_STRING_ELT(nm, 0, mkChar("modulus"));
+    SET_STRING_ELT(nm, 1, mkChar("sign"));
+    setAttrib(val, R_NamesSymbol, nm);
+    SET_VECTOR_ELT(val, 0, ScalarReal(modulus));
+    setAttrib(VECTOR_ELT(val, 0), install("logarithm"), ScalarLogical(useLog));
+    SET_VECTOR_ELT(val, 1, ScalarInteger(sign));
+    setAttrib(val, R_ClassSymbol, ScalarString(mkChar("det")));
+    UNPROTECT(3);
+    return val;
+}
+
 /* ------------------------------------------------------------ */
 
 
@@ -930,6 +981,7 @@ R_init_lapack(DllInfo *info)
     tmp->dgeqp3 = modLa_dgeqp3;
     tmp->qr_coef_real = modqr_coef_real;
     tmp->qr_qy_real = modqr_qy_real;
+    tmp->det_ge_real = moddet_ge_real;
     R_setLapackRoutines(tmp);
 }
 

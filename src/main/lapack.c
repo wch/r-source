@@ -44,6 +44,7 @@ SEXP La_dgesv(SEXP A, SEXP B)
 SEXP La_dgeqp3(SEXP A)
 SEXP qr_coef_real(SEXP Q, SEXP B)
 SEXP qr_qy_real(SEXP Q, SEXP B, SEXP trans)
+SEXP det_ge_real(SEXP A, SEXP logarithm)
 */
 
 static int initialized = 0;
@@ -228,6 +229,17 @@ SEXP qr_qy_real(SEXP Q, SEXP B, SEXP trans)
     if(!initialized) La_Init();
     if(initialized > 0)
 	return (*ptr->qr_qy_real)(Q, B, trans);
+    else {
+	error("lapack routines cannot be loaded");
+	return R_NilValue;
+    }
+}
+
+SEXP det_ge_real(SEXP A, SEXP logarithm)
+{
+    if(!initialized) La_Init();
+    if(initialized > 0)
+	return (*ptr->det_ge_real)(A, logarithm);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;

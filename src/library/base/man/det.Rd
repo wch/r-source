@@ -1,35 +1,50 @@
 \name{det}
 \title{Calculate the Determinant of a Matrix}
 \alias{det}
+\alias(determinant)
 \usage{
-det(x, method = c("qr", "eigenvalues"), tol = 1e-07)
+det(x, \dots)
+determinant(x, logarithm, \dots)
 }
 \description{
-  \code{det} calculates the determinant of a matrix either by QR
-  decomposition or from the eigenvalues, see \code{\link{qr}} and
-  \code{\link{eigen}}.
+  \code{det} calculates the determinant of a matrix. \code{determinant}
+  is a generic function that returns separately the modulus of the determinant,
+  optionally on the logarithm scale, and the sign of the determinant.
   }
 \arguments{
   \item{x}{numeric matrix.}
-  \item{method}{\code{"qr"} (default) or \code{"eigenvalues"}.}
-  \item{tol}{tolerance, used only for method \code{"qr"}.}
+  \item{logarithm}{logical; if \code{TRUE} return the logarithm of the
+    modulus of the determinant.  Default is \code{TRUE}.
 }
 \value{
-  The determinant, or zero if \code{qr} determines the matrix to be
-  numerically singular.
+  For \code{det}, the determinant of \code{x}.  For \code{determinant}, a
+  list with components
+  \item{modulus}{a numeric value. The modulus (absolute value) of the
+    determinant if \code{logarithm} is \code{FALSE}; otherwise the
+    logarithm of the modulus.}
+  \item{sign}{integer; either +1 or -1 according to whether the
+    determinant is positive or negative.}
 }
 \note{
   Often, computing the determinant is \emph{not} what you should be doing
   to solve a given problem.
-
-  The \code{"qr"} method is much faster for large matrices.
 }
-\seealso{\code{\link{eigen}}, \code{\link{qr}}, \code{\link{svd}}}
+\note{
+  Prior to release 1.8.0 the \code{det} function had a \code{method}
+  argument to allow use of either a QR decomposition or an
+  eigenvalue-eigenvector decomposition.  The \code{determinant} function now
+  uses an LU decomposition and the \code{det} function is simply a
+  wrapper around a call to \code{determinant}.
+}
+%\seealso{\code{\link{eigen}}, \code{\link{qr}}, \code{\link{svd}}}
 \examples{
 (x <- matrix(1:4, ncol=2))
+unlist(determinant(x))
 det(x)
-det(x, method="eigenvalues")
+ndet(x)
 
 det(print(cbind(1,1:3,c(2,0,1))))
+ndet(print(cbind(1,1:3,c(2,0,1))))
 }
+
 \keyword{array}
