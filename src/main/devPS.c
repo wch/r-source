@@ -2968,14 +2968,13 @@ static void XF_WriteString(FILE *fp, char *str)
 static int XF_SetColor(int color, XFigDesc *pd)
 {
     int i;
-    if (color <0 || color > 0xffffff) return -1;
+    unsigned int alpha = color & 0xff000000;
+    if(alpha < 0xff)  return -1;
+    color = color & 0xffffff;
     for (i = 0; i < pd->nXFigColors; i++)
-    {
 	if(color == pd->XFigColors[i]) return i;
-    }
-    if(pd->nXFigColors == 534) {
+    if(pd->nXFigColors == 534)
 	error("run out of colors in xfig()");
-    }
     /* new colour */
     fprintf(pd->psfp, "0 %d #%02x%02x%02x\n", pd->nXFigColors,
 	    R_RED(color), R_GREEN(color), R_BLUE(color));
@@ -3332,7 +3331,6 @@ static void XFig_NewPage(R_GE_gcontext *gc,
 {
     char buf[PATH_MAX];
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
-    FILE *fp = pd->tmpfp;
 
     pd->pageno++;
     if(pd->onefile) {
@@ -3359,24 +3357,25 @@ static void XFig_NewPage(R_GE_gcontext *gc,
 	pd->XFigColors[7] = 0xffffff;
 	pd->nXFigColors = 32;
     }
-     if(R_OPAQUE(gc->fill)) {
-	 int cbg = XF_SetColor(gc->fill, pd);
-	 int ix0, iy0, ix1, iy1;
-	 double x0 = 0.0, y0 = 0.0, x1 = 72.0 * pd->pagewidth,
-	     y1 = 72.0 * pd->pageheight;
-	 XFconvert(&x0, &y0, pd); XFconvert(&x1, &y1, pd);
-	 ix0 = (int)x0; iy0 = (int)y0; ix1 = (int)x1; iy1 = (int)y1;
-	 fprintf(fp, "2 2 "); /* Polyline */
-	 fprintf(fp, "%d %d ", 0, 0); /* style, thickness */
-	 fprintf(fp, "%d %d ", cbg, cbg); /* pen colour fill colour */
-	 fprintf(fp, "200 0 20 4.0 0 0 -1 0 0 ");
-	 fprintf(fp, "%d\n", 5); /* number of points */
-	 fprintf(fp, "%d %d ", ix0, iy0);
-	 fprintf(fp, "%d %d ", ix0, iy1);
-	 fprintf(fp, "%d %d ", ix1, iy1);
-	 fprintf(fp, "%d %d ", ix1, iy0);
-	 fprintf(fp, "%d %d\n", ix0, iy0);
-   }
+    if(R_OPAQUE(gc->fill)) {
+	FILE *fp = pd->tmpfp;
+	int cbg = XF_SetColor(gc->fill, pd);
+	int ix0, iy0, ix1, iy1;
+	double x0 = 0.0, y0 = 0.0, x1 = 72.0 * pd->pagewidth,
+	    y1 = 72.0 * pd->pageheight;
+	XFconvert(&x0, &y0, pd); XFconvert(&x1, &y1, pd);
+	ix0 = (int)x0; iy0 = (int)y0; ix1 = (int)x1; iy1 = (int)y1;
+	fprintf(fp, "2 2 "); /* Polyline */
+	fprintf(fp, "%d %d ", 0, 0); /* style, thickness */
+	fprintf(fp, "%d %d ", cbg, cbg); /* pen colour fill colour */
+	fprintf(fp, "200 0 20 4.0 0 0 -1 0 0 ");
+	fprintf(fp, "%d\n", 5); /* number of points */
+	fprintf(fp, "%d %d ", ix0, iy0);
+	fprintf(fp, "%d %d ", ix0, iy1);
+	fprintf(fp, "%d %d ", ix1, iy1);
+	fprintf(fp, "%d %d ", ix1, iy0);
+	fprintf(fp, "%d %d\n", ix0, iy0);
+    }
 }
 
 #ifdef HAVE_UNISTD_H
