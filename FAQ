@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-23, 2003-07-04
+Version 1.7-24, 2003-07-07
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1983,6 +1983,9 @@ distributions of R.)
 
 *scatterplot3d*
      Plots a three dimensional (3D) point cloud perspectively.
+
+*seao*
+     Simple Evolutionary Algorithm Optimization.
 
 *sem*
      Functions for fitting general linear Structural Equation Models (with
