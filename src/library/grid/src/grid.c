@@ -1761,7 +1761,7 @@ SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just)
     double xx, yy, ww, hh;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
-    int i, nx, ny, nw, nh, maxn;
+    int i, ny, nw, nh, maxn;
     LViewportContext vpc;
     R_GE_gcontext gc;
     LTransform transform;
