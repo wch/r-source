@@ -195,6 +195,13 @@ print.ordered <- function (x, quote=FALSE)
 Ops.ordered <-
 function (e1, e2)
 {
+    ok <- switch(.Generic,
+                 "<" = , ">" = , "<=" = , ">=" = ,"=="=, "!=" =TRUE,
+                 FALSE)
+    if(!ok) {
+	warning(paste('"',.Generic,'"', " not meaningful for ordered factors", sep=""))
+        return(rep(NA, max(length(e1),if(!missing(e2))length(e2))))
+    }
     nas <- is.na(e1) | is.na(e2)
     ord1 <- FALSE
     ord2 <- FALSE
@@ -206,8 +213,7 @@ function (e1, e2)
         l2 <- levels(e2)
         ord2 <- TRUE
     }
-    if (all(nchar(.Method)) && (length(l1) != length(l2) ||
-        !all(sort(l2) == sort(l1))))
+    if (all(nchar(.Method)) && (length(l1) != length(l2) || !all(l2 == l1)))
         stop("Level sets of factors are different")
     if (ord1 && ord2) {
         e1 <- codes(e1)
