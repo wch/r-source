@@ -1,3 +1,4 @@
+#-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
 CFLAGS=-O2 -I. -DWIN32 -D_X86_
