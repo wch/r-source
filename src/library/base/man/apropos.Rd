@@ -43,7 +43,7 @@ find(lm, num=T) ## .. numbers with these names
 find(lm, num=T, mode="function")# only the second one
 rm(lm)
 
-apropos(".", mode="list", simple.word=FALSE)
+apropos(".", mode="list")
 
 # need a DOUBLE backslash `\\\\' (in case you don't see it anymore)
 apropos("\\\\[")
