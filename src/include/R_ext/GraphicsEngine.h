@@ -67,15 +67,11 @@ typedef enum {
     GE_ScalePS = 8
 } GEevent;
 
-/* The full definition should be ...
- *    typedef SEXP (* GEcallback)(GEvent, *GEDevDesc, SEXP);
- *
- * ... but I could not figure out how to use *GEDevDesc before
- * the definition of GEDevDesc.
- */
-typedef SEXP (* GEcallback)();
+typedef struct _GEDevDesc GEDevDesc;
 
-typedef struct {
+typedef SEXP (* GEcallback)(GEevent, GEDevDesc *, SEXP);
+
+typedef struct { 
     /* An array of information about each graphics system that
      * has registered with the graphics engine.
      * This is used to store graphics state for each graphics
@@ -98,14 +94,14 @@ typedef struct {
     GEcallback callback;
 } GESystemDesc;
 
-typedef struct {
+struct _GEDevDesc {
     int newDevStruct;
     NewDevDesc *dev;
     /* Information about a device which has nothing to do with
      * R's concept of a graphics engine.
      */
     GESystemDesc *gesd[MAX_GRAPHICS_SYSTEMS];
-} GEDevDesc;
+};
 
 GEDevDesc* GEcreateDevDesc(NewDevDesc* dev);
 void GEdestroyDevDesc(GEDevDesc* dd);
