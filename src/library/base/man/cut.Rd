@@ -46,7 +46,8 @@ cut.default(x, breaks, labels = NULL,
 }
 \note{
   Instead of \code{table(cut(x, br))}, \code{hist(x, br, plot = FALSE)} is
-  more efficient and less memory hungry.
+  more efficient and less memory hungry.  Instead of \code{cut(*,
+    labels = FALSE)}, \code{\link{findInterval}()} is more efficient.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -55,7 +56,8 @@ cut.default(x, breaks, labels = NULL,
 }
 \seealso{
   \code{\link{split}} for splitting a variable according to a group factor;
-  \code{\link{factor}}, \code{\link{tabulate}}, \code{\link{table}}.
+  \code{\link{factor}}, \code{\link{tabulate}}, \code{\link{table}},
+  \code{\link{findInterval}()}.
 }
 \examples{
 Z <- rnorm(10000)
