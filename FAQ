@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-01-27
+Version 2.0.2005-01-28
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1674,6 +1674,9 @@ distributions of R.)
 
 *bindata*
      Generation of correlated artificial binary data.
+
+*bitops*
+     Functions for Bitwise operations on integer vectors.
 
 *blighty*
      Function for drawing the coastline of the United Kingdom.
