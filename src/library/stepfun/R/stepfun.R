@@ -129,3 +129,5 @@ plot.stepfun <-
 
 
 
+.noGenerics <- TRUE
+

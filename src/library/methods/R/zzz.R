@@ -63,7 +63,8 @@
     ## this has not been done, since cacheMetaData is in this package.  library, attach,
     ## and detach functions look for cacheMetaData and call it if it's found.
     for(i in rev(seq(along = search())))
-      cacheMetaData(i, TRUE)
+      if(!exists(".noGenerics", where = i, inherits = FALSE))
+        cacheMetaData(i, TRUE)
 }
 
 ### The following code is only executed when dumping

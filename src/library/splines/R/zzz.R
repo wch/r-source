@@ -1,4 +1,4 @@
-### $Id: zzz.R,v 1.2 2000/05/30 16:53:19 ripley Exp $
+### $Id: zzz.R,v 1.3 2003/02/09 09:31:06 ripley Exp $
 ###
 ###                     Splines classes for R
 ###
@@ -23,3 +23,5 @@
 ### MA 02111-1307, USA
 
 .First.lib <- function(lib, pkg) library.dynam( "splines", pkg, lib )
+
+.noGenerics <- TRUE

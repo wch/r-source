@@ -11,6 +11,7 @@
 \alias{.packages}
 \alias{.path.package}
 \alias{.libPaths}
+\alias{.noGenerics}
 \alias{print.libraryIQR}
 \alias{print.packageInfo}
 \description{
@@ -81,7 +82,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{library(package)} and \code{require(package)} both load the
   package with name \code{package}.  \code{require} is designed for use
   inside other functions; it returns \code{FALSE} and gives a warning
-  (rather than an error as \code{library()}) if the package does not exist.
+  (rather than an error as \code{library()} does) if the package does not exist.
   Both functions check and update the list of currently loaded packages
   and do not reload code that is already loaded.
 
@@ -180,6 +181,16 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   (or \code{TRUE} if \code{logical.return} is \code{TRUE}).
   \code{require} returns a logical indicating whether the required
   package is available.
+}
+\section{Formal methods}{
+  \code{library} takes some further actions when package \code{methods}
+  is attached (as it is by default).  Packages may define formal generic
+  functions as well as re-defining functions in other packages (notably
+  \code{base}) to be generic, and this information is cached whenever
+  such a package is loaded after \code{methods} and re-defined functions
+  are excluded from the list of conflicts.  This may take appreciable
+  time and can be prevented by defining an object \code{.noGenerics}
+  (with any value) in the package.
 }
 \note{
   \code{library} and \code{require} can only load an \emph{installed}

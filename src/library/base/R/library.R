@@ -52,24 +52,17 @@ library <-
                        ".noGenerics")
         sp <- search()
         lib.pos <- match(pkgname, sp)
+        ## ignore generics not defined for the package
         if(file.exists(objectsFile <-
                        file.path(pkgpath, "Meta", "objects.rds"))) {
             ob <- .readRDS(objectsFile)
-            ob <- ob[!(ob$class == "genericFunction"
-                       && ob$origpkg !=package), 1]
+            ob <- ob[!(ob$class == "genericFunction" & ob$origPkg !=package),1]
         } else {
             ob <- objects(lib.pos, all = TRUE)
             if(!nogenerics && "package:methods" %in% sp) {
-                ## ignore generics not defined for the package
-                ## This gets all the objects so is very slow
-                ## and evaluates all promises: a *very* bad idea
-                if( length(ob) > 0 )
-                    ob <- ob[sapply(ob, function(f) {
-                        f <- get(f, pos = lib.pos)
-                        fAttr <- c(class(f), attr(f, "package"))
-                        !(length(fAttr) == 2
-                          && fAttr[1] == "genericFunction"
-                          && fAttr[2] != package)})]
+                gen <- getGenerics(lib.pos)
+                gen <- gen[gen@package != ".GlobalEnv"]
+                ob <- ob[!(ob %in% gen)]
             }
         }
         fst <- TRUE
@@ -79,7 +72,7 @@ library <-
             if (any(obj.same > 0)) {
                 same <- ob[obj.same]
                 same <- same[!(same %in% dont.mind)]
-                Classobjs <- grep("^\.__", same)
+                Classobjs <- grep("^\\.__", same)
                 if(length(Classobjs)) same <- same[-Classobjs]
                 if(length(same)) {
                     if (fst) {
@@ -169,6 +162,12 @@ library <-
                     else stop(".First.lib failed")
             }
             nogenerics <- exists(".noGenerics", envir = env, inherits = FALSE)
+            if(!nogenerics) {
+                ## A package will have created a generic
+                ## only if it has created a formal method.
+                nogenerics <-
+                    length(objects(env, pattern="^\\.__M", all=TRUE)) == 0
+            }
 	    if(warn.conflicts &&
                !exists(".conflicts.OK", envir = env, inherits = FALSE))
                 checkConflicts(package, pkgname, pkgpath, nogenerics)
@@ -228,7 +227,7 @@ library <-
             else if(basename(f) %in% c("vignette.rds", "00Index.rds")) {
                 txt <- .readRDS(f)
                 ## New-style vignette indexes are data frames with more
-                ## info that just the base name of the PDF file and the
+                ## info than just the base name of the PDF file and the
                 ## title.  For such an index, we give the names of the
                 ## vignettes, their titles, and indicate whether PDFs
                 ## are available.

@@ -165,3 +165,6 @@ capabilities <- function(what = NULL)
     i <- pmatch(what, nm)
     if(is.na(i)) logical(0) else z[i]
 }
+
+## base has no S4 generics
+.noGenerics <- TRUE

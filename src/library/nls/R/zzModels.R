@@ -1,4 +1,4 @@
-### $Id: zzModels.R,v 1.6 2002/06/14 20:22:57 ripley Exp $
+### $Id: zzModels.R,v 1.7 2003/02/09 09:31:04 ripley Exp $
 ###
 ###       Individual selfStarting nonlinear regression models
 ###
@@ -517,6 +517,8 @@ SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
           },
               c("Asym", "Drop", "lrc", "pwr"))
 
+
+.noGenerics <- TRUE
 
 ### Local variables:
 ### mode: S

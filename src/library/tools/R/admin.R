@@ -166,12 +166,11 @@ function(dir, outDir)
         ex <- sapply(ob, function(f) {
             f <- get(f, pos)
             pkg <- attr(f, "package")
-            ## ensure we get the method's view of the class
-            c(.Primitive("dataClass")(f), ifelse(is.null(pkg), "", pkg))
+            c(class(f), ifelse(is.null(pkg), "", pkg))
         })
-        ob <- data.frame(name=I(ob), class=I(ex[1,]), orig=I(ex[2,]))
+        ob <- data.frame(name=I(ob), class=I(ex[1,]), origPkg=I(ex[2,]))
     } else ob <- data.frame(name=I(character(0)), class=I(character(0)),
-                            origpkg=I(character(0)))
+                            origPkg=I(character(0)))
     row.names(ob) <- seq(len = nrow(ob))
 
     if(.fileTest("-d", outDir))

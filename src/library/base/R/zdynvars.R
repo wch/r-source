@@ -26,5 +26,3 @@
             .lib.loc
     }
 })
-
-.noGenerics <- TRUE
