@@ -14,14 +14,14 @@ margin), "/")} for newbies, except that if \code{margin} has length
 zero, then one gets \code{x/sum(x)}.  }
 
 \value{
-  Table like \code{x} expressed relative to \code{margin} 
+  Table like \code{x} expressed relative to \code{margin}
 }
 \author{ Peter Dalgaard }
 
 \seealso{\code{\link{margin.table}}}
 
 \examples{
-m<-matrix(1:4,2)
+m <- matrix(1:4,2)
 m
 prop.table(m,1)
 }

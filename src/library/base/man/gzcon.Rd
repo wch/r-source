@@ -46,14 +46,14 @@ print(load(con))}
 zz <- gzfile("ex.gz", "w")
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
 close(zz)
-readLines(zz<-gzcon(file("ex.gz")))
+readLines(zz <- gzcon(file("ex.gz")))
 close(zz)
 unlink("ex.gz")
 
 zz <- gzcon(file("ex.gz", "wb"))
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
 close(zz)
-readLines(zz<-gzfile("ex.gz"))
+readLines(zz <- gzfile("ex.gz"))
 close(zz)
 unlink("ex.gz")
 }
