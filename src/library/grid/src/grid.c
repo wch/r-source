@@ -934,6 +934,16 @@ SEXP L_newpagerecording()
     GEDevDesc *dd = getDevice();
     if (LOGICAL(gridStateElement(dd, GSS_ASK))[0]) {
 	NewFrameConfirm();
+	/*
+	 * User may have killed device during pause for prompt
+	 */
+	if (NoDevices())
+	    error(_("attempt to plot on null device"));
+	else
+	    /* 
+	     * Should throw an error if dd != GECurrentDevice ?
+	     */
+	    dd = GEcurrentDevice();
     }
     GEinitDisplayList(dd);
     return R_NilValue;

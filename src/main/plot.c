@@ -529,7 +529,12 @@ SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     dd = CurrentDevice();
-    GNewPlot(GRecording(call, dd));
+    /*
+     * If user is prompted before new page, user has opportunity
+     * to kill current device.  GNewPlot returns (potentially new) 
+     * current device.
+     */
+    dd = GNewPlot(GRecording(call, dd));
 
     Rf_dpptr(dd)->xlog = Rf_gpptr(dd)->xlog = FALSE;
     Rf_dpptr(dd)->ylog = Rf_gpptr(dd)->ylog = FALSE;
