@@ -1799,12 +1799,15 @@ void GESymbol(double x, double y, int pch, double size,
 	    GERect(x-.5, y-.5, x+.5, y+.5, gc, dd);
 	} else {
 #ifdef SUPPORT_MBCS
-	    int cnt = wcrtomb(str, pch, NULL);
-	    str[cnt] = 0;
-#else
-	    str[0] = pch;
-	    str[1] = '\0';
+	    if(mbcslocale) {
+		int cnt = wcrtomb(str, pch, NULL);
+		str[cnt] = 0;
+	    } else
 #endif
+	    {
+		str[0] = pch;
+		str[1] = '\0';
+	    }
 	    GEText(x, y, str, NA_REAL, NA_REAL, 0., gc, dd);
 	}
     }
