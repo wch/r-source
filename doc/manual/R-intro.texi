@@ -1761,12 +1761,7 @@ An alternative is
 
 The multiplication function can be replaced by an arbitrary function of
 two variables.  For example if we wished to evaluate the function
-@ifinfo
-f(x, y) = cos(y)/(1 + x^2)
-@end ifinfo
-@tex
-$f(x, y) = cos(y)/(1 + x^2)$
-@end tex
+@eqn{f(x; y) = \cos(y)/(1 + x^2), f(x; y) = cos(y)/(1 + x^2)}
 over a regular grid of values with @math{x}- and @math{y}-coordinates
 defined by the @R{} vectors @code{x} and @code{y} respectively, we could
 proceed as follows:
@@ -1841,6 +1836,13 @@ is available, so we could have used @code{B <- t(A)}.
 @node Matrix facilities, Forming partitioned matrices, Generalized transpose of an array, Arrays and matrices
 @section Matrix facilities
 
+@macro xTx{}
+ @eqn{@strong{x}'@strong{x}, x'x}
+@end macro
+@macro xxT{}
+ @eqn{@strong{x}@strong{x}', x x'}
+@end macro
+
 As noted above, a matrix is just an array with two subscripts.  However
 it is such an important special case it needs a separate discussion.
 @R{} contains many operators and functions that are available only for
@@ -1894,11 +1896,10 @@ is the matrix product.  If @code{x} is a vector, then
 
 @noindent
 is a quadratic form.@footnote{Note that @code{x %*% x} is ambiguous, as
-it could mean either @math{@strong{x}'@strong{x}} or
-@math{@strong{x}@strong{x}'}, where @math{@strong{x}} is the column
-form.  In such cases the smaller matrix seems implicitly to be the
-interpretation adopted, so the scalar @math{@strong{x}'@strong{x}} is in
-this case the result.  The matrix @math{@strong{x}@strong{x}'} may be
+it could mean either @xTx{} or @xxT{}, where @eqn{@strong{x},x} is
+the column form.  In such cases the smaller matrix seems implicitly to be the
+interpretation adopted, so the scalar @xTx{} is in
+this case the result.  The matrix @xxT{} may be
 calculated either by @code{cbind(x) %*% x} or @code{x %*% rbind(x)}
 since the result of @code{rbind()} or @code{cbind()} is always a
 matrix.}
@@ -1939,9 +1940,11 @@ of that linear equation system.  In @R{},
 @end example
 
 solves the system, returning @code{x} (up to some accuracy loss).
-Note that in linear algebra, formally @code{x = A^@{-1@} %*% b} where
-@code{A^@{-1@}} denotes the @emph{inverse} of @code{A}, which can be
-computed by
+Note that in linear algebra, formally
+@eqn{@strong{x} = @strong{A}^{-1} @strong{b}, @code{x = A^@{-1@} %*% b}}
+where
+@eqn{@strong{A}^{-1}, @code{A^@{-1@}}} denotes the @emph{inverse} of
+@eqn{@strong{A},@code{A}}, which can be computed by
 
 @example
 solve(A)
@@ -1950,7 +1953,8 @@ solve(A)
 but rarely is needed.  Numerically, it is both inefficient and unstable to
 compute @code{x <- solve(A) %*% b} instead of @code{solve(A,b)}.
 
-The quadratic form @ @code{x %*% A^@{-1@} %*% x} @
+The quadratic form
+@eqn{@strong{x' A^{-1} x},@ @code{x %*% A^@{-1@} %*% x} @ }
 which is used in multivariate computations, should be computed by something like
 @code{x %*% solve(A,x)}, rather than computing the inverse of @code{A}.
 
@@ -3452,12 +3456,13 @@ following to use it safely.
 
 Thus given a @math{n} by @math{1} vector @math{y} and an @math{n} by
 @math{p} matrix @math{X} then @math{X \ y} is defined as
-@ifinfo
-(X'X)^@{-@}X'y, where (X'X)^@{-@} is a generalized inverse of X'X.
-@end ifinfo
+@ifnottex
+(X'X)^@{-@}X'y, where (X'X)^@{-@}
+@end ifnottex
 @tex
-$(X'X)^{-}X'y$, where $(X'X)^{-}$ is a generalized inverse of $X'X$.
+$(X'X)^{-}X'y$, where $(X'X)^{-}$
 @end tex
+is a generalized inverse of @math{X'X}.
 
 @example
 > bslash <- function(X, y) @{
@@ -3638,10 +3643,10 @@ levels) and @code{varieties} (@code{v} levels).  If @math{R} and
 @emph{replications} and @emph{block size} matrices, respectively, and
 @math{N} is the @math{b} by @math{v} incidence matrix, then the
 efficiency factors are defined as the eigenvalues of the matrix
-@ifinfo
+@ifnottex
 E = I_v - R^@{-1/2@}N'K^@{-1@}NR^@{-1/2@} = I_v - A'A, where
 A = K^@{-1/2@}NR^@{-1/2@}
-@end ifinfo
+@end ifnottex
 @tex
 $$E = I_v - R^{-1/2}N'K^{-1}NR^{-1/2} = I_v - A'A,$$
 where $A = K^{-1/2}NR^{-1/2}$.
@@ -4036,12 +4041,12 @@ extractor functions.
 
 The template for a statistical model is a linear regression model with
 independent, homoscedastic errors
-@ifinfo
+@ifnottex
 @display
 y_i = sum_@{j=0@}^p beta_j x_@{ij@} + e_i, @ @ @ @ i = 1, @dots{} n,
 @end display
 where the e_i are NID(0, sigma^2)
-@end ifinfo
+@end ifnottex
 @tex
 $$ y_i = \sum_{j=0}^p \beta_j x_{ij} + e_i,
    \qquad e_i \sim {\rm NID}(0,\sigma^2),
@@ -4049,24 +4054,16 @@ $$ y_i = \sum_{j=0}^p \beta_j x_{ij} + e_i,
 $$
 @end tex
 In matrix terms this would be written
+@ifnottex
+    y = X @ beta + e @*
+@end ifnottex
 @tex
-$$ y = X \beta + e $$
+ $$ y = X \beta + e $$
 @end tex
 where the @math{y} is the response vector, @math{X} is the @emph{model
 matrix} or @emph{design matrix} and has columns
-@ifinfo
-x_0, x_1, @dots{}, x_p,
-@end ifinfo
-@tex
-$x_0, x_1, @dots{}, x_p$,
-@end tex
-the determining variables.  Very often
-@ifinfo
-x_0
-@end ifinfo
-@tex
-$x_0$
-@end tex
+@math{x_0, x_1, @dots{}, x_p},
+the determining variables.  Very often @math{x_0}
 will be a column of ones defining an @emph{intercept} term.
 
 @subsubheading Examples
@@ -4094,9 +4091,9 @@ Simple linear regression of @math{y} on @math{x} through the origin
 
 @item log(y) ~ x1 + x2
 Multiple regression of the transformed variable,
-@ifinfo
+@ifnottex
 log(y),
-@end ifinfo
+@end ifnottex
 @tex
 $\log(y)$,
 @end tex
@@ -4545,9 +4542,9 @@ assumptions:
 @itemize @bullet
 @item
 There is a response, @math{y}, of interest and stimulus variables
-@ifinfo
+@ifnottex
 x_1, x_2, @dots{},
-@end ifinfo
+@end ifnottex
 @tex
 $x_1$, $x_2$, @dots{},
 @end tex
@@ -4557,13 +4554,13 @@ whose values influence the distribution of the response.
 The stimulus variables influence the distribution of @math{y} through
 @emph{a single linear function, only}.  This linear function is called
 the @emph{linear predictor}, and is usually written
-@ifinfo
+@ifnottex
 @display
 eta = beta_1 x_1 + beta_2 x_2 + @dots{} + beta_p x_p,
 @end display
 hence x_i has no influence on the distribution of @math{y} if and only if
 beta_i is zero.
-@end ifinfo
+@end ifnottex
 @tex
 $$ \eta = \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p, $$
 hence $x_i$ has no influence on the distribution of @math{y} if and only
@@ -4572,7 +4569,7 @@ if $\beta_i=0$.
 
 @item
 The distribution of @math{y} is of the form
-@ifinfo
+@ifnottex
 @display
 f_Y(y; mu, phi)
   = exp((A/phi) * (y lambda(mu) - gamma(lambda(mu))) + tau(y, phi))
@@ -4581,7 +4578,7 @@ where phi is a @emph{scale parameter} (possibly known), and is constant
 for all observations, @math{A} represents a prior weight, assumed known
 but possibly varying with the observations, and $\mu$ is the mean of
 @math{y}.
-@end ifinfo
+@end ifnottex
 @tex
 $$
 f_Y(y;\mu,\varphi)
@@ -4597,13 +4594,13 @@ So it is assumed that the distribution of @math{y} is determined by its
 mean and possibly a scale parameter as well.
 
 @item
-@ifinfo
+@ifnottex
 The mean, mu, is a smooth invertible function of the linear predictor:
 @display
 mu = m(eta),    eta = m^@{-1@}(mu) = ell(mu)
 @end display
 and this inverse function, ell(), is called the @emph{link function}.
-@end ifinfo
+@end ifnottex
 @tex
 The mean, $\mu$, is a smooth invertible function of the linear predictor:
 $$ \mu = m(\eta),\qquad \eta = m^{-1}(\mu) = \ell(\mu) $$
@@ -4740,9 +4737,9 @@ which the chance of blindness for a male inhabitant is 50%.
 
 If @math{y} is the number of blind at age @math{x} and @math{n} the
 number tested, both models have the form
-@ifinfo
+@ifnottex
 y ~ B(n, F(beta_0 + beta_1 x))
-@end ifinfo
+@end ifnottex
 @tex
 $$ y \sim {\rm B}(n, F(\beta_0 + \beta_1 x)) $$
 @end tex
@@ -4752,9 +4749,9 @@ is the standard normal distribution function, and in the logit case,
 (the default),
 @eqn{F(z) = e^z/(1+e^z),F(z) = e^z/(1+e^z)}.
 In both cases the LD50 is
-@ifinfo
+@ifnottex
 LD50 = - beta_0/beta_1
-@end ifinfo
+@end ifnottex
 @tex
 $$ \hbox{LD50} = -\beta_0/\beta_1 $$
 @end tex
@@ -4852,24 +4849,24 @@ gaussian models with non-standard link functions or variance functions,
 incidentally.
 
 For example, consider fitting the non-linear regression
-@ifinfo
+@ifnottex
 y = theta_1 z_1 / (z_2 - theta_2) + e
-@end ifinfo
+@end ifnottex
 @tex
 $$ y = {\theta_1z_1 \over z_2 - \theta_2} + e $$
 @end tex
 which may be written alternatively as
-@ifinfo
+@ifnottex
 y = 1 / (beta_1 x_1 + beta_2 x_2) + e
-@end ifinfo
+@end ifnottex
 @tex
 $$ y = {1 \over \beta_1x_1 + \beta_2x_2} + e $$
 @end tex
 where
-@ifinfo
+@ifnottex
 x_1 = z_2/z_1, x_2 = -1/x_1, beta_1 = 1/theta_1, and beta_2 =
 theta_2/theta_1.
-@end ifinfo
+@end ifnottex
 @tex
 where $x_1 = z_2/z_1$, $x_2=-1/x_1$, $\beta_1=1/\theta_1$ and
 $\beta_2=\theta_2/\theta_1$.
@@ -5764,9 +5761,9 @@ regions.) Graphical parameters exist which control how these
 @item pch="+"
 Character to be used for plotting points.  The default varies with
 graphics drivers, but it is usually
-@ifinfo
+@ifnottex
 a circle.
-@end ifinfo
+@end ifnottex
 @tex
 `$\circ$'.
 @end tex
@@ -6296,23 +6293,13 @@ We now look at some more graphical features: contour and image plots.
 @item x <- seq(-pi, pi, len=50)
 @itemx y <- x
 @math{x} is a vector of 50 equally spaced values
-@ifinfo
-in the interval [-pi, pi].
-@end ifinfo
-@tex
-in $-\pi\leq x \leq \pi$.
-@end tex
+in @eqn{-\pi\leq x \leq \pi, the interval [-pi\, pi]}.
 @math{y} is the same.
 
 @item f <- outer(x, y, function(x, y) cos(y)/(1 + x^2))
 @math{f} is a square matrix, with rows and columns indexed by @math{x}
 and @math{y} respectively, of values of the function
-@ifinfo
-cos(y)/(1 + x^2).
-@end ifinfo
-@tex
-$\cos(y)/(1 + x^2)$.
-@end tex
+@eqn{\cos(y)/(1 + x^2),cos(y)/(1 + x^2)}.
 
 @item oldpar <- par(no.readonly = TRUE)
 @itemx par(pty="s")
