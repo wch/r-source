@@ -11,7 +11,7 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-OBJS = ansari.o d2x2xk.o fexact.o kendall.o ks.o prho.o swilk.o
+OBJS = ansari.o chisqsim.o d2x2xk.o fexact.o kendall.o ks.o prho.o swilk.o
 SHLIB = $(pkg).@SHLIB_EXT@
 
 ## FIXME:

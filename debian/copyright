@@ -74,8 +74,8 @@ src/unix/rotated.[ch]
 	Copyright (c) 1993 Alan Richardson
 
 
-src/appl/chisqsim.c
 src/appl/loglin.c
+src/library/ctest/src/chisqsim.c
 src/library/ctest/src/nscor.c
 src/library/ctest/src/prho.c
 src/library/ctest/src/swilk.c

@@ -46,11 +46,6 @@ void bincount(double *x, int *n, double *breaks, int *nb, int *count,
 /*unused*/
 void bincode2(double *, int *, double *, int *, int *, int *, int *);
 
-/* chisqsim.c: */
-void chisqsim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
-	      int *b, double *expected, int *observed, double *fact,
-	      int *jwork, double *results);
-
 /* chull.c -- comments in the source */
 void R_chull(int *n, double *x, int *m, int *in,
 	   int *ia, int *ib,

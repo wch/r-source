@@ -50,7 +50,7 @@ function(x, y = NULL, correct = TRUE, p = rep(1 / length(x), length(x)),
                       double(n + 1),
                       integer(nc),
                       results = double(B),
-                      PACKAGE = "base")
+                      PACKAGE = "ctest")
             STATISTIC <- sum((x - E) ^ 2 / E)
             PARAMETER <- NA
             PVAL <- sum(tmp$results >= STATISTIC) / B

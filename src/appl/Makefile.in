@@ -18,7 +18,7 @@ SOURCES_C = \
 	Rsock.c \
 	approx.c \
 	bakslv.c binning.c \
-	chisqsim.c chull.c cpoly.c cumsum.c \
+	chull.c cpoly.c cumsum.c \
 	fft.c fmin.c integrate.c\
 	lbfgsb.c loglin.c lowess.c \
 	machar.c maxcol.c massdist.c \
