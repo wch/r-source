@@ -5,7 +5,7 @@
   This function adds one or more straight lines through the current plot.
 }
 \synopsis{
-abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL, 
+abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
        coef = NULL, untf = FALSE, col = par("col"),
        lty = par("lty"), lwd = NULL, ...)
 }
@@ -18,7 +18,7 @@ abline(reg=, untf = FALSE, \dots)
 }
 \arguments{
   \item{a,b}{the intercept and slope.}
-  \item{untf}{logical.  See Details.}
+  \item{untf}{logical asking to \emph{untransform}.  See Details.}
   \item{h}{the y-value for a horizontal line.}
   \item{v}{the x-value for a vertical line.}
   \item{coef}{a vector of length two giving the intercept and slope.}
@@ -44,7 +44,7 @@ abline(reg=, untf = FALSE, \dots)
   If \code{untf} is true, and one or both axes are log-transformed, then
   a curve is drawn corresponding to a line in original coordinates,
   otherwise a line is drawn in the transformed coordinate system. The
-  \code{h} and \code{v} parameters alway refer to original coordinates.
+  \code{h} and \code{v} parameters always refer to original coordinates.
 
   The graphical parameters \code{col} and \code{lty} can be specified as
   arguments to \code{abline}; see \code{par} for details.
