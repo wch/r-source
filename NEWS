@@ -15,6 +15,9 @@ NEW FEATURES
 	to specify the shared library to be used for the symbol. See
 	?Foreign. Package writers are encouraged to use this.
 
+    o	On startup (unless --no-environ), first .Renviron is looked for in
+	the current directory, and then in $HOME/ (= ~/ ).
+
     o	New options(error.halt = FALSE) (default is TRUE) allows
 	continuation after an error in batch processing.
 
