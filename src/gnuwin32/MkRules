@@ -1,4 +1,5 @@
 #-*- Makefile -*-
+## This files contains tabs: make sure your editor leaves them unchanged.
 
 ## ===== configuration macros for building packages or R  ===============
 
