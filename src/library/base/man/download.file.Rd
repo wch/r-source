@@ -95,7 +95,11 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
   \code{"ftp_proxy"} use the form \code{"ftp://proxy.dom.com:3128/"}
   where the default port is \code{21}.  These environment variables
   must be set before the download code is first used: they cannot be
-  altered later by calling \code{Sys.putenv}.  
+  altered later by calling \code{Sys.putenv}.
+
+  Usernames and passwords can be set for HTTP transfers via both of
+  \code{"http_proxy_user"} and \code{"http_proxy_password"}.  Only the
+  basic HTTP/1.0 authentication scheme is supported.
 }
 \seealso{
   \code{\link{options}} to set the \code{timeout} and

@@ -151,6 +151,9 @@ NEW FEATURES
 
      o	ccf() now coerces its x and y arguments to class "ts".
 
+     o	download.file() can now use HTTP proxies which require basic
+	username/password authentication.
+
 
 INSTALLATION CHANGES
 
