@@ -7,7 +7,8 @@ if(!capabilities()["http/ftp"]) {
     q()
 }
 
-if(is.null(nsl("cran.r-project.org"))) q()
+if(.Platform$OS.type == "unix" &&
+   is.null(nsl("cran.r-project.org"))) q()
 
 # test do_download.
 CRAN.packages()[, 1]

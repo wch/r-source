@@ -100,7 +100,10 @@ test-all-extras:
 
 test-Internet:
 	@echo "running tests of Internet and socket functions"
+	@$(RM) internet.Rout
 	@$(MAKE) -f Makefile.win test-Internet-run RVAL_IF_DIFF=0
+	$(R) --internet2 --vanilla < internet.R > internet.Rout2
+	diff internet.Rout internet.Rout2
 
 test-Internet-run: $(test-out-internet)
 
