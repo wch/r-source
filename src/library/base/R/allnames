@@ -1,0 +1,5 @@
+all.names <- function(expr, functions = T, max.names = 200, unique = F)
+	.Internal(all.names(expr, functions, max.names, unique))
+ 
+all.vars <- function(expr, functions = F, max.names = 200, unique = T)
+	.Internal(all.names(expr, functions, max.names, unique))
