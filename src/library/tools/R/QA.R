@@ -1154,8 +1154,8 @@ function(x, ...)
 {
     for(i in seq(along = x)) {
         writeLines(strwrap(paste("found T/F in",
-                                 paste(deparse(x[[i]]), collapse = ""),
-                                 exdent = 4)))
+                                 paste(deparse(x[[i]]), collapse = "")),
+                           exdent = 4))
     }
     invisible(x)
 }
