@@ -54,6 +54,14 @@ Subject: Accuracy Bug 1228
 From: "David Heiser" <daheiser@gvn.net>
 Date: Mon, 5 Apr 2004 19:23:35 -0700
 ..This is really bug PR#1228 (in category 'Accuracy')
+* PR# 6756 *
+Subject: pcauchy precision
+From: terra@gnome.org
+Date: Sun, 11 Apr 2004 19:03:31 +0200 (CEST)
+* PR# 6757 *
+Subject: pbinom accuracy
+From: terra@gnome.org
+Date: Mon, 12 Apr 2004 17:20:23 +0200 (CEST)
 
 Directory:  Add-ons
 
@@ -587,7 +595,10 @@ Date: Fri, 27 Feb 2004 11:27:18 +0000
 
 Directory:  Macintosh
 
-none
+* PR# 6749 *
+Subject: Macintosh -- changing working directory forces computer to restart
+From: paolillo@indiana.edu
+Date: Thu,  8 Apr 2004 21:24:56 +0200 (CEST)
 
 Directory:  Misc
 
@@ -817,43 +828,7 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6747 *
-Subject: Results of your commands
-From: SYMPA <sympa@ens.fr>
-Date: Wed, 7 Apr 2004 12:34:31 +0200 (CEST)
-* PR# 6748 *
-Subject: Mailman results for Cottage
-From: cottage-request@eg.e-cell.org
-Date: Thu, 08 Apr 2004 12:00:02 +0900
-* PR# 6749 *
-Subject: Macintosh -- changing working directory forces computer to restart
-From: paolillo@indiana.edu
-Date: Thu,  8 Apr 2004 21:24:56 +0200 (CEST)
 * PR# 6750 *
 Subject: Incorrect handling of NA's in cor()
 From: msa@biostat.mgh.harvard.edu
 Date: Fri,  9 Apr 2004 18:45:40 +0200 (CEST)
-* PR# 6751 *
-Subject: Udgllgij powerful stuff. i approve.
-From: "andrew beaudoin" <micahmcmorrisy@email2me.net>
-Date: Sat, 10 Apr 2004 02:12:08 -0800
-* PR# 6752 *
-Subject: We are unable to process your service request - MAR  (KMM48693904V2673L0KM)
-From: "announcements-account@paypal.com" <announcements-account@paypal.com>
-Date: Sat, 10 Apr 2004 08:11:46 -0500
-* PR# 6753 *
-Subject: Valium, Cialis, Phentermine, Xanax, Soma  - All here
-From: "Brad Schultz" <mfokwkvuynted@xtra.co.nz>
-Date: Sat, 10 Apr 2004 13:26:59 -0400
-* PR# 6754 *
-Subject: Re: Sat, 10 Apr 2004 13:07:38 -0500
-From: "My SW Software" <TX@fepg.net>
-Date: Sat, 10 Apr 2004 13:07:38 -0500
-* PR# 6755 *
-Subject: anyhow   
-From: "Mel Doty" <Odu@bellsouth.net>
-Date: Sun, 11 Apr 2004 12:25:58 +0200
-* PR# 6756 *
-Subject: pcauchy precision
-From: terra@gnome.org
-Date: Sun, 11 Apr 2004 19:03:31 +0200 (CEST)
