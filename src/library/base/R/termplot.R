@@ -82,7 +82,7 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
 	    ff <- mf[,nmt[i]]
 	    ll <- levels(ff)
 	    xlims <- range(seq(along=ll)) + c(-.5, .5)
-            xx <- codes(ff) ##need if rug or partial
+            xx <- as.numeric(ff) ##need if rug or partial
 	    if(rug) {
 		xlims[1] <- xlims[1]-0.07*diff(xlims)
 		xlims[2] <- xlims[2]+0.03*diff(xlims)

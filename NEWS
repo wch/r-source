@@ -81,6 +81,10 @@ BUG FIXES
 	create dimnames of the form list(NULL, NULL) rather than
 	remove the dimnames attribute.
 
+    o	termplot() gave incorrect answers with rug=TRUE or
+	partial=TRUE for factors whose levels were not in
+	lexicographical order.
+
 
 
 		CHANGES IN R VERSION 1.7.0
