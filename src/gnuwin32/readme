@@ -25,12 +25,6 @@ rw0641b.zip.
 
 The source-change file rw0641s.zip is unpacked inside rw0641.
 
-An executable of INFO-ZIP's unzip is supplied with this
-distribution. If you already have a copy installed you may if you wish
-delete the RHOME\unzip directory and edit RHOME\etc\Rprofile to set
-
-	options(unzip="unzip.exe")
-
 
 Usage
 =====
@@ -147,11 +141,6 @@ file .Rprofile. In particular:
   a single window or a different window for each topic shown 
   (configurable in etc\Rconsole). Other possibilities we have 
   used are "notepad" and "pfe32 /v".
-
-- The location of the unzip program is set by options(unzip=). If you
-  have unzip installed on your system you can set this to the path to
-  unzip (or just options(unzip="unzip.exe") if this is on your path),
-  and delete the RHOME\unzip directory.
 
 - If you wish to use HTML help where this is available, set
   options(htmlhelp=T). If you prefer to use Windows help files where these
@@ -275,11 +264,12 @@ and run
 
 	make BUILD=EGCS or CYGWIN
 
-Note: the file rw0641\unzip\unzip.exe is not in the source distribution,
-nor are the sources (it the standard Info-Zip unzip 5.40). You will need to
-copy it from a binary distribution.
+Note: the file rw0641\unzip\unzip32.dll is not in the source
+distribution, nor are the sources (it is the standard Info-Zip unzip
+5.40, built with MSVC++4.2). You will need to copy it from a binary
+distribution.
 
-Note2: we are aware that because of limitations in line length or in the
+Note 2: we are aware that because of limitations in line length or in the
 shell used that the Makefiles do not work unchanged on all the possible
 combinations of tools, compilers and OSes.  We use the Cygwin make and 
 shell under NT, and cross-building (see below), and with small changes the 
@@ -292,7 +282,8 @@ You will need i386-mingw32 cross-compilers installed: see
 
 http://www.xraylith.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
 
-and ensure that these are in your path. You also need Perl and nroff.
+and ensure that these are in your path. You also need Perl and nroff
+installed.
 
 You also need: the R source (R-0.64.0.tgz) and rw0641s.zip.
 

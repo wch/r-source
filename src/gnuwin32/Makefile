@@ -3,7 +3,7 @@ include MkRules
 HELP=YES
 
 PACKAGES=base eda lqs modreg mva stepfun
-RPREFIX=prerw0641
+RPREFIX=rw0641-3
 
 ifdef DEBUG
  OPTFLAGS=-g -O2
@@ -29,7 +29,7 @@ EXTRALIBS=rx.a ga.a gl.a xdr.a em.a
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
-all: rbuild rdemo rpackage
+all: rbuild rdemo rpackage rinstaller
 
 CFLAGS=$(OPTFLAGS) -I../include
 FFLAGS=$(OPTFLAGS)
@@ -44,6 +44,9 @@ rbuild: fixfiles rlibs ../../bin/R.dll libR.a ../include/globalvar.h \
 	front-ends COPYRIGHTS
 
 rpackage: $(PKGS)
+
+rinstaller:
+	$(MAKE) -C installer PREFIX=$(PREFIX)
 
 rdemo:  libR.a
 	make -C ../../demos/dynload -f ../../src/gnuwin32/MkDyndemo
@@ -62,6 +65,7 @@ fixfiles:
 	$(MKDIR) -p ../../bin 
 	$(MAKE) -C ./fixed
 	$(CP) -pr unzip ../..
+	$(RM) ../../unzip/*.h
 
 R.dll: R.a $(EXTRALIBS)
 
@@ -155,7 +159,7 @@ bindist:
 	$(CP) -pr ../../bin ../../afm ../../demos  ../../unzip $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
-	$(RM) -rf $(RPREFIX)/demos/dynload/*.o
+	$(RM) $(RPREFIX)/demos/dynload/*.o
 	$(MKDIR) $(RPREFIX)/etc
 	$(CP) -p ../../etc/Rprofile $(RPREFIX)/etc/Rprofile
 	$(CP) -p ../../etc/Rconsole $(RPREFIX)/etc/Rconsole
@@ -163,22 +167,25 @@ bindist:
 	$(CP) -p ../../etc/rgb.txt $(RPREFIX)/etc/rgb.txt
 	$(MKDIR) $(RPREFIX)/doc
 	$(CP) -pr ../../doc/html $(RPREFIX)/doc
-	$(CP) -p ../../COPYING ../../COPYRIGHTS  ../../FAQ ../../NEWS $(RPREFIX)
+	$(CP) -p ../../COPYING COPYRIGHTS ../../FAQ ../../NEWS \
+		../../Y2K $(RPREFIX)
 	$(CP) -p readme $(RPREFIX)/README
 	$(CP) -p rw-faq $(RPREFIX)/rw-faq
 	$(CP) -p Announce $(RPREFIX)/Announce
 	$(CP) -p CHANGES $(RPREFIX)/CHANGES
-	$(CP) -p  COPYRIGHTS.win $(RPREFIX)/
+	zip -l docs.zip $(RPREFIX)/*
+	unzip -o docs.zip
+	$(RM) docs.zip
 	$(RM) -rf $(RPREFIX)b.zip $(RPREFIX)h.zip $(RPREFIX)w.zip $(RPREFIX)l.zip
 	$(RM) anindex.zip
-	zip -mr anindex.zip $(RPREFIX)/library/*/help/AnIndex $(RPREFIX)/library/*/help/00Titles
-	zip -mr $(RPREFIX)h.zip $(RPREFIX)/library/*/help \
+	zip -mrX anindex.zip $(RPREFIX)/library/*/help/AnIndex $(RPREFIX)/library/*/help/00Titles
+	zip -mrX $(RPREFIX)h.zip $(RPREFIX)/library/*/help \
 		$(RPREFIX)/library/*/R-ex
 	unzip anindex.zip
 	$(RM) anindex.zip
-	zip -rm $(RPREFIX)w.zip $(RPREFIX)/doc/html $(RPREFIX)/library/*/html
-	zip -rm $(RPREFIX)l.zip $(RPREFIX)/library/*/latex
-	zip -r $(RPREFIX)b.zip $(RPREFIX)
+	zip -rmX $(RPREFIX)w.zip $(RPREFIX)/doc/html $(RPREFIX)/library/*/html
+	zip -rmX $(RPREFIX)l.zip $(RPREFIX)/library/*/latex
+	zip -rX $(RPREFIX)b.zip $(RPREFIX)
 	$(RM) -rf $(RPREFIX)
 
 
@@ -192,7 +199,7 @@ srcdist:
 	$(MAKE) -C ../src/gnuwin32 cleanwin
 	mv ../src .
 	$(RM) $(RPREFIX)s.zip
-	zip -r  $(RPREFIX)s.zip src
+	zip -rX  $(RPREFIX)s.zip src
 	$(RM) -r src
 
 
@@ -220,7 +227,8 @@ distribution: bindist srcdist packagedist
 
 # Dependencies
 console.o:		console.h rui.h graphapp/ga.h graphapp/stdimg.h
-devga.o:  		console.h rui.h devga.h opt.h graphapp/ga.h graphapp/stdimg.h
+devga.o:  		console.h rui.h devga.h opt.h graphapp/ga.h \
+			graphapp/stdimg.h
 dynload.o: 		../include/FFDecl.h ../include/FFTab.h
 edit.o: 		run.h
 extra.o: 		graphapp/ga.h
@@ -237,7 +245,8 @@ system.o: 		devga.h run.h console.h rui.h graphapp/ga.h \
 ../main/par.o:		../include/Graphics.h
 ../main/plot.o:		../include/Graphics.h
 
-../main/arithmetic.o:	../include/Mathlib.h ../include/Arith.h
+../main/arithmetic.o:	../include/Mathlib.h ../include/Arith.h \
+			../include/Platform.h
 ../main/format.o:	../include/Mathlib.h ../include/Arith.h
 ../main/random.o:	../include/Mathlib.h ../include/Arith.h ../include/Random.h
 
@@ -250,6 +259,10 @@ system.o: 		devga.h run.h console.h rui.h graphapp/ga.h \
 ../main/printvector.o:	../include/Print.h
 
 ../main/version.o:	../include/Platform.h
+
+../nmath/snorm.o:	../include/Random.h
+../nmath/sunif.o:	../include/Random.h
+
 
 ../unix/devPS.o:        ../include/Graphics.h ../include/Defn.h
 ../unix/devPicTeX.o:    ../include/Graphics.h ../include/Defn.h

@@ -82,17 +82,24 @@ shell <- function(cmd, shell, flag="/c", intern=FALSE,
 
 zip.file.extract <- function(file, zipname="R.zip")
 {
-    unzip <- options()$unzip
-    if(!length(unzip)) return(file)
     ofile <- gsub("\\\\", "/", file)
     path <- sub("[^/]*$","", ofile)
     topic <- substr(ofile, nchar(path)+1, 1000)
     if(file.exists(file.path(path, zipname))) {
         tempdir <- sub("[^\\]*$","", tempfile())
-        if(!system(paste(unzip, "-oq",
-                         file.path(path, zipname), topic,
-                         "-d", tempdir), show = FALSE, invisible = TRUE))
-            file <- paste(tempdir,  topic, sep="")
+        if((unzip <- options()$unzip) != "internal") {
+            if(!system(paste(unzip, "-oq",
+                             file.path(path, zipname), topic,
+                             "-d", tempdir), show = FALSE, invisible = TRUE))
+                file <- paste(tempdir,  topic, sep="")
+        } else {
+            rc <- .Internal(int.unzip(file.path(path, zipname), topic, tempdir))
+            if (rc == 10)
+                warning(paste(R.home(),
+                              "unzip\\unzip32.dll cannot be loaded", sep="\\"))
+            if (rc == 0)
+                file <- paste(tempdir, topic, sep="")
+        }
     }
     file
 }
