@@ -34,6 +34,9 @@ other than their default, you can do that by either editing the file
 	VAR="..." ./configure              # Bourne shell compatibles
 	(setenv VAR "..."; ./configure)    # C shell
 
+One common variable to change is R_PAPERSIZE, which defaults to a4, not
+letter.
+
 Using
 
 	make docs
