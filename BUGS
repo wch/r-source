@@ -33,14 +33,14 @@ Date: Wed, 26 Dec 2001 13:03:31 +0100
 Subject: qgamma precision
 From: terra@diku.dk
 Date: Fri, 25 Oct 2002 16:50:17 +0200 (MET DST)
+..good idea; improvement has to work for both lower and upper tail probs.
 * PR# 2894 *
 Subject: qbeta hang
 From: terra@gnome.org
 Date: Thu, 1 May 2003 22:43:59 +0200 (MET DST)
-* PR# 2991 *
-Subject: qt(p,df) discontinuous in p for df in 1.01->1.7
-From: jens.lund@nordea.com
-Date: Tue, 13 May 2003 13:29:14 +0200 (MET DST)
+..R 1.7.1 incorporates the two suggestions of the 2nd followup:
+..  r = sqrt(-2 * log (a)) and ...(log1p(-a) + log (qq))...
+..
 
 Directory:  Add-ons
 
@@ -704,71 +704,7 @@ Date: Mon, 21 Apr 2003 17:01:53 -0400
 Subject: inconsistent handling of NA lty
 From: paul@stat.auckland.ac.nz
 Date: Tue, 10 Jun 2003 01:23:42 +0200 (MET DST)
-* PR# 3244 *
-Subject: Fwd:Succeed On eBay - Free Info ubymdvfqh cj
-From: "Larry Baldwin" <loving_u143@twinstarsmail.com>
-Date: Thu, 12 Jun 03 20:37:13 GMT
-* PR# 3245 *
-Subject: Brand New! Positioning Now! prh p yb npz hdyjm
-From: "Florence Inman" <cgcf1wn2@boxfrog.com>
-Date: Fri, 13 Jun 03 15:22:44 GMT
-* PR# 3246 *
-Subject: Best Deals on Mortgages!
-From: "Brooks Katz" <0005644986@volkswagen.de>
-Date: Thu, 12 Jun 03 23:55:55 GMT
-* PR# 3247 *
-Subject: INVESTMENT PROPOSAL
-From: DAVID CHANGA <davidchanga@netscape.net>
-Date: Fri, 13 Jun 2003 13:48:17 +0200
-* PR# 3248 *
-Subject: Re: Great!  zvcilyhnjetusmlo 
-From: "Sal Bruno" <c8ny2nkro@earthlink.com>
-Date: Thu, 12 Jun 03 20:16:07 GMT
 * PR# 3249 *
 Subject: lapack.dll can't be found by excel
 From: dwarner@skarven.net
 Date: Fri, 13 Jun 2003 18:33:20 +0200 (MET DST)
-* PR# 3250 *
-Subject: Free Play, and what you win, you keep
-From: "Mun Schmerge" <MunSchmerge@ananzi.co.za>
-Date: 13 Jun 2003 14:59:33 -0700
-* PR# 3251 *
-Subject: Tired Of Competing With Your Referrals For Referrals ?
-From: "spartacus@batuta.net" <spartacus@batuta.net>
-Date: Fri, 13 Jun 2003 18:10:22 -0400
-* PR# 3252 *
-Subject: r-bugs_Loans_Purchase_New_Home_45
-From: rjnr@smet.nasw.mhi.co.jp
-Date: Fri, 13 Jun 2003 23:28:20 +0100
-* PR# 3253 *
-Subject: The page isnt opening
-From: "Tammie Barnett" <t.barnettvg@mospatr.msk.ru>
-Date: Sat, 14 Jun 2003 03:21:13 +0000
-* PR# 3254 *
-Subject: Fwd:Online Auction Report n eapwuhaduseocrha
-From: "Althea Bonds" <tellme@keromail.com>
-Date: Sat, 14 Jun 03 10:12:53 GMT
-* PR# 3255 *
-Subject: Business/Financial Representative
-From: Kani Gamba <kanigamba@freemail.nl>
-Date: Sat, 14 Jun 2003 18:27:16 +0200
-* PR# 3256 *
-Subject: Fwd:Succeed On eBay - Free Info k fnk kicsgd
-From: "Wesley Kiser" <tarsier99@ranmamail.com>
-Date: Sat, 14 Jun 03 16:34:41 GMT
-* PR# 3257 *
-Subject: Re:How to look 20 again
-From: "Lou Crain" <libaotke@msn.com>
-Date: Sun, 15 Jun 03 14:12:18 GMT
-* PR# 3258 *
-Subject: >#Government Loan Program### n y ks
-From: "Daniel" <GovtGrants30975@earthlink.net>
-Date: Sun, 15 Jun 03 19:59:01 GMT
-* PR# 3259 *
-Subject: Hey There - check this out  glv  
-From: "Stacie Cannon" <jdj0wuj7il@earthlink.com>
-Date: Sun, 15 Jun 03 00:08:01 GMT
-* PR# 3260 *
-Subject: Re:Huge Profit on eBay imv
-From: "Mable Drew" <ulyses93@fish.co.jp>
-Date: Sun, 15 Jun 03 05:54:32 GMT
