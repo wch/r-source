@@ -2597,7 +2597,7 @@ static void PS_NewPage(R_GE_gcontext *gc,
 }
 
 #ifdef Win32
-int   runcmd(char *cmd, int wait, int visible, char *finput);
+int   Rf_runcmd(char *cmd, int wait, int visible, char *finput);
 #endif
 static void PostScriptClose(NewDevDesc *dd)
 {
@@ -2620,7 +2620,7 @@ static void PostScriptClose(NewDevDesc *dd)
 	    err = R_system(buff);
 #endif
 #ifdef Win32
-	    err = runcmd(buff, 0, 0, NULL);
+	    err = Rf_runcmd(buff, 0, 0, NULL);
 #endif
 	    if (err)
 		warning("error from postscript() in running:\n    %s", buff);
