@@ -713,10 +713,8 @@ SEXP do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
    methods code is automatically included, the pointer will not be
    needed 
 */
-
-typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP);
-
 R_stdGen_ptr_t R_standardGeneric_ptr = 0;
+
 
 SEXP do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
 {

@@ -43,7 +43,7 @@ static SEXP R_short_skeletons, R_empty_skeletons;
 static SEXP f_x_i_skeleton, fgets_x_i_skeleton, f_x_skeleton, fgets_x_skeleton;
 
 
-/* from main/objects.c */
+/* from Defn.h */
 typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP);
 
 extern R_stdGen_ptr_t R_standardGeneric_ptr;

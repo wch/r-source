@@ -463,6 +463,12 @@ extern char*	R_GUIType	INI_as("unknown");
 #endif
 #undef INI_as
 
+/* Pointer for the dispatch utilitiy in package methods  */
+typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP);
+
+extern R_stdGen_ptr_t R_standardGeneric_ptr;
+
+
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
