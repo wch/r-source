@@ -259,4 +259,12 @@ none
 
 Directory:  incoming
 
-none
+* PR# 216 *
+Subject: Bug in "[.ts" for multivariate ts {Problem with plot.ts, "["}
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 2 Jul 1999 18:45:20 +0200
+* PR# 217 *
+Subject: RE: Bug in "[.ts" for multivariate ts {Problem with plot.ts, "["
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Fri, 02 Jul 1999 18:21:37 +0200 (CEST)
+Date: 02-Jul-99
