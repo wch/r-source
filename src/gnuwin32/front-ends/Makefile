@@ -32,7 +32,11 @@ all: ../../../bin/Rgui.exe ../../../bin/Rterm.exe \
 	$(CP) $^ $@
 
 graphappmain.o: ../graphapp/graphappmain.c
+ifdef LEA_MALLOC
+	$(CC) -c -o $@ -I../graphapp $(CFLAGS) -DLEA_MALLOC $^
+else
 	$(CC) -c -o $@ -I../graphapp $(CFLAGS) $^
+endif
 
 rgui-CFLAGS=-DWin32
 rterm-CFLAGS=-DWin32
