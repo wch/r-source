@@ -28,8 +28,8 @@ reshapeLong(x,jvars,  ilev = row.names(x),
 
   \code{reshape*}, which were experimental, are replace by
   \code{\link{reshape}}. This has a different syntax and allows multiple
-  time-varying variables.
-  
+  time-varying variables.  See \code{\link{reshapeLong-deprecated}} and
+  \code{\link{reshapeWide-deprecated}} for the earlier syntax.
 }
 \seealso{\code{\link{Defunct}}}
 \keyword{documentation}
