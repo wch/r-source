@@ -533,6 +533,10 @@ Date: Mon, 15 Apr 2002 10:13:36 +0000
 Subject: hitting ^C breaks readline history
 From: Cyril Humbert <humbertc@univ-mlv.fr>
 Date: Tue, 28 May 2002 12:07:07 +0200 (MET DST)
+* PR# 1932 *
+Subject: R 1.5.1 not working with Windows NT on Virtual PC 4
+From: alex_dacosta@yahoo.fr
+Date: Fri, 23 Aug 2002 09:09:52 +0200 (MET DST)
 
 Directory:  TooMuchAtOnce
 
@@ -573,11 +577,15 @@ Date: Tue, 16 Jul 2002 16:59:22 -0400
 Subject: Re: R-1.5.1 (X11/Darwin), Mac OS 10.1.5
 From: Lincoln Davis <ld-temp-qt3i@pobox.com>
 Date: Wed, 21 Aug 2002 19:58:01 -0700
-* PR# 1929 *
-Subject: How to use R-library in C language?
-From: "Been" <u8826801@stat.nctu.edu.tw>
-Date: Fri, 23 Aug 2002 01:34:58 +0800
-* PR# 1930 *
-Subject: aov bug?
-From: <iwhite@staffmail.ed.ac.uk>
-Date: Thu, 22 Aug 2002 20:45:17 +0100 (BST)
+* PR# 1933 *
+Subject: dev2eps() prints ticks with wrong length!
+From: Timur Elzhov <Timur.Elzhov@jinr.ru>
+Date: Fri, 23 Aug 2002 17:22:15 +0400
+* PR# 1934 *
+Subject: try-error in batch and interactive mode 
+From: Jun Yan <jyan@stat.wisc.edu>
+Date: Fri, 23 Aug 2002 11:39:19 -0500 (CDT)
+* PR# 1935 *
+Subject: (±¤°?)?¶????º?¾? ?©??1??-???????? ??????´??ý-
+From: bujakorea <bujakrea@lycos.com>
+Date: Sat, 24 Aug 2002 05:45:06 +0900
