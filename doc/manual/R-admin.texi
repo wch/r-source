@@ -63,15 +63,15 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Obtaining R::                 
-* Installing R under Unix::     
-* Installing R under Windows::  
-* Add-on packages::             
-* Essential and useful other programs::  
-* Configuration on Unix::       
-* New platforms::               
-* Function and variable index::  
-* Concept index::               
+* Obtaining R::
+* Installing R under Unix::
+* Installing R under Windows::
+* Add-on packages::
+* Essential and useful other programs::
+* Configuration on Unix::
+* New platforms::
+* Function and variable index::
+* Concept index::
 @end menu
 
 @node Obtaining R, Installing R under Unix, Top, Top
@@ -84,8 +84,8 @@ Sources, binaries and documentation for @R{} can be obtained via
 @acronym{CRAN}.
 
 @menu
-* Getting and unpacking the sources::  
-* Using rsync::                 
+* Getting and unpacking the sources::
+* Using rsync::
 @end menu
 
 @node Getting and unpacking the sources, Using rsync, Obtaining R, Obtaining R
@@ -182,9 +182,9 @@ for current details.  These are installed in platform-specific ways.  So
 for the rest of this chapter we consider only building from the sources.
 
 @menu
-* Simple compilation::          
-* Making the manuals::          
-* Installation::                
+* Simple compilation::
+* Making the manuals::
+* Installation::
 @end menu
 
 @node Simple compilation, Making the manuals, Installing R under Unix, Installing R under Unix
@@ -419,7 +419,7 @@ See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
 @acronym{FAQ}} for more details.
 
 @menu
-* Building from source::        
+* Building from source::
 @end menu
 
 @node Building from source,  , Installing R under Windows, Installing R under Windows
@@ -453,9 +453,9 @@ cross-compile, see @file{src/gnuwin32/INSTALL}.
 @cindex Packages
 
 @menu
-* Installing packages::         
-* Updating packages::           
-* Removing packages::           
+* Installing packages::
+* Updating packages::
+* Removing packages::
 @end menu
 
 This chapter applies to Unix-like and Windows versions of @R{}.
@@ -471,11 +471,11 @@ setting the environment variable @env{R_LIBS} or using the @R{} function
 @section Installing packages
 @cindex Packages, installing
 
-Packages may be distributed in source form or compiled binary form. 
+Packages may be distributed in source form or compiled binary form.
 Installing source packages requires that compilers and tools
-(including Perl 5.004 or later) be installed.  Binary packages 
-are platform specific and generally need 
-no special tools to install, but see the documentation for 
+(including Perl 5.004 or later) be installed.  Binary packages
+are platform specific and generally need
+no special tools to install, but see the documentation for
 your platform for details.
 
 Note that you need to specify implicitly or explicitly the library to
@@ -607,8 +607,8 @@ extension @samp{-devel} or @samp{-dev}: you need both versions
 installed.
 
 @menu
-* Essential programs::          
-* Useful libraries and programs::  
+* Essential programs::
+* Useful libraries and programs::
 @end menu
 
 @node Essential programs, Useful libraries and programs, Essential and useful other programs, Essential and useful other programs
@@ -655,8 +655,8 @@ compiled in.  As the latter suffice and are tested with @R{} you should
 not need to change this.
 
 @menu
-* Tcl/Tk::                      
-* Linear algebra::              
+* Tcl/Tk::
+* Linear algebra::
 @end menu
 
 @node Tcl/Tk, Linear algebra, Useful libraries and programs, Useful libraries and programs
@@ -796,13 +796,13 @@ So if @R{} is re-built after ATLAS is installed, then packages such as
 @appendix Configuration on Unix
 
 @menu
-* Configuration options::       
-* Configuration variables::     
-* Using make::                  
-* Using FORTRAN::               
-* Compile and load flags::      
-* Building the GNOME interface::  
-* Platform notes::              
+* Configuration options::
+* Configuration variables::
+* Using make::
+* Using FORTRAN::
+* Compile and load flags::
+* Building the GNOME interface::
+* Platform notes::
 @end menu
 
 @node Configuration options, Configuration variables, Configuration on Unix, Configuration on Unix
@@ -1098,14 +1098,14 @@ of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
 @menu
-* Linux::                       
-* MacOS X::                     
-* Solaris::                     
-* HP-UX::                       
-* IRIX::                        
-* Alpha/OSF1::                  
-* Alpha/FreeBSD::               
-* AIX::                         
+* Linux::
+* MacOS X::
+* Solaris::
+* HP-UX::
+* IRIX::
+* Alpha/OSF1::
+* Alpha/FreeBSD::
+* AIX::
 @end menu
 
 @node Linux, MacOS X, Platform notes, Platform notes
@@ -1160,7 +1160,7 @@ fink install g77
 
 @cindex BLAS library
 @cindex LAPACK library
-The @code{vecLib} library of MacOS >= 10.2.2 can be used @emph{via} the 
+The @code{vecLib} library of MacOS >= 10.2.2 can be used @emph{via} the
 configuration options
 @smallexample
 --with-blas="-framework vecLib" --with-lapack
@@ -1277,7 +1277,7 @@ practice this seems to give little problem for 32-bit builds.
 For a 64-bit build, 64-bit libraries must be used.  As the configuration
 process by default sets @code{LDFLAGS} to @samp{-L/usr/local/lib},
 you may need to set it to avoid finding 32-bit addons (as in the
-@command{gcc -m64} example above).  It is possible to build Tcl/Tk as 
+@command{gcc -m64} example above).  It is possible to build Tcl/Tk as
 64-bit libraries with the configure option @command{--enable-64bit}, but
 only with the Forte compiler (and not with @command{gcc}) as of Tcl/Tk 8.4.5.
 
@@ -1297,7 +1297,7 @@ independent code (@acronym{PIC}).  This will result in @command{make}
 failing with a linker error similar to
 
 @smallexample
-ld: CODE_ONE_SYM fixup to non-code subspace in file foo.o - 
+ld: CODE_ONE_SYM fixup to non-code subspace in file foo.o -
 shared library must be position independent. Use +z or +Z to recompile.
 @end smallexample
 
@@ -1444,8 +1444,8 @@ note that linker flags must be escaped using @samp{-Wl,} if
 @command{gcc} is used for linking: use @samp{MAIN_LDFLAGS="-Wl,brtl"}
 and @samp{SHLIB_LDFLAGS="-Wl,-G"} in this case.
 
-Harald Servat Gelabert <harald@@cepba.upc.es> reported success building
-@R{} 1.7.0 under AIX 5.1 with
+Harald Servat Gelabert <harald at cepba dot upc dot es> reported
+success building @R{} 1.7.0 under AIX 5.1 with
 
 @smallexample
 CC=xlc
