@@ -5809,13 +5809,13 @@ void killDevice(int devNum)
 
 void KillAllDevices(void)
 {
-  /* don't try to close or remove the null device ! */
-  while (R_NumDevices > 1)
-    killDevice(R_CurrentDevice);
-  /* FIXME: There should really be a formal graphics finaliser
-   * but this is a good proxy for now.
-   */
-  GEunregisterSystem(baseRegisterIndex);
+    /* don't try to close or remove the null device ! */
+    while (R_NumDevices > 1)
+	killDevice(R_CurrentDevice);
+    /* FIXME: There should really be a formal graphics finaliser
+     * but this is a good proxy for now.
+     */
+    GEunregisterSystem(baseRegisterIndex);
 }
 
 

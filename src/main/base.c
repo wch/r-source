@@ -6,7 +6,7 @@
 #include <Graphics.h>
 #include <Rdevices.h>
 
-int baseRegisterIndex;
+int baseRegisterIndex = -1;
 
 SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
     GEDevDesc *curdd;

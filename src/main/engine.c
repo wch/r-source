@@ -199,6 +199,9 @@ void GEunregisterSystem(int registerIndex)
      * in graphics.c
      */
     DevDesc *dd;
+
+    /* safety check if called before Ginit() */
+    if(registerIndex < 0) return;
     if (numGraphicsSystems == 0)
 	error("No graphics system to unregister");
     /* Run through the existing devices and remove the information
