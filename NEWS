@@ -358,6 +358,11 @@ PACKAGE INSTALLATION CHANGES
 	system datasets to be lazy-loaded into the namespace/package
 	environment.
 
+    o	The packages listed in 'Depends' are now loaded before a package
+	is loaded (or its image is saved or it is prepared for lazy
+	loading).  This means that almost all uses of R_PROFILE.R and
+	install.R are now unnecessary.
+
 
 BUG FIXES
 

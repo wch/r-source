@@ -583,7 +583,7 @@ do_install_source () {
     code_file="${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
     rda_file="${R_PACKAGE_DIR}/R/all.rda"
     if test -f NAMESPACE; then
-      code_cmd="echo saveNamespaceImage(\"${pkg_name}\", \"${rda_file}\", \"${lib}\")"
+      code_cmd="echo .getRequiredPackages(); saveNamespaceImage(\"${pkg_name}\", \"${rda_file}\", \"${lib}\")"
       loader_file=nsrdaload.R
       R_save_args="--vanilla --slave"
     else
@@ -593,7 +593,7 @@ do_install_source () {
     fi
     (echo "options(save.image.defaults=${save_image_defaults})"; \
       if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
-      echo "invisible(.libPaths(c(\"${lib}\", .libPaths())))"; \
+      echo ".getRequiredPackages(); invisible(.libPaths(c(\"${lib}\", .libPaths())))"; \
       ${code_cmd}) | \
         R_DEFAULT_PACKAGES= LANG=C "${R_EXE}" ${R_save_args} ${save_args}
     if test ${?} -ne 0; then

@@ -234,6 +234,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 } else pos <- npos
             }
             if(newpackage) {
+                .getRequiredPackages(descfile)
 		## If the name space mechanism is available and the package
 		## has a name space, then the name space loading mechanism
 		## takes over.
@@ -768,3 +769,23 @@ print.packageInfo <- function(x, ...)
 
 manglePackageName <- function(pkgName, pkgVersion)
     paste(pkgName, "_", pkgVersion, sep = "")
+
+.getRequiredPackages <- function(file="DESCRIPTION", quietly = FALSE)
+{
+    req <- read.dcf(file, fields = "Depends")[,1]
+    if(!is.na(req)) {
+        sch <- search()
+        ## keep in step with tools:::.check_package_depends
+        pkgs <- unlist(strsplit(req, ","))
+        pkgs <- gsub("^[[:space:]]*([[:alnum:].]+).*$", "\\1" , pkgs)
+        for(pkg in pkgs) {
+            if(pkg == "R") next
+            if (!paste("package", pkg, sep = ":") %in% sch ) {
+                if (!quietly) cat("Loading required package:", pkg, "\n")
+                library(pkg, character.only = TRUE, logical = TRUE) ||
+                stop("package '", pkg, "' could not be loaded", call. = FALSE)
+            }
+        }
+    }
+    invisible()
+}

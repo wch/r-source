@@ -40,7 +40,7 @@ if ${R_SAVE_IMAGE}; then
     code_file="${lib}/${pkg}/R/${pkg}"
     rda_file="${lib}/${pkg}/R/all.rda"
     if test -f NAMESPACE; then
-        code_cmd="echo saveNamespaceImage(\"${pkg}\", \"${rda_file}\", \"${lib1}\")"
+        code_cmd="echo .getRequiredPackages(); saveNamespaceImage(\"${pkg}\", \"${rda_file}\", \"${lib1}\")"
         loader_file=nsrdaload.R
         R_SAVE_EXE=""
     else
@@ -50,7 +50,7 @@ if ${R_SAVE_IMAGE}; then
     fi
     (echo "options(save.image.defaults=${save_image_defaults})"; \
       if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
-      echo "invisible(.libPaths(c(\"${lib1}\", .libPaths())))"; \
+      echo ".getRequiredPackages(); invisible(.libPaths(c(\"${lib1}\", .libPaths())))"; \
       ${code_cmd}) | ${R_EXE} ${R_SAVE_EXE}
     if test ${?} -ne 0; then
       echo "execution of package source for '${pkg}' failed"

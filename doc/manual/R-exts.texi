@@ -259,13 +259,17 @@ parentheses.  (List package names even if they are part of a bundle.)
 You can also use the special package name @samp{R} if your package
 depends on a certain version of R.  E.g., if the package works only with
 R version 1.8.0 or newer, include @samp{R (>= 1.8.0)} in the
-@samp{Depends} field.  The R package checking facilities use this field,
-hence it is an error to use improper syntax or misuse the @samp{Depends}
-field for comments on other software that might be needed.  Other
-dependencies (external to the @R{} system) should be listed in the
-@samp{SystemRequirements} field or a separate @file{README} file.  The
-@R{} @command{INSTALL} facilities already check if the version of R used
-is recent enough for the package being installed.
+@samp{Depends} field.  Both @code{library} and the R package checking
+facilities use this field, hence it is an error to use improper syntax
+or misuse the @samp{Depends} field for comments on other software that
+might be needed.  Other dependencies (external to the @R{} system)
+should be listed in the @samp{SystemRequirements} field or a separate
+@file{README} file.  The @R{} @command{INSTALL} facilities already check
+if the version of @R{} used is recent enough for the package being
+installed, and the list of packages which is specified will be loaded
+before the current package, both when @code{library} is called and when
+saving an image or preparing for lazy-loading.
+
 
 The optional @samp{Suggests} field uses the same syntax as
 @samp{Depends} and lists packages that are not necessarily needed.  This
@@ -324,6 +328,7 @@ options of @code{R CMD INSTALL}, @samp{--[no-]lazy} and
 
 The optional @samp{SaveImage} field controls whether the @R{} objects
 are stored in a saved image @pxref{The install.R and R_PROFILE.R files}.
+(It takes the same values as the field @samp{LazyLoad}.)
 
 There should be no @samp{Built} or @samp{Packaged} fields, as these are
 added by the package management tools.
@@ -357,19 +362,20 @@ field in the @file{DESCRIPTION} file, which takes precedence over the
 presence of an @file{install.R} file.
 
 The second purpose for @file{install.R} is to hold code that needs to be
-executed each time the package is attached, after the image is
-loaded.  Few packages have a need for such code so @file{install.R} is
-normally an empty file.
+executed each time the package is attached, before the image is
+loaded.  Very few packages have a need for such code.
 
 The optional file @file{R_PROFILE.R} is executed before the code in the
 @file{R} subdirectory when saving an image or preparing for
 lazy-loading, and should be used to set up an environment needed only to
 evaluate the code (which is run with the @option{--vanilla} command-line
-flag).  Very few packages will need such code.
+flag).  Very few packages will need such code, as the packages in the
+@samp{Depends} field should suffice.
 
 Both @file{install.R} and @file{R_PROFILE.R} should be viewed as
 experimental; the mechanism to execute code before attaching or
-installing the package may change in the near future.
+installing the package may change in the near future.  With the other
+facilities available in @R{} 2.0.0 they should be removed if possible.
 
 
 @node Package subdirectories, Package bundles, The install.R and R_PROFILE.R files, Package structure
