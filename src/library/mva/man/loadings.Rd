@@ -10,7 +10,7 @@ print.loadings(x, digits = 3, cutoff = 0.1, sort = FALSE, ...)
 print.factanal(x, digits = 3, ...)
 }
 \arguments{
-  \item{x}{an object of class \sfn{"factanal"} or teh \sfn{loadings}
+  \item{x}{an object of class \code{"factanal"} or the \code{loadings}
     component of such an object.}
   \item{digits}{number of decimal places to use in printing uniquenesses
     and loadings.}
