@@ -2,8 +2,8 @@
 \title{Read Data Values}
 \usage{
 scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
-     dec = ".", skip = 0, nlines = 0, na.strings = "NA", flush = FALSE,
-     strip.white = FALSE, quiet = FALSE)
+     quote = "", dec = ".", skip = 0, nlines = 0, na.strings = "NA",
+     flush = FALSE, strip.white = FALSE, quiet = FALSE)
 }
 \alias{scan}
 \arguments{
@@ -26,7 +26,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \item{sep}{by default, scan expects to read white-space delimited
       input fields.  Alternatively, \code{sep} can be used to specify a
       character which delimits fields.} 
-  \item{quote}{the set of quoting characters}
+  \item{quote}{the set of quoting characters as a single character string.}
   \item{dec}{decimal point character.}
   \item{skip}{this many lines of the input file should be skipped before
     starting to read data values.}
