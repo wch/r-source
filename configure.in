@@ -964,6 +964,7 @@ AC_OUTPUT(Makeconf
   etc/Makefile
   etc/Makeconf
   etc/Renviron
+  m4/Makefile
   share/Makefile
   src/Makefile
   src/appl/Makefile

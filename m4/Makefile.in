@@ -1,0 +1,45 @@
+#
+# ${R_HOME}/m4/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ..
+subdir = m4
+
+include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in README \
+	R.m4 \
+	am-fixes.m4 \
+	gnome-gnorba-check.m4 \
+	gnome-orbit-check.m4 \
+	gnome.m4 \
+	libglade.m4 \
+	libtool.m4
+
+all: Makefile R
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+
+R: Makefile
+
+mostlyclean: clean
+clean:
+distclean: clean
+	@rm -f Makefile
+maintainer-clean: distclean
+
+install install-strip uninstall TAGS info dvi check:
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
