@@ -68,7 +68,7 @@ Hershey
     sans serif symbol \tab plain \cr
     sans serif symbol \tab italic \cr
   }
-
+  and the indices of these are available as \code{Hershey$allowed}.
   \describe{
     \item{Escape sequences:}{The string to be drawn can include escape
     sequences, which all begin with a \code{\\}.   When \R encounters a
@@ -165,6 +165,8 @@ Hershey
   \code{\link{Japanese}}
 }
 \examples{
+str(Hershey)
+
 ######
 # create tables of vector font functionality
 ######

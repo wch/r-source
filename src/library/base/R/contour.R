@@ -37,7 +37,7 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     method <- pmatch(method[1], c("simple", "edge", "flattest"))
     if (!is.null(vfont))
         vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface) - 1,
-                   fontindex= pmatch(vfont[2], Hershey$fontindex)- 1)
+                   fontindex= pmatch(vfont[2], Hershey$fontindex))
     if (!is.null(labels))
         labels <- as.character(labels)
     .Internal(contour(as.double(x), as.double(y), z, as.double(levels),

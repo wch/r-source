@@ -379,6 +379,8 @@ NEW FEATURES
 	for creating executable programs linked against the R shared
 	library.
 
+    o	There's now a `Hershey' (list object)
+	for Hershey vector font computations and documentation.
 
 
 BUG FIXES

@@ -9,8 +9,8 @@ function(x, y = NULL, labels = seq(along = x),
     }
     if (!is.null(vfont))
         vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface) - 1,
-                   fontindex= pmatch(vfont[2], Hershey$fontindex)- 1)
-    .Internal(text(xy.coords(x,y, recycle=TRUE),
+                   fontindex= pmatch(vfont[2], Hershey$fontindex))
+    .Internal(text(xy.coords(x,y, recycle = TRUE),
 		   labels, adj, pos, offset, vfont,
 		   cex, col, font, xpd, ...))
 }
@@ -21,7 +21,12 @@ Hershey <-
            "gothic english", "gothic german", "gothic italian",
            "serif symbol", "sans serif symbol"),
          fontindex =
-         c("symbol", "plain", "italic", "bold", "bold italic",
-           "cyrillic", "oblique cyrillic", "EUC")
+         c("plain", "italic", "bold", "bold italic",
+           "cyrillic", "oblique cyrillic", "EUC"),
+## List of valid combinations : ../man/Hershey.Rd
+## *checking* of allowed combinations is done in
+## (via max{#}) in    FixupVFont() ../../../main/plot.c
+## The basic "table" really is in  ../../../main/g_fontdb.c
+         allowed = rbind(cbind(1, 1:8), cbind(2, 1:5), cbind(3,1:4),
+                         cbind(4:6, 1), cbind(7, 1:5), cbind(8,1:3))
          )
-
