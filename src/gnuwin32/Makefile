@@ -262,6 +262,7 @@ bindist: docfiles
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
 	$(RM) $(RPREFIX)/demos/dynload/*.o $(RPREFIX)/demos/dynload/*.def
 	$(RM) $(RPREFIX)/*/Makefile.in
+	$(RM) $(RPREFIX)/bin/INSTALL $(RPREFIX)/bin/SHLIB $(RPREFIX)/bin/build(RPREFIX)/bin/check 
 	$(MKDIR) $(RPREFIX)/etc
 	$(CP) -p ../../etc/Rprofile $(RPREFIX)/etc/Rprofile
 	$(CP) -p ../../etc/Rconsole $(RPREFIX)/etc/Rconsole
@@ -322,7 +323,7 @@ GW32_HEADERS = globalvar.h # psignal.h
 
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
-	$(MKDIR) $(RPREFIX) $(RPREFIX)/etc $(RPREFIX)/src \
+	$(MKDIR) $(RPREFIX) $(RPREFIX)/bin $(RPREFIX)/etc $(RPREFIX)/src \
 	  $(RPREFIX)/src/include $(RPREFIX)/src/library \
 	  $(RPREFIX)/src/gnuwin32 $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -p ../../COPYING exported-vars R.exp MkRules MakePkg MakeDll \
@@ -339,6 +340,8 @@ packagedist:
 	$(CP) readme.packages $(RPREFIX)
 	$(CP) ../../etc/Rdconvlib.pl ../../etc/buildlib.pl \
 	   ../../etc/html-layout.pl $(RPREFIX)/etc
+	$(CP) ../../bin/INSTALL ../../bin/SHLIB ../../bin/build \
+	   ../../bin/check $(RPREFIX)/bin
 	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
 	$(CP) -pr windlgs $(RPREFIX)/src/library
 	zip -rX $(RPREFIX)sp.zip $(RPREFIX)

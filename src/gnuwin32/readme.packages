@@ -12,7 +12,7 @@ ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
 need suitable versions of make, sh, cat, cp, diff, echo, g(awk),
 mkdir, mv, rm, sed; we have packaged a set at
 http://www.stats.ox.ac.uk/pub/Rtools/tools.zip extracted from the
-cygwin distribution (http://sourceware.cygnus.com/cygwin/mirrors.html)
+cygwin distribution (http://sources.redhat.com/cygwin/mirrors.html)
 or (gzip, tar) compiled from the sources.
 
 BEWARE: `Native' ports of make are _not_ suitable, and the 18 Jan 2000

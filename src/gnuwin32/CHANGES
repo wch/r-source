@@ -43,10 +43,10 @@ is in your path you can use
 	Rcmd Rdindex   [options] files
 	Rcmd Sd2Rd     [options] file
 
-There are new utilities INSTALL, REMOVE, SHLIB which can be used to
-install a source package, remove a package and make a DLL, and much
-closer versions of the Unix R utilities build and check.  Invoke these
-by
+There are new utilities (in rw1020sp.zip) INSTALL, REMOVE, SHLIB which
+can be used to install a source package, remove a package and make a
+DLL, and much closer versions of the Unix R utilities build and check.
+Invoke these by
 
 	Rcmd INSTALL [options] pkgdir(s)
 	Rcmd REMOVE  [options] pkg(s)
