@@ -9,6 +9,19 @@
 		CHANGES IN R VERSION 1.8.0
 
 
+MACOS CHANGES
+
+    o   As from this release there is only one R port for the
+	Macintosh, which runs only on MacOS X.  (The `Carbon' port has
+	been discontinued, and the `Darwin' port is part of the new
+	version.)   The current version can be run either as a
+	command-line application or as an `Aqua' console.  There is a 
+	`Quartz' device quartz(), and the download and installation of
+	both source and binary packages is supported from the Aqua
+	console.  Those CRAN and BioC packages which build under MacOS
+	X have binary versions updated daily.
+
+
 USER-VISIBLE CHANGES
 
     o	The defaults for glm.control(epsilon=1e-8, maxit=25) have been
@@ -46,9 +59,9 @@ CHANGES TO THE LANGUAGE
     o	Non-syntactic variable names can now be specified by inclusion
 	between backticks `Like This`.	The deparse() code has been
 	changed to output non-syntactical names with this convention,
-	when they occur as operands in expressions. This is controlled
+	when they occur as operands in expressions.  This is controlled
 	by a `backtick' argument, which is by default TRUE for
-	composite expressions and FALSE for single symbols. This
+	composite expressions and FALSE for single symbols.  This
 	should give minimal interference with existing code.
 
     o	Variables in formulae can be quoted by backticks, and such
@@ -98,7 +111,7 @@ NEW FEATURES
 	data frames, with a warning.
 
     o	format.info() now also works with `nsmall' in analogy with
-	format.default()
+	format.default().
 
     o	gamma(n) is very slightly more precise for integer n in 11:50.
 
@@ -266,14 +279,12 @@ NEW FEATURES
 	make the generic functions more self-contained (e.g., usable
 	in apply-type operations) and potentially to speed dispatch.
 
-    o	There is a GUI (RAqua) for Mac OS X, and support for binary packages
-
     o	The data editor is no longer limited to 65535 rows, and will
 	be substantially faster for large numbers of columns.
 
     o	Standalone Rmath now has a get_seed function as requested (PR#3160).
 
-    o	GC timing is not enabled until the first call to gc.time; it
+    o	GC timing is not enabled until the first call to gc.time(); it
 	can be disabled by calling gc.time(FALSE).  This can speed up
 	the garbage collector and reduce system calls on some
 	platforms.
@@ -634,7 +645,7 @@ BUG FIXES
     o	The length of a string specification of par(lty=) is now checked: it
 	should be 2, 4, 6 or 8.
 
-    o	Using lty=as.integer(NA) and as.double(NA) was being accepted
+    o	Using lty=as.integer(NA) and as.double(NA) were being accepted
 	but giving nonsensical results.	 Those are not documented
 	valid values for lty.  (PR#3217)
 
@@ -676,13 +687,13 @@ BUG FIXES
 
     o	strwidth(f) and strheight(f) could seg.fault when `f' was a
 	function.  The fix [to C-level coerceVector()] now gives an error
-	instead of passing through. This may catch other potential
+	instead of passing through.  This may catch other potential
 	problems.
 
     o	trunc.POSIXt(x) for 0-length x does not return invalid structures
 	anymore.  (PR#3763).
 
-    o	Using write.table() setting the dec argument and with no
+    o	Using write.table() setting the `dec' argument and with no
 	numeric columns failed.	 (PR#3532)
 
     o	$<- did not duplicate when it needed to.
@@ -693,7 +704,7 @@ BUG FIXES
     o	Removed warning about names in persistent strings when a
 	namespace is saved.
 
-    o	Fixed some malformed error messages in methods package.
+    o	Fixed some malformed error messages in the methods package.
 
     o	pipes were not opening properly when profiling on a Mac. (PR#1140)
 
