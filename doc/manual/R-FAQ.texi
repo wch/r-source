@@ -2437,8 +2437,8 @@ read.
 On Unix systems a bug report can be generated using the function
 @code{bug.report()}.  This automatically includes the version
 information and sends the bug to the correct address.  Alternatively the
-bug report can be emailed to @email{r-bugs@@lists.r-project.org} or
-submitted to the Web page at @uref{http://bugs.r-project.org/}.
+bug report can be emailed to @email{r-bugs@@r-project.org} or submitted
+to the Web page at @uref{http://bugs.r-project.org/}.
 
 Bug reports on contributed packages should perhaps be sent to the
 package maintainer rather than to r-bugs.
