@@ -53,20 +53,23 @@
   package is found more than once, the first match is used.  Unless
   \code{quiet = TRUE} a warning will be given about the named packages
   which are not found, and an error if none are.  If \code{verbose} is
-  true, warnings about packages found more than once are given.
+  true, warnings about packages found more than once are given.  It does
+  know about versioned installs of packages.
 
   \code{.path.package} returns the paths from which the named packages
   were loaded, or if none were named, for all currently loaded packages.
   Unless \code{quiet = TRUE} it will warn if some of the packages named
   are not loaded, and given an error if none are.  This function is not
   meant to be called by users, and its interface might change in future
-  versions.
+  versions.  Note that currently \code{package} must include the
+  version mumber if versioned installs are used.
 
   \code{.getRequiredPackages2} attaches all the packages mentioned in the
   \code{Depends} field: failure to find a package is an error.  It also
-  checks the versions of the packages found against the depends field.
+  checks the versions of the packages found against the \code{Depends} field.
 
-  \code{.getRequiredPackages} is a wrapper using a \file{DESCRIPTION} file.
+  \code{.getRequiredPackages} is a wrapper to
+  \code{.getRequiredPackages2} using a \file{DESCRIPTION} file.
 }
 \value{
   \code{.find.package} and \code{.path.packages} return a character
