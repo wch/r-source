@@ -258,7 +258,7 @@ typedef union { SEXPREC s; double align; } SEXPREC_ALIGN;
 #ifndef USE_WRITE_BARRIER
 #define SET_FRAME(x,v)		(((x)->u.envsxp.frame)=(v))
 #define SET_ENCLOS(x,v)		(((x)->u.envsxp.enclos)=(v))
-#define SET)HASHTAB(x,v)	(((x)->u.envsxp.hashtab)=(v))
+#define SET_HASHTAB(x,v)	(((x)->u.envsxp.hashtab)=(v))
 #endif
 #define NARGS(x)	((x)->sxpinfo.gp)	/* for closure calls */
 #define SET_NARGS(x,v)	(((x)->sxpinfo.gp)=(v))
