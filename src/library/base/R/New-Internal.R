@@ -4,11 +4,11 @@ stop <- function(message = NULL).Internal(stop(message))
 warning <- function(message = NULL).Internal(warning(message))
 restart <- function(on = TRUE).Internal(restart(on))
 geterrmessage <- function() .Internal(geterrmessage())
-try <- function(expr, first = T)
+try <- function(expr, first = TRUE)
 {
     restart(first)
-    if(first) {
-        first <- F
+    if(is.logical(first) && first) {
+        first <- FALSE
         expr
     } else
        invisible(structure(.Internal(geterrmessage()), class="try-error"))

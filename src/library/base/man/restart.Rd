@@ -39,6 +39,8 @@ try(expr, first = T)
   \code{\link{geterrmessage}} for retrieving the last error message.
 }
 \examples{
+## this example will not work correctly in example(try), but
+##  it does work correctly if pasted in
 options(show.error.messages = FALSE)
 try(log("a"))
 print(.Last.value)
