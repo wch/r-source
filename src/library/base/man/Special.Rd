@@ -7,8 +7,6 @@
 \alias{psigamma}
 \alias{digamma}
 \alias{trigamma}
-\alias{tetragamma}
-\alias{pentagamma}
 \alias{choose}
 \alias{lchoose}
 \alias{factorial}
@@ -26,8 +24,6 @@ lgamma(x)
 psigamma(x, deriv = 0)
 digamma(x)
 trigamma(x)
-tetragamma(x)
-pentagamma(x)
 choose(n, k)
 lchoose(n, k)
 factorial(x)
@@ -50,8 +46,7 @@ lfactorial(x)
   gamma function.   \code{factorial(x)} is \eqn{x!} and identical to
   \code{gamma(x+1)} and \code{lfactorial} is \code{lgamma(x+1)}.
 
-  The functions \code{digamma}, \code{trigamma}, \code{tetragamma} and
-  \code{pentagamma} return the first, second, third and fourth
+  The functions \code{digamma} and \code{trigamma} return the first and second
   derivatives of the logarithm of the gamma function.
   \code{psigamma(x, deriv)} (\code{deriv >= 0}) is more generally
   computing the \code{deriv}-th derivative of \eqn{\psi(x)}.
@@ -96,9 +91,16 @@ x <- seq(.1, 4, length = 201); dx <- diff(x)[1]
 par(mfrow = c(2, 3))
 for (ch in c("", "l","di","tri","tetra","penta")) {
   is.deriv <- nchar(ch) >= 2
-  if (is.deriv) dy <- diff(y) / dx
   nm <- paste(ch, "gamma", sep = "")
-  y <- get(nm)(x)
+  if (is.deriv) {
+    dy <- diff(y) / dx # finite difference
+    der <- which(ch == c("di","tri","tetra","penta")) - 1
+    nm2 <- paste("psigamma(*, deriv = ", der,")",sep='')
+    nm  <- if(der >= 2) nm2 else paste(nm, nm2, sep = " ==\n")
+    y <- psigamma(x, deriv=der)
+  } else {
+    y <- get(nm)(x)
+  }
   plot(x, y, type = "l", main = nm, col = "red")
   abline(h = 0, col = "lightgray")
   if (is.deriv) lines(x[-1], dy, col = "blue", lty = 2)

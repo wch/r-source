@@ -50,3 +50,19 @@ La.eigen <- function (x, symmetric, only.values = FALSE,
 ## </entry>
 
 
+## <entry>
+## Deprecated in 1.9.0
+tetragamma <- function(x) {
+    .Deprecated("psigamma(*, deriv=2)")
+    psigamma(x, deriv=2)
+}
+## </entry>
+
+
+## <entry>
+## Deprecated in 1.9.0
+pentagamma <- function(x) {
+    .Deprecated("psigamma(*, deriv=3)")
+    psigamma(x, deriv=3)
+}
+## </entry>

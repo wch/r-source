@@ -4,6 +4,8 @@
 \alias{Deprecated}
 \alias{.Deprecated}
 \alias{La.eigen}
+\alias{tetragamma}
+\alias{pentagamma}
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of
@@ -14,6 +16,8 @@
 
 % Deprecated in 1.9.0
 La.eigen(x, symmetric, only.values = FALSE, method = c("dsyevr", "dsyev"))
+tetragamma(x)
+pentagamma(x)
 % </Deprecated 1.9.0>
 }
 \details{
