@@ -57,7 +57,7 @@ sys.save.image(name)
   and these are portable across all XDR-compliant implementations.
 
   Default values for \code{save.image} options can be modified with
-  the \code{save.image.opitons} option.  This mechanism is experimental
+  the \code{save.image.defaults} option.  This mechanism is experimental
   and subject to change.
 
   \code{sys.save.image} is a system function that is called by \code{q()}
