@@ -393,6 +393,7 @@ cleanwin:
 	$(MAKE) -C ../extra/xdr -f Makefile.win clean
 	$(MAKE) -C ../extra/pcre -f Makefile.win distclean
 	$(MAKE) -C ../extra/bzip2 -f Makefile.win clean
+	$(MAKE) -C ../extra/zlib -f Makefile.win distclean
 	$(MAKE) -C bitmap clean
 	-$(MAKE) -C installer clean
 
