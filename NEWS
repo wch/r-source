@@ -155,6 +155,10 @@ BUG FIXES
     o	Under some circumstances mosaicplot() failed if main was
 	supplied as it was passed on to model.frame.default().
 
+    o	Conversion to POSIXlt (including printing) of POSIXct dates
+	before 1902 and after 2038 computed which were leap years from
+	(year-1900) so got some xx00 years wrong.
+
 
 
 		CHANGES IN R VERSION 1.8.0
