@@ -51,6 +51,8 @@ BUG FIXES
     o   The L-BFGS-B option of optim() apparently needs part of its 
 	workspace zeroed.  (PR#6720)
 
+    o   extractAIC.survreg needed updating.
+
 
 
 		CHANGES IN R VERSION 1.9.0
