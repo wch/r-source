@@ -2799,7 +2799,7 @@ foo <- c(1,1,0,0,1,1)
 rep <- 1:6
 m <- lm(foo ~ rep, model=FALSE)
 model.matrix(m)
-n <- 1.6
+n <- 1:6
 m <- lm(foo ~ n, model=FALSE)
 model.matrix(m)
 ## failed in 1.8.0 because the wrong n or rep was found.
