@@ -465,6 +465,7 @@ LibExtern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 #define findFun			Rf_findFun
 #define findVar			Rf_findVar
 #define findVarInFrame		Rf_findVarInFrame
+#define findVarInFrame3		Rf_findVarInFrame3
 #define GetArrayDimnames	Rf_GetArrayDimnames
 #define getAttrib		Rf_getAttrib
 #define GetColNames		Rf_GetColNames
@@ -652,7 +653,8 @@ SEXP evalList(SEXP, SEXP);
 SEXP evalListKeepMissing(SEXP, SEXP);
 /* SEXP extendEnv(SEXP, SEXP, SEXP); */
 SEXP findVar(SEXP, SEXP);
-SEXP findVarInFrame(SEXP, SEXP, Rboolean);
+SEXP findVarInFrame(SEXP, SEXP);
+SEXP findVarInFrame3(SEXP, SEXP, Rboolean);
 SEXP findFun(SEXP, SEXP);
 SEXP getAttrib(SEXP, SEXP);
 void GetMatrixDimnames(SEXP, SEXP*, SEXP*, char**, char**);

@@ -606,7 +606,7 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho)
 {
     SEXP vl;
 
-    if ((vl = findVarInFrame(rho, symbol, TRUE)) != R_UnboundValue) {
+    if ((vl = findVarInFrame3(rho, symbol, TRUE)) != R_UnboundValue) {
 	vl = eval(symbol, rho);	/* for promises */
 	if(NAMED(vl) == 2) {
 	    PROTECT(vl = duplicate(vl));

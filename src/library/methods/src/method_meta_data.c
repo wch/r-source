@@ -43,7 +43,7 @@ SEXP R_get_from_method_metadata(SEXP name)
     check_methods_table("get");
     if(!isSymbol(name))
 	name = install(CHAR(asChar(name)));
-    value = findVarInFrame(methods_table, name, TRUE);
+    value = findVarInFrame(methods_table, name);
     if(value == R_UnboundValue)
 	value = R_NilValue;
     return value;

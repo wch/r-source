@@ -1,11 +1,9 @@
 
 #include <R.h>
 #include <Rdefines.h>
-#define findVarInFrame		Rf_findVarInFrame
 #define NewEnvironment		Rf_NewEnvironment
 #define substitute		Rf_substitute
 
-extern SEXP findVarInFrame(SEXP rho, SEXP symbol, Rboolean isGet);
 extern SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho);
 
 /* substitute in an _evaluated_ object, with an explicit list as
