@@ -11,6 +11,15 @@
 
 BUG FIXES
 
+    o	The fix to PR#2396 broke read.table() on file with CR line
+	endings. (PR#2469)
+
+
+		CHANGES IN R VERSION 1.6.2
+
+
+BUG FIXES
+
     o	plot.stepfun() now obeys a `ylim=.' specification.
 
     o	removeClass() does a better job of removing inheritance
