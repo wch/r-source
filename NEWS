@@ -153,7 +153,7 @@ BUG FIXES
 
     o   tcltk package didn't work with tcl8.0.x.  Compatibility code
         inserted (PR#1640, thanks to René Bertin for helping out with
-        this). 
+        this).
 
     o	selfStart() {pkg "nls"} now works again when parameter names are
         not specified (but implicit).
@@ -169,8 +169,13 @@ BUG FIXES
 
     o   fisher.test() could miscalculate odds ratio and confidence
         interval for tables with large entries, due to numerical
-        overflow. 
- 
+        overflow.
+
+    o	using lty = "1" (or "10") does no longer produce invalid
+	postscript or pdf.  Using "0" in a character lty is currently not
+	really device-independently implemented and needs more fixing.
+
+
 
 		CHANGES IN R VERSION 1.5.0
 
