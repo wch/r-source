@@ -43,10 +43,12 @@ local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
        dp <- sub("[[:blank:]]*([[:alnum:]]+)", "\\1", dp) # strip whitespace
        options(defaultPackages = dp)
     })
+
 .First.sys <- function()
 {
+    last <- rev(getOption("defaultPackages"))[1]
     for(pkg in getOption("defaultPackages")) {
-        res <- require(pkg, quietly = TRUE, warn.conflicts=FALSE,
+        res <- require(pkg, quietly = TRUE, warn.conflicts = (pkg != last),
                        character.only = TRUE, save = FALSE)
         if(!res)
             warning("package ", pkg,
