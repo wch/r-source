@@ -25,12 +25,12 @@ file.info(...)
   A data frame with row names the file names and columns
   \item{size}{integer: File size in bytes.}
   \item{isdir}{logical: Is the file a directory?}
-  \item{mode}{integer of class \code{"octmode".  The file permissions,
+  \item{mode}{integer of class \code{"octmode"}.  The file permissions,
     printed in octal, for example \code{644}.}
   \item{mtime, ctime, atime}{real: file modification, creation and last
     access times in days since 1970-1-1 in the UTC timezone.}
 #ifdef unix
-  \item{uid}{integer: the user ID of the file's owner .}
+  \item{uid}{integer: the user ID of the file's owner.}
   \item{gid}{integer: the group ID of the file's group.}
   \item{uname}{character: \code{uid} interpreted as a user name.}
   \item{grname}{character: \code{gid} interpreted as a group name.}
