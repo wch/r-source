@@ -241,7 +241,8 @@ void DoPathSelect ( WindowRef window )
 
 void DoMouseDown ( const EventRecord * event )
 {
-	WindowRef	we;
+	//WindowRef	we;
+	WEReference	we;
 	WindowPtr	window ;
 	SInt16		partCode ;
     SInt32 		selStart, selEnd;

@@ -117,7 +117,8 @@ pascal void InitSmartScrollAwareApplication ( void )
     }
 }
 
-inline SInt32 __SmartScrollDispatch
+//inline 
+SInt32 __SmartScrollDispatch
 	(
 		SInt32 inSelector,
 		ControlHandle inControl,

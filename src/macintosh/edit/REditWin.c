@@ -299,10 +299,10 @@ void DoLineTo()
 	goto cleanup ;
     }
     GetPort ( & savePort ) ;
-    SetPort ( lineToBox ) ;
+    SetPort ( GetDialogPort(lineToBox) ) ;
    
     /* Set the Dialog Title */
-    SetWTitle ( lineToBox, "\p Line Number" ) ;
+    SetWTitle ( GetDialogWindow(lineToBox), "\p Line Number" ) ;
 
     while(true){
 	ModalDialog ( GetMyStandardDialogFilter ( ), & itemHit ) ;
@@ -385,10 +385,10 @@ void Do_HelpOnTopic(void)
 	goto cleanup ;
     }
     GetPort ( & savePort ) ;
-    SetPort ( HelpObjectBox ) ;
+    SetPort ( GetDialogPort(HelpObjectBox) ) ;
    
     /* Set the Dialog Title */
-    SetWTitle ( HelpObjectBox, "\pR Help" ) ;
+    SetWTitle ( GetDialogWindow(HelpObjectBox), "\pR Help" ) ;
 
     while(true){
 	ModalDialog ( GetMyStandardDialogFilter ( ), & itemHit ) ;
@@ -448,10 +448,10 @@ void Do_RunExample(void)
 	goto cleanup ;
     }
     GetPort ( & savePort ) ;
-    SetPort ( ExampleObjectBox ) ;
+    SetPort ( GetDialogPort(ExampleObjectBox) ) ;
    
     /* Set the Dialog Title */
-    SetWTitle ( ExampleObjectBox, "\pR examples" ) ;
+    SetWTitle ( GetDialogWindow(ExampleObjectBox), "\pR examples" ) ;
 
     while(true){
 	ModalDialog ( GetMyStandardDialogFilter ( ), & itemHit ) ;
@@ -512,10 +512,10 @@ void Do_SearchHelp(void)
 	goto cleanup ;
     }
     GetPort ( & savePort ) ;
-    SetPort ( SearchObjectBox ) ;
+    SetPort ( GetDialogPort(SearchObjectBox) ) ;
    
     /* Set the Dialog Title */
-    SetWTitle ( SearchObjectBox, "\pSearch for R Help" ) ;
+    SetWTitle ( GetDialogWindow(SearchObjectBox), "\pSearch for R Help" ) ;
 
     while(true){
 	ModalDialog ( GetMyStandardDialogFilter ( ), & itemHit ) ;
@@ -573,10 +573,10 @@ void Do_EditObject()
 	goto cleanup ;
     }
     GetPort ( & savePort ) ;
-    SetPort ( EditObjectBox ) ;
+    SetPort ( GetDialogPort(EditObjectBox) ) ;
    
     /* Set the Dialog Title */
-    SetWTitle ( EditObjectBox, "\p Edit Object" ) ;
+    SetWTitle ( GetDialogWindow(EditObjectBox), "\p Edit Object" ) ;
 
     while(true){
 	ModalDialog ( GetMyStandardDialogFilter ( ), & itemHit ) ;
@@ -631,10 +631,10 @@ void Do_StandardAlert(Str255 LabelText)
 	goto cleanup ;
     }
     GetPort ( & savePort ) ;
-    SetPort ( ErrorBox ) ;
+    SetPort ( GetDialogPort(ErrorBox) ) ;
    
     /* Set the Dialog Title */
-    SetWTitle ( ErrorBox, "\p Error Alert" ) ;
+    SetWTitle ( GetDialogWindow(ErrorBox), "\p Error Alert" ) ;
     GetDialogItem(ErrorBox, 2, &type, &itemHandle, &itemRect);  /* 3 is text field */
     SetDialogItemText(itemHandle, LabelText);
     while(true){
@@ -680,10 +680,10 @@ void Do_About()
 	goto cleanup ;
     }
     GetPort ( & savePort ) ;
-    SetPort ( AboutBox ) ;
+    SetPort ( GetDialogPort(AboutBox) ) ;
    
     /* Set the Dialog Title */
-    SetWTitle ( AboutBox, "\p About R" ) ;
+    SetWTitle ( GetDialogWindow(AboutBox), "\p About R" ) ;
 
     while(true) {
 	ModalDialog ( GetMyStandardDialogFilter ( ), & itemHit ) ;

@@ -172,9 +172,9 @@
 	#endif
 #endif
 
-#ifndef __CARBONCOMPATIBILITY__
-#include "CarbonCompatibility.h"
-#endif
+//#ifndef __CARBONCOMPATIBILITY__
+//#include "CarbonCompatibility.h"
+//#endif
 
 #include <R_ext/Boolean.h>
 #include "Startup.h"
@@ -682,7 +682,7 @@ void            free_History(void);
 void            maintain_cmd_History(char*);
 void            do_Down_Array       (void);
 void            R_WriteConsole1      (Ptr, SInt32);
-void            R_ReadConsole1       (char* ,  char* , int, int);
+void            R_ReadConsole1       (char* ,  unsigned char* , int, int);
 void            R_WriteConsole2      (Ptr, SInt32);
 void            R_ReadConsole2       (char* ,  char* , int, int);
 Boolean         inRange             (int start, int end , int back, int length);

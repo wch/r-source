@@ -36,45 +36,11 @@
  
 
 
-#include "RIntf.h"
-
-extern long start_Time;
-extern long last_Time;
-char genvString[256];
 
 /* doCopyPString
 */
-void  doCopyPString(Str255 sourceString,Str255 destinationString)
-{
-    SInt16 stringLength;
-
-    stringLength = sourceString[0];
-    BlockMove(sourceString + 1,destinationString + 1,stringLength);
-    destinationString[0] = stringLength;
-}
-
-
-
 
 /* R_OpenFile
 */
-FILE* R_OpenFile1(char *file)
-{
-    FILE* fp;
-
-    /* Max file length is 256 characters */
-    fp = fopen(file, "r");
-    return fp;
-}
-
 /* R_OpenLibraryFile
 */
-FILE *R_OpenLibraryFile(char *file)
-{
-    char buf[256];
-    FILE *fp;
-
-    sprintf(buf, "%s:library:base:R:%s", R_Home, file);
-    fp = R_fopen(buf, "r");
-    return fp;
-}
