@@ -20,6 +20,8 @@
 #include "Defn.h"
 #include "Mathlib.h"
 
+#ifdef not_used_currently
+
 static void CheckDims(SEXP dims)
 {
 	int i;
@@ -29,6 +31,8 @@ static void CheckDims(SEXP dims)
 			error("invalid array extent\n");
 	}
 }
+
+#endif
 
 SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -90,6 +94,8 @@ SEXP allocMatrix(SEXPTYPE mode, int nrow, int ncol)
 	return s;
 }
 
+#ifdef use_do_array/*--- unused (1998, April 24 -- 0.62 unstable */
+
 SEXP do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP vals, dims, ans;
@@ -110,6 +116,7 @@ SEXP do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else error("bad arguments to array\n");
 	return call;/* never used; just for -Wall */
 }
+#endif
 
 SEXP allocArray(SEXPTYPE mode, SEXP dims)
 {
