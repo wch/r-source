@@ -2451,6 +2451,7 @@ XPoint *XmbRotTextExtents(Display *dpy, XFontSet font, double angle,
 
 void RXSetFontSet(Display *display, GC gc, XFontSet font)
 {
+#if 0
     /* FIXME: PD says all the fonts have fid=0 */
     char **ml;
     XFontStruct **fs_list;
@@ -2458,6 +2459,7 @@ void RXSetFontSet(Display *display, GC gc, XFontSet font)
 
     cnt = XFontsOfFontSet(font, &fs_list, &ml);
     for(i = 0; i < cnt; i++) XSetFont(display, gc, fs_list[i]->fid);
+#endif
 }
 
 XFontStruct * RXFontStructOfFontSet(XFontSet font) 
