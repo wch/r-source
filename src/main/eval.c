@@ -33,12 +33,30 @@ SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
 
 #ifdef Macintosh
 
-/* The universe will end if the Stack on the Mac grows til it hits the heap. */
 /* This code places a limit on the depth to which eval can recurse. */
 
-void isintrpt(){}
+/* Now R correctly handles user breaks 
+   Jago, 4 Jun 2001, Stefano M. Iacus
+*/
+extern RgnHandle sMouseRgn;
+extern UInt32 sSleepTime;
+void isintrpt()
+{
+   EventRecord event;
+       
+   WaitNextEvent( everyEvent, &event, sSleepTime, sMouseRgn );
+   if ((event.modifiers & cmdKey) && ((event.message & charCodeMask) == '.'))
+	{
+	    FlushEvents(keyDownMask, 0);
+	    Rprintf("\n");
+	    error("user break");
+	    raise(SIGINT);
+	    return;
+	}
+}
 
 #endif
+
 
 #ifdef R_PROFILING
 
@@ -263,6 +281,7 @@ SEXP eval(SEXP e, SEXP rho)
     /* check for a user abort */
     if ((R_EvalCount++ % 100) == 0) {
 	isintrpt();
+	R_EvalCount = 0 ;
     }
 #endif
 #ifdef Win32
