@@ -206,7 +206,7 @@ function(pattern, fields = c("alias", "title"),
 		    ## If there are no aliases at all, cbind() below
 		    ## would give matrix(p, nc = 1).  (Of course, Rd
 		    ## objects without aliases are useless ...)
-		    if(length((a <- unlist(aliases)) > 0))
+		    if(length(a <- unlist(aliases)) > 0)
 			dbAliases <-
 			    rbind(dbAliases,
 				  cbind(a,
@@ -215,7 +215,7 @@ function(pattern, fields = c("alias", "title"),
 					p))
 		    keywords <- contents[, "Keywords"]
                     ## And similarly if there are no keywords at all.
-                    if(length((k <- unlist(keywords)) > 0))
+                    if(length(k <- unlist(keywords)) > 0)
                         dbKeywords <-
                             rbind(dbKeywords,
                                   cbind(k,
