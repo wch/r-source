@@ -50,15 +50,15 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 @node Top, Acknowledgements, (dir), (dir)
 
 @menu
-* Acknowledgements::
-* Creating R packages::
-* Writing R documentation::
-* System and foreign language interfaces::
-* The R API::
-* R (internal) programming miscellania::
-* R coding standards::
-* Function and variable index::
-* Concept index::
+* Acknowledgements::            
+* Creating R packages::         
+* Writing R documentation::     
+* System and foreign language interfaces::  
+* The R API::                   
+* R (internal) programming miscellania::  
+* R coding standards::          
+* Function and variable index::  
+* Concept index::               
 @end menu
 
 @node Acknowledgements, Creating R packages, Top, Top
@@ -79,10 +79,10 @@ documentation as needed.  The @R{} distribution provides several
 packages, such as @pkg{eda}, @pkg{mva}, and @pkg{stepfun}.
 
 @menu
-* Package structure::
-* Configure and cleanup::
-* Checking and building packages::
-* Submitting a package to CRAN::
+* Package structure::           
+* Configure and cleanup::       
+* Checking and building packages::  
+* Submitting a package to CRAN::  
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -97,10 +97,10 @@ also contain script files @file{configure} and @file{cleanup} which are
 executed before and after installation, @xref{Configure and cleanup}.
 
 @menu
-* The DESCRIPTION file::
-* Other files::
-* Package subdirectories::
-* Package bundles::
+* The DESCRIPTION file::        
+* Other files::                 
+* Package subdirectories::      
+* Package bundles::             
 @end menu
 
 @node The DESCRIPTION file, Other files, Package structure, Package structure
@@ -472,15 +472,15 @@ main archive.
 @cindex Documentation, writing
 
 @menu
-* Rd format::
-* Sectioning::
-* Marking text::
-* Lists and tables::
-* Cross-references::
-* Mathematics::
-* Insertions::
-* Platform-specific sections::
-* Processing Rd format::
+* Rd format::                   
+* Sectioning::                  
+* Marking text::                
+* Lists and tables::            
+* Cross-references::            
+* Mathematics::                 
+* Insertions::                  
+* Platform-specific sections::  
+* Processing Rd format::        
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation, Writing R documentation
@@ -1121,15 +1121,15 @@ environment on Windows.
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::
-* Interface functions .C and .Fortran::
-* dyn.load and dyn.unload::
-* Creating shared libraries::
-* Interfacing C++ code::
-* Handling R objects in C::
-* Interface functions .Call and .External::
-* Evaluating R expressions from C::
-* Debugging::
+* Operating system access::     
+* Interface functions .C and .Fortran::  
+* dyn.load and dyn.unload::     
+* Creating shared libraries::   
+* Interfacing C++ code::        
+* Handling R objects in C::     
+* Interface functions .Call and .External::  
+* Evaluating R expressions from C::  
+* Debugging::                   
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -1584,13 +1584,14 @@ needed.  As in interpreted @R{} code, much use is made of coercion to
 force the variant object to the right type.
 
 @menu
-* Garbage Collection::
-* Allocating storage::
-* Details of R types::
-* Attributes::
-* Classes::
-* Handling lists::
-* Finding and setting variables::
+* Garbage Collection::          
+* Allocating storage::          
+* Details of R types::          
+* Attributes::                  
+* Classes::                     
+* Handling lists::              
+* Finding and setting variables::  
+* Changes in R version 1.2::    
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -1983,7 +1984,7 @@ and enables us to say
   g = REAL(getListElement(a, "g"))[0];
 @end example
 
-@node Finding and setting variables,  , Handling lists, Handling R objects in C
+@node Finding and setting variables, Changes in R version 1.2, Handling lists, Handling R objects in C
 @subsection Finding and setting variables
 @cindex Finding variables
 @cindex Setting variables
@@ -2029,6 +2030,76 @@ can be used to assign values to @R{} objects, in the specified
 environment frame and to perform the equivalent of @code{assign(x,
 value, envir = rho, inherits = TRUE)} respectively.
 
+@node Changes in R version 1.2,  , Finding and setting variables, Handling R objects in C
+@subsection Changes in R version 1.2
+
+@R{} version 1.2.0 introduces a new ``generational'' garbage collector
+which means that strings and vectors (and language objects) are handled
+differently from the numerical atomic types.
+
+Earlier code was written in a style like
+@smallexample
+  VECTOR(dimnames)[0] = getAttrib(x, R_NamesSymbol);
+@end smallexample
+
+@noindent
+but that is no longer allowed.  The functions @code{VECTOR_ELT} and
+@code{SET_VECTOR_ELT} must now be used to access and set elements of a
+generic vector.  There are analogous functions @code{STRING_ELT} and
+@code{SET_STRING_ELT} for character vectors.
+@findex VECTOR_ELT
+@findex SET_VECTOR_ELT
+@findex STRING_ELT
+@findex SET_STRING_ELT
+
+To convert existing code, use the following replacements.
+
+@quotation
+@multitable @columnfractions 0.35 0.5
+
+@item @strong{Original} @tab @strong{Replacement}
+
+@item @code{foo = VECTOR(bar)[i]} @tab @code{foo = VECTOR_ELT(bar, i)}
+@item @code{VECTOR(foo)[j] = bar} @tab @code{SET_VECTOR_ELT(foo, j, bar)}
+@item @code{foo = STRING(bar)[i]} @tab @code{foo = STRING_ELT(bar, i)}
+@item @code{STRING(foo)[j] = bar} @tab @code{SET_STRING_ELT(foo, j, bar)}
+
+@end multitable 
+@end quotation
+
+The new garbage collector requires that all assignments into fields
+containing @code{SEXP} values go through functions such as
+@code{SET_VECTOR_ELT}.  Packages compiled under older versions of @R{}
+may contain binary code that modifies these fields directly.  These
+packages @emph{must} be recompiled and re-installed.  Failure to do so
+may confuse the memory manager and result in heap corruption.
+
+In order to achieve maximal source compatibility in the @R{} 1.x series,
+add-on packages should either use conditionals of the form
+
+@smallexample
+#if R_VERSION >= R_Version(1, 2, 0)
+  @var{new-style-code}
+#else
+  @var{old-style-code}
+#endif
+@end smallexample
+
+@noindent
+or, maybe preferably order to avoid unnecessarily duplicating code, use
+the new-style interface along with a @strong{private} header file
+containing the following code:
+
+@smallexample
+#if R_VERSION < R_Version(1, 2, 0)
+# define STRING_ELT(x,i)        (STRING(x)[i])
+# define VECTOR_ELT(x,i)        (VECTOR(x)[i])
+# define SET_STRING_ELT(x,i,v)  (STRING(x)[i] = (v))
+# define SET_VECTOR_ELT(x,i,v)  (VECTOR(x)[i] = (v))
+#endif
+@end smallexample
+
+
 @node Interface functions .Call and .External, Evaluating R expressions from C, Handling R objects in C, System and foreign language interfaces
 @section Interface functions @code{.Call} and @code{.External}
 @cindex Interfaces to compiled code
@@ -2041,9 +2112,9 @@ based on the interface of the same name in @Sl{} version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::
-* Calling .External::
-* Missing and special values::
+* Calling .Call::               
+* Calling .External::           
+* Missing and special values::  
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -2649,8 +2720,8 @@ compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 
 
 @menu
-* Finding entry points::
-* Inspecting R objects::
+* Finding entry points::        
+* Inspecting R objects::        
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging, Debugging
@@ -2816,19 +2887,19 @@ $7 = 5
 @chapter The R API: entry points for C code
 
 @menu
-* Memory allocation::
-* Error handling::
-* Random numbers::
-* Missing and IEEE values::
-* Printing::
-* Calling C from Fortran and vice versa::
-* Numerical analysis subroutines::
-* Distribution functions::
-* Mathematical Utilities::
-* Mathematical Constants::
-* Utility functions::
-* Version information::
-* Standalone Mathlib::
+* Memory allocation::           
+* Error handling::              
+* Random numbers::              
+* Missing and IEEE values::     
+* Printing::                    
+* Calling C from Fortran and vice versa::  
+* Numerical analysis subroutines::  
+* Distribution functions::      
+* Mathematical Utilities::      
+* Mathematical Constants::      
+* Utility functions::           
+* Version information::         
+* Standalone Mathlib::          
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -2865,8 +2936,8 @@ appropriate header files when using these entry points.
 @cindex Memory allocation from C
 
 @menu
-* Transient::
-* User-controlled::
+* Transient::                   
+* User-controlled::             
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -3520,8 +3591,8 @@ to set its seeds).
 @appendix R (internal) programming miscellania
 
 @menu
-* .Internal and .Primitive::
-* Testing R code::
+* .Internal and .Primitive::    
+* Testing R code::              
 @end menu
 
 @node .Internal and .Primitive, Testing R code, R (internal) programming miscellania, R (internal) programming miscellania
