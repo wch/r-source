@@ -17,7 +17,7 @@ that is included.  Similarly, a renamed copy of LSAME is included as
 that is not exported by MacOS's vecLib.
 
 The routines dsyev and dsyevr have their names remapped to r* unless
-HAVE_LAPACK is defined.  This ensures that the versions in dlapack1.f
+HAVE_LAPACK is defined.  This ensures that the versions in rsyev.f
 are called even if an external BLAS library contains LAPACK.  This was
 necessary on 64-bit Solaris where the routines in libsunperf were
 picked up and used excessive amounts of memory.  In principle it might
