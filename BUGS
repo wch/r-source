@@ -372,3 +372,11 @@ Date: 18 Sep 1999 21:07:50 +0200
 Subject: text( col=, cex=, font=) : doesn't allow more than length-1 arg
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 27 Sep 1999 11:12:08 +0200
+* PR# 288 *
+Subject: configure bug with IRIX 6.5 (Makedep)
+From: caves@yorvic.york.ac.uk
+Date: Tue, 28 Sep 1999 10:30:54 +0200 (MET DST)
+* PR# 289 *
+Subject: Collating sequences are used inconsistently.
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Tue, 28 Sep 1999 15:43:45 +0100 (BST)
