@@ -4,7 +4,7 @@
 \usage{
 power.t.test(n=NULL, delta=NULL, sd=1, sig.level=0.05, power=NULL,
              type=c("two.sample", "one.sample", "paired"),
-             alternative=c("two.sided", "one.sided"))
+             alternative=c("two.sided", "one.sided"), strict=FALSE)
 }
 \arguments{
  \item{n}{Number of observations (per group)}
@@ -14,6 +14,7 @@ power.t.test(n=NULL, delta=NULL, sd=1, sig.level=0.05, power=NULL,
  \item{power}{Power of test (1 minus Type II error probability)}
  \item{type}{Type of t test}
  \item{alternative}{One- or two-sided test}
+ \item{strict}{Use strict interpretation in two-sided case}
 }
 \description{
  Compute power of test, or determine parameters to obtain target power.
@@ -25,6 +26,11 @@ power.t.test(n=NULL, delta=NULL, sd=1, sig.level=0.05, power=NULL,
   parameter is determined from the others. Notice that the last two have
   non-NULL defaults so NULL must be explicitly passed if you want to
   compute them.
+
+  If \code{strict=TRUE} is used, the power will include the probability of
+  rejection in the opposite direction of the true effect, in the two-sided 
+  case. Without this the power will be half the significance level if the 
+  true difference is zero.
 }
 \value{
   Object of class \code{"power.htest"}, a list of the arguments

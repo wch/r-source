@@ -1,7 +1,7 @@
 power.t.test <-
     function(n=NULL, delta=NULL, sd=1, sig.level=0.05, power=NULL,
              type=c("two.sample", "one.sample", "paired"),
-             alternative=c("two.sided", "one.sided"))
+             alternative=c("two.sided", "one.sided"), strict=FALSE)
 {
     if ( sum(sapply(list(n, delta, sd, power, sig.level), is.null)) != 1 )
         stop("exactly one of n, delta, sd, power, and sig.level must be NULL")
@@ -11,10 +11,19 @@ power.t.test <-
 
     tsample <- switch(type, one.sample = 1, two.sample = 2, paired = 1)
     tside <- switch(alternative, one.sided = 1, two.sided = 2)
+    if (tside == 2) delta <- abs(delta)
 
     p.body <- quote({nu <- (n - 1) * tsample
                      pt(qt(sig.level/tside, nu, lower = FALSE),
                         nu, ncp = sqrt(n/tsample) * delta/sd, lower = FALSE)})
+    if (strict & tside == 2) # count rejections in opposite tail
+      p.body <- quote({
+          nu <- (n - 1) * tsample
+          qu<-qt(sig.level/tside, nu, lower = FALSE)
+          pt(qu, nu, ncp = sqrt(n/tsample) * delta/sd, lower = FALSE) +
+            pt(-qu, nu, ncp = sqrt(n/tsample) * delta/sd, lower = TRUE)
+      }) 
+
     if (is.null(power))
         power <- eval(p.body)
     else if (is.null(n))
@@ -49,7 +58,7 @@ power.t.test <-
 
 power.prop.test <-
     function(n=NULL, p1=NULL, p2=NULL, sig.level=0.05, power=NULL,
-             alternative=c("two.sided", "one.sided"))
+             alternative=c("two.sided", "one.sided"), strict=FALSE)
 {
     if ( sum(sapply(list(n, p1, p2, power, sig.level), is.null)) != 1 )
         stop("exactly one of n, p1, p2, power, and sig.level must be NULL")
@@ -63,6 +72,22 @@ power.prop.test <-
                                * sqrt((p1 + p2) * (1 - (p1 + p2)/2))))
                            / sqrt(p1 * (1 - p1) + p2 * (1 - p2)))))
 
+    if (strict & tside == 2) # count rejections in opposite tail
+      p.body <- quote({
+          qu <- qnorm(sig.level/tside, lower = FALSE)
+          d <- abs(p1 - p2)
+          q1 <- 1 - p1
+          q2 <- 1 - p2
+          pbar <- (p1 + p2)/2
+          qbar <- 1 - pbar
+          v1 <- p1 * q1
+          v2 <- p2 * q2
+          vbar <- pbar * qbar
+          pnorm((sqrt(n)*d - qu * sqrt(2 * vbar) )
+                / sqrt(v1 + v2)) +
+          pnorm((sqrt(n)*d + qu * sqrt(2 * vbar) )
+                / sqrt(v1 + v2), lower=FALSE)
+      })
     if (is.null(power))
         power <- eval(p.body)
     else if (is.null(n))

@@ -167,6 +167,14 @@ NEW FEATURES
      o	glm() now accepts `etastart' and `mustart' as alternative ways
 	to express starting values.
 
+     o  power.t.test() now behaves correctly for negative delta in the
+        two-tailed case. 
+
+     o  power.t.test() and power.prop.test() now have a `strict'
+        argument that includes rejections in the "wrong tail" in the
+        power calculation. (Based in part on code suggested by Ulrich
+        Halekoh.)
+
      o	print.matrix() and prmatrix() are now separate functions.
 	prmatrix() is the old S-compatible function, and
 	print.matrix() is a proper print method, currently identical
