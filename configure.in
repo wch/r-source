@@ -53,12 +53,11 @@ AC_SUBST(VERSION)
 ### Defaults
 
 f="${srcdir}/config.site"
-if test -r $f; then echo "loading site script $f"; . $f ; fi
+if test -r ${f}; then echo "loading site script ${f}"; . ${f}; fi
 f="${HOME}/.Rconf"
-if test -r $f; then echo "loading user script $f"; . $f ; fi
+if test -r ${f}; then echo "loading user script ${f}"; . ${f} ; fi
 f="./config.site"
-if test -r $f; then echo "loading build specific script $f"; . $f ; fi
-
+if test -r ${f}; then echo "loading build specific script ${f}"; . ${f} ; fi
 
 ### Handle arguments to configure
 
@@ -155,7 +154,6 @@ AC_ARG_WITH(gnome,
 ### Programs.
 
 AC_PROG_AWK
-
 AC_PROG_INSTALL
 warn_install="redefining INSTALL to be `pwd`/tools/install-sh -c"
 case "${INSTALL}" in
@@ -174,7 +172,6 @@ case "${host}" in
     AC_MSG_WARN([${warn_install}])
     ;;
 esac
-
 AC_PROG_LN_S
 AC_PROG_RANLIB
 AC_PROG_YACC
@@ -346,9 +343,10 @@ if test -n "${BLAS}" && ${use_blas}; then
     [ FLIBS="-lblas ${FLIBS}" BLAS=""
       if ${use_blas_risc}; then
         AC_CHECK_LIB(blas_risc, main,
-	  FLIBS="-lblas_risc ${FLIBS}", , -lblas -lf2c)
+	  FLIBS="-lblas_risc ${FLIBS}", , ${FLIBS})
       fi
-    ])
+    ], ,
+    ${FLIBS})
 fi
 AC_SUBST(BLAS)
 
@@ -736,3 +734,8 @@ R is now configured for ${host}
   FORTRAN compiler:         ${FORT}
   Gnome support:            ${use_gnome}
 ])
+
+dnl Local Variables: ***
+dnl mode: sh ***
+dnl sh-indentation: 2 ***
+dnl End: ***
