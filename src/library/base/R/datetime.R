@@ -67,7 +67,7 @@ as.POSIXct.POSIXlt <- function(x, tz = "")
 as.POSIXct.default <- function(x, tz = "")
 {
     if(inherits(x, "POSIXct")) return(x)
-    if(is.character(x)) return(as.POSIXlt(x))
+    if(is.character(x)) return(as.POSIXct(as.POSIXlt(x)))
     stop(paste("Don't know how to convert `", deparse(substitute(x)),
                "' to class \"POSIXct\"", sep=""))
 }
