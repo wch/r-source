@@ -2,44 +2,52 @@
 
 # ${RHOME}/etc/REMOVE for removing add-on packages
 # Usage:
-#	R REMOVE pkg [lib]
+#	R REMOVE [options] [-l lib] pkg_1 ... pkg_n
 
-if [ "$1" ]
-then
-    pkg=$1
-else
-    echo "usage:  R REMOVE pkg [lib]"
-    exit 1
+VERSION="0.1-0"
+USAGE_MSG="Usage:  R REMOVE [options] [-l lib] pkg_1 ... pkg_n"
+lib=${RHOME}/library
+
+case ${1} in
+  -h|--help|-\?)
+    echo "${USAGE_MSG}"; exit 0 ;;
+  -V|--version)
+    echo "${VERSION}"; exit 0 ;;
+  -l)
+    lib=${2}; shift 2 ;;
+esac
+
+if test ${#} -eq 0; then
+  echo "${USAGE_MSG}"
+  exit 1
 fi
 
-lib=${2:-${RHOME}/library}
-if test -d ${lib}
-then
-    lib=`cd ${lib}; pwd`
+if test -d ${lib} -a -w ${lib}; then
+  cd ${lib}
+  lib=`pwd`
 else    
-    echo "Cannot find directory \`${lib}'"
-    exit 1
+  echo "ERROR:  cannot cd to or remove from directory \`${lib}'"
+  exit 1
 fi    
 
-cd ${lib}
-if test -d ${pkg};
-then
+for pkg in $*; do
+  if test -d ${pkg}; then
     rm -rf ${pkg}
-    cat */TITLE > LibIndex 2> /dev/null
-else
-    echo "There is no pkg \`${pkg}' in lib \`${lib}'"
-    exit 1
-fi
+  else
+    echo "Warning:  there is no pkg \`${pkg}' in lib \`${lib}'"
+    continue
+  fi
+done  
+
+cat */TITLE > LibIndex 2> /dev/null
 
 NO_PERL5=@NO_PERL5@
-
 if ${NO_PERL5}; then
-    echo "*** Cannot update the file"
-    echo "***    ${RHOME}/library/index.html"
-    echo "*** without perl, version 5. Please remove the entry for"
-    echo "*** package \`${pkg}' manually."
-
-    exit 0
+  echo "*** Cannot update the file"
+  echo "***    ${lib}/index.html"
+  echo "*** without Perl version 5.  Please delete the entries for"
+  echo "*** the packages you removed manually."
+  exit 2
 fi
 
-$RHOME/etc/build-help --htmllists
+${RHOME}/etc/build-help --htmllists
