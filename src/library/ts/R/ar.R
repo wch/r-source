@@ -182,28 +182,33 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
         stop("number of series in fit and newdata do not match")
     n <- NROW(newdata)
     if(nser > 1) {
-        x <- rbind(newdata, matrix(newdata[n, ], n.ahead, nser, byrow=TRUE))
+        if(is.null(object$x.intercept)) xint <- rep(0, nser)
+        else xint <- object$x.intercept
+        x <- rbind(sweep(newdata, 2, object$x.mean),
+                   matrix(rep(0, nser), n.ahead, nser, byrow=TRUE))
         if(p > 0) {
             for(i in 1:n.ahead) {
-                x[n+i,] <- x[n+i-1,] %*% ar[1,,]
+                x[n+i,] <- x[n+i-1,] %*% ar[1,,] + xint
                 if(p > 1) for(j in 2:p)
                     x[n+i,] <- x[n+i,] + x[n+i-j,] %*% ar[j,,]
             }
             pred <- x[n+(1:n.ahead), ]
         } else {
-            pred <- matrix(0, n.ahead, nser)
+            pred <- matrix(xint, n.ahead, nser, byrow=TRUE)
         }
         pred <- pred + matrix(object$x.mean, n.ahead, nser, byrow=TRUE)
         colnames(pred) <- colnames(object$var.pred)
         if(se.fit) {
             warning("se.fit not yet implemented for multivariate models")
-            se <- array(NA, dim=c(n.ahead, nser, nser))
+            se <- matrix(NA, n.ahead, nser)
         }
     } else {
+        if(is.null(object$x.intercept)) xint <- 0
+        else xint <- object$x.intercept
         x <- c(newdata-object$x.mean, rep(0, n.ahead))
         if(p > 0) {
             for(i in 1:n.ahead) {
-                x[n+i] <- sum(ar * x[n+i - (1:p)])
+                x[n+i] <- sum(ar * x[n+i - (1:p)]) + xint
             }
             pred <- x[n+(1:n.ahead)]
             if(se.fit) {
@@ -213,7 +218,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
                         psi = double(npsi+object$order+1),
                         as.integer(npsi), PACKAGE="ts")$psi[1:npsi]
                 vars <- cumsum(c(1, psi^2))
-                se <- sqrt(object$var.pred*vars)
+                se <- sqrt(object$var.pred*vars)[1:n.ahead]
             }
         } else {
             pred <- rep(0, n.ahead)
@@ -224,6 +229,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
             pred <- pred + rep(xint, n.ahead)
     }
     pred <- ts(pred, start = st + dt, frequency=xfreq)
+    if(se.fit) se <- ts(se, start = st + dt, frequency=xfreq)
     if(se.fit) return(pred, se) else return(pred)
 }
 

@@ -32,7 +32,7 @@ ar.burg <-
     coefs <- matrix(z$coefs, order.max, order.max)
     partialacf <- array(diag(coefs), dim = c(order.max, 1, 1))
     var.pred <- if(var.method == 1) z$var1 else z$var2
-    xaic <- n.used * log(var.pred) + 2 * (0:order.max)
+    xaic <- n.used * log(var.pred) + 2 * (0:order.max) + 2 * demean
     xaic <- xaic - min(xaic)
     names(xaic) <- 0:order.max
     order <- if (aic) (0:order.max)[xaic == 0] else order.max

@@ -28,7 +28,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     if(demean) {
         xm <- apply(x, 2, mean)
         x <- sweep(x, 2, xm)
-    } else xm <- 0
+    } else xm <- rep(0, nser)
     ## Fit models of increasing order
 
     for (m in order.min:order.max)
@@ -61,7 +61,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         seA[[m - order.min+1]] <- if(ncol(varA) > 0) sqrt(diag(varA))
         else numeric(0)
         aic[m - order.min+1] <-
-            n.used*log(det(varE[[m-order.min+1]]))+2*nser*(nser*m+1)
+            n.used*log(det(varE[[m-order.min+1]]))+2*nser*(nser*m+demean)
     }
 
     m <- which(aic==min(aic)) + order.min - 1 # Determine best model
