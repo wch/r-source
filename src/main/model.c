@@ -1266,7 +1266,7 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     nc = length(data);
     nr = 0;			/* -Wall */
-    if (!isNull(data)) {
+    if (nc > 0) {
 	nr = nrows(VECTOR(data)[0]);
 	for (i = 0; i < nc; i++) {
 	    ans = VECTOR(data)[i];
