@@ -59,7 +59,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         } else result <- vector("list", max(asgn.e) + 1)
         names(result) <- nmstrata
         lmcall$formula <- form <-
-            update(formula, paste(". ~ .-", deparse(errorterm)))
+            update(formula, paste(". ~ .-", deparse(errorterm, width = 500)))
         Terms <- terms(form)
         lmcall$method <- "model.frame"
         mf <- eval(lmcall, parent.frame())
@@ -176,6 +176,8 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
     } else {
         if(rdf > 0) {
             resid <- as.matrix(x$residuals)
+            wt <- object$weights
+            if(!is.null(wt)) resid <- resid * wt^0.5
             nterms <- nterms + 1
             df <- c(df, rdf)
             ss <- rbind(ss, colSums(resid^2))

@@ -375,6 +375,9 @@ BUG FIXES
 
     o	as.list(<logical>) now works properly (PR#1926).
 
+    o	The residual SSq printed from an aov() fit with weights is
+	now the weighted SSq.  (PR#1930)
+
 
 
 		CHANGES IN R VERSION 1.5.1
