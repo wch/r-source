@@ -1,3 +1,21 @@
+		CHANGES IN R VERSION 0.62.3
+
+NEW FEATURES
+
+    o   New generic function preplot().
+
+    o	A new R BATCH interface for non-interactive execution.
+
+    o   Added `offline' argument to help() for producing hardcopy via
+	latex and dvips.
+
+BUG FIXES
+
+    o	The handling of extra FORTRAN libraries (f2c-related and BLAS)
+	should now be correct.  Via SHLIBLDFLAGS, add-ons will also be
+	linked against these libraries.
+
+
 		CHANGES IN R VERSION 0.62.2
 
 (The new functions predict.glm, poly, aov, alias, biplot.default and
