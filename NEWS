@@ -1,6 +1,23 @@
 				Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       1.2 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 1.2.0
+
+
+NEW FEATURES
+
+    o   hclust() takes new argument `members' allowing dissimilarity
+	matrices both for singletons (as until now) and clusters. 
+
+
+
+	**************************************************
+	*						 *
 	*	       1.1 SERIES NEWS			 *
 	*						 *
 	**************************************************

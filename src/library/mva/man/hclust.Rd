@@ -7,7 +7,7 @@
   Performs a hierarchical cluster analysis on a set of dissimilarities.
 }
 \usage{
-hclust(d, method = "complete")
+hclust(d, method = "complete", members=NULL)
 
 plot.hclust(hclust.obj, labels, hang = 0.1, \dots)
 }
@@ -19,6 +19,8 @@ plot.hclust(hclust.obj, labels, hang = 0.1, \dots)
     \code{"ward"}, \code{"single"}, \code{"complete"},
     \code{"average"}, \code{"mcquitty"}, \code{"median"} or
     \code{"centroid"}.}
+
+  \item{members}{\code{NULL} or a vector with length size of \code{d}.}
 
   \item{hclust.obj}{an object of the type produced by \code{hclust}.}
 
@@ -88,6 +90,18 @@ plot.hclust(hclust.obj, labels, hang = 0.1, \dots)
   for clusters with characteristics somewhere between
   the single and complete link methods.
 
+  If \code{members!=NULL}, then \code{d} is taken to be a
+  dissimilarity matrix between clusters instead of dissimilarities
+  between singletons and \code{members} gives the number of observations
+  per cluster. This way the hierarchical cluster algorithm can be ``started
+  in the middle of the dendrogram'', e.g., in order to reconstruct the
+  part of the tree above a cut (see examples). Dissimilarities between
+  clusters can be efficiently computed (i.e., without \code{hclust}
+  itself) only for a limited number of distance/linkage combinations,
+  the simplest one being squared Euclidean distance and centroid
+  linkage. In this case the dissimilarities between the clusters are
+  the squared Euclidean distances between cluster means.
+
   In hierarchical cluster displays, a decision is needed at each merge to
   specify which subtree should go on the left and which on the right.
   Since, for \eqn{n} observations there are \eqn{n-1} merges,
@@ -141,6 +155,23 @@ data(USArrests)
 hc <- hclust(dist(USArrests), "ave")
 plot(hc, hang=-1)
 plot(hc)
+
+## Do the same with centroid clustering and squared Euclidean distance,
+## cut the tree into ten clusters and reconstruct the upper part of the
+## tree from the cluster centers.
+hc <- hclust(dist(USArrests)^2, "cen")
+memb <- cutree(hc, k=10)
+cent <- NULL
+for(k in 1:10){
+  cent <- rbind(cent, apply(USArrests[memb==k,,drop=FALSE], 2, mean))
+}
+hc1 <- hclust(dist(cent)^2, method="cen", members=table(memb))
+opar <- par(mfrow=c(1,2))
+plot(hc, labels=FALSE, hang=-1)
+title(main="Original Tree")
+plot(hc1, labels=FALSE, hang=-1)
+title("Re-start from 10 clusters")
+par(opar)
 }
 \keyword{multivariate}
 \keyword{cluster}

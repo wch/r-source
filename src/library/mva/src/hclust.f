@@ -14,12 +14,14 @@ C  MEMBR, NN, DISNN  vectors of length N, used to store      C
 C                    cluster cardinalities, current nearest  C
 C                    neighbour, and the dissimilarity assoc. C
 C                    with the latter.                        C
+C                    MEMBR must be initialized by R to the   C
+C                    default of  rep(1, N)                   C
 C  FLAG              boolean indicator of agglomerable obj./ C
 C                    clusters.                               C
 C                                                            C
 C  F. Murtagh, ESA/ESO/STECF, Garching, February 1986.       C
-C  R. Ihaka, Modifications for R, December 1996              C
-C                                                            C
+C  Modifications for R: Ross Ihaka, Dec 1996                 C
+C                       Fritz Leisch, Jun 2000               C
 C------------------------------------------------------------C
       SUBROUTINE HCLUST(N,LEN,IOPT,IA,IB,CRIT,MEMBR,NN,DISNN,
      X                FLAG,DISS)
@@ -41,7 +43,9 @@ C
 C  Initializations
 C
       DO I=1,N
-         MEMBR(I)=1.
+C        We do not initialize MEMBR in order to be able to restart the
+C        algorithm from a cut.
+C        MEMBR(I)=1.
          FLAG(I)=.TRUE.
       ENDDO
       NCL=N
