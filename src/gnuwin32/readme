@@ -1,7 +1,7 @@
-R 0.99.0 for Windows 9x and NT
+R 1.0.0 for Windows 9x and NT
 ==============================
 
-This distribution contains a binary distribution of R-0.99.0 to run on
+This distribution contains a binary distribution of R-1.0.0 to run on
 Windows 95, 98 and NT4 on Intel/clone chips. It is designed to
 be as close as possible to the implementation on Unix, but see the
 list of differences below. The port was by Guido Masarotto with
@@ -15,27 +15,27 @@ Installation
 
 The distribution consists of several zip files:
 
-rw0990b1.zip and rw0990b2.zip		the base system
-rw0990h.zip				text help
-rw0990ch.zip				compiled HTML help
-rw0990w.zip				HTML help files
-rw0990l.zip				latex help for offline help
-rw0990d1.zip				PDF manuals except
-rw0990d2.zip				PDF version of the reference manual
-rw0990sp.zip				files to install source packages
+rw1000b1.zip and rw1000b2.zip		the base system
+rw1000h.zip				text help
+rw1000ch.zip				compiled HTML help
+rw1000w.zip				HTML help files
+rw1000l.zip				latex help for offline help
+rw1000d1.zip				PDF manuals except
+rw1000d2.zip				PDF version of the reference manual
+rw1000sp.zip				files to install source packages
 
 and optionally the installer rwinst.exe.
 
 The simplest way to install is to run the installer (double-click on
 the icon for rwinst.exe and navigate its wizard-like pages).
 
-To install manually, unpack rw0990b1.zip and rw0990b2.zip anywhere you
-like. It will unpack to a directory tree under rw0990. The help,
+To install manually, unpack rw1000b1.zip and rw1000b2.zip anywhere you
+like. It will unpack to a directory tree under rw1000. The help,
 compiled HTML, HTML and latex help files are in separate files
-rw0990h.zip, rw0990ch.zip rw0990w.zip and rw0990l.zip which should be
-unpacked in the same directory you unpacked rw0990b1.zip.  File
-rw0990d.zip contains PDF versions of the (draft) manuals for R, which
-unpack into rw0990/doc/manual.
+rw1000h.zip, rw1000ch.zip rw1000w.zip and rw1000l.zip which should be
+unpacked in the same directory you unpacked rw1000b1.zip.  File
+rw1000d.zip contains PDF versions of the (draft) manuals for R, which
+unpack into rw1000/doc/manual.
 
 You should install either the text or compiled HTML help.
 
@@ -43,14 +43,14 @@ You should install either the text or compiled HTML help.
 Usage
 =====
 
-There are two executables in rw0990\bin:
+There are two executables in rw1000\bin:
 
 GUI:
 
 Rgui.exe runs as a standard Windows GUI executable and provides an R
 console in its own window. It takes the standard R command-line
 arguments; these are most easily set by making a shortcut to
-...\rw0990\bin\rgui.exe and adding the arguments in the Target field.
+...\rw1000\bin\rgui.exe and adding the arguments in the Target field.
 Set the `Start in' field of the shortcut to the directory you want to use
 as the working directory (where workspaces and files are saved and
 loaded from).
@@ -147,7 +147,7 @@ help(topic, htmlhelp=T).  Using help.start() sets the browser to the
 top-level page, from which you can access a search engine.
 
 (v) Latex help files are available for use with help(topic, offline=T).
-You will need to customize the file rw0990\bin\helpPRINT.bat: it
+You will need to customize the file rw1000\bin\helpPRINT.bat: it
 contains instructions.
 
 
@@ -191,7 +191,7 @@ Adding packages
 
 Binaries for many packages are available at
 CRAN/bin/windows/windows-NT/contrib. These are zip files which should
-be unpacked in rw0990\library. They are then available for use. You
+be unpacked in rw1000\library. They are then available for use. You
 can also use the installer rwinst.exe to selectively unpack the zip
 files.
 
@@ -201,10 +201,10 @@ search engine can be updated from a running R process by the command
 	link.html.help()
 
 provided the owner of the process has write permission on
-rw0990\doc\html.  If you have the source-package files and Perl
+rw1000\doc\html.  If you have the source-package files and Perl
 installed you can use
 
-	cd ...\rw0990\src\gnuwin32\help
+	cd ...\rw1000\src\gnuwin32\help
 	make indices
 
 Private libraries of packages can be used and can be specified by the
@@ -221,7 +221,7 @@ in the environment or on the command line, or add the line
 to your .Rprofile or at the end of R_HOME\etc\Rprofile.
 
 To install a package from source code you need the source-package
-distribution rw0990sp.zip installed (but not the R source). This contains
+distribution rw1000sp.zip installed (but not the R source). This contains
 detailed instructions.
 
 

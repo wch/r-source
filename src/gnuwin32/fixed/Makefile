@@ -31,7 +31,7 @@ r/rw-FAQ.html: ../rw-FAQ.texi
 	makeinfo --no-headers --number-sections -o $@ $<
 
 
-fixh: h/config.h ../../../date-stamp ../../include/FFDecl.h ../../include/FFTab.h
+fixh: h/config.h ../../../date-stamp ../../include/FFDecl.h ../../include/FFTab.h ../../../VERSION
 	$(CP) -p ./h/config.h ./h/psignal.h ../../include
 	sh ./GETVERSION > ../../include/Rversion.h
 	sh ./GETCONFIG > ../../include/Rconfig.h

@@ -58,11 +58,10 @@ TESTout-sloppy = $(TESTsrc-sloppy:.R=.Rout)
 all: test-Specific
 test-Specific-strict: $(TESTout-strict)
 test-Specific-sloppy: $(TESTout-sloppy)
-# first RVAL_IF_DIFF will be zero when people give us valid tests
 test-Specific:
 	@echo "running strict specific tests"
 	@$(MAKE) -f $(RHOME)/src/gnuwin32/check/Maketests \
-	  test-Specific-strict RVAL_IF_DIFF=0
+	  test-Specific-strict RVAL_IF_DIFF=1
 	@echo "running sloppy specific tests"
 	@$(MAKE) -f $(RHOME)/src/gnuwin32/check/Maketests \
 	  test-Specific-sloppy RVAL_IF_DIFF=0

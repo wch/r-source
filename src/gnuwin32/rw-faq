@@ -1,6 +1,6 @@
 R for Windows FAQ
 Frequently Asked Questions on R for Windows
-Version for rw0990
+Version for rw1000
 Brian Ripley
 
 
@@ -61,7 +61,7 @@ that version. The main R FAQ can be found at
 
 There have been two versions of R for Windows, but only is under active
 development, that described here. It is often called something like
-`rw0990' (although not officially). The information here applies only
+`rw1000' (although not officially). The information here applies only
 to recent versions (`rw0901' or later).
 
 There is also information on the use of R for Windows in the Venables &
@@ -414,10 +414,10 @@ scrollbar.
 7.1 How can I compile R from source?
 ====================================
 
-Get the R sources. Suppose you want to compile R-0.99.0.
+Get the R sources. Suppose you want to compile R-1.0.0.
 
-     tar zxvf R-0.99.0.tgz
-     cd R-0.99.0
+     tar zxvf R-1.0.0.tgz
+     cd R-1.0.0
      cd src\gnuwin32
 
 Now read the `INSTALL' file and set up all the tools needed. Then you

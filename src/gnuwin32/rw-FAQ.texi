@@ -3,7 +3,7 @@
 @setfilename rw-FAQ.info
 @settitle R for Windows FAQ
 @setchapternewpage on
-@set VERSION rw0990
+@set VERSION rw1000
 @c %**end of header
 
 @dircategory Programming
@@ -519,11 +519,11 @@ later) use the horizontal scrollbar.
 @node How can I compile R from source?, How do I debug code that I have compiled and dyn.load-ed?, Building from Source, Building from Source
 @section How can I compile R from source?
 
-Get the R sources. Suppose you want to compile R-0.99.0.
+Get the R sources. Suppose you want to compile R-1.0.0.
 
 @example
-tar zxvf R-0.99.0.tgz
-cd R-0.99.0
+tar zxvf R-1.0.0.tgz
+cd R-1.0.0
 cd src\gnuwin32
 @end example
 @noindent
