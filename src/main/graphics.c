@@ -97,15 +97,10 @@ static char HexDigits[] = "0123456789ABCDEF";
  *
  */
 
-#ifndef DEG2RAD
-#define	DEG2RAD		0.01745329251994329576
-#endif
-
 double Log10(double x)
 {
     return (R_FINITE(x) && x > 0.0) ? log10(x) : NA_REAL;
 }
-
 
 /* In interpreted R, units are as follows:
  *	1 = "user"
@@ -2968,7 +2963,7 @@ static void clipRect(double x0, double y0, double x1, double y1, int coords,
     else {
 	int npts;
 	double *xcc, *ycc;
-	xcc = ycc = 0;		/* -Wall */	
+	xcc = ycc = 0;		/* -Wall */
 	npts = GClipPolygon(xc, yc, 4, coords, 0, xcc, ycc, dd);
 	if (npts > 1) {
 	    xcc = (double*)R_alloc(npts, sizeof(double));
@@ -3075,7 +3070,7 @@ double GStrHeight(char *str, int units, DevDesc *dd)
     h = n * GConvertYUnits(1, CHARS, DEVICE, dd);
     if (units != DEVICE)
 	h = GConvertYUnits(h, DEVICE, units, dd);
-    return h;    
+    return h;
 #endif
 }
 
@@ -3096,6 +3091,7 @@ void GText(double x, double y, int coords, char *str,
         char *s, *sbuf, *sb;
 	int i, n;
 	double xoff, yoff;
+	double sin_rot, cos_rot;/* sin() & cos() of rot{ation} in radians */
 #ifdef BUG61
 	double yadj;
 	/* Fixup for string centering. */
@@ -3123,6 +3119,9 @@ void GText(double x, double y, int coords, char *str,
 	sbuf = (char*)malloc(strlen(str) + 1);
 	sb = sbuf;
 	i = 0;
+	sin_rot = DEG2RAD * rot;
+	cos_rot = cos(sin_rot);
+	sin_rot = sin(sin_rot);
         for(s = str; ; s++) {
             if (*s == '\n' || *s == '\0') {
 		*sb = '\0';
@@ -3131,8 +3130,8 @@ void GText(double x, double y, int coords, char *str,
 		/* (translate verticaly then rotate). */
                 yoff = (1 - yc) * (n - 1) - i - yadj;
 		yoff = GConvertYUnits(yoff, CHARS, INCHES, dd);
-		xoff = - yoff * sin(DEG2RAD * rot);
-		yoff = yoff * cos(DEG2RAD * rot);
+		xoff = - yoff * sin_rot;
+		yoff = yoff * cos_rot;
 		GConvert(&xoff, &yoff, INCHES, NDC, dd);
 		xoff = x + xoff;
 		yoff = y + yoff;
@@ -3145,8 +3144,8 @@ void GText(double x, double y, int coords, char *str,
 			yc = 0.5;
 		    yoff = (1 - yc)*(n - 1) - i;
 		    yoff = GConvertYUnits(yoff, CHARS, INCHES, dd);
-		    xoff = - yoff*sin(DEG2RAD*rot);
-		    yoff = yoff*cos(DEG2RAD*rot);
+		    xoff = - yoff*sin_rot;
+		    yoff = yoff*cos_rot;
 		    xoff = x + xoff;
 		    yoff = y + yoff;
 		} else {
@@ -3174,7 +3173,7 @@ void GText(double x, double y, int coords, char *str,
 			    double maxDepth = 0;
 			    char *ss;
 			    for (ss=sbuf; *ss; ss++) {
-				GMetricInfo(*ss, &h, &d, &w, 
+				GMetricInfo(*ss, &h, &d, &w,
 					    INCHES, dd);
 				if (h > maxHeight) maxHeight = h;
 				if (d > maxDepth) maxDepth = d;
@@ -3185,10 +3184,8 @@ void GText(double x, double y, int coords, char *str,
 		    } else {
 			height = GStrHeight(sbuf, INCHES, dd);
 		    }
-		    xleft = xoff - xc*width*cos(DEG2RAD*rot) + 
-			yc*height*sin(DEG2RAD*rot);
-		    ybottom = yoff - xc*width*sin(DEG2RAD*rot) -
-			yc*height*cos(DEG2RAD*rot);
+		    xleft  = xoff - xc*width*cos_rot + yc*height*sin_rot;
+		    ybottom= yoff - xc*width*sin_rot - yc*height*cos_rot;
 		} else {
 		    xleft = xoff;
 		    ybottom = yoff;
@@ -3277,28 +3274,29 @@ void GArrow(double xfrom, double yfrom, double xto, double yto, int coords,
 
     GConvert(&xfromInch, &yfromInch, coords, INCHES, dd);
     GConvert(&xtoInch, &ytoInch, coords, INCHES, dd);
+    angle *= DEG2RAD;
     if(code & 1) {
 	xc = xtoInch - xfromInch;
 	yc = ytoInch - yfromInch;
 	rot= atan2(yc, xc);
-	x[0] = xfromInch + length * cos(rot+angle*DEG2RAD);
-	y[0] = yfromInch + length * sin(rot+angle*DEG2RAD);
+	x[0] = xfromInch + length * cos(rot+angle);
+	y[0] = yfromInch + length * sin(rot+angle);
 	x[1] = xfromInch;
 	y[1] = yfromInch;
-	x[2] = xfromInch + length * cos(rot-angle*DEG2RAD);
-	y[2] = yfromInch + length * sin(rot-angle*DEG2RAD);
+	x[2] = xfromInch + length * cos(rot-angle);
+	y[2] = yfromInch + length * sin(rot-angle);
 	GPolyline(3, x, y, INCHES, dd);
     }
     if(code & 2) {
 	xc = xfromInch - xtoInch;
 	yc = yfromInch - ytoInch;
 	rot= atan2(yc, xc);
-	x[0] = xtoInch + length * cos(rot+angle*DEG2RAD);
-	y[0] = ytoInch + length * sin(rot+angle*DEG2RAD);
+	x[0] = xtoInch + length * cos(rot+angle);
+	y[0] = ytoInch + length * sin(rot+angle);
 	x[1] = xtoInch;
 	y[1] = ytoInch;
-	x[2] = xtoInch + length * cos(rot-angle*DEG2RAD);
-	y[2] = ytoInch + length * sin(rot-angle*DEG2RAD);
+	x[2] = xtoInch + length * cos(rot-angle);
+	y[2] = ytoInch + length * sin(rot-angle);
 	GPolyline(3, x, y, INCHES, dd);
     }
 }
@@ -4864,6 +4862,8 @@ static LineTYPE linetype[] = {
     { "dashed",	 LTY_DASHED  },
     { "dotted",	 LTY_DOTTED  },
     { "dotdash", LTY_DOTDASH },
+    { "longdash",LTY_LONGDASH},
+    { "twodash", LTY_TWODASH },
     { NULL,	 0	     },
 };
 

@@ -53,8 +53,6 @@ XPoint *XRotTextExtents(Display*, XFontStruct*, double,
 
 /* ---------------------------------------------------------------------- */
 
-extern double deg2rad;/* pi/180 = .017453... */
-
 #endif /* _XVERTEXT_INCLUDED_ */
 
 
