@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-13, @value{FAQ-YEAR}-11-08
+@set FAQ-VERSION 1.8-14, @value{FAQ-YEAR}-11-08
 @set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -440,7 +440,7 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-10-26:
+@c Linux binaries as of 2003-11-08:
 @c
 @c debian    woody i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
 @c           sarge i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
@@ -453,13 +453,14 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c           8.0   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.1   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.2   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           9.0   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c vinelinux 2.6   i386  1.8.0  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains Debian
 stable/testing packages for the i386 platform (now part of the Debian
 distribution and maintained by Dirk Eddelbuettel), Mandrake 9.0/9.1 i386
 packages by Michele Alzetta, Red Hat 7.x/8.x/9 i386 packages by Martyn
-Plummer, SuSE 7.3/8.0/8.1/8.2 i386 packages by Detlef Steuer, and
+Plummer, SuSE 7.3/8.0/8.1/8.2/9.0 i386 packages by Detlef Steuer, and
 VineLinux 2.6 i386 packages by Susunu Tanimura.
  
 The Debian packages can be accessed through APT, the Debian package
