@@ -13,6 +13,9 @@ Support for bzip-ed connections has been added.
 rw1051
 ======
 
+The miniR distribution has grown to 8 floppies (as the recommended
+packages are putting on weight).
+
 file.rename() (which is by default used when saving workspaces) now
 uses Windows API rather than ISO C functions.  This works around a
 reported problem with Windows thinking a file was in use, and on
@@ -29,7 +32,7 @@ hence to circumvent it.
 File | Print on the menu of a windows() graphics device was not working.
 
 The binary distribution could not make packages which needed to link
-to Rblas.dll
+to Rblas.dll.
 
 
 
