@@ -2,7 +2,8 @@
 \alias{checkFF}
 \title{Check Foreign Function Calls}
 \usage{
-checkFF(file, package, lib.loc = .lib.loc)
+checkFF(file, package, lib.loc = .lib.loc,
+        verbose = getOption("verbose"))
 }
 \description{
   Performs checks on calls to compiled code from R code.  Currently only
@@ -17,13 +18,15 @@ checkFF(file, package, lib.loc = .lib.loc)
     package is checked.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search for \code{package}.}
+  \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
+    printed.}
 }
 \seealso{
   \code{\link{.C}},
   \code{\link{.Fortran}}.
 }
 \examples{
-checkFF(package = "ts")
+checkFF(package = "ts", verbose = TRUE)
 }
 \keyword{programming}
 \keyword{utilities}

@@ -1,4 +1,6 @@
-checkFF <- function(file, package, lib.loc = .lib.loc) {
+checkFF <-
+function(file, package, lib.loc = .lib.loc,
+         verbose = getOption("verbose")) {
     if(missing(file)) {
         if(missing(package))
             stop("you must specify `file' or `package'")
@@ -12,8 +14,9 @@ checkFF <- function(file, package, lib.loc = .lib.loc) {
                (e[[1]] == as.name(".Fortran"))) {
                 parg <- e[["PACKAGE"]]
                 if(is.null(parg)) parg <- "MISSING"
-                cat(e[[1]], "(", deparse(e[[2]]), ", ...): ", parg,
-                    "\n", sep = "")
+                if((parg == "MISSING") || verbose)
+                    cat(e[[1]], "(", deparse(e[[2]]), ", ...): ", parg,
+                        "\n", sep = "")
             }
             for(i in seq(along = e)) Recall(e[[i]])
         }
