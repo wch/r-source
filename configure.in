@@ -395,7 +395,7 @@ if test -n "${BLAS}" && ${use_atlas}; then
       AC_CHECK_LIB(cblas, cblas_dgemm,
         [ FLIBS="-lcblas ${FLIBS}"
 	  AC_CHECK_LIB(f77blas, ${fun},
-            FLIBS="-lf77blas ${FLIBS}", , ${FLIBS}),
+            FLIBS="-lf77blas ${FLIBS}", , ${FLIBS})
 	], ,${FLIBS})
     ], ,
     ${FLIBS})

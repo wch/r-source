@@ -3614,7 +3614,7 @@ if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
 else
   echo "$ac_t""no" 1>&6
 fi
-,
+
 	
 else
   echo "$ac_t""no" 1>&6
