@@ -167,7 +167,10 @@ BUG FIXES
 	library, and so update.packages() would only update a bundle
 	in the first location in lib.loc.
 
-
+    o   fisher.test() could miscalculate odds ratio and confidence
+        interval for tables with large entries, due to numerical
+        overflow. 
+ 
 
 		CHANGES IN R VERSION 1.5.0
 
