@@ -6,14 +6,14 @@ format.AsIs(x, width = 12, \dots)
 format.data.frame(x, \dots, justify = "none")
 format.default(x, trim = FALSE, digits = getOption("digits"),
                nsmall = 0, justify = c("left", "right", "none"),
-               big.mark = "", big.interval = 3,
+               big.mark = "",   big.interval = 3,
              small.mark = "", small.interval = 5,
            decimal.mark = ".", \dots)
 format.factor(x, \dots)
 format.pval(pv, digits = max(1, getOption("digits") - 2),
             eps = .Machine$double.eps, na.form = "NA")
 
-prettyNum(x, big.mark = "", big.interval = 3,
+prettyNum(x, big.mark = "",   big.interval = 3,
            small.mark = "", small.interval = 5,
          decimal.mark = ".", ...)
 }
@@ -80,8 +80,10 @@ prettyNum(x, big.mark = "", big.interval = 3,
   \code{format.data.frame} formats the data frame column by column,
   applying the appropriate method of \code{format} for each column.
 
-  \code{prettyNum} is the utility function for prettifying its first
-  argument which is left unchanged if the other arguments are not changed.
+  \code{prettyNum} is the utility function for prettifying \code{x}. If
+  \code{x} is not a character, \code{format(x[i], ...)} is applied to
+  each element, and then it is left unchanged if all the other arguments
+  are at their defaults.
 }
 \note{
   Currently \code{format} drops trailing zeroes, so \code{format(6.001,
@@ -105,11 +107,15 @@ format(zz, justify="left")
 format(13.7)
 format(13.7, nsmall=3)
 
-r <- c("76491283764.97430", "29.1234567890123", "-7.1234", "-100.1","1123")
-prettyNum(r, big.mark = "'")
-prettyNum(r, big.mark = "'", small.mark = " ", decimal.mark = ",")
+r <- c("76491283764.97430", "29.12345678901", "-7.1234", "-100.1","1123")
+## American:
+prettyNum(r, big.mark = ",")
+## Some Europeans:
+prettyNum(r, big.mark = "'", decimal.mark = ",")
 
-cbind(format(pnorm(1:7, lower = FALSE), small.mark = " ", digits = 15))
+pN <- pnorm(1:7, lower=FALSE)
+cbind(format (pN, small.mark = " ", digits = 15))
+cbind(formatC(pN, small.mark = " ", digits = 17, format = "f"))
 
 ## handling of quotes
 zz <- data.frame(a=I("abc"), b=I("def\"gh"))
