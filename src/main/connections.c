@@ -2331,7 +2331,7 @@ void putdots(int *pold, int new)
 	if((i+1) % 50 == 0) REprintf("\n");
 	else if((i+1) % 10 == 0) REprintf(" ");
     }
-    fflush(stderr);
+    if(R_Consolefile) fflush(R_Consolefile);
 }
 
 

@@ -1,10 +1,24 @@
-download.file <- function(url, destfile, method = "internal",
+download.file <- function(url, destfile, method,
                           quiet = FALSE, mode = "w")
 {
-    method <- if(missing(method)) "internal" else
+    method <- if(missing(method)) "auto" else
     match.arg(method,
-              c("internal", "wget", "lynx", "cp", "socket"))
+              c("auto", "internal", "wget", "lynx", "socket"))
 
+    if(method == "auto") {
+        if(capabilities("libxml"))
+            method <- "internal"
+        else if(length(grep("^file:", url)))
+            method <- "internal"
+        else if(system("wget --help > /dev/null")==0)
+            method <- "wget"
+        else if(system("lynx -help > /dev/null")==0)
+            method <- "lynx"
+        else if (length(grep("^http:",url))==0)
+            method <- "socket"
+        else
+            stop("No download method found")
+    }
     if(method == "internal")
         status <- .Internal(download(url, destfile, quiet, mode))
     else if(method == "wget")
@@ -16,10 +30,6 @@ download.file <- function(url, destfile, method = "internal",
                                    "' -O", destfile, sep=""))
     else if(method == "lynx")
         status <- system(paste("lynx -dump '", url, "' >", destfile, sep=""))
-    else if(method == "cp") {
-        url <- sub("^file:", "", url)
-        status <- system(paste("cp", url, destfile))
-    }
     else if (method == "socket") {
         status <- 0
         httpclient(url, check.MIME.type=TRUE, file=destfile)

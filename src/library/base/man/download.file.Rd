@@ -2,21 +2,19 @@
 \alias{download.file}
 \title{Download File from the Internet}
 \description{
-  This function can be used to download a file from the Internet either
-  using a helper application such as \code{wget} or by making a direct
-  socket connection.
+  This function can be used to download a file from the Internet.
 }
 \usage{
-download.file(url, destfile, method = "internal", quiet = FALSE, mode="w")
+download.file(url, destfile, method, quiet = FALSE, mode="w")
 }
 \arguments{
-  \item{url}{A character string with the URL of a file to be downloaded.}
+  \item{url}{A character string with the URL of a resource to be downloaded.}
   \item{destfile}{A character string with the name where the downloaded
     file is saved.  For the \code{"internal"} method tilde-expansion is
     performed.}
   \item{method}{Tool to be used for downloading files.  Currently
     download methods \code{"internal"}, \code{"wget"}, \code{"lynx"} 
-    \code{"cp"} and \code{"socket"} are available.  To use \code{"wget"}
+    and \code{"socket"} are available.  To use \code{"wget"}
     or \code{"lynx"} the executable must be installed on your system and
     in your path. To use \code{"socket"} the file must be on an
     \code{HTTP} server, in plain text, and your system must allow socket
@@ -30,22 +28,21 @@ download.file(url, destfile, method = "internal", quiet = FALSE, mode="w")
 \details{
   The function \code{download.file} can be used to download a single
   file as described by \code{url} from the internet and store it in
-  \code{destfile}.  It makes a system call to the tool given by
-  \code{method}, the respective program must be installed on your system
-  and be in the search path for executables.  If method \code{"cp"} is
-  used, then the \code{url} must start with \code{"file:"} and give the
-  path to a local file.
+  \code{destfile}.
   The \code{url} must start with a type specification such as
-  \code{"http://"}, \code{"ftp://"} or \code{"file:"}.
+  \code{"http://"}, \code{"ftp://"} or \code{"file://"}.
 
   For the \code{"internal"} method proxies can be specified via
   environment variables.  Setting \code{"no_proxy"} stops any proxy
   being tried.  Otherwise the setting of \code{"http_proxy"} or
   \code{"ftp_proxy"} (or failing that, the all upper-case version) is
   consulted and if non-empty used as a proxy site.
-  For FTP transfers, the username
-  and password on the proxy can be specified by \code{"ftp_proxy_user"}
-  and \code{"ftp_proxy_password"}.
+  For FTP transfers, the username and password on the proxy can be
+  specified by \code{"ftp_proxy_user"} and \code{"ftp_proxy_password"}.
+
+  For methods \code{"wget"} and \code{"lynx"} it makes a system call to
+  the tool given by \code{method}, and the respective program must be
+  installed on your system and be in the search path for executables.
 }
 \note{
   Cacheing proxies and firewalls may well not allow method \code{"socket"}
