@@ -70,7 +70,7 @@ smooth(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
   \code{\link{lowess}};
   \code{\link[stats]{loess}},
   \code{\link[stats]{supsmu}} and
-  \code{\link[stats]{smooth.spline}} in package \pkg{modreg}.
+  \code{\link[stats]{smooth.spline}}.
 }
 \examples{
 ## see also   demo(smooth) !

@@ -19,7 +19,7 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
 }
 \details{
   The namespace can be specified in several ways.  Using, for example,
-  \code{ns="modreg"} is the most direct, but a loaded package with a
+  \code{ns="stats"} is the most direct, but a loaded package with a
   namespace can be specified via any of the methods used for
   \code{\link{get}}: \code{ns} can also be the environment
   \code{<namespace:foo>}.
@@ -45,7 +45,7 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
   \code{\link{get}}, \code{\link{fix}}, \code{\link{getS3method}}
 }
 \examples{\dontrun{
-fixInNamespace("predict.ppr", "modreg")
+fixInNamespace("predict.ppr", "stats")
 ## alternatively
 fixInNamespace("predict.ppr", pos = 5)
 }}

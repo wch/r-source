@@ -39,6 +39,6 @@ getAnywhere(x)
 }
 \examples{
 getAnywhere("format.dist")
-getAnywhere("simpleLoess") # not exported from modreg
+getAnywhere("simpleLoess") # not exported from stats
 }
 \keyword{data}
