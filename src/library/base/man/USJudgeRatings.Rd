@@ -2,7 +2,9 @@
 \alias{USJudgeRatings}
 \title{Lawyers' Ratings of State Judges in the US Superior Court}
 \usage{data(USJudgeRatings)}
-\format{A data frame containing 43 observations on 12 numeric variables.
+\format{
+  A data frame containing 43 observations on 12 numeric variables.
+
   \tabular{rll}{
     [,1] \tab CONT \tab Number of contacts of lawyer with judge.\cr
     [,2] \tab INTG \tab Judicial integrity.\cr
@@ -15,7 +17,7 @@
     [,9] \tab ORAL \tab Sound oral rulings.\cr
     [,10] \tab WRIT \tab Sound written rulings.\cr
     [,11] \tab PHYS \tab Physical ability.\cr
-    [,12] \tab RTEN \tab Worthy of retention.\cr
+    [,12] \tab RTEN \tab Worthy of retention.
   }
 }
 \description{

@@ -3,21 +3,22 @@
 \title{Attitudes Toward Supervisors}
 \usage{data(attitude)}
 \description{Not available (yet).}
-\format{A data from with 30 observations on 7 variables.
+\format{
+  A data from with 30 observations on 7 variables.
+
   \tabular{rlll}{
-      [,1] \tab rating   \tab numeric  \tab Overall rating \cr
-      [,2] \tab complaints\tab numeric \tab Handling of employee complaints \cr
-      [,3] \tab privileges\tab numeric \tab Gives special privileges \cr
-      [,4] \tab learning \tab numeric  \tab Opportunity to learn \cr      
-      [,5] \tab raises   \tab numeric  \tab Gives raises \cr
-      [,6] \tab critical \tab numeric  \tab Too critical \cr
-      [,7] \tab advancel \tab numeric  \tab Advancement  \cr      
-  }
+    [,1] \tab rating   \tab numeric  \tab Overall rating \cr
+    [,2] \tab complaints\tab numeric \tab Handling of employee complaints \cr
+    [,3] \tab privileges\tab numeric \tab Gives special privileges \cr
+    [,4] \tab learning \tab numeric  \tab Opportunity to learn \cr
+    [,5] \tab raises   \tab numeric  \tab Gives raises \cr
+    [,6] \tab critical \tab numeric  \tab Too critical \cr
+    [,7] \tab advancel \tab numeric  \tab Advancement}
 }
 \source{
-    S. Chatterjee and B. Price (1977).
-    \emph{Regression Analysis by Example}.
-    New York: Wiley.
+  S. Chatterjee and B. Price (1977).
+  \emph{Regression Analysis by Example}.
+  New York: Wiley.
 }
 \examples{
 data(attitude)

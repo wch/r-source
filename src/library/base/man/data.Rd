@@ -21,21 +21,22 @@ show.data(package = c(.packages(),.Autoloaded), lib.loc = .lib.loc)
 }
 \details{
   Currently, four formats of data files are supported:
-  \enumerate{
-    \item files ending \code{".RData"} or \code{".rda"} are
-    \code{\link{load}()ed}. 
 
-    \item files ending \code{".R"} or \code{".r"} are
-    \code{\link{source}()d} in, with the R working directory changed
+  \enumerate{
+    \item files ending \file{.RData} or \file{.rda} are
+    \code{\link{load}()}ed.
+
+    \item files ending \file{.R} or \file{.r} are
+    \code{\link{source}()}d in, with the \R working directory changed
     temporarily to the directory containing the respective file.
 
-    \item files ending \code{".tab"} or \code{".txt"} are read using
+    \item files ending \file{.tab} or \file{.txt} are read using
     \code{\link{read.table}(\dots, header = TRUE)}, and hence result in
-    a \code{\link{data.frame}}.
+    a data frame.
 
-    \item files ending \code{".csv"} are read using
-    \code{\link{read.table}(\dots, header = TRUE, sep=";")},
-    and also result in a \code{\link{data.frame}}.
+    \item files ending \file{.csv} are read using
+    \code{\link{read.table}(\dots, header = TRUE, sep = ";")},
+    and also result in a data frame.
   }
 }
 \value{

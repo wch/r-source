@@ -4,17 +4,17 @@
 \alias{quakes}
 \format{A data frame with 1000 observations on 5 variables.
   \tabular{rlll}{
-    [,1] \tab lat       \tab numeric    \tab Latitude of event\cr
-    [,2] \tab long      \tab numeric    \tab Longitude\cr
-    [,3] \tab depth     \tab numeric    \tab Depth (km)\cr
-    [,4] \tab mag       \tab numeric    \tab Richter Magnitude\cr
-    [,5] \tab stations  \tab numeric    \tab Number of stations reporting
+    [,1] \tab lat      \tab numeric \tab Latitude of event\cr
+    [,2] \tab long     \tab numeric \tab Longitude\cr
+    [,3] \tab depth    \tab numeric \tab Depth (km)\cr
+    [,4] \tab mag      \tab numeric \tab Richter Magnitude\cr
+    [,5] \tab stations \tab numeric \tab Number of stations reporting
   }
 }
 \source{
   This is one of the Harvard PRIM-H project data sets.  They in turn
-  obtained it from Dr. John Woodhouse, Dept. of Geophysics,
-  Harvard University.
+  obtained it from Dr. John Woodhouse, Dept. of Geophysics, Harvard
+  University.
 }
 \description{
   The data set give the locations of 1000 seismic events of MB > 4.0.

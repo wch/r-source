@@ -49,9 +49,9 @@
 }
 \source{
   U.S. Department of Commerce, Bureau of the Census (1977).
-  Statistical Abstract of the United States.
+  \emph{Statistical Abstract of the United States}.
 
   U.S. Department of Commerce, Bureau of the Census (1977).
-  County and City Data Book.
+  \emph{County and City Data Book}.
 }
 \keyword{datasets}

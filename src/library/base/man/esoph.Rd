@@ -3,6 +3,7 @@
 \usage{data(esoph)}
 \alias{esoph}
 \format{data frame with records for 88 age/alcohol/tobacco combinations.
+
   \tabular{rlll}{
     [,1] \tab "agegp" \tab Age group \tab 1  25-34 years \cr
     \tab \tab \tab 2  35-44 \cr
@@ -19,12 +20,12 @@
     \tab \tab \tab 3  20-29 \cr
     \tab \tab \tab 4  30+ \cr
     [,4] \tab "ncases" \tab Number of cases \tab \cr
-    [,5] \tab "ncontrols"  \tab Number of subjects \tab  \cr
+    [,5] \tab "ncontrols"  \tab Number of subjects \tab
   }
 }
-\source{Breslow and Day (1980).
- "Statistical Methods in Cancer Research.
-  1: The Analysis of Case-control studies"; IARC Lyon.
+\source{Breslow & Day (1980).
+  \emph{Statistical Methods in Cancer Research. 1: The Analysis of
+    Case-Control Studies}.  IARC Lyon. 
 }
 \author{Thomas Lumley}
 \description{Data from a case-control study of (o)esophageal cancer in

@@ -7,22 +7,21 @@
   Death rates per 100 in Virginia in 1940.
 }
 \details{
-  The death rates are
-  cross-classified by age group (rows) and population group
-  (columns).  The age groups are: 50--54, 55--59, 60--64, 65--69, 70--74
-  and the population groups are Rural/Male, Rural/Female, Urban/Male
-  and Urban/Female.
+  The death rates are cross-classified by age group (rows) and
+  population group (columns).  The age groups are: 50--54, 55--59,
+  60--64, 65--69, 70--74 and the population groups are Rural/Male,
+  Rural/Female, Urban/Male and Urban/Female.
 
-  This provides a rather nice 3--way analysis of variance example.
+  This provides a rather nice 3-way analysis of variance example.
 }
 \source{
   L. Moyneau, S. K. Gilliam, and L. C. Florant (1947).
   Differences in Virginia death rates by color, sex, age,
   and rural or urban residence.
-  \emph{American Sociological Review}, \bold{12}, 525-535.
+  \emph{American Sociological Review}, \bold{12}, 525--535.
 }
 \references{
-  McNeil, D. R. (1977).  \emph{Interactive Data Analysis.}  Wiley.
+  McNeil, D. R. (1977).  \emph{Interactive Data Analysis}.  Wiley.
 }
 \examples{
 data(VADeaths)

@@ -4,22 +4,21 @@
 \alias{anscombe}
 \format{A data frame with 11 observations on 8 variables.
   \tabular{rl}{
-   x1 == x2 == x3 \tab the integers 4:14, specially arranged \cr
-   x4  \tab values 8 and 19 \cr
-   y1, y2, y3, y4 \tab numbers in (3, 12.5)\cr
-                \tab mean(y<j>) = 7.5 and st.dev = 2.03
-    }
+    x1 == x2 == x3 \tab the integers 4:14, specially arranged \cr
+    x4             \tab values 8 and 19 \cr
+    y1, y2, y3, y4 \tab numbers in (3, 12.5) with mean 7.5 and sdev 2.03}
 }
 \source{
-  Edward R. Tufte (1989).  The Visual Display of Quantitative Information;
-  Graphics Press, p.13-14.
+  Edward R. Tufte (1989).
+  \emph{The Visual Display of Quantitative Information}, 13--14.
+  Graphics Press.
 }
 \references{
-Francis J. Anscombe (1973). Graphs in Statistical Analysis;
-	\emph{American Statistician}, \bold{27}, 17-21.
+  Francis J. Anscombe (1973).  Graphs in Statistical Analysis;
+  \emph{American Statistician}, \bold{27}, 17--21.
 }
 \description{
-  Four x--y datasets which have the same traditional
+  Four \eqn{x}-\eqn{y} datasets which have the same traditional
   statistical properties (mean, variance, correlation, regression line,
   etc.), yet are quite different.
 }
@@ -49,7 +48,7 @@ for(i in 1:4) {
        xlim=c(3,19), ylim=c(3,13))
   abline(get(paste("lm.",i,sep="")), col="blue")
 }
-mtext("Anscombe's  4  Regression data sets", outer = TRUE, cex=1.5)
+mtext("Anscombe's 4 Regression data sets", outer = TRUE, cex=1.5)
 par(op)
 }
 \keyword{datasets}

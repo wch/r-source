@@ -5,15 +5,18 @@
 \format{A data frame with 50 observations on 2 variable.
   \tabular{rlll}{
     [,1]  \tab speed  \tab numeric  \tab Speed (mph)\cr
-    [,2]  \tab dist   \tab numeric  \tab Stopping distance (ft)\cr
+    [,2]  \tab dist   \tab numeric  \tab Stopping distance (ft)
   }
 }
-\source{Ezekiel, M. (1930).  Methods of Correlation Analysis.  Wiley.
+\source{
+  Ezekiel, M. (1930).  \emph{Methods of Correlation Analysis}.  Wiley.
 }
-\description{The data give the speed of cars and the distances taken to stop.
-Note that the data were recorded in the 1920s.
+\description{
+  The data give the speed of cars and the distances taken to stop.
+  Note that the data were recorded in the 1920s.
 }
-\references{McNeil, D. R. (1977).  Interactive Data Analysis.  Wiley.
+\references{
+  McNeil, D. R. (1977).  \emph{Interactive Data Analysis}.  Wiley.
 }
 \examples{
 data(cars)
