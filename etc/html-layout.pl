@@ -42,7 +42,7 @@ sub html_pagehead
 	"<h1>$title " .
 	"<img class=toplogo src=\"$top/logo.jpg\" alt=\"[R logo]\"></h1>\n\n" .
         "<hr>\n\n" .
-        "<div align=center>\n";
+        "<div align=\"center\">\n";
 
     $retval .= "<A HREF=\"$prev\"><IMG SRC=\"$top/left.jpg\"\n" .
 	"ALT=\"[$prevtext]\" WIDTH=30 HEIGHT=30 BORDER=0></A>\n"
@@ -77,7 +77,7 @@ sub html_functionhead
     if($pkgname){
 	$retval .= "<table width=100%><tr>" .
 	    "<td>$name {$pkgname}</td>" .
-	    "<td align=right>R Documentation</td></tr></table><p>";
+	    "<td align=\"right\">R Documentation</td></tr></table>";
     }
 
     $retval .= html_title2($title);
@@ -88,7 +88,7 @@ sub html_functionfoot
     my $retval;
 
     if($HTML){
-	$retval .= "\n\n<p align=center><hr><div align=center>" .
+	$retval .= "\n\n<hr><div align=\"center\">" .
 	    "<a href=\"00Index.$HTML\">[Package Contents]</a></div>\n\n";
     }
 
@@ -102,7 +102,7 @@ sub html_title2
     my $title = $_[0];
 
     if($opt_chm) {
-	"\n<h2 align=center><FONT COLOR=\"#0000FF\">" .
+	"\n<h2 align=\"center\"><FONT COLOR=\"#0000FF\">" .
 	    "<tt>$title</tt></FONT></h2>\n\n";
     } else {
 	"\n<h2>$title</h2>\n\n";
@@ -123,7 +123,7 @@ sub html_title3
 
 sub html_alphabet
 {
-    "<p align=center>\n"
+    "<p align=\"center\">\n"
     . "<A HREF=\"#A\">A</A>\n"
     . "<A HREF=\"#B\">B</A>\n"
     . "<A HREF=\"#C\">C</A>\n"
@@ -161,11 +161,11 @@ sub chm_pagehead
 	"<BODY TEXT=\"#000000\" BGCOLOR=\"#FFFFFF\" " .
 	"LINK=\"#0000F0\" VLINK=\"#660066\" ALINK=\"#FF0000\" " .
 	"BACKGROUND=\"white\">\n" .
-	"<h1 align=center>\n" .
+	"<h1 align=\"center\">\n" .
         "<FONT COLOR=\"#999999\" " .
         "size=\"+3\"><tt>\n" .
         "$title\n" .
-        "</tt></FONT><img src=\"logo.jpg\" alt=\"[R logo]\" align=center></h1>\n\n" .
+        "</tt></FONT><img src=\"logo.jpg\" alt=\"[R logo]\" align=\"center\"></h1>\n\n" .
         "<hr>\n\n";
     $retval .= "<OBJECT TYPE=\"application/x-oleobject\" CLASSID=\"clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e\">\n";
     $retval .= "<PARAM NAME=\"Keyword\" VALUE=\".. Contents\">\n" .
@@ -185,7 +185,7 @@ sub chm_functionhead
     if($pkgname){
 	$retval .= "<table width=100%><tr>" .
 	    "<td>$name($pkgname)</td>" .
-	    "<td align=right>R Documentation</td></tr></table><p>";
+	    "<td align=\"right\">R Documentation</td></tr></table><p>";
     }
 
     $retval .= "<OBJECT TYPE=\"application/x-oleobject\" CLASSID=\"clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e\">\n";

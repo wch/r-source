@@ -595,7 +595,7 @@ sub text2html {
 	  &&  $text =~ /\\deqn/){
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$eqn = $ascii if $ascii;
-	$text =~ s/\\deqn(.*)$id/<P align=center><I>$eqn<\/I><\/P>/s;
+	$text =~ s/\\deqn(.*)$id/<P align="center"><I>$eqn<\/I><\/P>/s;
     }
 
     $text = replace_command($text, "itemize", "<UL>", "</UL>");
@@ -677,7 +677,7 @@ sub html_print_block {
 
     if(defined $blocks{$block}){
 	print htmlout html_title3($title);
-	print htmlout "<p>\n", text2html($blocks{$block}), "</p>\n";
+	print htmlout "<p>\n", text2html($blocks{$block}), "\n";
     }
 }
 
@@ -718,7 +718,7 @@ sub html_print_argblock {
 		  && $text =~ /\\item/s){
 		my ($id, $arg, $desc)  =
 		    get_arguments("item", $text, 2);
-		print htmlout "<TR VALIGN=TOP><TD><CODE>";
+		print htmlout "<TR VALIGN=\"TOP\"><TD><CODE>";
 		print htmlout text2html($arg);
 		print htmlout "</CODE></TD>\n<TD>\n";
 		print htmlout text2html($desc), "</TD></TR>\n";
