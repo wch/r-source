@@ -631,6 +631,7 @@ char*	R_Date(void);
 char*	R_HomeDir(void);
 Rboolean R_FileExists(char*);
 Rboolean R_HiddenFile(char*);
+double	R_FileMtime(char*);
 
 /* environment cell access */
 typedef struct R_varloc_st *R_varloc_t;
@@ -723,6 +724,7 @@ SEXP R_LoadFromFile(FILE*, int);
 SEXP R_NewHashedEnv(SEXP);
 extern int R_Newhashpjw(char*);
 FILE* R_OpenLibraryFile(char *);
+char *R_LibraryFileName(char *, char *, size_t);
 void R_PreserveObject(SEXP);
 void R_ReleaseObject(SEXP);
 void R_RestoreGlobalEnv(void);
