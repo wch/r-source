@@ -2,9 +2,9 @@ hist <- function(x, ...) UseMethod("hist")
 
 hist.default <-
     function (x, breaks, freq= NULL, probability = !freq, include.lowest= TRUE,
-              right=TRUE, col = NULL, border = par("fg"),
+              right= TRUE, col = NULL, border = par("fg"),
               main = paste("Histogram of" , xname),
-              xlim = range(breaks), ylim = range(y, 0),
+              xlim = range(breaks), ylim = NULL,
               xlab = xname, ylab,
               axes = TRUE, plot = TRUE, labels = FALSE, nclass = NULL, ...)
 {
@@ -65,14 +65,14 @@ hist.default <-
         stop("`probability' is an alias for `!freq', however they differ.")
     intensities <- counts/(n*h)
     mids <- 0.5 * (breaks[-1] + breaks[-nB])
+    equidist <- !use.br || diff(range(h)) < 1e-7 * mean(h)
     r <- structure(list(breaks = breaks, counts = counts,
-                        intensities = intensities, mids = mids, xname = xname),
+                        intensities = intensities, mids = mids,
+                        xname = xname, equidist = equidist),
                    class="histogram")
     if (plot) {
-        if(freq && use.br && max(h)-min(h) > 1e-7 * mean(h))
-            warning("the AREAS in the plot are wrong -- maybe use `freq=FALSE'")
-        if(missing(ylim))
-            y <- if (freq) .Alias(counts) else .Alias(intensities)
+##-         if(missing(ylim))
+##-             y <- if (freq) .Alias(counts) else .Alias(intensities)
         plot(r, freq = freq, col = col, border = border,
              main = main, xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab,
              axes = axes, labels = labels, ...)
@@ -82,39 +82,44 @@ hist.default <-
 }
 
 plot.histogram <-
-    function (x, freq = TRUE, col = NULL, border = par("fg"),
+    function (x, freq = equidist, col = NULL, border = par("fg"), lty = NULL,
               main = paste("Histogram of", x$xname),
-              xlim = range(x$breaks), ylim = range(y, 0),
-              xlab = x$xname, ylab, axes = TRUE, labels = FALSE,  ...)
+              xlim = range(x$breaks), ylim = NULL,
+              xlab = x$xname, ylab,
+              axes = TRUE, labels = FALSE, add = FALSE, ...)
 {
+    equidist <-
+        if(is.logical(x$equidist)) x$equidist
+        else { h <- diff(x$breaks) ; diff(range(h)) < 1e-7 * mean(h) }
+    if(freq && !equidist)
+        warning("the AREAS in the plot are wrong -- rather use `freq=FALSE'!")
+
     y <- if (freq) x$counts else x$intensities
     nB <- length(x$breaks)
     if(is.null(y) || 0 == nB) stop("`x' is wrongly structured")
-    plot.new()
-    plot.window(xlim, ylim, "")         #-> ylim's default from 'y'
-    if (missing(ylab))
-        ylab <- paste(if(!freq)"Relative ", "Frequency", sep="")
-    title(main = main, xlab = xlab, ylab = ylab, ...)
-    if(axes) {
-        axis(1, ...)
-        axis(2, ...)
+
+    if(!add) {
+        if(is.null(ylim))
+            ylim <- range(y, 0)
+        if (missing(ylab))
+            ylab <- paste(if(!freq)"Relative ", "Frequency", sep="")
+        plot.new()
+        plot.window(xlim, ylim, "")     #-> ylim's default from 'y'
+        title(main = main, xlab = xlab, ylab = ylab, ...)
+        if(axes) {
+            axis(1, ...)
+            axis(2, ...)
+        }
     }
     rect(x$breaks[-nB], 0, x$breaks[-1], y,
-         col = col, border = border)
-    if(labels)
+         col = col, border = border, lty = lty)
+    if((logl <- is.logical(labels) && labels) || is.character(labels))
         text(x$mids, y,
-             labels = if(freq) x$counts else round(x$intensities,3),
+             labels = if(logl) {
+                 if(freq) x$counts else round(x$intensities,3)
+             } else labels,
              adj = c(0.5, -0.5))
     invisible()
 }
 
-lines.histogram <-
-    function(x, freq = TRUE, col = NULL, border = par("fg"), lty = NULL, ...)
-{
-    y <- if (freq) x$counts else x$intensities
-    nB <- length(x$breaks)
-    if(is.null(y) || 0 == nB) stop("`x' is wrongly structured")
-    rect(x$breaks[-nB], 0, x$breaks[-1], y,
-         col = col, border = border, lty = lty)
-    invisible()
-}
+lines.histogram <- function(x, ...) plot.histogram(x, ..., add = TRUE)
