@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.1-23, 2000-11-12</h2>
+<h2>Version 1.1-24, 2000-11-13</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -497,8 +497,10 @@ Up:<a rel=up href="#How%20can%20R%20be%20installed%3f">How can R be installed?</
 
 <h3>2.5.3 How can R be installed (Macintosh)</h3>
 
-<p>The Power Macintosh port is temporarily on hold, and currently no binary
-distribution is available.  We hope that this will change soon.
+<p>A binhexed self-extracting archive containing a pre-alpha port of R
+1.1.1 for MacOS has recently been made available by
+<a href="mailto:stefano.iacus@unimi.it at">Stefano Iacus</a> at
+<a href="http://www.eco-dip.unimi.it/R/">http://www.eco-dip.unimi.it/R/</a>.
 
 <p><hr>
 Node:<a name="Are%20there%20Unix%20binaries%20for%20R%3f">Are there Unix binaries for R?</a>,
@@ -571,11 +573,16 @@ documentation, R's system and foreign language interfaces, and the R
 API. 
 </ul>
 
-<p>Furthermore, the "R Language Definition" manual (<code>R-lang</code>) is
-currently being written, and will be available in R version 1.2. 
+<p>The following manuals will additionally be available in R version 1.2.
+
+<ul>
+<li>"R Data Import/Export" (<code>R-data</code>),
+which is a guide to importing and exporting data to and from R. 
+<li>"The R Language Definition" (<code>R-lang</code>). 
 This is the "Kernighan &amp; Ritchie of R", explaining evaluation,
 parsing, object oriented programming, computing on the language, and so
-forth.
+forth. 
+</ul>
 
 <p>In addition to material written specifically for R, documentation for
 S/<small>S-PLUS</small> (see <a href="#R%20and%20S">R and S</a>) can be used in combination with this FAQ
@@ -1245,9 +1252,9 @@ the actual arguments or the default expressions, this is usually
 equivalent to S, until assignment takes place.
 
 <li>In R, <code>eval(EXPR, sys.parent())</code> does not work.  Instead, one
-should use <code>eval(EXPR, sys.frame(sys.parent())),</code> which also works
-in S, or <code>eval(EXPR, parent.frame())</code>, which is more efficient but
-does not work in S.
+should use either <code>eval(EXPR, sys.frame(sys.parent())),</code> which also
+works in S, or <code>eval(EXPR, parent.frame())</code>, which is more
+efficient but does not work in S.
 
 <li>In S, the index variable in a <code>for()</code> loop is local to the inside
 of the loop.  In R it is local to the environment where the <code>for()</code>
@@ -1305,12 +1312,13 @@ Up:<a rel=up href="#Top">Top</a>
 
 <h1>4 R Web Interfaces</h1>
 
-<p><strong>Rcgi</strong> is a CGI WWW interface to R by <a href="mailto:h089@mth.uea.ac.uk">Mark J. Ray</a>.  Recent versions have the ability to use "embedded
-code": you can mix user input and code, allowing the <small>HTML</small> author to
-do anything from load in data sets to enter most of the commands for
-users without writing CGI scripts.  Graphical output is possible in
-PostScript or GIF formats and the executed code is presented to the user
-for revision.
+<p><strong>Rcgi</strong> is a CGI WWW interface to R by
+<a href="mailto:mjr@stats.mth.uea.ac.uk">Mark J. Ray</a>.  Recent versions have the
+ability to use "embedded code": you can mix user input and code,
+allowing the <small>HTML</small> author to do anything from load in data sets to
+enter most of the commands for users without writing CGI scripts. 
+Graphical output is possible in PostScript or GIF formats and the
+executed code is presented to the user for revision.
 
 <p>Demo and download are available from
 <a href="http://www.mth.uea.ac.uk/~h089/Rcgi/">http://www.mth.uea.ac.uk/~h089/Rcgi/</a>.
@@ -1636,7 +1644,7 @@ in competing risks.
 <dd>Extensions to <strong>dse</strong>, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions. 
 <br><dt><strong>exactDistr</strong>
-<dd>Exact distributions for rank tests, using an implementation of the
+<dd>Exact distributions for rank tests by means of an implementation of the
 Streitberg/Roehmel shift algorithm. 
 <br><dt><strong>foreign</strong>
 <dd>Functions for reading data stored by statistical software like Minitab,

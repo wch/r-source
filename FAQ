@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-23, 2000-11-12
+Version 1.1-24, 2000-11-13
 Kurt Hornik
 
 
@@ -330,8 +330,9 @@ more details.
 2.5.3 How can R be installed (Macintosh)
 ----------------------------------------
 
-   The Power Macintosh port is temporarily on hold, and currently no binary
-distribution is available.  We hope that this will change soon.
+   A binhexed self-extracting archive containing a pre-alpha port of R
+1.1.1 for MacOS has recently been made available by Stefano Iacus
+<stefano.iacus@unimi.it at> at `http://www.eco-dip.unimi.it/R/'.
 
 2.6 Are there Unix binaries for R?
 ==================================
@@ -386,10 +387,14 @@ available for web browsing at `http://stat.ethz.ch/R/manual/'.
      creating R add-on packages, writing R documentation, R's system and
      foreign language interfaces, and the R API.
 
-Furthermore, the "R Language Definition" manual (`R-lang') is currently
-being written, and will be available in R version 1.2.  This is the
-"Kernighan & Ritchie of R", explaining evaluation, parsing, object oriented
-programming, computing on the language, and so forth.
+The following manuals will additionally be available in R version 1.2.
+
+   * "R Data Import/Export" (`R-data'), which is a guide to importing and
+     exporting data to and from R.
+
+   * "The R Language Definition" (`R-lang').  This is the "Kernighan &
+     Ritchie of R", explaining evaluation, parsing, object oriented
+     programming, computing on the language, and so forth.
 
    In addition to material written specifically for R, documentation for
 S/S-PLUS (see *Note R and S::) can be used in combination with this FAQ
@@ -936,9 +941,9 @@ the same time being as compatible as possible with S.
      equivalent to S, until assignment takes place.
 
    * In R, `eval(EXPR, sys.parent())' does not work.  Instead, one should
-     use `eval(EXPR, sys.frame(sys.parent())),' which also works in S, or
-     `eval(EXPR, parent.frame())', which is more efficient but does not
-     work in S.
+     use either `eval(EXPR, sys.frame(sys.parent())),' which also works in
+     S, or `eval(EXPR, parent.frame())', which is more efficient but does
+     not work in S.
 
    * In S, the index variable in a `for()' loop is local to the inside of
      the loop.  In R it is local to the environment where the `for()'
@@ -982,12 +987,13 @@ Computational and Graphical Statistics_, *9*, 582-599.
 4 R Web Interfaces
 ******************
 
-   *Rcgi* is a CGI WWW interface to R by Mark J. Ray <h089@mth.uea.ac.uk>.
-Recent versions have the ability to use "embedded code": you can mix user
-input and code, allowing the HTML author to do anything from load in data
-sets to enter most of the commands for users without writing CGI scripts.
-Graphical output is possible in PostScript or GIF formats and the executed
-code is presented to the user for revision.
+   *Rcgi* is a CGI WWW interface to R by Mark J. Ray
+<mjr@stats.mth.uea.ac.uk>.  Recent versions have the ability to use
+"embedded code": you can mix user input and code, allowing the HTML author
+to do anything from load in data sets to enter most of the commands for
+users without writing CGI scripts.  Graphical output is possible in
+PostScript or GIF formats and the executed code is presented to the user
+for revision.
 
    Demo and download are available from
 `http://www.mth.uea.ac.uk/~h089/Rcgi/'.
@@ -1374,7 +1380,7 @@ these a try, of course.  This area of CRAN currently contains
      series package.  Contains PADI, juice and monitoring extensions.
 
 *exactDistr*
-     Exact distributions for rank tests, using an implementation of the
+     Exact distributions for rank tests by means of an implementation of the
      Streitberg/Roehmel shift algorithm.
 
 *foreign*
