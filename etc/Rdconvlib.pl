@@ -404,6 +404,7 @@ sub text2html {
     $text =~ s/\\pi/&pi/go;
     $text =~ s/\\mu/&mu/go;
     $text =~ s/\\sigma/&sigma/go;
+    $text =~ s/\\Sigma/&Sigma/go;
     $text =~ s/\\lambda/&lambda/go;
     $text =~ s/\\beta/&beta/go;
     $text =~ s/\\epsilon/&epsilon/go;
@@ -736,6 +737,7 @@ sub text2nroff {
     $text =~ s/\\pi/pi/go;
     $text =~ s/\\mu/mu/go;
     $text =~ s/\\sigma/sigma/go;
+    $text =~ s/\\Sigma/Sigma/go;
     $text =~ s/\\lambda/lambda/go;
     $text =~ s/\\beta/beta/go;
     $text =~ s/\\epsilon/epsilon/go;
