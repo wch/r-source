@@ -315,6 +315,9 @@ SEXP frameSubset(SEXP x, SEXP s, SEXP call, int drop)
 	int nr, nc, ncs;
 	int i;
 
+	if ( !isFrame(x) )
+		errorcall(call, "argument is not a data frame\n");
+
 	nc = length(x);
 	nr = nrows(CAR(x));
 

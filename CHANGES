@@ -2,6 +2,8 @@
 
 BUG FIXES
 
+    o	[.data.frame caused segfault if called with non-dataframe argument
+
     o	hist() now is more compatible to S, has a new `labels' argument,
 	and should work ok for non-equidistant breaks.
 
