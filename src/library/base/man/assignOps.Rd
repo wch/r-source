@@ -33,8 +33,8 @@ x = value
   The operators \code{<<-} and \code{->>} cause a search to made through
   the environment for an existing definition of the variable being
   assigned.  If such a variable is found then its value is redefined,
-  otherwise assignment takes place globally. Note that their semantics
-  differ from that in the S language, but is useful in conjunction with
+  otherwise assignment takes place globally.  Note that their semantics
+  differ from that in the S language, but are useful in conjunction with
   the scoping rules of \R.
 
   In all the assignment operator expressions, \code{x} can be a name
