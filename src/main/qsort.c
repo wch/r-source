@@ -34,8 +34,8 @@ SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     x_int = !x_real && (TYPEOF(x) == INTSXP || TYPEOF(x) == LGLSXP);
     PROTECT(sx = (x_real || x_int) ? duplicate(x) : coerceVector(x, REALSXP));
     /* if x has names, drop them, since they won't be ordered : */
-    if (!isNull(getAttrib(x, R_NamesSymbol)))
-	setAttrib(x, R_NamesSymbol, R_NilValue);
+    if (!isNull(getAttrib(sx, R_NamesSymbol)))
+	setAttrib(sx, R_NamesSymbol, R_NilValue);
     indx_ret = asLogical(CADR(args));
     n = LENGTH(x);
     if(x_int) ivx = INTEGER(sx); else vx = REAL(sx);
