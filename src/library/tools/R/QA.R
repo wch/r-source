@@ -20,16 +20,16 @@ sQuote <- function(s) paste("'", s, "'", sep = "")
     ## Note that file.exists() only tests existence ('test -e') but not
     ## for being a regular file ('test -f').  We cannot really do this,
     ## so our '-f' tests for existence and not being a directory.
-    ## Not vectorized because the typical use is 'if(.shTest(......))'.
+    ## Note: vectorized in x and y.
     switch(op,
-           "-f" = !is.na(isdir <- file.info(x)$isdir) && !isdir,
-           "-d" = !is.na(isdir <- file.info(x)$isdir) && isdir,
+           "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
+           "-d" = !is.na(isdir <- file.info(x)$isdir) & isdir,
            "-nt" = (!is.na(mt.x <- file.info(x)$mtime)
-                    && !is.na(mt.y <- file.info(y)$mtime)
-                    && (mt.x > mt.y)),
+                    & !is.na(mt.y <- file.info(y)$mtime)
+                    & (mt.x > mt.y)),
            "-ot" = (!is.na(mt.x <- file.info(x)$mtime)
-                    && !is.na(mt.y <- file.info(y)$mtime)
-                    && (mt.x < mt.y)),
+                    & !is.na(mt.y <- file.info(y)$mtime)
+                    & (mt.x < mt.y)),
            stop(paste("test", sQuote(op), "is not available")))
 }
            
