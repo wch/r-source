@@ -1,8 +1,15 @@
-r-base (1.0.1-0) unstable; urgency=low
+r-base (1.0.1-2) unstable; urgency=low
 
-  * Test builds of new upstream sources.
+  * Test builds for new release
 
- -- Douglas Bates <bates@stat.wisc.edu>  Fri, 17 Mar 2000 10:50:13 -0600
+ -- Douglas Bates <bates@stat.wisc.edu>  Mon, 17 Apr 2000 10:08:37 -0500
+
+r-base (1.0.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * Includes fix for problem with xaxt and yaxt (Closes #61984)
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Sun, 16 Apr 2000 13:50:06 -0500
 
 r-base (1.0.0-2) unstable; urgency=low
 
