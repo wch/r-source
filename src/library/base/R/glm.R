@@ -551,7 +551,7 @@ print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
 	cat(paste(deparse(x$call), sep="\n", collapse="\n"), "\n\n", sep="")
 	cat("Deviance Residuals: \n")
 	if(x$df.residual > 5) {
-		x$deviance.resid <- quantile(x$deviance.resid)
+		x$deviance.resid <- quantile(x$deviance.resid,na.rm=T)
 		names(x$deviance.resid) <- c("Min", "1Q", "Median", "3Q", "Max")
 	}
 	print.default(x$deviance.resid, digits=digits, na = "", print.gap = 2)
