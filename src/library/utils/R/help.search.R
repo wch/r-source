@@ -91,7 +91,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	save.db <- FALSE
         dir <- file.path(tempdir(), ".R")
 	dbfile <- file.path(dir, "help.db")
-	if((tools::fileTest("-d", dir)
+	if((tools::file_test("-d", dir)
             || ((unlink(dir) == 0) && dir.create(dir)))
 	   && (unlink(dbfile) == 0))
 	    save.db <- TRUE

@@ -21,15 +21,15 @@ function(dataDir, contents)
     ## We could also have an interface like
     ##   .build_data_index(dir, contents = NULL)
     ## where @code{dir} is the path to a package's root source dir and
-    ## contents is Rdcontents(listFilesWithType(file.path(dir, "man"),
+    ## contents is Rdcontents(list_files_with_type(file.path(dir, "man"),
     ## "docs")).
     ## </NOTE>
 
-    if(!fileTest("-d", dataDir))
+    if(!file_test("-d", dataDir))
         stop(paste("directory", sQuote(dataDir), "does not exist"))
-    dataFiles <- listFilesWithType(dataDir, "data")
+    dataFiles <- list_files_with_type(dataDir, "data")
     ## <FIXME> to avoid name clashes CO2 is stored as zCO2.R
-    dataTopics <- unique(basename(filePathSansExt(dataFiles)))
+    dataTopics <- unique(basename(file_path_sans_ext(dataFiles)))
     dataTopics[dataTopics == "zCO2"] <- "CO2"
     if(!length(dataTopics)) return(matrix("", 0, 2))
     dataTopics <- sort(dataTopics)
@@ -63,13 +63,13 @@ function(demoDir)
     ## docs are in sync.
     ## </NOTE>
 
-    if(!fileTest("-d", demoDir))
+    if(!file_test("-d", demoDir))
         stop(paste("directory", sQuote(demoDir), "does not exist"))
-    demoFiles <- listFilesWithType(demoDir, "demo")
-    demoTopics <- unique(basename(filePathSansExt(demoFiles)))
+    demoFiles <- list_files_with_type(demoDir, "demo")
+    demoTopics <- unique(basename(file_path_sans_ext(demoFiles)))
     if(!length(demoTopics)) return(matrix("", 0, 2))
     demoIndex <- cbind(demoTopics, "")
-    if(fileTest("-f", INDEX <- file.path(demoDir, "00Index"))) {
+    if(file_test("-f", INDEX <- file.path(demoDir, "00Index"))) {
         demoEntries <- try(read.00Index(INDEX))
         if(inherits(demoEntries, "try-error"))
             warning(paste("cannot read index information in file",
@@ -86,7 +86,7 @@ function(demoDir)
 .check_demo_index <-
 function(demoDir)
 {
-    if(!fileTest("-d", demoDir))
+    if(!file_test("-d", demoDir))
         stop(paste("directory", sQuote(demoDir), "does not exist"))
     infoFromBuild <- .build_demo_index(demoDir)
     infoFromIndex <- try(read.00Index(file.path(demoDir, "00Index")))

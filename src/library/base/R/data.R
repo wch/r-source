@@ -15,7 +15,7 @@ function(..., list = character(0),
     paths <- unique(paths[file.exists(paths)])
 
     ## Find the directories with a 'data' subdirectory.
-    paths <- paths[tools::fileTest("-d", file.path(paths, "data"))]
+    paths <- paths[tools::file_test("-d", file.path(paths, "data"))]
     ## Earlier versions remembered given packages with no 'data'
     ## subdirectory, and warned about them.
 
@@ -31,21 +31,21 @@ function(..., list = character(0),
             entries <- NULL
             ## Use "." as the 'package name' of the working directory.
             packageName <-
-                if(tools::fileTest("-f",
-                                   file.path(path, "DESCRIPTION")))
+                if(tools::file_test("-f",
+                                    file.path(path, "DESCRIPTION")))
                     basename(path)
                 else
                     "."
             ## Check for new-style 'Meta/data.rds', then for '00Index'.
             ## Earlier versions also used to check for 'index.doc'.
-            if(tools::fileTest("-f",
-                               INDEX <-
-                               file.path(path, "Meta", "data.rds"))) {
+            if(tools::file_test("-f",
+                                INDEX <-
+                                file.path(path, "Meta", "data.rds"))) {
                 entries <- .readRDS(INDEX)
             }
-            else if(tools::fileTest("-f",
-                                    INDEX <-
-                                    file.path(path, "data", "00Index")))
+            else if(tools::file_test("-f",
+                                     INDEX <-
+                                     file.path(path, "data", "00Index")))
                 entries <- read.00Index(INDEX)
             else {
                 ## No index: check whether subdir 'data' contains data
@@ -53,18 +53,18 @@ function(..., list = character(0),
                 ## zip archive ... in any case, as data sets found are
                 ## available for loading, we also list their names.
                 dataDir <- file.path(path, "data")
-                entries <- tools::listFilesWithType(dataDir, "data")
+                entries <- tools::list_files_with_type(dataDir, "data")
                 if((length(entries) == 0)
-                   && all(tools::fileTest("-f",
-                                          file.path(dataDir,
-                                                    c("Rdata.zip",
-                                                      "filelist"))))) {
+                   && all(tools::file_test("-f",
+                                           file.path(dataDir,
+                                                     c("Rdata.zip",
+                                                       "filelist"))))) {
                     entries <- readLines(file.path(dataDir, "filelist"))
                     entries <- entries[fileExt(entries) %in% dataExts]
                 }
                 if(length(entries) > 0) {
                     entries <-
-                        unique(tools::filePathSansExt(basename(entries)))
+                        unique(tools::file_path_sans_ext(basename(entries)))
                     entries <- cbind(entries, "")
                 }
                 else
@@ -111,9 +111,9 @@ function(..., list = character(0),
 	if (name == "CO2") name <- "zCO2"
         files <- NULL
         for(p in paths) {
-            if(tools::fileTest("-f", file.path(p, "Rdata.zip"))) {
-                if(tools::fileTest("-f",
-                                   fp <- file.path(p, "filelist")))
+            if(tools::file_test("-f", file.path(p, "Rdata.zip"))) {
+                if(tools::file_test("-f",
+                                    fp <- file.path(p, "filelist")))
                     files <-
                         c(files,
                           file.path(p, scan(fp, what="", quiet = TRUE)))

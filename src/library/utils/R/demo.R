@@ -6,7 +6,7 @@ function(topic, device = getOption("device"),
     paths <- .find.package(package, lib.loc, verbose = verbose)
 
     ## Find the directories with a 'demo' subdirectory.
-    paths <- paths[tools::fileTest("-d", file.path(paths, "demo"))]
+    paths <- paths[tools::file_test("-d", file.path(paths, "demo"))]
     ## Earlier versions remembered given packages with no 'demo'
     ## subdirectory, and warned about them.
 
@@ -19,22 +19,22 @@ function(topic, device = getOption("device"),
 	for(path in paths) {
 	    entries <- NULL
 	    ## Check for new-style 'Meta/demo.rds', then for '00Index'.
-	    if(tools::fileTest("-f",
-			       INDEX <-
-			       file.path(path, "Meta", "demo.rds"))) {
+	    if(tools::file_test("-f",
+                                INDEX <-
+                                file.path(path, "Meta", "demo.rds"))) {
 		entries <- .readRDS(INDEX)
 	    }
-	    else if(tools::fileTest("-f",
-				    INDEX <-
-				    file.path(path, "demo", "00Index")))
+	    else if(tools::file_test("-f",
+                                     INDEX <-
+                                     file.path(path, "demo", "00Index")))
 		entries <- read.00Index(INDEX)
 	    else {
 		## No index: check whether subdir 'demo' contains demos.
 		demoDir <- file.path(path, "demo")
-		entries <- tools::listFilesWithType(demoDir, "demo")
+		entries <- tools::list_files_with_type(demoDir, "demo")
 		if(length(entries) > 0) {
 		    entries <-
-			unique(tools::filePathSansExt(basename(entries)))
+			unique(tools::file_path_sans_ext(basename(entries)))
 		    entries <- cbind(entries, "")
 		}
 		else
@@ -81,9 +81,9 @@ function(topic, device = getOption("device"),
     available <- character(0)
     paths <- file.path(paths, "demo")
     for(p in paths) {
-	files <- basename(tools::listFilesWithType(p, "demo"))
+	files <- basename(tools::list_files_with_type(p, "demo"))
 	## Files with base names sans extension matching topic
-	files <- files[topic == tools::filePathSansExt(files)]
+	files <- files[topic == tools::file_path_sans_ext(files)]
 	if(length(files) > 0)
 	    available <- c(available, file.path(p, files))
     }

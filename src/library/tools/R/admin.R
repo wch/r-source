@@ -30,7 +30,7 @@ function(dir, outDir)
                        paste(R.version[c("major", "minor")],
                              collapse = "."),
                        "; ",
-                       if(fileTest("-d", file.path(dir, "src"))) OStype
+                       if(file_test("-d", file.path(dir, "src"))) OStype
                        else "",
                        "; ",
                        ## Prefer date in ISO 8601 format.
@@ -49,9 +49,9 @@ function(dir, outDir)
 .install_package_code_files <-
 function(dir, outDir)
 {
-    if(!fileTest("-d", dir))
+    if(!file_test("-d", dir))
         stop(paste("directory", sQuote(dir), "does not exist"))
-    dir <- filePathAsAbsolute(dir)
+    dir <- file_path_as_absolute(dir)
 
     ## Attempt to set the LC_COLLATE locale to 'C' to turn off locale
     ## specific sorting.
@@ -73,9 +73,9 @@ function(dir, outDir)
     db <- .read_description(file.path(dir, "DESCRIPTION"))
     
     codeDir <- file.path(dir, "R")
-    if(!fileTest("-d", codeDir)) return(invisible())
+    if(!file_test("-d", codeDir)) return(invisible())
 
-    codeFiles <- listFilesWithType(codeDir, "code", full.names = FALSE)
+    codeFiles <- list_files_with_type(codeDir, "code", full.names = FALSE)
 
     collationField <-
         c(paste("Collate", .OStype(), sep = "."), "Collate")
@@ -103,7 +103,7 @@ function(dir, outDir)
         }
         ## See which files are listed in the collation spec but don't
         ## exist.
-        badFiles <- codeFilesInCspec[! codeFilesInCspec %in% codeFiles]
+        badFiles <- codeFilesInCspec %w/o% codeFiles
         if(length(badFiles)) {
             out <- paste("\nfiles in ", sQuote(collationField),
                          " field missing from ", sQuote(codeDir),
@@ -117,7 +117,7 @@ function(dir, outDir)
         ## See which files exist but are missing from the collation
         ## spec.  Note that we do not want the collation spec to use
         ## only a subset of the available code files.
-        badFiles <- codeFiles[! codeFiles %in% codeFilesInCspec]
+        badFiles <- codeFiles %w/o% codeFilesInCspec
         if(length(badFiles)) {
             out <- paste("\nfiles in", sQuote(codeDir),
                          "missing from", sQuote(collationField),
@@ -133,10 +133,10 @@ function(dir, outDir)
 
     codeFiles <- file.path(codeDir, codeFiles)
 
-    if(!fileTest("-d", outDir) && !dir.create(outDir))
+    if(!file_test("-d", outDir) && !dir.create(outDir))
         stop("cannot open directory", sQuote(outDir))
     outCodeDir <- file.path(outDir, "R")
-    if(!fileTest("-d", outCodeDir) && !dir.create(outCodeDir))
+    if(!file_test("-d", outCodeDir) && !dir.create(outCodeDir))
         stop("cannot open directory", sQuote(outCodeDir))
     outFile <- file.path(outCodeDir, db["Package"])
     ## <NOTE>
@@ -160,21 +160,21 @@ function(dir, outDir)
 function(dir, outDir)
 {
     options(warn=1) # to ensure warnings get seen
-    if(!fileTest("-d", dir))
+    if(!file_test("-d", dir))
         stop(paste("directory", sQuote(dir), "does not exist"))
-    if(!fileTest("-d", outDir))
+    if(!file_test("-d", outDir))
         stop(paste("directory", sQuote(outDir), "does not exist"))
 
     ## If there is an @file{INDEX} file in the package sources, we
     ## install this, and do not build it.
-    if(fileTest("-f", file.path(dir, "INDEX")))
+    if(file_test("-f", file.path(dir, "INDEX")))
         if(!file.copy(file.path(dir, "INDEX"),
                       file.path(outDir, "INDEX"),
                       overwrite = TRUE))
             stop("unable to copy INDEX to ", file.path(outDir, "INDEX"))
 
     outMetaDir <- file.path(outDir, "Meta")
-    if(!fileTest("-d", outMetaDir) && !dir.create(outMetaDir))
+    if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
          stop("cannot open directory", sQuote(outMetaDir))
     .install_package_Rd_indices(dir, outDir)
     .install_package_vignette_index(dir, outDir)
@@ -187,12 +187,12 @@ function(dir, outDir)
 .install_package_Rd_indices <-
 function(dir, outDir)
 {
-    dir <- filePathAsAbsolute(dir)
+    dir <- file_path_as_absolute(dir)
     docsDir <- file.path(dir, "man")
-    if(!fileTest("-d", docsDir)) return(invisible())
+    if(!file_test("-d", docsDir)) return(invisible())
 
     dataDir <- file.path(dir, "data")
-    outDir <- filePathAsAbsolute(outDir)    
+    outDir <- file_path_as_absolute(outDir)    
     ## <FIXME>
     ## Not clear whether we should use the basename of the directory we
     ## install to, or the package name as obtained from the DESCRIPTION
@@ -205,19 +205,19 @@ function(dir, outDir)
     indices <- c(file.path("Meta", "Rd.rds"),
                  file.path("Meta", "hsearch.rds"),
                  "CONTENTS", "INDEX")
-    upToDate <- fileTest("-nt", file.path(outDir, indices), docsDir)
-    if(fileTest("-d", dataDir)) {
+    upToDate <- file_test("-nt", file.path(outDir, indices), docsDir)
+    if(file_test("-d", dataDir)) {
         ## Note that the data index is computed from both the package's
         ## Rd files and the data sets actually available.
         upToDate <-
             c(upToDate,
-              fileTest("-nt",
+              file_test("-nt",
                         file.path(outDir, "Meta", "data.rds"),
                         c(dataDir, docsDir)))
     }
     if(all(upToDate)) return(invisible())
 
-    contents <- Rdcontents(listFilesWithType(docsDir, "docs"))
+    contents <- Rdcontents(list_files_with_type(docsDir, "docs"))
 
     .write_contents_as_RDS(contents,
                            file.path(outDir, "Meta", "Rd.rds"))
@@ -232,12 +232,12 @@ function(dir, outDir)
     ## build one.
     ## <FIXME>
     ## Maybe also save this in RDS format then?
-    if(!fileTest("-f", file.path(dir, "INDEX")))
+    if(!file_test("-f", file.path(dir, "INDEX")))
         writeLines(formatDL(.build_Rd_index(contents)),
                    file.path(outDir, "INDEX"))
     ## </FIXME>
 
-    if(fileTest("-d", dataDir)) {
+    if(file_test("-d", dataDir)) {
         .saveRDS(.build_data_index(dataDir, contents),
                  file.path(outDir, "Meta", "data.rds"))
     }
@@ -249,13 +249,13 @@ function(dir, outDir)
 .install_package_vignette_index <-
 function(dir, outDir)
 {
-    dir <- filePathAsAbsolute(dir)
+    dir <- file_path_as_absolute(dir)
     vignetteDir <- file.path(dir, "inst", "doc")
     ## Create a vignette index only if the vignette dir exists.
-    if(!fileTest("-d", vignetteDir))
+    if(!file_test("-d", vignetteDir))
         return(invisible())
 
-    outDir <- filePathAsAbsolute(outDir)    
+    outDir <- file_path_as_absolute(outDir)    
     ## <FIXME>
     ## Not clear whether we should use the basename of the directory we
     ## install to, or the package name as obtained from the DESCRIPTION
@@ -265,18 +265,18 @@ function(dir, outDir)
     packageName <- basename(outDir)
     ## </FIXME>
     outVignetteDir <- file.path(outDir, "doc")
-    if(!fileTest("-d", outVignetteDir) && !dir.create(outVignetteDir))
+    if(!file_test("-d", outVignetteDir) && !dir.create(outVignetteDir))
         stop("cannot open directory", sQuote(outVignetteDir))
 
     ## If there is an HTML index in the @file{inst/doc} subdirectory of
     ## the package source directory (@code{dir}), we do not overwrite it
     ## (similar to top-level @file{INDEX} files).  Installation already
     ## copies/d this over.
-    hasHtmlIndex <- fileTest("-f", file.path(vignetteDir, "index.html"))
+    hasHtmlIndex <- file_test("-f", file.path(vignetteDir, "index.html"))
     htmlIndex <- file.path(outDir, "doc", "index.html")
 
     ## Write dummy HTML index if no vignettes are found and exit.
-    if(!length(listFilesWithType(vignetteDir, "vignette"))) {
+    if(!length(list_files_with_type(vignetteDir, "vignette"))) {
         if(!hasHtmlIndex)
             .writeVignetteHtmlIndex(packageName, htmlIndex)
         return(invisible())
@@ -288,8 +288,8 @@ function(dir, outDir)
     if(NROW(vignetteIndex) > 0) {
         vignettePDFs <-
             sub("$", ".pdf",
-                basename(filePathSansExt(vignetteIndex$File)))
-        ind <- fileTest("-f", file.path(outVignetteDir, vignettePDFs))
+                basename(file_path_sans_ext(vignetteIndex$File)))
+        ind <- file_test("-f", file.path(outVignetteDir, vignettePDFs))
         vignetteIndex$PDF[ind] <- vignettePDFs[ind]
     }
     if(!hasHtmlIndex)
@@ -306,25 +306,25 @@ function(dir, outDir)
 .install_package_vignettes <-
 function(dir, outDir)
 {
-    dir <- filePathAsAbsolute(dir)
+    dir <- file_path_as_absolute(dir)
     vignetteDir <- file.path(dir, "inst", "doc")
-    if(!fileTest("-d", vignetteDir))
+    if(!file_test("-d", vignetteDir))
         return(invisible())
-    vignetteFiles <- listFilesWithType(vignetteDir, "vignette")
+    vignetteFiles <- list_files_with_type(vignetteDir, "vignette")
     if(!length(vignetteFiles))
         return(invisible())
 
-    outDir <- filePathAsAbsolute(outDir)
+    outDir <- file_path_as_absolute(outDir)
     outVignetteDir <- file.path(outDir, "doc")
-    if(!fileTest("-d", outVignetteDir) && !dir.create(outVignetteDir))
+    if(!file_test("-d", outVignetteDir) && !dir.create(outVignetteDir))
         stop("cannot open directory", sQuote(outVignetteDir))
     ## For the time being, assume that no PDFs are available in
     ## vignetteDir.
     vignettePDFs <-
         file.path(outVignetteDir,
                   sub("$", ".pdf",
-                      basename(filePathSansExt(vignetteFiles))))
-    upToDate <- fileTest("-nt", vignettePDFs, vignetteFiles)
+                      basename(file_path_sans_ext(vignetteFiles))))
+    upToDate <- file_test("-nt", vignettePDFs, vignetteFiles)
     if(all(upToDate))
         return(invisible())
 
@@ -334,7 +334,7 @@ function(dir, outDir)
     ## allows inspection of problems and automatic cleanup via Make.
     cwd <- getwd()
     buildDir <- file.path(cwd, ".vignettes")
-    if(!fileTest("-d", buildDir) && !dir.create(buildDir))
+    if(!file_test("-d", buildDir) && !dir.create(buildDir))
         stop(paste("cannot create directory", sQuote(buildDir)))
     on.exit(setwd(cwd))
     setwd(buildDir)
@@ -353,7 +353,7 @@ function(dir, outDir)
                sep = envSep))
 
     for(srcfile in vignetteFiles[!upToDate]) {
-        base <- basename(filePathSansExt(srcfile))
+        base <- basename(file_path_sans_ext(srcfile))
         texfile <- paste(base, ".tex", sep = "")
         yy <- try(Sweave(srcfile, pdf = TRUE, eps = FALSE, quiet =
                          TRUE))
@@ -385,7 +385,7 @@ function(dir, outDir)
         } else
             texi2dvi(texfile, pdf = TRUE, quiet = TRUE)
         pdffile <-
-            paste(basename(filePathSansExt(srcfile)), ".pdf", sep = "")
+            paste(basename(file_path_sans_ext(srcfile)), ".pdf", sep = "")
         if(!file.exists(pdffile))
             stop(paste("file", sQuote(pdffile), "was not created"))
         if(!file.copy(pdffile, outVignetteDir, overwrite = TRUE))
@@ -406,7 +406,7 @@ function(dir, outDir)
 function(dir, outDir)
 {
     demoDir <- file.path(dir, "demo")
-    if(!fileTest("-d", demoDir)) return(invisible())
+    if(!file_test("-d", demoDir)) return(invisible())
     demoIndex <- .build_demo_index(demoDir)
     .saveRDS(demoIndex,
              file = file.path(outDir, "Meta", "demo.rds"))
@@ -418,14 +418,14 @@ function(dir, outDir)
 .install_package_namespace_info <-
 function(dir, outDir)
 {
-    dir <- filePathAsAbsolute(dir)
+    dir <- file_path_as_absolute(dir)
     nsFile <- file.path(dir, "NAMESPACE")
-    if(!fileTest("-f", nsFile)) return(invisible())
+    if(!file_test("-f", nsFile)) return(invisible())
     nsInfoFilePath <- file.path(outDir, "Meta", "nsInfo.rds")
-    if(fileTest("-nt", nsInfoFilePath, nsFile)) return(invisible())
+    if(file_test("-nt", nsInfoFilePath, nsFile)) return(invisible())
     nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
     outMetaDir <- file.path(outDir, "Meta")
-    if(!fileTest("-d", outMetaDir) && !dir.create(outMetaDir))
+    if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
         stop("cannot open directory", sQuote(outMetaDir))
     .saveRDS(nsInfo, nsInfoFilePath)
     invisible()

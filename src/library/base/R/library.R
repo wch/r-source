@@ -592,9 +592,9 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
     function(package, lib.loc = NULL, quiet = FALSE,
              verbose = getOption("verbose"))
 {
-    .filePathAsAbsolute <- function(x) {
-        ## Note that we cannot use tools::filePathAsAbsolute() here, as
-        ## cyclic name space dependencies are not supported.  Argh.
+    .file_path_as_absolute <- function(x) {
+        ## Note that we cannot use tools::file_path_as_absolute() here,
+        ## as cyclic name space dependencies are not supported.  Argh.
         ## This version is simpler: we only need it for directories
         ## already known to exist.
         cwd <- getwd(); on.exit(setwd(cwd))
@@ -618,7 +618,7 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
         fp <- file.path(lib.loc, pkg)
         if(useAttached)
             fp <- c(.path.package(pkg, TRUE), fp)
-        ## Note that we cannot use tools::fileTest() here, as cyclic
+        ## Note that we cannot use tools::file_test() here, as cyclic
         ## name space dependencies are not supported.  Argh.
         fp <- unique(fp[file.exists(fp) &
                         file.exists(file.path(fp, "DESCRIPTION"))])
@@ -626,7 +626,7 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
             bad <- c(bad, pkg)
             next
         }
-        afp <- .filePathAsAbsolute(fp[1])
+        afp <- .file_path_as_absolute(fp[1])
         if(verbose && (length(fp) > 1))
             warning(paste("package ", sQuote(pkg),
                           " found more than once,\n",
