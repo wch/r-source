@@ -511,6 +511,7 @@ AC_DEFUN([R_PROG_F77_CC_COMPAT_COMPLEX],
     [ cat > conftestf.f <<EOF
       subroutine cftest(x)
       complex*16 x(3)
+      integer i
 
 c a few tests of constructs that are sometimes missing
       if(x(1) .eq. x(1)) i = 0
