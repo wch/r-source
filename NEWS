@@ -62,9 +62,9 @@ NEW FEATURES
 	rather than as double/DOUBLE PRECISION, by setting the
 	attribute "Csingle". See ?Foreign for details.
 
-    o   Comparison of strings uses the current locale on systems where
+    o	Comparison of strings uses the current locale on systems where
 	this is available, and so is always consistent with the ordering
-	used by sort(). 
+	used by sort().
 
 
 BUG FIXES
@@ -111,7 +111,7 @@ BUG FIXES
     o	na.omit.ts and na.contiguous now preserve time-series attributes.
 
     o	more automatic testing ("make check") using options(error.halt=FALSE)
-	led to the elimination of half a dozen of seg.fault possibilities.
+	led to the elimination of dozens (!) of seg.fault possibilities.
 
     o	family quasi handles zero observations with var=mu^2 more correctly.
 
@@ -125,6 +125,8 @@ BUG FIXES
     o	qr over-estimated ranks in some degenerate cases.
 	qr did not work correctly if n < p and the first n cols were
 	rank-deficient.
+
+    o	str() wouldn't work quite right for named characters.
 
 
 		CHANGES IN R VERSION 0.65.0
