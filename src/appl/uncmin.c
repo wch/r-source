@@ -579,6 +579,7 @@ tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p
     xpls[i] = x[i] + sc[i];
   }
   (*fcn)(n, xpls, fpls, state);
+  Rprintf("trust value %g at %f %f %f\n", *fpls, xpls[0], xpls[1], xpls[2]);
   dltf = *fpls - f;
   slp = F77_CALL(ddot)(&n, g, &one, sc, &one);
 
@@ -769,6 +770,7 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
 	    /* solution not (yet) found */
 
 	    /* First find a point with a finite value */
+	    
 	    if (almbda < rmnlmb) {
 		/* no satisfactory xpls found sufficiently distinct from x */
 

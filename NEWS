@@ -105,6 +105,10 @@ NEW FEATURES
 
     o   "default" is now a valid argument to RNGkind().
 
+    o   nlm() and optim() will now give up immediately they try to
+	step to a non-finite value: nlm at least would go into an
+	infinite loop.
+
 
 BUG FIXES
 
@@ -237,6 +241,9 @@ BUG FIXES
         now.
 
     o   Title field of DESCRIPTION now overrides TITLE file.
+
+    o   R now reports `50 or more warnings', not just 50, as it only
+	displays the first 50.
 
 
 	**************************************************

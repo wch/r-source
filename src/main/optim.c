@@ -87,7 +87,10 @@ static double fminfn(int n, double *p, OptStruct OS)
     double val;
 
     PROTECT(x = allocVector(REALSXP, n));
-    for (i = 0; i < n; i++) REAL(x)[i] = p[i] * (OS->parscale[i]);
+    for (i = 0; i < n; i++) {
+	if (!R_FINITE(p[i])) error("non-finite value supplied by optim");
+	REAL(x)[i] = p[i] * (OS->parscale[i]);
+    }
     CADR(OS->R_fcall) = x;
     PROTECT(s = coerceVector(eval(OS->R_fcall, OS->R_env), REALSXP));
     val = REAL(s)[0]/(OS->fnscale);
@@ -103,8 +106,10 @@ static void fmingr(int n, double *p, double *df, OptStruct OS)
 
     if (!isNull(OS->R_gcall)) { /* analytical derivatives */
 	PROTECT(x = allocVector(REALSXP, n));
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+	    if (!R_FINITE(p[i])) error("non-finite value supplied by nlm");
 	    REAL(x)[i] = p[i] * (OS->parscale[i]);
+	}
 	CADR(OS->R_gcall) = x;
 	PROTECT(s = coerceVector(eval(OS->R_gcall, OS->R_env), REALSXP));
 	for (i = 0; i < n; i++)
