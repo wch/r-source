@@ -39,6 +39,7 @@ function(dir, outDir)
                        ## Could also use
                        ##   format(Sys.time(), "%a %b %d %X %Y")
                        Sys.time(),
+                       .Platform$OS.type,
                        sep = "")),
                file.path(outDir, "DESCRIPTION"))
     invisible()
@@ -96,8 +97,7 @@ function(dir, outDir)
         collationField <- collationField[i][1]
         codeFilesInCspec <-
             scan(textConnection(gsub("\n", " ", db[collationField])),
-                 what = character(), sep = ",", strip.white = TRUE,
-                 quiet = TRUE)
+                 what = character(), strip.white = TRUE, quiet = TRUE)
         ## Duplicated entries in the collaction spec?
         badFiles <-
             unique(codeFilesInCspec[duplicated(codeFilesInCspec)])
