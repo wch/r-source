@@ -580,7 +580,7 @@ dnl
 dnl R_HEADER_GLIBC2
 dnl
 AC_DEFUN(R_HEADER_GLIBC2,
- [AC_CACHE_CHECK([for GNU C library and its version],
+ [AC_CACHE_CHECK([for GNU C library with version >= 2],
     r_cv_header_glibc2,
     AC_EGREP_CPP(yes,
       changequote(<<, >>)dnl
