@@ -20,11 +20,13 @@ Collect the tools
 -----------------
 
 You will need suitable versions of at least make, sh, cat, cp, cut,
-diff, echo, egrep, expr, grep, ls, mkdir, mv, rm, sed, touch;
-we use those from the cygwin distribution
+diff, echo, egrep, expr, grep, ls, mkdir, mv, rm, sed, touch; we use
+those from the cygwin distribution
 (http://www.cygwin.com/mirrors.html) or (gzip, makeinfo, texindex)
 compiled from the sources.  We have packaged a set at
-http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
+http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.  You may need to copy
+sh.exe to c:\bin\sh.exe; the exact circumstances are mysterious, but
+the error message will be `make[1]: /bin/sh.exe: Command not found'.
 
 BEWARE: `Native' ports of make are _not_ suitable (including that at
 the mingw site).  There were also problems with several earlier

@@ -15,7 +15,10 @@ You will need suitable versions of at least make, sh, cat, cp, diff,
 echo, mkdir, mv, rm, sed; we have packaged a set at
 http://www.stats.ox.ac.uk/pub/Rtools/tools.zip extracted from the
 cygwin distribution (http://www.cygwin.com/mirrors.html) or (gzip)
-compiled from the sources.
+compiled from the sources.  You may need to copy sh.exe to
+c:\bin\sh.exe; the exact circumstances are mysterious, but the error
+message will be `make[1]: /bin/sh.exe: Command not found'.
+
 
 BEWARE: `Native' ports of make are _not_ suitable (including that at
 the mingw site).  There were also problems with several earlier
