@@ -46,6 +46,11 @@ reports success, just as for packages.
 
 Rcmd INSTALL now supports versioned install via --with-package-versions.
 
+Installing now sorts in the C locale to ensure that a consistent sort
+order is used.  (Some aspects of sorting used to be done in the locale
+of the host machine, but Perl and the cygwin-based tools used the
+ASCII collation order.)
+
 
 
 Bug fixes
@@ -64,6 +69,8 @@ In RGui, ^T would not transpose the first and second characters on a
 line.  (PR#5593)
 
 Fixed junk character at start of a pipe(). (PR#5053)
+
+Cross-building of R itself now works again.  (It had been broken since 1.8.0.)
 
 
 
