@@ -84,9 +84,9 @@ spectrum(\dots, method = c("pgram", "ar"))
   Brockwell, P. J. and Davis, R. A. (1991) \emph{Time Series: Theory and
     Methods.} Second edition. Springer.
 
-  Venables, W. N. and Ripley, B. D. (1997) \emph{Modern Applied
-    Statistics with S-PLUS.} Second edition. Springer. (Especially
-  pages 437--442.)
+  Venables, W. N. and Ripley, B. D. (2002) \emph{Modern Applied
+    Statistics with S-PLUS.} Fourth edition. Springer. (Especially
+  pages 392--7.)
 }
 \author{Martyn Plummer, B.D. Ripley}
 \seealso{

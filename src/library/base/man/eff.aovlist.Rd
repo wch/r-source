@@ -38,7 +38,7 @@ eff.aovlist(aovlist)
 ## for balanced designs all efficiencies are zero or one.
 ## so as a statistically meaningless test:
 options(contrasts=c("contr.helmert", "contr.poly"))
-## From Venables and Ripley (1997) p.210.
+## From Venables and Ripley (2002) p.165.
 N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
 P <- c(1,1,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,0,1,0,1,1,0)
 K <- c(1,0,0,1,0,1,1,0,0,1,0,1,0,1,1,0,0,0,1,1,1,0,1,0)

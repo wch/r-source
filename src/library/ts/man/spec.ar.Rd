@@ -28,9 +28,9 @@ spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action = na.fail,
   Thompson, D.J. (1990) Time series analysis of Holocene climate data.
   \emph{Phil. Trans. Roy. Soc. A} \bold{330}, 601--616.
 
-  Venables, W.N. and Ripley, B.D. (1997) \emph{Modern Applied
-    Statistics with S-PLUS.} Second edition. Springer. (Especially
-  page 448.)
+  Venables, W.N. and Ripley, B.D. (2002) \emph{Modern Applied
+    Statistics with S.} Fourth edition. Springer. (Especially
+  page 402.)
 }
 \section{Warning}{
   Some authors, for example Thomson (1990), warn strongly

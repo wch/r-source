@@ -56,7 +56,7 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
   \code{\link{proj}}, \code{\link{model.tables}}, \code{\link{TukeyHSD}}
 }
 \examples{
-## From Venables and Ripley (1997) p.210.
+## From Venables and Ripley (2002) p.165.
 N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
 P <- c(1,1,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,0,1,0,1,1,0)
 K <- c(1,0,0,1,0,1,1,0,0,1,0,1,0,1,1,0,0,0,1,1,1,0,1,0)

@@ -212,8 +212,8 @@ glm.fit.null(x, y, weights = rep(1, nrow(x)),
   \emph{An Introduction to Generalized Linear Models.}
   London: Chapman and Hall.
 
-  Venables, W. N. and Ripley, B. D. (1999)
-  \emph{Modern Applied Statistics with S-PLUS.}
+  Venables, W. N. and Ripley, B. D. (2002)
+  \emph{Modern Applied Statistics with S.}
   New York: Springer.
 }
 
@@ -227,7 +227,7 @@ glm.D93 <- glm(counts ~ outcome + treatment, family=poisson())
 anova(glm.D93)
 summary(glm.D93)
 
-## an example with offsets from Venables & Ripley (1999, pp.217-8)
+## an example with offsets from Venables & Ripley (2002, p.189)
 \testonly{"anorexia" <-
 structure(list(Treat = structure(c(2, 2, 2, 2, 2, 2, 2, 2, 2,
 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1,

@@ -65,9 +65,9 @@ extractAIC.survreg(fit, scale, k = 2, \dots)
 %-- Source in ../R/add.R
 \author{B. D. Ripley}
 \references{
-  Venables, W. N. and Ripley, B. D. (1997)
-  \emph{Modern Applied Statistics with S-PLUS.}
-  New York: Springer (2nd ed).
+  Venables, W. N. and Ripley, B. D. (2002)
+  \emph{Modern Applied Statistics with S.}
+  New York: Springer (4th ed).
 }
 \seealso{\code{\link{deviance}}, \code{\link{add1}}, \code{\link{step}}}
 \examples{

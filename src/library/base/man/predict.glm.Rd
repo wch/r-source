@@ -1,7 +1,8 @@
 \name{predict.glm}
 \title{Predict Method for GLM Fits}
 \usage{
-\method{predict}{glm}(object, newdata = NULL, type = c("link", "response", "terms"),
+\method{predict}{glm}(object, newdata = NULL,
+            type = c("link", "response", "terms"),
             se.fit = FALSE, dispersion = NULL, terms = NULL, \dots)
 }
 \alias{predict.glm}
@@ -40,18 +41,14 @@
   \item{residual.scale}{A scalar giving the square root of the
     dispersion used in computing the standard errors.}
 }
-\author{B.D. Ripley}
-%  \note{This method is also currently used for objects of
-%    class \code{"survreg"} (parametric survival fits from package
-%    \code{survival4}) and possibly others. The assumptions made by
-%    \code{predict.glm} may not always be right for such objects.}
+\author{B. D. Ripley}
 
 \seealso{
   \code{\link{glm}}, \code{\link{SafePrediction}}
 }
 
 \examples{
-## example from Venables and Ripley (1997, pp. 231-3.)
+## example from Venables and Ripley (2002, pp. 190-2.)
 ldose <- rep(0:5, 2)
 numdead <- c(1, 4, 9, 13, 18, 20, 0, 2, 6, 10, 12, 16)
 sex <- factor(rep(c("M", "F"), c(6, 6)))

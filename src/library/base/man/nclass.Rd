@@ -38,9 +38,9 @@ nclass.FD(x)
   however the other algorithms are to be preferred.
 }
 \references{
-  Venables, W. N. and Ripley, B. D. (1999)
+  Venables, W. N. and Ripley, B. D. (2002)
   \emph{Modern Applied Statistics with S-PLUS.}
-  Springer, pages 118--9.
+  Springer, page 112.
 
   Freedman, D. and Diaconis, P. (1981)
   On the histogram as a density estimator: \eqn{L_2} theory.

@@ -23,9 +23,9 @@ max.col(m)
 }
 \author{W. N. Venables and B. D. Ripley}
 \references{
-  Venables, W. N. and Ripley, B. D. (1999)
-  \emph{Modern Applied Statistics with S-PLUS.}
-  New York: Springer (3nd ed).
+  Venables, W. N. and Ripley, B. D. (2002)
+  \emph{Modern Applied Statistics with S.}
+  New York: Springer (4th ed).
 }
 \seealso{\code{\link{which.max}} for vectors.}
 \examples{
