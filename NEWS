@@ -86,6 +86,10 @@ NEW FEATURES
 	rounding errors in low-precision calculations in gs >= 8.11.
 	(PR#5285, which is not a bug in R.)
 
+    o   arraySubscript and vectorSubscript take a new argument which
+        is a function pointer that provides access to character 
+        strings (such as the names vector) rather than assuming these
+        are passed in
 
 UTILITIES
 
