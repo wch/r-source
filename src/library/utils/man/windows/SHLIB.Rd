@@ -1,9 +1,9 @@
 \name{SHLIB}
 \title{Build a DLL for Dynamic Loading}
 \description{
-  The given source files are first compiled.  All
-  specified object files are then linked into a shared library which can
-  be loaded into \R using \code{dyn.load} or \code{library.dynam}.
+  The given source files are first compiled.  All specified object files
+  are then linked into a shared library which can be loaded into \R
+  using \code{dyn.load} or \code{library.dynam}.
 }
 \alias{SHLIB}
 \usage{R CMD SHLIB [options] [-o dllname] files}
@@ -18,18 +18,12 @@
     \code{R CMD SHLIB --help} for a current list.  The most useful one
     is \code{-d} to build a debug DLL.}
 }
-\description{
-  The given source files are first compiled.  All specified object files
-  are then linked into a shared library which can be loaded into \R
-  using \code{dyn.load} or \code{library.dynam}.
-}
 \details{
-  \code{R CMD SHLIB} uses the same mechanism as used by
-  \code{\link{INSTALL}} to compile source code in packages. To use
-  \code{SHLIB} you need to have installed (from the \R installer) the
-  files for compiling source packages as well as the tools described in
-  the file \file{readme.packages} in the top directory of the \R
-  installation.
+  \code{R CMD SHLIB} uses the mechanism as used by \code{\link{INSTALL}}
+  to compile source code in packages. To use \code{SHLIB} you need to
+  have installed (from the \R installer) the files for compiling source
+  packages as well as the tools described in the file
+  \file{readme.packages} in the top directory of the \R installation.
 
   Please consult section \sQuote{Creating shared objects} in the manual
   \sQuote{Writing R Extensions} for how to customize it (for example to
