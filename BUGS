@@ -174,19 +174,15 @@ none
 
 Directory:  incoming
 
-* PR# 575 *
-Subject: missing include in pnorm.c
-From: faraway@umich.edu
-Date: Mon, 19 Jun 2000 22:01:25 +0200 (MET DST)
+* PR# 576 *
+Subject:  exists() and the mode argument 
+From: J.C.Rougier@durham.ac.uk
+Date: Tue, 20 Jun 2000 12:03:36 +0100 (BST)
 * PR# 536 *
 Subject: Problem with match.arg()
 From: kjetikj@astro.uio.no
 Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
 --1.0.0 bug fixed for 1.0.1 ??
-* PR# 565 *
-Subject: Postscript device ignores title if it is too long.
-From: Stephen Eglen <stephen@anc.ed.ac.uk>
-Date: Fri, 9 Jun 2000 09:17:09 +0100 (BST)
 * PR# 564 *
 Subject: "clipping error in x11()"
 From: Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
@@ -195,6 +191,14 @@ Date: Wed, 7 Jun 2000 23:06:54 +0200 (MET DST)
 Subject: Bus Error crash
 From: kjetikj@astro.uio.no
 Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
+* PR# 565 *
+Subject: Postscript device ignores title if it is too long.
+From: Stephen Eglen <stephen@anc.ed.ac.uk>
+Date: Fri, 9 Jun 2000 09:17:09 +0100 (BST)
+* PR# 569 *
+Subject: Typo in the documentation of prcomp.
+From: =?iso-8859-1?q?Bj=F8rn-Helge_Mevik?= <bhm@math.uio.no>
+Date: 14 Jun 2000 14:16:14 +0200
 * PR# 568 *
 Subject: problem with aperm?
 From: Jim Lemon <jim.lemon@uts.edu.au>
@@ -203,14 +207,18 @@ Date: Tue, 13 Jun 2000 13:20:10 +1000
 Subject: ctest not works
 From: George Diniz <george@cpqam.fiocruz.br>
 Date: Sun, 12 Mar 2000 12:03:45 -0200
+* PR# 571 *
+Subject:  Missing -lc for compilation on AIX (R 1.1.0) 
+From: Thomas Vogels <tov@infiniti.ece.cmu.edu>
+Date: Thu, 15 Jun 2000 13:42:50 -0400
 * PR# 570 *
 Subject: extra comma in configure
 From: tov@ece.cmu.edu
 Date: Wed, 14 Jun 2000 21:45:35 +0200 (MET DST)
-* PR# 569 *
-Subject: Typo in the documentation of prcomp.
-From: =?iso-8859-1?q?Bj=F8rn-Helge_Mevik?= <bhm@math.uio.no>
-Date: 14 Jun 2000 14:16:14 +0200
+* PR# 575 *
+Subject: missing include in pnorm.c
+From: faraway@umich.edu
+Date: Mon, 19 Jun 2000 22:01:25 +0200 (MET DST)
 * PR# 574 *
 Subject: chron library
 From: keitt@nceas.ucsb.edu
@@ -219,7 +227,3 @@ Date: Mon, 19 Jun 2000 19:20:16 +0200 (MET DST)
 Subject:  Missing -lm for tcltk (R 1.1.0, AIX 4.3) 
 From: Thomas Vogels <tov@phoenix.ece.cmu.edu>
 Date: Fri, 16 Jun 2000 10:32:54 -0400
-* PR# 571 *
-Subject:  Missing -lc for compilation on AIX (R 1.1.0) 
-From: Thomas Vogels <tov@infiniti.ece.cmu.edu>
-Date: Thu, 15 Jun 2000 13:42:50 -0400
