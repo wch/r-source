@@ -85,8 +85,11 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     int   i, rc;
     ParseStatus status;
     SEXP  x, fn, envir, ti, ed, t;
-    char *filename, *title, *editcmd, *vmaxsave, *cmd;
+    char *filename, *editcmd, *vmaxsave, *cmd;
     FILE *fp;
+#ifdef Win32
+    char *title;
+#endif
 
     checkArity(op, args);
 
