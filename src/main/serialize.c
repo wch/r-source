@@ -1643,7 +1643,7 @@ SEXP do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     if (version == NA_INTEGER || version <= 0)
 	error("bad version value");
     if (version < 2)
-	error("cannott save to connections in version %d format", version);
+	error("cannot save to connections in version %d format", version);
 
     fun = CAR(nthcdr(args,4));
     hook = fun != R_NilValue ? CallHook : NULL;
