@@ -4,19 +4,19 @@
 
 OBJS=
 
-if [ $1 = "-o" ]; then
-  LIB=$2; shift 2
+if [ ${1} = "-o" ]; then
+  lib=${2}; shift 2
 else
-  LIB=${1%.*}.@SHLIBEXT@
+  lib=${1%.*}.@SHLIBEXT@
 fi
 
-for i in $*; do
+for i in ${*}; do
   obj=${i%.*}.o
   make -f ${RHOME}/etc/Makeconf ${obj}
   OBJS="${OBJS} ${obj}"
 done
 
-@SHLIBLD@ @SHLIBLDFLAGS@ -o ${LIB} ${OBJS}    
+@SHLIBLD@ @SHLIBLDFLAGS@ -o ${lib} ${OBJS}    
 
 ### Local Variables: ***
 ### mode: sh ***
