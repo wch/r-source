@@ -2,6 +2,9 @@
 
 NEW FEATURES
 
+    o   mva's dist() now takes arguments diag and upper which control
+        how the distance matrix is printed.
+
     o	Attributes are now propagated correctly in binary operations.
         Changes from:
 	  Steve Oncley and Gordon Maclean
