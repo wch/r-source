@@ -35,7 +35,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	   ## else
 	   stop(paste("invalid `method':", method)))
     xvars <- as.character(attr(mt, "variables"))[-1]
-    if(yvar <- attr(mt, "response") > 0) xvars <- xvars[-yvar]
+    if((yvar <- attr(mt, "response")) > 0) xvars <- xvars[-yvar]
     xlev <- if(length(xvars) > 0) {
 	xlev <- lapply(mf[xvars], levels)
 	xlev[!sapply(xlev, is.null)]

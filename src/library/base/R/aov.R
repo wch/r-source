@@ -61,7 +61,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         lmcall$method <- "model.frame"
         mf <- eval(lmcall, sys.frame(sys.parent()))
         xvars <- as.character(attr(Terms, "variables"))[-1]
-        if (yvar <- attr(Terms, "response") > 0) 
+        if ((yvar <- attr(Terms, "response")) > 0)
             xvars <- xvars[-yvar]
         if (length(xvars) > 0) {
             xlev <- lapply(mf[xvars], levels)
@@ -99,8 +99,8 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
                 fiti$terms <- Terms
             } else {
                 y <- qty[select,,drop=FALSE]
-                fiti <- list(coefficients = numeric(0), residuals = y, 
-                             fitted.values = 0 * y, weights = wts, rank = 0, 
+                fiti <- list(coefficients = numeric(0), residuals = y,
+                             fitted.values = 0 * y, weights = wts, rank = 0,
                              df.residual = NROW(y))
             }
             if(projections) fiti$projections <- proj(fiti)
@@ -114,7 +114,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         attr(result, "terms") <- allTerms
         attr(result, "contrasts") <- cons
         attr(result, "xlevels") <- xlev
-        result 
+        result
     }
 }
 
@@ -429,7 +429,7 @@ coef.listof <- function(object)
 
 se.contrast <- function(x, ...) UseMethod("se.contrast")
 
-se.contrast.aov <- 
+se.contrast.aov <-
     function(object, contrast.obj, coef = contr.helmert(ncol(contrast))[, 1],
              data = NULL)
 {
@@ -442,7 +442,7 @@ se.contrast.aov <-
                       attr(object$terms, "term.labels"))[1 + uasgn]
         effects <- as.matrix(qr.qty(object$qr, contrast))
         effect.sq <- effects[seq(along=asgn), , drop = FALSE]^2
-        res <- matrix(0, nrow = nterms, ncol = ncol(effects), 
+        res <- matrix(0, nrow = nterms, ncol = ncol(effects),
                       dimnames = list(nmeffect, colnames(contrast)))
         for(i in seq(nterms)) {
             select <- (asgn == uasgn[i])
@@ -579,7 +579,7 @@ se.contrast.aovlist <-
     strata.nms <- rownames(effic)[row(eff.used)[eff.used]]
     var.nms <- colnames(effic)[col(eff.used)[eff.used]]
     rse.list <- sapply(object[unique(strata.nms)], SS)
-    wgt <- matrix(0, nrow = length(var.nms), ncol = ncol(contrast), 
+    wgt <- matrix(0, nrow = length(var.nms), ncol = ncol(contrast),
                   dimnames = list(var.nms, colnames(contrast)))
     for(i in seq(length(var.nms)))
         wgt[i, ] <- weights[[strata.nms[i]]][var.nms[i], , drop = FALSE]

@@ -18,7 +18,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 	warning(paste("method =", method,
 		      "is not supported. Using \"qr\"."))
     xvars <- as.character(attr(mt, "variables"))[-1]
-    if(yvar <- attr(mt, "response") > 0) xvars <- xvars[-yvar]
+    if((yvar <- attr(mt, "response")) > 0) xvars <- xvars[-yvar]
     xlev <-
 	if(length(xvars) > 0) {
 	    xlev <- lapply(mf[xvars], levels)
