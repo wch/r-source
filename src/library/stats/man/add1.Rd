@@ -109,10 +109,7 @@ drop1(object, scope, \dots)
   methods will attempt to use a subset of the data with no missing
   values for any of the variables if \code{na.action=na.omit}, but
   this may give biased results.  Only use these functions with data
-  containing missing values with great care.  Some of the methods will
-  take missing values into account and/or give warnings, but not all.
-  This is true of the \code{default}, \code{lm} and \code{glm} methods
-  as from \R 2.1.0.
+  containing missing values with great care.
 }
 \seealso{
   \code{\link{step}}, \code{\link{aov}}, \code{\link{lm}},

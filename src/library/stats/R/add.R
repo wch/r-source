@@ -8,12 +8,10 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	scope <- add.scope(object, update.formula(object, scope))
     if(!length(scope))
 	stop("no terms in scope for adding to object")
-    newform <- update.formula(object,
-                              paste(". ~ . +", paste(scope, collapse="+")))
-    fitdat <- model.frame(update(object, newform)) # remove NAs
-    if(nrow(fitdat) != nrow(model.frame(object)))
-       warning("working with reduced set of cases that are complete in all models considered")
-    object <- update(object, data = fitdat)
+#     newform <- update.formula(object,
+#                               paste(". ~ . +", paste(scope, collapse="+")))
+#     data <- model.frame(update(object, newform)) # remove NAs
+#     object <- update(object, data = data)
     ns <- length(scope)
     ans <- matrix(nrow = ns + 1, ncol = 2)
     dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
@@ -24,7 +22,7 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	if(trace > 1) cat("trying +", tt, "\n")
 	nfit <- update(object, as.formula(paste("~ . +", tt)),
                        evaluate = FALSE)
-        nfit <- eval(nfit, list(fitdat=fitdat), parent.frame())
+        nfit <- eval.parent(nfit)
 	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
         if(length(nfit$residuals) != n0)
             stop("number of rows in use has changed: remove missing values?")
@@ -76,6 +74,8 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     dfs <- numeric(ns+1)
     RSS <- numeric(ns+1)
     names(dfs) <- names(RSS) <- c("<none>", scope)
+    dfs[1] <- object$rank
+    RSS[1] <- deviance.lm(object)
     add.rhs <- paste(scope, collapse = "+")
     add.rhs <- eval(parse(text = paste("~ . +", add.rhs)))
     new.form <- update.formula(object, add.rhs)
@@ -99,10 +99,6 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     ousex <- match(asgn, match(oTerms, Terms), 0) > 0
     if(int) ousex[1] <- TRUE
     iswt <- !is.null(wt <- object$weights)
-    X <- x[, ousex, drop = FALSE]
-    z <- if(iswt) lm.wfit(X, y, wt) else lm.fit(X, y)
-    dfs[1] <- z$rank
-    RSS[1] <- deviance.lm(z)
     for(tt in scope) {
 	usex <- match(asgn, match(tt, Terms), 0) > 0
 	X <- x[, usex|ousex, drop = FALSE]
@@ -165,6 +161,8 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     ns <- length(scope)
     dfs <- dev <- numeric(ns+1)
     names(dfs) <- names(dev) <- c("<none>", scope)
+    dfs[1] <- object$rank
+    dev[1] <- object$deviance
     add.rhs <- paste(scope, collapse = "+")
     add.rhs <- eval(parse(text = paste("~ . +", add.rhs)))
     new.form <- update.formula(object, add.rhs)
@@ -192,11 +190,6 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     asgn <- attr(x, "assign")
     ousex <- match(asgn, match(oTerms, Terms), 0) > 0
     if(int) ousex[1] <- TRUE
-    X <- x[, ousex, drop = FALSE]
-    z <-  glm.fit(X, y, wt, offset=object$offset,
-                  family=object$family, control=object$control)
-    dfs[1] <- z$rank
-    dev[1] <- z$deviance
     for(tt in scope) {
 	usex <- match(asgn, match(tt, Terms), 0) > 0
 	X <- x[, usex|ousex, drop = FALSE]
@@ -259,8 +252,8 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	if(!all(match(scope, tl, FALSE)))
 	    stop("scope is not a subset of term labels")
     }
-    fitdat <- model.frame(object) # remove NAs
-    object <- update(object, data = fitdat)
+#    data <- model.frame(object) # remove NAs
+#    object <- update(object, data = data)
     ns <- length(scope)
     ans <- matrix(nrow = ns + 1, ncol = 2)
     dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
@@ -271,7 +264,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	if(trace > 1) cat("trying -", tt, "\n")
 	nfit <- update(object, as.formula(paste("~ . -", tt)),
                        evaluate = FALSE)
-        nfit <- eval(nfit, list(fitdat=fitdat), parent.frame())
+        nfit <- eval.parent(nfit)
 	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
         if(length(nfit$residuals) != n0)
             stop("number of rows in use has changed: remove missing values?")

@@ -4489,7 +4489,7 @@ character(0)
 > x <- 1:20; x[10] <- NA
 > x2 <- runif(20); x2[20] <- NA
 > fit <- lm(y ~ x)
-> (res0 <- drop1(fit))
+> drop1(fit)
 Single term deletions
 
 Model:
@@ -4497,35 +4497,22 @@ y ~ x
        Df Sum of Sq     RSS     AIC
 <none>              20.1913  5.1555
 x       1    1.4798 21.6711  4.4993
-> (res <-  try(stats:::drop1.default(fit)))
-Single term deletions
-
-Model:
-y ~ x
-       Df    AIC
-<none>    5.1555
-x       1 4.4993
-> stopifnot(all.equal(res0[, "AIC"], res[, "AIC"]))
-> (res1 <- add1(fit, ~ . +x2))
+> res <-  try(stats:::drop1.default(fit))
+Error in stats:::drop1.default(fit) : number of rows in use has changed: remove missing values?
+> stopifnot(inherits(res, "try-error"))
+> add1(fit, ~ . +x2)
 Single term additions
 
 Model:
 y ~ x
        Df Sum of Sq     RSS     AIC
-<none>              17.6049  3.6005
-x2      1    0.0117 17.5931  5.5885
+<none>              20.1913  6.0679
+x2      1    2.5982 17.5931  5.5885
 Warning message:
 using the 18/19 rows from a combined fit in: add1.lm(fit, ~. + x2) 
-> (res <-  try(stats:::add1.default(fit, ~ . +x2)))
-Single term additions
-
-Model:
-y ~ x
-       Df    AIC
-<none>    3.6005
-x2      1 5.5885
-Warning message:
-working with reduced set of cases that are complete in all models considered in: stats:::add1.default(fit, ~. + x2) 
-> stopifnot(all.equal(res1[, "AIC"], res[, "AIC"]))
-> ## In 2.0.1 these ran and gave incorrect answers.
+> res <-  try(stats:::add1.default(fit, ~ . +x2))
+Error in stats:::add1.default(fit, ~. + x2) : 
+	number of rows in use has changed: remove missing values?
+> stopifnot(inherits(res, "try-error"))
+> ## 2.0.1 ran and gave incorrect answers.
 > 
