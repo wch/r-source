@@ -4124,7 +4124,7 @@ fi
 fi
 
 for ac_func in acosh asinh atanh bcopy finite getcwd isnan matherr \
-  memcpy memmove regcomp rint strcoll system times
+  memcpy memmove rint strcoll system times
 do
 echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
 echo "configure:4131: checking for $ac_func" >&5

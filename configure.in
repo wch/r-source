@@ -380,7 +380,7 @@ AC_FUNC_ALLOCA
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isnan matherr \
-  memcpy memmove regcomp rint strcoll system times)
+  memcpy memmove rint strcoll system times)
 R_FUNC___SETFPUCW
 R_FUNC_CALLOC
 R_FUNC_FINITE

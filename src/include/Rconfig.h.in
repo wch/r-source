@@ -89,9 +89,6 @@
 /* HPUX rint is broken */
 #undef USE_BUILTIN_RINT
 
-/* POSIX Regular Expressions Available */
-#undef HAVE_REGCOMP
-
 /* Compatibility for "memmove" on older BSD platforms */
 #undef HAVE_MEMMOVE
 #undef HAVE_MEMCPY
