@@ -2389,6 +2389,7 @@ void GClip(DevDesc *dd)
 void GForceClip(DevDesc *dd)
 {
     double x1, y1, x2, y2;
+    if (dd->gp.state == 0) return;
     setClipRect(&x1, &y1, &x2, &y2, DEVICE, dd);
     dd->dp.clip(x1, x2, y1, y2, dd);
 }

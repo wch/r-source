@@ -1133,8 +1133,9 @@ static void PS_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     PostScriptSetClipRect(pd->psfp, x0, x1, y0, y1);
-    /* clipping does grestore so invalidate current font */
-    pd->fontsize = -1; 
+    /* clipping does grestore so invalidate current font, color, fill,
+       and linewidth parameters */
+    pd->fontsize = pd->col = pd->fill = pd->lwd = -1; 
 }
 
 static void PS_Resize(DevDesc *dd)
