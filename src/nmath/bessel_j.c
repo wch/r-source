@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2000 Ross Ihaka and the R Development Core team.
+ *  Copyright (C) 1998-2001 Ross Ihaka and the R Development Cbore team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,10 +23,11 @@
 /* From http://www.netlib.org/specfun/rjbesl	Fortran translated by f2c,...
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
+#include "bessel.h"
 #include "nmath.h"
+
 static void J_bessel(double *x, double *alpha, long *nb,
 		     double *b, long *ncalc);
-
 
 double bessel_j(double x, double alpha)
 {
@@ -99,7 +100,7 @@ static void J_bessel(double *x, double *alpha, long *nb,
        to the desired accuracy for N <= NCALC, but precision
        is lost for NCALC < N <= NB.  If b[N] does not vanish
        for N > NCALC (because it is too small to be represented),
-       and b[N]/b[NCALC] = 10^(-K), then only the first NSIG-K
+       and b[N]/b[NCALC] = 10^(-K), then only the first NSIG - K
        significant figures of b[N] can be trusted.
 
 
@@ -139,56 +140,14 @@ static void J_bessel(double *x, double *alpha, long *nb,
    TWOPI2 = (2*PI - TWOPI1) to working precision, i.e.,
 	    TWOPI1 + TWOPI2 = 2 * PI to extra precision.
  --------------------------------------------------------------------- */
-    static double pi2 = .636619772367581343075535;
-    static double twopi1 = 6.28125;
-    static double twopi2 =  .001935307179586476925286767;
-
-/********************************************************************
-
-  Explanation of machine-dependent constants
-
-   it	  = Number of bits in the mantissa of a working precision variable
-   NSIG	  = Decimal significance desired.  Should be set to
-	    INT(LOG10(2)*it+1).	 Setting NSIG lower will result
-	    in decreased accuracy while setting NSIG higher will
-	    increase CPU time without increasing accuracy.  The
-	    truncation error is limited to a relative error of T=.5*10^(-NSIG).
-   ENTEN  = 10 ^ K, where K is the largest long such that
-	    ENTEN is machine-representable in working precision
-   ENSIG  = 10 ^ NSIG
-   RTNSIG = 10 ^ (-K) for the smallest long K such that K >= NSIG/4
-   ENMTEN = Smallest ABS(X) such that X/4 does not underflow
-   XLARGE = Upper limit on the magnitude of X.	If ABS(X)=N,
-	    then at least N iterations of the backward recursion
-	    will be executed.  The value of 10 ^ 4 is used on every machine.
-
-     Approximate values for some important machines are:
-
-			  it  NSIG   ENTEN   ENSIG  RTNSIG     ENMTEN	XLARGE
-   IEEE (IBM/XT,								
-     SUN, etc.)	 (S.P.)	  24	8   1E+38    1E+8    1E-2    4.70E-38	  1E+4
-   IEEE (.....)	 (D.P.)	  53   16   1D+308   1D+16   1E-4    8.90D-308	  1D+4
-   CRAY-1	 (S.P.)	  48   15   1E+2465  1E+15   1E-4    1.84E-2466	  1E+4
-   Cyber 180/855								
-     under NOS	 (S.P.)	  48   15   1E+322   1E+15   1E-4    1.25E-293	  1E+4
-   IBM 3033	 (D.P.)	  14	5   1D+75    1D+5    1E-2    2.16D-78	  1D+4
-   VAX		 (S.P.)	  24	8   1E+38    1E+8    1E-2    1.17E-38	  1E+4
-   VAX D-Format	 (D.P.)	  56   17   1D+38    1D+17   1E-5    1.17D-38	  1D+4
-   VAX G-Format	 (D.P.)	  53   16   1D+307   1D+16   1E-4    2.22D-308	  1D+4
-
- ---------------------------------------------------------------------
-  Machine-dependent parameters
- ---------------------------------------------------------------------*/
-    static double enten = 1e308;	/*NETLIB had 1e38 */
-    static double ensig = 1e16;		/*NETLIB had 1e17 */
-    static double rtnsig = 1e-4;
-    static double enmten = 8.9e-308;	/*NETLIB had 1.2e-37 */
-    static double xlarge = 1e4;
+    const double pi2 = .636619772367581343075535;
+    const double twopi1 = 6.28125;
+    const double twopi2 =  .001935307179586476925286767;
 
 /*---------------------------------------------------------------------
  *  Factorial(N)
  *--------------------------------------------------------------------- */
-    static double fact[25] = { 1.,1.,2.,6.,24.,120.,720.,5040.,40320.,
+    const double fact[25] = { 1.,1.,2.,6.,24.,120.,720.,5040.,40320.,
 	    362880.,3628800.,39916800.,479001600.,6227020800.,87178291200.,
 	    1.307674368e12,2.0922789888e13,3.55687428096e14,6.402373705728e15,
 	    1.21645100408832e17,2.43290200817664e18,5.109094217170944e19,
@@ -215,7 +174,7 @@ static void J_bessel(double *x, double *alpha, long *nb,
     if (*nb > 0 && *x >= 0. && 0. <= nu && nu < 1.) {
 
 	*ncalc = *nb;
-	if(*x > xlarge) {
+	if(*x > xlrg_BESS_IJ) {
 	    ML_ERROR(ME_RANGE);
 	    for(i=1; i <= *nb; i++)
 		b[i] = ML_POSINF;/* FIXME : +Inf is really nonsense */
@@ -233,13 +192,13 @@ static void J_bessel(double *x, double *alpha, long *nb,
 	  3) use recursion otherwise
 	  ===================================================================*/
 
-	if (*x < rtnsig) {
+	if (*x < rtnsig_BESS) {
 	  /* ---------------------------------------------------------------
 	     Two-term ascending series for small X.
 	     --------------------------------------------------------------- */
 	    alpem = 1. + nu;
 
-	    halfx = (*x > enmten) ? .5 * *x :  0.;
+	    halfx = (*x > enmten_BESS) ? .5 * *x :  0.;
 	    aa	  = (nu != 0.)	  ? pow(halfx, nu) / (nu * gamma_cody(nu)) : 1.;
 	    bb	  = (*x + 1. > 1.)? -halfx * halfx : 0.;
 	    b[1] = aa + aa * bb / alpem;
@@ -256,9 +215,9 @@ static void J_bessel(double *x, double *alpha, long *nb,
 		       Calculate higher order functions.
 		       ---------------------------------------------- */
 		    if (bb == 0.)
-			tover = (enmten + enmten) / *x;
+			tover = (enmten_BESS + enmten_BESS) / *x;
 		    else
-			tover = enmten / bb;
+			tover = enmten_BESS / bb;
 		    cc = halfx;
 		    for (n = 2; n <= *nb; ++n) {
 			aa /= alpem;
@@ -325,7 +284,7 @@ static void J_bessel(double *x, double *alpha, long *nb,
 		    b[j] = gnu * b[j - 1] / *x - b[j - 2];
 	}
 	else {
-	    /* rtnsig <= x && ( x <= 25 || intx+1 < *nb ) :	
+	    /* rtnsig_BESS <= x && ( x <= 25 || intx+1 < *nb ) :	
 	       --------------------------------------------------------
 	       Use recurrence to generate results.
 	       First initialize the calculation of P*S.
@@ -338,12 +297,12 @@ static void J_bessel(double *x, double *alpha, long *nb,
 	    /* ---------------------------------------------------
 	       Calculate general significance test.
 	       --------------------------------------------------- */
-	    test = ensig + ensig;
+	    test = ensig_BESS + ensig_BESS;
 	    if (nbmx >= 3) {
 		/* ------------------------------------------------------------
 		   Calculate P*S until N = NB-1.  Check for possible overflow.
 		   ---------------------------------------------------------- */
-		tover = enten / ensig;
+		tover = enten_BESS / ensig_BESS;
 		nstart = intx + 2;
 		nend = *nb - 1;
 		en = (double) (nstart + nstart) - 2. + twonu;
@@ -358,7 +317,7 @@ static void J_bessel(double *x, double *alpha, long *nb,
 			   To avoid overflow, divide P*S by TOVER.
 			   Calculate P*S until ABS(P) > 1.
 			   -------------------------------------------*/
-			tover = enten;
+			tover = enten_BESS;
 			p /= tover;
 			plast /= tover;
 			psave = p;
@@ -378,7 +337,7 @@ static void J_bessel(double *x, double *alpha, long *nb,
 			   the highest N such that the test is passed.
 			   ----------------------------------------------- */
 			test = pold * plast * (.5 - .5 / (bb * bb));
-			test /= ensig;
+			test /= ensig_BESS;
 			p = plast * tover;
 			--n;
 			en -= 2.;
@@ -401,7 +360,7 @@ static void J_bessel(double *x, double *alpha, long *nb,
 		/* -----------------------------------------------------
 		   Calculate special significance test for NBMX > 2.
 		   -----------------------------------------------------*/
-		test = fmax2(test, sqrt(plast * ensig) * sqrt(p + p));
+		test = fmax2(test, sqrt(plast * ensig_BESS) * sqrt(p + p));
 	    }
 	    /* ------------------------------------------------
 	       Calculate P*S until significance test passes. */
@@ -528,7 +487,7 @@ L250:
 	    if (nu + 1. != 1.)
 		sum *= (gamma_cody(nu) * pow(.5* *x, -nu));
 
-	    aa = enmten;
+	    aa = enmten_BESS;
 	    if (sum > 1.)
 		aa *= sum;
 	    for (n = 1; n <= *nb; ++n) {

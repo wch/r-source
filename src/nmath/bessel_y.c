@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2000 Ross Ihaka and the R Development Core team.
+ *  Copyright (C) 1998-2001 Ross Ihaka and the R Development Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,10 +23,11 @@
 /* From http://www.netlib.org/specfun/rybesl	Fortran translated by f2c,...
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
+#include "bessel.h"
 #include "nmath.h"
+
 static void Y_bessel(double *x, double *alpha, long *nb,
 		     double *by, long *ncalc);
-
 
 double bessel_y(double x, double alpha)
 {
@@ -150,72 +151,6 @@ static void Y_bessel(double *x, double *alpha, long *nb,
     const static double fivpi = 15.707963267948966192;
     const static double pim5	=   .70796326794896619231;
 
-
-/* *******************************************************************
-
- Explanation of machine-dependent constants
-
-   beta	  = Radix for the floating-point system
-   p	  = Number of significant base-beta digits in the
-	    significand of a floating-point number
-   minexp = Smallest representable power of beta
-   maxexp = Smallest power of beta that overflows
-   EPS	  = beta ** (-p)  == DBL_EPSILON
-   DEL	  = Machine number below which sin(x)/x = 1; approximately SQRT(EPS).
-   XMIN	  = Smallest acceptable argument for RBESY; approximately
-	    max(2*beta**minexp,2/XINF), rounded up
-   XINF	  = Largest positive machine number; approximately beta**maxexp
-	    == DBL_MAX (defined in  #include <float.h>)
-   THRESH = Lower bound for use of the asymptotic form;
-	    approximately AINT(-LOG10(EPS/2.0))+1.0
-   XLARGE = Upper bound on X;
-	    approximately 1/DEL, because the sine and cosine functions
-	    have lost about half of their precision at that point.
-
-     Approximate values for some important machines are:
-
-			beta	p     minexp	  maxexp      EPS
-
-  CRAY-1	(S.P.)	  2    48     -8193	   8191	   3.55E-15
-  Cyber 180/185
-    under NOS	(S.P.)	  2    48      -975	   1070	   3.55E-15
-  IEEE (IBM/XT,
-    SUN, etc.)	(S.P.)	  2    24      -126	    128	   5.96E-8
-  IEEE (IBM/XT,
-    SUN, etc.)	(D.P.)	  2    53     -1022	   1024	   1.11D-16
-  IBM 3033	(D.P.)	 16    14	-65	     63	   1.39D-17
-  VAX		(S.P.)	  2    24      -128	    127	   5.96E-8
-  VAX D-Format	(D.P.)	  2    56      -128	    127	   1.39D-17
-  VAX G-Format	(D.P.)	  2    53     -1024	   1023	   1.11D-16
-
-
-			 DEL	  XMIN	    XINF     THRESH  XLARGE
-
- CRAY-1	       (S.P.)  5.0E-8  3.67E-2466 5.45E+2465  15.0E0  2.0E7
- Cyber 180/855
-   under NOS   (S.P.)  5.0E-8  6.28E-294  1.26E+322   15.0E0  2.0E7
- IEEE (IBM/XT,
-   SUN, etc.)  (S.P.)  1.0E-4  2.36E-38	  3.40E+38     8.0E0  1.0E4
- IEEE (IBM/XT,
-   SUN, etc.)  (D.P.)  1.0D-8  4.46D-308  1.79D+308   16.0D0  1.0D8
- IBM 3033      (D.P.)  1.0D-8  2.77D-76	  7.23D+75    17.0D0  1.0D8
- VAX	       (S.P.)  1.0E-4  1.18E-38	  1.70E+38     8.0E0  1.0E4
- VAX D-Format  (D.P.)  1.0D-9  1.18D-38	  1.70D+38    17.0D0  1.0D9
- VAX G-Format  (D.P.)  1.0D-8  2.23D-308  8.98D+307   16.0D0  1.0D8
-
- *******************************************************************
-
- ----------------------------------------------------------------------
-  Machine-dependent constants
- ----------------------------------------------------------------------*/
-
-/*    static double xmin = 4.46e-308;
- *    static double xinf = 1.79e308;
- */
-    const static double del = 2.1491193328908e-8;/* x < del  <==>  sin(x)/x ~= 1 */
-    const static double thresh = 16.;
-    const static double xlarge = 1e8;
-
     /*----------------------------------------------------------------------
       Coefficients for Chebyshev polynomial expansion of
       1/gamma(1-x), abs(x) <= .5
@@ -244,11 +179,11 @@ static void Y_bessel(double *x, double *alpha, long *nb,
     ex = *x;
     nu = *alpha;
     if (*nb > 0 && 0. <= nu && nu < 1.) {
-	if(ex < DBL_MIN || ex > xlarge) {
+	if(ex < DBL_MIN || ex > xlrg_BESS_Y) {
 	    ML_ERROR(ME_RANGE);
 	    *ncalc = *nb;
-	    if(ex > xlarge)  by[0]=ML_POSINF;
-	    if(ex < DBL_MIN) by[0]=ML_NEGINF;
+	    if(ex > xlrg_BESS_Y)  by[0]=ML_POSINF;
+	    else if(ex < DBL_MIN) by[0]=ML_NEGINF;
 	    for(i=0; i < *nb; i++)
 		by[i] = by[0];
 	    return;
@@ -270,7 +205,7 @@ static void Y_bessel(double *x, double *alpha, long *nb,
 	    d = -log(b);
 	    f = nu * d;
 	    e = pow(b, -nu);
-	    if (fabs(nu) < del)
+	    if (fabs(nu) < M_eps_sinc)
 		c = M_1_PI;
 	    else
 		c = nu / sin(nu * M_PI);
@@ -314,7 +249,7 @@ static void Y_bessel(double *x, double *alpha, long *nb,
 	    p = g * c;
 	    q = M_1_PI / g;
 	    c = nu * M_PI_2;
-	    if (fabs(c) < del)
+	    if (fabs(c) < M_eps_sinc)
 		r = 1.;
 	    else
 		r = sin(c) / c;
@@ -341,7 +276,7 @@ static void Y_bessel(double *x, double *alpha, long *nb,
 	    }
 	    ya = -ya;
 	    ya1 = -ya1 / b;
-	} else if (ex < thresh) {
+	} else if (ex < thresh_BESS_Y) {
 	    /* --------------------------------------------------------------
 	       Use Temme's scheme for moderate X :  3 <= x < 16
 	       -------------------------------------------------------------- */
@@ -395,7 +330,7 @@ L220:
 	    d = M_SQRT_2dPI / sqrt(ex);
 	    ya = d * (pa * s + qa * c);
 	    ya1 = d * (qa1 * s - pa1 * c);
-	} else { /* x > thresh */
+	} else { /* x > thresh_BESS_Y */
 	    /* ----------------------------------------------------------
 	       Use Campbell's asymptotic scheme.
 	       ---------------------------------------------------------- */

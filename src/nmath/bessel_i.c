@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2000 Ross Ihaka and the R Development Core team.
+ *  Copyright (C) 1998-2001 Ross Ihaka and the R Development Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@
 /* From http://www.netlib.org/specfun/ribesl	Fortran translated by f2c,...
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
+#include "bessel.h"
 #include "nmath.h"
+
 static void I_bessel(double *x, double *alpha, long *nb,
 		     long *ize, double *bi, long *ncalc);
-
-static double exparg = 709.;/* maximal x for UNscaled answer, see below */
 
 double bessel_i(double x, double alpha, double expo)
 {
@@ -75,7 +75,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
  X     - Non-negative argument for which
 	 I's or exponentially scaled I's (I*EXP(-X))
 	 are to be calculated.	If I's are to be calculated,
-	 X must be less than EXPARG (see below).
+	 X must be less than EXPARG_BESS (see bessel.h).
  ALPHA - Fractional part of order for which
 	 I's or exponentially scaled I's (I*EXP(-X)) are
 	 to be calculated.  0 <= ALPHA < 1.0.
@@ -103,7 +103,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
   calculated to the desired accuracy.
 
   NCALC < 0:  An argument is out of range. For example,
-     NB <= 0, IZE is not 1 or 2, or IZE=1 and ABS(X) >= EXPARG.
+     NB <= 0, IZE is not 1 or 2, or IZE=1 and ABS(X) >= EXPARG_BESS.
      In this case, the BI-vector is not calculated, and NCALC is
      set to MIN0(NB,0)-1 so that NCALC != NB.
 
@@ -156,95 +156,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
     /*-------------------------------------------------------------------
       Mathematical constants
       -------------------------------------------------------------------*/
-    static double const__ = 1.585;
-
-/* *******************************************************************
-
- Explanation of machine-dependent constants
-
-   beta	  = Radix for the floating-point system
-   minexp = Smallest representable power of beta
-   maxexp = Smallest power of beta that overflows
-   it	  = Number of bits in the mantissa of a working precision variable
-   NSIG	  = Decimal significance desired.  Should be set to
-	    INT(LOG10(2)*it+1).	 Setting NSIG lower will result
-	    in decreased accuracy while setting NSIG higher will
-	    increase CPU time without increasing accuracy.  The
-	    truncation error is limited to a relative error of
-	    T=.5*10**(-NSIG).
-   ENTEN  = 10.0 ** K, where K is the largest long such that
-	    ENTEN is machine-representable in working precision
-   ENSIG  = 10.0 ** NSIG
-   RTNSIG = 10.0 ** (-K) for the smallest long K such that
-	    K >= NSIG/4
-   ENMTEN = Smallest ABS(X) such that X/4 does not underflow
-   XLARGE = Upper limit on the magnitude of X when IZE=2.  Bear
-	    in mind that if ABS(X)=N, then at least N iterations
-	    of the backward recursion will be executed.	 The value
-	    of 10.0 ** 4 is used on every machine.
-   EXPARG = Largest working precision argument that the library
-	    EXP routine can handle and upper limit on the
-	    magnitude of X when IZE=1; approximately
-	    LOG(beta**maxexp)
-
-
-     Approximate values for some important machines are:
-
-			beta	   minexp      maxexp	    it
-
-  CRAY-1	(S.P.)	  2	   -8193	8191	    48
-  Cyber 180/855
-    under NOS	(S.P.)	  2	    -975	1070	    48
-  IEEE (IBM/XT,
-    SUN, etc.)	(S.P.)	  2	    -126	 128	    24
-  IEEE (IBM/XT,
-    SUN, etc.)	(D.P.)	  2	   -1022	1024	    53
-  IBM 3033	(D.P.)	 16	     -65	  63	    14
-  VAX		(S.P.)	  2	    -128	 127	    24
-  VAX D-Format	(D.P.)	  2	    -128	 127	    56
-  VAX G-Format	(D.P.)	  2	   -1024	1023	    53
-
-
-			NSIG	   ENTEN       ENSIG	  RTNSIG
-
- CRAY-1	       (S.P.)	 15	  1.0E+2465   1.0E+15	  1.0E-4
- Cyber 180/855
-   under NOS   (S.P.)	 15	  1.0E+322    1.0E+15	  1.0E-4
- IEEE (IBM/XT,
-   SUN, etc.)  (S.P.)	  8	  1.0E+38     1.0E+8	  1.0E-2
- IEEE (IBM/XT,
-   SUN, etc.)  (D.P.)	 16	  1.0D+308    1.0D+16	  1.0D-4
- IBM 3033      (D.P.)	  5	  1.0D+75     1.0D+5	  1.0D-2
- VAX	       (S.P.)	  8	  1.0E+38     1.0E+8	  1.0E-2
- VAX D-Format  (D.P.)	 17	  1.0D+38     1.0D+17	  1.0D-5
- VAX G-Format  (D.P.)	 16	  1.0D+307    1.0D+16	  1.0D-4
-
-
-			 ENMTEN	     XLARGE   EXPARG
-
- CRAY-1	       (S.P.)	1.84E-2466   1.0E+4    5677
- Cyber 180/855
-   under NOS   (S.P.)	1.25E-293    1.0E+4	741
- IEEE (IBM/XT,
-   SUN, etc.)  (S.P.)	4.70E-38     1.0E+4	 88
- IEEE (IBM/XT,
-   SUN, etc.)  (D.P.)	8.90D-308    1.0D+4	709
- IBM 3033      (D.P.)	2.16D-78     1.0D+4	174
- VAX	       (S.P.)	1.17E-38     1.0E+4	 88
- VAX D-Format  (D.P.)	1.17D-38     1.0D+4	 88
- VAX G-Format  (D.P.)	2.22D-308    1.0D+4	709
-
- *******************************************************************
- -------------------------------------------------------------------
-  Machine-dependent parameters
- -------------------------------------------------------------------
-*/
-    static long	   nsig =   16;
-    static double ensig = 1e16;
-    static double rtnsig = 1e-4;
-    static double enmten = 8.9e-308;
-    static double enten = 1e308;
-    static double xlarge = 1e4;
+    const double const__ = 1.585;
 
     /* Local variables */
     long nend, intx, nbmx, k, l, n, nstart;
@@ -263,15 +175,15 @@ static void I_bessel(double *x, double *alpha, long *nb,
 	(1 <= *ize && *ize <= 2) ) {
 
 	*ncalc = *nb;
-	if((*ize == 1 && *x > exparg) ||
-	   (*ize == 2 && *x > xlarge)) {
+	if((*ize == 1 && *x > exparg_BESS) ||
+	   (*ize == 2 && *x > xlrg_BESS_IJ)) {
 	    ML_ERROR(ME_RANGE);
 	    for(k=1; k <= *nb; k++)
 		bi[k]=ML_POSINF;
 	    return;
 	}
 	intx = (long) (*x);/* --> we will probably fail when *x > LONG_MAX */
-	if (*x >= rtnsig) { /* "non-small" x */
+	if (*x >= rtnsig_BESS) { /* "non-small" x */
 /* -------------------------------------------------------------------
    Initialize the forward sweep, the P-sequence of Olver
    ------------------------------------------------------------------- */
@@ -283,8 +195,8 @@ static void I_bessel(double *x, double *alpha, long *nb,
 	    /* ------------------------------------------------
 	       Calculate general significance test
 	       ------------------------------------------------ */
-	    test = ensig + ensig;
-	    if (intx << 1 > nsig * 5) {
+	    test = ensig_BESS + ensig_BESS;
+	    if (intx << 1 > nsig_BESS * 5) {
 		test = sqrt(test * p);
 	    } else {
 		test /= pow(const__, (double)intx);
@@ -294,7 +206,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
 		   Calculate P-sequence until N = NB-1
 		   Check for possible overflow.
 		   ------------------------------------------------ */
-		tover = enten / ensig;
+		tover = enten_BESS / ensig_BESS;
 		nstart = intx + 2;
 		nend = *nb - 1;
 		for (k = nstart; k <= nend; ++k) {
@@ -308,7 +220,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
 			   To avoid overflow, divide P-sequence by TOVER.
 			   Calculate P-sequence until ABS(P) > 1.
 			   ---------------------------------------------- */
-			tover = enten;
+			tover = enten_BESS;
 			p /= tover;
 			plast /= tover;
 			psave = p;
@@ -328,7 +240,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
 			   Calculate backward test, and find NCALC,
 			   the highest N such that the test is passed.
 			   ------------------------------------------------ */
-			test = pold * plast / ensig;
+			test = pold * plast / ensig_BESS;
 			test *= .5 - .5 / (bb * bb);
 			p = plast * tover;
 			--n;
@@ -354,7 +266,7 @@ L90:
 		/*---------------------------------------------------
 		  Calculate special significance test for NBMX > 2.
 		  --------------------------------------------------- */
-		test = fmax2(test,sqrt(plast * ensig) * sqrt(p + p));
+		test = fmax2(test,sqrt(plast * ensig_BESS) * sqrt(p + p));
 	    }
 	    /* --------------------------------------------------------
 	       Calculate P-sequence until significance test passed.
@@ -473,7 +385,7 @@ L230:
 		sum *= (gamma_cody(1. + nu) * pow(*x * .5, -nu));
 	    if (*ize == 1)
 		sum *= exp(-(*x));
-	    aa = enmten;
+	    aa = enmten_BESS;
 	    if (sum > 1.)
 		aa *= sum;
 	    for (n = 1; n <= *nb; ++n) {
@@ -489,7 +401,7 @@ L230:
 	       -----------------------------------------------------------*/
 	    aa = 1.;
 	    empal = 1. + nu;
-	    if (*x > enmten)
+	    if (*x > enmten_BESS)
 		halfx = .5 * *x;
 	    else
 		halfx = 0.;
@@ -515,9 +427,9 @@ L230:
 		       Calculate higher-order functions.
 		       ------------------------------------------------- */
 		    cc = halfx;
-		    tover = (enmten + enmten) / *x;
+		    tover = (enmten_BESS + enmten_BESS) / *x;
 		    if (bb != 0.)
-			tover = enmten / bb;
+			tover = enmten_BESS / bb;
 		    for (n = 2; n <= *nb; ++n) {
 			aa /= empal;
 			empal += 1.;

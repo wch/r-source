@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2000 Ross Ihaka and the R Development Core team.
+ *  Copyright (C) 1998-2001 Ross Ihaka and the R Development Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@
 /* From http://www.netlib.org/specfun/rkbesl	Fortran translated by f2c,...
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
+#include "bessel.h"
 #include "nmath.h"
+
 static void K_bessel(double *x, double *alpha, long *nb,
 		     long *ize, double *bk, long *ncalc);
-
-static double xmax = 705.342;/* maximal x for UNscaled answer, see below */
 
 double bessel_k(double x, double alpha, double expo)
 {
@@ -76,7 +76,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
  X     - Non-negative argument for which
 	 K's or exponentially scaled K's (K*EXP(X))
 	 are to be calculated.	If K's are to be calculated,
-	 X must not be greater than XMAX (see below).
+	 X must not be greater than XMAX_BESS_K.
  ALPHA - Fractional part of order for which
 	 K's or exponentially scaled K's (K*EXP(X)) are
 	 to be calculated.  0 <= ALPHA < 1.0.
@@ -106,7 +106,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
   calculated to the desired accuracy.
 
   NCALC < -1:  An argument is out of range. For example,
-	NB <= 0, IZE is not 1 or 2, or IZE=1 and ABS(X) >= XMAX.
+	NB <= 0, IZE is not 1 or 2, or IZE=1 and ABS(X) >= XMAX_BESS_K.
 	In this case, the B-vector is not calculated,
 	and NCALC is set to MIN0(NB,0)-2	 so that NCALC != NB.
   NCALC = -1:  Either  K(ALPHA,X) >= XINF  or
@@ -152,97 +152,37 @@ static void K_bessel(double *x, double *alpha, long *nb,
 
  -------------------------------------------------------------------
 */
-
-/*
- ---------------------------------------------------------------------
-  Machine dependent parameters
- ---------------------------------------------------------------------
-  Explanation of machine-dependent constants
-
-   beta	  = Radix for the floating-point system
-   minexp = Smallest representable power of beta
-   maxexp = Smallest power of beta that overflows
-   EPS	  = The smallest positive floating-point number such that 1.0+EPS > 1.0
-   SQXMIN = Square root of beta**minexp
-   XINF	  = Largest positive machine number; approximately  beta**maxexp
-	    == DBL_MAX (defined in  #include <float.h>)
-   XMIN	  = Smallest positive machine number; approximately beta**minexp
-
-   XMAX	  = Upper limit on the magnitude of X when IZE=1;  Solution
-	    to equation:
-	       W(X) * (1-1/8X+9/128X**2) = beta**minexp
-	    where  W(X) = EXP(-X)*SQRT(PI/2X)
-
-
-     Approximate values for some important machines are:
-
-			  beta	     minexp	 maxexp	     EPS
-
-  CRAY-1	(S.P.)	    2	     -8193	  8191	  7.11E-15
-  Cyber 180/185
-    under NOS	(S.P.)	    2	      -975	  1070	  3.55E-15
-  IEEE (IBM/XT,
-    SUN, etc.)	(S.P.)	    2	      -126	   128	  1.19E-7
-  IEEE (IBM/XT,
-    SUN, etc.)	(D.P.)	    2	     -1022	  1024	  2.22D-16
-  IBM 3033	(D.P.)	   16	       -65	    63	  2.22D-16
-  VAX		(S.P.)	    2	      -128	   127	  5.96E-8
-  VAX D-Format	(D.P.)	    2	      -128	   127	  1.39D-17
-  VAX G-Format	(D.P.)	    2	     -1024	  1023	  1.11D-16
-
-
-			 SQXMIN	      XINF	  XMIN	    XMAX
-
- CRAY-1	       (S.P.)  6.77E-1234  5.45E+2465  4.59E-2467 5674.858
- Cyber 180/855
-   under NOS   (S.P.)  1.77E-147   1.26E+322   3.14E-294   672.788
- IEEE (IBM/XT,
-   SUN, etc.)  (S.P.)  1.08E-19	   3.40E+38    1.18E-38	    85.337
- IEEE (IBM/XT,
-   SUN, etc.)  (D.P.)  1.49D-154   1.79D+308   2.23D-308   705.342
- IBM 3033      (D.P.)  7.35D-40	   7.23D+75    5.40D-79	   177.852
- VAX	       (S.P.)  5.42E-20	   1.70E+38    2.94E-39	    86.715
- VAX D-Format  (D.P.)  5.42D-20	   1.70D+38    2.94D-39	    86.715
- VAX G-Format  (D.P.)  7.46D-155   8.98D+307   5.57D-309   706.728
-
- *******************************************************************
- */
-    /*static double eps = 2.22e-16;*/
-    /*static double xinf = 1.79e308;*/
-    /*static double xmin = 2.23e-308;*/
-    static double sqxmin = 1.49e-154;/* = sqrt(xmin) */
-
     /*---------------------------------------------------------------------
      * Mathematical constants
      *	A = LOG(2) - Euler's constant
      *	D = SQRT(2/PI)
      ---------------------------------------------------------------------*/
-    static double a = .11593151565841244881;
+    const double a = .11593151565841244881;
 
     /*---------------------------------------------------------------------
       P, Q - Approximation for LOG(GAMMA(1+ALPHA))/ALPHA + Euler's constant
       Coefficients converted from hex to decimal and modified
       by W. J. Cody, 2/26/82 */
-    static double p[8] = { .805629875690432845,20.4045500205365151,
+    const double p[8] = { .805629875690432845,20.4045500205365151,
 	    157.705605106676174,536.671116469207504,900.382759291288778,
 	    730.923886650660393,229.299301509425145,.822467033424113231 };
-    static double q[7] = { 29.4601986247850434,277.577868510221208,
+    const double q[7] = { 29.4601986247850434,277.577868510221208,
 	    1206.70325591027438,2762.91444159791519,3443.74050506564618,
 	    2210.63190113378647,572.267338359892221 };
     /* R, S - Approximation for (1-ALPHA*PI/SIN(ALPHA*PI))/(2.D0*ALPHA) */
-    static double r[5] = { -.48672575865218401848,13.079485869097804016,
+    const double r[5] = { -.48672575865218401848,13.079485869097804016,
 	    -101.96490580880537526,347.65409106507813131,
 	    3.495898124521934782e-4 };
-    static double s[4] = { -25.579105509976461286,212.57260432226544008,
+    const double s[4] = { -25.579105509976461286,212.57260432226544008,
 	    -610.69018684944109624,422.69668805777760407 };
     /* T    - Approximation for SINH(Y)/Y */
-    static double t[6] = { 1.6125990452916363814e-10,
+    const double t[6] = { 1.6125990452916363814e-10,
 	    2.5051878502858255354e-8,2.7557319615147964774e-6,
 	    1.9841269840928373686e-4,.0083333333333334751799,
 	    .16666666666666666446 };
     /*---------------------------------------------------------------------*/
-    static double estm[6] = { 52.0583,5.7607,2.7782,14.4303,185.3004, 9.3715 };
-    static double estf[7] = { 41.8341,7.1075,6.4306,42.511,1.35633,84.5096,20.};
+    const double estm[6] = { 52.0583,5.7607,2.7782,14.4303,185.3004, 9.3715 };
+    const double estf[7] = { 41.8341,7.1075,6.4306,42.511,1.35633,84.5096,20.};
 
     /* Local variables */
     long iend, i, j, k, m, ii, mplus1;
@@ -250,13 +190,13 @@ static void K_bessel(double *x, double *alpha, long *nb,
     double d1, d2, d3, f0, f1, f2, p0, q0, t1, t2, twonu;
     double dm, ex, bk1, bk2, nu;
 
-    ii = 0;			/* -Wall */
+    ii = 0; /* -Wall */
 
     ex = *x;
     nu = *alpha;
     *ncalc = imin2(*nb,0) - 2;
     if (*nb > 0 && (0. <= nu && nu < 1.) && (1 <= *ize && *ize <= 2)) {
-	if(ex <= 0 || (*ize == 1 && ex > xmax)) {
+	if(ex <= 0 || (*ize == 1 && ex > xmax_BESS_K)) {
 	    ML_ERROR(ME_RANGE);
 	    *ncalc = *nb;
 	    for(i=0; i < *nb; i++)
@@ -264,7 +204,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
 	    return;
 	}
 	k = 0;
-	if (nu < sqxmin) {
+	if (nu < sqxmin_BESS_K) {
 	    nu = 0.;
 	} else if (nu > .5) {
 	    k = 1;
