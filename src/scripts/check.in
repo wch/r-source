@@ -32,7 +32,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.46 $ ';
+my $revision = ' $Revision: 1.47 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -607,7 +607,8 @@ sub check_pkg {
                    "-d ${library}/${pkgname}/R-ex");
         }
         if($WINDOWS) {
-            $cmd = "${R_CMD} massage-Examples.sh ".
+            ## avoid Rcmd as line may be too long after expansion.
+            $cmd = "sh ${R_HOME}/bin/massage-Examples.sh ".
   		     "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
   		     "> ${pkgname}-Ex.R";
         } else {

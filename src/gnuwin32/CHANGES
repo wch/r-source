@@ -41,9 +41,8 @@ the same directory.
 
 Rcmd check has been changed to be more robust to reported problems
 with Perl's system() command under 16-bit versions of Windows.  It now
-works for us under Windows 98, except for large packages such as MASS,
-where command-line length limits are exceeded.  (It has always worked
-under NT4 and 2000.)
+works for us under Windows 98.  (It has always worked under NT4 and
+2000.)
 
 Rcmd SHLIB no longer adds a version tab to the DLL, as this seemed to
 cause some people problems under 16-bit versions of Windows.
