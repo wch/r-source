@@ -10,24 +10,23 @@ print.htest <- function(x, digits = 4, quote = TRUE, prefix = "", ...)
                   ",", sep = ""), "")
     cat("p-value =", format.pval(x$p.value, digits= digits), "\n")
     if(!is.null(x$alternative)) {
+        cat("alternative hypothesis: ")
 	if(!is.null(x$null.value)) {
 	    if(length(x$null.value) == 1) {
-		if (x$alternative == "two.sided" )
-		    alt.char <- "not equal to"
-		else if( x$alternative == "less" )
-		    alt.char <- "less than"
-		else if( x$alternative == "greater" )
-		    alt.char <- "greater than"
-		cat("alternative hypothesis:", "true", names(x$null.value),
-                    "is", alt.char, x$null.value, "\n")
+                alt.char <-
+                  switch(x$alternative,
+                         two.sided = "not equal to",
+                         less = "less than",
+                         greater = "greater than")
+
+		cat("true", names(x$null.value), "is", alt.char, x$null.value, "\n")
 	    }
 	    else {
-		cat("alternative hypothesis:", x$alternative, "\n")
-		cat("null values:\n")
+		cat(x$alternative, "\nnull values:\n")
 		print(x$null.value, ...)
 	    }
 	}
-	else cat("alternative hypothesis:", x$alternative, "\n")
+	else cat(x$alternative, "\n")
     }
     if(!is.null(x$conf.int)) {
 	cat(format(100 * attr(x$conf.int, "conf.level")),
