@@ -10,7 +10,7 @@
 NEW FEATURES
 
     o   Files BUGS and FAQ are now included with distribution
-	
+
     o	readline has now an argument  prompt = ""
 
     o	coplot() now labels levels when conditioning variable is factor
@@ -65,7 +65,7 @@ NEW FEATURES
     o	Many functions providing an interface to the operating system
 	have been made "platform independent".	See the manual entries
 	for "file", "list.files" and "file.show" for details of the new
-	interface.
+	interface. The system.file() interface has been changed.
 
     o	There is a new function "eval.with.vis" which behaves exactly
 	like "eval", but which returns both the result of the evaluation
@@ -75,13 +75,34 @@ NEW FEATURES
 	the "example" and "demo" functions no longer print invisible
 	values when the example script is run.
 
+    o   Index files in data directories in packages should be 00Index
+	not index.doc.
+
+    o   Function interaction() to compute factor interactions.
+
+    o   load() can load to specific environments.
+
+    o	Sockets interface: make/read/write/close.socket()
+
     o	Function chull() for planar convex hulls
 
     o	pairs.formula() allows formula notations for scatter plot matrix.
 
+    o   documentation for datasets mtcars, plants, randu and sleep.
+
 BUG FIXES
 
-    o	documented in .C what C/Fortran types R objects correspond to
+    o   the sunspots dataset is now monthly.
+
+    o   ts() allows a data-frame argument `data'.
+
+    o   anova.lm handles singular models better, and deparses responses.
+
+    o   dump() now uses digits=12 rather than the current setting.
+
+    o   tabulate ignores entries beyond nbins rather than core dumps.
+
+    o	?.C documents what C/Fortran types R objects correspond to
 	in foreign function calls, which is not what everyone thought.
 
     o	changed long to int in several .C calls to follow the above rules.
@@ -116,7 +137,7 @@ BUG FIXES
 
     o	pt() now works better for extreme `df' arguments.
 
-    o	fixed some glitches with formatC() and its doc.
+    o	fixed some glitches with formatC() and its docs.
 
     o	several fixes in *.c code to make -Wall happy
 
@@ -125,7 +146,8 @@ BUG FIXES
 
     o   zapped old windows files since they didn't build any more. 
 	The sources for the later gnuwin32 version are expected to 
-	appear here for 0.64.1.
+	appear here for 0.64.1. The #ifdef Win32's here are for that
+	version.
 
 
 	**************************************************
