@@ -50,5 +50,13 @@ str(uniroot(function(x) x*(x^2-1) + .5, low = -2, up = 2, tol = 0.0001),
     dig = 10)
 str(uniroot(function(x) x*(x^2-1) + .5, low = -2, up =2 , tol = 1e-10 ),
     dig = 10)
+
+## Find the smallest value x for which exp(x) > 0 (numerically):
+r <- uniroot(function(x) 1e80*exp(x) -1e-300,,-1000,0, tol=1e-20)
+str(r, digits= 15)##> around -745.1332191
+
+exp(r$r)	# = 0, but not for r$r * 0.999...
+minexp <- r$r * (1 - .Machine$double.eps)
+exp(minexp)	# typically denormalized
 }
 \keyword{optimize}
