@@ -662,12 +662,9 @@ restrictions.
 @node SPSS, Octave, S-PLUS, Importing from other statistical systems
 @section SPSS
 @cindex SPSS
-@cindex PSPP
 
-It is planned to include facilities to import SPSS data files in package
-@code{foreign}.  It may be possible to use the
-@uref{http://pspp.stat.wisc.edu, PSPP package} to convert these files to
-a text format.
+Package @code{foreign} on @acronym{CRAN} will shortly be able to read
+files created by the `save' and `export' commands in @acronym{SPSS}.
 
 @node Octave,  , SPSS, Importing from other statistical systems
 @section Octave
