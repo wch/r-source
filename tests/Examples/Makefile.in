@@ -51,7 +51,7 @@ test-Examples-Base: Makefile
 ## <NOTE>
 ## We do *not* want this to be added to test-Examples conditional on
 ## @USE_RECOMMENDED_PACKAGES_TRUE@.
-## 'make fullcheck' is used for running test-Examples-Recommended in
+## 'make check-all' is used for running test-Examples-Recommended in
 ## addition to 'make check'.
 test-Examples-Recommended: test-Examples-Base
 	@$(MAKE) $(EX_OUT_RECOMMENDED)
@@ -73,10 +73,36 @@ R:
 	  echo "$(ECHO_T) OK"; \
 	fi
 
+## <NOTE>
+## We need to update an ex_in file if it is older than any Rd file it
+## contains examples from, or older than massage-Examples.pl.  As we do
+## not have the Rd files as explicit dependencies (which would currently
+## be impossible for recommended packages), we cannot use Make to figure
+## out the need to update ex_in files ... hence we do things ourselves,
+## and force these computations.
+## The ugly 'find | grep' construct is necessary because 'test -nt' is
+## not portable.  The pipeline will succeed if the target exists and is
+## newer than the corresponding DESCRIPTION file in the package.  If the
+## target does not exist, then find will fail; if it exists and is
+## older, then find will succeed but output nothing so that the grep
+## will fail.
+## </NOTE>
 $(EX_IN_BASE): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
+	if find $@ -newer $(top_srcdir)/share/perl/massage-Examples.pl \
+	    -print 2> /dev/null | grep $@ > /dev/null; then \
+	  target_is_newer_than_massage_Ex=yes; \
+	else \
+	  target_is_newer_than_massage_Ex=no; \
+	fi; \
 	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
+	  target_is_newer_than_Rdfiles=no; \
+	else \
+	  target_is_newer_than_Rdfiles=yes; \
+	fi; \
+	if test "$${target_is_newer_than_massage_Ex}" = no \
+	    || test "$${target_is_newer_than_Rdfiles}" = no; then \
 	  echo "collecting examples for package '$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
 	    OPTS="--txt --example" $(MAKE) R_PKGS_BASE="$${pkg}" DOCS); \
@@ -87,16 +113,22 @@ $(EX_IN_BASE): FORCE
 	  touch $@; \
 	fi)
 
-## The ugly 'find | grep' construct is necessary because 'test -nt' is
-## nonportable.  The pipeline will succeed if the target exists and is
-## newer than the corresponding DESCRIPTION file in the package.  If the
-## target does not exist, then find will fail; if it exists and is
-## older, then find will succeed but output nothing so that the grep
-## will fail.
 $(EX_IN_RECOMMENDED): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
+	if find $@ -newer $(top_srcdir)/share/perl/massage-Examples.pl \
+	    -print 2> /dev/null | grep $@ > /dev/null; then \
+	  target_is_newer_than_massage_Ex=yes; \
+	else \
+	  target_is_newer_than_massage_Ex=no; \
+	fi; \
 	if find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
-	    -print 2> /dev/null | grep $@ > /dev/null; then :; else \
+	    -print 2> /dev/null | grep $@ > /dev/null; then \
+	  target_is_newer_than_Rdfiles=yes; \
+	else \
+	  target_is_newer_than_Rdfiles=no; \
+	fi; \
+	if test "$${target_is_newer_than_massage_Ex}" = no \
+	    || test "$${target_is_newer_than_Rdfiles}" = no; then \
 	  echo "collecting examples for package '$${pkg}' ..."; \
 	  f=$${TMPDIR-/tmp}/R$$$$; \
 	  $(PERL) $(top_srcdir)/share/perl/massage-Examples.pl $${pkg} \
