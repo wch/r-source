@@ -58,7 +58,7 @@ getExportedValue <- function(ns, name) {
     }
     ns <- asNamespace(ns)
     if (isBaseNamespace(ns)) get(name, env = ns, inherits=FALSE)
-    else get(getInternalExportName(name, ns), env = ns, inherits=FALSE)
+    else get(getInternalExportName(name, ns), env = ns)
 }
 
 "::" <- function(pkg,name){
