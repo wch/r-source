@@ -206,11 +206,11 @@ AC_ARG_ENABLE([linux-lfs],
 [want_linux_lfs="${enableval}"],
 [want_linux_lfs=no])
 
-AC_ARG_ENABLE([utf8],
-[AC_HELP_STRING([--enable-utf8],
-                [Enable support for UTF-8 locales @<:@no@:>@])],
-[want_utf8_support="${enableval}"],
-[want_utf8_support=no])
+AC_ARG_ENABLE([mbcs],
+[AC_HELP_STRING([--enable-mbcs],
+                [Enable support for UTF-8 and other MBCS locales @<:@yes@:>@])],
+[want_mbcs_support="${enableval}"],
+[want_mbcs_support=yes])
 
 
 ### ** Optional packages.
@@ -1290,7 +1290,7 @@ AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
 AC_SUBST(R_MODULES)
 
 ## UTF-8 locales - support for MBCS and specifically UTF-8
-R_UTF8
+R_MBCS
 
 ## iconv headers and function.
 R_ICONV
@@ -1611,8 +1611,8 @@ fi
 if test "${r_cv_iconv_latin1}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [iconv], [, ])
 fi
-if test "${want_utf8_support}" = yes; then
-  R_SH_VAR_ADD(r_capabilities, [UTF-8], [, ])
+if test "${want_mbcs_support}" = yes; then
+  R_SH_VAR_ADD(r_capabilities, [MBCS], [, ])
 fi
 if test "${USE_NLS}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [NLS], [, ])

@@ -2782,12 +2782,12 @@ fi
 ])# R_ICONV
 
 
-## R_UTF8
+## R_MBCS
 ## -------------
-## UTF-8 locales - support for MBCS and specifically UTF-8
-AC_DEFUN([R_UTF8],
+## locales - support for MBCS and specifically UTF-8
+AC_DEFUN([R_MBCS],
 [
-if test "$want_utf8_support" = yes ; then
+if test "$want_mbcs_support" = yes ; then
 ## Wide character support -- need to include headers in case of macros?
 AC_CHECK_HEADERS(wchar.h wctype.h)
 AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
@@ -2799,17 +2799,17 @@ for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
 do
 this=`echo "ac_cv_func_$ac_func"`
 if test "x$this" = xno; then
-  want_utf8_support=no
+  want_mbcs_support=no
 fi
 done
 fi
-if test "x${want_utf8_support}" = xyes; then
+if test "x${want_mbcs_support}" = xyes; then
 AC_DEFINE(SUPPORT_UTF8, 1, [Define this to enable support for UTF-8 locales.])
 AC_SUBST(SUPPORT_UTF8)
 AC_DEFINE(SUPPORT_MBCS, 1, [Define this to enable support for MBCS locales.])
 AC_SUBST(SUPPORT_MBCS)
 fi
-])# R_UTF8
+])# R_MBCS
 
 
 ### Local variables: ***

@@ -1169,11 +1169,11 @@ encodings worked, but e.g. @code{postscript()} and @code{pdf()} need to
 be told about the encoding in use.
 
 Full internationalization can be enabled when @R{} is built under
-Unix-alikes by the @command{configure} option @option{--enable-utf8}:
-@pxref{Configuration on Unix}.  Under Windows, it is enabled by default
-in source builds, but support for `East Asian' (Chinese/Japanese/Korean)
-languages is only enabled in the binary install if it is selected in the
-installer.
+Unix-alikes by the (default) @command{configure} option
+@option{--enable-mbcs}: @pxref{Configuration on Unix}.  Under Windows,
+it is enabled by default in source builds, but support for `East Asian'
+(Chinese/Japanese/Korean) languages is only enabled in the binary
+install if it is selected in the installer.
 
 All versions of @R{} support all single-byte character sets that the
 underlying OS can handle.  These are interpreted according to the
@@ -1627,23 +1627,23 @@ against the dynamic library and so such packages cannot be used from a
 As from version 2.1.0, @R{} has some support for multi-byte character
 sets (@acronym{MBCS}), in particular for UTF-8 locales (which are
 usually identified by suffix @code{.utf8}, something like
-@code{en_GB.utf8}@footnote{As usual, AIX has to be different: it has
+@code{en_GB.utf8}@footnote{AIX has to be different: it has
 @code{EN_US.UTF-8}!}.  UTF-8 is an encoding of Unicode and in principle
 covers all human languages simultaneously: however, a given system may
 not have fonts capable of displaying more than a few of these languages.
 
-To enable UTF-8 support, configure with @option{--enable-utf8}.  This
-will check for a large number of features, notably support for the
+To enable UTF-8 support, configure with default @option{--enable-mbcs}.
+This will check for a large number of features, notably support for the
 C99/UNIX98 wide character functions and for UTF-8 or MBCS support in
-X11.  If enough of these are found, @code{UTF-8} will be listed as one
+X11.  If enough of these are found, @code{MBCS} will be listed as one
 of the ``Additional capabilities''.  Then if @R{} is started in a UTF-8
 locale it assumes that the terminal will supply and display
 UTF-8-encoded characters@footnote{You may have to set this with
 @code{luit}, but it should be the default in a window manager session
 started in UTF-8.}.  If run in a single-byte locale @R{} behaves almost
-exactly as if it was not configured with @option{--enable-utf8}.
+exactly as if it was configured with @option{--disable-mbcs}.
 
-A version of @R{} with UTF-8 support can also be run in other multi-byte
+A version of @R{} with MBCS support can also be run in other multi-byte
 locales, for example those using the EUC-JP, EUC-KR and EUC-TW
 encodings.  A very few parts of @R{} currently assume that ASCII
 characters never occur as part of multi-byte character sequences, which

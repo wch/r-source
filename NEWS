@@ -226,13 +226,11 @@ NEW FEATURES
 
 INTERNATIONALIZATION
 
-    o	Unix-alike versions of R can now be used in UTF-8 locales on
-	suitably equipped OSes if configured with option --enable-utf8.
-	[The changes to font handling in the X11 module are based on
-	the Japanization patches of Eiji Nakama.]
-
-	Such a version of R will also run in other locales with
-	multi-byte character sets.
+    o	Unix-alike versions of R can now be used in UTF-8 and other
+	multi-byte locales on suitably equipped OSes if configured
+	with option --enable-mbcs (which is the default).  [The
+	changes to font handling in the X11 module are based on the
+	Japanization patches of Eiji Nakama.]
 
 	See the 'Internationalization' chapter in the 'Installation
 	and Administration' manual.
