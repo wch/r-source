@@ -4,29 +4,37 @@ function(file, local=FALSE, echo = debug, print.eval=echo, debug=FALSE,
 {
  envir <- if (local) sys.frame(sys.parent()) else .GlobalEnv
  if(debug) { cat("'envir' chosen:"); print(envir) }
- exprs <- parse(n = -1, file = file)
+ Ne <- length(exprs <- parse(n = -1, file = file))
  if(debug)
-	cat("--> parsed", length(exprs), "expressions; now eval(.)ing them:\n")
- if (length(exprs) == 0)    return(invisible())
+	cat("--> parsed", Ne, "expressions; now eval(.)ing them:\n")
+ if (Ne == 0) return(invisible())
  ass1 <- expression(y <- x)[[1]][[1]] #-- ass1 :  the  '<-' symbol/name
- for (i in exprs) {
+ for (i in 1:Ne) {
+	if(debug)
+	  cat("\n>>>> eval(expression_nr.",i,")\n\t  =================\n")
+	ei <- exprs[i]
 	if(echo) {
-		dep <- paste(deparse(i), collapse="\n")
+		dep <- paste(deparse(ei), collapse="\n")
 		if(nchar(dep) > max.deparse.length)
 			dep <- paste(substr(dep, 1, max.deparse.length),
 				     " .... [TRUNCATED] ")
 		cat("\n> ", dep, "\n", sep="")
 	}
-	yy <- eval(i, envir)
-	i.symbol <- mode(i[[1]]) == "name"
+	yy <- eval(ei, envir)
+	i.symbol <- mode(ei[[1]]) == "name"
 	if(!i.symbol) {
-		curr.fun <- i[[1]][[1]]## i[[1]] : the function "<-" or other
+		curr.fun <- ei[[1]][[1]]## ei[[1]] : the function "<-" or other
 		if(debug) { cat('curr.fun:'); str(curr.fun) }
 	}
+	if(debug >= 2) {
+	  cat(".... mode(ei[[1]])=", mode(ei[[1]]),"; paste(curr.fun)=");
+	  str(paste(curr.fun))
+	}
 	if(print.eval &&
-	   (i.symbol || all(paste(curr.fun) != c("<-","cat", "str", "print"))))
+	   (i.symbol|| (length(pf <- paste(curr.fun))==1 &&
+			all(paste(curr.fun) != c("<-","cat", "str", "print")))))
 		print(yy)
-	if(debug) cat(" .. after", deparse(i), ":\n")
+	if(debug) cat(" .. after `", deparse(ei), "'\n", sep="")
  }
  invisible(yy)
 }
@@ -54,7 +62,7 @@ demo <- function(topic, device = x11, directory.sep = "/")
  dimnames(Topics)[[1]] <- c("dir", "file", "flag")
  topic.names <- dimnames(Topics)[[2]]
  demo.help <- function() {
-	cat("Choices for argument `topic' are:\n")
+	cat("Use ``demo(topic)'' where choices for argument `topic' are:\n")
 	cbind(topics = topic.names)
  }
  if(missing(topic)) return(demo.help())
