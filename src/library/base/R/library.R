@@ -210,6 +210,11 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
             ## Remove the '00Index.rds' once 1.7.0 is out.
             else if(basename(f) %in% c("vignette.rds", "00Index.rds")) {
                 txt <- .readRDS(f)
+                ## New-style vignette indexes are data frames with more
+                ## info that just the base name of the PDF file and the
+                ## title.
+                if(is.data.frame(txt))
+                    txt <- txt[txt$PDF != "", c("PDF", "Title")]
             }
             ## </FIXME>
             else

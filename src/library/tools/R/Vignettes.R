@@ -171,24 +171,53 @@ function(vignetteDir)
 {
     if(!.fileTest("-d", vignetteDir))
         stop(paste("directory", sQuote(vignetteDir), "does not exist"))
-    vignetteFiles <- .listFilesWithType(vignetteDir, "vignette")
-    vignetteIndexEntryRE <-
-        "[[:space:]]*%+[[:space:]]*\\\\VignetteIndexEntry\{([^}]*)\}"
-    vignetteTitles <-
-        sapply(vignetteFiles,
-               function(file) {
-                   lines <- grep(vignetteIndexEntryRE, readLines(file),
-                                 value = TRUE)
-                   c(gsub(vignetteIndexEntryRE, "\\1", lines), "")[1]
-               })
     vignetteFiles <-
-        paste(basename(gsub("\\.[[:alpha:]]+$", "", vignetteFiles)),
-              ".pdf", sep = "")
-    vignetteIndex <- cbind(vignetteFiles, "")
-    ## <FIXME>
-    ## Replace this by
-    ##   vignetteIndex <- cbind(vignetteFiles, vignetteTitles)
-    ## for 1.8.
+        path.expand(.listFilesWithType(vignetteDir, "vignette"))
+
+    vignetteMetaRE <- function(tag)
+        paste("[[:space:]]*%+[[:space:]]*\\\\Vignette", tag,
+              "\{([^}]*)\}", sep = "")
+
+    vignetteInfo <- function(file) {
+        lines <- readLines(file)
+        ## \VignetteIndexEntry
+        vignetteIndexEntryRE <- vignetteMetaRE("IndexEntry")
+        title <- grep(vignetteIndexEntryRE, lines, value = TRUE)
+        title <- c(gsub(vignetteIndexEntryRE, "\\1", title), "")[1]
+        ## \VignetteDepends
+        vignetteDependsRE <- vignetteMetaRE("Depends")
+        depends <- grep(vignetteDependsRE, lines, value = TRUE)
+        depends <- gsub(vignetteDependsRE, "\\1", depends)
+        if(length(depends) > 0)
+            depends <- unlist(strsplit(depends[1], ", *"))
+        ## \VignetteKeyword and old-style \VignetteKeywords
+        vignetteKeywordsRE <- vignetteMetaRE("Keywords")
+        keywords <- grep(vignetteKeywordsRE, lines, value = TRUE)
+        keywords <- gsub(vignetteKeywordsRE, "\\1", keywords)
+        keywords <- if(length(keywords) == 0) {
+            ## No old-style \VignetteKeywords entries found.
+            vignetteKeywordRE <- vignetteMetaRE("Keyword")
+            keywords <- grep(vignetteKeywordRE, lines, value = TRUE)
+            gsub(vignetteKeywordRE, "\\1", keywords)
+        }
+        else
+            unlist(strsplit(keywords[1], ", *"))
+        list(file = file, title = title, depends = depends,
+             keywords = keywords)
+    }
+
+    contents <- vector("list", length = length(vignetteFiles) * 4)
+    dim(contents) <- c(length(vignetteFiles), 4)
+    for(i in seq(along = vignetteFiles))
+        contents[i, ] <- vignetteInfo(vignetteFiles[i])
+    colnames(contents) <- c("File", "Title", "Depends", "Keywords")
+
+    vignettePDFs <- 
+        paste(gsub("\\.[[:alpha:]]+$", "", vignetteFiles), ".pdf",
+              sep = "")
+
+    vignetteTitles <- unlist(contents[, "Title"])
+    
     ## Compatibility code for transition from old-style to new-style
     ## indexing.  If we have @file{00Index.dcf}, use it when computing
     ## the vignette index, but let the index entries in the vignettes
@@ -202,13 +231,20 @@ function(vignetteDir)
         else
             vignetteEntries <-
                 cbind(colnames(vignetteEntries), c(vignetteEntries))
-        idx <- match(vignetteFiles, vignetteEntries[ , 1], 0)
-        vignetteIndex[which(idx != 0), 2] <- vignetteEntries[idx, 2]
+        pos <- match(basename(vignettePDFs), vignetteEntries[ , 1], 0)
+        idx <- which(vignetteTitles == "")
+        vignetteTitles[which(pos != 0) & idx] <-
+            vignetteEntries[pos, 2][idx]
     }
-    idx <- which(vignetteTitles != "")
-    vignetteIndex[idx, 2] <- vignetteTitles[idx]
-    ## </FIXME>    
-    vignetteIndex
+
+    vignettePDFs[!.fileTest("-f", vignettePDFs)] <- ""
+    vignettePDFs <- basename(vignettePDFs)
+
+    data.frame(File = I(unlist(contents[, "File"])),
+               Title = I(vignetteTitles),
+               Depends = I(contents[, "Depends"]),
+               Keywords = I(contents[, "Keywords"]),
+               PDF = I(vignettePDFs))
 }
 
 ### * .checkVignetteIndex
@@ -220,7 +256,8 @@ function(vignetteDir)
         stop(paste("directory", sQuote(vignetteDir), "does not exist"))
     vignetteIndex <- .buildVignetteIndex(vignetteDir)
     badEntries <-
-        vignetteIndex[grep("^[[:space:]]*$", vignetteIndex[, 2]), 1]
+        vignetteIndex[grep("^[[:space:]]*$", vignetteIndex[, "Title"]),
+                      "File"]
     class(badEntries) <- "checkVignetteIndex"
     badEntries
 }
@@ -231,10 +268,15 @@ function(x, ...)
     if(length(x) > 0) {
         writeLines(paste("Vignettes with missing or empty",
                          "\\VignetteIndexEntry:"))
-        print(gsub("\\.[[:alpha:]]+$", "", unclass(x)), ...)
+        print(gsub("\\.[[:alpha:]]+$", "", basename(unclass(x))), ...)
     }
     invisible(x)
 }
+
+### Local variables: ***
+### mode: outline-minor ***
+### outline-regexp: "### [*]+" ***
+### End: ***
 
 ### Local variables: ***
 ### mode: outline-minor ***

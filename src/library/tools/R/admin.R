@@ -127,17 +127,19 @@ function(dir, outDir)
     if(!.fileTest("-d", vignetteDir)) return()
     vignetteIndex <- .buildVignetteIndex(vignetteDir)
 
+    .saveRDS(vignetteIndex,
+             file = file.path(outDir, "Meta", "vignette.rds"))
+
     ## <FIXME>
     ## Compatibility code for BioC vignette tools.
     ## Remove eventually ...
     outVignetteDir <- file.path(outDir, "doc")
     if(!.fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
+    vignetteIndex <-
+        vignetteIndex[vignetteIndex$PDF != "", c("PDF", "Title")]
     writeLines(formatDL(vignetteIndex, style = "list"),
                file.path(outVignetteDir, "00Index.dcf"))
     ## </FIXME>
-    
-    .saveRDS(vignetteIndex,
-             file = file.path(outDir, "Meta", "vignette.rds"))
 }
 
 ### * .installPackageDemoIndex
