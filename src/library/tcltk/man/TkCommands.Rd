@@ -205,6 +205,7 @@ tkplace.slaves(...)
 
 }
 \arguments{
+  \item{x}{A window object}
   \item{\dots}{Handled via \code{.Tcl.args}}
 }
 \details{

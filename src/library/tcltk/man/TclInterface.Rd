@@ -46,9 +46,13 @@ tclRequire(package, warn = TRUE)
   \item{win}{a window structure}
   \item{x}{an object}
   \item{ID}{a window ID}
+  \item{parent}{a window which becomes the parent of the resulting window}
   \item{path}{path to a directory containing Tcl packages}
   \item{package}{a Tcl package name}
   \item{warn}{logical. Warn if not found?}
+  \item{...}{Additional arguments. See below.}
+% Actually, both .Tcl and .Tcl.callback take only a single argument;
+% I've forgotten why they were defined as ... arguments.
 }
 \details{
   Many of these functions are not intended for general use but are used
