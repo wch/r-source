@@ -31,6 +31,9 @@
   \emph{Interactive Data Analysis}.
   Wiley.
 }
+\seealso{
+  \code{\link{xtabs}} for ways to display these data as a table.
+}
 \examples{
 data(warpbreaks)
 summary(warpbreaks)
