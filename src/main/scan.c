@@ -72,7 +72,7 @@ static complex strtoc(const char *nptr, char **endptr) {
     char *s, *endp;
 
     x = strtod(nptr, &endp);
-    if (*endp == '\0') {
+    if (isBlankString(endp)) {
 	z.r = x; z.i = 0;
     }
     else if (*endp == 'i')  {
@@ -234,7 +234,7 @@ static void extractItem(char *buffer, SEXP ans, int i)
 	    REAL(ans)[i] = NA_REAL;
 	else {
 	    REAL(ans)[i] = strtod(buffer, &endp);
-	    if (*endp != '\0')
+	    if (!isBlankString(endp))
 		expected("a real", buffer);
 	}
 	break;
@@ -243,7 +243,7 @@ static void extractItem(char *buffer, SEXP ans, int i)
 	    COMPLEX(ans)[i].r = COMPLEX(ans)[i].i = NA_REAL;
 	else {
 	    COMPLEX(ans)[i] = strtoc(buffer, &endp);
-	    if (*endp != '\0')
+	    if (!isBlankString(endp))
 		expected("a complex", buffer);
 	}
 	break;
@@ -725,7 +725,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {
 	    if (strlen(tmp) != 0) {
 		REAL(rval)[i] = strtod(tmp, &endp);
-		if (*endp != '\0') {
+		if (!isBlankString(endp)) {
 		    numeric = 0;
 		    break;
 		}
