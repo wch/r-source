@@ -1,3 +1,22 @@
+r-base (1.6.2.cvs.20030413-1) unstable; urgency=low
+
+  * Upgraded to release candidate dated 2003-04-13 of R 1.7.0
+  * debian/control: Section set to gnome for r-gnome
+  * debian/r-recommended.preinst: rm doc dir (Closes: #188995)
+ 
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 14 Apr 2003 20:35:32 -0500
+
+r-base (1.6.2.cvs.20030409-1) unstable; urgency=low
+
+  * Upgraded to release candidate dated 2003-04-09 of R 1.7.0
+  * debian/rules: Hack result of dh_shlibdeps with Perl to remove the
+    double atlas2 entry caused by the virtual depends on blas and lapack
+  * debian/rules: Small improvement to R_LIBS patch to conform with
+    standard of respecting prior settings, if any, of the variable
+  * debian/control: Upgraded Standards-Version to 3.5.9
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Wed,  9 Apr 2003 23:09:00 -0500
+
 r-base (1.6.2.cvs.20030405-1) unstable; urgency=low
 
   * Upgraded to release candidate dated 2003-04-05 of R 1.7.0
@@ -46,7 +65,7 @@ r-base (1.6.2.cvs.20030326-1) unstable; urgency=low
   * debian/rules: Configure with --with-lapack
   * debian/control: Build-Depends on lapack-dev
   * debian/rules: Explicitly use gcc/g77/g++-3.2 for builds on testing
-  * debian/r-gnome.menu: Needs entry corrected to "x11"
+  * debian/r-gnome.menu: The Needs: entry was corrected to "x11"
 
  -- Dirk Eddelbuettel <edd@debian.org>  Wed, 26 Mar 2003 09:19:07 -0600
 

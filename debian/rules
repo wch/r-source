@@ -3,7 +3,7 @@
 # Copyright 1997-2003 by Douglas Bates <bates@stat.wisc.edu> 
 #                    and Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.49 2003/04/05 14:32:27 bates Exp $
+# $Id: rules,v 1.50 2003/04/16 12:03:35 bates Exp $
 
 corepackage	= r-base-core
 latexpackage	= r-base-latex
@@ -43,6 +43,9 @@ endif
 export DH_COMPAT  = 3
 
 # edd 15 Aug 2001: default to blas, atlas can override it 
+#atlas 		= --with-blas=blas
+# dmb 04 Apr 2003  better to no specify blas
+atlas 		= --with-blas
 atlas 		= --with-blas
 # edd 08 Mar 2003: use the new lapack feature
 lapack		= --with-lapack
@@ -299,10 +302,11 @@ endif
 
         # now deal with $R_HOME/etc <--> /etc/R
 	# edd 03 Apr 2003  patch Renviron for new R_LIBS standard
-	(cd $(debetc); 	cat $(debbase)/Renviron-R_LIBS.patch | patch; 	\
-			mv Makeconf Renviron	../../../../etc/R/; 	\
-			ln -s  /etc/R/Makeconf  .; \
-			ln -s  /etc/R/Renviron  .  )
+	(cd $(debetc); \
+		cat $(debbase)/Renviron-R_LIBS.patch | patch --verbose;	\
+		mv Makeconf Renviron	../../../../etc/R/; 		\
+		ln -s  /etc/R/Makeconf  .; 				\
+		ln -s  /etc/R/Renviron  .  				)
         #
 	touch install-arch-stamp
 
@@ -385,7 +389,7 @@ binary-arch: build-arch install-arch check
         #dh_installmanpages -a	-N$(gnomepackage) -p$(corepackage) getline.3
         #dh_installman 		-p$(corepackage) doc/R.1
 	## dh_installinfo -a	-n doc/manual/R-*.info*
-	## edd 04 Apr 2004  manual is dangling unless r-doc-pdf is installed ...
+	## edd 04 Apr 2004 manual is dangling unless r-doc-pdf is installed ...
 	##(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/html .)
 	##(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/manual .)
 	# ... so install doc as a link, as we already did with library
@@ -406,6 +410,12 @@ binary-arch: build-arch install-arch check
 	dh_installdeb -a
 	dh_perl -a
 	dh_shlibdeps -a
+	echo "*** Hack alert ***"
+	echo "*** Pruning shlibdeps result from double atlas entry ***"
+	cat debian/r-base-core.substvars
+	perl -p -i -e 's/atlas2-base, //' debian/r-base-core.substvars
+	cat debian/r-base-core.substvars
+	echo "*** Hack done ***"
 	dh_gencontrol -a
 	dh_md5sums -a		-X'usr/bin/R'  -XLibIndex -Xindex.txt \
 					-Xfunction.html -Xpackages.html
