@@ -575,6 +575,18 @@ stopifnot(!is.na(z), mode(z) == "numeric", z == -Inf)
 z <- max(integer(0))
 stopifnot(!is.na(z), mode(z) == "numeric", z == -Inf)
 
+## more reading the code BDR 2002-03-31
+stopifnot(identical(range(), range(numeric(0))))
+## in 1.4.1 range() was c(1,1)
+stopifnot(is.null(c()))
+## in 1.4.1 this was structure(TRUE, names="recursive")
+
+## range(numeric(0)) was not as documented
+x <- numeric(0)
+(rx <- range(x))
+stopifnot(identical(rx, c(min(x), max(x))))
+## 1.4.1 had c(NA, NA)
+
 
 ## This example last: needed < 1.5.0 ##
 

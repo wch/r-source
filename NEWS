@@ -220,8 +220,6 @@ NEW FEATURES
 	separately (by accepting y = NULL).  This gives a small
 	performance gain (suggestion of Jonathan Rougier).
 
-    o	Experimental interface to quicksort sorting.
-
     o	New prettyNum() function used in formatC() and format.default()
         which have new optional arguments `big.mark', `big.interval',
         `small.mark', `small.interval', and `decimal.mark'.
@@ -232,7 +230,7 @@ NEW FEATURES
 	   `decreasing' to allow the order to be reversed whilst
 	   still preserving ties.
 
-	-  sort() has an option to use different methods in some cases
+	-  sort() has an option to use quicksort in some cases
 	   (currently numeric vectors without names and increasing order).
 
 	-  The default Shell sort is Sedgewick's variant, around 20%
@@ -240,20 +238,23 @@ NEW FEATURES
 	   NAs several-fold.
 
 	-  sort.list() (and order with just one vector) is several
-	   times faster for numeric, integer and logical vectors.
+	   times faster for numeric, integer and logical vectors, and
+	   faster for character vectors.
 
     o   axis() now omits labels which are NA (but still draws the
 	tick mark.
 
-    o   the tcltk package has gained several new functions that allow
+    o   The tcltk package has gained several new functions that allow
 	access to C level Tcl objects. These are implemented using a new 
-	`tclObj' class, and this is now the return value from .Tcl() and
-	tkcmd().
+	`tclObj' class, and this is now the class of the return value 
+	from .Tcl() and tkcmd().
 
     o   min/max of integer(0) (or NULL) is now Inf/-Inf, not an
 	extreme integer.
 
     o   range() gave c(1, 1).
+
+    o	range(numeric(0)) is now c(Inf, -Inf), as it was documented to be.
 
 
 DEPRECATED & DEFUNCT
