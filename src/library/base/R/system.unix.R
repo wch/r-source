@@ -250,7 +250,7 @@ download.file <- function(url, destfile, method="auto")
             method <- "cp"
         else if(system("wget --help > /dev/null")==0)
             method <- "wget"
-        else if(system("lynx --help > /dev/null")==0)
+        else if(system("lynx -help > /dev/null")==0)
             method <- "lynx"
         else
             stop("No download method found")
