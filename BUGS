@@ -392,13 +392,6 @@ From: edd@debian.org
 From: "Stephen J. Turnbull" <turnbull@sk.tsukuba.ac.jp>
 Date: Sun, 11 Nov 2001 18:23:33 +0100 (MET)
 Date: Mon, 18 Sep 2000 19:48:11 +0900 (JST)
-* PR# 1167 *
-Subject: r-gnome: plots go blank directly after R is finished plotting
-Subject: r-gnome: plots go blank directly after R is finished plotting
-From: edd@debian.org
-From: Egon Willighagen <egonw@sci.kun.nl>
-Date: Tue, 13 Nov 2001 04:01:07 +0100 (MET)
-Date: Mon, 22 Oct 2001 23:44:41 +0200
 * PR# 1168 *
 Subject: pdf driver
 From: White.Denis@epamail.epa.gov
@@ -427,3 +420,11 @@ Date: Thu, 15 Nov 2001 08:25:03 +0100
 Subject: pdf() behavior
 From: White.Denis@epamail.epa.gov
 Date: Thu, 15 Nov 2001 10:18:21 -0800
+* PR# 1175 *
+Subject: pearson residuals in glm for binomial response
+From: John Kent <J.T.Kent@leeds.ac.uk>
+Date: Fri, 16 Nov 2001 10:34:56 GMT
+* PR# 1176 *
+Subject: UseMethod() fails to 
+From: hb@maths.lth.se
+Date: Fri, 16 Nov 2001 17:00:01 +0100 (MET)
