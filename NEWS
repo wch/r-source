@@ -218,7 +218,10 @@ NEW FEATURES
     o	R CMD check now also checks the keyword entries against the list
 	of standard keywords.
 
-
+    o   Matrix multiplication functions %*% and crossprod now use a
+        level-3 BLAS routine dgemm.  When R is linked with the ATLAS
+        library this can be substantially faster than the previous
+        code.
 
 BUG FIXES
 
