@@ -41,7 +41,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.87 $ ';
+my $revision = ' $Revision: 1.88 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -286,8 +286,7 @@ sub check_pkg {
     if($opt_perms && ($R::Vars::OSTYPE eq "unix")) {
 	$log->checking("for sufficient/correct file permissions");
 	my @badfiles = ();
-	my @excludepatterns = ("^.Rbuildignore\$", "\~\$", "\\.swp\$",
-			       "^.*/\\.#[^/]*\$", "^.*/#[^/]*#\$");
+	my @excludepatterns = R::Utils::get_exclude_patterns();
 	if(-f "./.Rbuildignore") {
 	    open(RBUILDIGNORE, "./.Rbuildignore");
 	    while(<RBUILDIGNORE>) {

@@ -108,6 +108,15 @@ sub list_files_with_exts {
     @paths;
 }
 
+sub get_exclude_patterns {
+    ## Return list of file patterns excluded by R CMD build and check.
+    ## Kept here so that we ensure that the lists are in sync, but not
+    ## exported.
+    my @exclude_patterns = ("^.Rbuildignore\$", "\~\$", "\\.swp\$",
+			    "^.*/\\.#[^/]*\$", "^.*/#[^/]*#\$");
+    @exclude_patterns;
+}
+
 sub R_tempfile {
 
     my $pat = "Rutils";
