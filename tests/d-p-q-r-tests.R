@@ -8,6 +8,7 @@
 ###-- these are identical in ./arith-true.R ["fixme": use source(..)]
 opt.conformance <- 0
 Meps <- .Machine $ double.eps
+xMax <- .Machine $ double.xmax
 options(rErr.eps = 1e-30)
 rErr <- function(approx, true, eps = .Options$rErr.eps)
 {
@@ -23,6 +24,9 @@ if(!interactive())
     .Random.seed <- c(0,rep(7654, 3))
 
 ###--- Discrete Distributions: Simple Consistency Checks  pZZ = cumsum(dZZ)
+
+all(dpois(0:5,0)           == c(1, rep(0,5)))
+all(dpois(0:5,0, log=TRUE) == c(0, rep(-Inf, 5)))
 
 ## Currently, just Wilcoxon  [should do this for all !]
 is.sym <- TRUE
@@ -91,6 +95,9 @@ for(sh in round(rlnorm(30),2)) {
                 "\n  shape,scale=",formatC(c(sh, sig)),"\n")
     }
 }
+pgamma(1,Inf,Inf) == 0
+all(is.nan(c(pgamma(Inf,1,Inf), pgamma(Inf,Inf,1), pgamma(Inf,Inf,Inf))))
+pgamma(Inf,1,xMax) == 1 && pgamma(xMax,1,Inf) == 0
 
 ##--- Normal (& Lognormal) :
 
@@ -110,6 +117,7 @@ y <- seq(-70,0, by = 10)
 cbind(y, "log(pnorm(y))"= log(pnorm(y)), "pnorm(y, log=T)"= pnorm(y, log=TRUE))
 
 All.eq(pz, plnorm(exp(z)))
+
 
 ###==========  p <-> q  Inversion consistency =====================
 ok <- 1e-5 < pz & pz < 1 - 1e-5
@@ -121,7 +129,6 @@ PDQR <- c("beta", "binom", "cauchy", "chisq", "exp", "f",
           "pois","signrank","t","unif","weibull","wilcox")
 PQonly <- c("tukey")
 
-
 ###===== Random numbers -- first, just output:
 
 .Random.seed <- c(0, 17292, 29447, 24113)
