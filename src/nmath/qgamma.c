@@ -28,7 +28,7 @@
  *  NOTES
  *
  *    This function is based on the Applied Statistics
- *    Algorithm AS 91.
+ *    Algorithm AS 91 and AS 239.
  *
  *  REFERENCES
  *
@@ -39,58 +39,54 @@
 
 #include "Mathlib.h"
 
-#define MAXIT 20
-
-#define C1	0.01
-#define C2	0.222222
-#define C3	0.32
-#define C4	0.4
-#define C5	1.24
-#define C6	2.2
 #define C7	4.67
 #define C8	6.66
 #define C9	6.73
-
 #define C10	13.32
-#define C11	60.0
-#define C12	70.0
-#define C13	84.0
-#define C14	105.0
-#define C15	120.0
-#define C16	127.0
-#define C17	140.0
-#define C18	1175.0
-#define C19	210.0
 
-#define C20	252.0
-#define C21	2264.0
-#define C22	294.0
-#define C23	346.0
-#define C24	420.0
-#define C25	462.0
-#define C26	606.0
-#define C27	672.0
-#define C28	707.0
-#define C29	735.0
+#define C11	60
+#define C12	70
+#define C13	84
+#define C14	105
+#define C15	120
+#define C16	127
+#define C17	140
+#define C18	1175
+#define C19	210
 
-#define C30	889.0
-#define C31	932.0
-#define C32	966.0
-#define C33	1141.0
-#define C34	1182.0
-#define C35	1278.0
-#define C36	1740.0
-#define C37	2520.0
-#define C38	5040.0
+#define C20	252
+#define C21	2264
+#define C22	294
+#define C23	346
+#define C24	420
+#define C25	462
+#define C26	606
+#define C27	672
+#define C28	707
+#define C29	735
+
+#define C30	889
+#define C31	932
+#define C32	966
+#define C33	1141
+#define C34	1182
+#define C35	1278
+#define C36	1740
+#define C37	2520
+#define C38	5040
+
+#define EPS0 5e-7/* originally: IDENTICAL to EPS2; not clear why */
+#define EPS1 1e-2
+#define EPS2 5e-7
+#define MAXIT 20
+
+#define pMIN 0.000002
+#define pMAX 0.999998
 
 double qgamma(double p, double alpha, double scale)
 {
     double a, b, c, ch, g, p1, v;
-    double p2, q, s1, s2, s3, s4, s5, s6, t, x, xx;
-    double aa = 0.6931471806;
-    double e = 0.5e-6;
-    double pmin = 0.000002;
-    double pmax = 0.999998;
+    double p2, q, s1, s2, s3, s4, s5, s6, t, x;
     int i;
 
     /* test arguments and initialise */
@@ -98,73 +94,69 @@ double qgamma(double p, double alpha, double scale)
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(alpha) || ISNAN(scale))
 	return p + alpha + scale;
-#endif 
-    if (p < pmin || p > pmax || alpha <= 0) {
+#endif
+
+    if (p < 0 || p > 1 || alpha <= 0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
+    if (/* 0 <= */ p < pMIN) return 0;
+    if (/* 1 >= */ p > pMAX) return ML_POSINF;
 
     v = 2*alpha;
 
-    /* xx = 0.5*v; */
+    c = alpha-1;
+    g = lgamma(alpha);/* log Gamma(v/2) */
 
-    xx = alpha;
-    c = xx-1.0;
-    g = lgamma(0.5*v);
+    if(v < (-1.24)*log(p)) {
+      /* starting approximation for small chi-squared */
 
-
-    if(v < (-C5)*log(p)) {
-
-	/* starting approximation for small chi-squared */
-
-	ch = pow(p*xx*exp(g+xx*aa),1.0/xx);
-	if(ch < e) {
+	ch = pow(p*alpha*exp(g+alpha*M_LN_2), 1/alpha);
+	if(ch < EPS0) {
 	    ML_ERROR(ME_DOMAIN);
 	    return ML_NAN;
 	}
-    }
-    else if(v > C3) {
+
+    } else if(v > 0.32) {
 
 	/* starting approximation using Wilson and Hilferty estimate */
 
-	x = qnorm(p, 0.0, 1.0);
-	p1 = C2/v;
-	ch = v*pow(x*sqrt(p1)+1.0-p1, 3.0);
+	x = qnorm(p, 0, 1);
+	p1 = 0.222222/v;
+	ch = v*pow(x*sqrt(p1)+1-p1, 3);
 
 	/* starting approximation for p tending to 1 */
 
-	if( ch>C6*v+6.0 )
-	    ch = -2.0*(log(1.0-p)-c*log(0.5*ch)+g);
-    }
-    else {
+	if( ch > 2.2*v + 6 )
+	    ch = -2*(log(1-p) - c*log(0.5*ch) + g);
 
-	/* starting approximation for v less than or equal to 0.32 */
+    } else { /* starting approximation for v <= 0.32 */
 
-	ch = C4;
-	a = log(1.0-p);
+	ch = 0.4;
+	a = log(1-p) + g + c*M_LN_2;
 	do {
 	    q = ch;
-	    p1 = 1.0+ch*(C7+ch);
+	    p1 = 1+ch*(C7+ch);
 	    p2 = ch*(C9+ch*(C8+ch));
-	    t = -0.5+(C7+2.0*ch)/p1-(C9+ch*(C10+3.0*ch))/p2;
-	    ch = ch-(1.0-exp(a+g+0.5*ch+c*aa)*p2/p1)/t;
-	} while(fabs(q/ch-1.0) > C1);
+	    t = -0.5 +(C7+2*ch)/p1 - (C9+ch*(C10+3*ch))/p2;
+	    ch -= (1- exp(a+0.5*ch)*p2/p1)/t;
+	} while(fabs(q/ch - 1) > EPS1);
     }
 
-    /* algorithm as 239 and calculation of seven term taylor series */
+    /* algorithm AS 239 and calculation of seven term taylor series */
 
-    for( i=1 ; i<=MAXIT  ; i++ ) {
+    for( i=1 ; i <= MAXIT ; i++ ) {
 	q = ch;
 	p1 = 0.5*ch;
-	p2 = p - pgamma(p1, xx, 1.0);
+	p2 = p - pgamma(p1, alpha, 1);
 #ifdef IEEE_754
 	if(!finite(p2))
 #else
-	    if(errno != 0)
+	if(errno != 0)
 #endif
 		return ML_NAN;
 
-	t = p2*exp(xx*aa+g+p1-c*log(ch));
+	t = p2*exp(alpha*M_LN_2+g+p1-c*log(ch));
 	b = t/ch;
 	a = 0.5*t-b*c;
 	s1 = (C19+a*(C17+a*(C14+a*(C13+a*(C12+C11*a)))))/C24;
@@ -173,8 +165,8 @@ double qgamma(double p, double alpha, double scale)
 	s4 = (C20+a*(C27+C34*a)+c*(C22+a*(C30+C36*a)))/C38;
 	s5 = (C13+C21*a+c*(C18+C26*a))/C37;
 	s6 = (C15+c*(C23+C16*c))/C38;
-	ch = ch+t*(1.0+0.5*t*s1-b*c*(s1-b*(s2-b*(s3-b*(s4-b*(s5-b*s6))))));
-	if(fabs(q/ch-1.0) > e)
+	ch = ch+t*(1+0.5*t*s1-b*c*(s1-b*(s2-b*(s3-b*(s4-b*(s5-b*s6))))));
+	if(fabs(q/ch-1) > EPS2)
 	    return 0.5*scale*ch;
     }
     ML_ERROR(ME_PRECISION);
