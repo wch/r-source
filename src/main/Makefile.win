@@ -34,6 +34,7 @@ CSOURCES=\
 	unique.c util.c \
 	version.c vfonts.c \
 	acosh.c asinh.c atanh.c
+## FIXME remove last line when we require mingw-runtime >= 3.6.
 
 FSOURCES=xxxpr.f
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) 
