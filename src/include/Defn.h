@@ -504,7 +504,7 @@ SEXP evalList(SEXP, SEXP);
 SEXP evalListKeepMissing(SEXP, SEXP);
 SEXP extendEnv(SEXP, SEXP, SEXP);
 int factorsConform(SEXP, SEXP);
-void findcontext(int, SEXP);
+void findcontext(int, SEXP, SEXP);
 SEXP findVar(SEXP, SEXP);
 SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
 SEXP findVarInFrame(SEXP, SEXP);
