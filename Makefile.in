@@ -69,7 +69,7 @@ install: installdirs
 	  done; \
 	fi
 	@for f in `find bin -type f -print \
-	             | grep -v '^bin/R' \
+	             | grep -v '^bin/R$$' \
 	             | grep -v '^bin/R_' \
 	             | grep -v '^bin/R.bin'`; do \
 	  $(INSTALL_SCRIPT) $${f} $(rhome)/bin; \

@@ -15,5 +15,6 @@ read.fwf <- function(file, widths, sep = "\t", as.is = FALSE,
     cat(file = FILE, sapply(raw, doone),
         sep = c(rep(sep,,length(widths)-1), "\n"))
     read.table(file = FILE, header = FALSE, sep = sep, as.is = as.is,
-	       skip = skip, row.names = row.names, col.names = col.names)
+	       skip = skip, row.names = row.names, col.names = col.names,
+               quote="")
 }

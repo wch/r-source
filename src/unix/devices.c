@@ -99,8 +99,8 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Do this for early redraw attempts */
     dd->displayList = R_NilValue;
     GInit(&dd->dp);
-    if (!X11DeviceDriver(dd, display, width, height, ps, gamma, colormodel,
-                         maxcubesize)) {
+    if (!ptr_X11DeviceDriver(dd, display, width, height, ps, gamma, colormodel,
+			     maxcubesize)) {
 	free(dd);
 	errorcall(call, "unable to start device X11");
     }
@@ -130,7 +130,7 @@ SEXP do_GTK(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Do this for early redraw attempts */
     dd->displayList = R_NilValue;
     GInit(&dd->dp);
-    if (!GTKDeviceDriver(dd, display, width, height, ps)) {
+    if (!ptr_GTKDeviceDriver(dd, display, width, height, ps)) {
 	free(dd);
 	errorcall(call, "unable to start device gtk");
     }
@@ -160,7 +160,7 @@ SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Do this for early redraw attempts */
     dd->displayList = R_NilValue;
     GInit(&dd->dp);
-    if (!GnomeDeviceDriver(dd, display, width, height, ps)) {
+    if (!ptr_GnomeDeviceDriver(dd, display, width, height, ps)) {
 	free(dd);
 	errorcall(call, "unable to start device gtk");
     }

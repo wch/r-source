@@ -4,13 +4,13 @@
 #define extern
 #endif
 
-extern int  (*X11DeviceDriver)(DevDesc*, char*, double, double, double, double,
+extern int  (*ptr_X11DeviceDriver)(DevDesc*, char*, double, double, double, double,
 			       int, int);
 extern SEXP (*ptr_dataentry)(SEXP call, SEXP op, SEXP args, SEXP rho);
 
-extern int (*GnomeDeviceDriver)(DevDesc*, char*, double, double, double);
+extern int (*ptr_GnomeDeviceDriver)(DevDesc*, char*, double, double, double);
 
-extern int (*GTKDeviceDriver)(DevDesc*, char*, double, double, double);
+extern int (*ptr_GTKDeviceDriver)(DevDesc*, char*, double, double, double);
 
 extern void (*ptr_R_Suicide)(char *);
 extern void (*ptr_R_ShowMessage)();
