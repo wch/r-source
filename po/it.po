@@ -18,77 +18,77 @@ msgstr ""
 
 #: src/appl/approx.c:110
 msgid "approx(): invalid f value"
-msgstr ""
+msgstr "approx(): valor di f non ammissibile"
 
 #: src/appl/approx.c:115
 msgid "approx(): invalid interpolation method"
-msgstr ""
+msgstr "approx(): metodo di interpolazione non valido"
 
 #: src/appl/approx.c:121
 msgid "approx(): attempted to interpolate NA values"
-msgstr ""
+msgstr "approx(): tentativo di interpolazione di valori NA"
 
 #: src/appl/binning.c:67
 msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
-msgstr ""
+msgstr "valori di NA in .C(\"bincode\",... NAOK=FALSE)"
 
 #: src/appl/binning.c:104
 msgid "NA's in .C(\"bincount\",... NAOK=FALSE)"
-msgstr ""
+msgstr "valori di NA .C(\"bincount\",... NAOK=FALSE)"
 
 #: src/appl/pretty.c:104
 msgid "Internal(pretty()): very small range.. corrected"
-msgstr ""
+msgstr "Internal(pretty()): range troppo piccolo.. corretto"
 
 #: src/appl/pretty.c:107
 msgid "Internal(pretty()): very large range.. corrected"
-msgstr ""
+msgstr "Internal(pretty()): range troppo ampio.. corretto"
 
 #: src/appl/rcont.c:78
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
-msgstr ""
+msgstr "rcont2 [%d,%d]: exp underflow a 0; algoritmo interrotto"
 
 #: src/appl/strsignif.c:109
 msgid ".C(..): Width cannot be zero"
-msgstr ""
+msgstr "".C(..): La larghezza non può essere zero"
 
 #: src/appl/strsignif.c:123
 msgid ".C(..): 'type' must be \"integer\" for  \"d\"-format"
-msgstr ""
+msgstr ".C(..): 'type' deve essere \"integer\" per il formato \"d\""
 
 #: src/appl/strsignif.c:215
 msgid ".C(..): 'type' must be \"real\" for this format"
-msgstr ""
+msgstr ".C(..): 'type' deve essere \"real\" per questo formato"
 
 #: src/gnuwin32/dynload.c:101
 #, c-format
 msgid "DLL attempted to change FPU control word from %x to %x"
-msgstr ""
+msgstr "la DLL ha tentato di cambiare la FPU control word da %x a %x"
 
 #: src/gnuwin32/dynload.c:139
 msgid "cannot get working directory"
-msgstr ""
+msgstr "impossibile ottenere la directory di lavoro"
 
 #: src/gnuwin32/extra.c:46
 msgid "invalid 'tempdir' in R_tmpnam"
-msgstr ""
+msgstr "'tempdir' non valida in R_tmpnam"
 
 #: src/gnuwin32/extra.c:59 src/unix/sys-unix.c:304
 msgid "cannot find unused tempfile name"
-msgstr ""
+msgstr "non è stato possibile trovare un nome tempfile non ancora utilizzato"
 
 #: src/gnuwin32/extra.c:92
 msgid "invalid 'names' in R_unlink"
-msgstr ""
+msgstr "'names' non valido in R_unlink"
 
 #: src/gnuwin32/extra.c:136
 msgid "invalid file name argument"
-msgstr ""
+msgstr "nome file specificato non valido"
 
 #: src/gnuwin32/extra.c:139
 msgid "invalid 'recursive' argument"
-msgstr ""
+msgstr "argomento 'recursive' non valido"
 
 #: src/gnuwin32/extra.c:160 src/gnuwin32/extra.c:207 src/gnuwin32/extra.c:391
 #: src/gnuwin32/extra.c:414
@@ -98,77 +98,77 @@ msgstr "R_HOME non impostata"
 #: src/gnuwin32/extra.c:167
 #, c-format
 msgid "%s\\doc\\html\\rwin.htm[l] not found"
-msgstr ""
+msgstr "%s\\doc\\html\\rwin.htm[l] non trovata"
 
 #: src/gnuwin32/extra.c:195
 msgid "invalid topic argument"
-msgstr ""
+msgstr "parametro topic non valido"
 
 #: src/gnuwin32/extra.c:201
 #, c-format
 msgid "%s not found"
-msgstr ""
+msgstr "%s non trovato"
 
 #: src/gnuwin32/extra.c:211 src/gnuwin32/extra.c:223
 msgid "invalid hlpfile argument"
-msgstr ""
+msgstr "parametro hlpfile non valido"
 
 #: src/gnuwin32/extra.c:214 src/gnuwin32/extra.c:226
 msgid "WinHelp call failed"
-msgstr ""
+msgstr "chiamata a WinHelp non riuscita"
 
 #: src/gnuwin32/extra.c:217
 msgid "too many .hlp files opened"
-msgstr ""
+msgstr "troppi file .hlp aperti"
 
 #: src/gnuwin32/extra.c:228
 msgid "type not yet implemented"
-msgstr ""
+msgstr "type non ancora implementato"
 
 #: src/gnuwin32/extra.c:402 src/gnuwin32/extra.c:619 src/gnuwin32/extra.c:634
 #: src/main/platform.c:841 src/unix/sys-std.c:897 src/unix/sys-std.c:919
 msgid "invalid file argument"
-msgstr ""
+msgstr "parametro file non valido"
 
 #: src/gnuwin32/extra.c:433 src/gnuwin32/extra.c:460
 msgid "invalid 'message' argument"
-msgstr ""
+msgstr "parametro 'message' non valido"
 
 #: src/gnuwin32/extra.c:445
 msgid "unknown type"
-msgstr ""
+msgstr "type sconosciuto"
 
 #: src/gnuwin32/extra.c:463
 msgid "invalid 'default' argument"
-msgstr ""
+msgstr "parametro 'deafult' non valido"
 
 #: src/gnuwin32/extra.c:484 src/gnuwin32/extra.c:508 src/gnuwin32/extra.c:546
 #: src/gnuwin32/extra.c:581
 msgid "Menu functions can only be used in the GUI"
-msgstr ""
+msgstr "Le funzioni Menu possono essere utilizzate solo nella GUI"
 
 #: src/gnuwin32/extra.c:512 src/gnuwin32/extra.c:549 src/gnuwin32/extra.c:584
 msgid "invalid 'menuname' argument"
-msgstr ""
+msgstr "parametro 'menuname' non valido"
 
 #: src/gnuwin32/extra.c:516
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
-msgstr ""
+msgstr "impossibile ottenere voci menu per %s (%s)"
 
 #: src/gnuwin32/extra.c:554
 #, c-format
 msgid "unable to add menu (%s)"
-msgstr ""
+msgstr "impossibile aggiungere menu (%s)"
 
 #: src/gnuwin32/extra.c:560 src/gnuwin32/extra.c:592
 msgid "invalid 'itemname' argument"
-msgstr ""
+msgstr "parametro 'itemname' non valido"
 
 #: src/gnuwin32/extra.c:566
 #, c-format
 msgid "unable to add menu item (%s)"
-msgstr ""
+msgstr "impossibile aggiungere voce menu (%s)"
 
 #: src/gnuwin32/extra.c:589
 msgid "menu does not exist"
@@ -177,47 +177,47 @@ msgstr "il menu non esiste"
 #: src/gnuwin32/extra.c:596
 #, c-format
 msgid "unable to delete menu item (%s)"
-msgstr ""
+msgstr "impossibile eliminare la voce menu (%s)"
 
 #: src/gnuwin32/extra.c:623
 msgid "savehistory can only be used in Rgui and Rterm"
-msgstr ""
+msgstr "savehistory può essere utilizzata solo in Rgui e Rterm"
 
 #: src/gnuwin32/extra.c:638
 msgid "loadhistory can only be used in Rgui and Rterm"
-msgstr ""
+msgstr "loadhistory può essere utilizzata solo in Rgui e Rterm"
 
 #: src/gnuwin32/extra.c:706 src/unix/sys-std.c:968
 msgid "invalid 'time' value"
-msgstr ""
+msgstr "valore 'time' non valido"
 
 #: src/gnuwin32/extra.c:761 src/gnuwin32/extra.c:771
 msgid "incorrect argument"
-msgstr ""
+msgstr "parametro sbagliato"
 
 #: src/gnuwin32/extra.c:764
 msgid "don't be silly!: your machine has a 4Gb address limit"
-msgstr ""
+msgstr "esagerato! la tua macchina ha un limite massimo di indirizzi di 4Gb"
 
 #: src/gnuwin32/extra.c:767
 msgid "cannot decrease memory limit"
-msgstr ""
+msgstr "impossibile diminuire il limite di memoria"
 
 #: src/gnuwin32/extra.c:785 src/main/platform.c:881
 msgid "invalid 'path' argument"
-msgstr ""
+msgstr "parametro 'path' non valido"
 
 #: src/gnuwin32/extra.c:870
 msgid "invalid 'list' argument"
-msgstr ""
+msgstr "parametro 'list' non valido"
 
 #: src/gnuwin32/extra.c:874
 msgid "invalid 'preselect' argument"
-msgstr ""
+msgstr "parametro 'preselect' non valido"
 
 #: src/gnuwin32/extra.c:1047
 msgid "argument must be a character vector"
-msgstr ""
+msgstr "il parametro deve essere un vettori di caratteri"
 
 #: src/gnuwin32/extra.c:1062 src/main/connections.c:1324
 msgid "Unable to open the clipboard"
@@ -225,39 +225,39 @@ msgstr "Non è possibile aprire gli appunti"
 
 #: src/gnuwin32/extra.c:1067 src/main/connections.c:1328
 msgid "Unable to write to the clipboard"
-msgstr ""
+msgstr "Impossibile scrivere negli appunti"
 
 #: src/gnuwin32/extra.c:1094
 msgid "default must be a character string"
-msgstr ""
+msgstr "default deve essere una stringa di caratteri"
 
 #: src/gnuwin32/extra.c:1096
 msgid "default is overlong"
-msgstr ""
+msgstr "default è troppo lungo"
 
 #: src/gnuwin32/extra.c:1105
 msgid "caption must be a character string"
-msgstr ""
+msgstr "la didascalia deve essere una stringa di caratteri"
 
 #: src/gnuwin32/extra.c:1107
 msgid "'multi' must be a logical value"
-msgstr ""
+msgstr "'multi' deve essere un valore logico/booleano"
 
 #: src/gnuwin32/extra.c:1109
 msgid "'filterindex' must be an integer value"
-msgstr ""
+msgstr "'filterindex' deve essere un valore intero"
 
 #: src/gnuwin32/extra.c:1243
 msgid "'title' must be a character string"
-msgstr ""
+msgstr "'title' deve essere una stringa di caratteri"
 
 #: src/gnuwin32/extra.c:1275
 msgid "'which' must be length 1"
-msgstr ""
+msgstr "'which' deve essere di lunghezza 1"
 
 #: src/gnuwin32/extra.c:1305
 msgid "invalid value of 'which'"
-msgstr ""
+msgstr "valore di 'which' non valido"
 
 #: src/gnuwin32/extra.c:1307 src/gnuwin32/extra.c:1309
 #: src/gnuwin32/extra.c:1349
@@ -266,131 +266,131 @@ msgstr "dispositivo non valido"
 
 #: src/gnuwin32/extra.c:1310
 msgid "requires SDI mode"
-msgstr ""
+msgstr "richiede modalità SDI"
 
 #: src/gnuwin32/extra.c:1343
 msgid "invalid graphical device number"
-msgstr ""
+msgstr "numero di dispositivo grafico non valido"
 
 #: src/gnuwin32/extra.c:1353
 msgid "bad device"
-msgstr ""
+msgstr "dispositivo sbagliato"
 
 #: src/gnuwin32/extra.c:1592 src/gnuwin32/extra.c:1600
 msgid "invalid input in Rmbstowcs"
-msgstr ""
+msgstr "input non valido per Rmbstowcs"
 
 #: src/gnuwin32/run.c:43
 msgid "Insufficient memory (expandcmd)"
-msgstr ""
+msgstr "Memoria insufficiente (expandcmd)"
 
 #: src/gnuwin32/run.c:50
 msgid "A \" is missing (expandcmd)"
-msgstr ""
+msgstr "Manca un \" (expandcmd)"
 
 #: src/gnuwin32/run.c:88
 msgid " not found"
-msgstr ""
+msgstr " non trovato"
 
 #: src/gnuwin32/run.c:137
 msgid "Impossible to redirect input"
-msgstr ""
+msgstr "Impossibile redirigere l'input"
 
 #: src/gnuwin32/run.c:183
 msgid "Impossible to run "
-msgstr ""
+msgstr "Impossibile eseguire "
 
 #: src/gnuwin32/run.c:255
 msgid "Insufficient memory (rpipeOpen)"
-msgstr ""
+msgstr "Memoria insufficiente (rpipeOpen)"
 
 #: src/gnuwin32/run.c:263 src/gnuwin32/run.c:281
 msgid "Impossible to create pipe"
-msgstr ""
+msgstr "Impossibile creare una pipe"
 
 #: src/gnuwin32/run.c:301
 msgid "Impossible to create thread/pipe"
-msgstr ""
+msgstr "Impossibile create un thread/pipe"
 
 #: src/gnuwin32/run.c:432 src/main/connections.c:286 src/main/dounzip.c:317
 msgid "seek not enabled for this connection"
-msgstr ""
+msgstr "seek non possibile per questo tipo di connession"
 
 #: src/gnuwin32/run.c:438
 msgid "truncate not enabled for this connection"
-msgstr ""
+msgstr "truncate non utilizzabile per questo tipo di connessione"
 
 #: src/gnuwin32/run.c:515 src/gnuwin32/run.c:519 src/gnuwin32/run.c:525
 #: src/gnuwin32/run.c:541 src/main/connections.c:803
 #: src/main/connections.c:807 src/main/connections.c:813
 #: src/main/connections.c:827
 msgid "allocation of pipe connection failed"
-msgstr ""
+msgstr "non è stato possibile allocare memoria per la connessione pipe"
 
 #: src/gnuwin32/sys-win32.c:188
 msgid "character string expected as first argument"
-msgstr ""
+msgstr "il primo parametro deve essere una stringa di caratteri"
 
 #: src/gnuwin32/sys-win32.c:200
 msgid "character string expected as third argument"
-msgstr ""
+msgstr "il terzo parametro deve essere una stringa di caratteri"
 
 #: src/gnuwin32/system.c:122
 #, c-format
 msgid "Fatal error: %s\n"
-msgstr ""
+msgstr "Errore irreversibile: %s\n"
 
 #: src/gnuwin32/system.c:292 src/unix/sys-std.c:588
 #, c-format
 msgid "encoding '%s' is not recognised"
-msgstr ""
+msgstr "encoding '%s' non riconosciuto"
 
 #: src/gnuwin32/system.c:298 src/unix/sys-std.c:594
 msgid "<ERROR: invalid input in encoding> "
-msgstr ""
+msgstr "<ERRORE: input non valido per questo encoding> "
 
 #: src/gnuwin32/system.c:496
 #, c-format
 msgid "Unable to open file '%s'"
-msgstr ""
+msgstr "Impossibile aprire file '%s'"
 
 #: src/gnuwin32/system.c:509
 #, c-format
 msgid "file.show(): file %s does not exist\n"
-msgstr ""
+msgstr "file.show(): il file %s non esiste\n"
 
 #: src/gnuwin32/system.c:856
 msgid "WARNING: no max-mem-size given\n"
-msgstr ""
+msgstr "ATTENZIONE: non è stato specificato un valore per max-mem-size\n"
 
 #: src/gnuwin32/system.c:862
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
-msgstr ""
+msgstr "ATTENZIONE: valore non valido di  --max-mem-size: verrà ignorato"
 
 #: src/gnuwin32/system.c:864
 #, c-format
 msgid "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
-msgstr ""
+msgstr "ATTENZIONE: valore di --max-mem-size=%lu'%c': troppo grande e quindi ignorato\n"
 
 #: src/gnuwin32/system.c:869
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
-msgstr ""
+msgstr "ATTENZIONE: valore di max-mem-size =%4.1fM troppo piccolo e quindi ignorato"
 
 #: src/gnuwin32/system.c:879 src/unix/system.c:230
 #, c-format
 msgid "WARNING: unknown option %s\n"
-msgstr ""
+msgstr "ATTENZIONE: opzione %s sconosiuta\n"
 
 #: src/gnuwin32/system.c:904 src/unix/system.c:234
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
-msgstr ""
+msgstr "ARGOMENTO '%s' __ignorato__\n"
 
 #: src/gnuwin32/system.c:922 src/unix/system.c:272
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
-msgstr ""
+msgstr "si deve specificare '--save', '--no-save' oppure '--vanilla'"
 
 #: src/gnuwin32/system.c:927
 msgid ""
@@ -399,15 +399,15 @@ msgstr ""
 
 #: src/gnuwin32/system.c:936
 msgid "WARNING: invalid R_HISTSIZE ignored;"
-msgstr ""
+msgstr "ATTENZIONE: valore non valido di R_HISTSIZE ignorato;"
 
 #: src/include/Errormsg.h:31
 msgid "NaNs produced"
-msgstr ""
+msgstr "Si è prodotto un NaN"
 
 #: src/include/Errormsg.h:33
 msgid "Non-numeric argument to mathematical function"
-msgstr ""
+msgstr "Argomento non numerico in una funzione matematica"
 
 #: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3662
 #: src/main/scan.c:1464
@@ -416,19 +416,19 @@ msgstr "argomento non valido"
 
 #: src/include/Errormsg.h:37
 msgid "first argument must be a character string"
-msgstr ""
+msgstr "il primo parametro deve essere una stringa id caratteri"
 
 #: src/include/Errormsg.h:38
 msgid "first argument must be a list"
-msgstr ""
+msgstr "il primo parametro deve essere di tipo list"
 
 #: src/include/Errormsg.h:39
 msgid "second argument must be a character string"
-msgstr ""
+msgstr "il secondo parametro deve essere una stringa di caratteri"
 
 #: src/include/Errormsg.h:40
-msgid "secong argument must be a list"
-msgstr ""
+msgid "second argument must be a list"
+msgstr "il secondo argomento deve essere di tipo list"
 
 #: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:203
 #: src/main/subscript.c:307 src/main/subscript.c:310 src/main/subscript.c:404
@@ -7177,11 +7177,11 @@ msgstr ""
 
 #: src/unix/X11.c:73 src/unix/X11.c:92 src/unix/X11.c:103
 msgid "X11 module cannot be loaded"
-msgstr ""
+msgstr "il modulo X11 non può essere caricato"
 
 #: src/unix/X11.c:117 src/unix/X11.c:124 src/unix/X11.c:131
 msgid "X11 is not available"
-msgstr ""
+msgstr "X11 non disponibile"
 
 #, fuzzy
 #~ msgid "illegal second argument of length 0"
