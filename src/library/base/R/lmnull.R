@@ -1,11 +1,11 @@
+###-------- This is  UGLY :  a lot of coding is just doubled from  ./lm.R  ----
+
 anova.lm.null <- function (object, ...)
 {
     if (length(list(object, ...)) > 1)
 	return(anovalist.lm(object, ...))
     w <- weights(object)
-    if (is.null(w))
-	ssr <- sum(resid(object)^2)
-    else ssr <- sum(w * resid(object)^2)
+    ssr <- sum(if (is.null(w))resid(object)^2 else w * resid(object)^2)
     ##comp <- object$effects[1:object$rank]
     ##asgn <- object$assign[object$qr$pivot][1:object$rank]
     dfr <- df.residual(object)
@@ -16,27 +16,23 @@ anova.lm.null <- function (object, ...)
     p <- 1 - pf(f, df, dfr)
     table <- cbind(df, ss, ms, f, p)
     table[length(p), 4:5] <- NA
-    dimnames(table) <- list(c(attr(object$terms, "term.labels"),
-			      "Residual"), c("Df", "Sum Sq", "Mean Sq", "F",
-					     "Pr(>F)"))
-    result <- list(table = table, title = "Analysis of Variance Table")
-    class(result) <- "tabular"
-    result
+    dimnames(table) <- list(c(attr(object$terms, "term.labels"), "Residuals"),
+			    c("Df", "Sum Sq", "Mean Sq", "F value", "Pr(>F)"))
+    structure(table, heading = c("Analysis of Variance Table\n",
+                     paste("Response:", formula(object)[[2]])),
+              class= "anova")# was "tabular"
 }
-"print.lm.null" <-
-    function (x, digits = max(3, .Options$digits - 3), ...)
+print.lm.null <- function (x, digits = max(3, .Options$digits - 3), ...)
 {
     cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
-    cat("No coefficients:\n")
-###print(coef(x))
-    cat("\n")
+    cat("No coefficients:\n\n")
+    invisible(x)
 }
-"print.summary.lm.null" <-
-    function (x, digits = max(3, .Options$digits - 3), ...)
+
+print.summary.lm.null <- function (x, digits = max(3, .Options$digits - 3), ...)
 {
     cat("\nCall:\n")
-    cat(paste(deparse(x$call), sep = "\n", collapse = "\n"),
-	"\n\n", sep = "")
+    cat(paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep = "")
     resid <- x$residuals
     df <- x$df
     rdf <- df[2]
@@ -44,13 +40,12 @@ anova.lm.null <- function (object, ...)
 	cat("Residuals:\n")
 	if (length(dim(resid)) == 2) {
 	    rq <- apply(t(resid), 1, quantile)
-	    dimnames(rq) <- list(c("Min", "1Q", "Median",
-				   "3Q", "Max"), dimnames(resid)[[2]])
+	    dimnames(rq) <- list(c("Min", "1Q", "Median", "3Q", "Max"),
+				 dimnames(resid)[[2]])
 	}
 	else {
 	    rq <- quantile(resid)
-	    names(rq) <- c("Min", "1Q", "Median",
-			   "3Q", "Max")
+	    names(rq) <- c("Min", "1Q", "Median", "3Q", "Max")
 	}
 	print(rq, digits = digits, ...)
     }
@@ -59,13 +54,13 @@ anova.lm.null <- function (object, ...)
 	print(resid, digits = digits, ...)
     }
     else cat("\nNo Coefficients:\n")
-    cat("\nResidual standard error:", format(signif(x$sigma,
-						    digits)), "on", rdf, "degrees of freedom\n")
+    cat("\nResidual standard error:",
+	format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom\n")
     cat("\n")
     invisible(x)
 }
-"summary.lm.null" <-
-    function (z, correlation = FALSE)
+
+summary.lm.null <- function (z, correlation = FALSE)
 {
     n <- length(z$fitted.values)
     p <- 0
