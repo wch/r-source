@@ -1,11 +1,8 @@
-
-split.screen <- function(figs,
-			 screen = if (exists(".split.screens",
-			 envir=.GlobalEnv))
-			 .split.cur.screen
-			 else
-			 0,
-			 erase = TRUE)
+split.screen <-
+    function(figs,
+	     screen = if(exists(".split.screens", envir=.GlobalEnv))
+		      .split.cur.screen else 0,
+	     erase = TRUE)
 {
     first.split <- !exists(".split.screens", envir=.GlobalEnv)
     if (missing(figs))
@@ -34,7 +31,7 @@ split.screen <- function(figs,
 	stop("figs must specify at least one screen\n")
     new.screens <- valid.screens <- cur.screen <- 0
     if (first.split) {
-        if (erase) frame()
+        if (erase) plot.new()
 	split.par.list <- c("adj", "bty", "cex", "col", "crt", "err",
 			    "font", "lab", "las", "lty",
 			    "lwd", "mar", "mex", "mfg", "mgp",

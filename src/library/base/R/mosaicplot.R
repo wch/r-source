@@ -11,8 +11,8 @@ mosaicplot <- function(x, ...) UseMethod("mosaicplot")
 ##   displaying sign and magnitude of the standardized residuals.
 
 mosaicplot.default <-
-function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
-         NULL, dir = NULL, color = FALSE, shade = FALSE, margin = NULL,
+function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off = NULL,
+         dir = NULL, color = FALSE, shade = FALSE, margin = NULL,
          type = c("pearson", "deviance", "FT"))
 {
     mosaic.cell <- function(X, x1, y1, x2, y2,
@@ -249,7 +249,7 @@ function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
     }
 
     ##-- Plotting
-    frame()
+    plot.new()
     if(!shade) {
         opar <- par(usr = c(1, 1000, 1, 1000), mgp = c(1, 1, 0))
         on.exit(par(opar))
@@ -265,8 +265,9 @@ function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
         ## Compute cex so that the rotated legend text does not take up
         ## more than 1/12 of the of the plot region horizontally and not
         ## more than 1/4 vertically.
-        rtxtCex <- min(1, pin[1] / (strheight(rtxt, units = "i") * 12),
-                       pin[2] / (strwidth(rtxt, units = "i") / 4))
+        rtxtCex <- min(1,
+                       pin[1] / (strheight(rtxt, units = "i") * 12),
+                       pin[2] / (strwidth (rtxt, units = "i") / 4))
         rtxtWidth <- 0.1                # unconditionally ...
         ## We put the legend to the right of the third axis.
         opar <- par(usr = c(1, 1000 * (1.1 + rtxtWidth), 1, 1000),
