@@ -317,3 +317,36 @@ provoke.bug()
 ## segfaulted in 1.2.2, will also on machines without vsnprintf.
 ##                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ## and hence keep the above paragraph at the end of this file
+
+## PR 1004 (follow up).  Exact Kolmogorov-Smirnov test gave incorrect
+## results due to rounding errors (Charles Geyer, charlie@stat.umn.edu,
+## 2001-10-25).
+library(ctest)
+## Example 5.4 in Hollander and Wolfe (Nonparametric Statistical
+## Methods, 2nd ed., Wiley, 1999, pp. 180-181).
+x <- c(-0.15, 8.6, 5, 3.71, 4.29, 7.74, 2.48, 3.25, -1.15, 8.38)
+y <- c(2.55, 12.07, 0.46, 0.35, 2.69, -0.94, 1.73, 0.73, -0.35, -0.37)
+stopifnot(round(ks.test(x, y)$p.value, 4) == 0.0524)
+
+## PR 1150.  Wilcoxon rank sum and signed rank tests did not return the
+## Hodges-Lehmann estimators of the associated confidence interval
+## (Charles Geyer, charlie@stat.umn.edu, 2001-10-25).
+library(ctest)
+## One-sample test: Example 3.1 in Hollander & Wolfe (1973), 29f.
+x <- c(1.83,  0.50,  1.62,  2.48, 1.68, 1.88, 1.55, 3.06, 1.30)
+y <- c(0.878, 0.647, 0.598, 2.05, 1.06, 1.29, 1.06, 3.14, 1.29)
+we <- wilcox.test(y, x, paired = TRUE, conf.int = TRUE)
+## NOTE order: y then x.
+## Results from Hollander & Wolfe (1999), 2nd edition, page 40 and 53
+stopifnot(round(we$p.value,4) == 0.0391)
+stopifnot(round(we$conf.int,3) == c(-0.786, -0.010))
+stopifnot(round(we$estimate,3) == -0.46)
+## Two-sample test: Example 4.1 in Hollander & Wolfe (1973), 69f.
+x <- c(0.80, 0.83, 1.89, 1.04, 1.45, 1.38, 1.91, 1.64, 0.73, 1.46)
+y <- c(1.15, 0.88, 0.90, 0.74, 1.21)
+we <- wilcox.test(y, x, conf.int = TRUE)
+## NOTE order: y then x.
+## Results from Hollander & Wolfe (1999), 2nd edition, page 111 and 126
+stopifnot(round(we$p.value,4) == 0.2544)
+stopifnot(round(we$conf.int,3) == c(-0.76, 0.15))
+stopifnot(round(we$estimate,3) == -0.305)
