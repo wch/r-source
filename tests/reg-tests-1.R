@@ -867,8 +867,12 @@ stopifnot(match(x + 0, x, 0) == 1)
 ## match failed on Solaris with some compiler settings
 
 
+## identical on specials  (BDR 2002-08-02)
+stopifnot(identical(as.double(NA), NaN) == FALSE)
+## was identical on 1.5.1
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
 detach("package:methods")
-
