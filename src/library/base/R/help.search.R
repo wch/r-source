@@ -104,6 +104,7 @@ function(pattern, fields = c("alias", "title"),
             np <- 0
         }
         ## If we cannot save the help db only use the given packages.
+        contentsEnv <- new.env()
         packagesInHelpDB <- if(!is.null(package) && !save.db)
             package
         else
@@ -111,22 +112,34 @@ function(pattern, fields = c("alias", "title"),
         for(p in packagesInHelpDB) {
             if(verbose)
                 cat("", p, if((np <- np + 1)%% 5 == 0) "\n")
+            contents <- NULL
             path <- .find.package(p, lib.loc, quiet = TRUE)
             if(length(path) == 0)
                 stop(paste("could not find package", sQuote(p)))
             lib <- dirname(path)
-            cfile <- file.path(path, "CONTENTS")
-            if(file.exists(cfile)) {
-                ctext <- read.dcf(cfile,
-                                 fields = c("Entry", "Aliases",
-                                 "Description", "Keywords"))
-                if((nr <- NROW(ctext)) > 0){
+            if(file.exists(contentsFile <-
+                          file.path(path, "CONTENTS.rda"))) {
+                load(contentsFile, envir = contentsEnv)
+                ## Could check on the version info here ...
+                contents <- get("contents", envir = contentsEnv)[ ,
+                                            c("Name", "Aliases",
+                                              "Title", "Keywords")]
+            }
+            else if(file.exists(contentsFile <-
+                                file.path(path, "CONTENTS")))
+                contents <-
+                    read.dcf(contentsFile,
+                             fields = c("Entry", "Aliases",
+                             "Description", "Keywords"))
+            if(!is.null(contents)) {
+                if((nr <- NROW(contents)) > 0) {
                     db <- rbind(db,
-                                cbind(rep(p, nr), rep(lib, nr), ctext))
+                                cbind(rep(p, nr),
+                                      rep(lib, nr),
+                                      contents))
                 } else {
-                    warning(paste("Empty", sQuote("CONTENTS"),
-                                  "file of pkg", sQuote(p),
-                                  "in", sQuote(lib)))
+                    warning(paste("Empty contents for package",
+                                  sQuote(p), "in", sQuote(lib)))
                 }
             }
         }
