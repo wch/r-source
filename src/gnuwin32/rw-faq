@@ -172,7 +172,7 @@ working directory will be set to that containing the file.
 It depends what you want to print.
 
    * You can print the graphics window from its menu or by using
-     `dev.print()'.
+     `dev.print' with suitable arguments (see its help page).
 
    * You can print from the R console or pager by `File | Print'.
      (This will print the selection if there is one, otherwise the
