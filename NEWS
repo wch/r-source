@@ -585,6 +585,12 @@ BUG FIXES
     o	rug() now correctly warns about clipped values also for logarithmic
 	axes and has a `quiet' argument for suppressing these (PR#1188).
 
+    o   model.matrix.default was not handling correctly contrasts.arg
+	which did not supply a full set of contrasts (PR#1187).
+
+    o   The `width' argument of density() was only compatible with S
+	only for a Gaussian kernel: now it is compatible in all cases.
+
 
 
 	**************************************************

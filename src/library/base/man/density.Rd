@@ -26,7 +26,7 @@ density(x, bw = "nrd", adjust = 1,
     This makes it easy to specify values like ``half the default''
     bandwidth.}
 
-  \item{kernel,window}{a character string giving the smoothing kernel
+  \item{kernel, window}{a character string giving the smoothing kernel
     to be used. This must be one of \code{"gaussian"},
     \code{"rectangular"}, \code{"triangular"}, \code{"epanechnikov"},
     \code{"biweight"}, \code{"cosine"} or \code{"optcosine"}, with default
@@ -35,10 +35,13 @@ density(x, bw = "nrd", adjust = 1,
     
     \code{"cosine"} is smoother than \code{"optcosine"}, which is the
     usual ``cosine'' kernel in the literature and almost MSE-efficient.
+    However, \code{"cosine"} is the version used by S.
   }
   
   \item{width}{this exists for compatibility with S; if given, and
-    \code{bw} is not, will set \code{bw = width/4}.}
+    \code{bw} is not, will set \code{bw} to \code{width} if this is a
+    character string, or to a kernel-dependent multiple of \code{width}
+    if this is numeric.}
 
   \item{give.Rkern}{logical; if true, \emph{no} density is estimated, and
     the ``canonical bandwidth'' of the chosen \code{kernel} is returned
@@ -124,7 +127,7 @@ plot(density(c(-20,rep(0,98),20)), xlim = c(-4,4))# IQR = 0
 
 # The Old Faithful geyser data
 data(faithful)
-d <- density(faithful$eruptions, bw = 0.15)
+d <- density(faithful$eruptions, bw = "sj")
 d
 plot(d)
 
@@ -136,37 +139,48 @@ x <- xx <- faithful$eruptions
 x[i.out <- sample(length(x), 10)] <- NA
 doR <- density(x, bw = 0.15, na.rm = TRUE)
 lines(doR, col = "blue")
-points(xx[i.out], rep(.01,10))
+points(xx[i.out], rep(0.01, 10))
 
 
 (kernels <- eval(formals(density)$kernel))
 
-plot (density(0,bw = 1))
+## show the kernels in the R parametrization
+plot (density(0, bw = 1), xlab = "",
+      main="R's density() kernels with bw = 1")
 for(i in 2:length(kernels))
-   lines(density(0,bw = 1, kern =  kernels[i]), col = i)
-mtext(side = 3, "R's density() kernels with bw = 1")
-legend(1.5,.4, leg = kernels, col = seq(kernels),lty = 1, cex = .8, y.int = 1)
+   lines(density(0, bw = 1, kern =  kernels[i]), col = i)
+legend(1.5,.4, legend = kernels, col = seq(kernels),
+       lty = 1, cex = .8, y.int = 1)
+
+## show the kernels in the S parametrization
+plot(density(0, from=-1.2, to=1.2, width=2, kern="gaussian"), type="l",
+     ylim = c(0, 1), xlab="", main="R's density() kernels with width = 1")
+for(i in 2:length(kernels))
+   lines(density(0, width=2, kern =  kernels[i]), col = i)
+legend(0.6, 1.0, legend = kernels, col = seq(kernels), lty = 1)
 
 (RKs <- cbind(sapply(kernels, function(k)density(kern = k, give.Rkern = TRUE))))
 100*round(RKs["epanechnikov",]/RKs, 4) ## Efficiencies
 
 data(precip)
-plot(density(precip, n = 2^13))
+bw <- bw.SJ(precip) ## sensible automatic choice
+plot(density(precip, bw = bw, n = 2^13),
+main="same sd bandwidths, 7 different kernels")
 for(i in 2:length(kernels))
-   lines(density(precip, kern =  kernels[i], n = 2^13), col = i)
-mtext(side = 3, "same scale bandwidths, 7 different kernels")
+   lines(density(precip, bw = bw, kern =  kernels[i], n = 2^13), col = i)
 
 ## Bandwidth Adjustment for "Exactly Equivalent Kernels"
 h.f <- sapply(kernels, function(k)density(kern = k, give.Rkern = TRUE))
 (h.f <- (h.f["gaussian"] / h.f)^ .2)
 ## -> 1, 1.01, .995, 1.007,... close to 1 => adjustment barely visible..
 
-plot(density(precip, n = 2^13))
+plot(density(precip, bw = bw, n = 2^13),
+main="equivalent bandwidths, 7 different kernels")
 for(i in 2:length(kernels))
-   lines(density(precip, adjust = h.f[i], kern =  kernels[i], n = 2^13),
-         col = i)
-mtext(side = 3, "equivalent bandwidths, 7 different kernels")
-legend(55,.035, leg = kernels, col = seq(kernels), lty = 1)
+   lines(density(precip, bw = bw, adjust = h.f[i], kern =  kernels[i],
+         n = 2^13), col = i)
+legend(55, 0.035, legend = kernels, col = seq(kernels), lty = 1)
+
 }
 \keyword{distribution}
 \keyword{smooth}

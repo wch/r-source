@@ -304,7 +304,11 @@ model.matrix.default <- function(object, data = environment(object),
             for (nn in namC) {
                 if (is.na(ni <- match(nn, namD)))
                     warning(paste("Variable", nn, "absent, contrast ignored"))
-                else contrasts(data[[ni]]) <- contrasts.arg[[nn]]
+                else {
+                    ca <- contrasts.arg[[nn]]
+                    if(is.matrix(ca)) contrasts(data[[ni]], ncol(ca)) <- ca
+                    else contrasts(data[[ni]]) <- contrasts.arg[[nn]]
+                }
             }
         }
     } else { # internal model.matrix needs some variable

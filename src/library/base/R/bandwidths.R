@@ -61,10 +61,14 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
     b <- 1.23 * scale * n^(-1/9)
     c1 <- 1/(2*sqrt(pi)*n)
     TD  <- -TDh(cnt, b, n, d)
+    if(!is.finite(TD) || TD <= 0)
+        stop("sample is too sparse to find TD")
     alph2 <- 1.357*(SDh(cnt, a, n, d)/TD)^(1/7)
     if(method == "dpi")
         res <- (c1/SDh(cnt,(2.394/(n * TD))^(1/7) , n, d))^(1/5)
     else {
+        if(!is.finite(alph2))
+            stop("sample is too sparse to find alph2")
         if (fSD(lower, cnt, alph2, c1, n, d) *
             fSD(upper, cnt, alph2, c1, n, d) > 0)
             stop("No solution in the specified range of bandwidths")

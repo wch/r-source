@@ -41,7 +41,21 @@ density <-
     if (n > 512) n <- 2^ceiling(log2(n)) #- to be fast with FFT
 
     if (missing(bw) && !missing(width)) {
-        if(is.numeric(width)) bw <- width/4
+        if(is.numeric(width)) {
+            ## S has width equal to the length of the support of the kernel
+            ## except for the gaussian where it is 4 * sd.
+            ## R has bw a multiple of the sd.
+            fac <- switch(kernel,
+                          gaussian = 4,
+                          rectangular = 2*sqrt(3),
+                          triangular = 2 * sqrt(6),
+                          epanechnikov = 2 * sqrt(5),
+                          biweight = 2 * sqrt(7),
+                          cosine = 2/sqrt(1/3 - 2/pi^2),
+                          optcosine = 2/sqrt(1-8/pi^2)
+                          )
+            bw <- width / fac
+        }
         if(is.character(width)) bw <- width
     }
     if (is.character(bw)) {
@@ -53,16 +67,6 @@ density <-
                      sj = , "sj-ste" = bw.SJ(x, method="ste"),
                      "sj-dpi" = bw.SJ(x, method="dpi"),
                      stop("unknown bandwidth rule"))
-# width adjustments from V&R 1994 p.137.
-#        if(kernel != "gaussian")
-#         bw <- bw * switch(kernel,
-#                       rectangular = 1/1.15,
-#                       triangular  = 1.393/1.15,
-#                       epanechnikov= 1.272/1.15,
-#                       biweight    = NA,
-#                       cosine      = NA,
-#                       optcosine   = NA
-#                       )
     }
     if (!is.finite(bw)) stop("non-finite `bw'")
     bw <- adjust * bw
