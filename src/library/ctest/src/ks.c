@@ -38,7 +38,7 @@ pkstwo(Sint *n, double *x, double *tol)
 void
 psmirnov2x(double *x, Sint *m, Sint *n)
 {
-    double md, nd, *u, w;
+    double md, nd, q, *u, w;
     Sint i, j;
 
     if(*m > *n) {
@@ -46,20 +46,21 @@ psmirnov2x(double *x, Sint *m, Sint *n)
     }
     md = (double) (*m);
     nd = (double) (*n);
+    q = floor(*x * md * nd - 1e-7) / (md * nd);
     u = (double *) R_alloc(*n + 1, sizeof(double));
     if(!u)
 	error("allocation error in psmirnov2x().");
     for(j = 0; j <= *n; j++) {
-	u[j] = ((j / nd) > *x) ? 0 : 1;
+	u[j] = ((j / nd) > q) ? 0 : 1;
     }
     for(i = 1; i <= *m; i++) {
 	w = (double)(i) / ((double)(i + *n));
-	if((i / md) > *x)
+	if((i / md) > q)
 	    u[0] = 0;
 	else
 	    u[0] = w * u[0];
 	for(j = 1; j <= *n; j++) {
-	    if(fabs(i / md - j / nd) > *x)
+	    if(fabs(i / md - j / nd) > q)
 		u[j] = 0;
 	    else
 		u[j] = w * u[j] + u[j - 1];
