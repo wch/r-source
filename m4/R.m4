@@ -1799,10 +1799,13 @@ AC_SUBST(BLAS_LIBS)
 ## R_XDR
 ## -----
 ## Try finding XDR library functions and headers.
+## In theory we only need rpc/xdr.h, but on some platforms
+## that is not usable without rpc/types.h, so we just
+## include rpc/rpc.h which seems to work everywhere.
 AC_DEFUN([R_XDR],
 [AC_CACHE_CHECK([for XDR support],
                 [r_cv_xdr],
-[if test "${ac_cv_header_rpc_xdr_h}" = yes \
+[if test "${ac_cv_header_rpc_rpc_h}" = yes \
     && test "${ac_cv_search_xdr_string}" != no ; then
   r_cv_xdr=yes
 else

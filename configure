@@ -11558,7 +11558,7 @@ fi
 
 for ac_header in arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
   fpu_control.h grp.h ieee754.h ieeefp.h locale.h netdb.h netinet/in.h \
-  pwd.h readline/history.h readline/readline.h rpc/xdr.h strings.h \
+  pwd.h readline/history.h readline/readline.h rpc/rpc.h strings.h \
   sys/param.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
   sys/times.h sys/utsname.h unistd.h
 do
@@ -22261,7 +22261,7 @@ echo $ECHO_N "checking for XDR support... $ECHO_C" >&6
 if test "${r_cv_xdr+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  if test "${ac_cv_header_rpc_xdr_h}" = yes \
+  if test "${ac_cv_header_rpc_rpc_h}" = yes \
     && test "${ac_cv_search_xdr_string}" != no ; then
   r_cv_xdr=yes
 else

@@ -257,8 +257,8 @@
 /* Define to 1 if you have the `rint' function. */
 #undef HAVE_RINT
 
-/* Define to 1 if you have the <rpc/xdr.h> header file. */
-#undef HAVE_RPC_XDR_H
+/* Define to 1 if you have the <rpc/rpc.h> header file. */
+#undef HAVE_RPC_RPC_H
 
 /* Define to 1 if you have the `setenv' function. */
 #undef HAVE_SETENV
