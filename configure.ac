@@ -857,7 +857,9 @@ case "${host_os}" in
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
     ;;
   linux*)			# GNU Linux/ELF
-    main_ldflags="-export-dynamic"
+    ## Luke Tierney says that just '-export-dynamic' does not work for
+    ## Intel compilers (icc).
+    main_ldflags="-Wl,--export-dynamic"
     ;;
   mingw*)
     SHLIB_EXT=".dll"
