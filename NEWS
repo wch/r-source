@@ -319,6 +319,8 @@ BUG FIXES
 
     o	Fixed some malformed error messages in methods package.
 
+    o	plot.POSIX[cl]t no longer passes col, lty, lwd to axis.POSIXt.
+
 
 
 
