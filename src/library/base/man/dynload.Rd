@@ -69,7 +69,7 @@ symbol.For(name)
   aspects of the mode argument to the dlopen() routine on UNIX
   systems. They are available so that users can exercise greater control
   over the loading process for an individual library.  In general, the
-  defaults values are appropriate and one should override them only if 
+  defaults values are appropriate and you should override them only if
   there is good reason and you understand the implications.
 
 #ifdef unix
@@ -122,7 +122,7 @@ symbol.For(name)
   is set to \code{TRUE} using the \code{\link{options}} function, 
   a warning will be printed.  (If the warning says
   that the control word was changed from some other value than 8001F, 
-  please   report the circumstances to the Windows maintainers:  
+  please report the circumstances to the Windows maintainers:  
   that probably indicates an internal bug.)
 #endif
 }
