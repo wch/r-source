@@ -4,6 +4,7 @@
 # Last revision: Christian Spieler, 29-Apr-1998
 # This version Brian Ripley 2-May-1999
 
+include ../../MkRules
 
 ### Optional section
 
@@ -16,7 +17,7 @@ LOCFLAGS = $(LOCAL_UNZIP)
 ### Compiler-specific section
 
 # ------------ GNU C ------------
-CC = gcc
+#CC = gcc
 
 #AS = as
 AS = $(CC)
@@ -72,7 +73,7 @@ EXE = .exe
 .SUFFIXES: .c .S $(OBJ) $(EXE)
 
 # Commands
-RM = rm -f
+#RM = rm -f
 
 OBJS = api.o crc_i386.o crctab.o crypt.o explode.o extract.o fileio.o \
 globals.o inflate.o list.o match.o nt.o process.o ttyio.o unreduce.o \
@@ -81,8 +82,8 @@ unshrink.o win32.o windll.o zipinfo.o
 all: unzip32.a
 
 unzip32.a: $(OBJS)
-	ar cr $@ *.o
-	ranlib $@
+	$(AR) cr $@ *.o
+	$(RANLIB) $@
 
 ### General section
 

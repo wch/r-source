@@ -14,10 +14,10 @@ GA:
 UZ:
 	$(MAKE) -C $(UNZIPDIR) -f ../Makefile.unzip
 
-R.ico:
+R.ico: ../front-ends/R.ico
 	$(CP) -p ../front-ends/R.ico .
 
-rwico.o: rwico.rc R.ico
+rwico.o: rwico.rc
 
 rwinst.exe: rwinst.o rwico.o dounzip.o ../ga.a $(UNZIPDIR)/unzip32.a
 	$(CC) -s -mwindows -o $@ $^ -lcomctl32
