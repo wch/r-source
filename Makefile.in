@@ -149,7 +149,9 @@ dist-unix: distdir
 	-chmod -R go-w $(distdir)
 	distname=`$(srcdir)/tools/GETDISTNAME`; \
 	  dirname=`echo $${distname} | sed -e s/_.*//`; \
-	  mv $(distdir) $${dirname}; \
+          if test $(distdir) != $${dirname} ; then \
+            mv $(distdir) $${dirname}; \
+          fi ; \
 	  GZIP=$(GZIP) $(TAR) czf $${distname}.tar.gz $${dirname}; \
 	  rm -rf $${dirname}
 dist-win:
