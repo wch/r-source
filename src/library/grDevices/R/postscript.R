@@ -116,7 +116,18 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
         old$command <- if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
     ## handle family separately as length can be 1, 4, or 5
     if(!missing(family)) {
-        if(length(family) == 4) family <- c(family, "sy______.afm")
+        if(length(family) == 4) {
+            family <- c(family, "sy______.afm")
+        } else {
+            # If family has been defined as device-independent
+            # R graphics family (i.e., it can be found in postscriptFonts)
+            # then map to postscript font family
+            if (length(family) == 1) {
+                psFamily <- postscriptFonts(family)[[1]]
+                if (!is.null(psFamily)) 
+                    family <- psFamily$family
+            }
+        }          
         old$family <- family
     }
     if(is.null(old$encoding) || old$encoding  == "default")
@@ -145,7 +156,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
 }
 
 pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
-                 width = 6, height = 6, onefile = TRUE,
+                 width = 6, height = 6, onefile = TRUE, family, 
                  title = "R Graphics Output", fonts = NULL, version="1.1", ...)
 {
     new <- list(onefile=onefile, ...)# eval
@@ -156,6 +167,19 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
         old$encoding <- switch(.Platform$OS.type,
                                "windows" = "WinAnsi.enc",
                                "ISOLatin1.enc")
+    if(!missing(family)) {
+        if (!is.character(family) || length(family) != 1)
+            stop("Invalid family argument")
+        # If family has been defined as device-independent
+        # R graphics family (i.e., it can be found in postscriptFonts)
+        # then map to postscript font family
+        else {
+            psFamily <- postscriptFonts(family)[[1]]
+            if (!is.null(psFamily)) 
+                family <- psFamily$family
+        }
+        old$family <- family
+    }
     # Extract version
     versions <- c("1.1", "1.2", "1.3", "1.4")
     if (version %in% versions)

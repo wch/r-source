@@ -9,8 +9,8 @@
 }
 \synopsis{
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
-    width = 6, height = 6, onefile = TRUE, title = "R Graphics Output",
-    fonts = NULL, version = "1.1", \dots)
+    width = 6, height = 6, onefile = TRUE, family,
+    title = "R Graphics Output", fonts = NULL, version = "1.1", \dots)
 }
 \usage{
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
@@ -55,7 +55,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \code{pdf()} opens the file \code{file} and the PDF commands needed to
   plot any graphics requested are sent to that file.
 
-  The \code{family} argument can be used to specify a PDF-specific
+  The \code{family} argument can be used to specify either a
+  device-independent R graphics font family (see
+  \code{postscriptFonts}) or a PDF-specific
   font family as the initial/default font for the device.
 
   If a device-independent R graphics font family is specified

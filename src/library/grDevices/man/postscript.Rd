@@ -158,8 +158,10 @@ ps.options(paper, horizontal, width, height, family, encoding,
 
 \section{Families}{
   Font families may be specified in several ways.  The \code{family}
-  argument specifies an initial/default font family for the device.  This
-  is a PostScript-specific font family specification (see below).
+  argument specifies an initial/default font family for the device.
+  This may be a device-independent R graphics font family
+  (see \code{postscriptFonts}) or
+  a PostScript-specific font family specification (see below).
   The \code{fonts} argument specifies a set of device-independent
   font families that are mapped to PostScript-specific fonts via
   a font database (see \code{postscriptFonts}).  
