@@ -203,28 +203,34 @@ The @file{man} subdirectory should contain documentation files for the
 objects in the package in ``R documentation'' (Rd) format.  The
 documentation files to be installed must also start with a (lower or
 upper case) letter and have the extension @file{.Rd} (the default) or
-@file{.rd}.  @xref{Writing R documentation}, for more information.
+@file{.rd}.  @xref{Writing R documentation}, for more information.  Note
+that all user-level objects in a package should be documented; if a
+package @var{pkg} contains user-level objects which are for ``internal''
+use only, it should provide a file @file{@var{pkg}-internal.Rd} which
+documents all such objects, and clearly states that these are not meant
+to be called by the user.  See e.g.@: package @strong{ts} in the @R{}
+distribution for an example.
 
 The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @file{unix}, @file{windows} or @file{mac}.
 
-The C or FORTRAN source files for the compiled code are in @file{src},
-plus optionally file @file{Makevars} or @file{Makefile}.  When a
-package is installed using @code{R CMD INSTALL}, Make is used to control
-compilation and linking into a shared library for loading into @R{}.
-There are default variables and rules for this (determined when @R{} is
-configured and recorded in @file{$R_HOME/etc/Makeconf}).  If a package
-needs to specify additional directories for searching header files
-(@samp{-I} options) or additional libraries for linking (@samp{-l} and
-@samp{-L} options), it should do this by setting the variables
+The C, C++, or FORTRAN source files for the compiled code are in
+@file{src}, plus optionally file @file{Makevars} or @file{Makefile}.
+When a package is installed using @code{R CMD INSTALL}, Make is used to
+control compilation and linking into a shared library for loading into
+@R{}.  There are default variables and rules for this (determined when
+@R{} is configured and recorded in @file{$R_HOME/etc/Makeconf}).  If a
+package needs to specify additional directories for searching header
+files (@samp{-I} options) or additional libraries for linking (@samp{-l}
+and @samp{-L} options), it should do this by setting the variables
 @code{PKG_CPPFLAGS} and @code{PKG_LIBS} in @file{src/Makevars}.
 (Additional flags to be passed to the C, C++, or Fortran compilers can
 be specified by the variables @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS},
 and @code{PKG_FFLAGS}, respectively.)  Note that this mechanism should
 be general enough to eliminate the need for a package-specific
 @file{Makefile}.  If such a file is to be distributed, considerable care
-is needed to make it general enough to work on all @R{} platforms.
-If necessary, platform-specific files can be used, for example
+is needed to make it general enough to work on all @R{} platforms.  If
+necessary, platform-specific files can be used, for example
 @file{Makevars.win} or @file{Makefile.win} on Windows take precedence
 over @file{Makevars} or @file{Makefile}.
 
@@ -1240,7 +1246,7 @@ for the source code of @R{} itself.
 
 As from @R{} version 1.2.0 it is possible to profile @R{} code on most
 Unix-like versions of @R{}.  @R{} has to be built to enable this, by
-supplying the option @kbd{--enable-R-profiling}, profiling being
+supplying the option @option{--enable-R-profiling}, profiling being
 disabled in a default build.  Unfortunately, profiling relies on OS
 facilities not available on Windows.
 
@@ -3758,14 +3764,14 @@ column number of the maximal element in the @var{i}-th row (the same as
 @R{}'s @code{max.col()} function).
 @end deftypefun
 
-There is also the internal function use to expand file names in
-several @R{} functions, and called directly by @code{path.expand}.
+There is also the internal function use to expand file names in several
+@R{} functions, and called directly by @code{path.expand}.
 
-@deftypefun char * R_ExpandFileName(char* @var{fn})
-Expand a path name @var{fn} by replacing a leading tilde by the
-user's home directory (if defined).  The precise meaning is
-platform-specific; it will usually be taken from the environment
-variable @code{HOME} if this is defined.
+@deftypefun char *R_ExpandFileName (char* @var{fn})
+Expand a path name @var{fn} by replacing a leading tilde by the user's
+home directory (if defined).  The precise meaning is platform-specific;
+it will usually be taken from the environment variable @env{HOME} if
+this is defined.
 @end deftypefun
 
 
