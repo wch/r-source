@@ -280,7 +280,7 @@ function(package, dir, lib.loc = NULL)
             c(undocThings,
               list("S4 methods" =
                    unique(sub("([^,]*),(.*)",
-                              "\\\\S4method{\\1}{\\2}",
+                              "generic \\1 and siglist \\2",
                               S4methods))))
     }
 
@@ -292,8 +292,14 @@ print.undoc <-
 function(x, ...)
 {
     for(i in which(sapply(x, length) > 0)) {
-        writeLines(paste("Undocumented ", names(x)[i], ":", sep = ""))
-        .prettyPrint(x[[i]])
+        tag <- names(x)[i]
+        writeLines(paste("Undocumented ", tag, ":", sep = ""))
+        ## We avoid markup for indicating S4 methods, hence need to
+        ## special-case output for these ...
+        if(tag == "S4 methods")
+            writeLines(strwrap(x[[i]], indent = 2, exdent = 2))
+        else
+            .prettyPrint(x[[i]])
     }
     invisible(x)
 }
