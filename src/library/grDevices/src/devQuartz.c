@@ -28,6 +28,7 @@
 #include <Defn.h>
 #include <Graphics.h>
 #include <Rdevices.h>
+#include "grDevices.h"
 
 
 #if defined(__APPLE_CC__) && defined(HAVE_AQUA)

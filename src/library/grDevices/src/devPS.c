@@ -37,6 +37,7 @@
 #include <R_ext/Error.h>
 #include "Fileio.h"
 #include <Rdevices.h>
+#include "grDevices.h"
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>

@@ -27,6 +27,7 @@
 #include "Graphics.h"
 #include "Fileio.h"
 #include <Rdevices.h>
+#include "grDevices.h"
 
 	/* device-specific information per picTeX device */
 
