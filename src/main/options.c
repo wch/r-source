@@ -32,8 +32,8 @@
 /* Interface to the (polymorphous!)  options(...)  command.
  *
  * We have two kind of options:
- *   1) those used exclusively from R code, 
- *	typically initialized in Rprofile.  
+ *   1) those used exclusively from R code,
+ *	typically initialized in Rprofile.
 
  *	Their names need not appear here, but may, when we want
  *	to make sure that they are assigned `valid' values only.
@@ -42,7 +42,7 @@
  *	Either accessing and/or setting a global C variable,
  *	or just accessed by e.g.  GetOption(install("pager"), ..)
  *
- * A (complete?!) list of these (2):	
+ * A (complete?!) list of these (2):
  *
  *	"prompt"
  *	"continue"
@@ -200,6 +200,7 @@ int R_SetOptionWarn(int w)
 }
 
 /* Note that options are stored as a dotted pair list */
+/* initialized to 14 elements. */
 /* This is barely historical, but is also useful. */
 
 void InitOptions(void)
@@ -207,7 +208,7 @@ void InitOptions(void)
     SEXP t, val, v;
     char *p;
 
-    PROTECT(v = val = allocList(13));
+    PROTECT(v = val = allocList(14));
 
     SET_TAG(v, install("prompt"));
     SETCAR(v, mkString("> "));
@@ -266,6 +267,11 @@ void InitOptions(void)
     LOGICAL(CAR(v))[0] = R_KeepSource;
     v = CDR(v);
 
+    SET_TAG(v, install("keep.all.source"));
+    SETCAR(v, allocVector(LGLSXP, 1));
+    LOGICAL(CAR(v))[0] = 0;
+    v = CDR(v);
+
     SET_TAG(v, install("keep.source.pkgs"));
     SETCAR(v, allocVector(LGLSXP, 1));
     LOGICAL(CAR(v))[0] = R_KeepSource;
@@ -297,7 +303,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
     options = SYMVALUE(Options());
 
     if (args == R_NilValue) {
-	/* This is the zero argument case.  
+	/* This is the zero argument case.
 	   We alloc up a real list and write the system values into it.
 	*/
 	n = length(options);
@@ -314,8 +320,8 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return value;
     }
 
-    /* The arguments to "options" can either be a sequence of 
-       name = value form, or can be a single list.  
+    /* The arguments to "options" can either be a sequence of
+       name = value form, or can be a single list.
        This means that we must code so that both forms will work.
        [ Vomits quietly onto shoes ... ]
        */
@@ -359,7 +365,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (streql(CHAR(namei), "width")) {
 		k = asInteger(argi);
 		if (k < R_MIN_WIDTH_OPT || k > R_MAX_WIDTH_OPT)
-		    errorcall(call, 
+		    errorcall(call,
 			      "invalid width parameter, allowed %d...%d",
 			      R_MIN_WIDTH_OPT, R_MAX_WIDTH_OPT);
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
@@ -367,7 +373,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "digits")) {
 		k = asInteger(argi);
 		if (k < R_MIN_DIGITS_OPT || k > R_MAX_DIGITS_OPT)
-		    errorcall(call, 
+		    errorcall(call,
 			      "invalid digits parameter, allowed %d...%d",
 			      R_MIN_DIGITS_OPT, R_MAX_DIGITS_OPT);
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
@@ -375,7 +381,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "expressions")) {
 		k = asInteger(argi);
 		if (k < R_MIN_EXPRESSIONS_OPT || k > R_MAX_EXPRESSIONS_OPT)
-		    errorcall(call, 
+		    errorcall(call,
 			      "expressions parameter invalid, allowed %d...%d",
 			      R_MIN_EXPRESSIONS_OPT, R_MAX_EXPRESSIONS_OPT);
 		R_Expressions = k;

@@ -69,21 +69,23 @@ static int	xxgetc();
 static int	xxungetc();
 static int 	xxcharcount, xxcharsave;
 
-/* Handle function source */
+/* Handle source */
 
-/* FIXME: These arrays really ought to be dynamically extendable
-   As from 1.6.0, SourceLine[] is, and the other two are checked.
-*/
+#define INITNEST 256
+#define INITSRCSIZE 65536
 
-#define MAXFUNSIZE 131072
-#define MAXLINESIZE  1024
-#define MAXNEST       265
+/* These objects are allocated as needed */
 
-static unsigned char FunctionSource[MAXFUNSIZE];
-static unsigned char SourceLine[MAXLINESIZE];
-static unsigned char *FunctionStart[MAXNEST], *SourcePtr;
+char *SourcePtr;	/* Current character being parsed */
+char *SourceBase;       /* Start of source, for debugging */
+
+static SEXP FunctionStart;	/* CHARSXP used to hold function start pointers */
+static PROTECT_INDEX FSpi;	/* Protection index for the above */
+
+#define FUNCTIONSTART(i) ((char **)CHAR(FunctionStart))[i]
+
 static int FunctionLevel = 0;
-static int KeepSource;
+static int KeepSource; 		/* Should functions keep source? */
 
 /* Soon to be defunct entry points */
 
@@ -288,16 +290,24 @@ static int (*ptr_ungetc)(int);
 
 static int xxgetc(void)
 {
+    int saveoffset;
     int c = ptr_getc();
     if (c == EOF) {
         EndOfFile = 1;
         return R_EOF;
     }
     if (c == '\n') R_ParseError += 1;
-    if ( KeepSource && GenerateCode && FunctionLevel > 0 ) {
-	if(SourcePtr <  FunctionSource + MAXFUNSIZE)
-	    *SourcePtr++ = c;
-	else  error("function is too long to keep source");
+    if (GenerateCode && (KeepAllSource ||
+         		(KeepSource && FunctionLevel > 0 ))) {
+        if (SourcePtr > CHAR(SavedSource) + LENGTH(SavedSource)) {
+	    saveoffset = SourcePtr - CHAR(SavedSource);
+	    REPROTECT(SavedSource = lengthgets(SavedSource, LENGTH(SavedSource)*2), SSpi);
+	    if (isNull(SavedSource))
+		error("function is too long to keep source");
+	    SourcePtr = CHAR(SavedSource) + saveoffset;
+	    SourceBase = CHAR(SavedSource);
+	}
+	*SourcePtr++ = c;
     }
     xxcharcount++;
     return c;
@@ -306,7 +316,8 @@ static int xxgetc(void)
 static int xxungetc(int c)
 {
     if (c == '\n') R_ParseError -= 1;
-    if ( KeepSource && GenerateCode && FunctionLevel > 0 )
+    if (GenerateCode && (KeepAllSource ||
+         		(KeepSource && FunctionLevel > 0 )))
 	SourcePtr--;
     xxcharcount--;
     return ptr_ungetc(c);
@@ -631,8 +642,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 	if (!KeepSource)
 	    PROTECT(source = R_NilValue);
 	else {
-	    unsigned char *p, *p0, *end;
-	    int lines = 0, nc;
+	    char *p, *end;
 
 	    /*  If the function ends with an endline comment,  e.g.
 
@@ -654,34 +664,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 		end = p;
 	    }
 
-	    for (p = FunctionStart[FunctionLevel]; p < end ; p++)
-		if (*p == '\n') lines++;
-	    if ( *(end - 1) != '\n' ) lines++;
-	    PROTECT(source = allocVector(STRSXP, lines));
-	    p0 = FunctionStart[FunctionLevel];
-	    lines = 0;
-	    for (p = FunctionStart[FunctionLevel]; p < end ; p++)
-		if (*p == '\n' || p == end - 1) {
-		    nc = p - p0;
-		    if (*p != '\n')
-			nc++;
-		    if (nc <= MAXLINESIZE) {
-			strncpy((char *)SourceLine, (char *)p0, nc);
-			SourceLine[nc] = '\0';
-			SET_STRING_ELT(source, lines++,
-				       mkChar((char *)SourceLine));
-		    } else { /* over-long line */
-			char *LongLine = (char *) malloc(nc);
-			if(!LongLine) 
-			    error("unable to allocate space to source line");
-			strncpy(LongLine, (char *)p0, nc);
-			LongLine[nc] = '\0';
-			SET_STRING_ELT(source, lines++,
-				       mkChar((char *)LongLine));
-			free(LongLine);
-		    }
-		    p0 = p + 1;
-		}
+	    source = collectLines(FUNCTIONSTART(FunctionLevel), end); /* automatically protected */
 	    /* PrintValue(source); */
 	}
 	PROTECT(ans = lang4(fname, CDR(formals), body, source));
@@ -801,54 +784,6 @@ static SEXP GrowList(SEXP l, SEXP s)
     return l;
 }
 
-#if 0
-/* Comment Handling :R_CommentSxp is of the same form as an expression */
-/* list, each time a new { is encountered a new element is placed in the */
-/* R_CommentSxp and when a } is encountered it is removed. */
-
-static void ResetComment(void)
-{
-    R_CommentSxp = CONS(R_NilValue, R_NilValue);
-}
-
-static void PushComment(void)
-{
-    if (GenerateCode)
-	R_CommentSxp = CONS(R_NilValue, R_CommentSxp);
-}
-
-static void PopComment(void)
-{
-    if (GenerateCode)
-	R_CommentSxp = CDR(R_CommentSxp);
-}
-
-static void AddComment(SEXP l)
-{
-    SEXP tcmt, cmt;
-    int i, ncmt;
-
-    if(GenerateCode) {
-	tcmt = CAR(R_CommentSxp);
-	/* Return if there are no comments */
-	if (tcmt == R_NilValue || l == R_NilValue)
-	    return;
-	/* Attach the comments as a comment attribute */
-	ncmt = length(tcmt);
-	cmt = allocVector(STRSXP, ncmt);
-	for(i=0 ; i<ncmt ; i++) {
-	    STRING(cmt)[i] = CAR(tcmt);
-	    tcmt = CDR(tcmt);
-	}
-	PROTECT(cmt);
-	setAttrib(l, R_CommentSymbol, cmt);
-	UNPROTECT(1);
-	/* Reset the comment accumulator */
-	CAR(R_CommentSxp) = R_NilValue;
-    }
-}
-#endif
-
 static SEXP FirstArg(SEXP s, SEXP tag)
 {
     SEXP tmp;
@@ -895,7 +830,7 @@ static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
  *	SEXP R_Parse1Buffer(IOBuffer *buffer, int gencode, ParseStatus *status)
  *
  *
- *  The success of the parse is indicated as folllows:
+ *  The success of the parse is indicated as follows:
  *
  *
  *	status = PARSE_NULL       - there was no statement to parse
@@ -931,13 +866,24 @@ static void ParseInit()
     EatLines = 0;
     EndOfFile = 0;
     FunctionLevel=0;
-    SourcePtr = FunctionSource;
-    xxcharcount = 0;
+    PROTECT_WITH_INDEX(SavedSource = allocVector(CHARSXP, INITSRCSIZE), &SSpi);
+    PROTECT_WITH_INDEX(FunctionStart = allocVector(CHARSXP, INITNEST*sizeof(char *)/sizeof(char)), &FSpi);
+    SourcePtr = CHAR(SavedSource);
+    SourceBase = SourcePtr;
     KeepSource = *LOGICAL(GetOption(install("keep.source"), R_NilValue));
+    xxcharcount = 0;
+}
+
+static void ParseDone()
+{
+    UNPROTECT(2);
 }
 
 static SEXP R_Parse1(ParseStatus *status)
 {
+    SEXP source;
+    int SourceStart = SourcePtr - CHAR(SavedSource);
+
     switch(yyparse()) {
     case 0:                     /* End of file */
         *status = PARSE_EOF;
@@ -953,7 +899,13 @@ static SEXP R_Parse1(ParseStatus *status)
     case 3:                     /* Valid expr '\n' terminated */
     case 4:                     /* Valid expr ';' terminated */
         *status = PARSE_OK;
-        break;
+	if (KeepAllSource && !isNull(R_CurrentExpr)) {
+	    source = allocVector(INTSXP, 2);
+	    INTEGER(source)[0] = SourceStart;
+	    INTEGER(source)[1] = SourcePtr - CHAR(SavedSource);
+	    setAttrib(R_CurrentExpr, R_SourceSymbol, source);
+	}
+	break;
     }
     return R_CurrentExpr;
 }
@@ -978,6 +930,8 @@ SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status)
     ptr_getc = file_getc;
     ptr_ungetc = file_ungetc;
     R_Parse1(status);
+    if (KeepAllSource) R_CurrentExpr = convertSource(R_CurrentExpr);
+    ParseDone();
     return R_CurrentExpr;
 }
 
@@ -1001,6 +955,8 @@ SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
     ptr_getc = buffer_getc;
     ptr_ungetc = buffer_ungetc;
     R_Parse1(status);
+    if (KeepAllSource) R_CurrentExpr = convertSource(R_CurrentExpr);
+    ParseDone();
     return R_CurrentExpr;
 }
 
@@ -1024,6 +980,8 @@ SEXP R_Parse1Vector(TextBuffer *textb, int gencode, ParseStatus *status)
     ptr_getc = text_getc;
     ptr_ungetc = text_ungetc;
     R_Parse1(status);
+    if (KeepAllSource) R_CurrentExpr = convertSource(R_CurrentExpr);
+    ParseDone();
     return R_CurrentExpr;
 }
 
@@ -1038,6 +996,8 @@ SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
     ptr_getc = g_getc;
     ptr_ungetc = g_ungetc;
     R_Parse1(status);
+    if (KeepAllSource) R_CurrentExpr = convertSource(R_CurrentExpr);
+    ParseDone();
     return R_CurrentExpr;
 }
 #endif
@@ -1046,12 +1006,21 @@ SEXP R_Parse(int n, ParseStatus *status)
 {
     int i;
     SEXP t, rval;
+    SEXP source = NULL;
+    SEXP tsource;
     if (n >= 0) {
+	ParseInit();
         PROTECT(rval = allocVector(EXPRSXP, n));
         for (i = 0 ; i < n ; i++) {
         try_again:
-	    ParseInit();
             t = R_Parse1(status);
+            if ( i == 0 && KeepAllSource )
+            	PROTECT(source = getAttrib(t, R_SourceSymbol));
+            else if ( i == n-1 && KeepAllSource ) {
+		tsource = getAttrib(t, R_SourceSymbol);
+		if (!isNull(tsource))
+            	    INTEGER(source)[1] = INTEGER(tsource)[1];
+	    }
             switch(*status) {
             case PARSE_NULL:
                 goto try_again;
@@ -1066,19 +1035,35 @@ SEXP R_Parse(int n, ParseStatus *status)
                 break;
             }
         }
+        if ( KeepAllSource ) {
+	    setAttrib(rval, R_SourceSymbol, source);
+	    rval = convertSource(rval);
+	    UNPROTECT(1);
+    	}
+
         UNPROTECT(1);
+        ParseDone();
         return rval;
     }
     else {
+	ParseInit();
         PROTECT(t = NewList());
         for(;;) {
-	    ParseInit();
             rval = R_Parse1(status);
             switch(*status) {
             case PARSE_NULL:
                 break;
             case PARSE_OK:
                 t = GrowList(t, rval);
+                if ( KeepAllSource ) {
+		    tsource = getAttrib(rval, R_SourceSymbol);
+		    if (!isNull(tsource)) {
+			if (source)
+                    	    INTEGER(source)[1] = INTEGER(tsource)[1];
+                    	else
+                    	    PROTECT(source = tsource);
+		    }
+		}
                 break;
             case PARSE_INCOMPLETE:
             case PARSE_ERROR:
@@ -1092,7 +1077,13 @@ SEXP R_Parse(int n, ParseStatus *status)
                     SET_VECTOR_ELT(rval, n, CAR(t));
                     t = CDR(t);
                 }
+                if ( KeepAllSource ) {
+                    setAttrib(rval, R_SourceSymbol, source);
+                    rval = convertSource(rval);
+                    UNPROTECT(1);
+		}
                 UNPROTECT(1);
+                ParseDone();
                 *status = PARSE_OK;
                 return rval;
                 break;
@@ -1119,7 +1110,7 @@ static int con_getc(void)
 {
     int c;
     static int last=-1000;
-    
+
     c = Rconn_fgetc(con_parse);
     if (c == EOF && last != '\n') c = '\n';
     return (last = c);
@@ -1653,10 +1644,10 @@ int isValidName(char *name)
     if( c != '.' && !isalpha(c) )
         return 0;
 
-    if (c == '.' && isdigit((int)*p)) 
+    if (c == '.' && isdigit((int)*p))
 	return 0;
 
-    while ( c = *p++, (isalnum(c) || c == '.' 
+    while ( c = *p++, (isalnum(c) || c == '.'
 #ifdef UNDERSCORE_IN_NAMES
 		       || c == '_'
 #endif
@@ -1665,13 +1656,13 @@ int isValidName(char *name)
 
     if (c != '\0') return 0;
 
-    if (strcmp(name, "...") == 0) 
+    if (strcmp(name, "...") == 0)
 	return 1;
 
     for (i = 0; keywords[i].name != NULL; i++)
         if (strcmp(keywords[i].name, name) == 0)
                 return 0;
-    
+
     return 1;
 }
 
@@ -1683,7 +1674,7 @@ static int SymbolValue(int c)
     do {
 	YYTEXT_PUSH(c, yyp);
     }
-    while ((c = xxgetc()) != R_EOF && (isalnum(c) || c == '.' 
+    while ((c = xxgetc()) != R_EOF && (isalnum(c) || c == '.'
 #ifdef UNDERSCORE_IN_NAMES
 				       || c == '_'
 #endif
@@ -1692,15 +1683,18 @@ static int SymbolValue(int c)
     YYTEXT_PUSH('\0', yyp);
     if ((kw = KeywordLookup(yytext))) {
 	if ( kw == FUNCTION ) {
-	    if (FunctionLevel >= MAXNEST)
-		error("functions nested too deeply in source code");
-	    if ( FunctionLevel++ == 0 && GenerateCode) {
-		strcpy((char *)FunctionSource, "function");
-		SourcePtr = FunctionSource + 8;
+	    if (FunctionLevel*sizeof(char *) >= LENGTH(FunctionStart)) {
+		REPROTECT(FunctionStart = lengthgets(FunctionStart, 2*LENGTH(FunctionStart)), FSpi);
+		if (isNull(FunctionStart))
+		    error("functions nested too deeply in source code");
 	    }
-	    FunctionStart[FunctionLevel] = SourcePtr - 8;
+	    if ( FunctionLevel++ == 0 && !KeepAllSource && GenerateCode) {
+		strcpy(CHAR(SavedSource), "function");
+		SourcePtr = CHAR(SavedSource) + 8;
+	    }
+	    FUNCTIONSTART(FunctionLevel) = SourcePtr - 8;
 #if 0
-	    printf("%d,%d\n", SourcePtr - FunctionSource, FunctionLevel);
+	    printf("%d,%d\n", SourcePtr - CHAR(SavedSource), FunctionLevel);
 #endif
 	}
 	return kw;

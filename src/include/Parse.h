@@ -34,6 +34,16 @@ SEXP R_ParseBuffer(IoBuffer*, int, ParseStatus *, SEXP);
 SEXP R_ParseGeneral(int (*)(), int (*)(), int, ParseStatus *);
 
 
+	/* Source related declarations */
+
+int KeepAllSource;	/* Should all source be kept? */
+SEXP SavedSource;  	/* CHARSXP of whole source, used while parsing */
+PROTECT_INDEX SSpi;	/* Protection index for the above */
+
+SEXP collectLines(char*, char*);
+SEXP convertSource(SEXP e);
+
+
 #ifndef HAVE_RCONNECTION_TYPEDEF
 typedef struct Rconn  *Rconnection;
 #define HAVE_RCONNECTION_TYPEDEF

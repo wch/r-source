@@ -35,7 +35,9 @@ CSOURCES=\
 FSOURCES=xxxpr.f
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) 
 
-gram.c: ;
+gram.c: gram.y
+	bison gram.y
+	mv gram.tab.c gram.c
 
 saveload-CFLAGS=-I../extra/xdr
 connections-CFLAGS=-I../extra/zlib -I../extra/bzip2

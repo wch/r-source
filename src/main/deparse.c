@@ -693,7 +693,12 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	break;
     case EXPRSXP:
     	if (!localForDisplay) attr1(s, d);
-	if(length(s) <= 0)
+        if (d->useSource && (n = length(t = getAttrib(s, R_SourceSymbol))) > 0) {
+    	    for(i = 0 ; i < n ; i++) {
+	    	print2buff(CHAR(STRING_ELT(t, i)), d);
+	    	writeline(d);
+	    }
+	} else if (length(s) <= 0)
 	    print2buff("expression()", d);
 	else {
 	    print2buff("expression(", d);
@@ -735,7 +740,12 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    print2buff("quote(", d);
 	    d->forDisplay = TRUE;
 	}
-	if (TYPEOF(CAR(s)) == SYMSXP) {
+        if (d->useSource && (n = length(t = getAttrib(s, R_SourceSymbol))) > 0) {
+    	    for(i = 0 ; i < n ; i++) {
+	    	print2buff(CHAR(STRING_ELT(t, i)), d);
+	    	writeline(d);
+	    }
+	} else 	if (TYPEOF(CAR(s)) == SYMSXP) {
 	    if ((TYPEOF(SYMVALUE(CAR(s))) == BUILTINSXP) ||
 		(TYPEOF(SYMVALUE(CAR(s))) == SPECIALSXP)) {
 		op = CAR(s);

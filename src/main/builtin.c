@@ -504,15 +504,15 @@ SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/* do_lengthgets: assign a length to a vector or a list */
-/* (if it is vectorizable). We could probably be fairly */
+/* do_lengthgets: assign a length to a vector or list  */
+/* (if it is vectorizable) or a CHARSXP. We could probably be fairly */
 /* clever with memory here if we wanted to. */
 
 SEXP lengthgets(SEXP x, R_len_t len)
 {
     R_len_t lenx, i;
     SEXP rval, names, xnames, t;
-    if (!isVector(x) && !isVectorizable(x))
+    if (!isVector(x) && !isVectorizable(x) && !(TYPEOF(x) == CHARSXP))
 	error("can not set length of non-vector");
     lenx = length(x);
     if (lenx == len)
@@ -579,6 +579,12 @@ SEXP lengthgets(SEXP x, R_len_t len)
 		    SET_STRING_ELT(names, i, STRING_ELT(xnames, i));
 	    }
 	break;
+    case CHARSXP:
+    	for (i = 0; i < len; i++)
+    	    if (i < lenx)
+		CHAR(rval)[i] = CHAR(x)[i];
+	    else
+	    	CHAR(rval)[i] = '\0';
     }
     if (isVector(x) && xnames != R_NilValue)
 	setAttrib(rval, R_NamesSymbol, names);

@@ -40,7 +40,7 @@ extern IoBuffer R_ConsoleIob;
 */
 SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP text, prompt, s;
+    SEXP text, prompt, s, source;
     Rconnection con;
     Rboolean wasopen;
     int ifile, num;
@@ -57,10 +57,15 @@ SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     num = asInteger(CAR(args));				args = CDR(args);
     PROTECT(text = coerceVector(CAR(args), STRSXP));	args = CDR(args);
     prompt = CAR(args);					args = CDR(args);
+    source = CAR(args);					args = CDR(args);
+
     if (prompt == R_NilValue)
 	PROTECT(prompt);
     else
 	PROTECT(prompt = coerceVector(prompt, STRSXP));
+
+    if (isLogical(source) && length(source) && LOGICAL(source)[0])
+    	KeepAllSource = TRUE;
 
     if (length(text) > 0) {
 	if (num == NA_INTEGER)
@@ -86,8 +91,53 @@ SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (status != PARSE_OK)
 	    errorcall(call, "parse error");
     }
+
     UNPROTECT(2);
+    KeepAllSource = FALSE;
     return s;
 }
 
+/* return a protected STRSXP containing source lines from the buffer,
+   assumes that end points to the character following the desired source,
+   possibly null, but temporarily writeable */
 
+SEXP collectLines(char *buffer, char *end)
+{
+    int lines = 0;
+    char *p, *p0, save;
+    SEXP source;
+
+    for (p = buffer; p < end ; p++)
+	if (*p == '\n') lines++;
+    if ( *(end - 1) != '\n' ) lines++;
+    PROTECT(source = allocVector(STRSXP, lines));
+    p0 = buffer;
+    lines = 0;
+    for (p = buffer ; p < end ; p++)
+	if ( *p == '\n' ) {
+	    save = *p;
+	    *p = '\0';
+	    SET_STRING_ELT(source, lines++, mkChar(p0));
+	    *p = save;
+	    p0 = p + 1;
+	}
+    if ( *(end - 1) != '\n' ) {
+	save = *end;
+	*end = '\0';
+	SET_STRING_ELT(source, lines++, mkChar(p0));
+	*end = save;
+    }
+    return(source);
+}
+
+SEXP convertSource(SEXP e)
+{
+    SEXP source = getAttrib(e, R_SourceSymbol);
+
+    if (!isNull(source) && isInteger(source) && length(source) ==  2) {
+	source = collectLines(CHAR(SavedSource)+INTEGER(source)[0], CHAR(SavedSource)+INTEGER(source)[1]);
+	setAttrib(e, R_SourceSymbol, source);
+	UNPROTECT(1);
+    }
+    return(e);
+}

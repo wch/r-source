@@ -24,7 +24,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	cat(sQuote("envir"), "chosen:")
 	print(envir)
     }
-    Ne <- length(exprs <- parse(n = -1, file = file))
+    Ne <- length(exprs <- parse(n = -1, file = file, keep.all.source = echo))
     if (verbose)
 	cat("--> parsed", Ne, "expressions; now eval(.)ing them:\n")
     if (Ne == 0)
