@@ -85,12 +85,13 @@ getOption(x)
       used with ordered factors.}
 
     \item{\code{defaultPackages}:}{the packages that are attached by
-      default when \R starts up.  Initially set to \code{c("methods",
-	"ctest")}.  To change these \emph{before} the initial startup,
-      you must put a call to \code{options} in your \file{.Rprofile}
-      file, to ensure that the change takes effect for the base package
-      is initialized (it is in the corresponding \code{.First} that the
-      packages are attached.)}
+      default when \R starts up.  Initially set from value of the
+      environment variables \code{R_DefaultPackages}, or if that is
+      unset to \code{c("methods", "ctest")}.  (Set
+      \code{R_DEFAULT_PACKAGES} to \code{NULL} or a comma-separated list
+      of package names.) A call to \code{options} should be in your
+      \file{.Rprofile} file to ensure that the change takes effect
+      before the base package is initialized (see \code{\link{Startup).}
 
     \item{\code{expressions}:}{sets a limit on the number of nested
       expressions that will be evaluated.  This is especially important

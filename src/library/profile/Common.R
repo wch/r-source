@@ -23,7 +23,7 @@ R.version.string <-
 options(na.action = "na.omit")
 options(show.signif.stars = TRUE)
 options(show.coef.Pvalues = TRUE)
-options(keep.source = interactive())    # was `TRUE' in 1.0.x
+options(keep.source = interactive())
 options(warn = 0)
 options(help.try.all.packages = FALSE)
 options(CRAN = "http://cran.r-project.org")
@@ -32,9 +32,20 @@ options(timeout = 60)
 options(internet.info = 2)
 options(encoding = native.enc)
 options(show.error.messages = TRUE)
-options(defaultPackages = c("methods", "ctest"))
-
-.First <- function() {
-    for(pkg in getOption("defaultPackages"))
-        require(pkg, quietly = TRUE, character.only = TRUE)
+local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
+       if(identical(dp, ""))
+#           dp <- c("methods", "ctest", "mva", "modreg", "nls", "ts")
+           dp <- c("methods", "ctest")
+       else if(identical(dp, "NULL")) dp <- character(0)
+       else dp <- strsplit(dp, ",")[[1]]
+       options(defaultPackages = dp)
+    })
+.First.sys <- function()
+{
+    for(pkg in getOption("defaultPackages")) {
+        res <- require(pkg, quietly = TRUE, character.only = TRUE)
+        if(!res)
+            warning("package ", pkg,
+                    'in options("defaultPackages") was not found')
+    }
 }

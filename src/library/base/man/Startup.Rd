@@ -8,6 +8,7 @@
 #endif
 \alias{.Renviron}
 \alias{.First}
+\alias{.First.sys}
 \title{Initialization at Start of an R Session}
 \usage{
 .First <- function() { \dots\dots }
@@ -56,14 +57,11 @@
   if there is one (unless \code{--no-restore-data} was specified, or
   \code{--no-restore}, on the command line).
 
-  Finally, if a function \code{.First} is found on the search path,
-  it is executed as \code{.First()}.  In a ``factory-fresh'' version of
-  \R the \code{.First} in the system profile file
-  \file{library/base/R/Rprofile} is used.  This calls
-  \code{\link{require}} to attach the default packages, specified by
-  \code{\link{options}("defaultPackages")}, which starts off being 
-  \code{c("methods", "ctest")}.  (This can be suppressed by the flag
-  \code{--no-dotFirst}, needed in the build process.)
+  Next, if a function \code{.First} is found on the search path,
+  it is executed as \code{.First()}.
+  Finally,  function \code{.First.sys()} in the base package is run.
+  This calls \code{\link{require}} to attach the default packages
+  specified by \code{\link{options}("defaultPackages")}.
 
   A function \code{.First} (and \code{\link{.Last}}) can be defined
   in appropriate \code{.Rprofile} or \code{Rprofile.site} files
@@ -72,7 +70,8 @@
   a call to \code{\link{options}} in the
   \code{.Rprofile} or \code{Rprofile.site} file.  For example,
   \code{options(defaultPackages = character())} will attach no extra
-  packages on startup.
+  packages on startup.  Alternatively, set \code{R_DEFAULT_PACKAGES=NULL}
+  as an environment variable before running \R.
 
   The commands history is read from the file specified by the
   environment variable \code{R_HISTFILE} (default \code{.Rhistory})

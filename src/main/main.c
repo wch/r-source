@@ -548,6 +548,25 @@ void setup_Rmainloop(void)
 	}
 	UNPROTECT(1);
     }
+    /* Try to invoke the .First.sys function, which loads the default packages.
+       If there is an error we continue. */
+
+    doneit = !R_LoadDotFirst;
+    SETJMP(R_Toplevel.cjmpbuf);
+    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
+    signal(SIGINT, onintr);
+    if (!doneit) {
+	doneit = 1;
+	PROTECT(cmd = install(".First.sys"));
+	R_CurrentExpr = findVar(cmd, baseEnv);
+	if (R_CurrentExpr != R_UnboundValue &&
+	    TYPEOF(R_CurrentExpr) == CLOSXP) {
+	        PROTECT(R_CurrentExpr = lang1(cmd));
+	        R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
+	        UNPROTECT(1);
+	}
+	UNPROTECT(1);
+    }
     /* gc_inhibit_torture = 0; */
 }
 

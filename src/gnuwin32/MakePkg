@@ -155,8 +155,8 @@ ifeq ($(strip $(BUILD)),CROSS)
 	@(cat DESCRIPTION; $(ECHO); $(ECHO) "Built: R" $(RVER)\;  Win32\;  `date`) \
 	  | $(SED) '/^\s*$$/d' > ${DPKG}/DESCRIPTION
 else
-	@$(ECHO) "library(tools);.installPackageDescription('.', '"$(DPKG)"')" | \
-	  $(RHOME)/bin/rterm.exe --vanilla --no-dotFirst --slave > /dev/null
+	@$(ECHO) ".installPackageDescription('.', '"$(DPKG)"')" | \
+	  $(RHOME)/bin/rterm.exe --vanilla --slave  R_DEFAULT_PACKAGES=tools> /dev/null
 endif
 
 $(DATA): $(DSOURCES)
@@ -211,10 +211,10 @@ indices:
 	@$(ECHO) "  installing indices"
 ifeq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) "library(tools); .installPackageIndices('.', '"$(DPKG)"')" | \
-	  $(R_EXE) --vanilla   --no-dotFirst --slave > /dev/null
+	  $(R_EXE) --vanilla  --no-dotFirst --slave > /dev/null
 else
-	@$(ECHO) "library(tools); .installPackageIndices('.', '"$(DPKG)"')" | \
-	  $(RHOME)/bin/rterm.exe --vanilla --no-dotFirst --slave > /dev/null
+	@$(ECHO) ".installPackageIndices('.', '"$(DPKG)"')" | \
+	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=tools > /dev/null
 endif
 # need not have HTML installed when building packages
 	@$(MKDIR) -p $(RHOME)/doc/html/search
@@ -229,7 +229,7 @@ ifeq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) "library(tools); .installMD5sums('"$(DPKG)"')" | \
 	  $(R_EXE) --vanilla  --no-dotFirst --slave > /dev/null
 else
-	@$(ECHO) "library(tools); .installMD5sums('"$(DPKG)"')" | \
-	  $(RHOME)/bin/rterm.exe --vanilla --no-dotFirst --slave > /dev/null
+	@$(ECHO) ".installMD5sums('"$(DPKG)"')" | \
+	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=tools > /dev/null
 endif
 endif
