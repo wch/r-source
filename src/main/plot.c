@@ -2038,6 +2038,7 @@ static double ComputeAdjValue(double adj, int side, int las)
 	    case 2: adj = 1.0; break;
 	    case 4: adj = 0.0; break;
 	    }
+	    break;
 	case 2:/* perpendicular to axis */
 	    switch(side) {
 	    case 1:
@@ -2045,6 +2046,7 @@ static double ComputeAdjValue(double adj, int side, int las)
 	    case 3:
 	    case 4: adj = 0.0; break;
 	    }
+	    break;
 	case 3:/* vertical */
 	    switch(side) {
 	    case 1: adj = 1.0; break;
@@ -2052,21 +2054,74 @@ static double ComputeAdjValue(double adj, int side, int las)
 	    case 2:
 	    case 4: adj = 0.5; break;
 	    }
+	    break;
 	}
     }
     return adj;
 }
 
-static double ComputeAtValue(double at, double adj, int side, int outer,
+static double ComputeAtValueFromAdj(double adj, int side, int outer, 
+				    DevDesc *dd) 
+{
+    double at;
+    switch(side % 2) {
+    case 0:
+	at  = outer ? adj : yNPCtoUsr(adj, dd);
+	break;
+    case 1:
+	at = outer ? adj : xNPCtoUsr(adj, dd);
+	break;
+    }
+    return at;
+}
+
+static double ComputeAtValue(double at, double adj, 
+			     int side, int las, int outer,
 			     DevDesc *dd)
 {
     if (!R_FINITE(at)) {
-	switch(side % 2) {
-	case 0:
-	    at  = outer ? adj : yNPCtoUsr(adj, dd);
+	/* If the text is parallel to the axis, use "adj" for "at"
+	 * Otherwise, centre the text
+	 */
+	switch(las) {
+	case 0:/* parallel to axis */
+	    at = ComputeAtValueFromAdj(adj, side, outer, dd);
 	    break;
-	case 1:
-	    at = outer ? adj : xNPCtoUsr(adj, dd);
+	case 1:/* horizontal */
+	    switch(side) {
+	    case 1:
+	    case 3: 
+		at = ComputeAtValueFromAdj(adj, side, outer, dd);
+		break;
+	    case 2: 
+	    case 4: 
+		at = outer ? 0.5 : yNPCtoUsr(0.5, dd);
+		break;
+	    }
+	    break;
+	case 2:/* perpendicular to axis */
+	    switch(side) {
+	    case 1:
+	    case 3: 
+		at = outer ? 0.5 : xNPCtoUsr(0.5, dd);
+		break;
+	    case 2:
+	    case 4: 
+		at = outer ? 0.5 : yNPCtoUsr(0.5, dd);
+		break;
+	    }
+	    break;
+	case 3:/* vertical */
+	    switch(side) {
+	    case 1: 
+	    case 3:
+		at = outer ? 0.5 : xNPCtoUsr(0.5, dd);
+		break;
+	    case 2:
+	    case 4: 
+		at = ComputeAtValueFromAdj(adj, side, outer, dd);
+		break;
+	    }
 	    break;
 	}
     }
@@ -2222,7 +2277,8 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.font = (fontval == NA_INTEGER) ? fontsave : fontval;
 	dd->gp.col = (colval == NA_INTEGER) ? colsave : colval;
 	dd->gp.adj = ComputeAdjValue(adjval, sideval, dd->gp.las);
-	atval = ComputeAtValue(atval, dd->gp.adj, sideval, outerval, dd);
+	atval = ComputeAtValue(atval, dd->gp.adj, sideval, dd->gp.las,
+			       outerval, dd);
 
 	if (vectorFonts) {
 #ifdef GMV_implemented
