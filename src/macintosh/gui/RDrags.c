@@ -35,6 +35,7 @@
 
 	C port by John C. Daub
 */
+#include <RCarbon.h>
 
 #include "RIntf.h"
 
