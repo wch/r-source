@@ -2723,8 +2723,8 @@ void GText(double x, double y, int coords, char *str,
 		*sb = '\0';
 		/* Compute the approriate offset. */
 		/* (translate verticaly then rotate). */
-		yoff = GConvertYUnits((1 - yc) * (n - 1) - i - yadj,
-				      CHARS, INCHES, dd);
+                yoff = (1 - yc) * (n - 1) - i - yadj;
+		yoff = GConvertYUnits(yoff, CHARS, INCHES, dd);
 		xoff = - yoff * sin(DEG2RAD * rot);
 		yoff = yoff * cos(DEG2RAD * rot);
 		GConvert(&xoff, &yoff, INCHES, NDC, dd);
@@ -2735,15 +2735,15 @@ void GText(double x, double y, int coords, char *str,
 		}
 		else {
 		    if(!dd->dp.xpd) {
-			double xtest = x;
-			double ytest = y;
+			double xtest = xoff;
+			double ytest = yoff;
 			/* FIXME: This needs checking */
-			/* GConvert(&xtest, &ytest, NDC, NFC, dd); */
+			GConvert(&xtest, &ytest, NDC, NFC, dd);
 			if(xtest < 0 || ytest < 0 ||
 			   xtest > 1 || ytest > 1)
 			    return;
 		    }
-		    dd->dp.text(x, y, NDC, sbuf, xc, yc, rot, dd);
+		    dd->dp.text(xoff, yoff, NDC, sbuf, xc, yc, rot, dd);
 		}
 		sb = sbuf;
 		i += 1;
