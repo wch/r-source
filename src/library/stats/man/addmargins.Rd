@@ -61,9 +61,9 @@
 \seealso{\code{\link{table}}, \code{\link{ftable}}, \code{\link{margin.table}}.}
 
 \examples{
-Aye <- sample( c("Yes","Si","Oui"), 177, replace=T )
-Bee <- sample( c("Hum","Buzz"), 177, replace=T )
-Sea <- sample( c("White","Black","Red","Dead"), 177, replace=T )
+Aye <- sample( c("Yes","Si","Oui"), 177, replace=TRUE )
+Bee <- sample( c("Hum","Buzz"), 177, replace=TRUE )
+Sea <- sample( c("White","Black","Red","Dead"), 177, replace=TRUE )
 A <- table( Aye, Bee, Sea )
 A
 addmargins( A )
