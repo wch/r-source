@@ -601,6 +601,9 @@ FUNTAB R_FunTab[] =
 {"mem.limits",	do_memlimits,	0,	11,	2,	PP_FUNCALL},
 {"merge",	do_merge,	0,	11,	4,	PP_FUNCALL},
 {"capabilities",do_capabilities,0,	11,	0,	PP_FUNCALL},
+{"new.env",	do_newenv,	0,	11,     2,      PP_FUNCALL},
+{"parent.env",  do_parentenv,   0,	11,     1,      PP_FUNCALL},
+{"parent.env<-",do_parentenvgets, 0,	11,     2,      PP_FUNCALL},
 #if 0
 {"visibleflag", do_visibleflag,	0,	1,	0,	PP_FUNCALL},
 #endif

@@ -11,6 +11,10 @@
 
 NEW FEATURES
 
+    o   new.env is now internal and allows you to set hashing. Also,
+        parent.env and parent.env<- are included to provide direct access
+        to setting and retrieving environments.
+
     o	Function identical(), a fast and reliable way to test for exact
 	equality of two objects.
 

@@ -149,6 +149,52 @@ SEXP do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     return CAR(args);
 }
 
+
+SEXP do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP s;
+    int hash, local;
+
+    checkArity(op, args);
+
+    hash = asInteger(CAR(args));
+    if( !isEnvironment(CADR(args)) )
+	errorcall(call, "enclos needs to be an environment");
+
+    PROTECT(s = NewEnvironment(R_NilValue, R_NilValue,
+			       CADR(args))); 
+
+    /* 0, 0 gets the recomended minima */
+    if( hash )
+	SET_HASHTAB(s, R_NewHashTable(0,0));
+    UNPROTECT(1);
+    return(s);
+}
+
+SEXP do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+
+    if( !isEnvironment(CAR(args)) )
+	errorcall(call, "argument is not an environment");
+
+    return( ENCLOS(CAR(args)) );
+}
+
+SEXP do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+
+    if( !isEnvironment(CAR(args)) )
+	errorcall(call, "argument is not an environment");
+    if( !isEnvironment(CADR(args)) )
+	errorcall(call, "parent is not an environment");
+
+    ENCLOS(CAR(args)) = CADR(args);
+
+    return( CAR(args) );
+}
+
 static void cat_newline(SEXP labels, int *width, int lablen, int ntot)
 {
     Rprintf("\n");
