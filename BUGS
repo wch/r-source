@@ -138,3 +138,7 @@ Date: 01 Mar 2000 16:00:54 +0100
 Subject: Re: [R] Re: R-1.0.0 is released
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 01 Mar 2000 20:26:40 +0100
+* PR# 469 *
+Subject:  using function names as parameters 
+From: Torsten Hothorn <hothorn@ci.tuwien.ac.at>
+Date: Fri, 3 Mar 2000 10:11:00 +0100
