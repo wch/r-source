@@ -1,12 +1,12 @@
 as.logical <- function(x) .Internal(as.vector(x,"logical"))
 as.integer <- function(x) .Internal(as.vector(x,"integer"))
-as.real <- function(x) .Internal(as.vector(x,"real"))
+as.double <- function(x) .Internal(as.vector(x,"double"))
+as.real <- .Alias(as.double)
 as.complex <- function(x) .Internal(as.vector(x, "complex"))
-as.double <- function(x) .Internal(as.vector(x,"real"))
-as.single <- function(x) 
+as.single <- function(x)
 {
 	warning("type single is not supported in R")
-	.Internal(as.vector(x,"real"))
+	.Internal(as.vector(x,"double"))
 }
 as.character <- function(x) .Internal(as.vector(x,"character"))
 as.expression <- function(x) .Internal(as.vector(x,"expression"))
@@ -36,7 +36,7 @@ as.matrix.data.frame <- function(x) {
                             else paste(".", 1 : t, sep = "")
                           })),
             sep = "")
-    rownames(y) <- rownames(x)    
+    rownames(y) <- rownames(x)
   }
   y
 }
@@ -54,5 +54,5 @@ as.name <- function(x) .Internal(as.vector(x, "name"))
 as.numeric <- as.double
 as.qr <- function(x) stop("you cannot be serious")
 as.ts <- function(x) if(is.ts(x)) x else ts(x)
-as.formula <- function(object) 
+as.formula <- function(object)
 	if(inherits(object, "formula")) object else formula(object)

@@ -36,7 +36,8 @@ format.char(x, width = NULL, flag = "-")
     page 243.
     \code{"0"}  pads leading zeros; \code{"-"} does left adjustment,
     others are \code{"+"}, \code{" "}, and \code{"#"}.}
-  \item{mode}{\code{"real"},  \code{"integer"} or \code{"character"}.
+  \item{mode}{\code{"double"} (or \code{"real"}), \code{"integer"} or
+    \code{"character"}.
     Default: Automatic.}
 }
 \value{

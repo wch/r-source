@@ -6,11 +6,11 @@ mode <- function(x) {
 			# otherwise
 			"call"))
 	if(is.name(x)) "name" else
-        switch(tx <- typeof(x),
-               real=, integer= "numeric",
-               closure=, builtin=, special= "function",
-               # otherwise
-               tx)
+	switch(tx <- typeof(x),
+	       double=, real=, integer= "numeric",# 'real' not used anymore [4/98,MM]
+	       closure=, builtin=, special= "function",
+	       # otherwise
+	       tx)
 }
 "mode<-" <- function(x, value)
 {

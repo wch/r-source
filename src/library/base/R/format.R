@@ -89,8 +89,9 @@ formatC <- function (x, digits = NULL, width = NULL,
 	if (is.null(x)) return("")
 	n <- length(x)
 	if (missing(mode))    mode <- storage.mode(x)
-	else if (any(mode == c("real", "integer"))) storage.mode(x) <- mode
-	else stop("\"mode\" must be \"real\" or \"integer\"")
+	else if (any(mode == c("double", "real", "integer")))
+          storage.mode(x) <- if(mode=="real")"double" else mode
+	else stop("\"mode\" must be \"double\" (\"real\") or \"integer\"")
 	if (mode == "character" || (!is.null(format) && format == "s")) {
 	 if (mode != "character") {
 	  warning('should give "character" argument for format="s" -- COERCING')
@@ -107,7 +108,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 	 format <- if (mode == "integer") "d" else "g"
 	else {
 	 if (any(format == c("f", "e", "E", "g", "G", "fg"))) {
-		 if (mode == "integer") mode <- storage.mode(x) <- "real"
+		 if (mode == "integer") mode <- storage.mode(x) <- "double"
 	 }
 	 else if (format == "d") {
 		 if (mode != "integer") mode <- storage.mode(x) <- "integer"
