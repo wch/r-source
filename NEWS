@@ -44,6 +44,10 @@ INSTALLATION CHANGES
 
 BUG FIXES
 
+    o   Installing saved images in packages is done with just the base 
+	package loaded, consistently on all platforms.  Package maintainers
+	should ensure they require() other standard packages they use.
+
 	
 
 	
