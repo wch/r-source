@@ -174,8 +174,6 @@ sealClass(Class, where)
 
   When such a class definition is printed, the data part shows up as a
   pseudo-slot named \dQuote{.Data}.
-
- 
 }
 
 \section{S3 Classes}{
@@ -188,47 +186,47 @@ sealClass(Class, where)
   include S3 classes, they should be declared by including them in a
   call to \code{\link{setOldClass}}.  Here are some considerations:
 
-\itemize{
-\item Using S3 classes somewhat defeats the purpose of defining a
-  formal class:  An important advantage to your users is that a formal
-  class provides guarantees of what the object contains (minimally,
-  the classes of the slots and therfore what data they contain;
-  optionally, any other requirements imposed by a validity method).
+  \itemize{
+  \item Using S3 classes somewhat defeats the purpose of defining a
+    formal class:  An important advantage to your users is that a formal
+    class provides guarantees of what the object contains (minimally,
+    the classes of the slots and therfore what data they contain;
+    optionally, any other requirements imposed by a validity method).
 
-  But there is no guarantee whatever about the data in an object from
-  an S3 class.  It's entirely up to the functions that create or
-  modify such objects.  If you want to provide guarantees to your
-  users, you will need a valdity method that explicitly checks the
-  contents of S3-class objects.
+    But there is no guarantee whatever about the data in an object from
+    an S3 class.  It's entirely up to the functions that create or
+    modify such objects.  If you want to provide guarantees to your
+    users, you will need a valdity method that explicitly checks the
+    contents of S3-class objects.
 
-\item To get the minimal guarantee (that the object in a slot has, or
-  extends, the class for the slot) you should ensure that the S3
-  classes are known to \emph{be} S3 classes, with the possible
-  inheritance.  To do this, include a call to
-  \code{\link{setOldClass}} for the S3 classes used.
+  \item To get the minimal guarantee (that the object in a slot has, or
+    extends, the class for the slot) you should ensure that the S3
+    classes are known to \emph{be} S3 classes, with the possible
+    inheritance.  To do this, include a call to
+    \code{\link{setOldClass}} for the S3 classes used.
 
-  Otherwise, the S3 class is undefined (and the code used by
-  \code{setClass} will issue a warning).  Slot assignments, for
-  example, will not then check for possible errors.
+    Otherwise, the S3 class is undefined (and the code used by
+    \code{setClass} will issue a warning).  Slot assignments, for
+    example, will not then check for possible errors.
 
-\item These caveats apply to S3 classes; that is, objects with a class assigned
-  by some R function but without a formal class definition.  In
-  contrast, the  built-in data types (\code{numeric},
-  \code{list}, etc.) are generally fine as slots or for
-  \code{contains=} classes (see the previous section).  These data
-  types don't have formal slots, but the base code in the system
-  essentially forces them to contain the type of data they claim to
-  have.
+  \item These caveats apply to S3 classes; that is, objects with a
+    class assigned by some R function but without a formal class
+    definition.  In contrast, the built-in data types (\code{numeric},
+    \code{list}, etc.) are generally fine as slots or for
+    \code{contains=} classes (see the previous section).  These data
+    types don't have formal slots, but the base code in the system
+    essentially forces them to contain the type of data they claim to
+    have.
 
-  The data types \code{matrix} and \code{array} are somewhat in
-  between.  They do not have an explicit S3 class, but do have one or
-  two attributes.  There is no general problem in having these as
-  slots, but because there is no guarantee of a dimnames slot, they
-  don't work as formal classes.  The \code{ts} class is treated as a
-  formal class, extending class \code{vector}.
-}
-  
-}
+    The data types \code{matrix} and \code{array} are somewhat in
+    between.  They do not have an explicit S3 class, but do have one or
+    two attributes.  There is no general problem in having these as
+    slots, but because there is no guarantee of a dimnames slot, they
+    don't work as formal classes.  The \code{ts} class is treated as a
+    formal class, extending class \code{vector}.
+  }
+
+}% S3 classes
 
 \references{
   The \R package \pkg{methods} implements, with a few exceptions, the
@@ -247,12 +245,9 @@ sealClass(Class, where)
 }
 \examples{
 \dontshow{
-if(isClass("trackMultiCurve"))
-  removeClass("trackMultiCurve")
-if(isClass("trackCurve"))
-  removeClass("trackCurve")
-if(isClass("track"))
-  removeClass("track")
+ if(isClass("trackMultiCurve")) removeClass("trackMultiCurve")
+ if(isClass("trackCurve"))	removeClass("trackCurve")
+ if(isClass("track"))		removeClass("track")
 }
 ## A simple class with two slots
 setClass("track",
@@ -271,7 +266,7 @@ setClass("trackMultiCurve",
 ## only one column.
 ## First, the wrong way.
 try(setIs("trackMultiCurve", "trackCurve",
-  test = function(obj) {ncol(slot(obj, "y")) == 1}))
+    test = function(obj) {ncol(slot(obj, "y")) == 1}))
 
 ## Why didn't that work?  You can only override the slots "x", "y",
 ## and "smooth" if you provide an explicit coerce function to correct
@@ -289,10 +284,9 @@ setIs("trackMultiCurve", "trackCurve",
 ## A class that extends the built-in data type "numeric"
 
 setClass("numWithId", representation(id = "character"),
-    contains = "numeric")
+         contains = "numeric")
 
 new("numWithId", 1:3, id = "An Example")
-
 
 \dontshow{
 tMC <- new("trackMultiCurve")
