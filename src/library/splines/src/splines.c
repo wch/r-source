@@ -21,16 +21,13 @@
  * 1981) and the CMLIB library DBSPLINES.
  */
 
-#include "S.h"
-#ifndef R_S_H
-#define longint long int
-#endif /* R_S_H */
+#include "R.h"
 
 static double *ldel, *rdel;
-static long orderm1;
+static Sint orderm1;
 
 static void
-diff_table(double *ti, double x, longint ndiff)
+diff_table(double *ti, double x, Sint ndiff)
 {
   register double *r = rdel, *l = ldel, *dpt = ti;
   
@@ -43,7 +40,7 @@ diff_table(double *ti, double x, longint ndiff)
 static void
 basis_funcs(double *ti, double x, double *b)
 {
-  longint j, r;
+  Sint j, r;
   double saved, term;
 
   diff_table(ti, x, orderm1);
@@ -60,18 +57,18 @@ basis_funcs(double *ti, double x, double *b)
 }  
 
 static double
-evaluate(double *ti, double x, double *a, longint nder)
+evaluate(double *ti, double x, double *a, Sint nder)
 {
   register double *lpt, *rpt, *apt;
-  register longint inner;
-  longint outer = orderm1;
+  register Sint inner;
+  Sint outer = orderm1;
 
   while(nder--) {
     for(inner = outer, apt = a, lpt = ti - outer; inner--; apt++, lpt++)
       *apt = outer * (*(apt + 1) - *apt)/(*(lpt + outer) - *lpt);
     outer--;
   }
-  diff_table(ti, x, (long) outer);
+  diff_table(ti, x, (Sint) outer);
   while(outer--)
     for(apt = a, lpt = ldel + outer, rpt = rdel, inner = outer + 1;
 	inner--; lpt--, rpt++, apt++)
@@ -80,11 +77,11 @@ evaluate(double *ti, double x, double *a, longint nder)
 }  
   
 void
-spline_value(double *knots, double *coeff, longint *ncoeff,
-	     longint *order, double *x, longint *nx, longint *deriv,
+spline_value(double *knots, double *coeff, Sint *ncoeff,
+	     Sint *order, double *x, Sint *nx, Sint *deriv,
 	     double *y)
 {
-  long n = *nx;
+  Sint n = *nx;
   double *a, *last = knots + *ncoeff;
 
   a = Calloc(*order, double);
@@ -96,18 +93,18 @@ spline_value(double *knots, double *coeff, longint *ncoeff,
   while(n--) {
     while(knots <= last && *knots <= *x) {knots++; coeff++;}
     Memcpy(a, coeff, *order);
-    *y++ = evaluate(knots, *x++, a, (longint) *deriv);
+    *y++ = evaluate(knots, *x++, a, (Sint) *deriv);
   }
   Free(ldel); Free(rdel); Free(a);
 }
 
-void spline_basis(double *knots, longint *ncoeff, longint *order,
-		  double *xvals, longint *derivs, longint *nx,
-		  double *basis, longint *offsets)
+void spline_basis(double *knots, Sint *ncoeff, Sint *order,
+		  double *xvals, Sint *derivs, Sint *nx,
+		  double *basis, Sint *offsets)
 {				/* evaluate the non-zero B-spline basis */
 				/* functions (or their derivatives) at */
 				/* xvals.  */
-  longint n = *nx, i, j;
+  Sint n = *nx, i, j;
   double *dpt, *coeff, *last = knots + *ncoeff;
 
   orderm1 = *order - 1L;
@@ -121,21 +118,21 @@ void spline_basis(double *knots, longint *ncoeff, longint *order,
       for(i = 0; i < *order; i++) {
 	for(j = 0; j < *order; j++) coeff[j] = 0;
 	coeff[i] = 1;
-	*basis++ = evaluate(dpt, *xvals, coeff, (longint) *derivs);
+	*basis++ = evaluate(dpt, *xvals, coeff, (Sint) *derivs);
       }
     }
     else {
       basis_funcs(dpt, *xvals, basis); /* fast method for value */
       basis += *order;
     }
-    *offsets++ = (long)(dpt - knots);
+    *offsets++ = (Sint)(dpt - knots);
   }
   Free(ldel); Free(rdel); Free(coeff);
 }
 
-void lin_interp(double *x, double *y, double *x0, double *y0, longint *nvals)
+void lin_interp(double *x, double *y, double *x0, double *y0, Sint *nvals)
 {
-  longint n = *nvals;
+  Sint n = *nvals;
   double *firstx = x;
 
   while(n--) {
