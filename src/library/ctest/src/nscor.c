@@ -92,8 +92,8 @@ void init(double *work)
 	work[(i << 2) + 2] = pi2 - xx * xx * half;
 	/* upper & lower tail */
 	/* had  log(alnorm_(&xx, UPPER)) & log(alnorm_(&xx, LOWER)) :*/
-	work[(i << 2) + 3] = pnorm(xx,0.,1., 0, /*log_p = */1));
-	work[(i << 2) + 4] = pnorm(xx,0.,1., 1, /*log_p = */1));
+	work[(i << 2) + 3] = pnorm(xx,0.,1., 0, /*log_p = */1);
+	work[(i << 2) + 4] = pnorm(xx,0.,1., 1, /*log_p = */1);
 	xx = xstart + (double) i * hh;
     }
     return;
