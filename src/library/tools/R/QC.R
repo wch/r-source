@@ -1071,7 +1071,14 @@ function(package, dir, file, lib.loc = NULL,
             ## This may find things twice if a setMethod() with a bad FF
             ## call is from inside a function (e.g., InitMethods()).
             for(f in getGenerics(codeEnv)) {
+                ## <FIXME>
+                ## The get(f) should not be necessary, but without it,
+                ## current versions of SparseM fail on "%x%"() ... otoh,
+                ## we cannot use get on "%*%"() ...
+                if(is(gf <- get(f, codeEnv), "genericFunction"))
+                    f <- gf
                 meths <- linearizeMlist(getMethods(f, codeEnv))
+                ## </FIXME>
                 exprs <- c(exprs, lapply(meths@methods, body))
             }
         }
@@ -1303,12 +1310,13 @@ function(package, dir, lib.loc = NULL)
         for(g in genFuns) {
             ## Find all methods in funs for generic g.
             ## <FIXME>
-            ## Code taken from older versions of methods().
             ## We should really determine the name g dispatches for, see
-            ## a current version of methods() [2003-07-07].
-            name <- paste("^", g, ".", sep = "")
-            methods <- grep(gsub("([.[])", "\\\\\\1", name),
-                            funs, value = TRUE)
+            ## a current version of methods() [2003-07-07].  (Care is
+            ## needed for internal generics and group generics.)
+            ## Matching via grep() is tricky with e.g. a '$' in the name
+            ## of the generic function ... hence substr().
+            name <- paste(g, ".", sep = "")
+            methods <- funs[substr(funs, 1, nchar(name)) == name]
             ## </FIXME>
             methods <- methods[! methods %in% methodsStopList]
             if(hasNamespace) {
