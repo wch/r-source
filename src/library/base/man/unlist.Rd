@@ -19,7 +19,8 @@ If \code{use.names=FALSE} all naming information is dropped.
 \code{\link{c}}, \code{\link{as.list}}.
 }
 \examples{
-unlist(unlist(options()))# works for vectors or lists
+unlist(options())
+unlist(unlist(options(), use.names=F))# works for vectors or lists
 l.ex <- list(a = list(1:5, LETTERS[1:5]), b = "Z", c = NA)
 unlist(l.ex, rec = F)
 unlist(l.ex, rec = T)
