@@ -35623,6 +35623,10 @@ cat >>confdefs.h <<\_ACEOF
 #define IEEE_754 1
 _ACEOF
 
+else
+  { { echo "$as_me:$LINENO: error: IEEE 754 floating-point arithmetic is required" >&5
+echo "$as_me: error: IEEE 754 floating-point arithmetic is required" >&2;}
+   { (exit 1); exit 1; }; }
 fi
 
 

@@ -92,6 +92,10 @@ DEPRECATED & DEFUNCT
 
 INSTALLATION CHANGES
 
+    o	Arithmetic supporting +/-Inf, NaNs and the IEC 60559 (aka
+	IEEE 754) standard is now required -- the partial and often
+	untested support for more limited arithmetic has been withdrawn.
+
     o	The dynamic libraries libR and libRlapack are now installed in
 	R_HOME/lib rather than R_HOME/bin.
 

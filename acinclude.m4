@@ -1490,6 +1490,8 @@ fi])
 if test "${r_cv_ieee_754}" = yes; then
   AC_DEFINE(IEEE_754, 1,
             [Define if you have IEEE 754 floating point arithmetic.])
+else
+  AC_MSG_ERROR([IEEE 754 floating-point arithmetic is required])
 fi
 ])# R_IEEE_754
 
