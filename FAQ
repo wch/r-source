@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.90-7, 2000/01/06
+Version 0.90-8, 2000/01/08
 Kurt Hornik
 
 
@@ -1144,11 +1144,6 @@ Journal of Statistical Software
      Statistics with S-PLUS" by W. Venables and B. Ripley.  Contained in
      the `VR' bundle.
 
-*stable*
-     Density, distribution, quantile and hazard functions of a stable
-     variate; generalized linear models for the parameters of a stable
-     distribution.
-
 *stataread*
      Read and write Stata v6 `.dta' files.
 
@@ -1198,11 +1193,12 @@ these a try, of course.  This area of CRAN currently contains
 for nonlinear regression and repeated measurements, consisting of *event*
 (procedures for event history analysis), *gnlm* (generalized nonlinear
 regression models), *growth* (normal theory repeated measurements models),
-*repeated* (models for non-normal repeated measurements.), and *rmutil*
-(tools for repeated measurements).  Jim's packages were used for all
-analyses in the new edition of his book "Models for Repeated Measurements"
-(1999, Oxford University Press), and can be obtained from
-`http://www.luc.ac.be/~jlindsey/rcode.html'.
+*repeated* (models for non-normal repeated measurements.), *rmutil* (tools
+for repeated measurements), and *stable* (probability functions and
+generalized regression models for stable distributions).  Jim's packages
+were used for all analyses in the new edition of his book "Models for
+Repeated Measurements" (1999, Oxford University Press), and can be obtained
+from `http://www.luc.ac.be/~jlindsey/rcode.html'.
 
    Paul Gilbert <pgilbert@bank-banque-canada.ca> has written the Dynamic
 Systems Estimation (DSE) Library, a multivariate time series package which

@@ -3,7 +3,7 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ-VERSION 0.90-7, 2000/01/06
+@set FAQ-VERSION 0.90-8, 2000/01/08
 @set REL-VERSION 0.90.1
 @set DEV-VERSION 0.99.0
 @c %**end of header
@@ -1376,10 +1376,10 @@ A. W. Bowman and A. Azzalini (1997), Oxford University Press.
 Functions for kriging and point pattern analysis from ``Modern Applied
 Statistics with @SPLUS{}'' by W. Venables and B. Ripley.  Contained in
 the @file{VR} bundle.
-@item stable
-Density, distribution, quantile and hazard functions of a stable
-variate; generalized linear models for the parameters of a stable
-distribution.
+@c @item stable
+@c Density, distribution, quantile and hazard functions of a stable
+@c variate; generalized linear models for the parameters of a stable
+@c distribution.
 @item stataread
 Read and write Stata v6 @file{.dta} files.
 @c @item survival4
@@ -1427,11 +1427,12 @@ packages for nonlinear regression and repeated measurements, consisting
 of @strong{event} (procedures for event history analysis), @strong{gnlm}
 (generalized nonlinear regression models), @strong{growth} (normal
 theory repeated measurements models), @strong{repeated} (models for
-non-normal repeated measurements.), and @strong{rmutil} (tools for
-repeated measurements).  Jim's packages were used for all analyses in
-the new edition of his book ``Models for Repeated Measurements'' (1999,
-Oxford University Press), and can be obtained from
-@uref{http://www.luc.ac.be/~jlindsey/rcode.html}.
+non-normal repeated measurements.), @strong{rmutil} (tools for repeated
+measurements), and @strong{stable} (probability functions and
+generalized regression models for stable distributions).  Jim's packages
+were used for all analyses in the new edition of his book ``Models for
+Repeated Measurements'' (1999, Oxford University Press), and can be
+obtained from @uref{http://www.luc.ac.be/~jlindsey/rcode.html}.
 
 @email{pgilbert@@bank-banque-canada.ca, Paul Gilbert} has written the
 Dynamic Systems Estimation (DSE) Library, a multivariate time series
@@ -1637,14 +1638,14 @@ objects in the package.  The documentation files to be installed must
 also start with a (lower- or uppercase) letter and have the extension
 @file{.Rd} (the default) or @file{.rd}, and are written in the R
 documentation format.
-@ifset STANDALONE
+@ifclear UseExternalXrefs
 See section ``Writing R documentation'' in @cite{Writing R Extensions}
 for more information.
-@end ifset
-@ifclear STANDALONE
+@end ifclear
+@ifset UseExternalXrefs
 @xref{Writing R documentation, Writing R docs, R Extensions, R-exts,
 Writing R Extensions}, for more information.
-@end ifclear
+@end ifset
 
 C or @FORTRAN{} source and optionally a @file{Makefile} for the compiled
 code is in @file{src}.  Note that the @file{Makefile} most likely is not
@@ -1671,14 +1672,14 @@ for additional software that might be needed by the package), and
 removing the files created in this process.  See the add-on package
 @strong{e1071} on CRAN for an example of this mechanism.
 
-@ifset STANDALONE
+@ifclear UseExternalXrefs
 See section ``Creating R packages'' in @cite{Writing R Extensions} for
 more information.
-@end ifset
-@ifclear STANDALONE
+@end ifclear
+@ifset UseExternalXrefs
 @xref{Creating R packages, Creating R pkgs, R Extensions, R-exts,
 Writing R Extensions}, for more information.
-@end ifclear
+@end ifset
 
 The web page @uref{http://www.biostat.washington.edu/~thomas/Rlib.html}
 maintained by Thomas Lumley provides information on porting S packages
