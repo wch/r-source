@@ -1,4 +1,5 @@
 require(tcltk) || stop("tcltk support is absent")
+require(ctest)
 
 local({
 
