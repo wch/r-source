@@ -182,7 +182,7 @@ test-Random:
 
 test-Reg:
 	@echo "running regression tests ..."
-	@$(MAKE) -f Makefile.win $(test-out-reg) RVAL_IF_DIFF=0
+	@$(MAKE) -f Makefile.win $(test-out-reg) RVAL_IF_DIFF=1
 
 test-Segfault:
 	@echo "running tests to possibly trigger segfaults"
