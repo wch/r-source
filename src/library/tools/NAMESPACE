@@ -9,7 +9,7 @@ export("Rdindex",
        "texi2dvi", "buildVignettes", "pkgVignettes", "pkgDepends",
        "getDepList", "installFoundDepends", "vignetteDepends")
 
-export("Rd_db", "Rd_parse", "package.dependencies")
+export("Rd_db", "Rd_parse", "package.dependencies", "read.00Index")
 
 ## <FIXME>
 ## Remove in 2.1.

@@ -17,7 +17,7 @@ function(dir, outDir)
         stop(paste("Invalid DESCRIPTION file",
                    paste(.capture_output_from_print(ok),
                          collapse = "\n"),
-                   sep = "\n\n"))
+                   sep = "\n\n"), call.=FALSE)
     }
 
     db <- .read_description(file.path(dir, "DESCRIPTION"))
