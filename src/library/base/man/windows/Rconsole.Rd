@@ -8,7 +8,7 @@
   \code{windows}, \code{win.graph}, \code{win.metafile} and \code{win.print}.
 }
 \value{
-  Each of the files contains details in comments of how to set the
+  Each of the files contains details in its comments of how to set the
   values.
 
   At the time of writing \file{Rdevga} configured the mapping of font
@@ -29,7 +29,7 @@
 
   If the environment variable \code{R_USER} is not set, the \R system
   sets it to \code{HOME} if that is set (stripping any trailing
-  slash), otherwise to \code{HOMEDIR:HOMEPATH} is \code{HOMEDIR} is set
+  slash), otherwise to \code{HOMEDIR:HOMEPATH} if \code{HOMEDIR} is set
   otherwise to the working directory.
 }
 \note{
