@@ -7,65 +7,91 @@
 
 NEW FEATURES
 
-    o   scan() now supports complex numbers.
+    o   packages splines (for regression smoothing splines or
+        interpolating splines) and nls (nonlinear least squares) are
+        part of the base distribution.
 
-    o   New function undoc() for listing undocumented objects.
+    o	New error handling using
+	options ( error = expression(..) ,  warning.expr = ... ).
+	REPLACING version 0.65.1's  options(error.halt = T/F)
+
+    o	collected warnings before an error are no longer lost but
+	are printed after the error message (unless the error makes
+	this impossible).
+
+
+    o	abline(a,b) now (again) refers to transformed coordinates on
+	plots with log-axes, so that abline(lm(log10(y)~log10(x)))
+	(say) draws a best-fitting line on a log-log plot. The earlier
+	convention (to draw a curve representing a line in original
+	coordinates) is available using a new untf= argument.
+
+    o	barplot.default() has new `axisnames' (and `sub') arguments, easily
+	allowing suppression of bar labeling.
+
+    o  	gc() now reports the total sizes in Mb as well as numbers.
 
     o   New function help.search() for searching the names, titles,
 	aliases, or keywords in the help system.
-
-    o   User's .Rprofile now executes in global environment
 
     o   image() allows x and y to specify either the boundaries or the 
 	midpoints of the cells. If the latter, the whole cells are
 	drawn, rather than the outer cells being half-sized as previously.
 
-    o   New function sort.list, for S compatibility. (This has argument
-	partial, but always sorts completely.)
-
-    o   New function regexpr, similar to grep but returns the position
-	of the match in each string. (For S-PLUS compatibility.)
-
-    o   All the standard packages have DESCRIPTION files, so
-	installed.packages and package.description will work with them.
-
-    o   The R-external manual describes programming for the
-	.Call and .External interfaces is in the doc/manual directory.
-
-    o   optimization with nlm can use analytic gradients and Hessians
-        if they are supplied.
-
-    o   packages splines (for regression smoothing splines or
-        interpolating splines) and nls (nonlinear least squares) are
-        part of the base distribution.
-
-    o   parse.dcf for parsing files in debian control file format
-        (DESCRIPTION, CONTENTS, ...)
-
-    o   All HTML pages now use the new style sheet doc/html/R.css
-
-    o  	S.h now contains (via Rdefines.h) a MESSAGE macro, and
-	Free NULLs the pointer, for compatibility with S3 (but not S4).
-
-    o  	gc() now reports the total sizes in Mb as well as numbers.
-
     o   NULL extra arguments to model.frame() are now treated as missing
 	(instead of an error).
 
+    o   optimization with nlm() can use analytic gradients and Hessians
+        if they are supplied.
+
+    o	on.exit() allows add=TRUE.
+
+    o   function parse.dcf() for parsing files in debian control file format
+        (DESCRIPTION, CONTENTS, ...)
+
+    o	predict.{g}lm has a type="terms" option, and residual.glm has
+	type="partial" as a step towards plot.gam().
+
     o   New arguments to q() and quit() allow the exit status to be set
 	and the execution of .Last() to be skipped.
+
+    o   New function regexpr(), similar to grep but returns the position
+	of the match in each string. (For S-PLUS compatibility.)
+
+    o   scan() now supports complex numbers.
+
+    o   New function sort.list, for S compatibility. (This has argument
+	partial, but always sorts completely.)
+
+    o	storage.mode<- can be used to set "single", and if setting
+	anything other than "single" it removes the "Csingle" attribute.
+
+    o	new function sunflowerplot().
+
+    o   New function undoc() for listing undocumented objects.
+
+
+    o   User's .Rprofile now executes in global environment
+
+    o   All HTML pages now use the new style sheet doc/html/R.css
 
     o   html and text files have now a header line giving the name of
         the help file and the package. The description section now
         comes first.
 
-    o	on.exit allows add=TRUE.
+    o   All the standard packages have DESCRIPTION files, so
+	installed.packages and package.description will work with them.
 
-    o	storage.mode<- can be used to set "single", and if setting
-	anything other than "single" it removes the "Csingle" attribute.
+    o   The R-external manual which describes programming for the
+	.Call and .External interfaces is in the doc/manual directory.
+
+
+    o  	S.h now contains (via Rdefines.h) a MESSAGE macro, and
+	Free NULLs the pointer, for compatibility with S3 (but not S4).
 
     o	New subroutine REALPR callable from Fortran (like DBLEPR but
 	for real arguments): useful if as.single is in use.
+
 
     o	The scaling of symbols is now linear in cex=, rather than being
 	tied to the available font's size. The fonts on an X11 device
@@ -78,91 +104,73 @@ NEW FEATURES
 
     o	The cex= argument to plot() etc. can be a vector, like pch=.
 
-    o	abline(a,b) now (again) refers to transformed coordinates on
-	plots with log-axes, so that abline(lm(log10(y)~log10(x)))
-	(say) draws a best-fitting line on a log-log plot. The earlier
-	convention (to draw a curve representing a line in original
-	coordinates) is available using a new untf= argument.
-
-    o	new function sunflowerplot().
-
-    o	zero.R tries to find the zero DLL in a system-independent way.
-
     o	lty=0 now (again) makes lines invisible. Looks better for
 	barplot label axis.
 
-    o	collected warnings before an error are no longer lost but
-	are printed after the error message (unless the error makes
-	this impossible).
-
-    o	New error handling using
-	options ( error = expression(..) ,  warning.expr = ... ).
-	REPLACING version 0.65.1's  options(error.halt = T/F)
-
-    o	barplot.default() has new `axisnames' (and `sub') arguments, easily
-	allowing suppression of bar labeling.
-
-    o	predict.{g}lm has a type="terms" option, and residual.glm has
-	type="partial" as a step towards plot.gam().
+    o	zero.R tries to find the zero DLL in a system-independent way.
 
 
 BUG FIXES
 
-    o   read.table(as.is = TRUE) would leave everything as character.
-	Now it correctly tries to convert to numeric.
-
-    o   Empty lists now deparse correctly.
-
-    o   Fix problems in scan(flush = TRUE).
-
     o	apply should now work for all un-dimnamed arrays (PR#318).
-
-    o   help page for gc gives correct size of cons cells (20 bytes
-	for 32-bit systems, 36 or more for 64-bit systems).
-
-    o   gcinfo reports correct percentages of heap even for vsize > 200M.
-
-    o   expand.grid returns a data frame even for one arg.
-
-    o   Protect R_fopen against NULL filename in Unix.
-
-    o   Stored-source was dropped by dump().
-
-    o	When documentation is "compiled" (build-help), you now get warnings
-	for multiple (conflicting) \alias{.} or \name{.}s.
-
-    o	stars() has "NULL" instead of "NA" defaults.
-
-    o	expand.grid(x) now also works for vector arguments x.
-
-    o	diag(x) now works (as pre 0.65.1) for 1-d arrays.
-
-    o	na.omit.ts and na.contiguous preserve classes.
 
     o	ar(..., demean=F) works more consistently across methods.
 
-    o	ts.union, cbind.ts, arithmetic on ts objects now allow
-	non-integer frequencies.
+    o	density() should work better with NAs and infinite values. See
+	?density for the current definitions of how these are handled.
 
-    o	Math text in outer margins didn't work.
+    o	diag(x) now works (as pre 0.65.1) for 1-d arrays.
 
-    o	Text clipping now works in the X11 driver.
+    o   Stored-source was dropped by dump().
 
-    o	str() is quite a bit nicer with factors.
+    o   expand.grid returns a data frame even for one arg.
 
-    o	require() now has the warn.conflicts argument of library().
+    o	expand.grid(x) now also works for vector arguments x.
 
     o	factor(list()) or factor(character(0)) *is* now a factor
 	with valid levels(.);
 	ordered does NOT allow an `ordered' argument anymore
 	and is now defined as trivial call to factor.
 
+    o   help page for gc gives correct size of cons cells (20 bytes
+	for 32-bit systems, 36 or more for 64-bit systems).
+
+    o   gcinfo reports correct percentages of heap even for vsize > 200M.
+
     o	gl(6,3,12) and gl(6,3,2) now both work.
+
+    o   Empty lists now deparse correctly.
+
+    o	na.omit.ts and na.contiguous preserve classes.
+
+    o	plot.factor {plot(<factor>)} now obeys axes=FALSE and xaxt="n".
+
+    o   read.table(as.is = TRUE) would leave everything as character.
+	Now it correctly tries to convert to numeric.
+
+    o	require() now has the warn.conflicts argument of library().
+
+    o   Fix problems in scan(flush = TRUE).
 
     o	split(x,f) now works even when f is a factor with unused levels
 	(PR#294).
 
-    o	plot.factor {plot(<factor>)} now obeys axes=FALSE and xaxt="n".
+    o	stars() has "NULL" instead of "NA" defaults.
+
+    o	str() is quite a bit nicer with factors.
+
+    o	ts.union, cbind.ts, arithmetic on ts objects now allow
+	non-integer frequencies.
+
+
+    o   Protect R_fopen against NULL filename in Unix.
+
+    o	When documentation is "compiled" (build-help), you now get warnings
+	for multiple (conflicting) \alias{.} or \name{.}s.
+
+    o	Math text in outer margins didn't work.
+
+    o	Text clipping now works in the X11 driver.
 
     o	Problems with realloc on some systems in AllocBuffer.
 
@@ -175,9 +183,6 @@ BUG FIXES
 	on some non-GNU makes.
 
     o	Windows version copes better with paths with spaces in.
-
-    o	density() should work better with NAs and infinite values. See
-	?density for the current definitions of how these are handled.
 
     o	R CMD check had a typo which made the final message fail.
 
