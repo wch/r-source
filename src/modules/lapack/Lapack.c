@@ -102,6 +102,7 @@ static SEXP modLa_rs(SEXP xin, SEXP only_values, SEXP method)
     if (strcmp(meth, "dsyevr") == 0) {
 	warning("method = \"dseyvr\" requires IEEE 754 arithmetic: using \"dsyev\"");
 	meth = "dsyev";
+    }
 #endif
     PROTECT(x = duplicate(xin));
     rx = REAL(x);
