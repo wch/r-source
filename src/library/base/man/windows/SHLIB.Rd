@@ -7,16 +7,15 @@
     compiled and included in the library.  You can also include the name
     of object files which are automagically made from their sources.}
   \item{dllname}{the full name of the shared library to be built,
-    including the extension \file{.dll}.  If
-    not given, the name of the library is taken from the first source
-    file.}
+    including the extension \file{.dll}.  If not given, the name of
+    the DLL is taken from the first source file.}
 }
 \description{
   The given source files are first compiled.  All
   specified object files are then linked into a shared library which can
-  be loaded into \R using \code{dyn.load()}.  
+  be loaded into \R using \code{dyn.load} or \code{library.dynam}.  
 }
 \seealso{
-  \code{\link{dyn.load}}
+  \code{\link{dyn.load}}, \code{\link{library.dynam}}
 }
 \keyword{utilities}
