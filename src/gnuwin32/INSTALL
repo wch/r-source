@@ -69,7 +69,7 @@ Do not use paths with spaces in: you can always use the short forms.
 Check your path
 ---------------
 
-You need the following in your path:
+You need the following in your path (with the first two first):
 .
 our toolset
 mingw\bin
