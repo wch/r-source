@@ -66,10 +66,11 @@ seq(from)
   times the larger of the ends) will return \code{from}.
 }
 \value{
-  The result is of \code{mode} \code{"integer"} if \code{from} is
-  (numerically equal to an) integer and, e.g., only \code{to} is
-  specified, or also if only \code{length} or only \code{along.with} is
-  specified.
+  Currently, the default method returns a result is of \emph{storage
+    mode} \code{"integer"} if \code{from} is (numerically equal to an)
+  integer and, e.g., only \code{to} is specified, or also if only
+  \code{length} or only \code{along.with} is specified.  \strong{Note:}
+  this may change in the future and programmers should not rely on it.
   % MM: to specify all the conditions doesn't seem worth, nor should the
   % code be changed just for docu.purposes; e.g. str(seq(from=1:1, to=8, by=3:3))
 }
