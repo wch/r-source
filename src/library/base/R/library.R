@@ -67,8 +67,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ## ignore generics not defined for the package
         ob <- objects(lib.pos, all = TRUE)
         if(!nogenerics && .isMethodsDispatchOn()) {
-            gen <- methods:::getGenerics(lib.pos)
-            gen <- gen[methods:::slot(gen, "package") != ".GlobalEnv"]
+            these <- objects(lib.pos, all = TRUE)
+            these <- these[substr(these, 1, 6) == ".__M__"]
+            gen <- gsub(".__M__(.*):([^:]+)", "\\1", these)
+            from <- gsub(".__M__(.*):([^:]+)", "\\2", these)
+            gen <- gen[from != ".GlobalEnv"]
             ob <- ob[!(ob %in% gen)]
         }
         fst <- TRUE
