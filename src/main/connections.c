@@ -156,7 +156,11 @@ static int file_vfprintf(Rconnection con, const char *format, va_list ap)
 static int file_fgetc(Rconnection con)
 {
     FILE *fp = ((Rfileconn)(con->private))->fp;
+#ifdef Win32
     return fgetc(fp); /* R_fgetc fails on Windows */
+#else
+    return R_fgetc(fp);
+#endif
 }
 
 static int file_ungetc(int c, Rconnection con)
