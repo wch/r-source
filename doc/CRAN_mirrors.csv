@@ -1,7 +1,7 @@
 Name,Country,City,URL,Host,Maintainer
 Australia,Australia,Brisbane,http://cran.au.r-project.org/,"PlanetMirror, Brisbane",hostmaster@iseek.com.au
 Austria,Austria,Wien,http://cran.at.r-project.org/,"Technische Universitaet Wien",CRAN@R-project.org
-"Brasil (PR)",Brasil,Curitiba,http://cran.br.r-project.org/,"Universidade Federal do Parana¡","Paulo J. Ribeiro Jr <paulojus@est.ufpr.br>"
+"Brasil (PR)",Brasil,Curitiba,http://cran.br.r-project.org/,"Universidade Federal do Parana??","Paulo J. Ribeiro Jr <paulojus@est.ufpr.br>"
 "Brasil (MG)",Brasil,Vicosa,http://www.termix.ufv.br/CRAN/,"Federal University of Vicosa",
 "Brasil (SP)",Brasil,Piracicaba,http://lmq.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba",jlpolize@carpa.ciagri.usp.br
 "Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","Brad McNeney <mcneney@sfu.ca>"
@@ -11,6 +11,7 @@ Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,SunSITE,mirror@sunsite.dk
 "France (Lyon)",France,Lyon,http://cran.univ-lyon1.fr/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <jthioulouse@biomserv.univ-lyon1.fr>"
 "France (Paris)",France,Paris,http://mirror.internet.tp/cran/,"Boese Internet, Paris","Pelle Boese <pelle@boese.biz>"
 "Germany (Berlin)",Germany,Berlin,http://cran.r-mirror.de/,"Stefan Drees, Berlin","Stefan Drees <sdrees@ieee.org>"
+"Germany (Koeln)",Germany,Koeln,http://cran.miscellaneousmirror.org/,Miscellaneousdata.de,"Simon Hardy-Francis <simonhf@gmail.com>"
 "Germany (Mainz)",Germany,Mainz,http://umfragen.sowi.uni-mainz.de/CRAN/,"University of Mainz",
 Hungary,Hungary,Budapest,http://cran.hu.r-project.org/,"Semmelweis University","Laszlo L Tornoci <torlasz@xenia.sote.hu>"
 Italy,Italy,Ferrara,http://microarrays.unife.it/CRAN/,"Universita di Ferrara","Stefano Volinia <s.volinia@unife.it>"
@@ -24,11 +25,13 @@ Portugal,Portugal,Porto,http://cran.pt.r-project.org/,"Universidade do Porto",ne
 Spain,Spain,Madrid,http://cran.es.r-project.org/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias@rediris.es>"
 "Switzerland (Zuerich)",Switzerland,Zuerich,http://cran.ch.r-project.org/,"ETH Zuerich",Martin.Maechler@R-project.org
 "Switzerland (Bern)",Switzerland,Bern,http://www.imsv.unibe.ch/cran/,"Universitaet Bern","Thomas Schweizer <Thomas.Schweizer@stat.unibe.ch>"
+Turkey,Turkey,Istanbul,http://godel.cs.bilgi.edu.tr/mirror/cran/,"Istanbul Bilgi University","Vehbi Sinan TUNALIOGLU <vst@bilgi.edu.tr>"
 Taiwan,Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan@infor.org>"
 "UK (Bristol)",UK,Bristol,http://cran.uk.r-project.org/,"University of Bristol","Guy Nason <G.P.Nason@bristol.ac.uk>"
 "UK (London)",UK,London,http://www.sourcekeg.co.uk/cran/,"Sourcekeg, London",mirrors@sourcekeg.co.uk
 "USA (CA)",USA,"Los Angeles",http://cran.stat.ucla.edu/,"University of California, Los Angeles, CA",
 "USA (MA)",USA,Boston,http://www.bioconductor.org/CRAN/,"Dana Farber Cancer Institute, Boston, MA","Jeff Gentry <jgentry@jimmy.harvard.edu>"
+"USA (MI)",USA,Houghton,http://www.biometrics.mtu.edu/CRAN/,"Michigan Technological University","Robert Froese <froese@mtu.edu>"
 "USA (NC)",USA,"Chapel Hill",http://www.ibiblio.org/pub/languages/R/CRAN/,"University of North Carolina, Chapel Hill, NC","""Nancy C. Wilson"" <nancy@metalab.unc.edu>"
 "USA (PA 1)",USA,Pittsburgh,http://cran.us.r-project.org/,"Pair Networks, Pittsburgh, PA",sigma@pair.com
 "USA (PA 2)",USA,Pittsburgh,http://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA",
