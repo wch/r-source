@@ -101,6 +101,44 @@ NEW FEATURES
     o	New persp function added.  It is NOT compatible with S (yet)
 	and is subject to internal and interface changes.
 
+    o   gctorture() for torturing the garbage collector to reveal
+        memory protection bugs. (Call GC on every memory allocation). 
+
+    o   B. Ripley's aov code has been added. This includes (in Brian's
+        own words, slightly edited by pd):
+
+        - aov() now handles models with Error terms, multiple
+          responses. 
+
+	- proj(), model.tables(), se.contrast(), replications(),
+          eff.aovlist()
+
+          This is still not fully equivalent to S, but it is not clear
+          to me that any R user would ever need the parts that are not
+          implemented. If so, they can implement them!
+
+        - dummy.coef(), with methods for lm and aovlist fits.
+
+	- add1(), drop1(), step()
+
+	  are all implemented. I have corrected S's use of `AIC' to
+	  actually use Cp or AIC, and label appropriately. There are
+	  default, lm and glm methods so this will work on any class
+	  with a linear predictor and a way to extract the rank and
+	  the log-likelihood or deviance.
+
+	  I have not implemented some of the efficiency tricks used by
+	  S: it is not clear that they are worthwhile, nor needed.
+
+	- summary() and deviance() -- mlm methods.
+
+	- kappa() (condition numbers) and labels(), mainly as they
+	  were mentioned as `to do' in R. kappa() is a lot more
+	  general than that in S.
+
+	- C() for attaching contrasts to factors
+
+
 BUG FIXES
 
     o	min(NULL); max(double())  now give warnings.  range() gives NA.
@@ -129,6 +167,10 @@ BUG FIXES
 
     o	Fixes and restructuring to name generation in connection with
 	unlist() and c().
+
+    o   Many bugs found and fixed in the memory allocation / garbage
+        collection area. In particular, the parser was sometimes
+        UNPROTECT()ing the wrong pointers.
 
 
 		CHANGES IN R VERSION 0.62.4
