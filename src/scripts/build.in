@@ -44,7 +44,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.73 $ ';
+my $revision = ' $Revision: 1.74 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -124,8 +124,8 @@ foreach my $pkg (@ARGV) {
 	mkdir("$libdir", 0755)
 	    or die "Cannot create directory '$libdir'\n";
 
-	if(system("${R::Vars::R_CMD} INSTALL -l '$libdir' " .
-		  "$INSTALL_opts '$pkg'")) {
+	if(R_system("${R::Vars::R_CMD} INSTALL -l '$libdir' " .
+		    "$INSTALL_opts '$pkg'")) {
 	    $log->error("installation failed");
 	}
 	print("\n");
@@ -150,9 +150,9 @@ foreach my $pkg (@ARGV) {
 	if($WINDOWS) {
 	    my $filename = "${pkgname}_" . $description->{"Version"};
 	    $log->message("building '$filename.zip'");
-	    system("rm -f $startdir/$filename.zip");
-	    system("zip -r9X $startdir/$filename.zip " .
-		   "$pkgs $topLevelFiles");
+	    R_system("rm -f $startdir/$filename.zip");
+	    R_system("zip -r9X $startdir/$filename.zip " .
+		     "$pkgs $topLevelFiles");
 	    chdir($startdir);
 	} else {
 	    ## <FIXME>
@@ -278,7 +278,7 @@ foreach my $pkg (@ARGV) {
 	}
 	## <FIXME>
 	## Is option '-h' portable?
-	system("$tar chf $filepath $pkgname");
+	R_system("$tar chf $filepath $pkgname");
 	## </FIXME>
 	my $tmpdir = "${R::Vars::TMPDIR}/Rbuild.$$";
 	## (Same as $libdir for building a binary package.)
@@ -286,7 +286,7 @@ foreach my $pkg (@ARGV) {
 	mkdir("$tmpdir", 0755)
 	    or die "Cannot create directory '$tmpdir'\n";
 	chdir($tmpdir);
-	system("$tar xhf $filepath");
+	R_system("$tar xhf $filepath");
 	## Remove exclude files.
 	open(EXCLUDE, "< $exclude");
 	while(<EXCLUDE>) {
@@ -327,10 +327,10 @@ foreach my $pkg (@ARGV) {
 		   $user_name, "\n");
 	$fh->close();
 	## Finalize.
-	system("$tar chf $filepath $pkgname");
+	R_system("$tar chf $filepath $pkgname");
 	chdir($startdir);
 	rmtree($tmpdir);
-	system("gzip -9f $filename");
+	R_system("gzip -9f $filename");
     }
     $log->close();
     print("\n");
@@ -353,7 +353,7 @@ sub prepare_pkg {
 	    ## a Windows Makefile.win might use $(RHOME)/src/gnuwin32/MkRules
 	    $ENV{RHOME} = $ENV{R_HOME};
 	    if(-r "Makefile.win") {
-		system("${R::Vars::MAKE} -f Makefile.win clean");
+		R_system("${R::Vars::MAKE} -f Makefile.win clean");
 	    } else {
 		foreach my $file (<*.o $pkgname.a $pkgname.dll $pkgname.def>) {
 		    unlink($file);
