@@ -38,6 +38,14 @@ Date: Wed, 26 Dec 2001 13:03:31 +0100
 Subject: possible bug in det using method="qr"
 From: armin@approximity.com
 Date: Sat, 5 Jan 2002 01:48:13 +0100 (MET)
+* PR# 1429 *
+Subject: fft fails for lengths 392, 588, 968, 980 ....
+From: ripley@stats.ox.ac.uk
+From: Gabriel Fricout <Gabriel.FRICOUT@cmm.ensmp.fr>
+Date: Mon, 1 Apr 2002 22:24:26 +0100 (BST)
+Date: Thu, 28 Mar 2002 09:37:34 +0100
+--fft(rep(1, 392)) is an even simpler case.
+--segfault disappears with gctorture(TRUE)
 
 Directory:  Add-ons
 
@@ -265,6 +273,12 @@ From: kss28@mail.cba.nau.edu
 Date: Mon, 25 Mar 2002 21:18:58 +0100 (MET)
 --Was gcc 2.95.2 in private followup.
 --Probably unappropriate flags
+* PR# 1428 *
+Subject: R compile on Solaris 8 fails
+From: brower@bst.rochester.edu
+Date: Mon, 1 Apr 2002 22:19:07 +0200 (MET DST)
+--problems with g++ not finding -lstdc++
+--Not a problem with R per se
 
 Directory:  Language
 
@@ -312,11 +326,6 @@ Date: Thu, 13 Dec 2001 13:46:54 -0500 (EST)
 Subject:  Problem with "missing" in "local" 
 From: J.C.Rougier@durham.ac.uk
 Date: Fri, 4 Jan 2002 13:34:34 GMT
-* PR# 1409 *
-Subject: rare bad bug in sys.function() {or match.arg()}
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 22 Mar 2002 20:41:52 +0100
---probably same as PR#921
 
 Directory:  Low-level
 
@@ -466,13 +475,3 @@ Date: Fri, 4 Jan 2002 12:51:15 +0100 (MET)
 Subject: make check fails when R_HOME env var set
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Fri, 25 Jan 2002 15:08:33 -0500
-* PR# 1428 *
-Subject: R compile on Solaris 8 fails
-From: brower@bst.rochester.edu
-Date: Mon, 1 Apr 2002 22:19:07 +0200 (MET DST)
-* PR# 1429 *
-Subject: fft fails for lengths 392, 588, 968, 980 ....
-From: ripley@stats.ox.ac.uk
-From: Gabriel Fricout <Gabriel.FRICOUT@cmm.ensmp.fr>
-Date: Mon, 1 Apr 2002 22:24:26 +0100 (BST)
-Date: Thu, 28 Mar 2002 09:37:34 +0100
