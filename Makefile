@@ -1,5 +1,7 @@
 ####---- Master Makefile for R --- this is NOT made by configure ---
 
+include Makeconf
+
 R: config.status
 	@echo "Building R"
 	cd src; make R
@@ -13,10 +15,6 @@ docs: build-docs
 help: build-help
 html: build-html
 latex: build-latex
-
-install:
-	@echo "Installing R"
-	@echo "SORRY, this hasn't been implemented yet."
 
 build-docs build-help build-latex build-html::
 	-@cd etc; make $@
@@ -50,3 +48,25 @@ realclean: acclean
 	@cd demos/dynload; make $@
 	@echo "Really cleaning ./etc/"; cd etc; make $@
 	@echo "Really cleaning the source tree"; cd src; make $@
+
+install: R help html
+	$(INSTALL) -d $(bindir) $(mandir)/man1
+	$(INSTALL_DATA) R.1 $(mandir)/man1
+	$(INSTALL) -d $(rhome)/bin \
+		$(rhome)/cmd \
+		$(rhome)/etc \
+		$(rhome)/include \
+		$(rhome)/library
+	$(INSTALL_DATA) COPYING COPYRIGHTS MIRROR-SITES RESOURCES $(rhome)
+	cd afm; make install
+	$(INSTALL_PROGRAM) bin/R.binary $(rhome)/bin
+	cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(bindir)/R
+	chmod 755 $(bindir)/R
+	$(INSTALL_PROGRAM) cmd/[a-z]* $(rhome)/cmd
+	cd demos; make install
+	cd doc; make install
+	cd etc; make install
+	$(INSTALL_DATA) include/*.h $(rhome)/include
+	@echo "Installing library ..."
+	cd library; tar c [a-z]* | (cd $(rhome)/library; tar x) 
+	$(INSTALL_DATA) library/LibIndex $(rhome)/library

@@ -30,3 +30,4 @@ exec_prefix=@exec_prefix@
 bindir=@bindir@
 libdir=@libdir@
 mandir=@mandir@
+rhome=@libdir@/R
