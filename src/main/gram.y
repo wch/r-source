@@ -52,7 +52,7 @@ SEXP		mkFalse(void);
 SEXP		mkFloat(char *);
 SEXP		mkInteger(char *);
 SEXP		mkNA(void);
-SEXP		mkString(char *);
+SEXP		mkString(const char *);
 SEXP		mkTrue(void);
 
 /* Internal lexer / parser state variables */
@@ -1285,7 +1285,7 @@ static int KeywordLookup(char *s)
 }
 
 
-SEXP mkString(char *s)
+SEXP mkString(const char *s)
 {
     SEXP t;
 

@@ -136,6 +136,7 @@ SEXP do_dimgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dimnames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dimnamesgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_docall(SEXP, SEXP, SEXP, SEXP);
+SEXP do_dotcall(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotCode(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotplot(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dput(SEXP, SEXP, SEXP, SEXP);
