@@ -78,6 +78,12 @@ $(EX_IN): FORCE
 	  $(top_srcdir)/tools/move-if-change $${f} $@; \
 	  touch $@; \
 	fi)
+
+# The ugly "find .. |grep" construct is necessary because "test foo -nt bar" 
+# is nonportable. The pipeline will succeed if the target exists and is newer
+# than the corresponding DESCRIPTION file in the package. If the target does
+# not exist, then find will fail; if it exists and is older, then find will 
+# succeed but output nothing so that the grep will fail.
 $(RECOMMENDED_EX_IN): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
 	find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
