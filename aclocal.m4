@@ -445,7 +445,11 @@ fi
 ])# R_PROG_F77_OR_F2C
 
 AC_DEFUN([R_PROG_F77_FLIBS],
-[AC_REQUIRE([AC_F77_LIBRARY_LDFLAGS])
+[AC_BEFORE([$0], [AC_F77_LIBRARY_LDFLAGS])
+r_save_LIBS="${LIBS}"
+LIBS=
+AC_F77_LIBRARY_LDFLAGS
+LIBS="${r_save_LIBS}"
 flibs=
 if test "${GCC}" = yes; then
   linker_option="-Wl,"

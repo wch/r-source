@@ -612,7 +612,19 @@ fi
 ## ----------------
 ## Run AC_F77_LIBRARY_LDFLAGS, and fix some known problems with FLIBS.
 AC_DEFUN([R_PROG_F77_FLIBS],
-[AC_REQUIRE([AC_F77_LIBRARY_LDFLAGS])
+[AC_BEFORE([$0], [AC_F77_LIBRARY_LDFLAGS])
+## Currently (Autoconf 2.50 or better, it seems) FLIBS also contains all
+## elements of LIBS when AC_F77_LIBRARY_LDFLAGS is run.  This is because
+## _AC_PROG_F77_V_OUTPUT() uses 'eval $ac_link' for obtaining verbose
+## linker output, and AC_LANG(Fortran 77) sets up ac_link to contain
+## LIBS.  Most likely a bug, and a nuisance in any case ... 
+## But we cannot simply eliminate the elements in FLIBS duplicated from
+## LIBS (e.g. '-lm' should be preserved).  Hence, we try to call
+## AC_F77_LIBRARY_LDFLAGS() with LIBS temporarily set to empty.
+r_save_LIBS="${LIBS}"
+LIBS=
+AC_F77_LIBRARY_LDFLAGS
+LIBS="${r_save_LIBS}"
 ## Currently g77 on Darwin links against '-lcrt1.o' (and for GCC 3.1 or
 ## better also against '-lcrtbegin.o'), which (unlike '-lcrt0.o') are
 ## not stripped by AC_F77_LIBRARY_LDFLAGS.  This in particular causes
