@@ -387,18 +387,26 @@ function(package, dir, lib.loc = NULL)
 ### * Rd_parse
 
 Rd_parse <-
-function(file)
+function(file, text = NULL)
 {
-    if(is.character(file)) {
-        file <- file(file)
-        on.exit(close(file))
+    ## Arguments similar to the ones in parse(), with 'text' a character
+    ## vector with the text to parse (elements are treated as if they
+    ## were lines of a file).
+    if(!is.null(text))
+        lines <- Rdpp(text)
+    else {
+        if(is.character(file)) {
+            file <- file(file)
+            on.exit(close(file))
+        }
+        if(!inherits(file, "connection"))
+            stop(.wrong_args("file",
+                             "must be a character string or connection"))
+        ## Try to suppress "incomplete final line found by readLines"
+        ## warnings.
+        lines <- .try_quietly(Rdpp(readLines(file)))
     }
-    if(!inherits(file, "connection"))
-        stop(.wrong_args("file",
-                         "must be a character string or connection"))
-    ## Try to suppress "incomplete final line found by readLines"
-    ## warnings.
-    lines <- .try_quietly(Rdpp(readLines(file)))
+    
     ## Get meta data (need to agree on what precisely these are), and
     ## remove the corresponding lines (assuming that these entries are
     ## all one-liners).  We mostly do this because \alias (see Paren.Rd)
