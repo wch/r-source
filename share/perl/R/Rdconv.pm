@@ -68,7 +68,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
     if($type !~ /,/) {
 	## Trivial (R 0.62 case): Only 1 $type at a time ==> one filename is ok.
 	## filename = 0	  ==>	use stdout
-	$htmlfile= $txtfile= $Sdfile= $latexfile= 
+	$htmlfile= $txtfile= $Sdfile= $latexfile=
 	    $Exfile = $chmfile = $_[3];
     } else { # have "," in $type: Multiple types with multiple output files
 	$dirname = $_[3]; # The super-directory , such as  <Rlib>/library/<pkg>
@@ -81,7 +81,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	$latexfile= $dirname ."/latex/". $Rdname.".tex"	if $type =~ /tex/i;
 	$Exfile	  = $dirname ."/R-ex/" . $Rdname.".R"	if $type =~ /example/i;
     }
-    
+
 
     $max_bracket = 0;
     $max_section = 0;
@@ -135,7 +135,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	@keywords= get_multi($complete_text,"keyword");
 
 	get_blocks($complete_text);
- 
+
 	if($type =~ /html/i || $type =~ /txt/i ||
 	   $type =~ /Sd/    || $type =~ /tex/i || $type =~ /chm/i ) {
 
@@ -479,10 +479,10 @@ sub striptitle { # text
 sub rdoc2html { # (filename) ; 0 for STDOUT
 
     local $htmlout;
-    if($_[0]) { 
+    if($_[0]) {
 	$htmlout = new FileHandle;
 	open $htmlout, "> $_[0]";  # will be closed when goes out of scope
-    } else { 
+    } else {
 	$htmlout = "STDOUT";
     }
     $using_chm = 0;
@@ -520,8 +520,6 @@ sub text2html {
         $text =~ s/&([^#])/&amp;\1/go; # might have explicit &# in source
 	$text =~ s/>/&gt;/go;
 	$text =~ s/</&lt;/go;
-	$text =~ s/\\le/&lt;=/go;
-	$text =~ s/\\ge/&gt;=/go;
 	$text =~ s/\\%/%/go;
 
 	if($inarglist) {
@@ -544,6 +542,8 @@ sub text2html {
 	$text =~ s/\\epsilon/&epsilon;/go;
 	$text =~ s/\\left\(/\(/go;
 	$text =~ s/\\right\)/\)/go;
+	$text =~ s/\\le/&lt;=/go;# \le *after* \left !
+	$text =~ s/\\ge/&gt;=/go;
 	$text =~ s/\\R/<font face=\"Courier New,Courier\" color=\"\#666666\"><b>R<\/b><\/font>/go;
 	$text =~ s/---/&#151;/go; # HTML 4.01 has &mdash; and &#8212;
 	$text =~ s/--/&#150;/go; # HTML 4.01 has &ndash; and &#8211;
@@ -597,7 +597,7 @@ sub text2html {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
-		} 
+		}
 	    }
 	    else{
 		if($opt ne "") {
@@ -720,7 +720,7 @@ sub code2html {
        		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
-		} 
+		}
 	    }
 	    else{
 		if($opt ne "") {
@@ -786,8 +786,8 @@ sub html_print_argblock {
 		  && $text =~ /\\item/s){
 		my ($id, $arg, $desc)  =
 		    get_arguments("item", $text, 2);
-		print $htmlout ("<tr valign=\"top\"><td><code>", 
-				text2html($arg, 1, 1), 
+		print $htmlout ("<tr valign=\"top\"><td><code>",
+				text2html($arg, 1, 1),
 				"</code></td>\n<td>\n",
 				text2html($desc, 1, 1), "</td></tr>\n");
 		$text =~ s/.*$id//s;
@@ -984,10 +984,10 @@ use Text::Tabs;
 sub rdoc2txt { # (filename); 0 for STDOUT
 
     local $txtout;
-    if($_[0]) { 
+    if($_[0]) {
 	$txtout = new FileHandle;
 	open $txtout, "> $_[0]";  # will be closed when goes out of scope
-    } else { 
+    } else {
 	$txtout = "STDOUT";
     }
 
@@ -999,7 +999,7 @@ sub rdoc2txt { # (filename); 0 for STDOUT
     if ($pkgname) {
 	my $pad = 75 - length($blocks{"name"}) - length($pkgname) - 30;
 	$pad = int($pad/2);
-	print $txtout  $blocks{"name"}, " " x $pad, 
+	print $txtout  $blocks{"name"}, " " x $pad,
 	"package:$pkgname", " " x $pad,"R Documentation\n\n";
     }
     print $txtout (txt_header(striptitle($blocks{"title"})), "\n");
@@ -1066,11 +1066,8 @@ sub text2txt {
     $text =~ s/\n\s*\n/\n\n/sgo;
     $text =~ s/\\dots/\\&.../go;
     $text =~ s/\\ldots/\\&.../go;
-    $text =~ s/\\le/<=/go;
-    $text =~ s/\\ge/>=/go;
     $text =~ s/\\%/%/sgo;
     $text =~ s/\\\$/\$/sgo;
-
 
     $text =~ s/\\Gamma/Gamma/go;
     $text =~ s/\\alpha/alpha/go;
@@ -1084,6 +1081,8 @@ sub text2txt {
     $text =~ s/\\epsilon/epsilon/go;
     $text =~ s/\\left\(/\(/go;
     $text =~ s/\\right\)/\)/go;
+    $text =~ s/\\le/<=/go;
+    $text =~ s/\\ge/>=/go;
     $text =~ s/\\R/R/go;
     $text =~ s/---/--/go;
     $text =~ s/--/-/go;
@@ -1232,7 +1231,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
 	if ($para =~ s/^[\n]*\.tide ([^\n]+)\n//) {
 	    $indent1 = " " x $INDENT . txt_header($1);
 	    $indent2 = $indent . (" " x $INDENTDD);
-	}	
+	}
         # check for .in or .inen command
 	if ($para =~ s/^[\n]*\.in([^\ ]*) (.*)/\2/) {
 	    $INDENT = $INDENT + $para;
@@ -1266,7 +1265,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
 	    my @colformat = ();
 	    for($k=0; $k<$ncols; $k++){
 		my $cf = substr($format, $k, 1);
-		
+
 		if($cf =~ /l/o){
 		    $colformat[$k] = "l";
 		}
@@ -1295,7 +1294,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
 		    $tmp =~ s/^\s*//;
 		    $tmp =~ s/\s*$//;
 		    $colwidth = length($tmp);
-		    if ($colwidth > $colwidths[$l]) { 
+		    if ($colwidth > $colwidths[$l]) {
 			$colwidths[$l] = $colwidth;
 		    }
 		}
@@ -1326,7 +1325,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
 		print $txtout $indent, "$line\n";
 	    }
 
-	# plain text    
+	# plain text
 	} else {
 	    $para =~ s/\n\s*/ /go;
 	    print $txtout "\n";
@@ -1508,10 +1507,10 @@ sub txt_tables {
 sub rdoc2Sd { # (filename)
 
     local $Sdout;
-    if($_[0]) { 
+    if($_[0]) {
 	$Sdout = new FileHandle;
 	open $Sdout, "> $_[0]";  # will be closed when goes out of scope
-    } else { 
+    } else {
 	$Sdout = "STDOUT";
     }
 
@@ -1642,11 +1641,8 @@ sub text2nroff {
     $text =~ s/\n\s*\n/\n.IP \"\" $indent\n/sgo;
     $text =~ s/\\dots/\\&.../go;
     $text =~ s/\\ldots/\\&.../go;
-    $text =~ s/\\le/<=/go;
-    $text =~ s/\\ge/>=/go;
     $text =~ s/\\%/%/sgo;
     $text =~ s/\\\$/\$/sgo;
-
 
     $text =~ s/\\Gamma/Gamma/go;
     $text =~ s/\\alpha/alpha/go;
@@ -1660,6 +1656,8 @@ sub text2nroff {
     $text =~ s/\\epsilon/epsilon/go;
     $text =~ s/\\left\(/\(/go;
     $text =~ s/\\right\)/\)/go;
+    $text =~ s/\\le/<=/go;
+    $text =~ s/\\ge/>=/go;
     $text =~ s/\\R/R/go;
     $text =~ s/---/--/go;
     $text =~ s/--/-/go;
@@ -1718,7 +1716,7 @@ sub text2nroff {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
 	$arg = text2nroff($arg);
 	$descitem = ".IP \"\" $TAGOFF\n".
-	    ".ti -\\w\@" . $arg . 
+	    ".ti -\\w\@" . $arg .
 	    "\\ \@u\n" . $arg . "\\ " . text2nroff($desc);
 	$descitem =~ s/\\&\././go;
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
@@ -1833,10 +1831,10 @@ sub rdoc2ex { # (filename)
 
     if(defined $blocks{"examples"}) {
 	local $Exout;
-	if($_[0]) { 
+	if($_[0]) {
 	    $Exout = new FileHandle;
 	    open $Exout, "> $_[0]";  # will be closed when goes out of scope
-	} else { 
+	} else {
 	    $Exout = "STDOUT";
 	}
 
@@ -1901,10 +1899,10 @@ sub rdoc2latex {# (filename)
     my $c, $a;
 
     local $latexout;
-    if($_[0]) { 
+    if($_[0]) {
 	$latexout = new FileHandle;
 	open $latexout, "> $_[0]";  # will be closed when goes out of scope
-    } else { 
+    } else {
 	$latexout = "STDOUT";
     }
     print $latexout "\\Header\{";
@@ -1920,10 +1918,10 @@ sub rdoc2latex {# (filename)
 	$generic =~ s/\.data\.frame$/.dataframe/o;
 	$generic =~ s/\.model\.matrix$/.modelmatrix/o;
 	$generic =~ s/\.[^.]+$//o;
-	if ($generic ne "" && $generic eq $current && $generic ne "ar") { 
+	if ($generic ne "" && $generic eq $current && $generic ne "ar") {
 	    $cmd = "methalias"
 	} else { $cmd = "alias"; $current = $a; }
-	
+
 	$c = code2latex($_,0);
 	$a = latex_code_alias($c);
 	print STDERR "rdoc2l: alias='$_', code2l(.)='$c', latex_c_a(.)='$a'\n"
@@ -2198,10 +2196,10 @@ sub latex_code_alias {
 sub rdoc2chm { # (filename) ; 0 for STDOUT
 
     local $htmlout;
-    if($_[0]) { 
+    if($_[0]) {
 	$htmlout = new FileHandle;
 	open $htmlout, "> $_[0]";  # will be closed when goes out of scope
-    } else { 
+    } else {
 	$htmlout = "STDOUT";
     }
     $using_chm = 1;
