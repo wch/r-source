@@ -121,7 +121,7 @@ pkgVignettes <- function(package, dir, lib.loc = NULL)
 ### Run a weave and pdflatex on all vignettes of a package and try to
 ### remove all temporary files that were created.
 
-buildVignettes <-function(package, dir, lib.loc = NULL)
+buildVignettes <-function(package, dir, lib.loc = NULL, quiet=TRUE)
 {
     vigns <- pkgVignettes(package=package, dir=dir, lib.loc=lib.loc)
     if(is.null(vigns)) return(NULL)
@@ -141,14 +141,11 @@ buildVignettes <-function(package, dir, lib.loc = NULL)
         bf <- sub("\\..[^\\.]*$", "", f)
         bft <- paste(bf, ".tex", sep="")
         pdfs <- c(pdfs, paste(bf, ".pdf", sep=""))
-
-        yy <- try(Sweave(f, quiet=TRUE))
+        
+        yy <- try(Sweave(f, quiet=quiet))
         if(inherits(yy, "try-error")) stop(yy)
         if(!have.makefile){
-            yy <- system(paste(file.path(R.home(), "bin", "texi2dvi"),
-                               "--quiet --pdf", bft))
-            if(yy>0)
-                stop(paste("running texi2dvi on", bft, "failed"))
+            texi2dvi(file=bft, pdf=TRUE, clean=TRUE, quiet=quiet)
         }
     }
 

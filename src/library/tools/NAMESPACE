@@ -7,7 +7,8 @@ export(".installMD5sums", "Rdindex", "Rtangle", "RtangleSetup",
        "checkReplaceFuns", "checkS3methods", "checkTnF", "checkVignettes",
        "codoc", "codocClasses", "codocData", "md5sum", "undoc",
        "filePathAsAbsolute", "filePathSansExt", "fileTest",
-       "listFilesWithExts", "listFilesWithType", "delimMatch")
+       "listFilesWithExts", "listFilesWithType", "delimMatch",
+       "texi2dvi", "buildVignettes", "pkgVignettes")
 
 ## <FIXME>
 ## Documented as internal but called from scripts
@@ -15,15 +16,13 @@ export(".installPackageCodeFiles",
        ".installPackageDescription",
        ".installPackageIndices",
        ".checkDemoIndex",
-       ".checkVignetteIndex",
-       "buildVignettes")
+       ".checkVignetteIndex")
 ## </FIXME>
 
 ## <FIXME>
 ## Needed by Bioconductor's vExplorer(): will no longer be necessary
 ## when Sweave objects are in place
-export("pkgVignettes",
-       "RtangleWritedoc",
+export("RtangleWritedoc",
        "RweaveLatexOptions")
 ## </FIXME>
 
