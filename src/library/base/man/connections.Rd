@@ -1,4 +1,5 @@
 \name{connections}
+\alias{connections}
 \alias{connection}
 \alias{file}
 \alias{pipe}

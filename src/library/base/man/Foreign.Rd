@@ -1,4 +1,5 @@
 \name{Foreign}
+\alias{Foreign}
 \alias{.C}
 \alias{.Fortran}
 \alias{.External}

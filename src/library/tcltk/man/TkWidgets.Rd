@@ -1,8 +1,5 @@
 \name{TkWidgets}
-\title{Tk widgets}
-\description{
-  Create Tk widgets and associated \R objects.
-}
+\alias{TkWidgets}
 \alias{tkwidget}
 \alias{tkbutton}
 \alias{tkcanvas}
@@ -19,6 +16,10 @@
 \alias{tkscrollbar}
 \alias{tktext}
 \alias{tktoplevel}
+\title{Tk widgets}
+\description{
+  Create Tk widgets and associated \R objects.
+}
 \usage{
 tkwidget(parent, type, ...)
 tkbutton(parent, ...)

@@ -1,4 +1,9 @@
 \name{name}
+\alias{name}
+\alias{is.symbol}
+\alias{as.symbol}
+\alias{as.name}
+\alias{is.name}
 \title{Variable Names or Symbols, respectively}
 \usage{
 as.symbol(x)
@@ -7,10 +12,6 @@ is.symbol(y)
 as.name(x)
 is.name(y)
 }
-\alias{is.symbol}
-\alias{as.symbol}
-\alias{as.name}
-\alias{is.name}
 \description{
   \code{as.symbol} coerces its argument to be a \emph{symbol}, or
   equivalently, a \emph{name}.  The argument must

@@ -1,6 +1,7 @@
 \name{TclInterface}
 \title{Low-level Tcl/Tk Interface}
 %
+\alias{TclInterface}
 \alias{.Tcl}
 \alias{.Tcl.callback}
 \alias{.Tcl.args}

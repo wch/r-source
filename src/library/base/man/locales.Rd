@@ -1,4 +1,5 @@
 \name{locales}
+\alias{locales}
 \alias{Sys.getlocale}
 \alias{Sys.setlocale}
 \title{Query or Set Aspects of the Locale}

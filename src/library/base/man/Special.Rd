@@ -1,5 +1,20 @@
 \name{Special}
+\alias{Special}
+\alias{beta}
+\alias{lbeta}
+\alias{gamma}
+\alias{lgamma}
+\alias{digamma}
+\alias{trigamma}
+\alias{tetragamma}
+\alias{pentagamma}
+\alias{choose}
+\alias{lchoose}
 \title{Special Functions of Mathematics}
+\description{
+  Special mathematical functions related to the beta and gamma
+  functions.
+}
 \usage{
 beta(a, b)
 lbeta(a, b)
@@ -12,17 +27,7 @@ pentagamma(x)
 choose(n,k)
 lchoose(n,k)
 }
-\alias{beta}
-\alias{lbeta}
-\alias{gamma}
-\alias{lgamma}
-\alias{digamma}
-\alias{trigamma}
-\alias{tetragamma}
-\alias{pentagamma}
-\alias{choose}
-\alias{lchoose}
-\description{
+\details{
 %---- This should be improved! ---  want mathematical definitions
 %----   AND References to Abramowitz and Stegun
   The functions \code{beta} and \code{lbeta} return the beta function
@@ -31,8 +36,8 @@ lchoose(n,k)
         B(a,b) = (Gamma(a)Gamma(b))/(Gamma(a+b)).}
 
   The functions \code{gamma} and \code{lgamma} return the gamma function
-  \eqn{\Gamma(x)}
-  and the natural logarithm of the absolute value of the gamma function.
+  \eqn{\Gamma(x)} and the natural logarithm of the absolute value of the
+  gamma function.
 
   The functions \code{digamma}, \code{trigamma}, \code{tetragamma} and
   \code{pentagamma} return the first, second, third and fourth
