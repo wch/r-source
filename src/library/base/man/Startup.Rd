@@ -38,7 +38,7 @@
   See \bold{Details} for how the file is read.
 
 #endif
-#ifndef Mac
+#ifndef mac
   Then \R searches for the site-wide startup profile unless the command
   line option \code{--no-site-file} was given.  The name of this file is
   taken from the value of the \code{R\_PROFILE} environment variable.
