@@ -3470,11 +3470,23 @@ void GArrow(double xfrom, double yfrom, double xto, double yto, int coords,
     double ytoInch = yto;
     double rot, xc, yc;
     double x[3], y[3];
+    double eps = 1.e-3;
 
     GLine(xfrom, yfrom, xto, yto, coords, dd);
 
     GConvert(&xfromInch, &yfromInch, coords, INCHES, dd);
     GConvert(&xtoInch, &ytoInch, coords, INCHES, dd);
+    if((code & 3) == 0) return; /* no arrows specified */
+
+#ifdef HAVE_HYPOT
+    if(hypot(xfromInch - xtoInch, yfromInch - ytoInch) < eps) {
+#else
+    if(pythag(xfromInch - xtoInch, yfromInch - ytoInch) < eps) {
+#endif
+	/* effectively 0-length arrow */
+	warning("zero-length arrow is of indeterminate angle and so skipped");
+	return;
+    }
     angle *= DEG2RAD;
     if(code & 1) {
 	xc = xtoInch - xfromInch;

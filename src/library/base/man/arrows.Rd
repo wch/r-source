@@ -27,6 +27,11 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
   The graphical parameters \code{col} and \code{lty} can be used
   to specify a color and line texture for the line segments which
   make up the arrows (\code{col} may be a vector).
+
+  The direction of a zero-length arrow is indeterminate, and hence so is
+  the direction of the arrowheads.  To allow for rounding error,
+  arrowheads are omitted (with a warning) on any arrow of length less
+  than 1/1000 inch.
 }
 \seealso{
   \code{\link{segments}} to draw segments.

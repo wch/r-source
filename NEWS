@@ -390,6 +390,10 @@ BUG FIXES
 
     o   hsv() truncation bug fixed (hopefully correctly this time...)
 
+    o   effectively zero-length arrows are omitted (rather than getting
+	a system- and device-dependent arbitrary angle).
+
+
 
 	**************************************************
 	*						 *
