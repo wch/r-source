@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-04-01)
+Version 1.7.0 Under development (unstable) (2003-04-08)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2332,14 +2332,6 @@ Step:  AIC= 24.97
 +     detach("package:survival")
 + }
 Loading required package: survival 
-
-Attaching package 'survival':
-
-
-	The following object(s) are masked from package:base :
-
-	 [.terms 
-
  Surv [1:23, 1:2]  9  13  13+ 18  23  28+ 31  34  45+ 48  ...
  - attr(*, "dimnames")=List of 2
   ..$ : NULL
