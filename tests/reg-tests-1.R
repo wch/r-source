@@ -2842,3 +2842,11 @@ stopifnot(is.na(ISOdate(year=2003, month=22, day=20)))
 ## PR#4582 %*% with NAs
 stopifnot(is.na(NA %*% 0), is.na(0 %*% NA))
 ## depended on the BLAS in use.
+
+
+## as.matrix on an all-logical data frame
+ll <- data.frame(a = rpois(10,1) > 0, b = rpois(10,1) > 0)
+stopifnot(mode(as.matrix(ll)) == "logical")
+lll <- data.frame(a = LETTERS[1:10], b = rpois(10,1) > 0)
+stopifnot(mode(as.matrix(ll)) == "character")
+## both were char before 1.9.0

@@ -40,8 +40,9 @@ is.matrix(x)
   attribute of length 2) and \code{FALSE} otherwise.
 
   \code{as.matrix} is a generic function. The method for data frames
-  will convert any non-numeric column into a character vector using
-  \code{\link{format}} and so return a character matrix. 
+  will convert any non-numeric/complex column into a character
+  vector using \code{\link{format}} and so return a character matrix,
+  except that all-logical data frames will be coerced to a logical matrix.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

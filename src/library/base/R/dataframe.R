@@ -1018,6 +1018,7 @@ as.matrix.data.frame <- function (x)
     X <- x
     class(X) <- NULL
     non.numeric <- non.atomic <- FALSE
+    all.logical <- TRUE
     for (j in 1:p) {
 	xj <- X[[j]]
 	if(length(dj <- dim(xj)) == 2 && dj[2] > 1) {
@@ -1028,6 +1029,7 @@ as.matrix.data.frame <- function (x)
 				  if(length(dnj) > 0) dnj else 1:dj[2],
 				  sep = ".")
 	}
+        if(!is.logical(xj)) all.logical <- FALSE
 	if(length(levels(xj)) > 0 || !(is.numeric(xj) || is.complex(xj))
 	   || (!is.null(cl <- attr(xj, "class")) && # numeric classed objects to format:
 	       any(cl == c("POSIXct", "POSIXlt"))))
@@ -1042,6 +1044,8 @@ as.matrix.data.frame <- function (x)
 	    }
 	    else X[[j]] <- as.list(as.vector(xj))
 	}
+    } else if(all.logical) {
+        ## do nothing for logical columns if a logical matrix will result.
     } else if(non.numeric) {
 	for (j in 1:p) {
 	    if (is.character(X[[j]]))

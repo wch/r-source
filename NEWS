@@ -99,6 +99,9 @@ NEW FEATURES
 	`.' expanded and probably will have the original environment
 	set as its environment.  And what it does is now documented.
 
+    o   as.matrix.data.frame() now coerces an all-logical data frame
+	to a logical matrix.
+
 
 UTILITIES
 
