@@ -6,6 +6,9 @@ lm(formula, data = list(), subset, weights, na.action=na.omit,
 
 anova(lm.obj, \dots)
 summary(lm.obj, correlation = FALSE)
+predict(lm.obj,newdata = model.frame(object), conf.level = 0.95, 
+        tol.level = conf.level)
+
 
 coefficients(lm.obj)
 deviance(lm.obj)
@@ -22,6 +25,7 @@ lm.wfit(x, y, w, method = "qr", tol = 1e-7, \dots)
 \alias{anova.lm}
 \alias{summary.lm}
 \alias{coefficients.lm}
+\alias{predict.lm}
 \alias{deviance.lm}
 \alias{df.residual.lm}
 \alias{effects.lm}
@@ -89,6 +93,15 @@ The generic accessor functions \code{coefficients},
 \code{effects}, \code{fitted.values} and \code{residuals}
 can be used to extract various useful features of the
 value returned by \code{lm}.
+
+The function \code{predict} produces predicted values with confidence
+and prediction (tolerance) intervals in the form of a data frame with
+components \code{predictor}, \code{conf.l}, \code{conf.u},
+\code{pred.l}, and \code{pred.u}, obtained by evaluating the
+regression function in the frame \code{newdata}, the arguments
+\code{conf.level} and \code{tol.level} control the respective
+intervals.
+
 }
 \seealso{
 \code{\link{anova}} for the ANOVA table,
@@ -107,5 +120,14 @@ weight <- c(ctl,trt)
 anova(lm.D9 <- lm(weight~group))
 summary(lm.D90 <- lm(weight ~ group -1))# omitting intercept
 summary(resid(lm.D9) - resid(lm.D90)) #- residual are practically identical
+
+## Predictions
+x<-rnorm(15)
+y<-x+rnorm(15)
+predict(lm(y~x))
+predict(lm(y~x),data.frame(x=seq(-3,3,0.1)),.99,.90)
+
 }
 \keyword{regression}
+
+
