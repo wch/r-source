@@ -147,7 +147,10 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 
     mode = TYPEOF(x);
     result = allocVector(mode, n);
-    SET_NAMED(result, NAMED(x));
+    if (mode == VECSXP || mode == EXPRSXP)
+	/* we do not duplicate the values when extracting the subset,
+	   so to be conservative mark the result as NAMED = 2 */
+	SET_NAMED(result, 2);
 
     PROTECT(result = ExtractSubset(x, result, indx, call));
     if (result != R_NilValue &&
@@ -505,13 +508,53 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, dim, ax, px, x, subs;
-    int drop, i, ndim, nsubs, type;
+    SEXP ans, ax, px, x, subs;
+    int drop, i, nsubs, type;
 
     /* By default we drop extents of length 1 */
 
-    drop = 1;
     PROTECT(args);
+
+    /* Handle case of extracting a single element from a simple vector
+       directly to improve speed for this simple case. */
+    if (CDDR(args) == R_NilValue) {
+	int i;
+	SEXP x = CAR(args);
+	SEXP s = CADR(args);
+	if (ATTRIB(x) == R_NilValue && ATTRIB(s) == R_NilValue) {
+	    switch (TYPEOF(x)) {
+	    case REALSXP:
+		switch (TYPEOF(s)) {
+		case REALSXP: i = (LENGTH(s) == 1) ? REAL(s)[0] : -1; break;
+		case INTSXP: i = (LENGTH(s) == 1) ? INTEGER(s)[0] : -1; break;
+		default:  i = -1;
+		}
+		if (i >= 1 && i <= LENGTH(x)) {
+		    ans = allocVector(REALSXP, 1);
+		    REAL(ans)[0] = REAL(x)[i-1];
+		    UNPROTECT(1);
+		    return ans;
+		}
+		break;
+	    case INTSXP:
+		switch (TYPEOF(s)) {
+		case REALSXP: i = (LENGTH(s) == 1) ? REAL(s)[0] : -1; break;
+		case INTSXP: i = (LENGTH(s) == 1) ? INTEGER(s)[0] : -1; break;
+		default:  i = -1;
+		}
+		if (i >= 1 && i <= LENGTH(x)) {
+		    ans = allocVector(INTSXP, 1);
+		    INTEGER(ans)[0] = INTEGER(x)[i-1];
+		    UNPROTECT(1);
+		    return ans;
+		}
+		break;
+	    default: break;
+	    }
+	}
+    }
+
+    drop = 1;
     ExtractDropArg(args, &drop);
     x = CAR(args);
 
@@ -526,13 +569,16 @@ SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     subs = CDR(args);
     nsubs = length(subs);
     type = TYPEOF(x);
-    PROTECT(dim = getAttrib(x, R_DimSymbol));
-    ndim = length(dim);
 
     /* Here coerce pair-based objects into generic vectors. */
     /* All subsetting takes place on the generic vector form. */
 
-    if (isPairList(x)) {
+    ax = x;
+    if (isVector(x))
+	PROTECT(ax);
+    else if (isPairList(x)) {
+	SEXP dim = getAttrib(x, R_DimSymbol);
+	int ndim = length(dim);
 	if (ndim > 1) {
 	    PROTECT(ax = allocArray(VECSXP, dim));
 	    setAttrib(ax, R_DimNamesSymbol, getAttrib(x, R_DimNamesSymbol));
@@ -545,10 +591,7 @@ SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for(px = x, i = 0 ; px != R_NilValue ; px = CDR(px))
 	    SET_VECTOR_ELT(ax, i++, CAR(px));
     }
-    else PROTECT(ax = x);
-
-    if(!isVector(ax))
-	errorcall(call, R_MSG_ob_nonsub);
+    else errorcall(call, R_MSG_ob_nonsub);
 
     /* This is the actual subsetting code. */
     /* The separation of arrays and matrices is purely an optimization. */
@@ -556,7 +599,7 @@ SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(nsubs < 2)
 	ans = VectorSubset(ax, (nsubs == 1 ? CAR(subs) : R_MissingArg), call);
     else {
-	if (nsubs != length(dim))
+	if (nsubs != length(getAttrib(x, R_DimSymbol)))
 	    errorcall(call, "incorrect number of dimensions");
 	if (nsubs == 2)
 	    ans = MatrixSubset(ax, subs, call, drop);
@@ -586,7 +629,7 @@ SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	setAttrib(ans, R_TspSymbol, R_NilValue);
 	setAttrib(ans, R_ClassSymbol, R_NilValue);
     }
-    UNPROTECT(5);
+    UNPROTECT(4);
     return ans;
 }
 
