@@ -21,7 +21,8 @@ DLLLIBS=-L../../gnuwin32 -lR -lRblas -lg2c
 $(MODULE).dll: $(OBJS)
 
 clean:
-	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll Rlapack.def
+	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll Rlapack.def \
+	  Rlapack.dll libRlapack.a
 
 
 # Rlapack.* section
@@ -35,7 +36,7 @@ Rlapack.dll: double.o cmplx.o Rlapackrc.o
 	@$(RM) Defs
 	$(DLL) --shared $(DLLFLAGS) -o $@ Rlapack.def $^ $(DLLLIBS)
 
-libRlapack.a: Rlapack.dll
+libRlapack.a: Rlapack.def
 
 ../../../bin/Rlapack.dll: Rlapack.dll
 	@$(MKDIR) -p ../../../bin
