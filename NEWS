@@ -99,6 +99,9 @@ BUG FIXES
 
     o   as.POSIXct.dates had a sign error for the origin (PR#2222)
 
+    o   The claim that pie charts should be avoiden (in pie.Rd) is now
+        supported by a quote from Cleveland (1985).
+
 
 INTERNALS
 

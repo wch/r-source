@@ -37,13 +37,22 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
 \note{
   Pie charts are a very bad way of displaying information.
   The eye is good at judging linear measures and bad at judging
-  relative areas.
+  relative areas.  A bar chart or dot chart is a preferable way of
+  displaying this type of data.
 
-  A bar chart or dot chart is a preferable way of displaying this
-  type of data.
-
+  Cleveland (1985), p. 264: "Data that can be shown by pie charts always
+  can be shown by a dot chart. This means that judgements of position
+  along a common scale can be made instead of the less accurate angle
+  judgements." This statement is based on the empirical investigations
+  of Cleveland and McGill as well as investigations by perceptual
+  psychologists.
+  
   Prior to \R 1.5.0 this was known as \code{piechart}, which is the name
   of a Trellis function, so the name was changed to be compatible with S.
+}
+\references{
+  Cleveland, W. S. (1985) \emph{The elements of graphing
+    data}. Wadsworth: Monterey, CA, USA.
 }
 \seealso{
   \code{\link{dotchart}}.
