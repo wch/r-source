@@ -50,6 +50,10 @@ BUG FIXES
     o   Some HTML files used src="R.css" instead of href="R.css"
         causing some browsers to ignore the style sheet.
 
+    o	The data editor no longer crashes when entries contain more than
+	45 characters, and works correctly if the field width is
+	larger than the window width.
+
 
 
 		CHANGES IN R VERSION 1.1.0
