@@ -20,10 +20,10 @@
 #include "Mathlib.h"
 #include <stdio.h>
 
-/* Linear Interpolation */
+/* Linear and Step Function Interpolation */
 /* Assumes that ordinates are in ascending order */
 /* The right interval is found by bisection */
-/* Linear interpolation then takes place on that interval*/
+/* Linear/constant interpolation then takes place on that interval*/
 
 extern double R_NaReal;
 static double ylow;
@@ -70,21 +70,36 @@ static double approx1(double v, double *x, double *y, int n, int method)
 
 	/* R Frontend for Linear and Constant Interpolation */
 
-int approx(double *x, double *y, int *nxy, double *xout, int *nout, int *rule, int *method, double *f)
+int approx(double *x, double *y, int *nxy, double *xout, int *nout, int *method, double *yleft, double *yright, double *f)
 {
 	int i;
 
-	if(*rule == 1) {
-		ylow = R_NaReal;
-		yhigh = R_NaReal;
+		/* check interpolation method */
+
+	switch(*method) {
+	    case 1:
+		break;
+	    case 2:
+		if(!FINITE(*f) || *f < 0 || *f > 1)
+			error("invalid f value in approx\n");
+		f2 = *f;
+		f1 = 1 - *f;
+		break;
+	    default:
+		error("invalid interpolation method in approx\n");
+		break;
 	}
-	else {
-		ylow = y[0];
-		yhigh = y[*nxy-1];
+
+	for(i=0 ; i<*nxy ; i++)
+		if(x[i] == R_NaReal || y[i] == R_NaReal)
+			error("attempt interpolate NA values in approx\n");
+
+	ylow = *yleft;
+	yhigh = *yright;
+
+	for(i=0 ; i<*nout ; i++) {
+		if(xout[i] !=  R_NaReal)
+			xout[i] = approx1(xout[i], x, y, *nxy, *method);
 	}
-	f2 = *f;
-	f1 = 1 - *f;
-	for(i=0 ; i<*nout ; i++)
-		xout[i] = approx1(xout[i], x, y, *nxy, *method);
 	return 0;
 }

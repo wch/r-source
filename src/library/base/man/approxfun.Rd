@@ -1,8 +1,10 @@
 \name{approx[fun]}
 \title{Interpolation Functions}
 \usage{
-approx   (x, y, xout, method="linear", n=50, rule=1, f=0)
-approxfun(x, y,       method="linear",       rule=1, f=0)
+approx   (x, y, xout, method="linear", n=50,
+          yleft, yright, rule=1, f=0)
+approxfun(x, y,       method="linear",
+          yleft, yright, rule=1, f=0)
 }
 \alias{approx}
 \alias{approxfun}
@@ -17,6 +19,12 @@ approxfun(x, y,       method="linear",       rule=1, f=0)
   \item{n}{If \code{xout} is not specified, interpolation takes place at
     \code{n} equally spaced points spanning the interval [\code{min(x)},
     \code{max(x)}].}
+  \item{yleft}{the value to be returned when input \code{x} values
+    less than \code{min(x)}. The default is defined by the value
+    of \code{rule} given below.}
+  \item{yright}{the value to be returned when input \code{x} values
+    greater than \code{max(x)}. The default is defined by the value
+    of \code{rule} given below.}
   \item{rule}{an integer describing how interpolation is to take place
     outside the interval [\code{min(x)}, \code{max(x)}].
     If \code{rule} is \code{1} then \code{NA}s are returned for such
