@@ -1155,7 +1155,7 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP subs, x, y, ans;
+    SEXP subs, x, y;
     int nsubs, oldtype;
 
     gcall = call;

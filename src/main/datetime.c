@@ -283,7 +283,7 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP stz, x, ans, ansnames, class, tzone;
     int i, n, isgmt = 0, valid;
     char *tz = NULL, oldtz[20] = "", *p = NULL;
-    struct tm *ptm;
+    struct tm *ptm = NULL;
 
     checkArity(op, args);
     PROTECT(x = coerceVector(CAR(args), REALSXP));
