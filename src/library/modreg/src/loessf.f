@@ -1182,7 +1182,7 @@ c        Hermite basis
       if(ifloor.gt.x) ifloor=ifloor-1
       end
 
-c DSIGN is in ../../../appl/fortran.c
+c DSIGN is unused, causes conflicts on some platforms
 c	DOUBLE PRECISION function DSIGN(a1,a2)
 c	DOUBLE PRECISION a1, a2
 c	DSIGN=DABS(a1)

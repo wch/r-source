@@ -75,8 +75,6 @@ BUG FIXES
 
     o	Fixed problem in usemethod() where CAR(call) could be non-symbol.
 
-    o	AIX building of modreg {duplicate dsign()} fixed.
-
     o	is.qr() checks not only for $qr, but also for $rank & $qraux, PR#482.
 
     o	postscript() now uses the options "papersize" and "printcmd"
@@ -137,8 +135,8 @@ BUG FIXES
 
     o	kernel("dirichlet", m=10, r=1) in package ts now works.
 
-    o   save/restore of  environments containing "..." object should
-        work now
+    o	save/restore of	 environments containing "..." object should
+	work now.
 
     o   qhyper should work better for large N.
 
@@ -150,6 +148,9 @@ BUG FIXES
 
     o   Subtle roundoff problems caused arrays to be allocated short in
         loess.c in some cases, leading to segfaults.
+
+    o	loessf.f in modreg defined DSIGN unecessarily and this caused
+	a conflict on AIX.
 
 
 	*********************************************************
