@@ -7,7 +7,8 @@
 }
 \usage{
 read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
-         skip = 0, row.names, col.names, n = -1, buffersize=2000, \dots)
+         skip = 0, row.names, col.names, n = -1, buffersize = 2000,
+         \dots)
 }
 \arguments{
   \item{file}{
@@ -45,7 +46,7 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
   in \code{file} are replaced by \code{NA}.
   
   Negative-width fields are used to indicate columns to be skipped, eg
-  code{-5} to skip 5 columns. These fields are not seen by
+  \code{-5} to skip 5 columns. These fields are not seen by
   \code{read.table} and so should not be included in a \code{col.names}
   or \code{colClasses} argument.
   
