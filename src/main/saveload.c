@@ -1247,10 +1247,8 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
 
-    fname = CAR(args);
-
-    if (TYPEOF(fname) != STRSXP || LENGTH(fname) <= 0 )
-	errorcall(call, "first argument must be a string\n");
+    if (!isValidString(fname = CAR(args)))
+	errorcall (call, "first argument must be a file name\n");
 
     /* GRW 1/26/99 GRW : added environment parameter so that */
     /* the loaded objects can be placed where desired  */
@@ -2462,14 +2460,14 @@ SEXP do_hdf5load (SEXP call, SEXP op, SEXP args, SEXP env)
 
   checkArity (op, args);
 
-  if (TYPEOF (CAR (args)) != STRSXP)
+  if (!isValidString(CAR(args)))
     errorcall (call, "first argument must be a pathname\n");
 
   if (TYPEOF (CADR (args)) != LGLSXP)
     errorcall (call, "second argument must be a logical vector\n");
 
-  path = CHAR (STRING (CAR (args))[0]);
-  restore_syms = INTEGER (CADR (args))[0];
+  path = CHAR(STRING (CAR(args))[0]);
+  restore_syms = INTEGER (CADR(args))[0];
 
   H5dont_atexit ();
 
