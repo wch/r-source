@@ -1,19 +1,18 @@
 \name{prop.test}
 \title{Test for Equal or Given Proportions}
 \usage{
-prop.test(x, n, p = NULL, alternative = "two.sided",
+prop.test(x, n = NULL, p = NULL, alternative = "two.sided",
           conf.level = 0.95, correct = TRUE)
 }
 \alias{prop.test}
 \arguments{
-  \item{x, n}{vectors of counts of successes and trials, respectively.
-    Only pairs with finite values are used.  The elements of \code{x}
-    must be nonnegative and not greater than the corresponding elements
-    of \code{n} which must be positive.  All elements should be
-    integers.}
-  \item{p}{a vector of probabilities of success.  \code{p} must have the
-    same length as \code{x} and \code{n}, and its elements must be
-    greater than 0 and less than 1.}
+  \item{x}{a vector of counts of successes or a matrix with 2 columns
+    giving the counts of successes and failures, respectively.}
+  \item{n}{a vector of counts of trials; ignored if \code{x} is a
+    matrix.}
+  \item{p}{a vector of probabilities of success.  The length of \code{p}
+    must be the same as the number of groups specified by \code{x}, and
+    its elements must be greater than 0 and less than 1.}
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.  You
     can specify just the initial letter.  Only used for testing the null
@@ -30,6 +29,11 @@ prop.test(x, n, p = NULL, alternative = "two.sided",
   \code{prop.test} can be used for testing the null that the proportions
   (probabilities of success) in several groups are the same, or that
   they equal certain given values.
+
+  Only groups with finite numbers of successes and failures are used.
+  Counts of successes and failures must be nonnegative and hence not
+  greater than the corresponding numbers of trials which must be
+  positive.  All finite counts should be integers.
 
   If \code{p} is \code{NULL} and there is more than one group, the null
   tested is that the proportions in each group are the same.  If there
