@@ -2,7 +2,7 @@
 \title{Add Points to a Plot}
 \usage{
 points(x, \dots)
-points.default(x, y=NULL, type="p", pch=1, col="black", \dots)
+points.default(x, y=NULL, type="p", pch=1, col="black", bg=NA, cex=1, \dots)
 }
 \alias{points}
 \alias{points.default}
@@ -11,25 +11,28 @@ points.default(x, y=NULL, type="p", pch=1, col="black", \dots)
 \item{type}{character indicating the type of plotting; actually any of
   the \code{type}s as in \code{\link{plot}(..)}.}
 \item{pch}{plotting `character', i.e. symbol to use.  \code{pch} can
-either be a \code{\link{character}} or an integer code for a set of
-graphics symbols.  The full set of S symbols is available with \code{pch=0:18}.
+  either be a \code{\link{character}} or an integer code for a set of
+  graphics symbols.  The full set of S symbols is available with
+  \code{pch=0:18}.
 
-In addition, there is a special set of \R plotting symbols which
-can be obtained with \code{pch=19:25} and can be colored and filled
-with different colors:
-\itemize{
-\item\code{pch=19}: solid circle,
-\item\code{pch=20}: bullet,
-\item\code{pch=21}: circle,
-\item\code{pch=22}: square,
-\item\code{pch=23}: diamond,
-\item\code{pch=24}: triangle point-up,
-\item\code{pch=25}: triangle point down.
+  In addition, there is a special set of \R plotting symbols which
+  can be obtained with \code{pch=19:25} and can be colored and filled
+  with different colors:
+  \itemize{
+    \item\code{pch=19}: solid circle,
+    \item\code{pch=20}: bullet,
+    \item\code{pch=21}: circle,
+    \item\code{pch=22}: square,
+    \item\code{pch=23}: diamond,
+    \item\code{pch=24}: triangle point-up,
+    \item\code{pch=25}: triangle point down.
+  }
 }
-}
-\item{col}{color to use.}
-\item{\dots}{Further graphical parameters (see \code{\link{par}}) may
-also be supplied as arguments.}
+\item{col}{color code or name, see \code{\link{colors}}, \code{\link{palette}}.}
+\item{bg}{background (``fill'') color for open plot symbols}
+\item{cex}{character expansion}
+\item{\dots}{Further graphical parameters (see \code{\link{plot.xy}} and
+  \code{\link{par}}) may also be supplied as arguments.}
 }
 \description{
 \code{points} is a generic function to draw a sequence of points at the
