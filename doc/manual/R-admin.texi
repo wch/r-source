@@ -164,10 +164,12 @@ cause it to skip the CVS directories.  Further information on
 @cindex Installing under Unix
 
 @R{} will configure and build from source under a number of common
-Unix-like platforms, including @code{i386-freebsd}, @code{i386-linux},
-@code{i386-sun-solaris}, @code{ppc-linux}, @code{mips-sgi-irix},
-@code{alpha-linux}, @code{alpha-dec-osf4}, @code{rs6000-ibm-aix},
-@code{hppa-hp-hpux}, @code{sparc-linux} and @code{sparc-sun-solaris}.
+Unix-like platforms, including @samp{i386-freebsd},
+@samp{i386-linux-gnu}, @samp{i386-sun-solaris},
+@samp{powerpc-linux-gnu}, @samp{powerpc-apple-darwin},
+@samp{mips-sgi-irix}, @samp{alpha-linux-gnu}, @samp{alpha-dec-osf4},
+@samp{rs6000-ibm-aix}, @samp{hppa-hp-hpux}, @samp{sparc-linux-gnu} and
+@samp{sparc-sun-solaris}.
 
 @cindex Linux
 @cindex MacOS X
