@@ -8,12 +8,14 @@ is.ts(x)
 
 print(ts.obj, calendar, ...)
 plot(ts.obj, ...)
+lines(ts.obj, ...)
 }
 \alias{ts}
 \alias{as.ts}
 \alias{is.ts}
 \alias{print.ts}
 \alias{plot.ts}
+\alias{lines.ts}
 \arguments{
   \item{data}{a vector or matrix the observed time-series values.}
   \item{start}{the time of the first observation.}
@@ -47,8 +49,9 @@ plot(ts.obj, ...)
   \code{as.ts} and \code{is.ts} respectively coerce a vector into a
   time-series and test whether an object is a time series.
 
-  Time series have methods associated with the generic \code{print} and
-  \code{plot} functions.  The argument \code{calendar} to the print
+  Time series have methods associated with the generic \code{print},
+  \code{plot} \code{lines} functions.  The argument \code{calendar}
+  to the print
   method can be used to enable/disable the display of information about
   month names, quarter names or year when printing.
 }

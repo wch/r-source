@@ -112,6 +112,7 @@ time.ts <- function (x) {
 }
 
 print.ts <- function(x, calendar, ...) {
+    x.orig <- x
     x <- as.ts(x)
     fr.x <- frequency(x)
     if(missing(calendar))
@@ -147,7 +148,7 @@ print.ts <- function(x, calendar, ...) {
 	##---  if(is.matrix(x)) rownames(data) <- tx
     }
     NextMethod("print", ...)
-    invisible(x)
+    invisible(x.orig)
 }
 
 plot.ts <-
@@ -208,14 +209,18 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL, xlab =
     if (frame.plot) box(...)
 }
 
-window.ts <- function(x, start, end) {
+lines.ts <- function(x, ...)
+    lines.default(time(as.ts(x)), x, ...)
+
+window.ts <- function(x, start = NULL, end = NULL)
+{
     x <- as.ts(x)
     xtsp <- tsp(x)
     freq <- xtsp[3]
     xtime <- time(x)
     ts.eps <- .Options$ts.eps
 
-    start <- if(missing(start))
+    start <- if(is.null(start))
 	xtsp[1]
     else switch(length(start),
 		start,
@@ -226,7 +231,7 @@ window.ts <- function(x, start, end) {
 	warning("start value not changed")
     }
 
-    end <- if(missing(end))
+    end <- if(is.null(end))
 	xtsp[2]
     else switch(length(end),
 		end,
