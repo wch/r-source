@@ -123,8 +123,15 @@
         x$results[,3] -> dt
         x$results[,1] -> pkg
         x$results[,4] -> desc
-
-        load.idx <- which(.Internal(data.manager(dt,pkg,desc)))
+		len <- NROW(dt)
+		url <- character(len)
+		for(i in 1:len){
+			tmp <- as.character(help(dt[i], package = pkg[i], htmlhelp=TRUE))
+			if(length(tmp)>0)
+				url[i] <- tmp
+		}
+		as.character(help("BOD", package="datasets",htmlhelp=T))
+        load.idx <- which(.Internal(data.manager(dt,pkg,desc,url)))
 
         for(i in load.idx) {
             cat("loading dataset:", dt[i],"\n")
@@ -176,8 +183,11 @@ print.hsearch <- function(x,...)
                                      "matching\n\n")))
           } else {
 			url = character(rows)
-			for(i in 1:rows)
-				url[i] <- as.character(help(db[i,"topic"], package = db[i,"Package"], htmlhelp=TRUE))
+			for(i in 1:rows){
+				tmp <- as.character(help(db[i,"topic"], package = db[i,"Package"], htmlhelp=TRUE))
+				if(length(tmp)>0)
+					url[i] <- tmp
+			}
             wtitle <- paste("Help topics matching", sQuote(x$pattern))
             showhelp <- which(.Internal(hsbrowser(db[,"topic"], db[,"Package"],
 							db[,"title"],  wtitle, url )))
@@ -433,4 +443,12 @@ CRAN.binaries <- function(CRAN=getOption("CRAN"), method,
     read.dcf(file=tmpf, fields=c("Package", "Version"))
   }
 
+main.help.url <- function () {
+    .Script("sh", "help-links.sh", paste(tempdir(), 	paste(.libPaths(), 
+        collapse = " ")))
+    make.packages.html()
+    tmpdir <- paste("file://", tempdir(), "/.R", sep = "")
+    url <- paste(tmpdir,"/doc/html/index.html", sep = "")
+	options(main.help.url=url)
+}
  
