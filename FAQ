@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-20 2004-05-27
+Version 1.9-21 2004-05-28
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -57,7 +57,7 @@ R FAQ
     5.1.1 Add-on packages in R
     5.1.2 Add-on packages from CRAN
     5.1.3 Add-on packages from Omegahat
-    5.1.4 Add-on packages from BioConductor
+    5.1.4 Add-on packages from Bioconductor
     5.1.5 Other add-on packages
   5.2 How can add-on packages be installed?
   5.3 How can add-on packages be used?
@@ -2832,14 +2832,14 @@ packages from the Omegahat Project for Statistical Computing
      An extension module for libxslt, the XML-XSL document translator, that
      allows XSL functions to be implemented via R functions.
 
-5.1.4 Add-on packages from BioConductor
+5.1.4 Add-on packages from Bioconductor
 ---------------------------------------
 
 The Bioconductor Project (http://www.bioconductor.org) produces an open
 source software framework that will assist biologists and statisticians
 working in bioinformatics, with primary emphasis on inference using DNA
 microarrays.  The following R packages are contained in the current release
-of BioConductor, with more packages under development.
+of Bioconductor, with more packages under development.
 
 *AnnBuilder*
      Assemble and process genomic annotation data, from databases such as
@@ -2850,23 +2850,71 @@ of BioConductor, with more packages under development.
      Object-oriented representation and manipulation of genomic data (S4
      class structure).
 
+*Biostrings*
+     Class definitions and generics for biological sequences along with
+     pattern matching algorithms.
+
+*DNAcopy*
+     Segments DNA copy number data using circular binary segmentation to
+     detect regions with abnormal copy number.
+
 *DynDoc*
      Functionality to create and interact with dynamic documents, vignettes,
      and other navigable documents.
 
-*MAGEML*
-     Functionality to handle MAGEML documents.
+*EBarrays*
+     Empirical Bayes tools for the analysis of replicated microarray data
+     across multiple conditions.
+
+*GOstats*
+     Tools for manipulating GO and microarrays.
+
+*GeneSpring*
+     Functions and class definitions to be able to read and write GeneSpring
+     specific data objects and convert them to Bioconductor objects.
+
+*GeneTS*
+     A package for analysing multiple gene expression time series data.
+     Currently, implements methods for cell cycle analysis and for inferring
+     large sparse graphical Gaussian models.
+
+*Icens*
+     Functions for computing the NPMLE for censored and truncated data.
+
+*LPE*
+     Significance analysis of microarray data with small number of
+     replicates using the Local Pooled Error (LPE) method.
+
+*MeasurementError.cor*
+     Two-stage measurement error model for correlation estimation with
+     smaller bias than the usual sample correlation.
+
+*PROcess*
+     Ciphergen SELDI-TOF processing.
 
 *RBGL*
      An interface between the graph package and the Boost graph libraries,
      allowing for fast manipulation of graph objects in R.
 
+*RMAGEML*
+     Functionality to handle MAGEML documents.
+
 *ROC*
      Receiver Operating Characteristic (ROC) approach for identifying genes
      that are differentially expressed in two types of samples.
 
+*RSNPper*
+     Interface to chip.org::SNPper for SNP-related data.
+
 *RdbiPgSQL*
      Methods for accessing data stored in PostgreSQL tables.
+
+*Rdbi*
+     Generic framework for database access in R.
+
+*Resourcerer*
+     Read annotation data from TIGR Resourcerer or convert the annotation
+     data into Bioconductor data package.
 
 *Rgraphviz*
      An interface with Graphviz for plotting graph objects in R.
@@ -2877,8 +2925,12 @@ of BioConductor, with more packages under development.
 *SAGElyzer*
      Locates genes based on SAGE tags.
 
-*SNPtools*
-     Rudimentary structures for SNP data.
+*SNAData*
+     Data from the book "Social Network Analysis" by Wasserman & Faust
+     (1999).
+
+*aCGH*
+     Classes and functions for Array Comparative Genomic Hybridization data.
 
 *affy*
      Methods for Affymetrix Oligonucleotide Arrays.
@@ -2892,6 +2944,15 @@ of BioConductor, with more packages under development.
 *affydata*
      Affymetrix data for demonstration purposes.
 
+*affylmGUI*
+     Graphical User Interface for affy analysis using package *limma*.
+
+*affypdnn*
+     Probe Dependent Nearest Neighbors (PDNN) for the affy package.
+
+*altcdfenvs*
+     Utilities to handle cdfenvs.
+
 *annaffy*
      Functions for handling data from Bioconductor Affymetrix annotation
      data packages.
@@ -2901,6 +2962,20 @@ of BioConductor, with more packages under development.
      web databases such as GenBank, LocusLink and PubMed.  Process and store
      query results.  Generate HTML reports of analyses.
 
+*arrayMagic*
+     Utilities for quality control and processing for two-color cDNA
+     microarray data.
+
+*arrayQuality*
+     Performing print-run and array level quality assessment.
+
+*bim*
+     Bayesian interval mapping diagnostics:  functions to interpret QTLCart
+     and Bmapqtl samples.
+
+*convert*
+     Convert Microarray Data Objects.
+
 *ctc*
      Tools to export and import Tree and Cluster to other programs.
 
@@ -2909,16 +2984,22 @@ of BioConductor, with more packages under development.
      experiments and for the statistical analysis of factorial microarray
      data.
 
+*ecolitk*
+     Metadata and tools to work with E. coli.
+
 *edd*
      Expression density diagnostics: graphical methods and pattern
      recognition algorithms for distribution shape classification.
+
+*exprExternal*
+     Implementation of exprSet using externalVectors.
 
 *externalVector*
      Basic class definitions and generics for external pointer based vector
      objects for R.
 
 *factDesign*
-     A set of tools for analyzing data from factorial designed micraorray
+     A set of tools for analyzing data from factorial designed microarray
      experiments.  The functions can be used to evaluate appropriate tests
      of contrast and perform single outlier detection.
 
@@ -2941,6 +3022,10 @@ of BioConductor, with more packages under development.
      Testing globally whether a group of genes is significantly related to
      some clinical variable of interest.
 
+*goTools*
+     Functions for description/comparison of oligo ID list using the Gene
+     Ontology database.
+
 *gpls*
      Classification using generalized partial least squares for two-group
      and multi-group classification.
@@ -2951,14 +3036,23 @@ of BioConductor, with more packages under development.
 *hexbin*
      Binning functions, in particular hexagonal bins for graphing.
 
+*impute*
+     Imputation for microarray data (currently KNN only).
+
 *limma*
      Linear models for microarray data.
+
+*limmaGUI*
+     Graphical User Interface for package *limma*.
 
 *makecdfenv*
      Two functions.  One reads a Affymetrix chip description file (CDF) and
      creates a hash table environment containing the location/probe set
      membership mapping.  The other creates a package that automatically
      loads that environment.
+
+*marray*
+     Exploratory analysis for two-color spotted microarray data.
 
 *marrayClasses*
      Class definitions for pre-normalized and normalized cDNA microarray
@@ -2983,7 +3077,7 @@ of BioConductor, with more packages under development.
      in UCB and UCSF.
 
 *matchprobes*
-     ools for sequence matching of probes on arrays.
+     Tools for sequence matching of probes on arrays.
 
 *multtest*
      Multiple testing procedures for controlling the family-wise error rate
@@ -2994,8 +3088,27 @@ of BioConductor, with more packages under development.
 *ontoTools*
      Graphs and sparse matrices for working with ontologies.
 
+*pairseqsim*
+     Pairwise sequence alignment and scoring algorithms for global, local
+     and overlap alignment with affine gap penalty.
+
 *pamr*
-     Pam: prediction analysis for microarrays.
+     Pam: Prediction Analysis for Microarrays.
+
+*pickgene*
+     Adaptive gene picking for microarray expression data analysis.
+
+*prada*
+     Tools for analyzing and navigating data from high-throughput
+     phenotyping experiments based on cellular assays and fluorescent
+     detection.
+
+*qvalue*
+     Q-value estimation for false discovery rate control.
+
+*rama*
+     Robust Analysis of MicroArrays: robust estimation of cDNA microarray
+     intensities with replicates using a Bayesian hierarchical model.
 
 *reposTools*
      Tools for dealing with file repositories and allow users to easily
@@ -3010,6 +3123,9 @@ of BioConductor, with more packages under development.
      Discovery Rate (FDR) with both the Significance Analysis of Microarrays
      (SAM) and the Empirical Bayes Analyses of Microarrays (EBAM).
 
+*simpleaffy*
+     Very simple high level analysis of Affymetrix data.
+
 *splicegear*
      A set of tools to work with alternative splicing.
 
@@ -3019,6 +3135,10 @@ of BioConductor, with more packages under development.
 *vsn*
      Calibration and variance stabilizing transformations for both
      Affymetrix and cDNA array data.
+
+*webbioc*
+     Integrated web interface for doing microarray analysis using several of
+     the Bioconductor packages.
 
 *widgetTools*
      Tools for creating Tcl/Tk widgets, i.e., small-scale graphical user
