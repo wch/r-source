@@ -768,7 +768,7 @@ tr_free_spec(struct tr_spec *trs) {
     }
 }
 
-unsigned char
+static unsigned char
 tr_get_next_char_from_spec(struct tr_spec **p) {
     unsigned char c;
     struct tr_spec *this;
