@@ -1274,6 +1274,7 @@ static SEXP NewDataLoad (FILE *fp)
 	SET_ENCLOS(obj, NewReadItem(sym_table, env_table, fp));
 	SET_FRAME(obj, NewReadItem(sym_table, env_table, fp));
 	SET_TAG(obj, NewReadItem(sym_table, env_table, fp));
+	R_RestoreHashCount(obj);
     }
 
     /* Read the actual object back */

@@ -897,6 +897,7 @@ void R_RunWeakRefFinalizer(SEXP w);
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
 
 /* Environment and Binding Features */
+void R_RestoreHashCount(SEXP rho);
 #define ENVIRONMENT_LOCKING
 #define FANCY_BINDINGS
 #ifdef ENVIRONMENT_LOCKING

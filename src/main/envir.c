@@ -2207,3 +2207,18 @@ Rboolean R_HasFancyBindings(SEXP rho)
     }
 }    
 #endif
+
+void R_RestoreHashCount(SEXP rho)
+{
+    if (IS_HASHED(rho)) {
+	SEXP table;
+	int i, count, size;
+
+	table = HASHTAB(rho);
+	size = HASHSIZE(table);
+	for (i = 0, count = 0; i < size; i++)
+	    if (VECTOR_ELT(table, i) != R_NilValue)
+		count++;
+	SET_HASHPRI(table, count);
+    }
+}
