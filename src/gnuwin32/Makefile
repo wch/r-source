@@ -1,5 +1,4 @@
 include MkRules
-include RWVERSION
 
 ## This is done so Rpwd.exe gets built first under a native build,
 ## but it is not used in Makefile under a cross-build.
@@ -25,6 +24,8 @@ else
 RHOME = $(shell perl pwd.pl ../..)
 PKGD = $(shell perl pwd.pl $(PKGDIR))
 endif
+
+RPREFIX = $(shell perl fixed/rwver.pl ../../VERSION)
 
 RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
