@@ -274,6 +274,8 @@ foreach $pkg (@ARGV){
 	    if(-d $dir && $tmp != 0
 	       && $pkgname ne "RadioSonde" 
 	       && $pkgname ne "pls.pcr" 
+	       && $pkgname ne "mlbench" 
+	       && $pkgname ne "tapiR" 
 	       && $pkgname ne "anm") {
 		my $Rout = "datacnt";
 		my @tmp = `ls.exe -s1 $dir`;  # system > no longer works
