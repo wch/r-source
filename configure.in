@@ -145,16 +145,19 @@ R_ARG_WITH_EXCLUSIVE(g77, f2c,
   AC_MSG_WARN(${warn_g77_and_f2c})
   use_f2c=false])
 
+## BLAS.
 AC_ARG_WITH(blas,
   [  --with-blas             use specified BLAS library],
   R_ARG_USE(blas),
   use_blas=true)
 
+## Readline.
 AC_ARG_WITH(readline,
   [  --with-readline         use readline library (if available) [yes]],
   R_ARG_USE(readline),
   use_readline=true)
 
+## GNOME.
 AC_ARG_WITH(gnome,
   [  --with-gnome            use GNOME, or specify its prefix [no]],
   [ if test "${withval}" = no; then
@@ -169,6 +172,7 @@ AC_ARG_WITH(gnome,
     fi],
   want_gnome=no)
 
+## Tcl/Tk.
 AC_ARG_WITH(tcltk,
   [  --with-tcltk            use Tcl/Tk, or specify its library dir [yes]],
   [ if test "${withval}" = no; then
@@ -228,6 +232,9 @@ case "${host}" in
     AC_AIX
     LIBS="${LIBS} -lc"
     ;;
+  ## <FIXME>
+  ## Autoconf 2.50 or better has AC_PROG_CC_STDC which takes care of
+  ## this.
   *hpux*)
     case "${CC}" in
       cc)
@@ -241,6 +248,7 @@ case "${host}" in
 	;;
     esac
     ;;
+  ## </FIXME>
 esac
 
 R_PROG_CC_M
@@ -394,6 +402,8 @@ eval "export ${shlibpath_var}"
 
 AC_PROG_CXX
 AC_PROG_CXXCPP
+R_PROG_CXX_M
+R_PROG_CXX_C_O_LO
 
 ### Libraries.
 
@@ -429,10 +439,10 @@ fi
 AC_FUNC_ALLOCA
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(access acosh asinh atanh bcopy finite ftruncate getcwd \
-  getgrgid getpwuid getuid hypot isnan matherr memcpy memmove mkfifo \
-  popen putenv rint setenv snprintf strcoll stat strptime system times \
-  unsetenv vsnprintf)
+AC_CHECK_FUNCS(access acosh asinh atanh bcopy bzero finite ftruncate \
+  getcwd getgrgid getpwuid getuid hypot isascii isnan matherr memcpy \
+  memmove mempcpy mkfifo popen putenv rint setenv snprintf strcoll \
+  stat strptime system times unsetenv vsnprintf)
 AC_REPLACE_FUNCS(strdup)
 AC_SEARCH_LIBS(connect, [socket])
 AC_SEARCH_LIBS(gethostbyname, [nsl socket])
@@ -442,6 +452,7 @@ R_FUNC_CALLOC
 R_FUNC_FINITE
 R_FUNC_LOG
 R_FUNC_STRPTIME
+R_IEEE_754
 
 ### Header files.
 
@@ -450,10 +461,10 @@ AC_HEADER_TIME
 AC_HEADER_DIRENT
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(dl.h dlfcn.h elf.h errno.h fcntl.h floatingpoint.h \
-  fpu_control.h grp.h ieee754.h ieeefp.h locale.h netdb.h netinet/in.h \
-  pwd.h readline/history.h readline/readline.h rpc/rpc.h rpc/xdr.h \
-  string.h sys/param.h sys/select.h sys/socket.h sys/stat.h \
-  sys/time.h sys/times.h sys/utsname.h unistd.h)
+  fpu_control.h grp.h ieee754.h ieeefp.h libintl.h locale.h netdb.h \
+  netinet/in.h pwd.h readline/history.h readline/readline.h \
+  rpc/xdr.h string.h strings.h sys/param.h sys/select.h sys/socket.h \
+  sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h)
 case "${host}" in
   *sunos4*)
     AC_DEFINE(SunOS4) ;;
@@ -479,7 +490,6 @@ fi
 AC_CHECK_SIZEOF(long, 4)
 AC_CHECK_SIZEOF(long long, 0)
 AC_CHECK_SIZEOF(long double, 0)
-R_C_IEEE_754
 
 ### Platform-specific overrides for the C, FORTRAN and C++ compilers.
 
@@ -743,6 +753,8 @@ case "${host}" in
       if test -n "${ldoutput}"; then
         shlib_cxxldflags="-shared"
       fi
+    else
+      cxxpicflags="-PIC"
     fi
     ;;
 esac
@@ -789,7 +801,8 @@ if test -z "${CPICFLAGS}"; then
 fi
 
 : ${FPICFLAGS=${fpicflags}}
-if test -z "${FPICFLAGS}"; then
+if test -z "${FPICFLAGS}"\
+    && test -z "${F2C}"; then
   case "${host}" in
     *aix4.[[2-9]]*)
       ;;
@@ -966,7 +979,7 @@ AC_SUBST(R_LD_LIBRARY_PATH)
 ### Final cleanups/rewrites.
 
 ## <FIXME>
-## This will no longer be necessary in Autoconf 2.49b or better.
+## This will no longer be necessary in Autoconf 2.50 or better.
 LTLIBOBJS=`echo $LIBOBJS | sed 's/\.o/\.lo/g'`
 AC_SUBST(LTLIBOBJS)
 LTALLOCA=`echo "$ALLOCA" | sed 's/\.o/.lo/g'`
