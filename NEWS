@@ -134,9 +134,8 @@ C-LEVEL FACILITIES
 	Applications using libRmath may need to be re-compiled.
 
     o	The methods used by optim() have entry points in R_ext/Applic.h
-	and have a more general interface.  This has been done for
-	future internal use, and they should not yet be regarded as
-	part of the API.
+	and have a more general interface documented in `Writing R
+	Extensions'.
 
 
 BUG FIXES
