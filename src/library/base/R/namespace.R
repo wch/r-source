@@ -168,9 +168,11 @@ loadNamespace <- function (package, lib.loc = NULL,
                        "does not have a name space"))
 
         # create namespace; arrange to unregister on error
-        nsInfo <- parseNamespaceFile(package, package.lib, mustExist = FALSE)
-        version = read.dcf(file.path(package.lib, package, "DESCRIPTION"),
-                           fields="Version")
+        nsInfoFilePath <- file.path(package.lib, package, "Meta", "nsInfo.rds")
+        nsInfo <- if(file.exists(nsInfoFilePath)) .readRDS(nsInfoFilePath)
+        else parseNamespaceFile(package, package.lib, mustExist = FALSE)
+        version <- read.dcf(file.path(package.lib, package, "DESCRIPTION"),
+                            fields = "Version")
         ns <- makeNamespace(package, version = version, lib = package.lib)
         on.exit(.Internal(unregisterNamespace(package)))
 

@@ -104,7 +104,7 @@ Rcode: fixed/fixdesc
 
 rpackage: ../../library/R.css
 	@$(MAKE) --no-print-directory $(PKGS)
-	rm ../../library/stats/R/stats.R ../../library/mle/R/mle.R
+	@rm -f ../../library/stats/R/stats.R ../../library/mle/R/mle.R
 
 rlibs:
 	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win

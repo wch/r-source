@@ -173,14 +173,27 @@ ifeq ($(strip $(BUILD)),CROSS)
 	  | $(SED) '/^\s*$$/d' > ${DPKG}/DESCRIPTION
 else
 	@$(ECHO) ".installPackageDescription('.', '"$(DPKG)"')" | \
-	  $(RHOME)/bin/rterm.exe --vanilla --slave  R_DEFAULT_PACKAGES=tools> /dev/null
+	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=tools > /dev/null
 endif
 
 nmspace:
+ifeq ($(strip $(BUILD)),CROSS)
 	@if test -f ${SPKG}/NAMESPACE; then \
-	  $(ECHO) "  installing NAMESPACE file"; \
+	  $(ECHO) -n "  installing NAMESPACE file"; \
 	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
+	  $(ECHO) " and metadata"; \
+	  $(ECHO) ".installPackageNamespaceInfo('.', '"$(DPKG)"')" | \
+	    R_DEFAULT_PACKAGES=tools $(R_EXE) --vanilla --slave > /dev/null; \
 	fi
+else
+	@if test -f ${SPKG}/NAMESPACE; then \
+	  $(ECHO) -n "  installing NAMESPACE file"; \
+	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
+	  $(ECHO) " and metadata"; \
+	  $(ECHO) ".installPackageNamespaceInfo('.', '"$(DPKG)"')" | \
+	    $(RHOME)/bin/rterm.exe R_DEFAULT_PACKAGES=tools --vanilla --slave > /dev/null; \
+	fi
+endif
 nmspacefake:
 	@if test -f ${SPKG}/NAMESPACE; then \
 	  $(ECHO) "  installing NAMESPACE file"; \

@@ -16,6 +16,7 @@ export(".installMD5sums", "Rdindex", "Rtangle", "RtangleSetup",
 export(".installPackageCodeFiles",
        ".installPackageDescription",
        ".installPackageIndices",
+       ".installPackageNamespaceInfo",
        ".checkDemoIndex",
        ".checkVignetteIndex")
 ## </FIXME>

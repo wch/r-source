@@ -33,6 +33,7 @@
 % \alias{.buildVignetteIndex}
 % \alias{.buildDemoIndex}
 % \alias{.buildDataIndex}
+\alias{.installPackageNamespaceInfo}
 \alias{.checkVignetteIndex}
 \alias{print.checkVignetteIndex}
 \alias{.checkDemoIndex}
@@ -67,6 +68,7 @@ RtangleWritedoc(object, chunk)
 % .installPackageRdIndices(dir, outDir)
 % .installPackageVignetteIndex(dir, outDir)
 % .installPackageDemoIndex(dir, outDir)
+.installPackageNamespaceInfo(dir, outDir)
 .checkDemoIndex(demoDir)
 .checkVignetteIndex(vignetteDir)
 }

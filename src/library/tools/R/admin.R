@@ -39,7 +39,7 @@ function(dir, outDir)
                        ## Could also use
                        ##   format(Sys.time(), "%a %b %d %X %Y")
                        Sys.time(),
-                       "; ",                       
+                       "; ",
                        .Platform$OS.type,
                        sep = "")),
                file.path(outDir, "DESCRIPTION"))
@@ -65,7 +65,7 @@ function(dir, outDir)
         ## <NOTE>
         ## I don't think we can give an error here.
         ## It may be the case that Sys.setlocale() fails because the "OS
-        ## reports request cannot be honored" (src/main/platform.c), in 
+        ## reports request cannot be honored" (src/main/platform.c), in
         ## which case we should still proceed ...
         warning("cannot turn off locale-specific sorting via LC_COLLATE")
         ## </NOTE>
@@ -89,7 +89,7 @@ function(dir, outDir)
         ## currently, file paths relative to codeDir, separated by
         ## white space, possibly quoted.  Note that we could have
         ## newlines in DCF entries but do not allow them in file names,
-        ## hence we gsub() them out. 
+        ## hence we gsub() them out.
         collationField <- collationField[i][1]
         codeFilesInCspec <-
             scan(textConnection(gsub("\n", " ", db[collationField])),
@@ -101,7 +101,7 @@ function(dir, outDir)
             out <- paste("\nduplicated files in",
                          sQuote(collationField),
                          "field:")
-            out <- paste(out, 
+            out <- paste(out,
                          paste(" ", badFiles, collapse = "\n"),
                          sep = "\n")
             stop(out)
@@ -292,6 +292,22 @@ function(dir, outDir)
     invisible()
 }
 
+### * .installPackageNamespaceInfo
+
+.installPackageNamespaceInfo <-
+function(dir, outDir)
+{
+    dir <- filePathAsAbsolute(dir)
+    nsFile <- file.path(dir, "NAMESPACE")
+    if(!fileTest("-f", nsFile)) return(invisible())
+    nsInfoFilePath <- file.path(outDir, "Meta", "nsInfo.rds")
+    if(fileTest("-nt", nsInfoFilePath, nsFile)) return(invisible())
+    nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
+    outMetaDir <- file.path(outDir, "Meta")
+    if(!fileTest("-d", outMetaDir)) dir.create(outMetaDir)
+    .saveRDS(nsInfo, nsInfoFilePath)
+    invisible()
+}
 
 ### Local variables: ***
 ### mode: outline-minor ***
