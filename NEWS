@@ -177,6 +177,9 @@ BUG FIXES
 
     o   plot.hclust() now tolerates mode changes on dumped objects. (PR#4361)
 
+    o   prompt() no longer insists files are in the current directory. 
+	(PR#4978)
+
 
 
 		CHANGES IN R VERSION 1.8.0
