@@ -177,10 +177,11 @@ void textRect(double x, double y, SEXP text, int i,
 {
     /* NOTE that we must work in inches for the angles to be correct
      */
-    double x1, x2, x3, x4, y1, y2, y3, y4;
-    double w, h, rotrad, sinrotrad, cosrotrad;
-    double wxbit, hxbit, wxbit2, hxbit2;
-    double wybit, hybit, wybit2, hybit2;
+    LLocation bl, br, tr, tl;
+    LLocation tbl, tbr, ttr, ttl;
+    LTransform thisLocation, thisRotation, thisJustification;
+    LTransform tempTransform, transform;
+    double w, h;
     if (isExpression(text)) {
 	SEXP expr = VECTOR_ELT(text, i % LENGTH(text));
 	w = fromDeviceWidth(GEExpressionWidth(expr, gc, dd),
@@ -194,31 +195,40 @@ void textRect(double x, double y, SEXP text, int i,
 	h = fromDeviceHeight(GEStrHeight(string, gc, dd),
 			     GE_INCHES, dd);
     }
-    rotrad = DEG2RAD*rot;
-    sinrotrad = sin(rotrad);
-    cosrotrad = cos(rotrad);
-    wxbit = xadj*w*cosrotrad;
-    hxbit = yadj*h*sinrotrad;
-    wxbit2 = (1-xadj)*w*cosrotrad;
-    hxbit2 = (1-yadj)*h*sinrotrad;
-    wybit = xadj*w*sinrotrad;
-    hybit = yadj*h*cosrotrad;
-    wybit2 = (1-xadj)*w*sinrotrad;
-    hybit2 = (1-yadj)*h*cosrotrad;
-    x1 = x - wxbit + hxbit;
-    y1 = y - wybit - hybit;
-    x2 = x + wxbit2 + hxbit2;
-    y2 = y + wybit2 - hybit2;
-    x3 = x + wxbit2 - hxbit2;
-    y3 = y + wybit2 + hybit2;
-    x4 = x - wxbit - hxbit;
-    y4 = y - wybit + hybit;
-    rect(x1, x2, x3, x4, y1, y2, y3, y4, r);
+    location(0, 0, bl);
+    location(w, 0, br);
+    location(w, h, tr);
+    location(0, h, tl);
+    translation(-xadj*w, -yadj*h, thisJustification);
+    translation(x, y, thisLocation);
+    if (rot != 0)
+	rotation(rot, thisRotation);
+    else
+	identity(thisRotation);
+    /* Position relative to origin of rotation THEN rotate.
+     */
+    multiply(thisJustification, thisRotation, tempTransform);
+    /* Translate to (x, y)
+     */
+    multiply(tempTransform, thisLocation, transform);
+    trans(bl, transform, tbl);
+    trans(br, transform, tbr);
+    trans(tr, transform, ttr);
+    trans(tl, transform, ttl);
+    rect(locationX(tbl), locationX(tbr), locationX(ttr), locationX(ttl),
+	 locationY(tbl), locationY(tbr), locationY(ttr), locationY(ttl),
+	 r);
     /* For debugging, the following prints out an R statement to draw the
      * bounding box
      */
-    /*  Rprintf("\ngrid.lines(c(%f, %f, %f, %f, %f), c(%f, %f, %f, %f, %f), default.units=\"inches\")\n",
-	x1, x2, x3, x4, x1, y1, y2, y3, y4, y1); */
+    /*
+    Rprintf("\ngrid.lines(c(%f, %f, %f, %f, %f), c(%f, %f, %f, %f, %f), default.units=\"inches\")\n",
+	locationX(tbl), locationX(tbr), locationX(ttr), locationX(ttl),
+	 locationX(tbl),
+	 locationY(tbl), locationY(tbr), locationY(ttr), locationY(ttl),
+	 locationY(tbl)
+	 ); 
+    */
 }
         
 /***********************
