@@ -28,6 +28,9 @@
 
 #include "internal.h"
 static HWND hwndToolTip = 0;
+#ifndef TOOLTIPS_CLASS
+#include "commctrl.h"
+#endif
 
 int addtooltip(control c,char *tp) {
     TOOLINFO ti;

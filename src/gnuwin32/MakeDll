@@ -7,14 +7,14 @@ include ../../../gnuwin32/MkRules
 
 ifdef DEBUG
   DLLFLAGS=
-  DEBUGFLAG=-g
+  DEBUGFLAG=-g -Wall
 else
   DLLFLAGS=-s
-  DEBUGFLAG=
+  DEBUGFLAG=-Wall
 endif
 
 CFLAGS=-I../../../include -include ../../../include/globalvar.h $(DEBUGFLAG) -O2
-FFLAGS=-O2
+FFLAGS=-O2 $(DEBUGFLAG)
 DLLLIBS=-L../../../gnuwin32  $(FLIBS) -lR 
 
 

@@ -51,6 +51,8 @@ extern int _finite(double);
 #undef pid_t
 /* Object size */
 #undef size_t
+/* Fix a GCC bug on AIX? */
+#undef blkcnt_t
 
 /* Define if you have <sys/wait.h> that is POSIX.1 compatible.  */
 #undef HAVE_SYS_WAIT_H
@@ -151,6 +153,8 @@ double atanh(double);
 
 /* Bug Workarounds */
 #undef HAVE_OSF_SPRINTF_BUG
+#undef CALLOC_BROKEN
+#undef FINITE_BROKEN
 #undef LOG_BROKEN
 
 /* Some platforms other than ELF drop the leading _ */

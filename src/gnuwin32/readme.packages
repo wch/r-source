@@ -9,15 +9,15 @@ The cygwin-B20.x set of tools available from
 http://sourceware.cygnus.com/cygwin and several mirrors, the Fortran
 additions ecgs-1.1-f77.tar.gz from that page or directly from
 http://www.xraylith.wisc.edu/~khan/software/gnu-win32/ and the Fortran
-library libg2c.mingw32.a.bz2 from CRAN/bin/windows/windows-NT/base/etc.
-You can also use the egcs-1.1.2 compilers upgrade from Mumit Khan's
-site.
+library libg2c.mingw32.a.bz2 from
+CRAN/bin/windows/windows-NT/base/etc.  You can also use the gcc-2.95
+or egcs-1.1.2 compilers upgrade from Mumit Khan's site.
 
 Do remember to set MAKE_MODE to UNIX.
 
 OR
 
-The mingw32 port of egcs-1.1 (or 1.1.2) from
+The mingw32 port of gcc-2.95 (or egcs-1.1.2) from
 ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32, the
 ld.exe and cygwin1.dll from the B20 set in your path ahead of the
 mingw32 binaries (if you don't want to download all the B20 distribution,
@@ -26,15 +26,15 @@ CRAN/bin/windows/windows-NT/base/etc/ld.cygwin.zip).
 
 
 Suitable versions of rm, sed, mkdir, echo, cp and cat, for example
-(Win 9x) from the djtools set at CRAN/bin/windows/windows-NT/base/etc
-or (Win 9x or NT) a cygwin set.
+a cygwin set.
 
 perl5, available via http://www.perl.com/CPAN/ports.
 
 groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
 
 All of these need to be installed and in your path, and the
-appropriate environment variables set.  Then
+appropriate environment variables set.  Edit MkRules to set the
+appropriate paths as needed Then
 
 	cd RHOME\src\gnuwin32
 

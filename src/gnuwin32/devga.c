@@ -31,7 +31,7 @@
 #include "console.h"
 #include "rui.h"
 #include "devga.h"		/* 'Public' routines from here */
-#include "winuser.h"
+#include "windows.h"
 
 extern console RConsole;
 extern int AllDevicesKilled;

@@ -30,7 +30,8 @@ library <-
                 }
                 else stop(txt)
             }
-            which.lib.loc <- lib.loc[match(packagedir[1], file.path(lib.loc, name))]
+	    which.lib.loc <-
+		lib.loc[match(packagedir[1], file.path(lib.loc, name))]
             if (length(packagedir) > 1) {
                 warning(paste("Package `", name, "' found more than once,\n  ",
                               "using the one found in `", which.lib.loc,
@@ -58,7 +59,8 @@ library <-
                 firstlib <- get(".First.lib", envir = env, inherits = FALSE)
                 firstlib(which.lib.loc, name)
             }
-            if (warn.conflicts) {
+            if (warn.conflicts &&
+                !exists(".conflicts.OK",  envir = env, inherits = FALSE)) {
                 ##-- Check for conflicts
                 dont.mind <- c("last.dump", "last.warning", ".Last.value",
                                ".Random.seed")

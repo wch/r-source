@@ -29,6 +29,9 @@
 #include "internal.h"
 
 static char MDIStatusText[256] = "" ;
+#ifndef SBARS_SIZEGRIP
+#include "commctrl.h"
+#endif
 
 int addstatusbar() {
   int a[1]={-1};

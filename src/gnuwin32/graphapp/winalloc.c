@@ -24,7 +24,7 @@
    This file is an add-on  to GraphApp, a cross-platform C graphics library.
  */
 
-#include <winbase.h>
+#include <windows.h>
 #include "ga.h"
 
 void *winmalloc(size_t size)

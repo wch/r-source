@@ -1,6 +1,6 @@
 .SUFFIXES: .c .f .o .a .def .exp .dll .exe .d
 
-# Alternatives CYGWIN (-B20.1), EGCS (-1.1.x-mingw32), CROSS (my Linux Box)
+# Alternatives CYGWIN (-B20.1), MINGW32 (-1.1.x-mingw32), CROSS (my Linux Box)
 
 BUILD=EGCS
 
@@ -15,7 +15,7 @@ FLIBS=-lg2c.mingw32
 AWK=gawk
 endif
 
-ifeq ($(strip $(BUILD)),EGCS)
+ifeq ($(strip $(BUILD)),MINGW32)
 BINPREF=
 MINGW32CFLAG= 
 MINGW32LDFLAG= 
