@@ -323,8 +323,16 @@ void errorcall(SEXP call, const char *format,...)
     }
 
     if (inError) {
-	if(inError == 3)
-	    REprintf("Error during wrapup \n");
+	if(inError == 3) {
+	     /* Can REprintf generate an error? If so we should guard for it */
+	    REprintf("Error during wrapup: ");
+	    /* this does NOT try to print the call since that could
+               cause a cascade of error calls */
+	    va_start(ap, format);
+	    Rvsnprintf(errbuf, sizeof(errbuf), format, ap);
+	    va_end(ap);
+	    REprintf("%s\n", errbuf);
+	}
 	jump_now();
     }
 
@@ -463,15 +471,40 @@ void jump_to_toplevel()
 }
 
 /*
-   Absolutely no allocation can be triggered in jump_now.
-   The error could be an out of memory error and any allocation
-   could result in an infinite-loop condition. All you can do
-   is reset things and exit.
-*/
+   Absolutely no allocation can be triggered in jump_now except
+   whatever happens in R_run_onexits.  The error could be an out of
+   memory error and any allocation could result in an infinite-loop
+   condition. All you can do is reset things and exit.  */
 void jump_now()
 {
-  Rf_resetStack(0);
-  LONGJMP(R_ToplevelContext->cjmpbuf, 0);
+    RCNTXT *c;
+
+    /* find the jump target; do the jump if target is a CTXT_RESTART */
+    for (c = R_GlobalContext; c; c = c->nextcontext) {
+	if (c->callflag == CTXT_RESTART) {
+	    inError=0;
+	    findcontext(CTXT_RESTART, c->cloenv, R_DollarSymbol);
+	}
+	if (c->callflag == CTXT_TOPLEVEL)
+	    break;
+    }
+    /* at this point we should have c == R_TopLevelContext */
+
+    /* Run onexit/cend code for all contexts down to but not including
+       the jump target.  Ordinarily this will already have been done,
+       but it may not have been completed in a recursive error
+       situation.  This may cause recursive calls to jump_now, but the
+       possible number of such recursive calls is limited since each
+       exit function is removed before it its executed.  This is not a
+       great design because we could run out of other resources that
+       are on the stack (like C stack for example).  The right thing
+       to do is arrange execute exit *after* the LONGJMP, but that
+       requires a more extensive redesign of the non-local transfer of
+       control mechanism.  LT. */
+    R_run_onexits(R_ToplevelContext);
+
+    Rf_resetStack(0);
+    LONGJMP(R_ToplevelContext->cjmpbuf, 0);
 }
 
 
