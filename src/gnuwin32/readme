@@ -82,9 +82,6 @@ ESS under NTEmacs, for example ess-5.1.9.  The pager is automatically
 set to "console" so help will be displayed in emacs buffers.
 
 
-You can also try the ESS-5.1.x betas, which have some in-built support.
-
-
 GRAPHICS:
 
 The screen device is called windows(). This is launched automatically,
@@ -169,10 +166,6 @@ file .Rprofile. In particular:
   (configurable in etc\Rconsole). Other possibilities we have
   used are "notepad" and "pfe32 /v", and "console" to list the files in
   the console (rgui.exe) or terminal window (rterm.exe).
-
-- If you wish to use HTML help where this is available, set
-  options(htmlhelp=T). If you prefer to use Windows help files where these
-  available, set options(winhelp=T).
 
 
 Adding packages
@@ -341,7 +334,7 @@ and ensure that these are in your path. You will need Perl and nroff
 installed.
 
 You also need: the R source (R-0.90.0.tgz), and to build the installer,
-unzip5.40.zip from any Info-Zip mirror.
+unzip5.40.zip from any Info-ZIP mirror.
 
 Then: untar R-0.90.0.tgz somewhere
 
