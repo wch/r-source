@@ -880,12 +880,15 @@ SEXP do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval = R_NilValue;
-    char buf[2 * PATH_MAX];
+    char buf[2 * PATH_MAX], *p;
 
     checkArity(op, args);
 
 #ifdef R_GETCWD
     R_GETCWD(buf, PATH_MAX);
+#ifdef Win32
+    for(p=buf; *p; p++) if(*p == '\\') *p = '/';
+#endif
     rval = mkString(buf);
 #endif
     return(rval);
