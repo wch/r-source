@@ -206,16 +206,20 @@ function(vignetteDir)
              keywords = keywords)
     }
 
+    if(length(vignetteFiles) == 0)
+        return(data.frame(File = I(character(0)),
+                          Title = I(character(0)),
+                          Depends = I(list()),
+                          Keywords = I(list()),
+                          PDF = I(character())))
+
     contents <- vector("list", length = length(vignetteFiles) * 4)
     dim(contents) <- c(length(vignetteFiles), 4)
     for(i in seq(along = vignetteFiles))
         contents[i, ] <- vignetteInfo(vignetteFiles[i])
     colnames(contents) <- c("File", "Title", "Depends", "Keywords")
 
-    ## paste will give length 1 result with a 0-length argument
-    vignettePDFs <- if(length(vignetteFiles))
-        paste(gsub("\\.[[:alpha:]]+$", "", vignetteFiles), ".pdf", sep = "")
-    else character(0)
+    vignettePDFs <- gsub("\\.[[:alpha:]]+$", ".pdf", vignetteFiles)
 
     vignetteTitles <- unlist(contents[, "Title"])
 
