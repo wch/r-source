@@ -31,7 +31,7 @@ x$name
     integer as by \code{\link{as.integer}}.  Character strings are
     partially matched to the (dim)names of the object if exact matching
     does not succeed.
-    
+
     For \code{[}-indexing only: \code{i, j, \dots} can be
     logical vectors, indicating elements/slices to select.  Such vectors
     are recycled if necessary to match the corresponding extent.  When
@@ -39,8 +39,8 @@ x$name
     columns as there are dimensions of \code{x}; the result is then a
     vector with elements corresponding to the sets of indices in each
     row of \code{i}.
-    
-    \code{i, j, \dots} can also be negative integers, indicating 
+
+    \code{i, j, \dots} can also be negative integers, indicating
     elements/slices to leave out of the selection.
     }
   \item{drop}{For matrices, and arrays.  If \code{TRUE} the
@@ -60,7 +60,7 @@ x$name
   computed indices, whereas \code{[[} does.  \code{x$name} is equivalent
   to \code{x[["name"]]} if \code{x} is recursive
   (see \code{\link{is.recursive}}) and \code{NULL} otherwise.
-  
+
   The \code{[[} operator requires all relevant subscripts to be supplied.
   With the \code{[} operator an empty index (a comma separated blank)
   indicates that all entries in that dimension are selected.
@@ -89,7 +89,7 @@ x$name
   When \code{$<-} is applied to a \code{NULL} \code{x}, it coerces
   \code{x} to \code{list()}.  This is what happens with \code{[[<-} is
   \code{y} is of length greater than one: if \code{y} has length 1 or 0,
-  \code{x} is coerced to a zero-length vector of the type of \code{value}, 
+  \code{x} is coerced to a zero-length vector of the type of \code{value},
 
   As from \R 1.9.0 both \code{$} and \code{[[} can be applied to
   environments.  Only character arguments are allowed and no partial
@@ -114,7 +114,7 @@ x$name
   there is ambiguity as to whether an element of the rhs should
   be used or not (and \R handled this inconsistently prior to \R 2.0.0),
   this is only allowed if the rhs value is of length one (so the two
-  interpretations would have the same outcome).  
+  interpretations would have the same outcome).
 }
 \section{Argument matching}{
   Note that these operations do match their index arguments in the standard
@@ -126,7 +126,7 @@ x$name
   not for the \code{data.frame} methods described in
   \code{\link{[.data.frame}}.
 
-  To avoid confusion, do not name indiex arguments
+  To avoid confusion, do not name index arguments
   (but \code{drop} must be named).
 }
 \references{
