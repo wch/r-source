@@ -6,7 +6,7 @@
   Read binary data from a connection, or write binary data to a connection.
 }
 \usage{
-readBin(con, what, n = -1, size = NA, endian = .Platform$endian)
+readBin(con, what, n = 1, size = NA, endian = .Platform$endian)
 writeBin(object, con, size = NA, endian = .Platform$endian)
 }
 \arguments{
@@ -16,8 +16,8 @@ writeBin(object, con, size = NA, endian = .Platform$endian)
     the mode: one of \code{"numeric", "double", "integer", "int",
       "logical", "complex", "character"}.}
   \item{n}{integer.  The (maximal) number of records to be
-    read. Negative values indicate that one should read up to the end of
-    the connection.}
+    read. You can use an over-estimate here, but not too large as
+    storage is reserved for \code{n} items.}
   \item{size}{integer.  The number of bytes per element in the byte
     stream.  The default, \code{NA}, uses the natural size.  Size changing
     is not supported for complex vectors.}
@@ -54,7 +54,7 @@ writeBin(object, con, size = NA, endian = .Platform$endian)
 }
 \value{
   For \code{readBin}, a vector of appropriate mode and the number of
-  items read (which might be less than \code{m}).
+  items read (which might be less than \code{n}).
 
   For \code{writeBin}, none.
 }
