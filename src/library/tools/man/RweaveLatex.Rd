@@ -22,19 +22,64 @@ RweaveLatexSetup(file, output=NULL, quiet=FALSE, debug=FALSE,
   \item{quiet}{If \code{TRUE} all progress messages are suppressed.}
   \item{debug}{If \code{TRUE}, input and output of all code
     chunks is copied to the console.}
-  \item{echo}{By default S commands are echoed to the output file, if
-    \code{FALSE}, only their output is included.}
-  \item{eval}{If \code{FALSE}, code chunks are not evaluated.}
-  \item{split}{If \code{TRUE}, text output is written to seperate files
-    for each code chunk.}
   \item{stylepath}{If \code{TRUE}, a hard path to the file \file{Sweave.sty}
     installed with this package is set, if \code{FALSE}, only
     \code{\\usepackage\{Sweave\}} is written. The hard path makes the
     TeX file less
     portable, but avoids the problem of installing the current
     version of \file{Sweave.sty} to some place in your TeX input path.}
-  \item{pdf}{Create PDF graphics (for use by pdflatex)?}
-  \item{eps}{Create EPS graphics (for use by normal latex)?}
+  \item{echo}{set default for option \code{echo}, see defails below.}
+  \item{eval}{set default for option \code{eval}, see defails below.}
+  \item{split}{set default for option \code{split}, see defails below.}
+  \item{pdf}{set default for option \code{pdf}, see defails below.}
+  \item{eps}{set default for option \code{eps}, see defails below.}
+}
+\section{Supported Options}{
+  RweaveLatex supports the following options for code chunks (the values
+  in parentheses show the default values):
+  \describe{
+    \item{echo:} logical (\code{TRUE}). Include S code in the
+    output file?
+    \item{eval:} logical (\code{TRUE}). If \code{FALSE}, the code chunk is not
+    evaluated, and hence no text or graphical output produced.
+    \item{results:} character string (\code{verbatim}).
+    If \code{results=verbatim}, the output of S commands is
+    included in the verbatim-like Soutput environment. If
+    \code{results=tex}, the output is taken to be already proper latex markup
+    and included as is. If \code{results=hide} then all output is
+    completely suppressed (but the code executed during the weave).
+    \item{print:} logical (\code{FALSE}).
+    If \code{TRUE}, each expression in the
+    code chunk is wrapped into a \code{print()} statement before evaluation,
+    such that the values of all expressions become visible.
+    \item{term:} logical (\code{FALSE}). If \code{TRUE}, visibility of values
+    emulates an interactive R session: values of assignments are not
+    printed, values of single objects are printed.
+    \item{split:} logical (\code{FALSE}). If \code{TRUE}, text output is
+    written to seperate files 
+    for each code chunk.
+    \item{strip.white:} logical (\code{TRUE}). If \code{TRUE}, blank
+    lines at the beginning and end of output are removed.
+    \item{prefix:} logical (\code{TRUE}). If \code{TRUE} generated filenames of
+    figures and output have a common prefix.
+    \item{prefix.string:} a character string, default is the name of the
+    \code{.Snw} source file.
+    \item{include:} logical (\code{TRUE}), indicating whether input
+    statements for text output and includegraphics statements
+    for figures should be auto-generated. Use \code{include=FALSE} if
+    the output should appear in a different place than the code chunk
+    (by placing the input line manually).
+    \item{fig:} logical (\code{FALSE}), indicating whether the code
+    chunk produces 
+    graphical output. Note that only one figure per code chunk can be
+    processed this way.
+    \item{eps:} logical (\code{TRUE}), indicating whether EPS figures shall be
+    generated. Ignored if \code{fig=FALSE}. 
+    \item{pdf:} logical (\code{TRUE}), indicating whether PDF figures shall be
+    generated. Ignored if \code{fig=FALSE}.
+    \item{width:} numeric (6), width of figures.
+    \item{height:} numeric (6), height of figures.
+  }
 }
 \author{Friedrich Leisch}
 \references{
