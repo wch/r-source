@@ -52,6 +52,7 @@
   Philippe Lambert,
   Patrick Lindsey,
   Jim Lindsey,
+  Catherine Loader,
   John Maindonald,
   Jens Oehlschaegel-Akiyoshi,
   Steve Oncley and Gordon Maclean,

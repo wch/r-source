@@ -345,9 +345,8 @@ BUG FIXES
 	This fixes a bug with e.g. apply(X,2,median, na.rm = TRUE) and
 	all(NULL == NULL) is now TRUE.
 
-    o	dbinom() and dpois() now use the more accurate algorithm of
-	Clive Loader.  E.g.,  1 - 2*sum(dbinom(0:999, 1999, 1/2))
-	is now zero instead of 1.0e-12.
+    o	dbinom() and dpois() now use a more accurate algorithm; e.g., 
+        1 - 2*sum(dbinom(0:999, 1999, 1/2)) is now zero instead of 1.0e-12.
 
     o	library.dynam no longer fails if the library appears more than
 	once in lib.loc.
