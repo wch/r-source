@@ -475,7 +475,10 @@ SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error("assign: invalid first argument\n");
     else
 	name = install(CHAR(STRING(CAR(args))[0]));
-    PROTECT(val = eval(CADR(args), rho));
+    if (isLanguage(CADR(args)))
+	PROTECT(val = CADR(args));
+    else
+	PROTECT(val = eval(CADR(args), rho));
     R_Visible = 0;
     aenv = CAR(CDDR(args));
     if (TYPEOF(aenv) != ENVSXP && aenv != R_NilValue)
