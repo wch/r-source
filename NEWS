@@ -19,6 +19,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   structure() clobbered factors with missing levels
+
     o   pmatch() misbehaved on duplicate matches
     
     o	R CMD Rd2dvi <file.Rd> works again
@@ -26,7 +28,7 @@ BUG FIXES
     o	logical binops tried to set time series parameters before dimensions
 
     o	upped the BUFSIZE in model.c (This is really peeing in the pants 
-	to get warm...)
+	to keep warm...)
 
     o	dput(), dump() and deparse()  now always use DBL_DIG (=15) digits
 	for numeric formatting.
