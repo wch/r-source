@@ -68,16 +68,5 @@ extensions.
 
 Future versions will see R converted to GNU coding standards.
 
-
-5. SOME DIFFERENCES BETWEEN R AND S
-
-1. In R, "factor" and "ordered factor" are primitive vector types.
-   This means in particular that they can be shaped as arrays.
-
-2. In R a list is a Lisp-style list composed of dotted pairs, rather
-   than a vector of generic elements as in S.  This means that list
-   subscripting can be rather inefficient.  However, lists are rarely
-   large and so we have not (yet) bothered to implement a matching
-   "generic vector" type, even though this could be quite useful.
-
-Robert Gentleman + Ross Ihaka + The R core.
+Sincerely,
+The R Core.
