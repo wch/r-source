@@ -89,7 +89,8 @@ BUG FIXES
 	being included in formal classes.
 
     o	terms() sometimes removed offset() terms incorrectly, since it
-	counted by variables and not terms.
+	counted by variables and not terms.  Its "offset" attribute
+	was incorrectly documented as referring to terms not variables.
 
 
 
