@@ -13,11 +13,11 @@ PKGDIR = $(RHOME)/src/library
 PKGD = $(shell perl pwd.pl $(PKGDIR))# must be absolute path
 
 ifdef DEBUG
- OPTFLAGS = -g -O2 -Wall
- DLLFLAGS =
+ OPTFLAGS=-g -O2 -Wall
+ DLLFLAGS=
 else
- OPTFLAGS = -O2 -Wall -pedantic
- DLLFLAGS = -s
+ OPTFLAGS=-O2 -Wall -pedantic
+ DLLFLAGS=-s
 endif
 
 R-DLLFLAGS = -mwindows
@@ -35,7 +35,6 @@ LEA_MALLOC=YES
 # flags to ensure that Doug Lea's malloc is used:
 ifdef LEA_MALLOC
 extra-CFLAGS+=-DLEA_MALLOC
-malloc-CFLAGS+=-DLEA_MALLOC
 OBJS-EXTRA=malloc.o
 endif
 
@@ -87,6 +86,7 @@ dllversion.o: ../include/Rversion.h
 R1.a: R.a $(OBJS-EXTRA)
 	$(CP) R.a R1.a
 	$(AR) cr R1.a $(OBJS-EXTRA)
+	$(RANLIB) R1.a
 
 R.dll: R1.a $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
