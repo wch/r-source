@@ -7,7 +7,8 @@ RLIB = $(rRHOME)/library
 RsrcLIB = $(rRHOME)/src/library
 BUILDlatex = $(RETC)/Rdconv --type latex
 
-Packages = pkg-base.tex pkg-eda.tex pkg-mva.tex
+Packages = pkg-base.tex pkg-eda.tex pkg-mva.tex pkg-stepfun.tex
+#- Man.tex  also must have an  \input{..} for each of these ^^^^
 
 all: Man.dvi
 
@@ -23,6 +24,9 @@ pkg-eda.tex: $(RLIB)/eda/latex/*.tex
 pkg-mva.tex: $(RLIB)/mva/latex/*.tex
 	@echo 'Collecting components of  $@ ..'
 	@sed 's/__PKG__/mva/g' Pkg-start.tex | cat - $^ Pkg-end.tex > $@
+pkg-stepfun.tex: $(RLIB)/stepfun/latex/*.tex
+	@echo 'Collecting components of  $@ ..'
+	@sed 's/__PKG__/stepfun/g' Pkg-start.tex | cat - $^ Pkg-end.tex > $@
 
 Man.dvi: Man.tex Rd.sty $(Packages)
 	@echo 'making latex documentation...'
