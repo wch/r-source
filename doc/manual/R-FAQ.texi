@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-43, @value{FAQ-YEAR}-09-18
+@set FAQ-VERSION 1.7-44, @value{FAQ-YEAR}-09-19
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1736,6 +1736,9 @@ various approaches.
 David Scott's ASH routines for 1D and 2D density estimation.
 @item aws
 Functions to perform adaptive weights smoothing.
+@item bim
+Bayesian interval mapping diagnostics:  functions to interpret
+QTLCart/Bmapqtl samples.
 @item bindata
 Generation of correlated artificial binary data.
 @item blighty
