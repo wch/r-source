@@ -503,7 +503,9 @@ reconcilePropertiesAndPrototype <-
       ## A rule is needed to decide whether the environment should be hashed.
       ## decide on a prototype, if one was not provided
       if(is.null(prototype) && is.na(match("VIRTUAL", superClasses))) {
-          basicSuperClasses <- .BasicClasses[!is.na(match(superClasses, .BasicClasses))]
+          bWhich <- match(superClasses, .BasicClasses)
+          bWhich <- bWhich[!is.na(bWhich)]
+          basicSuperClasses <- .BasicClasses[bWhich]
           if(length(basicSuperClasses) > 0) {
               if(length(basicSuperClasses) > 1) {
                   warning("Class \"",name,"\" extends more than one basic class (",
