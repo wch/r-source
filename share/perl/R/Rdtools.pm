@@ -158,7 +158,14 @@ sub get_usages {
 			$usages{$prefix} = $match;
 		    }
 		}
-	    } else {
+	    }
+	    elsif($rest =~ /^\s*<-\s*([[:alpha:]]+)\s*[\n\}]/) {
+		## Looks like documentation for a replacement function.
+		$usages{"\"$prefix<-\""} =
+		    substr($match, 0, -1) . ", $1)";
+		$rest =~ s/^.*[\n\}]//g;
+	    }
+	    else {
 		$rest =~ s/^.*[\n\}]//g;
 	    }
 	    $usage = $rest;
