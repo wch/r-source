@@ -161,6 +161,7 @@ foreach $pkg (@ARGV){
     my $makecmd = "pkg";
     $makecmd = "pkgfake" if $opt_fake;
     $description = new R::Dcf("$pkg/DESCRIPTION");
+    my $intname = $description->{"Package"};
     
     ## do we have a package bundle?
     my $zippkgs = $pkgname;
@@ -190,6 +191,7 @@ foreach $pkg (@ARGV){
 	    close pkgdesc;
 	}
 	$pkgdir = $pkg;
+	$intname = $description->{"Bundle"};
     }
     print "\n";
 
@@ -366,7 +368,7 @@ foreach $pkg (@ARGV){
     # wipe out lockdir
     rmtree($lockdir) if $safe;
     exit $res if $res;
-    print("\* DONE\n");
+    print("\* DONE ($intname)\n");
 }
 
 ## remove unpack directory
