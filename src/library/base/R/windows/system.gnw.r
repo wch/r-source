@@ -63,3 +63,7 @@ shell.exec <- function(file) invisible(.Internal(shell.exec(file)))
 dir.create <- function(path)
     invisible(.Internal(dir.create(path)))
 
+memory.size <- function(max = FALSE) .Internal(memory.size(max))
+
+DLL.version <- function(path) .Internal(DLL.version(path))
+
