@@ -104,7 +104,8 @@ set.seed(seed, kind = NULL)
 \note{
   \code{.Random.seed} saves the seed set for the uniform random-number
   generator, at least for the system generators. It does not necessarily
-  save the state of other generators. If you want to
+  save the state of other generators, and in particular does not save
+  the state of the Box--Muller normal generator. If you want to
   reproduce work later, call \code{set.seed} rather than set
   \code{.Random.seed}.
 }
