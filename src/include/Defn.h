@@ -20,29 +20,27 @@
 #ifndef DEFN_H_
 #define DEFN_H_
 
-#define NEW_FACTORS
-#define NEW_DATAFRAMES
-#define NEWLIST
-
 #define COUNTING
 
 #include "Platform.h"
 #include "Arith.h"
 #include "Errormsg.h"
 
-	/* Heap and Pointer Protection Stack Sizes. */
-	/* These values are minima and can be */
-	/* overriden in Platform.h */
+/*  Heap and Pointer Protection Stack Sizes.  */
+/*  These values are minima and can be overriden in Platform.h  */
+
+/*  R_PPSSIZE  The pointer protection stack size  */
+/*  R_NSIZE    The number of cons cells  */
+/*  R_VSIZE    The vector heap size in bytes */
 
 #ifndef R_PPSSIZE
-#define	R_PPSSIZE	10000L		/* pointer protection stack size */
+#define	R_PPSSIZE    10000L
 #endif
 #ifndef R_NSIZE
-#define	R_NSIZE		200000L		/* number of cons cells */
+#define	R_NSIZE      200000L
 #endif
-
 #ifndef R_VSIZE
-#define	R_VSIZE		2000000L	/* vector heap size in bytes */
+#define	R_VSIZE      2000000L
 #endif
 
 #ifdef Macintosh
@@ -69,120 +67,131 @@
 #include <locale.h>
 #endif
 
-#define HSIZE		211	/* The size of the hash table for symbols */
-#define MAXELTSIZE	512	/* The largest string size */
-#define MAXIDSIZE	512	/* Largest symbol size possible */
+#define HSIZE	    211	/* The size of the hash table for symbols */
+#define MAXELTSIZE  512	/* The largest string size */
+#define MAXIDSIZE   512	/* Largest symbol size possible */
 
-	/* Fundamental Data Types:  These are largely Lisp */
-	/* influenced structures, with the exception of LGLSXP, */
-	/* FACTSXP, ORDSXP, INTSXP, REALSXP and STRSXP which */
-	/* are the element types for S-like data objects. */
+
+/*  Fundamental Data Types:  These are largely Lisp  */
+/*  influenced structures, with the exception of LGLSXP,  */
+/*  INTSXP, REALSXP, CPLXSXP and STRSXP which are the  */
+/*  element types for S-like data objects.  */
+
+/*  Note that the gap of 11 and 12 below is because of  */
+/*  the withdrawal of native "factor" and "ordered" types.  */
 
 typedef unsigned int SEXPTYPE;
 
-#define NILSXP		0	/* nil */
-#define SYMSXP		1	/* symbols */
-#define LISTSXP		2	/* lists & dotted pairs */
-#define CLOSXP		3	/* closures */
-#define ENVSXP		4	/* environments */
-#define PROMSXP		5	/* evaluated/unevaluated closure arguments */
-#define LANGSXP		6	/* language constructs (special lists) */
-#define SPECIALSXP	7	/* special forms */
-#define BUILTINSXP	8	/* builtin non-special forms */
-#define CHARSXP		9	/* "scalar" string type (internal only)*/
-#define LGLSXP		10	/* logical vectors */
-#ifdef OLD
-#define FACTSXP		11	/* unordered factors */
-#define ORDSXP		12	/* ordered factors */
-#endif
-#define INTSXP		13	/* integer vectors */
-#define REALSXP		14	/* real variables */
-#define CPLXSXP		15	/* complex variables */
-#define STRSXP		16	/* string vectors */
-#define DOTSXP		17	/* dot-dot-dot object */
-#define ANYSXP		18	/* make "any" args work */
-#define VECSXP		19	/* generic vectors */
-#define EXPRSXP		20	/* expressions vectors */
+#define NILSXP	     0    /* nil */
+#define SYMSXP	     1    /* symbols */
+#define LISTSXP	     2    /* lists & dotted pairs */
+#define CLOSXP	     3    /* closures */
+#define ENVSXP	     4    /* environments */
+#define PROMSXP	     5    /* evaluated/unevaluated closure arguments */
+#define LANGSXP	     6    /* language constructs (special lists) */
+#define SPECIALSXP   7    /* special forms */
+#define BUILTINSXP   8    /* builtin non-special forms */
+#define CHARSXP	     9    /* "scalar" string type (internal only)*/
+#define LGLSXP	    10    /* logical vectors */
+#define INTSXP	    13    /* integer vectors */
+#define REALSXP	    14    /* real variables */
+#define CPLXSXP	    15    /* complex variables */
+#define STRSXP	    16    /* string vectors */
+#define DOTSXP	    17    /* dot-dot-dot object */
+#define ANYSXP	    18    /* make "any" args work */
+#define VECSXP	    19    /* generic vectors */
+#define EXPRSXP	    20    /* expressions vectors */
 
 typedef struct {
-	double r;
-	double i;
+    double r;
+    double i;
 } complex;
 
 typedef struct SEXPREC {
+
+    /* Flags */
+    struct {
+	SEXPTYPE type      :  5;
+	unsigned int obj   :  1;
+	unsigned int named :  2;
+	unsigned int gp    : 16;
+	unsigned int mark  :  1;
+	unsigned int debug :  1;
+	unsigned int trace :  1;
+	unsigned int       :  5;
+    } sxpinfo;
+
+    /* Attributes */
+    struct SEXPREC *attrib;
+
+    /* Data */
+    union {
 	struct {
-		SEXPTYPE type      :  5;
-		unsigned int obj   :  1;
-		unsigned int named :  2;
-		unsigned int gp    : 16;
-		unsigned int mark  :  1;
-		unsigned int debug :  1;
-		unsigned int trace :  1;
-		unsigned int       :  5;
-	} sxpinfo;
-	struct SEXPREC *attrib; 	/* Attributes */
-	union {
-		struct {
-			int	length;
-			union {
-				char		*c;
-				int		*i;
-				double		*f;
-				complex		*z;
-				struct SEXPREC	**s;
-			} type;
-			int	truelength;
-		} vecsxp;
-		struct {
-			int		offset;
-		} primsxp;
-		struct {
-			struct SEXPREC *pname;
-			struct SEXPREC *value;
-			struct SEXPREC *internal;
-		} symsxp;
-		struct {
-			struct SEXPREC *carval;
-			struct SEXPREC *cdrval;
-			struct SEXPREC *tagval;
-		} listsxp;
-		struct {
-			struct SEXPREC *frame;
-			struct SEXPREC *enclos;
-		} envsxp;
-		struct {
-			struct SEXPREC *formals;
-			struct SEXPREC *body;
-			struct SEXPREC *env;
-		} closxp;
-		struct {
-			struct SEXPREC *value;
-			struct SEXPREC *expr;
-			struct SEXPREC *env;
-		} promsxp;
-	} u;
+	    int	length;
+	    union {
+		char		*c;
+		int		*i;
+		double		*f;
+		complex		*z;
+		struct SEXPREC	**s;
+	    } type;
+	    int	truelength;
+	} vecsxp;
+	struct {
+	    int		offset;
+	} primsxp;
+	struct {
+	    struct SEXPREC *pname;
+	    struct SEXPREC *value;
+	    struct SEXPREC *internal;
+	} symsxp;
+	struct {
+	    struct SEXPREC *carval;
+	    struct SEXPREC *cdrval;
+	    struct SEXPREC *tagval;
+	} listsxp;
+	struct {
+	    struct SEXPREC *frame;
+	    struct SEXPREC *enclos;
+	} envsxp;
+	struct {
+	    struct SEXPREC *formals;
+	    struct SEXPREC *body;
+	    struct SEXPREC *env;
+	} closxp;
+	struct {
+	    struct SEXPREC *value;
+	    struct SEXPREC *expr;
+	    struct SEXPREC *env;
+	} promsxp;
+    } u;
 } SEXPREC, *SEXP;
 
 
+/* The type of the do_xxxx functions. */
+/* These are the built-in R functions. */
 typedef SEXP (*CCODE)();
 
+
+/* The type definitions for the table of built-in functions. */
+/* This table can be found in ../main/names.c */
 typedef struct {
-	char	*name;		/* print name */
-	CCODE	cfun;		/* c-code address */
-	int	code;		/* offset within c-code */
-	int	eval;		/* evaluate args? */
-	int	arity;		/* function arity */
-	int	gram;		/* pretty-print info */
+    char   *name;    /* print name */
+    CCODE  cfun;     /* c-code address */
+    int	   code;     /* offset within c-code */
+    int	   eval;     /* evaluate args? */
+    int	   arity;    /* function arity */
+    int	   gram;     /* pretty-print info */
 } FUNTAB;
 
-	/* General Cons Cell Attributes */
+/* General Cons Cell Attributes */
 #define ATTRIB(x)	((x)->attrib)
 #define OBJECT(x)	((x)->sxpinfo.obj)
 #define MARK(x)		((x)->sxpinfo.mark)
 #define TYPEOF(x)	((x)->sxpinfo.type)
 #define NAMED(x)	((x)->sxpinfo.named)
 
-	/* Primitive Access Macros */
+/* Primitive Access Macros */
 #define PRIMOFFSET(x)	((x)->u.primsxp.offset)
 #define PRIMFUN(x)	(R_FunTab[(x)->u.primsxp.offset].cfun)
 #define PRIMNAME(x)	(R_FunTab[(x)->u.primsxp.offset].name)
@@ -191,14 +200,12 @@ typedef struct {
 #define PPINFO(x)	(R_FunTab[(x)->u.primsxp.offset].gram)
 #define PRIMPRINT(x)	(((R_FunTab[(x)->u.primsxp.offset].eval)/100)%10)
 
-
-	/* Symbol Access Macros */
+/* Symbol Access Macros */
 #define PRINTNAME(x)	((x)->u.symsxp.pname)
 #define SYMVALUE(x)	((x)->u.symsxp.value)
 #define INTERNAL(x)	((x)->u.symsxp.internal)
 
-
-	/* Vector Access Macros */
+/* Vector Access Macros */
 #define LENGTH(x)	((x)->u.vecsxp.length)
 #define TRUELENGTH(x)	((x)->u.vecsxp.truelength)
 #define CHAR(x)		((x)->u.vecsxp.type.c)
@@ -211,8 +218,8 @@ typedef struct {
 #define LEVELS(x)	((x)->sxpinfo.gp)
 #define VECTOR(x)	((x)->u.vecsxp.type.s)
 
-	/* List Access Macros */
-	/* These also work for ... objects */
+/* List Access Macros */
+/* These also work for ... objects */
 #define LISTVAL(x)	((x)->u.listsxp)
 #define TAG(e)		((e)->u.listsxp.tagval)
 #define CAR(e)		((e)->u.listsxp.carval)
@@ -228,30 +235,30 @@ typedef struct {
 #define MISSING(x)	((x)->sxpinfo.gp)	/* for closure calls */
 #define SETCDR(x,y)	{SEXP X=(x), Y=(y); if(X != R_NilValue) CDR(X)=Y; else error("bad value");}
 
-	/* Closure Access Macros */
+/* Closure Access Macros */
 #define FORMALS(x)	((x)->u.closxp.formals)
 #define BODY(x)		((x)->u.closxp.body)
 #define CLOENV(x)	((x)->u.closxp.env)
 #define DEBUG(x)	((x)->sxpinfo.debug)
 #define TRACE(x)	((x)->sxpinfo.trace)
 
-	/* Environment Access Macros */
+/* Environment Access Macros */
 #define FRAME(x)	((x)->u.envsxp.frame)
 #define ENCLOS(x)	((x)->u.envsxp.enclos)
 #define NARGS(x)	((x)->sxpinfo.gp)	/* for closure calls */
 
-	/* Promise Access Macros */
+/* Promise Access Macros */
 #define PREXPR(x)	((x)->u.promsxp.expr)
 #define PRENV(x)	((x)->u.promsxp.env)
 #define PRVALUE(x)	((x)->u.promsxp.value)
 #define PRSEEN(x)	((x)->sxpinfo.gp)
 
-	/* Pointer Protection and Unprotection */
+/* Pointer Protection and Unprotection */
 #define PROTECT(s)	protect(s)
 #define UNPROTECT(n)	unprotect(n)
 
 
-	/* Vector Heap Structure */
+/* Vector Heap Structure */
 typedef struct {
 	union {
 		SEXP		backpointer;
@@ -259,7 +266,7 @@ typedef struct {
 	} u;
 } VECREC, *VECP;
 
-	/* Vector Heap Macros */
+/* Vector Heap Macros */
 #define BACKPOINTER(v)	((v).u.backpointer)
 #define BYTE2VEC(n)	(((n)>0)?(((n)-1)/sizeof(VECREC)+1):0)
 #define INT2VEC(n)	(((n)>0)?(((n)*sizeof(int)-1)/sizeof(VECREC)+1):0)
@@ -268,37 +275,39 @@ typedef struct {
 #define PTR2VEC(n)	(((n)>0)?(((n)*sizeof(SEXP)-1)/sizeof(VECREC)+1):0)
 
 
-	/* Evaluation Context Structure */
+/* Evaluation Context Structure */
 typedef struct RCNTXT {
-	struct RCNTXT *nextcontext;	/* The next context up the chain */
-	int callflag;			/* The context "type" */
-	sigjmp_buf cjmpbuf;		/* C stack and register information */
-	int cstacktop;			/* Top of the pointer protection stack */
-	SEXP promargs;			/* Promises supplied to closure */
-	SEXP sysparent;			/* environment the closure was called from*/
-	SEXP call;			/* The call that effected this context*/
-	SEXP cloenv;			/* The environment */
-	SEXP conexit;			/* Interpreted "on.exit" code */
-	void (*cend)();			/* C "on.exit" thunk */
+    struct RCNTXT *nextcontext;	/* The next context up the chain */
+    int callflag;		/* The context "type" */
+    sigjmp_buf cjmpbuf;		/* C stack and register information */
+    int cstacktop;		/* Top of the pointer protection stack */
+    SEXP promargs;		/* Promises supplied to closure */
+    SEXP sysparent;		/* environment the closure was called from */
+    SEXP call;			/* The call that effected this context*/
+    SEXP cloenv;		/* The environment */
+    SEXP conexit;		/* Interpreted "on.exit" code */
+    void (*cend)();		/* C "on.exit" thunk */
 } RCNTXT, *context;
 
-	/* The Various Context Types */
+/* The Various Context Types.  In general the type is a */
+/* bitwise OR of the values below.  Note that CTXT_LOOP */
+/* is already the or of CTXT_NEXT and CTXT_BREAK. */
 enum {
-	CTXT_TOPLEVEL = 0,
-	CTXT_NEXT     = 1,
-	CTXT_BREAK    = 2,
-	CTXT_LOOP     = 3,	/* break OR next target */
-	CTXT_RETURN   = 4,
-	CTXT_CCODE    = 8,
-	CTXT_BROWSER  = 12,
-	CTXT_GENERIC  = 16
+    CTXT_TOPLEVEL = 0,
+    CTXT_NEXT     = 1,
+    CTXT_BREAK    = 2,
+    CTXT_LOOP     = 3,	/* break OR next target */
+    CTXT_RETURN   = 4,
+    CTXT_CCODE    = 8,
+    CTXT_BROWSER  = 12,
+    CTXT_GENERIC  = 16
 };
 
 
-	/* Miscellaneous Definitions */
+/* Miscellaneous Definitions */
 #define streql(s, t)	(!strcmp((s), (t)))
 
-	/* Arithmetic and Relation Operators */
+/* Arithmetic and Relation Operators */
 #define	PLUSOP	1
 #define	MINUSOP	2
 #define	TIMESOP	3
@@ -318,78 +327,86 @@ extern int		errno;
 
 /* Global Variables */
 
-		/* Memory Management */
-extern int	R_NSize;		/* Size of cons cell heap */
-extern int	R_VSize;		/* Size of the vector heap */
-extern SEXP	R_NHeap;		/* Start of the cons cell heap */
-extern SEXP	R_FreeSEXP;		/* Cons cell free list */
-extern VECREC*	R_VHeap;		/* Base of the vector heap */
-extern VECREC*	R_VTop;			/* Current top of the vector heap */
-extern VECREC*	R_VMax;			/* bottom of R_alloc'ed heap */
-extern long	R_Collected;		/* Number of free cons cells (after gc) */
-		/* The Pointer Protection Stack */
-extern int	R_PPStackSize;		/* The stack size (elements) */
-extern int	R_PPStackTop;		/* The top of the stack */
-extern SEXP*	R_PPStack;		/* The pointer protection stack */
-		/* Evaluation Environment */
-extern SEXP	R_Call;			/* The current call */
-extern SEXP	R_GlobalEnv;		/* The "global" environment */
-extern SEXP	R_CurrentExpr;		/* Currently evaluating expression */
-extern SEXP	R_ReturnedValue;	/* Slot for return-ing values */
-extern SEXP*	R_SymbolTable;		/* The symbol table */
-extern RCNTXT	R_Toplevel;		/* Storage for the toplevel environment */
-extern RCNTXT*	R_ToplevelContext;	/* The toplevel environment */
-extern RCNTXT*	R_GlobalContext;	/* The global environment */
-extern int	R_Visible;		/* Value visibility flag */
-extern int	R_EvalDepth;		/* Evaluation recursion depth */
-extern int	R_EvalCount;		/* Evaluation count */
-extern FUNTAB	R_FunTab[];		/* Built in functions */
-extern int	R_BrowseLevel;		/* how deep the browser is */
-		/* File Input/Output */
-extern int	R_Interactive;		/* Non-zero during interactive use */
-extern int	R_Quiet;		/* Be as quiet as possible */
-extern int	R_Slave;		/* Run as a slave process */
-/* extern int	R_Console; */		/* Console active flag */
-extern FILE*	R_Inputfile;		/* Current input flag */
-extern FILE*	R_Consolefile;		/* Console output file */
-extern FILE*	R_Outputfile;		/* Output file */
-extern FILE*	R_Sinkfile;		/* Sink file */
-		/* Objects Used In Parsing  */
-extern SEXP	R_CommentSxp;		/* Comments accumulate here */
-extern SEXP	R_ParseText;		/* Text to be parsed */
-extern int	R_ParseCnt;		/* Count of lines of text to be parsed */
-extern int	R_ParseError;		/* Line where parse error occured */
-		/* Special Values */
-extern SEXP	R_NilValue;		/* The nil object */
-extern SEXP	R_UnboundValue;		/* Unbound marker */
-extern SEXP	R_MissingArg;		/* Missing argument marker */
-		/* Symbol Table Shortcuts */
-extern SEXP	R_Bracket2Symbol;	/* "[[" */
-extern SEXP	R_BracketSymbol;	/* "[" */
-extern SEXP	R_ClassSymbol;		/* "class" */
-extern SEXP	R_DimNamesSymbol;	/* "dimnames" */
-extern SEXP	R_DimSymbol;		/* "dim" */
-extern SEXP	R_DollarSymbol;		/* "$" */
-extern SEXP	R_DotsSymbol;		/* "..." */
-extern SEXP	R_DropSymbol;		/* "drop" */
-extern SEXP	R_LevelsSymbol;		/* "levels" */
-extern SEXP	R_ModeSymbol;		/* "mode" */
-extern SEXP	R_NamesSymbol;		/* "names" */
-extern SEXP	R_NaRmSymbol;		/* "na.rm" */
-extern SEXP	R_RowNamesSymbol;	/* "row.names" */
-extern SEXP	R_SeedsSymbol;		/* ".Random.seed" */
-extern SEXP	R_TspSymbol;		/* "tsp" */
-extern SEXP	R_LastvalueSymbol;	/* ".Last.value" */
-extern SEXP	R_CommentSymbol;	/* "comment" */
-		/* Missing Values - others from Arith.h */
-extern SEXP	R_NaString;		/* NA_STRING as a CHARSXP */
-extern SEXP	R_BlankString;		/* "" as a CHARSXP */
-		/* Image Dump/Restore */
-extern char	R_ImageName[256];	/* Default image name */
-extern int	R_Unnamed;		/* Use default name? */
-extern int	R_DirtyImage;		/* Current image dirty */
-extern int	R_Init;			/* Do we have an image loaded */
-extern FILE*	R_FileRef;		/* the environment file pointer  */
+/* Memory Management */
+extern int	R_NSize;	    /* Size of cons cell heap */
+extern int	R_VSize;	    /* Size of the vector heap */
+extern SEXP	R_NHeap;	    /* Start of the cons cell heap */
+extern SEXP	R_FreeSEXP;	    /* Cons cell free list */
+extern VECREC*	R_VHeap;	    /* Base of the vector heap */
+extern VECREC*	R_VTop;		    /* Current top of the vector heap */
+extern VECREC*	R_VMax;		    /* bottom of R_alloc'ed heap */
+extern long	R_Collected;	    /* Number of free cons cells (after gc) */
+
+/* The Pointer Protection Stack */
+extern int	R_PPStackSize;	    /* The stack size (elements) */
+extern int	R_PPStackTop;	    /* The top of the stack */
+extern SEXP*	R_PPStack;	    /* The pointer protection stack */
+
+/* Evaluation Environment */
+extern SEXP	R_Call;		    /* The current call */
+extern SEXP	R_GlobalEnv;	    /* The "global" environment */
+extern SEXP	R_CurrentExpr;	    /* Currently evaluating expression */
+extern SEXP	R_ReturnedValue;    /* Slot for return-ing values */
+extern SEXP*	R_SymbolTable;	    /* The symbol table */
+extern RCNTXT	R_Toplevel;	    /* Storage for the toplevel environment */
+extern RCNTXT*	R_ToplevelContext;  /* The toplevel environment */
+extern RCNTXT*	R_GlobalContext;    /* The global environment */
+extern int	R_Visible;	    /* Value visibility flag */
+extern int	R_EvalDepth;	    /* Evaluation recursion depth */
+extern int	R_EvalCount;	    /* Evaluation count */
+extern FUNTAB	R_FunTab[];	    /* Built in functions */
+extern int	R_BrowseLevel;	    /* how deep the browser is */
+
+/* File Input/Output */
+extern int	R_Interactive;	    /* Non-zero during interactive use */
+extern int	R_Quiet;	    /* Be as quiet as possible */
+extern int	R_Slave;	    /* Run as a slave process */
+/* extern int	R_Console; */	    /* Console active flag */
+extern FILE*	R_Inputfile;	    /* Current input flag */
+extern FILE*	R_Consolefile;	    /* Console output file */
+extern FILE*	R_Outputfile;	    /* Output file */
+extern FILE*	R_Sinkfile;	    /* Sink file */
+
+/* Objects Used In Parsing  */
+extern SEXP	R_CommentSxp;	    /* Comments accumulate here */
+extern SEXP	R_ParseText;	    /* Text to be parsed */
+extern int	R_ParseCnt;	    /* Count of lines of text to be parsed */
+extern int	R_ParseError;	    /* Line where parse error occured */
+
+/* Special Values */
+extern SEXP	R_NilValue;	    /* The nil object */
+extern SEXP	R_UnboundValue;	    /* Unbound marker */
+extern SEXP	R_MissingArg;	    /* Missing argument marker */
+
+/* Symbol Table Shortcuts */
+extern SEXP	R_Bracket2Symbol;   /* "[[" */
+extern SEXP	R_BracketSymbol;    /* "[" */
+extern SEXP	R_ClassSymbol;	    /* "class" */
+extern SEXP	R_DimNamesSymbol;   /* "dimnames" */
+extern SEXP	R_DimSymbol;	    /* "dim" */
+extern SEXP	R_DollarSymbol;	    /* "$" */
+extern SEXP	R_DotsSymbol;	    /* "..." */
+extern SEXP	R_DropSymbol;	    /* "drop" */
+extern SEXP	R_LevelsSymbol;	    /* "levels" */
+extern SEXP	R_ModeSymbol;	    /* "mode" */
+extern SEXP	R_NamesSymbol;	    /* "names" */
+extern SEXP	R_NaRmSymbol;	    /* "na.rm" */
+extern SEXP	R_RowNamesSymbol;   /* "row.names" */
+extern SEXP	R_SeedsSymbol;	    /* ".Random.seed" */
+extern SEXP	R_TspSymbol;	    /* "tsp" */
+extern SEXP	R_LastvalueSymbol;  /* ".Last.value" */
+extern SEXP	R_CommentSymbol;    /* "comment" */
+
+/* Missing Values - others from Arith.h */
+extern SEXP	R_NaString;	    /* NA_STRING as a CHARSXP */
+extern SEXP	R_BlankString;	    /* "" as a CHARSXP */
+
+/* Image Dump/Restore */
+extern char	R_ImageName[256];   /* Default image name */
+extern int	R_Unnamed;	    /* Use default name? */
+extern int	R_DirtyImage;	    /* Current image dirty */
+extern int	R_Init;		    /* Do we have an image loaded */
+extern FILE*	R_FileRef;	    /* the environment file pointer  */
 
 #define NA_LOGICAL	R_NaInt
 #define NA_INTEGER	R_NaInt
@@ -397,12 +414,12 @@ extern FILE*	R_FileRef;		/* the environment file pointer  */
 #define NA_REAL		R_NaReal
 #define NA_STRING	R_NaString
 
-	/* File Handling */
+/* File Handling */
 
 #define R_EOF	65535
 extern int	R_fgetc(FILE*);
 
-	/* MAGIC Numbers for files */
+/* MAGIC Numbers for files */
 
 #define R_MAGIC_BINARY 1975
 #define R_MAGIC_ASCII  1976
@@ -411,16 +428,15 @@ extern int	R_fgetc(FILE*);
 #define R_MAGIC_BINARY_VERSION16 1971
 #define R_MAGIC_ASCII_VERSION16  1972
 
-	/* Other Stuff */
+/* Other Stuff */
 
 void hsv2rgb(double h, double s, double v, double *r, double *g, double *b);
-/* void GCircle(double x, double y, double radius, int col, int border); */
 void call_R(char *func, long nargs, void **arguments, char **modes, long *lengths, char **names, long nres, char **results);
 void printRealVector(double * x, int n, int index);
 void printIntegerVector(int * x, int n, int index);
 int StringFalse(char *name);
 
-		/* Platform Dependent Gui Hooks */
+/* Platform Dependent Gui Hooks */
 
 #define	R_CONSOLE	1
 #define	R_FILE		2
@@ -435,24 +451,24 @@ void	R_Busy(int);
 void	R_CleanUp(int);
 void	R_StartUp(void);
 
-		/* Defined in main.c */
+/* Defined in main.c */
 
 char	*R_PromptString(int, int);
 
-		/* C Memory Management Interface */
+/* C Memory Management Interface */
 
 void Init_C_alloc(void);
 void Reset_C_alloc(void);
 char *C_alloc(long, int);
 void C_free(char *);
 
-		/* Missing Value Test */
-		/* Special NaN */
+/* Missing Value Test */
+/* Special NaN */
 
 int R_IsNA(double);
 int R_IsNaN(double);
 
-		/* Internally Used Functions */
+/* Internally Used Functions */
 
 SEXP allocArray(SEXPTYPE, SEXP);
 SEXP allocMatrix(SEXPTYPE, int, int);
