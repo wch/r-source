@@ -14,23 +14,25 @@ tapply(X, INDEX, FUN = NULL, simplify = TRUE, \dots)
   \item{simplify}{If \code{FALSE}, \code{tapply} always returns an array
     of mode \code{"list"}.  If \code{TRUE} (the default), then if
     \code{FUN} always returns a scalar, \code{tapply} returns an array
-    with the mode of the scalar, and if the array would be one
-    dimensional the dimension is removed, to make it a vector.}
+    with the mode of the scalar.}
   \item{\dots}{optional arguments to \code{FUN}.}
 }
 \value{
   When \code{FUN} is present, \code{tapply} calls \code{FUN} for each
   cell that has any data in it.  If \code{FUN} returns a single atomic
-  value for each cell (e.g., functions \code{mean} or \code{var}), then
-  \code{tapply} returns a multi-way array containing the values.  The
+  value for each cell (e.g., functions \code{mean} or \code{var}) and
+  when \code{simplify} is true,
+  \code{tapply} returns a multi-way \link{array} containing the values.  The
   array has the same number of dimensions as \code{INDEX} has
   components; the number of levels in a dimension is the number of
   levels (\code{nlevels(.)}) in the corresponding component of
-  \code{INDEX}.  This is a vector if \code{INDEX} has only one
-  component.
+  \code{INDEX}.
+
+  Note that contrary to S, \code{simplify = TRUE} always returns an
+  array, possibly 1-dimensional.
 
   If \code{FUN} does not return a single atomic value, \code{tapply}
-  returns an array of mode \code{"\link{list}"} whose components are the
+  returns an array of mode \code{\link{list}} whose components are the
   values of the individual calls to \code{FUN}, i.e., the result is a
   list with a \code{\link{dim}} attribute.
 }
@@ -44,12 +46,17 @@ groups <- as.factor(rbinom(32, n = 5, p = .4))
 tapply(groups, groups, length) #- is almost the same as
 table(groups)
 
+data(warpbreaks)
+## contingency table from data.frame : array with named dimnames
+tapply(warpbreaks$breaks, warpbreaks[,-1], sum)
+tapply(warpbreaks$breaks, warpbreaks[,3,drop=F], sum)
+
 n <- 17; fac <- factor(rep(1:3, len = n), levels = 1:5)
 table(fac)
 tapply(1:n, fac, sum)
-tapply(1:n, fac, sum, simplify = FALSE) #- does not yet print okay
-tapply(1:n, fac, range)			#- .. nor does this
-tapply(1:n, fac, quantile)		#- ... or this
+tapply(1:n, fac, sum, simplify = FALSE)
+tapply(1:n, fac, range)
+tapply(1:n, fac, quantile)
 
 ind <- list(c(1, 2, 2), c("A", "A", "B"))
 table(ind)
