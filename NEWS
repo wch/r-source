@@ -164,6 +164,9 @@ BUG FIXES
     o   All braces in regular expressions used by Sweave() are now
         escaped by a backslash.
 
+    o	unloadNamespace failed because getNamespaceImports now coerces a
+	string argument to a name space.
+
 	
 
 		CHANGES IN R VERSION 1.7.0

@@ -17,10 +17,12 @@ getNamespaceVersion <- function(ns) {
     else getNamespaceInfo(ns, "spec")["version"]
 }
 getNamespaceExports <- function(ns) {
+    ns <- asNamespace(ns)
     if (isBaseNamespace(ns)) ls(NULL, all = TRUE)
     else ls(getNamespaceInfo(ns, "exports"), all = TRUE)
 }
 getNamespaceImports <- function(ns) {
+    ns <- asNamespace(ns)
     if (isBaseNamespace(ns)) NULL
     else getNamespaceInfo(ns, "imports")
 }
