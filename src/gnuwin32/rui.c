@@ -393,7 +393,7 @@ static void menupkgcranmirror(control m)
 {
     if (!ConsoleAcceptCmd) return;
     consolecmd(RConsole,
-	       "local({m <- read.csv(file.path(R.home(), \"doc/CRAN_mirrors.csv\"), as.is=TRUE); URL <- m[m[, 1]==select.list(m[,1],,FALSE), 'URL']; if(!is.na(URL)) options(CRAN=URL)})");
+	       "local({m <- read.csv(file.path(R.home(), \"doc/CRAN_mirrors.csv\"), as.is=TRUE); URL <- m[m[, 1]==select.list(m[,1],,FALSE), 'URL']; if(length(URL)) options(CRAN=URL[1])})");
 }
 
 static void menupkginstallcran(control m)
