@@ -68,23 +68,32 @@ install: installdirs
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome); \
 	done
+## FIXME:
+## This is really ugly, but should disappear anyway when we convert to
+## Automake.
 	@echo "installing executables ..."
 	@$(INSTALL_PROGRAM) bin/R.bin $(rhome)/bin
 	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(rhome)/bin/R
 	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R
-	@for f in `ls bin/*.$(SHLIB_EXT)`; do \
-	  $(INSTALL_PROGRAM) $${f} $(rhome)/bin; \
-	done
-	@if test -f gnome/R_gnome.$(SHLIB_EXT); then \
-	  $(INSTALL_PROGRAM) gnome/R_gnome.$(SHLIB_EXT) $(rhome)/gnome; \
-	fi
 	@for f in `find bin -type f -print \
 	             | grep -v '^bin/R$$' \
-	             | grep -v '^bin/R_' \
-	             | grep -v '^bin/R.bin'`; do \
-	  $(INSTALL_SCRIPT) $${f} $(rhome)/bin; \
+	             | grep -v '^bin/R.bin' \
+	             | grep -v '^bin/libR' \
+	             | grep -v '^bin/R_'`; do \
+	  $(INSTALL_SCRIPT) $${f} $(Rexecbindir); \
 	done
+	@echo "installing shlibs ..."
+	@for f in `ls bin/*.$(SHLIB_EXT) bin/*.la`; do \
+	  $(INSTALL_PROGRAM) $${f} $(Rexeclibdir); \
+	done
+@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=finish $(Rexeclibdir)
+	@if test -f gnome/R_gnome.$(SHLIB_EXT); then \
+	  $(MKINSTALLDIRS) $(rhome)/gnome; \
+	  for f in `ls gnome/*.$(SHLIB_EXT) gnome/*.la`; do \
+	    $(INSTALL_PROGRAM) $${f} $(rhome)/gnome; \
+	  done; \
+	fi
 	@echo "installing headers ..."
 	@for f in include/*.h; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/include; \
@@ -92,6 +101,7 @@ install: installdirs
 	@for f in include/R_ext/*.h; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/include/R_ext; \
 	done
+## </FIXME>
 	@echo "installing library ..."
 	@cp -r library $(rhome) || \
 	  (cd library; \
