@@ -52,8 +52,8 @@ void chull(int *n, double *x, int *m, int *in,
 	   int *ih, int *nh, int *il);
 
 /* cpoly.c : */
-int F77_SYMBOL(cpoly)(double *opr, double *opi, int *degree,
-		      double *zeror, double *zeroi, int *fail);
+int cpoly(double *opr, double *opi, int *degree,
+	  double *zeror, double *zeroi, int *fail);
 void polyev(int *,
 	    double *, double *, double *, double *,
 	    double *, double *, double *, double *);

@@ -770,8 +770,7 @@ SEXP do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    REAL(zr)[degree-i] = COMPLEX(z)[i].r;
 	    REAL(zi)[degree-i] = COMPLEX(z)[i].i;
 	}
-	F77_SYMBOL(cpoly)(REAL(zr), REAL(zi), &degree,
-			  REAL(rr), REAL(ri), &fail);
+	cpoly(REAL(zr), REAL(zi), &degree, REAL(rr), REAL(ri), &fail);
 	if(fail) errorcall(call, "root finding code failed");
 	UNPROTECT(2);
 	r = allocVector(CPLXSXP, degree);

@@ -40,7 +40,7 @@
 static SEXP R_fcall1;
 static SEXP R_env1;
 
-static double F77_SYMBOL(fcn1)(double *x)
+static double F77_NAME(fcn1)(double *x)
 {
     SEXP s;
     REAL(CADR(R_fcall1))[0] = *x;
@@ -111,7 +111,7 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_env1 = rho;
     PROTECT(R_fcall1 = lang2(v, R_NilValue));
     CADR(R_fcall1) = allocVector(REALSXP, 1);
-    REAL(CADR(R_fcall1))[0] = F77_SYMBOL(fmin)(&xmin, &xmax, F77_SYMBOL(fcn1), &tol);
+    REAL(CADR(R_fcall1))[0] = F77_CALL(fmin)(&xmin, &xmax, F77_CALL(fcn1), &tol);
     UNPROTECT(1);
     return CADR(R_fcall1);
 }
@@ -334,7 +334,7 @@ static int FT_lookup(int n, double *x)
 
 /* This how the optimizer sees them */
 
-static int F77_SYMBOL(fcn)(int *n, double *x, double *f)
+static int F77_NAME(fcn)(int *n, double *x, double *f)
 {
     SEXP s;
     double *g = (double *) 0, *h = (double *) 0;
@@ -384,14 +384,14 @@ static int F77_SYMBOL(fcn)(int *n, double *x, double *f)
 }
 
 
-static int F77_SYMBOL(Cd1fcn)(int *n, double *x, double *g)
+static int F77_NAME(Cd1fcn)(int *n, double *x, double *g)
 {
     /* error("optimization using analytic gradients not implemented
        (yet)\n"); */
     int ind;
 
     if ((ind = FT_lookup(*n, x)) < 0) {	/* shouldn't happen */
-	F77_SYMBOL(fcn)(n, x, g);
+	F77_CALL(fcn)(n, x, g);
 	if ((ind = FT_lookup(*n, x)) < 0) {
 	    error("function value caching for optimization is seriously confused.\n");
 	}
@@ -401,14 +401,14 @@ static int F77_SYMBOL(Cd1fcn)(int *n, double *x, double *g)
 }
 
 
-static int F77_SYMBOL(Cd2fcn)(int *nr, int *n, double *x, double *h)
+static int F77_NAME(Cd2fcn)(int *nr, int *n, double *x, double *h)
 {
     /*  error("optimization using analytic Hessians not implemented
 	(yet)\n"); */
     int j, ind;
 
     if ((ind = FT_lookup(*n, x)) < 0) {	/* shouldn't happen */
-	F77_SYMBOL(fcn)(n, x, h);
+	F77_CALL(fcn)(n, x, h);
 	if ((ind = FT_lookup(*n, x)) < 0) {
 	    error("function value caching for optimization is seriously confused.\n");
 	}
@@ -667,8 +667,8 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
      *	 I think we always check gradients and hessians
      */
 
-    F77_SYMBOL(optif9)(&n, &n, x, F77_SYMBOL(fcn), F77_SYMBOL(Cd1fcn),
-		       F77_SYMBOL(Cd2fcn), typsiz, &fscale,
+    F77_CALL(optif9)(&n, &n, x, F77_CALL(fcn), F77_CALL(Cd1fcn),
+		       F77_CALL(Cd2fcn), typsiz, &fscale,
 		       &method, &iexp, &msg, &ndigit, &itnlim,
 		       &iagflg, &iahflg, &ipr,
 		       &dlt, &gradtl, &stepmx, &steptol,
@@ -682,7 +682,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (want_hessian) {
 	PROTECT(value = allocVector(VECSXP, 6));
 	PROTECT(names = allocVector(STRSXP, 6));
-	F77_SYMBOL(fdhess)(&n, xpls, &fpls, F77_SYMBOL(fcn), a, &n,
+	F77_CALL(fdhess)(&n, xpls, &fpls, F77_CALL(fcn), a, &n,
 			   &wrk[0], &wrk[n], &ndigit, typsiz);
 	for (i = 0; i < n; i++)
 	    for (j = 0; j < i; j++)
@@ -757,7 +757,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  ipr	   --> device to which to send output [unused in C]
  */
 
-int F77_SYMBOL(result)(int *nr, int *n, double *x, double *f, double *g,
+int F77_NAME(result)(int *nr, int *n, double *x, double *f, double *g,
 		       double *a, double *p, int *itncnt, int *iflg, int *ipr)
 {
     /* Print iteration number */
