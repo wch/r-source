@@ -60,7 +60,7 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   available in the contrib section of CRAN, the comprehensive R archive
   network.  The current list of packages is downloaded over the internet
   (or copied from a local CRAN mirror). Both functions use
-  \code{\link{parse.dcf}} for parsing the description files.
+  \code{\link{read.dcf}} for parsing the description files.
   \code{old.packages} compares the two lists and reports installed
   packages that have newer versions on CRAN.
 
@@ -118,6 +118,6 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   \code{\link{INSTALL}}, \code{\link{REMOVE}},
 #endif
   \code{\link{library}}, \code{\link{.packages}},
-  \code{\link{parse.dcf}}, \code{\link{download.file}}
+  \code{\link{read.dcf}}, \code{\link{download.file}}
 }
 \keyword{utilities}

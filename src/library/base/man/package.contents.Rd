@@ -17,7 +17,7 @@ package.description(pkg, lib = .lib.loc, fields = NULL)
  \item{fields}{A character vector of fields to return (if other fields
    occur in the file they are ignored.}
 }
-\seealso{\code{\link{parse.dcf}}}
+\seealso{\code{\link{read.dcf}}}
 \examples{
 package.contents("mva")
 }

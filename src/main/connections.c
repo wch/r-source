@@ -1289,6 +1289,29 @@ int Rconn_ungetc(int c, Rconnection con)
     return c;
 }
 
+/* read one line (without trailing newline) from con and store it in buf */
+/* return number of characters read, -1 on EOF */
+int Rconn_getline(Rconnection con, char *buf, int bufsize)
+{
+    int nbuf = -1;
+    char c;
+    
+    while((c = Rconn_fgetc(con)) != R_EOF) {
+	if(nbuf >= bufsize) {
+	    error("Line longer than buffer size");
+	}
+	if(c != '\n'){
+	    buf[++nbuf] = c;
+	}
+	else{
+	    buf[++nbuf] = '\0';
+	    break;
+	}
+    }
+    return(nbuf);
+}
+
+
 int Rconn_printf(Rconnection con, const char *format, ...)
 {
     int res;

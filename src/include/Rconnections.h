@@ -78,6 +78,7 @@ typedef struct urlconn {
 
 int Rconn_fgetc(Rconnection con);
 int Rconn_ungetc(int c, Rconnection con);
+int Rconn_getline(Rconnection con, char *buf, int bufsize);
 int Rconn_printf(Rconnection con, const char *format, ...);
 Rconnection getConnection(int n);
 Rconnection getConnection_no_err(int n);

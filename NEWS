@@ -143,7 +143,8 @@ NEW FEATURES
     o	New function formatDL() for formatting description lists.
 
     o	New function write.dcf() for writing data in Debian Control File
-	format.
+	format. parse.dcf() has been replaced by (much faster)
+	internal read.dcf().
 
     o	New function oneway.test() in package ctest for testing for
 	equal means in a one-way layout, assuming normality but not

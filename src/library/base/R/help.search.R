@@ -66,13 +66,10 @@ help.search <- function(pattern, fields = c("alias", "title"),
             lib <- dirname(path)
             cfile <- file.path(path, "CONTENTS")
             if(file.exists(cfile)) {
-                ctext <- scan("", file = cfile, sep = "\n", quote="",
-                              quiet = TRUE)
-                if(length(ctext) > 0) {
-                    ctext <- parse.dcf(ctext,
-                                       fields = c("Entry", "Aliases",
-                                       "Description", "Keywords"))
-                    nr <- NROW(ctext)
+                ctext <- read.dcf(cfile,
+                                 fields = c("Entry", "Aliases",
+                                 "Description", "Keywords"))
+                if((nr <- NROW(ctext)) > 0){
                     db <- rbind(db,
                                 cbind(rep(p, nr), rep(lib, nr), ctext))
                 } else {

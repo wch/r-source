@@ -10,9 +10,8 @@ CRAN.packages <- function(CRAN=getOption("CRAN"), method,
         download.file(url=paste(contriburl, "PACKAGES", sep="/"),
                       destfile=tmpf, method=method)
     }
-    parse.dcf(file=tmpf, fields=c("Package", "Version",
-                         "Priority", "Bundle", "Depends"),
-              versionfix=TRUE)
+    read.dcf(file=tmpf, fields=c("Package", "Version",
+                       "Priority", "Bundle", "Depends"))
 }
 
 update.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
@@ -131,8 +130,7 @@ package.contents <- function(pkg, lib=.lib.loc){
         return(NA)
     }
 
-    contents <- scan("", file=file, quote="", sep="\n", quiet=TRUE)
-    parse.dcf(contents, fields=c("Entry", "Keywords", "Description"))
+    read.dcf(file=file, fields=c("Entry", "Keywords", "Description"))
 }
 
 
@@ -152,8 +150,7 @@ package.description <- function(pkg, lib=.lib.loc, fields=NULL)
         return(retval)
     }
 
-    contents <- scan("", file=file, quote="", sep="\n", quiet=TRUE)
-    parse.dcf(contents, fields=fields, versionfix=TRUE)
+    read.dcf(file=file, fields=fields)
 }
 
 
