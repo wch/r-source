@@ -84,7 +84,8 @@ prompt.default <-
 		  "", "## The function is currently defined as",
 		  fn.def,
 		  "}",
-		  "\\keyword{ ~keyword }%-- one or more ..."
+		  "\\keyword{ ~kwd1 }% at least one, from doc/KEYWORDS",
+		  "\\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line"
 		  )
     } else {#-- not function, assume dataset --
         tf <- tempfile(); on.exit(unlink(tf))
