@@ -385,8 +385,8 @@ etc/Rman2Rd
 etc/Sd2Rd
 etc/build-html
 etc/build-index
+etc/build-htmlpkglist
 etc/html2dos
-etc/remove-html
 demos/dynload/Makefile
 src/library/LIBSETUP
 src/library/LIBCLEAN
@@ -395,6 +395,6 @@ cmd/fwf2table
 
 AC_OUTPUT_COMMANDS(
 (cd etc; chmod +x INSTALL Rdconv Rdindex Rman2Rd Sd2Rd \
-         build-html build-index html2dos remove-html)
+         build-html build-index html2dos build-htmlpkglist)
 (cd cmd; chmod +x fwf2table)
 )
