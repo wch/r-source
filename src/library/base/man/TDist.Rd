@@ -1,4 +1,4 @@
-\name{T}
+\name{TDist}
 \title{The Student t Distribution}
 \usage{
 dt(x, df)
