@@ -2,6 +2,9 @@
 
 NEW FEATURES
 
+    o	Added split.screen etc functions for manipulating multiple
+	screens on a single device
+
     o   After help.start() the html help system is used for all help()
         requests. The name of the browser is now controlled by
         options("browser").
