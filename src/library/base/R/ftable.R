@@ -9,7 +9,7 @@ ftable.default <- function(..., exclude = c(NA, NaN),
     if(is.list(x))
         x <- table(x, exclude = exclude)
     else if(inherits(x, "ftable")) {
-        x <- ftable2table(x)
+        x <- as.table(x)
     }
     else if(!(is.array(x) && (length(dim(x)) > 1))) {
         x <- do.call("table",
@@ -87,7 +87,7 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
        || inherits(edata, "table")
        || length(dim(edata)) > 2) {
         if(inherits(edata, "ftable")) {
-            data <- ftable2table(data)
+            data <- as.table(data)
         }
         varnames <- names(dimnames(data))
         if(rhs.has.dot)
@@ -132,39 +132,8 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
     }
 }
 
-print.ftable <- function(x) {
-    if(!inherits(x, "ftable"))
-        stop("x must be an `ftable'")
-    ox <- x
-    makeLabels <- function(lst) {
-        lens <- sapply(lst, length)
-        cplensU <- c(1, cumprod(lens))
-        cplensD <- rev(c(1, cumprod(rev(lens))))
-        y <- NULL
-        for (i in rev(seq(along = lst))) {
-            ind <- 1 + seq(from = 0, to = lens[i] - 1) * cplensD[i + 1]
-            tmp <- character(length = cplensD[i])
-            tmp[ind] <- lst[[i]]
-            y <- cbind(rep(tmp, times = cplensU[i]), y)
-        }
-        y
-    }
-    xrv <- attr(x, "row.vars")
-    xcv <- attr(x, "col.vars")
-    LABS <- cbind(rbind(matrix("", nr = length(xcv), nc = length(xrv)),
-                        names(xrv), makeLabels(xrv)),
-                  c(names(xcv), rep("", times = nrow(x) + 1)))
-    DATA <- rbind(t(makeLabels(xcv)), rep("", times = ncol(x)), x)
-    x <- cbind(apply(LABS, 2, formatC, flag = "-"),
-               apply(DATA, 2, formatC))
-    cat(t(x), sep = c(rep(" ", ncol(x) - 1), "\n"))
-    invisible(ox)
-}
-
-ftable2table <- function(x) {
-    ## Note: it would be nicer to have as.table() for coercion to a
-    ## standard contingency table.  But the term ``table'' is also used
-    ## differently, so let's wait until this gets straightened out.
+as.table.ftable <- function(x)
+{
     if(!inherits(x, "ftable"))
         stop("x must be an `ftable'")
     xrv <- rev(attr(x, "row.vars"))
@@ -179,4 +148,155 @@ ftable2table <- function(x) {
                     seq(from = nrv + ncv, to = nrv + 1)))
     class(x) <- "table"
     x
+}
+
+write.ftable <- function(x, file = "", quote = TRUE)
+{
+    if(!inherits(x, "ftable"))
+        stop("x must be an `ftable'")
+    ox <- x
+    charQuote <- function(s) {
+        ## If `quote' is TRUE, we want to quote all character strings in
+        ## the output.  However, simply quoting using `"' does not work
+        ## because the left-adjusted formatting below calls format()
+        ## which escapes `"' to `\"'.  Hence, we quote using `@', and
+        ## use gsub() after formatting ...
+        if(quote)
+            paste("@", s, "@", sep = "")
+        else
+            s
+    }
+    makeLabels <- function(lst) {
+        lens <- sapply(lst, length)
+        cplensU <- c(1, cumprod(lens))
+        cplensD <- rev(c(1, cumprod(rev(lens))))
+        y <- NULL
+        for (i in rev(seq(along = lst))) {
+            ind <- 1 + seq(from = 0, to = lens[i] - 1) * cplensD[i + 1]
+            tmp <- character(length = cplensD[i])
+            tmp[ind] <- charQuote(lst[[i]])
+            y <- cbind(rep(tmp, times = cplensU[i]), y)
+        }
+        y
+    }
+    xrv <- attr(x, "row.vars")
+    xcv <- attr(x, "col.vars")
+    LABS <- cbind(rbind(matrix("", nr = length(xcv), nc = length(xrv)),
+                        charQuote(names(xrv)),
+                        makeLabels(xrv)),
+                  c(charQuote(names(xcv)),
+                    rep("", times = nrow(x) + 1)))
+    DATA <- rbind(t(makeLabels(xcv)), rep("", times = ncol(x)), x)
+    x <- cbind(apply(LABS, 2, formatC, flag = "-"),
+               apply(DATA, 2, formatC))
+    if(quote) {
+        ## Now change the leading and sort-of-trailing `@' obtained from
+        ## quoting to `"'
+        x[] <- gsub("^@", "\"", x)
+        x[] <- gsub("@( *)$", "\"\\1", x)
+    }
+    cat(t(x), file = file, sep = c(rep(" ", ncol(x) - 1), "\n"))
+    invisible(ox)
+}
+
+print.ftable <- function(x)
+    write.ftable(x, quote = FALSE)
+
+read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
+                        col.vars, skip = 0)
+{
+    z <- count.fields(file, sep, quote, skip)
+    n.row.vars <- z[max(which(z == max(z)))] - z[length(z)] + 1
+    i <- which(z == n.row.vars)
+    if((length(i) != 1) || (i == 1)) {
+        ## This is not really an ftable.
+        if((z[1] == 1) && z[2] == max(z)) {
+            ## Case A.  File looks like
+            ##
+            ##                                cvar.nam
+            ## rvar.1.nam   ... rvar.k.nam    cvar.lev.1 ... cvar.lev.l
+            ## rvar.1.lev.1 ... rvar.k.lev.1  ...        ... ...
+            ##
+            n.col.vars <- 1
+            col.vars <- vector("list", length = n.col.vars)
+            s <- scan(file, what = "", sep = sep, quote = quote,
+                      nlines = 2, skip = skip, quiet = TRUE)
+            names(col.vars) <- s[1]
+            s <- s[-1]
+            row.vars <- vector("list", length = n.row.vars)
+            i <- 1 : n.row.vars
+            names(row.vars) <- s[i]
+            col.vars[[1]] <- s[-i]
+            z <- z[3 : length(z)]
+        }
+        else {
+            ## Case B.
+            ## We cannot determine the names and levels of the column
+            ## variables, and also not the names of the row variables.
+            if(missing(row.var.names)) {
+                ## `row.var.names' should be a character vector (or
+                ## factor) with the names of the row variables.
+                stop("row.var.names missing")
+            }
+            n.row.vars <- length(row.var.names)
+            row.vars <- vector("list", length = n.row.vars)
+            names(row.vars) <- as.character(row.var.names)
+            if(missing(col.vars) || !is.list(col.vars)) {
+                ## `col.vars' should be a list.
+                stop("col.vars missing or incorrect")
+            }
+            col.vars <- lapply(col.vars, as.character)
+            n.col.vars <- length(col.vars)
+            if(is.null(names(col.vars)))
+                names(col.vars) <-
+                    paste("Factor", seq(along = col.vars), sep = ".")
+            else {
+                nam <- names(col.vars)
+                ind <- which(nchar(nam) == 0)
+                names(col.vars)[ind] <-
+                    paste("Factor", ind, sep = ".")
+            }
+        }
+    }
+    else {
+        ## We can figure things out ourselves.
+        n.col.vars <- i - 1
+        col.vars <- vector("list", length = n.col.vars)
+        n <- c(1, z[1 : n.col.vars] - 1)
+        for(k in seq(from = 1, to = n.col.vars)) {
+            s <- scan(file, what = "", sep = sep, quote = quote,
+                      nlines = 1, skip = skip + k - 1, quiet = TRUE)
+            col.vars[[k]] <- s[-1]
+            names(col.vars)[k] <- s[1]
+        }
+        row.vars <- vector("list", length = n.row.vars)
+        names(row.vars) <- scan(file, what = "", sep = sep, quote =
+                                quote, nlines = 1, skip = skip +
+                                n.col.vars, quiet = TRUE)
+        z <- z[(n.col.vars + 2) : length(z)]
+    }
+    p <- 1
+    n <- integer(n.row.vars)
+    for(k in seq(from = 1, to = n.row.vars)) {
+        n[k] <- sum(z == max(z) - k + 1) / p
+    }
+    is.row.lab <- rep(rep(c(TRUE, FALSE), length(z)),
+                      c(rbind(z - min(z) + 1, min(z) - 1)))
+    s <- scan(file, what = "", sep = sep, quote = quote, quiet = TRUE,
+              skip = skip + n.col.vars + 1)
+    values <- as.numeric(s[!is.row.lab])
+    tmp <- s[is.row.lab]
+    len <- length(tmp)
+    for(k in seq(from = 1, to = n.row.vars)) {
+        i <- seq(from = 1, to = len, by = len / n[k])
+        row.vars[[k]] <- unique(tmp[i])
+        tmp <- tmp[seq(from = 2, to = len / n[k])]
+        len <- length(tmp)
+    }
+    dim(values) <- c(prod(sapply(row.vars, length)),
+                     prod(sapply(col.vars, length)))
+    structure(values,
+              row.vars = row.vars,
+              col.vars = col.vars,
+              class = "ftable")
 }
