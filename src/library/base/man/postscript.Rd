@@ -42,6 +42,7 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
 \description{
 \code{postscript} starts the graphics device driver for producing
 PostScript graphics.
+
 The auxiliary function \code{ps.options} can be used to set and view
 (if called without arguments)
 default values for the arguments to \code{postscript}.

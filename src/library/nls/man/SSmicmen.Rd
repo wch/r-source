@@ -1,6 +1,6 @@
-% $Id: SSmicmen.Rd,v 1.1 1999/11/12 13:34:35 bates Exp $
+% $Id: SSmicmen.Rd,v 1.1.10.1 1999/12/20 15:16:46 ripley Exp $
 \name{SSmicmen}
-\title{Michaelis-Menten model}
+\title{Michaelis-Menten Model}
 \usage{
 SSmicmen(input, Vm, K)
 }

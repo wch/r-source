@@ -4,11 +4,14 @@
 median(x, na.rm=FALSE)
 }
 \alias{median}
+\arguments{
+  \item{x}{a numeric vector containing the values
+    whose median is to be computed.}
+  \item{na.rm}{a logical value indicating whether \code{NA}
+    values should be stripped before the computation proceeds.}
+  }
 \description{
-\code{median}
-computes the sample median of the vector of values given as its argument.
-If \code{na.rm} is \code{TRUE} then \code{NA} values are deleted
-before computation proceeds.
+  Compute the sample median of the vector of values given as its argument.
 }
 \seealso{\code{\link{quantile}} for general quantiles.}
 \examples{

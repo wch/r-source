@@ -29,7 +29,8 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   \code{X11} starts a graphics device driver for the X Window System
   (version 11).  This can only be done on machines that run X.
   \code{x11} is recognized as a synonym for \code{X11}.
-
+}
+\details{
   By default, an X11 device will use the best color rendering
   strategy that it can.  The choice can be overriden with the
   \code{colortype} parameter.  A value of \code{"mono"} results in

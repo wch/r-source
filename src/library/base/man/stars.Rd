@@ -1,6 +1,6 @@
 \name{stars}
 \alias{stars}
-\title{Star plots and segment diagrams of multivariate data}
+\title{Star Plots and Segment Diagrams of Multivariate Data}
 \usage{
 stars(x, full = TRUE, scale = TRUE, radius = TRUE, labels =
       dimnames(x)[[1]], locations = NULL, xlimit = NULL, ylimit = NULL,

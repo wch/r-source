@@ -2,7 +2,7 @@
 %%%
 %%% Modified 1998/01/05 by Friedrich.Leisch@ci.tuwien.ac.at
 %%% Modified 1998/07/07 by Martin Maechler
-%%% Last modified 1999/11/20 by Brian Ripley
+%%% Modified 1999/11/20 by Brian Ripley
 
 \RequirePackage{bm}              % standard boldsymbol
 \RequirePackage{alltt}           % {verbatim} allowing \..
@@ -24,7 +24,7 @@
   {\begin{list}{}{\setlength{\leftmargin}{30pt}}\item}%
   {\end{list}}
 \newcommand{\HTML}{{\normalfont\textsc{html}}}
-\newcommand{\R}{{\normalfont\textsf{R}}}
+\newcommand{\R}{{\normalfont\textsf{R}}{}}
 
 \def\href#1#2{\special{html:<a href="#1">}{#2}\special{html:</a>}}
 
@@ -62,7 +62,7 @@
 \newcommand{\Link}[1]{#1\index{#1|textit}}
 %
 % \alias{<alias>}{<header>}
-\newcommand{\alias}[2]{\index{#1@#1\textit{(#2)}}}
+\newcommand{\alias}[2]{\index{#1@#1 \textit{(#2)}}}
 % \keyword{<topic>}{<header>}
 \newcommand{\keyword}[2]{\index{$*$Topic{\large\ \textbf{#1}}!#2@\textsf{#2}}}
 %
@@ -113,11 +113,11 @@
 \newenvironment{References}{%
   \begin{Rdsection}{References}}{\end{Rdsection}}
 \newenvironment{SeeAlso}{%
-  \begin{Rdsection}{See Also}\raggedright}{\end{Rdsection}}
+  \begin{Rdsection}{See Also}}{\end{Rdsection}}
 \newenvironment{Format}{%
-  \begin{Rdsection}{Format}\raggedright}{\end{Rdsection}}
+  \begin{Rdsection}{Format}}{\end{Rdsection}}
 \newenvironment{Source}{%
-  \begin{Rdsection}{Source}\raggedright}{\end{Rdsection}}
+  \begin{Rdsection}{Source}}{\end{Rdsection}}
 \newenvironment{Section}[1]{%
   \begin{Rdsection}{#1}}{\end{Rdsection}}
 \newenvironment{Usage}{%

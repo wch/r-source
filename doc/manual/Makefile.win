@@ -66,10 +66,15 @@ refman.pdf: refman.tex version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	@TEXINPUTS="$(PDF);.;" \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 
-R-exts.pdf: R-exts.texi
+R-exts.pdf: R-exts.texi version.texi 
 	$(PDFTEX) R-exts.texi
 	$(TEXINDEX) R-exts.cp R-exts.fn R-exts.vr
 	$(PDFTEX) R-exts.texi
+
+version.texi: $(top_srcdir)/VERSION
+	@echo "creating $(subdir)/$@"
+	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
+	  echo "@set VERSION $${v}" > $@)
 
 
 mostlyclean: clean

@@ -2,6 +2,7 @@
 # and R (Examples) format
 
 # Copyright (C) 1997 Friedrich Leisch
+# Modifications for Windows (C) 1998, 1999 B. D. Ripley
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -75,7 +76,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	## Trivial (R 0.62 case): Only 1 $type at a time ==> one filename is ok.
 	## filename = 0	  <==>	STDOUT
 	## filename = -1  <==>	do NOT open and close files!
-	$htmlfile= $nrofffile= $Sdfile= $latexfile= $Exfile = $_[3];
+	$htmlfile= $nrofffile= $Sdfile= $latexfile= $Exfile = $chmfile = $_[3];
     } else { # have "," in $type: Multiple types with multiple output files
 	$dirname = $_[3]; # The super-directory , such as  <Rlib>/library/<pkg>
 	die "Rdconv(): '$dirname' is NOT a valid directory:$!\n"
@@ -142,7 +143,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	get_blocks($complete_text);
 
 	if($type =~ /html/i || $type =~ /nroff/i ||
-	   $type =~ /Sd/    || $type =~ /tex/i) {
+	   $type =~ /Sd/    || $type =~ /tex/i || $type =~ /chm/i ) {
 
 	    get_sections($complete_text);
 
@@ -157,6 +158,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	rdoc2Sd($Sdfile)	if $type =~ /Sd/i;
 	rdoc2latex($latexfile)	if $type =~ /tex/i;
 	rdoc2ex($Exfile)	if $type =~ /example/i;
+	rdoc2chm($chmfile)	if $type =~ /chm/i;
 
     } else {
 	warn "\n*** Rdconv(): no type specified\n";
@@ -450,6 +452,13 @@ sub replace_prepend_command {
     $text;
 }
 
+sub striptitle { # text
+    my $text = $_[0];
+    $text =~ s/\\//go;
+    $text =~ s/---/-/go;
+    $text =~ s/--/-/go;
+    return $text;
+}
 
 #==************************ HTML ********************************
 
@@ -459,7 +468,8 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
     if($_[0]!= -1) {
       if($_[0]) { open htmlout, "> $_[0]"; } else { open htmlout, "| cat"; }
     }
-    print htmlout html_functionhead($blocks{"title"}, $pkgname,
+    $using_chm = 0;
+    print htmlout html_functionhead(striptitle($blocks{"title"}), $pkgname,
 				    $blocks{"name"});
 
     html_print_block("description", "Description");
@@ -531,10 +541,24 @@ sub text2html {
 	my ($id, $arg)	= get_arguments("link", $text, 1);
 	$htmlfile = $htmlindex{$arg};
 	if($htmlfile){
-	    $text =~
-		s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
+	    if($using_chm) {
+		if ($htmlfile =~ s+^$pkg/html/++) {
+		    # in the same file
+		} else {
+		    $tmp = $htmlfile;
+		    ($base, $topic) = ($tmp =~ m+(.*)/(.*)+);
+		    $base =~ s+/html$++;
+		    $htmlfile = "ms-its:../../$base/winhlp/$base.chm::/$topic";
+#		    print "$htmlfile\n";
+		}
+		$text =~
+		    s/\\link$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
+	    } else {
+		$text =~
+		    s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
+	    }
 	}
-	else{
+	else {
 	    $misslink = $misslink . " " . $arg;
 	    $text =~ s/\\link$id.*$id/$arg/s;
 	}
@@ -608,8 +632,22 @@ sub code2html {
 	$htmlfile = $htmlindex{$argkey};
 
 	if($htmlfile){
-	    $text =~
-		s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
+	    if($using_chm) {
+		if ($htmlfile =~ s+^$pkg/html/++) {
+		    # in the same file
+		} else {
+		    $tmp = $htmlfile;
+		    ($base, $topic) = ($tmp =~ m+(.*)/(.*)+);
+		    $base =~ s+/html$++;
+		    $htmlfile = "ms-its:../../$base/chtml/$base.chm::/$topic";
+#		    print "$htmlfile\n";
+		}
+		$text =~
+		    s/\\link$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
+	    } else {
+		$text =~
+		    s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
+	    }
 	}
 	else{
 	    $misslink = $misslink . " " . $argkey;
@@ -791,9 +829,9 @@ sub rdoc2nroff { # (filename); 0 for STDOUT
     print nroffout ".po 3\n";
     print nroffout ".na\n";
     print nroffout ".tl '", $blocks{"name"},
-          "($pkgname)''R Documentation'\n\n" if $pkgname;
+          " {$pkgname}''R Documentation'\n\n" if $pkgname;
     print nroffout ".SH\n";
-    print nroffout $blocks{"title"}, "\n";
+    print nroffout striptitle($blocks{"title"}), "\n";
     nroff_print_block("description", "Description");
     nroff_print_codeblock("usage", "Usage");
     nroff_print_argblock("arguments", "Arguments");
@@ -860,8 +898,11 @@ sub text2nroff {
     $text =~ s/\\left\(/\(/go;
     $text =~ s/\\right\)/\)/go;
     $text =~ s/\\R/R/go;
-    $text =~ s/---/\\(em/go;
-    $text =~ s/--/\\(en/go;
+# these are troff, not nroff
+#    $text =~ s/---/\\(em/go;
+#    $text =~ s/--/\\(en/go;
+    $text =~ s/---/--/go;
+    $text =~ s/--/-/go;
     $text =~ s/$EOB/\{/go;
     $text =~ s/$ECB/\}/go;
 
@@ -1124,8 +1165,10 @@ sub nroff_tables {
 		"does not fit tabular format \{$format\}\n")
 		if ($#cols != $#colformat);
 	    for($l=0; $l<$#cols; $l++){
+		$cols[$l] =~ s/^\s*(.*)\s*$/$1/;
 		$table .= "$cols[$l]\t";
 	    }
+	    $cols[$#cols] =~ s/^\s*(.*)\s*$/$1/;
 	    $table .= "$cols[$#cols]\n";
 	}
 	$table .= ".TE\n";
@@ -1254,7 +1297,7 @@ sub Sd_print_sections {
 
 sub rdoc2ex { # (filename)
 
-    local($tit = $blocks{"title"});
+    local($tit = striptitle($blocks{"title"}));
 
     if(defined $blocks{"examples"}) {
 	if($_[0]!= -1) {
@@ -1314,6 +1357,11 @@ sub code2examp {
 
 #==********************* LaTeX ***********************************
 
+sub ltxstriptitle { # text
+    my $text = $_[0];
+    $text =~ s/\\R/\\R\{\}/go;
+    return $text;
+}
 
 sub rdoc2latex {# (filename)
 
@@ -1325,7 +1373,7 @@ sub rdoc2latex {# (filename)
     print latexout "\\Header\{";
     print latexout $blocks{"name"};
     print latexout "\}\{";
-    print latexout $blocks{"title"};
+    print latexout ltxstriptitle($blocks{"title"});
     print latexout "\}\n";
 
     foreach (@aliases) {
@@ -1391,7 +1439,7 @@ sub text2latex {
     $text =~ s/\\dddeqn/\\deqn/og;
 
     $text =~ s/&/\\&/go;
-    $text =~ s/\\R /\\R\\ /go;
+    $text =~ s/\\R(\s+)/\\R\{\}$1/go;
     $text =~ s/\\\\/\\bsl{}/go;
     $text =~ s/\\cr/\\\\\{\}/go;
     $text =~ s/\\tab(\s+)/&$1/go;
@@ -1584,6 +1632,38 @@ sub latex_code_alias {
     $c;
 }
 
+#==************************ Compiled HTML ********************************
+
+
+sub rdoc2chm { # (filename) ; 0 for STDOUT
+
+    if($_[0]!= -1) {
+      if($_[0]) { open htmlout, "> $_[0]"; } else { open htmlout, "| cat"; }
+    }
+    $using_chm = 1;
+    print htmlout chm_functionhead(striptitle($blocks{"title"}), $pkgname,
+				   $blocks{"name"});
+
+    html_print_block("description", "Description");
+    html_print_codeblock("usage", "Usage");
+    html_print_argblock("arguments", "Arguments");
+    html_print_block("format", "Format");
+    html_print_block("details", "Details");
+    html_print_argblock("value", "Value");
+
+    html_print_sections();
+
+    html_print_block("note", "Note");
+    html_print_block("author", "Author(s)");
+    html_print_block("source", "Source");
+    html_print_block("references", "References");
+    html_print_block("seealso", "See Also");
+    html_print_codeblock("examples", "Examples");
+
+    print htmlout html_functionfoot();
+    close htmlout;
+    $using_chm = 0;
+}
 
 # Local variables: **
 # perl-indent-level: 4 **

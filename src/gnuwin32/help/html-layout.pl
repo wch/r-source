@@ -47,7 +47,7 @@ sub html_pagehead
     $retval .= "<A HREF=\"$prev\"><IMG SRC=\"$top/left.jpg\"\n" .
 	"ALT=\"[$prevtext]\" WIDTH=30 HEIGHT=30 BORDER=0></A>\n"
 	    if $prev;
-    
+
     $retval .=
 	"<A HREF=\"$up\"><IMG SRC=\"$top/up.jpg\"" .
         "ALT=\"[$uptext]\" WIDTH=30 HEIGHT=30 BORDER=0></A>\n"
@@ -56,7 +56,7 @@ sub html_pagehead
     $retval .= "<A HREF=\"$next\"><IMG SRC=\"$top/right.jpg\"\n" .
     "ALT=\"[$nextext]\" WIDTH=30 HEIGHT=30 BORDER=0></A>\n"
 	if $next;
-    
+
     $retval .= "</DIV>\n\n";
 
     $retval;
@@ -76,17 +76,17 @@ sub html_functionhead
 
     if($pkgname){
 	$retval .= "<table width=100%><tr>" .
-	    "<td>$name($pkgname)</td>" .
+	    "<td>$name {$pkgname}</td>" .
 	    "<td align=right>R Documentation</td></tr></table><p>";
     }
-    
+
     $retval .= html_title2($title);
 }
 
 sub html_functionfoot
 {
     my $retval;
-    
+
     if($HTML){
 	$retval .= "\n\n<p align=center><hr><div align=center>" .
 	    "<a href=\"00Index.$HTML\">[Package Contents]</a></div>\n\n";
@@ -124,31 +124,31 @@ sub html_title3
 sub html_alphabet
 {
     "<p align=center>\n"
-    . "<A HREF=\"#A\">A</A>\n" 
-    . "<A HREF=\"#B\">B</A>\n" 
-    . "<A HREF=\"#C\">C</A>\n" 
-    . "<A HREF=\"#D\">D</A>\n" 
-    . "<A HREF=\"#E\">E</A>\n" 
-    . "<A HREF=\"#F\">F</A>\n" 
-    . "<A HREF=\"#G\">G</A>\n" 
-    . "<A HREF=\"#H\">H</A>\n" 
-    . "<A HREF=\"#I\">I</A>\n" 
-    . "<A HREF=\"#J\">J</A>\n" 
-    . "<A HREF=\"#K\">K</A>\n" 
-    . "<A HREF=\"#L\">L</A>\n" 
-    . "<A HREF=\"#M\">M</A>\n" 
-    . "<A HREF=\"#N\">N</A>\n" 
-    . "<A HREF=\"#O\">O</A>\n" 
-    . "<A HREF=\"#P\">P</A>\n" 
-    . "<A HREF=\"#Q\">Q</A>\n" 
-    . "<A HREF=\"#R\">R</A>\n" 
+    . "<A HREF=\"#A\">A</A>\n"
+    . "<A HREF=\"#B\">B</A>\n"
+    . "<A HREF=\"#C\">C</A>\n"
+    . "<A HREF=\"#D\">D</A>\n"
+    . "<A HREF=\"#E\">E</A>\n"
+    . "<A HREF=\"#F\">F</A>\n"
+    . "<A HREF=\"#G\">G</A>\n"
+    . "<A HREF=\"#H\">H</A>\n"
+    . "<A HREF=\"#I\">I</A>\n"
+    . "<A HREF=\"#J\">J</A>\n"
+    . "<A HREF=\"#K\">K</A>\n"
+    . "<A HREF=\"#L\">L</A>\n"
+    . "<A HREF=\"#M\">M</A>\n"
+    . "<A HREF=\"#N\">N</A>\n"
+    . "<A HREF=\"#O\">O</A>\n"
+    . "<A HREF=\"#P\">P</A>\n"
+    . "<A HREF=\"#Q\">Q</A>\n"
+    . "<A HREF=\"#R\">R</A>\n"
     . "<A HREF=\"#S\">S</A>\n"
-    . "<A HREF=\"#T\">T</A>\n" 
-    . "<A HREF=\"#U\">U</A>\n" 
-    . "<A HREF=\"#V\">V</A>\n" 
-    . "<A HREF=\"#W\">W</A>\n" 
-    . "<A HREF=\"#X\">X</A>\n" 
-    . "<A HREF=\"#Y\">Y</A>\n" 
+    . "<A HREF=\"#T\">T</A>\n"
+    . "<A HREF=\"#U\">U</A>\n"
+    . "<A HREF=\"#V\">V</A>\n"
+    . "<A HREF=\"#W\">W</A>\n"
+    . "<A HREF=\"#X\">X</A>\n"
+    . "<A HREF=\"#Y\">Y</A>\n"
     . "<A HREF=\"#Z\">Z</A>\n"
     . "</p>\n";
 }
@@ -187,13 +187,14 @@ sub chm_functionhead
 	    "<td>$name($pkgname)</td>" .
 	    "<td align=right>R Documentation</td></tr></table><p>";
     }
-    
+
     $retval .= "<OBJECT TYPE=\"application/x-oleobject\" CLASSID=\"clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e\">\n";
     foreach(@aliases) {
 #	print "alias: $_\n";
 	$retval .= "<PARAM NAME=\"Keyword\" VALUE=\"R:   $_\">\n";
     }
     $title =~ s/\"/'/go;  #'
+    $title =~ s/,//go;  # commas seem to give problems
     $retval .= "<PARAM NAME=\"Keyword\" VALUE=\" $title\">\n" .
 	"</OBJECT>\n\n";
     $retval .= html_title2($title);

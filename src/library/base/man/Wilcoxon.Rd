@@ -17,13 +17,14 @@ rwilcox(nn, m, n)
   \item{m,n}{numbers of observations in the first and second sample,
     respectively.  Must be positive integers less than 50.}
 }
-\value{
+\description{
   These functions provide information about the distribution of the
   Wilcoxon rank sum statistic obtained from samples with size \code{m}
   and \code{n}, respectively.  \code{dwilcox} gives the density,
   \code{pwilcox} gives the distribution function, \code{qwilcox} gives
   the quantile function, and \code{rwilcox} generates random deviates.
-
+}
+\details{
   This distribution is obtained as follows.  Let \code{x} and \code{y}
   be two random, independent samples of size \code{m} and \code{n}.
   Then the Wilcoxon rank sum statistic is the number of all pairs

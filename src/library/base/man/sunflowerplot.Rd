@@ -45,14 +45,15 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
     \code{add=FALSE}].}
 }
 \description{
-  Multiple points are plotted as "sunflowers" with multiple leaves
-  such that overplotting is visualized instead of accidental and invisible.
+  Multiple points are plotted as ``sunflowers'' with multiple leaves
+  such that overplotting is visualized instead of accidental and
+  invisible.
 }
 \details{
   For \code{number[i]==1}, a (slightly enlarged) usual plotting symbol
   (\code{pch}) is drawn.
   For \code{number[i] > 1}, a small plotting symbol is drawn and
-  \code{number[i]} equi-angular "rays" emanate from it.
+  \code{number[i]} equi-angular ``rays'' emanate from it.
 
   If \code{rotate=TRUE} and \code{number[i] >= 2}, a random direction
   is chosen (instead of the y-axis) for the first ray.  The goal is to
@@ -60,28 +61,28 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
   artefactual visual impressions.
 }
 \section{Side Effects}{
-  A scatter plot is drawn with "sunflowers" as symbols.
+  A scatter plot is drawn with ``sunflowers'' as symbols.
 }
 \value{
   A list with three components of same length,
   \item{x}{x coordinates}
   \item{y}{y coordinates}
-  \item{number}{number }
+  \item{number}{number}
 }
 \references{
-  Chambers, J.M., Cleveland, W.S., Kleiner, B. and Tukey, P.A. (1983).\cr
-  \emph{Graphical Methods for Data Analysis}, Wadsworth.
+  Chambers, J.M., Cleveland, W.S., Kleiner, B. and Tukey, P.A. (1983).
+  \emph{Graphical Methods for Data Analysis}.  Wadsworth.
 
   Schilling, M.F. and Watkins, A.E. (1994).
-  A suggestion for sunflower plots, \emph{The American Statistician}
-  \bold{48}:303--305.
+  A suggestion for sunflower plots.
+  \emph{The American Statistician} \bold{48}, 303--305.
 }
 \author{
-  Andreas Ruckstuhl, Werner Stahel, Martin Maechler, Tim Hesterberg,\cr
-  1989--1993.  Port to \R by Martin \email{maechler@stat.math.ethz.ch}.
+  Andreas Ruckstuhl, Werner Stahel, Martin Maechler, Tim Hesterberg,
+  1989--1993.  Port to \R by Martin Maechler
+  \email{maechler@stat.math.ethz.ch}.
 }
 \seealso{\code{\link{density}}}
-
 \examples{
 data(iris)
 ## `number' is computed automatically:

@@ -2,7 +2,7 @@
 \alias{subset}
 \alias{subset.default}
 \alias{subset.data.frame}
-\title{Subsetting vectors and data frames}
+\title{Subsetting Vectors and Data Frames}
 \usage{
 subset(x, ...)
 subset.default(x, subset)
@@ -15,7 +15,7 @@ subset.data.frame(x, subset, select)
     \item{select}{expression, indicating variables to select from a
 	dataframe}
 }
-\description{
+\details{
     For ordinary vectors, the result is simply 
     \code{x[subset & !is.na(subset)]}. 
 

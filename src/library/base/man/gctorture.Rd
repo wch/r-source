@@ -1,7 +1,7 @@
 \name{gctorture}
-\title{Torture garbage collector}
+\title{Torture Garbage Collector}
 \usage{
-gctorture(on=TRUE)
+gctorture(on = TRUE)
 }
 \alias{gctorture}
 \arguments{

@@ -1,7 +1,7 @@
 \name{nlsModel}
 \alias{nlsModel}
 \alias{nlsModel.plinear}
-\title{Create an nlsModel object}
+\title{Create an nlsModel Object}
 \usage{
 nlsModel(form, data, start)
 }

@@ -8,41 +8,42 @@ lm.influence(lm.obj)
 \item{lm.obj}{an object as returned by \code{\link{lm}}.}
 }
 \description{
-This function provides the basic quantities which are
-used in forming a wide variety of diagnostics for
-checking the quality of regression fits.
+  This function provides the basic quantities which are
+  used in forming a wide variety of diagnostics for
+  checking the quality of regression fits.
 
-The functions listed below give a more direct way
-of computing a variety of regression diagnostics.
+\details{
+  The functions listed in \bold{See Also} give a more direct way
+  of computing a variety of regression diagnostics.
 }
 \value{
-A list containing the following components:
-\item{hat}{a vector containing the diagonal of the ``hat'' matrix.}
-\item{coefficients}{the change in the estimated coefficients which results
-when the i-th case is dropped from the regression is contained in
-the i-th row of this matrix.}
-\item{sigma}{a vector whose i-th element contains the estimate
-of the residual standard deviation obtained when the i-th
-case is dropped from the regression.}
+  A list containing the following components:
+  \item{hat}{a vector containing the diagonal of the ``hat'' matrix.}
+  \item{coefficients}{the change in the estimated coefficients which results
+    when the i-th case is dropped from the regression is contained in
+    the i-th row of this matrix.}
+  \item{sigma}{a vector whose i-th element contains the estimate
+    of the residual standard deviation obtained when the i-th
+    case is dropped from the regression.}
 }
 \note{
-The \code{coefficients} returned by the \R version
-of \code{lm.influence} differ from those computed by S.
-Rather than returning the coefficients which result
-from dropping each case, we return the changes in the coefficients.
-This is more directly useful in many diagnostic measures.
+  The \code{coefficients} returned by the \R version
+  of \code{lm.influence} differ from those computed by S.
+  Rather than returning the coefficients which result
+  from dropping each case, we return the changes in the coefficients.
+  This is more directly useful in many diagnostic measures.
 
-Note that cases with \code{weights == 0} are \emph{dropped}.
+  Note that cases with \code{weights == 0} are \emph{dropped}.
 }
 \references{
-Belsley, D. A., E. Kuh and R. E. Welsch (1980).
-\emph{Regression Diagnostics}.
-New York: Wiley.
+  Belsley, D. A., E. Kuh and R. E. Welsch (1980).
+  \emph{Regression Diagnostics}.
+  New York: Wiley.
 }
 \seealso{
-\code{\link{summary.lm}} for \code{\link{summary}} and related methods;
-\code{\link{influence.measures}},
-\code{\link{hat}} for the hat matrix diagonals,
+\code{\link{summary.lm}} for \code{\link{summary}} and related methods;\cr
+\code{\link{influence.measures}},\cr
+\code{\link{hat}} for the hat matrix diagonals,\cr
 \code{\link{dfbetas}},
 \code{\link{dffits}},
 \code{\link{covratio}},

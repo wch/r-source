@@ -1,5 +1,5 @@
 \name{lapply}
-\title{Apply a Function Over a List or Vector}
+\title{Apply a Function over a List or Vector}
 \usage{
 lapply(X, FUN, \dots)
 sapply(X, FUN, \dots, simplify = TRUE, USE.NAMES = TRUE)

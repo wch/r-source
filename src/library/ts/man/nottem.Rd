@@ -4,7 +4,7 @@
 \name{nottem}
 \alias{nottem}
 \title{
-    Average Monthly Temperatures at Nottingham, 1920-1939
+    Average Monthly Temperatures at Nottingham, 1920--1939
 }
 \description{
     A time series object containing average air temperatures at

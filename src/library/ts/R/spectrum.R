@@ -300,7 +300,7 @@ plot.spec.coherency <-
               lty=ci.lty, col=ci.col)
         title(main)
     } else {
-        opar <- par(mfrow = c(nser, nser), mar = c(1.5, 1.5, 0.5, 0.5),
+        opar <- par(mfrow = c(nser-1, nser-1), mar = c(1.5, 1.5, 0.5, 0.5),
                     oma = c(4, 4, 6, 4))
         on.exit(par(opar))
         frame()
@@ -348,7 +348,7 @@ plot.spec.phase <-
         lines(x$freq, x$phase - cl, lty=ci.lty, col=ci.col)
         title(main)
     } else {
-        opar <- par(mfrow = c(nser, nser), mar = c(1.5, 1.5, 0.5, 0.5),
+        opar <- par(mfrow = c(nser-1, nser-1), mar = c(1.5, 1.5, 0.5, 0.5),
                     oma = c(4, 4, 6, 4))
         on.exit(par(opar))
         frame()

@@ -16,34 +16,34 @@ arima0.diag(fit, gof.lag = 10)
  \item{x}{a univariate time series}
 
  \item{order}{A specification of the non-seasonal part of the ARIMA
-     model: the three components are (p, d, q), the AR order, the degree
-     of differencing and the MA order.}
+   model: the three components are (p, d, q), the AR order, the degree
+   of differencing and the MA order.}
 
  \item{seasonal}{A specification of the seasonal part of the ARIMA
-     model, plus the period (which defaults to \code{frequency(x)}).}
+   model, plus the period (which defaults to \code{frequency(x)}).}
 
  \item{xreg}{Optionally, a vector or matrix of external regressors,
-     which must have the same number of rows as \code{x}.}
+   which must have the same number of rows as \code{x}.}
 
  \item{include.mean}{Should the ARIMA model include
-     a mean term? The default is \code{TRUE} for undifferenced series,
-     \code{FALSE} for differenced ones (where a mean would not affect
-     the fit nor predictions).}
+   a mean term? The default is \code{TRUE} for undifferenced series,
+   \code{FALSE} for differenced ones (where a mean would not affect
+   the fit nor predictions).}
 
  \item{na.action}{Function to be applied to remove missing values.}
 
  \item{delta}{A value to indicate at which point `fast recursions'
-     should be used. See the Details section.}
+   should be used. See the Details section.}
 
  \item{transform.pars}{If greater than 0, the ARMA parameters are
-     transformed to ensure that they remain in the region of
-     invertibility. If equal to 2, the optimization is rerun on
-     the original scale to find the Hessian.}
+   transformed to ensure that they remain in the region of
+   invertibility. If equal to 2, the optimization is rerun on
+   the original scale to find the Hessian.}
 
  \item{arima0.obj, fit}{The result of an \code{arima0} fit.}
 
  \item{newxreg}{New values of \code{xreg} to be used for
-     prediction. Must have at least \code{n.ahead} rows.}
+   prediction. Must have at least \code{n.ahead} rows.}
 
  \item{n.ahead}{The number of steps ahead for which prediction is required.}
 
@@ -52,39 +52,41 @@ arima0.diag(fit, gof.lag = 10)
  \item{gof.lag}{Number of lags to be used in goodness-of-fit test.}
 }
 \description{
-    Fit an ARIMA model to a univariate time series by exact maximum
-    likelihood, and forecast from the fitted model.
+  Fit an ARIMA model to a univariate time series by exact maximum
+  likelihood, and forecast from the fitted model.
 }
 \details{
-    Different definitions of ARIMA models have different signs for the
-    AR and/or MA coefficients. The definition here has
+  Different definitions of ARIMA models have different signs for the
+  AR and/or MA coefficients. The definition here has
 
-    X[t] = a[1]X[t-1] + ... + a[p]X[t-p] + e[t] + b[1]e[t-1] + ... + b[q]e[t-q]
+  \deqn{X_t = a_1X_{t-1} + \cdots + a_pX_{t-p} + e_t + b_1e_{t-1} + \dots + b_qe_{t-q}}{\code{X[t] = a[1]X[t-1] + \dots + a[p]X[t-p] + e[t] + b[1]e[t-1] + \dots + b[q]e[t-q]}}
 
-    and so the MA coefficients differ in sign from those of S-PLUS.
+  and so the MA coefficients differ in sign from those of
+  S-PLUS. Further, if \code{include.mean} is true, this formaula
+  applies to \eqn{X-m} rather than \eqn{X}.
     
-    The exact likelihood is computed via a state-space representation of
-    the ARMA process, and the innovations and their variance found by a
-    Kalman filter using the Fortran code of Gardener \emph{et al.}
-    (1980).  This has the option to switch to `fast recursions' (assume
-    an effectively infinite past) if the innovations variance is close
-    enough to its asymptotic bound. The argument \code{delta} sets the
-    tolerance: at its default value the approximation is normally
-    negligible and the speed-up considerable. Exact computations can be
-    ensured by setting \code{delta} to a negative value.
+  The exact likelihood is computed via a state-space representation of
+  the ARMA process, and the innovations and their variance found by a
+  Kalman filter using the Fortran code of Gardener \emph{et al.}
+  (1980).  This has the option to switch to `fast recursions' (assume
+  an effectively infinite past) if the innovations variance is close
+  enough to its asymptotic bound. The argument \code{delta} sets the
+  tolerance: at its default value the approximation is normally
+  negligible and the speed-up considerable. Exact computations can be
+  ensured by setting \code{delta} to a negative value.
 
-    The variance matrix of the estimates is found from the Hessian of
-    the log-likelihood, and so may only be a rough guide, especially for
-    fits close to the boundary of invertibility.
+  The variance matrix of the estimates is found from the Hessian of
+  the log-likelihood, and so may only be a rough guide, especially for
+  fits close to the boundary of invertibility.
 
-    Optimization is (currently) done by \code{\link{nlm}}. It will work
-    best if the columns in \code{xreg} are roughly scaled to zero mean
-    and unit variance.
+  Optimization is (currently) done by \code{\link{nlm}}. It will work
+  best if the columns in \code{xreg} are roughly scaled to zero mean
+  and unit variance.
 
-    Finite-history prediction is used. This is only statistically
-    efficient if the MA part of the fit is invertible, so
-    \code{predict.arima0} will give a warning for non-invertible MA
-    models.
+  Finite-history prediction is used. This is only statistically
+  efficient if the MA part of the fit is invertible, so
+  \code{predict.arima0} will give a warning for non-invertible MA
+  models.
 }
 \value{
   For \code{arima0}, a list of class \code{"arima0"} with components:
@@ -94,15 +96,15 @@ arima0.diag(fit, gof.lag = 10)
   \item{sigma2}{the MLE of the innovations variance.}
 
   \item{var.coef}{the estimated variance matrix of the coefficients
-      \code{coef}. If \code{transform.pars = 1}, only the portion
-      corresponding to the untransformed parameters is returned.}
+    \code{coef}. If \code{transform.pars = 1}, only the portion
+    corresponding to the untransformed parameters is returned.}
 
   \item{loglik}{the maximized log-likelihood (of the differenced data).}
 
   \item{arma}{A compact form of the specification, as a vector giving
-      the number of AR, MA, seasonal AR and seasonal MA coefficients,
-      plus the period and the number of non-seasonal and seasonal
-      differences.}
+    the number of AR, MA, seasonal AR and seasonal MA coefficients,
+    plus the period and the number of non-seasonal and seasonal
+    differences.}
 
   \item{aic}{the AIC value corresponding to the log-likelihood.}
 
@@ -121,7 +123,7 @@ arima0.diag(fit, gof.lag = 10)
 }
 \references{
     Brockwell, P. J. and Davis, R. A. (1996) \emph{Introduction to Time
-	Series and Forecasting.} Springer, New York. Sections 3.3 and 8.3.
+      Series and Forecasting.} Springer, New York. Sections 3.3 and 8.3.
 
     Gardener, G, Harvey, A. C. and Phillips, G. D. A. (1980) Algorithm
     AS154. An algorithm for exact maximum likelihood estimation of
@@ -138,15 +140,15 @@ arima0.diag(fit, gof.lag = 10)
 
 \author{B.D. Ripley}
 \note{
-    This is a preliminary version, and will be replaced in due course.
+  This is a preliminary version, and will be replaced in due course.
 
-    The standard errors of prediction exclude the uncertainty in the
-    estimation of the ARMA model and the regression coefficients.
-
-    The results are likely to be different from S-PLUS's
-    \code{arima.mle}, which computes a conditional likelihood and does
-    not include a mean in the model. Further, the convention used by
-    \code{arima.mle} reverses the signs of the MA coefficients.
+  The standard errors of prediction exclude the uncertainty in the
+  estimation of the ARMA model and the regression coefficients.
+  
+  The results are likely to be different from S-PLUS's
+  \code{arima.mle}, which computes a conditional likelihood and does
+  not include a mean in the model. Further, the convention used by
+  \code{arima.mle} reverses the signs of the MA coefficients.
 }
 
 \seealso{\code{\link{ar}}}

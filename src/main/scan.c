@@ -181,7 +181,7 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
     }
  donefill:
     if (strip) {
-	while (isspace(*--bufp))
+	while (isspace((int)*--bufp))
 	    ;
 	bufp++;
     }
@@ -805,7 +805,7 @@ SEXP do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
     /* now strip white space off the end as well */
-    while (isspace(*--bufp))
+    while (isspace((int)*--bufp))
 	;
     *++bufp = '\0';
     ConsolePrompt[0] = '\0';
@@ -839,9 +839,9 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
     ConsolePrompt[0] = '\0';
 
     bufp = buffer;
-    while (isspace(*bufp)) bufp++;
+    while (isspace((int)*bufp)) bufp++;
     first = LENGTH(CAR(args)) + 1;
-    if (isdigit(*bufp)) {
+    if (isdigit((int)*bufp)) {
 	first = strtod(buffer, NULL);
     }
     else {

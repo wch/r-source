@@ -1,6 +1,6 @@
 \name{Recall}
 \alias{Recall}
-\title{Recursive Calling of Itself}
+\title{Recursive Calling}
 \usage{
 Recall(...)
 }

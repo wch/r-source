@@ -4,12 +4,12 @@
 \name{loess}
 \title{Local Polynomial Regression Fitting}
 \usage{
-loess(formula, data, weights, subset, na.action, model=FALSE,
-      span=0.75, enp.target, degree=2,
-      parametric=FALSE, drop.square=FALSE, normalize=TRUE,
-      family=c("gaussian", "symmetric"),
-      method=c("loess", "model.frame"),
-      control=loess.control(...), ...)
+loess(formula, data, weights, subset, na.action, model = FALSE,
+      span = 0.75, enp.target, degree = 2,
+      parametric = FALSE, drop.square = FALSE, normalize = TRUE,
+      family = c("gaussian", "symmetric"),
+      method = c("loess", "model.frame"),
+      control = loess.control(...), ...)
 }
 \alias{loess}
 \alias{anova.loess}
@@ -17,42 +17,43 @@ loess(formula, data, weights, subset, na.action, model=FALSE,
 \alias{summary.loess}
 \alias{print.summary.loess}
 \arguments{
- \item{formula}{a formula specifying the response and one or more
-   numeric predictors (best specified via an interaction, but can also
-   be specified additively).}
- \item{data}{an optional data frame within which to look first for the
-   response, predictors and weights,}
- \item{weights}{optional weights for each case.}
- \item{subset}{an optional specification of a subset of the data to be used.}
- \item{na.action}{the action to be taken with missing values in the
-   response or predictors. The default is to stop.}
- \item{model}{should the model frame be returned?}
- \item{span}{the parameter \eqn{\alpha} which controls the degree of
-     smoothing.}
- \item{enp.target}{an alternative way to specify \code{span}, as the
-   approximate equivalent number of parameters to be used.}
- \item{degree}{the degree of the polynomials to be used, up to 2.}
- \item{parametric}{should any terms be fitted globally rather than
-   locally? Terms can be specified by name, number or as a logical
-   vector of the same length as the number of predictors.}
- \item{drop.square}{for fits with more than one predictor and
-   \code{degree=2}, should the quadratic term (and cross-terms) be
-   dropped for particular predictors? Terms are specified in the same way
-   as for \code{parametric}.}
- \item{normalize}{should the predictors be normalized to a common scale
-   if there is more than one? The normalization used is to set the
-   10\% trimmed standard deviation to one. Set to false for spatial
-   coordinate predictors and others know to be a common scale.}
- \item{family}{if \code{family="gaussian"} fitting is by least-squares,
-   and if \code{family="symmetric"} a re-descending M estimator is used
-   with Tukey's biweight function.}
- \item{method}{fit the model or just extract the model frame.}
- \item{control}{control parameters: see \code{\link{loess.control}}.}
- \item{\ldots}{control parameters can also be supplied directly.}
+  \item{formula}{a formula specifying the response and one or more
+    numeric predictors (best specified via an interaction, but can also
+    be specified additively).}
+  \item{data}{an optional data frame within which to look first for the
+    response, predictors and weights.}
+  \item{weights}{optional weights for each case.}
+  \item{subset}{an optional specification of a subset of the data to be
+    used.}
+  \item{na.action}{the action to be taken with missing values in the
+    response or predictors.  The default is to stop.}
+  \item{model}{should the model frame be returned?}
+  \item{span}{the parameter \eqn{\alpha} which controls the degree of
+    smoothing.}
+  \item{enp.target}{an alternative way to specify \code{span}, as the
+    approximate equivalent number of parameters to be used.}
+  \item{degree}{the degree of the polynomials to be used, up to 2.}
+  \item{parametric}{should any terms be fitted globally rather than
+    locally?  Terms can be specified by name, number or as a logical
+    vector of the same length as the number of predictors.}
+  \item{drop.square}{for fits with more than one predictor and
+    \code{degree=2}, should the quadratic term (and cross-terms) be
+    dropped for particular predictors?  Terms are specified in the same
+    way as for \code{parametric}.}
+  \item{normalize}{should the predictors be normalized to a common scale
+    if there is more than one?  The normalization used is to set the
+    10\% trimmed standard deviation to one.  Set to false for spatial
+    coordinate predictors and others know to be a common scale.}
+  \item{family}{if \code{"gaussian"} fitting is by least-squares, and if
+    \code{"symmetric"} a re-descending M estimator is used with Tukey's
+    biweight function.}
+  \item{method}{fit the model or just extract the model frame.}
+  \item{control}{control parameters: see \code{\link{loess.control}}.}
+  \item{\ldots}{control parameters can also be supplied directly.}
 }
 \description{
- Fit a polynomial surface determined by one or more numerical
- predictors, using local fitting.
+  Fit a polynomial surface determined by one or more numerical
+  predictors, using local fitting.
 }
 \details{
   Fitting is done locally.  That is, for the fit at point x, the fit is
@@ -68,7 +69,7 @@ loess(formula, data, weights, subset, na.action, model=FALSE,
 
   For the default family, fitting is by (weighted) least squares. For
   \code{family="symmetric"} a few iterations of an M-estimation
-  procedure with Tukey' biweight are used. Be aware that as the initial
+  procedure with Tukey's biweight are used. Be aware that as the initial
   value is the least-squares fit, this need not be a very resistant fit.
   
   It can be important to tune the control list to achieve acceptable
@@ -91,10 +92,10 @@ loess(formula, data, weights, subset, na.action, model=FALSE,
   The memory usage of this implementation of \code{loess} is roughly
   quadratic in the number of points, with 1000 points taking about 10Mb.
 }
-
-
-\seealso{\code{\link{loess.control}}, \code{\link{predict.loess}}}
-
+\seealso{
+  \code{\link{loess.control}},
+  \code{\link{predict.loess}}
+}
 \examples{
 data(cars)
 cars.lo <- loess(dist ~ speed, cars)

@@ -1,8 +1,9 @@
 \name{scan}
 \title{Read Data Values}
 \usage{
-scan(file="", what= double(0), nmax=-1, n=-1, sep="", skip=0, nlines=0,
-         na.strings="NA", flush=FALSE, strip.white=FALSE, quiet=FALSE)
+scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
+     skip = 0, nlines = 0, na.strings = "NA", flush = FALSE,
+     strip.white = FALSE, quiet = FALSE)
 }
 \alias{scan}
 \arguments{
@@ -46,6 +47,9 @@ scan(file="", what= double(0), nmax=-1, n=-1, sep="", skip=0, nlines=0,
     leading and trailing white space from field \code{i} is stripped.}
   \item{quiet}{logical; if \code{FALSE} (default), scan(.) will print a
     line, telling what fields have been read.}
+}
+\description{
+  Read data into a vector or list from the console or file.
 }
 \details{
   The value of \code{what} can be a list of types, in which case

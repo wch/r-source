@@ -11,9 +11,15 @@ plot(ecdf(x), verticals = FALSE, col.01line = "gray70", \dots)
 \arguments{\item{x}{numeric vector with the ``observations''.}
 }
 \description{
-  For observations \code{x}, \code{ecdf(x)} returns the
-  e.c.d.f. (empirical cumulative distribution function), i.e.
-  the function \eqn{F_n}{Fn}.  Given  the observations,
+  Compute an empirical cumulative distribution function.
+}
+\details{
+  The e.c.d.f. (empirical cumulative distribution function)
+  \eqn{F_n}{Fn} is a step
+  function with jump \eqn{1/n} at each observation (possibly with
+  multiple jumps at one place if there are ties).
+  
+  For observations 
   \code{x}\eqn{= (}\eqn{x_1,x_2}{x1,x2},\ldots\eqn{x_n)}{xn)},
   \eqn{F_n}{Fn} is the fraction of observations less or equal to \eqn{t},
   i.e.,
@@ -26,7 +32,7 @@ plot(ecdf(x), verticals = FALSE, col.01line = "gray70", \dots)
   \code{\link{plot.stepfun}}.
 }
 \value{
-  An \R function \eqn{F_n}{Fn} of class \code{"ecdf"}, inheriting from the
+  A function of class \code{"ecdf"}, inheriting from the
   \code{"\link{stepfun}"} class.
 }
 \author{
@@ -39,7 +45,7 @@ plot(ecdf(x), verticals = FALSE, col.01line = "gray70", \dots)
 ##-- Simple didactical  ecdf  example:
 Fn <- ecdf(rnorm(12))
 Fn; summary(Fn)
-12*Fn(knots(Fn)) == 1:12 ## == 1:12  iff there are no ties !
+12*Fn(knots(Fn)) == 1:12 ## == 1:12  if and only if there are no ties !
 
 y <- round(rnorm(12),1); y[3] <- y[1]
 Fn12 <- ecdf(y)

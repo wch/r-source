@@ -10,19 +10,28 @@ is.matrix(x)
 \alias{as.matrix.default}
 \alias{as.matrix.data.frame}
 \alias{is.matrix}
+\arguments{
+  \item{data}{an optional data vector.}
+  \item{nrow}{the desired number of rows}
+  \item{ncol}{the desired number of columns}
+  \item{byrow}{logical. If \code{FALSE}
+    (the default) the matrix is filled by columns, otherwise the matrix is
+    filled by rows.}
+  \item{dimnames}{A \code{\link{dimnames}} attribute for the matrix: a
+    \code{list} of length 2.}
+  \item{x}{an \R object.}
+}
 \description{
   \code{matrix} creates a matrix from the given set of values.
-  \code{nrow} gives the desired number of rows and \code{ncol} the
-  desired number of columns.  If either of \code{nrow} or \code{ncol} is
-  not given, an attempt is made to infer it from the length of
-  \code{data} and the other parameter.  If \code{byrow} is \code{FALSE}
-  (the default) the matrix is filled by columns, otherwise the matrix is
-  filled by rows.  A \code{\link{dimnames}} attribute for the matrix can be
-  specified with the optional \code{dimnames} argument (which thus has
-  to be a \code{\link{list}} of length 2).
 
-  \code{as.matrix} attempts to turn its argument into a matrix.  This
-  function is generic with a default and a \code{\link{data.frame}} method.
+  \code{as.matrix} attempts to turn its argument into a matrix.
+
+  \code{is.matrix} tests if its argument is a (strict) matrix.
+}
+\details{
+  If either of \code{nrow} or \code{ncol} is
+  not given, an attempt is made to infer it from the length of
+  \code{data} and the other parameter.
 
   \code{is.matrix} returns \code{TRUE} if \code{x} is a matrix (i.e., it
   \emph{not} a \code{\link{data.frame}} and has a \code{\link{dim}}

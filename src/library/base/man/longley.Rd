@@ -3,27 +3,28 @@
 \title{Longley's Regression Data}
 \usage{data(longley)}
 \source{
-    J. W. Longley (1967).
-    An appraisal of least-squares programs from the point of view of the
-    user.
-    \emph{Journal of the American Statistical Association} \bold{62},
-    819--841.}
-\format{A data frame with 7 economical variables, observed yearly
-    from 1947 to 1962 (\eqn{n=16}).
+  J. W. Longley (1967).
+  An appraisal of least-squares programs from the point of view of the
+  user.
+  \emph{Journal of the American Statistical Association} \bold{62},
+  819--841.}
+\format{
+  A data frame with 7 economical variables, observed yearly from 1947 to
+  1962 (\eqn{n=16}).
 
-    \tabular{rl}{
-    	GNP.deflator: \tab GNP implicit price deflator (\eqn{1954=100})\cr
-    	GNP:          \tab Gross National Producr.\cr
-    	Unemployed:   \tab number of unemployed \cr
-    	Armed.Forces: \tab number of .. in the armed forces\cr
-    	Population:   \tab `noninstitutionalized' population\cr
- 	              \tab \eqn{\ge} 14 years of age.\cr 
-    	Year:         \tab the year (time).\cr
-    	Employed:     \tab number of people employed.
-    }
+  \tabular{ll}{
+    GNP.deflator: \tab GNP implicit price deflator (\eqn{1954=100})\cr
+    GNP:          \tab Gross National Producr.\cr
+    Unemployed:   \tab number of unemployed \cr
+    Armed.Forces: \tab number of .. in the armed forces\cr
+    Population:   \tab `noninstitutionalized' population \eqn{\ge} 14
+    years of age.\cr
+    Year:         \tab the year (time).\cr
+    Employed:     \tab number of people employed.
+  }
 
-    The regression \code{lm(Employed ~ .)} is known to be highly
-    collinear.
+  The regression \code{lm(Employed ~ .)} is known to be highly
+  collinear.
 }
 \examples{
 # give the data set in the form it is used in S-plus:

@@ -42,12 +42,15 @@ This will minimize paging and ensure that execution
 is as efficient as possible.
 .TP
 \fB\-\-vsize\fP \fIn\fP
-Use a vector heap of size \fIn\fP megabytes (the default is 2).
+Use a vector heap of size \fIn\fP bytes (the default is 2 MB).
 .TP
 \fB\-\-nsize\fP \fIn\fP
-The number of \fIcons cells\fP (each occupying 16 bytes)
-which R is to use (the default is 200000).
+The number of \fIcons cells\fP which R is to use (the default is 250000).
 .LP
+Boths options must either be integers or integers ending with `M', `K',
+or `k' meaning `Mega' (2^20), (computer) `Kilo' (2^10), or regular
+`kilo' (1000).
+
 The following options relate to the saving and restoring of a user's
 data sets and functions at startup and termination.
 .TP

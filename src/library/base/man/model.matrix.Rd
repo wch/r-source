@@ -1,5 +1,5 @@
 \name{model.matrix}
-\title{Construct design matrices}
+\title{Construct Design Matrices}
 \usage{
 model.matrix   (object, \dots)
 model.matrix.lm(object, \dots)
@@ -23,13 +23,12 @@ model.weights(x)
   \item{x}{a modle frame.}
 }
 \description{
-    \code{model.matrix} creates a design matrix.
-    \code{model.weights} extracts the weights.
+  \code{model.matrix} creates a design matrix.
+  \code{model.weights} extracts the weights.
 }
-\details
-{
-  \code{model.matrix} creates a design matrix from the description given in
-  \code{terms(formula)}, using the data in \code{data} which must
+\details{
+  \code{model.matrix} creates a design matrix from the description given
+  in \code{terms(formula)}, using the data in \code{data} which must
   contain columns with the same names as would be created by a call to
   \code{model.frame(formula)} or, more precisely, by evaluating
   \code{attr(terms(formula), "variables")}.  There may be other columns
@@ -41,7 +40,8 @@ model.weights(x)
   and data.
 }
 \references{
-  Chambers and Hastie: "\emph{Statistical Models in S}".
+  Chambers and Hastie (1992), \emph{Statistical Models in S}.
+  Chapman & Hall, London.
 }
 \seealso{
   \code{\link{model.frame}},

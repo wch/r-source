@@ -1,11 +1,11 @@
 \name{commandArgs}
-\title{ Command line arguments for R}
+\title{Extract Command Line Arguments}
 \usage{
 commandArgs()
 }
 %- maybe also `usage' for other objects documented here.
 \description{
-  provides access to a copy of the command line
+  Provides access to a copy of the command line
   arguments supplied when this R session was invoked.
 }
 \details{
@@ -18,8 +18,8 @@ commandArgs()
 \value{
   A character vector containing the name of the
   executable and the user-supplied command line arguments.
-  The first element is the name of the executable by which R was
-  invoked. As far as I am aware, the exact form of this is element
+  The first element is the name of the executable by which \R was
+  invoked. As far as I am aware, the exact form of this element
   is platform dependent. It may be the fully qualified name, or simply
   the last component (or basename) of the application.
 }

@@ -166,9 +166,7 @@ static void   PicTeX_Resize(DevDesc*);
 static double PicTeX_StrWidth(char*, DevDesc*);
 static void   PicTeX_Text(double, double, int, char*, double, double, double,
 			  DevDesc*);
-#ifdef _not_used_
 static void   PicTeX_MetricInfo(int, double*, double*, double*, DevDesc*);
-#endif
 
 	/* Support routines */
 

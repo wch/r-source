@@ -23,7 +23,8 @@ on the log scale}
   deviation equal to \code{sdlog}.  \code{dlnorm} gives the density,
   \code{plnorm} gives the distribution function \code{qlnorm} gives the
   quantile function and \code{rlnorm} generates random deviates.
-
+}
+\details{
   If \code{meanlog} or \code{sdlog} are not specified they assume the
   default values of \code{0} and \code{1} respectively.
 

@@ -4,8 +4,8 @@
 \name{smooth.spline}
 \title{Fit a Smoothing Spline}
 \usage{
-smooth.spline(x, y, w=rep(1, length(x)), df=5, spar=0, cv=FALSE,
-              all.knots=FALSE, df.offset=0, penalty=1)
+smooth.spline(x, y, w = rep(1, length(x)), df = 5, spar = 0,
+              cv = FALSE, all.knots = FALSE, df.offset = 0, penalty = 1)
 }
 \alias{smooth.spline}
 \alias{predict.smooth.spline.fit}
@@ -20,9 +20,10 @@ smooth.spline(x, y, w=rep(1, length(x)), df=5, spar=0, cv=FALSE,
      the smoother matrix).}
  \item{spar}{the coefficient \eqn{\lambda} of the integral of the squared
    second derivative in the fit (penalized log lik.) criterion.}
- \item{cv}{ordinary (TRUE) or `generalized' (FALSE) cross-validation.}
- \item{all.knots}{if TRUE, all points in \code{x} are uses as knots. If
-   FALSE, a suitably fine grid of knots is used.}
+ \item{cv}{ordinary (\code{TRUE}) or `generalized' (\code{FALSE})
+   cross-validation.}
+ \item{all.knots}{if \code{TRUE}, all points in \code{x} are uses as
+   knots. If \code{FALSE}, a suitably fine grid of knots is used.}
  \item{df.offset}{allows the degrees of freedom to be increased by
    \code{df.offset} in the GCV criterion.}
  \item{penalty}{the coefficient of the penalty for degrees of freedom

@@ -2,11 +2,11 @@
 \alias{parse.dcf}
 \title{Parse Debian Control File Format}
 \description{
-  Parses text read from a file in debian control file format, e.g., the
-  DESCRIPTION or CONTENTS of a package.
+  Parses text read from a file in Debian control file format, e.g., the
+  \file{DESCRIPTION} or \file{CONTENTS} of a package.
 }
 \usage{
-parse.dcf(desc=NULL, file="", fields=NULL, versionfix=FALSE)
+parse.dcf(desc = NULL, file = "", fields = NULL, versionfix = FALSE)
 }
 \arguments{
  \item{text}{A character vector containing one line of the file in each
@@ -18,7 +18,7 @@ parse.dcf(desc=NULL, file="", fields=NULL, versionfix=FALSE)
    truncated at the first whitespace character.}
 }
 \value{
-  If \code{fields=NULL}, a list with one element per entry is
+  If \code{fields = NULL}, a list with one element per entry is
   returned. Each entry is a list of character vectors, one per field.
   If \code{fields} are specified, then a character matrix with one row
   per entry and one column per field is returned. 

@@ -14,11 +14,13 @@ predict.glm <-
 	    pred <- switch(type,
 			   link = object$linear.predictors,
 			   response = object$fitted,
-                           terms = predict.lm(object,  se.fit=se.fit, scale = 1,
-                             type=type, terms=terms)
+                           terms = predict.lm(object,  se.fit=se.fit,
+                               scale = 1, type="terms", terms=terms)
                            )
 	else {
-	    pred <- predict.lm(object, newdata, se.fit, scale = 1, type=type, terms=terms)
+	    pred <- predict.lm(object, newdata, se.fit, scale = 1,
+                               type = ifelse(type=="link", "response", type),
+                               terms = terms)
 	    switch(type,
 		   response = {pred <- family(object)$linkinv(pred)},
 		   link =, terms= )

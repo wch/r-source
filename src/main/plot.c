@@ -30,7 +30,7 @@
 
 void NewFrameConfirm()
 {
-    char buf[16];
+    unsigned char buf[16];
     R_ReadConsole("Hit <Return> to see next plot: ", buf, 16, 0);
 }
 
@@ -229,7 +229,11 @@ SEXP FixupFont(SEXP font, int dflt)
 	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++) {
 	    k = INTEGER(font)[i];
+#ifndef Win32
 	    if (k < 1 || k > 4) k = NA_INTEGER;
+#else
+	    if (k < 1 || k > 32) k = NA_INTEGER;
+#endif
 	    INTEGER(ans)[i] = k;
 	}
     }
@@ -237,7 +241,11 @@ SEXP FixupFont(SEXP font, int dflt)
 	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++) {
 	    k = REAL(font)[i];
+#ifndef Win32
 	    if (k < 1 || k > 4) k = NA_INTEGER;
+#else
+	    if (k < 1 || k > 32) k = NA_INTEGER;
+#endif
 	    INTEGER(ans)[i] = k;
 	}
     }
@@ -1024,7 +1032,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP sxy, sx, sy, pch, cex, col, bg, lty;
     double *x, *y, xold, yold, xx, yy, thiscex;
     int i, n, npch, ncex, ncol, nbg, nlty, type=0, start=0, thispch, thiscol;
-    
+
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
@@ -1071,11 +1079,11 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
        as zero (black) or "don't draw" depending on line/rect/circle
        situation. Now we set the default to zero and don't plot at all
        if col==NA.
-       
+
        FIXME: bg needs similar change, but that requires changes to
        the specific drivers. */
 
-    PROTECT(col = FixupCol(CAR(args), 0)); args = CDR(args); 
+    PROTECT(col = FixupCol(CAR(args), 0)); args = CDR(args);
     ncol = LENGTH(col);
 
     PROTECT(bg = FixupCol(CAR(args), NA_INTEGER));	args = CDR(args);
@@ -1214,7 +1222,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yy = y[i];
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
 	    if (R_FINITE(xx) && R_FINITE(yy)) {
-		if (R_FINITE(thiscex = REAL(cex)[i % ncex]) 
+		if (R_FINITE(thiscex = REAL(cex)[i % ncex])
 		    && (thispch = INTEGER(pch)[i % npch]) != NA_INTEGER
 		    && (thiscol = INTEGER(col)[i % ncol]) != NA_INTEGER)
 		{
@@ -1270,7 +1278,7 @@ static void xypoints(SEXP call, SEXP args, int *n)
 
 SEXP do_segments(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* segments(x0, y0, x1, y1, col, lty, lwd, xpd) */
+    /* segments(x0, y0, x1, y1, col, lty, lwd, ...) */
     SEXP sx0, sx1, sy0, sy1, col, lty, lwd;
     double *x0, *x1, *y0, *y1;
     double xx[2], yy[2];
@@ -1338,11 +1346,10 @@ SEXP do_segments(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* rect(xl, yb, xr, yt, col, border, lty, xpd) */
-    SEXP sxl, sxr, syb, syt, col, lty, border;
+    /* rect(xl, yb, xr, yt, col, border, lty, lwd, xpd) */
+    SEXP sxl, sxr, syb, syt, col, lty, lwd, border;
     double *xl, *xr, *yb, *yt, x0, y0, x1, y1;
-    int i, n, nxl, nxr, nyb, nyt;
-    int ncol, nlty, nborder, xpd;
+    int i, n, nxl, nxr, nyb, nyt, ncol, nlty, nlwd, nborder, xpd;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
@@ -1364,6 +1371,9 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(lty = FixupLty(GetPar("lty", args), dd->gp.lty));
     nlty = length(lty);
 
+    PROTECT(lwd = FixupLwd(GetPar("lwd", args), dd->gp.lwd));
+    nlwd = length(lwd);
+
     xpd = asInteger(GetPar("xpd", args));
 
     GSavePars(dd);
@@ -1381,9 +1391,13 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
     GMode(1, dd);
     for (i = 0; i < n; i++) {
 	if (nlty && INTEGER(lty)[i % nlty] != NA_INTEGER)
-	  dd->gp.lty = INTEGER(lty)[i % nlty];
+	    dd->gp.lty = INTEGER(lty)[i % nlty];
 	else
-	  dd->gp.lty = dd->dp.lty;
+	    dd->gp.lty = dd->dp.lty;
+	if (nlwd && REAL(lwd)[i % nlwd] != NA_REAL)
+	    dd->gp.lwd = REAL(lwd)[i % nlwd];
+	else
+	    dd->gp.lwd = dd->dp.lwd;
 	x0 = xl[i%nxl];
 	y0 = yb[i%nyb];
 	x1 = xr[i%nxr];
@@ -1397,7 +1411,7 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
     GMode(0, dd);
 
     GRestorePars(dd);
-    UNPROTECT(3);
+    UNPROTECT(4);
     /* NOTE: only record operation if no "error"  */
     /* NOTE: on replay, call == R_NilValue */
     if (call != R_NilValue)
@@ -2102,7 +2116,7 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
     if ((v = CAR(args)) != R_NilValue)
 	CAR(args) = v = coerceVector(v, REALSXP);
     args = CDR(args);
-    
+
     if ((untf = CAR(args)) != R_NilValue)
 	CAR(args) = untf = coerceVector(untf, LGLSXP);
     args = CDR(args);

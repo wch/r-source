@@ -4,17 +4,17 @@
 \name{predict.smooth.spline}
 \title{Predict from Smoothing Spline Fit}
 \usage{
-predict.smooth.spline(object, x, deriv=0)
+predict.smooth.spline(object, x, deriv = 0)
 }
 \alias{predict.smooth.spline}
 \arguments{
- \item{object}{a fit from \code{smooth.spline}.}
- \item{x}{the new values of x.}
- \item{deriv}{integer; the order of the derivative required.}
+  \item{object}{a fit from \code{smooth.spline}.}
+  \item{x}{the new values of x.}
+  \item{deriv}{integer; the order of the derivative required.}
 }
 \description{
- Predict a smoothing spline fit at new points, return the derivative if
- desired. The predicted fit is linear beyond the original data.
+  Predict a smoothing spline fit at new points, return the derivative if
+  desired. The predicted fit is linear beyond the original data.
 }
 \value{
   A list with components

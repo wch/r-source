@@ -1,5 +1,5 @@
 \name{dump}
-\title{Text Representations of \R Objects}
+\title{Text Representations of R Objects}
 \usage{
 dump(list, fileout="dumpdata")
 }

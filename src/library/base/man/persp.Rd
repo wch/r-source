@@ -54,7 +54,10 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 }
 \description{
   This function draws perspective plots of surfaces over the
-  x-y plane.  The plots are produced by first transforming the
+  x--y plane.
+}
+\details{
+  The plots are produced by first transforming the
   coordinates to the interval [0,1].  The surface is then viewed
   by looking at the origin from a direction defined by \code{theta}
   and \code{phi}.  If \code{theta} and \code{phi} are both zero

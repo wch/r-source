@@ -23,7 +23,8 @@ rnorm(n, mean=0, sd=1)
   \code{dnorm} gives the density, \code{pnorm} gives the distribution
   function \code{qnorm} gives the quantile function and \code{rnorm}
   generates random deviates.
-
+}
+\details{
   If \code{mean} or \code{sd} are not specified they assume the default
   values of \code{0} and \code{1}, respectively.
 

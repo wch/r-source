@@ -1,5 +1,5 @@
 /*
- *  $Id: nls.c,v 1.1.10.2 1999/12/12 19:23:41 ripley Exp $ 
+ *  $Id: nls.c,v 1.1.10.3 1999/12/20 15:16:46 ripley Exp $ 
  *
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
@@ -261,20 +261,9 @@ numeric_deriv(SEXP args) {
 	REAL(gradient)[start + k] = (REAL(ans_del)[k] -
 				     REAL(ans)[k])/delta;
       REAL(VECTOR(pars)[i])[j] = origPar;
-      /*      if(LENGTH(VECTOR(pars)[i]) > 1) {
-	tempChar = allocString(strlen(CHAR(STRING(theta)[i])) + 2);
-	sprintf(CHAR(tempChar), "%s%c", CHAR(STRING(theta)[i]), '0' + j);
-	STRING(gradNames)[nGradNames] = mkChar(CHAR(tempChar));
-      } else
-      STRING(gradNames)[nGradNames] = STRING(theta)[i];*/
-
       ++nGradNames;
     }
   }
-  /*  dimnames = allocVector(VECSXP, lengthDims + 1);
-  VECTOR(dimnames)[lengthDims] = gradNames;
-  eval(lang2(install("print"),gradNames), rho);
-  setAttrib(gradient, R_DimNamesSymbol, dimnames); */
   setAttrib(ans, install("gradient"), gradient);
   UNPROTECT(6);
   return ans;

@@ -1,13 +1,13 @@
 \name{par}
+\alias{par}
+\alias{.Pars}
+\alias{.Pars.readonly}
 \title{Set or Query Graphical Parameters}
 \usage{
 par(\dots, no.readonly = FALSE)
 
-<highlevel plot> (\dots\dots, <tag> = <value>)
+<highlevel plot> (\dots, <tag> = <value>)
 }
-\alias{par}
-\alias{.Pars}
-\alias{.Pars.readonly}
 \description{
   % \code{par} is an abomination before man and god.
   \code{par} can be used to set or query graphical parameters.
@@ -91,7 +91,7 @@ par(\dots, no.readonly = FALSE)
   \item{col.main}{The color to be used for plot main titles.}
   \item{col.sub}{The color to be used for plot sub-titles.}
   \item{cra}{\emph{\bold{R.O.}}; size of default character
-    \code{(width,height)} in "rasters" (pixels).}
+    \code{(width,height)} in ``rasters'' (pixels).}
   \item{crt}{A numerical value specifying (in degrees) how single characters
     should be rotated.  It is unwise to expect values other than
     multiples of 90 to work.  Compare with \code{srt} which does string
@@ -236,8 +236,8 @@ par(\dots, no.readonly = FALSE)
     \code{"s"}, except that it is also ensured that there is room for
     plotting symbols within the bounding box.   Style \code{"d"}
     (direct) specifies that the current axis should be used on
-    subsequent plots. (\emph{Only "r" and "i"
-	styles are currently implemented})}
+    subsequent plots. (\emph{Only \code{"r"} and \code{"i"} styles are
+      currently implemented})}
   \item{xaxt}{A character which specifies the axis type.
     Specifying \code{"n"} causes an axis to be set up, but not plotted.}
   \item{xlog}{\emph{\bold{R.O.}}.  A logical value (see \code{log} in

@@ -10,7 +10,10 @@ splineOrder(object)
  \item{object}{An object that inherits from class \code{spline}.}
 }
 \description{
-  Return the order of the object.  The order of a spline is the number
+  Return the order of a spline object.
+}
+\details{
+  The order of a spline is the number
   of coefficients in each piece of the piecewise polynomial
   representation.  Thus a cubic spline has order 4.
 }

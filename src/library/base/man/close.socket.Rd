@@ -1,5 +1,5 @@
 \name{close.socket}
-\title{Close a socket}
+\title{Close a Socket}
 \usage{
 close.socket(socket)
 }

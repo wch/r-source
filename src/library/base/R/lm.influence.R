@@ -40,6 +40,12 @@ lm.influence <- function (lm.obj)
 	     DUP = FALSE, PACKAGE="base")[c("hat", "coefficients", "sigma")]
 }
 
+rstandard <- function(lm.obj)
+{
+    infl <- lm.influence(lm.obj)
+    weighted.residuals(lm.obj)/(summary(lm.obj)$sigma * sqrt(1 - infl$hat))
+}
+
 rstudent <- function(lm.obj)
 {
     infl <- lm.influence(lm.obj)

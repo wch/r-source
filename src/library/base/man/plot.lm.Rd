@@ -1,41 +1,43 @@
 \name{plot.lm}
 \alias{plot.lm}
-\title{Plot Diagnostics for an "lm" Object}
+\title{Plot Diagnostics for an lm Object}
 \usage{
-plot.lm (x, which = 1:4,
-         caption = c("Residuals vs Fitted", "Normal Q-Q plot",
-                     "Scale-Location plot", "Cook's distance plot"),
-         panel = points,
-         sub.caption = deparse(x$call), main = "",
-         ask = interactive() && one.fig && .Device != "postscript",
-         ...,
-         id.n = 3, labels.id = names(residuals(x)), cex.id = 0.25)
+plot.lm(x, which = 1:4,
+        caption = c("Residuals vs Fitted", "Normal Q-Q plot",
+                    "Scale-Location plot", "Cook's distance plot"),
+        panel = points,
+        sub.caption = deparse(x$call), main = "",
+        ask = interactive() && one.fig && .Device != "postscript",
+        ...,
+        id.n = 3, labels.id = names(residuals(x)), cex.id = 0.25)
 }
 \arguments{
-    \item{x}{\code{lm} object, typically result of \code{\link{lm}} or
-	\code{\link{glm}}.}
-    \item{which}{If a subset of the plots is required, specify a subset
-	of the numbers \code{1:4}.}
-    \item{caption}{Captions to appear above the plots}
-    \item{panel}{Panel function.  A useful alternative to \code{\link{points}}
-	is \code{\link{panel.smooth}}.}
-    \item{sub.caption}{common title -- above figures if there are
-	multiple; used as \code{sub} (s.\code{\link{title}}) otherwise.}
-    \item{main}{title to each plot -- in addition to the above \code{caption}.}
-    \item{ask}{logical; if \code{TRUE}, the user is \emph{ask}ed before
-	each plot, see \code{\link{par}(ask=.)}.}
-    \item{\dots}{other parameters to be passed through to plotting functions.}
-    \item{id.n}{number of points to be labelled in each plot, starting with
-	the most extreme.}
-    \item{labels.id}{vector of labels, from which the labels for extreme
-	points will be chosen.  \code{NULL} uses observation numbers.}
-    \item{cex.id}{magnification of point labels.}
+  \item{x}{\code{lm} object, typically result of \code{\link{lm}} or
+    \code{\link{glm}}.}
+  \item{which}{If a subset of the plots is required, specify a subset of
+    the numbers \code{1:4}.}
+  \item{caption}{Captions to appear above the plots}
+  \item{panel}{Panel function.  A useful alternative to
+    \code{\link{points}} is \code{\link{panel.smooth}}.}
+  \item{sub.caption}{common title---above figures if there are multiple;
+    used as \code{sub} (s.\code{\link{title}}) otherwise.}
+  \item{main}{title to each plot---in addition to the above
+    \code{caption}.} 
+  \item{ask}{logical; if \code{TRUE}, the user is \emph{ask}ed before
+    each plot, see \code{\link{par}(ask=.)}.}
+  \item{\dots}{other parameters to be passed through to plotting
+    functions.}
+  \item{id.n}{number of points to be labelled in each plot, starting
+    with the most extreme.}
+  \item{labels.id}{vector of labels, from which the labels for extreme
+    points will be chosen.  \code{NULL} uses observation numbers.}
+  \item{cex.id}{magnification of point labels.}
 }
 \description{
-    Four plots (choosable by \code{which}) are currently provided: a
-    plot of residuals against fitted values, a Scale-Location plot of
-    \eqn{\sqrt{| residuals |}} against fitted values, a Normal Q-Q plot,
-    and a plot of Cook's distances versus row labels.
+  Four plots (choosable by \code{which}) are currently provided: a plot
+  of residuals against fitted values, a Scale-Location plot of
+  \eqn{\sqrt{| residuals |}} against fitted values, a Normal Q-Q plot,
+  and a plot of Cook's distances versus row labels.
 }
 \details{\code{sub.caption}---by default the function call---is shown as
     a subtitle (under the x-axis title) on each plot when plots are on

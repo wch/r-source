@@ -6,38 +6,37 @@
 \alias{download.packages}
 \alias{install.packages}
 \alias{contrib.url}
-\title{Download packages from CRAN}}
+\title{Download Packages from CRAN}}
 \usage{
-update.packages(lib.loc=.lib.loc, CRAN=options("CRAN"),
-                contriburl=contrib.url(CRAN),
-                method="auto", instlib=NULL)
+update.packages(lib.loc = .lib.loc, CRAN = options("CRAN"),
+                contriburl = contrib.url(CRAN),
+                method = "auto", instlib = NULL)
 
 installed.packages(lib.loc = .lib.loc)
-CRAN.packages(CRAN=options("CRAN"), method="auto",
-              contriburl=contrib.url(CRAN))
+CRAN.packages(CRAN = options("CRAN"), method = "auto",
+              contriburl = contrib.url(CRAN))
 
-download.file(url, destfile, method="auto")
-download.packages(pkgs, destdir, available=NULL,
-                  CRAN=options("CRAN"), method="auto",
-                  contriburl=contrib.url(CRAN))
-install.packages(pkgs, lib, available=NULL,
-                  CRAN=options("CRAN"), method="auto",
-                  contriburl=contrib.url(CRAN))
+download.file(url, destfile, method = "auto")
+download.packages(pkgs, destdir, available = NULL,
+                  CRAN = options("CRAN"), method = "auto",
+                  contriburl = contrib.url(CRAN))
+install.packages(pkgs, lib, available = NULL,
+                  CRAN = options("CRAN"), method = "auto",
+                  contriburl = contrib.url(CRAN))
 }
 \arguments{ 
   \item{lib.loc}{A character vector describing the location of R
     library trees to search through (and update packages therein).}
-  \item{CRAN}{Base URL of the CRAN mirror to use, i.e., URL of a CRAN
-    root such as \code{"http://www.r-project.org"} (the default) or
-    \code{"http://lib.stat.cmu.edu/R/CRAN"}.}
+  \item{CRAN}{The base URL of the CRAN mirror to use, i.e., the URL of a
+    CRAN root such as \code{"http://www.r-project.org"} (the default) or
+    its Statlib mirror, \code{"http://lib.stat.cmu.edu/R/CRAN"}.}
   \item{contriburl}{URL of the contrib section of CRAN. Use this argument
-    only if your CRAN mirror is
-    incomplete, e.g., because you burned only the contrib
-    section on a CD. Overrides argument \code{CRAN}.}
-  \item{method}{Tool to be used for downloading files. Currently download
-    methods \code{"auto"}, \code{"wget"}, \code{"lynx"} and \code{"cp"} are
-    available. To use \code{"wget"} or \code{"lynx"} the executable must
-    be installed on your system and in your path.}
+    only if your CRAN mirror is incomplete, e.g., because you burned
+    only the contrib section on a CD.  Overrides argument \code{CRAN}.}
+  \item{method}{Tool to be used for downloading files.  Currently
+    download methods \code{"auto"}, \code{"wget"}, \code{"lynx"} and
+    \code{"cp"} are available.  To use \code{"wget"} or \code{"lynx"}
+    the executable must be installed on your system and in your path.}
   \item{url}{A character string with the URL of a file to be downloaded.}
   \item{destfile}{A character string with the name where the downloaded
     file is saved.}
@@ -55,7 +54,7 @@ install.packages(pkgs, lib, available=NULL,
   CRAN and update outdated packages on the fly.}
 }
 \details{
-  \code{installed.packages()} scans the DESCRIPTION files of each
+  \code{installed.packages()} scans the \file{DESCRIPTION} files of each
   package found along \code{lib.loc} and returns a list of package
   names, library paths and version numbers.  \code{CRAN.packages()}
   returns a similar list, but corresponding to packages currently

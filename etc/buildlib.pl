@@ -67,7 +67,12 @@ sub buildinit {
     chdir $currentdir;
 
     chdir($pkg) or die("Cannot change to $pkg\n");
-    $pkg = basename(getcwd());
+    $tmp = getcwd();
+    if($OSdir eq "windows") {
+	$tmp =~ s+\\+/+g; # need Unix-style path here
+    }
+    $pkg = basename($tmp);
+#    $pkg = basename(getcwd());
 
     chdir "man" or die("There are no man pages in $pkg\n");
     opendir man, '.';
@@ -262,10 +267,12 @@ sub build_index {
         mkdir "$dest", $dir_mod || die "Could not create directory $dest: $!\n";
     }
 
-    system("/bin/cp ../TITLE $dest/TITLE");
     open title, "<../TITLE";
+#    open out, ">$dest/TITLE";
     $title = <title>;
+#    print out "$title";
     close title;
+#    close out;
     $title =~ s/^\S*\s*(.*)/$1/;
 
     mkdir "$dest/help", $dir_mod || die "Could not create $dest/help: $!\n";
@@ -301,20 +308,18 @@ sub build_index {
 	    $rdtitle =~ s/\\R/R/g; # don't use \R in titles
 
 	    $filenm{$rdname} = $manfilebase;
+	    if($opt_chm) {$title2file{$rdtitle} = $manfilebase;}
 
 	    while($text =~ s/\\(alias|name)\{\s*(.*)\s*\}//){
 		$alias = $2;
 		$alias =~ s/\\%/%/g;
 		my $an = $aliasnm{$alias};
-#  printf STDERR "DBG: (rdname,m..base)=(%11s,%11s);\t(alias,an)=(%11s,%11s)\n",
-#   $rdname,$manfilebase,$alias,$an;
 		if ($an) {
 		    if($an ne $manfilebase) {
 			warn "\\$1\{$alias\} already in $an.Rd -- " .
 			  "skipping the one in $manfilebase.Rd\n";
 		    }
-		}
-		else {
+		} else {
 		    $alltitles{$alias} = $rdtitle;
 		    $aliasnm{$alias} = $manfilebase;
 		    $naliases++;
@@ -323,8 +328,7 @@ sub build_index {
 	}
     }
 
-    sub foldorder {uc($a) cmp uc($b) or $a cmp $b;
-    }
+    sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}
 
     open(anindex, ">${anindex}");
     foreach $alias (sort foldorder keys %aliasnm) {
@@ -336,18 +340,23 @@ sub build_index {
     open(anindex, "<$anindex");
     open(titleindex, ">$lib/$pkg/help/00Titles");
     open(htmlfile, ">$lib/$pkg/html/00Index.$HTML");
+    if($opt_chm) {open(chmfile, ">$chmdir/00Index.$HTML");}
 
     print htmlfile html_pagehead("$title", "../../../doc/html",
 				 "../../../doc/html/index.$HTML", "Top",
 				 "../../../doc/html/packages.$HTML",
 				 "Package List");
 
+    if($opt_chm) {print chmfile chm_pagehead("$title");}
+
 
     if($naliases>100){
-       print htmlfile html_alphabet();
+	print htmlfile html_alphabet();
+	if($opt_chm) {print chmfile html_alphabet();}
    }
 
     print htmlfile "\n<p>\n<table width=\"100%\">\n";
+    if($opt_chm) {print chmfile "\n<p>\n<table width=\"100%\">\n";}
 
     my $firstletter = "";
     while(<anindex>){
@@ -357,9 +366,13 @@ sub build_index {
 	if($aliasfirst gt "Z") { $aliasfirst = "misc"; }
 	if( ($naliases > 100) && ($aliasfirst ne $firstletter) ) {
 	    print htmlfile "</table>\n";
-#	    print htmlfile "<a name=\"$aliasfirst\">\n";
 	    print htmlfile html_title2("<a name=\"$aliasfirst\">-- $aliasfirst --</a>");
 	    print htmlfile "<table width=\"100%\">\n";
+	    if($opt_chm) {
+		print chmfile "</table>\n";
+		print chmfile html_title2("<a name=\"$aliasfirst\">-- $aliasfirst --</a>");
+		print chmfile "<table width=\"100%\">\n";
+	    }
 	    $firstletter = $aliasfirst;
 	}
 	print titleindex "$alias\t$alltitles{$alias}\n";
@@ -368,13 +381,18 @@ sub build_index {
 	$htmlalias =~ s/>/&gt;/go;
 	print htmlfile "<TR><TD width=\"25%\"><A HREF=\"$file.$HTML\">" .
 	    "$htmlalias</A></TD>\n<TD>$alltitles{$alias}</TD></TR>\n";
+	if($opt_chm) {
+	    print chmfile "<TR><TD width=\"25%\"><A HREF=\"$file.$HTML\">" .
+		"$htmlalias</A></TD>\n<TD>$alltitles{$alias}</TD></TR>\n";}
     }
 
     print htmlfile "</TABLE>\n";
     print htmlfile "</BODY></HTML>\n";
+    if($opt_chm) {print chmfile "</table>\n</body></HTML>\n";}
 
     close titleindex;
     close htmlfile;
+    if($opt_chm) {close chmfile;}
     close anindex;
 
 #    build_htmlpkglist($lib);
