@@ -1,6 +1,9 @@
 
-		CHANGES IN VERSION R VERSION 0.60.2
+		CHANGES IN VERSION R VERSION 0.61
 
+We try to make development more flexible by creating a "CVS branch". This
+should make it easier to produce patches for obvious bugs in the releases,
+without having to wait for changes in other areas to stabilize.
 
 NEW FEATURES
 
@@ -15,6 +18,8 @@ NEW FEATURES
     o   A new `language' demo, "is.things", is provided.
 
     o   symnum(.) function
+
+    o   The files in R/library/base/data have had a .R suffix added.
 
 BUG_FIXES
 
