@@ -167,4 +167,4 @@ download.packages <- function(pkgs, destdir, available=NULL,
 }
 
 contrib.url <- function(CRAN)
-    file.path(CRAN, "bin", "windows", "contrib")
+    file.path(CRAN, "bin", "windows", "contrib", "1.7")
