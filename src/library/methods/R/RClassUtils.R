@@ -673,13 +673,7 @@ isClassDef <-
 showClass <-
   ## print the information about a class definition.  If complete==TRUE, include the
   ## indirect information about extensions.
-  function(Class, complete = TRUE, printTo = stdout(), propertiesAreCalled = "Properties") {
-      if(identical(printTo, FALSE)) {
-          tmp <- tempfile()
-          con <- file(tmp, "w")
-      }
-      else
-          con <- printTo
+  function(Class, complete = TRUE, propertiesAreCalled = "Properties") {
     if(isClassDef(Class)) {
       ClassDef <- Class
       Class <- getClassName(ClassDef)
@@ -689,40 +683,28 @@ showClass <-
     else
       ClassDef <- getClassDef(Class)
     if(identical(getVirtual(ClassDef), TRUE))
-      cat(file = con, "Virtual Class\n")
+      cat("Virtual Class\n")
     x <- getProperties(ClassDef)
     if(length(x)>0) {
         n <- length(x)
-        cat(file = con, "\n",propertiesAreCalled, ":\n", sep="")
+        cat("\n",propertiesAreCalled, ":\n", sep="")
         text <- format(c(names(x), as.character(x)), justify="right")
-        if(identical(con, stdout())) {
-            text <- matrix(text, nrow =2, ncol = n, byrow = TRUE)
-            dimnames(text) <- list(c("Name:", "Class:"), rep("", n))
-            print(text, quote = FALSE)
-        }
-        else { ## not so nice if large no. of slots, but can be redirected
-            cat(file = con, paste(c("Name: ", text[seq(length=n)]), collapse=" "), "\n")
-            cat(file = con, paste(c("Class:", text[seq(n+1, length=n)]), collapse=" "), "\n")
-        }
+        text <- matrix(text, nrow =2, ncol = n, byrow = TRUE)
+        dimnames(text) <- list(c("Name:", "Class:"), rep("", n))
+        print(text, quote = FALSE)
     }
     else
-      cat(file = con, "\nNo ", propertiesAreCalled, ", prototype of class \"",
+      cat("\nNo ", propertiesAreCalled, ", prototype of class \"",
           data.class(getPrototype(ClassDef)), "\"\n", sep="")
     ext <- getExtends(ClassDef)
     if(length(ext)>0) {
-      cat(file = con, "\nExtends:\n")
-      showExtends(ext, con)
+      cat("\nExtends:\n")
+      showExtends(ext)
     }
     ext <- getSubclasses(ClassDef)
     if(length(ext)>0) {
-      cat(file = con, "\nKnown Subclasses:\n")
-      showExtends(ext, con)
-    }
-    if(identical(printTo, FALSE)) {
-        close(con)
-        value <- readLines(tmp)
-        unlink(tmp)
-        value
+      cat("\nKnown Subclasses:\n")
+      showExtends(ext)
     }
   }
 
@@ -730,45 +712,35 @@ showExtends <-
   ## print the elements of the list of extensions.  Also used to print
   ## extensions recorded in the opposite direction, via a subclass list
   function(ext, printTo = stdout()) {
-      if(identical(printTo, FALSE)) {
-          tmp <- tempfile()
-          con <- file(tmp, "w")
+      what <- names(ext)
+      how <- character(length(ext))
+      for(i in seq(along=ext)) {
+          eli <- el(ext, i)
+          if(length(eli$by) > 0)
+              how[i] <- paste("by class", paste("\"", eli$by, "\"", sep="", collapse = ", "))
+          else if(identical(eli$dataPart, TRUE))
+              how[i] <- "from data part"
+          else
+              how[i] <- "directly"
+          if(is.function(eli$test)) {
+              if(is.function(eli$coerce))
+                  how[i] <- paste(how[i], ", with explicit test and coerce", sep="")
+              else
+                  how[i] <- paste(how[i], ", with explicit test", sep="")
+          }
+          else if(is.function(eli$coerce))
+              how[i] <- paste(how[i], ", with explicit coerce", sep="")
       }
-      else
-          con <- printTo
-    what <- names(ext)
-    for(i in seq(along=ext)) {
-      cat(file = con, "Class \"", el(what, i), "\" ", sep="")
-      eli <- el(ext, i)
-      if(length(eli$by) > 0)
-        how <- paste("by class", paste("\"", eli$by, "\"", sep="", collapse = ", "))
-      else if(identical(eli$dataPart, TRUE))
-          how <- "from data part"
-      else
-        how <- "directly"
-      if(is.function(eli$test)) {
-        if(is.function(eli$coerce))
-          how <- paste(how, ", with explicit test and coerce", sep="")
-        else
-          how <- paste(how, ", with explicit test", sep="")
-      }
-      else if(is.function(eli$coerce))
-        how <- paste(how, ", with explicit coerce", sep="")
-      cat(file = con, how, ".\n", sep="")
-    }
-    if(identical(printTo, FALSE)) {
-        close(con)
-        value <- readLines(tmp)
-        unlink(tmp)
-        value
-    }
+      if(identical(printTo, FALSE))
+          list(what = what, how = how)
+      else cat(file = printTo, paste("Class \"", what, "\", ", how, ".\n", sep=""), sep="")
   }
 
 
 
 print.classRepEnvironment <-
   function(x, ...)
-  showClass(x, prop="Slots")
+  showClass(x, propertiesAreCalled="Slots")
 
 ## assign the empty definition of an environment to be used
 ## to store session-scope metadata.
@@ -1186,34 +1158,6 @@ getSlots <- function(x, complete = TRUE) {
     value
 }
 
-print.environment <-
-    function(x, ...) {
-        if(is.null(attr(x, "class")))
-            print.default(x, ...)
-        else
-            showNonVector(x, ...)
-    }
-
-showNonVector <-
-    function(object, printTo = stdout()) {
-        if(identical(printTo, FALSE)) {
-            tmp <- tempfile()
-            con <- file(tmp, "w")
-        }
-        else
-            con <- printTo
-        cat(file = con, "Object of class:", class(object))
-        for(what in objects( object)) {
-            cat(file = con, "\nSlot \"", what, "\":\n")
-            show(get(what, object), con)
-        }
-        if(identical(printTo, FALSE)) {
-            close(con)
-            value <- readLines(tmp)
-            unlink(tmp)
-            value
-        }
-    }
 
 ## check for reserved slot names.  Currently only "class" is reserved
 validSlotNames <- function(names) {

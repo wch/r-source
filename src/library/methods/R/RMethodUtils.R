@@ -290,6 +290,21 @@ rematchDefinition <- function(definition, generic, mnames, fnames) {
     body(generic, envir = environment(definition)) <- newBody
     generic
 }
+
+unRematchDefinition <- function(definition) {
+    ## undo the effects of rematchDefiniition, if it was used.
+    ## Has the obvious disadvantage of depending on the implementation.
+    ## If we considered the rematching part of the API, a cleaner solution
+    ## would be to include the "as given to setMethod" definition as a slot
+    bdy <- body(definition)
+    if(identical(class(bdy),"{") && length(bdy) > 1) {
+        bdy <- bdy[[2]]
+        if(identical(class(bdy), "<-") &&
+           identical(bdy[[2]], as.name(".local")))
+            definition <- bdy[[3]]
+    }
+    definition
+}
     
 getGeneric <-
   ## return the definition of the function named f as a generic.
@@ -614,4 +629,16 @@ methodSignatureMatrix <- function(object, sigSlots = c("target", "defined")) {
             allMethods <- insertMethod(allMethods, "ANY", argName, deflt)
         }
     allMethods
+}
+
+makeCallString <- function(def, name = substitute(def), args = formalArgs(def)) {
+    if(is.character(def)) {
+        if(missing(name))
+            name <- def
+        def <- getFunction(def)
+    }
+    if(is(def, "function"))
+        paste(name, "(", paste(args, collapse=", "), ")", sep="")
+    else
+        ""
 }

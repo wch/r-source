@@ -7,8 +7,8 @@
     setClass("OptionalMethods", where = envir)
     setIs("function", "OptionalMethods")
     setIs("NULL", "OptionalMethods")
-    setClass("MethodsList", representation(methods = "list", argument = "name", allMethods = "list", fromClass = "character"),
-             prototype = list(methods=list(),  argument = as.name("<UNDEFINED>"),  allMethods = list(), fromClass = character())
+    setClass("MethodsList", representation(methods = "list", argument = "name", allMethods = "list"),
+             prototype = list(methods=list(),  argument = as.name("<UNDEFINED>"),  allMethods = list())
              , where = envir)
     setIs("MethodsList", "OptionalMethods", where = envir)
     setClass("EmptyMethodsList", representation(argument = "name", sublist = "list"),
