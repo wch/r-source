@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/build
 
-revision='$Revision: 1.19 $'
+revision='$Revision: 1.20 $'
 version=`set - ${revision}; echo ${2}`
 version="R package builder ${version}
 
@@ -26,7 +26,7 @@ Options:
   -v, --version		print version info and exit
   --vsize=N		set R's vector heap size to N bytes
   --nsize=N		set R's number of cons cells to N
-  --force		force overwriting of (index) files  
+  --force		force overwriting of (index) files
 
 Email bug reports to <r-bugs@lists.r-project.org>."
 
@@ -153,7 +153,7 @@ checkdir () {
     exit 1
   fi
   result "OK"
-  
+
   ## Check whether `DESCRIPTION' exists and contains required fields
   checking "for \`DESCRIPTION'"
   if test -r ${dir}/DESCRIPTION; then
@@ -183,11 +183,11 @@ checkdir () {
 ## The work horse
 checkpkg () {
   cd ${start_dir}
-  
+
   if ${is_bundle}; then
     ## If this package is part of a bundle, we need to make sure the
     ## directory exists and contains a `DESCRIPTION.in' file.
-    ## Note that this code repeats the first two tests in checkdir(). 
+    ## Note that this code repeats the first two tests in checkdir().
     checking "package dir"
     if test -d ${1}; then
       dir=`cd ${1}; pwd`
@@ -258,7 +258,7 @@ checkpkg () {
 
   ## Check R documentation files
   if test -d man; then
-    checking "Rd files"    
+    checking "Rd files"
     all_file=${TMPDIR:-/tmp}/Rall${$}
     tag_file=${TMPDIR:-/tmp}/Rtag${$}
     rm -f ${all_file} 2>/dev/null
@@ -341,7 +341,7 @@ checkpkg () {
       exit 1
     fi
   fi
-  
+
   ## Update `data/00Index'
   if test -d data; then
     if test -n "${Rdfiles}"; then
@@ -428,6 +428,7 @@ buildpkg () {
   rm -f ${exclude_file} 2>/dev/null \
     || (echo "cannot create file with exclude patterns" && exit 2)
   find ${package} -type d -name check >> ${exclude_file}
+  find ${package} -type d -name '*[Oo]ld' >> ${exclude_file}
   find ${package} -name GNUMakefile >> ${exclude_file}
   find ${package} -name CVS >> ${exclude_file}
   find ${package} -name \*~ >> ${exclude_file}
