@@ -3,8 +3,7 @@ CFLAGS=@CFLAGS@ -I../include
 AR=@AR@
 RANLIB=@RANLIB@
 
-OBJS=	gdevice.o \
-	graphics.o
+OBJS=	graphics.o
 
 LIB=	../lib/libgraphics.a
 

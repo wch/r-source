@@ -58,7 +58,6 @@ OBJS=		arithmetic.o \
 		par.o \
 		paste.o\
 		plot.o \
-		plot3d.o \
 		plotmath.o \
 		print.o \
 		printarray.o \
@@ -111,7 +110,6 @@ dotcode.o:	../include/FFDecl.h ../include/FFTab.h
 colors.o:	../include/Graphics.h
 par.o:		../include/Graphics.h
 plot.o:		../include/Graphics.h
-plot3d.o:	../include/Graphics.h
 
 arithmetic.o:	../include/Mathlib.h
 random.o:	../include/Mathlib.h

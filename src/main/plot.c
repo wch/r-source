@@ -681,7 +681,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     else {
 	dolabels = 1;
-	PROTECT(lab = coerceVector(CAR(args), REALSXP));
+	PROTECT(lab = coerceVector(CAR(args), STRSXP));
     }
     args = CDR(args);
 
@@ -726,15 +726,13 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if (dolabels) {
-	if(length(lab) == 0) {
+	if(length(lab) == 0)
 	    lab = labelformat(at);
-	}
-	else {
+	else if (!isExpression(lab))
 	    lab = labelformat(lab);
-	    if (LENGTH(at) != LENGTH(lab))
-		errorcall(call, "location and label lengths differ\n");
-	}
     }
+    if (length(at) != length(lab))
+	errorcall(call, "location and label lengths differ\n");
     UNPROTECT(2);
     R_Visible = 0;
     GSavePars(dd);
