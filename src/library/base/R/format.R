@@ -20,16 +20,13 @@ format.default <- function(x, trim=FALSE, digits=NULL)
 	   structure(.Internal(format(x, trim = trim)), names=names(x)))
 }
 
+## Martin Maechler <maechler@stat.math.ethz.ch>
 ##-- this should also happen in	C(.) :
 ##	.Internal(format(..) should work  with	'width =' and 'flag=.."
 ##		at least for the case of character arguments.
 format.char <- function(x, width = NULL, flag = "-")
 {
-    ## Purpose: Character formatting
-    ## ---------------------------------------------------------------------
-    ## Arguments: x: character,  width: of field,  flag: if "-" LEFT-justify
-    ## ---------------------------------------------------------------------
-    ## Author: Martin Maechler <maechler@stat.math.ethz.ch>
+    ## Character formatting, flag: if "-" LEFT-justify
     if (is.null(x)) return("")
     if(!is.character(x)) {
 	warning("format.char: coercing 'x' to 'character'")
@@ -37,16 +34,18 @@ format.char <- function(x, width = NULL, flag = "-")
     }
     if(is.null(width) && flag == "-")
 	return(format(x))		# Left justified; width= max.width
-    ## else
+
     at <- attributes(x)
     nc <- nchar(x)			#-- string lengths
     if(is.null(width)) width <- max(nc)
     else if(width<0) { flag <- "-"; width <- -width }
     pad <- sapply(pmax(0,width - nc),
 		  function(no) paste(character(no+1), collapse =" "))
-    r <- if(flag=="-") paste(x, pad, sep="")#-- LEFT  justified
-    else	   paste(pad, x, sep="")#-- RIGHT justified
-    if(!is.null(at)) attributes(r) <- at
+    r <-
+        if(flag=="-")   paste(x, pad, sep="")#-- LEFT  justified
+        else	        paste(pad, x, sep="")#-- RIGHT justified
+    if(!is.null(at))
+        attributes(r) <- at
     r
 }
 
@@ -122,12 +121,14 @@ formatC <- function (x, digits = NULL, width = NULL,
 	}
 	else stop('"format" must be in {"f","e","E","g","G", "fg", "s"}')
     }
-    if (missing(digits) || is.null(digits))
+    if(is.null(width) && is.null(digits))
+        width <- 1
+    if (is.null(digits))
 	digits <- if (mode == "integer") 2 else 4
-    else if(digits<0)
+    else if(digits < 0)
 	digits <- 6
-    if(is.null(width)) width <- digits + 1
-    else if (width == 0) width <- digits##was stop("`width' must not be 0")
+    if(is.null(width))  width <- digits + 1
+    else if (width == 0)width <- digits
     i.strlen <-
 	pmax(abs(width),
 	     if(format == "fg"||format == "f") {

@@ -1,7 +1,7 @@
 \name{formatC}
 \title{Flexible Formatting}
 \usage{
-formatC(x, digits = NULL, width = max(0, digits) + 1,
+formatC(x, digits = NULL, width = NULL,
         format = NULL, flag = "", mode = NULL)
 format.char(x, width = NULL, flag = "-")
 }
@@ -16,10 +16,12 @@ format.char(x, width = NULL, flag = "-")
 
     Default: 2 for integer, 4 for real numbers.  If less than 0,
     the C default of 6 digits is used.}
-  \item{width}{the total field width; \code{width < 0} means left
-    justify the number in this field (equivalent to \code{flag ="-"}).
-    It is possible that the result will be longer than this, but that
-    should only happen in reasonable cases.}
+  \item{width}{the total field width; if both \code{digits} and
+      \code{width} are unspecified, \code{width} defaults to 1,
+      otherwise to \code{digits + 1}.  \code{width = 0} will use
+      \code{width = digits}, \code{width < 0} means left
+      justify the number in this field (equivalent to \code{flag ="-"}).
+      If necessary, the result will have more characters than \code{width}.}
   \item{format}{equal to \code{"d"}  (for integers), \code{"f"},
     \code{"e"}, \code{"E"}, \code{"g"}, \code{"G"}, \code{"fg"} (for
     reals), or \code{"s"} (for strings).
@@ -40,18 +42,22 @@ format.char(x, width = NULL, flag = "-")
     \code{"character"}.
     Default: Automatic.}
 }
+\description{
+    Formatting numbers individually and flexibly, using \code{C} style
+    format specifications.
+}
 \value{
   A character object of same size and attributes as \code{x}.
-  Unlike \code{format}, each number is formatted individually.  A for
-  loop over each element of \code{x}, calling \code{sprintf(\dots)} is
-  done in the C function \code{str_signif}.
+  Unlike \code{\link{format}}, each number is formatted individually.
+  Looping over each element of \code{x}, \code{sprintf(\dots)} is
+  called (inside the C function \code{str_signif}).
 
   \code{format.char(x)} and \code{formatC}, for character \code{x}, do
   simple (left or right) padding with white space.
 }
 \author{
  Originally written by Bill Dunlap, later much improved by Martin Maechler,
- it was adapted for \R by Friedrich Leisch.
+ it was first adapted for \R by Friedrich Leisch.
 }
 \seealso{
   \code{\link{format}}.
