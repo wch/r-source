@@ -7,7 +7,7 @@ function(package, dir, lib.loc = NULL)
         if(length(package) != 1)
             stop(paste("argument", sQuote("package"),
                        "must be of length 1"))
-        
+
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         helpIndex <- file.path(dir, "help", "AnIndex")
@@ -17,7 +17,7 @@ function(package, dir, lib.loc = NULL)
         isBase <- package == "base"
 
         ## Find all documented topics from the help index.
-        allDocTopics <- sort(scan(file = helpIndex, 
+        allDocTopics <- sort(scan(file = helpIndex,
                                   what = list("", ""),
                                   quiet = TRUE, sep="\t")[[1]])
 
@@ -61,7 +61,7 @@ function(package, dir, lib.loc = NULL)
         codeEnv <- new.env()
         codeDir <- file.path(dir, "R")
         if(.fileTest("-d", codeDir)) {
-            ## Collect code in codeFile.            
+            ## Collect code in codeFile.
             codeFile <- tempfile("Rcode")
             on.exit(unlink(codeFile))
             codeExts <- .makeFileExts("code")
@@ -71,7 +71,7 @@ function(package, dir, lib.loc = NULL)
                 files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
             file.create(codeFile)
             file.append(codeFile, files)
-            ## Read code from codeFile into codeEnv            
+            ## Read code from codeFile into codeEnv
             yy <- try(.sourceAssignments(codeFile, env = codeEnv))
             if(inherits(yy, "try-error")) {
                 stop("cannot source package code")
@@ -170,7 +170,7 @@ function(package, dir, lib.loc = NULL)
                                                topicName("class", u)))
                                %in% allDocTopics]))
     }
-    
+
     class(undocObjs) <- "undoc"
     undocObjs
 }
@@ -196,7 +196,7 @@ function(package, dir, lib.loc = NULL,
     unlinkOnExitFiles <- NULL
     on.exit(unlink(unlinkOnExitFiles))
 
-    ## Argument handling.    
+    ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
             stop(paste("argument", sQuote("package"),
@@ -238,7 +238,7 @@ function(package, dir, lib.loc = NULL,
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
-        
+
         ## Collect code in codeFile.
         codeFile <- tempfile("Rcode")
         unlinkOnExitFiles <- c(unlinkOnExitFiles, codeFile)
@@ -249,20 +249,20 @@ function(package, dir, lib.loc = NULL,
             files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
         file.create(codeFile)
         file.append(codeFile, files)
-        
+
         ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()
         if(verbose)
-            cat("Reading code from", sQuote(codeFile), "\n")        
+            cat("Reading code from", sQuote(codeFile), "\n")
         yy <- try(.sourceAssignments(codeFile, env = codeEnv))
         if(inherits(yy, "try-error")) {
             stop("cannot source package code")
         }
 
     }
-        
+
     lsCode <- ls(envir = codeEnv, all.names = TRUE)
-    
+
     ## Find the function objects to work on.
     funs <- lsCode[sapply(lsCode, function(f) {
         f <- get(f, envir = codeEnv)
@@ -377,7 +377,7 @@ function(package, dir, lib.loc = NULL,
     if(verbose) {
         writeLines("\nObjects without usage information:")
         print(undocObjs)
-        writeLines("")        
+        writeLines("")
     }
 
     class(badDocObjs) <- "codoc"
@@ -450,7 +450,7 @@ function(package, dir, lib.loc = NULL)
         if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- .convertFilePathToAbsolute(dir)            
+            dir <- .convertFilePathToAbsolute(dir)
         codeDir <- file.path(dir, "R")
         if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
@@ -475,7 +475,7 @@ function(package, dir, lib.loc = NULL)
             stop("cannot source package code")
         }
     }
-        
+
     lsCode <- ls(envir = codeEnv, all.names = TRUE)
 
     ## Find the assignment functions in the given package.
@@ -519,7 +519,7 @@ function(package, dir, lib.loc = NULL)
         if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- .convertFilePathToAbsolute(dir)            
+            dir <- .convertFilePathToAbsolute(dir)
     }
 
     docsDir <- file.path(dir, "man")
@@ -556,7 +556,7 @@ function(package, dir, lib.loc = NULL)
         docObj <- gsub("^# usages in documentation object ", "",
                        readLines(txtConn, 1))
         if(isBase
-           && docObj %in% c("Defunct", "Deprecated", "Devices")) { 
+           && docObj %in% c("Defunct", "Deprecated", "Devices")) {
             readLines(txtConn, n + 1); next
         }
         argList <- readLines(txtConn, 1)
@@ -661,7 +661,7 @@ function(package, dir, lib.loc = NULL)
         if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- .convertFilePathToAbsolute(dir)            
+            dir <- .convertFilePathToAbsolute(dir)
         codeDir <- file.path(dir, "R")
         if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
@@ -722,7 +722,7 @@ function(package, dir, lib.loc = NULL)
         methods
     })
     allMethodsInPackage <- unlist(methodsInPackage)
-    
+
     ## Collect usages into docsFile.
     docsFile <- tempfile("Rdocs")
     on.exit(unlink(docsFile), add = TRUE)
@@ -849,7 +849,7 @@ function(package, dir, file, lib.loc = NULL,
         if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- .convertFilePathToAbsolute(dir)            
+            dir <- .convertFilePathToAbsolute(dir)
         codeDir <- file.path(dir, "R")
         if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
@@ -869,7 +869,7 @@ function(package, dir, file, lib.loc = NULL,
         stop(paste("you must specify ", sQuote("package"), ", ",
                    sQuote("dir"), " or ", sQuote("file"), sep = ""))
     }
-    
+
     if(!.fileTest("-f", file))
         stop(paste("file", sQuote(file), "does not exist"))
 
@@ -890,7 +890,11 @@ function(package, dir, file, lib.loc = NULL,
                 ".Call.graphics", ".External.graphics")
     findBadExprs <- function(e) {
         if(is.call(e) || is.expression(e)) {
-            if(as.character(e[[1]]) %in% FFfuns) {
+            ## note this picks up all calls, e.g. a$b, and they
+            ## may convert to a vector.  The function is the
+            ## the first element in all the calls we are interested in.
+            ## BDR 2002-11-28
+            if(as.character(e[[1]])[1] %in% FFfuns) {
                 parg <- if(is.null(e[["PACKAGE"]])) {
                     badExprs <<- c(badExprs, e)
                     "MISSING"
@@ -976,7 +980,7 @@ function(package, dir, lib.loc = NULL)
         if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- .convertFilePathToAbsolute(dir)            
+            dir <- .convertFilePathToAbsolute(dir)
         codeDir <- file.path(dir, "R")
         if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
@@ -993,7 +997,7 @@ function(package, dir, lib.loc = NULL)
             files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
         file.create(codeFile)
         file.append(codeFile, files)
-        
+
         ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()
         yy <- try(.sourceAssignments(codeFile, env = codeEnv))
@@ -1053,7 +1057,7 @@ function(package, dir, lib.loc = NULL)
     if(!isBase) envList <- c(envList, list(as.environment(NULL)))
     for(env in envList) {
         allObjs <- ls(envir = env, all.names = TRUE)
-        genFuns <- allObjs[sapply(allObjs, .isS3Generic, env) == TRUE]        
+        genFuns <- allObjs[sapply(allObjs, .isS3Generic, env) == TRUE]
 
         for(g in genFuns) {
             ## Find all methods in funs for generic g.  Taken from the
@@ -1094,7 +1098,7 @@ checkTnF <-
 function(package, dir, file, lib.loc = NULL)
 {
     docsFiles <- character(0)
-    
+
     if(!missing(package)) {
         if(length(package) != 1)
             stop(paste("argument", sQuote("package"),
@@ -1114,7 +1118,7 @@ function(package, dir, file, lib.loc = NULL)
         if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- .convertFilePathToAbsolute(dir)            
+            dir <- .convertFilePathToAbsolute(dir)
         codeDir <- file.path(dir, "R")
         if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
@@ -1204,7 +1208,7 @@ function(x, ...)
                                            collapse = "")),
                                exdent = 4))
         }
-        writeLines("")        
+        writeLines("")
     }
     invisible(x)
 }
