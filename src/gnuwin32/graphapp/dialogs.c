@@ -429,7 +429,7 @@ static window init_askstr_dialog(char *title, char *question,
 
 	win = newwindow(title, rect(0,0,tw+30,h*9+12),
 			Titlebar | Centered | Modal);
-        setbackground(win,LightGray);
+        setbackground(win, myGetSysColor(COLOR_MENU));
 	add_data(win);
 	d = data(win);
 	d->question = newlabel(question, rect(10,h,tw+4,h*2+2),
