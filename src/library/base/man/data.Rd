@@ -3,8 +3,9 @@
 \usage{
 data(\dots, list = character(0), package = c(.packages(),.Autoloaded),
      lib.loc = .lib.loc)
-}
+show.data(package = c(.packages(),.Autoloaded), lib.loc = .lib.loc)
 \alias{data}
+\alias{show.data}
 \arguments{
  \item{\dots}{a sequence of \code{name}s or character strings}
  \item{list}{a character vector}
@@ -14,11 +15,12 @@ data(\dots, list = character(0), package = c(.packages(),.Autoloaded),
  \item{lib.loc}{a character vector of directory names of \R libraries.
   Defaults to all libraries currently known.}}
 \description{
-\code{data} loads or lists available data sets.
+\code{data} loads or lists via \code{show.data} the available data sets.
 The data sets to be loaded can be specified as a sequence of \code{name}s
 or character strings, or as the character vector \code{list}, or as both.
 
-If no data sets are specified, the available data sets are displayed.
+If no data sets are specified or \code{show.data} is called directly,
+the available data sets are displayed.
 
 Currently, four formats of data files are supported:
 \enumerate{
@@ -35,8 +37,18 @@ Currently, four formats of data files are supported:
 }
 }
 \value{
-A character vector of all data sets specified for loading.
+    A character vector of all data sets specified, an empty character
+    vector if none were specified.
 }
+\details{
+    If no data sets are specified, \code{data} calls \code{show.data}.
+    \code{show.data} looks for a file \file{00Index} (failing that the
+    deprecated convention of \file{index.doc}) in a \file{data}
+    directory of each specified package, and uses these files to prepare
+    a listing. If there is a \file{data} area but no index a warning is
+    given: such packages are incomplete. 
+}
+
 \seealso{
 \code{\link{help}} for obtaining documentation on data sets.
 }

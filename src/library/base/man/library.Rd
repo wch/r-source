@@ -172,7 +172,8 @@ provide(name)
   plain R code (\file{.R} or \file{.r}), tables (\file{.tab},
   \file{.txt}, or \file{.csv}), or \code{save()} images (\file{.RData}
   or \file{.rda}).  See the documentation for \code{data()} for more
-  information.
+  information.  If there is a \file{data} subdirectory it should contain
+  a \file{00Index} file that describes the datasets available.
 
   Finally, \file{exec} could contain additional executables the package
   needs, typically Shell or Perl scripts.  This mechanism is currently
