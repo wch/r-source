@@ -26,7 +26,7 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.36 $ ';
+my $revision = ' $Revision: 1.37 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -56,10 +56,12 @@ my $R_HOME = $ENV{'R_HOME'} ||
 usage() if $opt_help;
 
 my $startdir = cwd();
+my $library;
 if($opt_library){
     chdir($opt_library) ||
 	die "Error: cannot change to directory \`$opt_library'\n";
-    $library = Win32::GetShortPathName(cwd());
+    $library = cwd();
+    $library = Win32::GetShortPathName($library) if $library =~ / /;
     chdir($startdir);
 } else {
     $library = $R_HOME . "/library";
@@ -117,7 +119,7 @@ foreach $pkg (@ARGV){
     die "  *** can't install into source directory ***\n" 
 	if $canonpkg eq $pkgoutdir;
     rmtree($pkgoutdir) if (-d $pkgoutdir);
-    $pkgdir = Win32::GetShortPathName($pkgdir);
+    $pkgdir = Win32::GetShortPathName($pkgdir) if $pkgdir =~ / /;
 
     my $makecmd = "pkg";
     $makecmd = "pkgfake" if $opt_fake;
@@ -217,6 +219,7 @@ foreach $pkg (@ARGV){
         if($opt_build) {
 	    my $filename = "${pkgname}_" . $description->{"Version"};
 	    chdir($library);
+	    $startdir = Win32::GetShortPathName($startdir) if $startdir =~ / /;
 	    system("rm -f  $startdir/$filename.zip");
 	    system("zip -r9Xq $startdir/$filename.zip $zippkgs");
 	    if ($is_bundle) {

@@ -63,6 +63,9 @@ svd(A)	16.2	7.77	6.83
 Note that using a fast BLAS is much less effective for smaller
 matrices as are more common in statistical applications.
 
+Rcmd INSTALL/build/check map path names with spaces in to their short
+forms.
+
 
 Bug fixes
 ---------

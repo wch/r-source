@@ -243,10 +243,9 @@ sub R_cwd {
     my $abspath = Cwd::cwd();
     if($R::Vars::OSTYPE eq "windows") {
 	# ensure there are no spaces in the paths.
-	Win32::GetShortPathName($abspath);
-    } else {
-	$abspath;
-    }
+	Win32::GetShortPathName($abspath) if $abspath =~ / /;
+    } 
+    $abspath;
 }
 
 1;
