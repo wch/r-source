@@ -281,7 +281,7 @@ setMethod <-
         if(length(allWhere)>0) { # put methods into existing generic
             for(i in seq(along = allWhere)) {
                 fi <- get(f, allWhere[[i]])
-                geni <- is(get(f, i), "genericFunction")
+                geni <- is(fi, "genericFunction")
                 generics[[i]] <- geni
                 if(!geni && is.null(deflt))
                     deflt <- fi
@@ -315,7 +315,7 @@ setMethod <-
         fdef <- getGeneric(f, where = where)
         gwhere <- where
     }
-    else if(is.null(gwhere)) {
+    else if(identical(gwhere, NA)) {
         ## better be a primitive since getGeneric returned a generic, but none was found
         if(is.null(elNamed(.BasicFunsList, f)))
             stop("Apparent internal error: a generic function was found for \"",
