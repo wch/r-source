@@ -4,7 +4,7 @@
 @settitle R for Mac OS X FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-1 @value{FAQ-YEAR}-04-01
+@set FAQ-VERSION 1.9-2 @value{FAQ-YEAR}-06-08
 @set REL-VERSION 1.9.0
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -91,6 +91,7 @@ Stefano M. Iacus                 @*
 * The near future of the Aqua GUI::               
 * Aqua GUI Bugs::       
 * Quartz device::               
+* TclTk issues::               
 * Additional resources::
 * Acknowledgments::       
 * Sparse questions::
@@ -142,7 +143,8 @@ always preferable though. We do not support Mac OS X version 10.1.
 * the Fortran compiler g77 for gcc 3.3::
 * the libreadline 4.3 (optional)::
 * the X11 window server (optional)::
-* the TclTk 8.4 headers and libraries (optional)::
+* the X11 TclTk headers and libraries (optional)::
+* the Aqua TclTk headers and libraries (optional)::
 * a TeX suite of tools for documentation (optional)::
 @end menu
 
@@ -210,8 +212,8 @@ If you have Jaguar, you'll need to install both the X11 Window server and the X1
 the XFree86 web page.  Apple site only supports the latest version of his OS (at the moment Panther).
 Users report that other version of X11 Window Servers (other than the one distributed by Apple) work as well.
 
-@node the TclTk 8.4 headers and libraries (optional)
-@subsection the TclTk 8.4 headers and libraries (optional)
+@node the X11 TclTk headers and libraries (optional)
+@subsection the X11 TclTk headers and libraries (optional)
 You need to download the sources of the Tcl and Tk 8.4.x packages to build yourself the sources. 
 The original sources can be found on the official TclTk web page @uref{http://www.tcl.tk/software/tcltk/8.4.html}.
 Please do the following respecting the sequence (you'll be asked for a root password). These are examples for version 8.4.4
@@ -236,6 +238,17 @@ cd tk8.4.4/unix/
 ./configure
 make
 sudo make install
+@end example
+
+@node the Aqua TclTk headers and libraries (optional)
+@subsection the Aqua TclTk headers and libraries (optional)
+Once you have installed the AquaTclTk libraries and headers files you should configure @R{} using this additional
+arguments
+@example
+--with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
+--with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
+TCLTK_LIBS='-framework Tcl -framework Tk'
+TCLTK_CPPFLAGS='-I/Library/Frameworks/Tcl.Framework/Headers -I/Library/Frameworks/Tk.Framework/Headers'
 @end example
 
 @node a TeX suite of tools for documentation (optional)
@@ -302,7 +315,7 @@ located inside the framework.
 Suppose you have the @emph{/usr/local/bin} directory on your System, than you should just 
 type in your Terminal (a root password is required)
 @smallexample
-sudo ln -s /Library/Frameworks/R.framework/Resources/bin/R /usr/local/bin/R
+sudo ln -s /Library/Frameworks/R.framework/Resources/R /usr/local/bin/R
 @end smallexample
 Assuming that you have @emph{/usr/local/bin} in your @emph{PATH} environment variable, you'll be able to launch R from any location
 on your System just by typing @emph{R}.
@@ -734,7 +747,7 @@ not @R{} scripts or image data) simply gives an error. It's up to the user to @e
 @noindent
 If @R{} is not yet running this action causes @R{} to startup.
 
-@node Quartz device, Additional resources, R and external applications, Top
+@node Quartz device, TclTk issues, R and external applications, Top
 @chapter Quartz device
 The quartz device is the native graphic device in R for Mac OS X. It's name derives from Apple's Quartz Technology
 which is essentially similar to PDF rendering. One of the most amazing features of Quartz is antialiasing which gives you
@@ -776,7 +789,24 @@ dimensions and you cannot resize the image from the inside another applications 
 When rendering text and/or mathematical symbols the style is ignored, i.e. only plain style is drawn.
 The printing function is not yet implemented.
 
-@node Additional resources, Acknowledgments, Quartz device, Top
+@node TclTk issues, Additional resources, Quartz device, Top
+@chapter TclTk issues
+Each binary distribution of @R{} available through @CRAN{} is built to use the X11 implementation of TclTk.
+Of course a X windows server has to be started first. If you are not using the Aqua GUI you need to also
+define the environment variable DISPLAY before attempting to use X11 from inside @R{}. You can do this as follows
+@example
+Sys.putenv("DISPLAY"=":0")
+@end example
+If you don't like the X11 GUI you would probably want to build R using the Aqua version of TclTk (@pxref{the Aqua TclTk headers and libraries (optional)}).
+After installing the R.framework you should do the following to have the quartz device working under Aqua TclTk. Open a
+Terminal window and move inside the @file{Resources/bin} directory of the @file{R.framework}
+(usually @file{/Library/Frameworks/R.framework}), then type the following
+@example
+sudo /Developer/Tools/Rez -t APPL Carbon.r -o R.bin
+@end example
+
+
+@node Additional resources, Acknowledgments, TclTk issues, Top
 @chapter Additional resources
 Here are few references that can be of interest for Mac OS X and/or developers.
 
