@@ -5,11 +5,11 @@ SPKG=.
 SAVE=CHECK
 
 ifneq ($(strip $(BUILD)),CROSS)
-SPKG0 = $(shell ../Rpwd.exe $(SPKG))
-DPKG0 = $(shell ../Rpwd.exe $(DPKG))
+SPKG0 = $(shell $(RHOME)/src/gnuwin32/Rpwd.exe $(SPKG))
+DPKG0 = $(shell $(RHOME)/src/gnuwin32/Rpwd.exe $(DPKG))
 else
-SPKG0 = $(shell perl ../pwd.pl $(SPKG))
-DPKG0 = $(shell perl ../pwd.pl $(DPKG))
+SPKG0 = $(shell perl $(RHOME)/src/gnuwin32/pwd.pl $(SPKG))
+DPKG0 = $(shell perl $(RHOME)/src/gnuwin32/pwd.pl $(DPKG))
 endif
 
 
