@@ -746,7 +746,10 @@ sub code2html {
     $text = drop_full_command($text, "testonly");
     $text =~ s/\\\\/\\/go;
 
-    unmark_brackets($text);
+    $text = unmark_brackets($text);
+    ## \method{CLASS}{GENERIC}
+    $text =~ s/\\method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}/$1/g;
+    $text;
 }
 
 # Print a standard block
@@ -1170,7 +1173,10 @@ sub code2txt {
     $text = undefine_command($text, "dontrun");
     $text = drop_full_command($text, "testonly");
 
-    unmark_brackets($text);
+    $text = unmark_brackets($text);
+    ## \method{CLASS}{GENERIC}
+    $text =~ s/\\method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}/$1/g;
+    $text;
 }
 
 
@@ -1571,7 +1577,7 @@ sub rdoc2Sd { # (filename)
 	print $Sdout ".DN\n", text2nroff($blocks{"description"}), "\n";
     }
     if (defined $blocks{"usage"}){
-	print $Sdout ".CS\n", text2nroff($blocks{"usage"}), "\n";
+	print $Sdout ".CS\n", code2nroff($blocks{"usage"}), "\n";
     }
     Sd_print_argblock("arguments", ".RA");
     Sd_print_argblock("value", ".RT");
@@ -1801,7 +1807,10 @@ sub code2nroff {
     $text = undefine_command($text, "dontrun");
     $text = drop_full_command($text, "testonly");
 
-    unmark_brackets($text);
+    $text = unmark_brackets($text);
+    ## \method{CLASS}{GENERIC}
+    $text =~ s/\\method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}/$1/g;
+    $text;
 }
 
 sub nroff_tables {
@@ -1929,7 +1938,10 @@ sub code2examp {
 				    "##D ");
     $text =~ s/\\\\/\\/g;
 
-    unmark_brackets($text);
+    $text = unmark_brackets($text);
+    ## \method{CLASS}{GENERIC}
+    $text =~ s/\\method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}/$1/g;
+    $text;
 }
 
 
@@ -2075,7 +2087,11 @@ sub code2latex {
     }
     $text = undefine_command($text, "dontrun");
     $text = drop_full_command($text, "testonly");
-    unmark_brackets($text);
+
+    $text = unmark_brackets($text);
+    ## \method{CLASS}{GENERIC}
+    $text =~ s/\\method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}/$1/g;
+    $text;
 }
 
 sub latex_print_block {
