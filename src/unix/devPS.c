@@ -346,7 +346,7 @@ static int PS_Open(void)
 		return 0;
 
 	for(i=1 ; i<=5 ; i++) {
-		sprintf(buf, "%s/lib/afm/%s", rhome,
+		sprintf(buf, "%s/afm/%s", rhome,
 			FamilyName[fontfamily][i][1]);
 		if(!PostScriptLoadFontMetrics(buf, &(metrics[i-1])))
 			return 0;
