@@ -7,7 +7,7 @@ See the file NEWS for changes that affect all versions of R.
 rw1090
 ======
 
-Both Rterm and Rgui now give usage information via the --help
+Both Rterm and Rgui now give usage information via the --help or -h
 command-line flag.
 
 There is now a "Misc|Break to debugger" menu option, enabled 
@@ -31,11 +31,12 @@ Added winMenuNames() and winMenuItems() functions to query user menus.
 Added menu items for www.r-project.org and CRAN on the help menu. 
 (Wishlist PR#6492)
 
-Added "R" command to be similar to Unix invocaton of scripts, e.g.
-"R CMD INSTALL" replaces "Rcmd INSTALL".  Rcmd still exists for 
-backwards compatibility.
+Added "R" command to be similar to Unix invocation of scripts, e.g.
+"R CMD INSTALL" is the same as "Rcmd INSTALL".  Rcmd still exists for 
+backwards compatibility (and to avoid conflicts over the name `R').
+All of R, R CMD and Rcmd now accept --help.
 
-
+Rcmd Rd2dvi can now be specified as such rather than as Rcmd Rd2dvi.sh.
 
 
 Installation
@@ -127,7 +128,7 @@ R CMD SHLIB was computing dependencies for all C files, not just those
 specified on the command line, and building the DLL from all *.o files
 in the directory.
 
-The sizes of metafile in pixels were often coming out one pixel more
+The sizes of metafiles in pixels were often coming out one pixel more
 than requested, so the background was not quite all painted.  Now we
 over-estimate.
 

@@ -761,7 +761,7 @@ int cmdlineoptions(int ac, char **av)
 
     while (--ac) {
 	if (processing && **++av == '-') {
-	    if (!strcmp(*av, "--help")) {
+	    if (!strcmp(*av, "--help") || !strcmp(*av, "-h")) {
 		R_ShowMessage(PrintUsage());
 		exit(0);
 	    }else if (!strcmp(*av, "--no-environ")) {

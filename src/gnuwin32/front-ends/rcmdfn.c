@@ -74,10 +74,10 @@ int rcmdfn (int cmdarg, int argc, char **argv)
     char RCMD[] = "R CMD";
     int len = strlen(argv[0]);
     
-    if(strncmp(argv[0]+len-4, "Rcmd", 4) == 0 || 
-       strncmp(argv[0]+len-4, "rcmd", 4) == 0 ||
-       strncmp(argv[0]+len-8, "Rcmd.exe", 8) == 0 || 
-       strncmp(argv[0]+len-8, "rcmd.exe", 8) == 0) 
+    if(!strncmp(argv[0]+len-4, "Rcmd", 4) || 
+       !strncmp(argv[0]+len-4, "rcmd", 4) ||
+       !strncmp(argv[0]+len-8, "Rcmd.exe", 8) || 
+       !strncmp(argv[0]+len-8, "rcmd.exe", 8)) 
 	strcpy(RCMD, "Rcmd");
 
 
@@ -86,8 +86,12 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	rcmdusage(RCMD);
 	return(0);
     }
-    if (argc == cmdarg+1 && strcmp(argv[cmdarg], "--help") == 0) {
-	/* need to cover Rcmd --help, R CMD --help and R --help */
+    if (argc == cmdarg+1 && 
+	(!strcmp(argv[cmdarg], "--help") || !strcmp(argv[cmdarg], "-h"))
+	) {
+	/* need to cover Rcmd --help, R CMD --help and R --help, 
+	   as well as -h versions.
+	 */
 	if(cmdarg == 2 || (cmdarg == 1 && strcmp(RCMD, "Rcmd")) == 0) {
 	    fprintf(stderr, "%s%s%s", "Usage: ", RCMD, " command args\n\n");
 	    rcmdusage(RCMD);
@@ -242,14 +246,21 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 
 	if (cmdarg > 0 && argc > cmdarg) {
 	    p = argv[cmdarg];
-	    if (strcmp(".sh", p + strlen(p) - 3) == 0) {
-		strcpy(cmd, "sh "); strcat(cmd, RHome); strcat(cmd, "/bin/");
-	    } else if (strcmp(".bat", p + strlen(p) - 4) == 0) strcpy(cmd, "");
-	    else if (strcmp(".exe", p + strlen(p) - 4) == 0) strcpy(cmd, "");
-	    else {
-		strcpy(cmd, "perl "); strcat(cmd, RHome); strcat(cmd, "/bin/");
+	    if (strcmp(p, "Rd2dvi") == 0) {
+		strcat(cmd, "sh "); 
+		strcat(cmd, RHome); strcat(cmd, "/bin/Rd2dvi.sh");
+	    } else {
+		if (!strcmp(".sh", p + strlen(p) - 3)) {
+		    strcpy(cmd, "sh "); 
+		    strcat(cmd, RHome); strcat(cmd, "/bin/");
+		} else if (!strcmp(".bat", p + strlen(p) - 4)) strcpy(cmd, "");
+		else if (!strcmp(".exe", p + strlen(p) - 4)) strcpy(cmd, "");
+		else {
+		    strcpy(cmd, "perl ");
+		    strcat(cmd, RHome); strcat(cmd, "/bin/");
+		}
+		strcat(cmd, p);
 	    }
-	    strcat(cmd, p);
 	} else
 	    sprintf(cmd, "%s/bin/Rterm.exe", getRHOME());
 

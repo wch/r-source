@@ -6789,7 +6789,7 @@ Post-process @R{} profiling files.
 Convert Rd format to various other formats, including @HTML{}, Nroff,
 La@TeX{}, plain text, and S documentation format.
 @item Rd2dvi
-(@code{Rd2dvi.sh} in Windows) Convert Rd format to DVI/PDF.
+Convert Rd format to DVI/PDF.
 @item Rd2txt
 Convert Rd format to text.
 @item Sd2Rd

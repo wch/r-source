@@ -34,6 +34,7 @@ int main (int argc, char **argv)
 		|| strcmp(argv[1], "SHLIB") == 0
 		|| strcmp(argv[1], "INSTALL") == 0
 		|| strcmp(argv[1], "REMOVE") == 0
+		|| strcmp(argv[1], "-h") == 0
 	 	|| strcmp(argv[1], "--help") == 0) cmdarg = 1;
     }
 
