@@ -66,6 +66,10 @@ NEW FEATURES
     o	read.fwf() has a new argument `n' for specifying the number of
 	records (lines) read in.
 
+    o   plot.mts() has a new argument `panel' providing the same
+        functionality as in coplot()
+	
+
 
 BUG FIXES
 

@@ -307,7 +307,8 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
 lines.ts <- function(x, ...)
     lines.default(time(as.ts(x)), x, ...)
 
-plot.mts <- function (x, plot.type = c("multiple", "single"),
+
+plot.mts <- function (x, plot.type = c("multiple", "single"), panel = lines,
                       log = "", col = par("col"),  bg = NA, pch = par("pch"),
                       cex = par("cex"), lty = par("lty"), lwd = par("lwd"),
                       ann = par("ann"),  xlab = "Time", main=NULL,
@@ -317,9 +318,10 @@ plot.mts <- function (x, plot.type = c("multiple", "single"),
                         font.main=par("font.main"),
                         col.main=par("col.main"), ...)
     {
-            mtext(main, 3, 3, cex=cex.main, font=font.main, col=col.main, ...)
+        mtext(main, 3, 3, cex=cex.main, font=font.main, col=col.main, ...)
     }
     plot.type <- match.arg(plot.type)
+    panel <- match.fun(panel)
     nser <- NCOL(x)
     if(plot.type == "single" || nser == 1) {
         m <- match.call()
@@ -340,7 +342,8 @@ plot.mts <- function (x, plot.type = c("multiple", "single"),
     for(i in 1:nser) {
         plot(x[, i], axes = FALSE, xlab="", ylab="",
              log = log, col = col, bg = bg, pch = pch, ann = ann,
-             ...)
+             type="n", ...)
+        panel(x[, i], col = col, bg = bg, pch = pch, ...)
         box()
         axis(2, xpd=NA)
         mtext(nm[i], 2, 3)

@@ -14,7 +14,7 @@
      lty = par("lty"), lwd = par("lwd"),
      axes = TRUE, frame.plot = axes, ann = par("ann"),
      main = NULL, plot.type = c("multiple", "single"),
-     xy.labels = n <= 150, xy.lines = do.lab, ...)
+     xy.labels = n <= 150, xy.lines = do.lab, panel=lines, ...)
 
 lines(x, \dots)
 }
@@ -32,6 +32,9 @@ lines(x, \dots)
   \item{xy.lines}{logical, indicating if \code{\link{lines}}
     should be drawn for an x-y plot.  Default is true, when labels are
     drawn as well.}
+  \item{panel}{a \code{function(x, col, bg, pch, ...)} which gives the
+    action to be carried out in each panel of the display for
+    \code{plot.type="multiple"}.  The default is \code{lines}.} 
 
   \item{\dots}{additional graphical arguments, see \code{\link{plot}},
     \code{\link{plot.default}} and \code{\link{par}}.}
@@ -54,7 +57,8 @@ lines(x, \dots)
 
 ## Multivariate
 z <- ts(matrix(rt(300, df = 3), 100, 3), start=c(1961, 1), frequency=12)
-plot(z)# multiple
+plot(z)                # multiple
+plot(z, panel=points)  # same with points instead of lines
 plot(z, plot.type="single", lty=1:3)
 
 ## A phase plot:
