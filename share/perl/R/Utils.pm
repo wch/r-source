@@ -63,20 +63,17 @@ sub text2html {
 sub file_path {
     my @args = @_;
     my $filesep = "/";
-    my $outpath ="";
     my $v;
 
     if($R::Vars::OSTYPE eq "mac") {
-     foreach $v (@args) {
-      $v =~ s/:\z//;
-     }
-     $filesep = ":";
+	foreach $v (@args) {
+	    $v =~ s/:\z//;
+	}
+	$filesep = ":";
     }
 
     join($filesep, @args);
 }
-
-
 
 sub env_path {
     my @args = @_;
@@ -84,7 +81,6 @@ sub env_path {
     $envsep = ";" if($R::Vars::OSTYPE eq "windows");
     join($envsep, @args);
 }
-
 
 sub list_files {
     my $dir = $_[0];
