@@ -156,7 +156,8 @@ glm.fit.null <- function (x, y, weights = rep(1, nobs), start = NULL,
 		prior.weights = weights, df.residual = resdf,
 		df.null = nulldf, y = y, converged = conv, boundary = FALSE))
 }
-model.matrix.glm.null<-function(x,...){
+
+model.matrix.glm.null<-function(object, ...){
   rval<-matrix(ncol=0,nrow=length(object$y))
   attr(rval,"assign")<-integer(0)
 }
