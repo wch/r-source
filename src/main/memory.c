@@ -372,7 +372,7 @@ SEXP allocVector(SEXPTYPE type, int length)
 #endif
 	LENGTH(s) = length;
 	NAMED(s) = 0;
-	OBJECT(s) = 0;
+	OBJECT(s) = (type == FACTSXP || type == ORDSXP);
 	ATTRIB(s) = R_NilValue;
 	if (size > 0) {
 		CHAR(s) = (char *) (R_VTop + 1);

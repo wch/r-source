@@ -28,6 +28,8 @@ int get1index(SEXP s, SEXP names, int pok)
 
 	if (length(s) > 1)
 		error("attempt to select more than one element\n");
+	if (length(s) < 1)
+		error("attempt to select less than one element\n");
 	if (TYPEOF(s) == INTSXP || TYPEOF(s) == LGLSXP)
 		k = INTEGER(s)[0] - 1;
 	else if (TYPEOF(s) == REALSXP)
