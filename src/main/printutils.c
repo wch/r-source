@@ -18,10 +18,13 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8-FIXME> Octal representation of strings needs fixing
+/* <UTF8>
 
    char here is either ASCII or handled as a whole, apart from Rstrlen 
    and EncodeString.
+
+   Octal representation of strings replaced by \u+6hex (can that be
+   improved?).
 */
 
 
@@ -218,7 +221,9 @@ char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei)
     return buffer->data;
 }
 
-
+#ifdef SUPPORT_UTF8
+#include <wchar.h>
+#endif
 /* strlen() using escaped rather than literal form,
    and allows for embedded nuls */
 int Rstrlen(SEXP s, int quote)
@@ -229,35 +234,49 @@ int Rstrlen(SEXP s, int quote)
     len = 0;
     p = CHAR(s);
     for (i = 0; i < LENGTH(s); i++) {
-	if(isprint((int)*p)) {
-	    switch(*p) {
-	    case '\\':
-		 len += 2; break;
-	    case '\'':
-	    case '"':
-		len += (quote == *p)? 2 : 1; break;
-	    default: 
-		len++; break;
+
+	/* ASCII */
+	if((unsigned char) *p < 0x80) {
+	    if(isprint((int)*p)) {
+		switch(*p) {
+		case '\\':
+		    len += 2; break;
+		case '\'':
+		case '"':
+		    len += (quote == *p)? 2 : 1; break;
+		default: 
+		    len++; break;
+		}
+	    } else switch(*p) {
+	    case '\a':
+	    case '\b':
+	    case '\f':
+	    case '\n':
+	    case '\r':
+	    case '\t':
+	    case '\v':
+	    case '\0':
+		len += 2; break;
+	    default:
+		/* print in octal */
+		len += 4; break;
 	    }
-	} else switch(*p) {
-	case '\a':
-	case '\b':
-	case '\f':
-	case '\n':
-	case '\r':
-	case '\t':
-	case '\v':
-	case '\0':
-	    len += 2; break;
-	default:
-#ifdef Win32
-	    len += ((unsigned int)*p < 32) ? 5 : 1;
+	    p++;
+#ifdef SUPPORT_UTF8
+	} else if(utf8locale) { /* beginning of multibyte UTF-8 char */
+	    int clen = utf8clen(*p);
+	    wchar_t wc;
+	    mbrtowc(&wc, p, clen, NULL);
+	    len += iswprint((int)wc) ? 1 : 8;
+	    i += (clen - 1);
+#endif
+	} else { /* 8 bit char */
+#ifdef Win32 /* It seems Windows does not know what is printable! */
+	    len++;
 #else
-	    /* print in octal */
-	    len += 5; break;
+	    len += isprint((int)*p) ? 1 : 4;
 #endif
 	}
-	p++;
     }
     return len;
 }
@@ -266,7 +285,7 @@ int Rstrlen(SEXP s, int quote)
 char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 {
     int b, b0, i, j, cnt;
-    char *p, *q, buf[5];
+    char *p, *q, buf[9];
 
     if (s == NA_STRING) {
 	p = quote ? CHAR(R_print.na_string) : CHAR(R_print.na_string_noquote);
@@ -291,44 +310,58 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
     for (i = 0; i < cnt; i++) {
 
 	/* ASCII */
+	if((unsigned char) *p < 0x80) {
+	    if(isprint((int)*p)) {
+		switch(*p) {
+		case '\\': *q++ = '\\'; *q++ = '\\'; break;
+		case '\'':
+		case '"':
+		    if(quote == *p)  *q++ = '\\'; *q++ = *p; break;
+		default: *q++ = *p; break;
+		}
+	    } else switch(*p) {
+	    /* ANSI Escapes */
+	    case '\a': *q++ = '\\'; *q++ = 'a'; break;
+	    case '\b': *q++ = '\\'; *q++ = 'b'; break;
+	    case '\f': *q++ = '\\'; *q++ = 'f'; break;
+	    case '\n': *q++ = '\\'; *q++ = 'n'; break;
+	    case '\r': *q++ = '\\'; *q++ = 'r'; break;
+	    case '\t': *q++ = '\\'; *q++ = 't'; break;
+	    case '\v': *q++ = '\\'; *q++ = 'v'; break;
+	    case '\0': *q++ = '\\'; *q++ = '0'; break;
 
-	if(isprint((int)*p)) {
-	    switch(*p) {
-	    case '\\': *q++ = '\\'; *q++ = '\\'; break;
-	    case '\'':
-	    case '"':
-		if(quote == *p)  *q++ = '\\'; *q++ = *p; break;
-	    default: *q++ = *p; break;
-	    }
-	}
-
-	/* ANSI Escapes */
-
-	else switch(*p) {
-	case '\a': *q++ = '\\'; *q++ = 'a'; break;
-	case '\b': *q++ = '\\'; *q++ = 'b'; break;
-	case '\f': *q++ = '\\'; *q++ = 'f'; break;
-	case '\n': *q++ = '\\'; *q++ = 'n'; break;
-	case '\r': *q++ = '\\'; *q++ = 'r'; break;
-	case '\t': *q++ = '\\'; *q++ = 't'; break;
-	case '\v': *q++ = '\\'; *q++ = 'v'; break;
-	case '\0': *q++ = '\\'; *q++ = '0'; break;
-
-	default:
-#ifdef Win32 /* It seems Windows does not know what is printable! */
-	    if((unsigned int)*p < 32) {
+	    default:
 		/* print in octal */
 		snprintf(buf, 5, "\\%03o", (unsigned char) *p);
 		for(j = 0; j < 4; j++) *q++ = buf[j];
-	    } else *q++ = *p;
-#else
-	    /* print in octal */
-	    snprintf(buf, 5, "\\%03o", (unsigned char) *p);
-	    for(j = 0; j < 4; j++) *q++ = buf[j];
+		break;
+	    }
+	    p++;
+#ifdef SUPPORT_UTF8
+	} else if(utf8locale) { /* beginning of multibyte UTF-8 char */
+	    int j, clen = utf8clen(*p);
+	    wchar_t wc;
+	    mbrtowc(&wc, p, clen, NULL);
+	    if(iswprint(wc)) {
+		for(j = 0; j < clen; j++) *q++ = *p++;
+	    } else {
+		snprintf(buf, 9, "\\u%06x", (unsigned int) wc);
+		p += clen;
+	    }
+	    i += (clen - 1);
 #endif
-	    break;
+	} else {  /* 8 bit char */
+#ifdef Win32 /* It seems Windows does not know what is printable! */
+	    *q++ = *p;
+#else
+	    if(!isprint((int)*p) {
+		/* print in octal */
+		snprintf(buf, 5, "\\%03o", (unsigned char) *p);
+		for(j = 0; j < 4; j++) *q++ = buf[j];
+		p++;
+	    } else *q++ = *p++;
+#endif
 	}
-	p++;
     }
     if(quote) *q++ = quote;
     if(b > 0 && justify != Rprt_adj_right) {

@@ -708,7 +708,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	   well as . followed by a number */
 	need_prefix = FALSE;
 #ifdef SUPPORT_UTF8
-	if (utf8locale) {
+	if (utf8locale && this[0]) {
 	    int nc = l, used;
 	    wchar_t wc;
 	    p = this;
@@ -716,7 +716,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (wc == L'.') {
 		if (nc > 0) {
 		    mbrtowc(&wc, p, nc, NULL);
-		    if(!iswalpha(wc))  need_prefix = TRUE;
+		    if(iswdigit(wc))  need_prefix = TRUE;
 		}
 	    } else if (!iswalpha(wc)) need_prefix = TRUE;
 	} else 
@@ -1136,9 +1136,9 @@ do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef SUPPORT_UTF8
     if(utf8locale) {
 	int nb, nc, j;
-	wctrans_t tr = wctrans(ul ? "upper" : "lower");
+	wctrans_t tr = wctrans(ul ? "toupper" : "tolower");
 	wchar_t * wc;
-	/* the translated string need not even be the same length in bytes */
+	/* the translated string need not be the same length in bytes */
 	for(i = 0; i < n; i++) {
 	    if (STRING_ELT(x, i) == NA_STRING) 
 		SET_STRING_ELT(y, i, NA_STRING);

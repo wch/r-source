@@ -17,7 +17,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8> char here is either ASCII or handled as a whole */
+/* <UTF8> char here is either ASCII or handled as a whole.
+   Metric info is requested on widechar if found.
+ */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -1643,7 +1645,7 @@ void GEText(double x, double y, char *str,
 			/* Otherwise use GEStrHeight and fiddle yc */
 			double h, d, w;
 			GEMetricInfo(0, gc, &h, &d, &w, dd);
-			if (n>1 || (h==0 && d==0 && w==0)) {
+			if (n > 1 || (h == 0 && d == 0 && w == 0)) {
 			    height = fromDeviceHeight(GEStrHeight(sbuf, gc,
 								  dd),
 						      GE_INCHES, dd);
@@ -1654,48 +1656,50 @@ void GEText(double x, double y, char *str,
 			    char *ss = sbuf;
 			    int charNum = 0;
 #ifdef SUPPORT_UTF8
-			    int n = strlen(ss), used;
-			    wchar_t wc;
-			    while ((used  = mbrtowc(&wc, ss, n, NULL)) > 0) {
-				GEMetricInfo((int)wc, gc, &h, &d, &w, dd);
-				h = fromDeviceHeight(h, GE_INCHES, dd);
-				d = fromDeviceHeight(d, GE_INCHES, dd);
-				/* Set maxHeight and maxDepth from height
-				   and depth of first char.
-				   Must NOT set to 0 in case there is
-				   only 1 char and it has negative
-				   height or depth
-				*/
-				if (charNum++ == 0) {
-				    maxHeight = h;
-				    maxDepth = d;
-				} else {
-				    if (h > maxHeight) maxHeight = h;
-				    if (d > maxDepth) maxDepth = d;
+			    if(utf8locale && !utf8strIsASCII(ss)) {
+				int n = strlen(ss), used;
+				wchar_t wc;
+				while ((used=mbrtowc(&wc, ss, n, NULL)) > 0) {
+				    GEMetricInfo((int)wc, gc, &h, &d, &w, dd);
+				    h = fromDeviceHeight(h, GE_INCHES, dd);
+				    d = fromDeviceHeight(d, GE_INCHES, dd);
+				    /* Set maxHeight and maxDepth from height
+				       and depth of first char.
+				       Must NOT set to 0 in case there is
+				       only 1 char and it has negative
+				       height or depth
+				    */
+				    if (charNum++ == 0) {
+					maxHeight = h;
+					maxDepth = d;
+				    } else {
+					if (h > maxHeight) maxHeight = h;
+					if (d > maxDepth) maxDepth = d;
+				    }
+				    ss += used; n -=used;
 				}
-				ss += used; n -=used;
-			    }
-#else
-			    for (ss = sbuf; *ss; ss++) {
-				GEMetricInfo((unsigned char) *ss, gc,
-					     &h, &d, &w, dd);
-				h = fromDeviceHeight(h, GE_INCHES, dd);
-				d = fromDeviceHeight(d, GE_INCHES, dd);
-				/* Set maxHeight and maxDepth from height
-				   and depth of first char.
-				   Must NOT set to 0 in case there is
-				   only 1 char and it has negative
-				   height or depth
-				*/
-				if (charNum++ == 0) {
-				    maxHeight = h;
-				    maxDepth = d;
-				} else {
-				    if (h > maxHeight) maxHeight = h;
-				    if (d > maxDepth) maxDepth = d;
-				}
-			    }
+			    } else
 #endif
+				for (ss = sbuf; *ss; ss++) {
+				    GEMetricInfo((unsigned char) *ss, gc,
+						 &h, &d, &w, dd);
+				    h = fromDeviceHeight(h, GE_INCHES, dd);
+				    d = fromDeviceHeight(d, GE_INCHES, dd);
+				    /* Set maxHeight and maxDepth from height
+				       and depth of first char.
+				       Must NOT set to 0 in case there is
+				       only 1 char and it has negative
+				       height or depth
+				    */
+				    if (charNum++ == 0) {
+					maxHeight = h;
+					maxDepth = d;
+				    } else {
+					if (h > maxHeight) maxHeight = h;
+					if (d > maxDepth) maxDepth = d;
+				    }
+				}
+
 			    height = maxHeight - maxDepth;
 			    yc = 0.5;
 			}
@@ -2152,7 +2156,7 @@ void GEMetricInfo(int c,
 	    dd->dev->metricInfo(c, gc, ascent, descent, width, dd->dev);
 	else
 #endif
-	dd->dev->metricInfo(c & 0xFF, gc, ascent, descent, width, dd->dev);
+	    dd->dev->metricInfo(c & 0xFF, gc, ascent, descent, width, dd->dev);
 }
 
 /****************************************************************
