@@ -442,7 +442,13 @@ sub build_chm_toc {
 	"<HEAD></HEAD><HTML><BODY>\n<UL>\n";
     print tocfile
 	"<LI> <OBJECT type=\"text/sitemap\">\n",
-	    "<param name=\"Name\" value=\"Package $pkg:  R objects\">\n</OBJECT>";
+	"<param name=\"Name\" value=\"Package $pkg:  Contents\">\n",
+	"<param name=\"Local\" value=\"00Index.html\">\n",
+	"</OBJECT>\n";
+    print tocfile
+	"<LI> <OBJECT type=\"text/sitemap\">\n",
+	"<param name=\"Name\" value=\"Package $pkg:  R objects\">\n",
+	"</OBJECT>\n";
     print tocfile "<UL>\n";   # contents of a book
     foreach $alias (sort foldorder keys %aliasnm) {
 	print tocfile
@@ -454,7 +460,8 @@ sub build_chm_toc {
     print tocfile "</UL>\n";  # end of a book
     print tocfile
 	"<LI> <OBJECT type=\"text/sitemap\">\n",
-	    "<param name=\"Name\" value=\"Package $pkg:  Titles\">\n</OBJECT>\n";
+	"<param name=\"Name\" value=\"Package $pkg:  Titles\">\n",
+	"</OBJECT>\n";
     print tocfile "<UL>\n";   # contents of a book
     foreach $title (sort foldorder keys %title2file) {
 	print tocfile
