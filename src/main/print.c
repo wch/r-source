@@ -17,14 +17,18 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/*== see ./printutils.c for general remarks on Printing and the Encode.. utils.
+/*>>> print.default() -> do_printdefault & its sub-functions.
+ * ---	do_printmatrix, do_sink, do_invisible
+ *
+ *== see ./printutils.c for general remarks on Printing and the Encode.. utils.
+ *
+ *== also ./printvector.c,  ./printarray.c
  */
 #include "Defn.h"
 #include "Print.h"
 #include "Fileio.h"
 
 static void printAttributes(SEXP, SEXP);
-void PrintValueRec(SEXP, SEXP);
 
 int R_print_width;
 SEXP print_na_string;
