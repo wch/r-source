@@ -223,6 +223,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
     bufp = buf;
     for(;;) {
 	if(!*bufp) {
+	    R_Busy(0);
 	    if (R_ReadConsole(R_PromptString(browselevel, prompt_type),
 			     buf, 1024, 1) == 0) return;
 	    bufp = buf;
