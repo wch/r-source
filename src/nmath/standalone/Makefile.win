@@ -66,6 +66,13 @@ DEPENDS = $(SOURCES_NMATH:.c=.d)
 
 Rmath.dll: Rmath.a
 Rmath.a: sunif.o $(SOURCES_NMATH:.c=.o)
+Rmath.def: sunif.o $(SOURCES_NMATH:.c=.o)
+	$(ECHO) LIBRARY $* > $@
+	$(ECHO) EXPORTS >> $@
+	$(NM) $^ > Defs
+	$(SED) -n '/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p' Defs >> $@
+	$(RM) Defs
+libRmath.a: Rmath.def
 
 # Dependencies
 makeMakedeps: $(DEPENDS)
