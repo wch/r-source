@@ -354,9 +354,6 @@
 /* Define if you have the <ieeefp.h> header file.  */
 #undef HAVE_IEEEFP_H
 
-/* Define if you have the <libintl.h> header file.  */
-#undef HAVE_LIBINTL_H
-
 /* Define if you have the <locale.h> header file.  */
 #undef HAVE_LOCALE_H
 

@@ -618,7 +618,6 @@ EOF
 	  ${RANLIB} libconftest.a 1>&AC_FD_CC
 	fi
       fi
-      AC_DEFINE(HAVE_F77_UNDERSCORE)
       AC_LANG_RESTORE
       AC_CHECK_LIB(f2c, f_open, flibs=-lf2c, flibs=,
 	[-L. -lconftest ${LIBM}])
