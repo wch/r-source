@@ -154,7 +154,8 @@ makePrototypeFromClassDef <-
     check <- rep(FALSE, length(pnames))
     for(what in pnames) {
         pwhat <- slot(prototype, what)
-        if(!is(pwhat, slotDefs[[what]])) {
+        slotClass <- getClassDef(slotDefs[[what]], where)
+        if(is.null(slotClass) || !extends(class(pwhat), slotClass)) {
             if(is.null(pwhat)) {
 #                 warning("In class \"", className,
 #                         "\", the prototype for slot \"", what, "\" (slot class \"",
