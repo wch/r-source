@@ -14,7 +14,7 @@
 
    <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.7.0 (2003-03-12).
+   <p>The current version of this document is 1.7.0 (2003-04-02).
 
    ISBN 3-901167-52-8
 
@@ -128,6 +128,18 @@ discrepancies.  To re-run the tests you would need
 
 <pre class="smallexample">     make check FORCE=FORCE
      </pre>
+
+   <p>More comprehensive testing can be done by
+
+<pre class="smallexample">     make check-devel
+     </pre>
+
+<p>or
+
+<pre class="smallexample">     make check-all
+     </pre>
+
+<p>see <code>tests/README</code>.
 
    <p>If these commands execute successfully, the R binary will be copied
 to the <code></code><var>R_HOME</var><code>/bin</code> directory.  In addition, a shell-script
@@ -468,8 +480,7 @@ later, but has been deprecated in favor of the function <code>Rdindex()</code>
 in package <strong>tools</strong> as of R version 1.7.0.)
 
    <p>You will not be able to build the info files unless you have
-<code>makeinfo</code> version 4 or later installed (and some Linux
-distributions have 3.12).
+<code>makeinfo</code> version 4 or later installed.
 
    <p>The typeset documentation needs <code>tex</code> and <code>latex</code>, or
 <code>pdftex</code> and <code>pdflatex</code>.
@@ -481,31 +492,17 @@ distributions have 3.12).
    <p>The command-line editing depends on the <code>readline</code> library
 available from any GNU mirror: you will need a fairly recent version.
 
-   <p>Use of <code>gzfile</code> connections needs <code>zlib</code> (version 1.1.3 or
-later): if an installed version is not found, that in the R sources
-will be compiled in.
-
    <p>The bitmapped graphics devices <code>jpeg()</code> and <code>png()</code> need the
-appropriate libraries installed: <code>jpeg</code> (version 6b or later) or
-<code>libpng</code> (versions 1.0.5 to 1.2.1 or 1.2.3 or later) and
-<code>zlib</code> (version 1.1.3 or later) respectively. 
-(<code>libpng-1.2.2</code>, only, moved its header files, and you will need
-add something like <code>-I/usr/local/include/libpng12</code> to
-<code>CPPFLAGS</code> to make use of it.)
+appropriate headers and libraries installed: <code>jpeg</code> (version 6b
+or later) or <code>libpng</code> (version 1.2.3 or later) and <code>zlib</code>
+(version 1.1.3 or later) respectively.
 
    <p>The <code>bitmap</code> and <code>dev2bitmap</code> devices make use of ghostscript
 (<a href="http://www.cs.wisc.edu/~ghost">http://www.cs.wisc.edu/~ghost</a>).
 
-   <p><code>bzfile</code> connections make use of <code>libbz2</code>, part of
-<code>bzip2</code> (<a href="http://sources.redhat.com/bzip2">http://sources.redhat.com/bzip2</a>).  If no installed
-version is found, that in the R sources will be compiled in.
-
-   <p><code>grep</code> and related functions will make use of PCRE if installed. 
-The sources are at
-<a href="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/">ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/</a>; the
-Debian package is <code>libpcre3-dev</code> and the RPM something like
-<code>pcre-devel-3.4-2</code>.  If no installed version is found, that in the
-R sources will be compiled in.
+   <p>If you have them installed (including the approrpiate headers),
+<code>zlib</code>, <code>libbz2</code> and PCRE will be used: otherwise versions
+in the R sources will be compiled in.
 
    </ul>
 
@@ -1129,8 +1126,6 @@ native blas seems not to have been built with the flags needed to
 suppress <code>SIGFPE</code>'s.  Currently R does not set a signal handler for
 <code>SIGFPE</code> on platforms that support <small>IEEE</small> arithmetic, so
 these are fatal.
-
-   <p><code>make check</code> passes with no problems.
 
 <a name="Alpha%2fFreeBSD"></a>
 
