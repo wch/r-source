@@ -261,7 +261,7 @@ static void menurm(control m)
 {
     if (!ConsoleAcceptCmd) return;
     if (askyesno("Are you sure?") == YES)
-	consolecmd(RConsole, "rm(list=ls())");
+	consolecmd(RConsole, "rm(list=ls(all=TRUE))");
     show(RConsole);
 }
 
