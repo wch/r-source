@@ -30,9 +30,13 @@
 \code{summary} method for class \code{"lm"}.
 }
 \details{
-\code{print.summary.lm} tries to be smart about formatting the
-coefficients, standard errors, etc. and additionally gives
-``significance stars'' if \code{signif.stars} is \code{TRUE}.
+  \code{print.summary.lm} tries to be smart about formatting the
+  coefficients, standard errors, etc. and additionally gives
+  ``significance stars'' if \code{signif.stars} is \code{TRUE}.
+
+  Correlations are printed to two decimal places (or symbolically): to
+  see the actual correlations print \code{summary(object)$correlation}
+  directly.
 }
 \value{
   The function \code{summary.lm} computes and returns a list of summary

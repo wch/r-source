@@ -293,7 +293,11 @@ NEW FEATURES
     o	Generic function confint() and `lm' method (formerly in
 	package MASS, which has `glm' and `nls' methods).
 
-    o	summary.{lm,glm} now default to symbolic.cor = FALSE.
+    o	print.summary.{lm,glm} now default to symbolic.cor = FALSE, but
+	symbolic.cor can be passed to the print methods from the
+	summary methods.  print.summary.{lm,glm} print correlations to
+	2 decimal places, and the symbolic printout avoids abbreviating
+	labels.
 
     o	QR objects now have class "qr", and solve.qr() is now just the
 	method for solve() for the class.

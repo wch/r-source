@@ -517,7 +517,7 @@ stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
 }
 
 summary.glm <- function(object, dispersion = NULL,
-			correlation = FALSE, ...)
+			correlation = FALSE, symbolic.cor = FALSE, ...)
 {
     Qr <- object$qr
     est.disp <- FALSE
@@ -581,14 +581,16 @@ summary.glm <- function(object, dispersion = NULL,
 	dd <- sqrt(diag(covmat.unscaled))
 	ans$correlation <-
 	    covmat.unscaled/outer(dd,dd)
+        ans$symbolic.cor <- symbolic.cor
     }
     class(ans) <- "summary.glm"
     return(ans)
 }
 
-print.summary.glm <- function (x, digits = max(3, getOption("digits") - 3),
-			       na.print = "", symbolic.cor = FALSE,
-			       signif.stars= getOption("show.signif.stars"), ...)
+print.summary.glm <-
+    function (x, digits = max(3, getOption("digits") - 3),
+              na.print = "", symbolic.cor = x$symbolic.cor,
+              signif.stars= getOption("show.signif.stars"), ...)
 {
     cat("\nCall:\n")
     cat(paste(deparse(x$call), sep="\n", collapse="\n"), "\n\n", sep="")
@@ -620,12 +622,14 @@ print.summary.glm <- function (x, digits = max(3, getOption("digits") - 3),
 	p <- NCOL(correl)
 	if(p > 1) {
 	    cat("\nCorrelation of Coefficients:\n")
-	    if(symbolic.cor)
-		print(symnum(correl)[-1,-p])
-	    else {
-                correl[!lower.tri(correl)] <- NA
-                print(correl[-1, -p, drop=FALSE],
-                      digits = digits, na = "")
+	    if(is.logical(symbolic.cor) && symbolic.cor) { # NULL < 1.7.0 objects
+                res <- symnum(correl)
+                colnames(res) <- rep("", p)
+		print(res)
+	    } else {
+                correl <- format(round(correl, 2), nsmall = 2, digits = digits)
+                correl[!lower.tri(correl)] <- ""
+                print(correl[-1, -p, drop=FALSE], quote = FALSE)
             }
 	}
     }

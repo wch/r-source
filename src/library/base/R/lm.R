@@ -242,7 +242,7 @@ print.lm <- function(x, digits = max(3, getOption("digits") - 3), ...)
     invisible(x)
 }
 
-summary.lm <- function (object, correlation = FALSE, ...)
+summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
 {
     z <- object
     Qr <- object$qr
@@ -296,6 +296,7 @@ summary.lm <- function (object, correlation = FALSE, ...)
     if (correlation) {
 	ans$correlation <- (R * resvar)/outer(se, se)
 	dimnames(ans$correlation) <- dimnames(ans$cov.unscaled)
+        ans$symbolic.cor <- symbolic.cor
     }
     class(ans) <- "summary.lm"
     ans
@@ -303,7 +304,7 @@ summary.lm <- function (object, correlation = FALSE, ...)
 
 print.summary.lm <-
     function (x, digits = max(3, getOption("digits") - 3),
-              symbolic.cor = FALSE,
+              symbolic.cor = x$symbolic.cor,
 	      signif.stars= getOption("show.signif.stars"),	...)
 {
     cat("\nCall:\n")#S: ' ' instead of '\n'
@@ -350,13 +351,15 @@ print.summary.lm <-
 	p <- NCOL(correl)
 	if (p > 1) {
 	    cat("\nCorrelation of Coefficients:\n")
-	    if(symbolic.cor)
-		print(symnum(correl)[-1,-p])
-	    else {
-		correl[!lower.tri(correl)] <- NA
-		print(correl[-1, -p, drop=FALSE],
-		      digits = digits, na = "")
-	    }
+	    if(is.logical(symbolic.cor) && symbolic.cor) { # NULL < 1.7.0 objects
+                res <- symnum(correl)
+                colnames(res) <- rep("", p)
+		print(res)
+	    } else {
+                correl <- format(round(correl, 2), nsmall = 2, digits = digits)
+                correl[!lower.tri(correl)] <- ""
+                print(correl[-1, -p, drop=FALSE], quote = FALSE)
+            }
 	}
     }
     cat("\n")#- not in S

@@ -5,11 +5,12 @@
 \alias{print.summary.glm.null}
 \title{Summarizing Generalized Linear Model Fits}
 \usage{
-\method{summary}{glm}(object, dispersion = NULL, correlation = FALSE, \dots)
+\method{summary}{glm}(object, dispersion = NULL, correlation = FALSE,
+       symbolic.cor = FALSE, \dots)
 
 \method{print}{summary.glm}(x, digits = max(3, getOption("digits") - 3),
-              na.print = "", symbolic.cor = FALSE,
-              signif.stars = getOption("show.signif.stars"), \dots)
+      na.print = "", symbolic.cor = x$symbolic.cor,
+      signif.stars = getOption("show.signif.stars"), \dots)
 }
 \arguments{
   \item{object}{an object of class \code{"glm"}, usually, a result of a
@@ -33,9 +34,13 @@
   \code{summary.glm} objects.
 }
 \details{
-\code{print.summary.glm} tries to be smart about formatting the
-coefficients, standard errors, etc. and additionally gives
-``significance stars'' if \code{signif.stars} is \code{TRUE}.
+  \code{print.summary.glm} tries to be smart about formatting the
+  coefficients, standard errors, etc. and additionally gives
+  ``significance stars'' if \code{signif.stars} is \code{TRUE}.
+
+  Correlations are printed to two decimal places (or symbolically): to
+  see the actual correlations print \code{summary(object)$correlation}
+  directly.
 }
 \value{
   \code{summary.glm} returns an object of class \code{"summary.glm"}, a
@@ -61,6 +66,8 @@ coefficients, standard errors, etc. and additionally gives
   \item{cov.scaled}{ditto, scaled by \code{dispersion}.}
   \item{correlation}{(only if \code{correlation} is true.)  The estimated
     correlations of the estimated coefficients.}
+  \item{symbolic.cor}{(only if \code{correlation} is true.)  The value
+    of the argument \code{symbolic.cor}.}
 }
 \seealso{
   \code{\link{glm}}, \code{\link{summary}}.
