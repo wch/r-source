@@ -191,7 +191,7 @@ function(RdFiles)
     title <- sub("^[[:space:]]*", "", title)
     title <- sub("[[:space:]]*$", "", title)
 
-    data.frame(File = I(RdFiles),
+    data.frame(File = I(basename(RdFiles)),
                Name = I(unlist(contents[ , "Name"])),
                Type = I(unlist(contents[ , "Type"])),
                Title = I(title),
@@ -224,14 +224,15 @@ function(contents, packageName, outFile)
     ## collections of Rd files which do not necessarily all come from
     ## the same package ...
 
+    ## If the contents is 'empty', return immediately.  (Otherwise,
+    ## e.g. URLs would not be right ...)
+    if(!NROW(contents)) return()
+
     ## <FIXME>
     ## This has 'html' hard-wired.
     ## Note that slashes etc. should be fine for URLs.
-    URLs <- paste("../../../library/",
-                  packageName,
-                  "/html/",
-                  basename(gsub("\\.[[:alpha:]]+$", "",
-                                contents[ , "File"])),
+    URLs <- paste("../../../library/", packageName, "/html/",
+                  .filePathSansExt(contents[ , "File"]),
                   ".html",
                   sep = "")
     ## </FIXME>
