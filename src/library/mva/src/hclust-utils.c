@@ -5,7 +5,11 @@ SEXP R_cutree(SEXP merge, SEXP which)
 {
     SEXP ans;
     int n, k, l, nclust, m1, m2, ok, anscol;
-    int x[nrows(merge)+2], y[nrows(merge)+2], y1[nrows(merge)+2];
+    int *x, *y, *y1;
+
+    x = (int *) R_alloc(nrows(merge)+2, sizeof(int));
+    y = (int *) R_alloc(nrows(merge)+2, sizeof(int));
+    y1 = (int *) R_alloc(nrows(merge)+2, sizeof(int));
 
     merge = coerceVector(merge, INTSXP);
     which = coerceVector(which, INTSXP);
