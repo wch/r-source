@@ -8,10 +8,11 @@ This document concerns building and installing R from sources.
 Pre-made binaries are made available for some systems with varying
 regularity and can be obtained from CRAN (see the RESOURCES file).
 
-R will configure and build under a number of common Unix platforms
-including dec-alpha-osf, freebsd, hpux, linux-elf, sgi-irix, solaris,
-and sunos.  In general it is relatively easy to adapt R to new
-platforms.  See the section on new platforms for details.
+R will configure and build under a number of common Unix-like
+platforms (including dec-alpha-osf, freebsd, hpux, linux-elf,
+rs6000-ibm-aix, sgi-irix, solaris, and sunos) and on Windows (see
+src/gnuwin32/readme).  In general it is relatively easy to adapt R to
+new platforms.  See the section on new platforms for details.
 
 
 GETTING AND UNPACKING THE SOURCES
