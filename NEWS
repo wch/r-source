@@ -11,7 +11,7 @@
 NEW FEATURES
 
     o	The ``Introduction to R'' manual, in doc/manual.
-    	The ``Writing R Extensions'' manual is much enhanced for 
+    	The ``Writing R Extensions'' manual is much enhanced for
 	this release.
 
     o	The format for save/load has been changed. Workspaces and
@@ -215,6 +215,10 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	save(1, file = ""[F])  no longer segfaults.
+
+    o	read.fwf(character(0),..) no longer starts gobbling standard input.
+
     o   predict.glm(, type="link", se.fit=T) works
 
     o	str() now works with Surv(.) objects from library(survival5).
@@ -280,7 +284,7 @@ BUG FIXES
 
     o	Extensive enhancements and corrections to the help pages.
 
-    o	The possibility of buffer overruns during printing has been 
+    o	The possibility of buffer overruns during printing has been
 	much reduced, and eliminated on systems with vsnprintf.
 
 
