@@ -107,9 +107,8 @@ FORCE:
 
 .R.Rout-gct:
 	@echo "running gctorture() + \`$<'"
-	@(echo '.ptime <- proc.time(); gctorture()' ; cat $< ; \
-	  echo 'cat("Time used {gctorture()}:", proc.time() - .ptime, "\\n")') \
-	 | $(R) > $@
+	@(echo '.ptime <- proc.time(); gctorture()' ; \
+	  cat $< $(srcdir)/gct-tail) | $(R) > $@
 	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
 	  if test ! -r $$Ro ; then $(MAKE) $$Ro ; fi; \
 	  echo @ECHO_N@ "comparing \`$@' to \`$$Ro' ...@ECHO_C@"; \
