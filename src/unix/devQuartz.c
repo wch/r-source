@@ -578,7 +578,7 @@ Rboolean innerQuartzDeviceDriver(NewDevDesc *dd, char *display,
     dd->canChangeFont = TRUE;
     dd->canRotateText = TRUE;
     dd->canResizeText = TRUE;
-    dd->canClip       = FALSE;
+    dd->canClip       = TRUE;
     dd->canHAdj = 0;
     dd->canChangeGamma = FALSE;
 
@@ -860,6 +860,8 @@ static void 	Quartz_NewPage(R_GE_gcontext *gc,
     area.origin = origin;
     area.size = size;
 
+	Quartz_Clip(0,size.width, 0, size.height, dd);
+	
     if(gc->fill == NA_INTEGER)
       gc->fill = R_RGB(255, 255, 255);
       
@@ -873,7 +875,47 @@ static void 	Quartz_NewPage(R_GE_gcontext *gc,
 static void 	Quartz_Clip(double x0, double x1, double y0, double y1,
 		     	NewDevDesc *dd)
 {
- return;
+    QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;
+	float x, y, width, height;
+
+    if (x0 < x1) {
+		x = x0;
+		width = (float)(x1 -x0);
+    }
+    else {
+		x = x1;
+		width = (float)(x0 -x1);
+    }
+
+    if (y0 < y1) {
+		y = y0;
+		height = (float)(y1 -y0);
+    }
+    else {
+		y = y1;
+		height = (float)(y0-y1);
+    }
+
+/*  
+	Clipping on Quartz works on intersections of paths.
+	RestoreGState must be called before clipping. This
+	ensures that the clipping path is cleared.
+	As R makes subsequent calls of Clip() we need to
+	1. Save the GState before Clipping
+	2. Clipping
+	3. all the subsequent drawings will be in the clipped
+	   rectangle
+	4. on the next device->Clip() call we RestoreGState to
+	   clear the clipping path
+
+	See Apple's Technical Q&A QA1050 "Turn Off Core Graphics Clipping"
+	S.M.I.
+*/	   
+	CGContextRestoreGState(GetContext(xd)); 
+	
+	CGContextSaveGState( GetContext(xd) );
+	CGContextClipToRect( GetContext(xd), CGRectMake(x, y, width, height) );
+	
 }
 
 static double 	Quartz_StrWidth(char *str, 

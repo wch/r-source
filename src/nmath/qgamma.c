@@ -29,7 +29,10 @@
  *	This function is based on the Applied Statistics
  *	Algorithm AS 91 ("ppchi2") and via pgamma(.) AS 239.
  *
- *	R core improvements: p ~ 1 no longer gives +Inf; final Newton step
+ *	R core improvements:
+ *	o  lower_tail, log_p
+ *      o  non-trivial result for p outside [0.000002, 0.999998]
+ *	o  p ~ 1 no longer gives +Inf; final Newton step(s)
  *
  *  REFERENCES
  *
@@ -42,7 +45,6 @@
 
 #ifdef DEBUG_qgamma
 # define DEBUG_q
-# include <R_ext/Print.h>
 #endif
 
 double qchisq_appr(double p, double nu, double g/* = log Gamma(nu/2) */,
@@ -90,7 +92,7 @@ double qchisq_appr(double p, double nu, double g/* = log Gamma(nu/2) */,
 	if( ch > 2.2*nu + 6 )
 	    ch = -2*(R_DT_Clog(p) - c*log(0.5*ch) + g);
 
-    } else { /* 1.24*(-log(p)) <= nu <= 0.32 */
+    } else { /* "small nu" : 1.24*(-log(p)) <= nu <= 0.32 */
 
 	ch = 0.4;
 	a = R_DT_Clog(p) + g + c*M_LN2;
@@ -183,8 +185,8 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 	p1 = 0.5*ch;
 	p2 = p_ - pgamma(p1, alpha, 1, /*lower_tail*/TRUE, /*log_p*/FALSE);
 #ifdef DEBUG_qgamma
-	if(i == 1) Rprintf(" Ph.II iter; ch=%g, p2=%g\n", ch, p2);
-	if(i >= 2) Rprintf("     it=%d,  ch=%g, p2=%g\n", i, p2);
+	if(i == 1) REprintf(" Ph.II iter; ch=%g, p2=%g\n", ch, p2);
+	if(i >= 2) REprintf("     it=%d,  ch=%g, p2=%g\n", i, p2);
 #endif
 #ifdef IEEE_754
 	if(!R_FINITE(p2))
@@ -232,25 +234,37 @@ END:
     for(i = 1; i <= max_it_Newton; i++) {
 	p1 = p_ - p;
 #ifdef DEBUG_qgamma
-	if(i == 2) Rprintf(" p=%g, N{it=%d}, d{p}=%g\n", p, i, p_ - p);
-	if(i >= 3) Rprintf("         it=%d,  d{p}=%g\n", i, p_ - p);
+	if(i == 1) REprintf("\n it=%d: p=%g, x = %g, p.=%g; p1:=D{p}=%g\n",
+			   i, p, x, p_, p1);
+	if(i >= 2) REprintf("         it=%d,  d{p}=%g\n",    i, p1);
 #endif
-	if(fabs(p1) < fabs(EPS_N * p) ||
-	   (g = dgamma(x, alpha, scale, FALSE)) == 0) {
+	if(fabs(p1) < fabs(EPS_N * p))
+	    break;
+	/* else */
+	if((g = dgamma(x, alpha, scale, log_p)) == R_D__0) {
+#ifdef DEBUG_q
+	    if(i == 1) REprintf("no final Newton step because dgamma(*)== 0!");
+#endif
 	    break;
 	}
-	else {
-	    /* delta x = f(x)/f'(x);
-	     * if(log_p) f(x) := log P(x) - p; f'(x) = d/dx log P(x) = P' / P
-	     * ==> f(x)/f'(x) = f*P / P' = f*exp(p_) / P' (since p_ = log P(x))
-	     */
-	    t = log_p ? p1*exp(p_)/g : p1/g ;/* = "delta x" */
-	    t = lower_tail ? x - t : x + t;
-	    p_ = pgamma (t, alpha, scale, lower_tail, log_p);
-	    if (fabs(p_ - p) >= fabs(p1))/* no improvement */
-		break;
-	    else x = t;
-	}
+	/* else :
+	 * delta x = f(x)/f'(x);
+	 * if(log_p) f(x) := log P(x) - p; f'(x) = d/dx log P(x) = P' / P
+	 * ==> f(x)/f'(x) = f*P / P' = f*exp(p_) / P' (since p_ = log P(x))
+	 */
+	t = log_p ? p1*exp(p_ - g) : p1/g ;/* = "delta x" */
+	t = lower_tail ? x - t : x + t;
+	p_ = pgamma (t, alpha, scale, lower_tail, log_p);
+	if (fabs(p_ - p) > fabs(p1) ||
+	    (i > 1 && fabs(p_ - p) == fabs(p1)) /* <- against flip-flop */) {
+	    /* no improvement */
+#ifdef DEBUG_q
+	    if(i == 1 && max_it_Newton > 1)
+                REprintf("no Newton step done since delta{p} >= last delta");
+#endif
+	    break;
+	} /* else : */
+	x = t;
     }
     return x;
 }

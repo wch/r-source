@@ -1,0 +1,1 @@
+PKG_LIBS=$(BLAS_LIBS)

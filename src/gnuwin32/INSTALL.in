@@ -1,0 +1,303 @@
+R @RVER@ for Windows
+====================
+
+This distribution contains the sources to build a port of R-@RVER@ to
+run on Windows 95, 98, ME, NT4, 2000 and XP on Intel/clone chips. See the
+file `README.@RWVER@' for fuller details, including how to install the binary
+versions.
+
+
+Building From Source on Windows
+===============================
+
+[Some further details, including how to debug, are given in the rw-FAQ.]
+
+First collect the tools that you need.  There is a `portal' with
+current links at http://www.stats.ox.ac.uk/pub/Rtools/.
+
+
+Collect the tools
+-----------------
+
+You will need suitable versions of at least make, sh, cat, cp, cut,
+diff, echo, egrep, expr, grep, ls, mkdir, mv, rm, sed, touch; we use
+those from the cygwin distribution
+(http://www.cygwin.com/mirrors.html) or (gzip, makeinfo, texindex)
+compiled from the sources.  We have packaged a set at
+http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
+
+BEWARE: `Native' ports of make are _not_ suitable (including that at
+the mingw site).  There were also problems with several earlier
+versions of the cygwin tools and dll.  To avoid frustration, please
+use our tool set, and make sure it is at the front of your path.
+
+To compile this version you need a recent version of the Mingw port of
+gcc from http://sourceforge.net/projects/mingw/.  There will probably
+be a distribution called something like MinGW-2.0.0-2.exe, or you can
+get the components (binutils-2.13, gcc-3.2, mingw-runtime-2.2 and
+w32api-2.0 or later.)  Earlier versions will probably work, but
+mingw-runtime >= 1.3 and w32api >= 1.5 are essential.
+
+No earlier Mingw compiler has been tested and support for using the
+Cygwin compiler has been withdrawn.  If you see errors about `-shared'
+not being understood or `__imp_foo' missing, you are not using the
+recommended compiler.
+
+
+The Windows port of perl5, available via
+http://www.activestate.com/Products/ActivePerl/.
+BEWARE: you do need the *Windows* port and not the Cygwin one.
+
+zip and unzip from the Info-ZIP project (http://www.info-zip.org and
+mirrors, and included in our tools.zip).
+
+PCRE from ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/ or
+http://pcre.sourceforge.net/src/.  Unpack this (we used
+pcre-3.9.tar.bz2) and copy the files into src/extra/pcre.
+
+bzip2-1.0.2 from http://sources.redhat.com/bzip2.  Unpack this and
+copy the files into src/extra/bzip2.
+
+
+If you want to make compiled html (.chm) files you will need the
+Microsoft HTML Help Workshop, currently available for download at
+http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwmicrosofthtmlhelpdownloads.asp
+and http://www.microsoft.com/office/ork/xp/appndx/appa06.htm
+
+You may need this on the same drive as the other tools. (Although we
+have successfully used it elsewhere, others have reported problems).
+
+
+All of these need to be installed and in your path, and the
+appropriate environment variables set.  You also need `.' in your path.
+Do not use paths with spaces in: you can always use the short forms.
+
+
+Check your path
+---------------
+
+You need the following in your path:
+.
+our toolset
+mingw\bin
+Perl\bin
+the latex bin directory
+zip.exe, unzip.exe, hhc.exe
+
+Do not use spaces nor unnecessary quotes in your PATH variable.
+
+
+Building
+--------
+
+You also need the R source (R-@RVER@.tgz).
+
+Then: untar R-@RVER@.tgz somewhere (with no spaces in the path names),
+
+	cd /somewhere/R-@RVER@/src/gnuwin32
+
+IMPORTANT: edit MkRules to set the appropriate paths as needed and to
+set the type(s) of help that you want built.  BEWARE: MkRules contains
+tabs and some editors (e.g. WinEdt) silently remove them.
+
+Then run
+
+	make
+
+
+Note 1: The file @RWVER@\bin\Rchtml.dll is only built if CHM help is
+specified in MkRules. Its source is the help directory, and you need
+the HTML Help Workshop files to build it. It contains instructions to
+build it under VC++6, and it is preferable to use that as the VC++
+library will check versions of the components needed. You can just
+copy this from a binary distribution.
+
+Note 2: we have had reports that earlier versions of Norton Anti-Virus
+lock up the machine when windres is run, so you may need to disable
+it. (Norton Anti-Virus 2002 causes no problems.)
+
+Note 3: By default Doug Lea's malloc in the file src/gnuwin32/malloc.c is
+used.  You can opt out of this by commenting the line LEA_MALLOC=YES
+in MkRules, in which case the Windows malloc is used.  The one
+in crtdll.dll is unlikely to be satisfactory: the one in msvcrt.dll
+does work but imposes a considerable performance penalty.
+
+
+You can test a build by `make check': expect some differences in the
+tests of the print routines.  You may need to set TMPDIR to a suitable
+temporary directory: the default is c:\TEMP.
+
+
+Using ATLAS
+-----------
+
+You can make use of ATLAS (http://math-atlas.sourceforge.net/) fast
+BLAS libraries by defining USE_ATLAS=YES in MkRules and specifying the
+path to the libraries in macro ATLAS_PATH.
+
+You will need to build the libraries optimized for your architecture
+under the Cygwin compilers.  (The pre-compiled libraries on that site
+are for Compaq Visual Fortran, and you need to compile for g77.)
+
+For convenience
+
+	make Rblas-clean Rblas
+
+will re-make the Rblas.dll and so allows experimentation with different BLAS
+configurations.
+
+Prebuilt Rblas.dll for various Pentium and AthlonXP chips are available
+in the windows/contrib/ATLAS area on CRAN.
+
+
+Building bitmap device support
+------------------------------
+
+The file @RWVER@\bin\Rbitmap.dll is not built automatically:
+instructions on how to build it are in the file bitmap\INSTALL.
+
+If everything is set up in directory bitmap,
+
+	make bitmapdll
+
+will work from this directory.
+
+
+Building Tcl/Tk support
+-----------------------
+
+The TclTk support package is not built automatically.  To use this you
+need to download and install ActiveTcl 8.3.x from
+http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/ and set TCL_HOME
+in MkRules to where you installed it (perhaps c:/Program Files/Tcl).
+Then
+
+	make tcl
+
+will make the package.
+
+ActiveTcl 8.4.x can also be used, but a binary distribution can only
+be used with one of 8.3.x and 8.4.x.  The CRAN binary distribution is
+build using 8.3.x.
+
+
+
+Building the Manuals
+====================
+
+To make the PDF versions of the manuals you will need pdftex installed
+and configured to work with a large file: see doc/manual/README.  You
+also need texindex (included in our tool set).  Then the pdf manuals
+can be made by
+
+	make docs
+
+If you want to make the info versions (not the Reference Manual), you
+will need a version of makeinfo 4.2 (included in our tool set). Then
+
+	cd ../../doc/manual
+	make -f Makefile.win info
+
+will make the info files.
+
+To make DVI versions of the manuals use
+
+	cd ../../doc/manual
+	make -f Makefile.win dvi
+
+(assuming you have tex and latex installed and in your path).
+
+To make HTML versions of the manuals (not the Reference Manual) use
+
+	cd ../../doc/manual
+	make -f Makefile.win html
+
+This makes use of tidy.exe, available via http://tidy.sourceforge.net/,
+with a compiled version included in our tool set.
+
+The fptex distribution of TeX (via www.fptex.org) includes a suitable
+port of pdftex.
+
+
+Recommended packages
+====================
+
+The recommended packages can be built by
+
+	make recommended
+
+and checked by
+
+	make check-recommended
+
+
+If you are using a cvs/rsync version of the R sources, you need to put
+the .tar.gz files for the recommended packages in
+../library/Recommended, and copy foo_*.tar.gz to foo.tgz.  If you have
+rsync installed,
+
+	make rsync-recommended
+
+does this from the CRAN master.
+
+
+Building the installers
+=======================
+
+See installer/INSTALL.  You need a complete R build first, including 
+bitmap and Tcl/Tk support and the manuals, as well as the recommended
+packages.
+
+Once everything is set up
+
+	make
+	make distribution
+	make recommended
+	make fullcheck
+	make rinstaller
+
+will make and check all the pieces and then make the installers.
+
+
+Cross-building on ix86 Linux
+============================
+
+You will need i386-mingw32 cross-compilers installed and in your path.
+There is currently a complete set of tools at
+
+    http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross.tar.bz2
+
+(Just unpack this somewhere and put its bin directory in your path.)
+
+You will need Perl, zip and unzip installed.
+
+You also need the R source (R-@RVER@.tgz).
+
+Then: untar R-@RVER@.tgz somewhere, and
+
+	cd /somewhere/R-@RVER@/src/gnuwin32
+
+Edit MkRules to set BUILD=CROSS and the appropriate paths (including
+HEADER) as needed.
+
+Edit MkRules to set the type(s) of help that you want built. (You
+will not be able to cross-build .chm or .hlp files,
+so WINHELP is automatically set to NO.)
+
+Packages can be made in the same way as natively: see the file
+readme.packages.
+
+Note that to cross-build the methods package you need a working copy
+of this version of R on the Linux system.
+
+(It is possible to cross-build the main installers using WINE, which
+we leave as an exercise for the reader.)
+
+
+Feedback
+========
+
+Please send comments and bug reports to
+
+	R-windows@r-project.org
+

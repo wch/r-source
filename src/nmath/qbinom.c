@@ -2,6 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000, 2002 The R Development Core Team
+ *  Copyright (C) 2003--2004 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -49,7 +50,7 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
     if (pr < 0 || pr > 1 || n < 0)
 	ML_ERR_return_NAN;
 
-    if (pr == R_DT_0 || n == 0) return 0.;
+    if (pr == 0. || n == 0) return 0.;
     if (p == R_DT_0) return 0.;
     if (p == R_DT_1) return n;
 

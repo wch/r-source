@@ -37,7 +37,7 @@
 # include <locale.h>
 #endif
 
-#ifdef HAVE_LANGINFO_H
+#ifdef HAVE_LANGINFO_CODESET
 # include <langinfo.h>
 #endif
 
@@ -408,6 +408,8 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
    Don't use R-specific type, e.g. Rboolean */
 /* int R_Is_Running = 0; now in Defn.h */
 
+void R_ShowMessage(char *s); /* in OS/system.c */
+
 void setup_Rmainloop(void)
 {
     volatile int doneit;
@@ -417,8 +419,7 @@ void setup_Rmainloop(void)
 
     InitConnections(); /* needed to get any output at all */
 
-    /* Initialize the interpreter's */
-    /* internal structures. */
+    /* Initialize the interpreter's internal structures. */
 
 #ifdef HAVE_LOCALE_H
 #ifdef Win32
@@ -459,7 +460,7 @@ void setup_Rmainloop(void)
 		RSetConsoleWidth();
 	}
 #endif
-#ifdef HAVE_NL_LANGINFO
+#ifdef HAVE_LANGINFO_CODESET
     utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
 #endif
     /* gc_inhibit_torture = 0; */
@@ -532,7 +533,6 @@ void setup_Rmainloop(void)
 
     R_LoadProfile(R_OpenSysInitFile(), baseEnv);
 
-
     if (strcmp(R_GUIType, "Tk") == 0) {
 	char buf[256];
 
@@ -540,11 +540,14 @@ void setup_Rmainloop(void)
 	R_LoadProfile(R_fopen(buf, "r"), R_GlobalEnv);
     }
 
-    /* Print a platform and version dependent */
-    /* greeting and a pointer to the copyleft. */
-    if(!R_Quiet)
+    /* Print a platform and version dependent greeting and a pointer to
+     * the copyleft.
+     */
+    if(!R_Quiet) {
 	PrintGreeting();
-    if(utf8locale) Rprintf("\tUTF-8 locales are not currently supported\n\n");
+	if(utf8locale)
+	    R_ShowMessage("WARNING: UTF-8 locales are not currently supported\n");
+    }
 
     R_LoadProfile(R_OpenSiteFile(), baseEnv);
     R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);

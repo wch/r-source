@@ -40,7 +40,7 @@
 \alias{addNextMethod,MethodDefinition-method}
 \alias{addNextMethod,MethodWithNext-method}
 \alias{addNextMethod}
-alias{.valueClassTest}
+\alias{.valueClassTest}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
 \alias{.EmptyPrimitiveSkeletons}

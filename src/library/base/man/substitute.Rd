@@ -1,7 +1,7 @@
 \name{substitute}
 \title{Substituting and Quoting Expressions}
 \usage{
-substitute(expr, env=<<see below>>)
+substitute(expr, env)
 quote(expr)
 }
 \alias{substitute}
@@ -16,7 +16,7 @@ quote(expr)
 }
 \arguments{
   \item{expr}{Any syntactically valid \R expression}
-  \item{env}{An environment or a list object. Defaults to the
+  \item{env}{An environment or a list object.  Defaults to the
     current evaluation environment.}
 }
 \details{

@@ -41,7 +41,8 @@ lag.plot(x, lags = 1, layout = NULL, set.lags = 1:lags,
   internal consistency.
 }
 \author{Martin Maechler}
-\seealso{\code{\link{plot.ts}} which is the basic work horse.}
+\seealso{
+  \code{\link{plot.ts}} which is the basic work horse.
 }
 \examples{
 data(nhtemp)

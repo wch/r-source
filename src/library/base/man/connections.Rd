@@ -201,18 +201,18 @@ isIncomplete(con)
 #endif
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
-  1998). However \R goes well beyond the Svr4 model, for example
-  in output text connections and URL, gzfile, bzfile and socket connections.
+  1998).  However \R goes well beyond the Svr4 model, for example in
+  output text connections and URL, gzfile, bzfile and socket
+  connections.
 
-  The default mode in \R is \code{"r"} except for socket
-  connections. This differs from Svr4, where it is the equivalent of
-  \code{"r+"}, known as \code{"*"}.
+  The default mode in \R is \code{"r"} except for socket connections.
+  This differs from Svr4, where it is the equivalent of \code{"r+"},
+  known as \code{"*"}.
 
   On platforms where \code{vsnprintf} does not return the needed length
   of output (e.g., Windows) there is a 100,000 character output limit on
   the length of line for \code{fifo}, \code{gzfile} and \code{bzfile}
   connections: longer lines will be truncated with a warning.
-}
 }
 \references{
   Chambers, J. M. (1998)

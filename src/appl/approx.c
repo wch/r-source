@@ -50,6 +50,8 @@ static double approx1(double v, double *x, double *y, int n,
     /* Approximate  y(v),  given (x,y)[i], i = 0,..,n-1 */
     int i, j, ij;
 
+    if(!n) return R_NaN;
+
     i = 0;
     j = n - 1;
 

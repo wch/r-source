@@ -31,7 +31,7 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
                  prod(d[seq(from = i + 1, length = length(d) - i)]))
         w <- cbind(w, dimnames(z)[[i]][j])
     }
-    w <- w[which(!unlist(lapply(z, is.null))), ]
+    w <- w[which(!unlist(lapply(z, is.null))), , drop = FALSE]
     y <- data.frame(w, lapply(y, unlist, use.names = FALSE))
     names(y) <- c(names(by), names(x))
     y

@@ -199,7 +199,15 @@ function(dir, outDir)
     if(!fileTest("-d", docsDir)) return(invisible())
 
     dataDir <- file.path(dir, "data")
-    packageName <- basename(dir)
+    outDir <- filePathAsAbsolute(outDir)    
+    ## <FIXME>
+    ## Not clear whether we should use the basename of the directory we
+    ## install to, or the package name as obtained from the DESCRIPTION
+    ## file in the directory we install from (different for versioned
+    ## installs).  We definitely do not want the basename of the dir we
+    ## install from.
+    packageName <- basename(outDir)
+    ## </FIXME>
 
     indices <- c(file.path("Meta", "Rd.rds"),
                  file.path("Meta", "hsearch.rds"),
@@ -253,7 +261,15 @@ function(dir, outDir)
     if(!fileTest("-d", vignetteDir))
         return(invisible())
 
-    packageName <- basename(dir)
+    outDir <- filePathAsAbsolute(outDir)    
+    ## <FIXME>
+    ## Not clear whether we should use the basename of the directory we
+    ## install to, or the package name as obtained from the DESCRIPTION
+    ## file in the directory we install from (different for versioned
+    ## installs).  We definitely do not want the basename of the dir we
+    ## install from.
+    packageName <- basename(outDir)
+    ## </FIXME>
     outVignetteDir <- file.path(outDir, "doc")
     if(!fileTest("-d", outVignetteDir) && !dir.create(outVignetteDir))
         stop("cannot open directory", sQuote(outVignetteDir))
@@ -374,6 +390,8 @@ function(dir, outDir)
             stop(paste("cannot copy", sQuote(pdffile), "to",
                        sQuote(outVignetteDir)))
     }
+    ## need to change out of this dir before we delete it, at least on Windows
+    setwd(cwd)
     unlink(buildDir, recursive = TRUE)
     invisible()
 }

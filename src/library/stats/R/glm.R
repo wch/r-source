@@ -701,9 +701,9 @@ residuals.glm <-
 		  pearson = (y-mu)*sqrt(wts)/sqrt(object$family$variance(mu)),
 		  working = r,
 		  response = y - mu,
-		  partial = r 
+		  partial = r
 		  )
-    if(!is.null(object$na.action)) 
+    if(!is.null(object$na.action))
       res<- naresid(object$na.action, res)
     if (type=="partial") ## need to avoid doing naresid() twice.
       res<-res+predict(object, type="terms")
@@ -716,7 +716,7 @@ model.frame.glm <- function (formula, ...)
 {
     dots <- list(...)
     nargs <- dots[match(c("data", "na.action", "subset"), names(dots), 0)]
-    if (any(nargs > 0) || is.null(formula$model)) {
+    if (length(nargs) || is.null(formula$model)) {
 	fcall <- formula$call
 	fcall$method <- "model.frame"
 	fcall[[1]] <- as.name("glm")

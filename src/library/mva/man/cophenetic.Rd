@@ -1,0 +1,60 @@
+\name{cophenetic}
+\alias{cophenetic}
+\title{Cophenetic Distances for a Hierarchical Clustering}
+\description{
+  Computes the cophenetic distances for a hierarchical clustering.
+}
+\usage{
+cophenetic(x)
+}
+\arguments{
+  \item{x}{an object of class \code{\link[mva]{hclust}} or with a method
+    for \code{\link[mva]{as.hclust}()} such as \code{\link[cluster]{agnes}}.}
+}
+\details{
+  The cophenetic distance between two observations that have been
+  clustered is defined to be the intergroup dissimilarity at which the
+  two observations are first combined into a single cluster.
+  Note that this distance has many ties and restrictions.
+
+  It can be argued that a dendrogram is an appropriate summary of some
+  data if the correlation between the original distances and the
+  cophenetic distances is high.  Otherwise, it should simply be viewed as
+  the description of the output of the clustering algorithm.
+}
+\value{
+  An object of class \code{dist}.
+}
+\references{
+  Sneath, P.H.A. and Sokal, R.R (1973)
+  \emph{Numerical Taxonomy: The Principles and Practice of Numerical
+    Classification}, p. 278 ff;
+  Freeman, San Francisco.
+}
+\author{Robert Gentleman}
+
+\seealso{\code{\link{dist}}, \code{\link{hclust}}}
+
+\examples{
+ data(USArrests)
+ library(mva)
+ d1 <- dist(USArrests)
+ hc <- hclust(d1, "ave")
+ d2 <- cophenetic(hc)
+ cor(d1,d2) # 0.7659
+
+## Example from Sneath & Sokal, Fig. 5-29, p.279
+d0 <- c(1,3.8,4.4,5.1, 4,4.2,5, 2.6,5.3, 5.4)
+attributes(d0) <- list(Size = 5, diag=TRUE)
+class(d0) <- "dist"
+names(d0) <- letters[1:5]
+d0
+str(upgma <- hclust(d0, method = "average"))
+plot(upgma, hang = -1)
+#
+(d.coph <- cophenetic(upgma))
+cor(d0, d.coph) # 0.9911
+}
+\keyword{cluster}
+\keyword{multivariate}
+

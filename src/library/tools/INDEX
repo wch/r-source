@@ -1,0 +1,9 @@
+QA                       QA Checks for R Code and/or Documentation
+checkFF                  Check Foreign Function Calls
+checkTnF                 Check R Code for T/F
+codoc                    Check Code/Documentation Consistency
+undoc                    Find Undocumented Objects
+Sweave			 Automatic Generation of Reports
+RweaveLatex		 R/LaTeX Driver for Sweave
+Rtangle			 R Driver for Stangle
+checkVignettes		 Check all Sweave Files of a Package

@@ -174,8 +174,8 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
     int i, j, k, mm, mx, nn, np, nx, fn;
     double arg, den, elim, eps, fln, fx, rln, rxsq,
 	r1m4, r1m5, s, slope, t, ta, tk, tol, tols, tss, tst,
-	tt, t1, t2, wdtol, xdmln, xdmy, xinc, xln, xm, xmin,
-	xq, yint;
+	tt, t1, t2, wdtol, xdmln, xdmy, xinc, xln = 0.0 /* -Wall */, 
+	xm, xmin, xq, yint;
     double trm[23], trmr[n_max + 1];
 
     *ierr = 0;

@@ -19,7 +19,7 @@ all: Makefile DESCRIPTION
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
           echo ".packageName <- \"$(pkg)\"" >  $${f}; \
-	  cat `ls $(srcdir)/R/*.R` >> $${f}; \
+	  cat `LC_COLLATE=C ls $(srcdir)/R/*.R` >> $${f}; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
 	@for f in COPYRIGHTS INDEX SOURCES NAMESPACE; do \
 	  if test -f $(srcdir)/$${f}; then \

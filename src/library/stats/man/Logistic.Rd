@@ -4,6 +4,7 @@
 \alias{plogis}
 \alias{qlogis}
 \alias{rlogis}
+\concept{logit}
 \title{The Logistic Distribution}
 \description{
   Density, distribution function, quantile function and random
@@ -48,6 +49,11 @@ rlogis(n, location = 0, scale = 1)
 
   It is a long-tailed distribution with mean \eqn{\mu}{m} and variance
   \eqn{\pi^2/3 \sigma^2}{pi^2 /3 s^2}.
+}
+\note{
+  \code{qlogis(p)} is the same as the well known \sQuote{\emph{logit}}
+  function, \eqn{logit(p) = \log(p/(1-p))}, and \code{plogis(x)} has
+  consequently been called the \dQuote{inverse logit}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

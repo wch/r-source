@@ -4,10 +4,10 @@
 \title{Search the Help System}
 \description{
   Allows for searching the help system for documentation matching a
-  given character string in the (file) name, alias, title, or keyword
-  entries (or any combination thereof), using either \link{fuzzy matching}
-  or \link{regular expression} matching.  Names and titles of the
-  matched help entries are displayed nicely.
+  given character string in the (file) name, alias, title, concept or
+  keyword entries (or any combination thereof), using either
+  \link{fuzzy matching} or \link{regular expression} matching.  Names
+  and titles of the matched help entries are displayed nicely.
 }
 \usage{
 help.search(pattern, fields = c("alias", "concept", "title"),
@@ -109,14 +109,11 @@ help.search(apropos = "print")  # The same
 help.search(keyword = "hplot")  # All help pages documenting high-level
                                 # plots.
 file.show(file.path(R.home(), "doc", "KEYWORDS"))  # show all keywords
-file.show(file.path(R.home(), "doc", "KEYWORDS"))  # show all keywords
 
 ## Help pages with documented topics starting with 'try'.
 help.search("\\\\btry", fields = "alias")
 ## Do not use '^' or '$' when matching aliases or keywords
 ## (unless all packages were installed using R 1.7 or newer).
-## Look at all defined keywords:
-file.show(file.path(R.home(),"doc","KEYWORDS"))
 }
 }
 \keyword{documentation}

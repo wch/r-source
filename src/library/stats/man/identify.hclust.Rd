@@ -67,7 +67,7 @@
   dev.set(dev.prev())# old one for dendrogram
   plot(hci)
   ## select subtrees in dendrogram and "see" the species distribution:
-  identify.(hci, function(k) barplot(table(iris[k,5]),col=2:4), DEV.FUN = nD)
+  identify(hci, function(k) barplot(table(iris[k,5]),col=2:4), DEV.FUN = nD)
 }
 % dev.off()
 }

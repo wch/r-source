@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001--2003  The R Development Core Team.
- *  Copyright (C) 2003        The R Foundation
+ *  Copyright (C) 2003-4      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,10 +40,8 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
 	error("method must be a character object");
     meth = CHAR(STRING_ELT(method, 0));
 #ifndef IEEE_754
-    if (strcmp(meth, "dgesdd") == 0) {
-	warning("method = \"dgesdd\" requires IEEE 754 arithmetic: using \"dgesvd\"");
-	meth = "dgesvd";
-    }
+    if (strcmp(meth, "dgesdd") == 0)
+	error("method = \"dgesdd\" requires IEEE 754 arithmetic");
 #endif
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0]; p = xdims[1];

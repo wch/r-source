@@ -119,8 +119,8 @@ matplot(iris.S[,"Petal.Length",], iris.S[,"Petal.Width",], pch="SCV",
         sub = paste(c("S", "C", "V"), dimnames(iris.S)[[3]],
                     sep = "=", collapse= ",  "),
         main = "Fisher's Iris Data")
-}
 par(op)
+}
 \keyword{hplot}
 \keyword{aplot}
 \keyword{array}

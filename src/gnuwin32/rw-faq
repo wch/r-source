@@ -1,0 +1,876 @@
+R for Windows FAQ
+Frequently Asked Questions on R for Windows
+Version for rw1063
+Brian Ripley
+
+
+Table of Contents
+*****************
+
+
+1 Introduction
+
+2 Installation and Usage
+  2.1 Where can I find the latest version?
+  2.2 How do I install R for Windows?
+  2.3 How do I run it?
+  2.4 How do I UNinstall R?
+  2.5 What's the best way to upgrade?
+  2.6 There seems to be a limit on the memory it uses!
+  2.7 How can I keep workspaces for different projects in different directories?
+  2.8 How do I print from R?
+  2.9 Can I use `R BATCH'?
+  2.10 Can I use rw1063 with ESS and (X)emacs?
+  2.11 What are HOME and working directories?
+  2.12 How do I set environment variables?
+  2.13 R can't find my file, but I know it is there!
+  2.14 Does R use the Registry?
+  2.15 Entering certain characters crashes Rgui.
+  2.16 The internet download functions fail.
+  2.17 Other strange crashes.
+
+3 Packages
+  3.1 Can I install packages (libraries) in this version?
+  3.2 I don't have permission to write to the `rw1063\library' directory.
+  3.3 The packages I installed do not appear in the HTML help system.
+  3.4 My functions are not found by the HTML help search system.
+  3.5 Loading a package fails.
+  3.6 Package TclTk does not work.
+  3.7 Hyperlinks in Compiled HTML sometimes do not work.
+  3.8 `update.packages()' fails
+
+4 Windows Features
+  4.1 What should I expect to behave differently from the Unix version of R?
+  4.2 I hear about some nifty features: please tell me about them!
+  4.3 Circles appear as ovals on screen
+  4.4 How do I move focus to a graphics window or the console?
+
+5 Workspaces
+  5.1 My workspace gets saved in a strange place: how do I stop this?
+  5.2 How do I store my workspace in a different place?
+  5.3 Can I load workspaces saved under Unix/GNU-Linux?
+
+6 The R Console and Fonts
+  6.1 I would like to be able to use Japanese fonts
+  6.2 I don't see characters with accents at the R console, for example in ?text.
+  6.3 When using Rgui the output to the console seems to be delayed.
+  6.4 Long lines in the console or pager are truncated.
+
+7 Building from Source
+  7.1 How can I compile R from source?
+  7.2 Can I use a fast BLAS?
+  7.3 How do I include compiled C code?
+  7.4 How do I debug code that I have compiled and dyn.load-ed?
+  7.5 How do I include C++ code?
+  7.6 The output from my C code disappears.  Why?
+  7.7 The output from my Fortran code disappears.  Why?
+  7.8 The console freezes when my compiled code is running.
+
+
+
+
+1 Introduction
+**************
+
+This FAQ is for the Windows port of R: it describes features specific to
+that version.  The main R FAQ can be found at
+
+     `http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html'.
+
+The information here applies only to recent versions of R for Windows,
+(`1.4.0' or later); the current version is often called something like
+`rw1063' (although not officially).
+
+
+2 Installation and Usage
+************************
+
+2.1 Where can I find the latest version?
+========================================
+
+Go to any CRAN site (see `http://cran.r-project.org/mirrors.html' for a
+list), navigate to the `bin/windows/base' directory and collect the
+files you need.  There are two versions of the distribution.
+
+1) `rw1063.exe' is about 19Mb and gives a complete installation.
+
+2) Directory `miniR' contains `miniR.exe' and eight files
+`miniR-?.bin'.  You can put `miniR.exe' and `miniR-1.bin' on one floppy
+and the remaining `miniR-?.bin' on a floppy each.  This is a small
+installation, containing the text and compiled HTML versions of the
+help files and the _An Introduction to R_ and _Data Import/Export_
+manuals in PDF.
+
+2.2 How do I install R for Windows?
+===================================
+
+First, you need Windows 95/98/ME/NT4/2000/XP: Windows 3.11+win32s will
+not work.  Your file system must allow long file names (as is likely
+except perhaps for some network-mounted systems).
+
+If you want to build packages from sources, we recommend that you choose
+an installation path not containing spaces.  (Using a path with spaces
+in will probably work, but is little-tested.)
+
+To use `rw1063.exe' or `miniR.exe'.  Just double-click on the icon and
+follow the instructions.  If you installed R this way you can uninstall
+it from the Control Panel or Start Menu (unless you supressed making a
+group for R).
+
+Choose a working directory for R.  If you installed manually, make a
+shortcut to `rw1063\bin\Rgui.exe' on your desktop or somewhere on the
+Start menu file tree.  Right-click the shortcut, select Properties...
+and change the `Start in' field to your working directory.
+
+You may also want to add command-line arguments at the end of the Target
+field, for example `--sdi --max-mem-size=40M'.  You can also set
+environment variables at the end of the Target field, for example
+`R_LIBS=p:/myRlib'.
+
+2.3 How do I run it?
+====================
+
+Just double-click on the shortcut you prepared at installation.
+
+If you want to set up another project, make a new shortcut or use the
+existing one and change the `Start in' field of the Properties.
+
+You may if you prefer run R from the command line of any shell you use,
+for example an `MS-DOS window' (Windows 9x/ME), a `Command Prompt'
+(Windows 2000/XP) or a port of a Unix shell such as `tcsh' or `bash'.
+(The command line can be anything you would put in the Target field of
+a shortcut, and the starting directory will be the currect working
+directory of the shell.)
+
+2.4 How do I UNinstall R?
+=========================
+
+Normally you can do this from the R group on the Start Menu or from the
+`Add/Remove Programs' in the Control Panel.  If it does not appear
+there or if you want to remove an old version, run `unins000.exe' in
+the top-level installation directory.  (As from version 1.6.2 there will
+be a separate uninstall item in the R group for each installed version
+of R.)
+
+Uninstalling R only removes files from the initial installation, not for
+example packages you have installed.
+
+If all else fails, you can just delete the whole directory in which R
+was installed.
+
+2.5 What's the best way to upgrade?
+===================================
+
+That's a matter of taste.  For most people the best thing to do is to
+uninstall R (see the previous Q), install the new version, copy any
+installed packages to the library folder in the new installation, run
+`update.packages()' (from the menu, if you prefer) and then delete
+anything left of the old installation.  Different versions of R are
+quite deliberately installed in parallel folders so you can keep old
+versions around if you prefer.
+
+2.6 There seems to be a limit on the memory it uses!
+====================================================
+
+Indeed there is.  It is set by the command-line flag `--max-mem-size'
+(*note How do I install R for Windows?::) and defaults to the smaller
+of the amount of physical RAM in the machine and 1Gb.  It can be set to
+any amount over 10M. (R will not run in less.)  Be aware though that
+Windows has (in most versions) a maximum amount of user virtual memory
+of 2Gb, and parts of this can be reserved by processes but not used.
+Because of the way the memory manager works, it is possible that there
+will be free memory but R will not be able to make use of it.
+
+Use `?Memory' and `?memory.size' for information about memory usage.
+The limit can be raised by calling `memory.limit' within a running R
+session.
+
+We have found that starting R with too large a value of
+`--max-mem-size' may fail: the limit seemed to be about 1.7Gb on
+Windows 2000 Professional.
+
+R can be compiled to use a different memory manager which might be
+better at using large amounts of memory, but is substantially slower
+(making R several times slower on some tasks).
+
+2.7 How can I keep workspaces for different projects in different directories?
+==============================================================================
+
+Create a separate shortcut for each project: see Q2.3.  All the paths to
+files used by R are relative to the starting directory, so setting the
+`Start in' field automatically helps separate projects.
+
+Alternatively, start R by double-clicking on a saved `.RData' file in
+the directory for the project you want to use, or drag-and-drop a file
+with extension `.RData' onto an R shortcut.  In either case, the
+working directory will be set to that containing the file.
+
+2.8 How do I print from R?
+==========================
+
+It depends what you want to print.
+
+   * You can print the graphics window from its menu or by using
+     `dev.print' with suitable arguments (see its help page: most likely
+     `dev.print(win.graph)' will work).
+
+   * You can print from the R console or pager by `File | Print'.
+     (This will print the selection if there is one, otherwise the whole
+     console or pager contents.)
+
+   * You can print help files from the pager or HTML browser.
+
+   * If you have configured `RHOME\bin\helpPRINT.bat' and have LaTeX
+     installed you can print help files by `help(fn_name,
+     offline=TRUE)'.
+
+2.9 Can I use `R BATCH'?
+========================
+
+Yes, if you have Perl and the files for making source packages (from
+`rw1063.exe') installed.  The Windows analogue is `Rcmd BATCH': use
+`Rcmd BATCH --help' for full details.
+
+Otherwise you can set up a batch file using `Rterm.exe'.  A sample
+batch file might contain (as one line)
+
+     path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out
+
+2.10 Can I use rw1063 with ESS and (X)emacs?
+============================================
+
+Yes.  Recent versions of ESS (e.g. 5.1.20) come with support for this
+version of R, and there is support for interrupting the R process from
+ESS (by `C-c C-c').
+
+For help with ESS, please send email to <ESS-help@stat.ethz.ch>, not
+the R mailing lists.
+
+2.11 What are HOME and working directories?
+===========================================
+
+Several places in the documentation use these terms.
+
+The working directory is the directory from which `Rgui' or `Rterm' was
+launched, unless a shortcut was used when it is given by the `Start in'
+field of the shortcut's properties.  You can find this from R code by
+the call `getwd()'.
+
+The home directory is set as follows:
+If environment variable `R_USER' is set, its value is used.
+Otherwise if environment variable `HOME' is set, its value is used.
+Otherwise if environment variables `HOMEDRIVE' and `HOMEPATH' are set,
+the value is `${HOMEDRIVE}${HOMEPATH}'.
+If all of these fail, the current working directory is used.
+
+You can find this from R code by `Sys.getenv("R_USER")'.
+
+2.12 How do I set environment variables?
+========================================
+
+Environment variables can be set in R in three different ways.
+  1. On the command line as name=value pairs.  For example in the
+     shortcut to `RGui' you could have
+
+          path_to_R\bin\Rgui.exe HOME=p:/ R_LIBS=p:/myRlib
+
+  2. In an environment file `.Renviron' in the working directory or
+     your home directory, for example containing the line
+
+          R_LIBS=p:/myRlib
+
+     See `?Startup' for more details of environment files.
+
+  3. For all applications via Windows.  How you set an environment
+     variable is system specific: in Windows 9x you can set them in
+     `autoexec.bat' or in an MS-DOS window from which you launch `Rgui'
+     / `Rterm'.  Under Windows NT/2000/XP you can use the control panel
+     or the properties of `My Computer'.  Under Windows ME you can use
+     the System Configuration Utility (under Programs, Accessories,
+     System Tools on the Start menu).  You may have to log out or
+     reboot for such changes to take effect.
+
+The order of precedence for environmental variables is the order in
+which these options are listed, that is the command line then
+`.Renviron' then the inherited environment.
+
+2.13 R can't find my file, but I know it is there!
+==================================================
+
+How did you specify it?  Backslashes have to be doubled in R character
+strings, so for example one needs
+`"d:\\rw1063\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
+for yourself by using forward slashes as path separators: they do work
+under Windows.
+
+Another possible source of grief is spaces in folder names.  We have
+tried to make R work on paths with spaces in, but lots of people writing
+packages for Unix do not bother.  So it is worth trying the alternative
+short name (something like `PROGRA~1'; you can get it as the `MS-DOS
+name' from the Properties of the file on most versions of Windows, and
+from `dir /X' in a `Command Prompt' window on 2000/XP).
+
+2.14 Does R use the Registry?
+=============================
+
+Not itself.
+
+The installers set some entries to allow uninstallation.  In addition
+they set a Registry key `LOCAL_MACHINE\Software\R-core\R' giving the
+version and install path.  Again, this is not used by R itself, but it
+will be used by the DCOM interface
+(`http://cran.r-project.org/other-software.html').  Finally, a file
+association for extension `.RData' is set in the Registry.
+
+You can add the Registry entries by running `RSetReg.exe' in the `bin'
+folder, and remove them by running this with argument `/U'.  Note that
+the settings are all per machine and not per user, and that this
+neither sets up nor removes the file associations.
+
+2.15 Entering certain characters crashes Rgui.
+==============================================
+
+This used to happen occasionally, and all the occurrences we have
+solved have been traced to faulty versions of `msvcrt.dll'.  We have
+installed a workaround as from `rw1051' that seems to avoid this.
+
+If it still happens, try extracting the one to be found in the
+self-extracting archive
+`ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe' and put it in the
+`rw1063\bin' directory.  Removing `msvcrt.dll' from that directory
+reverts to the standard behaviour.  It seems that on some versions of
+Windows (but not 2000/XP) you also need to put the `rw1063\bin'
+directory early in your path.
+
+This fix has solved other problems too, for example incorrect results in
+the date-time functions.  However, you are probably better off
+re-installing Windows.
+
+2.16 The internet download functions fail.
+==========================================
+
+for example `update.packages' and the menu items on the Packages menu.
+
+We have had several reports of this, although they do work for us on
+_all_ of our machines.  There are two known possible fixes.
+
+(a) Use the alternative `internet2.dll' by starting R with the flag
+`--internet2' (*note How do I install R for Windows?::) which uses the
+Internet Explorer internals (and so needs Internet Explorer 4 or later
+installed).
+
+(b) A proxy needs to be set up: see `?download.file'.
+
+2.17 Other strange crashes.
+===========================
+
+Some users have found that `Rgui.exe' fails to start, exiting with a
+"Floating- point invalid operation" or other low level error.  This
+error may also happen in the middle of a session.  In some cases where
+we have tracked this down, it was due to bugs in the video driver on
+the system in question:  it makes changes to the floating point control
+word which are incompatible with R.  (Good practice would restore the
+control word to the state it was in when the driver code was called.)
+For example, one user reported that the virtual screen manager JSP2
+caused this crash.
+
+These errors are essentially impossible for us to fix or work around.
+The only solution we know of is for the user to replace the buggy
+driver that is causing the error.
+
+
+3 Packages
+**********
+
+3.1 Can I install packages (libraries) in this version?
+=======================================================
+
+Yes, but you will need a lot of tools to do so, unless the author or the
+maintainers of the `bin/windows/contrib' section on CRAN have been kind
+enough to provide a pre-compiled version for Windows as a `.zip' file.
+
+You can install pre-compiled packages either from CRAN or from a local
+`.zip' file by using `install.packages': see its help page.  There are
+menu items on the `Packages' menu to provide a point-and-click
+interface to package installation.
+
+Note that the pre-compiled versions on CRAN are unsupported: see
+`http://cran.r-project.org/bin/windows/contrib/ReadMe'.
+
+If there is not a pre-compiled version or that is not up-to-date or you
+prefer compiling from source, make sure you installed the necessary
+files from `rw1063.exe'.  Then read the file `readme.packages'.  You
+will need to collect and install several tools to use this: you can
+download them via the portal at
+`http://www.stats.ox.ac.uk/pub/Rtools/'.  Once you have done so, just
+run `Rcmd INSTALL pkgname'.  To check the package (including running
+all the examples on its help pages and in its test suite, if any) use
+`Rcmd check pkgname': see the _`Writing R Extensions'_ manual.
+
+Note that this is rather so tricky; please do ensure that you have
+followed the instructions *exactly*.  At least 90% of the questions
+asked are because people have not done so.
+
+3.2 I don't have permission to write to the `rw1063\library' directory.
+=======================================================================
+
+You can install packages anywhere and use the environment variable
+`R_LIBS' (*note How do I set environment variables?::) to point to the
+library location(s).
+
+Suppose your packages are installed in `p:\myRlib'.  Then you can EITHER
+
+     set the environment variable R_LIBS to p:\myRlib
+
+OR use a package by, e.g.
+
+     library(MASS, lib.loc="p:/myRlib")
+
+3.3 The packages I installed do not appear in the HTML help system.
+===================================================================
+
+The HTML search only works for packages installed in `rw1063\library'.
+
+To update the HTML indices after you have installed a pre-compiled
+package, run at the R prompt.
+
+     > link.html.help()
+
+This is done automatically when installing from the Packages menu or by
+`install.packages()', and when `help.start' is run, provided you have
+write permission in `rw1063\library'.
+
+3.4 My functions are not found by the HTML help search system.
+==============================================================
+
+The following conditions need to hold for functions in a package you
+installed.
+
+   * the package is installed in `rw1063\library'.
+
+   * the package contains a `CONTENTS' file in its top-level directory.
+
+   * you updated the indices as described in the answer to Q3.3 after
+     installing the package.
+
+If those all hold true, this works for us.
+
+If the help search system does not work _at all_, this probably
+indicates that Java support is either not installed or not enabled in
+your browser.  Recent versions of browsers have made Java support
+optional: for example it is optional in Netscape 6/7 and in Opera, and
+may not be installed for IE6 on Windows XP.
+
+3.5 Loading a package fails.
+============================
+
+Is the package compiled for this version of R?  Many of the packages
+need to be compiled for a fairly recent version.  (As from version
+1.5.0, R will warn if a package is used that was built under a _later_
+version.)
+
+You can tell the version the package was compiled for by looking at the
+`Built:' line in its `DESCRIPTION' file or at the `Version' tab of its
+DLL (if it has one) in the `libs' directory.  (Right-click on the DLL
+in Windows Explorer and select `Version' tab of the `Properties', or
+use the `DLL.version' function inside R.)  If there is no `Built:' line
+or version tab, the package was compiled too long ago.
+
+3.6 Package TclTk does not work.
+================================
+
+For package `tcltk' to work (try `demo(tkdensity)' or `demo(tkttest)'
+after `library(tcltk)') you need to have Tcl installed.  Download
+ActiveTcl 8.3.x from
+`http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/' and install it.
+(Most of the installers that ActiveTcl uses will put the `bin'
+directory containing the Tcl and Tk DLLs in your path, but you should
+check.  From R, run `Sys.getenv("PATH")' to do so.)  Note that you do
+need 8.3.x and not 8.4.0: follow the links to 8.4.0 and you will find
+8.3.x available there.  (If you build R from the sources yourself you
+can configure it to use 8.4.0.)
+
+You then need to set the environment variable `TCL_LIBRARY' (*note How
+do I set environment variables?::), to something like `c:/Program
+Files/Tcl/lib/tcl8.3'.  (The startup code for the package will warn you
+if this is unset.  NB: do not quote the path, even if as here it
+contains spaces. If you forget, you can set the variable inside R by
+something like
+         Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
+.)  Similarly, you can set the path if needed by something like
+         Sys.putenv(PATH=paste(Sys.getenv("PATH"), "c:/Tcl/bin", sep = ";"))
+
+3.7 Hyperlinks in Compiled HTML sometimes do not work.
+======================================================
+
+They may well not work between packages installed in different
+libraries.  This is solved under Unix using symbolic links which Windows
+does not implement.
+
+3.8 `update.packages()' fails
+=============================
+
+You may not be able to update a package which is in use: Windows `locks'
+the package's DLL when it is loaded.  So use `update.packages()' (or
+the menu equivalent) in a new session.
+
+If you put `library(foo)' in your `.Rprofile' you will need to start R
+with `--vanilla' to be able to update package `foo'.
+
+
+4 Windows Features
+******************
+
+4.1 What should I expect to behave differently from the Unix version of R?
+==========================================================================
+
+   * R commands can be interrupted by <Esc> in `Rgui.exe' and
+     <Ctrl-break> or <Ctrl-C> in `Rterm.exe': <Ctrl-C> is used for
+     copying in the GUI version.
+
+   * Command-line editing is always available, but is simpler than the
+     readline-based editing on Unix.  For `Rgui.exe', the menu item
+     `Help | Console' will give details.  For `Rterm.exe' see file
+     `README.rterm'.
+
+   * Using `help.start()' does not automatically send help requests to
+     the browser: use `options(htmlhelp=TRUE)' to turn this on.
+
+   * The HTML help system can only access packages installed in the
+     standard library.
+
+   * Paths to files (e.g. in `source()') can be specified with either
+     "/" or "\\".
+
+   * `system()' is slightly different: see its help page and that of
+     `shell()'.
+
+4.2 I hear about some nifty features: please tell me about them!
+================================================================
+
+You have read the `README.rw1063'? There are file menus on the R
+console, pager and graphics windows.  You can source and save from
+those menus, and copy the graphics to `png', `jpeg', `bmp',
+`postscript', `PDF' or `metafile'.  There are right-click menus giving
+shortcuts to menu items, and optionally toolbars with buttons giving
+shortcuts to frequent operations.
+
+If you resize the R console the `options(width=)' is automatically set
+to the console width (unless disabled in the configuration file).
+
+The graphics has a history mechanism.  As `README.rw1063' says:
+
+     `The History menu allows the recording of plots.  When plots have
+     been recorded they can be reviewed by <PgUp> and <PgDn>, saved and
+     replaced.  Recording can be turned on automatically (the Recording
+     item on the list) or individual plots can be added (Add or the
+     <INS> key).  The whole plot history can be saved to or retrieved
+     from an R variable in the global environment.
+
+     There is only one graphics history shared by all the windows
+     devices.'
+
+The R console and graphics windows have configuration files stored in
+the `RHOME\etc' directory called `Rconsole' and `Rdevga'; you can keep
+personal copies in your `HOME' directory.  They contain comments which
+should suffice for you to edit them to your preferences.  For more
+details see `?Rconsole'.  There is a Preferences editor invoked from
+the `Edit' menu which can be used to edit the file `Rconsole'.
+
+4.3 Circles appear as ovals on screen
+=====================================
+
+The graphics system asks Windows for the number of pixels per inch in
+the X and Y directions, and uses that to size graphics (which in R are
+in units of inches).  Sometimes the answer is a complete invention, and
+in any case Windows will not know exactly how the horizontal and
+vertical size have been set on a CRT.  You can specify correct values
+either in the call to `windows' or as options: see `?windows'.
+(Typically these are of the order of 80.)
+
+On one of our systems, the screen height is reported as 240mm, and the
+width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960 and 1600 x
+1200 modes.  In fact it is a 21" monitor and 400mm x 300mm!
+
+4.4 How do I move focus to a graphics window or the console?
+============================================================
+
+You may want to do this from within a function, for example when calling
+`identify' or `readline'.  Use the function `bringToTop()'.  With its
+default argument it brings the active graphics window to the top and
+gives it focus.  With argument `-1' it brings the console to the top
+and gives it focus.
+
+This works for `Rgui.exe' in MDI and SDI modes, and can be used for
+graphics windows from `Rterm.exe' (although Windows may not always act
+on it).
+
+
+5 Workspaces
+************
+
+5.1 My workspace gets saved in a strange place: how do I stop this?
+===================================================================
+
+Have you changed the working directory?: see Q5.2.
+
+5.2 How do I store my workspace in a different place?
+=====================================================
+
+Use the `File | Change Dir...' menu item to select a new working
+directory: this defaults to the last directory you loaded a file from.
+The workspace is saved in the working directory.  You can also save a
+snapshot of the workspace from the `Save Workspace...' menu item.
+
+From the command line you can change the working directory by the
+function `setwd': see its help page.
+
+5.3 Can I load workspaces saved under Unix/GNU-Linux?
+=====================================================
+
+Yes.  All ports of R use the same format for workspaces, so they are
+interchangeable (for the same 1.x.? version of R, at least).
+
+
+6 The R Console and Fonts
+*************************
+
+6.1 I would like to be able to use Japanese fonts
+=================================================
+
+for example, in the console and to annotate graphs.
+
+We believe this is possible by setting suitable fonts in the Rconsole
+and Rdevga configuration files (see Q4.2).  You can specify additional
+fonts in Rdevga, and use them by
+
+     par(font=, font.lab=, font.main=, font.sub=)
+
+Nineteen fonts are specified (as 1 to 19) by default: you can add to
+these (up to 13 more) or replace them.
+
+6.2 I don't see characters with accents at the R console, for example in ?text.
+===============================================================================
+
+You need to specify a font in Rconsole (see Q4.2) that supports Latin1
+encoding.  The default, `Courier New', does on our systems, as does
+`FixedSys'.  This may be a problem in other locales, especially for
+non-Western European languages.
+
+Support for these characters within `Rterm' depends on the environment
+(the terminal window and shell, including locale settings) within which
+it is run as well as the font used by the terminal window.
+
+6.3 When using Rgui the output to the console seems to be delayed.
+==================================================================
+
+This is deliberate: the console output is buffered and re-written in
+chunks to be faster and less distracting.  You can turn buffering off or
+on from the `Misc' menu or the right-click menu: <Ctrl-W> toggles the
+setting.
+
+If you are sourcing R code or writing from a function, there is another
+option.  A call to the R function `flush.console()' will write out the
+buffer and so update the console.
+
+6.4 Long lines in the console or pager are truncated.
+=====================================================
+
+They only *seem* to be truncated: that $ at the end indicates you can
+scroll the window to see the rest of the line.  Use the horizontal
+scrollbar or the <CTRL + left/right arrow> keys to scroll horizontally.
+
+
+7 Building from Source
+**********************
+
+7.1 How can I compile R from source?
+====================================
+
+Get the R sources.  Suppose you want to compile R-1.6.2.  Start in a
+directory whose path does not contain spaces, and run
+
+     tar zxvf R-1.6.2.tgz
+     cd R-1.6.2
+     cd src\gnuwin32
+
+Now read the `INSTALL' file and set up all the tools needed.  Then you
+can just use `make', sit back and wait.  (A complete build takes about
+5 minutes on a 1GHz PIII with a fast local disc.)
+
+You may need to compile under a case-honouring file system: we found
+that a `samba'-mounted file system (which maps all file names to lower
+case) did not work.
+
+7.2 Can I use a fast BLAS?
+==========================
+
+Fast BLAS (Basic Linear Algebra Subprograms,
+`http://www.netlib.org/blas/faq.html') routines are used to speed up
+numerical linear algebra.  There is support in the R sources for the
+`tuned' BLAS called ATLAS (`http://math-atlas.sourceforge.net').  The
+savings can be appreciable: on a 366MHz PIIM and a 1000 x 1000 matrix
+`La.svd' took 182 sec with the standard BLAS and 59 sec with ATLAS.
+Because ATLAS is tuned to a particular chip we can't use it generally:
+the optimal routines for a PIII or an Athlon XP are quite different and
+neither will not run at all on a PII.
+
+BLAS support is supplied by the single DLL `R_HOME\bin\Rblas.dll', and
+you can add a fast BLAS just by replacing that.  Replacements for some
+of the more common chips are available on CRAN in directory
+`bin/windows/contrib/ATLAS'.
+
+If you are building R from source, in the file `MkRules' there are
+macros `USE_ATLAS' and `ATLAS_PATH'.  Set `USE_ATLAS = YES' and
+`ATLAS_PATH' to where the ATLAS libraries are located.  You will need
+to make the libraries yourself: none of the binaries we have seen are
+compiled for the correct compiler.
+
+7.3 How do I include compiled C code?
+=====================================
+
+We strongly encourage you to do this _via_ building an R package: see
+the _`Writing R Extensions'_ manual.  In any event you should install
+the parts of the R system for building R packages (in `rw1063.exe'),
+and get and install the tools (including Perl) and compilers mentioned
+in the file `readme.packages' contained therein.  Then you can use
+     ...\bin\Rcmd SHLIB foo.c bar.f
+
+to make `foo.dll'.  Use `...\bin\Rcmd SHLIB --help' for further
+options, or see `?SHLIB'.
+
+If you want to use Visual C++, Borland C++ or other compilers, see the
+appropriate section in `readme.packages'.
+
+7.4 How do I debug code that I have compiled and dyn.load-ed?
+=============================================================
+
+You will need a suitable version of `gdb': we normally use that from
+the Cygwin distribution.  Debugging under Windows is often a fraught
+process, and sometimes does not work at all.  If all you need is a
+_just-in-time_ debugger to catch crashes, consider `Dr. Mingw' from
+`http://mefriss1.swan.ac.uk/~jfonseca/gnu-win32/software/drmingw/'.
+That will be able to pinpoint the error, most effectively if you build a
+version of R with debugging information as described below.
+
+First, build a version of the R system with debugging information by
+
+     make clean
+     make DEBUG=T
+
+and make a debug version of your package by
+
+     make pkgclean-mypkg
+     make DEBUG=T pkg-mypkg
+
+Then you can debug by
+
+     gdb /path/to/rw1063/bin/Rgui.exe
+
+However, note
+
+   * `gdb' will only be able to find the source code if we run in the
+     location where the source was compiled (`rw1063/src/gnuwin32' for
+     the main system, `rw1063/src/library/mypkg/src' for a package),
+     unless told otherwise by the `directory' command.  It is most
+     convenient to set a list of code locations via `directory' commands
+     in the file `.gdbinit' in the directory from which `gdb' is run.
+
+   * It is only possible to set breakpoints in a DLL after the DLL has
+     been loaded.  So a way to examine the function `tukeyline' in
+     package `eda' might be
+
+               gdb ../../../../bin/Rgui.exe
+               (gdb) break WinMain
+               (gdb) run
+               [ stops with R.dll loaded ]
+               (gdb) break R_ReadConsole
+               (gdb) continue
+               [ stops with console running ]
+               (gdb) continue
+               Rconsole> library(eda)
+               (gdb) break tukeyline
+               (gdb) clear R_ReadConsole
+               (gdb) continue
+
+     Fortran symbols need an underline appended.
+
+   * Windows has little support for signals, so the usual idea of
+     running a program under a debugger and sending it a signal to
+     interrupt it and drop control back to the debugger does not work
+     with a `mingw' version of `gdb'.  It does often work with the
+     `cygwin' version.
+
+
+7.5 How do I include C++ code?
+==============================
+
+You need to do two things:
+
+(a) Write a wrapper to export the symbols you want to call from R as
+`extern "C"'.
+
+(b) Include the C++ libraries in the link to make the DLL.  Suppose
+`X.cc' contains your C++ code, and `X_main.cc' is the wrapper, as in
+the example in _`Writing R Extensions'_.  Then build the DLL by (`gcc')
+
+     ...\bin\Rcmd SHLIB X.cc X_main.cc
+
+or (VC++, which requires extension `.cpp')
+
+     cl /MT /c X.cpp X_main.cpp
+     link /dll /out:X.dll /export:X_main X.obj X_main.obj
+
+or (Borland C++, which also requires extension `.cpp')
+
+     bcc32 -u- -WDE X.cpp X_main.cpp
+
+and call the entry point(s) in `X_R', such as `X_main'.  Construction
+of static variables will occur when the DLL is loaded, and destruction
+when the DLL is unloaded, usually when R terminates.
+
+Note that you will not see the messages from this example in the GUI
+console: see the next section.
+
+This example is in package `cxx_0.0-x.tar.gz' in the
+`src/contrib/Devel' section on CRAN, and that can be compiled as a
+package in the usual way on Windows.
+
+7.6 The output from my C code disappears.  Why?
+===============================================
+
+The `Rgui.exe' console is a Windows application: writing to `stdout' or
+`stderr' will not produce output in the console.  (This will work with
+`Rterm.exe'.)  Use `Rprintf' or `REprintf' instead.  These are declared
+in header file `R_ext/PrtUtil.h'.
+
+Note that output from the console is delayed (*note The output to the
+console seems to be delayed::), so that you will not normally see any
+output before returning to the R prompt.
+
+7.7 The output from my Fortran code disappears.  Why?
+=====================================================
+
+Writing to Fortran output writes to a file, not the `Rgui' console.
+Use one of the subroutines `dblepr', `intpr' or `realpr' documented in
+the _`Writing R Extensions'_ manual.
+
+Note that output from the console is delayed (*note The output to the
+console seems to be delayed::), so that you will not normally see any
+output before returning to the R prompt even when using the `xxxpr'
+subroutines.
+
+7.8 The console freezes when my compiled code is running.
+=========================================================
+
+The console, pagers and graphics window all run in the same thread as
+the R engine.  To allow the console etc to respond to Windows events,
+call `R_ProcessEvents()' periodically from your compiled code.  If you
+want output to be updated on the console, call `R_FlushConsole()' and
+then `R_ProcessEvents()'.
+
+
+
+Last edited 2002 December 24 by Professor B. D. Ripley
+<ripley@stats.ox.ac.uk>
+

@@ -146,12 +146,13 @@ print.packageStatus <- function(x, ...)
     invisible(x)
 }
 
-
-newestVersion <- function(x){
-
+newestVersion <- function(x)
+{
+    ## only used for length(x) >= 2
     for(k in 1:length(x)){
-        y <- lapply(x[-1], compareVersion, b=x[1])
-        if(all(y<=0))
+        if(length(x) == 1) return(k)
+        y <- sapply(x[-1], compareVersion, b=x[1])
+        if(all(y <= 0))
             return(k)
         else
             x <- x[-1]

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2003  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998--2004  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -511,6 +511,7 @@ PostScriptLoadFontMetrics(const char * const fontpath, FontMetricInfo *metrics,
 
     if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) return 0;
 
+    metrics->KernPairs = NULL;
     mode = 0;
     for (ii = 0; ii < 256; ii++) {
 	charnames[ii][0] = '\0';
@@ -1639,9 +1640,13 @@ static void PostScriptClose(NewDevDesc *dd)
 
 static void PS_Close(NewDevDesc *dd)
 {
+    int i;
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     PostScriptClose(dd);
+    for(i = 0; i < 5; i++) {
+        if(pd->metrics[i].KernPairs) free(pd->metrics[i].KernPairs);
+    }
     free(pd);
 }
 
@@ -2234,7 +2239,7 @@ XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 
 static Rboolean XFig_Open(NewDevDesc *dd, XFigDesc *pd)
 {
-    char buf[512], name[50];
+    char buf[512], name[50], *tmp;
     int i;
 
     if (!LoadEncoding("ISOLatin1.enc", buf, FALSE))
@@ -2262,7 +2267,9 @@ static Rboolean XFig_Open(NewDevDesc *dd, XFigDesc *pd)
     }
     if (!pd->psfp) return FALSE;
     /* assume tmpname is less than PATH_MAX */
-    strcpy(pd->tmpname, R_tmpnam("Rxfig", R_TempDir));
+    tmp = R_tmpnam("Rxfig", R_TempDir);
+    strcpy(pd->tmpname, tmp);
+    free(tmp);
     pd->tmpfp = R_fopen(pd->tmpname, "w");
     if (!pd->tmpfp) {
 	fclose(pd->psfp);
@@ -3161,10 +3168,13 @@ static void PDF_NewPage(R_GE_gcontext *gc,
 
 static void PDF_Close(NewDevDesc *dd)
 {
+    int i;
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
     if(pd->pageno > 0) PDF_endpage(pd);
     PDF_endfile(pd);
+    for(i = 0; i < 5; i++)
+       if(pd->metrics[i].KernPairs) free(pd->metrics[i].KernPairs);
     free(pd->pos); free(pd->pageobj); free(pd);
 }
 

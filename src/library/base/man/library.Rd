@@ -116,7 +116,8 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   change in future versions.  In earlier versions of R, only the names
   of all available packages were returned; use \code{.packages(all =
     TRUE)} for obtaining these.  Note that
-  \code{\link[utils]{installed.packages}()} returns even more information.
+  \code{\link[utils:update.packages]{installed.packages}()}
+  returns even more information.
 
   \code{library(help = somename)} computes basic information about the
   package \code{somename}, and returns this in an object of class

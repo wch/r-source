@@ -42,7 +42,6 @@ capabilities(what = NULL)
     \item{PCRE}{Is the Perl-Compatible Regular Expression library
       available?  This is needed for the \code{perl = TRUE} option to
       \code{\link{grep}} are related function.}
-    }
 }
 \seealso{\code{\link{.Platform}}}
 

@@ -44,5 +44,4 @@ center(x, "t")       # Works
 center(x, "med")     # Works
 try(center(x, "m"))  # Error
 }
-}
 \keyword{programming}

@@ -2,6 +2,7 @@
 \alias{format.octmode}
 \alias{print.octmode}
 \alias{as.character.octmode}
+\alias{[.octmode}
 \title{Display Numbers in Octal}
 \description{
   Convert or print integers in octal format, with as many digits as are

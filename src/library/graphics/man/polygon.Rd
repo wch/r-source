@@ -62,8 +62,9 @@ polygon(x, y = NULL, density = NULL, angle = 45,
   The present shading algorithm can produce incorrect results for
   self-intersecting polygons.
 }
-\author{The code implementing polygon shading was donated by
-  Kevin Buhr \email{buhr@stat.wisc.edu}.}
+\author{
+  The code implementing polygon shading was donated by
+  Kevin Buhr \email{buhr@stat.wisc.edu}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -37,8 +37,8 @@ subset(x, \dots)
   of the standard indexing conventions so that for example ranges of
   columns can be specified easily.
 
-  Setting \code{drop=TRUE} will drop unused levels from factors in a
-  data frame. The default is to retain them.
+  The \code{drop} argument is passed on to the indexing method for data
+  frames.
 }
 \value{
   An object similar to \code{x} contain just the selected elements (for

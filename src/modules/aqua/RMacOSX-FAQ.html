@@ -28,7 +28,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R for Mac OS X FAQ</h2>
 
 <h2>Frequently Asked Questions on R for Mac OS X</h2>
-<h2>Version 1.9-1 2004-04-01</h2>
+<h2>Version 1.9-2 2004-06-08</h2>
 <address>Stefano M. Iacus</address>
 <p><p><hr><p>
 
@@ -42,6 +42,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <li><a accesskey="7" href="#The%20near%20future%20of%20the%20Aqua%20GUI">The near future of the Aqua GUI</a>: 
 <li><a accesskey="8" href="#Aqua%20GUI%20Bugs">Aqua GUI Bugs</a>: 
 <li><a accesskey="9" href="#Quartz%20device">Quartz device</a>: 
+<li><a href="#TclTk%20issues">TclTk issues</a>: 
 <li><a href="#Additional%20resources">Additional resources</a>: 
 <li><a href="#Acknowledgments">Acknowledgments</a>: 
 <li><a href="#Sparse%20questions">Sparse questions</a>: 
@@ -142,8 +143,9 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Building%20R%20from%20sources">Buildin
 <li><a accesskey="2" href="#the%20Fortran%20compiler%20g77%20for%20gcc%203.3">the Fortran compiler g77 for gcc 3.3</a>: 
 <li><a accesskey="3" href="#the%20libreadline%204.3%20(optional)">the libreadline 4.3 (optional)</a>: 
 <li><a accesskey="4" href="#the%20X11%20window%20server%20(optional)">the X11 window server (optional)</a>: 
-<li><a accesskey="5" href="#the%20TclTk%208.4%20headers%20and%20libraries%20(optional)">the TclTk 8.4 headers and libraries (optional)</a>: 
-<li><a accesskey="6" href="#a%20TeX%20suite%20of%20tools%20for%20documentation%20(optional)">a TeX suite of tools for documentation (optional)</a>: 
+<li><a accesskey="5" href="#the%20X11%20TclTk%20headers%20and%20libraries%20(optional)">the X11 TclTk headers and libraries (optional)</a>: 
+<li><a accesskey="6" href="#the%20Aqua%20TclTk%20headers%20and%20libraries%20(optional)">the Aqua TclTk headers and libraries (optional)</a>: 
+<li><a accesskey="7" href="#a%20TeX%20suite%20of%20tools%20for%20documentation%20(optional)">a TeX suite of tools for documentation (optional)</a>: 
 </ul>
 
 <div class="node">
@@ -222,7 +224,7 @@ These instructions apply to both Jaguar and Panther.
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="the%20X11%20window%20server%20(optional)">the X11 window server (optional)</a>,
-Next:&nbsp;<a rel="next" accesskey="n" href="#the%20TclTk%208.4%20headers%20and%20libraries%20(optional)">the TclTk 8.4 headers and libraries (optional)</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#the%20X11%20TclTk%20headers%20and%20libraries%20(optional)">the X11 TclTk headers and libraries (optional)</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#the%20libreadline%204.3%20(optional)">the libreadline 4.3 (optional)</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#What%20is%20needed%20to%20build%20R">What is needed to build R</a>
 <br>
@@ -243,14 +245,14 @@ Users report that other version of X11 Window Servers (other than the one distri
 
 <div class="node">
 <p><hr>
-Node:&nbsp;<a name="the%20TclTk%208.4%20headers%20and%20libraries%20(optional)">the TclTk 8.4 headers and libraries (optional)</a>,
-Next:&nbsp;<a rel="next" accesskey="n" href="#a%20TeX%20suite%20of%20tools%20for%20documentation%20(optional)">a TeX suite of tools for documentation (optional)</a>,
+Node:&nbsp;<a name="the%20X11%20TclTk%20headers%20and%20libraries%20(optional)">the X11 TclTk headers and libraries (optional)</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#the%20Aqua%20TclTk%20headers%20and%20libraries%20(optional)">the Aqua TclTk headers and libraries (optional)</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#the%20X11%20window%20server%20(optional)">the X11 window server (optional)</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#What%20is%20needed%20to%20build%20R">What is needed to build R</a>
 <br>
 </div>
 
-<h3 class="subsection">the TclTk 8.4 headers and libraries (optional)</h4>
+<h3 class="subsection">the X11 TclTk headers and libraries (optional)</h4>
 
 <p>You need to download the sources of the Tcl and Tk 8.4.x packages to build yourself the sources. 
 The original sources can be found on the official TclTk web page <a href="http://www.tcl.tk/software/tcltk/8.4.html">http://www.tcl.tk/software/tcltk/8.4.html</a>. 
@@ -277,8 +279,27 @@ type:
 
 <div class="node">
 <p><hr>
+Node:&nbsp;<a name="the%20Aqua%20TclTk%20headers%20and%20libraries%20(optional)">the Aqua TclTk headers and libraries (optional)</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#a%20TeX%20suite%20of%20tools%20for%20documentation%20(optional)">a TeX suite of tools for documentation (optional)</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#the%20X11%20TclTk%20headers%20and%20libraries%20(optional)">the X11 TclTk headers and libraries (optional)</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#What%20is%20needed%20to%20build%20R">What is needed to build R</a>
+<br>
+</div>
+
+<h3 class="subsection">the Aqua TclTk headers and libraries (optional)</h4>
+
+<p>Once you have installed the AquaTclTk libraries and headers files you should configure <small>R</small> using this additional
+arguments
+<pre class="example">     --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh
+     --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
+     TCLTK_LIBS='-framework Tcl -framework Tk'
+     TCLTK_CPPFLAGS='-I/Library/Frameworks/Tcl.Framework/Headers -I/Library/Frameworks/Tk.Framework/Headers'
+     </pre>
+
+<div class="node">
+<p><hr>
 Node:&nbsp;<a name="a%20TeX%20suite%20of%20tools%20for%20documentation%20(optional)">a TeX suite of tools for documentation (optional)</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#the%20TclTk%208.4%20headers%20and%20libraries%20(optional)">the TclTk 8.4 headers and libraries (optional)</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#the%20Aqua%20TclTk%20headers%20and%20libraries%20(optional)">the Aqua TclTk headers and libraries (optional)</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#What%20is%20needed%20to%20build%20R">What is needed to build R</a>
 <br>
 </div>
@@ -375,7 +396,7 @@ To use <small>R</small> you probably need to add a symbolic link on your System 
 located inside the framework. 
 Suppose you have the <em>/usr/local/bin</em> directory on your System, than you should just
 type in your Terminal (a root password is required)
-<pre class="smallexample">     sudo ln -s /Library/Frameworks/R.framework/Resources/bin/R /usr/local/bin/R
+<pre class="smallexample">     sudo ln -s /Library/Frameworks/R.framework/Resources/R /usr/local/bin/R
      </pre>
    Assuming that you have <em>/usr/local/bin</em> in your <em>PATH</em> environment variable, you'll be able to launch R from any location
 on your System just by typing <em>R</em>. 
@@ -1071,7 +1092,7 @@ not <small>R</small> scripts or image data) simply gives an error. It's up to th
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="Quartz%20device">Quartz device</a>,
-Next:&nbsp;<a rel="next" accesskey="n" href="#Additional%20resources">Additional resources</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#TclTk%20issues">TclTk issues</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#R%20and%20external%20applications">R and external applications</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <br>
@@ -1154,9 +1175,32 @@ The printing function is not yet implemented.
 
 <div class="node">
 <p><hr>
+Node:&nbsp;<a name="TclTk%20issues">TclTk issues</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Additional%20resources">Additional resources</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Quartz%20device">Quartz device</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+<br>
+</div>
+
+<h2 class="chapter">TclTk issues</h2>
+
+<p>Each binary distribution of <small>R</small> available through <small>CRAN</small> is built to use the X11 implementation of TclTk. 
+Of course a X windows server has to be started first. If you are not using the Aqua GUI you need to also
+define the environment variable DISPLAY before attempting to use X11 from inside <small>R</small>. You can do this as follows
+<pre class="example">     Sys.putenv("DISPLAY"=":0")
+     </pre>
+   If you don't like the X11 GUI you would probably want to build R using the Aqua version of TclTk (see <a href="#the%20Aqua%20TclTk%20headers%20and%20libraries%20(optional)">the Aqua TclTk headers and libraries (optional)</a>). 
+After installing the R.framework you should do the following to have the quartz device working under Aqua TclTk. Open a
+Terminal window and move inside the <code>Resources/bin</code> directory of the <code>R.framework</code>
+(usually <code>/Library/Frameworks/R.framework</code>), then type the following
+<pre class="example">     sudo /Developer/Tools/Rez -t APPL Carbon.r -o R.bin
+     </pre>
+
+<div class="node">
+<p><hr>
 Node:&nbsp;<a name="Additional%20resources">Additional resources</a>,
 Next:&nbsp;<a rel="next" accesskey="n" href="#Acknowledgments">Acknowledgments</a>,
-Previous:&nbsp;<a rel="previous" accesskey="p" href="#Quartz%20device">Quartz device</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#TclTk%20issues">TclTk issues</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <br>
 </div>

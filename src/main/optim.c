@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2002  the R Development Core Team
+ *  Copyright (C) 1999-2004  the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,6 +16,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include <Defn.h>
 #include <R_ext/Random.h>	/* for the random number generation in
@@ -1017,7 +1021,8 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 
     *fail = 0;
     g = vect(n);
-    wa = vect(2*m*n+4*n+11*m*m+8*m);
+    /* this needs to be zeroed for snd in mainlb to be zeroed */
+    wa = (double *) S_alloc(2*m*n+4*n+11*m*m+8*m, sizeof(double));
     iwa = (int *) R_alloc(3*n, sizeof(int));
     strcpy(task, "START");
     while(1) {

@@ -1,0 +1,13 @@
+useDynLib(lqs)
+
+export(cov.mcd, cov.mve, cov.rob, lmsreg, lqs, ltsreg)
+
+# documented but not exported
+export(predict.lqs)
+# needed to use update, as match.call returns this
+export(lqs.formula)
+
+S3method(lqs, default)
+S3method(lqs, formula)
+S3method(predict, lqs)
+S3method(print, lqs)

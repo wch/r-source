@@ -53,7 +53,7 @@ optim(par, fn, gr = NULL,
   be more fragile that the BFGS method, but as they do not store a
   matrix they may be successful in much larger optimization problems.
 
-  Method \code{"L-BFGS-B"} is that of Byrd \emph{et. al.} (1994) which
+  Method \code{"L-BFGS-B"} is that of Byrd \emph{et. al.} (1995) which
   allows \emph{box constraints}, that is each variable can be given a lower
   and/or upper bound. The initial value must satisfy the constraints.
   This uses a limited-memory modification of the BFGS quasi-Newton
@@ -295,6 +295,6 @@ plot(x, y, type="n", asp=1, xlab="", ylab="",
 arrows(tspres[s,1], -tspres[s,2], tspres[s+1,1], -tspres[s+1,2],
        angle=10, col="red")
 text(x, y, names(eurodist), cex=0.8)
-}}
+}
 \keyword{nonlinear}
 \keyword{optimize}

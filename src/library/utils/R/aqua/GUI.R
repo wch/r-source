@@ -95,205 +95,6 @@ if(.Platform$GUI == "AQUA") {
        }
    }
 
-    ## edited from windows/install.packages
-    ##
-    install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
-                                 contriburl=contrib.url(CRAN, type="mac.binary"),
-                                 method, available=NULL, destdir=NULL,
-                                 installWithVers=FALSE)
-    {
-
-        link.html.help<-function(...,verbose=FALSE)
-        {
-            html<-getOption("htmlhelp")
-            if (!is.null(html) && html)
-                make.packages.html()
-        }
-        untar<-function(what, where)
-        {
-            xcode <- system(paste("tar zxf", what, "-C", where), intern=FALSE)
-            if (xcode) warning("tar returned non-zero exit code: ",xcode)
-        }
-
-        ## edited from windows download.packages
-        download.binaries <- function(pkgs, destdir, available=NULL,
-                                      CRAN=getOption("CRAN"),
-                                      contriburl=contrib.url(CRAN,type="mac.binary"),
-                                      method)
-        {
-            dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
-
-            if(!dirTest(destdir)) stop("destdir is not a directory")
-            localcran <- length(grep("^file:", contriburl)) > 0
-            if(is.null(available))
-                available <- CRAN.packages(contriburl=contriburl, method=method)
-
-            retval <- NULL
-            for(p in unique(pkgs))
-            {
-                ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
-                ok <- ok & !is.na(ok)
-                if(!any(ok))
-                    warning(paste("No package \"", p, "\" on CRAN.", sep=""))
-                else{
-                    fn <- paste(p, "_", available[ok, "Version"], ".tgz", sep="")
-                    ##fn<-paste(p,".tgz",sep="")
-                    if(localcran){
-                        fn <- paste(substring(contriburl, 6), fn, sep="/")
-                        retval <- rbind(retval, c(p, fn))
-                    }
-                    else{
-                        url <- paste(contriburl, fn, sep="/")
-                        destfile <- file.path(destdir, fn)
-
-                        if(download.file(url, destfile, method, mode="wb") == 0)
-                            retval <- rbind(retval, c(p, destfile))
-                        else
-                            warning(paste("Download of package", p, "failed"))
-                    }
-                }
-            }
-
-            retval
-        }
-
-        unpackPkg <- function(pkg, pkgname, lib, installWithVers=FALSE)
-        {
-
-            ## Create a temporary directory and unpack the zip to it
-            ## then get the real package & version name, copying the
-            ## dir over to the appropriate install dir.
-            tmpDir <- tempfile(, lib)
-            if (!dir.create(tmpDir))
-                stop('Unable to create temp directory ', tmpDir)
-            cDir <- getwd()
-            on.exit(setwd(cDir), add = TRUE)
-            res <- untar(pkg, tmpDir)
-            setwd(tmpDir)
-            res <- tools::checkMD5sums(pkgname, file.path(tmpDir,pkgname))
-            if(!is.na(res) && res)
-                cat("package ", pkgname,
-                    " successfully unpacked and MD5 sums checked\n")
-
-            ## Check to see if this is a bundle or a single package
-            if (file.exists("DESCRIPTION")) {
-                ## Bundle
-                conts <- read.dcf("DESCRIPTION",fields="Contains")[1,]
-                if (is.na(conts))
-                    stop("Malformed bundle DESCRIPTION file, no Contains field")
-                else
-                    pkgs <- strsplit(conts," ")[[1]]
-            } else pkgs <- pkgname
-
-            for (curPkg in pkgs) {
-                desc <- read.dcf(file.path(curPkg, "DESCRIPTION"),
-                                 c("Package", "Version"))
-                if (installWithVers) {
-                    instPath <- file.path(lib, paste(desc[1,1], desc[1,2], sep="_"))
-                }
-                else instPath <- file.path(lib, desc[1,1])
-
-                ## If the package is already installed w/ this
-                ## instName, remove it.  If it isn't there, the unlink call will
-                ## still return success.
-                ret <- unlink(instPath, recursive=TRUE)
-                if (ret == 0) {
-                    ## Move the new package to the install lib and
-                    ## remove our temp dir
-                    file.rename(file.path(tmpDir, curPkg), instPath)
-                } else {
-                    ## !! Can't revert to old 'zip.unpack' as it would
-                    ## !! potentially leave cruft from a bundle in there
-                    stop("Can not remove prior installation of package")
-                }
-            }
-            setwd(cDir)
-            unlink(tmpDir, recursive=TRUE)
-        }
-
-        if(!length(pkgs)) return(invisible())
-        if(missing(lib) || is.null(lib)) {
-            lib <- .libPaths()[1]
-            if(length(.libPaths()) > 1)
-                warning(paste("argument `lib' is missing: using", lib))
-        }
-        pkgnames <- basename(pkgs)
-        pkgnames <- sub("\\.tgz$", "", pkgnames)
-        pkgnames <- sub("_[0-9.-]+$", "", pkgnames)
-        ## there is no guarantee we have got the package name right:
-        ## foo.zip might contain package bar or Foo or FOO or ....
-        ## but we can't tell without trying to unpack it.
-        if(is.null(CRAN) & missing(contriburl)) {
-            for(i in seq(along=pkgs)) {
-                unpackPkg(pkgs[i], pkgnames[i], lib, installWithVers)
-            }
-            link.html.help(verbose=TRUE)
-            return(invisible())
-        }
-        localcran <- length(grep("^file:", contriburl)) > 0
-        if(!localcran) {
-            if (is.null(destdir)){
-                tmpd <- tempfile("Rinstdir")
-                if (!dir.create(tmpd))
-                    stop('Unable to create temp directory ', tmpd)
-            } else tmpd <- destdir
-        }
-
-        foundpkgs <- download.binaries(pkgs, destdir=tmpd,
-                                       available=available,
-                                       contriburl=contriburl, method=method)
-
-        if(!is.null(foundpkgs))
-        {
-            update <- cbind(pkgs, lib)
-            colnames(update) <- c("Package", "LibPath")
-            for(lib in unique(update[,"LibPath"]))
-            {
-                oklib <- lib==update[,"LibPath"]
-                for(p in update[oklib, "Package"])
-                {
-                    okp <- p == foundpkgs[, 1]
-                    if(length(okp) > 0)
-                        unpackPkg(foundpkgs[okp, 2], pkgnames[okp], lib,
-                                  installWithVers)
-                }
-            }
-            cat("\n")
-            if(!localcran && is.null(destdir)){
-                ## I think we want to always delete the temporary files
-                ##answer <- substr(readline("Delete downloaded files (y/N)? "), 1,1)
-                answer <- "y"
-                if(answer == "y" | answer == "Y") {
-                    for(file in foundpkgs[, 2]) unlink(file)
-                    unlink(tmpd, recursive=TRUE)
-                } else
-                cat("The packages are in", tmpd)
-                cat("\n")
-            }
-            link.html.help(verbose=TRUE)
-        }
-        else
-            unlink(tmpd, recursive=TRUE)
-        invisible()
-    }
-
-    install.from.file <- function(pkg = file.choose(), binary=FALSE)
-    {
-	if (binary){
-		install.binaries(CRAN=NULL, pkg=pkg, lib=.libPaths()[1])
-	}
-
-        lib <- .libPaths()[1]
-        cmd <- paste(file.path(R.home(), "bin", "R"), "CMD INSTALL")
-        cmd <- paste(cmd, "-l", lib)
-        cmd <- paste(cmd," '",pkg,"'",sep = "")
-        status <- system(cmd)
-        if(status == 0)
-            cat("\tpackage successfully installed\n")
-        else
-            cat("\tnpackage installation failed\n")
-    }
-
     data.manager <- function()
     {
         data() -> x
@@ -338,21 +139,6 @@ if(.Platform$GUI == "AQUA") {
 
     }
 
-    CRAN.binaries <- function(CRAN=getOption("CRAN"), method,
-                              contriburl=contrib.url(CRAN, type="mac.binary"))
-    {
-        localcran <- length(grep("^file:", contriburl)) > 0
-        if(localcran)
-            tmpf <- paste(substring(contriburl,6), "PACKAGES", sep="/")
-        else{
-            tmpf <- tempfile()
-            on.exit(unlink(tmpf))
-            download.file(url=paste(contriburl, "PACKAGES", sep="/"),
-                          destfile=tmpf, method=method, cacheOK=FALSE)
-        }
-        read.dcf(file=tmpf, fields=c("Package", "Version"))
-    }
-
     flush.console <- function() .Internal(flush.console())
 
     print.hsearch <- function(x,...)
@@ -383,7 +169,10 @@ Rapp.updates <- function() {
  strsplit(rapp.ver,"\\.") -> ver
  rapp.ver <- as.numeric(ver[[1]])
 
- if( sum(cran.ver - rapp.ver) > 0 ){
+ rapp.ver <- as.numeric(ver[[1]])
+ this.ver <- sum(rapp.ver * c(10000,100,1))
+ new.ver <- sum(cran.ver * c(10000,100,1))
+ if (new.ver > this.ver) {
   cat("\nThis version of R is",paste(rapp.ver,collapse="."))
   cat("\nThere is a newer version of R on CRAN which is",paste(cran.ver,collapse="."), "\n")
 
@@ -409,32 +198,12 @@ Rapp.updates <- function() {
         warning("This function is intended to work with the Aqua GUI")
     }
 
-    install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
-                                 contriburl=contrib.url(CRAN, type="mac.binary"),
-                                 method, available=NULL, destdir=NULL,
-                                 installWithVers=FALSE)
-    {
-        warning("This function is intended to work with the Aqua GUI")
-    }
-
-
-    install.from.file <- function(pkg = file.choose(), binary=FALSE)
-    {
-        warning("This function is intended to work with the Aqua GUI")
-    }
-
     data.manager <- function()
     {
         warning("This function is intended to work with the Aqua GUI")
     }
 
     package.manager <- function()
-    {
-        warning("This function is intended to work with the Aqua GUI")
-    }
-
-    CRAN.binaries <- function(CRAN=getOption("CRAN"), method,
-                              contriburl=contrib.url(CRAN, type="mac.binary"))
     {
         warning("This function is intended to work with the Aqua GUI")
     }
@@ -448,3 +217,219 @@ Rapp.updates <- function() {
     }
 
 }
+
+## edited from windows/install.packages
+##
+install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
+                             contriburl=contrib.url(CRAN, type="mac.binary"),
+                             method, available=NULL, destdir=NULL,
+                             installWithVers=FALSE)
+  {
+    
+    link.html.help<-function(...,verbose=FALSE)
+      {
+        html<-getOption("htmlhelp")
+        if (!is.null(html) && html)
+          make.packages.html()
+      }
+    untar<-function(what, where)
+      {
+        xcode <- system(paste("tar zxf", what, "-C", where), intern=FALSE)
+        if (xcode) warning("tar returned non-zero exit code: ",xcode)
+      }
+    
+    ## edited from windows download.packages
+    download.binaries <- function(pkgs, destdir, available=NULL,
+                                  CRAN=getOption("CRAN"),
+                                  contriburl=contrib.url(CRAN,type="mac.binary"),
+                                  method)
+      {
+        dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
+        
+        if(!dirTest(destdir)) stop("destdir is not a directory")
+        localcran <- length(grep("^file:", contriburl)) > 0
+        if(is.null(available))
+          available <- CRAN.packages(contriburl=contriburl, method=method)
+        
+        retval <- NULL
+        for(p in unique(pkgs))
+          {
+            ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
+            ok <- ok & !is.na(ok)
+            if(!any(ok))
+              warning(paste("No package \"", p, "\" on CRAN.", sep=""))
+            else{
+              fn <- paste(p, "_", available[ok, "Version"], ".tgz", sep="")
+              ##fn<-paste(p,".tgz",sep="")
+              if(localcran){
+                fn <- paste(substring(contriburl, 6), fn, sep="/")
+                retval <- rbind(retval, c(p, fn))
+              }
+              else{
+                url <- paste(contriburl, fn, sep="/")
+                destfile <- file.path(destdir, fn)
+                
+                if(download.file(url, destfile, method, mode="wb") == 0)
+                  retval <- rbind(retval, c(p, destfile))
+                else
+                  warning(paste("Download of package", p, "failed"))
+              }
+                }
+          }
+        
+        retval
+      }
+    
+    unpackPkg <- function(pkg, pkgname, lib, installWithVers=FALSE)
+      {
+        
+        ## Create a temporary directory and unpack the zip to it
+        ## then get the real package & version name, copying the
+        ## dir over to the appropriate install dir.
+            tmpDir <- tempfile(, lib)
+            if (!dir.create(tmpDir))
+              stop('Unable to create temp directory ', tmpDir)
+            cDir <- getwd()
+            on.exit(setwd(cDir), add = TRUE)
+            res <- untar(pkg, tmpDir)
+            setwd(tmpDir)
+            res <- tools::checkMD5sums(pkgname, file.path(tmpDir,pkgname))
+            if(!is.na(res) && res)
+              cat("package ", pkgname,
+                  " successfully unpacked and MD5 sums checked\n")
+            
+            ## Check to see if this is a bundle or a single package
+            if (file.exists("DESCRIPTION")) {
+              ## Bundle
+              conts <- read.dcf("DESCRIPTION",fields="Contains")[1,]
+              if (is.na(conts))
+                stop("Malformed bundle DESCRIPTION file, no Contains field")
+              else
+                pkgs <- strsplit(conts," ")[[1]]
+            } else pkgs <- pkgname
+            
+            for (curPkg in pkgs) {
+              desc <- read.dcf(file.path(curPkg, "DESCRIPTION"),
+                               c("Package", "Version"))
+              if (installWithVers) {
+                instPath <- file.path(lib, paste(desc[1,1], desc[1,2], sep="_"))
+              }
+              else instPath <- file.path(lib, desc[1,1])
+              
+              ## If the package is already installed w/ this
+              ## instName, remove it.  If it isn't there, the unlink call will
+              ## still return success.
+              ret <- unlink(instPath, recursive=TRUE)
+              if (ret == 0) {
+                ## Move the new package to the install lib and
+                ## remove our temp dir
+                file.rename(file.path(tmpDir, curPkg), instPath)
+              } else {
+                ## !! Can't revert to old 'zip.unpack' as it would
+                ## !! potentially leave cruft from a bundle in there
+                stop("Can not remove prior installation of package")
+              }
+            }
+            setwd(cDir)
+            unlink(tmpDir, recursive=TRUE)
+          }
+    
+    if(!length(pkgs)) return(invisible())
+    if(missing(lib) || is.null(lib)) {
+      lib <- .libPaths()[1]
+      if(length(.libPaths()) > 1)
+        warning(paste("argument `lib' is missing: using", lib))
+    }
+    pkgnames <- basename(pkgs)
+    pkgnames <- sub("\\.tgz$", "", pkgnames)
+    pkgnames <- sub("_[0-9.-]+$", "", pkgnames)
+        ## there is no guarantee we have got the package name right:
+    ## foo.zip might contain package bar or Foo or FOO or ....
+    ## but we can't tell without trying to unpack it.
+    if(is.null(CRAN) & missing(contriburl)) {
+      for(i in seq(along=pkgs)) {
+        unpackPkg(pkgs[i], pkgnames[i], lib, installWithVers)
+      }
+      link.html.help(verbose=TRUE)
+      return(invisible())
+    }
+    localcran <- length(grep("^file:", contriburl)) > 0
+    if(!localcran) {
+      if (is.null(destdir)){
+        tmpd <- tempfile("Rinstdir")
+        if (!dir.create(tmpd))
+          stop('Unable to create temp directory ', tmpd)
+      } else tmpd <- destdir
+    }
+
+    foundpkgs <- download.binaries(pkgs, destdir=tmpd,
+                                   available=available,
+                                   contriburl=contriburl, method=method)
+    
+    if(!is.null(foundpkgs))
+      {
+        update <- cbind(pkgs, lib)
+        colnames(update) <- c("Package", "LibPath")
+        for(lib in unique(update[,"LibPath"]))
+          {
+            oklib <- lib==update[,"LibPath"]
+            for(p in update[oklib, "Package"])
+              {
+                okp <- p == foundpkgs[, 1]
+                if(length(okp) > 0)
+                  unpackPkg(foundpkgs[okp, 2], pkgnames[okp], lib,
+                            installWithVers)
+              }
+          }
+        cat("\n")
+        if(!localcran && is.null(destdir)){
+          ## I think we want to always delete the temporary files
+          ##answer <- substr(readline("Delete downloaded files (y/N)? "), 1,1)
+          answer <- "y"
+          if(answer == "y" | answer == "Y") {
+            for(file in foundpkgs[, 2]) unlink(file)
+            unlink(tmpd, recursive=TRUE)
+          } else
+          cat("The packages are in", tmpd)
+          cat("\n")
+        }
+        link.html.help(verbose=TRUE)
+      }
+    else
+      unlink(tmpd, recursive=TRUE)
+    invisible()
+  }
+
+install.from.file <- function(pkg = file.choose(), binary=FALSE)
+  {
+    if (binary){
+      install.binaries(CRAN=NULL, pkg=pkg, lib=.libPaths()[1])
+    }
+    
+    lib <- .libPaths()[1]
+    cmd <- paste(file.path(R.home(), "bin", "R"), "CMD INSTALL")
+    cmd <- paste(cmd, "-l", lib)
+    cmd <- paste(cmd," '",pkg,"'",sep = "")
+    status <- system(cmd)
+    if(status == 0)
+      cat("\tpackage successfully installed\n")
+    else
+      cat("\tnpackage installation failed\n")
+  }
+
+CRAN.binaries <- function(CRAN=getOption("CRAN"), method,
+                          contriburl=contrib.url(CRAN, type="mac.binary"))
+  {
+    localcran <- length(grep("^file:", contriburl)) > 0
+    if(localcran)
+      tmpf <- paste(substring(contriburl,6), "PACKAGES", sep="/")
+    else{
+      tmpf <- tempfile()
+      on.exit(unlink(tmpf))
+      download.file(url=paste(contriburl, "PACKAGES", sep="/"),
+                    destfile=tmpf, method=method, cacheOK=FALSE)
+    }
+    read.dcf(file=tmpf, fields=c("Package", "Version"))
+  }
+
+ 

@@ -27,17 +27,23 @@ mle <- function(minuslogl, start=formals(minuslogl), method="BFGS",
     if(!missing(start) && (!is.list(start) || is.null(names(start))))
         stop("'start' must be a named list")
     start[n] <- NULL
+    start <- sapply(start, eval.parent) # expressions are allowed
+    nm <- names(start)
+    oo <- match(nm, names(fullcoef))
+    if (any(is.na(oo)))
+        stop("some named arguments in 'start' are not arguments to the supplied log-likelihood")
+    start <- start[order(oo)]
     f <- function(p){
         l <- as.list(p)
+	names(l) <- nm
         l[n] <- fixed
         do.call("minuslogl", l)
     }
-    start <- sapply(start, eval.parent) # expressions are allowed
     oout <- optim(start, f, method=method, hessian=TRUE, ...)
     coef <- oout$par
     vcov <- if(length(coef)) solve(oout$hessian) else matrix(numeric(0),0,0)
     min <-  oout$value
-    fullcoef[names(start)] <- coef
+    fullcoef[nm] <- coef
     new("mle", call=call, coef=coef, fullcoef=unlist(fullcoef), vcov=vcov,
         min=min, details=oout, minuslogl=minuslogl, method=method)
 }

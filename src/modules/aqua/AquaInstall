@@ -1,0 +1,22 @@
+#!/bin/sh
+# Shell installer for RAqua
+#
+# ${R_HOME}/src/modules/aqua/AquaInstall
+
+cd ../../../
+make install rhome=/Applications/RAqua.app/Contents mandir=/Applications/RAqua.app/Contents bindir=/Applications/RAqua.app/Contents
+here=`pwd`;
+cp src/modules/aqua/R.fix /Applications/RAqua.app/Contents/
+cd /Applications/RAqua.app/Contents
+mv RESOURCES R_RESOURCES
+mv bin MacOS
+ln -s MacOS bin
+./R.fix
+rm R.fix
+cd ${here}
+cp -R src/modules/aqua/Contents/Resources /Applications/RAqua.app/Contents
+cp src/modules/aqua/Contents/PkgInfo /Applications/RAqua.app/Contents
+cp src/modules/aqua/Contents/Info.plist/Applications/RAqua.app/Contents
+
+echo "Note: execute this script one time only!"
+echo "type >>  sh /Applications/RAqua.app/Contents/MacOS/R --gui-aqua  << to run R"

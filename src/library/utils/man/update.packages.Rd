@@ -6,11 +6,11 @@
 \alias{download.packages}
 \alias{install.packages}
 \alias{contrib.url}
-\title{Download Packages from CRAN}}
+\title{Download Packages from CRAN}
 \description{
   These functions can be used to automatically compare the version
   numbers of installed packages with the newest available version on
-  CRAN and update outdated packages on the fly.}
+  CRAN and update outdated packages on the fly.
 }
 \usage{
 update.packages(lib.loc = NULL, CRAN = getOption("CRAN"),

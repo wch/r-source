@@ -27,7 +27,9 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
     if (!EISPACK) {
         if (symmetric) {
             z <- if(!complex.x)
-                .Call("La_rs", x, only.values, "dsyevr", PACKAGE = "base")
+                .Call("La_rs", x, only.values,
+                      if(capabilities("IEEE754")) "dsyevr" else "dsyev",
+                      PACKAGE = "base")
             else
                 .Call("La_rs_cmplx", x, only.values, PACKAGE = "base")
             ord <- rev(seq(along = z$values))

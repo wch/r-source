@@ -2529,7 +2529,7 @@ Suppose that @code{x} had a class attribute that contained @code{"foo"}
 and @code{"bar"}, in that order.  Then @R{} would first search for a
 function called @code{mean.foo} and if it did not find one it would then
 search for a function @code{mean.bar} and if that search was also
-unsuccessful then a final search for @code{foo.default} would be made.
+unsuccessful then a final search for @code{mean.default} would be made.
 If the last search is unsuccessful @R{} reports an error.  It is a good
 idea to always write a default method.  Note that the functions
 @code{mean.foo} etc.@: are referred to, in this context, as methods.

@@ -8,7 +8,7 @@
 \usage{
 get(x, pos=-1, envir=as.environment(pos), mode="any", inherits=TRUE)
 mget(x, envir, mode = "any",
-     ifnotfound = list(function(x) stop(paste("value for \"", 
+     ifnotfound = list(function(x) stop(paste("value for \"",
     x, "\" not found", sep = ""), call. = FALSE)), inherits = FALSE)
 }
 \arguments{
@@ -56,6 +56,9 @@ mget(x, envir, mode = "any",
   the item being requested. The default value for \code{inherits} is
   \code{FALSE}, in contrast to the default behavior for \code{get}.
 }
+\note{
+  The reverse of \code{a <- get(nam)} is \code{\link{assign}(nam, a)}.
+}
 \value{
   The object found.  (If no object is found an error results.)
 }
@@ -65,7 +68,7 @@ mget(x, envir, mode = "any",
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{exists}}.
+  \code{\link{exists}}, \code{\link{assign}}.
 }
 \examples{
 get("\%o\%")

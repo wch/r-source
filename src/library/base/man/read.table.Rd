@@ -187,7 +187,15 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   especially those with many columns: it is designed to read
   \emph{data frames} which may have columns of very different classes.
   Use \code{\link{scan}} instead.
+
+  Prior to version 1.9.0, underscores were not valid in variable names,
+  and code that relies on them being converted to dots will no longer
+  work. The simplest workaround is to use 
+   \code{names(d) <- gsub("_", ".", names(d))},
+  or, avoiding the (small) risk of creating duplicate names,
+   \code{names(d) <- make.names(gsub("_", ".", names(d)), unique=TRUE)}. 
 }
+
 \seealso{
   The \emph{R Data Import/Export} manual.
   

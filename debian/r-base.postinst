@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# postinst script for the Debian GNU/Linux r-base package
+# This version written by Douglas Bates <bates@stat.wisc.edu>
+
+set -e
+
+#DEBHELPER#
+
+    
+install-info --quiet --section "Programming" "R-FAQ" /usr/share/info/R-FAQ.info
+install-info --quiet --section "Programming" "R-exts" /usr/share/info/R-exts.info
+install-info --quiet --section "Programming" "R-intro" /usr/share/info/R-intro.info
+install-info --quiet --section "Programming" "R-data" /usr/share/info/R-data.info
+install-info --quiet --section "Programming" "R-lang" /usr/share/info/R-lang.info
+    
+if [ -x /usr/bin/update-menus ] ; then update-menus ; fi
+
+case "$1" in
+    configure)
+	if [ -x /usr/bin/paperconf ]
+	then
+	    perl -pi -e \
+	    '$P=`/usr/bin/paperconf`,chop $P,s:a4:$P: if /{R_PAPERSIZE/' /usr/bin/R
+	fi
+    ;;
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+    *)
+	echo "postinst called with unknown argument \`$1'" >&2
+    ;;
+esac

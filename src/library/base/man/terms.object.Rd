@@ -1,0 +1,52 @@
+\name{terms.object}
+\title{Description of Terms Objects}
+\alias{terms.object}
+\description{
+  An object of class \code{\link{terms}} holds information about a
+  model.  Usually the model was specified in terms of a
+  \code{\link{formula}} and that formula was used to determine the terms
+  object.
+}
+\value{
+  The object itself is simply the formula supplied to the call of
+  \code{\link{terms.formula}}.  The object has a number of attributes
+  and they are used to construct the model frame:
+
+  \item{factors}{A matrix of variables by terms showing which variables
+    appear in which terms. The entries are 0 if the variable does not
+    occur in the term, 1 if it does occur and should be coded by
+    contrasts, and 2 if it occurs and should be coded via dummy
+    variables for all levels (as when an intercept or lower-order term
+    is missing).}
+  \item{term.labels}{A character vector containing the labels for each
+    of the terms in the model.  Non-syntactic names will be quoted by
+    backticks.}
+  \item{variables}{A call to \code{list} of the variables in the model.}
+  \item{intercept}{Either 0, indicating no intercept is to be fit, or 1
+    indicating that an intercept is to be fit.}
+  \item{order}{A vector of the same length as \code{term.labels}
+    indicating the order of interaction for each term }
+  \item{response}{The index of the variable (in variables) of the
+    response (the left hand side of the formula).}
+  \item{offset}{If the model contains \code{\link{offset}} terms there
+    is an \code{offset} attribute indicating which variables are offsets}
+  \item{specials}{If the \code{specials} argument was given to
+    \code{\link{terms.formula}} there is a \code{specials} attribute, a
+    list of vectors indicating the terms that contain these special
+    functions.}
+
+  The object has class \code{c("terms", "formula")}.
+}
+\note{
+  These objects are different from those found in S.  In particular
+  there is no \code{formula} attribute, instead the object is itself a
+  formula.  Thus, the mode of a terms object is different as well. 
+
+  Examples of the \code{specials} argument can be seen in the
+  \code{\link{aov}} and \code{\link[survival]{coxph}} functions.
+}
+\seealso{
+  \code{\link{terms}}, \code{\link{formula}}.
+}
+%%--- MM: I would really like instructive examples here...
+\keyword{models}

@@ -34,6 +34,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
             for (i in 1:xdim) {
                 XP[i] <- sum(X[X[,1]==i,p]) / sum(X[,p])
             }
+            if(any(is.na(XP))) stop("missing values in contingency table")
             white <- off[1] * (x2 - x1) / max(1, xdim-1)
             x.l <- x1
             x.r <- x1 + (1 - off[1]) * XP[1] * (x2 - x1)
@@ -355,6 +356,7 @@ function(formula, data = NULL, ...,
         if(is.matrix(edata))
             m$data <- as.data.frame(data)
         m$main <- m$... <- NULL
+        m$na.action <- na.omit # tabulation would omit them
         m[[1]] <- as.name("model.frame")
         mf <- eval(m, parent.frame())
         mosaicplot(table(mf), main = main, ...)

@@ -7,7 +7,9 @@
 }
 \usage{
 \method{plot}{ts}(x, y = NULL, plot.type = c("multiple", "single"),
-     xy.labels, xy.lines, panel = lines, nc, ...)
+        xy.labels, xy.lines, panel = lines, nc, yax.flip = FALSE,
+        mar.multi = c(0, 5.1, 0, if(yax.flip) 5.1 else 2.1),
+        oma.multi = c(6, 0, 5, 0), axes = TRUE, \dots)
 
 \method{lines}{ts}(x, \dots)
 }
@@ -32,7 +34,12 @@
 
   \item{nc}{the number of columns to use when \code{type="multiple"}.
     Defaults to 1 for up to 4 series, otherwise to 2.}
-
+  \item{yax.flip}{logical indicating if the y-axis (ticks and numbering)
+    should flip from side 2 (left) to 4 (right) from series to series
+    when \code{type="multiple"}.}
+  \item{mar.multi, oma.multi}{the (default) \code{\link{par}} settings
+    for \code{plot.type="multiple"}.  Modify with care!}
+  \item{axes}{logical indicating if x- and y- axes should be drawn.}
   \item{\dots}{additional graphical arguments, see \code{\link{plot}},
     \code{\link{plot.default}} and \code{\link{par}}.}
 }
@@ -53,7 +60,13 @@
 }
 \examples{
 ## Multivariate
-z <- ts(matrix(rt(300, df = 3), 100, 3), start=c(1961, 1), frequency=12)
+z <- ts(matrix(rt(200 * 8, df = 3), 200, 8), start=c(1961, 1), frequency=12)
+plot(z, yax.flip = TRUE)
+plot(z, axes= FALSE, ann= FALSE, frame.plot= TRUE,
+      mar.mult= c(0,0,0,0), oma.mult= c(1,1,5,1))
+title("plot(ts(..), axes=FALSE, ann=FALSE, frame.plot=TRUE, mar..., oma...)")
+
+z <- window(z[,1:3], end = c(1969,12))
 plot(z, type = "b")    # multiple
 plot(z, plot.type="single", lty=1:3, col=4:2)
 

@@ -48,7 +48,7 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1)
   match, of, if \code{value} is \code{TRUE}, the matched elements.
 }
 \author{David Meyer \email{David.Meyer@ci.tuwien.ac.at} (based on C code
-  by Jarkko Hietaniemi); modifications by Kurt Hornik}
+  by Jarkko Hietaniemi); modifications by Kurt Hornik.
 }
 \seealso{\code{\link{grep}}}
 \examples{

@@ -76,7 +76,7 @@ hist(x, \dots)
   The definition of \dQuote{histogram} differs by source (with
   country-specific biases).  \R's default with equi-spaced breaks (also
   the default) is to plot the counts in the cells defined by
-  \code{breaks}. Thus the height of a rectangle is proportional to
+  \code{breaks}.  Thus the height of a rectangle is proportional to
   the number of points falling into the cell, as is the area
   \emph{provided} the breaks are equally-spaced.
 
@@ -93,8 +93,8 @@ hist(x, \dots)
   and \code{include.lowest} really has the meaning of
   \dQuote{\emph{include highest}}.
 
-  A numerical tolerance of \eqn{10^{-7}}{1e-7} times the range of the
-  breaks is applied when counting entries on the edges of bins.
+  A numerical tolerance of \eqn{10^{-7}}{1e-7} times the median bin size
+  is applied when counting entries on the edges of bins.
 
   The default for \code{breaks} is \code{"Sturges"}: see
   \code{\link{nclass.Sturges}}.  Other names for which algorithms

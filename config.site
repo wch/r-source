@@ -172,6 +172,24 @@
 ## and tk.h headers.
 ## TCLTK_CPPFLAGS=
 
+## Browser default
+## Default setting for the R_BROWSER env variable
+## If unset configure searches in turn for (currently)
+## netscape mozilla galeon kfmclient opera gnome-moz-remote open
+## and uses the full path.
+## R_BROWSER=
+
+## BLAS and LAPACK settings
+## Use BLAS_LIBS for all '-L' and '-l' options needed for linking
+## against an external BLAS implementation.
+## BLAS_LIBS=
+## Use LAPACK_LIBS for all '-L' and '-l' options needed for linking
+## against an external LAPACK implementation.  
+## Note that (see R-admin) that our main intention is to allow a
+## LAPACK-containing BLAS to be used, so this is rarely needed, and
+## it is not used if the BLAS already contains LAPACK.
+## LAPACK_LIBS=
+
 ## Make name.
 ## Set this if you want to use a make by another name.
 ## For example, if your GNU make is called 'gmake', use 'MAKE=gmake'.

@@ -1,0 +1,18 @@
+Methods                  Defining Methods and Generic Functions
+MethodsList              MethodsList Objects
+RClassUtils              Utilities for Managing Class Definitions
+REnvironment             Utilities for Using an Environment as a Database
+RMethodUtils             Utilities for Managing Method Definitions
+SClasses                 Classes with Formal Definitions
+Session                  Session Data and Debugging Tools
+as                       Force an Object to Belong to a Class
+as.environment           Coerce to an Environment Object
+assign                   Assign a Value to a Name
+exists                   Is an Object Defined?
+get                      Return a Variable's Value
+is                       Is an Object from a Class
+ls                       List Objects
+recover                  Browsing on an Error
+remove                   Remove Objects from a Specified Environment
+setGeneric               Define a New Generic Function
+.BasicFunsList           List of Builtin and Special Functions

@@ -10,7 +10,7 @@
   \code{is.function} is generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.
 }
-\value{\code{TRUE} if \code{x} is a function, and \code{FALSE}
-  otherwise.}
+\value{
+  \code{TRUE} if \code{x} is a function, and \code{FALSE} otherwise.
 }
 \keyword{programming}
