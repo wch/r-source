@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.12 1999/11/01 16:53:32 maechler Exp $
+    ## $Id: str.R,v 1.13 2000/01/24 11:48:08 maechler Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -41,7 +41,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## ------------------------------------------------------------------------
-    ## $Id: str.R,v 1.12 1999/11/01 16:53:32 maechler Exp $
+    ## $Id: str.R,v 1.13 2000/01/24 11:48:08 maechler Exp $
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
@@ -104,7 +104,8 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 		##-- atomic:   numeric	complex	 character  logical
 		mod <- substr(mode(object), 1, 4)
 		if     (mod == "nume")
-		    mod <- if(is.integer(object))"int" else "num"
+		    mod <- if(is.integer(object)) "int"
+		    else if(has.class) cl[1] else "num"
 		else if(mod == "char") { mod <- "chr"; char.like <- TRUE }
 		else if(mod == "comp") mod <- "cplx" #- else: keep 'logi'
 		if(is.array(object)) {
@@ -239,7 +240,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 		ob <- if(le > ivec.len) object[1:ivec.len] else object
 		ao <- abs(ob <- ob[!is.na(ob)])
 	    }
-	    if(is.integer(object) ||
+	    if(is.integer(object) || mod == "Surv" ||
 	       (all(ao > 1e-10 | ao==0) && all(ao < 1e10| ao==0) &&
 		all(ob == signif(ob, digits.d)))) {
 		vec.len <- ivec.len

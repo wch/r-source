@@ -17,9 +17,9 @@ NEW FEATURES
 	contains the beginnings of a description of the public API and
 	how to use it.
 
-    o   Many of the exported symbols have been remapped or hidden. This
-        means that code using Rdefines.h or Rinternals.h or Mathlib.h
-        will need to be re-compiled, and code using Applic.h may do so.
+    o	Many of the exported symbols have been remapped or hidden. This
+	means that code using Rdefines.h or Rinternals.h or Mathlib.h
+	will need to be re-compiled, and code using Applic.h may do so.
 
     o	DPQ {probability density quantile} functions have new
 	arguments, "lower_tail = TRUE" and "log{_p} = FALSE".  This allows
@@ -113,22 +113,24 @@ NEW FEATURES
 	(default) and `GNOME', provided that GNOME support is available.
 	Command line options \`-g' and `--gnome' are defunct.
 
-    o   power.t.test() and power.prop.test() functions added for power and
-        sample size calculations
+    o	power.t.test() and power.prop.test() functions added for power and
+	sample size calculations
 
-    o   edit() is now generic and a new edit.data.frame() function
+    o	edit() is now generic and a new edit.data.frame() function
 	calls up the spreadsheet data editor. This is still rather
 	rudimentary, since the data editor really only knows about
 	numeric and character vectors.
 
-    o   Modifications to the data editor so that one can use ESC to
-        quit a partial cell entry and entering an empty cell causes
-        the element to be set to NA.
+    o	Modifications to the data editor so that one can use ESC to
+	quit a partial cell entry and entering an empty cell causes
+	the element to be set to NA.
 
-    o   prop.table() and margin.table() functions (these are *really*
-        trivial) 
+    o	prop.table() and margin.table() functions (these are *really*
+	trivial)
 
 BUG FIXES
+
+    o	str() now works with Surv(.) objects from library(survival5).
 
     o	all.equal(-Inf, -1e5) now gives "Mean absolute difference: Inf"
 	instead of "Mean relative  difference: NaN".
@@ -180,10 +182,10 @@ BUG FIXES
     o	system.time() now does sensible things in the non-HAVE_TIMES
 	case, and that and proc.time() have better documentation.
 
-    o   a couple of bugs in the data editor spreadsheet have been
-        eliminated.
+    o	a couple of bugs in the data editor spreadsheet have been
+	eliminated.
 
-    o   Elapsed time in proc.time() is no longer rounded to whole
+    o	Elapsed time in proc.time() is no longer rounded to whole
 	seconds under Unix.
 
 
