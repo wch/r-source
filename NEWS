@@ -56,6 +56,11 @@ INSTALLATION CHANGES
 	now also looks for Fujitsu's frt and Compaq's fort, but no
 	longer for cf77 and cft77.
 
+    o	Configure checks that mixed C/Fortran code can be run before
+	checking compatibility on ints and doubles: the latter test
+	was sometimes failing because the Fortran libraries were not
+	found.
+
 
 DEPRECATED & DEFUNCT
 

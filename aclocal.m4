@@ -507,6 +507,58 @@ if test "${r_cv_prog_f77_append_underscore}" = yes; then
 fi
 ])# R_PROG_F77_APPEND_UNDERSCORE
 
+AC_DEFUN([R_PROG_F77_CAN_RUN],
+[AC_REQUIRE([AC_CHECK_LIBM])
+AC_MSG_CHECKING([whether mixed C/Fortran code can be run])
+AC_CACHE_VAL([r_cv_prog_f77_can_run],
+[cat > conftestf.f <<EOF
+      subroutine cftest(a, b, x, y)
+      integer a(3), b(2)
+      double precision x(3), y(3)
+      end
+EOF
+${F77} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
+[cat > conftest.c <<EOF
+#include <math.h>
+#include "confdefs.h"
+#ifdef HAVE_F77_UNDERSCORE
+# define F77_SYMBOL(x)   x ## _
+#else
+# define F77_SYMBOL(x)   x
+#endif
+int main () {
+  exit(0);
+}
+EOF]
+if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
+  ## <NOTE>
+  ## This should really use MAIN_LD, and hence come after this is
+  ## determined (and necessary additions to MAIN_LDFLAGS were made).
+  ## But it seems that we currently can always use the C compiler.
+  ## Also, to be defensive there should be a similar test with SHLIB_LD
+  ## and SHLIB_LDFLAGS (and note that on HPUX with native cc we have to
+  ## use ld for SHLIB_LD) ...
+  if ${CC} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+       conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
+       ${LIBM} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
+  ## </NOTE>
+  then
+    output=`./conftest${ac_exeext} 2>&1`
+    if test ${?} = 0; then
+      r_cv_prog_f77_can_run=yes
+    fi
+  fi
+fi
+])
+rm -rf conftest conftest.* conftestf.* core
+if test -n "${r_cv_prog_f77_can_run}"; then
+  AC_MSG_RESULT([yes])
+else
+  AC_MSG_WARN([cannot run mixed C/Fortan code])
+  AC_MSG_ERROR([Maybe check LDFLAGS for paths to Fortran libraries?])
+fi
+])# R_PROG_F77_CAN_RUN
+
 AC_DEFUN([R_PROG_F77_CC_COMPAT],
 [AC_REQUIRE([AC_CHECK_LIBM])
 AC_MSG_CHECKING([whether ${F77} and ${CC} agree on int and double])

@@ -14603,6 +14603,65 @@ _ACEOF
 fi
 
 
+echo "$as_me:$LINENO: checking whether mixed C/Fortran code can be run" >&5
+echo $ECHO_N "checking whether mixed C/Fortran code can be run... $ECHO_C" >&6
+if test "${r_cv_prog_f77_can_run+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat > conftestf.f <<EOF
+      subroutine cftest(a, b, x, y)
+      integer a(3), b(2)
+      double precision x(3), y(3)
+      end
+EOF
+${F77} ${FFLAGS} -c conftestf.f 1>&5 2>&5
+cat > conftest.c <<EOF
+#include <math.h>
+#include "confdefs.h"
+#ifdef HAVE_F77_UNDERSCORE
+# define F77_SYMBOL(x)   x ## _
+#else
+# define F77_SYMBOL(x)   x
+#endif
+int main () {
+  exit(0);
+}
+EOF
+if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
+  ## <NOTE>
+  ## This should really use MAIN_LD, and hence come after this is
+  ## determined (and necessary additions to MAIN_LDFLAGS were made).
+  ## But it seems that we currently can always use the C compiler.
+  ## Also, to be defensive there should be a similar test with SHLIB_LD
+  ## and SHLIB_LDFLAGS (and note that on HPUX with native cc we have to
+  ## use ld for SHLIB_LD) ...
+  if ${CC} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+       conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
+       ${LIBM} 1>&5 2>&5;
+  ## </NOTE>
+  then
+    output=`./conftest${ac_exeext} 2>&1`
+    if test ${?} = 0; then
+      r_cv_prog_f77_can_run=yes
+    fi
+  fi
+fi
+
+fi
+
+rm -rf conftest conftest.* conftestf.* core
+if test -n "${r_cv_prog_f77_can_run}"; then
+  echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+else
+  { echo "$as_me:$LINENO: WARNING: cannot run mixed C/Fortan code" >&5
+echo "$as_me: WARNING: cannot run mixed C/Fortan code" >&2;}
+  { { echo "$as_me:$LINENO: error: Maybe check LDFLAGS for paths to Fortran libraries?" >&5
+echo "$as_me: error: Maybe check LDFLAGS for paths to Fortran libraries?" >&2;}
+   { (exit 1); exit 1; }; }
+fi
+
+
 echo "$as_me:$LINENO: checking whether ${F77} and ${CC} agree on int and double" >&5
 echo $ECHO_N "checking whether ${F77} and ${CC} agree on int and double... $ECHO_C" >&6
 if test "${r_cv_prog_f77_cc_compat+set}" = set; then
