@@ -38,8 +38,6 @@ char*	S_alloc(long, int);
 char*	S_realloc(char*, long, long, int);
 
 /* C Memory Management Interface */
-void	Init_C_alloc(void);
-void	Reset_C_alloc(void);
 char*	C_alloc(long, int);
 void	C_free(char *);
 

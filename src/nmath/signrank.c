@@ -18,7 +18,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
+ *    #include "Rmath.h"
  *    double dsignrank(double x, double n, int give_log)
  *    double psignrank(double x, double n, int lower_tail, int log_p)
  *    double qsignrank(double x, double n, int lower_tail, int log_p)

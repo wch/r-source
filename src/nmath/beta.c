@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
+ *    #include "Rmath.h"
  *    double beta(double a, double b);
  *
  *  DESCRIPTION

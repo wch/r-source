@@ -23,10 +23,10 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
-#include "Graphics.h"
-#include "Print.h"
+#include <Defn.h>
+#include <Rmath.h>
+#include <Graphics.h>
+#include <Print.h>
 
 #ifndef HAVE_HYPOT
 # define hypot pythag

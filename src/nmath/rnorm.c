@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
+ *    #include "Rnorm.h"
  *    double rnorm(double mu, double sigma);
  *
  *  DESCRIPTION

@@ -31,11 +31,11 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Graphics.h"
-#include "Devices.h"		/* KillAllDevices */
-#include "R_ext/Mathlib.h"	/* eg. fmax2() */
-#include "R_ext/Applic.h"	/* pretty0() */
+#include <Defn.h>
+#include <Graphics.h>
+#include <Devices.h>		/* KillAllDevices */
+#include <Rmath.h>		/* eg. fmax2() */
+#include <R_ext/Applic.h>	/* pretty0() */
 
 #include <string.h>
 #include <stdlib.h>

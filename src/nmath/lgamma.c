@@ -18,7 +18,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
+ *    #include "Rmath.h"
  *    extern int signgam;
  *    double lgammafn(double x);
  *

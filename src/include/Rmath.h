@@ -118,6 +118,44 @@
 #define M_SQRT1_2	0.707106781186547524400844362105	/* 1/sqrt(2) */
 #endif
 
+/* R-Specific Constants */
+
+#ifndef M_SQRT_3
+#define M_SQRT_3	1.732050807568877293527446341506	/* sqrt(3) */
+#endif
+
+#ifndef M_SQRT_32
+#define M_SQRT_32	5.656854249492380195206754896838	/* sqrt(32) */
+#endif
+
+#ifndef M_LOG10_2
+#define M_LOG10_2	0.301029995663981195213738894724	/* log10(2) */
+#endif
+
+#ifndef M_SQRT_PI
+#define M_SQRT_PI	1.772453850905516027298167483341	/* sqrt(pi) */
+#endif
+
+#ifndef M_1_SQRT_2PI
+#define M_1_SQRT_2PI	0.398942280401432677939946059934	/* 1/sqrt(2pi) */
+#endif
+
+#ifndef M_SQRT_2dPI
+#define M_SQRT_2dPI	0.797884560802865355879892119869	/* sqrt(2/pi) */
+#endif
+
+
+#ifndef M_LN_SQRT_PI
+#define M_LN_SQRT_PI	0.572364942924700087071713675677	/* log(sqrt(pi)) */
+#endif
+
+#ifndef M_LN_SQRT_2PI
+#define M_LN_SQRT_2PI	0.918938533204672741780329736406	/* log(sqrt(2*pi)) */
+#endif
+
+#ifndef M_LN_SQRT_PId2
+#define M_LN_SQRT_PId2	0.225791352644727432363097614947	/* log(sqrt(pi/2)) */
+#endif
 
 #ifdef MATHLIB_STANDALONE
  typedef enum { FALSE = 0, TRUE } Rboolean;
@@ -130,19 +168,13 @@
 #endif
 
 
-/* always remap these two to avoid conflicts with Fortran versions */
-#define d1mach		Rf_d1mach
-#define i1mach		Rf_i1mach
 
 #ifndef R_NO_REMAP
-#define bd0       	Rf_bd0
 #define bessel_i	Rf_bessel_i
 #define bessel_j	Rf_bessel_j
 #define bessel_k	Rf_bessel_k
 #define bessel_y	Rf_bessel_y
 #define beta		Rf_beta
-#define chebyshev_eval	Rf_chebyshev_eval
-#define chebyshev_init	Rf_chebyshev_init
 #define choose		Rf_choose
 #define dbeta		Rf_dbeta
 #define dbinom		Rf_dbinom
@@ -163,35 +195,24 @@
 #define dnorm4		Rf_dnorm4
 #define dnt		Rf_dnt
 #define dpois		Rf_dpois
-#define dpsifn		Rf_dpsifn
 #define dsignrank	Rf_dsignrank
 #define dt		Rf_dt
 #define dtukey		Rf_dtukey
 #define dunif		Rf_dunif
 #define dweibull	Rf_dweibull
 #define dwilcox		Rf_dwilcox
-#define fastchoose	Rf_fastchoose
-#define fcube		Rf_fcube
 #define fmax2		Rf_fmax2
 #define fmin2		Rf_fmin2
 #define fmod		Rf_fmod
 #define fprec		Rf_fprec
 #define fround		Rf_fround
-#define fsign		Rf_fsign
-#define fsquare		Rf_fsquare
 #define ftrunc		Rf_ftrunc
+#define fsign		Rf_fsign
 #define gammafn		Rf_gammafn
-#define gammalims	Rf_gammalims
-#define gamma_cody	Rf_gamma_cody
 #define imax2		Rf_imax2
 #define imin2		Rf_imin2
-#define I_bessel	Rf_I_bessel
-#define J_bessel	Rf_J_bessel
-#define K_bessel	Rf_K_bessel
 #define lbeta		Rf_lbeta
 #define lchoose		Rf_lchoose
-#define lfastchoose	Rf_lfastchoose
-#define lgammacor	Rf_lgammacor
 #define lgammafn	Rf_lgammafn
 #define log1p		Rf_log1p
 #define pbeta		Rf_pbeta
@@ -271,10 +292,8 @@
 #define rweibull	Rf_rweibull
 #define rwilcox		Rf_rwilcox
 #define sign		Rf_sign
-#define stirlerr       	Rf_stirlerr
 #define tetragamma	Rf_tetragamma
 #define trigamma	Rf_trigamma
-#define Y_bessel	Rf_Y_bessel
 #endif
 
 #define	rround	fround
@@ -443,38 +462,54 @@ double	rnbeta(double, double, double);
 
 	/* Non-central F Distribution */
 
-/* double	dnf(double, double, double, double, int); */
 double	pnf(double, double, double, double, int, int);
 double	qnf(double, double, double, double, int, int);
-/* double	rnf(double, double, double); */
 
 	/* Non-central Student t Distribution */
 
-/* double	dnt(double, double, double, int); */
 double	pnt(double, double, double, int, int);
 double	qnt(double, double, double, int, int);
-/* double	rnt(double, double); */
 
 	/* Studentized Range Distribution */
 
-/* double	dtukey(double, double, double, double, int); */
 double	ptukey(double, double, double, double, int, int);
 double	qtukey(double, double, double, double, int, int);
-/* double	rtukey(double, double, double); */
 
-/* Wilcoxon Rank Sum Distribution */
+	/* Wilcoxon Rank Sum Distribution */
 
 double dwilcox(double, double, double, int);
 double pwilcox(double, double, double, int, int);
 double qwilcox(double, double, double, int, int);
 double rwilcox(double, double);
 
-/* Wilcoxon Signed Rank Distribution */
+	/* Wilcoxon Signed Rank Distribution */
 
 double dsignrank(double, double, int);
 double psignrank(double, double, int, int);
 double qsignrank(double, double, int, int);
 double rsignrank(double);
+
+	/* Gamma and Related Functions */
+double	gammafn(double);
+double	lgammafn(double);
+double	digamma(double);
+double	trigamma(double);
+double	tetragamma(double);
+double	pentagamma(double);
+
+double	beta(double, double);
+double	lbeta(double, double);
+
+double	choose(double, double);
+double	lchoose(double, double);
+
+	/* Bessel Functions */
+
+double	bessel_i(double, double, double);
+double	bessel_j(double, double);
+double	bessel_k(double, double, double);
+double	bessel_y(double, double);
+
 
 	/* General Support Functions */
 
@@ -485,9 +520,11 @@ int	imin2(int, int);
 double	fmax2(double, double);
 double	fmin2(double, double);
 double	sign(double);
-double	fsign(double, double);
+double	fmod(double, double);
 double	fprec(double, double);
 double	fround(double, double);
+double	fsign(double, double);
+double	ftrunc(double);
 
 
 /* ----------------- Private part of the header file ------------------- */
@@ -498,61 +535,14 @@ double	fround(double, double);
 #define sunif	unif_rand
 #define sexp	exp_rand
 
-	/* Machine Characteristics */
+#ifdef MATHLIB_PRIVATE
+#define d1mach		Rf_d1mach
+#define gamma_cody	Rf_gamma_cody
 
 double	d1mach(int);
-int	i1mach(int);
-
-	/* General Support Functions */
-
-double	fmod(double, double);
-double	ftrunc(double);
-double	fsquare(double);
-double	fcube(double);
-
-	/* Chebyshev Series */
-
-int	chebyshev_init(double*, int, double);
-double	chebyshev_eval(double, double *, int);
-
-	/* Gamma and Related Functions */
-
-void	gammalims(double*, double*);
-double	lgammacor(double);/* log(gamma) correction */
-double  stirlerr(double);/* Stirling expansion "error"  */
-double	gammafn(double);
 double	gamma_cody(double);
-double	lgammafn(double);
-void	dpsifn(double, int, int, int, double*, int*, int*);
-double	digamma(double);
-double	trigamma(double);
-double	tetragamma(double);
-double	pentagamma(double);
 
-double	choose(double, double);
-double	lchoose(double, double);
-double	fastchoose(double, double);
-double	lfastchoose(double, double);
-
-
-double  bd0(double, double);
-
-	/* Bessel Functions of All Kinds */
-
-double	bessel_i(double, double, double);
-double	bessel_j(double, double);
-double	bessel_k(double, double, double);
-double	bessel_y(double, double);
-void	I_bessel(double*, double*, long*, long*, double*, long*);
-void	J_bessel(double*, double*, long*,	 double*, long*);
-void	K_bessel(double*, double*, long*, long*, double*, long*);
-void	Y_bessel(double*, double*, long*,	 double*, long*);
-
-	/* Beta and Related Functions */
-
-double	beta(double, double);
-double	lbeta(double, double);
-
+#endif /* MATHLIB_PRIVATE */
 
 #ifdef MATHLIB_STANDALONE
 #ifndef MATHLIB_PRIVATE_H

@@ -57,9 +57,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
-#include "Print.h"
+#include <Defn.h>
+#include <Rmath.h>
+#include <Print.h>
 
 #define BUFSIZE 8192  /* used by Rprintf etc */
 static char *Encodebuf=NULL;

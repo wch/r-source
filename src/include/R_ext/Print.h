@@ -1,6 +1,7 @@
 /*
- *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1998-2000    Robert Gentleman, Ross Ihaka
+ *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,21 +15,24 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
- *
- *  SYNOPSIS
- *
- *    #include "Mathlib.h"
- *    double fcube(double x);
- *
- *  DESCRIPTION
- *
- *    This function returns the cube of its argument.
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+#ifndef R_EXT_PRINT_H_
+#define R_EXT_PRINT_H_
 
-#include "nmath.h"
+#include <stdarg.h>
 
-double fcube(double x)
-{
-    return x * x * x;
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
+void Rprintf(char*, ...);
+void REprintf(char*, ...);
+void Rvprintf(const char*, va_list);
+void REvprintf(const char*, va_list);
+
+#ifdef  __cplusplus
 }
+#endif
+
+#endif /* R_EXT_PRINT_H_ */

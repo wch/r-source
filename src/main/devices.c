@@ -22,10 +22,10 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
-#include "Graphics.h"
-#include "Devices.h"
+#include <Defn.h>
+#include <Rmath.h>
+#include <Graphics.h>
+#include <Devices.h>
 
 /* Return a non-relocatable copy of a string */
 

@@ -23,11 +23,11 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Print.h"		/* for printRealVector() */
-#include "R_ext/Mathlib.h"
-#include "R_ext/Applic.h"
-#include "R_ext/RS.h"			/* for Memcpy */
+#include <Defn.h>
+#include <Print.h>		/* for printRealVector() */
+#include <Rmath.h>
+#include <R_ext/Applic.h>
+#include <R_ext/RS.h>			/* for Memcpy */
 
 
 /* One Dimensional Minimization --- just wrapper code for Brent's "fmin" */

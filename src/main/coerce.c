@@ -22,9 +22,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"/*-- Maybe modularize into own Coerce.h ..*/
-#include "R_ext/Mathlib.h"
-#include "Print.h"
+#include <Defn.h> /*-- Maybe modularize into own Coerce.h ..*/
+#include <Rmath.h>
+#include <Print.h>
 
 
 /* This section of code handles type conversion for elements */

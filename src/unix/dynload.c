@@ -65,8 +65,8 @@
 # include <unistd.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
+#include <Defn.h>
+#include <Rmath.h>
 
 #ifndef HAVE_NO_SYMBOL_UNDERSCORE
 # ifdef HAVE_ELF_H

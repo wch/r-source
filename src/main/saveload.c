@@ -23,9 +23,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
-#include "Fileio.h"
+#include <Defn.h>
+#include <Rmath.h>
+#include <Fileio.h>
 
 #define R_MAGIC_ASCII_V1   1001
 #define R_MAGIC_BINARY_V1  1002

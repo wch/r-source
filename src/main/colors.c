@@ -22,9 +22,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Graphics.h"
-#include "R_ext/Mathlib.h"
+#include <Defn.h>
+#include <Graphics.h>
+#include <Rmath.h>
 
 unsigned int char2col(char *s)
 {

@@ -21,44 +21,4 @@
 
 #include <Rmath.h>
 
-/* R-Specific Constants */
-
-#ifndef M_SQRT_3
-#define M_SQRT_3	1.732050807568877293527446341506	/* sqrt(3) */
-#endif
-
-#ifndef M_SQRT_32
-#define M_SQRT_32	5.656854249492380195206754896838	/* sqrt(32) */
-#endif
-
-#ifndef M_LOG10_2
-#define M_LOG10_2	0.301029995663981195213738894724	/* log10(2) */
-#endif
-
-#ifndef M_SQRT_PI
-#define M_SQRT_PI	1.772453850905516027298167483341	/* sqrt(pi) */
-#endif
-
-#ifndef M_1_SQRT_2PI
-#define M_1_SQRT_2PI	0.398942280401432677939946059934	/* 1/sqrt(2pi) */
-#endif
-
-#ifndef M_SQRT_2dPI
-#define M_SQRT_2dPI	0.797884560802865355879892119869	/* sqrt(2/pi) */
-#endif
-
-
-#ifndef M_LN_SQRT_PI
-#define M_LN_SQRT_PI	0.572364942924700087071713675677	/* log(sqrt(pi)) */
-#endif
-
-#ifndef M_LN_SQRT_2PI
-#define M_LN_SQRT_2PI	0.918938533204672741780329736406	/* log(sqrt(2*pi)) */
-#endif
-
-#ifndef M_LN_SQRT_PId2
-#define M_LN_SQRT_PId2	0.225791352644727432363097614947	/* log(sqrt(pi/2)) */
-#endif
-
-
 #endif /* MATHLIB_H */

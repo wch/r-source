@@ -23,11 +23,10 @@
 #include <config.h>
 #endif
 
-#include "R_ext/Mathlib.h" /* for imin2 and imax2 */
-#include "R_ext/PrtUtil.h" /* for Rprintf */
-#include "R_ext/Utils.h" /* for R_rsort */
-
-#include "R_ext/Applic.h"
+#include <Rmath.h> /* for imin2 and imax2 */
+#include <R_ext/Print.h> /* for Rprintf */
+#include <R_ext/Utils.h> /* for R_rsort */
+#include <R_ext/Applic.h>
 
 static void stem_print(int close, int dist, int ndigits)
 {

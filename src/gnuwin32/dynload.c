@@ -61,8 +61,8 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
+#include <Defn.h>
+#include <Rmath.h>
 #include <direct.h>
 #include <windows.h>
 

@@ -58,7 +58,7 @@
 #endif
 
 #include <float.h>
-#include "R_ext/Mathlib.h" /* for R_pow_di */
+#include <Rmath.h> /* for R_pow_di */
 #include "R_ext/Arith.h"
 #include "R_ext/Applic.h"
 

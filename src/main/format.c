@@ -38,9 +38,9 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
-#include "Print.h"
+#include <Defn.h>
+#include <Rmath.h>
+#include <Print.h>
 
 
 void formatString(SEXP *x, int n, int *fieldwidth, int quote)

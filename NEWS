@@ -318,6 +318,10 @@ NEW FEATURES
 
     o	Recommended include file `Rmath.h' replaces `R_ext/Mathlib.h'.
 
+    o	Bessel, beta and gamma functions are now documented as part of
+	the API.  Undocumented entry points are no longer in the
+	header files, and some are no longer visible.
+
 
 BUG FIXES
 

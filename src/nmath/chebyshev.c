@@ -18,7 +18,6 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
  *    int chebyshev_init(double *dos, int nos, double eta)
  *    double chebyshev_eval(double x, double *a, int n)
  *

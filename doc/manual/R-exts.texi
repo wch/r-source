@@ -451,12 +451,6 @@ obtain more information about the usage of the @R{} package checker.
 A subset of the checking steps can be selected by
 adding flags.
 
-@c FIXME: This should be obsolete with the new GenGC, right?
-@c Note that some packages will require more than the default workspace
-@c size to run their examples: this needs to be specified by setting the
-@c environment variables @env{R_NSIZE} and @env{R_VSIZE} or the
-@c command-line options @code{--nsize} and @code{--vsize}.
-
 @findex R CMD build
 @cindex Package builder
 Using @code{R CMD build}, the @R{} package builder, one can build R
@@ -3144,9 +3138,6 @@ $7 = 5
 * Printing::                    
 * Calling C from FORTRAN and vice versa::  
 * Numerical analysis subroutines::  
-* Distribution functions::      
-* Mathematical Utilities::      
-* Mathematical Constants::      
 * Utility functions::           
 * Platform and version information::  
 * Standalone Mathlib::          
@@ -3412,8 +3403,6 @@ The function @code{REprintf} is similar but writes on the error stream
 output stream.  Functions @code{Rvprintf} and @code{REvprintf} are the
 analogues using the @code{vprintf} interface.
 
-These routines are declared in @file{R_ext/PrtUtil.h} which is not
-included by @file{R.h}.
 
 @subsection Printing from FORTRAN
 @cindex Printing from FORTRAN
@@ -3466,7 +3455,7 @@ to access a FORTRAN common block from C
 On most current platforms these are all the same, but it is unwise to
 rely on this.
 
-@node Numerical analysis subroutines, Distribution functions, Calling C from FORTRAN and vice versa, The R API
+@node Numerical analysis subroutines, Utility functions, Calling C from FORTRAN and vice versa, The R API
 @section Numerical analysis subroutines
 @cindex Numerical analysis subroutines from C
 
@@ -3480,12 +3469,20 @@ from users' FORTRAN code.  Although not part of the official
 @acronym{API}, this set of subroutines is unlikely to change (but might
 be supplemented).
 
-The header file @file{Rmath.h} lists other undocumented calls
-that are currently available, mainly special functions (such gamma, beta
-and Bessel functions).  These @emph{are} subject to change.
+The header file @file{Rmath.h} lists many other functions that are
+available and documented in the following subsections. Many of these are
+C interfaces to the code behind @R{} functions, so the @R{} function
+documentation may give further details.
 
-@node Distribution functions, Mathematical Utilities, Numerical analysis subroutines, The R API
-@section Distribution functions
+@menu
+* Distribution functions::      
+* Mathematical functions::      
+* Utilities::                   
+* Mathematical constants::      
+@end menu
+
+@node Distribution functions, Mathematical functions, Numerical analysis subroutines, Numerical analysis subroutines
+@subsection Distribution functions
 @cindex  Distribution functions from C
 
 The routines used to calculate densities, cumulative distribution
@@ -3572,51 +3569,67 @@ distributions.
 @end quotation
 
 @noindent
-The argument sequences are not all quite the same as the @R{} ones.
+The argument names are not all quite the same as the @R{} ones.
 @c ^^^ FIXME ?? (argument names in the C code wouldn't change the API ..) ^^
 @c {don't want to change the R function argument names} -- <<
 
-@node Mathematical Utilities, Mathematical Constants, Distribution functions, The R API
-@section Mathematical Utilities
-There are a few other numerical utilities available as entry points.
 
-@c FIXME :  Not yet documented (but in the public API) are
-@c -----    ------------------
-@c ======== These are all mathematically non-trivial
-@c ======== whereas the "Mathematical Utilities" here are at least elementary.
-@c ======== We should hence use an extra [section + node] ...
+@node Mathematical functions, Utilities, Distribution functions, Numerical analysis subroutines
+@subsection Mathematical functions
 
-@c void	gammalims(double*, double*);
-@c double	lgammacor(double);
-@c double	gammafn(double);
-@c double	gamma_cody(double);
-@c double	lgammafn(double);
-@c void	dpsifn(double, int, int, int, double*, int*, int*);
-@c double	digamma(double);
-@c double	trigamma(double);
-@c double	tetragamma(double);
-@c double	pentagamma(double);
-@c
-@c double	choose(double, double);
-@c double	lchoose(double, double);
-@c double	fastchoose(double, double);
-@c double	lfastchoose(double, double);
-@c
-@c 	/* Bessel Functions of All Kinds */
-@c
-@c double	bessel_i(double, double, double);
-@c double	bessel_j(double, double);
-@c double	bessel_k(double, double, double);
-@c double	bessel_y(double, double);
-@c void	I_bessel(double*, double*, long*, long*, double*, long*);
-@c void	J_bessel(double*, double*, long*,	 double*, long*);
-@c void	K_bessel(double*, double*, long*, long*, double*, long*);
-@c void	Y_bessel(double*, double*, long*,	 double*, long*);
-@c
-@c 	/* Beta and Related Functions */
-@c
-@c double	beta(double, double);
-@c double	lbeta(double, double);
+@findex gammafn
+@findex lgammafn
+@findex digamma
+@findex trigamma
+@findex tetragamma
+@findex pentagamma
+@cindex Gamma function
+@deftypefun double gammafn (double @var{x})
+@deftypefunx double lgammafn (double @var{x})
+@deftypefunx double digamma (double @var{x})
+@deftypefunx double trigamma (double @var{x})
+@deftypefunx double tetragamma (double @var{x})
+@deftypefunx double pentagamma (double @var{x})
+The Gamma function, its natural logarithm and first four derivatives.
+@end deftypefun
+
+@findex beta
+@findex lbeta
+@cindex Beta function
+@deftypefun double beta (double @var{a}, double @var{b})
+@deftypefunx double lbeta (double @var{a}, double @var{b})
+The (complete) Beta function and its natural logarithm.
+@end deftypefun
+
+@findex choose
+@findex lchoose
+@deftypefun double choose (double @var{n}, double @var{k})
+@deftypefunx double lchoose (double @var{n}, double @var{k})
+The number of combinations of @var{k} items chosen from from @var{n} and
+its natural logarithm.  @var{n} and @var{k} are rounded to the nearest
+integer.
+@end deftypefun
+
+@findex bessel_i
+@findex bessel_j
+@findex bessel_k
+@findex bessel_y
+@cindex Bessel functions
+@deftypefun double bessel_i (double @var{x}, double @var{nu}, double @var{expo})
+@deftypefunx double bessel_j (double @var{x}, double @var{nu})
+@deftypefunx double bessel_k (double @var{x}, double @var{nu}, double @var{expo})
+@deftypefunx double bessel_y (double @var{x}, double @var{nu})
+Bessel functions of types I, J, K and Y with index @var{nu}.  For
+@code{bessel_i} and @code{bessel_k} there is the option to return
+@code{exp(-x) I(x;nu)} or @code{exp(x) K(x;nu)} if @code{@var{expo} ==
+2}. (Use @code{@var{expo} == 1} for unscaled values.)
+@end deftypefun
+
+
+@node Utilities, Mathematical constants, Mathematical functions, Numerical analysis subroutines
+@subsection Utilities
+There are a few other numerical utility functions available as entry points.
+
 
 @deftypefun double R_pow (double @var{x}, double @var{y})
 @deftypefunx double R_pow_di (double @var{x}, int @var{i})
@@ -3671,15 +3684,16 @@ decimal digits.
 This is the function used by @R{}'s @code{signif()}.
 @end deftypefun
 
-@c FIXME : These are not yet in there
-@c double ftrunc(double)
-@c double fmod(double, double)
-@c double fsquare(double)
-@c double fcube(double)
+@deftypefun double fmod (double @var{x})
+Returns the absolute value of value of @var{x}.
+@end deftypefun
 
+@deftypefun double ftrunc (double @var{x})
+Returns the value of @var{x} truncated (to an integer value) towards zero.
+@end deftypefun
 
-@node Mathematical Constants, Utility functions, Mathematical Utilities, The R API
-@section Mathematical Constants
+@node Mathematical constants,  , Utilities, Numerical analysis subroutines
+@subsection Mathematical constants
 @findex M_E
 @findex M_PI
 @c maybe not all into the index ...
@@ -3710,6 +3724,7 @@ use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
 @item @code{M_SQRT2}        @tab = sqrt(2)         @tab 1.4142136
 @item @code{M_SQRT1_2}      @tab = 1/sqrt(2)       @tab 0.7071068
 @c R-specific ones
+@item @code{M_SQRT_3}       @tab = sqrt(3)         @tab 1.7320508
 @item @code{M_SQRT_32}      @tab = sqrt(32)        @tab 5.6568542
 @item @code{M_LOG10_2}      @tab = log10(2)        @tab 0.3010300
 @item @code{M_SQRT_PI}      @tab = sqrt(pi)        @tab 1.7724539
@@ -3730,7 +3745,7 @@ Further, the included header @file{R_ext/Boolean.h}
 has constants @code{TRUE} and @code{FALSE = 0} of type @code{Rboolean} in
 order to provide a way of using ``logical'' variables in C consistently.
 
-@node Utility functions, Platform and version information, Mathematical Constants, The R API
+@node Utility functions, Platform and version information, Numerical analysis subroutines, The R API
 @section Utility functions
 @cindex Sort functions from C
 
@@ -3818,9 +3833,8 @@ version includes the patchlevel (as in @code{99.0}).
 
 It is possible to build @code{Mathlib}, the @R{} set of mathematical
 functions documented in @file{Rmath.h}, as a standalone library
-@file{libRmath} under Unix and Windows.  This includes the functions
-documented in @ref{Distribution functions} and @ref{Mathematical
-Utilities} and the constants in @ref{Mathematical Constants}.
+@file{libRmath} under Unix and Windows.  (This includes the functions
+documented in @ref{Numerical analysis subroutines} as from that header file.)
 
 The library is not built automatically when @R{} is installed, but can
 be built in the directory @file{src/nmath/standalone}. See the file

@@ -18,7 +18,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
+ *    #include "Rmath.h"
  *    double fmod(double x, double y);
  *
  *  DESCRIPTION

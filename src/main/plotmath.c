@@ -27,9 +27,9 @@
 
 #include <ctype.h>
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
-#include "Graphics.h"
+#include <Defn.h>
+#include <Rmath.h>
+#include <Graphics.h>
 
 
 /* The R graphics device */

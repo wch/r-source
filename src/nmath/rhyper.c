@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
+ *    #include "Rmath.h"
  *    double rhyper(double NR, double NB, double n);
  *
  *  DESCRIPTION

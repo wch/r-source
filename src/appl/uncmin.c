@@ -26,10 +26,12 @@
 
 #include <math.h>
 #include <R.h>
-#include "R_ext/Applic.h"
-#include "R_ext/Linpack.h"	/* ddot, dnrm2, dtrsl, dscal */
-#include "R_ext/Mathlib.h"	/* d1mach i1mach */
-#include "R_ext/PrtUtil.h"	/* Rprintf and printRealVector */
+#include <R_ext/Applic.h>
+#include <R_ext/PrtUtil.h> /* printRealVector */
+#include <R_ext/Linpack.h> /* ddot, dnrm2, dtrsl, dscal */
+#define MATHLIB_PRIVATE
+#include <Rmath.h> /* for dimach */
+#undef MATHLIB_PRIVATE
 
 /* CC	 subroutines  mvmlt[lsu] should be REPLACED by BLAS ones!
  * CC

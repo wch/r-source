@@ -18,10 +18,11 @@
  *
  *  SYNOPSIS
  *
- *    #include "Mathlib.h"
+ *    #include "Rmath.h"
  *    double choose(double n, double k);
- *    double fastchoose(double n, double k);
  *    double lchoose(double n, double k);
+ *    (and private)
+ *    double fastchoose(double n, double k);
  *    double lfastchoose(double n, double k);
  *
  *  DESCRIPTION
