@@ -360,6 +360,8 @@ distclean veryclean: clean clean-recommended
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
 	$(RM) rw-FAQ fixed/html/rw-FAQ.html
+	$(RM) -r cran/index.html cran/ReadMe cran/README* cran/*.exe cran/md5sum.txt \
+	  cran/mini
 	$(RM) Rpwd.exe # do this last of all
 
 cleanwin:
@@ -414,127 +416,6 @@ docfiles:
 bitmapdll:
 	$(MAKE) -C bitmap
 
-distribution: bindist packagedist docsdist
-
-bindist: tcl bitmapdll docfiles
-	$(RM) -r $(RPREFIX)
-	$(MKDIR) $(RPREFIX)
-	$(CP) -pr ../../bin ../../modules ../../afm $(RPREFIX)
-	$(MKDIR) $(RPREFIX)/library
-	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
-# morley.tab is needed for R-intro Appendix A
-	$(CP) -p ../library/base/data/morley.tab $(RPREFIX)/library/base/data
-	$(RM) $(RPREFIX)/*/Makefile.in
-	(cd $(RPREFIX)/bin; $(RM) INSTALL REMOVE SHLIB build check \
-	   massage-Examples Rd2dvi.sh Rd2txt Rdconv Rdiff.sh Rdindex \
-           Sd2Rd)
-	$(MKDIR) $(RPREFIX)/etc
-	$(CP) -p ../../etc/Rprofile $(RPREFIX)/etc/Rprofile
-	$(CP) -p ../../etc/Rconsole $(RPREFIX)/etc/Rconsole
-	$(CP) -p ../../etc/Rdevga $(RPREFIX)/etc/Rdevga
-	$(CP) -p ../../etc/rgb.txt $(RPREFIX)/etc/rgb.txt
-	$(MKDIR) -p $(RPREFIX)/doc/manual  $(RPREFIX)/share/texmf
-	$(CP) -pr ../../doc/html $(RPREFIX)/doc
-	$(CP) -p ../../doc/manual/*.html $(RPREFIX)/doc/manual
-	$(CP) -pr ../../share/texmf $(RPREFIX)/share
-	$(CP) -p ../../AUTHORS ../../COPYING COPYRIGHTS ../../FAQ ../../NEWS \
-		../../README ../../RESOURCES ../../THANKS ../../Y2K $(RPREFIX)
-	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
-	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README.$(RPREFIX)
-	$(CP) -p rw-faq $(RPREFIX)/rw-FAQ
-	$(CP) -p CHANGES README.Rterm $(RPREFIX)
-	find $(RPREFIX) -name CVS -prune -exec rm -rf \{\} \;
-# convert docs and batch files to CRLF: might already be on Windows, though.
-ifeq ($(strip $(BUILD)),CROSS)
-	zip -l dosfiles.zip $(RPREFIX)/* $(RPREFIX)/bin/*.bat
-	unzip -ao dosfiles.zip
-else
-	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/bin/*.bat
-	unzip -o dosfiles.zip
-endif
-	$(RM) dosfiles.zip
-	$(RM) $(RPREFIX)b.zip $(RPREFIX)m.zip $(RPREFIX)h.zip \
-	   $(RPREFIX)w.zip $(RPREFIX)l.zip $(RPREFIX)ch.zip
-	$(RM) anindex.zip
-	zip -mrX anindex.zip $(RPREFIX)/library/*/help/AnIndex
-	zip -mr9X $(RPREFIX)h.zip $(RPREFIX)/library/*/help
-	unzip anindex.zip
-	$(RM) anindex.zip
-	$(RM) $(RPREFIX)/doc/manual/R-FAQ.html
-	zip -rm9X $(RPREFIX)w.zip $(RPREFIX)/doc/html \
-          $(RPREFIX)/doc/manual/*.html \
-	  $(RPREFIX)/library/*/html $(RPREFIX)/library/R.css
-	-zip -rm9X $(RPREFIX)ch.zip $(RPREFIX)/library/*/chtml \
-	  $(RPREFIX)/bin/Rchtml.dll
-#	$(RM) $(RPREFIX)/library/*/winhlp/*.GID
-#	-zip -rm9X $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
-	zip -rm9X $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/share/texmf
-	$(RM) -r $(RPREFIX)/doc
-	$(MKDIR) -p  $(RPREFIX)/doc/html
-	$(CP) -p ../../doc/html/faq.html ../../doc/html/rw-FAQ.html \
-	  $(RPREFIX)/doc/html
-	zip -rm9X $(RPREFIX)m.zip $(RPREFIX)/library/*/man
-	zip -r9X $(RPREFIX)b.zip $(RPREFIX)
-	$(RM) -rf $(RPREFIX)
-
-
-#taken from ../include/Makefile.in
-SRC_HEADERS = R.h S.h Rdefines.h Rdevices.h Rgraphics.h Rinternals.h Rmath.h
-OBJ_HEADERS = Rconfig.h Rversion.h
-GW32_HEADERS =
-
-packagedist:
-	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
-	$(MKDIR) -p $(RPREFIX) $(RPREFIX)/bin $(RPREFIX)/etc \
-	  $(RPREFIX)/doc $(RPREFIX)/doc/html $(RPREFIX)/share \
-	  $(RPREFIX)/src/include $(RPREFIX)/src/library \
-	  $(RPREFIX)/src/gnuwin32/fixed
-	$(CP) ../../doc/html/logo.jpg $(RPREFIX)/doc/html
-	$(CP) ../../doc/KEYWORDS* $(RPREFIX)/doc
-	$(CP) -p exported-vars R.exp Rblas.def MkRules MakePkg MakeDll \
-	  Rpwd.exe pwd.pl makeDllRes.pl install-save.sh $(RPREFIX)/src/gnuwin32
-	$(SED) -e s/@RVER@/$(RVER)/g Makefile.packages > $(RPREFIX)/src/gnuwin32/Makefile
-	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
-	$(CP) -pr help check $(RPREFIX)/src/gnuwin32
-	$(RM) $(RPREFIX)/src/gnuwin32/help/*.c \
-	  $(RPREFIX)/src/gnuwin32/help/MkChmDll
-	$(MAKE) --no-print-directory -C $(RPREFIX)/src/gnuwin32/help clean
-	$(CP) -p $(foreach i,$(SRC_HEADERS) $(OBJ_HEADERS) $(GW32_HEADERS), \
-	  ../include/$i) $(RPREFIX)/src/include
-	$(CP) -pr ../include/R_ext $(RPREFIX)/src/include
-	$(SED) -e 3,5d readme.packages > $(RPREFIX)/readme.packages
-	$(CP) ../../COPYING.LIB $(RPREFIX)
-	$(CP) -r ../../share/make ../../share/perl ../../share/texmf \
-	   $(RPREFIX)/share
-	$(CP) ../../bin/INSTALL ../../bin/REMOVE ../../bin/SHLIB \
-	  ../../bin/build ../../bin/check ../../bin/massage-Examples \
-	  ../../bin/Rd2dvi.sh ../../bin/Rd2txt ../../bin/Rdconv \
-	  ../../bin/Rdindex ../../bin/Rdiff.sh \
-	  ../../bin/Sd2Rd  \
-          $(RPREFIX)/bin
-	$(CP) -pr ../../lib $(RPREFIX)
-	$(CP) ../../share/make/wintests.mk $(RPREFIX)/share/make
-	$(CP) -pr ../../share/R $(RPREFIX)/share
-	$(CP) -p graphapp/graphapp.h graphapp/ga.h $(RPREFIX)/src/include
-	$(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs
-	$(CP) -pr windlgs $(RPREFIX)/src/library
-	find $(RPREFIX) -name CVS -prune -exec rm -rf \{\} \;
-	zip -r9X $(RPREFIX)sp.zip $(RPREFIX)
-	$(RM) -r $(RPREFIX)
-
-docsdist: docs
-	$(RM) -r $(RPREFIX)
-	$(RM) -f $(RPREFIX)d1.zip $(RPREFIX)d2.zip
-	$(MKDIR) $(RPREFIX) $(RPREFIX)/doc $(RPREFIX)/doc/manual
-	$(CP) -pr $(RHOME)/doc/manual/*.pdf $(RPREFIX)/doc/manual
-	zip -rm9X $(RPREFIX)d2.zip $(RPREFIX)/doc/manual/refman.pdf
-	zip -rm9X $(RPREFIX)d1.zip $(RPREFIX)/doc/manual \
-	  -x $(RPREFIX)/doc/manual/R-FAQ.pdf
-	$(RM) -r $(RPREFIX)
-
-install:
-	cp *.zip /pub/bdr/RWin/Rpre
-
 CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)/Recommended
 
 rsync-recommended:
@@ -566,6 +447,22 @@ dist-recommended:
 	@for p in $(REC_PKGS); do \
 	(cd ../..; zip -r9X src/gnuwin32/Recommended.zip library/$$p) ; \
 	done
+	
+distribution: all tcl bitmapdll docfiles docs recommended
+	$(MAKE) --no-print-directory -C installer 
+	$(MAKE) --no-print-directory -C installer clean	
+	$(MKDIR) -p cran/mini
+	mv installer/rw*.exe cran
+	(cd cran; md5sum rw*.exe >md5sum.txt)
+	mv installer/mini*.* cran/mini
+	(cd cran/mini; md5sum mini* >md5sum.txt)
+	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
+	  -e s/@RVER@/$(RVER)/g readme > cran/README.$(RPREFIX)
+	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
+	  -e s/@RVER@/$(RVER)/g cran/index.in > cran/index.html
+	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
+	  -e s/@RVER@/$(RVER)/g cran/ReadMe.in > cran/ReadMe
+	  
 
 ## ============= End of maintainer targets ========================
 

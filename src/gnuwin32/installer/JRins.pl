@@ -25,7 +25,6 @@ my $fn, $component, $path;
 my $startdir=cwd();
 my $RVER;
 my $RW=$ARGV[0];
-my $ISVER=$ARGV[1];
 my $iconpars="WorkingDir: \"{app}\"" ;
 ## add to the target command line as in the next example
 # my $iconpars="Parameters: \"--sdi\"; WorkingDir: \"{app}\"" ;
@@ -37,8 +36,20 @@ $RVER =~ s/\n.*$//;
 $RVER =~ s/Under .*$/Pre-release/;
 
 open insfile, "> R.iss" || die "Cannot open R.iss\n";
+open minifile,"> Rsmall.iss" || die "Cannot open Rsmall.iss\n";
+
+print minifile <<END;
+[Setup]
+OutputBaseFilename=miniR
+DiskSpanning=yes
+END
+
 print insfile <<END;
 [Setup]
+OutputBaseFilename=${RW}
+END
+
+my $lines=<<END;
 AppName=R for Windows
 AppVerName=R for Windows $RVER
 AppPublisher=R Development Core Team
@@ -53,14 +64,38 @@ LicenseFile=${RW}\\COPYING
 DisableReadyPage=yes
 DisableStartupPrompt=yes
 OutputDir=.
-OutputBaseFilename=${RW}
 WizardSmallImageFile=R.bmp
 UsePreviousAppDir=no
 ChangesAssociations=yes
 Compression=bzip
+
+[Tasks]
+Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4
+Name: "associate"; Description: "&Associate R with .RData files"; GroupDescription: "Registry entries:"; MinVersion: 4,4
+Name: "DCOM"; Description: "&Register R path for use by the (D)COM server"; GroupDescription: "Registry entries:"; MinVersion: 4,4
+
+[Icons]
+Name: "{group}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; $iconpars
+Name: "{group}\\Uninstall R $RVER"; Filename: "{uninstallexe}"
+Name: "{userdesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: desktopicon; $iconpars
+
+[Registry] 
+Root: HKLM; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty; Tasks: DCOM
+Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekey; Tasks: DCOM
+Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Tasks: DCOM
+Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Tasks: DCOM
+
+Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWorkspace"; Flags: uninsdeletevalue; Tasks: associate
+Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey; Tasks: associate 
+Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\\bin\\RGui.exe,0"; Tasks: associate 
+Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: """{app}\\bin\\RGui.exe"" ""%1"""; Tasks: associate 
 END
-print insfile "AlwaysCreateUninstallIcon=yes\n" if $ISVER eq 2;
+
+print insfile $lines;
 print insfile <<END;
+
+[Icons]
+Name: "{group}\\R $RVER Help"; Filename: "{app}\\doc\\html\\Rwin.html"; Components: html
 
 [Types]
 Name: "user"; Description: "User installation"
@@ -78,69 +113,45 @@ Name: "refman"; Description: "Reference Manual"; Types: full custom
 Name: "devel"; Description: "Source Package Installation Files"; Types: full custom
 Name: "tcl"; Description: "Support Files for library(tcltk)"; Types: user full custom
 
-[Tasks]
-Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4
-Name: "associate"; Description: "&Associate R with .RData files"; GroupDescription: "Registry entries:"; MinVersion: 4,4
-Name: "DCOM"; Description: "&Register R path for use by the (D)COM server"; GroupDescription: "Registry entries:"; MinVersion: 4,4
-
-[Icons]
-Name: "{group}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; $iconpars
-Name: "{group}\\R $RVER Help"; Filename: "{app}\\doc\\html\\Rwin.html"; Components: html
+[Files]
 END
-if($ISVER eq 3) {
-    print insfile <<END;
-Name: "{group}\\Uninstall R $RVER"; Filename: "{uninstallexe}"
-END
-}
-print insfile <<END;
-Name: "{userdesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: desktopicon; $iconpars
 
-[Registry] 
-Root: HKLM; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty; Tasks: DCOM
-Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekey; Tasks: DCOM
-Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Tasks: DCOM
-Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Tasks: DCOM
+print minifile $lines;
+print minifile <<END;
 
-Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWorkspace"; Flags: uninsdeletevalue; Tasks: associate
-Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey; Tasks: associate 
-Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\\bin\\RGui.exe,0"; Tasks: associate 
-Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: """{app}\\bin\\RGui.exe"" ""%1"""; Tasks: associate 
+[Types]
+Name: "compact"; Description: "Minimal user installation"
+Name: "custom"; Description: "Custom installation"; Flags: iscustom
+
+[Components]
+Name: "main"; Description: "Main Files"; Types: compact custom; Flags: fixed
+Name: "chtml"; Description: "Compiled HTML Help Files"; Types: custom
+Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: custom
 
 [Files]
 END
 
-$path="${RW}";$component="main";chdir($path);
-find(\&listFiles, ".");
-
-chdir($startdir);
-$path="${RW}ch\\${RW}";$component="chtml";chdir($path);
-find(\&listFiles, ".");
-
-chdir($startdir);
-$path="${RW}w\\${RW}";$component="html";chdir($path);
-find(\&listFiles, ".");
-
-chdir($startdir);
-$path="${RW}d1\\${RW}";$component="manuals";chdir($path);
-find(\&listFiles, ".");
-
-chdir($startdir);
-$path="${RW}d2\\${RW}";$component="refman";chdir($path);
-find(\&listFiles, ".");
-
-chdir($startdir);
-$path="${RW}sp\\${RW}";$component="devel";chdir($path);
-find(\&listFiles, ".");
-
-chdir($startdir);
-$path="${RW}l\\${RW}";$component="latex";chdir($path);
-find(\&listFiles, ".");
-
-chdir($startdir);
-$path="TclInst";$component="tcl";chdir($path);
+my %develfiles=("doc\\html\\logo.jpg" => 1,
+		"readme.packages" => 1,
+		"COPYING.LIB" => 1,
+		"bin\\INSTALL" => 1,
+		"bin\\REMOVE" => 1,
+		"bin\\SHLIB" => 1,
+		"bin\\build" => 1,
+		"bin\\check" => 1,
+		"bin\\massage-Examples" => 1,
+		"bin\\Rd2dvi.sh" => 1,
+		"bin\\Rd2txt" => 1,
+		"bin\\Rdconv" => 1,
+		"bin\\Rdindex" => 1,
+		"bin\\Rdiff.sh" => 1,
+		"bin\\Sd2Rd" => 1);
+		
+$path="${RW}";chdir($path);
 find(\&listFiles, ".");
 
 close insfile;
+close minifile;
 
 sub listFiles {
     $fn = $File::Find::name;
@@ -151,6 +162,49 @@ sub listFiles {
 	$dir =~ s/[^\\]+$//;
 	$dir = "\\".$dir;
 	$dir =~ s/\\$//;
-	print insfile "Source: \"$path\\$fn\"; DestDir: \"{app}$dir\"; CopyMode: alwaysoverwrite; Components: $component\n";
+	$_ = $fn;
+
+	if ($_ eq "bin\\Rchtml.dll" 
+	      || m/^library\\[^\\]*\\chtml/) {
+	    $component = "chtml";
+	} elsif ($_ eq "doc\\html\\logo.jpg") {
+	    $component = "html devel";
+	} elsif ($_ eq "doc\\html\\faq.html"
+	      || $_ eq "doc\\html\\rw-FAQ.html") {
+	    $component = "main";
+	} elsif (m/^doc\\html/
+	      || m/^doc\\manual\\[^\\]*\.html/
+	      || m/^library\\[^\\]*\\html/
+	      || $_ eq "library\\R.css") {
+	    $component = "html";
+	} elsif ($_ eq "doc\\manual\\refman.pdf") {
+	    $component = "refman";
+	} elsif (m/^doc\\manual/ && $_ ne "doc\\manual\\R-FAQ.pdf") {
+	    $component = "manuals";
+	} elsif (m/^library\\[^\\]*\\latex/
+	      || m/^share\\texmf/) {
+	    $component = "latex";
+	} elsif (m/^Tcl/) {
+	    $component = "tcl";
+	} elsif (exists($develfiles{$_})
+	      || m/^doc\\KEYWORDS/
+	      || m/^src\\gnuwin32/
+	      || m/^src\\include/
+	      || m/^src\\library\\windlgs/
+	      || m/^share\\make/
+	      || m/^share\\perl/
+	      || m/^share\\R/
+	      || m/^lib\\/) {
+	    $component = "devel";
+	} else {
+	    $component = "main";
+	}
+	
+	$lines="Source: \"$path\\$fn\"; DestDir: \"{app}$dir\"; Flags: ignoreversion; Components: $component\n";
+
+	print insfile $lines;
+	if ($component =~ m/(main|chtml|manuals)/o) {
+	    print minifile $lines;
+	}
     }
 }

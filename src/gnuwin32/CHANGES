@@ -61,6 +61,10 @@ installation of Tcl/Tk (version 8.4.x unless you compile from sources)
 by setting the environment variables MY_TCLTK and TCL_LIBRARY and
 having tcl84.dll and tk84.dll in your path.
 
+The Makefiles that build the installers have been reorganized--see
+the Maintainers.notes file for details, and INSTALL for new build
+instructions.
+
 HTML help changes
 -----------------
 

@@ -23,3 +23,10 @@ Also, watch out for versions of the header files.  For example,
 Mingw-1.1 bundle.
 
 BDR 2002-04-15, 2003-02-10
+
+2) The Makefiles for building a distribution have been reorganized.  Now
+all of the decisions about what files go into the distributables are made
+in installer/Makefile; the decisions about which component of the setup
+program each file goes into are made in installer/JRins.pl.
+
+DJM 2003-02-25

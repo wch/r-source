@@ -7,18 +7,13 @@ You need the R installation built completely (see ../INSTALL: this
 includes making bitmap and Tcl/Tk support and the manuals).
 It's worthwhile testing it too!
 
-Go to the parent of this directory and make the distribution zip
-files and the recommended packages by
+Go to the parent of this directory and edit ISDIR and IS_VERSION 
+in ../MkRules and run
 
 make distribution
-make recommended
-
-Then edit ISDIR and IS_VERSION in ../MkRules and run
-
-make
 make clean
 
 You will have rw1???.exe and a set of files miniR* for the floppy-sized
-distribution.
+distribution, both in the ../cran directory.
 
 
