@@ -528,7 +528,9 @@ plot.lm <- function(x,...) {
   r <- residuals(x)
   yh<- fitted(x)
   hii <- lm.influence(x)$hat
-  if(prod(par("mfcol")) < 2) { op <- par(ask = TRUE); on.exit(par(op)) }
+  if(prod(par("mfcol")) < 2 && interactive()) {
+          op <- par(ask = TRUE); on.exit(par(op))
+  }
   plot(yh,r, xlab="Fitted values", ylab="Residuals",
        main = paste("Tukey-Anscombe plot of", deparse(x$call)))
   abline(h=0, lty=3, col = "gray")
