@@ -1,30 +1,26 @@
-ts.name.dots <- function(call, infer = TRUE)
-{
-    call <- call$...
-    if(is.null(call))
-        stop("No \"...\" argument in function definition")
-    if(length(call) <= 1)
-        character(0)
-    else {
-        nd <- names(call)
-        if(infer) {
-            na <- as.character(call)
-            if(is.null(nd)) nd <- rep("", length(na))
-            nd[nd == ""] <- na[nd == ""]
-        }
-        nd
-    }
-}
-
 cbind.ts <- function(..., dframe = FALSE, union=TRUE)
 {
+    names.dots <- function(...)
+    {
+        l <- as.list(substitute(list(...)))[-1]
+        nm <- names(l)
+        fixup <- if (is.null(nm)) seq(along = l) else nm == ""
+        dep <- sapply(l[fixup], function(x) deparse(x)[1])
+        if (is.null(nm)) dep
+        else {
+            nm[fixup] <- dep
+            nm
+        }
+    }
     sers <- list(...)
     nser <- length(sers)
     if(nser == 0) return(NULL)
-    if(nser == 1) return(sers[1])
+    if(nser == 1)
+        if(dframe) return(as.data.frame(sers[1])) else return(sers[1])
+    nmsers <- names.dots(...)
+    sers <- lapply(sers, as.ts)
     nsers <- sapply(sers, NCOL)
-    nmsers <- ts.name.dots(match.call(expand.dots = FALSE))
-    tsps <- sapply(list(...), tsp)
+    tsps <- sapply(sers, tsp)
     freq <- round(mean(tsps[3,]))
     if(max(abs(tsps[3,] - freq)) > .Options$ts.eps) {
         stop("Not all series have the same frequency")
@@ -79,11 +75,4 @@ cbind.ts <- function(..., dframe = FALSE, union=TRUE)
 }
 
 ts.union <- .Alias(cbind.ts)
-ts.intersect <- function(...)
-{
-    m <- match.call()
-    m[[1]] <- as.name("cbind.ts")
-    m$union <- FALSE
-    return(eval(m, sys.frame(sys.parent())))
-}
-
+ts.intersect <- function(...) cbind.ts(..., union=FALSE)
