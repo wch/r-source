@@ -11,8 +11,8 @@ subdir = doc
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-INSTFILES = KEYWORDS KEYWORDS.db
-DISTFILES = CRAN_mirrors.csv Makefile.in $(INSTFILES) R.aux
+INSTFILES =  CRAN_mirrors.csv KEYWORDS KEYWORDS.db
+DISTFILES = Makefile.in $(INSTFILES) R.aux
 NON_SVN_INSTFILES = R.1
 SUBDIRS = html manual
 
