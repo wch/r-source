@@ -246,6 +246,9 @@ BUG FIXES
 
     o   plot.POSIX[cl]t now respect the `xaxt' parameter.
 
+    o   It is now possible to predict from an intercept-only model:
+	previously model.matrix() objected to a 0-column model frame.
+
 
 
 	**************************************************

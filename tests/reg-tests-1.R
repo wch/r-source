@@ -165,6 +165,7 @@ if (capabilities("libz")) {
     unlink("t1.gz")
     stopifnot(sz < 2000)
 }
+
 ## PR 1010: plot.mts (type="p") was broken in 1.3.0 and this call failed.
 plot(ts(matrix(runif(10), ncol = 2)), type = "p")
 
@@ -229,6 +230,7 @@ x <- "abcdef"
 substr(x, 2, 3) <- "w"
 ## last was "aw" in 1.3.1
 
+
 ## reading bytes from a connection,  Friedrich Leisch 2001-09-07
 cat("Hello World", file="world.txt")
 con <- file("world.txt", "r")
@@ -237,6 +239,15 @@ close(con)
 unlink("world.txt")
 stopifnot(zz == "Hello World")
 ## was "" in 1.3.1.
+
+
+## prediction was failing for intercept-only model as model frame
+## has no columns.
+d <- data.frame(x=runif(50), y=rnorm(50))
+d.lm <- lm(y ~ 1, data=d)
+predict(d.lm, data.frame(x=0.5))
+## error in 1.3.1
+
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {

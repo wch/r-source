@@ -287,24 +287,29 @@ model.matrix.default <- function(object, data = environment(object),
 	data <- data[,reorder, drop=FALSE]
     }
     int <- attr(t, "response")
-    contr.funs <- as.character(getOption("contrasts"))
-    isF <- sapply(data, function(x) is.factor(x) || is.logical(x) )
-    isF[int] <- FALSE
-    isOF <- sapply(data, is.ordered)
-    namD <- names(data)
-    for(nn in namD[isF]) # drop response
-	if(is.null(attr(data[[nn]], "contrasts")))
-	    contrasts(data[[nn]]) <- contr.funs[1 + isOF[nn]]
-    ## it might be safer to have numerical contrasts:
-    ##	  get(contr.funs[1 + isOF[nn]])(nlevels(data[[nn]]))
-    if (!is.null(contrasts.arg) && is.list(contrasts.arg)) {
-	if (is.null(namC <- names(contrasts.arg)))
-	    stop("invalid contrasts argument")
-	for (nn in namC) {
-	    if (is.na(ni <- match(nn, namD)))
-		warning(paste("Variable", nn, "absent, contrast ignored"))
-	    else contrasts(data[[ni]]) <- contrasts.arg[[nn]]
-	}
+    if(length(data)) { # no rhs terms, so skip all this
+        contr.funs <- as.character(getOption("contrasts"))
+        isF <- sapply(data, function(x) is.factor(x) || is.logical(x) )
+        isF[int] <- FALSE
+        isOF <- sapply(data, is.ordered)
+        namD <- names(data)
+        for(nn in namD[isF])            # drop response
+            if(is.null(attr(data[[nn]], "contrasts")))
+                contrasts(data[[nn]]) <- contr.funs[1 + isOF[nn]]
+        ## it might be safer to have numerical contrasts:
+        ##	  get(contr.funs[1 + isOF[nn]])(nlevels(data[[nn]]))
+        if (!is.null(contrasts.arg) && is.list(contrasts.arg)) {
+            if (is.null(namC <- names(contrasts.arg)))
+                stop("invalid contrasts argument")
+            for (nn in namC) {
+                if (is.na(ni <- match(nn, namD)))
+                    warning(paste("Variable", nn, "absent, contrast ignored"))
+                else contrasts(data[[ni]]) <- contrasts.arg[[nn]]
+            }
+        }
+    } else { # internal model.matrix needs some variable
+        isF <-  F
+        data <- list(x=rep(0, nrow(data)))
     }
     ans <- .Internal(model.matrix(t, data))
     cons <- if(any(isF))
