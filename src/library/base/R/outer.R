@@ -19,4 +19,5 @@ outer <- function (X, Y, FUN = "*", ...)
     robj
 }
 
-"%o%" <- outer
+## Binary operator, hence don't simply do "%o%" <- outer.
+"%o%" <- function(X, Y) outer(X, Y)

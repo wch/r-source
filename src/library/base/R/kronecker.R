@@ -46,4 +46,5 @@ function (X, Y, FUN = "*", make.dimnames = FALSE, ...)
     opobj
 }
 
-"%x%" <- kronecker
+## Binary operator, hence don't simply do "%x%" <- kronecker.
+"%x%" <- function(X, Y) kronecker(X, Y)
