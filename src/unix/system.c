@@ -55,7 +55,7 @@ void R_StartConsole(Rboolean OpenConsole) { ptr_R_StartConsole(); }
 #endif
 
 Rboolean UsingReadline = TRUE;  /* used in sys-std.c & ../main/platform.c */
-SA_TYPE SaveAction = SA_SAVEASK;
+extern SA_TYPE SaveAction;
 
 /* call pointers to allow interface switching */
 
