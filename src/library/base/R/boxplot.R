@@ -109,7 +109,8 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	        notch.frac = 0.5, boxwex = 0.8,
 		border=par("fg"), col=NULL, log="", pars=NULL,
                 frame.plot = axes,
-                horizontal = FALSE, add = FALSE, at = NULL, ...)
+                horizontal = FALSE, add = FALSE, at = NULL, show.names=NULL,
+                ...)
 {
     pars <- c(pars, list(...))
 
@@ -231,7 +232,8 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     if(!axes) { axes <- pars$axes; pars$axes <- NULL }
     if(axes) {
         ax.pars <- pars[names(pars) %in% c("xaxt", "yaxt", "las")]
-        if (n > 1)
+        if (is.null(show.names)) show.names<-(n>1)
+        if (show.names)
             do.call("axis", c(list(side = 1 + horizontal,
                                    at = at, labels = z$names), ax.pars))
         do.call("axis", c(list(side = 2 - horizontal), ax.pars))

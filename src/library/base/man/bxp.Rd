@@ -4,7 +4,7 @@
 bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
     boxwex = 0.8, border = par("fg"), col = NULL, log = "",
     pars = NULL, frame.plot = axes, horizontal = FALSE, add = FALSE,
-    at = NULL, \dots)
+    at = NULL, show.names=NULL,\dots)
 }
 \alias{bxp}
 \arguments{
@@ -40,6 +40,7 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
 \item{at}{numeric vector giving the locations where the boxplots should
   be drawn, particularly when \code{add = TRUE};
   defaults to \code{1:n} where \code{n} is the number of boxes.}
+\item{show.names}{Set to \code{TRUE} or \code{FALSE} to override the defaults on whether an x-axis label is printed for each group}
 \item{pars,\dots}{Graphical parameters can be passed as arguments to
   this function, either as a list (\code{pars}) or normally(\code{\dots}).}
 }
@@ -60,6 +61,14 @@ bxp(bx.p, notch = TRUE, axes = FALSE)
 bxp(bx.p, notch = TRUE, col= 'lightblue', frame = FALSE)
 bxp(bx.p, notch = TRUE, col= 'lightblue', border='red',
     log = "x", ylim = c(-1,4), main = "bxp(*, log='x', ylim=*)")
+par(op)
+op <- par(mfrow= c(1,2))
+data(PlantGrowth)
+## single group -- no label
+boxplot(weight~group,data=PlantGrowth,subset=group=="ctrl")
+bx<-boxplot(weight~group,data=PlantGrowth,subset=group=="ctrl",plot=FALSE)
+## with label
+bxp(bx,show.names=TRUE)
 par(op)
 }
 \keyword{aplot}

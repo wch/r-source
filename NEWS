@@ -14,7 +14,8 @@ NEW FEATURES
     o	Function identical(), a fast and reliable way to test for exact
 	equality of two objects.
 
-
+    o   bxp() has a show.names argument allowing labels on a single
+	boxplot
 
 BUG FIXES
 
