@@ -121,11 +121,14 @@ NEW FEATURES
 
     o	readChar() can now read strings with embedded nuls.
 
-    o	There is a new atomic vector type, class "raw".  See ?raw for
+    o	There is a new atomic vector type, class "raw".	 See ?raw for
 	full details including the operators and utility functions provided.
 
-    o	The png() and jpeg(0 devices (and the bmp() device under
+    o	The png() and jpeg() devices (and the bmp() device under
 	Windows) now allow a nominal resolution to be recorded in the file.
+
+    o	ls.str() and lsf.str() now return an object of class "ls_str" which
+	has a print method.
 
 
 UTILITIES
