@@ -188,11 +188,14 @@ sub get_blocks {
 	    ($id, $blocks{$block}) = get_arguments($block, $text, 1);
 	    print STDERR "found: $block\n" if $debug;
 	    if((($block =~ /usage/) || ($block =~ /examples/))){
-		$blocks{$block} =~ s/^[ \t]+$//; #- multiple empty lines to one
+		## multiple empty lines to one
+		$blocks{$block} =~ s/^[ \t]+$//; 
 		$blocks{$block} =~ s/\n\n\n/\n\n/gom;
 	    } else {
-		$blocks{$block} =~ s/^\s*(\S)/$1/;
-		$blocks{$block} =~ s/\n[ \t]*(\S)/\n$1/g;
+		## remove leading and trailing whitespace 
+		$blocks{$block} =~ s/^\s+//so;
+		$blocks{$block} =~ s/\s+$//so;
+		$blocks{$block} =~ s/\n[ \t]+/\n/go;
 	    }
 
 	    # no formatting commands allowed in the title string
@@ -249,8 +252,11 @@ sub get_sections {
 	my ($endid, $section, $body)
 	    = get_arguments("section", $text, 2);
 	print STDERR "found: $section\n" if $debug;
-	$body =~ s/^\s*(\S)/$1/;
-	$body =~ s/\n[ \t]*(\S)/\n$1/g;
+
+	## remove leading and trailing whitespace 
+	$blocks{$block} =~ s/^\s+//so;
+	$blocks{$block} =~ s/\s+$//so;
+	$blocks{$block} =~ s/\n[ \t]+/\n/go;
 	$section_body[$max_section] = $body;
 	$section_title[$max_section++] = $section;
 	$text =~ s/\\section//s;
