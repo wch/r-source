@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-25
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-26
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1852,6 +1852,8 @@ An interface between R and the MySQL database system.
 @item RNetCDF
 An interface to Unidata's NetCDF library functions (version 3) and
 furthermore access to Unidata's udunits calendar conversions.
+@item ROCR
+Visualizing the performance of scoring classifiers.
 @item RODBC
 An @acronym{ODBC} database interface.
 @item ROracle
@@ -2452,6 +2454,9 @@ classifier will consist of a classification tree with one such
 @math{k}-nn classifier in each leaf.
 @item knncat
 Nearest-neighbor classification with categorical variables.
+@item ks
+Kernel smoothing: bandwidth matrices for kernel density estimators and
+kernel discriminant analysis for bivariate data.
 @item kza
 Kolmogorov-Zurbenko Adpative filter for locating change points in a time
 series.

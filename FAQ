@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-02-25
+Version 2.0.2005-02-26
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1515,6 +1515,9 @@ distributions of R.)
      An interface to Unidata's NetCDF library functions (version 3) and
      furthermore access to Unidata's udunits calendar conversions.
 
+*ROCR*
+     Visualizing the performance of scoring classifiers.
+
 *RODBC*
      An ODBC database interface.
 
@@ -2293,6 +2296,10 @@ distributions of R.)
 
 *knncat*
      Nearest-neighbor classification with categorical variables.
+
+*ks*
+     Kernel smoothing: bandwidth matrices for kernel density estimators and
+     kernel discriminant analysis for bivariate data.
 
 *kza*
      Kolmogorov-Zurbenko Adpative filter for locating change points in a
