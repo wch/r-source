@@ -1,13 +1,16 @@
 \name{aov}
-\title{Fit an Analysis of Variance Model}
-\usage{
-aov(formula, data = NULL, projections = FALSE, qr = TRUE,
-    contrasts = NULL, \dots)
-}
 \alias{aov}
 \alias{print.aov}
 \alias{print.aovlist}
 \alias{Error}
+\title{Fit an Analysis of Variance Model}
+\description{
+  Fit an analysis of variance model by a call to \code{lm} for each stratum.
+}
+\usage{
+aov(formula, data = NULL, projections = FALSE, qr = TRUE,
+    contrasts = NULL, \dots)
+}
 \arguments{
   \item{formula}{A formula specifying the model.}
   \item{data}{A data frame in which the variables specified in the
@@ -22,17 +25,14 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
   \item{\dots}{Arguments to be passed to \code{lm}, such as \code{subset}
     or \code{na.action}.}
 }
-\description{
-  Fit an analysis of variance model by a call to \code{lm} for each stratum.
-}
 \details{
   This provides a wrapper to \code{lm} for fitting linear models to
   balanced or unbalanced experimental designs.
 
   The main difference from \code{lm} is in the way \code{print},
   \code{summary} and so on handle the fit: this is expressed in the
-  traditional language of the analysis of variance rather than of linear
-  models.
+  traditional language of the analysis of variance rather than that of
+  linear models.
 
   If the formula contains a single \code{Error} term, this is used to
   specify error strata, and appropriate models are fitted within each
