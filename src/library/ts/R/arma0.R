@@ -50,7 +50,8 @@ arima0 <- function(x, order=c(0,0,0),
         warning(paste("possible convergence problem: optim gave code=",
                       res$convergence))
     coef <- res$par
-    if(transform.pars) coef <- .C("dotrans", coef, new=coef, PACKAGE="ts")$new
+    if(transform.pars)
+        coef <- .C("dotrans", coef, new=coef, as.integer(1), PACKAGE="ts")$new
     .C("free_starma", PACKAGE="ts")
     if(transform.pars == 2) {
         .C("setup_starma",

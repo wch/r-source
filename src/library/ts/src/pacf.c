@@ -354,19 +354,19 @@ void dotrans(double *raw, double *new, int trans)
     int i, v;
 
     if(trans) {
-    v = 0;
-    for(i = 0; i < mp; i++)
-	partrans(mp, raw+v, new+v);
-    v += mp;
-    for(i = 0; i < mq; i++)
-	partrans(mq, raw+v, new+v);
-    v += mq;
-    for(i = 0; i < msp; i++)
-	partrans(msp, raw+v, new+v);
-    v += msp;
-    for(i = 0; i < msq; i++)
-	partrans(msq, raw+v, new+v);
-    for(i = mp+mq+msp+msq; i < mp+mq+msp+msq + m; i++) new[i] = raw[i];
+	v = 0;
+	for(i = 0; i < mp; i++)
+	    partrans(mp, raw+v, new+v);
+	v += mp;
+	for(i = 0; i < mq; i++)
+	    partrans(mq, raw+v, new+v);
+	v += mq;
+	for(i = 0; i < msp; i++)
+	    partrans(msp, raw+v, new+v);
+	v += msp;
+	for(i = 0; i < msq; i++)
+	    partrans(msq, raw+v, new+v);
+	for(i = mp+mq+msp+msq; i < mp+mq+msp+msq + m; i++) new[i] = raw[i];
     } else
 	for(i = 0; i < mp+mq+msp+msq+m; i++) new[i] = raw[i];
 }
