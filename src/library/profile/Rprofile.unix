@@ -9,6 +9,7 @@ options(latexcmd = as.vector(getenv("R_LATEXCMD")))
 options(dvipscmd = as.vector(getenv("R_DVIPSCMD")))
 options(device = if(interactive() && getenv("DISPLAY") != "")
         "X11" else "postscript")
+options(X11colortype = "true")
 options(pager = "${RHOME}/bin/pager")
 options(browser = "netscape")
 
