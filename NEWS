@@ -76,6 +76,9 @@ NEW FEATURES
 
     o	as.POSIX[cl]t can now convert logical NAs.
 
+    o	as.data.frame() now coerces logical matrices into logical
+	columns (rather than factors).
+
 
 DEPRECATED & DEFUNCT
 
@@ -141,8 +144,6 @@ BUG FIXES
 
     o	hist.POSIXct(*, breaks) now works for `breaks = #{breaks}'
 
-    o	as.data.frame() does not coerce logical matrices into factors 
-	anymore.
 
 
 		CHANGES IN R VERSION 1.5.1
