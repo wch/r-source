@@ -54,8 +54,9 @@ BUG FIXES
     o	as.matrix(data.frame(d= as.POSIXct("2004-07-20"))) doesn't give a
         wrong warning anymore.
 
-    o	gsub(perl=TRUE) code needed the R length of return strings set
-	explicitly.  (Fixed also PR#7108)
+    o	gsub(perl=TRUE) code got the R length of return strings wrong
+	in some circumstances (when the string was shortened).  
+	(Fixed also PR#7108)
 
 
 
