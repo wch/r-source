@@ -268,7 +268,7 @@ static void getFullDLLPath(SEXP call, char *buf, char *path)
     if(path[0] == '~')
 	strcpy(buf, R_ExpandFileName(path));
     else if(path[0] != '/') {
-#ifdef HAVE_UNISTD_H
+#ifdef HAVE_GETCWD
 	if(!getcwd(buf, PATH_MAX))
 #endif
 	    errorcall(call, "can't get working directory!");
