@@ -65,7 +65,7 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
     downloaded and installed.}
   \item{installWithVers}{If \code{TRUE}, will invoke the install of the
     package such that it can be referenced by package version.}
-  \item{CheckBuilt}{If \code{TRUE}, a package built under an earlier
+  \item{checkBuilt}{If \code{TRUE}, a package built under an earlier
     minor version of \R is considered to be \sQuote{old}.}
   \item{instlib}{character string giving the library directory where to
     install the packages.}
