@@ -22,7 +22,7 @@ stop.list[["base"]] <-
                              "packages",sep="."))
 	socket.fun <- apropos("socket")
 	## "Interactive" ones:
-	dev.int <- c("X11", "windows", "macintosh")
+	dev.int <- c("X11", "x11", "windows", "macintosh")
 	## print.plot() will print a blank page on the printer and is
 	## deprecated anyway --pd
 	misc.2 <- c("help.start", "print.plot",
