@@ -118,6 +118,10 @@ Date: Tue, 3 Sep 2002 13:13:17 +0200 (MET DST)
 Subject: SJava 0.65, Sample Java files are missing
 From: grimm.heinz@rcc.ch
 Date: Tue, 3 Sep 2002 13:24:30 +0200 (MET DST)
+* PR# 2173 *
+Subject: xlim in plot.survfit() [with a discussion on "..."]
+From: jerome@hivnet.ubc.ca
+Date: Wed, 16 Oct 2002 18:46:11 +0200 (MET DST)
 
 Directory:  Analyses
 
@@ -142,6 +146,14 @@ Date: Mon, 22 Oct 2001 11:55:14 -0400 (EDT)
 Subject: bug(?) in R FAQ - Should I run R from within Emacs?
 From: Tim.Harrold@csiro.au
 Date: Thu, 11 Jul 2002 18:21:42 +1000
+* PR# 2170 *
+Subject: documentation: Missing paranthesis in reshape.Rd
+From: lina@u.washington.edu
+Date: Wed, 16 Oct 2002 08:36:07 +0200 (MET DST)
+* PR# 2175 *
+Subject:  Documentation for .Renviron 
+From: j.c.rougier@durham.ac.uk
+Date: Wed, 16 Oct 2002 18:19:48 +0100
 
 Directory:  Graphics
 
@@ -628,80 +640,14 @@ Date: Mon, 7 Oct 2002 15:46:21 +1300
 Subject:  Core dump with "parse" 
 From: j.c.rougier@durham.ac.uk
 Date: Mon, 7 Oct 2002 18:52:30 +0100
-* PR# 2134 *
-Subject: Questionnaire
-From: collectibles <collectibles@ukonline.co.uk>
-Date: Thu, 10 Oct 2002 06:19:29 +0100
-* PR# 2135 *
-Subject: Endspan 
-From: legal <legal@car-finance.net>
-Date: Thu, 10 Oct 2002 06:25:01 +0100
-* PR# 2143 *
-Subject: Honey
-From: servicet <servicet@smartnet.com.tw>
-Date: Thu, 10 Oct 2002 23:52:57 +0800 (CST)
 * PR# 2144 *
 Subject: Save() with ascii=TRUE may corrupt numeric values
 From: "Efthymiou, Nick" <Nick.Efthymiou@schwab.com>
 Date: Thu, 10 Oct 2002 14:09:21 -0700
-* PR# 2145 *
-Subject: A Rescue Disk set requires that you restart
-From: jane4toad <jane4toad@aol.com>
-Date: Fri, 11 Oct 2002 16:21:37 +0100
-* PR# 2146 *
-Subject: Technical Support Site at 
-From: gord <gord@thebarras.co.uk>
-Date: Fri, 11 Oct 2002 16:16:34 +0100
-* PR# 2147 *
-Subject: Please wait ...
-From: fharrell <fharrell@virginia.edu>
-Date: Fri, 11 Oct 2002 16:12:07 +0100
 * PR# 2148 *
 Subject:  Odd outcome of attr with environments 
 From: j.c.rougier@durham.ac.uk
 Date: Fri, 11 Oct 2002 19:37:37 +0100
-* PR# 2149 *
-Subject: Hello,sos!
-From: nabilisa <nabilisa@harper.uchicago.edu>
-Date: Sat, 12 Oct 2002 07:34:52 -0500 (CDT)
-* PR# 2150 *
-Subject: Technical Support Site at 
-From: Ealf0100 <Ealf0100@leodrc.k>
-Date: Sat, 12 Oct 2002 15:24:57 +0100
-* PR# 2151 *
-Subject: Technical Support Site at 
-From: cgrigsby <cgrigsby@adams.net>
-Date: Sat, 12 Oct 2002 15:30:51 +0100
-* PR# 2152 *
-Subject: (¼ºÀÎ±¤°í)³ª¸¸ÀÇ Áñ°Å¿î °ø°£À»...(Æò»ý29,000¿ø)
-From: µµ¿ì¹Ì <ujm852kr@yahoo.co.kr>
-Date: Sun, 13 Oct 2002 09:17:28 +0900
-* PR# 2153 *
-Subject: Undeliverable mail--"vector with the numbers of fields found."
-Subject: vector with the numbers of fields found.<br>
-From: postmaster <postmaster@r-project.org>
-From: r-bugs@r-project.org<br>
-Date: Sun, 13 Oct 2002 06:05:12 -0500
-* PR# 2154 *
-Subject: <±¤°í>ÁË¼ÛÇÕ´Ï´Ù.°ËÅä ¹Ù¶ø´Ï´Ù.   
-From: ÃßÆò»ç<chupyu@hanmail.net>
-Date: Sun, 13 Oct 2002 20:11:13 -0600
-* PR# 2155 *
-Subject: ±M·~·s®Q¾ãÅé³y«¬¦ñÀHªA°È¡I¡I
-From: 1bvccbngn30by@snb.ch
-Date: 13 Oct 2002 18:35:55 +0800
-* PR# 2156 *
-Subject: IMMEDIATE ASSISTANCE
-From: MALIKE BELLO <mrs_mariamsese2002@spinfinder.com>
-Date: Sun, 13 Oct 2002 16:00:34 +0100
-* PR# 2157 *
-Subject: Cellpadding
-From: stusy_pilky <stusy_pilky@hotmail.com>
-Date: Sun, 13 Oct 2002 16:54:01 +0100
-* PR# 2158 *
-Subject: Alt border
-From: kim <kim@sex-explorer.com>
-Date: Sun, 13 Oct 2002 16:57:37 +0100
 * PR# 2159 *
 Subject: The class attribute on an environment seems buggy
 From: hb@maths.lth.se
@@ -710,25 +656,11 @@ Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
 Subject: possible memory leak in 1.6
 From: socher@stat.uni-muenchen.de
 Date: Mon, 14 Oct 2002 16:01:19 +0200 (MET DST)
-* PR# 2161 *
-Subject: ±M·~¥N¼Ðªk©ç«Î
-From: zq2v_o11azy@novartis.com
-Date: 15 Oct 2002 02:11:35 +0800
-* PR# 2162 *
-Subject: Work and earn from home!                                           3748rqx-7
-From: blanka_p@prontomail.com
-Date: Tue, 15 Oct 2002 13:26:33 -0700
-* PR# 2163 *
-Subject: Undeliverable mail--"let's be friends"
-Subject: let's be friends<br>
-From: postmaster <postmaster@r-project.org>
-From: r-bugs@r-project.org<br>
-Date: Tue, 15 Oct 2002 12:50:45 +0100
-* PR# 2164 *
-Subject: Win.Non.31995.B           File infector 
-From: dmc <dmc@dbpoweramp.com>
-Date: Tue, 15 Oct 2002 12:51:34 +0100
 * PR# 2165 *
 Subject: Core dump with a 64-bit system
 From: kai.makisara@metla.fi
 Date: Tue, 15 Oct 2002 14:45:20 +0200 (MET DST)
+* PR# 2177 *
+Subject: Hello, thanks for reading this email!
+From: adria6113121@yahoo.com
+Date: Wed, 16 Oct 2002 18:00:22 +0300
