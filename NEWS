@@ -103,6 +103,7 @@ NEW FEATURES
 
     o   Previously deprecated functions read.table.url(), scan.url(),
 	source.url(), httpclient() and parse.dcf() are defunct.
+	Method "socket" for download.file no longer exists.
 
     o	Transparency is now supported on most graphics devices.
 	Internally colors include an alpha channel for opacity, but at
@@ -153,6 +154,10 @@ NEW FEATURES
         differentiating documentation on the same name but different
         type (class?matrix, for example).  So far, no such
         documentation exists.
+
+    o   All methods for download.file() do tilde-expansion on the path
+	name.
+
 
 
 BUG FIXES

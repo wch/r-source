@@ -5,22 +5,27 @@
   This function can be used to download a file from the Internet.
 }
 \usage{
-download.file(url, destfile, method, quiet = FALSE, mode="w", cacheOK = TRUE)
+download.file(url, destfile, method, quiet = FALSE, mode="w",
+              cacheOK = TRUE)
 }
 \arguments{
-  \item{url}{A character string with the URL of a resource to be downloaded.}
+  \item{url}{A character string naming the URL of a resource to be
+    downloaded.}
+
   \item{destfile}{A character string with the name where the downloaded
-    file is saved.  For the \code{"internal"} method tilde-expansion is
-    performed.}
+    file is saved.  Tilde-expansion is performed.}
+
   \item{method}{Method to be used for downloading files.  Currently
-    download methods \code{"internal"}, \code{"wget"}, \code{"lynx"}
-    and \code{"socket"} are available.  The default is to choose the
-    first of these which is available, on almost all systems
-    \code{"internal"}.}
+    download methods \code{"internal"}, \code{"wget"} and \code{"lynx"}
+    are available.  The default is to choose the first of these which
+    is available, on almost all systems \code{"internal"}.}
+
   \item{quiet}{If \code{TRUE}, suppress status messages (if any).}
+
   \item{mode}{character.  The mode with which to write the file. Useful
     values are \code{"w"}, \code{"wb"} (binary), \code{"a"} (append) and
     \code{"ab"}.  Only used for the \code{"internal"} method.}
+
   \item{cacheOK}{logical. Is a server-side cached value acceptable?
     Implemented for the \code{"internal"} and \code{"wget"} methods.}
 }
@@ -63,27 +68,22 @@ download.file(url, destfile, method, quiet = FALSE, mode="w", cacheOK = TRUE)
   and password on the proxy can be specified by \code{"ftp_proxy_user"}
   and \code{"ftp_proxy_password"}.
 #ifdef windows
-  
-  Alternatively, if \code{modules\\internet2.dll} is used to replace
-  \code{modules\\internet.dll}, 
+
+  There is an alternative method if you have Internet Explorer 4 or
+  later installed.   You can use \code{modules\\internet2.dll} to
+  replace \code{modules\\internet.dll}, when
   the `Internet Options' of the system are used to choose proxies and so
   on; these are set in the Control Panel and are those used for Internet
-  Explorer.
+  Explorer.  This version does not support \code{cacheOK = FALSE}.
 #endif
 }
 \note{
-  Methods \code{"wget"}, \code{"lynx"} and \code{"socket"} are for
-  historical compatibility.  They will block any other activity on the
-  \R process.
+  Methods \code{"wget"} and \code{"lynx"} are for historical
+  compatibility. They will block all other activity on the \R process.
 
   For methods \code{"wget"} and \code{"lynx"} a system call is made to
   the tool given by \code{method}, and the respective program must be
   installed on your system and be in the search path for executables.
-
-  Method \code{"socket"} is deprecated.  To use it the file must be on
-  an \code{HTTP} server, in plain text, and your system must allow
-  socket connections to be opened directly to that server (and not
-  via a proxy or firewall).
 }
 \seealso{
   \code{\link{options}} to set the \code{timeout} and

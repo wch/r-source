@@ -3,7 +3,7 @@ download.file <- function(url, destfile, method,
 {
     method <- if(missing(method)) "auto" else
     match.arg(method,
-              c("auto", "internal", "wget", "lynx", "socket"))
+              c("auto", "internal", "wget", "lynx"))
 
     if(method == "auto") {
         if(capabilities("http/ftp"))
@@ -14,8 +14,6 @@ download.file <- function(url, destfile, method,
             method <- "wget"
         else if(shell("lynx -help", invisible=TRUE)==0)
             method <- "lynx"
-        else if (length(grep("^http:",url))==0)
-            method <- "socket"
         else
             stop("No download method found")
     }
@@ -24,13 +22,11 @@ download.file <- function(url, destfile, method,
     else if(method == "wget") {
         extra <- if(quiet) " --quiet" else ""
         if(!cacheOK) extra <- paste(extra, "--cache=off")
-        status <- system(paste("wget", extra, url, "-O", destfile))
+        status <- system(paste("wget", extra, url, "-O",
+                               path.expand(destfile)))
     } else if(method == "lynx")
-        status <- shell(paste("lynx -dump", url, ">", destfile))
-    else if (method == "socket") {
-        status <- 0
-        httpclient(url, check.MIME.type=TRUE, file=destfile)
-    }
+        status <- shell(paste("lynx -dump", url, ">",
+                              path.expand(destfile)))
 
     if(status > 0)
         warning("Download had nonzero exit status")

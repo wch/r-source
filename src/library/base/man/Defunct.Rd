@@ -89,7 +89,7 @@ parse.dcf(text = NULL, file = "", fields = NULL, versionfix = FALSE)
   \code{*.url} are replaced by calling \code{read.table}, \code{scan} or
   \code{source} on a \code{\link{url}} connection.
 
-  \code{httpclient} is used by the deprecated \code{"socket"} method
+  \code{httpclient} was used by the deprecated \code{"socket"} method
   of \code{\link{download.file}}.
 
   \code{parse.dcf} has been replaced by \code{read.dcf}, which is much
