@@ -1152,3 +1152,91 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
     INTEGER(ans)[0] = first;
     return ans;
 }
+
+/* readTableHead(file, nlines, comment.char, blank.lines.skip) */
+/* simplified version of readLines, with skip of blank lines and
+   comment-only lines */
+#define BUF_SIZE 1000
+SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP file, comstr, ans = R_NilValue, ans2;
+    int nlines, i, c, nread, nbuf, buf_size = BUF_SIZE;
+    char *p, *buf;
+    Rboolean empty, skip;
+    
+    checkArity(op, args);
+
+    file = CAR(args);		   args = CDR(args);
+    nlines = asInteger(CAR(args)); args = CDR(args);
+    comstr = CAR(args);
+    if (nlines <= 0 || nlines == NA_INTEGER)
+	errorcall(call, "invalid nlines value");
+    if (TYPEOF(comstr) != STRSXP || length(comstr) != 1)
+	errorcall(call, "invalid comment.char value");
+    p = CHAR(STRING_ELT(comstr, 0));
+    comchar = NO_COMCHAR; /*  here for -Wall */
+    if (strlen(p) > 1) errorcall(call, "invalid comment.char value");
+    else if (strlen(p) == 1) comchar = (int)*p;
+
+    i = asInteger(file);
+    con = getConnection(i);
+    ttyflag = 0;
+    wasopen = con->isopen; 
+    if(!wasopen) {
+	strcpy(con->mode, "r");
+	con->open(con);
+    } else { /* for a non-blocking connection, more input may
+		have become available, so re-position */
+	if(con->canseek && !con->blocking)
+	    con->seek(con, con->seek(con, -1, 1, 1), 1, 1);
+    }
+
+    buf = (char *) malloc(buf_size);
+    if(!buf)
+	error("cannot allocate buffer in readTableHead");
+
+    PROTECT(ans = allocVector(STRSXP, nlines));
+    for(nread = 0; nread < nlines; ) {
+	nbuf = 0; empty = TRUE, skip = FALSE;
+	while((c = Rconn_fgetc(con)) != R_EOF) {
+	    if(nbuf == buf_size) {
+		buf_size *= 2;
+		buf = (char *) realloc(buf, buf_size);
+		if(!buf)
+		    error("cannot allocate buffer in readTableHead");
+	    }
+	    if(empty && !skip)
+		if(c != ' ' && c != '\t' && c != comchar) empty = FALSE;
+	    if(!skip && c == comchar) skip = TRUE;
+	    if(c != '\n') buf[nbuf++] = c; else break;
+	}
+	buf[nbuf] = '\0';
+	if(!empty) {
+	    SET_STRING_ELT(ans, nread, mkChar(buf));
+	    nread++;   
+	}
+	if(c == R_EOF) goto no_more_lines;
+    }
+    UNPROTECT(1);
+    free(buf);
+    if(!wasopen) con->close(con);
+    return ans;
+
+no_more_lines:
+    if(!wasopen) con->close(con);
+    if(nbuf > 0) { /* incomplete last line */
+	if(con->text && con->blocking) {
+	    nread++;
+	    warning("incomplete final line found by readTableHeader on `%s'",
+		    con->description);
+	} else
+	    error("incomplete final line found by readTableHeader on `%s'",
+		  con->description);
+    }
+    free(buf);
+    PROTECT(ans2 = allocVector(STRSXP, nread));
+    for(i = 0; i < nread; i++)
+	SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
+    UNPROTECT(2);
+    return ans2;
+}
