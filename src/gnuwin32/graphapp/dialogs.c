@@ -23,7 +23,13 @@
    See the file COPYLIB.TXT for details.
 */
 
+/* Copyright (C) 2004 	The R Foundation
+
+   Additions for R, Chris Jackson
+   Find and replace dialog boxes and dialog handlers */
+
 #include "internal.h"
+#include "ga.h"
 
 #define BUFSIZE _MAX_PATH
 static char strbuf[BUFSIZE];
@@ -44,6 +50,8 @@ static char *userfilter;
 void setuserfilter(char *uf) {
    userfilter=uf;
 }
+
+static HWND hModelessDlg = NULL;
 
 /*
  *  Error reporting dialog.
@@ -597,3 +605,146 @@ char *askUserPass(char *title)
     }
     return ""; /* -Wall */
 }
+
+int modeless_active()
+{
+    if (hModelessDlg)
+	return 1;
+    return 0;
+}
+
+PROTECTED
+HWND get_modeless()
+{
+    return hModelessDlg;
+}
+
+void finddialog(textbox t){
+    static FINDREPLACE fr;
+    static char szFindWhat[80];
+
+    fr.lStructSize = sizeof(fr);
+    fr.hwndOwner = t->handle;
+    fr.lpstrFindWhat = szFindWhat;
+    fr.wFindWhatLen = 80;
+    fr.Flags = FR_DOWN;
+    fr.lCustData        = 0 ;
+    fr.lpfnHook         = NULL ;
+    fr.lpTemplateName   = NULL ;
+
+    hModelessDlg = FindText(&fr);
+}
+
+void replacedialog(textbox t){
+    static FINDREPLACE fr;
+    static char szFindWhat[80];
+    static char szReplaceWith[80];
+
+    fr.lStructSize = sizeof(fr);
+    fr.hwndOwner = t->handle;
+    fr.lpstrFindWhat = szFindWhat;
+    fr.lpstrReplaceWith = szReplaceWith;
+    fr.wFindWhatLen = 80;
+    fr.wReplaceWithLen = 80;
+    fr.Flags = FR_DOWN;
+    fr.lCustData        = 0 ;
+    fr.lpfnHook         = NULL ;
+    fr.lpTemplateName   = NULL ;
+
+    hModelessDlg = ReplaceText(&fr);
+}
+
+
+/* Find and select a string in a rich edit control */
+
+int richeditfind(HWND hwnd, char *what, int matchcase, int wholeword, int down)
+{
+    long start, end;
+    CHARRANGE sel;
+    WPARAM w = 0;
+    FINDTEXTEX ft;
+    sendmessage (hwnd, EM_EXGETSEL, 0, &sel) ;
+    start = sel.cpMin;
+    end = sel.cpMax;
+    ft.lpstrText = what;
+    ft.chrgText.cpMin = start;
+    ft.chrgText.cpMax = end;
+    if (down) {
+	w = w | FR_DOWN;
+	ft.chrg.cpMin = end;
+	ft.chrg.cpMax = -1;
+    }
+    else {
+	ft.chrg.cpMin = start;
+	ft.chrg.cpMax = 0;
+    }
+    if (matchcase) w = w | FR_MATCHCASE;
+    if (wholeword) w = w | FR_WHOLEWORD;
+    if (sendmessage(hwnd, EM_FINDTEXTEX, w, &ft) == -1)
+	return 0;
+    else {
+	sendmessage (hwnd, EM_EXSETSEL, 0, &(ft.chrgText));
+	sendmessage (hwnd, EM_SCROLLCARET, 0, 0) ;
+    }
+    return 1;
+}
+
+int richeditreplace(HWND hwnd, char *what, char *replacewith, int matchcase, int wholeword, int down)
+{
+    /* If current selection is the find string, replace it and find next */
+    long start, end;
+    CHARRANGE sel;
+    char *buf;
+    textbox t = find_by_handle(hwnd);
+    sendmessage (hwnd, EM_EXGETSEL, 0, &sel) ;
+    start = sel.cpMin;
+    end = sel.cpMax;
+    if (start < end) {
+	buf = (char *) malloc(end - start + 1);
+	sendmessage(hwnd, EM_GETSELTEXT, 0, buf);
+	if (!strcmp(buf, what)) {
+	    checklimittext(t, strlen(replacewith) - strlen(what) + 2);
+	    sendmessage (hwnd, EM_REPLACESEL, 1, replacewith);
+	}
+	free(buf);
+    }
+    /* else just find next */
+    if (richeditfind(hwnd, what, matchcase, wholeword, down))
+	return 1;
+    return 0;
+}
+
+PROTECTED
+void handle_findreplace(HWND hwnd, LPFINDREPLACE pfr)
+{
+    CHARRANGE sel;
+    int matchcase=0, wholeword=0, down=0;
+    char buf[100];
+    if (pfr->Flags & FR_MATCHCASE) matchcase = 1;
+    if (pfr->Flags & FR_WHOLEWORD) wholeword = 1;
+    if (pfr->Flags & FR_DOWN) down = 1;
+
+    if (pfr->Flags & FR_FINDNEXT) {
+	if (!richeditfind(hwnd, pfr->lpstrFindWhat, matchcase, wholeword, down)) {
+	    snprintf(buf, 100, "\"%s\" not found", pfr->lpstrFindWhat);
+	    askok(buf);
+	}
+    }
+    else if (pfr->Flags & FR_REPLACE) {
+	if (!richeditreplace(hwnd, pfr->lpstrFindWhat, pfr->lpstrReplaceWith, matchcase, wholeword, down)) {
+	    snprintf(buf, 100, "\"%s\" not found", pfr->lpstrFindWhat);
+	    askok(buf);
+	}
+    }
+    else if (pfr->Flags & FR_REPLACEALL) {
+	/* replace all in the whole buffer then return to original selection state */
+	sendmessage (hwnd, EM_EXGETSEL, 0, &sel) ;
+	sendmessage (hwnd, EM_SETSEL, 0, 0) ;
+	while ( richeditreplace(hwnd, pfr->lpstrFindWhat, pfr->lpstrReplaceWith, matchcase, wholeword, down) ) ;
+	sendmessage (hwnd, EM_EXSETSEL, 0, &sel) ;
+    }
+
+    else if (pfr->Flags & FR_DIALOGTERM)
+	hModelessDlg = NULL;
+}
+

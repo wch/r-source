@@ -145,6 +145,13 @@ edit.matrix <-
     out
 }
 
+file.edit <-
+  function (..., editor=getOption("editor"))
+{
+    file <- c(...)
+    .Internal(file.edit(file, editor))
+}
+
 vi <- function(name=NULL, file="")
     edit.default(name, file, editor="vi")
 

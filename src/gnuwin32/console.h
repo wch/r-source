@@ -22,6 +22,7 @@
 typedef window console;
 typedef window pager;
 typedef window dataeditor;
+typedef window editor;
 
 void
 setconsoleoptions(char *fnname,int fnsty, int fnpoints,
@@ -41,6 +42,7 @@ void consolepaste(console c);
 void consolepastecmds(console c);
 void consoleselectall(console c);
 void consolecmd(console c, char *cmd);
+void consolenewline(console c);
 void consolehelp();
 void consolesetbrk(console c, actionfn, char ch, char mod);
 void consoletogglelazy(console c);

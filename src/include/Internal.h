@@ -200,6 +200,7 @@ SEXP do_fileinfo(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileremove(SEXP, SEXP, SEXP, SEXP);
 SEXP do_filerename(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileshow(SEXP, SEXP, SEXP, SEXP);
+SEXP do_fileedit(SEXP, SEXP, SEXP, SEXP);
 SEXP do_filesymlink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_filledcontour(SEXP, SEXP, SEXP, SEXP);
 SEXP do_first_max(SEXP, SEXP, SEXP, SEXP);

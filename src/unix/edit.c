@@ -33,6 +33,7 @@
 #include <stdio.h>
 #ifdef Win32
 # include "run.h"
+int Rgui_Edit(char *filename);
 #endif
 
 #ifdef HAVE_AQUA
@@ -124,16 +125,21 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (strlen(cmd) == 0) errorcall(call, "argument `editor' is not set");
     editcmd = R_alloc(strlen(cmd) + strlen(filename) + 6, sizeof(char));
 #ifdef Win32
-/* Quote path if necessary */
-    if(cmd[0] != '"' && strchr(cmd, ' '))
-	sprintf(editcmd, "\"%s\" \"%s\"", cmd, filename);
-    else
-	sprintf(editcmd, "%s \"%s\"", cmd, filename);
-    rc = runcmd(editcmd, 1, 1, "");
-    if (rc == NOLAUNCH)
-	errorcall(call, "unable to run editor %s", cmd);
-    if (rc != 0)
-	warningcall(call, "editor ran but returned error status");
+    if (!strcmp(cmd,"internal")) {
+	Rgui_Edit(filename);
+    }
+    else {
+	/* Quote path if necessary */
+	if(cmd[0] != '"' && strchr(cmd, ' '))
+	    sprintf(editcmd, "\"%s\" \"%s\"", cmd, filename);
+	else
+	    sprintf(editcmd, "%s \"%s\"", cmd, filename);
+	rc = runcmd(editcmd, 1, 1, "");
+	if (rc == NOLAUNCH)
+	    errorcall(call, "unable to run editor %s", cmd);
+	if (rc != 0)
+	    warningcall(call, "editor ran but returned error status");
+    }
 #else
 # if defined(HAVE_AQUA)
     if (!strcmp(R_GUIType,"AQUA"))

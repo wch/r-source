@@ -357,6 +357,48 @@ int Rf_initEmbeddedR(int argc, char **argv)
 }
 
 
+    /*
+       This function can be used to open the named files in text
+       editors.  If the file does not exist then the editor should be
+       opened to create a new file.  On GUI platforms multiple files
+       can be opened in separate editor windows, but this currently
+       only works on Windows, not Aqua.
+    */
+
+    /*
+     *     nfile   = number of files
+     *     file    = array of filenames
+     *     editor  = editor to be used.
+     */
+
+int R_EditFiles(int nfile, char **file, char *editor)
+{
+    char  buf[1024];
+
+    if (nfile > 0) {
+	if (nfile > 1) 
+	    R_ShowMessage("WARNING: Only editing the first in the list of files");
+
+#if defined(HAVE_AQUA)
+	if (!strcmp(R_GUIType,"AQUA"))
+	    Raqua_Edit(file[0]);
+	else {
+#endif
+	    /* Quote path if necessary */
+	    if (editor[0] != '"' && strchr(editor, ' '))
+		snprintf(buf, 1024, "\"%s\" \"%s\"", editor, file[0]);
+	    else
+		snprintf(buf, 1024, "%s \"%s\"", editor, file[0]);
+	    R_system(buf);
+#if defined(HAVE_AQUA)
+	}
+#endif
+	return 0;
+    }
+    return 1;
+}
+
+
 
 	/* Declarations to keep f77 happy */
 

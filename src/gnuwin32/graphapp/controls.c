@@ -25,7 +25,9 @@
    See the file COPYLIB.TXT for details.
 */
 
-/*  Changes for R:
+/*  Copyright (C) 2004 	The R Foundation
+
+    Changes for R:
 
     sort out resize (confused screen and client coords)
     add printer and metafile handling
@@ -133,6 +135,12 @@ void setdrop(control obj, dropfn fn)
 		DragAcceptFiles(obj->handle, TRUE);
 		obj->call->drop = fn;
 	    }
+}
+
+void setonfocus(control obj, actionfn fn)
+{
+	if (obj)
+		obj->call->focus = fn;
 }
 
 

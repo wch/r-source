@@ -619,6 +619,12 @@ static int CleanTranscript(char *tscpt, char *cmds)
     return(len+2);
 }
 
+/* Send a single newline to the console */
+void consolenewline(control c)
+{
+    storekey(c, '\n');
+}
+
 /* the following four routines are system dependent */
 void consolepaste(control c)
 FBEGIN

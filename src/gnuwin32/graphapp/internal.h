@@ -78,6 +78,7 @@ extern "C" {
 
 
 #include <commdlg.h>
+#include <richedit.h>
 
 #ifdef __MWERKS__
 	/* Metrowerks Codewarrior Cross-Platform C/C++ Compiler */
@@ -250,6 +251,8 @@ struct callinfo
 	mousefn	mouserepeat;	/* mouse-down timer auto repeat */
 
 	dropfn drop;		/* drag-and-drop function */
+    
+	actionfn focus;
   };
 
 
@@ -309,13 +312,14 @@ struct callinfo
 /* Object management. */
 
   PROTECTED object  new_object(int kind, HANDLE handle, object parent);
+  PROTECTED object  tree_search(object top, HANDLE handle, int id, int key);
   PROTECTED object  find_object(HANDLE handle, int id, int key);
   PROTECTED void    move_to_front(object obj);
   PROTECTED void    apply_to_list(object first, actionfn fn);
 
   #define find_by_handle(h) find_object(h, 0, 0)
   #define find_by_id(id)    find_object(0, id, 0)
-  #define find_by_key(key)  find_object(0, 0, key)
+  #define find_by_key(base, key)  tree_search(base, 0, 0, key)
 
 /* Object refcounts and deletion. */
 
@@ -328,12 +332,17 @@ struct callinfo
 
   PROTECTED void  adjust_menu(WPARAM wParam);
   PROTECTED void  handle_menu_id(WPARAM wParam);
-  PROTECTED void  handle_menu_key(WPARAM wParam);
+  PROTECTED int  handle_menu_key(WPARAM wParam);
 
 /* Control event management. */
 
   PROTECTED void   handle_control(HWND hwnd, UINT message);
   PROTECTED object find_valid_sibling(object obj);
+
+/* Dialog event management */
+
+  PROTECTED void handle_findreplace(HWND hwnd, LPFINDREPLACE pfr);
+  PROTECTED HWND get_modeless();
 
 /* Drawing context management. */
 

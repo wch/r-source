@@ -233,6 +233,54 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
+/*  file.edit
+ *
+ *  Open a file in a text editor. The function calls
+ *  "R_EditFiles" which is a platform dependent hook that invokes
+ *  the given editor. 
+ *
+ */
+
+
+SEXP do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP fn, ed;
+    char **f, *vm, *editor;
+    int i, n;
+
+    checkArity(op, args);
+    vm = vmaxget();
+    fn = CAR(args); args = CDR(args);
+    ed = CAR(args); 
+
+    n = length(fn);
+    if (!isString(ed))
+	errorcall(call, "invalid editor specification");
+    if (n > 0) {
+	if (!isString(fn))
+	    errorcall(call, "invalid filename specification");
+	f = (char**)R_alloc(n, sizeof(char*));
+	for (i = 0; i < n; i++) {
+	    if (!isNull(STRING_ELT(fn, i)))
+		f[i] = CHAR(STRING_ELT(fn, i));
+	    else
+		f[i] = CHAR(R_BlankString);
+	}
+    }
+    else {  /* open a new file for editing */
+	n = 1;
+	f = (char**)R_alloc(1, sizeof(char*));
+	f[0] = CHAR(R_BlankString);
+    }
+    if (length(ed) >= 1 || !isNull(STRING_ELT(ed, 0)))
+	editor = CHAR(STRING_ELT(ed, 0));
+    else
+	editor = CHAR(R_BlankString);
+    R_EditFiles(n, f, editor);
+    vmaxset(vm);
+    return R_NilValue;
+}
+
 
 /*  append.file
  *

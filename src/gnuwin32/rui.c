@@ -69,6 +69,8 @@ static int lmanintro, lmanref, lmandata, lmanlang, lmanext;
 static menu m, mman;
 static char cmd[1024];
 
+#include "editor.h"
+
 /* menu callbacks */
 
 void fixslash(char *s)
@@ -85,6 +87,11 @@ void fixslash(char *s)
 void Rconsolecmd(char *cmd)
 {
     consolecmd(RConsole, cmd);
+}
+
+void closeconsole(control m)  /* can also be called from editor menus */
+{
+    R_CleanUp(SA_DEFAULT, 0, 1);
 }
 
 static void menusource(control m)
@@ -190,7 +197,7 @@ static void menusavefile(control m)
 
 static void menuexit(control m)
 {
-    R_CleanUp(SA_DEFAULT, 0, 1);
+    closeconsole(m);
 }
 
 static void menuselectall(control m)
@@ -260,7 +267,7 @@ static void buttonkill(control m)
     UserBreak = TRUE;
 }
 
-static void menuclear(control m)
+void menuclear(control m)
 {
     consoleclear(RConsole);
 }
@@ -285,7 +292,7 @@ static void menude(control m)
 /*    show(RConsole); */
 }
 
-static void menuconfig(control m)
+void menuconfig(control m)
 {
     Rgui_configure();
 /*    show(RConsole); */
@@ -803,11 +810,6 @@ void readconsolecfg()
 		      bufbytes, buflines);
 }
 
-static void closeconsole(control m)
-{
-    R_CleanUp(SA_DEFAULT, 0, 1);
-}
-
 static void dropconsole(control m, char *fn)
 {
     char *p;
@@ -833,17 +835,17 @@ static void dropconsole(control m, char *fn)
 }
 
 static MenuItem ConsolePopup[] = {	  /* Numbers used below */
-    {"Copy", menucopy, 0},			  /* 0 */
-    {"Paste", menupaste, 0},			  /* 1 */
-    {"Paste commands only", menupastecmds, 0},	  /* 2 */
-    {"Copy and paste", menucopypaste, 0},	  /* 3 */
+    {"Copy", menucopy, 'C', 0},			  /* 0 */
+    {"Paste", menupaste, 'V', 0},		  /* 1 */
+    {"Paste commands only", menupastecmds, 0, 0},  /* 2 */
+    {"Copy and paste", menucopypaste, 'X', 0},	  /* 3 */
+    {"-", 0, 0, 0},
+    {"Clear window", menuclear, 'L', 0},          /* 5 */
+    {"-", 0, 0, 0},
+    {"Select all", menuselectall, 0, 0},	  /* 7 */
     {"-", 0, 0},
-    {"Clear window", menuclear, 0},		  /* 5 */
-    {"-", 0, 0},
-    {"Select all", menuselectall, 0},		  /* 7 */
-    {"-", 0, 0},
-    {"Buffered output", menulazy, 0},		  /* 9 */
-    {"Stay on top", menuconsolestayontop, 0},	  /* 10 */
+    {"Buffered output", menulazy, 'W', 0},	  /* 9 */
+    {"Stay on top", menuconsolestayontop, 0, 0},  /* 10 */
     LASTMENUITEM
 };
 
@@ -878,6 +880,75 @@ static void popupact(control m)
     }
 }
 
+/* Package management menu is common to all R windows */
+
+int RguiPackageMenu()
+{
+    MCHECK(newmenu("Packages"));
+    MCHECK(mpkgl = newmenuitem("Load package...", 0, menupkgload));
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(mpkgi = newmenuitem("Install package(s) from CRAN...", 0,
+			       menupkginstallcran));
+    MCHECK(mpkgil = newmenuitem("Install package(s) from local zip files...",
+				0, menupkginstalllocal));
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(mpkgu = newmenuitem("Update packages from CRAN", 0,
+			       menupkgupdate));
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(mpkgb = newmenuitem("Install package(s) from Bioconductor...",
+			       0, menupkginstallbioc));
+    MCHECK(mpkgbu = newmenuitem("Update packages from Bioconductor",
+				0, menupkgupdatebioc));
+    return 0;
+}
+
+/* Help functions common to all R windows. 
+   These should be appended to each context-specific help menu */
+
+int RguiCommonHelp(menu m)
+{
+    addto(m);
+
+    MCHECK(mFAQ = newmenuitem("FAQ on R", 0, menuFAQ));
+    if (!check_doc_file("doc\\html\\faq.html")) disable(mFAQ);
+    MCHECK(mrwFAQ = newmenuitem("FAQ on R for &Windows", 0, menurwFAQ));
+    if (!check_doc_file("doc\\html\\rw-faq.html")) disable(mrwFAQ);
+
+    MCHECK(mman = newsubmenu(m, "Manuals"));
+    MCHECK(mmanintro = newmenuitem("An &Introduction to R", 0, menumainman));
+    lmanintro = check_doc_file("doc\\manual\\R-intro.pdf");
+    if (!lmanintro) disable(mmanintro);
+    MCHECK(mmanref = newmenuitem("R &Reference Manual", 0, menumainref));
+    lmanref = check_doc_file("doc\\manual\\refman.pdf");
+    if (!lmanref) disable(mmanref);
+    MCHECK(mmandata = newmenuitem("R Data Import/Export", 0, menumaindata));
+    lmandata = check_doc_file("doc\\manual\\R-data.pdf");
+    if (!lmandata) disable(mmandata);
+    MCHECK(mmanlang = newmenuitem("R Language Manual", 0, menumainlang));
+    lmanlang = check_doc_file("doc\\manual\\R-lang.pdf");
+    if (!lmanlang) disable(mmanlang);
+    MCHECK(mmanext = newmenuitem("Writing R Extensions", 0, menumainext));
+    lmanext = check_doc_file("doc\\manual\\R-exts.pdf");
+    if (!lmanext) disable(mmanext);
+    if (!lmanintro && !lmanref && !lmanlang && !lmanext) disable(mman);
+
+    addto(m);
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(mhelp = newmenuitem("R functions (text)...", 0, menuhelp));
+    MCHECK(mhelpstart = newmenuitem("Html help", 0, menuhelpstart));
+    if (!check_doc_file("doc\\html\\rwin.html")) disable(mhelpstart);
+    MCHECK(mhelpsearch = newmenuitem("Search help...", 0, menuhelpsearch));
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(mapropos = newmenuitem("Apropos...", 0, menuapropos));
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(newmenuitem("R Project home page", 0, menuRhome));
+    MCHECK(mCRAN = newmenuitem("CRAN", 0, menuCRAN));
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(newmenuitem("About", 0, menuabout));
+    return 0;
+}
+
+
 int setupui()
 {
     initapp(0, 0);
@@ -906,8 +977,8 @@ int setupui()
           MCHECK(tb = newtoolbar(btsize + 4));
           addto(tb);
 
-          MCHECK(bt = newtoolbutton(open_image, r, menusource));
-          MCHECK(addtooltip(bt, "Source R code"));
+          MCHECK(bt = newtoolbutton(open_image, r, menueditoropen));
+          MCHECK(addtooltip(bt, "Open script"));
           r.x += (btsize + 1) ;
 
           MCHECK(bt = newtoolbutton(open1_image, r, menuloadimage));
@@ -956,6 +1027,8 @@ int setupui()
     MCHECK(RMenuBar = newmenubar(menuact));
     MCHECK(newmenu("File"));
     MCHECK(msource = newmenuitem("Source R code...", 0, menusource));
+    MCHECK(newmenuitem("New script", 0, menueditornew));
+    MCHECK(newmenuitem("Open script...", 0, menueditoropen));
     MCHECK(mdisplay = newmenuitem("Display file(s)...", 0, menudisplay));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mload = newmenuitem("Load Workspace...", 0, menuloadimage));
@@ -994,63 +1067,14 @@ int setupui()
     MCHECK(mrm = newmenuitem("Remove all objects", 0, menurm));
     MCHECK(msearch = newmenuitem("List &search path", 0, menusearch));
 
-    MCHECK(newmenu("Packages"));
-    MCHECK(mpkgl = newmenuitem("Load package...", 0, menupkgload));
-    MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mpkgi = newmenuitem("Install package(s) from CRAN...", 0,
-			       menupkginstallcran));
-    MCHECK(mpkgil = newmenuitem("Install package(s) from local zip files...",
-				0, menupkginstalllocal));
-    MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mpkgu = newmenuitem("Update packages from CRAN", 0,
-			       menupkgupdate));
-    MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mpkgb = newmenuitem("Install package(s) from Bioconductor...",
-			       0, menupkginstallbioc));
-    MCHECK(mpkgbu = newmenuitem("Update packages from Bioconductor",
-				0, menupkgupdatebioc));
+    RguiPackageMenu();
 #ifdef USE_MDI
     newmdimenu();
 #endif
     MCHECK(m = newmenu("Help"));
     MCHECK(newmenuitem("Console", 0, menuconsolehelp));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mFAQ = newmenuitem("FAQ on R", 0, menuFAQ));
-    if (!check_doc_file("doc\\html\\faq.html")) disable(mFAQ);
-    MCHECK(mrwFAQ = newmenuitem("FAQ on R for &Windows", 0, menurwFAQ));
-    if (!check_doc_file("doc\\html\\rw-faq.html")) disable(mrwFAQ);
-
-    MCHECK(mman = newsubmenu(m, "Manuals"));
-    MCHECK(mmanintro = newmenuitem("An &Introduction to R", 0, menumainman));
-    lmanintro = check_doc_file("doc\\manual\\R-intro.pdf");
-    if (!lmanintro) disable(mmanintro);
-    MCHECK(mmanref = newmenuitem("R &Reference Manual", 0, menumainref));
-    lmanref = check_doc_file("doc\\manual\\refman.pdf");
-    if (!lmanref) disable(mmanref);
-    MCHECK(mmandata = newmenuitem("R Data Import/Export", 0, menumaindata));
-    lmandata = check_doc_file("doc\\manual\\R-data.pdf");
-    if (!lmandata) disable(mmandata);
-    MCHECK(mmanlang = newmenuitem("R Language Manual", 0, menumainlang));
-    lmanlang = check_doc_file("doc\\manual\\R-lang.pdf");
-    if (!lmanlang) disable(mmanlang);
-    MCHECK(mmanext = newmenuitem("Writing R Extensions", 0, menumainext));
-    lmanext = check_doc_file("doc\\manual\\R-exts.pdf");
-    if (!lmanext) disable(mmanext);
-    if (!lmanintro && !lmanref && !lmanlang && !lmanext) disable(mman);
-    addto(m);
-
-    MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mhelp = newmenuitem("R functions (text)...", 0, menuhelp));
-    MCHECK(mhelpstart = newmenuitem("Html help", 0, menuhelpstart));
-    if (!check_doc_file("doc\\html\\rwin.html")) disable(mhelpstart);
-    MCHECK(mhelpsearch = newmenuitem("Search help...", 0, menuhelpsearch));
-    MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mapropos = newmenuitem("Apropos...", 0, menuapropos));
-    MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(newmenuitem("R Project home page", 0, menuRhome));
-    MCHECK(mCRAN = newmenuitem("CRAN", 0, menuCRAN));
-    MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(newmenuitem("About", 0, menuabout));
+    RguiCommonHelp(m);
     consolesetbrk(RConsole, menukill, ESC, 0);
     gl_hist_init(R_HistorySize, 0);
     if (R_RestoreHistory) gl_loadhistory(R_HistoryFile);

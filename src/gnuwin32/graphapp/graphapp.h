@@ -560,6 +560,8 @@ void	setmouserepeat(control c, mousefn fn);
 
 void	setdrop(control c, dropfn fn);
 
+void	setonfocus(control c, actionfn fn);
+
 /*
  *  Using windows and controls.
  */
@@ -650,6 +652,7 @@ field	  newfield(char *text, rect r);
 field	  newpassword(char *text, rect r);
 textbox	  newtextbox(char *text, rect r);
 textbox	  newtextarea(char *text, rect r);
+textbox	  newrichtextarea(char *text, rect r);
 
 listbox	  newlistbox(char *list[], rect r, scrollfn fn);
 listbox	  newdroplist(char *list[], rect r, scrollfn fn);
@@ -675,6 +678,7 @@ menuitem  newmenuitem(char *name, int key, menufn fn);
  *  Text editing functions.
  */
 
+void  undotext(textbox t);
 void  cuttext(textbox t);
 void  copytext(textbox t);
 void  cleartext(textbox t);

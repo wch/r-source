@@ -31,7 +31,9 @@
    See the file COPYLIB.TXT for details.
 */
 
-/* Changes for R:
+/* Copyright (C) 2004 	The R Foundation
+
+   Changes for R:
 
    set the system font for labels
    add newscrollbar, field_no_border
@@ -40,6 +42,7 @@
  */
 
 #include "internal.h"
+#include "ga.h"
 
 #define SHADOW_WIDTH 1
 
@@ -806,8 +809,7 @@ radiobutton newradiobutton(char *text, rect r, actionfn fn)
 }
 #endif
 
-#if 0
-void undotext(control obj)
+void undotext(control obj)  /* Why was this previously commented out? CJ */
 {
 	if (! obj)
 		return;
@@ -815,7 +817,6 @@ void undotext(control obj)
 		return;
 	sendmessage(obj->handle, EM_UNDO, 0, 0L);
 }
-#endif
 
 void cuttext(control obj)
 {
@@ -964,6 +965,23 @@ textbox newtextarea(char *text, rect r)
 		settext(obj, text);
 	}
 	return obj;
+}
+
+textbox newrichtextarea(char *text, rect r)
+{
+    textbox obj;
+    if (!LoadLibrary("riched20.dll")) /* RichEdit version 2.0, not included in Win95 */
+	LoadLibrary("riched32.dll");  /* RichEdit version 1.0 */
+    obj = newchildwin(RICHEDIT_CLASS, NULL,
+		      WS_HSCROLL | ES_AUTOHSCROLL |
+		      WS_VSCROLL | ES_AUTOVSCROLL |
+		      ES_LEFT | ES_MULTILINE | ES_NOHIDESEL,
+		      r, NULL);
+    if (obj) {
+	obj->kind = TextboxObject;
+	settext(obj, text);
+    }
+    return obj;
 }
 
 static SCROLLINFO si;
@@ -1259,7 +1277,7 @@ void handle_control(HWND hwnd, UINT message)
 		if (message != LBN_SELCHANGE)
 			return;
 		index = sendmessage(hwnd, LB_GETCARETINDEX, 0, 0L);
-		/* We do want to see de-selection events too 
+		/* We do want to see de-selection events too
 		if (! sendmessage(hwnd, LB_GETSEL, index, 0L))
 		  return;*/
 		obj->value = index;
@@ -1276,8 +1294,14 @@ void handle_control(HWND hwnd, UINT message)
 
 	  case FieldObject:
 	  case TextboxObject:
-		/* For the moment we ignore all but killfocus. */
-		if (message != EN_KILLFOCUS)
+	      if (message == EN_MAXTEXT) {
+		  /* increase the character limit in the editor by 50%
+		     if the limit is reached, but this should not
+		     happen */
+		  setlimittext(obj, 1.5 * getlimittext(obj));
+	      }
+	      /* Ignore everything else but killfocus. */
+	      else if (message != EN_KILLFOCUS)
 			return;
 		break;
 
@@ -1318,7 +1342,7 @@ progressbar newprogressbar(rect r, int pbmin, int pbmax, int incr, int smooth)
 	set_new_winproc(obj); /* set custom winproc */
 	settextfont(obj, SystemFont);
 	obj->kind = ListboxObject;
-	SendMessage(hwnd, PBM_SETRANGE32, (WPARAM) pbmin, (LPARAM) pbmax); 
+	SendMessage(hwnd, PBM_SETRANGE32, (WPARAM) pbmin, (LPARAM) pbmax);
 	SendMessage(hwnd, PBM_SETSTEP, (WPARAM) incr, 0);
 
 	return obj;
@@ -1327,18 +1351,18 @@ progressbar newprogressbar(rect r, int pbmin, int pbmax, int incr, int smooth)
 void setprogressbar(progressbar obj, int n)
 {
 	if (! obj) return;
-        SendMessage(obj->handle, PBM_SETPOS, (WPARAM) n, 0); 
+        SendMessage(obj->handle, PBM_SETPOS, (WPARAM) n, 0);
 }
 
 void stepprogressbar(progressbar obj, int n)
 {
 	if (! obj) return;
-        SendMessage(obj->handle, PBM_STEPIT, 0, 0); 
+        SendMessage(obj->handle, PBM_STEPIT, 0, 0);
 }
 
 void setprogressbarrange(progressbar obj, int pbmin, int pbmax)
 {
 	if (! obj) return;
-	SendMessage(obj->handle, PBM_SETRANGE32, (WPARAM) pbmin, 
-		    (LPARAM) pbmax); 
+	SendMessage(obj->handle, PBM_SETRANGE32, (WPARAM) pbmin,
+		    (LPARAM) pbmax);
 }

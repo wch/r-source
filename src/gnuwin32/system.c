@@ -31,6 +31,7 @@
 #include "graphapp/ga.h"
 #include "console.h"
 #include "rui.h"
+#include "editor.h"
 #include "getline/getline.h"
 #include <windows.h>		/* for CreateEvent,.. */
 #include <process.h>		/* for _beginthread,... */
@@ -39,6 +40,7 @@
 #include "Startup.h"
 #include <stdlib.h>		/* for exit */
 void CleanTempDir();		/* from extra.c */
+void editorcleanall();                  /* from editor.c */
 
 
 R_size_t R_max_memory = INT_MAX;
@@ -395,6 +397,7 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
 	break;
     }
     R_RunExitFinalizers();
+    editorcleanall();
     CleanEd();
     CleanTempDir();
     closeAllHlpFiles();
@@ -503,6 +506,43 @@ int internal_ShowFile(char *file, char *header)
     return R_ShowFiles(1, files, headers, "File", 0, CHAR(STRING_ELT(pager, 0)));
 }
 
+    /*
+       This function can be used to open the named files in text editors, with the
+       given titles and overall title.  
+       If the file does not exist then the editor should be opened to create a new file. 
+    */
+
+    /*
+     *     nfile   = number of files
+     *     file    = array of filenames
+     *     editor  = editor to be used.
+     */
+
+int R_EditFiles(int nfile, char **file, char *editor)
+{
+    int   i;
+    char  buf[1024];
+
+    if (nfile > 0) {
+	if (editor == NULL || strlen(editor) == 0)
+	    editor = "internal";
+	for (i = 0; i < nfile; i++) {
+	    if (!strcmp(editor, "internal")) {
+		Rgui_Edit(file[i], 0);
+	    } else {
+		/* Quote path if necessary */
+		if (editor[0] != '"' && strchr(editor, ' '))
+		    snprintf(buf, 1024, "\"%s\" \"%s\"", editor, file[i]);
+		else
+		    snprintf(buf, 1024, "%s \"%s\"", editor, file[i]);
+		runcmd(buf, 0, 1, "");
+	    }
+
+	}
+	return 0;
+    }
+    return 1;
+}
 
 /* Prompt the user for a file name.  Return the length of */
 /* the name typed.  On Gui platforms, this should bring up */

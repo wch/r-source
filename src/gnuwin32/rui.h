@@ -73,3 +73,8 @@ int RgetMDIwidth();
 int RgetMDIheight();
 #endif
 
+void menuconfig();
+void menuclear(control m);
+int RguiPackageMenu();
+int RguiCommonHelp();
+void closeconsole(control m);

@@ -1,6 +1,50 @@
 				Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       2.0 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 2.0.0
+
+
+USER-VISIBLE CHANGES
+
+
+
+
+NEW FEATURES
+
+    o	file.edit() function added:  like file.show(), but allows editing.
+
+
+UTILITIES
+
+
+
+
+C-LEVEL FACILITIES
+
+
+
+
+DEPRECATED & DEFUNCT
+
+
+
+
+INSTALLATION CHANGES
+
+
+
+
+BUG FIXES
+
+	
+	
+	**************************************************
+	*						 *
 	*	       1.9 SERIES NEWS			 *
 	*						 *
 	**************************************************

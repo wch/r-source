@@ -665,6 +665,7 @@ FUNTAB R_FunTab[] =
 /* Functions To Interact with the Operating System */
 
 {"file.show",	do_fileshow,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"file.edit",	do_fileedit,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.create",	do_filecreate,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.remove",	do_fileremove,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"file.rename",	do_filerename,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
