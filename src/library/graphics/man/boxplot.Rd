@@ -9,7 +9,7 @@
 \usage{
 boxplot(x, \dots)
 
-\method{boxplot}{formula}(formula, data = NULL, \dots, subset, na.action = stats::na.pass)
+\method{boxplot}{formula}(formula, data = NULL, \dots, subset, na.action = NULL)
 
 \method{boxplot}{default}(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
         notch = FALSE, outline = TRUE, names, plot = TRUE,

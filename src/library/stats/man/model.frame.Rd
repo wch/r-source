@@ -31,11 +31,11 @@ model.frame(formula, \dots)
     \code{\link{[.data.frame}}) for the rows of \code{data} or if that is not
     supplied, a data frame made up of the variables used in \code{formula}.}
 
-  \item{na.action}{how \code{NA}s are treated. The default is first,
+  \item{na.action}{how \code{NA}s are treated.  The default is first,
     any \code{na.action} attribute of \code{data}, second
     a \code{na.action} setting of \code{\link{options}}, and third
     \code{\link{na.fail}} if that is unset.  The \dQuote{factory-fresh}
-    default is \code{\link{na.omit}}.}
+    default is \code{\link{na.omit}}.  Another possible value is \code{NULL}.}
 
   \item{drop.unused.levels}{should factors have unused levels dropped?
     Defaults to \code{FALSE}.}
@@ -83,6 +83,10 @@ model.frame(formula, \dots)
   (and may well add attributes).  The levels of any factors in the data
   frame are adjusted according to the \code{drop.unused.levels} and
   \code{xlev} arguments.
+
+  Unless \code{na.action = NULL}, time-series attributes will be removed
+  from the variables found (since they will be wrong if \code{NA}s are
+  removed).
 }
 \value{
   A \code{\link{data.frame}} containing the variables used in

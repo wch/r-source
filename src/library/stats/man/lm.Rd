@@ -35,11 +35,12 @@ lm(formula, data, subset, weights, na.action,
   \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.  The default is set by
     the \code{na.action} setting of \code{\link{options}}, and is
-    \code{\link{na.fail}} if that is unset. The \dQuote{factory-fresh}
-    default is \code{\link{na.omit}}.}
+    \code{\link{na.fail}} if that is unset.  The \dQuote{factory-fresh}
+    default is \code{\link{na.omit}}.  Another possible value is
+    \code{NULL}, no action.}
 
   \item{method}{the method to be used; for fitting, currently only
-    \code{method="qr"} is supported; \code{method="model.frame"} returns
+    \code{method = "qr"} is supported; \code{method = "model.frame"} returns
     the model frame (the same as with \code{model = TRUE}, see below).}
 
   \item{model, x, y, qr}{logicals.  If \code{TRUE} the corresponding
@@ -122,6 +123,23 @@ lm(formula, data, subset, weights, na.action,
   \code{effects} and (unless not requested) \code{qr} relating to the linear
   fit, for use by extractor functions such as \code{summary} and
   \code{\link{effects}}.
+}
+\section{Using time series}{
+  Considerable care is needed when using \code{lm} with time series.
+  
+  Unless \code{na.action = NULL}, the time series attributes are
+  stripped from the variables before the regression is done.  (This is
+  necessary as omitting \code{NA}s would invalidate the time series
+  attributes, and if \code{NA}s are omitted in the middle of the series
+  the result would no longer be a regular time series.)
+
+  Even if the time series attributes are retained, they are not used to
+  line up series, so that the time shift of a lagged or differenced
+  regressor would be ignored.  It is good practice to prepare a
+  \code{data} argument by \code{\link{ts.intersect}(\dots, dframe = TRUE)},
+  then apply a suitable \code{na.action} to that data frame and call
+  \code{lm} with \code{na.action = NULL} so that residuals and fitted
+  values are time series.
 }
 \seealso{
   \code{\link{summary.lm}} for summaries and \code{\link{anova.lm}} for

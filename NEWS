@@ -69,15 +69,6 @@ USER-VISIBLE CHANGES
         a syntax error.  If this breaks existing code, just add
         parentheses -- or braces in the case of plotmath.
 
-    o   Objects created from a formally defined class now include the
-        name of the corresponding package as an attribute in the
-        object's class. This allows packages with namespaces to have
-        private (non-exported) classes.
-
-    o   setClass() and its utilities now warn if either superclasses
-        or classes for slots are undefined.  (Use setOldClass to
-        register S3 classes for use as slots)
-
 
 NEW FEATURES
 
@@ -89,7 +80,7 @@ NEW FEATURES
 	palette) for coloring its output when given a matrix.
 
     o	The 'formula' method for boxplot() has a 'na.action' argument,
-	defaulting to 'na.pass'.  This is mainly useful if the response
+	defaulting to NULL.  This is mainly useful if the response
 	is a matrix when the previous default of 'na.omit' would omit
 	entire rows.  (Related to PR#6846.)
 
@@ -212,6 +203,11 @@ NEW FEATURES
 	creates a model frame with a different number of rows from
 	that implied by the size of 'newdata'.
 
+	Time series attributes are never copied to variables in the
+	model frame unless na.action = NULL.  (This was always the
+	intention, but they sometimes were as the result of an earlier
+	bug fix.)
+
     o	package.dependencies() has been moved to package 'tools'.
 
     o	packageDescription() has been moved to package 'utils'.
@@ -267,6 +263,10 @@ NEW FEATURES
     o	source() with 'echo = TRUE' uses the function source attribute
 	when displaying commands as they are parsed.
 
+    o   setClass() and its utilities now warn if either superclasses
+        or classes for slots are undefined.  (Use setOldClass to
+        register S3 classes for use as slots)
+
     o	str(obj) now displays more reasonably the STRucture of S4 objects.
 
 	It's also improved for language objects and lists with promise
@@ -311,6 +311,11 @@ NEW FEATURES
     o	Printing a character string with embedded nuls now prints the
 	whole string, and non-printable characters are represented by
 	octal escape sequences.
+
+    o   Objects created from a formally defined class now include the
+        name of the corresponding package as an attribute in the
+        object's class. This allows packages with namespaces to have
+        private (non-exported) classes.
 
 
 UTILITIES
