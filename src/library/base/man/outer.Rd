@@ -2,8 +2,10 @@
 \title{Outer Product of Vectors}
 \usage{
 outer(x, y, FUN = "*", \dots)
+x \%o\% y
 }
 \alias{outer}
+\alias{\%o\%}
 \arguments{
 \item{x}{a vector.}
 \item{y}{a vector.}
@@ -20,8 +22,12 @@ and which operates elementwise on arrays.
 This needs to be extended to taking arrays of arbitrary dimension for
 \code{x} and \code{y} and returns an array of dimension
 \code{c(dim(x), dim(y))}.
+
+\code{\%o\%} is an \code{\link{.Alias}} for \code{outer} (where
+\code{FUN} cannot be changed from \code{"*"}.
 }
 \examples{
 outer(1:5, 1:5, "+")
+all(outer(1:5, 1:5) == 1:5 \%o\% 1:5)
 }
 \keyword{array}

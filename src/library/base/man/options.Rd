@@ -2,8 +2,10 @@
 \title{Options Settings}
 \usage{
 options(\dots)
+.Options
 }
 \alias{options}
+\alias{.Options}
 \arguments{
 \item{\dots}{any options can be defined, using \code{name = value}.
   However, only the ones below are used in ``base \R''.
@@ -36,20 +38,24 @@ options(\dots)
   (\code{\link{ts}}) computations.}
 }
 \description{
-  This function allows the user to set and examine a variety of global
+  \code{options} allows the user to set and examine a variety of global
   ``options'' which affect the way in which \R computes and displays
   its results.
 
   Invoking \code{options()} with no arguments returns a list with the
   current values of the options.
+  \code{.Options} is another way to access this list \bold{``read only''}.
 }
 \value{
   A list (in any case) with the previous values of the options changed,
   or all options when no arguments were given.
 }
 \examples{
-options()		 # printing all current options
+options() # printing all current options
 op <- options(); str(op) # nicer printing
+
+# .Options is the same:
+all(sapply(1:length(op), function(i) all(.Options[[i]] == op[[i]])))
 
 options('width')[[1]] == options()$width # the latter needs more memory
 options(digits=20)

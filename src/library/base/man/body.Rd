@@ -5,6 +5,7 @@ body(fun=sys.function(sys.parent()))
 body(obj) <- list
 }
 \alias{body}
+\alias{body<-}
 \value{
 If \code{fun} is a function then the body of that
 function is returned.

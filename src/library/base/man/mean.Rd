@@ -4,6 +4,7 @@
 mean(x, trim=0, na.rm=FALSE)
 }
 \alias{mean}
+\alias{mean.default}
 \arguments{
 \item{x}{a numeric vector containing the values
 whose mean is to be computed.}
@@ -13,6 +14,7 @@ trimmed from each end of \code{x} before the mean is computed.}
 values should be stripped before the computation proceeds.}
 }
 \description{
+Generic function for the (trimmed) arithmetic mean.
 If \code{trim} is zero (the default),
 the arithmetic mean of the values in \code{x} is computed.
 If \code{trim} is non-zero, a symmetrically trimmed mean is computed

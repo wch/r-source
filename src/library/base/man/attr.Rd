@@ -5,6 +5,7 @@ attr(x, which)
 attr(x, which) <- value
 }
 \alias{attr}
+\alias{attr<-}
 \arguments{
 \item{x}{an object whose attributes are to be accessed.}
 \item{which}{a character string specifying which attribute is to be accessed.}

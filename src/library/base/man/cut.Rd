@@ -1,9 +1,12 @@
 \name{cut}
 \title{Convert Numeric to Factor}
 \usage{
-cut(x, breaks, labels=NULL, include.lowest = FALSE, right=TRUE, dig.lab=3)
+cut(x, \dots)
+cut.default(x, breaks, labels = NULL,
+            include.lowest = FALSE, right = TRUE, dig.lab = 3)
 }
 \alias{cut}
+\alias{cut.default}
 \arguments{
 \item{x}{a numeric vector which is to be converted to a factor by cutting.}
 \item{break}{either a vector of cut points or number

@@ -8,10 +8,12 @@ seq(from, to, length=)
 seq(along)
 }
 \alias{seq}
+\alias{seq.default}
 \alias{:}
 \description{
 The \code{:} and the first \code{seq(.)} form above generate the sequence
 \code{from, from+1}, \ldots, \code{to}.
+\code{seq} is a generic function.
 
 The second, \code{from, from+by}, \ldots, \code{to}.
 The third generates a sequence of \code{length} equally spaced values from

@@ -1,7 +1,8 @@
 \name{hist}
 \title{Histograms}
 \usage{
-hist(x, breaks, freq = NULL, probability = !freq,
+hist(x, \dots)
+hist.default(x, breaks, freq = NULL, probability = !freq,
      include.lowest = TRUE, col = NULL, border = par("fg"),
      main = paste("Histogram of" , deparse(substitute(x))),
      xlim = range(breaks),  ylim = range(counts, 0),
@@ -9,6 +10,7 @@ hist(x, breaks, freq = NULL, probability = !freq,
      axes = TRUE, plot = TRUE, labels = FALSE, \dots)
 }
 \alias{hist}
+\alias{hist.default}
 \arguments{
 \item{x}{a vector of values for which the histogram is desired.}
 \item{breaks}{either a single number giving the
@@ -35,7 +37,8 @@ or a vector giving the breakpoints between histogram cells.}
 \item{\dots}{further graphical parameters to \code{title} and \code{axis}.}
 }
 \description{
-\code{hist} computes and plots a histogram of the given data values.
+The generic function \code{hist} computes and plots a histogram of the
+given data values.
 The histogram cells are intervals of the form
 \code{(a,b]}, i.e. they include their right-hand endpoint,
 but not their left one, with the exception of the first cell when

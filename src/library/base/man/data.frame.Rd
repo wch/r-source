@@ -10,15 +10,18 @@ is.data.frame(x)
 row.names(data.frame.obj)
 row.names(data.frame.obj) <- names
 print(data.frame.obj)
+plot(data.frame.obj)
 }
 \alias{data.frame}
 \alias{as.data.frame}
 \alias{is.data.frame}
 \alias{row.names}
+\alias{row.names<-}
 %- methods:
 \alias{row.names.default}
 \alias{row.names<-.data.frame}
 \alias{print.data.frame}
+\alias{plot.data.frame}
 %
 \alias{as.data.frame.AsIs}
 \alias{as.data.frame.character}

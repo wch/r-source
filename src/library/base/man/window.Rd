@@ -4,6 +4,7 @@
 window(x, start, end)
 }
 \alias{window}
+\alias{window.default}
 \alias{window.ts}
 \arguments{
 \item{x}{a time-series or other object.}
@@ -16,10 +17,7 @@ extracts the subset of the object \code{x}
 observed between the times \code{start} and \code{end}.
 Methods are available for time series and point-processes.
 }
-\seealso{
-\code{\link{time}},
-\code{\link{ts}}.
-}
+\seealso{\code{\link{time}}, \code{\link{ts}}.}
 \examples{
 data(presidents)
 sixties <- window(presidents, 1960, c(1969,4))

@@ -5,6 +5,7 @@ formals(fun=sys.function(sys.parent()))
 formals(obj) <- list
 }
 \alias{formals}
+\alias{formals<-}
 \value{
 If \code{fun} is a function then the formal argument list to that
 function is returned.

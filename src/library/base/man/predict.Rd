@@ -4,6 +4,7 @@
 predict(object, \dots)
 }
 \alias{predict}
+\alias{predict.default}
 \arguments{
 \item{object}{a model object for which prediction is desired.}
 \item{\dots}{additional arguments affecting the predictions

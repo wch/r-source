@@ -1,11 +1,13 @@
 \name{optimize}
 \title{One Dimensional Optimization}
 \usage{
+optimise(\dots\dots\dots)
 optimize(f=, interval=, lower=min(interval),
         upper=max(interval), maximum=FALSE,
         tol=.Machine$double.eps^0.25, ...)
 }
 \alias{optimize}
+\alias{optimise}
 \arguments{
 \item{f}{the function to be optimized. The function is
 either minimized or maximized over its first argument
@@ -24,8 +26,10 @@ The function \code{optimize} searches the interval from
 \code{lower} to \code{upper} for a minimum or maximum of
 the function \code{f} with respect to its first argument.
 
-The function uses Fortran code (from Netlib)
-based on algorithms given in the reference.
+It uses Fortran code (from Netlib) based on algorithms given in the
+reference.
+
+\code{optimise} is an alias for \code{optimize}.
 }
 \value{
 A list with components \code{minimum} (or \code{maximum})

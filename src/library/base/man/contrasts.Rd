@@ -5,6 +5,7 @@ contrasts(x)
 contrasts(x) <- ctr
 }
 \alias{contrasts}
+\alias{contrasts<-}
 \arguments{
 \item{x}{a factor.}
 \item{ctr}{either a matrix whose columns give coefficients

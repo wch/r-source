@@ -1,9 +1,11 @@
 \name{pairs}
 \title{Scatterplot Matrices}
 \usage{
-pairs(x, labels=dimnames(x)[[2]], panel=points, \dots)
+pairs(x, \dots)
+pairs.default(x, labels=dimnames(x)[[2]], panel=points, \dots)
 }
 \alias{pairs}
+\alias{pairs.default}
 \arguments{
 \item{x}{the coordinates of points given as columns of a matrix.}
 \item{labels}{the names of the variables.}

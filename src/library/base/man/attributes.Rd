@@ -5,6 +5,7 @@ attributes(obj)
 attributes(obj) <- list
 }
 \alias{attributes}
+\alias{attributes<-}
 \description{
 This function provides access to an object's attribute list.
 The simple form above returns the an object's attribute list.

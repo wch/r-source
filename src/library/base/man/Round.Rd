@@ -12,6 +12,7 @@ trunc(x)
 \alias{round}
 \alias{signif}
 \alias{trunc}
+\alias{trunc.default}
 \description{
   \code{ceiling} takes a single numeric argument \code{x} and returns a
   numeric vector containing the smallest integers not less than the

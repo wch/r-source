@@ -1,9 +1,11 @@
 \name{diff}
 \title{Lagged Differences}
 \usage{
-diff(x, lag=1, differences=1)
+diff(x, \dots)
+diff.default(x, lag=1, differences=1)
 }
 \alias{diff}
+\alias{diff.default}
 \arguments{
 \item{x}{a numeric vector or matrix containing the values to be differenced.}
 \item{lag}{an integer indicating which lag to use.}
