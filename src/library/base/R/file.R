@@ -17,8 +17,8 @@ file.remove <- function(file)
 list.files <- function(path, pattern=NULL, all.files=FALSE, full.names=FALSE)
 .Internal(list.files(path, pattern, all.files, full.names))
 
-file.path <- function(...)
-paste(..., sep=.Platform$file.sep)
+file.path <- function(..., fsep=.Platform$file.sep)
+paste(..., sep=fsep)
 
 file.exists <- function(file)
 .Internal(file.exists(file))
@@ -34,10 +34,11 @@ system.file <- function (..., pkg = .packages(), lib = .lib.loc)
 {
     flist <- list(...)
     if(length(flist) > 1 || (length(flist) == 1 && nchar(flist[[1]]) > 0)) {
-        FILES <- paste(t(outer(lib, pkg, paste, sep = .Platform$file.sep)), 
-            paste(..., sep = .Platform$file.sep), sep = .Platform$file.sep)
+        FILES <- file.path(t(outer(lib, pkg, paste, sep = .Platform$file.sep)), 
+                           file.path(...))
     } else {
-        FILES <- paste(lib, pkg, sep = .Platform$file.sep)
+        if(missing(pkg)) pkg <- "base" 
+        FILES <- outer(lib, pkg, paste, sep = .Platform$file.sep)
     }
     present <- file.exists(FILES)
     if (any(present)) FILES[present]
