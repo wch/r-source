@@ -863,7 +863,10 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     ans_flags = 0;
     ans_length = 0;
     ans_nnames = 0;
-    AnswerType(args, 0, 0);
+
+    for (t = args; t != R_NilValue; t = CDR(t))
+	AnswerType(CAR(t), 0, 0);
+
     /* zero-extent matrices shouldn't give NULL
        if (ans_length == 0)
        return R_NilValue;
