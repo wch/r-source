@@ -754,6 +754,9 @@ BUG FIXES
     o	trunc.POSIXt(x) for 0-length x does not return invalid structures
 	anymore.  (PR#3763).
 
+    o	warnings() now returns NULL instead of an error when no warnings
+	have occured yet.  (PR#4389)
+
     o	Using write.table() setting the `dec' argument and with no
 	numeric columns failed.	 (PR#3532)
 
