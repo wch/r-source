@@ -44,6 +44,9 @@ NEW FEATURES
 	tightened: this will produce more accurate results, slightly
 	slower.
 
+    o   The data editor is no longer limited to 65535 rows, and will
+	be substantially faster for large numbers of columns.
+
 
 DEPRECATED & DEFUNCT
 
