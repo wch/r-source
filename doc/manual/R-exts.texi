@@ -69,10 +69,6 @@ Copyright @copyright{} 1999 R Development Core Team
 
 @contents
 
-@menu
-* Acknowledgments::             
-@end menu
-
 @node Top, Legalese, (dir), (dir)
 
 @menu
