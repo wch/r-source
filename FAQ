@@ -1,6 +1,10 @@
-R FAQ
+START-INFO-DIR-ENTRY
+* R FAQ: (R-FAQ).               The R statistical system FAQ.
+END-INFO-DIR-ENTRY
+
+   R FAQ
 Frequently Asked Questions on R
-Version 1.4-14, 2002-02-08
+Version 1.4-15, 2002-02-11
 Kurt Hornik
 
 
@@ -216,10 +220,11 @@ project ("GNU S").
 systems.
 
    The current version of R will configure and build under a number of
-common Unix platforms including i386-freebsd, i386-linux-gnu,
-i386-sun-solaris, powerpc-linux-gnu, powerpc-apple-darwin, mips-sgi-irix,
-alpha-linux-gnu, alpha-dec-osf4, rs6000-ibm-aix, hppa-hp-hpux,
-sparc-linux-gnu, and sparc-sun-solaris.
+common Unix platforms including i386-freebsd, CPU-linux-gnu for the i386,
+alpha, arm, hppa, ia64, m68k, powerpc, and sparc CPUs (see e.g.
+`http://buildd.debian.org/build.php?&pkg=r-base'), i386-sun-solaris,
+powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4, rs6000-ibm-aix,
+hppa-hp-hpux, and sparc-sun-solaris.
 
    If you know about other platforms, please drop us a note.
 
@@ -561,18 +566,18 @@ contributed extensions, documentation for R, and binaries.
 
 and is currently being mirrored daily at
 
-     `http://cran.at.r-project.org/'(TU Wien, Austria)
-     `http://cran.au.r-project.org/'(PlanetMirror, Australia)
-     `http://cran.br.r-project.org/'(Universidade Federal de
-                                  Parana', Brazil)
-     `http://cran.ch.r-project.org/'(ETH Zu"rich, Switzerland)
-     `http://cran.de.r-project.org/'(APP, Germany)
-     `http://cran.dk.r-project.org/'(SunSITE, Denmark)
-     `http://cran.hu.r-project.org/'(Semmelweis U, Hungary)
-     `http://cran.uk.r-project.org/'(U of Bristol, United
-                                  Kingdom)
-     `http://cran.us.r-project.org/'(U of Wisconsin, USA)
-     `http://cran.za.r-project.org/'(Rhodes U, South Africa)
+     `http://cran.at.r-project.org/'  (TU Wien, Austria)
+     `http://cran.au.r-project.org/'  (PlanetMirror, Australia)
+     `http://cran.br.r-project.org/'  (Universidade Federal de
+                                      Parana', Brazil)
+     `http://cran.ch.r-project.org/'  (ETH Zu"rich, Switzerland)
+     `http://cran.de.r-project.org/'  (APP, Germany)
+     `http://cran.dk.r-project.org/'  (SunSITE, Denmark)
+     `http://cran.hu.r-project.org/'  (Semmelweis U, Hungary)
+     `http://cran.uk.r-project.org/'  (U of Bristol, United
+                                      Kingdom)
+     `http://cran.us.r-project.org/'  (U of Wisconsin, USA)
+     `http://cran.za.r-project.org/'  (Rhodes U, South Africa)
 
 Please use the CRAN site closest to you to reduce network load.
 
@@ -1643,6 +1648,10 @@ works, was published in the Journal of Statistical Software
      structural equivalence detection, p* modeling, and network
      visualization.
 
+*spsarlm*
+     Functions for estimating spatial simultaneous autoregressive (SAR)
+     models, including sparse matrix methods for computing the Jacobian.
+
 *spatial*
      Functions for kriging and point pattern analysis from "Modern Applied
      Statistics with S-PLUS" by W. Venables and B. Ripley.  Contained in
@@ -2338,13 +2347,9 @@ to get the numbers back.  More efficient, but harder to remember, is
 7.13 Are Trellis displays implemented in R?
 ===========================================
 
-   An R package called *lattice*, which provides graphical functionality
-that is compatible with most Trellis commands, is under development.  The
-latest version of the package may be downloaded from the `contrib/Devel'
-area of CRAN.  *lattice* currently relies on another package called *grid*
-(also under development) so you will need to download that as well.
-Because these packages are under active development, they might only work
-with the latest development version of R.
+   An R package called *lattice* provides graphical functionality that is
+compatible with most Trellis commands.  It currently relies on another
+package called *grid* so you will need to download that as well.
 
    You could also look at `coplot()' and `dotchart()' which might do at
 least some of what you want.  Note also that the R version of `pairs()' is
@@ -2353,7 +2358,7 @@ that R's default plot method has an argument `asp' allowing to specify (and
 fix against device resizing) the aspect ratio of the plot.
 
    (Because the word "Trellis" has been claimed as a trademark we do not
-use it in R.  The name "lattice" has been proposed for the R equivalent.)
+use it in R.  The name "lattice" has been chosen for the R equivalent.)
 
 7.14 What are the enclosing and parent environments?
 ====================================================

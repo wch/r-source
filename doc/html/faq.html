@@ -3,20 +3,22 @@
 <title>R FAQ</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name=description content="R FAQ">
-<meta name=generator content="makeinfo 4.0b">
+<meta name=generator content="makeinfo 4.0f">
 <link href="http://texinfo.org/" rel=generator-home>
 </head>
-
 <body>
+<h1>R FAQ</h1>
 <p><hr>
 Node:<a name="Top">Top</a>,
-Next:<a rel=next href="#Introduction">Introduction</a>
+Next:<a rel=next href="#Introduction">Introduction</a>,
+Previous:<a rel=previous href="#dir">(dir)</a>,
+Up:<a rel=up href="#dir">(dir)</a>
 <br>
 
-<h1>R FAQ</h1>
+<h2>R FAQ</h1>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.4-14, 2002-02-08</h2>
+<h2>Version 1.4-15, 2002-02-11</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -40,7 +42,7 @@ Previous:<a rel=previous href="#Top">Top</a>,
 Up:<a rel=up href="#Top">Top</a>
 <br>
 
-<h1>1 Introduction</h1>
+<h2>1 Introduction</h1>
 
 <p>This document contains answers to some of the most frequently asked
 questions about R.
@@ -60,7 +62,7 @@ Previous:<a rel=previous href="#Introduction">Introduction</a>,
 Up:<a rel=up href="#Introduction">Introduction</a>
 <br>
 
-<h2>1.1 Legalese</h2>
+<h3>1.1 Legalese</h2>
 
 <p>This document is free software; you can redistribute it and/or modify it
 under the terms of the <small>GNU</small> General Public License as published
@@ -75,7 +77,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 <p>A copy of the <small>GNU</small> General Public License is available via WWW
 at
 
-<pre><a href="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</a>.
+<br><pre><a href="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</a>.
 </pre>
 
 <p>You can also obtain it by writing to the Free Software Foundation, Inc.,
@@ -88,11 +90,11 @@ Previous:<a rel=previous href="#Legalese">Legalese</a>,
 Up:<a rel=up href="#Introduction">Introduction</a>
 <br>
 
-<h2>1.2 Obtaining this document</h2>
+<h3>1.2 Obtaining this document</h2>
 
 <p>The latest version of this document is always available from
 
-<pre><a href="http://www.ci.tuwien.ac.at/~hornik/R/">http://www.ci.tuwien.ac.at/~hornik/R/</a>
+<br><pre><a href="http://www.ci.tuwien.ac.at/~hornik/R/">http://www.ci.tuwien.ac.at/~hornik/R/</a>
 </pre>
 
 <p>From there, you can obtain versions converted to
@@ -114,7 +116,7 @@ Previous:<a rel=previous href="#Obtaining%20this%20document">Obtaining this docu
 Up:<a rel=up href="#Introduction">Introduction</a>
 <br>
 
-<h2>1.3 Citing this document</h2>
+<h3>1.3 Citing this document</h2>
 
 <p>In publications, please refer to this <small>FAQ</small> as Hornik
 (2002), "The R <small>FAQ</small>" and give the above,
@@ -127,7 +129,7 @@ Previous:<a rel=previous href="#Citing%20this%20document">Citing this document</
 Up:<a rel=up href="#Introduction">Introduction</a>
 <br>
 
-<h2>1.4 Notation</h2>
+<h3>1.4 Notation</h2>
 
 <p>Everything should be pretty standard.  <code>R&gt;</code> is used for the R
 prompt, and a <code>$</code> for the shell prompt (where applicable).
@@ -138,7 +140,7 @@ Previous:<a rel=previous href="#Notation">Notation</a>,
 Up:<a rel=up href="#Introduction">Introduction</a>
 <br>
 
-<h2>1.5 Feedback</h2>
+<h3>1.5 Feedback</h2>
 
 <p>Feedback is of course most welcome.
 
@@ -155,7 +157,7 @@ Previous:<a rel=previous href="#Introduction">Introduction</a>,
 Up:<a rel=up href="#Top">Top</a>
 <br>
 
-<h1>2 R Basics</h1>
+<h2>2 R Basics</h1>
 
 <ul>
 <li><a href="#What%20is%20R%3f">What is R?</a>: 
@@ -178,7 +180,7 @@ Previous:<a rel=previous href="#R%20Basics">R Basics</a>,
 Up:<a rel=up href="#R%20Basics">R Basics</a>
 <br>
 
-<h2>2.1 What is R?</h2>
+<h3>2.1 What is R?</h2>
 
 <p>R is a system for statistical computation and graphics.  It consists of
 a language plus a run-time environment with graphics, a debugger, access
@@ -229,16 +231,17 @@ Previous:<a rel=previous href="#What%20is%20R%3f">What is R?</a>,
 Up:<a rel=up href="#R%20Basics">R Basics</a>
 <br>
 
-<h2>2.2 What machines does R run on?</h2>
+<h3>2.2 What machines does R run on?</h2>
 
 <p>R is being developed for the Unix, Windows and Mac families of operating
 systems.
 
 <p>The current version of R will configure and build under a number of
-common Unix platforms including i386-freebsd, i386-linux-gnu,
-i386-sun-solaris, powerpc-linux-gnu, powerpc-apple-darwin,
-mips-sgi-irix, alpha-linux-gnu, alpha-dec-osf4, rs6000-ibm-aix,
-hppa-hp-hpux, sparc-linux-gnu, and sparc-sun-solaris.
+common Unix platforms including i386-freebsd, <var>cpu</var>-linux-gnu for
+the i386, alpha, arm, hppa, ia64, m68k, powerpc, and sparc CPUs (see
+e.g. <a href="http://buildd.debian.org/build.php?&amp;pkg=r-base">http://buildd.debian.org/build.php?&amp;pkg=r-base</a>),
+i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4,
+rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
 
 <p>If you know about other platforms, please drop us a note.
 
@@ -249,7 +252,7 @@ Previous:<a rel=previous href="#What%20machines%20does%20R%20run%20on%3f">What m
 Up:<a rel=up href="#R%20Basics">R Basics</a>
 <br>
 
-<h2>2.3 What is the current version of R?</h2>
+<h3>2.3 What is the current version of R?</h2>
 
 <p>The current released version is 1.4.1.  Conforming to this
 `major.minor.patchlevel' numbering scheme, there are three development
@@ -266,14 +269,14 @@ Previous:<a rel=previous href="#What%20is%20the%20current%20version%20of%20R%3f"
 Up:<a rel=up href="#R%20Basics">R Basics</a>
 <br>
 
-<h2>2.4 How can R be obtained?</h2>
+<h3>2.4 How can R be obtained?</h2>
 
 <p>Sources, binaries and documentation for R can be obtained via
 <small>CRAN</small>, the "Comprehensive R Archive Network" (see <a href="#What%20is%20CRAN%3f">What is CRAN?</a>).
 
 <p>Sources are also available via anonymous rsync.  Use
 
-<pre>rsync -rC rsync.r-project.org::<var>module</var> R
+<br><pre>rsync -rC rsync.r-project.org::<var>module</var> R
 </pre>
 
 <p>to create a copy of the source tree specified by <var>module</var> in the
@@ -294,7 +297,7 @@ Previous:<a rel=previous href="#How%20can%20R%20be%20obtained%3f">How can R be o
 Up:<a rel=up href="#R%20Basics">R Basics</a>
 <br>
 
-<h2>2.5 How can R be installed?</h2>
+<h3>2.5 How can R be installed?</h2>
 
 <ul>
 <li><a href="#How%20can%20R%20be%20installed%20(Unix)">How can R be installed (Unix)</a>: 
@@ -309,7 +312,7 @@ Previous:<a rel=previous href="#How%20can%20R%20be%20installed%3f">How can R be 
 Up:<a rel=up href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>
 <br>
 
-<h3>2.5.1 How can R be installed (Unix)</h3>
+<h4>2.5.1 How can R be installed (Unix)</h3>
 
 <p>If binaries are available for your platform (see <a href="#Are%20there%20Unix%20binaries%20for%20R%3f">Are there Unix binaries for R?</a>), you can use these, following the instructions that
 come with them.
@@ -329,7 +332,7 @@ can obtain a PDF version of the object reference manual via
 <p>In the simplest case, untar the R source code, change to the directory
 thus created, and issue the following commands (at the shell prompt):
 
-<pre>$ ./configure
+<br><pre>$ ./configure
 $ make
 </pre>
 
@@ -372,7 +375,7 @@ Home Directory" (<code>R_HOME</code>) of the installed system.
 (typically <code>/usr/local</code>) and can be set by running
 <code>configure</code> with the option
 
-<pre>$ ./configure --prefix=/where/you/want/R/to/go
+<br><pre>$ ./configure --prefix=/where/you/want/R/to/go
 </pre>
 
 <p>(E.g., the R executable will then be installed into
@@ -389,7 +392,7 @@ Previous:<a rel=previous href="#How%20can%20R%20be%20installed%20(Unix)">How can
 Up:<a rel=up href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>
 <br>
 
-<h3>2.5.2 How can R be installed (Windows)</h3>
+<h4>2.5.2 How can R be installed (Windows)</h3>
 
 <p>The <code>bin/windows</code> directory of a <small>CRAN</small> site contains
 binaries for a base distribution and a large number of add-on packages
@@ -409,7 +412,7 @@ Previous:<a rel=previous href="#How%20can%20R%20be%20installed%20(Windows)">How 
 Up:<a rel=up href="#How%20can%20R%20be%20installed%3f">How can R be installed?</a>
 <br>
 
-<h3>2.5.3 How can R be installed (Macintosh)</h3>
+<h4>2.5.3 How can R be installed (Macintosh)</h3>
 
 <p>The <code>bin/macos</code> directory of a <small>CRAN</small> site contains
 bin-hexed (<code>hqx</code>) and stuffit (<code>sit</code>) archives for a base
@@ -431,7 +434,7 @@ Previous:<a rel=previous href="#How%20can%20R%20be%20installed%3f">How can R be 
 Up:<a rel=up href="#R%20Basics">R Basics</a>
 <br>
 
-<h2>2.6 Are there Unix binaries for R?</h2>
+<h3>2.6 Are there Unix binaries for R?</h2>
 
 <p>The <code>bin/linux</code> directory of a <small>CRAN</small> site contains Debian
 potato/woody packages for the i386 platform (now part of the Debian
@@ -444,7 +447,7 @@ Maximino Ameneiro Gomez, and LinuxPPC 5.0 RPMs by Alex Buerkle.
 <p>The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
 
-<pre>deb http://cran.r-project.org/bin/linux/debian <var>distribution</var> main
+<br><pre>deb http://cran.r-project.org/bin/linux/debian <var>distribution</var> main
 </pre>
 
 <p>(where <var>distribution</var> is either <code>stable</code> or <code>testing</code>;
@@ -467,7 +470,7 @@ Previous:<a rel=previous href="#Are%20there%20Unix%20binaries%20for%20R%3f">Are 
 Up:<a rel=up href="#R%20Basics">R Basics</a>
 <br>
 
-<h2>2.7 What documentation exists for R?</h2>
+<h3>2.7 What documentation exists for R?</h2>
 
 <p>Online documentation for most of the functions and variables in R
 exists, and can be printed on-screen by typing <kbd>help(<var>name</var>)</kbd>
@@ -571,7 +574,7 @@ See <a href="#Citing%20R">Citing R</a>.
 <p>An annotated bibliography (BibTeX format) of R-related publications
 which includes most of the above references can be found at
 
-<pre><a href="http://www.r-project.org/doc/bib/R.bib">http://www.r-project.org/doc/bib/R.bib</a>
+<br><pre><a href="http://www.r-project.org/doc/bib/R.bib">http://www.r-project.org/doc/bib/R.bib</a>
 </pre>
 
 <p><hr>
@@ -581,11 +584,11 @@ Previous:<a rel=previous href="#What%20documentation%20exists%20for%20R%3f">What
 Up:<a rel=up href="#R%20Basics">R Basics</a>
 <br>
 
-<h2>2.8 Citing R</h2>
+<h3>2.8 Citing R</h2>
 
 <p>To cite R in publications, use
 
-<pre>@article{,
+<br><pre>@article{,
   author =    {Ross Ihaka and Robert Gentleman},
   title =     {R: A Language for Data Analysis and Graphics},
   journal =   {Journal of Computational and Graphical Statistics},
@@ -603,7 +606,7 @@ Previous:<a rel=previous href="#Citing%20R">Citing R</a>,
 Up:<a rel=up href="#R%20Basics">R Basics</a>
 <br>
 
-<h2>2.9 What mailing lists exist for R?</h2>
+<h3>2.9 What mailing lists exist for R?</h2>
 
 <p>Thanks to <a href="mailto:Martin.Maechler@r-project.org">Martin Maechler</a>, there
 are three mailing lists devoted to R.
@@ -667,7 +670,7 @@ Previous:<a rel=previous href="#What%20mailing%20lists%20exist%20for%20R%3f">Wha
 Up:<a rel=up href="#R%20Basics">R Basics</a>
 <br>
 
-<h2>2.10 What is <small>CRAN</small>?</h2>
+<h3>2.10 What is <small>CRAN</small>?</h2>
 
 <p>The "Comprehensive R Archive Network" (<small>CRAN</small>) is a collection
 of sites which carry identical material, consisting of the R
@@ -736,7 +739,7 @@ Previous:<a rel=previous href="#What%20is%20CRAN%3f">What is CRAN?</a>,
 Up:<a rel=up href="#R%20Basics">R Basics</a>
 <br>
 
-<h2>2.11 Can I use R for commercial purposes?</h2>
+<h3>2.11 Can I use R for commercial purposes?</h2>
 
 <p>R is released under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License (GPL)</a>.  If you have any questions regarding the
 legality of using R in any particular situation you should bring it up
@@ -780,7 +783,7 @@ Previous:<a rel=previous href="#R%20Basics">R Basics</a>,
 Up:<a rel=up href="#Top">Top</a>
 <br>
 
-<h1>3 R and S</h1>
+<h2>3 R and S</h1>
 
 <ul>
 <li><a href="#What%20is%20S%3f">What is S?</a>: 
@@ -797,7 +800,7 @@ Previous:<a rel=previous href="#R%20and%20S">R and S</a>,
 Up:<a rel=up href="#R%20and%20S">R and S</a>
 <br>
 
-<h2>3.1 What is S?</h2>
+<h3>3.1 What is S?</h2>
 
 <p>S is a very high level language and an environment for data analysis and
 graphics.  In 1998, the Association for Computing Machinery
@@ -858,7 +861,7 @@ Previous:<a rel=previous href="#What%20is%20S%3f">What is S?</a>,
 Up:<a rel=up href="#R%20and%20S">R and S</a>
 <br>
 
-<h2>3.2 What is <small>S-PLUS</small>?</h2>
+<h3>3.2 What is <small>S-PLUS</small>?</h2>
 
 <p><small>S-PLUS</small> is a value-added version of S sold by Insightful Corporation. 
 Based on the S language, <small>S-PLUS</small> provides functionality in a wide
@@ -877,7 +880,7 @@ Previous:<a rel=previous href="#What%20is%20S-PLUS%3f">What is S-PLUS?</a>,
 Up:<a rel=up href="#R%20and%20S">R and S</a>
 <br>
 
-<h2>3.3 What are the differences between R and S?</h2>
+<h3>3.3 What are the differences between R and S?</h2>
 
 <p>We can regard S as a language with three current implementations or
 "engines", the "old S engine" (S version 3; <small>S-PLUS</small> 3.x and 4.x),
@@ -902,7 +905,7 @@ Previous:<a rel=previous href="#What%20are%20the%20differences%20between%20R%20a
 Up:<a rel=up href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>
 <br>
 
-<h3>3.3.1 Lexical scoping</h3>
+<h4>3.3.1 Lexical scoping</h3>
 
 <p>Contrary to other implementations of the S language, R has adopted the
 evaluation model of Scheme.
@@ -918,7 +921,7 @@ bindings that were in effect at the time the function was created.
 
 <p>Consider the following function:
 
-<pre>cube &lt;- function(n) {
+<br><pre>cube &lt;- function(n) {
   sq &lt;- function() n * n
   n * sq()
 }
@@ -927,7 +930,7 @@ bindings that were in effect at the time the function was created.
 <p>Under S, <code>sq()</code> does not "know" about the variable <code>n</code>
 unless it is defined globally:
 
-<pre>S&gt; cube(2)
+<br><pre>S&gt; cube(2)
 Error in sq():  Object "n" not found
 Dumped
 S&gt; n &lt;- 3
@@ -938,7 +941,7 @@ S&gt; cube(2)
 <p>In R, the "environment" created when <code>cube()</code> was invoked is
 also looked in:
 
-<pre>R&gt; cube(2)
+<br><pre>R&gt; cube(2)
 [1] 8
 </pre>
 
@@ -952,7 +955,7 @@ postings by Luke Tierney.)
 <p>The <small>S-PLUS</small> documentation for <code>call()</code> basically suggests the
 following:
 
-<pre>dorder &lt;- function(n, r, pfun, dfun) {
+<br><pre>dorder &lt;- function(n, r, pfun, dfun) {
   f &lt;- function(x) NULL
   con &lt;- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
   PF &lt;- call(substitute(pfun), as.name("x"))
@@ -974,7 +977,7 @@ work, though).
 <p>A version which makes heavy use of <code>substitute()</code> and seems to work
 under both S and R is
 
-<pre>dorder &lt;- function(n, r, pfun, dfun) {
+<br><pre>dorder &lt;- function(n, r, pfun, dfun) {
   con &lt;- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
   eval(substitute(function(x) K * PF(x)^a * (1 - PF(x))^b * DF(x),
                   list(PF = substitute(pfun), DF = substitute(dfun),
@@ -986,7 +989,7 @@ under both S and R is
 
 <p>However, in R there is a much easier solution:
 
-<pre>dorder &lt;- function(n, r, pfun, dfun) {
+<br><pre>dorder &lt;- function(n, r, pfun, dfun) {
   con &lt;- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
   function(x) {
     con * pfun(x)^(r - 1) * (1 - pfun(x))^(n - r) * dfun(x)
@@ -1004,7 +1007,7 @@ in the above version, the free variables in the value function are not
 modified, you can actually use it in S as well if you abstract out the
 closure operation into a function <code>MC()</code> (for "make closure"):
 
-<pre>dorder &lt;- function(n, r, pfun, dfun) {
+<br><pre>dorder &lt;- function(n, r, pfun, dfun) {
   con &lt;- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
   MC(function(x) {
        con * pfun(x)^(r - 1) * (1 - pfun(x))^(n - r) * dfun(x)
@@ -1020,12 +1023,12 @@ access to evaluation frames, as is of course possible in both R and S).
 
 <p>For R, <code>MC()</code> simply is
 
-<pre>MC &lt;- function(f, env) f
+<br><pre>MC &lt;- function(f, env) f
 </pre>
 
 <p>(lexical scope!), a version for S is
 
-<pre>MC &lt;- function(f, env = NULL) {
+<br><pre>MC &lt;- function(f, env = NULL) {
   env &lt;- as.list(env)
   if (mode(f) != "function")
     stop(paste("not a function:", f))
@@ -1099,7 +1102,7 @@ Previous:<a rel=previous href="#Lexical%20scoping">Lexical scoping</a>,
 Up:<a rel=up href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>
 <br>
 
-<h3>3.3.2 Models</h3>
+<h4>3.3.2 Models</h3>
 
 <p>There are some differences in the modeling code, such as
 
@@ -1128,7 +1131,7 @@ Previous:<a rel=previous href="#Models">Models</a>,
 Up:<a rel=up href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>
 <br>
 
-<h3>3.3.3 Others</h3>
+<h4>3.3.3 Others</h3>
 
 <p>Apart from lexical scoping and its implications, R follows the S
 language definition in the Blue and White Books as much as possible, and
@@ -1201,7 +1204,7 @@ there is a single precision interface to C/FORTRAN subroutines.
 (under R) and global (under S) environment, respectively.  For example,
 given
 
-<pre>x &lt;- 1; fun &lt;- function() {y &lt;- 1; ls()}
+<br><pre>x &lt;- 1; fun &lt;- function() {y &lt;- 1; ls()}
 </pre>
 
 <p>then <code>fun()</code> returns <code>"y"</code> in R and <code>"x"</code> (together with
@@ -1281,7 +1284,7 @@ Previous:<a rel=previous href="#What%20are%20the%20differences%20between%20R%20a
 Up:<a rel=up href="#R%20and%20S">R and S</a>
 <br>
 
-<h2>3.4 Is there anything R can do that <small>S-PLUS</small> cannot?</h2>
+<h3>3.4 Is there anything R can do that <small>S-PLUS</small> cannot?</h2>
 
 <p>Since almost anything you can do in R has source code that you could
 port to <small>S-PLUS</small> with little effort there will never be much you can do
@@ -1304,7 +1307,7 @@ Previous:<a rel=previous href="#Is%20there%20anything%20R%20can%20do%20that%20S-
 Up:<a rel=up href="#R%20and%20S">R and S</a>
 <br>
 
-<h2>3.5 What is R-plus?</h2>
+<h3>3.5 What is R-plus?</h2>
 
 <p>There is no such thing.
 
@@ -1315,7 +1318,7 @@ Previous:<a rel=previous href="#R%20and%20S">R and S</a>,
 Up:<a rel=up href="#Top">Top</a>
 <br>
 
-<h1>4 R Web Interfaces</h1>
+<h2>4 R Web Interfaces</h1>
 
 <p><strong>Rcgi</strong> is a CGI WWW interface to R by
 <a href="mailto:mjr@stats.mth.uea.ac.uk">Mark J. Ray</a>.  Recent versions have the
@@ -1350,7 +1353,7 @@ Previous:<a rel=previous href="#R%20Web%20Interfaces">R Web Interfaces</a>,
 Up:<a rel=up href="#Top">Top</a>
 <br>
 
-<h1>5 R Add-On Packages</h1>
+<h2>5 R Add-On Packages</h1>
 
 <ul>
 <li><a href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>: 
@@ -1368,7 +1371,7 @@ Previous:<a rel=previous href="#R%20Add-On%20Packages">R Add-On Packages</a>,
 Up:<a rel=up href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <br>
 
-<h2>5.1 Which add-on packages exist for R?</h2>
+<h3>5.1 Which add-on packages exist for R?</h2>
 
 <p>The R distribution comes with the following extra packages:
 
@@ -1777,6 +1780,9 @@ fitting them to data, in the scalar and the multivariate case.
 graph-level indices, structural distance and covariance methods,
 structural equivalence detection, p* modeling, and network
 visualization. 
+<br><dt><strong>spsarlm</strong>
+<dd>Functions for estimating spatial simultaneous autoregressive (SAR)
+models, including sparse matrix methods for computing the Jacobian. 
 <br><dt><strong>spatial</strong>
 <dd>Functions for kriging and point pattern analysis from "Modern Applied
 Statistics with <small>S-PLUS</small>" by W. Venables and B. Ripley.  Contained in
@@ -1961,14 +1967,14 @@ Previous:<a rel=previous href="#Which%20add-on%20packages%20exist%20for%20R%3f">
 Up:<a rel=up href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <br>
 
-<h2>5.2 How can add-on packages be installed?</h2>
+<h3>5.2 How can add-on packages be installed?</h2>
 
 <p>(Unix only.)  The add-on packages on <small>CRAN</small> come as gzipped tar
 files named <code><var>pkg</var>_<var>version</var>.tar.gz</code>, which may in fact be
 "bundles" containing more than one package.  Provided that
 <code>tar</code> and <code>gzip</code> are available on your system, type
 
-<pre>$ R CMD INSTALL /path/to/<var>pkg</var>_<var>version</var>.tar.gz
+<br><pre>$ R CMD INSTALL /path/to/<var>pkg</var>_<var>version</var>.tar.gz
 </pre>
 
 <p>at the shell prompt to install to the library tree rooted at the first
@@ -1979,7 +1985,7 @@ the default library by default.)
 
 <p>To install to another tree (e.g., your private one), use
 
-<pre>$ R CMD INSTALL -l <var>lib</var> /path/to/<var>pkg</var>_<var>version</var>.tar.gz
+<br><pre>$ R CMD INSTALL -l <var>lib</var> /path/to/<var>pkg</var>_<var>version</var>.tar.gz
 </pre>
 
 <p>where <var>lib</var> gives the path to the library tree to install to.
@@ -1995,12 +2001,12 @@ trees are rooted.  You do not have to specify the default tree in
 <code>R_LIBS</code>.  E.g., to use a private tree in <code>$HOME/lib/R</code> and a
 public site-wide tree in <code>/usr/local/lib/R-contrib</code>, put
 
-<pre>R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"; export R_LIBS
+<br><pre>R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"; export R_LIBS
 </pre>
 
 <p>into your (Bourne) shell profile or even preferably, add the line
 
-<pre>R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"
+<br><pre>R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"
 </pre>
 
 <p>your <code>~/.Renviron</code> file.  (Note that no <code>export</code> statement is
@@ -2014,18 +2020,18 @@ Previous:<a rel=previous href="#How%20can%20add-on%20packages%20be%20installed%3
 Up:<a rel=up href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <br>
 
-<h2>5.3 How can add-on packages be used?</h2>
+<h3>5.3 How can add-on packages be used?</h2>
 
 <p>To find out which additional packages are available on your system, type
 
-<pre>library()
+<br><pre>library()
 </pre>
 
 <p>at the R prompt.
 
 <p>This produces something like
 
-<pre>Packages in `/home/me/lib/R':
+<br><pre>Packages in `/home/me/lib/R':
 
 mystuff       My own R functions, nicely packaged but not documented
 
@@ -2059,18 +2065,18 @@ ts            Time series functions
 
 <p>You can "load" the installed package <var>pkg</var> by
 
-<pre>library(<var>pkg</var>)
+<br><pre>library(<var>pkg</var>)
 </pre>
 
 <p>You can then find out which functions it provides by typing one of
 
-<pre>library(help = <var>pkg</var>)
+<br><pre>library(help = <var>pkg</var>)
 help(package = <var>pkg</var>)
 </pre>
 
 <p>You can unload the loaded package <var>pkg</var> by
 
-<pre>detach("package:<var>pkg</var>")
+<br><pre>detach("package:<var>pkg</var>")
 </pre>
 
 <p><hr>
@@ -2080,11 +2086,11 @@ Previous:<a rel=previous href="#How%20can%20add-on%20packages%20be%20used%3f">Ho
 Up:<a rel=up href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <br>
 
-<h2>5.4 How can add-on packages be removed?</h2>
+<h3>5.4 How can add-on packages be removed?</h2>
 
 <p>Use
 
-<pre>$ R CMD REMOVE <var>pkg_1</var> <small>...</small> <var>pkg_n</var>
+<br><pre>$ R CMD REMOVE <var>pkg_1</var> <small>...</small> <var>pkg_n</var>
 </pre>
 
 <p>to remove the packages <var>pkg_1</var>, <small>...</small>, <var>pkg_n</var> from the
@@ -2094,7 +2100,7 @@ of R prior to 1.3.0 removed from the default library by default.)
 
 <p>To remove from library <var>lib</var>, do
 
-<pre>$ R CMD REMOVE -l <var>lib</var> <var>pkg_1</var> <small>...</small> <var>pkg_n</var>
+<br><pre>$ R CMD REMOVE -l <var>lib</var> <var>pkg_1</var> <small>...</small> <var>pkg_n</var>
 </pre>
 
 <p><hr>
@@ -2104,7 +2110,7 @@ Previous:<a rel=previous href="#How%20can%20add-on%20packages%20be%20removed%3f"
 Up:<a rel=up href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <br>
 
-<h2>5.5 How can I create an R package?</h2>
+<h3>5.5 How can I create an R package?</h2>
 
 <p>A package consists of a subdirectory containing the files
 <code>DESCRIPTION</code> and <code>INDEX</code>, and the subdirectories <code>R</code>,
@@ -2131,7 +2137,7 @@ Previous:<a rel=previous href="#How%20can%20I%20create%20an%20R%20package%3f">Ho
 Up:<a rel=up href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <br>
 
-<h2>5.6 How can I contribute to R?</h2>
+<h3>5.6 How can I contribute to R?</h2>
 
 <p>R is in active development and there is always a risk of bugs creeping
 in.  Also, the developers do not have access to all possible machines
@@ -2161,7 +2167,7 @@ Previous:<a rel=previous href="#R%20Add-On%20Packages">R Add-On Packages</a>,
 Up:<a rel=up href="#Top">Top</a>
 <br>
 
-<h1>6 R and Emacs</h1>
+<h2>6 R and Emacs</h1>
 
 <ul>
 <li><a href="#Is%20there%20Emacs%20support%20for%20R%3f">Is there Emacs support for R?</a>: 
@@ -2176,7 +2182,7 @@ Previous:<a rel=previous href="#R%20and%20Emacs">R and Emacs</a>,
 Up:<a rel=up href="#R%20and%20Emacs">R and Emacs</a>
 <br>
 
-<h2>6.1 Is there Emacs support for R?</h2>
+<h3>6.1 Is there Emacs support for R?</h2>
 
 <p>There is an Emacs package called <small>ESS</small> ("Emacs Speaks
 Statistics") which provides a standard interface between statistical
@@ -2232,7 +2238,7 @@ Previous:<a rel=previous href="#Is%20there%20Emacs%20support%20for%20R%3f">Is th
 Up:<a rel=up href="#R%20and%20Emacs">R and Emacs</a>
 <br>
 
-<h2>6.2 Should I run R from within Emacs?</h2>
+<h3>6.2 Should I run R from within Emacs?</h2>
 
 <p>Yes, <em>definitely</em>.  Inferior R mode provides a readline/history
 mechanism, object name completion, and syntax-based highlighting of the
@@ -2259,7 +2265,7 @@ Previous:<a rel=previous href="#Should%20I%20run%20R%20from%20within%20Emacs%3f"
 Up:<a rel=up href="#R%20and%20Emacs">R and Emacs</a>
 <br>
 
-<h2>6.3 Debugging R from within Emacs</h2>
+<h3>6.3 Debugging R from within Emacs</h2>
 
 <p>To debug R "from within Emacs", there are several possibilities.  To
 use the Emacs GUD (Grand Unified Debugger) library with the recommended
@@ -2290,7 +2296,7 @@ the R binary.  That way <code>.gdbinit</code> can stay in the directory with
 the code and be used to set up the environment and the search paths for
 the source, e.g. as follows:
 
-<pre>set env R_HOME /opt/R
+<br><pre>set env R_HOME /opt/R
 set env R_PAPERSIZE letter
 set env R_PRINTCMD lpr
 dir /opt/R/src/appl
@@ -2306,7 +2312,7 @@ Previous:<a rel=previous href="#R%20and%20Emacs">R and Emacs</a>,
 Up:<a rel=up href="#Top">Top</a>
 <br>
 
-<h1>7 R Miscellanea</h1>
+<h2>7 R Miscellanea</h1>
 
 <ul>
 <li><a href="#Why%20does%20R%20run%20out%20of%20memory%3f">Why does R run out of memory?</a>: 
@@ -2338,7 +2344,7 @@ Previous:<a rel=previous href="#R%20Miscellanea">R Miscellanea</a>,
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.1 Why does R run out of memory?</h2>
+<h3>7.1 Why does R run out of memory?</h2>
 
 <p>Versions of R prior to 1.2.0 used a <em>static</em> memory model.  At
 startup, R asked the operating system to reserve a fixed amount of
@@ -2366,7 +2372,7 @@ Previous:<a rel=previous href="#Why%20does%20R%20run%20out%20of%20memory%3f">Why
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.2 Why does sourcing a correct file fail?</h2>
+<h3>7.2 Why does sourcing a correct file fail?</h2>
 
 <p>Versions of R prior to 1.2.1 may have had problems parsing files not
 ending in a newline.  Earlier R versions had a similar problem when
@@ -2379,11 +2385,11 @@ Previous:<a rel=previous href="#Why%20does%20sourcing%20a%20correct%20file%20fai
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.3 How can I set components of a list to NULL?</h2>
+<h3>7.3 How can I set components of a list to NULL?</h2>
 
 <p>You can use
 
-<pre>x[i] &lt;- list(NULL)
+<br><pre>x[i] &lt;- list(NULL)
 </pre>
 
 <p>to set component <code>i</code> of the list <code>x</code> to <code>NULL</code>, similarly
@@ -2401,7 +2407,7 @@ Previous:<a rel=previous href="#How%20can%20I%20set%20components%20of%20a%20list
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.4 How can I save my workspace?</h2>
+<h3>7.4 How can I save my workspace?</h2>
 
 <p><code>save.image()</code> saves the objects in the user's <code>.GlobalEnv</code> to
 the file <code>.RData</code> in the R startup directory.  (This is also what
@@ -2415,12 +2421,12 @@ Previous:<a rel=previous href="#How%20can%20I%20save%20my%20workspace%3f">How ca
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.5 How can I clean up my workspace?</h2>
+<h3>7.5 How can I clean up my workspace?</h2>
 
 <p>To remove all objects in the currently active environment (typically
 <code>.GlobalEnv</code>), you can do
 
-<pre>rm(list = ls(all = TRUE))
+<br><pre>rm(list = ls(all = TRUE))
 </pre>
 
 <p>(Without <code>all = TRUE</code>, only the objects with names not starting
@@ -2433,7 +2439,7 @@ Previous:<a rel=previous href="#How%20can%20I%20clean%20up%20my%20workspace%3f">
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.6 How can I get eval() and D() to work?</h2>
+<h3>7.6 How can I get eval() and D() to work?</h2>
 
 <p>Strange things will happen if you use <code>eval(print(x), envir = e)</code>
 or <code>D(x^2, "x")</code>.  The first one will either tell you that
@@ -2448,7 +2454,7 @@ differentiated.  What you (most likely) really want is obtained by
 "quoting" the first argument upon surrounding it with
 <code>expression()</code>.  For example,
 
-<pre>R&gt; D(expression(x^2), "x")
+<br><pre>R&gt; D(expression(x^2), "x")
 2 * x
 </pre>
 
@@ -2458,12 +2464,12 @@ implemented, but problems would arise whenever the expression is
 contained in a variable, passed as a parameter, or is the result of a
 function call.  Consider for instance the semantics in cases like
 
-<pre>D2 &lt;- function(e, n) D(D(e, n), n)
+<br><pre>D2 &lt;- function(e, n) D(D(e, n), n)
 </pre>
 
 <p>or
 
-<pre>g &lt;- function(y) eval(substitute(y), sys.frame(sys.parent(n = 2)))
+<br><pre>g &lt;- function(y) eval(substitute(y), sys.frame(sys.parent(n = 2)))
 g(a * b)
 </pre>
 
@@ -2476,7 +2482,7 @@ Previous:<a rel=previous href="#How%20can%20I%20get%20eval()%20and%20D()%20to%20
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.7 Why do my matrices lose dimensions?</h2>
+<h3>7.7 Why do my matrices lose dimensions?</h2>
 
 <p>When a matrix with a single row or column is created by a subscripting
 operation, e.g., <code>row &lt;- mat[2, ]</code>, it is by default turned into a
@@ -2487,7 +2493,7 @@ been determined to be a <em>feature</em>.
 <p>To prevent this happening, add the option <code>drop = FALSE</code> to the
 subscripting.  For example,
 
-<pre>rowmatrix &lt;- mat[2, , drop = FALSE]  # creates a row matrix
+<br><pre>rowmatrix &lt;- mat[2, , drop = FALSE]  # creates a row matrix
 colmatrix &lt;- mat[, 2, drop = FALSE]  # creates a column matrix
 a &lt;- b[1, 1, 1, drop = FALSE]        # creates a 1 x 1 x 1 array
 </pre>
@@ -2495,14 +2501,14 @@ a &lt;- b[1, 1, 1, drop = FALSE]        # creates a 1 x 1 x 1 array
 <p>The <code>drop = FALSE</code> option should be used defensively when
 programming.  For example, the statement
 
-<pre>somerows &lt;- mat[index, ]
+<br><pre>somerows &lt;- mat[index, ]
 </pre>
 
 <p>will return a vector rather than a matrix if <code>index</code> happens to
 have length 1, causing errors later in the code.  It should probably be
 rewritten as
 
-<pre>somerows &lt;- mat[index, , drop = FALSE]
+<br><pre>somerows &lt;- mat[index, , drop = FALSE]
 </pre>
 
 <p><hr>
@@ -2512,7 +2518,7 @@ Previous:<a rel=previous href="#Why%20do%20my%20matrices%20lose%20dimensions%3f"
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.8 How does autoloading work?</h2>
+<h3>7.8 How does autoloading work?</h2>
 
 <p>R has a special environment called <code>.AutoloadEnv</code>.  Using
 <kbd>autoload(<var>name</var>, <var>pkg</var>)</kbd>, where <var>name</var> and
@@ -2534,7 +2540,7 @@ Previous:<a rel=previous href="#How%20does%20autoloading%20work%3f">How does aut
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.9 How should I set options?</h2>
+<h3>7.9 How should I set options?</h2>
 
 <p>The function <code>options()</code> allows setting and examining a variety of
 global "options" which affect the way in which R computes and displays
@@ -2545,7 +2551,7 @@ variable.
 
 <p>For example, given
 
-<pre>test1 &lt;- function(x = pi, dig = 3) {
+<br><pre>test1 &lt;- function(x = pi, dig = 3) {
   oo &lt;- options(digits = dig); on.exit(options(oo));
   cat(.Options$digits, x, "\n")
 }
@@ -2557,7 +2563,7 @@ test2 &lt;- function(x = pi, dig = 3) {
 
 <p>we obtain:
 
-<pre>R&gt; test1()
+<br><pre>R&gt; test1()
 3 3.14
 R&gt; test2()
 3 3.141593
@@ -2575,7 +2581,7 @@ Previous:<a rel=previous href="#How%20should%20I%20set%20options%3f">How should 
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.10 How do file names work in Windows?</h2>
+<h3>7.10 How do file names work in Windows?</h2>
 
 <p>As R uses C-style string handling, <code>\</code> is treated as an escape
 character, so that for example one can enter a newline as <code>\n</code>. 
@@ -2592,7 +2598,7 @@ Previous:<a rel=previous href="#How%20do%20file%20names%20work%20in%20Windows%3f
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.11 Why does plotting give a color allocation error?</h2>
+<h3>7.11 Why does plotting give a color allocation error?</h2>
 
 <p>Sometimes plotting, e.g., when running <code>demo(image)</code>, results in
 "Error: color allocation error".  This is an X problem, and only
@@ -2616,18 +2622,18 @@ Previous:<a rel=previous href="#Why%20does%20plotting%20give%20a%20color%20alloc
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.12 How do I convert factors to numeric?</h2>
+<h3>7.12 How do I convert factors to numeric?</h2>
 
 <p>It may happen that when reading numeric data into R (usually, when
 reading in a file), they come in as factors.  If <code>f</code> is such a
 factor object, you can use
 
-<pre>as.numeric(as.character(f))
+<br><pre>as.numeric(as.character(f))
 </pre>
 
 <p>to get the numbers back.  More efficient, but harder to remember, is
 
-<pre>as.numeric(levels(f))[as.integer(f)]
+<br><pre>as.numeric(levels(f))[as.integer(f)]
 </pre>
 
 <p>In any case, do not call <code>as.numeric()</code> or their likes directly.
@@ -2639,16 +2645,12 @@ Previous:<a rel=previous href="#How%20do%20I%20convert%20factors%20to%20numeric%
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.13 Are Trellis displays implemented in R?</h2>
+<h3>7.13 Are Trellis displays implemented in R?</h2>
 
-<p>An R package called <strong>lattice</strong>, which provides graphical
-functionality that is compatible with most Trellis commands, is under
-development.  The latest version of the package may be downloaded from
-the <code>contrib/Devel</code> area of <small>CRAN</small>.  <strong>lattice</strong>
-currently relies on another package called <strong>grid</strong> (also under
-development) so you will need to download that as well.  Because these
-packages are under active development, they might only work with the
-latest development version of R.
+<p>An R package called <strong>lattice</strong> provides graphical functionality
+that is compatible with most Trellis commands.  It currently relies on
+another package called <strong>grid</strong> so you will need to download that
+as well.
 
 <p>You could also look at <code>coplot()</code> and <code>dotchart()</code> which might
 do at least some of what you want.  Note also that the R version of
@@ -2658,7 +2660,7 @@ of <code>splom()</code>, and that R's default plot method has an argument
 aspect ratio of the plot.
 
 <p>(Because the word "Trellis" has been claimed as a trademark we do not
-use it in R.  The name "lattice" has been proposed for the R
+use it in R.  The name "lattice" has been chosen for the R
 equivalent.)
 
 <p><hr>
@@ -2668,7 +2670,7 @@ Previous:<a rel=previous href="#Are%20Trellis%20displays%20implemented%20in%20R%
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.14 What are the enclosing and parent environments?</h2>
+<h3>7.14 What are the enclosing and parent environments?</h2>
 
 <p>Inside a function you may want to access variables in two additional
 environments: the one that the function was defined in ("enclosing"),
@@ -2722,7 +2724,7 @@ Previous:<a rel=previous href="#What%20are%20the%20enclosing%20and%20parent%20en
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.15 How can I substitute into a plot label?</h2>
+<h3>7.15 How can I substitute into a plot label?</h2>
 
 <p>Often, it is desired to use the value of an R object in a plot label,
 e.g., a title.  This is easily accomplished using <code>paste()</code> if the
@@ -2732,7 +2734,7 @@ case, either use <code>parse()</code> on your pasted character string or use
 <code>substitute()</code> on an expression.  For example, if <code>ahat</code> is an
 estimator of your parameter a of interest, use
 
-<pre>title(substitute(hat(a) == ahat, list(ahat = ahat)))
+<br><pre>title(substitute(hat(a) == ahat, list(ahat = ahat)))
 </pre>
 
 <p>(note that it is <code>==</code> and not <code>=</code>).  There are more worked
@@ -2745,7 +2747,7 @@ Previous:<a rel=previous href="#How%20can%20I%20substitute%20into%20a%20plot%20l
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.16 What are valid names?</h2>
+<h3>7.16 What are valid names?</h2>
 
 <p>When creating data frames using <code>data.frame()</code> or
 <code>read.table()</code>, R by default ensures that the variable names are
@@ -2794,7 +2796,7 @@ Previous:<a rel=previous href="#What%20are%20valid%20names%3f">What are valid na
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.17 Are GAMs implemented in R?</h2>
+<h3>7.17 Are GAMs implemented in R?</h2>
 
 <p>There is a <code>gam()</code> function for Generalized Additive Models in
 package <strong>mgcv</strong>, but it is not an exact clone of what is described
@@ -2810,16 +2812,16 @@ Previous:<a rel=previous href="#Are%20GAMs%20implemented%20in%20R%3f">Are GAMs i
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.18 Why is the output not printed when I source() a file?</h2>
+<h3>7.18 Why is the output not printed when I source() a file?</h2>
 
 <p>Most R commands do not generate any output. The command
 
-<pre>1+1
+<br><pre>1+1
 </pre>
 
 <p>computes the value 2 and returns it; the command
 
-<pre>summary(glm(y~x+z, family=binomial))
+<br><pre>summary(glm(y~x+z, family=binomial))
 </pre>
 
 <p>fits a logistic regression model, computes some summary information and
@@ -2833,12 +2835,12 @@ specifically print it.
 
 <p>To print the value use
 
-<pre>print(1+1)
+<br><pre>print(1+1)
 </pre>
 
 <p>or
 
-<pre>print(summary(glm(y~x+z, family=binomial)))
+<br><pre>print(summary(glm(y~x+z, family=binomial)))
 </pre>
 
 <p>instead, or use <code>source(<var>file</var>, echo=TRUE)</code>.
@@ -2850,7 +2852,7 @@ Previous:<a rel=previous href="#Why%20is%20the%20output%20not%20printed%20when%2
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.19 Why does outer() behave strangely with my function?</h2>
+<h3>7.19 Why does outer() behave strangely with my function?</h2>
 
 <p>As the help for <code>outer()</code> indicates, it does not work on arbitrary
 functions the way the <code>apply()</code> family does.  It requires functions
@@ -2865,7 +2867,7 @@ scalars, then you can still use <code>outer()</code> but you will need to wrap
 your function up first, to simulate vectorized behavior.  Suppose your
 function is
 
-<pre>foo &lt;- function(x, y, happy) {
+<br><pre>foo &lt;- function(x, y, happy) {
   stopifnot(length(x) == 1, length(y) == 1) # scalars only!
   (x + y) * happy
 }
@@ -2873,14 +2875,14 @@ function is
 
 <p>If you define the general function
 
-<pre>wrapper &lt;- function(x, y, my.fun, ...) {
+<br><pre>wrapper &lt;- function(x, y, my.fun, ...) {
   sapply(seq(along=x), FUN = function(i) my.fun(x[i], y[i], ...))
 }
 </pre>
 
 <p>then you can use <code>outer()</code> by writing, e.g.,
 
-<pre>outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
+<br><pre>outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
 </pre>
 
 <p><hr>
@@ -2889,7 +2891,7 @@ Previous:<a rel=previous href="#Why%20does%20outer()%20behave%20strangely%20with
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
-<h2>7.20 Why does the output from anova() depend on the order of factors in the model?</h2>
+<h3>7.20 Why does the output from anova() depend on the order of factors in the model?</h2>
 
 <p>In a model such as <code>~A+B+A:B</code>, R will report the difference in sums
 of squares between the models <code>~1</code>, <code>~A</code>, <code>~A+B</code> and
@@ -2921,7 +2923,7 @@ Previous:<a rel=previous href="#R%20Miscellanea">R Miscellanea</a>,
 Up:<a rel=up href="#Top">Top</a>
 <br>
 
-<h1>8 R Programming</h1>
+<h2>8 R Programming</h1>
 
 <ul>
 <li><a href="#How%20should%20I%20write%20summary%20methods%3f">How should I write summary methods?</a>: 
@@ -2937,7 +2939,7 @@ Previous:<a rel=previous href="#R%20Programming">R Programming</a>,
 Up:<a rel=up href="#R%20Programming">R Programming</a>
 <br>
 
-<h2>8.1 How should I write summary methods?</h2>
+<h3>8.1 How should I write summary methods?</h2>
 
 <p>Suppose you want to provide a summary method for class <code>foo</code>.  Then
 <code>summary.foo()</code> should not print anything, but return an object of
@@ -2956,7 +2958,7 @@ Previous:<a rel=previous href="#How%20should%20I%20write%20summary%20methods%3f"
 Up:<a rel=up href="#R%20Programming">R Programming</a>
 <br>
 
-<h2>8.2 How can I debug dynamically loaded code?</h2>
+<h3>8.2 How can I debug dynamically loaded code?</h2>
 
 <p>Roughly speaking, you need to start R inside the debugger, load the
 code, send an interrupt, and then set the required breakpoints.
@@ -2972,7 +2974,7 @@ Previous:<a rel=previous href="#How%20can%20I%20debug%20dynamically%20loaded%20c
 Up:<a rel=up href="#R%20Programming">R Programming</a>
 <br>
 
-<h2>8.3 How can I inspect R objects when debugging?</h2>
+<h3>8.3 How can I inspect R objects when debugging?</h2>
 
 <p>The most convenient way is to call <code>R_PV</code> from the symbolic
 debugger.
@@ -2986,7 +2988,7 @@ Previous:<a rel=previous href="#How%20can%20I%20inspect%20R%20objects%20when%20d
 Up:<a rel=up href="#R%20Programming">R Programming</a>
 <br>
 
-<h2>8.4 How can I change compilation flags?</h2>
+<h3>8.4 How can I change compilation flags?</h2>
 
 <p>Suppose you have C code file for dynloading into R, but you want to use
 <code>R CMD SHLIB</code> with compilation flags other than the default ones
@@ -2996,7 +2998,7 @@ are a Bourne shell user, you can also pass the desired flags to Make
 (which is used for controlling compilation) via the Make variable
 <code>MAKEFLAGS</code>, as in
 
-<pre>MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
+<br><pre>MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
 </pre>
 
 <p><hr>
@@ -3006,7 +3008,7 @@ Previous:<a rel=previous href="#R%20Programming">R Programming</a>,
 Up:<a rel=up href="#Top">Top</a>
 <br>
 
-<h1>9 R Bugs</h1>
+<h2>9 R Bugs</h1>
 
 <ul>
 <li><a href="#What%20is%20a%20bug%3f">What is a bug?</a>: 
@@ -3020,7 +3022,7 @@ Previous:<a rel=previous href="#R%20Bugs">R Bugs</a>,
 Up:<a rel=up href="#R%20Bugs">R Bugs</a>
 <br>
 
-<h2>9.1 What is a bug?</h2>
+<h3>9.1 What is a bug?</h2>
 
 <p>If R executes an illegal instruction, or dies with an operating system
 error message that indicates a problem in the program (as opposed to
@@ -3067,7 +3069,7 @@ Previous:<a rel=previous href="#What%20is%20a%20bug%3f">What is a bug?</a>,
 Up:<a rel=up href="#R%20Bugs">R Bugs</a>
 <br>
 
-<h2>9.2 How to report a bug</h2>
+<h3>9.2 How to report a bug</h2>
 
 <p>When you decide that there is a bug, it is important to report it and to
 report it in a way which is useful.  What is most useful is an exact
@@ -3088,7 +3090,7 @@ unnecessary work for the ones trying to fix the problem.
 <p>For example, suppose that on a data set which you know to be quite large
 the command
 
-<pre>R&gt; data.frame(x, y, z, monday, tuesday)
+<br><pre>R&gt; data.frame(x, y, z, monday, tuesday)
 </pre>
 
 <p>never returns.  Do not report that <code>data.frame()</code> fails for large
@@ -3132,7 +3134,7 @@ Previous:<a rel=previous href="#R%20Bugs">R Bugs</a>,
 Up:<a rel=up href="#Top">Top</a>
 <br>
 
-<h1>10 Acknowledgments</h1>
+<h2>10 Acknowledgments</h1>
 
 <p>Of course, many many thanks to Robert and Ross for the R system, and to
 the package writers and porters for adding to it.
