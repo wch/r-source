@@ -53,8 +53,8 @@ help.start(update = TRUE, gui = "irrelevant",
   specified, but \code{help} will still use the file association mechanism.
 
   \code{help.start} and the Java-based search engine have been tested
-  under Internet Explorer 6, Netscape 6.2.3/7.0/7.1, Opera 7.23,
-  Mozilla 1.6 and MozillaFirefox 0.8.
+  under Internet Explorer 6, Netscape 7.1, Opera 7.23,
+  Mozilla 1.6/1.7 and MozillaFirefox 0.8/0.9/1.0.
 #endif
 }
 \note{
