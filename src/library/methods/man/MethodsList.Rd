@@ -42,7 +42,7 @@ linearizeMlist(mlist, inherited = TRUE)
 
 finalDefaultMethod(mlist, fname = "NULL")
 
-mergeMethods(m1, m2)
+mergeMethods(m1, m2, genericLabel)
 
 loadMethod(method, fname, envir)
 

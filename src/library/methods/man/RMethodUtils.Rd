@@ -70,7 +70,7 @@ setAllMethodsSlot(mlist)
 
 doPrimitiveMethod(name, def, call=sys.call(-1), ev=sys.frame(-2))
 
-conformMethod(signature, mnames, fnames)
+conformMethod(signature, mnames, fnames, f)
 
 getGeneric(f, mustFind=FALSE)
 
