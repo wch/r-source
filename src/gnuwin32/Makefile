@@ -377,7 +377,7 @@ distclean veryclean: clean clean-recommended
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
 	$(RM) rw-FAQ fixed/html/rw-FAQ.html
-	$(RM) -r cran/index.html cran/ReadMe cran/README* cran/*.exe cran/md5sum.txt \
+	$(RM) -r cran/*.html cran/ReadMe cran/README* cran/*.exe cran/md5sum.txt \
 	  cran/mini
 	$(RM) Rpwd.exe # do this last of all
 
