@@ -44,6 +44,10 @@ NEW FEATURES
     o	multivariate methods for ar: "yule-walker" (now in C) and
 	"burg" (new) contributed by Martyn Plummer.
 
+    o	New data sets `HairEyeColor' (hair and eye color of statistics
+	students), `Titanic' (survival of passengers on the Titanic),
+	and `UCBAdmissions' (student admissions at UC Berkeley).
+
 
 BUG FIXES
 
