@@ -6269,7 +6269,7 @@ We now look at some more graphical features: contour and image plots.
 @itemx y <- x
 @math{x} is a vector of 50 equally spaced values in
 @ifnottex
-the interval [-pi\, pi]}.
+the interval [-pi\, pi].
 @end ifnottex
 @iftex
 @tex
