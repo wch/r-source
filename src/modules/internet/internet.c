@@ -26,7 +26,7 @@
 #include <Rconnections.h>
 #include <R_ext/R-ftp-http.h>
 
-static void *in_R_HTTPOpen(const char *url);
+static void *in_R_HTTPOpen(const char *url, const int cacheOK);
 static int   in_R_HTTPRead(void *ctx, char *dest, int len);
 static void  in_R_HTTPClose(void *ctx);
 
@@ -64,7 +64,7 @@ static void url_open(Rconnection con)
 
     switch(type) {
     case HTTPsh:
-	ctxt = in_R_HTTPOpen(url);
+	ctxt = in_R_HTTPOpen(url, 0);
 	if(ctxt == NULL) error("cannot open URL `%s'", url);
 	((Rurlconn)(con->private))->ctxt = ctxt;
 	break;
@@ -196,7 +196,7 @@ typedef struct {
 #include <graphapp/ga.h>
 #endif
 
-/* download(url, destfile, quiet) */
+/* download(url, destfile, quiet, mode, cacheOK) */
 
 #define CPBUFSIZE 65536
 #define IBUFSIZE 4096
@@ -204,7 +204,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, scmd, sfile, smode;
     char *url, *file, *mode;
-    int quiet, status = 0;
+    int quiet, status = 0, cacheOK;
 #ifdef Win32
     window wprog;
     progressbar pb;
@@ -213,25 +213,28 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
     checkArity(op, args);
-    scmd = CAR(args);
+    scmd = CAR(args); args = CDR(args);
     if(!isString(scmd) || length(scmd) < 1)
 	error("invalid `url' argument");
     if(length(scmd) > 1)
 	warning("only first element of `url' argument used");
     url = CHAR(STRING_ELT(scmd, 0));
-    sfile = CADR(args);
+    sfile = CAR(args); args = CDR(args);
     if(!isString(sfile) || length(sfile) < 1)
 	error("invalid `destfile' argument");
     if(length(sfile) > 1)
 	warning("only first element of `destfile' argument used");
     file = CHAR(STRING_ELT(sfile, 0));
-    IDquiet = quiet = asLogical(CADDR(args));
+    IDquiet = quiet = asLogical(CAR(args)); args = CDR(args);
     if(quiet == NA_LOGICAL)
 	error("invalid `quiet' argument");
-    smode =  CADDDR(args);
+    smode =  CAR(args); args = CDR(args);
     if(!isString(smode) || length(smode) != 1)
 	error("invalid `mode' argument");
     mode = CHAR(STRING_ELT(smode, 0));
+    cacheOK = asLogical(CAR(args));
+    if(cacheOK == NA_LOGICAL)
+	error("invalid `cacheOK' argument");
 
     if(strncmp(url, "file://", 7) == 0) {
 	FILE *in, *out;
@@ -266,7 +269,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef Win32
 	R_FlushConsole();
 #endif
-	ctxt = in_R_HTTPOpen(url);
+	ctxt = in_R_HTTPOpen(url, cacheOK);
 	if(ctxt == NULL) status = 1;
 	else {
 	    if(!quiet) REprintf("opened URL\n", url);
@@ -415,7 +418,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #if defined(SUPPORT_LIBXML) && !defined(USE_WININET)
 
-void *in_R_HTTPOpen(const char *url)
+void *in_R_HTTPOpen(const char *url, int cacheOK)
 {
     inetconn *con;
     void *ctxt;
@@ -426,7 +429,7 @@ void *in_R_HTTPOpen(const char *url)
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
 
     RxmlNanoHTTPTimeout(timeout);
-    ctxt = RxmlNanoHTTPOpen(url, NULL);
+    ctxt = RxmlNanoHTTPOpen(url, NULL, cacheOK);
     if(ctxt != NULL) {
 	int rc = RxmlNanoHTTPReturnCode(ctxt);
 	if(rc != 200) {
@@ -543,7 +546,7 @@ InternetCallback(HINTERNET hInternet, DWORD context, DWORD Status,
 }
 #endif /* USE_WININET_ASYNC */
 
-static void *in_R_HTTPOpen(const char *url)
+static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 {
     WIctxt  wictxt;
     DWORD status, d1 = 4, d2 = 0, d3 = 100;
@@ -790,7 +793,7 @@ static void in_R_FTPClose(void *ctx)
 #endif
 
 #ifndef HAVE_INTERNET
-static void *in_R_HTTPOpen(const char *url)
+static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 {
     return NULL;
 }

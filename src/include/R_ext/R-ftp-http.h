@@ -10,7 +10,7 @@ void  R_FTPClose(void *ctx);
 
 /* internal code */
 
-void *	RxmlNanoHTTPOpen(const char *URL, char **contentType);
+void *	RxmlNanoHTTPOpen(const char *URL, char **contentType, int cacheOK);
 int	RxmlNanoHTTPRead(void *ctx, void *dest, int len);
 void	RxmlNanoHTTPClose(void *ctx);
 int 	RxmlNanoHTTPReturnCode(void *ctx);

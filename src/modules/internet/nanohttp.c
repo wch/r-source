@@ -91,7 +91,7 @@
 static void RxmlNanoHTTPScanProxy(const char *URL);
 static void *RxmlNanoHTTPMethod(const char *URL, const char *method,
 				const char *input, char **contentType,
-				const char *headers);
+				const char *headers, const int cacheOK);
 
 #ifdef Unix
 #include <R_ext/eventloop.h>
@@ -966,10 +966,10 @@ RxmlNanoHTTPConnectHost(const char *host, int port)
  */
 
 void*
-RxmlNanoHTTPOpen(const char *URL, char **contentType)
+RxmlNanoHTTPOpen(const char *URL, char **contentType, int cacheOK)
 {
     if (contentType != NULL) *contentType = NULL;
-    return RxmlNanoHTTPMethod(URL, NULL, NULL, contentType, NULL);
+    return RxmlNanoHTTPMethod(URL, NULL, NULL, contentType, NULL, cacheOK);
 }
 
 /**
@@ -1038,7 +1038,7 @@ RxmlNanoHTTPClose(void *ctx)
 
 void*
 RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
-                  char **contentType, const char *headers)
+                  char **contentType, const char *headers, const int cacheOK)
 {
     RxmlNanoHTTPCtxtPtr ctxt;
     char *bp, *p;
@@ -1089,6 +1089,8 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
     }
     else
 	ilen = 0;
+    if (!cacheOK)
+	blen += 20;
     if (headers != NULL)
 	blen += strlen(headers);
     if (contentType && *contentType)
@@ -1108,6 +1110,10 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
     p = bp + strlen(bp);
     sprintf(p, " HTTP/1.0\r\nHost: %s\r\n", ctxt->hostname);
     p += strlen(p);
+    if(!cacheOK) {
+	sprintf(p, "Pragma: no-cache\r\n");
+	p += strlen(p);
+    }
     if (contentType != NULL && *contentType) {
 	sprintf(p, "Content-Type: %s\r\n", *contentType);
 	p += strlen(p);

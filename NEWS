@@ -57,6 +57,8 @@ NEW FEATURES
         and methods ("S4" methods).  In support of this, the "@"
         operator has been added to the grammar.
 
+    o	New argument `cacheOK' to download.file() to request cache-flushing.
+
 
 
 BUG FIXES

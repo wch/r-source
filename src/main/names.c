@@ -775,8 +775,8 @@ FUNTAB R_FunTab[] =
 {"socketConnection",do_sockconn,0,	11,     6,      PP_FUNCALL},
 {"getAllConnections",do_getallconnections,0,	11,     0,      PP_FUNCALL},
 {"summary.connection",do_sumconnection,0,	11,     1,      PP_FUNCALL},
-{"download", 	do_download,	0,      11,     4,      PP_FUNCALL},
-{"nsl", 	do_nsl,	0,      11,     1,      PP_FUNCALL},
+{"download", 	do_download,	0,      11,     5,      PP_FUNCALL},
+{"nsl", 	do_nsl,		0,      11,     1,      PP_FUNCALL},
 
 
 {"readDCF", 	do_readDCF,	0,      11,     2,      PP_FUNCALL},

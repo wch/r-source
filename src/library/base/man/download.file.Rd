@@ -5,7 +5,7 @@
   This function can be used to download a file from the Internet.
 }
 \usage{
-download.file(url, destfile, method, quiet = FALSE, mode="w")
+download.file(url, destfile, method, quiet = FALSE, mode="w", cacheOK = TRUE)
 }
 \arguments{
   \item{url}{A character string with the URL of a resource to be downloaded.}
@@ -21,6 +21,8 @@ download.file(url, destfile, method, quiet = FALSE, mode="w")
   \item{mode}{character.  The mode with which to write the file. Useful
     values are \code{"w"}, \code{"wb"} (binary), \code{"a"} (append) and
     \code{"ab"}.  Only used for the \code{"internal"} method.}
+  \item{cacheOK}{logical. Is a server-side cached value acceptable?
+    Implemented for the \code{"internal"} and \code{"wget"} methods.}
 }
 \details{
   The function \code{download.file} can be used to download a single
@@ -28,6 +30,11 @@ download.file(url, destfile, method, quiet = FALSE, mode="w")
   \code{destfile}.
   The \code{url} must start with a scheme such as
   \code{"http://"}, \code{"ftp://"} or \code{"file://"}.
+
+  \code{cacheOK = FALSE} is useful for \code{"http://"} URLs, and will
+  attempt to get a copy directly from the site rather than from an
+  intermediate cache.  (Not all platforms support it.)
+  It is used by \code{\link{CRAN.packages}}.
 
   The remaining details apply to method \code{"internal"} only.
 
