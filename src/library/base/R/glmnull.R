@@ -99,9 +99,10 @@ summary.glm.null <- function (object, dispersion = NULL, correlation = TRUE,
     class(ans) <- c("summary.glm.null", "summary.glm")
     return(ans)
 }
-glm.fit.null <- function (x, y, weights = rep(1, nobs), start = NULL,
-                          offset = rep(0, nobs), family = gaussian(),
-                          control = glm.control(), intercept = FALSE)
+glm.fit.null <-
+    function (x, y, weights = rep(1, nobs), start = NULL,
+              etastart = NULL, mustart = NULL, offset = rep(0, nobs),
+              family = gaussian(), control = glm.control(), intercept = FALSE)
 {
     if(intercept) stop("null models have no intercept")
     ynames <- names(y)
