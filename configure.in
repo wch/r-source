@@ -284,10 +284,10 @@ fi
 
 if test -n "${F77}"; then
   FC=${F77}
+  OCTAVE_FLIBS
   R_PROG_F77_G77
   R_PROG_F77_APPEND_UNDERSCORE
   R_PROG_F77_CC_COMPAT
-  OCTAVE_FLIBS
   f77_rules_frag=Makefrag.f77
   cat << \EOF > ${f77_rules_frag}
 .f.c:
