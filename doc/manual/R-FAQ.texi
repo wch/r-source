@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-23 @value{FAQ-YEAR}-06-11
+@set FAQ-VERSION 1.9-24 @value{FAQ-YEAR}-06-15
 @set REL-VERSION 1.9.0
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2487,6 +2487,11 @@ running BUGS from R.  Support for Linux systems with Wine is emphasized.
 Functions for creating references, reading from and writing ro
 references and a memory efficient refdata type that transparently
 encapsulates matrices and data frames.
+@item regress
+Fitting Gaussian linear models where the covariance structure is a
+linear combination of known matrices by maximising the residual log
+likelihood.  Can be used for multivariate models and random effects
+models.
 @item relimp
 Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model.
@@ -2673,6 +2678,9 @@ Functions for survival analysis, including penalised likelihood.
 @emph{Recommended}.
 @item survrec
 Survival analysis for recurrent event data.
+@item svmpath
+Computes the entire regularization path for the two-class svm classifier
+with essentialy the same cost as a single SVM fit.
 @item systemfit
 Contains functions for fitting simultaneous systems of equations using
 Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
