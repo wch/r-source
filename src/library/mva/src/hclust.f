@@ -10,7 +10,7 @@ C                    storage; LEN = N.N-1/2,                 C
 C  IOPT              clustering criterion to be used,        C
 C  IA, IB, CRIT      history of agglomerations; dimensions   C
 C                    N, first N-1 locations only used,       C
-C  MEMBR, NN, DISNN  vectors of length N, used to store      C 
+C  MEMBR, NN, DISNN  vectors of length N, used to store      C
 C                    cluster cardinalities, current nearest  C
 C                    neighbour, and the dissimilarity assoc. C
 C                    with the latter.                        C
@@ -33,7 +33,7 @@ c Args
       DOUBLE PRECISION CRIT(N), MEMBR(N),DISS(LEN), DISNN(N)
 c Var
       INTEGER IM, JJ, JM, I, NCL, J, IND, I2, J2, K, IND1, IND2, IND3
-      DOUBLE PRECISION INF, DMIN, X, XX
+      DOUBLE PRECISION INF, DMIN, D12
 c External function
       INTEGER IOFFST
 c
@@ -95,7 +95,6 @@ C
       DO 50 K=1,N
          IF (.NOT.FLAG(K)) GOTO 800
          IF (K.EQ.I2) GOTO 800
-         X=MEMBR(I2)+MEMBR(J2)+MEMBR(K)
          IF (I2.LT.K) THEN
                            IND1=IOFFST(N,I2,K)
                       ELSE
@@ -107,15 +106,14 @@ C
                            IND2=IOFFST(N,K,J2)
          ENDIF
          IND3=IOFFST(N,I2,J2)
-         XX=DISS(IND3)
+         D12=DISS(IND3)
 C
 C  WARD'S MINIMUM VARIANCE METHOD - IOPT=1.
 C
          IF (IOPT.EQ.1) THEN
             DISS(IND1)=(MEMBR(I2)+MEMBR(K))*DISS(IND1)+
-     X                 (MEMBR(J2)+MEMBR(K))*DISS(IND2)-
-     X                 MEMBR(K)*XX
-            DISS(IND1)=DISS(IND1)/X
+     X                 (MEMBR(J2)+MEMBR(K))*DISS(IND2) - MEMBR(K)*D12
+            DISS(IND1)=DISS(IND1) / (MEMBR(I2)+MEMBR(J2)+MEMBR(K))
          ENDIF
 C
 C  SINGLE LINK METHOD - IOPT=2.
@@ -146,14 +144,14 @@ C
 C  MEDIAN (GOWER'S) METHOD - IOPT=6.
 C
          IF (IOPT.EQ.6) THEN
-            DISS(IND1)=0.5*DISS(IND1)+0.5*DISS(IND2)-0.25*XX
+            DISS(IND1)=0.5*DISS(IND1)+0.5*DISS(IND2)-0.25*D12
          ENDIF
 C
 C  CENTROID METHOD - IOPT=7.
 C
          IF (IOPT.EQ.7) THEN
             DISS(IND1)=(MEMBR(I2)*DISS(IND1)+MEMBR(J2)*DISS(IND2)-
-     X          MEMBR(I2)*MEMBR(J2)*XX/(MEMBR(I2)+MEMBR(J2)))/
+     X                  MEMBR(I2)*MEMBR(J2)*D12/(MEMBR(I2)+MEMBR(J2)))/
      X          (MEMBR(I2)+MEMBR(J2))
             ENDIF
 C
@@ -200,7 +198,7 @@ c     of HCLUST()
 C
 C
       INTEGER FUNCTION IOFFST(N,I,J)
-C  Map row I and column J of upper half diagonal symmetric matrix 
+C  Map row I and column J of upper half diagonal symmetric matrix
 C  onto vector.
       INTEGER N,I,J
       IOFFST=J+(I-1)*N-(I*(I+1))/2
