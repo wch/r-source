@@ -8,7 +8,7 @@
 \alias{inherits}
 \description{
   \R possesses a simple generic function mechanism which can be used for
-  an object-oriented style of programming.  Method despatch takes place
+  an object-oriented style of programming.  Method dispatch takes place
   based on the class of the first argument to the generic function.
 }
 \usage{
@@ -16,6 +16,9 @@ class(x)
 class(x) <- names
 unclass(x)
 inherits(x, what, which = FALSE)
+
+oldClass(x)
+oldClass(x) <- names
 }
 \arguments{
   \item{x}{a \R object}
@@ -47,7 +50,7 @@ inherits(x, what, which = FALSE)
   classes an object inherits from.
 
   \code{unclass} returns (a copy of) its argument with its class
-  information removed.
+  attribute removed.
 
   \code{inherits} indicates whether its first argument inherits from any
   of the classes specified in the \code{what} argument.  If \code{which}
