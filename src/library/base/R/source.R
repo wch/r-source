@@ -120,8 +120,8 @@ demo <- function(topic, device = getOption("device"),
                            quiet = TRUE)
 
     if(missing(topic)) {
-        ## List all available demos
-        ## This code could be made more similar to show.data()
+        ## List all available demos.
+        ## This code could be made more similar to data().
         first <- TRUE
         outFile <- tempfile("Rdemo.")
         outConn <- file(outFile, open = "w")
@@ -140,6 +140,7 @@ demo <- function(topic, device = getOption("device"),
         if(first) {
             warning("no demo listings found")
             close(outConn)
+            unlink(outFile)
         }
         else {
             if(missing(package))
