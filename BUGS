@@ -120,6 +120,11 @@ Date: Sun, 17 Nov 2002 15:28:14 +0100
 Subject: Segmentation fault using "survival" package
 From: jerome@hivnet.ubc.ca
 Date: Sat, 23 Nov 2002 00:51:50 +0100 (MET)
+* PR# 2322 *
+Subject: simplex
+From: george@lecompte.org
+Date: Sat, 23 Nov 2002 17:30:37 +0100 (MET)
+..report on boot, I think (not mentioned, though)
 
 Directory:  Analyses
 
@@ -613,10 +618,6 @@ From: hb@maths.lth.se
 Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
 ..Not a bug, but perhaps a useful feature: should the attributes of environments
 ..be copied on assignment?
-* PR# 2299 *
-Subject: formatC with format="fg" displays number in exponential notation
-From: schutz@wehi.edu.au
-Date: Sat, 16 Nov 2002 06:33:04 +0100 (MET)
 * PR# 2305 *
 Subject: Prediction from arima() object (library ts)
 From: mcrae_allan@hotmial.com
@@ -625,19 +626,3 @@ Date: Mon, 18 Nov 2002 15:12:22 +0100 (MET)
 Subject:  Nesting of readline input 
 From: j.c.rougier@durham.ac.uk
 Date: Tue, 19 Nov 2002 14:24:41 GMT
-* PR# 2316 *
-Subject: Platform() used in tkfilefind.X although now deprecated
-From: "Stephen Eglen	(CNS)" <stephen@cogsci.ed.ac.uk>
-Date: Wed, 20 Nov 2002 22:12:58 +0000
-* PR# 2322 *
-Subject: simplex
-From: george@lecompte.org
-Date: Sat, 23 Nov 2002 17:30:37 +0100 (MET)
-* PR# 2323 *
-Subject: Intermittant hang in cmdscale
-From: campbell.webb@yale.edu
-Date: Sat, 23 Nov 2002 23:57:32 +0100 (MET)
-* PR# 2326 *
-Subject: Contr.poly for n > 100
-From: clifford@galton.uchicago.edu
-Date: Mon, 25 Nov 2002 22:23:39 +0100 (MET)
