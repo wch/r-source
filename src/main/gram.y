@@ -146,7 +146,7 @@ static int	xxvalue(SEXP, int);
 %left		UNOT NOT
 %left   	GT GE LT LE EQ NE
 %left		'+' '-'
-%left		'*' '/' '%'
+%left		'*' '/'
 %left		SPECIAL
 %left		':'
 %left		UMINUS UPLUS

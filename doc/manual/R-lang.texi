@@ -938,11 +938,11 @@ below.
 @item @code{!}
 @tab Unary not
 @item @code{~}
-@tab Tilde, used for formulae, can be either unary or binary
+@tab Tilde, used for model formulae, can be either unary or binary
 @item @code{?}
 @tab Help
 @item @code{:}
-@tab Sequence, binary
+@tab Sequence, binary (in model formulae: interaction)
 @item @code{*}
 @tab Multiplication, binary
 @item @code{/}
@@ -951,8 +951,18 @@ below.
 @tab Exponentiation, binary
 @item @code{%@var{x}%}
 @tab Special binary operators, @var{x} can be replaced by anything
-@item @code{%}
+@item @code{%%}
 @tab Modulus, binary
+@item @code{%/%}
+@tab Integer divide, binary
+@item @code{%*%}
+@tab Matrix product, binary
+@item @code{%o%}
+@tab Outer product, binary
+@item @code{%x%}
+@tab Kronecker product, binary
+@item @code{%in%}
+@tab Matching operator, binary (in model formulae: nesting)
 @item @code{<}
 @tab Less than, binary
 @item @code{>}
@@ -981,9 +991,6 @@ below.
 @tab List subset, binary
 @end multitable
 @end quotation
-
-@c FIXME %% %/% %*% (maybe %x% %o% %in% too?) Say something about
-@c %name%? 
 
 Except for the syntax, there is no difference between applying an
 operator and calling a function.  In fact, @code{x + y} can equivalently

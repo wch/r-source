@@ -251,7 +251,7 @@ Rboolean isUserBinop(SEXP s)
 {
     if (isSymbol(s)) {
 	char *str = CHAR(PRINTNAME(s));
-	if (str[0] == '%' && str[strlen(str)-1] == '%')
+	if (strlen(str) >= 2 && str[0] == '%' && str[strlen(str)-1] == '%')
 	    return TRUE;
     }
     return FALSE;

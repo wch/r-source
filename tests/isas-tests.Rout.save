@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.3.0 Under development (unstable) (2001-04-28)
+Version 1.3.0 Under development (unstable) (2001-04-30)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2467,7 +2467,7 @@ Error in as.table.ftable(x) : x must be an `ftable'
 > ###--------
 >  x <- as.data.frame(character(0))
 > is.array(as.array( x ))
-Error in dimnames<-.data.frame(*tmp*, value = list(n)) : 
+Error in "dimnames<-.data.frame"(*tmp*, value = list(n)) : 
 	invalid dimnames given for data frame
 > is.call(as.call( x ))
 [1] TRUE
@@ -2520,7 +2520,7 @@ Error in ts(x) : ts object must have one or more observations
 > 
 > if(is.array(x)) { cat('IS: ');all.equal(x, as.array( x ), tol=0)
 + } else   !isall.equal(x, as.array( x ))
-Error in dimnames<-.data.frame(*tmp*, value = list(n)) : 
+Error in "dimnames<-.data.frame"(*tmp*, value = list(n)) : 
 	invalid dimnames given for data frame
 > if(is.call(x)) { cat('IS: ');all.equal(x, as.call( x ), tol=0)
 + } else   !isall.equal(x, as.call( x ))
@@ -2610,7 +2610,7 @@ Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct
 > f <- as.POSIXlt( x );  all.equal(f, as.POSIXlt( f ), tol=0)
 Error in as.POSIXlt(x) : Don't know how to convert `x' to class "POSIXlt"
 > f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
-Error in dimnames<-.data.frame(*tmp*, value = list(n)) : 
+Error in "dimnames<-.data.frame"(*tmp*, value = list(n)) : 
 	invalid dimnames given for data frame
 > f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
 [1] TRUE
@@ -2744,7 +2744,7 @@ Error in as.matrix.data.frame(as.data.frame(unclass(x))) :
 > f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
 Error in as.matrix.data.frame(x) : length of dimnames[2] not equal to array extent
 > f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
-Error in dimnames<-.data.frame(*tmp*, value = dimnames) : 
+Error in "dimnames<-.data.frame"(*tmp*, value = dimnames) : 
 	invalid dimnames given for data frame
 > f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
 Error in as.matrix.data.frame(x) : length of dimnames[2] not equal to array extent
@@ -2783,6 +2783,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  6.11 1.44 7.56 0 0 
+Time elapsed:  2.36 0.15 2.64 0 0 
 > 
 > 

@@ -712,7 +712,15 @@ static void deparse2buff(SEXP s)
 		    break;
 		}
 		else {
-		    deparse2buff(CAR(s));
+		    if ( isSymbol(CAR(s)) )
+		    	if ( !isValidName(CHAR(PRINTNAME(CAR(s)))) ){
+			    print2buff("\"");
+			    print2buff(CHAR(PRINTNAME(CAR(s))));
+			    print2buff("\"");
+			} else
+			    print2buff(CHAR(PRINTNAME(CAR(s))));
+		    else
+			deparse2buff(CAR(s));
 		    print2buff("(");
 		    args2buff(CDR(s), 0, 0);
 		    print2buff(")");

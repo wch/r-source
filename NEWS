@@ -202,6 +202,11 @@ BUG FIXES
     o	the "coef = 0" fix (PR#917) to boxplot.stats() accidentally broke
 	boxplot.stats(do.out = FALSE).
 
+    o   The documentation and parts of the parse/deparse mechanism
+    	indicated that there was an operator '%'. Corrected. PR#925
+
+    o   Fixed some cases where the deparser gave code that threw a
+        syntax error when parsed.
 
 
 	**************************************************
