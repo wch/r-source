@@ -1,7 +1,7 @@
-The Makefile.in.in here was originally produced by gettextize, and seems not
-fully correct for our usage.
+The Makefile.in.in here was originally produced by gettextize, but has
+since been modified extensively.
 
-If you convert a C file for use with gettext, add it to POTFILES.in, and
+If you convert a C file for use with gettext, add it to POTFILES.in and
 then run
 
 make update-po
@@ -16,3 +16,17 @@ and after checking, copy en.po.new over en.po.  Then delete stamp-po and run
 To add a new translation, add the lang.po file to this directory and add
 the language to LINGUAS.  Hopefully `make' will do the rest 
 (create lang.gmo and install it as required).
+
+
+Windows RGui translations
+=========================
+
+These are contained in RGui.pot, created by running
+
+cd ../src/gnuwin32
+xgettext --keyword=G_ --keyword=GN_ -o ../../po/RGui.pot *.c graphapp/gmenus.c
+
+To install a translation, add its .gmo file to the RGUI-CATALOGS macro
+Makefile.win, and both the .po and .gmo files to the RGUI-CATALOGS
+macro in Makefile.in.in.  To avoid confusion, call the compiled
+translation for language 'll' RGui-ll.gmo.

@@ -9,6 +9,11 @@
 # General Public License and is *not* in the public domain.
 #
 # Origin: gettext-0.14
+## Much modified by the R-core team for use in the R project.
+
+## add other languages for the R domain to LINGUAS
+## add both RGui-ll.po and RGui-ll.gmo files to RGUI_CATALOGS
+RGUI_CATALOGS =
 
 VPATH = @srcdir@
 srcdir = @srcdir@
@@ -39,7 +44,7 @@ DUMMYPOFILES = @DUMMYPOFILES@
 DISTFILES.common = README Makefile.in.in Makefile.win remove-potcdate.sin \
 $(DISTFILES.common.extra1) $(DISTFILES.common.extra2) $(DISTFILES.common.extra3)
 DISTFILES = $(DISTFILES.common) Makevars POTFILES.in $(DOMAIN).pot stamp-po \
-$(POFILES) $(GMOFILES) \
+$(POFILES) $(GMOFILES) $(RGUI_CATALOGS) \
 $(DISTFILES.extra1) $(DISTFILES.extra2) $(DISTFILES.extra3)
 
 POTFILES = \
