@@ -218,12 +218,17 @@ setMethod <-
     fnames <- formalArgs(fdef)
     snames <- names(signature)
     if(length(snames)>0)
-        signature <- matchSignature(fnames, signature, definition)
+        signature <- matchSignature(fnames, signature, fdef)
     switch(typeof(definition),
            closure = {
                mnames <- formalArgs(definition)
-               if(!identical(mnames, fnames)) 
+               if(!identical(mnames, fnames)) {
+                   ## omitted classes in method => "missing"
                    signature <- conformMethod(signature, mnames, fnames)
+                   ## extra classes in method => use "..." to rematch
+                   definition <- rematchDefinition(definition, fdef,
+                                                   mnames, fnames)
+               }
            },
            builtin = , special = {
              ## the only primitive methods allowed are those equivalent
