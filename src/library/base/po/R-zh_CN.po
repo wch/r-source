@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-02 09:43\n"
+"POT-Creation-Date: 2005-03-02 21:22\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: Fei Chen <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -64,6 +64,10 @@ msgstr "nv的值必需是0，nrow(x)或ncol(x)"
 
 msgid "all can not be used with other deparse options"
 msgstr "all不能和deparse的其他选项同时共存"
+
+#, fuzzy
+msgid "second argument must be a list"
+msgstr "变元必需为字符"
 
 msgid "'kind' must be a character string of length 1 (RNG to be used)."
 msgstr "’kind’ 必需是字符，而且其长度只能为1(用RNG) 。"
