@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.27 $'
+revision='$Revision: 1.28 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}"
 
@@ -190,7 +190,11 @@ do_install () {
     mkdir -p ${lib}/${pkg}/libs
     if test -f src/Makefile; then
       (cd src;
-	${MAKE} -f ${R_HOME}/etc/Makeconf -f Makefile \
+        makefiles="-f ${R_HOME}/etc/Makeconf -f Makefile"
+	if test -r Makevars; then
+	  makefiles="-f Makevars ${makefiles}"
+	fi
+	${MAKE} ${makefiles} \
 	  && cp *.@SHLIBEXT@ ${lib}/${pkg}/libs \
 	  || error=true; \
 	if ${clean}; then ${MAKE} clean; fi)
