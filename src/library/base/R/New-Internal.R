@@ -70,13 +70,13 @@ rbind <- function(..., deparse.level=1) {
 # convert deparsing options to bitmapped integer
 
 .deparseOpts <- function(control) {
-    opts <- pmatch(as.character(control), c("keepInteger", "quoteExpressions", 
+    opts <- pmatch(as.character(control), c("keepInteger", "quoteExpressions",
                    "showAttributes", "useSource", "warnIncomplete", "all"))
-    if (any(is.na(opts))) stop(paste("deparse options ", 
-                               paste('"',control[is.na(opts)],'"', sep=""), 
+    if (any(is.na(opts))) stop(paste("deparse options ",
+                               paste('"',control[is.na(opts)],'"', sep=""),
      			       collapse=" "), " not recognized", call. = FALSE)
     if (any(opts == 6)) {
-	if (length(opts) != 1) 
+	if (length(opts) != 1)
 	    stop("all can not be used with other deparse options",
 	       	call. = FALSE)
 	else
@@ -176,6 +176,8 @@ data.class <- function(x) {
     }
 }
 
+is.numeric.factor <- function(x) FALSE
+# is.integer.factor <- function(x) FALSE
 
 ## base has no S4 generics
 .noGenerics <- TRUE
