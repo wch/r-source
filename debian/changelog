@@ -1,8 +1,38 @@
-r-base (0.62.0-0) unstable; urgency=low
+r-base (0.62.0-1) unstable; urgency=low
 
-  * New upstream release
+  * new upstream release
 
- -- Douglas Bates <bates@stat.wisc.edu>  Wed, 18 Feb 1998 09:34:57 -0600
+ -- Douglas Bates <bates@stat.wisc.edu>  Wed, 27 May 1998 10:21:44 -0500
+
+r-base (0.61.3-0) unstable; urgency=low
+
+  * new upstream release
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Mon,  4 May 1998 12:05:53 -0500
+
+r-base (0.61.2-2) frozen unstable; urgency=low
+
+  * recompiled against xlib6g (bug #21027)
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Mon, 13 Apr 1998 14:05:33 -0500
+
+r-base (0.61.2-1) frozen unstable; urgency=low
+
+  * Added symbolic link for /usr/lib/R/library in /usr/doc/r-base/ (bug#20190)
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Thu, 26 Mar 1998 14:01:57 -0600
+
+r-base (0.61.2-0) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Mon,  9 Mar 1998 15:22:31 -0600
+
+r-base (0.61.1-5) unstable; urgency=low
+
+  * Removed call to dh_du in build rules.
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Fri,  6 Mar 1998 13:47:54 -0600
 
 r-base (0.61.1-4) unstable; urgency=low
 

@@ -2,13 +2,12 @@
 # debian/rules file for the Debian GNU/Linux r-base package
 # Copyright 1997, 1998 by Douglas M. Bates <bates@stat.wisc.edu>
 
-# based on the sample debian/rules file for GNU hello by Ian Jackson.
-
 package=r-base
 
 build:
 	dh_testdir
-	./configure --prefix=/usr
+	R_PAPERSIZE=letter CC=egcc CFLAGS="-Wall -g -O2" FFLAGS="-Wall -g -O2"\
+	 ./configure --prefix=/usr
 	make 
 	make help
 	make html
@@ -33,15 +32,18 @@ binary-arch: build
 	dh_clean -k
 	dh_installdirs
 	make install prefix=`pwd`/debian/tmp/usr
-	cp -a afm bin cmd demos doc etc html include library debian/tmp/usr/lib/R
+	#cp -a afm bin cmd demos doc etc html include library debian/tmp/usr/lib/R
 	find debian/tmp/usr/lib/R -type f -a -name '*.in' -exec rm \{\} \;
 	(cd debian/tmp/usr/lib/R/etc; rm -rf older-stuff undoc config.guess config.sub tasks)
-	sed -e '/^RHOME=.*/s::RHOME=/usr/lib/R:' < bin/R > debian/tmp/usr/bin/R
+	sed -e '/^RHOME=.*/s::RHOME=/usr/lib/R:' \
+	    -e '/R.binary  /s::R.binary -v 8 -n 400000 :'\
+	  < bin/R > debian/tmp/usr/bin/R
 	chmod +x debian/tmp/usr/bin/R
-#	sed -e '1s:local/::' < doc/keyword-test > debian/tmp/usr/lib/R/doc/keyword-test
+	sed -e '1s:local/::' < doc/keyword-test > debian/tmp/usr/lib/R/doc/keyword-test
 	cp -a debian/tmp/usr/bin/R debian/tmp/usr/lib/R/bin
 	dh_installdocs
-	(cd debian/tmp/usr/doc/r-base && ln -s ../../lib/R/html .)
+	(cd debian/tmp/usr/doc/r-base && ln -s ../../lib/R/html . &&\
+	  ln -s ../../lib/R/library .)
 	dh_installmenu
 	dh_installmanpages re_format.7 regex.3
 	dh_installchangelogs CHANGES
@@ -52,6 +54,7 @@ binary-arch: build
 	dh_shlibdeps
 	dh_gencontrol
 #	dh_makeshlibs
+#	dh_du
 	dh_md5sums
 	dh_builddeb
 
