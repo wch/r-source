@@ -38,6 +38,8 @@ plotting to/saving to most devices.  The png() device does support
 transparent backgrounds, but this is not accessible through the 
 menus nor the savePlot() function.
 
+Building under (repaired) Cygwin -mno-cygwin environments is no longer
+supported.
 
 
 rw1031

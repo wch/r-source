@@ -32,20 +32,15 @@ versions of the cygwin tools and dll.  To avoid frustration, please
 use our tool set.
 
 We recommend that you use a recent snapshot of the mingw port of gcc
-from http://prdownloads.sourceforge.net/mingw/.  For example, at the
+from http://downloads.sourceforge.net/mingw/.  For example, at the
 time of writing, Mingw-1.0.1-20010726.tar.gz based on gcc-2.95.3.
 Just unpack this somewhere and put its bin directory in your path.
 
-You can also use the mingw port of gcc-2.95.2-1 by Mumit Khan linked
-from http://www.mingw.org/, but you *cannot* use earlier versions of
-the mingw compilers, for example gcc-2.95.2 (no -1): the symptom is a
-report that `-shared' is not understood.
-
-It *might* also be possible to use the compilers from the cygwin 1.1 net
-release with the -mno-cygwin -mwin32 flags; the current versions use
-mscrt.dll.  (You will need the cygwin, gcc, mingw32, w32api and
-binutils bundles.  All the recent versions we have tried do not work
-unchanged with -mno-cygwin.)
+You may also be able to use the mingw port of gcc-2.95.2-1 by Mumit
+Khan linked from http://www.mingw.org/, but you *cannot* use earlier
+versions of the mingw compilers, for example gcc-2.95.2 (no -1): the
+symptom is a report that `-shared' is not understood.  [This option is
+no longer tested, though.]
 
 
 The Windows port of perl5, available via
@@ -91,7 +86,7 @@ Edit Makefile to set the type(s) of help that you want built.
 
 and run
 
-	make BUILD=MINGW32 or CYGWIN
+	make
 
 
 Note 1: the file rw1040\unzip\unzip32.dll is not in the source
@@ -188,7 +183,8 @@ Building the installers
 =======================
 
 See installer/INSTALL.  You need a complete R build first, including 
-bitmap and Tcl/Tk support and the manuals.
+bitmap and Tcl/Tk support and the manuals, as well as the recommended
+packages in R-1.4.0-recommended.tgz.
 
 
 
