@@ -240,15 +240,24 @@ function(contents, type = NULL)
 {
     ## Build an Rd 'index' containing Rd names and titles, maybe
     ## subscripted according to the Rd type (\docType).
+    
+    keywords <- contents[ , "Keywords"]
+    
     if(!is.null(type)) {
-        ind <- contents[ , "Type"] %in% type
+        idx <- contents[ , "Type"] %in% type
         ## Argh.  Ideally we only want to subscript according to
         ## \docType.  Maybe for 2.0 ...
         if(type == "data")
-            ind <- ind | contents[ , "Keywords"] == "datasets"
-        contents <- contents[ind, , drop = FALSE]
+            idx <- idx | keywords == "datasets"
+        ## (Note: we really only want the Rd objects which have
+        ## 'datasets' as their *only* keyword.)
+        contents <- contents[idx, , drop = FALSE]
     }
-    contents[ , c("Name", "Title"), drop = FALSE]
+    
+    ## Drop all Rd objects marked as 'internal' from the index.
+    idx <- is.na(sapply(keywords, function(x) match("internal", x)))
+    
+    contents[idx, c("Name", "Title"), drop = FALSE]
 }
 
 ### * Rdindex
