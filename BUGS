@@ -292,3 +292,7 @@ Date: Thu, 27 Jan 2000 18:47:38 +0100
 Subject: convolution bug
 From: wsimpson@gcal.ac.uk
 Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
+* PR# 409 *
+Subject: Segmentation fault in recursion, 0.90.1
+From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
+Date: Tue, 1 Feb 2000 12:12:41 +0000 (GMT)
