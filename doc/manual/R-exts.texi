@@ -2079,6 +2079,7 @@ generic vector.  There are analogous functions @code{STRING_ELT} and
 
 To convert existing code, use the following replacements.
 @example
+        original                                 replacement
   foo = VECTOR(bar)[i]                    foo = VECTOR_ELT(bar, i)
   VECTOR(foo)[j] = bar                    SET_VECTOR_ELT(foo, j, bar)
   foo = STRING(bar)[i]                    foo = STRING_ELT(bar, i)
@@ -2087,10 +2088,10 @@ To convert existing code, use the following replacements.
 
 The new garbage collector requires that all assignments into fields
 containing @code{SEXP} values go through functions such as
-@code{SET_VECTOR_ELT}.  Libraries compiled under older versions of @R{}
+@code{SET_VECTOR_ELT}.  Packages compiled under older versions of @R{}
 may contain binary code that modifies these fields directly.  These
-libraries @emph{must} be recompiled.  Failure to do so may confuse the
-memory manager and result in heap corruption.
+packages @emph{must} be recompiled and re-installed.  Failure to do so
+may confuse the memory manager and result in heap corruption.
 
 
 @node Interface functions .Call and .External, Evaluating R expressions from C, Handling R objects in C, System and foreign language interfaces
