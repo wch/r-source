@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.120 $'
+revision='$Revision: 1.121 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -411,12 +411,20 @@ do_install_source () {
   esac
   export R_SAVE_IMAGE
 
+  ## Copy DESCRIPTION file, stamp with build information, and remove
+  ## blank lines.  (Need to add an empty line to deal with missing
+  ## trailing newlines at EOF.)
+  ## As from 1.7.0, packages without compiled code are not marked
+  ## as being from any platform.
+  echo ".installPackageDescription(\".\", \"${R_PACKAGE_DIR}\")" | \
+    R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
+  if test ${?} -ne 0; then
+    echo "ERROR: installing package DESCRIPTION failed"
+    exit 1
+  fi
+
   if ${R_SAVE_IMAGE}; then
     message "save image"
-    if test -f NAMESPACE; then
-      echo "ERROR: cannot (yet) use '--save' if package has NAMESPACE"
-      exit 1
-    fi
     ## <NOTE>
     ## We want R to run as quietly as possible when creating the save
     ## image.  But this is tricky: sending options(echo=FALSE) to R via
@@ -424,20 +432,32 @@ do_install_source () {
     ## echoes what we sent before shutting up R, which is not what we
     ## want.  Option '--slave' gets around this but also turns off
     ## saving ... hence we call R with '--slave --save'.  Argh.
+    ## </NOTE>
     save_image_defaults="list(compress=TRUE, safe=FALSE)"
+    code_file="${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
+    rda_file="${R_PACKAGE_DIR}/R/all.rda"
+    if test -f NAMESPACE; then
+        code_cmd="echo saveNamespaceImage(\"${pkg}\", \"${rda_file}\", \"${lib}\")"
+        loader_file=nsrdaload.R
+        R_SAVE_EXE="${R_EXE} --slave"
+    else
+        code_cmd="cat ${code_file}"
+        loader_file=firstlib.R
+        R_SAVE_EXE="${R_EXE} --slave --save"
+    fi
     (echo "options(save.image.defaults=${save_image_defaults})"; \
       if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
       echo "invisible(.libPaths(c(\"${lib}\", .libPaths())))"; \
-      cat "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}") | \
-	  ${R_EXE} --slave --save ${save_args}
-    ## </NOTE>
+      ${code_cmd}) | ${R_SAVE_EXE} ${save_args}
     if test ${?} -ne 0; then
       echo "ERROR: execution of package source for '${pkg}' failed"
       exit 1
     fi
-    mv .RData "${R_PACKAGE_DIR}/R/all.rda"
-    mv "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}" "${R_PACKAGE_DIR}/R/${pkg}.R"
-    cat "${R_HOME}/share/R/firstlib.R" > "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
+    if test ! -f NAMESPACE; then
+        mv .RData ${rda_file}
+    fi
+    mv "${code_file}" "${R_PACKAGE_DIR}/R/${pkg}.R"
+    cat "${R_HOME}/share/R/${loader_file}" > "${code_file}"
     ## If install.R is non-empty, arrange to evaluate the R code it
     ## contains after the package source (maybe for some kind of
     ## cleanup).
@@ -493,18 +513,6 @@ do_install_source () {
     fi
   else
     echo "No man pages found in package '${pkg}'"
-  fi
-
-  ## Copy DESCRIPTION file, stamp with build information, and remove
-  ## blank lines.  (Need to add an empty line to deal with missing
-  ## trailing newlines at EOF.)
-  ## As from 1.7.0, packages without compiled code are not marked
-  ## as being from any platform.
-  echo ".installPackageDescription(\".\", \"${R_PACKAGE_DIR}\")" | \
-    R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
-  if test ${?} -ne 0; then
-    echo "ERROR: installing package DESCRIPTION failed"
-    exit 1
   fi
 
   echo ".installPackageIndices(\".\", \"${R_PACKAGE_DIR}\")" | \
