@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-27 @value{FAQ-YEAR}-06-25
+@set FAQ-VERSION 1.9-28 @value{FAQ-YEAR}-06-27
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -1698,6 +1698,11 @@ bundle.  @emph{Recommended}.
 @item MCMCpack
 Markov chain Monte Carlo (MCMC) package: functions for posterior
 simulation for a number of statistical models.
+@item MNP
+Fitting Bayesian Multinomial Probit models via Markov chain Monte Carlo.
+Along with the standard Multinomial Probit model, it can also fit models
+with different choice sets for each observation and complete or partial
+ordering of all the available alternatives.
 @item MPV
 Data sets from the book ``Introduction to Linear Regression Analysis''
 by D. C. Montgomery, E. A. Peck, and C. G. Vining, 2001, John Wiley and
