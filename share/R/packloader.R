@@ -2,7 +2,8 @@
 {
     fullName <- paste("package", pkgname, sep=":")
     myEnv <- as.environment(match(fullName, search()))
-    dbbase <- file.path(libname, pkgname, "R", pkgname)
+    barepackage <- sub("([^-]+)_.*", "\\1", pkgname)
+    dbbase <- file.path(libname, pkgname, "R", barepackage)
     rm(.First.lib, envir = myEnv)
     lazyLoad(dbbase, myEnv)
     if(exists(".First.lib", envir = myEnv, inherits = FALSE)) {
