@@ -633,7 +633,7 @@ linearizeMlist <-
         value <- list()
         classes <- list()
         arguments <- list()
-        argname <- mlist@argument
+        argname <- as.character(mlist@argument)
         for(i in seq(along = cnames)) {
             mi <- methods[[i]]
             if(is.function(mi)) {
