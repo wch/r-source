@@ -209,7 +209,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    /* Match was empty. */
 		    pt[0] = *bufp;
 		    pt[1] = '\0';
-		    buff++;
+		    bufp++;
 		}
 		SET_STRING_ELT(t, j, mkChar(pt));
 	    }
