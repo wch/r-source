@@ -29,20 +29,24 @@ tsp(x) <- value
   \code{time}, \code{start}, \code{end} and \code{frequency} are generic
   functions with a \code{default} and a \code{ts} method (see
   \code{\link{methods}}).
+  \code{tsp(x)} returns \code{c(start(x),end(x),frequency(x))}.
+}
+\details{
+  \code{time} creates the vector of times at which a time series was sampled.
+  \code{offset} can be used to indicate when sampling took place
+  in the time unit.
+  \code{0} indicates the start of the unit, \code{0.5} the middle and
+  \code{1} the end of the interval.
 
-\code{time} creates the vector of times at which a
-time series was sampled.
-\code{offset} can be used to indicate when sampling took place
-in the time unit.
-\code{0} indicates the start of the unit, \code{0.5} the middle and
-\code{1} the end of the interval.
+  \code{start} and \code{end} extract
+  the times the first and last observations were taken
+  and \code{frequency} returns the number of samples per unit time.
 
-\code{start} and \code{end} extract
-the times the first and last observations were taken
-and \code{frequency} returns the number of samples per unit time.
-
-\code{tsp(x)} returns the vector \code{c(start(x),end(x),frequency(x))}.
-It is included for compatibility with the S language.
+  \code{tsp(x)} returns the vector \code{c(start(x),end(x),frequency(x))}.
+  It is included for compatibility with the S language.
+  In the assignment form, \code{value} must be a numeric of length 3 or
+  \code{NULL} which removes the \code{"tsp"} attribute \emph{and} the
+  \code{"ts"} class of \code{x}.
 }
 \seealso{
   \code{\link{ts}}, \code{\link{window}}
