@@ -12,8 +12,9 @@ statusbar = yes
 ## Font.
 # Please use only fixed width font.
 # If font=FixedFont the system fixed font is used; in this case
-# points and style are ignored
-font = Courier New
+# points and style are ignored. If font begin by TT, only 
+# True Type font are searched.
+font = TT Courier New
 points = 10
 style = normal # Style can be normal, bold, italic
 

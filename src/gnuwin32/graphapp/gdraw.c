@@ -521,12 +521,20 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
 	lf.lfCharSet = SYMBOL_CHARSET;
     else
 	lf.lfCharSet = ANSI_CHARSET;
-    lf.lfOutPrecision = OUT_TT_ONLY_PRECIS ;
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-    strncpy(lf.lfFaceName, face, LF_FACESIZE-1);
-
+    if ((strlen(face)>1) && 
+        (face[0]== 'T') && (face[1] == 'T')) {
+        char *pf;
+        lf.lfOutPrecision = OUT_TT_ONLY_PRECIS ;
+        for (pf = &face[2]; isspace(*pf) ; pf++);
+        strncpy(lf.lfFaceName, pf, LF_FACESIZE-1);
+    }
+    else {
+        lf.lfOutPrecision = OUT_DEFAULT_PRECIS ;
+        strncpy(lf.lfFaceName, face, LF_FACESIZE-1);
+    }
     if (style & Italic)
 	lf.lfItalic = 1;
     if (style & Bold)
@@ -579,6 +587,28 @@ int devicewidthmm(drawing dev) MEASUREDEV(HORZSIZE)
 int deviceheightmm(drawing dev) MEASUREDEV(VERTSIZE)
 int devicepixelsx(drawing dev) MEASUREDEV(LOGPIXELSX)
 int devicepixelsy(drawing dev) MEASUREDEV(LOGPIXELSY)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
