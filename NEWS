@@ -7,6 +7,10 @@
 
 NEW FEATURES
 
+    o   image() allows x and y to specify either the boundaries or the 
+	midpoints of the cells. If the latter, the whole cells are
+	drawn, rather than the outer cells being half-sized as previously.
+
     o   New function sort.list, for S compatibility. (This has argument
 	partial, but always sorts completely.)
 

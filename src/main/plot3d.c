@@ -761,7 +761,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP oargs, sx, sy, sz, szlim, sc;
     double *x, *y, *z;
     unsigned *c;
-    double xlow, xhigh, ylow, yhigh, zmin = 0., zmax = 0.;
+    double xlow, zmin = 0., zmax = 0.;
     int i, j, nx, ny, nz, ic, nc, colsave, xpdsave;
     DevDesc *dd = CurrentDevice();
 
@@ -833,31 +833,11 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GMode(1, dd);
 
-    for (i = 0; i < nx; i++) {
-	if (i == 0)
-	    xlow = x[0];
-	else
-	    xlow = 0.5 * (x[i] + x[i-1]);
-	if (i == nx-1)
-	    xhigh = x[i];
-	else
-	    xhigh = 0.5 * (x[i] + x[i+1]);
-
-	for (j = 0; j < ny; j++) {
-	    if (R_FINITE(z[i + j * nx])) {
-		ic = floor((nc - 1) * (z[i + j * nx]-zmin)/(zmax - zmin) + 0.5);
-		if (ic >= 0 && ic < nc) {
-		    if (j == 0)
-			ylow = y[0];
-		    else
-			ylow = 0.5 * (y[j] + y[j - 1]);
-		    if (j == ny - 1)
-			yhigh = y[j];
-		    else
-			yhigh = 0.5 * (y[j] + y[j + 1]);
-		    GRect(xlow, ylow, xhigh, yhigh,
-			  USER, c[ic], NA_INTEGER, dd);
-		}
+    for (i = 0; i < nx - 1 ; i++) {
+	for (j = 0; j < ny - 1; j++) {
+	    if (R_FINITE(z[i + j * (nx - 1)])) {
+		ic = floor((nc - 1) * (z[i + j * (nx-1)]-zmin)/(zmax - zmin) + 0.5);
+		GRect(x[i], y[j], x[i+1], y[j+1], USER, c[ic], NA_INTEGER, dd);
 	    }
 	}
     }

@@ -42,6 +42,15 @@ image(x, y, z, zlim, col = heat.colors(12),
   topographical color schemes suitable for displaying ordered data, with
   \code{n} giving the number of colors desired.
 }
+\details{
+    The length of \code{x} should be equal to the \code{nrow(x)+1} or
+    \code{nrow(x)}. In the first case \code{x} specifies the boundaries
+    between the cells: in the second case \code{x} specifies the
+    midpoints of the cells. Similar reasoning applies to \code{y}. It
+    probably only makes sense to specify the midpoints of an
+    equally-spaced grid, and you only are only allowed to specify the
+    midpoints if there are least two rows (or columns for \code{y}).
+}
 \note{
   Based on a function by Thomas Lumley
   \email{thomas@biostat.washington.edu}.
@@ -55,7 +64,7 @@ image(x, y, z, zlim, col = heat.colors(12),
 \examples{
 \testonly{
 ## Degenerate, should still work
-image(as.matrix(1))
+# image(as.matrix(1)) # makes no sense, now an error
 image(matrix(pi,2,4))
 }
 x <- y <- seq(-4*pi, 4*pi, len=27)
