@@ -29,6 +29,9 @@
 /* Define if you have <alloca.h> and it should be used (not on Ultrix).  */
 #define HAVE_ALLOCA_H 1
 
+/* Define if you have the <errno.h> header file.  */
+#define HAVE_ERRNO_H 1
+
 /* Define if you don't have vprintf but do have _doprnt.  */
 #undef HAVE_DOPRNT
 
@@ -394,7 +397,7 @@
 #define PACKAGE "R"
 
 /* Version number of package */
-#define VERSION "1.2.2"
+#define VERSION "1.3.0"
 
 
 #endif /* not _CONFIG_H */
