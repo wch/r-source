@@ -28,7 +28,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.7-40, 2003-09-12</h2>
+<h2>Version 1.7-42, 2003-09-16</h2>
 <h2>ISBN 3-901167-51-X</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -173,7 +173,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
    <p>In particular, note that I do not have access to Windows or Mac systems. 
 Features specific to the Windows and Mac OS ports of R are described in
 the <a href="http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html">"R for Windows <small>FAQ</small>"</a> and the
-<a href="http://cran.r-project.org/bin/macos/rmac-FAQ.html">"R for Macintosh <small>FAQ</small>/DOC"</a>.  If you have information on Mac or
+<a href="http://cran.R-project.org/bin/macos/rmac-FAQ.html">"R for Macintosh <small>FAQ</small>/DOC"</a>.  If you have information on Mac or
 Windows systems that you think should be added to this document, please
 let me know.
 
@@ -238,8 +238,8 @@ flexible graphical environment for creating various kinds of data
 presentations.  Additional modules ("add-on packages") are available
 for a variety of specific purposes (see <a href="#R%20Add-On%20Packages">R Add-On Packages</a>).
 
-   <p>R was initially written by <a href="mailto:Ross.Ihaka@r-project.org">Ross Ihaka</a>
-and <a href="mailto:Robert.Gentleman@r-project.org">Robert Gentleman</a> at the
+   <p>R was initially written by <a href="mailto:Ross.Ihaka@R-project.org">Ross Ihaka</a>
+and <a href="mailto:Robert.Gentleman@R-project.org">Robert Gentleman</a> at the
 Department of Statistics of the University of Auckland in Auckland, New
 Zealand.  In addition, a large group of individuals has contributed to R
 by sending code and bug reports.
@@ -251,7 +251,7 @@ Hornik, Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley,
 Martin Maechler, Duncan Murdoch, Paul Murrell, Martyn Plummer, Brian
 Ripley, Duncan Temple Lang, and Luke Tierney.
 
-   <p>R has a home page at <a href="http://www.r-project.org/">http://www.r-project.org/</a>.  It is free
+   <p>R has a home page at <a href="http://www.R-project.org/">http://www.R-project.org/</a>.  It is free
 software distributed under a <small>GNU</small>-style copyleft, and an
 official part of the <small>GNU</small> project ("<small>GNU</small> S").
 
@@ -312,7 +312,7 @@ the "Comprehensive R Archive Network" (see <a href="#What%20is%20CRAN%3f">What i
 
    <p>Sources are also available via anonymous rsync.  Use
 
-<pre class="smallexample">     rsync -rC rsync.r-project.org::<var>module</var> R
+<pre class="example">     rsync -rC --delete rsync.R-project.org::<var>module</var> R
      </pre>
 
 <p>to create a copy of the source tree specified by <var>module</var> in the
@@ -321,7 +321,7 @@ specifies one of the three existing flavors of the R sources, and can be
 one of <code>r-release</code> (current released version), <code>r-patched</code>
 (patched released version), and <code>r-devel</code> (development version). 
 The rsync trees are created directly from the master CVS archive and are
-updated hourly.  The <code>-C</code> option in the <code>rsync</code> command
+updated hourly.  The <code>-C</code> and in the <code>rsync</code> command
 is to cause it to skip the CVS directories.  Further information on
 <code>rsync</code> is available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
 
@@ -370,7 +370,7 @@ can obtain a PDF version of the object reference manual via <small>CRAN</small>.
    <p>In the simplest case, untar the R source code, change to the directory
 thus created, and issue the following commands (at the shell prompt):
 
-<pre class="smallexample">     $ ./configure
+<pre class="example">     $ ./configure
      $ make
      </pre>
 
@@ -413,7 +413,7 @@ Home Directory" (<code>R_HOME</code>) of the installed system.
 (typically <code>/usr/local</code>) and can be set by running
 <code>configure</code> with the option
 
-<pre class="smallexample">     $ ./configure --prefix=/where/you/want/R/to/go
+<pre class="example">     $ ./configure --prefix=/where/you/want/R/to/go
      </pre>
 
 <p>(E.g., the R executable will then be installed into
@@ -440,7 +440,7 @@ to run on Windows 95, 98, ME, NT4, 2000, and XP (at least) on Intel and
 clones (but not on other platforms).  The Windows version of R was
 created by Robert Gentleman, and is now being developed and maintained
 by <a href="mailto:murdoch@stats.uwo.ca">Duncan Murdoch</a> and
-<a href="mailto:Brian.Ripley@r-project.org">Brian D. Ripley</a>.
+<a href="mailto:Brian.Ripley@R-project.org">Brian D. Ripley</a>.
 
    <p>For most installations the Windows installer program will be the easiest
 tool to use.
@@ -462,7 +462,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#How%20can%20R%20be%20installed%3f">How
 and a large number of add-on packages to run under MacOS 8.6 to MacOS
 9.1 or MacOS X natively.  The Mac version of R and the Mac binaries are
 maintained by
-<a href="mailto:Stefano.Iacus@r-project.org">Stefano Iacus</a>.
+<a href="mailto:Stefano.Iacus@R-project.org">Stefano Iacus</a>.
 
    <p>The <a href="http://www.eco-dip.unimi.it/R/rmac-FAQ.html">"R for Macintosh <small>FAQ</small>/DOC"</a> has more details.
 
@@ -492,7 +492,7 @@ Steuer, and VineLinux 2.6 i386 packages by Susunu Tanimura.
    <p>The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
 
-<pre class="smallexample">     deb http://cran.r-project.org/bin/linux/debian <var>distribution</var> main
+<pre class="example">     deb http://cran.R-project.org/bin/linux/debian <var>distribution</var> main
      </pre>
 
 <p>(where <var>distribution</var> is either <code>stable</code> or <code>testing</code>;
@@ -624,7 +624,7 @@ See <a href="#Citing%20R">Citing R</a>.
    <p>An annotated bibliography (BibTeX format) of R-related publications
 which includes most of the above references can be found at
 
-<pre class="display">     <a href="http://www.r-project.org/doc/bib/R.bib">http://www.r-project.org/doc/bib/R.bib</a>
+<pre class="display">     <a href="http://www.R-project.org/doc/bib/R.bib">http://www.R-project.org/doc/bib/R.bib</a>
      </pre>
 
 <div class="node">
@@ -640,7 +640,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 
 <p>To cite R in publications, use
 
-<pre class="smallexample">     @article{,
+<pre class="example">     @article{,
        author =    {Ross Ihaka and Robert Gentleman},
        title =     {R: A Language for Data Analysis and Graphics},
        journal =   {Journal of Computational and Graphical Statistics},
@@ -662,44 +662,50 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 
 <h3 class="section">2.9 What mailing lists exist for R?</h3>
 
-<p>Thanks to <a href="mailto:Martin.Maechler@r-project.org">Martin Maechler</a>, there
-are three mailing lists devoted to R.
+<p>Thanks to <a href="mailto:Martin.Maechler@R-project.org">Martin Maechler</a>, there
+are four mailing lists devoted to R.
 
      <dl>
-<dt><code>r-announce</code>
-     <dd>This list is for announcements about the development of R and the
+<dt><code>R-announce</code>
+     <dd>A moderated list for announcements about the development of R and the
 availability of new code. 
-<br><dt><code>r-devel</code>
+<br><dt><code>R-packages</code>
+     <dd>A moderated list for announcements on the availability of new or
+enhanced contributed packages. 
+<br><dt><code>R-help</code>
+     <dd>The `main' R mailing list, for announcements about the development of R
+and the availability of new code, including new or enhanced contributed
+packages, questions and answers about problems and solutions using R,
+enhancements and patches to the source code and documentation of R,
+comparison and compatibility with S and <small>S-PLUS</small>, and for the posting of
+nice examples and benchmarks. 
+<br><dt><code>R-devel</code>
      <dd>This list is for discussions about the future of R and pre-testing of
 new versions.  It is meant for those who maintain an active position in
 the development of R. 
-<br><dt><code>r-help</code>
-     <dd>The `main' R mailing list, for announcements about the development of R
-and the availability of new code, questions and answers about problems
-and solutions using R, enhancements and patches to the source code and
-documentation of R, comparison and compatibility with S and <small>S-PLUS</small>,
-and for the posting of nice examples and benchmarks. 
 </dl>
 
-<p>Note that the r-announce list is gatewayed into r-help, so you don't
-need to subscribe to both of them.
+<p>Note that the R-announce and R-packages lists are gatewayed into R-help. 
+Hence, you should subscribe to either of them only in case you are not
+subscribed to R-help.
 
-   <p>Send email to <a href="mailto:r-help@lists.r-project.org">r-help@lists.r-project.org</a> to reach everyone on
-the r-help mailing list.  To subscribe (or unsubscribe) to this list
+   <p>Send email to <a href="mailto:R-help@lists.R-project.org">R-help@lists.R-project.org</a> to reach everyone on
+the R-help mailing list.  To subscribe (or unsubscribe) to this list
 send <code>subscribe</code> (or <code>unsubscribe</code>) in the <em>body</em> of the
 message (not in the subject!) to
-<a href="mailto:r-help-request@lists.r-project.org">r-help-request@lists.r-project.org</a>.  Information about the list
+<a href="mailto:R-help-request@lists.R-project.org">R-help-request@lists.R-project.org</a>.  Information about the list
 can be obtained by sending an email with <code>info</code> as its contents to
-<a href="mailto:r-help-request@lists.r-project.org">r-help-request@lists.r-project.org</a>.
+<a href="mailto:R-help-request@lists.R-project.org">R-help-request@lists.R-project.org</a>.
 
    <p>Subscription and posting to the other lists is done analogously, with
-`r-help' replaced by `r-announce' and `r-devel', respectively.
+<code>R-help</code> replaced by <code>R-announce</code>, <code>R-packages</code>, and
+<code>R-devel</code>, respectively.
 
-   <p>Subscriptions to `r-help' and `r-devel' are also available in digest
-format, see the <code>doc/html/mail.html</code> file in <small>CRAN</small> for more
-information.
+   <p>Subscriptions to the R-help and R-devel mailing lists are also available
+in digest (plain or MIME) format, see the <code>doc/html/mail.html</code> file
+in <small>CRAN</small> for more information.
 
-   <p>It is recommended that you send mail to r-help rather than only to the R
+   <p>It is recommended that you send mail to R-help rather than only to the R
 Core developers (who are also subscribed to the list, of course).  This
 may save them precious time they can use for constantly improving R, and
 will typically also result in much quicker feedback for yourself.
@@ -714,7 +720,7 @@ in a monthly schedule via the <code>doc/html/mail.html</code> file in <small>CRA
 Searchable archives of the lists are available via
 <a href="http://maths.newcastle.edu.au/~rking/R/">http://maths.newcastle.edu.au/~rking/R/</a>.
 
-   <p>The R Core Team can be reached at <a href="mailto:r-core@lists.r-project.org">r-core@lists.r-project.org</a>
+   <p>The R Core Team can be reached at <a href="mailto:R-core@lists.R-project.org">R-core@lists.R-project.org</a>
 for comments and reports.
 
 <div class="node">
@@ -737,31 +743,31 @@ binaries.
 <small>URL</small>
 
    <blockquote>
-<a href="http://cran.r-project.org/">http://cran.r-project.org/</a>
+<a href="http://cran.R-project.org/">http://cran.R-project.org/</a>
 </blockquote>
 
 <p>and is currently being mirrored daily at
 
    <blockquote>
-        <p><table><tr align="left"><td valign="top"><a href="http://cran.at.r-project.org/">http://cran.at.r-project.org/</a>
+        <p><table><tr align="left"><td valign="top"><a href="http://cran.at.R-project.org/">http://cran.at.R-project.org/</a>
 </td><td valign="top">(TU Wien, Austria)
-<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.au.r-project.org/">http://cran.au.r-project.org/</a>
+<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.au.R-project.org/">http://cran.au.R-project.org/</a>
 </td><td valign="top">(PlanetMirror, Australia)
-<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.br.r-project.org/">http://cran.br.r-project.org/</a>
+<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.br.R-project.org/">http://cran.br.R-project.org/</a>
 </td><td valign="top">(Universidade Federal de Paran&aacute;, Brazil)
-<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.ch.r-project.org/">http://cran.ch.r-project.org/</a>
+<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.ch.R-project.org/">http://cran.ch.R-project.org/</a>
 </td><td valign="top">(ETH Z&uuml;rich, Switzerland)
-<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.de.r-project.org/">http://cran.de.r-project.org/</a>
+<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.de.R-project.org/">http://cran.de.R-project.org/</a>
 </td><td valign="top">(APP, Germany)
-<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.dk.r-project.org/">http://cran.dk.r-project.org/</a>
+<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.dk.R-project.org/">http://cran.dk.R-project.org/</a>
 </td><td valign="top">(SunSITE, Denmark)
-<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.hu.r-project.org/">http://cran.hu.r-project.org/</a>
+<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.hu.R-project.org/">http://cran.hu.R-project.org/</a>
 </td><td valign="top">(Semmelweis U, Hungary)
-<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.uk.r-project.org/">http://cran.uk.r-project.org/</a>
+<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.uk.R-project.org/">http://cran.uk.R-project.org/</a>
 </td><td valign="top">(U of Bristol, United Kingdom)
-<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.us.r-project.org/">http://cran.us.r-project.org/</a>
+<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.us.R-project.org/">http://cran.us.R-project.org/</a>
 </td><td valign="top">(U of Wisconsin, USA)
-<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.za.r-project.org/">http://cran.za.r-project.org/</a>
+<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.za.R-project.org/">http://cran.za.R-project.org/</a>
 </td><td valign="top">(Rhodes U, South Africa)
         <br></td></tr></table>
 </blockquote>
@@ -776,8 +782,8 @@ and MS Windows).  <small>CRAN</small> also provides access to documentation on R
 existing mailing lists and the R Bug Tracking system.
 
    <p>To "submit" to <small>CRAN</small>, simply upload to
-<a href="ftp://cran.r-project.org/incoming/">ftp://cran.r-project.org/incoming/</a> and send an email to
-<a href="mailto:cran@r-project.org">cran@r-project.org</a>.  Note that <small>CRAN</small> generally does not
+<a href="ftp://cran.R-project.org/incoming/">ftp://cran.R-project.org/incoming/</a> and send an email to
+<a href="mailto:cran@R-project.org">cran@R-project.org</a>.  Note that <small>CRAN</small> generally does not
 accept submissions of precompiled binaries due to security reasons.
 
    <blockquote>
@@ -989,7 +995,7 @@ bindings that were in effect at the time the function was created.
 
    <p>Consider the following function:
 
-<pre class="smallexample">     cube &lt;- function(n) {
+<pre class="example">     cube &lt;- function(n) {
        sq &lt;- function() n * n
        n * sq()
      }
@@ -998,7 +1004,7 @@ bindings that were in effect at the time the function was created.
    <p>Under S, <code>sq()</code> does not "know" about the variable <code>n</code>
 unless it is defined globally:
 
-<pre class="smallexample">     S&gt; cube(2)
+<pre class="example">     S&gt; cube(2)
      Error in sq():  Object "n" not found
      Dumped
      S&gt; n &lt;- 3
@@ -1009,7 +1015,7 @@ unless it is defined globally:
    <p>In R, the "environment" created when <code>cube()</code> was invoked is
 also looked in:
 
-<pre class="smallexample">     R&gt; cube(2)
+<pre class="example">     R&gt; cube(2)
      [1] 8
      </pre>
 
@@ -1023,7 +1029,7 @@ postings by Luke Tierney.)
    <p>The <small>S-PLUS</small> documentation for <code>call()</code> basically suggests the
 following:
 
-<pre class="smallexample">     dorder &lt;- function(n, r, pfun, dfun) {
+<pre class="example">     dorder &lt;- function(n, r, pfun, dfun) {
        f &lt;- function(x) NULL
        con &lt;- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
        PF &lt;- call(substitute(pfun), as.name("x"))
@@ -1045,7 +1051,7 @@ work, though).
    <p>A version which makes heavy use of <code>substitute()</code> and seems to work
 under both S and R is
 
-<pre class="smallexample">     dorder &lt;- function(n, r, pfun, dfun) {
+<pre class="example">     dorder &lt;- function(n, r, pfun, dfun) {
        con &lt;- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
        eval(substitute(function(x) K * PF(x)^a * (1 - PF(x))^b * DF(x),
                        list(PF = substitute(pfun), DF = substitute(dfun),
@@ -1057,7 +1063,7 @@ under both S and R is
 
    <p>However, in R there is a much easier solution:
 
-<pre class="smallexample">     dorder &lt;- function(n, r, pfun, dfun) {
+<pre class="example">     dorder &lt;- function(n, r, pfun, dfun) {
        con &lt;- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
        function(x) {
          con * pfun(x)^(r - 1) * (1 - pfun(x))^(n - r) * dfun(x)
@@ -1075,7 +1081,7 @@ in the above version, the free variables in the value function are not
 modified, you can actually use it in S as well if you abstract out the
 closure operation into a function <code>MC()</code> (for "make closure"):
 
-<pre class="smallexample">     dorder &lt;- function(n, r, pfun, dfun) {
+<pre class="example">     dorder &lt;- function(n, r, pfun, dfun) {
        con &lt;- round(exp(lgamma(n + 1) - lgamma(r) - lgamma(n - r + 1)))
        MC(function(x) {
             con * pfun(x)^(r - 1) * (1 - pfun(x))^(n - r) * dfun(x)
@@ -1091,12 +1097,12 @@ access to evaluation frames, as is of course possible in both R and S).
 
    <p>For R, <code>MC()</code> simply is
 
-<pre class="smallexample">     MC &lt;- function(f, env) f
+<pre class="example">     MC &lt;- function(f, env) f
      </pre>
 
 <p>(lexical scope!), a version for S is
 
-<pre class="smallexample">     MC &lt;- function(f, env = NULL) {
+<pre class="example">     MC &lt;- function(f, env = NULL) {
        env &lt;- as.list(env)
        if (mode(f) != "function")
          stop(paste("not a function:", f))
@@ -1134,13 +1140,14 @@ Computing", <a href="http://www.amstat.org/publications/jcgs/"><em>Journal of Co
 
    <p>Lexical scoping also implies a further major difference.  Whereas S
 stores all objects as separate files in a directory somewhere (usually
-<code>.Data</code> under the current directory), R does not.  All objects
-in R are stored internally.  When R is started up it grabs a very large
-piece of memory and uses it to store the objects.  R performs its own
-memory management of this piece of memory.  Having everything in memory
-is necessary because it is not really possible to externally maintain
-all relevant "environments" of symbol/value pairs.  This difference
-also seems to make R <em>faster</em> than S.
+<code>.Data</code> under the current directory), R does not.  All objects in R
+are stored internally.  When R is started up it grabs a piece of memory
+and uses it to store the objects.  R performs its own memory management
+of this piece of memory, growing and shrinking its size as needed. 
+Having everything in memory is necessary because it is not really
+possible to externally maintain all relevant "environments" of
+symbol/value pairs.  This difference also seems to make R <em>faster</em>
+than S.
 
    <p>The down side is that if R crashes you will lose all the work for the
 current session.  Saving and restoring the memory "images" (the
@@ -1276,7 +1283,7 @@ there is a single precision interface to C/FORTRAN subroutines.
 (under R) and global (under S) environment, respectively.  For example,
 given
 
-     <pre class="smallexample">          x &lt;- 1; fun &lt;- function() {y &lt;- 1; ls()}
+     <pre class="example">          x &lt;- 1; fun &lt;- function() {y &lt;- 1; ls()}
           </pre>
 
      <p>then <code>fun()</code> returns <code>"y"</code> in R and <code>"x"</code> (together with
@@ -1715,6 +1722,8 @@ distributions).
 <br><dt><strong>VLMC</strong>
      <dd>Functions, classes &amp; methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models. 
+<br><dt><strong>VaR</strong>
+     <dd>Methods for calculation of Value at Risk (VaR). 
 <br><dt><strong>XML</strong>
      <dd>Facilities for reading <small>XML</small> documents and DTDs. 
 <br><dt><strong>abind</strong>
@@ -2237,6 +2246,11 @@ using the RAM approach.
      <dd>An object-oriented framework for geostatistical modeling. 
 <br><dt><strong>shapefiles</strong>
      <dd>Functions to read and write ESRI shapefiles. 
+<br><dt><strong>shapes</strong>
+     <dd>Routines for the statistical analysis of shapes, including procrustes
+analysis, displaying shapes and principal components, testing for mean
+shape difference, thin-plate spline transformation grids and edge
+superimposition methods. 
 <br><dt><strong>sm</strong>
      <dd>Software linked to the book "Applied Smoothing Techniques for Data
 Analysis:  The Kernel Approach with <small>S-PLUS</small> Illustrations" by
@@ -2614,11 +2628,7 @@ Jim has also started <strong>dna</strong>, a package with procedures for the
 analysis of DNA sequences.  Jim's packages can be obtained from
 <a href="http://www.luc.ac.be/~jlindsey/rcode.html">http://www.luc.ac.be/~jlindsey/rcode.html</a>.
 
-   <a href="mailto:fharrell@virginia.edu">Frank Harrell</a> has made R ports of his
-<strong>Design</strong> and <strong>Hmisc</strong> packages available via
-<a href="http://hesweb1.med.virginia.edu/biostat/s/library/r/">http://hesweb1.med.virginia.edu/biostat/s/library/r/</a>.
-
-   <p>More code has been posted to the r-help mailing list, and can be
+   <p>More code has been posted to the R-help mailing list, and can be
 obtained from the mailing list archive.
 
 <div class="node">
@@ -2637,7 +2647,7 @@ files named <code></code><var>pkg</var><code>_</code><var>version</var><code>.ta
 "bundles" containing more than one package.  Provided that
 <code>tar</code> and <code>gzip</code> are available on your system, type
 
-<pre class="smallexample">     $ R CMD INSTALL /path/to/<var>pkg</var>_<var>version</var>.tar.gz
+<pre class="example">     $ R CMD INSTALL /path/to/<var>pkg</var>_<var>version</var>.tar.gz
      </pre>
 
 <p>at the shell prompt to install to the library tree rooted at the first
@@ -2648,7 +2658,7 @@ to the default library by default.)
 
    <p>To install to another tree (e.g., your private one), use
 
-<pre class="smallexample">     $ R CMD INSTALL -l <var>lib</var> /path/to/<var>pkg</var>_<var>version</var>.tar.gz
+<pre class="example">     $ R CMD INSTALL -l <var>lib</var> /path/to/<var>pkg</var>_<var>version</var>.tar.gz
      </pre>
 
 <p>where <var>lib</var> gives the path to the library tree to install to.
@@ -2664,12 +2674,12 @@ trees are rooted.  You do not have to specify the default tree in
 <code>R_LIBS</code>.  E.g., to use a private tree in <code>$HOME/lib/R</code> and a
 public site-wide tree in <code>/usr/local/lib/R-contrib</code>, put
 
-<pre class="smallexample">     R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"; export R_LIBS
+<pre class="example">     R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"; export R_LIBS
      </pre>
 
 <p>into your (Bourne) shell profile or even preferably, add the line
 
-<pre class="smallexample">     R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"
+<pre class="example">     R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"
      </pre>
 
 <p>your <code>~/.Renviron</code> file.  (Note that no <code>export</code> statement is
@@ -2689,7 +2699,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packag
 
 <p>To find out which additional packages are available on your system, type
 
-<pre class="smallexample">     library()
+<pre class="example">     library()
      </pre>
 
 <p>at the R prompt.
@@ -2714,6 +2724,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packag
      grid          The Grid Graphics Package
      lattice       Lattice Graphics
      lqs           Resistant Regression and Covariance Estimation
+     methods       Formal Methods and Classes
+     mle           Maximum likelihood estimation
      mgcv          Multiple smoothing parameter estimation and GAMs by GCV
      modreg        Modern Regression: Smoothing and Local Methods
      mva           Classical Multivariate Analysis
@@ -2726,25 +2738,25 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packag
      splines       Regression Spline Functions and Classes
      stepfun       Step Functions, including Empirical Distributions
      survival      Survival analysis, including penalised likelihood
-     tcltk         Interface to Tcl/Tk
+     tcltk         Tcl/Tk Interface
      tools         Tools for Package Development and Administration
      ts            Time series functions
      </pre>
 
    <p>You can "load" the installed package <var>pkg</var> by
 
-<pre class="smallexample">     library(<var>pkg</var>)
+<pre class="example">     library(<var>pkg</var>)
      </pre>
 
    <p>You can then find out which functions it provides by typing one of
 
-<pre class="smallexample">     library(help = <var>pkg</var>)
+<pre class="example">     library(help = <var>pkg</var>)
      help(package = <var>pkg</var>)
      </pre>
 
    <p>You can unload the loaded package <var>pkg</var> by
 
-<pre class="smallexample">     detach("package:<var>pkg</var>")
+<pre class="example">     detach("package:<var>pkg</var>")
      </pre>
 
 <div class="node">
@@ -2760,7 +2772,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packag
 
 <p>Use
 
-<pre class="smallexample">     $ R CMD REMOVE <var>pkg_1</var> ... <var>pkg_n</var>
+<pre class="example">     $ R CMD REMOVE <var>pkg_1</var> ... <var>pkg_n</var>
      </pre>
 
 <p>to remove the packages <var>pkg_1</var>, <small class="dots">...</small>, <var>pkg_n</var> from the
@@ -2770,7 +2782,7 @@ of R prior to 1.3.0 removed from the default library by default.)
 
    <p>To remove from library <var>lib</var>, do
 
-<pre class="smallexample">     $ R CMD REMOVE -l <var>lib</var> <var>pkg_1</var> ... <var>pkg_n</var>
+<pre class="example">     $ R CMD REMOVE -l <var>lib</var> <var>pkg_1</var> ... <var>pkg_n</var>
      </pre>
 
 <div class="node">
@@ -2823,7 +2835,7 @@ as described in "Statistical Models in S" (see <a href="#What%20is%20S%3f">What 
 Generalized Additive Models (see <a href="#Are%20GAMs%20implemented%20in%20R%3f">Are GAMs implemented in R?</a>) and
 some of the nonlinear modeling code are not there yet.
 
-   <p>The <a href="http://developer.r-project.org/">R Developer Page</a> acts as an
+   <p>The <a href="http://developer.R-project.org/">R Developer Page</a> acts as an
 intermediate repository for more or less finalized ideas and plans for
 the R statistical system.  It contains (pointers to) TODO lists, RFCs,
 various other writeups, ideas lists, and CVS miscellanea.
@@ -2832,7 +2844,7 @@ various other writeups, ideas lists, and CVS miscellanea.
 be worth porting to R.
 
    <p>If you are interested in working on any of these projects, please notify
-<a href="mailto:Kurt.Hornik@r-project.org">Kurt Hornik</a>.
+<a href="mailto:Kurt.Hornik@R-project.org">Kurt Hornik</a>.
 
 <div class="node">
 <p><hr>
@@ -2978,7 +2990,7 @@ the R binary.  That way <code>.gdbinit</code> can stay in the directory with
 the code and be used to set up the environment and the search paths for
 the source, e.g. as follows:
 
-<pre class="smallexample">     set env R_HOME /opt/R
+<pre class="example">     set env R_HOME /opt/R
      set env R_PAPERSIZE letter
      set env R_PRINTCMD lpr
      dir /opt/R/src/appl
@@ -3084,7 +3096,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 
 <p>You can use
 
-<pre class="smallexample">     x[i] &lt;- list(NULL)
+<pre class="example">     x[i] &lt;- list(NULL)
      </pre>
 
 <p>to set component <code>i</code> of the list <code>x</code> to <code>NULL</code>, similarly
@@ -3125,7 +3137,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <p>To remove all objects in the currently active environment (typically
 <code>.GlobalEnv</code>), you can do
 
-<pre class="smallexample">     rm(list = ls(all = TRUE))
+<pre class="example">     rm(list = ls(all = TRUE))
      </pre>
 
 <p>(Without <code>all = TRUE</code>, only the objects with names not starting
@@ -3155,7 +3167,7 @@ differentiated.  What you (most likely) really want is obtained by
 "quoting" the first argument upon surrounding it with
 <code>expression()</code>.  For example,
 
-<pre class="smallexample">     R&gt; D(expression(x^2), "x")
+<pre class="example">     R&gt; D(expression(x^2), "x")
      2 * x
      </pre>
 
@@ -3165,12 +3177,12 @@ implemented, but problems would arise whenever the expression is
 contained in a variable, passed as a parameter, or is the result of a
 function call.  Consider for instance the semantics in cases like
 
-<pre class="smallexample">     D2 &lt;- function(e, n) D(D(e, n), n)
+<pre class="example">     D2 &lt;- function(e, n) D(D(e, n), n)
      </pre>
 
 <p>or
 
-<pre class="smallexample">     g &lt;- function(y) eval(substitute(y), sys.frame(sys.parent(n = 2)))
+<pre class="example">     g &lt;- function(y) eval(substitute(y), sys.frame(sys.parent(n = 2)))
      g(a * b)
      </pre>
 
@@ -3196,7 +3208,7 @@ been determined to be a <em>feature</em>.
    <p>To prevent this happening, add the option <code>drop = FALSE</code> to the
 subscripting.  For example,
 
-<pre class="smallexample">     rowmatrix &lt;- mat[2, , drop = FALSE]  # creates a row matrix
+<pre class="example">     rowmatrix &lt;- mat[2, , drop = FALSE]  # creates a row matrix
      colmatrix &lt;- mat[, 2, drop = FALSE]  # creates a column matrix
      a &lt;- b[1, 1, 1, drop = FALSE]        # creates a 1 x 1 x 1 array
      </pre>
@@ -3204,14 +3216,14 @@ subscripting.  For example,
    <p>The <code>drop = FALSE</code> option should be used defensively when
 programming.  For example, the statement
 
-<pre class="smallexample">     somerows &lt;- mat[index, ]
+<pre class="example">     somerows &lt;- mat[index, ]
      </pre>
 
 <p>will return a vector rather than a matrix if <code>index</code> happens to
 have length 1, causing errors later in the code.  It should probably be
 rewritten as
 
-<pre class="smallexample">     somerows &lt;- mat[index, , drop = FALSE]
+<pre class="example">     somerows &lt;- mat[index, , drop = FALSE]
      </pre>
 
 <div class="node">
@@ -3258,7 +3270,7 @@ variable.
 
    <p>For example, given
 
-<pre class="smallexample">     test1 &lt;- function(x = pi, dig = 3) {
+<pre class="example">     test1 &lt;- function(x = pi, dig = 3) {
        oo &lt;- options(digits = dig); on.exit(options(oo));
        cat(.Options$digits, x, "\n")
      }
@@ -3270,7 +3282,7 @@ variable.
 
 <p>we obtain:
 
-<pre class="smallexample">     R&gt; test1()
+<pre class="example">     R&gt; test1()
      3 3.14
      R&gt; test2()
      3 3.141593
@@ -3341,12 +3353,12 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 reading in a file), they come in as factors.  If <code>f</code> is such a
 factor object, you can use
 
-<pre class="smallexample">     as.numeric(as.character(f))
+<pre class="example">     as.numeric(as.character(f))
      </pre>
 
 <p>to get the numbers back.  More efficient, but harder to remember, is
 
-<pre class="smallexample">     as.numeric(levels(f))[as.integer(f)]
+<pre class="example">     as.numeric(levels(f))[as.integer(f)]
      </pre>
 
    <p>In any case, do not call <code>as.numeric()</code> or their likes directly for
@@ -3454,7 +3466,7 @@ case, either use <code>parse()</code> on your pasted character string or use
 <code>substitute()</code> on an expression.  For example, if <code>ahat</code> is an
 estimator of your parameter a of interest, use
 
-<pre class="smallexample">     title(substitute(hat(a) == ahat, list(ahat = ahat)))
+<pre class="example">     title(substitute(hat(a) == ahat, list(ahat = ahat)))
      </pre>
 
 <p>(note that it is <code>==</code> and not <code>=</code>).  There are more worked
@@ -3542,12 +3554,12 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 
 <p>Most R commands do not generate any output. The command
 
-<pre class="smallexample">     1+1
+<pre class="example">     1+1
      </pre>
 
 <p>computes the value 2 and returns it; the command
 
-<pre class="smallexample">     summary(glm(y~x+z, family=binomial))
+<pre class="example">     summary(glm(y~x+z, family=binomial))
      </pre>
 
 <p>fits a logistic regression model, computes some summary information and
@@ -3561,12 +3573,12 @@ specifically print it.
 
    <p>To print the value use
 
-<pre class="smallexample">     print(1+1)
+<pre class="example">     print(1+1)
      </pre>
 
 <p>or
 
-<pre class="smallexample">     print(summary(glm(y~x+z, family=binomial)))
+<pre class="example">     print(summary(glm(y~x+z, family=binomial)))
      </pre>
 
 <p>instead, or use <code>source(</code><var>file</var><code>, echo=TRUE)</code>.
@@ -3595,7 +3607,7 @@ scalars, then you can still use <code>outer()</code> but you will need to wrap
 your function up first, to simulate vectorized behavior.  Suppose your
 function is
 
-<pre class="smallexample">     foo &lt;- function(x, y, happy) {
+<pre class="example">     foo &lt;- function(x, y, happy) {
        stopifnot(length(x) == 1, length(y) == 1) # scalars only!
        (x + y) * happy
      }
@@ -3603,14 +3615,14 @@ function is
 
 <p>If you define the general function
 
-<pre class="smallexample">     wrapper &lt;- function(x, y, my.fun, ...) {
+<pre class="example">     wrapper &lt;- function(x, y, my.fun, ...) {
        sapply(seq(along = x), FUN = function(i) my.fun(x[i], y[i], ...))
      }
      </pre>
 
 <p>then you can use <code>outer()</code> by writing, e.g.,
 
-<pre class="smallexample">     outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
+<pre class="example">     outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
      </pre>
 
 <div class="node">
@@ -3639,7 +3651,7 @@ full model to the models with each factor removed one at a time (the
 famous `Type III sums of squares' from SAS, for example).  These do not
 depend on the order of factors in the model.  The question of which set
 of sums of squares is the Right Thing provokes low-level holy wars on
-r-help from time to time.
+R-help from time to time.
 
    <p>There is no need to be agitated about the particular sums of squares
 that R reports.  You can compute your favorite sums of squares quite
@@ -3699,44 +3711,44 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 
 <p>If you have
 
-<pre class="smallexample">     varname &lt;- c("a", "b", "d")
+<pre class="example">     varname &lt;- c("a", "b", "d")
      </pre>
 
 <p>you can do
 
-<pre class="smallexample">     get(varname[1]) + 2
+<pre class="example">     get(varname[1]) + 2
      </pre>
 
 <p>for
 
-<pre class="smallexample">     a + 2
+<pre class="example">     a + 2
      </pre>
 
 <p>or
 
-<pre class="smallexample">     assign(varname[1], 2 + 2)
+<pre class="example">     assign(varname[1], 2 + 2)
      </pre>
 
 <p>for
 
-<pre class="smallexample">     a &lt;- 2 + 2
+<pre class="example">     a &lt;- 2 + 2
      </pre>
 
 <p>or
 
-<pre class="smallexample">     eval(substitute(lm(y ~ x + variable),
+<pre class="example">     eval(substitute(lm(y ~ x + variable),
                      list(variable = as.name(varname[1]))
      </pre>
 
 <p>for
 
-<pre class="smallexample">     lm(y ~ x + a)
+<pre class="example">     lm(y ~ x + a)
      </pre>
 
    <p>At least in the first two cases it is often easier to just use a list,
 and then you can easily index it by name
 
-<pre class="smallexample">     vars &lt;- list(a = 1:10, b = rnorm(100), d = LETTERS)
+<pre class="example">     vars &lt;- list(a = 1:10, b = rnorm(100), d = LETTERS)
      vars[["a"]]
      </pre>
 
@@ -3867,7 +3879,7 @@ are a Bourne shell user, you can also pass the desired flags to Make
 (which is used for controlling compilation) via the Make variable
 <code>MAKEFLAGS</code>, as in
 
-<pre class="smallexample">     MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
+<pre class="example">     MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
      </pre>
 
 <div class="node">
@@ -3965,7 +3977,7 @@ unnecessary work for the ones trying to fix the problem.
    <p>For example, suppose that on a data set which you know to be quite large
 the command
 
-<pre class="smallexample">     R&gt; data.frame(x, y, z, monday, tuesday)
+<pre class="example">     R&gt; data.frame(x, y, z, monday, tuesday)
      </pre>
 
 <p>never returns.  Do not report that <code>data.frame()</code> fails for large
@@ -3997,11 +4009,11 @@ read.
    <p>On Unix systems a bug report can be generated using the function
 <code>bug.report()</code>.  This automatically includes the version
 information and sends the bug to the correct address.  Alternatively the
-bug report can be emailed to <a href="mailto:r-bugs@r-project.org">r-bugs@r-project.org</a> or submitted
-to the Web page at <a href="http://bugs.r-project.org/">http://bugs.r-project.org/</a>.
+bug report can be emailed to <a href="mailto:R-bugs@R-project.org">R-bugs@R-project.org</a> or submitted
+to the Web page at <a href="http://bugs.R-project.org/">http://bugs.R-project.org/</a>.
 
    <p>Bug reports on contributed packages should perhaps be sent to the
-package maintainer rather than to r-bugs.
+package maintainer rather than to R-bugs.
 
 <div class="node">
 <p><hr>

@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-40, 2003-09-12
+Version 1.7-42, 2003-09-16
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -175,7 +175,7 @@ Feedback is of course most welcome.
 Features specific to the Windows and Mac OS ports of R are described in the
 "R for Windows FAQ" (http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html) and the
 "R for Macintosh FAQ/DOC"
-(http://cran.r-project.org/bin/macos/rmac-FAQ.html).  If you have
+(http://cran.R-project.org/bin/macos/rmac-FAQ.html).  If you have
 information on Mac or Windows systems that you think should be added to
 this document, please let me know.
 
@@ -210,8 +210,8 @@ environment for creating various kinds of data presentations.  Additional
 modules ("add-on packages") are available for a variety of specific
 purposes (*note R Add-On Packages::).
 
-   R was initially written by Ross Ihaka <Ross.Ihaka@r-project.org> and
-Robert Gentleman <Robert.Gentleman@r-project.org> at the Department of
+   R was initially written by Ross Ihaka <Ross.Ihaka@R-project.org> and
+Robert Gentleman <Robert.Gentleman@R-project.org> at the Department of
 Statistics of the University of Auckland in Auckland, New Zealand.  In
 addition, a large group of individuals has contributed to R by sending code
 and bug reports.
@@ -223,7 +223,7 @@ Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley, Martin
 Maechler, Duncan Murdoch, Paul Murrell, Martyn Plummer, Brian Ripley,
 Duncan Temple Lang, and Luke Tierney.
 
-   R has a home page at `http://www.r-project.org/'.  It is free software
+   R has a home page at `http://www.R-project.org/'.  It is free software
 distributed under a GNU-style copyleft, and an official part of the GNU
 project ("GNU S").
 
@@ -260,14 +260,14 @@ Sources, binaries and documentation for R can be obtained via CRAN, the
 
    Sources are also available via anonymous rsync.  Use
 
-     rsync -rC rsync.r-project.org::MODULE R
+     rsync -rC --delete rsync.R-project.org::MODULE R
 
 to create a copy of the source tree specified by MODULE in the subdirectory
 `R' of the current directory, where MODULE specifies one of the three
 existing flavors of the R sources, and can be one of `r-release' (current
 released version), `r-patched' (patched released version), and `r-devel'
 (development version).  The rsync trees are created directly from the
-master CVS archive and are updated hourly.  The `-C' option in the `rsync'
+master CVS archive and are updated hourly.  The `-C' and in the `rsync'
 command is to cause it to skip the CVS directories.  Further information on
 `rsync' is available at `http://rsync.samba.org/rsync/'.
 
@@ -351,7 +351,7 @@ distribution and a large number of add-on packages from CRAN to run on
 Windows 95, 98, ME, NT4, 2000, and XP (at least) on Intel and clones (but
 not on other platforms).  The Windows version of R was created by Robert
 Gentleman, and is now being developed and maintained by Duncan Murdoch
-<murdoch@stats.uwo.ca> and Brian D. Ripley <Brian.Ripley@r-project.org>.
+<murdoch@stats.uwo.ca> and Brian D. Ripley <Brian.Ripley@R-project.org>.
 
    For most installations the Windows installer program will be the easiest
 tool to use.
@@ -366,7 +366,7 @@ The `bin/macos' directory of a CRAN site contains bin-hexed (`hqx') and
 stuffit (`sit') archives for a base distribution and a large number of
 add-on packages to run under MacOS 8.6 to MacOS 9.1 or MacOS X natively.
 The Mac version of R and the Mac binaries are maintained by Stefano Iacus
-<Stefano.Iacus@r-project.org>.
+<Stefano.Iacus@R-project.org>.
 
    The "R for Macintosh FAQ/DOC"
 (http://www.eco-dip.unimi.it/R/rmac-FAQ.html) has more details.
@@ -389,7 +389,7 @@ packages by Susunu Tanimura.
    The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
 
-     deb http://cran.r-project.org/bin/linux/debian DISTRIBUTION main
+     deb http://cran.R-project.org/bin/linux/debian DISTRIBUTION main
 
 (where DISTRIBUTION is either `stable' or `testing'; feel free to use a
 CRAN mirror instead of the master) to the file `/etc/apt/sources.list'.
@@ -496,7 +496,7 @@ Statistics_, *5*, 299-314.  *Note Citing R::.
    An annotated bibliography (BibTeX format) of R-related publications
 which includes most of the above references can be found at
 
-     `http://www.r-project.org/doc/bib/R.bib'
+     `http://www.R-project.org/doc/bib/R.bib'
 
 2.8 Citing R
 ============
@@ -516,42 +516,50 @@ To cite R in publications, use
 2.9 What mailing lists exist for R?
 ===================================
 
-Thanks to Martin Maechler <Martin.Maechler@r-project.org>, there are three
+Thanks to Martin Maechler <Martin.Maechler@R-project.org>, there are four
 mailing lists devoted to R.
 
-`r-announce'
-     This list is for announcements about the development of R and the
+`R-announce'
+     A moderated list for announcements about the development of R and the
      availability of new code.
 
-`r-devel'
+`R-packages'
+     A moderated list for announcements on the availability of new or
+     enhanced contributed packages.
+
+`R-help'
+     The `main' R mailing list, for announcements about the development of R
+     and the availability of new code, including new or enhanced contributed
+     packages, questions and answers about problems and solutions using R,
+     enhancements and patches to the source code and documentation of R,
+     comparison and compatibility with S and S-PLUS, and for the posting of
+     nice examples and benchmarks.
+
+`R-devel'
      This list is for discussions about the future of R and pre-testing of
      new versions.  It is meant for those who maintain an active position in
      the development of R.
 
-`r-help'
-     The `main' R mailing list, for announcements about the development of R
-     and the availability of new code, questions and answers about problems
-     and solutions using R, enhancements and patches to the source code and
-     documentation of R, comparison and compatibility with S and S-PLUS,
-     and for the posting of nice examples and benchmarks.
+Note that the R-announce and R-packages lists are gatewayed into R-help.
+Hence, you should subscribe to either of them only in case you are not
+subscribed to R-help.
 
-Note that the r-announce list is gatewayed into r-help, so you don't need
-to subscribe to both of them.
-
-   Send email to <r-help@lists.r-project.org> to reach everyone on the
-r-help mailing list.  To subscribe (or unsubscribe) to this list send
+   Send email to <R-help@lists.R-project.org> to reach everyone on the
+R-help mailing list.  To subscribe (or unsubscribe) to this list send
 `subscribe' (or `unsubscribe') in the _body_ of the message (not in the
-subject!) to <r-help-request@lists.r-project.org>.  Information about the
+subject!) to <R-help-request@lists.R-project.org>.  Information about the
 list can be obtained by sending an email with `info' as its contents to
-<r-help-request@lists.r-project.org>.
+<R-help-request@lists.R-project.org>.
 
    Subscription and posting to the other lists is done analogously, with
-`r-help' replaced by `r-announce' and `r-devel', respectively.
+`R-help' replaced by `R-announce', `R-packages', and `R-devel',
+respectively.
 
-   Subscriptions to `r-help' and `r-devel' are also available in digest
-format, see the `doc/html/mail.html' file in CRAN for more information.
+   Subscriptions to the R-help and R-devel mailing lists are also available
+in digest (plain or MIME) format, see the `doc/html/mail.html' file in CRAN
+for more information.
 
-   It is recommended that you send mail to r-help rather than only to the R
+   It is recommended that you send mail to R-help rather than only to the R
 Core developers (who are also subscribed to the list, of course).  This may
 save them precious time they can use for constantly improving R, and will
 typically also result in much quicker feedback for yourself.
@@ -566,7 +574,7 @@ in a monthly schedule via the `doc/html/mail.html' file in CRAN.
 Searchable archives of the lists are available via
 `http://maths.newcastle.edu.au/~rking/R/'.
 
-   The R Core Team can be reached at <r-core@lists.r-project.org> for
+   The R Core Team can be reached at <R-core@lists.R-project.org> for
 comments and reports.
 
 2.10 What is CRAN?
@@ -578,22 +586,22 @@ contributed extensions, documentation for R, and binaries.
 
    The CRAN master site at TU Wien, Austria, can be found at the URL
 
-     `http://cran.r-project.org/'
+     `http://cran.R-project.org/'
 
 and is currently being mirrored daily at
 
-     `http://cran.at.r-project.org/'  (TU Wien, Austria)
-     `http://cran.au.r-project.org/'  (PlanetMirror, Australia)
-     `http://cran.br.r-project.org/'  (Universidade Federal de
+     `http://cran.at.R-project.org/'  (TU Wien, Austria)
+     `http://cran.au.R-project.org/'  (PlanetMirror, Australia)
+     `http://cran.br.R-project.org/'  (Universidade Federal de
                                       Paraná, Brazil)
-     `http://cran.ch.r-project.org/'  (ETH Zürich, Switzerland)
-     `http://cran.de.r-project.org/'  (APP, Germany)
-     `http://cran.dk.r-project.org/'  (SunSITE, Denmark)
-     `http://cran.hu.r-project.org/'  (Semmelweis U, Hungary)
-     `http://cran.uk.r-project.org/'  (U of Bristol, United
+     `http://cran.ch.R-project.org/'  (ETH Zürich, Switzerland)
+     `http://cran.de.R-project.org/'  (APP, Germany)
+     `http://cran.dk.R-project.org/'  (SunSITE, Denmark)
+     `http://cran.hu.R-project.org/'  (Semmelweis U, Hungary)
+     `http://cran.uk.R-project.org/'  (U of Bristol, United
                                       Kingdom)
-     `http://cran.us.r-project.org/'  (U of Wisconsin, USA)
-     `http://cran.za.r-project.org/'  (Rhodes U, South Africa)
+     `http://cran.us.R-project.org/'  (U of Wisconsin, USA)
+     `http://cran.za.R-project.org/'  (Rhodes U, South Africa)
 
 Please use the CRAN site closest to you to reduce network load.
 
@@ -605,8 +613,8 @@ MS Windows).  CRAN also provides access to documentation on R, existing
 mailing lists and the R Bug Tracking system.
 
    To "submit" to CRAN, simply upload to
-`ftp://cran.r-project.org/incoming/' and send an email to
-<cran@r-project.org>.  Note that CRAN generally does not accept submissions
+`ftp://cran.R-project.org/incoming/' and send an email to
+<cran@R-project.org>.  Note that CRAN generally does not accept submissions
 of precompiled binaries due to security reasons.
 
      *Note:*  It is very important that you indicate the copyright
@@ -880,12 +888,12 @@ Computational and Graphical Statistics_, *9*, 491-508.
    Lexical scoping also implies a further major difference.  Whereas S
 stores all objects as separate files in a directory somewhere (usually
 `.Data' under the current directory), R does not.  All objects in R are
-stored internally.  When R is started up it grabs a very large piece of
-memory and uses it to store the objects.  R performs its own memory
-management of this piece of memory.  Having everything in memory is
-necessary because it is not really possible to externally maintain all
-relevant "environments" of symbol/value pairs.  This difference also seems
-to make R _faster_ than S.
+stored internally.  When R is started up it grabs a piece of memory and
+uses it to store the objects.  R performs its own memory management of this
+piece of memory, growing and shrinking its size as needed.  Having
+everything in memory is necessary because it is not really possible to
+externally maintain all relevant "environments" of symbol/value pairs.
+This difference also seems to make R _faster_ than S.
 
    The down side is that if R crashes you will lose all the work for the
 current session.  Saving and restoring the memory "images" (the functions
@@ -1419,6 +1427,9 @@ distributions of R.)
 *VLMC*
      Functions, classes & methods for estimation, prediction, and simulation
      (bootstrap) of VLMC (Variable Length Markov Chain) models.
+
+*VaR*
+     Methods for calculation of Value at Risk (VaR).
 
 *XML*
      Facilities for reading XML documents and DTDs.
@@ -2115,6 +2126,12 @@ distributions of R.)
 *shapefiles*
      Functions to read and write ESRI shapefiles.
 
+*shapes*
+     Routines for the statistical analysis of shapes, including procrustes
+     analysis, displaying shapes and principal components, testing for mean
+     shape difference, thin-plate spline transformation grids and edge
+     superimposition methods.
+
 *sm*
      Software linked to the book "Applied Smoothing Techniques for Data
      Analysis:  The Kernel Approach with S-PLUS Illustrations" by A. W.
@@ -2541,11 +2558,7 @@ has also started *dna*, a package with procedures for the analysis of DNA
 sequences.  Jim's packages can be obtained from
 `http://www.luc.ac.be/~jlindsey/rcode.html'.
 
-   Frank Harrell <fharrell@virginia.edu> has made R ports of his *Design*
-and *Hmisc* packages available via
-`http://hesweb1.med.virginia.edu/biostat/s/library/r/'.
-
-   More code has been posted to the r-help mailing list, and can be
+   More code has been posted to the R-help mailing list, and can be
 obtained from the mailing list archive.
 
 5.2 How can add-on packages be installed?
@@ -2619,6 +2632,8 @@ at the R prompt.
      grid          The Grid Graphics Package
      lattice       Lattice Graphics
      lqs           Resistant Regression and Covariance Estimation
+     methods       Formal Methods and Classes
+     mle           Maximum likelihood estimation
      mgcv          Multiple smoothing parameter estimation and GAMs by GCV
      modreg        Modern Regression: Smoothing and Local Methods
      mva           Classical Multivariate Analysis
@@ -2631,7 +2646,7 @@ at the R prompt.
      splines       Regression Spline Functions and Classes
      stepfun       Step Functions, including Empirical Distributions
      survival      Survival analysis, including penalised likelihood
-     tcltk         Interface to Tcl/Tk
+     tcltk         Tcl/Tk Interface
      tools         Tools for Package Development and Administration
      ts            Time series functions
 
@@ -2697,7 +2712,7 @@ as described in "Statistical Models in S" (see *Note What is S?::);
 Generalized Additive Models (*note Are GAMs implemented in R?::) and some
 of the nonlinear modeling code are not there yet.
 
-   The R Developer Page (http://developer.r-project.org/) acts as an
+   The R Developer Page (http://developer.R-project.org/) acts as an
 intermediate repository for more or less finalized ideas and plans for the
 R statistical system.  It contains (pointers to) TODO lists, RFCs, various
 other writeups, ideas lists, and CVS miscellanea.
@@ -2706,7 +2721,7 @@ other writeups, ideas lists, and CVS miscellanea.
 be worth porting to R.
 
    If you are interested in working on any of these projects, please notify
-Kurt Hornik <Kurt.Hornik@r-project.org>.
+Kurt Hornik <Kurt.Hornik@R-project.org>.
 
 6 R and Emacs
 *************
@@ -3231,7 +3246,7 @@ non-orthogonal design (i.e., most unbalanced designs) these comparisons are
 full model to the models with each factor removed one at a time (the famous
 `Type III sums of squares' from SAS, for example).  These do not depend on
 the order of factors in the model.  The question of which set of sums of
-squares is the Right Thing provokes low-level holy wars on r-help from time
+squares is the Right Thing provokes low-level holy wars on R-help from time
 to time.
 
    There is no need to be agitated about the particular sums of squares
@@ -3458,11 +3473,11 @@ This ensures that the site profile and saved data files are not read.
    On Unix systems a bug report can be generated using the function
 `bug.report()'.  This automatically includes the version information and
 sends the bug to the correct address.  Alternatively the bug report can be
-emailed to <r-bugs@r-project.org> or submitted to the Web page at
-`http://bugs.r-project.org/'.
+emailed to <R-bugs@R-project.org> or submitted to the Web page at
+`http://bugs.R-project.org/'.
 
    Bug reports on contributed packages should perhaps be sent to the
-package maintainer rather than to r-bugs.
+package maintainer rather than to R-bugs.
 
 10 Acknowledgments
 ******************
