@@ -94,7 +94,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
     if(legend) {
 	legend <- c(rbind(sapply(cutpoints,format),
 			  c(sQuote(symbols),"")),
-		    if(has.na) paste("	    ## NA: `",na,"'",sep=""))
+		    if(has.na) paste("	    ## NA:", sQuote(na)))
 	attr(ans,"legend") <- paste(legend[-2*(ns+1)], collapse=" ")
     }
     noquote(ans)
