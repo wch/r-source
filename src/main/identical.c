@@ -137,6 +137,9 @@ static Rboolean compute_identical(SEXP x, SEXP y)
     case SYMSXP:
     case EXTPTRSXP:
     case WEAKREFSXP:
+#ifdef BYTECODE
+    case BCODESXP: /**** is this the best approach? */
+#endif
 	return(x == y ? TRUE : FALSE);
 	/*  case PROMSXP: */
 	/* test for equality of the substituted expression -- or should
