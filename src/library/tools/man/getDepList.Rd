@@ -29,7 +29,7 @@ pkgDepends(pkg, recursive = TRUE, local = TRUE, reduce = TRUE, lib.loc=NULL)
 \details{
   The function \code{pkgDepends} is a convenience function which wraps
   \code{getDepList} and takes as input a package name.  It will then
-  query \code{\link{installed.packages}} and also generate a dependency
+  query \code{\link[utils]{installed.packages}} and also generate a dependency
   matrix, calling \code{getDepList} with this information and returning
   the result.
   
@@ -69,7 +69,7 @@ pkgDepends(pkg, recursive = TRUE, local = TRUE, reduce = TRUE, lib.loc=NULL)
 \author{ Jeff Gentry }
 \seealso{\code{\link{installFoundDepends}}}
 \examples{
-  pkgDepends("tools",local=FALSE)
+pkgDepends("tools", local = FALSE)
 }
 \keyword{utilities}
 

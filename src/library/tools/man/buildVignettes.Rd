@@ -20,7 +20,7 @@ pkgVignettes(package, dir, lib.loc = NULL)
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  The specified library trees are used to
     to search for \code{package}.}
-  \item{quiet}{logical. Run \code{\link{Sweave}} and
+  \item{quiet}{logical. Run \code{\link[utils]{Sweave}} and
     \code{\link{texi2dvi}} in quiet mode.}
 }
 \value{
