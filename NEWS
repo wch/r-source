@@ -17,6 +17,9 @@ NEW FEATURES
 	during configuration, and is `less' if available, otherwise
 	`more' (and not `more -s' as previously).
 
+    o	configure now tests for strptime functions that fail before
+	1970 (found on Irix).
+
 
 
 BUG FIXES
@@ -26,6 +29,9 @@ BUG FIXES
 
     o	The `exact' p-values for the two-sided two-sample
         Kolmogorov-Smirnov test were for the wrong tail: replace by 1-p.
+
+    o	In the HTML conversion of .Rd files, \link[foo]{bar} was
+	ignoring [foo] outside \code{} statements.
 
 
 

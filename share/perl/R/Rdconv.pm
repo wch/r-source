@@ -561,7 +561,7 @@ sub text2html {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")
 	  &&  $text =~ /\\link/){
-	my ($id, $arg, $org) = get_link($text);
+	my ($id, $arg, $opt) = get_link($text);
 	## fix conversions in key of htmlindex:
 	my $argkey = $arg;
 	$argkey =~ s/&lt;/</go;
