@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-33, 2001-12-03
+Version 1.3-34, 2001-12-08
 Kurt Hornik
 
 
@@ -1226,9 +1226,6 @@ works, was published in the Journal of Statistical Software
 
 *RmSQL*
      An interface between R and the mSQL database system.
-
-*Rstreams*
-     Binary file stream support functions.
 
 *Rwave*
      An environment for the time-frequency analysis of 1-D signals (and
