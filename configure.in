@@ -182,6 +182,7 @@ AC_PROG_RANLIB
 ## force g77, f77, or f2c to be used.  It is also possible to use these
 ## options to specify the full path name of the compiler.
 
+f77_is_g77=false
 if ${use_f77}; then
   if test "${with_f77}" = yes; then
     F77=f77
@@ -212,6 +213,11 @@ else
   fi
   if test -z "${F77}"; then
     AC_CHECK_PROGS(F2C, f2c)
+  else
+    f77_output=`${F77} -v 2>&1 | grep "GNU F77"`
+    if test -n "${f77_output}"; then
+      f77_is_g77=true
+    fi
   fi
 fi
 
@@ -331,11 +337,17 @@ if ${use_blas}; then
   AC_CHECK_LIB(blas, main, FLIBS="-lblas ${FLIBS}" BLAS="")
 fi
 AC_SUBST(BLAS)
+for arg in ${LIBS}; do
+  case ${arg} in
+    -L*)
+      FLIBS="${arg} ${FLIBS}"
+      ;;
+  esac
+done
 AC_SUBST(FLIBS)
 if ${use_readline}; then
   AC_CHECK_LIB(readline, rl_callback_read_char)
 fi
-
 
 ### Library functions.
 
@@ -461,6 +473,11 @@ case "${host}" in
     ;;
   *solaris*)
     SHLIBLDFLAGS="-G"
+    if ${f77_is_g77}; then
+      FPICFLAGS=-fPIC
+    else
+      FPICFLAGS=-PIC
+    fi
     ;;
 esac
 
