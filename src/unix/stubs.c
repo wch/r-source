@@ -22,14 +22,8 @@
 #endif
 
 #include "Defn.h"
-#include "Rdevices.h"
 #include "devUI.h"
 
-SEXP stub_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    error("the data entry editor has not been loaded");
-    return R_NilValue;
-}
 
 SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
