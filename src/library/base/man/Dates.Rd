@@ -37,8 +37,8 @@
   
   \code{\link{format.Date}} for conversion to and from character strings.
 
-  \code{\link[graphics]{plot.Date}} and
-  \code{\link[graphics]{hist.Date}} for plotting.
+  \code{\link[graphics:axis.POSIXct]{plot.Date}} and
+  \code{\link[graphics:hist.POSIXt]{hist.Date}} for plotting.
 
   \code{\link{weekdays}} for convenience extraction functions.
 
@@ -48,6 +48,12 @@
   \code{\link{DateTimeClasses}} for date-time classes.
 }
 \examples{
+(today <- Sys.Date())
+format(today, "\%d \%b \%Y")  # with month as a word
+(tenweeks <- seq(today, len=10, by="1 week")) # next ten weeks
+weekdays(today)
+months(tenweeks)
+as.Date(.leap.seconds)
 }
 \keyword{utilities}
 \keyword{chron}

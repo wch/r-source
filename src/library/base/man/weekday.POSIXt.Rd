@@ -53,11 +53,13 @@ julian(x, \dots)
 }
 \note{
   Other components such as the day of the month or the year are
-  very easy to compute for \code{"POSIXt"} objects: just use
-  \code{\link{as.POSIXlt}} and extract the relevant component.
+  very easy to computes: just use \code{\link{as.POSIXlt}} and extract
+  the relevant component.
 }
 
-\seealso{\code{\link{DateTimeClasses}}}
+\seealso{
+  \code{\link{DateTimeClasses}}, \code{\link{Date}}
+}
 
 \examples{
 weekdays(.leap.seconds)

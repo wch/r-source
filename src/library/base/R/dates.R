@@ -48,6 +48,29 @@ as.Date.default <- function(x, ...)
 	       "' to class \"Date\"", sep=""))
 }
 
+## convert from package date
+as.Date.date <- function(x, ...)
+{
+    if(inherits(x, "date")) {
+        x <- (x - 3653) # origin 1960-01-01
+        return(structure(x, class = "Date"))
+    } else stop(paste("`", deparse(substitute(x)),
+                      "' is not a \"dates\" object", sep=""))
+}
+
+## convert from package chron
+as.Date.dates <- function(x, ...)
+{
+    if(inherits(x, "dates")) {
+        z <- attr(x, "origin")
+        x <- trunc(as.numeric(x))
+        if(length(z) == 3 && is.numeric(z))
+            x  <- x + as.numeric(as.Date(paste(z[3], z[1], z[2], sep="/")))
+        return(structure(x, class = "Date"))
+    } else stop(paste("`", deparse(substitute(x)),
+                      "' is not a \"dates\" object", sep=""))
+}
+
 format.Date <- function(x, ...)
 {
     xx <- format(as.POSIXlt(x), ...)

@@ -6,6 +6,8 @@
 \alias{as.Date.default}
 \alias{as.Date.factor}
 \alias{as.Date.POSIXct}
+\alias{as.Date.date}
+\alias{as.Date.dates}
 
 \title{Date Conversion Functions to and from Character}
 \description{
@@ -40,7 +42,10 @@ as.Date(x, \ldots)
   The \code{as.Date} methods accept character strings, factors, logical
   \code{NA} and objects of class \code{"\link{POSIXct}"}, which are
   converted to days by ignoring the time to be midnight in the
-  representation of the time in UTC.
+  representation of the time in UTC.  Also objects of class
+  \code{"date"} (from package \pkg{\link[date:as.date]{date}} or
+  \pkg{\link[survival:as.date]{survival}}) and
+  \code{"dates"} (from package \pkg{\link[chron]{chron}}).
 
   The \code{format} and \code{as.character} methods ignore any
   fractional part of the date.

@@ -8,6 +8,9 @@
 \usage{
 \method{cut}{POSIXt}(x, breaks, labels = NULL, start.on.monday = TRUE,
     right = FALSE, \dots)
+
+\method{cut}{Date}(x, breaks, labels = NULL, start.on.monday = TRUE,
+    right = FALSE, \dots)
 }
 \arguments{
   \item{x}{an object inheriting from class \code{"POSIXt"} or \code{"Date"}.}
