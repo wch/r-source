@@ -9,6 +9,13 @@
 		CHANGES IN R VERSION 1.9.1
 
 
+NEW FEATURES
+
+    o	as.Date() now has a method for "POSIXlt" objects.
+
+    o	mean() has a method for "difftime" objects and so summary() works.
+
+
 BUG FIXES
 
     o	pbinom(q, N, prob) is now more accurate when prob is close to 0.
@@ -20,6 +27,11 @@ BUG FIXES
     o	makeARIMA() was not handling an ARMA(0, 0) model correctly.
 
     o	as.Date() was failing on factors.  (PR#6779)
+
+    o	min(), max() and range() were failing on "difftime" objects.
+
+    o	as.data.frame.list() could fail on some unusual list names.
+	(PR#6782)
 
 
 

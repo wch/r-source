@@ -14,6 +14,8 @@ as.Date.POSIXct <- function(x, ...) {
     structure(z, class="Date")
 }
 
+as.Date.POSIXlt <- function(x, ...) .Internal(POSIXlt2Date(x))
+
 as.Date.factor <- function(x, ...) as.Date(as.character(x))
 
 
