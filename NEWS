@@ -94,6 +94,10 @@ BUG FIXES
 	HTML file in ~/.R if help.start() has been run recently in the
 	session, so the style sheet and hyperlinks should now be found.
 
+    o	dotplot's arguments `color' and `lcolor' are now interpreted
+	correctly if they are vectors of length > 1.  (It is not clear
+	from the help that this was ever intended.)
+
 
 
 		CHANGES IN R VERSION 1.1.0
