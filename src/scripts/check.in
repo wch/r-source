@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.188 $ ';
+my $revision = ' $Revision: 1.189 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -506,6 +506,36 @@ sub check_pkg {
     }
 
     $log->result("OK");
+
+    ## next check for name clashes on case-insensitive file systems
+    ## (that is on Windows).
+    my @seen = (), @duplicated = ();
+    sub check_case_names {
+	my $file_path = lc($File::Find::name);
+	if($seen{$file_path}) {push(@duplicated, $file_path);}
+	$seen{$file_path}  = 1;
+    }
+    if($in_bundle) {
+	chdir(dirname($pkgdir)); # more portable than '..'?
+	find(\&check_case_names, $pkgname);
+	chdir($pkgname);
+    }
+    else {
+	find(\&check_case_names, ".");
+    }
+    if(scalar(@duplicated) > 0) {
+	$log->error();
+	$log->print("Found the following files with " .
+		    "similar file names:\n");
+	$log->print("  " . join("\n  ", @duplicated) . "\n");
+	$log->print(wrap("", "",
+			 ("File names must not differ just by case",
+			  "to be usable on all R platforms.\n",
+			  "Please rename the files and try again.\n",
+			  "See section 'Package structure'",
+			  "in manual 'Writing R Extensions'.\n")));
+	exit(1);
+    }
 
     ## Check for sufficient file permissions (Unix only).
 

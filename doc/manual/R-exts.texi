@@ -168,7 +168,8 @@ well as the characters @samp{"}, @samp{*}, @samp{:}, @samp{/}, @samp{<},
 names.  In addition, files with names @samp{con}, @samp{prn},
 @samp{aux}, @samp{clock$}, @samp{nul}, @samp{com1} to @samp{com4}, and
 @samp{lpt1} to @samp{lpt3} after conversion to lower case and stripping
-possible ``extensions'', are disallowed.
+possible ``extensions'', are disallowed.  Also, file names in the same
+directory must not differ only by case (see the previous paragraph).
 
 The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
