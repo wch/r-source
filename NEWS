@@ -430,8 +430,12 @@ C-LEVEL FACILITIES
 	Rmath.h in R 1.2.0.
 
     o	PREXPR has been replaced by two macros, PREXPR for obtaining the
-	expression and PRCODE for obtaining the code for use in eval.  This
-	is to support byte compiled promises.
+	expression and PRCODE for obtaining the code for use in eval.
+	The macro BODY_EXPR has been added for use with closures.
+	For a closure with a byte compiled body, the macro BODY_EXPR
+	returns the expression that was compiled; if the body is not
+	compiled then the body is returned.  This is to support byte
+	compilation.
 
 
 UTILITIES
