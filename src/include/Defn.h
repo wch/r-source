@@ -75,19 +75,6 @@
 #include <ctype.h>
 */
 
-/* Formerly in Arith.h */
-#ifdef IEEE_754
-# define MATH_CHECK(call)	(call)
-#else
-# ifdef __MAIN__
-    double R_tmp;
-# else
-    extern double R_tmp;
-# endif
-#  define MATH_CHECK(call)	(errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
-#endif
-
-
 /* Getting the working directory */
 #if defined(HAVE_GETCWD)
 #define R_GETCWD(x, y) getcwd(x, y)
@@ -299,6 +286,14 @@ FUNTAB	R_FunTab[];	    /* Built in functions */
 #define INI_as(v)
 #endif
 
+/* Formerly in Arith.h */
+#ifdef IEEE_754
+# define MATH_CHECK(call)	(call)
+#else
+  extern double R_tmp;
+# define MATH_CHECK(call)	(errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
+#endif
+
 /* extern int	errno; already have errno.h ! */
 extern int	gc_inhibit_torture INI_as(1);
 
@@ -369,7 +364,7 @@ extern int	R_HistorySize;	/* Size of the history file */
 /* Warnings/Errors */
 extern int	R_CollectWarnings INI_as(0);	/* the number of warnings */
 extern SEXP	R_Warnings;	    /* the warnings and their calls */
-extern int	R_ShowErrorMessages INI_as(1);  /* show error messages? */
+extern int	R_ShowErrorMessages INI_as(1);	/* show error messages? */
 
 /* GUI type */
 
