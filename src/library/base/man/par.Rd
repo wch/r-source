@@ -4,9 +4,9 @@
 \alias{.Pars.readonly}
 \title{Set or Query Graphical Parameters}
 
-%% The real documentation is the code	in ../../../main/par.c
+%% The `real documentation' is the code	in ../../../main/par.c
 %% AND (defined AND commented)		in ../../../include/Graphics.h
-%% Default initialization by GInit()	in ../../../main/par.c
+%% Default initialization by GInit()	in ../../../main/graphics.c
 
 \description{
   \code{par} can be used to set or query graphical parameters.
@@ -209,7 +209,7 @@ par(\dots, no.readonly = FALSE)
       For compatibility with S, the form \code{c(i, j, nr, nc)} is also
       accepted, when \code{nr} and \code{nc} should be the current
       number of rows and number of columns.  Mismatches will be ignored,
-      with a warning.} 
+      with a warning.}
     \item{\code{mgp}}{The margin line (in \code{mex} units) for the axis
       title, axis labels and axis line.
       The default is \code{c(3, 1, 0)}.}
@@ -326,15 +326,15 @@ par(\dots, no.readonly = FALSE)
 
 \section{Line Type Specification}{
   Line types can either be specified by giving an index into a small
-  built in table of line types (1 = solid, 2 = dashed, 3 = dotted) or
-  directly as the lengths of on/off stretches of line.  This is done
-  with a string of up to eight characters which give the lengths in
-  consecutive positions in the string.  For example, the string
-  \code{"33"} specifies three units on followed by three off and
-  \code{"3313"} specifies three units on followed by three off followed
-  by one on and finally three off.  The `units' here are (on most
-  devices) proportional to \code{lwd}, and with \code{lwd = 1} are in
-  pixels or points.
+  built in table of line types (1 = solid, 2 = dashed, etc, see
+  \code{lty} above) or directly as the lengths of on/off stretches of
+  line.  This is done with a string of up to eight characters, namely
+  (hexadesimal) digits which give the lengths in consecutive positions
+  in the string.  For example, the string \code{"33"} specifies three
+  units on followed by three off and \code{"3313"} specifies three units
+  on followed by three off followed by one on and finally three off.
+  The `units' here are (on most devices) proportional to \code{lwd}, and
+  with \code{lwd = 1} are in pixels or points.
 }
 
 \note{
