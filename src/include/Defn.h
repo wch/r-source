@@ -415,7 +415,7 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho);
 
 void R_SetInput(int);		/* Set the input stream */
 int cget(void);			/* Get a character from input */
-void uncget(int);		/* Unget characters from input */
+void uncget(void);		/* Unget characters from input */
 
 #include "RFront.h"
 /* These are defined in rfrontend_api.h */

@@ -148,6 +148,40 @@ void InitGlobalEnv()
 	/* a file descriptor which is to be read to end of file */
 	/* If R_Console is one, input is taken from the console. */
 
+#ifdef NEW
+static void R_FileRepl(FILE *fp, SEXP rho, int savestack, int browselevel)
+{
+	SEXP expr;
+	int status;
+
+	for(;;) {
+		R_PPStackTop = savestack;
+		R_CurrentExpr = R_ParseFile(fp, &status);
+		switch(status) {
+		    case PARSE_NULL:
+			break;
+		    case PARSE_OK:
+			if (R_CurrentExpr) {
+				R_Visible = 0;
+				R_EvalDepth = 0;
+				PROTECT(R_CurrentExpr);
+				RBusy(1);
+				R_CurrentExpr = eval(R_CurrentExpr, rho);
+				SYMVALUE(R_LastvalueSymbol) = R_CurrentExpr;
+				UNPROTECT(1);
+				if (R_Visible)
+					PrintValueEnv(R_CurrentExpr, rho);
+			}
+		    case PARSE_ERROR:
+			break;
+		    case PARSE_EOF:
+			return;
+			break;
+		}
+	}
+}
+#endif
+
 static void R_Repl(SEXP rho, int savestack, int browselevel)
 {
 	int pflag = 1;

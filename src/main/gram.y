@@ -1,7 +1,7 @@
 %{
 /*
  *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,21 +20,99 @@
 
 #include "Defn.h"
 
-extern SEXP listAppend(SEXP,SEXP);
-void pushCmt();
-void popCmt();
-
-static int eatln;
 extern SEXP R_CommentSxp;
 
+/* static */ void ResetComment(void);
+static void AddComment(SEXP);
+static void PushComment(void);
+static void PopComment(void);
+static int isComment(SEXP);
+static void ifpush(void);
+static void CheckFormalArgs(SEXP, SEXP);
+static int KeywordLookup(char*);
+
+SEXP listAppend(SEXP,SEXP);
+SEXP newlist(void);
+SEXP growlist(SEXP, SEXP);
+SEXP firstarg(SEXP, SEXP);
+SEXP nextarg(SEXP, SEXP, SEXP);
+SEXP tagarg(SEXP, SEXP);
+
+		/* These routines allocate constants */
+
+SEXP mkString(char *);
+SEXP mkInteger(char *);
+SEXP mkFloat(char *);
+SEXP mkComplex(char *);
+SEXP mkNA(void);
+SEXP mkTrue(void);
+SEXP mkFalse(void);
+
+		/* Internal lexer / parser state variables */
+
+static int EatLines;
+static int GenerateCode = 0;
+static int EndOfFile = 0;
+static FILE *InputFile = NULL;
+static int (*xxgetc)();
+static void (*xxungetc)();
+
+static int newline = 0;			/* Used only for prompting */
+
+
+	/* Soon to be defunct entry points */
+
+void	R_SetInput(int);
+int	R_fgetc(FILE*);
+void	uncget(void);
+
+void	yyinit(void);
+int	yylex(void);
+int	yyerror(char*);
+void	yyprompt(char *, ...);
+int	yywrap();
+
+	/* Routines used to build the parse tree */
+
+static SEXP xxnullformal(void);
+static SEXP xxfirstformal0(SEXP);
+static SEXP xxfirstformal1(SEXP, SEXP);
+static SEXP xxaddformal0(SEXP, SEXP);
+static SEXP xxaddformal1(SEXP, SEXP, SEXP);
+static SEXP xxexprlist0();
+static SEXP xxexprlist1(SEXP);
+static SEXP xxexprlist2(SEXP, SEXP);
+static SEXP xxsub0(void);
+static SEXP xxsub1(SEXP);
+static SEXP xxsymsub0(SEXP);
+static SEXP xxsymsub1(SEXP, SEXP);
+static SEXP xxnullsub0();
+static SEXP xxnullsub1(SEXP);
+static SEXP xxsublist1(SEXP);
+static SEXP xxsublist2(SEXP, SEXP);
+static SEXP xxcond(SEXP);
+static SEXP xxifcond(SEXP);
+static SEXP xxif(SEXP, SEXP, SEXP);
+static SEXP xxifelse(SEXP, SEXP, SEXP, SEXP);
+static SEXP xxforcond(SEXP, SEXP);
+static SEXP xxfor(SEXP, SEXP, SEXP);
+static SEXP xxwhile(SEXP, SEXP, SEXP);
+static SEXP xxrepeat(SEXP, SEXP);
+static SEXP xxnxtbrk(SEXP);
+static SEXP xxfuncall(SEXP, SEXP);
+static SEXP xxdefun(SEXP, SEXP, SEXP);
+static SEXP xxunary(SEXP, SEXP);
+static SEXP xxbinary(SEXP, SEXP, SEXP);
+static SEXP xxparen(SEXP, SEXP);
+static SEXP xxsubscript(SEXP, SEXP, SEXP);
+static SEXP xxexprlist(SEXP, SEXP);
+static int xxvalue(SEXP, int);
+
 #define YYSTYPE		SEXP
-#ifdef YYBYACC
-#define YYRETURN(x)	{ return(x); }
-#else
-#define YYRETURN(x)	{ free((void*)yys); free((void*)yyv); return(x); }
-#endif
 
 %}
+
+%token		END_OF_INPUT
 
 %token		STR_CONST NUM_CONST NULL_CONST SYMBOL FUNCTION LEX_ERROR
 %token		LBB ERROR
@@ -64,124 +142,125 @@ extern SEXP R_CommentSxp;
 
 %%
 
-prog:						{ newline = 0; }
-	|	prog '\n'			{ R_CurrentExpr = NULL; return 2; }
-	|	prog expr '\n'			{ R_CurrentExpr = $2; UNPROTECT(1); YYRETURN(3); }
-	|	prog expr ';'			{ R_CurrentExpr = $2; UNPROTECT(1); YYRETURN(4); }
-	|	prog error 			{ YYABORT; }
+prog	:	END_OF_INPUT			{ return 0; }
+	|	'\n'				{ return xxvalue(NULL,2); }
+	|	expr '\n'			{ return xxvalue($1,3); }
+	|	expr ';'			{ return xxvalue($1,4); }
+	|	error	 			{ YYABORT; }
 	;
 
-expr:	 	NUM_CONST			{ $$ = $1; }
+expr	: 	NUM_CONST			{ $$ = $1; }
 	|	STR_CONST			{ $$ = $1; }
 	|	NULL_CONST			{ $$ = $1; }
 	|	SYMBOL				{ $$ = $1; }
 
-	|	'{' exprlist '}'		{ $$ = yyexprlist($1,$2); }
-	|	'(' expr ')'			{ $$ = yyparen($1,$2); }
+	|	'{' exprlist '}'		{ $$ = xxexprlist($1,$2); }
+	|	'(' expr ')'			{ $$ = xxparen($1,$2); }
 
-	|	'-' expr %prec UMINUS		{ $$ = yyunary($1,$2); }
-	|	'+' expr %prec UMINUS		{ $$ = yyunary($1,$2); }
-	|	'!' expr %prec UNOT		{ $$ = yyunary($1,$2); }
-	|	'~' expr %prec TILDE		{ $$ = yyunary($1,$2); }
-	|	'?' expr			{ $$ = yyunary($1,$2); }
+	|	'-' expr %prec UMINUS		{ $$ = xxunary($1,$2); }
+	|	'+' expr %prec UMINUS		{ $$ = xxunary($1,$2); }
+	|	'!' expr %prec UNOT		{ $$ = xxunary($1,$2); }
+	|	'~' expr %prec TILDE		{ $$ = xxunary($1,$2); }
+	|	'?' expr			{ $$ = xxunary($1,$2); }
 
-	|	expr ':'  expr			{ $$ = yybinary($2,$1,$3); }
-	|	expr '+'  expr			{ $$ = yybinary($2,$1,$3); }
-	|	expr '-' expr			{ $$ = yybinary($2,$1,$3); }
-	|	expr '*' expr			{ $$ = yybinary($2,$1,$3); }
-	|	expr '/' expr			{ $$ = yybinary($2,$1,$3); }
-	|	expr '^' expr 			{ $$ = yybinary($2,$1,$3); }
-	|	expr SPECIAL expr		{ $$ = yybinary($2,$1,$3); }
-	|	expr '%' expr			{ $$ = yybinary($2,$1,$3); }
-	|	expr '~' expr			{ $$ = yybinary($2,$1,$3); }
-	|	expr LT expr			{ $$ = yybinary($2,$1,$3); }
-	|	expr LE expr			{ $$ = yybinary($2,$1,$3); }
-	|	expr EQ expr			{ $$ = yybinary($2,$1,$3); }
-	|	expr NE expr			{ $$ = yybinary($2,$1,$3); }
-	|	expr GE expr			{ $$ = yybinary($2,$1,$3); }
-	|	expr GT expr			{ $$ = yybinary($2,$1,$3); }
-	|	expr AND expr			{ $$ = yybinary($2,$1,$3); }
-	|	expr OR expr			{ $$ = yybinary($2,$1,$3); }
+	|	expr ':'  expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr '+'  expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr '-' expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr '*' expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr '/' expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr '^' expr 			{ $$ = xxbinary($2,$1,$3); }
+	|	expr SPECIAL expr		{ $$ = xxbinary($2,$1,$3); }
+	|	expr '%' expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr '~' expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr LT expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr LE expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr EQ expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr NE expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr GE expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr GT expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr AND expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr OR expr			{ $$ = xxbinary($2,$1,$3); }
 
-	|	expr LEFT_ASSIGN expr 		{ $$ = yybinary($2,$1,$3); }
-	|	expr RIGHT_ASSIGN expr 		{ $$ = yybinary($2,$3,$1); }
-	|	FUNCTION '(' formlist ')' gobble expr %prec LOW
-						{ $$ = yydefun($1, $3, $6); }
-	|	expr '(' sublist ')'		{ $$ = yyfuncall($1, $3); }
-	|	IF ifcond expr 			{ $$ = yynode3(2,$1,$2,$3); }
-	|	IF ifcond expr ELSE expr	{ $$ = yynode4(3,$1,$2,$3,$5); }
-	|	FOR forcond expr %prec FOR 	{ $$ = yyforloop($1,$2,$3); }
-	|	WHILE cond expr			{ $$ = yynode3(2,$1,$2,$3); }
-	|	REPEAT expr			{ $$ = yynode2(1,$1,$2); }
-	|	expr LBB sublist ']' ']'	{ $$ = yysubscript($1,$2,$3); }
-	|	expr '[' sublist ']'		{ $$ = yysubscript($1,$2,$3); }
-	|	expr '$' SYMBOL			{ $$ = yybinary($2,$1,$3); }
-	|	expr '$' STR_CONST		{ $$ = yybinary($2,$1,$3); }
-	|	NEXT				{ $$ = lang1($1); PROTECT($$); }
-	|	BREAK				{ $$ = lang1($1); PROTECT($$); }
+	|	expr LEFT_ASSIGN expr 		{ $$ = xxbinary($2,$1,$3); }
+	|	expr RIGHT_ASSIGN expr 		{ $$ = xxbinary($2,$3,$1); }
+	|	FUNCTION '(' formlist ')' cr expr %prec LOW
+						{ $$ = xxdefun($1,$3,$6); }
+	|	expr '(' sublist ')'		{ $$ = xxfuncall($1,$3); }
+	|	IF ifcond expr 			{ $$ = xxif($1,$2,$3); }
+	|	IF ifcond expr ELSE expr	{ $$ = xxifelse($1,$2,$3,$5); }
+	|	FOR forcond expr %prec FOR 	{ $$ = xxfor($1,$2,$3); }
+	|	WHILE cond expr			{ $$ = xxwhile($1,$2,$3); }
+	|	REPEAT expr			{ $$ = xxrepeat($1,$2); }
+	|	expr LBB sublist ']' ']'	{ $$ = xxsubscript($1,$2,$3); }
+	|	expr '[' sublist ']'		{ $$ = xxsubscript($1,$2,$3); }
+	|	expr '$' SYMBOL			{ $$ = xxbinary($2,$1,$3); }
+	|	expr '$' STR_CONST		{ $$ = xxbinary($2,$1,$3); }
+	|	NEXT				{ $$ = xxnxtbrk($1); }
+	|	BREAK				{ $$ = xxnxtbrk($1); }
 	;
 
 
-cond:		'(' expr ')'			{ $$ = yycond($2); }
+cond	:	'(' expr ')'			{ $$ = xxcond($2); }
 	;
 
-ifcond:		'(' expr ')'			{ $$ = yyifcond($2); }
+ifcond	:	'(' expr ')'			{ $$ = xxifcond($2); }
 	;
 
-forcond:	'(' SYMBOL IN expr ')' 		{ $$ = yyforcond($2, $4); }
+forcond :	'(' SYMBOL IN expr ')' 		{ $$ = xxforcond($2,$4); }
 	;
 
 
-exprlist:					{ $$ = yyexprlist0(); }
-	|	expr				{ $$ = yyexprlist1($1); }
-	|	exprlist ';' expr		{ $$ = yyexprlist2($1, $3); }
-	|	exprlist ';'			{ $$ = $1; addcomment(CAR($$));}
-	|	exprlist '\n' expr		{ $$ = yyexprlist2($1, $3); }
+exprlist:					{ $$ = xxexprlist0(); }
+	|	expr				{ $$ = xxexprlist1($1); }
+	|	exprlist ';' expr		{ $$ = xxexprlist2($1,$3); }
+	|	exprlist ';'			{ $$ = $1; AddComment(CAR($$));}
+	|	exprlist '\n' expr		{ $$ = xxexprlist2($1,$3); }
 	|	exprlist '\n'			{ $$ = $1;}
 	;
 
-sublist:	sub				{ $$ = yysublist1($1); }
-	|	sublist gobble ',' sub		{ $$ = yysublist2($1,$4); }
+sublist	:	sub				{ $$ = xxsublist1($1); }
+	|	sublist cr ',' sub		{ $$ = xxsublist2($1,$4); }
 	;
 
-sub:						{ $$ = yysub0(); }
-	|	expr				{ $$ = yysub1($1); }
-	|	SYMBOL '=' 			{ $$ = yysymsub0($1); }
-	|	SYMBOL '=' expr			{ $$ = yysymsub1($1,$3); }
-	|	STR_CONST '=' 			{ $$ = yysymsub0($1); }
-	|	STR_CONST '=' expr		{ $$ = yysymsub1($1,$3); }
-	|	NULL_CONST '=' 			{ $$ = yynullsub0(); }
-	|	NULL_CONST '=' expr		{ $$ = yynullsub1($3); }
+sub	:					{ $$ = xxsub0(); }
+	|	expr				{ $$ = xxsub1($1); }
+	|	SYMBOL '=' 			{ $$ = xxsymsub0($1); }
+	|	SYMBOL '=' expr			{ $$ = xxsymsub1($1,$3); }
+	|	STR_CONST '=' 			{ $$ = xxsymsub0($1); }
+	|	STR_CONST '=' expr		{ $$ = xxsymsub1($1,$3); }
+	|	NULL_CONST '=' 			{ $$ = xxnullsub0(); }
+	|	NULL_CONST '=' expr		{ $$ = xxnullsub1($3); }
 	;
 
-formlist:					{ $$ = yynullformal(); }
-	|	SYMBOL				{ $$ = yyfirstformal0($1); }
-	|	SYMBOL '=' expr			{ $$ = yyfirstformal1($1, $3); }
-	|	formlist ',' SYMBOL		{ $$ = yyaddformal0($1,$3); }
-	|	formlist ',' SYMBOL '=' expr	{ $$ = yyaddformal1($1,$3,$5); }
+formlist:					{ $$ = xxnullformal(); }
+	|	SYMBOL				{ $$ = xxfirstformal0($1); }
+	|	SYMBOL '=' expr			{ $$ = xxfirstformal1($1,$3); }
+	|	formlist ',' SYMBOL		{ $$ = xxaddformal0($1,$3); }
+	|	formlist ',' SYMBOL '=' expr	{ $$ = xxaddformal1($1,$3,$5); }
 	;
 
-gobble:		{eatln = 1;}
+cr	:					{ EatLines = 1; }
 	;
 %%
 
-static void addcomment(SEXP);
-static void ifpush(void);
-SEXP newlist(void);
-SEXP growlist(SEXP, SEXP);
-SEXP firstarg(SEXP, SEXP);
-SEXP nextarg(SEXP, SEXP, SEXP);
-SEXP tagarg(SEXP, SEXP);
-void check_formals(SEXP, SEXP);
 
-static SEXP yynullformal()
+/*----------------------------------------------------------------------------*/
+
+static int xxvalue(SEXP v, int k)
+{
+	if(k > 2) UNPROTECT(1);
+	R_CurrentExpr = v;
+	return k;
+}
+
+static SEXP xxnullformal()
 {
 	SEXP ans;
 	PROTECT(ans = R_NilValue);
 	return ans;
 }
 
-static SEXP yyfirstformal0(SEXP sym)
+static SEXP xxfirstformal0(SEXP sym)
 {
 	SEXP ans;
 	UNPROTECT(1);
@@ -189,7 +268,7 @@ static SEXP yyfirstformal0(SEXP sym)
 	return ans;
 }
 
-static SEXP yyfirstformal1(SEXP sym, SEXP expr)
+static SEXP xxfirstformal1(SEXP sym, SEXP expr)
 {
 	SEXP ans;
 	UNPROTECT(2);
@@ -197,57 +276,57 @@ static SEXP yyfirstformal1(SEXP sym, SEXP expr)
 	return ans;
 }
 
-static SEXP yyaddformal0(SEXP formlist, SEXP sym)
+static SEXP xxaddformal0(SEXP formlist, SEXP sym)
 {
 	SEXP ans;
 	UNPROTECT(2);
-	check_formals(formlist ,sym);
+	CheckFormalArgs(formlist ,sym);
 	PROTECT(ans = nextarg(formlist, R_MissingArg, sym));
 	return ans;
 }
 
-static SEXP yyaddformal1(SEXP formlist, SEXP sym, SEXP expr)
+static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr)
 {
 	SEXP ans;
 	UNPROTECT(3);
-	check_formals(formlist, sym);
+	CheckFormalArgs(formlist, sym);
 	PROTECT(ans = nextarg(formlist, expr, sym));
 	return ans;
 }
 
-static SEXP yyexprlist0()
+static SEXP xxexprlist0()
 {
 	SEXP ans;
 	PROTECT(ans = newlist());
 	return ans;
 }
 
-static SEXP yyexprlist1(SEXP expr)
+static SEXP xxexprlist1(SEXP expr)
 {
 	SEXP ans;
-	addcomment(expr);
+	AddComment(expr);
 	UNPROTECT(1);
 	PROTECT(ans = growlist(newlist(), expr));
 	return ans;
 }
 
-static SEXP yyexprlist2(SEXP exprlist, SEXP expr)
+static SEXP xxexprlist2(SEXP exprlist, SEXP expr)
 {
 	SEXP ans;
-	addcomment(expr);
+	AddComment(expr);
 	UNPROTECT(2);
 	PROTECT(ans = growlist(exprlist, expr));
 	return ans;
 }
 
-static SEXP yysub0(void)
+static SEXP xxsub0(void)
 {
 	SEXP ans;
 	PROTECT(ans = lang2(R_MissingArg,R_NilValue));
 	return ans;
 }
 
-static SEXP yysub1(SEXP expr)
+static SEXP xxsub1(SEXP expr)
 {
 	SEXP ans;
 	UNPROTECT(1);
@@ -255,7 +334,7 @@ static SEXP yysub1(SEXP expr)
 	return ans;
 }
 
-static SEXP yysymsub0(SEXP sym)
+static SEXP xxsymsub0(SEXP sym)
 {
 	SEXP ans;
 	UNPROTECT(1);
@@ -263,7 +342,7 @@ static SEXP yysymsub0(SEXP sym)
 	return ans;
 }
 
-static SEXP yysymsub1(SEXP sym, SEXP expr)
+static SEXP xxsymsub1(SEXP sym, SEXP expr)
 {
 	SEXP ans;
 	UNPROTECT(2);
@@ -271,7 +350,7 @@ static SEXP yysymsub1(SEXP sym, SEXP expr)
 	return ans;
 }
 
-static SEXP yynullsub0()
+static SEXP xxnullsub0()
 {
 	SEXP ans;
 	UNPROTECT(1);
@@ -279,7 +358,7 @@ static SEXP yynullsub0()
 	return ans;
 }
 
-static SEXP yynullsub1(SEXP expr)
+static SEXP xxnullsub1(SEXP expr)
 {
 	SEXP ans = install("NULL");
 	UNPROTECT(2);
@@ -288,7 +367,7 @@ static SEXP yynullsub1(SEXP expr)
 }
 
 
-static SEXP yysublist1(SEXP sub)
+static SEXP xxsublist1(SEXP sub)
 {
 	SEXP ans;
 	UNPROTECT(1);
@@ -296,7 +375,7 @@ static SEXP yysublist1(SEXP sub)
 	return ans;
 }
 
-static SEXP yysublist2(SEXP sublist, SEXP sub)
+static SEXP xxsublist2(SEXP sublist, SEXP sub)
 {
 	SEXP ans;
 	UNPROTECT(2);
@@ -304,29 +383,45 @@ static SEXP yysublist2(SEXP sublist, SEXP sub)
 	return ans;
 }
 
-static SEXP yycond(SEXP expr)
+static SEXP xxcond(SEXP expr)
 {
-	eatln = 1;
+	EatLines = 1;
 	return expr;
 }
 
-static SEXP yyifcond(SEXP expr)
+static SEXP xxifcond(SEXP expr)
 {
 	ifpush();
-	eatln = 1;
+	EatLines = 1;
 	return expr;
 }
 
-static SEXP yyforcond(SEXP sym, SEXP expr)
+static SEXP xxif(SEXP ifsym, SEXP cond, SEXP expr)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	PROTECT(ans = lang3(ifsym, cond, expr));
+	return ans;
+}
+
+static SEXP xxifelse(SEXP ifsym, SEXP cond, SEXP ifexpr, SEXP elseexpr)
+{
+	SEXP ans;
+	UNPROTECT(3);
+	PROTECT(ans = lang4(ifsym, cond, ifexpr, elseexpr));
+	return ans;
+}
+
+static SEXP xxforcond(SEXP sym, SEXP expr)
 {
 	SEXP ans;
 	UNPROTECT(2);
 	PROTECT(ans = LCONS(sym, expr));
-	eatln=1;
+	EatLines=1;
 	return ans;
 }
 
-static SEXP yyforloop(SEXP forsym, SEXP forcond, SEXP body)
+static SEXP xxfor(SEXP forsym, SEXP forcond, SEXP body)
 {
 	SEXP ans;
 	UNPROTECT(2);
@@ -334,7 +429,29 @@ static SEXP yyforloop(SEXP forsym, SEXP forcond, SEXP body)
 	return ans;
 }
 
-static SEXP yyfuncall(SEXP expr, SEXP args)
+static SEXP xxwhile(SEXP whilesym, SEXP cond, SEXP body)
+{
+	SEXP ans;
+	UNPROTECT(2);
+	PROTECT(ans = lang3(whilesym, cond, body));
+	return ans;
+}
+
+static SEXP xxrepeat(SEXP repeatsym, SEXP body)
+{
+	SEXP ans;
+	UNPROTECT(1);
+	PROTECT(ans = lang2(repeatsym, body));
+	return ans;
+}
+
+static SEXP xxnxtbrk(SEXP keyword)
+{
+	PROTECT(keyword = lang1(keyword));
+	return keyword;
+}
+
+static SEXP xxfuncall(SEXP expr, SEXP args)
 {
 	SEXP ans;
 	if(isString(expr))
@@ -348,18 +465,18 @@ static SEXP yyfuncall(SEXP expr, SEXP args)
 	return ans;
 }       
 
-static SEXP yydefun(SEXP fname, SEXP formals, SEXP body)
+static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 {
 	SEXP ans;
-	addcomment(body);
+	AddComment(body);
 	UNPROTECT(2);
 	ans = lang3(fname, CDR(formals), body); 
 	PROTECT(ans);
-	popCmt();
+	PopComment();
 	return ans;
 }
 
-static SEXP yyunary(SEXP op, SEXP arg)
+static SEXP xxunary(SEXP op, SEXP arg)
 {
 	SEXP ans;
 	UNPROTECT(1);
@@ -367,7 +484,7 @@ static SEXP yyunary(SEXP op, SEXP arg)
 	return ans;
 }
 
-static SEXP yybinary(SEXP n1, SEXP n2, SEXP n3)
+static SEXP xxbinary(SEXP n1, SEXP n2, SEXP n3)
 {
 	SEXP ans;
 	UNPROTECT(2);
@@ -375,7 +492,7 @@ static SEXP yybinary(SEXP n1, SEXP n2, SEXP n3)
 	return ans;
 }
 
-static SEXP yyparen(SEXP n1, SEXP n2)
+static SEXP xxparen(SEXP n1, SEXP n2)
 {
 	SEXP ans;
 	UNPROTECT(1);
@@ -383,31 +500,7 @@ static SEXP yyparen(SEXP n1, SEXP n2)
 	return ans;
 }
 
-static SEXP yynode2(int nprot, SEXP n1, SEXP n2)
-{
-	SEXP ans;
-	UNPROTECT(nprot);
-	PROTECT(ans = lang2(n1, n2));
-	return ans;
-}
-
-static SEXP yynode3(int nprot, SEXP n1, SEXP n2, SEXP n3)
-{
-	SEXP ans;
-	UNPROTECT(nprot);
-	PROTECT(ans = lang3(n1, n2, n3));
-	return ans;
-}
-
-static SEXP yynode4(int nprot, SEXP n1, SEXP n2, SEXP n3, SEXP n4)
-{
-	SEXP ans;
-	UNPROTECT(nprot);
-	PROTECT(ans = lang4(n1, n2, n3, n4));
-	return ans;
-}
-
-static SEXP yysubscript(SEXP a1, SEXP a2, SEXP a3)
+static SEXP xxsubscript(SEXP a1, SEXP a2, SEXP a3)
 {
 	SEXP ans;
 	UNPROTECT(2);
@@ -416,16 +509,18 @@ static SEXP yysubscript(SEXP a1, SEXP a2, SEXP a3)
 	return ans;
 }
 
-static SEXP yyexprlist(SEXP a1, SEXP a2)
+static SEXP xxexprlist(SEXP a1, SEXP a2)
 {
 	SEXP ans;
 	UNPROTECT(1);
 	TYPEOF(a2) = LANGSXP;
 	CAR(a2) = a1;
 	PROTECT(ans = a2);
-	eatln = 0;
+	EatLines = 0;
 	return ans;
 }
+
+/*----------------------------------------------------------------------------*/
 
 SEXP tagarg(SEXP arg, SEXP tag)
 {
@@ -439,13 +534,17 @@ SEXP tagarg(SEXP arg, SEXP tag)
 	}
 }
 
-/* Lists are created and grown using a special dotted pair. */
-/* The CAR of the list points to the last cons-cell in the list */
-/* and the CDR points to the first.  The list can be extracted */
-/* from the pair by taking its CDR, while the CAR gives fast access */
-/* to the end of the list. */
+/*
+ *  Stretchy List Structures
+ *
+ *  Lists are created and grown using a special dotted pair.
+ *  The CAR of the list points to the last cons-cell in the
+ *  list and the CDR points to the first.  The list can be
+ *  extracted from the pair by taking its CDR, while the CAR
+ *  gives fast access to the end of the list.
+ */
 
-/* Create a stretchy-list dotted pair */
+	/* Create a stretchy-list dotted pair */
 
 SEXP newlist(void)
 {
@@ -454,7 +553,7 @@ SEXP newlist(void)
 	return s;
 }
 
-/* Add a new element at the end of a stretchy list */
+	/* Add a new element at the end of a stretchy list */
 
 SEXP growlist(SEXP l, SEXP s)
 {
@@ -467,38 +566,43 @@ SEXP growlist(SEXP l, SEXP s)
 	return l;
 }
 
+/*
+ *  Comment Handling
+ *
+ *  R_CommentSxp is of the same form as an expression list,
+ *  each time a new { is encountered a new element is placed
+ *  in the R_CommentSxp and when a } is encountered it is
+ *  removed.
+ *
+ *  The following routine is referenced in error.c.
+ *  That reference should be removed.
+ */
 
-	/* Comment Handling */
-
-	/* R_CommentSxp is of the same form as an expression list, */
-	/* each time a new { is encountered a new element is placed */
-	/* in the R_CommentSxp and when a } is encountered it is */
-	/* removed. */
-
-extern void ResetComment()
+/* static */ void ResetComment(void)
 {
 	R_CommentSxp = CONS(R_NilValue, R_NilValue);
 }
 
-void pushCmt()
+static void PushComment(void)
 {
 	R_CommentSxp = CONS(R_NilValue, R_CommentSxp);
 }
 
-void popCmt()
+static void PopComment(void)
 {
 	R_CommentSxp = CDR(R_CommentSxp);
 }
 
 int isComment(SEXP l)
 {
-	if (isList(l) && isString(CAR(l)) && !strncmp(CHAR(STRING(CAR(l))[0]), "#", 1))
+	if (isList(l) && isString(CAR(l))
+	&& !strncmp(CHAR(STRING(CAR(l))[0]), "#", 1))
 		return 1;
 	else
 		return 0;
 }
 
-static void addcomment(SEXP l)
+static void AddComment(SEXP l)
 {
 	SEXP tcmt, cmt;
 	int i, ncmt;
@@ -548,23 +652,12 @@ SEXP nextarg(SEXP l, SEXP s, SEXP tag)
 	return l;
 }
 
+/*----------------------------------------------------------------------------*/
 
-SEXP mkString(char *);
-SEXP mkInteger(char *);
-SEXP mkFloat(char *);
-SEXP mkComplex(char *);
-SEXP mkNA(void);
-SEXP mkTrue(void);
-SEXP mkFalse(void);
+	/* Basic File IO */
 
-
-/*
-//	Basic File IO:
-//
-//	This code is here because at this particular instant it
-//	seems closely related to cget(), which appears below.
-*/
-
+	/* This code is here because at this particular instant it */
+	/* seems closely related to cget(), which appears below.  */
 
 int R_fgetc(FILE *fp)
 {
@@ -595,6 +688,9 @@ static current_input;
 
 void R_SetInput(int input)
 {
+	xxgetc = cget;
+	xxungetc = uncget;
+
 	switch (input) {
 
 	case 0:			/* Initialization / Reset */
@@ -675,35 +771,115 @@ int cget()
 //	beyond the start of the buffer is impossible.
 */
 
-void uncget(int n)
+void uncget()
 {
-	cnt += n;
-	bufp -= n;
+	cnt += 1;
+	bufp -= 1;
 }
 
+/*----------------------------------------------------------------------------*/
+
+/* TODO:
+   The function "parse" in source.c needs to be moved here.
+   It should work by calling these functions.
+   With that change, "newlist" and "growlist" can become
+   static local functions */
 
 /*
-//	Lexical Analyzer:
-//
-//	Basic lexical analysis is performed by the following
-//	routines.  Input is read a line at a time, and, if the
-//	program is in batch mode, each input line is echoed to
-//	standard output after it is read.
-//
-//	The function yylex() scans the input, breaking it into
-//	tokens which are then passed to the parser.  The lexical
-//	analyser maintains a symbol table (in a very messy fashion).
-//
-//	The fact that if statements need to parse differently
-//	depending on whether the statement is being interpreted or
-//	part of the body of a function causes the need for ifpop
-//	and ifpush. When an if statement is encountered an 'i' is
-//	pushed on a stack (provided there are parentheses active).
-//	At later points this 'i' needs to be popped off of the if
-//	stack.
-*/
+ *  Parsing Entry Points:
+ *
+ *  The Following extry points provide language parsing facilities.
+ *  Note that there are separate entry points for parsing IOBuffers
+ *  (i.e. interactve use), files and R character strings.
+ *
+ *	SEXP R_ParseFile(FILE *fp, int gencode, int *status)
+ *
+ *	SEXP R_ParseVector(SEXP *text, int gencode, int *status)
+ *
+ *	SEXP R_ParseBuffer(IOBuffer *buffer, int gencode, int *status)
+ *	
+ *  The entry points provide the same functionality, they just
+ *  set things up in slightly different ways.
+ *
+ *	status = 0 - there was no statement to parse
+ *		 1 - complete statement
+ *		 2 - incomplete statement
+ *		 3 - syntax error
+ */
 
-static int newline = 0;
+SEXP R_ParseFile(FILE *fp, int gencode, int *status)
+{
+	GenerateCode = gencode;
+	EndOfFile = 0;
+	R_ParseError = 0;
+	ResetComment();
+
+	xxgetc = cget;
+	xxungetc = uncget;
+
+	switch(yyparse()) {
+	    case 0:		/* End of file */
+		*status = 2;
+		break;
+	    case 1:		/* Syntax error / incomplete */
+		if(EndOfFile) *status = 2;
+		else *status = 3;
+		break;
+	    case 2:		/* Empty Line */
+		*status = 0;
+		break;
+	    case 3:		/* Valid expression '\n' terminated */
+	    case 4:		/* Valid expression ';' terminated */
+		*status = 1;
+		break;
+	}
+	return R_CurrentExpr;
+}
+
+SEXP R_ParseVector(SEXP *text, int gencode, int *status)
+{
+	GenerateCode = gencode;
+	EndOfFile = 0;
+	R_ParseError = 0;
+	ResetComment();
+	xxgetc = cget;
+	xxungetc = uncget;
+	return R_NilValue;
+}
+
+SEXP R_ParseBuffer(void *buffer, int gencode, int *status)
+{
+	GenerateCode = gencode;
+	EndOfFile = 0;
+	R_ParseError = 0;
+	ResetComment();
+	xxgetc = cget;
+	xxungetc = uncget;
+	return R_NilValue;
+}
+
+/*----------------------------------------------------------------------------*/
+/*
+ *  Lexical Analyzer:
+ *
+ *  Basic lexical analysis is performed by the following
+ *  routines.  Input is read a line at a time, and, if the
+ *  program is in batch mode, each input line is echoed to
+ *  standard output after it is read.
+ *
+ *  The function yylex() scans the input, breaking it into
+ *  tokens which are then passed to the parser.  The lexical
+ *  analyser maintains a symbol table (in a very messy fashion).
+ *
+ *  The fact that if statements need to parse differently
+ *  depending on whether the statement is being interpreted or
+ *  part of the body of a function causes the need for ifpop
+ *  and ifpush. When an if statement is encountered an 'i' is
+ *  pushed on a stack (provided there are parentheses active).
+ *  At later points this 'i' needs to be popped off of the if
+ *  stack.
+ */
+
 static int reset = 1;
 #ifndef DEBUG_LEX
 static
@@ -712,13 +888,13 @@ char *parenp, parenstack[50];
 
 static void ifpush(void)
 {
-	if (*parenp == '{' || *parenp == '[' || *parenp == '(' || *parenp == 'i')
+	if (*parenp=='{' || *parenp=='[' || *parenp=='(' || *parenp == 'i')
 		*++parenp = 'i';
 }
 
 static void ifpop(void)
 {
-	if (*parenp == 'i')
+	if (*parenp=='i')
 		parenp--;
 }
 
@@ -727,12 +903,13 @@ static int typeofnext(void)
 	int k, c;
 
 	c = cget();
-	if (isdigit(c)) k = 1;
+	if (isdigit(c))
+		k = 1;
 	else if (isalpha(c) || c == '.')
 		k = 2;
 	else
 		k = 3;
-	uncget(1);
+	uncget();
 	return k;
 }
 
@@ -743,7 +920,7 @@ static int nextchar(int expect)
 	if (c == expect)
 		return 1;
 	else
-		uncget(1);
+		uncget();
 	return 0;
 }
 
@@ -753,7 +930,8 @@ static int nextchar(int expect)
 struct {
 	char *name;
 	int token;
-} keywords[] = {
+}
+keywords[] = {
 	{ "NULL",	NULL_CONST	},
 	{ "NA",		NUM_CONST	},
 	{ "TRUE",	NUM_CONST	},
@@ -773,10 +951,9 @@ struct {
 };
 
 
-	/* klookup has side effects, it sets yylval */
+	/* KeywordLookup has side effects, it sets yylval */
 
-int klookup(s)
-char *s;
+static int KeywordLookup(char *s)
 {
 	int i;
 
@@ -785,7 +962,7 @@ char *s;
 			switch (keywords[i].token) {
 			case NULL_CONST:
 				PROTECT(yylval = R_NilValue);
-				eatln = 0;
+				EatLines = 0;
 				break;
 			case NUM_CONST:
 				switch(i) {
@@ -801,31 +978,31 @@ char *s;
 				case 4:
 					PROTECT(yylval = R_GlobalEnv);
 				}
-				eatln = 0;
+				EatLines = 0;
 				break;
 			case FUNCTION:
 			case WHILE:
 			case REPEAT:
 			case FOR:
 			case IF:
-				eatln = 1;
+				EatLines = 1;
 				yylval = install(s);
 				break;
 			case IN:
-				eatln = 1;
+				EatLines = 1;
 				break;
 			case ELSE:
 				ifpop();
-				eatln = 1;
+				EatLines = 1;
 				break;
 			case NEXT:
 			case BREAK:
-				eatln = 0;
+				EatLines = 0;
 				yylval = install(s);
 				break;
 			case SYMBOL:
 				PROTECT(yylval = install(s));
-				eatln = 0;
+				EatLines = 0;
 				break;
 			}
 			return keywords[i].token;
@@ -916,7 +1093,7 @@ void yyprompt(char *format, ...)
 	RBusy(0);
 }
 
-void yyerror(char *s)
+int yyerror(char *s)
 {
 	int i;
 
@@ -937,9 +1114,10 @@ void yyerror(char *s)
 	newline = 0;
 	reset = 1;
 	cnt = 0;
+	return 0;
 }
 
-void check_formals(SEXP formlist, SEXP new)
+static void CheckFormalArgs(SEXP formlist, SEXP new)
 {
 	int i;
 
@@ -974,16 +1152,16 @@ int yylex()
 		parenp = parenstack;
 		*parenp = ' ';
 		reset = 0;
-		eatln = 0;
+		EatLines = 0;
 		ResetComment();
 	}
 
-	while ((c = cget()) == ' ' || c == '\t' || c == '');
+	while ((c = xxgetc()) == ' ' || c == '\t' || c == '');
 
 	if (c == '#') {
 		p = yytext;
 		*p++ = c;
-		while ((c = cget()) != '\n' && c != R_EOF)
+		while ((c = xxgetc()) != '\n' && c != R_EOF)
 			*p++ = c;
 		*p = '\0';
 		if(R_CommentSxp != R_NilValue) {
@@ -994,9 +1172,7 @@ int yylex()
 	}
 
 
-	if (c == R_EOF) {
-		return EOF;
-	}
+	if (c == R_EOF) return END_OF_INPUT;
 
 		/* This code deals with context sensitivity to      */
 		/* newlines.  The main problem is finding out       */
@@ -1005,20 +1181,20 @@ int yylex()
 		/* of "(", "[", or "{".			     */
 
 	if (c == '\n') {
-		if (eatln || *parenp == '[' || *parenp == '(') {
+		if (EatLines || *parenp == '[' || *parenp == '(') {
 			prompt();
 			goto again;
 		}
 		if (*parenp == 'i') {
 			prompt();
-			while ((c = cget()) == ' ' || c == '\t');
+			while ((c = xxgetc()) == ' ' || c == '\t');
 			if (c == R_EOF) {
 				error("unexpected end-of-file in parse\n");
 			}
 			if (c == '#') {
 				p = yytext;
 				*p++ = c;
-				while ((c = cget()) != '\n' && c != R_EOF)
+				while ((c = xxgetc()) != '\n' && c != R_EOF)
 					*p++ = c;
 				*p = '\0';
 				if(R_CommentSxp != R_NilValue) {
@@ -1029,7 +1205,7 @@ int yylex()
 			}
 			if (c == '\n') {
 				prompt();
-				uncget(1);
+				xxungetc();
 				goto again;
 			}
 			if (c == '}' || c == ')' || c == ']' ) {
@@ -1042,9 +1218,9 @@ int yylex()
 				ifpop();
 				return c;
 			}
-			uncget(1);
+			xxungetc();
 			if (!strncmp(bufp, "else", 4) && !isalnum(bufp[4]) && bufp[4] != '.') {
-				eatln = 1;
+				EatLines = 1;
 				bufp += 4;
 				cnt -= 4;
 				ifpop();
@@ -1081,14 +1257,14 @@ int yylex()
 		int seenexp = 0;
 		p = yytext;
 		*p++ = c;
-		while (isdigit(c = cget()) || c == '.' || c == 'e' || c == 'E') {
+		while (isdigit(c = xxgetc()) || c == '.' || c == 'e' || c == 'E') {
 			if (c == 'E' || c == 'e') {
 				if (seenexp)
 					break;
 				seenexp = 1;
 				seendot = 1;
 				*p++ = c;
-				c = cget();
+				c = xxgetc();
 				if (!isdigit(c) && c != '+' && c != '-')
 					break;
 			}
@@ -1105,9 +1281,9 @@ int yylex()
 		}
 		else {
 			PROTECT(yylval = mkFloat(yytext));
-			uncget(1);
+			xxungetc();
 		}
-		eatln = 0;
+		EatLines = 0;
 		return NUM_CONST;
 	}
 
@@ -1116,13 +1292,13 @@ int yylex()
 	if (c == '\"' || c == '\'') {
 		quote = c;
 		p = yytext;
-		while ((c = cget()) != R_EOF && c != quote) {
+		while ((c = xxgetc()) != R_EOF && c != quote) {
 			if (c == '\n') {
-				uncget(1);
+				xxungetc();
 				return ERROR;
 			}
 			if (c == '\\') {
-				c = cget();
+				c = xxgetc();
 				switch (c) {
 				case 'a':
 					c = '\a';
@@ -1154,7 +1330,7 @@ int yylex()
 		}
 		*p = '\0';
 		PROTECT(yylval = mkString(yytext));
-		eatln = 0;
+		EatLines = 0;
 		return STR_CONST;
 	}
 
@@ -1162,9 +1338,9 @@ int yylex()
 	if (c == '%') {
 		p = yytext;
 		*p++ = c;
-		while ((c = cget()) != R_EOF && c != '%') {
+		while ((c = xxgetc()) != R_EOF && c != '%') {
 			if (c == '\n') {
-				uncget(1);
+				xxungetc();
 				return ERROR;
 			}
 			*p++ = c;
@@ -1173,7 +1349,7 @@ int yylex()
 			*p++ = c;
 		*p++ = '\0';
 		yylval = install(yytext);
-		eatln=1;
+		EatLines=1;
 		return SPECIAL;
 	}
 
@@ -1182,7 +1358,7 @@ int yylex()
 
 	/* gag, barf, but the punters want it */
 	if (c == '_') {
-		eatln = 1;
+		EatLines = 1;
 		yylval = install("<-");
 		return LEFT_ASSIGN;
 	}
@@ -1192,17 +1368,17 @@ int yylex()
 		p = yytext;
 		do {
 			*p++ = c;
-		} while ((c = cget()) != R_EOF && (isalnum(c) || c == '.'));
-		uncget(1);
+		} while ((c = xxgetc()) != R_EOF && (isalnum(c) || c == '.'));
+		xxungetc();
 		*p = '\0';
 
-		if ((kw = klookup(yytext))) {
-			if(kw == FUNCTION) pushCmt();
+		if ((kw = KeywordLookup(yytext))) {
+			if(kw == FUNCTION) PushComment();
 			return kw;
 		}
 
 		PROTECT(yylval = install(yytext));
-		eatln = 0;
+		EatLines = 0;
 		return SYMBOL;
 	}
 
@@ -1210,7 +1386,7 @@ int yylex()
 
 	switch (c) {
 	case '<':
-		eatln = 1;
+		EatLines = 1;
 		if (nextchar('=')) {
 			yylval = install("<=");
 			return LE;
@@ -1229,7 +1405,7 @@ int yylex()
 		yylval = install("<");
 		return LT;
 	case '-':
-		eatln = 1;
+		EatLines = 1;
 		if (nextchar('>'))
 			if (nextchar('>')) {
 				yylval = install("<<-");
@@ -1242,7 +1418,7 @@ int yylex()
 		yylval = install("-");
 		return '-';
 	case '>':
-		eatln = 1;
+		EatLines = 1;
 		if (nextchar('=')) {
 			yylval = install(">=");
 			return GE;
@@ -1250,7 +1426,7 @@ int yylex()
 		yylval = install(">");
 		return GT;
 	case '!':
-		eatln = 1;
+		EatLines = 1;
 		if (nextchar('=')) {
 			yylval = install("!=");
 			return NE;
@@ -1258,14 +1434,14 @@ int yylex()
 		yylval = install("!");
 		return '!';
 	case '=':
-		eatln = 1;
+		EatLines = 1;
 		if (nextchar('=')) {
 			yylval = install("==");
 			return EQ;
 		}
 		return '=';
 	case ':':
-		eatln = 1;
+		EatLines = 1;
 		if (nextchar('=')) {
 			yylval = install(":=");
 			return LEFT_ASSIGN;
@@ -1273,7 +1449,7 @@ int yylex()
 		yylval = install(":");
 		return ':';
 	case '&':
-		eatln = 1;
+		EatLines = 1;
 		if (nextchar('&')) {
 			yylval = install("&&");
 			return AND;
@@ -1281,7 +1457,7 @@ int yylex()
 		yylval = install("&");
 		return AND;
 	case '|':
-		eatln = 1;
+		EatLines = 1;
 		if (nextchar('|')) {
 			yylval = install("||");
 			return OR;
@@ -1291,12 +1467,12 @@ int yylex()
 	case '{':
 		*++parenp = c;
 		yylval = install("{");
-		pushCmt();
+		PushComment();
 		return c;
 	case '}':
 		ifpop();
 		if(*parenp == '{')
-			popCmt();
+			PopComment();
 		parenp--;
 		return c;
 	case '(':
@@ -1304,7 +1480,7 @@ int yylex()
 		yylval = install("(");
 		return c;
 	case ')':
-		eatln = 0;
+		EatLines = 0;
 		ifpop();
 		parenp--;
 		return c;
@@ -1319,16 +1495,16 @@ int yylex()
 		return c;
 	case ']':
 		ifpop();
-		eatln = 0;
+		EatLines = 0;
 		parenp--;
 		return c;
 	case '?':
-		eatln = 1;
+		EatLines = 1;
 		strcpy(yytext, "help");
 		yylval = install(yytext);
 		return c;
 	case '*':
-		eatln=1;
+		EatLines=1;
 		if (nextchar('*'))
 			c='^';
 		yytext[0] = c;
@@ -1340,7 +1516,7 @@ int yylex()
 	case '^':
 	case '~':
 	case '$':
-		eatln = 1;
+		EatLines = 1;
 		yytext[0] = c;
 		yytext[1] = '\0';
 		yylval = install(yytext);
