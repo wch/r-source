@@ -2,18 +2,23 @@ format <- function(x, ...) UseMethod("format")
 
 ###	 -----
 ###----- FIXME ----- the digits handling should rather happen in
-###	 -----	     in .Internal(format(...))	 in  ../../main/paste.c !
-###--- also the 'names' should be kept INTERNALLY !
+###	 -----	     in .Internal(format(...))	in ../../../main/paste.c !
+### also the 'names' should be kept dealt with there (dim, dimnames *are*) !
+###
+### The new (1.2) switch "character" would be faster in .Internal()
+### combine with "width = ", and format.char() below!
+
 format.default <- function(x, trim = FALSE, digits = NULL,
-                           justify = c("left", "right", "none"))
+			   justify = c("left", "right", "none"))
 {
     f.char <- function(x, justify) {
-        if(length(x) <= 1) return(x)
-        nc <- nchar(x)
-        w <- max(nc)
-        all <- paste(rep(" ", w), collapse="")
-        if(justify == "left") paste(x, substring(all, 1, w-nc), sep="")
-        else paste(substring(all, 1, w-nc), x, sep="")
+	if(length(x) <= 1) return(x)
+	nc <- nchar(x)
+	w <- max(nc)
+	all <- substring(paste(rep(" ", w), collapse=""), 1, w-nc)
+	if(justify == "left")
+	     paste(x, all, sep="")
+	else paste(all, x, sep="")
     }
     if(!is.null(digits)) {
 	op <- options(digits=digits)
@@ -22,8 +27,9 @@ format.default <- function(x, trim = FALSE, digits = NULL,
     justify <- match.arg(justify)
     switch(mode(x),
 	   NULL = "NULL",
-           character = switch(justify, none=x, left=f.char(x, "left"),
-                              right=f.char(x, "right")),
+	   character = switch(justify, none=x,
+			       left=f.char(x, "left"),
+			      right=f.char(x, "right")),
 	   list = sapply(lapply(x, function(x)
 				.Internal(format(unlist(x), trim=trim))),
 			 paste, collapse=", "),
@@ -31,11 +37,13 @@ format.default <- function(x, trim = FALSE, digits = NULL,
 	   ##else: numeric, complex, ??? :
 	   structure(.Internal(format(x, trim = trim)), names=names(x)))
 }
+## NOTE: Currently need non-default format.dist() -> ../../mva/R/dist.R 
 
-## Martin Maechler <maechler@stat.math.ethz.ch>
-##-- this should also happen in	C(.) :
+
+## MM: This should also happen in C(.) :
 ##	.Internal(format(..) should work  with	'width =' and 'flag=.."
 ##		at least for the case of character arguments.
+## Note that format.default now has a `justify' argument
 format.char <- function(x, width = NULL, flag = "-")
 {
     ## Character formatting, flag: if "-" LEFT-justify
@@ -164,8 +172,6 @@ formatC <- function (x, digits = NULL, width = NULL,
 	     } else # format == "g" or "e":
 	     rep(digits+8, n)
 	     )
-    ##Dbg if(format=="fg"||format == "f")
-    ##Dbg   cat("formatC(,.): xEx=",xEx,"\n\t==> i.strlen=",i.strlen,"\n")
     r <- .C("str_signif",
 	    x = x,
 	    n = n,
@@ -176,10 +182,6 @@ formatC <- function (x, digits = NULL, width = NULL,
 	    flag   = as.character(flag),
 	    result = blank.chars(i.strlen),
 	    PACKAGE = "base")$result
-    ##Dbg if(any(ii <- (nc.res <- nchar(r)) > i.strlen)) {
-    ##Dbg  cat("formatC: some  i.strlen[.] were too small:\n")
-    ##Dbg  print(cbind(ii=which(ii), strlen=i.strlen[ii], nchar=nc.res[ii]))
-    ##Dbg }
     if (some.special)
 	r[!Ok] <- format.char(rQ, width=width, flag=flag)
     if (!is.null(x.atr <- attributes(x)))
@@ -196,7 +198,7 @@ format.data.frame <- function(x, ..., justify = "none")
     nc <- dims[2]
     rval <- vector("list", nc)
     for(i in 1:nc)
-        rval[[i]] <- format(x[[i]], ..., justify = justify)
+	rval[[i]] <- format(x[[i]], ..., justify = justify)
     dn <- dimnames(x)
     names(rval) <- dn[[2]]
     rval$check.names <- FALSE
@@ -210,7 +212,8 @@ format.AsIs <- function(x, width = 12, ...)
     n <- length(x)
     rvec <- rep(NA, n)
     for(i in 1:n)
-        rvec[i] <- toString(x[[i]], width, ...)
+	rvec[i] <- toString(x[[i]], width, ...)
 #    return(format.char(rvec, flag = "+"))
     format.default(rvec, justify = "right")
 }
+
