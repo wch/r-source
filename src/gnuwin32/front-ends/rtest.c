@@ -80,7 +80,7 @@ int main (int argc, char **argv)
     }
 
     R_DefParams(Rp);
-    Rp->rhome = "c:/R/rw0650";
+    Rp->rhome = "c:/R/rw0651";
     Rp->home = "c:/bdr";
     Rp->CharacterMode = LinkDLL;
     Rp->ReadConsole = myReadConsole;
