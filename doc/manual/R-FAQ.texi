@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-3, 2002-10-05
+@set FAQ-VERSION 1.6-4, 2002-10-09
 @set REL-VERSION 1.6.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -428,7 +428,7 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @c
 @c debian   woody i386  1.6.0  Dirk Eddelbuettel <edd@debian.org>
 @c          sarge i386  1.6.0  Dirk Eddelbuettel <edd@debian.org>
-@c mandrake 8.2   i386  1.5.1  Michele Alzetta <mikalzet@libero.it>
+@c mandrake 8.*   i386  1.6.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat   6.x   i386  1.5.1  Stephen Eglen <stephen@gnu.org>
 @c          7.x   alpha 1.6.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c                i386  1.6.0  Martyn Plummer <plummer@iarc.fr>
@@ -1807,6 +1807,8 @@ hierarchical clustering and classification and regression trees.
 @item maxstat
 Maximally selected rank and Gauss statistics with several p-value
 approximations.
+@item mclust
+Model-based cluster analysis.
 @item mda
 Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -2118,11 +2120,6 @@ Ensembles of tree classifiers.
 @c Moved to Devel for 1.6 as it fails R CMD check.
 @item locfit
 Local Regression, likelihood and density estimation.
-@c </NOTE>
-@c <NOTE>
-@c Moved to Devel for 1.6 as it fails R CMD check.
-@item mclust
-Model-based cluster analysis.
 @c </NOTE>
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
