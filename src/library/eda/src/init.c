@@ -28,14 +28,14 @@ static const R_CMethodDef CEntries[] = {
     {"Rsm_3R", (DL_FUNC) &Rsm_3R, 5},  
     {"Rsm_3", (DL_FUNC) &Rsm_3, 5},  
     {"Rsm_S", (DL_FUNC) &Rsm_S, 5},  
+    {"tukeyline", (DL_FUNC) &tukeyline, 6},  
     {NULL, NULL, 0}
 };
 
 
 void R_init_eda(DllInfo *dll)
 {
-/*
+    R_useDynamicSymbols(dll, FALSE);
     R_registerRoutines(dll, CEntries, NULL, NULL, NULL);
-*/
 }
 
