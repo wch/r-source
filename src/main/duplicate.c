@@ -34,6 +34,39 @@
  *  promises requires that the promises be forced and
  *  the value duplicated.  */
 
+/* This macro pulls out the common code in copying an atomic vector.
+   The special handling of the scalar case (__n__ == 1) seems to make
+   a small but measurable difference, at least for some cases. */
+#define DUPLICATE_ATOMIC_VECTOR(type, fun, to, from) do {\
+  int __n__ = LENGTH(from);\
+  PROTECT(from); \
+  PROTECT(to = allocVector(TYPEOF(from), __n__)); \
+  if (__n__ == 1) fun(to)[0] = fun(from)[0]; \
+  else { \
+    int __i__; \
+    type *__fp__ = fun(from), *__tp__ = fun(to); \
+    for (__i__ = 0; __i__ < __n__; __i__++) \
+      __tp__[__i__] = __fp__[__i__]; \
+  } \
+  DUPLICATE_ATTRIB(to, from); \
+  SET_TRUELENGTH(to, TRUELENGTH(from)); \
+  UNPROTECT(2); \
+} while (0)
+
+/* The following macros avoid the cost of going through calls to the
+   assignment functions (and duplicate in the case of ATTRIB) when the
+   ATTRIB or TAG value to be stored is R_NilValue, the value the field
+   will have been set to by the allocation function */
+#define DUPLICATE_ATTRIB(to, from) do {\
+  SEXP __a__ = ATTRIB(from); \
+  if (__a__ != R_NilValue) SET_ATTRIB(to, duplicate(__a__)); \
+} while (0)
+
+#define COPY_TAG(to, from) do { \
+  SEXP __tag__ = TAG(from); \
+  if (__tag__ != R_NilValue) SET_TAG(to, __tag__); \
+} while (0)
+
 SEXP duplicate(SEXP s)
 {
     SEXP h, t,  sp;
@@ -52,7 +85,7 @@ SEXP duplicate(SEXP s)
 	SET_FORMALS(t, FORMALS(s));
 	SET_BODY(t, BODY(s));
 	SET_CLOENV(t, CLOENV(s));
-	SET_ATTRIB(t, duplicate(ATTRIB(s)));
+	DUPLICATE_ATTRIB(t, s);
 	UNPROTECT(2);
 	break;
     case LISTSXP:
@@ -61,8 +94,8 @@ SEXP duplicate(SEXP s)
 	while(sp != R_NilValue) {
 	    SETCDR(t, CONS(duplicate(CAR(sp)), R_NilValue));
 	    t = CDR(t);
-	    SET_TAG(t, TAG(sp));
-	    SET_ATTRIB(t, duplicate(ATTRIB(sp)));
+	    COPY_TAG(t, sp);
+	    DUPLICATE_ATTRIB(t, sp);
 	    sp = CDR(sp);
 	}
 	t = CDR(h);
@@ -74,70 +107,43 @@ SEXP duplicate(SEXP s)
 	while(sp != R_NilValue) {
 	    SETCDR(t, CONS(duplicate(CAR(sp)), R_NilValue));
 	    t = CDR(t);
-	    SET_TAG(t, TAG(sp));
-	    SET_ATTRIB(t, duplicate(ATTRIB(sp)));
+	    COPY_TAG(t, sp);
+	    DUPLICATE_ATTRIB(t, sp);
 	    sp = CDR(sp);
 	}
 	t = CDR(h);
 	SET_TYPEOF(t, LANGSXP);
-	SET_ATTRIB(t, duplicate(ATTRIB(s)));
+	DUPLICATE_ATTRIB(t, s);
 	UNPROTECT(2);
 	break;
     case CHARSXP:
 	PROTECT(s);
 	PROTECT(t = allocString(strlen(CHAR(s))));
 	strcpy(CHAR(t), CHAR(s));
-	SET_ATTRIB(t, duplicate(ATTRIB(s)));
+	DUPLICATE_ATTRIB(t, s);
 	UNPROTECT(2);
 	break;
     case EXPRSXP:
     case VECSXP:
-	n = length(s);
+	n = LENGTH(s);
 	PROTECT(s);
-	PROTECT(t = allocVector(TYPEOF(s), LENGTH(s)));
+	PROTECT(t = allocVector(TYPEOF(s), n));
 	for(i = 0 ; i < n ; i++)
 	    SET_VECTOR_ELT(t, i, duplicate(VECTOR_ELT(s, i)));
-	SET_ATTRIB(t, duplicate(ATTRIB(s)));
+	DUPLICATE_ATTRIB(t, s);
 	SET_TRUELENGTH(t, TRUELENGTH(s));
 	UNPROTECT(2);
 	break;
+    case LGLSXP: DUPLICATE_ATOMIC_VECTOR(int, LOGICAL, t, s); break;
+    case INTSXP: DUPLICATE_ATOMIC_VECTOR(int, INTEGER, t, s); break;
+    case REALSXP: DUPLICATE_ATOMIC_VECTOR(double, REAL, t, s); break;
+    case CPLXSXP: DUPLICATE_ATOMIC_VECTOR(Rcomplex, COMPLEX, t, s); break;
     case STRSXP:
-    case LGLSXP:
-    case INTSXP:
-    case REALSXP:
-    case CPLXSXP:
-	n = length(s);
-	PROTECT(s);
-	PROTECT(t = allocVector(TYPEOF(s), LENGTH(s)));
-	switch (TYPEOF(s)) {
-	case STRSXP:
-	case EXPRSXP:
-	  for (i = 0; i < n; i++)
-	    SET_VECTOR_ELT(t, i, VECTOR_ELT(s, i));
-	  break;
-	case LGLSXP:
-	  for (i = 0; i < n; i++)
-	    LOGICAL(t)[i] = LOGICAL(s)[i];
-	  break;
-	case INTSXP:
-	  for (i = 0; i < n; i++)
-	    INTEGER(t)[i] = INTEGER(s)[i];
-	  break;
-	case REALSXP:
-	  for (i = 0; i < n; i++)
-	    REAL(t)[i] = REAL(s)[i];
-	  break;
-	case CPLXSXP:
-	  for (i = 0; i < n; i++)
-	    COMPLEX(t)[i] = COMPLEX(s)[i];
-	break;
-	default:
-	  UNIMPLEMENTED("copyVector");
-	}
-	SET_ATTRIB(t, duplicate(ATTRIB(s)));
-	UNPROTECT(2);
-	SET_TRUELENGTH(t, TRUELENGTH(s));
-	break;
+	/* direct copying and bypassing the write barrier is OK since
+	   t was just allocated and so it cannot be older than any of
+	   the elements in s.  LT */
+	    DUPLICATE_ATOMIC_VECTOR(SEXP, STRING_PTR, t, s);
+	    break;
     case PROMSXP: /* duplication requires that we evaluate the promise */
 #ifdef OLD
 	if (PRVALUE(s) == R_UnboundValue) {
