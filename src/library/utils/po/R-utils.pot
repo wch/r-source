@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-16 08:35\n"
+"POT-Creation-Date: 2005-02-18 07:50\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -290,6 +290,51 @@ msgstr ""
 msgid "is missing or broken"
 msgstr ""
 
+msgid "no packages were specified"
+msgstr ""
+
+msgid "argument 'lib' is missing: using"
+msgstr ""
+
+msgid "cannot install MacOS X binary packages on Windows"
+msgstr ""
+
+msgid "cannot install MacOS X binary packages on this plaform"
+msgstr ""
+
+msgid "cannot install Windows binary packages on this plaform"
+msgstr ""
+
+msgid "This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM"
+msgstr ""
+
+msgid "Installation of package"
+msgstr ""
+
+msgid "had non-zero exit status"
+msgstr ""
+
+msgid "Unable to create temp directory"
+msgstr ""
+
+msgid "Do not know which element of 'lib' to install dependencies into"
+msgstr ""
+
+msgid "skipping dependencies"
+msgstr ""
+
+msgid "dependencies"
+msgstr ""
+
+msgid "are not available"
+msgstr ""
+
+msgid "also installing the dependencies"
+msgstr ""
+
+msgid "The downloaded packages are in"
+msgstr ""
+
 msgid "is a formal generic function; S3 methods will not likely be found"
 msgstr ""
 
@@ -365,7 +410,28 @@ msgstr ""
 msgid "'priority' must be character or NULL"
 msgstr ""
 
-msgid "argument 'lib' is missing: using"
+msgid "destdir is not a directory"
+msgstr ""
+
+msgid "at the repositories"
+msgstr ""
+
+msgid "download of package"
+msgstr ""
+
+msgid "failed"
+msgstr ""
+
+msgid "--- Please select a CRAN mirror for use in this session ---"
+msgstr ""
+
+msgid "trying to use CRAN without setting a mirror"
+msgstr ""
+
+msgid "--- Please select repositories for use in this session ---"
+msgstr ""
+
+msgid "Enter one or more numbers"
 msgstr ""
 
 msgid "must be supplied"
@@ -527,51 +593,6 @@ msgstr ""
 msgid "cannot create HTML search index"
 msgstr ""
 
-msgid "no packages were specified"
-msgstr ""
-
-msgid "This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM"
-msgstr ""
-
-msgid "Installation of package"
-msgstr ""
-
-msgid "had non-zero exit status"
-msgstr ""
-
-msgid "Unable to create temp directory"
-msgstr ""
-
-msgid "Do not know which element of 'lib' to install dependencies into"
-msgstr ""
-
-msgid "skipping dependencies"
-msgstr ""
-
-msgid "dependencies"
-msgstr ""
-
-msgid "are not available"
-msgstr ""
-
-msgid "also installing the dependencies"
-msgstr ""
-
-msgid "The downloaded packages are in"
-msgstr ""
-
-msgid "destdir is not a directory"
-msgstr ""
-
-msgid "at the repositories"
-msgstr ""
-
-msgid "download of package"
-msgstr ""
-
-msgid "failed"
-msgstr ""
-
 msgid "unable to find the html help"
 msgstr ""
 
@@ -609,12 +630,6 @@ msgid "packages"
 msgstr ""
 
 msgid "are in use and will not be installed"
-msgstr ""
-
-msgid "--- Please select a CRAN mirror for use in this session ---"
-msgstr ""
-
-msgid "trying to use CRAN without setting a mirror"
 msgstr ""
 
 msgid "zipfile"
