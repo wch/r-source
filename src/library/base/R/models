@@ -20,7 +20,7 @@ print.formula <- function(x) print.default(unclass(x))
 
 terms <- function(x, ...) UseMethod("terms")
 terms.default <- function(x) x$terms
-terms.terms <- function(x) x
+terms.terms <- function(x, ...) x
 print.terms <- function(x) print.default(unclass(x))
 "delete.response" <- function (termobj) 
 {
