@@ -48,6 +48,9 @@ not be deleted from within R.
 If a graphics window is opened in a minimized MDI session, it now
 uses the physical monitor size instead of the zero-sized MDI frame.
 
+Using PgUp whilst recording after a multiple of 4 plots failed to save
+the current plot. (PR#3663 revisited.)
+
 
 
 rw1090
