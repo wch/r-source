@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.145 $'
+revision='$Revision: 1.146 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -607,7 +607,7 @@ do_install_source () {
   fi
 
   ## Install a dump of the parsed NAMESPACE file
-  if test -f NAMESPACE; then
+  if test -f NAMESPACE && test "${fake}" != "true"; then
       echo ".installPackageNamespaceInfo(\".\", \"${R_PACKAGE_DIR}\")" | \
         R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
     if test ${?} -ne 0; then
@@ -619,10 +619,13 @@ do_install_source () {
   ## <FIXME>
   ## Remove stuff we should not have installed in the first place.
   ## When installing from a source directory under CVS control, we
-  ## should really exclude the CVS subdirs.  (In fact, we should also
-  ## exclude everything in @file{.Rbuildignore}, but that's another
-  ## story ...)
-  find "${R_PACKAGE_DIR}" -name CVS -exec rm -rf \{\} \; 2>/dev/null
+  ## should really exclude the CVS subdirs.  The same applies for the
+  ## .svn Subversion subdirs.  (In fact, we should also exclude
+  ## everything in @file{.Rbuildignore}, but that's another story ...)
+  find "${R_PACKAGE_DIR}" -name CVS -type d \
+    -exec rm -rf \{\} \; 2>/dev/null
+  find "${R_PACKAGE_DIR}" -name .svn -type d \
+    -exec rm -rf \{\} \; 2>/dev/null
   ## </FIXME>
 
   if ${clean}; then
