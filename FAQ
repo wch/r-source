@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-43 2004-08-12
+Version 1.9-44 2004-08-13
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2399,6 +2399,9 @@ distributions of R.)
 *pixmap*
      Functions for import, export, plotting and other manipulations of
      bitmapped images.
+
+*plotrix*
+     Various useful functions for enhancing plots.
 
 *pls.pcr*
      Multivariate regression by PLS and PCR.

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-43 @value{FAQ-YEAR}-08-12
+@set FAQ-VERSION 1.9-44 @value{FAQ-YEAR}-08-13
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2491,6 +2491,8 @@ Converts S trees to @HTML{}/Perl files for interactive tree traversal.
 @item pixmap
 Functions for import, export, plotting and other manipulations of
 bitmapped images.
+@item plotrix
+Various useful functions for enhancing plots.
 @item pls.pcr
 Multivariate regression by PLS and PCR.
 @c <COMMENT>
