@@ -50,4 +50,4 @@ subset(airquality,select=Ozone:Wind)
 attach(airquality)
 subset(Ozone,Temp>80)
 }
-\keyword{dataframes subset extract}
+\keyword{manip}
