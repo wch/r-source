@@ -107,7 +107,7 @@ Summary.factor(x, \dots)
 \section{Simple Dispatching}{
     % -------------------- grep -nw DispatchOrEval src/*/*[ch]
     % 			      --------------
-    The following builtin function are \emph{generic} as well, i.e., you
+    The following builtin functions are \emph{generic} as well, i.e., you
     can write \code{\link{methods}} for them:
 
     \code{\link{"["}}, %do_subset() [subset.c:464]
