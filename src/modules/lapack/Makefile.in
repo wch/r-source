@@ -24,15 +24,16 @@ SOURCES_F = \
   dorgbr.f dorghr.f dorgl2.f dorglq.f dorgql.f dorgqr.f dorgtr.f dorm2r.f \
   dormbr.f dorml2.f dormlq.f dormqr.f drscl.f dsteqr.f dsterf.f dsyev.f \
   dsytd2.f dsytrd.f dtrevc.f dtrexc.f dtrsen.f dtrsna.f dtrsyl.f \
-  ieeeck.f ilaenv.f \
+  ieeeck.f ilaenv.f @COMPILE_DOUBLE_COMPLEX_FALSE@ \
   zgesv.f zgetf2.f zgetrf.f zgetrs.f zlaswp.f
 
 SOURCES_BLAS = \
    dcabs1.f dsyr2.f dsyr2k.f dger.f dsymv.f dgemv.f dtrmm.f dtrsv.f dtrmv.f \
-   izamax.f zswap.f zscal.f zgeru.f  zgemm.f ztrsm.f
+   @COMPILE_DOUBLE_COMPLEX_FALSE@ izamax.f zswap.f zscal.f zgeru.f zgemm.f ztrsm.f
 
 DEPENDS = $(SOURCES_C:.c=.d)
-OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) @USE_EXTERNAL_BLAS_FALSE@ $(SOURCES_BLAS:.f=.o)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) \
+  @USE_EXTERNAL_BLAS_FALSE@ $(SOURCES_BLAS:.f=.o)
 HEADERS = 
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)

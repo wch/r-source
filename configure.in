@@ -289,6 +289,7 @@ if test -n "${F77}"; then
   R_PROG_F77_APPEND_UNDERSCORE
   R_PROG_F77_CC_COMPAT
   R_PROG_F77_CC_COMPAT_COMPLEX
+  AM_CONDITIONAL(COMPILE_DOUBLE_COMPLEX, test "x$HAVE_DOUBLE_COMPLEX" != x)
   f77_rules_frag=Makefrag.f77
   cat << \EOF > ${f77_rules_frag}
 .f.c:
