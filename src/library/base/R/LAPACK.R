@@ -1,5 +1,5 @@
 La.eigen <- function (x, symmetric, only.values = FALSE,
-                      method = c("dsyev", "dsyevr"))
+                      method = c("dsyevr", "dsyev"))
 {
     if(!is.numeric(x) && !is.complex(x))
 	stop("argument to La.eigen must be numeric or complex")
@@ -36,7 +36,7 @@ La.eigen <- function (x, symmetric, only.values = FALSE,
 }
 
 La.svd <- function(x, nu = min(n, p), nv = min(n, p),
-                   method = c("dgesvd", "dgesdd"))
+                   method = c("dgesdd", "dgesvd"))
 {
     if(!is.numeric(x) && !is.complex(x))
 	stop("argument to La.svd must be numeric or complex")

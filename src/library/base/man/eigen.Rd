@@ -5,7 +5,7 @@
 \usage{
 eigen(x, symmetric, only.values = FALSE)
 La.eigen(x, symmetric, only.values = FALSE,
-         method = c("dsyev", "dsyevr"))
+         method = c("dsyevr", "dsyev"))
 }
 \arguments{
   \item{x}{a matrix whose spectral decomposition is to be computed.}

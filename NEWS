@@ -65,6 +65,10 @@ USER-VISIBLE CHANGES
 
     o	Former stars(*, colors = v) must now be stars(*, col.segments = v).
 
+    o	The default methods for La.svd and La.eigen have changed and
+	so there may be sign changes in singular/eigen vectors,
+	including in cancor, cmdscale, factanal, princomp and varimax.
+
 
 NEW FEATURES
 
@@ -399,11 +403,9 @@ NEW FEATURES
 	library trees R knows about.  This is still stored in .lib.loc,
 	which however should no longer be accessed directly.
 
-    o	La.eigen() and La.svd() have optional methods to use later
-	(and supposedly much faster) LAPACK routines.  If these prove
-	fast and reliable the new methods will become the default in
-	due course.  The difference is most noticeable on systems with
-	optimized BLAS libraries.
+    o	La.eigen() and La.svd() have new default methods to use later
+	(and often much faster) LAPACK routines.  The difference
+	is most noticeable on systems with optimized BLAS libraries.
 
     o	New capabilities() options "GNOME" and "IEEE754".
 
@@ -629,6 +631,8 @@ BUG FIXES
     o   The rbinom() C code had a transcription error from the original
         Fortran which led to a small deviation from the intended
         distribution. (PR#1190)
+
+    o   pt(t, , ncp=0) was wrong if t was +/-Inf.
 
 
 
