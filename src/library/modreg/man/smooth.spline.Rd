@@ -11,7 +11,7 @@
   Fits a cubic smoothing spline to the supplied data.
 }
 \usage{
-smooth.spline(x, y, w = rep(1, length(x)), df = 5, spar = NULL,
+smooth.spline(x, y, w = rep(1, length(x)), df, spar = NULL,
               cv = FALSE, all.knots = FALSE, df.offset = 0, penalty = 1,
               control.spar = list())
 }

@@ -2,7 +2,7 @@
 #### Copyright (C) 2000-2001 The R Development Core Team
 
 smooth.spline <-
-  function(x, y = NULL, w = NULL, df = 5, spar = NULL, cv = FALSE,
+  function(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
 	   all.knots = FALSE, df.offset = 0, penalty = 1, control.spar = list())
 {
     sknotl <- function(x)

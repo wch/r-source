@@ -46,13 +46,14 @@ getNativeSymbolInfo(name, PACKAGE)
     compare with other symbol address. This is an external pointer
     object and of class \code{NativeSymbol}.}
   \item{package}{a list containing 3 elements:
-    \item{name}{the short form of the library name which can be used
-      as the value of the \code{PACKAGE} argument in
-    the different native interface functions.}
-    \item{path}{the fully qualified name of the shared library file.}
-    \item{dynamicLookup}{a logical value indicating whether dynamic
-      resolution is used when looking for symbols in this library,
-      or only registered routines can be located.
+    \describe{
+      \item{name}{the short form of the library name which can be used
+	as the value of the \code{PACKAGE} argument in
+	the different native interface functions.}
+      \item{path}{the fully qualified name of the shared library file.}
+      \item{dynamicLookup}{a logical value indicating whether dynamic
+	resolution is used when looking for symbols in this library,
+	or only registered routines can be located.}
     }    
   }
   The class of this list object is \code{NativeSymbolInfo}.
