@@ -48,6 +48,8 @@ if(.Platform$GUI == "AQUA"){
 
 # this is to allow g77 compiler to work
  Sys.putenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep=""))
+
+.libPaths("~/.R/library")
  
 # still undocumented, will be moved to base soon 
  browse.pkgs <- function(where="CRAN"){
