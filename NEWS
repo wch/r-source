@@ -11,8 +11,8 @@
 
 MACOS CHANGES
 
-    o   As from this release there is only one R port for the
-	Macintosh, which runs only on MacOS X.  (The `Carbon' port has
+    o	As from this release there is only one R port for the
+	Macintosh, which runs only on MacOS X.	(The `Carbon' port has
 	been discontinued, and the `Darwin' port is part of the new
 	version.)   The current version can be run either as a
 	command-line application or as an `Aqua' console.  There is a
@@ -303,24 +303,24 @@ NEW FEATURES
 	the garbage collector and reduce system calls on some
 	platforms.
 
-    o   textConnection() now has a local argument for use with output
+    o	textConnection() now has a local argument for use with output
 	connections. local = TRUE means the variable containing the output
 	is assigned in the frame of the caller.
 
-    o   serialize() and unserialize() functions are available for
+    o	serialize() and unserialize() functions are available for
 	low-level serialization to connections.
 
-    o   socketSelect() allows waiting on multiple sockets.
+    o	socketSelect() allows waiting on multiple sockets.
 
 
 STANDARD PACKAGES
 
-    o   New package 'mle'. This is a simple package to find maximum
-        likelihood estimates, and perform likelihood profiling and
-        approximate confidence limits based upon it. A well-behaved
+    o	New package 'mle'. This is a simple package to find maximum
+	likelihood estimates, and perform likelihood profiling and
+	approximate confidence limits based upon it. A well-behaved
 	likelihood function is assumed, and it is the responsibility
 	of the user to gauge the applicability of the asymptotic
-        theory. This package is based on S4 methods and classes.
+	theory. This package is based on S4 methods and classes.
 
     o	Changes in package 'mva':
 
@@ -328,7 +328,7 @@ STANDARD PACKAGES
 	  computed in the print method.
 
 	- heatmap() has many more arguments, partly thanks to Wolfgang
-          Huber and Andy Liaw.
+	  Huber and Andy Liaw.
 
 	- Arguments `unit' and `hmin' of plclust() are now implemented.
 
@@ -392,8 +392,8 @@ STANDARD PACKAGES
 	- decompose() has a new argument `filter'.
 
 	- HoltWinters() has new arguments `optim.start' and
-          `optim.control', and returns more components in the fitted
-          values.  The plot method allows `ylim' to be set.
+	  `optim.control', and returns more components in the fitted
+	  values.  The plot method allows `ylim' to be set.
 
 	- plot.ts() has a new argument `nc' controlling the number of
 	  columns (with default the old behaviour for plot.mts).
@@ -499,8 +499,8 @@ C-LEVEL FACILITIES
 	A compiler for producing byte compiled code will be made available
 	separately and should become part of a future R release.
 
-    o   On Unix-like systems calls to the popen() and system() C library
-	functions now go through R_popen and R_system.  On Mac OS X these
+    o	On Unix-like systems calls to the popen() and system() C library
+	functions now go through R_popen and R_system.	On Mac OS X these
 	suspend SIGALRM interrupts around the library call.  (Related to
 	PR#1140.)
 
@@ -646,7 +646,7 @@ BUG FIXES
     o	HoltWinters() would segfault if only gamma was optimized, and
 	not converge if gamma=0 and seasonal="mult".
 
-    o   hyperref.cfg now contains definitions for colors it uses.
+    o	hyperref.cfg now contains definitions for colors it uses.
 
     o	identify.default() detects zero-length arguments.  (PR#4057)
 
@@ -661,7 +661,7 @@ BUG FIXES
 	appropriately.	It also ensures that hat values are not greater
 	than one, and rounds values within rounding error of one.
 
-    o	The `method' argument to loess() did not work.  (PR#3332)
+    o	The `method' argument to loess() did not work.	(PR#3332)
 
     o	lsfit() was returning incorrect residuals for 0-rank fits.
 
@@ -700,6 +700,9 @@ BUG FIXES
 	documented in the same way as S, and now behaves as
 	documented.  (PR#3504)
 
+    o	plclust() [and hence plot.hclust()] sometimes now uses correct `ylim's
+	also in unusual cases.	(PR#4197)
+
     o	plot.POSIX[cl]t no longer passes col, lty, lwd to axis.POSIXt.
 
     o	The png(), jpeg(), png() and win.metafile() devices now
@@ -722,7 +725,7 @@ BUG FIXES
     o	sapply() for matrix result does not return list(NULL,NULL) dimnames
 	anymore.
 
-    o	scan() now interprets quoting in fields to be skipped.  (PR#4128)
+    o	scan() now interprets quoting in fields to be skipped.	(PR#4128)
 
     o	seq.POSIXt(from, to, by="DSTday") was failing or calculating
 	the length incorrectly.
@@ -739,8 +742,8 @@ BUG FIXES
 	instead of passing through.  This may catch other potential
 	problems.
 
-    o   Sweave() reports the chunk number rather than the driver call when
-        a try error gets caught.
+    o	Sweave() reports the chunk number rather than the driver call when
+	a try error gets caught.
 
     o	trunc.POSIXt(x) for 0-length x does not return invalid structures
 	anymore.  (PR#3763).
@@ -784,7 +787,7 @@ BUG FIXES
     o	Internals for complex assignment did not check that function name
 	was a symbol, which could cause a segfault.
 
-    o   Fixed bug in S4 methods dispatch that made local variables in the
+    o	Fixed bug in S4 methods dispatch that made local variables in the
 	generic visible when executing the body of a method, thus violating
 	lexical scope.
 

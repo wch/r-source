@@ -1,8 +1,9 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
+ *  Copyright (C) 2002--2003  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,9 +15,10 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  A copy of the GNU General Public License is available via WWW at
+ *  http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
+ *  writing to the Free Software Foundation, Inc., 59 Temple Place,
+ *  Suite 330, Boston, MA  02111-1307  USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -52,7 +54,7 @@ void NewFrameConfirm(void)
 SEXP do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int listFlag;
-    
+
     checkArity(op, args);
     listFlag = asLogical(CAR(args));
     if(listFlag == NA_LOGICAL) errorcall(call, "invalid argument");
@@ -395,7 +397,7 @@ GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
 	       else if (!isExpression(txt)) {
 		    UNPROTECT(1);
 		    PROTECT(txt = coerceVector(txt, STRSXP));
-	       } 
+	       }
 	    } else {
 	       n = length(nms);
 	       for (i = 0; i < n; i++) {
@@ -1051,7 +1053,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		    - GConvertYUnits(line, LINES, NFC, dd);
 	    if (R_FINITE(Rf_gpptr(dd)->tck)) {
 		double len, xu, yu;
-		if(Rf_gpptr(dd)->tck > 0.5) 
+		if(Rf_gpptr(dd)->tck > 0.5)
 		    len = GConvertYUnits(Rf_gpptr(dd)->tck, NPC, NFC, dd);
 		else {
 		    xu = GConvertXUnits(Rf_gpptr(dd)->tck, NPC, INCHES, dd);
@@ -1073,7 +1075,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		    + GConvertYUnits(line, LINES, NFC, dd);
 	    if (R_FINITE(Rf_gpptr(dd)->tck)) {
 		double len, xu, yu;
-		if(Rf_gpptr(dd)->tck > 0.5) 
+		if(Rf_gpptr(dd)->tck > 0.5)
 		    len = GConvertYUnits(Rf_gpptr(dd)->tck, NPC, NFC, dd);
 		else {
 		    xu = GConvertXUnits(Rf_gpptr(dd)->tck, NPC, INCHES, dd);
@@ -1083,7 +1085,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		axis_tick = axis_base - len;
 	    } else
-		axis_tick = axis_base - 
+		axis_tick = axis_base -
 		    GConvertYUnits(Rf_gpptr(dd)->tcl, LINES, NFC, dd);
 	}
 	if (doticks) {
@@ -1176,7 +1178,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		    - GConvertXUnits(line, LINES, NFC, dd);
 	    if (R_FINITE(Rf_gpptr(dd)->tck)) {
 		double len, xu, yu;
-		if(Rf_gpptr(dd)->tck > 0.5) 
+		if(Rf_gpptr(dd)->tck > 0.5)
 		    len = GConvertXUnits(Rf_gpptr(dd)->tck, NPC, NFC, dd);
 		else {
 		    xu = GConvertXUnits(Rf_gpptr(dd)->tck, NPC, INCHES, dd);
@@ -1186,7 +1188,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		axis_tick = axis_base + len;
 	    } else
-		axis_tick = axis_base + 
+		axis_tick = axis_base +
 		    GConvertXUnits(Rf_gpptr(dd)->tcl, LINES, NFC, dd);
 	}
 	else {
@@ -1197,7 +1199,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		    + GConvertXUnits(line, LINES, NFC, dd);
 	    if (R_FINITE(Rf_gpptr(dd)->tck)) {
 		double len, xu, yu;
-		if(Rf_gpptr(dd)->tck > 0.5) 
+		if(Rf_gpptr(dd)->tck > 0.5)
 		    len = GConvertXUnits(Rf_gpptr(dd)->tck, NPC, NFC, dd);
 		else {
 		    xu = GConvertXUnits(Rf_gpptr(dd)->tck, NPC, INCHES, dd);
@@ -1207,7 +1209,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		axis_tick = axis_base - len;
 	    } else
-		axis_tick = axis_base - 
+		axis_tick = axis_base -
 		    GConvertXUnits(Rf_gpptr(dd)->tcl, LINES, NFC, dd);
 	}
 	if (doticks) {
@@ -3066,7 +3068,7 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    warn = asInteger(GetOption(install("warn"), R_NilValue));
 	    if (dmin > THRESHOLD) {
 	        if(warn >= 0)
-		    REprintf("warning: no point with %.2f inches\n", 
+		    REprintf("warning: no point with %.2f inches\n",
                                         THRESHOLD);
 	    }
 	    else if (LOGICAL(ind)[imin]) {
@@ -3337,10 +3339,11 @@ SEXP do_dend(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, imax, n;
-    double pin, *ll, tmp, yval, *y, ymin, ymax, yrange;
+    double pin, *ll, tmp, yval, *y, ymin, ymax, yrange, m;
     SEXP originalArgs, merge, height, llabels, str;
     char *vmax;
     DevDesc *dd;
+
     dd = CurrentDevice();
     GCheckState(dd);
     originalArgs = args;
@@ -3376,12 +3379,18 @@ SEXP do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
     Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase * Rf_gpptr(dd)->cex;
     dnd_offset = GStrWidth("m", INCHES, dd);
     vmax = vmaxget();
-    y =	 (double*)R_alloc(n, sizeof(double));
-    ll =  (double*)R_alloc(n, sizeof(double));
+    y =  (double*)R_alloc(n, sizeof(double));
+    ll = (double*)R_alloc(n, sizeof(double));
     dnd_lptr = &(INTEGER(merge)[0]);
     dnd_rptr = &(INTEGER(merge)[n]);
-    ymin = REAL(height)[0];
-    ymax = REAL(height)[n - 1];
+    ymax = ymin = REAL(height)[0];
+    for (i = 1; i < n; i++) {
+	m = REAL(height)[i];
+	if (m > ymax)
+	    ymax = m;
+	else if (m < ymin)
+	    ymin = m;
+    }
     pin = Rf_gpptr(dd)->pin[1];
     for (i = 0; i < n; i++) {
 	str = STRING_ELT(llabels, i);
