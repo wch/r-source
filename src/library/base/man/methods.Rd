@@ -11,8 +11,17 @@ methods(generic.function, class)
 \description{
   \R possesses a simple generic function mechanism which can be used for
   an object-oriented style of programming.  Method despatch takes place
-  based on the class of the first argument to the generic function or on 
+  based on the class of the first argument to the generic function or on
   the object supplied as an argument to \code{UseMethod} or \code{NextMethod}.
+}
+\alias{.isMethodsDispatchOn}
+\note{
+  This scheme is called \emph{S3} (S version 3).  For new projects,
+  it is recommended to use the more flexible and robust \emph{S4} scheme
+  provided in the \file{methods} package after \code{library(methods)}.
+  \cr
+  The function \code{.isMethodsDispatchOn()} returns \code{TRUE} if the
+  new S4 methods are available but is meant for \R internal use only.
 }
 \arguments{
   \item{generic}{a character string naming a function.}
@@ -61,7 +70,7 @@ methods(generic.function, class)
   \code{NextMethod} should not be called except in methods called by
   \code{UseMethod}. In particular it will not work inside anonymous
   calling functions (eg \code{get("print.ts")(AirPassengers)}).
-  
+
 }
 \note{
   The \code{methods} function was written by Martin Maechler.
