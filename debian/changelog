@@ -1,3 +1,38 @@
+r-base (1.6.1-2) unstable; urgency=low
+
+  * Rebuilt with support for bzip2 (compression) and pcre (reg.expressions)
+  * debian/control: Added libbz2-dev and libpcre3-dev to Build-Depends
+  * debian/rules: Set R_BROWSER to /usr/bin/mozilla in $R_HOME/etc/Renviron
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 11 Nov 2002 13:26:27 -0600
+
+r-base (1.6.1-1) unstable; urgency=low
+
+  * Upgraded to R version 1.6.1 released today
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Fri,  1 Nov 2002 16:56:50 -0600
+
+r-base (1.6.0.rel.20021024-1) unstable; urgency=low
+
+  * Upgraded to release candidate dated 2002-10-24 of R 1.6.1
+  * debian/control: Set section for r-base-dev to devel
+  * debian/r-doc-info.prerm: Add upgrade target
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu, 24 Oct 2002 21:01:49 -0500
+
+r-base (1.6.0.rel.20021017-1) unstable; urgency=low
+
+  * Upgraded to first release candidate (dated 2002-10-17) of R 1.6.1
+  * Since 1.6.0, the R Core upstream stream now bundles the sources 
+    of the r-recommended package directly in the r-base sources -- thus 
+    the source package r-recommended will be replaced by a binary 
+    package derived from these sources
+  * debian/control: Added new package r-recommended
+  * debian/r-recommended.{files,links}: Defined accordingly
+  * debian/copyright: Include the copyright file from r-recommended
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu, 17 Oct 2002 20:53:49 -0500
+
 r-base (1.6.0.rel-1) unstable; urgency=low
 
   * Upgraded to new upstream release 1.6.0 [ which we need to rename

@@ -213,3 +213,151 @@ src/modules/lapack/double.f, cmplx.f
     It is freely-available software, and is copyrighted.
 
   although no actual copyright statement appears in the code.
+
+
+------ copyright file for r-recommended [ used to be a separate package ] ----
+
+This is the Debian GNU/Linux r-recommended package provided several
+recommended packages for the GNU R language and environment for statisticial
+computing.  The r-recommended package comprises the R packages KernSmooth,
+VR, boot, cluster, foreign, mgcv, nlme, rpart and survival; they were written
+(or ported) by the R core team.
+
+This package was intially created by Doug Bates, but is now maintained by 
+Dirk Eddelbuettel <edd@debian.org>. The sources where downloaded from the
+US mirror of the Comprehensive R Archive Network:
+	http://cran.us.r-project.org/src/contrib
+They are also available from every other CRAN mirror.  Visit
+	http://cran.r-project.org
+to find a CRAN site near you.
+
+The r-recommended packages are copyright by their authors and released either
+under the GNU General Public License or under (what was once common in the
+Sciences) licenses such as "Unlimited use and distribution" (see below). The
+exact terms are described in the per-package DESCRIPTION files which are
+collated below for reference.
+
+On Debian GNU/Linux systems, the complete text of these licenses can be found
+in /usr/share/common-licenses/GPL and /usr/share/common-licenses/Artistic.
+
+
+
+Package: KernSmooth
+Priority: recommended
+Version: 2.22-6
+Date: 2001-June-08
+Title: Functions for kernel smoothing for Wand & Jones (1995)
+Author: S original by Matt Wand.
+	R port by  Brian Ripley <ripley@stats.ox.ac.uk>.
+Maintainer: Brian Ripley <ripley@stats.ox.ac.uk>
+Description: functions for kernel smoothing (and density estimation)
+  corresponding to the book: 
+  Wand, M.P. and Jones, M.C. (1995) "Kernel Smoothing".
+License: Unlimited use and distribution (see LICENCE).
+URL: http://www.biostat.harvard.edu/~mwand
+
+Bundle: VR
+Priority: recommended
+Contains: MASS class nnet spatial
+Version: 6.2-9 
+Date: 2001/09/23
+Depends: R (>= 1.3.0)
+Author: S original by Venables & Ripley.
+  R port by Brian Ripley <ripley@stats.ox.ac.uk>, following earlier
+  work by Kurt Hornik and Albrecht Gebhardt.
+Maintainer: Brian Ripley <ripley@stats.ox.ac.uk>
+BundleDescription: Various functions from the libraries of Venables and
+  Ripley, `Modern Applied Statistics with S-PLUS' (3rd edition).
+License: GPL (version 2 or later)
+URL: http://www.stats.ox.ac.uk/pub/MASS3/
+
+Package: boot
+Priority: recommended
+Version: 1.2-5
+Date: 2001-Aug-16
+Author: S original <http://dmawww.epfl.ch/davison.mosaic/BMA/library.html>
+  by Angelo Canty.  R port by  Brian Ripley <ripley@stats.ox.ac.uk>.
+Maintainer: Brian Ripley <ripley@stats.ox.ac.uk>
+Description: functions and datasets for bootstrapping from the
+  book "Bootstrap Methods and Their Applications" by A.C. Davison and 
+  D.V. Hinkley (1997, CUP).
+Title: Bootstrap R (S-Plus) Functions (Canty)
+Depends: R (>= 1.3.0), survival
+License: Unlimited distribution.
+
+Package: cluster
+Version: 1.3-4
+Priority: recommended
+Author: S original by Peter Rousseeuw <rousse@uia.ua.ac.be>, Anja Struyf
+	<Anja.Struyf@uia.ua.ac.be> and Mia Hubert <Mia.Hubert@uia.ua.ac.be>.
+  R port by Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at> and Martin Maechler.
+Maintainer: Martin Maechler <maechler@stat.math.ethz.ch>
+Title: Functions for clustering (by Rousseeuw et al.)
+Description: Functions for cluster analysis, originally from
+  Peter Rousseeuw, Anja Struyf and Mia Hubert.
+Depends:
+License: GPL version 2 or later
+
+Package: foreign
+Priority: recommended
+Version: 0.4-7
+Date: 2001-07-17
+Title: Read data stored by Minitab, S, SAS, SPSS, Stata, ...
+Maintainer: Saikat DebRoy <saikat@stat.wisc.edu>
+Author: Thomas Lumley <thomas@biostat.washington.edu>,
+        Saikat DebRoy <saikat@stat.wisc.edu>,
+        Douglas M. Bates <bates@stat.wisc.edu> and
+	Duncan Murdoch <murdoch@stats.uwo.ca>
+Description: Functions for reading and writing data stored by statistical
+         packages such as Minitab, S, SAS, SPSS, Stata, ...
+License: GPL version 2 or later
+
+Package: mgcv
+Version: 0.5-3
+Author: Simon Wood <snw@st-and.ac.uk>
+Maintainer: Simon Wood <snw@st-and.ac.uk>
+Title: Multiple smoothing parameter estimation and GAMs by GCV
+Description: Routines for GAMs and other generalized ridge regression problems 
+             with multiple smoothing parameter selection by GCV or UBRE.
+             Includes an implementation of gam().
+Priority: recommended
+License: GPL version 2 or later
+
+Package: nlme
+Version: 3.1-19
+Date: 2001/10/31
+Priority: recommended
+Title: Linear and nonlinear mixed effects models
+Author: Jose Pinheiro <jcp@research.bell-labs.com>,
+        Douglas Bates <bates@stat.wisc.edu>,
+        Saikat DebRoy <saikat@stat.wisc.edu>, and
+        Deepayan Sarkar <deepayan@stat.wisc.edu> 
+Maintainer: Douglas Bates <bates@stat.wisc.edu>
+Description: Fit and compare Gaussian linear and nonlinear mixed-effects models.
+Depends: nls, R(>= 1.3.0)
+License: GPL version 2 or later
+
+Package: rpart
+Priority: recommended
+Version: 3.1-2
+Date: July 2001 version of rpart
+Author: Terry M Therneau and Beth Atkinson <atkinson@mayo.edu>.
+        R port by Brian Ripley <ripley@stats.ox.ac.uk>.
+Maintainer: Brian Ripley <ripley@stats.ox.ac.uk>
+Description: Recursive partitioning and regression trees
+Title: Recursive partitioning
+Depends: R (>= 1.3.0), survival
+License: use under GPL2, or see file LICENCE
+URL: Svr4 original at http://www.mayo.edu/hsr/Sfunc.html
+
+Title: Survival analysis, including penalised likelihood.
+Maintainer: Thomas Lumley <tlumley@u.washington.edu>
+Priority: recommended
+Package: survival
+Version: 2.6
+Author: S original by Terry Therneau, ported by Thomas Lumley
+Description: survival analysis: descriptive statistics, two-sample
+  tests, parametric accelerated failure models, Cox model. Delayed entry
+  (truncation) allowed for all models; interval censoring for parametric
+  models.
+License: GPL2

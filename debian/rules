@@ -3,7 +3,7 @@
 # Copyright 1997-2001 by Douglas Bates <bates@stat.wisc.edu>, <edd@debian.org>
 # Copyright 2001-2002 by Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.42 2002/10/21 21:21:15 bates Exp $
+# $Id: rules,v 1.43 2002/11/19 15:50:31 bates Exp $
 
 corepackage	= r-base-core
 latexpackage	= r-base-latex
@@ -12,8 +12,7 @@ htmlpackage	= r-doc-html
 gnomepackage	= r-gnome
 nmathpackage	= r-mathlib
 infopackage	= r-doc-info
-## r-recommended support is currently (fresh 1.6.0) broken
-#recdpackage	= r-recommended
+recdpackage	= r-recommended
 
 # for the standalone library, no sonames are assigned in the upstream Makefiles
 somaj		= 1
@@ -88,16 +87,17 @@ upstream:
 	links http://cran.us.r-project.org/src/base
 
 upstreamdevel:
-	links ftp://ftp.stat.math.ethz.ch/Software/R
+	links http://cran.us.r-project.org/src/base
+	#links ftp://ftp.stat.math.ethz.ch/Software/R
 
 build: build-arch build-indep
 
-build-arch: configure make-arch build-arch-stamp
+build-arch: configure make-arch-stamp build-arch-stamp
 build-arch-stamp:
 	@echo "*** build-arch ***"
 	touch build-arch-stamp
 
-build-indep: configure make-indep build-indep-stamp
+build-indep: configure make-indep-stamp build-indep-stamp
 build-indep-stamp:
 	@echo "*** build-indep ***"
 	touch build-indep-stamp
@@ -138,6 +138,13 @@ make-arch-stamp:
 			CXX=${cxxcompiler}			\
 			FC=${fortrancompiler}			\
 			R
+	make		CFLAGS="$(compilerflags)"		\
+			CXXFLAGS="$(compilerflags)"		\
+			FFLAGS="$(compilerflags)"		\
+			CC=${compiler} 				\
+			CXX=${cxxcompiler}			\
+			FC=${fortrancompiler}			\
+			stamp-recommended
         # currently needed for binary package with docs [FIXME: how?]
 	make docs
 
@@ -167,10 +174,10 @@ make-indep-stamp:
 	make pdf
 	touch make-indep-stamp
 
-#make: configure make-arch make-stamp
-#make-stamp: 
-#        # Already made in general 'make': make html
-#	touch make-stamp
+make: configure make-arch-stamp make-indep-stamp make-stamp
+make-stamp: 
+        # Already made in general 'make': make html
+	touch make-stamp
 
 check: configure make-arch check-stamp
 check-stamp: 
@@ -211,11 +218,18 @@ install-arch-stamp:
 
 	make    	prefix=$(debtmp)/usr   	 		\
 			mandir=$(debtmp)/usr/share/man	 	install
+
+        # Now for a set of fixes / corrections for the Debian installation 
+
         # set R_HOME_DIR env.var. in R shell script
 	sed -e '/^R_HOME_DIR=.*/s::R_HOME_DIR=/usr/lib/R:' \
 	  < bin/R > $(debtmp)/usr/bin/R
 	sed -e '/^R_HOME_DIR=.*/s::R_HOME_DIR=/usr/lib/R:' \
 	  < bin/R > $(debtmp)/usr/lib/R/bin/R
+
+        # set browser to mozilla as mozilla-1.0.0 works with help.start()
+	sed -e '/^R_BROWSER=.*/s::R_BROWSER=$${R_BROWSER-/usr/bin/mozilla}:' \
+	  < etc/Renviron > $(debtmp)/usr/lib/R/etc/Renviron
 
         # fix permissions (Lintian)
 	chmod a+x 	$(debtmp)/usr/lib/R/share/sh/echo.sh 		\
@@ -234,11 +248,16 @@ ifneq "$(findstring $(arch), m68k-linux arm-linux)" ""
 	perl -p -i -e 's/-g -O2/-g0 -O0/g' $(debtmp)/usr/lib/R/etc/Makeconf
 endif
 
+        # that being done, now install in different sub-packages
+
         # move the GNOME version to the r-gnome package
 ifneq ($(gnome),0)
 	dh_movefiles	-p$(gnomepackage) 	usr/lib/R/modules/R_gnome.so
 endif
 
+        # move files for r-recommended
+        # doing this before html/latex moves ensure they keep their tex/latex
+	dh_movefiles	-p$(recdpackage)
         # move the html manual files in r-doc-html.files into r-doc-html 
         # these get built in make-arch too ...
 	dh_movefiles	-p$(htmlpackage)		
@@ -246,10 +265,7 @@ endif
 	dh_movefiles	-pr-base-html
         # move files for r-base-latex
 	dh_movefiles	-pr-base-latex
-
-        # move files for r-recommended
-        ## dh_movefiles	-p$(recdpackage)
-        # move files for r-base-core
+        # move all the rest into r-base-core
 	dh_movefiles	-p$(corepackage)
 
         # for the standalone library package, move the two libs
@@ -352,6 +368,8 @@ binary-arch: build-arch install-arch check
         # install lintian "silencer"
 	install -p -m 0644  debian/$(corepackage).lintian \
 	   $(debbase)/$(corepackage)/usr/share/lintian/overrides/$(corepackage)
+	install -p -m 0644  debian/$(recdpackage).lintian \
+	   $(debbase)/$(recdpackage)/usr/share/lintian/overrides/$(recdpackage)
         #dh_undocumented -a
 	dh_installchangelogs -a	-k NEWS 
 	dh_strip -a
