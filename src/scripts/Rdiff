@@ -8,7 +8,7 @@ tfile=${2}
 exitstatus=${3}
 
 ## sed script to get rid of the startup message
-script='/^R : Copyright/,/quit R.$/{d;}; p'
+script='/^R : Copyright/,/quit R.$/{d;}'
 ## egrep pattern to get rid of some more???
 pattern='(^Number of.*:|^Time '
 if test -n "`echo ${ffile} | grep primitive-funs`"; then
