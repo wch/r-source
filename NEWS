@@ -33,12 +33,17 @@ BUG FIXES
 	now happens by default).
 
     o	scan now sets the maximal sizes internally when `what' is a list
-	from `nmax' and failing that `nlines'.  This uses memory much more
+	from `nmax' and failing that `nlines'.	This uses memory much more
 	efficiently if `nmax' is specified.  read.table() makes use of this.
 
     o	The Fortran code used is now much closer to ANSI compliance.
 
     o	cov.rob() gives useful error message on nearly-degenerate matrices.
+
+    o	Necessary source code additions and changes for the Macintosh
+	version have been incorporated; though not for configuration and
+	"make" which are not yet available on the Mac.
+
 
 
 		CHANGES IN R VERSION 1.2.1
@@ -103,7 +108,7 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   There have been many small improvements/corrections in the
+    o	There have been many small improvements/corrections in the
 	documentation. In particular:
 
 	The help pages for lm and glm now describe the fitted objects.
@@ -111,8 +116,8 @@ BUG FIXES
 	is.vector() is now correctly documented: complex vectors and
 	lists return TRUE.
 
-    o   The default sortedXyData constructor in the nls package now
-        handles missing values in the response.
+    o	The default sortedXyData constructor in the nls package now
+	handles missing values in the response.
 
     o	On startup, file .RData is now restored *after* the site and
 	user profiles are loaded (if at all).  This is as previously
@@ -210,8 +215,8 @@ BUG FIXES
     o	Loading .Random.seed could extremely rarely and with some
 	generators reject a value as NA_INTEGER when it was valid.
 
-    o   save(..., ascii=TRUE) created broken files when saving strings
-        containing special characters (ASCII code > 127).
+    o	save(..., ascii=TRUE) created broken files when saving strings
+	containing special characters (ASCII code > 127).
 
     o	mean(c(1,NA,NA,NA)[-1], trim = .1, na.rm = TRUE) doesn't give an
 	error anymore.
