@@ -70,6 +70,16 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
     is restricted to a full page display.  In future it is likely to
     be replaced by a genuine \code{levelplot} function which will
     work in multipanel displays.
+
+    The ouput produced by \code{filled.contour} is actually a combination
+     of two plots; one is the filled contour and one is the legend.
+     Two separate coordinate systems are set up for these
+     two plots, but they are only used internally - once the function has
+     returned these coordinate systems are lost.  If you
+     want to annotate the main contour plot, for example to add points,
+     you can specify
+     graphics commands in the plot.axes argument.  An example is given
+     below.
 }
 \seealso{\code{\link{contour}}, \code{\link{image}}, \code{\link{palette}}.}
 \examples{
@@ -87,6 +97,12 @@ filled.contour(x, y, volcano, color = terrain.colors,
     key.axes = axis(4, seq(90, 190, by = 10)))# maybe also asp=1
 mtext(paste("filled.contour(.) from", R.version.string),
       side = 1, line = 4, adj = 1, cex = .66)
+
+# Annotating a filled contour plot
+a <- expand.grid(1:20, 1:20)
+b <- matrix(a[,1] + a[,2], 20)
+filled.contour(x = 1:20, y = 1:20, z = b,
+               plot.axes={ axis(1); axis(2); points(10,10) })
 }
 \keyword{hplot}
 \keyword{aplot}
