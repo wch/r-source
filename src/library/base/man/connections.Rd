@@ -94,7 +94,7 @@ isIncomplete(con)
 
   Possible values for the mode \code{open} to open a connection are
   \describe{
-    \item{\code{"r"} or \code{"wt"}}{Open for reading in text mode.}
+    \item{\code{"r"} or \code{"rt"}}{Open for reading in text mode.}
     \item{\code{"w"} or \code{"wt"}}{Open for writing in text mode.}
     \item{\code{"a"} or \code{"at"}}{Open for appending in text mode.}
     \item{\code{"rb"}}{Open for reading in binary mode.}
