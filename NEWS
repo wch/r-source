@@ -288,6 +288,9 @@ C-LEVEL FACILITIES
     o	Added an onExit() function to graphics devices, to be executed
 	upon user break if non-NULL.
 
+    o   ISNAN now works even in C++ code that undefines the 
+        isnan macro. 
+
 
 DEPRECATED & DEFUNCT
 

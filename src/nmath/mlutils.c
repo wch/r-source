@@ -54,6 +54,14 @@ int R_finite(double x)
 #endif
 }
 
+/* C++ math header undefines any isnan macro. This file
+   doesn't get C++ headers and so is safe. */
+int R_isnancpp(double x)
+{
+	return (isnan(x) != 0);
+
+}
+
 static double myfmod(double x1, double x2)
 {
     double q = x1 / x2;

@@ -131,6 +131,16 @@ int R_IsNaN(double x)
     return 0;
 }
 
+/* ISNAN uses isnan, which is undefined by C++ headers 
+   This workaround is called only when ISNAN() is used
+   in a user code in a file with __cplusplus defined */
+
+int R_isnancpp(double x)
+{
+   return (isnan(x)!=0);
+}
+
+
 /* <FIXME> Simplify this mess.  Not used inside R 
    if isfinite works, and if finite works only in packages */
 int R_finite(double x)

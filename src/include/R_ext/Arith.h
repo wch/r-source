@@ -51,8 +51,18 @@ int R_finite(double);		/* True if none of NA, NaN, +/-Inf */
 
 #define ISNA(x)	       R_IsNA(x)
 /* True for *both* NA and NaN.
-   NOTE: some systems do not return 1 for TRUE. */
-#define ISNAN(x)       (isnan(x)!=0)
+   NOTE: some systems do not return 1 for TRUE. 
+   Also note that C++ math headers specifically undefine
+   isnan if it is a macro (it is on OS X and in C99),
+   hence the workaround.  This code also appears in Rmath.h
+*/
+#ifdef __cplusplus
+  int R_isnancpp(double); /* in arithmetic.c */
+#  define ISNAN(x)     R_isnancpp(x)
+#else
+#  define ISNAN(x)     (isnan(x)!=0)
+#endif
+
 #ifdef HAVE_WORKING_ISFINITE
 /* isfinite is defined in <math.h> according to C99 */
 # define R_FINITE(x)    isfinite(x)
