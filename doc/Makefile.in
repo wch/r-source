@@ -9,11 +9,29 @@ top_builddir = ..
 
 include $(top_builddir)/Makeconf
 
-all R docs::
+all R docs:
+	@$(MKINSTALLDIRS) $(top_builddir)/doc/html/search
+	@if [ "$(srcdir)" != "." ]; then \
+	  for f in $(srcdir)/html/*.html $(srcdir)/html/*.jpg; do \
+	    $(INSTALL_DATA) $$f $(top_builddir)/doc/html; \
+	  done; \
+	  for f in $(srcdir)/html/search/*.class \
+	    $(srcdir)/html/search/*.html \
+	    $(srcdir)/html/search/index.txt ; do \
+	    $(INSTALL_DATA) $$f $(top_builddir)/doc/html/search; \
+	  done; \
+	fi
 
-install: installdirs
+install: installdirs installhtml
 	$(INSTALL) keyword-test $(rhome)/doc
 	$(INSTALL_DATA) $(srcdir)/KEYWORDS $(rhome)/doc
+#	cd manual; $(MAKE) install
+
+installdirs:
+	@$(MKINSTALLDIRS) $(rhome)/doc/manual
+	@$(MKINSTALLDIRS) $(rhome)/doc/html/search
+
+installhtml:
 	@for f in $(srcdir)/html/*.html $(srcdir)/html/*.jpg; do \
 	  $(INSTALL_DATA) $$f $(rhome)/doc/html; \
 	done
@@ -22,15 +40,18 @@ install: installdirs
 	          $(srcdir)/html/search/index.txt ; do \
 	  $(INSTALL_DATA) $$f $(rhome)/doc/html/search; \
 	done
-#	cd manual; $(MAKE) install
-
-installdirs:
-	@$(MKINSTALLDIRS) $(rhome)/doc/manual
-	@$(MKINSTALLDIRS) $(rhome)/doc/html/search
 
 mostlyclean:
 clean:
+	@if [ "$(srcdir)" != "." ]; then \
+	  rm -rf html; \
+	fi
+	@cd manual; $(MAKE) $@
+
 distclean:
 	@rm -f Makefile keyword-test
-	@cd manual; $(MAKE) $@
+
 maintainer-clean: distclean
+
+
+
