@@ -143,8 +143,8 @@ execution (not necessarily by a shell) and the second argument will be
 @code{internal} which if true will collect the output of the command
 into an @R{} character vector.
 
-The function @code{unix.time} is available for timing (even on non-Unix
-platforms, although the information available may be limited there).
+The function @code{system.time} is available for timing (although the
+information available may be limited on non-Unix-like platforms).
 
 @node Interface functions .C and .Fortran, dyn.load and dyn.unload, Operating system access, System and foreign language interfaces
 @section Interface functions @code{.C} and @code{.Fortran}
@@ -169,7 +169,7 @@ There can be up to 65 further arguments giving @R{} objects to be passed
 to compiled code.  Normally these are copied before being passed in, and
 copied again to an @R{} list object when the compiled code returns.  If
 the arguments are given names, these are used as names for the
-components in the returned list object.
+components in the returned list object (but not passed to the compiled code).
 
 The following table gives the mapping between the modes of @R{} vectors
 and the types of arguments to a C function or Fortran subroutine.
@@ -191,7 +191,8 @@ a single character string can be passed to or from Fortran, and the
 success of this is compiler-dependent.  Other @R{} objects can be passed
 to @code{.C}, but it is better to use one of the other interfaces.  An
 exception is passing an @R{} function for use with @code{call_R}, when
-the object can be handled as @code{void *} en route to @code{call_R}.
+the object can be handled as @code{void *} en route to @code{call_R},
+but even there @code{.Call} is to be preferred.
 
 It is possible to pass numeric vectors of storage mode @code{double} to
 C as @code{float *} or Fortran as @code{REAL} by setting the attribute
@@ -206,7 +207,8 @@ checked for missing values @code{NA} and for the IEEE special values
 generates an error.  If it is true, these values are passed unchecked.
 
 Argument @code{DUP} can be used to suppress copying.  It is dangerous:
-see the on-line help for arguments against its use.
+see the on-line help for arguments against its use.  It is not possible
+to pass numeric vectors as @code{float *} or @code{REAL} if @code{DUP=TRUE}.
 
 Finally, argument @code{PACKAGE} confines the search for the symbol name
 to a specific shared library (or use @code{"base"} for code compiled
@@ -217,6 +219,36 @@ are normally sufficient to cause @R{} to crash.
 Note that the compiled code should not return anything except through
 its arguments: C functions should be of type @code{void} and Fortran
 subprograms should be subroutines.
+
+To fix ideas, let us consider a very simple example which convolves two
+finite sequences. (This is hard to do fast in interpreted @R{} code, but
+easy in C code.)  We could do this using @code{.C} by
+
+@example
+void convolve(double *a, int *na, double *b, int *nb, double *ab)
+@{
+  int i, j, nab = *na + *nb - 1;
+
+  for(i = 0; i < nab; i++) ab[i] = 0.0;
+  for(i = 0; i < *na; i++)
+    for(j = 0; j < *nb; j++) ab[i + j] += a[i] * b[j];
+@}
+@end example
+
+@noindent
+called from @R{} by
+
+@example
+conv <- function(a, b)
+  .C("convolve", as.double(a), as.integer(length(a)),
+     as.double(b), as.integer(length(b)),
+     ab = double(length(a) + length(b) - 1))$ab
+@end example
+
+Note that we take care to coerce all the arguments to the correct @R{}
+storage mode before calling @code{.C}; mistakes in matching the types
+can lead to wrong results or hard-to-catch errors.
+
 
 @node dyn.load and dyn.unload, Handling R objects in C, Interface functions .C and .Fortran, System and foreign language interfaces
 @section @code{dyn.load} and @code{dyn.unload}
@@ -245,7 +277,13 @@ for platform independence.  On some Unix systems the path supplied to
 for shared libraries does not contain the current directory.
 
 Loading is most often done via a call to @code{library.dynam} in the
-@code{.First.lib} function of a package.
+@code{.First.lib} function of a package. This has the form
+
+@smallexample
+library.dynam("libname", package, lib.loc)
+@end smallexample
+@noindent
+where @code{libname} is the library/DLL name with the extension omitted.
 
 Under some Unix systems there is a choice of how the symbols are
 resolved when the library is loaded, governed by the arguments
@@ -255,10 +293,13 @@ will terminate @R{} unceremoniously.
 
 If a library/DLL is loaded more than once the most recent version is
 used.  More generally, if the same symbol name appears in several
-libraries, the most recently loaded occurrence is used.
+libraries, the most recently loaded occurrence is used. The
+@code{PACKAGES} argument provides a good way to avoid any ambiguity in
+which occurrence is meant.
 
 @section Interfacing C++ code
 
+@noindent
 (Contributed by @emph{Adrian Trapletti}.)
 
 Suppose we have the following hypothetical C++ library, consisting of
@@ -386,7 +427,7 @@ a little simpler to use, but @code{.External} is a little more general.
 A call to @code{.Call} is very similar to @code{.C}, for example
 
 @example
-.Call("convolve", a, b)
+.Call("convolve2", a, b)
 @end example
 
 @noindent
@@ -397,7 +438,7 @@ can passed as arguments.  The C side of the interface is
 @example
 #include <S.h>
 
-SEXP convolveE(SEXP a, SEXP b)
+SEXP convolve2(SEXP a, SEXP b)
  ...
 @end example
 
@@ -461,7 +502,7 @@ Do make use of the source code for inspirational examples.
 It is necessary to know something about how @R{} objects are handled in
 C code.  All the @R{} objects you will deal with will be handled with
 the type @dfn{SEXP}@footnote{SEXP is an acronym for @emph{S}imple
-@emph{EXP}ression, common in LISP-like language syntaxes}, which is a
+@emph{EXP}ression, common in LISP-like language syntaxes.}, which is a
 pointer to a structure.  Think of this structure as a @emph{variant
 type} that can handle all the usual types of @R{} objects, that is
 vectors of various modes, functions, environments, language objects and
@@ -554,7 +595,7 @@ Protection is not needed for objects which @R{} already knows are in
 use.  In particular, this applies to function arguments.
 
 There is a less-used@footnote{for historical reasons,
-@code{UNPROTECT_PTR(s)} exists only since @R{} version 0.63.0 (Nov.@:
+@code{UNPROTECT_PTR(s)} has existed only since @R{} version 0.63.0 (Nov.@:
 1998)} macro @code{UNPROTECT_PTR(s)} that unprotects the @code{SEXP} s.
 
 @findex UNPROTECT_PTR
@@ -624,7 +665,7 @@ The usual @R{} object modes are given in the table.
 @end quotation
 @noindent
 Among the important internal @code{SEXPTYPE}s are @code{LANGSXP},
-@code{VECSXP}, @code{CHARSXP} etc.
+@code{CHARSXP} etc.
 
 Unless you are very sure about the type of the arguments, the code
 should check the data types.  Sometimes it may also be necessary to
@@ -657,7 +698,7 @@ PROTECT(@var{newSexp} = AS_NUMERIC(@var{oldSexp}));
 @noindent
 Protection is needed as a new @emph{object} is created; the object
 formerly pointed to by the @code{SEXP} is re-used is still protected but
-now used.
+now unused.
 
 All the coercion functions do their own error-checking, and generate
 @code{NA}s with a warning or stop with an error as appropriate.
@@ -779,7 +820,7 @@ installed.
 @subsection Classes
 @cindex Classes
 
-In @R{} the class is just the attribute names @code{"class"} so it can
+In @R{} the class is just the attribute named @code{"class"} so it can
 be handled as such, but there is a shortcut @code{classgets}.  Suppose
 we want to give the return value in our example the class @code{"mat"}.
 We can use
@@ -906,30 +947,6 @@ based on the interface of the same name in S version 4, and
 @code{.External} is based on @code{.Internal}.  @code{.External} is more
 complex but allows a variable number of arguments.
 
-To fix ideas, let us consider a very simple example which convolves two
-finite sequences. (This is hard to do fast in interpreted @R{} code, but
-easy in C code.)  We could do this using @code{.C} by
-
-@example
-void convolve(double *a, int *na, double *b, int *nb, double *ab)
-@{
-  int i, j, nab = *na + *nb - 1;
-
-  for(i = 0; i < nab; i++) ab[i] = 0.0;
-  for(i = 0; i < *na; i++)
-    for(j = 0; j < *nb; j++) ab[i + j] += a[i] * b[j];
-@}
-@end example
-
-@noindent
-called from @R{} by
-
-@example
-conv <- function(a, b)
-  .C("convolve", as.double(a), as.integer(length(a)),
-     as.double(b), as.integer(length(b)),
-     ab = double(length(a) + length(b) - 1))$ab
-@end example
 
 @menu
 * Calling .Call::               
@@ -942,8 +959,8 @@ conv <- function(a, b)
 
 @findex .Call
 
-Now let us do the same thing via @code{.Call}, first using the
-@file{Rdefines.h} macros.  The calling function in @R{} is
+Let us convert our finite convolution example to use @code{.Call}, first
+using the @file{Rdefines.h} macros.  The calling function in @R{} is
 
 @example
 conv <- function(a, b) .Call("convolve2", a, b)
@@ -976,14 +993,11 @@ SEXP convolve2(SEXP a, SEXP b)
 @}
 @end example
 
-The reader might have spotted that we have not protected @code{a} and
-@code{b}: as these are arguments we do not need to even though we may
-have changed their values by coercion.
-
 Note that unlike the macros in S version 4, the @R{} versions of these
 macros do check that coercion can be done and raise an error if it
 fails.  They will raise warnings if missing values are introduced by
-coercion.
+coercion. Although we illustrate doing the coercion in the C code here,
+it often is simpler to do the necessary coercions in the @R{} code.
 
 Now for the version in @R{}-internal style.  Only the C code changes.
 
@@ -1022,7 +1036,7 @@ We can use the same example to illustrate @code{.External}.  The @R{}
 code changes only by replacing @code{.Call} by @code{.External}
 
 @example
-conv <- function(a, b) .External("convolve2", a, b)
+conv <- function(a, b) .External("convolveE", a, b)
 @end example
 
 @noindent
@@ -1033,7 +1047,7 @@ the arguments.
 @example
 #include <Rinternals.h>
 
-SEXP convolve2(SEXP args)
+SEXP convolveE(SEXP args)
 @{
   int i, j, na, nb, nab;
   double *xa, *xb, *xab;
@@ -1140,7 +1154,8 @@ this is also true of @code{NA} as it is a type of @code{NaN}, but it is
 unwise to rely on such details.  Thus we will re-write the code to
 handle @code{NA}s using macros defined in @file{Arith.h}.
 
-The code changes are the same in any of the versions of @code{convolve2}:
+The code changes are the same in any of the versions of @code{convolve2}
+or @code{convolveE}:
 @example
     ...
   for(i = 0; i < na; i++)
@@ -1166,7 +1181,7 @@ The constants @code{R_NaN}, @code{R_PosInf}, @code{R_NegInf} and
 @node Evaluating R Expressions from C,  , Interface Functions .Call and .External, System and foreign language interfaces
 @section Evaluating R Expressions from C
 
-We noted in the introduction that the @code{call_R} interface could be
+We noted that the @code{call_R} interface could be
 used to evaluate @R{} expressions from C code, but the current
 interfaces are much more convenient to use.  The main function we will
 use is
@@ -1212,8 +1227,8 @@ SEXP lapply(SEXP list, SEXP expr, SEXP rho)
 
 It would be closer to @code{lapply} if we could pass in a function
 rather than an expression.  One way to do this is @emph{via} interpreted
-@R{} code as in the next example, but it is possible (if obscure) to do
-this in C code.  The following is based on the code in
+@R{} code as in the next example, but it is possible (if somewhat
+obscure) to do this in C code.  The following is based on the code in
 @file{src/main/optimize.c}.
 
 @example
@@ -1536,7 +1551,7 @@ However, there are exceptions which are fully specified as follows:
 
 @item
 ``Special functions'' which really are @emph{language} elements, however
-exist as @sc{<primitive>} s in @R{}:
+exist as @sc{<primitive>}s in @R{}:
 
 @example
 @{       (         if       for  while  repeat  break  next
@@ -1700,7 +1715,7 @@ of the extensions @file{.R}, @file{.S}, @file{.q}, @file{.r}, or
 @file{.s}.  We recommend using @file{.R}, as this extension seems to be
 not used by any other software.  It should be possible to read in the
 files using @code{source()}, so R objects must be created by
-assignments.  Note that there has to be no connection between the name
+assignments.  Note that there need be no connection between the name
 of the file and the R objects created by it.  If necessary, one of these
 files (historically @file{zzz.R}) should use @code{library.dynam()}
 @emph{inside} @code{.First.lib()} to load compiled code.
@@ -1715,7 +1730,8 @@ subdirectories named @code{unix}, @code{windows} or @code{mac}.
 
 The C or FORTRAN source and optionally a @file{Makefile} for the compiled
 code is in @file{src}.  Note that the @file{Makefile} most likely is not
-needed.
+needed, and if one is to be distributed considerable care is needed to
+make it general enough to work on all @R{} platforms.
 
 The @file{data} subdirectory is for additional data files the package
 makes available for loading using @code{data()}.  Currently, data files
@@ -1729,7 +1745,7 @@ The contents of the @file{inst} subdirectory will be copied recursively
 to the installation directory.
 
 Finally, @file{exec} could contain additional executables the package
-needs, typically Shell or Perl scripts.  This mechanism is currently not
+needs, typically shell or Perl scripts.  This mechanism is currently not
 used by any Unix package, and still experimental.
 
 @menu
@@ -1906,7 +1922,7 @@ By default, text inside @code{\examples@{@}} will be displayed in the
 output of the help page and run by @kbd{make check}.  You can use
 @code{\dontrun@{@}} for commands that should only be shown, but not run,
 and @code{\testonly@{@}} for extra commands for testing @R{} that should
-not be shown.
+not be shown to users.
 
 For example,
 @example
@@ -1918,7 +1934,7 @@ x <- runif(10)       @r{Shown and run.}
 @item \keyword@{@var{key_1}@}
 @itemx \keyword@{@var{key_2}@}
 @findex \keyword
-Use at least one keyword out of the list in @file{$R_HOME/doc/KEYWORDS}.
+Use at least one keyword from the list in @file{$R_HOME/doc/KEYWORDS}.
 
 @end table
 
@@ -1976,7 +1992,7 @@ in plain text for emphasis.
 
 Fragments of @R{} code, including the names of @R{} objects, should be
 marked using @code{\code}.  Only backslashes and percent signs need to be
-escaped inside @code{\code}.
+escaped (by a backslash) inside @code{\code}.
 
 Finally, @code{\link@{@var{foo}@}} (usually in the combination
 @code{\code@{\link@{@var{foo}@}@}}) produces a hyperlink to the help
@@ -2072,8 +2088,8 @@ The ``comment'' and ``control'' characters @samp{%} and @samp{\}
 In ``regular'' text (no verbatim, no @code{\eqn}, @dots{}), you
 currently must escape all La@TeX{} special characters, i.e., besides
 @samp{%}, @samp{@{}, and @samp{@}}, the four specials @samp{$},
-@samp{&}, @samp{#}, and @samp{_} are simply produced by preceding with a
-@samp{\}.  Further, @samp{^} by @code{\eqn@{\hat@{@}@}@{^@}}, and
+@samp{&}, @samp{#}, and @samp{_} are produced by preceding each with a
+@samp{\}.  Further, enter @samp{^} as @code{\eqn@{\hat@{@}@}@{^@}}, and
 @samp{~} by @code{\eqn@{\tilde@{@}@}@{~@}}.  Also, @samp{<}, @samp{>},
 and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 @code{\deqn}.
@@ -2102,6 +2118,12 @@ or
 
 @noindent
 for OS-specific inclusion or exclusion.
+
+If the differences between platforms are extensive or the @R{} objects
+documented are only relevant to one platform, platform-specific
+@code{.Rd} files can be put in a  @file{unix}, @file{windows} or
+@file{mac} subdirectory.
+
 
 @node Function and variable index, Concept index, Writing R documentation, Top
 @unnumbered Function and variable index

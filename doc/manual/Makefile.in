@@ -164,12 +164,9 @@ clean:
 	fi
 	@-rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.info* *.ky *.kys \
 	  *.log *.out *.pdf *.pg *.pgs *.ps *.ps-2 *.tmp *.toc *.tp  \
-	  *.vr *.vrs \
-	  *-pkg.tex refman.i??
-	@-rm -f Manual.i?? Reference.i?? Version.tex auto
+	  *.vr *.vrs *-pkg.tex refman.i?? refman.tex version.tex
 distclean: clean
 	@-rm -f Makefile lib2tex refman.top
-	@-rm -f ABOUT.tex Manual.tex Reference.tex
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)
