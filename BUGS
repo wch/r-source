@@ -278,10 +278,10 @@ none
 
 Directory:  incoming
 
-* PR# 754 *
-Subject: means in arima0
-From: arto.luoma@uta.fi
-Date: Thu, 30 Nov 2000 14:02:55 +0100 (MET)
+* PR# 755 *
+Subject: bug in outer()
+From: mvondavier@ets.org
+Date: Fri, 1 Dec 2000 20:47:30 +0100 (MET)
 * PR# 734 *
 Subject:  Assigning into a dataframe 
 From: J.C.Rougier@durham.ac.uk
@@ -314,6 +314,10 @@ Date: Tue, 28 Nov 2000 13:24:33 +0800
 Subject: (NA || x) and (NA && y)  {another "bug" }
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 27 Nov 2000 09:25:38 +0100
+* PR# 754 *
+Subject: means in arima0
+From: arto.luoma@uta.fi
+Date: Thu, 30 Nov 2000 14:02:55 +0100 (MET)
 * PR# 753 *
 Subject: Re: [R] Step function
 From: Thomas Lumley <thomas@biostat.washington.edu>
