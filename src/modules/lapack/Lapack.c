@@ -445,11 +445,11 @@ SEXP La_rs_cmplx(SEXP x, SEXP only_values)
 SEXP La_rg_cmplx(SEXP x, SEXP only_values)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
-    int i, n, lwork, info, vectors, *xdims, ov;
+    int  n, lwork, info, vectors, *xdims, ov;
     Rcomplex *work, *left, *right, *xvals, tmp;
     double *rwork;
     char jobVL[1], jobVR[1];
-    SEXP ret, nm, values, val;
+    SEXP ret, nm, values, val = R_NilValue;
 
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0];
