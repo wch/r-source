@@ -36,6 +36,8 @@
  *	C port by John C. Daub
  */
 
+#include <RCarbon.h>
+
 #ifndef __DIALOGS__
 #include <Dialogs.h>
 #endif

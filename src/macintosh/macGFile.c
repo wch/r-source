@@ -34,6 +34,8 @@
  *	C port by John C. Daub
  */
 
+#include <RCarbon.h>
+
 #include <stdio.h>
 #include <fp.h> /* Jago */
 #include <Quickdraw.h>

@@ -36,6 +36,8 @@
  *	C port by John C. Daub
  */
 
+#include <RCarbon.h>
+
 #ifndef __CONTROLS__
 #include <Controls.h>
 #endif 
