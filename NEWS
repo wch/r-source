@@ -295,6 +295,10 @@ NEW FEATURES
     o	For Windows and readline-based history, the saved file size is
 	re-read from R_HISTSIZE immediately before saving.
 
+    o	eff.aovlist() assumes orthogonal contrasts for any term
+	with more than one degree of freedom: this is now documented
+	and checked for.
+
 
 INTERNATIONALIZATION
 

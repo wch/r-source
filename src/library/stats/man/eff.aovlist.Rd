@@ -16,35 +16,48 @@ eff.aovlist(aovlist)
 \details{
   Fixed-effect terms in an analysis of variance model with multiple strata
   may be estimable in more than one stratum, in which case there is less
-  than complete information in each. The efficiency is the fraction of
+  than complete information in each.  The efficiency is the fraction of
   the maximum possible precision (inverse variance) obtainable by
   estimating in just that stratum.
 
   This is used to pick strata in which to estimate terms in
-  \code{model.tables.aovlist} and elsewhere.
+  \code{\link{model.tables.aovlist}} and
+  \code{\link{se.contrast.aovlist}}.
+
+  The calculation used requires orthogonal contrasts for each term, and
+  will throw are error if non-orthogonal contrasts (e.g. treatment
+  contrasts or an unbalanced design) are detected.
 }
 \value{
   A matrix giving for each non-pure-error stratum (row) the efficiencies
   for each fixed-effect term in the model.
 }
+\references{
+  Heiberger, R. M. (1989)
+  \emph{Computation for the Analysis of Designed Experiments}.  Wiley.
+}
 
-\seealso{\code{\link{aov}}, \code{\link{model.tables.aovlist}},
-  \code{\link{se.contrast.aovlist}} }
+\seealso{
+  \code{\link{aov}}, \code{\link{model.tables.aovlist}},
+  \code{\link{se.contrast.aovlist}}
+}
 
 \examples{
-## for balanced designs all efficiencies are zero or one.
-## so as a statistically meaningless test:
-options(contrasts=c("contr.helmert", "contr.poly"))
-## From Venables and Ripley (2002) p.165.
-N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
-P <- c(1,1,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,0,1,0,1,1,0)
-K <- c(1,0,0,1,0,1,1,0,0,1,0,1,0,1,1,0,0,0,1,1,1,0,1,0)
-yield <- c(49.5,62.8,46.8,57.0,59.8,58.5,55.5,56.0,62.8,55.8,69.5,
-55.0, 62.0,48.8,45.5,44.2,52.0,51.5,49.8,48.8,57.2,59.0,53.2,56.0)
+## An example of Yates (1932), a 2^3 design in 2 blocks replicated 4 times
 
-npk <- data.frame(block=gl(6,4), N=factor(N), P=factor(P),
-                  K=factor(K), yield=yield)
-npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
-eff.aovlist(npk.aovE)
+Block <- gl(8, 4)
+A<-factor(c(0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1))
+B<-factor(c(0,0,1,1,0,0,1,1,0,1,0,1,1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1))
+C<-factor(c(0,1,1,0,1,0,0,1,0,0,1,1,0,0,1,1,0,1,0,1,1,0,1,0,0,0,1,1,1,1,0,0))
+Yield <- c(101, 373, 398, 291, 312, 106, 265, 450, 106, 306, 324, 449,
+           272, 89, 407, 338, 87, 324, 279, 471, 323, 128, 423, 334,
+           131, 103, 445, 437, 324, 361, 302, 272)
+aovdat <- data.frame(Block, A, B, C, Yield)
+
+old <- getOption("contrasts")
+options(contrasts=c("contr.helmert", "contr.poly"))
+(fit <- aov(Yield ~ A*B*C + Error(Block), data = aovdat))
+eff.aovlist(fit)
+options(contrasts = old)
 }
 \keyword{models}

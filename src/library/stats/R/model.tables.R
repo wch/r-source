@@ -402,14 +402,20 @@ eff.aovlist <- function(aovlist)
 	   {
 	       asgn <- x$assign[x$qr$pivot[1:x$rank]]
 	       sp <- split(seq(along=asgn), attr(terms(x), "term.labels")[asgn])
-	       sapply(sp, function(x, y) sum(y[x]), y=diag(x$qr$qr)^2)
+	       sapply(sp, function(x, y) {
+                   y <- y[x, x, drop = FALSE]
+                   res <- sum(diag(y)^2)
+                   if(nrow(y) > 1 && sum(y^2) > 1.01 * res)
+                       stop("eff.aovlist: non-orthogonal contrasts would give an incorrect answer")
+                   res
+               }, y=x$qr$qr)
 	   })
     x.len <-
 	lapply(aovlist, function(x) {
-	    X <- as.matrix(qr.X(x$qr)^2)
+	    X <- as.matrix(qr.X(x$qr))
 	    asgn <- x$assign[x$qr$pivot[1:x$rank]]
 	    sp <- split(seq(along=asgn), attr(terms(x), "term.labels")[asgn])
-	    sapply(sp, function(x, y) sum(y[,x, drop = FALSE]), y=X)
+	    sapply(sp, function(x, y) sum(y[, x]), y=X^2)
 	})
     t.labs <- attr(Terms, "term.labels")
     s.labs <- names(aovlist)
@@ -420,9 +426,9 @@ eff.aovlist <- function(aovlist)
 	ind <- rbind(ind, cbind(match(i, s.labs),
 				match(names(proj.len[[i]]), t.labs)))
     eff[ind] <- unlist(x.len)
-    x.len <- t(eff) %*% rep.int(1, length(s.labs))
+    x.len <- colSums(eff)
     eff[ind] <- unlist(proj.len)
-    eff <- sweep(eff, 2, x.len, "/")
+    eff <- eff/rep(x.len, each = nrow(eff))
     eff[, x.len != 0, drop = FALSE]
 }
 
