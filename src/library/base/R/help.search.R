@@ -105,7 +105,9 @@ help.search <- function(pattern, fields = c("alias", "title"),
         outConn <- file(outFile, open = "w")
         writeLines(paste("Help files with ", fields, " matching `",
                          pattern, "':\n", "Type `?FOO' to inspect ",
-                         "entry `FOO(PKG) TITLE'.\n\n", sep = ""),
+                         "entry `FOO(PKG) TITLE' if PKG is loaded;\n",
+                         "otherwise, use `help(FOO, package = PKG)'.",
+                         "\n\n", sep = ""),
                    outConn)
         dbnam <- paste(db[ , "name"], "(", db[, "pkg"], ")", sep = "")
         dbtit <- paste(db[ , "title"], sep = "")
