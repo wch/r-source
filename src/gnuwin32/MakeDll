@@ -1,7 +1,10 @@
 #-*- Makefile -*-
 all:  libR $(DLLNAME).dll
 
+# set this in Makevars.win to supply your own resource file
 RCNAME=${DLLNAME}_res
+# set this (e.g. in SHLIB) to suppress adding version info to the DLL
+RCOBJ=$(RCNAME).o
 
 # Don't use SOURCES as this get passed on for libR.
 CFSOURCES=$(wildcard -f *.c *.f)
@@ -27,6 +30,7 @@ CFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CFLAGS)
 CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CXXFLAGS)
 FFLAGS=-O2 $(DEBUGFLAG)
 DLLLIBS=-L$(RHOME)/src/gnuwin32 $(PKG_LIBS) $(FLIBS) -lR 
+RESFLAGS=--include-dir $(RHOME)/src/include
 
 
 AA=$(wildcard Makefile)
@@ -48,7 +52,6 @@ libR:
 $(DLLNAME)_res.rc:
 	PERL5LIB=$(RHOME)/share/perl perl $(RHOME)/src/gnuwin32/makeDllRes.pl $(DLLNAME) > $@
 
-RESFLAGS=--include-dir $(RHOME)/src/include
 $(DLLNAME)_res.o: $(DLLNAME)_res.rc $(RHOME)/src/include/Rversion.h
 
 $(DLLNAME).a: $(OBJS)
@@ -56,4 +59,4 @@ $(DLLNAME).a: $(OBJS)
 	$(AR) cr $@ *.o
 	$(RANLIB) $@
 
-$(DLLNAME).dll : $(DLLNAME).a $(RCNAME).o
+$(DLLNAME).dll : $(DLLNAME).a $(RCOBJ)
