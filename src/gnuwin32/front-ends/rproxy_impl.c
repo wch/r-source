@@ -21,7 +21,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.c,v 1.11.4.1 2001/04/04 10:09:49 ripley Exp $
+ *  $Id: rproxy_impl.c,v 1.11.4.2 2001/04/05 09:32:52 ripley Exp $
  */
 
 #define NONAMELESSUNION
@@ -445,11 +445,18 @@ int R_Proxy_init (char const* pParameterString)
   }
 
   R_DefParams(Rp);
-  if(getenv("R_HOME")) {
+
+  // first, try process-local environment space (CRT)
+  if (getenv("R_HOME")) {
       strcpy(RHome, getenv("R_HOME"));
   } else {
-      strcpy(RHome, getRHOME());
-  }
+      // get variable from process-local environment space (Windows API)
+      if (GetEnvironmentVariable ("R_HOME", RHome, sizeof (RHome)) == 0) {
+	  // not found, fall back to getRHOME()
+	  strcpy(RHome, getRHOME());
+      }
+    }
+
   Rp->rhome = RHome;
   /*
    * try R_USER then HOME then working directory
