@@ -6,7 +6,7 @@
 rev(x)
 }
 \arguments{
-  \item{x}{a vector or another object for which reversion is defined.}
+  \item{x}{a vector or another object for which reversal is defined.}
 }
 \description{
   \code{rev} provides a reversed version of its argument.  It is generic
