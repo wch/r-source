@@ -42,7 +42,7 @@ Makedeps: ../include/FFDecl.h ../include/FFTab.h $(DEPS)
 	@cat $(DEPS) > $@
 
 ../include/FFDecl.h ../include/FFTab.h: $(top_srcdir)/src/appl/ROUTINES
-	(cd ../include; $(top_srcdir)/aux/GETSYMBOLS)
+	(cd ../include; $(top_srcdir)/tools/GETSYMBOLS)
 
 $(LIB): $(OBJS)
 	$(AR) cr $(LIB) $(OBJS)

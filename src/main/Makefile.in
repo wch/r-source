@@ -48,7 +48,7 @@ Makedeps: ../include/Platform.h ../include/FFDecl.h $(DEPS)
 	(cd ../include; $(MAKE) $(@F))
 
 ../include/FFDecl.h: $(top_srcdir)/src/appl/ROUTINES
-	(cd ../include; $(top_srcdir)/aux/GETSYMBOLS)
+	(cd ../include; $(top_srcdir)/tools/GETSYMBOLS)
 
 $(top_builddir)/bin/R.binary: $(OBJS) $(RLIBS)
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
