@@ -625,8 +625,9 @@ sub nroff_print_block {
 	print "\n";
 	print ".SH\n";
 	print "$title:\n";
-	print ".LP\n";
-	print ".in +$INDENT\n";
+#	print ".LP\n";
+#	print ".in +$INDENT\n";
+	print ".IP \"\" $INDENT\n";
 	print text2nroff($blocks{$block}), "\n";
 	print ".in -$INDENT\n";
     }
@@ -663,8 +664,9 @@ sub nroff_print_argblock {
 	print "\n";
 	print ".SH\n" if $title;
 	print "$title:\n" if $title;
-	print ".LP\n";
-	print ".in +$INDENT\n";
+#	print ".LP\n";
+#	print ".in +$INDENT\n";
+	print ".IP \"\" $INDENT\n";
 
 	my $text = $blocks{$block};
 
@@ -692,7 +694,7 @@ sub nroff_print_argblock {
 	else{
 	    print text2nroff($text), "\n";
 	}
-	print ".in -$INDENT\n";
+#	print ".in -$INDENT\n";
     }
 }
 
@@ -705,10 +707,11 @@ sub nroff_print_sections {
 	print "\n";
 	print ".SH\n";
 	print $section_title[$section], ":\n";
-	print ".LP\n";
-	print ".in +$INDENT\n";
+#	print ".LP\n";
+#	print ".in +$INDENT\n";
+	print ".IP \"\" $INDENT\n";
 	print text2nroff($section_body[$section]), "\n";
-	print ".in -$INDENT\n";
+#	print ".in -$INDENT\n";
     }
 }
 
