@@ -529,6 +529,9 @@ fi
 ## these options to specify the full path name of the compiler.
 AC_DEFUN([R_PROG_F77_OR_F2C],
 [if test -n "${FC}"; then
+  warn_arg_var_FC="configure variable 'FC' is deprecated.
+Use variable 'F77' to specify a FORTRAN 77 compiler if necessary."
+  AC_MSG_WARN([${warn_arg_var_FC}])
   F77=${FC}
   AC_MSG_RESULT([defining F77 to be ${F77}])
 elif test "${use_f77}" = yes; then
@@ -856,18 +859,18 @@ f77_rules_frag=Makefrag.f77
 cat << \EOF > ${f77_rules_frag}
 .f.c:
 .f.o:
-	$(FC) $(ALL_FFLAGS) -c $< -o $[@]
+	$(F77) $(ALL_FFLAGS) -c $< -o $[@]
 EOF
 if test "${r_cv_prog_f77_c_o_lo}" = yes; then
   cat << \EOF >> ${f77_rules_frag}
 .f.lo:
-	$(FC) $(ALL_FFLAGS_LO) -c $< -o $[@]
+	$(F77) $(ALL_FFLAGS_LO) -c $< -o $[@]
 EOF
 else
   cat << \EOF >> ${f77_rules_frag}
 .f.lo:
 	@test -d .libs || mkdir .libs
-	$(FC) $(ALL_FFLAGS_LO) -c $< -o .libs/$[*].o
+	$(F77) $(ALL_FFLAGS_LO) -c $< -o .libs/$[*].o
 	mv .libs/$[*].o $[*].lo
 EOF
 fi

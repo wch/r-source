@@ -225,7 +225,7 @@ INSTALLATION CHANGES
 	following 'visible' consequences:
 
 	- By default, configure no longer uses a cache file.  Use the
-          command line options '--config-cache' (or '-C') to enable
+          command line option '--config-cache' (or '-C') to enable
           caching.
 
 	- Key configuration variables such as 'CC' are now *precious*,
@@ -244,8 +244,12 @@ INSTALLATION CHANGES
 	  See the variable output section of 'configure --help' for a
 	  list of all these variables.
 
-    o	Configure option '--with-g77' is deprecated.  Use configure
-	variable 'F77' to specify the FORTRAN 77 compiler.
+    o	Configure option '--with-g77' and configure variable 'FC' are
+	deprecated.  Use configure variable 'F77' to specify the FORTRAN
+	77 compiler.
+
+    o	Non-standard directories containing libraries are specified
+	using configure variable 'LDFLAGS' (not 'LIBS').
 
 
 UTILITIES

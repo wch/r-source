@@ -108,14 +108,10 @@ if test -r ${cfile}; then
   . ${cfile}
 fi
 
-## We provide these defaults so that headers and libraries in '/usr/local'
-## are found (by the native tools, mostly).
+## We provide these defaults so that headers and libraries in
+## '/usr/local' are found (by the native tools, mostly).
 : ${CPPFLAGS="-I/usr/local/include"}
-## <FIXME>
-## Autoconf 2.50 or better recommends LDFLAGS for '-L' flags and LIBS for
-## '-l' flags ...
 : ${LDFLAGS="-L/usr/local/lib"}
-## </FIXME>
 
 ### ** Handle arguments to configure.
 
@@ -183,20 +179,21 @@ AC_ARG_WITH([f2c],
                 [use f2c even if FORTRAN compiler is available])],
 [R_ARG_USE(f2c)],
 [use_f2c=no])
-## <FIXME>
-## Remove '--with-g77' for 1.6.
-AC_ARG_WITH([g77], [],
-[warn_with_g77="option '--with-g77' is deprecated.
-Use variable F77 to specify a FORTRAN 77 compiler if necessary."
-AC_MSG_WARN([${warn_with_g77}])],
-[])
-## </FIXME>
 ## Allow the user to force/specify an F77 compiler.
 AC_ARG_WITH([f77],
 [AC_HELP_STRING([--with-f77],
                 [use a FORTRAN 77 compiler for FORTRAN subroutines])],
 [R_ARG_USE(f77)],
 [use_f77=no])
+
+## <FIXME>
+## Remove '--with-g77' for 1.6.
+AC_ARG_WITH([g77], [],
+[warn_arg_with_g77="option '--with-g77' is deprecated.
+Use variable F77 to specify a FORTRAN 77 compiler if necessary."
+AC_MSG_WARN([${warn_with_g77}])],
+[])
+## </FIXME>
 
 ## Make sure only one of the above options for Fortran compilers was
 ## specified.
@@ -230,8 +227,8 @@ elif test "${withval}" = yes; then
   want_gnome=yes
 else
   want_gnome=yes
-  LIBS="${LIBS} -L${withval}/lib"
   CPPFLAGS="${CPPFLAGS} -I${withval}/include"
+  LDFLAGS="${LDFLAGS} -L${withval}/lib"
   gnome_prefix="${withval}/lib"
 fi],
 [want_gnome=no])
@@ -246,7 +243,7 @@ elif test "${withval}" = yes; then
   want_tcltk=yes
 else
   want_tcltk=yes
-  LIBS="${LIBS} -L${withval}"
+  LDFLAGS="${LDFLAGS} -L${withval}"
   tcltk_prefix="${withval}"
 fi],
 [want_tcltk=yes])
@@ -284,11 +281,6 @@ AC_ARG_VAR([MAIN_CFLAGS],
            [additional CFLAGS used when compiling the main binary])
 AC_ARG_VAR([SHLIB_CFLAGS],
            [additional CFLAGS used when building shared libraries])
-## <FIXME>
-## Maybe deprecate this in favor of F77 (which is always precious)?
-AC_ARG_VAR([FC],
-           [command which runs the the FORTRAN compiler])
-## </FIXME>
 AC_ARG_VAR([MAIN_FFLAGS],
            [additional FFLAGS used when compiling the main binary])
 AC_ARG_VAR([SHLIB_FFLAGS],
@@ -387,7 +379,8 @@ AC_PROG_CXXCPP
 ## Should be needed for tests using AC_TRY_RUN()?
 ## Make sure that non-standard directories specified via '-L' are really
 ## searched in the tests.
-for arg in ${LIBS}; do
+## Note: earlier versions used LIBS rather than LDFLAGS.
+for arg in ${LDFLAGS}; do
   case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
@@ -506,7 +499,10 @@ R_PROG_CC_MAKEFRAG
 ### *** FORTRAN 77 compiler.
 
 if test -n "${F77}"; then
+  ## <FIXME>
+  ## Remove eventually (1.6 or later).
   FC="${F77}"
+  ## </FIXME>
   R_PROG_F77_FLIBS
   R_PROG_F77_APPEND_UNDERSCORE
   R_PROG_F77_CC_COMPAT
@@ -776,7 +772,7 @@ case "${host_os}" in
         cpicflags="+Z"
         ;;
     esac
-    case "${FC}" in
+    case "${F77}" in
       f77|fort77|f90)
         fpicflags="+Z"
         ;;
@@ -1133,7 +1129,8 @@ AC_SUBST(LIBPATHS)
 ## <FIXME>
 ## This should not be necessary when using libtool for linking.
 ## In any case, is this really good enough?
-for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${FLIBS} ${BLAS_LIBS}; do
+for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${X_LIBS} ${TCLTK_LIBS} \
+           ${GNOME_LIBS}; do
   case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
@@ -1296,8 +1293,11 @@ R is now configured for ${host}
   R profiling support:       ${want_R_profiling}
   R as a shared library:     ${want_R_shlib}
 ])
-if test -n "${warn_with_g77}"; then
-  AC_MSG_WARN([${warn_with_g77}])
+if test -m "${warn_arg_var_FC}"; then
+  AC_MSG_WARN([${warn_arg_var_FC}])
+fi
+if test -n "${warn_arg_with_g77}"; then
+  AC_MSG_WARN([${warn_arg_with_g77}])
 fi
 if test -n "${warn_f77_and_f2c}"; then
   AC_MSG_WARN([${warn_f77_and_f2c}])
