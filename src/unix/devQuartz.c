@@ -1025,8 +1025,6 @@ static void 	Quartz_MetricInfo(int c, int font, double cex, double ps,
         *descent = bounds.bottom;
         *width = bounds.right - bounds.left;
         *width = position.x;
-   //     Rprintf("left=%d, right=%d x=%f y=%f\n", bounds.left, bounds.right,position.x,position.y);
-   //     Rprintf("width=%d\n",bounds.right - bounds.left);
     }    
     
     SetPort(savedPort);
