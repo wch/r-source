@@ -18,8 +18,8 @@ cut.default(x, breaks, labels = NULL,
   \item{include.lowest}{logical, indicating if an `x[i]' equal to the
     lowest (or highest, for \code{right = FALSE}) `breaks' value should be
     included.}
-  \item{right}{logical, indicating if the intervals should closed on the
-    right (and open on the left) or vice versa.}
+  \item{right}{logical, indicating if the intervals should be closed on
+    the right (and open on the left) or vice versa.}
   \item{dig.lab}{integer which is used when labels are not given. It
     determines the number of digits used in formatting the break numbers.}
   \item{\dots}{further arguments passed to or from other methods.}
