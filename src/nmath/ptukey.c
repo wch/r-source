@@ -52,19 +52,19 @@ static double wprob(double w, double rr, double cc)
 	w     = value of range
 	rr    = no. of rows or groups
 	cc    = no. of columns or treatments
-	ir    = error flag = 1 if wprob probability > 1
-	wprob = returned probability integral from (0, w)
+	ir    = error flag = 1 if pr_w probability > 1
+	pr_w = returned probability integral from (0, w)
 
 	program will not terminate if ir is raised.
 
 	bb = upper limit of legendre integration
-	eps = maximum acceptable value of integral
+	iMax = maximum acceptable value of integral
 	nleg = order of legendre quadrature
 	ihalf = int ((nleg + 1) / 2)
 	wlar = value of range above which wincr1 intervals are used to
 	       calculate second part of integral,
 	       else wincr2 intervals are used.
-	eps1, eps2, eps3 = values which are used as cutoffs for terminating
+	C1, C2, C3 = values which are used as cutoffs for terminating
 	or modifying a calculation.
 
 	M_1_SQRT_2PI = 1 / sqrt(2 * pi);  from abramowitz & stegun, p. 3.
@@ -76,12 +76,12 @@ static double wprob(double w, double rr, double cc)
 #define ihalf	6
 
     /* looks like this is suboptimal for double precision.
-       (see how 'eps' are used) <MM>
+       (see how C1-C3 are used) <MM>
     */
-    const static double eps  =	 1.;
-    const static double eps1 = -30.;
-    const static double eps2 = -50.;
-    const static double eps3 =	60.;
+    /* const static double iMax  = 1.; not used if = 1*/
+    const static double C1 = -30.;
+    const static double C2 = -50.;
+    const static double C3 = 60.;
     const static double bb   = 8.;
     const static double wlar = 3.;
     const static double wincr1 = 2.;
@@ -102,7 +102,7 @@ static double wprob(double w, double rr, double cc)
 	0.233492536538354808760849898925,
 	0.249147045813402785000562436043
     };
-    double a, ac, wprob, b, binc, blb, bub, c, cc1, einsum, elsum,
+    double a, ac, pr_w, b, binc, blb, bub, c, cc1, einsum, elsum,
 	pminus, pplus, qexpo, qsqz, rinsum, wi, wincr, xx;
     int j, jj;
 
@@ -117,12 +117,12 @@ static double wprob(double w, double rr, double cc)
     /* find (f(w/2) - 1) ^ cc */
     /* (first term in integral of hartley's form). */
 
-    wprob = 2 * pnorm(qsqz, 0.,1., 1,0) - 1.; /* erf(qsqz / M_SQRT2) */
-    /* if wprob ^ cc < 2e-22 then set wprob = 0 */
-    if (wprob >= exp(eps2 / cc))
-	wprob = pow(wprob, cc);
+    pr_w = 2 * pnorm(qsqz, 0.,1., 1,0) - 1.; /* erf(qsqz / M_SQRT2) */
+    /* if pr_w ^ cc < 2e-22 then set pr_w = 0 */
+    if (pr_w >= exp(C2 / cc))
+	pr_w = pow(pr_w, cc);
     else
-	wprob = 0.0;
+	pr_w = 0.0;
 
     /* if w is large then the second component of the */
     /* integral is small, so fewer intervals are needed. */
@@ -171,7 +171,7 @@ static double wprob(double w, double rr, double cc)
 	    /* then doesn't contribute to integral */
 
 	    qexpo = ac * ac;
-	    if (qexpo > eps3)
+	    if (qexpo > C3)
 		break;
 
 #ifdef OLD
@@ -189,7 +189,7 @@ static double wprob(double w, double rr, double cc)
 	    /* then doesn't contribute to integral */
 
 	    rinsum = (pplus * 0.5) - (pminus * 0.5);
-	    if (rinsum >= exp(eps1 / cc1)) {
+	    if (rinsum >= exp(C1 / cc1)) {
 		rinsum = (aleg[j-1] * exp(-(0.5 * qexpo))) * pow(rinsum, cc1);
 		elsum += rinsum;
 	    }
@@ -200,16 +200,15 @@ static double wprob(double w, double rr, double cc)
 	bub += binc;
     }
 
-    /* if wprob ^ rr < 9e-14, then return 0 */
-
-    wprob = einsum + wprob;
-    if (wprob <= exp(eps1 / rr)) {
+    /* if pr_w ^ rr < 9e-14, then return 0 */
+    pr_w = einsum + pr_w;
+    if (pr_w <= exp(C1 / rr))
 	return 0.;
-    }
-    wprob = pow(wprob, rr);
-    if (wprob >= eps)
-	wprob = 1.;
-    return wprob;
+
+    pr_w = pow(pr_w, rr);
+    if (pr_w >= 1.)/* 1 was iMax was eps */
+	return 1.;
+    return pr_w;
 } /* wprob() */
 
 
@@ -376,9 +375,7 @@ double ptukey(double q, double rr, double cc, double df,
 
 	    }
 
-	    /* if exp(t1) < 9e-14, then doesn't */
-	    /* contribute to integral */
-
+	    /* if exp(t1) < 9e-14, then doesn't contribute to integral */
 	    if (t1 >= eps1) {
 		if (ihalfq < jj) {
 		    qsqz = q * sqrt(((xlegq[j] * ulen) + twa1) * 0.5);
