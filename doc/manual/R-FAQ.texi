@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-35, 2000-12-10
+@set FAQ-VERSION 1.1-36, 2000-12-11
 @set REL-VERSION 1.2.0
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -562,7 +562,16 @@ the data.  More information can be found at
 @uref{http://www.stat.Berkeley.EDU/users/statlabs/}.
 
 Last, but not least, Ross' and Robert's experience in designing and
-implementing R is described in:
+implementing R is described in Ihaka & Gentleman (1996), ``R: A Language
+for Data Analysis and Graphics'',
+@uref{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
+Computational and Graphical Statistics}}, @strong{5}, 299--314.
+@xref{Citing R}.
+
+@node Citing R, What mailing lists exist for R?, What documentation exists for R?, R Basics
+@section Citing R
+
+To cite R in publications, use
 
 @smallexample
 @group
@@ -577,14 +586,6 @@ implementing R is described in:
 @}
 @end group
 @end smallexample
-
-@node Citing R, What mailing lists exist for R?, What documentation exists for R?, R Basics
-@section Citing R
-
-To cite R in publications, use the above Ihaka & Gentleman (1996), ``R:
-A Language for Data Analysis and Graphics'',
-@uref{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
-Computational and Graphical Statistics}}, @strong{5}, 299--314.
 
 @node What mailing lists exist for R?, What is CRAN?, Citing R, R Basics
 @section What mailing lists exist for R?
@@ -1575,8 +1576,8 @@ Spatial and space-time point pattern analysis functions.
 @c Density, distribution, quantile and hazard functions of a stable
 @c variate; generalized linear models for the parameters of a stable
 @c distribution.
-@item stataread
-Read and write Stata v5 and v6 @file{.dta} files.
+@c @item stataread
+@c Read and write Stata v5 and v6 @file{.dta} files.
 @c @item survival4
 @c Functions for survival analysis, version 4 (requires @strong{splines}).
 @item survival5
@@ -1663,6 +1664,10 @@ Computing}.  Currently, there are
 @item Java
 An interface from R to Java to create and call Java objects and
 methods.
+@item RSMethods
+An implementation of S version 4 methods and classes for R, consistent
+with the basic material in ``Programming with data'' by John
+M. Chambers, 1998, Springer NY.
 @item RSPerl
 An interface from R to an embedded, persistent Perl interpreter,
 allowing one to call arbitrary Perl subroutines, classes and methods.

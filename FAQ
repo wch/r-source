@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-35, 2000-12-10
+Version 1.1-36, 2000-12-11
 Kurt Hornik
 
 
@@ -443,7 +443,14 @@ data.  More information can be found at
 `http://www.stat.Berkeley.EDU/users/statlabs/'.
 
    Last, but not least, Ross' and Robert's experience in designing and
-implementing R is described in:
+implementing R is described in Ihaka & Gentleman (1996), "R: A Language for
+Data Analysis and Graphics", _Journal of Computational and Graphical
+Statistics_, *5*, 299-314.  *Note Citing R::.
+
+2.8 Citing R
+============
+
+   To cite R in publications, use
 
      @article{,
        author =    {Ross Ihaka and Robert Gentleman},
@@ -454,13 +461,6 @@ implementing R is described in:
        number =    3,
        pages =     {299--314}
      }
-
-2.8 Citing R
-============
-
-   To cite R in publications, use the above Ihaka & Gentleman (1996), "R: A
-Language for Data Analysis and Graphics", _Journal of Computational and
-Graphical Statistics_, *5*, 299-314.
 
 2.9 What mailing lists exist for R?
 ===================================
@@ -1330,9 +1330,6 @@ works, was published in the Journal of Statistical Software
 *splancs*
      Spatial and space-time point pattern analysis functions.
 
-*stataread*
-     Read and write Stata v5 and v6 `.dta' files.
-
 *survival5*
      Functions for survival analysis, version 5 (suggests *date*), the main
      new feature being penalized (partial) likelihood.
@@ -1435,6 +1432,11 @@ Currently, there are
 *Java*
      An interface from R to Java to create and call Java objects and
      methods.
+
+*RSMethods*
+     An implementation of S version 4 methods and classes for R, consistent
+     with the basic material in "Programming with data" by John M.
+     Chambers, 1998, Springer NY.
 
 *RSPerl*
      An interface from R to an embedded, persistent Perl interpreter,
