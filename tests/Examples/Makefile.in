@@ -9,76 +9,67 @@ top_builddir = ../..
 
 include $(top_builddir)/Makeconf
 
-# FIXME
-
-
-###-*- Makefile -*- for 'test-Examples', also see ${RHOME}/tests/Makefile
-
 CleanMe = .RData sink-examp.txt
-## The following must be an ABSOLUTE path
-## or RELATIVE to 'Ex_Tests' (RHOME/test/Examples/ :
-rRHOME= ../..
-#
-RETC	= $(rRHOME)/etc
-R       = $(rRHOME)/bin/R --no-init-file --no-save --no-restore
-Rbinary = $(rRHOME)/bin/R.binary
-Rbase	= $(rRHOME)/library/base
 
-MANSRC = `ls $(rRHOME)/src/library/*/man/*.Rd`
-MANbaseDIR = $(rRHOME)/src/library/base/man
+R = $(top_builddir)/bin/R --no-init-file --no-save --no-restore --vsize 6
+Rbase = $(top_builddir)/library/base
+Rbinary = $(top_builddir)/bin/R.binary
+
+Rd_BASEDIR = $(top_srcdir)/src/library/base/man
+EXAMPLES = $(shell cd $(Rd_BASEDIR); ls *.Rd | sed 's/Rd$$/R/g')
 
 ##- Uncomment one of the 2 'Rd_files' defs -- depending on your 'make' version
 ##--- <<<<<< CONFIGURE should do this >>>>>>
 ##-- Sun make
-#> Rd_files:sh = ../../etc/Rd.files
+# Rd_files:sh = ../../etc/Rd.files
 ##-- GNU make
-Rd_files := $(shell $(rRHOME)/etc/Rd.files)
-#THIS FAILS for GNU and Sun make: Rd_files = `$(rRHOME)/etc/Rd.files`
+# Rd_files := $(shell $(rRHOME)/etc/Rd.files)
 #this has PATH prepended: Rd_files := $(wildcard $(MANbaseDIR)/*.Rd)
 #________in future_______  (for ALL 'make' versions)
 # FAILS: has directory/. _AND_ is not expanded
 #Rd_files = $(MANbaseDIR)/*.Rd
 #
-R_src = $(Rd_files:%.Rd=%.R)
+#R_src = $(Rd_files:%.Rd=%.R)
 #________in future_______: (FAILS!)
 #R_src = $(Rd_files:$(MANbaseDIR)/%.Rd=%.R)
 
 
 ##--------------------------------- TARGETS ------------------------------
+
+all: test-Examples
+
 test-Examples: All-Ex.Rout
 
-##-- The 'show-..' are just for testing purposes:
-show-R: ; @-(cd ../../include; echo "R = '$(R)'"
-show-RHOME: ; @-(RHOME=`cd ${rRHOME}; pwd`;export RHOME; printenv RHOME)
-show-Rd:
-	@-echo 'R help() files = "Rd files" :'
-	@-echo $(Rd_files)
-show-Ex:
-	@-echo 'R_src [targets of  help() files] :'
-	@-echo $(R_src)
+All-Ex.Rout: All-Ex.R
+	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
+	@if [ -f $@ ]; then mv $@ $@.bak ; fi
+	@echo "Running all help() examples ..."
+	$(R) < $< > $@
 
+All-Ex.R: $(EXAMPLES)
+	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
+	@if [ -f $@ ]; then mv $@ $@.bak ; fi
+	@echo "Massaging examples into $@ ..."
+	@-$(srcdir)/massage-Examples $(EXAMPLES) > $@
 
-%.R: $(MANbaseDIR)/%.Rd
-	@RHOME=$(rRHOME) $$RHOME/bin/Rdconv -t example $< > $@
+%.R: $(Rd_BASEDIR)/%.Rd
+	@RHOME=`cd $(top_builddir); pwd`; export RHOME; \
+	   $${RHOME}/bin/Rdconv -t example $< > $@
 	@-echo $@
 
-All-Ex.R: $(R_src)
-	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
-	@if [ -f $@ ]; then mv $@ $@.bak ; fi
-	@echo "Massaging single Examples into $@ ..."
-	@-./massage-Examples $(R_src) > $@
-
-All-Ex.Rout: All-Ex.R $(Rbinary) $(Rbase)
-	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
-	@if [ -f $@ ]; then mv $@ $@.bak ; fi
-	@echo 'Running all help() EXAMPLES ..'
-	$(R) --vsize 6 < All-Ex.R > $@
+##-- The `show-*' are just for testing purposes:
+show-R:
+	@-echo "R = \`$(R)'"
+show-Rd:
+	@-echo "Rd files [sources of help() files]:"
+	@-echo $(Rd_FILES)
+show-Ex:
+	@-echo "Examples [targets of help() files]:"
+	@-echo $(EXAMPLES)
 
 mostlyclean: clean
 clean:
 	@rm -f *.Rd* *.ps *.tex *.dat* data foo*
 distclean: clean
-	@rm -f *.R
-	@rm -fr $(CleanMe)
-	@rm -f Makefile
+	@rm -f *.R $(CleanMe) Makefile
 maintainer-clean: distclean
