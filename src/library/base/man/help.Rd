@@ -1,5 +1,14 @@
 \name{help}
+\alias{help}
+\alias{?}
+\alias{topicName}		% internal
 \title{Documentation}
+\description{
+  These functions provide access to documentation.
+  Documentation on a topic with name \code{name} (typically, an \R
+  object or a data set) can be printed with either \code{help(name)} or
+  \code{?name}.
+}
 \usage{
 help(topic, offline = FALSE, package = .packages(),
      lib.loc = NULL, verbose = getOption("verbose"),
@@ -18,11 +27,9 @@ help(topic, offline = FALSE, package = .packages(),
 ?topic
 type?topic
 }
-\alias{help}
-\alias{?}
 \arguments{
- \item{topic}{a name or character string on which documentation is
-   sought (but \emph{not} a variable containing a character string!).}
+ \item{topic}{a name or string constant on which documentation is sought
+   (but \emph{not} a variable containing a character string!).}
  \item{offline}{a logical indicating whether documentation should be
    displayed on-line to the screen (the default) or hardcopy of it
    should be produced.}
@@ -63,12 +70,6 @@ type?topic
       provided for the class with name \code{topic}.  The function
       \code{topicName} returns the actual name used in this case.}
 }
-\description{
-  These functions provide access to documentation.
-  Documentation on a topic with name \code{name} (typically, an \R
-  object or a data set) can be printed with either \code{help(name)} or
-  \code{?name}.
-}
 \details{
   In the case of unary and binary operators and control-flow special
   forms, the name may need to be quoted.
@@ -96,6 +97,11 @@ type?topic
 #ifdef mac
   Offline printing is not currently supported by the Macintosh port.
 #endif
+
+  %% \code{topicName} computes the string used internally to find
+  %% documenation of the given type and topic.  Called by the \code{?}
+  %% operator and the special prompt functions in the methods package.
+  
 }
 \note{
   Unless \code{lib.loc} is specified explicitly, the loaded packages are
