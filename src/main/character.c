@@ -507,11 +507,17 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	ns = strlen(s);
 	while (regexec(&reg, &s[offset], 10, regmatch, 0) == 0) {
 	    nmatch += 1;
-	    ns += length_adj(t, regmatch, reg.re_nsub);
-	    offset += regmatch[0].rm_eo;
-	    if (s[offset] == '\0' || !global) break;
+	    if (regmatch[0].rm_eo == 0)
+		offset++;
+	    else {
+		ns += length_adj(t, regmatch, reg.re_nsub);
+		offset += regmatch[0].rm_eo;
+	    }
+	    if (s[offset] == '\0' || !global)
+		break;
 	}
-	if (nmatch == 0) STRING(ans)[i] = STRING(vec)[i];
+	if (nmatch == 0)
+	    STRING(ans)[i] = STRING(vec)[i];
 	else {
 	    STRING(ans)[i] = allocString(ns);
 	    offset = 0;
@@ -523,9 +529,17 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    while (regexec(&reg, &s[offset], 10, regmatch, 0) == 0) {
 		for (j = 0; j < regmatch[0].rm_so ; j++)
 		    *u++ = s[offset+j];
-		u = string_adj(u, &s[offset], t, regmatch, reg.re_nsub);
-		offset += regmatch[0].rm_eo;
-		if (s[offset] == '\0' || !global) break;
+		if (regmatch[0].rm_eo == 0) {
+		    *u++ = s[offset];
+		    offset++;
+		}
+		else {
+		    u = string_adj(u, &s[offset], t, regmatch,
+				   reg.re_nsub);
+		    offset += regmatch[0].rm_eo;
+		}
+		if (s[offset] == '\0' || !global)
+		    break;
 	    }
 	    for (j = offset ; s[j] ; j++)
 		*u++ = s[j];
