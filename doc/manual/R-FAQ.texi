@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-35 @value{FAQ-YEAR}-07-21
+@set FAQ-VERSION 1.9-40 @value{FAQ-YEAR}-08-05
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -244,11 +244,11 @@ Zealand.  In addition, a large group of individuals has contributed to R
 by sending code and bug reports.
 
 Since mid-1997 there has been a core group (the ``R Core Team'') who can
-modify the R source code CVS archive.  The group currently consists of
-Doug Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt
-Hornik, Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley,
-Martin Maechler, Duncan Murdoch, Paul Murrell, Martyn Plummer, Brian
-Ripley, Duncan Temple Lang, and Luke Tierney.
+modify the R source code archive.  The group currently consists of Doug
+Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt Hornik,
+Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley, Martin
+Maechler, Duncan Murdoch, Paul Murrell, Martyn Plummer, Brian Ripley,
+Duncan Temple Lang, and Luke Tierney.
 
 R has a home page at @uref{http://www.R-project.org/}.  It is free
 software distributed under a @acronym{GNU}-style copyleft, and an
@@ -793,11 +793,12 @@ mirrors.  Please use the @CRAN{} site closest to you to reduce network
 load.
 
 From @CRAN{}, you can obtain the latest official release of R, daily
-snapshots of R (copies of the current CVS trees), as gzipped and bzipped
-tar files, a wealth of additional contributed code, as well as prebuilt
-binaries for various operating systems (Linux, Mac OS Classic, Mac OS X,
-and MS Windows).  @CRAN{} also provides access to documentation on R,
-existing mailing lists and the R Bug Tracking system.
+snapshots of R (copies of the current source trees), as gzipped and
+bzipped tar files, a wealth of additional contributed code, as well as
+prebuilt binaries for various operating systems (Linux, Mac OS Classic,
+Mac OS X, and MS Windows).  @CRAN{} also provides access to
+documentation on R, existing mailing lists and the R Bug Tracking
+system.
 
 To ``submit'' to @CRAN{}, simply upload to
 @uref{ftp://cran.R-project.org/incoming/} and send an email to
@@ -805,7 +806,7 @@ To ``submit'' to @CRAN{}, simply upload to
 accept submissions of precompiled binaries due to security reasons.
 
 @quotation
-@strong{Note:}  It is very important that you indicate the copyright
+@strong{Note}:  It is very important that you indicate the copyright
 (license) information (@acronym{GPL}, @acronym{BSD}, Artistic, @dots{})
 in your submission.
 @end quotation
@@ -1233,7 +1234,7 @@ commands stored in text files which can be read in using
 @code{source()}.
 
 @quotation
-@strong{Note:}  If you run R from within Emacs (see @ref{R and Emacs}),
+@strong{Note}:  If you run R from within Emacs (see @ref{R and Emacs}),
 you can save the contents of the interaction buffer to a file and
 conveniently manipulate it using @code{ess-transcript-mode}, as well as
 save source copies of all functions and data used.
@@ -1723,6 +1724,10 @@ A set of test nonlinear least squares examples from @acronym{NIST}, the
 U.S. National Institute for Standards and Technology.
 @item Oarray
 Arrays with arbitrary offsets.
+@item PBSmapping
+Software evolved from fisheries research conducted at the Pacific
+Biological Station (PBS) in Nanaimo, British Columbia, Canada.  Draws
+maps and implements other GIS procedures.
 @item PHYLOGR
 Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
@@ -1742,8 +1747,14 @@ Functions to import Arc/Info V7.x coverages and data.
 @item RColorBrewer
 ColorBrewer palettes for drawing nice maps shaded according to a
 variable.
+@item RCurl
+Allows one to compose HTTP requests to fetch URIs, post forms, etc., and
+process the results returned by the Web server.
 @item RMySQL
 An interface between R and the MySQL database system.
+@item RNetCDF
+An interface to Unidata's NetCDF library functions (version 3) and
+furthermore access to Unidata's udunits calendar conversions.
 @item RODBC
 An @acronym{ODBC} database interface.
 @item ROracle
@@ -1783,6 +1794,9 @@ statistical computing can be carried out.
 @c The data sets for the exercises in ``An Introduction to R''
 @c (@pxref{What documentation exists for R?}).
 @c REMOVED 2001-12-08
+@item Rstem
+Interface to Snowball implementation of Porter's word stemming
+algorithm.
 @c @item Rstreams
 @c Binary file stream support functions.
 @item Rwave
@@ -1985,6 +1999,8 @@ functionality.
 @item dr
 Functions, methods, and datasets for fitting dimension reduction
 regression, including pHd and inverse regression methods SIR and SAVE.
+@item drfit
+Dose-response data evaluation.
 @item dse
 Dynamic System Estimation, a multivariate time series package.  Contains
 @strong{dse1} (the base system, including multivariate ARMA and state
@@ -2052,6 +2068,8 @@ The Rmetrics module for ``The Valuation of Options''.
 @item fSeries
 The Rmetrics module for ``The Dynamical Process Behind Financial
 Markets''.
+@item faraway
+Functions and datasets for books by Julian Faraway.
 @item fastICA
 Implementation of FastICA algorithm to perform Independent Component
 Analysis (ICA) and Projection Pursuit.
@@ -2090,6 +2108,11 @@ Statistics, 1989).
 Features and strings for nonparametric regression.
 @item g.data
 Create and maintain delayed-data packages (DDP's).
+@item gRbase
+A package for graphical modelling in R.  Defines S4 classes for
+graphical meta data and graphical models, and illustrates how
+hierarchical log-linear models may be implemented and combined with
+@strong{dynamicGraph}.
 @item gafit
 Genetic algorithm for curve fitting.
 @item gap
@@ -2318,12 +2341,17 @@ Mean Score method for missing covariate data in logistic regression
 models.
 @item merror
 Accuracy and precision of measurements.
+@item mfp
+Multiple Fractional Polynomials.
 @item mgcv
 Routines for GAMs and other genralized ridge regression problems with
 multiple smoothing parameter selection by GCV or UBRE.
 @emph{Recommended}.
 @item mimR
 An R interface to MIM for graphical modeling in R.
+@item mitools
+Tools to perform analyses and combine results from multiple-imputation
+datasets.
 @item mix
 Estimation/multiple imputation programs for mixed categorical and
 continuous data.
@@ -2729,6 +2757,8 @@ Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
 Three-Stage Least Squares (3SLS).
 @item tapiR
 Tools for accessing (UK) parliamentary information in R.
+@item taskPR
+Task-Parallel R package.
 @item tensor
 Tensor product of arrays.
 @item tkrplot
@@ -2831,6 +2861,9 @@ time series package.  Contains PADI, juice and monitoring extensions.
 
 @item ensemble
 Ensembles of tree classifiers.
+
+@item rcom
+R COM Client Interface and internal COM Server.
 
 @c <COMMENT>
 @c Moved to Devel for 1.5 as it fails R CMD check.
@@ -3988,8 +4021,18 @@ title(substitute(hat(a) == ahat, list(ahat = ahat)))
 @end example
 
 @noindent
-(note that it is @samp{==} and not @samp{=}).  There are more worked
-examples in the mailing list achives.
+(note that it is @samp{==} and not @samp{=}).  Sometimes @code{bquote()}
+gives a more compact form, e.g.,
+
+@example
+title(bquote(hat(a) = .(ahat)))
+@end example
+
+@noindent
+where subexpressions enclosed in @samp{.()} are replaced by their
+values.
+
+There are more worked examples in the mailing list achives.
 
 @node What are valid names?, Are GAMs implemented in R?, How can I substitute into a plot label?, R Miscellanea
 @section What are valid names?
