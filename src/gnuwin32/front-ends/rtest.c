@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2002  R Development Core Team
+ *  Copyright (C) 1998--2004  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,6 +29,9 @@
 
 /* for signal-handling code */
 #include <psignal.h>
+
+void R_Suicide(char*); /* In Defn.h */
+int ShellGetPersonalDirectory(char *folder);
 
 /* one way to allow user interrupts: called in ProcessEvents */
 #ifdef _MSC_VER
@@ -137,13 +140,12 @@ int main (int argc, char **argv)
     Rp->R_Interactive = FALSE;
     Rp->RestoreAction = SA_RESTORE;
     Rp->SaveAction = SA_NOSAVE;
-    Rp->CommandLineArgs = NULL;
-    Rp->NumCommandLineArgs = 0;
     /* Rp->nsize = 300000;
        Rp->vsize = 6e6; */
     R_SetParams(Rp); /* so R_ShowMessage is set */
     R_SizeFromEnv(Rp);
     R_SetParams(Rp);
+    R_set_command_line_arguments(argc, argv);
 
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
 

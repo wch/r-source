@@ -61,14 +61,6 @@ typedef struct
     unsigned long ppsize;
     int NoRenviron;
 
-      /* Permanent copy of the command line arguments and the number
-         of them passed to the application.
-         These are populated via the routine R_set_command_line_arguments()
-         called from R_common_command_line().
-       */
-    int    NumCommandLineArgs;
-    char **CommandLineArgs;
-
 #ifdef Win32
     char *rhome;               /* R_HOME */
     char *home;                /* HOME  */
@@ -91,7 +83,7 @@ void R_SetWin32(Rstart);
 void R_SizeFromEnv(Rstart);
 void R_common_command_line(int *, char **, Rstart);
 
-void R_set_command_line_arguments(int argc, char **argv, Rstart Rp);
+void R_set_command_line_arguments(int argc, char **argv);
 
 void setup_Rmainloop(void);
 

@@ -715,7 +715,7 @@ int cmdlineoptions(int ac, char **av)
        have been removed by the time we get to call
        R_common_command_line().
      */
-    R_set_command_line_arguments(ac, av, Rp);
+    R_set_command_line_arguments(ac, av);
 
 
     /* set defaults for R_max_memory. This is set here so that

@@ -21,7 +21,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.c,v 1.23 2004/06/08 19:48:42 ripley Exp $
+ *  $Id: rproxy_impl.c,v 1.24 2004/06/09 13:35:32 ripley Exp $
  */
 
 #define NONAMELESSUNION
@@ -515,13 +515,12 @@ int R_Proxy_init (char const* pParameterString)
 #endif
   Rp->RestoreAction = 0; /* no restore */
   Rp->SaveAction = 2;    /* no save */
-  Rp->CommandLineArgs = NULL;
-  Rp->NumCommandLineArgs = 0;
 
 /*  Rp->nsize = 300000;
     Rp->vsize = 6e6;*/
   R_SetParams(Rp); /* so R_ShowMessage is set */
   R_SizeFromEnv(Rp);
+  R_set_command_line_arguments(0, NULL);
 
   /* parse parameters */
 #if 0

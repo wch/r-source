@@ -6,7 +6,7 @@ all: makeMakedeps libmain.a
 CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS=$(OPTFLAGS)
 CSOURCES=\
-	CConverters.c \
+	CConverters.c CommandLineArgs.c \
 	Rdynload.c Renviron.c RNG.c \
 	apply.c arithmetic.c apse.c array.c attrib.c \
 	base.c bind.c builtin.c \
