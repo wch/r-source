@@ -1,4 +1,6 @@
 \name{base-internal}
+\alias{.subset}
+\alias{.subset2}
 \alias{.find.package}
 \alias{.path.package}
 \alias{.getRequiredPackages}
@@ -9,6 +11,9 @@
   because of the special nature of the base namespace.
 }
 \usage{
+.subset(x, \dots)
+.subset2(x, \dots)
+
 .find.package(package, lib.loc = NULL, quiet = FALSE,
               verbose = getOption("verbose"))
 
@@ -20,6 +25,7 @@
                       useImports = FALSE)
 }
 \arguments{
+  \item{x}{object from which to extract elements.}
   \item{package}{the name of a package}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
@@ -35,6 +41,12 @@
     \code{"packageDescription2"}.}
 }
 \details{
+  The functions \code{.subset} and \code{.subset2} are essentially
+  equivalent to the \code{\link{[}} and \code{\link{[[}} operators,
+  except methods that dispatch does not take place.  This is to avoid
+  expensive unclassing when applying the default method to an object.  They
+  should not normally be invoked by end users.
+
   \code{.find.package} returns the paths to the locations where the
   given packages can be found.  If \code{lib.loc} is \code{NULL}, then
   then attached packages are searched before the libraries.  If a
