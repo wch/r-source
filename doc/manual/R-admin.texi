@@ -856,10 +856,10 @@ GNU @command{make} is called @samp{gmake}, you need to set the variable
 To compile @R{}, you need a FORTRAN compiler or @command{f2c}, the
 FORTRAN-to-C converter (@uref{http://www.netlib.org/f2c}).  The default
 is to search for @command{g77}, @command{f77}, @command{xlf},
-@command{cf77}, @command{cft77}, @command{pgf77}, @command{fl32},
-@command{af77}, @command{fort77}, @command{f90}, @command{xlf90},
-@command{pgf90}, @command{epcf90}, @command{f95}, @command{xlf95},
-@command{lf9}5, @command{g95}, and @command{fc} (in that
+@command{frt}, @command{pgf77}, @command{fl32}, @command{af77},
+@command{fort77}, @command{f90}, @command{xlf90}, @command{pgf90},
+@command{epcf90}, @command{f95}, @command{fort}, @command{xlf95},
+@command{lf95}, @command{g95}, and @command{fc} (in that
 order)@footnote{On HPUX @command{fort77} is the @acronym{POSIX}
 compliant FORTRAN compiler, and comes second in the search list.}, and
 then for @command{f2c}, and use whichever is found first; if none is

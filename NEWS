@@ -28,6 +28,9 @@ INSTALLATION CHANGES
 	in the DESCRIPTION file being preferred.  TITLE files will be
 	ignored both in installed packages and source packages.
 
+    o	When searching for a Fortran 77 compiler, configure by default
+	now also looks for Fujitsu's frt and Compaq's fort, but no
+	longer for cf77 and cft77.
 
 
 
