@@ -86,10 +86,11 @@ Sources, binaries and documentation for @R{} can be obtained via
 
 @menu
 * Getting and unpacking the sources::  
+* Getting patched and development versions::  
 * Using rsync::                 
 @end menu
 
-@node Getting and unpacking the sources, Using rsync, Obtaining R, Obtaining R
+@node Getting and unpacking the sources, Getting patched and development versions, Obtaining R, Obtaining R
 @section Getting and unpacking the sources
 @cindex Sources for R
 
@@ -140,14 +141,30 @@ users).
 @c Beware that this does not necessarily work if the older sources have
 @c been modified (e.g., by building in their directories).
 
-@node Using rsync,  , Getting and unpacking the sources, Obtaining R
+@node Getting patched and development versions, Using rsync, Getting and unpacking the sources, Obtaining R
+@section Getting patched and development versions
+
+A patched version of the current release, @samp{r-patched} and the
+current development version, @samp{r-devel}, are available as daily
+tarballs and via rsync.
+
+The tarballs are available from
+@uref{ftp://ftp.stat.math.ethz.ch/pub/Software/R/}.  Download either
+@samp{R-patched.tar.gz} or @samp{R-devel.tar.gz} (or the
+@samp{.tar.bz2} versions) and unpack as described in the previous
+section.  These tarballs do not contain the current sources for the
+recommended packages, which can be obtained by rsync (see the next
+section).
+
+
+@node Using rsync,  , Getting patched and development versions, Obtaining R
 @section Using rsync
 @findex rsync
 
 Sources are also available via anonymous rsync.  Use
 
 @smallexample
-rsync -rC rsync.r-project.org::@var{module} R
+rsync -rC --delete rsync.r-project.org::@var{module} R
 @end smallexample
 
 @noindent
@@ -162,6 +179,12 @@ created directly from the master CVS archive and are updated hourly.
 The @option{-C} option in the @command{rsync} command is to cause it to
 skip the CVS directories.  Further information on @command{rsync} is
 available at @uref{http://rsync.samba.org/rsync/}.
+
+Note that the sources available via rsync do not include the recommended
+packages, whereas these are included in the tarballs.  To install the
+appropriate sources for the recommended packages, run
+@command{./tools/rsync-recommended} from the top-level of the R sources
+that you pulled by rsync.
 
 
 @node Installing R under Unix, Installing R under Windows, Obtaining R, Top
