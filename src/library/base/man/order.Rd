@@ -15,7 +15,7 @@ sort.list(x, partial)
 \code{order} returns a permutation which rearranges its first
 argument into ascending order, breaking ties by further arguments.
 
-\code{sort.list} is the same, using only one argument put allowing
+\code{sort.list} is the same, using only one argument but allowing
 partial sorting.
 }
 \details{
