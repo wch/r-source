@@ -146,9 +146,12 @@ provide(name)
   which can be seen in the \code{eda} package.
 
   The \file{data} subdirectory is for additional data files the package
-  makes available for loading using \code{data()}.  Note that (at least
-  currently) all such files are in fact R code files, and must have the
-  extension \file{.R}.
+  makes available for loading using \code{data()}.  Currently, data
+  files can have one of three types as indicated by their extension:
+  plain R code (\file{.R} or \file{.r}), tables (\file{.tab},
+  \file{.txt}, or \file{.csv}), or \code{save()} images (\file{.RData}
+  or \file{.rda}).  See the documentation for \code{data()} for more
+  information.
 
   Finally, \file{exec} could contain additional executables the package
   needs, typically Shell or Perl scripts.  This mechanism is currently
@@ -164,6 +167,7 @@ provide(name)
   \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
   \code{\link{objects}}, \code{\link{autoload}},
   \code{\link{library.dynam}};
+  \code{\link{data}};
   \code{\link{INSTALL}}, \code{\link{REMOVE}}
 }
 \examples{
