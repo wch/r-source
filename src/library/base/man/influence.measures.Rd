@@ -31,7 +31,8 @@ hat(xmat)
   This suite of functions can be used to compute some of the regression
   diagnostics discussed in Belsley, Kuh and Welsch (1980), and in Cook
   and Weisberg (1982).
-
+}
+\details{
   The primary function is \code{influence.measures} which produces a
   class \code{"infl"} object tabular display showing the DFBETAS for
   each model variable, DFFITS, covariance ratios, Cook's distances and
@@ -41,6 +42,9 @@ hat(xmat)
   The functions \code{rstudent}, \code{dfbetas}, \code{dffits},
   \code{covratio} and \code{cooks.distance} provide direct access to the
   corresponding diagnostic quantities.
+
+  Note that cases with \code{weights == 0} are \emph{dropped} from all
+  these functions.
 }
 \references{
   Belsley, D. A., E. Kuh and R. E. Welsch (1980).
@@ -51,8 +55,7 @@ hat(xmat)
   \emph{Residuals and Influence in Regression.}
   London: Chapman and Hall.
 }
-\seealso{
-  \code{\link{lm.influence}}.
+\seealso{\code{\link{lm.influence}}.
 }
 \examples{
 ## Analysis of the life-cycle savings data

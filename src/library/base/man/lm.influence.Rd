@@ -31,6 +31,8 @@ of \code{lm.influence} differ from those computed by S.
 Rather than returning the coefficients which result
 from dropping each case, we return the changes in the coefficients.
 This is more directly useful in many diagnostic measures.
+
+Note that cases with \code{weights == 0} are \emph{dropped}.
 }
 \references{
 Belsley, D. A., E. Kuh and R. E. Welsch (1980).
