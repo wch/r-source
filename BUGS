@@ -25,7 +25,16 @@ actual reference number, of course!).
 
 Directory:  Accuracy
 
-none
+* PR# 1138 *
+Subject:  round() doesnt
+From: David Brahm  <a215020@onyx.fmr.com>
+Date: Mon, 22 Oct 2001 18:08:50 -0400 (EDT)
+--rounding accuracy on some platformns.  Continued in PR#1139.
+* PR# 1139 *
+Subject: round() doesn't
+From: David Brahm  <a215020@agate.fmr.com>
+Date: Mon, 22 Oct 2001 19:15:13 -0400 (EDT)
+--rounding accurcay on some platforms. Part of PR#1138
 
 Directory:  Add-ons
 
@@ -61,20 +70,10 @@ Date: Thu, 4 Oct 2001 14:45:29 +0200 (MET DST)
 Subject: Wrong df in bartlett.test when subsetting data
 From: jens.lund@nordea.com
 Date: Wed, 10 Oct 2001 17:43:42 +0200 (MET DST)
-* PR# 1150 *
-Subject: wilcox.test point estimates perverse
-From: Charles Geyer <charlie@oak.stat.umn.edu>
-Date: Fri, 26 Oct 2001 18:09:37 -0500
 
 Directory:  Analyses
 
-* PR# 1149 *
-Subject: psignrank and pwilcox null pointer deref
-From: charlie@stat.umn.edu
-Date: Fri, 26 Oct 2001 23:50:07 +0200 (MET DST)
---The use of null pointers is now caught.
---However, we intend to rewrite the code to recover the memory
---on error/interrupt.
+none
 
 Directory:  Documentation
 
@@ -374,15 +373,11 @@ Date: Sat, 20 Oct 2001 01:02:02 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 1138 *
-Subject:  round() doesnt
-From: David Brahm  <a215020@onyx.fmr.com>
-Date: Mon, 22 Oct 2001 18:08:50 -0400 (EDT)
-* PR# 1139 *
-Subject: round() doesn't
-From: David Brahm  <a215020@agate.fmr.com>
-Date: Mon, 22 Oct 2001 19:15:13 -0400 (EDT)
-* PR# 1141 *
-Subject: broken build with LDFLAGS
-From: dks@phy.hr
-Date: Wed, 24 Oct 2001 11:28:09 +0200 (MET DST)
+* PR# 1158 *
+Subject: bug.report()sends empty message
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Mon, 05 Nov 2001 10:05:27 -0500
+* PR# 1159 *
+Subject: stepwise algorithm step() on coxph()
+From: jerome@hivnet.ubc.ca
+Date: Mon, 5 Nov 2001 23:41:14 +0100 (MET)
