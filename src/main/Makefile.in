@@ -137,7 +137,7 @@ R: Makefile
 
 R.bin: $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
 @WANT_R_SHLIB_FALSE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) $(R_bin_LDADD) $(LIBS)
-@WANT_R_SHLIB_TRUE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) -L ../../lib -lR
+@WANT_R_SHLIB_TRUE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) -L../../lib -lR
 ## <FIXME>
 ## Not sure if we want to do this ...
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-bin
