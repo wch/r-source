@@ -1,6 +1,12 @@
 \name{taskCallbackNames}
 \alias{getTaskCallbackNames}
 \title{Query the names of the current internal top-level task callbacks}
+\description{
+  This provides a way to get the names (or identifiers)
+  for the currently registered task callbacks
+  that are invoked at the conclusion of each top-level task.
+  These identifies can be used to remove a callback.
+}
 \usage{
 getTaskCallbackNames()
 }
@@ -15,8 +21,11 @@ getTaskCallbackNames()
   call to \code{\link{addTaskCallback}}. 
 }
 \note{
-  This is an experimental feature and the interface may be changed
-  in the future.
+  One can use \code{\link{taskCallbackManager}}
+  to manage user-level task callbacks,
+  i.e. S-language functions, entirely within
+  the S language and access the names
+  more directly.
 }
 \seealso{
   \code{\link{addTaskCallback}}

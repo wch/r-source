@@ -1,6 +1,17 @@
 \name{taskCallbackManager}
 \alias{taskCallbackManager}
 \title{Create an R-level task callback manager}
+\description{
+  This provides an entirely S-language mechanism
+  for managing callbacks or actions  that are invoked at
+  the conclusion of each top-level task.  Essentially,
+  we register a single R function from this manager
+  with the underlying, native
+  task-callback mechanism and this function handles invoking the other
+  R callbacks under the control of the manager.
+  The manager consists of a collection of functions that access shared
+  variables to manage the list of user-level callbacks.
+}
 \usage{
 taskCallbackManager(handlers = list(), registered = FALSE, verbose = FALSE)
 }

@@ -2,6 +2,21 @@
 \alias{addTaskCallback}
 \alias{removeTaskCallback}
 \title{Add or remove a top-level task callback}
+\description{
+  \code{addTaskCallback} registers an R function
+  that is to be called each time a top-level task
+  is completed.
+
+  \code{removeTaskCallback} un-registers a function
+  that was registered earlier via \code{addTaskCallback}.
+
+  These provide low-level access to the internal/native
+  mechanism for managing task-completion actions.
+  One can use \code{\link{taskCallbackManager}}
+  at the S-language level to manage S functions
+  that are called at the completion of each task.
+  This is easier and more direct.
+}
 \usage{
 addTaskCallback(f, data = NULL, name = character(0))
 removeTaskCallback(id)
