@@ -18,41 +18,87 @@ as.ordered(x)
 \alias{is.ordered}
 \alias{as.factor}
 \alias{as.ordered}
+\description{
+    The function \code{factor} is used to encode a vector as a factor (the
+    names category and enumerated type are also used for factors).  If
+    \code{ordered} is \code{TRUE}, the factor levels are assumed to be ordered.
+    For compatibility with S there is also a function \code{ordered}.
+
+    \code{is.factor}, \code{is.ordered}, \code{as.factor} and
+    \code{as.ordered} are the membership and coercion functions for these
+    classes.
+}
+\arguments{
+    \item{x}{a vector of data, usually taking a small number of distinct
+	values}
+    \item{levels}{an optional vector of the values that \code{x} might
+	have taken. The default is the set of values taken by \code{x},
+	sorted into increasing order.}
+    \item{labels}{EITHER an optional vector of labels for the levels (in the
+	same order as \code{levels} after removing those in
+	\code{exclude}), OR a character string of length 1.}
+    \item{exclude}{a vector of values to be excluded when forming the
+	set of levels. This should be of the same type as \code{x}, and
+	will be coerced if necessary.}
+    \item{ordered}{A flag to determine if the levels should be regraded
+	as ordered (in the order given).}
+}
 \value{
-  The function \code{factor} is used to encode a vector as a factor (the
-  names category and enumerated type are also used for factors).  If
-  \code{ordered} is \code{TRUE}, the factor levels are assumed ordered.
-  By default the levels are unordered.  For compatibility purposes,
-  there is also a function called \code{ordered} which provides an
-  alternative way of creating ordered factors.
+    \code{factor} returns an object of class \code{"factor"} which has a
+    set of numeric codes the length of \code{x} with a \code{"levels"}
+    attribute. If \code{ordered} is true (or \code{ordered} is used) the
+    result has class \code{c("ordered", "factor")}.
 
-  The encoding of the vector happens as follows: if \code{x[i]} equals
-  \code{levels[j]}, then the \code{i}-th element of the result is
-  \code{j}.  If no match is found for \code{x[i]} in \code{levels}, then
-  the \code{i}-th element of the result is set to \code{\link{NA}}.  Any
-  values listed in \code{exclude} result in \code{NA}s appearing in the
-  factor returned.  If \code{exclude} is set to a zero length vector,
-  then any \code{\link{NA}} values in \code{x} are used for form a new
-  level for the factor.  \emph{This means that there will be no
-  \code{NA} values in the result}.
+    \code{is.factor} returns \code{TRUE} or \code{FALSE} depending on
+    whether its argument is of type factor or not.  Correspondingly,
+    \code{is.ordered} returns \code{TRUE} when its
+    argument is ordered and \code{FALSE} otherwise.
 
-  \code{factor} applied to a factor is a no-op, except if there are
-  empty levels. In that case, a factor with the reduced level set
-  set is returned.
+    \code{as.factor} coerces its argument to a factor.
+    It is an abbreviated form of \code{factor}.
 
-  \code{labels} is a vector of character strings used to label the
-  levels of the factor.  The default is to use the encoded factor levels.
+    \code{as.ordered(x)} returns \code{x} if this is ordered, and
+    \code{ordered(x)} otherwise.
+}
+\details{
+    The type of the vector \code{x} is not restricted.
 
-  \code{is.factor} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is of type factor or not.  Correspondingly,
-  \code{is.ordered} returns \code{TRUE} when its
-  argument is ordered and \code{FALSE} otherwise.
+    Ordered factors differ from factors only in their class, but methods
+    and the model-fitting functions treat the two classes quite differently.
 
-  \code{as.factor} coerces its argument to a factor.
-  It is an abbreviated form of \code{factor}.
+    The encoding of the vector happens as follows. First all the values
+    in \code{exclude} are removed from \code{levels}. If \code{x[i]} equals
+    \code{levels[j]}, then the \code{i}-th element of the result is
+    \code{j}.  If no match is found for \code{x[i]} in \code{levels},
+    then the \code{i}-th element of the result is set to \code{\link{NA}}.
 
-  \code{as.ordered(x)} returns \code{x} if this is ordered, and
-  \code{ordered(x)} otherwise.
+    Normally the `levels' used as an attribute of the result are the
+    reduced set of levels after removing those in \code{exclude}, but
+    this can be altered by supplying \code{labels}. This should either
+    be a set of new labels for the levels, or a character string, in
+    which case the levels are that character string with a sequence
+    number appended.
+
+    \code{factor(x)} applied to a factor is a no-operation unless there
+    are unused levels: in that case, a factor with the reduced level set is
+    returned. If \code{exclude} is used it should also be a factor with
+    the same level set as \code{x} or a set of codes for the levels to
+    be excluded.
+
+    The codes of a factor may contain \code{\link{NA}}. For a numeric
+    \code{x}, set \code{exclude=NULL} to make \code{\link{NA}} an extra
+    level (\code{"NA"}), by default the last level.
+}
+\section{Warning}{
+    The interpretation of a factor depends on both the codes and the
+    \code{"levels"} attribute. Be careful only to compare factors with
+    the same set of levels (in the same order).  In particular,
+    \code{as.numeric} applied to a factor is meaningless, and may
+    happen by implicit coercion.
+
+    The levels of a factor are by default sorted, but the sort order
+    may well depend on the locale at the time of creation, and should
+    not be assumed to be ASCII.
 }
 \seealso{
   \code{\link{gl}} for construction of ``balanced'' factors and
@@ -61,11 +107,13 @@ as.ordered(x)
   levels,  and \code{\link{codes}} to get integer codes.
 }
 \examples{
-ff <- factor(substring("statistics",1:10,1:10), levels=letters)
+ff <- factor(substring("statistics", 1:10, 1:10), levels=letters)
 ff
 codes(ff)
-factor(ff)# drops levels that don't occur !
-factor(factor(letters[7:10])[2:3]) # excercise indexing and reduction
+factor(ff)# drops the levels that do not occur
+factor(factor(letters[7:10])[2:3]) # exercise indexing and reduction
+factor(letters[1:20], label="letter")
+
 }
 \keyword{category}
 \keyword{NA}
