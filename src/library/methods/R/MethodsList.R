@@ -424,7 +424,7 @@ matchSignature <-
     if(length(signature) == 0)
         return(character())
     sigClasses <- as.character(signature)
-    if(!is.null(where)) {
+    if(!identical(where, baseenv())) {
         unknown <- !sapply(sigClasses, function(x, where)isClass(x, where=where), where = where)
         if(any(unknown)) {
             unknown <- unique(sigClasses[unknown])

@@ -371,7 +371,7 @@ setMethod <-
     resetGeneric(f, fdef, allMethods, gwhere, deflt) # Note: gwhere not used by resetGeneric
     ## assigns the methodslist object
     ## and deals with flags for primitives & for updating group members
-    if(!is.null(where))
+    if(!identical(where, baseenv()))
         assignMethodsMetaData(f, whereMethods, fdef, where, deflt)
     f
 }

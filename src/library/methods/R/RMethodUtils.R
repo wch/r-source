@@ -422,7 +422,7 @@ getGeneric <-
   function(f, mustFind = FALSE, where = .genEnv(f, topenv(parent.frame()))) {
     if(is.function(f) && is(f, "genericFunction"))
         return(f)
-    value <- if(is.null(where))
+    value <- if(identical(where, baseenv()))
         NULL
       else
           .getGeneric( f, as.environment(where))
