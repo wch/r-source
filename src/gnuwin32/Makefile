@@ -424,6 +424,7 @@ distclean veryclean: clean clean-recommended
 	$(RM) -r cran/*.html cran/ReadMe cran/README* cran/*.exe cran/md5sum.txt \
 	  cran/mini
 	$(RM) -r .vignettes # it gets left behind sometimes
+	$(RM) ../../FAQ ../../RESOURCES ../../doc/html/resources.html # not in SVN sources
 	$(RM) XINSTALL # from cross-building
 	$(RM) Rpwd.exe # do this last of all
 
@@ -563,7 +564,7 @@ crandir:
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e 's/@DATE@/$(DATE)/g' cran/mini.in > cran/mini/index.html
-	   
+
 distribution:
 	$(MAKE) all
 	$(MAKE) bitmapdll
