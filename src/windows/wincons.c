@@ -68,8 +68,7 @@ char RDEClass[] = "RDEClass";
 int R_VSmb;
 
 
-HMENU RMenuConsole, RMenuInit;
-HMENU RMenuConsWin, RMenuInitWin;
+HMENU RMenuConsole, RMenuConsWin;
 HANDLE hAccel;
 static HANDLE RPasteText;
 static LPSTR RPasteP;
@@ -126,14 +125,21 @@ HWND hWndServerDDE;
 void RKillDevice(void) {
 }
 
+int mbquery(void) {
+    int save;
+
+    save = MessageBox(RFrame, "Do you want to save the image?","R Save",
+                        MB_YESNOCANCEL | MB_DEFBUTTON1 | MB_ICONQUESTION | MB_APPLMODAL);
+    return (save);
+}
+    
 void RCleanUp(int ask)
 {
     int save=IDYES;
     
         if( R_DirtyImage ) {
              if( ask == 1)  /* query save */
-                save = MessageBox(RFrame, "Do you want to save the image?","R Save",
-                        MB_YESNOCANCEL | MB_DEFBUTTON1 | MB_ICONQUESTION | MB_APPLMODAL);
+                save = mbquery();
              else if (ask == 3)  /* save without query */
                 save = IDYES;
              else /* don't save */
@@ -143,13 +149,14 @@ void RCleanUp(int ask)
                 jump_to_toplevel();
              }
              if( save == IDYES ) {
+                strcpy(RFName, R_ImageName);
                 if( !Win_RSaveDlg(RClient) )
                         error("cannot save requested file\n");
                 dump_image(RFName,0);
              }
              R_DirtyImage = 0; /*hack to allow WM_CLOSE to check for a dirty image */
         }
-        KillAllDevices(); 
+        KillDevice(); 
         PostMessage(RFrame, WM_CLOSE, 0, 0);
 }
 
@@ -307,10 +314,8 @@ BOOL InitApplication(HINSTANCE hinstCurrent)
         /* set up the menu handles */
         hAccel=LoadAccelerators(hinstCurrent, "MdiAccel");
 
-        RMenuInit=LoadMenu(hinstCurrent, "RMenuInit");
-        RMenuInitWin=GetSubMenu(RMenuInit, 2);
         RMenuConsole=LoadMenu(hinstCurrent, "RMenuConsole");
-        RMenuConsWin=GetSubMenu(RMenuConsole, 2);
+        RMenuConsWin=GetSubMenu(RMenuConsole, 3);
         
         RMenuGraph=LoadMenu(hinstCurrent, "RMenuGraph");
         RMenuGraphWin=GetSubMenu(RMenuGraph, 1);
@@ -339,7 +344,7 @@ BOOL InitInstance(HINSTANCE hinstCurrent,int nCmdShow)
                 CW_USEDEFAULT,
                 CW_USEDEFAULT,
                 CW_USEDEFAULT,
-                NULL, RMenuInit, hinstCurrent, NULL);
+                NULL, RMenuConsole, hinstCurrent, NULL);
 
         if( RFrame == NULL )
                 return FALSE;
@@ -506,6 +511,7 @@ LRESULT CALLBACK ConsoleWndProc(HWND hWnd,UINT message,WPARAM wParam,
         LPARAM lParam)
 {
     char tmp[RBuffLen], *home;
+    int save;
     
         switch(message) {
                 case WM_CREATE:
@@ -530,6 +536,16 @@ LRESULT CALLBACK ConsoleWndProc(HWND hWnd,UINT message,WPARAM wParam,
                       break; 
                 case WM_COMMAND:
                         switch (GET_WM_COMMAND_ID(wParam,lParam)) {
+                                case RRR_NEW:
+                                        save=mbquery();
+                                        if (save == IDYES) {
+                                            if( !Win_RSaveDlg(RClient) )
+                                                error("cannot save requested file\n");
+                                            dump_image(RFName, 0);
+                                        }
+                                        R_GlobalEnv=emptyEnv();
+                                        jump_to_toplevel();
+                                        return 0;
                                 case RRR_OPEN:
                                         RFName[0]='\0';
                                         if( Win_ROpenDlg(RClient,"Open") )
@@ -594,6 +610,12 @@ LRESULT CALLBACK ConsoleWndProc(HWND hWnd,UINT message,WPARAM wParam,
                                                         return 0;
                                         }
                                         break;
+                                case RRR_DATA:
+                                        userdata();
+                                        return 0;
+                                case RRR_SYSDATA:
+                                        sysdata();
+                                        return 0;
                         }
                    break;
                 case WM_MDIACTIVATE:
@@ -650,6 +672,7 @@ void menuOpen(void)
                 error("workspace file corrupted -- no data loaded\n");
         }
         fclose(fp);
+        yyprompt((char *) CHAR(STRING(GetOption(install("prompt"), R_NilValue))[0]));
 }
 
 
@@ -670,7 +693,7 @@ LRESULT FAR PASCAL MainWndProc(HWND hWnd,UINT message,WPARAM wParam,
 
         switch (message) {
                 case WM_CREATE:
-                        cltcr.hWindowMenu = RMenuInitWin;
+                        cltcr.hWindowMenu = RMenuConsWin;
                         cltcr.idFirstChild = RRR_FIRSTCHILD;
                         RClosing = 0;
                         RClient = CreateWindow("MDICLIENT", NULL,

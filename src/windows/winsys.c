@@ -22,6 +22,7 @@
 #include "Fileio.h"
 
 static char szDirName[RBuffLen];
+static int R_QueryMemory(char*);
 static jmp_buf R_Winjbuf;
 float R_WinVersion;
         /*--- I n i t i a l i z a t i o n -- C o d e ---*/
@@ -87,7 +88,7 @@ typedef int (*MYPROC)(int);
 int WINAPI WinMain(HANDLE hinstCurrent, HANDLE hinstPrevious, 
 LPSTR lpszCmdParam, int nCmdShow)
 {
-        int i;
+        int i, nset=0, vset=0, mchange=0;
         char *exe, *ep, tmp[RBuffLen], tm1;
         HINSTANCE hinstLib;
         MYPROC ProcAdd;
@@ -140,10 +141,10 @@ parsemem:   while( isspace(*exe) )
                         REprintf("invalid argument passed to R\n");
                         return FALSE;
                 }
-                if(tm1 == 'n')
-                        R_NSize = i;
-                else if( tm1 == 'v' )
-                        R_VSmb = i;
+                if(tm1 == 'n') 
+                        nset = i;
+                else if( tm1 == 'v' ) 
+                        vset = i;
                 else
                         REprintf("warning: unkown option\n");
                 if(*exe != '\0')
@@ -152,26 +153,35 @@ parsemem:   while( isspace(*exe) )
             else if( *exe != '\0' )
                 strcpy(R_ImageName, exe);
         }
-        R_VSmb = max(R_VSize/1048576,2);
-        
-        R_SetMemory(R_NSize, R_VSmb);
+        if( nset == 0 ) 
+                nset = R_QueryMemory("NSize");
+        if( vset == 0 )
+                vset = R_QueryMemory("Vsize");
+        if( nset < 0 || vset < 0 ) {
+                 MessageBox(NULL, "Memory problem","R Memory", MB_OK);
+                 goto exiting;
+        }
+        if( nset != 0 )
+                R_NSize = nset;
+        else {
+                mchange = 1;
+                nset = R_NSize;
+        }
+        if( vset != 0 )   {
+                R_VSmb = vset;     
+                R_VSize = vset*1048576;
+        }
+        else {
+                mchange = 1;
+                vset = R_VSmb;
+        }
+        if( mchange )
+                R_SetMemory(nset, vset);
 
         if ( strlen(R_ImageName) == 0 )   {
                 strcpy(R_ImageName,szDirName);
-                strcat(R_ImageName,"\\.RData.rmg");
+                strcat(R_ImageName,"\\RData.rmg");
         }
-
-        /* test dll's 
-        
-        hinstLib = LoadLibrary("eda");
-        if( hinstLib != NULL) {
-                ProcAdd = (MYPROC) GetProcAddress(hinstLib, "tukeyline_");
-                if( ProcAdd != NULL)
-                        i=3;
-        }
-
-        FreeLibrary(hinstLib);
- */              
 
         erno = GetLastError();
         
@@ -179,15 +189,53 @@ parsemem:   while( isspace(*exe) )
                 mainloop();
         else
                 EventLoop();    /* run the windows event loop so that everything closes down */
-        
+exiting:        
         DestroyMenu(RMenuDE);
         DestroyMenu(RMenuGraph);
-        DestroyMenu(RMenuInit);
         DestroyMenu(RMenuConsole);
         DestroyMenu(RMenuEdit);
         return 0;
 }
 
+/* query memory and see if NSize and/or Vsize have been set
+   if so the current setting is returned
+   a negative return value indicates an error of some type.
+   0 indicates it was not set
+   a positive value is the value that is currently set
+*/
+
+int R_QueryMemory(char* regname)
+{
+    HKEY hkey;
+    DWORD disp, l1;
+    LONG res;
+    char buff[20],buff2[40];
+    int rval=0;
+
+    if(strlen(regname) > 22 ) {
+        MessageBox(NULL,"name is too long for QueryMemory"," R Memory",MB_OK);
+        return -1;
+    }
+    sprintf(buff2,"Software\\R\\%s",regname);
+    res = RegCreateKeyEx( HKEY_LOCAL_MACHINE, buff2,0, "", REG_OPTION_NON_VOLATILE,
+                        KEY_ALL_ACCESS, NULL, &hkey, &disp);
+    if( res == ERROR_SUCCESS ) {
+        if( disp == REG_OPENED_EXISTING_KEY ) {
+                  l1 = 20;
+                  RegQueryValueEx( hkey, "",0, &disp, buff, &l1);
+                  rval = atoi(buff);
+         }
+         return rval;
+    }
+    return -2;
+}
+
+/*
+R_SetMemory has no effect on the current session. It merely posts the
+chosen values for R_NSize and R_Vsize to the registry. They will be retrieved
+and used for subsequent sessions.
+*/
+        
 void R_SetMemory(int nsize, int vsize)
 {
         HKEY hkey;
@@ -197,7 +245,7 @@ void R_SetMemory(int nsize, int vsize)
         int rnsize=0, rvsize=0;
 
         if( nsize > 0 ) {
-                res = RegCreateKeyEx( HKEY_USERS, "Sofware\\R\\NSize",0, "", REG_OPTION_NON_VOLATILE,
+                res = RegCreateKeyEx( HKEY_USERS, "Software\\R\\NSize",0, "", REG_OPTION_NON_VOLATILE,
                         KEY_ALL_ACCESS, NULL, &hkey, &disp);
                 if( res == ERROR_SUCCESS ) {
                         if( disp == REG_OPENED_EXISTING_KEY ) {
@@ -205,12 +253,14 @@ void R_SetMemory(int nsize, int vsize)
                                 RegQueryValueEx( hkey, "",0, &disp, buff, &l1);
                                 rnsize = atoi(buff);
                         } 
-                        if( nsize > 1000000 || nsize < rnsize ) {
-                            R_NSize = rnsize;
-                            REprintf("warning: invalid language heap size ignored \n");
+                        if( nsize > 1000000 ) {
+                            MessageBox(NULL,"Invalid language heap size ignored","R Memory",
+                                MB_OK);
                         }
                         else {
-                            R_NSize = nsize;
+                            if( nsize < rnsize )
+                                MessageBox(NULL,"Memory being set smaller, some images may not restore",
+                                        "R Memory", MB_OK);
                             sprintf(buff,"%d",nsize);
                             res = RegSetValueEx( hkey, NULL, NULL, REG_SZ, buff, lstrlen(buff));
                         }
@@ -218,7 +268,7 @@ void R_SetMemory(int nsize, int vsize)
                 }
         }
         if( vsize > 0 ) {
-                res = RegCreateKeyEx( HKEY_USERS, "Sofware\\R\\VSize",0, "", REG_OPTION_NON_VOLATILE,
+                res = RegCreateKeyEx( HKEY_USERS, "Software\\R\\VSize",0, "", REG_OPTION_NON_VOLATILE,
                         KEY_ALL_ACCESS, NULL, &hkey, &disp);
                 if( res == ERROR_SUCCESS ) {
                     if( disp == REG_OPENED_EXISTING_KEY ) {
@@ -226,14 +276,13 @@ void R_SetMemory(int nsize, int vsize)
                           RegQueryValueEx( hkey, "",0, &disp, buff, &l1);
                           rvsize = atoi(buff);
                     }                     
-                    if( vsize > 1000 || vsize < rvsize) {
-                        R_VSize = rvsize *1048576; /* Mb */
-                        R_VSmb = rvsize;
-                        REprintf("warning: invalid vector heap size ignored \n");
+                    if( vsize > 1000 ) {
+                        MessageBox(NULL, "Invalid vector heap size ignored", "R Memory", MB_OK);
                     }
                     else {
-                        R_VSize = vsize * 1048576;  /* Mb */
-                        R_VSmb = vsize;
+                        if (vsize < rvsize )
+                                MessageBox(NULL, "Memory being set smaller, some images may not restore",
+                                        "R Memory", MB_OK);
                         sprintf(buff,"%d",vsize);
                         res = RegSetValueEx( hkey, NULL, NULL, REG_SZ, buff, lstrlen(buff));            
                     }
@@ -245,6 +294,7 @@ void R_SetMemory(int nsize, int vsize)
 
 void suicide(char *s)
 {
+        MessageBox(NULL, s, "R Aborting", MB_OK);
         RCleanUp(2);    /* 2 means don't save anything and it's an unrecoverable abort */
         longjmp(R_Winjbuf, 1);
 }
@@ -353,7 +403,7 @@ void RBusy(int which)
 
 void R_SaveGlobalEnv(void)
 {
-        FILE *fp = R_fopen(R_ImageName, "w");
+        FILE *fp = R_fopen(R_ImageName, "wb");
         if (!fp)
                 error("can't save data -- unable to open %s\n",R_ImageName);
         R_WriteMagic(fp, R_MAGIC_BINARY);
@@ -363,7 +413,7 @@ void R_SaveGlobalEnv(void)
 
 void R_RestoreGlobalEnv(void)
 {                       
-        FILE *fp = R_fopen(R_ImageName,"r");
+        FILE *fp = R_fopen(R_ImageName,"rb");
         if (!fp) {      
                 /* warning here perhaps */
                 return;

@@ -405,15 +405,20 @@ LRESULT FAR PASCAL GraphWndProc(HWND hWnd, UINT message, WPARAM wParam,
                  break;
              case WM_SIZE:
                  if( wParam != SIZE_MINIMIZED  ) { /* we must start a new plot because the clipping
-                     cannot be scaled properly */
-                         GetClientRect(hWnd, &r1);
-                         if( r1.bottom != graphicsRect.bottom
-                            || r1.right != graphicsRect.right ) {
-                             graphicsRect = r1;
-                             if( IsWindow(RGraphWnd) )
-                                Win_Resize();
-                         }
+                     cannot be scaled properly 
+                         GetClientRect(hWnd, &r1); */
+                         if( HIWORD(lParam) != graphicsRect.bottom
+                            || LOWORD(lParam) != graphicsRect.right ) {
+                               graphicsRect.bottom = HIWORD(lParam);
+                               graphicsRect.right  = LOWORD(lParam);                         
+                               Win_Resize();
+                         }                 
                  }
+                 if( wParam == SIZE_MAXIMIZED ) {
+                     r1.right = HIWORD(lParam);
+                     r1.bottom = LOWORD(lParam);
+                 }
+                   
                  break;
              case WM_LBUTTONDOWN:
                  if(LocatorDone==0) {
@@ -695,9 +700,12 @@ static void Win_Resize()
             MB_ICONEXCLAMATION | MB_OK);
             Win_Close();
         }
-
+        
+        SelectClipRgn(Nhdc, NULL);
+        SelectClipRgn(RGBhdc, NULL);
         SelectObject(RGBhdc, RGBitMap);
         FillRect(RGBhdc, &graphicsRect, GetStockObject(WHITE_BRUSH));
+        
         BitBlt(Nhdc,0,0,graphicsRect.right,graphicsRect.bottom,RGBhdc,0,0,SRCCOPY);
 
         ReleaseDC(RGraphWnd, Nhdc);
@@ -709,16 +717,14 @@ static void Win_Resize()
 void Win_NewPlot()
 {
         HDC Nhdc;
-        int i;
-        DWORD err;
+
 
         Nhdc=GetDC(RGraphWnd);
         SelectClipRgn(Nhdc, NULL);
         SelectClipRgn(RGBhdc, NULL);
         
-        i = FillRect(RGBhdc, &graphicsRect, GetStockObject(WHITE_BRUSH));
-        err = GetLastError();
-        i = BitBlt(Nhdc,0,0,graphicsRect.right,graphicsRect.bottom,RGBhdc,0,0,SRCCOPY);
+        FillRect(RGBhdc, &graphicsRect, GetStockObject(WHITE_BRUSH));
+        BitBlt(Nhdc,0,0,graphicsRect.right,graphicsRect.bottom,RGBhdc,0,0,SRCCOPY);
 
         if( R_WinVersion >= 4.0 ) {
                 if( RGMhdc != NULL )
