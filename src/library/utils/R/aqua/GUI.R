@@ -119,7 +119,7 @@
     {
      if (.Platform$GUI!="AQUA")
        stop("This function is intended to work with the Aqua GUI")
-        data() -> x
+        data(package = .packages(all.available = TRUE)) -> x
         x$results[,3] -> dt
         x$results[,1] -> pkg
         x$results[,4] -> desc
@@ -169,14 +169,18 @@ print.hsearch <- function(x,...)
   {
         if (.Platform$GUI=="AQUA"){
           db <- x$matches
-          if (NROW(db) == 0) {
+		  rows <- NROW(db)
+          if (rows == 0) {
             writeLines(strwrap(paste("No help files found matching",
                                      sQuote(x$pattern), "using", x$type,
                                      "matching\n\n")))
           } else {
+			url = character(rows)
+			for(i in 1:rows)
+				url[i] <- as.character(help(db[i,"topic"], package = db[i,"Package"], htmlhelp=TRUE))
             wtitle <- paste("Help topics matching", sQuote(x$pattern))
             showhelp <- which(.Internal(hsbrowser(db[,"topic"], db[,"Package"],
-                                                  db[,"title"],  wtitle)))
+							db[,"title"],  wtitle, url )))
             for(i in showhelp)
               print(help(db[i,"topic"], package = db[i,"Package"]))
           }
