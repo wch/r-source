@@ -38,6 +38,9 @@ BUG FIXES
 
     o	ls.str(envir = environment(F)) now works (when F is a function).
 
+    o	pie() now has a `border' (and 'lty') argument which allows empty
+        slice borders and makes pie() useable for hundreds of slices.
+
 
 
 		CHANGES IN R VERSION 1.5.1

@@ -1,6 +1,6 @@
 pie <-
     function (x, labels = names(x), edges = 200, radius = 0.8,
-              density = NULL, angle = 45, col = NULL,
+              density = NULL, angle = 45, col = NULL, border = NULL, lty = NULL,
               main = NULL, ...)
 {
     if (!is.numeric(x) || any(is.na(x) | x <= 0))
@@ -21,6 +21,8 @@ pie <-
             c("white", "lightblue", "mistyrose", "lightcyan", "lavender", "cornsilk")
         else par("fg")
     col <- rep(col, length = nx)
+    border <- rep(border, length = nx)
+    lty <- rep(lty, length = nx)
     angle <- rep(angle, length = nx)
     density <- rep(density, length = nx)
     for (i in 1:nx) {
@@ -28,14 +30,15 @@ pie <-
 	t2p <- 2*pi * seq(x[i], x[i + 1], length = n)
 	xc <- c(cos(t2p), 0) * radius
 	yc <- c(sin(t2p), 0) * radius
-	polygon(xc, yc, col = col[i],
-                angle = angle[i], density = density[i])
+	polygon(xc, yc, density = density[i], angle = angle[i],
+                border = border[i], col = col[i], lty = lty[i])
 	t2p <- 2*pi * mean(x[i + 0:1])
 	xc <- cos(t2p) * radius
 	yc <- sin(t2p) * radius
-	lines(c(1, 1.05)*xc, c(1, 1.05)*yc)
-	text(1.1*xc, 1.1*yc, labels[i],
-	     xpd = TRUE, adj = ifelse(xc < 0, 1, 0))
+        if(!is.na(lab <- labels[i]) && lab != "") {
+            lines(c(1, 1.05)*xc, c(1, 1.05)*yc)
+            text(1.1*xc, 1.1*yc, lab, xpd = TRUE, adj = ifelse(xc < 0, 1, 0))
+        }
     }
     title(main = main, ...)
     invisible(NULL)
