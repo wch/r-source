@@ -20,7 +20,7 @@ edit.int <- c("fix", "edit", "edit.data.frame", "edit.matrix",
               "emacs", "pico", "xemacs", "xedit")
 ## warning: readLines will work, but read all the rest of the script
 ## warning: trace will load methods.
-## warning: rm and remove zaps c0, l0, m0, df0 
+## warning: rm and remove zaps c0, l0, m0, df0
 misc.int <- c("browser", "bug.report", "menu", "repeat", "readLines",
               "package.skeleton", "trace", "recover", "rm", "remove")
 stop.list[["base"]] <-
@@ -36,9 +36,7 @@ stop.list[["base"]] <-
 	## "Interactive" ones:
 	dev.int <- c("X11", "x11", "windows", "macintosh", "postscript",
                      "xfig", "jpeg", "png", "pictex")
-	## print.plot() will print a blank page on the printer and is
-	## deprecated anyway --pd
-	misc.2 <- c("help.start", "print.plot",
+	misc.2 <- c("help.start", "browseEnv",
 		    "gctorture", "q", "quit", "restart", "try",
                     "read.fwf", "source",## << MM thinks "FIXME"
 		    "data.entry", "dataentry", "de", apropos("^de\."))
