@@ -3,7 +3,7 @@
 \usage{
 solve(a, b, \dots)
 
-\method{solve}{default}(a, b, tol = 1e-7, LINPACK = FALSE, \dots)
+\method{solve}{default}(a, b, tol, LINPACK = FALSE, \dots)
 }
 \alias{solve}
 \alias{solve.default}
@@ -14,7 +14,10 @@ solve(a, b, \dots)
     side(s) of the linear system.  If missing, \code{b} is taken to be
     an identity matrix and \code{solve} will return the inverse of \code{a}.}
   \item{tol}{the tolerance for detecting linear dependencies in the
-    columns of \code{a}, if LINPACK is used.}
+    columns of \code{a}.  If \code{LINPACK} is \code{TRUE} the default
+    is \code{1e-7}, otherwise it is \code{.Machine$double.eps}. Future
+    versions of R may use a tighter tolerance. Not presently used with
+    complex matrices \code{a}.}
   \item{LINPACK}{logical. Should LINPACK be used (for compatibility with
     \R < 1.7.0)?}
   \item{\dots}{further arguments passed to or from other methods}
