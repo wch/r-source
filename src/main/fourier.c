@@ -79,6 +79,7 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 	    maxmaxf = 1;
 	    maxmaxp = 1;
 	    ndims = LENGTH(d);
+	    /* do whole loop just for error checking and maxmax[fp] .. */
 	    for (i = 0; i < ndims; i++) {
 		if (INTEGER(d)[i] > 1) {
 		    fft_factor(INTEGER(d)[i], &maxf, &maxp);
@@ -97,9 +98,9 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 	    nspn = 1;
 	    for (i = 0; i < ndims; i++) {
 		if (INTEGER(d)[i] > 1) {
-		    nspn = nspn * n;
+		    nspn *= n;
 		    n = INTEGER(d)[i];
-		    nseg = nseg/n;
+		    nseg /= n;
 		    fft_factor(n, &maxf, &maxp);
 		    fft_work(&(COMPLEX(z)[0].r), &(COMPLEX(z)[0].i),
 			     nseg, n, nspn, inv, work, iwork);
@@ -112,8 +113,8 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
     return z;
 }
 
-/* Fourier Transform for Vector-Valued Series */
-/* Not to be confused with the spatial case. */
+/* Fourier Transform for Vector-Valued ("multivariate") Series */
+/* Not to be confused with the spatial case (in do_fft). */
 
 SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -129,7 +130,7 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 
     d = getAttrib(z, R_DimSymbol);
     if (d == R_NilValue || length(d) > 2)
-	errorcall(call, "vector-valued series required\n");
+	errorcall(call, "vector-valued (multivariate) series required\n");
     n = INTEGER(d)[0];
     p = INTEGER(d)[1];
 
@@ -147,7 +148,7 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     PROTECT(z);
 
-    /* -2 for forward transform, complex values */
+    /* -2 for forward  transform, complex values */
     /* +2 for backward transform, complex values */
 
     inv = asLogical(CADR(args));
