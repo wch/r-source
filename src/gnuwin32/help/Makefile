@@ -71,7 +71,7 @@ clean:
 
 HTM = $(filter-out 00Index.html, $(wildcard *.html))
 %.chm: $(HTM) Rchm.css logo.jpg
-	-@hhc $*.hhp
+	@hhc $*.hhp || exit 0
 
 %.hlp: %.rtf logo.bmp
 	hcrtf /x $*.hpj
@@ -113,9 +113,9 @@ help/Rhelp.zip: $(wildcard ../../src/library/$(PKG)/man/*.Rd \
 	@$(RM) -f help/Rhelp.zip latex/Rhelp.zip R-ex/Rex.zip
 
 zipup:
-	-zip -${ZIPFLAGS} help/Rhelp help/* -x help/AnIndex 2> /dev/null
-	-zip -${ZIPFLAGS} R-ex/Rex R-ex/*.R 2> /dev/null
-	-zip -${ZIPFLAGS} latex/Rhelp latex/*.tex 2> /dev/null
+	zip -${ZIPFLAGS} help/Rhelp help/* -x help/AnIndex 2> /dev/null || exit 0
+	zip -${ZIPFLAGS} R-ex/Rex R-ex/*.R 2> /dev/null || exit 0
+	zip -${ZIPFLAGS} latex/Rhelp latex/*.tex 2> /dev/null || exit 0
 
 uz-%:
 	@if test -f $*.zip ; then \
