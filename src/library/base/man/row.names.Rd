@@ -1,5 +1,4 @@
 \name{row.names}
-\alias{row.names}
 \title{Get and Set Row Names for Data Frames}
 \alias{row.names}
 \alias{row.names.data.frame}
