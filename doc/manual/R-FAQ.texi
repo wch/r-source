@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-21, 2000-11-04
+@set FAQ-VERSION 1.1-22, 2000-11-05
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -1357,7 +1357,9 @@ Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
 analyses using GLS.
 @item RODBC
-ODBC support and a back end database.
+An ODBC database interface.
+@item RPgSQL
+Provides methods for accessing data stored in PostgreSQL tables.
 @item RmSQL
 An interface between R and the mSQL database system.
 @c @item Rnotes
@@ -1370,13 +1372,13 @@ Data sets and sample linear mixed effects analyses corresponding to the
 examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 @item acepack
-ace (Alternating Conditional Expectations) and avas (Additivity and
-VAriance Stabilization for regression) for selecting regression
+ACE (Alternating Conditional Expectations) and AVAS (Additivity and
+VAriance Stabilization for regression) methods for selecting regression
 transformations.
 @item akima
 Linear or cubic spline interpolation for irregularly gridded data.
 @item ash
-Programs for 1D and 2D density estimation.
+David Scott's ASH routines for 1D and 2D density estimation.
 @item bindata
 Generation of correlated artificial binary data.
 @item boot
@@ -1473,9 +1475,8 @@ analysis (FDA), penalized discriminant analysis (PDA), multivariate
 additive regression splines (MARS), adaptive back-fitting splines
 (BRUTO), and penalized regression.
 @item mgcv
-Routines for multiple smoothing parameter selection by GCV or UBRE for
-generalized ridge regression problems (e.g., GAMs) with multiple
-smoothing parameters.
+Routines for GAMs and other genralized ridge regression problems with
+multiple smoothing parameter selection by GCV or UBRE.
 @item mlbench
 A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
@@ -1510,7 +1511,7 @@ Smoothing splines with penalties on order @math{m} derivatives.
 @item quadprog
 For solving quadratic programming problems.
 @item quantreg
-Compute regression quantiles and some related rank statistics.
+Quantile  regression and related methods.
 @c @item ratetables
 @c US national and state mortality data (requires @strong{survival4} and
 @c @strong{date}), for use with @strong{survival4}.
@@ -1518,7 +1519,7 @@ Compute regression quantiles and some related rank statistics.
 Functions for simple fixed and random effects meta-analysis for
 two-sample comparison of binary outcomes.
 @item rpart
-Recursive Partitioning.
+Recursive PARTitioning and regression trees.
 @item sgeostat
 An object-oriented framework for geostatistical modeling.
 @item sm
@@ -1541,18 +1542,20 @@ Spatial and space-time point pattern analysis functions.
 @c variate; generalized linear models for the parameters of a stable
 @c distribution.
 @item stataread
-Read and write Stata v6 @file{.dta} files.
+Read and write Stata v5 and v6 @file{.dta} files.
 @c @item survival4
 @c Functions for survival analysis, version 4 (requires @strong{splines}).
 @item survival5
 Functions for survival analysis, version 5 (suggests @strong{date}), the
 main new feature being penalized (partial) likelihood.
+@item tensor
+Tensor product of arrays.
 @item tree
 Classification and regression trees.
 @item tripack
 A constrained two-dimensional Delaunay triangulation package.
 @item tseries
-Additional code for time series analysis.
+Package for time series analysis with emphasis on non-linear modelling.
 @item wavethresh
 Software to perform 1-d and 2-d wavelet statistics and transforms.
 @item wle
@@ -1580,8 +1583,6 @@ An interface from R to Java to create and call Java objects and
 methods.
 @item RMySQL
 An interface between R and the MySQL database system.
-@item RPgSQL
-An interface between R and the PostgreSQL database system.
 @item cmprsk
 Estimation, testing and regression modeling of subdistribution functions
 in competing risks.
@@ -1593,7 +1594,8 @@ Finding D-optimal experimental designs.
 Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions.
 @item exactDistr
-Exact distributions for rank tests.
+Exact distributions for rank tests, using an implementation of the
+Streitberg/Roehmel shift algorithm.
 @item foreign
 Functions for reading data stored by statistical software like Minitab,
 SAS, SPSS, etc.
@@ -1609,8 +1611,6 @@ statistics.
 Read data from netCDF files.
 @item syskern
 Functions for writing code that is OS and R/S independent.
-@item tensor
-Tensor product of arrays.
 @item tframe
 Functions for writing code that is independent of the representation of
 time.
@@ -1802,6 +1802,12 @@ One place where functionality is still missing is the modeling software
 as described in ``Statistical Models in S'' (see @ref{What is S?});
 Generalized Additive Models (@strong{gam}) and some of the nonlinear
 modeling code are not there yet.
+
+@c FIXME:
+@c Simon Wood <snw@mcs.st-and.ac.uk> says that for GAMs,
+@c   You might want to try the packages mgcv, which has a version of
+@c   gam(), or gss which will fit a wide range of spline models.
+@c Something about this should be added once it is proven to work.
 
 The @uref{http://developer.r-project.org/, R Developer Page} acts as an
 intermediate repository for more or less finalized ideas and plans for

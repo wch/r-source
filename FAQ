@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-21, 2000-11-04
+Version 1.1-22, 2000-11-05
 Kurt Hornik
 
 
@@ -1079,7 +1079,10 @@ works, was published in the Journal of Statistical Software
      analyses using GLS.
 
 *RODBC*
-     ODBC support and a back end database.
+     An ODBC database interface.
+
+*RPgSQL*
+     Provides methods for accessing data stored in PostgreSQL tables.
 
 *RmSQL*
      An interface between R and the mSQL database system.
@@ -1093,15 +1096,15 @@ works, was published in the Journal of Statistical Software
      Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 
 *acepack*
-     ace (Alternating Conditional Expectations) and avas (Additivity and
-     VAriance Stabilization for regression) for selecting regression
+     ACE (Alternating Conditional Expectations) and AVAS (Additivity and
+     VAriance Stabilization for regression) methods for selecting regression
      transformations.
 
 *akima*
      Linear or cubic spline interpolation for irregularly gridded data.
 
 *ash*
-     Programs for 1D and 2D density estimation.
+     David Scott's ASH routines for 1D and 2D density estimation.
 
 *bindata*
      Generation of correlated artificial binary data.
@@ -1227,9 +1230,8 @@ works, was published in the Journal of Statistical Software
      (BRUTO), and penalized regression.
 
 *mgcv*
-     Routines for multiple smoothing parameter selection by GCV or UBRE for
-     generalized ridge regression problems (e.g., GAMs) with multiple
-     smoothing parameters.
+     Routines for GAMs and other genralized ridge regression problems with
+     multiple smoothing parameter selection by GCV or UBRE.
 
 *mlbench*
      A collection of artificial and real-world machine learning benchmark
@@ -1278,14 +1280,14 @@ works, was published in the Journal of Statistical Software
      For solving quadratic programming problems.
 
 *quantreg*
-     Compute regression quantiles and some related rank statistics.
+     Quantile  regression and related methods.
 
 *rmeta*
      Functions for simple fixed and random effects meta-analysis for
      two-sample comparison of binary outcomes.
 
 *rpart*
-     Recursive Partitioning.
+     Recursive PARTitioning and regression trees.
 
 *sgeostat*
      An object-oriented framework for geostatistical modeling.
@@ -1308,11 +1310,14 @@ works, was published in the Journal of Statistical Software
      Spatial and space-time point pattern analysis functions.
 
 *stataread*
-     Read and write Stata v6 `.dta' files.
+     Read and write Stata v5 and v6 `.dta' files.
 
 *survival5*
      Functions for survival analysis, version 5 (suggests *date*), the main
      new feature being penalized (partial) likelihood.
+
+*tensor*
+     Tensor product of arrays.
 
 *tree*
      Classification and regression trees.
@@ -1321,7 +1326,7 @@ works, was published in the Journal of Statistical Software
      A constrained two-dimensional Delaunay triangulation package.
 
 *tseries*
-     Additional code for time series analysis.
+     Package for time series analysis with emphasis on non-linear modelling.
 
 *wavethresh*
      Software to perform 1-d and 2-d wavelet statistics and transforms.
@@ -1352,9 +1357,6 @@ these a try, of course.  This area of CRAN currently contains
 *RMySQL*
      An interface between R and the MySQL database system.
 
-*RPgSQL*
-     An interface between R and the PostgreSQL database system.
-
 *cmprsk*
      Estimation, testing and regression modeling of subdistribution
      functions in competing risks.
@@ -1370,7 +1372,8 @@ these a try, of course.  This area of CRAN currently contains
      series package.  Contains PADI, juice and monitoring extensions.
 
 *exactDistr*
-     Exact distributions for rank tests.
+     Exact distributions for rank tests, using an implementation of the
+     Streitberg/Roehmel shift algorithm.
 
 *foreign*
      Functions for reading data stored by statistical software like Minitab,
@@ -1392,9 +1395,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *syskern*
      Functions for writing code that is OS and R/S independent.
-
-*tensor*
-     Tensor product of arrays.
 
 *tframe*
      Functions for writing code that is independent of the representation of
