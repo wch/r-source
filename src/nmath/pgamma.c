@@ -174,7 +174,9 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
     arg += log(sum);
 
 #ifdef DEBUG_p
+# ifndef IEEE_754
     REprintf("--> arg=%12g (elimit=%g)\n", arg, elimit);
+# endif
 #endif
 
     lower_tail = (lower_tail == pearson);
