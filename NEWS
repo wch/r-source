@@ -159,6 +159,9 @@ BUG FIXES
 
     o	Building standalone nmath did not support some of the DEBUG options.
 
+    o   mle() got confused if start value list was not in same order as
+        arguments of likelihood function (reported by Ben Bolker)
+
     o	backsolve(r, x, k) now allows k < nrow(x) - as its documentation
 	always claimed.
 
@@ -188,6 +191,7 @@ BUG FIXES
 	matches were missed.
 
     o	qbinom(*, prob = 0, lower.tail = FALSE) now properly gives 0 (PR#6972).
+
 
 
 		CHANGES IN R VERSION 1.9.0
