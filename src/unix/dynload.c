@@ -240,7 +240,6 @@ static int AddDLL(char *path, int asLocal, int now)
 }
 
  /*
-
     Computes the flag to be passed as the second argument to dlopen(),
     controlling whether the local or global symbol integration
     and lazy or eager resolution of the undefined symbols.
@@ -256,58 +255,62 @@ static int AddDLL(char *path, int asLocal, int now)
 static int
 computeDLOpenFlag(int asLocal, int now)
 {
- static char *warningMessages[] = {
-  "Explicit local dynamic loading not supported on this platform. Using default.",
-  "Explicit global dynamic loading not supported on this platform. Using default.",
-  "Explicit non-lazy dynamic loading not supported on this platform. Using default.",
-  "Explicit lazy dynamic loading not supported on this platform. Using default."
- };
-  /* Define a local macro for issuing the warnings.
-     This allows us to redefine it easily so that it only emits the warning
-     once as in
+#if !defined(RTLD_LOCAL) || !defined(RTLD_GLOBAL) || !defined(RTLD_NOW) || !defined(RTLD_LAZY)
+    static char *warningMessages[] = {
+	"Explicit local dynamic loading not supported on this platform. Using default.",
+	"Explicit global dynamic loading not supported on this platform. Using default.",
+	"Explicit non-lazy dynamic loading not supported on this platform. Using default.",
+	"Explicit lazy dynamic loading not supported on this platform. Using default."
+    };
+    /* Define a local macro for issuing the warnings.
+       This allows us to redefine it easily so that it only emits the
+       warning once as in
          DL_WARN(i) if(warningMessages[i]) {\
                      warning(warningMessages[i]); \
                      warningMessages[i] = NULL; \
     	            }
-     or to control the emission via the options currently in effect at call time.
-   */
-#define DL_WARN(i) \
-   if(asInteger(GetOption(install("warn"),R_NilValue)) == 1 || \
-         asInteger(GetOption(install("verbose"),R_NilValue)) > 0) \
-                      warning(warningMessages[i]);
+       or to control the emission via the options currently in effect at
+       call time.
+       */
+# define DL_WARN(i) \
+    if(asInteger(GetOption(install("warn"), R_NilValue)) == 1 || \
+       asInteger(GetOption(install("verbose"), R_NilValue)) > 0) \
+        warning(warningMessages[i]);
+#endif
 
- int openFlag = 0; /* Default value so no-ops for undefined flags should do nothing
-                      in the resulting dlopen(). */
+    int openFlag = 0;		/* Default value so no-ops for undefined
+				   flags should do nothing in the
+				   resulting dlopen(). */
 
-if(asLocal != 0) {
+    if(asLocal != 0) {
 #ifndef RTLD_LOCAL
-  DL_WARN(0)
+	DL_WARN(0)
 #else
-  openFlag = RTLD_LOCAL;
+	openFlag = RTLD_LOCAL;
 #endif
-} else {
+    } else {
 #ifndef RTLD_GLOBAL
-  DL_WARN(1)
+	DL_WARN(1)
 #else
-  openFlag = RTLD_GLOBAL;
+	openFlag = RTLD_GLOBAL;
 #endif
-}
+    }
 
-if(now != 0) {
+    if(now != 0) {
 #ifndef RTLD_NOW
-  DL_WARN(2)
+	DL_WARN(2)
 #else
-  openFlag |= RTLD_NOW;
+	openFlag |= RTLD_NOW;
 #endif
-} else {
+    } else {
 #ifndef RTLD_LAZY
-  DL_WARN(3)
+	DL_WARN(3)
 #else
-  openFlag |= RTLD_LAZY;
+	openFlag |= RTLD_LAZY;
 #endif
-}
+    }
 
- return(openFlag);
+    return(openFlag);
 }
 
 
