@@ -35,6 +35,8 @@ BUG FIXES
 
     o   sys.on.exit didn't work
 
+    o   sys.parent didn't quite work either for n >= 2. 
+
     o   par("mfg") was wrong, par(mfg=) switched to down columns. Now
 	par(mfrow/mfcol = c(nr, nc)) followed by par(mfg=c(i,j)) is 
 	the preferred style.
