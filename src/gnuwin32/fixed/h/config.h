@@ -490,13 +490,6 @@
 /* Define if the X Window System is missing or not being used. */
 #define X_DISPLAY_MISSING 1
 
-/* Define if on AIX 3.
-   System headers sometimes define this.
-   We just want to avoid a redefinition error message.  */
-#ifndef _ALL_SOURCE
-/* # undef _ALL_SOURCE */
-#endif
-
 /* Define to 'long' if <sys/types.h> does not define. Apparently necessary to
    fix a GCC bug on AIX? */
 #define blkcnt_t long
