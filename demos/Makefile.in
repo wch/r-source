@@ -8,17 +8,24 @@ top_srcdir = @top_srcdir@
 top_builddir = ..
 
 include $(top_builddir)/Makeconf
+subdir = demos
 
-all: R
+all: Makefile R
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
 
 R:
 	@if [ "$(srcdir)" != "." ]; then \
-	  $(MAKE) install rhome=$(top_builddir); \
+	  $(MAKE) rhome=$(top_builddir) install; \
 	fi
 
 docs:
 
 install: installdirs
+	@echo "Installing demos ..."
 	@for f in `ls $(srcdir)/dynload | sed '/CVS/d'`; do \
 	  $(INSTALL_DATA) $(srcdir)/dynload/$$f $(rhome)/demos/dynload; \
 	done
@@ -34,7 +41,6 @@ install: installdirs
 	@for f in $(srcdir)/nlm/*.R; do \
 	  $(INSTALL_DATA) $$f $(rhome)/demos/nlm; \
 	done
-
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/demos
 	@$(MKINSTALLDIRS) $(rhome)/demos/dynload 
@@ -42,6 +48,10 @@ installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/demos/language 
 	@$(MKINSTALLDIRS) $(rhome)/demos/models 
 	@$(MKINSTALLDIRS) $(rhome)/demos/nlm
+install-strip: install
+uninstall:
+	@echo "Uninstalling demos ..."
+	@rm -rf $(rhome)/demos
 
 mostlyclean:
 clean:
