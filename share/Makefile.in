@@ -27,7 +27,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 R:
-	@if [ "$(srcdir)" != "." ]; then \
+	@if test "`cd $(srcdir) && $(GETWD)`" != "`$(GETWD)`" ; then \
 	  $(MAKE) rhome=$(top_builddir) install-sources; \
 	fi
 
@@ -60,7 +60,7 @@ uninstall:
 
 mostlyclean:
 clean:
-	@if [ "$(srcdir)" != "." ]; then \
+	@if test "`cd $(srcdir) && $(GETWD)`" != "`$(GETWD)`" ; then \
 	  rm -rf $(SUBDIRS); \
 	fi
 distclean:

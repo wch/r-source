@@ -63,9 +63,10 @@ install-gnome:
 	fi
 install-strip: install
 uninstall:
-	@echo "uninstalling etc ..."
-	@if test -d $(rhome)/etc -a \
-	  "`cd $(rhome); pwd`" != "`cd $(top_builddir); pwd`"; then \
+	@echo "uninstalling $(subdir) ..."
+	@if test -d $(rhome)/$(subdir) \
+	  && test "`cd $(rhome); $(GETWD)`" \
+	       != "`cd $(top_builddir); $(GETWD)`"; then \
 	  (cd $(rhome)/etc && \
 	    rm -f *.pl $(OBJECTS) $(EXPORTFILE) $(GNOME_IF_FILES)); \
 	  rmdir $(rhome)/etc 2> /dev/null \
@@ -74,7 +75,7 @@ uninstall:
 
 mostlyclean: clean
 clean:
-	@if [ "$(srcdir)" != "." ]; then \
+	@if test "`cd $(srcdir) && $(GETWD)`" != "`$(GETWD)`" ; then \
 	  rm -f *.pl $(GNOME_IF_FILES); \
 	fi
 	@rm -f $(EXPORTFILE)

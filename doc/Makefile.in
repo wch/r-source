@@ -52,8 +52,8 @@ install-strip: install
 uninstall:
 	@echo "uninstalling $(subdir) ..."
 	@if test -d $(rhome)/$(subdir) \
-	  && test "`cd $(rhome); pwd`" != "`cd $(top_builddir); pwd`"; \
-	then \
+	  && test "`cd $(rhome); $(GETWD)`" \
+	       != "`cd $(top_builddir); $(GETWD)`"; then \
 	  for d in $(SUBDIRS); do \
 	    (cd $${d} && $(MAKE) $@) || exit 1; \
 	  done; \

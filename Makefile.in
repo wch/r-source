@@ -17,10 +17,6 @@ DISTFILES = $(INSTFILES) \
 	acconfig.h acinclude.m4 aclocal.m4 \
 	config.site configure configure.in \
 	date-stamp
-## FIXME:
-## Update when releasing 1.3.0
-CLEANFILES = $(INSTFILES) MIRROR-SITES
-## </FIXME>
 SUBDIRS = src afm doc etc share tests tools
 
 GZIP = --best
@@ -46,7 +42,7 @@ libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
 
 R: Makefile
-	@if [ "$(srcdir)" != "." ]; then \
+	@if test "`cd $(srcdir) && $(GETWD)`" != "`$(GETWD)`" ; then \
 	  for f in $(INSTFILES); do \
 	    $(INSTALL_DATA) $(srcdir)/$${f} $(top_builddir); \
 	  done; \
@@ -145,7 +141,7 @@ uninstall:
 	@rm -rf $(rhome)/bin
 	@rm -rf $(rhome)/gnome
 	@rm -f $(bindir)/R
-	@for f in $(CLEANFILES); do \
+	@for f in $(INSTFILES); do \
 	  rm -f $(rhome)/$${f}; \
 	done
 	@for d in afm doc etc share; do \
@@ -158,8 +154,8 @@ clean:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	@if [ "$(srcdir)" != "." ]; then \
-	  rm -f $(CLEANFILES); \
+	@if test "`cd $(srcdir) && $(GETWD)`" != "`$(GETWD)`" ; then \
+	  rm -f $(INSTFILES); \
 	fi
 distclean: clean
 	@for d in $(SUBDIRS); do \

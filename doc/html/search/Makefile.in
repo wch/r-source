@@ -44,7 +44,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 R: Makefile $(OBJECTS) @MAINTAINER_MODE_TRUE@ $(OBJECTS_JAVA)
-	@if [ "$(srcdir)" != "." ]; then \
+	@if test "`cd $(srcdir) && $(GETWD)`" != "`$(GETWD)`" ; then \
 	  $(MAKE) rhome=$(top_builddir) install-sources; \
 	fi
 
@@ -82,9 +82,10 @@ uninstall:
 
 mostlyclean:
 clean:
-	@if [ "$(srcdir)" != "." ]; then \
+	@if test "`cd $(srcdir) && $(GETWD)`" != "`$(GETWD)`" ; then \
 	  rm -f $(INSTFILES); \
 	fi
+	@rm -f $(OBJECTS)
 distclean: clean
 	@rm -f Makefile
 maintainer-clean: distclean
