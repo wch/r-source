@@ -45,7 +45,7 @@ double R_euclidean(double *x, int nr, int nc, int i1, int i2)
 	i2 += nr;
     }
     if(count == 0) return NA_REAL;
-    if(count != nc) dist *= ((double)count/nc);
+    if(count != nc) dist /= ((double)count/nc);
     return sqrt(dist);
 }
 
@@ -86,7 +86,7 @@ double R_manhattan(double *x, int nr, int nc, int i1, int i2)
 	i2 += nr;
     }
     if(count == 0) return NA_REAL;
-    if(count != nc) dist *= ((double)count/nc);
+    if(count != nc) dist /= ((double)count/nc);
     return dist;
 }
 
@@ -106,7 +106,7 @@ double R_canberra(double *x, int nr, int nc, int i1, int i2)
 	i2 += nr;
     }
     if(count == 0) return NA_REAL;
-    if(count != nc) dist *= ((double)count/nc);
+    if(count != nc) dist /= ((double)count/nc);
     return dist;
 }
 

@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.2.1 Patched (2001-02-23)
+Version 1.3.0 Under development (unstable) (2001-02-28)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -177,7 +177,7 @@ $B$subset
 > ## Comments:
 > ## All entries show all 3 digits after the decimal point now.
 > 
-> ## Chong Gu 2000-Feb-16.  step on binomials
+> ## Chong Gu 2001-Feb-16.  step on binomials
 > "detg1" <-
 + structure(list(Temp = structure(c(2, 1, 2, 1, 2, 1, 2, 1, 2,
 + 1, 2, 1), .Label = c("High", "Low"), class = "factor"), M.user = structure(c(1,
@@ -299,8 +299,30 @@ Residual Deviance: 5.656 	AIC: 71.35
 > gofX.manova <- manova(formula = cbind(A, B, C, D) ~ groups, data = gofX.df)
 > try(summary(gofX.manova))
 Error in summary.manova(gofX.manova) : residuals have rank 3 < 4
-> ## should fail with error message
+> ## should fail with an error message `residuals have rank 3 < 4'
 > 
 > 
-> ## summary.matrix(*, digits) 
+> ## Prior to 1.3.0 dist did not handle missing values, and the
+> ## internal C code was incorrectly scaling for missing values.
+> library(mva)
+> data(trees)
+> z <- as.matrix(t(trees))
+> z[1,1] <- z[2,2] <- z[3,3] <- z[2,4] <- NA
+> dist(z, method="euclidean")
+          Girth   Height
+Height 352.4365         
+Volume 123.5503 261.5802
+> dist(z, method="maximum")
+       Girth Height
+Height  72.7       
+Volume  56.4   63.3
+> dist(z, method="manhattan")
+           Girth   Height
+Height 1954.8821         
+Volume  557.1448 1392.343
+> dist(z, method="canberra")
+          Girth   Height
+Height 21.66477         
+Volume 10.96200 13.63365
+> detach("package:mva")
 > 
