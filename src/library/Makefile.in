@@ -38,7 +38,7 @@ R:
 	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
 	@echo "installing parsed NAMESPACE files"
-	@rm -r $(top_builddir)/library/tools/Meta/nsInfo.rds
+	@rm -f $(top_builddir)/library/tools/Meta/nsInfo.rds
 	@for pkg in $(R_PKGS_BASE) ; do \
 	  if test -f $(srcdir)/$${pkg}/NAMESPACE; then \
           echo ".installPackageNamespaceInfo(\"$(top_builddir)/library/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" \
