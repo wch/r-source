@@ -273,6 +273,9 @@ INSTALLATION CHANGES
     o	The C code for most of the graphics device drivers and their
 	afm files are now in package grDevices.
 
+    o	R is now linked against ncurses only if readline is specified
+	(the default).
+
 
 PACKAGE INSTALLATION CHANGES
 

@@ -484,9 +484,6 @@ AC_SUBST(LIBM)
 ## AC_CHECK_LIBM computes LIBM but does not add to LIBS, hence we do
 ## the following as well.
 AC_CHECK_LIB(m, sin)
-AC_CHECK_LIB(ncurses, main, [],
-             AC_CHECK_LIB(termcap, main, [],
-                          AC_CHECK_LIB(termlib, main)))
 case "${host_os}" in
   darwin[1234567].*)
     AM_CONDITIONAL(BUILD_DLFCN_DARWIN, true)
@@ -509,8 +506,23 @@ esac
 
 ## Readline.
 if test "${use_readline}" = yes; then
+  r_save_LIBS="${LIBS}"
+  ## don't use the cached value as we need to rebuild LIBS
+  unset ac_cv_lib_readline_rl_callback_read_char
   AC_CHECK_LIB(readline, rl_callback_read_char)
   use_readline="${ac_cv_lib_readline_rl_callback_read_char}"
+  if test "${use_readline}" = no; then
+    ## only need ncurses if libreadline is not statically linked against it
+    unset ac_cv_lib_readline_rl_callback_read_char
+    AC_CHECK_LIB(ncurses, main, [],
+                 AC_CHECK_LIB(termcap, main, [],
+                              AC_CHECK_LIB(termlib, main)))
+    AC_CHECK_LIB(readline, rl_callback_read_char)
+    use_readline="${ac_cv_lib_readline_rl_callback_read_char}"
+  fi
+  if test "${use_readline}" = no; then
+    LIBS="${r_save_LIBS}"
+  fi
 fi
 
 ### * Checks for header files.
