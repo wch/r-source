@@ -1,4 +1,4 @@
-%% From package:nlme  AIC.Rd,v 1.4 2000/07/03 18:22:45 bates 
+%% From package:nlme  AIC.Rd,v 1.4 2000/07/03 18:22:45 bates
 %% with additional "k = 2" argument (MM)
 \name{AIC}
 \title{Akaike Information Criterion}
@@ -6,32 +6,39 @@
 AIC(object, \dots, k = 2)
 }
 \alias{AIC}
-\alias{AIC.lm}
+\alias{AIC.default}
+\alias{AIC.lm}% << still needed for  library(nlme)
 \arguments{
   \item{object}{a fitted model object, for which there exists a
     \code{logLik} method to extract the corresponding log-likelihood, or
     an object inheriting from class \code{logLik}.}
-  \item{\dots}{optional fitted model objects.}
+  \item{\dots}{optionally more fitted model objects.}
   \item{k}{numeric, the ``penalty'' per parameter to be used; the
     default \code{k = 2} is the classical AIC.}
 }
 \description{
-  This generic function calculates the Akaike information criterion for
+  Generic function calculating the Akaike information criterion for
   one or several fitted model objects for which a log-likelihood value
   can be obtained, according to the formula
   \eqn{-2 \mbox{log-likelihood} + k n_{par}}{-2*log-likelihood + k*npar},
   where \eqn{n_{par}}{npar} represents the number of parameters in the
   fitted model, and \eqn{k = 2} for the usual AIC, or \eqn{k = \log(n)}
   (\eqn{n} the number of observations) for the so-called BIC or SBC
-  (Schwarz's Bayesian criterion).  When comparing fitted objects, the
-  smaller the AIC, the better the fit.
+  (Schwarz's Bayesian criterion).
+}
+\details{
+  The default method for \code{AIC}, \code{AIC.default()} entirely
+  relies on the existence of a \code{\link{logLik}} method
+  computing the log-likelihood for the given class.
+
+  When comparing fitted objects, the smaller the AIC, the better the fit.
 }
 \value{
-  if just one object is provided, returns a numeric value
-  with the corresponding AIC; if more than one object are provided,
-  returns a \code{data.frame} with rows corresponding to the objects and
-  columns representing the number of parameters in the model
-  (\code{df}) and the AIC.
+  If just one object is provided, returns a numeric value
+  with the corresponding AIC (or BIC, or \dots, depending on \code{k});
+  if more than one object are provided, returns a \code{data.frame} with
+  rows corresponding to the objects and columns representing the number
+  of parameters in the model (\code{df}) and the AIC.
 }
 \references{
   Sakamoto, Y., Ishiguro, M., and Kitagawa G. (1986).

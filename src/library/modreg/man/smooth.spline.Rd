@@ -12,7 +12,8 @@
 }
 \usage{
 smooth.spline(x, y, w = rep(1, length(x)), df = 5, spar = 0,
-              cv = FALSE, all.knots = FALSE, df.offset = 0, penalty = 1)
+              cv = FALSE, all.knots = FALSE, df.offset = 0, penalty = 1,
+              tol.spar = 0.001)
 }
 \arguments{
  \item{x}{a vector giving the values of the predictor variable, or  a
@@ -34,6 +35,8 @@ smooth.spline(x, y, w = rep(1, length(x)), df = 5, spar = 0,
    \code{df.offset} in the GCV criterion.}
  \item{penalty}{the coefficient of the penalty for degrees of freedom
    in the GCV criterion.}
+ \item{tol.spar}{the precision (\bold{tol}erance) used for root finding
+   when the smoothing parameter \code{spar} is computed.}
 }
 \details{
   The \code{x} vector should contain at least ten distinct values.
@@ -53,17 +56,30 @@ smooth.spline(x, y, w = rep(1, length(x)), df = 5, spar = 0,
 
   Note that with these definitions, \eqn{f_i = f(x_i)}, and the B-spline
   basis representation \eqn{f = X c} (i.e. \eqn{c} is
-  the vector of spline coefficients), the penalized log likelihood is 
+  the vector of spline coefficients), the penalized log likelihood is
   \eqn{L = (y - f)' W^2 (y - f) + \lambda c' \Sigma c}, and hence
   \eqn{c} is the solution of the (ridge regression)
   \eqn{(X' W^2 X + \lambda \Sigma) c = X' W^2 y}.
- 
 
   If \code{spar} is missing or 0, the value of \code{df} is used to
   determine the degree of smoothing. If both are missing, leave-one-out
   cross-validation is used to determine \eqn{\lambda}.
+  Note that from the above relation,
+%%  lam      = r * 256^(3s - 1)
+%%  log(lam) = log(r) + (3s - 1) * log(256)
+%% (log(lam) - log(r)) / log(256)  = 3s - 1
+%% s = [1 +  {log(lam) - log(r)} / {8 log(2)} ] / 3
+%%   = 1/3 + {log(lam) - log(r)} / {24 log(2)}
+%%   = 1/3 - log(r)/{24 log(2)} +  log(lam) / {24 log(2)}
+%%   =               s0         + 0.0601 * log(lam)
+  \code{spar} is \eqn{s = s0 + 0.0601 * \bold{\log}\lambda}{%
+                   spar = s0 + 0.0601 * log(lambda)},
+  which is intentionally \emph{different} from the S-plus implementation
+  of \code{smooth.spline} (where \code{spar} is proportional to
+  \eqn{\lambda}).  In \R's (\eqn{\log \lambda}) scale, it makes more
+  sense to vary \code{spar} linearly.
 
-  The `generalized' cross-validation method will work correctly when
+  The ``generalized'' cross-validation method will work correctly when
   there are duplicated points in \code{x}.  However, it is ambiguous what
   leave-one-out cross-validation means with duplicated points, and the
   internal code uses an approximation that involves leaving out groups

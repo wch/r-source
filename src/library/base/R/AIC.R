@@ -7,19 +7,24 @@ AIC <- function(object, ..., k = 2) UseMethod("AIC")
 AIC.logLik <- function(object, ..., k = 2)
     -2 * c(object) + k * attr(object, "df")
 
-## AIC for various fitted objects
-AIC.lm <- function(object, ..., k = 2)
+AIC.default <- function(object, ..., k = 2)
 {
-    if(length(list(...))) {
-        object <- list(object, ...)
-        val <- lapply(object, logLik)
-        val <- as.data.frame(t(sapply(val,
-                                      function(el)
-                                      c(attr(el, "df"), AIC(el, k = k)))))
-        names(val) <- c("df", "AIC")
-        row.names(val) <- as.character(match.call()[-1])
-        val
-    } else {
-        AIC(logLik(object), k = k)
+    ## AIC for various fitted objects --- any for which there's a logLik() method:
+
+    if(length(list(...))) {# several objects: produce data.frame
+	object <- list(object, ...)
+	val <- lapply(object, logLik)
+	val <- as.data.frame(t(sapply(val,
+				      function(el)
+				      c(attr(el, "df"), AIC(el, k = k)))))
+	names(val) <- c("df", "AIC")
+	row.names(val) <- as.character(match.call()[-1])
+	val
+    }
+    else {
+	AIC(logLik(object), k = k)
     }
 }
+
+
+AIC.lm <- .Alias(AIC.default)## currently (2001-09-18) needed for  library(nlme)

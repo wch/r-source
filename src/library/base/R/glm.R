@@ -157,7 +157,7 @@ glm.fit <-
     ##------------- THE Iteratively Reweighting L.S. iteration -----------
     for (iter in 1:control$maxit) {
 	good <- weights > 0
-        varmu <- variance(mu)[good]
+	varmu <- variance(mu)[good]
 	if (any(is.na(varmu)))
 	    stop("NAs in V(mu)")
 	if (any(varmu == 0))
@@ -165,7 +165,7 @@ glm.fit <-
 	mu.eta.val <- mu.eta(eta)
 	if (any(is.na(mu.eta.val[good])))
 	    stop("NAs in d(mu)/d(eta)")
-        ## drop observations for which w will be zero
+	## drop observations for which w will be zero
 	good <- (weights > 0) & (mu.eta.val != 0)
 
 	if (all(!good)) {
@@ -254,12 +254,12 @@ glm.fit <-
     if (boundary) warning("Algorithm stopped at boundary value")
     eps <- 10*.Machine$double.eps
     if (family$family == "binomial") {
-        if (any(mu > 1 - eps) || any(mu < eps))
-            warning("fitted probabilities numerically 0 or 1 occurred")
+	if (any(mu > 1 - eps) || any(mu < eps))
+	    warning("fitted probabilities numerically 0 or 1 occurred")
     }
     if (family$family == "poisson") {
-        if (any(mu < eps))
-            warning("fitted rates numerically 0 occurred")
+	if (any(mu < eps))
+	    warning("fitted rates numerically 0 occurred")
     }
     ## If X matrix was not full rank then columns were pivoted,
     ## hence we need to re-label the names ...
@@ -309,6 +309,7 @@ glm.fit <-
 	##Should not be necessary: --pd
 	##if(resdf>0) aic(y, n, mu, weights, dev) + 2*fit$rank else -Inf
 	aic(y, n, mu, weights, dev) + 2*fit$rank
+	##     ^^ is only initialize()d for "binomial" [yuck!]
     list(coefficients = coef, residuals = residuals, fitted.values = mu,
 	 effects = fit$effects, R = Rmat, rank = fit$rank,
 	 qr = fit[c("qr", "rank", "qraux", "pivot", "tol")], family = family,

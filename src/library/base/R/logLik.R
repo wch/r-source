@@ -1,7 +1,22 @@
-## from package:nls
 logLik <- function(object, ...) UseMethod("logLik")
 
-## from package:nlme 
+print.logLik <- function(x, ...) print(c(x), ...)
+
+## >> logLik.nls() in ../../nls/R/nls.R
+
+## from package:nlme
+
+## log-likelihood for glm objects
+logLik.glm <- function(object, ...)
+{
+    if(length(list(...)))
+        warning("extra arguments discarded")
+    p <- object$rank
+    val <- p - object$aic / 2
+    attr(val, "df") <- p
+    class(val) <- "logLik"
+    val
+}
 
 ## log-likelihood for lm objects
 logLik.lm <- function(object, REML = FALSE, ...)
@@ -31,4 +46,3 @@ logLik.lm <- function(object, REML = FALSE, ...)
     val
 }
 
-print.logLik <- function(x, ...) print(c(x), ...)

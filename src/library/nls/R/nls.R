@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.15 2001/08/16 09:24:25 ripley Exp $
+### $Id: nls.R,v 1.16 2001/09/18 17:05:13 maechler Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -613,7 +613,7 @@ logLik.nls <- function(object, REML = FALSE, ...)
     val
 }
 
-AIC.nls <- .Alias(AIC.lm) # AIC works via logLik
+## AIC.nls <- .Alias(AIC.lm) # AIC works via logLik
 
 df.residual.nls <- function(object, ...)
 {

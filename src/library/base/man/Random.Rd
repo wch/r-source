@@ -105,7 +105,7 @@ set.seed(seed, kind = NULL)
   Initially, there is no seed;	a new one is created from the current
   time when one is required.  Hence, different sessions will give
   different simulation results, by default.
-  
+
   \code{.Random.seed} saves the seed set for the uniform random-number
   generator, at least for the system generators.  It does not
   necessarily save the state of other generators, and in particular does
@@ -172,15 +172,16 @@ runif(1); .Random.seed; runif(1); .Random.seed
 rm(.Random.seed); runif(1); .Random.seed
 
 RNGkind("Wich")# (partial string matching on 'kind')
+
+## This shows how `runif(.)' works for Wichmann-Hill,
+## using only R functions:
+
 p.WH <- c(30269, 30307, 30323)
 a.WH <- c(  171,   172,   170)
 next.WHseed <- function(i.seed = .Random.seed[-1])
   { (a.WH * i.seed) \%\% p.WH }
 my.runif1 <- function(i.seed = .Random.seed)
   { ns <- next.WHseed(i.seed[-1]); sum(ns / p.WH) \%\% 1 }
-
-## This shows how `runif(.)' works for Wichmann-Hill,
-## using only R functions:
 rs <- .Random.seed
 (WHs <- next.WHseed(rs[-1]))
 u <- runif(1)

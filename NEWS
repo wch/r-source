@@ -84,11 +84,11 @@ NEW FEATURES
 
     o   The C routine type2symbol, similar to type2str, returns a symbol
         corresponding to the type supplied as an argument.
-    
-    o   data.frame() no longer converts logical arguments to factors
-	(following S4 rather than S3).  
 
-    o   model.matrix() treats logical variables as a factors with 
+    o   data.frame() no longer converts logical arguments to factors
+	(following S4 rather than S3).
+
+    o   model.matrix() treats logical variables as a factors with
 	levels c(FALSE, TRUE) (rather than 0-1 valued numerical
 	variables).  This makes R compatible with all S versions.
 
@@ -117,14 +117,14 @@ NEW FEATURES
 	your workspace.)
 
     o	Unix x11() devices can now have a canvas color set, which can
-	help to distinguish plotting "white" from plotting 
+	help to distinguish plotting "white" from plotting
 	"transparent".
 
     o	The macro SHLIB_EXT now includes `.', e.g. ".so" or ".dll",
 	since the Mac uses "Lib" without a `.'.
 
     o	barplot() now respects an inline `cex.axis' argument and has a
-	separate `cex.names' argument so names and the numeric axis 
+	separate `cex.names' argument so names and the numeric axis
 	labels can be scaled separately.  Also, graphics parameters
 	intended for axis() such as `las' can now be used.
 
@@ -195,6 +195,7 @@ NEW FEATURES
     o   integer addition, subtraction, and multiplication now return NA's
 	on overflow and issue a warning.
 
+    o	new AIC.default() and logLik.glm(), also fixing AIC(<glm obj>)
 
 
 BUG FIXES
@@ -205,7 +206,7 @@ BUG FIXES
 
     o	The code in model.matrix.default() handling contrasts was
 	assuming a response was present, and so without a response was
-	failing to record the contrasts for the first variable if it 
+	failing to record the contrasts for the first variable if it
 	were a factor.
 
     o	diffinv() could get the time base wrong in some cases.
