@@ -55,15 +55,18 @@ RESCOMP=$(BINPREF)windres
 .f.o:
 	$(F77) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
 
-%.exe %.exp:  
-	@$(ECHO) -------- Building $@ from $^ --------
-	$(ECHO) EXPORTS > $*.exp
-	$(NM) $^ | $(SED) -n "/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p" >> $*.exp
-	$(DLLTOOL) --dllname $@  --output-exp $*.e --def $*.exp
-	$(LINKER)  $(LINKFLAGS) $($*-LINKFLAGS) -o $@ -Wl,--base-file,$*.b $*.e $^ $($*-LIBS) $(LIBS)
-	$(DLLTOOL) --dllname $@  --base-file $*.b  --output-exp $*.e  --def $*.exp
-	$(LINKER)  $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $*.e $^ $($*-LIBS) $(LIBS)
-	rm $*.e $*.b 
+#%.exe %.exp:  
+#	@$(ECHO) -------- Building $@ from $^ --------
+#	$(ECHO) EXPORTS > $*.exp
+#	$(NM) $^ | $(SED) -n "/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p" >> $*.exp
+#	$(DLLTOOL) --dllname $@  --output-exp $*.e --def $*.exp
+#	$(LINKER)  $(LINKFLAGS) $($*-LINKFLAGS) -o $@ -Wl,--base-file,$*.b $*.e $^ $($*-LIBS) $(LIBS)
+#	$(DLLTOOL) --dllname $@  --base-file $*.b  --output-exp $*.e  --def $*.exp
+#	$(LINKER)  $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $*.e $^ $($*-LIBS) $(LIBS)
+#	rm $*.e $*.b 
+
+%.exe:  
+	$(LINKER)  $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)
 
 
 %.dll %.def:   
