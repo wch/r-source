@@ -541,6 +541,12 @@ stopifnot(all.equal(s1$d, s2$d), all.equal(s1$u, s2$u),
 (e2 <- La.eigen(m))
 stopifnot(all.equal(e1$d, e1$d))
 
+## order/sort.list on NA_STRING
+x <- c("A", "NA", "Z")
+stopifnot(sort(x, na.last = TRUE) == x[sort.list(x, na.last = TRUE)])
+stopifnot(sort(x, na.last = FALSE) == x[sort.list(x, na.last = FALSE)])
+## 1.4.1 sorted NA correctly with sort but not sort.list.
+
 ## This example last: needed < 1.5.0 ##
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09

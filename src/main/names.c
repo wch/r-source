@@ -587,7 +587,7 @@ FUNTAB R_FunTab[] =
 {"sys.parents",	do_sys,		8,	10,	-1,	PP_FUNCALL},
 {"sys.function",do_sys,		9,	10,	-1,	PP_FUNCALL},
 {"parent.frame",do_parentframe,	0,	10,	-1,	PP_FUNCALL},
-{"sort",	do_sort,	1,	11,	1,	PP_FUNCALL},
+{"sort",	do_sort,	1,	11,	2,	PP_FUNCALL},
 {"is.unsorted",	do_isunsorted,	0,	11,	1,	PP_FUNCALL},
 {"psort",	do_psort,	0,	11,	2,	PP_FUNCALL},
 {"qsort",	do_qsort,	0,	11,	2,	PP_FUNCALL},
@@ -944,7 +944,7 @@ void InitNames()
     R_ParseText = R_NilValue;
     /* String constants (CHARSXP values */
     /* Note: changed from mkChar so mkChar can see if it is getting
-       "NA" and then retrun NA_STRING rather than alloc a new CHAR */
+       "NA" and then return NA_STRING rather than alloc a new CHAR */
     /* NA_STRING */
     NA_STRING = allocString(strlen("NA"));
     strcpy(CHAR(NA_STRING), "NA");

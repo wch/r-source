@@ -186,6 +186,19 @@ NEW FEATURES
         which have new optional arguments `big.mark', `big.interval',
         `small.mark', `small.interval', and `decimal.mark'.
 
+    o   Changes to sorting:
+
+	-  sort(), sort.list() and order() have a new argument
+	   `decreasing' to allow the order to be reversed whilst
+	   still preserving ties.
+
+	-  sort() has an option to use different methods in some cases
+	   (currently numeric vectors without names and increasing order).
+
+	-  The default Shell sort is Sedgewick's variant, around 20%
+           faster, and pre-screening for NAs speeds cases without any
+	   NAs several-fold.
+
 
 DEPRECATED & DEFUNCT
 
@@ -448,6 +461,7 @@ BUG FIXES
     o	mean() gave (numeric) NA if integer overflow occurred in sum(),
 	but now always works with numeric (or complex) numbers.
 
+    o	sort.list() and order() were treating NA_STRING as "NA".
 
 
 	**************************************************

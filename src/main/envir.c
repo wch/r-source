@@ -2108,7 +2108,7 @@ SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
     UNPROTECT(1);
-    sortVector(ans);
+    sortVector(ans, FALSE);
     return ans;
 }
 
@@ -2132,7 +2132,7 @@ SEXP do_builtins(SEXP call, SEXP op, SEXP args, SEXP rho)
     ans = allocVector(STRSXP, nelts);
     nelts = 0;
     BuiltinNames(1, intern, ans, &nelts);
-    sortVector(ans);
+    sortVector(ans, TRUE);
     return ans;
 }
 

@@ -715,7 +715,7 @@ int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
 void R_Suicide(char*);
 SEXP setVarInFrame(SEXP, SEXP, SEXP);
-void sortVector(SEXP);
+void sortVector(SEXP, Rboolean);
 void ssort(SEXP*,int);
 SEXPTYPE str2type(char*);
 int StrToInternal(char*);

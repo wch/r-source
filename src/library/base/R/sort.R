@@ -1,5 +1,5 @@
-sort <- function(x, partial=NULL, na.last=NA,
-                 method = c("quick","shell"), index.return = FALSE)
+sort <- function(x, partial=NULL, na.last=NA, decreasing = FALSE,
+                 method = c("shell", "quick"), index.return = FALSE)
 {
     if(isfact <- is.factor(x)) {
 	lev <- levels(x)
@@ -35,12 +35,12 @@ sort <- function(x, partial=NULL, na.last=NA,
                },
                "shell" = {
                    if(!is.null(nms)) {
-                       o <- order(x)
+                       o <- sort.list(x, decreasing=decreasing)
                        y <- x[o]
                        names(y) <- nms[o]
                    }
                    else
-                       y <- .Internal(sort(x))
+                       y <- .Internal(sort(x, decreasing))
                })
     }
     if(!is.na(na.last) && has.na)
@@ -50,10 +50,10 @@ sort <- function(x, partial=NULL, na.last=NA,
     y
 }
 
-order <- function(..., na.last = TRUE)
+order <- function(..., na.last = TRUE, decreasing = FALSE)
 {
     if(!is.na(na.last))
-        .Internal(order(na.last, ...))
+        .Internal(order(na.last, decreasing, ...))
     else{ ## remove nas
         z <- list(...)
         if(any(diff(sapply(z, length)) != 0))
@@ -67,11 +67,11 @@ order <- function(..., na.last = TRUE)
     }
 }
 
-sort.list <- function(x, partial = NULL, na.last = TRUE)
+sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE)
 {
     if(!is.atomic(x))
         stop("`x' must be atomic")
     if(!is.null(partial))
         .NotYetUsed("partial != NULL")
-    .Internal(order(na.last, x))
+    .Internal(order(na.last, decreasing, x))
 }
