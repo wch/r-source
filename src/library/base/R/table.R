@@ -42,9 +42,11 @@ table <- function (..., exclude = c(NA, NaN),
 	if (is.null(lens)) lens <- length(a)
 	else if (length(a) != lens)
 	    stop("all arguments must have the same length")
-	if (is.factor(a))
-	    cat <- a
-	else
+	if (is.factor(a)){
+            levels<-levels(a)
+            levels<-levels[!(levels %in% exclude)]
+            cat <- factor(a,levels=levels)
+	}else
 	    cat <- factor(a, exclude = exclude)
 	nl <- length(l <- levels(cat))
 	dims <- c(dims, nl)

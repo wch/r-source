@@ -80,6 +80,10 @@ NEW FEATURES
      o  The postscript() and PDF() drivers now allow the title to be set.
 
 
+     o  table() now allows exclude= with factor arguments. (requested by
+	Michael Friendly)
+
+
 INSTALLATION CHANGES
 
     o	TITLE files in packages are no longer used, the Title field

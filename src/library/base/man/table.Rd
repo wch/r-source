@@ -22,7 +22,8 @@ as.data.frame.table(x, row.names = NULL, optional = FALSE, \dots)
     character strings), or a list (or data frame) whose components can
     be so interpreted}
   \item{exclude}{values to use in the exclude argument of \code{factor}
-    when interpreting non-factor objects}
+    when interpreting non-factor objects; levels to remove from all
+    factors in \dots}
   \item{dnn}{the names to be given to the dimensions in the result (`the
     dimname names').}
   \item{deparse.level}{controls how the default \code{dnn} is
@@ -83,5 +84,15 @@ class(tab <- xtabs(Freq ~ ., DF))# xtabs & table
 ## tab *is* ``the same'' as the original table:
 all(tab == UCBAdmissions) 
 all.equal(dimnames(tab), dimnames(UCBAdmissions))
+
+a<-1/rep(0:3,10)
+table(a)
+table(a, exclude=NULL)
+b<-factor(rep(c("A","B","C"),10))
+table(b)
+table(b,exclude="B")
+d<-factor(rep(c("A","B","C"),10), levels=c("A","B","C","D","E"))
+table(d, exclude="B")
+
 }
 \keyword{category}
