@@ -289,7 +289,8 @@ sub build_index {
     my %alltitles;
     my $naliases;
     my $nmanfiles;
-
+    my %firstlettersfound;
+                           
     foreach $manfile (@mandir) {
 	if($manfile =~ /\.Rd$/i){
 
@@ -323,11 +324,13 @@ sub build_index {
 		if ($an) {
 		    if($an ne $manfilebase) {
 			warn "\\$1\{$alias\} already in $an.Rd -- " .
-			  "skipping the one in $manfilebase.Rd\n";
+			    "skipping the one in $manfilebase.Rd\n";
 		    }
 		} else {
 		    $alltitles{$alias} = $rdtitle;
 		    $aliasnm{$alias} = $manfilebase;
+		    my $flc = firstLetterCategory($alias);
+		    $firstlettersfound{$flc}++;
 		    $naliases++;
 		}
 	    }
@@ -357,8 +360,10 @@ sub build_index {
 
 
     if($naliases>100){
-	print htmlfile html_alphabet();
-	if($opt_chm) {print chmfile html_alphabet();}
+	print htmlfile html_alphabet(keys(%firstlettersfound));
+	if($opt_chm) {
+	    print chmfile html_alphabet(keys(%firstlettersfound));
+	}
    }
 
     print htmlfile "\n<p>\n<table width=\"100%\">\n";
@@ -368,9 +373,7 @@ sub build_index {
     my $current = "", $currentfile = "", $file, $generic;
     while(<anindex>){
         chomp;  ($alias, $file) = split /\t/;
-        $aliasfirst = uc substr($alias, 0, 1);
-	if($aliasfirst lt "A") { $aliasfirst = ""; }
-	if($aliasfirst gt "Z") { $aliasfirst = "misc"; }
+        $aliasfirst = firstLetterCategory($alias);
 	if( ($naliases > 100) && ($aliasfirst ne $firstletter) ) {
 	    print htmlfile "</table>\n";
 	    print htmlfile html_title2("<a name=\"$aliasfirst\">-- $aliasfirst --</a>");
@@ -484,10 +487,24 @@ sub build_htmlfctlist {
     close htmlfile;
 }
 
-sub fileolder { #(filename, age)
+
+## return ``true'' if file exists and is older than $age
+sub fileolder {
     my($file, $age) = @_;
-    #- return ``true'' if file exists and is older than $age
-    (! ((-f $file) && ((-M $file) < $age)))
+    (! ((-f $file) && ((-M $file) < $age)));
+}
+
+
+## Return the first letter in uppercase, empty string for <=A and
+## "misc" for >=Z 
+## used for indexing various HTML lists.
+sub firstLetterCategory {
+    my ($x) = @_;
+    
+    $x = uc substr($x, 0, 1);
+    if($x lt "A") { $x = ""; }
+    if($x gt "Z") { $x = "misc"; }
+    $x;
 }
 
 1;

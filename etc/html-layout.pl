@@ -121,36 +121,19 @@ sub html_title3
     }
 }
 
+
+## produce alphabet for head of pages
+## optional argument gives array ofg letters to use
 sub html_alphabet
 {
-    "<p align=\"center\">\n"
-    . "<A HREF=\"#A\">A</A>\n"
-    . "<A HREF=\"#B\">B</A>\n"
-    . "<A HREF=\"#C\">C</A>\n"
-    . "<A HREF=\"#D\">D</A>\n"
-    . "<A HREF=\"#E\">E</A>\n"
-    . "<A HREF=\"#F\">F</A>\n"
-    . "<A HREF=\"#G\">G</A>\n"
-    . "<A HREF=\"#H\">H</A>\n"
-    . "<A HREF=\"#I\">I</A>\n"
-    . "<A HREF=\"#J\">J</A>\n"
-    . "<A HREF=\"#K\">K</A>\n"
-    . "<A HREF=\"#L\">L</A>\n"
-    . "<A HREF=\"#M\">M</A>\n"
-    . "<A HREF=\"#N\">N</A>\n"
-    . "<A HREF=\"#O\">O</A>\n"
-    . "<A HREF=\"#P\">P</A>\n"
-    . "<A HREF=\"#Q\">Q</A>\n"
-    . "<A HREF=\"#R\">R</A>\n"
-    . "<A HREF=\"#S\">S</A>\n"
-    . "<A HREF=\"#T\">T</A>\n"
-    . "<A HREF=\"#U\">U</A>\n"
-    . "<A HREF=\"#V\">V</A>\n"
-    . "<A HREF=\"#W\">W</A>\n"
-    . "<A HREF=\"#X\">X</A>\n"
-    . "<A HREF=\"#Y\">Y</A>\n"
-    . "<A HREF=\"#Z\">Z</A>\n"
-    . "</p>\n";
+    my @letters = @_;
+
+    @letters = (A..Z) if $#letters<0;
+    my $retval = "<p align=\"center\">\n";
+    foreach $letter (sort(@letters)){
+	$retval .= "<A HREF=\"#${letter}\">${letter}</A>\n";
+    }
+    $retval;
 }
 
 sub chm_pagehead

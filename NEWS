@@ -357,6 +357,10 @@ BUG FIXES
 
     o	call_R will now correctly handle character vector arguments.
 
+    o   The alphabet links on top of HTML function indices with more than
+	100 entries now contain only the letters which are really
+	first letters of at least one entry.
+
 
 
 		CHANGES IN R VERSION 1.0.1
