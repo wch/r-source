@@ -9,9 +9,10 @@ CleanMe  = $(CleanMe1) $(CleanMe2) $(CleanMe3)
 
 MANSRC = ../src/library/*/man/*.Rd
 MANbaseDIR = ../src/library/base/man
+MANdest= ../doc/manual
 
 ##--------------------------------- TARGETS ------------------------------
-DVI = ../doc/manual/Man.dvi
+DVI = $(MANdest)/Man.dvi
 
 build-help: stamp-help
 build-html: stamp-html
@@ -47,16 +48,19 @@ stamp-docs: $(MANSRC)
 	@touch stamp-html
 	@touch stamp-latex
 
-../doc/manual/Man.dvi: stamp-latex
-	-(cd ../doc/manual; make Man.dvi)
+$(DVI): stamp-latex
+	-(cd $(MANdest); make Man.dvi)
 
 $(Ex_Tests):
 	@if [ ! -d $@ ]; then mkdir -p $@ ; fi
 
 clean:
-	@rm -f $(CleanMe1)
+	-(cd $(MANdest); make $@)
 	@-(cd $(Ex_Tests) && make $@)
 
+moreclean: clean
+	@rm -f $(CleanMe1)
+
 distclean realclean:
-	@rm -fr $(Ex_Tests) $(CleanMe)
+	@rm -fr $(CleanMe) $(Ex_Tests)
 	@rm -f stamp-*

@@ -250,7 +250,7 @@ AC_SUBST(FFLAGS)
 #  Damn!  It seems that this can lead to using the wrong options
 #  if the CC we have differs from that which imake knows about.
 #  Lets always use -fpic when CC=gcc.
-# 
+#
 #  As a final safeguard, any options specified in config.site will
 #  override anything we discover below.
 
@@ -263,13 +263,14 @@ AC_CHECK_PROG(XMKMF,xmkmf,xmkmf)
 if test -n "$XMKMF"
 then
 	AC_MSG_CHECKING(how to make shared libraries)
-	rm -f Makefile
+	mv Makefile Makefile-SAFE
 	echo > Imakefile
 	xmkmf > /dev/null
 	PICFLAGS=`grep '^ *PICFLAGS' Makefile | sed 's/^ *PICFLAGS *= *//'`
 	SHLIBLDFLAGS=`grep 'SHLIBLDFLAGS' Makefile | sed 's/ *SHLIBLDFLAGS *= *//'`
 	DLLFLAGS=
 	rm Imakefile Makefile
+	mv Makefile-SAFE Makefile
 	AC_MSG_RESULT(done)
 else
 	PICFLAGS=
@@ -322,7 +323,7 @@ alpha*osf*)
 	LDCMD=gcc
 	LIBS="-lf2c $LIBS"
 	;;
-	
+
 *linux)
 	LDCMD=gcc
 	LIBS="-lf2c $LIBS"
@@ -348,7 +349,7 @@ alpha*osf*)
 	SHLIBLDFLAGS="-G"
 	;;
 
-esac 
+esac
 
 for i in `ls src/appl.c|grep '.c$'` `ls src/appl.f|grep '\.f'`
 do
@@ -392,7 +393,7 @@ AC_SUBST(FPICFLAGS)
 AC_SUBST(PERL)
 AC_SUBST(NO_PERL5)
 
-AC_OUTPUT(Makefile
+AC_OUTPUT(
 src/main/Makefile
 src/graphics/Makefile
 src/math/Makefile
