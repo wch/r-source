@@ -58,6 +58,11 @@ Date: Tue, 31 Jul 2001 11:24:09 -0400
 Subject: Polymarsall.c
 From: pleu@hotmail.com
 Date: Tue, 7 Aug 2001 22:42:07 +0200 (MET DST)
+* PR# 1050 *
+Subject: error in ksmooth C code + patch
+From: htang@hpl.hp.com
+Date: Mon, 13 Aug 2001 04:57:46 +0200 (MET DST)
+--fixed for 1.3.1
 
 Directory:  Analyses
 
@@ -268,7 +273,7 @@ none
 
 Directory:  incoming
 
-* PR# 1049 *
-Subject: predict.mlm: Error: Object "X" not found
-From: John Holena <john.holena@reverecapital.com>
-Date: Sun, 12 Aug 2001 13:35:15 -0400
+* PR# 1051 *
+Subject:      erappin' - daily morning update 8-13-01
+From: eminidaytrading <erap@eminidaytrading.com>
+Date:         Mon, 13 Aug 2001 09:18:54 -0400
