@@ -50,7 +50,7 @@ gammaCody(x)
 }
 \seealso{Other special mathematical functions, as the
     \code{\link{gamma}}, \eqn{\Gamma(x)}, and  \code{\link{beta}},
-    \eqn{\Beta(x)}.
+    \eqn{B(x)}.
 }
 \author{Original Fortran code:
     W. J. Cody, Argonne National Laboratory \cr
