@@ -29908,9 +29908,9 @@ fi
 
 for ac_func in access chdir expm1 fcntl finite fseeko ftello ftruncate getcwd \
   getgrgid getpwuid getuid hypot iconv isascii log1p \
-  matherr mbrtowc mbsrtowcs mbstowcs mkfifo \
-  popen putenv rint setenv strcoll stat strptime symlink \
-  system times unsetenv wcrtomb wcscoll wcsrtombs wcstombs wcswidth
+  matherr mbrtowc mbstowcs mkfifo popen putenv rint \
+  setenv strcoll stat strptime symlink system times unsetenv \
+  wcrtomb wcscoll wcstombs wcswidth wctrans wcwidth
 do
 as_ac_var=`echo "ac_cv_func_$ac_func" | $as_tr_sh`
 echo "$as_me:$LINENO: checking for $ac_func" >&5
@@ -39804,16 +39804,13 @@ else
   r_capabilities="${r_capabilities}${separator}JPEG"
 fi
 fi
-## always have these two on Unix.
-## R_SH_VAR_ADD(r_capabilities, [bzip2], [, ])
-## R_SH_VAR_ADD(r_capabilities, [PCRE], [, ])
 if test "${want_utf8_support}" = yes; then
   separator=", "
 test -z "${separator}" && separator=" "
 if test -z "${r_capabilities}"; then
-  r_capabilities="UTF8"
+  r_capabilities="UTF-8"
 else
-  r_capabilities="${r_capabilities}${separator}UTF8"
+  r_capabilities="${r_capabilities}${separator}UTF-8"
 fi
 fi
 r_options=

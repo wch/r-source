@@ -1211,9 +1211,9 @@ AC_CHECK_TYPES([off_t])
 AC_FUNC_ALLOCA
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate getcwd \
   getgrgid getpwuid getuid hypot iconv isascii log1p \
-  matherr mbrtowc mbsrtowcs mbstowcs mkfifo \
-  popen putenv rint setenv strcoll stat strptime symlink \
-  system times unsetenv wcrtomb wcscoll wcsrtombs wcstombs wcswidth)
+  matherr mbrtowc mbstowcs mkfifo popen putenv rint \
+  setenv strcoll stat strptime symlink system times unsetenv \
+  wcrtomb wcscoll wcstombs wcswidth wctrans wcwidth)
 ## isfinite and isnan are in math.h but might be macros
 AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
 ## <NOTE>
@@ -1609,11 +1609,8 @@ fi
 if test "${have_jpeg}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [JPEG], [, ])
 fi
-## always have these two on Unix.
-## R_SH_VAR_ADD(r_capabilities, [bzip2], [, ])
-## R_SH_VAR_ADD(r_capabilities, [PCRE], [, ])
 if test "${want_utf8_support}" = yes; then
-  R_SH_VAR_ADD(r_capabilities, [UTF8], [, ])
+  R_SH_VAR_ADD(r_capabilities, [UTF-8], [, ])
 fi
 r_options=
 if test "${want_R_framework}" = yes; then
