@@ -86,7 +86,7 @@ rbuild:
 	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
 	@$(MAKE) --no-print-directory makeMakedeps
-	@$(MAKE) --no-print-directory libRblas.a
+	@$(MAKE) --no-print-directory libRblas.a libiconv.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll
 	@$(MAKE) --no-print-directory libR.a
 	@$(MAKE) --no-print-directory ../../bin/Rblas.dll CHTML
