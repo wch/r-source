@@ -238,16 +238,17 @@ sub build_htmlpkglist {
 				 "", "",
 				 "", "", "./R.css");
 
-    print htmlfile "<table align=\"center\" summary=\"R Package list\">\n";
+    print htmlfile "<p><h3>Packages in the standard library</h3>\n", 
+    "<p>\n<table width=\"100%\">\n";
 
     foreach $key (sort(keys %htmltitles)) {
 	print htmlfile "<tr align=\"left\" valign=\"top\">\n";
-	print htmlfile "<td><a href=\"../../library/$key/html/00Index$HTML\">";
+	print htmlfile "<td width=\"25%\"><a href=\"../../library/$key/html/00Index$HTML\">";
 	print htmlfile encodealias($key), "</a></td><td>";
 	print htmlfile $htmltitles{$key}, "</td></tr>\n";
     }
 
-    print htmlfile "</table>\n";
+    print htmlfile "</table>\n\n";
     print htmlfile "</body></html>\n";
 
     close htmlfile;
