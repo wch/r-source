@@ -93,6 +93,7 @@ BUG FIXES
 
     o	spec.ar() now handles order 1 correctly.
 
+    o   add fuzz to prevent anomalies with hist()
 
 
 		CHANGES IN R VERSION 1.2.1
