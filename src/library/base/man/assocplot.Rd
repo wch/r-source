@@ -1,4 +1,4 @@
-\file{assocplot}
+\name{assocplot}
 \alias{assocplot}
 \title{Association Plots}
 \description{
