@@ -99,6 +99,9 @@ NEW FEATURES
 
      o	New argument `local' for example() (suggested by Andy Liaw).
 
+     o	load() now returns invisibly a character vector of the names
+	of the objects which were restored.
+
 
 INSTALLATION CHANGES
 

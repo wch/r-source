@@ -24,6 +24,9 @@ loadURL(url, envir = parent.frame(), quiet = TRUE, \dots)
   \code{loadURL} is a convenience wrapper which downloads a file, loads
   it and deletes the downloaded copy.
 }
+\value{
+  A character vector of the names of objects created, invisibly.
+}
 \seealso{
   \code{\link{save}}, \code{\link{download.file}}.
 }
@@ -38,6 +41,7 @@ load("all.Rdata")
 load("all.Rdata", .GlobalEnv)
 
 \dontrun{## This example may not still be available
-loadURL("http://hesweb1.med.virginia.edu/biostat/s/data/sav/kprats.sav")}
+## print the value to see what objects were created.
+print(loadURL("http://hesweb1.med.virginia.edu/biostat/s/data/sav/kprats.sav"))}
 }
 \keyword{file}
