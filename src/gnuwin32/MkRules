@@ -2,14 +2,14 @@
 .SUFFIXES: .c .cc .cpp .C .f .o .a .def .exp .dll .exe .d
 
 # Alternatives MINGW (mingw32 gcc), CROSS (Linux)
-BUILD=MINGW
+BUILD=CROSS
 
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
 # not requested. Spaces allowed.)
 HHWDIR=C:/Program Files/HTML Help Workshop
 
 # Where does Tcl/Tk live? Spaces allowed.
-TCL_HOME = c:/packages/Tcl
+TCL_HOME = $(RHOME)/src/gnuwin32/Tcl
 TCL_VERSION = 83
 
 ifeq ($(strip $(BUILD)),MINGW)
@@ -24,7 +24,7 @@ ifeq ($(strip $(BUILD)),CROSS)
 # Next two might be i386-mingw32- or i586- depending on the cross-compiler.
 BINPREF=i386-mingw32msvc-
 # Set this to where the mingw32 include files are
-HEADER=/packages/R-X/i386-mingw32msvc/include
+HEADER=/users/ripley/R/R-X-msvc/i386-mingw32msvc/include
 MINGW32CFLAG=-isystem $(HEADER)
 MINGW32LDFLAG=
 FLIBS=-lg2c

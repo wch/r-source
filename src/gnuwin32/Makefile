@@ -14,12 +14,12 @@ endif
 
 ## configuration macros
 HELP = YES
-WINHELP = CHM# NO, CHM, BOTH
+WINHELP =  NO # NO, CHM, BOTH
 
 LEA_MALLOC=YES
 
 # Set to YES and specify the path if you want to use the ATLAS BLAS.
-USE_ATLAS=YES
+USE_ATLAS=NO
 ATLAS_PATH=/R/ATLAS/lib/WinNT_PII
 
 PACKAGES = base ctest eda lqs methods modreg mva nls splines stepfun tools ts
@@ -496,6 +496,11 @@ docsdist: docs
 	zip -rm9X $(RPREFIX)d1.zip $(RPREFIX)/doc/manual \
 	  -x $(RPREFIX)/doc/manual/R-FAQ.pdf
 	$(RM) -r $(RPREFIX)
+
+install:
+	cp *.zip /pub/bdr/RWin/Rpre
+
+
 
 ## ============= End of maintainer targets ========================
 
