@@ -23,7 +23,7 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         coefs[1, 1] <- xm
         var0 <- sum((x-xm)^2)/n.used
         var.pred[1] <- var0
-        xaic[1] <- n.used * log(var0) + 2 * demean + n.used + n.used * log(2 * pi)
+        xaic[1] <- n.used * log(var0) + 2 * demean + 2 + n.used + n.used * log(2 * pi)
         for(i in 1:order.max) {
             fit <- arima0(x, order=c(i, 0, 0), include.mean=demean)
             coefs[i+1, 1:(i+demean)] <- fit$coef[1:(i+demean)]

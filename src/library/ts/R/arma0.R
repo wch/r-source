@@ -210,7 +210,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     names(arma) <- c("ar", "ma", "sar", "sma", "period", "diff", "sdiff")
     dimnames(var) <- list(nm[mask], nm[mask])
     value <- 2 * n.used * res$value + n.used + n.used*log(2*pi)
-    aic <- if(method != "CSS") value + 2*length(coef) else NA
+    aic <- if(method != "CSS") value + 2*length(coef) + 2 else NA
     res <- list(coef = fixed, sigma2 = sigma2, var.coef = var, mask = mask,
                 loglik = -0.5*value, aic = aic, arma = arma,
                 residuals = resid,

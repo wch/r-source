@@ -276,7 +276,7 @@ arima <- function(x, order = c(0, 0, 0),
         sigma2 <- val[[1]][1]/n.used
     }
     value <- 2 * n.used * res$value + n.used + n.used * log(2 * pi)
-    aic <- if(method != "CSS") value + 2*sum(mask) else NA
+    aic <- if(method != "CSS") value + 2*sum(mask) + 2 else NA
     nm <- NULL
     if (arma[1] > 0) nm <- c(nm, paste("ar", 1:arma[1], sep = ""))
     if (arma[2] > 0) nm <- c(nm, paste("ma", 1:arma[2], sep = ""))
