@@ -25,6 +25,7 @@
 #include <Defn.h>
 #include <Rmath.h>
 #include <R_ext/RS.h>
+#include <R_ext/Applic.h> /* for dgemm */
 /* "GetRowNames" and "GetColNames" are utility routines which */
 /* locate and return the row names and column names from the */
 /* dimnames attribute of a matrix.  They are useful because */

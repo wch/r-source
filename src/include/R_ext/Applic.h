@@ -163,9 +163,9 @@ void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
 	    double *h, int nfd, double *step, double *f, int ndigit,
 	    double *typx);
 
-void optif9(int nr, int n, double *x, 
+void optif9(int nr, int n, double *x,
 	    fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
-	    void *state, double *typsiz, double fscale, int method, 
+	    void *state, double *typsiz, double fscale, int method,
 	    int iexp, int *msg, int ndigit, int itnlim, int iagflg,
 	    int iahflg, double dlt, double gradtl, double stepmx,
 	    double steptl, double *xpls, double *fpls, double *gpls,
@@ -196,6 +196,9 @@ int F77_NAME(drotg)(double *da, double *db, double *c__, double *s);
 int F77_NAME(dscal)(int *n, double *da, double *dx, int *incx);
 int F77_NAME(dswap)(int *n, double *dx, int *incx, double *dy, int *incy);
 int F77_NAME(idamax)(int *n, double *dx, int *incx);
+int F77_NAME(dgemm)(char *transa, char *transb, int *m, int *n, int *k,
+		    double *alpha, double *a, int *lda, double *b, int *ldb,
+		    double *beta, double *c, int *ldc);
 /*----*/
 int F77_NAME(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
 int F77_NAME(chol)(double *a, int *lda, int *n, double *v, int *info);
