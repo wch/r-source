@@ -620,6 +620,7 @@ FUNTAB R_FunTab[] =
 {"file.show",	do_fileshow,	0,	111,	5,	PP_FUNCALL},
 {"file.create",	do_filecreate,	0,	11,	1,	PP_FUNCALL},
 {"file.remove",	do_fileremove,	0,	11,	1,	PP_FUNCALL},
+{"file.rename",	do_filerename,	0,	11,	2,	PP_FUNCALL},
 {"file.append",	do_fileappend,	0,	11,	2,	PP_FUNCALL},
 {"list.files",	do_listfiles,	0,	11,	4,	PP_FUNCALL},
 {"file.exists", do_fileexists,	0,	11,	1,	PP_FUNCALL},

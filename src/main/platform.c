@@ -280,6 +280,28 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    char from[PATH_MAX], to[PATH_MAX], *p;
+    checkArity(op, args);
+    
+    if (TYPEOF(CAR(args)) != STRSXP)
+	error("source must be a string");
+    p = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
+    if (strlen(p) >= PATH_MAX - 1)
+	error("expanded source name too long");
+    strncpy(from, p, PATH_MAX - 1);
+
+    if (TYPEOF(CADR(args)) != STRSXP)
+	error("destination must be a string");
+    p = R_ExpandFileName(CHAR(STRING_ELT(CADR(args), 0)));
+    if (strlen(p) >= PATH_MAX - 1)
+	error("expanded destination name too long");
+    strncpy(to, p, PATH_MAX - 1);
+
+    return rename(from, to) == 0 ? mkTrue() : mkFalse();
+}
+
 #ifndef Macintosh
 # include <sys/types.h>
 #else 
