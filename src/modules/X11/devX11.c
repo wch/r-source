@@ -594,7 +594,7 @@ static void handleEvent(XEvent event)
 	    XFindContext(display, event.xclient.window,
 			 devPtrContext, &temp);
 	    dd = (NewDevDesc *) temp;
-	    KillDevice((DevDesc*)(dd));
+	    KillDevice((DevDesc*) GetDevice(devNumber(dd)));
 	}
 }
 
