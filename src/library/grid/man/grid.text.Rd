@@ -47,6 +47,7 @@ grid.text(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
 }
 
 \examples{
+# Clipping of overlapping text
 grid.newpage()
 x <- runif(20)
 y <- runif(20)
@@ -55,6 +56,7 @@ grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,
           gp=gpar(fontsize=20, col="grey"))
 grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,
           gp=gpar(fontsize=20), check=TRUE)
+# Specifying the justification of text
 grid.newpage()
 draw.text <- function(just, i, j) {
   grid.text("ABCD", x=x[j], y=y[i], just=just)
@@ -80,5 +82,9 @@ draw.text(c(), 1, 4)
 draw.text(c("left"), 2, 4)
 draw.text(c("right"), 3, 4)
 draw.text(c("centre"), 4, 4)
+# A simple mathematical annotation example
+grid.newpage()
+grid.text(expression(z[i] == sqrt(x[i]^2 + y[i]^2)),
+  gp=gpar(cex=2))
 }
 \keyword{dplot}
