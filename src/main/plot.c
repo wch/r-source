@@ -202,9 +202,22 @@ SEXP FixupPch(SEXP pch, int dflt)
     }
     else if (isString(pch)) {
 	ans = allocVector(INTSXP, n);
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
+#ifdef SUPPORT_MBCS
+	    if(STRING_ELT(pch, i) == NA_STRING)
+		INTEGER(ans)[i] = NA_INTEGER;
+	    else {
+		wchar_t wc;
+		if(mbrtowc(&wc, CHAR(STRING_ELT(pch, i)), MB_CUR_MAX, 
+			   NULL) > 0) INTEGER(ans)[i] = wc; 
+		else
+		    error("invalid multibyte char in pch=\"c\"");
+	    }
+#else
 	    INTEGER(ans)[i] = STRING_ELT(pch, i) != NA_STRING ?
 		CHAR(STRING_ELT(pch, i))[0] : NA_INTEGER;
+#endif
+	}
     }
     else if (isLogical(pch)) {/* NA, but not TRUE/FALSE */
 	ans = allocVector(INTSXP, n);
