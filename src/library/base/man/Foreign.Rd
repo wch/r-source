@@ -103,6 +103,10 @@ affected, e.g.,
 In this case the output variable didn't exist before the call so it can't
 cause trouble. If the input variable is not changed in \code{Cfunction} you are
 safe.
+
+Also note that with \code{DUP=TRUE}, lists are passed in the internal
+R format \code{(SEXP)} like any other non-atomic object. The accessor
+macros in \code{Rinternals.h} are needed to get at the list elements.
 }
 
 \section{Header files for external code}{
