@@ -19,6 +19,7 @@
  *  EXPORTS	printVector()
  *	     	printNamedVector()
  *	     	printRealVector()
+ *	     	printIntegerVector()
  *	     	printComplexVector()
  *
  *  See ./printutils.c	 for remarks on Printing and the Encoding utils.
@@ -58,7 +59,7 @@ static void printLogicalVector(int *x, int n, int index)
     Rprintf("\n");
 }
 
-static void printIntegerVector(int *x, int n, int index)
+void printIntegerVector(int *x, int n, int index)
 {
     int i, w, labwidth=0, width;
 
