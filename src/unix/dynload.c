@@ -28,6 +28,10 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include "Defn.h"
 #include "R_ext/Rdynpriv.h"
 
