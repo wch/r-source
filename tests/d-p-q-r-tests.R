@@ -5,7 +5,7 @@
 ####
 ####	Functions for  ``d/p/q/r''
 
-source(paste(getenv("SRCDIR"),"all.equal.R", sep="/"))
+source(paste(R.home(),"tests", "all.equal.R", sep="/"))
 
 if(!interactive()) .Random.seed <- c(0,rep(7654, 3))
 
@@ -53,4 +53,21 @@ for(n in rbinom(n1, size = 2*n0, p = .4)) {
 	}
     }
     cat("\n")
+}
+
+##---  Gamma (incl. chi^2) Density :
+x <- round(rgamma(100, shape = 2),2)
+for(sh in round(rlnorm(30),2)) {
+    Ga <- gamma(sh)
+    for(sig in round(rlnorm(30),2)) {
+        if(!(all((d1 <- dgamma(  x,   shape = sh, scale = sig)) ==
+                 (d2 <- dgamma(x/sig, shape = sh, scale = 1) / sig))))
+            cat("ERROR: dgamma() doesn't scale!\n",
+                "(x, shape, scale) =", formatC(c(x, shape, scale)),"\n")
+        tst <- all.equal(d1,
+                         1/(Ga * sig^sh) * x^(sh-1) * exp(-x/sig))
+        if(!(is.logical(tst) && tst))
+            cat("NOT Equal:=(x, shape, scale) =",
+                formatC(c(x, shape, scale)),"\n")
+    }
 }
