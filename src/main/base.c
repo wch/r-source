@@ -14,7 +14,8 @@ SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
     GEDevDesc *curdd;
     GESystemDesc *sd;
     NewDevDesc *dev;
-    GPar *ddp; 
+    GPar *ddp;
+    GPar *ddpSaved;
     SEXP state;
     SEXP valid;
     SEXP result = R_NilValue;
@@ -68,7 +69,7 @@ SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	copyGPar(&(((baseSystemState*) sd->systemSpecific)->dpSaved),
 		 &(((baseSystemState*) 
 		    curdd->gesd[baseRegisterIndex]->systemSpecific)->dpSaved));
-	restoredpSaved((DevDesc*) dd);
+	restoredpSaved((DevDesc*) curdd);
 	copyGPar(&(((baseSystemState*) 
 		    curdd->gesd[baseRegisterIndex]->systemSpecific)->dp),
 		 &(((baseSystemState*) 
@@ -117,6 +118,34 @@ SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	LOGICAL(valid)[0] = ((baseSystemState*) sd->systemSpecific)->gp.valid;
 	UNPROTECT(1);
 	result = valid;
+	break;
+    case GE_ScalePS:
+        sd = dd->gesd[baseRegisterIndex];
+        dev = dd->dev;
+	ddp = &(((baseSystemState*) sd->systemSpecific)->dp);
+	ddpSaved = &(((baseSystemState*) sd->systemSpecific)->dpSaved);
+	if (isReal(data) && LENGTH(data) == 1) {
+	  double rf = REAL(data)[0];
+	  /* The pointsize appears to be being scaled somewhere else
+	   * Can't see where yet;  this seems to work and will have
+	   * to do while we're in feature freeze (!?)
+	   * ddp->ps *= rf;
+	   */
+	  ddp->cra[0] *= rf; 
+	  ddp->cra[1] *= rf;
+	  /* Modify the saved settings so effects dislpay list too
+	   */
+	  /* The pointsize appears to be being scaled somewhere else
+	   * Can't see where yet;  this seems to work and will have
+	   * to do while we're in feature freeze (!?)
+	   * ddpSaved->ps *= rf;
+	   */
+	  ddpSaved->cra[0] *= rf; 
+	  ddpSaved->cra[1] *= rf;
+	}
+	else 
+	  error("Event UpdatePS requires a single numeric value");
+	break;
     }
     return result;
 }

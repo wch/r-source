@@ -58,7 +58,13 @@ typedef enum {
      * chance to say that the output is crap (in which case the
      * graphics engine will abort the display list replay).
      */
-    GE_CheckPlot = 7
+    GE_CheckPlot = 7,
+    /* The device wants to scale the current pointsize
+     * (for scaling an image)
+     * This is not a nice general solution, but a quick fix for 
+     * the Windows device.
+     */
+    GE_ScalePS = 8
 } GEevent;
 
 /* The full definition should be ...
