@@ -63,7 +63,7 @@ help <-
                     }
                 }
                 if(htmlhelp) {
-                    file <- gsub("/", "\\\\", file)
+                    file <- chartr("/", "\\", file)
                     if(file.exists(file)) {
                         browseURL(file)
                         cat("help() for `", topic, "' is shown in browser\n",
@@ -81,7 +81,7 @@ help <-
                     thispkg <- sub(".*/([^/]*)$", "\\1", wfile)
                     hlpfile <- paste(wfile, "/winhlp/", thispkg, ".hlp",
                                      sep = "")
-                    hlpfile <- gsub("/", "\\\\", hlpfile)
+                    hlpfile <- chartr("/", "\\", hlpfile)
                     topic <- sub("(.*/help/)([^/]*)$", "\\2", file)
                     if(verbose) print(hlpfile)
                     if(file.exists(hlpfile)) {
@@ -132,8 +132,8 @@ help <-
                     cmd <- paste('"',
                                  paste(R.home(), "bin", "helpPRINT", sep="/"),
                                  '"', sep="")
-                    texpath <- gsub("\\\\", "/",
-                                    file.path(R.home(), "share", "texmf"))
+                    texpath <- chartr("\\", "/",
+                                      file.path(R.home(), "share", "texmf"))
                     system(paste(cmd, FILE, topic, texpath), wait = FALSE)
                     return(invisible())
                 }

@@ -42,7 +42,7 @@ shell <- function(cmd, shell, flag="/c", intern=FALSE,
     }
     if(missing(flag) && any(!is.na(pmatch(c("bash", "tcsh"), basename(shell)))))
         flag <- "-c"
-    if(translate) cmd <- gsub("/", "\\\\", cmd)
+    if(translate) cmd <- chartr("/", "\\", cmd)
     if(!is.null(shell)) cmd <- paste(shell, flag, cmd)
     res <- system(cmd, intern=intern, wait=wait | intern,
                   show.output.on.console=wait, ...)

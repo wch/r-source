@@ -19,7 +19,7 @@ help.start <- function(update = TRUE, gui = "irrelevant",
             try(fixup.libraries.URLs(.libPaths()))
         }
     }
-    a <- gsub("/", "\\\\", a)
+    a <- chartr("/", "\\", a)
     cat("If nothing happens, you should open `", a, "' yourself\n")
     browseURL(a, browser = browser)
     invisible("")
