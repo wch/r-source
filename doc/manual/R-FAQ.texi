@@ -2324,8 +2324,12 @@ removed such that the reduced data set has complete separation.
 Estimating the number of essential genes in a genome on the basis of
 data from a random transposon mutagenesis experiment, through the use of
 a Gibbs sampler.
-@item netCDF
-Read data from netCDF files.
+@c <COMMENT>
+@c Moved to the Archive as suggested by the maintainer: we now have
+@c ncdf, and other CRAN packages no longer use netCDF.
+@c @item netCDF
+@c Read data from netCDF files.
+@c </COMMENT>
 @item nlme
 Fit and compare Gaussian linear and nonlinear mixed-effects models.
 @emph{Recommended}.

@@ -2225,9 +2225,6 @@ distributions of R.)
      data from a random transposon mutagenesis experiment, through the use
      of a Gibbs sampler.
 
-*netCDF*
-     Read data from netCDF files.
-
 *nlme*
      Fit and compare Gaussian linear and nonlinear mixed-effects models.
      _Recommended_.
