@@ -340,7 +340,7 @@ void mainloop()
 
 	R_Inputfile = R_OpenLibraryFile("base");
 	if(R_Inputfile == NULL) {
-		suicide("unable to open the base package\n");
+		R_Suicide("unable to open the base package\n");
 	}
 
 	doneit = 0;

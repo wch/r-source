@@ -1,12 +1,27 @@
 #ifndef lint
-static char yysccsid[] = "@(#)yaccpar	1.9 (Berkeley) 02/21/93";
+static char const yysccsid[] = "@(#)yaccpar	1.9 (Berkeley) 02/21/93";
 #endif
 #define YYBYACC 1
 #define YYMAJOR 1
 #define YYMINOR 9
-#define yyclearin (yychar=(-1))
+#define YYLEX yylex()
+#define YYEMPTY -1
+#define yyclearin (yychar=(YYEMPTY))
 #define yyerrok (yyerrflag=0)
 #define YYRECOVERING (yyerrflag!=0)
+/* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
+#ifdef c_plusplus
+#ifndef __cplusplus
+#define __cplusplus
+#endif
+#endif
+#ifdef __cplusplus
+extern "C" { char *getenv(const char *); }
+#else
+extern char *getenv();
+extern int yylex();
+extern int yyparse();
+#endif
 #define YYPREFIX "yy"
 #line 2 "gram.y"
 /*
@@ -37,32 +52,32 @@ static char yysccsid[] = "@(#)yaccpar	1.9 (Berkeley) 02/21/93";
 #define LBRACE	'{'
 #define RBRACE	'}'
 
-static void	ResetComment(void);
-static void	AddComment(SEXP);
-static void	PushComment(void);
-static void	PopComment(void);
-static int	isComment(SEXP);
-static void	ifpush(void);
-static void	CheckFormalArgs(SEXP, SEXP);
-static int	KeywordLookup(char*);
+	/* Functions used in the parsing process */
 
-SEXP		listAppend(SEXP,SEXP);
-static SEXP	newlist(void);
-static SEXP	growlist(SEXP, SEXP);
-static SEXP	firstarg(SEXP, SEXP);
-static SEXP	nextarg(SEXP, SEXP, SEXP);
-static SEXP	tagarg(SEXP, SEXP);
+static void	AddComment(SEXP);
+static void	CheckFormalArgs(SEXP, SEXP);
+static SEXP	FirstArg(SEXP, SEXP);
+static SEXP	GrowList(SEXP, SEXP);
+static void	IfPush(void);
+static int	IsComment(SEXP);
+static int	KeywordLookup(char*);
+static SEXP	NewList(void);
+static SEXP	NextArg(SEXP, SEXP, SEXP);
+static void	PopComment(void);
+static void	PushComment(void);
+static void	ResetComment(void);
+static SEXP	TagArg(SEXP, SEXP);
 
 
 	/* These routines allocate constants */
 
-SEXP		mkString(char *);
-SEXP		mkInteger(char *);
-SEXP		mkFloat(char *);
 SEXP		mkComplex(char *);
-SEXP		mkNA(void);
-SEXP		mkTrue(void);
 SEXP		mkFalse(void);
+SEXP		mkFloat(char *);
+SEXP		mkInteger(char *);
+SEXP		mkNA(void);
+SEXP		mkString(char *);
+SEXP		mkTrue(void);
 
 	/* Internal lexer / parser state variables */
 
@@ -115,7 +130,7 @@ static int	xxvalue(SEXP, int);
 
 #define YYSTYPE		SEXP
 
-#line 119 "y.tab.c"
+#line 134 "y.tab.c"
 #define END_OF_INPUT 257
 #define ERROR 258
 #define STR_CONST 259
@@ -150,7 +165,7 @@ static int	xxvalue(SEXP, int);
 #define UMINUS 288
 #define UPLUS 289
 #define YYERRCODE 256
-short yylhs[] = {                                        -1,
+const short yylhs[] = {                                        -1,
     0,    0,    0,    0,    0,    1,    1,    1,    1,    1,
     1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
     1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -160,7 +175,7 @@ short yylhs[] = {                                        -1,
     9,    9,    9,    9,    9,    9,    9,    3,    3,    3,
     3,    3,    4,
 };
-short yylen[] = {                                         2,
+const short yylen[] = {                                         2,
     1,    1,    2,    2,    1,    1,    1,    1,    1,    3,
     3,    2,    2,    2,    2,    2,    3,    3,    3,    3,
     3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
@@ -170,7 +185,7 @@ short yylen[] = {                                         2,
     1,    2,    3,    2,    3,    2,    3,    0,    1,    3,
     3,    5,    0,
 };
-short yydefred[] = {                                      0,
+const short yydefred[] = {                                      0,
     5,    1,    7,    6,    8,    9,    0,    0,    0,    0,
    47,   48,    0,    0,    0,    0,    0,    0,    2,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -186,10 +201,10 @@ short yydefred[] = {                                      0,
    44,    0,    0,    0,    0,    0,    0,    0,    0,   43,
     0,    0,    0,   51,   59,    0,
 };
-short yydgoto[] = {                                      22,
+const short yydgoto[] = {                                      22,
    82,   38,   66,  119,   83,   28,   26,   30,   84,
 };
-short yysindex[] = {                                    730,
+const short yysindex[] = {                                    730,
     0,    0,    0,    0,    0,    0,  -35,  -33,  -24,  -18,
     0,    0, 1422, 1422, 1422, 1422, 1422, 1422,    0, 1422,
  1422,    0,  -10, -252, -228, 1422, 1422, 1422, 1422, 1422,
@@ -205,7 +220,7 @@ short yysindex[] = {                                    730,
     0, 1193, 1422,   57, 1140, 1193, 1193, 1193, 1193,    0,
  1443, 1193, 1422,    0,    0, 1193,
 };
-short yyrindex[] = {                                      0,
+const short yyrindex[] = {                                      0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,   15,
     0,    0,    0,  -21,    0,    0,    0,    0,    0,    0,
@@ -221,11 +236,11 @@ short yyrindex[] = {                                      0,
     0,    3,    0,   18,    0,  744,  134,  143,  147,    0,
   182,  756,    0,    0,    0,   35,
 };
-short yygindex[] = {                                      0,
+const short yygindex[] = {                                      0,
  1707,    0,    0,   17,   21,    0,    0,    0,   -9,
 };
 #define YYTABLESIZE 1840
-short yytable[] = {                                      63,
+const short yytable[] = {                                      63,
   102,   60,   56,  103,   24,   61,   25,   54,   52,   65,
    53,   61,   55,   60,   61,   27,   74,  107,   13,   68,
   108,   29,   68,   58,   52,   60,   56,   64,   53,   61,
@@ -411,7 +426,7 @@ short yytable[] = {                                      63,
     0,  127,  128,  129,    0,    0,    0,    0,    0,  132,
     0,    0,    0,    0,    0,    0,    0,    0,    0,  136,
 };
-short yycheck[] = {                                      10,
+const short yycheck[] = {                                      10,
   259,   36,   37,  262,   40,   40,   40,   42,   43,  262,
    45,   41,   47,   44,   44,   40,   10,   41,   10,   41,
    44,   40,   44,   58,   10,   36,   37,   41,   10,   40,
@@ -617,7 +632,7 @@ char *yyname[] = {
 "GT","GE","LT","LE","EQ","NE","AND","OR","LOW","TILDE","UNOT","NOT","SPECIAL",
 "UMINUS","UPLUS",
 };
-char *yyrule[] = {
+const char * const yyrule[] = {
 "$accept : prog",
 "prog : END_OF_INPUT",
 "prog : '\\n'",
@@ -743,7 +758,7 @@ static SEXP xxfirstformal0(SEXP sym)
 	SEXP ans;
 	UNPROTECT(1);
 	if(GenerateCode)
-		PROTECT(ans = firstarg(R_MissingArg, sym));
+		PROTECT(ans = FirstArg(R_MissingArg, sym));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -754,7 +769,7 @@ static SEXP xxfirstformal1(SEXP sym, SEXP expr)
 	SEXP ans;
 	UNPROTECT(2);
 	if(GenerateCode)
-		PROTECT(ans = firstarg(expr, sym));
+		PROTECT(ans = FirstArg(expr, sym));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -766,7 +781,7 @@ static SEXP xxaddformal0(SEXP formlist, SEXP sym)
 	UNPROTECT(2);
 	if(GenerateCode) {
 		CheckFormalArgs(formlist ,sym);
-		PROTECT(ans = nextarg(formlist, R_MissingArg, sym));
+		PROTECT(ans = NextArg(formlist, R_MissingArg, sym));
 	}
 	else
 		PROTECT(ans = R_NilValue);
@@ -779,7 +794,7 @@ static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr)
 	UNPROTECT(3);
 	if(GenerateCode) {
 		CheckFormalArgs(formlist, sym);
-		PROTECT(ans = nextarg(formlist, expr, sym));
+		PROTECT(ans = NextArg(formlist, expr, sym));
 	}
 	else
 		PROTECT(ans = R_NilValue);
@@ -790,7 +805,7 @@ static SEXP xxexprlist0()
 {
 	SEXP ans;
 	if(GenerateCode)
-		PROTECT(ans = newlist());
+		PROTECT(ans = NewList());
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -802,7 +817,7 @@ static SEXP xxexprlist1(SEXP expr)
 	AddComment(expr);
 	UNPROTECT(1);
 	if(GenerateCode)
-		PROTECT(ans = growlist(newlist(), expr));
+		PROTECT(ans = GrowList(NewList(), expr));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -814,7 +829,7 @@ static SEXP xxexprlist2(SEXP exprlist, SEXP expr)
 	AddComment(expr);
 	UNPROTECT(2);
 	if(GenerateCode)
-		PROTECT(ans = growlist(exprlist, expr));
+		PROTECT(ans = GrowList(exprlist, expr));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -835,7 +850,7 @@ static SEXP xxsub1(SEXP expr)
 	SEXP ans;
 	UNPROTECT(1);
 	if(GenerateCode)
-		PROTECT(ans = tagarg(expr, R_NilValue));
+		PROTECT(ans = TagArg(expr, R_NilValue));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -846,7 +861,7 @@ static SEXP xxsymsub0(SEXP sym)
 	SEXP ans;
 	UNPROTECT(1);
 	if(GenerateCode)
-		PROTECT(ans = tagarg(R_MissingArg, sym));
+		PROTECT(ans = TagArg(R_MissingArg, sym));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -857,7 +872,7 @@ static SEXP xxsymsub1(SEXP sym, SEXP expr)
 	SEXP ans;
 	UNPROTECT(2);
 	if(GenerateCode)
-		PROTECT(ans = tagarg(expr, sym));
+		PROTECT(ans = TagArg(expr, sym));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -868,7 +883,7 @@ static SEXP xxnullsub0()
 	SEXP ans;
 	UNPROTECT(1);
 	if(GenerateCode)
-		PROTECT(ans = tagarg(R_MissingArg, install("NULL")));
+		PROTECT(ans = TagArg(R_MissingArg, install("NULL")));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -879,7 +894,7 @@ static SEXP xxnullsub1(SEXP expr)
 	SEXP ans = install("NULL");
 	UNPROTECT(2);
 	if(GenerateCode)
-		PROTECT(ans = tagarg(expr, ans));
+		PROTECT(ans = TagArg(expr, ans));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -891,7 +906,7 @@ static SEXP xxsublist1(SEXP sub)
 	SEXP ans;
 	UNPROTECT(1);
 	if(GenerateCode)
-		PROTECT(ans = firstarg(CAR(sub),CADR(sub)));
+		PROTECT(ans = FirstArg(CAR(sub),CADR(sub)));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -902,7 +917,7 @@ static SEXP xxsublist2(SEXP sublist, SEXP sub)
 	SEXP ans;
 	UNPROTECT(2);
 	if(GenerateCode)
-		PROTECT(ans = nextarg(sublist, CAR(sub), CADR(sub)));
+		PROTECT(ans = NextArg(sublist, CAR(sub), CADR(sub)));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -1090,7 +1105,7 @@ static SEXP xxexprlist(SEXP a1, SEXP a2)
 
 /*----------------------------------------------------------------------------*/
 
-static SEXP tagarg(SEXP arg, SEXP tag)
+static SEXP TagArg(SEXP arg, SEXP tag)
 {
 	switch (TYPEOF(tag)) {
 	case NILSXP:
@@ -1114,7 +1129,7 @@ static SEXP tagarg(SEXP arg, SEXP tag)
 
 	/* Create a stretchy-list dotted pair */
 
-static SEXP newlist(void)
+static SEXP NewList(void)
 {
 	SEXP s = CONS(R_NilValue, R_NilValue);
 	CAR(s) = s;
@@ -1123,7 +1138,7 @@ static SEXP newlist(void)
 
 	/* Add a new element at the end of a stretchy list */
 
-static SEXP growlist(SEXP l, SEXP s)
+static SEXP GrowList(SEXP l, SEXP s)
 {
 	SEXP tmp;
 	PROTECT(l);
@@ -1163,7 +1178,7 @@ static void PopComment(void)
 		R_CommentSxp = CDR(R_CommentSxp);
 }
 
-int isComment(SEXP l)
+int IsComment(SEXP l)
 {
 	if (isList(l) && isString(CAR(l))
 	&& !strncmp(CHAR(STRING(CAR(l))[0]), "#", 1))
@@ -1203,22 +1218,22 @@ static void AddComment(SEXP l)
 	}
 }
 
-static SEXP firstarg(SEXP s, SEXP tag)
+static SEXP FirstArg(SEXP s, SEXP tag)
 {
 	SEXP tmp;
 	PROTECT(s);
 	PROTECT(tag);
-	tmp = newlist();
-	tmp = growlist(tmp, s);
+	tmp = NewList();
+	tmp = GrowList(tmp, s);
 	TAG(CAR(tmp)) = tag;
 	UNPROTECT(2);
 	return tmp;
 }
 
-static SEXP nextarg(SEXP l, SEXP s, SEXP tag)
+static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
 {
 	PROTECT(tag);
-	l = growlist(l, s);
+	l = GrowList(l, s);
 	TAG(CAR(l)) = tag;
 	UNPROTECT(1);
 	return l;
@@ -1456,14 +1471,14 @@ SEXP R_ParseFile(FILE *fp, int n, int *status)
 		return rval;
 	}
 	else {
-		PROTECT(t = newlist());
+		PROTECT(t = NewList());
 		for(;;) {
 			rval = R_Parse1File(fp, 1, status);
 			switch(*status) {
 			case PARSE_NULL:
 				break;
 			case PARSE_OK:
-				t = growlist(t, rval);
+				t = GrowList(t, rval);
 				break;
 			case PARSE_INCOMPLETE:
 			case PARSE_ERROR:
@@ -1517,14 +1532,14 @@ SEXP R_ParseVector(SEXP text, int n, int *status)
 		return rval;
 	}
 	else {
-		PROTECT(t = newlist());
+		PROTECT(t = NewList());
 		for(;;) {
 			rval = R_Parse1Vector(&textb, 1, status);
 			switch(*status) {
 			case PARSE_NULL:
 				break;
 			case PARSE_OK:
-				t = growlist(t, rval);
+				t = GrowList(t, rval);
 				break;
 			case PARSE_INCOMPLETE:
 			case PARSE_ERROR:
@@ -1611,7 +1626,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, int *status, SEXP prompt)
 		return rval;
 	}
 	else {
-		PROTECT(t = newlist());
+		PROTECT(t = NewList());
 		for(;;) {
 			if(!*bufp) {
 				if(R_ReadConsole(Prompt(prompt, prompt_type),
@@ -1629,7 +1644,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, int *status, SEXP prompt)
 			case PARSE_NULL:
 				break;
 			case PARSE_OK:
-				t = growlist(t, rval);
+				t = GrowList(t, rval);
 				break;
 			case PARSE_INCOMPLETE:
 			case PARSE_ERROR:
@@ -1671,14 +1686,14 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, int *status, SEXP prompt)
  *  The fact that if statements need to parse differently
  *  depending on whether the statement is being interpreted or
  *  part of the body of a function causes the need for ifpop
- *  and ifpush.  When an if statement is encountered an 'i' is
+ *  and IfPush.  When an if statement is encountered an 'i' is
  *  pushed on a stack (provided there are parentheses active).
  *  At later points this 'i' needs to be popped off of the if
  *  stack.
  *
  *----------------------------------------------------------------------------*/
 
-static void ifpush(void)
+static void IfPush(void)
 {
 	if ( *contextp==LBRACE || *contextp=='['
 	  || *contextp=='(' || *contextp == 'i')
@@ -2296,7 +2311,7 @@ again:
 		/* discard any immediately following newlines. */
 
 	case IF:
-		ifpush();
+		IfPush();
 		EatLines = 1;
 		break;
 
@@ -2372,20 +2387,20 @@ again:
 	}
 	return tok;
 }
-#line 2376 "y.tab.c"
+#line 2391 "y.tab.c"
 #define YYABORT goto yyabort
 #define YYREJECT goto yyabort
 #define YYACCEPT goto yyaccept
 #define YYERROR goto yyerrlab
+
 int
 yyparse()
 {
     register int yym, yyn, yystate;
 #if YYDEBUG
     register char *yys;
-    extern char *getenv();
 
-    if (yys = getenv("YYDEBUG"))
+    if ((yys = getenv("YYDEBUG")))
     {
         yyn = *yys;
         if (yyn >= '0' && yyn <= '9')
@@ -2402,7 +2417,7 @@ yyparse()
     *yyssp = yystate = 0;
 
 yyloop:
-    if (yyn = yydefred[yystate]) goto yyreduce;
+    if ((yyn = yydefred[yystate])) goto yyreduce;
     if (yychar < 0)
     {
         if ((yychar = yylex()) < 0) yychar = 0;
@@ -2442,12 +2457,12 @@ yyloop:
         goto yyreduce;
     }
     if (yyerrflag) goto yyinrecovery;
-#ifdef lint
+#if defined(lint) || defined(__GNUC__)
     goto yynewerror;
 #endif
 yynewerror:
     yyerror("syntax error");
-#ifdef lint
+#if defined(lint) || defined(__GNUC__)
     goto yyerrlab;
 #endif
 yyerrlab:
@@ -2805,7 +2820,7 @@ case 73:
 #line 235 "gram.y"
 { EatLines = 1; }
 break;
-#line 2809 "y.tab.c"
+#line 2824 "y.tab.c"
     }
     yyssp -= yym;
     yystate = *yyssp;

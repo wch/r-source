@@ -127,12 +127,12 @@ void InitMemory()
 
 	gStackH = TempNewHandle( R_PPStackSize * sizeof(SEXP), &result );
 	if( (gStackH == NULL) || (result != noErr) )
-		suicide( "couldn't allocate system memory for pointer stack" );
+		R_Suicide( "couldn't allocate system memory for pointer stack" );
 	TempHLock( gStackH, &result );
 	R_PPStack = (SEXP*)*gStackH;
 #else  
 	if (!(R_PPStack = (SEXP *) malloc(R_PPStackSize * sizeof(SEXP))))
-		suicide("couldn't allocate memory for pointer stack");
+		R_Suicide("couldn't allocate memory for pointer stack");
 #endif
      
 	R_PPStackTop = 0;
@@ -140,12 +140,12 @@ void InitMemory()
 #ifdef Macintosh
 	gNHeapH = TempNewHandle( R_NSize * sizeof(SEXPREC), &result );
 	if( (gNHeapH == NULL) || (result != noErr) )
-		suicide( "couldn't allocate system memory for node heap" );
+		R_Suicide( "couldn't allocate system memory for node heap" );
 	TempHLock( gNHeapH, &result );
 	R_NHeap = (SEXPREC *)*gNHeapH;
 #else
 	if (!(R_NHeap = (SEXPREC *) malloc(R_NSize * sizeof(SEXPREC))))
-		suicide("couldn't allocate memory for node heap");
+		R_Suicide("couldn't allocate memory for node heap");
 #endif
      
 	R_VSize = (((R_VSize + 1)/ sizeof(VECREC)));
@@ -153,7 +153,7 @@ void InitMemory()
 #ifdef Macintosh
 	gVHeapH = TempNewHandle( R_VSize * sizeof(VECREC), &result );
 	if( (gVHeapH == NULL) || (result != noErr) )
-		suicide( "couldn't allocate system memory for vector heap" );
+		R_Suicide( "couldn't allocate system memory for vector heap" );
 	TempHLock( gVHeapH, &result );
 	R_VHeap = (VECREC *)*gVHeapH;
 #else
@@ -161,7 +161,7 @@ void InitMemory()
 	printf("R_VSize = %d malloc-ed\n", R_VSize * sizeof(VECREC));
 #endif
 	if (!(R_VHeap = (VECREC *) malloc(R_VSize * sizeof(VECREC))))
-		suicide("couldn't allocate memory for vector heap");
+		R_Suicide("couldn't allocate memory for vector heap");
 #endif
      
 	R_VTop = &R_VHeap[0];

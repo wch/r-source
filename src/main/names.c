@@ -654,7 +654,7 @@ void InitNames()
 	print_na_string = NA_STRING;
 
 	if (!(R_SymbolTable = (SEXP *) malloc(HSIZE * sizeof(SEXP))))
-		suicide("couldn't allocate memory for symbol table");
+		R_Suicide("couldn't allocate memory for symbol table");
 
 	for (i = 0; i < HSIZE; i++)
 		R_SymbolTable[i] = R_NilValue;

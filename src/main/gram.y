@@ -27,32 +27,32 @@
 #define LBRACE	'{'
 #define RBRACE	'}'
 
-static void	ResetComment(void);
-static void	AddComment(SEXP);
-static void	PushComment(void);
-static void	PopComment(void);
-static int	isComment(SEXP);
-static void	ifpush(void);
-static void	CheckFormalArgs(SEXP, SEXP);
-static int	KeywordLookup(char*);
+	/* Functions used in the parsing process */
 
-SEXP		listAppend(SEXP,SEXP);
-static SEXP	newlist(void);
-static SEXP	growlist(SEXP, SEXP);
-static SEXP	firstarg(SEXP, SEXP);
-static SEXP	nextarg(SEXP, SEXP, SEXP);
-static SEXP	tagarg(SEXP, SEXP);
+static void	AddComment(SEXP);
+static void	CheckFormalArgs(SEXP, SEXP);
+static SEXP	FirstArg(SEXP, SEXP);
+static SEXP	GrowList(SEXP, SEXP);
+static void	IfPush(void);
+static int	IsComment(SEXP);
+static int	KeywordLookup(char*);
+static SEXP	NewList(void);
+static SEXP	NextArg(SEXP, SEXP, SEXP);
+static void	PopComment(void);
+static void	PushComment(void);
+static void	ResetComment(void);
+static SEXP	TagArg(SEXP, SEXP);
 
 
 	/* These routines allocate constants */
 
-SEXP		mkString(char *);
-SEXP		mkInteger(char *);
-SEXP		mkFloat(char *);
 SEXP		mkComplex(char *);
-SEXP		mkNA(void);
-SEXP		mkTrue(void);
 SEXP		mkFalse(void);
+SEXP		mkFloat(char *);
+SEXP		mkInteger(char *);
+SEXP		mkNA(void);
+SEXP		mkString(char *);
+SEXP		mkTrue(void);
 
 	/* Internal lexer / parser state variables */
 
@@ -258,7 +258,7 @@ static SEXP xxfirstformal0(SEXP sym)
 	SEXP ans;
 	UNPROTECT(1);
 	if(GenerateCode)
-		PROTECT(ans = firstarg(R_MissingArg, sym));
+		PROTECT(ans = FirstArg(R_MissingArg, sym));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -269,7 +269,7 @@ static SEXP xxfirstformal1(SEXP sym, SEXP expr)
 	SEXP ans;
 	UNPROTECT(2);
 	if(GenerateCode)
-		PROTECT(ans = firstarg(expr, sym));
+		PROTECT(ans = FirstArg(expr, sym));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -281,7 +281,7 @@ static SEXP xxaddformal0(SEXP formlist, SEXP sym)
 	UNPROTECT(2);
 	if(GenerateCode) {
 		CheckFormalArgs(formlist ,sym);
-		PROTECT(ans = nextarg(formlist, R_MissingArg, sym));
+		PROTECT(ans = NextArg(formlist, R_MissingArg, sym));
 	}
 	else
 		PROTECT(ans = R_NilValue);
@@ -294,7 +294,7 @@ static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr)
 	UNPROTECT(3);
 	if(GenerateCode) {
 		CheckFormalArgs(formlist, sym);
-		PROTECT(ans = nextarg(formlist, expr, sym));
+		PROTECT(ans = NextArg(formlist, expr, sym));
 	}
 	else
 		PROTECT(ans = R_NilValue);
@@ -305,7 +305,7 @@ static SEXP xxexprlist0()
 {
 	SEXP ans;
 	if(GenerateCode)
-		PROTECT(ans = newlist());
+		PROTECT(ans = NewList());
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -317,7 +317,7 @@ static SEXP xxexprlist1(SEXP expr)
 	AddComment(expr);
 	UNPROTECT(1);
 	if(GenerateCode)
-		PROTECT(ans = growlist(newlist(), expr));
+		PROTECT(ans = GrowList(NewList(), expr));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -329,7 +329,7 @@ static SEXP xxexprlist2(SEXP exprlist, SEXP expr)
 	AddComment(expr);
 	UNPROTECT(2);
 	if(GenerateCode)
-		PROTECT(ans = growlist(exprlist, expr));
+		PROTECT(ans = GrowList(exprlist, expr));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -350,7 +350,7 @@ static SEXP xxsub1(SEXP expr)
 	SEXP ans;
 	UNPROTECT(1);
 	if(GenerateCode)
-		PROTECT(ans = tagarg(expr, R_NilValue));
+		PROTECT(ans = TagArg(expr, R_NilValue));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -361,7 +361,7 @@ static SEXP xxsymsub0(SEXP sym)
 	SEXP ans;
 	UNPROTECT(1);
 	if(GenerateCode)
-		PROTECT(ans = tagarg(R_MissingArg, sym));
+		PROTECT(ans = TagArg(R_MissingArg, sym));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -372,7 +372,7 @@ static SEXP xxsymsub1(SEXP sym, SEXP expr)
 	SEXP ans;
 	UNPROTECT(2);
 	if(GenerateCode)
-		PROTECT(ans = tagarg(expr, sym));
+		PROTECT(ans = TagArg(expr, sym));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -383,7 +383,7 @@ static SEXP xxnullsub0()
 	SEXP ans;
 	UNPROTECT(1);
 	if(GenerateCode)
-		PROTECT(ans = tagarg(R_MissingArg, install("NULL")));
+		PROTECT(ans = TagArg(R_MissingArg, install("NULL")));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -394,7 +394,7 @@ static SEXP xxnullsub1(SEXP expr)
 	SEXP ans = install("NULL");
 	UNPROTECT(2);
 	if(GenerateCode)
-		PROTECT(ans = tagarg(expr, ans));
+		PROTECT(ans = TagArg(expr, ans));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -406,7 +406,7 @@ static SEXP xxsublist1(SEXP sub)
 	SEXP ans;
 	UNPROTECT(1);
 	if(GenerateCode)
-		PROTECT(ans = firstarg(CAR(sub),CADR(sub)));
+		PROTECT(ans = FirstArg(CAR(sub),CADR(sub)));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -417,7 +417,7 @@ static SEXP xxsublist2(SEXP sublist, SEXP sub)
 	SEXP ans;
 	UNPROTECT(2);
 	if(GenerateCode)
-		PROTECT(ans = nextarg(sublist, CAR(sub), CADR(sub)));
+		PROTECT(ans = NextArg(sublist, CAR(sub), CADR(sub)));
 	else
 		PROTECT(ans = R_NilValue);
 	return ans;
@@ -605,7 +605,7 @@ static SEXP xxexprlist(SEXP a1, SEXP a2)
 
 /*----------------------------------------------------------------------------*/
 
-static SEXP tagarg(SEXP arg, SEXP tag)
+static SEXP TagArg(SEXP arg, SEXP tag)
 {
 	switch (TYPEOF(tag)) {
 	case NILSXP:
@@ -629,7 +629,7 @@ static SEXP tagarg(SEXP arg, SEXP tag)
 
 	/* Create a stretchy-list dotted pair */
 
-static SEXP newlist(void)
+static SEXP NewList(void)
 {
 	SEXP s = CONS(R_NilValue, R_NilValue);
 	CAR(s) = s;
@@ -638,7 +638,7 @@ static SEXP newlist(void)
 
 	/* Add a new element at the end of a stretchy list */
 
-static SEXP growlist(SEXP l, SEXP s)
+static SEXP GrowList(SEXP l, SEXP s)
 {
 	SEXP tmp;
 	PROTECT(l);
@@ -678,7 +678,7 @@ static void PopComment(void)
 		R_CommentSxp = CDR(R_CommentSxp);
 }
 
-int isComment(SEXP l)
+int IsComment(SEXP l)
 {
 	if (isList(l) && isString(CAR(l))
 	&& !strncmp(CHAR(STRING(CAR(l))[0]), "#", 1))
@@ -718,22 +718,22 @@ static void AddComment(SEXP l)
 	}
 }
 
-static SEXP firstarg(SEXP s, SEXP tag)
+static SEXP FirstArg(SEXP s, SEXP tag)
 {
 	SEXP tmp;
 	PROTECT(s);
 	PROTECT(tag);
-	tmp = newlist();
-	tmp = growlist(tmp, s);
+	tmp = NewList();
+	tmp = GrowList(tmp, s);
 	TAG(CAR(tmp)) = tag;
 	UNPROTECT(2);
 	return tmp;
 }
 
-static SEXP nextarg(SEXP l, SEXP s, SEXP tag)
+static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
 {
 	PROTECT(tag);
-	l = growlist(l, s);
+	l = GrowList(l, s);
 	TAG(CAR(l)) = tag;
 	UNPROTECT(1);
 	return l;
@@ -971,14 +971,14 @@ SEXP R_ParseFile(FILE *fp, int n, int *status)
 		return rval;
 	}
 	else {
-		PROTECT(t = newlist());
+		PROTECT(t = NewList());
 		for(;;) {
 			rval = R_Parse1File(fp, 1, status);
 			switch(*status) {
 			case PARSE_NULL:
 				break;
 			case PARSE_OK:
-				t = growlist(t, rval);
+				t = GrowList(t, rval);
 				break;
 			case PARSE_INCOMPLETE:
 			case PARSE_ERROR:
@@ -1032,14 +1032,14 @@ SEXP R_ParseVector(SEXP text, int n, int *status)
 		return rval;
 	}
 	else {
-		PROTECT(t = newlist());
+		PROTECT(t = NewList());
 		for(;;) {
 			rval = R_Parse1Vector(&textb, 1, status);
 			switch(*status) {
 			case PARSE_NULL:
 				break;
 			case PARSE_OK:
-				t = growlist(t, rval);
+				t = GrowList(t, rval);
 				break;
 			case PARSE_INCOMPLETE:
 			case PARSE_ERROR:
@@ -1126,7 +1126,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, int *status, SEXP prompt)
 		return rval;
 	}
 	else {
-		PROTECT(t = newlist());
+		PROTECT(t = NewList());
 		for(;;) {
 			if(!*bufp) {
 				if(R_ReadConsole(Prompt(prompt, prompt_type),
@@ -1144,7 +1144,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, int *status, SEXP prompt)
 			case PARSE_NULL:
 				break;
 			case PARSE_OK:
-				t = growlist(t, rval);
+				t = GrowList(t, rval);
 				break;
 			case PARSE_INCOMPLETE:
 			case PARSE_ERROR:
@@ -1186,14 +1186,14 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, int *status, SEXP prompt)
  *  The fact that if statements need to parse differently
  *  depending on whether the statement is being interpreted or
  *  part of the body of a function causes the need for ifpop
- *  and ifpush.  When an if statement is encountered an 'i' is
+ *  and IfPush.  When an if statement is encountered an 'i' is
  *  pushed on a stack (provided there are parentheses active).
  *  At later points this 'i' needs to be popped off of the if
  *  stack.
  *
  *----------------------------------------------------------------------------*/
 
-static void ifpush(void)
+static void IfPush(void)
 {
 	if ( *contextp==LBRACE || *contextp=='['
 	  || *contextp=='(' || *contextp == 'i')
@@ -1811,7 +1811,7 @@ again:
 		/* discard any immediately following newlines. */
 
 	case IF:
-		ifpush();
+		IfPush();
 		EatLines = 1;
 		break;
 
