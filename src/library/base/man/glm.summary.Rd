@@ -9,7 +9,7 @@
        symbolic.cor = FALSE, \dots)
 
 \method{print}{summary.glm}(x, digits = max(3, getOption("digits") - 3),
-      na.print = "", symbolic.cor = x$symbolic.cor,
+      symbolic.cor = x$symbolic.cor,
       signif.stars = getOption("show.signif.stars"), \dots)
 }
 \arguments{
@@ -22,7 +22,6 @@
   \item{correlation}{logical; if \code{TRUE}, the correlation matrix of
     the estimated parameters is returned and printed.}
   \item{digits}{the number of significant digits to use when printing.}
-  \item{na.print}{Unused.}
   \item{symbolic.cor}{logical. If \code{TRUE}, print the correlations in
     a symbolic form (see \code{\link{symnum}}) rather than as numbers.}
   \item{signif.stars}{logical. If \code{TRUE}, ``significance stars''

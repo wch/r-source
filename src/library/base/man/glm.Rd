@@ -3,6 +3,8 @@
 \alias{glm.fit}
 \alias{glm.fit.null}
 \alias{weights.glm}
+\alias{print.glm}
+\alias{print.glm.null}
 
 \title{Fitting Generalized Linear Models}
 \description{
@@ -119,8 +121,8 @@ glm.fit.null(x, y, weights = rep(1, nrow(x)),
   is specified, the first in the list will be used.
 }
 \value{
-  \code{glm} returns an object of class \code{glm}
-  which inherits from the class \code{lm}. See later in this section.
+  \code{glm} returns an object of class inheriting from \code{"glm"}
+  which inherits from the class \code{"lm"}. See later in this section.
 
   The function \code{\link{summary}} (i.e., \code{\link{summary.glm}}) can
   be used to obtain or print a summary of the results and the function
@@ -177,6 +179,9 @@ glm.fit.null(x, y, weights = rep(1, nrow(x)),
   \item{xlevels}{(where relevant) a record of the levels of the factors
     used in fitting.}
 
+  Fits from null models have class \code{"glm.null"} inheriting from
+  \code{"glm"}.
+  
   In addition, non-null fits will have components \code{qr}, \code{R}
   and \code{effects} relating to the final weighted linear fit.
 

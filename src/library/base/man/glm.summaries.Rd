@@ -1,8 +1,6 @@
 \name{glm.summaries}
 \alias{family.glm}
 \alias{residuals.glm}
-\alias{print.glm}
-\alias{print.glm.null}
 \title{Accessing Generalized Linear Model Fits}
 \usage{
 \method{family}{glm}(object, \dots)

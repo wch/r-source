@@ -34,8 +34,7 @@ anova.glm.null <- function (object, ..., test = NULL, na.action = na.omit)
     class(output) <- c("anova.glm.null", "anova.glm")
     return(output)
 }
-print.glm.null <- function(x, digits = max(3, getOption("digits") - 3),
-                           na.print = "", ...)
+print.glm.null <- function(x, digits = max(3, getOption("digits") - 3), ...)
 {
     cat("\nCall: ", deparse(x$call), "\n\n")
     cat("No coefficients\n")
@@ -46,8 +45,8 @@ print.glm.null <- function(x, digits = max(3, getOption("digits") - 3),
     cat("AIC:", format(signif(x$aic, digits)), "\n")
     invisible(x)
 }
-print.summary.glm.null <- function (x, digits = max(3, getOption("digits") - 3),
-                                    na.print = "", ...)
+print.summary.glm.null <-
+    function (x, digits = max(3, getOption("digits") - 3), ...)
 {
     cat("\nCall:\n")
     cat(paste(deparse(x$call), sep = "\n", collapse = "\n"),
