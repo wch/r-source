@@ -233,6 +233,3 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 	"/Font4 exch definefont pop",
 	"[ /CMR10 findfont /CMSY10 findfont /CMMI10 findfont ] SymbolEncoding mergefonts",
 	"/Font5 exch definefont pop")
-
-## add merged fonts to resources
-.ps.cm.resourcecomments <- c("%%+ font CMBSY10", "%%+ font CMMI10")

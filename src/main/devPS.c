@@ -563,7 +563,7 @@ PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
 
 	case FontName:
 	    p = SkipToNextItem(buf);
-	    sscanf(p, "%s", fontname);
+	    sscanf(p, "%[^\n\f\r]", fontname);
 	    break;
 
 	case Empty:
@@ -669,7 +669,7 @@ static void PSEncodeFont(FILE *fp, char *encname)
 	    error("Object `.ps.fontreencoding' is not a character vector");
 	for (i = 0; i < length(fontreencoding); i++)
 	    fprintf(fp, "%s\n", CHAR(STRING_ELT(fontreencoding, i)));
-    } else if(strcmp(familyname[4], "CMSY10") == 0) {
+    } else if(strcmp(familyname[4], "CMSY10 CMBSY10 CMMI10") == 0) {
 	/* use different ps fragment for CM fonts */
 	fontreencoding = findVar(install(".ps.cm.fontreencoding"),
 				 R_GlobalEnv);
@@ -707,7 +707,7 @@ static void PSFileHeader(FILE *fp, char* encname,
 			 double left, double bottom, double right, double top)
 {
     int i;
-    SEXP resourcecomments, prolog;
+    SEXP prolog;
 
     if(EPSFheader)
 	fprintf(fp, "%%!PS-Adobe-3.0 EPSF-3.0\n");
@@ -716,20 +716,6 @@ static void PSFileHeader(FILE *fp, char* encname,
     fprintf(fp, "%%%%DocumentNeededResources: font %s\n", familyname[0]);
     for (i = 1; i < 5; i++)
 	fprintf(fp, "%%%%+ font %s\n", familyname[i]);
-    resourcecomments = findVar(install(".ps.resourcecomments"), R_GlobalEnv);
-    if(resourcecomments != R_UnboundValue) {
-	if(!isString(resourcecomments))
-	    error("Object .ps.resourcecomments is not a character vector");
-	for (i = 0; i < length(resourcecomments); i++)
-	    fprintf(fp, "%s\n", CHAR(STRING_ELT(resourcecomments, i)));
-    } else if(strcmp(familyname[4], "CMSY10") == 0) {
-	resourcecomments = findVar(install(".ps.cm.resourcecomments"),
-				   R_GlobalEnv);
-	if(!isString(resourcecomments))
-	    error("Object .ps.cm.resourcecomments is not a character vector");
-	for (i = 0; i < length(resourcecomments); i++)
-	    fprintf(fp, "%s\n", CHAR(STRING_ELT(resourcecomments, i)));
-    }
 
     if(!EPSFheader)
 	fprintf(fp, "%%%%DocumentMedia: %s %.0f %.0f 0 () ()\n",

@@ -3,8 +3,6 @@
 \alias{ps.options}
 \alias{.PostScript.Options}
 \alias{.ps.prolog}
-\alias{.ps.resourcecomments}
-\alias{.ps.cm.resourcecomments}
 \alias{.ps.fontreencoding}
 \alias{.ps.cm.fontreencoding}
 \title{PostScript Graphics}
@@ -136,11 +134,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
   vector \code{.ps.prolog}.  This is marked in the output, and can be
   changed by changing that vector.  (This is only advisable for
   PostScript experts.)  The font encoding can be changed by setting
-  \code{.ps.fontreencoding} to a character vector, and
-  \code{.ps.resourcecomments} can be used to add to the automaticaly
-  generated resource comments in the PostScript file.
-  (\code{.ps.cm.fontreencoding} and \code{.ps.cm.resourcecomments}
-  provide examples.)
+  \code{.ps.fontreencoding} to a character vector.
+  (\code{.ps.cm.fontreencoding} provides an example.)
 
   As ISOLatin1 encoding is used, \code{-} is set as a minus and not
   as a hyphen.  Supply a hyphen (character 173) if that is what you
@@ -158,9 +153,9 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
   \code{"Palatino"} or \code{"Times"}, and refers to the standard
   Adobe PostScript fonts of those names which are included (or cloned)
-  in all PostScript devices.
+  in all common PostScript devices.
 
-  Many PostScript emulators, (including those based on
+  Many PostScript emulators (including those based on
   \code{ghostscript}) use the URW equivalents of these fonts, which are
   \code{"URWGothic"}, \code{"URWBookman"}, \code{"NimbusMon"},
   \code{"NimbusSan"}, \code{"NimbusSanCond"}, \code{"CenturySch"},
@@ -171,10 +166,10 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \code{"URWTimes" == "NimbusRom"} are also supported.
 
   It is also possible to specify \code{family="ComputerModern"}. This
-  is intended to use with the Tyoe 1 versions of the TeX CM fonts.  It
+  is intended to use with the Type 1 versions of the TeX CM fonts.  It
   will normally be possible to include such output in TeX or LaTeX
   provided it is processed with \code{dvips -Ppfb -j0} or the equivalent
-  on your system.
+  on your system. (\code{-j0} turns off font subsetting.)
   
   If the second form of argument \code{"family"} is used, it should be a
   character vector of four or five paths to Adobe Font Metric files for
@@ -256,8 +251,7 @@ postscript("foo.ps", family = "NimbusSan")
 postscript("cm_test.eps", width = 4.0, height = 3.0,
            horizontal = FALSE, onefile = FALSE, paper = "special",
            family = "ComputerModern")
-## The resultant postscript file can be used by dvips provided
-## font subsetting is disabled (by flag -j0)
+## The resultant postscript file can be used by dvips -Ppfb -j0.
 }
 \testonly{
 xx <- seq(0, 7, length=701)
