@@ -18,7 +18,7 @@ points(x, \dots)
   \item{type}{character indicating the type of plotting; actually any of
     the \code{type}s as in \code{\link{plot}}.}
   \item{pch}{plotting \dQuote{character}, i.e., symbol to use.  \code{pch} can
-    either be a \code{\link{character}} or an integer code for a set of
+    either be a single character or an integer code for a set of
     graphics symbols.  The full set of S symbols is available with
     \code{pch=0:18}, see the last picture from \code{example(points)},
     i.e., the examples below.
@@ -37,7 +37,12 @@ points(x, \dots)
       \item \code{pch=25}: triangle point down.
     }
     Values \code{pch=26:32} are currently unused, and \code{pch=32:255}
-    give the text symbol in the encoding in use (see \code{\link{postscript}}).
+    give the text symbol in a single-byte locale. In a multi-byte locale
+    such as UTF-8, numeric values of \code{pch} greater than or equal to
+    32 specify a Unicode code point.
+    
+    If \code{pch} is an integer or character \code{NA} or an empty
+    character string, the point is omitted from the plot.
   }
   \item{col}{color code or name, see \code{\link{par}}.}
   \item{bg}{background (\dQuote{fill}) color for open plot symbols}
@@ -59,8 +64,7 @@ points(x, \dots)
   Graphical parameters are permitted as arguments to this function.
 }
 \note{
-  What is meant by \sQuote{a single character} is locale-dependent, and
-  may not be handled well in multi-byte locales such as UTF-8.
+  What is meant by \sQuote{a single character} is locale-dependent.
 
   The encoding may not have symbols for some or all of the characters in
   \code{pch=128:255} 

@@ -536,6 +536,9 @@ BUG FIXES
 
     o	dpois(*, lambda=Inf) now returns 0 (or -Inf for log).
 
+    o	Using pch="" gave a square (pch=0)!  Now it is regarded as the
+	same as NA, which was also undocumented but omits the point.
+
 
 
 
