@@ -290,3 +290,7 @@ Date: Tue, 11 Jan 2000 02:53:56 +0100 (MET)
 Subject: X11 troubles
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 13 Jan 2000 14:31:42 +0100
+* PR# 401 *
+Subject: bug in setting length of a list
+From: Saikat DebRoy <saikat@stat.wisc.edu>
+Date: 20 Jan 2000 12:55:15 -0600
