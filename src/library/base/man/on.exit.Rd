@@ -18,5 +18,6 @@ performing other cleanup actions.
 \examples{
 opar <- par(mai=c(1,1,1,1))
 on.exit(par(opar))
+\testonly{par(opar)}
 }
 \keyword{programming}

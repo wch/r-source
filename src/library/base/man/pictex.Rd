@@ -43,6 +43,7 @@ pictex()
 plot(1:11,(-5:5)^2, type='b', main="Simple Example Plot")
 dev.off()
 ##--------------------
+\dontrun{
 \%\% LaTeX Example
 \\documentclass{article}
 \\usepackage{pictex}
@@ -58,6 +59,7 @@ dev.off()
 \%\%-- TeX Example --
 \\input pictex
 $$ \\input Rplots.tex $$
+}
 }
 \keyword{device}
 %%-

@@ -39,7 +39,7 @@ dev.print(device=postscript, \dots)
 }
 \note{
 Every device has a display list which records all of
-the graphics operations that occur in the device.  
+the graphics operations that occur in the device.
 \code{dev.copy} and \code{dev.print} copy graphics
 contents by copying the display list from one device to another device.
 Also, automatic redrawing of graphics contents following the resizing of
@@ -47,7 +47,7 @@ a device depends on the contents of the display list.
 
 After the command \code{dev.control("inhibit")},
 graphics operations are not recorded in
-the display list so that 
+the display list so that
 \code{dev.copy} and \code{dev.print} will not copy anything and the
 contents of a device will not be redrawn automatically if the device is
 resized.
@@ -60,7 +60,7 @@ memory usage is an issue.
 \code{\link{dev.cur}} and other \code{dev.xxx} functions
 }
 \examples{
-if (interactive()) {
+\dontrun{
 x11()
 plot(rnorm(10), main="Plot 1")
 dev.copy(device=x11)

@@ -25,7 +25,7 @@ solve(a, b, tol = 1e-7)
 \examples{
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 h8 <- hilbert(8); h8
-solve(h8) # gives error: `singular'
+\dontrun{solve(h8) # gives error: `singular'}
 sh8 <- solve(h8, tol = 1e-10)
 round(sh8 \%*\% h8, 3)
 }

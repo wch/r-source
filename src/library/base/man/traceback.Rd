@@ -14,8 +14,9 @@ traceback()
 \examples{
 foo <- function(x) { print(1); bar(2) }
 bar <- function(x) { x + a.variable.which.does.not.exist }
+\dontrun{
 foo(2) # gives a strange error
-traceback()
+traceback()}
 ## [1] "bar(2)" "foo(2)"
 bar
 ## Ah, this is the culprit ...

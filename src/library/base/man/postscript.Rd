@@ -51,9 +51,10 @@ compatible, and can be included into other documents, e.g. into LaTeX, using
 \code{\link{x11}}, \code{\link{macintosh}}, \code{\link{Devices}}.
 }
 \examples{
-# open the file "foo.ps" for graphics output
-postscript("foo.ps")
-
+\dontrun{
+ # open the file "foo.ps" for graphics output
+ postscript("foo.ps")
+}
 plot(xx,yy)# produce the desired graph(s)
 ## dev.off()# turn off the postscript device
 

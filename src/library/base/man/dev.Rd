@@ -57,7 +57,7 @@ the list of devices.
 \code{\link{graphic.off}()} for closing all devices.
 }
 \examples{
-if (interactive()) {
+\dontrun{
 x11()
 plot(1:10)
 x11()

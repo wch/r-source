@@ -40,7 +40,7 @@ is handled by \code{de.restore}.
 }
 \examples{
 # call data entry with variables x and y
-data.entry(x,y)
+\dontrun{data.entry(x,y)}
 }
 \keyword{utilities}
 \keyword{file}
