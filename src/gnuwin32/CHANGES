@@ -8,7 +8,29 @@ rw1040
 ======
 
 libR.a is no longer used as the recommended compiler can import
-directly from R.dll.
+directly from R.dll (except when cross-building).
+
+The background colour of a windows() window (outside the device
+region) is now in the `Application Background' colour of the current
+Windows colour scheme.  (It used to be LightGray.)
+
+Gamma correction is now applied to the background colour of a graphics
+window.  (It has long been applied to the foreground colours.)  Users
+of LCD screens may want to set something like par(gamma=2) after
+launching a graphics window.
+
+The canvas colour of a windows() window can now be specified.  This is
+not gamma-corrected.
+
+savePlot() now supports saving to PDF.
+
+There is support for transparency in the devga device (which
+encompasses screen windows, metafiles, printers and the bmp, jpeg and
+png devices).  The default background color is "transparent" for all
+but the bitmap devices: this means that backgrounds are omitted when
+plotting to/saving to most devices.  The png() device does support
+transparent backgrounds, but this is not accessible through the 
+menus nor the savePlot() function.
 
 
 

@@ -2122,7 +2122,7 @@ Rboolean GADeviceDriver(DevDesc *dd, char *display, double width,
     /* Start the Device Driver and Hardcopy.  */
 
     if (!GA_Open(dd, xd, display, width, height, recording, resize,
-		 GArgb(canvas, dd->gp.gamma))) {
+		 GArgb(canvas, 1.0))) {
 	free(xd);
 	return FALSE;
     }

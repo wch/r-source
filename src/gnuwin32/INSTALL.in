@@ -130,8 +130,7 @@ Building bitmap device support
 ------------------------------
 
 The file @RWVER@\bin\Rbitmap.dll is not built automatically:
-instructions on how to build it are in the file bitmap\INSTALL.  You
-can just copy this from a binary distribution.
+instructions on how to build it are in the file bitmap\INSTALL.
 
 
 Building Tcl/Tk support
@@ -221,8 +220,10 @@ cross-built version of binutils 2.9.4.
 
 You will need Perl, zip and unzip installed.
 
-You also need: the R source (R-@RVER@.tgz), and to build the installer,
-unzip542.zip from any Info-ZIP mirror.
+You also need: the R source (R-@RVER@.tgz), and to build the rwinst
+installer, unzip542.zip from any Info-ZIP mirror.  (It is possible to
+cross-build the main installers using WINE, which we leave as an
+exercise for the reader.)
 
 Then: untar R-@RVER@.tgz somewhere, and
 
@@ -239,6 +240,10 @@ Packages can be made in the same way as natively: see the file
 readme.packages.  You will need to set STAMP=NO, e.g.
 
 	make STAMP=NO pkg-foo
+
+Note that cross-building does still need libR.a, and that to
+cross-build the methods package you need a working copy of this
+version of R on the Linux system.
 
 
 

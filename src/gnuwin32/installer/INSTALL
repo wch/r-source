@@ -10,12 +10,15 @@ files by
 
 make tcl
 make distribution
-make packagedist
 
-Then in this directory, edit ISDIR in Makefile and run
+Then in this directory, edit ISDIR in Makefile and then run
 
 make
 make ISclean
+
+You will have SetupR.exe and a set of files miniR* for the floppy-sized
+distribution.
+
 
 
 BDR's rwinst
