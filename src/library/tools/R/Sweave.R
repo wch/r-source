@@ -414,18 +414,21 @@ RweaveLatexOptions <- function(options)
         else return(as.logical(toupper(as.character(x))))
     }
 
-    
-    NOLOGOPTS <- c("results", "prefix.string", "width", "height",
+    NUMOPTS <- c("width", "height")
+    NOLOGOPTS <- c(NUMOPTS, "results", "prefix.string",
                    "engine", "label")
 
     for(opt in names(options)){
-        if(! (opt%in%NOLOGOPTS)){
+        if(! (opt %in% NOLOGOPTS)){
             oldval <- options[[opt]]
             if(!is.logical(options[[opt]])){
                 options[[opt]] <- c2l(options[[opt]])
             }
             if(is.na(options[[opt]]))
                 stop(paste("invalid value for", opt, ":", oldval))
+        }
+        else if(opt %in% NUMOPTS){
+            options[[opt]] <- as.numeric(options[[opt]])
         }
     }
 
