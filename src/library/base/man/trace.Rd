@@ -15,7 +15,7 @@
 }
 \usage{
 trace(what, tracer, exit, at, print = TRUE, signature = NULL)
-untrace(what)
+untrace(what, signature = NULL)
 }
 \arguments{ 
   \item{what}{ The name (quoted or not) of a function to be traced or
