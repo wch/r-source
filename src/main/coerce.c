@@ -1299,7 +1299,8 @@ SEXP substituteList(SEXP el, SEXP rho)
 				return substituteList(CDR(el), rho);
 			error("... used in an incorrect context\n");
 		}
-		PROTECT(h = substituteList(h, rho));
+		/* WRONG: PROTECT(h = substituteList(h, rho)); */
+		PROTECT(h = substituteList(h, R_NilValue)); 
 		PROTECT(t = substituteList(CDR(el), rho));
 		t = listAppend(h, t);
 		UNPROTECT(2);
