@@ -223,7 +223,7 @@ sub mark_brackets {
     print STDERR "\n-- mark_brackets:" if $debug;
     my $loopcount = 0;
     while(checkloop($loopcount++, $complete_text,
-		    "mismatched or missing brackets")
+		    "mismatched or missing braces")
 	  && $complete_text =~ /{([^{}]*)}/s) {
 	my $id = $NB . ++$max_bracket . $BN;
 	$complete_text =~ s/{([^{}]*)}/$id$1$id/s;
