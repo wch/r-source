@@ -26,7 +26,7 @@ local({
                         command=function()tkdestroy(top))
     tkpack(dismiss, side="left", expand=TRUE)
 
-    canvas<- tkcanvas(top, relief="raised", width=450, height=300)
+    canvas <- tkcanvas(top, relief="raised", width=450, height=300)
     tkpack(canvas, side="top", fill="x")
 
     plotFont <- "Helvetica 18"
@@ -36,12 +36,14 @@ local({
     tkcreate(canvas, "text", 225, 20, text="A Simple Plot",
              font=plotFont, fill="brown")
 
+    # X tickmarks & labels
     for (i in 0:10) {
         x <- 100 + i * 30
         tkcreate(canvas, "line", x, 250, x, 245, width=2)
         tkcreate(canvas, "text", x, 254,
                  text=10*i, anchor="n", font=plotFont)
     }
+    # Y tickmarks & labels
     for (i in 0:5) {
         y <- 250 - i * 40
         tkcreate(canvas, "line", 100, y, 105, y, width=2)
@@ -50,6 +52,7 @@ local({
                  anchor="e", font=plotFont)
     }
 
+    # The (original) data
     points <- matrix(c(12, 56,
                        20, 94,
                        33, 98,
@@ -58,7 +61,7 @@ local({
                        75, 160,
                        98, 223), ncol=2, byrow=TRUE)
 
-
+    ## `self-drawing' point object
     point.items <- apply(points, 1, function(row) {
         x <- 100 + 3 * row[1]
         y <- 250 - 4/5 * row[2]
@@ -69,37 +72,35 @@ local({
         item
     })
 
-    ## plotDown --
-    ## This procedure is invoked when the mouse is pressed over one of the
-    ## data points.  It sets up state to allow the point to be dragged.
-    ##
-    ## Arguments:
-    ## x, y -	The coordinates of the mouse press.
-
     plotDown <- function(x, y) {
-        x <- as.numeric(x)
-        y <- as.numeric(y)
-        tkdtag(canvas, "selected")
-        tkaddtag(canvas, "selected", "withtag", "current")
-        tkitemraise(canvas,"current")
-        lastX <<- x
-        lastY <<- y
+      ## This procedure is invoked when the mouse is pressed over one
+      ## of the data points.  It sets up state to allow the point
+      ## to be dragged.
+      ##
+      ## Arguments:
+      ## x, y -	The coordinates of the mouse press.
+      x <- as.numeric(x)
+      y <- as.numeric(y)
+      tkdtag(canvas, "selected")
+      tkaddtag(canvas, "selected", "withtag", "current")
+      tkitemraise(canvas,"current")
+      lastX <<- x
+      lastY <<- y
     }
 
-    ## plotMove --
-    ## This procedure is invoked during mouse motion events.  It drags the
-    ## current item.
-    ##
-    ## Arguments:
-    ## x, y -	The coordinates of the mouse.
-
     plotMove <- function(x, y) {
+        ## This procedure is invoked during mouse motion events.
+        ## It drags the current item.
+        ##
+        ## Arguments:
+        ## x, y -	The coordinates of the mouse.
         x <- as.numeric(x)
         y <- as.numeric(y)
         tkmove(canvas, "selected", x - lastX, y - lastY)
         lastX <<- x
         lastY <<- y
     }
+### FIXME : Don't allow points to be moved outside the canvas !!
 
     plotLine <- function(){
         coords <- lapply(point.items,
