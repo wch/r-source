@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-40, 2004-02-13
+Version 1.8-41, 2004-02-16
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1158,17 +1158,16 @@ to a web server.  It is easily installed using Apache under Linux and in
 principle should run on any platform that supports R and a web server
 provided that the installer has the necessary security permissions.
 
-   *Rcgi* is a CGI WWW interface to R by Mark J. Ray
-<mjr@stats.mth.uea.ac.uk>.  It had the ability to use "embedded code": you
-could mix user input and code, allowing the HTML author to do anything from
-load in data sets to enter most of the commands for users without writing
-CGI scripts.  Graphical output was possible in PostScript or GIF formats
-and the executed code was presented to the user for revision.  However, it
-is not clear if the project is still active and recent attempts to contact
-the author or find the package have failed.  Currently, a modified version
-of *Rcgi* by Mai Zhou <mai@ms.uky.edu> (actually, two versions: one with
-(bitmap) graphics and one without) as well as the original code are
-available from `http://www.ms.uky.edu/~statweb'.
+   *Rcgi* is a CGI WWW interface to R by MJ Ray <mjr@dsl.pipex.com>.  It
+had the ability to use "embedded code": you could mix user input and code,
+allowing the HTML author to do anything from load in data sets to enter
+most of the commands for users without writing CGI scripts.  Graphical
+output was possible in PostScript or GIF formats and the executed code was
+presented to the user for revision.  However, it is not clear if the
+project is still active.  Currently, a modified version of *Rcgi* by Mai
+Zhou <mai@ms.uky.edu> (actually, two versions: one with (bitmap) graphics
+and one without) as well as the original code are available from
+`http://www.ms.uky.edu/~statweb'.
 
 5 R Add-On Packages
 *******************
@@ -1910,6 +1909,10 @@ distributions of R.)
 
 *its*
      An S4 class for handling irregular time series.
+
+*kernlab*
+     Kernel-based machine learning methods including support vector
+     machines.  (Currently in `1.9.0/Other'.)
 
 *knnTree*
      Construct or predict with k-nearest-neighbor classifiers, using
