@@ -402,6 +402,9 @@
 /* Define to 1 if you have the <readline/readline.h> header file. */
 /* #undef HAVE_READLINE_READLINE_H */
 
+/* Define to 1 if you have the `realpath' function. */
+/* #undef HAVE_REALPATH */
+
 /* Define to 1 if you have the `rint' function. */
 #define HAVE_RINT 1
 
