@@ -22,7 +22,7 @@
     [, 8] \tab vs   \tab V/S \cr
     [, 9] \tab am   \tab Transmission (0 = automatic, 1 = manual) \cr
     [,10] \tab gear \tab Number of forward gears \cr
-    [,11] \tab carb \tab Number of carburettors
+    [,11] \tab carb \tab Number of carburetors
   }
 }
 \source{
