@@ -20,6 +20,12 @@
 
 #include "Defn.h"
 
+/* "show.file" displays a file so that a user can use it. */
+/* The function calls "R_ShowFile" which is a platform dependent */
+/* hook that arranges for the file to be displayed. A reasonable */
+/* approach would be to open a read-only edit window with the file */
+/* displayed in it. */
+
 SEXP do_showfile(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn;
@@ -30,6 +36,9 @@ SEXP do_showfile(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_ShowFile(CHAR(STRING(fn)[0]));
     return R_NilValue;
 }
+
+/* "append.file" takes two file names as arguments and arranges for */
+/* the second file to be appended to the second. */
 
 SEXP do_appendfile(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
