@@ -29,7 +29,7 @@ object.size(x)
 object.size(letters)
 object.size(ls)
 ## find the 10 largest objects in base
-z <- sapply(ls("package:base"), function(x) object.size(get(x)))
+z <- sapply(ls("package:base"), function(x) object.size(get(x, envir=NULL)))
 as.matrix(rev(sort(z))[1:10])
 }
 \keyword{utilities}
