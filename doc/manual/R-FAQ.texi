@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-03
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-04
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -4028,6 +4028,7 @@ dir /opt/R/src/unix
 * Where have all the methods gone?::  
 * How can I create rotated axis labels?::  
 * Why is read.table() so inefficient?::  
+* What is the difference between package and library?::  
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -4766,7 +4767,7 @@ Also see Figure 1 and associated code in Paul Murrell (2003),
 ``Integrating grid Graphics Output with Base Graphics Output'',
 @emph{RNews}, @strong{3/2}, 7--12.
 
-@node Why is read.table() so inefficient?,  , How can I create rotated axis labels?, R Miscellanea
+@node Why is read.table() so inefficient?, What is the difference between package and library?, How can I create rotated axis labels?, R Miscellanea
 @section Why is read.table() so inefficient?
 
 By default, @code{read.table()} needs to read in everything as character
@@ -4775,6 +4776,17 @@ or factors.  For a large data set, this takes condiderable amounts of
 time and memory.  Performance can substantially be improved by using the
 @code{colClasses} argument to specify the classes to be assumed for the
 columns of the table.
+
+@node What is the difference between package and library?,  , Why is read.table() so inefficient?, R Miscellanea
+@section What is the difference between package and library?
+
+A @dfn{package} is a standardized collection of material extending R,
+e.g.@: providing code, data, or documentation.  A @dfn{library} is a
+place (directory) where R knows to find packages it can use (i.e., which
+were @emph{installed}).  R is told to use a package (to ``load'' it and
+add it to the search path) via calls to the function @code{library}.
+
+@xref{R Add-On Packages}, for more details.
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
