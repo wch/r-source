@@ -36,8 +36,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \item{col}{color for the axis line and the tick marks.  The default
     \code{NULL} means to use \code{par("fg")}.}
   \item{padj}{adjustment for each string perpendicular to the reading direction.
-    For strings parallel to the axes, \code{padj=0} means bottom or right alignment, 
-    and \code{padj=1} means top or left alignment.
+    For strings parallel to the axes, \code{padj=0} means right or top alignment, 
+    and \code{padj=1} means left or bottom alignment.
     If \code{padj} is not a finite value (the default), the value of
     \code{par("las")} determines the adjustment.  For strings plotted
     perpendicular to the axis the default is to centre the string.}
