@@ -191,10 +191,22 @@ upper case) letter and have the extension @file{.Rd} (the default) or
 The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @code{unix}, @code{windows} or @code{mac}.
 
-The C or FORTRAN source and optionally a @file{Makefile} for the compiled
-code is in @file{src}.  Note that the @file{Makefile} most likely is not
-needed, and if one is to be distributed considerable care is needed to
-make it general enough to work on all @R{} platforms.
+The C or FORTRAN source files for the compiled code, and optionally
+files @file{Makevars} and @file{Makefile}, are in @file{src}.  When a
+package is installed using @code{R CMD INSTALL}, Make is used to control
+compilation and linking into a shared library for loading into @R{}.
+There are default variables and rules for this (determined when @R{} is
+configured and recorded in @file{$R_HOME/etc/Makeconf}).  If a package
+needs to specify additional directories for searching header files
+(@samp{-I} options) or additional libraries for linking (@samp{-l} and
+@samp{-L} options), it should do this by setting the variables
+@code{PKG_CPPFLAGS} and @code{PKG_LIBS} in @file{Makeconf}.  (Additional
+flags to be passed to the C or Fortran compiler can be specified by the
+variables @code{PKG_CFLAGS} and @code{PKG_FFLAGS}, respectively.)  Note
+that this mechanism should be general enough to eliminate the need for a
+package-specific @file{Makefile}.  If such a file is to be distributed,
+considerable care is needed to make it general enough to work on all
+@R{} platforms.
 
 The @file{data} subdirectory is for additional data files the package
 makes available for loading using @code{data()}.  Currently, data files
@@ -252,10 +264,14 @@ packages in all respects except that the @file{DESCRIPTION} file is
 replaced by a @file{DESCRIPTION.in} file which just contains fields
 additional to the @file{DESCRIPTION} file of the bundle, for example
 
+@quotation
+@cartouche
 @smallexample
 Package: spatial
 Description: Functions for kriging and point pattern analysis.
 @end smallexample
+@end cartouche
+@end quotation
 
 @node Configure and cleanup, Checking and building packages, Package bundles, Creating R packages
 @comment  node-name,  next,  previous,  up
@@ -263,7 +279,7 @@ Description: Functions for kriging and point pattern analysis.
 
 If your package needs some system-dependent configuration before
 installation you can include a script @file{configure} in your package
-which (if present) is executed by @code{R INSTALL} before any other
+which (if present) is executed by @code{R CMD INSTALL} before any other
 action is performed.  This can be a script created by the autoconf
 mechanism, but may also be a script written by yourself.  Use this to
 detect if any nonstandard libraries are present such that corresponding
@@ -272,8 +288,8 @@ error messages when the package is compiled or used.  To summarize, the
 full power of autoconf is available for your extension package
 (including variable substitution, searching for libraries, etc.).
 
-The script @file{cleanup} is executed as last thing by @code{R INSTALL}
-if present and can be used to clean up the package source tree,
+The script @file{cleanup} is executed as last thing by @code{R CMD
+INSTALL} if present and can be used to clean up the package source tree,
 especially remove files created by @file{configure}.
 
 As an example consider we want to use functionality provided by a (C or
@@ -305,7 +321,7 @@ From this file @code{configure} creates the actual R source file
 @file{foo.R} looking like
 
 @smallexample
-foo <- function(x)@{
+foo <- function(x) @{
     if(!FALSE) stop("Sorry, library `foo' is not available")
     ...
 @end smallexample
@@ -1180,27 +1196,34 @@ which occurrence is meant.
 @node Creating shared libraries, Interfacing C++ code, dyn.load and dyn.unload, System and foreign language interfaces
 @section Creating shared libraries
 @cindex Creating shared libraries
-@findex R SHLIB
+@findex R CMD SHLIB
 
 Under Unix, shared libraries for loading into @R{} can be created using
-@code{R SHLIB}.  This accepts as arguments a list of files which must be
-object files (with extension @file{.o}) or C or Fortran sources (with
-extensions @file{.c} and @file{.f}, respectively).  See @kbd{R SHLIB
---help}, or the on-line help for @code{SHLIB}, for usage information.
-If compiling the source files does not work ``out of the box'', you can
-pass special flags to the compilers when invoking @code{R SHLIB}, or
-write a @file{Makefile} in the compilation directory containing the
-rules required (or, of course, create the object files directly from the
-command line).
+@code{R CMD SHLIB}.  This accepts as arguments a list of files which
+must be object files (with extension @file{.o}) or C or Fortran sources
+(with extensions @file{.c} and @file{.f}, respectively).  See @kbd{R CMD
+SHLIB --help}, or the on-line help for @code{SHLIB}, for usage
+information.  If compiling the source files does not work ``out of the
+box'', you can specify additional flags by setting some of the variables
+@code{PKG_CPPFLAGS} (for the C preprocessor, typically @samp{-I} flags),
+@code{PKG_CFLAGS} and @code{PKG_FFLAGS} (for the C and Fortran
+compilers, respectively) in the file @file{Makevars} in the compilation
+directory, or write a @file{Makefile} in the compilation directory
+containing the rules required (or, of course, create the object files
+directly from the command line).  Similarly, variable @code{PKG_LIBS} in
+@file{Makevars} can be used for additional @samp{-l} and @samp{-L} flags
+to be passed to the linker when building the shared library.
 
 If an add-on package @var{pkg} contains C or Fortran code in its
-@file{src} subdirectory, @code{R INSTALL} creates a shared library (for
-loading into @R{} in the @code{.First.lib} function of the package)
-either automatically using the above @code{R SHLIB} mechanism, or using
-Make if a @file{src} contains a @file{Makefile}.  If a @file{Makefile}
-is really needed or provided, it needs to ensure that the shared library
-created is linked against all ``Fortran'' libraries that @R{} was linked
-against; Make variable @code{FLIBS} contains this information.
+@file{src} subdirectory, @code{R CMD INSTALL} creates a shared library
+(for loading into @R{} in the @code{.First.lib} function of the package)
+either automatically using the above @code{R CMD SHLIB} mechanism, or
+using Make if a @file{src} contains a @file{Makefile}.  In both cases,
+if file @file{Makevars} exists it is read first when invoking Make.  If
+a @file{Makefile} is really needed or provided, it needs to ensure that
+the shared library created is linked against all ``Fortran'' libraries
+that @R{} was linked against; Make variable @code{FLIBS} contains this
+information.
 
 @node Interfacing C++ code, Handling R objects in C, Creating shared libraries, System and foreign language interfaces
 @section Interfacing C++ code
