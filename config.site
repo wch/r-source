@@ -24,7 +24,7 @@
 
 # The command used to spool PostScript files to the printer.
 # If unspecified, the system will look for either "lpr" or "lp"
-R_PRINTCMD=prt-
+# R_PRINTCMD=lpr
 
 # The paper size for the local (PostScript) printer.
 # It must either be left blank or set to one of "a4" or "letter".
@@ -46,7 +46,7 @@ R_PRINTCMD=prt-
 # Use this to specify CFLAGS for the version of the C compiler specified
 # above.  If unspecified, defaults to "-g -O2" for gcc, and "-g" in all
 # other cases.
-CFLAGS="-g -O2 -Wall"
+# CFLAGS=
 
 # Header file search directory (`-IDIR') and any other miscellaneous
 # options for the C preprocessor and compiler.
