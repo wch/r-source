@@ -1,0 +1,26 @@
+include ../MkRules
+
+ifdef DEBUG
+  DEBUGFLAG=-g
+  LINKFLAGS=
+else
+  DEBUGFLAG=
+  LINKFLAGS=-s
+endif
+
+LIBS=-L.. -lR
+CFLAGS=-Wall
+
+rtest-CFLAGS=-I.. -I../../include
+Rtest.exe: rtest.o R.dll
+	$(CC) -o $@ $^ -L.. -lR
+
+rtest.c: ../../include/Platform.h
+
+R.dll: ../R.dll
+	$(CP) -p $^ $@
+
+clean:
+	$(RM) *.o *.exe *~ *.exp
+
+
