@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-03-08
+Version 2.0.2005-03-11
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -88,6 +88,7 @@ R FAQ
   7.27 How can I create rotated axis labels?
   7.28 Why is read.table() so inefficient?
   7.29 What is the difference between package and library?
+  7.30 I installed a package but the functions are not there
 8 R Programming
   8.1 How should I write summary methods?
   8.2 How can I debug dynamically loaded code?
@@ -4552,6 +4553,14 @@ package from libraries containing packages.
 
    *Note R Add-On Packages::, for more details.  See also Uwe Ligges (2003),
 "R Help Desk: Package Management", _R News_, *3/3*, 37-39.
+
+7.30 I installed a package but the functions are not there
+==========================================================
+
+To actually _use_ the package, it needs to be _loaded_ using `library()'.
+
+   See *Note R Add-On Packages:: and *Note What is the difference between
+package and library?:: for more information.
 
 8 R Programming
 ***************

@@ -31,7 +31,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 2.0.2005-03-08</h2>
+<h2>Version 2.0.2005-03-11</h2>
 <h2>ISBN 3-900051-08-9</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -502,7 +502,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
 
 <h3 class="section">2.6 Are there Unix binaries for R?</h3>
 
-<!-- Linux binaries as of 2004-11-17: -->
+<!-- Linux binaries as of 2005-03-09: -->
 <!-- mandrake -->
 <!-- 10.0    i386   2.0.0  Michele Alzetta <mikalzet@libero.it> -->
 <!-- redhat -->
@@ -514,6 +514,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
 <!-- fc3     i386   2.0.1  Martyn Plummer <plummer@iarc.fr> -->
 <!-- x86_64 2.0.1  Brian Ripley -->
 <!-- el3     i386   2.0.1  Matthew P Cox -->
+<!-- el4     i386   2.0.1  Matthew P Cox -->
 <!-- suse -->
 <!-- 7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de> -->
 <!-- 8.0     i386   1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de> -->
@@ -3490,6 +3491,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <li><a href="#How-can-I-create-rotated-axis-labels_003f">How can I create rotated axis labels?</a>
 <li><a href="#Why-is-read_002etable_0028_0029-so-inefficient_003f">Why is read.table() so inefficient?</a>
 <li><a href="#What-is-the-difference-between-package-and-library_003f">What is the difference between package and library?</a>
+<li><a href="#I-installed-a-package-but-the-functions-are-not-there">I installed a package but the functions are not there</a>
 </ul>
 
 <!-- @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea -->
@@ -4322,7 +4324,8 @@ columns of the table.
 
 <div class="node">
 <p><hr>
-<a name="What-is-the-difference-between-package-and-library_003f"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why-is-read_002etable_0028_0029-so-inefficient_003f">Why is read.table() so inefficient?</a>,
+<a name="What-is-the-difference-between-package-and-library_003f"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#I-installed-a-package-but-the-functions-are-not-there">I installed a package but the functions are not there</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why-is-read_002etable_0028_0029-so-inefficient_003f">Why is read.table() so inefficient?</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
@@ -4340,6 +4343,20 @@ containing packages.
    <p>See <a href="#R-Add_002dOn-Packages">R Add-On Packages</a>, for more details.  See also Uwe Ligges (2003),
 &ldquo;R Help Desk: Package Management&rdquo;, <em>R News</em>, <strong>3/3</strong>,
 37&ndash;39.
+
+<div class="node">
+<p><hr>
+<a name="I-installed-a-package-but-the-functions-are-not-there"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#What-is-the-difference-between-package-and-library_003f">What is the difference between package and library?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
+<br>
+</div>
+
+<h3 class="section">7.30 I installed a package but the functions are not there</h3>
+
+<p>To actually <em>use</em> the package, it needs to be <em>loaded</em> using
+<code>library()</code>.
+
+   <p>See <a href="#R-Add_002dOn-Packages">R Add-On Packages</a> and <a href="#What-is-the-difference-between-package-and-library_003f">What is the difference between package and library?</a> for more information.
 
 <div class="node">
 <p><hr>
