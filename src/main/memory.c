@@ -1393,13 +1393,18 @@ static void mem_err_cons()
 /* InitMemory : Initialise the memory to be used in R. */
 /* This includes: stack space, node space and vector space */
 
+#define PP_REDZONE_SIZE 1000L
+static R_size_t R_StandardPPStackSize, R_RealPPStackSize;
+
 void InitMemory()
 {
     int i;
     int gen;
 
     gc_reporting = R_Verbose;
-    if (!(R_PPStack = (SEXP *) malloc(R_PPStackSize * sizeof(SEXP))))
+    R_StandardPPStackSize = R_PPStackSize;
+    R_RealPPStackSize = R_PPStackSize + PP_REDZONE_SIZE;
+    if (!(R_PPStack = (SEXP *) malloc(R_RealPPStackSize * sizeof(SEXP))))
 	R_Suicide("couldn't allocate memory for pointer stack");
     R_PPStackTop = 0;
 
@@ -2018,14 +2023,38 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* "protect" push a single argument onto R_PPStack */
 
-/* In handling a stack overflow we have to be careful not to
-   use PROTECT. error("protect(): stack overflow") would call
-   deparse1, which uses PROTECT and segfaults */
+/* In handling a stack overflow we have to be careful not to use
+   PROTECT. error("protect(): stack overflow") would call deparse1,
+   which uses PROTECT and segfaults.*/
 
+/* However, the traceback creation in the normal error handler also
+   does a PROTECT, as does the jumping code, at least if there are
+   cleanup expressions to handle on the way out.  So for the moment
+   we'll allocate a slightly larger PP stack and only enable the added
+   red zone during handling of a stack overflow error.  LT */
+
+static void reset_pp_stack(void *data)
+{
+    R_size_t *poldpps = data;
+    R_PPStackSize =  *poldpps;
+}
 SEXP protect(SEXP s)
 {
-    if (R_PPStackTop >= R_PPStackSize)
+    if (R_PPStackTop >= R_PPStackSize) {
+	RCNTXT cntxt;
+	R_size_t oldpps = R_PPStackSize;
+
+	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+		     R_NilValue, R_NilValue);
+	cntxt.cend = &reset_pp_stack;
+	cntxt.cenddata = &oldpps;
+
+	if (R_PPStackSize < R_RealPPStackSize)
+	    R_PPStackSize = R_RealPPStackSize;
 	errorcall(R_NilValue, "protect(): stack overflow");
+
+	endcontext(&cntxt); /* not reached */
+    }
     R_PPStack[R_PPStackTop++] = s;
     return s;
 }
