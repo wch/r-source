@@ -48,7 +48,7 @@ Rexecgnomedir_LTLIBRARIES = R_gnome.la
 ## </FIXME>
 R_gnome_la_SOURCES = $(SOURCES)
 R_gnome_la_OBJECTS = $(OBJECTS)
-@USE_LIBTOOL_TRUE@R_gnome_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir) -module
+@USE_LIBTOOL_TRUE@R_gnome_la_LDFLAGS = -avoid-version -rpath $(Rexecgnomedir) -module
 ## FIXME:
 ## This used to have `-lm' hard-wired, but note that we test for it at
 ## configure time.  The default automake rule would add $(LIBS) anyway,
@@ -80,8 +80,8 @@ R_gnome.la: $(R_gnome_la_OBJECTS) $(R_gnome_la_DEPENDENCIES)
 ## </FIXME>
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change R_gnome.la $(Rexeclibdir)/R_gnome.$(SHLIB_EXT)
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) R_gnome.la $(Rexeclibdir)
+@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change R_gnome.la $(Rexecgnomedir)/R_gnome.$(SHLIB_EXT)
+@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) R_gnome.la $(Rexecgnomedir)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecgnomedir)
 
