@@ -39,6 +39,9 @@ BUG FIXES
 
     o	predict(smooth.spline(.), deriv = 1) now works.
 
+    o	identify() failed when x is a structure/matrix. (PR#1238)
+
+
 
 		CHANGES IN R VERSION 1.4.0
 
