@@ -15,7 +15,7 @@ if [ "$1" = "-html" ]; then shift; IHTML=;  fi
 if [ "$1" ]
 then
     pkg=$1
-    if ! test -d ${pkg}
+    if [ ! -d ${pkg} ]
     then
 	echo "Package \`${pkg}' does not exist"
 	exit 1
