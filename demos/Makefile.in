@@ -22,32 +22,23 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 R:
+	@(cd dynload && $(MAKE) $@)
 	@if [ "$(srcdir)" != "." ]; then \
-	  $(MAKE) rhome=$(top_builddir) install; \
+	  $(MAKE) rhome=`cd $(top_builddir); pwd` install; \
 	fi
 
 docs:
 
 install: installdirs
 	@echo "installing demos ..."
-	@for f in `ls $(srcdir)/dynload | sed '/CVS/d'`; do \
-	  $(INSTALL_DATA) $(srcdir)/dynload/$$f $(rhome)/demos/dynload; \
-	done
-	@for f in $(srcdir)/graphics/*.R; do \
-	  $(INSTALL_DATA) $$f $(rhome)/demos/graphics; \
-	done
-	@for f in $(srcdir)/language/*.R; do \
-	  $(INSTALL_DATA) $$f $(rhome)/demos/language; \
-	done
-	@for f in $(srcdir)/models/*.R; do \
-	  $(INSTALL_DATA) $$f $(rhome)/demos/models; \
-	done
-	@for f in $(srcdir)/nlm/*.R; do \
-	  $(INSTALL_DATA) $$f $(rhome)/demos/nlm; \
+	@(cd dynload && $(MAKE) $@)
+	@for d in graphics language models nlm; do \
+	  for f in $(srcdir)/$${d}/*.R; do \
+	    $(INSTALL_DATA) $${f} $(rhome)/demos/$${d}; \
+	  done; \
 	done
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/demos
-	@$(MKINSTALLDIRS) $(rhome)/demos/dynload 
 	@$(MKINSTALLDIRS) $(rhome)/demos/graphics 
 	@$(MKINSTALLDIRS) $(rhome)/demos/language 
 	@$(MKINSTALLDIRS) $(rhome)/demos/models 
@@ -59,8 +50,9 @@ uninstall:
 
 mostlyclean:
 clean:
+	@(cd dynload && $(MAKE) $@)
 	@if [ "$(srcdir)" != "." ]; then \
-	  rm -rf [a-z]*; \
+	  rm -rf [g-z]*; \
 	fi
 distclean:
 	@rm -f Makefile
