@@ -513,7 +513,13 @@ mlistMetaName <-
       else if(missing(name))
           methodsPackageMetaName("M","")
       else if(is.character(name)) {
-          if(nchar(package))
+          if(length(name) > 1 && !identical(package, "")) {
+              value <- name
+              name <- paste(name, package, sep=":")
+              for(i in seq(along = value))
+                  value[[i]] = methodsPackageMetaName("M", name[[i]])
+          }
+          else if(nchar(package))
              methodsPackageMetaName("M", paste(name, package, sep=":"))
           else {
               fdef <- getGeneric(name)

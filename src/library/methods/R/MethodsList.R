@@ -411,7 +411,7 @@ matchSignature <-
   ## arguments of `fun', and return a vector of all the classes in the order specified
   ## by the signature slot of the generic.  The classes not specified by `signature
   ##' will be `"ANY"' in the value.
-  function(signature, fun)
+  function(signature, fun, where)
 {
     if(!is(fun, "genericFunction"))
         stop("Trying to match a method signature to an object (of class \"",
@@ -423,19 +423,20 @@ matchSignature <-
     if(length(signature) == 0)
         return(character())
     sigClasses <- as.character(signature)
-    where <- topenv()
-    unknown <- !sapply(sigClasses, function(x, where)isClass(x, where), where = where)
+    if(!missing(where)) {
+        unknown <- !sapply(sigClasses, function(x, where)isClass(x, where=where), where = where)
+        if(any(unknown)) {
+            unknown <- unique(sigClasses[unknown])
+            warning("In the method signature for function \"", fun@generic,
+                    "\", class ", paste("\"", unknown, "\"", sep="", collapse = ", "), " has no current definition")
+        }
+    }
     signature <- as.list(signature)
     if(length(sigClasses) != length(signature))
         stop("Object to use as a method signature for function \"", fun@generic,
              "\" doesn't look like a legitimate signature (a vector of single class names): there were ",
              length(sigClasses), " class names, but ", length(signature),
              " elements in the signature object.")
-    if(any(unknown)) {
-        unknown <- unique(sigClasses[unknown])
-        warning("In the method signature for function \"", fun@generic,
-                "\", class ", paste("\"", unknown, "\"", sep="", collapse = ", "), " has no current definition")
-    }
     if(is.null(names(signature))) {
         which <- seq(length = length(signature))
     }

@@ -9,7 +9,7 @@ setGeneric <-
   ## If `def' is supplied, this defines the generic function.  The default method for
   ## a new generic will usually be an existing non-generic.  See the .Rd page
   ##
-    function(name, def = NULL, group = list(), valueClass = character(), where = topenv(),
+    function(name, def = NULL, group = list(), valueClass = character(), where = topenv(parent.frame()),
              package = NULL, signature = NULL,
              useAsDefault = existsFunction(name, generic = FALSE),
              genericFunction = NULL)
@@ -36,17 +36,22 @@ setGeneric <-
     stdGenericBody <- substitute(standardGeneric(NAME), list(NAME = name))
     if(is.null(def)) {
         ## get the current function which may already be a generic
-        fdef <- getFunction(name, mustFind = FALSE)
+        ##FIXME:  the two searches below should not be needed; problem with topenv?
+        fdef <- getFunction(name, mustFind = FALSE, where = where)
+        if(is.null(fdef))
+            fdef <- getFunction(name, mustFind = FALSE)
         if(is.null(fdef))
             stop("Must supply a function skeleton, explicitly or via an existing function")
         else if(is.primitive(fdef)) ## get the pre-defined version
             fdef <- getGeneric(name)
         else
             body(fdef, envir = as.environment(where)) <- stdGenericBody
-        if(is.null(package))
-            ## infer the package name; takes the first to be consistent with
-            ## ignoring conflicts in finding fdef above.
-            package <- functionPackageName(name)[[1]]
+        if(is.null(package)) {
+            if(is(fdef, "genericFunction"))
+                package <- fdef@package
+            else
+                package <- getPackageName(where)
+        }
     }
     else {
         if(is.primitive(def) || !is(def, "function"))
@@ -262,46 +267,52 @@ setMethod <-
     ## For primitive functions, getGeneric returns the (hidden) generic function,
     ## even if no methods have been defined.  An explicit generic MUST NOT be
     ## for these functions, dispatch is done inside the evaluator.
-    searchWhere <- if(isNamespace(where)) where else .GlobalEnv
-    fdef <- getGeneric(f, where = searchWhere)
+    where <- as.environment(where)
+    fdef <- getGeneric(f, where = where)
+    if(.lockedForMethods(fdef, where))
+        stop("The environment \"", getPackageName(where),
+             "\" is locked; cannot assign methods for function \"",
+             f, "\"")
     hasMethods <- !is.null(fdef)
     deflt <- NULL
-    gwhere <- NULL # where to insert the methods in generic
-    allWhere <- findFunction(f, where = searchWhere)
-    generics <-logical(length(allWhere))
-    if(length(allWhere)>0) { # put methods into existing generic
-        for(i in seq(along = allWhere)) {
-            fi <- get(f, allWhere[[i]])
-            geni <- is(get(f, i), "genericFunction")
-            generics[[i]] <- geni
-            if(!geni && is.null(deflt))
-                deflt <- fi
+    ## where to insert the methods in generic
+    if(is(getFunction(f, where = where, mustFind = FALSE), "genericFunction"))
+        gwhere <- where
+    else {
+        searchWhere <- if(isNamespace(where)) where else .GlobalEnv
+        gwhere <- NULL
+        allWhere <- findFunction(f, where = searchWhere)
+        generics <-logical(length(allWhere))
+        if(length(allWhere)>0) { # put methods into existing generic
+            for(i in seq(along = allWhere)) {
+                fi <- get(f, allWhere[[i]])
+                geni <- is(get(f, i), "genericFunction")
+                generics[[i]] <- geni
+                if(!geni && is.null(deflt))
+                    deflt <- fi
+            }
         }
-    }
-    if(any(generics)) {
-        ## try to add method to the existing generic, but if the corresponding
-        ## environment is sealed, must create a new generic in where
-        gwhere <- as.environment(allWhere[generics][[1]])
-        if(isNamespace(gwhere)) {
-            ##FIXME:  Should be possible to insert methods in _attached_ namespace
-            if(identical(as.environment(where), gwhere))
-                stop("The `where' environment (", getPackageName(where),
-                     ") is a sealed namespace; can't assign methods there")
-            message("Copying the generic function \"", f, "\" to environment \"",
-                    getPackageName(where),
-                    "\", because the previous version was in a sealed namespace (",
-                    getPackageName(gwhere), ")")
-            assign(f, fdef, where = where)
-            gwhere <- where
+        if(any(generics)) {
+            ## try to add method to the existing generic, but if the corresponding
+            ## environment is sealed, must create a new generic in where
+            gwhere <- as.environment(allWhere[generics][[1]])
+            if(.lockedForMethods(fdef, gwhere)) {
+                if(identical(as.environment(where), gwhere))
+                    stop("The `where' environment (", getPackageName(where),
+                         ") is a locked namespace; can't assign methods there")
+                message("Copying the generic function \"", f, "\" to environment \"",
+                        getPackageName(where),
+                        "\", because the previous version was in a sealed namespace (",
+                        getPackageName(gwhere), ")")
+                assign(f, fdef, where = where)
+                gwhere <- where
+            }
         }
     }
     if(!hasMethods)
       fdef <- deflt
     if(is.null(fdef))
       stop(paste("No existing definition for function \"",f,"\"", sep=""))
-    if(isSealedMethod(f, signature, fdef))
-        stop("The method for function \"", f, "\" and signature ", .signatureString(fdef, signature),
-           " is sealed and cannot be re-defined")
     if(!hasMethods) {
         message("Creating a new generic function for \"", f, "\" in \"",
                     getPackageName(where), "\"")
@@ -318,7 +329,10 @@ setMethod <-
                  getPackageName(where), "\"")
         gwhere <- as.environment("package:base")
     }
-    signature <- matchSignature(signature, fdef)
+    if(isSealedMethod(f, signature, fdef))
+        stop("The method for function \"", f, "\" and signature ", .signatureString(fdef, signature),
+           " is sealed and cannot be re-defined")
+    signature <- matchSignature(signature, fdef, where)
     switch(typeof(definition),
            closure = {
                fnames <- formalArgs(fdef)
@@ -868,4 +882,20 @@ isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE)) {
                       !is.na(match(signature[[2]], .BasicClasses))
         sealed
     }
+}
+
+.lockedForMethods <- function(fdef, env) {
+    locked <- environmentIsLocked(env)
+    if(!locked)
+        return(FALSE) #? can binding be locked and envir. not?
+    name <- fdef@generic
+    package <- fdef@package
+    objs <- c(name, mlistMetaName(name, package))
+    for(obj in objs) {
+        hasIt <- exists(obj, env, inherits = FALSE)
+        if((hasIt && bindingIsLocked(obj, env)) ||
+           (locked && !hasIt))
+            return(TRUE)
+    }
+    FALSE
 }

@@ -1,6 +1,5 @@
 \name{getPackageName}
 \alias{getPackageName}
-\alias{functionPackageName}
 \alias{setPackageName}
 \title{ The name associated with a given package }
 \description{
@@ -11,17 +10,11 @@
 }
 \usage{
 getPackageName(where = 1)
-functionPackageName(name)
 }
 \arguments{
   \item{where}{ The environment or position on the search list
       associated with the desired package. }
-  \item{name}{The name of a function:  \code{functionPackageName}
-      finds the function and returns the package name corresponding.
-      Note that if there are multiple instances of the function,
-      \emph{all} the corresponding names are returned.
-      }
-}
+ }
 \details{
   Package names are normally installed during loading of the package,
   by the \link{INSTALL} script or by the \code{\link{library}}
@@ -39,6 +32,5 @@ functionPackageName(name)
 ## both the following usually return "base"
 getPackageName(length(search()))
 
-functionPackageName("rnorm")
 }
 \keyword{ programming }% at least one, from doc/KEYWORDS

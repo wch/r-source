@@ -2,7 +2,7 @@ setClass <-
     ## Define Class to be an S-style class.
     function(Class, representation = list(), prototype = NULL,
              contains = character(), validity = NULL, access = list(),
-             where = topenv(), version = .newExternalptr(), sealed = FALSE, package = getPackageName(where))
+             where = topenv(parent.frame()), version = .newExternalptr(), sealed = FALSE, package = getPackageName(where))
 {
     if(isClass(Class) && getClassDef(Class)@sealed)
         stop(paste("\"", Class, "\" has a sealed class definition and cannot be redefined", sep=""))

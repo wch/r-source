@@ -41,12 +41,3 @@ getPackageName <- function(where = topenv()) {
 setPackageName <- function(pkg, env)
     assign(".packageName", pkg, env)
 
-functionPackageName <- function(name) {
-    where <- findFunction(name)
-    if(length(where) ==0)
-        stop(paste("No function \"", name, "\" found"))
-    else if(length(where) > 1)
-       sapply(as.list(where), getPackageName)
-    else
-        getPackageName(where[[1]])
-}

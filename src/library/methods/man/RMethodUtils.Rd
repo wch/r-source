@@ -70,7 +70,7 @@ getGeneric(f, mustFind=FALSE, where)
 
 getGroup(fdef, recursive, where)
 
-matchSignature(signature, fun)
+matchSignature(signature, fun, where)
 
 removeMethodsObject(f, where)
 
@@ -217,6 +217,10 @@ addNextMethod(method, f, mlist, optional, envir)
       Generates an error if any of the supplied signature names are
       not legal; that is, not in the signature slot of the generic
       function.
+
+      If argument \code{where} is supplied, a warning will be issued
+      if any of the classes does not have a formal definition visible
+      from \code{where}.
     }
 
     \item{\code{getMethodsMetaData},
