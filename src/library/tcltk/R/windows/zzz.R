@@ -5,6 +5,7 @@
     .C("tcltk_start", PACKAGE="tcltk")
     extra <- system.file("exec", package = "tcltk")
     extra <- gsub("\\\\", "/", extra)
+    bringToTop(-1) # restore focus to console
     invisible(addTclPath(extra))
 }
 
