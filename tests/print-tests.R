@@ -122,7 +122,7 @@ for(d in 1:9) {cat(d,":"); print(v4, digits=d) }
 DIG(7)
 
 
-###------------ Very big and very small	 (--> ./signif.R )
+###------------ Very big and very small
 umach <- unlist(.Machine)[paste("double.x", c("min","max"), sep='')]
 xmin <- umach[1]
 xmax <- umach[2]
@@ -131,6 +131,11 @@ tx <- unique(sort(c(outer(umach,1+tx))))# 11 values  (out of 14)
 tx <- tx[is.finite(tx)] #-- all kept
 (txp <- tx[tx >= 1])#-- Positive exponent -- 4 values
 (txn <- tx[tx <	 1])#-- Negative exponent -- 7 values
+
+c(0.099999994, 0.2) # 0.1 0.2 , not 0.10 0.20
+
+(z <- sort(c(outer(range(txn), 8^c(0,2:3)))))
+outer(z,seq(0,10,by=2), signif) # had NaN's till 1.1.1
 
 olddig <- options(digits=14) # RH6.0 fails at 15
 z <- 1.234567891234567e27

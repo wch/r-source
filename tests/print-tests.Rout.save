@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.0.0 Under development (unstable) (February 14, 2000)
+Version 1.2.0 Under development (unstable) (2000-08-22)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -259,7 +259,7 @@ Type	"q()" to quit R.
 > DIG(7)
 > 
 > 
-> ###------------ Very big and very small	 (--> ./signif.R )
+> ###------------ Very big and very small
 > umach <- unlist(.Machine)[paste("double.x", c("min","max"), sep='')]
 > xmin <- umach[1]
 > xmax <- umach[2]
@@ -270,6 +270,20 @@ Type	"q()" to quit R.
 [1] 1.617924e+308 1.795895e+308 1.797693e+308 1.797693e+308
 > (txn <- tx[tx <	 1])#-- Negative exponent -- 7 values
 [1] 2.002566e-308 2.222849e-308 2.225074e-308 2.225074e-308 2.225074e-308 2.227299e-308 2.447581e-308
+> 
+> c(0.099999994, 0.2) # 0.1 0.2 , not 0.10 0.20
+[1] 0.1 0.2
+> 
+> (z <- sort(c(outer(range(txn), 8^c(0,2:3)))))
+[1] 2.002566e-308 2.447581e-308 1.281643e-306 1.566452e-306 1.025314e-305 1.253162e-305
+> outer(z,seq(0,10,by=2), signif) # had NaN's till 1.1.1
+       [,1]     [,2]       [,3]         [,4]          [,5]          [,6]
+[1,] 2e-308 2.0e-308 2.003e-308 2.00257e-308 2.002566e-308 2.002566e-308
+[2,] 2e-308 2.4e-308 2.448e-308 2.44758e-308 2.447581e-308 2.447581e-308
+[3,] 1e-306 1.3e-306 1.280e-306 1.28160e-306 1.281643e-306 1.281643e-306
+[4,] 2e-306 1.6e-306 1.570e-306 1.56650e-306 1.566452e-306 1.566452e-306
+[5,] 1e-305 1.0e-305 1.025e-305 1.02530e-305 1.025314e-305 1.025314e-305
+[6,] 1e-305 1.3e-305 1.253e-305 1.25320e-305 1.253162e-305 1.253162e-305
 > 
 > olddig <- options(digits=14) # RH6.0 fails at 15
 > z <- 1.234567891234567e27
