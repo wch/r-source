@@ -1312,7 +1312,7 @@ static void popupclose(control c)
 	if (CAR(tvec) == R_NilValue) SETCAR(tvec, ssNewVector(STRSXP, 100));
 	levs = LEVELS(CAR(tvec));
 	SETCAR(tvec, coerceVector(CAR(tvec), STRSXP));
-	SET_LEVELS(CAR(tvec), levs);
+	SETLEVELS(CAR(tvec), levs);
     }
     SET_TAG(tvec, install(buf));
     hide(wconf);
