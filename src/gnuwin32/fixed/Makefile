@@ -27,6 +27,7 @@ SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
 fixh: h/config.h ../../../date-stamp ../../include/FFDecl.h ../../include/FFTab.h
 	$(CP) -p ./h/config.h ./h/psignal.h ../../include
 	sh ./GETVERSION > ../../include/Rversion.h
+	sh ./GETCONFIG > ../../include/Rver.h
 	$(ECHO) done > fixh
 
 fixbin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))

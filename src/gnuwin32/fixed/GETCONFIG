@@ -1,0 +1,28 @@
+#
+# ${RHOME}/tools/GETCONFIG
+
+echo "/* src/include/Rver.h.  Generated automatically */"
+echo "#ifndef R_EXT_RVER_H"
+echo "#define R_EXT_RVER_H"
+echo
+echo "#ifndef RCONFIG_H_"
+echo
+us=`sed -n /HAVE_F77_UNDERSCORE/p h/config.h | sed -n 1p | sed s/.\*HAVE_F77_UNDERSCORE//`
+if [ ${us} -eq 1 ] ; then
+  echo "#define F77_SYMBOL(x)	x ## _"
+else
+  echo "#define F77_SYMBOL(x)	x"
+fi
+echo
+ieeea=`sed -n /HAVE_ISNAN/p h/config.h | sed -n 1p | sed -e s/.\*HAVE_ISNAN// -e s+/.\*$++ `
+ieeeb=`sed -n /HAVE_FINITE/p h/config.h | sed -n 1p | sed s/.\*HAVE_FINITE//`
+if [ ${ieeea} -eq 1 -a ${ieeeb} -eq 1 ] ; then
+  echo "#define IEEE_754 1"
+else
+  echo "/* #undef IEEE_754 */"
+fi
+endian=`grep "WORDS_BIGENDIAN" h/config.h`
+echo "${endian}"
+echo
+echo "#endif"
+echo "#endif"
