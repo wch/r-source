@@ -175,6 +175,7 @@ NEW FEATURES
     o   readChar() now returns what is available if fewer characters
 	than resquested are on the file.
 
+    o   is.xxx reached through do_is are now generic
 
 
 BUG FIXES

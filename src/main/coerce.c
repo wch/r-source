@@ -1159,6 +1159,11 @@ SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
     checkArity(op, args);
+
+    if( isObject(CAR(args)) && DispatchOrEval(call,
+	       CHAR(PRINTNAME(CAR(call))), args, rho, &ans, 0,1))
+	return(ans);
+
     PROTECT(ans = allocVector(LGLSXP, 1));
     switch (PRIMVAL(op)) {
     case NILSXP:	/* is.null */
