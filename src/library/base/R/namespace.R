@@ -143,11 +143,12 @@ loadNamespace <- function (package, lib.loc = NULL,
     if (! is.null(ns))
         ns
     else {
-        runHook <- function(hookname, env, ...) {
+        runHook <- function(hookname, package, env, ...) {
             if (exists(hookname, envir = env, inherits = FALSE)) {
                 fun <- get(hookname, envir = env, inherits = FALSE)
                 if (! is.null(try({ fun(...); NULL})))
-                    stop(paste(hookname, "failed in loadNamespace"),
+                    stop(paste(hookname, "failed in loadNamespace",
+                               "for", sQuote(pkgname)),
                          call. = FALSE)
             }
         }
@@ -272,7 +273,7 @@ loadNamespace <- function (package, lib.loc = NULL,
 
 
         # run the load hook
-        runHook(".onLoad", env, package.lib, package)
+        runHook(".onLoad", package, env, package.lib, package)
 
         # process exports, seal, and clear on.exit action
         exports <- nsInfo$exports
@@ -286,7 +287,8 @@ loadNamespace <- function (package, lib.loc = NULL,
             if(length(expClasses) > 0) {
                 missingClasses <- !sapply(expClasses, methods:::isClass, where = ns)
                 if(any(missingClasses))
-                    stop("Classes for export not defined: ",
+                    stop("In", sQuote(package),
+                         "classes for export not defined: ",
                          paste(expClasses[missingClasses], collapse = ", "))
                 expClasses <- paste(methods:::classMetaName(""), expClasses, sep="")
             }
@@ -300,7 +302,8 @@ loadNamespace <- function (package, lib.loc = NULL,
                                        exports[!is.na(match(exports, allMethods))]))
                 missingMethods <- !(expMethods %in% allMethods)
                 if(any(missingMethods))
-                    stop("Methods for export not found: ",
+                    stop("In", sQuote(package),
+                         "methods for export not found: ",
                          paste(expMethods[missingMethods], collapse = ", "))
                 needMethods <- (exports %in% allMethods) & !(exports %in% expMethods)
                 if(any(needMethods))
@@ -314,7 +317,8 @@ loadNamespace <- function (package, lib.loc = NULL,
                 }
             }
             else if(length(expMethods) > 0)
-                stop("Methods specified for export, but none defined: ",
+                stop("In", sQuote(package),
+                     "methods specified for export, but none defined: ",
                      paste(expMethods, collapse=", "))
             exports <- c(exports, expClasses, expMethods)
         }
@@ -372,7 +376,7 @@ unloadNamespace <- function(ns) {
         if (exists(hookname, envir = env, inherits = FALSE)) {
             fun <- get(hookname, envir = env, inherits = FALSE)
             if (! is.null(try({ fun(...); NULL})))
-                stop(paste(hookname, "failed in unloadNamespace"),
+                stop(hookname, " failed in unloadNamespace(", ns, ")",
                      call. = FALSE)
         }
     }
@@ -382,7 +386,8 @@ unloadNamespace <- function(ns) {
     if (! is.na(pos)) detach(pos = pos)
     users <- getNamespaceUsers(ns)
     if (length(users) != 0)
-        stop(paste("name space still used by:", paste(users, collapse = ", ")))
+        stop(paste("name space", ns, "still used by:",
+                   paste(users, collapse = ", ")))
     nspath <- getNamespaceInfo(ns, "path")
     hook <- getHook(packageEvent(nsname, "onUnload")) # might be list()
     for(fun in rev(hook)) try(fun(nsname, nspath))
