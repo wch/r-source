@@ -44,7 +44,7 @@ function(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
       else
         thisblock<-min(buffersize,n)
       
-      raw <- readLines(file, n=n)
+      raw <- readLines(file, n=thisblock)
       nread<-length(raw)
       if (recordlength>1 &&  nread %% recordlength){
         raw<-raw[1:(nread-nread %% recordlength)]
