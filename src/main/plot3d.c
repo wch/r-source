@@ -503,6 +503,7 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     ltysave = dd->gp.lty;
     colsave = dd->gp.col;
+    GMode(1, dd);
     for (i = 0; i < nc; i++) {
 	vmax = vmaxget();
 	dd->gp.lty = INTEGER(lty)[i % nlty];
@@ -514,6 +515,7 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 	contour(x, nx, y, ny, z, REAL(c)[i], atom, dd);
 	vmaxset(vmax);
     }
+    GMode(0, dd);
     vmaxset(vmax0);
     dd->gp.lty = ltysave;
     dd->gp.col = colsave;
@@ -1203,6 +1205,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     /* and then draw them back to front. */
     /* This is the "painters" algorithm. */
 
+    GMode(1, dd);
     PerspBox(0, REAL(xlim), REAL(ylim), REAL(zlim), dd);
 
     DrawFacets(REAL(z), REAL(x), REAL(y), nrows(z), ncols(z), INTEGER(index),
@@ -1210,6 +1213,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 	       isNull(shade) ? NULL : REAL(shade));
 
     PerspBox(1, REAL(xlim), REAL(ylim), REAL(zlim), dd);
+    GMode(0, dd);
 
     GRestorePars(dd);
     UNPROTECT(11);

@@ -268,3 +268,71 @@ SEXP do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     return ans;
 }
+
+static int filbuf(char *buf, FILE *fp)
+{
+    int c;
+    while((c = fgetc(fp)) != EOF) {
+	if (c == '\n' || c == '\r') {
+	    *buf = '\0';
+	    return 1;
+	}
+	*buf++ = c;
+    }
+    return 0;
+}
+
+SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP topic, path, indexname, sep;
+    char linebuf[256], topicbuf[256], *p;
+    int i, npath, ltopicbuf, html;
+    FILE *fp;
+
+    topic = CAR(args); args = CDR(args);
+    if(!isString(topic) || length(topic) < 1 || isNull(topic))
+	error("invalid \"topic\" argument\n");
+    path = CAR(args); args = CDR(args);
+    if(!isString(path) || length(path) < 1 || isNull(path))
+	error("invalid \"path\" argument\n");
+    indexname = CAR(args); args = CDR(args);
+    if(!isString(indexname) || length(indexname) < 1 || isNull(indexname))
+	error("invalid \"indexname\" argument\n");
+    sep = CAR(args); args = CDR(args);
+    if(!isString(sep) || length(sep) < 1 || isNull(sep))
+	error("invalid \"sep\" argument\n");
+    html = asLogical(CAR(args));
+    sprintf(topicbuf, "%s\t", CHAR(STRING(topic)[0]));
+    ltopicbuf = strlen(topicbuf);
+    npath = length(path);
+    for (i = 0; i < npath; i++) {
+	sprintf(linebuf, "%s%s%s%s%s",
+		CHAR(STRING(path)[i]),
+		CHAR(STRING(sep)[0]),
+		"help", CHAR(STRING(sep)[0]),
+		CHAR(STRING(indexname)[0]));
+	if ((fp = fopen(linebuf, "rt")) == NULL)
+	    error("unable to open index file");
+	while (filbuf(linebuf, fp)) {
+	    if(strncmp(linebuf, topicbuf, ltopicbuf) == 0) {
+		p = &linebuf[ltopicbuf - 1];
+		while(isspace(*p)) p++;
+		fclose(fp);
+		if (html)
+		    sprintf(topicbuf, "%s%s%s%s%s%s",
+			    CHAR(STRING(path)[i]),
+			    CHAR(STRING(sep)[0]), 
+			    "html", CHAR(STRING(sep)[0]),
+			    p, ".html");
+		else
+		    sprintf(topicbuf, "%s%s%s%s%s",
+			    CHAR(STRING(path)[i]),
+			    CHAR(STRING(sep)[0]), 
+			    "help", CHAR(STRING(sep)[0]), p);
+		return mkString(topicbuf);
+	    }
+	}
+	fclose(fp);
+    }
+    return R_NilValue;
+}

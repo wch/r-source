@@ -102,8 +102,8 @@ SEXP		mkTrue(void);
 static int	EatLines = 0;
 static int	GenerateCode = 0;
 static int	EndOfFile = 0;
-static int	(*xxgetc)();
-static int	(*xxungetc)();
+static int	xxgetc();
+static int	xxungetc();
 
 /* Soon to be defunct entry points */
 
@@ -1463,6 +1463,26 @@ yyerrhandle:
 
 /*----------------------------------------------------------------------------*/
 
+static int (*ptr_getc)(void);
+static int (*ptr_ungetc)(int);
+
+static int xxgetc(void)
+{      
+    int c = ptr_getc();
+    if (c == EOF) {
+        EndOfFile = 1;
+        return R_EOF;
+    }  
+    if (c == '\n') R_ParseError += 1;
+    return c;
+}
+       
+static int xxungetc(int c)
+{      
+    if (c == '\n') R_ParseError -= 1;
+    return ptr_ungetc(c);
+}      
+
 static int xxvalue(SEXP v, int k)
 {
     if (k > 2) UNPROTECT_PTR(v);
@@ -2055,23 +2075,6 @@ static void ParseInit()
     ResetComment();
 }
 
-static int file_getc(void)
-{
-    int c = R_fgetc(R_Inputfile);
-    if (c == EOF) {
-	EndOfFile = 1;
-	return R_EOF;
-    }
-    if (c == '\n') R_ParseError += 1;
-    return c;
-}
-
-static int file_ungetc(int c)
-{
-    if (c == '\n') R_ParseError -= 1;
-    return ungetc(c, R_Inputfile);
-}
-
 static SEXP R_Parse1(int *status)
 {
     switch(yyparse()) {
@@ -2093,13 +2096,23 @@ static SEXP R_Parse1(int *status)
     return R_CurrentExpr;
 }
 
+static int file_getc(void)
+{
+    return R_fgetc(R_Inputfile);
+}
+
+static int file_ungetc(int c)
+{
+    return ungetc(c, R_Inputfile);
+}
+
 SEXP R_Parse1File(FILE *fp, int gencode, int *status)
 {
     ParseInit();
     GenerateCode = gencode;
     R_Inputfile = fp;
-    xxgetc = file_getc;
-    xxungetc = file_ungetc;
+    ptr_getc = file_getc;
+    ptr_ungetc = file_ungetc;
     R_Parse1(status);
     R_Inputfile = NULL;
     return R_CurrentExpr;
@@ -2109,12 +2122,7 @@ static IoBuffer *iob;
 
 static int buffer_getc()
 {
-    int c = R_IoBufferGetc(iob);
-    if (c == EOF) {
-	EndOfFile = 1;
-	return R_EOF;
-    }
-    else return c;
+    return R_IoBufferGetc(iob);
 }
 
 static int buffer_ungetc(int c)
@@ -2127,8 +2135,8 @@ SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, int *status)
     ParseInit();
     GenerateCode = gencode;
     iob = buffer;
-    xxgetc = buffer_getc;
-    xxungetc = buffer_ungetc;
+    ptr_getc = buffer_getc;
+    ptr_ungetc = buffer_ungetc;
     R_Parse1(status);
     return R_CurrentExpr;
 }
@@ -2137,12 +2145,7 @@ static TextBuffer *txtb;
 
 static int text_getc()
 {
-    int c = R_TextBufferGetc(txtb);
-    if (c == EOF) {
-	EndOfFile = 1;
-	return R_EOF;
-    }
-    else return c;
+    return R_TextBufferGetc(txtb);
 }
 
 static int text_ungetc(int c)
@@ -2155,8 +2158,8 @@ SEXP R_Parse1Vector(TextBuffer *textb, int gencode, int *status)
     ParseInit();
     GenerateCode = gencode;
     txtb = textb;
-    xxgetc = text_getc;
-    xxungetc = text_ungetc;
+    ptr_getc = text_getc;
+    ptr_ungetc = text_ungetc;
     R_Parse1(status);
     return R_CurrentExpr;
 }
@@ -2164,14 +2167,13 @@ SEXP R_Parse1Vector(TextBuffer *textb, int gencode, int *status)
 #define GENERAL
 #ifdef GENERAL
 
-
 SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
 		     int gencode, int *status)
 {
     ParseInit();
     GenerateCode = gencode;
-    xxgetc = g_getc;
-    xxungetc = g_ungetc;
+    ptr_getc = g_getc;
+    ptr_ungetc = g_ungetc;
     R_Parse1(status);
     return R_CurrentExpr;
 }
@@ -2241,8 +2243,8 @@ SEXP R_ParseFile(FILE *fp, int n, int *status)
     GenerateCode = 1;
     R_ParseError = 1;
     R_Inputfile = fp;
-    xxgetc = file_getc;
-    xxungetc = file_ungetc;
+    ptr_getc = file_getc;
+    ptr_ungetc = file_ungetc;
     return R_Parse(n, status);
 }
 
@@ -2254,8 +2256,8 @@ SEXP R_ParseVector(SEXP text, int n, int *status)
     txtb = &textb;
     GenerateCode = 1;
     R_ParseError = 1;
-    xxgetc = text_getc;
-    xxungetc = text_ungetc;
+    ptr_getc = text_getc;
+    ptr_ungetc = text_ungetc;
     rval = R_Parse(n, status);
     R_TextBufferFree(&textb);
     return rval;
@@ -2266,8 +2268,8 @@ SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n, int *status)
 {
     GenerateCode = 1;
     R_ParseError = 1;
-    xxgetc = ggetc;
-    xxungetc = gungetc;
+    ptr_getc = ggetc;
+    ptr_ungetc = gungetc;
     return R_Parse(n, status);
 }
 #endif
@@ -2589,7 +2591,7 @@ static char yytext[MAXELTSIZE];
 static int SkipSpace(void)
 {
     int c;
-    while ((c = xxgetc()) == ' ' || c == '\t' || c == '')
+    while ((c = xxgetc()) == ' ' || c == '\t' || c == '\f')
 	/* nothing */;
     return c;
 }
