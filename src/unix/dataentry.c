@@ -130,11 +130,12 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (indata != R_NilValue) {
 	PROTECT(inputlist = duplicate(indata)); nprotect++;
-	tvec2 = colmodes;
-	for (tvec = inputlist; tvec != R_NilValue; tvec = CDR(tvec)) {
+	for (tvec = inputlist, tvec2 = colmodes; 
+	     tvec != R_NilValue; 
+	     tvec = CDR(tvec), tvec2 = CDR(tvec2)) {
 	    type = TYPEOF(CAR(tvec));
 	    if (CAR(tvec2) != R_NilValue)
-		type = str2type(CHAR(STRING(CAR(colmodes))[0]));
+		type = str2type(CHAR(STRING(CAR(tvec2))[0]));
 	    if (type != STRSXP)
 		type = REALSXP;
 	    if (CAR(tvec) == R_NilValue) {
@@ -151,7 +152,6 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    CAR(tvec) = coerceVector(CAR(tvec), type);
 		LEVELS(CAR(tvec)) = LENGTH(CAR(tvec));
 	    }
-	    tvec2 = CDR(tvec2);
 	}
     }
     else if (colmodes == R_NilValue ) {
