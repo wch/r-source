@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-0, 2000/06/12
+@set FAQ-VERSION 1.1-1, 2000/06/17
 @set REL-VERSION 1.1.0
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -387,17 +387,17 @@ distribution is available.  We hope that this will change soon.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2000/06/12:
+@c Linux binaries as of 2000/06/17:
 @c
 @c debian   2.1 i386  1.0.0  Doug Bates
 @c          2.2 i386  1.0.1  Doug Bates
 @c          2.3 i386  1.0.1  Doug Bates
-@c linuxppc 5.0 ppc   1.0.1  Alex Buerkle <buerkle@hawaii.edu>
-@c redhat   6.x alpha 1.0.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.0.1  Martyn Plummer <plummer@iarc.fr>
+@c linuxppc 5.0 ppc   1.1.0  Alex Buerkle <buerkle@hawaii.edu>
+@c redhat   6.x alpha 1.1.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c              i386  1.1.0  Martyn Plummer <plummer@iarc.fr>
 @c              sparc 1.0.0  Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
 @c suse     5.3 i386  1.0.1  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-@c          6.4 i386  1.0.1  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+@c          6.4 i386  1.1.0  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
 The @file{bin/linux} directory of a CRAN site contains Debian
 2.1/2.2/2.3 packages for the i386 platform (now part of the Debian
@@ -1592,6 +1592,7 @@ nnet         Software for feed-forward neural networks with a single
 splines      Regression spline functions and classes
 stepfun      Step functions, including empirical distributions
 survival5    Survival analysis
+tcltk        Interface to Tcl/Tk
 ts           Time series functions
 @end smallexample
 
