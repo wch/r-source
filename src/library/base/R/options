@@ -1,2 +1,0 @@
-options <-
-function(...) .Internal(options(...))

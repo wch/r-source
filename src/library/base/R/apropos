@@ -1,9 +1,0 @@
-apropos <- function (pattern, where = FALSE)
-{
- x <- character(0)
- for (i in seq(search())) {
-	ll <- length(li <- ls(pos = i, pattern = pattern, all.names=TRUE))
-	if (ll) x <- c(x, if (where) structure(li, names = rep(i, ll)) else li)
- }
- x
-}

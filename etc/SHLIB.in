@@ -1,8 +1,0 @@
-
-LD=ld
-SHLIBLDFLAGS="@SHLIBLDFLAGS@"
-
-LIB=$1
-shift
-
-$LD $SHLIBLDFLAGS -o $LIB $*

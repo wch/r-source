@@ -1,3 +1,0 @@
-traceback <-
-function() unlist(.Traceback)
-

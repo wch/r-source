@@ -1,2 +1,0 @@
-#!/bin/sh
-./Rdconv -t nroff $1 | nroff -ms 2> /dev/null

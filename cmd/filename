@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# ${RHOME}/cmd/filename
-
-for f in $*
-do
-    if [ -r ${f} ]; then echo ${f}; exit 0; fi
-done    
-echo

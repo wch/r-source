@@ -1,1 +1,0 @@
-trunc <- function(x) ifelse(x<0,ceiling(x),floor(x))
