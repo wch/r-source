@@ -64,7 +64,7 @@
  *  multivariate complex fourier transform, computed in place
  *  using mixed-radix fast fourier transform algorithm.
  *  ----------------------------------------------------------------------
- * 
+ *
  *  arrays a and b originally hold the real and imaginary
  *       components of the data, and return the real and
  *       imaginary components of the resulting fourier coefficients.
@@ -73,7 +73,7 @@
  *       on the number of implied multiple subscripts.
  *       the subroutine is called once for each variate.
  *       the calls for a multivariate transform may be in any order.
- * 
+ *
  *  n is the dimension of the current variable.
  *  nspn is the spacing of consecutive data values
  *       while indexing the current variable.
@@ -81,30 +81,30 @@
  *  the sign of isn determines the sign of the complex
  *       exponential, and the magnitude of isn is normally one.
  *       the magnitude of isn determines the indexing increment for a&b.
- * 
+ *
  *  if fft is called twice, with opposite signs on isn, an
  *       identity transformation is done...calls can be in either order.
  *       the results are scaled by 1/n when the sign of isn is positive.
- * 
+ *
  *  a tri-variate transform with a(n1,n2,n3), b(n1,n2,n3)
  *  is computed by
  *         call fft(a,b,n2*n3,n1,1,-1)
  *         call fft(a,b,n3,n2,n1,-1)
  *         call fft(a,b,1,n3,n1*n2,-1)
- * 
+ *
  *  a single-variate transform of n complex data values is computed by
  *         call fft(a,b,1,n,1,-1)
- * 
+ *
  *  the data may alternatively be stored in a single complex
  *       array a, then the magnitude of isn changed to two to
  *       give the correct indexing increment and a(2) used to
  *       pass the initial address for the sequence of imaginary
  *       values, e.g.
  *         call fft(a,a(2),nseg,n,nspn,-2)
- * 
+ *
  *  array nfac is working storage for factoring n.  the smallest
  *       number exceeding the 15 locations provided is 12,754,584.
- * 
+ *
  */
 
 static int old_n = 0;
@@ -240,13 +240,8 @@ void fft_factor(int n, int *pmaxf, int *pmaxp)
 }
 
 static void fftmx(double *a, double *b, int ntot, int n, int nspan, int isn,
-	int m, int kt, double *at, double *ck, double *bt, double *sk,
-	int *np, int *nfac)
-/*
-double *a, *b, *at, *ck, *bt, *sk;
-int ntot, n, nspan, isn, m, kt;
-int *np, *nfac;
-*/
+		  int m, int kt, double *at, double *ck, double *bt, double *sk,
+		  int *np, int *nfac)
 {
       double aa, aj, ajm, ajp, ak, akm, akp;
       double bb, bj, bjm, bjp, bk, bkm, bkp;
@@ -268,26 +263,23 @@ int *np, *nfac;
       c72 = cos(s72);
       s72 = sin(s72);
       s120 = sqrt(0.75);
-      if(isn > 0) goto L10;
+      if(isn > 0) {
+#ifdef SCALING
+	/* scale by 1/n for isn > 0 */
+	ak = 1.0/n;
+	for(j=1 ; j<=nt ; j+=inc) {
+	  a[j] = a[j]*ak;
+	  b[j] = b[j]*ak;
+	}
+#else
+	;
+#endif
+      }
       s72 = -s72;
       s120 = -s120;
       rad = -rad;
-      goto L30;
-
-	/* scale by 1/n for isn > 0 */
-
-#ifdef SCALING
- L10: ak = 1.0/n;
-      for(j=1 ; j<=nt ; j+=inc) {;
-        a[j] = a[j]*ak;
-        b[j] = b[j]*ak;
-      };
-#else
- L10:
-	;
-#endif
-
- L30: kspan = ks;
+/* L30: */
+      kspan = ks;
       nn = nt - inc;
       jc = ks/n;
 
@@ -303,7 +295,7 @@ int *np, *nfac;
 
 	/* compute fourier transform */
 
- L40: dr = (8.0*jc)/kspan;
+Loop_outer: dr = (8.0*jc)/kspan;
       cd = sin(0.5*dr*rad);
       cd = 2.0*cd*cd;
       sd = sin(dr*rad);
@@ -365,7 +357,7 @@ int *np, *nfac;
       k1 = k1 + inc + inc;
       kk = (k1-kspan)/2 + jc;
       if( kk <= jc+jc) goto L60;
-      goto L40;
+      goto Loop_outer;
  L90: s1 = ((kk-1)/jc)*dr*rad;
       c1 = cos(s1);
       s1 = sin(s1);
@@ -459,7 +451,7 @@ L170: kk = kk - nt + jc;
       kk = kk - kspan + inc;
       if( kk <= jc) goto L120;
       if( kspan == jc) goto L350;
-      goto L40;
+      goto Loop_outer;
 L180: akp = akm + bjm;
       akm = akm - bjm;
       bkp = bkm - ajm;
@@ -636,7 +628,7 @@ L330: ak = a[kk];
       if( kk < kspan) goto L340;
       kk = kk - kspan + jc + inc;
       if( kk <= jc+jc) goto L300;
-      goto L40;
+      goto Loop_outer;
 L340: s1 = ((kk-1)/jc)*dr*rad;
       c2 = cos(s1);
       s1 = sin(s1);
@@ -666,7 +658,8 @@ L360: np[j+1] = np[j]/nfac[j];
 
 	/* permutation for single-variate transform (optional code) */
 
-L370: ak = a[kk];
+L370: /* repeat { ... */
+      ak = a[kk];
       a[kk] = a[k2];
       a[k2] = ak;
       bk = b[kk];
@@ -675,6 +668,7 @@ L370: ak = a[kk];
       kk = kk + inc;
       k2 = kspan + k2;
       if( k2 < ks) goto L370;
+
 L380: k2 = k2 - np[j];
       j = j + 1;
       k2 = np[j+1] + k2;
@@ -720,7 +714,7 @@ L430: if( kk < k2) goto L400;
 L440: if( 2*kt+1 >= m) return;
       kspnn = np[kt+1];
 
-	/* permutation for square-free factors of n */
+ /* permutation for square-free factors of n */
 
       j = m - kt;
       nfac[j+1] = 1;
@@ -745,7 +739,7 @@ L480: k2 = nfac[kt];
       j = j + 1;
       if( j <= nn) goto L470;
 
-	/* determine the permutation cycles of length greater than 1 */
+ /* determine the permutation cycles of length greater than 1 */
 
       j = 0;
       goto L500;
@@ -762,9 +756,10 @@ L500: j = j + 1;
       if( j != nn) goto L500;
       maxf = inc*maxf;
 
-	/* reorder a and b, following the permutation cycles */
+ /* reorder a and b, following the permutation cycles */
 
       goto L570;
+
 L510: j = j - 1;
       if( np[j] < 0) goto L510;
       jj = jc;
