@@ -256,6 +256,16 @@ www <- new("withId", ttt, id = "test 1")
 ## a strict coerce to "numeric" on the way to satisfying is(ttt, "maybeNumber").
 stopifnot(identical(www@.Data, ttt))
 
+### tests of the C macros MAKE_CLASS and NEW
+### FIXME:  there should be a separate man page for the C-level macros
+### and the tests below should be there.
+stopifnot(identical(.Call("R_methods_test_MAKE_CLASS", "trackCurve", PACKAGE = "methods"),
+                    getClass("trackCurve")))
+
+stopifnot(identical(.Call("R_methods_test_NEW", "track", PACKAGE = "methods"),
+                    new("track")))
+
+
 ## The following should not be needed.  But make check removes all files
 ## between example files, in a crude way that does not cause the class
 ## information to be reset.  There seems no way to detect this, so we
