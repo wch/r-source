@@ -78,7 +78,8 @@ clean:
 	  rm -rf html; \
 	fi
 	@(cd manual && $(MAKE) $@)
-distclean:
+distclean: clean
+	@(cd manual && $(MAKE) $@)
 	@rm -f Makefile keyword-test
 maintainer-clean: distclean
 

@@ -93,7 +93,7 @@ clean:
 	@echo cleaning in doc/manual
 	@-rm -f *.aux *.toc Man.i?? *.dvi *.log *.ps *.ps-2
 distclean: clean
-	@-rm -f -r auto pkg-*.tex Makefile lib2tex
+	@-rm -f auto Version.tex pkg-*.tex Makefile lib2tex
 maintainer-clean: distclean
 
 Man.ps:	Man.dvi

@@ -15,7 +15,7 @@ DISTFILES = COPYING COPYRIGHTS INSTALL MIRROR-SITES NEWS PLATFORMS \
 	Makeconf.in Makefile.in \
 	config.site configure configure.in configure.mac configure.win \
 	date-stamp
-SUBDIRS = afm demos doc etc src tests
+SUBDIRS = src afm demos doc etc tests
 
 GZIP = --best
 

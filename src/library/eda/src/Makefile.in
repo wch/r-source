@@ -26,6 +26,6 @@ $(LIB): $(OBJS)
 mostlyclean: clean
 clean:
 	@rm -f *.o *.$(SHLIBEXT)
-distclean:
+distclean: clean
 	@rm -f Makefile
 maintainer-clean: distclean
