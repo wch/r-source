@@ -14,7 +14,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
 ## subdirectories of R_HOME/share
-SUBDIRS_WITH_NO_BUILD = R glade make perl sh texmf
+SUBDIRS_WITH_NO_BUILD = R glade licenses make perl sh texmf
 ## subdirectories of R_HOME/share/perl
 SUBDIRS_SHARE_PERL = R Text
 
@@ -40,6 +40,7 @@ installdirs:
 	@if test -n "$(GNOME_IF_FILES)"; then \
 	  $(MKINSTALLDIRS) "$(rhome)/share/glade"; \
 	fi
+	@$(MKINSTALLDIRS) "$(rhome)/share/licenses"
 	@$(MKINSTALLDIRS) "$(rhome)/share/make"
 	@$(MKINSTALLDIRS) "$(rhome)/share/perl"
 	@for d in $(SUBDIRS_SHARE_PERL); do \
@@ -58,6 +59,9 @@ install-sources: installdirs
 	    $(INSTALL_DATA) $${f} "$(rhome)/share/glade"; \
 	  done; \
 	fi
+	@for f in $(srcdir)/licenses/*; do \
+	  $(INSTALL_DATA) $${f} "$(rhome)/share/licenses"; \
+	done
 	@for f in $(srcdir)/make/*.mk; do \
 	  $(INSTALL_DATA) $${f} "$(rhome)/share/make"; \
 	done
