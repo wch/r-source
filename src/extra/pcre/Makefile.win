@@ -1,0 +1,32 @@
+#-*- Makefile -*-
+include ../../gnuwin32/MkRules
+
+CFLAGS = -I. -O2 -DSTATIC
+
+all: config.h pcre.h libpcre.a
+
+pcre.o: pcre.c
+libpcre.a: get.o maketables.o pcre.o study.o pcreposix.o
+
+## this can't be used if cross-building, so ship the file
+ifneq ($(strip $(BUILD)),CROSS)
+dftables.exe: dftables.c
+chartables.c: dftables.exe
+	dftables > chartables.c
+endif
+
+config.h: config.in
+	$(SED)  -e 's/HAVE_STRERROR 0/HAVE_STERROR 1/' \
+	        -e 's/HAVE_MEMMOVE  0/HAVE_MEMMOVE 1/' \
+	        -e '/#undef size_t/d' -e '/#undef const/d' \
+	  $< > $@
+
+pcre.h: pcre.in
+	$(SED)  -e 's/@PCRE_MAJOR@/3/' -e 's/@PCRE_MINOR@/7/' \
+	  -e 's/@PCRE_DATE@/29-Oct-2001/' $< > $@
+
+clean:
+	$(RM) *.o *~ libpcre.a
+
+distclean: clean
+	$(RM) pcre.h config.h dftables.exe
