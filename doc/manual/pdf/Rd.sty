@@ -1,4 +1,4 @@
- %%% Rd.sty ... Style for printing the R manual
+%%% Rd.sty ... Style for printing the R manual
 %%%
 %%% Modified 1998/01/05 by Friedrich.Leisch@ci.tuwien.ac.at
 %%% Modified 1998/07/07 by Martin Maechler
@@ -71,7 +71,7 @@
 \newcommand{\describe}[1]{\begin{description}{#1}\end{description}}
 
 \newcommand{\Tabular}[2]{%
-  \begin{tabular}{#1}
+  \par\begin{tabular}{#1}
     #2
   \end{tabular}}
 
@@ -121,7 +121,7 @@
 \newenvironment{Section}[1]{%
   \begin{Rdsection}{#1}}{\end{Rdsection}}
 \newenvironment{Usage}{%
-  \begin{Rdsection}{}}{\end{Rdsection}}
+  \begin{Rdsection}{Usage}}{\end{Rdsection}}
 \newenvironment{Value}{%
   \begin{Rdsection}{Value}}{\end{Rdsection}}
 
