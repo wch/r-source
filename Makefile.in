@@ -10,7 +10,8 @@ top_builddir = .
 include $(top_builddir)/Makeconf
 
 distdir = $(PACKAGE)-$(VERSION)
-INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS FAQ NEWS RESOURCES THANKS
+INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS NEWS THANKS
+NON_SVN_INSTFILES = FAQ RESOURCES
 DISTFILES = $(INSTFILES) \
 	ChangeLog INSTALL ONEWS README VERSION Y2K \
 	Makeconf.in Makefile.in \
@@ -50,7 +51,7 @@ LIBTOOL_DEPS = @LIBTOOL_DEPS@
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
 
-R: Makefile
+R: Makefile svnonly
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  for f in $(INSTFILES); do \
 	    $(INSTALL_DATA) $(srcdir)/$${f} $(top_builddir); \
@@ -75,12 +76,15 @@ stamp-recommended: R docs
 vignettes: stamp-recommended
 	-@(cd src/library && $(MAKE) $@)
 
-install: installdirs
+install: installdirs svnonly
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)"; \
+	done
+	@for f in $(NON_SVN_INSTFILES); do \
+	  $(INSTALL_DATA) $${f} "$(rhome)"; \
 	done
 @WANT_R_FRAMEWORK_TRUE@		$(MAKE) install-R-framework
 @WANT_R_FRAMEWORK_TRUE@		@(sed 's/^LIBR =.*/LIBR = -framework R/' \
@@ -92,6 +96,17 @@ install: installdirs
 @WANT_R_FRAMEWORK_TRUE@		@(chmod 755 $(R_FRAMEWORK_DIR)/Resources/bin/R)
 @WANT_R_FRAMEWORK_TRUE@		@(cp $(R_FRAMEWORK_DIR)/Resources/bin/R $(R_FRAMEWORK_DIR)/Resources/R)
 
+svnonly:
+	@if test ! -f "$(srcdir)/FAQ" ; then \
+	  cd doc/manual && $(MAKE) front-matter ; \
+	  touch non-tarball ; \
+	else \
+	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	    for f in $(NON_SVN_INSTFILES); do \
+	      $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)/$(subdir)"; \
+	    done \
+	  fi \
+	fi
 
 installdirs:
 	@$(MKINSTALLDIRS) "$(rhome)"
@@ -113,15 +128,18 @@ clean:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  rm -f $(INSTFILES); \
+	  rm -f $(INSTFILES) $(NON_SVN_INSTFILES) ; \
 	fi
 distclean: clean
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	-@rm -rf bin include lib library modules gnome
+	@if test -f non-tarball ; then \
+	  rm -f $(NON_SVN_INSTFILES) non-tarball ; \
+	fi
 	-@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
 	  config.cache config.log config.status libtool \
-	  $(ACLOCAL_M4) acinclude.m4
+	  $(ACLOCAL_M4) acinclude.m4 $(distdir).tar.gz
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use; it"
 	@echo "deletes files that may need special rules to rebuild"
@@ -145,6 +163,9 @@ distdir: $(DISTFILES) vignettes
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
+	@for f in $(NON_SVN_INSTFILES); do \
+	  cp -p $${f} $(distdir)/$${f}; \
+	done
 	@for d in $(SUBDIRS); do \
 	  test -d $(distdir)/$${d} \
 	    || mkdir $(distdir)/$${d} \
@@ -160,6 +181,7 @@ distdir: $(DISTFILES) vignettes
 	done
 	@cp library/grid/doc/*.pdf library/grid/doc/index.html \
 	  $(distdir)/src/library/grid/inst/doc
+	@(cd $(distdir); tools/link-recommended)
 
 dvi info pdf:
 	-@(cd doc && $(MAKE) $@)

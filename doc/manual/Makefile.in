@@ -417,35 +417,7 @@ distclean: clean
 	-@rm -f Makefile
 maintainer-clean: distclean
 
-maintainer-build: \
-  $(top_srcdir)/FAQ \
-  $(top_srcdir)/RESOURCES \
-  $(top_srcdir)/doc/html/faq.html \
-  $(top_srcdir)/doc/html/resources.html
-$(top_srcdir)/FAQ: @MAINTAINER_MODE_TRUE@ $(srcdir)/R-FAQ.texi
-	@if test "$(MAKEINFO)" = false; then \
-	  echo "ERROR: 'makeinfo' v4 needed but missing on your system."; \
-	  exit 1; \
-	fi
-	$(TEXI2TEXT) $(srcdir)/R-FAQ.texi -o $@
-$(top_srcdir)/doc/html/faq.html: @MAINTAINER_MODE_TRUE@ $(srcdir)/R-FAQ.texi
-	@if test "$(MAKEINFO)" = false; then \
-	  echo "ERROR: 'makeinfo' v4 needed but missing on your system."; \
-	  exit 1; \
-	fi
-	$(TEXI2HTML) --number-sections $(srcdir)/R-FAQ.texi -o $@
-$(top_srcdir)/RESOURCES: @MAINTAINER_MODE_TRUE@ $(srcdir)/resources.texi
-	@if test "$(MAKEINFO)" = false; then \
-	  echo "ERROR: 'makeinfo' v4 needed but missing on your system."; \
-	  exit 1; \
-	fi
-	$(TEXI2TEXT) $(srcdir)/resources.texi -o $@
-$(top_srcdir)/doc/html/resources.html: @MAINTAINER_MODE_TRUE@ $(srcdir)/resources.texi
-	@if test "$(MAKEINFO)" = false; then \
-	  echo "ERROR: 'makeinfo' v4 needed but missing on your system."; \
-	  exit 1; \
-	fi
-	$(TEXI2HTML) --no-headers $(srcdir)/resources.texi -o $@
+maintainer-build:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
@@ -459,10 +431,23 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	done
 	@if test "$(MAKEINFO)" = false; then \
-	  echo "ERROR: 'makeinfo' v4 needed but missing on your system."; \
+	  echo "ERROR: 'makeinfo' v4.5 or later needed but missing on your system."; \
 	  exit 1; \
 	fi
 #	$(distdir)/doc/html has already been created
-	$(TEXI2HTML) --no-headers --number-sections \
+	@$(TEXI2HTML) --no-headers --number-sections \
 	  $(srcdir)/R-admin.texi -I$(srcdir) \
 	  -o $(distdir)/../html/R-admin.html
+#	front-matter files
+#	@$(TEXI2TEXT) $(srcdir)/resources.texi -o $(distdir)/../../RESOURCES
+#	@$(TEXI2TEXT) $(srcdir)/R-FAQ.texi -o $(distdir)/../../FAQ
+#	@$(TEXI2HTML) --no-headers $(srcdir)/resources.texi \
+#	  -o $(distdir)/../html/resources.html
+
+front-matter:
+	@$(TEXI2TEXT) $(srcdir)/resources.texi -o ${top_builddir}/RESOURCES
+	@$(TEXI2TEXT) $(srcdir)/R-FAQ.texi -o ${top_builddir}/FAQ
+
+html-non-svn:
+	@$(TEXI2HTML) --no-headers $(srcdir)/resources.texi \
+	  -o ../html/resources.html

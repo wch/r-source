@@ -70,7 +70,7 @@ distclean: clean
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)
-	@for f in $(DISTFILES) `cd $(srcdir) && ls *.tar.gz *.tgz`; do \
+	@for f in $(DISTFILES) `cd $(srcdir) && ls *.tar.gz`; do \
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \

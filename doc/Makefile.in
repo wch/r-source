@@ -12,7 +12,8 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 INSTFILES = KEYWORDS KEYWORDS.db
-DISTFILES = Makefile.in $(INSTFILES) R.1 R.aux
+DISTFILES = Makefile.in $(INSTFILES) R.aux
+NON_SVN_INSTFILES = R.1
 SUBDIRS = html manual
 
 HELP2MAN = $(PERL) $(top_srcdir)/tools/help2man.pl
@@ -21,7 +22,7 @@ all: Makefile R docs
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-R: Makefile @MAINTAINER_MODE_TRUE@ maintainer-build
+R: Makefile svnonly @MAINTAINER_MODE_TRUE@ maintainer-build
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
@@ -75,24 +76,40 @@ clean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  rm -f $(INSTFILES); \
+	  rm -f $(INSTFILES) R.1; \
 	fi
 distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
+	@if test -f non-tarball ; then \
+	  rm -f R.1 non-tarball ; \
+	fi
 	-@rm -f Makefile
 maintainer-clean: distclean
-	@echo "This command is intended for maintainers to use; it"
-	@echo "deletes files that may need special rules to rebuild"
-	-@rm -f $(srcdir)/R.1
 
-maintainer-build: $(srcdir)/R.1
+maintainer-build:
+
 $(srcdir)/R.1: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/VERSION $(top_srcdir)/date-stamp $(top_srcdir)/src/scripts/R.sh.in $(srcdir)/R.aux
 	@(cd $(top_builddir)/src/scripts && $(MAKE) R.fe)
 	@$(HELP2MAN) --include=$(srcdir)/R.aux --no-info --output=$@ \
 	  --name="a language for data analysis and graphics" \
 	  $(top_builddir)/src/scripts/R.fe
+
+svnonly:
+	@if test ! -f "$(srcdir)/R.1" ; then \
+	  (cd $(top_builddir)/src/scripts && $(MAKE) R.fe) ; \
+	  $(HELP2MAN) --include=$(srcdir)/R.aux --no-info --output=R.1 \
+	    --name="a language for data analysis and graphics" \
+	  $(top_builddir)/src/scripts/R.fe ; \
+	  touch non-tarball ; \
+	else \
+	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	    for f in $(NON_SVN_INSTFILES); do \
+	      $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)/$(subdir)"; \
+	    done \
+	  fi \
+	fi
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

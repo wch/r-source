@@ -21,6 +21,14 @@ NEW FEATURES
 	renamed to 'object'.
 
 
+DOCUMENTATION
+
+   o	File doc/html/faq.html no longer exists, and doc/manual/R-FAQ.html
+	(which has active links to other manuals) is used instead.
+	(If makeinfo >= 4.5 is not available, the version on CRAN is
+	linked to.)
+
+
 INSTALLATION CHANGES
 
    o	-D__NO_MATH_INLINES is only used on older ix86 glibc-based
@@ -31,10 +39,13 @@ INSTALLATION CHANGES
 	ensures that features such as inlining are only used if the
 	compilation flags specified support them.  (PR#7257)
 
+   o	Files FAQ, RESOURCES, doc/html/resources.html are no longer in
+	the SVN sources but are made by 'make dist'.
+
 
 BUG FIXES
 
-   o	Configuring for Tcl/TK makes use of ${TK_LIB_SPEC} ${TK_LIBS}
+   o	Configuring for Tcl/Tk makes use of ${TK_LIB_SPEC} ${TK_LIBS}
 	not ${TK_LIB_SPEC} ${TK_XLIBSW}, which is correct for
 	recent versions of Tk, but conceivably not for old
 	tkConfig.sh files.
@@ -119,6 +130,9 @@ BUG FIXES
     o   packageDescription() now correctly reports that a package does
 	not exist, rather than that its DESCRIPTION file is 'missing
 	or broken'.
+
+    o   'make dist' from builddir != sourcedir was copying not linking
+	recommended packages to *.tgz.
 
 
 
