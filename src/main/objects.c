@@ -191,6 +191,8 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 		table = eval(table, R_NilValue);
 	    if (TYPEOF(table) == ENVSXP) {
 		val = findVarInFrame3(table, method, TRUE);
+		if (TYPEOF(val)==PROMSXP)
+		    val = eval(val, rho);
 		if (val != R_UnboundValue)
 		    return val;
 	    }
