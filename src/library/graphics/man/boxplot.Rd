@@ -12,8 +12,9 @@ boxplot(x, \dots)
 \method{boxplot}{formula}(formula, data = NULL, \dots, subset, na.action = na.pass)
 
 \method{boxplot}{default}(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
-        notch = FALSE, outline = TRUE, names, boxwex = 0.8, plot = TRUE,
-        border = par("fg"), col = NULL, log = "", pars = NULL,
+        notch = FALSE, outline = TRUE, names, plot = TRUE,
+        border = par("fg"), col = NULL, log = "",
+        pars = list(boxwex = 0.8, staplewex = 0.5, outwex = 0.5),
         horizontal = FALSE, add = FALSE, at = NULL)
 }
 \arguments{
@@ -61,6 +62,10 @@ boxplot(x, \dots)
   \item{boxwex}{a scale factor to be applied to all boxes.  When there
     are only a few groups, the appearance of the plot can be improved
     by making the boxes narrower.}
+  \item{staplewex}{staple line width expansion, proportional to box
+    width.}
+  \item{outwex}{outlier line width expansion, proportional to box
+    width.}
   \item{plot}{if \code{TRUE} (the default) then a boxplot is
     produced.  If not, the summaries which the boxplots are based on
     are returned.}
@@ -71,8 +76,9 @@ boxplot(x, \dots)
     to be used to colour the bodies of the box plots.}
   \item{log}{character indicating if x or y or both coordinates should
     be plotted in log scale.}
-  \item{pars}{a list of graphical parameters; these are passed to
-    \code{\link{bxp}} (if \code{plot} is true).}
+  \item{pars}{a list of (potentially many) more graphical parameters,
+    e.g., \code{boxwex} or \code{outpch}; these are passed to
+    \code{\link{bxp}} (if \code{plot} is true); for details, see there.}
   \item{horizontal}{logical indicating if the boxplots should be
     horizontal; default \code{FALSE} means vertical boxes.}
   \item{add}{logical, if true \emph{add} boxplot to current plot.}
@@ -112,7 +118,7 @@ boxplot(x, \dots)
 }
 \seealso{
   \code{\link{boxplot.stats}} which does the computation,
-  \code{\link{bxp}} for the plotting;
+  \code{\link{bxp}} for the plotting and more examples;
   and \code{\link{stripchart}} for an alternative (with small data
   sets).
 }
@@ -160,5 +166,7 @@ boxplot(len ~ dose, data = ToothGrowth, add = TRUE,
         subset= supp == "OJ", col="orange")
 legend(2, 9, c("Ascorbic acid", "Orange juice"),
        fill = c("yellow", "orange"))
+
+## more examples in  help(bxp)
 }
 \keyword{hplot}
