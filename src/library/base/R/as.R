@@ -16,18 +16,29 @@ as.matrix <- function(x)
 {
 	UseMethod("as.matrix")
 }
-as.matrix.default <- function(x)
-{
-	if( is.matrix(x) )
-		x
-	else
-		array(x, c(length(x),1), if(!is.null(names(x))) list(names(x), NULL) else NULL)
+as.matrix.default <- function(x) {
+  if (is.matrix(x))
+    x
+  else
+    array(x, c(length(x),1), if(!is.null(names(x))) list(names(x), NULL) else NULL)
 }
-as.matrix.data.frame <- function(x)
-{
-	y <- .Internal(as.matrix.data.frame(x))
-	dimnames(y) <- dimnames(x)
-	y
+as.matrix.data.frame <- function(x) {
+  y <- .Internal(as.matrix.data.frame(x))
+  if (ncol(x) == ncol(y)) {
+    dimnames(y) <- dimnames(x)
+  } else {
+    N <- sapply(x, NCOL)
+    colnames(y) <-
+      paste(rep(colnames(x), N),
+            unlist(lapply(as.list(N),
+                          function (t) {
+                            if (t == 1) ""
+                            else paste(".", 1 : t, sep = "")
+                          })),
+            sep = "")
+    rownames(y) <- rownames(x)    
+  }
+  y
 }
 as.null <- function(x) NULL
 as.function <- function(x) stop("mode function cannot be assigned")
