@@ -43,4 +43,5 @@ then
         echo "Saving help page to \`${2}.ps'"
         mv ${1}.ps ${ODIR}/${2}.ps
     fi
+    rm -f ${1}.aux ${1}.dvi ${1}.log
 fi

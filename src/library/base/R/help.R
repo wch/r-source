@@ -61,7 +61,7 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
             }
             else {
                 FILE <- tempfile()
-                ## on.exit(unlink(paste(FILE, "*", sep = "")))
+                on.exit(unlink(FILE))
                 cat("\\documentclass[", .Options$papersize, "paper]{article}\n",
                   file = FILE, sep = "")
                 file.append(FILE,
@@ -73,7 +73,7 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
                 cat("\\end{document}\n", file = FILE, append = TRUE)
                 system(paste(file.path(R.home(), "bin", "help"),
                              "PRINT", FILE, topic,
-                             options()$latexcmd, options()$dvipscmd)
+                             .Options$latexcmd, .Options$dvipscmd)
                        )
                 return()
             }
