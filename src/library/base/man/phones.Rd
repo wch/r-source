@@ -28,7 +28,7 @@
 data(phones)
 matplot(rownames(phones), phones, type = "b", log = "y",
         xlab = "Year", ylab = "Number of telephones (1000's)")
-legend(1951.5, 80000, colnames(phones), col = 1:7, lty = 1:7, pch = rep(21, 7))
+legend(1951.5, 80000, colnames(phones), col = 1:6, lty = 1:5, pch = rep(21, 7))
 title(main = "phones data: log scale for response")
 }
 \keyword{datasets}
