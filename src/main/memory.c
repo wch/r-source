@@ -410,13 +410,19 @@ SEXP allocList(int n)
 
 void gc(void)
 {
+	sigset_t mask, omask;
+
 	int vcells, vfrac;
 	if (gc_reporting)
 		REprintf("Garbage collection ...");
+	sigemptyset(&mask);
+	sigaddset(&mask,SIGINT);
+	sigprocmask(SIG_BLOCK, &mask, &omask);
 	unmarkPhase();
 	markPhase();
 	compactPhase();
 	scanPhase();
+	sigprocmask(SIG_SETMASK, &omask, &mask);
 	if (gc_reporting) {
 		REprintf("\n%ld cons cells free (%ld%%)\n",
 			 R_Collected, (100 * R_Collected / R_NSize));

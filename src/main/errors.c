@@ -124,7 +124,7 @@ static void jump_now()
 {
 	inError=0;
 	R_PPStackTop = 0;
-	if(R_Interactive) longjmp(R_ToplevelContext->cjmpbuf, 0);
+	if(R_Interactive) siglongjmp(R_ToplevelContext->cjmpbuf, 0);
 	else REprintf("Execution halted\n");
 	exit(1);
 }
