@@ -156,7 +156,7 @@ help <- function(topic, offline = FALSE, package = .packages(),
                         sep="")
                     A <- cbind(package=pkgs, library=libs)
                     rownames(A) <- 1:nrow(A)
-                    print(A, quote=F)
+                    print(A, quote=FALSE)
                 } else {
                     stop(paste("No documentation for `", topic,
                                "' in specified packages and libraries:\n",

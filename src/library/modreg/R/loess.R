@@ -223,7 +223,7 @@ predict.loess <- function(object, newdata = NULL, se = FALSE)
 	vars <- as.character(attr(delete.response(terms(object)),
 				  "variables"))[-1]
 	newx <- if(length(vars) > 1 || NCOL(newdata) > 1) {
-	    if(any(!match(vars, colnames(newdata), F)))
+	    if(any(!match(vars, colnames(newdata), FALSE)))
 		stop("newdata does not contain the variables needed")
 	    as.matrix(newdata[, vars, drop=FALSE])
 	} else as.matrix(newdata)
