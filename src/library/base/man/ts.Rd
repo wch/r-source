@@ -81,7 +81,7 @@ lines(ts.obj, ...)
   \code{\link{start}},
   \code{\link{end}},
   \code{\link{time}},
-  \code{\link{window}}, standard ackage \code{ts} for many additional
+  \code{\link{window}}, standard package \code{ts} for many additional
   time-series functions.
 }
 \examples{
