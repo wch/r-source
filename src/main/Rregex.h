@@ -23,6 +23,12 @@
 #ifndef _REGEX_H
 #define _REGEX_H 1
 
+/* remap entry points */
+# define regfree(preg) Rf_regfree (preg)
+# define regexec(pr, st, nm, pm, ef) Rf_regexec (pr, st, nm, pm, ef)
+# define regcomp(preg, pattern, cflags) Rf_regcomp (preg, pattern, cflags)
+
+
 /* Allow the use in C++ code.  */
 #ifdef __cplusplus
 extern "C" {
@@ -518,17 +524,17 @@ extern int re_exec _RE_ARGS ((const char *));
 #endif
 
 /* POSIX compatibility.  */
-extern int regcomp _RE_ARGS ((regex_t *__preg, const char *__pattern,
+extern int Rf_regcomp _RE_ARGS ((regex_t *__preg, const char *__pattern,
 			      int __cflags));
 
-extern int regexec _RE_ARGS ((const regex_t *__preg,
+extern int Rf_regexec _RE_ARGS ((const regex_t *__preg,
 			      const char *__string, size_t __nmatch,
 			      regmatch_t __pmatch[], int __eflags));
 
 extern size_t regerror _RE_ARGS ((int __errcode, const regex_t *__preg,
 				  char *__errbuf, size_t __errbuf_size));
 
-extern void regfree _RE_ARGS ((regex_t *__preg));
+extern void Rf_regfree _RE_ARGS ((regex_t *__preg));
 
 
 #ifdef __cplusplus
