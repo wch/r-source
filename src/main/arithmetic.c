@@ -22,7 +22,15 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"		/*-> Arith.h */
+#ifdef __OpenBSD__
+/* for definition of "struct exception" in math.h */
+# define __LIBM_PRIVATE
+#endif
+#include "Defn.h"		/*-> Arith.h -> math.h */
+#ifdef __OpenBSD__
+# undef __LIBM_PRIVATE
+#endif
+
 #define MATHLIB_PRIVATE
 #include <Rmath.h>
 #undef MATHLIB_PRIVATE
@@ -81,7 +89,7 @@ typedef union
    Earlier code used to use establish_endianness()
    to compute these, but this is uncessary and makes them
    non-constant, but initialize once. This would involve
-   a song and dance in a threaded application (e.g pthread_once(), 
+   a song and dance in a threaded application (e.g pthread_once(),
    etc.).
  */
 #ifndef _AIX
@@ -95,7 +103,7 @@ static const int lw = 0;
 #else
 /* gcc on AIX messes up symbol table with static const */
 #  ifdef WORDS_BIGENDIAN
-static int hw = 0;  
+static int hw = 0;
 static int  lw = 1;
 #  else  /* WORDS_BIGENDIAN */
 static int hw = 1;
@@ -969,22 +977,22 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 22: return MATH1(tan);
     case 23: return MATH1(acos);
     case 24: return MATH1(asin);
-			  
+
     case 30: return MATH1(cosh);
     case 31: return MATH1(sinh);
     case 32: return MATH1(tanh);
     case 33: return MATH1(acosh);
     case 34: return MATH1(asinh);
     case 35: return MATH1(atanh);
-			  
+
     case 40: return MATH1(lgammafn);
     case 41: return MATH1(gammafn);
-			  
+
     case 42: return MATH1(digamma);
     case 43: return MATH1(trigamma);
     case 44: return MATH1(tetragamma);
     case 45: return MATH1(pentagamma);
-			  
+
     case 46: return MATH1(gamma_cody);
 
     default:
@@ -1118,7 +1126,7 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (isComplex(CAR(args)))
 	return complex_math2(call, op, args, env);
-    
+
 
     switch (PRIMVAL(op)) {
 
@@ -1133,23 +1141,23 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     case  6: return Math2_1(args, dchisq);
     case  7: return Math2_2(args, pchisq);
     case  8: return Math2_2(args, qchisq);
-		     
+
     case  9: return Math2_1(args, dexp);
     case 10: return Math2_2(args, pexp);
     case 11: return Math2_2(args, qexp);
-		     
+
     case 12: return Math2_1(args, dgeom);
     case 13: return Math2_2(args, pgeom);
     case 14: return Math2_2(args, qgeom);
-		     
+
     case 15: return Math2_1(args, dpois);
     case 16: return Math2_2(args, ppois);
     case 17: return Math2_2(args, qpois);
-		     
+
     case 18: return Math2_1(args, dt);
     case 19: return Math2_2(args, pt);
     case 20: return Math2_2(args, qt);
-			    
+
     case 21: return Math2_1(args, dsignrank);
     case 22: return Math2_2(args, psignrank);
     case 23: return Math2_2(args, qsignrank);
