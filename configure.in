@@ -807,7 +807,7 @@ if test -n "${LIBS1}"; then
 fi
 AC_SUBST(LIBPATHS)
 
-for arg in ${X_LIBS}; do
+for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${BLAS_LIBS}; do
   case ${arg} in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
