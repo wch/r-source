@@ -123,8 +123,8 @@ $(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
 
 RGui.pot-update:
 	(cd $(top_srcdir)/src/gnuwin32; $(XGETTEXT) --default-domain=RGui \
-	  --keyword=G_ --keyword=GN_ \
-	  --add-comments=TRANSLATORS: $(XGETTEXT_OPTIONS) \
+	  --keyword= --keyword=G_ --keyword=GN_ \
+	  --add-comments=TRANSLATORS: \
 	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
 	  --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
 	   -o - console.c dataentry.c editor.c pager.c preferences.c rui.c system.c graphapp/gmenus.c) > RGui.po

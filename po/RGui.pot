@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-08 09:42+0000\n"
+"POT-Creation-Date: 2005-02-08 10:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -666,74 +666,8 @@ msgstr ""
 msgid "menu or item does not exist"
 msgstr ""
 
-#: system.c:112
-#, c-format
-msgid "Fatal error: %s\n"
-msgstr ""
-
-#: system.c:282
-#, c-format
-msgid "encoding '%s' is not recognised"
-msgstr ""
-
-#: system.c:288
-msgid "<ERROR: invalid input in encoding> "
-msgstr ""
-
 #: system.c:393
 msgid "Save workspace image?"
-msgstr ""
-
-#: system.c:486
-#, c-format
-msgid "Unable to open file '%s'"
-msgstr ""
-
-#: system.c:499
-#, c-format
-msgid "file.show(): file %s does not exist\n"
-msgstr ""
-
-#: system.c:846
-msgid "WARNING: no max-mem-size given\n"
-msgstr ""
-
-#: system.c:852
-#, c-format
-msgid "WARNING: --max-mem-size value is invalid: ignored\n"
-msgstr ""
-
-#: system.c:854
-#, c-format
-msgid "WARNING: --max-mem-size=%lu`%c': too large and ignored\n"
-msgstr ""
-
-#: system.c:859
-#, c-format
-msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
-msgstr ""
-
-#: system.c:869
-#, c-format
-msgid "WARNING: unknown option %s\n"
-msgstr ""
-
-#: system.c:894
-#, c-format
-msgid "ARGUMENT '%s' __ignored__\n"
-msgstr ""
-
-#: system.c:912
-msgid "you must specify `--save', `--no-save' or `--vanilla'"
-msgstr ""
-
-#: system.c:917
-msgid ""
-"impossible to create 'reader thread'; you must free some system resources"
-msgstr ""
-
-#: system.c:926
-msgid "WARNING: invalid R_HISTSIZE ignored;"
 msgstr ""
 
 #: graphapp/gmenus.c:47
