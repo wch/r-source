@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-02-28
+Version 2.0.2005-03-01
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1340,6 +1340,10 @@ distributions of R.)
 
 *Ecdat*
      Data sets from econometrics textbooks.
+
+*GDD*
+     Platform and X11 independent device for creating bitmaps (png, gif and
+     jpeg) using the GD graphics library.
 
 *GRASS*
      An interface between the GRASS geographical information system and R,

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-28
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-01
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1720,6 +1720,9 @@ Estimation of missing values in a matrix by a @math{k}-th nearest
 neighboors algorithm.
 @item Ecdat
 Data sets from econometrics textbooks.
+@item GDD
+Platform and X11 independent device for creating bitmaps (png, gif and
+jpeg) using the GD graphics library.
 @item GRASS
 An interface between the GRASS geographical information system and R,
 based on starting R from within the GRASS environment and chosen
