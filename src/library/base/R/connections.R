@@ -200,7 +200,7 @@ readChar <- function(con, nchars)
     .Internal(readChar(con, as.integer(nchars)))
 }
 
-writeChar <- function(object, con, nchars = nchar(object, type="bytes"),
+writeChar <- function(object, con, nchars = nchar(object, type="chars"),
                       eos = "")
 {
     if(!is.character(object))

@@ -2845,19 +2845,39 @@ SEXP do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static SEXP readFixedString(Rconnection con, int len)
 {
-    char *buf, *p;
+    char *buf;
     int  pos, m;
     SEXP ans;
 
-    buf = (char *) R_alloc(len+1, sizeof(char));
-    for(pos = 0; pos < len; pos++) {
-	p = buf + pos;
-	m = con->read(p, sizeof(char), 1, con);
-	if(!m) {
-	    if(pos == 0) return R_NilValue; else break;
+#ifdef SUPPORT_UTF8
+    if(utf8locale) {
+	int i, clen;
+	char *p, *q;
+	p = buf = (char *) R_alloc(MB_CUR_MAX*len+1, sizeof(char));
+	memset(buf, 0, MB_CUR_MAX*len+1);
+	for(i = 0; i < len; i++) {
+	    q = p;
+	    m = con->read(p, sizeof(char), 1, con);
+	    if(!m) { if(i == 0) return R_NilValue; else break;}
+	    clen = utf8clen(*p++);
+	    if(clen > 1) {
+		m = con->read(p, sizeof(char), clen - 1, con);
+		if(m < clen - 1) error("invalid UTF-8 input in readChar");
+		p += clen - 1;
+		if((int)mbrlen(q, clen, NULL) < 0)
+		    error("invalid UTF-8 input in readChar");
+	    }
 	}
+	pos = p - buf;
+    } else
+#endif
+    {
+	buf = (char *) R_alloc(len+1, sizeof(char));
+	memset(buf, 0, len+1);
+	m = con->read(buf, sizeof(char), len, con);
+	if(m == 0) return R_NilValue;
+	pos = m;
     }
-    buf[pos] = '\0';
     /* String may contain nuls so don't use mkChar */
     ans = allocString(pos);
     memcpy(CHAR(ans), buf, pos);
@@ -2913,11 +2933,14 @@ SEXP do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP object, nchars, sep;
-    int i, len, n, nwrite=0, slen, tlen;
+    int i, len, lenb, lenc, n, nwrite=0, slen, tlen;
     char *s, *buf, *ssep = "";
     Rboolean wasopen, usesep;
     Rconnection con = NULL;
     char *vmax = vmaxget();
+#ifdef SUPPORT_MBCS
+    mbstate_t mb_st;
+#endif
 
     checkArity(op, args);
     object = CAR(args);
@@ -2961,16 +2984,38 @@ SEXP do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	for(i = 0; i < n; i++) {
 	    len = INTEGER(nchars)[i];
 	    s = CHAR(STRING_ELT(object, i));
+	    lenb = lenc = strlen(s);
+#ifdef SUPPORT_MBCS
+	    if(utf8locale) lenc = mbstowcs(NULL, s, 0);
+#endif
 	    /* As from 1.8.1, zero-pad if too many chars are requested. */
-	    if(len > strlen(s))
+	    if(len > lenc) {
 		warning("writeChar: more characters requested than are in the string - will zero-pad");
-	    memset(buf, '\0', len + slen);
-	    strncpy(buf, s, len);
+		lenb += (len - lenc);
+	    }
+	    if(len < lenc) {
+#ifdef SUPPORT_MBCS
+		if(utf8locale) {
+		    /* find out how many bytes we need to write */
+		    int i, used;
+		    char *p = s;
+		    mbs_init(&mb_st);
+		    for(i = 0, lenb = 0; i < len; i++) {
+			used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st);
+			p += used;
+			lenb += used;
+		    }
+		} else
+#endif
+		    lenb = len;
+	    }
+	    memset(buf, '\0', lenb + slen);
+	    strncpy(buf, s, lenb);
 	    if (usesep) {
 		strcat(buf, ssep);
-		len += slen;
+		lenb += slen;
 	    }
-	    nwrite = con->write(buf, sizeof(char), len, con);
+	    nwrite = con->write(buf, sizeof(char), lenb, con);
 	    if(!nwrite) {
 		warning("problem writing to connection");
 		break;

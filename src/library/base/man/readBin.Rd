@@ -13,7 +13,7 @@ readBin(con, what, n = 1, size = NA, signed = TRUE,
 writeBin(object, con, size = NA, endian = .Platform$endian)
 
 readChar(con, nchars)
-writeChar(object, con, nchars = nchar(object, type="bytes"), eos = "")
+writeChar(object, con, nchars = nchar(object, type="chars"), eos = "")
 }
 \arguments{
   \item{con}{A connection object or a character string.}
@@ -34,7 +34,7 @@ writeChar(object, con, nchars = nchar(object, type="bytes"), eos = "")
     target system for the file.  Using \code{"swap"} will force swapping
     endian-ness.}
   \item{object}{An \R object to be written to the connection.}
-  \item{nchars}{integer, giving the lengths in bytes of (unterminated)
+  \item{nchars}{integer, giving the lengths in characters of (unterminated)
     character strings to be read or written.}
   \item{eos}{character. The terminator to be written after each string,
     followed by an ASCII \code{nul}; use \code{NULL} for no terminator

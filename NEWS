@@ -253,6 +253,8 @@ INTERNATIONALIZATION
 	of by example() which will convert (non-UTF-8) Latin-1 example
 	files in a UTF-8 locale.
 
+    o	read/writeChar() work in units of characters, not bytes.
+
 
 UTILITIES
 
