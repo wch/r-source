@@ -360,18 +360,22 @@ frame <- plot.new
 plot.window <- function(xlim, ylim, log = "", asp = NA, ...)
     .Internal(plot.window(xlim, ylim, log, asp, ...))
 
-plot.data.frame <- function (x, ...) {
+plot.data.frame <- function (x, ...)
+{
+    plot2 <- function(x, xlab=names(x)[1], ylab=names(x)[2], ...)
+        plot(x[[1]], x[[2]], xlab=xlab, ylab=ylab, ...)
+
     if(!is.data.frame(x))
 	stop("plot.data.frame applied to non data frame")
-    x <- data.matrix(x)
     if(ncol(x) == 1) {
-	stripchart(x, ...)
-    }
-    else if(ncol(x) == 2) {
-	plot(x, ...)
-    }
-    else {
-	pairs(x, ...)
+        x1 <- x[[1]]
+        cl <- class(x1)
+        if(cl %in% c("integer", "numeric"))  stripchart(x1, ...)
+        else plot(x1, ...) # factor, ts, complex ...
+    } else if(ncol(x) == 2) {
+        plot2(x, ...)
+    } else {
+	pairs(data.matrix(x), ...)
     }
 }
 

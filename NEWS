@@ -156,6 +156,9 @@ NEW FEATURES
 	everywhere instead of just inside the "inner" knots, by setting the
 	new argument `outer.ok = TRUE'.
 
+    o	plot.data.frame tries hards to produce sensible plots for
+	non-numeric data frames with one or two columns.
+
 
 UTILITIES
 
