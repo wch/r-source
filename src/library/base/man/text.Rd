@@ -38,9 +38,9 @@ text(2, 1, "or Left/Bottom - JUSTIFIED at (2,1) by `adj = c(0,0)'",
      adj = c(0,0))
 text(4, 9, expression(hat(beta) == (X^t * X)^{-1} * X^t * y))
 text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)", cex = .6)
-text(4, 7, expression(bar(x) == sum(over(x[i], n), i==1, n)))
-text(4, 6.4, "expression(bar(x) == sum(over(x[i], n), i==1, n))", cex = .6)
-text(8, 5, expression(paste(over(1, sigma*sqrt(2*pi)), " ",
-                            plain(e)^{over(-(x-mu)^2, 2*sigma^2)})))
+text(4, 7, expression(bar(x) == sum(frac(x[i], n), i==1, n)))
+text(4, 6.4, "expression(bar(x) == sum(frac(x[i], n), i==1, n))", cex = .6)
+text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ",
+                            plain(e)^{frac(-(x-mu)^2, 2*sigma^2)})))
 }
 \keyword{aplot}
