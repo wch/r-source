@@ -1,6 +1,12 @@
 \name{write.table}
 \alias{write.table}
 \title{Data Output}
+\description{
+  \code{write.table} prints its required argument \code{x} (after
+  converting it to a data frame if it is not one already) to
+  \code{file}.  The entries in each line (row) are separated by the
+  value of \code{sep}.
+}
 \usage{
 write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
             eol = "\n", na = NA, row.names = TRUE, col.names = TRUE)
@@ -25,12 +31,8 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
   \item{na}{the string to use for missing values in the data.}
   \item{eol}{the character(s) to print at the end of each line (row).}
 }
-\description{
-  \code{write.table} prints its required argument \code{x} (after
-  converting it to a data frame if it is not one already) to
-  \code{file}.  The entries in each line (row) are separated by the
-  value of \code{sep}.
-}
 \seealso{
   \code{\link{read.table}}.
 }
+\keyword{print}
+\keyword{file}

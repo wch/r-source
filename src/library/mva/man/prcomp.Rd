@@ -5,6 +5,9 @@
 \alias{summary.prcomp}
 \alias{print.summary.prcomp}
 \title{Principal Components Analysis}
+\description{
+  Performs a principal components analysis on the given data matrix
+  and returns the results as an object of class \code{prcomp}.}
 \usage{
 prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
 }
@@ -28,9 +31,6 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
     are omitted.  Other settings for tol could be \code{tol = 0} or
     \code{tol = sqrt(.Machine$double.eps)}.} 
 }
-\description{
-  Performs a principal components analysis on the given data matrix
-  and returns the results as an object of class \code{prcomp}.}
 \value{
   \code{prcomp} returns an list with class \code{"prcomp"}
   containing the following components:
@@ -44,23 +44,22 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
     data multiplied by the \code{rotation} matrix) is returned.}
 }
 \details{
-  The calculation is done by a singular-value decomposition of the
-  data matrix, not by using
-  eigen on the covariance matrix.  This is generally the preferred
-  method for numerical accuracy.  The \code{print} method for the these
-  objects prints the results in a nice format and the \code{plot} method
-  produces a scree plot.
+  The calculation is done by a singular value decomposition of the
+  data matrix, not by using \code{eigen} on the covariance matrix.  This
+  is generally the preferred method for numerical accuracy.  The
+  \code{print} method for the these objects prints the results in a nice
+  format and the \code{plot} method produces a scree plot.
 }
 \references{
-    Mardia, K. V., J. T. Kent, J and M. Bibby (1979),
-    \emph{Multivariate Analysis}, London: Academic Press.
+  Mardia, K. V., J. T. Kent, J and M. Bibby (1979),
+  \emph{Multivariate Analysis}, London: Academic Press.
 
-    Venables, W. N. and B. D. Ripley (1997),
-    \emph{Modern Applied Statistics with S-PLUS}, Springer-Verlag.
+  Venables, W. N. and B. D. Ripley (1997),
+  \emph{Modern Applied Statistics with S-PLUS}, Springer-Verlag.
 }
 \seealso{
-    \code{\link{princomp}}, \code{\link{cor}}, \code{\link{cov}},
-    \code{\link{svd}}, \code{\link{eigen}}.
+  \code{\link{princomp}}, \code{\link{cor}}, \code{\link{cov}},
+  \code{\link{svd}}, \code{\link{eigen}}.
 }
 \examples{
 ## the variances of the variables in the
@@ -71,3 +70,4 @@ prcomp(USArrests, scale = TRUE)
 plot(prcomp(USArrests))
 summary(prcomp(USArrests))
 }
+\keyword{multivariate}

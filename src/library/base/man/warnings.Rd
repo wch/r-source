@@ -1,12 +1,15 @@
 \name{warnings}
+\alias{warnings}
 \title{Print Warning Messages}
+\description{
+  \code{warnings} prints the top-level variable \code{last.warning} in a
+  pleasing form.
+}
 \usage{
 warnings(\dots)
 }
-\alias{warnings}
-\description{
-\code{warnings} prints the top--level variable \code{last.warning}
-in a pleasing form.
+\arguments{
+  \item{\dots}{arguments to be passed to \code{\link{cat}}.}
 }
 \seealso{\code{\link{warning}}.}
 \examples{
@@ -18,3 +21,5 @@ for(w in -1:1) {
 warnings()
 options(ow) # reset
 }
+\keyword{programming}
+\keyword{error}

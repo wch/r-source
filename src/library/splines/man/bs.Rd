@@ -1,9 +1,12 @@
 \name{bs}
+\alias{bs}
 \title{Generate a Basis for Polynomial Splines}
+\description{
+  Generate the B-spline basis matrix for a cubic spline.
+}
 \usage{
 bs(x, df, knots, degree=3, intercept=FALSE, Boundary.knots)
 }
-\alias{bs}
 \arguments{
   \item{x}{the predictor variable.}
   \item{df}{degrees of freedom; one can specify \code{df} rather than
@@ -23,11 +26,8 @@ bs(x, df, knots, degree=3, intercept=FALSE, Boundary.knots)
     \code{Boundary.knots} are supplied, the basis parameters do not
     depend on \code{x}. Data can extend beyond \code{Boundary.knots}} 
 }
-\description{
-  Generate the B-spline basis matrix for a cubic spline.
-}
 \value{
-  a matrix of dimension \code{length(x) * df}, where either \code{df}
+  A matrix of dimension \code{length(x) * df}, where either \code{df}
   was supplied or if \code{knots} were supplied,
   \code{df = length(knots) + 3 + intercept}.  Attributes are returned
   that  correspond to the arguments to \code{bs}, and explicitly give
@@ -54,5 +54,4 @@ data(women)
 bs(women$height, df = 5)
 summary(fm1 <- lm(weight ~ bs(height, df = 5), data = women))
 }
-
-
+\keyword{nonparametric}

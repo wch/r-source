@@ -70,20 +70,19 @@ mosaicplot.formula(formula, data = NULL, subset, na.action, \dots)
   Mosaic displays for multi-way contingency tables.
   \emph{Journal of the American Statistical Association}, \bold{89},
   190-200.
-  \cr
+
   The home page of Michael Friendly
   (\url{http://hotspur.psych.yorku.ca/SCS/friendly.html}) provides
   information on various aspects of graphical methods for analyzing
   categorical data, including mosaic plots.
 }
 \examples{
-## FIXME: Use interesting data!
+data(Titanic)
+mosaicplot(Titanic, main = "Survival on the Titanic", color = TRUE)
 
-## Artificial 4-way table
-Y <- table(trunc(3*runif(1000)), trunc(3*runif(1000)),
-           trunc(5*runif(1000))-10, trunc(3*runif(1000)))
-dimnames(Y)[[2]] <- c("Cat", "Dog", "Horse")
-mosaicplot(Y, main = "Sample Mosaic", color = TRUE)
-
-## FIXME: Provide an example for the formula interface
+## Formula interface: visualize crosstabulation of numbers of gears and
+## carburettors in Motor Trend car data.
+data(mtcars)
+mosaicplot(~ gear + carb, data = mtcars, color = TRUE)
 }
+\keyword{hplot}

@@ -1,9 +1,12 @@
 \name{ns}
+\alias{ns}
 \title{Generate a Basis Matrix for Natural Cubic Splines}
+\description{
+  Generate the B-spline basis matrix for a natural cubic spline.
+}
 \usage{
 ns(x, df, knots, intercept=F, Boundary.knots)
 }
-\alias{ns}
 \arguments{
   \item{x}{the predictor variable.}
   \item{df}{degrees of freedom. One can supply \code{df} rather than
@@ -21,9 +24,6 @@ ns(x, df, knots, intercept=F, Boundary.knots)
     of the data).  If both \code{knots} and \code{Boundary.knots} are
     supplied, the basis parameters do not depend on \code{x}. Data can
     extend beyond \code{Boundary.knots}}
-}
-\description{
-  Generate the B-spline basis matrix for a natural cubic spline.
 }
 \value{
     A matrix of dimension \code{length(x) * df} where either \code{df} was
@@ -55,3 +55,4 @@ data(women)
 ns(women$height, df = 5)
 summary(fm1 <- lm(weight ~ ns(height, df = 5), data = women))
 }
+\keyword{nonparametric}
