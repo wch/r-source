@@ -50,7 +50,9 @@ printCoefmat(x, digits=max(3, getOption("digits") - 2),
     printed output.}
  \item{\dots}{further arguments for \code{\link{print}}.}
 }
-\value{Invisibly returns its argument, \code{x}.}}
+\value{
+  Invisibly returns its argument, \code{x}.
+}
 \author{Martin Maechler}
 \seealso{
   \code{\link{print.summary.lm}},

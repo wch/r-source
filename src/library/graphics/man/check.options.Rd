@@ -10,7 +10,7 @@ check.options(new, name.opt, reset = FALSE, assign.opt = FALSE,
   Utility function for setting options with some consistency checks.
   The \code{\link{attributes}} of the new settings in \code{new} are
   checked for consistency with the \emph{model} (often default)
-  list in \code{name.opt}.}
+  list in \code{name.opt}.
 }
 \arguments{
   \item{new}{a \emph{named} list}
