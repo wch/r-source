@@ -17,6 +17,11 @@ BUG FIXES
 
     o	\link[pkg]{foo} links were wrongly translated to HTML.
 
+    o	direct use of show.data() with no args was incorrect.
+
+    o	print.coefmat does sensible things if options
+	show.signif.stars and show.coef.Pvalues are not set correctly.
+
 
 		CHANGES IN R VERSION 1.0.0
 

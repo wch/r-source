@@ -89,7 +89,7 @@ show.data <-
     nodata <- noindex <- character(0)
     paths <-
         if(missing(lib.loc)) {
-            paths <- file.path(c(.path.package(package), getwd()), "data")
+            paths <- c(.path.package(package), getwd())
         } else
             system.file(pkg = package, lib = lib.loc)
     for (path in paths) {
