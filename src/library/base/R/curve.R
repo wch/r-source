@@ -1,4 +1,4 @@
-curve <- function(expr, from, to, n=100, add=FALSE, type="l", ...) {
+curve <- function(expr, from, to, n=101, add=FALSE, type="l", ...) {
 	expr <- substitute(expr)
 	lims <- par("usr")
 	if(missing(from)) from <- lims[1]

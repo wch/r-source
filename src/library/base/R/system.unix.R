@@ -1,6 +1,6 @@
 data <-
 function(..., list = character(0), package =c(.packages(),.Autoloaded),
-	 lib.loc = .lib.loc) {
+	 lib.loc = .lib.loc, trace = FALSE) {
   names <- c(as.character(substitute(list(...))[-1]), list)
   if (!missing(package))
     if (is.name(y <- substitute(package)))# && !is.character(package))
@@ -30,6 +30,8 @@ function(..., list = character(0), package =c(.packages(),.Autoloaded),
     found <- FALSE
     if (files != "") {
       for (file in files) {
+        if(trace)
+          cat("name=",name,":\t file= .../",sub(".*/","",file),"::\t",sep="")
 	if (found) break
 	found <- TRUE
 	switch(sub(".*\\.", "", file),
@@ -43,6 +45,7 @@ function(..., list = character(0), package =c(.packages(),.Autoloaded),
 		      env = .GlobalEnv),
 	       ## otherwise
 	       found <- FALSE)
+        if(trace) cat(if(!found) "*NOT* ", "found\n")
       }
     }
     if (!found)

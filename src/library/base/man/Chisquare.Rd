@@ -18,28 +18,30 @@ rchisq(n, df)
 \item{ncp}{non-centrality parameter.}
 }
 \value{
-    These functions provide information about the chi-square distribution
-    with \code{df} degrees of freedom (and optional non-centrality parameter
-    \code{ncp}).  \code{dchisq} gives the density,
-    \code{pchisq} gives the distribution function \code{qchisq} gives
-    the quantile function and \code{rchisq} generates random deviates.
+  These functions provide information about the chi-square
+  (\eqn{\chi^2}{chi^2}) distribution with \code{df} degrees of freedom and
+  optional non-centrality parameter \code{ncp}.
 
-    The chi-square distribution with \code{df} \eqn{= n} degrees of freedom
-    has density
-    \deqn{f(x) =
+  The chi-square distribution with \code{df}\eqn{= n} degrees of freedom
+  has density
+  \deqn{f(x) =
     \frac{1}{{2}^{n/2} \Gamma (n/2)}
     {x}^{n/2-1} {e}^{-x/2}}{f(x) = 1 / (2^(n/2) Gamma(n/2))  x^(n/2-1) e^(-x/2)}
-    for \eqn{x > 0}.
+  for \eqn{x > 0}.
 
-    The non-central chi-square distribution with \code{df} degrees of
-    freedom and non-centrality parameter \code{ncp} \eqn{= \lambda} has density
-    \deqn{
-      f(x) = e^{-\lambda / 2}
-      \sum_{r=0}^\infty \frac{\lambda^r}{2^r r!}\, \mathrm{pchisq}(x, df + 2r)}{
-      f(x) = exp(-lambda/2)
-      SUM_{r=0}^infty (lambda^r / 2^r r!)pchisq(x, df + 2r)
-    }
-    for \eqn{x \ge 0}.
+  \code{dchisq} gives the density \eqn{f_n},
+  \code{pchisq} gives the distribution function \eqn{F_n}, \code{qchisq} gives
+  the quantile function and \code{rchisq} generates random deviates.
+
+  The non-central chi-square distribution with \code{df}\eqn{= n} degrees of
+  freedom and non-centrality parameter \code{ncp} \eqn{= \lambda} has density
+  \deqn{
+    f(x) = e^{-\lambda / 2}
+      \sum_{r=0}^\infty \frac{\lambda^r}{2^r r!}\, F_{n + 2r}(x)}{
+    f(x) = exp(-lambda/2)
+    SUM_{r=0}^infty (lambda^r / 2^r r!)pchisq(x, df + 2r)
+  }
+  for \eqn{x \ge 0}.
 }
 \seealso{
 %DEPRECATED: \code{\link{dnchisq}} for the non-central chi-square distribution,

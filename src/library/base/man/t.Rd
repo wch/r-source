@@ -4,9 +4,10 @@
 t(x)
 }
 \alias{t}
+\alias{t.default}
 \alias{t.data.frame}
 \description{
-Given a matrix or \code{\link{data.frame}} \code{x} as argument,
+Given a matrix or \code{\link{data.frame}} \code{x},
 \code{t} returns the transpose (matrix or data.frame) of \code{x}.
 }
 \examples{

@@ -4,6 +4,7 @@
 solve(a, b, tol = 1e-7)
 }
 \alias{solve}
+\alias{solve.default}
 \alias{solve.qr}
 \arguments{
   \item{a}{a numeric matrix containing the coefficients of the linear
@@ -15,7 +16,7 @@ solve(a, b, tol = 1e-7)
     columns of \code{a}.}
 }
 \description{
-  This function solves the equation \code{a \%*\% x = b} for \code{x},
+  This generic function solves the equation \code{a \%*\% x = b} for \code{x},
   where \code{b} can be either a vector or a matrix.
 }
 \seealso{
