@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2000   Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1999-2001   Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -182,7 +182,7 @@ void clowess(double *x, double *y, int n,
 
     /* at least two,  at most n points */
 
-    ns = imax2(imin2((int)(f*n), n), 2);
+    ns = imax2(imin2((int)(f*n), n + 1e-7), 2);
 
     /* robustness iterations */
 

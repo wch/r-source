@@ -14,20 +14,30 @@ cat("\nNumber of base objects:\t\t", length(ls.base),
 ## This can be useful:	Which of the  builtin functions are "primitive" ?
 is.primitive <- function(obj)  is.function(obj) && is.null(args(obj))
 
+## Do we have a method (probably)?
+is.method <- function(fname) {
+    np <- length(sp <- strsplit(fname, split = "\\.")[[1]])
+    if(np <= 1) return(FALSE)
+    exists(paste(sp[1:(np-1)], collapse = '.'), mode="function") ||
+    (np>=3 &&
+     exists(paste(sp[1:(np-2)], collapse = '.'), mode="function"))
+}
+
 is.ALL <- function(obj, func.names = ls(pos=length(search())),
-		   not.using = c("is.single", "is.na.data.frame",
-		   "is.loaded", "is.empty.model", "is.element"),
+		   not.using = c("is.single", "is.loaded",
+                     "is.empty.model", "is.element"),
 		   true.only = FALSE, debug = FALSE)
 {
     ## Purpose: show many 'attributes' of  R object __obj__
     ## -------------------------------------------------------------------------
     ## Arguments: obj: any R object
     ## -------------------------------------------------------------------------
-    ## Author: Martin Maechler, Date:  6 Dec 96, 15:23
+    ## Author: Martin Maechler, Date: 6 Dec 1996
 
     is.fn <- func.names[substring(func.names,1,3) == "is."]
-    use.fn <- is.fn[ is.na(match(is.fn, not.using))]
-
+    use.fn <- is.fn[ is.na(match(is.fn, not.using))
+                    & ! sapply(is.fn, is.method) ]
+    
     r <- if(true.only) character(0)
     else structure(vector("list", length= length(use.fn)), names= use.fn)
     for(f in use.fn) {

@@ -55,7 +55,7 @@ R:
 
 $(EX_IN): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
-	if $(top_builddir)/tools/Rdnewer \
+	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
 	  if test -f $@.bak ; then mv $@.bak $@.bakk ; fi; \
 	  if test -f $@     ; then cp -p $@  $@.bak  ; fi; \

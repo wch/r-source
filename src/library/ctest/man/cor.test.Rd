@@ -17,8 +17,8 @@ cor.test(x, y,
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.  You
     can specify just the initial letter.}
-  \item{method}{a string indicating which correlation coefficient is
-    used for the test.  One of \code{"pearson"},
+  \item{method}{a character string indicating which correlation
+    coefficient is to be  used for the test.  One of \code{"pearson"},
     \code{"kendall"}, or \code{"spearman"}, can be abbreviated.}
   \item{exact}{a logical indicating whether an exact p-value should be
     computed.}
@@ -36,7 +36,8 @@ cor.test(x, y,
     null hypothesis, hence \code{0}.}
   \item{alternative}{a character string describing the alternative
     hypothesis.}
-  \item{method}{a string indicating how the correlation was estimated}
+  \item{method}{a character string indicating how the correlation was
+    estimated.}
   \item{data.name}{a character string giving the names of the data.}
 }
 \details{

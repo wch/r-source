@@ -2,8 +2,9 @@ Package: nls
 Version: @VERSION@
 Priority: base
 Title: Nonlinear regression
-Authors: Saikat DebRoy <saikat@stat.wisc.edu>,
-         Douglas M. Bates <bates@stat.wisc.edu>, and
-         Jose C. Pinheiro <jcp@research.bell-labs.com>
+Author: Saikat DebRoy <saikat@stat.wisc.edu>,
+ Douglas M. Bates <bates@stat.wisc.edu>, and
+ Jose C. Pinheiro <jcp@research.bell-labs.com>.
+Maintainer: R Core Team <R-core@r-project.org>
 Description: Nonlinear regression routines
 License: GPL version 2 or later

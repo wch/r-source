@@ -68,7 +68,7 @@ print.table <- function(x, digits = getOption("digits"), quote = FALSE,
                   na.print = na.print, ...)
 }
 
-as.data.frame.table <- function(x, row.names = NULL, optional = FALSE, ...)
+as.data.frame.table <- function(x, row.names = NULL, optional = FALSE)
 {
     x <- as.table(x)
     data.frame(do.call("expand.grid", dimnames(x)), Freq = c(x),

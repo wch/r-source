@@ -38,10 +38,6 @@
 #undef huge
 #endif
 
-/* not defined in any R header */
-#ifndef _STDLIB_H
-#define abs(x) ((x) >= 0 ? (x) : -(x))
-#endif
 /* #define dabs(x) (double)abs(x) */
 #define min(a,b) ((a) <= (b) ? (a) : (b))
 #define max(a,b) ((a) >= (b) ? (a) : (b))

@@ -6,8 +6,7 @@ sink(file = NULL, append = FALSE)
 }
 \arguments{
   \item{file}{a connection or a character string naming the
-    file to write to, or
-    \code{NULL} to stop ``sink''ing.}
+    file to write to, or \code{NULL} to stop ``sink''ing.}
   \item{append}{if \code{TRUE}, output will be appended to
     \code{file}; otherwise, it will overwrite the contents of
     \code{file}.}
@@ -22,8 +21,9 @@ sink(file = NULL, append = FALSE)
     \code{sink()} or \code{sink(file=NULL)} ends the diversion.
 
     If \code{file} is a connection if will be opened if necessary.
-    Switching to another file or connection closes the existing
-    connection unless it is the console.
+    Switching to another file or connection closes and destroys the
+    current sink connection if it is a file connection opened by the
+    last call to \code{sink}. 
 }
 \examples{
 sink("sink-examp.txt")

@@ -1,0 +1,17 @@
+		Macintosh-specific changes to R
+		===============================
+
+rm123
+=====
+
+This is the first Carbon version of R for MacOS and MacOS X.
+This version IS NOT a competitor of the MacOS X version based
+on the X11 device. This version will run under both MacOS and
+MacOS X natively taking advantages of the new Aqua Interface
+under MacOS X.
+A lot of work and many changes have been done to release this
+version. Even tought most of the known bugs have been fixed
+it is not excluded that new ones have also been introduced.
+Numerical issues has been solved, now R passes all the test.
+  
+

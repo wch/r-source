@@ -8,7 +8,6 @@
 \alias{lmsreg}
 \alias{ltsreg}
 \alias{print.lqs}
-\alias{residuals.lqs}
 \title{
 Resistant Regression
 }

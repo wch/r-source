@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2000  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998--2001  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -116,14 +116,14 @@ void natural_spline(int n, double *x, double *y, double *b, double *c, double *d
     b[1] = (y[2] - y[1])/d[1] - d[i] * c[2];
     c[1] = 0.0;
     d[1] = c[2]/d[1];
-    b[n] = (y[n] - y[nm1])/d[nm1] + 2.0 * d[nm1] * c[nm1];
+    b[n] = (y[n] - y[nm1])/d[nm1] + d[nm1] * c[nm1];
     for(i=2 ; i<n ; i++) {
 	b[i] = (y[i+1]-y[i])/d[i] - d[i]*(c[i+1]+2.0*c[i]);
 	d[i] = (c[i+1]-c[i])/d[i];
 	c[i] = 3.0*c[i];
     }
     c[n] = 0.0;
-    d[n] = d[nm1];
+    d[n] = 0.0;
 
     return;
 }
@@ -351,7 +351,7 @@ void spline_eval(int *method, int *nu, double *u, double *v,
 		 int *n, double *x, double *y, double *b, double *c, double *d)
 {
     int i, j, k, l;
-    double ul, dx;
+    double ul, dx, tmp;
 
     u--; v--;
     x--; y--;
@@ -384,6 +384,9 @@ void spline_eval(int *method, int *nu, double *u, double *v,
 	    while(j > i+1);
 	}
 	dx = ul - x[i];
-	v[l] = y[i] + dx*(b[i] + dx*(c[i] + dx*d[i]));
+	/* for natural splines extrapolate linearly left */
+	tmp = d[i];
+	if(*method == 2 && ul < x[1]) tmp = 0.0;
+	v[l] = y[i] + dx*(b[i] + dx*(c[i] + dx*tmp));
     }
 }

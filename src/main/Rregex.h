@@ -34,8 +34,12 @@ extern "C" {
 #if !defined _POSIX_C_SOURCE && !defined _POSIX_SOURCE && defined VMS
 /* VMS doesn't have `size_t' in <sys/types.h>, even though POSIX says it
    should be there.  */
-# include <stddef.h>
+# include <stddef.h> 
 #endif
+
+#ifdef Macintosh
+# include <stddef.h> 
+#endif /* mac */
 
 /* The following two types have to be signed and unsigned integer type
    wide enough to hold a value of a pointer.  For most ANSI compilers

@@ -11,8 +11,9 @@ prop.trend.test <- function (x, n, score = 1:length(x))
     names(chisq) <- "X-squared"
     df <- c(df = 1)
     pval <- pchisq(chisq, 1, lower.tail = FALSE)
-    rval <- list(statistic = chisq, parameter = df, p.value = pval, 
-        method = method, data.name = dname)
+    rval <- list(statistic = chisq, parameter = df,
+                 p.value = as.numeric(pval),  
+                 method = method, data.name = dname)
     class(rval) <- "htest"
     return(rval)
 }

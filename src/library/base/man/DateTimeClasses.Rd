@@ -25,6 +25,8 @@
 \alias{c.POSIXct}
 \alias{c.POSIXlt}
 \alias{as.matrix.POSIXlt}
+\alias{mean.POSIXct}
+\alias{mean.POSIXlt}
 \title{Date-Time Classes}
 \description{
   Description of the classes \code{"POSIXlt"} and \code{"POSIXct"}
@@ -40,6 +42,9 @@ summary.POSIXlt(object, digits = 15, ...)
 time + number
 time - number
 time1 lop time2
+
+c(time1, ...)
+mean(time)
 }
 \arguments{
   \item{x, object}{An object to be printed or summarized.}
@@ -47,7 +52,7 @@ time1 lop time2
     should be high enough to represent the least important time unit
     exactly.}
   \item{\dots}{Further arguments to be passed from or to other methods.}
-  \item{time, time1, time2}{date-time objects.}
+  \item{time, time1, time2, \dots}{date-time objects.}
   \item{number}{a numeric object.}
   \item{lop}{One of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
@@ -84,7 +89,8 @@ time1 lop time2
   \code{"POSIXlt"} objects will often have an attribute \code{"tzone"},
   a character vector of length 3 giving the timezone name from the
   \code{"TZ"} environment variable and the names of the base timezone
-  and the alternate (daylight-saving) timezone.
+  and the alternate (daylight-saving) timezone.  Sometimes this may
+  just be of length one, giving the timezone name.
 
   Unfortunately, the conversion is complicated by the operation of time
   zones and leap seconds (22 days have been 86401 seconds long so far:
@@ -101,6 +107,9 @@ time1 lop time2
   times used by \R do not include leap seconds.  (Conceivably this could
   be wrong if the system has changed since build time, just possibly by
   changing locales.)
+
+  Using \code{c} on \code{"POSIXlt"} objects converts them to the
+  current time zone.
 }
 \seealso{
   \code{\link{as.POSIXct}} and \code{\link{as.POSIXlt}} for conversion
@@ -113,7 +122,7 @@ time1 lop time2
 }
 \section{Warning}{
   Some Unix-like systems (especially Linux ones) do not have \code{"TZ"}
-  set, yet have internal code that expects it (as does POSIX). We have
+  set, yet have internal code that expects it (as does POSIX).  We have
   tried to work around this, but if you get unexpected results try
   setting \code{"TZ"}.
 }

@@ -10,5 +10,12 @@ licence <- license <- function() {
     cat("   The Free Software Foundation, Inc.,\n")
     cat("   59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n")
     cat("\n")
+    cat("A small number of files (the API header files and export files,\n")
+    cat("listed in R_HOME/COPYRIGHTS) are distributed under the\n")
+    cat("LESSER GNU GENERAL PUBLIC LICENSE version 2.1.\n")
+    cat("This can be obtained via WWW at\n")
+    cat("http://www.gnu.org/copyleft/lgpl.html, or by writing to the\n")
+    cat("address above\n")
+    cat("\n")
     cat("``Share and Enjoy.''\n\n")
 }

@@ -15,7 +15,7 @@ dfbetas  (lm.obj, infl = \dots)
 covratio (lm.obj, infl = \dots, res = \dots)
 cooks.distance(lm.obj, infl = \dots, res = \dots, sd = \dots)
 
-hat(x, intercept)
+hat(x, intercept = TRUE)
 }
 \alias{influence.measures}
 \alias{print.infl}

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -27,7 +27,7 @@
 
 #include "Defn.h"
 #include "Fileio.h"
-#include "Devices.h"		/* KillAllDevices() [nothing else?] */
+#include "Rdevices.h"		/* KillAllDevices() [nothing else?] */
 #include "graphapp/ga.h"
 #include "console.h"
 #include "rui.h"
@@ -59,6 +59,7 @@ int (*R_yesnocancel)(char *s);
 
 static DWORD mainThreadId;
 
+static char oldtitle[512];
 
 Rboolean UserBreak = FALSE;
 
@@ -224,6 +225,7 @@ ThreadedReadConsole(char *prompt, char *buf, int len, int addtohistory)
     WaitMessage();
     if (lineavailable) break;
     doevent();
+    if(R_tcldo) R_tcldo();
   }
   lineavailable = 0;
   /* restore handler  */
@@ -246,12 +248,19 @@ CharReadConsole(char *prompt, char *buf, int len, int addtohistory)
 static int
 FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 {
+    int ll;
     if (!R_Slave) {
 	fputs(prompt, stdout);
 	fflush(stdout);
     }
-    if (!fgets(buf, len, stdin))
+    if (fgets(buf, len, stdin) == NULL)
 	return 0;
+/* according to system.txt, should be terminated in \n, so check this
+   at eof */
+    ll = strlen((char *)buf);
+    if (feof(stdin) && buf[ll - 1] != '\n' && ll < len) {
+	buf[ll++] = '\n'; buf[ll] = '\0';
+    }
     if (!R_Interactive && !R_Slave)
 	fputs(buf, stdout);
     return 1;
@@ -384,8 +393,8 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     closeAllHlpFiles();
     KillAllDevices();
     AllDevicesKilled = TRUE;
-    if (R_Interactive && CharacterMode == RTerm)
-	SetConsoleTitle("");
+    if (R_Interactive && CharacterMode == RTerm) 
+	SetConsoleTitle(oldtitle);
     UnLoad_Unzip_Dll();
     UnLoad_Rbitmap_Dll();
     if (R_CollectWarnings && saveact != SA_SUICIDE
@@ -628,6 +637,8 @@ int cmdlineoptions(int ac, char **av)
        embedded applications get no limit */
     GlobalMemoryStatus(&ms);
     R_max_memory = min(256 * Mega, ms.dwTotalPhys);
+    /* need enough to start R: fails on a 8Mb system */
+    R_max_memory = max(16 * Mega, R_max_memory);
     
     R_DefParams(Rp);
     Rp->CharacterMode = CharacterMode;
@@ -710,7 +721,7 @@ int cmdlineoptions(int ac, char **av)
 			    value,
 			    (ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
 		    R_ShowMessage(s);
-		} else if (value < 10*1024*1024) {
+		} else if (value < 10*Mega) {
 		    sprintf(s, "WARNING: max-mem-size =%4.1fM too small and ignored\n", value/(1024.0 * 1024.0));
 		    R_ShowMessage(s);
 		} else
@@ -778,3 +789,7 @@ void setup_term_ui()
     readconsolecfg();
 }
 
+void saveConsoleTitle()
+{
+    GetConsoleTitle(oldtitle, 512);
+}

@@ -30,10 +30,15 @@
 
 double rt(double df)
 {
+    double num;
     if (ISNAN(df) || df <= 0.0)	ML_ERR_return_NAN;
 
     if(!R_FINITE(df))
 	return norm_rand();
-    else
-	return norm_rand() / sqrt(rchisq(df) / df);
+    else {
+/* Some compilers (including MW6) evaluated this from right to left
+	return norm_rand() / sqrt(rchisq(df) / df); */
+	num = norm_rand();
+	return num / sqrt(rchisq(df) / df);
+    }
 }

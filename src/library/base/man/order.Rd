@@ -17,6 +17,8 @@ sort.list(x, partial, na.last = TRUE)
   \item{x}{a vector.}
   \item{partial}{vector of indices for partial sorting.}
   \item{na.last}{for controlling the treatment of \code{NA}s.
+    If \code{TRUE}, missing values in the data are put last; if
+    \code{FALSE}, they are put first; if \code{NA}, they are removed.
     Currently, \code{TRUE} is the only possible value.}
 }
 \details{
@@ -26,11 +28,11 @@ sort.list(x, partial, na.last = TRUE)
 
   \code{\link{NA}} values are treated as greater than any other values
   so that permutations returned by \code{order} move \code{NA} values to
-  the top end of the array.  Other options provided by S are not (yet)
-  implemented in \R.
+  the top end of the array.  Other options are not (yet) implemented in
+  \R.
 
-  \code{partial} is supplied for compatibility with S, but the sorting
-  is always complete.
+  \code{partial} is supplied for compatibility with other
+  implementations of S, but the sorting is always complete.
 }
 \seealso{\code{\link{sort}} and \code{\link{rank}}.}
 \examples{

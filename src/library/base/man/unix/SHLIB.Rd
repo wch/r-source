@@ -14,8 +14,8 @@
   \item{libname}{the full name of the shared library to be built,
     including the extension (typically \file{.so} on Unix systems).  If
     not given, the name of the library is taken from the first file.}
-  \item{Further options to control the processing, or for obtaining
-    information about usage and version of the utility.}
+  \item{options}{Further options to control the processing, or for
+    obtaining information about usage and version of the utility.}
 }
 \seealso{
   \code{\link{COMPILE}}, \code{\link{dyn.load}}

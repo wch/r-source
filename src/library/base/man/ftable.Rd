@@ -11,16 +11,16 @@
 ftable(x, ...)
 ftable.default(..., exclude = c(NA, NaN), row.vars = NULL, col.vars = NULL)
 as.table.ftable(x)
-print.ftable(x)
+print.ftable(x, digits = getOption("digits"), ...)
 read.ftable(file, sep = "", quote = "\"", row.var.names, col.vars, skip = 0)
-write.ftable(x, file = "", quote = TRUE)
+write.ftable(x, file = "", quote = TRUE, digits = getOption("digits"))
 }
 \usage{
 ftable(\dots, exclude = c(NA, NaN), row.vars = NULL, col.vars = NULL)
 as.table.ftable(x)
 read.ftable(file, sep = "", quote = "\"",
             row.var.names, col.vars, skip = 0)
-write.ftable(x, file = "", quote = TRUE)
+write.ftable(x, file = "", quote = TRUE, digits = getOption("digits"))
 }
 \arguments{
   \item{\dots}{\R objects which can be interpreted as factors (including
@@ -50,6 +50,8 @@ write.ftable(x, file = "", quote = TRUE)
     variables, in case these cannot be determined automatically.}
   \item{skip}{the number of lines of the data file to skip before
     beginning to read data.}
+  \item{digits}{an integer giving the number of significant digits to
+    use for (the cell entries of) \code{x}.}
 }
 \value{
   \code{ftable} returns an object of class \code{"ftable"}, which is a

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-8, 2000 Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1997-2001 Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #include <Defn.h>
 #include <Rmath.h>
 #include <Graphics.h>		/* "GPar" structure + COMMENTS */
-#include <Devices.h>
+#include <Rdevices.h>
 
 
 /* par(.)'s call */
@@ -625,8 +625,10 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
 	ix = CHAR(STRING_ELT(value, 0))[0];
-	if (ix == 'm' || ix == 's')
+	if (ix == 'm' || ix == 's') {
 	    dd->dp.pty = dd->gp.pty = ix;
+	    dd->dp.defaultPlot = dd->gp.defaultPlot = TRUE;
+	}
 	else par_error(what);
     }
     else if (streql(what, "smo")) {

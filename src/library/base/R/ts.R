@@ -148,21 +148,22 @@ cycle.ts <- function (x, ...) as.ts(cycle.default(x, ...))
 
 print.ts <- function(x, calendar, ...)
 {
-    header <- function(x) {
-        if((fr.x <- frequency(x))!= 1)
-            cat("Time Series:\nStart =", deparse(start(x)),
-                "\nEnd =", deparse(end(x)),
-                "\nFrequency =", deparse(fr.x), "\n")
-        else
-            cat("Time Series:\nStart =", format(tsp(x)[1]),
-                "\nEnd =", format(tsp(x)[2]),
-                "\nFrequency =", deparse(fr.x), "\n")
-    }
     x.orig <- x
     x <- as.ts(x)
     fr.x <- frequency(x)
     if(missing(calendar))
-	calendar <- any(fr.x==c(4,12))
+	calendar <- any(fr.x == c(4,12))
+    if(!calendar)
+        header <- function(x) {
+            if((fr.x <- frequency(x))!= 1)
+                cat("Time Series:\nStart =", deparse(start(x)),
+                    "\nEnd =", deparse(end(x)),
+                    "\nFrequency =", deparse(fr.x), "\n")
+            else
+                cat("Time Series:\nStart =", format(tsp(x)[1]),
+                    "\nEnd =", format(tsp(x)[2]),
+                    "\nFrequency =", deparse(fr.x), "\n")
+        }
     if(NCOL(x) == 1) { # could be 1-col matrix
         if(calendar) {
             if(fr.x > 1) {
@@ -171,7 +172,8 @@ print.ts <- function(x, calendar, ...)
                     else if(fr.x == 4) {
                         c("Qtr1", "Qtr2", "Qtr3", "Qtr4")
                     } else paste("p", 1:fr.x, sep = "")
-                if(NROW(x) <= fr.x) { # not more than one period
+                if(NROW(x) <= fr.x && start(x)[1] == end(x)[1]) {
+                    ## not more than one period
                     dn1 <- start(x)[1]
                     dn2 <- dn2[1 + (start(x)[2] - 2 + seq(along=x))%%fr.x]
                     x <- matrix(format(x, ...), nrow = 1 , byrow = TRUE,
@@ -194,19 +196,17 @@ print.ts <- function(x, calendar, ...)
             attr(x, "class") <- attr(x, "tsp") <- attr(x, "na.action") <- NULL
         }
     } else { # multi-column matrix
-        if(calendar && fr.x > 1) {
-            tm <- time(x)
-            t2 <- 1 + floor(fr.x*(tm %%1))
-            p1 <- format(floor(tm))
-            if(fr.x == 12) {
-                p2 <- month.abb[t2]
-                rownames(x) <- paste(p2, p1, sep=" ")
-            } else {
-                if(fr.x == 4)
-                    p2 <- c("Q1", "Q2", "Q3", "Q4")[t2]
-                else p2 <- format(t2)
-                rownames(x) <- paste(p1, p2, sep=" ")
-            }
+	if(calendar && fr.x > 1) {
+	    tm <- time(x)
+	    t2 <- 1 + round(fr.x*(tm %%1))# round() was floor()
+	    p1 <- format(floor(tm))# yr
+	    rownames(x) <-
+		if(fr.x == 12)
+		    paste(month.abb[t2], p1, sep=" ")
+		else
+		    paste(p1, if(fr.x == 4) c("Q1", "Q2", "Q3", "Q4")[t2]
+			      else format(t2),
+			  sep=" ")
         } else {
             if(!calendar) header(x)
             rownames(x) <- format(time(x))

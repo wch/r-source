@@ -42,7 +42,8 @@ extractAIC.survreg(fit, scale, k = 2, \dots)
  
   For generalized linear models (i.e., for \code{\link{lm}},
   \code{\link{aov}}, and \code{\link{glm}}), \eqn{-2\log L} is
-  the \emph{deviance}, as computed by \code{\link{deviance}(fit)}.
+  the \emph{deviance}, as computed by \code{\link{deviance}(fit)}, plus
+  a constant.
     
   \code{k = 2} corresponds to the traditional AIC, using \code{k =
     log(n)} provides the BIC (Bayes IC) instead.

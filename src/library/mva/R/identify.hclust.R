@@ -1,4 +1,4 @@
-rect.hclust <- function(hclust.obj, k=NULL, which=NULL,
+rect.hclust <- function(tree, k=NULL, which=NULL,
                         x=NULL, h=NULL, border=2, cluster=NULL)
 {
     if(length(h)>1 | length(k)>1)
@@ -7,21 +7,21 @@ rect.hclust <- function(hclust.obj, k=NULL, which=NULL,
     if(!is.null(h)){
         if(!is.null(k))
             stop("specify exactly one of k and h")
-        k <- min(which(rev(hclust.obj$height)<h))
+        k <- min(which(rev(tree$height)<h))
         k <- max(k, 2)
     }
     else
         if(is.null(k)) 
             stop("specify exactly one of k and h")
     
-    if(k < 2 | k > length(hclust.obj$height))
-        stop(paste("k must be between 2 and", length(hclust.obj$height)))
+    if(k < 2 | k > length(tree$height))
+        stop(paste("k must be between 2 and", length(tree$height)))
     
     if(is.null(cluster))
-        cluster <- cutree(hclust.obj, k=k)
+        cluster <- cutree(tree, k=k)
     ## cutree returns classes sorted by data, we need classes
     ## as occurring in the tree (from left to right)
-    clustab <- table(cluster)[unique(cluster[hclust.obj$order])]
+    clustab <- table(cluster)[unique(cluster[tree$order])]
     m <- c(0, cumsum(clustab))
     
     if(!is.null(x)){
@@ -43,7 +43,7 @@ rect.hclust <- function(hclust.obj, k=NULL, which=NULL,
     retval <- list()
     for(n in 1:length(which)){
         rect(m[which[n]]+0.66, par("usr")[3],
-             m[which[n]+1]+0.33, mean(rev(hclust.obj$height)[(k-1):k]),
+             m[which[n]+1]+0.33, mean(rev(tree$height)[(k-1):k]),
              border = border[n])
         retval[[n]] <- which(cluster==as.integer(names(clustab)[which[n]]))
     }

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -33,7 +33,7 @@
 
 #include <Defn.h>
 #include <Graphics.h>
-#include <Devices.h>		/* KillAllDevices */
+#include <Rdevices.h>		/* KillAllDevices */
 #include <Rmath.h>		/* eg. fmax2() */
 #include <R_ext/Applic.h>	/* pretty0() */
 
@@ -1826,10 +1826,14 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 /* GScale: used to default axis information
  *	   i.e., if user has NOT specified par(usr=...)
  */
-    int log, n, style, swap;
+#define EPS_FAC_1  16
+#define EPS_FAC_2 100
+
+    Rboolean swap, is_xaxis = (axis == 1 || axis == 3);
+    int log, n, style;
     double temp;
 
-    if(axis == 1 || axis == 3) {
+    if(is_xaxis) {
 	n = dd->gp.lab[0];
 	style = dd->gp.xaxs;
 	log = dd->gp.xlog;
@@ -1844,7 +1848,6 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	min = log10(min);
 	max = log10(max);
     }
-
     if(!R_FINITE(min) || !R_FINITE(max)) {
 	warning("Nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]",
 		min, max, axis, log);
@@ -1852,16 +1855,17 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	if(!R_FINITE(max)) max = + .45 * DBL_MAX;
 	/* max - min is now finite */
     }
-    if(min == max) {
-	if(min == 0) {
-	    min = -1;
-	    max =  1;
-	}
-	else {
-	    temp = .4 * fabs(min);
-	    min -= temp;
-	    max += temp;
-	}
+    /* Version <= 1.2.0 had
+       if (min == max)	 -- exact equality for real numbers */
+    temp = fmax2(fabs(max), fabs(min));
+    if(temp == 0) {/* min = max = 0 */
+	min = -1;
+	max =  1;
+    }
+    else if(fabs(max - min) < temp * EPS_FAC_1 * DBL_EPSILON) {
+	temp *= (min == max) ? .4 : 1e-2;
+	min -= temp;
+	max += temp;
     }
 
     switch(style) {
@@ -1878,7 +1882,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	error("axis style \"%c\" unimplemented", style);
     }
 
-    if(axis == 1 || axis == 3) {
+    if(is_xaxis) {
 	if (log) {
 	    dd->gp.usr[0] = dd->dp.usr[0] = pow(10.,min);
 	    dd->gp.usr[1] = dd->dp.usr[1] = pow(10.,max);
@@ -1904,17 +1908,24 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	}
     }
 
-    if(min > max) {
-	swap = 1;
+    /* ------  The following : Only computation of [xy]axp[0:2] ------- */
+
+    /* This is not directly needed when [xy]axp = "n",
+     * but may later be different in another call to axis(), e.g.:
+      > plot(1, xaxt = "n");  axis(1)
+     * In that case, do_axis() should do the following.
+     * MM: May be we should modularize and put the following into another
+     * subroutine which could be called by do_axis {when [xy]axt != 'n'} ..
+     */
+
+    swap = min > max;
+    if(swap) {
 #ifdef DEBUG_PLOT
 	REprintf("GScale(..axis=%d) __SWAP__ (min = %g > %g = max); log=%d]\n",
 		 axis, min, max, log);
 #endif
-	temp = min;
-	min = max;
-	max = temp;
+	temp = min; min = max; max = temp;
     }
-    else swap = 0;
 
     if(log) {
 	min = pow(10., min);
@@ -1922,26 +1933,43 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	GLPretty(&min, &max, &n);
     }
     else GPretty(&min, &max, &n);
-    if (fabs(max - min) < fmax2(fabs(max), fabs(min))*100*DBL_EPSILON)
-	error("relative range of values is too small to compute accurately");
+
+    if(fabs(max - min) < (temp = fmax2(fabs(max), fabs(min)))* 
+       EPS_FAC_2 * DBL_EPSILON) {
+	/* Treat this case somewhat similar to the (min ~= max) case above */
+	warning("relative range of values = %5g * EPS, is small (axis %d)."
+		/*"to compute accurately"*/,
+		fabs(max - min) / (temp*DBL_EPSILON), axis);
+
+	/* No pretty()ing anymore */
+	min = dd->dp.usr[2]; /* original  (min,max) ..*/
+	max = dd->dp.usr[3];
+	temp = .01 * fabs(max - min);
+	min += temp;
+	max -= temp;
+	n = 1;
+    }
 
     if(swap) {
-	temp = min;
-	min = max;
-	max = temp;
+	temp = min; min = max; max = temp;
     }
 
-    if(axis == 1 || axis == 3) {
-	dd->gp.xaxp[0] = dd->dp.xaxp[0] = min;
-	dd->gp.xaxp[1] = dd->dp.xaxp[1] = max;
-	dd->gp.xaxp[2] = dd->dp.xaxp[2] = n;
+#define G_Store_AXP(is_X)			\
+    if(is_X) {					\
+	dd->gp.xaxp[0] = dd->dp.xaxp[0] = min;	\
+	dd->gp.xaxp[1] = dd->dp.xaxp[1] = max;	\
+	dd->gp.xaxp[2] = dd->dp.xaxp[2] = n;	\
+    }						\
+    else {					\
+	dd->gp.yaxp[0] = dd->dp.yaxp[0] = min;	\
+	dd->gp.yaxp[1] = dd->dp.yaxp[1] = max;	\
+	dd->gp.yaxp[2] = dd->dp.yaxp[2] = n;	\
     }
-    else {
-	dd->gp.yaxp[0] = dd->dp.yaxp[0] = min;
-	dd->gp.yaxp[1] = dd->dp.yaxp[1] = max;
-	dd->gp.yaxp[2] = dd->dp.yaxp[2] = n;
-    }
+
+    G_Store_AXP(is_xaxis);
 }
+#undef EPS_FAC_1
+#undef EPS_FAC_2
 
 void GSetupAxis(int axis, DevDesc *dd)
 {
@@ -1951,8 +1979,9 @@ void GSetupAxis(int axis, DevDesc *dd)
  *   xlog or ylog = TRUE ? */
     double min, max;
     int n;
+    Rboolean is_xaxis = (axis == 1 || axis == 3);
 
-    if(axis == 1 || axis == 3) {
+    if(is_xaxis) {
 	n = dd->gp.lab[0];
 	min = dd->gp.usr[0];
 	max = dd->gp.usr[1];
@@ -1965,17 +1994,9 @@ void GSetupAxis(int axis, DevDesc *dd)
 
     GPretty(&min, &max, &n);
 
-    if(axis == 1 || axis == 3) {
-	dd->gp.xaxp[0] = dd->dp.xaxp[0] = min;
-	dd->gp.xaxp[1] = dd->dp.xaxp[1] = max;
-	dd->gp.xaxp[2] = dd->dp.xaxp[2] = n;
-    }
-    else {
-	dd->gp.yaxp[0] = dd->dp.yaxp[0] = min;
-	dd->gp.yaxp[1] = dd->dp.yaxp[1] = max;
-	dd->gp.yaxp[2] = dd->dp.yaxp[2] = n;
-    }
+    G_Store_AXP(is_xaxis);
 }
+#undef G_Store_AXP
 
 /*-------------------------------------------------------------------
  *
@@ -2335,13 +2356,6 @@ void GCheckState(DevDesc *dd)
 */
 
 
-/* Draw a circle (radius is given in inches). */
-/* code down with GRect */
-void GCircle(double x, double y, int coords,
-	     double radius, int col, int border, DevDesc *dd);
-
-
-
 static void setClipRect(double *x1, double *y1, double *x2, double *y2,
                         int coords, DevDesc *dd)
 {
@@ -2425,53 +2439,118 @@ static int clipcode(double x, double y, cliprect *cr)
 }
 
 static Rboolean 
-CSclipline(double *x1, double *y1, double *x2, double *y2,
-	   int *clipped1, int *clipped2, int coords, cliprect *cr)
+CSclipline(double *x1, double *y1, double *x2, double *y2, cliprect *cr,
+	   int *clipped1, int *clipped2, int coords, DevDesc *dd)
 {
     int c, c1, c2;
-    double x, y;
+    double x, y, xl, xr, yb, yt;
+    cliprect cr2;
 
     *clipped1 = 0;
     *clipped2 = 0;
     c1 = clipcode(*x1, *y1, cr);
     c2 = clipcode(*x2, *y2, cr);
-    x = cr->xl;		/* keep -Wall happy */
-    y = cr->yb;		/* keep -Wall happy */
-    while( c1 || c2 ) {
-	if(c1 & c2)
-	    return FALSE;
-	if( c1 )
-	    c = c1;
-	else
-	    c = c2;
-	if( c & CS_LEFT ) {
-	    y = *y1 + (*y2 - *y1) * (cr->xl - *x1) / (*x2 - *x1);
-	    x = cr->xl;
-	}
-	else if( c & CS_RIGHT ) {
-	    y = *y1 + (*y2 - *y1) * (cr->xr - *x1) / (*x2 -  *x1);
-	    x = cr->xr;
-	}
-	else if( c & CS_BOTTOM ) {
-	    x = *x1 + (*x2 - *x1) * (cr->yb - *y1) / (*y2 - *y1);
-	    y = cr->yb;
-	}
-	else if( c & CS_TOP ) {
-	    x = *x1 + (*x2 - *x1) * (cr->yt - *y1)/(*y2 - *y1);
-	    y = cr->yt;
+    if ( !c1 && !c2 ) 
+	return TRUE;
+
+    xl = cr->xl;
+    xr = cr->xr;
+    yb = cr->yb;
+    yt = cr->yt;
+    if (dd->gp.xlog || dd->gp.ylog) {
+
+	GConvert(x1, y1, coords, NDC, dd);
+	GConvert(x2, y2, coords, NDC, dd);
+	GConvert(&xl, &yb, coords, NDC, dd);
+	GConvert(&xr, &yt, coords, NDC, dd);
+
+	cr2.xl = xl;
+	cr2.xr = xr;
+	cr2.yb = yb;
+	cr2.yt = yt;
+
+	x = xl;		/* keep -Wall happy */
+	y = yb;		/* keep -Wall happy */
+	while( c1 || c2 ) {
+	    if(c1 & c2)
+		return FALSE;
+	    if( c1 )
+		c = c1;
+	    else
+		c = c2;
+	    if( c & CS_LEFT ) {
+		y = *y1 + (*y2 - *y1) * (xl - *x1) / (*x2 - *x1);
+		x = xl;
+	    }
+	    else if( c & CS_RIGHT ) {
+		y = *y1 + (*y2 - *y1) * (xr - *x1) / (*x2 -  *x1);
+		x = xr;
+	    }
+	    else if( c & CS_BOTTOM ) {
+		x = *x1 + (*x2 - *x1) * (yb - *y1) / (*y2 - *y1);
+		y = yb;
+	    }
+	    else if( c & CS_TOP ) {
+		x = *x1 + (*x2 - *x1) * (yt - *y1)/(*y2 - *y1);
+		y = yt;
+	    }
+
+	    if( c==c1 ) {
+		*x1 = x;
+		*y1 = y;
+		*clipped1 = 1;
+		c1 = clipcode(x, y, &cr2);
+	    }
+	    else {
+		*x2 = x;
+		*y2 = y;
+		*clipped2 = 1;
+		c2 = clipcode(x, y, &cr2);
+	    }
 	}
 
-	if( c==c1 ) {
-	    *x1 = x;
-	    *y1 = y;
-	    *clipped1 = 1;
-	    c1 = clipcode(x, y, cr);
-	}
-	else {
-	    *x2 = x;
-	    *y2 = y;
-	    *clipped2 = 1;
-	    c2 = clipcode(x, y, cr);
+	GConvert(x1, y1, NDC, coords, dd);
+	GConvert(x2, y2, NDC, coords, dd);
+
+    } else {
+	x = xl;		/* keep -Wall happy */
+	y = yb;		/* keep -Wall happy */
+	while( c1 || c2 ) {
+	    if(c1 & c2)
+		return FALSE;
+	    if( c1 )
+		c = c1;
+	    else
+		c = c2;
+	    if( c & CS_LEFT ) {
+		y = *y1 + (*y2 - *y1) * (xl - *x1) / (*x2 - *x1);
+		x = xl;
+	    }
+	    else if( c & CS_RIGHT ) {
+		y = *y1 + (*y2 - *y1) * (xr - *x1) / (*x2 -  *x1);
+		x = xr;
+	    }
+	    else if( c & CS_BOTTOM ) {
+		x = *x1 + (*x2 - *x1) * (yb - *y1) / (*y2 - *y1);
+		y = yb;
+	    }
+	    else if( c & CS_TOP ) {
+		x = *x1 + (*x2 - *x1) * (yt - *y1)/(*y2 - *y1);
+		y = yt;
+	    }
+
+	    if( c==c1 ) {
+		*x1 = x;
+		*y1 = y;
+		*clipped1 = 1;
+		c1 = clipcode(x, y, cr);
+	    }
+	    else {
+		*x2 = x;
+		*y2 = y;
+		*clipped2 = 1;
+		c2 = clipcode(x, y, cr);
+	    }
 	}
     }
     return TRUE;
@@ -2512,7 +2591,7 @@ static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
     for (i = 1; i < n; i++) {
 	x2 = x[i];
 	y2 = y[i];
-	if (CSclipline(&x1, &y1, &x2, &y2, &ind1, &ind2, coords, &cr)) {
+	if (CSclipline(&x1, &y1, &x2, &y2, &cr, &ind1, &ind2, coords, dd)) {
 	    if (ind1 && ind2) {
 		xx[0] = x1;
 		yy[0] = y1;
@@ -2582,7 +2661,7 @@ clipLine(double *x1, double *y1, double *x2, double *y2,
 	cr.yt = temp;
     }
 
-    result = CSclipline(x1, y1, x2, y2, &dummy1, &dummy2, coords, &cr);
+    result = CSclipline(x1, y1, x2, y2, &cr, &dummy1, &dummy2, coords, dd);
 
     if (toDevice)
 	dd->gp.xpd = xpdsaved;
@@ -3609,7 +3688,7 @@ void GPretty(double *lo, double *up, int *ndiv)
 /*	Set scale and ticks for linear scales.
  *	Called from GScale() and GSetupAxis().
  *
- *	Pre:	   x1 = lo < up = x2
+ *	Pre:	    x1 == lo < up == x2      ;  ndiv >= 1
  *	Post: x1 <= y1 := lo < up =: y2 <= x2;	ndiv >= 1
  */
     double unit, ns, nu;
@@ -3661,11 +3740,7 @@ void GPretty(double *lo, double *up, int *ndiv)
 #define TRC0	1.55512030155621416073		/* sqrt(4 * pi/(3 * sqrt(3))) */
 #define TRC1	1.34677368708859836060		/* TRC0 * sqrt(3) / 2 */
 #define TRC2	0.77756015077810708036		/* TRC0 / 2 */
-#ifdef Macintosh
-#define CMAG	1.0
-#else
 #define CMAG	1.0				/* Circle magnifier, now defunct */
-#endif
 #ifdef OLDSYMSIZE
 #define GSTR_0  GStrWidth("0", INCHES, dd)
 #else
@@ -5172,8 +5247,8 @@ void InitGraphics(void)
 
 static SEXP getSymbolValue(char *symbolName)
 {
-    SEXP s, t;
-    t = findVar(s = install(symbolName), R_NilValue);
+    SEXP t;
+    t = findVar(install(symbolName), R_NilValue);
     return t;
 }
 

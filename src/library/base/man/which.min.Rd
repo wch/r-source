@@ -15,10 +15,11 @@ which.max(x)
    is searched.}
 }
 \value{
-  an \code{\link{integer}} of length 1, giving the index of the
-  \emph{first} minimum or maximum respectively of \code{x}.
+  an \code{\link{integer}} of length 1 or 0 (iff \code{x} has no
+  non-\code{NA}s) , giving the index of the \emph{first} minimum or
+  maximum respectively of \code{x}.
 
-  If this extremum is unique, the result is the same (but more
+  If this extremum is unique (or empty), the result is the same (but more
   efficient) as  \code{which(x == min(x))} or \code{which(x == max(x))}
   respectively.
 }
@@ -34,5 +35,9 @@ presidents[1:30]
 range(presidents, na.rm = TRUE)
 which.min(presidents)# 28
 which.max(presidents)# 2
+\testonly{
+  stopifnot(length(which.min(numeric(0))) == 0)
+  stopifnot(length(which.max( c(NA,NA) )) == 0)
+}
 }
 \keyword{utilities}

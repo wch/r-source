@@ -14,27 +14,35 @@ ecdf <- function (x)
     rval
 }
 
-print.ecdf <- function (Fn, digits=options("digits")[[1]]-2, ...)
+print.ecdf <- function (x, digits= getOption("digits") - 2, ...)
 {
-    numform <- function(x)	paste(formatC(x, dig=digits), collapse=", ")
+    numform <- function(x) paste(formatC(x, dig=digits), collapse=", ")
     cat("Empirical CDF \nCall: ")
-    print(attr(Fn, "call"), ...)
-    n <- length(x <- eval(expression(x),env = environment(Fn)))
+    print(attr(x, "call"), ...)
+    n <- length(xx <- eval(expression(x),env = environment(x)))
     i1 <- 1:min(3,n)
     i2 <- if(n>=4) max(4,n-1):n else integer(0)
-    cat(" x[1:",n,"] = ", numform(x[i1]),
-	if(n>3) ", ", if(n>5) " ..., ", numform(x[i2]), "\n", sep = "")
-    invisible(Fn)
+    cat(" x[1:",n,"] = ", numform(xx[i1]),
+	if(n>3) ", ", if(n>5) " ..., ", numform(xx[i2]), "\n", sep = "")
+    invisible(x)
 }
 
-summary.ecdf <- function(Fn, ...){
+summary.ecdf <- function(object, ...)
+{
     cat("Empirical CDF:	 ",
-	eval(expression(n),env = environment(Fn)),"obs.\n")
-    summary(knots(Fn), ...)
+	eval(expression(n),env = environment(object)),"obs.\n")
+    summary(knots(object), ...)
 }
 
 
-plot.ecdf <- function(..., verticals = FALSE, col.01line = "gray70") {
-    plot.stepfun(ylab="Fn(x)", ..., verticals = verticals)
+## add  conf.int = 0.95
+## and  conf.type = c("none", "KS")
+## (these argument names are compatible to Kaplan-Meier survfit() !)
+## and use ./KS-confint.R 's  code !!!
+
+plot.ecdf <- function(x, ..., ylab="Fn(x)", verticals = FALSE,
+		      col.01line = "gray70")
+{
+    plot.stepfun(x, ..., ylab = ylab, verticals = verticals)
     abline(h=c(0,1), col = col.01line, lty=2)
 }

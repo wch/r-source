@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, 2000 The R Development Core Team
+ *  Copyright (C) 1998, 2001 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,11 +35,11 @@
  */
 static char *R_OSType = OSTYPE;
 static char *R_FileSep = FILESEP;
-static char *R_DynLoadExt = DYNLOADEXT;
 
 SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP value, names;
+    char *tmp;
     checkArity(op, args);
     PROTECT(value = allocVector(VECSXP, 5));
     PROTECT(names = allocVector(STRSXP, 5));
@@ -50,7 +50,16 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(names, 4, mkChar("endian"));
     SET_VECTOR_ELT(value, 0, mkString(R_OSType));
     SET_VECTOR_ELT(value, 1, mkString(R_FileSep));
-    SET_VECTOR_ELT(value, 2, mkString(R_DynLoadExt));
+    tmp = (char *) malloc(strlen(SHLIB_EXT) + 2);
+    if(!tmp) {
+	error("Could not allocate memory");
+    }
+#ifndef Macintosh    
+    sprintf(tmp, ".%s", SHLIB_EXT);
+#else    /* Usually DLL under MacOS are called "LibraryLib" without a "." */
+    sprintf(tmp, "%s", SHLIB_EXT);
+#endif    
+    SET_VECTOR_ELT(value, 2, mkString(tmp));
     SET_VECTOR_ELT(value, 3, mkString(R_GUIType));
 #ifdef WORDS_BIGENDIAN
     SET_VECTOR_ELT(value, 4, mkString("big"));
@@ -276,8 +285,11 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifndef Macintosh
-#include <sys/types.h>
-#endif
+# include <sys/types.h>
+#else 
+# include <types.h>
+#endif /* mac */
+
 #if HAVE_DIRENT_H
 # include <dirent.h>
 #elif HAVE_SYS_NDIR_H
@@ -286,12 +298,14 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 # include <sys/dir.h>
 #elif HAVE_NDIR_H
 # include <ndir.h>
+#elif defined(Macintosh)
+# include "dirent.h"  /* We use a local equivalent to dirent.h */
 #endif
 
 #ifdef USE_SYSTEM_REGEX
-#include <regex.h>
+# include <regex.h>
 #else
-#include "Rregex.h"
+# include "Rregex.h"
 #endif
 
 static SEXP filename(char *dir, char *file)
@@ -336,6 +350,7 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     count = 0;
     for (i = 0; i < ndir ; i++) {
 	dnp = R_ExpandFileName(CHAR(STRING_ELT(d, i)));
+
 	if (strlen(dnp) >= PATH_MAX)  /* should not happen! */
 	    error("directory/folder path name too long");
 	strcpy(dirname, dnp);
@@ -515,15 +530,20 @@ SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef HAVE_STAT
-#include <sys/types.h>
-#include <sys/stat.h>
+# ifndef Macintosh
+#  include <sys/types.h>
+#  include <sys/stat.h>
+# else
+#  include <types.h>
+#  include <stat.h>
+#  endif /* mac */
 
-#if defined(Unix) && defined(HAVE_PWD_H) && defined(HAVE_GRP_H) \
+# if defined(Unix) && defined(HAVE_PWD_H) && defined(HAVE_GRP_H) \
   && defined(HAVE_GETPWUID) && defined(HAVE_GETGRGID)
-#include <pwd.h>
-#include <grp.h>
-#define UNIX_EXTRAS 1
-#endif
+#  include <pwd.h>
+#  include <grp.h>
+#  define UNIX_EXTRAS 1
+# endif
 
 SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -621,9 +641,9 @@ SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
 #ifdef HAVE_ACCESS
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
+# ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+# endif
 
 SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

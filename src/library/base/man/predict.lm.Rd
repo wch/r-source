@@ -6,10 +6,10 @@
   Predicted values based on linear model object
 }
 \usage{
-predict[.lm](object, newdata, se.fit = FALSE, scale = NULL, df = Inf, 
-             interval = c("none", "confidence", "prediction"),
-             level = 0.95, type = c("response", "terms"),
-             terms = NULL, \dots)
+\method{predict}{lm}(object, newdata, se.fit = FALSE, scale = NULL, df = Inf, 
+        interval = c("none", "confidence", "prediction"),
+        level = 0.95, type = c("response", "terms"),
+        terms = NULL, \dots)
 }
 \arguments{
  \item{object}{Object of class inheriting from \code{"lm"}}

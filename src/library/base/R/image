@@ -1,0 +1,16 @@
+image <-
+function (x=seq(0,1,len=nrow(z)), y=seq(0,1,len=ncol(z)), z,
+	zlim=range(z, na.rm=TRUE), col=heat.colors(12),
+	add = FALSE, xaxs="i", yaxs="i", xlab, ylab, ...)
+{
+	if(missing(xlab)) xlab <- if(missing(x)) "" else deparse(substitute(x))
+	if(missing(ylab)) ylab <- if(missing(y)) "" else deparse(substitute(y))
+	if(!add)
+	  plot(0, 0, xlim=range(x,na.rm=TRUE), ylim=range(y,na.rm=TRUE),
+		type="n", xaxs=xaxs, yaxs=yaxs, xlab=xlab, ylab=ylab, ...)
+	.Internal(image(as.double(x),
+			as.double(y),
+			as.double(z),
+			as.double(zlim),
+			col))
+}

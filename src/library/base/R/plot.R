@@ -140,12 +140,12 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
 
 plot.factor <- function(x, y, legend.text=levels(y), ...)
 {
-    if(missing(y) || is.factor(y)) ## <==> will do barplot(.)
-	axisnames <- if(length(dargs <- list(...)) > 0) {
-	    nam <- names(dargs)
-	    ((any("axes" == nam) && dargs$axes) ||
-	     (any("xaxt" == nam) && dargs$xaxt != "n"))
-	} else TRUE
+    if(missing(y) || is.factor(y)) {## <==> will do barplot(.)
+        dargs <- list(...)
+        axisnames <- if (!is.null(dargs$axes)) dargs$axes
+            else if (!is.null(dargs$xaxt)) dargs$xaxt != "n"
+            else TRUE
+    }
     if (missing(y)) {
 	barplot(table(x), axisnames=axisnames, ...)
     } else if (is.factor(y)) {

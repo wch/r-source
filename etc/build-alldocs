@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# Should work from anywhere in the R source tree.
+
+RHOME=`dirname $0`/..		# relative
+RHOME=`cd ${RHOME}; pwd`	# absolute
+export RHOME
+
+PKGS=`cd ${RHOME}/src/library; ls | sed '
+/^\./d
+/CVS/d
+/LIB*/d
+/Makefile/d
+/profile/d'`
+
+## The LibIndex is now built and updated via $RHOME/etc/INSTALL
+LI=${RHOME}/library/LibIndex
+if [ ! -f $LI ]; then cp /dev/null $LI; fi
+
+cd ${RHOME}/src/library
+for pkg in ${PKGS}
+do
+    ${RHOME}/etc/build-help ${pkg}
+done

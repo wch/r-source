@@ -37,8 +37,14 @@ double bessel_k(double x, double alpha, double expo)
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
+    if (x < 0) {
+      ML_ERROR(ME_RANGE);
+      return ML_NAN;
+    }
     ize = (long)expo;
-    nb = 1+ (long)floor(fabs(alpha));/* nb-1 <= alpha < nb */
+    if(alpha < 0)
+        alpha = -alpha;
+    nb = 1+ (long)floor(alpha);/* nb-1 <= |alpha| < nb */
     alpha -= (nb-1);
     bk = (double *) calloc(nb, sizeof(double));
     K_bessel(&x, &alpha, &nb, &ize, bk, &ncalc);

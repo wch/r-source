@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000, 2001 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,9 +32,9 @@ double pgeom(double x, double p, int lower_tail, int log_p)
 	return x + p;
 #endif
     x = floor(x);
-    if(p <= 0 || p > 1) ML_ERR_return_NAN;
+    if(p < 0 || p > 1) ML_ERR_return_NAN;
 
-    if (x < 0.) return R_DT_0;
+    if (x < 0. || p == 0.) return R_DT_0;
     if (!R_FINITE(x)) return R_DT_1;
     if(log_p && !lower_tail)
 	return log(1 - p) * (x + 1);

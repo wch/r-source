@@ -1,17 +1,17 @@
 C Output from Public domain Ratfor, version 1.0
 
 C PURPOSE
-C 	Calculation of the cubic B-spline smoothness prior
-C 	for "usual" interior knot setup.
-C	Uses BSPVD and INTRV in the CMLIB
-C	sgm[0-3](nb)    Symmetric matrix
+C       Calculation of the cubic B-spline smoothness prior
+C       for "usual" interior knot setup.
+C       Uses BSPVD and INTRV in the CMLIB
+C       sgm[0-3](nb)    Symmetric matrix
 C                       whose (i,j)'th element contains the integral of
 C                       B''(i,.) B''(j,.) , i=1,2 ... nb and j=i,...nb.
 C                       Only the upper four diagonals are computed.
 
       subroutine sgram(sg0,sg1,sg2,sg3,tb,nb)
 
-      implicit none
+c      implicit none
 C indices
       integer nb
       DOUBLE precision sg0(nb),sg1(nb),sg2(nb),sg3(nb), tb(nb+4)

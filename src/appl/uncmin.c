@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2000   Saikat DebRoy and the
+ *  Copyright (C) 1997-2001   Saikat DebRoy and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -23,8 +23,11 @@
    -- translated by f2c (version of 1 June 1993 23:00:00).
    -- and hand edited by Saikat DebRoy
    */
-
+#ifndef Macintosh
 #include <math.h>
+#else
+#include <fp.h>
+#endif /* mac */
 #include <R.h>
 #include <R_ext/Applic.h>
 #include <R_ext/PrtUtil.h> /* printRealVector */

@@ -91,9 +91,11 @@ extern void nt_rpc_report();
 #include <rpc/bcopy.h>
 extern int xdr_opaque_auth();
 
-#else
-#include <rpc/types.h>		/* some typedefs */
-#include <netinet/in.h>
+#else /* not WIN32 */
+# include <rpc/types.h>		/* some typedefs */
+# ifndef macintosh
+#  include <netinet/in.h>
+# endif
 #endif
 
 /* external data representation interfaces */
@@ -107,7 +109,7 @@ extern int xdr_opaque_auth();
 
 /* semi-private protocol headers */
 #include <rpc/rpc_msg.h>	/* protocol for rpc messages */
-#ifdef WIN32
+#if defined(WIN32) || defined(macintosh)
 #include <rpc/auth_uni.h>	/* protocol for unix style cred */
 #else
 #include <rpc/auth_unix.h>	/* protocol for unix style cred */

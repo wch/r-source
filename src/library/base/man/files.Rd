@@ -83,7 +83,7 @@ path.expand(path)
   Ross Ihaka, Brian Ripley
 }
 \seealso{
-  \code{\link{file.info}}, \code{\link{file.access}},
+  \code{\link{file.info}}, \code{\link{file.access}}, \code{\link{file.path}},
   \code{\link{file.show}}, \code{\link{list.files}},
   \code{\link{unlink}}.
 }

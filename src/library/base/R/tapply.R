@@ -1,9 +1,6 @@
 tapply <- function (X, INDEX, FUN=NULL, simplify=TRUE, ...)
 {
-    if (is.character(FUN))
-	FUN <- get(FUN, mode = "function")
-    if (!is.null(FUN) && mode(FUN) != "function")
-	stop(paste("'", FUN, "' is not a function",sep=""))
+    FUN <- if (!is.null(FUN)) match.fun(FUN)
     if (!is.list(INDEX)) INDEX <- list(INDEX)
     nI <- length(INDEX)
     namelist <- vector("list", nI)

@@ -15,7 +15,7 @@ shapiro.test(x)
   A list with class \code{"htest"} containing the following components:
   \item{statistic}{the value of the Shapiro-Wilk statistic.}
   \item{p.value}{the p-value for the test.}
-  \item{method}{the string \code{"Shapiro-Wilk normality test"}.}
+  \item{method}{the character string \code{"Shapiro-Wilk normality test"}.}
   \item{data.name}{a character string giving the name(s) of the data.}
 }
 \references{

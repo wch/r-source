@@ -18,7 +18,8 @@ rgeom(n, prob)
   \item{x, q}{vector of quantiles representing the number of failures in
     a sequence of Bernoulli trials before success occurs.}
   \item{p}{vector of probabilities.}
-  \item{n}{number of observations to generate.}
+  \item{n}{number of observations. If \code{length(n) > 1}, the length
+    is taken to be the number required.}
   \item{prob}{probability of success in each trial.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are

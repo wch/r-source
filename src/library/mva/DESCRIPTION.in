@@ -3,5 +3,6 @@ Version: @VERSION@
 Priority: base
 Title: Classical Multivariate Analysis
 Author: R Development Core Team
+Maintainer: R Core Team <R-core@r-project.org>
 Description: Multivariate analysis
 License: GPL Version 2 or later.

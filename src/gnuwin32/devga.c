@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2000  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2001  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 
 #include <Defn.h>
 #include <Graphics.h>
-#include <Devices.h>
+#include <Rdevices.h>
 #include <stdio.h>
 #include "opt.h"
 #include "graphapp/ga.h"
@@ -39,6 +39,16 @@
 
 extern console RConsole;
 extern Rboolean AllDevicesKilled;
+
+/* these really are globals: per machine, not per window */
+static double user_xpinch = 0.0, user_ypinch = 0.0;
+
+void GAsetunits(double xpinch, double ypinch)
+{
+    user_xpinch = xpinch;
+    user_ypinch = ypinch;
+}
+
 
 
 	/********************************************************/
@@ -53,6 +63,8 @@ extern Rboolean AllDevicesKilled;
 #define CLIP if (xd->clip.width>0) gsetcliprect(_d,xd->clip)
 #define DRAW(a) {drawing _d=xd->gawin;CLIP;a;NOBM(_d=xd->bm;CLIP;a;)}
 #define SHOW  gbitblt(xd->gawin,xd->bm,pt(0,0),getrect(xd->bm));
+
+#define SF 20  /* scrollbar resolution */
 
         /********************************************************/
 	/* Each driver can have its own device-specic graphical */
@@ -120,6 +132,7 @@ typedef struct {
     int	px, py, lty, lwd;
     int resizing; /* {1,2,3} */
     double rescale_factor;
+    int fast; /* Use fast fixed-width lines? */
 } gadesc;
 
 rect getregion(gadesc *xd)
@@ -230,7 +243,7 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
     char family[256], paper[256], bg[256], fg[256], **afmpaths = NULL;
 
     if (!ndd) {
-	R_ShowMessage("No enough memory to copy graphics window");
+	R_ShowMessage("Not enough memory to copy graphics window");
 	return;
     }
     if(!R_CheckDeviceAvailableBool()) {
@@ -383,7 +396,7 @@ static int SetBaseFont(gadesc *xd)
     xd->fontface = 1;
     xd->fontsize = xd->basefontsize;
     xd->fontangle = 0.0;
-    xd->usefixed= FALSE;
+    xd->usefixed = FALSE;
     xd->font = gnewfont(xd->gawin, fontname[0], fontstyle[0], 
 			MulDiv(xd->fontsize, xd->wanteddpi, xd->truedpi), 0.0);
     if (!xd->font) {
@@ -404,7 +417,7 @@ static int SetBaseFont(gadesc *xd)
 /* 2 = oblique, 3 = bold-oblique */
 
 #define SMALLEST 2
-#define LARGEST 64
+#define LARGEST 100
 
 static void SetFont(int face, int size, double rot, DevDesc *dd)
 {
@@ -412,11 +425,9 @@ static void SetFont(int face, int size, double rot, DevDesc *dd)
 
     if (face < 1 || face > fontnum)
 	face = 1;
+    if (size < SMALLEST) size = SMALLEST;
+    if (size > LARGEST) size = LARGEST;
     size = MulDiv(size, xd->wanteddpi, xd->truedpi);
-    if (size < SMALLEST)
-	size = SMALLEST;
-    if (size > LARGEST)
-	size = LARGEST;
     if (!xd->usefixed &&
 	(size != xd->fontsize || face != xd->fontface ||
 	 rot != xd->fontangle)) {
@@ -511,7 +522,7 @@ static void SetLinetype(int newlty, double nlwd, DevDesc *dd)
 /* Callback functions */
 
 
-static void HelpResize(window w,rect r)
+static void HelpResize(window w, rect r)
 {
     if (AllDevicesKilled) return;
     {
@@ -523,7 +534,7 @@ static void HelpResize(window w,rect r)
 		((xd->windowHeight != r.height))) {
 		xd->windowWidth = r.width;
 		xd->windowHeight = r.height;
-		xd->resize= TRUE;
+		xd->resize = TRUE;
 	    }
 	}
     }
@@ -1065,10 +1076,11 @@ static void devga_sbf(control c, int pos)
     DevDesc *dd = (DevDesc *) getdata(c);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     if (pos < 0) {
-	pos = min(-pos-1, xd->origWidth - xd->windowWidth);
+	pos = -pos-1;
+	pos = min(pos*SF, (xd->origWidth - xd->windowWidth + SF-1));
 	xd->xshift = -pos;
     } else {
-	pos = min(pos, xd->origHeight - xd->windowHeight);
+	pos = min(pos*SF, (xd->origHeight - xd->windowHeight + SF-1));
 	xd->yshift = -pos;
     }
     xd->resize = 1;
@@ -1077,7 +1089,7 @@ static void devga_sbf(control c, int pos)
 
 
 static int 
-setupScreenDevice(DevDesc *dd, gadesc *xd, int w, int h, 
+setupScreenDevice(DevDesc *dd, gadesc *xd, double w, double h, 
 		  Rboolean recording, int resize) 
 {
     menu  m;
@@ -1085,17 +1097,28 @@ setupScreenDevice(DevDesc *dd, gadesc *xd, int w, int h,
     double dw, dw0, dh, d;
 
     xd->kind = SCREEN;
-    dw = dw0 = w / pixelWidth(NULL);
-    dh = h / pixelHeight(NULL);
-    if ((dw / devicewidth(NULL)) > 0.85) {
-	d = dh / dw;
-	dw = 0.85 * devicewidth(NULL);
-	dh = d * dw;
-    }
-    if ((dh / deviceheight(NULL)) > 0.85) {
-	d = dw / dh;
-	dh = 0.85 * deviceheight(NULL);
-	dw = d * dh;
+    if (R_finite(user_xpinch) && user_xpinch > 0.0)
+	dw = dw0 = (int) (w * user_xpinch);
+    else
+	dw = dw0 = (int) (w / pixelWidth(NULL));
+    if (R_finite(user_ypinch) && user_ypinch > 0.0)
+	dh = (int) (w * user_ypinch);
+    else
+	dh = (int) (h / pixelHeight(NULL));
+    if (resize != 3) {
+	if ((dw / devicewidth(NULL)) > 0.85) {
+	    d = dh / dw;
+	    dw = 0.85 * devicewidth(NULL);
+	    dh = d * dw;
+	}
+	if ((dh / deviceheight(NULL)) > 0.85) {
+	    d = dw / dh;
+	    dh = 0.85 * deviceheight(NULL);
+	    dw = d * dh;
+	}
+    } else {
+	dw = min(dw, 0.85*devicewidth(NULL));
+	dh = min(dh, 0.85*deviceheight(NULL));
     }
     iw = dw + 0.5;
     ih = dh + 0.5;
@@ -1106,8 +1129,8 @@ setupScreenDevice(DevDesc *dd, gadesc *xd, int w, int h,
 				VScrollbar | HScrollbar))) {
 	return 0;
     }
-    gchangescrollbar(xd->gawin, VWINSB, 0, ih-1, ih, 0);
-    gchangescrollbar(xd->gawin, HWINSB, 0, iw-1, iw, 0);
+    gchangescrollbar(xd->gawin, VWINSB, 0, ih/SF-1, ih/SF, 0);
+    gchangescrollbar(xd->gawin, HWINSB, 0, iw/SF-1, iw/SF, 0);
 
     addto(xd->gawin);
     gsetcursor(xd->gawin, ArrowCursor);
@@ -1275,6 +1298,7 @@ static Rboolean GA_Open(DevDesc *dd, gadesc *xd, char *dsp,
     xd->fgcolor = Black;
     xd->bgcolor = White;
     xd->rescale_factor = 1.0;
+    xd->fast = 1;  /* Use `cosmetic pens' if available */
     xd->xshift = xd->yshift = 0;
     if (!dsp[0]) {
       if (!setupScreenDevice(dd, xd, w, h, recording, resize)) 
@@ -1292,7 +1316,7 @@ static Rboolean GA_Open(DevDesc *dd, gadesc *xd, char *dsp,
 	}
 	/*
 	  Observe that given actual graphapp implementation 256 is 
-	  irrilevant,i.e., depth of the bitmap is the one of graphic card
+	  irrelevant,i.e., depth of the bitmap is the one of graphic card
 	  if required depth > 1
 	*/
 	if (((xd->gawin = newbitmap(w,h,256)) == NULL) || 
@@ -1333,16 +1357,16 @@ static Rboolean GA_Open(DevDesc *dd, gadesc *xd, char *dsp,
 	if (strncmp(dsp, s, ls) || (dsp[ls] && (dsp[ls] != ':')))
 	    return FALSE;
 	xd->gawin = newmetafile((ld > ls) ? &dsp[ls + 1] : "",
-				rect(0, 0, MM_PER_INCH * w, MM_PER_INCH * h));
+				MM_PER_INCH * w, MM_PER_INCH * h);
 	xd->kind = METAFILE;
-	if (!xd->gawin)
-	    return FALSE;
+	xd->fast = 0; /* use scalable line widths */
+	if (!xd->gawin) return FALSE;
     }
     xd->truedpi = devicepixelsy(xd->gawin);
     if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP)) 
       xd->wanteddpi = 72 ;
     else
-      xd->wanteddpi = xd->rescale_factor * xd->truedpi;
+      xd->wanteddpi = xd->truedpi;
     if (!SetBaseFont(xd)) {
 	Rprintf("can't find any fonts\n");
 	del(xd->gawin);
@@ -1354,7 +1378,7 @@ static Rboolean GA_Open(DevDesc *dd, gadesc *xd, char *dsp,
     xd->origHeight = xd->showHeight = xd->windowHeight = rr.height;
     xd->clip = rr;
     setdata(xd->gawin, (void *) dd);
-    xd->needsave= FALSE;
+    xd->needsave = FALSE;
     return TRUE;
 }
 
@@ -1478,15 +1502,17 @@ static void GA_Resize(DevDesc *dd)
 	    dd->dp.left = dd->gp.left = shift;
 	    dd->dp.right = dd->gp.right = iw0 + shift;
 	    xd->xshift = shift;
-	    gchangescrollbar(xd->gawin, HWINSB, max(-shift,0), 
-			     xd->origWidth - 1, xd->windowWidth, 0);
+	    gchangescrollbar(xd->gawin, HWINSB, max(-shift,0)/SF, 
+			     xd->origWidth/SF - 1, xd->windowWidth/SF, 0);
 	    if(ih0 < ih) shift = (ih - ih0)/2.0; 
 	    else shift = min(0, xd->yshift);
 	    dd->dp.top = dd->gp.top = shift;
 	    dd->dp.bottom = dd->gp.bottom = ih0 + shift;
 	    xd->yshift = shift;
-	    gchangescrollbar(xd->gawin, VWINSB, max(-shift,0), 
-			     xd->origHeight - 1, xd->windowHeight, 0);
+	    gchangescrollbar(xd->gawin, VWINSB, max(-shift,0)/SF, 
+			     xd->origHeight/SF - 1, xd->windowHeight/SF, 0);
+	    xd->showWidth = xd->origWidth + min(0, xd->xshift);
+	    xd->showHeight = xd->origHeight + min(0,  xd->yshift);
 	}
 	xd->resize = FALSE;
 	if (xd->kind == SCREEN) {
@@ -1541,7 +1567,7 @@ static void GA_NewPage(DevDesc *dd)
 	DRAW(gfillrect(_d, xd->bgcolor, xd->clip));
     } else {
 	xd->clip = getregion(xd);
-	DRAW(gfillrect(_d, xd->bgcolor, getregion(xd)));
+	DRAW(gfillrect(_d, xd->bgcolor, xd->clip));
     }
 }
 
@@ -1668,7 +1694,7 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
     if (fg != NA_INTEGER) {
 	SetColor(fg, dd);
 	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
-	DRAW(gdrawrect(_d, xd->lwd, xd->lty, xd->fgcolor, r));
+	DRAW(gdrawrect(_d, xd->lwd, xd->lty, xd->fgcolor, r, 0));
     }
 }
 
@@ -1714,7 +1740,7 @@ static void GA_Circle(double x, double y, int coords,
     if (border != NA_INTEGER) {
 	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
 	SetColor(border, dd);
-	DRAW(gdrawellipse(_d, xd->lwd, xd->fgcolor, rr));
+	DRAW(gdrawellipse(_d, xd->lwd, xd->fgcolor, rr, 0));
     }
 }
 
@@ -1744,7 +1770,7 @@ static void GA_Line(double x1, double y1, double x2, double y2,
     SetColor(dd->gp.col, dd),
     SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
     DRAW(gdrawline(_d, xd->lwd, xd->lty, xd->fgcolor,
-		   pt(xx1, yy1), pt(xx2, yy2)));
+		   pt(xx1, yy1), pt(xx2, yy2), 0));
 }
 
 	/********************************************************/
@@ -1772,7 +1798,7 @@ static void GA_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
     }
     SetColor(dd->gp.col, dd),
 	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
-    DRAW(gdrawpolyline(_d, xd->lwd, xd->lty, xd->fgcolor, p, n, 0));
+    DRAW(gdrawpolyline(_d, xd->lwd, xd->lty, xd->fgcolor, p, n, 0, 0));
     C_free((char *) p);
 }
 
@@ -1814,7 +1840,7 @@ static void GA_Polygon(int n, double *x, double *y, int coords,
     if (fg != NA_INTEGER) {
 	SetColor(fg, dd);
 	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
-	DRAW(gdrawpolygon(_d, xd->lwd, xd->lty, xd->fgcolor, points, n ));
+	DRAW(gdrawpolygon(_d, xd->lwd, xd->lty, xd->fgcolor, points, n, 0 ));
     }
     C_free((char *) points);
 }
@@ -1839,7 +1865,7 @@ static void GA_Text(double x, double y, int coords,
 
     size = dd->gp.cex * dd->gp.ps + 0.5;
     GConvert(&x, &y, coords, DEVICE, dd);
-    SetFont(dd->gp.font, size, 0.0, dd);
+//    SetFont(dd->gp.font, size, 0.0, dd);
     pixs = - 1;
     xl = 0.0;
     yl = -pixs;
@@ -2001,6 +2027,7 @@ Rboolean GADeviceDriver(DevDesc *dd, char *display, double width,
 	free(xd);
 	return FALSE;
     }
+    dd->deviceSpecific = (void *) xd;
     /* Set up Data Structures  */
 
     dd->dp.open = GA_Open;
@@ -2030,11 +2057,19 @@ Rboolean GADeviceDriver(DevDesc *dd, char *display, double width,
     dd->dp.top = (xd->kind == PRINTER) ? rr.y : 0;	/* top */
     dd->dp.bottom = dd->dp.top + rr.height;	/* bottom */
 
+    if (resize == 3) { /* might have got a shrunken window */
+	int iw = width/pixelWidth(NULL) + 0.5, 
+	    ih = height/pixelHeight(NULL) + 0.5;
+	xd->origWidth = dd->dp.right = iw;
+	xd->origHeight = dd->dp.bottom = ih;
+    }
 
     /* Nominal Character Sizes in Pixels */
     gcharmetric(xd->gawin, xd->font, -1, &a, &d, &w);
     dd->dp.cra[0] = w * xd->rescale_factor;
     dd->dp.cra[1] = (a + d) * xd->rescale_factor;
+    /* Set basefont to full size: now allow for initial re-scale */
+    xd->wanteddpi = xd->truedpi * xd->rescale_factor;
 
     /* Character Addressing Offsets */
     /* These are used to plot a single plotting character */
@@ -2046,8 +2081,14 @@ Rboolean GADeviceDriver(DevDesc *dd, char *display, double width,
 
     /* Inches per raster unit */
 
-    dd->dp.ipr[0] = pixelWidth(xd->gawin);
-    dd->dp.ipr[1] = pixelHeight(xd->gawin);
+    if (R_finite(user_xpinch) && user_xpinch > 0.0)
+	dd->dp.ipr[0] = 1.0/user_xpinch;
+    else
+	dd->dp.ipr[0] = pixelWidth(xd->gawin);
+    if (R_finite(user_ypinch) && user_ypinch > 0.0)
+	dd->dp.ipr[1] = 1.0/user_ypinch;
+    else
+	dd->dp.ipr[1] = pixelHeight(xd->gawin);
 
     /* Device capabilities */
     /* Clipping is problematic for X11 */
@@ -2063,9 +2104,8 @@ Rboolean GADeviceDriver(DevDesc *dd, char *display, double width,
     /* initialise device description (most of the work */
     /* has been done in GA_Open) */
 
-    xd->resize= FALSE;
-    xd->locator= FALSE;
-    dd->deviceSpecific = (void *) xd;
+    xd->resize = (resize == 3);
+    xd->locator = FALSE;
     dd->displayListOn = TRUE;
     if (RConsole && (xd->kind!=SCREEN)) show(RConsole);
     return TRUE;

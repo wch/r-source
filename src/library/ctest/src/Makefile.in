@@ -11,8 +11,15 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SHLIB = $(pkg).@SHLIB_EXT@
 OBJS = ansari.o d2x2xk.o fexact.o kendall.o ks.o prho.o swilk.o
+SHLIB = $(pkg).@SHLIB_EXT@
+
+## FIXME:
+## We should really add FLIBS to SHLIB_LIBADD, but we need to include
+## the shlib Makeconf at a later stage, and its default value would
+## override our setting.
+PKG_LIBS = @FLIBS@
+## </FIXME>
 
 all: Makefile $(SHLIB)
 	@$(top_srcdir)/tools/mkinstalldirs \

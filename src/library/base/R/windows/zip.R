@@ -9,12 +9,12 @@ zip.file.extract <- function(file, zipname="R.zip")
             if(!system(paste(unzip, ' -oq "',
                              file.path(path, zipname), '" ', topic,
                              " -d ", tempdir, sep=""), invisible = TRUE))
-                file <- paste(tempdir,  topic, sep="")
+                file <- paste(tempdir, topic, sep="")
         } else {
             rc <- .Internal(int.unzip(file.path(path, zipname), topic, tempdir))
             if (rc == 10)
                 warning(paste(R.home(),
-                              "unzip\\unzip32static.dll cannot be loaded", sep="\\"))
+                              "unzip\\unzip32.dll cannot be loaded", sep="\\"))
             if (rc == 0)
                 file <- paste(tempdir, topic, sep="")
         }
@@ -34,7 +34,7 @@ zip.unpack <- function(zipname, dest)
             rc <- .Internal(int.unzip(zipname, NULL, dest))
             if (rc == 10)
                 warning(paste(R.home(),
-                              "unzip\\unzip32static.dll cannot be loaded", sep="\\"))
+                              "unzip\\unzip32.dll cannot be loaded", sep="\\"))
             rc
         }
     } else stop(paste("zipfile", zipname, "not found"))

@@ -22,8 +22,13 @@ lines.default(x, y=NULL, type="l", col=par("col"), lty=par("lty"), \dots)
 }
 \details{
   The coordinates can be passed to \code{lines}
-  in a plotting structure (a list with x and y components),
-  a time series, etc.
+  in a plotting structure (a list with \code{x} and \code{y} components),
+  a time series, etc. See \code{\link{xy.coords}}.
+
+  The coordinates can contain \code{NA} values. If a point contains
+  \code{NA} it either its \code{x} or \code{y} value, it is omitted from
+  the plot, and liens are not drawn to or from such points.  Thus
+  missing values can be used to achieve breaks in lines.
 }
 \seealso{
   \code{\link{points}}, \code{\link{plot}}, and the underlying ``primitive''

@@ -93,7 +93,7 @@ read.table <-
     names(what) <- col.names
     data <- scan(file = tfile, what = what, sep = sep, quote = quote, skip = 0,
 		 na.strings = na.strings, quiet = TRUE, fill = fill,
-                 strip.white = strip.white,
+                 strip.white = strip.white, nmax = nlines,
                  blank.lines.skip = blank.lines.skip)
 
     if(!blank.lines.skip && row.lens[nlines] == 0) {

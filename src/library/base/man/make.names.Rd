@@ -1,8 +1,8 @@
 \name{make.names}
 \alias{make.names}
-\title{Make Syntactically Valid Names Out of Strings}
+\title{Make Syntactically Valid Names}
 \description{
-  Make syntactically valid names out of character strings.
+  Make syntactically valid names out of character vectors.
 }
 \usage{
 make.names(names, unique = FALSE)
@@ -10,7 +10,7 @@ make.names(names, unique = FALSE)
 \arguments{
  \item{names}{character (vector) to be coerced to syntactically valid
    names.}
- \item{unique}{logical; if \code{TRUE}, the resulting strings are
+ \item{unique}{logical; if \code{TRUE}, the resulting elements are
      unique.  This may be desired for, e.g., column names.}
 }
 \value{

@@ -20,10 +20,12 @@ is.numeric(x)
 }
 \note{
   \emph{\R has no single precision data type.  All real numbers are
-    stored in double precision format}.
+    stored in double precision format}. While \code{as.numeric} is a
+  generic function, user methods must be written for \code{as.double},
+  which it calls
 
   \code{as.numeric} for factors yields the codes underlying the factor
-    levels.
+    levels, not the numeric representation of the labels.
 }
 \examples{
 as.numeric(c("-.1"," 2.7 ","B")) # (-0.1, 2.7, NA)  +  warning

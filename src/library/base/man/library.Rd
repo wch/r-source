@@ -1,5 +1,22 @@
 \name{library}
 \title{Loading and Listing of Packages}
+\alias{library}
+\alias{require}
+\alias{R_LIBS}
+\alias{.Autoloaded}
+\alias{.First.lib}
+\alias{.Last.lib}
+\alias{.Library}
+\alias{.packages}
+\alias{.path.package}
+\alias{.lib.loc}
+\description{
+  \code{library} and \code{require} load add-on packages.
+  \code{.First.lib} is called when a package is loaded;
+  \code{.packages} returns information about package availability.
+  \code{.path.package} returns information about where a package was
+  loaded from.
+}
 \usage{
 library(package, help = NULL, lib.loc = .lib.loc,
         character.only = FALSE, logical.return = FALSE,
@@ -16,19 +33,9 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 .Library
 .Autoloaded
 }
-\alias{library}
-\alias{require}
-\alias{R_LIBS}
-\alias{.Autoloaded}
-\alias{.First.lib}
-\alias{.Last.lib}
-\alias{.Library}
-\alias{.packages}
-\alias{.path.package}
-\alias{.lib.loc}
 \arguments{
-  \item{package, help}{\code{\link{name}} or character string giving the
-    name of a package.}
+  \item{package, help}{\link{name} or character string giving the name
+    of a package.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through.}
   \item{character.only}{a logical indicating whether \code{package} or
@@ -43,21 +50,14 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \item{quietly}{a logical.  If \code{TRUE}, a warning will not be
     printed if the package cannot be found.}
   \item{libname}{a character string giving the library directory where
-      the package was found.}
+    the package was found.}
   \item{pkgname}{a character string giving the name of the package.}
-  \item{libpath}{a character string giving the complete path to the package.}
-  \item{all.available}{logical; if \code{TRUE} return \code{character}
-    vector of all available packages in \code{lib.loc}.}
-  \item{quiet}{logical. Should \code{.path.package} not give warnings or
+  \item{libpath}{a character string giving the complete path to the
+    package.}
+  \item{all.available}{logical; if \code{TRUE} return a character vector
+    of all available packages in \code{lib.loc}.}
+  \item{quiet}{logical.  Should \code{.path.package} not give warnings or
     an error if the package(s) are not loaded?}
-}
-\description{
-  \code{library} and \code{require} load add-on packages; \code{provide}
-  allows code to register services that packages provide.
-  \code{.First.lib} is called when a package is loaded;
-  \code{.packages} returns information about package availability.
-  \code{.path.package} returns information about where a package was
-  loaded from.
 }
 \details{
   \code{library(package)} and \code{require(package)} both load the
@@ -150,22 +150,22 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 }
 \examples{
 (.packages())		    # maybe just "base"
-.packages(all = TRUE)       # return all available as char.vector
+.packages(all = TRUE)       # return all available as character vector
 library()                   # list all available packages
 library(lib = .Library)     # list all packages in the default library
-library(help = eda)         # documentation on package "eda"
-library(eda)                # load package "eda"
+library(help = eda)         # documentation on package `eda'
+library(eda)                # load package `eda'
 require(eda)                # the same
 (.packages())		    # "eda", too
 .path.package()
-.Autoloaded     # maybe "ctest"
+.Autoloaded                 # maybe "ctest"
 
 .lib.loc
 .Library == .lib.loc[length(.lib.loc)]  # `by definition'
 
 require(nonexistent)        # FALSE
-\dontrun{## Suppose a package needs to call a shared library named "foo.EXT",
-## where "EXT" is the system-specific extension.  Then you should use
+\dontrun{## Suppose a package needs to call a shared library named `foo.EXT',
+## where `EXT' is the system-specific extension.  Then you should use
 .First.lib <- function(lib, pkg) {
   library.dynam("foo", pkg, lib)
 }}

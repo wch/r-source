@@ -39,8 +39,11 @@ all(euro.cross == outer(1/euro, euro))
 ## Convert 20 Spanish Pesetas to Italian Lira
 20 * euro.cross["ESP", "ITL"]
 
-dotplot(euro, main = "euro data: 1 Euro in currency unit")
-dotplot(1/euro, main = "euro data: 1 currency unit in Euros")
-dotplot(log(euro, 10), main = "euro data: log10(1 Euro in currency unit)")
+dotchart(euro,
+         main = "euro data: 1 Euro in currency unit")
+dotchart(1/euro,
+         main = "euro data: 1 currency unit in Euros")
+dotchart(log(euro, 10),
+         main = "euro data: log10(1 Euro in currency unit)")
 }
 \keyword{datasets}

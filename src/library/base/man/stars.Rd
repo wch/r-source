@@ -2,10 +2,12 @@
 \alias{stars}
 \title{Star Plots and Segment Diagrams of Multivariate Data}
 \usage{
-stars(x, full = TRUE, scale = TRUE, radius = TRUE, labels =
-      dimnames(x)[[1]], locations = NULL, xlimit = NULL, ylimit = NULL,
-      len = 1, colors = NULL, key.loc = NULL, key.labels = NULL,
-      draw.segments = FALSE, draw.axes = FALSE, \dots)
+stars(x, full = TRUE, scale = TRUE, radius = TRUE, 
+      labels = dimnames(x)[[1]],
+      locations = NULL, xlim = NULL, ylim = NULL, len = 1,
+      colors = NULL, key.loc = NULL, key.labels = NULL, key.xpd = TRUE,
+      draw.segments = FALSE,
+      axes = FALSE, cex = 0.8, lwd = 0.25, \dots)
 }
 \arguments{
   \item{x}{matrix of data.  One segment plot will be produced for each
@@ -27,8 +29,8 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE, labels =
   \item{locations}{two column matrix with the x and y coordinates used
     to place each of the segment plots.  If \code{locations} is
     \code{NULL} the segment plots will be placed in a rectangular grid.}
-  \item{xlimit}{vector with the range of x coordinates to plot. }
-  \item{ylimit}{vector with the range of y coordinates to plot.}
+  \item{xlim}{vector with the range of x coordinates to plot. }
+  \item{ylim}{vector with the range of y coordinates to plot.}
   \item{len}{scale factor for the length of radii or segments.}
   \item{colors}{vector of integers, each of which specifies  a color
     for one of the segments.  Ignored if \code{draw.segments = FALSE}}
@@ -36,9 +38,15 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE, labels =
   \item{key.labels}{vector of character strings for labeling the
     segments of the unit key.  If omitted, the second component of
     \code{dimnames(x)} is used, if available.}
-  \item{draw.axes}{logical flag: if \code{TRUE} axes are added to the
+  \item{key.xpd}{clipping switch for the unit key (drawing and
+    labeling), see \code{\link{par}("xpd")}.}
+  \item{axes}{logical flag: if \code{TRUE} axes are added to the
     plot.}
-  \item{\dots}{any other arguments, typically arguments to \code{par}.}
+  \item{cex}{character expansion factor for the labels.}
+  \item{lwd}{line width used for drawing.}
+  \item{\dots}{further arguments, passed to the first call of
+    \code{plot()}, see \code{\link{plot.default}}.}
+  }
 }
 \description{
   Star plots or segment diagrams are created on the current graphics
@@ -58,14 +66,14 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE, labels =
 \author{Thomas S. Dye}
 \note{
   This code started life as spatial star plots by David A. Andrews.
-  See \url{http://www.stat.rice.edu/~andrewsd/software/software.html}.
+  See \url{http://www.udallas.edu:8080/~andrews/software/software.html}.
 }
 \examples{
 data(mtcars)
-stars(mtcars[, 1:7], len = 0.8, key.loc = c(12, 2),
+stars(mtcars[, 1:7], key.loc = c(12, 2),
       main = "Motor Trend Cars", full = FALSE) 
 
-stars(mtcars[, 1:7], len = 0.8, key.loc = c(12, 2),
+stars(mtcars[, 1:7], len = 0.8, key.loc = c(12, 1.5),
       main = "Motor Trend Cars", draw.segments = TRUE)
 
 data(USJudgeRatings)

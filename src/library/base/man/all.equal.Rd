@@ -22,9 +22,7 @@ all.equal.numeric(target, current,
     following two, for numerical comparison:}
   \item{tolerance}{numeric \eqn{\ge}{>=} 0.  Differences smaller than
     \code{tolerance} are not considered.}
-  \item{scale}{numeric scalar > 0 (or \code{NULL});
-    if specified, compare the average \emph{absolute} difference with
-    \code{scale * tolerance}, see below.}
+  \item{scale}{numeric scalar > 0 (or \code{NULL}). See Details.}
 }
 \description{
     \code{all.equal(x,y)} is a utility to compare \R objects \code{x}
@@ -38,9 +36,14 @@ all.equal.numeric(target, current,
     \code{all.equal.list} and \code{all.equal.language} provide
     comparison of recursive objects.
 
-    Numerical comparison is done using averge (\code{\link{mean}})
-    \emph{relative} error, unless \code{scale} is used or when the
-    absolute difference is less than \code{tolerance}.
+    Numerical comparisons for \code{scale = NULL} (the default) are done
+    by first computing the mean absolute difference of the two numerical
+    vectors. If this is smaller than \code{tolerance} or not finite,
+    absolute differences are used, otherwise relative differences scaled
+    by the mean absolute difference.
+
+    If \code{scale} is positive, comparisons are after scaling by \code{scale}.
+
     For complex arguments, \code{\link{Mod}} of difference is used.
 
     \code{attr.all.equal} is used for comparing

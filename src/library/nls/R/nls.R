@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.8 2000/10/03 15:28:21 maechler Exp $
+### $Id: nls.R,v 1.8.4.3 2001/03/24 00:10:55 bates Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -22,6 +22,7 @@
 ### Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 ### MA 02111-1307, USA
 
+### Force loading of the nls dynamic library in R
 .First.lib <- function(lib, pkg) library.dynam( "nls", pkg, lib )
 
 numericDeriv <- function(expr, theta, rho = parent.frame()) {
@@ -56,9 +57,9 @@ nlsModel.plinear <- function( form, data, start ) {
     storage.mode( lhs ) <- "double"
     rhs <- eval( form[[3]], envir = env )
     storage.mode( rhs ) <- "double"
-    p1 <- if( is.matrix( rhs ) ) { ncol( rhs ) } else { 1 }
+    p1 <- if( is.matrix(rhs) ) { ncol(rhs) } else { 1 }
     p <- p1 + p2
-    n <- length( lhs )
+    n <- length(lhs)
     fac <- ( n -  p )/p
     cc <- QR.B <- NA
     useParams <- rep(TRUE, p2)
@@ -371,8 +372,7 @@ nlsModel <- function( form, data, start ) {
            getPars = function() getPars(),
            getAllPars = function() getPars(),
            getEnv = function() env,
-           trace = function() cat( format( dev ),": ", format( getPars() ),
-             "\n"),
+           trace = function() cat( format(dev),": ", format( getPars() ), "\n"),
            Rmat = function() qr.R( QR ),
            predict = function(newdata = list(), qr = FALSE)
            {
@@ -395,20 +395,39 @@ nls.control <- function( maxiter = 50, tol = 0.00001, minFactor = 1/1024 ) {
 }
 
 nls <-
-  function (formula, data = list(),
-            start = getInitial( formula, data ), control,
+  function (formula, data = parent.frame(), start, control,
             algorithm="default", trace = FALSE,
-            subset, weights, na.action, ...)
+            subset, weights, na.action)
 {
     mf <- match.call()             # for creating the model frame
-    mform <- formula <- as.formula( formula )
+    formula <- as.formula( formula )
     varNames <- all.vars(formula)  # parameter and variable names from formula
+
+    ## adjust a one-sided model formula by using 0 as the response
+    if (length(formula) == 2) {
+        formula[[3]] <- formula[[2]]
+        formula[[2]] <- 0
+    }
+
+    ## get names of the parameters from the starting values or selfStart model
+    if (missing(start)) {
+        if(!is.null(attr(data, "parameters"))) {
+            pnames <- names(attr(data, "parameters"))
+        } else {
+            cll <- formula[[length(formula)]]
+            func <- get(as.character(cll[[1]]))
+            pnames <-
+                as.character(as.list(match.call(func, call = cll))[-1][attr(func,
+                                                      "pnames")])
+        }
+    } else {
+        pnames <- names(start)
+    }
 
     ## Heuristics for determining which names in formula represent actual
     ## variables
-
     ## If it is a parameter it is not a variable (nothing to guess here :-)
-    varNames <- varNames[is.na(match(varNames, names(start), nomatch = NA))]
+    varNames <- varNames[is.na(match(varNames, pnames, nomatch = NA))]
     ## If its length is a multiple of the response or LHS of the formula,
     ## then it is probably a variable
     ## This may fail if evaluation of formula[[2]] fails
@@ -422,8 +441,11 @@ nls <-
     mf$start <- mf$control <- mf$algorithm <- mf$trace <- NULL
     mf[[1]] <- as.name("model.frame")
     mf <- as.list(eval(mf, parent.frame()))
+    if (missing(start)) {
+        start <- getInitial(formula, mf)
+    }
     for(var in varNames[!varIndex])
-      mf[[var]] <- eval(as.name(var), data)
+        mf[[var]] <- eval(as.name(var), data)
 
     m <- switch(algorithm,
                 plinear = nlsModel.plinear( formula, mf, start ),
@@ -465,7 +487,6 @@ summary.nls <- function (object, ...)
     p1 <- 1:p
     r <- resid(z)
     f <- fitted(z)
-    w <- weights(z)
     R <- z$m$Rmat()
     w <- weights(z)
     if (!is.null(w)) {
@@ -540,10 +561,6 @@ predict.nls <-
     if (missing(newdata)) return(as.vector(fitted(object)))
     object$m$predict(newdata)
 }
-
-### Force loading of the nls dynamic library in R
-.First.lib <- function(lib, pkg) library.dynam( "nls", pkg, lib )
-
 
 fitted.nls <-
   function(object, ...)

@@ -1,0 +1,379 @@
+
+R : Copyright 2001, The R Development Core Team
+Version 1.2.2 Patched (2001-04-09)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type `license()' or `licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type `contributors()' for more information.
+
+Type `demo()' for some demos, `help()' for on-line help, or
+`help.start()' for a HTML browser interface to help.
+Type `q()' to quit R.
+
+> ### Regression tests for which the printed output is the issue
+> 
+> ## PR 715 (Printing list elements w/attributes)
+> ##
+> l <- list(a=10)
+> attr(l$a, "xx") <- 23
+> l
+$a
+[1] 10
+attr(,"xx")
+[1] 23
+
+> ## Comments:
+> ## should print as
+> # $a:
+> # [1] 10
+> # attr($a, "xx"):
+> # [1] 23
+> 
+> ## On the other hand
+> m <- matrix(c(1, 2, 3, 0, 10, NA), 3, 2)
+> na.omit(m)
+     [,1] [,2]
+[1,]    1    0
+[2,]    2   10
+attr(,"na.action")
+[1] 3
+attr(,"na.action")attr(,"class")
+[1] "omit"
+> ## should print as
+> #      [,1] [,2]
+> # [1,]    1    0
+> # [2,]    2   10
+> # attr(,"na.action")
+> # [1] 3
+> # attr(,"na.action")attr(,"class")
+> # [1] "omit"
+> 
+> ## and
+> x <- 1
+> attr(x, "foo") <- list(a="a")
+> x
+[1] 1
+attr(,"foo")
+attr(,"foo")$a
+[1] "a"
+
+> ## should print as
+> # [1] 1
+> # attr(,"foo")
+> # attr(,"foo")$a
+> # [1] "a"
+> 
+> 
+> ## PR 746 (printing of lists)
+> ##
+> test.list <- list(A = list(formula=Y~X, subset=TRUE),
++                   B = list(formula=Y~X, subset=TRUE))
+> 
+> test.list
+$A
+$A$formula
+Y ~ X
+
+$A$subset
+[1] TRUE
+
+
+$B
+$B$formula
+Y ~ X
+
+$B$subset
+[1] TRUE
+
+
+> ## Comments:
+> ## should print as
+> # $A
+> # $A$formula
+> # Y ~ X
+> #
+> # $A$subset
+> # [1] TRUE
+> #
+> #
+> # $B
+> # $B$formula
+> # Y ~ X
+> #
+> # $B$subset
+> # [1] TRUE
+> 
+> ## Marc Feldesman 2001-Feb-01.  Precision in summary.data.frame & *.matrix
+> data(attenu)
+> summary(attenu)
+     event            mag           station         dist       
+ Min.   : 1.00   Min.   :5.000   117    :  5   Min.   :  0.50  
+ 1st Qu.: 9.00   1st Qu.:5.300   113    :  4   1st Qu.: 11.32  
+ Median :18.00   Median :6.100   1028   :  4   Median : 23.40  
+ Mean   :14.74   Mean   :6.084   475    :  3   Mean   : 45.60  
+ 3rd Qu.:20.00   3rd Qu.:6.600   135    :  3   3rd Qu.: 47.55  
+ Max.   :23.00   Max.   :7.700   (Other):147   Max.   :370.00  
+                                 NA's   : 16                   
+     accel        
+ Min.   :0.00300  
+ 1st Qu.:0.04425  
+ Median :0.11300  
+ Mean   :0.15422  
+ 3rd Qu.:0.21925  
+ Max.   :0.81000  
+                  
+> summary(attenu, digits = 5)
+     event             mag            station         dist        
+ Min.   : 1.000   Min.   :5.0000   117    :  5   Min.   :  0.500  
+ 1st Qu.: 9.000   1st Qu.:5.3000   113    :  4   1st Qu.: 11.325  
+ Median :18.000   Median :6.1000   1028   :  4   Median : 23.400  
+ Mean   :14.742   Mean   :6.0841   475    :  3   Mean   : 45.603  
+ 3rd Qu.:20.000   3rd Qu.:6.6000   135    :  3   3rd Qu.: 47.550  
+ Max.   :23.000   Max.   :7.7000   (Other):147   Max.   :370.000  
+                                   NA's   : 16                    
+     accel        
+ Min.   :0.00300  
+ 1st Qu.:0.04425  
+ Median :0.11300  
+ Mean   :0.15422  
+ 3rd Qu.:0.21925  
+ Max.   :0.81000  
+                  
+> summary(data.matrix(attenu), digits = 5)# the same for matrix
+     event             mag            station             dist        
+ Min.   : 1.000   Min.   :5.0000   Min.   :  1.000   Min.   :  0.500  
+ 1st Qu.: 9.000   1st Qu.:5.3000   1st Qu.: 24.250   1st Qu.: 11.325  
+ Median :18.000   Median :6.1000   Median : 56.500   Median : 23.400  
+ Mean   :14.742   Mean   :6.0841   Mean   : 56.928   Mean   : 45.603  
+ 3rd Qu.:20.000   3rd Qu.:6.6000   3rd Qu.: 86.750   3rd Qu.: 47.550  
+ Max.   :23.000   Max.   :7.7000   Max.   :117.000   Max.   :370.000  
+                                   NA's   : 16.000                    
+     accel        
+ Min.   :0.00300  
+ 1st Qu.:0.04425  
+ Median :0.11300  
+ Mean   :0.15422  
+ 3rd Qu.:0.21925  
+ Max.   :0.81000  
+                  
+> ## Comments:
+> ## No difference between these in 1.2.1 and earlier
+> set.seed(1)
+> x <- c(round(runif(10), 2), 10000)
+> summary(x)
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+    0.000     0.050     0.550   909.400     0.675 10000.000 
+> summary(data.frame(x))
+       x            
+ Min.   :    0.000  
+ 1st Qu.:    0.050  
+ Median :    0.550  
+ Mean   :  909.423  
+ 3rd Qu.:    0.675  
+ Max.   :10000.000  
+> ## Comments:
+> ## All entries show all 3 digits after the decimal point now.
+> 
+> ## Chong Gu 2001-Feb-16.  step on binomials
+> "detg1" <-
++ structure(list(Temp = structure(c(2, 1, 2, 1, 2, 1, 2, 1, 2,
++ 1, 2, 1), .Label = c("High", "Low"), class = "factor"), M.user = structure(c(1,
++ 1, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2), .Label = c("N", "Y"), class = "factor"),
++     Soft = structure(c(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3), .Label = c("Hard",
++     "Medium", "Soft"), class = "factor"), M = c(42, 30, 52, 43,
++     50, 23, 55, 47, 53, 27, 49, 29), X = c(68, 42, 37, 24, 66,
++     33, 47, 23, 63, 29, 57, 19)), .Names = c("Temp", "M.user",
++ "Soft", "M", "X"), class = "data.frame", row.names = c("1", "3",
++ "5", "7", "9", "11", "13", "15", "17", "19", "21", "23"))
+> detg1.m0 <- glm(cbind(X,M)~1,binomial,detg1)
+> detg1.m0
+
+Call:  glm(formula = cbind(X, M) ~ 1, family = binomial, data = detg1) 
+
+Coefficients:
+(Intercept)  
+    0.01587  
+
+Degrees of Freedom: 11 Total (i.e. Null);  11 Residual
+Null Deviance:	    32.83 
+Residual Deviance: 32.83 	AIC: 92.52 
+> step(detg1.m0,scope=list(upper=~M.user*Temp*Soft))
+Start:  AIC= 92.52 
+ cbind(X, M) ~ 1 
+
+         Df Deviance    AIC
++ M.user  1   12.244 73.942
++ Temp    1   28.464 90.162
+<none>        32.826 92.524
++ Soft    2   32.430 96.128
+
+Step:  AIC= 73.94 
+ cbind(X, M) ~ M.user 
+
+         Df Deviance    AIC
++ Temp    1    8.444 72.142
+<none>        12.244 73.942
++ Soft    2   11.967 77.665
+- M.user  1   32.826 92.524
+
+Step:  AIC= 72.14 
+ cbind(X, M) ~ M.user + Temp 
+
+              Df Deviance    AIC
++ M.user:Temp  1    5.656 71.354
+<none>              8.444 72.142
+- Temp         1   12.244 73.942
++ Soft         2    8.228 75.926
+- M.user       1   28.464 90.162
+
+Step:  AIC= 71.35 
+ cbind(X, M) ~ M.user + Temp + M.user:Temp 
+
+              Df Deviance    AIC
+<none>              5.656 71.354
+- M.user:Temp  1    8.444 72.142
++ Soft         2    5.495 75.193
+
+Call:  glm(formula = cbind(X, M) ~ M.user + Temp + M.user:Temp, family = binomial,      data = detg1) 
+
+Coefficients:
+    (Intercept)          M.userY          TempLow  M.userY:TempLow  
+        0.26236         -0.85183          0.04411          0.44427  
+
+Degrees of Freedom: 11 Total (i.e. Null);  8 Residual
+Null Deviance:	    32.83 
+Residual Deviance: 5.656 	AIC: 71.35 
+> 
+> ## PR 829 (empty values in all.vars)
+> ## This example by Uwe Ligges <ligges@statistik.uni-dortmund.de>
+> 
+> temp <- matrix(1:4, 2)
+> all.vars(temp ~ 3) # OK
+[1] "temp"
+> all.vars(temp[1, ] ~ 3) # wrong in 1.2.1
+[1] "temp"
+> 
+> ## 2001-Feb-22 from David Scott.
+> ## rank-deficient residuals in a manova model.
+> gofX.df<-
++   structure(list(A = c(0.696706709347165, 0.362357754476673,
++ -0.0291995223012888,
++ 0.696706709347165, 0.696706709347165, -0.0291995223012888, 0.696706709347165,
++ -0.0291995223012888, 0.362357754476673, 0.696706709347165, -0.0291995223012888,
++ 0.362357754476673, -0.416146836547142, 0.362357754476673, 0.696706709347165,
++ 0.696706709347165, 0.362357754476673, -0.416146836547142, -0.0291995223012888,
++ -0.416146836547142, 0.696706709347165, -0.416146836547142, 0.362357754476673,
++ -0.0291995223012888), B = c(0.717356090899523, 0.932039085967226,
++ 0.999573603041505, 0.717356090899523, 0.717356090899523, 0.999573603041505,
++ 0.717356090899523, 0.999573603041505, 0.932039085967226, 0.717356090899523,
++ 0.999573603041505, 0.932039085967226, 0.909297426825682, 0.932039085967226,
++ 0.717356090899523, 0.717356090899523, 0.932039085967226, 0.909297426825682,
++ 0.999573603041505, 0.909297426825682, 0.717356090899523, 0.909297426825682,
++ 0.932039085967226, 0.999573603041505), C = c(-0.0291995223012888,
++ -0.737393715541246, -0.998294775794753, -0.0291995223012888,
++ -0.0291995223012888, -0.998294775794753, -0.0291995223012888,
++ -0.998294775794753, -0.737393715541246, -0.0291995223012888,
++ -0.998294775794753, -0.737393715541246, -0.653643620863612, -0.737393715541246,
++ -0.0291995223012888, -0.0291995223012888, -0.737393715541246,
++ -0.653643620863612, -0.998294775794753, -0.653643620863612,
++ -0.0291995223012888,
++ -0.653643620863612, -0.737393715541246, -0.998294775794753),
++     D = c(0.999573603041505, 0.67546318055115, -0.0583741434275801,
++     0.999573603041505, 0.999573603041505, -0.0583741434275801,
++     0.999573603041505, -0.0583741434275801, 0.67546318055115,
++     0.999573603041505, -0.0583741434275801, 0.67546318055115,
++     -0.756802495307928, 0.67546318055115, 0.999573603041505,
++     0.999573603041505, 0.67546318055115, -0.756802495307928,
++     -0.0583741434275801, -0.756802495307928, 0.999573603041505,
++     -0.756802495307928, 0.67546318055115, -0.0583741434275801
++     ), groups = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2,
++     2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3), class = "factor", .Label = c("1",
++     "2", "3"))), .Names = c("A", "B", "C", "D", "groups"), row.names = c("1",
++ "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13",
++ "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"
++ ), class = "data.frame")
+> 
+> gofX.manova <- manova(formula = cbind(A, B, C, D) ~ groups, data = gofX.df)
+> try(summary(gofX.manova))
+Error in summary.manova(gofX.manova) : residuals have rank 3 < 4
+> ## should fail with an error message `residuals have rank 3 < 4'
+> 
+> ## F. Tusell 2001-03-07.  printing kernels.
+> library(ts)
+> kernel("daniell", m=5)
+Daniell(5) 
+coef[-5] = 0.09091
+coef[-4] = 0.09091
+coef[-3] = 0.09091
+coef[-2] = 0.09091
+coef[-1] = 0.09091
+coef[ 0] = 0.09091
+coef[ 1] = 0.09091
+coef[ 2] = 0.09091
+coef[ 3] = 0.09091
+coef[ 4] = 0.09091
+coef[ 5] = 0.09091
+> kernel("modified.daniell", m=5)
+mDaniell(5) 
+coef[-5] = 0.05
+coef[-4] = 0.10
+coef[-3] = 0.10
+coef[-2] = 0.10
+coef[-1] = 0.10
+coef[ 0] = 0.10
+coef[ 1] = 0.10
+coef[ 2] = 0.10
+coef[ 3] = 0.10
+coef[ 4] = 0.10
+coef[ 5] = 0.05
+> kernel("daniell", m=c(3,5,7))
+unknown 
+coef[-15] = 0.0008658
+coef[-14] = 0.0025974
+coef[-13] = 0.0051948
+coef[-12] = 0.0086580
+coef[-11] = 0.0129870
+coef[-10] = 0.0181818
+coef[ -9] = 0.0242424
+coef[ -8] = 0.0303030
+coef[ -7] = 0.0363636
+coef[ -6] = 0.0424242
+coef[ -5] = 0.0484848
+coef[ -4] = 0.0536797
+coef[ -3] = 0.0580087
+coef[ -2] = 0.0614719
+coef[ -1] = 0.0640693
+coef[  0] = 0.0649351
+coef[  1] = 0.0640693
+coef[  2] = 0.0614719
+coef[  3] = 0.0580087
+coef[  4] = 0.0536797
+coef[  5] = 0.0484848
+coef[  6] = 0.0424242
+coef[  7] = 0.0363636
+coef[  8] = 0.0303030
+coef[  9] = 0.0242424
+coef[ 10] = 0.0181818
+coef[ 11] = 0.0129870
+coef[ 12] = 0.0086580
+coef[ 13] = 0.0051948
+coef[ 14] = 0.0025974
+coef[ 15] = 0.0008658
+> ## fixed by patch from Adrian Trapletti 2001-03-08
+> 
+> 
+> ## PR 883 (cor(x,y) when is.null(y))
+> try(cov(rnorm(10), NULL))
+Error in cov(rnorm(10), NULL) : supply both x and y or a matrix-like x
+> try(cor(rnorm(10), NULL))
+Error in cor(rnorm(10), NULL) : supply both x and y or a matrix-like x
+> ## gave the variance and 1 respectively in 1.2.2.
+> try(var(NULL))
+Error in var(NULL) : `x' is empty
+> try(var(numeric(0)))
+Error in var(numeric(0)) : `x' is empty
+> ## gave NA in 1.2.2
+> 

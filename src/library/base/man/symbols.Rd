@@ -2,16 +2,18 @@
 \alias{symbols}
 \title{Draw symbols on a plot}
 \description{
-This function draws symbols on a plot. One of six symbols; \emph{circles},
-\emph{squares}, \emph{rectangles}, \emph{stars}, \emph{thermometers},
-and \emph{boxplots}, can be plotted at a specified set of x and y
-coordinates.  Specific aspects of the symbols, such as relative size,
-can be customized by additional parameters.
+  This function draws symbols on a plot.  One of six symbols;
+  \emph{circles}, \emph{squares}, \emph{rectangles}, \emph{stars},
+  \emph{thermometers}, and \emph{boxplots}, can be plotted at a
+  specified set of x and y coordinates.  Specific aspects of the
+  symbols, such as relative size, can be customized by additional
+  parameters.
 }
 \usage{
 symbols(x, y, circles, squares, rectangles, stars,
         thermometers, boxplots, inches=TRUE, add=FALSE,
-        fg=1, bg=NA, ...)
+        fg=1, bg=NA, xlab = "", ylab = "", xlim = NULL,
+        ylim = NULL, \dots)
 }
 \arguments{
   \item{x}{a vector giving the x coordinates of the symbols.}
@@ -46,7 +48,11 @@ symbols(x, y, circles, squares, rectangles, stars,
   \item{fg}{colors the symbols are to be drawn in (the default is
         the value of the \code{col} graphics parameter).}
   \item{bg}{if specified, the symbols are filled with this color.
-        The default is to leave the symbols unfilled. }
+    The default is to leave the symbols unfilled. }
+  \item{xlab}{the x label of the plot.}  
+  \item{ylab}{the y label of the plot.}
+  \item{xlim}{numeric of length 2 giving the x limits for the plot.}
+  \item{ylim}{numeric of length 2 giving the y limits for the plot.}
   \item{\dots}{graphics parameters can also be passed to this function.}
 }
 \details{

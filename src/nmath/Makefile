@@ -1,0 +1,50 @@
+include ../../Makeconf
+
+INCLUDES= -I../include
+
+OBJ=	\
+	mlutils.o \
+	d1mach.o i1mach.o \
+	fmax2.o fmin2.o fmod.o fprec.o fround.o ftrunc.o \
+	sign.o fsign.o fsquare.o fcube.o \
+	imax2.o imin2.o \
+	chebyshev.o logrelerr.o lgammacor.o gammalims.o \
+	gamma.o lgamma.o beta.o lbeta.o polygamma.o \
+	choose.o \
+	snorm.o sunif.o sexp.o \
+	dgamma.o pgamma.o qgamma.o rgamma.o \
+	dbeta.o pbeta.o qbeta.o rbeta.o \
+	dunif.o punif.o qunif.o runif.o \
+	dnorm.o pnorm.o qnorm.o rnorm.o \
+	dlnorm.o plnorm.o qlnorm.o rlnorm.o \
+	df.o pf.o qf.o rf.o \
+	dt.o pt.o qt.o rt.o \
+	dchisq.o pchisq.o qchisq.o rchisq.o \
+	dbinom.o pbinom.o qbinom.o rbinom.o \
+	dcauchy.o pcauchy.o qcauchy.o rcauchy.o \
+	dexp.o pexp.o qexp.o rexp.o \
+	dgeom.o pgeom.o qgeom.o rgeom.o \
+	dhyper.o phyper.o qhyper.o rhyper.o \
+	dnbinom.o pnbinom.o qnbinom.o rnbinom.o \
+	dpois.o ppois.o qpois.o rpois.o \
+	dweibull.o pweibull.o qweibull.o rweibull.o \
+	dlogis.o plogis.o qlogis.o rlogis.o \
+	dnchisq.o pnchisq.o qnchisq.o \
+	dnbeta.o pnbeta.o \
+	pnf.o pnt.o \
+	ptukey.o qtukey.o \
+	dwilcox.o pwilcox.o qwilcox.o rwilcox.o
+
+LIB=		../lib/libmath.a
+
+$(LIB):		$(OBJ)
+		$(AR) cr $(LIB) $(OBJ)
+		$(RANLIB) $(LIB)
+
+$(OBJ):		../include/Mathlib.h
+
+clean:
+		@echo Cleaning in src/math
+		@-rm -f *.o *.a
+
+realclean:	clean

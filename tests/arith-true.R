@@ -188,5 +188,7 @@ all((c(NA || TRUE,  TRUE || NA,
     !c(NA && FALSE,FALSE && NA))))
 
 
+is.na(mean(c(1,NA,NA)[-1], trim = .1, na.rm = TRUE))
+
 ## Last Line:
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')

@@ -7,6 +7,9 @@ help(topic, offline = FALSE, package = .packages(),
 #ifdef unix
      htmlhelp = getOption("htmlhelp"),
 #endif
+#ifdef mac
+     htmlhelp = getOption("htmlhelp"),
+#endif
 #ifdef windows
      chmhelp = getOption("chmhelp"),
      htmlhelp = getOption("htmlhelp"), winhelp = getOption("winhelp"),
@@ -34,6 +37,10 @@ help(topic, offline = FALSE, package = .packages(),
  \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (which is the
      default after \code{\link{help.start}} has been called), the HTML
      version of the help will be shown in a browser.}
+#endif
+#ifdef mac
+  \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the HTML
+    version of the help will be shown in a browser.}
 #endif
 #ifdef windows
   \item{chmhelp}{logical (or \code{NULL}).  If \code{TRUE} the
@@ -74,6 +81,9 @@ help(topic, offline = FALSE, package = .packages(),
   the file \file{R\_HOME/bin/helpPRINT.bat} which contains an example.
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path.
+#endif
+#ifdef mac
+  Offline printing is not currently supported by the Macintosh port.
 #endif
 }
 \note{

@@ -1,6 +1,6 @@
-aperm <- function(a, perm, resize=TRUE) {
+aperm <- function(a, perm, resize = TRUE) {
     if (missing(perm))
-	perm<-(length(dim(a)):1)
+	perm <- length(dim(a)):1
     else {
 	if(length(perm) != length(dim(a)))
 	    stop("perm has incorrect length")
@@ -8,6 +8,7 @@ aperm <- function(a, perm, resize=TRUE) {
 	    stop("perm is not a permutation")
     }
     r <- .Internal(aperm(a, perm, resize))
-    if(!is.null(dn <- dimnames(a))) dimnames(r) <- dn[perm]
+    if(resize && !is.null(dn <- dimnames(a)))
+	dimnames(r) <- dn[perm]
     r
 }

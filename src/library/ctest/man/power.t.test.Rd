@@ -27,9 +27,9 @@ power.t.test(n=NULL, delta=NULL, sd=1, sig.level=0.05, power=NULL,
   compute them.
 }
 \value{
-  Object of class \code{power.htest}, a list of the arguments (including
-  the computed one) augmented with \code{method} and \code{note}
-  elements. 
+  Object of class \code{"power.htest"}, a list of the arguments
+  (including the computed one) augmented with \code{method} and
+  \code{note} elements. 
 }
 
 \author{Peter Dalgaard.  Based on previous work by Claus Ekstrøm}

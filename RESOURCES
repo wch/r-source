@@ -1,80 +1,95 @@
 
-			    AVAILABLE R RESOURCES
-
-1. FAQ
-
-A collection of Frequently Asked Questions and their answers is
-maintained by Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at> and can be
-found at the URL
-
-	http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html
-
-A text version is in file FAQ in this directory, and an HTML version
-is available as file doc/html/faq.html and via the on-line help (on
-the index page given by help.start()).
+                            AVAILABLE R RESOURCES
 
 
-2. MAILING LISTS
+1 FAQ
+*****
 
-Thanks to Martin Maechler there are number of mailing lists which
-are used by R users and developers.  They are
+A collection of Frequently Asked Questions and their answers is maintained
+by Kurt Hornik <Kurt.Hornik@r-project.org> and can be found at the URL
 
-	r-announce@lists.r-project.org 	announcements of new R releases
-					or applications,
+     `http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html'
 
-	r-help@lists.r-project.org	general inquiries and discussion
-					about R.
+A text version is in file `FAQ' in this directory, and an HTML version is
+available as file `doc/html/faq.html' and via the on-line help (on the
+index page given by `help.start()').
 
-	r-devel@lists.r-project.org	discussions about the future of R 
-					and pre-testing of new versions
+2 Mailing lists
+***************
 
+Thanks to Martin Maechler <Martin.Maechler@r-project.org> there are number
+of mailing lists which are used by R users and developers.  They are
 
-To subscribe (or unsubscribe) to these mailing list send
+    `r-announce@lists.r-project.org'
+          announcements of new R releases or applications;
 
-	subscribe  (or unsubscribe)
+    `r-help@lists.r-project.org'
+          general inquiries and discussion about R;
 
-(in the "body", not the subject !) to:
+    `r-devel@lists.r-project.org'
+          discussions about the future of R and pre-testing of new versions.
 
-	r-announce-request@lists.r-project.org
-	r-help-request@lists.r-project.org
-	r-devel-request@lists.r-project.org
+To subscribe (or unsubscribe) to these mailing lists send `subscribe' (or
+`unsubscribe') in the _body_ of the message (not in the subject!) to
+
+     `r-announce-request@lists.r-project.org'
+     `r-help-request@lists.r-project.org'
+     `r-devel-request@lists.r-project.org'
 
 Archives of the mailing lists are made available monthly; see the
-doc/mail/mail.html file on any CRAN node.  An HTML archive is
-available via http://www.ens.gu.edu.au/robertk/R/.
+`doc/mail/mail.html' file on any CRAN node.  An HTML archive is available
+via `http://www.ens.gu.edu.au/robertk/R/'.
 
+3 Archives
+**********
 
+The Comprehensive R Archive Network (CRAN) is a collection of sites which
+carry identical material, consisting of the R distribution(s), the
+contributed extensions, documentation for R, and binaries.
 
-3. ARCHIVES
+CRAN also contains a _daily_ snapshots of the latest R sources.
 
-The Comprehensive R Archive Network (CRAN) is a collection of sites
-which carry identical material, consisting of the R distribution(s),
-the contributed extensions, documentation for R, and binaries.
+The CRAN master site at TU Wien, Austria, can be found at the URLs
 
-The CRAN master site can be found at the URLs
+     `http://cran.r-project.org/'            
+     `ftp://cran.r-project.org/pub/R/'       
 
-    http://cran.r-project.org/
-or  ftp://cran.r-project.org/pub/R/                  (Austria)
+and is also available for anonymous rsync at `cran.r-project.org::CRAN'.
 
-and mirrored at many sites: see the list in the file MIRROR-SITES or
-on-line at
+It is currently mirrored daily at
 
-    http://cran.r-project.org/mirrors.html
+     `http://cran.at.r-project.org/'         TU Wien, Austria
+     `http://cran.ch.r-project.org/'         ETH Zu"rich, Switzerland
+     `http://cran.dk.r-project.org/'         SunSITE, Denmark
+     `http://cran.hu.r-project.org/'         Semmelweis University,
+                                             Hungary
+     `http://cran.uk.r-project.org/'         University of Bristol, UK
+     `http://cran.us.r-project.org/'         University of Wisconsin, USA
+     `http://mirror.aarnet.edu.au/CRAN/'     University of Queensland,
+                                             Australia
+     `ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/'
+                                             University of Aizu, Japan
+     `ftp://dola.snu.ac.kr/pub/R/CRAN/'      Seoul, South Korea
+     `http://lib.stat.cmu.edu/R/CRAN/'       Statlib, Carnegie Mellon
+                                             University, USA
 
+Many of these sites can also be accessed using FTP.  In the interests of
+preserving international bandwidth please use a site near you if possible.
 
-
-4. BUG-TRACKING SYSTEM
+4 Bug-tracking system
+*********************
 
 R has a bug-tracking system (or perhaps a bug-filing system is a more
-precise description) available on the net at 
+precise description) available on the net at
 
-    http://bugs.r-project.org
+     `http://bugs.r-project.org/'
 
-and via e-mail to r-bugs@r-project.org. The R function bug.report()
-can be used to invoke an editor from a within an R session and send
-the report to the right address. It also fills in some basic
-information, such as your R version and operating system, which has
-proved helpful in the debugging process.
+and via e-mail to <r-bugs@r-project.org>.  The R function `bug.report()'
+can be used to invoke an editor from a within an R session and send the
+report to the right address.  It also fills in some basic information, such
+as your R version and operating system, which has proved helpful in the
+debugging process.
 
-The source distribution has a file BUGS at the top level giving a
-summary of the entries at the time this distribution was prepared.
+The source distribution has a file `BUGS' at the top level giving a summary
+of the entries at the time this distribution was prepared.
+

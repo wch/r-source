@@ -1,6 +1,6 @@
 /*
  *  RProxy: Connector implementation between application and R language
- *  Copyright (C) 1999 Thomas Baier
+ *  Copyright (C) 1999--2001 Thomas Baier
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy.c,v 1.6 2000/04/24 08:48:48 ripley Exp $
+ *  $Id: rproxy.c,v 1.6.10.1 2001/04/04 10:09:49 ripley Exp $
  */
 
 #define NONAMELESSUNION
@@ -31,13 +31,17 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#include <Defn.h>
+#include <Graphics.h>
+#include <Rdevices.h>
+
 // static connector information
 #define CONNECTOR_NAME          "R Statistics Interpreter Connector"
 #define CONNECTOR_DESCRIPTION   "Implements abstract connector interface to R"
-#define CONNECTOR_COPYRIGHT     "(C) 1999, Thomas Baier"
+#define CONNECTOR_COPYRIGHT     "(C) 1999-2001, Thomas Baier"
 #define CONNECTOR_LICENSE       "GNU General Public License version 2 or greater"
 #define CONNECTOR_VERSION_MAJOR "0"
-#define CONNECTOR_VERSION_MINOR "91"
+#define CONNECTOR_VERSION_MINOR "99"
 
 // interpreter information here at the moment until I know better...
 #define INTERPRETER_NAME        "R"
@@ -52,6 +56,7 @@ typedef enum
 } R_Proxy_Object_State;
 
 SC_CharacterDevice* __output_device;
+SC_GraphicsDevice* __graphics_device;
 
 typedef struct _R_Proxy_Object_Impl
 {
@@ -73,7 +78,8 @@ int SYSCALL R_get_version (R_Proxy_Object_Impl* object,unsigned long* version)
   return SC_PROXY_OK;
 }
 
-int SYSCALL R_init (R_Proxy_Object_Impl* object)
+// 00-02-18 | baier | R_init(), R_Proxy_init() now take parameter-string
+int SYSCALL R_init (R_Proxy_Object_Impl* object,char const* parameters)
 {
   int lRc = SC_PROXY_ERR_UNKNOWN;
 
@@ -87,7 +93,7 @@ int SYSCALL R_init (R_Proxy_Object_Impl* object)
       return SC_PROXY_ERR_INITIALIZED;
     }
 
-  lRc = R_Proxy_init ();
+  lRc = R_Proxy_init (parameters);
 
   if (lRc == SC_PROXY_OK)
     {
@@ -135,6 +141,7 @@ int SYSCALL R_retain (R_Proxy_Object_Impl* object)
   return SC_PROXY_OK;
 }
 
+// 00-06-19 | baier | release graphics device
 int SYSCALL R_release (R_Proxy_Object_Impl* object)
 {
   if (object == NULL)
@@ -161,6 +168,12 @@ int SYSCALL R_release (R_Proxy_Object_Impl* object)
     {
       __output_device->vtbl->release (__output_device);
       __output_device = NULL;
+    }
+
+  if (__graphics_device)
+    {
+      __graphics_device->vtbl->release (__graphics_device);
+      __graphics_device = NULL;
     }
 
   free (object);
@@ -309,6 +322,7 @@ int SYSCALL R_free_data_buffer (R_Proxy_Object_Impl* object,
   return SC_PROXY_OK;
 }
 
+// 00-06-19 | baier | only set if version matches
 int SYSCALL R_set_output_device (R_Proxy_Object_Impl* object,
 				 struct _SC_CharacterDevice* device)
 {
@@ -330,10 +344,8 @@ int SYSCALL R_set_output_device (R_Proxy_Object_Impl* object,
       return SC_PROXY_OK;
     }
 
-  __output_device = device;
-
-  if (__output_device->vtbl->get_version (__output_device,
-					  &lCurrentVersion) != SC_PROXY_OK)
+  if (device->vtbl->get_version (device,
+				 &lCurrentVersion) != SC_PROXY_OK)
     {
       return SC_PROXY_ERR_UNKNOWN;
     }
@@ -343,6 +355,7 @@ int SYSCALL R_set_output_device (R_Proxy_Object_Impl* object,
       return SC_PROXY_ERR_INVALIDINTERFACEVERSION;
     }
 
+  __output_device = device;
   __output_device->vtbl->retain (device);
 
   return SC_PROXY_OK;
@@ -417,7 +430,76 @@ int SYSCALL R_query_info (R_Proxy_Object_Impl* object,
 
   return SC_PROXY_OK;
 }
+// 01-01-25 | baier | new parameters
+int R_Proxy_Graphics_Driver (DevDesc* pDD,
+			     char* pDisplay,
+			     double pWidth,
+			     double pHeight,
+			     double pPointSize,
+			     Rboolean pRecording,
+			     int pResize,
+			     struct _SC_GraphicsDevice* pDevice);
 
+
+int SYSCALL R_set_graphics_device (struct _SC_Proxy_Object* object,
+				   struct _SC_GraphicsDevice* device)
+{
+  unsigned long lCurrentVersion = 0;
+
+  if (object == NULL)
+    {
+      return SC_PROXY_ERR_INVALIDARG;
+    }
+
+  if (__graphics_device)
+    {
+      // remove the graphics device from the set of drivers
+      // @TB
+      __graphics_device->vtbl->release (__graphics_device);
+      __graphics_device = NULL;
+    }
+
+  if (device == NULL)
+    {
+      return SC_PROXY_OK;
+    }
+
+  if (device->vtbl->get_version (device,
+				 &lCurrentVersion) != SC_PROXY_OK)
+    {
+      return SC_PROXY_ERR_UNKNOWN;
+    }
+
+  if (lCurrentVersion != SC_GRAPHICSDEVICE_VERSION)
+    {
+      return SC_PROXY_ERR_INVALIDINTERFACEVERSION;
+    }
+
+  __graphics_device = device;
+  __graphics_device->vtbl->retain (device);
+
+  // add the graphics device to the set of drivers
+  {
+    DevDesc* lDD = (DevDesc*) malloc (sizeof (DevDesc));
+
+    /* Do this for early redraw attempts */
+    lDD->displayList = R_NilValue;
+    GInit(&lDD->dp);
+    R_Proxy_Graphics_Driver (lDD,
+			     "ActiveXDevice 1",
+			     100.0,
+			     100.0,
+			     10.0,
+			     0,
+			     0,
+			     device);
+    gsetVar(install(".Device"),
+	    mkString("ActiveXDevice 1"), R_NilValue);
+    addDevice(lDD);
+    initDisplayList(lDD);
+  }
+  return SC_PROXY_OK;
+}
 
 // global object table
 SC_Proxy_Object_Vtbl global_proxy_object_vtbl =
@@ -435,7 +517,8 @@ SC_Proxy_Object_Vtbl global_proxy_object_vtbl =
   (SC_PROXY_QUERY_OPS) R_query_ops,
   (SC_PROXY_FREE_DATA_BUFFER) R_free_data_buffer,
   (SC_PROXY_SET_CHARACTERDEVICE) R_set_output_device,
-  (SC_PROXY_QUERY_INFO) R_query_info
+  (SC_PROXY_QUERY_INFO) R_query_info,
+  (SC_PROXY_SET_GRAPHICSDEVICE) R_set_graphics_device
 };
 
 int SYSCALL EXPORT SC_Proxy_get_object (SC_Proxy_Object** obj,

@@ -52,7 +52,6 @@
       S and S-PLUS}, Springer.
 }
 \examples{
-library(nls)
 data(CO2)
 coplot(uptake ~ conc | Plant, data = CO2, show = FALSE, type = "b")
 ## fit the data for the first plant

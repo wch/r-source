@@ -33,8 +33,9 @@ sub info {
         if(/\\name\{([^\}]*)\}/){
 	    $self->{"name"} = $1;
 	}
-        if(/\\title\{([^\}]*)\}/){
+        if(/\\title\{\s*([^\}]*)\s*\}/s){
 	    $self->{"title"} = $1;
+	    $self->{"title"} =~ s/\s+/ /sg;
 	}
         if(/\\alias\{([^\}]*)\}/){
 	    push @{$self->{"aliases"}}, $1;

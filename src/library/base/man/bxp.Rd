@@ -3,7 +3,7 @@
 \usage{
 bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
     boxwex = 0.8, border = par("fg"), col = NULL, log = "",
-    pars = NULL, frame.plot = axes, \dots)
+    pars = NULL, frame.plot = axes, horizontal = FALSE, add = FALSE, \dots)
 }
 \alias{bxp}
 \arguments{
@@ -33,6 +33,9 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
 \item{frame.plot}{logical, indicating if a ``frame''
   (\code{\link{box}()}) should be drawn; defaults to \code{TRUE}, unless
   \code{axes = FALSE} is specified.}
+\item{horizontal}{logical indicating if the  boxplots should be
+  horizontal; default \code{FALSE} means vertical boxes.}
+\item{add}{logical, if true \emph{add} boxplot to current plot.}
 \item{pars,\dots}{Graphical parameters can be passed as arguments to
   this function, either as a list (\code{pars}) or normally(\code{\dots}).}
 }

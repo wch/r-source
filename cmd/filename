@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# ${RHOME}/cmd/filename
+
+#cc Using 'found' ensures that at least an empty string is returned;
+#cc without,  system.file() returns   character(0) if nothing is found.
+
+found=
+for f in $*
+do
+ if [ -r $f ];then echo "$f"; found=1
+ fi
+done
+test -z "$found" && echo
+

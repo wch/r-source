@@ -11,8 +11,8 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SHLIB = $(pkg).@SHLIB_EXT@
 OBJS = nls.o
+SHLIB = $(pkg).@SHLIB_EXT@
 
 all: Makefile $(SHLIB)
 	@$(top_srcdir)/tools/mkinstalldirs \

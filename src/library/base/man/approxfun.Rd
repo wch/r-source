@@ -15,7 +15,7 @@ approxfun(x, y,       method="linear",
 \arguments{
   \item{x,y}{vectors giving the coordinates of the points to be
     interpolated.  Alternatively a single plotting structure can be
-    specified.}
+    specified: see \code{\link{xy.coords}}.}
   \item{xout}{an optional set of values specifying where interpolation
     is to take place.}
   \item{method}{specifies the interpolation method to be used.  Choices

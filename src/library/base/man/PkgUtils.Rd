@@ -50,6 +50,12 @@ Rcmd check [options] pkgdirs
 #endif
   to obtain usage information on utility \code{foo}.
 }
+#ifdef windows
+\note{
+  These may not work correctly under Windows 95/98/ME because of
+  problems Perl has launching programs on those limited OSes.
+}
+#endif
 \seealso{
   The chapter ``Processing Rd format'' in ``Writing \R Extensions''
 #ifdef unix

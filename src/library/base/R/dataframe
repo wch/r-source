@@ -1,0 +1,96 @@
+frame.cvt <-
+function(x, as.is=FALSE)
+{
+	if(!as.is && (is.character(x) || is.logical(x)))
+		x <- factor(x)
+	x
+}
+
+data.frame <- function (..., row.names=NULL, col.names=NULL, as.is=FALSE)
+{
+ frame <- list(...)
+ n <- length(frame)
+ as.is <- rep(as.is, length=n)
+ for(i in 1:n)
+	if(!is.null(as.is.i<- attr(frame[[i]], "AsIs")))
+		as.is[i] <- as.is.i
+ if (is.null(col.names)) {
+	col.names <- names(frame)
+        if(is.null(col.names) || any(nameless <- nchar(col.names) == 0)) {
+                argn <- substitute(list(...))[-1]
+                for (i in 1:length(argn))
+                  if (!is.symbol(argn[[i]]))
+                    argn[[i]] <- paste("X", i, sep="")
+                argn <- as.character(argn)
+                if (is.null(col.names))
+                  col.names <- argn
+                else # have nameless
+                  col.names[nameless] <- argn[nameless]
+	}
+ }
+ names(frame) <- as.character(col.names)
+ for (i in 1:n) {
+	if (is.list(frame[[i]])) {
+                fi <- frame[[i]]
+                for (j in 1:length(fi))
+                  if (!is.numeric(fi[[j]]) && !is.factor(fi[[j]]))
+                    frame[[i]][[j]] <- frame.cvt(fi[[j]], as.is=as.is[i])
+        } else {
+		if (!is.numeric(frame[[i]]) && !is.factor(frame[[i]]))
+			frame[[i]] <- frame.cvt(frame[[i]], as.is=as.is[i])
+	}
+ }
+ .Internal(data.frame(frame, as.character(row.names), as.logical(as.is)))
+}
+
+row.names <- function(x) attr(x,"row.names")
+
+"row.names<-" <- function(x,value) {
+	if( !is.data.frame(x) )
+		return(data.frame(x, row.names=value))
+	else
+		attr(x,"row.names") <- as.character(value)
+	x
+}
+
+"is.na.data.frame" <-
+function (x)
+{
+	y <- do.call("cbind", lapply(x, "is.na"))
+	rownames(y) <- row.names(x)
+	y
+}
+
+I <- function(x) {
+	attr(x,"AsIs") <- TRUE
+	x
+}
+
+plot.data.frame <-
+function (x, ...)
+{
+	if (!is.data.frame(x))
+		stop("plot.data.frame applied to non data frame")
+	x <- data.matrix(x)
+	if (ncol(x) == 1) {
+		stripplot(x, ...)
+	}
+	else if (ncol(x) == 2) {
+		plot(x, ...)
+	}
+	else {
+		pairs(x, ...)
+	}
+}
+
+t.data.frame<- function(x)
+{
+	x <- as.matrix(x)
+	NextMethod("t")
+}
+
+as.data.frame <- function(x, row.names = NULL, optional = F, ...)
+	UseMethod("as.data.frame")
+as.data.frame.default <- function (x, row.names = NULL, optional = F, ...)
+	data.frame(x, row.names=row.names, ...)
+

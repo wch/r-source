@@ -3,7 +3,7 @@
 \alias{barplot.default}
 \title{Bar Plots}
 \usage{
-barplot(height, width = 1, space = NULL, names.arg = NULL,
+\method{barplot}{default}(height, width = 1, space = NULL, names.arg = NULL,
         legend.text = NULL, beside = FALSE, horiz = FALSE,
         col = heat.colors(NR), border = par("fg"),
         main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
@@ -21,7 +21,9 @@ barplot(height, width = 1, space = NULL, names.arg = NULL,
     bar.  If \code{height} is a matrix and \code{beside} is
     \code{TRUE}, then the values in each column are juxtaposed
     rather than stacked.}
-  \item{width}{optional vector of bar widths.}
+  \item{width}{optional vector of bar widths. Re-cycled to length the
+    number of bars drawn.  Specifying a single value will no visible
+    effect unless \code{xlim} is specified.}
   \item{space}{the amount of space (as a fraction of the average bar
     width) left before each bar.  May be given as a single number or
     one number per bar.  If \code{height} is a matrix and
@@ -77,7 +79,7 @@ barplot(height, width = 1, space = NULL, names.arg = NULL,
   midpoints of each \emph{group} of bars, see example.
 }
 \seealso{
-  \code{\link{plot}(\dots, type="h")}, \code{\link{dotplot}},
+  \code{\link{plot}(\dots, type="h")}, \code{\link{dotchart}},
   \code{\link{hist}}.
 }
 \examples{

@@ -37,14 +37,15 @@ fligner.test <- function(x, g) {
     a <- qnorm((1 + rank(abs(x)) / (n + 1)) / 2)
     STATISTIC <- sum(tapply(a, g, "sum")^2 / tapply(a, g, "length"))
     STATISTIC <- (STATISTIC - n * mean(a)^2) / var(a)
-    names(STATISTIC) <- "Fligner-Killeen:med chi-squared"
     PARAMETER <- k - 1
+    PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
+    names(STATISTIC) <- "Fligner-Killeen:med chi-squared"
     names(PARAMETER) <- "df"
     METHOD <- "Fligner-Killeen test for homogeneity of variances"
 
     RVAL <- list(statistic = STATISTIC,
                  parameter = PARAMETER,
-                 p.value = pchisq(STATISTIC, PARAMETER, lower = FALSE),
+                 p.value = PVAL,
                  method = METHOD,
                  data.name = DNAME)
     class(RVAL) <- "htest"

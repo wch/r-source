@@ -31,13 +31,42 @@ hist.default <-
                     stop("invalid number of breaks")
                 breaks
             }
-        breaks <- pretty (rx, n = nnb, min.n=1, eps.corr = 2)
+        breaks <- pretty (rx, n = nnb, min.n=1)
+
         nB <- length(breaks)
         if(nB <= 1) ##-- Impossible !
             stop(paste("hist.default: pretty() error, breaks=",format(breaks)))
     }
+
+    ## Do this *before* adding fuzz or logic breaks down...
+
+    h <- diff(breaks)
+    equidist <- !use.br || diff(range(h)) < 1e-7 * mean(h)
+    if (!use.br && any(h <= 0))
+        stop("not strictly increasing `breaks'.")
+    if (is.null(freq)) {
+        freq <- !missing(probability) && !as.logical(probability) ||
+                equidist
+    } else if(!missing(probability) && any(probability == freq))
+        stop("`probability' is an alias for `!freq', however they differ.")
+
+    ## Fuzz to handle cases where points are "effectively on"
+    ## the boundaries
+    diddle <- 1e-7 * max(abs(range(breaks)))
+    fuzz <- if(right)
+	c(if(include.lowest)-diddle else diddle,
+	    rep(diddle, length(breaks) - 1))
+    else
+	c(rep(-diddle, length(breaks) - 1),
+	    if(include.lowest) diddle else -diddle)
+
+    breaks <- breaks + fuzz
+    h <- diff(breaks)
+
     storage.mode(x) <- "double"
     storage.mode(breaks) <- "double"
+    ## With the fuzz adjustment above, the "right" and "include"
+    ## arguments are really irrelevant
     counts <- .C("bincount",
                  x,
                  n,
@@ -51,23 +80,10 @@ hist.default <-
         stop("negative `counts'. Internal Error in C-code for \"bincount\"")
     if (sum(counts) < n)
         stop("some `x' not counted; maybe `breaks' do not span range of `x'")
-    h <- diff(breaks)
-    if (!use.br && any(h <= 0))
-        stop("not strictly increasing `breaks'.")
-    if (is.null(freq)) {
-        freq <- if(!missing(probability))
-            !as.logical(probability)
-        else if(use.br) {
-            ##-- Do frequencies if breaks are evenly spaced
-            max(h)-min(h) < 1e-7 * mean(h)
-        } else TRUE
-    } else if(!missing(probability) && any(probability == freq))
-        stop("`probability' is an alias for `!freq', however they differ.")
     density <- counts/(n*h)
     mids <- 0.5 * (breaks[-1] + breaks[-nB])
-    equidist <- !use.br || diff(range(h)) < 1e-7 * mean(h)
     r <- structure(list(breaks = breaks, counts = counts,
-                        intensities = density, 
+                        intensities = density,
 			density = density, mids = mids,
                         xname = xname, equidist = equidist),
                    class="histogram")

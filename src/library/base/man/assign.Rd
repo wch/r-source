@@ -40,7 +40,7 @@ value ->> x
   environment are searched until the variable \code{x} is encountered.
   The value is then assigned in the environment in which the variable is
   encountered.  If the symbol is not encountered then assignment takes
-  place in the global environment.
+  place in the user's workspace (the global environment).
 
   If \code{inherits} is \code{FALSE}, assignment takes place in the
   initial frame of \code{envir}.

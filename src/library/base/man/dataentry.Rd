@@ -3,7 +3,7 @@
 \usage{
 data.entry(\dots, Modes = NULL, Names = NULL)
 dataentry(data, modes)
-de(\dots, Modes = NULL, Names = NULL)
+de(\dots, Modes = list(), Names = NULL)
 }
 \alias{data.entry}
 \alias{dataentry}

@@ -141,29 +141,31 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
     }
     if(has.pch || do.lines)
         col <- rep(col,length.out=n.leg)
-    if (has.pch) {                      #- draw points -------------------
-	pch   <- rep(pch, length.out=n.leg)
-	pt.bg <- rep(pt.bg, length.out=n.leg)
-	ok <- is.character(pch) | pch >= 0
-	x1 <- (if(merge) xt + 0.2*xchar else xt)[ok]
-	y1 <- yt[ok]
-	if(trace)
-	    catn("  points2(", x1,",", y1,", pch=", pch[ok],"...)")
-	points2(x1, y1, pch=pch[ok], col=col[ok], cex=cex, bg = pt.bg[ok])
-	if (!merge) xt <- xt + dx.pch
-    }
+
     if (do.lines) {                     #- draw lines ---------------------
+        seg.len <- 2 # length of drawn segment, in xchar units
 	ok.l <- if(missing(lty)) { lty <- 1; TRUE } else lty > 0
 	if(missing(lwd)) lwd <- par("lwd")
 	lty <- rep(lty, length.out = n.leg)
 	lwd <- rep(lwd, length.out = n.leg)
 	if(trace)
 	    catn("  segments2(",xt[ok.l] + x.off*xchar ,",", yt[ok.l],
-                 ", dx=",2*xchar,", dy=0, ...)", sep="")
-	segments2(xt[ok.l] + x.off*xchar, yt[ok.l], dx= 2*xchar, dy=0,
+                 ", dx=",seg.len*xchar,", dy=0, ...)", sep="")
+	segments2(xt[ok.l] + x.off*xchar, yt[ok.l], dx= seg.len*xchar, dy=0,
 		  lty = lty[ok.l], lwd = lwd[ok.l], col = col[ok.l])
-	## if (!merge)
-        xt <- xt + (2+x.off) * xchar
+	# if (!merge)
+        xt <- xt + (seg.len+x.off) * xchar
+    }
+    if (has.pch) {                      #- draw points -------------------
+	pch   <- rep(pch, length.out=n.leg)
+	pt.bg <- rep(pt.bg, length.out=n.leg)
+	ok <- is.character(pch) | pch >= 0
+	x1 <- (if(merge) xt-(seg.len/2)*xchar else xt)[ok]
+	y1 <- yt[ok]
+	if(trace)
+	    catn("  points2(", x1,",", y1,", pch=", pch[ok],"...)")
+	points2(x1, y1, pch=pch[ok], col=col[ok], cex=cex, bg = pt.bg[ok])
+	if (!merge) xt <- xt + dx.pch
     }
 
     xt <- xt + x.intersp * xchar

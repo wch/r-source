@@ -1,6 +1,5 @@
       subroutine dpbsl(abd,lda,n,m,b)
 
-      implicit none
       integer lda,n,m
       double precision abd(lda,n),b(n)
 c

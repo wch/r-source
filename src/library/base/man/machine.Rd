@@ -5,7 +5,7 @@ machine()
 }
 \alias{machine}
 \description{
-  This function returns a string which specifies what kind of
+  This function returns a character string which specifies what kind of
   environment \R is being run in.
 }
 \seealso{

@@ -78,7 +78,7 @@ image(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 }
 \note{
   Based on a function by Thomas Lumley
-  \email{thomas@biostat.washington.edu}.
+  \email{tlumley@u.washington.edu}.
 
   The way in which \code{zlim} is divided into colours will be changed
   for the next major release (1.1.0) to divide the range into

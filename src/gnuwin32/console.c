@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file console.c
- *  Copyright (C) 1998--2000  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2001  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -831,6 +831,7 @@ FBEGIN
     }
 FVOIDEND
 
+static Rboolean incomplete = FALSE;
 int consolewrites(control c, char *s)
 FBEGIN
     char buf[1001];
@@ -841,10 +842,20 @@ FBEGIN
 	buf[1000] = '\0';
 	/* now zap it */
 	for(i = 0; i < len; i++) xbufaddc(p->lbuf, '\b');
+	if (incomplete) {
+	    p->lbuf->ns--;
+	    p->lbuf->free--;
+	    p->lbuf->av++;
+	}
 	USER(NUMLINES - 1) = -1;
     }
     xbufadds(p->lbuf, s, 0);
     FC = 0;
+    if(p->input) {
+	incomplete = (s[strlen(s) - 1] != '\n');
+        if (incomplete) xbufaddc(p->lbuf, '\n');
+	xbufadds(p->lbuf, buf, 1);
+    }
     if (strchr(s, '\n')) p->needredraw = 1;
     if (!p->lazyupdate || (p->r >= 0))
         setfirstvisible(c, NUMLINES - ROWS);
@@ -852,11 +863,7 @@ FBEGIN
         p->newfv = NUMLINES - ROWS;
         if (p->newfv < 0) p->newfv = 0;
     }
-    if(p->input) {
-        if (!strchr(s, '\n')) xbufaddc(p->lbuf, '\n');
-	xbufadds(p->lbuf, buf, 1);
-	REDRAW;
-    }
+    if(p->input) REDRAW;
 FEND(0)
 
 void freeConsoleData(ConsoleData p)

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2000  The R Development Core Team.
+ *  Copyright (C) 1998--2001  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -70,24 +70,21 @@
 #ifdef Unix
 # define OSTYPE      "unix"
 # define FILESEP     "/"
-# define DYNLOADEXT  "." ## SHLIB_EXT
 #endif /* Unix */
 
 #ifdef Macintosh
 # define OSTYPE      "mac"
 # define FILESEP     ":"
-# define DYNLOADEXT  ".dll"
-#endif /* Macintosh */
+#endif /* macintosh */
 
 #ifdef Win32
 # define OSTYPE      "windows"
 # define FILESEP     "/"
-# define DYNLOADEXT  ".dll"
 #endif /* Win32 */
 
 #ifdef HAVE_F77_UNDERSCORE
 # define F77_SYMBOL(x)	x ## _
-# define F77_QSYMBOL(x)	#x ## "_"
+# define F77_QSYMBOL(x)	#x "_"
 #else
 # define F77_SYMBOL(x)	x
 # define F77_QSYMBOL(x) #x
@@ -113,7 +110,11 @@
 #define	R_VSIZE		6291456L
 #endif
 
+#ifdef Macintosh
+#include <fp.h> 
+#else
 #include <math.h>
+#endif
 
 /* all these are in Rinternals.h
 #include <errno.h>
@@ -430,6 +431,7 @@ extern FILE*	R_Outputfile	INI_as(NULL);	/* Output file */
 extern FILE*	R_Sinkfile	INI_as(NULL);	/* Sink file */
 extern int	R_OutputCon	INI_as(1);	/* Output connection */
 extern int	R_SinkCon	INI_as(1);	/* Sink connection */
+extern int	R_SinkCon_to_close	INI_as(0);
 
 /* Objects Used In Parsing  */
 extern SEXP	R_CommentSxp;	    /* Comments accumulate here */

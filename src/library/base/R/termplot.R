@@ -1,5 +1,5 @@
 termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
-		     rug=FALSE, terms=NULL, se=FALSE, xlabs=NULL, ylab=NULL,
+		     rug=FALSE, terms=NULL, se=FALSE, xlabs=NULL, ylabs=NULL,
                      main = NULL, col.term = 2, lwd.term = 1.5,
                      col.se = "orange", lty.se = 2, lwd.se = 1,
                      col.res= "gray", cex = 1, pch = par("pch"),
@@ -17,11 +17,8 @@ termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
     nmt <- colnames(tms)
     cn <- parse(text=nmt)
     ## Defaults:
-    if (is.null(xlabs))
-	xlabs <- nmt
-    if (is.null(ylab))
-	ylab <- substitute(link(foo),
-                           list(foo=formula(model)[[2]]))
+    if (is.null(ylabs))
+	ylabs <- paste("Partial for",nmt)
     if (is.null(main))
         main <- ""
     else if(is.logical(main))
@@ -36,6 +33,15 @@ termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
 	else
 	    eval(term, data, enclos = pf)
     }
+    carrier.name<-function(term){
+      	if (length(term) > 1)
+	    carrier.name(term[[2]])
+	else
+	    as.character(term)
+    }
+    if (is.null(xlabs))
+        xlabs<-unlist(lapply(cn,carrier.name))
+    
     if (partial.resid)
 	pres <- residuals(model, "partial")
     is.fac <- sapply(nmt, function(i) is.factor(mf[,i]))
@@ -73,7 +79,7 @@ termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
 		xlims[1] <- xlims[1]-0.07*diff(xlims)
 		xlims[2] <- xlims[2]+0.03*diff(xlims)
 	    }
-	    plot(1,0, type = "n", xlab = xlabs[i], ylab = ylab,
+	    plot(1,0, type = "n", xlab = xlabs[i], ylab = ylabs[i],
                  xlim = xlims, ylim = ylims, main = main[i], ...)
 	    for(j in seq(along=ll)) {
 		ww <- which(ff==ll[j])[c(1,1)]
@@ -88,7 +94,7 @@ termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
 	    if(rug)
 		xlims[1] <- xlims[1]-0.07*diff(xlims)
 	    oo <- order(xx)
-	    plot(xx[oo], tms[oo,i], type = "l", xlab = xlabs[i], ylab = ylab,
+	    plot(xx[oo], tms[oo,i], type = "l", xlab = xlabs[i], ylab = ylabs[i],
 		 xlim = xlims, ylim = ylims, main = main[i],
                  col=col.term, lwd=lwd.term, ...)
             if(se) se.lines(xx[oo], iy=oo, i=i)

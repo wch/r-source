@@ -92,7 +92,8 @@ qr.qty <- function(qr, y)
 	     as.double(qr$qraux),
 	     y,
 	     ny,
-	     qty=qty)$qty
+	     qty=qty,
+             PACKAGE = "base")$qty
 }
 
 qr.resid <- function(qr, y)

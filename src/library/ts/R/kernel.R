@@ -92,6 +92,14 @@ print.tskernel <- function (k, digits = max(3,getOption("digits")-3))
     cat(paste("coef[", format(i), "] = ",
               format(k$coef, digits=digits), sep=""), sep="\n")
 }
+print.tskernel <- function (k, digits = max(3,getOption("digits")-3))
+{
+    y <- c(rev(k$coef[2:(k$m + 1)]), k$coef)
+    i <- -k$m:k$m
+    cat(attr(k, "name"), "\n")
+    cat(paste("coef[", format(i), "] = ", format(y, digits = digits),
+              sep = ""), sep = "\n")
+}
 
 plot.tskernel <- function (k)
 {

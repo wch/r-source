@@ -3,8 +3,12 @@
 
    Generate random two-way table with given marginal totals.
    */
-
+#ifndef Macintosh
 #include <math.h>
+#else
+#include <fp.h>
+#endif
+
 #include "R_ext/Random.h"
 #include "R_ext/Applic.h"
 

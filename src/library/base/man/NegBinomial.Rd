@@ -26,7 +26,8 @@ rnbinom(n, size, prob)
   \item{x}{vector of (non-negative integer) quantiles.}
   \item{q}{vector of quantiles.}
   \item{p}{vector of probabilities.}
-  \item{n}{number of observations to generate.}
+  \item{n}{number of observations. If \code{length(n) > 1}, the length
+    is taken to be the number required.}
   \item{size}{target for number of successful trials, or shape parameter
     of gamma distribution.}
   \item{prob}{probability of success in each trial, or scale of gamma

@@ -26,15 +26,16 @@ attach(what, pos = 2, name = deparse(substitute(what)))
   \code{height} rather than \code{women$height}).
 
   By default the database is attached in position 2 in the search path,
-  immediately after the \R global environment and before all previously
+  immediately after the user's workspace and before all previously
   loaded packages and previously attached databases. This can be altered
   to attach later in the search path with the \code{pos} option, but you
-cannot attach at \code{pos=1}.
+  cannot attach at \code{pos=1}.
 
   Note that by default assignment is not performed in an attached
   database. Attempting to modify a variable or function in an attached
-  database will actually create a modified version in the \R global
-  environment. For this reason \code{attach} can lead to confusion.
+  database will actually create a modified version in the user's
+  workspace (the \R global environment). For this reason \code{attach}
+  can lead to confusion.
 }
 \value{
   The \code{\link{environment}} is returned invisibly with a

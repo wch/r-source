@@ -119,7 +119,7 @@ cor.test <- function(x, y,
 
     structure(list(statistic = STATISTIC,
 		   parameter = PARAMETER,
-		   p.value = PVAL,
+		   p.value = as.numeric(PVAL),
 		   estimate = ESTIMATE,
 		   null.value = NVAL,
 		   alternative = alternative,

@@ -45,8 +45,7 @@ DISTFILES = COPYRIGHT COPYRIGHT.ftn README ROUTINES lowess.doc \
 	$(HEADERS) \
 	$(SOURCES_C) \
 	$(SOURCES_F) \
-	blas.f \
-	zblas.f zhico.f zhifa.f zhisl.f zsico.f zsifa.f zsisl.f
+	blas.f
 
 noinst_LIBRARIES = libappl.a
 libappl_a_SOURCES = $(SOURCES)
@@ -75,7 +74,7 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(noinst_LIBRARIES) 
-	@@WANT_R_SHLIB_TRUE@$(MAKE) stamp-lo
+@WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
 
 libappl.a: $(libappl_a_OBJECTS)
 	$(AR) cr $@ $(libappl_a_OBJECTS)

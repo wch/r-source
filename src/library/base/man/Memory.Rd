@@ -34,6 +34,15 @@ mem.limits(nsize = NA, vsize = NA)
   and since setting larger values of the minima will make \R slightly more
   efficient on large tasks.
 
+#ifdef windows
+  (On Windows the \code{--max-mem-size} option sets the maximum memory
+  allocation: it has a minimum allowed value of 10M.  This is intended
+  to catch attempts to allocate excessive amounts of memory which may
+  cause other processes to run out of resources.  The default is the
+  smaller of the amount of physical RAM in the machine and 256Mb. 
+  See also \code{\link{memory.limit}}.)
+#endif
+
   To understand the options, one needs to know that \R maintains
   separate areas for fixed and variable sized objects.  The first of these
   is allocated as an array of ``\emph{cons cells}'' (Lisp programmers will
@@ -93,7 +102,9 @@ mem.limits(nsize = NA, vsize = NA)
   \code{\link{gc}} for information on the garbage collector,
   \code{\link{memory.profile}} for profiling the usage of cons cells.
 #ifdef windows
-  \code{\link{memory.size}} to monitor memory usage.
+
+  \code{\link{memory.size}} to monitor total memory usage,
+  \code{\link{memory.limit}} for the current limit.
 #endif
 }
 

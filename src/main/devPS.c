@@ -1,7 +1,9 @@
+
+
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2000  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998--2001  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -30,14 +32,14 @@
 #include "Graphics.h"
 #include "R_ext/Error.h"
 #include "Fileio.h"
-#include "Devices.h"
+#include <Rdevices.h>
 
-#define PS_minus_default 45
-/* wrongly was 177 (plusminus);
-   hyphen = 45 or 173;	(n-dash not available as code!)
-   175 = "¯" (macron)
-*/
-static char PS_minus = PS_minus_default;/*-> TODO: make this a ps.option() !*/
+/* Define this to use hyphen except in -[0-9] */
+#undef USE_HYPHEN
+/* In ISOLatin1, minus is 45 and hyphen is 173 */
+#ifdef USE_HYPHEN
+static char PS_hyphen = 173;
+#endif
 
 #define USERAFM 999
 
@@ -53,35 +55,35 @@ static struct {
 Family[] = {
 
     { "AvantGarde",
-      {"agw_____.lt1", "agd_____.lt1", "agwo____.lt1", "agdo____.lt1" }
+      {"agw_____.afm", "agd_____.afm", "agwo____.afm", "agdo____.afm" }
     },
 
     { "Bookman",
-      {"bkl_____.lt1", "bkd_____.lt1", "bkli____.lt1", "bkdi____.lt1"}
+      {"bkl_____.afm", "bkd_____.afm", "bkli____.afm", "bkdi____.afm"}
     },
 
     { "Courier",
-      {"com_____.lt1", "cob_____.lt1", "coo_____.lt1", "cobo____.lt1"}
+      {"com_____.afm", "cob_____.afm", "coo_____.afm", "cobo____.afm"}
     },
 
     { "Helvetica",
-      {"hv______.lt1", "hvb_____.lt1", "hvo_____.lt1", "hvbo____.lt1"}
+      {"hv______.afm", "hvb_____.afm", "hvo_____.afm", "hvbo____.afm"}
     },
 
     { "Helvetica-Narrow",
-      {"hvn_____.lt1", "hvnb____.lt1", "hvno____.lt1", "hvnbo___.lt1"}
+      {"hvn_____.afm", "hvnb____.afm", "hvno____.afm", "hvnbo___.afm"}
     },
 
     { "NewCenturySchoolbook",
-      {"ncr_____.lt1", "ncb_____.lt1", "nci_____.lt1", "ncbi____.lt1"}
+      {"ncr_____.afm", "ncb_____.afm", "nci_____.afm", "ncbi____.afm"}
     },
 
     { "Palatino",
-      {"por_____.lt1", "pob_____.lt1", "poi_____.lt1", "pobi____.lt1"}
+      {"por_____.afm", "pob_____.afm", "poi_____.afm", "pobi____.afm"}
     },
 
     { "Times",
-      {"tir_____.lt1", "tib_____.lt1", "tii_____.lt1", "tibi____.lt1"}
+      {"tir_____.afm", "tib_____.afm", "tii_____.afm", "tibi____.afm"}
     },
 
     { NULL }
@@ -132,6 +134,7 @@ static char familyname[5][50];
 /* These are the basic entities in the AFM file */
 
 #define BUFSIZE 512
+#define NA_SHORT -30000
 
 typedef struct {
     unsigned char c1;
@@ -284,13 +287,13 @@ static char charnames[256][25];
 static int GetCharInfo(char *buf, FontMetricInfo *metrics, int ISOLatin1)
 {
     char *p = buf, charname[25];
-    int nchar, i;
+    int nchar, nchar2=-1, i;
     short WX;
 
     if (!MatchKey(buf, "C ")) return 0;
     p = SkipToNextItem(p);
     sscanf(p, "%d", &nchar);
-    if (nchar < 0) return 1;
+    if (nchar < 0 && !ISOLatin1) return 1;
     p = SkipToNextKey(p);
 
     if (!MatchKey(p, "WX")) return 0;
@@ -302,13 +305,17 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics, int ISOLatin1)
     p = SkipToNextItem(p);
     if(ISOLatin1) {
 	sscanf(p, "%s", charname);
+#ifdef DEBUG_PS
+	Rprintf("char name %s\n", charname);
+#endif
+	/* a few chars appear twice in ISOLatin1 */
+	nchar = nchar2 = -1;
 	for (i = 32; i < 256; i++)
 	    if(!strcmp(charname, ISOLatin1Encoding[i-32])) {
-		nchar = i;
-		strcpy(charnames[i], charname);
-		break;
+		strcpy(charnames[i], charname); 
+		if(nchar == -1) nchar = i; else nchar2 = i;
 	    }
-	if (i > 255) return 1;
+	if (nchar == -1) return 1;
     } else {
 	sscanf(p, "%s", charnames[nchar]);
     }
@@ -331,6 +338,23 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics, int ISOLatin1)
 	    metrics->CharInfo[nchar].BBox[2],
 	    metrics->CharInfo[nchar].BBox[3]);
 #endif
+    if (nchar2 > 0) {
+	metrics->CharInfo[nchar2].WX = WX;
+	sscanf(p, "%hd %hd %hd %hd",
+	       &(metrics->CharInfo[nchar2].BBox[0]),
+	       &(metrics->CharInfo[nchar2].BBox[1]),
+	       &(metrics->CharInfo[nchar2].BBox[2]),
+	       &(metrics->CharInfo[nchar2].BBox[3]));
+
+#ifdef DEBUG_PS
+	Rprintf("nchar = %d %d %d %d %d %d\n", nchar2,
+		metrics->CharInfo[nchar2].WX,
+		metrics->CharInfo[nchar2].BBox[0],
+		metrics->CharInfo[nchar2].BBox[1],
+		metrics->CharInfo[nchar2].BBox[2],
+		metrics->CharInfo[nchar2].BBox[3]);
+#endif
+    }
     return 1;
 }
 
@@ -365,7 +389,7 @@ PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
 			  char *fontname, int ISOLatin1)
 {
     char buf[BUFSIZE], *p;
-    int mode, i = 0, ii, nKPX=0;
+    int mode, i = 0, j, ii, nKPX=0;
     FILE *fp;
 
     if(strchr(fontpath, FILESEP[0])) strcpy(buf, fontpath);
@@ -379,7 +403,8 @@ PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
     mode = 0;
     for (ii = 0; ii < 256; ii++) {
 	charnames[ii][0] = '\0';
-	metrics->CharInfo[ii].WX = 0;
+	metrics->CharInfo[ii].WX = NA_SHORT;
+	for(j = 0; j < 4; j++) metrics->CharInfo[ii].BBox[j] = 0;
     }
     while (fgets(buf, BUFSIZE, fp)) {
 	switch(KeyType(buf)) {
@@ -465,12 +490,19 @@ static double
 PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
 {
     int sum = 0, i;
+    short wx;
     unsigned char p1, p2;
     for ( ; *p; p++) {
-	if (*p == '-' && isdigit(p[1]))
-	    sum += metrics->CharInfo[(int)PS_minus].WX;
+#ifdef USE_HYPHEN
+	if (*p == '-' && !isdigit(p[1]))
+	    wx = metrics->CharInfo[(int)PS_hyphen].WX;
 	else
-	    sum += metrics->CharInfo[*p].WX;
+#endif
+	    wx = metrics->CharInfo[*p].WX;
+	if(wx == NA_SHORT)
+	    warning("font width unknown for character %d", *p);
+	else sum += wx;
+	
 	/* check for kerning adjustment */
 	p1 = p[0]; p2 = p[1];
 	for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
@@ -488,6 +520,8 @@ static void
 PostScriptMetricInfo(int c, double *ascent, double *descent,
 		     double *width, FontMetricInfo *metrics)
 {
+    short wx;
+    
     if (c == 0) {
 	*ascent = 0.001 * metrics->FontBBox[3];
 	*descent = -0.001 * metrics->FontBBox[1];
@@ -496,7 +530,12 @@ PostScriptMetricInfo(int c, double *ascent, double *descent,
     else {
 	*ascent = 0.001 * metrics->CharInfo[c].BBox[3];
 	*descent = -0.001 * metrics->CharInfo[c].BBox[1];
-	*width = 0.001 * metrics->CharInfo[c].WX;
+	wx = metrics->CharInfo[c].WX;
+	if(wx == NA_SHORT) {
+	    warning("font metrics unknown for character %d", c);
+	    wx = 0;
+	}
+	*width = 0.001 * wx;
     }
 }
 
@@ -566,7 +605,7 @@ static void PSFileHeader(FILE *fp, int encoding, char *papername,
 	fprintf(fp, "/bp  { gs gs } def\n");
     prolog = findVar(install(".ps.prolog"), R_GlobalEnv);
     if(!isString(prolog))
-	error("Object .ps.profile is not a character vector");
+	error("Object .ps.prolog is not a character vector");
     fprintf(fp, "%% begin .ps.prolog\n");
     for (i = 0; i < length(prolog); i++)
 	fprintf(fp, "%s\n", CHAR(STRING_ELT(prolog, i)));
@@ -667,9 +706,11 @@ static void PostScriptWriteString(FILE *fp, char *str)
 	    fprintf(fp, "\\\\");
 	    break;
 	case '-':
-	    if (isdigit((int)str[1]))
-		fputc(PS_minus, fp);
+#ifdef USE_HYPHEN
+	    if (!isdigit((int)str[1]))
+		fputc(PS_hyphen, fp);
 	    else
+#endif
 		fputc(*str, fp);
 	    break;
 	case '(':
@@ -798,7 +839,7 @@ PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
        then we must free(dd) */
 
     double xoff, yoff, pointsize;
-    rcolor setbg, setfg, setfill;
+    rcolor setbg, setfg;
 
     PostScriptDesc *pd;
 
@@ -825,7 +866,6 @@ PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 
     setbg = str2col(bg);
     setfg = str2col(fg);
-    setfill = NA_INTEGER;
 
     pd->width = width;
     pd->height = height;
@@ -839,7 +879,7 @@ PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     pd->printit = printit;
     strcpy(pd->command, cmd);
     if (printit && strlen(cmd) == 0)
-	error("postscript(prinit.it=T) used with an empty print command");
+	error("postscript(print.it=T) used with an empty print command");
     strcpy(pd->command, cmd);
 
 
@@ -1241,10 +1281,12 @@ static void PS_Deactivate(DevDesc *dd) {}
 static double PS_StrWidth(char *str, DevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
-
+    int face = dd->gp.font;
+    
+    if(face < 1 || face > 5) face = 1;
     return floor(dd->gp.cex * dd->gp.ps + 0.5) *
 	PostScriptStringWidth((unsigned char *)str,
-			      &(pd->metrics[dd->gp.font-1]));
+			      &(pd->metrics[face-1]));
 }
 
 static void PS_MetricInfo(int c, double *ascent, double *descent,
@@ -1489,13 +1531,6 @@ typedef struct {
     FontMetricInfo metrics[5];	/* font metrics */
 
 } XFigDesc;
-
-/* TODO
-
-   line styles
-   more accurate text positioning. Ross suggests using XFig justification
-     if appropriate.
- */
 
 static void
 XF_FileHeader(FILE *fp, char *papername, Rboolean landscape, Rboolean onefile)
@@ -1804,8 +1839,14 @@ XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     return 1;
 }
 
+#ifdef Unix
+char * Runix_tmpnam(char * prefix);
+#endif
 #ifdef Win32
 char * Rwin32_tmpnam(char * prefix);
+#endif
+#ifdef Macintosh
+char * Rmac_tmpnam(char * prefix);
 #endif
 
 static Rboolean XFig_Open(DevDesc *dd, XFigDesc *pd)
@@ -1834,10 +1875,14 @@ static Rboolean XFig_Open(DevDesc *dd, XFigDesc *pd)
 	pd->psfp = R_fopen(R_ExpandFileName(buf), "w");
     }
     if (!pd->psfp) return FALSE;
+#ifdef Unix
+    strcpy(pd->tmpname, Runix_tmpnam("Rxfig"));
+#endif
 #ifdef Win32
     strcpy(pd->tmpname, Rwin32_tmpnam("Rxfig"));
-#else
-    strcpy(pd->tmpname, tmpnam(NULL));
+#endif
+#ifdef Macintosh
+    strcpy(pd->tmpname, Rmac_tmpnam("Rxfig"));
 #endif
     pd->tmpfp = R_fopen(pd->tmpname, "w");
     if (!pd->tmpfp) {
@@ -2029,10 +2074,11 @@ static void XFig_Polygon(int n, double *x, double *y, int coords,
     fprintf(fp, "%d %d ", cpen, cbg); /* pen colour fill colour */
     fprintf(fp, "100 0 %d ", dofill); /* depth, pen style, area fill */
     fprintf(fp, "%.2f 0 0 -1 0 0 ", 4.0*lwd); /* style value, join .... */
-    fprintf(fp, "%d\n", n); /* number of points */
-    for(i = 0 ; i < n ; i++) {
-	xx = x[i];
-	yy = y[i];
+    fprintf(fp, "%d\n", n+1); /* number of points */
+    /* close the path */
+    for(i = 0 ; i <= n ; i++) {
+	xx = x[i%n];
+	yy = y[i%n];
 	GConvert(&xx, &yy, coords, DEVICE, dd); XFconvert(&xx, &yy, pd);
 	fprintf(fp, "  %d %d\n", (int)xx, (int)yy);
     }

@@ -6,10 +6,10 @@
   Use data editor on data frame or matrix contents.
 }
 \usage{
-edit.data.frame(name, factor.mode=c("numeric", "character"),
+edit.data.frame(name, factor.mode = c("numeric", "character"),
                 edit.row.names = any(row.names(name) != 1:nrow(name)),
                 \dots)
-edit.matrix(name, edit.row.names = any(rownames(name)), \dots)
+edit.matrix(name, edit.row.names = any(rownames(name != 1:nrow(name))), \dots)
 }
 \arguments{
   \item{name}{A data frame or matrix.}

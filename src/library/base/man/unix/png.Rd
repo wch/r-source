@@ -6,7 +6,7 @@
   A graphics device for JPEG or PNG format bitmap files.
 }
 \usage{
-jpeg(filename = "Rplot.jpg", width = 480, height = 480, pointsize = 12,
+jpeg(filename = "Rplot.jpeg", width = 480, height = 480, pointsize = 12,
      quality = 75, \dots)
 png(filename ="Rplot.png", width = 480, height = 480, pointsize = 12, \dots)
 }
@@ -33,6 +33,12 @@ png(filename ="Rplot.png", width = 480, height = 480, pointsize = 12,
   browsers. The PNG format is lossless and is best for line
   diagrams and blocks of solid colour. The JPEG format is lossy,
   but may be useful for image plots, for example.
+
+  \R can be compiled without support for either or both of these
+  devices: this will be reported if you attempt to use them on a system
+  where they are not supported.  They will not be not available if \R has
+  been started with \code{--gui=none} (and will give a different error
+  message).
 }
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.

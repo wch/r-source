@@ -1,17 +1,17 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-09-26)
+Version 1.2.0 Patched (2000-12-19)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type	"?license" or "?licence" for distribution details.
+Type `license()' or `licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type	"?contributors" for a list.
+Type `contributors()' for more information.
 
-Type	"demo()" for some demos, "help()" for on-line help, or
-    	"help.start()" for a HTML browser interface to help.
-Type	"q()" to quit R.
+Type `demo()' for some demos, `help()' for on-line help, or
+`help.start()' for a HTML browser interface to help.
+Type `q()' to quit R.
 
 > ###---- ALL tests here should return  TRUE !
 > ###
@@ -154,5 +154,30 @@ Type	"q()" to quit R.
 > is.null(class(unclass(d1$b)))
 [1] TRUE
 > 
+> ## bugs in R 1.2.0
+> format(as.POSIXct(relR120 <- "2000-12-15 11:24:40")) == relR120
+[1] TRUE
+> format(as.POSIXct(substr(relR120,1,10))) == substr(relR120,1,10)
+[1] TRUE
 > 
+> require(ts)
+Loading required package: ts 
+[1] TRUE
+> ## Start new year (i.e. line) at Jan:
+> (tt <- ts(1:10, start = c(1920,7), end = c(1921,4), freq = 12))
+     Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+1920                           1   2   3   4   5   6
+1921   7   8   9  10                                
+> cbind(tt, tt + 1)
+         tt tt + 1
+Jul 1920  1      2
+Aug 1920  2      3
+Sep 1920  3      4
+Oct 1920  4      5
+Nov 1920  5      6
+Dec 1920  6      7
+Jan 1921  7      8
+Feb 1921  8      9
+Mar 1921  9     10
+Apr 1921 10     11
 > 

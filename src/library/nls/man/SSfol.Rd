@@ -1,4 +1,4 @@
-% $Id: SSfol.Rd,v 1.2 1999/12/15 17:20:29 pd Exp $
+% $Id: SSfol.Rd,v 1.2.14.1 2001/03/24 00:08:06 bates Exp $
 \name{SSfol}
 \title{First-order Compartment Model}
 \usage{
@@ -34,7 +34,6 @@ SSfol(Dose, input, lKe, lKa, lCl)
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{
-library( nls )
 data( Theoph )
 Theoph.1 <- Theoph[ Theoph$Subject == 1, ]
 SSfol( Theoph.1$Dose, Theoph.1$Time, -2.5, 0.5, -3 )  # response only

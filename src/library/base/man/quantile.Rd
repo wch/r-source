@@ -1,10 +1,16 @@
 \name{quantile}
 \title{Sample Quantiles}
-\usage{
-quantile(x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE)
-}
 \alias{quantile}
 \alias{quantile.default}
+\description{
+  The generic function \code{quantile} produces sample quantiles
+  corresponding to the given probabilities.
+  The smallest observation corresponds to a probability of 0 and the
+  largest to a probability of 1.
+}
+\usage{
+\method{quantile}{default}(x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE)
+}
 \arguments{
   \item{x}{numeric vectors whose sample quantiles are wanted.}
   \item{probs}{numeric vector with values in \eqn{[0,1]}.}
@@ -13,12 +19,6 @@ quantile(x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE)
   \item{names}{logical; if true, the result has a \code{\link{names}}
     attribute.  Set to \code{FALSE} for speedup with many \code{probs}.
   }
-}
-\description{
-  The generic function \code{quantile} produces sample quantiles
-  corresponding to the given probabilities.
-  The smallest observation corresponds to a probability of 0 and the
-  largest to a probability of 1.
 }
 \details{
   A vector of length \code{length(probs)} is returned;

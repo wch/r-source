@@ -64,11 +64,11 @@ t.test <- function(x, y=NULL, alternative = c("two.sided", "less", "greater"),
     }
     if (alternative == "less") {
 	pval <- pt(tstat, df)
-	cint <- c(NA, tstat + qt(conf.level, df) )
+	cint <- c(-Inf, tstat + qt(conf.level, df) )
     }
     else if (alternative == "greater") {
 	pval <- pt(tstat, df, lower = FALSE)
-	cint <- c(tstat - qt(conf.level, df), NA)
+	cint <- c(tstat - qt(conf.level, df), Inf)
     }
     else {
 	pval <- 2 * pt(-abs(tstat), df)

@@ -1,22 +1,4 @@
 \name{edit}
-\title{Invoke a Text Editor}
-\usage{
-edit(name = NULL, file = "", editor = getOption("editor"))
-vi(name = NULL, file = "")
-emacs(name = NULL, file = "")
-pico(name = NULL, file = "")
-xemacs(name = NULL, file = "")
-xedit(name = NULL, file = "")
-}
-\synopsis{
-edit(name, \dots) 
-edit.default(name = NULL, file = "", editor = getOption("editor"))
-vi(name = NULL, file = "")
-emacs(name = NULL, file = "")
-pico(name = NULL, file = "")
-xemacs(name = NULL, file = "")
-xedit(name = NULL, file = "")
-}
 \alias{edit}
 \alias{edit.default}
 \alias{vi}
@@ -24,20 +6,40 @@ xedit(name = NULL, file = "")
 \alias{pico}
 \alias{xemacs}
 \alias{xedit}
-\arguments{
-  \item{name}{a named object that you want to edit. If name is missing
-    then the file specified by \code{file} is opened for editing.}
-  \item{file}{a string naming the file to write the edited version to.}
-  \item{editor}{a string naming the text editor you want to use. On Unix
-  the default is set from the \code{EDITOR} environmental variable. On
-  Windows it defaults to \code{notepad}.}
+\title{Invoke a Text Editor}
+\synopsis{
+edit(name, \dots) 
+edit.default(name = NULL, file = "", editor = getOption("editor"), ...)
+vi(name = NULL, file = "")
+emacs(name = NULL, file = "")
+pico(name = NULL, file = "")
+xemacs(name = NULL, file = "")
+xedit(name = NULL, file = "")
 }
 \description{
   Invoke a text editor on an \R object.
 }
+\usage{
+edit(name = NULL, file = "", editor = getOption("editor"), \dots)
+vi(name = NULL, file = "")
+emacs(name = NULL, file = "")
+pico(name = NULL, file = "")
+xemacs(name = NULL, file = "")
+xedit(name = NULL, file = "")
+}
+\arguments{
+  \item{name}{a named object that you want to edit. If name is missing
+    then the file specified by \code{file} is opened for editing.}
+  \item{file}{a string naming the file to write the edited version to.}
+  \item{editor}{a string naming the text editor you want to use.  On
+    Unix the default is set from the environment variables \code{EDITOR}
+    or \code{VISUAL} if either is set, otherwise \code{vi} is used.  On
+    Windows it defaults to \code{notepad}.}
+  \item{\dots}{further arguments to be passed to or from methods.}
+}
 \details{
   \code{edit} invokes the text editor specified by \code{editor} with
-  the object \code{name} to be edited. It is a generic function,
+  the object \code{name} to be edited.  It is a generic function,
   currently with a default method and one for data frames.
 
   \code{data.entry} can be used to edit data, and is used by \code{edit}
@@ -60,7 +62,9 @@ xedit(name = NULL, file = "")
   result in the temporary file being reopened for further editing.
 }
 \seealso{
-  \code{\link{edit.data.frame}}, \code{\link{data.entry}}, \code{\link{fix}}.
+  \code{\link{edit.data.frame}},
+  \code{\link{data.entry}},
+  \code{\link{fix}}.
 }
 \note{
   The functions \code{vi}, \code{emacs}, \code{pico}, \code{xemacs},

@@ -62,7 +62,9 @@ textConnection(letters)
 showConnections()
 #  class     description      mode text   isopen   can read can write
 #3 "letters" "textConnection" "r"  "text" "opened" "yes"    "no"     
-close(getConnection(3))
+\dontrun{close(getConnection(3))}
+\testonly{r <- as.numeric(row.names(showConnections()))
+close(getConnection(r))}
 showConnections()
 }
 \keyword{connection}

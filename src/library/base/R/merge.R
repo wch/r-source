@@ -52,21 +52,22 @@ merge.data.frame <-
     bxy <- bx[comm > 0]
     xinds <- match(bx, bxy, 0)
     yinds <- match(by, bxy, 0)
-    o <- outer(xinds, yinds, function(x, y) (x > 0) & x==y)
-    xi <- row(o)[o]
-    yi <- col(o)[o]
+#    o <- outer(xinds, yinds, function(x, y) (x > 0) & x==y)
+#    xi <- row(o)[o]
+#    yi <- col(o)[o]
+    m <- .Internal(merge(xinds, yinds))
     nm <- nm.x <- names(x)[-by.x]
     nm.y <- names(y)[-by.y]
     cnm <- match(nm.x, nm.y, 0)
     nm.x[cnm > 0] <- paste(nm.x[cnm > 0], "x", sep=".")
-    x <- x[xi, c(by.x, seq(length=ncol(x))[-by.x]), drop=FALSE]
+    x <- x[m$xi, c(by.x, seq(length=ncol(x))[-by.x]), drop=FALSE]
     names(x) <- c(names(x)[seq(along=by.x)], nm.x)
     cnm <- match(nm.y, nm, 0)
     nm.y[cnm > 0] <- paste(nm.y[cnm > 0], "y", sep=".")
-    y <- y[yi, -by.y, drop=FALSE]
+    y <- y[m$yi, -by.y, drop=FALSE]
     names(y) <- nm.y
     res <- cbind(x, y)
-    if (sort) res  <- res[sort.list(bx[xi]),, drop=FALSE]
+    if (sort) res  <- res[sort.list(bx[m$xi]),, drop=FALSE]
     row.names(res) <- seq(length=nrow(res))
     res
 }

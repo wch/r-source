@@ -1,2 +1,2 @@
-x11 <- .Alias(windows)
-X11 <- .Alias(windows)
+x11 <- .Alias(win.graph)
+X11 <- .Alias(win.graph)

@@ -1,0 +1,112 @@
+include ../../Makeconf
+
+INCLUDES= -I../include
+
+RLIBS=	\
+		../lib/libgraphics.a \
+		../lib/libunix.a \
+		../lib/libappl.a \
+		../lib/libmath.a
+
+OBJS=		arithmetic.o \
+		array.o \
+		attrib.o \
+		bind.o \
+		builtin.o \
+		character.o \
+		coerce.o \
+		colors.o \
+		complex.o \
+		context.o \
+		cov.o \
+		cum.o \
+		debug.o \
+		deparse.o \
+		deriv.o \
+		devices.o \
+		dotcode.o \
+		dstruct.o \
+		duplicate.o \
+		envir.o \
+		errors.o \
+		eval.o \
+		format.o \
+		fourier.o \
+		iosupport.o \
+		gram.o \
+		list.o \
+		logic.o \
+		main.o \
+		match.o \
+		memory.o \
+		model.o \
+		names.o \
+		objects.o \
+		optimize.o \
+		options.o \
+		par.o \
+		paste.o\
+		plot.o \
+		plot3d.o \
+		plotmath.o \
+		print.o \
+		printarray.o \
+		printvector.o \
+		printutils.o \
+		random.o \
+		relop.o \
+		saveload.o \
+		scan.o \
+		seq.o \
+		sort.o \
+		source.o \
+		split.o \
+		subassign.o \
+		subscript.o \
+		subset.o \
+		summary.o \
+		unique.o \
+		util.o \
+		version.o
+
+
+R.binary:	$(OBJS) $(RLIBS)
+		$(LDCMD) $(DLLFLAGS) -o R.binary $(OBJS) $(RLIBS) $(X_PRE_LIBS) $(X_LIBS) $(X_EXTRA_LIBS) $(LIBS)
+
+
+install:	R.binary
+		$(INSTALL_PROGRAM) R.binary ../../bin
+		@echo R binary installed
+
+$(OBJS):	../include/Defn.h
+
+tags:		*.h *.c
+		ctags *.h *.c
+
+gram.c:		gram.y
+		$(YACC) gram.y
+		mv y.tab.c gram.c
+
+clean:
+		@echo Cleaning in src/main
+		@-rm -f R.binary R-Image *core *.o
+
+realclean:	clean
+
+dotcode.o:	../include/FFDecl.h ../include/FFTab.h
+
+colors.o:	../include/Graphics.h
+par.o:		../include/Graphics.h
+plot.o:		../include/Graphics.h
+
+arithmetic.o:	../include/Mathlib.h
+random.o:	../include/Mathlib.h
+
+deparse.o:	names.h
+names.o:	names.h
+printArray.o:	../include/Print.h
+printMatrix.o:	../include/Print.h
+printScalar.o:	../include/Print.h
+printVector.o:	../include/Print.h
+sprintScalar.o:	../include/Print.h
+version.o:	../include/Platform.h

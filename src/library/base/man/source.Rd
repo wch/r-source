@@ -10,8 +10,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \item{file}{a connection or a character string giving the name
     of the file to read from.}
   \item{local}{if \code{local} is \code{FALSE}, the statements scanned
-    are evaluated in the global environment, otherwise in the local
-    calling source.}
+    are evaluated in the user's workspace (the global environment),
+    otherwise in the environment calling \code{source}.}
   \item{echo}{logical; if \code{TRUE}, each expression is printed
     after parsing, before evaluation.}
   \item{print.eval}{logical; if \code{TRUE}, the result of
@@ -34,6 +34,12 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   the file is reached.   \code{\link{parse}} is used to scan the
   expressions in, they are then evaluated sequentially in the chosen
   environment.
+}
+\details{
+  All versions of \R accept input  from a connection with end of line
+  marked by LF (as used on Unix), CRLF (as used on DOS/Windows)
+  or CR (as used on Mac).  The final line can be incomplete, that
+  is missing the final EOL marker. 
 }
 \seealso{
   \code{\link{demo}} which uses \code{source};

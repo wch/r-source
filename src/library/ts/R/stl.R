@@ -73,7 +73,7 @@ print.stl <- function(x, ...)
     cat(" ")
     dput(x$call)
     cat("\nComponents\n")
-    print(x$time.series)
+    print(x$time.series, ...)
     invisible(x)
 }
 

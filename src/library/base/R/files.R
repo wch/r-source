@@ -10,7 +10,9 @@ function (..., header=rep("", nfiles), title="R Information",
 {
     file <- c(...)
     nfiles <- length(file)
-    if (is.function(pager))
+    if(nfiles == 0)
+        return(invisible(NULL))
+    if(is.function(pager))
 	pager(file, header, title, delete.file)
     else
         .Internal(file.show(file, header, title, delete.file, pager))

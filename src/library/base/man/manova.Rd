@@ -33,7 +33,9 @@ summary.manova(object,
   by Hand and Taylor (1987).
 }
 \value{
-  A list with components
+  For \code{manova}, see \code{\link{aov}} and the comments in Details here.
+  
+  for \code{summary.manova}, a list with components
   \item{SS}{A names list of sums of squares and product matrices.}
   \item{Eigenvalues}{A matrix of eigenvalues, }
   \item{stats}{A matrix of the statistics, approximate F value and

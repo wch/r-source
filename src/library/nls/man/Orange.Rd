@@ -32,7 +32,6 @@
 	in S and S-PLUS}, Springer.
 }
 \examples{
-library(nls)
 data(Orange)
 coplot(circumference ~ age | Tree, data = Orange, show = FALSE)
 fm1 <- nls(circumference ~ SSlogis(age, Asym, xmid, scal),

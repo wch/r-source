@@ -1,10 +1,10 @@
 # Copyright (C) 1997-1999  Adrian Trapletti
 #
 
-diffinv <- function (obj, ...) { UseMethod("diffinv") }
+diffinv <- function (x, ...) { UseMethod("diffinv") }
 
-diffinv.vec <- function (x, lag = 1, differences = 1,
-                         xi = rep(0.0,lag*differences))
+diffinv.vector <- function (x, lag = 1, differences = 1,
+                            xi = rep(0.0,lag*differences))
 {
     if (!is.vector(x)) stop ("x is not a vector")
     if (lag < 1 | differences < 1) stop ("Bad value for lag or differences")
@@ -20,9 +20,9 @@ diffinv.vec <- function (x, lag = 1, differences = 1,
         res$y
     }
     else
-        diffinv.vec(diffinv.vec(x, lag, differences-1,
-                                xi[(lag+1):(lag*differences)]),
-                    lag, 1, xi[1:lag])
+        diffinv.vector(diffinv.vector(x, lag, differences-1,
+                                      xi[(lag+1):(lag*differences)]),
+                       lag, 1, xi[1:lag])
 }
 
 diffinv.default <- function (x, lag = 1, differences = 1,
@@ -34,11 +34,11 @@ diffinv.default <- function (x, lag = 1, differences = 1,
         y <- matrix(0, nr=n+lag*differences, nc=m)
         dim(xi) <- c(lag*differences, m)
         for (i in 1:m)
-            y[,i] <- diffinv.vec(as.vector(x[,i]), lag, differences,
-                                 as.vector(xi[,i]))
+            y[,i] <- diffinv.vector(as.vector(x[,i]), lag, differences,
+                                    as.vector(xi[,i]))
     }
     else if (is.vector(x))
-        y <- diffinv.vec(x, lag, differences, xi)
+        y <- diffinv.vector(x, lag, differences, xi)
     else
         stop ("x is not a vector or matrix")
     y

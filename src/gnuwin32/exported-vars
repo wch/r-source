@@ -10,6 +10,7 @@ R_GlobalEnv
 R_HistoryFile
 R_HistorySize
 R_Interactive
+R_Is_Running
 R_MissingArg
 R_NilValue
 R_PreciousList
@@ -34,6 +35,7 @@ R_NaRmSymbol
 R_RowNamesSymbol
 R_SeedsSymbol
 R_TspSymbol
+R_CurrentExpr
 ArrowCursor
 BlankCursor
 WatchCursor

@@ -98,9 +98,11 @@ sub get_usages {
 	    ## FIXME:
 	    ## Hack for method objects documented as `generic[.class]'.
 	    ## Eliminate if Rd allows for \method{GENERIC}{CLASS} markup.
-	    $prefix =~ s/\[//g;
-	    $prefix =~ s/\]//g;
+	    ## $prefix =~ s/\[//g;
+	    ## $prefix =~ s/\]//g;
 	    ## </FIXME>
+	    $prefix =~
+		s/\\method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}/$1\.$2/g;
 
 	    ## Play with $match.
 	    $match =~ s/=\s*([,\)])/$1/g;

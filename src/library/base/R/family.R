@@ -130,7 +130,8 @@ poisson <- function (link = "log")
     dev.resids <- function(y, mu, wt)
 	2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
     aic <- function(y, n, mu, wt, dev)
-	2*sum((mu-y*log(mu)+lgamma(y+1))*wt)
+#	2*sum((mu-y*log(mu)+lgamma(y+1))*wt)
+	-2*sum(dpois(y, mu, log=TRUE)*wt)
     initialize <- expression({
 	if (any(y < 0))
 	    stop(paste("Negative values not allowed for",
@@ -248,8 +249,12 @@ binomial <- function (link = "logit")
     dev.resids <- function(y, mu, wt)
 	2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
 		  (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
-    aic <- function(y, n, mu, wt, dev)
-	-2*sum((lchoose(n, n*y) + n*(y*log(mu) + (1-y)*log(1-mu)))*wt/n)
+    aic <- function(y, n, mu, wt, dev) {
+#	-2*sum((lchoose(n, n*y) + n*(y*log(mu) + (1-y)*log(1-mu)))*wt/n)
+        m <- if(any(n > 1)) n else wt
+	-2*sum(ifelse(m > 0, (wt/m), 0)*
+               dbinom(round(m*y), round(m), mu, log=TRUE))
+    }
     initialize <- expression({
 	if (NCOL(y) == 1) {
 	    ## allow factors as responses
@@ -259,8 +264,13 @@ binomial <- function (link = "logit")
 	    if (any(y < 0 | y > 1))
 		stop("y values must be 0 <= y <= 1")
             mustart <- (weights * y + 0.5)/(weights + 1)
+            m <- weights * y
+            if(any(abs(m - round(m)) > 1e-3))
+                warning("non-integer #successes in a binomial glm!")
 	}
 	else if (NCOL(y) == 2) {
+            if(any(abs(y - round(y)) > 1e-3))
+                warning("non-integer counts in a binomial glm!")
 	    n <- y[, 1] + y[, 2]
 	    y <- ifelse(n == 0, 0, y[, 1]/n)
 	    weights <- weights * n
@@ -363,8 +373,10 @@ Gamma <- function (link = "inverse")
     aic <- function(y, n, mu, wt, dev){
 	n <- sum(wt)
 	disp <- dev/n
-	2*((sum(wt*(y/mu+log(mu)-log(y)))+n*log(disp))/disp+
-	   n*lgamma(1/disp)+sum(log(y)*wt)+1)}
+#	2*((sum(wt*(y/mu+log(mu)-log(y)))+n*log(disp))/disp+
+#	   n*lgamma(1/disp)+sum(log(y)*wt)+1)
+	-2*sum(dgamma(y, 1/disp, mu*disp, log=TRUE)*wt) + 2
+    }
     initialize <- expression({
 	if (any(y <= 0))
 	    stop(paste("Non-positive values not",

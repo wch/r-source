@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2000  Guido Masarotto
+ *  Copyright (C) 1998--2001  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -172,26 +172,35 @@ static void CALLBACK  gLineHelper(int x, int y, LPARAM aa)
     }
 }
 
-void gdrawline(drawing d, int width, int style, rgb c, point p1, point p2)
+void gdrawline(drawing d, int width, int style, rgb c, point p1, point p2, 
+	       int fast)
 {
    point p[2];
    p[0] = p1;
    p[1] = p2;
-   gdrawpolyline( d, width, style, c, p, 2, 0);
+   gdrawpolyline( d, width, style, c, p, 2, 0, fast);
 }
 
 void gdrawpolyline(drawing d, int width, int style, rgb c,
-                   point p[], int n, int closepath)
+                   point p[], int n, int closepath, int fast)
 {
     int tmpx, tmpy, tmp;
     HDC dc = GETHDC(d);
     COLORREF winrgb = getwinrgb(d, c);
+    LOGBRUSH lb;
     HPEN gpen;
     int i;
 
     if (n < 2) return;
+    lb.lbStyle = BS_SOLID;
+    lb.lbColor = winrgb;
+    lb.lbHatch = 0;
     if (!style) {
-	gpen = CreatePen(PS_INSIDEFRAME, width, winrgb);
+	if (fast)
+	    gpen = CreatePen(PS_INSIDEFRAME, width, winrgb);
+	else
+	    gpen = ExtCreatePen(PS_GEOMETRIC|PS_SOLID|PS_ENDCAP_FLAT|PS_JOIN_ROUND,
+				width, &lb, 0, NULL);
 	SelectObject(dc, gpen);
 	SetROP2(dc, R2_COPYPEN);
         MoveToEx(dc, p[0].x, p[0].y, NULL);
@@ -202,11 +211,7 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
 	DeleteObject(gpen);
     }
      else {
-	LOGBRUSH lb;
 	DashStruct a;   
-        lb.lbStyle = BS_SOLID;
-        lb.lbColor = winrgb;
-	lb.lbHatch = 0;
 	gpen = ExtCreatePen(PS_GEOMETRIC|PS_SOLID|PS_ENDCAP_FLAT|PS_JOIN_ROUND,
 			    width, &lb, 0, NULL);
 	SelectObject(dc, gpen);
@@ -248,7 +253,7 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
     }
 }
 
-void gdrawrect(drawing d, int width, int style, rgb c, rect r)
+void gdrawrect(drawing d, int width, int style, rgb c, rect r, int fast)
 {
     int x0 = r.x;
     int y0 = r.y;
@@ -259,7 +264,7 @@ void gdrawrect(drawing d, int width, int style, rgb c, rect r)
     p[1] = pt(x1,y0);
     p[2] = pt(x1,y1);
     p[3] = pt(x0,y1);
-    gdrawpolyline(d, width, style, c, p, 4, 1);
+    gdrawpolyline(d, width, style, c, p, 4, 1, fast);
 }
 
 void gfillrect(drawing d, rgb fill, rect r)
@@ -273,10 +278,20 @@ void gfillrect(drawing d, rgb fill, rect r)
     DeleteObject(br);
 }
 
-void gdrawellipse(drawing d, int width, rgb border, rect r)
+void gdrawellipse(drawing d, int width, rgb border, rect r, int fast)
 {
     HDC dc = GETHDC(d);
-    HPEN gpen = CreatePen(PS_INSIDEFRAME, width, getwinrgb(d,border));
+    LOGBRUSH lb;
+    HPEN gpen;
+    if (fast) 
+	gpen = CreatePen(PS_INSIDEFRAME, width, getwinrgb(d, border));
+    else {
+	lb.lbStyle = BS_SOLID;
+	lb.lbColor = getwinrgb(d, border);
+	lb.lbHatch = 0;
+	gpen = ExtCreatePen(PS_GEOMETRIC|PS_SOLID|PS_ENDCAP_FLAT|PS_JOIN_ROUND,
+			    width, &lb, 0, NULL);
+    }
     SelectObject(dc, gpen);
     SetROP2(dc, R2_COPYPEN);
     Ellipse(dc, r.x, r.y, r.x+r.width, r.y+r.height);
@@ -616,9 +631,9 @@ static int measuredev(drawing dev, int what)
     HDC hDC;
     int n;
     if (dev)
-	hDC=GETHDC(dev);
+	hDC = GETHDC(dev);
     else
-	hDC=GetDC(NULL);
+	hDC = GetDC(NULL);
     n = GetDeviceCaps(hDC, what);
     if (!dev) ReleaseDC(NULL, hDC);
     return n;
@@ -635,5 +650,6 @@ int devicepixelsy(drawing dev) MEASUREDEV(LOGPIXELSY)
 
 void BringToTop(window c)
 {
-    SetForegroundWindow(c->handle);
+    SetForegroundWindow(c->handle); /* needed in Rterm */
+    BringWindowToTop(c->handle);    /* needed in Rgui --mdi */
 }

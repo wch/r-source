@@ -26,7 +26,7 @@
 
 #include <Defn.h>
 #include <Graphics.h>
-#include <Devices.h>
+#include <Rdevices.h>
 #include "devGTK.h"
 #include "terminal.h"
 #include "gdkrotated.h"

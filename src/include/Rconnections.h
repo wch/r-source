@@ -38,6 +38,7 @@ typedef struct Rconn
 /*    void (*onerror)(struct Rconn *); */
     int nPushBack, posPushBack; /* number of lines, position on top line */
     char **PushBack;
+    int save, save2;
     void *private;
 } *Rconnection;
 
@@ -60,10 +61,13 @@ typedef struct outtextconn {
 } *Routtextconn;
 
 int Rconn_fgetc(Rconnection con);
+int Rconn_ungetc(int c, Rconnection con);
 int Rconn_printf(Rconnection con, const char *format, ...);
 Rconnection getConnection(int n);
 void switch_stdout(int icon);
 SEXP R_ParseConn(Rconnection con, int n, int *status);
+void con_close(int i);
+
 
 
 

@@ -33,17 +33,20 @@
       South, North Central, West) that each state belongs to.}
     \item{\code{state.x77}:}{matrix with 50 rows and 8 columns giving
       the following statistics in the respective columns.
-      \itemize{
-      	\item \code{Population}: population estimate as of July 1, 1975
-       	\item \code{Income}: per capita income (1974)
-       	\item \code{Illiteracy}: illiteracy (1970, percent of population)
-       	\item \code{Life Exp}: life expectancy in years (1969--71)
-       	\item \code{Murder}: murder and non-negligent manslaughter rate
-	per 100,000 population (1976)
-       	\item \code{HS Grad}: percent high-school graduates (1970)
-       	\item \code{Frost}: mean number of days with minimum temperature
-       	below freezing (1931--1960) in capital or large city
-       \item \code{Area}: land area in square miles
+      \describe{
+      	\item{\code{Population}:}{population estimate as of July 1,
+	  1975}
+       	\item{\code{Income}:}{per capita income (1974)}
+       	\item{\code{Illiteracy}:}{illiteracy (1970, percent of
+	  population)}
+       	\item{\code{Life Exp}:}{life expectancy in years (1969--71)}
+       	\item{\code{Murder}:}{murder and non-negligent manslaughter rate
+	  per 100,000 population (1976)}
+       	\item{\code{HS Grad}:}{percent high-school graduates (1970)}
+       	\item{\code{Frost}:}{mean number of days with minimum
+	  temperature below freezing (1931--1960) in capital or large
+	  city}
+       \item{\code{Area}:}{land area in square miles}
     }}
   }
 }

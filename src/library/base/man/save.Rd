@@ -2,7 +2,7 @@
 \title{Save R Objects}
 \usage{
 save(\dots, list = character(0), file = "", ascii = FALSE)
-save.image(file = ".Rdata")
+save.image(file = ".RData")
 }
 \alias{save}
 \alias{save.image}

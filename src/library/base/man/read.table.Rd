@@ -41,7 +41,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   }
 
   \item{header}{a logical value indicating whether the file contains the
-    names of the variables as its first line. If missing, the value is
+    names of the variables as its first line.  If missing, the value is
     determined from the file format: \code{header} is set to \code{TRUE}
     if and only if the first row contains one fewer field than the
     second.}
@@ -103,6 +103,11 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   This function is the principal means of reading tabular data into \R.
 }
 \details{
+  If \code{row.names} is not specified and the header line has one less
+  entry than the number of columns, the first column is taken to be the
+  row names.  This allows data frames to be read in from the format in
+  which they are printed.
+
   \code{read.csv} and \code{read.csv2} are identical to
   \code{read.table} except for the defaults.  They are intended for
   reading ``comma separated value'' files (\file{.csv}) or the variant
@@ -121,6 +126,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   may need larger memory, see \code{\link{Memory}}.
 }
 \seealso{
+  The `R Data Import/Export' manual.
+  
   \code{\link{scan}},
   \code{\link{read.fwf}} for reading \emph{f}ixed \emph{w}idth
   \emph{f}ormatted input;

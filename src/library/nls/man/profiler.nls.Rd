@@ -1,12 +1,13 @@
-% $Id: profiler.nls.Rd,v 1.3 2000/01/17 16:23:10 ripley Exp $
+% $Id: profiler.nls.Rd,v 1.3.14.2 2001/03/24 00:08:06 bates Exp $
 \name{profiler.nls}
 \alias{profiler.nls}
 \title{ Constructor for Profiler Objects from nls Objects}
 \usage{
-profiler.nls(fitted)
+profiler.nls(fitted, ...)
 }
 \arguments{
  \item{fitted}{ the original fitted model object of class \code{\link{nls}}.}
+ \item{\dots}{  Additional parameters. None are used.}
 }
 \description{
     Create a profiler object for the model object \code{fitted} of class
@@ -44,7 +45,6 @@ profiler.nls(fitted)
 \seealso{\code{\link{nls}}, \code{\link{nlsModel}},
     \code{\link{profiler}}, \code{\link{profile.nls}}}
 \examples{
-library( nls )
 data( BOD )
 # obtain the fitted object
 fm1 <- nls(demand ~ SSasympOrig( Time, A, lrc ), data = BOD)

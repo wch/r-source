@@ -34,18 +34,25 @@ fourfoldplot <- function(x, color = c("red", "blue"), conf.level = 0.95,
     
     if(!is.array(x))
         stop("x must be an array")
-    if(length(dim(x)) == 2) {
-        x <- array(x,
-                   dim = c(dim(x), 1),
-                   dimnames = c(dimnames(x), list(Strata = NULL)))
-        k <- 1
-    }
-    else if(length(dim(x)) == 3)
-        k <- dim(x)[3]
-    else
-        stop("x must be 2- or 3-dimensional")
+    if(length(dim(x)) == 2)
+        x <- array(x, dim = c(dim(x), 1))
+    if(length(dim(x)) != 3)
+        stop("x must be 2- or 3-dimensional")        
     if(any(dim(x)[1:2] != 2))
         stop("table for each stratum must be 2 by 2")
+    dnx <- dimnames(x)
+    if(is.null(dnx))
+        dnx <- vector("list", 3)
+    for(i in which(sapply(dnx, is.null)))
+        dnx[[i]] <- LETTERS[seq(from = 1, to = dim(x)[i])]
+    if(is.null(names(dnx)))
+        i <- 1 : 3
+    else
+        i <- which(is.null(names(dnx)))
+    if(any(i))
+        names(dnx)[i] <- c("Row", "Col", "Strata")[i]
+    dimnames(x) <- dnx
+    k <- dim(x)[3]        
 
     if(!((length(conf.level) == 1) && is.finite(conf.level) &&
          (conf.level >= 0) && (conf.level < 1)))
@@ -63,6 +70,8 @@ fourfoldplot <- function(x, color = c("red", "blue"), conf.level = 0.95,
         t <- apply(tab, 2, sum)[1]
         if(or == 1)
             x <- t * n / (m + n)
+        else if(or == Inf)
+            x <- max(0, t - m)
         else {
             A <- or - 1
             B <- or * (m - t) + (n + t)
@@ -116,7 +125,7 @@ fourfoldplot <- function(x, color = c("red", "blue"), conf.level = 0.95,
         for(i in 1 : k) {
             f <- x[ , , i]
             if(any(f == 0))
-                f <- f + 10^(-6)
+                f <- f + 0.5
             or[i] <- (f[1, 1] * f[2, 2]) / (f[1, 2] * f[2, 1])
             se[i] <- sqrt(sum(1 / f))
         }

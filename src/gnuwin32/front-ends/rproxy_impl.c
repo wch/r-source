@@ -1,6 +1,6 @@
 /*
  *  RProxy: Connector implementation between application and R language
- *  Copyright (C) 1999 Thomas Baier
+ *  Copyright (C) 1999--2001 Thomas Baier
  *
  *  R_Proxy_init based on rtest.c,  Copyright (C) 1998--2000
  *                                  R Development Core Team
@@ -21,7 +21,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.c,v 1.11 2000/09/22 14:28:57 maechler Exp $
+ *  $Id: rproxy_impl.c,v 1.11.4.2 2001/04/05 09:32:52 ripley Exp $
  */
 
 #define NONAMELESSUNION
@@ -40,11 +40,20 @@
 #include "rproxy_impl.h"
 #include "IOStuff.h"
 #include "Parse.h"
+#include "Graphics.h"
 
-/* #define R_GlobalEnv (*_imp__R_GlobalEnv)
-#define R_Visible (*_imp__R_Visible)
-#define R_EvalDepth (*_imp__R_EvalDepth)
-#define R_DimSymbol (*_imp__R_DimSymbol) */
+struct _R_Proxy_init_parameters
+{
+  int vsize;
+  int vsize_valid;
+  int nsize;
+  int nsize_valid;
+};
+
+/*#define R_GlobalEnv (*__imp_R_GlobalEnv)
+#define R_Visible (*__imp_R_Visible)
+#define R_EvalDepth (*__imp_R_EvalDepth)
+#define R_DimSymbol (*__imp_R_DimSymbol)*/
 
 extern SEXP R_GlobalEnv;
 extern int R_Visible;
@@ -59,6 +68,12 @@ extern void setup_term_ui(void);
 extern char *getRHOME();
 extern void end_Rmainloop(), R_ReplDLLinit();
 extern void askok(char *);
+
+int R_Proxy_Graphics_Driver (DevDesc* pDD,
+			     char* pDisplay,
+			     double pWidth,
+			     double pHeight,
+			     double pPointSize);
 
 extern SC_CharacterDevice* __output_device;
 
@@ -332,7 +347,90 @@ int SEXP2BDX_Data (SEXP pExpression,BDX_Data** pData)
   return SC_PROXY_OK;
 }
 
-int R_Proxy_init ()
+// 00-02-18 | baier | parse parameter string and fill parameter structure
+int R_Proxy_parse_parameters (char const* pParameterString,
+			      struct _R_Proxy_init_parameters* pParameterStruct)
+{
+  /*
+   * parameter string is of the form name1=value1;name2=value2;...
+   *
+   * currently recognized parameter names (case-sensitive):
+   *
+   *   NSIZE ... number of cons cells, (unsigned int) parameter
+   *   VSIZE ... size of vector heap, (unsigned int) parameter
+   */
+  int lDone = 0;
+#if 0
+  char const* lParameterStart = pParameterString;
+  int lIndexOfSemicolon = 0;
+  char* lTmpBuffer = NULL;
+  char* lPosOfSemicolon = NULL;
+#endif
+
+  while (!lDone)
+    {
+#if 0
+      // NSIZE?
+      if (strncmp (lParameterStart,"NSIZE=",6) == 0)
+	{
+	  lParameterStart += 6;
+
+	  lPosOfSemicolon = strchr (lParameterStart,';');
+	  lIndexOfSemicolon = lPosOfSemicolon - lParameterStart;
+
+	  if (lPosOfSemicolon)
+	    {
+	      lTmpBuffer = malloc (lIndexOfSemicolon + 1); // to catch NSIZE=;
+	      strncpy (lTmpBuffer,lParameterStart,lIndexOfSemicolon);
+	      *(lTmpBuffer + lIndexOfSemicolon) = 0x0;
+	      pParameterStruct->nsize_valid = 1;
+	      pParameterStruct->nsize = atoi (lTmpBuffer);
+	      free (lTmpBuffer);
+	      lParameterStart += lIndexOfSemicolon + 1;
+	    }
+	  else
+	    {
+	      pParameterStruct->nsize_valid = 1;
+	      pParameterStruct->nsize = atoi (lParameterStart);
+	      lDone = 1;
+	    }
+	}
+      else if (strncmp (lParameterStart,"VSIZE=",6) == 0)
+	{
+	  lParameterStart += 6;
+
+	  lPosOfSemicolon = strchr (lParameterStart,';');
+	  lIndexOfSemicolon = lPosOfSemicolon - lParameterStart;
+
+	  if (lPosOfSemicolon)
+	    {
+	      lTmpBuffer = malloc (lIndexOfSemicolon + 1); // to catch VSIZE=;
+	      strncpy (lTmpBuffer,lParameterStart,lIndexOfSemicolon);
+	      *(lTmpBuffer + lIndexOfSemicolon) = 0x0;
+	      pParameterStruct->vsize_valid = 1;
+	      pParameterStruct->vsize = atoi (lTmpBuffer);
+	      free (lTmpBuffer);
+	      lParameterStart += lIndexOfSemicolon + 1;
+	    }
+	  else
+	    {
+	      pParameterStruct->vsize_valid = 1;
+	      pParameterStruct->vsize = atoi (lParameterStart);
+	      lDone = 1;
+	    }
+	}
+      else
+#endif
+	{
+	  lDone = 1;
+	}
+    }
+
+  return 0;
+}
+
+// 00-02-18 | baier | R_Proxy_init() now takes parameter string, parse it
+int R_Proxy_init (char const* pParameterString)
 {
   structRstart rp;
   Rstart Rp = &rp;
@@ -347,15 +445,22 @@ int R_Proxy_init ()
   }
 
   R_DefParams(Rp);
-  if(getenv("R_HOME")) {
+
+  // first, try process-local environment space (CRT)
+  if (getenv("R_HOME")) {
       strcpy(RHome, getenv("R_HOME"));
   } else {
-      strcpy(RHome, getRHOME());
-  }
+      // get variable from process-local environment space (Windows API)
+      if (GetEnvironmentVariable ("R_HOME", RHome, sizeof (RHome)) == 0) {
+	  // not found, fall back to getRHOME()
+	  strcpy(RHome, getRHOME());
+      }
+    }
+
   Rp->rhome = RHome;
-/*
- * try R_USER then HOME then working directory
- */
+  /*
+   * try R_USER then HOME then working directory
+   */
   if (getenv("R_USER")) {
     strcpy(RUser, getenv("R_USER")); // BR
   } else if (getenv("HOME")) {
@@ -387,6 +492,28 @@ int R_Proxy_init ()
     Rp->vsize = 6e6;*/
   R_SetParams(Rp); /* so R_ShowMessage is set */
   R_SizeFromEnv(Rp);
+
+  // parse parameters
+#if 0
+  {
+    struct _R_Proxy_init_parameters lParameterStruct =
+    {
+      0,0,0,0
+    };
+
+    R_Proxy_parse_parameters (pParameterString,&lParameterStruct);
+
+    if (lParameterStruct.nsize_valid)
+      {
+	Rp->nsize = lParameterStruct.nsize;
+      }
+    if (lParameterStruct.vsize_valid)
+      {
+	Rp->vsize = lParameterStruct.vsize;
+      }
+  }
+#endif
+
   R_SetParams(Rp);
 
   setup_term_ui();

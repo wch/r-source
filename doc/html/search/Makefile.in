@@ -78,6 +78,7 @@ clean:
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -f $(INSTFILES); \
 	fi
+	@rm -f $(OBJECTS)
 distclean: clean
 	@rm -f Makefile
 maintainer-clean: distclean

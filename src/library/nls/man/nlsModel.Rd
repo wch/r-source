@@ -60,7 +60,6 @@ nlsModel(form, data, start)
 \author{Douglas M. Bates and Saikat DebRoy}
 \seealso{\code{\link{nls}}}
 \examples{
-library( nls )
 data( DNase )
 DNase1 <- DNase[ DNase$Run == 1, ]
 mod <-

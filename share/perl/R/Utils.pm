@@ -39,6 +39,23 @@ END
 }
 
 
+sub text2latex {
+
+    s/\\/\\textbackslash{}/g;
+    s/([\{\}_\$\^\&\#])/\\$1/g;
+    s/>/\\textgreater{}/g;
+    s/</\\textless{}/g;
+    s/\~/\\textasciitilde{}/g;
+    $_;
+}
+      
+sub text2html {
+
+    s/&/&amp;/g;
+    s/>/&gt;/g;
+    s/</&lt;/g;
+    $_;
+}
 
 #**********************************************************
 

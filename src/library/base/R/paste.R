@@ -1,12 +1,14 @@
-paste <- function (..., sep = " ", collapse=NULL)
+paste <- function (..., sep = " ", collapse = NULL)
 {
     args <- list(...)
-    if(is.null(args)) ""
+    if(length(args) == 0)
+        if(length(collapse) == 0) character(0) else ""
     else {
-	for (i in 1:length(args)) args[[i]] <- as.character(args[[i]])
+	for(i in seq(along = args)) args[[i]] <- as.character(args[[i]])
 	.Internal(paste(args, sep, collapse))
     }
 }
+
 ##=== Could we extend  paste(.) to (optionally) accept a
 ##    2-vector for collapse ?	 With the following functionality
 
@@ -17,5 +19,3 @@ paste <- function (..., sep = " ", collapse=NULL)
 ##-	      paste(paste(r[-n],collapse=collapse[1]),
 ##-		    r[n], sep=collapse[min(2,length(collapse))])
 ##- }
-
-

@@ -211,9 +211,9 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    warning(runerror());
     } else {
 	fp = rpipeOpen(CHAR(STRING_ELT(CAR(args), 0)), vis,
-		       CHAR(STRING_ELT(CADDR(args), 0)));
+		       CHAR(STRING_ELT(CADDR(args), 0)), 0);
 	if (!fp) {
-	    /* If we are returning standard output generate an error */
+	    /* If we are capturing standard output generate an error */
 	    if (flag == 3)
 		error(runerror());
 	    warning(runerror());

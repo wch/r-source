@@ -12,7 +12,7 @@ conflicts(where=search(), detail=FALSE)
 \description{
     \code{conflicts} reports on objects that exist with the same name in
     two or more places on the \code{\link{search}} path, usually because
-    an object in the global environment or a package is masking a system
+    an object in the user's workspace or a package is masking a system
     object of the same name.  This helps discover unintentional masking.
 }
 \value{

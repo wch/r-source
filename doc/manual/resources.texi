@@ -1,0 +1,181 @@
+\input texinfo
+@c %**start of header
+@setfilename resources.info
+@settitle R Resources
+@c %**end of header
+
+@paragraphindent 0
+
+@c NOTE:
+@c This file is currently written for standalone usage only.
+@c If to be included in one the manuals, we need to conditionalize some
+@c nodes using @ifset/@ifclear (e.g. with flag STANDALONE), and change
+@c the hierarchical section levels with @raisesections/@lowersections.
+@c </NOTE>
+
+@ifinfo
+@sp 1
+@c Original header was centered, hence the @w{}.  Argh.
+@w{                            }AVAILABLE R RESOURCES
+@sp 1
+@end ifinfo
+
+@ifhtml
+@lowersections
+@html
+<HTML>
+<HEAD>
+<TITLE>R: Resources</TITLE>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="R.css">
+</HEAD>
+
+<BODY>
+<h1>Other Resources
+<img class="toplogo" src="logo.jpg" alt="[R logo]">
+</h1>
+<hr width="100%">
+@end html
+@end ifhtml
+
+@node Top, FAQ, (dir), (dir)
+
+@menu
+* FAQ::                         
+* Mailing lists::               
+* Archives::                    
+* Bug-tracking system::         
+@end menu
+
+@node FAQ, Mailing lists, Top, Top
+@chapter FAQ
+
+A collection of @uref{faq.html, , Frequently Asked Questions} and their
+answers is maintained by @email{Kurt.Hornik@@r-project.org, Kurt Hornik}
+and can be found at the @acronym{URL}
+
+@quotation
+@uref{http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html}
+@end quotation
+
+@ifinfo
+A text version is in file @file{FAQ} in this directory, and an
+@acronym{HTML} version is available as file @file{doc/html/faq.html} and
+via the on-line help (on the index page given by @code{help.start()}).
+@end ifinfo
+
+@node Mailing lists, Archives, FAQ, Top
+@chapter Mailing lists
+
+Thanks to @email{Martin.Maechler@@r-project.org, Martin Maechler} there
+are number of mailing lists which are used by R users and developers.
+They are
+
+@quotation
+@table @uref
+@item r-announce@@lists.r-project.org
+announcements of new R releases or applications;
+@item r-help@@lists.r-project.org
+general inquiries and discussion about R;
+@item r-devel@@lists.r-project.org
+discussions about the future of R and pre-testing of new versions.
+@end table
+@end quotation
+
+To subscribe (or unsubscribe) to these mailing lists send
+@samp{subscribe} (or @samp{unsubscribe}) in the @emph{body} of the
+message (not in the subject!) to
+
+@quotation
+@uref{r-announce-request@@lists.r-project.org} @*
+@uref{r-help-request@@lists.r-project.org}     @*
+@uref{r-devel-request@@lists.r-project.org}
+@end quotation
+
+@ifinfo
+Archives of the mailing lists are made available monthly; see the
+@file{doc/mail/mail.html} file on any CRAN node.  An @acronym{HTML}
+archive is available via @uref{http://www.ens.gu.edu.au/robertk/R/}.
+@end ifinfo
+
+@node Archives, Bug-tracking system, Mailing lists, Top
+@chapter Archives
+
+The Comprehensive R Archive Network (@acronym{CRAN}) is a collection of
+sites which carry identical material, consisting of the R
+distribution(s), the contributed extensions, documentation for R, and
+binaries.
+
+@acronym{CRAN} also contains a @emph{daily} snapshots of the latest R
+sources.
+
+The @acronym{CRAN} master site at TU Wien, Austria, can be found at the
+@acronym{URL}s
+
+@quotation
+@multitable @columnfractions .55 .40
+@item @uref{http://cran.r-project.org/}
+@item @uref{ftp://cran.r-project.org/pub/R/}
+@end multitable
+@end quotation
+
+and is also available for anonymous rsync at
+@samp{cran.r-project.org::CRAN}.
+
+It is currently mirrored daily at
+
+@quotation
+@multitable @columnfractions .55 .40
+@item @uref{http://cran.at.r-project.org/}
+@tab TU Wien, Austria
+@item @uref{http://cran.ch.r-project.org/}
+@tab ETH Z@"urich, Switzerland
+@item @uref{http://cran.dk.r-project.org/}
+@tab SunSITE, Denmark
+@item @uref{http://cran.hu.r-project.org/}
+@tab Semmelweis University, Hungary
+@item @uref{http://cran.uk.r-project.org/}
+@tab University of Bristol, UK
+@item @uref{http://cran.us.r-project.org/}
+@tab University of Wisconsin, USA
+@item @uref{http://mirror.aarnet.edu.au/CRAN/}
+@tab University of Queensland, Australia
+@item @uref{ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/}
+@ifinfo
+@tab @item
+@end ifinfo
+@tab University of Aizu, Japan
+@item @uref{ftp://dola.snu.ac.kr/pub/R/CRAN/}
+@tab Seoul, South Korea
+@item @uref{http://lib.stat.cmu.edu/R/CRAN/}
+@tab Statlib, Carnegie Mellon University, USA
+@end multitable
+@end quotation
+
+Many of these sites can also be accessed using FTP.  In the interests of
+preserving international bandwidth please use a site near you if
+possible.
+
+@node Bug-tracking system,  , Archives, Top
+@chapter Bug-tracking system
+
+R has a bug-tracking system (or perhaps a bug-filing system is a more
+precise description) available on the net at
+
+@quotation
+@uref{http://bugs.r-project.org/}
+@end quotation
+
+and via e-mail to @email{r-bugs@@r-project.org}.  The R function
+@code{bug.report()} can be used to invoke an editor from a within an R
+session and send the report to the right address.  It also fills in some
+basic information, such as your R version and operating system, which
+has proved helpful in the debugging process.
+
+The source distribution has a file @file{BUGS} at the top level giving a
+summary of the entries at the time this distribution was prepared.
+
+@bye
+
+@c Local Variables: ***
+@c mode: TeXinfo ***
+@c End: ***

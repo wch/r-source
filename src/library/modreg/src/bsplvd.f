@@ -1,6 +1,6 @@
       subroutine bsplvd ( t, lent, k, x, left, a, dbiatx, nderiv )
 c     --------   ------
-      implicit none
+c      implicit none
 
 C calculates value and deriv.s of all b-splines which do not vanish at x
 C calls bsplvb
@@ -118,7 +118,7 @@ c        that  a(j,i) = 0  for j .lt. i .
       end
 
       subroutine bsplvb ( t, lent,jhigh, index, x, left, biatx )
-      implicit none
+c      implicit none
 c     -------------
 
 calculates the value of all possibly nonzero b-splines at  x  of order
@@ -196,8 +196,8 @@ C Local Variables
       integer i,j,jp1
       double precision deltal(jmax), deltar(jmax),saved,term
 
+      save j,deltal,deltar
       data j/1/
-      save j,deltal,deltar !(valid in fortran 77)
 c
                                         go to (10,20), index
    10 j = 1

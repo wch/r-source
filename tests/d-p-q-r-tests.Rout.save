@@ -1,6 +1,6 @@
 
-R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-11-15)
+R : Copyright 2003, The R Development Core Team
+Version 1.7.0 Patched (2003-05-02)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -21,6 +21,9 @@ Type `q()' to quit R.
 > ####	Functions for  ``d/p/q/r''
 > 
 > .ptime <- proc.time()
+> F <- FALSE
+> T <- TRUE
+> 
 > ###-- these are identical in ./arith-true.R ["fixme": use source(..)]
 > opt.conformance <- 0
 > Meps <- .Machine $ double.eps
@@ -34,23 +37,177 @@ Type `q()' to quit R.
 + 	   true - approx)     # absolute error (e.g. when true=0)
 + }
 > ## Short cut:
-> All.eq <- function(x,y) all.equal.numeric(x,y, tolerance = 1e-14)
+> All.eq <- function(x,y) all.equal.numeric(x,y, tolerance = 100*.Machine$double.eps)
 > 
 > if(!interactive())
 +     .Random.seed <- c(0,rep(7654, 3))
 > 
-> ###--- Discrete Distributions: Simple Consistency Checks  pZZ = cumsum(dZZ)
+> ## The prefixes of ALL the PDQ & R functions
+> PDQRinteg <- c("binom", "geom", "hyper", "nbinom", "pois","signrank","wilcox")
+> PDQR <- c(PDQRinteg, "beta", "cauchy", "chisq", "exp", "f", "gamma",
++           "lnorm", "logis", "norm", "t","unif","weibull")
+> PQonly <- c("tukey")
+> 
+> ###--- Discrete Distributions --- Consistency Checks  pZZ = cumsum(dZZ)
+> 
+> ##for(pre in PDQRinteg) { n <- paste("d",pre,sep=""); cat(n,": "); str(get(n))}
+> 
+> ##__ 1. Binomial __
+> 
+> ## Cumulative Binomial '==' Cumulative F :
+> ## Abramowitz & Stegun, p.945-6;  26.5.24  AND  26.5.28 :
+> n0 <- 50; n1 <- 16; n2 <- 20; n3 <- 8
+> for(n in rbinom(n1, size = 2*n0, p = .4)) {
++     cat("n=",n,": ")
++     for(p in c(0,1,rbeta(n2, 2,4))) {
++ 	cat(".")
++ 	for(k in rbinom(n3, size = n,  prob = runif(1))) {
++ 	    ## For X ~ Bin(n,p), compute 1 - P[X > k] = P[X <= k] in three ways:
++ 	    tst1 <- all.equal(       pbinom(0:k, size = n, prob = p),
++                               cumsum(dbinom(0:k, size = n, prob = p)))
++ 	    tst <- all.equal(if(k==n || p==0) 1 else
++ 			     pf((k+1)/(n-k)*(1-p)/p, df1=2*(n-k), df2=2*(k+1)),
++ 			     sum(dbinom(0:k, size = n, prob = p)))
++ 	    if(!(is.logical(tst1) && tst1) ||
++                !(is.logical(tst)  && tst ) ) {
++ 		cat("n=", n,"; p =",format(p),".  k =",k)
++                 if(!is.logical(tst1)) cat("; tst1=",tst1)
++                 if(!is.logical(tst )) cat("; tst=", tst)
++                 cat("\n")
++             }
++ 	}
++     }
++     cat("\n")
++ }
+n= 45 : ......................
+n= 35 : ......................
+n= 32 : ......................
+n= 46 : ......................
+n= 42 : ......................
+n= 42 : ......................
+n= 35 : ......................
+n= 46 : ......................
+n= 42 : ......................
+n= 33 : ......................
+n= 33 : ......................
+n= 47 : ......................
+n= 37 : ......................
+n= 34 : ......................
+n= 51 : ......................
+n= 48 : ......................
+> 
+> ##__ 2. Geometric __
+> for(pr in seq(0,1,len=15)) {
++     print(All.eq((dg <- dgeom(0:10, pr)),
++                  pr * (1-pr)^(0:10)))
++     print(All.eq(cumsum(dg), pgeom(0:10, pr)))
++ }
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+> 
+> ##__ 3. Hypergeometric __
+> 
+> m <- 10; n <- 7
+> for(k in 2:m) {
++     x <- 0:(k+1)
++     print(All.eq(phyper(x, m, n, k), cumsum(dhyper(x, m, n, k))))
++ }
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+> 
+> ##__ 4. Negative Binomial __
+> 
+> ## PR #842
+> for(size in seq(0.8,2, by=.1))
++     print(all.equal(cumsum(dnbinom(0:7, size, .5)),
++                            pnbinom(0:7, size, .5)))
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+> All.eq(pnbinom(c(1,3), .9, .5), c(0.777035760338812, 0.946945347071519))
+[1] TRUE
+> 
+> ##__ 5. Poisson __
 > 
 > all(dpois(0:5,0)	   == c(1, rep(0,5)))
 [1] TRUE
 > all(dpois(0:5,0, log=TRUE) == c(0, rep(-Inf, 5)))
 [1] TRUE
 > 
-> ## Currently, just Wilcoxon  [should do this for all !]
+> ## Cumulative Poisson '==' Cumulative Chi^2 :
+> ## Abramowitz & Stegun, p.941 :  26.4.21 (26.4.2)
+> n1 <- 20; n2 <- 16
+> for(lambda in rexp(n1))
++     for(k in rpois(n2, lambda)) {
++ 	tst <- all.equal(1 - pchisq(2*lambda, 2*(1+ 0:k)),
++ 			 pp <- cumsum(dpois(0:k, lambda=lambda)), tol= 100*Meps)
++ 	if(!(is.logical(tst) && tst))
++ 	    cat("lambda=", format(lambda),".  k =",k, " --> tst=", tst,"\n")
++ 	tst2 <- all.equal(pp, ppois(0:k, lambda=lambda), tol = 100*Meps)
++ 	if(!(is.logical(tst2) && tst2))
++ 	    cat("lambda=", format(lambda),".  k =",k, " --> tst2=", tst2,"\n")
++ 	tst3 <- all.equal(1 - pp, ppois(0:k, lambda=lambda, lower.tail=FALSE))
++ 	if(!(is.logical(tst3) && tst3))
++ 	    cat("lambda=", format(lambda),".  k =",k, " --> tst3=", tst3,"\n")
++     }
+> 
+> 
+> ##__ 6. SignRank __
+> for(n in rpois(32, lam=8)) {
++     x <- -1:(n + 4)
++     eq <- All.eq(psignrank(x, n), cumsum(dsignrank(x, n)))
++     if(!is.logical(eq) || !eq) print(eq)
++ }
+> 
+> ##__ 7. Wilcoxon (symmetry & cumulative) __
 > is.sym <- TRUE
 > for(n in rpois(5, lam=6))
-+     for(m in rpois(15, lam=8))
-+     {
++     for(m in rpois(15, lam=8)) {
 + 	x <- -1:(n*m + 1)
 + 	fx <- dwilcox(x, n, m)
 + 	Fx <- pwilcox(x, n, m)
@@ -61,59 +218,10 @@ Type `q()' to quit R.
 > is.sym
 [1] TRUE
 > 
-> ##--- Cumulative Poisson '==' Cumulative Chi^2 :
-> ##--- Abramowitz & Stegun, p.941 :  26.4.21 (26.4.2)
-> n1 <- 20; n2 <- 16
-> for(lambda in rexp(n1))
-+     for(k in rpois(n2, lambda)) {
-+ 	tst <- all.equal(1 - pchisq(2*lambda, 2*(k+1)),
-+ 			 pp <- sum(dpois(0:k, lambda=lambda)), tol = 100*Meps)
-+ 	if(!(is.logical(tst) && tst))
-+ 	    cat("lambda=", format(lambda),".  k =",k, " --> tst=", tst,"\n")
-+ 	tst2 <- all.equal(pp, ppois(k, lambda=lambda), tol = 100*Meps)
-+ 	if(!(is.logical(tst2) && tst2))
-+ 	    cat("lambda=", format(lambda),".  k =",k, " --> tst2=", tst2,"\n")
-+ 	tst3 <- all.equal(1 - pp, ppois(k, lambda=lambda, lower.tail=FALSE))
-+ 	if(!(is.logical(tst3) && tst3))
-+ 	    cat("lambda=", format(lambda),".  k =",k, " --> tst3=", tst3,"\n")
-+     }
 > 
-> ##--- Cumulative Binomial '==' Cumulative F :
-> ##--- Abramowitz & Stegun, p.945-6;  26.5.24  AND  26.5.28 :
-> n0 <- 50; n1 <- 16; n2 <- 20; n3 <- 8
-> for(n in rbinom(n1, size = 2*n0, p = .4)) {
-+     cat("n=",n,": ")
-+     for(p in c(0,1,rbeta(n2, 2,4))) {
-+ 	cat(".")
-+ 	for(k in rbinom(n3, size = n,  prob = runif(1))) {
-+ 	    ## For X ~ Bin(n,p), compute 1 - P[X > k] = P[X <= k]  in two ways:
-+ 	    tst <- all.equal(if(k==n || p==0) 1 else
-+ 			     pf((k+1)/(n-k)*(1-p)/p, df1=2*(n-k), df2=2*(k+1)),
-+ 			     sum(dbinom(0:k, size = n, prob = p)))
-+ 	    if(!(is.logical(tst) && tst))
-+ 		cat("n=", n,"; p =",format(p),".  k =",k, " --> tst=",tst,"\n")
-+ 	}
-+     }
-+     cat("\n")
-+ }
-n= 33 : ......................
-n= 32 : ......................
-n= 33 : ......................
-n= 44 : ......................
-n= 39 : ......................
-n= 44 : ......................
-n= 41 : ......................
-n= 46 : ......................
-n= 30 : ......................
-n= 43 : ......................
-n= 44 : ......................
-n= 33 : ......................
-n= 37 : ......................
-n= 39 : ......................
-n= 37 : ......................
-n= 50 : ......................
+> ###-------- Continuous Distributions ----------
 > 
-> ##---  Gamma (incl. chi^2) Density :
+> ##---  Gamma (incl. central chi^2) Density :
 > x <- round(rgamma(100, shape = 2),2)
 > for(sh in round(rlnorm(30),2)) {
 +     Ga <- gamma(sh)
@@ -130,41 +238,45 @@ n= 50 : ......................
 + 		"\n  shape,scale=",formatC(c(sh, sig)),"\n")
 +     }
 + }
-> pgamma(1,Inf,Inf) == 0
+> pgamma(1,Inf,scale=Inf) == 0
 [1] TRUE
-> all(is.nan(c(pgamma(Inf,1,Inf), pgamma(Inf,Inf,1), pgamma(Inf,Inf,Inf))))
+> all(is.nan(c(pgamma(Inf,1,scale=Inf), pgamma(Inf,Inf,scale=1), pgamma(Inf,Inf,scale=Inf))))
 [1] TRUE
 Warning messages: 
 1: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
 2: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
 3: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
-> pgamma(Inf,1,xMax) == 1 && pgamma(xMax,1,Inf) == 0
+> pgamma(Inf,1,scale=xMax) == 1 && pgamma(xMax,1,scale=Inf) == 0
 [1] TRUE
+> ##-- non central Chi^2 :
+> xB <- c(2000,1e6,1e50,Inf)
+> for(df in c(0.1, 1, 10))
++     for(ncp in c(0, 1, 10, 100)) stopifnot(pchisq(xB, df=df, ncp=ncp) == 1)
 > 
 > ##--- Beta (need more):
 > 
 > ## big a & b (PR #643)
 > summary(a <- rlnorm(20, 5.5))
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  27.65  122.90  217.40  425.70  405.00 2017.00 
+  27.65  105.20  190.50  310.50  322.00 1611.00 
 > summary(b <- rlnorm(20, 6.5))
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  102.5   298.7   543.5   880.6   850.4  3144.0 
+  187.9   346.8   630.2  1281.0   978.0  9382.0 
 > pab <- expand.grid(seq(0,1,by=.1), a, b)
 > p <- pab[,1]; a <- pab[,2]; b <- pab[,3]
 > all.equal(dbeta(p,a,b), exp(pab <- dbeta(p,a,b, log = TRUE)), tol = 1e-11)
 [1] TRUE
 > sample(pab, 50)
- [1]          -Inf  -130.5211148 -1156.3350120     2.5609305  -167.6013444
- [6]          -Inf          -Inf   -22.3322711 -2669.6168481   -12.1267476
-[11]          -Inf          -Inf    -1.2433125 -2056.3157102          -Inf
-[16]   -72.8824245          -Inf   -38.4107147     2.4819954   -89.2725781
-[21]  -133.6280003     1.9256240  -354.6259852    -6.7038414   -71.6237059
-[26]  -383.7528143   -38.5976396          -Inf  -416.7312451 -1295.2560781
-[31]   -20.2485404  -414.3568613   -32.5299950 -1041.8994173   -31.1549695
-[36]  -267.0701042     2.5164276   -30.2187014    -0.6049374 -1275.5518021
-[41]  -909.6115927     1.1920417  -751.4409130 -1487.3397345  -247.6706732
-[46]     2.3257866   -84.9386146          -Inf  -628.0888136  -122.1900394
+ [1]          -Inf -4.338148e+01          -Inf -3.321764e+02 -5.222040e+01
+ [6] -2.302052e+03 -6.743669e+03          -Inf -5.069544e+02          -Inf
+[11] -5.995978e+02 -7.505186e+00 -2.086599e+01          -Inf -3.287371e+02
+[16] -4.161389e+02 -2.995488e+02 -6.933932e+01 -1.583166e+02 -1.557598e+01
+[21]  9.825994e-01 -1.883283e+04 -6.418225e+02  1.741584e+00 -6.910231e+02
+[26] -1.224343e+03 -1.974485e+01 -1.324279e+03 -2.013099e+03 -4.333847e+01
+[31]          -Inf -1.087940e+04 -9.095702e+00 -5.083759e+03          -Inf
+[36] -2.054621e+03 -1.309311e+02 -9.883952e+01 -1.685633e+02 -5.312428e+01
+[41] -3.565202e+00 -1.790596e+02          -Inf -4.265242e+03          -Inf
+[46] -2.259480e+01 -9.688007e+02 -6.797130e+02 -5.032581e+02 -2.174204e+03
 > 
 > 
 > ##--- Normal (& Lognormal) :
@@ -213,7 +325,38 @@ Warning messages:
 [6,] -20  -203.9171554    -203.9171554
 [7,] -10   -53.2312852     -53.2312852
 [8,]   0    -0.6931472      -0.6931472
+> y <- c(1:15, seq(20,40, by=5))
+> cbind(y, "log(pnorm(y))"= log(pnorm(y)), "pnorm(y, log=T)"= pnorm(y, log=TRUE),
++       "log(pnorm(-y))"= log(pnorm(-y)), "pnorm(-y, log=T)"= pnorm(-y, log=TRUE))
+       y log(pnorm(y)) pnorm(y, log=T) log(pnorm(-y)) pnorm(-y, log=T)
+ [1,]  1 -1.727538e-01   -1.727538e-01      -1.841022        -1.841022
+ [2,]  2 -2.301291e-02   -2.301291e-02      -3.783184        -3.783184
+ [3,]  3 -1.350810e-03   -1.350810e-03      -6.607726        -6.607726
+ [4,]  4 -3.167174e-05   -3.167174e-05     -10.360101       -10.360101
+ [5,]  5 -2.866516e-07   -2.866516e-07     -15.064998       -15.064998
+ [6,]  6 -9.865877e-10   -9.865876e-10     -20.736769       -20.736769
+ [7,]  7 -1.279865e-12   -1.279813e-12     -27.384307       -27.384307
+ [8,]  8 -6.661338e-16   -6.220961e-16     -35.013437       -35.013437
+ [9,]  9  0.000000e+00   -1.128588e-19     -43.628149       -43.628149
+[10,] 10  0.000000e+00   -7.619853e-24     -53.231285       -53.231285
+[11,] 11  0.000000e+00   -1.910660e-28     -63.824934       -63.824934
+[12,] 12  0.000000e+00   -1.776482e-33     -75.410673       -75.410673
+[13,] 13  0.000000e+00   -6.117164e-39     -87.989720       -87.989720
+[14,] 14  0.000000e+00   -7.793537e-45    -101.563034      -101.563034
+[15,] 15  0.000000e+00   -3.670966e-51    -116.131385      -116.131385
+[16,] 20  0.000000e+00   -2.753624e-89    -203.917155      -203.917155
+[17,] 25  0.000000e+00  -3.056697e-138    -316.639408      -316.639408
+[18,] 30  0.000000e+00  -4.906714e-198    -454.321244      -454.321244
+[19,] 35  0.000000e+00  -1.124911e-268    -616.975101      -616.975101
+[20,] 40  0.000000e+00    0.000000e+00           -Inf      -804.608442
+> ## Symmetry:
+> y <- c(1:50,10^c(3:10,20,50,150,250))
+> y <- c(-y,0,y)
+> for(L in c(FALSE,TRUE))
++     stopifnot(identical(pnorm(-y, log= L),
++                         pnorm(+y, log= L, lower=FALSE)))
 > 
+> ## Log norm
 > All.eq(pz, plnorm(exp(z)))
 [1] TRUE
 > 
@@ -222,12 +365,6 @@ Warning messages:
 > ok <- 1e-5 < pz & pz < 1 - 1e-5
 > all.equal(z[ok], qnorm(pz[ok]), tol= 1e-12)
 [1] TRUE
-> 
-> ## The prefixes of ALL the PDQ & R functions
-> PDQR <- c("beta", "binom", "cauchy", "chisq", "exp", "f",
-+ 	  "gamma", "geom", "hyper", "lnorm", "logis", "nbinom","norm",
-+ 	  "pois","signrank","t","unif","weibull","wilcox")
-> PQonly <- c("tukey")
 > 
 > ###===== Random numbers -- first, just output:
 > 
@@ -694,5 +831,5 @@ Warning messages:
 [1] TRUE
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  7.5 0.23 7.73 0 0 
+Time elapsed:  6.36 0.06 6.42 0 0 
 > 

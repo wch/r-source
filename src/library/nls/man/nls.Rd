@@ -15,7 +15,8 @@
 \title{Nonlinear Least Squares}
 \usage{
 nls(formula, data, start, control = nls.control(),
-    algorithm = "default", trace = FALSE, subset, na.action)
+    algorithm = "default", trace = FALSE, subset,
+    weights, na.action)
 }
 %- maybe also `usage' for other objects documented here.
 \arguments{
@@ -30,8 +31,17 @@ nls(formula, data, start, control = nls.control(),
      The default algorithm is a Gauss-Newton algorithm. The other 
      alternative is "plinear", the Golub-Pereyra algorithm for
      partially linear least-squares models.}
+ \item{trace}{logical value indicating if a trace of the iteration
+     progress should be printed.  Default is \code{FALSE}.  If
+     \code{TRUE} the residual sum-of-squares and the parameter values
+     are printed at the conclusion of each iteration.  When the
+     \code{"plinear"} algorithm is used, the conditional estimates of
+     the linear parameters are printed after the nonlinear parameters.}
  \item{subset}{an optional vector specifying a subset of observations
-     to be used in the fitting process.}
+   to be used in the fitting process.}
+ \item{weights}{an optional numeric vector of (fixed) weights.  When
+   present, the objective function is weighted least squares. \emph{not
+     yet implemented}}
 \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.}
 }
@@ -55,7 +65,6 @@ nls(formula, data, start, control = nls.control(),
 \author{Douglas M. Bates and Saikat DebRoy}
 \seealso{\code{\link{nlsModel}}}
 \examples{
-library( nls )
 data( DNase )
 DNase1 <- DNase[ DNase$Run == 1, ]
 ## using a selfStart model
@@ -73,6 +82,25 @@ fm3DNase1 <- nls( density ~ Asym/(1 + exp(( xmid - log(conc) )/scal ) ),
                   start = list( Asym = 3, xmid = 0, scal = 1 ),
                   trace = TRUE )
 summary( fm3DNase1 )
+## weighted nonlinear regression
+data(Puromycin)
+Treated <- Puromycin[Puromycin$state == "treated", ]
+weighted.MM <- function(resp, conc, Vm, K)
+{
+    ## Purpose: exactly as white book p.451 -- RHS for nls()
+    ##  Weighted version of Michaelis-Menten model
+    ## -------------------------------------------------------------------------
+    ## Arguments: `y', `x' and the two parameters (see book)
+    ## -------------------------------------------------------------------------
+    ## Author: Martin Maechler, Date: 23 Mar 2001, 18:48
+
+    pred <- (Vm * conc)/(K + conc)
+    (resp - pred) / sqrt(pred)
+}
+
+Pur.wt <- nls( ~ weighted.MM(rate, conc, Vm, K), data = Treated,
+              start = list(Vm = 200, K = 0.1),
+              trace = TRUE)
 }
 \keyword{nonlinear}
 \keyword{regression}

@@ -11,7 +11,7 @@ stl(x, s.window = NULL, s.degree = 0, t.window = NULL, t.degree = 1,
   \item{x}{A univariate time series to be decomposed.
     This should be an object of class \code{"ts"} with a frequency
     greater than one.}
-  \item{s.window}{Either the string \code{"periodic"} or the span (in
+  \item{s.window}{Either the character string \code{"periodic"} or the span (in
     lags) of the loess window for seasonal extraction, which should
     be odd.  This has no default.}
   \item{s.degree}{Degree of locally-fitted polynomial in seasonal

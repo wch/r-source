@@ -22,7 +22,7 @@
 #endif
 
 #include "Defn.h"
-#include "Devices.h"
+#include "Rdevices.h"
 #include "devUI.h"
 
 Rboolean stub_X11DeviceDriver(DevDesc *dd,

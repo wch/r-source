@@ -1,6 +1,6 @@
 R for Windows FAQ
 Frequently Asked Questions on R for Windows
-Version for rw1020
+Version for rw1023
 Brian Ripley
 
 
@@ -14,23 +14,28 @@ Table of Contents
   2.1 Where can I find the latest version?
   2.2 How do I install R for Windows?
   2.3 How do I run it?
-  2.4 How can I keep workspaces for different projects in different directories?
-  2.5 How do I print from R?
-  2.6 Can I use `R BATCH'?
-  2.7 Can I use rwXxxx with ESS and emacs?
-  2.8 What are HOME and working directories?
+  2.4 There seems to be a limit on the memory it uses!
+  2.5 How can I keep workspaces for different projects in different directories?
+  2.6 How do I print from R?
+  2.7 Can I use `R BATCH'?
+  2.8 Can I use rw1023 with ESS and emacs?
+  2.9 What are HOME and working directories?
+  2.10 R can't find my file, but I know it is there!
+  2.11 Does R use the Registry?
 
 3 Packages
   3.1 Can I install packages (libraries) in this version?
-  3.2 I don't have permission to write to the `rwXxxx/library' directory.
+  3.2 I don't have permission to write to the `rw1023\library' directory.
   3.3 The packages I installed do not appear in the HTML help system.
   3.4 My functions are not found by the HTML help search system.
   3.5 Loading a package fails.
   3.6 Package TclTk does not work.
+  3.7 Hyperlinks in Compiled HTML sometimes do not work.
 
 4 Windows Features
   4.1 What should I expect to behave differently from the Unix version of R?
   4.2 I hear about some nifty features: please tell me about them!
+  4.3 Circles appear as ovals on screen
 
 5 Workspaces
   5.1 My workspace gets saved in a strange place: how do I stop this?
@@ -45,11 +50,13 @@ Table of Contents
 
 7 Building from Source
   7.1 How can I compile R from source?
-  7.2 How do I debug code that I have compiled and dyn.load-ed?
-  7.3 How do I include C++ code?
-  7.4 The output from my C code disappears. Why?
-  7.5 The output from my Fortran code disappears. Why?
-  7.6 The console freezes when my compiled code is running.
+  7.2 How do I include compiled C code?
+  7.3 How do I debug code that I have compiled and dyn.load-ed?
+  7.4 How do I include C++ code?
+  7.5 The output from my C code disappears. Why?
+  7.6 The output from my Fortran code disappears. Why?
+  7.7 The console freezes when my compiled code is running.
+  7.8 The Perl scripts don't seem to work under Windows 9x/ME
 
 
 
@@ -64,7 +71,7 @@ that version. The main R FAQ can be found at
 
 The information here applies only to recent versions of R for Windows,
 (`rw1020' or later); the current version is often called something like
-`rw1020' (although not officially).
+`rw1023' (although not officially).
 
 
 2 Installation and Usage
@@ -77,15 +84,20 @@ Go to any CRAN site (see `http://cran.r-project.org/mirrors.html' for a
 list), navigate to the `bin/windows/base' directory and collect the
 files you need. You will need at least the files
 
-           rwXxxxb1.zip rwXxxxb2.zip
-           rwXxxxh.zip (text help) or rwXxxxch.zip (Compiled HTML help)
+           rw1023b1.zip rw1023b2.zip
+           rw1023h.zip (text help) or rw1023ch.zip (Compiled HTML help)
 
-and you may want `rwXxxxwh.zip' (the Windows help files) or
-`rwXxxxw.zip' (the HTML format help files), `rwXxxxl.zip' (the LaTeX
-format help files, used for offline printing), or `rwXxxxd?.zip' (the
+and you may want `rw1023wh.zip' (the Windows help files) or
+`rw1023w.zip' (the HTML format help files), `rw1023l.zip' (the LaTeX
+format help files, used for offline printing), or `rw1023d?.zip' (the
 draft manuals, in PDF).
 
 Optionally, you can download the installer, `rwinst.exe'.
+
+Alternatively, two installers based on Inno Setup are available.  One,
+`SetupR.exe', is about 10Mb and gives a complete installation. The
+other, `miniR.exe', is a small installation and comes in five files
+which fit onto four floppy discs.
 
 2.2 How do I install R for Windows?
 ===================================
@@ -94,21 +106,26 @@ First, you need Windows 95/98/ME/NT4/2000: Windows 3.11+win32s will not
 work.  Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-The simplest way is to run the installer (double-click on the icon for
-`rwinst.exe' and navigate its wizard-like pages).  Alternatively,
+The simplest way is to use `SetupR.exe' or `miniR.exe'. Just
+double-click on the icon and follow the instructions.  If you installed
+R this way you can uninstall it from the Control Panel or Start Menu
+(unless you supressed making a group for R).
+
+The next-simplest way is to run the installer (double-click on the icon
+for `rwinst.exe' and navigate its wizard-like pages).  Alternatively,
 choose a location and unzip the zip files (with a tool that preserves
 long file names and the directory structure: we recommend the INFO-ZIP
-project's `unzip'). All the files will unpack into a directory called
-`rwXxxx', for some `Xxxx'.
+project's `unzip'). All the files will unpack into a directory `rw1023'.
 
-Choose a working directory for R. Make a shortcut to
-`rwXxxx\bin\Rgui.exe' on your desktop or somewhere on the Start menu
+Choose a working directory for R. Unless you used `SetupR.exe' or
+`miniR.exe' (which did this for you), make a shortcut to
+`rw1023\bin\Rgui.exe' on your desktop or somewhere on the Start menu
 file tree. Right-click the shortcut, select Properties... and change
 the `Start in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the Target
-field, for example `--max-mem-size=40M'. You can also set environment
-variables at the end of the Target field, for example
+field, for example `--sdi --max-mem-size=40M'. You can also set
+environment variables at the end of the Target field, for example
 `R_LIBS=e:/R/library'.
 
 2.3 How do I run it?
@@ -119,14 +136,32 @@ Just double-click on the shortcut you prepared at installation.
 If you want to set up another project, make a new shortcut or use the
 existing one, and change the `Start in' field of the Properties.
 
-2.4 How can I keep workspaces for different projects in different directories?
+2.4 There seems to be a limit on the memory it uses!
+====================================================
+
+Indeed there is.  It is set by the command-line flag `--max-mem-size'
+and defaults to the smaller of the amount of physical RAM in the
+machine and 256Mb.  It can be set to any amount over 10M.  Be aware
+though that Windows has (in most versions) a maximum amount of user
+virtual memory of 2Gb, and parts of this can be reserved by processes
+but not used.  R itself reserves 256Mb on startup.  Because of the way
+the memory manager works, it is possible that there will be free memory
+but R will not be able to reserve it.
+
+Use `?Memory' and `?memory.size' for information about memory usage.
+
+R can be compiled to use a different memory manager which may be better
+at using large amounts of memory, but is substantially slower (making R
+several times slower on some tasks).
+
+2.5 How can I keep workspaces for different projects in different directories?
 ==============================================================================
 
 Create a separate shortcut for each project: see Q2.3. All the paths to
 files used by R are relative to the starting directory, so setting the
 `Start in' field automatically helps separate projects.
 
-2.5 How do I print from R?
+2.6 How do I print from R?
 ==========================
 
 It depends what you want to print.
@@ -144,18 +179,19 @@ It depends what you want to print.
      installed you can print help files by `help(fn_name,
      offline=TRUE)'.
 
-2.6 Can I use `R BATCH'?
+2.7 Can I use `R BATCH'?
 ========================
 
-Yes, if you have Perl installed.  The Windows analogue is `Rcmd BATCH':
-use `Rcmd BATCH --help' for full details.
+Yes, if you have Perl and the files for making source packages (from
+`rw1023sp.zip') installed.  The Windows analogue is `Rcmd BATCH': use
+`Rcmd BATCH --help' for full details.
 
 Otherwise you can set up a batch file using `Rterm.exe'. A sample batch
 file might contain (as one line)
 
      path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out
 
-2.7 Can I use rwXxxx with ESS and emacs?
+2.8 Can I use rw1023 with ESS and emacs?
 ========================================
 
 Yes. The latest versions of ESS (e.g. 5.1.18) come with support for this
@@ -165,7 +201,7 @@ ESS (by `C-c C-c').
 For help with ESS, please send email to <ESS-help@stat.ethz.ch>, not
 the R mailing lists.
 
-2.8 What are HOME and working directories?
+2.9 What are HOME and working directories?
 ==========================================
 
 Several places in the documentation use these terms.
@@ -184,6 +220,35 @@ If all of these fail, the current working directory is used.
 
 You can find this from R code by `Sys.getenv("R_USER")'.
 
+2.10 R can't find my file, but I know it is there!
+==================================================
+
+How did you specify it?  Backslashes have to be doubled in R character
+strings, so for example one needs
+`"d:\\rw1021\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
+for yourself by using forward slashes as path separators: they do work
+under Windows.
+
+Another possible source of grief is spaces in folder names.  We have
+tried to make R work on paths with spaces in, but lots of people writing
+packages for Unix do not bother. So it is worth trying the alternative
+short name (something like `PROGRA~1'; you can get it as the `MS-DOS
+name' from the Properties on most versions of Windows).
+
+2.11 Does R use the Registry?
+=============================
+
+Not itself.  The Inno Setup-based installers set some entries to allow
+uninstallation.  In addition those installers and (by default, but it
+can be unchecked) `rwinst.exe' set a Registry key
+`LOCAL_MACHINE\Software\R-core\R' giving the version and install path.
+Again, this is not used by R itself, but it will be used by the DCOM
+interface (`http://cran.r-project.org/other-software.html').
+
+You can add the Registry entries by running `RSetReg.exe' in the `bin'
+folder, and remove them by running this with argument `/U'.  Note that
+the settings are all per machine and not per user.
+
 
 3 Packages
 **********
@@ -191,22 +256,25 @@ You can find this from R code by `Sys.getenv("R_USER")'.
 3.1 Can I install packages (libraries) in this version?
 =======================================================
 
-Yes, of course. The easy way is to see if a pre-compiled binary version
-of the package is available: look on CRAN at `bin/windows/contrib'. If
-there is, download the zip file and unpack it in the `rwXxxx\library'
-directory, using `unzip' or similar, or using the installer
-`rwinst.exe'.  Perhaps even easier is to use the R function
-`install.packages()': check out its help page.
+Yes, but you will need a lot of tools to do so, unless the author or the
+maintainers of the `bin/windows/contrib' section on CRAN has been kind
+enough to provide a pre-compiled version for Windows as a `.zip' file.
 
-If there is not a binary version or that is not up-to-date or you prefer
-compiling from source, get `rwXxxxsp.zip' from the distribution (see
-Q1.1) and unpack it in `rwXxxx'. Then `cd src\gnuwin32' and read
-`README.packages'. You will need to collect and install several tools
-to use this. Once you have done so, installation is easy: just run
-`Rcmd INSTALL pkgname'. To check the package (run all the examples on
-its help pages and in its test suite, if any) use `Rcmd check pkgname'.
+You can install pre-compiled packages either from CRAN or from a local
+`.zip' file by using `install.packages': see its help page.
 
-3.2 I don't have permission to write to the `rwXxxx/library' directory.
+Note that the pre-compiled versions on CRAN are unsupported: see
+<http://cran.r-project.org/bin/windows/contrib/ReadMe>
+
+If there is not a pre-compiled version or that is not up-to-date or you
+prefer compiling from source, get `rw1023.zip' from the distribution
+(see Q1.1) and unpack it in `rw1023'.  Then read the `readme.packages'.
+You will need to collect and install several tools to use this.  Once
+you have done so, just run `Rcmd INSTALL pkgname'. To check the package
+(run all the examples on its help pages and in its test suite, if any)
+use `Rcmd check pkgname': see the `Writing R Extensions' manual.
+
+3.2 I don't have permission to write to the `rw1023\library' directory.
 =======================================================================
 
 You can install packages anywhere and use the environment variable
@@ -234,36 +302,25 @@ use the System Configuration Utility (under Programs, Accessories,
 System Tools on the Start menu).  You can also set them on the command
 line, for example in the shortcut you could have
 
-     path_to_R\bin\Rgui.exe --vsize=10M R_LIBS=e:/R/library
+     path_to_R\bin\Rgui.exe R_LIBS=e:/R/library
 
 and you can set variables in a file `.Renviron' in the working directory
 or your home directory, for example
 
      R_LIBS=e:/R/library
-     R_VSIZE=10M
-     R_NSIZE=400k
 
-The order of precedence is the command line (flags before variables)
-then `.Renviron' then the inherited environment.
+The order of precedence is the command line then `.Renviron' then the
+inherited environment.
 
 3.3 The packages I installed do not appear in the HTML help system.
 ===================================================================
 
-HTML help only works for packages installed in `rwXxxx\library'.
+HTML help only works for packages installed in `rw1023\library'.
 
-To update the HTML help files after you have installed a binary package,
-run at the R prompt.
+To update the HTML help files after you have installed a pre-compiled
+package, run at the R prompt.
 
      > link.html.help()
-
-(Using `install.packages()' does this for you.  The source-code
-installation also does this automatically, and if you have that
-installed you can use (preferably)
-
-     cd rwXxxx\src\gnuwin32\help
-     make indices
-
-instead.)
 
 3.4 My functions are not found by the HTML help search system.
 ==============================================================
@@ -271,9 +328,9 @@ instead.)
 The following conditions need to hold for functions in a package you
 installed.
 
-   * the package is installed in `rwXxxx\library'.
+   * the package is installed in `rw1023\library'.
 
-   * the package contains a `CONTENTS' file in top-level directory.
+   * the package contains a `CONTENTS' file in its top-level directory.
 
    * you updated the indices as described in the answer to Q3.3 after
      installing the package.
@@ -285,7 +342,7 @@ If those all hold true, this works for us.
 
 Is the package compiled for this version of R?  Many of the packages
 need to be compiled for a fairly recent version, and in particular a
-substantial minority need to be re-compiled for `rw1020'.
+substantial minority need to be re-compiled for `rw1020' and later.
 
 You can tell the version the package was compiled for by looking at the
 `Built:' line in its `DESCRIPTION' file or at the `Version' tab of its
@@ -297,14 +354,24 @@ package was compiled too long ago.
 3.6 Package TclTk does not work.
 ================================
 
-For package tcltk to work (try `demo(tkdensity)' or `demo(tkttest)')
+For package `tcltk' to work (try `demo(tkdensity)' or `demo(tkttest)')
 you need to have Tcl installed.  Download `tcl832.exe' (or use
 `tcl831.exe' if you already have it) from <dev.scriptics.com> and
 install it. (That will put the `bin' directory containing the Tcl and
 Tk DLLs in your path).  You then need to set the environment variable
 `TCL_LIBRARY', to something like `c:/Program Files/Tcl/lib/tcl8.3'.
 (The startup code for the package will warn you if this is unset, and
-Q3.2 explains how to set them.)
+Q3.2 explains how to set them.  NB: do not quote the path, even if as
+here it contains spaces.)
+
+3.7 Hyperlinks in Compiled HTML sometimes do not work.
+======================================================
+
+Unfortunately, hyperlinks in compiled HTML files used from R are
+interpreted relative to the current working directory of the R process,
+not relative to the `pkg.chm' file.  This was not discovered until
+`rw1021', so only files made since that version are working correctly.
+Remake the package under `rw1021' or later to cure this.
 
 
 4 Windows Features
@@ -365,6 +432,21 @@ should suffice for you to edit them to your preferences. For more
 details see `?Rconsole'.  There is a Preferences editor invoked from
 the `Edit' menu which can be used to edit the file `Rconsole'.
 
+4.3 Circles appear as ovals on screen
+=====================================
+
+The graphics system asks Windows for the number of pixels per inch in
+the X and Y directions, and uses that to size graphics (which in R are
+in units of inches).  Sometimes the answer is a complete invention, and
+in any case Windows will not know exactly how the horizontal and
+vertical size have been set on a CRT.  You can specify correct values
+either in the call to `windows' or as options: see `?windows'.
+(Typically these are of the order of 80.)
+
+On one of our systems, the screen height is reported as 240mm, and the
+width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960 and 1600 x
+1200 modes. In fact it is a 21" monitor and 400mm x 300mm!
+
 
 5 Workspaces
 ************
@@ -385,7 +467,9 @@ snapshot of the workspace from the `Save Workspace' menu item.
 5.3 Can I load workspaces saved under Unix/GNU-Linux?
 =====================================================
 
-Yes. The converse (saving on Windows, loading on Unix) also works.
+Yes. The converse (saving on Windows, loading on Unix) also works on
+almost all Unix systems, and workspaces can be interchanged with the
+Macintosh port too.
 
 
 6 The R Console and Fonts
@@ -438,10 +522,10 @@ scrollbar or the <CTRL+arrow> keys to scroll horizontally.
 7.1 How can I compile R from source?
 ====================================
 
-Get the R sources. Suppose you want to compile R-1.2.0.
+Get the R sources. Suppose you want to compile R-1.2.2.
 
-     tar zxvf R-1.2.0.tgz
-     cd R-1.2.0
+     tar zxvf R-1.2.2.tgz
+     cd R-1.2.2
      cd src\gnuwin32
 
 Now read the `INSTALL' file and set up all the tools needed. Then you
@@ -452,7 +536,23 @@ You may need to compile under a case-honouring file system: we found
 that a `samba'-mounted file system (which maps all file names to lower
 case) did not work.
 
-7.2 How do I debug code that I have compiled and dyn.load-ed?
+7.2 How do I include compiled C code?
+=====================================
+
+We strongly encourage you to do this _via_ building an R package: see
+the _Writing R Extensions_ manual.  In any event you should install the
+parts of the R system for building R packages in `rw1023sp.zip', and
+get and install the tools (including Perl) and compilers mentioned in
+the file `readme.packages' there.  Then you can use
+     ...\bin\Rcmd SHLIB foo.c bar.c
+
+to make `foo.dll'.  Use `...\bin\Rcmd SHLIB --help' for further
+options, or see `?SHLIB'.
+
+If you want to use Visual C++, Borland C++ or other compilers, see the
+appropriate section in `readme.packages'.
+
+7.3 How do I debug code that I have compiled and dyn.load-ed?
 =============================================================
 
 First, build a version of the R system with debugging information by
@@ -467,13 +567,13 @@ and make a debug version of your package by
 
 Then you can debug by
 
-     gdb /path/to/rwXxxx/bin/Rgui.exe
+     gdb /path/to/rw1023/bin/Rgui.exe
 
 However, note
 
    * gdb will only be able to find the source code if we run in the
-     location where the source was compiled (`rwXxxx/src/gnuwin32' for
-     the main system, `rwXxxx/src/library/mypkg/src' for a package),
+     location where the source was compiled (`rw1023/src/gnuwin32' for
+     the main system, `rw1023/src/library/mypkg/src' for a package),
      unless told otherwise by the `directory' command. It is most
      convenient to set a list of code locations via `directory'
      commands in the file `.gdbinit' in the directory from which `gdb'
@@ -510,11 +610,11 @@ However, note
 
 If you have an X server available on the PC, there is a version of
 `DDD' available that runs under the cygwin emulation layer (follow the
-links at `http://sources.redhat.com/cygwin') and provides a graphical
-user interface to `gdb'.  Another (Windows-native) GUI for `gdb' is
+links at `http://www.cygwin.com') and provides a graphical user
+interface to `gdb'.  Another (Windows-native) GUI for `gdb' is
 `Insight', part of the latest `cygwin' version of `gdb'
 
-7.3 How do I include C++ code?
+7.4 How do I include C++ code?
 ==============================
 
 You need to do two things:
@@ -544,11 +644,11 @@ when the DLL is unloaded, usually when R terminates.
 Note that you will not see the messages from this example in the GUI
 console: see the next section.
 
-This example is in package `cxx_0.0-0.tar.gz' in the
+This example is in package `cxx_0.0-x.tar.gz' in the
 `src/contrib/Devel' section on CRAN, and that can be compiled as
 package in the usual way on Windows.
 
-7.4 The output from my C code disappears. Why?
+7.5 The output from my C code disappears. Why?
 ==============================================
 
 The `Rgui.exe' console is a Windows application: writing to `stdout' or
@@ -560,14 +660,14 @@ Note that output from the console is delayed (*note The output to the
 console seems to be delayed::), so that you will not normally see any
 output before returning to the R prompt.
 
-7.5 The output from my Fortran code disappears. Why?
+7.6 The output from my Fortran code disappears. Why?
 ====================================================
 
 Writing to Fortran output writes to a file, not the `Rgui' console.
 Use one of the subroutines `dblepr', `intpr' or `realpr' documented in
 the _`Writing R Extensions'_ manual.
 
-7.6 The console freezes when my compiled code is running.
+7.7 The console freezes when my compiled code is running.
 =========================================================
 
 The console, pagers and graphics window all run in the same thread as
@@ -576,7 +676,16 @@ call `R_ProcessEvents()' periodically from your compiled code.  If you
 want output to be updated on the console, call `R_FlushConsole()' and
 then `R_ProcessEvents()'.
 
+7.8 The Perl scripts don't seem to work under Windows 9x/ME
+===========================================================
+
+Yes, we know that for example `Rcmd check' can fail with some versions
+of Perl on some 16-bit Windows installations.  Usually there are
+alternatives such as `make pkgcheck-foo', but you could try getting a
+modern operating system!
 
 
-Last edited 2000 November 30 by Brian Ripley <ripley@stats.ox.ac.uk>
+
+Last edited 2001 April 19 by Professor B. D. Ripley
+<ripley@stats.ox.ac.uk>
 

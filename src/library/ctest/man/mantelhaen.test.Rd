@@ -57,7 +57,7 @@ mantelhaen.test(x, y = NULL, z = NULL,
   \item{alternative}{a character string describing the alternative
     hypothesis.
     Only present in the 2 by 2 by \eqn{K} case.}
-  \item{method}{a string indicating the method employed, and whether
+  \item{method}{a character string indicating the method employed, and whether
     or not continuity correction was used.}
   \item{data.name}{a character string giving the names of the data.}
 }

@@ -8,9 +8,10 @@ t.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 \arguments{
   \item{x}{a numeric vector of data values.}
   \item{y}{an optional numeric vector data values.}
-  \item{alternative}{character specifying the alternative hypothesis,
-    must be one of \code{"two.sided"} (default), \code{"greater"} or
-    \code{"less"}.  You can specify just the initial letter.}
+  \item{alternative}{a character string specifying the alternative
+    hypothesis, must be one of \code{"two.sided"} (default),
+    \code{"greater"} or \code{"less"}.  You can specify just the initial
+    letter.}
   \item{mu}{a number indicating the true value of the mean (or
     difference in means if you are performing a two sample test).}
   \item{paired}{a logical indicating whether you want a paired
@@ -34,23 +35,22 @@ t.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
   Welch modification to the degrees of freedom is used.
 }
 \value{
-    A list with class \code{"htest"} containing the following
-    components:
-    \item{statistic}{the value of the t-statistic.}
-    \item{parameters}{the degrees of freedom for the t-statistic.}
-    \item{p.value}{the p-value for the test.}
-    \item{conf.int}{a confidence interval for the mean appropriate to
-	the specified alternative hypothesis.}
-    \item{estimate}{the estimated mean or difference in means depending
-	on whether it was a one-sample test or a two-sample test.}
-    \item{null.value}{the specified hypothesized value of the mean or
-	mean difference depending on whether it was a one-sample test or
-	a two-sample test.}
-    \item{alternative}{a character string describing the alternative
-    	hypothesis.}
-    \item{method}{a character string indicating what type of t-test was
-    	performed.}
-    \item{data.name}{a character string giving the name(s) of the data.}
+  A list with class \code{"htest"} containing the following components:
+  \item{statistic}{the value of the t-statistic.}
+  \item{parameters}{the degrees of freedom for the t-statistic.}
+  \item{p.value}{the p-value for the test.}
+  \item{conf.int}{a confidence interval for the mean appropriate to the
+    specified alternative hypothesis.}
+  \item{estimate}{the estimated mean or difference in means depending on
+    whether it was a one-sample test or a two-sample test.}
+  \item{null.value}{the specified hypothesized value of the mean or mean
+    difference depending on whether it was a one-sample test or a
+    two-sample test.}
+  \item{alternative}{a character string describing the alternative
+    hypothesis.}
+  \item{method}{a character string indicating what type of t-test was
+    performed.}
+  \item{data.name}{a character string giving the name(s) of the data.}
 }
 \seealso{
   \code{\link{prop.test}}

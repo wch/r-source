@@ -8,7 +8,7 @@ layout(mat,
        respect= FALSE)
 
 layout.show(n = 1)
-lcm(w)
+lcm(x)
 }
 \alias{layout}
 \alias{layout.show}
@@ -53,7 +53,10 @@ lcm(w)
 \code{layout} returns the number of figures, \eqn{N}, see above.
 }
 \references{
-Chapter 5 of Paul Murrell's Ph.D. thesis.
+  Murrell, P. R. (1999) Layouts: A mechanism for arranging plots on a page. 
+  \emph{Journal of Computational and Graphical Statistics},
+  \bold{8}, 121-134. 
+  Chapter 5 of Paul Murrell's Ph.D. thesis.
 }
 \seealso{
 \code{\link{par}(mfrow=..)}, \code{\link{par}(mfcol=..)}

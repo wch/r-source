@@ -1,11 +1,17 @@
 \name{kernapply}
+\title{Apply Smoothing Kernel}
 \alias{kernapply}
 \alias{kernapply.default}
 \alias{kernapply.ts}
 \alias{kernapply.tskernel}
 \alias{kernapply.vector}
-
-\title{Apply Smoothing Kernel}
+\synopsis{
+kernapply(x, ...)
+kernapply.default(x, k, circular = FALSE)
+kernapply.ts(x, k, circular = FALSE)
+kernapply.vector(x, k, circular = FALSE)
+kernapply.tskernel(k1, k2)
+}
 \usage{
 kernapply(x, k, circular = FALSE) 
 kernapply(k1, k2)

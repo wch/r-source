@@ -36,6 +36,10 @@ double bessel_y(double x, double alpha)
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
+    if (x < 0 || alpha < 0) {
+      ML_ERROR(ME_RANGE);
+      return ML_NAN;
+    }
     nb = 1+ (long)floor(alpha);/* nb-1 <= alpha < nb */
     alpha -= (nb-1);
     by = (double *) calloc(nb, sizeof(double));

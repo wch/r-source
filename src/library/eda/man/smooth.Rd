@@ -16,13 +16,13 @@ summary(smoothobj, \dots)
 }
 \arguments{
   \item{x}{a vector or time series}
-  \item{kind}{a string indicating the kind of smoother required;
+  \item{kind}{a character string indicating the kind of smoother required;
     defaults to \code{"3RS3R"}.}
   \item{twiceit}{logical, indicating if the result should be ``twiced''.
     Twicing a smoother \eqn{S(y)} means \eqn{S(y) + S(y - S(y))}, i.e.,
     adding smoothed residuals to the smoothed values.  This decreases
     bias (increasing variance).}
-  \item{endrule}{a string indicating the rule for smoothing at the
+  \item{endrule}{a character string indicating the rule for smoothing at the
     boundary.  Either \code{"Tukey"} (default) or \code{"copy"}.}
   \item{do.ends}{logical, indicating if the 3-splitting of ties should
     also happen at the boundaries (``ends'').  This is only used for

@@ -1,6 +1,6 @@
 
-R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-11-29)
+R : Copyright 2001, The R Development Core Team
+Version 1.2.0 Patched (2001-01-09)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -280,7 +280,10 @@ NaNs produced in: gamma(x)
 [1] TRUE
 > 
 > 
+> is.na(mean(c(1,NA,NA)[-1], trim = .1, na.rm = TRUE))
+[1] TRUE
+> 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  4.07 0.18 4.26 0 0 
+Time elapsed:  4.12 0.13 4.29 0 0 
 > 

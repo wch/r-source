@@ -42,7 +42,6 @@
   Toronto. 
 }
 \examples{
-library(nls)
 data(Puromycin)
 plot(rate ~ conc, data = Puromycin, las = 1,
      xlab = "Substrate concentration (ppm)",

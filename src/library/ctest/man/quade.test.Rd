@@ -37,7 +37,7 @@ quade.test(y, groups, blocks)
   \item{parameters}{a vector with the numerator and denominator degrees 
     of freedom of the approximate F distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}
-  \item{method}{the string \code{"Quade test"}.}
+  \item{method}{the character string \code{"Quade test"}.}
   \item{data.name}{a character string giving the names of the data.}
 }
 \references{

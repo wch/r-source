@@ -291,6 +291,7 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
     cor = PRIMVAL(op);
 
     /* Arg.1: x */
+    if (isNull(CAR(args)) || !LENGTH(CAR(args))) error("`x' is empty");
     x = SETCAR(args, coerceVector(CAR(args), REALSXP));
     if ((ansmat = isMatrix(x))) {
 	n = nrows(x);

@@ -75,7 +75,8 @@ distdir: $(DISTFILES)
 	done
 	@for d in R data exec man src; do \
 	  if test -d $(srcdir)/$${d}; then \
-	    ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
+	    ((cd $(srcdir); \
+	          $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
 	        | (cd $(distdir); $(TAR) -x -f -)) \
 	      || exit 1; \
 	  fi; \

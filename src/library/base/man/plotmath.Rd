@@ -114,8 +114,9 @@
 }
 \references{
   Murrell, P. and Ihaka, R. (2000) An approach to providing
-  mathematical annotation in plots. \emph{Journal of Computational
-    and Graphical Statistics} (In press).
+  mathematical annotation in plots.
+  \emph{Journal of Computational and Graphical Statistics},
+  \bold{9}, 582--599.
 }
 \seealso{
   \code{\link{axis}},

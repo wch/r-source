@@ -1,10 +1,10 @@
-This is the README file for the 16 April 2000 public release of the
+This is the README file for the 14 January 2001 public release of the
 Info-ZIP group's portable UnZip zipfile-extraction program (and related
 utilities).
 
-unzip541.zip      portable UnZip, version 5.41, source code distribution
-unzip541.tar.Z    same as above, but compress'd tar format
-unzip541.tar.gz   same as above, but gzip'd tar format
+unzip542.zip      portable UnZip, version 5.42, source code distribution
+unzip542.tar.Z    same as above, but compress'd tar format
+unzip542.tar.gz   same as above, but gzip'd tar format
 
 __________________________________________________________________________
 
@@ -45,7 +45,7 @@ example, vms/Contents) may list important compilation info in addition to
 explaining what files are what, so be sure to read them.  Some of the ports
 have their own, special README files, so be sure to look for those, too.
 
-See unzip.1 or unzip.doc for usage (or the corresponding UnZipSFX, ZipInfo,
+See unzip.1 or unzip.txt for usage (or the corresponding UnZipSFX, ZipInfo,
 fUnZip and ZipGrep docs).  For VMS, unzip_def.rnh or unzip_cli.help may be
 compiled into unzip.hlp and installed as a normal VMS help entry; see
 vms/descrip.mms.
@@ -53,6 +53,17 @@ vms/descrip.mms.
 
 CHANGES AND NEW FEATURES
 ------------------------
+The 5.42 maintance release fixes more bugs and cleans up the redistribution
+conditions:
+
+   - removal of unreduce.c and amiga/timelib.c code to get rid of the last
+     distribution restrictions beyond the BSD-like Info-ZIP LICENSE
+   - new generic timelib replacement (currently used by AMIGA port)
+   - more reasonable mapping rules of UNIX "leading-dot" filenames to the
+     DOS 8.3 name convention
+   - repaired screensize detection in MORE paging code
+     (was broken for DOS/OS2/WIN32 in 5.41)
+
 The 5.41 maintance release adds another new port and fixes some bugs.
 
    - new BSD-like LICENSE
@@ -146,7 +157,7 @@ direct access to a subset of the supported systems, others may wish to pro-
 vide ready-to-run executables for new systems.  In general there is no prob-
 lem with this; we require only that such distributions include this README
 file, the WHERE file, the COPYING file (contains copyright/redistribution
-information), and the appropriate documentation files (unzip.doc and/or
+information), and the appropriate documentation files (unzip.txt and/or
 unzip.1 for UnZip, etc.).  If the local system provides a way to make self-
 extracting archives in which both the executables and text files can be
 stored together, that's best (in particular, use UnZipSFX if at all possible,

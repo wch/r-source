@@ -1,9 +1,17 @@
-r-base (1.2.0-0) unstable; urgency=low
+r-base (1.2.1-0) unstable; urgency=low
 
   * Test builds for new upstream release.
 
- -- Douglas Bates <bates@stat.wisc.edu>  Mon, 31 Jul 2000 15:32:51 -0500
+ -- Douglas Bates <bates@stat.wisc.edu>  Wed, 20 Dec 2000 16:10:19 -0600
 
+r-base (1.2.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * Added the r-base-dev package to create the correct dependencies for
+    installing R packages from CRAN (Comprehensive R Archive Network)
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Fri, 15 Dec 2000 07:20:51 -0600
+    
 r-base (1.1.0-1) unstable; urgency=low
 
   * New upstream release.

@@ -89,6 +89,7 @@ help <-
                     hlpfile <- paste(wfile, "/winhlp/", thispkg, ".hlp",
                                      sep = "")
                     hlpfile <- gsub("/", "\\\\", hlpfile)
+                    topic <- sub("(.*/help/)([^/]*)$", "\\2", file)
                     if(verbose) print(hlpfile)
                     if(file.exists(hlpfile)) {
                         .Internal(show.help.item(topic, 2, hlpfile))

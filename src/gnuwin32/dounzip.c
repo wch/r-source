@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file dounzip.c
- *  Copyright (C) 1998--2000  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2001  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ typedef int (WINAPI * _DLL_UNZIP)(int, char **, int, char **,
 _DLL_UNZIP Wiz_SingleEntryUnzip;
 HINSTANCE hUnzipDll;
 
-#define UNZ_DLL_VERSION "5.41\0"
+#define UNZ_DLL_VERSION "5.42\0"
 #define COMPANY_NAME "Info-ZIP\0"
 #define DLL_VERSION_WARNING "%s is missing\nor has the wrong version number.\nEnsure that you have the correct DLL installed"
 

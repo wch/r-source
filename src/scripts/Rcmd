@@ -20,7 +20,20 @@ fi
 . ${R_HOME}/etc/Renviron
 export `sed 's/^ *#.*//; s/^\(.*\)=.*/\1/' ${R_HOME}/etc/Renviron`
 
-PATH="${R_HOME}/bin:${PATH}" exec "${@}"
+PATH="${R_HOME}/bin:${PATH}" 
+case "${1}" in
+  perl)
+    shift;
+    exec ${PERL} "${@}"
+    ;;
+  awk)
+    shift;
+    exec ${AWK}  "${@}"
+    ;;
+  *)
+    exec "${@}"
+    ;;
+esac
 
 ### Local Variables: ***
 ### mode: sh ***

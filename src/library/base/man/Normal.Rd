@@ -18,7 +18,8 @@ rnorm(n, mean=0, sd=1)
 \arguments{
   \item{x,q}{vector of quantiles.}
   \item{p}{vector of probabilities.}
-  \item{n}{number of observations.}
+  \item{n}{number of observations. If \code{length(n) > 1}, the length
+    is taken to be the number required.}
   \item{mean}{vector of means.}
   \item{sd}{vector of standard deviations.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}

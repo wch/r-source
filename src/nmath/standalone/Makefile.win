@@ -31,7 +31,7 @@ CFLAGS=$(OPTFLAGS) -I.. -I../../include -I../../include/R_ext $(DEFS)
 SOURCES_NMATH = \
 	mlutils.c \
 	d1mach.c i1mach.c \
-	fmax2.c fmin2.c fmod.c fprec.c fround.c ftrunc.c \
+	fmax2.c fmin2.c fprec.c fround.c ftrunc.c \
 	sign.c fsign.c \
 	imax2.c imin2.c \
 	chebyshev.c log1p.c lgammacor.c gammalims.c stirlerr.c bd0.c \

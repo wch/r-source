@@ -576,7 +576,7 @@ static SEXP ExpandDots(SEXP s, int expdots)
 }
 static SEXP subDots(SEXP rho)
 {
-    SEXP rval, dots, a, b;
+    SEXP rval, dots, a, b, t;
     int len,i;
     char tbuf[10];
 
@@ -592,15 +592,14 @@ static SEXP subDots(SEXP rho)
     PROTECT(rval=allocList(len));
     for(a=dots, b=rval, i=1; i<=len; a=CDR(a), b=CDR(b), i++) {
 	sprintf(tbuf,"..%d",i);
-	if( TAG(a) != R_NilValue )
-	    SET_TAG(b, TAG(a));
+	SET_TAG(b, TAG(a));
+	t = CAR(a);
+	while (TYPEOF(t) == PROMSXP)
+	    t = PREXPR(t);
+	if( isSymbol(t) || isLanguage(t) ) 
+	    SETCAR(b, mkSYMSXP(mkChar(tbuf), R_UnboundValue));
 	else
-	    SET_TAG(b, install(tbuf));
-	if( isSymbol(PREXPR(CAR(a))) || isLanguage(PREXPR(CAR(a))) ) {
-		SETCAR(b, mkSYMSXP(mkChar(tbuf), R_UnboundValue));
-	}
-	else
-		SETCAR(b, PREXPR(CAR(a)));
+	    SETCAR(b, t);
     }
     UNPROTECT(1);
     return rval;
@@ -678,35 +677,41 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (CAR(t1) == R_DotsSymbol) {
 		t2 = subDots(sysp);
 		break;
-#ifdef NEWDOTS
-		t2 = findVarInFrame( sysp, R_DotsSymbol);
-		b = allocList(length(t2));
-		for(f=b; f!=R_NilValue; f=CDR(f)) {
-			CAR(b)=PREXPR(CAR(t2));
-			t2 = CDR(t2);
-		}
-#endif
 	}
     }
     /* now to splice t2 into the correct spot in actuals */
     if (t2 != R_MissingArg ) {	/* so we did something above */
 	if( CAR(actuals) == R_DotsSymbol ) {
-	        UNPROTECT(1);
-	        actuals = listAppend(t2, CDR(actuals));
-	        PROTECT(actuals);
+	    UNPROTECT(1);
+	    actuals = listAppend(t2, CDR(actuals));
+	    PROTECT(actuals);
 	}
 	else {
-		for(t1=actuals; t1!=R_NilValue; t1=CDR(t1)) {
-			if( CADR(t1) == R_DotsSymbol ) {
-				tail = CDDR(t1);
-				SETCDR(t1, t2);
-				listAppend(actuals,tail);
-				break;
-			}
+	    for(t1=actuals; t1!=R_NilValue; t1=CDR(t1)) {
+		if( CADR(t1) == R_DotsSymbol ) {
+		    tail = CDDR(t1);
+		    SETCDR(t1, t2);
+		    listAppend(actuals,tail);
+		    break;
 		}
+	    }
+	}
+    } else { /* get rid of it */
+	if( CAR(actuals) == R_DotsSymbol ) {
+	    UNPROTECT(1);
+	    actuals = CDR(actuals);
+	    PROTECT(actuals);
+	}
+	else {
+	    for(t1=actuals; t1!=R_NilValue; t1=CDR(t1)) {
+		if( CADR(t1) == R_DotsSymbol ) {
+		    tail = CDDR(t1);
+		    SETCDR(t1, tail);
+		    break;
+		}
+	    }
 	}
     }
-
     rlist = matchArgs(formals, actuals);
 
     /* Attach the argument names as tags */
@@ -731,7 +736,4 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(4);
     return rval;
 }
-
-
-
 

@@ -22,8 +22,8 @@
 
 struct structRPIPE {
     HANDLE process;
-    HANDLE read,write;
-    int exitcode,active;
+    HANDLE read, write;
+    int exitcode, active;
 };
 
 typedef struct structRPIPE rpipe;
@@ -32,12 +32,12 @@ typedef struct structRPIPE rpipe;
  * runcmd and rpipeClose return the exit code of the process
  * if runcmd return -1, problems in process start
 */
-int   runcmd(char *cmd,int wait,int visible,char *finput);
+int   runcmd(char *cmd, int wait, int visible, char *finput);
 
-rpipe *rpipeOpen(char *cmd, int visible,char *finput);
-char  *rpipeGets(rpipe *r,char *buf,int len);
-int   rpipeGetc(rpipe *r);
-int  rpipeClose(rpipe *r);
+rpipe *rpipeOpen(char *cmd, int visible, char *finput, int io);
+char  *rpipeGets(rpipe *r, char *buf, int len);
+int rpipeGetc(rpipe *r);
+int rpipeClose(rpipe *r);
 
 char *runerror();
 

@@ -10,7 +10,7 @@
 table(\dots, exclude = c(NA, NaN), dnn, deparse.level = 1)
 as.table(x, \dots)
 is.table(x)
-as.data.frame.table(x, \dots)
+as.data.frame.table(x, row.names = NULL, optional = FALSE)
 }
 \arguments{
   \item{\dots}{objects which can be interpreted as factors (including
@@ -23,6 +23,10 @@ as.data.frame.table(x, \dots)
   \item{deparse.level}{controls how the default \code{dnn} is
     constructed.  See details.}
   \item{x}{an arbitrary \R object.}
+  \item{row.names}{a character vector giving the row names for the data
+    frame.}
+  \item{optional}{a logical controlling whether row names are set.
+    Currently not used.}
 }
 \description{
   \code{table} uses the cross-classifying factors to build a contingency
@@ -43,7 +47,9 @@ as.data.frame.table(x, \dots)
   \code{as.data.frame} to convert the array-based representation of a
   contingency table to a data frame containing the classifying factors
   and the corresponding counts (the latter as component \code{Freq}).
+  This is the inverse of \code{\link{xtabs}}.
 }
+\seealso{
 \examples{
 ## Simple frequency distribution
 table(rpois(100,5))
@@ -63,5 +69,13 @@ a <- letters[1:3]
 table(a, sample(a))                    # dnn is c("a", "")
 table(a, sample(a), deparse.level = 0) # dnn is c("", "")
 table(a, sample(a), deparse.level = 2) # dnn is c("a", "sample(a)")
+
+## xtabs() <-> as.data.frame.table() :
+data(UCBAdmissions) ## already a contingency table
+DF <- as.data.frame(UCBAdmissions)
+class(tab <- xtabs(Freq ~ ., DF))# xtabs & table
+## tab *is* ``the same'' as the original table:
+all(tab == UCBAdmissions) 
+all.equal(dimnames(tab), dimnames(UCBAdmissions))
 }
 \keyword{category}

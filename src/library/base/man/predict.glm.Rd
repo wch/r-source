@@ -25,7 +25,7 @@ predict.glm(object, newdata = NULL, type = c("link", "response", "terms"),
    computing the standard errors.  If omitted, that returned by
    \code{summary} applied to the object is used.}
   \item{terms}{with \code{type="terms"} by default all terms are returned.
-   A vector of strings specifies which terms are to be returned}
+   A character vector specifies which terms are to be returned}
 }
 \description{
   Obtains predictions and optionally estimates standard errors of those

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2000  R Development Core Team
+ *  Copyright (C) 1998--2001  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ extern int R_RestoreHistory;
 extern char *R_HistoryFile;
 
 extern char *getDLLVersion();
+extern void saveConsoleTitle();
 
 static char Rversion[25];
 char *getRVersion()
@@ -55,7 +56,6 @@ static void my_onintr()
   UserBreak = 1;
   PostThreadMessage(mainThreadId,0,0,0);
 }
-
 
 int AppMain (int argc, char **argv)
 {
@@ -74,6 +74,7 @@ int AppMain (int argc, char **argv)
     if(R_Interactive) {
 	gl_hist_init(R_HistorySize, 1);
 	if (R_RestoreHistory) gl_loadhistory(R_HistoryFile);
+	saveConsoleTitle();
 	SetConsoleTitle("Rterm");
     }
     Rf_mainloop();

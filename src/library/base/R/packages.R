@@ -105,6 +105,10 @@ old.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
 newerVersion <- function(a, b){
     a <- as.integer(strsplit(a, "[\\.-]")[[1]])
     b <- as.integer(strsplit(b, "[\\.-]")[[1]])
+    if(is.na(a))
+        return(FALSE)
+    if(is.na(b))
+        return(TRUE)
     for(k in 1:length(a)){
         if(k <= length(b)){
             if(a[k]>b[k])

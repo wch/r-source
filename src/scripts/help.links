@@ -50,8 +50,8 @@ get_unique () {
      
 
 for lib in $*; do
-    echo "<P><h3>Packages in ${lib}</h3>" >> ${PKGLIST}
-    echo "<P><TABLE width=100%>" >> ${PKGLIST}
+    echo "<p><h3>Packages in ${lib}</h3>" >> ${PKGLIST}
+    echo "<p><table width=\"100%\">" >> ${PKGLIST}
     if test -d ${lib}; then
       for pkg in `ls -d ${lib}/* | sed '/CVS$/d; /profile$/d'`; do
 	if test -d ${pkg}; then
@@ -64,9 +64,9 @@ for lib in $*; do
 	    else
 		pkgtitle=""
 	    fi
-	    echo "<TR ALIGN=LEFT VALIGN=TOP>
-		    <TD width=25%><A HREF=\"../../library/${targetname}/html/00Index.html\">
-		    ${pkgname}</A><TD>${pkgtitle}</TD></TR>" \
+	    echo "<tr align=\"left\" valign=\"top\">
+		    <td width=\"25%\"><a href=\"../../library/${targetname}/html/00Index.html\">
+		    ${pkgname}</a><td>${pkgtitle}</td></tr>" \
 		>> ${PKGLIST}
 
 	    cat ${pkg}/CONTENTS | \
@@ -77,11 +77,11 @@ for lib in $*; do
 	fi
       done
     fi
-    echo "</TABLE>" >> ${PKGLIST}
+    echo "</table>" >> ${PKGLIST}
     echo "" >> ${PKGLIST}
 done
 
-cat ${R_HOME}/doc/html/packages-foot.html >> ${PKGLIST}
+echo "</body></html>" >> ${PKGLIST}
 ln -s ${R_HOME}/doc/html/R.css ${USER_R_HOME}/library
 
 ### Local Variables: ***

@@ -42,40 +42,37 @@ c
 C
 C  Initializations
 C
-      DO I=1,N
+      DO 10 I=1,N
 C        We do not initialize MEMBR in order to be able to restart the
 C        algorithm from a cut.
 C        MEMBR(I)=1.
-         FLAG(I)=.TRUE.
-      ENDDO
+ 10      FLAG(I)=.TRUE.
       NCL=N
 C
 C  Carry out an agglomeration - first create list of NNs
 C
-      DO I=1,N-1
+      DO 30 I=1,N-1
          DMIN=INF
-         DO J=I+1,N
+         DO 20 J=I+1,N
             IND=IOFFSET(N,I,J)
-            IF (DISS(IND).GE.DMIN) GOTO 500
+            IF (DISS(IND).GE.DMIN) GOTO 20
                DMIN=DISS(IND)
                JM=J
-  500    CONTINUE
-         ENDDO
+ 20         CONTINUE
          NN(I)=JM
          DISNN(I)=DMIN
-      ENDDO
+ 30      CONTINUE
 C
   400 CONTINUE
 C     Next, determine least diss. using list of NNs
       DMIN=INF
-      DO I=1,N-1
+      DO 600 I=1,N-1
          IF (.NOT.FLAG(I)) GOTO 600
          IF (DISNN(I).GE.DMIN) GOTO 600
             DMIN=DISNN(I)
             IM=I
             JM=NN(I)
   600    CONTINUE
-      ENDDO
       NCL=NCL-1
 C
 C  This allows an agglomeration to be carried out.
@@ -90,7 +87,7 @@ C  Update dissimilarities from new cluster.
 C
       FLAG(J2)=.FALSE.
       DMIN=INF
-      DO K=1,N
+      DO 50 K=1,N
          IF (.NOT.FLAG(K)) GOTO 800
          IF (K.EQ.I2) GOTO 800
          X=MEMBR(I2)+MEMBR(J2)+MEMBR(K)
@@ -160,14 +157,14 @@ C
             DMIN=DISS(IND1)
             JJ=K
   800    CONTINUE
-      ENDDO
+ 50      CONTINUE
       MEMBR(I2)=MEMBR(I2)+MEMBR(J2)
       DISNN(I2)=DMIN
       NN(I2)=JJ
 C
 C  Update list of NNs insofar as this is required.
 C
-      DO I=1,N-1
+      DO 900 I=1,N-1
          IF (.NOT.FLAG(I)) GOTO 900
          IF (NN(I).EQ.I2) GOTO 850
          IF (NN(I).EQ.J2) GOTO 850
@@ -175,7 +172,7 @@ C
   850    CONTINUE
 C        (Redetermine NN of I:)
          DMIN=INF
-         DO J=I+1,N
+         DO 870 J=I+1,N
             IND=IOFFSET(N,I,J)
             IF (.NOT.FLAG(J)) GOTO 870
             IF (I.EQ.J) GOTO 870
@@ -183,11 +180,9 @@ C        (Redetermine NN of I:)
                DMIN=DISS(IND)
                JJ=J
   870       CONTINUE
-         ENDDO
          NN(I)=JJ
          DISNN(I)=DMIN
   900    CONTINUE
-      ENDDO
 C
 C  Repeat previous steps until N-1 agglomerations carried out.
 C

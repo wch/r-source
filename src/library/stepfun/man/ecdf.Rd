@@ -1,20 +1,27 @@
 \name{ecdf}
+\alias{ecdf}
+\alias{plot.ecdf}
+\alias{print.ecdf}
 \title{Empirical Cumulative Distribution Function}
 \usage{
 ecdf(x)
-plot(\dots, verticals = FALSE, col.01line = "gray70")
+
+\method{plot}{ecdf}(x, \dots, ylab="Fn(x)", verticals = FALSE,
+     col.01line = "gray70")
+
+\method{print}{ecdf}(x, digits= getOption("digits") - 2, \dots)
 }
-\alias{ecdf}
-\alias{print.ecdf}
-\alias{summary.ecdf}
-\alias{plot.ecdf}
 \arguments{
-  \item{x}{numeric vector with the ``observations''.}
+  \item{x}{numeric vector of \dQuote{observations} in \code{ecdf};  for
+    the methods, an object of class \code{"ecdf"}, typically.}
   \item{\dots}{arguments to be passed to \code{\link{plot.stepfun}}, the
     first of which should be an \R object of class \code{"ecdf"}.}
-  \item{vertical}{see \code{\link{plot.stepfun}}.}
+  \item{ylab}{label for the y-axis.}
+  \item{verticals}{see \code{\link{plot.stepfun}}.}
   \item{col.01line}{numeric or character specifying the color of the
     horizontal lines at y=0 and 1, see \code{\link{colors}}.}
+  \item{digits}{number of significant digits to use, see
+    \code{\link{print}}.}
 }
 \description{
   Compute or plot an empirical cumulative distribution function.

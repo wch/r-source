@@ -6,7 +6,7 @@ manova <- function(...)
     if(inherits(result, "aovlist")) {
         for(i in seq(along=result)) {
             if(!inherits(result[[i]], "maov")) stop("need multiple response")
-            class(result[[i]]) <- c("manova", class(results[[i]]))
+            class(result[[i]]) <- c("manova", class(result[[i]]))
         }
         attr(result, "call") <- Call
     } else {
@@ -125,6 +125,8 @@ summary.manova <-
                                  c(test, "approx F", "num Df", "den Df",
                                    "Pr(>F)"))
         rss.qr <- qr(ss[[nt]])
+        if(rss.qr$rank < ncol(resid))
+            stop(paste("residuals have rank", rss.qr$rank,"<", ncol(resid)))
         if(!is.null(rss.qr))
             for(i in seq(len=nterms)[ok]) {
                 eigs[i, ] <- Re(eigen(qr.coef(rss.qr, ss[[i]]),

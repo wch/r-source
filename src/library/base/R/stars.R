@@ -1,13 +1,16 @@
 ### T. Dye <tdye@lava.net>, July 1999
 ### This code started life as spatial star plots by David A. Andrews.
-### See http://www.stat.rice.edu/~andrewsd/software/software.html.
+### See http://www.udallas.edu:8080/~andrews/software/software.html
 
-"stars" <-
+stars <-
 function(x, full = TRUE, scale = TRUE, radius = TRUE,
-	 labels = dimnames(x)[[1]], locations = NULL, xlimit = NULL,
-	 ylimit = NULL, len = 1, colors = NULL, key.loc = NULL,
-	 key.labels = NULL, draw.segments = FALSE, draw.axes = FALSE, ...) {
-
+	 labels = dimnames(x)[[1]],
+         locations = NULL, xlim = NULL, ylim = NULL, len = 1,
+         colors = NULL,
+         key.loc = NULL, key.labels = NULL, key.xpd = TRUE,
+         draw.segments = FALSE, axes = FALSE,
+         cex = 0.8, lwd = 0.25, ...) 
+{
     if (is.data.frame(x))
 	x <- as.matrix(x)
     else if (!is.matrix(x))
@@ -22,20 +25,29 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
     seg.colors <- if(!is.null(colors)) colors else 1:n.seg
 
     if (is.null(locations)) {		# make loc matrix
-	mat.dim <- ceiling(sqrt(n.loc))
-	temp.loc.1 <- rep(x=2.1* 1:mat.dim, times=mat.dim, length=n.loc)
-	temp.loc.2 <- rep(x=2.1* mat.dim:1,
-			  rep(x=mat.dim, times=mat.dim), length=n.loc)
-	loc <- matrix(data=c(temp.loc.1,temp.loc.2),ncol=2)
+	md <- ceiling(sqrt(n.loc)) # =>  md^2 >= n.loc
+        loc0 <- 2.1* 1:md
+        loc <- expand.grid(loc0, rev(loc0))[1:n.loc, ]
     }
     else {
-	if (!is.matrix(locations) || ncol(locations) != 2)
-	    stop("locations must be a 2-column matrix.")
-	loc <- .Alias(locations)
+        if (is.numeric(locations) && length(locations) == 2) {
+            ## all stars around the same origin
+            loc <- cbind(rep(locations[1],n.loc),
+                         rep(locations[2],n.loc))
+            if(!missing(labels) && n.loc > 1)
+                warning("labels don't make sense for a single location")
+            else labels <- NULL
+        }
+        else {
+            if (is.data.frame(locations))
+                locations <- data.matrix(locations)
+            if (!is.matrix(locations) || ncol(locations) != 2)
+                stop("locations must be a 2-column matrix.")
+            loc <- .Alias(locations)
+            if (n.loc != nrow(loc))
+                stop("number of rows of locations and x must be equal.")
+        }
     }
-
-    if ( n.loc != nrow(loc) )
-	stop("number of rows of locations and x must be equal.")
 
     ## Angles start at zero and pace around the circle counter
     ## clock-wise in equal increments.
@@ -61,30 +73,26 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 
     x <- x * len
 
-    temp.xlim <-
-	if(is.null(xlimit))
-	    range(loc[,1] + max(x), loc[,1] - max(x)) else xlimit
-    temp.ylim <-
-	if(is.null(ylimit))
-	    range(loc[,2] + max(x), loc[,2] - max(x)) else ylimit
-
-    opar <- par(no.readonly = TRUE)
-    on.exit(par(opar))
+    if(is.null(xlim)) xlim <- range(loc[,1] + max(x), loc[,1] - max(x))
+    if(is.null(ylim)) ylim <- range(loc[,2] + max(x), loc[,2] - max(x))
 
     ## The asp argument keeps everything square
-    plot(0, type="n", ..., xlim=temp.xlim, ylim=temp.ylim,
-	 xlab="", ylab="", asp = 1, axes = draw.axes)
+    plot(0, type="n", ..., xlim=xlim, ylim=ylim,
+	 xlab="", ylab="", asp = 1, axes = axes)
 
     if ( draw.segments ) {
 	## for each location, draw a segment diagram
 	for ( i in 1:n.loc ) {
 	    poly.x <- NA
 	    poly.y <- NA
-	    start.x.coord <- x[i,] * cos( angles ) + loc[i,1]
-	    start.y.coord <- x[i,] * sin( angles ) + loc[i,2]
+	    start.x <- x[i,] * cos( angles ) + loc[i,1]
+	    start.y <- x[i,] * sin( angles ) + loc[i,2]
+
+### FIXME : we can do without the following inner loop !
+
 	    for (j in 1:n.seg) {
-		poly.x <- c(poly.x,loc[i,1],start.x.coord[j])
-		poly.y <- c(poly.y,loc[i,2],start.y.coord[j])
+		poly.x <- c(poly.x,loc[i,1],start.x[j])
+		poly.y <- c(poly.y,loc[i,2],start.y[j])
 
 		next.angle <-
 		    if(j < n.seg)
@@ -95,46 +103,44 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 		poly.x <- c(poly.x, x[i,j] * cos( k ) + loc[i,1], NA)
 		poly.y <- c(poly.y, x[i,j] * sin( k ) + loc[i,2], NA)
 	    }
-	    par(lwd=0.25)
-	    polygon(poly.x, poly.y, col = seg.colors)
-	    par(lwd=1)
+	    polygon(poly.x, poly.y, col = seg.colors, lwd=lwd)
 	    if (!is.null(labels))
 		text(loc[i,1], loc[i,2] - if(full)max(x) else 0.1 * max(x),
-		     labels[i], cex=0.5, adj=c(0.5,1))
+		     labels[i], cex=cex, adj=c(0.5,1))
 	}
-    } # Segment diagrams are drawn
+    } # Segment diagrams
+
     else { # Draw stars instead
 	for ( i in 1:n.loc ) {
-	    temp.x.coord <- x[i,] * cos( angles ) + loc[i,1]
-	    temp.y.coord <- x[i,] * sin( angles ) + loc[i,2]
-	    if ( radius ) {
-		par(lwd=0.25)
+	    temp.x <- x[i,] * cos( angles ) + loc[i,1]
+	    temp.y <- x[i,] * sin( angles ) + loc[i,2]
+	    if (radius)
 		segments(rep(loc[i,1],n.seg),
 			 rep(loc[i,2],n.seg),
-			 temp.x.coord, temp.y.coord)
-		par(lwd=1)
-	    }
-	    lines(c(temp.x.coord, temp.x.coord[1]),
-		  c(temp.y.coord, temp.y.coord[1]), lwd=0.25)
+			 temp.x, temp.y, lwd=lwd)
+	    lines(c(temp.x, temp.x[1]),
+		  c(temp.y, temp.y[1]), lwd=lwd)
 	    if (!is.null(labels))
 		text(loc[i,1], loc[i,2] - if(full)max(x) else 0.1 * max(x),
-		     labels[i], cex=0.5, adj=c(0.5,1))
+		     labels[i], cex=cex, adj=c(0.5,1))
 	}
     }
 
-    if ( ! is.null(key.loc) ) {		# Draw unit key
+    if ( !is.null(key.loc) ) { ## Draw unit key
+
+        ## allow drawing outside plot region (inside figure region):
+        op <- par(xpd = key.xpd); on.exit(par(op))
+        key.x.coord <- cos( angles ) * len + key.loc[1]
+        key.y.coord <- sin( angles ) * len + key.loc[2]
 	if ( draw.segments ) {
 	    key.x <- NA
 	    key.y <- NA
-	    key.x.coord <- cos( angles ) * len + key.loc[1]
-	    key.y.coord <- sin( angles ) * len + key.loc[2]
 	    for (j in 1:n.seg){
 		key.x <- c(key.x,key.loc[1],key.x.coord[j])
 		key.y <- c(key.y,key.loc[2],key.y.coord[j])
 		k <- angles[j] + deg
 		next.angle <-
-		    if (j < n.seg)
-			angles[j+1]
+		    if (j < n.seg) angles[j+1]
 		    else (if(full) 360 else 180) * deg
 
 		while (k < next.angle) {
@@ -145,20 +151,14 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 		key.x <- c(key.x, len * cos( next.angle ) + key.loc[1], NA)
 		key.y <- c(key.y, len * sin( next.angle ) + key.loc[2], NA)
 	    }
-	    par(lwd=0.25)
-	    polygon(key.x, key.y, col = seg.colors)
-	    par(lwd=1)
+	    polygon(key.x, key.y, col = seg.colors, lwd=lwd)
 	}
-	else { # draw a star
-	    temp.x.coord <- cos( angles ) * len + key.loc[1]
-	    temp.y.coord <- sin( angles ) * len + key.loc[2]
-	    par(lwd=0.25)
+	else { # draw unit star
 	    if ( radius )
 		segments(rep(key.loc[1],n.seg), rep(key.loc[2],n.seg),
-			 temp.x.coord, temp.y.coord)
-	    lines(c(temp.x.coord, temp.x.coord[1]),
-		  c(temp.y.coord, temp.y.coord[1]))
-	    par(lwd=1)
+			 key.x.coord, key.y.coord, lwd=lwd)
+	    lines(c(key.x.coord, key.x.coord[1]),
+		  c(key.y.coord, key.y.coord[1]), lwd=lwd)
 	}
 	if (is.null(key.labels))
 	    key.labels <- dimnames(x)[[2]]
@@ -166,30 +166,26 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 	lab.angl <- angles +
 	    if(draw.segments) (angles[2] - angles[1]) / 2 else 0
 
-	label.x.coord <- cos( lab.angl ) * len * 1.1 + key.loc[1]
-	label.y.coord <- sin( lab.angl ) * len * 1.1 + key.loc[2]
+	label.x <- cos( lab.angl ) * len * 1.1 + key.loc[1]
+	label.y <- sin( lab.angl ) * len * 1.1 + key.loc[2]
 
+        ##-- FIXME : Do the following witout loop !
 	for (k in 1:n.seg) {
 	    text.adj <-
-		if (lab.angl[k] < (90 * deg) || lab.angl[k] > (270 * deg))
-		    0
-		else if (lab.angl[k] > (90 * deg) && lab.angl[k] < (270 * deg))
-		    1
-		else
-		    0.5
+                c(## horizontal
+                  if      (lab.angl[k] < 90*deg || lab.angl[k] > 270*deg) 0
+                  else if (lab.angl[k] > 90*deg && lab.angl[k] < 270*deg) 1
+                  else 0.5,
+                  ## vertical 
+                  if (lab.angl[k] <= 90*deg) (1 - lab.angl[k] / (90*deg)) /2
+                  else if (lab.angl[k] <= 270*deg)
+                  (lab.angl[k] - 90*deg) / (180*deg)
+                  else ## lab.angl[k] > 270*deg
+                  1 - (lab.angl[k] - 270*deg) / (180*deg)
+                  )
 
-	    if (lab.angl[k] <= (90 * deg))
-		text.adj <-
-		    c(text.adj, 0.5 * (1 - lab.angl[k] / (90 * deg)))
-	    else if (lab.angl[k] > (90 * deg) & lab.angl[k] <= (270 * deg))
-		text.adj <-
-		    c(text.adj, (lab.angl[k] - (90 * deg)) / (180 * deg))
-	    else if (lab.angl[k] > (270 * deg))
-		text.adj <-
-		    c(text.adj, 1 - (0.5 * (lab.angl[k] - (270 * deg)) /
-				     (90 * deg)))
-	    text.default(x=label.x.coord[k], y=label.y.coord[k],
-			 labels= key.labels[k], cex = 0.5, adj = text.adj)
+	    text(label.x[k], label.y[k],
+                 labels= key.labels[k], cex = cex, adj = text.adj)
 	}
     } # Unit key is drawn and labelled
     invisible()

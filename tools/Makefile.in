@@ -10,20 +10,16 @@ subdir = tools
 
 include $(top_builddir)/Makeconf
 
-SCRIPT_SOURCES = \
-	Rdnewer.in \
-	help2man.in \
-	install-info.in \
-	pkg2tex.in
-SCRIPT_OBJECTS = $(SCRIPT_SOURCES:.in=)
-
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in \
 	GETCONFIG GETMAKEVAL GETSYMBOLS GETVERSION \
 	Rd.files \
+	Rdnewer.pl \
 	config.guess \
 	config.sub \
 	copy-if-change \
+	help2man.pl \
+	install-info.pl \
 	install-sh \
 	keywords2html.pl \
 	ldAIX4 \
@@ -33,36 +29,25 @@ DISTFILES = Makefile.in \
 	missing \
 	mkinstalldirs \
 	move-if-change \
-	texi2dvi \
-	$(SCRIPT_SOURCES)
+	pkg2tex.pl \
+	texi2dvi
 
 all: Makefile R
 
 .SUFFIXES:
 .SUFFIXES: .in
 
-.in:
-	@cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
-	@chmod +x $@
-
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
-	@(for f in $(SCRIPT_OBJECTS); do \
-	    echo "$${f}: $(srcdir)/$${f}.in"; \
-	  done) >> $@
 
-R: $(SCRIPT_OBJECTS)
-
-$(SCRIPT_OBJECTS): $(top_builddir)/config.status
+R: Makefile
 
 mostlyclean: clean
 clean:
 distclean: clean
-	@rm -f Makefile $(SCRIPT_OBJECTS)
+	@rm -f Makefile
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)
@@ -71,6 +56,3 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-
-## Automagically generated dependencies:
-

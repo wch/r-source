@@ -4,7 +4,7 @@
  *    October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000, The R Core Development Team
+ *	Copyright (C) 2000, 2001 The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -56,14 +56,15 @@ double dhyper(double x, double r, double b, double n, int give_log)
     b = R_D_forceint(b);
     n = R_D_forceint(n);
 
+    if (n < x || r < x || n - x > b) return(R_D__0);
     if (n == 0) return((x == 0) ? R_D__1 : R_D__0);
 
     p = ((double)n)/((double)(r+b));
     q = ((double)(r+b-n))/((double)(r+b));
 
-    p1 = dbinom_raw(x,r,p,q,give_log);
-    p2 = dbinom_raw(n-x,b,p,q,give_log);
-    p3 = dbinom_raw(n,r+b,p,q,give_log);
+    p1 = dbinom_raw(x,  r, p,q,give_log);
+    p2 = dbinom_raw(n-x,b, p,q,give_log);
+    p3 = dbinom_raw(n,r+b, p,q,give_log);
 
     return( (give_log) ? p1 + p2 - p3 : p1*p2/p3 );
 }

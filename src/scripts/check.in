@@ -1,7 +1,7 @@
 #! @PERL@
 #-*- perl -*-
 
-# Copyright (C) 2000 R Development Core Team
+# Copyright (C) 2000, 2001 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.27 $ ';
+my $revision = ' $Revision: 1.27.2.8 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -57,21 +57,24 @@ $opt_latex = 0 if $opt_no_latex;
 
 my $startdir=getcwd();
 $opt_outdir=$startdir unless $opt_outdir;
-chdir($opt_outdir) || die "Cannot change to directory $opt_outdir\n";
+chdir($opt_outdir) ||
+    die "Error: cannot change to directory \`$opt_outdir'\n";
 my $outdir=getcwd();
 chdir($startdir);
 
 my $R_HOME = $ENV{'R_HOME'} ||
-    die "Error: Environment variable R_HOME not found\n";
+    die "Error: environment variable R_HOME not found\n";
 
 my $R_CMD = $ENV{'R_CMD'} ||
-    die "Error: Environment variable R_CMD not found\n";
+    die "Error: environment variable R_CMD not found\n";
 
 my $WINDOWS = R_getenv("R_UNDER_WINDOWS", 0);
 my $TMPDIR = R_getenv("TMPDIR", "/tmp");
 my $R_exe = "${R_HOME}/bin/R";
 if($WINDOWS){
     $TMPDIR = R_getenv("TMPDIR", "/TEMP");
+    die "Please set TMPDIR to a valid temporary directory\n" 
+	unless (-e $TMPDIR);
     $R_exe = "Rterm.exe";
     $MAKE = "make";
     $LATEX = "latex";
@@ -99,7 +102,7 @@ if($opt_latex){
     my $log = new R::Logfile();
     $log->checking("for working latex");
     open(texfile, "> $TMPDIR/Rtextest$$.tex") ||
-	die "cannot write to Rtextest$$.tex\n";
+	die "Error: cannot write to Rtextest$$.tex\n";
     print texfile "\\documentclass\{article\}\\begin\{document\}" .
 	"test\\end\{document\}\n";
     close texfile;
@@ -120,27 +123,35 @@ if($opt_latex){
 
 ## this is the main loop over all packages to be checked
 my $pkg;
-$#ARGV <=1 || die "no packages were specified";
+$#ARGV >=0 || die "Error: no packages were specified";
 foreach $pkg (@ARGV){
     my $is_bundle=0;
+
+    ## $pkg should be the path to the package (bundle) root source
+    ## directory, either absolute or relative to $startdir.
+    ## $pkgdir is the corresponding absolute path.
+    ## $pkgname is the name of the package (bundle).
+    chdir($startdir);
     $pkg =~ s/\/$//;
-    my $pkgname = basename($pkg);
+    (-d $pkg) || die "Error: package dir \`$pkg' does not exist";
+    chdir($pkg) ||
+	die "Error: cannot change to directory \`$pkg'\n";
+    my $pkgdir = getcwd();
+    my $pkgname = basename($pkgdir);
     chdir($startdir);
 
-    (-d $pkg) || die "\`$pkg' is not a directory";
-    
     my $pkgoutdir="$outdir/$pkgname.Rcheck";
     rmtree($pkgoutdir) if ($opt_clean && (-d $pkgoutdir)) ;
     if(! -d $pkgoutdir){
 	if(! mkdir($pkgoutdir, 0755)){
-	    die("could not create directory $pkgoutdir\n");
+	    die("Error: cannot create directory \`$pkgoutdir'\n");
 	    exit(1);
 	}
     }
-
+    
     $log = new R::Logfile("$pkgoutdir/00check.log");
     $log->message("using log directory $pkgoutdir");
-
+    
     if(! $opt_library){
 	$library = $pkgoutdir;
 	if($WINDOWS){
@@ -150,17 +161,18 @@ foreach $pkg (@ARGV){
 	    $ENV{'R_LIBS'} = "$library:$R_LIBS";
 	}
     }
-
+    
     print "\n";
-    if(system("${R_CMD} INSTALL -l $library $pkg")){
+    if(system("${R_CMD} INSTALL -l $library $pkgdir")){
 	$log->error("installation failed");
+	exit(1);
     }
     print("\n");
-
+    
     my $description;
-    $log->checking("for file \`$pkg/DESCRIPTION'");
-    if(-r "$pkg/DESCRIPTION"){
-	$description = new R::Dcf("$pkg/DESCRIPTION");
+    $log->checking("for file \`$pkgname/DESCRIPTION'");
+    if(-r "$pkgdir/DESCRIPTION"){
+	$description = new R::Dcf("$pkgdir/DESCRIPTION");
 	$log->result("OK");
     }
     else{
@@ -168,17 +180,16 @@ foreach $pkg (@ARGV){
 	exit(1);
     }
 
-	
     if($description->{"Contains"}){
-	$log->message("Looks like \`${pkg}' is a package bundle");
+	$log->message("Looks like \`${pkgname}' is a package bundle");
 	$is_bundle=1;
 	my @bundlepkgs = split(/\s+/, $description->{"Contains"});
 	my $ppkg="";
 	foreach $ppkg (@bundlepkgs){
-	    $log->message("checking \`$ppkg' in bundle \`$pkg'");
+	    $log->message("checking \`$ppkg' in bundle \`$pkgname'");
 	    $log->setstars("**");
 	    chdir($startdir);
-	    check_pkg("$pkg/$ppkg", $pkgoutdir, $startdir, $library,
+	    check_pkg("$pkgdir/$ppkg", $pkgoutdir, $startdir, $library,
 		      $is_bundle, $description, $log);
 	    $log->setstars("*");
 	}
@@ -186,7 +197,7 @@ foreach $pkg (@ARGV){
     else{
 	$is_bundle=0;
 	chdir($startdir);
-	check_pkg("$pkg", $pkgoutdir, $startdir, $library,
+	check_pkg($pkgdir, $pkgoutdir, $startdir, $library,
 		  $is_bundle, $description, $log);
     }
     
@@ -198,30 +209,35 @@ foreach $pkg (@ARGV){
     print("\n");
 }
 
-    
-
-
-
 #**********************************************************
 
 sub check_pkg {
 
     my ($pkg, $pkgoutdir, $startdir, $library,
 	$in_bundle, $description, $log) = @_;
-
-    my $pkgname = basename($pkg);
-
+    my ($pkgdir, $pkgname);
+    
+    ## $pkg is the argument we received from the main loop.
+    ## $pkgdir is the corresponding absolute path,
+    ## $pkgname the name of the package.
+    ## Note that we need to do repeat the checking from the main loop in
+    ## the case of package bundles (and we could check for this).
     $log->checking("package directory");
-    my $dir;
-    if(-d $pkg){
-	chdir($pkg);
-	$dir = getcwd();
+    chdir($startdir);
+    $pkg =~ s/\/$//;
+    if(-d $pkg) {
+	chdir($pkg) ||
+	    die "Error: cannot change to directory \`$pkg'\n";
+	$pkgdir = getcwd();
+	$pkgname = basename($pkgdir);
     }
-    else{
-	$log->error("package dir \`${pkg}' does not exist");
+    else {
+	$log->error("Error: package dir \`$pkg' does not exist");
 	exit 1;
     }
     $log->result("OK");
+    
+    chdir($pkgdir);
     
     if($in_bundle){  # join DESCRIPTION and DESCRIPTION.in
 	if(-r "DESCRIPTION.in"){
@@ -244,23 +260,23 @@ sub check_pkg {
 	
     }
 
-
     ## mandatory entries in DESCRIPTION:
     ##   Package, Title, Version, License, Author
-    $log->checking("DESCRIPTION Package entry");
+    $log->checking("DESCRIPTION Package field");
     if(! $description->{"Package"}){
-	$log->error("no DESCRIPTION Package entry found");
+	$log->error("no DESCRIPTION Package field found");
 	exit(1);
     }
-    if($description->{"Package"} ne basename($dir)){
+    my $tmp = $description->{"Package"};
+    if($description->{"Package"} ne $pkgname){
 	$log->error("DESCRIPTION Package field differs from dir name");
 	exit(1);
     }
     $log->result("OK");
-
-    $log->checking("DESCRIPTION Version entry");
+    
+    $log->checking("DESCRIPTION Version field");
     if(! $description->{"Version"}){
-	$log->error("no DESCRIPTION Version entry found");
+	$log->error("no DESCRIPTION Version field found");
 	exit(1);
     }
     if($description->{"Version"} =~ /[^\d\.\-]/){
@@ -269,19 +285,31 @@ sub check_pkg {
     }
     $log->result("OK");
     
-    my $entry;
-    foreach $entry (qw(Title License Author)){
-	$log->checking("DESCRIPTION $entry entry");
-	if(! $description->{$entry}){
-	    $log->error("no DESCRIPTION $entry entry found");
+    my $field;
+    foreach $field (qw(Title License Author)){
+	$log->checking("DESCRIPTION $field field");
+	if(! $description->{$field}){
+	    $log->error("no DESCRIPTION $field field found");
 	    exit(1);
 	}
 	$log->result("OK");
     }
+    ## FIXME:
+    ## Currently only give warning about missing `Maintainer' field.
+    ## Should be required in 1.3.0.
+    ## Also add check whether the field gives ONE email address only.
+    $log->checking("DESCRIPTION Maintainer field");
+    if(!$description->{"Maintainer"}) {
+	$log->warning();
+	$log->message("  no DESCRIPTION Maintainer field found");
+    }
+    else {
+	$log->result("OK");
+    }
+    ## </FIXME>
     
-
     ## check Rd documentation files
-
+    
     if(-d "man"){
 	$log->checking("Rd files");
 	my @rdfiles;
@@ -296,8 +324,8 @@ sub check_pkg {
 	}
 	if($#badfiles>=0){
 	    $log->error("  Cannot handle Rd file names containing \`<'.\n" .
-		    "  These are not legal file names on all R platforms.\n" .
-		    "  Please rename the following files and try again:");
+			"  These are not legal file names on all R platforms.\n" .
+			"  Please rename the following files and try again:");
 	    $log->message("    " . join("\n    ", @badfiles));
 	    exit(1);
 	}
@@ -310,7 +338,7 @@ sub check_pkg {
 			    seealso examples note author synopsis);
 	my %badmandatory;
 	my %badunique;
-
+	
 	## create hash allTags with all tags found in mandatory Tags and
 	## uniqueTags 
 	my $tag;
@@ -363,20 +391,19 @@ sub check_pkg {
 			      join("\n    ", @{$badunique{$tag}}));
 	    }
 	}
-	    
+
 	$log->result("OK") unless $any;
     }
 
-          
     ## Check for undocumented objects
 
-    if(-d "R" && -d "man"){
+    if(((-d "R") || (-d "data")) && -d "man") {
 	$log->checking("for undocumented objects");
 
 	my $Rcmd = "$TMPDIR/Rcmd.$$";
 	my $Rout = "$TMPDIR/Rout.$$";
 	open Rcmd, "> $Rcmd" || die "Cannot write to \`$Rcmd'\n";
-        print Rcmd "undoc(dir = \"${dir}\")\n";
+        print Rcmd "undoc(dir = \"${pkgdir}\")\n";
         close Rcmd;
         system("${R_exe} ${R_opts} < ${Rcmd} > ${Rout}");
         my @out;
@@ -385,7 +412,6 @@ sub check_pkg {
         close Rout;
         unlink($Rcmd);
         unlink($Rout);
-
 
 	my @err = grep {s/^Error *//} @out;
 	@out = grep {/^ *\[/} @out;
@@ -406,7 +432,7 @@ sub check_pkg {
 
     chdir($pkgoutdir);
 
-    if($opt_examples && <$library/$pkgname/R-ex/*.R>){
+    if($opt_examples && <$library/$pkgname/R-ex/*.R>) {
 	$log->creating("${pkgname}-Ex.R");
         my $iszipped = 0;
         my $massage = "massage-Examples";
@@ -436,9 +462,9 @@ sub check_pkg {
 	$log->result("OK");
     }
 
-    if($opt_tests && (-d "$startdir/$pkg/tests")){
+    if($opt_tests && (-d "$pkgdir/tests")){
         $log->checking("tests");
-        my $testsrcdir="$startdir/$pkg/tests";
+        my $testsrcdir="$pkgdir/tests";
         my $testdir="$pkgoutdir/tests";
         if(! -d $testdir){
             if(! mkdir($testdir, 0755)){
@@ -513,6 +539,7 @@ sub check_pkg {
             while(<file>){
                 print manual $_;
             }
+            close file;
         }
         print manual "\\end\{document\}\n";
         close manual;

@@ -31,7 +31,7 @@ split.data.frame(x, f)
 \examples{
 n <- 10; nn <- 100
 g <- factor(round(n * runif(n * nn)))
-x <- rnorm(n * nn) + sqrt(codes(g))
+x <- rnorm(n * nn) + sqrt(as.numeric(g))
 xg <- split(x, g)
 boxplot(xg, col = "lavender", notch = TRUE, varwidth = TRUE)
 sapply(xg, length)

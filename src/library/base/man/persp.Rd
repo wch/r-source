@@ -3,11 +3,10 @@
 \usage{
 persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
       xlim = range(x), ylim = range(y), zlim = range(z, na.rm = TRUE), 
-      xlab = NULL, ylab = NULL, zlab = NULL,
-      theta = 0, phi = 15, r = sqrt(3), d = 1,
-      scale = TRUE, expand = 1, 
-      col = NULL, border = NULL, ltheta = -135, lphi = 0,
-      shade = NA, box = TRUE, axes = TRUE, nticks = 5, ticktype = "simple",
+      xlab = NULL, ylab = NULL, zlab = NULL, main = NULL, sub = NULL,
+      theta = 0, phi = 15, r = sqrt(3), d = 1, scale = TRUE, expand = 1, 
+      col = NULL, border = NULL, ltheta = -135, lphi = 0, shade = NA,
+      box = TRUE, axes = TRUE, nticks = 5, ticktype = "simple",
       ...) 
 }
 \alias{persp}
@@ -24,6 +23,7 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
     so that the rectangular volume defined by these limits is visible.}
   \item{xlab, ylab, zlab}{titles for the axes. N.B. These must the
     character strings; expressions are not accepted.}
+  \item{main, sub}{main and sub title, as for \code{\link{title}}.}
   \item{theta, phi}{angles defining the viewing direction.
     \code{theta} gives the azimuthal direction and \code{phi}
     the colatitude.}
@@ -67,8 +67,7 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
     ticks as per 2D plots.}
   \item{nticks}{the (approximate) number of tick marks to draw on the
     axes.  Has no effect if \code{ticktype} is "simple".}
-  \item{\dots}{additional graphical parameters (see \code{\link{par}})
-    and the arguments to \code{\link{title}} may also be supplied.}
+  \item{\dots}{additional graphical parameters (see \code{\link{par}}).}
 }
 \description{
   This function draws perspective plots of surfaces over the

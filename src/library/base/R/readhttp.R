@@ -44,26 +44,29 @@
                       sep = "")
     }
     if (drop.ctrl.z)
-        data <- gsub("\026", "", data, extended = FALSE)
+        data <- gsub("\032", "", data, extended = FALSE)
     cat(data, file = file)
     return(file)
 }
+
 "read.table.url" <-
     function (url, method="auto", ...)
 {
-    f<-tempfile()
-    if (download.file(url, destfile=f,method=method)==0)
+    f <- tempfile()
+    if (download.file(url, destfile=f, method=method) == 0) {
         data <- read.table(f, ...)
-    else {
+        unlink(f)
+    } else {
         unlink(f)
         stop("transfer failure")
     }
     return(data)
 }
+
 "scan.url" <-
     function (url, file=tempfile(), method="auto", ...)
 {
-    if (download.file(url, dest=file, method=method)!=0){
+    if (download.file(url, dest=file, method=method) != 0){
         unlink(file)
         stop("transfer failed")
     }
@@ -71,10 +74,11 @@
     unlink(file)
     return(data)
 }
+
 "source.url" <-
     function (url, file=tempfile(), method="auto", ...)
 {
-    if (download.file(url, dest=file, method=method)!=0){
+    if (download.file(url, dest=file, method=method) != 0) {
         unlink(file)
         stop("transfer failure")
     }
@@ -86,11 +90,12 @@
     eval(m, parent.frame())
     unlink(file)
 }
+
 "url.show" <-
     function (url,  title = url, file = tempfile(),
-              delete.file = TRUE, method="auto",...)
+              delete.file = TRUE, method="auto", ...)
 {
-    if (download.file(url, dest = file,method=method)!=0)
+    if (download.file(url, dest = file, method = method) != 0)
         stop("transfer failure")
-    file.show(file, delete.file = delete.file,title=title, ...)
+    file.show(file, delete.file = delete.file, title = title, ...)
 }

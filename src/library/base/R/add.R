@@ -165,6 +165,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     new.form <- update.formula(object, add.rhs)
     Terms <- terms(new.form)
     y <- object$y
+    wt <- object$prior.weights
     if(is.null(x)) {
 	fc <- object$call
 	fc$formula <- Terms
@@ -174,13 +175,14 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	x <- model.matrix(Terms, m, contrasts = object$contrasts)
         oldn <- length(y)
         y <- model.response(m, "numeric")
+        ## binomial case has adjusted y.
+        if(NCOL(y) == 2) y <- y[, 1]/(y[, 1] + y[,2])
         newn <- length(y)
         if(newn < oldn)
             warning(paste("using the", newn, "/", oldn ,
                           "rows from a combined fit"))
     }
     n <- nrow(x)
-    wt <- object$prior.weights
     if(is.null(wt)) wt <- rep(1, n)
     Terms <- attr(Terms, "term.labels")
     asgn <- attr(x, "assign")
@@ -203,7 +205,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	else loglik <- n * log(dev/n)
     } else loglik <- dev/dispersion
     aic <- loglik + k * dfs
-    aic <- aic + (extractAIC(object)[2] - aic[1])
+    aic <- aic + (extractAIC(object, k = k)[2] - aic[1])
     dfs <- dfs - dfs[1]
     dfs[1] <- NA
     aod <- data.frame(Df = dfs, Deviance = dev, AIC = aic,
@@ -407,7 +409,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     aic <- loglik + k * dfs
     dfs <- dfs[1] - dfs
     dfs[1] <- NA
-    aic <- aic + (extractAIC(object)[2] - aic[1])
+    aic <- aic + (extractAIC(object, k = k)[2] - aic[1])
     aod <- data.frame(Df = dfs, Deviance = dev, AIC = aic,
 		      row.names = scope, check.names = FALSE)
     if(all(is.na(aic))) aod <- aod[, -3]

@@ -21,13 +21,29 @@ a self-extracting zip archive that contains instructions.
 Installation
 ============
 
-The distribution consists of several zip files:
+The distribution can be obtained in one of three versions:
+
+1) A 10Mb file SetupR.exe.  Just run this for a Windows-2000 style
+installer.  It contains all the R components except WinHlp files, and you
+can select what want installed.
+
+
+2) Files miniR.exe and miniR-1.bin to miniR-4.bin.  If you nned to,
+put miniR.exe and miniR-1.bin on one floppy, and miniR-2.bin to
+miniR-4.bin on separate floppies.
+
+This is a small installation, containing text and compiled HTML help
+and the Introduction to R and Data Import/Export manuals in PDF.
+
+
+3) The full distribution consists of several zip files:
 
 @RWVER@b1.zip and @RWVER@b2.zip		the base system
 @RWVER@h.zip				text help
 @RWVER@ch.zip				compiled HTML help
 @RWVER@w.zip				HTML help files
 @RWVER@l.zip				latex help files for offline help
+@RWVER@wh.zip				WinHlp help files
 @RWVER@d1.zip				PDF manuals except
 @RWVER@d2.zip				  PDF version of the reference manual
 @RWVER@sp.zip				files to build packages from source
@@ -68,6 +84,10 @@ Set the `Start in' field of the shortcut to the directory you want to use
 as the working directory (where workspaces and files are saved and
 loaded from).
 
+You have a choice of interface:  SDI (lots of separate windows) or
+MDI (multiple child windows in one large window).  MSI is the default:
+select SDI by adding --sdi in the Target field.
+
 Command-line editing is available: see Help | Console for details.
 
 The menus provide shortcuts to some R commands such as help, help.start,
@@ -106,7 +126,7 @@ Rterm.exe --no-restore --no-save < infile > outfile
 
 although users will probably want to set up simple .bat or .cmd files
 to run batch jobs. You can also use it via Rcmd BATCH: see ?BATCH or
-Rcmd BATCH --help.
+Rcmd BATCH --help.  (You will need @RWVER@sp.zip and Perl installed.)
 
 Use with ESS: You can use Rterm.exe to provide inferior R-mode in ESS
 under NTEmacs, for example with ess-5.1.18.  The pager is

@@ -114,7 +114,7 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
     fixFormulaObject <- function(object) {
 	tmp <- attr(terms(object), "term.labels")
 	form <- formula(object)
-	lhs <- if(length(form) == 2) NULL else deparse(form[[2]])
+	lhs <- if(length(form) == 2) NULL else paste(deparse(form[[2]]),collapse="")
 	rhs <- if(length(tmp)) paste(tmp, collapse = " + ") else "1"
 	if(!attr(terms(object), "intercept")) rhs <- paste(rhs, "- 1")
 	ff <- formula(paste(lhs, "~", rhs))

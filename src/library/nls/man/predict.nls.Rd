@@ -2,7 +2,7 @@
 \title{Predicting from Nonlinear Least Squares Fits}
 \alias{predict.nls}
 \usage{
-predict[.nls](object, newdata , se.fit = FALSE, scale = NULL, df = Inf, 
+\method{predict}{nls}(object, newdata , se.fit = FALSE, scale = NULL, df = Inf, 
               interval = c("none", "confidence", "prediction"),
               level = 0.95, ...)
 }
@@ -46,18 +46,19 @@ predict[.nls](object, newdata , se.fit = FALSE, scale = NULL, df = Inf,
 \value{
   \code{predict.nls} produces a vector of predictions or a matrix of
   predictions and bounds with column names \code{fit}, \code{lwr}, and
-  \code{upr} if \code{interval} is set. If \code{se.fit} is
-  \code{TRUE}, a list with the following components is returned
+  \code{upr} if \code{interval} is set.  If \code{se.fit} is
+  \code{TRUE}, a list with the following components is returned:
 
   \item{fit}{vector or matrix as above}
   \item{se.fit}{standard error of predictions}
   \item{residual.scale}{residual standard deviations}
   \item{df}{degrees of freedom for residual}
 }
-\seealso{The model fitting function \code{\link{nls}}, \code{\link{predict}}.
+\seealso{
+  The model fitting function \code{\link{nls}},
+  \code{\link{predict}}.
 }
 \examples{
-library( nls )
 data( BOD )
 fm <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 predict(fm)              # fitted values at observed times
@@ -73,7 +74,3 @@ par(opar)
 \keyword{nonlinear}
 \keyword{regression}
 \keyword{models}
-
-
-
-

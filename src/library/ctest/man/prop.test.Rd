@@ -14,11 +14,12 @@ prop.test(x, n = NULL, p = NULL,
   \item{p}{a vector of probabilities of success.  The length of
     \code{p} must be the same as the number of groups specified by
     \code{x}, and its elements must be greater than 0 and less than 1.}
-  \item{alternative}{the alternative hypothesis; must be one of
-    \code{"two.sided"} (default), \code{"greater"} or \code{"less"} and
-    can be abbreviated by the initial letter.  Only used for testing the
-    null that a single proportion equals a given value, or that two
-    proportions are equal; ignored otherwise.}
+  \item{alternative}{a character string specifying the alternative
+    hypothesis, must be one of \code{"two.sided"} (default),
+    \code{"greater"} or \code{"less"}.  You can specify just the initial
+    letter.  Only used for testing the null that a single proportion
+    equals a given value, or that two proportions are equal; ignored
+    otherwise.}
   \item{conf.level}{confidence level of the returned confidence
     interval.  Must be a single number between 0 and 1.  Only used
     when testing the null that a single proportion equals a given

@@ -14,7 +14,7 @@ C These now all call C functions via F77_NAME(.) in ./print.c :
       real data(ndata)
       nc = nchar
       if(nc .lt. 0) nc = len(label)
-      call realpr0(label, nc, data, ndata)
+      call realp0(label, nc, data, ndata)
       end
 
       subroutine dblepr(label, nchar, data, ndata)
@@ -22,5 +22,5 @@ C These now all call C functions via F77_NAME(.) in ./print.c :
       double precision data(ndata)
       nc = nchar
       if(nc .lt. 0) nc = len(label)
-      call dblepr0(label, nc, data, ndata)
+      call dblep0(label, nc, data, ndata)
       end

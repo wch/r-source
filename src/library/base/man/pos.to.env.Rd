@@ -18,7 +18,8 @@
   it.
 }
 \examples{
-pos.to.env(1)
+pos.to.env(1) # R_GlobalEnv
+# the next returns NULL, which is how package:base is represented.
 pos.to.env(length(search()))
 }
 \keyword{utilities}

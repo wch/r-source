@@ -16,7 +16,7 @@ loess.control(surface = c("interpolate", "direct"),
  \item{statistics}{should the statistics be computed exactly or
    approximately? Exact computation can be very slow.}
  \item{trace.hat}{should the trace of the smoother matrix be computed
-   exactly or approximately. It is recommended to use the approximation
+   exactly or approximately? It is recommended to use the approximation
    for more than about 1000 data points.}
  \item{cell}{if interpolation is used this controls the accuracy of the
    approximation via the maximum number of points in a  cell in the kd
@@ -33,6 +33,7 @@ loess.control(surface = c("interpolate", "direct"),
   \item{trace.hat}{}
   \item{cell}{}
   \item{iterations}{}
+  with meanings as explained under `Arguments'.
 }
 \author{B.D. Ripley}
 \seealso{\code{\link{loess}}}

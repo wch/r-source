@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999, 2000  the R Development Core Team
+ *  Copyright (C) 1999-2001  the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,13 +17,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <math.h>
-
-#include "Defn.h"
+#include <Defn.h>
 #include <Rdefines.h>		/* for CREATE_STRING_VECTOR */
-#include "R_ext/Random.h"	/* for the random number generation in
+#include <R_ext/Random.h>	/* for the random number generation in
 				   samin() */
-#include "R_ext/Applic.h"	/* setulb() */
+#include <R_ext/Applic.h>	/* setulb() */
 
 static SEXP getListElement(SEXP list, char *str)
 {
@@ -615,7 +613,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
     double **P;
     double size, step, temp, trystep;
     char tstr[6];
-    double VH, VL, VN, VR;
+    double VH, VL, VR;
 
     if (trace)
 	Rprintf("  Nelder-Mead direct search function minimizer\n");
@@ -697,7 +695,6 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
 	    if (VH > VL + convtol && VL > abstol) {
 		sprintf(tstr, "%5d", funcount);
 		if (trace) Rprintf("%s%s %f %f\n", action, tstr, VH, VL);
-		VN = beta * VL + (1.0 - beta) * VH;
 
 		for (i = 0; i < n; i++) {
 		    temp = -P[i][H - 1];

@@ -1,6 +1,6 @@
 /*
  *  RProxy: Connector implementation between application and R language
- *  Copyright (C) 1999 Thomas Baier
+ *  Copyright (C) 1999--2001 Thomas Baier
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.h,v 1.4 1999/12/15 17:20:28 pd Exp $
+ *  $Id: rproxy_impl.h,v 1.4.14.1 2001/04/04 10:09:49 ripley Exp $
  */
 
 #ifndef _RPROXY_IMPL_H_
@@ -27,7 +27,8 @@
 
 // exported functions for implementation
 
-int R_Proxy_init ();
+// 00-02-18 | baier | init() now receives parameter-string
+int R_Proxy_init (char const* pParameters);
 int R_Proxy_evaluate (char const* pCmd,BDX_Data** pData);
 int R_Proxy_evaluate_noreturn (char const* pCmd);
 int R_Proxy_get_symbol (char const* pSymbol,BDX_Data** pData);

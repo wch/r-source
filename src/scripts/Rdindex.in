@@ -24,8 +24,9 @@
 
 use Getopt::Long;
 use R::Utils;
+use R::Rd;
 
-my $revision = ' $Revision: 1.10 $ ';
+my $revision = ' $Revision: 1.10.2.1 $ ';
 my $version;
 my $name;
 
@@ -115,27 +116,20 @@ if ($#ARGV == 0 && -d $ARGV[0]) {
 undef $/;
 
 foreach $file (@Rdfiles) {
-    if (!open(FILE, $file)) {
-	print STDERR "File $file not found\n";
+    my $rdinfo = R::Rd->info($file);
+    $name = $rdinfo->{"name"};
+    my $l = length($name);
+    if ($l <= $l1) {
+	$~ = short;
     }
     else {
-	$_ = <FILE>;
-	m/\\name\{([^\}]*)\}/;
-	$name = $1;
-	$l = length($name);
-	if ($l <= $l1) {
-	    $~ = short;
-	}
-	else {
-	    $~ = long;
-	}
-	/\\title\{\s*([^\}]+)\s*\}/s;
-	$desc = $1;
+	$~ = long;
+    }
+    $desc = $rdinfo->{"title"};
+    write;
+    $~ = cont;
+    while ($desc) {
 	write;
-	$~ = cont;
-	while ($desc) {
-	    write;
-	}
     }
 }
 

@@ -638,11 +638,17 @@ SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    /* Here we use the fact that: */
 	    /* CAR(R_NilValue) = R_NilValue */
 	    /* CDR(R_NilValue) = R_NilValue */
+
+	    int ndn; /* Number of dimnames. Unlikely to be anything but
+                        0 or nsubs, but just in case... */
+
 	    PROTECT(indx = allocVector(INTSXP, nsubs));
 	    dimnames = getAttrib(x, R_DimNamesSymbol);
+	    ndn = length(dimnames);
 	    for (i = 0; i < nsubs; i++) {
 		INTEGER(indx)[i] =
-		    get1index(CAR(subs), VECTOR_ELT(dimnames, i),
+		    get1index(CAR(subs), (i < ndn) ? VECTOR_ELT(dimnames, i) :
+		              R_NilValue,
 			      INTEGER(indx)[i], /*partial ok*/TRUE);
 		subs = CDR(subs);
 		if (INTEGER(indx)[i] < 0 ||

@@ -360,7 +360,17 @@ static void attr2(SEXP s)
 	    else if(TAG(a) == R_LevelsSymbol) {
 		print2buff(".Label");
 	    }
-	    else deparse2buff(TAG(a));
+	    else {
+		/* TAG(a) might contain spaces etc */
+		char *tag = CHAR(PRINTNAME(TAG(a)));
+		if(isValidName(tag))
+		    deparse2buff(TAG(a));
+		else {
+		    print2buff("\"");
+		    deparse2buff(TAG(a));
+		    print2buff("\"");
+		}
+	    }
 	    print2buff(" = ");
 	    deparse2buff(CAR(a));
 	    a = CDR(a);

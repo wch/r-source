@@ -1,21 +1,37 @@
 \name{names}
-\title{The Names Attribute of an Object}
-\usage{
-names(x, \dots)
-names.default(x)
-names(x) <- value
-}
 \alias{names}
 \alias{names.default}
 \alias{names<-}
 \alias{names<-.default}
+\title{The Names Attribute of an Object}
 \description{
-\code{names} is a generic accessor function to the \code{names}
-attribute of an \R object, typically a \code{\link{vector}}.
-The first form prints the names of the observations
-and the second sets the names.
-In this case, \code{value} must be a vector of character strings of the
-same length as \code{x}.
+  Functions to get or set the names of an object.
+}
+\usage{
+names(x, \dots)
+names(x) <- value
+}
+\arguments{
+  \item{x}{an \R object.}
+  \item{value}{a character vector of the same length as \code{x}, or
+    \code{NULL}.} 
+}
+\value{
+  For \code{names}, \code{NULL} or a character vector of the same length
+  as \code{x}.
+
+  For \code{names<-}, the updated object.  (Note that the value of
+  \code{names(x) <- value} is that of the assignment, \code{value}, not
+  the return value from the left-hand side.)
+}
+\description{
+  \code{names} is a generic accessor function, and \code{names<-} is a
+  generic replacement function.  The default methods get and set
+  the \code{"names"} attribute of a vector or list.
+
+  It is possible to update just part of the names attribute via the
+  general rules: see the examples.  This works because the expression
+  there is evaluated as \code{z <- "names<-"(z, "[<-"(names(z), 3, "c2"))}.
 }
 \examples{
 \testonly{data(islands)}
@@ -24,5 +40,11 @@ names(islands)
 
 # remove the names attribute
 names(islands) <- NULL
+
+z <- list(a=1, b="c", c=1:3)
+names(z)
+# change just the name of the third element.
+names(z)[3] <- "c2"
+z
 }
 \keyword{attribute}

@@ -26,6 +26,12 @@ parse(file = "", n = NULL, text = NULL, prompt = NULL, white = FALSE)
   \code{\link{scan}}, \code{\link{source}}, \code{\link{eval}},
   \code{\link{deparse}}.
 }
+\details{
+  All versions of \R accept input  from a connection with end of line
+  marked by LF (as used on Unix), CRLF (as used on DOS/Windows)
+  or CR (as used on Mac).  The final line can be incomplete, that
+  is missing the final EOL marker. 
+}
 \examples{
 cat("x <- c(1,4)\n  x ^ 3 -10 ; outer(1:7,5:9)\n", file="xyz.Rdmped")
 # parse 3 statements from the file "xyz.Rdmped"

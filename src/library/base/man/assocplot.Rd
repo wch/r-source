@@ -29,15 +29,16 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   where \eqn{f_{ij}} and \eqn{e_{ij}} are the observed and expected
   counts corresponding to the cell.  In the Cohen-Friendly association
   plot, each cell is represented by a rectangle that has (signed) height
-  proportional to \eqn{d_ij} and width proportional to \eqn{e_{ij}}, so
-  that the area of the box is proportional to the difference in observed
-  and expected frequencies.  The rectangles in each row are positioned
-  relative to a baseline indicating independence (\eqn{d_{ij} = 0}).
-  If the observed frequency of a cell is greater than the expected one,
-  the box rises above the baseline and is shaded in the color specified
-  by the first element of \code{col}, which defaults to black;
-  otherwise, the box falls below the basline and is shaded in the color
-  specified by the second element of \code{col}, which default to red.
+  proportional to \eqn{d_{ij}} and width proportional to
+  \eqn{\sqrt{e_{ij}}}{sqrt(e_{ij})}, so that the area of the box is
+  proportional to the difference in observed and expected frequencies.
+  The rectangles in each row are positioned relative to a baseline
+  indicating independence (\eqn{d_{ij} = 0}).  If the observed frequency
+  of a cell is greater than the expected one, the box rises above the
+  baseline and is shaded in the color specified by the first element of
+  \code{col}, which defaults to black; otherwise, the box falls below
+  the basline and is shaded in the color specified by the second element
+  of \code{col}, which default to red.
 }
 \seealso{
   \code{\link{mosaicplot}};

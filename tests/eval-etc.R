@@ -40,13 +40,14 @@ dput(get("x",env=e))
 ### Substitute, Eval, Parse, etc
 
 ## PR#3 : "..." matching
+## Revised March 7 2001 -pd
 A <- function(x, y, ...) {
     B <- function(a, b, ...) { match.call() }
     B(x+y, ...)
 }
 (aa <- A(1,2,3))
 all.equal(as.list(aa),
-          list(as.name("B"), a = expression(x+y)[[1]], ..1 = 3))
+          list(as.name("B"), a = expression(x+y)[[1]], b = 3))
 (a2 <- A(1,2, named = 3)) #A(1,2, named = 3)
 all.equal(as.list(a2),
           list(as.name("B"), a = expression(x+y)[[1]], named = 3))
@@ -55,8 +56,21 @@ CC <- function(...) match.call()
 DD <- function(...) CC(...)
 a3 <- DD(1,2,3)
 all.equal(as.list(a3),
-          list(as.name("CC"), ..1 = 1, ..2 = 2, ..3 = 3))
+          list(as.name("CC"), 1, 2, 3))
 
+## More dots issues: March 19 2001 -pd
+## Didn't work up to and including 1.2.2
+
+f <- function(...) {
+	val <- match.call(expand.dots=F)$...
+        x <- val[[1]]
+	eval.parent(substitute(missing(x)))
+}
+g <- function(...) h(f(...))
+h <- function(...) list(...)
+k <- function(...) g(...)
+X <- k(a=) 
+all.equal(X, list(TRUE))
 
 ## Bug PR#24
 f <- function(x,...) substitute(list(x,...))

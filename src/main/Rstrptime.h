@@ -34,6 +34,7 @@ static void get_locale_strings(void);
 
 #define match_char(ch1, ch2) if (ch1 != ch2) return NULL
 
+#ifndef Macintosh
 #if defined __GNUC__ && __GNUC__ >= 2
 # define match_string(cs1, s2) \
   ({ size_t len = strlen (cs1);						      \
@@ -45,6 +46,10 @@ static void get_locale_strings(void);
 # define match_string(cs1, s2) \
   (strncasecmp ((cs1), (s2), strlen (cs1)) ? 0 : ((s2) += strlen (cs1), 1))
 #endif
+#else
+# define match_string(cs1, s2) \
+  (strncmp ((cs1), (s2), strlen (cs1)) ? 0 : ((s2) += strlen (cs1), 1))
+#endif /* mac */
 
 /* We intentionally do not use isdigit() for testing because this will
    lead to problems with the wide character version.  */

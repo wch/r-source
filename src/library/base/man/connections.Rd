@@ -20,9 +20,9 @@
 file(description, open = "", blocking = TRUE)
 pipe(description, open = "")
 
-open(con, open = "rt", blocking = TRUE)
-close(con, type = "rw")
-seek(con, where = NA, rw = "")
+\method{open}{connection}(con, open = "r", blocking = TRUE)
+\method{close}{connection}(con, type = "rw")
+\method{seek}{connection}(con, where = NA, rw = "")
 
 isOpen(con, rw = "")
 isIncomplete(con)
@@ -31,7 +31,6 @@ isSeekable(con)
 \arguments{
   \item{description}{character. A description of the connection. For
     \code{file} this is a path to the file to be opened.
-    For a \code{textConnection} it is an \R character vector object.
   }
   \item{open}{character.  A description of how to open the connection
     (if at all). See Details for possible values.}
@@ -131,6 +130,14 @@ unlink("ex.data")
 
 # read listing of current directory
 readLines(pipe("ls -1"))
+
+# remove trailing commas. Suppose
+% cat data2
+450, 390, 467, 654,  30, 542, 334, 432, 421,
+357, 497, 493, 550, 549, 467, 575, 578, 342,
+446, 547, 534, 495, 979, 479
+# Then read this by
+scan(pipe("sed -e s/,$// data2"), sep=",")
 
 # convert decimal point to comma in output 
 zz <- pipe(paste("sed s/\\\\./,/ >", "outfile"), "w")

@@ -25,7 +25,10 @@ rownames <- function(x, do.NULL = TRUE, prefix = "row")
 }
 "rownames<-" <- function(x, value) {
     dn <- dimnames(x)
-    dimnames(x) <- list(value, if(!is.null(dn)) dn[[2]])
+    ndn <- names(dn)
+    dn <- list(value, if(!is.null(dn)) dn[[2]])
+    names(dn) <- ndn
+    dimnames(x) <- dn
     x
 }
 colnames <- function(x, do.NULL = TRUE, prefix = "col")
@@ -39,7 +42,10 @@ colnames <- function(x, do.NULL = TRUE, prefix = "col")
 }
 "colnames<-" <- function(x, value) {
     dn <- dimnames(x)
-    dimnames(x) <- list(if(!is.null(dn)) dn[[1]], value)
+    ndn <- names(dn)
+    dn <- list(if(!is.null(dn)) dn[[1]], value)
+    names(dn) <- ndn
+    dimnames(x) <- dn
     x
 }
 

@@ -3,5 +3,6 @@ Version: @VERSION@
 Priority: base
 Title: Modern Regression: Smoothing and Local Methods
 Author: Brian Ripley.
+Maintainer: R Core Team <R-core@r-project.org>
 Description: Modern regression: smoothing and local methods
 License: GPL Version 2 or later.

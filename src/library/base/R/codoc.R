@@ -77,9 +77,13 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
         invisible()
     }
     .DocsEnv <- new.env()
+    if(verbose)
+        cat("Docs: `lib.source(\"", docsFile, "\", *)'\n", sep="")
     lib.source(docsFile, env = .DocsEnv)
     lsDocs <- ls(envir = .DocsEnv, all.names = TRUE)
     .CodeEnv <- new.env()
+    if(verbose)
+        cat("Code: `lib.source(\"", codeFile, "\", *)'\n", sep="")
     lib.source(codeFile, env = .CodeEnv)
     lsCode <- ls(envir = .CodeEnv, all.names = TRUE)
 
@@ -100,17 +104,19 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
         print(undocFuns)
     }
 
-    isGeneric <- function(f) {
-        any(grep("UseMethod", deparse(body(f))))
-    }
-
     ## Function objects which are non-primitive (such that args() is
     ## non-NULL) and have wrong usage documentation
     args <- lapply(funs,
                    function(f) args(get(f, envir = .CodeEnv)))
     funs <- funs[(funs %in% lsDocs) & (sapply(args, length) > 0)]
-    if(ignore.generic.functions)
+    if(ignore.generic.functions) {
+        isGeneric <- function(f) {
+            any(grep("UseMethod",
+                     deparse(body(get(f, envir = .CodeEnv)))))
+        }
         funs <- funs[!sapply(funs, isGeneric)]
+    }
+
     getCoDoc <- function(f) {
         ffc <- formals(get(f, envir = .CodeEnv))
         ffd <- formals(get(f, envir = .DocsEnv))

@@ -4,7 +4,8 @@ boxplot.default <-
 function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
          notch = FALSE, names, boxwex = 0.8,
 	 data = parent.frame(), plot = TRUE,
-         border = par("fg"), col = NULL, log = "", pars = NULL)
+         border = par("fg"), col = NULL, log = "", pars = NULL,
+         horizontal = FALSE, add = FALSE)
 {
     args <- list(x, ...)
     namedargs <-
@@ -57,7 +58,8 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
               names = names)
     if(plot) {
 	bxp(z, width, varwidth = varwidth, notch = notch, boxwex = boxwex,
-            border = border, col = col, log = log, pars = pars)
+            border = border, col = col, log = log, pars = pars,
+            horizontal = horizontal, add = add)
 	invisible(z)
     }
     else z
@@ -82,50 +84,83 @@ boxplot.formula <- function(formula, data = NULL, subset, na.action, ...)
 boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 {
     nna <- !is.na(x)
-    n <- length(nna)                    # including +/- Inf
+    n <- length(nna) # including +/- Inf
     stats <- fivenum(x, na.rm = TRUE)
     iqr <- diff(stats[c(2, 4)])
-    out <- x < (stats[2] - coef * iqr) | x > (stats[4] + coef * iqr)
-    if(coef > 0) stats[c(1, 5)] <- range(x[!out], na.rm = TRUE)
+    if(coef < 0) stop("`coef' must not be negative")
+    if(coef == 0)
+	do.out <- FALSE
+    else { # coef > 0
+	out <- x < (stats[2] - coef * iqr) | x > (stats[4] + coef * iqr)
+	if(any(out[nna])) stats[c(1, 5)] <- range(x[!out], na.rm = TRUE)
+    }
     conf <- if(do.conf)
-        stats[3] + c(-1.58, 1.58) * diff(stats[c(2, 4)]) / sqrt(n)
+	stats[3] + c(-1.58, 1.58) * diff(stats[c(2, 4)]) / sqrt(n)
     list(stats = stats, n = n, conf = conf,
-         out = if(do.out) x[out & nna] else numeric(0))
+	 out = if(do.out) x[out & nna] else numeric(0))
 }
 
 bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	        notch.frac = 0.5, boxwex = 0.8,
 		border=par("fg"), col=NULL, log="", pars=NULL,
                 frame.plot = axes,
-                ...)
+                horizontal = FALSE, add = FALSE, ...)
 {
     pars <- c(pars, list(...))
 
-    bplt <- function(x, wid, stats, out, conf, notch, border, col)
+    bplt <- function(x, wid, stats, out, conf, notch, border, col, horizontal)
     {
 	## Draw single box plot
 	if(!any(is.na(stats))) {
 	    ## stats = +/- Inf:	 polygon & segments should handle
 	    wid <- wid/2
-	    if(notch) {
-		xx <- x+wid*c(-1,1, 1, notch.frac, 1,
-			      1,-1,-1,-notch.frac,-1)
-		yy <- c(stats[c(2,2)],conf[1],stats[3],conf[2],
-			stats[c(4,4)],conf[2],stats[3],conf[1])
-		polygon(xx, yy, col=col, border=border)
-		segments(x-wid/2,stats[3], x+wid/2,stats[3], col=border)
-	    }
-	    else {
-		xx <- x+wid*c(-1,1,1,-1)
-		yy <- stats[c(2,2,4,4)]
-		polygon(xx, yy, col=col, border=border)
-		segments(x-wid,stats[3],x+wid,stats[3],col=border)
-	    }
-	    segments(rep(x,2),stats[c(1,5)], rep(x,2),
-		     stats[c(2,4)], lty="dashed",col=border)
-	    segments(rep(x-wid/2,2),stats[c(1,5)],rep(x+wid/2,2),
-		     stats[c(1,5)],col=border)
-	    points(rep(x,length(out)), out, col=border)
+            if (horizontal) {
+
+                if (notch) {
+                    xx <- x + wid * c(-1, 1, 1, notch.frac, 1, 1,
+                                      -1, -1, -notch.frac, -1)
+                    yy <- c(stats[c(2, 2)], conf[1], stats[3], conf[2],
+                            stats[c(4, 4)], conf[2], stats[3], conf[1])
+                    polygon(yy, xx, col = col, border = border)
+                    segments(stats[3], x - wid/2, stats[3], x + wid/2,
+                             col = border)
+                }
+                else {
+                    xx <- x + wid * c(-1, 1, 1, -1)
+                    yy <- stats[c(2, 2, 4, 4)]
+                    polygon(yy, xx, col = col, border = border)
+                    segments(stats[3], x - wid, stats[3], x + wid,
+                             col = border)
+                }
+                segments(stats[c(1, 5)], rep(x, 2), stats[c(2, 4)], rep(x, 2),
+                         lty = "dashed", col = border)
+                segments(stats[c(1, 5)], rep(x - wid/2, 2), stats[c(1, 5)],
+                         rep(x + wid/2, 2), col = border)
+                points(out, rep(x, length(out)), col = border)
+
+            }
+            else { ## vertical
+
+                if(notch) {
+                    xx <- x+wid*c(-1,1, 1, notch.frac, 1,
+                                  1,-1,-1,-notch.frac,-1)
+                    yy <- c(stats[c(2,2)],conf[1],stats[3],conf[2],
+                            stats[c(4,4)],conf[2],stats[3],conf[1])
+                    polygon(xx, yy, col=col, border=border)
+                    segments(x-wid/2,stats[3], x+wid/2,stats[3], col=border)
+                }
+                else {
+                    xx <- x+wid*c(-1,1,1,-1)
+                    yy <- stats[c(2,2,4,4)]
+                    polygon(xx, yy, col=col, border=border)
+                    segments(x-wid,stats[3],x+wid,stats[3],col=border)
+                }
+                segments(rep(x,2),stats[c(1,5)], rep(x,2),
+                         stats[c(2,4)], lty="dashed",col=border)
+                segments(rep(x-wid/2,2),stats[c(1,5)],rep(x+wid/2,2),
+                         stats[c(1,5)],col=border)
+                points(rep(x,length(out)), out, col=border)
+            }
 	    if(any(inf <- !is.finite(out))) {
 		## FIXME: should MARK on plot !! (S-plus doesn't either)
 		warning(paste("Outlier (",
@@ -164,9 +199,15 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     if(missing(border) || length(border)==0)
 	border <- par("fg")
 
-    plot.new()
-    plot.window(xlim=c(0.5,n+0.5), ylim=ylim, log=log)
-
+    if (!add) {
+    	plot.new()
+    	## shall we switch log for horizontal with
+        ## switch(log, x="y", y="x", log) ??
+    	if (horizontal)
+            plot.window(ylim = c(0.5, n + 0.5), xlim = ylim, log = log)
+        else
+            plot.window(xlim = c(0.5, n + 0.5), ylim = ylim, log = log)
+    }
     for(i in 1:n)
 	bplt(i, wid=width[i],
 	     stats= z$stats[,i],
@@ -174,13 +215,17 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	     conf = z$conf[,i],
 	     notch= notch,
 	     border=border[(i-1)%%length(border)+1],
-	     col=if(is.null(col)) col else col[(i-1)%%length(col)+1])
+	     col = if(is.null(col)) col else col[(i-1)%%length(col)+1],
+             horizontal=horizontal)
 
     axes <- is.null(pars$axes)
     if(!axes) { axes <- pars$axes; pars$axes <- NULL }
     if(axes) {
-	if(n > 1) axis(1, at=1:n, labels=z$names, xaxt = pars$xaxt)
-	axis(2, yaxt = pars$yaxt)
+        if (n > 1)
+            do.call("axis", c(list(side = 1 + horizontal, at = 1:n, labels
+                 = z$names), pars[names(pars) %in% c("xaxt", "yaxt", "las")]))
+        do.call("axis", c(list(side = 2 - horizontal),
+                          pars[names(pars) %in% c("xaxt", "yaxt", "las")]))
     }
     do.call("title", pars)
     if(frame.plot)
