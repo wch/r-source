@@ -60,7 +60,7 @@ static menuitem msource, mdisplay, mload, msave, mloadhistory,
     msavehistory, mpaste, mcopy, mcopypaste, mlazy, mconfig,
     mls, mrm, msearch, mhelp, mmanintro, mmanref, mmandata,
     mmanext, mmanlang, mapropos, mhelpstart, mFAQ, mrwFAQ,
-    mpkgl, mpkgi, mpkgil, mpkgu, mde;
+    mpkgl, mpkgi, mpkgil, mpkgb, mpkgu, mpkgbu, mde;
 static int lmanintro, lmanref, lmandata, lmanlang, lmanext;
 static menu m, mman;
 static char cmd[1024];
@@ -303,6 +303,21 @@ static void menupkgupdate(control m)
 /*    show(RConsole); */
 }
 
+static void menupkgupdatebioc(control m)
+{
+    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole, 
+	       "update.packages(CRAN=getOption(\"BIOC\"))");
+/*    show(RConsole); */
+}
+
+
+static void menupkginstallbioc(control m) {
+    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole,
+	       "{a<- CRAN.packages(CRAN=getOption(\"BIOC\"))\ninstall.packages(select.list(a[,1],,TRUE), .libPaths()[1], available=a, CRAN=getOption(\"BIOC\"))}");
+}
+
 static void menupkginstallcran(control m)
 {
     if (!ConsoleAcceptCmd) return;
@@ -429,8 +444,10 @@ static void menuact(control m)
 	enable(mapropos);
 	enable(mpkgl);
 	enable(mpkgi);
+	enable(mpkgb);
 	enable(mpkgil);
 	enable(mpkgu);
+	enable(mpkgbu);
 	enable(mde);
     } else {
 	disable(msource);
@@ -443,8 +460,10 @@ static void menuact(control m)
 	disable(mapropos);
 	disable(mpkgl);
 	disable(mpkgi);
+	disable(mpkgb);
 	disable(mpkgil);
 	disable(mpkgu);
+	disable(mpkgbu);
 	disable(mde);
     }
 
@@ -816,12 +835,17 @@ int setupui()
     MCHECK(mpkgl = newmenuitem("Load package...", 0, menupkgload));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mpkgi = newmenuitem("Install package(s) from CRAN...", 0,
-			       menupkginstallcran));
+			       menupkginstallcran));		       
     MCHECK(mpkgil = newmenuitem("Install package(s) from local zip files...",
 				0, menupkginstalllocal));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mpkgu = newmenuitem("Update packages from CRAN", 0,
 			       menupkgupdate));
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(mpkgi = newmenuitem("Install package(s) from Bioconductor...",
+			       0, menupkginstallbioc));	
+    MCHECK(mpkgbu = newmenuitem("Update packages from Bioconductor",
+				0, menupkgupdatebioc));
 #ifdef USE_MDI
     newmdimenu();
 #endif
