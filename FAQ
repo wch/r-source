@@ -176,8 +176,8 @@ Feedback is of course most welcome.
    In particular, note that I do not have access to Windows or Macintosh
 systems.  Features specific to the Windows and Mac OS X ports of R are
 described in the "R for Windows FAQ"
-(http://cran.r-project.org/bin/windows/rw-FAQ.html) and the "R for Mac OS X FAQ
-(http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html).  If you have
+(http://cran.r-project.org/bin/windows/rw-FAQ.html) and the "R for Mac OS X
+FAQ (http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html).  If you have
 information on Macintosh or Windows systems that you think should be added
 to this document, please let me know.
 

@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.9.0 (2004-04-02).
+   <p>The current version of this document is 1.9.0 (2004-04-03).
 
    ISBN 3-900051-02-X
 
@@ -102,7 +102,7 @@ last released version, and <code>R-devel.tar.gz</code> that of the next minor
 <p>to create a copy of the source tree specified by <var>module</var> in the
 subdirectory <code>R</code> of the current directory, where <var>module</var> can
 be one of <code>r-release</code> (current released version), <code>r-patched</code>
-(patched released version), and <code>r-devel</code> (development version).
+(patched released version), and <code>r-devel</code> (development version). 
 The rsync trees are created directly from the master CVS archive and are
 updated hourly.  The <code>-C</code> option in the <code>rsync</code> command
 is to cause it to skip the CVS directories.  Further information on
@@ -120,7 +120,7 @@ the R sources.
 
 <p>R will configure and build under a number of common Unix platforms
 including i386-freebsd, <var>cpu</var>-linux-gnu for the i386, alpha, arm,
-hppa, ia64, m68k, powerpc, and sparc CPUs (see e.g.
+hppa, ia64, m68k, powerpc, and sparc CPUs (see e.g. 
 <a href="http://buildd.debian.org/build.php?&amp;pkg=r-base">http://buildd.debian.org/build.php?&amp;pkg=r-base</a>),
 i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4,
 rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
@@ -182,7 +182,7 @@ directory.  You can copy this script to a place where users can invoke
 it, for example to <code>/usr/local/bin/R</code>.  You could also copy the man
 page <code>R.1</code> to a place where your <code>man</code> reader finds it,
 such as <code>/usr/local/man/man1</code>.  If you want to install the complete
-R tree to, e.g., <code>/usr/local/lib/R</code>, see <a href="#Installation">Installation</a>.
+R tree to, e.g., <code>/usr/local/lib/R</code>, see <a href="#Installation">Installation</a>. 
 Note: you do not <em>need</em> to install R: you can run it from where
 it was built.
 
@@ -220,19 +220,19 @@ the latest version).
 
      <dl>
 <dt><code>refman</code>
-     <dd>Printed versions of all the help pages.
+     <dd>Printed versions of all the help pages. 
 <br><dt><code>R-FAQ</code>
-     <dd>R <small>FAQ</small> (which is already built for you).
+     <dd>R <small>FAQ</small> (which is already built for you). 
 <br><dt><code>R-intro</code>
-     <dd>"An Introduction to R".
+     <dd>"An Introduction to R". 
 <br><dt><code>R-data</code>
-     <dd>"R Data Import/Export".
+     <dd>"R Data Import/Export". 
 <br><dt><code>R-admin</code>
-     <dd>"R Installation and Administration", this manual.
+     <dd>"R Installation and Administration", this manual. 
 <br><dt><code>R-exts</code>
-     <dd>"Writing R Extensions".
+     <dd>"Writing R Extensions". 
 <br><dt><code>R-lang</code>
-     <dd>"The R Language Definition".
+     <dd>"The R Language Definition". 
 </dl>
 
 <p>To make these, use
@@ -383,7 +383,7 @@ configure R appropriately, for example
      make
      </pre>
 
-<p>sit back and wait. The last option <code>--with-aqua</code> is needed only if you want a Console GUI.
+<p>sit back and wait. The last option <code>--with-aqua</code> is needed only if you want a Console GUI. 
 The first two options are strongly recommended.
 
    <p>R is by default configured and installed as a framework called <code>R.framework</code>. The
@@ -412,7 +412,7 @@ setting the environment variable <code>R_LIBS</code> or using the R function
 
 <h3 class="section">5.1 Installing packages</h3>
 
-<p>Packages may be distributed in source form or compiled binary form.
+<p>Packages may be distributed in source form or compiled binary form. 
 Installing source packages requires that compilers and tools
 (including Perl 5.004 or later) be installed.  Binary packages
 are platform specific and generally need
@@ -644,7 +644,7 @@ but not single-precision nor complex routines.
 
    <p>Provision is made for using an external LAPACK library, principally to
 cope with BLAS libraries which contain a copy of LAPACK (such as
-<code>libsunperf</code> on Solaris and <code>vecLib</code> on Mac OS X 10.2.2).
+<code>libsunperf</code> on Solaris and <code>vecLib</code> on Mac OS X 10.2.2). 
 However, the likely performance gains are thought to be small (and may
 be negative), and the default is not to search for a suitable LAPACK
 library.  You can specify a specific LAPACK library or a search for a
@@ -678,11 +678,11 @@ is needed so <code>libsunperf</code> can be used.
 
    <p>An ATLAS `tuned' BLAS can also be used on Windows: see
 <code>src/gnuwin32/INSTALL</code> for how to enable this when building from
-source, and <a href="http://cran.r-project.org/bin/windows/rw-FAQ.html">R Windows <small>FAQ</small></a> for adding pre-compiled support to binary versions.
+source, and <a href="http://cran.r-project.org/bin/windows/rw-FAQ.html">R Windows <small>FAQ</small></a> for adding pre-compiled support to binary versions. 
 Goto's BLAS can also be used when building from source.
 
    <p>Note that under Unix (but not under Windows) if R is compiled
-against a non-default BLAS, then all BLAS-using packages must also be.
+against a non-default BLAS, then all BLAS-using packages must also be. 
 So if R is re-built after ATLAS is installed, then packages such as
 <strong>quantreg</strong> will need to be re-installed.
 
@@ -772,7 +772,7 @@ a full path.
 
    <p>If you find you need to alter configure variables, it is worth noting
 that some settings may be cached in the file <code>config.cache</code>, and it
-is a good idea to remove that file (if it exists) before re-configuring.
+is a good idea to remove that file (if it exists) before re-configuring. 
 Note that caching is turned <em>off</em> by default; use the command line
 option <code>--config-cache</code> (or <code>-C</code>) to enable caching.
 
@@ -961,7 +961,7 @@ packages in order to compile the R-GNOME interface.
 
 <p>This section provides some notes on building R on different Unix-like
 platforms.  These notes are based on tests run on one or two systems in
-each case with particular sets of compilers and support libraries.
+each case with particular sets of compilers and support libraries. 
 Success in building R depends on the proper installation and functioning
 of support software; your results may differ if you have other versions
 of compilers and support libraries.
@@ -1012,7 +1012,7 @@ configuration options
 <pre class="smallexample">     --with-blas="-framework vecLib" --with-lapack
      </pre>
 
-<p>to provide higher-performance versions of the BLAS and LAPACK routines.
+<p>to provide higher-performance versions of the BLAS and LAPACK routines. 
 With <code>gcc 3.1</code> that appears to be the only way to build R, as
 the Fortran support routines in <code>libg2c</code> cannot be linked into a
 dynamic library.  (We have had reports of success with <code>gcc 3.3</code>.)
@@ -1303,7 +1303,7 @@ browser by visiting a page such as
 <a href="http://www.java.com/en/download/help/testvm.jsp">http://www.java.com/en/download/help/testvm.jsp</a> (although that
 will fail for earlier versions of Java such as the Microsoft JVM which
 do work with R).  You can check which version of Java is in use at
-<a href="http://java.sun.com/docs/books/tutorial/applet/practical/properties.html">http://java.sun.com/docs/books/tutorial/applet/practical/properties.html</a>.
+<a href="http://java.sun.com/docs/books/tutorial/applet/practical/properties.html">http://java.sun.com/docs/books/tutorial/applet/practical/properties.html</a>. 
 Java 1.1 is sufficent.
 
    <p>Many thanks to Marc Schwartz in tracking down many of these issues with
@@ -1359,7 +1359,7 @@ has been installed and is operational: Sun's current <code>j2re
 1.4.2_04</code> works in Internet Explorer, Netscape 7.1, Mozilla 1.6 and
 Mozilla FireFox 0.8 on Windows XP.  Note that a recent Windows system
 may not have Java installed at all.  For Netscape/Mozilla/FireFox visit
-<a href="http://java.sun.com/getjava/manual.html">http://java.sun.com/getjava/manual.html</a> to install a Sun JVM.
+<a href="http://java.sun.com/getjava/manual.html">http://java.sun.com/getjava/manual.html</a> to install a Sun JVM. 
 Which (if any) JVM is enabled can be set in `Set Program Access and
 Defaults' in Windows XP (SP1 or later), and which JVM is used by browser
 plugins may also be controlled by the Sun Java applet in the Control
@@ -1390,7 +1390,7 @@ many compilers these reduce the degree of compliance to the
 SunPro compilers causes R's <code>NaN</code> to be set incorrectly.
 
    <p><strong>Shared Libraries</strong>: There seems to be very little agreement
-across platforms on what needs to be done to build shared libraries.
+across platforms on what needs to be done to build shared libraries. 
 there are many different combinations of flags for the compilers and
 loaders.  GNU libtool cannot be used (yet), as it currently does not
 fully support FORTRAN (and will most likely never support <code>f2c</code>:
