@@ -606,23 +606,6 @@ distributions have 3.12).
 The typeset documentation needs @command{tex} and @command{latex}, or
 @command{pdftex} and @command{pdflatex}.
 
-@menu
-* Building on MacOS X::         
-@end menu
-
-@node Building on MacOS X,  , Essential programs, Essential programs
-@subsection Building on MacOS X
-
-You can build @R{} as a Unix application on MacOS X.  You will need the
-DevTools, @command{f2c}
-(@uref{ftp://netlib.bell-labs.com/netlib/f2c.tar}@footnote{compile with
-@command{c++} or comment out @code{sigcatch(0)} in line 520 of
-@file{main.c}}) and the @code{dlcompat} libraries@footnote{e.g.@:
-@uref{http://fink.sourceforge.net/files/dlcompat-20010123.tar.gz}}.
-
-You will also need to install a X sub-system or configure with
-@option{--without-x}.
-
 
 @node Useful libraries and programs,  , Essential programs, Essential and useful other programs
 @section Useful libraries and programs
@@ -977,7 +960,7 @@ specify location of @command{libglade-config}
 
 @node Platform notes,  , Building the GNOME interface, Configuration on Unix
 @section Platform notes
-This section provides some notes on building R on different Unix
+This section provides some notes on building R on different Unix-like
 platforms.  These notes are based on tests run on one or two systems
 in each case with particular sets of compilers and support libraries.
 Success in building R depends on the proper installation and functioning
@@ -985,6 +968,7 @@ of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
 @menu
+* MacOS X::                     
 * Solaris::                     
 * HPUX::                        
 * IRIX::                        
@@ -992,7 +976,21 @@ of compilers and support libraries.
 * Alpha/FreeBSD::               
 @end menu
 
-@node Solaris, HPUX, Platform notes, Platform notes
+@node MacOS X, Solaris, Platform notes, Platform notes
+@subsection MacOS X
+
+You can build @R{} as a Unix application on MacOS X.  You will need the
+DevTools, @command{f2c}
+(@uref{ftp://netlib.bell-labs.com/netlib/f2c.tar}@footnote{compile with
+@command{c++} or comment out @code{sigcatch(0)} in line 520 of
+@file{main.c}}) and the @code{dlcompat} libraries@footnote{e.g.@:
+@uref{http://fink.sourceforge.net/files/dlcompat-20010123.tar.gz}}.
+
+You will also need to install a X sub-system or configure with
+@option{--without-x}.
+
+
+@node Solaris, HPUX, MacOS X, Platform notes
 @subsection Solaris on Sparc
 
 @R{} has been built successfully on Solaris 2.7 using
