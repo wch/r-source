@@ -133,11 +133,11 @@ will be reused.)
 New function memory.size() showing the amount of memory currently in
 use or the maximum that has been used.
 
-New command-line option --max-mem-size to limit the maximum memory
-allocation: it is by default unlimited (except by system constraints)
-and has a minimum allowed value of 10M.  This is intended to catch
-attempts to allocate excessive amounts of memory which may cause other
-processes to run out of resources.
+New command-line option --max-mem-size to set the maximum memory
+allocation: it has a minimum allowed value of 10M.  This is intended
+to catch attempts to allocate excessive amounts of memory which may
+cause other processes to run out of resources.  The default is the
+smaller of the amount of physical RAM in the machine and 256Mb.
 
 DLLs for packages (including standard packages supplied with R)
 automatically gain version information when compiled under this
