@@ -134,7 +134,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                             (length(fAttr) == 2
                              && fAttr[1] == "genericFunction"
                              && fAttr[2] != package)
-                        } == FALSE)]
+                        }) == FALSE]
                 }
 		fst <- TRUE
 		ipos <- seq(along = sp <- search())[-c(lib.pos,
@@ -169,9 +169,15 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
 	    help <- as.character(substitute(help))
         pkgName <- help[1]              # only give help on one package
         pkgPath <- .find.package(pkgName, lib.loc, verbose = verbose)
-        docFiles <- file.path(pkgPath,
-                              c("DESCRIPTION", "INDEX",
-                                file.path("doc", "00Index.dcf")))
+        docFiles <- file.path(pkgPath, c("DESCRIPTION", "INDEX"))
+        ## This is a bit ugly, but in the future we might also have
+        ## DESCRIPTION or INDEX files as serialized R objects ...
+        if(file.exists(vignetteIndexRDS <-
+                       file.path(pkgPath, "doc", "00Index.rds")))
+            docFiles <- c(docFiles, vignetteIndexRDS)
+        else
+            docFiles <- c(docFiles,
+                          file.path(pkgPath, "doc", "00Index.dcf"))
         pkgInfo <- vector(length = 4, mode = "list")
         pkgInfo[[1]] <- paste("\n\t\tInformation on Package",
                               sQuote(pkgName))
@@ -192,6 +198,8 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                 else
                     NULL
             }
+            else if(basename(f) == "00Index.rds")
+                txt <- .readRDS(f)
             else
                 txt <- readLines(f)
             txt
@@ -398,7 +406,7 @@ function(x, ...)
                        "\n\n", sep = ""))
     footers <- c("\n", "\n", "\n", "")
     formatDocEntry <- function(entry) {
-        if(is.list(entry))
+        if(is.list(entry) || is.matrix(entry))
             formatDL(entry, style = "list")
         else
             entry
