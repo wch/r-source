@@ -370,13 +370,25 @@ SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	mode = str2type(CHAR(STRING(s)[0]));
 	if (mode == -1 && streql(CHAR(STRING(s)[0]), "double"))
 		mode = REALSXP;
-	if ((CHARSXP < mode && mode <= STRSXP) || mode == EXPRSXP)
+	switch(mode) {
+	case LGLSXP:
+	case INTSXP:
+	case REALSXP:
+	case CPLXSXP:
+	case STRSXP:
+	case EXPRSXP:
+#ifdef NEWLIST
+	case VECSXP:
+#endif
 		s = allocVector(mode, len);
-	else if (mode == LISTSXP)
+		break;
+	case LISTSXP:
 		s = allocList(len);
-	else
+		break;
+	default:
 		error("vector: cannot make a vector of mode \"%s\".\n",
 		      CHAR(STRING(s)[0]));
+	}
 	if (mode == INTSXP || mode == LGLSXP)
 		for (i = 0; i < len; i++)
 			INTEGER(s)[i] = 0;

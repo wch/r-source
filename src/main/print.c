@@ -43,81 +43,86 @@ static char tagbuf[TAGBUFLEN + 5];
 
 void PrintDefaults(SEXP rho)
 {
-	print_na_string = NA_STRING;
-	print_na_width = strlen(CHAR(print_na_string));
-	print_quote = 1;
-	print_digits = GetOptionDigits(rho);
-	print_gap = 1;
-	R_print_width = GetOptionWidth(rho);
+    print_na_string = NA_STRING;
+    print_na_width = strlen(CHAR(print_na_string));
+    print_quote = 1;
+    print_digits = GetOptionDigits(rho);
+    print_gap = 1;
+    R_print_width = GetOptionWidth(rho);
 }
 
 SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	FILE *fp;
+    FILE *fp;
 
-	if(isNull(CAR(args))) {
-		if(R_Sinkfile) fclose(R_Sinkfile);
-		R_Sinkfile = NULL;
-		R_Outputfile = R_Consolefile;
-	} else {
-		if(TYPEOF(CAR(args)) != STRSXP || LENGTH(CAR(args)) != 1)
-			errorcall(call, "invalid file name\n");
-		if( !(fp=R_fopen(CHAR(STRING(CAR(args))[0]), "w")))
-			errorcall(call, "unable to open file\n");
-		R_Sinkfile = fp;
-		R_Outputfile = fp;
-	}
-	return R_NilValue;
+    if(isNull(CAR(args))) {
+	if(R_Sinkfile) fclose(R_Sinkfile);
+	R_Sinkfile = NULL;
+	R_Outputfile = R_Consolefile;
+    } else {
+	if(TYPEOF(CAR(args)) != STRSXP || LENGTH(CAR(args)) != 1)
+	    errorcall(call, "invalid file name\n");
+	if( !(fp=R_fopen(CHAR(STRING(CAR(args))[0]), "w")))
+	    errorcall(call, "unable to open file\n");
+	R_Sinkfile = fp;
+	R_Outputfile = fp;
+    }
+    return R_NilValue;
 }
 
 SEXP do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	switch (length(args)) {
-	case 0:
-		return R_NilValue;
-	case 1:
-		return CAR(args);
-	default:
-		checkArity(op, args);
-		return call;/* never used, just for -Wall */
-	}
+    switch (length(args)) {
+    case 0:
+	return R_NilValue;
+    case 1:
+	return CAR(args);
+    default:
+	checkArity(op, args);
+	return call;/* never used, just for -Wall */
+    }
 }
 
 SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	int quote, right;
-	SEXP a, x, rowlab, collab, oldnames;
+    int quote, right;
+    SEXP a, x, rowlab, collab, oldnames;
 
-	checkArity(op,args);
+    checkArity(op,args);
 
-	PrintDefaults(rho);
+    PrintDefaults(rho);
 
-	a=args;
-	x = CAR(a); a=CDR(a);
-	rowlab = CAR(a); a= CDR(a);
-	collab = CAR(a); a= CDR(a);
-	quote = asInteger(CAR(a)); a=CDR(a);
-	right = asInteger(CAR(a));
+    a = args;
+    x = CAR(a); a = CDR(a);
+    rowlab = CAR(a); a = CDR(a);
+    collab = CAR(a); a = CDR(a);
+    quote = asInteger(CAR(a)); a = CDR(a);
+    right = asInteger(CAR(a));
 
-	PROTECT(oldnames = getAttrib(x,R_DimNamesSymbol));
-	/* fix up the dimnames */
-	if(length(rowlab) || length(collab) || rowlab==R_NilValue ||
-			collab==R_NilValue ) {
-		a = oldnames;
-		if( a == R_NilValue )
-			a = allocList(2);
-		if( length(rowlab) || rowlab==R_NilValue )
-			CAR(a) = rowlab;
-		if( length(collab) || collab==R_NilValue )
-			CADR(a) = collab;
-		PROTECT(a);
-		setAttrib(x,R_DimNamesSymbol,a);
-		UNPROTECT(1);
-	}
-	printMatrix(x, 0, getAttrib(x,R_DimSymbol), quote, right);
-	setAttrib(x,R_DimNamesSymbol, oldnames);
+#ifdef OLD
+    PROTECT(oldnames = getAttrib(x, R_DimNamesSymbol));
+    /* fix up the dimnames */
+    if (length(rowlab) || length(collab) ||
+	rowlab == R_NilValue || collab == R_NilValue) {
+	a = oldnames;
+	if(a == R_NilValue)
+	    a = allocList(2);
+	if(length(rowlab) || rowlab==R_NilValue)
+	    CAR(a) = rowlab;
+	if(length(collab) || collab==R_NilValue)
+	    CADR(a) = collab;
+	PROTECT(a);
+	setAttrib(x, R_DimNamesSymbol, a);
 	UNPROTECT(1);
-	return x;
+    }
+#else
+    if (length(rowlab) == 0) rowlab = R_NilValue;
+    if (length(collab) == 0) collab = R_NilValue;
+#endif
+    printMatrix(x, 0, getAttrib(x, R_DimSymbol), quote, right, rowlab, collab);
+    setAttrib(x, R_DimNamesSymbol, oldnames);
+    UNPROTECT(1);
+    return x;
 }
 
 
@@ -183,12 +188,10 @@ static void PrintGenericVector(SEXP s, SEXP env)
     char *pbuf, *ptag;
 
     ns = length(s);
-    if((dims = getAttrib(s, R_DimSymbol)) != R_NilValue
-       && length(dims) > 1) {
+    if((dims = getAttrib(s, R_DimSymbol)) != R_NilValue && length(dims) > 1) {
         PROTECT(dims);
         PROTECT(t = allocArray(STRSXP, dims));
-        setAttrib(t, R_DimNamesSymbol, getAttrib(s, R_DimNamesSymbol));
-        for (i = 0 ; i<ns ; i++) {
+        for (i = 0 ; i < ns ; i++) {
             switch(TYPEOF(VECTOR(s)[i])) {
             case NILSXP:
                 pbuf = Rsprintf("NULL");
@@ -219,10 +222,15 @@ static void PrintGenericVector(SEXP s, SEXP env)
             }
             STRING(t)[i] = mkChar(pbuf);
         }
-        if (LENGTH(dims) == 2)
-            printMatrix(t, 0, dims, 0, 0);
-        else
-            printArray(t, 0);
+        if (LENGTH(dims) == 2) {
+	    SEXP rl, cl;
+	    GetMatrixDimnames(s, &rl, &cl);
+            printMatrix(t, 0, dims, 0, 0, rl, cl);
+	}
+        else {
+	    names = GetArrayDimnames(s);
+            printArray(t, dims, 0, names);
+	}
         UNPROTECT(2);
     }
     else {
@@ -233,6 +241,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
         CAR(newcall) = install("print");
         TYPEOF(newcall) = LANGSXP;
 
+	if(ns > 0) {
         for (i = 0 ; i < ns ; i++) {
             if (i > 0) Rprintf("\n");
             if (names != R_NilValue &&
@@ -258,100 +267,106 @@ static void PrintGenericVector(SEXP s, SEXP env)
             *ptag = '\0';
         }
         Rprintf("\n");
+	}
+	else Rprintf("NULL\n");
         UNPROTECT(1);
     }
-    printAttributes(s, env);
 }
 #endif
 
-static void printList(SEXP s,SEXP env)
+static void
+printList(SEXP s, SEXP env)
 {
-	int i, taglen;
-	SEXP dims, t, newcall;
-	char *pbuf, *ptag;
+    int i, taglen;
+    SEXP dims, dimnames, t, newcall;
+    char *pbuf, *ptag;
 
-	if((dims = getAttrib(s, R_DimSymbol)) != R_NilValue
-	  && length(dims) > 1) {
-		PROTECT(dims);
-		PROTECT(t = allocArray(STRSXP, dims));
-		setAttrib(t, R_DimNamesSymbol, getAttrib(s, R_DimNamesSymbol));
-		i = 0;
-		while(s != R_NilValue) {
-			switch(TYPEOF(CAR(s))) {
-				case NILSXP:
-					pbuf = Rsprintf("NULL");
-					break;
-				case LGLSXP:
-					pbuf = Rsprintf("Logical,%d", LENGTH(CAR(s)));
-					break;
-				case INTSXP:
-				case REALSXP:
-					pbuf = Rsprintf("Numeric,%d", LENGTH(CAR(s)));
-					break;
-				case CPLXSXP:
-					pbuf = Rsprintf("Complex,%d", LENGTH(CAR(s)));
-					break;
-				case STRSXP:
-					pbuf = Rsprintf("Character,%d", LENGTH(CAR(s)));
-					break;
-				case LISTSXP:
-					pbuf = Rsprintf("List,%d", length(CAR(s)));
-					break;
-				case LANGSXP:
-					pbuf = Rsprintf("Expression");
-					break;
-				default:
-					pbuf = Rsprintf("?");
-					break;
-			}
-			STRING(t)[i++] = mkChar(pbuf);
-			s = CDR(s);
-		}
-		if (LENGTH(dims) == 2)
-			printMatrix(t, 0, dims, 0, 0);
-		else
-			printArray(t, 0);
-		UNPROTECT(2);
+    if ((dims = getAttrib(s, R_DimSymbol)) != R_NilValue
+        && length(dims) > 1) {
+	PROTECT(dims);
+	PROTECT(t = allocArray(STRSXP, dims));
+	i = 0;
+	while(s != R_NilValue) {
+	    switch(TYPEOF(CAR(s))) {
+	    case NILSXP:
+		pbuf = Rsprintf("NULL");
+		break;
+	    case LGLSXP:
+		pbuf = Rsprintf("Logical,%d", LENGTH(CAR(s)));
+		break;
+	    case INTSXP:
+	    case REALSXP:
+		pbuf = Rsprintf("Numeric,%d", LENGTH(CAR(s)));
+		break;
+	    case CPLXSXP:
+		pbuf = Rsprintf("Complex,%d", LENGTH(CAR(s)));
+		break;
+	    case STRSXP:
+		pbuf = Rsprintf("Character,%d", LENGTH(CAR(s)));
+		break;
+	    case LISTSXP:
+		pbuf = Rsprintf("List,%d", length(CAR(s)));
+		break;
+	    case LANGSXP:
+		pbuf = Rsprintf("Expression");
+		break;
+	    default:
+		pbuf = Rsprintf("?");
+		break;
+	    }
+	    STRING(t)[i++] = mkChar(pbuf);
+	    s = CDR(s);
+	}
+	if (LENGTH(dims) == 2) {
+	    SEXP rl, cl;
+	    GetMatrixDimnames(s, &rl, &cl);
+	    printMatrix(t, 0, dims, 0, 0, rl, cl);
 	}
 	else {
-		i = 1;
-		taglen = strlen(tagbuf);
-		ptag = tagbuf + taglen;
-		PROTECT(newcall = allocList(2));
-		CAR(newcall) = install("print");
-		TYPEOF(newcall) = LANGSXP;
-		while (TYPEOF(s) == LISTSXP) {
-			if (i > 1) Rprintf("\n");
-			if (TAG(s) != R_NilValue && isSymbol(TAG(s))) {
-				if (taglen + strlen(CHAR(PRINTNAME(TAG(s)))) > TAGBUFLEN)
-					sprintf(ptag, "$...");
-				else
-					sprintf(ptag, "$%s", CHAR(PRINTNAME(TAG(s))));
-			}
-			else {
-				if (taglen + IndexWidth(i) > TAGBUFLEN)
-					sprintf(ptag, "$...");
-				else
-					sprintf(ptag, "[[%d]]", i);
-			}
-			Rprintf("%s\n", tagbuf);
-			if(isObject(CAR(s))) {
-				CADR(newcall) = CAR(s);
-				eval(newcall, env);
-			}
-			else PrintValueRec(CAR(s),env);
-			*ptag = '\0';
-			s = CDR(s);
-			i += 1;
-		}
-		if (s != R_NilValue) {
-			Rprintf("\n. \n\n");
-			PrintValueRec(s,env);
-		}
-		Rprintf("\n");
-		UNPROTECT(1);
+	    dimnames = getAttrib(s, R_DimNamesSymbol);
+	    printArray(t, dims, 0, dimnames);
 	}
-	printAttributes(s,env);
+	UNPROTECT(2);
+    }
+    else {
+	i = 1;
+	taglen = strlen(tagbuf);
+	ptag = tagbuf + taglen;
+	PROTECT(newcall = allocList(2));
+	CAR(newcall) = install("print");
+	TYPEOF(newcall) = LANGSXP;
+	while (TYPEOF(s) == LISTSXP) {
+	    if (i > 1) Rprintf("\n");
+	    if (TAG(s) != R_NilValue && isSymbol(TAG(s))) {
+		if (taglen + strlen(CHAR(PRINTNAME(TAG(s)))) > TAGBUFLEN)
+		    sprintf(ptag, "$...");
+		else
+		    sprintf(ptag, "$%s", CHAR(PRINTNAME(TAG(s))));
+	    }
+	    else {
+		if (taglen + IndexWidth(i) > TAGBUFLEN)
+		    sprintf(ptag, "$...");
+		else
+		    sprintf(ptag, "[[%d]]", i);
+	    }
+	    Rprintf("%s\n", tagbuf);
+	    if(isObject(CAR(s))) {
+		CADR(newcall) = CAR(s);
+		eval(newcall, env);
+	    }
+	    else PrintValueRec(CAR(s),env);
+	    *ptag = '\0';
+	    s = CDR(s);
+	    i += 1;
+	}
+	if (s != R_NilValue) {
+	    Rprintf("\n. \n\n");
+	    PrintValueRec(s,env);
+	}
+	Rprintf("\n");
+	UNPROTECT(1);
+    }
+    printAttributes(s,env);
 }
 
 static void PrintExpression(SEXP s)
@@ -384,95 +399,100 @@ static void PrintExpression(SEXP s)
 #endif
 }
 
-	/* PrintValueRec - recursively print an SEXP
-	 *
-	 * This is the "dispatching" function for  print.default()
-	 */
+
+/* PrintValueRec - recursively print an SEXP */
+/* This is the "dispatching" function for  print.default() */
 
 void PrintValueRec(SEXP s,SEXP env)
 {
-	int i;
-	SEXP t;
+    int i;
+    SEXP t;
 
-	switch (TYPEOF(s)) {
-	case NILSXP:
-		Rprintf("NULL\n");
-		break;
-	case SYMSXP:
-		Rprintf("%s\n", CHAR(PRINTNAME(s)));
-		break;
-	case SPECIALSXP:
-	case BUILTINSXP:
-		Rprintf(".Primitive(\"%s\")\n", PRIMNAME(s));
-		break;
-	case CHARSXP:
-		Rprintf("\"%s\"\n", EncodeString(CHAR(s),0,'"', adj_left));
-		break;
-	case EXPRSXP:
-		PrintExpression(s);
-		break;
-	case CLOSXP:
-	case LANGSXP:
-		t = deparse1(s, 0);
-		for (i = 0; i < LENGTH(t); i++)
-			Rprintf("%s\n", CHAR(STRING(t)[i]));
-		if (TYPEOF(s) == CLOSXP) t = CLOENV(s);
-		else t = R_GlobalEnv;
-		if (t != R_GlobalEnv)
-			Rprintf("<environment: %p>\n", t);
-		break;
-	case ENVSXP:
-		if (s == R_GlobalEnv) Rprintf("<environment: R_GlobalEnv>\n");
-		else Rprintf("<environment: %p>\n", s);
-		break;
-	case PROMSXP:
-		Rprintf("<promise: %p>\n", s);
-		break;
-	case DOTSXP:
-		Rprintf("<...>\n");
-		break;
+    switch (TYPEOF(s)) {
+    case NILSXP:
+	Rprintf("NULL\n");
+	break;
+    case SYMSXP:
+	Rprintf("%s\n", CHAR(PRINTNAME(s)));
+	break;
+    case SPECIALSXP:
+    case BUILTINSXP:
+	Rprintf(".Primitive(\"%s\")\n", PRIMNAME(s));
+	break;
+    case CHARSXP:
+	Rprintf("\"%s\"\n", EncodeString(CHAR(s),0,'"', adj_left));
+	break;
+    case EXPRSXP:
+	PrintExpression(s);
+	break;
+    case CLOSXP:
+    case LANGSXP:
+	t = deparse1(s, 0);
+	for (i = 0; i < LENGTH(t); i++)
+	    Rprintf("%s\n", CHAR(STRING(t)[i]));
+	if (TYPEOF(s) == CLOSXP) t = CLOENV(s);
+	else t = R_GlobalEnv;
+	if (t != R_GlobalEnv)
+	    Rprintf("<environment: %p>\n", t);
+	break;
+    case ENVSXP:
+	if (s == R_GlobalEnv) Rprintf("<environment: R_GlobalEnv>\n");
+	else Rprintf("<environment: %p>\n", s);
+	break;
+    case PROMSXP:
+	Rprintf("<promise: %p>\n", s);
+	break;
+    case DOTSXP:
+	Rprintf("<...>\n");
+	break;
 #ifdef NEWLIST
-	case VECSXP:
-		PrintGenericVector(s, env);
-		break;
+    case VECSXP:
+	PrintGenericVector(s, env);
+	break;
 #endif
-	case LISTSXP:
-		printList(s,env);
-		break;
-	case LGLSXP:
-	case INTSXP:
-	case REALSXP:
-	case STRSXP:
-	case CPLXSXP:
-		PROTECT(t = getAttrib(s, R_DimSymbol));
-		if (TYPEOF(t) == INTSXP) {
-			if (LENGTH(t) == 1) {
-				PROTECT(t = getAttrib(s, R_DimNamesSymbol));
-				if (t != R_NilValue && CAR(t) != R_NilValue)
-					printNamedVector(s, CAR(t), print_quote);
-				else
-					printVector(s, 1, print_quote);
-				UNPROTECT(1);
-			}
-			else if (LENGTH(t) == 2)
-				printMatrix(s, 0, t, print_quote, 0);
-			else
-				printArray(s, print_quote);
-		}
-		else {
-			UNPROTECT(1);
-			PROTECT(t = getAttrib(s, R_NamesSymbol));
-			if (t != R_NilValue)
-				printNamedVector(s, t, print_quote);
-			else
-				printVector(s, 1, print_quote);
-		}
+    case LISTSXP:
+	printList(s,env);
+	break;
+    case LGLSXP:
+    case INTSXP:
+    case REALSXP:
+    case STRSXP:
+    case CPLXSXP:
+	PROTECT(t = getAttrib(s, R_DimSymbol));
+	if (TYPEOF(t) == INTSXP) {
+	    if (LENGTH(t) == 1) {
+		PROTECT(t = getAttrib(s, R_DimNamesSymbol));
+		if (t != R_NilValue && CAR(t) != R_NilValue)
+		    printNamedVector(s, CAR(t), print_quote);
+		else
+		    printVector(s, 1, print_quote);
 		UNPROTECT(1);
-		break;
-	default:
-		UNIMPLEMENTED("PrintValueRec");
+	    }
+	    else if (LENGTH(t) == 2) {
+		SEXP rl, cl;
+		GetMatrixDimnames(s, &rl, &cl);
+		printMatrix(s, 0, t, print_quote, 0, rl, cl);
+	    }
+	    else {
+		SEXP dimnames;
+		dimnames = GetArrayDimnames(s);
+		printArray(s, t, print_quote, dimnames);
+	    }
 	}
-	printAttributes(s,env);
+	else {
+	    UNPROTECT(1);
+	    PROTECT(t = getAttrib(s, R_NamesSymbol));
+	    if (t != R_NilValue)
+		printNamedVector(s, t, print_quote);
+	    else
+		printVector(s, 1, print_quote);
+	}
+	UNPROTECT(1);
+	break;
+    default:
+	UNIMPLEMENTED("PrintValueRec");
+    }
+    printAttributes(s,env);
 }
 
 static void printAttributes(SEXP s,SEXP env)

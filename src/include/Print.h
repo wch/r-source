@@ -65,9 +65,9 @@ void PrintValueRec(SEXP,SEXP);
 
 /*  REprintf(char*, ...); ... --> all in Defn.h */
 
-void printArray(SEXP, int);
+void printArray(SEXP, SEXP, int, SEXP);
 void printDataFrame(SEXP);
-void printMatrix(SEXP, int, SEXP, int, int);
+void printMatrix(SEXP, int, SEXP, int, int, SEXP, SEXP);
 void printNamedVector(SEXP, SEXP, int);
 void printVector(SEXP, int, int);
 

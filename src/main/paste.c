@@ -34,6 +34,9 @@ SEXP mkChar(char *);
 SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP ans, collapse, sep, px, x, tmpchar;
+#ifdef NEWLIST
+	int j;
+#endif
 	int i, k, maxlen, nx, pwidth, sepw;
 	char *s, *buf;
 
@@ -47,7 +50,11 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* Check the arguments */
 
 	x = CAR(args);
+#ifdef NEWLIST
+	if (!isVectorList(x))
+#else
 	if (!isList(x))
+#endif
 		errorcall(call, "invalid first argument\n");
 
 	sep = CADR(args);
@@ -66,26 +73,57 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	nx = length(x);
 	maxlen = 0;
+#ifdef NEWLIST
+	for (j = 0 ; j < nx ; j++) {
+		if (!isString(VECTOR(x)[j]))
+			error("non-string argument to Internal paste\n");
+		if(length(VECTOR(x)[j]) > maxlen)
+			maxlen = length(VECTOR(x)[j]);
+	}
+#else
 	for (px = x; px != R_NilValue; px = CDR(px)) {
 		if (!isString(CAR(px)))
 			error("non-string argument to Internal paste\n");
 		if(length(CAR(px)) > maxlen)
 			maxlen = length(CAR(px));
 	}
+#endif
 	if(maxlen == 0) return mkString("");
 
 	PROTECT(ans = allocVector(STRSXP, maxlen));
 
 	for (i = 0; i < maxlen; i++) {
 		pwidth = 0;
+#ifdef NEWLIST
+		for (j = 0; j < nx ; j++) {
+			k = length(VECTOR(x)[j]);
+			if (k > 0)
+				pwidth += LENGTH(STRING(VECTOR(x)[j])[i%k]);
+		}
+#else
 		for (px = x; px != R_NilValue; px = CDR(px)) {
 			k = length(CAR(px));
 			if (k > 0)
 				pwidth += LENGTH(STRING(CAR(px))[i%k]);
 		}
+#endif
 		pwidth += (nx - 1) * sepw;
 		tmpchar = allocString(pwidth);
 		buf = CHAR(tmpchar);
+#ifdef NEWLIST
+		for (j=0; j < nx ; j++) {
+			k = length(VECTOR(x)[j]);
+			if (k > 0) {
+				s = CHAR(STRING(VECTOR(x)[j])[i%k]);
+				sprintf(buf, "%s", s);
+				buf += LENGTH(STRING(VECTOR(x)[j])[i%k]);
+			}
+			if (CDR(px) != R_NilValue && sepw != 0) {
+				sprintf(buf, "%s", CHAR(sep));
+				buf += sepw;
+			}
+		}
+#else
 		for (px=x; px != R_NilValue; px = CDR(px)) {
 			k = length(CAR(px));
 			if (k > 0) {
@@ -98,6 +136,7 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 				buf += sepw;
 			}
 		}
+#endif
 		STRING(ans)[i] = tmpchar;
 	}
 

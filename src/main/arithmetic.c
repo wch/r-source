@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998 Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1998  The R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+
 
 #include "Defn.h"
 #include "Mathlib.h"
@@ -153,14 +154,65 @@ SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int ibeta, it, irnd, ngrd, machep, negep, iexp, minexp, maxexp;
     double eps, epsneg, xmin, xmax;
+#ifdef NEWLIST
+    SEXP ans, nms;
+#else
     SEXP a, ans;
+#endif
 
     checkArity(op, args);
 
-    PROTECT(a = ans = allocList(14));
-
     machar(&ibeta, &it, &irnd, &ngrd, &machep, &negep, &iexp,
 	   &minexp, &maxexp, &eps, &epsneg, &xmin, &xmax);
+
+#ifdef NEWLIST
+    PROTECT(ans = allocVector(VECSXP, 14));
+    PROTECT(nms = allocVector(STRSXP, 14));
+    STRING(nms)[0] = mkChar("double.eps");
+    VECTOR(ans)[0] = ScalarReal(eps);
+
+    STRING(nms)[1] = mkChar("double.neg.eps");
+    VECTOR(ans)[1] = ScalarReal(epsneg);
+
+    STRING(nms)[2] = mkChar("double.xmin");
+    VECTOR(ans)[2] = ScalarReal(xmin);
+
+    STRING(nms)[3] = mkChar("double.xmax");
+    VECTOR(ans)[3] = ScalarReal(xmax);
+
+    STRING(nms)[4] = mkChar("double.base");
+    VECTOR(ans)[4] = ScalarInteger(ibeta);
+
+    STRING(nms)[5] = mkChar("double.digits");
+    VECTOR(ans)[5] = ScalarInteger(it);
+
+    STRING(nms)[6] = mkChar("double.rounding");
+    VECTOR(ans)[6] = ScalarInteger(irnd);
+
+    STRING(nms)[7] = mkChar("double.guard");
+    VECTOR(ans)[7] = ScalarInteger(ngrd);
+
+    STRING(nms)[8] = mkChar("double.ulp.digits");
+    VECTOR(ans)[8] = ScalarInteger(machep);
+
+    STRING(nms)[9] = mkChar("double.neg.ulp.digits");
+    VECTOR(ans)[9] = ScalarInteger(negep);
+
+    STRING(nms)[10] = mkChar("double.exponent");
+    VECTOR(ans)[10] = ScalarInteger(iexp);
+
+    STRING(nms)[11] = mkChar("double.min.exp");
+    VECTOR(ans)[11] = ScalarInteger(minexp);
+
+    STRING(nms)[12] = mkChar("double.max.exp");
+    VECTOR(ans)[12] = ScalarInteger(maxexp);
+
+    STRING(nms)[13] = mkChar("integer.max");
+    VECTOR(ans)[13] = ScalarInteger(INT_MAX);
+    setAttrib(ans, R_NamesSymbol, nms);
+    UNPROTECT(2);
+#else
+    PROTECT(a = ans = allocList(14));
 
     TAG(a) = install("double.eps"); CAR(a) = allocVector(REALSXP, 1);
     REAL(CAR(a))[0] = eps;	a = CDR(a);
@@ -205,6 +257,7 @@ SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
     INTEGER(CAR(a))[0] = INT_MAX;a = CDR(a);
 
     UNPROTECT(1);
+#endif
     return ans;
 }
 
@@ -972,32 +1025,32 @@ SEXP do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_round(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-  SEXP a, b;
-  int n;
-  if (DispatchGroup("Math", call, op, args, env, &a))
+    SEXP a, b;
+    int n;
+    if (DispatchGroup("Math", call, op, args, env, &a))
+	return a;
+    lcall = call;
+    switch(n = length(args)) {
+    case 1:
+	PROTECT(a = CAR(args));
+	PROTECT(b = allocVector(REALSXP, 1));
+	REAL(b)[0] = 0;
+	break;
+    case 2:
+	PROTECT(a = CAR(args));
+	PROTECT(b = CADR(args));
+	break;
+    default:
+	error("%d arguments passed to \"round\" which requires 1 or 2\n", n);
+    }
+    if (isComplex(CAR(args))) {
+	args = list2(a, b);
+	a = complex_math2(call, op, args, env);
+    }
+    else
+	a = math2(op, a, b, rround);
+    UNPROTECT(2);
     return a;
-  lcall = call;
-  switch(n = length(args)) {
-  case 1:
-    PROTECT(a = CAR(args));
-    PROTECT(b = allocVector(REALSXP, 1));
-    REAL(b)[0] = 0;
-    break;
-  case 2:
-    PROTECT(a = CAR(args));
-    PROTECT(b = CADR(args));
-    break;
-  default:
-    error("%d arguments passed to \"round\" which requires 1 or 2\n", n);
-  }
-  if (isComplex(CAR(args))) {
-    args = list2(a, b);
-    a = complex_math2(call, op, args, env);
-  }
-  else
-    a = math2(op, a, b, rround);
-  UNPROTECT(2);
-  return a;
 }
 
 SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1025,31 +1078,31 @@ SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_signif(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-  SEXP a, b;
-  int n;
-  if (DispatchGroup("Math", call, op, args, env, &a))
+    SEXP a, b;
+    int n;
+    if (DispatchGroup("Math", call, op, args, env, &a))
+	return a;
+    switch(n = length(args)) {
+    case 1:
+	PROTECT(a = CAR(args));
+	PROTECT(b = allocVector(REALSXP, 1));
+	REAL(b)[0] = 6;
+	break;
+    case 2:
+	PROTECT(a = CAR(args));
+	PROTECT(b = CADR(args));
+	break;
+    default:
+	error("%d arguments passed to \"signif\" which requires 1 or 2\n", n);
+    }
+    if (isComplex(CAR(args))) {
+	args = list2(a, b);
+	a = complex_math2(call, op, args, env);
+    }
+    else
+	a = math2(op, a, b, prec);
+    UNPROTECT(2);
     return a;
-  switch(n = length(args)) {
-  case 1:
-    PROTECT(a = CAR(args));
-    PROTECT(b = allocVector(REALSXP, 1));
-    REAL(b)[0] = 6;
-    break;
-  case 2:
-    PROTECT(a = CAR(args));
-    PROTECT(b = CADR(args));
-    break;
-  default:
-    error("%d arguments passed to \"signif\" which requires 1 or 2\n", n);
-  }
-  if (isComplex(CAR(args))) {
-    args = list2(a, b);
-    a = complex_math2(call, op, args, env);
-  }
-  else
-    a = math2(op, a, b, prec);
-  UNPROTECT(2);
-  return a;
 }
 
 #define mod_iterate3(n1,n2,n3,i1,i2,i3) for (i=i1=i2=i3=0; i<n; \

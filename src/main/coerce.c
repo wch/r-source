@@ -254,8 +254,15 @@ SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case ENVSXP:		/* is.environment */
 		LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == ENVSXP);
 		break;
+#ifdef NEWLIST
 	case LISTSXP:		/* is.list */
-		LOGICAL(ans)[0] = ((TYPEOF(CAR(args)) == LISTSXP) || TYPEOF(CAR(args)) == NILSXP);
+		LOGICAL(ans)[0] = ((TYPEOF(CAR(args)) == VECSXP) ||
+				    TYPEOF(CAR(args)) == NILSXP);
+#else
+	case LISTSXP:		/* is.list */
+		LOGICAL(ans)[0] = ((TYPEOF(CAR(args)) == LISTSXP) ||
+				    TYPEOF(CAR(args)) == NILSXP);
+#endif
 		break;
 	case EXPRSXP:		/* is.expression */
 		LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == EXPRSXP);
