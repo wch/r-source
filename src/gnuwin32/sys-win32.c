@@ -122,7 +122,6 @@ typedef struct _FILETIME {
  
 void R_getProcTime(double *data)
 {
-    SEXP  ans;
     long  elapsed;
     double kernel, user;
     OSVERSIONINFO verinfo;
