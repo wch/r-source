@@ -1,5 +1,5 @@
 #! @PERL@
-### $Id: lib2tex.in,v 1.1 1998/05/22 16:23:53 bates Exp $
+### $Id: lib2tex.in,v 1.2 1998/09/28 05:54:26 hornik Exp $
 
 ## Create a single pkg-pkgname.tex file from the Latex subdirectories
 ## Copyright (C) 1998 Douglas M. Bates <bates@stat.wisc.edu>
@@ -40,12 +40,6 @@ if ($ENV{'RLIB'}) {
     $RLIB = "../../library";
 }
 
-my $header = new FileHandle "Pkg-start.tex" or
-    croak "unable to open Pkg-start.tex: $!\n";
-
-my $trailer = new FileHandle "Pkg-end.tex" or
-    croak "unable to open Pkg-end.tex: $!\n";
-
 for (@ARGV) {
     my $latexDir = $RLIB . "/" . $_ . "/latex/";
     carp "latex subdirectory for library $_ does not exist!\n", next
@@ -58,15 +52,9 @@ for (@ARGV) {
     $out->close;
 }
 
-
 sub do_header {
     my( $pkgname, $outfile ) = @_;
-    seek( $header, 0, 0);
-    while (<$header>) {
-	s/__PKG__/$pkgname/g;
-	$outfile->print( $_ );
-    }
-    
+    $outfile->print("\n\\section\{The \\texttt\{$pkgname\} package\}\n");
 }
 
 sub do_tex_files {
@@ -82,8 +70,7 @@ sub do_tex_files {
 	
 sub do_trailer {
     my $outfile = shift;
-    seek( $trailer, 0, 0 );
-    $outfile->print( <$trailer> );
+    $outfile->print("\\clearpage");
 }
 
 sub usage {
