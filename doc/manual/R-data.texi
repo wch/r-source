@@ -786,7 +786,7 @@ from a database for separate analysis.
 
 Traditionally there have been large (and expensive) commercial RDBMSs
 (@uref{http://www.informix.com, Informix}; @uref{http://www.oracle.com,
-Oracle}; @uref{http://www.sysbase.com, Sysbase}; IBM's DB/2; Microsoft
+Oracle}; @uref{http://www.sybase.com, Sybase}; IBM's DB/2; Microsoft
 @acronym{SQL} Server on Windows) and academic and small-system databases
 (such as MySQL, PostgreSQL, Microsoft Access, @dots{}), the former
 marked out by much greater emphasis on data security features.  The line
@@ -806,11 +806,11 @@ Linux.
 All of the packages described later in this chapter provide clients to
 client/server databases.  The database can reside on the same machine or
 (more often) remotely.  There is an @acronym{ISO} standard (in fact
-several: @acronym{SQL}-92 is @acronym{ISO}/IEC 9075, also known as
-@acronym{ANSI} X3.135-1992) for an interface language called
-@acronym{SQL} (Structured Query Language, sometimes pronounced `sequel':
-see Bowman @emph{et al.@:} 1996) which these DBMSs support to varying
-degrees.
+several: @acronym{SQL}92 is @acronym{ISO}/IEC 9075, also known as
+@acronym{ANSI} X3.135-1992, and @acronym{SQL}99 is coming into use) for
+an interface language called @acronym{SQL} (Structured Query Language,
+sometimes pronounced `sequel': see Bowman @emph{et al.@:} 1996 and Kline
+and Kline 2001) which these DBMSs support to varying degrees.
 
 
 @menu
@@ -885,6 +885,9 @@ as the LIMIT clause can be used to optimize the query.)
 There are queries to create a table (CREATE TABLE, but usually one
 copies a data frame to the database in these interfaces), INSERT or
 DELETE or UPDATE data.  A table is destroyed by a DROP TABLE `query'.
+
+Kline and Kline (2001) discuss the details of the implementation of SQL
+in SQL Server 2000, Oracle, MySQL and PostgreSQL.
 
 @node Data types,  , SQL queries, Overview of RDBMSs
 @subsection Data types
@@ -1864,7 +1867,10 @@ P.@: Dubois (2000) @emph{MySQL.} New Riders.
 
 @noindent
 M.@: Henning and S.@: Vinoski (1999) @emph{Advanced CORBA Programming
-with C++} Addison-Wesley.
+with C++.} Addison-Wesley.
+
+@noindent
+K.@: Kline and D.@: Kline (2001) @emph{SQL in a Nutshell.} O'Reilly.
 
 @noindent
 B.@: Momjian (2000) @emph{PostgreSQL: Introduction and Concepts.}
