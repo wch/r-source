@@ -2,12 +2,21 @@
 
 NEW FEATURES
 
-    o   Makefiles should now conform (mostly) with the GNU Coding 
+    o   New example(<foo>) function runs the \emph{Examples} R code of <foo>.
+	[to be documented and more thoroughly tested -- MM].
+
+    o   experimental functions [as.|is.|]pairlist() for the few old-style
+	dotted pair lists [undocumented].
+
+    o   options(check.bounds = TRUE) makes sub-assignments which "stretch"
+	a vector give a warning [dropped undocumented check.bounds() function].
+
+    o   Makefiles should now conform (mostly) with the GNU Coding
 	Standards.  In particular, `make install', `make uninstall'
 	and `make install-strip' now work.
 	Also, it is now possible to build R in a non-source directory.
 
-    o   which() preserves names and has a new `arr.ind' argument 
+    o   which() preserves names and has a new `arr.ind' argument
 	allowing for array indices.
 
     o   New functions {d,p,q,r}signrank for the Wilcoxon signed rank
