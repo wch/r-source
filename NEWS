@@ -199,6 +199,9 @@ NEW FEATURES
 	width, allowing for double-width characters in multi-byte
 	character sets.
 
+    o   gc() now reports maximum as well as current memory use.
+
+
 
 UTILITIES
 

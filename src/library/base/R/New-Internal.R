@@ -94,12 +94,12 @@ deparse <- function(expr, width.cutoff = 60,
 do.call <- function(what,args).Internal(do.call(what,args))
 drop <- function(x).Internal(drop(x))
 format.info <- function(x, nsmall=0).Internal(format.info(x, nsmall))
-gc <- function(verbose = getOption("verbose"))
+gc <- function(verbose = getOption("verbose"),  reset=FALSE)
 {
-    res <-.Internal(gc(verbose))/c(1, 1, 10, 10, 1, 1, rep(10,4))
-    res <- matrix(res, 2, 5,
+    res <-.Internal(gc(verbose,reset))/c(1, 1, 10, 10, 1, 1, rep(10,4),rep(1,2),rep(10,2))
+    res <- matrix(res, 2, 7,
                   dimnames = list(c("Ncells","Vcells"),
-                  c("used", "(Mb)", "gc trigger", "(Mb)", "limit (Mb)")))
+                  c("used", "(Mb)", "gc trigger", "(Mb)", "limit (Mb)","max used", "(Mb)")))
     if(all(is.na(res[, 5]))) res[, -5] else res
 }
 gcinfo <- function(verbose).Internal(gcinfo(verbose))

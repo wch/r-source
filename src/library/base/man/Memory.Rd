@@ -18,7 +18,7 @@ mem.limits(nsize = NA, vsize = NA)
 }
 \arguments{
   \item{vl, vu, vsize}{Heap memory in bytes.}
-  \item{nl, nu, nsize}{Number of cons cells.}
+  \item{nl, nu, nsize}{Number of cons cells.} 
 }
 \details{
   \R has a variable-sized workspace (from version 1.2.0). There is now
@@ -102,10 +102,10 @@ mem.limits(nsize = NA, vsize = NA)
 \seealso{
   \code{\link{Memory-limits}} for the design limitations.
   
-  \code{\link{gc}} for information on the garbage collector,
-  \code{\link{object.size}(a)} for the (approximate) size of \R object
-  \code{a}.  \code{\link{memory.profile}} for profiling the usage of
-  cons cells.
+  \code{\link{gc}} for information on the garbage collector and total
+  memory usage,  \code{\link{object.size}(a)} for the (approximate)
+  size of \R object \code{a}.  \code{\link{memory.profile}} for
+  profiling the usage of cons cells.
 #ifdef windows
 
   \code{\link{memory.size}} to monitor total memory usage,
