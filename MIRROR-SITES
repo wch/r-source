@@ -2,22 +2,35 @@
 			R SOURCE CODE MIRROR SITES
 
 
-The primary R distribution site
+The primary R distribution site is
 
 	ftp://stat.auckland.ac.nz/pub/R/
 
-is mirrored DAILY at the following sites.
+However, due to high internet fees in NZ, please don't use this server
+unless it is absolutely necessary.
+
+The "Comprehensive R Archive Network" (CRAN) is a collection of sites
+which carry identical material, consisting of the R distribution(s),
+the contributed extensions, documentation for R, and binaries.
+
+CRAN also contains a DAILY snapshot of the latest R sources.
+
+The CRAN master site can be found at the URL's
+
+    http://www.ci.tuwien.ac.at/R
+    ftp://ftp.ci.tuwien.ac.at/pub/R/                  (Austria)
+
+and is currently being mirrored at
+
+    http://SunSITE.auc.dk/R/                          (Denmark)
+    http://www.stat.unipg.it/pub/stat/statlib/R/CRAN/ (Italy)
+    ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/           (Japan)
+    ftp://ftp.stat.math.ethz.ch/R-CRAN/               (Switzerland)
+    http://lib.stat.cmu.edu/R/CRAN/                   (USA/Pennsylvania)
+    ftp://ftp.biostat.washington.edu/mirrors/R/CRAN/  (USA/Washington)
+    ftp://franz.stat.wisc.edu/pub/R/                  (USA/Wisconsin)
 
 
-EUROPE:
-	ftp://ftp.stat.math.ethz.ch/R/
-	ftp://statlab.uni-heidelberg.de/pub/mirrors/auckland/R/
-
-JAPAN:
-	ftp://ftp.u-aizu.ac.jp/pub/lang/R/
-
-NORTH AMERICA:
-	Statlib mirrors R:  http://lib.stat.cmu.edu/R/
 
 In the interests of preserving international bandwidth (and of
 keeping our internet bills under control) please use a site near
