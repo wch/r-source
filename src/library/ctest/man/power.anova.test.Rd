@@ -53,3 +53,4 @@ power.anova.test(groups = length(groupmeans),
                  within.var=500, power=.90) # n = 15.18834
 
 }
+\keyword{htest}
