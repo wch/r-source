@@ -46,7 +46,7 @@
 \seealso{\code{\link{aov}}}
 
 \examples{
-## Example on producing plastic filem from Krzanowski (1998, p. 381)
+## Example on producing plastic film from Krzanowski (1998, p. 381)
 tear <- c(6.5, 6.2, 5.8, 6.5, 6.5, 6.9, 7.2, 6.9, 6.1, 6.3,
           6.7, 6.6, 7.2, 7.1, 6.8, 7.1, 7.0, 7.2, 7.5, 7.6)
 gloss <- c(9.5, 9.9, 9.6, 9.6, 9.2, 9.1, 10.0, 9.9, 9.5, 9.4,
