@@ -3,11 +3,10 @@
 \usage{
 persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
       xlim = range(x), ylim = range(y), zlim = range(z, na.rm = TRUE), 
-      xlab = NULL, ylab = NULL, zlab = NULL,
-      theta = 0, phi = 15, r = sqrt(3), d = 1,
-      scale = TRUE, expand = 1, 
-      col = NULL, border = NULL, ltheta = -135, lphi = 0,
-      shade = NA, box = TRUE, axes = TRUE, nticks = 5, ticktype = "simple",
+      xlab = NULL, ylab = NULL, zlab = NULL, main = NULL, sub = NULL,
+      theta = 0, phi = 15, r = sqrt(3), d = 1, scale = TRUE, expand = 1, 
+      col = NULL, border = NULL, ltheta = -135, lphi = 0, shade = NA,
+      box = TRUE, axes = TRUE, nticks = 5, ticktype = "simple",
       ...) 
 }
 \alias{persp}
