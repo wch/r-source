@@ -28,9 +28,9 @@ installer.  It contains all the R components except WinHlp files, and you
 can select what want installed.  This includes the recommended packages.
 
 
-2) Files miniR.exe and miniR-1.bin to miniR-8.bin.  If you need to,
+2) Files miniR.exe and miniR-1.bin to miniR-?.bin.  If you need to,
 put miniR.exe and miniR-1.bin on one floppy, and miniR-2.bin to
-miniR-8.bin on separate floppies.
+miniR-?.bin on separate floppies.
 
 This is a small installation, containing text and compiled HTML help
 and the Introduction to R and Data Import/Export manuals in PDF.

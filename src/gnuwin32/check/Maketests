@@ -39,7 +39,7 @@ test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
 
 test-src-reg-1 = \
-	reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R reg-plot.R
+	reg-tests-1.R reg-tests-2.R reg-IO.R  reg-plot.R
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
 test-out-reg = $(test-src-reg:.R=.Rout)
