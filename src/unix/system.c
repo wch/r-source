@@ -51,7 +51,7 @@
 #include "Runix.h"
 
 
-#ifdef HAVE_AQUA 
+#ifdef HAVE_AQUA
 void R_StartConsole(Rboolean OpenConsole) { ptr_R_StartConsole(); }
 #endif
 
@@ -102,7 +102,7 @@ int main(int ac, char **av)
 }
 
 #ifdef HAVE_AQUA
-/*  this should be a global variable as it used in unix/devQuartz.c 
+/*  this should be a global variable as it used in unix/devQuartz.c
 	and in unix/main.c
 */
 Rboolean useaqua = FALSE;
@@ -254,7 +254,7 @@ int Rf_initialize_R(int ac, char **av)
     /* On Unix the console is a file; we just use stdio to write on it */
 
 #ifdef HAVE_AQUA
-    if(useaqua) 
+    if(useaqua)
       R_Interactive = useaqua;
     else
 #endif
@@ -264,15 +264,15 @@ int Rf_initialize_R(int ac, char **av)
     if(useaqua){
      R_Outputfile = NULL;
      R_Consolefile = NULL;
-    } else { 
+    } else {
 #endif
     R_Outputfile = stdout;
     R_Consolefile = stderr;
 #ifdef HAVE_AQUA
     }
-#endif 
+#endif
 
-  
+
 /*
  *  Since users' expectations for save/no-save will differ, we decided
  *  that they should be forced to specify in the non-interactive case.
@@ -294,7 +294,7 @@ int Rf_initialize_R(int ac, char **av)
 	Rstd_read_history(R_HistoryFile);
     fpu_setup(1);
 
-#ifdef HAVE_AQUA    
+#ifdef HAVE_AQUA
     if(useaqua)
      R_StartConsole(TRUE);
 #endif
@@ -371,12 +371,12 @@ int Rf_initEmbeddedR(int argc, char **argv)
      *     editor  = editor to be used.
      */
 
-int R_EditFiles(int nfile, char **file, char *editor)
+int R_EditFiles(int nfile, char **file, char **title, char *editor)
 {
     char  buf[1024];
 
     if (nfile > 0) {
-	if (nfile > 1) 
+	if (nfile > 1)
 	    R_ShowMessage("WARNING: Only editing the first in the list of files");
 
 #if defined(HAVE_AQUA)
