@@ -30,17 +30,16 @@ formatC(x, digits = NULL, width = max(0, digits) + 1,
 }
 \value{
   A character object of same size and attributes as \code{x}.
-  Unlike \code{format}, each number is individually formatted.  A for
+  Unlike \code{format}, each number is formatted individually.  A for
   loop over each element of \code{x}, calling \code{sprintf(\dots)} is
   done in the C function \code{str_signif}.
 
-  For  character  arguments,  simple (left or right) padding with white
+  For character arguments \code{x}, simple (left or right) padding with white
   space is done.
 }
-\note{
-  This function was originally written by Bill Dunlap and later much
-  improved by Martin Maechler.
-  It was adapted for \R by Friedrich Leisch.
+\author{
+ Originally written by Bill Dunlap, later much improved by Martin Maechler,
+ it was adapted for \R by Friedrich Leisch.
 }
 \seealso{
   \code{\link{format}}.
@@ -55,3 +54,4 @@ cbind(formatC(xx, dig = 5, wid = 8, format = "f", flag = "0"))
 formatC(c("a", "Abc", "no way"), wid = -7)  # <=> flag = "-"
 }
 \keyword{character}
+\keyword{print}
