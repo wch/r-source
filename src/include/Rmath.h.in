@@ -32,9 +32,9 @@
 
 #ifdef MATHLIB_STANDALONE
 # define R_NO_REMAP 1
-@RMATH_HAVE_LOG1P@
 #endif
 
+@RMATH_HAVE_LOG1P@
 
 #include <errno.h>
 #include <limits.h>
