@@ -155,7 +155,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 				    si <- Sys.info()
 				    si[c("user","nodename","sysname")]})))
     }
-    if(html || .Platform$OS.type != "mac")
+    if(html)
 	wsbrowser(IDS,IsRoot,Container,ItemsPerContainer, ParentID,
 		  NAMES,TYPES,DIMS,
 		  kind = "HTML", main = main, properties = properties,
