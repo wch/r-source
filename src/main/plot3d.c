@@ -939,11 +939,110 @@ static int LimitCheck(double *lim, double *c, double *s)
     return 1;
 }
 
+static int Vertex[8][3] = {
+    {0, 0, 0},
+    {0, 0, 1},
+    {0, 1, 0},
+    {0, 1, 1},
+    {1, 0, 0},
+    {1, 0, 1},
+    {1, 1, 0},
+    {1, 1, 1}
+};
+
+static int Edge[12][2] = {
+    {0, 1},
+    {2, 3},
+    {4, 5},
+    {6, 7},
+    {0, 2},
+    {1, 3},
+    {4, 6},
+    {5, 7},
+    {0, 4},
+    {1, 5},
+    {2, 6},
+    {3, 7},
+};
+
+static int Face[6][4] = {
+    { 0,  9,  2,  8},
+    {10,  3, 11,  1},
+    { 4,  1,  5,  0},
+    { 2,  7,  3,  6},
+    { 8,  6, 10,  4},
+    { 5, 11,  7,  9},
+};
+
+static void PerspBox(int front, double *x, double *y, double *z, DevDesc *dd)
+{
+    Vector3d u0, v0, u1, v1;
+    int edge, e, f, p0, p1, near;
+    u0[3] = 1;
+    u1[3] = 1;
+    for (f = 0 ; f < 6 ; f++) {
+	u0[0] = u1[0] = 0.5 * (x[0] + x[1]);
+	u0[1] = u1[1] = 0.5 * (y[0] + y[1]);
+	u0[2] = u1[2] = 0.5 * (z[0] + z[1]);
+	switch(f) {
+	case 0:
+	    u0[1] = y[0];
+	    u1[1] = 2 * y[0] - y[1];
+	    break;
+	case 1:
+	    u0[1] = y[1];
+	    u1[1] = 2 * y[1] - y[0];	    
+	    break;
+	case 2:
+	    u0[0] = x[0];
+	    u1[0] = 2 * x[0] - x[1];
+	    break;
+	case 3:
+	    u0[0] = x[1];
+	    u1[0] = 2 * x[1] - x[0];
+	    break;
+	case 4:
+	    u0[2] = z[0];
+	    u1[2] = 2 * z[0] - z[1];
+	    break;
+	case 5:
+	    u0[2] = z[1];
+	    u1[2] = 2 * z[1] - z[0];
+	    break;
+	}
+	TransVector(u0, VT, v0);
+	TransVector(u1, VT, v1);
+#ifdef TEST
+	GLine(v0[0]/v0[3], v0[1]/v0[3],
+	      v1[0]/v1[3], v1[1]/v1[3], USER, dd);
+ 	printf("f = %d,  %g  %g\n", f, v1[2]/v1[3], v0[2]/v0[3]);
+#endif
+	near = (v1[2]/v1[3] > v0[2]/v0[3]);
+	if (front && near || (!front && !near)) {
+	    for (e = 0 ; e < 4 ; e++) {
+		edge = Face[f][e];
+		p0 = Edge[edge][0];
+		p1 = Edge[edge][1];
+		u0[0] = x[Vertex[p0][0]];
+		u0[1] = y[Vertex[p0][1]];
+		u0[2] = z[Vertex[p0][2]];
+		u1[0] = x[Vertex[p1][0]];
+		u1[1] = y[Vertex[p1][1]];
+		u1[2] = z[Vertex[p1][2]];
+		TransVector(u0, VT, v0);
+		TransVector(u1, VT, v1);
+		GLine(v0[0]/v0[3], v0[1]/v0[3],
+		      v1[0]/v1[3], v1[1]/v1[3], USER, dd);
+	    }
+	}
+    }
+}
+
 SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, z, xlim, ylim, zlim, depth, index, originalArgs, col, border;
     double theta, phi, r, d, expand, xc, yc, zc, xs, ys, zs;
-    int scale, ncol;
+    int i, j, scale, ncol;
     DevDesc *dd;
 
     if(length(args) < 12)
@@ -1071,12 +1170,27 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     /* and then draw them back to front. */
     /* This is the "painters" algorithm. */
 
+    PerspBox(0, REAL(xlim), REAL(ylim), REAL(zlim), dd);
+
     DrawFacets(REAL(z), REAL(x), REAL(y), nrows(z), ncols(z), INTEGER(index),
 	       INTEGER(col), ncol);
+
+    PerspBox(1, REAL(xlim), REAL(ylim), REAL(zlim), dd);
 
     GRestorePars(dd);
     UNPROTECT(10);
     if (call != R_NilValue)
         recordGraphicOperation(op, originalArgs, dd);
+
+    PROTECT(x = allocVector(REALSXP, 16));
+    PROTECT(y = allocVector(INTSXP, 2));
+    for(i = 0 ; i < 4 ; i++)
+      for(j = 0 ; j < 4 ; j++) {
+        REAL(x)[i+j*4] = VT[i][j];
+      }
+    INTEGER(y)[0] = 4;
+    INTEGER(y)[1] = 4;
+    setAttrib(x, R_DimSymbol, y);
+    UNPROTECT(2);
     return x;
 }
