@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-35, 2001-12-12
+Version 1.3-36, 2001-12-14
 Kurt Hornik
 
 
@@ -564,6 +564,7 @@ and is currently being mirrored daily at
      `http://cran.at.r-project.org/'(TU Wien, Austria)
      `http://cran.au.r-project.org/'(PlanetMirror, Australia)
      `http://cran.ch.r-project.org/'(ETH Zu"rich, Switzerland)
+     `http://cran.de.r-project.org/'(APP, Germany)
      `http://cran.dk.r-project.org/'(SunSITE, Denmark)
      `http://cran.hu.r-project.org/'(Semmelweis U, Hungary)
      `http://cran.uk.r-project.org/'(U of Bristol, United
