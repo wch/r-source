@@ -41,6 +41,8 @@ write_PACKAGES <-
                 close(con)
             }
         } else {
+            dir <- file_path_as_absolute(dir)
+            files <- list.files(dir, pattern="\.tar\.gz$", full.names=TRUE)
             cwd <- getwd()
             td <- tempfile("PACKAGES")
             if(!dir.create(td)) stop("unable to create ", td)
@@ -49,8 +51,7 @@ write_PACKAGES <-
             for(i in seq(along = files)) {
                 if(verbose) cat("  ", files[i], "\n", sep ="")
                 p <- file.path(packages[i], "DESCRIPTION")
-                ## <FIXME> quote appropriately to OS
-                temp <- try(system(paste("tar zxf",  files[i], shQuote(p))))
+                temp <- try(system(paste("tar zxf", files[i], p)))
                 if(!identical(class(temp), "try-error")) {
                     temp <- try(read.dcf(p, fields = fields), silent = TRUE)
                     if(!identical(class(temp), "try-error"))
