@@ -1,36 +1,11 @@
 # Makefile for R for Windows Installers
 
 include ../MkRules
-UNZIPDIR=unzip
 include ../RWVERSION
 
-.PHONY: GA UZ
-
 all: SetupR.exe miniR.exe
-old: R.ico GA UZ rwinst.exe
-
-# O1 for small rather than fast
-CFLAGS=-I../graphapp -I../../include -I$(UNZIPDIR)/windll -Wall -O1 -DRVER=\"$(RPREFIX)\"
-
-GA:
-	$(MAKE) -C ../graphapp
-
-UZ:
-	$(MAKE) -C $(UNZIPDIR) -f ../Makefile.unzip
-
-R.ico: ../front-ends/R.ico
-	$(CP) -p ../front-ends/R.ico .
-
-rwico.o: rwico.rc
-
-rwinst.o: ../../include/Rversion.h ../graphapp/ga.h ../graphapp/graphapp.h
-
-rwinst.exe: rwinst.o rwico.o dounzip.o ../ga.a $(UNZIPDIR)/unzip32.a
-	$(CC) -s -mwindows -o $@ $^ -lcomctl32
-
-clean:
-	$(RM) R.ico *.o *~ \#*\# rwinst.exe
-	-$(MAKE) -C $(UNZIPDIR) -f ../Makefile.unzip clean
+clean: ISclean
+distclean: ISdistclean
 
 #======================================================================
 
@@ -41,7 +16,7 @@ IS: SetupR.exe
 # location where Inno Setup was installed
 ISDIR=C:/packages/Inno
 # location where binary packages are kept
-PKGS=U:/Rweb/RWin
+PKGS=C:/R/Rdist/libs
 
 R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 ../$(RPREFIX)ch.zip ../$(RPREFIX)d1.zip ../$(RPREFIX)d2.zip \

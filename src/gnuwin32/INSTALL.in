@@ -216,10 +216,7 @@ cross-built version of binutils 2.9.4.
 
 You will need Perl, zip and unzip installed.
 
-You also need: the R source (R-@RVER@.tgz), and to build the rwinst
-installer, unzip542.zip from any Info-ZIP mirror.  (It is possible to
-cross-build the main installers using WINE, which we leave as an
-exercise for the reader.)
+You also need the R source (R-@RVER@.tgz).
 
 Then: untar R-@RVER@.tgz somewhere, and
 
@@ -241,6 +238,8 @@ Note that cross-building does still need libR.a, and that to
 cross-build the methods package you need a working copy of this
 version of R on the Linux system.
 
+(It is possible to cross-build the main installers using WINE, which
+we leave as an exercise for the reader.)
 
 
 Feedback
