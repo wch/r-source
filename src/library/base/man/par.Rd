@@ -16,10 +16,8 @@ par(\dots)
   Parameters are queried by giving vectors of character strings to
   \code{par}.  In this case, the values are returned in a tagged list.
 }
-% --- The real documentation is the code -- in ../../../main/par.c   ;-)
-
-%--- CHECK  which of the things below are still  "unimplemented" @@
-%--- add   'gamma' !
+%% --- The real documentation is the code -- in ../../../main/par.c   ;-)
+%% --- AND (defined AND commented) in ../../../include/Graphics.h
 \arguments{
   \item{adj}{The value of \code{adj} determines the way in which text
     strings are justified.  A value of \code{0} produces right
@@ -28,6 +26,8 @@ par(\dots)
   \item{ann}{If set to \code{FALSE}, high-level plotting functions do
     not annotate the plots they produce with axis and overall titles.
     The default is to do annotation.}
+  \item{ask}{logical. If \code{TRUE}, the user is asked for input,
+    before a new figure is drawn.}
   \item{bg}{The color to be used for the background of plots.  A
     description of how colors are specified is given below.}
   \item{bty}{A character string which determined the type of box which
@@ -45,17 +45,19 @@ par(\dots)
     to the current.}
   \item{cex.sub}{The magnification to be used for sub-titles relative to
     the current.}
+  \item{cin}{\emph{\bold{R.O.}}. }
   \item{col}{A specification for the default plotting color.  A
     description of how colors are specified is given below.}
   \item{col.axis}{The color to be used for axis annotation.}
   \item{col.lab}{The color to be used for x and y labels.}
   \item{col.main}{The color to be used for plot main titles.}
   \item{col.sub}{The color to be used for plot sub-titles.}
+  \item{cra}{\emph{\bold{R.O.}}. }
   \item{crt}{A numerical value specifying (in degrees) how strings
     should be rotated.  It is unwise to expect values other than
     multiples of 90 to work.}
-  \item{csi}{(\emph{Unimplemented}) The height of characters in inches.}
-  \item{din}{The device dimensions in inches (cannot be set).}
+  \item{csi}{\emph{\bold{R.O.}}. The height of (default sized) characters in inches.}
+  \item{din}{\emph{\bold{R.O.}}. The device dimensions in inches.}
   \item{err}{(\emph{Unimplemented}) The degree of error reporting desired.}
   \item{fg}{The color to be used for the foreground of plots.
     This is the default color is used for things like axes and boxes
@@ -69,13 +71,18 @@ par(\dots)
   \item{font}{An integer which specifies which font to use for text.
     If possible, device drivers arrange so that 1 corresponds to plain
     text, 2 to bold face, 3 to italic and 4 to bold italic.}
+  \item{font.axis}{The font to be used for axis annotation.}
+  \item{font.lab}{The font to be used for x and y labels.}
+  \item{font.main}{The font to be used for plot main titles.}
+  \item{font.sub}{The font to be used for plot sub-titles.}
+  \item{gamma}{the gamma correction, see \code{\link{hsv}(.., gamma)}.}
   \item{lab}{A numerical vector of the form \code{c(x, y, len)} which
     modifies the way that axes are annotated.
     The values of \code{x} and \code{y} give the (approximate) number of
     tickmarks on the x and y axes and
     \code{len} species the label size.
     \emph{Currently}, \code{len} \emph{is unimplemented}.}
-  \item{las}{(\emph{Unimplemented})
+  \item{las}{(\emph{Unimplemented}, \code{0} is used, even for vertical).
     the style of axis labels.
     0=always parallel to the axis,
     1=always horizontal,
@@ -89,6 +96,8 @@ par(\dots)
     the length (in points) of line segments which are alternatively
     drawn and skipped.  For example, \code{"44"} is dashed and
     \code{"13"} is dotted.}
+  \item{lwd}{The line width \bold{not yet supported for postscript}, a
+    \emph{positive} numerical, defaulting to \code{1}.}
   \item{mai}{A numerical vector of the form \code{c(xb, yl, xt, yr)}
     which gives the margin size specified in inches.}
   \item{mar}{A numerical vector of the form \code{c(xb, yl, xt, yr)}
@@ -96,19 +105,21 @@ par(\dots)
     the plot.  The default is \code{c(5, 4, 4, 2) + 0.1}.}
   \item{mex}{\code{mex} is a character size expansion factor which is
     used to describe coordinates in the margins of plots.}
-  \item{mfcol}{This is a vector of the form \code{c(nr, nc)}.
+  \item{mfcol, mfrow}{A vector of the form \code{c(nr, nc)}.
     Subsequent figures will be drawn in an \code{nr}-by-\code{nc}
-    array on the device by \emph{columns}.}
+    array on the device by \emph{columns} (\code{mfcol}), or
+    \emph{rows} (\code{mfrow}), respectively.}
   \item{mfg}{A numerical vector of the form \code{c(i, j, nr, nc)} where
     \code{i} and \code{j} indicate which figure in an
     \code{nr}-by-\code{nc} array of figures is currently being drawn.}
-  \item{mfrow}{This is a vector of the form \code{c(nr, nc)}.
-    Subsequent figures will be drawn in an \code{nr}-by-\code{nc}
-    array on the device by \emph{rows}.}
   \item{mgp}{The margin line for the axis title, axis labels and axis
     line.  The default is \code{c(3, 1, 0)}.}
   \item{mkh}{The height in inches of symbols to be drawn when the value
     of \code{pch} is an integer.}
+  \item{new}{logical, defaulting to \code{FALSE}.  If set to
+    \code{TRUE}, the next high-level plotting command (actually
+    \code{\link{plot.new}(.)} should \emph{not clean} the frame before
+    drawing ``as if it was on a \bold{new} device''.}
   \item{oma}{A vector of the form \code{c(xb, xt, yl, yr)} giving the
     size of the outer margins in lines of text.}
   \item{omd}{A vector of the form \code{c(x1, x2, y1, y2)} giving the
@@ -122,6 +133,7 @@ par(\dots)
   \item{plt}{A vector of the form \code{c(x1, x2, y1, y2)} giving the
     the coordinates of the plot region as fractions of the current
     figure region.}
+  \item{ps}{integer; the pointsize of text and symbols.}
   \item{pty}{A character specifying the type of plot region to be used;
     \code{"s"} generates a square plotting region and \code{"m"}
     generates the maximal plotting region.}
@@ -137,6 +149,8 @@ par(\dots)
     of a line of text.  The default value is \code{-0.5}.}
   \item{tmag}{A number specifying the enlargement of text of the main
     title relative to the other annotating text of the plot.}
+  \item{type}{character;  the default plot type desired, see
+    \code{\link{plot.default}(type=\dots)}, defaulting to \code{"p"}.}
   \item{usr}{A vector of the form \code{c(x1, x2, y1, y2)} giving the
     extremes of the user coordinates of the plotting region.}
   \item{xaxp}{A vector of the form \code{c(x1, x2, n)} giving the
@@ -146,8 +160,10 @@ par(\dots)
     calculation to be used for the x-axis.}
   \item{xaxt}{A character which specifies the axis type.
     Specifying \code{"n"} causes an axis to be set up, but not plotted.}
-  \item{xlog}{A logical value. If \code{TRUE} a logarithmic scale is
-    used.  The default is to use a linear scale.}
+  \item{xlog}{\emph{\bold{R.O.}}.  A logical value (see \code{log} in
+    \code{\link{plot.default}}).
+    If \code{TRUE} a logarithmic scale is in use. For a new device, it
+    defaults to \code{FALSE}, i.e., linear scale.}
   \item{xpd}{A logical value.
     If \code{FALSE}, all plotting is clipped to the plot region.}
   \item{yaxp}{A vector of the form \code{c(y1, y2, n)} giving
@@ -157,9 +173,14 @@ par(\dots)
     calculation to be used for the y-axis.}
   \item{yaxt}{A character which specifies the axis type.
     Specifying \code{"n"} causes an axis to be set up, but not plotted.}
-  \item{ylog}{A logical value. If \code{TRUE} a logarithmic scale is
-    used.  The default is to use a linear scale.}
+  \item{ylog}{\emph{\bold{R.O.}}.  A logical value (see \code{log} in
+    \code{\link{plot.default}}).  See \code{xlog} above.}
+
 }
+\note{\emph{\bold{R.O.}} := \bold{Read-only arguments}: These may only
+  be used in queries, i.e.,  they do \emph{not} set anything.
+}
+
 \section{Color Specification}{Colors can be specified in several
   different ways.  The simplest way is with a character string giving
   the color name (e.g., \code{"red"}).  A list of the possible colors
@@ -194,6 +215,10 @@ op <- par(mfrow = c(2, 2), # 2 x 2 pictures on one plot
 
 ## At end of plotting, reset to previous settings:
 par(op)
+
+par("ylog")# FALSE
+plot(1:12,log="y")
+par("ylog")# TRUE
 }
 \keyword{iplot}
 \keyword{dplot}
