@@ -5,8 +5,11 @@
    */
 
 #include <math.h>
-#include <S.h>
+#include "S.h"
 
+#undef max
+#undef min
+#undef abs
 #define	max(a, b) 		((a) < (b) ? (b) : (a))
 #define	min(a, b) 		((a) > (b) ? (b) : (a))
 #define	abs(x)			((x) >= 0 ? (x) : -(x))

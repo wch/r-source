@@ -1,5 +1,15 @@
 #!/bin/sh
 
+#  Configuration Script for the Macintosh
+#
+#  This script builds a source tree suitable for export to the Macintosh
+#  for compilation under the CodeWarrior development environment.
+#
+#  We don't attempt anything fancy here.  We do just enough to
+#  produce compilable source code.  Help files etc must be copied
+#  bu hand.
+
+
 RHOME=`pwd`
 MHOME=`pwd`/Macintosh
 
