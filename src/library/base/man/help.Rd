@@ -58,7 +58,7 @@ type?topic
   \item{type}{the special type of documentation to use for this topic;
       for example, if the type is \code{class}, documentation is
       provided for the class with name \code{topic}.  The function
-      \code{\link{topicName}} returns the actual name used in this case.}
+      \code{topicName} returns the actual name used in this case.}
 }
 \description{
   These functions provide access to documentation.
