@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/build
 
-REVISION='$Revision: 1.1 $'
+REVISION='$Revision: 1.2 $'
 VERSION=`set - ${REVISION}; echo ${2}`
 VERSION="R package builder version ${VERSION}
 
@@ -140,7 +140,8 @@ buildpkg () {
 	  result "WARNING:"
 	fi
 	any="${any} ${tag}"
-	echo "Rd files without ${tag}: ${badfiles}"
+	echo "Rd files without ${tag}:"
+	echo "${badfiles}"
       fi
     done
     if test -z "${any}"; then
@@ -189,18 +190,18 @@ buildpkg () {
   fi
   out=`echo "undoc(dir = \"${dir}\")" | R ${R_opts} | \
     grep "^Error\\|^ *\\["`
-  err=`echo ${out} | grep "^Error"`
+  err=`echo "${out}" | grep "^Error"`
   if test -z "${err}"; then
     if test -n "${out}"; then
       result "WARNING:"
-      echo ${out};
+      echo "${out}"
     else
       result "OK"
     fi
   else
-    err=`echo ${err} | sed -e 's/^Error *//'`
+    err=`echo "${err}" | sed -e 's/^Error *//'`
     result "ERROR:"
-    echo ${err}
+    echo "${err}"
     exit 1
   fi
 
