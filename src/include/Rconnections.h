@@ -95,4 +95,4 @@ void con_close(int i);
 void Rconn_setEncoding(Rconnection con, SEXP enc);
 void R_SinkReset(void);
 
-int R_OutputCon, R_ErrorCon;
+int R_OutputCon;
