@@ -687,7 +687,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
         ## their DESCRIPTION file registers the given package and has a
         ## valid version.  Actually, we should really exclude all
         ## candidates with "bad" DESCRIPTION metadata, but we cannot use
-        ## tools:::check_package_description() for a full check here.
+        ## tools:::.check_package_description() for a full check here.
         ## (But then packages installed with R 2.0 or better must have
         ## valid DESCRIPTION metadata anyways.)
         if(length(paths)) {
