@@ -26,7 +26,6 @@ PKGS = $(R_PKGS_BASE)
 ## PERL5LIB/PERLLIB are set appropriately (or do this ourselves).
 ## See e.g. @file{src/gnuwin32/help/Makefile}.
 R_CMD_BUILD_HELP = $(top_builddir)/bin/R CMD perl $(top_srcdir)/share/perl/build-help.pl
-R_CMD_RD2CONTENTS = $(top_builddir)/bin/R CMD perl $(top_srcdir)/share/perl/Rd2contents.pl --os=unix
 ## </NOTE>
 
 R_EXE = $(top_builddir)/bin/R --vanilla
