@@ -316,10 +316,10 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 965 *
-Subject: Documentation bug in bug.report
-From: thoffman@zappa.sax.de
-Date: Fri, 1 Jun 2001 19:50:58 +0200 (MET DST)
+* PR# 966 *
+Subject: update.packages() and parse(text="A B")
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Sun, 03 Jun 2001 15:34:41 +0200
 * PR# 953 *
 Subject: bugs in deriv(*, *, function.arg = ) 
 Subject: PROTECT() bugs in deriv(*, *, function.arg = ) 
@@ -360,6 +360,10 @@ Date: Thu, 31 May 2001 22:07:43 +0200 (MET DST)
 Subject: R-1.2.3: a small suggestion
 From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
 Date: Thu, 31 May 2001 09:19:26 -0600 (MDT)
+* PR# 965 *
+Subject: Documentation bug in bug.report
+From: thoffman@zappa.sax.de
+Date: Fri, 1 Jun 2001 19:50:58 +0200 (MET DST)
 * PR# 964 *
 Subject: R-1.2.3 OSF precompiled binary doesn't run under DU4.0D
 From: paul@gromit.dlib.vt.edu
