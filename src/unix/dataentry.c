@@ -268,6 +268,8 @@ int doMouseDown(DEEvent * event)
 }
 #endif
 
+static int CellModified;
+
 static void doSpreadKey(int key, DEEvent * event)
 {
     KeySym iokey;
@@ -301,7 +303,7 @@ static void doSpreadKey(int key, DEEvent * event)
 	jumpwin(1, 1);
     else if (IsModifierKey(iokey)) {
     }
-    else
+    else 
 	handlechar(text);
 }
 
@@ -388,7 +390,7 @@ void drawwindow()
 
     i = textwidth("Quit", 4);
     drawrectangle(windowWidth - 6 - bwidth - i, 3, i + 4, hwidth - 6);
-    drawtext(windowWidth - 4 - bwidth - i, hwidth - 5, "Quit", 4);
+    drawtext(windowWidth - 4 - bwidth - i, hwidth - 7, "Quit", 4);
 #endif
 
     /* set the active rectangle to be the upper left one */
@@ -507,6 +509,9 @@ void drawrow(int whichrow)
 /* printelt: print the correct value from vector[vrow] into the
    spreadsheet in row ssrow and col sscol */
 
+/* WARNING: This has no check that you're not beyond the end of the
+   vector. Caller must check. */
+
 void printelt(SEXP invec, int vrow, int ssrow, int sscol)
 {
     char *strp;
@@ -563,6 +568,38 @@ void drawcol(int whichcol)
     Rsync();
 }
 
+void drawelt(int whichrow, int whichcol)
+{
+    int i;
+    char clab[15];
+    SEXP tmp;
+
+    if (length(inputlist) >= whichcol + colmin - 1) {
+	tmp = nthcdr(inputlist, whichcol + colmin - 2);
+	if (whichrow == 0)
+	    if (TAG(tmp) != R_NilValue)
+		printstring(
+		    CHAR(PRINTNAME(TAG(tmp))),
+		    strlen(CHAR(PRINTNAME(TAG(tmp)))), 0, whichcol);
+	    else {
+		sprintf(clab, "var%d", whichcol + colmin - 1);
+		printstring(clab, strlen(clab), 0, whichcol);
+	    }
+	else
+	    if (CAR(tmp) != R_NilValue && 
+		(i = rowmin + whichrow - 2) < (int)LEVELS(CAR(tmp)) )
+		printelt(CAR(tmp), i, whichrow, whichcol);
+    }
+    else if (whichrow == 0){
+	sprintf(clab, "var%d", whichcol + colmin - 1);
+	printstring(clab, strlen(clab), 0, whichcol);
+    }
+    else
+	printstring("", 0, whichrow,  whichcol);
+
+    Rsync();
+}
+
 void jumppage(int dir)
 {
     switch (dir) {
@@ -601,7 +638,9 @@ void jumppage(int dir)
 void printrect(int lwd)
 {
     setlineattribs(lwd);
-    drawrectangle(ccol * box_w, hwidth + crow * box_h, box_w, box_h);
+    drawrectangle(ccol * box_w + lwd - 1, 
+		  hwidth + crow * box_h + lwd -1, 
+		  box_w - lwd + 1, box_h - lwd + 1);
     Rsync();
 }
 
@@ -695,7 +734,8 @@ static SEXP getccol()
     wcol = ccol + colmin - 1;
     wrow = crow + rowmin - 1;
     if (length(inputlist) < wcol)
-	inputlist = listAppend(inputlist, allocList(wcol - length(inputlist)));
+	inputlist = listAppend(
+	    inputlist, allocList(wcol - length(inputlist)));
     tmp = nthcdr(inputlist, wcol - 1);
     if (CAR(tmp) == R_NilValue) {
 	len = (wrow < 100) ? 100 : wrow;
@@ -736,33 +776,48 @@ void closerect()
     *bufp = '\0';
 
     /* first check to see if anything has been entered */
-    if (clength != 0) {
-	if (crow == 0) {	/* then we are entering a new column name */
-	    if (length(inputlist) < ccol + colmin - 1)
-		inputlist = 
-		    listAppend(inputlist, 
-			       allocList((ccol - colmin - 1 
-					  + length(inputlist))));
-	    tvec = nthcdr(inputlist, ccol + colmin - 2);
-	    TAG(tvec) = install(buf);
-	}
-	else {
-	    cvec = getccol();
-	    if ((crow + rowmin - 1) > (int)LEVELS(cvec))
-		LEVELS(cvec) = (crow + rowmin - 1);
-	    if (TYPEOF(cvec) == STRSXP) {
-		tvec = allocString(strlen(buf));
-		strcpy(CHAR(tvec), buf);
-		STRING(cvec)[(rowmin + crow - 2)] = tvec;
+    if (CellModified) {
+	if (clength != 0) {
+	    if (crow == 0) {  
+		/* then we are entering a new column name */
+		if (length(inputlist) < ccol + colmin - 1)
+		    inputlist = 
+			listAppend(inputlist, 
+				   allocList((ccol - colmin - 1 
+					      + length(inputlist))));
+		tvec = nthcdr(inputlist, ccol + colmin - 2);
+		TAG(tvec) = install(buf);
 	    }
-	    else
-		REAL(cvec)[(rowmin + crow - 2)] = atof(buf);
+	    else {
+		cvec = getccol();
+		if ((crow + rowmin - 1) > (int)LEVELS(cvec))
+		    LEVELS(cvec) = (crow + rowmin - 1);
+		if (TYPEOF(cvec) == STRSXP) {
+		    tvec = allocString(strlen(buf));
+		    strcpy(CHAR(tvec), buf);
+		    STRING(cvec)[(rowmin + crow - 2)] = tvec;
+		}
+		else
+		    REAL(cvec)[(rowmin + crow - 2)] = atof(buf);
+	    }
 	}
+	else 
+	    if (crow == 0) {
+		sprintf(buf, "var%d", ccol);
+		printstring(buf, strlen(buf), 0, ccol - colmin + 1);
+	    }
+	    else {
+		cvec = getccol();
+		if ((crow + rowmin - 1) > (int)LEVELS(cvec))
+		    LEVELS(cvec) = (crow + rowmin - 1);
+		if (TYPEOF(cvec) == STRSXP) 
+		    STRING(cvec)[(rowmin + crow - 2)] = NA_STRING;
+		else 
+		    REAL(cvec)[(rowmin + crow - 2)] = NA_REAL;
+		drawelt(crow,ccol);
+	    }
     }
-    else if (crow == 0) {
-	sprintf(buf, "var%d", ccol);
-	printstring(buf, strlen(buf), 0, ccol - colmin + 1);
-    }
+    CellModified = 0;
 
     downlightrect();
 
@@ -783,10 +838,10 @@ void printstring(char *ibuf, int buflen, int row, int col)
     int len, x_pos, y_pos;
 
     find_coords(row, col, &x_pos, &y_pos);
-    cleararea(col * box_w + text_offset, 
-	      hwidth + row * box_h + text_offset,
-	      box_w - 2 * text_offset, 
-	      box_h - 2 * text_offset);
+    cleararea(col * box_w + 2, 
+	      hwidth + row * box_h + 2,
+	      box_w - 3, 
+	      box_h - 3);
     len = nchars(ibuf, buflen);
     drawtext(x_pos + text_offset, y_pos + box_h - text_offset, ibuf, len);
     Rsync();
@@ -812,12 +867,23 @@ void clearrect()
    depending on the current column type, only printing characters
    should get this far */
 
+/* --- Not true! E.g. ESC ends up in here... */
+
 void handlechar(char *text)
 {
     int c;
     SEXP tvec;
 
     c = text[0];
+
+    if ( c == '\033' ) {
+	CellModified = 0;
+	clength = 0;
+	drawelt(crow, ccol);
+	return;
+    }
+    else
+	CellModified = 1;
 
     if (clength == 0) {
 	if (length(inputlist) >= ccol + colmin - 1)
@@ -1478,6 +1544,7 @@ int initwin()
     }
 
     drawwindow();
+    CellModified = 0;
     return 0;
 }
 
