@@ -26,6 +26,13 @@
 #include <R_ext/Error.h>
 #include <R_ext/Applic.h>
 
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) gettext (String)
+#else
+#define _(String) (String)
+#endif
+
 /* Linear and Step Function Interpolation */
 
 /* Assumes that ordinates are in ascending order
@@ -100,18 +107,18 @@ void R_approx(double *x, double *y, int *nxy, double *xout, int *nout,
 	break;
     case 2: /* constant */
 	if(!R_FINITE(*f) || *f < 0 || *f > 1)
-	    error("approx(): invalid f value");
+	    error(_("approx(): invalid f value"));
 	M.f2 = *f;
 	M.f1 = 1 - *f;
 	break;
     default:
-	error("approx(): invalid interpolation method");
+	error(_("approx(): invalid interpolation method"));
 	break;
     }
 
     for(i=0 ; i<*nxy ; i++)
 	if(ISNA(x[i]) || ISNA(y[i]))
-	    error("approx(): attempted to interpolate NA values");
+	    error(_("approx(): attempted to interpolate NA values"));
 
     M.kind = *method;
     M.ylow = *yleft;

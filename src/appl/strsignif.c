@@ -80,6 +80,13 @@
 #include <R_ext/Applic.h>
 #include <Rmath.h>		/* fround */
 
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) gettext (String)
+#else
+#define _(String) (String)
+#endif
+
 /*
    The declaration for x is unusual for a .C() but is managed by
    casting in the code itself.  However, it does mean that we cannot
@@ -99,7 +106,7 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
     char *form = R_alloc(len_flag+4 + strlen(*format), sizeof(char));
 
     if (wid == 0)
-	error(".C(..): Width cannot be zero");
+	error(_(".C(..): Width cannot be zero"));
 
     if (strcmp("d", *format) == 0) {
 	if (len_flag == 0)
@@ -113,7 +120,7 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 	    for (i=0; i < nn; i++)
 		sprintf(result[i], form, wid, ((int *)x)[i]);
 	else
-	    error(".C(..): `type' must be \"integer\" for  \"d\"-format");
+	    error(_(".C(..): `type' must be \"integer\" for  \"d\"-format"));
     }
     else { /* --- floating point --- */
 	if (len_flag == 0)
@@ -205,6 +212,6 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 #endif
 		}
 	} else
-	    error(".C(..): `type' must be \"real\" for this format");
+	    error(_(".C(..): `type' must be \"real\" for this format"));
     }
 }

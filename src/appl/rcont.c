@@ -14,6 +14,12 @@
 #include <R_ext/Boolean.h>
 #include <R_ext/Error.h>
 #include <R_ext/Utils.h>
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) gettext (String)
+#else
+#define _(String) (String)
+#endif
 
 void
 rcont2(int *nrow, int *ncol,
@@ -69,8 +75,7 @@ rcont2(int *nrow, int *ncol,
 		if (x >= dummy)
 		    break;
 		if (x == 0.)/* MM: I haven't seen this anymore */
-		    error("rcont2 [%d,%d]: exp underflow to 0;"
-			  " algorithm failure", l, m);
+		    error(_("rcont2 [%d,%d]: exp underflow to 0; algorithm failure"), l, m);
 
 		sumprb = x;
 		y = x;

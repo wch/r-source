@@ -46,6 +46,13 @@
 #include <config.h>
 #endif
 
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) gettext (String)
+#else
+#define _(String) (String)
+#endif
+
 #include <R_ext/Applic.h>
 #include <Rmath.h>
 #include <R_ext/Error.h>
@@ -94,10 +101,10 @@ double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
     }
 
     if(cell < 20*DBL_MIN) {
-      warning("Internal(pretty()): very small range.. corrected");
+      warning(_("Internal(pretty()): very small range.. corrected"));
       cell = 20*DBL_MIN;
     } else if(cell * 10 > DBL_MAX) {
-      warning("Internal(pretty()): very large range.. corrected");
+      warning(_("Internal(pretty()): very large range.. corrected"));
       cell = .1*DBL_MAX;
     }
     base = pow(10., floor(log10(cell))); /* base <= cell < 10*base */

@@ -72,7 +72,7 @@ static Rboolean url_open(Rconnection con)
 	if(ctxt == NULL) {
 	  /* if we call error() we get a connection leak*/
 	  /* so do_url has to raise the error*/
-	  /* error("cannot open URL `%s'", url); */
+	  /* error("cannot open URL '%s'", url); */
 	    return FALSE;
 	}
 	((Rurlconn)(con->private))->ctxt = ctxt;
@@ -82,13 +82,13 @@ static Rboolean url_open(Rconnection con)
 	if(ctxt == NULL) {
 	  /* if we call error() we get a connection leak*/
 	  /* so do_url has to raise the error*/
-	  /* error("cannot open URL `%s'", url); */
+	  /* error("cannot open URL '%s'", url); */
 	    return FALSE;
 	}
 	((Rurlconn)(con->private))->ctxt = ctxt;
 	break;
     default:
-	warning("unknown URL scheme");
+	warning(_("unknown URL scheme"));
 	return FALSE;
     }
 
@@ -157,17 +157,17 @@ static Rconnection in_R_newurl(char *description, char *mode)
     Rconnection new;
 
     new = (Rconnection) malloc(sizeof(struct Rconn));
-    if(!new) error("allocation of url connection failed");
+    if(!new) error(_("allocation of url connection failed"));
     new->class = (char *) malloc(strlen("file") + 1);
     if(!new->class) {
 	free(new);
-	error("allocation of url connection failed");
+	error(_("allocation of url connection failed"));
     }
     strcpy(new->class, "url");
     new->description = (char *) malloc(strlen(description) + 1);
     if(!new->description) {
 	free(new->class); free(new);
-	error("allocation of url connection failed");
+	error(_("allocation of url connection failed"));
     }
     init_con(new, description, mode);
     new->canwrite = FALSE;
@@ -179,7 +179,7 @@ static Rconnection in_R_newurl(char *description, char *mode)
     new->private = (void *) malloc(sizeof(struct urlconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
-	error("allocation of url connection failed");
+	error(_("allocation of url connection failed"));
     }
 
     IDquiet = TRUE;
@@ -240,26 +240,26 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     scmd = CAR(args); args = CDR(args);
     if(!isString(scmd) || length(scmd) < 1)
-	error("invalid `url' argument");
+	error(_("invalid 'url' argument"));
     if(length(scmd) > 1)
-	warning("only first element of `url' argument used");
+	warning(_("only first element of 'url' argument used"));
     url = CHAR(STRING_ELT(scmd, 0));
     sfile = CAR(args); args = CDR(args);
     if(!isString(sfile) || length(sfile) < 1)
-	error("invalid `destfile' argument");
+	error(_("invalid 'destfile' argument"));
     if(length(sfile) > 1)
-	warning("only first element of `destfile' argument used");
+	warning(_("only first element of 'destfile' argument used"));
     file = CHAR(STRING_ELT(sfile, 0));
     IDquiet = quiet = asLogical(CAR(args)); args = CDR(args);
     if(quiet == NA_LOGICAL)
-	error("invalid `quiet' argument");
+	error(_("invalid 'quiet' argument"));
     smode =  CAR(args); args = CDR(args);
     if(!isString(smode) || length(smode) != 1)
-	error("invalid `mode' argument");
+	error(_("invalid 'mode' argument"));
     mode = CHAR(STRING_ELT(smode, 0));
     cacheOK = asLogical(CAR(args));
     if(cacheOK == NA_LOGICAL)
-	error("invalid `cacheOK' argument");
+	error(_("invalid 'cacheOK' argument"));
 
     if(strncmp(url, "file://", 7) == 0) {
 	FILE *in, *out;
@@ -268,9 +268,9 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	/* Use binary transfers */
 	in = R_fopen(R_ExpandFileName(url+7), (mode[2] == 'b') ? "rb" : "r");
-	if(!in) error("cannot open URL `%s'", url);
+	if(!in) error(_("cannot open URL '%s'"), url);
 	out = R_fopen(R_ExpandFileName(file), mode);
-	if(!out) error("cannot open destfile `%s'", file);
+	if(!out) error(_("cannot open destfile '%s'"), file);
 	while((n = fread(buf, 1, CPBUFSIZE, in)) > 0)
 	    fwrite(buf, 1, n, out);
 	fclose(out); fclose(in);
@@ -287,22 +287,22 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
 	out = R_fopen(R_ExpandFileName(file), mode);
-	if(!out) error("cannot open destfile `%s'", file);
+	if(!out) error(_("cannot open destfile '%s'"), file);
 
 	R_Busy(1);
-	if(!quiet) REprintf("trying URL `%s'\n", url);
+	if(!quiet) REprintf(_("trying URL '%s'\n"), url);
 #ifdef Win32
 	R_FlushConsole();
 #endif
 	ctxt = in_R_HTTPOpen(url, cacheOK);
 	if(ctxt == NULL) status = 1;
 	else {
-	    if(!quiet) REprintf("opened URL\n", url);
+	    if(!quiet) REprintf(_("opened URL\n"), url);
 	    guess = total = ((inetconn *)ctxt)->length;
 #ifdef Win32
 	    if (guess <= 0) guess = 100 * 1024;
 	    R_FlushConsole();
-	    wprog = newwindow("Download progress", rect(0, 0, 540, 100),
+	    wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
 			      Titlebar | Centered);
 	    setbackground(wprog, dialog_bg());
 	    strcpy(buf, "URL: ");
@@ -349,11 +349,11 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	    del(wprog);
 #endif
 	    if (total > 0 && total != nbytes)
-		warning("downloaded length %d != reported length %d",
+		warning(_("downloaded length %d != reported length %d"),
 			nbytes, total);
 	}
 	R_Busy(0);
-	if (status == 1) error("cannot open URL `%s'", url);
+	if (status == 1) error(_("cannot open URL '%s'"), url);
 
     } else if (strncmp(url, "ftp://", 6) == 0) {
 
@@ -366,22 +366,22 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
 	out = R_fopen(R_ExpandFileName(file), mode);
-	if(!out) error("cannot open destfile `%s'", file);
+	if(!out) error(_("cannot open destfile '%s'"), file);
 
 	R_Busy(1);
-	if(!quiet) REprintf("trying URL `%s'\n", url);
+	if(!quiet) REprintf(_("trying URL '%s'\n"), url);
 #ifdef Win32
 	R_FlushConsole();
 #endif
 	ctxt = in_R_FTPOpen(url);
 	if(ctxt == NULL) status = 1;
 	else {
-	    if(!quiet) REprintf("opened URL\n", url);
+	    if(!quiet) REprintf(_("opened URL\n"), url);
 	    guess = total = ((inetconn *)ctxt)->length;
 #ifdef Win32
 	    if (guess <= 0) guess = 100 * 1024;
 	    R_FlushConsole();
-	    wprog = newwindow("Download progress", rect(0, 0, 540, 100),
+	    wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
 			      Titlebar | Centered);
 	    setbackground(wprog, LightGrey);
 	    strcpy(buf, "URL: ");
@@ -428,15 +428,15 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	    del(wprog);
 #endif
 	    if (total > 0 && total != nbytes)
-		warning("downloaded length %d != reported length %d",
+		warning(_("downloaded length %d != reported length %d"),
 			nbytes, total);
 	}
 	R_Busy(0);
-	if (status == 1) error("cannot open URL `%s'", url);
+	if (status == 1) error(_("cannot open URL '%s'"), url);
 #endif
 
     } else
-	error("unsupported URL scheme");
+	error(_("unsupported URL scheme"));
 
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = status;
@@ -463,14 +463,14 @@ void *in_R_HTTPOpen(const char *url, int cacheOK)
 	int rc = RxmlNanoHTTPReturnCode(ctxt);
 	if(rc != 200) {
 	    RxmlNanoHTTPClose(ctxt);
-	    warning("cannot open: HTTP status was `%d %s'", rc,
+	    warning(_("cannot open: HTTP status was '%d %s'"), rc,
 		  RxmlNanoHTTPStatusMsg(ctxt));
 	    return NULL;
 	} else {
 	    type = RxmlNanoHTTPContentType(ctxt);
 	    len = RxmlNanoHTTPContentLength(ctxt);
 	    if(!IDquiet){
-		REprintf("Content type `%s'", type ? type : "unknown");
+		REprintf("Content type '%s'", type ? type : "unknown");
 		if(len >= 0) REprintf(" length %d bytes\n", len);
 		else REprintf(" length unknown\n", len);
 #ifdef Win32
@@ -633,7 +633,7 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
 	    InternetCloseHandle(wictxt->hand);
 	    free(wictxt);
-	    warning("InternetOpenUrl timed out");
+	    warning(_("InternetOpenUrl timed out"));
 	    return NULL;
 	}
     }
@@ -660,7 +660,7 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 		p = buf + strlen(buf) - 1;
 		if(*p == '\n' || *p == '\r') *p = '\0'; else break;
 	    }
-	    warning("InternetOpenUrl failed: `%s'", buf);
+	    warning(_("InternetOpenUrl failed: '%s'"), buf);
 	    return NULL;
 	} else {
 	    FormatMessage( 
@@ -674,7 +674,7 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 		p = buf + strlen(buf) - 1;
 		if(*p == '\n' || *p == '\r') *p = '\0'; else break;
 	    }
-	    warning("InternetOpenUrl failed: `%s'", buf);
+	    warning(_("InternetOpenUrl failed: '%s'"), buf);
 	    return NULL;
 	}
     }
@@ -689,7 +689,7 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 	InternetCloseHandle(wictxt->session);
 	InternetCloseHandle(wictxt->hand);
 	free(wictxt);
-	warning("cannot open: HTTP status was `%d %s'", status, buf);
+	warning(_("cannot open: HTTP status was '%d %s'"), status, buf);
 	return NULL;
     }
 
@@ -702,7 +702,7 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
     wictxt->length = status;
     wictxt->type = strdup(buf);
     if(!IDquiet) {
-	REprintf("Content type `%s' length %d bytes\n", buf, status);
+	REprintf("Content type '%s' length %d bytes\n", buf, status);
 	R_FlushConsole();
     }
 
@@ -724,7 +724,7 @@ static int in_R_HTTPRead(void *ctx, char *dest, int len)
 	    Sleep(100);
 	}
 	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
-	    warning("Internet read timed out");
+	    warning(_("Internet read timed out"));
 	    nread = 0;
 	}
     }
@@ -789,7 +789,7 @@ static void *in_R_FTPOpen(const char *url)
 	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
 	    InternetCloseHandle(wictxt->hand);
 	    free(wictxt);
-	    warning("InternetOpenUrl timed out");
+	    warning(_("InternetOpenUrl timed out"));
 	    return NULL;
 	}
     }
@@ -811,7 +811,7 @@ static void *in_R_FTPOpen(const char *url)
 	free(wictxt);
 	if (err1 == ERROR_INTERNET_EXTENDED_ERROR) {
 	    InternetGetLastResponseInfo(&err2, buf, &blen);
-	    warning("InternetOpenUrl failed: `%s'", buf);
+	    warning(_("InternetOpenUrl failed: '%s'"), buf);
 	    return NULL;
 	} else {
 	    FormatMessage( 
@@ -820,7 +820,7 @@ static void *in_R_FTPOpen(const char *url)
 		err1,
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 		buf, 101, NULL);
-	    warning("InternetOpenUrl failed: `%s'", buf);
+	    warning(_("InternetOpenUrl failed: '%s'"), buf);
 	    return NULL;
 	}
     }
@@ -903,7 +903,7 @@ void R_init_internet(DllInfo *info)
     R_InternetRoutines *tmp;
     tmp = (R_InternetRoutines*) malloc(sizeof(R_InternetRoutines));
     if(!tmp) {
-	error("Cannot allocate memory for InternetRoutines structure");
+	error(_("Cannot allocate memory for InternetRoutines structure"));
 	return;
     }
 

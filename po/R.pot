@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-01-26 11:54+0000\n"
+"POT-Creation-Date: 2005-01-26 16:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,6 +59,917 @@ msgstr ""
 
 #: src/appl/strsignif.c:215
 msgid ".C(..): `type' must be \"real\" for this format"
+msgstr ""
+
+#: src/main/character.c:115
+msgid "nchar() requires a character vector"
+msgstr ""
+
+#: src/main/character.c:119
+msgid "invalid 'type' arg"
+msgstr ""
+
+#: src/main/character.c:210
+msgid "extracting substrings from a non-character object"
+msgstr ""
+
+#: src/main/character.c:215
+msgid "invalid substring argument(s) in substr()"
+msgstr ""
+
+#: src/main/character.c:278
+msgid "replacing substrings in a non-character object"
+msgstr ""
+
+#: src/main/character.c:283
+msgid "invalid substring argument(s) in substr<-()"
+msgstr ""
+
+#: src/main/character.c:287
+msgid "invalid rhs in substr<-()"
+msgstr ""
+
+#: src/main/character.c:353
+msgid "non-character argument in strsplit()"
+msgstr ""
+
+#: src/main/character.c:361 src/main/pcre.c:108 src/main/pcre.c:246
+#: src/main/pcre.c:361
+msgid "perl = TRUE is only fully implemented in UTF-8 locales"
+msgstr ""
+
+#: src/main/character.c:414 src/main/character.c:436
+#, c-format
+msgid "invalid split pattern '%s'"
+msgstr ""
+
+#: src/main/character.c:702
+msgid "the first argument must be a string"
+msgstr ""
+
+#: src/main/character.c:717
+msgid "abbreviate used with non-ASCII chars"
+msgstr ""
+
+#: src/main/character.c:733
+msgid "non-character names"
+msgstr ""
+
+#: src/main/character.c:737
+msgid "invalid value of allow_"
+msgstr ""
+
+#: src/main/character.c:790 src/main/character.c:1281
+#, c-format
+msgid "invalid multibyte string %d"
+msgstr ""
+
+#: src/main/character.c:854 src/main/character.c:1174 src/main/pcre.c:110
+#: src/main/pcre.c:366
+msgid "regular expression is invalid in this locale"
+msgstr ""
+
+#: src/main/character.c:876 src/main/character.c:1028
+#: src/main/character.c:1177 src/main/pcre.c:117 src/main/pcre.c:262
+#: src/main/pcre.c:371
+#, c-format
+msgid "invalid regular expression '%s'"
+msgstr ""
+
+#: src/main/character.c:885 src/main/character.c:1191 src/main/pcre.c:132
+#: src/main/pcre.c:295 src/main/pcre.c:386
+#, c-format
+msgid "input string %d is invalid in this locale"
+msgstr ""
+
+#: src/main/character.c:937 src/main/pcre.c:176
+#, c-format
+msgid "invalid backreference %d in regular expression"
+msgstr ""
+
+#: src/main/character.c:1023 src/main/pcre.c:248
+msgid "'pattern' is invalid in this locale"
+msgstr ""
+
+#: src/main/character.c:1025 src/main/pcre.c:250
+msgid "'replacement' is invalid in this locale"
+msgstr ""
+
+#: src/main/character.c:1034
+msgid "zero-length pattern"
+msgstr ""
+
+#: src/main/character.c:1257
+msgid "non-character argument to tolower()"
+msgstr ""
+
+#: src/main/character.c:1331
+#, c-format
+msgid "decreasing range specification ('%lc-%lc')"
+msgstr ""
+
+#: src/main/character.c:1417
+#, c-format
+msgid "decreasing range specification ('%c-%c')"
+msgstr ""
+
+#: src/main/character.c:1495
+msgid "invalid (NA) arguments."
+msgstr ""
+
+#: src/main/character.c:1517
+msgid "invalid multibyte string 'old'"
+msgstr ""
+
+#: src/main/character.c:1524
+msgid "invalid multibyte string 'new'"
+msgstr ""
+
+#: src/main/character.c:1543 src/main/character.c:1604
+msgid "old is longer than new"
+msgstr ""
+
+#: src/main/character.c:1560
+#, c-format
+msgid "invalid input multibyte string %d"
+msgstr ""
+
+#: src/main/character.c:1703
+msgid "Use of agrep() in a UTF-8 locale may only work for ASCII strings"
+msgstr ""
+
+#: src/main/character.c:1712
+msgid "could not allocate memory for approximate matching"
+msgstr ""
+
+#: src/main/character.c:1736
+msgid "could not perform case insensitive matching"
+msgstr ""
+
+#: src/main/character.c:1778
+msgid "argument must be a character vector of length 1"
+msgstr ""
+
+#: src/main/character.c:1780
+msgid ""
+"argument should be a character vector of length 1\n"
+"all but the first element will be ignored"
+msgstr ""
+
+#: src/main/character.c:1795 src/main/character.c:1827
+#: src/main/character.c:1848
+msgid "argument 'x' must be a raw vector"
+msgstr ""
+
+#: src/main/character.c:1798
+msgid "argument 'multiple' must be TRUE or FALSE"
+msgstr ""
+
+#: src/main/character.c:1829
+msgid "argument 'shift' must be a small integer"
+msgstr ""
+
+#: src/main/character.c:1866
+msgid "argument 'x' must be a integer vector"
+msgstr ""
+
+#: src/main/character.c:1886
+msgid "argument 'x' must be raw, integer or logical"
+msgstr ""
+
+#: src/main/character.c:1888
+msgid "argument 'type' must be a character string"
+msgstr ""
+
+#: src/main/character.c:1892
+#, c-format
+msgid "argument 'x' must be a multiple of %d long"
+msgstr ""
+
+#: src/main/character.c:1906 src/main/character.c:1921
+msgid "argument 'x' must not contain NAs"
+msgstr ""
+
+#: src/main/character.c:1946
+msgid "strtrim() requires a character vector"
+msgstr ""
+
+#: src/main/character.c:1951 src/main/character.c:1955
+msgid "invalid 'width' argument"
+msgstr ""
+
+#: src/main/connections.c:80
+msgid "All connections are in use"
+msgstr ""
+
+#: src/main/connections.c:90
+msgid "connection not found"
+msgstr ""
+
+#: src/main/connections.c:101 src/main/connections.c:2487
+#: src/main/connections.c:2902 src/main/connections.c:2951
+#: src/main/connections.c:3073 src/main/connections.c:3113
+msgid "invalid connection"
+msgstr ""
+
+#: src/main/connections.c:141
+#, c-format
+msgid "conversion from encoding %s is unsupported"
+msgstr ""
+
+#: src/main/connections.c:153
+#, c-format
+msgid "conversion to encoding %s is unsupported"
+msgstr ""
+
+#: src/main/connections.c:166
+msgid "open/close not enabled for this connection"
+msgstr ""
+
+#: src/main/connections.c:182
+msgid "printing not enabled for this connection"
+msgstr ""
+
+#: src/main/connections.c:203 src/main/connections.c:1764
+msgid "printing of extremely long output is truncated"
+msgstr ""
+
+#: src/main/connections.c:224
+msgid "invalid char string in output conversion"
+msgstr ""
+
+#: src/main/connections.c:263
+#, c-format
+msgid "invalid input found on input connection '%s'"
+msgstr ""
+
+#: src/main/connections.c:280
+msgid "getc not enabled for this connection"
+msgstr ""
+
+#: src/main/connections.c:286
+msgid "seek not enabled for this connection"
+msgstr ""
+
+#: src/main/connections.c:292
+msgid "truncation not enabled for this connection"
+msgstr ""
+
+#: src/main/connections.c:303
+msgid "read not enabled for this connection"
+msgstr ""
+
+#: src/main/connections.c:310
+msgid "write not enabled for this connection"
+msgstr ""
+
+#: src/main/connections.c:370
+#, c-format
+msgid "cannot open file '%s'"
+msgstr ""
+
+#: src/main/connections.c:450
+msgid "connection is not open for reading"
+msgstr ""
+
+#: src/main/connections.c:455
+msgid "connection is not open for writiing"
+msgstr ""
+
+#: src/main/connections.c:480 src/main/connections.c:1378
+msgid "can only truncate connections open for writing"
+msgstr ""
+
+#: src/main/connections.c:485 src/main/connections.c:488
+msgid "file truncation failed"
+msgstr ""
+
+#: src/main/connections.c:490
+msgid "file truncation navailable on this platform"
+msgstr ""
+
+#: src/main/connections.c:535 src/main/connections.c:539
+#: src/main/connections.c:545 src/main/connections.c:562
+msgid "allocation of file connection failed"
+msgstr ""
+
+#: src/main/connections.c:605
+#, c-format
+msgid "cannot create fifo '%s'"
+msgstr ""
+
+#: src/main/connections.c:610
+#, c-format
+msgid "'%s' exists but is not a fifo"
+msgstr ""
+
+#: src/main/connections.c:623
+#, c-format
+msgid "fifo '%s' is not ready"
+msgstr ""
+
+#: src/main/connections.c:624
+#, c-format
+msgid "cannot open fifo '%s'"
+msgstr ""
+
+#: src/main/connections.c:675 src/main/connections.c:679
+#: src/main/connections.c:685 src/main/connections.c:701
+msgid "allocation of fifo connection failed"
+msgstr ""
+
+#: src/main/connections.c:718 src/main/connections.c:848
+#: src/main/connections.c:1034 src/main/connections.c:1216
+#: src/main/connections.c:1876 src/main/connections.c:1995
+#: src/main/connections.c:3304
+msgid "invalid 'description' argument"
+msgstr ""
+
+#: src/main/connections.c:720 src/main/connections.c:850
+#: src/main/connections.c:1036 src/main/connections.c:1218
+#: src/main/connections.c:1997 src/main/connections.c:3306
+msgid "only first element of 'description' argument used"
+msgstr ""
+
+#: src/main/connections.c:724 src/main/connections.c:854
+#: src/main/connections.c:1040 src/main/connections.c:1222
+#: src/main/connections.c:1883 src/main/connections.c:1946
+#: src/main/connections.c:2001 src/main/connections.c:2053
+#: src/main/connections.c:3318
+msgid "invalid 'open' argument"
+msgstr ""
+
+#: src/main/connections.c:727 src/main/connections.c:3322
+msgid "invalid 'block' argument"
+msgstr ""
+
+#: src/main/connections.c:731 src/main/connections.c:859
+#: src/main/connections.c:1044 src/main/connections.c:1226
+#: src/main/connections.c:1952 src/main/connections.c:2005
+#: src/main/connections.c:3326
+msgid "invalid 'encoding' argument"
+msgstr ""
+
+#: src/main/connections.c:743 src/main/connections.c:878
+#: src/main/connections.c:1059 src/main/connections.c:1237
+#: src/main/connections.c:1965 src/main/connections.c:2016
+#: src/main/connections.c:2063 src/main/connections.c:3363
+msgid "unable to open connection"
+msgstr ""
+
+#: src/main/connections.c:757
+msgid "fifo connections are not available on this system"
+msgstr ""
+
+#: src/main/connections.c:779
+#, c-format
+msgid "cannot open pipe() cmd '%s'"
+msgstr ""
+
+#: src/main/connections.c:803 src/main/connections.c:807
+#: src/main/connections.c:813 src/main/connections.c:827
+msgid "allocation of pipe connection failed"
+msgstr ""
+
+#: src/main/connections.c:896
+msgid "pipe connections are not available on this system"
+msgstr ""
+
+#: src/main/connections.c:909
+#, c-format
+msgid "cannot open compressed file '%s'"
+msgstr ""
+
+#: src/main/connections.c:950
+msgid "whence = \"end\" is not implemented for gzfile connections"
+msgstr ""
+
+#: src/main/connections.c:956
+msgid "seek on a gzfile connection returned an internal error"
+msgstr ""
+
+#: src/main/connections.c:990 src/main/connections.c:994
+#: src/main/connections.c:1000 src/main/connections.c:1019
+msgid "allocation of gzfile connection failed"
+msgstr ""
+
+#: src/main/connections.c:1047
+msgid "invalid 'compress' argument"
+msgstr ""
+
+#: src/main/connections.c:1092
+#, c-format
+msgid "cannot open bzip2-ed file '%s'"
+msgstr ""
+
+#: src/main/connections.c:1101 src/main/connections.c:1110
+#, c-format
+msgid "file '%s' appears not to be compressed by bzip2"
+msgstr ""
+
+#: src/main/connections.c:1173 src/main/connections.c:1177
+#: src/main/connections.c:1183 src/main/connections.c:1201
+msgid "allocation of bzfile connection failed"
+msgstr ""
+
+#: src/main/connections.c:1286
+msgid "memory allocation to copy clipboard failed"
+msgstr ""
+
+#: src/main/connections.c:1290
+msgid "clipboard cannot be opened or contains no text"
+msgstr ""
+
+#: src/main/connections.c:1297
+msgid "memory allocation to open clipboard failed"
+msgstr ""
+
+#: src/main/connections.c:1324
+msgid "Unable to open the clipboard"
+msgstr ""
+
+#: src/main/connections.c:1328
+msgid "Unable to write to the clipboard"
+msgstr ""
+
+#: src/main/connections.c:1367
+msgid "attempt to seek outside the range of the clipboard"
+msgstr ""
+
+#: src/main/connections.c:1407
+msgid "clipboard connection is open for reading only"
+msgstr ""
+
+#: src/main/connections.c:1423
+msgid "clipboard buffer is full and output lost"
+msgstr ""
+
+#: src/main/connections.c:1438
+msgid "'mode' for the clipboard must be 'r' or 'w'"
+msgstr ""
+
+#: src/main/connections.c:1440 src/main/connections.c:1444
+#: src/main/connections.c:1450 src/main/connections.c:1467
+msgid "allocation of clipboard connection failed"
+msgstr ""
+
+#: src/main/connections.c:1538 src/main/connections.c:1542
+#: src/main/connections.c:1548
+msgid "allocation of terminal connection failed"
+msgstr ""
+
+#: src/main/connections.c:1622
+msgid "cannot allocate memory for text connection"
+msgstr ""
+
+#: src/main/connections.c:1667
+msgid "seek is not relevant for text connection"
+msgstr ""
+
+#: src/main/connections.c:1675 src/main/connections.c:1679
+#: src/main/connections.c:1685 src/main/connections.c:1698
+#: src/main/connections.c:1831 src/main/connections.c:1835
+#: src/main/connections.c:1841 src/main/connections.c:1854
+#: src/main/connections.c:1860
+msgid "allocation of text connection failed"
+msgstr ""
+
+#: src/main/connections.c:1811
+msgid "text connection: appending to a non-existent char vector"
+msgstr ""
+
+#: src/main/connections.c:1880 src/main/connections.c:2411
+msgid "invalid 'text' argument"
+msgstr ""
+
+#: src/main/connections.c:1887
+msgid "invalid 'environment' argument"
+msgstr ""
+
+#: src/main/connections.c:1901
+msgid "unsupported mode"
+msgstr ""
+
+#: src/main/connections.c:1929
+msgid "invalid 'host' argument"
+msgstr ""
+
+#: src/main/connections.c:1934
+msgid "invalid 'port' argument"
+msgstr ""
+
+#: src/main/connections.c:1938
+msgid "invalid 'server' argument"
+msgstr ""
+
+#: src/main/connections.c:1942 src/main/connections.c:2056
+msgid "invalid 'blocking' argument"
+msgstr ""
+
+#: src/main/connections.c:1977
+msgid "sockets are not available on this system"
+msgstr ""
+
+#: src/main/connections.c:2043 src/main/connections.c:2097
+#: src/main/connections.c:2112 src/main/connections.c:2161
+#: src/main/connections.c:2183 src/main/connections.c:2202
+#: src/main/connections.c:2214 src/main/connections.c:2317
+#: src/main/connections.c:2413 src/main/connections.c:3669
+msgid "'con' is not a connection"
+msgstr ""
+
+#: src/main/connections.c:2046
+msgid "cannot open standard connections"
+msgstr ""
+
+#: src/main/connections.c:2048
+msgid "connection is already open"
+msgstr ""
+
+#: src/main/connections.c:2082
+msgid "unknown 'rw' value"
+msgstr ""
+
+#: src/main/connections.c:2163
+msgid "cannot close standard connections"
+msgstr ""
+
+#: src/main/connections.c:2166
+msgid "cannot close output sink connection"
+msgstr ""
+
+#: src/main/connections.c:2168
+msgid "cannot close messages sink connection"
+msgstr ""
+
+#: src/main/connections.c:2185 src/main/connections.c:3384
+msgid "connection is not open"
+msgstr ""
+
+#: src/main/connections.c:2274 src/main/connections.c:2286
+msgid "Line longer than buffer size"
+msgstr ""
+
+#: src/main/connections.c:2321
+msgid "invalid value for 'n'"
+msgstr ""
+
+#: src/main/connections.c:2324
+msgid "invalid value for 'ok'"
+msgstr ""
+
+#: src/main/connections.c:2326 src/main/connections.c:2503
+#: src/main/connections.c:2904
+msgid "cannot read from this connection"
+msgstr ""
+
+#: src/main/connections.c:2329 src/main/connections.c:2422
+#: src/main/connections.c:2507 src/main/connections.c:2696
+#: src/main/connections.c:2911 src/main/connections.c:2983
+#: src/main/connections.c:3145
+msgid "cannot open the connection"
+msgstr ""
+
+#: src/main/connections.c:2339 src/main/connections.c:2358
+msgid "cannot allocate buffer in readLines"
+msgstr ""
+
+#: src/main/connections.c:2375
+#, c-format
+msgid "incomplete final line found by readLines on '%s'"
+msgstr ""
+
+#: src/main/connections.c:2385
+msgid "too few lines read in readLines"
+msgstr ""
+
+#: src/main/connections.c:2416
+msgid "invalid 'sep' argument"
+msgstr ""
+
+#: src/main/connections.c:2418 src/main/connections.c:2690
+#: src/main/connections.c:2953 src/main/connections.c:3385
+msgid "cannot write to this connection"
+msgstr ""
+
+#: src/main/connections.c:2457
+msgid "incomplete string at end of file has been discarded"
+msgstr ""
+
+#: src/main/connections.c:2469
+msgid "null terminator not found: breaking string at 10000 chars"
+msgstr ""
+
+#: src/main/connections.c:2488
+msgid "can only read from a binary connection"
+msgstr ""
+
+#: src/main/connections.c:2491
+msgid "invalid value of 'what'"
+msgstr ""
+
+#: src/main/connections.c:2494
+msgid "invalid value of 'n'"
+msgstr ""
+
+#: src/main/connections.c:2498
+msgid "invalid value of 'signed'"
+msgstr ""
+
+#: src/main/connections.c:2501 src/main/connections.c:2688
+msgid "invalid value of 'swap'"
+msgstr ""
+
+#: src/main/connections.c:2522 src/main/connections.c:2742
+msgid "size changing is not supported for complex vectors"
+msgstr ""
+
+#: src/main/connections.c:2546 src/main/connections.c:2564
+#: src/main/connections.c:2590 src/main/connections.c:2631
+#: src/main/connections.c:2651 src/main/connections.c:2723
+#: src/main/connections.c:2736 src/main/connections.c:2795
+#: src/main/connections.c:2824
+#, c-format
+msgid "size %d is unknown on this machine"
+msgstr ""
+
+#: src/main/connections.c:2575
+msgid "raw is always of size 1"
+msgstr ""
+
+#: src/main/connections.c:2680
+msgid "'x' is not an atomic vector type"
+msgstr ""
+
+#: src/main/connections.c:2684
+msgid "can only write to a binary connection"
+msgstr ""
+
+#: src/main/connections.c:2703 src/main/connections.c:2840
+#: src/main/connections.c:3022
+msgid "problem writing to connection"
+msgstr ""
+
+#: src/main/connections.c:2747
+msgid "size changing is not supported for raw vectors"
+msgstr ""
+
+#: src/main/connections.c:2867 src/main/connections.c:2870
+msgid "invalid UTF-8 input in readChar"
+msgstr ""
+
+#: src/main/connections.c:2917
+msgid "supplied length is invalid"
+msgstr ""
+
+#: src/main/connections.c:2963
+msgid "invalid value of 'sep'"
+msgstr ""
+
+#: src/main/connections.c:2995
+msgid ""
+"writeChar: more characters requested than are in the string - will zero-pad"
+msgstr ""
+
+#: src/main/connections.c:3047 src/main/connections.c:3050
+#: src/main/connections.c:3089 src/main/connections.c:3094
+msgid "could not allocate space for pushBack"
+msgstr ""
+
+#: src/main/connections.c:3070
+msgid "invalid 'data' argument"
+msgstr ""
+
+#: src/main/connections.c:3076
+msgid "invalid 'newLine' argument"
+msgstr ""
+
+#: src/main/connections.c:3078
+msgid "can only push back on open readable connections"
+msgstr ""
+
+#: src/main/connections.c:3080
+msgid "can only push back on text-mode connections"
+msgstr ""
+
+#: src/main/connections.c:3133 src/main/connections.c:3193
+msgid "sink stack is full"
+msgstr ""
+
+#: src/main/connections.c:3136
+msgid "cannot switch output to stdin"
+msgstr ""
+
+#: src/main/connections.c:3153
+msgid "no sink to remove"
+msgstr ""
+
+#: src/main/connections.c:3184
+msgid "invalid value for closeOnExit"
+msgstr ""
+
+#: src/main/connections.c:3186 src/main/connections.c:3214
+msgid "invalid value for 'type'"
+msgstr ""
+
+#: src/main/connections.c:3188
+msgid "invalid value for 'split'"
+msgstr ""
+
+#: src/main/connections.c:3350 src/modules/internet/internet.c:439
+msgid "unsupported URL scheme"
+msgstr ""
+
+#: src/main/connections.c:3437
+msgid "file stream does not have gzip magic number"
+msgstr ""
+
+#: src/main/connections.c:3448
+msgid "file stream does not have valid gzip header"
+msgstr ""
+
+#: src/main/connections.c:3514
+msgid "writing error whilst flushing gzcon connection"
+msgstr ""
+
+#: src/main/connections.c:3614
+#, c-format
+msgid "crc error %x %x\n"
+msgstr ""
+
+#: src/main/connections.c:3639
+msgid "write error on gzcon connection"
+msgstr ""
+
+#: src/main/connections.c:3673
+msgid "'level' must be one of 0 ... 9"
+msgstr ""
+
+#: src/main/connections.c:3676
+msgid "'allowNonCompression' must be TRUE or FALSE"
+msgstr ""
+
+#: src/main/connections.c:3679
+msgid "this is already a gzcon connection"
+msgstr ""
+
+#: src/main/connections.c:3685
+msgid "can only use read- or write- binary connections"
+msgstr ""
+
+#: src/main/connections.c:3689 src/main/connections.c:3693
+#: src/main/connections.c:3700 src/main/connections.c:3714
+msgid "allocation of gzcon connection failed"
+msgstr ""
+
+#: src/main/connections.c:3759
+msgid "R_compress1 requires a scalar string"
+msgstr ""
+
+#: src/main/connections.c:3766
+msgid "internal error in R_compress1"
+msgstr ""
+
+#: src/main/connections.c:3781
+msgid "R_decompress1 requires a scalar string"
+msgstr ""
+
+#: src/main/connections.c:3786
+msgid "internal error in R_decompress1"
+msgstr ""
+
+#: src/main/connections.c:3802
+msgid "not a list of sockets"
+msgstr ""
+
+#: src/main/connections.c:3807
+msgid "bad write indicators"
+msgstr ""
+
+#: src/main/connections.c:3817
+msgid "not a socket connection"
+msgstr ""
+
+#: src/main/errors.c:117 src/main/errors.c:152
+msgid "interrupts suspended; signal ignored"
+msgstr ""
+
+#: src/main/errors.c:226
+msgid "invalid option \"warning.expression\""
+msgstr ""
+
+#: src/main/errors.c:254
+#, c-format
+msgid "(converted from warning) %s"
+msgstr ""
+
+#: src/main/errors.c:259
+#, c-format
+msgid "Warning in %s : "
+msgstr ""
+
+#: src/main/errors.c:263
+msgid "Warning: "
+msgstr ""
+
+#: src/main/errors.c:319 src/main/errors.c:336 src/main/errors.c:425
+msgid "Lost warning messages\n"
+msgstr ""
+
+#: src/main/errors.c:349
+msgid "Warning message:\n"
+msgstr ""
+
+#: src/main/errors.c:358
+msgid "Warning messages:\n"
+msgstr ""
+
+#: src/main/errors.c:370
+#, c-format
+msgid "There were %d warnings (use warnings() to see them)\n"
+msgstr ""
+
+#: src/main/errors.c:373
+msgid "There were 50 or more warnings (use warnings() to see the first 50)\n"
+msgstr ""
+
+#: src/main/errors.c:416
+msgid "Error during wrapup: "
+msgstr ""
+
+#: src/main/errors.c:439
+msgid "Error in "
+msgstr ""
+
+#: src/main/errors.c:450 src/main/errors.c:453
+#, c-format
+msgid "Error: "
+msgstr ""
+
+#: src/main/errors.c:462 src/main/errors.c:908
+msgid "In addition: "
+msgstr ""
+
+#: src/main/errors.c:596
+msgid "invalid option \"error\"\n"
+msgstr ""
+
+#: src/main/errors.c:672
+msgid "Execution halted\n"
+msgstr ""
+
+#: src/main/errors.c:719
+msgid " [invalid string in stop(.)]"
+msgstr ""
+
+#: src/main/errors.c:745
+msgid " [invalid string in warning(.)]"
+msgstr ""
+
+#: src/main/errors.c:761
+#, c-format
+msgid "incorrect number of arguments to \"%s\""
+msgstr ""
+
+#: src/main/errors.c:767
+#, c-format
+msgid "Unimplemented feature in %s"
+msgstr ""
+
+#: src/main/errors.c:873
+msgid "No function to return from, jumping to top level"
+msgstr ""
+
+#: src/main/errors.c:889
+msgid "top level inconsistency?"
+msgstr ""
+
+#: src/main/errors.c:989
+msgid "bad handler data"
+msgstr ""
+
+#: src/main/errors.c:1137
+msgid "error message not a string"
+msgstr ""
+
+#: src/main/errors.c:1211
+msgid "handler or restart stack mismatch in old restart"
+msgstr ""
+
+#: src/main/errors.c:1237 src/main/errors.c:1253
+msgid "bad error message"
+msgstr ""
+
+#: src/main/errors.c:1295
+msgid "bad restart"
+msgstr ""
+
+#: src/main/errors.c:1327
+msgid "restart not on stack"
+msgstr ""
+
+#: src/main/errors.c:1345
+msgid "not in a try context"
 msgstr ""
 
 #: src/main/version.c:34
@@ -150,10 +1061,6 @@ msgstr ""
 #: src/modules/internet/internet.c:352 src/modules/internet/internet.c:431
 #, c-format
 msgid "downloaded length %d != reported length %d"
-msgstr ""
-
-#: src/modules/internet/internet.c:439
-msgid "unsupported URL scheme"
 msgstr ""
 
 #: src/modules/internet/internet.c:466 src/modules/internet/internet.c:692

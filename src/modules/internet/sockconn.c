@@ -173,17 +173,17 @@ Rconnection in_R_newsock(char *host, int port, int server, char *mode)
     Rconnection new;
 
     new = (Rconnection) malloc(sizeof(struct Rconn));
-    if(!new) error("allocation of file connection failed");
+    if(!new) error(_("allocation of socket connection failed"));
     new->class = (char *) malloc(strlen("socket") + 1);
     if(!new->class) {
 	free(new);
-	error("allocation of socket connection failed");
+	error(_("allocation of socket connection failed"));
     }
     strcpy(new->class, "socket");
     new->description = (char *) malloc(strlen(host) + 10);
     if(!new->description) {
 	free(new->class); free(new);
-	error("allocation of socket connection failed");
+	error(_("allocation of socket connection failed"));
     }
     init_con(new, host, mode);
     new->open = &sock_open;
@@ -196,7 +196,7 @@ Rconnection in_R_newsock(char *host, int port, int server, char *mode)
     new->private = (void *) malloc(sizeof(struct sockconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
-	error("allocation of socket connection failed");
+	error(_("allocation of socket connection failed"));
     }
     ((Rsockconn)new->private)-> port = port;
     ((Rsockconn)new->private)-> server = server;

@@ -26,6 +26,13 @@
 #include <R_ext/Arith.h>
 #include <R_ext/Applic.h>
 
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) gettext (String)
+#else
+#define _(String) (String)
+#endif
+
 /* bincode  cuts up the data using half open intervals defined as [a,b)
    (if right = FALSE) or (a, b] (if right = TRUE)
 */
@@ -57,7 +64,7 @@ void bincode(double *x, int *pn, double *breaks, int *pnb, int *code,
 		code[i] = lo + 1;
 	    }
 	} else if (! *naok)
-	    error("NA's in .C(\"bincode\",... NAOK=FALSE)");
+	    error(_("NA's in .C(\"bincode\",... NAOK=FALSE)"));
     }
 }
 
@@ -94,5 +101,5 @@ void bincount(double *x, int *pn, double *breaks, int *pnb, int *count,
 		count[lo] += 1;
 	    }
 	} else if (! *naok)
-	    error("NA's in .C(\"bincount\",... NAOK=FALSE)");
+	    error(_("NA's in .C(\"bincount\",... NAOK=FALSE)"));
 }
