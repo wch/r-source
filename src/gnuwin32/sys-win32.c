@@ -178,10 +178,10 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "character string expected as first argument");
     if (isInteger(CADR(args)))
 	flag = INTEGER(CADR(args))[0];
-    if (flag > 20) {
+    if (flag >= 20) {
 	vis = -1;
 	flag -= 20;
-    } else if (flag > 10) {
+    } else if (flag >= 10) {
 	vis = 0;
 	flag -= 10;
     } else
