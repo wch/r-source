@@ -71,6 +71,8 @@ rm140
   last temporary edited file will be shown. See man
   pages of edit(). Consequently it is now fixed the
   problem with the function fix().
+* Refresh of graphic windows fixed. One time only and
+  the bottom part of the window is correctly redrawn.
   
        
     
