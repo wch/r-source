@@ -11,7 +11,7 @@ PP.test(x, lshort = TRUE)
 }
 \description{
   Computes the Phillips-Perron test for the null hypothesis that
-  \code{x} has a unit root.
+  \code{x} has a unit root against a stationary alternative.
 }
 \details{
   The general regression equation which incorporates a constant and a
