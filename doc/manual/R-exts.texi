@@ -3923,7 +3923,7 @@ exist as ``primitive'' functions in @R{}:
 
 @example
 @{       (         if       for  while  repeat  break  next
-return  function  on.exit
+return  function   quote    on.exit
 @end example
 
 @item
@@ -3950,7 +3950,7 @@ Basic mathematical functions with a single argument, i.e.,
 
 @example
 sign    abs
-floor   ceiling
+floor   ceiling  trunc
 ----------------------
 sqrt    exp
 cos     sin      tan
