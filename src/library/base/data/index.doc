@@ -1,6 +1,7 @@
 acid		Determination of Formaldehyde Concentration
 airmiles	Passenger-Miles on US Airlines 1937-1960
 airquality	Chambers et al?
+anscombe	Anscombe's quartet of regression data
 attenu		Joiner-Boore Attenuation Data
 attitude	Chatterjee-Price Attitude Data
 bees		Bees and Honey Consumption
@@ -10,9 +11,11 @@ consume		Consumption Statistics
 crimes		Violent Crime Statistics for the USA
 deaths		Death Rates in Virginia (1940)
 discoveries	Yearly Numbers of "Important" Discoveries
+esoph		(O)esophageal Cancer Case-control study
 eurodist	Distances between European Cities
 faithful	Old Faithful Geyser Data
 freeny		Freeny's Revenue Data
+infert		Secondary infertility matched case-control study
 insects		The Effect of Insecticides on Insect Counts
 iris		Edgar Anderson's Iris Data
 islands		World Landmass Areas
