@@ -42,6 +42,10 @@ the package name unless overridden.)
 
 PKG_FFLAGS is now used if provided.
 
+bringToTop() tested against the wrong limit for the device list and so
+would sometimes not work for high-numbered devices if lower-numbered
+devices had been closed.
+
 
 
 rw1072
