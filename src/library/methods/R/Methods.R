@@ -151,12 +151,14 @@ getMethods <-
         else
           NULL
       }
-    else {
+    else if(isGeneric(f)) {
       if(identical(where, -1))
         getMethodsForDispatch(f)
       else
         getMethodsMetaData(f, where)
     }
+    else
+        NULL
   }
 
 getMethodsForDispatch <-
@@ -258,7 +260,7 @@ removeMethod <- function(f, signature = character(), where) {
 }
 
 findMethod <- function(f, signature, where = search()) {
-    found <- logical(along=where)
+    found <- logical(length(where))
     metaName <- mlistMetaName(f)
     for(i in seq(along = where)) {
         found[i] <- exists(metaName, where[[i]]) &&
@@ -275,8 +277,8 @@ getMethod <-
 {
     mlist <- getMethods(f, where)
     if(length(signature) == 0)
-        return(finalDefaultMethod(mlist, f))
-    while(is(mlist, "MethodsList")) {
+        mlist <- finalDefaultMethod(mlist)
+    else while(is(mlist, "MethodsList")) {
         Class <- signature[[1]]
         if(Class == "")
             Class <- "ANY"
@@ -286,7 +288,7 @@ getMethod <-
         if(length(signature) == 0)
             break
     }
-    if(is.function(mlist) && length(signature) == 0)
+    if(is(mlist, "function") && length(signature) == 0)
         ## the only successful outcome
         mlist
     else if(optional)
