@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998, 1999   Robert Gentleman, Ross Ihaka 
+ *  Copyright (C) 1998, 1999   Robert Gentleman, Ross Ihaka
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -92,8 +92,8 @@ int F77_SYMBOL(rs)(int *nm, int *n, double *a, double *w,
 		   int *matz, double *z, double *fv1, double *fv2, int *ierr);
 
 /* fft.c */
-/* NOTE:  The following functions use GLOBAL (static) variables !! 
- * ----   some of R-core think that this should be changed, 
+/* NOTE:  The following functions use GLOBAL (static) variables !!
+ * ----   some of R-core think that this should be changed,
  *        which will INEVITABLY extend the argument lists ...!
  *-- i.e. don't export these yet!
  */
@@ -225,8 +225,7 @@ int F77_SYMBOL(dtrsl)(double *t, int *ldt, int *n, double *b, int *job,
 		      int *info);
 
 double F77_SYMBOL(fmin)(double *ax, double *bx, D_fp f, double *tol);
-int F77_SYMBOL(lminfl)(double *x, int *ldx, int *n, int *k,
-		       double *qraux, double *b,
+int F77_SYMBOL(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
 		       double *resid, double *hat, double *coef, double *sigma);
 /* Only exported headers from ../appl/uncmin.f : */
 int F77_SYMBOL(fdhess)(int *n, double *x, double *fval,
@@ -240,7 +239,7 @@ int F77_SYMBOL(optif9)(int *nr, int *n, double *x,
 		       double *stepmx, double *steptl,
 		       double *xpls, double *fpls, double *gpls,
 		       int *itrmcd, double *a, double *wrk, int *itncnt);
- 
+
 double zeroin(double ax, double bx, double (*f)(double, void *), void *info,
 	      double *tol, int *maxit);
 

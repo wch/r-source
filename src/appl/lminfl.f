@@ -63,10 +63,10 @@ c
 c     This version dated Aug 24, 1996.
 c     Ross Ihaka, University of Auckland.
 c
-      subroutine lminfl(x, ldx, n, k, qraux, b, resid, hat, coef, sigma)
-      double precision x(ldx,k), qraux(k), b(k), resid(n)
-      double precision hat(n), coef(n,k), sigma(n)
+      subroutine lminfl(x, ldx, n, k, qraux, resid, hat, coef, sigma)
       integer ldx, n, k
+      double precision x(ldx,k), qraux(k), resid(n),
+     +     hat(n), coef(n,k), sigma(n)
 c
       integer i, j, info
       double precision sum, denom, dummy
@@ -76,7 +76,7 @@ c
       do 10 i = 1,n
         hat(i) = 0.0d0
    10 continue
-	
+
       do 40 j = 1,k
         do 20 i = 1,n
           sigma(i) = 0.0d0
