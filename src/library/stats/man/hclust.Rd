@@ -189,7 +189,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   \code{\link{identify.hclust}}, \code{\link{rect.hclust}},
   \code{\link{cutree}}, \code{\link{dendrogram}}, \code{\link{kmeans}}.
 
-  For the Lance--William formula and methods that apply it generally,
+  For the Lance--Williams formula and methods that apply it generally,
   see \code{\link[cluster]{agnes}} from package \pkg{cluster}.
 }
 \examples{
