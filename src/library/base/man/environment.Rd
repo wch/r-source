@@ -3,6 +3,8 @@
 \alias{environment<-}
 \alias{.GlobalEnv}
 \alias{globalenv}
+\alias{emptyenv}
+\alias{baseenv}
 \alias{is.environment}
 \alias{new.env}
 \alias{parent.env}
@@ -21,6 +23,9 @@ is.environment(obj)
 .GlobalEnv
 globalenv()
 .BaseNamespaceEnv
+
+emptyenv()
+baseenv()
 
 new.env(hash = FALSE, parent = parent.frame())
 

@@ -186,7 +186,8 @@ SEXP do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if( !isEnvironment(CAR(args)) )
 	errorcall(call, _("argument is not an environment"));
-
+    if( CAR(args) == R_EmptyEnv )
+    	errorcall(call, _("the empty environment has no parent"));
     return( ENCLOS(CAR(args)) );
 }
 
@@ -196,6 +197,8 @@ SEXP do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if( !isEnvironment(CAR(args)) )
 	errorcall(call, _("argument is not an environment"));
+    if( CAR(args) == R_EmptyEnv )
+    	errorcall(call, _("can not set parent of the empty environment"));
     if( !isEnvironment(CADR(args)) )
 	errorcall(call, _("'parent' is not an environment"));
 
