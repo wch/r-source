@@ -1461,8 +1461,7 @@ int Rconn_ungetc(int c, Rconnection con)
 /* return number of characters read, -1 on EOF */
 int Rconn_getline(Rconnection con, char *buf, int bufsize)
 {
-    int nbuf = -1;
-    char c;
+    int c, nbuf = -1;
     
     while((c = Rconn_fgetc(con)) != R_EOF) {
 	if(nbuf >= bufsize) {
