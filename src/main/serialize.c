@@ -528,6 +528,22 @@ static void InFormat(R_inpstream_t stream)
     case 'A': type = R_pstream_ascii_format; break;
     case 'B': type = R_pstream_binary_format; break;
     case 'X': type = R_pstream_xdr_format; break;
+    case '\n':
+	/* GROSS HACK: ASCII unserialize may leave a trailing newline
+	   in the stream.  If the stream contains a second
+	   serialization, then a second unserialize will fail if such
+	   a newline is present.  The right fix is to make sure
+	   unserialize consumes exactly what serialize produces.  But
+	   this seems hard because of the current use of whitespace
+	   skipping in unserialize.  So a temporary hack to cure the
+	   symptom is to deal with a possible leading newline.  I
+	   don't think more than one is possible, but I'm not sure.
+	   LT */
+	if (buf[1] == 'A') {
+	    type = R_pstream_ascii_format;
+	    stream->InBytes(stream, buf, 1);
+	    break;
+	}
     default:
 	type = R_pstream_any_format;  /* keep compiler happy */
 	error("unknown input format");
