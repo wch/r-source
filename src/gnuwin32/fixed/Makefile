@@ -24,8 +24,9 @@ SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
 	$(SED) -e $(SED0) -e $(SED01) -e $(SED3) -e $(SED4) $< > $@
 
 
-fixh: h/config.h ../FFDecl.h ../FFTab.h \
-  ../../include/Rconfig.h ../../include/Rversion.h ../../include/Rmath.h
+version: ../../include/Rversion.h
+fixh: version h/config.h ../FFDecl.h ../FFTab.h \
+  ../../include/Rconfig.h  ../../include/Rmath.h
 	$(CP) -p ./h/config.h ./h/psignal.h ../../include
 	$(ECHO) done > fixh
 
@@ -87,7 +88,7 @@ fixetc: $(filter-out ./etc/CVS, $(wildcard ./etc/*))
 
 fixshare: ./share/tests.mk
 	$(MKDIR) -p ../../../share/make
-	$(CP) -p $^ ../../../share/make
+	$(CP) -p $^ ../../../share/make/wintests.mk
 	$(ECHO) done > fixshare	
 
 clean:
