@@ -251,8 +251,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
   0255) in ISOLatin1.
 
   Computer Modern fonts are encoded rather differently and should be
-  used with \code{encoding = "TeXtext.enc"}, taking care that some
-  symbols \code{< > \ _ { }) are not available in those fonts.
+  used with \code{encoding = "TeXtext.enc"}, taking care that the
+  symbols \code{< > \\ _ \{ \}} are not available in those fonts.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
