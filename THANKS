@@ -36,6 +36,7 @@ Anthony Rossini		<rossini@blindglobe.net>
 Jonathan Rougier	<J.C.Rougier@durham.ac.uk>
 Deepayan Sarkar		<deepayan@stat.wisc.edu>
 Günther Sawitzki	<gs@statlib.uni-heidelberg.de>
+Detlef Steuer		<detlef.steuer@gmx.de>
 Bill Simpson		<wsi@gcal.ac.uk>
 Gordon Smyth		<smyth@wehi.edu.au>
 Adrian Trapletti	<a.trapletti@bluewin.ch>
@@ -51,6 +52,17 @@ Achim Zeileis		<Achim.Zeileis@wu-wien.ac.at>
 We have probably omitted some important names here because of incomplete
 record keeping.	 If we have overlooked you, please let us know and we'll
 update the list.
+
+The R Foundation may decide to give out <first.lastname>@R-project.org
+email addresses to contributors to the R Project (even without making them
+members of the R Foundation) when in the view of the R Foundation this
+would help advance the R project.
+
+The R Core Group, Bill Venables and Roger Bivand are the regular members
+of the R Foundation.  In addition,
+Dirk Eddelbuettel, Torsten Hothorn, Uwe Ligges, David Meyer, Deepayan Sarkar,
+Simon Urbanek, Simon Wood, and Achim Zeileis
+are also e-addressable by <Firstname>.<Lastname>@R-project.org.
 
 Many more, too numerous to mention here, have contributed by sending bug
 reports and suggesting various improvements.
