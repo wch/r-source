@@ -44,7 +44,7 @@ axis.POSIXct(side, x, at, format, ...)
   \link{DateTimeClasses} for details of the classes.
 }
 \examples{
-res <- try(data(beav1, package = MASS))
+res <- try(data(beav1, package = "MASS"))
 if(!inherits(res, "try-error")) {
 attach(beav1)
 time <- strptime(paste(1990, day, time \%/\% 100, time \%\% 100),

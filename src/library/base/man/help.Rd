@@ -191,7 +191,7 @@ help(lapply)
 help("for")             # or ?"for", but the quotes are needed
 ?"+"
 
-help(package = stepfun) # get help even when package is not loaded
+help(package="stepfun") # get help even when package is not loaded
 
 data()                  # list all available data sets
 ?women                  # information about data set "women"

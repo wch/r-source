@@ -60,6 +60,9 @@ BUG FIXES
 
     o   Fixed bug that would cause segfault on protect stack overflow.
 
+    o   crossprod() on matrices with zero extents would return an
+	uninitialized matrix (rather than one filled with zeros).
+
 
 
 		CHANGES IN R VERSION 1.8.0
