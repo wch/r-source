@@ -35,6 +35,17 @@ BUG FIXES
 		CHANGES IN R VERSION 1.5.1
 
 
+NEW FEATURES
+
+    o   Enhancements to mathematical annotation of plots:
+
+	- expressions involving dot(<something>) now produce a dot accent
+	  above the <something> (initial patch from Ben Bolker).  
+
+	- within an expression, the symbol partialdiff is now converted 
+	  to a partial differential symbol (greek delta).
+
+
 BUG FIXES
 
     o	Rdconv now skips CRs in input files, even on Unix.
@@ -45,6 +56,19 @@ BUG FIXES
     o	polygon() and rect() with lty = "blank" were omitting the fill
 	colour (if present).  symbols(circles=, lty="blank") was
 	drawing the border of the disks.
+
+    o	Subsetting non-existent rows in a data frame would produce
+	missing row names, which are not allowed.
+
+    o   On Unix, R_PAPERSIZE was set to '' instead of 'a4' as default on
+	systems without paperconf.
+
+    o	Under GNOME, capabilities() now reports correctly that X11, png
+	and jpeg are available (if they are under X11).
+
+    o   RweaveLatex.Rd had unbalanced braces in section "Supported
+        Options".
+    
 
 
 
