@@ -64,7 +64,8 @@ regexpr(pattern, text,  extended=TRUE, perl=FALSE)
 }
 \note{
   \code{perl=TRUE} will only be available if \R was compiled against 
-  PCRE: this is detected at configure time.
+  PCRE: this is detected at configure time.  All Unix and Windows system
+  should have it.
 }
 \seealso{
   \code{\link{agrep}} for approximate matching.
