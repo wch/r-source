@@ -45,7 +45,7 @@ static void create_dialog()
     setcursor(ArrowCursor);  /* not `busy' cursor */
     win = newwindow("t-test entry", rect(0, 0, 200, 200),
 			Titlebar | Centered | Modal);
-    setbackground(win, myGetSysColor(COLOR_MENU));
+    setbackground(win, dialog_bg());
     setkeydown(win, hit_key);
     bApply = newbutton("Apply", rect(20, 160, 50, 25), apply);
     bCancel = newbutton("Cancel", rect(120, 160, 50, 25), NULL);

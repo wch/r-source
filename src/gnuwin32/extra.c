@@ -861,7 +861,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     wselect = newwindow(multiple ? "Select" : "Select one", 
 			rect(0, 0, xmax, ymax),
 			Titlebar | Centered | Modal);
-    setbackground(wselect, myGetSysColor(COLOR_MENU));
+    setbackground(wselect, dialog_bg());
     if(multiple)
 	f_list = newmultilist(clist, rect(10, 10, 35+8*mw, ylist), NULL);
     else
