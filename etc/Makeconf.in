@@ -61,3 +61,9 @@ ALL_FFLAGS_LO = $(ALL_FFLAGS)
 @r_cc_rules_frag@
 @r_cxx_rules_frag@
 @r_f77_rules_frag@
+
+## As we currently use
+##   -bundle -bundle_loader $(Rexecbindir)/R.bin -undefined error
+## for the default SHLIB_LDFLAGS on Darwin >= 5 ...
+rhome = @libdir@/R
+Rexecbindir = $(rhome)/bin
