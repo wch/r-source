@@ -468,41 +468,29 @@ print.anova.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 	invisible(x)
 }
 
-predict.lm <- function (object, newdata = model.frame(object),
-			conf.level=0.95, tol.level=conf.level)
-{
-	form <- delete.response(terms(object))
-	X <- model.matrix(form,newdata)
-	n <- NROW(object$qr$qr)
-	p <- object$rank
-	p1 <- 1:p
-	piv <- object$qr$pivot[p1]
-	r <- resid(object)
-	f <- fitted(object)
-	w <- weights(object)
-	rss <- sum(if(is.null(w)) r^2 else w*r^2)
-	R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
-	est <- object$coefficients[piv]
-	predictor <- c(X[,piv,drop=F] %*% est)
-	ip <- real(NROW(X))
-	resvar <- rss/(n - p)
-	vcov <- resvar * R
-	for (i in (1:NROW(X))) {
-		xi <- X[i,piv]
-		ip[i] <- xi %*% vcov %*% xi
-	}
-	stderr1 <- sqrt(ip)
-	stderr2 <- sqrt(resvar + ip)
-	tt1 <- qt((1-conf.level)/2, n - p)
-	tt2 <- qt((1- tol.level)/2, n - p)
-	conf.l <- predictor + tt1 * stderr1
-	conf.u <- predictor - tt1 * stderr1
-	pred.l <- predictor + tt2 * stderr2
-	pred.u <- predictor - tt2 * stderr2
-	data.frame(predictor=predictor, conf.l=conf.l, conf.u=conf.u,
-	pred.l=pred.l,pred.u=pred.u,row.names=rownames(newdata))
+predict.lm <- function(object, newdata = model.frame(object), se = FALSE) {
+  X <- model.matrix(delete.response(terms(object)), newdata)
+  n <- NROW(object$qr$qr)
+  p <- object$rank
+  p1 <- 1:p
+  piv <- object$qr$pivot[p1]
+  r <- resid(object)
+  f <- fitted(object)
+  w <- weights(object)
+  if (is.null(w)) rss <- sum(r^2)
+  else rss <- sum(r^2 * w)
+  R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
+  est <- object$coefficients[piv]
+  predictor <- c(X[, piv, drop = F] %*% est)
+  if(se) {
+    ip <- real(NROW(X))
+    for (i in (1:NROW(X))) {
+      xi <- X[i, piv]
+      ip[i] <- xi %*% R %*% xi
+    }
+    list(fit = predictor, se = sqrt(ip))
+  } else predictor
 }
-
 
 effects.lm <- function(...) .NotYetImplemented()
 
