@@ -124,9 +124,7 @@ function(..., list = character(0),
         found <- FALSE
         if (length(files) > 1) {
             ## more than one candidate
-            ## use the order given in data.Rd within path
-            good <- c("R", "r", "RData", "rdata", "rda",
-                      "tab", "txt", "TXT", "csv", "CSV")
+            good <- tools:::.makeFileExts("data")
             exts <- sub(".*\\.", "", files)
             o <- match(exts, good, nomatch = 100)
             paths <- dirname(files)

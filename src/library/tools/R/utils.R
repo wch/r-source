@@ -226,9 +226,10 @@ function(type = c("code", "data", "demo", "docs", "vignette"))
     ## extensions for a given file type.
     switch(type,
            code = c("R", "r", "S", "s", "q"),
+           ## Keep in sync with the order given in base's data.Rd.
            data = c("R", "r",
                     "RData", "rdata", "rda",
-                    "TXT", "txt", "tab", "CSV", "csv"),
+                    "tab", "txt", "TXT", "csv", "CSV"),
            demo = "R",
            docs = c("Rd", "rd"),
            vignette = c(outer(c("R", "r", "S", "s"), c("nw", "tex"),
