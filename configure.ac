@@ -1215,7 +1215,7 @@ fi
 AC_CHECK_TYPES([off_t])
 AC_FUNC_ALLOCA
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate getcwd \
-  getgrgid getpwuid getuid hypot iconv isascii log1p \
+  getgrgid getpwuid getuid hypot iconv iconvlist isascii log1p \
   matherr mbrtowc mbstowcs mkfifo popen putenv rint \
   setenv strcoll stat strptime symlink system times unsetenv \
   wcrtomb wcscoll wcstombs wcswidth wctrans wcwidth)

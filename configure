@@ -30016,8 +30016,9 @@ fi
 
 
 
+
 for ac_func in access chdir expm1 fcntl finite fseeko ftello ftruncate getcwd \
-  getgrgid getpwuid getuid hypot iconv isascii log1p \
+  getgrgid getpwuid getuid hypot iconv iconvlist isascii log1p \
   matherr mbrtowc mbstowcs mkfifo popen putenv rint \
   setenv strcoll stat strptime symlink system times unsetenv \
   wcrtomb wcscoll wcstombs wcswidth wctrans wcwidth
