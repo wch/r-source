@@ -67,10 +67,9 @@ and run
 	make BUILD=MINGW32 or CYGWIN
 
 
-Note 1: the file rw1010\unzip\unzip32.dll is not in the source
-distribution, nor are the sources (it is the standard Info-Zip unzip
-5.40, built with MSVC++4.2). You will need to copy it from a binary
-distribution.
+Note 1: the file rw1010\unzip\unzip32static.dll is not in the source
+distribution. It can be found in file unz541dN.zip at any INFO-ZIP
+mirror, or you can copy it from a binary distribution.
 
 The file rw1010\bin\Rchtml.dll is only built if CHM help is specifed
 in the main Makefile. Its source is the help directory, and you need
