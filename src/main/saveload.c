@@ -1476,7 +1476,7 @@ static int InIntegerXdr(FILE *fp)
 
 static void OutStringXdr(FILE *fp, char *s)
 {
-    int n = strlen(s);
+    unsigned int n = strlen(s);
     OutIntegerXdr(fp, n);
     if (!xdr_bytes(&xdrs, &s, &n, n)) {
 	xdr_destroy(&xdrs);
@@ -1488,7 +1488,7 @@ static char *InStringXdr(FILE *fp)
 {
     static char *buf = NULL;
     static int buflen = 0;
-    int nbytes = InIntegerXdr(fp);
+    unsigned int nbytes = InIntegerXdr(fp);
     if (nbytes >= buflen) {
 	char *newbuf = realloc(buf, nbytes + 1);
 	if (newbuf == NULL)
