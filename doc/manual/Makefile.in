@@ -166,8 +166,8 @@ clean:
 	  *.ps *.ps-2 *.info*
 	@-rm -f R-external.cp R-external.fn R-external.ky R-external.pg \
 	  R-external.tmp R-external.tp R-external.vr
-	@-rm -f R-exts.cp R-exts.fn R-exts.ky R-exts.pg \
-	  R-exts.tmp R-exts.tp R-exts.vr
+	@-rm -f R-exts.cp R-exts.cps R-exts.fn R-exts.ky R-exts.pg \
+	  R-exts.tmp R-exts.tp R-exts.vr R-exts.vrs
 distclean: clean
 	@-rm -f auto Version.tex pkg-*.tex Makefile install-info \
 	  lib2tex ABOUT.tex Manual.tex *.pdf *.dvi
