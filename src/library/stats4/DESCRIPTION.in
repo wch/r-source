@@ -1,0 +1,8 @@
+Package: stats4
+Title: Statistical functions using S4 classes
+Version: @VERSION@
+Priority: base
+Author: Peter Dalgaard
+Description: Statistical functions using S4 classes
+Maintainer: R Core Team <R-core@r-project.org>
+License: GPL

@@ -1410,6 +1410,8 @@ AC_CONFIG_FILES(
   src/library/stats/DESCRIPTION
   src/library/stats/Makefile
   src/library/stats/src/Makefile
+  src/library/stats4/DESCRIPTION
+  src/library/stats4/Makefile
   src/library/stepfun/DESCRIPTION
   src/library/stepfun/Makefile
   src/library/splines/DESCRIPTION

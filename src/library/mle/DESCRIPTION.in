@@ -1,5 +1,5 @@
 Package: mle
-Title: Maximum likelihood estimation
+Title: Defunct package for maximum likelihood estimation
 Version: @VERSION@
 Priority: base
 Author: Peter Dalgaard

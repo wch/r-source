@@ -28,6 +28,8 @@ USER-VISIBLE CHANGES
 	datasets have been moved to package stats.  Sweave has been
 	moved to utils.
 
+	Package mle has been renamed as stats4.
+
 	A few user-contributed packages have made assumptions about
 	where functions were and so will need updating.
 
