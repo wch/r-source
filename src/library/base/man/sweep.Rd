@@ -28,7 +28,7 @@ sweep(x, MARGIN, STATS, FUN="-", \dots)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{apply}} on which \code{sweep} is based;
+  \code{\link{apply}} on which \code{sweep} used to be based;
   \code{\link{scale}} for centering and scaling.
 }
 \examples{
