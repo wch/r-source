@@ -144,8 +144,8 @@ static void SetLineType(GdkBitmap *stipple, int newlty, int newlwd)
     dashlist[i] = j;
     newlty = newlty >> 4;
   }
-
-  /* set dashes */
+  */
+  /*  set dashes */
   /*  gdk_gc_set_dashes(gc, 0, dashlist, i);*/
 }
 

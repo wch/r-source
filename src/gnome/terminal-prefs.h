@@ -20,17 +20,28 @@
 
 #include <gnome.h>
 
-/* dialog widget */
-GtkWidget *prefs_dialog;
+/* in system.c */
+void R_set_SaveAction(int sa);
 
 /* functions */
-GtkWidget *prefs_text_page(void);
-GtkWidget *prefs_workspace_frame(void);
-GtkWidget *prefs_history_frame(void);
-GtkWidget *prefs_exit_page(void);
-GtkWidget *prefs_apps_page(void);
-GtkWidget *prefs_graphics_page(void);
-GtkWidget *prefs_startup_page(void);
-GtkWidget *prefs_pager_page(void);
-
 void settings_prefs_cb(GtkWidget *widget, gpointer data);
+
+void R_gnome_prefs_gui_load(void);
+void R_gnome_prefs_cmd_load(int defrestoreact, int defsaveact, int defvsize, int defnsize);
+void R_gnome_prefs_save(void);
+
+int prefs_get_restoreact(void);
+int prefs_get_vsize(void);
+int prefs_get_nsize(void);
+int prefs_get_saveact(void);
+gchar *prefs_get_console_font(void);
+GdkColor prefs_get_console_textcolor(void);
+GdkColor prefs_get_console_bgcolor(void);
+gchar *prefs_get_pager_title_font(void);
+GdkColor prefs_get_pager_title_textcolor(void);
+GdkColor prefs_get_pager_title_bgcolor(void);
+gchar *prefs_get_pager_text_font(void);
+gchar *prefs_get_pager_em_font(void);
+GdkColor prefs_get_pager_text_textcolor(void);
+GdkColor prefs_get_pager_text_bgcolor(void);
+

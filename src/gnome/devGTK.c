@@ -407,7 +407,7 @@ static int GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
   gtkd->windowWidth = iw = w / pixelWidth();
   gtkd->windowHeight = ih = h / pixelHeight();
 
-  gtkd->window = gnome_app_new("R.gnome.graphics", "R Graphics");
+  gtkd->window = gnome_app_new("R.graphics", "R Graphics");
 
   gtk_window_set_policy(GTK_WINDOW(gtkd->window), TRUE, TRUE, FALSE);
   gtk_widget_realize(gtkd->window);

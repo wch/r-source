@@ -18,604 +18,672 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include "Defn.h"
+#include "Startup.h"
+
 #include "terminal-prefs.h"
 #include "terminal.h"
 
-/* FIXME: needs to be updated to work with the new preferences stuff */
+#include <glade/glade.h>
+#include <glib.h>
 
-static void prefs_font_entry_changed(GtkWidget *widget, gpointer data)
+
+/* saved user preferences */
+typedef struct _gui_preferences gui_preferences;
+struct _gui_preferences {
+  int restoreact;
+
+  int saveact;
+
+  gchar *console_font;
+  GdkColor console_textcolor;
+  GdkColor console_bgcolor;
+
+  gchar *pager_title_font;
+  GdkColor pager_title_textcolor;
+  GdkColor pager_title_bgcolor;
+  gchar *pager_text_font;
+  gchar *pager_em_font;
+  GdkColor pager_text_textcolor;
+  GdkColor pager_text_bgcolor;
+};
+
+
+static gui_preferences user_prefs;
+
+
+void R_gnome_prefs_gui_load(void)
 {
-  GtkWidget *font_picker;
-  gchar *font;
-  gchar **pref = (gchar **) data;
+  gchar *tmp;
+  GdkColor text, bg;
 
-  if(font_pref_locked == FALSE) {
-    font_pref_locked = TRUE;
+  /* Text settings */
+  gnome_config_push_prefix("/R/Console/");
+  /*  -misc-fixed-medium-r-semicondensed-*-*-120-*-*-c-*-iso8859-1
+      -*-fixed-*-*-*-*-*-*-*-*-*-*-*-*    */
+    /*  user_prefs.console_font = gnome_config_get_string("font=fixed");*/
+  user_prefs.console_font = gnome_config_get_string("font=-misc-fixed-medium-*-semicondensed-*-*-120-*-*-*-*-iso8859-1");
 
-    font_picker = (GtkWidget *) gtk_object_get_user_data(GTK_OBJECT(widget));
-    
-    g_return_if_fail(GTK_IS_ENTRY(widget));
-    g_return_if_fail(GNOME_IS_FONT_PICKER(font_picker));
-    
-    font = gtk_entry_get_text(GTK_ENTRY(widget));
-    
-    *pref = g_strdup(font);
-    
-    gnome_font_picker_set_font_name(GNOME_FONT_PICKER(font_picker), font);
-    
-    gnome_property_box_changed(GNOME_PROPERTY_BOX(prefs_dialog));
-
-    font_pref_locked = FALSE;
+  tmp = gnome_config_get_string("textcolor=black");
+  if(gdk_color_parse(tmp, &text) == 0) {
+    gdk_color_parse("black", &text);
   }
-}
+  user_prefs.console_textcolor = text;
 
-static void prefs_font_picker_font_set(GtkWidget *widget, gchar *font, gpointer data)
-{
-  GtkWidget *font_entry;
-  gchar **pref = (gchar **) data;
-
-  if(font_pref_locked == FALSE) {
-    font_pref_locked = TRUE;
-
-    font_entry = (GtkWidget *) gtk_object_get_user_data(GTK_OBJECT(widget));
-
-    g_return_if_fail(GNOME_IS_FONT_PICKER(widget));
-    g_return_if_fail(GTK_IS_ENTRY(font_entry));
-
-    *pref = g_strdup(font);
-
-    gtk_entry_set_text(GTK_ENTRY(font_entry), font);
-
-    gnome_property_box_changed(GNOME_PROPERTY_BOX(prefs_dialog));
-
-    font_pref_locked = FALSE;
+  tmp = gnome_config_get_string("bgcolor=white");
+  if(gdk_color_parse(tmp, &bg) == 0) {
+    gdk_color_parse("white", &bg);
   }
+  user_prefs.console_bgcolor = bg;
+
+  gnome_config_pop_prefix();
+
+  /* Pager settings */
+  gnome_config_push_prefix("/R/Pager/");
+
+  user_prefs.pager_title_font = gnome_config_get_string("title_font=-adobe-helvetica-bold-r-normal-*-*-100-*-*-p-*-iso8859-1");
+
+  tmp = gnome_config_get_string("title_textcolor=black");
+  if(gdk_color_parse(tmp, &text) == 0) {
+    gdk_color_parse("black", &text);
+  }
+  g_free(tmp);
+  user_prefs.pager_title_textcolor = text;
+
+  tmp = gnome_config_get_string("title_bgcolor=white");
+  if(gdk_color_parse(tmp, &bg) == 0) {
+    gdk_color_parse("white", &bg);
+  }
+  g_free(tmp);
+  user_prefs.pager_title_bgcolor = bg;
+
+  user_prefs.pager_text_font = gnome_config_get_string("text_font=-misc-fixed-medium-r-normal-*-*-120-*-*-c-*-iso8859-1");
+  user_prefs.pager_em_font = gnome_config_get_string("em_font=-misc-fixed-bold-r-normal-*-*-120-*-*-c-*-iso8859-1");
+
+  tmp = gnome_config_get_string("text_textcolor=black");
+  if(gdk_color_parse(tmp, &text) == 0) {
+    gdk_color_parse("black", &text);
+  }
+  g_free(tmp);
+  user_prefs.pager_text_textcolor = text;
+
+  tmp = gnome_config_get_string("text_bgcolor=white");
+  if(gdk_color_parse(tmp, &bg) == 0) {
+    gdk_color_parse("white", &bg);
+  }
+  g_free(tmp);
+  user_prefs.pager_text_bgcolor = bg;
+
+  gnome_config_pop_prefix();    
 }
 
-static void prefs_text_color_set(GtkWidget *widget, gint r, gint g, gint b, gint a, gpointer data)
+void R_gnome_prefs_cmd_load(int defrestoreact, int defsaveact, int defvsize, int defnsize)
 {
-  R_gnome_newprefs.textcolor.red = r;
-  R_gnome_newprefs.textcolor.green = g;
-  R_gnome_newprefs.textcolor.blue = b;
-
-  gnome_property_box_changed(GNOME_PROPERTY_BOX(prefs_dialog));
-}
-
-static void prefs_bg_color_set(GtkWidget *widget, gint r, gint g, gint b, gint a, gpointer data)
-{
-  R_gnome_newprefs.bgcolor.red = r;
-  R_gnome_newprefs.bgcolor.green = g;
-  R_gnome_newprefs.bgcolor.blue = b;
-
-  gnome_property_box_changed(GNOME_PROPERTY_BOX(prefs_dialog));
-}
-
-GtkWidget *prefs_text_page(void)
-{
-  GtkWidget *frame, *table;
-
-  GtkWidget *font_label, *font_entry, *font_picker, *font_picker_label;
-  GtkWidget *textcol_label, *textcol_button;
-  GtkWidget *bgcol_label, *bgcol_button;
-
-  frame = gtk_frame_new("Text settings");
-  table = gtk_table_new(3, 3, FALSE);
-  gtk_container_set_border_width(GTK_CONTAINER(frame), GNOME_PAD_SMALL);
-  gtk_container_add(GTK_CONTAINER(frame), table);
-
-  /* Font */
-  font_label = gtk_label_new("Font: ");
-  gtk_misc_set_alignment(GTK_MISC(font_label), 1.0, 0.5);
-  font_entry = gtk_entry_new();
-  gtk_entry_set_text(GTK_ENTRY(font_entry), R_gnome_userprefs.font);
-  gtk_entry_set_position(GTK_ENTRY(font_entry), 0);
-
-  font_picker = gnome_font_picker_new();
-  gnome_font_picker_set_font_name(GNOME_FONT_PICKER(font_picker),
-				  gtk_entry_get_text(GTK_ENTRY (font_entry)));
-  gnome_font_picker_set_mode(GNOME_FONT_PICKER(font_picker),
-			     GNOME_FONT_PICKER_MODE_USER_WIDGET);
-  font_picker_label = gtk_label_new("Browse...");
-  gnome_font_picker_uw_set_widget(GNOME_FONT_PICKER(font_picker),
-				  font_picker_label);
-
-  gtk_table_attach(GTK_TABLE(table), font_label,
-		   0, 1, 0, 1,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(table), font_entry,
-		   1, 2, 0, 1,
-		   GTK_FILL, 0, 0, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(table), font_picker,
-		   2, 3, 0, 1,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-
-  gtk_signal_connect(GTK_OBJECT(font_entry), "changed",
-		     GTK_SIGNAL_FUNC(prefs_font_entry_changed),
-		     (gpointer) &R_gnome_newprefs.font);
-  gtk_signal_connect(GTK_OBJECT(font_picker), "font_set",
-		     GTK_SIGNAL_FUNC(prefs_font_picker_font_set),
-		     (gpointer) &R_gnome_newprefs.font);
-  gtk_object_set_user_data(GTK_OBJECT(font_picker), GTK_OBJECT(font_entry));
-  gtk_object_set_user_data(GTK_OBJECT(font_entry), GTK_OBJECT(font_picker));
-
-  /* Text colour */
-  textcol_label = gtk_label_new("Text colour: ");
-  gtk_misc_set_alignment(GTK_MISC(textcol_label), 1.0, 0.5);
-  textcol_button = gnome_color_picker_new();
-  gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (textcol_button),
-			      R_gnome_userprefs.textcolor.red,
-			      R_gnome_userprefs.textcolor.green,
-			      R_gnome_userprefs.textcolor.blue,
-			      0);
-  
-  gtk_table_attach(GTK_TABLE(table), textcol_label,
-		   0, 1, 1, 2,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(table), textcol_button,
-		   1, 2, 1, 2,
-		   0, 0, 0, GNOME_PAD_SMALL);
-
-  gtk_signal_connect(GTK_OBJECT(textcol_button),
-		     "color_set",
-		     GTK_SIGNAL_FUNC(prefs_text_color_set),
-		     NULL);
-
-  /* Background colour */
-  bgcol_label = gtk_label_new("Background colour: ");
-  gtk_misc_set_alignment(GTK_MISC(bgcol_label), 1.0, 0.5);
-  bgcol_button = gnome_color_picker_new();
-  gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (bgcol_button),
-			      R_gnome_userprefs.bgcolor.red,
-			      R_gnome_userprefs.bgcolor.green,
-			      R_gnome_userprefs.bgcolor.blue,
-			      0);
-  
-  gtk_table_attach(GTK_TABLE(table), bgcol_label,
-		   0, 1, 2, 3,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(table), bgcol_button,
-		   1, 2, 2, 3,
-		   0, 0, 0, GNOME_PAD_SMALL);
-
-  gtk_signal_connect(GTK_OBJECT(bgcol_button),
-		     "color_set",
-		     GTK_SIGNAL_FUNC(prefs_bg_color_set),
-		     NULL);
-
-  return frame;
-}
-
-GtkWidget *prefs_exit_page(void)
-{
-  GtkWidget *vbox;
-  GtkWidget *workspace_frame, *history_frame;
-
-  vbox = gtk_vbox_new(FALSE, 0);
-
-  workspace_frame = prefs_workspace_frame();
-  history_frame = prefs_history_frame();
-
-  gtk_box_pack_start(GTK_BOX(vbox), workspace_frame, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), history_frame, TRUE, TRUE, 0);
-
-  return vbox;
-}
-
-GtkWidget *prefs_workspace_frame(void)
-{
-  GtkWidget *frame, *table;
-  GtkWidget *ask;
-  GtkWidget *save;
-  GtkWidget *savetofile, *dummy, *nameentry;
-  GtkWidget *dontsave;
-
-  frame = gtk_frame_new("Workspace");
-  
-  table = gtk_table_new(2, 5, FALSE);
-  gtk_container_set_border_width(GTK_CONTAINER(frame), GNOME_PAD_SMALL);
-  gtk_container_add(GTK_CONTAINER(frame), table);
-
-  ask = gtk_radio_button_new_with_label(NULL, "Ask me");
-  
-
-  save = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(ask), "Save");
-  savetofile = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(ask), "Save in this file:");
-  dummy = gtk_event_box_new();
-  nameentry = gnome_file_entry_new(NULL, "Workspace file");
-  
-  dontsave = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(ask), "Don't save");
-
-  gtk_table_attach(GTK_TABLE(table), ask,
-		   0, 2, 0, 1,
-		   GTK_FILL, 0, GNOME_PAD, 0);
-  gtk_table_attach(GTK_TABLE(table), save,
-		   0, 2, 1, 2,
-		   GTK_FILL, 0, GNOME_PAD, 0);
-  gtk_table_attach(GTK_TABLE(table), savetofile,
-		   0, 2, 2, 3,
-		   GTK_FILL, 0, GNOME_PAD, 0);
-  gtk_table_attach(GTK_TABLE(table), dummy,
-		   0, 1, 3, 4,
-		   GTK_FILL, 0, GNOME_PAD_BIG, 0);
-  gtk_table_attach(GTK_TABLE(table), nameentry,
-		   1, 2, 3, 4,
-		   GTK_FILL, 0, 0, 0);
-  gtk_table_attach(GTK_TABLE(table), dontsave,
-		   0, 2, 4, 5,
-		   GTK_FILL, 0, GNOME_PAD, GNOME_PAD_SMALL);
-
-  return frame;
-}
-
-GtkWidget *prefs_history_frame(void)
-{
-  GtkWidget *frame, *table;
-  GtkWidget *save;
-  GtkWidget *savewithws;
-  GtkWidget *dontsave;
-
-  frame = gtk_frame_new("Command history");
-  
-  table = gtk_table_new(2, 3, FALSE);
-  gtk_container_set_border_width(GTK_CONTAINER(frame), GNOME_PAD_SMALL);
-  gtk_container_add(GTK_CONTAINER(frame), table);
-
-  save = gtk_radio_button_new_with_label(NULL, "Always save");
-  savewithws = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(save), "Save if workspace saved");
-  dontsave = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(save), "Don't save");
-
-  gtk_table_attach(GTK_TABLE(table), save,
-		   0, 2, 0, 1,
-		   GTK_FILL, 0, GNOME_PAD, 0);
-  gtk_table_attach(GTK_TABLE(table), savewithws,
-		   0, 2, 1, 2,
-		   GTK_FILL, 0, GNOME_PAD, 0);
-  gtk_table_attach(GTK_TABLE(table), dontsave,
-		   0, 2, 2, 3,
-		   GTK_FILL, 0, GNOME_PAD, 0);
-
-  return frame;
-}
-
-GtkWidget *prefs_apps_page(void)
-{
-  GtkWidget *frame, *table;
-
-  frame = gtk_frame_new("Helper applications");
-  gtk_container_set_border_width(GTK_CONTAINER(frame), GNOME_PAD_SMALL);
-
-  return frame;
-}
-
-GtkWidget *prefs_graphics_page(void)
-{
-  GtkWidget *frame, *table;
-
-  frame = gtk_frame_new("Graphics device options");
-  gtk_container_set_border_width(GTK_CONTAINER(frame), GNOME_PAD_SMALL);
-
-  return frame;
-}
-
-GtkWidget *prefs_startup_page(void)
-{
-  GtkWidget *frame, *table;
-  GtkWidget *vsize_label, *vsize_entry;
-  GtkWidget *nsize_label, *nsize_entry;
-  GtkWidget *warning_label;
-
-  frame = gtk_frame_new("R environment");
-  table = gtk_table_new(3, 3, FALSE);
-  gtk_container_set_border_width(GTK_CONTAINER(frame), GNOME_PAD_SMALL);
-  gtk_container_add(GTK_CONTAINER(frame), table);
-
-  /* R_Vsize */
-  vsize_label = gtk_label_new("Vector heap size (vsize):");
-  gtk_misc_set_alignment(GTK_MISC(vsize_label), 1.0, 0.5);
-  vsize_entry = gtk_entry_new();
-  /*  gtk_entry_set_text(GTK_ENTRY(nsize_entry), R_gnome_userprefs.nsize); */
-
-  gtk_table_attach(GTK_TABLE(table), vsize_label,
-		   0, 1, 0, 1,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(table), vsize_entry,
-		   1, 2, 0, 1,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-
-  /* R_Nsize */
-  nsize_label = gtk_label_new("Number of cons cells (nsize):");
-  gtk_misc_set_alignment(GTK_MISC(nsize_label), 1.0, 0.5);
-  nsize_entry = gtk_entry_new();
-  /*  gtk_entry_set_text(GTK_ENTRY(nsize_entry), R_gnome_userprefs.nsize); */
-
-  gtk_table_attach(GTK_TABLE(table), nsize_label,
-		   0, 1, 1, 2,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(table), nsize_entry,
-		   1, 2, 1, 2,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-
-  /* Warning */
-  warning_label = gtk_label_new("These settings will take effect next time you start R.");
-  gtk_misc_set_alignment(GTK_MISC(warning_label), 0.0, 0.5);
-
-  gtk_table_attach(GTK_TABLE(table), warning_label,
-		   0, 2, 2, 3,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-
-  return frame;
-}
-
-
-GtkWidget *prefs_pager_page(void)
-{
-  GtkWidget *vbox;
-
-  GtkWidget *title_frame, *title_table;
-
-  GtkWidget *tfont_label, *tfont_entry, *tfont_picker, *tfont_picker_label;
-  GtkWidget *ttextcol_label, *ttextcol_button;
-  GtkWidget *tbgcol_label, *tbgcol_button;
-
-  GtkWidget *text_frame, *text_table;
-  
-  GtkWidget *nfont_label, *nfont_entry, *nfont_picker, *nfont_picker_label;
-  GtkWidget *emfont_label, *emfont_entry, *emfont_picker, *emfont_picker_label;
-  GtkWidget *ntextcol_label, *ntextcol_button;
-  GtkWidget *nbgcol_label, *nbgcol_button;
-
-  /* Title settings */
-  title_frame = gtk_frame_new("Title text settings");
-  title_table = gtk_table_new(3, 3, FALSE);
-  gtk_container_set_border_width(GTK_CONTAINER(title_frame), GNOME_PAD_SMALL);
-  gtk_container_add(GTK_CONTAINER(title_frame), title_table);
-
-  /* Font */
-  tfont_label = gtk_label_new("Font: ");
-  gtk_misc_set_alignment(GTK_MISC(tfont_label), 1.0, 0.5);
-  tfont_entry = gtk_entry_new();
-  gtk_entry_set_text(GTK_ENTRY(tfont_entry), R_gnome_userprefs.pager_title_font);
-  gtk_entry_set_position(GTK_ENTRY(tfont_entry), 0);
-
-  tfont_picker = gnome_font_picker_new();
-  gnome_font_picker_set_font_name(GNOME_FONT_PICKER(tfont_picker),
-				  gtk_entry_get_text(GTK_ENTRY (tfont_entry)));
-  gnome_font_picker_set_mode(GNOME_FONT_PICKER(tfont_picker),
-			     GNOME_FONT_PICKER_MODE_USER_WIDGET);
-  tfont_picker_label = gtk_label_new("Browse...");
-  gnome_font_picker_uw_set_widget(GNOME_FONT_PICKER(tfont_picker),
-				  tfont_picker_label);
-
-  gtk_table_attach(GTK_TABLE(title_table), tfont_label,
-		   0, 1, 0, 1,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(title_table), tfont_entry,
-		   1, 2, 0, 1,
-		   GTK_FILL, 0, 0, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(title_table), tfont_picker,
-		   2, 3, 0, 1,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-
-  /* Text colour */
-  ttextcol_label = gtk_label_new("Text colour: ");
-  gtk_misc_set_alignment(GTK_MISC(ttextcol_label), 1.0, 0.5);
-  ttextcol_button = gnome_color_picker_new();
-  gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (ttextcol_button),
-			      R_gnome_userprefs.textcolor.red,
-			      R_gnome_userprefs.textcolor.green,
-			      R_gnome_userprefs.textcolor.blue,
-			      0);
-  
-  gtk_table_attach(GTK_TABLE(title_table), ttextcol_label,
-		   0, 1, 1, 2,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(title_table), ttextcol_button,
-		   1, 2, 1, 2,
-		   0, 0, 0, GNOME_PAD_SMALL);
-
-  /* Background colour */
-  tbgcol_label = gtk_label_new("Background colour: ");
-  gtk_misc_set_alignment(GTK_MISC(tbgcol_label), 1.0, 0.5);
-  tbgcol_button = gnome_color_picker_new();
-  gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (tbgcol_button),
-			      R_gnome_userprefs.bgcolor.red,
-			      R_gnome_userprefs.bgcolor.green,
-			      R_gnome_userprefs.bgcolor.blue,
-			      0);
-  
-  gtk_table_attach(GTK_TABLE(title_table), tbgcol_label,
-		   0, 1, 2, 3,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(title_table), tbgcol_button,
-		   1, 2, 2, 3,
-		   0, 0, 0, GNOME_PAD_SMALL);
-
-  /* Normal text settings */
-  text_frame = gtk_frame_new("Body text settings");
-  text_table = gtk_table_new(3, 4, FALSE);
-  gtk_container_set_border_width(GTK_CONTAINER(text_frame), GNOME_PAD_SMALL);
-  gtk_container_add(GTK_CONTAINER(text_frame), text_table);
-
-  /* Font */
-  nfont_label = gtk_label_new("Font: ");
-  gtk_misc_set_alignment(GTK_MISC(nfont_label), 1.0, 0.5);
-  nfont_entry = gtk_entry_new();
-  gtk_entry_set_text(GTK_ENTRY(nfont_entry), R_gnome_userprefs.pager_text_font);
-  gtk_entry_set_position(GTK_ENTRY(nfont_entry), 0);
-
-  nfont_picker = gnome_font_picker_new();
-  gnome_font_picker_set_font_name(GNOME_FONT_PICKER(nfont_picker),
-				  gtk_entry_get_text(GTK_ENTRY (nfont_entry)));
-  gnome_font_picker_set_mode(GNOME_FONT_PICKER(nfont_picker),
-			     GNOME_FONT_PICKER_MODE_USER_WIDGET);
-  nfont_picker_label = gtk_label_new("Browse...");
-  gnome_font_picker_uw_set_widget(GNOME_FONT_PICKER(nfont_picker),
-				  nfont_picker_label);
-
-  gtk_table_attach(GTK_TABLE(text_table), nfont_label,
-		   0, 1, 0, 1,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(text_table), nfont_entry,
-		   1, 2, 0, 1,
-		   GTK_FILL, 0, 0, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(text_table), nfont_picker,
-		   2, 3, 0, 1,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-
-  /* Emphasis font */
-  emfont_label = gtk_label_new("Emphasis font: ");
-  gtk_misc_set_alignment(GTK_MISC(emfont_label), 1.0, 0.5);
-  emfont_entry = gtk_entry_new();
-  gtk_entry_set_text(GTK_ENTRY(emfont_entry), R_gnome_userprefs.pager_em_font);
-  gtk_entry_set_position(GTK_ENTRY(emfont_entry), 0);
-
-  emfont_picker = gnome_font_picker_new();
-  gnome_font_picker_set_font_name(GNOME_FONT_PICKER(emfont_picker),
-				  gtk_entry_get_text(GTK_ENTRY (emfont_entry)));
-  gnome_font_picker_set_mode(GNOME_FONT_PICKER(emfont_picker),
-			     GNOME_FONT_PICKER_MODE_USER_WIDGET);
-  emfont_picker_label = gtk_label_new("Browse...");
-  gnome_font_picker_uw_set_widget(GNOME_FONT_PICKER(emfont_picker),
-				  emfont_picker_label);
-
-  gtk_table_attach(GTK_TABLE(text_table), emfont_label,
-		   0, 1, 1, 2,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(text_table), emfont_entry,
-		   1, 2, 1, 2,
-		   GTK_FILL, 0, 0, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(text_table), emfont_picker,
-		   2, 3, 1, 2,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-
-  /* Text colour */
-  ntextcol_label = gtk_label_new("Text colour: ");
-  gtk_misc_set_alignment(GTK_MISC(ntextcol_label), 1.0, 0.5);
-  ntextcol_button = gnome_color_picker_new();
-  gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (ntextcol_button),
-			      R_gnome_userprefs.textcolor.red,
-			      R_gnome_userprefs.textcolor.green,
-			      R_gnome_userprefs.textcolor.blue,
-			      0);
-  
-  gtk_table_attach(GTK_TABLE(text_table), ntextcol_label,
-		   0, 1, 2, 3,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(text_table), ntextcol_button,
-		   1, 2, 2, 3,
-		   0, 0, 0, GNOME_PAD_SMALL);
-
-  /* Background colour */
-  nbgcol_label = gtk_label_new("Background colour: ");
-  gtk_misc_set_alignment(GTK_MISC(nbgcol_label), 1.0, 0.5);
-  nbgcol_button = gnome_color_picker_new();
-  gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (nbgcol_button),
-			      R_gnome_userprefs.bgcolor.red,
-			      R_gnome_userprefs.bgcolor.green,
-			      R_gnome_userprefs.bgcolor.blue,
-			      0);
-  
-  gtk_table_attach(GTK_TABLE(text_table), nbgcol_label,
-		   0, 1, 3, 4,
-		   GTK_FILL, 0, GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-  gtk_table_attach(GTK_TABLE(text_table), nbgcol_button,
-		   1, 2, 3, 4,
-		   0, 0, 0, GNOME_PAD_SMALL);
-
-
-  /* VBox */
-  vbox = gtk_vbox_new(FALSE, 0);
-
-  gtk_box_pack_start(GTK_BOX(vbox), title_frame, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), text_frame, TRUE, TRUE, 0);
-
-  return vbox;
-}
-
-static void prefs_apply_cb(GtkWidget *widget, int page, gpointer data)
-{
-  GtkStyle *textstyle;
-
-  /* page = -1 means apply all pages */
-  /*  if(page != -1)
-      return;*/
-
-  /* font */
-  if(g_strcasecmp(R_gnome_userprefs.font, R_gnome_newprefs.font) != 0) {
-    textstyle = gtk_style_copy(gtk_widget_get_style(R_gtk_terminal_text));
-    textstyle->font = gdk_font_load(R_gnome_newprefs.font);
-    gtk_widget_set_style(R_gtk_terminal_text, textstyle);
+  gchar *tmp;
+
+  /* Startup settings */
+  gnome_config_push_prefix("/R/Startup/");
+
+  tmp = g_strdup_printf("restoreact=%d", defrestoreact);
+  user_prefs.restoreact = gnome_config_get_int(tmp);
+  g_free(tmp);
+
+  switch(user_prefs.restoreact) {
+  case SA_NORESTORE:
+  case SA_RESTORE:
+      break;
+
+  default:
+      user_prefs.restoreact = defrestoreact;
+      break;
   }
 
-  /* update prefs */
-  R_gnome_userprefs = R_gnome_newprefs;
+  gnome_config_pop_prefix();
 
-  R_gnome_save_prefs();
+  /* Exit settings */
+  gnome_config_push_prefix("/R/Exit/");
+
+  tmp = g_strdup_printf("saveact=%d", defsaveact);
+  user_prefs.saveact = gnome_config_get_int(tmp);
+  g_free(tmp);
+
+  switch(user_prefs.saveact) {
+  case SA_DEFAULT:
+  case SA_NOSAVE:
+  case SA_SAVE:
+  case SA_SAVEASK:
+      break;
+
+  default:
+      user_prefs.saveact = defsaveact;
+      break;
+  }
+
+  gnome_config_pop_prefix();
+}
+
+void R_gnome_prefs_save(void)
+{
+  gchar *tmp;
+  GdkColor color;
+
+  /* Text settings */
+  gnome_config_push_prefix("/R/Console/");
+
+  gnome_config_set_string("font", user_prefs.console_font);
+
+  color = user_prefs.console_textcolor;
+  tmp = g_strdup_printf("rgb:%04x/%04x/%04x", color.red, color.green, color.blue);
+  gnome_config_set_string("textcolor", tmp);
+  g_free(tmp);
+  
+  color = user_prefs.console_bgcolor;
+  tmp = g_strdup_printf("rgb:%04x/%04x/%04x", color.red, color.green, color.blue);
+  gnome_config_set_string("bgcolor", tmp);
+  g_free(tmp);
+
+  gnome_config_pop_prefix();
+
+  /* Pager settings */
+  gnome_config_push_prefix("/R/Pager/");
+
+  gnome_config_set_string("title_font", user_prefs.pager_title_font);
+
+  color = user_prefs.pager_title_textcolor;
+  tmp = g_strdup_printf("rgb:%04x/%04x/%04x", color.red, color.green, color.blue);
+  gnome_config_set_string("title_textcolor", tmp);
+  g_free(tmp);
+  
+  color = user_prefs.pager_title_bgcolor;
+  tmp = g_strdup_printf("rgb:%04x/%04x/%04x", color.red, color.green, color.blue);
+  gnome_config_set_string("title_bgcolor", tmp);
+  g_free(tmp);
+
+  gnome_config_set_string("text_font", user_prefs.pager_text_font);
+
+  gnome_config_set_string("em_font", user_prefs.pager_em_font);
+
+  color = user_prefs.pager_text_textcolor;
+  tmp = g_strdup_printf("rgb:%04x/%04x/%04x", color.red, color.green, color.blue);
+  gnome_config_set_string("text_textcolor", tmp);
+  g_free(tmp);
+  
+  color = user_prefs.pager_text_bgcolor;
+  tmp = g_strdup_printf("rgb:%04x/%04x/%04x", color.red, color.green, color.blue);
+  gnome_config_set_string("text_bgcolor", tmp);
+  g_free(tmp);
+
+  gnome_config_pop_prefix();
+
+  /* Startup settings */
+  gnome_config_push_prefix("/R/Startup/");
+
+  gnome_config_set_int("restoreact", user_prefs.restoreact);
+
+  gnome_config_pop_prefix();
+
+  /* Exit settings */
+  gnome_config_push_prefix("/R/Exit/");
+
+  gnome_config_set_int("saveact", user_prefs.saveact);
+
+  gnome_config_pop_prefix();
+  
+  /* Write the config file */
+  gnome_config_sync();
+}
+
+
+/* Access functions */
+
+int prefs_get_restoreact(void)
+{
+    return user_prefs.restoreact;
+}
+
+int prefs_get_saveact(void)
+{
+    return user_prefs.saveact;
+}
+
+gchar *prefs_get_console_font(void)
+{
+    return user_prefs.console_font;
+}
+
+GdkColor prefs_get_console_textcolor(void)
+{
+    return user_prefs.console_textcolor;
+}
+
+GdkColor prefs_get_console_bgcolor(void)
+{
+    return user_prefs.console_bgcolor;
+}
+
+gchar *prefs_get_pager_title_font(void)
+{
+    return user_prefs.pager_title_font;
+}
+
+GdkColor prefs_get_pager_title_textcolor(void)
+{
+    return user_prefs.pager_title_textcolor;
+}
+
+GdkColor prefs_get_pager_title_bgcolor(void)
+{
+    return user_prefs.pager_title_bgcolor;
+}
+
+gchar *prefs_get_pager_text_font(void)
+{
+    return user_prefs.pager_text_font;
+}
+
+gchar *prefs_get_pager_em_font(void)
+{
+    return user_prefs.pager_em_font;
+}
+
+GdkColor prefs_get_pager_text_textcolor(void)
+{
+    return user_prefs.pager_text_textcolor;
+}
+
+GdkColor prefs_get_pager_text_bgcolor(void)
+{
+    return user_prefs.pager_text_bgcolor;
+}
+
+
+/* Dialog functions */
+
+static void widget_changed_cb(GtkWidget *widget, gpointer user_data)
+{
+    g_return_if_fail(user_data != NULL);
+    g_return_if_fail(GNOME_IS_PROPERTY_BOX(user_data));
+
+    gnome_property_box_changed(GNOME_PROPERTY_BOX(user_data));
+}
+
+static void font_picker_changed_cb(GtkWidget *widget, gchar *font_name, gpointer user_data)
+{
+    g_return_if_fail(user_data != NULL);
+    g_return_if_fail(GNOME_IS_PROPERTY_BOX(user_data));
+
+    gnome_property_box_changed(GNOME_PROPERTY_BOX(user_data));
+}
+
+static void color_picker_changed_cb(GtkWidget *widget, guint r, guint g, guint b, guint a, gpointer user_data)
+{
+    g_return_if_fail(user_data != NULL);
+    g_return_if_fail(GNOME_IS_PROPERTY_BOX(user_data));
+
+    gnome_property_box_changed(GNOME_PROPERTY_BOX(user_data));
+}
+
+static void console_page_init(GtkWidget *prefs_dialog, GladeXML *prefs_xml)
+{
+    GtkWidget *console_font, *console_text_color, *console_bg_color;
+
+    console_font = glade_xml_get_widget(prefs_xml, "prefs_console_font");
+    console_text_color = glade_xml_get_widget(prefs_xml, "prefs_console_text_color");
+    console_bg_color = glade_xml_get_widget(prefs_xml, "prefs_console_bg_color");
+
+    gnome_font_picker_set_font_name(GNOME_FONT_PICKER(console_font),
+				    user_prefs.console_font);
+    gnome_color_picker_set_i16(GNOME_COLOR_PICKER(console_text_color),
+			       user_prefs.console_textcolor.red,
+			       user_prefs.console_textcolor.green,
+			       user_prefs.console_textcolor.blue,
+			       0);
+    gnome_color_picker_set_i16(GNOME_COLOR_PICKER(console_bg_color),
+			       user_prefs.console_bgcolor.red,
+			       user_prefs.console_bgcolor.green,
+			       user_prefs.console_bgcolor.blue,
+			       0);
+
+    gtk_signal_connect(GTK_OBJECT(console_font), "font-set",
+		       font_picker_changed_cb, prefs_dialog);
+    gtk_signal_connect(GTK_OBJECT(console_text_color), "color-set",
+		       color_picker_changed_cb, prefs_dialog);
+    gtk_signal_connect(GTK_OBJECT(console_bg_color), "color-set",
+		       color_picker_changed_cb, prefs_dialog);
+}
+
+static void console_page_apply(GladeXML *prefs_xml) {
+    GtkWidget *console_font, *console_text_color, *console_bg_color;
+    gchar *font_name;
+    gushort r, g, b, a;
+    gboolean change;
+
+    change = FALSE;
+
+    console_font = glade_xml_get_widget(prefs_xml, "prefs_console_font");
+    console_text_color = glade_xml_get_widget(prefs_xml, "prefs_console_text_color");
+    console_bg_color = glade_xml_get_widget(prefs_xml, "prefs_console_bg_color");
+
+    font_name = gnome_font_picker_get_font_name(GNOME_FONT_PICKER(console_font));
+    if(strcmp(user_prefs.console_font, font_name)) {
+	g_free(user_prefs.console_font);
+	user_prefs.console_font = g_strdup(font_name);
+	change = TRUE;
+    }
+
+    gnome_color_picker_get_i16(GNOME_COLOR_PICKER(console_text_color), &r, &g, &b, &a);
+    if((user_prefs.console_textcolor.red != r) || (user_prefs.console_textcolor.green != g)
+       || (user_prefs.console_textcolor.blue != b)) {
+	user_prefs.console_textcolor.red = r;
+	user_prefs.console_textcolor.green = g;
+	user_prefs.console_textcolor.blue = b;
+	change = TRUE;
+    }
+
+    gnome_color_picker_get_i16(GNOME_COLOR_PICKER(console_bg_color), &r, &g, &b, &a);
+    if((user_prefs.console_bgcolor.red != r) || (user_prefs.console_bgcolor.green != g)
+       || (user_prefs.console_bgcolor.blue != b)) {
+	user_prefs.console_bgcolor.red = r;
+	user_prefs.console_bgcolor.green = g;
+	user_prefs.console_bgcolor.blue = b;
+	change = TRUE;
+    }
+
+    if(change == TRUE) {
+	terminal_set_style();
+    }
+}
+
+static void pager_page_init(GtkWidget *prefs_dialog, GladeXML *prefs_xml)
+{
+    GtkWidget *title_font, *title_text_color, *title_bg_color;
+    GtkWidget *body_font, *body_emphasis_font, *body_text_color, *body_bg_color;
+
+    title_font = glade_xml_get_widget(prefs_xml, "prefs_title_font");
+    title_text_color = glade_xml_get_widget(prefs_xml, "prefs_title_text_color");
+    title_bg_color = glade_xml_get_widget(prefs_xml, "prefs_title_bg_color");
+
+    body_font = glade_xml_get_widget(prefs_xml, "prefs_body_font");
+    body_emphasis_font = glade_xml_get_widget(prefs_xml, "prefs_body_emphasis_font");
+    body_text_color = glade_xml_get_widget(prefs_xml, "prefs_body_text_color");
+    body_bg_color = glade_xml_get_widget(prefs_xml, "prefs_body_bg_color");
+
+    gnome_font_picker_set_font_name(GNOME_FONT_PICKER(title_font),
+				    user_prefs.pager_title_font);
+    gnome_color_picker_set_i16(GNOME_COLOR_PICKER(title_text_color),
+			       user_prefs.pager_title_textcolor.red,
+			       user_prefs.pager_title_textcolor.green,
+			       user_prefs.pager_title_textcolor.blue,
+			       0);
+    gnome_color_picker_set_i16(GNOME_COLOR_PICKER(title_bg_color),
+			       user_prefs.pager_title_bgcolor.red,
+			       user_prefs.pager_title_bgcolor.green,
+			       user_prefs.pager_title_bgcolor.blue,
+			       0);
+
+    gnome_font_picker_set_font_name(GNOME_FONT_PICKER(body_font),
+				    user_prefs.pager_text_font);
+    gnome_font_picker_set_font_name(GNOME_FONT_PICKER(body_emphasis_font),
+				    user_prefs.pager_em_font);
+    gnome_color_picker_set_i16(GNOME_COLOR_PICKER(body_text_color),
+			       user_prefs.pager_text_textcolor.red,
+			       user_prefs.pager_text_textcolor.green,
+			       user_prefs.pager_text_textcolor.blue,
+			       0);
+    gnome_color_picker_set_i16(GNOME_COLOR_PICKER(body_bg_color),
+			       user_prefs.pager_text_bgcolor.red,
+			       user_prefs.pager_text_bgcolor.green,
+			       user_prefs.pager_text_bgcolor.blue,
+			       0);
+
+    gtk_signal_connect(GTK_OBJECT(title_font), "font-set",
+		       font_picker_changed_cb, prefs_dialog);
+    gtk_signal_connect(GTK_OBJECT(title_text_color), "color-set",
+		       color_picker_changed_cb, prefs_dialog);
+    gtk_signal_connect(GTK_OBJECT(title_bg_color), "color-set",
+		       color_picker_changed_cb, prefs_dialog);
+    gtk_signal_connect(GTK_OBJECT(body_font), "font-set",
+		       font_picker_changed_cb, prefs_dialog);
+    gtk_signal_connect(GTK_OBJECT(body_emphasis_font), "font-set",
+		       font_picker_changed_cb, prefs_dialog);
+    gtk_signal_connect(GTK_OBJECT(body_text_color), "color-set",
+		       color_picker_changed_cb, prefs_dialog);
+    gtk_signal_connect(GTK_OBJECT(body_bg_color), "color-set",
+		       color_picker_changed_cb, prefs_dialog);
+}
+
+static void pager_page_apply(GladeXML *prefs_xml)
+{
+    GtkWidget *title_font, *title_text_color, *title_bg_color;
+    GtkWidget *body_font, *body_emphasis_font, *body_text_color, *body_bg_color;
+    gchar *font_name;
+    gushort r, g, b, a;
+    gboolean change;
+
+    change = FALSE;
+
+    title_font = glade_xml_get_widget(prefs_xml, "prefs_title_font");
+    title_text_color = glade_xml_get_widget(prefs_xml, "prefs_title_text_color");
+    title_bg_color = glade_xml_get_widget(prefs_xml, "prefs_title_bg_color");
+
+    body_font = glade_xml_get_widget(prefs_xml, "prefs_body_font");
+    body_emphasis_font = glade_xml_get_widget(prefs_xml, "prefs_body_emphasis_font");
+    body_text_color = glade_xml_get_widget(prefs_xml, "prefs_body_text_color");
+    body_bg_color = glade_xml_get_widget(prefs_xml, "prefs_body_bg_color");
+
+    font_name = gnome_font_picker_get_font_name(GNOME_FONT_PICKER(title_font));
+    if(strcmp(user_prefs.pager_title_font, font_name)) {
+	g_free(user_prefs.pager_title_font);
+	user_prefs.pager_title_font = g_strdup(font_name);
+	change = TRUE;
+    }
+
+    gnome_color_picker_get_i16(GNOME_COLOR_PICKER(title_text_color), &r, &g, &b, &a);
+    if((user_prefs.pager_title_textcolor.red != r)
+       || (user_prefs.pager_title_textcolor.green != g)
+       || (user_prefs.pager_title_textcolor.blue != b)) {
+	user_prefs.pager_title_textcolor.red = r;
+	user_prefs.pager_title_textcolor.green = g;
+	user_prefs.pager_title_textcolor.blue = b;
+	change = TRUE;
+    }
+
+    gnome_color_picker_get_i16(GNOME_COLOR_PICKER(title_bg_color), &r, &g, &b, &a);
+    if((user_prefs.pager_title_bgcolor.red != r)
+       || (user_prefs.pager_title_bgcolor.green != g)
+       || (user_prefs.pager_title_bgcolor.blue != b)) {
+	user_prefs.pager_title_bgcolor.red = r;
+	user_prefs.pager_title_bgcolor.green = g;
+	user_prefs.pager_title_bgcolor.blue = b;
+	change = TRUE;
+    }
+
+    font_name = gnome_font_picker_get_font_name(GNOME_FONT_PICKER(body_font));
+    if(strcmp(user_prefs.pager_text_font, font_name)) {
+	g_free(user_prefs.pager_text_font);
+	user_prefs.pager_text_font = g_strdup(font_name);
+	change = TRUE;
+    }
+
+    font_name = gnome_font_picker_get_font_name(GNOME_FONT_PICKER(body_emphasis_font));
+    if(strcmp(user_prefs.pager_em_font, font_name)) {
+	g_free(user_prefs.pager_em_font);
+	user_prefs.pager_em_font = g_strdup(font_name);
+	change = TRUE;
+    }
+
+    gnome_color_picker_get_i16(GNOME_COLOR_PICKER(body_text_color), &r, &g, &b, &a);
+    if((user_prefs.pager_text_textcolor.red != r)
+       || (user_prefs.pager_text_textcolor.green != g)
+       || (user_prefs.pager_text_textcolor.blue != b)) {
+	user_prefs.pager_text_textcolor.red = r;
+	user_prefs.pager_text_textcolor.green = g;
+	user_prefs.pager_text_textcolor.blue = b;
+	change = TRUE;
+    }
+
+    gnome_color_picker_get_i16(GNOME_COLOR_PICKER(body_bg_color), &r, &g, &b, &a);
+    if((user_prefs.pager_text_bgcolor.red != r)
+       || (user_prefs.pager_text_bgcolor.green != g)
+       || (user_prefs.pager_text_bgcolor.blue != b)) {
+	user_prefs.pager_text_bgcolor.red = r;
+	user_prefs.pager_text_bgcolor.green = g;
+	user_prefs.pager_text_bgcolor.blue = b;
+	change = TRUE;
+    }
+
+    if(change == TRUE) {
+	/* FIXME: update existing help windows */
+    }
+}
+
+static void startup_page_init(GtkWidget *prefs_dialog, GladeXML *prefs_xml)
+{
+    GtkWidget *always_ws_radio, *never_ws_radio;
+    GtkWidget *vsize_entry, *nsize_entry;
+
+    always_ws_radio = glade_xml_get_widget(prefs_xml, "prefs_always_restore_ws_radio");
+    never_ws_radio = glade_xml_get_widget(prefs_xml, "prefs_never_restore_ws_radio");
+
+    switch(user_prefs.restoreact) {
+    case SA_NORESTORE:
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(never_ws_radio), TRUE);
+	break;
+
+    case SA_RESTORE:
+    default:
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(always_ws_radio), TRUE);
+	break;
+    }
+
+    gtk_signal_connect(GTK_OBJECT(always_ws_radio), "toggled",
+		       widget_changed_cb, prefs_dialog);
+    gtk_signal_connect(GTK_OBJECT(never_ws_radio), "toggled",
+		       widget_changed_cb, prefs_dialog);
+}
+
+static void startup_page_apply(GladeXML *prefs_xml)
+{
+    GtkWidget *always_ws_radio, *never_ws_radio;
+    GtkWidget *vsize_entry, *nsize_entry;
+
+    always_ws_radio = glade_xml_get_widget(prefs_xml, "prefs_always_restore_ws_radio");
+    never_ws_radio = glade_xml_get_widget(prefs_xml, "prefs_never_restore_ws_radio");
+
+    if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(always_ws_radio)))
+	user_prefs.restoreact = SA_RESTORE;
+    else if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(never_ws_radio)))
+	user_prefs.restoreact = SA_NORESTORE;
+}
+
+static void exit_page_init(GtkWidget *prefs_dialog, GladeXML *prefs_xml)
+{
+    GtkWidget *prompt_ws_radio, *always_ws_radio, *never_ws_radio;
+
+    prompt_ws_radio = glade_xml_get_widget(prefs_xml,
+					   "prefs_prompt_save_ws_radio");
+    always_ws_radio = glade_xml_get_widget(prefs_xml,
+					   "prefs_always_save_ws_radio");
+    never_ws_radio = glade_xml_get_widget(prefs_xml,
+					  "prefs_never_save_ws_radio");
+
+    switch(user_prefs.saveact) {
+    case SA_SAVE:
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(always_ws_radio), TRUE);
+	break;
+
+    case SA_NOSAVE:
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(never_ws_radio), TRUE);
+	break;
+
+    case SA_DEFAULT:
+    case SA_SAVEASK:
+    default:
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(prompt_ws_radio), TRUE);
+	break;
+    }
+
+    gtk_signal_connect(GTK_OBJECT(prompt_ws_radio), "toggled",
+		       widget_changed_cb, prefs_dialog);
+    gtk_signal_connect(GTK_OBJECT(always_ws_radio), "toggled",
+		       widget_changed_cb, prefs_dialog);
+    gtk_signal_connect(GTK_OBJECT(never_ws_radio), "toggled",
+		       widget_changed_cb, prefs_dialog);
+}
+
+static void exit_page_apply(GladeXML *prefs_xml)
+{
+    GtkWidget *prompt_ws_radio, *always_ws_radio, *never_ws_radio;
+
+    prompt_ws_radio = glade_xml_get_widget(prefs_xml, "prefs_prompt_save_ws_radio");
+    always_ws_radio = glade_xml_get_widget(prefs_xml, "prefs_always_save_ws_radio");
+    never_ws_radio = glade_xml_get_widget(prefs_xml, "prefs_never_save_ws_radio");
+
+    if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(prompt_ws_radio)))
+	user_prefs.saveact = SA_SAVEASK;
+    else if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(always_ws_radio)))
+	user_prefs.saveact = SA_SAVE;
+    else if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(never_ws_radio)))
+	user_prefs.saveact = SA_NOSAVE;
+
+    R_set_SaveAction(user_prefs.saveact);
+}
+
+
+static void prefs_apply_cb(GnomePropertyBox *property_box, gint page_num, gpointer user_data)
+{
+    GladeXML *prefs_xml;
+
+    prefs_xml = (GladeXML *) user_data;
+
+    if(page_num == -1) {
+	console_page_apply(prefs_xml);
+	pager_page_apply(prefs_xml);
+	startup_page_apply(prefs_xml);
+	exit_page_apply(prefs_xml);
+
+	R_gnome_prefs_save();
+    }
+}
+
+static gboolean prefs_close_cb(GnomeDialog *dialog, gpointer user_data)
+{
+    /* free the xml object */
+    gtk_object_unref(GTK_OBJECT(user_data));
+
+    return FALSE;
 }
 
 void settings_prefs_cb(GtkWidget *widget, gpointer data)
 {
-  /* notebook pages */
-  GtkWidget *page0, *page1, *page2, *page3, *page4, *page5;
-  GtkWidget *label0, *label1, *label2, *label3, *label4, *label5;
+    GladeXML *prefs_xml;
+    GtkWidget *prefs_dialog;
 
-  /* copy current prefs */
-  R_gnome_newprefs = R_gnome_userprefs;
+    /* load xml object */
+    prefs_xml = glade_xml_new(glade_interface_file, "prefs_propertybox");
 
-  /* Page 0: text font and colour options */
-  page0 = prefs_text_page();
-  label0 = gtk_label_new("Console");
+    /* create dialog */
+    prefs_dialog = glade_xml_get_widget(prefs_xml, "prefs_propertybox");
 
-  /* Page 1: environment options */
-  page1 = prefs_startup_page();
-  label1 = gtk_label_new("Startup");
+    /* setup pages */
+    console_page_init(prefs_dialog, prefs_xml);
+    pager_page_init(prefs_dialog, prefs_xml);
+    startup_page_init(prefs_dialog, prefs_xml);
+    exit_page_init(prefs_dialog, prefs_xml);
 
-  /* Page 2: actions on exit */
-  page2 = prefs_exit_page();
-  label2 = gtk_label_new("Exit");
+    /* setup dialog */
+    gtk_window_set_title(GTK_WINDOW(prefs_dialog), "R preferences");
+    gnome_dialog_set_parent(GNOME_DIALOG(prefs_dialog),
+			    GTK_WINDOW(R_gtk_main_window));
+    gtk_window_set_modal(GTK_WINDOW(prefs_dialog), TRUE);
 
-  /* Page 3: pager text settings */
-  page3 = prefs_pager_page();
-  label3 = gtk_label_new("Pager");
+    gtk_signal_connect(GTK_OBJECT(prefs_dialog), "apply",
+		       (GtkSignalFunc)prefs_apply_cb, (gpointer) prefs_xml);
+    gtk_signal_connect(GTK_OBJECT(prefs_dialog), "close",
+		       (GtkSignalFunc)prefs_close_cb, (gpointer) prefs_xml);
 
-  /* Page 4: external applications */
-  page4 = prefs_apps_page();
-  label4 = gtk_label_new("Applications");
-
-  /* Page 5: graphics options */
-  page5 = prefs_graphics_page();
-  label5 = gtk_label_new("Graphics");
-
-  /* Create the dialog box */
-  prefs_dialog = gnome_property_box_new();
-  gtk_window_set_title(GTK_WINDOW(prefs_dialog), "R Preferences");
-
-  /* Append the pages to the notebook */
-  gnome_property_box_append_page(GNOME_PROPERTY_BOX(prefs_dialog),
-				 page0, label0);
-  gnome_property_box_append_page(GNOME_PROPERTY_BOX(prefs_dialog),
-				 page1, label1);
-  gnome_property_box_append_page(GNOME_PROPERTY_BOX(prefs_dialog),
-				 page2, label2);
-  gnome_property_box_append_page(GNOME_PROPERTY_BOX(prefs_dialog),
-				 page3, label3);
-  gnome_property_box_append_page(GNOME_PROPERTY_BOX(prefs_dialog),
-				 page4, label4);
-  gnome_property_box_append_page(GNOME_PROPERTY_BOX(prefs_dialog),
-				 page5, label5);
-
-  /* Connect to property box signal */
-  gtk_signal_connect(GTK_OBJECT(prefs_dialog), "apply",
-		     GTK_SIGNAL_FUNC(prefs_apply_cb),
-		     NULL);
-
-  /* Setup dialog features */
-  gnome_dialog_set_parent(GNOME_DIALOG(prefs_dialog),
-			  GTK_WINDOW(R_gtk_main_window));
-  gtk_window_set_modal(GTK_WINDOW(prefs_dialog), TRUE);
-  
-  /* Display the dialog */
-  gtk_widget_show_all(prefs_dialog);
+    /* show the dialog box */
+    gtk_widget_show_all(GTK_WIDGET(prefs_dialog));
 }
 
 

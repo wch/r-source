@@ -22,6 +22,7 @@
 #include "Fileio.h"
 
 #include "terminal.h"
+#include "terminal-prefs.h"
 #include "gtkconsole.h"
 
 #include <gnome.h>
@@ -151,6 +152,7 @@ int del, char *pager)
   GtkStyle *textstyle;
   gint charw, charh, winw, winh;
   GdkFont *titlefont, *emfont;
+  GdkColor textcolor, bgcolor;
 
   const gint bufsize = 2048;
   gchar buf[bufsize];
@@ -163,14 +165,14 @@ int del, char *pager)
   if(nfile < 1)
     return 0;
 
-  if((wtitle != NULL) && (*wtitle != NULL))
+  if((wtitle != NULL) && (*wtitle != '\0'))
     realtitle = wtitle;
   else
     realtitle = "R pager";
 
   pager_data = g_new(pager_data_t, 1);
 
-  pager_data->pagerwin = gnome_app_new("R.gnome.pager", realtitle);
+  pager_data->pagerwin = gnome_app_new("R.pager", realtitle);
   
   gnome_app_create_toolbar_with_data(GNOME_APP(pager_data->pagerwin), pager_toolbar, (gpointer) pager_data);
 
@@ -181,14 +183,14 @@ int del, char *pager)
 
   /* set text font here */
   textstyle = gtk_style_copy(gtk_widget_get_style(pager_data->text));
-  textstyle->font = gdk_font_load(R_gnome_userprefs.pager_text_font);
-  textstyle->text[GTK_STATE_NORMAL] = R_gnome_userprefs.pager_text_textcolor;
-  textstyle->base[GTK_STATE_NORMAL] = R_gnome_userprefs.pager_text_bgcolor;
+  textstyle->font = gdk_font_load(prefs_get_pager_text_font());
+  textstyle->text[GTK_STATE_NORMAL] = prefs_get_pager_text_textcolor();
+  textstyle->base[GTK_STATE_NORMAL] = prefs_get_pager_text_bgcolor();
   gtk_widget_set_style(pager_data->text, textstyle);
 
   /* load title and em font here */
-  titlefont = gdk_font_load(R_gnome_userprefs.pager_title_font);
-  emfont = gdk_font_load(R_gnome_userprefs.pager_em_font);
+  titlefont = gdk_font_load(prefs_get_pager_title_font());
+  emfont = gdk_font_load(prefs_get_pager_em_font());
 
   /* set width to 80 columns here */
   charw = gdk_char_width(pager_data->text->style->font, 'w');
@@ -207,13 +209,16 @@ int del, char *pager)
 		    GTK_FILL, 
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
+  textcolor = prefs_get_pager_title_textcolor();
+  bgcolor = prefs_get_pager_title_bgcolor();
+
   for(i = 0; i < nfile; i++) {
-    if((title[i] != NULL) && (*title[i] != NULL)) {
+    if((title[i] != NULL) && (*title[i] != '\0')) {
       g_snprintf(buf, bufsize, "%s\n\n", title[i]);
       gtk_text_insert(GTK_TEXT(pager_data->text), 
 		      titlefont,
-		      &R_gnome_userprefs.pager_title_textcolor, 
-		      &R_gnome_userprefs.pager_title_bgcolor,
+		      &textcolor, 
+		      &bgcolor,
 		      buf, strlen(buf));
     }
     if((fd = open(file[i], O_RDONLY, "")) != -1) {
@@ -241,8 +246,8 @@ int del, char *pager)
 	    if(emmode) {
 	      gtk_text_insert(GTK_TEXT(pager_data->text),
 			      emfont,
-			      &R_gnome_userprefs.pager_text_textcolor, 
-			      &R_gnome_userprefs.pager_text_bgcolor,
+			      NULL, 
+			      NULL,
 			      k - 1, 1);
 	      modestart = k;
 	      emmode = FALSE;
