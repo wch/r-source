@@ -6,8 +6,6 @@
 #ifndef _CONFIG_H
 #define _CONFIG_H
 
-#define HAVE_DOUBLE_COMPLEX
-
 
 /* Define if on AIX 3.
    System headers sometimes define this.
@@ -28,9 +26,6 @@
 
 /* Define if you have alloca, as a function or macro.  */
 #undef HAVE_ALLOCA
-#ifdef __MRC__
-#define HAVE_ALLOCA 1
-#endif
 
 /* Define if you have <alloca.h> and it should be used (not on Ultrix).  */
 #ifndef __MRC__
@@ -47,8 +42,7 @@
 #undef HAVE_VFORK_H
 
 /* Define if you have the vprintf function.  */
-//#undef HAVE_VPRINTF
-#define  HAVE_VPRINTF 1
+#undef HAVE_VPRINTF
 
 /* Define to `int' if <sys/types.h> doesn't define.  */
 #undef pid_t
@@ -297,9 +291,7 @@
 #undef HAVE_SNPRINTF
 
 /* Define if you have the stat function.  */
-#ifndef __MRC__
 #define HAVE_STAT 1
-#endif
 
 /* Define if you have the strcoll function.  */
 #define HAVE_STRCOLL 1
@@ -320,7 +312,7 @@
 #undef HAVE_UNSETENV
 
 /* Define if you have the vsnprintf function.  */
-//#define HAVE_VSNPRINTF 1
+#define HAVE_VSNPRINTF 1
 
 /* Define if you have the <dirent.h> header file.  */
 #undef HAVE_DIRENT_H
@@ -401,9 +393,9 @@
 #undef HAVE_SYS_SOCKET_H
 
 /* Define if you have the <sys/stat.h> header file.  */
-#ifndef __MRC__
+//#ifndef __MRC__
 #define HAVE_SYS_STAT_H 1
-#endif
+//#endif
 
 /* Define if you have the <sys/time.h> header file.  */
 #define HAVE_SYS_TIME_H 1
