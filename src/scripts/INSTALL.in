@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.112 $'
+revision='$Revision: 1.113 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -280,7 +280,6 @@ do_install_binary () {
 
 do_install_source () {
   pkg="${1}"
-  stars="**"
 
   ## Make the destination directories available to the developer's
   ## installation scripts (e.g. configure, etc.)
@@ -293,7 +292,7 @@ do_install_source () {
   export R_PACKAGE_NAME
 
   message "Installing *source* package '${R_FULL_PKG}' ..."
-
+  stars="**"
 
   if ${use_configure} && test -x ./configure ; then
     eval ${configure_vars} ./configure ${configure_args}
@@ -302,6 +301,10 @@ do_install_source () {
       exit 4
     fi
   fi
+
+  for f in COPYING NAMESPACE; do
+    if test -f "${f}"; then cp "${f}" "${R_PACKAGE_DIR}"; fi
+  done
 
   if test -d src; then
     message "libs"
@@ -395,11 +398,6 @@ do_install_source () {
     cp -r inst/* "${R_PACKAGE_DIR}"
   fi
 
-  ## Install the NAMESPACE file if present
-  if test -f NAMESPACE; then
-    cp NAMESPACE "${R_PACKAGE_DIR}/NAMESPACE"
-  fi
-
   case ${save} in
     CHECK)
       if test -r install.R; then
@@ -448,9 +446,6 @@ do_install_source () {
     fi
   fi
 
-  for f in COPYING; do
-    if test -f "${f}"; then cp "${f}" "${R_PACKAGE_DIR}"; fi
-  done
   ## Copy DESCRIPTION file, stamp with build information, and remove
   ## blank lines.  (Need to add an empty line to deal with missing
   ## trailing newlines at EOF.)
