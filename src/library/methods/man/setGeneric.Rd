@@ -215,6 +215,34 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers, where=1)
 \author{
   John Chambers
 }
+\examples{
+\dontrun{
+## An example of group generic methods, using the class
+## "track"; see the documentation of setClass for its definition
+
+#define a method for the Arith group
+
+setMethod("Arith", c("track", "numeric"), 
+ function(e1, e2){
+  e1@y <- callGeneric(e1@y , e2)
+  e1
+})
+
+# But -- we must turn on method dispatch for the members
+# of this group if there are no specific methods for "+", etc.
+
+setGroupGeneric("Arith")
+
+# now arithmetic operators  will dispatch methods:
+
+t1 - 100
+
+t1/2.5
+
+# where t1 is an object of class "track"
+
+}
+}
 \seealso{
   \code{\link{Methods}} for a discussion of other functions to specify
   and manipulate the methods of generic functions.
