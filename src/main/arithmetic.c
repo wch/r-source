@@ -209,9 +209,9 @@ static double myfmod(double x1, double x2)
     return x1 - floor(q) * x2;
 }
 
-/*#ifdef Log_0_broken /-* only on some platforms: small performance loss: */
+/*#ifdef Log_broken /-* only on some platforms: small performance loss: */
 #if 1==1/* always(for testing)*/
-double R_log(double x){ return(x == 0.0 ? R_NegInf : log(x)); }
+double R_log(double x){ return(x > 0 ? log(x) : x < 0 ? R_NaN : R_NegInf); }
 #else /* be more efficient -- one function less on the stack */
 #define R_log	log
 #endif
@@ -220,6 +220,8 @@ double R_pow(double x, double y) /* = x ^ y */
 {
     if(x == 1. || y == 0.)
 	return(1.);
+    if (FINITE(x) && FINITE(y))
+	return(pow(x,y));
     if (ISNAN(x) || ISNAN(y)) {
 #ifdef IEEE_754
 	return(x + y);
@@ -231,19 +233,19 @@ double R_pow(double x, double y) /* = x ^ y */
 	if(x > 0) /* Inf ^ y */
 	    return((y < 0.)? 0. : R_PosInf);
 	else { /* (-Inf) ^ y */
-	    if(y != floor(y))
-		return(R_NaN);
-	    else /* (-Inf) ^ n */
+	    if(FINITE(y) && y == floor(y)) /* (-Inf) ^ n */
 		return((y < 0.) ? 0. : (myfmod(y,2.) ? x  : -x));
 	}
     }
-    if(!FINITE(y) && x > 0) {
-	if(y > 0) /* y == +Inf */
-	    return((x >= 1)? R_PosInf : 0.);
-	else /* y == -Inf */
-	    return((x < 1) ? R_PosInf : 0.);
+    if(!FINITE(y)) {
+	if(x >= 0) {
+	    if(y > 0) /* y == +Inf */
+		return((x >= 1)? R_PosInf : 0.);
+	    else /* y == -Inf */
+		return((x < 1) ? R_PosInf : 0.);
+	}
     }
-    return(pow(x,y));
+    return(R_NaN);/* all other cases: (-Inf)^{+-Inf, non-int}; (neg)^{+-Inf} */
 }
 
 /* Base 2 and General Base Logarithms */
@@ -948,6 +950,7 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (isComplex(CAR(args)))
 	return complex_math2(call, op, args, env);
+    lcall = call;
 
     switch (PRIMVAL(op)) {
     case  0: return math2(op, CAR(args), CADR(args), atan2);
@@ -997,6 +1000,7 @@ SEXP do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
     int n;
     if (DispatchGroup("Math", call, op, args, env, &s))
 	return s;
+    lcall = call;
     switch (n = length(args)) {
     case 1:
 	if (isComplex(CAR(args)))
@@ -1020,7 +1024,7 @@ SEXP do_round(SEXP call, SEXP op, SEXP args, SEXP env)
     int n;
     if (DispatchGroup("Math", call, op, args, env, &a))
 	return a;
-    b = R_NilValue;		/* -Wall */
+    b = R_NilValue;	/* -Wall */
     lcall = call;
     switch (n = length(args)) {
     case 1:
@@ -1075,7 +1079,8 @@ SEXP do_signif (SEXP call, SEXP op, SEXP args, SEXP env)
     int n;
     if (DispatchGroup("Math", call, op, args, env, &a))
 	return a;
-    b = R_NilValue;		/* -Wall */
+    b = R_NilValue;	/* -Wall */
+    lcall = call;
     switch (n = length(args)) {
     case 1:
 	PROTECT(a = CAR(args));
@@ -1184,6 +1189,7 @@ static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
 SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
+    lcall = call;
 
     switch (PRIMVAL(op)) {
 
@@ -1352,6 +1358,7 @@ static SEXP math4(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
 SEXP do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
+    lcall = call;
 
     switch (PRIMVAL(op)) {
     case  1: return Math4(op, args, dhyper);
@@ -1489,6 +1496,7 @@ static SEXP math5(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se,
 SEXP do_math5(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
+    lcall = call;
 
     switch (PRIMVAL(op)) {
     case  1: return Math5(op, args, dhyper);
