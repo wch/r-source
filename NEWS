@@ -96,6 +96,17 @@ NEW FEATURES
     o	legend() has a new argument 'pt.cex'.
 
 
+INSTALLATION ISSUES
+
+    o	src/modules/X11/dataentry.c would not build on some XFree
+	4.4.0 systems.	(This is a bug in their header files but we have
+	added a workaround.)
+
+    o	Building with gcc/g77 3.4.0 on ix86 platforms failed to produce
+	a working build: the critical LAPACK routines are now compiled
+	with -ffloat-store.
+
+
 BUG FIXES
 
     o	pbinom(q, N, prob) is now more accurate when prob is close to 0.
@@ -121,10 +132,6 @@ BUG FIXES
 
     o	type.convert() ignored na.strings when no conversion was done.
 	(PR#6781, not needed for its primary use in read.table.)
-
-    o	src/modules/X11/dataentry.c would not build on some XFree
-	4.4.0 systems.	(This is a bug in their header files but we have
-	added a workaround.)
 
     o	Fixed the clipping problem in the quartz() device.
 
@@ -161,9 +168,6 @@ BUG FIXES
     o	mosaicplot() stops cleanly if given a table containing missing values.
 
     o	install.packages() from a local CRAN was broken.
-
-    o	Building with gcc 3.4.0 on ix86 platforms failed: the critical
-	LAPACK routines are now compiled with -ffloat-store.
 
     o	bxp() fixed for e.g.,  boxplot(..., border=2:4)
 
