@@ -141,6 +141,10 @@ NEW FEATURES
     o	New function write.dcf() for writing data in Debian Control File
 	format.
 
+    o	New function oneway.test() in package ctest for testing for
+	equal means in a one-way layout, assuming normality but not
+	necessarily equal variances.
+
 
 BUG FIXES
 
