@@ -2,7 +2,7 @@
 @c %**start of header
 @setfilename R-intro.info
 @settitle An Introduction to R
-@set VERSION $Revision: 1.6 $
+@set VERSION $Revision: 1.7 $
 @setchapternewpage on
 @c %**end of header
 
@@ -17,19 +17,7 @@
 
 @include R-defs.texi
 
-@c NOTE:
-@c Conversion to PDF fails if sectioning titles contain (user-defined)
-@c macros such as @R{}.  Hence in section titles we changed @R{} to R.
-@c Revert when this is fixed.
-
-@ifinfo
-This is an introduction to R.
-
-Copyright @copyright{} 1990, 1992 W.@: Venables
-Copyright @copyright{} 1997, R.@: Gentleman & R.@: Ihaka
-Copyright @copyright{} 1997, 1998 M.@: M@"achler
-Copyright @copyright{} 1999, 2000 R Development Core Team
-
+@macro permission{}
 Permission is granted to make and distribute verbatim copies of this
 manual provided the copyright notice and this permission notice are
 preserved on all copies.
@@ -43,6 +31,26 @@ Permission is granted to copy and distribute translations of this manual
 into another language, under the above conditions for modified versions,
 except that this permission notice may be stated in a translation
 approved by the R Development Core Team.
+@end macro
+
+@macro Rcopyright{}
+Copyright @copyright{} 1990, 1992 W.@: Venables
+Copyright @copyright{} 1997, R.@: Gentleman & R.@: Ihaka
+Copyright @copyright{} 1997, 1998 M.@: M@"achler
+Copyright @copyright{} 1999, 2000 R Development Core Team
+@end macro
+
+@c NOTE:
+@c Conversion to PDF fails if sectioning titles contain (user-defined)
+@c macros such as @R{}.  Hence in section titles we changed @R{} to R.
+@c Revert when this is fixed.
+
+@ifinfo
+This is an introduction to R.
+
+@Rcopyright{}
+
+@permission{}
 
 @end ifinfo
 
@@ -56,25 +64,16 @@ approved by the R Development Core Team.
 @vskip 0pt plus 1filll
 
 @flushleft
+@c - This FAILS (for the @"achler part in make R-intro.dvi) :
+@c - @Rcopyright{}
 Copyright @copyright{} 1990, 1992 W.@: Venables
 Copyright @copyright{} 1997, R.@: Gentleman & R.@: Ihaka
 Copyright @copyright{} 1997, 1998 M.@: M@"achler
 Copyright @copyright{} 1999, 2000 R Development Core Team
 @end flushleft
 
-Permission is granted to make and distribute verbatim copies of this
-manual provided the copyright notice and this permission notice are
-preserved on all copies.
+@permission{}
 
-Permission is granted to copy and distribute modified versions of this
-manual under the conditions for verbatim copying, provided that the
-entire resulting derived work is distributed under the terms of a
-permission notice identical to this one.
-
-Permission is granted to copy and distribute translations of this manual
-into another language, under the above conditions for modified versions,
-except that this permission notice may be stated in a translation
-approved by the R Development Core Team.
 @end titlepage
 
 @contents
@@ -82,25 +81,25 @@ approved by the R Development Core Team.
 @node Top, Preface, (dir), (dir)
 
 @menu
-* Preface::                     
-* Introduction and preliminaries::  
-* Simple manipulations numbers and vectors::  
-* Objects::                     
-* Factors::                     
-* Arrays and matrices::         
-* Lists and data frames::       
-* Reading data from files::     
-* Probability distributions::   
-* Loops and conditional execution::  
-* Writing your own functions::  
-* Statistical models in R::     
-* Graphics::                    
-* A sample session::            
-* Invoking R::                  
-* The command line editor::     
-* Function and variable index::  
-* Concept index::               
-* References::                  
+* Preface::
+* Introduction and preliminaries::
+* Simple manipulations numbers and vectors::
+* Objects::
+* Factors::
+* Arrays and matrices::
+* Lists and data frames::
+* Reading data from files::
+* Probability distributions::
+* Loops and conditional execution::
+* Writing your own functions::
+* Statistical models in R::
+* Graphics::
+* A sample session::
+* Invoking R::
+* The command line editor::
+* Function and variable index::
+* Concept index::
+* References::
 @end menu
 
 @node Preface, Introduction and preliminaries, Top, Top
@@ -119,7 +118,7 @@ the section where the feature is described.  Users can contribute to the
 project by implementing any of these that remain.
 
 We would like to extend warm thanks to Bill Venables for granting
-permission to distributed this modified version of the notes in this
+permission to distribute this modified version of the notes in this
 way, and for being a supporter of @R{} from way back.
 
 Comments and corrections are always welcome.  Please address email
@@ -137,23 +136,23 @@ almost any time and need not wait until all the preceding sections have
 been digested.
 
 @menu
-* Introduction and preliminaries::  
+* Introduction and preliminaries::
 @end menu
 
 @node Introduction and preliminaries, Simple manipulations numbers and vectors, Preface, Top
 @chapter Introduction and preliminaries
 
 @menu
-* The R environment::           
-* Related software and documentation::  
-* R and statistics::            
-* R and the window system::     
-* Using R interactively::       
-* Getting help::                
-* Case sensitivity::            
-* Recall and correction of previous commands::  
-* Executing commands from or diverting output to a file::  
-* Data permanency and removing objects::  
+* The R environment::
+* Related software and documentation::
+* R and statistics::
+* R and the window system::
+* Using R interactively::
+* Getting help::
+* Case sensitivity::
+* Recall and correction of previous commands::
+* Executing commands from or diverting output to a file::
+* Data permanency and removing objects::
 @end menu
 
 @node The R environment, Related software and documentation, Introduction and preliminaries, Introduction and preliminaries
@@ -324,7 +323,7 @@ of the session.
 
 To use @R{} under Windows the procedure to
 follow is basically the same.  Create a folder as the working directory,
-and set that is the @file{Start In} field in your @R{} shortcut.
+and set that in the @file{Start In} field in your @R{} shortcut.
 Then launch @R{} by double clicking on the icon.
 
 @section An introductory session
@@ -428,9 +427,10 @@ The recall and editing capabilities under UNIX are highly customizable.
 You can find out how to do this by reading the manual entry for the
 @strong{readline} library.
 
-Alternatively, the @code{emacs} text editor provides rather more general
-support mechanisms for working interactively with @R{}.  @xref{R and
-Emacs, , , R-FAQ, The R statistical system FAQ}.
+Alternatively, the @code{emacs} text editor provides more general
+support mechanisms (via ``@strong{ESS}'', @emph{Emacs Speaks Statistics})
+for working interactively with @R{}.
+@xref{R and Emacs, , , R-FAQ, The R statistical system FAQ}.
 
 @node Executing commands from or diverting output to a file, Data permanency and removing objects, Recall and correction of previous commands, Introduction and preliminaries
 @section Executing commands from or diverting output to a file
@@ -516,14 +516,14 @@ been conducted in the same directory.
 @cindex Vectors
 
 @menu
-* Vectors and assignment::      
-* Vector arithmetic::           
-* Generating regular sequences::  
-* Logical vectors::             
-* Missing values::              
-* Character vectors::           
-* Index vectors::               
-* Other types of objects::      
+* Vectors and assignment::
+* Vector arithmetic::
+* Generating regular sequences::
+* Logical vectors::
+* Missing values::
+* Character vectors::
+* Index vectors::
+* Other types of objects::
 @end menu
 
 @node Vectors and assignment, Vector arithmetic, Simple manipulations numbers and vectors, Simple manipulations numbers and vectors
@@ -584,7 +584,9 @@ using
 @end example
 
 If an expression is used as a complete command, the value is printed
-@emph{and lost}.  So now if we were to use the command
+@emph{and lost}@footnote{Actually, it is still available as
+@code{.Last.value} before any other statements are executed}.  So now if we
+were to use the command
 
 @example
 > 1/x
@@ -702,7 +704,7 @@ sqrt(-17)
 @end example
 
 @noindent
-will give an error, but
+will give @code{NaN} and a warning, but
 
 @example
 sqrt(-17+0i)
@@ -712,7 +714,7 @@ sqrt(-17+0i)
 will do the computations as complex numbers.
 
 @menu
-* Generating regular sequences::  
+* Generating regular sequences::
 @end menu
 
 @node Generating regular sequences, Logical vectors, Vector arithmetic, Simple manipulations numbers and vectors
@@ -850,7 +852,7 @@ The function @code{is.na(x)} gives a logical vector of the same size as
 in @code{x} is @code{NA}.
 
 @example
-> ind <- is.na(z)
+> z <- c(1:3,NA);  ind <- is.na(z)
 @end example
 
 Notice that the logical expression @code{x == NA} is quite different
@@ -899,7 +901,7 @@ function; examples of their use will emerge frequently.
 
 @findex paste
 The @code{paste()} function takes an arbitrary number of arguments and
-concatenates them into a single character string.  Any numbers given
+concatenates them one by one into character strings.  Any numbers given
 among the arguments are coerced into character strings in the evident
 way, that is, in the same way they would be if they were printed.  The
 arguments are by default separated in the result by a single blank
@@ -923,6 +925,10 @@ c("X1", "Y2", "X3", "Y4", "X5", "Y6", "X7", "Y8", "X9", "Y10")
 Note particularly that recycling of short lists takes place here too;
 thus @code{c("X", "Y")} is repeated 5 times to match the sequence
 @code{1:10}.
+@footnote{@code{paste(..., collapse=@var{ss})} allows to collapse the
+arguments into a single character string putting @var{ss} in between, and
+there are more tools for character manipulation, see the help
+for @code{sub} and @code{substring}.}
 
 @node Index vectors, Other types of objects, Character vectors, Simple manipulations numbers and vectors
 @section Index vectors; selecting and modifying subsets of a data set
@@ -1090,10 +1096,10 @@ extend @R{}.
 @cindex Attributes
 
 @menu
-* The intrinsic attributes mode and length::  
-* Changing the length of an object::  
-* Getting and setting attributes::  
-* The class of an object::      
+* The intrinsic attributes mode and length::
+* Changing the length of an object::
+* Getting and setting attributes::
+* The class of an object::
 @end menu
 
 @node The intrinsic attributes mode and length, Changing the length of an object, Objects, Objects
@@ -1288,7 +1294,7 @@ orientation}, but only briefly.
 @cindex Ordered factors
 
 A @emph{factor} is a vector object used to specify a discrete
-classification of the components of other vectors of the same length.
+classification (grouping) of the components of other vectors of the same length.
 @R{} provides both @emph{ordered} and @emph{unordered} factors.
 
 @section A specific example
@@ -1324,7 +1330,8 @@ other objects:
 @example
 > statef
  [1] tas sa  qld nsw nsw nt  wa  wa  qld vic nsw vic qld qld sa
-[16] tas sa  nt  wa vic qld nsw nsw wa  sa  act nsw vic vic act
+[16] tas sa  nt  wa  vic qld nsw nsw wa  sa  act nsw vic vic act
+Levels:  act nsw nt qld sa tas vic wa
 @end example
 
 To find out the levels of a factor the function @code{levels()} can be
@@ -1337,8 +1344,8 @@ used.
 @end example
 
 @menu
-* The function tapply() and ragged arrays::  
-* Ordered factors::             
+* The function tapply() and ragged arrays::
+* Ordered factors::
 @end menu
 
 @node The function tapply() and ragged arrays, Ordered factors, Factors, Factors
@@ -1366,9 +1373,8 @@ special function @code{tapply()}:
 giving a means vector with the components labelled by the levels
 
 @example
-> incmeans
- act    nsw   nt  qld sa  tas vic    wa
-44.5 57.333 55.5 53.6 55 60.5  56 52.25
+   act    nsw     nt    qld     sa    tas    vic     wa
+44.500 57.333 55.500 53.600 55.000 60.500 56.000 52.250
 @end example
 
 The function @code{tapply()} is used to apply a function, here
@@ -1450,16 +1456,16 @@ linear models are different.
 @chapter Arrays and matrices
 
 @menu
-* Arrays::                      
-* Array indexing::              
-* Index arrays::                
-* The array() function::        
-* The outer product of two arrays::  
-* Generalized transpose of an array::  
-* Matrix facilities::           
-* Forming partitioned matrices::  
-* The concatenation function c() with arrays::  
-* Frequency tables from factors::  
+* Arrays::
+* Array indexing::
+* Index arrays::
+* The array() function::
+* The outer product of two arrays::
+* Generalized transpose of an array::
+* Matrix facilities::
+* Forming partitioned matrices::
+* The concatenation function c() with arrays::
+* Frequency tables from factors::
 @end menu
 
 @node Arrays, Array indexing, Arrays and matrices, Arrays and matrices
@@ -1540,8 +1546,8 @@ however, if the single index is not a vector but itself an array, as we
 next discuss.
 
 @menu
-* Index arrays::                
-* The array() function::        
+* Index arrays::
+* The array() function::
 @end menu
 
 @node Index arrays, The array() function, Array indexing, Arrays and matrices
@@ -1659,7 +1665,7 @@ beginning again to make it up to size 24 (@pxref{The recycling rule}).
 As an extreme but common example
 
 @example
-> Z <- array(0, c(3,4,2)
+> Z <- array(0, c(3,4,2))
 @end example
 
 @noindent
@@ -1687,7 +1693,7 @@ concerning mixed array and vector calculations has to be considered a
 little more carefully.
 
 @menu
-* The recycling rule::          
+* The recycling rule::
 @end menu
 
 @node The recycling rule,  , The array() function, The array() function
@@ -1709,7 +1715,7 @@ they match the size of any other operands.
 As long as short vectors and arrays @emph{only} are encountered, the
 arrays must all have the same @code{dim} attribute or an error results.
 @item
-Any vector operand longer than a matrix or array operand generate an error.
+Any vector operand longer than a matrix or array operand generates an error.
 @item
 If array structures are present and no error or coercion to vector has
 been precipitated, the result is an array structure with the common
@@ -1820,7 +1826,7 @@ function @code{t()}
 is available, so we could have used @code{B <- t(A)}.
 
 @node Matrix facilities, Forming partitioned matrices, Generalized transpose of an array, Arrays and matrices
-@section Matrix facilities 
+@section Matrix facilities
 
 As noted above, a matrix is just an array with two subscripts.  However
 it is such an important special case it needs a separate discussion.
@@ -1832,10 +1838,10 @@ number of rows and columns in the matrix @code{A} respectively.
 @findex ncol
 
 @menu
-* Multiplication and inversion::  
-* Eigenvalues and eigenvectors::  
-* Singular value decomposition and determinants::  
-* Least squares fitting and the QR decomposition::  
+* Multiplication and inversion::
+* Eigenvalues and eigenvectors::
+* Singular value decomposition and determinants::
+* Least squares fitting and the QR decomposition::
 @end menu
 
 @node  Multiplication and inversion, Eigenvalues and eigenvectors, Matrix facilities, Matrix facilities
@@ -2138,11 +2144,12 @@ Then to calculate a two-way table of frequencies:
 
 @example
 > table(incomef,statef)
-            act nsw nt qld sa tas vic wa
-35+ thru 45   1   1  0   1  0   0   1  0
-45+ thru 55   1   1  1   1  2   0   1  3
-55+ thru 65   0   3  1   3  2   2   2  1
-65+ thru 75   0   1  0   0  0   0   1  0
+         statef
+incomef   act nsw nt qld sa tas vic wa
+  (35,45]   1   1  0   1  0   0   1  0
+  (45,55]   1   1  1   1  2   0   1  3
+  (55,65]   0   3  1   3  2   2   2  1
+  (65,75]   0   1  0   0  0   0   1  0
 @end example
 
 Extension to higher way frequency tables is immediate.
@@ -2151,9 +2158,9 @@ Extension to higher way frequency tables is immediate.
 @chapter Lists and data frames
 
 @menu
-* Lists::                       
-* Constructing and modifying lists::  
-* Data frames::                 
+* Lists::
+* Constructing and modifying lists::
+* Data frames::
 @end menu
 
 @node Lists, Constructing and modifying lists, Lists and data frames, Lists and data frames
@@ -2263,7 +2270,7 @@ additional components.  For example
 @end example
 
 @menu
-* Concatenating lists::         
+* Concatenating lists::
 @end menu
 
 @node Concatenating lists,  , Constructing and modifying lists, Constructing and modifying lists
@@ -2309,17 +2316,17 @@ the @emph{same length}, and matrix structures must all have the same
 @emph{row size}.
 @end itemize
 
-A data frames may for many purposes be regarded as a matrix with columns
+A data frame may for many purposes be regarded as a matrix with columns
 possibly of differing modes and attributes.  It may be displayed in
 matrix form, and its rows and columns extracted using matrix indexing
 conventions.
 
 @menu
-* Making data frames::          
-* attach() and detach()::       
-* Working with data frames::    
-* Attaching arbitrary lists::   
-* Managing the search path::    
+* Making data frames::
+* attach() and detach()::
+* Working with data frames::
+* Attaching arbitrary lists::
+* Managing the search path::
 @end menu
 
 @node Making data frames, attach() and detach(), Data frames, Data frames
@@ -2486,7 +2493,7 @@ After @code{lentils} is attached we have
 @end example
 
 @noindent
-and as we see @code{ls} (or @code{objects}) can be used to examine the 
+and as we see @code{ls} (or @code{objects}) can be used to examine the
 contents of any position on the search path.
 
 Finally, we detach the data frame and confirm it has been removed from
@@ -2507,7 +2514,7 @@ rather than entered during an @R{} session at the keyboard.  @R{} input
 facilities are simple and their requirements are fairly strict and even
 rather inflexible.  There is a clear presumption by the designers of
 @R{} that you will be able to modify your input files using other tools,
-such file editors or @code{perl}@footnote{Under UNIX, the utilities
+such as file editors or @code{perl}@footnote{Under UNIX, the utilities
 @code{sed} or @code{awk} can be used.} to fit in with the requirements
 of @R{}.  Generally this is very simple.
 
@@ -2527,11 +2534,11 @@ the @code{read.table()} function.  There is also a more primitive input
 function, @code{scan()}, that can be called directly.
 
 @menu
-* The read.table() function::   
-* The scan() function::         
-* Accessing builtin datasets::  
-* Editing data::                
-* Importing data::              
+* The read.table() function::
+* The scan() function::
+* Accessing builtin datasets::
+* Editing data::
+* Importing data::
 @end menu
 
 @node The read.table() function, The scan() function, Reading data from files, Reading data from files
@@ -2614,7 +2621,7 @@ line of headings, and hence, by implication from the form of the file,
 that no explicit row labels are given.
 
 @menu
-* The scan() function::         
+* The scan() function::
 @end menu
 
 @node The scan() function, Accessing builtin datasets, The read.table() function, Reading data from files
@@ -2714,12 +2721,12 @@ data()
 data(Puromycin)
 @end example
 
-@noindent 
+@noindent
 will list all the datasets in all the currently attached packages (at
 least @pkg{base} and @pkg{nls}) and then load @code{Puromycin} from the
 first package in which such a dataset is found.
 
-User-contributed packages can be a rich source of datasets: indeed the
+User-contributed packages can be a rich source of datasets: indeed
 Dr.@: Venables' notes, the original source of this introduction, came
 with a set of datasets which is now available on CRAN as the package
 @pkg{Rnotes}.
@@ -2771,9 +2778,9 @@ connections to ODBC databases (such as Access on Windows).
 @cindex Probability distributions
 
 @menu
-* R as a set of statistical tables::  
-* Examining the distribution of a set of data::  
-* One- and two-sample tests::   
+* R as a set of statistical tables::
+* Examining the distribution of a set of data::
+* One- and two-sample tests::
 @end menu
 
 @node R as a set of statistical tables, Examining the distribution of a set of data, Probability distributions, Probability distributions
@@ -2847,10 +2854,10 @@ distribution.
 Here are some examples
 
 @example
-## 2-tailed p-value for t distribution
-2*pt(-2.43, df = 13)
-## upper 1% point for an F(2, 7)  distribution
-qf(0.99, 2, 7)
+> ## 2-tailed p-value for t distribution
+> 2*pt(-2.43, df = 13)
+> ## upper 1% point for an F(2, 7)  distribution
+> qf(0.99, 2, 7)
 @end example
 
 @node  Examining the distribution of a set of data, One- and two-sample tests, R as a set of statistical tables, Probability distributions
@@ -2869,8 +2876,8 @@ and a display of the numbers by @code{stem} (a ``stem and leaf'' plot).
 > data(faithful)
 > attach(faithful)
 > summary(eruptions)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  1.600   2.163   4.000   3.488   4.454   5.100 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
+  1.600   2.163   4.000   3.488   4.454   5.100
 > fivenum(eruptions)
 [1] 1.6000 2.1585 4.0000 4.4585 5.1000
 > stem(eruptions)
@@ -2913,7 +2920,7 @@ A stem-and-leaf plot is like a histogram, and @R{} has a function
 @cindex Density estimation
 More elegant density plots can be made by @code{density}, and we added a
 line produced by @code{density} in this example.  The bandwidth
-@code{bw} was chosen by trial-and-error as the default give too much
+@code{bw} was chosen by trial-and-error as the default gives too much
 smoothing (it usually does for ``interesting'' densities).  (Automated
 methods of bandwidth choice are implemented in packages @pkg{MASS} and
 @pkg{KernSmooth}.)
@@ -2993,10 +3000,10 @@ Finally, we might want a more formal test of agreement with normality
 > library(ctest)
 > shapiro.test(long)
 
-         Shapiro-Wilk normality test 
+         Shapiro-Wilk normality test
 
-data:  long 
-W = 0.9793, p-value = 0.01052 
+data:  long
+W = 0.9793, p-value = 0.01052
 @end example
 
 @noindent
@@ -3007,11 +3014,11 @@ and the Kolmogorov-Smirnov test
 @example
 > ks.test(long, "pnorm", mean=mean(long), sd=sqrt(var(long)))
 
-         One-sample Kolmogorov-Smirnov test 
+         One-sample Kolmogorov-Smirnov test
 
-data:  long 
-D = 0.0661, p-value = 0.4284 
-alternative hypothesis: two.sided 
+data:  long
+D = 0.0661, p-value = 0.4284
+alternative hypothesis: two.sided
 @end example
 
 @noindent
@@ -3067,16 +3074,16 @@ an @emph{unpaired} t-test by
 @example
 > t.test(A, B)
 
-         Welch Two Sample t-test 
+         Welch Two Sample t-test
 
-data:  A and B 
-t = 3.2499, df = 12.027, p-value = 0.00694 
-alternative hypothesis: true difference in means is not equal to 0 
+data:  A and B
+t = 3.2499, df = 12.027, p-value = 0.00694
+alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- 0.01385526 0.07018320 
+ 0.01385526 0.07018320
 sample estimates:
-mean of x mean of y 
- 80.02077  79.97875 
+mean of x mean of y
+ 80.02077  79.97875
 @end example
 
 @noindent
@@ -3090,16 +3097,16 @@ package @pkg{ctest}
 > library(ctest)
 > var.test(A, B)
 
-         F test to compare two variances 
+         F test to compare two variances
 
-data:  A and B 
-F = 0.5837, num df = 12, denom df =  7, p-value = 0.3938 
-alternative hypothesis: true ratio of variances is not equal to 1 
+data:  A and B
+F = 0.5837, num df = 12, denom df =  7, p-value = 0.3938
+alternative hypothesis: true ratio of variances is not equal to 1
 95 percent confidence interval:
- 0.1251097 2.1052687 
+ 0.1251097 2.1052687
 sample estimates:
-ratio of variances 
-         0.5837405 
+ratio of variances
+         0.5837405
 @end example
 @findex var.test
 
@@ -3110,16 +3117,16 @@ the classical t-test that assumes equality of the variances.
 @example
 > t.test(A, B, var.equal=TRUE)
 
-         Two Sample t-test 
+         Two Sample t-test
 
-data:  A and B 
-t = 3.4722, df = 19, p-value = 0.002551 
-alternative hypothesis: true difference in means is not equal to 0 
+data:  A and B
+t = 3.4722, df = 19, p-value = 0.002551
+alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- 0.01669058 0.06734788 
+ 0.01669058 0.06734788
 sample estimates:
-mean of x mean of y 
- 80.02077  79.97875 
+mean of x mean of y
+ 80.02077  79.97875
 @end example
 
 All these tests assume normality of the two samples.  The two-sample
@@ -3132,14 +3139,14 @@ distribution under the null hypothesis.
 > library(ctest)
 > wilcox.test(A, B)
 
-         Wilcoxon rank sum test with continuity correction 
+         Wilcoxon rank sum test with continuity correction
 
-data:  A and B 
-W = 89, p-value = 0.007497 
-alternative hypothesis: true mu is not equal to 0 
+data:  A and B
+W = 89, p-value = 0.007497
+alternative hypothesis: true mu is not equal to 0
 
-Warning message: 
-Cannot compute exact p-value with ties in: wilcox.test(A, B) 
+Warning message:
+Cannot compute exact p-value with ties in: wilcox.test(A, B)
 @end example
 
 @noindent
@@ -3165,14 +3172,14 @@ distribution:
 @example
 > ks.test(A, B)
 
-         Two-sample Kolmogorov-Smirnov test 
+         Two-sample Kolmogorov-Smirnov test
 
-data:  A and B 
-D = 0.5962, p-value = 0.05919 
-alternative hypothesis: two.sided 
+data:  A and B
+D = 0.5962, p-value = 0.05919
+alternative hypothesis: two.sided
 
-Warning message: 
-cannot compute correct p-values with ties in: ks.test(A, B) 
+Warning message:
+cannot compute correct p-values with ties in: ks.test(A, B)
 @end example
 
 @node Loops and conditional execution, Writing your own functions, Probability distributions, Top
@@ -3180,8 +3187,8 @@ cannot compute correct p-values with ties in: ks.test(A, B)
 @cindex Loops and conditional execution
 
 @menu
-* Grouped expressions::         
-* Control statements::          
+* Grouped expressions::
+* Control statements::
 @end menu
 
 @node Grouped expressions, Control statements, Loops and conditional execution, Loops and conditional execution
@@ -3205,8 +3212,8 @@ parentheses and used a part of an even larger expression, and so on.
 @cindex Control statements
 
 @menu
-* Conditional execution::       
-* Repetitive execution::        
+* Conditional execution::
+* Repetitive execution::
 @end menu
 
 @node Conditional execution, Repetitive execution, Control statements, Control statements
@@ -3353,15 +3360,15 @@ A call to the function then usually takes the form
 anywhere a function call is legitimate.
 
 @menu
-* Simple examples::             
-* Defining new binary operators::  
-* Named arguments and defaults::  
-* The ellipsis argument (...)::  
-* Assignment within functions::  
-* More advanced examples::      
-* Scope::                       
-* Customizing the environment::  
-* Object orientation::          
+* Simple examples::
+* Defining new binary operators::
+* Named arguments and defaults::
+* The ellipsis argument (...)::
+* Assignment within functions::
+* More advanced examples::
+* Scope::
+* Customizing the environment::
+* Object orientation::
 @end menu
 
 @node Simple examples, Defining new binary operators, Writing your own functions, Writing your own functions
@@ -3488,7 +3495,7 @@ Thus if there is a function @code{fun1} defined by
 then the function may be invoked in several ways, for example
 
 @example
-> ans <- fun1(d, df, 20, TRUE)
+> ans <- fun1(d, df, TRUE, 20)
 > ans <- fun1(d, df, graph=TRUE, limit=20)
 > ans <- fun1(data=d, limit=20, graph=TRUE, data.frame=df)
 @end example
@@ -3570,9 +3577,9 @@ in @R{}.  These are discussed further in @ref{Scope}.
 @section More advanced examples
 
 @menu
-* Efficiency factors in block designs::  
-* Dropping all names in a printed array::  
-* Recursive numerical integration::  
+* Efficiency factors in block designs::
+* Dropping all names in a printed array::
+* Recursive numerical integration::
 @end menu
 
 @node Efficiency factors in block designs, Dropping all names in a printed array, More advanced examples, More advanced examples
@@ -3710,8 +3717,8 @@ area <- function(f, a, b, eps = 1.0e-06, lim = 10) @{
 @end example
 
 @menu
-* Scope::                       
-* Object orientation::          
+* Scope::
+* Object orientation::
 @end menu
 
 @node Scope, Customizing the environment, More advanced examples, Writing your own functions
@@ -3746,8 +3753,8 @@ In this function, @code{x} is a formal parameter, @code{y} is a local
 variable and @code{z} is a free variable.
 
 In @R{} the free variable bindings are resolved by first looking in the
-environment in which the function was created.  First we define a
-function called @code{cube}.
+environment in which the function was created.  This is called
+@emph{lexical scope}.  First we define a function called @code{cube}.
 
 @example
 cube <- function(n) @{
@@ -3756,17 +3763,16 @@ cube <- function(n) @{
 @}
 @end example
 
-The variable @code{n} in the function @code{sq} is not an argument to
-that function.  Therefore it is a free variable and the scoping rules
-must be used to ascertain the value that is to be associated with it.
-Under static scope the value is that associated with a global variable
-named @code{n}.  Under lexical scope it is the parameter to the function
-@code{cube} since that is the active binding for the variable @code{n}
-at the time the function @code{sq} was defined.  The difference between
-evaluation in @R{} and evaluation in @SPLUS{} is that @SPLUS{} looks
-for a global variable called @code{n} while @R{} first looks for a
-variable called @code{n} in the environment created when @code{cube} was
-invoked.
+The variable @code{n} in the function @code{sq} is not an argument to that
+function.  Therefore it is a free variable and the scoping rules must be
+used to ascertain the value that is to be associated with it.  Under static
+scope (@SPLUS{}) the value is that associated with a global variable named
+@code{n}.  Under lexical scope (@R{}) it is the parameter to the function
+@code{cube} since that is the active binding for the variable @code{n} at
+the time the function @code{sq} was defined.  The difference between
+evaluation in @R{} and evaluation in @SPLUS{} is that @SPLUS{} looks for a
+global variable called @code{n} while @R{} first looks for a variable
+called @code{n} in the environment created when @code{cube} was invoked.
 
 @example
 ## @r{first evaluation in S}
@@ -3972,14 +3978,14 @@ basic output is minimal, and one needs to ask for the details by calling
 extractor functions.
 
 @menu
-* Formulae for statistical models::  
-* Linear models::               
-* Generic functions for extracting model information::  
-* Analysis of variance and model comparison::  
-* Updating fitted models::      
-* Generalized linear models::   
-* Nonlinear least squares and maximum likelihood models::  
-* Some non-standard models::    
+* Formulae for statistical models::
+* Linear models::
+* Generic functions for extracting model information::
+* Analysis of variance and model comparison::
+* Updating fitted models::
+* Generalized linear models::
+* Nonlinear least squares and maximum likelihood models::
+* Some non-standard models::
 @end menu
 
 @node Formulae for statistical models, Linear models, Statistical models in R, Statistical models in R
@@ -4041,7 +4047,7 @@ explicit one.
 @item y ~ 0 + x
 @itemx y ~ -1 + x
 @itemx y ~ x - 1
-Simple linear regression of @math{y} on @math{x} through the origin 
+Simple linear regression of @math{y} on @math{x} through the origin
 (that is, without an intercept term).
 
 @item log(y) ~ x1 + x2
@@ -4106,7 +4112,7 @@ The operator @code{~} is used to define a @emph{model formula} in @R{}.
 The form, for an ordinary linear model, is
 
 @example
-@var{response} ~ @var{op_1} @var{term_1} @var{op_2} @var{term_2} @var{op_3} @var{term_3} @var{@dots{}} 
+@var{response} ~ @var{op_1} @var{term_1} @var{op_2} @var{term_2} @var{op_3} @var{term_3} @var{@dots{}}
 @end example
 
 @noindent
@@ -4193,7 +4199,7 @@ implicit.  This is not the case in other contexts, for example in
 specifying nonlinear models.
 
 @menu
-* Contrasts::                   
+* Contrasts::
 @end menu
 
 @node Contrasts,  , Formulae for statistical models, Formulae for statistical models
@@ -4203,7 +4209,7 @@ specifying nonlinear models.
 We need at least some idea how the model formulae specify the columns of
 the model matrix.  This is easy if we have continuous variables, as each
 provides one column of the model matrix (and the intercept will provide
-a column of ones if included in the model). 
+a column of ones if included in the model).
 
 @cindex Factors
 @cindex Ordered factors
@@ -4229,7 +4235,7 @@ options(contrasts = c("contr.treatment", "contr.poly"))
 @noindent
 The main reason for mentioning this is that @R{} and @Sl{} have
 different defaults for unordered factors, @Sl{} using Helmert
-contrasts.  So if you need to compare you results to those of a textbook
+contrasts.  So if you need to compare your results to those of a textbook
 or paper which used @SPLUS{}, you will need to set
 
 @example
@@ -4287,7 +4293,7 @@ should come first from the @code{production} @emph{data frame}.
 @node Generic functions for extracting model information, Analysis of variance and model comparison, Linear models, Statistical models in R
 @section Generic functions for extracting model information
 
-The value of @code{lm()} is fitted model object; technically a list of
+The value of @code{lm()} is a fitted model object; technically a list of
 results of class @code{"lm"}.  Information about the fitted model can
 then be displayed, extracted, plotted and so on by using generic
 functions that orient themselves to objects of class @code{"lm"}.  These
@@ -4327,8 +4333,7 @@ variance table.
 
 @findex plot
 @item @code{plot(@var{object})}
-@tab Product two plots, one of the observations against the fitted
-values, the other of the absolute residuals against the fitted values.
+@tab Produce four plots, showing residuals, fitted values and some diagnostics.
 
 @findex predict
 @item @code{predict(@var{object},} @tab
@@ -4409,7 +4414,7 @@ would typically be used to describe an experiment with mean model
 ``within farms, between blocks'' and ``within blocks''.
 
 @menu
-* ANOVA tables::                
+* ANOVA tables::
 @end menu
 
 @node ANOVA tables,  , Analysis of variance and model comparison, Analysis of variance and model comparison
@@ -4583,8 +4588,8 @@ reference works on the subject for full details, such as McCullagh &
 Nelder (1989) or Dobson (1990).
 
 @menu
-* Families::                    
-* The glm() function::          
+* Families::
+* The glm() function::
 @end menu
 
 @node Families, The glm() function, Generalized linear models, Generalized linear models
@@ -4687,9 +4692,9 @@ for blindness and the results recorded.  The data is shown below:
 
 @quotation
 @multitable {No.@: tested:} {50} {50} {50} {50} {50}
-@item Age:          @tab  20 @tab  35 @tab  45 @tab  55 @tab  70 
-@item No.@: tested: @tab  50 @tab  50 @tab  50 @tab  50 @tab  50 
-@item No.@: blind:  @tab  @w{ 6} @tab  17 @tab  26 @tab  37 @tab  44 
+@item Age:          @tab  20 @tab  35 @tab  45 @tab  55 @tab  70
+@item No.@: tested: @tab  50 @tab  50 @tab  50 @tab  50 @tab  50
+@item No.@: blind:  @tab  @w{ 6} @tab  17 @tab  26 @tab  37 @tab  44
 @end multitable
 @end quotation
 
@@ -4800,7 +4805,7 @@ Poisson generalized linear model may be fitted as in the following
 example:
 
 @example
-> fmod <- glm(y ~ A + B + x, family = poisson(link=sqrt), 
+> fmod <- glm(y ~ A + B + x, family = poisson(link=sqrt),
               data = worm.counts)
 @end example
 
@@ -4852,7 +4857,7 @@ Supposing a suitable data frame to be set up we could fit this
 non-linear regression as
 
 @example
-> nlfit <- glm(y ~ x1 + x2 - 1, 
+> nlfit <- glm(y ~ x1 + x2 - 1,
                family = quasi(link=inverse, variance=constant),
                data = biochem)
 @end example
@@ -4879,8 +4884,8 @@ try, and convergence depends critically upon the quality of the initial
 guesses.
 
 @menu
-* Least squares::               
-* Maximum likelihood::          
+* Least squares::
+* Maximum likelihood::
 @end menu
 
 @node Least squares, Maximum likelihood, Nonlinear least squares and maximum likelihood models, Nonlinear least squares and maximum likelihood models
@@ -4951,10 +4956,10 @@ fitted is the Michaelis-Menten model, so we can use
 > fit <- nls(y ~ SSmicmen(x, Vm, K), df)
 > fit
 Nonlinear regression model
-  model:  y ~ SSmicmen(x, Vm, K) 
-   data:  df 
-          Vm            K 
-212.68370711   0.06412123 
+  model:  y ~ SSmicmen(x, Vm, K)
+   data:  df
+          Vm            K
+212.68370711   0.06412123
  residual sum-of-squares:  1195.449
 > summary(fit)
 
@@ -5153,13 +5158,13 @@ In addition, @R{} maintains a list of @emph{graphical parameters} which
 can be manipulated to customize your plots.
 
 @menu
-* High-level plotting commands::  
-* Low-level plotting commands::  
-* Interacting with graphics::   
-* Using graphics parameters::   
-* Graphics parameters::         
-* Device drivers::              
-* Dynamic graphics::            
+* High-level plotting commands::
+* Low-level plotting commands::
+* Interacting with graphics::
+* Using graphics parameters::
+* Graphics parameters::
+* Device drivers::
+* Dynamic graphics::
 @end menu
 
 @node High-level plotting commands, Low-level plotting commands, Graphics, Graphics
@@ -5172,10 +5177,10 @@ otherwise.) High-level plotting commands always start a new plot,
 erasing the current plot if necessary.
 
 @menu
-* The plot() function::         
-* Displaying multivariate data::  
-* Display graphics::            
-* Arguments to high-level plotting functions::  
+* The plot() function::
+* Displaying multivariate data::
+* Display graphics::
+* Arguments to high-level plotting functions::
 @end menu
 
 @node The plot() function, Displaying multivariate data, High-level plotting commands, High-level plotting commands
@@ -5449,15 +5454,15 @@ follows:
 
 @table @code
 @item legend( , fill=v)
-Colors for filled boxes 
+Colors for filled boxes
 @item legend( , col=v)
-Colors in which points or lines will be drawn 
+Colors in which points or lines will be drawn
 @item legend( , lty=v)
-Line styles 
+Line styles
 @item legend( , lwd=v)
 Line widths
 @item legend( , pch=v)
-Plotting characters (character vector) 
+Plotting characters (character vector)
 @end table
 
 @item title(main, sub)
@@ -5573,8 +5578,8 @@ permanently, affecting all graphics functions which access the current
 device; or temporarily, affecting only a single graphics function call.
 
 @menu
-* The par() function::          
-* Arguments to graphics functions::  
+* The par() function::
+* Arguments to graphics functions::
 @end menu
 
 @node The par() function, Arguments to graphics functions, Using graphics parameters, Using graphics parameters
@@ -5655,10 +5660,10 @@ setting the parameter.
 @end table
 
 @menu
-* Graphical elements::          
-* Axes and tick marks::         
-* Figure margins::              
-* Multiple figure environment::  
+* Graphical elements::
+* Axes and tick marks::
+* Figure margins::
+* Multiple figure environment::
 @end menu
 
 @node Graphical elements, Axes and tick marks, Graphics parameters, Graphics parameters
@@ -5716,7 +5721,7 @@ device drivers arrange so that @code{1} corresponds to plain text,
 @item font.axis
 @itemx font.lab
 @itemx font.main
-@itemx font.sub 
+@itemx font.sub
 The font to be used for axis annotation, @math{x} and @math{y} labels,
 main and sub-titles, respectively.
 
@@ -5932,8 +5937,8 @@ of hardcopy devices this ensures that every page is completed and has
 been sent to the printer.
 
 @menu
-* PostScript diagrams for typeset documents::  
-* Multiple graphics devices::   
+* PostScript diagrams for typeset documents::
+* Multiple graphics devices::
 @end menu
 
 @node PostScript diagrams for typeset documents, Multiple graphics devices, Device drivers, Device drivers
@@ -6163,7 +6168,7 @@ Michaelson and Morley to measure the speed of light.
 
 @table @code
 @item file.show("morley.data")
-Optional.  Look at the file. 
+Optional.  Look at the file.
 
 @item mm <- read.table("morley.data")
 @itemx mm
@@ -6221,7 +6226,7 @@ cos(y)/(1 + x^2).
 $\cos(y)/(1 + x^2)$.
 @end tex
 
-@item oldpar <- par()
+@item oldpar <- par(no.readonly = TRUE)
 @itemx par(pty="s")
 Save the plotting parameters and set the plotting region to ``square''.
 
@@ -6242,7 +6247,7 @@ Make a contour plot, @dots{}
 @item image(x, y, f)
 @itemx image(x, y, fa)
 Make some high density image plots, (of which you can get
-hardcopies if you wish), @dots{} 
+hardcopies if you wish), @dots{}
 
 @item objects(); rm(x, y, f, fa)
 @dots{} and clean up before moving on.
@@ -6294,8 +6299,8 @@ want to save it.
 @appendix Invoking R
 
 @menu
-* Invoking R under UNIX::       
-* Invoking R under Windows::    
+* Invoking R under UNIX::
+* Invoking R under Windows::
 @end menu
 
 @node Invoking R under UNIX, Invoking R under Windows, Invoking R, Invoking R
@@ -6344,7 +6349,7 @@ It also loads a saved image from @file{.RData} if there is one (unless
 Finally, if a function @code{.First} exists, it is executed.  This
 function (as well as @code{.Last} which is executed at the end of the
 @R{} session) can be defined in the appropriate startup profiles, or
-reside in @file{.RData}. 
+reside in @file{.RData}.
 @end itemize
 
 In addition, there are options for controlling the memory available to
@@ -6556,7 +6561,7 @@ It also loads a saved image from @file{.RData} if there is one (unless
 Finally, if a function @code{.First} exists, it is executed.  This
 function (as well as @code{.Last} which is executed at the end of the
 @R{} session) can be defined in the appropriate startup profiles, or
-reside in @file{.RData}. 
+reside in @file{.RData}.
 @end itemize
 
 In addition, there are options for controlling the memory available to
@@ -6752,12 +6757,12 @@ The final @key{RET} terminates the command line editing sequence.
 D.@: B.@: Bates and  D.@: G.@: Watts (1988), @emph{Nonlinear Regression
 Analysis and Its Applications.} John Wiley & Sons, New York.
 
-Richard A.@: Becker, John M.@: Chambers and Allan R.@: Wilks (1988), 
+Richard A.@: Becker, John M.@: Chambers and Allan R.@: Wilks (1988),
 @emph{The New S Language.} Chapman & Hall, New York.
 This book is often called the ``@emph{Blue Book}''.
 
-John M.@: Chambers and Trevor J.@: Hastie eds. (1992), 
-@emph{Statistical Models in S.} Chapman & Hall, New York. 
+John M.@: Chambers and Trevor J.@: Hastie eds. (1992),
+@emph{Statistical Models in S.} Chapman & Hall, New York.
 This is also called the ``@emph{White Book}''.
 
 Annette J.@: Dobson (1990), @emph{An Introduction to Generalized Linear
