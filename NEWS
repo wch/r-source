@@ -16,7 +16,7 @@ NEW FEATURES
     o   R INSTALL now can directly install pkg_version.tar.gz files
         as obtained from CRAN. New function update.packages()
         & friends for automatically downloading packages from CRAN and
-        install them on the fly.
+        install them on the fly (on Unix).
 
     o	New function commandArgs() to record the command-line used.
 
@@ -28,6 +28,8 @@ NEW FEATURES
 	from an http server instead of a file.
 
     o	grid() gets useful defaults: grid lines drawn at tick marks.
+
+    o	set operations union(), intersect(), setdiff() and is.element().
 
     o	New function stars() for star plots and segment diagrams of
 	multivariate data.

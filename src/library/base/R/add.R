@@ -239,9 +239,6 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 		     test=c("none", "Chisq", "F"), k = 2, ...)
 {
-    setdiff <- function(x, y)
-	if(length(x) == 0 || length(y) == 0) x else x[match(x, y, 0) == 0]
-
     x <- model.matrix(object)
     iswt <- !is.null(wt <- object$weights)
     n <- nrow(x)
@@ -314,9 +311,6 @@ drop1.mlm <- function(object, ...)
 drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 		      k = 2, ...)
 {
-    setdiff <- function(x, y)
-	if(length(x) == 0 || length(y) == 0) x else x[match(x, y, 0) == 0]
-
     x <- model.matrix(object)
     iswt <- !is.null(wt <- object$weights)
     n <- nrow(x)
