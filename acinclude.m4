@@ -347,6 +347,8 @@ rm -rf conftest* TMP])
 ## ------------------
 ## Generate a Make fragment with suffix rules for the C compiler.
 ## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
+## NB test -d .libs || mkdir .libs can be run more than once
+##    and hence race when a parallel make is used
 AC_DEFUN([R_PROG_CC_MAKEFRAG],
 [r_cc_rules_frag=Makefrag.cc
 AC_REQUIRE([R_PROG_CC_M])
@@ -376,7 +378,7 @@ EOF
 else
   cat << \EOF >> ${r_cc_rules_frag}
 .c.lo:
-	@test -d .libs || mkdir .libs
+	@-test -d .libs || mkdir .libs
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o .libs/$[*].o
 	mv .libs/$[*].o $[*].lo
 EOF
@@ -429,7 +431,7 @@ AC_DEFUN([R_PROG_CC_FLAG_D__NO_MATH_INLINES],
 
 ## R_C_OPTIEEE
 ## -----------
-## Check whethter the C compiler needs '-OPT:IEEE_NaN_inf=ON' to 
+## Check whether the C compiler needs '-OPT:IEEE_NaN_inf=ON' to
 ## correctly deal with IEEE NaN/Inf.
 ## This flag is needed for the native SGI C compiler.
 ## If needed, add the flag to R_XTRA_CFLAGS.
@@ -1982,7 +1984,7 @@ if test "${acx_blas_ok}" = no; then
   if test "x$GCC" != xyes; then # only works with Sun CC
      AC_MSG_CHECKING([for ${sgemm} in -lsunperf])
      r_save_LIBS="${LIBS}"
-     LIBS="-xlic_lib=sunperf -lsunmath $LIBS"
+     LIBS="-xlic_lib=sunperf -lsunmath ${LIBS}"
      AC_TRY_LINK_FUNC([${sgemm}], [R_sunperf=yes], [R_sunperf=no])
      if test "${R_sunperf}" = yes; then
         BLAS_LIBS="-xlic_lib=sunperf -lsunmath"

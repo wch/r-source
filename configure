@@ -14850,7 +14850,7 @@ EOF
 else
   cat << \EOF >> ${r_cc_rules_frag}
 .c.lo:
-	@test -d .libs || mkdir .libs
+	@-test -d .libs || mkdir .libs
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o .libs/$*.o
 	mv .libs/$*.o $*.lo
 EOF
@@ -20424,7 +20424,7 @@ if test "${acx_blas_ok}" = no; then
      echo "$as_me:$LINENO: checking for ${sgemm} in -lsunperf" >&5
 echo $ECHO_N "checking for ${sgemm} in -lsunperf... $ECHO_C" >&6
      r_save_LIBS="${LIBS}"
-     LIBS="-xlic_lib=sunperf -lsunmath $LIBS"
+     LIBS="-xlic_lib=sunperf -lsunmath ${LIBS}"
      cat >conftest.$ac_ext <<_ACEOF
 #line $LINENO "configure"
 /* confdefs.h.  */
