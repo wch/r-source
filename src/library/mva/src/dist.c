@@ -116,30 +116,32 @@ static double canberra(double *x, int nr, int nc, int i1, int i2)
 
 static double binary(double *x, int nr, int nc, int i1, int i2)
 {
-	double total, count, dist;
-	int j;
-	count = 0;
-	dist = 0;
-	for(j=0 ; j<nc ; j++) {
-		if(FINITE(x[i1]) && FINITE(x[i2])) {
-			if(x[i1] == 0 && x[i2] == 0)
-				continue;
-			else if(x[i1] == 0 || x[i2] == 0) {
-				dist += 1;
-				count += 1;
-			}
-			else {
-				count += 1;
-			}
-			total += 1;
-		}
-		i1 += nr;
-		i2 += nr;
+  int total, count, dist;
+  int j;
+
+  total = 0;
+  count = 0;
+  dist = 0;
+
+  for(j=0 ; j<nc ; j++) {
+    if(FINITE(x[i1]) && FINITE(x[i2])) {
+      if(x[i1] || x[i2]){
+	count++;
+	if( ! (x[i1] && x[i2]) ){
+	  dist++;
 	}
-	if(total == 0) return NA_REAL;
-	if(count == 0) return 0;
-	return dist / count;
+      }
+      total++;
+    }
+    i1 += nr;
+    i2 += nr;
+  }
+  
+  if(total == 0) return NA_REAL;
+  if(count == 0) return 0;
+  return (double) dist / count;
 }
+
 
 
 void dist(double *x, int *nr, int *nc, double *d, int *method)
