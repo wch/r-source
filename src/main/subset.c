@@ -510,7 +510,7 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else PROTECT(ax = x);
 
-    if(!isVectorObject(ax))
+    if(!isVector(ax))
 	errorcall(call, "object is not subsetable\n");
 
     /* This is the actual subsetting code. */
