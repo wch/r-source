@@ -15,6 +15,8 @@ BUG FIXES
     o   Factors could get allocated without the OBJECT bit, which
 	nearly drove Kurt mad trying to write plot.factor...
 
+    o   Fixed confidence limit problem in t.test
+
 		CHANGES IN R VERSION 0.61.1
 
 NEW FEATURES
