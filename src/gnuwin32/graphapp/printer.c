@@ -25,6 +25,7 @@
  */
 
 #include "internal.h"
+#include "rui.h"
 
 
 /*
@@ -32,12 +33,12 @@
  */
 static void private_delprinter(printer obj)
 {
-        HDC h = (HDC) obj->handle;
-	if (!obj || !h || (obj->kind != PrinterObject)) return;
-        EndPage(h);
-        EndDoc(h);
-        DeleteDC(h);
-        return;
+    HDC h = (HDC) obj->handle;
+    if (!obj || !h || (obj->kind != PrinterObject)) return;
+    EndPage(h);
+    EndDoc(h);
+    DeleteDC(h);
+    return;
 }
 
 /*
@@ -45,14 +46,15 @@ static void private_delprinter(printer obj)
  */
 static object get_printer_base(void)
 {
-	static object printer_base = NULL;
+    static object printer_base = NULL;
 
-	if (! printer_base)
-		printer_base = new_object(BaseObject, 0, NULL);
-	return printer_base;
+    if (! printer_base)
+	printer_base = new_object(BaseObject, 0, NULL);
+    return printer_base;
 }
 
-static HDC chooseprinter() {
+static HDC chooseprinter()
+{
     PRINTDLG pd;
     HDC dc;
     char cwd[MAX_PATH];
@@ -60,17 +62,17 @@ static HDC chooseprinter() {
     GetCurrentDirectory(MAX_PATH,cwd);
 
     pd.lStructSize = sizeof( PRINTDLG );
-    pd.hwndOwner=NULL;
-    pd.hDevMode=(HANDLE)NULL;
-    pd.hDevNames=(HANDLE)NULL;
+    pd.hwndOwner = NULL;
+    pd.hDevMode = (HANDLE)NULL;
+    pd.hDevNames = (HANDLE)NULL;
     pd.Flags = PD_RETURNDC | PD_NOSELECTION | PD_NOPAGENUMS |
-               PD_USEDEVMODECOPIES;
-    pd.nFromPage=0;
-    pd.nToPage=0;
-    pd.nMinPage=0;
-    pd.nMaxPage=0;
-    pd.nCopies=1;
-    pd.hInstance=(HINSTANCE)NULL;
+	PD_USEDEVMODECOPIES;
+    pd.nFromPage = 0;
+    pd.nToPage = 0;
+    pd.nMinPage = 0;
+    pd.nMaxPage = 0;
+    pd.nCopies = 1;
+    pd.hInstance = (HINSTANCE)NULL;
     pd.lCustData = (LPARAM)0;
     pd.lpfnPrintHook = 0;
     pd.lpfnSetupHook = 0;
@@ -93,32 +95,33 @@ printer newprinter(double width, double height)
     HDC hDC = chooseprinter();
     double dd,AL;
     int ww,hh,x0,y0;
+
     if ( !hDC) return NULL;
     obj = new_object(PrinterObject,(HANDLE) hDC,get_printer_base());
     if ( !obj ) {
-         askok("Insufficient memory for new printer");
-         DeleteDC(hDC);
-         return NULL;
+	R_ShowMessage("Insufficient memory for new printer");
+	DeleteDC(hDC);
+	return NULL;
     }
-    if ((width==0.0) && (height==0.0)) {
-       ww = GetDeviceCaps(hDC,HORZRES);
-       hh = GetDeviceCaps(hDC,VERTRES);
+    if ((width == 0.0) && (height == 0.0)) {
+	ww = GetDeviceCaps(hDC, HORZRES);
+	hh = GetDeviceCaps(hDC, VERTRES);
     }
     else {
-       if (width < 0.1) width = 0.1;
-       if (height < 0.1) height = 0.1;
-       dd =  GetDeviceCaps(hDC, HORZSIZE) / width;
-       AL = (dd < 1.0) ? dd : 1.0;
-       dd = GetDeviceCaps(hDC, VERTSIZE) / height;
-       AL = (dd < AL) ? dd : AL;
-       ww = (AL * width) * GetDeviceCaps(hDC,LOGPIXELSX) / 25.4;
-       hh = (AL * height) * GetDeviceCaps(hDC,LOGPIXELSY) / 25.4;
+	if (width < 0.1) width = 0.1;
+	if (height < 0.1) height = 0.1;
+	dd =  GetDeviceCaps(hDC, HORZSIZE) / width;
+	AL = (dd < 1.0) ? dd : 1.0;
+	dd = GetDeviceCaps(hDC, VERTSIZE) / height;
+	AL = (dd < AL) ? dd : AL;
+	ww = (AL * width) * GetDeviceCaps(hDC,LOGPIXELSX) / 25.4;
+	hh = (AL * height) * GetDeviceCaps(hDC,LOGPIXELSY) / 25.4;
     }
     x0 = (GetDeviceCaps(hDC,HORZRES) - ww) / 2;
     y0 = (GetDeviceCaps(hDC,VERTRES) - hh) / 2;
-    obj->rect= rect(x0,y0,ww,hh);
-    obj->depth=GetDeviceCaps(hDC, BITSPIXEL)*
-                   GetDeviceCaps(hDC, PLANES);
+    obj->rect = rect(x0,y0,ww,hh);
+    obj->depth = GetDeviceCaps(hDC, BITSPIXEL)*
+	GetDeviceCaps(hDC, PLANES);
     obj->die = private_delprinter;
     obj->drawstate = copydrawstate();
     obj->drawstate->dest = obj;
@@ -130,9 +133,9 @@ printer newprinter(double width, double height)
     docinfo.fwType = 0;
 
     if (StartDoc(hDC, &docinfo) <= 0) {
-       askok("Impossible to start the print job");
-       del(obj);
-       return NULL;
+	R_ShowMessage("Unable to start the print job");
+	del(obj);
+	return NULL;
     }
 
     StartPage(hDC);
@@ -141,8 +144,9 @@ printer newprinter(double width, double height)
 }
 
 
-void nextpage(printer p) {
-   if (!p || (p->kind != PrinterObject)) return;
-   EndPage((HDC) p->handle);
-   StartPage((HDC) p->handle);
+void nextpage(printer p)
+{
+    if (!p || (p->kind != PrinterObject)) return;
+    EndPage((HDC) p->handle);
+    StartPage((HDC) p->handle);
 }

@@ -23,9 +23,11 @@
 
 extern int RguiMDI;
 extern int MDIset;
-extern console RConsole;
+extern window RConsole;
 void Rconsolecmd(char *);
 
+void (*R_ShowMessage)(char *s);
+int (*R_yesnocancel)(char *s);
 
 
 
