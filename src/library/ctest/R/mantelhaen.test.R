@@ -61,9 +61,9 @@ function(x, y = NULL, z = NULL,
                           sum(apply(rbind(s.x, s.y), 2, prod)
                               / (n^2 * (n - 1))))
             PARAMETER <- 1
-            names(STATISTIC) <- "Mantel-Haenszel X-square"
+            names(STATISTIC) <- "Mantel-Haenszel X-squared"
             names(PARAMETER) <- "df"
-            METHOD <- paste("Mantel-Haenszel chi-square test",
+            METHOD <- paste("Mantel-Haenszel chi-squared test",
                             ifelse(YATES, "with", "without"),
                             "continuity correction")
             s.diag <- sum(x[1, 1, ] * x[2, 2, ] / n)

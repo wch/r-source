@@ -28,7 +28,7 @@ friedman.test <- function(y, groups, blocks) {
                    - (sum(unlist(lapply(TIES, function (u) {u^3 - u}))) /
                       (k - 1))))
     PARAMETER <- k - 1
-    names(STATISTIC) <- "Friedman chi-square"
+    names(STATISTIC) <- "Friedman chi-squared"
     names(PARAMETER) <- "df"
 
     structure(list(statistic = STATISTIC,

@@ -38,7 +38,7 @@ bartlett.test <- function(x, g) {
     v.total <- sum(n * v) / n.total
     STATISTIC <- ((n.total * log(v.total) - sum(n * log(v))) /
                   (1 + (sum(1 / n) - 1 / n.total) / (3 * (k - 1))))
-    names(STATISTIC) <- "Bartlett's K-square"
+    names(STATISTIC) <- "Bartlett's K-squared"
     PARAMETER <- k - 1
     names(PARAMETER) <- "df"
   

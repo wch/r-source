@@ -21,7 +21,7 @@ Box.test (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"))
 \value{
   A list with class \code{"htest"} containing the following components:
   \item{statistic}{the value of the test statistic.}
-  \item{parameter}{the degrees of freedom of the approximate chi-square
+  \item{parameter}{the degrees of freedom of the approximate chi-squared
     distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}
   \item{method}{a character string indicating which type of test was

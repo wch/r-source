@@ -19,7 +19,7 @@ mcnemar.test(x, y = NULL, correct = TRUE)
   A list with class \code{"htest"} containing the following components:
   \item{statistic}{the value of McNemar's statistic.}
   \item{parameter}{the degrees of freedom of the approximate
-    chi-square distribution of the test statistic.}
+    chi-squared distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}
   \item{method}{a character string indicating the type of test
     performed, and whether continuity correction was used.}

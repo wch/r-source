@@ -3,7 +3,7 @@
  *  original  (C) 1992 Royal Statistical Society
  *  Copyright (C) 2000 The R Development Core Team
  *
- *  Computes the noncentral chi-square distribution function with
+ *  Computes the noncentral chi-squared distribution function with
  *  positive real degrees of freedom f and nonnegative noncentrality
  *  parameter theta
  */
