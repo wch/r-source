@@ -43,9 +43,6 @@
 #include "nmath.h"
 #include "dpq.h"
 
-/* for user interrupt: */
-#include <R_ext/Utils.h>
-
 /* This is called from	qbeta(.) in a root-finding loop --- be FAST! */
 
 double pbeta_raw(double x, double pin, double qin, int lower_tail)
@@ -140,9 +137,10 @@ double pbeta_raw(double x, double pin, double qin, int lower_tail)
 	    if (q == n)
 		n--;
 	    for(i= 1; i <= n; i++) {
+#ifndef MATHLIB_STANDALONE
 		/* for now, at least allow this:*/
 		R_CheckUserInterrupt();
-
+#endif
 		if (p1 <= 1 && term / eps <= finsum)
 		    break;
 		xi = i;
