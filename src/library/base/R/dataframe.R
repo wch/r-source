@@ -66,7 +66,7 @@ as.data.frame <- function(x, row.names = NULL, optional = FALSE) {
     UseMethod("as.data.frame")
 }
 as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
-    stop(paste("can't coerce", class(x), "into a data.frame"))
+    stop(paste("can't coerce class", dQuote(class(x)), "into a data.frame"))
 
 
 ###  Here are methods ensuring that the arguments to "data.frame"
