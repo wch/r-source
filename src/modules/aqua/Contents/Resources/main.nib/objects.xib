@@ -4,7 +4,7 @@
   <object name="rootObject" class="NSCustomObject" id="1">
     <string name="customClass">NSApplication</string>
   </object>
-  <array count="35" name="allObjects">
+  <array count="39" name="allObjects">
     <object class="IBCarbonMenu" id="29">
       <string name="title">main</string>
       <array count="4" name="items">
@@ -194,9 +194,6 @@
         <string name="bounds">0 0 360 480 </string>
       </object>
       <boolean name="liveResize">TRUE</boolean>
-      <int name="carbonWindowClass">6</int>
-      <int name="themeBrush">0</int>
-      <int name="windowPosition">0</int>
     </object>
     <reference idRef="167"/>
     <reference idRef="184"/>
@@ -204,8 +201,35 @@
     <reference idRef="187"/>
     <reference idRef="188"/>
     <reference idRef="189"/>
+    <object class="IBCarbonWindow" id="190">
+      <string name="windowRect">211 300 376 564 </string>
+      <string name="title">About RAqua</string>
+      <object name="rootControl" class="IBCarbonRootControl" id="191">
+        <string name="bounds">0 0 165 264 </string>
+        <array count="2" name="subviews">
+          <object class="IBCarbonStaticText" id="194">
+            <string name="bounds">20 87 39 177 </string>
+            <string name="title">R for MacOS X</string>
+          </object>
+          <object class="IBCarbonStaticText" id="196">
+            <string name="bounds">116 87 132 163 </string>
+            <ostype name="controlSignature">????</ostype>
+            <int name="controlID">132</int>
+          </object>
+        </array>
+      </object>
+      <boolean name="hasCollapseBox">FALSE</boolean>
+      <boolean name="hasHorizontalZoom">FALSE</boolean>
+      <boolean name="isResizable">FALSE</boolean>
+      <boolean name="hasVerticalZoom">FALSE</boolean>
+      <int name="themeBrush">1</int>
+      <int name="windowPosition">1</int>
+    </object>
+    <reference idRef="191"/>
+    <reference idRef="194"/>
+    <reference idRef="196"/>
   </array>
-  <array count="35" name="allParents">
+  <array count="39" name="allParents">
     <reference idRef="1"/>
     <reference idRef="29"/>
     <reference idRef="131"/>
@@ -241,8 +265,14 @@
     <reference idRef="184"/>
     <reference idRef="154"/>
     <reference idRef="154"/>
+    <reference idRef="1"/>
+    <reference idRef="190"/>
+    <reference idRef="191"/>
+    <reference idRef="191"/>
   </array>
-  <dictionary count="3" name="nameTable">
+  <dictionary count="4" name="nameTable">
+    <string>AboutWindow</string>
+    <reference idRef="190"/>
     <string>Files Owner</string>
     <reference idRef="1"/>
     <string>MainWindow</string>
@@ -250,5 +280,5 @@
     <string>MenuBar</string>
     <reference idRef="29"/>
   </dictionary>
-  <unsigned_int name="nextObjectID">190</unsigned_int>
+  <unsigned_int name="nextObjectID">197</unsigned_int>
 </object>
