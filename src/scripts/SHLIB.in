@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.11 $'
+revision='$Revision: 1.12 $'
 version=`set - ${revision}; echo ${2}`
 version="R shared library builder ${version}"
 
@@ -26,6 +26,8 @@ lib=
 objs=
 MAKE=${MAKE-@MAKE@}
 makefiles="-f ${R_HOME}/etc/Makeconf"
+SHLIBLD=@SHLIBLD@
+CXX=@CXX@
 
 while test -n "${1}"; do
   case ${1} in
@@ -37,7 +39,14 @@ while test -n "${1}"; do
       lib=${2}; shift ;;
     --output=*)
       lib=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
-    *.?)
+    *.cc)
+      if test -z "${lib}"; then
+	lib="`echo ${1} | sed 's/\.[^\.][^\.]*$/.@SHLIBEXT@/'`"
+      fi
+      objs="${objs} `echo ${1} | sed 's/\.[^\.][^\.]*$/.o/'`"
+      SHLIBLD=${CXX}
+      ;;
+    *.[cfo])
       if test -z "${lib}"; then
 	lib="`echo ${1} | sed 's/\.[^\.][^\.]*$/.@SHLIBEXT@/'`"
       fi
@@ -51,7 +60,7 @@ if test -r Makevars; then
   makefiles="-f Makevars ${makefiles}"
 fi
 
-${MAKE} ${makefiles} SHLIB="${lib}" OBJS="${objs}"
+${MAKE} ${makefiles} SHLIBLD="${SHLIBLD}" SHLIB="${lib}" OBJS="${objs}"
 
 ### Local Variables: ***
 ### mode: sh ***

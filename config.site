@@ -92,3 +92,17 @@
 
 # For `-l' and `-L' options to pass to the linker.
 # LIBS=
+
+# The command which runs the C++ compiler.  It not specified, configure
+# uses the values of the environment variables `CXX' or `CCC' if set,
+# and then looks under the names `c++', `g++', `gcc', `CC', `cxx', and
+# `cc++' (in that order).
+# CXX=
+# Options for the C++ compiler.
+# CXXFLAGS=
+# Any special flags which must be used when compiling C++ code to be
+# turned into a shared library.  If this variable is left unspecified
+# an attempt is made to automatically detect the correct value by
+# configure.
+# CXXPICFLAGS=
+

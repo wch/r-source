@@ -311,6 +311,11 @@ AC_SUBST(FC)
 AC_SUBST(F2C)
 AC_SUBST_FILE(f77_rules_frag)
 
+## C++ compiler.
+
+AC_PROG_CXX
+AC_PROG_CXXCPP
+
 ### Libraries.
 
 ## Make sure that non-standard directories specified via `-L' are really
@@ -421,6 +426,7 @@ AC_CHECK_HEADERS(dl.h dlfcn.h elf.h floatingpoint.h fpu_control.h \
   ieee754.h ieeefp.h locale.h readline/history.h readline/readline.h \
   rpc/rpc.h rpc/xdr.h string.h sys/param.h sys/stat.h sys/time.h \
   sys/times.h unistd.h)
+AC_CHECK_HEADERS(netdb.h netinet/in.h netinet/tcp.h sys/socket.h)
 case "${host}" in
   *sunos4*)
     AC_DEFINE(SunOS4) ;;
@@ -443,16 +449,13 @@ if test "${cross_compiling}" = yes; then
 fi
 AC_CHECK_SIZEOF(long, 4)
 
-if test "${GCC}" = yes; then
-  case "${host}" in
-    i[[3456789]]86-*-*)
-      R_PROG_CC_FLAG(-mieee-fp,
-	R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-fp")
-      ;;
-  esac
-fi
-
 case "${host}" in
+  i[[3456789]]86-*-*)
+    R_PROG_CC_FLAG(-mieee-fp,
+      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-fp")
+    R_PROG_CXX_FLAG(-mieee-fp,
+      R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -mieee-fp")
+    ;;
   *aix4.[[2-9]]*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     if test "${GCC}" = yes; then
@@ -464,19 +467,19 @@ case "${host}" in
   alpha*osf*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ## <Albrecht.Gebhardt@uni-klu.ac.at>
-    if test -z "${GCC}"; then
+    if test "${GCC}" = yes; then
+      R_PROG_CC_FLAG(-mieee,
+        R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee")
+    else
       R_PROG_CC_FLAG(-ieee_with_inexact,
         R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact")
       R_PROG_CC_FLAG(-std1,
         R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -std1")
-    else
-      R_PROG_CC_FLAG(-mieee,
-        R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee")
     fi
-    if test -z "${G77}"; then
-      R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -fpe3"
-    else
+    if test "${G77}" = yes; then
       R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee"
+    else
+      R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -fpe3"
     fi
     ## </Albrecht.Gebhardt@uni-klu.ac.at>
     ;;
@@ -500,9 +503,11 @@ case "${host}" in
 esac
 
 AC_SUBST(CFLAGS)
+AC_SUBST(CXXFLAGS)
 AC_SUBST(FFLAGS)
 AC_SUBST(F2CFLAGS)
 AC_SUBST(R_XTRA_CFLAGS)
+AC_SUBST(R_XTRA_CXXFLAGS)
 AC_SUBST(R_XTRA_FFLAGS)
 AC_SUBST(R_XTRA_LIBS)
 
@@ -513,8 +518,8 @@ AC_SUBST(R_XTRA_LIBS)
 ## MAINLD, MAINLDFLAGS
 ##   command and flags for loading the main binary so that it will load
 ##   shared libraries (DLLs) at runtime
-## CPICFLAGS, FPICFLAGS
-##   flags for compiling C and Fortran library code
+## CPICFLAGS, CXXPICFLAGS, FPICFLAGS
+##   flags for compiling C, C++, and Fortran library code
 ## SHLIBLD, SHLIBLDFLAGS
 ##   command and flags for creating DLLs
 ##
@@ -541,11 +546,18 @@ if test -n "${XMKMF}"; then
     cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
     fpicflags=${cpicflags}
   fi
+  cxx=`${srcdir}/tools/GETMAKEVAL CXX`
+  if test "`which ${cxx}`" = "`which ${CXX}`"; then
+    cxxpicflags=`${srcdir}/tools/GETMAKEVAL CXXPICFLAGS`
+  fi
   rm -f Imakefile Makefile
 fi
 if test "${GCC}" = yes; then
   cpicflags=-fPIC
   shlibldflags=-shared
+fi
+if test "${GXX}" = yes; then
+  cxxpicflags=-fPIC
 fi
 if test "${G77}" = yes; then
   fpicflags=-fPIC
@@ -569,6 +581,7 @@ case "${host}" in
   alpha*osf*)
     mainld="${FC} -g -nofor_main -fpe3 "
     cpicflags=
+    cxxpicflags=
     shlibld=${FC}
     shlibldflags=-shared
     ;;
@@ -655,6 +668,16 @@ if test -z "${CPICFLAGS}"; then
   esac
 fi
 : ${FPICFLAGS=${fpicflags}}
+: ${CXXPICFLAGS=${cxxpicflags}}
+if test -z "${CXXPICFLAGS}"; then
+  case "${host}" in
+    alpha*osf*)
+      ;;
+    *)
+      AC_MSG_WARN([Could not determine CXXPICFLAGS.])
+      ;;
+  esac
+fi
 : ${SHLIBLD=${shlibld}}
 : ${SHLIBLDFLAGS=${shlibldflags}}
 if test -z "${SHLIBLDFLAGS}"; then
@@ -666,6 +689,7 @@ AC_SUBST(MAINLD)
 AC_SUBST(MAINLDFLAGS)
 AC_SUBST(CPICFLAGS)
 AC_SUBST(FPICFLAGS)
+AC_SUBST(CXXPICFLAGS)
 AC_SUBST(SHLIBLDFLAGS)
 AC_SUBST(SHLIBEXT)
 AC_SUBST(SHLIBLD)
