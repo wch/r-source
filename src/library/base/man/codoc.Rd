@@ -57,3 +57,4 @@ codoc(dir, use.values = FALSE, use.positions = TRUE,
 \seealso{
   \code{\link{undoc}}
 }
+\keyword{documentation}
