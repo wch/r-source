@@ -10,7 +10,7 @@ delay(expr, env=.GlobalEnv)
 }
 \description{
   \code{delay} creates a \emph{promise} to evaluate the given
-  expression in the specifies environment if its value is requested.
+  expression in the specified environment if its value is requested.
   This provides direct access to \emph{lazy evaluation} mechanism
   used by \R for the evaluation of (interpreted) functions.
 }
