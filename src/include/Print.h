@@ -71,7 +71,7 @@ void printArray(SEXP, int);
 void printMatrix(SEXP, int, SEXP, int, int);
 void printNamedVector(SEXP, SEXP, int);
 void printVector(SEXP, int, int);
-void printRealVector(double * x, int n, int index);
+void printRealVector(double *x, int n, int index);
 void printComplexVector(complex *x, int n, int index);
 
 #endif
