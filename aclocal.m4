@@ -263,13 +263,12 @@ EOF
     rm -rf conftest conftest.* conftestf.*
     if test -z "${r_cv_f77_append_underscore}"; then
       AC_MSG_ERROR([Nothing worked - cannot use FORTRAN])
-    else
-      AC_MSG_RESULT([${r_cv_f77_append_underscore}])
-      if test "${r_cv_f77_append_underscore}" = yes; then
-	AC_DEFINE(HAVE_F77_UNDERSCORE)
-      fi
     fi
   ])
+  AC_MSG_RESULT([${r_cv_f77_append_underscore}])
+  if test "${r_cv_f77_append_underscore}" = yes; then
+    AC_DEFINE(HAVE_F77_UNDERSCORE, 1)
+  fi
 ])
 
 AC_DEFUN(OCTAVE_CC_FLAG, [
