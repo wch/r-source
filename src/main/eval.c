@@ -1057,7 +1057,7 @@ SEXP do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
     t = CAR(cptr->call);
     s = findFun(t, cptr->sysparent);
     PROTECT(t = LCONS(t,args));
-    ans = applyClosure(t, s, args, rho, R_NilValue);
+    ans = applyClosure(t, s, args, cptr->sysparent, R_NilValue);
     UNPROTECT(1);
     return ans;
 }
