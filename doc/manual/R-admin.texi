@@ -618,6 +618,13 @@ interface to @code{install.packages}, @code{update.packages} and
 @code{library}.
 
 
+On Mac OS X @code{install.packages} works as it does on other Unix
+systems, but there is an additional function @code{install.binaries}
+that will download and install binary packages from
+@acronym{CRAN}. These Macintosh binary package files have the
+extension @code{tgz}. The Aqua GUI provides for installation of either
+binary or source packages, from @acronym{CRAN} or local files.
+
 @node Updating packages, Removing packages, Installing packages, Add-on packages
 @section Updating packages
 @findex update.packages
@@ -1227,13 +1234,22 @@ libraries with the exception of the ATLAS BLAS libraries.
 @subsection Mac OS X
 @cindex Mac OS X
 
-You can build @R{} as a Unix application on Mac OS X.  You will need Apple Developer
-Tools, @command{f2c} or @command{g77}.  You will also need to install an X sub-system 
-or configure with @option{--without-x}. The X window manager is part of the 
-standard Mac OS X distribution since Mac OS X version 10.3.
+You can build @R{} as a Unix application on Mac OS X using the Apple
+Developer Tools and @command{f2c} or @command{g77}.  You will also
+need to install an X sub-system or configure with
+@option{--without-x}. The X window manager is part of the standard Mac
+OS X distribution since Mac OS X version 10.3 (Panther).
 
-For more information on how to find these tools please read the  
-@uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac OS X @acronym{FAQ}}.
+For more information on how to find these tools please read the
+@uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac
+OS X @acronym{FAQ}}.
+
+If you use the X window manager and prefer @code{Terminal.app} to
+@code{xterm}, you should be aware that @R{}, like many Unix tools,
+uses the existence of a @code{DISPLAY} environment variable to
+determine whether an X system is running. This affects the default
+graphics device for the commmand line version of R and the behaviour
+of the @code{png()} and @code{jpeg} devices.
 
 
 @cindex BLAS library
@@ -1245,10 +1261,11 @@ configuration options
 @end smallexample
 
 @noindent
-to provide higher-performance versions of the BLAS and LAPACK routines.
-With @command{gcc 3.1} that appears to be the only way to build @R{}, as
-the Fortran support routines in @code{libg2c} cannot be linked into a
-dynamic library.  (We have had reports of success with @command{gcc 3.3}.)
+to provide higher-performance versions of the BLAS and LAPACK
+routines.  With @command{gcc 3.1} that appears to be the only way to
+build @R{}, as the Fortran support routines in @code{libg2c} cannot be
+linked into a dynamic library.  (We have had reports of success and of
+failure with @command{gcc 3.3}.)
 
 
 @node Solaris, HP-UX, Mac OS X, Platform notes
@@ -1581,6 +1598,7 @@ enabling the Java search engine.
 * Java Virtual Machines on Linux ::  
 * Java Virtual Machines on Unix::  
 * Java Virtual Machines on Windows ::  
+* Java Virtual Machines on Mac OS X ::  
 @end menu
 
 @node Java Virtual Machines on Linux , Java Virtual Machines on Unix, Enabling search in HTML help, Enabling search in HTML help
@@ -1624,9 +1642,8 @@ distributions of @code{j2re 1.4.2_01} available: see
 http://www.MedAnalytics.com/INSTALL
 @end smallexample
 
-Sun's @code{j2re 1.4.x} is said not to work with Mozilla 1.6 under Mac OS X.
 
-@node Java Virtual Machines on Windows ,  , Java Virtual Machines on Unix, Enabling search in HTML help
+@node Java Virtual Machines on Windows , Java Virtual Machines on Mac OS X  , Java Virtual Machines on Unix, Enabling search in HTML help
 @section Java Virtual Machines on Windows
 
 We have not seen any problems on Windows provided a Java Virtual Machine
@@ -1640,6 +1657,14 @@ Defaults' in Windows XP (SP1 or later), and which JVM is used by browser
 plugins may also be controlled by the Sun Java applet in the Control
 Panel.
 
+@node Java Virtual Machines on Mac OS X , , Java Virtual Machines on Windows , Enabling search in HTML help
+@section Java Virtual Machines on Windows
+
+The HTML search engine does not work with Safari under Mac OS X, and
+Sun's @code{j2re 1.4.x} is said not to work with Mozilla 1.6.
+
+The Aqua GUI provides an interface to @code{help.search} that may
+substitute for the Java search.
 
 @node New platforms, Function and variable index, Enabling search in HTML help, Top
 @appendix New platforms
