@@ -806,13 +806,13 @@ static SEXP modLa_dgeqp3(SEXP Ain)
     F77_CALL(dgeqp3)(&m, &n, REAL(A), &m, INTEGER(jpvt), REAL(tau),
 		     &tmp, &lwork, rwork, &info);
     if (info < 0)
-	error("error code %d from Lapack routine dqeqp3", info);
+	error("error code %d from Lapack routine dgeqp3", info);
     lwork = (int) tmp;
     work = (double *) R_alloc(lwork, sizeof(double));
     F77_CALL(dgeqp3)(&m, &n, REAL(A), &m, INTEGER(jpvt), REAL(tau),
 		     work, &lwork, rwork, &info);
     if (info < 0)
-	error("error code %d from Lapack routine dqeqp3", info);
+	error("error code %d from Lapack routine dgeqp3", info);
     val = PROTECT(allocVector(VECSXP, 4));
     nm = PROTECT(allocVector(STRSXP, 4));
     rank = PROTECT(allocVector(INTSXP, 1));
