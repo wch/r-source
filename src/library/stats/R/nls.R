@@ -421,7 +421,7 @@ nls <-
         as.formula(paste("~", paste( varNames[varIndex], collapse = "+")),
                    env = environment(formula))
 
-    mf$start <- mf$control <- mf$algorithm <- mf$trace <- NULL
+    mf$start <- mf$control <- mf$algorithm <- mf$trace <- mf$model <- NULL
     mf[[1]] <- as.name("model.frame")
     mf <- as.list(eval(mf, parent.frame()))
     if (missing(start)) start <- getInitial(formula, mf)
@@ -442,7 +442,7 @@ nls <-
     nls.out$call$trace <- trace
     nls.out$na.action <- attr(mf, "na.action")
     nls.out$dataClasses <- attr(attr(mf, "terms"), "dataClasses")
-    if(model) nls.out <- mf
+    if(model) nls.out$model <- mf
     class(nls.out) <- "nls"
     nls.out
 }
