@@ -2107,13 +2107,14 @@ SEXP do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 /* ------------------- internet access functions  --------------------- */
 
 void *R_HTTPOpen(const char *url);
-int  R_HTTPRead(void *ctx, void *dest, int len);
-void R_HTTPClose(void *ctx);
+int   R_HTTPRead(void *ctx, void *dest, int len);
+void  R_HTTPClose(void *ctx);
 
 void *R_FTPOpen(const char *url);
-int  R_FTPRead(void *ctx, void *dest, int len);
-void R_FTPClose(void *ctx);
+int   R_FTPRead(void *ctx, void *dest, int len);
+void  R_FTPClose(void *ctx);
 
+static Rboolean IDquiet=TRUE;
 
 static void url_open(Rconnection con)
 {
@@ -2243,6 +2244,8 @@ static Rconnection newurl(char *description, char *mode)
 	free(new->description); free(new->class); free(new);
 	error("allocation of url connection failed");
     }
+
+    IDquiet = TRUE;
     return new;
 }
 
@@ -2351,7 +2354,7 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
     if(length(sfile) > 1)
 	warning("only first element of `destfile' argument used");
     file = CHAR(STRING_ELT(sfile, 0));
-    quiet = asLogical(CADDR(args));
+    IDquiet = quiet = asLogical(CADDR(args));
     if(quiet == NA_LOGICAL)
 	error("invalid `quiet' argument");
     smode =  CADDDR(args);
@@ -2555,7 +2558,8 @@ InternetCallback(HINTERNET hInternet, DWORD context, DWORD Status,
 void *R_HTTPOpen(const char *url)
 {
     WIctxt  wictxt;
-    DWORD status, d1 = 4, d2 = 0;
+    DWORD status, d1 = 4, d2 = 0, d3 = 100;
+    char buf[101];
     
 /*	BOOL res = InternetAttemptConnect(0);
 
@@ -2583,7 +2587,9 @@ void *R_HTTPOpen(const char *url)
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     InternetSetStatusCallback(wictxt->hand,
 			      (INTERNET_STATUS_CALLBACK) InternetCallback);
-    Rprintf("using Asynchronous WinInet calls\n");
+    if(!IDquiet) 
+	Rprintf("using Asynchronous WinInet calls, timeout %d secs\n", 
+		timeout);
 
     callback_status = 0;
     InternetOpenUrl(wictxt->hand, url,
@@ -2607,7 +2613,7 @@ void *R_HTTPOpen(const char *url)
     
     wictxt->session = (HINTERNET) callback_res->dwResult;
 #else
-    Rprintf("using Synchronous WinInet calls\n");
+    if(!IDquiet) Rprintf("using Synchronous WinInet calls\n");
     wictxt->session = InternetOpenUrl(wictxt->hand, url,
 				      NULL, 0,
         INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
@@ -2626,13 +2632,20 @@ void *R_HTTPOpen(const char *url)
 	InternetCloseHandle(wictxt->session);
 	InternetCloseHandle(wictxt->hand);
 	free(wictxt);
-	error("cannot open: status code %d\n", status);
+	HttpQueryInfo(wictxt->session,
+		      HTTP_QUERY_STATUS_TEXT, &buf, &d3, &d2);
+	error("cannot open: HTTP status code was %d %s\n", status, buf);
     }
 
-    HttpQueryInfo(wictxt->session,
-		  HTTP_QUERY_CONTENT_LENGTH | HTTP_QUERY_FLAG_NUMBER,
-		  &status, &d1, &d2);
-    Rprintf("Content length %d bytes\n", status);
+    if(!IDquiet) {
+	HttpQueryInfo(wictxt->session,
+		      HTTP_QUERY_CONTENT_TYPE, &buf, &d3, &d2);
+	HttpQueryInfo(wictxt->session,
+		      HTTP_QUERY_CONTENT_LENGTH | HTTP_QUERY_FLAG_NUMBER,
+		      &status, &d1, &d2);
+	Rprintf("Content type `%s' length %d bytes\n", buf, status);
+    }
+    
     return (void *)wictxt;
 }
 
@@ -2688,7 +2701,9 @@ void *R_FTPOpen(const char *url)
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     InternetSetStatusCallback(wictxt->hand,
 			      (INTERNET_STATUS_CALLBACK) InternetCallback);
-    Rprintf("using Asynchronous WinInet calls\n");
+    if(!IDquiet) 
+	Rprintf("using Asynchronous WinInet calls, timeout %d secs\n", 
+		timeout);
 
     callback_status = 0;
     InternetOpenUrl(wictxt->hand, url,
@@ -2711,7 +2726,7 @@ void *R_FTPOpen(const char *url)
 
     wictxt->session = (HINTERNET) callback_res->dwResult;
 #else
-    Rprintf("using Synchronous WinInet calls\n");
+    if(!IDquiet) Rprintf("using Synchronous WinInet calls\n");
     wictxt->session = InternetOpenUrl(wictxt->hand, url,
 				      NULL, 0,
         INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
