@@ -68,25 +68,21 @@ showMethods(f = character(), where = topenv(parent.frame()),
 }
 \examples{
 \dontshow{
-setClass("track",
-            representation(x="numeric", y="numeric"))
-## First, with only one object as argument:
-setMethod("plot", signature(x="track", y="missing"),
-  function(x,  y, ...) plot(slot(x, "x"), slot(x, "y"), ...)
-)
-## Second, plot the data from the track on the y-axis against anything
-## as the x data.
-setMethod("plot", signature(y = "track"),
- function(x, y, ...) plot(x, slot(y, "y"), ...)
-)
-setMethod("plot", "track",
- function(x, y, ...) plot(slot(x, "y"), y,  ...)
-)
+ setClass("track",
+          representation(x="numeric", y="numeric"))
+ ## First, with only one object as argument:
+ setMethod("plot", signature(x="track", y="missing"),
+           function(x,  y, ...) plot(slot(x, "x"), slot(x, "y"), ...))
+ ## Second, plot the data from the track on the y-axis against anything
+ ## as the x data.
+ setMethod("plot", signature(y = "track"),
+           function(x, y, ...) plot(x, slot(y, "y"), ...))
+ setMethod("plot", "track",
+           function(x, y, ...) plot(slot(x, "y"), y,  ...))
 }
-## assuming the methods for plot
-## are set up as in the documentation for setMethod,
-## print (without definitions) the methods that involve
-## class "track"
+## Assuming the methods for plot
+## are set up as in the example of help(setMethod),
+## print (without definitions) the methods that involve class "track":
 showMethods("plot", classes = "track")
 \dontrun{
 Function "plot":

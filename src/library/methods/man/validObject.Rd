@@ -9,15 +9,16 @@
   or an error is generated (according to whether \code{test} is
   \code{TRUE}).
 
-  The function \code{setValidity}  sets
-  the validity method of a class (but more normally, this method will
-  be supplied as the \code{validity} argument to \code{\link{setClass}}).  The method should be a function of one
-  object that returns \code{TRUE} or a description of the non-validity.
+  The function \code{setValidity} sets the validity method of a class
+  (but more normally, this method will be supplied as the
+  \code{validity} argument to \code{\link{setClass}}).  The method
+  should be a function of one object that returns \code{TRUE} or a
+  description of the non-validity.
 }
 \usage{
-validObject(object, test)
+validObject(object, test = FALSE)
 
- setValidity(Class, method, where = topenv(parent.frame()) )
+setValidity(Class, method, where = topenv(parent.frame()) )
 }
 \arguments{
   \item{object}{ Any object, but not much will happen unless the
