@@ -92,8 +92,8 @@ NEW FEATURES
 	levels c(FALSE, TRUE) (rather than 0-1 valued numerical
 	variables).  This makes R compatible with all S versions.
 
-    o   Modified `save' internals to improve performance when saving large
-	collections of code.
+    o	Modified `save' internals to improve performance when saving
+	large collections of code.
 
     o   As an experiment only, "=" is now allowed as an assignment
         operator in the grammar.  This is not a commitment that it
@@ -208,12 +208,17 @@ NEW FEATURES
 	than a confusing error message (for compatibility with S4).
 
     o   axis.POSIXct() allows the label date/times to be specified
-	via the news `at' argument.
+	via the new `at' argument.
 
-    o   princomp() has a formula interface.
+    o   princomp() now has a formula interface.
 
     o   factanal() and princomp() use napredict() on their scores, so
 	na.action = na.exclude is supported.
+
+    o   loess(), lqs(), nls() and ppr() use the standard na-handling
+	and so support na.action = na.exclude.
+
+    o   predict.ppr() now predicts on `newdata' containing NAs.
 
 
 
@@ -237,7 +242,7 @@ BUG FIXES
 
     o   substr<- was misbehaving if the replacement was too short.
 
-    o   The version of packages.html generated when building R or
+    o   The version of `packages.html' generated when building R or
 	installing packages had an incorrect link to the style sheet.
 	The version used by help.start() was correct. (PR#1090)
 
@@ -247,7 +252,10 @@ BUG FIXES
     o   plot.POSIX[cl]t now respect the `xaxt' parameter.
 
     o   It is now possible to predict from an intercept-only model:
-	previously model.matrix() objected to a 0-column model frame.
+	previously model.matrix.default() objected to a 0-column
+	model frame.
+
+    o   c.POSIXct was not setting the right classes in 1.3.x.
 
 
 

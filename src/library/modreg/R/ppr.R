@@ -13,6 +13,7 @@ function(formula, data=sys.parent(), weights, subset,
     m$contrasts <- m$... <- NULL
     m[[1]] <- as.name("model.frame")
     m <- eval(m, parent.frame())
+    na.act <- attr(m, "na.action")
     Terms <- attr(m, "terms")
     attr(Terms, "intercept") <- 0
     X <- model.matrix(Terms, m, contrasts)
@@ -20,6 +21,7 @@ function(formula, data=sys.parent(), weights, subset,
     w <- model.extract(m, weights)
     if(length(w) == 0) w <- rep(1, nrow(X))
     fit <- ppr.default(X, Y, w, ...)
+    if(!is.null(na.act)) fit$na.action <- na.act
     fit$terms <- Terms
     fit$call <- call
     structure(fit, class=c("ppr.form", "ppr"))
@@ -164,20 +166,30 @@ plot.ppr <- function(x, ask, type="o", ...)
 
 predict.ppr <- function(object, newdata, ...)
 {
-    if(missing(newdata)) return(object$fitted)
-    if(!is.null(object$terms))
-	x <- model.matrix(delete.response(object$terms), newdata)
-    else x <- as.matrix(newdata)
+    if(missing(newdata)) return(fitted(object))
+    if(!is.null(object$terms)) {
+        newdata <- as.data.frame(newdata)
+        rn <- row.names(newdata)
+# work hard to predict NA for rows with missing data
+        Terms <- delete.response(object$terms)
+        m <- model.frame(Terms, newdata, na.action = na.omit)
+        keep <- match(row.names(m), rn)
+        x <- model.matrix(Terms, m, contrasts = object$contrasts)
+    } else {
+        x <- as.matrix(newdata)
+        keep <- 1:nrow(x)
+        rn <- dimnames(x)[[1]]
+    }
     if(ncol(x) != object$p) stop("wrong number of columns in x")
-    drop(matrix(.Fortran("bdrpred",
-			 as.integer(nrow(x)),
-			 as.double(x),
-			 as.double(object$smod),
-			 y = double(nrow(x)*object$q),
-			 double(2*object$smod[4]),
-			 PACKAGE="modreg"
-			 )$y,
-		ncol=object$q,
-		dimnames=list(dimnames(x)[[1]], object$ynames)
-		))
+    res <- matrix(NA, length(keep), object$q,
+                  dimnames = list(rn, object$ynames))
+    res[keep, ] <- matrix(.Fortran("bdrpred",
+                                   as.integer(nrow(x)),
+                                   as.double(x),
+                                   as.double(object$smod),
+                                   y = double(nrow(x)*object$q),
+                                   double(2*object$smod[4]),
+                                   PACKAGE="modreg"
+                                   )$y, ncol=object$q)
+    drop(res)
 }

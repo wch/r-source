@@ -18,6 +18,7 @@ function(formula, data=NULL, weights, subset, na.action, model = FALSE,
     mf[[1]] <- as.name("model.frame")
     mf <- eval(mf, parent.frame())
     if (match.arg(method) == "model.frame") return(mf)
+    na.act <- attr(mf, "na.action")
     y <- model.response(mf, "numeric")
     w <- model.weights(mf)
     if(is.null(w)) w <- rep(1, length(y))
@@ -49,6 +50,7 @@ function(formula, data=NULL, weights, subset, na.action, model = FALSE,
     fit$y <- y
     fit$weights <- w
     if(model) fit$model <- mf
+    if(!is.null(na.act)) fit$na.action <- na.act
     fit
 }
 
