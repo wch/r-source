@@ -5,11 +5,12 @@
 #	R INSTALL [(+|-)debug] [-help/+help] [-html/+html] [-latex/+latex]
 #                 [+docs/-docs] pkg [lib]
 
+DEBUG=false
 IHELP=true
 IHTML=true
 ILATEX=true
 if [ "$1" = "+debug" ]; then shift; DEBUG=true;   fi
-if [ "$1" = "-debug" ]; then shift; DEBUG=true;   fi
+if [ "$1" = "-debug" ]; then shift; DEBUG=false;  fi
 if [ "$1" = "+help" ];  then shift; IHELP=true;   fi
 if [ "$1" = "-help" ];  then shift; IHELP=false;  fi
 if [ "$1" = "+html" ];  then shift; IHTML=true;   fi
@@ -63,8 +64,7 @@ if test -d R; then dir=R; elif test -d funs; then dir=funs; fi
 if test "$dir"; then
   echo "${dir}"
   test -d ${lib}/${pkg}/R || mkdir ${lib}/${pkg}/R
-  cat `ls ${dir}/[a-z]* | sed '/CVS/d; /~$/d; /\.orig$/d; /\.bak$/d;
-		/^core$/d; /system.*/d'` > ${lib}/${pkg}/R/${pkg}
+  cat `ls ${dir}/*.[RSqrs]` > ${lib}/${pkg}/R/${pkg}
 fi
 
 if test -d data; then
@@ -89,7 +89,6 @@ fi
 (cd ${lib}; cat */TITLE > LibIndex 2> /dev/null)
 
 echo "DONE"
-
 
 # ----------- Installing help pages ------
 
@@ -129,15 +128,15 @@ else
 fi
 
 if ${IHELP}; then
-    BUILDHELPOPTS="${BUILDHELPOPTS} --nroff"
+  BUILDHELPOPTS="${BUILDHELPOPTS} --nroff"
 fi
 
 if ${IHTML}; then
-    BUILDHELPOPTS="${BUILDHELPOPTS} --html"
+  BUILDHELPOPTS="${BUILDHELPOPTS} --html"
 fi
 
 if ${ILATEX}; then
-    BUILDHELPOPTS="${BUILDHELPOPTS} --latex"
+  BUILDHELPOPTS="${BUILDHELPOPTS} --latex"
 fi
 
 if ${DEBUG}; then
