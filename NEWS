@@ -203,7 +203,8 @@ NEW FEATURES
 	option.
 
     o   read.table.url() and related functions now use download.file,
-	which has an extra "socket" method for direct HTTP socket connection.
+	which has an extra "socket" method for direct HTTP socket
+        connection. download.file has new option ``quiet''.
 
     o	pairs.default() has an oma argument to allow users to override
 	the internal setting of that graphics parameter.
