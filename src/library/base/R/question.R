@@ -27,6 +27,5 @@ topicName <- function(type, topic) {
     if((length(type) == 0) || (length(topic) == 0))
         character(0)
     else
-        paste(topic, type, sep = "-")
+        paste(paste(topic, collapse = ","), type, sep = "-")
 }
-   
