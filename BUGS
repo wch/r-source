@@ -96,11 +96,6 @@ Date: Mon, 2 Sep 2002 09:27:36 +0200 (MET DST)
 Subject: xlim in plot.survfit() [with a discussion on "..."]
 From: jerome@hivnet.ubc.ca
 Date: Wed, 16 Oct 2002 18:46:11 +0200 (MET DST)
-* PR# 2320 *
-Subject: Segmentation fault using "survival" package
-From: jerome@hivnet.ubc.ca
-Date: Sat, 23 Nov 2002 00:51:50 +0100 (MET)
-..still true in 1.7.1 and R-devel (2003-08-13)
 * PR# 2322 *
 Subject: simplex
 From: george@lecompte.org
@@ -276,6 +271,8 @@ Date: Sun, 20 May 2001 10:35:16 +1000
 Subject:  las=1 with log axis 
 From: Peter Dalgaard BSA <pd@pubhealth.ku.dk>
 Date: Wed, 27 Jun 2001 11:54:06 +0200
+..Paul in reply 1: I'm leaving this bug active until these other issues are
+..resolved
 * PR# 1045 *
 Subject: Palette changes on redraw
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -338,10 +335,6 @@ Date: Mon, 24 Feb 2003 18:53:29 +0100 (MET)
 Subject: plot() with type="s" and lty=2
 From: jerome@hivnet.ubc.ca
 Date: Wed, 12 Mar 2003 23:35:59 +0100 (MET)
-* PR# 3099 *
-Subject: surprising behaviour of "bgroup": sets all in greek letters
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Sun, 25 May 2003 18:33:49 +0200
 
 Directory:  In-Out
 
@@ -456,6 +449,11 @@ Date: Fri, 4 Jan 2002 13:34:34 GMT
 Subject: lib.fixup, .GlobalEnv, and R1.5.0
 From: mark.bravington@csiro.au
 Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
+* PR# 4051 *
+Subject: completeSubclasses() methods bug
+From: colin@colinsmith.org
+Date: Tue, 2 Sep 2003 22:15:26 +0200 (MET DST)
+..methods package
 
 Directory:  Low-level
 
@@ -485,34 +483,14 @@ Date: Mon, 4 Nov 2002 10:18:48 +0100
 
 Directory:  Macintosh
 
-* PR# 1819 *
-Subject: Date arithmetic fails
-From: RML27@cornell.edu
-Date: Sun, 21 Jul 2002 20:26:12 +0200 (MET DST)
-..In fact, as.POSIXct is off by 66 years. See
-..   http://developer.apple.com/qa/ops/ops23.html
-..This is semifixed, but timezones still don't work
 * PR# 1991 *
 Subject: Mac Save As... bug
 From: Tim Cole <tjc1@cam.ac.uk>
 Date: Sun, 8 Sep 2002 13:47:00 +0100
-* PR# 2550 *
-Subject: eigen() error: R Version 1.6.1 on Mac OS X
-From: "Daniel E. Weeks" <dweeks@watson.hgen.pitt.edu>
-Date: Fri, 14 Feb 2003 15:36:15 -0500
-* PR# 2725 *
-Subject: Default broswer for OS X
-From: james@freelancepropaganda.com
-Date: Fri, 4 Apr 2003 06:04:48 +0200 (MET DST)
 * PR# 2813 *
 Subject: Search Engine
 From: leroy@ucsd.edu
 Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
-* PR# 3602 *
-Subject: Mac OS 10 (not X11) failure to rotate symbols
-From: "p.b.pynsent" <p.b.pynsent@bham.ac.uk>
-Date: Thu, 31 Jul 2003 17:06:08 +0100
-..not a bug: this is as documented
 
 Directory:  Misc
 
@@ -594,12 +572,6 @@ From: Dirk Eddelbuettel <edd@debian.org>
 Date: Thu, 20 Sep 2001 23:54:19 -0500
 ..This platform turned out to have badly broken FPU behaviour. Given up, at 
 ..least for now .
-* PR# 1140 *
-Subject: Possible bug, Rprof() and scan(pipe())
-From: Don MacQueen <macq@llnl.gov>
-Date: Tue, 23 Oct 2001 13:50:26 -0700
-..MacOS X: Doesn't happen on Solaris or Linux
-..Still happens in pre1.8.0
 * PR# 1261 *
 Subject: R_140 AND RHL_72 AND Packages
 From: Patrick Gonin <gonin@genethon.fr>
@@ -716,56 +688,7 @@ Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
 Subject: sweave provoked segfault
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Mon, 21 Apr 2003 17:01:53 -0400
-* PR# 4051 *
-Subject: completeSubclasses() methods bug
-From: colin@colinsmith.org
-Date: Tue, 2 Sep 2003 22:15:26 +0200 (MET DST)
-..methods package
-* PR# 4052 *
-Subject: STRICTLY CONFIDENTIAL.
-From: "KWAMI OBETE" <3kobete@zwallet.com>
-Date: Tue, 2 Sep 2003 21:22:12 +0000
-* PR# 4053 *
-Subject: Your details
-From: <rene.hron@lsr-noe.gv.at>
-Date: Wed, 3 Sep 2003 0:51:30 --0700
-* PR# 4054 *
-Subject: Insider secrets, tax certificates. tnc
-From: "Mabel Drake" <genrek67@train.net>
-Date: Wed, 03 Sep 03 10:34:50 GMT
-* PR# 4055 *
-Subject: Eat Until You're Thin! 2 Months Free! mpxzycppfgaccmjyyb
-From: "Fay Sewell" <qythy247@yahoo.com>
-Date: Wed, 03 Sep 03 00:49:39 GMT
-* PR# 4056 *
-Subject: Last line in .Rprofile must have newline
-From: hb@maths.lth.se
-Date: Wed, 3 Sep 2003 09:08:46 +0200 (MET DST)
-* PR# 4057 *
-Subject: identify() seg.faults 
-From: Roger.Bivand@nhh.no
-Date: Wed, 3 Sep 2003 09:21:51 +0200 (MET DST)
-* PR# 4058 *
-Subject: Re: Approved
-From: <henrik.andersin@evli.com>
-Date: Wed, 3 Sep 2003 15:48:38 --0700
-* PR# 4059 *
-Subject: 0_ News-Your Private Pharmacy _ tajacgedk 
-From: "Tracy Abrams" <wdfwoj234@smtp.secureserver.net>
-Date: Wed, 03 Sep 03 18:51:31 GMT
-* PR# 4060 *
-Subject: Virus to sender
-From: release@sweeperadmin.co.za
-Date: Wed, 3 Sep 2003 17:59:18 +0200 (EET)
-* PR# 4061 *
-Subject: Increase the Length of your Penis  ceremonious
-From: "Bobbi Copeland" <vcuofbk757v4@sohu.com.cn>
-Date: Wed, 03 Sep 03 22:34:09 GMT
-* PR# 4062 *
-Subject: family fun>>family movie Motion Picture ROAR, the
-From: "Pansy Tatum" <gug323ndx@aol.com>
-Date: Thu, 04 Sep 03 06:14:00 GMT
-* PR# 4063 *
-Subject: IMPORTANT
-From: gogobe_lalahim@latinmail.com
-Date: Wed, 3 Sep 2003 21:33:32 +0200
+* PR# 4071 *
+Subject: "euro"
+From: a9709233@unet.univie.ac.at
+Date: Thu, 4 Sep 2003 23:54:18 +0200 (MET DST)
