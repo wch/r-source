@@ -61,10 +61,6 @@ system(command, intern=FALSE, wait=TRUE, input,
     directory, the working directory and the Windows system directories
     before \code{PATH}.
 
-    If the path to the command contains spaces, the relevant parts of
-    the path must be quoted, for example \code{system('"/Program
-	Files/something or another/some.exe"').
-
     Precisely what is seen by the user depends on whether \code{Rgui} or
     \code{Rterm} is being used.  For \code{Rgui} a new console will
     always be used, so a commands window will appear for the duration of

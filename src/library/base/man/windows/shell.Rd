@@ -45,18 +45,13 @@ shell(cmd, shell, flag="/c", intern=FALSE, wait=TRUE,
 }
 \details{
     If no \code{shell} is specified, the environment variables
-    \code{R_SHELL}, \code{SHELL} and \code{COMSPEC} are tried in turn:
+    \code{R\_SHELL}, \code{SHELL} and \code{COMSPEC} are tried in turn:
     \code{COMSPEC} should always succeed. Using \code{shell=NULL}
     invokes the command \code{cmd} directly, in which case an extension
     of \code{.exe} is assumed. It is possible to use batch files
     directly if their extension is given: Windows (rather than \R) then
     chooses a shell.
     
-    If the path to the command contains spaces, the relevant parts of
-    the path must be quoted, for example \code{shell('"/Program
-    Files/something or another/some.exe"').  For this to work the
-    shell must handle quoted paths correctly.
-
     See \code{\link{system}} for fuller details: \code{shell} is a more
     user-friendly wrapper for \code{system}.
 }
