@@ -71,7 +71,7 @@
   packages than \code{methods} and \code{ctest} when you start, insert
   a call to \code{\link{options}} in the
   \code{.Rprofile} or \code{Rprofile.site} file.  For example,
-  \code{options(defaultPakages = character())} will attach no extra
+  \code{options(defaultPackages = character())} will attach no extra
   packages on startup.
 
   The commands history is read from the file specified by the
