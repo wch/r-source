@@ -392,24 +392,53 @@ installed is available from the shell variable @code{R_PACKAGE_NAME}.
 
 @findex R CMD check
 Using @code{R CMD check}, the @R{} package checker, one can test whether
-@emph{installed} @R{} packages work correctly.  This checks whether the
-examples provided by the packages' documentation can be run successfully
+@emph{source} @R{} packages work correctly.  This runs a series of checks.
+
+@enumerate
+@item
+It tried installing the package.  This will warn about
+missing cross-references and duplicate aliases in help files.
+
+@item
+The @code{DESCRIPTION} file is checked for completeness.
+
+@item
+The @code{Rd} files are checked for @code{\name}, @code{\alias} and
+@code{\keyword} fields.
+
+@item
+A check is made for undocumented user-level objects in the package.
+
+@item
+The examples provided by the packages' documentation are run
 (@pxref{Writing R documentation}, for information on using
-@code{\examples} to create executable example code.)  If the package
-sources contain a @file{tests} directory then the tests specified in
-that directory are run. (Typically they will consist of a set of
-@file{.R} source files and target output files @file{.Rout.save}.)
+@code{\examples} to create executable example code.)
 
 Of course, released packages should be able to run at least their own
 examples.
 
+@item
+If the package
+sources contain a @file{tests} directory then the tests specified in
+that directory are run. (Typically they will consist of a set of
+@file{.R} source files and target output files @file{.Rout.save}.)
+
+@item
+If a working @code{latex} program is available, the @code{.dvi} version
+of the package's manual is created (to check that the @code{Rd} files
+can be converted successfully).
+@end enumerate
+
 Use @kbd{R CMD check --help} to obtain more information about the usage
 of the @R{} package checker.  Under Windows the equivalent command is
-@code{Rcmd check}.  Note that some packages will require more
-than the default workspace size to run their examples: this needs to be
-specified by setting the environment variables @code{R_NSIZE} and
-@code{R_VSIZE} or the command-line options @code{--nsize} and
-@code{--vsize}.
+@code{Rcmd check}.  By adding flags a subset of the checking steps
+can be selected.
+
+Note that some packages will require more than the default workspace
+size to run their examples: this needs to be specified by setting the
+environment variables @code{R_NSIZE} and @code{R_VSIZE} or the
+command-line options @code{--nsize} and @code{--vsize}.
+
 
 @findex R CMD build
 @cindex Package builder
@@ -419,15 +448,17 @@ Prior to actually building the package in the common gzipped tar file
 format, a variety of diagnostic checks and cleanups are performed.  In
 particular, it is tested whether the @file{DESCRIPTION} file contains
 the required entries, whether object and data indices exist (it will
-build them if they do not) and can be assumed to be up-to-date, whether
-the documentation sources contain the required name, alias, title,
-description, and keyword information, and whether there are any
-undocumented user level objects.  Run-time checks whether the package
-works correctly should be performed using @code{R CMD check} prior to
-invoking the build procedure.
+build them if they do not) and can be assumed to be up-to-date.
+
+Run-time checks whether the package works correctly should be performed
+using @code{R CMD check} prior to invoking the build procedure.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
-of the @R{} package builder.  The Windows equivalent is @kbd{Rcmd build}.
+of the @R{} package builder.  The Windows equivalent is @kbd{Rcmd
+build}.
+
+@code{R CMD build} can also build pre-compiled version of packages for
+binary distributions.
 
 @node Submitting a package to CRAN,  , Checking and building packages, Creating R packages
 @section Submitting a package to CRAN
@@ -446,25 +477,12 @@ run from the directory containing @file{mypkg} as a subdirectory.)
 
 @enumerate
 @item
-Install the package (by @code{R INSTALL mypkg}).  This will warn about
-missing cross-references and duplicate aliases in help files.  If you
-can, do the install on a `vanilla' system with no additional packages
-installed.
+Run @code{R CMD check} to check that the package will install and will
+runs its examples, and that the documentation is complete and can be
+processed.
 
 @item
-Run @code{R CMD check} to check that all the examples on the help pages
-can be run, and to check the test suite in @file{tests} (if any).
-
-@item
-Run @code{R CMD Rd2dvi mypkg/man} to build a La@TeX{} version of the
-reference manual.  (This checks the @code{latex}-specific parts of the
-help files.)  An even better check if you have @code{pdftex} installed
-is @code{R CMD Rd2dvi --pdf mypkg/man} as this will build the PDF
-documentation as installed on CRAN.
-
-@item
-Run @code{R CMD build} to run further checks on the help files and
-documentation files such as @file{DESCRIPTION} and to make the release
+Run @code{R CMD build} to run a few further checks and to make the release
 @file{.tar.gz} file.
 @end enumerate
 
@@ -1124,13 +1142,9 @@ above commands can be obtained by running @code{R CMD command --help},
 e.g., @code{R CMD Rdconv --help}.  All available commands can be listed
 using @code{R --help}.
 
-All of these have Windows equivalents.  The batch files in the
-@file{bin} directory @file{Rd2txt.bat}, @file{Rdconv.bat},
-@file{Rdindex.bat} and @file{Sd2Rd.bat} can be used in exactly the same
-way as their Unix counterparts if the environment variable @code{R_HOME}
-is set.  (You will need Perl installed: you need that on Unix too.)
-There is a shell script @file{Rd2dvi.sh} which needs a Unix-like
-environment on Windows.
+All of these have Windows equivalents.  For most just replace @code{R
+CMD} by @code{Rcmd}, with the exception that it is @code{Rcmd Rd2dvi.sh}
+(and that needs the tools to build packages from source to be installed).
 
 @node System and foreign language interfaces, The R API, Writing R documentation, Top
 @chapter System and foreign language interfaces
