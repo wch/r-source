@@ -125,6 +125,11 @@ n <- 10000;all(abs(rErr(lgamma(1:n),cumsum(log(c(1,1:(n-1)))))) < 100*Meps)
 
 all(is.nan(gamma(0:-4))) # + warn.
 
+## choose() {and lchoose}:
+n51 <- c(196793068630200, 229591913401900, 247959266474052)
+abs(c(n51, rev(n51))- choose(51, 23:28)) <= 2
+all(choose(0:4,2) == c(0,0,1,3,6))
+## 3 to 8 units off and two NaN's in 1.8.1
 
 ## fft():
 ok <- TRUE
