@@ -17,6 +17,7 @@ NEW FEATURES
 
     o   grep(), (g)sub() and regexpr() have a new argument `perl'
 	which if TRUE uses Perl-style regexps from PCRE (if installed).
+	New capabilities option "PCRE" to say if PCRE is available.
 
 
 C-LEVEL FACILITIES
@@ -26,6 +27,8 @@ C-LEVEL FACILITIES
 
 
 BUG FIXES
+
+    o   read.dcf() had a memory leak.
 
 
 
