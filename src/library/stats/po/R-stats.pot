@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-08 13:17\n"
+"POT-Creation-Date: 2005-03-10 15:18\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,6 +198,9 @@ msgid "the contrast defined is empty (has no TRUE elements)"
 msgstr ""
 
 msgid "columns of 'contrast.obj' must define a contrast (sum to zero)"
+msgstr ""
+
+msgid "no degrees of freedom for residuals"
 msgstr ""
 
 msgid "'object' does not include an error 'qr' component"

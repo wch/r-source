@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-05 08:54\n"
+"POT-Creation-Date: 2005-03-10 15:19\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,6 +126,9 @@ msgid "'%s' is not a generic function in '%s'; methods not removed"
 msgstr ""
 
 msgid "cannot restore previous version of '%s' in locked environment/package '%s'"
+msgstr ""
+
+msgid "restoring default function definition of '%s'"
 msgstr ""
 
 msgid "cannot reset '%s', the definition is not a generic function object"
