@@ -93,19 +93,19 @@ esac
 ### ** Defaults.
 
 cfile="${srcdir}/config.site"
-if test -r ${cfile}; then
-  echo "loading site script ${cfile}"
-  . ${cfile}
+if test -r "${cfile}"; then
+  echo "loading site script '${cfile}'"
+  . "${cfile}"
 fi
 cfile="${HOME}/.Rconf"
-if test -r ${cfile}; then
-  echo "loading user script ${cfile}"
-  . ${cfile}
+if test -r "${cfile}"; then
+  echo "loading user script '${cfile}'"
+  . "${cfile}"
 fi
 cfile="./config.site"
-if test -r ${cfile}; then
-  echo "loading build specific script ${cfile}"
-  . ${cfile}
+if test -r "${cfile}"; then
+  echo "loading build specific script '${cfile}'"
+  . "${cfile}"
 fi
 
 ## We provide these defaults so that headers and libraries in
@@ -374,11 +374,7 @@ for arg in ${LDFLAGS}; do
   case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
-      if test -z "${R_LD_LIBRARY_PATH}"; then
-        R_LD_LIBRARY_PATH="${lib}"
-      else
-        R_LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}${PATH_SEPARATOR}${lib}"
-      fi
+      R_SH_VAR_ADD(R_LD_LIBRARY_PATH, [${lib}], [${PATH_SEPARATOR}])
       ;;
   esac
 done
@@ -525,11 +521,11 @@ case "${host_cpu}" in
   i*86)
     R_PROG_CC_FLAG_D__NO_MATH_INLINES
     R_PROG_CC_FLAG([-mieee-fp],
-                   [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-fp"])
+                   R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mieee-fp]))
     R_PROG_F77_FLAG([-mieee-fp],
-                   [R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee-fp"])
+                    R_SH_VAR_ADD(R_XTRA_FFLAGS, [-mieee-fp]))
     R_PROG_CXX_FLAG([-mieee-fp],
-                    [R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -mieee-fp"])
+                    R_SH_VAR_ADD(R_XTRA_CXXFLAGS, [-mieee-fp]))
     ;;
   alpha*)
     ## <NOTE>
@@ -548,26 +544,26 @@ case "${host_cpu}" in
     ## What about the C++ compilers?
     if test "${GCC}" = yes; then
       R_PROG_CC_FLAG([-mieee-with-inexact],
-                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-with-inexact"])
+                     R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mieee-with-inexact]))
     else
       R_PROG_CC_FLAG([-std1],
-                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -std1"])
+                     R_SH_VAR_ADD(R_XTRA_CFLAGS, [-std1]))
       R_PROG_CC_FLAG([-ieee_with_inexact],
-                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact"])
+                     R_SH_VAR_ADD(R_XTRA_CFLAGS, [-ieee_with_inexact]))
     fi
     if test "${G77}" = yes; then
       R_PROG_F77_FLAG([-mieee],
-                      [R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee"])
+                      R_SH_VAR_ADD(R_XTRA_FFLAGS, [-mieee]))
     else
       R_PROG_F77_FLAG([-fpe3],
-                      [R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -fpe3"])
+                      R_SH_VAR_ADD(R_XTRA_FFLAGS, [-fpe3]))
     fi
     if test "${GXX}" = yes; then
       R_PROG_CXX_FLAG([-mieee],
-                      [R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -mieee"])
+                      R_SH_VAR_ADD(R_XTRA_CXXFLAGS, [-mieee]))
     else
       R_PROG_CXX_FLAG([-ieee],
-                      [R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -ieee"])
+                      R_SH_VAR_ADD(R_XTRA_CXXFLAGS, [-ieee]))
     fi
     ## </NOTE>
     ;;
@@ -582,9 +578,9 @@ case "${host_os}" in
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     if test "${GCC}" = yes; then
       R_PROG_CC_FLAG([-mno-fp-in-toc],
-                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mno-fp-in-toc"])
+                     R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mno-fp-in-toc]))
     fi
-    R_XTRA_LIBS="${R_XTRA_LIBS} /lib/crt0.o"
+    R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0.o])
     ;;
   cygwin*|mingw*|windows*|winnt)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
@@ -592,7 +588,7 @@ case "${host_os}" in
   darwin*)
     ## Need '-no-cpp-precomp' say J de Leeuw <deleeuw@stat.ucla.edu> and
     ## http://fink.sourceforge.net/doc/porting/basics.php.
-    R_XTRA_CPPFLAGS="${R_XTRA_CPPFLAGS} -no-cpp-precomp"
+    R_SH_VAR_ADD(R_XTRA_CPPFLAGS, [-no-cpp-precomp])
     ;;
   hpux*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
@@ -605,7 +601,7 @@ case "${host_os}" in
 	## pre-processor to increase the size of an internal table.  It
 	## seems that src/modules/vfonts/g_her_glyph.c contains a line
 	## that is too long for the pre-processor without this flag.
-	R_XTRA_CPPFLAGS="${R_XTRA_CPPFLAGS} -Wp,-H16000"
+	R_SH_VAR_ADD(R_XTRA_CPPFLAGS, [-Wp,-H16000])
 	;;
     esac
     AC_CHECK_LIB(dld, shl_load, [R_XTRA_LIBS="-ldld ${R_XTRA_LIBS}"])
@@ -618,11 +614,11 @@ case "${host_os}" in
     ## check whether the non-GNU tools *accept* the flag.
     if test "${G77}" != yes; then
       R_PROG_F77_FLAG([-OPT:IEEE_NaN_inf=ON],
-                      [R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -OPT:IEEE_NaN_inf=ON"])
+                      R_SH_VAR_ADD(R_XTRA_FFLAGS, [-OPT:IEEE_NaN_inf=ON]))
     fi
     if test "${GXX}" != yes; then
       R_PROG_CXX_FLAG([-OPT:IEEE_NaN_inf=ON],
-                      [R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -OPT:IEEE_NaN_inf=ON"])
+                      R_SH_VAR_ADD(R_XTRA_CXXFLAGS, [-OPT:IEEE_NaN_inf=ON]))
     fi
     ## </NOTE>
     ;;
@@ -757,6 +753,12 @@ case "${host_os}" in
     ## the main binary.  Change once the driver is modularized.
     main_ldflags="-framework Carbon"
     ## </FIXME>
+    ## Want '-mdynamic-no-pic' for GCC 3, says Jan de Leeuw.
+    if test "${GCC}" = yes; then
+      if ${CC} --version | grep '3\.' > /dev/null; then
+        R_SH_VAR_ADD(main_ldflags, [-mdynamic-no-pic])
+      fi
+    fi
     case "${host_os}" in
       darwin1.[[012]])
 	shlib_ldflags="-bundle -undefined suppress" ;;
@@ -876,11 +878,7 @@ esac
 ## Step 5.  Overrides from the environment and error checking.
 if test -z "${MAIN_LD}"; then
   MAIN_LD="${main_ld}"
-  if test -z "${MAIN_LDFLAGS}"; then
-    MAIN_LDFLAGS="${main_ldflags}"
-  else
-    MAIN_LDFLAGS="${MAIN_LDFLAGS} ${main_ldflags}"
-  fi
+  R_SH_VAR_ADD(MAIN_LDFLAGS, [${main_ldflags}])
 fi
 
 : ${CPICFLAGS="${cpicflags}"}
@@ -922,11 +920,7 @@ fi
 
 if test -z "${SHLIB_LD}"; then
   SHLIB_LD="${shlib_ld}"
-  if test -z "${SHLIB_LDFLAGS}"; then
-    SHLIB_LDFLAGS="${shlib_ldflags}"
-  else
-    SHLIB_LDFLAGS="${SHLIB_LDFLAGS} ${shlib_ldflags}"
-  fi
+  R_SH_VAR_ADD(SHLIB_LDFLAGS, [${shlib_ldflags}])
 fi
 if test -z "${SHLIB_LDFLAGS}"; then
   AC_MSG_WARN([I could not determine SHLIB_LDFLAGS.])
@@ -935,11 +929,7 @@ fi
 
 if test -z "${SHLIB_CXXLD}"; then
   SHLIB_CXXLD="${shlib_cxxld}"
-  if test -z "${SHLIB_CXXLDFLAGS}"; then
-    SHLIB_CXXLDFLAGS="${shlib_cxxldflags}"
-  else
-    SHLIB_CXXLDFLAGS="${SHLIB_CXXLDFLAGS} ${shlib_cxxldflags}"
-  fi
+  R_SH_VAR_ADD(SHLIB_CXXLDFLAGS, [${shlib_cxxldflags}])
 fi
 if test -z "${SHLIB_CXXLDFLAGS}"; then
   warn_shlib_cxxldflags="I could not determine SHLIB_CXXLDFLAGS"
@@ -1053,13 +1043,13 @@ fi
 ## GNOME.
 R_GNOME
 if test "${use_gnome}" = yes; then
-  R_GUIS="${R_GUIS} gnome";
+  R_SH_VAR_ADD(R_GUIS, [gnome]);
 fi
 
 ## Aqua
 R_AQUA
 if test "${use_aqua}" = yes; then
-  R_GUIS="${R_GUIS} aqua";
+  R_SH_VAR_ADD(R_GUIS, [aqua]);
 fi
 
 ## Tcl/Tk.
@@ -1125,10 +1115,10 @@ LIBS2=""
 for arg in ${LIBS}; do
   case "${arg}" in
     -L*)
-      LIBS1="${LIBS1} ${arg}"
+      R_SH_VAR_ADD(LIBS1, [${arg}])
       ;;
     *)
-      LIBS2="${LIBS2} ${arg}"
+      R_SH_VAR_ADD(LIBS2, [${arg}])
       ;;
   esac
 done
@@ -1143,11 +1133,7 @@ for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${X_LIBS} ${TCLTK_LIBS} \
   case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
-      if test -z "${R_LD_LIBRARY_PATH}"; then
-        R_LD_LIBRARY_PATH="${lib}"
-      else
-        R_LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}${PATH_SEPARATOR}${lib}"
-      fi
+      R_SH_VAR_ADD(R_LD_LIBRARY_PATH, [${lib}], [${PATH_SEPARATOR}])
       ;;
   esac
 done
@@ -1283,12 +1269,12 @@ AC_OUTPUT
 ## Doing this via AC_CONFIG_COMMANDS would require explicitly passing all
 ## configure variables to config.status.
 ## </NOTE>
-R_c_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
-R_cxx_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
+r_c_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
+r_cxx_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
 if test -z "${F2C}"; then
-  R_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
+  r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 else
-  R_f77_compiler="${F2C} ${F2CFLAGS}"
+  r_f77_compiler="${F2C} ${F2CFLAGS}"
 fi
 AC_MSG_RESULT(
 [
@@ -1297,9 +1283,9 @@ R is now configured for ${host}
   Source directory:          ${srcdir}
   Installation directory:    ${prefix}
 
-  C compiler:                ${R_c_compiler}
-  C++ compiler:              ${R_cxx_compiler}
-  Fortran compiler:          ${R_f77_compiler}
+  C compiler:                ${r_c_compiler}
+  C++ compiler:              ${r_cxx_compiler}
+  Fortran compiler:          ${r_f77_compiler}
 
   X11 support:               ${use_X11}
   Gnome support:             ${use_gnome}
