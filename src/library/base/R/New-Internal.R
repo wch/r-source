@@ -191,5 +191,8 @@ encodeString <- function(x, w = 0, quote = "", na = TRUE,
     .Internal(encodeString(x, w, quote, justify, na))
 }
 
+l10n_info <- function() .Internal(l10n_info())
+
+
 ## base has no S4 generics
 .noGenerics <- TRUE
