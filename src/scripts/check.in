@@ -742,12 +742,14 @@ sub check_pkg {
     ## Check DESCRIPTION meta-information.
 
     ## If we just installed the package (via R CMD INSTALL), we already
-    ## validated the package DESCRIPTION metadata.  Otherwise, let us be
-    ## defensive about this ...
+    ## validated most of the package DESCRIPTION metadata.  Otherwise,
+    ## let us be defensive about this ...
 
+    my $full =
+	!$opt_install || ($opt_install eq "skip") || $is_base_pkg;
     &R::Utils::check_package_description($pkgdir, $pkgname, $log,
-					 $in_bundle, $is_base_pkg)
-	if(!$opt_install || ($opt_install eq "skip") || $is_base_pkg);
+					 $in_bundle, $is_base_pkg,
+					 $full);
     
     ## Check package dependencies.
 

@@ -6,6 +6,7 @@ use File::Path;
 use FileHandle;
 use IO::File;
 use Exporter;
+use R::Dcf;
 use R::Vars;
 use Text::Wrap;
 use Text::Tabs;
@@ -56,7 +57,7 @@ sub R_version {
     print STDERR <<END;
 $name $version
 
-Copyright (C) 1997-2003 R Core Development Team.
+Copyright (C) 1997-2005 R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty.
 END
@@ -329,8 +330,8 @@ sub text2html {
 
 ## This is currently shared between build and check.
 sub check_package_description {
-    my ($pkgdir, $pkgname, $log, $in_bundle, $is_base_pkg) = @_;
-    my ($dfile, $dir);
+    my ($pkgdir, $pkgname, $log, $in_bundle, $is_base_pkg, $full) = @_;
+    my ($dfile, $dir, $description);
     if($is_base_pkg) {
 	$dfile = "DESCRIPTION.in";
     }
@@ -370,19 +371,37 @@ sub check_package_description {
     }
     
     $log->checking("DESCRIPTION meta-information");
-    
-    my $Rcmd = "tools:::.check_package_description(\"$dfile\")";
-    my @out = R_runR($Rcmd, "--vanilla --quiet",
-		     "R_DEFAULT_PACKAGES=NULL");
-    rmtree(dirname($dir)) if($in_bundle);
-    @out = grep(!/^\>/, @out);
-    if(scalar(@out) > 0) {
-	$log->error();
-	$log->print(join("\n", @out) . "\n");
-	exit(1);
+
+    my $description = new R::Dcf($dfile);
+
+    if($full) {
+	my $Rcmd = "tools:::.check_package_description(\"$dfile\")";
+	my @out = R_runR($Rcmd, "--vanilla --quiet",
+			 "R_DEFAULT_PACKAGES=NULL");
+	rmtree(dirname($dir)) if($in_bundle);
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $log->error();
+	    $log->print(join("\n", @out) . "\n");
+	    exit(1);
+	}
     }
-    
-    $log->result("OK");
+
+    ## Also check whether the package name has two dots, which is not
+    ## portable as it is not guaranteed to work in Windows.  (Do this
+    ## here as R currently turns non-empty package meta data check
+    ## results into installation errors.)
+    if(grep(/\..*\./, $description->{"Package"})) {
+	$log->warning();
+	$log->print(wrap("", "",
+			 ("Package name contains more than one dot.\n",
+			  "Names should contain at most one dot to",
+			  "be guaranteed to portably work on all",
+			  "supported platforms.\n")));
+    }
+    else {
+	$log->result("OK");
+    }
 }
 
 

@@ -376,7 +376,7 @@ sub prepare_pkg {
     my $pkgname = basename($pkg);
 
     &R::Utils::check_package_description($pkgdir, $pkgname, $log,
-					 $in_bundle, 0);
+					 $in_bundle, 0, 1);
 
     if(-d "src") {
 	chdir("src");
