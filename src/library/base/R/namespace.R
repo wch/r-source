@@ -288,8 +288,8 @@ loadNamespace <- function (package, lib.loc = NULL,
             if(length(expClasses) > 0) {
                 missingClasses <- !sapply(expClasses, methods:::isClass, where = ns)
                 if(any(missingClasses))
-                    stop("In", sQuote(package),
-                         "classes for export not defined: ",
+                    stop("In ", sQuote(package),
+                         " classes for export not defined: ",
                          paste(expClasses[missingClasses], collapse = ", "))
                 expClasses <- paste(methods:::classMetaName(""), expClasses, sep="")
             }
@@ -303,8 +303,8 @@ loadNamespace <- function (package, lib.loc = NULL,
                                        exports[!is.na(match(exports, allMethods))]))
                 missingMethods <- !(expMethods %in% allMethods)
                 if(any(missingMethods))
-                    stop("In", sQuote(package),
-                         "methods for export not found: ",
+                    stop("In ", sQuote(package),
+                         " methods for export not found: ",
                          paste(expMethods[missingMethods], collapse = ", "))
                 needMethods <- (exports %in% allMethods) & !(exports %in% expMethods)
                 if(any(needMethods))
