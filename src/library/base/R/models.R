@@ -43,7 +43,13 @@ print.formula <- function(x, ...) {
 }
 
 terms <- function(x, ...) UseMethod("terms")
-terms.default <- function(x, ...) x$terms
+terms.default <- function(x, ...) {
+    v<-x$terms
+    if(is.null(v))
+        stop("no terms component")
+    return(v)
+}
+
 terms.terms <- function(x, ...) x
 print.terms <- function(x, ...) print.default(unclass(x))
 #delete.response <- function (termobj)
@@ -119,6 +125,8 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 	}
     }
     attr(terms, "specials")$offset <- NULL
+    if( !inherits(terms, "formula") )
+        class(terms)<-c(class(terms), "formula")
     terms
 }
 

@@ -7,7 +7,6 @@ terms.terms(terms.obj)
 terms.default(anything)
 }
 \alias{terms}
-\alias{terms.formula}
 \alias{terms.terms}
 \alias{terms.aovlist}
 \alias{terms.default}
@@ -23,7 +22,8 @@ of class \code{terms} which contains the
 \emph{terms} representation of a symbolic model.
 }
 \seealso{
-\code{\link{lm}}, \code{\link{glm}}, \code{\link{formula}}.
+  \code{\link{terms.object}, \code{\link{terms.formula}}\link{lm}},
+  \code{\link{glm}}, \code{\link{formula}}.
 }
 %%--- MM: I would really like instructive examples here...
 \keyword{models}
