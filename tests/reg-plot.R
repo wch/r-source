@@ -1,7 +1,8 @@
 #### Regression tests for GRAPHICS & PLOTS
 
 postscript("reg-plot.ps")
-## consider doing an ``approximate'' (AFM fonts!) diff  reg*.ps  reg*.ps.save
+## since we supply the font metrics, the results depend only on
+## the encoding used: Windows is different from Unix.
 
 options(warn = 1)# print them as they occur
 

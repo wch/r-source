@@ -65,7 +65,7 @@ DISTFILES = Makefile.in Makefile.win README \
 	$(test-src-postscript) ps-tests.Rout.save \
 	$(test-src-random) p-r-random-tests.Rout.save \
 	$(test-src-reg) reg-IO.Rout.save reg-IO2.Rout.save \
-	  reg-plot.Rout.save reg-tests-2.Rout.save \
+	  reg-plot.Rout.save reg-plot.ps.save reg-tests-2.Rout.save \
 	$(test-src-ts) \
 	gct-foot.R \
 	nanbug.rda
@@ -94,13 +94,6 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-random) $(test-out-postscript) $(test-out-reg) \
 	$(test-out-ts)
 
-$(test-out): Makefile stamp-R
-stamp-R: $(top_builddir)/bin/R.bin $(top_builddir)/library/base/R/base \
-	$(top_builddir)/library/methods/R/all.rda \
-	$(top_builddir)/library/methods/R/methods
-	@touch $@
-
-
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct
 
@@ -109,6 +102,13 @@ fullcheck: check test-Examples-Recommended
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+$(test-out): Makefile stamp-R
+
+stamp-R: $(top_builddir)/bin/R.bin $(top_builddir)/library/base/R/base \
+	$(top_builddir)/library/methods/R/all.rda \
+	$(top_builddir)/library/methods/R/methods
+	@touch $@
 
 Makedeps: Makefile
 	@(for f in $(test-src) $(test-src-reg) $(test-src-demo); do \
@@ -141,6 +141,16 @@ FORCE:
 	  mv $@.fail $@; \
 	  echo "$(ECHO_T) OK"; \
 	fi
+
+reg-plot.Rout: reg-plot.R
+	@rm -f $@ $@.fail
+	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
+	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
+	@echo "$(ECHO_T) OK"
+	@echo $(ECHO_N) \
+	  "comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ...$(ECHO_C)"
+	@$(RDIFF) reg-plot.ps $(srcdir)/reg-plot.ps.save $(RVAL_IF_DIFF)
+	@echo "$(ECHO_T) OK"
 
 .R.Rout-gct:
 	@echo "running gctorture() + '$<'"
