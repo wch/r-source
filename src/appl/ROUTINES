@@ -42,6 +42,7 @@ F77_SUBROUTINE(dsvdc)
 F77_SUBROUTINE(dtrsl)
 F77_SUBROUTINE(dtrco)
 #
+C_FUNCTION(find_interv_vec)
 C_FUNCTION(fft_factor)
 C_FUNCTION(fft_work)
 C_FUNCTION(fdhess)

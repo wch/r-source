@@ -19,11 +19,14 @@ C See comments in ./sbart.f from which this is called
       double precision bvalue
 C local variables
       double precision vnikx(4,1),work(16)
-      integer i,icoef,ileft,ilo,j,mflag, lenkno
+      integer i,icoef,ileft,j,mflag, lenkno
       double precision b0,b1,b2,b3,eps, xv,rss,df, sumw
+c
+      integer interv
+      external interv
 
       lenkno = nk+4
-      ilo = 1
+      ileft = 1
       eps = 1d-11
 
 C compute the coefficients coef() of estimated smooth
@@ -69,7 +72,7 @@ C     Get Leverages First
 	 call sinerp(abd,ld4,nk,p1ip,p2ip,ldnk,0)
 	 do 16 i=1,n
 	    xv = x(i)
-	    call interv(knot(1),(nk+1),xv,ileft,mflag)
+	    ileft = interv(knot(1), nk+1, xv, 0,0, ileft, mflag)
 	    if(mflag .eq. -1) then
 	       ileft = 4
 	       xv = knot(4)+eps

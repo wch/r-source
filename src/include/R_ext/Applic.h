@@ -251,6 +251,16 @@ double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 int F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
 		     double *resid, double *hat, double *coef, double *sigma);
 
+/* ../appl/interv.c */
+int findIntervall(double *xt, int n, double x,
+		  Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
+		  int *mflag);
+int F77_SUB(interv)(double *xt, int *n, double *x,
+		    Rboolean *rightmost_closed, Rboolean *all_inside,
+		    int *ilo, int *mflag);
+void find_interv_vec(double *xt, int *n,	double *x,   int *nx,
+		     int *rightmost_closed, int *all_inside, int *indx);
+
 /* ../appl/zeroin.c */
 double R_zeroin(double ax, double bx, double (*f)(double, void *), void *info,
 		double *Tol, int *Maxit);

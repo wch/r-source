@@ -16,8 +16,11 @@ C indices
       integer nb
       DOUBLE precision sg0(nb),sg1(nb),sg2(nb),sg3(nb), tb(nb+4)
 c     -------------
-      integer ileft,ilo,mflag, i,ii,jj, lentb
+      integer ileft,mflag, i,ii,jj, lentb
       DOUBLE precision vnikx(4,3),work(16),yw1(4),yw2(4), wpt
+c
+      integer interv
+      external interv
 
       lentb=nb+4
 C Initialise the sigma vectors
@@ -28,13 +31,13 @@ C Initialise the sigma vectors
          sg3(i)=0.
  1    continue
 
-      ilo = 1
+      ileft = 1
       do 2 i=1,nb
 C     Calculate a linear approximation to the
 C     second derivative of the non-zero B-splines
 C     over the interval [tb(i),tb(i+1)].
 C     call intrv(tb(1),(nb+1),tb(i),ilo,ileft,mflag)
-         call interv(tb(1),(nb+1),tb(i),ileft,mflag)
+         ileft = interv(tb(1), nb+1,tb(i), 0,0, ileft, mflag)
 C     Left end second derivatives
 C     call bspvd (tb,4,3,tb(i),ileft,4,vnikx,work)
          call bsplvd (tb,lentb,4,tb(i),ileft,work,vnikx,3)
@@ -53,7 +56,7 @@ C     Slope*(length of interval) in Linear Approximation to B''
  6       continue
 
          wpt = tb(i+1) - tb(i)
-C     Calculate Contributions to the simga vectors
+C     Calculate Contributions to the sigma vectors
          if(ileft.ge.4) then
             do 10 ii=1,4
                jj=ii

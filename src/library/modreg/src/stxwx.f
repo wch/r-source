@@ -7,7 +7,10 @@ c      implicit none
      &     hs0(n),hs1(n),hs2(n),hs3(n)
 C local
       DOUBLE precision eps,vnikx(4,1),work(16)
-      integer lenxk,ilo, i,j, ileft,mflag
+      integer lenxk, i,j, ileft,mflag
+c
+      integer interv
+      external interv
 
       lenxk=n+4
 C     Initialise the output vectors
@@ -20,11 +23,11 @@ C     Initialise the output vectors
  1    continue
 
 C     Compute X'WX -> hs0,hs1,hs2,hs3  and X'WZ -> y
-      ilo=1
+      ileft=1
       eps= .1d-9
 
       do 100 i=1,k
-         call interv(xknot(1),(n+1),x(i),ileft,mflag)
+         ileft= interv(xknot(1), n+1, x(i), 0,0, ileft, mflag)
 C        if(mflag==-1) {write(6,'("Error in hess ",i2)')mflag;stop}
 C        if(mflag==-1) {return}
          if(mflag.eq. 1)then

@@ -1,17 +1,5 @@
-NOTE: The following source files are   NOT used at all currently
-----
-      They are BLAS/Linpack for complex matrices and vectors:
-
-	zblas.f
-	zeroin.f
-	zhico.f
-	zhifa.f
-	zhisl.f
-	zsico.f
-	zsifa.f
-	zsisl.f
-
-Hint:	Adding new functionality here usually needs an entry in each of
+NOTE:
+----	Adding new functionality here usually needs an entry in each of
 	       	Makefile.in
 		ROUTINES
 		../include/R_ext/Applic.h
