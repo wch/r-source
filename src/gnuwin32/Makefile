@@ -515,7 +515,7 @@ rsync-recommended:
 	$(RM) ../library/Recommended/*.tgz; \
 	(cd ../library/Recommended; for i in ${RECOMMENDED} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
 
-../library/%/DESCRIPTION: ../library/RECOMMENDED/%.tgz
+../library/%/DESCRIPTION: ../library/Recommended/%.tgz
 	@echo "---- $*"
 	(cd ../library; rm -rf $*; tar zxf Recommended/$*.tgz; touch $@)
 
