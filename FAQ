@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-15, 2001-08-04
+Version 1.3-16, 2001-08-09
 Kurt Hornik
 
 
@@ -1074,6 +1074,10 @@ works, was published in the Journal of Statistical Software
 *lqs*
      Resistant regression and covariance estimation.
 
+*methods*
+     Formally defined methods and classes for R objects, plus other
+     programming tools, as described in the Green Book.
+
 *modreg*
      MODern REGression: smoothing and local methods.
 
@@ -1294,6 +1298,10 @@ works, was published in the Journal of Statistical Software
 *exactRankTests*
      Computes exact p-values and quantiles using an implementation of the
      Streitberg/Roehmel shift algorithm.
+
+*fasticaR*
+     Implementation of FastICA algorithm to perform Independent Component
+     Analysis (ICA) and Projection Pursuit.
 
 *fdim*
      Functions for calculating fractal dimension.
