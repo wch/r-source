@@ -222,10 +222,13 @@ extern double m_one;
 	/* Undo SGI Madness */
 
 #ifdef ftrunc
-#undef ftrunc
+# undef ftrunc
 #endif
 #ifdef qexp
-#undef qexp
+# undef qexp
+#endif
+#ifdef qgamma
+# undef qgamma
 #endif
 
 	/* Name Hiding to Avoid Clashes with Fortran */
