@@ -1,6 +1,5 @@
-density <-
-    function(x, bw, adjust = 1, kernel="gaussian", window = kernel,
-	     n = 512, width, from, to, cut = 3, na.rm = FALSE)
+density <- function(x, bw, adjust = 1, kernel="gaussian", window = kernel,
+		    n = 512, width, from, to, cut = 3, na.rm = FALSE)
 {
     if (!is.numeric(x))
 	stop("argument must be numeric")
@@ -14,7 +13,6 @@ density <-
     if(is.na(method))
 	stop(paste("kernel must be a 'pmatch' of",
 		   paste(k.list,collapse=', ')))
-    ##if(! method %in% 1:4) stop("unknown density estimation kernel")
     n.user <- n
     n <- max(n, 512)
     if(n > 512) n <- 2^ceiling(log2(n)) #- to be fast with FFT
@@ -61,23 +59,21 @@ density <-
 	      class="density")
 }
 
-plot.density <-
-    function(s, main=NULL, xlab=NULL, ylab="Density", type="l",
-	     zero.line = TRUE, ...)
+plot.density <- function(s, main=NULL, xlab=NULL, ylab="Density", type="l",
+			 zero.line = TRUE, ...)
 {
     if(is.null(xlab))
-	xlab <- paste("N =", s$n, "  Bandwidth =", format(s$bw))
+	xlab <- paste("N =", s$n, "  Bandwidth =", formatC(s$bw))
     if(is.null(main)) main <- deparse(s$call)
     plot.default(s, main=main, xlab=xlab, ylab=ylab, type=type, ...)
     if(zero.line) abline(h=0, lwd=0.1, col = "gray")
 }
 
-print.density <-
-    function(x, digits=NULL, ...)
+print.density <- function(x, digits=NULL, ...)
 {
     cat("\nCall:\n\t",deparse(x$call),
 	"\n\nData: ",x$data.name," (",x$n," obs.);",
-	"\tBandwidth 'bw' =",formatC(x$bw,digits=digits), "\n\n",sep="")
+	"\tBandwidth 'bw' = ",formatC(x$bw,digits=digits), "\n\n",sep="")
     print(summary(as.data.frame(x[c("x","y")])), digits=digits, ...)
     invisible(x)
 }
