@@ -283,7 +283,8 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level, SEXP call)
 	break;
 
     default:
-	errorcall(call, "incompatible types");
+	errorcall(call, 
+		  "incompatible types (%d) in subassignment type fix", which);
 
     }
 
@@ -729,8 +730,8 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	}
 	break;
 
-    /* case 1014: logical   <- real	  */
-    /* case 1314: integer   <- real	  */
+    /* case 1014:  logical   <- real	  */ 
+    /* case 1314:  integer   <- real	  */
     case 1414:	/* real	     <- real	  */
 
 	for (j = 0; j < ncs; j++) {
@@ -860,7 +861,8 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	}
 	break;
     default:
-	error("incompatible types in subset assignment");
+	error("incompatible types (case %d) in matrix subset assignment", 
+	      which);
     }
     UNPROTECT(2);
     return x;
@@ -978,7 +980,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    break;
 
 	/* case 1014:	   logical   <- real	  */
-	case 1314:	/* integer   <- real	  */
+	/* case 1314:	   integer   <- real	  */
 	case 1414:	/* real	     <- real	  */
 
 	    REAL(x)[ii] = REAL(y)[i % ny];
@@ -1038,7 +1040,8 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    break;
 
 	default:
-	    error("incompatible types in subset assignment");
+	    error("incompatible types (%d) in array subset assignment", 
+		  which);
 	}
     next_i:
 	;
@@ -1483,12 +1486,12 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(x);
 
 	switch (which) {
-	/* because we have called SubassignTypeFix the commented
-	   values cannot occur (and would be unsafe) */
+	    /* confusingly, unlike the [<- case, 'which' here is
+	       before coercion, not afterwards */
 
 	case 1010:	/* logical   <- logical	  */
 	case 1310:	/* integer   <- logical	  */
-	/* case 1013:	   logical   <- integer	  */
+	case 1013:	/* logical   <- integer	  */
 	case 1313:	/* integer   <- integer	  */
 
 	    INTEGER(x)[offset] = INTEGER(y)[0];
@@ -1503,8 +1506,8 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		REAL(x)[offset] = INTEGER(y)[0];
 	    break;
 
-	/* case 1014:	   logical   <- real	  */
-	/* case 1314:	   integer   <- real	  */
+	case 1014:	/* logical   <- real	  */
+	case 1314:	/* integer   <- real	  */
 	case 1414:	/* real	     <- real	  */
 
 	    REAL(x)[offset] = REAL(y)[0];
@@ -1535,9 +1538,9 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    break;
 
-	/* case 1015:	   logical   <- complex	  */
-	/* case 1315:	   integer   <- complex	  */
-	/* case 1415:	   real	     <- complex	  */
+	case 1015:	/* logical   <- complex	  */
+	case 1315:	/* integer   <- complex	  */
+	case 1415:	/* real	     <- complex	  */
 	case 1515:	/* complex   <- complex	  */
 
 	    COMPLEX(x)[offset] = COMPLEX(y)[0];
@@ -1548,19 +1551,19 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1614:	/* character <- real	  */
 	case 1615:	/* character <- complex	  */
 	case 1616:	/* character <- character */
-	/* case 1016:	   logical   <- character */
-	/* case 1316:	   integer   <- character */
-	/* case 1416:	   real	     <- character */
-	/* case 1516:	   complex   <- character */
+	case 1016:	/* logical   <- character */
+	case 1316:	/* integer   <- character */
+	case 1416:	/* real	     <- character */
+	case 1516:	/* complex   <- character */
 
 	    SET_STRING_ELT(x, offset, STRING_ELT(y, 0));
 	    break;
 
-	/* case 1019:  logical    <- vector     */
-	/* case 1319:  integer    <- vector     */
-	/* case 1419:  real       <- vector     */
-	/* case 1519:  complex    <- vector     */
-	/* case 1619:  character  <- vector     */
+	case 1019:      /* logical    <- vector     */
+	case 1319:      /* integer    <- vector     */
+	case 1419:      /* real       <- vector     */
+	case 1519:      /* complex    <- vector     */
+	case 1619:      /* character  <- vector     */
 
 	case 1901:  /* vector     <- symbol     */
 	case 1904:  /* vector     <- environment*/
@@ -1597,7 +1600,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    break;
 
 	default:
-	    error("incompatible types in subset assignment");
+	    error("incompatible types (%d) in [[ assignment", which);
 	}
 	/* If we stretched, we may have a new name. */
 	/* In this case we must create a names attribute */
