@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2001 the R Development Core Team
+ *  Copyright (C) 2000-2002 the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -64,7 +64,9 @@ double exp_rand(void)
     int i;
 
     a = 0.;
+    /* precaution if u = 0 is ever returned */
     u = unif_rand();
+    while(u <= 0.0 || u >= 1.0) u = unif_rand();
     for (;;) {
 	u += u;
 	if (u > 1.0)
