@@ -141,8 +141,17 @@ static void R_deleteCachedSymbols(DllInfo *dll)
 HINSTANCE R_loadLibrary(const char *path, int asLocal, int now)
 {
     HINSTANCE tdlh;
+    unsigned int dllcw, rcw;
 
+    rcw = _controlfp(0,0);
+    _clearfp();
     tdlh = LoadLibrary(path);
+    dllcw = _controlfp(0,0);
+
+    if (dllcw != rcw) {
+		warning("DLL attempted to change FPU control word from %x to %x",rcw,dllcw);
+		_controlfp(rcw, _MCW_EM | _MCW_IC | _MCW_RC | _MCW_PC);
+	}
     return(tdlh);
 }
 
