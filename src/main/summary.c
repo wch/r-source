@@ -279,7 +279,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, a;
     double tmp = 0.0, s;
-    Rcomplex z, ztmp, zcum;
+    Rcomplex z, ztmp, zcum={0.0, 0.0} /* -Wall */;
     int itmp = 0, icum=0, int_a, empty;
     short iop;
     SEXPTYPE ans_type;/* only INTEGER, REAL, or COMPLEX here */
