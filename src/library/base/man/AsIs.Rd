@@ -27,7 +27,7 @@ I(x)
     classes.  Class \code{"AsIs"} has a few of its own methods, including
     for \code{[}, \code{as.data.frame}, \code{print} and \code{format}.
 
-    \item In function \code{\link{formula}}.  There it is used to
+    \item In function \code{\link[stats]{formula}}.  There it is used to
     inhibit the interpretation of  operators such as \code{"+"},
     \code{"-"}, \code{"*"} and \code{"^"} as formula operators, so they
     are used as arithmetical operators.  This is interpreted as a symbol
@@ -44,6 +44,6 @@ I(x)
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{data.frame}}, \code{\link{formula}}
+  \code{\link{data.frame}}, \code{\link[stats]{formula}}
 }
 \keyword{models}

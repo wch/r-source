@@ -49,7 +49,7 @@ unstack(x, \dots)
 }
 \author{Douglas Bates}
 \seealso{
-  \code{\link{lm}}, \code{\link{reshape}}
+  \code{\link[stats]{lm}}, \code{\link[stats]{reshape}}
 }
 \examples{
 data(PlantGrowth)

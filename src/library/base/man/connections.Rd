@@ -95,7 +95,7 @@ isIncomplete(con)
   platforms, and all but \code{fifo} on Windows.)
 
   Proxies can be specified for \code{url} connections: see
-  \code{\link{download.file}}.
+  \code{\link[utils]{download.file}}.
 
   \code{open}, \code{close} and \code{seek} are generic functions: the
   following applies to the methods relevant to connections.
@@ -225,7 +225,7 @@ isIncomplete(con)
   \code{fifo} and \code{socketConnection} are supported by this build of \R.
 
 #ifdef windows
-  To flush output to the console, see \code{\link{flush.console}}.
+  To flush output to the console, see \code{\link[utils]{flush.console}}.
 #endif
 }
 

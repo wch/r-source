@@ -48,7 +48,7 @@
 \seealso{
   \code{\link{hist}},
   \code{\link{stem}},
-  \code{\link{density}}.
+  \code{\link[stats]{density}}.
 }
 \examples{
 data(women)

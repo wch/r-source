@@ -67,7 +67,7 @@ is.table(x)
   Only when \code{exclude} is specified (i.e., not by default), will
   \code{table} drop levels of factor arguments potentially.
 }
-\seealso{Use \code{\link{ftable}} for printing (and more) of
+\seealso{Use \code{\link[stats]{ftable}} for printing (and more) of
   multidimensional tables.
 }
 \references{

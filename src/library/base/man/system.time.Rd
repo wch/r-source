@@ -44,7 +44,7 @@ unix.time(expr)
 }
 #endif
 \seealso{
-  \code{\link{proc.time}}, \code{\link{time}} which is for time series.
+  \code{\link{proc.time}}, \code{\link[stats]{time}} which is for time series.
 }
 \examples{
 system.time(for(i in 1:100) mad(runif(1000)))

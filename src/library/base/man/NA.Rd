@@ -62,9 +62,10 @@ is.na(x) <- value
 }
 \seealso{
   \code{\link{NaN}}, \code{\link{is.nan}}, etc.,
-  and the utility function \code{\link{complete.cases}}.
+  and the utility function \code{\link[stats]{complete.cases}}.
 
-  \code{\link{na.action}}, \code{\link{na.omit}}, \code{\link{na.fail}}
+  \code{\link[stats]{na.action}}, \code{\link[stats]{na.omit}},
+  \code{\link[stats]{na.fail}}
   on how methods can be tuned to deal with missing values.
 }
 \examples{

@@ -42,6 +42,6 @@
   to a file.
 }
 \author{Guido Masarotto}
-\seealso{\code{\link{windows}}}
+\seealso{\code{\link[graphics]{windows}}}
 
 \keyword{utilities}

@@ -10,7 +10,7 @@ package.dependencies(x, check=FALSE)
 }
 \arguments{
     \item{x}{A matrix of package descriptions as returned by
-	\code{\link{CRAN.packages}}.}
+	\code{\link[utils]{CRAN.packages}}.}
     \item{check}{If \code{TRUE}, return logical vector of check results.
 	If \code{FALSE}, return parsed list of dependencies.}
 }
@@ -19,5 +19,5 @@ package.dependencies(x, check=FALSE)
     running version of R. IN the future we might add checks for
     inter-package dependencies.
 }
-\seealso{\code{\link{update.packages}}}
+\seealso{\code{\link[utils]{update.packages}}}
 \keyword{utilities}

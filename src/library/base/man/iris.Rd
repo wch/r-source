@@ -42,7 +42,10 @@ data(iris3)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole. (has \code{iris3} as \code{iris}.)
 }
-\seealso{\code{\link{matplot}} some examples of which use \code{iris}.}
+\seealso{
+  \code{\link[graphics]{matplot}} some examples of which use
+  \code{iris}.
+}
 \examples{
 data(iris3)
 dni3 <- dimnames(iris3)

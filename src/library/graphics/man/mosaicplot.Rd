@@ -48,7 +48,7 @@ mosaicplot(x, \dots)
     4.}
   \item{margin}{a list of vectors with the marginal totals to be fit in
     the log-linear model.  By default, an independence model is fitted.
-    See \code{\link{loglin}} for further information.}
+    See \code{\link[stats]{loglin}} for further information.}
   \item{cex.axis}{The magnification to be used for axis annotation,
     as a multiple of \code{par("cex")}.}
   \item{las}{numeric; the style of axis labels, see \code{\link{par}}.}
@@ -122,7 +122,7 @@ mosaicplot(x, \dots)
 }
 \seealso{
   \code{\link{assocplot}},
-  \code{\link{loglin}}.
+  \code{\link[stats]{loglin}}.
 }
 \examples{
 data(Titanic)

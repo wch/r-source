@@ -42,8 +42,8 @@
 }
 \seealso{
   \code{\link[ctest]{chisq.test}},
-  \code{\link{loglin}},
-  \code{\link{mosaicplot}}
+  \code{\link[stats]{loglin}},
+  \code{\link[graphics]{mosaicplot}}
 }
 \examples{
 data(HairEyeColor)

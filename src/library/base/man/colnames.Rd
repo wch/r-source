@@ -45,8 +45,8 @@ colnames(x) <- value
 }
 \seealso{
   \code{\link{dimnames}},
-  \code{\link{case.names}},
-  \code{\link{variable.names}}.
+  \code{\link[stats]{case.names}},
+  \code{\link[stats]{variable.names}}.
 }
 \examples{
 m0 <- matrix(NA, 4, 0)

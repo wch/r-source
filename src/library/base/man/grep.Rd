@@ -89,7 +89,7 @@ regexpr(pattern, text,  extended = TRUE, perl = FALSE, fixed = FALSE)
   \code{\link{tolower}}, \code{\link{toupper}} and \code{\link{chartr}}
   for character translations.
   \code{\link{charmatch}}, \code{\link{pmatch}}, \code{\link{match}}.
-  \code{\link{apropos}} uses regexps and has nice examples.
+  \code{\link[utils]{apropos}} uses regexps and has nice examples.
 }
 \examples{
 grep("[a-z]", letters)

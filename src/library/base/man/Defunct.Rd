@@ -157,7 +157,8 @@ print.atomic(x, quote = TRUE, \dots)
   package to subsume another.
 
   \code{dotplot} and \code{stripplot} have been renamed to
-  \code{\link{dotchart}} and \code{\link{stripchart}}, respectively.
+  \code{\link[graphics]{dotchart}} and \code{\link[graphics]{stripchart}},
+  respectively.
 
   \code{getenv} has been replaced by \code{\link{Sys.getenv}}.
 
@@ -166,7 +167,7 @@ print.atomic(x, quote = TRUE, \dots)
   \code{source} on a \code{\link{url}} connection.
 
   \code{httpclient} was used by the deprecated \code{"socket"} method
-  of \code{\link{download.file}}.
+  of \code{\link[utils]{download.file}}.
 
   \code{parse.dcf} has been replaced by \code{read.dcf}, which is much
   faster, but has a slightly different interface.
@@ -178,7 +179,7 @@ print.atomic(x, quote = TRUE, \dots)
   some notes on \url{http://developer.r-project.org}.
 
   \code{reshape*}, which were experimental, are replaced by
-  \code{\link{reshape}}. This has a different syntax and allows multiple
+  \code{\link[stats]{reshape}}. This has a different syntax and allows multiple
   time-varying variables.
 
   \code{piechart} is the old name for \code{pie}, but clashed with usage
@@ -202,10 +203,10 @@ print.atomic(x, quote = TRUE, \dots)
   \code{printNoClass} was in package \pkg{methods} and calls directly the
   internal function \code{print.default}.
 
-  \code{plot.mts} has been removed, as \code{\link{plot.ts}} now has the
+  \code{plot.mts} has been removed, as \code{\link[ts]{plot.ts}} now has the
   same functionality.
 
-  \code{print.coefmat} was an older name for \code{\link{printCoefmat}}
+  \code{print.coefmat} was an older name for \code{\link[stats]{printCoefmat}}
   with a different default for \code{na.print}.
 
   \code{codes} was almost always used inappropriately.  To get the
@@ -214,7 +215,7 @@ print.atomic(x, quote = TRUE, \dots)
   equivalent to these, but for \emph{unordered} factors it assumed an
   an alphabetical ordering of the levels in the locale in use.
 
-  \code{anovalist.lm} was replaced by \code{\link{anova.lmlist}} in
+  \code{anovalist.lm} was replaced by \code{\link[stats]{anova.lmlist}} in
   \R 1.2.0.
 
   \code{lm.fit.null} and \code{lm.wfit.null} are superseded by

@@ -22,7 +22,7 @@ diff(x, \dots)
 }
 \details{
   \code{diff} is a generic function with a default method and ones for
-  classes \code{"\link{ts}"} and \code{"\link{POSIXt}"}.
+  classes \code{"\link[stats]{ts}"} and \code{"\link{POSIXt}"}.
   \code{\link{NA}}'s propagate.
 }
 \value{
@@ -44,7 +44,7 @@ diff(x, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{diff.ts}}, \code{\link[ts]{diffinv}}.
+  \code{\link[stats]{diff.ts}}, \code{\link[ts]{diffinv}}.
 }
 \examples{
 diff(1:10, 2)

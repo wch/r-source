@@ -54,7 +54,7 @@ scale(x, center = TRUE, scale = TRUE)
   \code{\link{sweep}} which allows centering (and scaling) with
   arbitrary statistics.
 
-  For working with the scale of a plot, see \code{\link{par}}.
+  For working with the scale of a plot, see \code{\link[graphics]{par}}.
 }
 \examples{
 x <- matrix(1:10, nc=2)

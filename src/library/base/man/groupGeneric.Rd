@@ -197,7 +197,7 @@ Complex(z)
   Chambers, J. M. (1998) \emph{Programming with Data.} Springer, pp. 352--4.
 }
 \seealso{
-  \code{\link{methods}} for methods of non-Internal generic functions.
+  \code{\link[utils]{methods}} for methods of non-Internal generic functions.
 }
 \examples{
 methods("Math")

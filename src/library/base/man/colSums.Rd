@@ -40,7 +40,8 @@ rowMeans(x, na.rm = FALSE, dims = 1)
   If there are no values in a range to be summed over (after removing
   missing values with \code{na.rm = TRUE}), that
   component of the output is set to \code{0} (\code{*Sums}) or \code{NA}
-  (\code{*Means}), consistent with \code{\link{sum}} and \code{\link{mean}}.
+  (\code{*Means}), consistent with \code{\link{sum}} and
+  \code{\link[stats]{mean}}.
 }
 \seealso{
   \code{\link{apply}}, \code{\link{rowsum}}

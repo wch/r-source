@@ -100,7 +100,7 @@ data(\dots, list = character(0), package = .packages(),
   a metadata specification for the plaintext formats.
 }
 \seealso{
-  \code{\link{help}} for obtaining documentation on data sets,
+  \code{\link[utils]{help}} for obtaining documentation on data sets,
   \code{\link{save}} for \emph{creating} the second (\file{.rda}) kind
   of data, typically the most efficient one.
 }

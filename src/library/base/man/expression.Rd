@@ -37,8 +37,8 @@ as.expression(x, \dots)
   \code{\link{eval}},
   \code{\link{function}}.
   Further,
-  \code{\link{text}} and
-  \code{\link{legend}}
+  \code{\link[graphics]{text}} and
+  \code{\link[graphics]{legend}}
   for plotting math expressions.
 }
 \examples{
