@@ -528,6 +528,9 @@ FUNTAB R_FunTab[] =
 {"dir.create",	do_dircreate,	0,	11,	1,	PP_FUNCALL},
 {"file.edit",	do_fileedit,	0,	11,	1,	PP_FUNCALL},
 {"new.file",	do_newfile,	0,	11,	1,	PP_FUNCALL},
+{"add.menu.cmd",	do_addmenucmd,	0,	11,	2,	PP_FUNCALL},
+{"del.menu.cmd",	do_delmenucmd,	0,	11,	1,	PP_FUNCALL},
+{"get.menu.cmd",	do_getmenucmd,	0,	11,	1,	PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	5,	PP_FUNCALL},
