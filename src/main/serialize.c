@@ -965,7 +965,7 @@ static void WriteBCLang(SEXP s, SEXP ref_table, SEXP reps,
 	    }
 	}
 	if (output) {
-	    OutInteger(stream, LANGSXP);
+	    OutInteger(stream, type);
 	    WriteItem(TAG(s), ref_table, stream);
 	    WriteBCLang(CAR(s), ref_table, reps, stream);
 	    WriteBCLang(CDR(s), ref_table, reps, stream);
