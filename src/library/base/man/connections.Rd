@@ -47,6 +47,7 @@ socketConnection(host = "localhost", port, server = FALSE,
 
 open(con, \dots)
 \method{open}{connection}(con, open = "r", blocking = TRUE, \dots)
+
 close(con, \dots)
 \method{close}{connection}(con, type = "rw", \dots)
 
@@ -91,10 +92,10 @@ isIncomplete(con)
   \code{unz} reads (only) single files within zip files, in binary mode.
   The description is the full path, with \file{.zip} extension if required.
 
-  All platforms support \code{file}, \code{gzfile}, \code{bzfile} and
-  \code{url("file://")} connections.  The other types may be partially
-  implemented or not implemented at all.  (They do work on most Unix
-  platforms, and all but \code{fifo} on Windows.)
+  All platforms support \code{file}, \code{gzfile}, \code{bzfile},
+  \code{unz} and \code{url("file://")} connections.  The other types may
+  be partially implemented or not implemented at all.  (They do work on
+  most Unix platforms, and all but \code{fifo} on Windows.)
 
   Proxies can be specified for \code{url} connections: see
   \code{\link[utils]{download.file}}.
@@ -195,7 +196,7 @@ isIncomplete(con)
 
   When writing to the clipboard, the output is
   copied to the clipboard only when the connection is closed or flushed.
-  There is a 32Kb limit of the text to be written to the clipboard.
+  There is a 32Kb limit on the text to be written to the clipboard.
 }
 #endif
 \note{
