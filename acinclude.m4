@@ -727,7 +727,7 @@ if test "x${r_cv_type_socklen}" = x; then
 else
   AC_MSG_RESULT([${r_cv_type_socklen} *])
 fi
-AC_DEFINE_UNQUOTED(SOCKLEN_T, "${r_cv_type_socklen}")
+AC_DEFINE_UNQUOTED(SOCKLEN_T, ${r_cv_type_socklen})
 ])
 ##
 ## R_C_IEEE_754
