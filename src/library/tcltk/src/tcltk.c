@@ -527,7 +527,11 @@ void tcltk_init(void)
 {
     int code;
 
+    /* Absence of the following line is said to be an error with
+     * tcl 8.4 on all platforms, and is known to cause crashes under
+     * Windows */
     Tcl_FindExecutable(NULL);
+
     RTcl_interp = Tcl_CreateInterp();
     code = Tcl_Init(RTcl_interp); /* Undocumented... If omitted, you
 				    get the windows but no event

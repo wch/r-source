@@ -244,6 +244,10 @@ BUG FIXES
     o   Macros NEW_OBJECT (aka NEW) and MAKE_CLASS added; required by
         the .Call interface to generate arbitrary objects.
 
+    o   Problem that prevented package tcltk from working with 
+        Tcl/Tk 8.4 (crash on init) resolved. (Notice that binaries
+	may still require an older Tcl, esp. on Windows).
+
 
 		CHANGES IN R VERSION 1.6.1
 
