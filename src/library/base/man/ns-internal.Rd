@@ -31,7 +31,7 @@ namespaceImportMethods(self, ns, vars)
 packageHasNamespace(package, package.lib)
 parseNamespaceFile(package, package.lib, mustExist = TRUE)
 registerS3method(genname, class, method, envir = parent.frame())
-registerS3methods(info, env)
+registerS3methods(info, package, env)
 setNamespaceInfo(ns, which, val)
 .mergeExportMethods(new, ns)
 }
