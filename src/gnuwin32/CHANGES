@@ -15,6 +15,9 @@ Certain HP printer drivers (e.g. the 6/6MP-Postscript driver) reset the
 FPU and so were causing crashes.  This has been circumvented in this
 version.
 
+Building on a non-default drive should be more reliable, as Perl is
+used to find the current drive.
+
 
 rw1000
 ======

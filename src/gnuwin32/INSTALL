@@ -58,7 +58,7 @@ installer, unzip5.40.zip from any Info-Zip mirror.  Do remember to set
 MAKE_MODE to UNIX (set MAKE_MODE=UNIX at the Windows command-line).
 
 
-Then: untar R-1.1.0.tgz somewhere,
+Then: untar R-1.1.0.tgz somewhere (with no spaces in the path names),
 
 	cd /somewhere/R-1.1.0/src/gnuwin32
 

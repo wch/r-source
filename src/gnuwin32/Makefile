@@ -7,10 +7,10 @@ PACKAGES=base ctest eda lqs modreg mva nls splines stepfun ts
 RPREFIX=rw1010
 RVER=$(shell cut -d' ' -f1 ../../VERSION)
 
-RHOME=$(shell cd ../..; pwd)# must be absolute path
+RHOME=$(shell cd ../..; perl src/gnuwin32/pwd.pl)# must be absolute path
 RLIB=$(RHOME)/library
 PKGDIR=$(RHOME)/src/library
-PKGD=$(shell cd $(PKGDIR); pwd)# must be absolute path
+PKGD=$(shell cd $(PKGDIR); perl $(RHOME)/src/gnuwin32/pwd.pl)# must be absolute path
 
 ifdef DEBUG
  OPTFLAGS=-g -O2 -Wall
@@ -280,7 +280,7 @@ packagedist:
 	  $(RPREFIX)/src/include $(RPREFIX)/src/library \
 	  $(RPREFIX)/src/gnuwin32 $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -p ../../COPYING exported-vars R.exp MkRules MakePkg MakeDll \
-	  maketitle $(RPREFIX)/src/gnuwin32
+	  maketitle pwd.pl $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32
