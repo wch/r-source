@@ -1,7 +1,9 @@
 factor <- function (x, levels = sort(unique(x), na.last = TRUE),
 		    labels=levels, exclude = NA, ordered = is.ordered(x))
 {
-    if (length(x)) {
+    if(is.null(x))
+        x <- list()
+##-     if (length(x)) {
 	exclude <- as.vector(exclude, typeof(x))
 	levels <- levels[is.na(match(levels, exclude))]
 	f <- match(x, levels)
@@ -15,9 +17,9 @@ factor <- function (x, levels = sort(unique(x), na.last = TRUE),
 	    else
 		stop(paste("invalid labels; length", nl,
 			   "should be 1 or",length(levels)))
-    }
-    else
-	f <- numeric(0)
+##-     }
+##-     else
+##- 	f <- numeric(0)
     class(f) <- c(if(ordered)"ordered", "factor")
     f
 }
@@ -31,19 +33,15 @@ category <- function(...) .Defunct()
 levels <- function(x) attr(x, "levels")
 nlevels <- function(x) length(levels(x))
 
-"levels<-" <-
-function(x, value)
-  UseMethod("levels<-")
+"levels<-" <- function(x, value) UseMethod("levels<-")
 
-"levels<-.default" <-
-function(x, value)
+"levels<-.default" <- function(x, value)
 {
   attr(x, "levels") <- value
   x
 }
 
-"levels<-.factor" <-
-function (x, value)
+"levels<-.factor" <- function(x, value)
 {
   xlevs <- levels(x)
   if (is.list(value)) {

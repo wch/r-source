@@ -75,7 +75,8 @@ BUG FIXES
 
     o	require() now has the warn.conflicts argument of library().
 
-    o	factor(list()) *is* now a factor;
+    o	factor(list()) or factor(character(0)) *is* now a factor
+	with valid levels(.);
 	ordered does NOT allow an `ordered' argument anymore
 	and is now defined as trivial call to factor.
 
