@@ -116,7 +116,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                     if(n <= 1290) # n*(n^2 - 1) does not overflow
                         .C("prho",
                            as.integer(n),
-                           as.integer(q + 1),
+                           as.double(q + 1),
                            p = double(1),
                            integer(1),
                            as.logical(lower.tail),

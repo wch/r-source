@@ -90,6 +90,10 @@ BUG FIXES
     o	The plot() method for `ecdf' objects, plot.ecdf(), now allows to
 	set a `ylab' argument (different from the default).
 
+    o	cor.test(*, method="spearman") gave wrong results `randomly'
+	(because of a wrong type passed to C; PR#4718).
+
+
 
 
 		CHANGES IN R VERSION 1.8.0
