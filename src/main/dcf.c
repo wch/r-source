@@ -19,7 +19,7 @@
 
 #include <Defn.h>
 #include <Rconnections.h>
-#include <regex.h>
+#include "Rregex.h"
 
 SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 {
