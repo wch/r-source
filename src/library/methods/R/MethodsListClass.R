@@ -140,7 +140,7 @@
               }, where = envir)
     ## make sure body(m) <- .... leaves a method as a method
     setGeneric("body<-", where = envir)
-    setMethod("body<-", "MethodDefinition", function (f, value, envir) {
+    setMethod("body<-", "MethodDefinition", function (f, envir, value) {
         ff <- as(f, "function")
         body(ff, envir = envir) <- value
         f@.Data <- ff
@@ -188,6 +188,3 @@
     else
         object
 }
-
-        
-       

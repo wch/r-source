@@ -9,11 +9,11 @@ body <- function(fun=sys.function(sys.parent())) {
     .Internal(body(fun))
 }
 alist <- function (...) as.list(sys.call())[-1]
-"body<-" <- function (f, value, envir = parent.frame()) {
+"body<-" <- function (f, envir = parent.frame(), value) {
     if (is.expression(value))
 	value <- value[[1]]
     f <- as.function(c(formals(f), value), envir)
 }
-"formals<-" <- function (f, value, envir = parent.frame()) {
+"formals<-" <- function (f, envir = parent.frame(), value) {
     f <- as.function(c(value, body(f)), envir)
 }

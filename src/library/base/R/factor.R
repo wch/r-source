@@ -64,7 +64,7 @@ codes.factor <- function(x, ...)
 
 codes.ordered <- as.integer
 
-"codes<-" <- function(x, value, ...)
+"codes<-" <- function(x, ..., value)
 {
     if ( length(value) == 1 )
 	value <- rep.int(value, length(x))
