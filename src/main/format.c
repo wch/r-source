@@ -24,13 +24,13 @@
  *  See ./print.c  for do_printdefault, do_printmatrix, etc.
  *
  * Exports
- *	formatString 
+ *	formatString
  *	formatLogical
- *	formatFactor 
+ *	formatFactor
  *	formatInteger
- *	formatReal   
+ *	formatReal
  *	formatComplex
- * 
+ *
  * These  formatFOO() functions determine the proper width, digits, etc.
  */
 
@@ -144,7 +144,7 @@ void formatInteger(int *x, int n, int *fieldwidth)
  *    kpower+1		digits to the left of "."
  *    kpower+1+sgn	including sign
  *
- * Using GLOBAL  R_print.digits  -- had  #define MAXDIG R_print.digits 
+ * Using GLOBAL	 R_print.digits	 -- had	 #define MAXDIG R_print.digits
 */
 
 static double tbl[] =
@@ -302,7 +302,7 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
     int i, kpower, nsig;
     int naflag;
 #ifdef IEEE_754
-    int rnanflag, rposinf, rneginf, inanflag, iposinf, ineginf;
+    int rnanflag, rposinf, rneginf, inanflag, iposinf;
 #endif
 
     eps = pow(10.0, -(double)R_print.digits);
@@ -314,7 +314,6 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
     rneginf = 0;
     inanflag = 0;
     iposinf = 0;
-    ineginf = 0;
 #endif
     neg = 0;
 
@@ -436,9 +435,8 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
 	*ni = 0;
     }
 #ifdef IEEE_754
-    if (inanflag && *mr < 3) *mi = 3;
-    if (iposinf && *mr < 3) *mi = 3;
-    if (ineginf && *mr < 4) *mi = 4;
+    if (inanflag && *mi < 3) *mi = 3;
+    if (iposinf	 && *mi < 3) *mi = 3;
 #endif
     if(*mr < 0) *mr = 0;
     if(*mi < 0) *mi = 0;
