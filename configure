@@ -14,7 +14,7 @@ ac_default_prefix=/usr/local
 ac_help="$ac_help
   --enable-R-profiling    attempt to compile support for Rprof() [yes]"
 ac_help="$ac_help
-  --enable-R-shlibs       build R shared libraries [no]"
+  --enable-R-shlibs       build R as a shared library [no]"
 ac_help="$ac_help
   --enable-maintainer-mode
                           enable make rules and dependencies not useful
