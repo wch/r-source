@@ -93,4 +93,9 @@ sys.load.image <- function(name, quiet) {
     }
 }
 
-sys.save.image <- function(name) save.image(name)
+sys.save.image <- function(name)
+{
+    ## ensure that there is a reasonable chance that we can open a connection
+    closeAllConnections()
+    save.image(name)
+}

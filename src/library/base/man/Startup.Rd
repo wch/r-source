@@ -18,9 +18,9 @@
   Unless \code{--no-environ} was given, \R searches for user and site
   files to process for setting environment variables.  The name of the
   site file is the one pointed to by the environment variable
-  \code{R\_ENVIRON}; if this is unset,
-  \file{\$R\_HOME/etc/Renviron.site}
-  is used.  The user files searched for are \file{.Renviron} in the
+  \code{R\_ENVIRON}; if this is unset or empty,
+  \file{\$R\_HOME/etc/Renviron.site} is used (if it exists).
+  The user files searched for are \file{.Renviron} in the
   current or in the user's home directory (in that order).
   See \bold{Details} for how the files are read.
 
@@ -67,10 +67,17 @@
   Leading and trailing white space in \code{value} are stripped.
 %  No other interpretation of \code{value} is performed. In particular,
 %  if it is enclosed in quotes, the quotes form part of the value.
-  \code{value} is processed in a similar to a Unix shell.  In particular
+  \code{value} is processed in a similar way to a Unix shell.  In particular
   quotes are stripped, and backslashes are removed except inside quotes.
 }
 \note{
+#ifdef Unix
+  The file \file{\$R\_HOME/etc/Renviron} is always read very early in
+  the start-up processing.  It contains environment variables set by \R
+  in the configure process.  Values in that file can be overriden by
+  site or user environment files.
+  
+#endif
   Prior to \R version 1.4.0, the environment files searched were
   \file{.Renviron} in the current directory, the file pointed to by
   \code{R_ENVIRON} if set, and \file{.Renviron} in the user's home
