@@ -180,6 +180,10 @@ BUG FIXES
 
     o	jitter(x) now returns x when length(x) == 0.
 
+    o	Under some rare circumstances the locale-specific tables used by
+	the perl=TRUE option to grep etc were being corrupted and so 
+	matches were missed.
+
 
 
 		CHANGES IN R VERSION 1.9.0
