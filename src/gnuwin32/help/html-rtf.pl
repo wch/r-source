@@ -14,9 +14,9 @@
 
 $Font{"P"} = "\\f0\\fs22";
 $Font{"H1"} = "\\f0\\fs48";
-$Font{"H2"} = "\\f0\\fs32";
-$Font{"H3"} = "\\f0\\fs28";
-$Font{"H4"} = "\\f0\\fs28";
+$Font{"H2"} = "\\f0\\fs36\\cf1";
+$Font{"H3"} = "\\f0\\fs30";
+$Font{"H4"} = "\\f0\\fs26";
 $Font{"H5"} = "\\f0\\fs20";
 $Font{"H6"} = "\\f0\\fs18";
 $Font{"PRE"} = "\\f1\\fs20";
@@ -93,13 +93,16 @@ $Begin{"H6"} = "begin_header";
 $End{"H6"} = "end_header";
 
 sub begin_header {
-    local ($element, $tag) = @_;
+    local ($element, $tag, %attributes) = @_;
     print RTF $Font{$element}, " ";
+    if($attributes{"align"} eq "center") {
+	print RTF "\\qc "
+    }
 }
 
 sub end_header {
     local ($element) = @_;
-    print RTF "\\sa240\\par\\pard\\plain\n";
+    print RTF "\\sa240\\par\\ql\\pard\\plain\n";
 }
 
 $Begin{"BR"} = "line_break";
@@ -113,13 +116,32 @@ $Begin{"P"} = "begin_paragraph";
 $End{"P"} = "end_paragraph";
 
 sub begin_paragraph {
-    local ($element, $tag) = @_;
+    local ($element, $tag, %attributes) = @_;
     print RTF $Font{"P"}, " ";
+    if($attributes{"align"} eq "center") {
+	print RTF "\\qc "
+    }
 }
 
 sub end_paragraph {
     local ($element) = @_;
     print RTF "\\sa240\\par\\pard\\plain\n";
+}
+
+$Begin{"DIV"} = "begin_division";
+$End{"DIV"} = "end_division";
+
+sub begin_division {
+    local ($element, $ta, %attributes) = @_;
+    print RTF $Font{"P"}, " ";
+    if($attributes{"align"} eq "center") {
+	print RTF "\\qc "
+    }
+}
+
+sub end_division {
+    local ($element) = @_;
+    print RTF "\\sa240\\par\\ql\\pard\\plain\n";
 }
 
 $Begin{"A"} = "begin_a";
@@ -176,9 +198,9 @@ sub end_a {
 			$href = $filename . $href;
 		    }
 		    $href =~ s/#/_hash_/og;
-		    print RTF "}{\\v _label_$href} ";
+		    print RTF "}{\\v _label_$href}";
 		} else {
-		    print RTF "}{\\v _label_$href} ";
+		    print RTF "}{\\v _label_$href}";
 		}
 		$href =~ s/_hash_.*//o;
 		if(! exists $filehash{$href}) {
@@ -441,17 +463,16 @@ sub html_content {
 	$string =~ s/\{/\\{/o;
 	$string =~ s/\}/\\}/o;
 	print RTF $string;
-	if(!(defined $in_a)) {print RTF " ";}
+#	if(!(defined $in_a)) {print RTF " ";}
 #	&print_word_wrap ($string);
     }
 }
 
 sub html_whitespace {
     local ($string) = @_;
-    if (! $whitespace_significant) {
-	die "Internal error, called html_whitespace when whitespace was not significant";
+    if ($whitespace_significant) { # means verbatim
+	$string =~ s/\n/\\line\n/og;
     }
-    $string =~ s/\n/\\line\n/og;
     print RTF $string;
 }
 

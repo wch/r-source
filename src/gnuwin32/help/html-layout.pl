@@ -101,16 +101,26 @@ sub html_title2
 {
     my $title = $_[0];
 
+    if($opt_chm) {
     "\n<h2 align=center><FONT FACE=\"Courier New,Courier\" " .
-	"COLOR=\"#999999\">$title</FONT></h2>\n\n";
+	"COLOR=\"#0000FF\">$title</FONT></h2>\n\n";
+    } else {
+	"\n<h2 align=center><FONT FACE=\"Courier New,Courier\" " .
+	    "COLOR=\"#999999\">$title</FONT></h2>\n\n";
+    }
 }
 
 sub html_title3
 {
     my $title = $_[0];
 
-    "\n<h2><FONT FACE=\"Courier New,Courier\" " .
+    if($opt_chm) {
+	"\n<h3><FONT FACE=\"Courier New,Courier\" " .
+	"COLOR=\"#666666\">$title</FONT></h3>\n\n";
+    } else {
+	"\n<h2><FONT FACE=\"Courier New,Courier\" " .
 	"COLOR=\"#666666\">$title</FONT></h2>\n\n";
+    }
 }
 
 sub html_alphabet

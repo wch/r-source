@@ -65,9 +65,11 @@ sub parse_html_stream {
   main:
     while (1) {
 
+	$original = $line_buffer;
 	# if whitespace does not matter, trim any leading space.
 	if (! $whitespace_significant) {
-	    $line_buffer =~ s/^\s+//;}
+	    $line_buffer =~ s/^\s+//;
+	}
 
 	# now dispatch on the type of token
 
@@ -97,9 +99,10 @@ sub parse_html_stream {
 	    $line_buffer = $';
 	    &html_tag ($token);}
 
-	elsif ($line_buffer =~ /^([^\s<]+)/) {
+	elsif ($original =~ /^([^\n<]+)/) {
 	    $token = $1;
 	    $line_buffer = $';
+	    if ($line_buffer =~ /^\n/) {$token .= " ";}
 	    $token = &substitute_entities($token);
 	    &html_content ($token); }
 
@@ -233,7 +236,7 @@ sub tag_element {
 # associative array of the attributes of a tag.
 sub tag_attributes {
     local ($tag) = @_;
-    $tag =~ /^<[A-Za-z]+\s+(.*)>$/;
+    $tag =~ /^<[A-Za-z0-9]+\s+(.*)>$/;
     &parse_attributes($1);
 }
 
