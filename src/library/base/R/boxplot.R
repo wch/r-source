@@ -84,7 +84,7 @@ boxplot.formula <- function(formula, data = NULL, subset, na.action, ...)
 boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 {
     nna <- !is.na(x)
-    n <- length(nna) # including +/- Inf
+    n <- sum(nna) # including +/- Inf
     stats <- fivenum(x, na.rm = TRUE)
     iqr <- diff(stats[c(2, 4)])
     if(coef < 0) stop("`coef' must not be negative")
