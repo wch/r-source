@@ -19,7 +19,7 @@ buildjpeg: $(JPEGDIR)/jconfig.h Makefile.jpeg
 $(JPEGDIR)/jconfig.h: jconfig.h 
 	$(CP) jconfig.h $(JPEGDIR)/jconfig.h
 
-rbitmap-CFLAGS=-Wall -pedantic -DHAVE_PNG -DHAVE_JPEG -I./zlib -I./libpng -I$(JPEGDIR) 
+rbitmap-CFLAGS=-Wall -pedantic -DHAVE_PNG -DHAVE_JPEG -I./zlib -I./libpng -I$(JPEGDIR) -I../../include/R_ext
 Rbitmap-DLLLIBS=-L../ -lR -L./libpng -lpng -L./zlib -lz -L$(JPEGDIR) -ljpeg
 Rbitmap-DLLFLAGS=-s
 
