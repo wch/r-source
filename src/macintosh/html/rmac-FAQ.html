@@ -5,24 +5,21 @@
 
 
 <h1 align="center">R for Macintosh FAQ/DOC</h1>
-<h2>Version for <tt>R 1.3.0</tt></h2>
+<h2>Version for <tt>R 1.3.1</tt></h2>
 <address>S. M. Iacus</address>
 <p>
 Changes specific to this version:
 
-<ul> Fixed a bug when saving from menus</ul>
-<ul> Fixed a bug that crashes R under System 8.6 due to a call
-to a non-existent function under 8.6</ul>
-<ul> Stack and memory settings changed to work on System 8.6</ul>
-<ul> Added back the "Save" menu</ul>
-<ul> file.choose() works correctly now</ul>
-<ul> Now R takes track of file names associated to each window</ul>
-<ul> Fixed a bug with printer dialog, now "cancel" works correctly</ul>
-<ul> Now R can handle "user breaks" in evaluation and printing loops. R 
-uses standard MacOS control break sequence, that is "CMD + ."</ul>
-<ul> Windows are smoothly refreshed/updated under MacOS X"</ul>
-<ul> Now R can run AppleScript, some demo scripts are provided. See 
-"help(applescript)" for more details</ul>
+<ul> Added the "Config" menu</ul>
+<ul> Fixed a bug in the lapack module. Complex functions are now available.</ul>
+<ul> Added MPW makefiles to build standard libraries and modules</ul>
+<ul> Added experimental script to build R via Apple's MRC compiler</ul>
+<ul> Now R needs a new shared library <a href="#f2cLib">"f2cLib"</a> that 
+   will increase portability for all fortran based packages</ul>
+<ul> Added support for apple events. R begins to be a scriptable
+  application. Very limited support by now but will increase soon.
+  Some demo scripts have been added.</ul>
+<ul> link.html.help() function has been added by picking windows code.</ul>
 
 
 <p><p><hr><p>
@@ -546,6 +543,41 @@ names&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; of any new/closed window</td>
 <td></td>
 </tr>
 
+
+<tr>
+<td>Config</td>
+
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td>Allow Interrupt</td>
+
+<td>&nbsp;</td>
+
+<td>It is equivalent to set the option "Interrupt=TRUE" in the 
+.Renvironment config file but this can be changed at runtime.</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+
+<td>On Open Source</td>
+
+<td></td>
+
+<td>It is equivalent to set the option "OnOpenSource=TRUE" in the 
+.Renvironment config file but this can be changed at runtime. Useful to 
+work with external editor such as Alpha.</td>
+</tr>
+
+
 <tr>
 <td>Help</td>
 
@@ -678,6 +710,7 @@ of a line means that this is a commented out line.
 <br># switch off
 <br># Default: Interrupt=FALSE
 <br>&nbsp;
+<br> This can be changed at runtime also via the Config menu.
 <p>R behaviour when R application receive an "open" event:
 <br>-------------------------------------------------------
 <p># Wheter to show or source a file
@@ -688,7 +721,7 @@ of a line means that this is a commented out line.
 <p>This means that when you drag a file on top of the R icon or you submit
 something from an external editor, R application simply open it (FALSE)
 or sources it (TRUE). If the file is a worspace image file, then R loads
-that workspace.
+that workspace. This can be changed at runtime also via the Config menu.
 <br>&nbsp;
 <p>Tab size of text windows:
 <br>-------------------------
@@ -757,6 +790,9 @@ MacOS X as virtual memory is always on.
 <a href="http://asu.info.apple.com/swupdates.nsf/artnum/n11916">CarbonLib 
 library</a> from Apple. At the time of this release, version 1.2.5 is the current non developer release.
 Normally it is included in System 9.1 and X.
+<br><a NAME="f2cLib">Now R needs the f2cLib shared library to run. This 
+library is distributed with R but in case you miss it you can found it <a 
+href="http://www.ci.tuwien.ac.at/~iacus/R">here</a>.
 <br>The minimum System version release is 8.6 (+ CarbonLib library).
 <br>You no longer need the WasteLib library.
 <p><a NAME="FBUGS"></a><b>FIXED BUGS</b>
