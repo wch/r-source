@@ -30,14 +30,9 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
         type <- "help"
         if(offline) type <- "latex"
         else if (htmlhelp) type <- "html"
-        topic <- gsub("\\[","\\\\[", topic)
+        ## no longer, with index.search()! topic <- gsub("\\[","\\\\[", topic)
         INDICES <- system.file(pkg=package, lib=lib.loc)
         file <- index.search(topic, INDICES, "AnIndex", type)
-        if (file == "") {
-            # try data .doc -- this is OUTDATED
-            file <- system.file(file.path("data", paste(topic, ".doc",
-                sep = "")), pkg = package, lib = lib.loc)
-        }
         if (length(file) && file != "") {
             if (verbose)
                 cat("\t\t\t\t\t\tHelp file name `", sub(".*/", "", file),
