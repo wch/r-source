@@ -420,3 +420,7 @@ Date: Wed, 22 Sep 1999 10:33:33 +0200 (CEST)
 Subject: model.matrix()
 From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
 Date: Wed, 22 Sep 1999 11:32:04 +0100 (BST)
+* PR# 286 *
+Subject:  segmentation fault in R 
+From: "Mitsuru Oka" <oka@debian.or.jp>
+Date: 25 Sep 1999 17:15:29 -0000
