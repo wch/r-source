@@ -139,10 +139,6 @@ From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Fri, 15 Jan 1999 11:00:25 +0100 (MET)
 --An incident where the 0.63.2 patches didn't take. So far the only one. 
 --Maybe caused by patching unclean sources?
-* PR# 165 *
-Subject: make check
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Tue, 13 Apr 1999 12:03:42 +0200 (CEST)
 
 Directory:  Language
 
@@ -269,7 +265,23 @@ Date: Sun, 9 May 1999 12:42:29 -0400 (EDT)
 Subject: subscripting in list()
 From: Wenxin Mao <mao@compstat.wharton.upenn.edu>
 Date: Sun, 9 May 1999 13:02:51 -0400 (EDT)
-* PR# 188 *
-Subject:  linear mixed models 
-From: Evgenia Dimitriadou <dimi@ci.tuwien.ac.at>
-Date: Mon, 10 May 1999 18:18:59 +0200
+* PR# 189 *
+Subject: model.matrix crashes
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Tue, 11 May 1999 10:16:33 +0200 (MET DST)
+* PR# 190 *
+Subject: PRIVATE: xxxx
+From: barakil@nice.com
+Date: Tue, 11 May 1999 13:38:49 +0200 (MET DST)
+* PR# 191 *
+Subject: dev.print help page
+From: wsi@gcal.ac.uk
+Date: Tue, 11 May 1999 13:39:05 +0200 (MET DST)
+* PR# 192 *
+Subject: dev.print aspect ratio
+From: wsi@gcal.ac.uk
+Date: Tue, 11 May 1999 13:43:50 +0200 (MET DST)
+* PR# 193 *
+Subject: matrix() can't handle NaN
+From: wsi@gcal.ac.uk
+Date: Tue, 11 May 1999 14:01:59 +0200 (MET DST)
