@@ -186,6 +186,10 @@ BUG FIXES
     o	Saving images of packages with namespaces (such as mle) was
 	not compressing the image.
 
+    o	When formula.default() returned a terms object, it returned a
+        result of class c("terms", "formula") with different
+        subsetting rules from an object of class "formula".
+
 
 
 
