@@ -17,7 +17,7 @@ OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 
 DLLLIBS=-L../../gnuwin32 -lRm -lg2c
 ifeq ($(strip $(USE_ATLAS)),YES)
-DLLLIBS+=-L/R/ATLAS/lib/WinNT_PII -lcblas -lf77blas -latlas
+DLLLIBS+=-L$(ATLAS_PATH) -lcblas -lf77blas -latlas
 else
 FSOURCES += blas2.f cmplxblas.f
 endif

@@ -6,7 +6,7 @@ FFLAGS=$(OPTFLAGS)
 CSOURCES=$(wildcard *.c)
 FSOURCES=$(wildcard *.f)
 ifeq ($(strip $(USE_ATLAS)),YES)
-FSOURCES1=$(filter-out blas.o, $(FSOURCES))
+FSOURCES1=$(filter-out blas.f, $(FSOURCES))
 else
 FSOURCES1=$(FSOURCES)
 endif

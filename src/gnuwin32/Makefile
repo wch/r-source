@@ -11,7 +11,7 @@ LEA_MALLOC=YES
 
 # Set to YES and specify the path if you want to use the ATLAS BLAS.
 USE_ATLAS=NO
-ATLAS=/R/ATLAS/lib/WinNT_PII
+ATLAS_PATH=/R/ATLAS/lib/WinNT_PII
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -35,7 +35,8 @@ endif
 R-DLLFLAGS = -mwindows
 R-DLLLIBS =-L. $(FLIBS) -lcomctl32 -lversion
 ifeq ($(strip $(USE_ATLAS)),YES)
-R-DLLLIBS +=-L$(ATLAS) -lcblas -lf77blas -latlas
+R-DLLLIBS +=-L$(ATLAS_PATH) -lcblas -lf77blas -latlas
+FLIBS +=-L$(ATLAS_PATH) -lcblas -lf77blas -latlas
 endif
 SOURCES = $(filter-out malloc.c,$(wildcard *.c *.f))
 OBJS = $(SOURCES:.c=.o)
@@ -82,7 +83,7 @@ rlibs:
 
 rmodules: libRm.a
 	$(MAKE) -C ../modules OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' \
-	  USE_ATLAS=$(USE_ATLAS) -f Makefile.win
+	  USE_ATLAS=$(USE_ATLAS) ATLAS_PATH=$(ATLAS_PATH) -f Makefile.win
 
 COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
@@ -184,7 +185,7 @@ bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:  libR.a #../include/globalvar.h
-	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
+	$(MAKE) DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" EXTRADOCS=$($*-EXTRADOCS) \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \
