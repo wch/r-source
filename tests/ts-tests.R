@@ -1,4 +1,6 @@
 library(ts)
+.proctime00 <- proc.time()
+
 ### ar
 data(lh)
 ar(lh)
@@ -119,3 +121,5 @@ ap <- log10(AirPassengers) - 2
 par(mfrow=c(1,2))
 plot(cbind(ap, fitted(fit)), plot.type = "single")
 plot(cbind(ap, tsSmooth(fit)), plot.type = "single")
+
+cat('Time elapsed: ', proc.time() - .proctime00,'\n')
