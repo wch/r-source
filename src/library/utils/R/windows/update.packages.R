@@ -18,9 +18,11 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
         res <- zip.unpack(pkg, tmpDir)
         setwd(tmpDir)
         res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
-        if(!is.na(res) && res)
+        if(!is.na(res) && res) {
             cat("package", sQuote(pkgname),
                 "successfully unpacked and MD5 sums checked\n")
+            flush.console()
+        }
 
         ## Check to see if this is a bundle or a single package
         if (file.exists("DESCRIPTION")) {
@@ -34,9 +36,11 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
             res <- TRUE
             for (curPkg in pkgs) res <- res &
             tools::checkMD5sums(pkgname, file.path(tmpDir, curPkg))
-            if(!is.na(res) && res)
+            if(!is.na(res) && res) {
                 cat("bundle", sQuote(pkgname),
                     "successfully unpacked and MD5 sums checked\n")
+                flush.console()
+            }
         } else pkgs <- pkgname
 
         for (curPkg in pkgs) {

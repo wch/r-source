@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 2.0.0 (2004-06-04).
+   <p>The current version of this document is 2.0.0 (2004-06-09).
 
    ISBN 3-900051-02-X
 
@@ -88,7 +88,16 @@ packages: if the number in the file <code>VERSION</code> is
 to directory <code>src/library/Recommended</code> in the sources you have
 unpacked.  Normally <code>R-patched.tar.gz</code> will have the number of the
 last released version, and <code>R-devel.tar.gz</code> that of the next minor
-(<code></code><var>x</var><code>.</code><var>y</var><code>.0</code>) release.
+(<code></code><var>x</var><code>.</code><var>y</var><code>.0</code>) release.  After downloading manually you need
+to execute <code>tools/link-recommended</code> from the top level of the
+sources to make the requisite links in <code>src/library/Recommended</code>.
+
+   <p>One way to download the package sources is to use <code>wget</code>.  A
+suitable incantation from the top level of the R sources might be
+<pre class="smallexample">     wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
+       http://cran.r-project.org/src/contrib/<var>x</var>.<var>y</var>.<var>z</var>/Recommended
+     tools/link-recommended
+     </pre>
 
 <a name="Using%20rsync"></a>
 
