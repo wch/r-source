@@ -30,7 +30,7 @@ deriv3.formula(expr, namevec, function.arg, tag, hessian)
   \item{function.arg}{If specified, a character vector of arguments for
     a function return, or a function (with empty body) or \code{TRUE},
     the latter indicating that a function with argument names
-    \code{namevec} should be used. \bold{Note:} this is incompatible with S.}
+    \code{namevec} should be used.}
   \item{tag}{character; the prefix to be used for the locally created
     variables in result.}
   \item{hessian}{a logical value indicating whether the second derivatives
@@ -47,7 +47,8 @@ deriv3.formula(expr, namevec, function.arg, tag, hessian)
   \code{\link{formula}} method.  It returns a \code{\link{call}} for
   computing the \code{expr} and its (partial) derivatives,
   simultaneously.  It uses so-called \emph{``algorithmic
-    derivatives''}.
+    derivatives''}.  If \code{function.arg} is a function,
+  its arguments can have default values, see the \code{fx} example below.
 
   Currently, \code{deriv.formula} just calls \code{deriv.default} after
   extracting the expression to the right of \code{~}.
@@ -107,10 +108,13 @@ stopifnot(eval(D.sc) ==
           attr(eval(dxy),"gradient")[,"x"])
 
 ## function returned:
-deriv(y ~ sin(cos(x) * y), c("x","y"), func = TRUE)
-
-deriv(y ~ b0 + b1 * 2^(-x/th), c("b0", "b1", "th"),
-     c("b0", "b1", "th", "x") )
+deriv((ff <- y ~ sin(cos(x) * y)), c("x","y"), func = TRUE)
+stopifnot(all.equal(deriv(ff, c("x","y"), func = TRUE ),
+                    deriv(ff, c("x","y"), func = function(x,y){ } )))
+## function with defaulted arguments:
+(fx <- deriv(y ~ b0 + b1 * 2^(-x/th), c("b0", "b1", "th"),
+             function(b0, b1, th, x = 1:7){} ) )
+fx(2,3,4)
 
 ## Higher derivatives
 deriv3(y ~ b0 + b1 * 2^(-x/th), c("b0", "b1", "th"),
