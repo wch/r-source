@@ -23,10 +23,6 @@
 
   Files with an incomplete last line (no end of line mark) are now
   accepted.
-
-  It is not possible to redirect \file{stderr} on Windows 95/98/ME using
-  \file{command.com} as the shell, so warning and error messages will
-  not be redirected to the output file.
 }
 \keyword{utilities}
     
