@@ -39,6 +39,10 @@ other than their default, you can do that by either editing the file
 One common variable to change is R_PAPERSIZE, which defaults to a4, not
 letter.
 
+If you have libraries and header files, e.g. for GNU readline, in
+non-system directories, use the variables LIBS (for libraries) and
+CPPFLAGS (for header files), respectively, to specify these locations.
+
 Make will also build plain text help pages as well as HTML and LaTeX
 versions of the documentation (the three kinds can also be generated
 separately using make help, make html and make latex).  Note that as
@@ -48,7 +52,8 @@ documentation files via the `doc/pre-formatted-help' directory of the
 Comprehensive R Archive Network (CRAN), see the file `RESOURCES' for
 information on CRAN.
 
-Now type R and reach for your S manuals ...
+Now rehash if necessary, type `R' and reach for your S manuals ...
+And, read the R FAQ (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html).
 
 
 INSTALLATION
@@ -76,9 +81,9 @@ and can be set by running configure with the option
 The prefix of the installation directories can also be seen in the
 status message that is displayed at the end of configure.
 
-If you have libraries and header files, e.g. for GNU readline, in
-non-system directories, use the variables LIBS (for libraries) and
-CPPFLAGS (for header files), respectively, to specify these locations.
+Note that you can run R without installing it from the place you
+compiled, even after `make clean'---all you need is a link from
+RHOME/bin/R to somewhere in your path.
 
 
 USING FORTRAN
