@@ -17,7 +17,7 @@ NEW FEATURES
         save or SIGUSR2 to quit and save without running .Last and
         on.exit expressions.
 
-    o   Option for user-supplied normal random generator in RNGkind(). 
+    o   Option for user-supplied normal random generator in RNGkind().
 
     o	New functions tolower() and toupper() for converting alphabetic
 	characters to lower-case and upper-case, respectively.
@@ -26,6 +26,9 @@ NEW FEATURES
 	`--gui'.
 
     o	nlm() can now take additional arguments in ... to be passed to f.
+
+    o	cor.test(*, meth="spearman") might give slightly better P values,
+	since it now relies on pnorm(.) {with proper tail} instead of alnorm.
 
 
 BUG FIXES
@@ -72,7 +75,7 @@ BUG FIXES
 
     o   Some (strange?) model formulas could cause memory corruption
         (thanks to John Fox for digging this up).
- 
+
     o   Matrix multiplication in cases such as 1:3 %*% t(1:2) is accepted.
 
 

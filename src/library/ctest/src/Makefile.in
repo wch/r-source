@@ -12,7 +12,7 @@ subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
 SHLIB = $(pkg).@SHLIBEXT@
-OBJS = alnorm.o ansari.o fexact.o kendall.o ks.o prho.o swilk.o
+OBJS = ansari.o fexact.o kendall.o ks.o prho.o swilk.o
 
 all: Makefile $(SHLIB)
 	@$(top_srcdir)/tools/mkinstalldirs \
