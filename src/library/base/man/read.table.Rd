@@ -163,7 +163,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \code{fill = TRUE} in these variants.
 
   The rest of the line after a comment character is skipped; quotes
-  are not processed in comments. Complete comment lines are allowed
+  are not processed in comments.  Complete comment lines are allowed
   provided \code{blank.lines.skip = TRUE}; however, comment lines prior
   to the header must have the comment character in the first non-blank
   column.
