@@ -269,12 +269,6 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
     PROTECT(newcall = duplicate(cptr->call));
 
     class = R_data_class(obj, FALSE);
-    /* if(R_has_methods(NULL))  if the methods package has been attached */
-    /*    class = R_data_class(obj, FALSE);
-    else if (isObject(obj)) 
-	class = getAttrib(obj, R_ClassSymbol);
-    else
-       class = R_NilValue;*/
     nclass = length(class);
     for (i = 0; i < nclass; i++) {
 	sprintf(buf, "%s.%s", generic, CHAR(STRING_ELT(class, i)));
@@ -848,10 +842,12 @@ SEXP do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 
     x = CAR(args);
     /* if x isn't an object get out asap */
-    if( !isObject(x) )
-	return mkFalse();
+    /* if( !isObject(x) )
+       return mkFalse();
 
-    class = getAttrib(x, R_ClassSymbol);
+       class = getAttrib(x, R_ClassSymbol);*/
+
+    class = R_data_class(x, FALSE);
     nclass = length(class);
 
     what = CADR(args);

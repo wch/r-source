@@ -2049,6 +2049,13 @@ stopifnot(is.object(x))
 ## failed in 1.6.2
 
 
+## check inherits now works for basic classes:
+x <- 1:3
+is.object(x) # FALSE
+stopifnot(inherits(x, "integer"))
+## 2003-Mar-12 it did not
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
