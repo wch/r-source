@@ -168,9 +168,11 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
         pkgName <- help[1]              # only give help on one package
         pkgPath <- .find.package(pkgName, lib.loc, verbose = verbose)
         docFiles <- file.path(pkgPath,
-                              c("TITLE", "DESCRIPTION", "INDEX",
+                              c("DESCRIPTION", "INDEX",
                                 file.path("doc", "00Index.dcf")))
         pkgInfo <- vector(length = 4, mode = "list")
+        pkgInfo[[1]] <- paste("\n\t\tInformation on Package `",
+                              pkgName, "'", sep="")
         readDocFile <- function(f) {
             if(basename(f) %in% c("DESCRIPTION", "00Index.dcf")) {
                 ## This should be in valid DCF format ...
@@ -193,7 +195,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
             txt
         }
         for(i in which(file.exists(docFiles)))
-            pkgInfo[[i]] <- readDocFile(docFiles[i])
+            pkgInfo[[i+1]] <- readDocFile(docFiles[i])
         y <- list(name = pkgName, path = pkgPath, info = pkgInfo)
         class(y) <- "packageInfo"
         return(y)
