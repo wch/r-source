@@ -423,7 +423,7 @@ FUNTAB R_FunTab[] =
 {"call",	do_call,	0,	0,	-1,	PP_FUNCALL},
 {"do.call",	do_docall,	0,	11,	2,	PP_FUNCALL},
 {"as.call",	do_ascall,	0,	1,	1,	PP_FUNCALL},
-{"type.convert",do_typecvt,	1,	11,	3,	PP_FUNCALL},
+{"type.convert",do_typecvt,	1,	11,	4,	PP_FUNCALL},
 
 
 /* String Manipulation */
@@ -564,7 +564,7 @@ FUNTAB R_FunTab[] =
 {"rank",	do_rank,	0,	11,	1,	PP_FUNCALL},
 {"missing",	do_missing,	1,	0,	1,	PP_FUNCALL},
 {"nargs",	do_nargs,	1,	0,	0,	PP_FUNCALL},
-{"scan",	do_scan,	0,	11,	10,	PP_FUNCALL},
+{"scan",	do_scan,	0,	11,	11,	PP_FUNCALL},
 {"count.fields",do_countfields,	0,	11,	3,	PP_FUNCALL},
 {"t.default",	do_transpose,	0,	11,	1,	PP_FUNCALL},
 {"aperm",	do_aperm,	0,	11,	3,	PP_FUNCALL},

@@ -124,13 +124,13 @@ static int sequal(SEXP x, int i, SEXP y, int j)
 }
 
 /* Choose M to be the smallest power of 2 */
-/* not less than 2*n and set K = log2(M) */
+/* not less than 4*n and set K = log2(M) */
 static void MKsetup(int n)
 {
-    int n2 = 2 * n;
+    int n4 = 4 * n;
     M = 1;
     K = 0;
-    while (M < n2) {
+    while (M < n4) {
 	M *= 2;
 	K += 1;
     }

@@ -1,13 +1,15 @@
 count.fields <- function(file, sep = "", skip = 0)
-    .Internal(count.fields(file, sep, skip))
+    .Internal(count.fields(file, sep,  skip))
 
 
 read.table <-
-    function (file, header=FALSE, sep="", row.names, col.names, as.is=FALSE,
+    function (file, header=FALSE, sep="", dec=".", row.names,
+              col.names, as.is=FALSE,
 	      na.strings="NA", skip=0)
 {
-    type.convert <- function(x, na.strings="NA", as.is=FALSE)
-	.Internal(type.convert(x, na.strings, as.is))
+    type.convert <- function(x, na.strings = "NA",
+                             as.is = FALSE, dec = ".")
+	.Internal(type.convert(x, na.strings, as.is, dec))
 
     ##	basic column counting and header determination;
     ##	rlabp (logical) := it looks like we have column names
@@ -67,7 +69,7 @@ read.table <-
 	stop(paste("as.is has the wrong length",
 		   length(as.is),"!= cols =", cols))
     for (i in 1:cols)
-        data[[i]] <- type.convert(data[[i]], as.is = as.is[i])
+        data[[i]] <- type.convert(data[[i]], as.is = as.is[i], dec = dec)
 
     ##	now determine row names
 

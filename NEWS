@@ -164,6 +164,13 @@ NEW FEATURES
         pairwise.prop.test for pairwise comparisons of grouped data
         and proportions.
 
+    o   Scan() and read.table() now have a dec= argument to set the
+        decimal point character. If sep= is set, quoting of strings is
+        now possible and follows the conventions for comma-separated
+        files. This should make it easier to read the "continental
+        CSV" format (fields separated by semicolon and using comma as
+        decimal point).
+
 BUG FIXES
 
     o	str() now works with Surv(.) objects from library(survival5).
