@@ -41,12 +41,13 @@ detach <- function(name, pos=2, version)
         if(!is.null(libpath)) try(.Last.lib(libpath))
     }
     .Internal(detach(pos))
-    ## check for detaching a required package
-#     for(pkgs in search()) {
-#         if(exists(".required", pkgs, inherits = FALSE)
-#            && packageName %in% paste("package:", get(".required", pkgs, inherits = FALSE),sep=""))
-#             warning(packageName, " is required by ", pkgs, " (still attached)")
-#     }
+    ## check for detaching a  package required by another package (not by .GlobalEnv
+    ## because detach() can't currently fix up the .required there)
+    for(pkgs in search()[-1]) {
+        if(exists(".required", pkgs, inherits = FALSE)
+           && packageName %in% paste("package:", get(".required", pkgs, inherits = FALSE),sep=""))
+            warning(packageName, " is required by ", pkgs, " (still attached)")
+    }
     if(.isMethodsDispatchOn()) {
         if("package:methods" %in% search())
             cacheMetaData(env, FALSE)
