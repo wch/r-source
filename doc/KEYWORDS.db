@@ -3,7 +3,7 @@ Basics|sysdata: Basic System Variables # != S
 Basics|datasets: Datasets available by data() # != S
 Basics|data: Environments, Scoping, Packages # ~= S
 Basics|manip: Data Manipulation
-Basics|attribute: Data Attributes	
+Basics|attribute: Data Attributes
 Basics|classes: Data Types (not OO)
 Basics|classes|character: Character Data Operations
 Basics|classes|complex: Complex Numbers
@@ -27,6 +27,7 @@ Mathematics|math: Mathematical Calculus etc # != S
 Mathematics|logic: Logical Operators
 Mathematics|optimize: Optimization
 Mathematics|symbolmath: `Symbolic Math', as polynomials, fractions
+Mathematics|graphs: Graphs (not graphics), i.e nodes&edges, e.g. dendrograms
 Programming: Programming, Input/Ouput, and Miscellaneous
 Programming|programming: Programming
 Programming|programming|interface: Interfaces to Other Languages
