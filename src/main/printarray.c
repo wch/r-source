@@ -379,7 +379,7 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
 		    Rprintf(", %d", l);
 		k = k * INTEGER(dim)[j];
 	    }
-	    printf("\n\n");
+	    Rprintf("\n\n");
 	    switch (TYPEOF(x)) {
 	    case LGLSXP:
 		printLogicalMatrix(x, i * b, nr, nc, dn0, dn1);
