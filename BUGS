@@ -803,17 +803,7 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6441 *
-Subject: VIRUS (W32/Bagle-A) IN YOUR MAIL
-Subject: Hi
-Subject: Hi
-From: virusalert@ox.ac.uk
-From: r-bugs@r-project.org
-From: r-bugs@r-project.org
-Date: Mon, 19 Jan 2004 09:57:56 +0000 (GMT)
-Date: Mon, 19 Jan 2004 20:56:49 +1000
-Date: Mon, 19 Jan 2004 20:56:49 +1000
-* PR# 6442 *
-Subject: small bug on qchisq
-From: Remy.Drouilhet@upmf-grenoble.fr
-Date: Mon, 19 Jan 2004 18:09:34 +0100 (CET)
+* PR# 6448 *
+Subject: cor( x, y , method = "spearman" ) incorrect if any( is.na(c( x, y
+From: <cberry@tajo.ucsd.edu>
+Date: Tue, 20 Jan 2004 15:16:19 -0800 (PST)
