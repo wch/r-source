@@ -394,7 +394,7 @@ work.
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-The simplest way is to use @file{rw1060.exe} or @file{miniR.exe}.  Just
+The simplest way is to use @file{rw1061.exe} or @file{miniR.exe}.  Just
 double-click on the icon and follow the instructions.  If you installed
 R this way you can uninstall it from the Control Panel or Start Menu
 (unless you suppressed making a group for @R{}).
