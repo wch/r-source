@@ -102,6 +102,8 @@ static int sock_read_helper(Rconnection con, void *ptr, size_t size)
 		con->incomplete = TRUE;
 		return nread > 0 ? nread : res;
 	    }
+	    else if (con->blocking && res == 0) /* should mean EOF */
+		return nread;
 	    else if (res < 0) return res;
 	    else this->pend = this->inbuf + res;
 	}
