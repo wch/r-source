@@ -20,6 +20,8 @@ NEW FEATURES
     o	configure now tests for strptime functions that fail before
 	1970 (found on Irix).
 
+    o	New formula interface to cor.test() in package ctest.
+
 
 
 BUG FIXES

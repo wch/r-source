@@ -128,3 +128,27 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 		   data.name = DNAME),
 	      class = "htest")
 }
+
+cor.test.formula <-
+function(formula, data, subset, na.action, ...)
+{
+    if(missing(formula)
+       || !inherits(formula, "formula")
+       || length(formula) != 2)
+        stop("formula missing or invalid")
+    if(missing(na.action))
+        na.action <- getOption("na.action")
+    m <- match.call(expand.dots = FALSE)
+    if(is.matrix(eval(m$data, parent.frame())))
+        m$data <- as.data.frame(data)
+    m[[1]] <- as.name("model.frame")
+    m$... <- NULL
+    mf <- eval(m, environment(formula))
+    if(length(mf) != 2)
+        stop("invalid formula")
+    DNAME <- paste(names(mf), collapse = " and ")
+    names(mf) <- c("x", "y")
+    y <- do.call("cor.test", c(mf, list(...)))
+    y$data.name <- DNAME
+    y
+}

@@ -11,6 +11,7 @@
 \method{cor.test}{default}(x, y,
          alternative = c("two.sided", "less", "greater"),
          method = c("pearson", "kendall", "spearman"), exact = NULL)
+\method{cor.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
   \item{x, y}{numeric vectors of data values.  \code{x} and \code{y}
@@ -23,6 +24,16 @@
     \code{"kendall"}, or \code{"spearman"}, can be abbreviated.}
   \item{exact}{a logical indicating whether an exact p-value should be
     computed.}
+  \item{formula}{a formula of the form \code{~ u + v}, where both
+    \code{u} and \code{v} are numeric variables giving the data values.}
+  \item{data}{an optional data frame containing the variables in the
+    model formula.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used.}
+  \item{na.action}{a function which indicates what should happen when
+    the data contain \code{NA}s.  Defaults to
+    \code{getOption("na.action")}.}
+  \item{\dots}{further arguments to be passed to the default method.}
 }
 \value{
   A list with class \code{"htest"} containing the following components:
