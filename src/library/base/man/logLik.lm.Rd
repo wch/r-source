@@ -1,4 +1,3 @@
-% from nlme, was logLik.lm.Rd,v 1.4 2000/07/03 18:22:47 bates
 \name{logLik.lm}
 \alias{logLik.lm}
 \title{Extract Log-Likelihood from an lm Object}

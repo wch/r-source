@@ -1,4 +1,3 @@
-% from nls,  logLik.Rd,v 1.1 1999/11/12 13:34:35 bates
 \name{logLik}
 \title{Extract Log-Likelihood}
 \usage{
@@ -24,7 +23,8 @@ logLik(object, \dots)
 \description{
   This function is generic; method functions can be written to handle
   specific classes of objects.  Classes which already have methods for
-  this function include: \code{lm}, \code{nls} in package \pkg{nls},
+  this function include: \code{glm}, \code{lm},
+  \code{nls} in package \pkg{nls}
   and \code{gls}, \code{lme} and others in package \pkg{nlme}.
 %   \code{corStruct}, \code{lmList}, \code{lmeStruct}, \code{reStruct}, and
 %   \code{varFunc}.
@@ -38,7 +38,7 @@ logLik(object, \dots)
   The details depend on the method function used; see the appropriate
   documentation.
 }
-\seealso{\code{\link{logLik.lm}}, \code{\link[nls]{logLik.nls}},
+\seealso{\code{\link{logLik.lm}}, \code{\link{logLik.glm}},
   \code{\link[nlme]{logLik.gls}}, \code{\link[nlme]{logLik.lme}}, etc.}
 \author{Jose Pinheiro and Douglas Bates}
 \examples{
