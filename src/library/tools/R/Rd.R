@@ -154,6 +154,15 @@ function(RdFiles)
     ## Compute contents db from Rd files.
 
     RdFiles <- path.expand(RdFiles[.fileTest("-f", RdFiles)])
+
+    if(length(RdFiles) == 0)
+        return(data.frame(File = I(character(0)),
+                          Name = I(character(0)),
+                          Type = I(character(0)),
+                          Title = I(character(0)),
+                          Aliases = I(list()),
+                          Keywords = I(list())))
+    
     contents <- vector("list", length(RdFiles) * 5)
     dim(contents) <- c(length(RdFiles), 5)
     for(i in seq(along = RdFiles)) {
