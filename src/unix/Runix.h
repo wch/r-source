@@ -2,7 +2,6 @@
 
 void fpu_setup(Rboolean);/* ./sys-unix.c */
 
-void R_ShowMessage(char *s);
 void Rstd_read_history(char *s);
 
 void Rstd_Suicide(char *s);

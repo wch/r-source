@@ -52,7 +52,6 @@
 #define GETGREEN(col)  (((col) >> GSHIFT) & 0xFFUL)
 #define GETBLUE(col)   (((col) >> BSHIFT) & 0xFFUL)
 
-void R_ShowMessage(char *msg);
 #include <R_ext/Error.h>
 
 #ifdef HAVE_PNG

@@ -42,10 +42,7 @@ typedef struct {
   Uitem *mItems;
 } menuItems;
 
-void Rconsolecmd(char *);
-
-void R_ShowMessage(char *s);
-
+#include <R_ext/Error.h> /* for R_ShowMessage */
 int check_doc_file(char *);
 void internal_shellexec(char *);
 int internal_ShowFile(char *, char *);

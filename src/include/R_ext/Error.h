@@ -29,6 +29,8 @@ void	Rf_error(const char *, ...);
 void	Rf_warning(const char *, ...);
 void	WrongArgCount(const char *);
 void	UNIMPLEMENTED(const char *);
+void 	R_ShowMessage(char *s);
+    
 
 #ifdef  __cplusplus
 }

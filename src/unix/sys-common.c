@@ -305,9 +305,6 @@ SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  INITIALIZATION HELPER CODE
  */
 
-
-extern void R_ShowMessage(char *);
-
 void R_DefParams(Rstart Rp)
 {
     Rp->R_Quiet = FALSE;
