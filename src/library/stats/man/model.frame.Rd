@@ -61,7 +61,7 @@ model.frame(formula, \dots)
   \code{model = TRUE}) or pass the call used when fitting on to the
   default method.  The default method itself can cope with rather
   standard model objects such as those of classes
-  \code{"\link[lqs]{lqs}"} and \code{"\link[ppr]{ppr}"} if no other
+  \code{"\link[MASS]{lqs}"} and \code{"\link[ppr]{ppr}"} if no other
   arguments are supplied.
   
   The rest of this section applies only to the default method.

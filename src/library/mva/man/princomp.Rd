@@ -35,7 +35,8 @@ princomp(x, \dots)
   \item{scores}{a logical value indicating whether the score on each
     principal component should be calculated.}
   \item{covmat}{a covariance matrix, or a covariance list as returned by
-    \code{\link{cov.wt}}, \code{\link{cov.mve}} or \code{\link{cov.mcd}}.
+    \code{\link{cov.wt}}, \code{\link[MASS]{cov.mve}} or
+    \code{\link[MASS]{cov.mcd}}.
     If supplied, this is used rather than the covariance matrix of
     \code{x}.}
   \item{\dots}{arguments passed to or from other methods. If \code{x} is

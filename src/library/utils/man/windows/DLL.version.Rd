@@ -21,6 +21,6 @@ DLL.version(path)
 }
 \examples{
 DLL.version(file.path(R.home(), "bin/R.dll"))
-DLL.version(file.path(R.home(), "library/lqs/libs/lqs.dll"))
+DLL.version(file.path(R.home(), "library/stats/libs/stats.dll"))
 }
 \keyword{utilities}

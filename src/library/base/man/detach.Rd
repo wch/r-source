@@ -52,8 +52,8 @@ library(eda)
 pkg <- "package:eda"
 detach(pos = match(pkg, search()))
 
-## careful: do not do this unless 'lqs' is not already loaded.
-library(lqs)
+## careful: do not do this unless 'stepfun' is not already loaded.
+library(stepfun)
 detach(2)# 'pos' used for 'name'
 }
 \keyword{data}

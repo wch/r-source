@@ -1043,8 +1043,6 @@ meth2gen <- function(cl)
     noquote(sub(paste("\\.",cl,"$",sep=""),"", methods(class = cl)))
 meth2gen("data.frame")
 meth2gen("dendrogram")
-library(lqs)
-meth2gen("lqs")
 ## --> the output may need somewhat frequent updating..
 
 

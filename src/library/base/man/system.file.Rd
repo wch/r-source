@@ -29,8 +29,8 @@ system.file(\dots, package = "base", lib.loc = NULL)
 }
 \seealso{\code{\link{list.files}}}
 \examples{
-system.file()                # The root of the 'base' package
-system.file(package = "lqs") # The root of package 'lqs'
+system.file()                  # The root of the 'base' package
+system.file(package = "stats") # The root of package 'stats'
 system.file("INDEX")
 system.file("help", "AnIndex", package = "stepfun")
 }

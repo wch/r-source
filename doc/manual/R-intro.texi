@@ -5137,10 +5137,10 @@ with code for projection pursuit regression.
 fitting regression models in a way resistant to the influence of extreme
 outliers in the data.  Function @code{lqs}
 @findex lqs
-in the standard package of the same name provides state-of-art
-algorithms for highly-resistant fits.  Less resistant but statistically
-more efficient methods are available in user-contributed packages, for
-example function @code{rlm}
+in the recommended package @pkg{MASS} provides state-of-art algorithms
+for highly-resistant fits.  Less resistant but statistically more
+efficient methods are available in packages, for example function
+@code{rlm}
 @findex rlm
 in package @pkg{MASS}.
 
