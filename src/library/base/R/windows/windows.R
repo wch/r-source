@@ -79,3 +79,10 @@ print.SavedPlots <- function(x, ...)
     cat("  #plot calls are", paste(lens, collapse=", "), "\n")
     cat("  Current position is plot", 1 + x[[4]], "\n")
 }
+
+"[.SavedPlots" <- function(x, i, ...)
+{
+    numplots <- x[[2]]
+    if(i > numplots || i < 1) stop("subscript out of range")
+    x[[5]][[i]]
+}

@@ -6,6 +6,7 @@
 \alias{x11}
 \alias{X11}
 \alias{print.SavedPlots}
+\alias{[.SavedPlots}
 
 \title{Windows graphics devices}
 
@@ -105,14 +106,17 @@ win.print(width = 7, height = 7, pointsize = 12)
   background colour is that when the device is copied the background
   colour is copied but the canvas colour is not.
 
-  Recorded plots are of class \code{"SavedPlots"}.
+  Recorded plot histories are of class \code{"SavedPlots"}.  They have a
+  \code{print} method, and a subset method.  As the individual plots are
+  of class \code{"recordedplot"} they can be replayed by printing them:
+  see \code{\link{recordPlot}}.
 }
 
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
 }
 
-\author{Guido Masarotto}
+\author{Guido Masarotto and Brian Ripley}
 
 \seealso{
   \code{\link{savePlot}}, \code{\link{bringToTop}},

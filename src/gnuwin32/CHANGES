@@ -51,6 +51,10 @@ plotting to/saving to most devices.  The png() device does support
 transparent backgrounds, but this is not accessible through the 
 menus nor the savePlot() function.
 
+There is a print method for saved plot histories, and individual
+plots can be replayed from the command line by subsetting a
+plot history variable.
+
 The console pop-up was checking the wrong item for `Buffered output'.
 
 Installing a package now first removes the data and demo directories
