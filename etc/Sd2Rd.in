@@ -1,9 +1,11 @@
 #! @PERL@
 
 # Convert S documentation to R documentation format
-# Usage:  Sd2Rd [-x] file
+# Usage:  Sd2Rd [-n] [-x] file
 # The option `-x' makes the program greedily interpret all single-quoted
 # names intended as code names.
+# The option `-n' renders examples non-executable by wrapping them into
+# a \dontrun{} environment.
 
 # Copyright (C) 1997, 1998 Kurt Hornik
 #
@@ -24,7 +26,7 @@
 
 # Bug reports to Kurt.Hornik@ci.tuwien.ac.at
 
-$VERSION = "0.3-1";
+$VERSION = "0.3-2";
 ($NAME = $0) =~ s|.*/||;
 
 $\ = "\n";
@@ -38,16 +40,23 @@ $needVal = 0;
 $output = "";
 
 use Getopt::Long;
-GetOptions(("x")) || &usage();
+GetOptions(("n", "x")) || &usage();
 
 while (<>) {
   chop;
   &substitute unless /^\./;
   @word = split;
-
+  
   if (/^\s*$/) { &output("\n"); }
   if (/^[^.]/) { &output($_); }
 
+  ## Added by BDR 1998/08/27
+  if (/^\.\\\"/o) {
+    s/^\.\\\"/%/;
+    &output($_);
+  }
+  ## End
+  
   if (/^\.AG/) {
     if ($needArg) {
       &section(0, "\\arguments\{");
@@ -62,8 +71,12 @@ while (<>) {
   if (/^\.DN/) { &section(0, "\\description\{"); }
   if (/^\.DT/) { &section(0, "\\details\{"); }
   if (/^\.EX/) {
-    &section(0, "\\examples\{");
-    $inVerbatim = 1;	
+    if ($opt_n) {
+      &section(1, "\\examples\{\\dontrun\{");
+    } else {
+      &section(0, "\\examples\{");
+    }
+    $inVerbatim = 1;
   }
   if (/^\.FN/) {
     unless($fun) { $fun = $word[1]; }
@@ -115,7 +128,6 @@ while (<>) {
     &section(0, "");
     print("% Converted by $NAME version $VERSION.");
   }
-  
   if (/^\.AO/) {
     output("Arguments for function \\code\{$word[1]()\} can also be");
     output("supplied to this function.");
@@ -228,10 +240,14 @@ sub output {
 }
 
 sub usage {
-  print("\n$NAME version $VERSION\n\nusage:  $NAME [-x] file\n");
+  print("\n$NAME version $VERSION\n\nusage:  $NAME [-n] [-x] file\n");
+  print("options:");
+  print("  -x      interpret all single-quoted names as code names");
+  print("  -n      render examples non-executable");
   exit;
 }
 
 ### Local Variables: ***
+### mode: perl ***
 ### perl-indent-level: 2 ***
 ### End: ***
