@@ -17036,9 +17036,10 @@ fi
 
 
 
+
 for ac_func in access chdir expm1 fcntl finite ftruncate getcwd \
   getgrgid getpwuid getuid hypot isascii isnan log1p matherr mkfifo \
-  popen putenv rint setenv strcoll stat strptime system times unsetenv
+  popen putenv rint setenv strcoll stat strptime symlink system times unsetenv
 do
 as_ac_var=`echo "ac_cv_func_$ac_func" | $as_tr_sh`
 echo "$as_me:$LINENO: checking for $ac_func" >&5
