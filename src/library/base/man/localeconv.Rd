@@ -33,9 +33,10 @@ Sys.localeconv()
 ##            "127"             "127"
 
 ## Now try your default locale (which might be "C").
-old <- Sys.setlocale(locale = "")
+\dontrun{old <- Sys.getlocale()
+Sys.setlocale(locale = "")
 Sys.localeconv()
-Sys.setlocale(locale = old)
+Sys.setlocale(locale = old)}
 
 \dontrun{read.table("foo", dec=Sys.localeconv()["decimal_point"])}
 }
