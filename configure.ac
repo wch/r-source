@@ -1306,9 +1306,9 @@ fi
 if test "${have_jpeg}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [JPEG], [, ])
 fi
-if test "${have_pcre}" = yes; then
-  R_SH_VAR_ADD(r_capabilities, [PCRE], [, ])
-fi
+## always have these two on Unix.
+R_SH_VAR_ADD(r_capabilities, [bzip2], [, ])
+R_SH_VAR_ADD(r_capabilities, [PCRE], [, ])
 r_options=
 if test "${want_R_shlib}" = yes; then
   R_SH_VAR_ADD(r_options, [shared library], [, ])

@@ -25103,14 +25103,20 @@ else
   r_capabilities="${r_capabilities}${separator}JPEG"
 fi
 fi
-if test "${have_pcre}" = yes; then
-  separator=", "
+## always have these two on Unix.
+separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_capabilities}"; then
+  r_capabilities="bzip2"
+else
+  r_capabilities="${r_capabilities}${separator}bzip2"
+fi
+separator=", "
 test -z "${separator}" && separator=" "
 if test -z "${r_capabilities}"; then
   r_capabilities="PCRE"
 else
   r_capabilities="${r_capabilities}${separator}PCRE"
-fi
 fi
 r_options=
 if test "${want_R_shlib}" = yes; then
