@@ -25,7 +25,8 @@ It is not possible to coerce objects to mode call
 otherwise terminates with an error message.
 }
 \seealso{
-  \code{\link{is.language}}, \code{\link{expression}}, \code{\link{function}}.
+  \code{\link{do.call}} for calling a function by name and argument
+  list; \code{\link{is.language}}, \code{\link{expression}}, \code{\link{function}}.
 }
 \examples{
 is.call(call) #-> FALSE: Functions are NOT calls
