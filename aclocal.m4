@@ -881,16 +881,12 @@ fi
 AC_DEFUN([R_HEADER_SETJMP],
 [AC_CACHE_CHECK([whether setjmp.h is POSIX.1 compatible], 
                 [r_cv_header_setjmp_posix],
-[AC_EGREP_HEADER(sigjmp_buf, setjmp.h, 
-                 [r_cv_header_setjmp_posix=yes],
-                 [r_cv_header_setjmp_posix=no])
-if test "${r_cv_header_setjmp_posix}" = yes; then
-  AC_EGREP_HEADER([siglongjmp], setjmp.h, [], [r_cv_header_setjmp_posix=no])
-fi
-if test "${r_cv_header_setjmp_posix}" = yes; then
-  AC_EGREP_HEADER([sigsetjmp], setjmp.h, [], [r_cv_header_setjmp_posix=no])
-fi
-])
+[AC_TRY_COMPILE([#include <setjmp.h>],
+[sigjmp_buf b;
+sigsetjmp(b, 0);
+siglongjmp(b, 1);],
+[r_cv_header_setjmp_posix=yes],
+[r_cv_header_setjmp_posix=no])])
 if test "${r_cv_header_setjmp_posix}" = yes; then
   AC_DEFINE(HAVE_POSIX_SETJMP, 1,
             [Define if you have POSIX.1 compatible sigsetjmp/siglongjmp.])
@@ -921,8 +917,8 @@ fi
 AC_DEFUN([R_TYPE_SOCKLEN],
 [AC_MSG_CHECKING([for type of socket length])
 AC_CACHE_VAL([r_cv_type_socklen],
-  [for t in socklen_t size_t int; do
-    AC_TRY_COMPILE(
+[for t in socklen_t size_t int; do
+  AC_TRY_COMPILE(
 [#include <stddef.h>
 #include <sys/types.h>
 #ifdef HAVE_SYS_SOCKET_H
@@ -932,10 +928,10 @@ AC_CACHE_VAL([r_cv_type_socklen],
 #include <winsock.h>
 #endif
 ], 
-                   [(void)getsockopt (1, 1, 1, NULL, (${t} *)NULL)],
-                   [r_cv_type_socklen=${t}; break],
-	           [r_cv_type_socklen=])
-  done])
+                 [(void)getsockopt (1, 1, 1, NULL, (${t} *)NULL)],
+                 [r_cv_type_socklen=${t}; break],
+                 [r_cv_type_socklen=])
+done])
 if test "x${r_cv_type_socklen}" = x; then
   warn_type_socklen="could not determine type of socket length"
   AC_MSG_WARN([${warn_type_socklen}])
@@ -969,6 +965,17 @@ fi
 AC_SUBST(HAVE_GNOME)
 AC_SUBST(GNOME_IF_FILES)
 ])# R_GNOME
+
+AC_DEFUN([R_AQUA],
+[use_aqua=no
+if test "${want_aqua}" = yes; then
+  case "${host_os}" in
+    darwin*)
+      use_aqua=yes
+      ;;
+  esac
+fi
+])# R_AQUA
 
 AC_DEFUN([R_IEEE_754],
 [AC_CHECK_FUNCS([finite isnan])
