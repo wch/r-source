@@ -58,14 +58,10 @@ getenv("MAKE", "MAKE", "make");
 getenv("R_HOME", "R_HOME");
 
 if($OSTYPE eq "windows"){
-    if($R_HOME){
-	$R_EXE = "${R_HOME}/bin/Rterm.exe";
-	$R_CMD = "${R_HOME}/bin/Rcmd.exe";
-    }
-    else{
-	$R_EXE = "Rterm.exe";
-	$R_CMD = "Rcmd.exe";
-    }
+    ## DON'T add R_HOME/bin here: it might contain spaces and will not
+    ## work using system() under Windows 98. 
+    $R_EXE = "Rterm.exe";
+    $R_CMD = "Rcmd.exe";
     getenv("TMPDIR", "TMPDIR", "C:/TEMP");
     $TMPDIR = "" unless (-d $TMPDIR);
 }
