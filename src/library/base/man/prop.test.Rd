@@ -4,6 +4,7 @@
 prop.test(x, n, p = NULL, alternative = "two.sided", 
           conf.level = 0.95, correct = TRUE)
 }
+\alias{prop.test}
 \arguments{
   \item{x, n}{vectors of counts of successes and trials, respectively.
     Only pairs with finite values are used.  The elements of \code{x}
