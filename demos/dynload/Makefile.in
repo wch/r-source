@@ -50,12 +50,13 @@ uninstall:
 
 mostlyclean:
 clean:
-	@rm -f zero.$(SHLIB_EXT)
+	@-rm -rf .libs _libs
+	@-rm -f zero.$(SHLIB_EXT)
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -f $(INSTFILES); \
 	fi
 distclean:
-	@rm -f Makefile
+	@-rm -f Makefile
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

@@ -29,7 +29,8 @@ include $(top_builddir)/etc/Makeconf
 
 mostlyclean: clean
 clean:
-	@rm -f *.o *.$(SHLIB_EXT)
+	@-rm -rf .libs _libs
+	@-rm -f *.o *.$(SHLIB_EXT)
 distclean: clean
-	@rm -f Makefile
+	@-rm -f Makefile
 maintainer-clean: distclean
