@@ -80,7 +80,7 @@ double pnt(double t, double df, double delta)
 	del = -del;
     }
 
-    if (df > 4e5 || del*del > 2*M_LN2*(-DBL_MIN_EXP)) {
+    if (df > 4e5 || del*del > 2*M_LN2*(-(DBL_MIN_EXP))) {
 	/*-- 2nd part: if del > 37.62, then p=0 below
 	  FIXME: test should depend on `df', `tt' AND `del' ! */
 	/* Approx. from	 Abramowitz & Stegun 26.7.10 (p.949) */
