@@ -46,6 +46,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static void substr(char *buf, char *str, int sa, int so)
 {
+/* Store the substring	str [sa:so]  into buf[] */
     int i;
     str += (sa - 1);
     for (i = 0; i <= (so - sa); i++)
@@ -79,7 +80,6 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    start = 1;
 	if (start > stop || start > slen) {
 	    buff[0]='\0';
-	    STRING(s)[i] = mkChar(buff);
 	}
 	else {
 	    if (stop > slen)
@@ -89,8 +89,8 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 		warningcall(call, "a string was truncated in substr()\n");
 	    }
 	    substr(buff, CHAR(STRING(x)[i]), start, stop);
-	    STRING(s)[i] = mkChar(buff);
 	}
+	STRING(s)[i] = mkChar(buff);
     }
     UNPROTECT(1);
     return s;
@@ -103,7 +103,7 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 /* returned of length equal to the input vector x, each element of the */
 /* list is the collection of splits for the corresponding element of x. */
 
-static char *buff=NULL;	        /* Buffer for character strings */
+static char *buff=NULL;		/* Buffer for character strings */
 
 static void AllocBuffer(int len)
 {
@@ -115,7 +115,7 @@ static void AllocBuffer(int len)
     if(!buff) {
 	bufsize = 0;
 	error("Could not allocate memory for strsplit");
-    }   
+    }
 }
 
 SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -172,20 +172,20 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-/* Abbreviate 
+/* Abbreviate
    long names in the S-designated fashion:
-   1) spaces 
+   1) spaces
    2) lower case vowels
    3) lower case consonants
-   4) upper case letters 
-   5) special characters.  
+   4) upper case letters
+   5) special characters.
 
    Letters are dropped from the end of words
-   and at least one letter is retained from each word.  
+   and at least one letter is retained from each word.
 
-   If unique abbreviations are not produced letters are added until the 
-   results are unique (duplicated names are removed prior to entry). 
-   names, minlength, use.classes, dot 
+   If unique abbreviations are not produced letters are added until the
+   results are unique (duplicated names are removed prior to entry).
+   names, minlength, use.classes, dot
 */
 
 
@@ -220,11 +220,11 @@ static SEXP stripchars(SEXP inchar, int minlen)
 
     for (i = upper, j = 1; i > 0; i--) {
 	if (isspace(buff1[i])) {
-	    if (j) 
+	    if (j)
 		buff1[i] = '\0' ;
 	    else
 		nspace++;
-        } 
+	}
 	else
 	    j = 0;
 	/*strcpy(buff1[i],buff1[i+1]);*/
@@ -233,8 +233,8 @@ static SEXP stripchars(SEXP inchar, int minlen)
     }
 
     upper = strlen(buff1) -1;
-    for (i = upper; i > 0; i--) { 
-        if(LOWVOW(i) && LASTCHAR(i))
+    for (i = upper; i > 0; i--) {
+	if(LOWVOW(i) && LASTCHAR(i))
 	    strcpy(&buff1[i], &buff1[i + 1]);
 	if (strlen(buff1) - nspace <= minlen)
 	    goto donesc;
@@ -400,9 +400,9 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	j = 0;
 	for (i = 0 ; i < n ; i++)
 	    if (INTEGER(ind)[i]) {
-		STRING(ans)[j++] = STRING(vec)[i];	
+		STRING(ans)[j++] = STRING(vec)[i];
 		/* FIXME: Want to inherit 'names(vec)': [the following is wrong]
-		   TAG   (ans)[j]   = TAG(vec)[i]; */
+		   TAG	 (ans)[j]   = TAG(vec)[i]; */
 	    }
     }
     else {
