@@ -853,7 +853,7 @@ Date: Fri, 16 Apr 2004 16:53:03 +0200
 Subject: R.spec
 From: joachim.geiger@ipp.mpg.de
 Date: Tue, 20 Apr 2004 11:51:40 +0200 (CEST)
-..About the source PRM for 1.9.0 under RedHat 8.0.
+..About the source RPM for 1.9.0 under RedHat 8.0.
 * PR# 6804 *
 Subject: Re: [R] Error message during debug
 From: Duncan Murdoch <dmurdoch@pair.com>
@@ -862,10 +862,6 @@ Date: Tue, 20 Apr 2004 14:15:05 -0400
 Subject: segfault in approx()
 From: kjetil@entelnet.bo
 Date: Wed, 21 Apr 2004 17:49:03 -0400
-* PR# 6814 *
-Subject: is.na(valid_date) too often true on SGI MIPS
-From: aa056@chebucto.ns.ca
-Date: Fri, 23 Apr 2004 18:27:45 +0200 (CEST)
 * PR# 6830 *
 Subject: 'R CMD build' fails when there are spaces in the path
 From: ellis@stat.harvard.edu
@@ -874,27 +870,7 @@ Date: Tue, 27 Apr 2004 16:18:44 +0200 (CEST)
 Subject: boxplot graphical arguments
 From: Arni Magnusson <arnima@u.washington.edu>
 Date: Tue, 27 Apr 2004 19:42:00 -0700 (PDT)
-* PR# 6833 *
-Subject: boxplot documentation
-From: Arni Magnusson <arnima@u.washington.edu>
-Date: Tue, 27 Apr 2004 19:47:04 -0700 (PDT)
-* PR# 6834 *
-Subject: Qpjpcl Pain Medicati0ns Lortab H'y_d_roc_0_d_0`n_e Norco V~i_c_o`din 
-From: "rudolph wilbers" <landsworth@verticalheaven.com>
-Date: Wed, 28 Apr 2004 13:57:49 -0200
-* PR# 6835 *
-Subject: =?Windows-1252?Q?Informa=E7=E3o_de_Virus!!!?=
-From: =?Windows-1252?Q?Dr=AA_Josefina_Castro?= <jcastro@direito.up.pt>
-Date: Wed, 28 Apr 2004 08:06:58 +0100
-* PR# 6836 *
-Subject: Your EQUITY NEWS UPDATE For Wed, 28 Apr 2004 07:07:06 -0500
-From: "Josefina Schultz" <marthfreitas@inonesearch.com>
-Date: Wed, 28 Apr 2004 07:07:06 -0500
-* PR# 6837 *
-Subject: Ready and (0nline) r-bugs preview.jpg
-From: Date Chatters <DateChatters@directcastle.com>
-Date: Wed, 28 Apr 2004 20:56:32 +0800
-* PR# 6838 *
-Subject: Re: model.matrix.default(x ~ y) bug when y is array
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 28 Apr 2004 16:44:30 +0200
+* PR# 6839 *
+Subject: model.tabels warning refers to wrong function
+From: cmoffet@nwrc.ars.usda.gov
+Date: Thu, 29 Apr 2004 16:48:31 +0200 (CEST)
