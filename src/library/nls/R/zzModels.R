@@ -1,4 +1,4 @@
-### $Id: zzModels.R,v 1.4 2001/03/27 16:12:17 bates Exp $
+### $Id: zzModels.R,v 1.5 2001/05/10 02:50:31 bates Exp $
 ###
 ###       Individual selfStarting nonlinear regression models
 ###
@@ -335,16 +335,16 @@ SSfpl <- # selfStart(~ A + (B - A)/(1 + exp((xmid - input)/scal)),
               if (nrow(xy) < 5) {
                   stop("Too few distinct input values to fit a four-parameter logistic")
               }
-              ## get a preliminary estimate for xmid
-              xydata <- c(as.list(xy), xmid = NLSstClosestX(xy, mean(range(xy[["y"]]))))
-              xydata <- as.list(xydata)
-              pars <- as.vector(coef(nls(y ~ cbind(1, 1/(1 + exp((xmid - x)/exp(lscal)))),
-                                         data = xydata,
-                                         start = list(lscal = 0),  # scal = 1
-                                         algorithm = "plinear")))
-              pars <- as.vector(coef(nls(y ~ cbind(1, 1/(1 + exp((xmid - x)/exp(lscal)))),
-                                         data = data.frame(xy),
-                                         start = list(xmid = xydata$xmid, lscal = pars[1]),
+              ## convert the response to a proportion (i.e. contained in (0,1))
+              rng <- range(xy$y); drng <- diff(rng)
+              xy$prop <- (xy$y - rng[1] + 0.05 * drng)/(1.1 * drng)
+              ## inverse regression of the x values on the proportion
+              ir <- as.vector(coef(lm(x ~ I(log(prop/(1-prop))), data = xy)))
+              pars <- as.vector(coef(nls(y ~ cbind(1, 1/(1 + exp((xmid - x)/
+                                                                 exp(lscal)))),
+                                         data = xy,
+                                         start = list(xmid = ir[1],
+                                                      lscal = log(abs(ir[2]))),
                                          algorithm = "plinear")))
               value <- c(pars[3], pars[3] + pars[4], pars[1], exp(pars[2]))
               names(value) <- mCall[c("A", "B", "xmid", "scal")]
