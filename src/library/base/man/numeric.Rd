@@ -23,6 +23,11 @@ is.numeric(x)
   \code{is.numeric} returns \code{TRUE} if its argument is of type real
   or type integer and \code{FALSE} otherwise.
 }
+\details{
+  \code{is.numeric} is  generic: you can write methods to handle
+  of specific classes of objects, see \link{Methods}.
+}
+
 \note{
   \emph{\R has no single precision data type.  All real numbers are
     stored in double precision format}. While \code{as.numeric} is a

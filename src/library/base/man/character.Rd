@@ -18,6 +18,10 @@ is.character(x)
   \item{x}{object to be coerced or tested.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
+\details{
+  \code{as.character} and \code{is.character} are generic: you can
+  write methods to handle of specific classes of objects, see \link{Methods}.
+}
 \value{
   \code{character} creates a character vector of the specified length.
   The elements of the vector are all equal to \code{""}.

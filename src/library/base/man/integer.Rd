@@ -33,6 +33,8 @@ is.integer(x)
 
   \code{is.integer} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of integer type or not.
+  \code{is.integer} is generic: you can write methods to handle
+  of specific classes of objects, see \link{Methods}.
 }
 \seealso{
   \code{\link{round}} (and \code{ceiling} and \code{floor} on that help

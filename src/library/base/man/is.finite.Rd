@@ -40,7 +40,8 @@ is.nan(x)
   equality to \code{NaN}, or even use \code{\link{identical}},
   since systems typically have many different NaN values.
   In most ports of \R one of these is used for the numeric missing
-  value \code{NA}.
+  value \code{NA}.  It is generic: you can write methods to handle
+  of specific classes of objects, see \link{Methods}.
 }
 \note{
   In \R, basically all mathematical functions (including basic

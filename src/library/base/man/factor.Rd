@@ -93,6 +93,9 @@ as.ordered(x)
   If \code{"NA"} is a level, the way to set a code to be missing is to
   use \code{\link{is.na}} on the left-hand-side of an assignment.
   Under those circumstances missing values are printed as \code{<NA>}.
+
+  \code{is.factor} is generic: you can write methods to handle
+  of specific classes of objects, see \link{Methods}.
 }
 \section{Warning}{
   The interpretation of a factor depends on both the codes and the

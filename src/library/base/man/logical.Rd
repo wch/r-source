@@ -25,6 +25,9 @@ is.logical(x)
   \code{TRUE} and \code{FALSE} are part of the \R language, where
   \code{T} and \code{F} are global variables set to these.
   All four are \code{logical(1)} vectors.
+
+  \code{is.logical} is generic: you can write methods to handle
+  of specific classes of objects, see \link{Methods}.
 }
 \arguments{
   \item{length}{desired length.}

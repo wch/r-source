@@ -12,6 +12,10 @@ is.language(x)
 \arguments{
   \item{x}{object to be tested.}
 }
+\details{
+  \code{is.language} is generic: you can write methods to handle
+  of specific classes of objects, see \link{Methods}.
+}
 \examples{
 ll <- list(a = expression(x^2 - 2*x + 1), b = as.name("Jim"),
            c = as.expression(exp(1)), d = call("sin", pi))

@@ -63,6 +63,9 @@ parent.env(env) <- value
   can be used to destructively change environments in ways that
   violate assumptions made by the internal C code.  It may be removed
   in the near future.
+
+  \code{is.environment} is generic: you can write methods to handle
+  of specific classes of objects, see \link{Methods}.
 }
 \seealso{
   The \code{envir} argument of \code{\link{eval}}.

@@ -19,6 +19,9 @@ length(x) <- n
   \code{length} returns \code{NA}.
 }
 \details{
+  \code{length} is generic: you can write methods to handle
+  of specific classes of objects, see \link{Methods}.
+
   The replacement form can be used to reset
   the length of a vector.
   If a vector is shortened, extra values are discarded

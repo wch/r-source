@@ -53,6 +53,9 @@ Conj(x)
 
   In addition, the elementary trigonometric, logarithmic and exponential
   functions are available for complex values.
+
+  \code{is.complex} is generic: you can write methods to handle
+  of specific classes of objects, see \link{Methods}.
 }
 \examples{
 0i ^ (-3:3)

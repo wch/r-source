@@ -16,6 +16,10 @@ does not have a list structure and \code{FALSE} otherwise.
 \arguments{
   \item{x}{object to be tested.}
 }
+\details{
+  These are generic: you can write methods to handle
+  of specific classes of objects, see \link{Methods}.
+}
 \seealso{\code{\link{is.list}}, \code{\link{is.language}}, etc, and the
   \code{demo("is.things")}.}
 \examples{

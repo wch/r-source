@@ -9,4 +9,8 @@ values in R.
 \arguments{
   \item{x}{object to be tested.}
 }
+\details{
+  \code{is.single} is generic: you can write methods to handle
+  of specific classes of objects, see \link{Methods}.
+}
 \keyword{classes}

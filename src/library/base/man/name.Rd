@@ -29,6 +29,10 @@ is.name(y)
   The term ``symbol'' is from the lisp background of \R, whereas ``name''
   has been the standard S term for this.
 }
+\details{
+  \code{is.symbol} is generic: you can write methods to handle
+  of specific classes of objects, see \link{Methods}.
+}
 \seealso{
   \code{\link{call}}, \code{\link{is.language}}. For the internal
   object mode, \code{\link{typeof}}.

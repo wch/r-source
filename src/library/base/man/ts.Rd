@@ -69,6 +69,10 @@ is.ts(x)
 
   \code{as.ts} will use the \code{\link{tsp}} attribute of the object if
   it has one to set the start and end times and frequency.
+
+  \code{is.ts} tests if an object is a time series. It is generic: you
+  can write methods to handle of specific classes of objects,
+  see \link{Methods}.
 }
 \seealso{
   \code{\link{tsp}},

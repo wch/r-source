@@ -11,6 +11,8 @@
   \code{as.matrix} attempts to turn its argument into a matrix.
 
   \code{is.matrix} tests if its argument is a (strict) matrix.
+  It is generic: you can write methods to handle
+  of specific classes of objects, see \link{Methods}.
 }
 \usage{
 matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL)

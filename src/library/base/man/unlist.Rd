@@ -16,6 +16,9 @@ unlist(x, recursive = TRUE, use.names = TRUE)
   \item{use.names}{logical. Should names be preserved?}
 }
 \details{
+  \code{unlist} is generic: you can write methods to handle
+  of specific classes of objects, see \link{Methods}.
+  
   If \code{recursive = FALSE}, the function will not recurse beyond
   the first level items in \code{x}.
 
