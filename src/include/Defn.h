@@ -436,7 +436,7 @@ extern int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
 extern int	R_Expressions	INI_as(500);	/* options(expressions) */
 extern Rboolean	R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
 #ifdef EXPERIMENTAL_NAMESPACES
-extern int	R_UseNamespaceDispatch INI_as(FALSE);
+extern int	R_UseNamespaceDispatch INI_as(TRUE);
 #endif
 
 /* File Input/Output */

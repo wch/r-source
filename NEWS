@@ -11,13 +11,23 @@
 
 NEW FEATURES
 
-    o   New operator :: in the grammar, for namespaces.
+    o   New operator :: in the grammar, for name spaces.
 
     o   New faster rowsum, also works on data frames
 
     o   grep(), (g)sub() and regexpr() have a new argument `perl'
 	which if TRUE uses Perl-style regexps from PCRE (if installed).
 	New capabilities option "PCRE" to say if PCRE is available.
+
+    o   Preparations for name space support:
+
+	- Functions in the base package are now defined in a name space.
+	  As a temporary measure, you can disable this by defining the
+	  environment variable R_NO_BASE_NAMESPACE.
+
+	- UseMethod dispatching now searches for methods in the
+          environment of the caller of the generic function rather
+          than the environment where the generic is defined.
 
 
 C-LEVEL FACILITIES
