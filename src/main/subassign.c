@@ -158,6 +158,8 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level, SEXP call)
 {
     Rboolean redo_which =  (level == 1);
     int which = 100 * TYPEOF(*x) + TYPEOF(*y);
+    /* coercion can lose the object bit */
+    Rboolean x_is_object = OBJECT(*x);
 
     switch (which) {
 
@@ -276,6 +278,7 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level, SEXP call)
 	*x = EnlargeVector(*x, stretch);
 	UNPROTECT(1);
     }
+    SET_OBJECT(*x, x_is_object);
 
     if(redo_which)
 	return(100 * TYPEOF(*x) + TYPEOF(*y));

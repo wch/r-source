@@ -2041,6 +2041,14 @@ stopifnot(identical(rownames(res[[2]]),  "X2"))
 ## the error was in lm.(w)fit
 
 
+## coercion lost the object bit in [<-
+x <- I(TRUE)
+is.object(x)
+x[2] <- "N"
+stopifnot(is.object(x))
+## failed in 1.6.2
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

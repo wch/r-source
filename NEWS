@@ -656,6 +656,9 @@ BUG FIXES
 
     o	Sweave() now handles empty chunks at the end of files correctly.
 
+    o	[<- lost the object bit if coercion was involved.
+
+
 
 	**************************************************
 	*						 *
