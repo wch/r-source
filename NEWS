@@ -6,6 +6,9 @@
 
 NEW FEATURES
 
+    o   New function regexpr, similar to grep but returns the position
+	of the match in each string. (For S-PLUS compatibility.)
+
     o   All the standard packages have DESCRIPTION files, so
 	installed.packages and package.description will work with them.
 

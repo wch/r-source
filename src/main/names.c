@@ -430,6 +430,7 @@ FUNTAB R_FunTab[] =
 {"grep",	do_grep,	1,	11,	5,	PP_FUNCALL},
 {"sub",		do_gsub,	0,	11,	5,	PP_FUNCALL},
 {"gsub",	do_gsub,	1,	11,	5,	PP_FUNCALL},
+{"regexpr",	do_regexpr,	1,	11,	3,	PP_FUNCALL},
 
 
 /* Type Checking */

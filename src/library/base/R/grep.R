@@ -15,3 +15,8 @@ gsub <-
 {
     .Internal(gsub(pattern, replacement, x, ignore.case, extended))
 }
+
+regexpr <- function(pattern, text, extended=TRUE)
+{
+    .Internal(regexpr(pattern, text, extended))
+}

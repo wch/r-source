@@ -590,3 +590,46 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     NO_REGEX_ERROR();
 #endif
 }
+SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+#ifdef HAVE_REGCOMP
+    SEXP pat, text, ans, matchlen;
+    regex_t reg;
+    regmatch_t regmatch[10];
+    int i, n, st, extended_opt, eflags;
+
+    checkArity(op, args);
+    pat = CAR(args); args = CDR(args);
+    text = CAR(args); args = CDR(args);
+    extended_opt = asLogical(CAR(args));
+    if (extended_opt == NA_INTEGER) extended_opt = 1;
+
+    if (!isString(pat) || length(pat) < 1 ||
+	!isString(text) || length(text) < 1 )
+	errorcall(call, "invalid argument");
+
+    eflags = extended_opt ? REG_EXTENDED : 0;
+
+    if (regcomp(&reg, CHAR(STRING(pat)[0]), eflags))
+	errorcall(call, "invalid regular expression");
+    n = length(text);
+    PROTECT(ans = allocVector(INTSXP, n));
+    PROTECT(matchlen = allocVector(INTSXP, n));
+
+    for (i = 0 ; i < n ; i++) {
+	if(regexec(&reg, CHAR(STRING(text)[i]), 1, regmatch, 0) == 0) {
+	    st = regmatch[0].rm_so; 
+	    INTEGER(ans)[i] = st + 1; /* index from one */
+	    INTEGER(matchlen)[i] = regmatch[0].rm_eo - st;
+	} else {
+	    INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
+	}
+    }
+    regfree(&reg);
+    setAttrib(ans, install("match.length"), matchlen);
+    UNPROTECT(2);
+    return ans;
+#else
+    NO_REGEX_ERROR();
+#endif
+}
