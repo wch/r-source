@@ -12,7 +12,7 @@
 \details{
   %% FIXME: use \describe instead when this works in nroff!
   \emph{Binary operators:} addition, subtraction, multiplication, and
-  division use the standard \R\ syntax, although multiplication only
+  division use the standard \R syntax, although multiplication only
   juxtaposes the arguments.  For example, \code{a+b}, \code{a-b}, and
   \code{a/b}, produce \eqn{a+b}, \eqn{a-b}, and \eqn{a/b}, but
   \code{a*b} produces \eqn{ab}.

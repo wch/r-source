@@ -21,7 +21,7 @@ prompt.data.frame(object, filename = paste(name, ".Rd", sep = ""))
 \seealso{
   \code{\link{help}} and he chapter on ``Writing \R documentation'' in
   the ``R Extension Writer's Manual'' (see the \file{doc/manual}
-  subdirectory of the \R\ source tree).
+  subdirectory of the \R source tree).
 }
 \note{
   The documentation file produced by \code{prompt.data.frame} does not
