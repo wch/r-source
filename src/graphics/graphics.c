@@ -2725,7 +2725,7 @@ void GPretty(double *s, double *u, int *ndiv)
 
 void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 {
-	double r, xc, yc, unit;
+	double r, xc, yc;
 	double xx[4], yy[4];
 	char str[2];
 	int ltysave;
@@ -2745,7 +2745,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 		case 0: /* S square */
 			xc = RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			GRect(x-xc, y-yc, x+xc, y+yc, INCHES, NA_INTEGER, 
+			GRect(x-xc, y-xc, x+xc, y+xc, INCHES, NA_INTEGER, 
 			      dd->gp.col, dd);
 			break;
 
@@ -2757,9 +2757,9 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 		case 2:	/* S triangle - point up */
 			xc = RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			r = TRC0 * yc;
+			r = TRC0 * xc;
+			yc = TRC2 * xc;
 			xc = TRC1 * xc;
-			yc = TRC2 * yc;
 			xx[0] = x; yy[0] = y+r;
 			xx[1] = x+xc; yy[1] = y-yc;
 			xx[2] = x-xc; yy[2] = y-yc;
@@ -2769,33 +2769,33 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 		case 3: /* S plus */
 			xc = sqrt(2.0)*RADIUS*GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			GLine(x-xc, y, x+xc, y, coords, dd);
-			GLine(x, y-yc, x, y+yc, coords, dd);
+			GLine(x-xc, y, x+xc, y, INCHES, dd);
+			GLine(x, y-xc, x, y+xc, INCHES, dd);
 			break;
 
 		case 4: /* S times */
 			xc = RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			GLine(x-xc, y-yc, x+xc, y+yc, coords, dd);
-			GLine(x-xc, y+yc, x+xc, y-yc, coords, dd);
+			GLine(x-xc, y-xc, x+xc, y+xc, INCHES, dd);
+			GLine(x-xc, y+xc, x+xc, y-xc, INCHES, dd);
 			break;
 
 		case 5: /* S diamond */
 			xc = sqrt(2.0) * RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
 			xx[0] = x-xc; yy[0] = y;
-			xx[1] = x; yy[1] = y+yc;
+			xx[1] = x; yy[1] = y+xc;
 			xx[2] = x+xc; yy[2] = y;
-			xx[3] = x; yy[3] = y-yc;
+			xx[3] = x; yy[3] = y-xc;
 			GPolygon(4, xx, yy, INCHES, NA_INTEGER, dd->gp.col, dd);
 			break;
 
 		case 6: /* S triangle - point down */
 			xc = RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
+			r = TRC0 * xc;
+			yc = TRC2 * xc;
 			xc = TRC1 * xc;
-			r = TRC0 * yc;
-			yc = TRC2 * yc;
 			xx[0] = x; yy[0] = y-r;
 			xx[1] = x+xc; yy[1] = y+yc;
 			xx[2] = x-xc; yy[2] = y+yc;
@@ -2805,52 +2805,49 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 		case 7:	/* S square and times superimposed */
 			xc =  RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			GLine(x-xc, y-yc, x+xc, y+yc, coords, dd);
-			GLine(x-xc, y+yc, x+xc, y-yc, coords, dd);
-			GRect(x-xc, y-yc, x+xc, y+yc, INCHES, NA_INTEGER, 
+			GLine(x-xc, y-xc, x+xc, y+xc, INCHES, dd);
+			GLine(x-xc, y+xc, x+xc, y-xc, INCHES, dd);
+			GRect(x-xc, y-xc, x+xc, y+xc, INCHES, NA_INTEGER, 
 			      dd->gp.col, dd);
 			break;
 
 		case 8: /* S plus and times superimposed */
 			xc =  RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			GLine(x-xc, y-yc, x+xc, y+yc, coords, dd);
-			GLine(x-xc, y+yc, x+xc, y-yc, coords, dd);
-			yy[0] = y+yc;
-			yy[1] = y-yc;
+			GLine(x-xc, y-xc, x+xc, y+xc, INCHES, dd);
+			GLine(x-xc, y+xc, x+xc, y-xc, INCHES, dd);
 			xc = sqrt(2.0) * xc;
-			yc = sqrt(2.0) * yc;
-			GLine(x-xc, y, x+xc, y, coords, dd);
-			GLine(x, y-yc, x, y+yc, coords, dd);
+			GLine(x-xc, y, x+xc, y, INCHES, dd);
+			GLine(x, y-xc, x, y+xc, INCHES, dd);
 			break;
 
 		case 9: /* S diamond and plus superimposed */
 			xc = sqrt(2.0) * RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
 			xx[0] = x-xc; yy[0] = y;
-			xx[1] = x; yy[1] = y+yc;
+			xx[1] = x; yy[1] = y+xc;
 			xx[2] = x+xc; yy[2] = y;
-			xx[3] = x; yy[3] = y-yc;
+			xx[3] = x; yy[3] = y-xc;
 			GPolygon(4, xx, yy, INCHES, NA_INTEGER, dd->gp.col, dd);
-			GLine(x-xc, y, x+xc, y, coords, dd);
-			GLine(x, y-yc, x, y+yc, coords, dd);
+			GLine(x-xc, y, x+xc, y, INCHES, dd);
+			GLine(x, y-xc, x, y+xc, INCHES, dd);
 			break;
 
 		case 10: /* S hexagon (circle) and plus superimposed */
 			xc = CMAG * RADIUS * GStrWidth("0", INCHES, dd);
 			GCircle(x, y, coords, xc, NA_INTEGER, dd->gp.col, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			GLine(x-xc, y, x+xc, y, coords, dd);
-			GLine(x, y-yc, x, y+yc, coords, dd);
+			GLine(x-xc, y, x+xc, y, INCHES, dd);
+			GLine(x, y-xc, x, y+xc, INCHES, dd);
 			break;
 
 		case 11: /* S superimposed triangles */
 			xc = RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			xc = TRC1 * xc;
-			r = TRC0 * yc;
-			yc = TRC2 * yc;
+			r = TRC0 * xc;
+			yc = TRC2 * xc;
 			yc = 0.5 * (yc + r);
+			xc = TRC1 * xc;
 			xx[0] = x; yy[0] = y+r;
 			xx[1] = x+xc; yy[1] = y-yc;
 			xx[2] = x-xc; yy[2] = y-yc;
@@ -2864,9 +2861,9 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 		case 12: /* S square and plus superimposed */
 			xc = RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			GLine(x-xc, y, x+xc, y, coords, dd);
-			GLine(x, y-yc, x, y+yc, coords, dd);
-			GRect(x-xc, y-yc, x+xc, y+yc, INCHES,
+			GLine(x-xc, y, x+xc, y, INCHES, dd);
+			GLine(x, y-xc, x, y+xc, INCHES, dd);
+			GRect(x-xc, y-xc, x+xc, y+xc, INCHES,
 			      NA_INTEGER, dd->gp.col, dd);
 			break;
 
@@ -2874,28 +2871,28 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 			xc = CMAG * RADIUS * GStrWidth("0", INCHES, dd);
 			GCircle(x, y, coords, xc, NA_INTEGER, dd->gp.col, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			GLine(x-xc, y-yc, x+xc, y+yc, coords, dd);
-			GLine(x-xc, y+yc, x+xc, y-yc, coords, dd);
+			GLine(x-xc, y-xc, x+xc, y+xc, INCHES, dd);
+			GLine(x-xc, y+xc, x+xc, y-xc, INCHES, dd);
 			break;
 
 		case 14: /* S square and point-up triangle superimposed */
 			xc = RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			xx[0] = x; yy[0] = y+r;
-			xx[1] = x+xc; yy[1] = y-yc;
-			xx[2] = x-xc; yy[2] = y-yc;
+			xx[0] = x; yy[0] = y+yc;
+			xx[1] = x+xc; yy[1] = y-xc;
+			xx[2] = x-xc; yy[2] = y-xc;
 			GPolygon(3, xx, yy, INCHES, NA_INTEGER, dd->gp.col, dd);
-			GRect(x-xc, y-yc, x+xc, y+yc, INCHES,
+			GRect(x-xc, y-xc, x+xc, y+xc, INCHES,
 			      NA_INTEGER, dd->gp.col, dd);
 			break;
 
 		case 15: /* S filled square */
 			xc = RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			xx[0] = x-xc; yy[0] = y-yc;
-			xx[1] = x+xc; yy[1] = y-yc;
-			xx[2] = x+xc; yy[2] = y+yc;
-			xx[INCHES] = x-xc; yy[3] = y+yc;
+			xx[0] = x-xc; yy[0] = y-xc;
+			xx[1] = x+xc; yy[1] = y-xc;
+			xx[2] = x+xc; yy[2] = y+xc;
+			xx[3] = x-xc; yy[3] = y+xc;
 			GPolygon(4, xx, yy, INCHES, dd->gp.col, 
 				 NA_INTEGER, dd);
 			break;
@@ -2908,22 +2905,22 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 		case 17: /* S filled point-up triangle */
 			xc = RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			r = TRC0 * yc;
+			r = TRC0 * xc;
+			yc = TRC2 * xc;
 			xc = TRC1 * xc;
-			yc = TRC2 * yc;
 			xx[0] = x;    yy[0] = y+r;
 			xx[1] = x+xc; yy[1] = y-yc;
 			xx[2] = x-xc; yy[2] = y-yc;
-			GPolygon(INCHES, xx, yy, INCHES, dd->gp.col, 
+			GPolygon(3, xx, yy, INCHES, dd->gp.col, 
 				 NA_INTEGER, dd);
 			break;
 
 		case 18:
 			xc = RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			xx[0] = x;    yy[0] = y-yc;
+			xx[0] = x;    yy[0] = y-xc;
 			xx[1] = x+xc; yy[1] = y;
-			xx[2] = x;    yy[2] = y+yc;
+			xx[2] = x;    yy[2] = y+xc;
 			xx[3] = x-xc; yy[3] = y;
 			GPolygon(4, xx, yy, INCHES, dd->gp.col, 
 				 NA_INTEGER, dd);
@@ -2949,17 +2946,17 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 		case  22: /* squares */
 			xc = RADIUS * SQRC * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			GRect(x-xc, y-yc, x+xc, y+yc, INCHES, 
+			GRect(x-xc, y-xc, x+xc, y+xc, INCHES, 
 			      dd->gp.bg, dd->gp.col, dd);
 			break;
 
 		case 23: /* diamonds */
 			xc = RADIUS * DMDC * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			xx[0] = x   ; yy[0] = y-yc;
+			xx[0] = x   ; yy[0] = y-xc;
 			xx[1] = x+xc; yy[1] = y;
-			xx[2] = x   ; yy[2] = y+yc;
-			xx[INCHES] = x-xc; yy[3] = y;
+			xx[2] = x   ; yy[2] = y+xc;
+			xx[3] = x-xc; yy[3] = y;
 			GPolygon(4, xx, yy, INCHES,
 				 dd->gp.bg, dd->gp.col, dd);
 			break;
@@ -2967,9 +2964,9 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 		case 24: /* triangle (point up) */
 			xc = RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			r = TRC0 * yc;
+			r = TRC0 * xc;
+			yc = TRC2 * xc;
 			xc = TRC1 * xc;
-			yc = TRC2 * yc;
 			xx[0] = x;    yy[0] = y+r;
 			xx[1] = x+xc; yy[1] = y-yc;
 			xx[2] = x-xc; yy[2] = y-yc;
@@ -2980,9 +2977,9 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 		case 25: /* triangle (point down) */
 			xc = RADIUS * GStrWidth("0", INCHES, dd);
 			GConvert(&x, &y, coords, INCHES, dd);
-			r = TRC0 * yc;
+			r = TRC0 * xc;
+			yc = TRC2 * xc;
 			xc = TRC1 * xc;
-			yc = TRC2 * yc;
 			xx[0] = x;    yy[0] = y-r;
 			xx[1] = x+xc; yy[1] = y+yc;
 			xx[2] = x-xc; yy[2] = y+yc;
