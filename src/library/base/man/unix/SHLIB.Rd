@@ -19,3 +19,4 @@
 \seealso{
   \code{\link{COMPILE}}, \code{\link{dyn.load}}
 }
+\keyword{utilities}

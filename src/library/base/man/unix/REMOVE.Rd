@@ -18,3 +18,4 @@
 \seealso{
   \code{\link{INSTALL}}
 }
+\keyword{utilities}

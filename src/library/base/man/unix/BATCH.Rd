@@ -20,7 +20,9 @@
   at the beginning of \code{infile}.
 }
 \note{
-    Unlike \code{Splus BATCH}, this does not run the \R process in the
-    background. In most shells \code{R BATCH [options] infile [outfile]
-	\&} will do so. 
+  Unlike \code{Splus BATCH}, this does not run the \R process in the
+  background. In most shells \code{R BATCH [options] infile [outfile]
+    \&} will do so. 
 }
+\keyword{utilities}
+    

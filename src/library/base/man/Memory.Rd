@@ -1,15 +1,15 @@
 \name{Memory}
 \alias{Memory}
 \title{Memory Available for Data Storage}
+\description{
+  Use command line options to set the memory available for \R.
+}
 \usage{
 R --vsize v --nsize n
 }
 \arguments{
-    \item{v}{Use \code{v} bytes of heap memory}
-    \item{n}{Use \code{n} cons cells.}
-}
-\description{
-    Use command line options to set the memory available for \R.
+  \item{v}{Use \code{v} bytes of heap memory}
+  \item{n}{Use \code{n} cons cells.}
 }
 \details{
     \R (currently) uses a static memory model.  This means that when it
@@ -77,4 +77,4 @@ R --vsize v --nsize n
 R --vsize 15M --nsize 1000k
 }
 }
-
+\keyword{environment}

@@ -17,3 +17,4 @@
 \seealso{
   \code{\link{SHLIB}}, \code{\link{dyn.load}}
 }
+\keyword{utilities}

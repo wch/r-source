@@ -36,3 +36,4 @@
   \code{\link{update.packages}} for automatic update of packages using
   the internet.
 }
+\keyword{utilities}
