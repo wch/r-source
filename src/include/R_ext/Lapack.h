@@ -154,10 +154,11 @@ F77_NAME(dgebrd)(const int* m, const int* n, double* a, const int* lda,
 /* DGECON - estimate the reciprocal of the condition number of a */
 /* general real matrix A, in either the 1-norm or the */
 /* infinity-norm, using the LU factorization computed by DGETRF */
-void F77_NAME(dgecon)(const char* norm, const int* n,
-    		  const double* a, const int* lda,
-    		  const double* anorm, double* rcond,
-    		  double* work, int* iwork, int* info);
+void
+F77_NAME(dgecon)(const char* norm, const int* n,
+		 const double* a, const int* lda,
+		 const double* anorm, double* rcond,
+		 double* work, int* iwork, int* info);
 /* DGEEQU - compute row and column scalings intended to equilibrate */
 /* an M-by-N matrix A and reduce its condition number */
 void
@@ -1229,15 +1230,16 @@ F77_NAME(dsyevx)(const char* jobz, const char* range,
 		 int* ifail, int* info);
 /* DSYEVR - compute all eigenvalues and, optionally, eigenvectors   */
 /* of a real symmetric matrix A                                    */
-void F77_NAME(dsyevr)(const char *jobz, const char *range, const char *uplo,
-		      const int *n, double *a, const int *lda,
-		      const double *vl, const double *vu,
-		      const int *il, const int *iu,
-		      const double *abstol, int *m, double *w, 
-		      double *z, const int *ldz, int *isuppz, 
-		      double *work, const int *lwork,
-		      int *iwork, const int *liwork,
-		      int *info);
+void 
+F77_NAME(dsyevr)(const char *jobz, const char *range, const char *uplo,
+		 const int *n, double *a, const int *lda,
+		 const double *vl, const double *vu,
+		 const int *il, const int *iu,
+		 const double *abstol, int *m, double *w, 
+		 double *z, const int *ldz, int *isuppz, 
+		 double *work, const int *lwork,
+		 int *iwork, const int *liwork,
+		 int *info);
 /* DSYGS2 - reduce a real symmetric-definite generalized */
 /* eigenproblem to standard form */
 void
@@ -1555,64 +1557,6 @@ F77_NAME(dtzrqf)(const int* m, const int* n,
     		 double* a, const int* lda,
     		 double* tau, int* info);
 
-/* ZGESV computes the solution to a complex system of linear equations */
-void
-F77_NAME(zgesv)(const int *n, const int *nrhs, Rcomplex *a,
-		const int *lda, int *ipiv, Rcomplex *b,
-		const int *ldb, int *info);
-
-/*  ZGEQP3 computes a QR factorization with column pivoting */
-void
-F77_NAME(zgeqp3)(const int *m, const int *n,
-		 Rcomplex *a, const int *lda,
-		 int *jpvt, Rcomplex *tau,
-		 Rcomplex *work, const int *lwork,
-		 double *rwork, int *info);
-
-/* ZUNMQR applies Q or Q**H from the Left or Right */
-void
-F77_NAME(zunmqr)(const char *side, const char *trans,
-		 const int *m, const int *n, const int *k,
-		 Rcomplex *a, const int *lda,
-		 Rcomplex *tau,
-		 Rcomplex *c, const int *ldc,
-		 Rcomplex *work, const int *lwork, int *info);
-
-/*  ZTRTRS solves triangular systems */
-void
-F77_NAME(ztrtrs)(const char *uplo, const char *trans, const char *diag,
-		 const int *n, const int *nrhs,
-		 Rcomplex *a, const int *lda,
-		 Rcomplex *b, const int *ldb, int *info);
-/* ZGESVD - compute the singular value decomposition (SVD); of a   */
-/* real M-by-N matrix A, optionally computing the left and/or      */
-/* right singular vectors                                          */
-void
-F77_NAME(zgesvd)(const char *jobu, const char *jobvt,
-		 const int *m, const int *n,
-		 Rcomplex *a, const int *lda, double *s,
-		 Rcomplex *u, const int *ldu,
-		 Rcomplex *vt, const int *ldvt,
-		 Rcomplex *work, const int *lwork, double *rwork,
-		 int *info);
-
-/* ZGHEEV - compute all eigenvalues and, optionally, eigenvectors */ 
-/* of a Hermitian matrix A */
-void
-F77_NAME(zheev)(const char *jobz, const char *uplo,
-		const int *n, Rcomplex *a, const int *lda,
-		double *w, Rcomplex *work, const int *lwork,
-		double *rwork, int *info);
-
-/* ZGGEEV - compute all eigenvalues and, optionally, eigenvectors */
-/* of a complex non-symmetric matrix A */
-void
-F77_NAME(zgeev)(const char *jobvl, const char *jobvr,
-		const int *n, Rcomplex *a, const int *lda,
-		Rcomplex *wr, Rcomplex *vl, const int *ldvl,
-		Rcomplex *vr, const int *ldvr,
-		Rcomplex *work, const int *lwork, 
-		double *rwork, int *info);
 
 
 /* Double precision utilties in Lapack */
@@ -2268,6 +2212,72 @@ F77_NAME(dlauum)(const char* uplo, const int* n,
 		 double* a, const int* lda, int* info);
 
 
+/* ======================================================================== */
+
+/* Selected Double Complex Lapack Routines 
+   ========
+ */
+
+/* ZGESV computes the solution to a complex system of linear equations */
+void
+F77_NAME(zgesv)(const int *n, const int *nrhs, Rcomplex *a,
+		const int *lda, int *ipiv, Rcomplex *b,
+		const int *ldb, int *info);
+
+/*  ZGEQP3 computes a QR factorization with column pivoting */
+void
+F77_NAME(zgeqp3)(const int *m, const int *n,
+		 Rcomplex *a, const int *lda,
+		 int *jpvt, Rcomplex *tau,
+		 Rcomplex *work, const int *lwork,
+		 double *rwork, int *info);
+
+/* ZUNMQR applies Q or Q**H from the Left or Right */
+void
+F77_NAME(zunmqr)(const char *side, const char *trans,
+		 const int *m, const int *n, const int *k,
+		 Rcomplex *a, const int *lda,
+		 Rcomplex *tau,
+		 Rcomplex *c, const int *ldc,
+		 Rcomplex *work, const int *lwork, int *info);
+
+/*  ZTRTRS solves triangular systems */
+void
+F77_NAME(ztrtrs)(const char *uplo, const char *trans, const char *diag,
+		 const int *n, const int *nrhs,
+		 Rcomplex *a, const int *lda,
+		 Rcomplex *b, const int *ldb, int *info);
+/* ZGESVD - compute the singular value decomposition (SVD); of a   */
+/* real M-by-N matrix A, optionally computing the left and/or      */
+/* right singular vectors                                          */
+void
+F77_NAME(zgesvd)(const char *jobu, const char *jobvt,
+		 const int *m, const int *n,
+		 Rcomplex *a, const int *lda, double *s,
+		 Rcomplex *u, const int *ldu,
+		 Rcomplex *vt, const int *ldvt,
+		 Rcomplex *work, const int *lwork, double *rwork,
+		 int *info);
+
+/* ZGHEEV - compute all eigenvalues and, optionally, eigenvectors */ 
+/* of a Hermitian matrix A */
+void
+F77_NAME(zheev)(const char *jobz, const char *uplo,
+		const int *n, Rcomplex *a, const int *lda,
+		double *w, Rcomplex *work, const int *lwork,
+		double *rwork, int *info);
+
+/* ZGGEEV - compute all eigenvalues and, optionally, eigenvectors */
+/* of a complex non-symmetric matrix A */
+void
+F77_NAME(zgeev)(const char *jobvl, const char *jobvr,
+		const int *n, Rcomplex *a, const int *lda,
+		Rcomplex *wr, Rcomplex *vl, const int *ldvl,
+		Rcomplex *vr, const int *ldvr,
+		Rcomplex *work, const int *lwork, 
+		double *rwork, int *info);
+
+
 /* NOTE: The following entry points were traditionally in this file,
    but are not provided by R's libRlapack */
 
@@ -2283,6 +2293,696 @@ double
 F77_NAME(zlantr)(const char* norm, const char* uplo, const char* diag,
 		 const int* m, const int* n, Rcomplex *a,
 		 const int* lda, double *work);
+
+/* ======================================================================== */
+
+/* Other double precision and double complex Lapack routines
+   provided by libRlapack.
+
+   These are extracted from the CLAPACK headers.
+*/
+
+void
+F77_NAME(dbdsdc)(char *uplo, char *compq, int *n, double *
+	d, double *e, double *u, int *ldu, double *vt, 
+	int *ldvt, double *q, int *iq, double *work, int * iwork, int *info);
+
+void
+F77_NAME(dgegs)(char *jobvsl, char *jobvsr, int *n, 
+	double *a, int *lda, double *b, int *ldb, double *
+	alphar, double *alphai, double *beta, double *vsl, 
+	int *ldvsl, double *vsr, int *ldvsr, double *work, 
+	int *lwork, int *info);
+ 
+void
+F77_NAME(dgelsd)(int *m, int *n, int *nrhs, 
+	double *a, int *lda, double *b, int *ldb, double *
+	s, double *rcond, int *rank, double *work, int *lwork,
+	 int *iwork, int *info);
+ 
+void
+F77_NAME(dgelsx)(int *m, int *n, int *nrhs,
+	double *a, int *lda, double *b, int *ldb, int *
+	jpvt, double *rcond, int *rank, double *work, int *
+	info);
+
+void
+F77_NAME(dgesc2)(int *n, double *a, int *lda, 
+	double *rhs, int *ipiv, int *jpiv, double *scale);
+ 
+void
+F77_NAME(dgesdd)(char *jobz, int *m, int *n, double *
+	a, int *lda, double *s, double *u, int *ldu, 
+	double *vt, int *ldvt, double *work, int *lwork, 
+	int *iwork, int *info);
+ 
+void
+F77_NAME(dgetc2)(int *n, double *a, int *lda, int 
+	*ipiv, int *jpiv, int *info);
+ void
+F77_NAME(dggesx)(char *jobvsl, char *jobvsr, char *sort, L_fp 
+	delctg, char *sense, int *n, double *a, int *lda, 
+	double *b, int *ldb, int *sdim, double *alphar, 
+	double *alphai, double *beta, double *vsl, int *ldvsl,
+	 double *vsr, int *ldvsr, double *rconde, double *
+	rcondv, double *work, int *lwork, int *iwork, int *
+	liwork, logical *bwork, int *info);
+ 
+void
+F77_NAME(dggev)(char *jobvl, char *jobvr, int *n, double *
+	a, int *lda, double *b, int *ldb, double *alphar, 
+	double *alphai, double *beta, double *vl, int *ldvl, 
+	double *vr, int *ldvr, double *work, int *lwork, 
+	int *info);
+ 
+void
+F77_NAME(dggevx)(char *balanc, char *jobvl, char *jobvr, char *
+	sense, int *n, double *a, int *lda, double *b, 
+	int *ldb, double *alphar, double *alphai, double *
+	beta, double *vl, int *ldvl, double *vr, int *ldvr, 
+	int *ilo, int *ihi, double *lscale, double *rscale, 
+	double *abnrm, double *bbnrm, double *rconde, double *
+	rcondv, double *work, int *lwork, int *iwork, logical *
+	bwork, int *info);
+ 
+void
+F77_NAME(dggsvp)(char *jobu, char *jobv, char *jobq, int *m, 
+	int *p, int *n, double *a, int *lda, double *b, 
+	int *ldb, double *tola, double *tolb, int *k, int 
+	*l, double *u, int *ldu, double *v, int *ldv, 
+	double *q, int *ldq, int *iwork, double *tau, 
+	double *work, int *info);
+ 
+void
+F77_NAME(dgtts2)(int *itrans, int *n, int *nrhs, 
+	double *dl, double *d, double *du, double *du2, 
+	int *ipiv, double *b, int *ldb);
+void
+F77_NAME(dlagv2)(double *a, int *lda, double *b, int *ldb, double *alphar, 
+		 double *alphai, double * beta, double *csl, double *snl, 
+		 double *csr, double * snr);
+
+void
+F77_NAME(dlals0)(int *icompq, int *nl, int *nr, 
+	int *sqre, int *nrhs, double *b, int *ldb, double 
+	*bx, int *ldbx, int *perm, int *givptr, int *givcol, 
+	int *ldgcol, double *givnum, int *ldgnum, double *
+	poles, double *difl, double *difr, double *z, int *
+	k, double *c, double *s, double *work, int *info);
+ 
+void
+F77_NAME(dlalsa)(int *icompq, int *smlsiz, int *n, 
+	int *nrhs, double *b, int *ldb, double *bx, int *
+	ldbx, double *u, int *ldu, double *vt, int *k, 
+	double *difl, double *difr, double *z, double *
+	poles, int *givptr, int *givcol, int *ldgcol, int *
+	perm, double *givnum, double *c, double *s, double *
+	work, int *iwork, int *info);
+ 
+void
+F77_NAME(dlalsd)(char *uplo, int *smlsiz, int *n, int 
+	*nrhs, double *d, double *e, double *b, int *ldb, 
+	double *rcond, int *rank, double *work, int *iwork, 
+	int *info);
+ 
+void
+F77_NAME(dlamc1)(int *beta, int *t, logical *rnd, logical 
+	*ieee1);
+ 
+void
+F77_NAME(dlamc2)(int *beta, int *t, logical *rnd, 
+	double *eps, int *emin, double *rmin, int *emax, 
+	double *rmax);
+ 
+void
+F77_NAME(dlamc3)(double *a, double *b);
+ 
+void
+F77_NAME(dlamc4)(int *emin, double *start, int *base);
+ 
+void
+F77_NAME(dlamc5)(int *beta, int *p, int *emin, 
+	logical *ieee, int *emax, double *rmax);
+
+void
+F77_NAME(dlaqp2)(int *m, int *n, int *offset, 
+	double *a, int *lda, int *jpvt, double *tau, 
+	double *vn1, double *vn2, double *work);
+ 
+void
+F77_NAME(dlaqps)(int *m, int *n, int *offset, int 
+	*nb, int *kb, double *a, int *lda, int *jpvt, 
+	double *tau, double *vn1, double *vn2, double *auxv, 
+	double *f, int *ldf);
+
+void
+F77_NAME(dlar1v)(int *n, int *b1, int *bn, double 
+	*sigma, double *d, double *l, double *ld, double *
+	lld, double *gersch, double *z, double *ztz, double 
+	*mingma, int *r, int *isuppz, double *work);
+ 
+void
+F77_NAME(dlarrb)(int *n, double *d, double *l, 
+	double *ld, double *lld, int *ifirst, int *ilast, 
+	double *sigma, double *reltol, double *w, double *
+	wgap, double *werr, double *work, int *iwork, int *
+	info);
+ 
+void
+F77_NAME(dlarre)(int *n, double *d, double *e, 
+	double *tol, int *nsplit, int *isplit, int *m, 
+	double *w, double *woff, double *gersch, double *work,
+	 int *info);
+ 
+void
+F77_NAME(dlarrf)(int *n, double *d, double *l, 
+	double *ld, double *lld, int *ifirst, int *ilast, 
+	double *w, double *dplus, double *lplus, double *work,
+	 int *iwork, int *info);
+ 
+void
+F77_NAME(dlarrv)(int *n, double *d, double *l, 
+	int *isplit, int *m, double *w, int *iblock, 
+	double *gersch, double *tol, double *z, int *ldz, 
+	int *isuppz, double *work, int *iwork, int *info);
+
+void
+F77_NAME(dlarz)(char *side, int *m, int *n, int *l, 
+	double *v, int *incv, double *tau, double *c, 
+	int *ldc, double *work);
+ 
+void
+F77_NAME(dlarzb)(char *side, char *trans, char *direct, char *
+	storev, int *m, int *n, int *k, int *l, double *v,
+	 int *ldv, double *t, int *ldt, double *c, int *
+	ldc, double *work, int *ldwork);
+ 
+void
+F77_NAME(dlarzt)(char *direct, char *storev, int *n, int *
+	k, double *v, int *ldv, double *tau, double *t, 
+	int *ldt);
+ 
+void
+F77_NAME(dlasd0)(int *n, int *sqre, double *d, 
+	double *e, double *u, int *ldu, double *vt, int *
+	ldvt, int *smlsiz, int *iwork, double *work, int *
+	info);
+ 
+void
+F77_NAME(dlasd1)(int *nl, int *nr, int *sqre, 
+	double *d, double *alpha, double *beta, double *u, 
+	int *ldu, double *vt, int *ldvt, int *idxq, int *
+	iwork, double *work, int *info);
+ 
+void
+F77_NAME(dlasd2)(int *nl, int *nr, int *sqre, int 
+	*k, double *d, double *z, double *alpha, double *
+	beta, double *u, int *ldu, double *vt, int *ldvt, 
+	double *dsigma, double *u2, int *ldu2, double *vt2, 
+	int *ldvt2, int *idxp, int *idx, int *idxc, int *
+	idxq, int *coltyp, int *info);
+ 
+void
+F77_NAME(dlasd3)(int *nl, int *nr, int *sqre, int 
+	*k, double *d, double *q, int *ldq, double *dsigma, 
+	double *u, int *ldu, double *u2, int *ldu2, 
+	double *vt, int *ldvt, double *vt2, int *ldvt2, 
+	int *idxc, int *ctot, double *z, int *info);
+ 
+void
+F77_NAME(dlasd4)(int *n, int *i, double *d, 
+	double *z, double *delta, double *rho, double *
+	sigma, double *work, int *info);
+ 
+void
+F77_NAME(dlasd5)(int *i, double *d, double *z, 
+	double *delta, double *rho, double *dsigma, double *
+	work);
+ 
+void
+F77_NAME(dlasd6)(int *icompq, int *nl, int *nr, 
+	int *sqre, double *d, double *vf, double *vl, 
+	double *alpha, double *beta, int *idxq, int *perm, 
+	int *givptr, int *givcol, int *ldgcol, double *givnum,
+	 int *ldgnum, double *poles, double *difl, double *
+	difr, double *z, int *k, double *c, double *s, 
+	double *work, int *iwork, int *info);
+ 
+void
+F77_NAME(dlasd7)(int *icompq, int *nl, int *nr, 
+	int *sqre, int *k, double *d, double *z, 
+	double *zw, double *vf, double *vfw, double *vl, 
+	double *vlw, double *alpha, double *beta, double *
+	dsigma, int *idx, int *idxp, int *idxq, int *perm, 
+	int *givptr, int *givcol, int *ldgcol, double *givnum,
+	 int *ldgnum, double *c, double *s, int *info);
+ 
+void
+F77_NAME(dlasd8)(int *icompq, int *k, double *d, 
+	double *z, double *vf, double *vl, double *difl, 
+	double *difr, int *lddifr, double *dsigma, double *
+	work, int *info);
+ 
+void
+F77_NAME(dlasd9)(int *icompq, int *ldu, int *k, 
+	double *d, double *z, double *vf, double *vl, 
+	double *difl, double *difr, double *dsigma, double *
+	work, int *info);
+
+void
+F77_NAME(dlasda)(int *icompq, int *smlsiz, int *n, 
+	int *sqre, double *d, double *e, double *u, int 
+	*ldu, double *vt, int *k, double *difl, double *difr, 
+	double *z, double *poles, int *givptr, int *givcol, 
+	int *ldgcol, int *perm, double *givnum, double *c, 
+	double *s, double *work, int *iwork, int *info);
+ 
+void
+F77_NAME(dlasdq)(char *uplo, int *sqre, int *n, int *
+	ncvt, int *nru, int *ncc, double *d, double *e, 
+	double *vt, int *ldvt, double *u, int *ldu, 
+	double *c, int *ldc, double *work, int *info);
+ 
+void
+F77_NAME(dlasdt)(int *n, int *lvl, int *nd, int *
+	inode, int *ndiml, int *ndimr, int *msub);
+ 
+void
+F77_NAME(dlasq5)(int *i0, int *n0, double *z, 
+	int *pp, double *tau, double *dmin, double *dmin1, 
+	double *dmin2, double *dn, double *dnm1, double *dnm2,
+	 logical *ieee);
+ 
+void
+F77_NAME(dlasq6)(int *i0, int *n0, double *z, 
+	int *pp, double *dmin, double *dmin1, double *dmin2,
+	 double *dn, double *dnm1, double *dnm2);
+ 
+void
+F77_NAME(dlatdf)(int *ijob, int *n, double *z, 
+	int *ldz, double *rhs, double *rdsum, double *rdscal, 
+	int *ipiv, int *jpiv);
+ 
+void
+F77_NAME(dlatrz)(int *m, int *n, int *l, double *
+	a, int *lda, double *tau, double *work);
+ 
+void
+F77_NAME(dormr3)(char *side, char *trans, int *m, int *n,
+	int *k, int *l, double *a, int *lda, double *tau,
+	double *c, int *ldc, double *work, int *info);
+
+void
+F77_NAME(dormrz)(char *side, char *trans, int *m, int *n,
+	int *k, int *l, double *a, int *lda, double *tau,
+	double *c, int *ldc, double *work, int *lwork,
+	int *info);
+
+void
+F77_NAME(dptts2)(int *n, int *nrhs, double *d, 
+	double *e, double *b, int *ldb);
+ 
+void
+F77_NAME(dsbgvd)(char *jobz, char *uplo, int *n, int *ka, 
+	int *kb, double *ab, int *ldab, double *bb, int *
+	ldbb, double *w, double *z, int *ldz, double *work, 
+	int *lwork, int *iwork, int *liwork, int *info);
+ 
+void
+F77_NAME(dsbgvx)(char *jobz, char *range, char *uplo, int *n, 
+	int *ka, int *kb, double *ab, int *ldab, double *
+	bb, int *ldbb, double *q, int *ldq, double *vl, 
+	double *vu, int *il, int *iu, double *abstol, int 
+	*m, double *w, double *z, int *ldz, double *work, 
+	int *iwork, int *ifail, int *info);
+
+void
+F77_NAME(dspgvd)(int *itype, char *jobz, char *uplo, int *
+	n, double *ap, double *bp, double *w, double *z,
+	int *ldz, double *work, int *lwork, int *iwork,
+	int *liwork, int *info);
+
+void
+F77_NAME(dspgvx)(int *itype, char *jobz, char *range, char *
+	uplo, int *n, double *ap, double *bp, double *vl,
+	double *vu, int *il, int *iu, double *abstol, int
+	*m, double *w, double *z, int *ldz, double *work,
+	int *iwork, int *ifail, int *info);
+
+void
+F77_NAME(dstegr)(char *jobz, char *range, int *n, double *
+	d, double *e, double *vl, double *vu, int *il, 
+	int *iu, double *abstol, int *m, double *w, 
+	double *z, int *ldz, int *isuppz, double *work, 
+	int *lwork, int *iwork, int *liwork, int *info);
+ 
+void
+F77_NAME(dstevr)(char *jobz, char *range, int *n, double *
+	d, double *e, double *vl, double *vu, int *il, 
+	int *iu, double *abstol, int *m, double *w, 
+	double *z, int *ldz, int *isuppz, double *work, 
+	int *lwork, int *iwork, int *liwork, int *info);
+ 
+void
+F77_NAME(dsygvd)(int *itype, char *jobz, char *uplo, int *
+	n, double *a, int *lda, double *b, int *ldb, 
+	double *w, double *work, int *lwork, int *iwork, 
+	int *liwork, int *info);
+ 
+void
+F77_NAME(dsygvx)(int *itype, char *jobz, char *range, char *
+	uplo, int *n, double *a, int *lda, double *b, int 
+	*ldb, double *vl, double *vu, int *il, int *iu, 
+	double *abstol, int *m, double *w, double *z, 
+	int *ldz, double *work, int *lwork, int *iwork, 
+	int *ifail, int *info);
+ 
+void
+F77_NAME(dtgex2)(logical *wantq, logical *wantz, int *n, 
+	double *a, int *lda, double *b, int *ldb, double *
+	q, int *ldq, double *z, int *ldz, int *j1, int *
+	n1, int *n2, double *work, int *lwork, int *info);
+ 
+void
+F77_NAME(dtgexc)(logical *wantq, logical *wantz, int *n, 
+	double *a, int *lda, double *b, int *ldb, double *
+	q, int *ldq, double *z, int *ldz, int *ifst, 
+	int *ilst, double *work, int *lwork, int *info);
+ 
+void
+F77_NAME(dtgsen)(int *ijob, logical *wantq, logical *wantz, 
+	logical *select, int *n, double *a, int *lda, double *
+	b, int *ldb, double *alphar, double *alphai, double *
+	beta, double *q, int *ldq, double *z, int *ldz, 
+	int *m, double *pl, double *pr, double *dif, 
+	double *work, int *lwork, int *iwork, int *liwork, 
+	int *info);
+ 
+void
+F77_NAME(dtgsna)(char *job, char *howmny, logical *select, 
+	int *n, double *a, int *lda, double *b, int *ldb, 
+	double *vl, int *ldvl, double *vr, int *ldvr, 
+	double *s, double *dif, int *mm, int *m, double *
+	work, int *lwork, int *iwork, int *info);
+ 
+void
+F77_NAME(dtgsy2)(char *trans, int *ijob, int *m, int *
+	n, double *a, int *lda, double *b, int *ldb, 
+	double *c, int *ldc, double *d, int *ldd, 
+	double *e, int *lde, double *f, int *ldf, double *
+	scale, double *rdsum, double *rdscal, int *iwork, int 
+	*pq, int *info);
+ 
+void
+F77_NAME(dtgsyl)(char *trans, int *ijob, int *m, int *
+	n, double *a, int *lda, double *b, int *ldb, 
+	double *c, int *ldc, double *d, int *ldd, 
+	double *e, int *lde, double *f, int *ldf, double *
+	scale, double *dif, double *work, int *lwork, int *
+	iwork, int *info);
+ 
+void
+F77_NAME(dtzrzf)(int *m, int *n, double *a, int *
+	lda, double *tau, double *work, int *lwork, int *info);
+ 
+
+void
+F77_NAME(zbdsqr)(char *uplo, int *n, int *ncvt, int *
+	nru, int *ncc, double *d, double *e, Rcomplex *vt, 
+	int *ldvt, Rcomplex *u, int *ldu, Rcomplex *c, 
+	int *ldc, double *rwork, int *info);
+ 
+void
+F77_NAME(zdrot)(int *n, Rcomplex *cx, int *incx, 
+	Rcomplex *cy, int *incy, double *c, double *s);
+ 
+void
+F77_NAME(zgebak)(char *job, char *side, int *n, int *ilo,
+	int *ihi, double *scale, int *m, Rcomplex *v,
+	int *ldv, int *info);
+
+void
+F77_NAME(zgebal)(char *job, int *n, Rcomplex *a, int
+	*lda, int *ilo, int *ihi, double *scale, int *info);
+
+void
+F77_NAME(zgebd2)(int *m, int *n, Rcomplex *a,
+	int *lda, double *d, double *e, Rcomplex *tauq,
+	Rcomplex *taup, Rcomplex *work, int *info);
+
+void
+F77_NAME(zgebrd)(int *m, int *n, Rcomplex *a,
+	int *lda, double *d, double *e, Rcomplex *tauq,
+	Rcomplex *taup, Rcomplex *work, int *lwork, int *
+	info);
+void
+F77_NAME(zgehd2)(int *n, int *ilo, int *ihi,
+	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *
+	work, int *info);
+
+void
+F77_NAME(zgehrd)(int *n, int *ilo, int *ihi,
+	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *
+	work, int *lwork, int *info);
+
+void
+F77_NAME(zgelq2)(int *m, int *n, Rcomplex *a,
+	int *lda, Rcomplex *tau, Rcomplex *work, int *info);
+
+void
+F77_NAME(zgelqf)(int *m, int *n, Rcomplex *a,
+	int *lda, Rcomplex *tau, Rcomplex *work, int *lwork,
+	 int *info);
+
+void
+F77_NAME(zgeqr2)(int *m, int *n, Rcomplex *a,
+	int *lda, Rcomplex *tau, Rcomplex *work, int *info);
+
+void
+F77_NAME(zgeqrf)(int *m, int *n, Rcomplex *a,
+		 int *lda, Rcomplex *tau, Rcomplex *work, int *lwork,
+		 int *info);
+
+void
+F77_NAME(zgetf2)(int *m, int *n, Rcomplex *a,
+	int *lda, int *ipiv, int *info);
+
+void
+F77_NAME(zgetrf)(int *m, int *n, Rcomplex *a,
+	int *lda, int *ipiv, int *info);
+
+void
+F77_NAME(zgetrs)(char *trans, int *n, int *nrhs,
+	Rcomplex *a, int *lda, int *ipiv, Rcomplex *b,
+	int *ldb, int *info);
+
+
+void
+F77_NAME(zhetd2)(char *uplo, int *n, Rcomplex *a, int *lda, double *d,
+		 double *e, Rcomplex *tau, int *info);
+
+void
+F77_NAME(zhetrd)(char *uplo, int *n, Rcomplex *a,
+	int *lda, double *d, double *e, Rcomplex *tau,
+	Rcomplex *work, int *lwork, int *info);
+
+void
+F77_NAME(zhseqr)(char *job, char *compz, int *n, int *ilo,
+	 int *ihi, Rcomplex *h, int *ldh, Rcomplex *w,
+	Rcomplex *z, int *ldz, Rcomplex *work, int *lwork,
+	 int *info);
+
+void
+F77_NAME(zlabrd)(int *m, int *n, int *nb,
+	Rcomplex *a, int *lda, double *d, double *e,
+	Rcomplex *tauq, Rcomplex *taup, Rcomplex *x, int *
+	ldx, Rcomplex *y, int *ldy);
+
+void
+F77_NAME(zlacgv)(int *n, Rcomplex *x, int *incx);
+
+void
+F77_NAME(zlacpy)(char *uplo, int *m, int *n,
+	Rcomplex *a, int *lda, Rcomplex *b, int *ldb);
+
+void
+F77_NAME(zlahqr)(logical *wantt, logical *wantz, int *n,
+	int *ilo, int *ihi, Rcomplex *h, int *ldh,
+	Rcomplex *w, int *iloz, int *ihiz, Rcomplex *z,
+	int *ldz, int *info);
+
+void
+F77_NAME(zlahrd)(int *n, int *k, int *nb,
+	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *t,
+	int *ldt, Rcomplex *y, int *ldy);
+
+void
+F77_NAME(zlange)(char *norm, int *m, int *n, Rcomplex *a, int *lda, 
+		 double *work);
+
+void
+F77_NAME(zlanhe)(char *norm,  char *uplo, int *n, Rcomplex *a,
+		   int *lda, double *work);
+
+void
+F77_NAME(zlanhs)(char *norm, int *n, Rcomplex *a, int *lda, double *work);
+
+
+void
+F77_NAME(zlaqp2)(int *m, int *n, int *offset,
+	Rcomplex *a, int *lda, int *jpvt, Rcomplex *tau,
+	double *vn1, double *vn2, Rcomplex *work);
+
+void
+F77_NAME(zlaqps)(int *m, int *n, int *offset, int
+	*nb, int *kb, Rcomplex *a, int *lda, int *jpvt,
+	Rcomplex *tau, double *vn1, double *vn2, Rcomplex *
+	auxv, Rcomplex *f, int *ldf);
+
+void
+F77_NAME(zlarf)(char *side, int *m, int *n, Rcomplex
+	*v, int *incv, Rcomplex *tau, Rcomplex *c, int *
+	ldc, Rcomplex *work);
+
+void
+F77_NAME(zlarfb)(char *side, char *trans, char *direct, char *
+	storev, int *m, int *n, int *k, Rcomplex *v, int
+	*ldv, Rcomplex *t, int *ldt, Rcomplex *c, int *
+	ldc, Rcomplex *work, int *ldwork);
+
+void
+F77_NAME(zlarfg)(int *n, Rcomplex *alpha, Rcomplex *
+	x, int *incx, Rcomplex *tau);
+
+void
+F77_NAME(zlarft)(char *direct, char *storev, int *n, int *
+	k, Rcomplex *v, int *ldv, Rcomplex *tau, Rcomplex *
+	t, int *ldt);
+
+void
+F77_NAME(zlarfx)(char *side, int *m, int *n,
+	Rcomplex *v, Rcomplex *tau, Rcomplex *c, int *
+	ldc, Rcomplex *work);
+
+void
+F77_NAME(zlascl)(char *type, int *kl, int *ku,
+	double *cfrom, double *cto, int *m, int *n,
+	Rcomplex *a, int *lda, int *info);
+
+void
+F77_NAME(zlaset)(char *uplo, int *m, int *n,
+	Rcomplex *alpha, Rcomplex *beta, Rcomplex *a, int *
+	lda);
+
+void
+F77_NAME(zlasr)(char *side, char *pivot, char *direct, int *m,
+	 int *n, double *c, double *s, Rcomplex *a,
+	int *lda);
+
+void
+F77_NAME(zlassq)(int *n, Rcomplex *x, int *incx,
+	double *scale, double *sumsq);
+
+void
+F77_NAME(zlaswp)(int *n, Rcomplex *a, int *lda,
+	int *k1, int *k2, int *ipiv, int *incx);
+
+void
+F77_NAME(zlatrd)(char *uplo, int *n, int *nb,
+	Rcomplex *a, int *lda, double *e, Rcomplex *tau,
+	Rcomplex *w, int *ldw);
+
+void
+F77_NAME(zlatrs)(char *uplo, char *trans, char *diag, char *
+	normin, int *n, Rcomplex *a, int *lda, Rcomplex *x,
+	double *scale, double *cnorm, int *info);
+
+void
+F77_NAME(zsteqr)(char *compz, int *n, double *d,
+	double *e, Rcomplex *z, int *ldz, double *work,
+	int *info);
+
+void
+F77_NAME(ztrevc)(char *side, char *howmny, logical *select,
+	int *n, Rcomplex *t, int *ldt, Rcomplex *vl,
+	int *ldvl, Rcomplex *vr, int *ldvr, int *mm, int
+	*m, Rcomplex *work, double *rwork, int *info);
+
+F77_NAME(zung2l)(int *m, int *n, int *k,
+	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *
+	work, int *info);
+
+void
+F77_NAME(zung2r)(int *m, int *n, int *k,
+	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *
+	work, int *info);
+
+void
+F77_NAME(zungbr)(char *vect, int *m, int *n, int *k,
+	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *
+	work, int *lwork, int *info);
+
+void
+F77_NAME(zunghr)(int *n, int *ilo, int *ihi,
+	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *
+	work, int *lwork, int *info);
+
+void
+F77_NAME(zungl2)(int *m, int *n, int *k,
+	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *
+	work, int *info);
+
+void
+F77_NAME(zunglq)(int *m, int *n, int *k,
+	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *
+	work, int *lwork, int *info);
+
+void
+F77_NAME(zungql)(int *m, int *n, int *k,
+	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *
+	work, int *lwork, int *info);
+
+void
+F77_NAME(zungqr)(int *m, int *n, int *k,
+	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *
+	work, int *lwork, int *info);
+
+void
+F77_NAME(zungr2)(int *m, int *n, int *k,
+	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *
+	work, int *info);
+
+void
+F77_NAME(zungrq)(int *m, int *n, int *k,
+	Rcomplex *a, int *lda, Rcomplex *tau, Rcomplex *
+	work, int *lwork, int *info);
+
+void
+F77_NAME(zungtr)(char *uplo, int *n, Rcomplex *a,
+	int *lda, Rcomplex *tau, Rcomplex *work, int *lwork,
+	 int *info);
+
+void
+F77_NAME(zunm2r)(char *side, char *trans, int *m, int *n,
+	int *k, Rcomplex *a, int *lda, Rcomplex *tau,
+	Rcomplex *c, int *ldc, Rcomplex *work, int *info);
+
+void
+F77_NAME(zunmbr)(char *vect, char *side, char *trans, int *m,
+	int *n, int *k, Rcomplex *a, int *lda, Rcomplex
+	*tau, Rcomplex *c, int *ldc, Rcomplex *work, int *
+	lwork, int *info);
+
+void
+F77_NAME(zunml2)(char *side, char *trans, int *m, int *n,
+	int *k, Rcomplex *a, int *lda, Rcomplex *tau,
+	Rcomplex *c, int *ldc, Rcomplex *work, int *info);
+
+void
+F77_NAME(zunmlq)(char *side, char *trans, int *m, int *n,
+	int *k, Rcomplex *a, int *lda, Rcomplex *tau,
+	Rcomplex *c, int *ldc, Rcomplex *work, int *lwork,
+	 int *info);
 
 #ifdef  __cplusplus
 }
