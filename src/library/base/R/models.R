@@ -195,11 +195,11 @@ model.frame.default <-
 	formula <- terms(formula, data = data)
     rownames <- attr(data, "row.names")
     varnames <- as.character(attr(formula, "variables")[-1])
-    variables <- eval(attr(formula, "variables"), data)
+    variables <- eval(attr(formula, "variables"), data, sys.frame(sys.parent()))
     extranames <- as.character(substitute(list(...))[-1])
     extras <- substitute(list(...))
-    extras <- eval(extras, data)
-    subset <- eval(substitute(subset), data)
+    extras <- eval(extras, data, sys.frame(sys.parent()))
+    subset <- eval(substitute(subset), data, sys.frame(sys.parent()))
     data <- .Internal(model.frame(formula, rownames, variables, varnames,
 				  extras, extranames, subset, na.action))
     ## fix up the levels

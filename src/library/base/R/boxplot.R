@@ -12,8 +12,8 @@ boxplot <- function(x, ..., range=1.5, width=NULL, varwidth=FALSE,
     groups <-
 	if(is.language(x)) {
 	    if (inherits(x, "formula") && length(x) == 3) {
-		groups <- eval(x[[3]], data)
-		x <- eval(x[[2]], data)
+		groups <- eval(x[[3]], data, sys.frame(sys.parent()))
+		x <- eval(x[[2]], data, sys.frame(sys.parent()))
 		split(x, groups)
 	    }
 	}

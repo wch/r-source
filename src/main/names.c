@@ -496,7 +496,7 @@ FUNTAB R_FunTab[] =
 {"dyn.unload",	do_dynunload,	0,	111,	1,	PP_FUNCALL},
 {"ls",		do_ls,		1,	11,	2,	PP_FUNCALL},
 {"typeof",	do_typeof,	1,	11,	1,	PP_FUNCALL},
-{"eval",	do_eval,	1,	11,	2,	PP_FUNCALL},
+{"eval",	do_eval,	1,	11,	3,	PP_FUNCALL},
 {"expression",	do_expression,	1,	0,	-1,	PP_FUNCALL},
 {"sys.parent",	do_sys,		1,	10,	-1,	PP_FUNCALL},
 {"sys.call",	do_sys,		2,	10,	-1,	PP_FUNCALL},

@@ -52,17 +52,17 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
     if (missing(data))
 	data <- sys.frame(sys.parent())
     x.name <- deparse(x)
-    x <- eval(x, data)
+    x <- eval(x, data, sys.frame(sys.parent()))
     nobs <- length(x)
     y.name <- deparse(y)
-    y <- eval(y, data)
+    y <- eval(y, data, sys.frame(sys.parent()))
     if(length(y) != nobs) bad.lengths()
     a.name <- deparse(a)
-    a <- eval(a, data)
+    a <- eval(a, data, sys.frame(sys.parent()))
     if(length(a) != nobs) bad.lengths()
     if (have.b) {
 	b.name <- deparse(b)
-	b <- eval(b, data)
+	b <- eval(b, data, sys.frame(sys.parent()))
 	if(length(b) != nobs) bad.lengths()
     }
     else b <- NULL

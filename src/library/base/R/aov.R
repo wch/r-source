@@ -447,7 +447,7 @@ se.contrast.aov <-
         res
     }
     if(is.null(data)) contrast.obj <- eval(contrast.obj)
-    else contrast.obj <- eval(substitute(contrast.obj), data)
+    else contrast.obj <- eval(substitute(contrast.obj), data, sys.frame(sys.parent()))
     if(!missing(coef)) {
         if(sum(coef) != 0)
             stop("coef must define a contrast, i.e., sum to 0")
@@ -533,7 +533,7 @@ se.contrast.aovlist <-
     }
     contrast.obj <-
         if(is.null(data)) eval(contrast.obj)
-        else eval(substitute(contrast.obj), data)
+        else eval(substitute(contrast.obj), data, sys.frame(sys.parent()))
     if(!missing(coef)) {
         if(sum(coef) != 0)
             stop("coef must define a contrast, i.e., sum to 0")

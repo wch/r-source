@@ -138,6 +138,13 @@ NEW FEATURES
 
 	- C() for attaching contrasts to factors
 
+    o   eval() semantics changed when envir= is a list. A 3rd argument is 
+	now allowed, specifying the enclosure (i.e. where R looks for
+	variables *not* found in envir=) it defaults to the calling 
+	environment (was .GlobalEnv). Note that when used inside a function,
+	it is often desirable to set the enclosure to the parent 
+	environment instead. [ eval(e, data, sys.frame(sys.parent())) ] 
+
 
 BUG FIXES
 
