@@ -541,6 +541,8 @@ void markSExp(SEXP s)
 	case SYMSXP:
 	    markSExp(TAG(s));
 	    markSExp(CAR(s));
+	    /* use parameterized jump (i.e. assignment+goto) instead of
+	       recursive tail call markSExp(CDR(s)) to reduce stack use */
 	    s = CDR(s);
 	    goto tailcall_entry;
 	default:
