@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.4-17, 2002-02-15
+Version 1.4-18, 2002-02-19
 Kurt Hornik
 
 
@@ -1454,6 +1454,9 @@ works, was published in the Journal of Statistical Software
 
 *hdf5*
      Interface to the NCSA HDF5 library.
+
+*ifs*
+     Iterated Function Systems distribution function estimator.
 
 *ineq*
      Inequality, concentration and poverty measures, and Lorenz curves
