@@ -37,10 +37,18 @@ data <- function(..., list = character(0), package =c(.packages(),.Autoloaded),
 }
 
 getenv <- function(x) {
-	y <- structure(character(length(x)), names = x)
-	for (i in x)
-		y[i] <- system(paste("echo $", i, sep = ""), intern = TRUE)
-	y
+  if (missing(x)) {
+    x <- strsplit(.Internal(getenv(character())), "=")
+    v <- n <- character(LEN <- length(x))
+    for (i in 1:LEN) {
+      n[i] <- x[[i]][1]
+      v[i] <- paste(x[[i]][-1], collapse = "=")
+    }
+    y <- structure(v, names = n)
+  } else {
+    y <- structure(.Internal(getenv(x)), names = x)
+  }
+  y
 }
 
 help <- function(topic, package = c(.packages(),.Autoloaded), lib.loc =
@@ -213,4 +221,3 @@ tempfile <- function(pattern = "file") {
 unlink <- function(x) {
 	system(paste("rm -rf ", paste(x, collapse = " ")))
 }
-
