@@ -62,6 +62,11 @@ rm140
   and so forth)
 * Windows (both text and graphic) now appears only after
   repositioning
+* lwd parameter in graphic functions re-implemented even
+  if not yet perfectly working.
+* lty & lwd paramter now works for all the graphic call
+  apart for Circle.
+       
     
    
    
