@@ -51,6 +51,7 @@ function(x, which = 1:4,
                  cex = cex.id, xpd = TRUE, adj = if(adj.x) 1)
     }
     nb.fig <- prod(par("mfcol"))
+    one.fig <- prod(par("mfcol")) == 1
     if (ask) {
 	op <- par(ask = TRUE)
 	on.exit(par(op))
