@@ -382,3 +382,31 @@ Date: Wed, 24 Oct 2001 11:28:09 +0200 (MET DST)
 Subject: incompletely built html documentation
 From: dks@phy.hr
 Date: Wed, 24 Oct 2001 11:45:47 +0200 (MET DST)
+* PR# 1143 *
+Subject: Problem testing R version 1.3.1
+From: Gordon Lack <gml4410@ggr.co.uk>
+Date: Fri, 26 Oct 2001 16:42:21 +0100
+* PR# 1144 *
+Subject: Re: Problem testing R version 1.3.1
+From: Gordon Lack <gml4410@ggr.co.uk>
+Date: Fri, 26 Oct 2001 16:59:26 +0100
+* PR# 1145 *
+Subject: Problem testing R version 1.3.1 on SGI Irix
+From: Gordon Lack <gml4410@ggr.co.uk>
+Date: Fri, 26 Oct 2001 19:04:04 +0100
+* PR# 1146 *
+Subject: promax rotation matrix
+From: pperkins@ucsd.edu
+Date: Fri, 26 Oct 2001 20:44:07 +0200 (MET DST)
+* PR# 1147 *
+Subject: postscript problem
+From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
+Date: Fri, 26 Oct 2001 15:23:45 -0400
+* PR# 1148 *
+Subject: warnings --- wish/bug
+From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
+Date: Fri, 26 Oct 2001 15:27:56 -0400
+* PR# 1149 *
+Subject: psignrank and pwilcox null pointer deref
+From: charlie@stat.umn.edu
+Date: Fri, 26 Oct 2001 23:50:07 +0200 (MET DST)
