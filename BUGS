@@ -324,3 +324,7 @@ Date: Thu, 13 Sep 2001 10:43:07 +0200 (MET DST)
 Subject:  rowsum dimnames 
 From: David Brahm  <a215020@agate.fmr.com>
 Date: Fri, 14 Sep 2001 10:45:42 -0400 (EDT)
+* PR# 1093 *
+Subject: Solution to (well known) problem with Rdconv.pm on Sun Solaris
+From: hb@maths.lth.se
+Date: Sat, 15 Sep 2001 14:23:02 +0200 (MET DST)
