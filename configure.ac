@@ -1373,7 +1373,7 @@ LIBS="${LIBS1} ${LIBS2}"
 ## '/usr/lib', so that the entries from '/etc/ld.so.conf' are not
 ## shadowed (otherwise, e.g. optimized ATLAS libs would not be used).
 case "${host_os}" in
-  linux*)
+  linux* | solaris*)
     r_ld_library_defaults="/usr/lib:/lib"
     ;;
   *)

@@ -25739,6 +25739,27 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 LIBS="${r_save_LIBS}"
+case "${host_os}" in
+  linux*)
+    r_libpath_default="/usr/lib64 /lib64 /usr/lib /lib"
+    ;;
+  solaris*)
+    r_libpath_default="/usr/lib /lib"
+    ;;
+  *)
+    r_libpath_default=
+    ;;
+esac
+r_extra_libs=
+for arg in ${LDFLAGS}; do
+  case "${arg}" in
+    -L*)
+      lib=`echo ${arg} | sed "s/^-L//"`
+      r_extra_libs="${r_extra_libs} $lib"
+      ;;
+  esac
+done
+
 flibs=
 if test "${GCC}" = yes; then
   linker_option="-Wl,"
@@ -25763,9 +25784,9 @@ for arg in ${FLIBS}; do
       ## Canonicalize (/usr/lib/gcc-lib/i686-linux/3.4.3/../../..).
       lib=`cd "${lib}" && ${GETWD}`
       r_want_lib=true
-      ## Do not add something twice
-      for dir in ${r_save_flibs}; do
-        if test x"${dir}" = x"${lib}"; then
+      ## Do not add something twice nor default paths nor those in LDFLAGS
+      for dir in ${r_save_flibs} ${r_libpath_default} ${r_extra_libs}; do
+        if test "${dir}" = "${lib}"; then
            r_want_lib=false
            break
         fi
@@ -37398,7 +37419,7 @@ LIBS="${LIBS1} ${LIBS2}"
 ## '/usr/lib', so that the entries from '/etc/ld.so.conf' are not
 ## shadowed (otherwise, e.g. optimized ATLAS libs would not be used).
 case "${host_os}" in
-  linux*)
+  linux* | solaris*)
     r_ld_library_defaults="/usr/lib:/lib"
     ;;
   *)

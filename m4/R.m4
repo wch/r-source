@@ -760,9 +760,32 @@ LIBS="${r_save_LIBS}"
 ## Fortran main program, which we do not have.
 ## 2) g77 also tends to duplicate paths via ../../.., so we canonicalize
 ## paths and remove duplicates.
-## 3) We only need a path like /usr/lib/gcc-lib/i686-linux/3.4.3 if it contains
+## 3) We do not need -L/lib etc, nor those in LDFLAGS
+## 4) We only need a path like /usr/lib/gcc-lib/i686-linux/3.4.3 if it contains
 ## libg2c.a, libgfortranpreview ... but cover that later.
 ##
+## First try to fathom out what -Lfoo commands are unnecessary.
+case "${host_os}" in
+  linux*)
+    r_libpath_default="/usr/lib64 /lib64 /usr/lib /lib"
+    ;;
+  solaris*)
+    r_libpath_default="/usr/lib /lib"
+    ;;
+  *)
+    r_libpath_default=
+    ;;
+esac
+r_extra_libs=
+for arg in ${LDFLAGS}; do
+  case "${arg}" in
+    -L*)
+      lib=`echo ${arg} | sed "s/^-L//"`
+      r_extra_libs="${r_extra_libs} $lib"
+      ;;
+  esac
+done
+
 flibs=
 if test "${GCC}" = yes; then
   linker_option="-Wl,"
@@ -787,9 +810,9 @@ for arg in ${FLIBS}; do
       ## Canonicalize (/usr/lib/gcc-lib/i686-linux/3.4.3/../../..).
       lib=`cd "${lib}" && ${GETWD}`
       r_want_lib=true
-      ## Do not add something twice
-      for dir in ${r_save_flibs}; do
-        if test x"${dir}" = x"${lib}"; then
+      ## Do not add something twice nor default paths nor those in LDFLAGS
+      for dir in ${r_save_flibs} ${r_libpath_default} ${r_extra_libs}; do
+        if test "${dir}" = "${lib}"; then
            r_want_lib=false
            break
         fi
