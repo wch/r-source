@@ -709,19 +709,19 @@ is
 <p><a NAME="REQUIREMENTS"></a><b>SYSTEM REQUIREMENTS</b>
 <p>To run the R application you need at least 42MB of free memory for the
 application itself you work under MacOS but there is no limitations under
-<br>MacOS X as virtual memory is always on.
-<br>You need the latest version of the CarbonLib library from Apple. At
-the time of this release, version 1.2.5 is the current non developer release.
-Normally
-<br>it is included in System 9.1 and X.
+MacOS X as virtual memory is always on.
+<br>You need the latest version of the 
+<a href="http://asu.info.apple.com/swupdates.nsf/artnum/n11916">CarbonLib 
+library</a> from Apple. At the time of this release, version 1.2.5 is the current non developer release.
+Normally it is included in System 9.1 and X.
 <br>The minimum System version release is 8.6 (+ CarbonLib library).
 <br>You no longer need the WasteLib library.
 <p><a NAME="FBUGS"></a><b>FIXED BUGS</b>
 <br>This version has several bugs fixed. Mostly GUI incongruencies and
 problems have been resolved and few R internal numerical bugs. You have
-signalled a
-<br>bug but this has not yet been fixed, please "don't give up" but send
-us again your feedback (stefano.iacus@unimi.it)
+signalled a bug but this has not yet been fixed, please "don't give up" but send
+us again your feedback 
+(<a href="malito:stefano.iacus@unimi.it">stefano.iacus@unimi.it</a>)
 <br>&nbsp;
 <ul>
 <li>
@@ -767,17 +767,13 @@ negative length vectors are not allowed
 To solve this problem you just need to resize the device window to a&nbsp;
 bigger size
 <br>&nbsp;
-<ul>
-<li>
+<ul><li>
 On MacOS X&nbsp; copying to the clipboard an image or saving it in a file&nbsp;
 produces a picture without text in it. This problem is (probably) due to
 the fact that the fonts we use are saved as polygons/vectors and not&nbsp;
 as images.</li>
-</ul>
-
-<ul>
 <li>
-3) From version 1.2.2, at startup time you can run scripts by selecting&nbsp;
+From version 1.2.2, at startup time you can run scripts by selecting&nbsp;
 input and output file and options (this is usefule when you want to run
 tests/checks). Both under MacOS and MacOS X you cannot choose a file&nbsp;
 that is outside the directory where the R application is. This problem
@@ -785,16 +781,15 @@ is not due to the R application but to a bug in Sioux Interface provided&nbsp;
 by the compiler. This problem will be fixed with the next release of the
 compiler.</li>
 
-<li>
-&nbsp;For some reason MacZip does not intercat too much with R under MacOS
+<li>For some reason MacZip does not intercat too much with R under MacOS
 X.&nbsp; Moreover MacZip has not yet been “carbonized” so when R calls
 it to&nbsp; uncompress items it also starts up Classic Environment. We
 suggest to&nbsp; uncompress the help and examples files directly by using
 Stuffit Expander&nbsp; that is part of the utilities provided with System
 X.</li>
 
-<li>
-&nbsp;Mathematical expressions are not yet well spaced.</li>
+<li>Mathematical expressions are not yet well spaced moreover, 
+mathemathic symbols are not rotated.</li>
 </ul>
 <a NAME="FAQ"></a><b>SHORT FAQ</b>
 <br>&nbsp;
