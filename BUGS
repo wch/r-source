@@ -32,11 +32,10 @@ Date: Wed, 5 Jul 2000 18:32:01 +0200 (CEST)
 
 Directory:  Add-ons
 
-* PR# 567 *
-Subject: ctest not works
-From: George Diniz <george@cpqam.fiocruz.br>
-Date: Sun, 12 Mar 2000 12:03:45 -0200
---possibly the RH6.2 Fortran bug
+* PR# 601 *
+Subject: plot.times error -- missing or illegal tck parameter
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Wed, 12 Jul 2000 15:56:08 +1000
 * PR# 503 *
 Subject: dmvnorm() bug in e1071
 From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
@@ -46,6 +45,11 @@ From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
 --base R has no est.variogram function.
 --This appears to be a bug report on sgeostat.
+* PR# 567 *
+Subject: ctest not works
+From: George Diniz <george@cpqam.fiocruz.br>
+Date: Sun, 12 Mar 2000 12:03:45 -0200
+--possibly the RH6.2 Fortran bug
 
 Directory:  Analyses
 
@@ -66,14 +70,10 @@ Date: Sun, 25 Jun 2000 15:59:57 -0400 (EDT)
 
 Directory:  Graphics
 
-* PR# 584 *
-Subject: par(lty = "1") -- lty storage-etc bug
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 27 Jun 2000 09:11:36 +0200 (CEST)
-* PR# 580 *
-Subject: dotplot() colors reversed
+* PR# 603 *
+Subject: pairs(), "cex" argument has no effect
 From: Rashid Nassar <rnassar@duke.edu>
-Date: Sun, 25 Jun 2000 15:36:00 -0400 (EDT)
+Date: Wed, 12 Jul 2000 19:08:11 -0400 (EDT)
 * PR# 565 *
 Subject: Postscript device ignores title if it is too long.
 From: Stephen Eglen <stephen@anc.ed.ac.uk>
@@ -86,6 +86,14 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
+* PR# 584 *
+Subject: par(lty = "1") -- lty storage-etc bug
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 27 Jun 2000 09:11:36 +0200 (CEST)
+* PR# 580 *
+Subject: dotplot() colors reversed
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sun, 25 Jun 2000 15:36:00 -0400 (EDT)
 
 Directory:  In-Out
 
@@ -169,7 +177,10 @@ none
 
 Directory:  Models
 
-none
+* PR# 600 *
+Subject: Faulty handling of aliasing in predict.lm; wrong constant
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Wed, 12 Jul 2000 14:46:56 +1000
 
 Directory:  Startup
 
@@ -238,39 +249,4 @@ none
 
 Directory:  incoming
 
-* PR# 607 *
-Subject: documentation for contrasts and contrasts<-
-From: Setzer.Woodrow@epamail.epa.gov
-Date: Thu, 13 Jul 2000 12:34:26 -0400
-* PR# 600 *
-Subject: Faulty handling of aliasing in predict.lm; wrong constant
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Wed, 12 Jul 2000 14:46:56 +1000
-* PR# 599 *
-Subject: help page typos
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Mon, 10 Jul 2000 19:51:44 -0400 (EDT)
-* PR# 602 *
-Subject: buglet in fix() [was "function via source or fix"]
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 12 Jul 2000 08:33:36 +0200 (CEST)
-* PR# 601 *
-Subject: plot.times error -- missing or illegal tck parameter
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Wed, 12 Jul 2000 15:56:08 +1000
-* PR# 604 *
-Subject: typo, help page ?pairs
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Wed, 12 Jul 2000 20:08:25 -0400 (EDT)
-* PR# 603 *
-Subject: pairs(), "cex" argument has no effect
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Wed, 12 Jul 2000 19:08:11 -0400 (EDT)
-* PR# 606 *
-Subject: typo, ?cutree {mva}
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Wed, 12 Jul 2000 20:19:39 -0400 (EDT)
-* PR# 605 *
-Subject: typos, help package mva
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Wed, 12 Jul 2000 20:10:21 -0400 (EDT)
+none
