@@ -290,7 +290,7 @@ There is currently a complete set of tools at
 
 (Just unpack this somewhere and put its bin directory in your path.)
 
-You will need Perl, zip and unzip installed and makeinfo >= 4.2 
+You will need Perl, zip and unzip installed and makeinfo >= 4.5
 (part of GNU texinfo).
 
 You also need the R source (R-2.x.y.tgz).
@@ -306,7 +306,7 @@ Edit MkRules to set the type(s) of help that you want built. (You will
 not be able to cross-build .chm files, so WINHELP is automatically set
 to NO.)
 
-You also need a working copy of this version of R on Linux: set
+You also need a working copy of *this version* of R on Linux: set
 R_EXE in MkRules to point to it.
 
 Packages can be made in the same way as natively: see the file
