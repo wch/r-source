@@ -135,7 +135,7 @@ tx <- tx[is.finite(tx)] #-- all kept
 c(0.099999994, 0.2) # 0.1 0.2 , not 0.10 0.20
 
 (z <- sort(c(outer(range(txn), 8^c(0,2:3)))))
-outer(z,seq(0,10,by=2), signif) # had NaN's till 1.1.1
+outer(z, 0:6, signif) # had NaN's till 1.1.1
 
 olddig <- options(digits=14) # RH6.0 fails at 15
 z <- 1.234567891234567e27
