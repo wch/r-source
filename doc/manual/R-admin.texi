@@ -1129,10 +1129,34 @@ tests.
 
 @node Alpha/OSF1, Alpha/FreeBSD, IRIX, Platform notes
 @subsection Alpha/OSF1
+@R{} has been built successfully on an Alpha running OSF1 V4.0 using
+@command{gcc}/@command{g77} and @command{cc}/@command{f77}.  Mixing
+@command{cc} and @command{g77} fails to configure.  The
+@command{configure} option @code{--without-blas} was used since the
+native blas seems not to have been built with the flags needed to
+suppress @code{SIGFPE}'s.  Currently R does not set a signal handler for
+@code{SIGFPE} on platforms that support @acronym{IEEE} arithmetic, so
+these are fatal.
+
+@command{make check} passes with no problems.  @command{make
+test-all-extras} in the @code{tests} directory fails at the end of
+@code{reg-tests-1.R} since this system does not have @code{vsnprintf}.
+As currently written, the test at the end of @code{reg-tests-1.R} causes
+a segfault in this case.  You can complete the tests by executing
+@smallexample
+touch reg-tests-1.Rout
+@end smallexample
+
 
 @node Alpha/FreeBSD,  , Alpha/OSF1, Platform notes
 @subsection Alpha/FreeBSD
 
+Attempts to build @R{} on an Alpha with FreeBSD 4.3 have been only
+partly successful.  Configuring with @code{-mieee} added to both
+@code{CFLAGS} and @code{FFLAGS} builds successfully, but tests fail with
+@code{SIGFPE}'s.  It would appear that @code{-mieee} only defers these
+rather than suppressing them entirely.  Advice on how to complete this
+port would be greatly appreciated.
 
 
 @node New platforms, Function and variable index, Configuration on Unix, Top
