@@ -68,6 +68,9 @@ NEW FEATURES
 	specified explicitly as \link[pkg]{topic} or 
 	\link[pkg:maintopic]{topic}
 
+    o   Hershey vector fonts are available in text() and contour().
+        Documentation for Hershey vector fonts is in help(Hershey).
+
 
 BUG FIXES
 
