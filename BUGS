@@ -188,10 +188,10 @@ none
 
 Directory:  incoming
 
-* PR# 587 *
-Subject: dim(a <- ...) sets invisible flag erronously
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
+* PR# 588 *
+Subject: INTERNET SPY GUIDE finds info!
+From: spysguidesnet12@rocketmail.com
+Date: Sat, 01 Jul 00 20:15:34 EST
 * PR# 536 *
 Subject: Problem with match.arg()
 From: kjetikj@astro.uio.no
@@ -229,6 +229,10 @@ Date: Tue, 27 Jun 2000 09:11:36 +0200 (CEST)
 Subject: persp greek label problem
 From: ramin.nakisa@ncr.com
 Date: Mon, 26 Jun 2000 20:06:38 +0200 (MET DST)
+* PR# 587 *
+Subject: dim(a <- ...) sets invisible flag erronously
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
 * PR# 586 *
 Subject: system.file on Windows, / vs \\
 From: Thomas Lumley <thomas@biostat.washington.edu>
