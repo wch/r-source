@@ -127,7 +127,7 @@ function (x, y, weights = rep(1, nobs), start = NULL,
         eta <-
           if(!is.null(etastart) && valideta(etastart))
             etastart
-          else if(!is.null(start)) 
+          else if(!is.null(start))
             if (length(start) != nvars)
               stop(paste("Length of start should equal", nvars,
                          "and correspond to initial coefs for",
@@ -303,26 +303,6 @@ function (x, y, weights = rep(1, nobs), start = NULL,
              prior.weights = weights, df.residual = resdf, df.null = nulldf,
              y = y, converged = conv, boundary = boundary)
 }
-
-
-print.glm <- function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
-{
-	cat("\nCall: ", deparse(x$call), "\n\n")
-	cat("Coefficients")
-	if(is.character(co <- x$contrasts))
-		cat("  [contrasts: ",
-			apply(cbind(names(co),co), 1, paste, collapse="="), "]")
-	cat(":\n")
-	print.default(format(x$coefficients, digits=digits),
-		      print.gap = 2, quote = FALSE)
-	cat("\nDegrees of Freedom:", x$df.null, "Total (i.e. Null); ",
-		 x$df.residual, "Residual\n")
-	cat("Null Deviance:    ", format(signif(x$null.deviance, digits)), "\n")
-	cat("Residual Deviance:", format(signif(x$deviance, digits)), "\t")
-	cat("AIC:", format(signif(x$aic, digits)), "\n")
-	invisible(x)
-}
-
 
 anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
 {
@@ -546,8 +526,7 @@ summary.glm <- function(object, dispersion = NULL,
 	return(ans)
 }
 
-print.glm <-
-function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
+print.glm <- function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
 {
 	cat("\nCall: ", deparse(x$call), "\n\n")
 	cat("Coefficients")
@@ -702,8 +681,8 @@ residuals.glm <- function(x, type="deviance")
 ##	eval(call, sys.frame(sys.parent()))
 ##}
 
-model.frame.glm <- 
-function (formula, data, na.action, ...) 
+model.frame.glm <-
+function (formula, data, na.action, ...)
 {
   if (is.null(formula$model)) {
     fcall <- formula$call
