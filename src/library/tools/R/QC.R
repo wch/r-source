@@ -1543,7 +1543,7 @@ function(package, dir, file, lib.loc = NULL,
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         if(basename(dir) != "base")
-            .load_package_quietly(package, dirname(dir))
+            .load_package_quietly(package, lib.loc)
         code_env <- if(packageHasNamespace(package, dirname(dir)))
             asNamespace(package)
         else
@@ -2667,7 +2667,7 @@ function(dfile)
             }
         }
         if(length(c(bad_dep_entry, bad_dep_op, bad_dep_version)))
-            out$bad_depends_or_suggests <-
+            out$bad_depends_or_suggests_or_imports <-
                 list(bad_dep_entry = bad_dep_entry,
                      bad_dep_op = bad_dep_op,
                      bad_dep_version = bad_dep_version)
@@ -2702,9 +2702,9 @@ function(x, ...)
     if(length(x$bad_maintainer))
         writeLines(c("Malformed maintainer field.", ""))
 
-    if(any(as.integer(sapply(x$bad_depends_or_suggests, length)))) {
-        bad <- x$bad_depends_or_suggests
-        writeLines("Malformed Depends or Suggests field.")
+    if(any(as.integer(sapply(x$bad_depends_or_suggests_or_imports, length)))) {
+        bad <- x$bad_depends_or_suggests_or_imports
+        writeLines("Malformed Depends or Suggests or Imports field.")
         if(length(bad$bad_dep_entry)) {
             tmp <- c("Offending entries:",
                      paste(" ", bad$bad_dep_entry),
