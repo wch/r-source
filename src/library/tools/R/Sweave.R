@@ -108,7 +108,7 @@ RweaveLatex <- function()
 
 RweaveLatexSetup <-
     function(file, output=NULL, quiet=FALSE, debug=FALSE, echo=TRUE,
-             split=FALSE, stylepath=TRUE, pdf=TRUE, eps=TRUE)
+             eval=TRUE, split=FALSE, stylepath=TRUE, pdf=TRUE, eps=TRUE)
 {
     if(is.null(output)){
         prefix.string <- basename(sub("\\.[rsRS]?nw$", "", file))
@@ -128,7 +128,7 @@ RweaveLatexSetup <-
         styfile <- "Sweave"
     
     options <- list(prefix=TRUE, prefix.string=prefix.string,
-                    engine="R",
+                    engine="R", print=FALSE, eval=eval,
                     fig=FALSE, pdf=pdf, eps=eps, 
                     width=6, height=6,
                     echo=echo, results="verbatim", split=split,
@@ -148,10 +148,13 @@ RweaveLatexRuncode <- function(object, chunk, options)
     if(!object$quiet){
         cat(formatC(options$chunknr, width=2), ":")
         if(options$echo) cat(" echo")
-        cat("", options$results)
-        if(options$fig){
-            if(options$eps) cat(" eps") 
-            if(options$pdf) cat(" pdf") 
+        if(options$eval){
+            if(options$print) cat(" print")
+            cat("", options$results)
+            if(options$fig){
+                if(options$eps) cat(" eps") 
+                if(options$pdf) cat(" pdf") 
+            }
         }
         if(!is.null(options$label))
             cat(" (label=", options$label, ")", sep="")
@@ -175,20 +178,25 @@ RweaveLatexRuncode <- function(object, chunk, options)
     openSinput <- FALSE
     
     for(ce in chunkexps){
+        dce <- deparse(ce)
         if(object$debug)
-            cat("\nRnw> ", paste(deparse(ce), collapse="\n+  "),"\n")
+            cat("\nRnw> ", paste(dce, collapse="\n+  "),"\n")
         if(options$echo){
             if(!openSinput){
                 cat("\\begin{Sinput}",
                     file=chunkout, append=TRUE)
                 openSinput <- TRUE
             }
-            cat("\nR> ", paste(deparse(ce), collapse="\n+  "),
+            cat("\nR> ", paste(dce, collapse="\n+  "),
                 file=chunkout, append=TRUE, sep="")
         }
+        if(options$print)
+            ce <- parse(text=paste("print(", dce, ")"))
+
         tmpcon <- textConnection("output", "w")
         sink(file=tmpcon)
-        err <- try(eval(ce, envir=.GlobalEnv))
+        err <- NULL
+        if(options$eval) err <- try(eval(ce, envir=.GlobalEnv))
         sink()
         close(tmpcon)
         if(inherits(err, "try-error"))
@@ -231,7 +239,7 @@ RweaveLatexRuncode <- function(object, chunk, options)
         cat("\\input{", chunkprefix, "}\n", sep="",
             file=object$output, append=TRUE)
 
-    if(options$fig){
+    if(options$fig && options$eval){
         if(options$eps){
             postscript(file=paste(chunkprefix, "eps", sep="."),
                        width=options$width, height=options$height,
@@ -262,7 +270,11 @@ RweaveLatexWritedoc <- function(object, chunk)
     while((pos <-  regexpr("\\\\Sexpr{([^}]*)}", chunk)) >0)
     {
         cmd <- substr(chunk, pos+7, pos-2+attr(pos, "match.length"))
-        val <- as.character(eval(parse(text=cmd), envir=.GlobalEnv))
+        if(object$options$eval)
+            val <- as.character(eval(parse(text=cmd), envir=.GlobalEnv))
+        else
+            val <- paste("\\\\verb{<<", cmd, ">>{", sep="")
+        
         chunk <- sub("\\\\Sexpr{[^}]*}", val, chunk)
     }
     while((pos <-  regexpr("\\\\SweaveOpts{([^}]*)}", chunk)) >0)
@@ -297,7 +309,7 @@ RweaveLatexOptions <- function(options)
     }
 
     LOGOPTS <- c("fig", "pdf", "eps", "echo", "split",
-                 "strip.white", "include", "prefix")
+                 "strip.white", "include", "prefix", "eval", "print")
 
     LOGOPTS <- LOGOPTS[LOGOPTS %in% names(options)]
     

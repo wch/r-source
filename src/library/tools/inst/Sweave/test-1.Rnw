@@ -13,11 +13,18 @@
 
 A simple example that will run in any S engine: The integers from 1 to
 10 are
-<<>>=
-print(1:10)
+<<print=TRUE>>=
+1:10
 <<results=hide>>=
 print(1:20)
 @ % the above is just to ensure that 2 code chunks can follow each other
+
+We can also emulate a simple calculator:
+<<echo=TRUE,print=TRUE>>=
+1 + 1
+1 + pi
+sin(pi/2)
+@ 
 
 Now we look at Gaussian data:
 

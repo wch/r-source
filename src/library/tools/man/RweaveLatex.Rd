@@ -8,20 +8,23 @@
 }
 \usage{
 RweaveLatex()
-RweaveLatexSetup(file, output=NULL, quiet=FALSE, debug=FALSE, echo=TRUE,
-             split=FALSE, stylepath=TRUE, pdf=TRUE, eps=TRUE
+RweaveLatexSetup(file, output=NULL, quiet=FALSE, debug=FALSE,
+    echo=TRUE, eval = TRUE, split=FALSE, stylepath=TRUE,
+    pdf=TRUE, eps=TRUE)
 }
 \arguments{
   \item{file}{Name of Sweave source file.}
   \item{output}{Name of output file, default is to remove extension
-   \file{.nw}, \file{.Rnw} or \file{.Snw} and to add extension \file{.tex}. Any
-   directory names in \code{file} are also remogved such that the output
-   is created in the current working directory.}
+    \file{.nw}, \file{.Rnw} or \file{.Snw} and to add extension
+    \file{.tex}. Any 
+    directory names in \code{file} are also remogved such that the output
+    is created in the current working directory.}
   \item{quiet}{If \code{TRUE} all progress messages are suppressed.}
   \item{debug}{If \code{TRUE}, input and output of all code
-   chunks is copied to the console.}
+    chunks is copied to the console.}
   \item{echo}{By default S commands are echoed to the output file, if
     \code{FALSE}, only their output is included.}
+  \item{eval}{If \code{FALSE}, code chunks are not evaluated.}
   \item{split}{If \code{TRUE}, text output is written to seperate files
     for each code chunk.}
   \item{stylepath}{If \code{TRUE}, a hard path to the file \file{Sweave.sty}
