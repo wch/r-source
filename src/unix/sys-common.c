@@ -200,8 +200,12 @@ char *R_HomeDir()
  *  7) PLATFORM DEPENDENT FUNCTIONS
  */
 
+/* The __APPLE__ code below is for OS X */
 #ifdef Win32
 # include <windows.h>
+#elif defined(__APPLE__)
+# include <crt_externs.h>
+# define environ (*_NSGetEnviron())
 #else
 extern char ** environ;
 #endif
