@@ -972,10 +972,10 @@ AC_SUBST(LIBR_LDFLAGS)
 
 AC_FUNC_ALLOCA
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite ftruncate getcwd \
-  getgrgid getpwuid getuid hypot isascii isnan log1p matherr mkfifo \
+  getgrgid getpwuid getuid hypot isascii isnan log1p matherr memcpy mkfifo \
   popen putenv rint setenv strcoll stat strptime system times unsetenv)
 ## <NOTE>
-## No need checking for bcopy bzero memcpy mempcpy even though ifnames
+## No need checking for bcopy bzero mempcpy even though ifnames
 ## might report corresponding HAVE_FOO conditionals.
 ## </NOTE>
 
