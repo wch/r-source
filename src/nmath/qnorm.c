@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Core Development Group
  *  based on AS 111 (C) 1977 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -82,11 +83,11 @@ double qnorm(double p, double mu, double sigma)
 	    if (q < 0.0)
 		val = -val;
 	}
-	else if(r > 1e-300) {		/* Assuming IEEE here? */
+	else if(r >= DBL_MIN) { /* r = p <= eps : Use Wichura */
 	    val = -2 * log(p);
-	    r = log(6.283185307179586476925286766552 * val);
-	    r = r/val + (2 - r)/(val * val)
-		+ (-14 + 6 * r - r * r)/(2 * val * val * val);
+	    r = log(2 * M_PI * val);
+	    p = val * val;
+	    r = r/val + (2 - r)/p + (-14 + 6 * r - r * r)/(2 * p * val);
 	    val = sqrt(val * (1 - r));
 	    if(q < 0.0)
 		val = -val;
