@@ -4,9 +4,10 @@ arima0 <- function(x, order=c(0,0,0),
                    transform.pars=2)
 {
     series <- deparse(substitute(x))
-    if(is.matrix(ts))
+    if(NCOL(x) > 1)
         stop("only implemented for univariate time series")
     x <- na.action(as.ts(x))
+    dim(x) <- NULL
     n <- length(x)
     if(is.null(seasonal$period) || is.na(seasonal$period)
        || seasonal$period == 0) seasonal$period <- frequency(x)
