@@ -14,14 +14,17 @@ NEW FEATURES
     o   On systems using IEEE arithmetic, the builtin Inf and NaN
 	values are now recognised and used.  NA and NaN should
 	propagate correctly in computations, with NA dominating
-	in computations invoving both quantities.
+	in computations involving both quantities.
         E.g. NA+NaN is NA.
-	
+
+    o   Some of the t, F, and chisq distribution/probability functions
+	now allow a noncentrality parameter `ncp'.
+
     o   system.file()  [now documented] returns all files matched by
 	wildcards.
 
-    o   data() now supports the new .tab and .tbr file format, for
-	data to be read by  read.table(), with and w/o `header = T'.
+    o   data() now supports the new .tab file format, for
+	data to be read by  read.table(file, header=TRUE).
 
     o	Rdconv: new tabular environment, new sections `\format' and
         `\source', new output format `-type Sd' for S documentation
@@ -43,6 +46,8 @@ NEW FEATURES
 
 
 BUG FIXES
+
+    o   format(NULL) now works.
 
     o	minor fix in symnum.
 
@@ -66,7 +71,7 @@ BUG FIXES
     o	Return statements of the form return(x,y) will now return
 	a list with named components.
 
-    o	Parsing of nested "if" statments was broken.  This is fixed now.
+    o	Parsing of nested "if" statements was broken.  This is fixed now.
 	(Reported by Paul Gilbert).
 
     o	Wrong declaration of ConsoleBufCnt in src/main/scan.c caused crash
@@ -167,7 +172,7 @@ NEW FEATURES
 
 BUG FIXES
 
-    o	A file was closed multiple times if an error message occured
+    o	A file was closed multiple times if an error message occurred
 	after sourcing a file.	In some versions of Linux this caused
 	a core dump.
 
@@ -270,7 +275,7 @@ BUG FIXES
 		glm(y~., data=df)
 
 	will now work.	The RHS of the model will consist of an
-	additive model containing all (non-respose) variabels in the
+	additive model containing all (non-response) variables in the
 	given data frame.
 
     o	The following type of assignment to data frame subsets
@@ -308,7 +313,7 @@ BUG FIXES
 	Dealing with (close to) collinear situations is still not flexible
 	enough.
 
-    o	internal postcript() improved (missing lines in boxplot(.)).
+    o	internal postscript() improved (missing lines in boxplot(.)).
 
     o	Improvement to many (even most ?) documentation (.Rd) files.
 
@@ -409,7 +414,7 @@ BUG FIXES
     (Hill 1970, CACM) appears to be much faster and more accurate than
     Splus.
 
- o  A final Newton step has beed added to give a final "polish" to
+ o  A final Newton step has been added to give a final "polish" to
     the quantiles produced by pnorm().	These should be close to full
     accuracy now.
 
