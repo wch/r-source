@@ -168,7 +168,8 @@ function(pattern, fields = c("alias", "title"),
                         aliases <-
                             strsplit(contents[, "Aliases"], " +")
                         ## Don't do it for keywords, though, as these
-                        ## might be missing or non-standard ...
+                        ## might be non-standard (and hence contain
+                        ## white space ...).
                     }
                     else {
                         base <-
@@ -191,11 +192,16 @@ function(pattern, fields = c("alias", "title"),
                         rbind(dbBase,
                               cbind(p, lib, IDs, base,
                                     topic = sapply(aliases, "[", 1)))
-                    dbAliases <-
-                        rbind(dbAliases,
-                              cbind(unlist(aliases),
-                                    rep(IDs, sapply(aliases, length)),
-                                    p))
+                    ## If there are no aliases at all, cbind() below
+                    ## would give matrix(p, nc = 1).  (Of course, Rd
+                    ## objects without aliases are useless ...)
+                    if(length((a <- unlist(aliases)) > 0))
+                        dbAliases <-
+                            rbind(dbAliases,
+                                  cbind(a,
+                                        rep(IDs,
+                                            sapply(aliases, length)),
+                                        p))
                     keywords <- contents[, "Keywords"]
                     dbKeywords <-
                         rbind(dbKeywords,
@@ -304,7 +310,6 @@ function(pattern, fields = c("alias", "title"),
     db <- dbBase[sort(unique(i)),
                  c("topic", "title", "Package", "LibPath"),
                  drop = FALSE]
-    cat("I am here\n")
     if(verbose) cat("matched", NROW(db), "objects.\n")
 
     ## Retval.
@@ -328,14 +333,16 @@ function(x, ...)
                          "entry 'FOO(PKG) TITLE':",
                          "\n", sep = ""),
                    outConn)
-        dbnam <- paste(db[ , "topic"], "(", db[, "Package"], ")",
+        dbnam <- paste(db[ , "topic"], "(",
+                       db[, "Package"], ")",
                        sep = "")
         dbtit <- paste(db[ , "title"], sep = "")
         writeLines(formatDL(dbnam, dbtit), outConn)
         close(outConn)
         file.show(outFile, delete.file = TRUE)
     } else {
-        cat(paste("No help files found with ", fields, " matching ",
-                  sQuote(x$pattern), "\n", sep = ""))
+        cat(paste("No help files found with ", fields,
+                  " matching ", sQuote(x$pattern), "\n",
+                  sep = ""))
     }
 }
