@@ -19,6 +19,10 @@ fi
 
 tmpfile=${TMPDIR:-/tmp}/${ffile}-d.${$}
 
+if test ${ffile} = '-' ; then 
+  ffile=''
+fi
+
 sed -e "${script}" ${ffile} | egrep -v "${pattern}" > ${tmpfile}
 (sed -e "${script}" ${tfile} | \
   egrep -v "${pattern}" | \
