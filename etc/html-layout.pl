@@ -71,7 +71,7 @@ sub html_functionhead
     my ($title, $pkgname, $name) = @_;
 
     my $retval = "<HTML><HEAD><TITLE>R: $title</TITLE>\n" .
-	"<LINK REL=STYLESHEET TYPE=\"text/css\" HREF=\"../../../doc/html/R.css\">" .
+	"<LINK REL=STYLESHEET TYPE=\"text/css\" HREF=\"../../R.css\">" .
 	"</HEAD><BODY>\n\n";
 
     if($pkgname){

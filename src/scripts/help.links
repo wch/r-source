@@ -72,6 +72,7 @@ for lib in $*; do
 done
 
 cat ${R_HOME}/doc/html/packages-foot.html >> ${PKGLIST}
+ln -s ${R_HOME}/doc/html/R.css ${USER_R_HOME}/library
 
 ### Local Variables: ***
 ### mode: sh ***

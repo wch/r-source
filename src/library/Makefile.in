@@ -31,6 +31,7 @@ R:
 	done
 	@(cd $(top_builddir)/library; \
 	  cat */TITLE > LibIndex 2> /dev/null)
+	@cp $(top_srcdir)/doc/html/R.css $(top_builddir)/library/
 
 docs:
 	@echo "building all R object docs (help, HTML, LaTeX, examples)"
