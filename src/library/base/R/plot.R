@@ -82,15 +82,14 @@ function (x, y=NULL, type="p", main=NULL, col=par("fg"), bg=NA,
  panel.first
  plot.xy(xy, type, col=col, pch=pch, cex=cex, bg=bg, lty=lty, lwd=lwd, ...)
  panel.last
- pars <- list(...)
  if (axes) {
-	axis(1, pars=pars)
-	axis(2, pars=pars)
+	axis(1, ...)
+	axis(2, ...)
  }
  if (frame.plot)
 	box(...)
  if (ann)
-	title(main=main, xlab=xlab, ylab=ylab, pars=pars)
+	title(main=main, xlab=xlab, ylab=ylab, ...)
  invisible()
 }
 

@@ -17,49 +17,46 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+/* This file processed for NEWLIST */
+
 #include "Defn.h"
 
 SEXP do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	SEXP s;
-	checkArity(op,args);
-
-	if( TYPEOF(CAR(args)) == STRSXP ) {
-		PROTECT(s=install(CHAR(STRING(CAR(args))[0])));
-		CAR(args)= findFun(s, rho);
-		UNPROTECT(1);
-	}
-
-	if(TYPEOF(CAR(args)) != CLOSXP )
-		errorcall(call,"argument must be a function\n");
-
-	switch(PRIMVAL(op)) {
-		case 0:
-			DEBUG(CAR(args))=1;
-			break;
-		case 1:
-			DEBUG(CAR(args))=0;
-			break;
-	}
-	return R_NilValue;
+    SEXP s;
+    checkArity(op,args);
+    if (TYPEOF(CAR(args)) == STRSXP) {
+	PROTECT(s = install(CHAR(STRING(CAR(args))[0])));
+	CAR(args )= findFun(s, rho);
+	UNPROTECT(1);
+    }
+    if (TYPEOF(CAR(args)) != CLOSXP)
+	errorcall(call, "argument must be a function\n");
+    switch(PRIMVAL(op)) {
+    case 0:
+	DEBUG(CAR(args)) = 1;
+	break;
+    case 1:
+	DEBUG(CAR(args)) = 0;
+	break;
+    }
+    return R_NilValue;
 }
 
 SEXP do_trace(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	checkArity(op,args);
-
-	if(TYPEOF(CAR(args)) != CLOSXP && TYPEOF(CAR(args)) != BUILTINSXP &&
-		TYPEOF(CAR(args)) != SPECIALSXP) 
-		errorcall(call,"argument must be a function\n");
-
-	switch(PRIMVAL(op)) {
-		case 0:
-			TRACE(CAR(args))=1;
-			break;
-		case 1:
-			TRACE(CAR(args))=0;
-			break;
-	}
-	return R_NilValue;
+    checkArity(op, args);
+    if (TYPEOF(CAR(args)) != CLOSXP && TYPEOF(CAR(args)) != BUILTINSXP &&
+	TYPEOF(CAR(args)) != SPECIALSXP) 
+	errorcall(call, "argument must be a function\n");
+    switch(PRIMVAL(op)) {
+    case 0:
+	TRACE(CAR(args)) = 1;
+	break;
+    case 1:
+	TRACE(CAR(args)) = 0;
+	break;
+    }
+    return R_NilValue;
 }
 

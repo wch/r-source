@@ -74,7 +74,7 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	nx = length(x);
 	maxlen = 0;
 #ifdef NEWLIST
-	for (j = 0 ; j < nx ; j++) {
+	for (j = 0; j < nx; j++) {
 		if (!isString(VECTOR(x)[j]))
 			error("non-string argument to Internal paste\n");
 		if(length(VECTOR(x)[j]) > maxlen)
@@ -95,7 +95,7 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0; i < maxlen; i++) {
 		pwidth = 0;
 #ifdef NEWLIST
-		for (j = 0; j < nx ; j++) {
+		for (j = 0; j < nx; j++) {
 			k = length(VECTOR(x)[j]);
 			if (k > 0)
 				pwidth += LENGTH(STRING(VECTOR(x)[j])[i%k]);
@@ -111,14 +111,14 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		tmpchar = allocString(pwidth);
 		buf = CHAR(tmpchar);
 #ifdef NEWLIST
-		for (j=0; j < nx ; j++) {
+		for (j = 0; j < nx; j++) {
 			k = length(VECTOR(x)[j]);
 			if (k > 0) {
 				s = CHAR(STRING(VECTOR(x)[j])[i%k]);
 				sprintf(buf, "%s", s);
 				buf += LENGTH(STRING(VECTOR(x)[j])[i%k]);
 			}
-			if (CDR(px) != R_NilValue && sepw != 0) {
+			if (j != nx - 1 && sepw != 0) {
 				sprintf(buf, "%s", CHAR(sep));
 				buf += sepw;
 			}

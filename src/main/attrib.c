@@ -51,13 +51,13 @@ SEXP getAttrib(SEXP vec, SEXP name)
 		if(!isNull(s)) return CAR(s);
 	    }
 	}
-	if(isList(vec) || isLanguage(vec)) {
+	if (isList(vec) || isLanguage(vec)) {
 	    len = length(vec);
 	    PROTECT(s = allocVector(STRSXP, len));
 	    blank = mkChar("");
 	    i = 0;
 	    any = 0;
-	    for (; vec != R_NilValue; vec=CDR(vec),i++) {
+	    for ( ; vec != R_NilValue; vec = CDR(vec), i++) {
 		if (TAG(vec) == R_NilValue)
 		    STRING(s)[i] = blank;
 		else if (isSymbol(TAG(vec))) {
@@ -136,13 +136,14 @@ void copyMostAttrib(SEXP inp, SEXP ans)
     SEXP s;
     PROTECT(ans);
     PROTECT(inp);
-    for (s=ATTRIB(inp); s!=R_NilValue; s=CDR(s)) {
+    for (s = ATTRIB(inp); s != R_NilValue; s = CDR(s)) {
 	if ((TAG(s) != R_NamesSymbol) &&
 	    (TAG(s) != R_DimSymbol) &&
-	    (TAG(s) != R_DimNamesSymbol) ) {
+	    (TAG(s) != R_DimNamesSymbol)) {
 	    installAttrib(ans, TAG(s), CAR(s));
 	}
     }
+    OBJECT(ans) = OBJECT(inp);
     UNPROTECT(2);
 }
 
@@ -230,9 +231,9 @@ SEXP tspgets(SEXP vec, SEXP val)
 	frequency = (INTEGER(val)[2] == NA_INTEGER) ?
 	    NA_REAL : INTEGER(val)[2];
     }
-    if(frequency <= 0) badtsp();
+    if (frequency <= 0) badtsp();
     n = nrows(vec);
-    if(fabs(end - start - (n - 1)/frequency) > 1.e-5)
+    if (fabs(end - start - (n - 1)/frequency) > 1.e-5)
 	badtsp();
 
     PROTECT(vec);
@@ -248,8 +249,8 @@ SEXP tspgets(SEXP vec, SEXP val)
 
 SEXP commentgets(SEXP vec, SEXP comment)
 {
-    if(isNull(comment) || isString(comment)) {
-	if(length(comment) <= 0) {
+    if (isNull(comment) || isString(comment)) {
+	if (length(comment) <= 0) {
 	    ATTRIB(vec) = stripAttrib(R_CommentSymbol, vec);
 	}
 	else {
@@ -264,8 +265,8 @@ SEXP commentgets(SEXP vec, SEXP comment)
 SEXP do_commentgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    if(NAMED(CAR(args)) == 2) CAR(args) = duplicate(CAR(args));
-    if(length(CADR(args)) == 0) CADR(args) = R_NilValue;
+    if (NAMED(CAR(args)) == 2) CAR(args) = duplicate(CAR(args));
+    if (length(CADR(args)) == 0) CADR(args) = R_NilValue;
     setAttrib(CAR(args), R_CommentSymbol, CADR(args));
     return CAR(args);
 }
@@ -278,15 +279,19 @@ SEXP do_comment(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP classgets(SEXP vec, SEXP class)
 {
-    if(isNull(class) || isString(class)) {
-	if(length(class) <= 0) {
+    if (isNull(class) || isString(class)) {
+	if (length(class) <= 0) {
 	    ATTRIB(vec) = stripAttrib(R_ClassSymbol, vec);
 	    OBJECT(vec) = 0;
 	}
 	else {
-	    if(streql(CHAR(STRING(class)[0]), "data.frame") &&
-	       !isList(vec) )
+#ifdef NEWLIST
+	    if (streql(CHAR(STRING(class)[0]), "data.frame") && !isNewList(vec))
 		error("attempt to make non-list a data frame\n");
+#else
+	    if (streql(CHAR(STRING(class)[0]), "data.frame") && !isList(vec))
+		error("attempt to make non-list a data frame\n");
+#endif
 	    installAttrib(vec, R_ClassSymbol, class);
 	    OBJECT(vec) = 1;
 	}
@@ -299,8 +304,8 @@ SEXP classgets(SEXP vec, SEXP class)
 SEXP do_classgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    if(NAMED(CAR(args)) == 2) CAR(args) = duplicate(CAR(args));
-    if(length(CADR(args)) == 0) CADR(args) = R_NilValue;
+    if (NAMED(CAR(args)) == 2) CAR(args) = duplicate(CAR(args));
+    if (length(CADR(args)) == 0) CADR(args) = R_NilValue;
     setAttrib(CAR(args), R_ClassSymbol, CADR(args));
     return CAR(args);
 }
@@ -314,7 +319,7 @@ SEXP do_class(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    if(NAMED(CAR(args)) == 2) CAR(args) = duplicate(CAR(args));
+    if (NAMED(CAR(args)) == 2) CAR(args) = duplicate(CAR(args));
     setAttrib(CAR(args), R_NamesSymbol, CADR(args));
     return CAR(args);
 }
@@ -330,8 +335,8 @@ SEXP namesgets(SEXP vec, SEXP val)
     /* Ensure that the labels are indeed */
     /* a vector of character strings */
 
-    if( isList(val) ) {
-	if( !isVectorizable(val) )
+    if (isList(val)) {
+	if (!isVectorizable(val))
 	    error("incompatible names argument\n");
 	else {
 	    rval = allocVector(STRSXP, length(vec));
@@ -353,9 +358,9 @@ SEXP namesgets(SEXP vec, SEXP val)
 
     /* Special treatment for one dimensional arrays */
 
-    if(isVector(vec) || isList(vec) || isLanguage(vec)) {
+    if (isVector(vec) || isList(vec) || isLanguage(vec)) {
 	s = getAttrib(vec, R_DimSymbol);
-	if(TYPEOF(s) == INTSXP && length(s) == 1) {
+	if (TYPEOF(s) == INTSXP && length(s) == 1) {
 	    PROTECT(val = CONS(val, R_NilValue));
 	    setAttrib(vec, R_DimNamesSymbol, val);
 	    UNPROTECT(3);
@@ -388,7 +393,7 @@ SEXP do_names(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP s;
     checkArity(op, args);
     s = CAR(args);
-    if(isVector(s) || isList(s) || isLanguage(s))
+    if (isVector(s) || isList(s) || isLanguage(s))
 	return getAttrib(s, R_NamesSymbol);
     return R_NilValue;
 }
@@ -396,11 +401,11 @@ SEXP do_names(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    if(DispatchOrEval(call, op, args, env, &ans, 0))
+    if (DispatchOrEval(call, op, args, env, &ans, 0))
 	return(ans);
     PROTECT(args = ans);
     checkArity(op, args);
-    if(NAMED(CAR(args)) > 2) CAR(args) = duplicate(CAR(args));
+    if (NAMED(CAR(args)) > 2) CAR(args) = duplicate(CAR(args));
     setAttrib(CAR(args), R_DimNamesSymbol, CADR(args));
     UNPROTECT(1);
     return CAR(args);
@@ -430,7 +435,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
     if (isList(val)) {
 	SEXP newval;
 	newval = allocVector(VECSXP, k);
-	for(i = 0 ; i < k ; i++) {
+	for (i = 0; i < k; i++) {
 	    VECTOR(newval)[i] = val;
 	    val = CDR(val);
 	}
@@ -444,7 +449,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	    if (INTEGER(dims)[i] != LENGTH(VECTOR(val)[i]) 
 		&& LENGTH(VECTOR(val)[i]) != 0)
 		error("length of dimnames element not equal to array extent\n");
-	    if(LENGTH(VECTOR(val)[i]) == 0) {
+	    if (LENGTH(VECTOR(val)[i]) == 0) {
 		VECTOR(val)[i] = R_NilValue;
 	    }
 	    else if (!isString(VECTOR(val)[i])) {
@@ -452,11 +457,11 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	    }
 	}
     }
-    installAttrib(vec, R_DimNamesSymbol, val );
-    if(isList(vec) && k == 1) {
+    installAttrib(vec, R_DimNamesSymbol, val);
+    if (isList(vec) && k == 1) {
 	top = VECTOR(val)[0];
 	i = 0;
-	for(val=vec ; !isNull(val) ; val=CDR(val))
+	for (val = vec; !isNull(val); val = CDR(val))
 	    TAG(val) = install(CHAR(STRING(top)[i++]));
     }
 #else
@@ -467,7 +472,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 		error("invalid type for dimname (must be a vector)\n");
 	    if (INTEGER(dims)[i] != LENGTH(CAR(val)) && LENGTH(CAR(val)) != 0)
 		error("length of dimnames element not equal to array extent\n");
-	    if(LENGTH(CAR(val)) == 0) {
+	    if (LENGTH(CAR(val)) == 0) {
 		CAR(val) = R_NilValue;
 	    }
 	    else if (!isString(CAR(val))) {
@@ -477,10 +482,10 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	val = CDR(val);
     }
     installAttrib(vec, R_DimNamesSymbol, top);
-    if(isList(vec) && k == 1) {
+    if (isList(vec) && k == 1) {
 	top = CAR(top);
 	i = 0;
-	for(val=vec ; !isNull(val) ; val=CDR(val))
+	for (val = vec; !isNull(val); val = CDR(val))
 	    TAG(val) = install(CHAR(STRING(top)[i++]));
     }
 #endif
@@ -491,7 +496,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 SEXP do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    if(DispatchOrEval(call, op, args, env, &ans, 0))
+    if (DispatchOrEval(call, op, args, env, &ans, 0))
 	return(ans);
     PROTECT(args = ans);
     checkArity(op, args);
@@ -503,7 +508,7 @@ SEXP do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    if(DispatchOrEval(call, op, args, env, &ans, 0))
+    if (DispatchOrEval(call, op, args, env, &ans, 0))
 	return(ans);
     PROTECT(args = ans);
     checkArity(op, args);
@@ -515,11 +520,11 @@ SEXP do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    if(DispatchOrEval(call, op, args, env, &ans, 0))
+    if (DispatchOrEval(call, op, args, env, &ans, 0))
 	return(ans);
     PROTECT(args = ans);
     checkArity(op, args);
-    if(NAMED(CAR(args)) > 1) CAR(args) = duplicate(CAR(args));
+    if (NAMED(CAR(args)) > 1) CAR(args) = duplicate(CAR(args));
     setAttrib(CAR(args), R_DimSymbol, CADR(args));
     setAttrib(CAR(args), R_NamesSymbol, R_NilValue);
     UNPROTECT(1);
@@ -542,10 +547,10 @@ SEXP dimgets(SEXP vec, SEXP val)
 
     len = length(vec);
     ndim = length(val);
-    if( ndim == 0 )
+    if (ndim == 0)
 	error("dim: Invalid dimension vector\n");
     total = 1;
-    for (i=0; i<ndim; i++)
+    for (i = 0; i < ndim; i++)
 	total *= INTEGER(val)[i];
     if (total != len)
 	error("dim<- length of dims do not match the length of object\n");
@@ -568,6 +573,9 @@ SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (namesattr != R_NilValue)
 	    nvalues++;
     }
+    /* FIXME */
+    if (nvalues <= 0) return R_NilValue;
+    /* FIXME */
     PROTECT(value = allocVector(VECSXP, nvalues));
     PROTECT(names = allocVector(STRSXP, nvalues));
     PROTECT(blank = mkChar(""));
@@ -577,7 +585,7 @@ SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 	STRING(names)[nvalues] = PRINTNAME(R_NamesSymbol);
 	nvalues++;
     }
-    while(attrs != R_NilValue) {
+    while (attrs != R_NilValue) {
 	VECTOR(value)[nvalues] = CAR(attrs);
 	if (TAG(attrs) == R_NilValue)
 	    STRING(names)[nvalues] = blank;
@@ -622,8 +630,8 @@ SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP object, attrs, names;
     int i, nattrs;
 
-    /* If there are multiple references to the */
-    /* object being mutated, we must duplicate. */
+    /* If there are multiple references to the object being mutated, */
+    /* we must duplicate so that the other references are unchanged. */
 
     if (NAMED(CAR(args)) == 2)
 	CAR(args) = duplicate(CAR(args));
@@ -631,48 +639,56 @@ SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Extract the arguments from the argument list */
 
     object = CAR(args);
-    if(object == R_NilValue ) {
-	warning("attempt to set attributes on NULL\n");
-	return(R_NilValue);
-    }
     attrs = CADR(args);
+    if (object == R_NilValue) {
+	if (attrs == R_NilValue)
+	    return R_NilValue;
+	else
+	    PROTECT(object = allocVector(VECSXP, 0));
+    }
+    else PROTECT(object);
+
     if (!isNewList(attrs))
 	errorcall(call, "attributes must be in a list\n");
-    names = getAttrib(attrs, R_NamesSymbol);
-    if (names == R_NilValue)
-	errorcall(call, "attributes must be named\n");
 
     /* Empty the existing attribute list */
-    /* FIXME: the code below treats pair-based */
-    /* structures in a special way.  This can */
-    /* probably be dropped down the road. */
-    /* Users should never encounter pair-based lists. */
 
-    if(isList(object))
+    /* FIXME: the code below treats pair-based structures */
+    /* in a special way.  This can probably be dropped down */
+    /* the road (users should never encounter pair-based lists). */
+    /* Of course, if we want backward compatibility we can't */
+    /* make the change. :-( */
+
+    if (isList(object))
 	setAttrib(object, R_NamesSymbol, R_NilValue);
     ATTRIB(object) = R_NilValue;
     OBJECT(object) = 0;
 
-    /* We do two passes through the attributes */
-    /* the first finding and transferring "dims" */
-    /* and the second transferring the rest. */
-    /* This is to ensure that "dim" occurs */
-    /* in the attribute list before "dimnames". */
+    /* We do two passes through the attributes; the first */
+    /* finding and transferring "dims" and the second */
+    /* transferring the rest.  This is to ensure that */
+    /* "dim" occurs in the attribute list before "dimnames". */
 
     nattrs = length(attrs);
-    for(i = 0 ; i < nattrs ; i++) {
-	if (STRING(names)[i] == R_NilValue &&
-	    CHAR(STRING(names)[i])[0] == '\0') {
-	    error("all attributes must have names\n");
+    if (nattrs > 0) {
+	names = getAttrib(attrs, R_NamesSymbol);
+	if (names == R_NilValue)
+	    errorcall(call, "attributes must be named\n");	
+	for (i = 0; i < nattrs; i++) {
+	    if (STRING(names)[i] == R_NilValue &&
+		CHAR(STRING(names)[i])[0] == '\0') {
+		error("all attributes must have names\n");
+	    }
+	    if (!strcmp(CHAR(STRING(names)[i]), "dim"))
+		setAttrib(object, R_DimSymbol, VECTOR(attrs)[i]);
 	}
-	if (!strcmp(CHAR(STRING(names)[i]), "dim"))
-	    setAttrib(object, R_DimSymbol, VECTOR(attrs)[i]);
+	for (i = 0; i < nattrs; i++) {
+	    if (strcmp(CHAR(STRING(attrs)[i]), "dim"))
+		setAttrib(object, install(CHAR(STRING(names)[i])),
+			  VECTOR(attrs)[i]);
+	}
     }
-    for(i = 0 ; i < nattrs ; i++) {
-	if (strcmp(CHAR(STRING(attrs)[i]), "dim"))
-	    setAttrib(object, install(CHAR(STRING(names)[i])),
-		      VECTOR(attrs)[i]);
-    }
+    UNPROTECT(1);
     return object;
 }
 #else
@@ -680,8 +696,8 @@ static SEXP dimptr;
 
 static SEXP TrimDim(SEXP l)
 {
-    if(l != R_NilValue) {
-	if(TAG(l) == R_DimSymbol) {
+    if (l != R_NilValue) {
+	if (TAG(l) == R_DimSymbol) {
 	    dimptr = l;
 	    return CDR(l);
 	}
@@ -696,14 +712,14 @@ static SEXP TrimDim(SEXP l)
 SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, t;
-    if(CAR(args) == R_NilValue ) {
+    if (CAR(args) == R_NilValue) {
 	warning("attempt to set attributes on NULL\n");
 	return(R_NilValue);
     }
-    if(NAMED(CAR(args)) == 2) CAR(args) = duplicate(CAR(args));
+    if (NAMED(CAR(args)) == 2) CAR(args) = duplicate(CAR(args));
     s = CAR(args);
     t = CADR(args);
-    if(isList(s))
+    if (isList(s))
 	setAttrib(s, R_NamesSymbol, R_NilValue);
     ATTRIB(s) = R_NilValue;
     OBJECT(s) = 0;
@@ -716,12 +732,12 @@ SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 
     dimptr = R_NilValue;
     t = TrimDim(t);
-    if(dimptr != R_NilValue) {
+    if (dimptr != R_NilValue) {
 	CDR(dimptr) = t;
 	t = dimptr;
     }
 
-    for (; t != R_NilValue; t = CDR(t)) {
+    for ( ; t != R_NilValue; t = CDR(t)) {
 	if (TAG(t) == R_NilValue)
 	    error("all attributes must have names\n");
 	setAttrib(s, TAG(t), CAR(t));
@@ -749,7 +765,7 @@ SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP obj, name, value;
 
     obj = eval(CAR(args), env);
-    if(NAMED(obj) == 2)
+    if (NAMED(obj) == 2)
 	PROTECT(duplicate(obj));
     else
 	PROTECT(obj);

@@ -93,7 +93,7 @@ SEXP duplicate(SEXP s)
 	case VECSXP:
 		n = length(s);
 		PROTECT(s);
-		PROTECT(t = allocVector(VECSXP, LENGTH(s)));
+		PROTECT(t = allocVector(TYPEOF(s), LENGTH(s)));
 		for(i = 0 ; i < n ; i++)
 			VECTOR(t)[i] = duplicate(VECTOR(s)[i]);
 		ATTRIB(t) = duplicate(ATTRIB(s));

@@ -15,14 +15,16 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *
+ *  Object Formatting
+ *
+ *  See ./printutils.c for general remarks on Printing and the Encode.. utils.
+ *  See ./paste.c for do_paste() , do_format() and  do_formatinfo()
+ *  These  formatFOO() functions determine the proper width, digits, etc.
  */
 
-/*== see ./printutils.c	 for general remarks on Printing and the Encode.. utils.
- *== see ./paste.c	 for do_paste() , do_format() and  do_formatinfo()
- *
- * These  formatFOO (.)	 functions determine the proper	 width, digits, etc:
- *
- */
+/* File processed for NEWLIST */
 
 
 #include "Defn.h"
@@ -233,20 +235,20 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
 	    left = kpower + 1;
 	    sleft = sgn + ((left <= 0) ? 1 : left); /* >= 1 */
 	    right = nsig - left; /* #{digits} right of '.' ( > 0 often)*/
-	    if (sgn) neg = 1; /* if any < 0, need extra space for sign */
+	    if (sgn) neg = 1;    /* if any < 0, need extra space for sign */
 
 	    /* Infinite precision "F" Format : */
-	    if (right > rt) rt = right;	/* max digits to right of . */
-	    if (left > mxl) mxl = left;	/* max digits to  left of . */
-	    if (left < mnl) mnl = left;	/* min digits to  left of . */
-	    if (sleft> mxsl) mxsl = sleft;	/* max left including sign(s)*/
-	    if (nsig > mxns) mxns = nsig;	/* max sig digits */
+	    if (right > rt) rt = right;	   /* max digits to right of . */
+	    if (left > mxl) mxl = left;	   /* max digits to  left of . */
+	    if (left < mnl) mnl = left;	   /* min digits to  left of . */
+	    if (sleft> mxsl) mxsl = sleft; /* max left including sign(s)*/
+	    if (nsig > mxns) mxns = nsig;  /* max sig digits */
 	}
     }
     /* F Format (NEW):  use "F" format
      *	    WHENEVER we use not more space than 'E'
      *		and still satisfy 'print_digits'
-
+     *
      * E Format has the form   [S]X[.XXX]E+XX[X]
      *
      * This is indicated by setting *e to non-zero (usually 1)

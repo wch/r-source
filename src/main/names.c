@@ -699,6 +699,8 @@ void InitNames()
 	strcpy(CHAR(NA_STRING), "NA");
 	print_na_string = NA_STRING;
 
+	R_BlankString = mkChar("");
+
 	if (!(R_SymbolTable = (SEXP *) malloc(HSIZE * sizeof(SEXP))))
 		R_Suicide("couldn't allocate memory for symbol table");
 

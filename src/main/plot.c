@@ -95,15 +95,17 @@ SEXP do_devoff(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-    /*	P A R A M E T E R    U T I L I T I E S	*/
+/*  P A R A M E T E R    U T I L I T I E S  */
 
 
 int Specify2(char*, SEXP, DevDesc*);
 
+
+/* ProcessInLinePars handles inline par specifications in graphics */
+/* functions.  It does this by calling Specify2 which is in par.c */
+
 void ProcessInlinePars(SEXP s, DevDesc *dd)
 {
-    /* ProcessInLinePars handles inline par specifications in graphics */
-    /* functions.  It does this by calling Specify2 which is in par.c */
     if(isList(s)) {
 	while(s != R_NilValue) {
 	    if(isList(CAR(s)))
@@ -116,16 +118,17 @@ void ProcessInlinePars(SEXP s, DevDesc *dd)
 }
 
 
+/* GetPar is intended for looking through a list typically that bound */
+/* to ... for a particular parameter value.  This is easier than trying */
+/* to match every graphics parameter in argument lists explicitly. */
+/* FIXME : This needs to be destructive, so that "ProcessInlinePars" */
+/* can be safely called afterwards. */
+
 SEXP GetPar(char *which, SEXP parlist)
 {
-    /* GetPar is intended for looking through a list */
-    /* typically that bound to ... for a particular */
-    /* parameter value.	 This is easier than trying */
-    /* to match every graphics parameter in argument */
-    /* lists and passing them explicitly. */
     SEXP w, p;
     w = install(which);
-    for(p=parlist ; p!=R_NilValue ; p=CDR(p)) {
+    for (p = parlist ; p != R_NilValue ; p = CDR(p)) {
 	if(TAG(p) == w)
 	    return CAR(p);
     }
@@ -454,14 +457,7 @@ static void GetAxisLimits(double left, double right, double *low, double *high)
 }
 
 
-/*
- *  SYNOPSIS
- *
- *    axis(side, at, labels, ...)
- *
- *  DESCRIPTION
- *
- */
+/* axis(side, at, labels, ...) */
 
 static SEXP labelformat(SEXP labels)
 {
@@ -938,10 +934,17 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Required Arguments */
     sxy = CAR(args);
+#ifdef NEWLIST
+    if (!isNewList(sxy) || length(sxy) < 2)
+	errorcall(call, "invalid plotting structure\n");
+    internalTypeCheck(call, sx = VECTOR(sxy)[0], REALSXP);
+    internalTypeCheck(call, sy = VECTOR(sxy)[1], REALSXP);
+#else
     if (!isList(sxy) || length(sxy) < 2)
 	errorcall(call, "invalid plotting structure\n");
     internalTypeCheck(call, sx = CAR(sxy), REALSXP);
     internalTypeCheck(call, sy = CADR(sxy), REALSXP);
+#endif
     if (LENGTH(sx) != LENGTH(sy))
 	error("x and y lengths differ for plot\n");
     n = LENGTH(sx);

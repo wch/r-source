@@ -66,22 +66,21 @@
 
 static SEXP gcall;
 
-#ifdef NotUsed
+#ifdef UNUSED
 static void SetArgsforUseMethod(SEXP x)
 {
     char buf[4];
     int i=1;
 
-    if( TAG(x) == R_NilValue)
+    if (TAG(x) == R_NilValue)
 	TAG(x) = install("x");
-    for(x=CDR(x); x!=R_NilValue ; x=CDR(x)) {
-	if(TAG(x) == R_NilValue) {
-	    if(i<10)
+    for (x = CDR(x); x != R_NilValue; x = CDR(x)) {
+	if (TAG(x) == R_NilValue) {
+	    if (i<10)
 		sprintf(buf,"..%d",i);
 	    else
 		sprintf(buf,".%d",i);
 	    TAG(x)=install(buf);
-
 	    i++;
 	}
     }
@@ -95,7 +94,7 @@ SEXP do_checkbounds(SEXP call, SEXP op, SEXP args, SEXP rho)
     int flag;
     checkArity(op,args);
     flag = asLogical(CAR(args));
-    if(flag == NA_LOGICAL)
+    if (flag == NA_LOGICAL)
 	errorcall(call, "invalid argument\n");
     R_BoundChecking = flag;
     R_Visible = 0;
@@ -103,101 +102,91 @@ SEXP do_checkbounds(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/* "EnlargeVector" takes a vector or list "x" and changes its length to */
-/* "nnew".  This makes it possible to assign values "past the end" of a */
-/* vector or list although, unlike S, we only extend as much as is */
-/* necessary. */
+/* "EnlargeVector" takes a vector "x" and changes its length to */
+/* "newlen".  This makes it possible to assign values "past the */
+/* end" of the vector or list although, unlike S, we only extend */
+/* as much as is necessary. */
 
-static SEXP EnlargeVector(SEXP x, int nnew)
+static SEXP EnlargeVector(SEXP x, int newlen)
 {
-    int i, n;
-    SEXP newx, ap, alist, nap, newalist;
+    int i, len;
+    SEXP blank, newx, names, newnames;
 
-    if(R_BoundChecking)
+    /* Sanity Checks */
+    if (R_BoundChecking)
 	warning("assignment outside vector/list limits\n");
+    if (!isVector(x))
+	error("attempt to enlarge non-vector\n");
 
-    if(isVector(x)) {
+    /* Enlarge the vector itself. */
+    len = length(x);
+    PROTECT(x);
+    PROTECT(newx = allocVector(TYPEOF(x), newlen));
 
-	/* We begin by enlarging the vector itself. */
-
-	n = length(x);
-	PROTECT(x);
-	PROTECT(newx = allocVector(TYPEOF(x), nnew));
-	switch(TYPEOF(x)) {
-	case LGLSXP:
-	case INTSXP:
-	    for(i=0 ; i<n ; i++)
-		INTEGER(newx)[i] = INTEGER(x)[i];
-	    for(i=n ; i<nnew ; i++)
-		INTEGER(newx)[i] = NA_INTEGER;
-	    break;
-	case REALSXP:
-	    for(i=0 ; i<n ; i++)
-		REAL(newx)[i] = REAL(x)[i];
-	    for(i=n ; i<nnew ; i++)
-		REAL(newx)[i] = NA_REAL;
-	    break;
-	case CPLXSXP:
-	    for(i=0 ; i<n ; i++)
-		COMPLEX(newx)[i] = COMPLEX(x)[i];
-	    for(i=n ; i<nnew ; i++) {
-		COMPLEX(newx)[i].r = NA_REAL;
-		COMPLEX(newx)[i].i = NA_REAL;
-	    }
-	    break;
-	case STRSXP:
-	    ap = mkChar("");
-	    for(i=0 ; i<n ; i++)
-		STRING(newx)[i] = STRING(x)[i];
-	    for(i=n ; i<nnew ; i++)
-		STRING(newx)[i] = ap;
-	    break;
-	case EXPRSXP:
-#ifdef NEWLIST
-	case VECSXP:
-#endif
-	    for(i=0 ; i<n ; i++)
-		VECTOR(newx)[i] = VECTOR(x)[i];
-	    for(i=n ; i<nnew ; i++)
-		VECTOR(newx)[i] = R_NilValue;
-	    break;
+    /* Copy the elements into place. */
+    switch(TYPEOF(x)) {
+    case LGLSXP:
+    case INTSXP:
+	for (i = 0; i < len; i++)
+	    INTEGER(newx)[i] = INTEGER(x)[i];
+	for (i = len; i < newlen; i++)
+	    INTEGER(newx)[i] = NA_INTEGER;
+	break;
+    case REALSXP:
+	for (i = 0; i < len; i++)
+	    REAL(newx)[i] = REAL(x)[i];
+	for (i = len; i < newlen; i++)
+	    REAL(newx)[i] = NA_REAL;
+	break;
+    case CPLXSXP:
+	for (i = 0; i < len; i++)
+	    COMPLEX(newx)[i] = COMPLEX(x)[i];
+	for (i = len; i < newlen; i++) {
+	    COMPLEX(newx)[i].r = NA_REAL;
+	    COMPLEX(newx)[i].i = NA_REAL;
 	}
-
-	/* After having enlarged the vector, we must ensure that */
-	/* The attribute list is correctly adjusted.   This means */
-	/* enlarging the "names" attribute (if any) and deleting */
-	/* any "dim" and "dimnames" attributes. */
-
-	ap = alist = ATTRIB(x);
-	PROTECT(nap = newalist = CONS(R_NilValue, R_NilValue));
-	while(ap != R_NilValue) {
-	    if(TAG(ap) == R_NamesSymbol) {
-		CDR(nap) = CONS(R_NilValue, R_NilValue);
-		nap = CDR(nap);
-		CAR(nap) = EnlargeVector(CAR(ap), nnew);
-		TAG(nap) = TAG(ap);
-	    }
-	    else if(TAG(ap) != R_DimSymbol && TAG(ap) != R_DimNamesSymbol) {
-		CDR(nap) = CONS(R_NilValue, R_NilValue);
-		nap = CDR(nap);
-		CAR(nap) = CAR(ap);
-		TAG(nap) = TAG(ap);
-	    }
-	    ap = CDR(ap);
-	}
-	ATTRIB(newx) = CDR(newalist);
-	OBJECT(newx) = OBJECT(x);
-	UNPROTECT(3);
-	return newx;
+	break;
+    case STRSXP:
+	blank = mkChar("");
+	for (i = 0; i < len; i++)
+	    STRING(newx)[i] = STRING(x)[i];
+	for (i = len; i < newlen; i++)
+	    STRING(newx)[i] = blank;
+	break;
+    case EXPRSXP:
+    case VECSXP:
+	for (i = 0; i < len; i++)
+	    VECTOR(newx)[i] = VECTOR(x)[i];
+	for (i = len; i < newlen; i++)
+	    VECTOR(newx)[i] = R_NilValue;
+	break;
     }
-    else error("attempt to enlarge non-vector\n");
-    return R_NilValue;
+
+    /* Adjust the attribute list. */
+    names = getAttrib(x, R_NamesSymbol);
+    if (!isNull(names)) {
+	PROTECT(newnames = allocVector(STRSXP, newlen));
+	blank = mkChar("");
+	for (i = 0; i < len; i++)
+	    STRING(newnames)[i] = STRING(names)[i];
+	for (i = len; i < newlen; i++)
+	    STRING(newnames)[i] = blank;
+	setAttrib(newx, R_NamesSymbol, newnames);
+	UNPROTECT(1);
+    }
+    copyMostAttrib(x, newx);
+    UNPROTECT(2);
+    return newx;
 }
 
 
-static void SubassignTypeFix(SEXP *x, SEXP *y, int which, int stretch)
+static void SubassignTypeFix(SEXP *x, SEXP *y,
+			     int which, int stretch, int level)
 {
-    switch(which) {
+    switch (which) {
+
+    case 1900:  /* vector     <- null       */
+    case 2000:  /* expression <- null       */
 
     case 1010:	/* logical    <- logical    */
     case 1310:	/* integer    <- logical    */
@@ -215,60 +204,71 @@ static void SubassignTypeFix(SEXP *x, SEXP *y, int which, int stretch)
 
 	break;
 
-    case 1013:	/* logical   <- integer	  */
+    case 1013:	/* logical    <- integer    */
 
 	*x = coerceVector(*x, INTSXP);
 	break;
 
-    case 1014:	/* logical   <- real	  */
-    case 1314:	/* integer   <- real	  */
+    case 1014:	/* logical    <- real	    */
+    case 1314:	/* integer    <- real	    */
 
 	*x = coerceVector(*x, REALSXP);
 	break;
 
-    case 1015:	/* logical   <- complex	  */
-    case 1315:	/* integer   <- complex	  */
-    case 1415:	/* real	     <- complex	  */
+    case 1015:	/* logical    <- complex    */
+    case 1315:	/* integer    <- complex    */
+    case 1415:	/* real	      <- complex    */
 
 	*x = coerceVector(*x, CPLXSXP);
 	break;
 
-    case 1610:	/* character <- logical	  */
-    case 1613:	/* character <- integer	  */
-    case 1614:	/* character <- real	  */
-    case 1615:	/* character <- complex	  */
+    case 1610:	/* character  <- logical    */
+    case 1613:	/* character  <- integer    */
+    case 1614:	/* character  <- real	    */
+    case 1615:	/* character  <- complex    */
 
 	*y = coerceVector(*y, STRSXP);
 	break;
 
-    case 1016:	/* logical   <- character */
-    case 1316:	/* integer   <- character */
-    case 1416:	/* real	     <- character */
-    case 1516:	/* complex   <- character */
+    case 1016:	/* logical    <- character  */
+    case 1316:	/* integer    <- character  */
+    case 1416:	/* real	      <- character  */
+    case 1516:	/* complex    <- character  */
 
 	*x = coerceVector(*x, STRSXP);
 	break;
 
-    case 1910:  /* logical    <- vector    */
-    case 1913:  /* integer    <- vector    */
-    case 1914:  /* real       <- vector    */
-    case 1915:  /* complex    <- vector    */
-    case 1916:  /* character  <- vector    */
+    case 1910:  /* vector     <- logical    */
+    case 1913:  /* vector     <- integer    */
+    case 1914:  /* vector     <- real       */
+    case 1915:  /* vector     <- complex    */
+    case 1916:  /* vector     <- character  */
 
-	*x = coerceVector(*x, VECSXP);
+	if (level == 1) {
+	    /* Coerce the RHS into a list */
+	    *y = coerceVector(*y, VECSXP);
+	}
+	else {
+	    /* Wrap the RHS in a list */
+	    SEXP tmp = allocVector(VECSXP, 1);
+	    VECTOR(tmp)[0] = *y;
+	    *y = tmp;
+	}
 	break;
 
-    case 2001:	/* expression <- symbol	   */
-    case 2006:	/* expression <- language  */
-    case 2010:	/* expression <- logical   */
-    case 2013:	/* expression <- integer   */
-    case 2014:	/* expression <- real	   */
-    case 2015:	/* expression <- complex   */
-    case 2016:	/* expression <- character */
-    case 2019:  /* expression <- vector    */
+    case 2001:	/* expression <- symbol	    */
+    case 2006:	/* expression <- language   */
+    case 2010:	/* expression <- logical    */
+    case 2013:	/* expression <- integer    */
+    case 2014:	/* expression <- real	    */
+    case 2015:	/* expression <- complex    */
+    case 2016:	/* expression <- character  */
+    case 2019:  /* expression <- vector     */
 
-	/* Note : no coercion is needed here, */
-	/* we just insert the rhs into the lhs. */
+	/* Note : No coercion is needed here. */
+	/* We just insert the RHS into the LHS. */
+	/* FIXME : is this true or should it be */
+	/* just like the "vector" case. */
 	break;
 
     default:
@@ -276,18 +276,65 @@ static void SubassignTypeFix(SEXP *x, SEXP *y, int which, int stretch)
 
     }
 
-    if(stretch)
+    if (stretch)
 	*x = EnlargeVector(*x, stretch);
 }
 
+static SEXP DeleteListElements(SEXP x, SEXP which)
+{
+    SEXP include, xnew, xnames, xnewnames;
+    int i, ii, len, newlen, lenw;
+    len = length(x);
+    lenw = length(which);
+    /* calculate the length of the result */
+    PROTECT(include = allocVector(INTSXP, len));
+    for (i = 0; i < len; i++)
+	INTEGER(include)[i] = 1;
+    for (i = 0; i < lenw; i++) {
+	ii = INTEGER(which)[i];
+	if (0 < ii  && ii <= len)
+	    INTEGER(include)[ii - 1] = 0;
+    }
+    ii = 0;
+    for (i = 0; i < len; i++)
+	ii += INTEGER(include)[i];
+    if (ii == len) {
+	UNPROTECT(1);
+	return x;
+    }
+    PROTECT(xnew = allocVector(VECSXP, ii));
+    ii = 0;
+    for (i = 0; i < len; i++) {
+	if (INTEGER(include)[i] == 1) {
+	    VECTOR(xnew)[ii] = VECTOR(x)[i];
+	    ii++;
+	}
+    }
+    xnames = getAttrib(x, R_NamesSymbol);
+    if (xnames != R_NilValue) {
+	PROTECT(xnewnames = allocVector(STRSXP, ii));
+	ii = 0;
+	for (i = 0; i < len; i++) {
+	    if (INTEGER(include)[i] == 1) {
+		STRING(xnewnames)[ii] = STRING(xnames)[i];
+		ii++;
+	    }
+	}
+	setAttrib(xnew, R_NamesSymbol, xnewnames);
+	UNPROTECT(1);
+    }
+    copyMostAttrib(x, xnew);
+    UNPROTECT(2);
+    return xnew;
+}
 
 static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 {
     SEXP dim, index;
-    int i, ii, iy, n, ny, stretch, which;
+    int i, ii, iy, n, ns, nx, ny, stretch, which;
     double ry;
 
-    if(isNull(x) && isNull(y)) {
+    if (isNull(x) && isNull(y)) {
 	return R_NilValue;
     }
 
@@ -296,8 +343,8 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
     dim = getAttrib(x, R_DimSymbol);
     if (isMatrix(s) && isArray(x) &&
-	(isInteger(s) || isReal(s)) &&
-	ncols(s) == length(dim)) {
+	    (isInteger(s) || isReal(s)) &&
+	    ncols(s) == length(dim)) {
 	s = mat2indsub(dim, s);
     }
     PROTECT(s);
@@ -312,29 +359,32 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* been coerced into a form which can */
     /* accept elements from the RHS. */
 
-    SubassignTypeFix(&x, &y, which, stretch);
+    SubassignTypeFix(&x, &y, which, stretch, 1);
     ny = length(y);
+    nx = length(x);
 
-    if (n > 0 && ny == 0)
-	errorcall(call, "nothing to replace with\n");
-
-    if (n > 0 && n % ny)
-	warning("number of items to replace is not a multiple of replacement length\n");
+    if ((TYPEOF(x) != VECSXP && TYPEOF(x) != EXPRSXP) || y != R_NilValue) {
+	if (n > 0 && ny == 0)
+	    errorcall(call, "nothing to replace with\n");
+	if (n > 0 && n % ny)
+	    warning("number of items to replace is not a multiple of replacement length\n");
+    }
 
     PROTECT(x);
 
-    /* Nasty bug fixed here.  When array elements */
-    /* are being permuted the rhs must be duplicated */
-    /* or the elements get trashed. */
+    /* When array elements are being permuted the RHS */
+    /* must be duplicated or the elements get trashed. */
+    /* FIXME : this should be a shallow copy for list */
+    /* objects.  A full duplication is wasteful. */
 
-    if (x == y) PROTECT(y = duplicate(y));
-    else PROTECT(y);
+    if (x == y)
+	PROTECT(y = duplicate(y));
+    else
+	PROTECT(y);
 
-    /* Note that we are now committed. */
-    /* Since we are mutating existing */
-    /* objects any changes we make now */
-    /* are (likely to be) permanent. */
-    /* Beware! */
+    /* Note that we are now committed.  Since we are mutating */
+    /* existing objects any changes we make now are (likely */
+    /* to be) permanent.  Beware! */
 
     switch(which) {
 
@@ -343,9 +393,9 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     case 1013:	/* logical   <- integer	  */
     case 1313:	/* integer   <- integer	  */
 
-	for (i=0; i<n; i++) {
+	for (i = 0; i < n; i++) {
 	    ii = INTEGER(index)[i];
-	    if(ii == NA_INTEGER) continue;
+	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
 	    INTEGER(x)[ii] = INTEGER(y)[i % ny];
 	}
@@ -354,12 +404,12 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     case 1410:	/* real	     <- logical	  */
     case 1413:	/* real	     <- integer	  */
 
-	for (i=0; i<n; i++) {
+	for (i = 0; i < n; i++) {
 	    ii = INTEGER(index)[i];
-	    if(ii == NA_INTEGER) continue;
+	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
 	    iy = INTEGER(y)[i % ny];
-	    if(iy == NA_INTEGER)
+	    if (iy == NA_INTEGER)
 		REAL(x)[ii] = NA_REAL;
 	    else
 		REAL(x)[ii] = iy;
@@ -370,9 +420,9 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     case 1314:	/* integer   <- real	  */
     case 1414:	/* real	     <- real	  */
 
-	for (i=0; i<n; i++) {
+	for (i = 0; i < n; i++) {
 	    ii = INTEGER(index)[i];
-	    if(ii == NA_INTEGER) continue;
+	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
 	    REAL(x)[ii] = REAL(y)[i % ny];
 	}
@@ -381,12 +431,12 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     case 1510:	/* complex   <- logical	  */
     case 1513:	/* complex   <- integer	  */
 
-	for (i=0; i<n; i++) {
+	for (i = 0; i < n; i++) {
 	    ii = INTEGER(index)[i];
-	    if(ii == NA_INTEGER) continue;
+	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
 	    iy = INTEGER(y)[i % ny];
-	    if(iy == NA_INTEGER) {
+	    if (iy == NA_INTEGER) {
 		COMPLEX(x)[ii].r = NA_REAL;
 		COMPLEX(x)[ii].i = NA_REAL;
 	    }
@@ -399,12 +449,12 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
     case 1514:	/* complex   <- real	  */
 
-	for (i=0; i<n; i++) {
+	for (i = 0; i < n; i++) {
 	    ii = INTEGER(index)[i];
-	    if(ii == NA_INTEGER) continue;
+	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
 	    ry = REAL(y)[i % ny];
-	    if(ISNA(ry)) {
+	    if (ISNA(ry)) {
 		COMPLEX(x)[ii].r = NA_REAL;
 		COMPLEX(x)[ii].i = NA_REAL;
 	    }
@@ -420,9 +470,9 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     case 1415:	/* real	     <- complex	  */
     case 1515:	/* complex   <- complex	  */
 
-	for (i=0; i<n; i++) {
+	for (i = 0; i < n; i++) {
 	    ii = INTEGER(index)[i];
-	    if(ii == NA_INTEGER) continue;
+	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
 	    COMPLEX(x)[ii] = COMPLEX(y)[i % ny];
 	}
@@ -438,7 +488,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     case 1416:	/* real	     <- character */
     case 1516:	/* complex   <- character */
 
-	for (i=0; i<n; i++) {
+	for (i = 0; i < n; i++) {
 	    ii = INTEGER(index)[i];
 	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
@@ -446,13 +496,21 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	}
 	break;
 
+    case 1019:  /* vector     <- logical   */
+    case 1319:  /* vector     <- integer   */
+    case 1419:  /* vector     <- real      */
+    case 1519:  /* vector     <- complex   */
+    case 1619:  /* vector     <- character */
+
     case 1910:  /* vector     <- logical    */  
     case 1913:  /* vector     <- integer    */  
     case 1914:  /* vector     <- real       */  
     case 1915:  /* vector     <- complex    */  
     case 1916:  /* vector     <- character  */
 
-	for (i=0 ; i<n ; i++) {
+    case 1919:  /* vector     <- vector     */
+
+	for (i = 0; i < n; i++) {
 	    ii = INTEGER(index)[i];
 	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
@@ -469,14 +527,55 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     case 2016:	/* expression <- character  */
     case 2020:	/* expression <- expression */
 
-	for (i=0; i<n; i++) {
+	for (i = 0; i < n; i++) {
 	    ii = INTEGER(index)[i];
-	    if(ii == NA_INTEGER) continue;
+	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
 	    VECTOR(x)[ii] = VECTOR(y)[i % ny];
 	}
 	break;
 
+    case 1900:  /* vector     <- null       */
+    case 2000:  /* expression <- null       */
+
+	x = DeleteListElements(x, index);
+	UNPROTECT(4);
+	return x;
+    }
+    /* Check for additional named elements. */
+    /* Note we are using a horrible hack in makeSubscript */
+    /* Which passes the additional names back in the attribute */
+    /* slot of the generated subscript vector.  (Shudder!) */
+    if (ATTRIB(index) != R_NilValue) {
+	SEXP newnames = ATTRIB(index);
+	SEXP oldnames = getAttrib(x, R_NamesSymbol);
+	if (oldnames != R_NilValue) {
+	    for (i = 0; i < n; i++) {
+		if (STRING(newnames)[i] != R_NilValue) {
+		    ii = INTEGER(index)[i];
+		    if (ii == NA_INTEGER) continue;
+		    ii = ii - 1;
+		    STRING(oldnames)[ii] = STRING(newnames)[i];
+		}
+	    }
+	}
+	else {
+	    SEXP blank;
+	    PROTECT(oldnames = allocVector(STRSXP, nx));
+	    blank = mkChar("");
+	    for (i = 0; i < nx; i++)
+		STRING(oldnames)[i] = blank;
+	    for (i = 0; i < n; i++) {
+		if (STRING(newnames)[i] != R_NilValue) {
+		    ii = INTEGER(index)[i];
+		    if (ii == NA_INTEGER) continue;
+		    ii = ii - 1;
+		    STRING(oldnames)[ii] = STRING(newnames)[i];
+		}
+	    }
+	    setAttrib(x, R_NamesSymbol, oldnames);
+	    UNPROTECT(1);
+	}	    
     }
     UNPROTECT(4);
     return x;
@@ -505,7 +604,7 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     ncs = LENGTH(sc);
 
     /* <TSL> 21Oct97*/
-    if (length(y)==0)
+    if (length(y) == 0)
 	error("Replacement length is zero\n");
     /* </TSL>  */
 
@@ -514,25 +613,26 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
     which = 100 * TYPEOF(x) + TYPEOF(y);
 
-    SubassignTypeFix(&x, &y, which, 0);
+    SubassignTypeFix(&x, &y, which, 0, 1);
 
     PROTECT(x);
 
-    /* Nasty bug fixed here.  When array elements */
-    /* are being permuted the rhs must be duplicated */
-    /* or the elements get trashed. */
+    /* When array elements are being permuted the RHS */
+    /* must be duplicated or the elements get trashed. */
+    /* FIXME : this should be a shallow copy for list */
+    /* objects.  A full duplication is wasteful. */
 
-    if (x == y) PROTECT(y = duplicate(y));
-    else PROTECT(y);
+    if (x == y)
+	PROTECT(y = duplicate(y));
+    else
+	PROTECT(y);
 
-    /* Note that we are now committed. */
-    /* Since we are mutating existing */
-    /* objects any changes we make now */
-    /* are (likely to be) permanent. */
+    /* Note that we are now committed.  Since we are mutating */
+    /* existing objects any changes we make now are permanent. */
     /* Beware! */
 
     k = 0;
-    switch(which) {
+    switch (which) {
 
     case 1010:	/* logical   <- logical	  */
     case 1310:	/* integer   <- logical	  */
@@ -541,11 +641,11 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
 	for (j = 0; j < ncs; j++) {
 	    jj = INTEGER(sc)[j];
-	    if(jj == NA_INTEGER) continue;
+	    if (jj == NA_INTEGER) continue;
 	    jj = jj - 1;
 	    for (i = 0; i < nrs; i++) {
 		ii = INTEGER(sr)[i];
-		if(ii == NA_INTEGER) continue;
+		if (ii == NA_INTEGER) continue;
 		ii = ii - 1;
 		ij = ii + jj * nr;
 		INTEGER(x)[ij] = INTEGER(y)[k];
@@ -559,15 +659,15 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
 	for (j = 0; j < ncs; j++) {
 	    jj = INTEGER(sc)[j];
-	    if(jj == NA_INTEGER) continue;
+	    if (jj == NA_INTEGER) continue;
 	    jj = jj - 1;
 	    for (i = 0; i < nrs; i++) {
 		ii = INTEGER(sr)[i];
-		if(ii == NA_INTEGER) continue;
+		if (ii == NA_INTEGER) continue;
 		ii = ii - 1;
 		ij = ii + jj * nr;
 		iy = INTEGER(y)[k];
-		if(iy == NA_INTEGER)
+		if (iy == NA_INTEGER)
 		    REAL(x)[ij] = NA_REAL;
 		else
 		    REAL(x)[ij] = iy;
@@ -582,11 +682,11 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
 	for (j = 0; j < ncs; j++) {
 	    jj = INTEGER(sc)[j];
-	    if(jj == NA_INTEGER) continue;
+	    if (jj == NA_INTEGER) continue;
 	    jj = jj - 1;
 	    for (i = 0; i < nrs; i++) {
 		ii = INTEGER(sr)[i];
-		if(ii == NA_INTEGER) continue;
+		if (ii == NA_INTEGER) continue;
 		ii = ii - 1;
 		ij = ii + jj * nr;
 		REAL(x)[ij] = REAL(y)[k];
@@ -598,17 +698,17 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     case 1510:	/* complex   <- logical	  */
     case 1513:	/* complex   <- integer	  */
 
-	for (j=0; j<ncs ; j++) {
+	for (j = 0; j < ncs; j++) {
 	    jj = INTEGER(sc)[j];
-	    if(jj == NA_INTEGER) continue;
+	    if (jj == NA_INTEGER) continue;
 	    jj = jj - 1;
-	    for (i=0; i<nrs ; i++) {
+	    for (i = 0; i < nrs; i++) {
 		ii = INTEGER(sr)[i];
-		if(ii == NA_INTEGER) continue;
+		if (ii == NA_INTEGER) continue;
 		ii = ii - 1;
 		ij = ii + jj * nr;
 		iy = INTEGER(y)[k];
-		if(iy == NA_INTEGER) {
+		if (iy == NA_INTEGER) {
 		    COMPLEX(x)[ij].r = NA_REAL;
 		    COMPLEX(x)[ij].i = NA_REAL;
 		}
@@ -623,17 +723,17 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
     case 1514:	/* complex   <- real	  */
 
-	for (j=0; j<ncs ; j++) {
+	for (j = 0; j < ncs; j++) {
 	    jj = INTEGER(sc)[j];
-	    if(jj == NA_INTEGER) continue;
+	    if (jj == NA_INTEGER) continue;
 	    jj = jj - 1;
 	    for (i = 0; i < nrs; i++) {
 		ii = INTEGER(sr)[i];
-		if(ii == NA_INTEGER) continue;
+		if (ii == NA_INTEGER) continue;
 		ii = ii - 1;
 		ij = ii + jj * nr;
 		ry = REAL(y)[k];
-		if(ISNA(ry)) {
+		if (ISNA(ry)) {
 		    COMPLEX(x)[ij].r = NA_REAL;
 		    COMPLEX(x)[ij].i = NA_REAL;
 		}
@@ -653,11 +753,11 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
 	for (j = 0; j < ncs; j++) {
 	    jj = INTEGER(sc)[j];
-	    if(jj == NA_INTEGER) continue;
+	    if (jj == NA_INTEGER) continue;
 	    jj = jj - 1;
 	    for (i = 0; i < nrs; i++) {
 		ii = INTEGER(sr)[i];
-		if(ii == NA_INTEGER) continue;
+		if (ii == NA_INTEGER) continue;
 		ii = ii - 1;
 		ij = ii + jj * nr;
 		COMPLEX(x)[ij] = COMPLEX(y)[k];
@@ -678,11 +778,11 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
 	for (j = 0; j < ncs; j++) {
 	    jj = INTEGER(sc)[j];
-	    if(jj == NA_INTEGER) continue;
+	    if (jj == NA_INTEGER) continue;
 	    jj = jj - 1;
 	    for (i = 0; i < nrs; i++) {
 		ii = INTEGER(sr)[i];
-		if(ii == NA_INTEGER) continue;
+		if (ii == NA_INTEGER) continue;
 		ii = ii - 1;
 		ij = ii + jj * nr;
 		STRING(x)[ij] = STRING(y)[k];
@@ -745,26 +845,32 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
     which = 100 * TYPEOF(x) + TYPEOF(y);
 
-    /* Here we make sure that the LHS has */
-    /* been coerced into a form which can */
-    /* accept elements from the RHS. */
+    /* Here we make sure that the LHS has been coerced into */
+    /* a form which can accept elements from the RHS. */
 
-    SubassignTypeFix(&x, &y, which, 0);
+    SubassignTypeFix(&x, &y, which, 0, 1);
 
     PROTECT(x);
 
-    /* Nasty bug fixed here.  When array elements */
-    /* are being permuted the rhs must be duplicated */
-    /* or the elements get trashed. */
+    /* When array elements are being permuted the RHS */
+    /* must be duplicated or the elements get trashed. */
+    /* FIXME : this should be a shallow copy for list */
+    /* objects.  A full duplication is wasteful. */
 
-    if (x == y) PROTECT(y = duplicate(y));
-    else PROTECT(y);
+    if (x == y)
+	PROTECT(y = duplicate(y));
+    else
+	PROTECT(y);
+
+    /* Note that we are now committed.  Since we are mutating */
+    /* existing objects any changes we make now are permanent. */
+    /* Beware! */
 
     for (i = 0; i < n; i++) {
 	ii = 0;
 	for (j = 0; j < k; j++) {
 	    jj = subs[j][index[j]];
-	    if(jj == NA_INTEGER) goto next_i;
+	    if (jj == NA_INTEGER) goto next_i;
 	    ii += (jj - 1) * offset[j];
 	}
 
@@ -782,7 +888,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	case 1413:	/* real	     <- integer	  */
 
 	    iy = INTEGER(y)[i % ny];
-	    if(iy == NA_INTEGER)
+	    if (iy == NA_INTEGER)
 		REAL(x)[ii] = NA_REAL;
 	    else
 		REAL(x)[ii] = iy;
@@ -799,7 +905,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	case 1513:	/* complex   <- integer	  */
 
 	    iy = INTEGER(y)[i % ny];
-	    if(iy == NA_INTEGER) {
+	    if (iy == NA_INTEGER) {
 		COMPLEX(x)[ii].r = NA_REAL;
 		COMPLEX(x)[ii].i = NA_REAL;
 	    }
@@ -812,7 +918,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	case 1514:	/* complex   <- real	  */
 
 	    ry = REAL(y)[i % ny];
-	    if(ISNA(ry)) {
+	    if (ISNA(ry)) {
 		COMPLEX(x)[ii].r = NA_REAL;
 		COMPLEX(x)[ii].i = NA_REAL;
 	    }
@@ -873,11 +979,11 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* The shallow copy here is so that */
     /* permuting a list's elements will work */
 
-    if(isList(y) || isFrame(y) || isLanguage(y) ) {
+    if (isList(y) || isFrame(y) || isLanguage(y)) {
 	PROTECT(y);
 	ny = NAMED(y);
 	yi = allocList(length(y));
-	for(yp=yi ; yp!=R_NilValue ; yp=CDR(yp)) {
+	for (yp = yi; yp != R_NilValue; yp = CDR(yp)) {
 	    CAR(yp) = CAR(y);
 	    TAG(yp) = TAG(y);
 	    NAMED(CAR(yp)) = ny | NAMED(CAR(y));
@@ -896,23 +1002,23 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     if (n > 0 && n % ny)
 	error("no of items to replace is not a multiple of replacement length\n");
 
-    if(stretch) {
+    if (stretch) {
 	yi = allocList(stretch - nx);
 	PROTECT(x = listAppend(x, yi));
 	nx = stretch;
     }
     else PROTECT(x);
 
-    for (i=0; i<n; i++) {
+    for (i = 0; i < n; i++) {
 	ii = INTEGER(index)[i];
-	if(ii == NA_INTEGER) continue;
+	if (ii == NA_INTEGER) continue;
 	ii = ii - 1;
 	yi = nthcdr(y, i % ny);
 	xi = nthcdr(x, ii % nx);
-	if(NAMED(y) || NAMED(CAR(yi))) CAR(yi) = duplicate(CAR(yi));
+	if (NAMED(y) || NAMED(CAR(yi))) CAR(yi) = duplicate(CAR(yi));
 	else NAMED(CAR(yi)) = 1;
 	CAR(xi) = CAR(yi);
-	if(TAG(yi) != R_NilValue)
+	if (TAG(yi) != R_NilValue)
 	    TAG(xi) = TAG(yi);
     }
     UNPROTECT(3);
@@ -931,18 +1037,18 @@ static SEXP listRemove(SEXP x, SEXP s)
     PROTECT(s = makeSubscript(x, s, &stretch));
     ns = length(s);
     ind = (int*)R_alloc(nx, sizeof(int));
-    for(i=0 ; i<nx ; i++)
+    for (i = 0; i < nx; i++)
 	ind[i] = 1;
-    for(i=0 ; i<ns ; i++) {
+    for (i = 0; i < ns; i++) {
 	ii = INTEGER(s)[i];
-	if(ii != NA_INTEGER)
+	if (ii != NA_INTEGER)
 	    ind[ii - 1] = 0;
     }
     PROTECT(a = CONS(R_NilValue, R_NilValue));
     px = x;
     pa = a;
-    for(i=0 ; i<nx ; i++) {
-	if(ind[i]) {
+    for (i = 0; i < nx; i++) {
+	if (ind[i]) {
 	    CDR(pa) = px;
 	    px = CDR(px);
 	    pa = CDR(pa);
@@ -970,7 +1076,7 @@ SEXP listAssign1(SEXP call, SEXP x, SEXP subs, SEXP y)
     case 0:
 	break;
     case 1:
-	if(y == R_NilValue)
+	if (y == R_NilValue)
 	    x = listRemove(x, CAR(subs));
 	else
 	    x = SimpleListAssign(call, x, subs, y);
@@ -981,13 +1087,13 @@ SEXP listAssign1(SEXP call, SEXP x, SEXP subs, SEXP y)
 	    error("incorrect number of subscripts\n");
 
 	PROTECT(ax = allocArray(STRSXP, dims));
-	for(px=x, i=0 ; px!=R_NilValue ; px = CDR(px))
+	for (px = x, i = 0; px != R_NilValue; px = CDR(px))
 	    STRING(ax)[i++] = CAR(px);
 	setAttrib(ax, R_DimNamesSymbol, getAttrib(x, R_DimNamesSymbol));
-	if(isList(y)) {
+	if (isList(y)) {
 	    ny = length(y);
 	    PROTECT(ay = allocVector(STRSXP, ny));
-	    for(py=y, i=0 ; py!=R_NilValue ; py = CDR(py))
+	    for (py = y, i = 0; py != R_NilValue; py = CDR(py))
 		STRING(ay)[i++] = CAR(py);
 	}
 	else {
@@ -995,9 +1101,9 @@ SEXP listAssign1(SEXP call, SEXP x, SEXP subs, SEXP y)
 	    PROTECT(ay = allocVector(STRSXP, 1));
 	    STRING(ay)[0] = y;
 	}
-	if(nsubs == 2) ax = MatrixAssign(call, ax, subs, ay);
+	if (nsubs == 2) ax = MatrixAssign(call, ax, subs, ay);
 	else ax = ArrayAssign(call, ax, subs, ay);
-	for(px=x, i=0 ; px!=R_NilValue ; px = CDR(px))
+	for (px = x, i = 0; px != R_NilValue; px = CDR(px))
 	    CAR(px) = duplicate(STRING(ax)[i++]);
 	UNPROTECT(2);
 	break;
@@ -1016,7 +1122,7 @@ static SEXP EvalSubassignArgs(SEXP el, SEXP rho)
 
     PROTECT(ans = tail = CONS(R_NilValue, R_NilValue));
 
-    while(CDR(el) != R_NilValue) {
+    while (CDR(el) != R_NilValue) {
 
 	/* If we have a ... symbol, we look to see what it is bound to. */ 
 	/* If its binding is Null (i.e. zero length) we just ignore it */
@@ -1028,8 +1134,8 @@ static SEXP EvalSubassignArgs(SEXP el, SEXP rho)
 	if (CAR(el) == R_DotsSymbol) {
 	    h = findVar(CAR(el), rho);
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
-		while(h != R_NilValue) {
-		    if(CAR(h) == R_MissingArg)
+		while (h != R_NilValue) {
+		    if (CAR(h) == R_MissingArg)
 			CDR(tail) = CONS(R_MissingArg, R_NilValue);
 		    else
 			CDR(tail) = CONS(eval(CAR(h), rho), R_NilValue);
@@ -1038,7 +1144,7 @@ static SEXP EvalSubassignArgs(SEXP el, SEXP rho)
 		    h = CDR(h);
 		}
 	    }
-	    else if(h != R_MissingArg)
+	    else if (h != R_MissingArg)
 		error("... used in an incorrect context\n");
 	}
 	else if (CAR(el) == R_MissingArg) {
@@ -1073,7 +1179,7 @@ static void SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
     SEXP p;
     *x = CAR(args);
     *s = p = CDR(args);
-    while(CDDR(p) != R_NilValue)
+    while (CDDR(p) != R_NilValue)
 	p = CDR(p);
     *y = CADR(p);
     CDR(p) = R_NilValue;
@@ -1087,10 +1193,13 @@ static void SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
 /* and the remainder of args have not.  If this was called directly */
 /* the CAR(args) and the last arg won't have been. */
 
+SEXP OldToNewList(SEXP);
+SEXP NewToOldList(SEXP);
+
 SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP subs, x, y;
-    int nsubs;
+    int nsubs, oldtype;
     RCNTXT cntxt;
 
     /* This code performs an internal version of method dispatch. */
@@ -1099,11 +1208,10 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     gcall = call;
     CAR(args) = eval(CAR(args), rho);
-    if(isObject(CAR(args)) && CAR(call) != install("[<-.default")) {
-	/*SetArgsforUseMethod(args); */
+    if (isObject(CAR(args)) && CAR(call) != install("[<-.default")) {
 	CDR(args) = promiseArgs(CDR(args), rho);
 	begincontext(&cntxt,CTXT_RETURN, call, rho, rho, args);
-	if(usemethod("[<-", CAR(args), call, args, rho, &y)) {
+	if (usemethod("[<-", CAR(args), call, args, rho, &y)) {
 	    endcontext(&cntxt);
 	    return y;
 	}
@@ -1111,26 +1219,34 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     PROTECT(CDR(args) = EvalSubassignArgs(CDR(args), rho));
 
-    // If there are multiple references to an object we must */
-    // duplicate it so that only the local version is mutated. */
+    /* If there are multiple references to an object we must */
+    /* duplicate it so that only the local version is mutated. */
+    /* This will duplicate more often than necessary, but saves */
+    /* over always duplicating. */
 
-    if (NAMED(CAR(args)) == 2) {
+    if (NAMED(CAR(args)) == 2)
 	x = CAR(args) = duplicate(CAR(args));
-    }
+
     SubAssignArgs(args, &x, &subs, &y);
-
-    /* We can't modify an object which is named in another environment. */
-    /* NAMED(x)==2 indicates that x was obtained through a promise */
-    /* evaluation and hence it may be bound to a symbol elsewhere. */
-    /* This will duplicate more often than necessary, but saves over */
-    /* always duplicating.
-
     nsubs = length(subs);
-#ifdef NEWLIST
-    if (isVectorObject(x)) {
-#else
-    if (isVector(x)) {
-#endif
+
+    if (TYPEOF(x) == LISTSXP || TYPEOF(x) == LANGSXP) {
+	oldtype = TYPEOF(x);
+	PROTECT(x = OldToNewList(x));
+    }
+    else {
+	oldtype = 0;
+	PROTECT(x);
+    }
+
+    switch (TYPEOF(x)) {
+    case LGLSXP:
+    case INTSXP:
+    case REALSXP:
+    case CPLXSXP:
+    case STRSXP:
+    case EXPRSXP:
+    case VECSXP:
 	switch (nsubs) {
 	case 0:
 	    break;
@@ -1144,53 +1260,56 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    x = ArrayAssign(call, x, subs, y);
 	    break;
 	}
+	break;
+    default:
+	errorcall(call, "object is not subsetable\n");
+	break;
     }
-    else if(isList(x) || isLanguage(x)) {
-	x = listAssign1(call, x, subs, y);
+
+    if (oldtype == LANGSXP) {
+	x = NewToOldList(x);
+	TYPEOF(x) = LANGSXP;
     }
-    else errorcall(call, "object is not subsetable\n");
 
-    /* Note the setting of NAMED(x) to zero here. */
-    /* This means that the following assignment will */
-    /* not duplicate the value.  This works because */
-    /* at this point, x is guaranteed to have have */
-    /* at most one symbol bound to it.  It does mean */
-    /* that there will be multiple reference problems */
-    /* if "[<-" is used in a naked fashion. */
+    /* Note the setting of NAMED(x) to zero here.  This means */
+    /* that the following assignment will not duplicate the value. */
+    /* This works because at this point, x is guaranteed to have */
+    /* at most one symbol bound to it.  It does mean that there */
+    /* will be multiple reference problems if "[<-" is used */
+    /* in a naked fashion. */
 
-    UNPROTECT(1);
+    UNPROTECT(2);
     NAMED(x) = 0;
     return x;
 }
 
 
-/* The [[<- assignment, it should be fast. */
+/* The [[<- operator, it should be fast. */
 /* args[1] = object being subscripted */
 /* args[2] = list of subscripts */
 /* args[3] = replacement values */
 
 SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP dims, index, names, subs, x, y;
-    int i, ndims, nsubs, offset, which;
+    SEXP dims, index, names, newname, subs, x, y;
+    int i, ndims, nsubs, offset, stretch, which;
     RCNTXT cntxt;
 
     gcall = call;
     CAR(args) = eval(CAR(args), rho);
-    if(isObject(CAR(args)) && CAR(call) != install("[[<-.default") ) {
-	/*SetArgsforUseMethod(args);*/
+    if (isObject(CAR(args)) && CAR(call) != install("[[<-.default")) {
 	CDR(args) = promiseArgs(CDR(args), rho);
 	begincontext(&cntxt,CTXT_RETURN, call, rho, rho, args);
-	if(usemethod("[[<-", CAR(args), call, args, rho, &y)) {
+	if (usemethod("[[<-", CAR(args), call, args, rho, &y)) {
 	    endcontext(&cntxt);
 	    return y;
 	}
 	endcontext(&cntxt);
     }
-
     PROTECT(CDR(args) = EvalSubassignArgs(CDR(args), rho));
     SubAssignArgs(args, &x, &subs, &y);
-    if(isNull(x) && isNull(y)) {
+
+    if (isNull(x) && isNull(y)) {
 	UNPROTECT(1);
 	return R_NilValue;
     }
@@ -1201,13 +1320,22 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     ndims = length(dims);
     nsubs = length(subs);
 
+    stretch = 0;
     if (isVector(x)) {
-	if(!isExpression(x) && length(y) > 1)
+	if (
+#ifdef NEWLIST
+	    !isExpression(x) && !isVectorList(x) && length(y) > 1
+#else
+	    !isExpression(x) && length(y) > 1
+#endif
+	    )
 	    error("number of elements supplied larger than number of elements to replace\n");
 	if (nsubs == 1) {
-	    offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),0);
-	    if (offset < 0 || offset >= LENGTH(x))
+	    offset = OneIndex(x, CAR(subs), 0, &newname);
+	    if (offset < 0)
 		error("[[]] subscript out of bounds\n");
+	    if (offset >= LENGTH(x))
+		stretch = offset + 1;
 	}
 	else {
 	    if (ndims != nsubs)
@@ -1215,9 +1343,11 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(index = allocVector(INTSXP, ndims));
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
-		INTEGER(index)[i] = get1index(CAR(subs), isList(names) ? CAR(names) : R_NilValue,0);
+		INTEGER(index)[i] = get1index(CAR(subs), isList(names) ?
+					      CAR(names) : R_NilValue,0);
 		subs = CDR(subs);
-		if (INTEGER(index)[i] < 0 || INTEGER(index)[i] >= INTEGER(dims)[i])
+		if (INTEGER(index)[i] < 0 ||
+		    INTEGER(index)[i] >= INTEGER(dims)[i])
 		    error("[[]] subscript out of bounds\n");
 	    }
 	    offset = 0;
@@ -1228,7 +1358,8 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	which = 100 * TYPEOF(x) + TYPEOF(y);
 
-	SubassignTypeFix(&x, &y, which, 0);
+	SubassignTypeFix(&x, &y, which, stretch, 2);
+	PROTECT(x);
 
 	switch (which) {
 
@@ -1243,7 +1374,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1410:	/* real	     <- logical	  */
 	case 1413:	/* real	     <- integer	  */
 
-	    if(INTEGER(y)[0] == NA_INTEGER)
+	    if (INTEGER(y)[0] == NA_INTEGER)
 		REAL(x)[offset] = NA_REAL;
 	    else
 		REAL(x)[offset] = INTEGER(y)[0];
@@ -1259,7 +1390,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1510:	/* complex   <- logical	  */
 	case 1513:	/* complex   <- integer	  */
 
-	    if(INTEGER(y)[0] == NA_INTEGER) {
+	    if (INTEGER(y)[0] == NA_INTEGER) {
 		COMPLEX(x)[offset].r = NA_REAL;
 		COMPLEX(x)[offset].i = NA_REAL;
 	    }
@@ -1271,7 +1402,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	case 1514:	/* complex   <- real	  */
 
-	    if(ISNA(REAL(y)[0])) {
+	    if (ISNA(REAL(y)[0])) {
 		COMPLEX(x)[offset].r = NA_REAL;
 		COMPLEX(x)[offset].i = NA_REAL;
 	    }
@@ -1310,7 +1441,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1915:      /* vector     <- complex    */
 	case 1916:      /* vector     <- character  */
 
-	    VECTOR(x)[offset] = y;
+	    VECTOR(x)[offset] = VECTOR(y)[0];
 	    break;
 
 
@@ -1334,12 +1465,28 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	default:
 	    error("incompatible types in subset assignment\n");
 	}
+	/* If we stretched, we may have a new name. */
+	/* In this case we must create a names attribute */
+	/* (if it doesn't already exist) and set the new */
+	/* value in the names attribute. */	
+	if (stretch && newname != R_NilValue) {
+	    names = getAttrib(x, R_NamesSymbol);
+	    if (names == R_NilValue) {
+		PROTECT(names = allocVector(STRSXP, length(x)));
+		STRING(names)[offset] = newname;
+		setAttrib(x, R_NamesSymbol, names);
+		UNPROTECT(1);
+	    }
+	    else
+		STRING(names)[offset] = newname;
+	}
+	UNPROTECT(1);
     }
-    else if (isList(x) || isLanguage(x) ) {
-	if(NAMED(y)) y = duplicate(y);
+    else if (isList(x) || isLanguage(x)) {
+	if (NAMED(y)) y = duplicate(y);
 	PROTECT(y);
-	if(nsubs == 1) {
-	    if(isNull(y)) {
+	if (nsubs == 1) {
+	    if (isNull(y)) {
 		x = listRemove(x, CAR(subs));
 	    }
 	    else {
@@ -1356,7 +1503,8 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = 0; i < ndims; i++) {
 		INTEGER(index)[i] = get1index(CAR(subs), CAR(names),0);
 		subs = CDR(subs);
-		if (INTEGER(index)[i] < 0 || INTEGER(index)[i] >= INTEGER(dims)[i])
+		if (INTEGER(index)[i] < 0 ||
+		    INTEGER(index)[i] >= INTEGER(dims)[i])
 		    error("[[]] subscript out of bounds\n");
 	    }
 	    offset = 0;
@@ -1378,55 +1526,141 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, nlist, val, t;
-
     checkArity(op, args);
-
     gcall = call;
+
+    /* Note the RHS has alreaty been evaluated at this point */
+
     PROTECT(x = eval(CAR(args), env));
-
-    if (!isList(x) && !isLanguage(x))
-	error("$ used on non-list\n");
-
-    /* Note: rhs is already evaluated by evaluator */
     val = CADDR(args);
-    if(NAMED(val)) val = duplicate(val);
+    if (NAMED(val)) val = duplicate(val);
     PROTECT(val);
 
-    nlist = CADR(args);
-    if (isString(nlist))
-	nlist = install(CHAR(STRING(nlist)[0]));
-
-    if(TAG(x) == nlist ) {
-	if(val == R_NilValue) {
-	    ATTRIB(CDR(x)) = ATTRIB(x);
-	    OBJECT(CDR(x)) = OBJECT(x);
-	    NAMED(CDR(x)) = NAMED(x);
-	    x = CDR(x);
+    if (isList(x) || isLanguage(x)) {
+	nlist = CADR(args);
+	if (isString(nlist))
+	    nlist = install(CHAR(STRING(nlist)[0]));
+	if (TAG(x) == nlist) {
+	    if (val == R_NilValue) {
+		ATTRIB(CDR(x)) = ATTRIB(x);
+		OBJECT(CDR(x)) = OBJECT(x);
+		NAMED(CDR(x)) = NAMED(x);
+		x = CDR(x);
+	    }
+	    else
+		CAR(x) = val;
 	}
-	else
-	    CAR(x)= val;
+	else {
+	    for (t = x; t != R_NilValue; t = CDR(t))
+		if (TAG(CDR(t)) == nlist) {
+		    if (val == R_NilValue)
+			CDR(t) = CDDR(t);
+		    else
+			CAR(CDR(t)) = val;
+		    break;
+		}
+		else if (CDR(t) == R_NilValue && val != R_NilValue) {
+		    SETCDR(t, allocSExp(LISTSXP));
+		    TAG(CDR(t)) = nlist;
+		    CADR(t) = val;
+		    break;
+		}
+	}
+	if (x == R_NilValue && val != R_NilValue) {
+	    x = allocList(1);
+	    CAR(x) = val;
+	    TAG(x) = nlist;
+	}
     }
-    else {
-	for (t = x; t != R_NilValue; t = CDR(t))
-	    if (TAG(CDR(t)) == nlist) {
-		if( val == R_NilValue )
-		    CDR(t)=CDDR(t);
-		else
-		    CAR(CDR(t)) = val;
-		break;
+    else if 
+#ifdef NEWLIST
+	   (isNewList(x) || isExpression(x))
+#else
+	   (isExpression(x))
+#endif
+	{
+	    int i, imatch, nx;
+	    SEXP names = getAttrib(x, R_NamesSymbol);
+	    nx = length(x);
+	    nlist = CADR(args);
+	    if (isString(nlist))
+		nlist = STRING(nlist)[0];
+	    else
+		nlist = PRINTNAME(nlist);
+	    if (isNull(val)) {
+		/* If "val" is NULL, this is an element deletion */
+		/* if there is a match to "nlist" otherwise "x" */
+		/* is unchanged.  The attributes need adjustment. */
+		if (names != R_NilValue) {
+		    imatch = -1;
+		    for (i = 0; i < nx; i++)
+			if (NonNullStringMatch(STRING(names)[i], nlist)) {
+			    imatch = i;
+			    break;
+			}
+		    if (imatch >= 0) {
+			SEXP ans, ansnames;
+			int ii;
+			PROTECT(ans = allocVector(VECSXP, nx - 1));
+			PROTECT(ansnames = allocVector(STRSXP, nx - 1));
+			for (i = 0, ii = 0; i < nx; i++)
+			    if (i != imatch) {
+				VECTOR(ans)[ii] = VECTOR(x)[i];
+				STRING(ansnames)[ii] = STRING(names)[i];
+				ii++;
+			    }
+			setAttrib(ans, R_NamesSymbol, ansnames);
+			copyMostAttrib(x, ans);
+			UNPROTECT(2);
+			x = ans;
+		    } 
+		    /* else x is unchanged */
+		}
 	    }
-	    else if (CDR(t) == R_NilValue && val != R_NilValue) {
-		SETCDR(t, allocSExp(LISTSXP));
-		TAG(CDR(t)) = nlist;
-		CADR(t) = val;
-		break;
-	    }
-    }
-    if( x== R_NilValue && val != R_NilValue ) {
-	x=allocList(1);
-	CAR(x) = val;
-	TAG(x) = nlist;
-    }
+	    else {
+		/* If "val" is non-NULL, we are either replacing */
+		/* an existing list element or we are adding a new */
+		/* element. */
+		imatch = -1;
+		if (!isNull(names)) {
+		    for (i = 0; i < nx; i++)
+			if (NonNullStringMatch(STRING(names)[i], nlist)) {
+			    imatch = i;
+			    break;
+			}
+		}
+		if (imatch >= 0) {
+		    /* We are just replacing an element */
+		    VECTOR(x)[imatch] = val;
+		}
+		else {
+		    /* We are introducing a new element. */
+		    /* Enlarge the list, add the new element */
+		    /* and finally, adjust the attributes. */
+		    SEXP ans, ansnames;
+		    PROTECT(ans = allocVector(VECSXP, nx + 1));
+		    PROTECT(ansnames = allocVector(STRSXP, nx + 1));
+		    for (i = 0; i < nx; i++)
+			VECTOR(ans)[i] = VECTOR(x)[i];
+		    if (isNull(names)) {
+			SEXP blank = mkChar("");
+			for (i = 0; i < nx; i++)
+			    STRING(ansnames)[i] = blank;
+		    }
+		    else {
+			for (i = 0; i < nx; i++)
+			    STRING(ansnames)[i] = STRING(names)[i];
+		    }
+		    VECTOR(ans)[nx] = val;
+		    STRING(ansnames)[nx] = nlist;
+		    setAttrib(ans, R_NamesSymbol, ansnames);
+		    copyMostAttrib(x, ans);
+		    UNPROTECT(2);
+		    x = ans;
+		}
+	    } 
+	}
+    else error("$ used on non-list\n");
     UNPROTECT(2);
     NAMED(x) = 0;
     return x;

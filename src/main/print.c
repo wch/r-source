@@ -57,7 +57,6 @@ void PrintDefaults(SEXP rho)
 SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     FILE *fp;
-
     if(isNull(CAR(args))) {
 	if(R_Sinkfile) fclose(R_Sinkfile);
 	R_Sinkfile = NULL;
@@ -90,18 +89,14 @@ SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int quote, right;
     SEXP a, x, rowlab, collab, oldnames;
-
     checkArity(op,args);
-
     PrintDefaults(rho);
-
     a = args;
     x = CAR(a); a = CDR(a);
     rowlab = CAR(a); a = CDR(a);
     collab = CAR(a); a = CDR(a);
     quote = asInteger(CAR(a)); a = CDR(a);
     right = asInteger(CAR(a));
-
 #ifdef OLD
     PROTECT(oldnames = getAttrib(x, R_DimNamesSymbol));
     /* fix up the dimnames */
@@ -129,52 +124,50 @@ SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+/* .Internal(print.default(x, digits, quote, na.print, print.gap)) */
+/* Should now also dispatch to e.g., print.matrix(..) */
+/* The 'digits' must be "stored" here, since print.matrix */
+/* (aka prmatrix) does NOT accept a digits argument ... */
+
 SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-  /* .Internal(print.default(x, digits, quote, na.print, print.gap)) */
-  /*
-   * Should now also dispatch to e.g.,	print.matrix(..)
-   * The 'digits' must be "stored" here, since print.matrix (aka prmatrix)
-   * does NOT accept a digits argument...
-   *
-   */
-	SEXP x, naprint;
+    SEXP x, naprint;
+    checkArity(op, args);
+    PrintDefaults(rho);
 
-	checkArity(op, args);
+    x = CAR(args); args = CDR(args);
 
-	PrintDefaults(rho);
+    if(!isNull(CAR(args))) {
+	print_digits = asInteger(CAR(args));
+	if (print_digits == NA_INTEGER ||
+	    print_digits < 1 ||
+	    print_digits > 22)
+	        errorcall(call, "invalid digits parameter\n");
+    }
+    args = CDR(args);
 
-	x = CAR(args); args = CDR(args);
+    print_quote = asLogical(CAR(args));
+    if(print_quote == NA_LOGICAL)
+	errorcall(call, "invalid quote parameter\n");
+    args = CDR(args);
 
-	if(!isNull(CAR(args))) {
-		print_digits = asInteger(CAR(args));
-		if (print_digits == NA_INTEGER || print_digits < 1 || print_digits > 22)
-			errorcall(call, "invalid digits parameter\n");
-	}
-	args = CDR(args);
+    naprint = CAR(args);
+    if(!isNull(naprint))  {
+	if(!isString(naprint) || LENGTH(naprint) < 1)
+	    errorcall(call, "invalid na.print specification\n");
+	print_na_string = STRING(naprint)[0];
+	print_na_width = strlen(CHAR(print_na_string));
+    }
+    args = CDR(args);
 
-	print_quote = asLogical(CAR(args));
-	if(print_quote == NA_LOGICAL)
-		errorcall(call, "invalid quote parameter\n");
-	args = CDR(args);
+    if(!isNull(CAR(args))) {
+	print_gap = asInteger(CAR(args));
+	if (print_gap == NA_INTEGER || print_gap < 1 || print_gap > 10)
+	    errorcall(call, "invalid gap parameter\n");
+    }
 
-	naprint = CAR(args);
-	if(!isNull(naprint))  {
-		if(!isString(naprint) || LENGTH(naprint) < 1)
-			errorcall(call, "invalid na.print specification\n");
-		print_na_string = STRING(naprint)[0];
-		print_na_width = strlen(CHAR(print_na_string));
-	}
-	args = CDR(args);
-
-	if(!isNull(CAR(args))) {
-		print_gap = asInteger(CAR(args));
-		if (print_gap == NA_INTEGER || print_gap < 1 || print_gap > 10)
-			errorcall(call, "invalid gap parameter\n");
-	}
-
-	CustomPrintValue(x,rho);
-	return x;
+    CustomPrintValue(x, rho);
+    return x;
 }
 
 

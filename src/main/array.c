@@ -21,6 +21,32 @@
 #include "Mathlib.h"
 
 
+/* "GetRowNames" and "GetColNames" are utility routines which */
+/* locate and return the row names and column names from the */
+/* dimnames attribute of a matrix.  They are useful because */
+/* old versions of R used pair-based lists for dimnames */
+/* whereas recent versions use vector bassed lists */
+
+SEXP GetRowNames(SEXP dimnames)
+{
+    if (TYPEOF(dimnames) == VECSXP)
+	return VECTOR(dimnames)[0];
+    else if (TYPEOF(dimnames) == LISTSXP)
+	return CAR(dimnames);
+    else
+	return R_NilValue;	     
+}
+
+SEXP GetColNames(SEXP dimnames)
+{
+    if (TYPEOF(dimnames) == VECSXP)
+	return VECTOR(dimnames)[1];
+    else if (TYPEOF(dimnames) == LISTSXP)
+	return CADR(dimnames);
+    else
+	return R_NilValue;	     
+}
+
 SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP vals, snr, snc;
@@ -33,7 +59,7 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     byrow = asInteger(CADR(CDDR(args)));
 
     if (isVector(vals) || isList(vals)) {
-	if(length(vals) < 0)
+	if (length(vals) < 0)
 	    errorcall(call, "argument has length zero\n");
     } else errorcall(call, "invalid matrix element type\n");
 
@@ -44,23 +70,23 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     nr = asInteger(snr);
     nc = asInteger(snc);
 
-    if( lendat > 1 && (nr*nc) % lendat != 0 ) {
-	if( ((lendat>nr) && (lendat/nr)*nr != lendat ) ||
-	    ((lendat< nr) && (nr/lendat) * lendat != nr ))
+    if (lendat > 1 && (nr * nc) % lendat != 0) {
+	if (((lendat > nr) && (lendat / nr) * nr != lendat) ||
+	    ((lendat < nr) && (nr / lendat) * lendat != nr))
 	    warning("Replacement length not a multiple of the elements to replace in matrix(...) \n");
-	else if( ((lendat>nc) && (lendat/nc)*nc != lendat ) ||
-		 ((lendat< nc) && (nc/lendat) * lendat != nc ))
+	else if (((lendat > nc) && (lendat / nc) * nc != lendat) ||
+		 ((lendat < nc) && (nc / lendat) * lendat != nc))
 	    warning("Replacement length not a multiple of the elements to replace in matrix(...) \n");
     } 
-	else if ((lendat>1) && (nr*nc==0)){
+	else if ((lendat > 1) && (nr * nc == 0)){
 	  warning("Replacement length not a multiple of the elements to replace in matrix(...) \n");
 	}
-	else if (lendat ==0 && nr*nc>0){
+	else if (lendat == 0 && nr * nc > 0){
 	  error("No data to replace in matrix(...)\n");
 	}
 
     PROTECT(snr = allocMatrix(TYPEOF(vals), nr, nc));
-    if(isVector(vals))
+    if (isVector(vals))
 	copyMatrix(snr, vals, byrow);
     else
 	copyListMatrix(snr, vals, byrow);
@@ -111,52 +137,54 @@ SEXP allocArray(SEXPTYPE mode, SEXP dims)
 
 SEXP DropDims(SEXP x)
 {
-    SEXP p, q, r, dims, dimnames;
-    int i, n;
+    SEXP p, q, dims, dimnames;
+    int i, n, ndims;
 
     PROTECT(x);
-
     dims = getAttrib(x, R_DimSymbol);
     dimnames = getAttrib(x, R_DimNamesSymbol);
 
     /* Check that dropping will actually do something. */
     /* (1) Check that there is a "dim" attribute. */
 
-    if(dims == R_NilValue) {
+    if (dims == R_NilValue) {
 	UNPROTECT(1);
 	return x;
     }
+    ndims = LENGTH(dims);
 
-    /* (2) Check that there are redundant extents */
+    /* (2) Check whether there are redundant extents */
     n = 0;
-    for(i = 0 ; i < LENGTH(dims) ; i++)
-	if(INTEGER(dims)[i] != 1) n++;
-    if(n == LENGTH(dims)) {
+    for (i = 0; i < ndims; i++)
+	if (INTEGER(dims)[i] != 1) n++;
+    if (n == ndims) {
 	UNPROTECT(1);
 	return x;
     }
 
-    if(n <= 1) {  /* vector */
+    if (n <= 1) {
+	/* We have reduced to a vector result. */
 	SEXP newnames = R_NilValue;
 	if (dimnames != R_NilValue) {
 	    n = length(dims);
-#ifdef NEWLIST
-	    for(i = 0 ; i < n ; i++) {
-		if(INTEGER(dims)[i] != 1) {
-		    newnames = VECTOR(dimnames)[i];
-		    break;
+	    if (TYPEOF(dimnames) == VECSXP) {
+		for (i = 0; i < n; i++) {
+		    if (INTEGER(dims)[i] != 1) {
+			newnames = VECTOR(dimnames)[i];
+			break;
+		    }
 		}
 	    }
-#else
-	    q = dimnames;
-	    for(i = 0 ; i < n ; i++) {
-		if(INTEGER(dims)[i] != 1) {
-		    newnames = CAR(q);
-		    break;
+	    else {
+		q = dimnames;
+		for (i = 0; i < n; i++) {
+		    if (INTEGER(dims)[i] != 1) {
+			newnames = CAR(q);
+			break;
+		    }
+		    q = CDR(q);
 		}
-		q = CDR(q);
 	    }
-#endif
 	}
 	PROTECT(newnames);
 	setAttrib(x, R_DimNamesSymbol, R_NilValue);
@@ -164,35 +192,33 @@ SEXP DropDims(SEXP x)
 	setAttrib(x, R_NamesSymbol, newnames);
 	UNPROTECT(1);
     }
-    else {        /* array */
+    else {
+	/* We have a lower dimensional array. */
 	SEXP newdims, newdimnames;
-	PROTECT(newdims = allocVector(INTSXP, n));
+	int j = 0;
 	n = 0;
-	for(i = 0 ; i < LENGTH(dims) ; i++)
-	    if(INTEGER(dims)[i] != 1)
+	PROTECT(newdims = allocVector(INTSXP, n));
+	for (i = 0; i < ndims; i++)
+	    if (INTEGER(dims)[i] != 1)
 		INTEGER(newdims)[n++] = INTEGER(dims)[i];
-	if(dimnames != R_NilValue) {
-#ifdef NEWLIST
-	    int j = 0;
+	if (TYPEOF(dimnames) == VECSXP) {
 	    PROTECT(newdimnames = allocVector(VECSXP, n));
-	    for(i = 0 ; i < LENGTH(dims) ; i++) {
-		if(INTEGER(dims)[i] != 1) {
+	    for (i = 0; i < ndims; i++) {
+		if (INTEGER(dims)[i] != 1)
 		    VECTOR(newdimnames)[j++] = VECTOR(dimnames)[i];
-		}
 	    }
-#else
-	    PROTECT(newdimnames = allocList(n));
-	    q = dimnames;
-	    r = newdimnames;
-	    for(i=0 ; i<LENGTH(dims) ; i++) {
-		if(INTEGER(dims)[i] != 1) {
-		    CAR(r) = CAR(q);
-		    r = CDR(r);
-		}
+	}
+	else if (TYPEOF(dimnames) == LISTSXP) {
+	    PROTECT(newdimnames = allocVector(VECSXP, n));
+	    q = dimnames;	    
+	    for (i = 0; i < ndims; i++) {
+		if (INTEGER(dims)[i] != 1)
+		    VECTOR(newdimnames)[j++] = CAR(q);
 		q = CDR(q);
 	    }
-#endif
 	}
+	else
+	    newdimnames = R_NilValue;
 	setAttrib(x, R_DimNamesSymbol, R_NilValue);
 	setAttrib(x, R_DimSymbol, newdims);
 	if (dimnames != R_NilValue) {
@@ -212,13 +238,13 @@ SEXP do_drop(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     x = CAR(args);
-    if((xdims = getAttrib(x, R_DimSymbol)) != R_NilValue) {
+    if ((xdims = getAttrib(x, R_DimSymbol)) != R_NilValue) {
 	n = LENGTH(xdims);
 	shorten = 0;
-	for(i=0 ; i<n ; i++)
-	    if(INTEGER(xdims)[i] == 1) shorten = 1;
-	if(shorten) {
-	    if(NAMED(x)) x = duplicate(x);
+	for (i = 0; i < n; i++)
+	    if (INTEGER(xdims)[i] == 1) shorten = 1;
+	if (shorten) {
+	    if (NAMED(x)) x = duplicate(x);
 	    x = DropDims(x);
 	}
     }
@@ -304,17 +330,17 @@ static void cmatprod(complex *x, int nrx, int ncx,
     int i, j, k;
     double xij_r, xij_i, yjk_r, yjk_i, sum_i, sum_r;
 
-    for (i=0; i<nrx; i++)
-	for (k=0; k<ncy; k++) {
-	    z[i+k*nrx].r = NA_REAL;
-	    z[i+k*nrx].i = NA_REAL;
+    for (i = 0; i < nrx; i++)
+	for (k = 0; k < ncy; k++) {
+	    z[i + k * nrx].r = NA_REAL;
+	    z[i + k * nrx].i = NA_REAL;
 	    sum_r = 0.0;
 	    sum_i = 0.0;
-	    for (j=0; j<ncx; j++) {
-		xij_r = x[i+j*nrx].r;
-		xij_i = x[i+j*nrx].i;
-		yjk_r = y[j+k*nry].r;
-		yjk_i = y[j+k*nry].i;
+	    for (j = 0; j < ncx; j++) {
+		xij_r = x[i + j * nrx].r;
+		xij_i = x[i + j * nrx].i;
+		yjk_r = y[j + k * nry].r;
+		yjk_i = y[j + k * nry].i;
 #ifndef IEEE_754
 		if (ISNAN(xij_r) || ISNAN(xij_i)
 		    || ISNAN(yjk_r) || ISNAN(yjk_i))
@@ -323,8 +349,8 @@ static void cmatprod(complex *x, int nrx, int ncx,
 		sum_r += (xij_r * yjk_r - xij_i * yjk_i);
 		sum_i += (xij_r * yjk_i + xij_i * yjk_r);
 	    }
-	    z[i+k*nrx].r = sum_r;
-	    z[i+k*nrx].i = sum_i;
+	    z[i + k * nrx].r = sum_r;
+	    z[i + k * nrx].i = sum_i;
 #ifndef IEEE_754
 	next_ik:
 	    ;
@@ -410,7 +436,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     ldy = length(ydims);
 
     if (ldx != 2 && ldy != 2) {
-	if(PRIMVAL(op) == 0) {
+	if (PRIMVAL(op) == 0) {
 	    nrx = 1;
 	    ncx = LENGTH(x);
 	}
@@ -426,8 +452,8 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ncy = INTEGER(ydims)[1];
 	nrx = 0;
 	ncx = 0;
-	if(PRIMVAL(op) == 0) {
-	    if(LENGTH(x) == nry) {
+	if (PRIMVAL(op) == 0) {
+	    if (LENGTH(x) == nry) {
 		nrx = 1;
 		ncx = LENGTH(x);
 	    } 
@@ -435,13 +461,13 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ncx=1;
 		nrx=LENGTH(x);
 	    }
-	    if( nry*ncy == 1 ) {
+	    if (nry * ncy == 1) {
 		nrx = LENGTH(x);
 		ncx = 1;
 	    }
 	}
 	else {
-	    if(LENGTH(x) == nry) {
+	    if (LENGTH(x) == nry) {
 		nrx = LENGTH(x);
 		ncx = 1;
 	    }
@@ -452,7 +478,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ncx = INTEGER(xdims)[1];
 	nry = 0;
 	ncy = 0;
-	if(PRIMVAL(op) == 0) {
+	if (PRIMVAL(op) == 0) {
 	    if (LENGTH(y) == ncx) {
 		nry = LENGTH(y);
 		ncy = 1;
@@ -461,7 +487,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ncy = LENGTH(y);
 		nry = 1;
 	    }
-	    if ( nrx*ncx == 1 ) {
+	    if (nrx * ncx == 1) {
 		ncy = LENGTH(y);
 		nry = 1;
 	    }
@@ -480,25 +506,25 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ncy = INTEGER(ydims)[1];
     }
 
-    if(PRIMVAL(op) == 0) {
-	if(ncx != nry)
+    if (PRIMVAL(op) == 0) {
+	if (ncx != nry)
 	    errorcall(call, "non-conformable arguments\n");
     }
     else {
-	if(nrx != nry)
+	if (nrx != nry)
 	    errorcall(call, "non-conformable arguments\n");
     }
 
-    if(isComplex(CAR(args)) || isComplex(CADR(args)))
+    if (isComplex(CAR(args)) || isComplex(CADR(args)))
 	mode = CPLXSXP;
     else
 	mode = REALSXP;
     CAR(args) = coerceVector(CAR(args), mode);
     CADR(args) = coerceVector(CADR(args), mode);
 
-    if(PRIMVAL(op) == 0) {
+    if (PRIMVAL(op) == 0) {
 	PROTECT(ans = allocMatrix(mode, nrx, ncy));
-	if(mode == CPLXSXP)
+	if (mode == CPLXSXP)
 	    cmatprod(COMPLEX(CAR(args)), nrx, ncx,
 		     COMPLEX(CADR(args)), nry, ncy, COMPLEX(ans));
 	else
@@ -512,7 +538,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else {
 	PROTECT(ans = allocMatrix(mode, ncx, ncy));
-	if(mode == CPLXSXP)
+	if (mode == CPLXSXP)
 	    ccrossprod(COMPLEX(CAR(args)), nrx, ncx,
 		       COMPLEX(CADR(args)), nry, ncy, COMPLEX(ans));
 	else
@@ -531,12 +557,12 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, r, dims, dn;
-    int i, len=0, ncol=0, nrow=0;
+    int i, len = 0, ncol=0, nrow=0;
 
     checkArity(op, args);
     a = CAR(args);
 
-    if(isVector(a)) {
+    if (isVector(a)) {
 	dims = getAttrib(a, R_DimSymbol);
 	switch(length(dims)) {
 	case 0:
@@ -553,9 +579,9 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    goto not_matrix;
 	}
     }
-    else if(isList(a)) {
+    else if (isList(a)) {
 	dims = getAttrib(a, R_DimSymbol);
-	if(length(dims) == 2) {
+	if (length(dims) == 2) {
 	    errorcall(call, "can't transpose list matrices (yet)\n");
 	}
 	else goto not_matrix;
@@ -588,7 +614,7 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
     INTEGER(dims)[1] = nrow;
     setAttrib(r, R_DimSymbol, dims);
 
-    if(!isNull(dn = getAttrib(a, R_DimNamesSymbol))) {
+    if (!isNull(dn = getAttrib(a, R_DimNamesSymbol))) {
 	PROTECT(dn = duplicate(dn));
 	switch(length(dn)) {
 	case 1:
@@ -697,6 +723,11 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    STRING(r)[j] = STRING(a)[i];
 	}
 	break;
+    case VECSXP:
+	for (i = 0; i < len; i++) {
+	    j = swap(i, dimsa, dimsr, perm, ind1, ind2);
+	    VECTOR(r)[j] = VECTOR(a)[i];
+	}
     default:
 	errorcall(call, "invalid argument\n");
     }

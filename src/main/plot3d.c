@@ -37,7 +37,7 @@ static SEGP *ctr_SegDB;
 
 static int ctr_intersect(double z0, double z1, double zc, double *f)
 {
-    if((z0 - zc) * (z1 - zc) < 0.0) {
+    if ((z0 - zc) * (z1 - zc) < 0.0) {
 	*f = (zc - z0) / (z1 -	z0);
 	return 1;
     }
@@ -80,25 +80,30 @@ static void ctr_swapseg(SEGP seg)
 static double ctr_xtol;
 static double ctr_ytol;
 
-static int ctr_segdir(double xend, double yend, double *x, double *y, int *i, int *j, int nx, int ny)
+static int ctr_segdir(double xend, double yend, double *x, double *y,
+		      int *i, int *j, int nx, int ny)
 {
-    if(YMATCH(yend, y[*j])) {
-	if(*j == 0) return 0;
+    if (YMATCH(yend, y[*j])) {
+	if (*j == 0)
+	    return 0;
 	*j = *j - 1;
 	return 3;
     }
-    if(XMATCH(xend, x[*i])) {
-	if(*i == 0) return 0;
+    if (XMATCH(xend, x[*i])) {
+	if (*i == 0)
+	    return 0;
 	*i = *i - 1;
 	return 4;
     }
-    if(YMATCH(yend, y[*j+1])) {
-	if(*j >= ny - 1) return 0;
+    if (YMATCH(yend, y[*j + 1])) {
+	if (*j >= ny - 1)
+	    return 0;
 	*j = *j + 1;
 	return 1;
     }
-    if(XMATCH(xend, x[*i+1])) {
-	if(*i >= nx - 1) return 0;
+    if (XMATCH(xend, x[*i + 1])) {
+	if (*i >= nx - 1)
+	    return 0;
 	*i = *i + 1;
 	return 2;
     }
@@ -111,35 +116,40 @@ static int ctr_segdir(double xend, double yend, double *x, double *y, int *i, in
 /* is pointed to by seg and the updated segment list (with */
 /* the matched segment stripped is returned by the funtion. */
 
-static SEGP ctr_segupdate(double xend, double yend, int dir, int tail, SEGP seglist, SEGP* seg)
+static SEGP ctr_segupdate(double xend, double yend, int dir, int tail,
+			  SEGP seglist, SEGP* seg)
 {
-    if(seglist == NULL) {
+    if (seglist == NULL) {
 	*seg = NULL;
 	return NULL;
     }
-    switch(dir) {
+    switch (dir) {
     case 1:
     case 3:
-	if(YMATCH(yend,seglist->y0)) {
-	    if(!tail) ctr_swapseg(seglist);
+	if (YMATCH(yend,seglist->y0)) {
+	    if (!tail)
+		ctr_swapseg(seglist);
 	    *seg = seglist;
 	    return seglist->next;
 	}
-	if(YMATCH(yend,seglist->y1)) {
-	    if(tail) ctr_swapseg(seglist);
+	if (YMATCH(yend,seglist->y1)) {
+	    if (tail)
+		ctr_swapseg(seglist);
 	    *seg = seglist;
 	    return seglist->next;
 	}
 	break;
     case 2:
     case 4:
-	if(XMATCH(xend,seglist->x0)) {
-	    if(!tail) ctr_swapseg(seglist);
+	if (XMATCH(xend,seglist->x0)) {
+	    if (!tail)
+		ctr_swapseg(seglist);
 	    *seg = seglist;
 	    return seglist->next;
 	}
-	if(XMATCH(xend,seglist->x1)) {
-	    if(tail) ctr_swapseg(seglist);
+	if (XMATCH(xend,seglist->x1)) {
+	    if (tail)
+		ctr_swapseg(seglist);
 	    *seg = seglist;
 	    return seglist->next;
 	}
@@ -158,17 +168,17 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
     SEGP seglist, seg, s, start, end;
     double *xxx, *yyy;
 
-    for(i=0 ; i<nx-1 ; i++) {
+    for (i = 0; i < nx - 1; i++) {
 	xl = REAL(x)[i];
-	xh = REAL(x)[i+1];
-	for(j=0 ; j<ny-1 ; j++) {
+	xh = REAL(x)[i + 1];
+	for (j = 0; j < ny - 1; j++) {
 	    yl = REAL(y)[j];
-	    yh = REAL(y)[j+1];
-	    k = i+j*nx;
+	    yh = REAL(y)[j + 1];
+	    k = i + j * nx;
 	    zll = REAL(z)[k];
-	    zhl = REAL(z)[k+1];
-	    zlh = REAL(z)[k+nx];
-	    zhh = REAL(z)[k+nx+1];
+	    zhl = REAL(z)[k + 1];
+	    zlh = REAL(z)[k + nx];
+	    zhh = REAL(z)[k + nx + 1];
 	    k = 0;
 
 	    /* If the value at a corner is */
@@ -176,93 +186,93 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 	    /* level, change the value at */
 	    /* corner by a tiny amount. */
 
-	    if(zll == zc) zll = zll + atom;
-	    if(zhl == zc) zhl = zhl + atom;
-	    if(zlh == zc) zlh = zlh + atom;
-	    if(zhh == zc) zhh = zhh + atom;
+	    if (zll == zc) zll = zll + atom;
+	    if (zhl == zc) zhl = zhl + atom;
+	    if (zlh == zc) zlh = zlh + atom;
+	    if (zhh == zc) zhh = zhh + atom;
 
 	    /* Check for intersections with sides */
 
 	    nacode = 0;
-	    if(FINITE(zll)) nacode += 1;
-	    if(FINITE(zhl)) nacode += 2;
-	    if(FINITE(zlh)) nacode += 4;
-	    if(FINITE(zhh)) nacode += 8;
+	    if (FINITE(zll)) nacode += 1;
+	    if (FINITE(zhl)) nacode += 2;
+	    if (FINITE(zlh)) nacode += 4;
+	    if (FINITE(zhh)) nacode += 8;
 
-	    switch(nacode) {
+	    switch (nacode) {
 	    case 15:
-		if(ctr_intersect(zll, zhl, zc, &f)) {
+		if (ctr_intersect(zll, zhl, zc, &f)) {
 		    xx[k] = xl + f * (xh - xl);
 		    yy[k] = yl; k++;
 		}
-		if(ctr_intersect(zll, zlh, zc, &f)) {
+		if (ctr_intersect(zll, zlh, zc, &f)) {
 		    yy[k] = yl + f * (yh - yl);
 		    xx[k] = xl; k++;
 		}
-		if(ctr_intersect(zhl, zhh, zc, &f)) {
+		if (ctr_intersect(zhl, zhh, zc, &f)) {
 		    yy[k] = yl + f * (yh - yl);
 		    xx[k] = xh; k++;
 		}
-		if(ctr_intersect(zlh, zhh, zc, &f)) {
+		if (ctr_intersect(zlh, zhh, zc, &f)) {
 		    xx[k] = xl + f * (xh - xl);
 		    yy[k] = yh; k++;
 		}
 		break;
 	    case 14:
-		if(ctr_intersect(zhl, zhh, zc, &f)) {
+		if (ctr_intersect(zhl, zhh, zc, &f)) {
 		    yy[k] = yl + f * (yh - yl);
 		    xx[k] = xh; k++;
 		}
-		if(ctr_intersect(zlh, zhh, zc, &f)) {
+		if (ctr_intersect(zlh, zhh, zc, &f)) {
 		    xx[k] = xl + f * (xh - xl);
 		    yy[k] = yh; k++;
 		}
-		if(ctr_intersect(zlh, zhl, zc, &f)) {
+		if (ctr_intersect(zlh, zhl, zc, &f)) {
 		    xx[k] = xl + f * (xh - xl);
 		    yy[k] = yh + f * (yl - yh);
 		    k++;
 		}
 		break;
 	    case 13:
-		if(ctr_intersect(zll, zlh, zc, &f)) {
+		if (ctr_intersect(zll, zlh, zc, &f)) {
 		    yy[k] = yl + f * (yh - yl);
 		    xx[k] = xl; k++;
 		}
-		if(ctr_intersect(zlh, zhh, zc, &f)) {
+		if (ctr_intersect(zlh, zhh, zc, &f)) {
 		    xx[k] = xl + f * (xh - xl);
 		    yy[k] = yh; k++;
 		}
-		if(ctr_intersect(zll, zhh, zc, &f)) {
+		if (ctr_intersect(zll, zhh, zc, &f)) {
 		    xx[k] = xl + f * (xh - xl);
 		    yy[k] = yl + f * (yh - yl);
 		    k++;
 		}
 		break;
 	    case 11:
-		if(ctr_intersect(zhl, zhh, zc, &f)) {
+		if (ctr_intersect(zhl, zhh, zc, &f)) {
 		    yy[k] = yl + f * (yh - yl);
 		    xx[k] = xh; k++;
 		}
-		if(ctr_intersect(zll, zhl, zc, &f)) {
+		if (ctr_intersect(zll, zhl, zc, &f)) {
 		    xx[k] = xl + f * (xh - xl);
 		    yy[k] = yl; k++;
 		}
-		if(ctr_intersect(zll, zhh, zc, &f)) {
+		if (ctr_intersect(zll, zhh, zc, &f)) {
 		    xx[k] = xl + f * (xh - xl);
 		    yy[k] = yl + f * (yh - yl);
 		    k++;
 		}
 		break;
 	    case 7:
-		if(ctr_intersect(zll, zlh, zc, &f)) {
+		if (ctr_intersect(zll, zlh, zc, &f)) {
 		    yy[k] = yl + f * (yh - yl);
 		    xx[k] = xl; k++;
 		}
-		if(ctr_intersect(zll, zhl, zc, &f)) {
+		if (ctr_intersect(zll, zhl, zc, &f)) {
 		    xx[k] = xl + f * (xh - xl);
 		    yy[k] = yl; k++;
 		}
-		if(ctr_intersect(zlh, zhl, zc, &f)) {
+		if (ctr_intersect(zlh, zhl, zc, &f)) {
 		    xx[k] = xl + f * (xh - xl);
 		    yy[k] = yh + f * (yl - yh);
 		    k++;
@@ -275,21 +285,21 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 
 	    seglist = NULL;
 
-	    if(k > 0) {
-		if(k == 2) {
+	    if (k > 0) {
+		if (k == 2) {
 		    seglist = ctr_newseg(xx[0], yy[0], xx[1], yy[1], seglist);
 		}
-		else if(k == 4) {
-		    for(k=3 ; k>=1 ; k--) {
+		else if (k == 4) {
+		    for (k = 3; k >= 1; k--) {
 			m = k;
 			xl = xx[k];
-			for(l=0 ; l<k ; l++) {
-			    if(xx[l] > xl) {
+			for (l = 0; l < k; l++) {
+			    if (xx[l] > xl) {
 				xl = xx[l];
 				m = l;
 			    }
 			}
-			if(m != k) {
+			if (m != k) {
 			    xl = xx[k];
 			    yl = yy[k];
 			    xx[k] = xx[m];
@@ -303,7 +313,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 		}
 		else error("k != 2 or 4\n");
 	    }
-	    ctr_SegDB[i+j*nx] = seglist;
+	    ctr_SegDB[i + j * nx] = seglist;
 	}
     }
 
@@ -314,17 +324,20 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
     /* 3. Follow its head */
     /* 4. Draw the contour */
 
-    for(i=0 ; i<nx-1 ; i++)
-	for(j=0 ; j<ny-1 ; j++) {
-	    while((seglist = ctr_SegDB[i+j*nx])) {
+    for (i = 0; i < nx - 1; i++)
+	for (j = 0; j < ny - 1; j++) {
+	    while ((seglist = ctr_SegDB[i + j * nx])) {
 		ii = i; jj = j;
 		start = end = seglist;
-		ctr_SegDB[i+j*nx] = seglist->next;
+		ctr_SegDB[i + j * nx] = seglist->next;
 		xend = seglist->x1;
 		yend = seglist->y1;
-		while((dir=ctr_segdir(xend, yend, REAL(x), REAL(y), &ii, &jj, nx, ny))) {
-		    ctr_SegDB[ii+jj*nx] = ctr_segupdate(xend, yend, dir, 1, ctr_SegDB[ii+jj*nx], &seg);
-		    if(!seg) break;
+		while ((dir = ctr_segdir(xend, yend, REAL(x), REAL(y),
+				       &ii, &jj, nx, ny))) {
+		    ctr_SegDB[ii + jj * nx]
+			= ctr_segupdate(xend, yend, dir, 1,
+					ctr_SegDB[ii + jj * nx], &seg);
+		    if (!seg) break;
 		    end->next = seg;
 		    end = seg;
 		    xend = end->x1;
@@ -333,9 +346,12 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 		ii = i; jj = j;
 		xend = seglist->x0;
 		yend = seglist->y0;
-		while((dir=ctr_segdir(xend, yend, REAL(x), REAL(y), &ii, &jj, nx, ny))) {
-		    ctr_SegDB[ii+jj*nx] = ctr_segupdate(xend, yend, dir, 0, ctr_SegDB[ii+jj*nx], &seg);
-		    if(!seg) break;
+		while ((dir = ctr_segdir(xend, yend, REAL(x), REAL(y),
+				       &ii, &jj, nx, ny))) {
+		    ctr_SegDB[ii + jj * nx]
+			= ctr_segupdate(xend, yend, dir, 0,
+					ctr_SegDB[ii+jj*nx], &seg);
+		    if (!seg) break;
 		    seg->next = start;
 		    start = seg;
 		    xend = start->x0;
@@ -343,7 +359,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 		}
 		s = start;
 		ns = 0;
-		while(s) {
+		while (s) {
 		    ns++;
 		    s = s->next;
 		}
@@ -351,16 +367,16 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 		/* countour midpoint */
 		/* use for labelling sometime */
 
-		if(ns > 3) ns2 = ns/2;
+		if (ns > 3) ns2 = ns/2;
 		else ns2 = -1;
 
 		s = start;
-		xxx = (double *) C_alloc(ns+1, sizeof(double));
-		yyy = (double *) C_alloc(ns+1, sizeof(double));
+		xxx = (double *) C_alloc(ns + 1, sizeof(double));
+		yyy = (double *) C_alloc(ns + 1, sizeof(double));
 		ns = 0;
 		xxx[ns] = s->x0;
 		yyy[ns++] = s->y0;
-		while(s->next) {
+		while (s->next) {
 		    s = s->next;
 		    xxx[ns] = s->x0;
 		    yyy[ns++] = s->y0;
@@ -389,7 +405,8 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GCheckState(dd);
 
-    if(length(args) < 4) errorcall(call, "too few arguments\n");
+    if (length(args) < 4)
+	errorcall(call, "too few arguments\n");
 
     oargs = args;
 
@@ -420,46 +437,46 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* col, lwd and lty vectors here --- FIXME: "lwd" ???? */
 
-    if(nx < 2 || ny < 2)
+    if (nx < 2 || ny < 2)
 	errorcall(call, "insufficient x or y values\n");
 
-    if(nrows(z) != nx || ncols(z) != ny)
+    if (nrows(z) != nx || ncols(z) != ny)
 	errorcall(call, "dimension mismatch\n");
 
-    if(nc < 1)
+    if (nc < 1)
 	errorcall(call, "no contour values\n");
 
-    for(i=0 ; i<nx ; i++) {
-	if(!FINITE(REAL(x)[i]))
+    for (i = 0; i < nx; i++) {
+	if (!FINITE(REAL(x)[i]))
 	    errorcall(call, "missing x values\n");
-	if(i > 0 && REAL(x)[i] < REAL(x)[i-1])
+	if (i > 0 && REAL(x)[i] < REAL(x)[i - 1])
 	    errorcall(call, "increasing x values expected\n");
     }
 
-    for(i=0 ; i<ny ; i++) {
-	if(!FINITE(REAL(y)[i]))
+    for (i = 0; i < ny; i++) {
+	if (!FINITE(REAL(y)[i]))
 	    errorcall(call, "missing y values\n");
-	if(i > 0 && REAL(y)[i] < REAL(y)[i-1])
+	if (i > 0 && REAL(y)[i] < REAL(y)[i - 1])
 	    errorcall(call, "increasing y values expected\n");
     }
 
     ctr_xtol = 1e-3 * fabs(REAL(x)[nx-1]-REAL(x)[0]);
     ctr_ytol = 1e-3 * fabs(REAL(y)[ny-1]-REAL(y)[0]);
 
-    for(i=0 ; i<nc ; i++)
-	if(!FINITE(REAL(c)[i]))
+    for (i = 0; i < nc; i++)
+	if (!FINITE(REAL(c)[i]))
 	    errorcall(call, "illegal NA contour values\n");
 
     zmin = DBL_MAX;
     zmax = DBL_MIN;
-    for(i=0 ; i<nx*ny ; i++)
-	if(FINITE(REAL(z)[i])) {
-	    if(zmax < REAL(z)[i]) zmax =  REAL(z)[i];
-	    if(zmin > REAL(z)[i]) zmin =  REAL(z)[i];
+    for (i = 0; i < nx * ny; i++)
+	if (FINITE(REAL(z)[i])) {
+	    if (zmax < REAL(z)[i]) zmax =  REAL(z)[i];
+	    if (zmin > REAL(z)[i]) zmin =  REAL(z)[i];
 	}
 
-    if(zmin >= zmax) {
-	if(zmin == zmax)
+    if (zmin >= zmax) {
+	if (zmin == zmax)
 	    warning("all z values are equal\n");
 	else
 	    warning("all z values are NA\n");
@@ -478,20 +495,20 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     vmax0 = vmaxget();
     ctr_SegDB = (SEGP*)R_alloc(nx*ny, sizeof(SEGP));
 
-    for(i=0 ; i<nx ; i++)
-	for(j=0 ; j<ny ; j++)
-	    ctr_SegDB[i+j*nx] = NULL;
+    for (i = 0; i < nx; i++)
+	for (j = 0; j < ny; j++)
+	    ctr_SegDB[i + j * nx] = NULL;
 
     /* Draw the contours -- note the heap release */
 
     ltysave = dd->gp.lty;
     colsave = dd->gp.col;
-    for(i=0 ; i<nc ; i++) {
+    for (i = 0; i < nc; i++) {
 	vmax = vmaxget();
-	dd->gp.lty = INTEGER(lty)[i%nlty];
+	dd->gp.lty = INTEGER(lty)[i % nlty];
 	if (dd->gp.lty == NA_INTEGER)
 	    dd->gp.lty = ltysave;
-	dd->gp.col = INTEGER(col)[i%ncol];
+	dd->gp.col = INTEGER(col)[i % ncol];
 	if (dd->gp.col == NA_INTEGER)
 	    dd->gp.col = colsave;
 	contour(x, nx, y, ny, z, REAL(c)[i], atom, dd);
@@ -541,7 +558,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 
     szlim = CAR(args);
     internalTypeCheck(call, szlim, REALSXP);
-    if(length(szlim) != 2 ||
+    if (length(szlim) != 2 ||
        !FINITE(REAL(szlim)[0]) ||
        !FINITE(REAL(szlim)[1]) ||
        REAL(szlim)[0] >= REAL(szlim)[1])
@@ -563,13 +580,13 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Check of grid coordinates */
     /* We want them to all be finite and in strictly ascending order */
 
-    if(nx < 2 || ny < 2) goto badxy;
-    if(!FINITE(x[0])) goto badxy;
-    if(!FINITE(y[0])) goto badxy;
-    for(i=1 ; i<nx ; i++)
-	if(!FINITE(x[i]) || x[i] <= x[i-1]) goto badxy;
-    for(j=1 ; j<ny ; j++)
-	if(!FINITE(y[j]) || y[j] <= y[j-1]) goto badxy;
+    if (nx < 2 || ny < 2) goto badxy;
+    if (!FINITE(x[0])) goto badxy;
+    if (!FINITE(y[0])) goto badxy;
+    for (i = 1; i < nx; i++)
+	if (!FINITE(x[i]) || x[i] <= x[i - 1]) goto badxy;
+    for (j = 1; j < ny; j++)
+	if (!FINITE(y[j]) || y[j] <= y[j - 1]) goto badxy;
 
     colsave = dd->gp.col;
     xpdsave = dd->gp.xpd;
@@ -577,28 +594,28 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GMode(dd, 1);
 
-    for(i=0 ; i<nx ; i++) {
-	if(i == 0)
+    for (i = 0; i < nx; i++) {
+	if (i == 0)
 	    xlow = x[0];
 	else
 	    xlow = 0.5 * (x[i] + x[i-1]);
-	if(i == nx-1)
+	if (i == nx-1)
 	    xhigh = x[nx-1];
 	else
 	    xhigh = 0.5 * (x[i] + x[i+1]);
 
-	for(j=0 ; j<ny ; j++) {
-	    if(FINITE(z[i+j*nx])) {
-		ic = floor((nc - 1) * (z[i+j*nx]-zmin)/(zmax - zmin) + 0.5);
-		if(ic >= 0 && ic < nc) {
-		    if(j == 0)
+	for (j = 0; j < ny; j++) {
+	    if (FINITE(z[i + j * nx])) {
+		ic = floor((nc - 1) * (z[i + j * nx]-zmin)/(zmax - zmin) + 0.5);
+		if (ic >= 0 && ic < nc) {
+		    if (j == 0)
 			ylow = y[0];
 		    else
-			ylow = 0.5 * (y[j] + y[j-1]);
-		    if(j == ny-1)
-			yhigh = y[ny-1];
+			ylow = 0.5 * (y[j] + y[j - 1]);
+		    if (j == ny - 1)
+			yhigh = y[ny - 1];
 		    else
-			yhigh = 0.5 * (y[j] + y[j+1]);
+			yhigh = 0.5 * (y[j] + y[j + 1]);
 		    GRect(xlow, ylow, xhigh, yhigh,
 			  USER, c[ic], NA_INTEGER, dd);
 		}
@@ -654,9 +671,9 @@ static void TransVector (Vector3d u, Trans3d T, Vector3d v)
     double sum;
     int i, j;
 
-    for(i = 0 ; i < 4 ; i++) {
+    for (i = 0; i < 4; i++) {
 	sum = 0;
-	for(j = 0 ; j < 4 ; j++)
+	for (j = 0; j < 4; j++)
 	    sum = sum + u[j] * T[j][i];
 	v[i] = sum;
     }
@@ -668,24 +685,24 @@ static void Accumulate (Trans3d T)
     double sum;
     int i, j, k;
 
-    for(i = 0 ; i < 4 ; i++) {
-	for(j = 0 ; j < 4 ; j++) {
+    for (i = 0; i < 4; i++) {
+	for (j = 0; j < 4; j++) {
 	    sum = 0;
-	    for(k = 0 ; k < 4 ; k++)
+	    for (k = 0; k < 4; k++)
 		sum = sum + VT[i][k] * T[k][j];
 	    U[i][j] = sum;
 	}
     }
-    for(i = 0 ; i < 4 ; i++)
-	for(j = 0 ; j < 4 ; j++)
+    for (i = 0; i < 4; i++)
+	for (j = 0; j < 4; j++)
 	    VT[i][j] = U[i][j];
 }
 
 static void SetToIdentity (Trans3d T)
 {
     int i, j;
-    for(i = 0 ; i < 4 ; i++) {
-	for(j = 0 ; j < 4 ; j++)
+    for (i = 0; i < 4; i++) {
+	for (j = 0; j < 4; j++)
 	    T[i][j] = 0;
 	T[i][i] = 1;
     }
@@ -794,15 +811,15 @@ static int DepthOrder(double *z, double *x, double *y, int nx, int ny,
     double d;
     nx1 = nx - 1;
     ny1 = ny - 1;
-    for (i = 0 ; i < nx1*ny1 ; i++)
+    for (i = 0; i < nx1 * ny1; i++)
 	index[i] = i;
-    for (i = 0 ; i < nx1 ; i++)
-	for (j = 0 ; j < ny1 ; j++) {
+    for (i = 0; i < nx1; i++)
+	for (j = 0; j < ny1; j++) {
 	    d = -DBL_MAX;
-	    for (ii = 0 ; ii <= 1 ; ii++)
-		for (jj = 0 ; jj <= 1 ; jj++) {
-		    u[0] = x[i+ii];
-		    u[1] = y[j+jj];
+	    for (ii = 0; ii <= 1; ii++)
+		for (jj = 0; jj <= 1; jj++) {
+		    u[0] = x[i + ii];
+		    u[1] = y[j + jj];
 		    /* Originally I had the following line here: */
 		    /* u[2] = z[i+ii+(j+jj)*nx]; */
 		    /* But this leads to artifacts. */
@@ -832,13 +849,14 @@ static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
     nx1 = nx - 1;
     ny1 = ny - 1;
     n = nx1 * ny1;
-    for(k = 0 ; k < n ; k++) {
+    for (k = 0; k < n; k++) {
 	nv = 0;
 	i = index[k] % nx1;
 	j = index[k] / nx1;
 	icol = (i + j * nx1) % ncol;
 
-	u[0] = x[i]; u[1] = y[j]; u[2] = z[i+j*nx]; u[3] = 1;
+	u[0] = x[i]; u[1] = y[j];
+	u[2] = z[i + j * nx]; u[3] = 1;
 	if (FINITE(u[0]) &&  FINITE(u[1]) && FINITE(u[2])) {
 	    TransVector(u, VT, v);
 	    xx[nv] = v[0] / v[3];
@@ -846,7 +864,8 @@ static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
 	    nv++;
 	}
 
-	u[0] = x[i+1]; u[1] = y[j]; u[2] = z[i+1+j*nx]; u[3] = 1;
+	u[0] = x[i + 1]; u[1] = y[j];
+	u[2] = z[i + 1 + j * nx]; u[3] = 1;
 	if (FINITE(u[0]) &&  FINITE(u[1]) && FINITE(u[2])) {
 	    TransVector(u, VT, v);
 	    xx[nv] = v[0] / v[3];
@@ -854,7 +873,8 @@ static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
 	    nv++;
 	}
 
-	u[0] = x[i+1]; u[1] = y[j+1]; u[2] = z[i+1+(j+1)*nx]; u[3] = 1;
+	u[0] = x[i + 1]; u[1] = y[j + 1];
+	u[2] = z[i + 1 + (j + 1) * nx]; u[3] = 1;
 	if (FINITE(u[0]) &&  FINITE(u[1]) && FINITE(u[2])) {
 	    TransVector(u, VT, v);
 	    xx[nv] = v[0] / v[3];
@@ -862,7 +882,8 @@ static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
 	    nv++;
 	}
 
-	u[0] = x[i]; u[1] = y[j+1]; u[2] = z[i+(j+1)*nx]; u[3] = 1;
+	u[0] = x[i]; u[1] = y[j + 1];
+	u[2] = z[i + (j + 1) * nx]; u[3] = 1;
 	if (FINITE(u[0]) &&  FINITE(u[1]) && FINITE(u[2])) {
 	    TransVector(u, VT, v);
 	    xx[nv] = v[0] / v[3];
@@ -882,12 +903,12 @@ static int CheckRange(double *x, int n, double min, double max)
     int i;
     xmin =  DBL_MAX;
     xmax = -DBL_MAX;
-    for (i = 0 ; i < n ; i++)
+    for (i = 0; i < n; i++)
 	if (FINITE(x[i])) {
-	    if(x[i] < xmin) xmin = x[i];
-	    if(x[i] > xmax) xmax = x[i];
+	    if (x[i] < xmin) xmin = x[i];
+	    if (x[i] > xmax) xmax = x[i];
 	}
-    if(xmin < min || xmax > max)
+    if (xmin < min || xmax > max)
 	errorcall(gcall, "coordinates outsize specified range\n");
 }
 
@@ -900,19 +921,19 @@ static int PerspWindow(double *xlim, double *ylim, double *zlim, DevDesc *dd)
     
     xmax = xmin = ymax = ymin = 0;
     u[3] = 1;
-    for(i=0 ; i<2 ; i++) {
+    for (i = 0; i < 2; i++) {
 	u[0] = xlim[i];
-	for(j=0 ; j<2 ; j++) {
+	for (j = 0; j < 2; j++) {
 	    u[1] = ylim[j];
-	    for(k=0 ; k<2 ; k++) {
+	    for (k = 0; k < 2; k++) {
 		u[2] = zlim[k];
 		TransVector(u, VT, v);
 		xx = v[0] / v[3];
 		yy = v[1] / v[3];
-		if(xx > xmax) xmax = xx;
-		if(xx < xmin) xmin = xx;
-		if(yy > ymax) ymax = yy;		
-		if(yy < ymin) ymin = yy;		
+		if (xx > xmax) xmax = xx;
+		if (xx < xmin) xmin = xx;
+		if (yy > ymax) ymax = yy;		
+		if (yy < ymin) ymin = yy;		
 	    }
 	}
     }
@@ -932,7 +953,7 @@ static int PerspWindow(double *xlim, double *ylim, double *zlim, DevDesc *dd)
 
 static int LimitCheck(double *lim, double *c, double *s)
 {
-    if(!FINITE(lim[0]) || !FINITE(lim[1]) || lim[0] >= lim[1])
+    if (!FINITE(lim[0]) || !FINITE(lim[1]) || lim[0] >= lim[1])
 	return 0;
     *s = 0.5 * fabs(lim[1] - lim[0]);
     *c = 0.5 * (lim[1] + lim[0]);
@@ -973,7 +994,7 @@ static void PerspBox(int front, double *x, double *y, double *z, DevDesc *dd)
     Vector3d u0, v0, u1, v1, u2, v2, u3, v3;
     double d[3], e[3];
     int f, i, p0, p1, p2, p3, near;
-    for (f = 0 ; f < 6 ; f++) {
+    for (f = 0; f < 6; f++) {
         p0 = Face[f][0];
         p1 = Face[f][1];
         p2 = Face[f][2];
@@ -1002,9 +1023,9 @@ static void PerspBox(int front, double *x, double *y, double *z, DevDesc *dd)
 	TransVector(u3, VT, v3);
 
 	/* Visibility test */
-	/* Determine whether the surface normal is toward the eye? */
+	/* Determine whether the surface normal is toward the eye. */
 
-        for (i = 0 ; i < 3 ; i++) {
+        for (i = 0; i < 3; i++) {
 	    d[i] = v1[i]/v1[3] - v0[i]/v0[3];
 	    e[i] = v2[i]/v2[3] - v1[i]/v1[3];
         }
@@ -1030,7 +1051,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, j, scale, ncol;
     DevDesc *dd;
 
-    if(length(args) < 12)
+    if (length(args) < 12)
 	errorcall(call, "too few parameters\n");
     gcall = call;
     originalArgs = args;
@@ -1120,7 +1141,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     GSetState(1, dd);
     GSavePars(dd);
     ProcessInlinePars(args, dd);
-    if(length(border) > 1)
+    if (length(border) > 1)
 	dd->gp.fg = INTEGER(border)[0];
     dd->gp.xlog = 0;
     dd->gp.ylog = 0;
@@ -1169,9 +1190,9 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(x = allocVector(REALSXP, 16));
     PROTECT(y = allocVector(INTSXP, 2));
-    for(i = 0 ; i < 4 ; i++)
-      for(j = 0 ; j < 4 ; j++) {
-        REAL(x)[i+j*4] = VT[i][j];
+    for (i = 0; i < 4; i++)
+      for (j = 0; j < 4; j++) {
+        REAL(x)[i + j * 4] = VT[i][j];
       }
     INTEGER(y)[0] = 4;
     INTEGER(y)[1] = 4;

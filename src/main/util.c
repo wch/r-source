@@ -26,39 +26,39 @@ SEXP mkChar(char *);
 
 SEXP ScalarLogical(int x)
 {
-	SEXP ans = allocVector(LGLSXP, 1);
-	INTEGER(ans)[0] = x;
-	return ans;
+    SEXP ans = allocVector(LGLSXP, 1);
+    INTEGER(ans)[0] = x;
+    return ans;
 }
 
 SEXP ScalarInteger(int x)
 {
-	SEXP ans = allocVector(INTSXP, 1);
-	INTEGER(ans)[0] = x;
-	return ans;
+    SEXP ans = allocVector(INTSXP, 1);
+    INTEGER(ans)[0] = x;
+    return ans;
 }
 
 SEXP ScalarReal(double x)
 {
-	SEXP ans = allocVector(REALSXP, 1);
-	REAL(ans)[0] = x;
-	return ans;
+    SEXP ans = allocVector(REALSXP, 1);
+    REAL(ans)[0] = x;
+    return ans;
 }
 
 SEXP ScalarComplex(complex x)
 {
-	SEXP ans = allocVector(CPLXSXP, 1);
-	COMPLEX(ans)[0] = x;
-	return ans;
+    SEXP ans = allocVector(CPLXSXP, 1);
+    COMPLEX(ans)[0] = x;
+    return ans;
 }
 
 SEXP ScalarString(SEXP x)
 {
-        SEXP ans;
-        PROTECT(ans = allocVector(STRSXP, 1));
-        STRING(ans)[0] = x;
-        UNPROTECT(1);
-        return ans;
+    SEXP ans;
+    PROTECT(ans = allocVector(STRSXP, 1));
+    STRING(ans)[0] = x;
+    UNPROTECT(1);
+    return ans;
 }
 
 static char *truenames[] = {
@@ -211,19 +211,26 @@ int isSymbol(SEXP s)
 
 int isUserBinop(SEXP s)
 {
-    if(isSymbol(s)) {
+    if (isSymbol(s)) {
 	char *str = CHAR(PRINTNAME(s));
-	if(str[0] == '%' && str[strlen(str)-1] == '%')
+	if (str[0] == '%' && str[strlen(str)-1] == '%')
 	    return 1;
     }
     return 0;
 }
 
 
+#ifdef NEWLIST
+int isNull(SEXP s)
+{
+    return (s == R_NilValue || (TYPEOF(s) == VECSXP && LENGTH(s) == 0));
+}
+#else
 int isNull(SEXP s)
 {
     return s == R_NilValue;
 }
+#endif
 
 
 int isFunction(SEXP s)
@@ -241,6 +248,11 @@ int isList(SEXP s)
 
 
 #ifdef NEWLIST
+int isNewList(SEXP s)
+{
+    return (s == R_NilValue || TYPEOF(s) == VECSXP);
+}
+
 int isPairList(SEXP s)
 {
     int ans;
@@ -259,17 +271,17 @@ int isPairList(SEXP s)
 
 int isVectorList(SEXP s)
 {
-	int ans;
-	switch (TYPEOF(s)) {
-	case VECSXP:
-	case EXPRSXP:
-		ans = 1;
-		break;
-	default:
-		ans = 0;
-		break;
-	}
-	return ans;
+    int ans;
+    switch (TYPEOF(s)) {
+    case VECSXP:
+    case EXPRSXP:
+	ans = 1;
+	break;
+    default:
+	ans = 0;
+	break;
+    }
+    return ans;
 }
 
 
@@ -295,21 +307,14 @@ int isVectorObject(SEXP s)
 #endif
 
 
-#ifdef NEWLIST
-int isNewList(SEXP s)
-{
-    return (TYPEOF(s) == VECSXP);
-}
-#endif
-
 int isFrame(SEXP s)
 {
     SEXP class;
     int i;
-    if(isObject(s)) {
+    if (isObject(s)) {
 	class = getAttrib(s, R_ClassSymbol);
-	for(i=0 ; i<length(class) ; i++)
-	    if(!strcmp(CHAR(STRING(class)[i]), "data.frame")) return 1;
+	for (i = 0; i < length(class); i++)
+	    if (!strcmp(CHAR(STRING(class)[i]), "data.frame")) return 1;
     }
     return 0;
 }
@@ -317,7 +322,7 @@ int isFrame(SEXP s)
 
 int isEnvironment(SEXP s)
 {
-    if(TYPEOF(s) == NILSXP || TYPEOF(s) == ENVSXP)
+    if (TYPEOF(s) == NILSXP || TYPEOF(s) == ENVSXP)
 	return 1;
     else
 	return 0;
@@ -410,7 +415,7 @@ int isVectorizable(SEXP s)
 	return 1;
     else if (!isList(s))
 	return 0;
-    for ( ; s != R_NilValue ; s = CDR(s)) {
+    for ( ; s != R_NilValue; s = CDR(s)) {
 	if (!isVector(CAR(s)) || LENGTH(CAR(s)) > 1)
 	    return 0;
 	mode = (mode >= (int) TYPEOF(CAR(s))) ? mode : TYPEOF(CAR(s));
@@ -439,12 +444,12 @@ int conformable(SEXP x, SEXP y)
 int nrows(SEXP s)
 {
     SEXP t;
-    if(isVector(s) || isList(s)) {
+    if (isVector(s) || isList(s)) {
 	t = getAttrib(s, R_DimSymbol);
-	if(t == R_NilValue) return LENGTH(s);
+	if (t == R_NilValue) return LENGTH(s);
 	return INTEGER(t)[0];
     }
-    else if(isFrame(s)) {
+    else if (isFrame(s)) {
 	return nrows(CAR(s));
     }
     else error("object is not a matrix\n");
@@ -455,12 +460,12 @@ int nrows(SEXP s)
 int ncols(SEXP s)
 {
     SEXP t;
-    if(isVector(s) || isList(s)) {
+    if (isVector(s) || isList(s)) {
 	t = getAttrib(s, R_DimSymbol);
-	if(t == R_NilValue) return 1;
+	if (t == R_NilValue) return 1;
 	return INTEGER(t)[1];
     }
-    else if(isFrame(s)) {
+    else if (isFrame(s)) {
 	return length(s);
     }
     else error("object is not a matrix\n");
@@ -470,7 +475,7 @@ int ncols(SEXP s)
 
 int nlevels(SEXP f)
 {
-    if(!isFactor(f))
+    if (!isFactor(f))
 	return 0;
     return LENGTH(getAttrib(f, R_LevelsSymbol));
 }
@@ -555,11 +560,11 @@ int inherits(SEXP s, char *name)
 {
     SEXP class;
     int i, nclass;
-    if(isObject(s)) {
+    if (isObject(s)) {
 	class = getAttrib(s, R_ClassSymbol);
 	nclass = length(class);
-	for(i=0 ; i<nclass ; i++) {
-	    if(!strcmp(CHAR(STRING(class)[i]), name))
+	for (i = 0; i < nclass; i++) {
+	    if (!strcmp(CHAR(STRING(class)[i]), name))
 		return 1;
 	}
 	return 0;
@@ -620,13 +625,11 @@ TypeTable[] = {
 SEXPTYPE str2type(char *s)
 {
     int i;
-
-    for (i=0; TypeTable[i].str ; i++) {
+    for (i = 0; TypeTable[i].str; i++) {
 	if (!strcmp(s, TypeTable[i].str))
 	    return TypeTable[i].type;
     }
-    /*NOTREACHED :*/
-    return TypeTable[0].type;
+    return -1;
 }
 
 
@@ -634,7 +637,7 @@ SEXP type2str(SEXPTYPE t)
 {
     int i;
 
-    for (i=0; TypeTable[i].str ; i++) {
+    for (i = 0; TypeTable[i].str; i++) {
 	if (TypeTable[i].type == t)
 	    return mkChar(TypeTable[i].str);
     }
@@ -642,6 +645,11 @@ SEXP type2str(SEXPTYPE t)
     return R_NilValue; /* for -Wall */
 }
 
+int StringBlank(SEXP x)
+{
+    if (x == R_NilValue) return 1;
+    else return CHAR(x)[0] == '\0';
+}
 
 /* Function to test whether a string is a true value */
 
@@ -678,7 +686,7 @@ SEXP nthcdr(SEXP s, int n)
 {
     if (isList(s) || isLanguage(s) || isFrame(s) || TYPEOF(s) == DOTSXP ) {
 	while( n-- > 0 ) {
-	    if(s == R_NilValue)
+	    if (s == R_NilValue)
 		error("\"nthcdr\" list shorter than %d\n", n);
 	    s = CDR(s);
 	}
@@ -707,8 +715,8 @@ static int isMissing(SEXP symbol, SEXP rho)
     while (rho != R_NilValue) {
 	vl = mfindVarInFrame(FRAME(rho), symbol);
 	if (vl != R_NilValue) {
-	    if(MISSING(vl) == 1) return 1;
-	    if(TYPEOF(CAR(vl)) == PROMSXP && TYPEOF(PREXPR(CAR(vl))) == SYMSXP)
+	    if (MISSING(vl) == 1) return 1;
+	    if (TYPEOF(CAR(vl)) == PROMSXP && TYPEOF(PREXPR(CAR(vl))) == SYMSXP)
 		return isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
 	    else
 		return 0;
@@ -733,8 +741,8 @@ SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     while(rho != R_NilValue) {
 	t = mfindVarInFrame(FRAME(rho), s);
-	if(t != R_NilValue) {
-	    if(MISSING(t)) {
+	if (t != R_NilValue) {
+	    if (MISSING(t)) {
 		LOGICAL(rval)[0] = 1;
 		return rval;
 	    }
@@ -747,15 +755,13 @@ SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
   havebinding:
 
     t = CAR(t);
-    if(TYPEOF(t) != PROMSXP) {
+    if (TYPEOF(t) != PROMSXP) {
 	LOGICAL(rval)[0] = 0;
 	return rval;
-	/*
-	  errorcall(call, "non-promise bound to argument\n");
-	*/
+	/* errorcall(call, "non-promise bound to argument\n"); */
     }
 
-    if(!isSymbol(PREXPR(t))) LOGICAL(rval)[0] = 0;
+    if (!isSymbol(PREXPR(t))) LOGICAL(rval)[0] = 0;
     else LOGICAL(rval)[0] = isMissing(PREXPR(t), PRENV(t));
     return rval;
 }
@@ -824,4 +830,57 @@ SEXP dcar(SEXP l)
 SEXP dcdr(SEXP l)
 {
     return(CDR(l));
+}
+
+
+SEXP OldToNewList(SEXP x)
+{
+    SEXP xptr, xnew, xnames, blank;
+    int i, len = 0, named = 0;
+    for (xptr = x ; xptr != R_NilValue ; xptr = CDR(xptr)) {
+	named = (TAG(xptr) != R_NilValue);
+	len++;
+    }
+    PROTECT(x);
+    PROTECT(xnew = allocVector(VECSXP, len));
+    if (named) {
+	blank = mkChar("");
+	PROTECT(xnames = allocVector(STRSXP, len));
+    }
+    xptr = x;
+    for (i = 0; i < len; i++) {
+	VECTOR(xnew)[i] = CAR(xptr);
+	if (named) {
+	    if(TAG(xptr) == R_NilValue)
+		STRING(xnames)[i] = blank;
+	    else
+		STRING(xnames)[i] = PRINTNAME(TAG(xptr));
+	xptr = CDR(xptr);
+	}
+    }
+    setAttrib(xnew, R_NamesSymbol, xnames);
+    copyMostAttrib(x, xnew);
+    UNPROTECT(2 + named);
+    return xnew;
+}
+
+SEXP NewToOldList(SEXP x)
+{
+    SEXP xptr, xnew, xnames;
+    int i, len, named;
+    len = length(x);
+    PROTECT(x);
+    PROTECT(xnew = allocList(len));
+    PROTECT(xnames = getAttrib(x, R_NamesSymbol));
+    named = (xnames != R_NilValue);
+    xptr = xnew;
+    for (i = 0; i < len; i++) {
+	CAR(xptr) = VECTOR(x)[i];
+	if (named && CHAR(STRING(xnames)[i])[0] != '\0')
+	    TAG(xptr) = install(CHAR(STRING(xnames)[i]));
+	xptr = CDR(xptr);	
+    }
+    copyMostAttrib(x, xnew);
+    UNPROTECT(3);
+    return xnew;
 }

@@ -22,6 +22,7 @@
 
 #define NEW_FACTORS
 #define NEW_DATAFRAMES
+#define NEWLIST
 
 #define COUNTING
 
@@ -130,6 +131,7 @@ typedef struct SEXPREC {
 				complex		*z;
 				struct SEXPREC	**s;
 			} type;
+			int	truelength;
 		} vecsxp;
 		struct {
 			int		offset;
@@ -199,6 +201,7 @@ typedef struct {
 
 	/* Vector Access Macros */
 #define LENGTH(x)	((x)->u.vecsxp.length)
+#define TRUELENGTH(x)	((x)->u.vecsxp.truelength)
 #define CHAR(x)		((x)->u.vecsxp.type.c)
 #define STRING(x)	((x)->u.vecsxp.type.s)
 #define LOGICAL(x)	((x)->u.vecsxp.type.i)
@@ -380,7 +383,8 @@ extern SEXP	R_TspSymbol;		/* "tsp" */
 extern SEXP	R_LastvalueSymbol;	/* ".Last.value" */
 extern SEXP	R_CommentSymbol;	/* "comment" */
 		/* Missing Values - others from Arith.h */
-extern SEXP	R_NaString;		/* NA_STRING */
+extern SEXP	R_NaString;		/* NA_STRING as a CHARSXP */
+extern SEXP	R_BlankString;		/* "" as a CHARSXP */
 		/* Image Dump/Restore */
 extern char	R_ImageName[256];	/* Default image name */
 extern int	R_Unnamed;		/* Use default name? */
@@ -518,10 +522,12 @@ SEXP getAttrib(SEXP, SEXP);
 int get1index(SEXP,SEXP,int);
 void GetMatrixDimnames(SEXP, SEXP*, SEXP*);
 SEXP GetArrayDimnames(SEXP);
+SEXP GetColNames(SEXP);
 SEXP GetOption(SEXP, SEXP);
 int GetOptionDigits(SEXP);
 int GetOptionWidth(SEXP);
 SEXP GetPar(char*, SEXP);
+SEXP GetRowNames(SEXP);
 SEXP getVar(SEXP, SEXP);
 SEXP getVarInFrame(SEXP, SEXP);
 void gsetVar(SEXP, SEXP, SEXP);

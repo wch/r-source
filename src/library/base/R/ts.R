@@ -175,13 +175,11 @@ function (x, type="l", xlim=NULL, ylim=NULL, xlab = "Time", ylab, log="",
 		lines.default(time.x, x, col=col[1], bg=bg, lty=lty[1],
 			pch=pch[1], type=type)
 	}
-
-	pars <- list(...)
 	if (ann)
-		title(main = main, xlab = xlab, ylab = ylab, pars = pars)
+		title(main = main, xlab = xlab, ylab = ylab, ...)
 	if (axes) {
-		axis(1, pars = pars)
-		axis(2, pars = pars)
+		axis(1, ...)
+		axis(2, ...)
 	}
         if (frame.plot) box(...)
 }
