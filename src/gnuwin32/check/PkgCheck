@@ -9,7 +9,7 @@ include $(RHOME)/src/gnuwin32/MkRules
 all: run
 
 R = $(RHOME)/bin/Rterm --vanilla LC_ALL=C
-RDIFF = $(RHOME)/src/scripts/Rdiff
+RDIFF = $(RHOME)/bin/Rcmd Rdiff.sh
 
 run: $(PKG)-Ex.R
 	@$(ECHO) "Running examples in '$(PKG)-Ex.R' ..."

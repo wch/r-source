@@ -67,8 +67,6 @@ Rsmall.iss: JRsmall.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip \
 	rm $(PREFIX)d1/$(PREFIX)/doc/manual/R-exts.pdf
 	rm $(PREFIX)d1/$(PREFIX)/doc/manual/R-lang.pdf
 	mkdir -p $(PREFIX)/doc/html
-	cp ../../../doc/html/faq.html $(PREFIX)/doc/html
-	cp ../../../doc/html/rw-FAQ.html $(PREFIX)/doc/html
 	perl JRsmall.pl $(RVER) $(PREFIX)
 
 miniR.exe: Rsmall.iss

@@ -42,6 +42,8 @@ Rcmd INSTALL now allows Windows-style paths to a tar file.
 rproxy.dll is now built for StatConnector version 0.99: earlier versions
 are no longer supported.
 
+A Windows-specific bug in bitmap() which caused output to appear twice
+has been fixed.
 
 
 rw1022
