@@ -141,8 +141,7 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if (strcspn(fmt, "s") >= strlen(fmt))
 			error("%s", "use format %s for character objects");
 		    if(strlen(CHAR(STRING_ELT(CAR(args), 0))) > MAXLINE)
-			warning("%s",
-				"Likely truncation of character string in %s");
+			warning("Likely truncation of character string");
 		    snprintf(bit, MAXLINE, fmt, 
 			     CHAR(STRING_ELT(CAR(args), 0)));
 		    bit[MAXLINE] = '\0';
