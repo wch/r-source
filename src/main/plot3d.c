@@ -939,101 +939,86 @@ static int LimitCheck(double *lim, double *c, double *s)
     return 1;
 }
 
-static int Vertex[8][3] = {
-    {0, 0, 0},
-    {0, 0, 1},
-    {0, 1, 0},
-    {0, 1, 1},
-    {1, 0, 0},
-    {1, 0, 1},
-    {1, 1, 0},
-    {1, 1, 1}
-};
+/* PerspBox: The following code carries out a visibility test */
+/* on the surfaces of the xlim/ylim/zlim box around the plot. */
+/* If front = 0, only the faces with their inside toward the */
+/* eyepoint are drawn.  If front = 1, only the faces with */
+/* their outside toward the eye are drawn.  This lets us carry */
+/* out hidden line removal by drawing any faces which will be */
+/* obscured before the surface, and those which will not be */
+/* obscured after the surface. */
 
-static int Edge[12][2] = {
-    {0, 1},
-    {2, 3},
-    {4, 5},
-    {6, 7},
-    {0, 2},
-    {1, 3},
-    {4, 6},
-    {5, 7},
-    {0, 4},
-    {1, 5},
-    {2, 6},
-    {3, 7},
+static int Vertex[8][3] = {
+  {0, 0, 0},
+  {0, 0, 1},
+  {0, 1, 0},
+  {0, 1, 1},
+  {1, 0, 0},
+  {1, 0, 1},
+  {1, 1, 0},
+  {1, 1, 1},
 };
 
 static int Face[6][4] = {
-    { 0,  9,  2,  8},
-    {10,  3, 11,  1},
-    { 4,  1,  5,  0},
-    { 2,  7,  3,  6},
-    { 8,  6, 10,  4},
-    { 5, 11,  7,  9},
+  {0, 1, 5, 4},
+  {2, 6, 7, 3},
+  {0, 2, 3, 1},
+  {4, 5, 7, 6},
+  {0, 4, 6, 2},
+  {1, 3, 7, 5},
 };
 
 static void PerspBox(int front, double *x, double *y, double *z, DevDesc *dd)
 {
-    Vector3d u0, v0, u1, v1;
-    int edge, e, f, p0, p1, near;
-    u0[3] = 1;
-    u1[3] = 1;
+    Vector3d u0, v0, u1, v1, u2, v2, u3, v3;
+    double d[3], e[3];
+    int f, i, p0, p1, p2, p3, near;
     for (f = 0 ; f < 6 ; f++) {
-	u0[0] = u1[0] = 0.5 * (x[0] + x[1]);
-	u0[1] = u1[1] = 0.5 * (y[0] + y[1]);
-	u0[2] = u1[2] = 0.5 * (z[0] + z[1]);
-	switch(f) {
-	case 0:
-	    u0[1] = y[0];
-	    u1[1] = 2 * y[0] - y[1];
-	    break;
-	case 1:
-	    u0[1] = y[1];
-	    u1[1] = 2 * y[1] - y[0];	    
-	    break;
-	case 2:
-	    u0[0] = x[0];
-	    u1[0] = 2 * x[0] - x[1];
-	    break;
-	case 3:
-	    u0[0] = x[1];
-	    u1[0] = 2 * x[1] - x[0];
-	    break;
-	case 4:
-	    u0[2] = z[0];
-	    u1[2] = 2 * z[0] - z[1];
-	    break;
-	case 5:
-	    u0[2] = z[1];
-	    u1[2] = 2 * z[1] - z[0];
-	    break;
-	}
+        p0 = Face[f][0];
+        p1 = Face[f][1];
+        p2 = Face[f][2];
+        p3 = Face[f][3];
+
+	u0[0] = x[Vertex[p0][0]];
+	u0[1] = y[Vertex[p0][1]];
+	u0[2] = z[Vertex[p0][2]];
+	u0[3] = 1;
+	u1[0] = x[Vertex[p1][0]];
+	u1[1] = y[Vertex[p1][1]];
+	u1[2] = z[Vertex[p1][2]];
+	u1[3] = 1;
+	u2[0] = x[Vertex[p2][0]];
+	u2[1] = y[Vertex[p2][1]];
+	u2[2] = z[Vertex[p2][2]];
+	u2[3] = 1;
+	u3[0] = x[Vertex[p3][0]];
+	u3[1] = y[Vertex[p3][1]];
+	u3[2] = z[Vertex[p3][2]];
+	u3[3] = 1;
+    
 	TransVector(u0, VT, v0);
 	TransVector(u1, VT, v1);
-#ifdef TEST
-	GLine(v0[0]/v0[3], v0[1]/v0[3],
-	      v1[0]/v1[3], v1[1]/v1[3], USER, dd);
- 	printf("f = %d,  %g  %g\n", f, v1[2]/v1[3], v0[2]/v0[3]);
-#endif
-	near = (v1[2]/v1[3] > v0[2]/v0[3]);
+	TransVector(u2, VT, v2);
+	TransVector(u3, VT, v3);
+
+	/* Visibility test */
+	/* Determine whether the surface normal is toward the eye? */
+
+        for (i = 0 ; i < 3 ; i++) {
+	    d[i] = v1[i]/v1[3] - v0[i]/v0[3];
+	    e[i] = v2[i]/v2[3] - v1[i]/v1[3];
+        }
+	near = (d[0]*e[1] - d[1]*e[0]) < 0;
+
 	if (front && near || (!front && !near)) {
-	    for (e = 0 ; e < 4 ; e++) {
-		edge = Face[f][e];
-		p0 = Edge[edge][0];
-		p1 = Edge[edge][1];
-		u0[0] = x[Vertex[p0][0]];
-		u0[1] = y[Vertex[p0][1]];
-		u0[2] = z[Vertex[p0][2]];
-		u1[0] = x[Vertex[p1][0]];
-		u1[1] = y[Vertex[p1][1]];
-		u1[2] = z[Vertex[p1][2]];
-		TransVector(u0, VT, v0);
-		TransVector(u1, VT, v1);
-		GLine(v0[0]/v0[3], v0[1]/v0[3],
-		      v1[0]/v1[3], v1[1]/v1[3], USER, dd);
-	    }
+	  GLine(v0[0]/v0[3], v0[1]/v0[3],
+		v1[0]/v1[3], v1[1]/v1[3], USER, dd);
+	  GLine(v1[0]/v1[3], v1[1]/v1[3],
+		v2[0]/v2[3], v2[1]/v2[3], USER, dd);
+	  GLine(v2[0]/v2[3], v2[1]/v2[3],
+		v3[0]/v3[3], v3[1]/v3[3], USER, dd);
+	  GLine(v3[0]/v3[3], v3[1]/v3[3],
+		v0[0]/v0[3], v0[1]/v0[3], USER, dd);
 	}
     }
 }
