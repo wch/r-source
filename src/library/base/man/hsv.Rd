@@ -21,6 +21,10 @@ hsv(h=1, s=1, v=1, gamma=1)
   used with a \code{col=} specification in graphics functions or in
   \code{par}.
 }
+\section{Gamma correction}{
+  For each color, \eqn{(r,g,b)} in RGB space (with all values in \eqn{[0,1]}),
+  the final color corresponds to \eqn{(r^gamma, g^gamma, b^gamma)}.
+}
 \seealso{
   \code{\link{rainbow}},
   \code{\link{rgb}},
