@@ -78,7 +78,7 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@code{1.7.0} or later); the current version is often called something like
+(@code{1.8.0} or later); the current version is often called something like
 @code{@value{VERSION}} (although not officially).
 
 
@@ -306,11 +306,10 @@ LaTeX installed you can print help files by @code{help(fn_name, offline=TRUE)}.
 @node Can I use R BATCH?, Can I use @RWVER@ with ESS and (X)emacs?, How do I print from R?, Installation and Usage
 @section Can I use @code{R BATCH}?
 
-Yes, if you have Perl installed (and in your path).  The Windows
-analogue is @code{Rcmd BATCH}: use @code{Rcmd BATCH --help} for full
-details.
+Yes.  The Windows analogue is @code{Rcmd BATCH}: use @code{Rcmd BATCH
+--help} for full details.  (Perl is no longer required as from R 1.8.0.)
 
-Otherwise you can set up a batch file using @code{Rterm.exe}.  A sample
+You can set also up a batch file using @code{Rterm.exe}.  A sample
 batch file might contain (as one line)
 
 @example

@@ -23,8 +23,7 @@ BUFFERED is defined in src/gnuwin32/devga.c.]
 Rterm reverts to sending warning/error messages to stdout on Windows
 95/98/ME.
 
-Rcmd BATCH no longer attempts to redirect stderr on Windows 95/98/ME,
-and so may work again there (if Perl's system() call does).
+Rcmd BATCH is now handled in C, and works again on Windows 95/98/ME.
 
 Calling dev.off() (or ending a session) when a windows() device is
 open and recording plots automatically saves the current plot as the
