@@ -58,6 +58,9 @@ mainfiles Ä fixdesc
 	  if  `Exists ::library:{pkg}:INDEX`
 	   Duplicate -y ::library:{pkg}:INDEX {RHOME}library:{pkg}
 	  end 
+      if  `Exists ::library:{pkg}:NAMESPACE`
+	   Duplicate -y ::library:{pkg}:NAMESPACE {RHOME}library:{pkg}
+	  end 
 	  if  `Exists ::library:{pkg}:TITLE`
 	     Duplicate -y ::library:{pkg}:TITLE {RHOME}library:{pkg}
       end
