@@ -9395,8 +9395,8 @@ fi
 fi
 
 for ac_func in access acosh asinh atanh bcopy finite ftruncate getcwd \
-  getgrgid getpwuid getuid hypot isnan matherr memcpy memmove mkfifo popen \
-  putenv rint setenv snprintf strcoll stat strptime system times \
+  getgrgid getpwuid getuid hypot isnan matherr memcpy memmove mkfifo \
+  popen putenv rint setenv snprintf strcoll stat strptime system times \
   unsetenv vsnprintf
 do
 echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
@@ -10044,7 +10044,7 @@ for ac_hdr in dl.h dlfcn.h elf.h errno.h fcntl.h floatingpoint.h \
   fpu_control.h grp.h ieee754.h ieeefp.h locale.h netdb.h netinet/in.h \
   netinet/tcp.h pwd.h readline/history.h readline/readline.h rpc/rpc.h \
   rpc/xdr.h string.h sys/param.h sys/select.h sys/socket.h sys/stat.h \
-  sys/time.h sys/times.h sys/utsname.h unistd.h zlib.h
+  sys/time.h sys/times.h sys/utsname.h unistd.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
@@ -12838,8 +12838,8 @@ echo $ac_n "checking for libglade""... $ac_c" 1>&6
 echo "configure:12839: checking for libglade" >&5
 if test "$LIBGLADE_CONFIG" = "no"; then
   echo "$ac_t""no" 1>&6
-   warn_libglade="GNOME support requires libglade version >= 0.3"
-	  echo "configure: warning: ${warn_libglade}" 1>&2
+   warn_libglade_version="GNOME support requires libglade version >= 0.3"
+	  echo "configure: warning: ${warn_libglade_version}" 1>&2
 else
   if $LIBGLADE_CONFIG --check $module_args; then
     LIBGLADE_CFLAGS=`$LIBGLADE_CONFIG --cflags $module_args`
@@ -12850,8 +12850,8 @@ else
   else
     echo "*** libglade was not compiled with support for $module_args" 1>&2
     echo "$ac_t""no" 1>&6
-     warn_libglade="GNOME support requires libglade version >= 0.3"
-	  echo "configure: warning: ${warn_libglade}" 1>&2
+     warn_libglade_version="GNOME support requires libglade version >= 0.3"
+	  echo "configure: warning: ${warn_libglade_version}" 1>&2
   fi
 fi
 
@@ -13775,7 +13775,7 @@ else
   echo "$ac_t""no" 1>&6
 fi
 
-  if test "${r_cv_zlib}" = yes; then
+  if test "${have_zlib}" = yes; then
     cat >> confdefs.h <<\EOF
 #define HAVE_ZLIB 1
 EOF
@@ -14753,8 +14753,8 @@ fi
 if test -n "${warn_shlib_cxxldflags}"; then
   echo "configure: warning: ${warn_shlib_cxxldflags}" 1>&2
 fi
-if test -n "${warn_libglade}"; then
-  echo "configure: warning: ${warn_libglade}" 1>&2
+if test -n "${warn_libglade_version}"; then
+  echo "configure: warning: ${warn_libglade_version}" 1>&2
 fi
 if test -n "${warn_tcltk_version}"; then
   echo "configure: warning: ${warn_tcltk_version}" 1>&2
