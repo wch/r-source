@@ -524,13 +524,13 @@ case "${host}" in
   *aix4.[[2-9]]*)
     EXPORTFILE="\$(top_builddir)/etc/R.exp"
     ldcmd=ld
-    dllflags="-bdynamic -bE:${EXPORTFILE} -bM:SRE -lc -lm"
+    dllflags="-bdynamic -bE:${EXPORTFILE} -bM:SRE"
     if test "${GCC}" = yes; then
       dllflags="${dllflags} `${CC} -print-libgcc-file-name`"
     fi
     shlibld=ld
     shlibldflags="-bM:SRE -H512 -T512 -bnoentry -bexpall \
-      -bI:\$(R_HOME)/etc/R.exp -lc -lm"
+      -bI:\$(R_HOME)/etc/R.exp"
     ;;
   alpha*osf*)
     ldcmd="${FC} -g -nofor_main -fpe3 "
