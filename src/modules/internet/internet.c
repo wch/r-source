@@ -434,7 +434,7 @@ void *R_HTTPOpen(const char *url)
 #endif
 	    }
 	}
-    }
+    } else return NULL;
     con = (inetconn *) malloc(sizeof(inetconn));
     if(con) {
 	con->length = len;
