@@ -114,9 +114,11 @@ weights <- function(x, ...)UseMethod("weights")
 
 df.residual <- function(x, ...)UseMethod("df.residual")
 
-variable.names <-function(obj, ...)UseMethod("variable.names")
+variable.names <-function(object, ...) UseMethod("variable.names")
+variable.names.default <- .Alias(colnames)
 
-case.names <-function(obj, ...)UseMethod("case.names")
+case.names <-function(object, ...) UseMethod("case.names")
+case.names.default <- .Alias(rownames)
 
 offset <- function(x) x
 ## ?
