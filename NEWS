@@ -115,6 +115,8 @@ BUG FIXES
 
     o	Rinternals.h is now accepted by a C++ compiler.
 
+    o   type.convert() was failing to detect integer overflow.
+
 
 
 		CHANGES IN R VERSION 1.4.0

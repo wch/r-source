@@ -77,6 +77,22 @@ static int ConsoleGetchar()
     return *ConsoleBufp++;
 }
 
+/* Like strtol, but for ints not longs and returns NA_INTEGER on overflow */
+static int Strtoi(const char *nptr, int base)
+{
+    long res;
+    char *endp;
+    
+    errno = 0;
+    res = strtol(nptr, &endp, base);
+    if (*endp != '\0') res = NA_INTEGER;
+    /* next can happen on a 64-bit platform */
+    if (res > INT_MAX || res < INT_MIN) res = NA_INTEGER;
+    if (errno == ERANGE) res = NA_INTEGER;
+    return(res);
+}
+
+
 static double Strtod (const char *nptr, char **endptr) 
 {
     if (decchar == '.')
@@ -342,8 +358,8 @@ static void extractItem(char *buffer, SEXP ans, int i)
 	if (isNAstring(buffer, 0))
 	    INTEGER(ans)[i] = NA_INTEGER;
 	else {
-	    INTEGER(ans)[i] = strtol(buffer, &endp, 10);
-	    if (*endp != '\0')
+	    INTEGER(ans)[i] = Strtoi(buffer, 10);
+	    if (INTEGER(ans)[i] == NA_INTEGER)
 		expected("an integer", buffer);
 	}
 	break;
@@ -903,7 +919,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP cvec, a, dup, levs, dims, names, dec;
     SEXP rval = R_NilValue; /* -Wall */
-    int i, j, len, numeric, asIs;
+    int i, j, len, numeric, asIs, res;
     Rboolean islogical = TRUE, isinteger = TRUE, isreal = TRUE, 
 	iscomplex = TRUE, done = FALSE;
     char *endp, *tmp;
@@ -953,7 +969,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    && strcmp(tmp, "T") != 0 && strcmp(tmp, "TRUE") != 0)
 	    islogical = FALSE;
 
-	strtol(tmp, &endp, 10); if (*endp != '\0') isinteger = FALSE;
+	res = Strtoi(tmp, 10); if (res == NA_INTEGER) isinteger = FALSE;
 	Strtod(tmp, &endp); if (!isBlankString(endp)) isreal = FALSE;
 	strtoc(tmp, &endp); if (!isBlankString(endp)) iscomplex = FALSE;
     }
@@ -985,8 +1001,8 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (strlen(tmp) == 0 || isNAstring(tmp, 1) || isBlankString(tmp))
 		INTEGER(rval)[i] = NA_INTEGER;
 	    else {
-		INTEGER(rval)[i] = strtol(tmp, &endp, 10);
-		if (*endp != '\0') {
+		INTEGER(rval)[i] = Strtoi(tmp, 10);
+		if (INTEGER(rval)[i] == NA_INTEGER) {
 		    isinteger = FALSE;
 		    break;
 		}

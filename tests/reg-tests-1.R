@@ -425,6 +425,12 @@ glm(y ~ 0, family = binomial)
 ##  Comments:  1.3.1 gave  Error in any(n > 1) : Object "n" not found
 
 
+## Integer overflow in type.convert
+res <- type.convert("12345689")
+stopifnot(typeof(res) == "integer")
+res <- type.convert("12345689012")
+stopifnot(typeof(res) == "double")
+##  Comments: was integer in 1.4.0
 
 ## This example last ##
 
