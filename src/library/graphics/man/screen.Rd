@@ -78,8 +78,6 @@ close.screen(n, all.screens = FALSE)
   The functions are also incompatible with some plotting functions,
   such as \code{\link{coplot}}, which make use of these other mechanisms.
 
-  The functions should not be used with multiple devices.
-
   \code{erase.screen} will appear not to work if the background colour
   is transparent (as it is by default on most devices).
 }

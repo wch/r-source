@@ -1,17 +1,30 @@
+## An environment not exported from namespace:graphics used to
+## store the split.screen settings
+.SSenv <- new.env()
+
+.SSget <- function(x) get(paste(x, dev.cur(), sep=":"), envir=.SSenv, inherits=FALSE)
+.SSexists <- function(x) exists(paste(x, dev.cur(), sep=":"), envir=.SSenv, inherits=FALSE)
+.SSassign <- function(x, value) assign(paste(x, dev.cur(), sep=":"), value, envir=.SSenv)
+assign("par.list",
+       c("adj", "bty", "cex", "col", "crt", "err", "font", "lab",
+         "las", "lty", "lwd", "mar", "mex", "mfg", "mgp", "pch",
+         "pty", "smo", "srt", "tck", "usr", "xaxp", "xaxs", "xaxt", "xpd",
+         "yaxp", "yaxs", "yaxt", "fig"), envir=.SSenv)
+
 split.screen <-
-    function(figs,
-	     screen = if(exists(".split.screens", envir=.GlobalEnv))
-		      .split.cur.screen else 0,
-	     erase = TRUE)
+    function(figs, screen, erase = TRUE)
 {
-    first.split <- !exists(".split.screens", envir=.GlobalEnv)
+    first.split <- !.SSexists("sp.screens")
+    if(missing(screen))
+        screen <- if(!first.split) .SSget("sp.cur.screen") else 0
+    if(!first.split) .valid.screens <- .SSget("sp.valid.screens")
     if (missing(figs))
 	if (first.split)
 	    return(FALSE)
 	else
-	    return(.split.valid.screens)
+	    return(.valid.screens)
     if ((first.split && screen != 0) ||
-	(!first.split && !(screen %in% .split.valid.screens)))
+	(!first.split && !(screen %in% .valid.screens)))
 	stop("Invalid screen number\n")
     ## if figs isn't a matrix, make it one
     if (!is.matrix(figs)) {
@@ -32,24 +45,17 @@ split.screen <-
     new.screens <- valid.screens <- cur.screen <- 0
     if (first.split) {
         if (erase) plot.new()
-	split.par.list <- c("adj", "bty", "cex", "col", "crt", "err",
-			    "font", "lab", "las", "lty",
-			    "lwd", "mar", "mex", "mfg", "mgp",
-			    "pch", "pty", "smo", "srt", "tck", "usr",
-			    "xaxp", "xaxs", "xaxt", "xpd", "yaxp",
-			    "yaxs", "yaxt", "fig")
-	assign(".split.par.list", split.par.list, envir=.GlobalEnv)
 	## save the current graphics state
-	split.saved.pars <- par(split.par.list)
+	split.saved.pars <- par(get("par.list", envir=.SSenv))
 	split.saved.pars$fig <- NULL
 	## NOTE: remove all margins when split screens
 	split.saved.pars$omi <- par(omi=rep.int(0,4))$omi
-	assign(".split.saved.pars", split.saved.pars, envir=.GlobalEnv)
+	.SSassign("sp.saved.pars", split.saved.pars)
 	## set up the screen information
 	split.screens <- vector(mode="list", length=num.screens)
 	new.screens <- 1:num.screens
 	for (i in new.screens) {
-	    split.screens[[i]] <- par(split.par.list)
+	    split.screens[[i]] <- par(get("par.list", envir=.SSenv))
 	    split.screens[[i]]$fig <- figs[i,]
 	}
 	valid.screens <- new.screens
@@ -57,9 +63,9 @@ split.screen <-
     }
     else {
         if (erase) erase.screen(screen)
-	max.screen <- max(.split.valid.screens)
+	max.screen <- max(.valid.screens)
 	new.max.screen <- max.screen + num.screens
-	split.screens <- .split.screens
+	split.screens <- .SSget("sp.screens")
 	## convert figs to portions of the specified screen
 	total <- c(0,1,0,1)
 	if (screen > 0)
@@ -71,45 +77,50 @@ split.screen <-
                                  c(2,2))
 	new.screens <- (max.screen+1):new.max.screen
 	for (i in new.screens) {
-	    split.screens[[i]] <- par(.split.par.list)
+	    split.screens[[i]] <- par(get("par.list", envir=.SSenv))
 	    split.screens[[i]]$fig <- figs[i-max.screen,]
 	}
-	valid.screens <- c(.split.valid.screens, new.screens)
+	valid.screens <- c(.valid.screens, new.screens)
 	cur.screen <- max.screen+1
     }
-    assign(".split.screens", split.screens, envir=.GlobalEnv)
-    assign(".split.cur.screen", cur.screen, envir=.GlobalEnv)
-    assign(".split.valid.screens", valid.screens, envir=.GlobalEnv)
-    par(.split.screens[[cur.screen]])
+    .SSassign("sp.screens", split.screens)
+    .SSassign("sp.cur.screen", cur.screen)
+    .SSassign("sp.valid.screens", valid.screens)
+    if(first.split) on.exit(close.screen(all.screens=TRUE))
+    par(split.screens[[cur.screen]])
+    on.exit()
     return(new.screens)
 }
 
-screen <- function(n = .split.cur.screen, new = TRUE)
+screen <- function(n = cur.screen, new = TRUE)
 {
-    if (!exists(".split.screens", envir=.GlobalEnv))
+    if (!.SSexists("sp.screens"))
 	return(FALSE)
+    cur.screen <- .SSget("sp.cur.screen")
     if (missing(n) && missing(new))
-	return(.split.cur.screen)
-    if (!(n %in% .split.valid.screens))
+	return(cur.screen)
+    if (!(n %in% .SSget("sp.valid.screens")))
 	stop("Invalid screen number\n")
-    .split.screens[[.split.cur.screen]] <- par(.split.par.list)
-    assign(".split.screens", .split.screens, envir=.GlobalEnv)
-    assign(".split.cur.screen", n, envir=.GlobalEnv)
-    par(.split.screens[[n]])
+    split.screens <- .SSget("sp.screens")
+    split.screens[[cur.screen]] <- par(get("par.list", envir=.SSenv))
+    assign("sp.screens", split.screens, envir=.SSenv)
+    assign("sp.cur.screen", n, envir=.SSenv)
+    par(split.screens[[n]])
     if (new)
 	erase.screen(n)
     invisible(n)
 }
 
-erase.screen <- function(n = .split.cur.screen)
+erase.screen <- function(n = cur.screen)
 {
-    if (!exists(".split.screens", envir=.GlobalEnv))
+    if (!.SSexists("sp.screens"))
 	return(FALSE)
-    if (!(n %in% .split.valid.screens) && n != 0)
+    cur.screen <- .SSget("sp.cur.screen")
+    if (!(n %in% .SSget("sp.valid.screens")) && n != 0)
 	stop("Invalid screen number\n")
     old <- par(usr=c(0,1,0,1), mar=c(0,0,0,0),
 	       fig = if (n > 0)
-	       .split.screens[[n]]$fig
+	       .SSget("sp.screens")[[n]]$fig
 	       else
 	       c(0,1,0,1),
 	       xaxs="i", yaxs="i")
@@ -123,33 +134,25 @@ erase.screen <- function(n = .split.cur.screen)
 
 close.screen <- function(n, all.screens=FALSE)
 {
-    if (!exists(".split.screens", envir=.GlobalEnv))
+    if (!.SSexists("sp.screens"))
 	return(FALSE)
     if (missing(n) && missing(all.screens))
-	return(.split.valid.screens)
-    if (all.screens || all(.split.valid.screens %in% n)) {
-	par(.split.saved.pars)
+	return(.SSget("sp.valid.screens"))
+    valid.screens <- .SSget("sp.valid.screens")
+    if (all.screens || all(valid.screens %in% n)) {
+	par(.SSget("sp.saved.pars") )
 	par(mfrow=c(1,1), new=FALSE)
-	remove(".split.screens", ".split.cur.screen",
-	       ".split.saved.pars", ".split.valid.screens",
-	       ".split.par.list",
-	       envir=.GlobalEnv)
+	rm(list=paste(c("sp.screens", "sp.cur.screen", "sp.saved.pars",
+           "sp.valid.screens"), dev.cur(), sep=":"), envir=.SSenv)
 	invisible()
-    }
-    else {
-	assign(".split.valid.screens",
-	       .split.valid.screens[-sort(match(n, .split.valid.screens))],
-	       envir=.GlobalEnv)
-	temp <- .split.cur.screen
+    } else {
+	.SSassign("sp.valid.screens",
+                  valid.screens[-sort(match(n, valid.screens))])
+	temp <- .SSget("sp.cur.screen")
 	if (temp %in% n)
-	    temp <- min(.split.valid.screens[.split.valid.screens>temp])
-	if (temp > max(.split.valid.screens))
-	    temp <- min(.split.valid.screens)
+	    temp <- min(valid.screens[valid.screens>temp])
+	if (temp > max(valid.screens)) temp <- min(valid.screens)
 	screen(temp, new=FALSE)
-	return(.split.valid.screens)
+	return(valid.screens)
     }
 }
-
-
-
-
