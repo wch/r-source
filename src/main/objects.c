@@ -1209,6 +1209,7 @@ SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   prim_mlist */
 	PROTECT(mlist = get_primitive_methods(op, rho));
 	do_set_prim_method(op, "set", R_NilValue, mlist);
+	current = prim_methods[offset]; /* as revised by do_set_prim_method */
 	UNPROTECT(1);
     }
     mlist = prim_mlist[offset];
