@@ -753,6 +753,11 @@ stopifnot(all(!is.na(res)))
 ## outer values were NA in 1.5.1
 
 
+library(methods)
+stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
+detach("package:methods")
+
+
 ## related to PR 1577/1608, conversions to character
 DF <- data.frame(b = LETTERS[1:3])
 sapply(DF, class)
