@@ -38,7 +38,7 @@ USER-VISIBLE CHANGES
 	do test that x11() works in a new Unix-alike R installation.
 
     o	The tables for plotmath, Hershey and Japanese have been moved
-	from the help pages (example(plotmath)) to demo(plotmath) etc.
+	from the help pages (example(plotmath) etc) to demo(plotmath) etc.
 
     o	plot.dendrogram (`mva' package) now draws leaf labels if present
 	by default.
@@ -414,8 +414,7 @@ C-LEVEL FACILITIES
     o	A full double-precision LAPACK shared library is made
 	available as -lRlapack.	 To use this include
 	$(LAPACK_LIBS) $(BLAS_LIBS) in PKG_LIBS.
-	[Not currently operational on MacOS X unless vecLib is used,
-	and vecLib and libsunperf give incomplete libraries.]
+	[Not currently operational on MacOS X unless vecLib is used.]
 
     o	Header file R_ext/Lapack.h added.  C declarations of BLAS
 	routines moved to R_ext/BLAS.h and included in R_ext/Applic.h
@@ -449,6 +448,13 @@ BUG FIXES
 
     o	Sys.sleep() on Unix was having trouble with waits of less than 0.5s
 
+    o	The fix to PR#2396 broke read.table() on files with CR line
+	endings. (PR#2469)   Separate problem with this on Carbon MacOS
+	build fixed as well.
+
+    o	Converting Sweave files to noweb syntax using SweaveSyntConv()
+	was broken.
+
     o	Printing numbers near the minimum could get the number of
 	significant figures wrong due to underflow: for example 4e-308
 	might print as 4.00000e-308.  (Seen on some Windows builds,
@@ -474,7 +480,7 @@ BUG FIXES
 	used, and that conversion neither respected `digits' nor
 	`quote'.
 
-    o	Rprof() might gave misleading results for too small values of
+    o	Rprof() might give misleading results for too small values of
 	`interval' and in practice the default 20ms was about as small
 	as is advisable on Linux.  Now the interval is forced to be at
 	least one clock tick.
@@ -507,10 +513,10 @@ BUG FIXES
 	the range.
 
     o	tcltk was using deprecated internals of the Tcl library when
-	accessing error messages. Not likely to be a user-visible
+	accessing error messages.  Not likely to be a user-visible
 	change (yet!).
 
-    o	The automatic search of BLAS libs now tries Sun's libsunperf
+    o	The automatic search for BLAS libs now tries Sun's libsunperf
 	the way the latest versions require. (PR#2530)
 
     o	str(array(1)) now does show the array.
@@ -524,7 +530,7 @@ BUG FIXES
 
     o	La.chol2inv() gave incorrect results unless the matrix was square.
 
-    o	When the POSIXt data functions were required to guess DST,
+    o	When the POSIXt date functions were required to guess DST,
 	they sometimes guessed correctly that DST was in force but
 	converted a POSIXlt time as if standard time was given.
 
@@ -549,19 +555,6 @@ BUG FIXES
 	*	       1.6 SERIES NEWS			 *
 	*						 *
 	**************************************************
-
-
-		CHANGES IN R VERSION 1.6.3
-
-
-BUG FIXES
-
-    o	The fix to PR#2396 broke read.table() on files with CR line
-	endings. (PR#2469) Separate problem with this on Carbon Mac
-	build fixed as well.
-
-    o	Converting Sweave files to noweb syntax using SweaveSyntConv()
-	was broken.
 
 
 		CHANGES IN R VERSION 1.6.2
