@@ -5,9 +5,9 @@ scan <-
 	    na.strings<-c(na.strings,"")
 	if(!missing(n)) {
 	    if(missing(nmax))
-		nmax <- n/length(what)
+		nmax <- n / pmax(length(what), 1)
 	    else
-		stop("Either specify 'nmax' or 'n', but not both.")
+		stop("Either specify `nmax' or `n', but not both.")
 	}
 	.Internal(scan(file, what, nmax, sep, skip, nlines,
 		       na.strings,flush,strip.white, quiet))
