@@ -208,6 +208,14 @@ xxx <- scan("foo.txt", "", sep="\n")
 stopifnot(identical(xx, xxx))
 unlink("foo.txt")
 
+## as.character was truncating formulae:  John Fox 2001-08-23
+mod <- this ~ is + a + very + long + formula + with + a + very + large + number + of + characters
+zz <- as.character(mod)
+zz
+nchar(zz)
+stopifnot(nchar(zz)[3] == 83)
+## truncated in 1.3.0
+
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {
    warnmsg <- paste(LETTERS[sample(1:26,n,replace=TRUE)],collapse="")

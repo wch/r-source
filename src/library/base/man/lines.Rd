@@ -1,11 +1,15 @@
 \name{lines}
+\alias{lines}
+\alias{lines.default}
 \title{Add Connected Line Segments to a Plot}
+\description{
+  A generic function taking coordinates given in various ways and
+  joining the corresponding points with line segments.
+}
 \usage{
 lines(x, \dots)
 lines.default(x, y=NULL, type="l", col=par("col"), lty=par("lty"), \dots)
 }
-\alias{lines}
-\alias{lines.default}
 \arguments{
   \item{x, y}{coordinate vectors of points to join.}
   \item{type}{character indicating the type of plotting; actually any of
@@ -16,23 +20,20 @@ lines.default(x, y=NULL, type="l", col=par("col"), lty=par("lty"), \dots)
     also be supplied as arguments, particularly, line type, \code{lty} and
     line width, \code{lwd}.}
 }
-\description{
-  A generic function taking coordinates given in various ways
-  and joining the corresponding points with line segments.
-}
 \details{
-  The coordinates can be passed to \code{lines}
-  in a plotting structure (a list with \code{x} and \code{y} components),
-  a time series, etc. See \code{\link{xy.coords}}.
+  The coordinates can be passed to \code{lines} in a plotting structure
+  (a list with \code{x} and \code{y} components), a time series,
+  etc. See \code{\link{xy.coords}}.
 
   The coordinates can contain \code{NA} values. If a point contains
   \code{NA} it either its \code{x} or \code{y} value, it is omitted from
-  the plot, and liens are not drawn to or from such points.  Thus
+  the plot, and lines are not drawn to or from such points.  Thus
   missing values can be used to achieve breaks in lines.
 }
 \seealso{
-  \code{\link{points}}, \code{\link{plot}}, and the underlying ``primitive''
-  \code{\link{plot.xy}}.
+  \code{\link{points}},
+  \code{\link{plot}},
+  and the underlying ``primitive'' \code{\link{plot.xy}}.
 }
 \examples{
 data(cars)

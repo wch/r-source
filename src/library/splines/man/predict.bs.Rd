@@ -21,7 +21,7 @@
     arguments are used.}
 }
 \value{
-  An object just like \code{basis}, except evaluated at the new values
+  An object just like \code{object}, except evaluated at the new values
   of \code{x}.
 
   These are methods for the generic function \code{\link{predict}} for
@@ -29,13 +29,8 @@
   \code{\link{predict}} for the general behavior of this function.
 }
 \seealso{
-  \code{\link{bs}},
-  \code{\link{ns}},
-  \code{\link{poly}}
-  % <FIXME>
-  % Not yet in R ...
-  % \code{lo}, \code{s}
-  % </FIXME>
+  \code{\link{bs}}, \code{\link{ns}}, \code{\link{poly}}.
+  %%-- FIXME: These are not in R (and wont ever ?!): \code{lo}, \code{s}
 }
 \examples{
 data(women)

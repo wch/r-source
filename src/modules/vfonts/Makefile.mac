@@ -1,6 +1,6 @@
-#   File:       Makefile.make
+#   File:       vfontsLib.make
 #   Target:     vfontsLib
-#   Created:    Jago, Aug 2001, Stefano M. Iacus
+#   Created:    Jago, Jul 2001, Stefano M. Iacus
 #
 #   This script assumes that R binary already exists in 
 #   folder 'src/macintosh/bin'
@@ -23,7 +23,7 @@ Includes        = -i :::include: ¶
 Sym-PPC         = -sym off
 
 PPCCOptions     = {Includes} {Sym-PPC} -opt off -includes unix -w 35 -shared_lib_export on -d HAVE_CONFIG_H ¶
-				-d Macintosh -d TARGET_API_MAC_CARBON -prefix RHeaders.h 
+				-d Macintosh -prefix RHeaders.h -noMapCR
 
 ### Modules directory ###
 
@@ -67,7 +67,7 @@ LibFiles-PPC    =  ¶
 
 
 {Module}Lib  ÄÄ  {ObjFiles-PPC} {LibFiles-PPC} {¥MondoBuild¥} 
-# creates export table
+#create export table
     if `Exists :expvar`
 	 delete :expvar
 	end
@@ -77,7 +77,7 @@ LibFiles-PPC    =  ¶
 	 echo "Creating modules directory" "{ModDir}" 
      NewFolder {ModDir}
     end
-# Builds the module	
+# Build the vfonts module	
 	PPCLink ¶
 		-o {ModDir}{Module}Lib ¶
 		{ObjFiles-PPC} ¶

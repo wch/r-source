@@ -34,16 +34,18 @@ hclust <- function(d, method="complete", members=NULL)
     if(method == -1)
 	stop("ambiguous clustering method")
 
-    n <- attr(d, "Size")
+    n <- as.integer(attr(d, "Size"))
     if(is.null(n))
 	stop("invalid dissimilarities")
+    if(n < 2)
+        stop("Must have n >= 2 objects to cluster")
     labels <- attr(d, "Labels")
 
     len <- n*(n-1)/2
 
     if(is.null(members))
         members <- rep(1, n)
-    if(length(members)!=n)
+    if(length(members) != n)
         stop("Invalid length of members")
 
     hcl <- .Fortran("hclust",
@@ -66,13 +68,13 @@ hclust <- function(d, method="complete", members=NULL)
 		      n = as.integer(n),
 		      ia = as.integer(hcl$ia),
 		      ib = as.integer(hcl$ib),
-		      order = integer(n),
+  		      order = integer(n),
 		      iia = integer(n),
 		      iib = integer(n), PACKAGE="mva")
 
-    tree <- list(merge=cbind(hcass$iia[1:(n-1)], hcass$iib[1:(n-1)]),
-		 height=hcl$crit[1:(n-1)],
-		 order=hcass$order,
+    tree <- list(merge = cbind(hcass$iia[1:(n-1)], hcass$iib[1:(n-1)]),
+		 height= hcl$crit[1:(n-1)],
+		 order = hcass$order,
 		 labels=attr(d, "Labels"),
                  method=METHODS[method],
                  call=match.call())
@@ -80,7 +82,6 @@ hclust <- function(d, method="complete", members=NULL)
     if(!is.null(attr(d, "method"))){
         tree$dist.method <- attr(d, "method")
     }
-
     class(tree) <- "hclust"
     tree
 }
@@ -105,7 +106,7 @@ plot.hclust <-
 	    else
 		as.character(x$labels)
 	} else {
-	    if(labels==FALSE)
+	    if(is.logical(labels) && !labels)# FALSE
 		character(n+1)
 	    else
 		as.character(labels)
@@ -113,7 +114,7 @@ plot.hclust <-
 
     plot.new()
     .Internal(dend.window(n, merge, height, order, hang, labels, ...))
-    .Internal(dend(n, merge, height, order, hang, labels, ...))
+    .Internal(dend       (n, merge, height, order, hang, labels, ...))
     if(axes)
         axis(2, at=pretty(range(height)))
     if (frame.plot)

@@ -761,8 +761,11 @@ RxmlNanoFTPConnect(void *ctx) {
 	hp = gethostbyname(proxy);
     else
 	hp = gethostbyname(ctxt->hostname);
-    if (hp == NULL)
+    if (hp == NULL) {
+	RxmlMessage(1, "cannot resolve host");
         return(-1);
+    }
+    
 
     /*
      * Prepare the socket
@@ -789,6 +792,7 @@ RxmlNanoFTPConnect(void *ctx) {
                 sizeof(struct sockaddr_in)) < 0) {
         closesocket(ctxt->controlFd); ctxt->controlFd = -1;
         ctxt->controlFd = -1;
+	RxmlMessage(1, "Failed to connect to server");
 	return(-1);
     }
 
@@ -799,6 +803,7 @@ RxmlNanoFTPConnect(void *ctx) {
     if (res != 2) {
         closesocket(ctxt->controlFd); ctxt->controlFd = -1;
         ctxt->controlFd = -1;
+	RxmlMessage(1, "Failed to get response from server");
 	return(-1);
     }
 
@@ -1319,6 +1324,7 @@ RxmlNanoFTPRead(void *ctx, void *dest, int len)
 	}
 	if (res == 0) { /* timeout, no data available yet */
 	    used += tv.tv_sec + 1e-6 * tv.tv_usec;
+	    if (used > timeout) return(0);
 	    res = RxmlNanoFTPCheckResponse(ctxt);
 	    if (res < 0) {
 		closesocket(ctxt->dataFd); ctxt->dataFd = -1;
@@ -1347,7 +1353,6 @@ RxmlNanoFTPRead(void *ctx, void *dest, int len)
 	    closesocket(ctxt->dataFd); ctxt->dataFd = -1;
 	    return(-1);
 	} else  break;
-	if (used > timeout) return(0);
     }
     return got;
 }

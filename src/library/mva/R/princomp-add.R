@@ -31,7 +31,7 @@ function(x, npcs = min(10, length(x$sdev)),
          type = c("barplot", "lines"),
          main = deparse(substitute(x)), ...)
 {
-    eval(main)
+    main
     type <- match.arg(type)
     pcs <- x$sdev^2
     xp <- seq(length=npcs)

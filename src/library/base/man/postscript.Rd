@@ -33,6 +33,20 @@ ps.options(paper, horizontal, width, height, family, encoding,
 }
 %% The definitive doc is the source :-)
 %% 	../../../main/devices.c  &   ../../../unix/devPS.c
+\description{
+  \code{postscript} starts the graphics device driver for producing
+  PostScript graphics.
+
+  The auxiliary function \code{ps.options} can be used to set and view
+  (if called without arguments)
+  default values for the arguments to \code{postscript}.  It needs to be
+  called before calling \code{postscript}, and the default values it
+  sets can be overridden by supplying arguments to \code{postscript}.
+}
+\alias{postscript}
+\alias{ps.options}
+\alias{.PostScript.Options}
+\alias{.ps.prolog}
 \arguments{
   \item{file}{a character string giving the name of the file.  If it is
     \code{""}, the output is piped to the command given by

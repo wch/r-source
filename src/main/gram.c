@@ -1,5 +1,5 @@
 
-/*  A Bison parser, made from ./gram.y
+/*  A Bison parser, made from ../../../R/src/main/gram.y
     by GNU Bison version 1.28  */
 
 #define YYBISON 1  /* Identify Bison output.  */
@@ -39,7 +39,7 @@
 #define	UMINUS	289
 #define	UPLUS	290
 
-#line 1 "./gram.y"
+#line 1 "../../../R/src/main/gram.y"
 
 /*
  *  R : A Computer Langage for Statistical Data Analysis
@@ -1046,319 +1046,319 @@ yyreduce:
   switch (yyn) {
 
 case 1:
-#line 160 "./gram.y"
+#line 160 "../../../R/src/main/gram.y"
 { return 0; ;
     break;}
 case 2:
-#line 161 "./gram.y"
+#line 161 "../../../R/src/main/gram.y"
 { return xxvalue(NULL,2); ;
     break;}
 case 3:
-#line 162 "./gram.y"
+#line 162 "../../../R/src/main/gram.y"
 { return xxvalue(yyvsp[-1],3); ;
     break;}
 case 4:
-#line 163 "./gram.y"
+#line 163 "../../../R/src/main/gram.y"
 { return xxvalue(yyvsp[-1],4); ;
     break;}
 case 5:
-#line 164 "./gram.y"
+#line 164 "../../../R/src/main/gram.y"
 { YYABORT; ;
     break;}
 case 6:
-#line 167 "./gram.y"
+#line 167 "../../../R/src/main/gram.y"
 { yyval = yyvsp[0]; ;
     break;}
 case 7:
-#line 168 "./gram.y"
+#line 168 "../../../R/src/main/gram.y"
 { yyval = yyvsp[0]; ;
     break;}
 case 8:
-#line 171 "./gram.y"
+#line 171 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 9:
-#line 174 "./gram.y"
+#line 174 "../../../R/src/main/gram.y"
 { yyval = yyvsp[0]; ;
     break;}
 case 10:
-#line 175 "./gram.y"
+#line 175 "../../../R/src/main/gram.y"
 { yyval = yyvsp[0]; ;
     break;}
 case 11:
-#line 176 "./gram.y"
+#line 176 "../../../R/src/main/gram.y"
 { yyval = yyvsp[0]; ;
     break;}
 case 12:
-#line 177 "./gram.y"
+#line 177 "../../../R/src/main/gram.y"
 { yyval = yyvsp[0]; ;
     break;}
 case 13:
-#line 179 "./gram.y"
+#line 179 "../../../R/src/main/gram.y"
 { yyval = xxexprlist(yyvsp[-2],yyvsp[-1]); ;
     break;}
 case 14:
-#line 180 "./gram.y"
+#line 180 "../../../R/src/main/gram.y"
 { yyval = xxparen(yyvsp[-2],yyvsp[-1]); ;
     break;}
 case 15:
-#line 182 "./gram.y"
+#line 182 "../../../R/src/main/gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
 case 16:
-#line 183 "./gram.y"
+#line 183 "../../../R/src/main/gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
 case 17:
-#line 184 "./gram.y"
+#line 184 "../../../R/src/main/gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
 case 18:
-#line 185 "./gram.y"
+#line 185 "../../../R/src/main/gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
 case 19:
-#line 186 "./gram.y"
+#line 186 "../../../R/src/main/gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
 case 20:
-#line 188 "./gram.y"
+#line 188 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 21:
-#line 189 "./gram.y"
+#line 189 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 22:
-#line 190 "./gram.y"
+#line 190 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 23:
-#line 191 "./gram.y"
+#line 191 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 24:
-#line 192 "./gram.y"
+#line 192 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 25:
-#line 193 "./gram.y"
+#line 193 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 26:
-#line 194 "./gram.y"
+#line 194 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 27:
-#line 195 "./gram.y"
+#line 195 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 28:
-#line 196 "./gram.y"
+#line 196 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 29:
-#line 197 "./gram.y"
+#line 197 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 30:
-#line 198 "./gram.y"
+#line 198 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 31:
-#line 199 "./gram.y"
+#line 199 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 32:
-#line 200 "./gram.y"
+#line 200 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 33:
-#line 201 "./gram.y"
+#line 201 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 34:
-#line 202 "./gram.y"
+#line 202 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 35:
-#line 203 "./gram.y"
+#line 203 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 36:
-#line 204 "./gram.y"
+#line 204 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 37:
-#line 205 "./gram.y"
+#line 205 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 38:
-#line 207 "./gram.y"
+#line 207 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 39:
-#line 208 "./gram.y"
+#line 208 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[0],yyvsp[-2]); ;
     break;}
 case 40:
-#line 210 "./gram.y"
+#line 210 "../../../R/src/main/gram.y"
 { yyval = xxdefun(yyvsp[-5],yyvsp[-3],yyvsp[0]); ;
     break;}
 case 41:
-#line 211 "./gram.y"
+#line 211 "../../../R/src/main/gram.y"
 { yyval = xxfuncall(yyvsp[-3],yyvsp[-1]); ;
     break;}
 case 42:
-#line 212 "./gram.y"
+#line 212 "../../../R/src/main/gram.y"
 { yyval = xxif(yyvsp[-2],yyvsp[-1],yyvsp[0]); ;
     break;}
 case 43:
-#line 213 "./gram.y"
+#line 213 "../../../R/src/main/gram.y"
 { yyval = xxifelse(yyvsp[-4],yyvsp[-3],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 44:
-#line 214 "./gram.y"
+#line 214 "../../../R/src/main/gram.y"
 { yyval = xxfor(yyvsp[-2],yyvsp[-1],yyvsp[0]); ;
     break;}
 case 45:
-#line 215 "./gram.y"
+#line 215 "../../../R/src/main/gram.y"
 { yyval = xxwhile(yyvsp[-2],yyvsp[-1],yyvsp[0]); ;
     break;}
 case 46:
-#line 216 "./gram.y"
+#line 216 "../../../R/src/main/gram.y"
 { yyval = xxrepeat(yyvsp[-1],yyvsp[0]); ;
     break;}
 case 47:
-#line 217 "./gram.y"
+#line 217 "../../../R/src/main/gram.y"
 { yyval = xxsubscript(yyvsp[-4],yyvsp[-3],yyvsp[-2]); ;
     break;}
 case 48:
-#line 218 "./gram.y"
+#line 218 "../../../R/src/main/gram.y"
 { yyval = xxsubscript(yyvsp[-3],yyvsp[-2],yyvsp[-1]); ;
     break;}
 case 49:
-#line 219 "./gram.y"
+#line 219 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 50:
-#line 220 "./gram.y"
+#line 220 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 51:
-#line 221 "./gram.y"
+#line 221 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 52:
-#line 222 "./gram.y"
+#line 222 "../../../R/src/main/gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 53:
-#line 223 "./gram.y"
+#line 223 "../../../R/src/main/gram.y"
 { yyval = xxnxtbrk(yyvsp[0]); ;
     break;}
 case 54:
-#line 224 "./gram.y"
+#line 224 "../../../R/src/main/gram.y"
 { yyval = xxnxtbrk(yyvsp[0]); ;
     break;}
 case 55:
-#line 228 "./gram.y"
+#line 228 "../../../R/src/main/gram.y"
 { yyval = xxcond(yyvsp[-1]); ;
     break;}
 case 56:
-#line 231 "./gram.y"
+#line 231 "../../../R/src/main/gram.y"
 { yyval = xxifcond(yyvsp[-1]); ;
     break;}
 case 57:
-#line 234 "./gram.y"
+#line 234 "../../../R/src/main/gram.y"
 { yyval = xxforcond(yyvsp[-3],yyvsp[-1]); ;
     break;}
 case 58:
-#line 238 "./gram.y"
+#line 238 "../../../R/src/main/gram.y"
 { yyval = xxexprlist0(); ;
     break;}
 case 59:
-#line 239 "./gram.y"
+#line 239 "../../../R/src/main/gram.y"
 { yyval = xxexprlist1(yyvsp[0]); ;
     break;}
 case 60:
-#line 240 "./gram.y"
+#line 240 "../../../R/src/main/gram.y"
 { yyval = xxexprlist2(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 61:
-#line 241 "./gram.y"
+#line 241 "../../../R/src/main/gram.y"
 { yyval = yyvsp[-1]; ;
     break;}
 case 62:
-#line 242 "./gram.y"
+#line 242 "../../../R/src/main/gram.y"
 { yyval = xxexprlist2(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 63:
-#line 243 "./gram.y"
+#line 243 "../../../R/src/main/gram.y"
 { yyval = yyvsp[-1];;
     break;}
 case 64:
-#line 246 "./gram.y"
+#line 246 "../../../R/src/main/gram.y"
 { yyval = xxsublist1(yyvsp[0]); ;
     break;}
 case 65:
-#line 247 "./gram.y"
+#line 247 "../../../R/src/main/gram.y"
 { yyval = xxsublist2(yyvsp[-3],yyvsp[0]); ;
     break;}
 case 66:
-#line 250 "./gram.y"
+#line 250 "../../../R/src/main/gram.y"
 { yyval = xxsub0(); ;
     break;}
 case 67:
-#line 251 "./gram.y"
+#line 251 "../../../R/src/main/gram.y"
 { yyval = xxsub1(yyvsp[0]); ;
     break;}
 case 68:
-#line 252 "./gram.y"
+#line 252 "../../../R/src/main/gram.y"
 { yyval = xxsymsub0(yyvsp[-1]); ;
     break;}
 case 69:
-#line 253 "./gram.y"
+#line 253 "../../../R/src/main/gram.y"
 { yyval = xxsymsub1(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 70:
-#line 254 "./gram.y"
+#line 254 "../../../R/src/main/gram.y"
 { yyval = xxsymsub0(yyvsp[-1]); ;
     break;}
 case 71:
-#line 255 "./gram.y"
+#line 255 "../../../R/src/main/gram.y"
 { yyval = xxsymsub1(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 72:
-#line 256 "./gram.y"
+#line 256 "../../../R/src/main/gram.y"
 { yyval = xxnullsub0(); ;
     break;}
 case 73:
-#line 257 "./gram.y"
+#line 257 "../../../R/src/main/gram.y"
 { yyval = xxnullsub1(yyvsp[0]); ;
     break;}
 case 74:
-#line 260 "./gram.y"
+#line 260 "../../../R/src/main/gram.y"
 { yyval = xxnullformal(); ;
     break;}
 case 75:
-#line 261 "./gram.y"
+#line 261 "../../../R/src/main/gram.y"
 { yyval = xxfirstformal0(yyvsp[0]); ;
     break;}
 case 76:
-#line 262 "./gram.y"
+#line 262 "../../../R/src/main/gram.y"
 { yyval = xxfirstformal1(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 77:
-#line 263 "./gram.y"
+#line 263 "../../../R/src/main/gram.y"
 { yyval = xxaddformal0(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 78:
-#line 264 "./gram.y"
+#line 264 "../../../R/src/main/gram.y"
 { yyval = xxaddformal1(yyvsp[-4],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 79:
-#line 267 "./gram.y"
+#line 267 "../../../R/src/main/gram.y"
 { EatLines = 1; ;
     break;}
 }
@@ -1583,7 +1583,7 @@ yyerrhandle:
     }
   return 1;
 }
-#line 269 "./gram.y"
+#line 269 "../../../R/src/main/gram.y"
 
 
 

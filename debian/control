@@ -2,14 +2,14 @@ Source: r-base
 Section: math
 Priority: optional
 Maintainer: Douglas Bates <bates@stat.wisc.edu>
-Standards-Version: 2.4.0.0
-Build-depends: atlas2-dev, libgnome-dev, tcl8.0-dev, tk8.0-dev, libglade-gnome0-dev,bison, g77, groff, libncurses5-dev, libreadline4-dev, tetex-bin, tetex-extra, debhelper
+Standards-Version: 3.5.0
+Build-depends: blas-dev (>= 1.0-9), libgnome-dev, tcl8.0-dev, tk8.0-dev, libglade-gnome0-dev, bison, g77, groff-base, libncurses5-dev, libreadline4-dev, tetex-bin, tetex-extra, debhelper
 
 Package: r-base
 Architecture: any
 Depends: perl5, zlib-bin, ${shlibs:Depends}
 Conflicts: r-cran
-Suggests: g77, libpaperg, ess
+Suggests: g77, libpaperg, ess, r-recommended
 Description: `GNU S' - A language and environment for statistical computing.
  R is described by its authors as "not unlike" S, which is a language
  developed at Bell Laboratories for statistical computing and graphics.
@@ -47,7 +47,8 @@ Description: `GNU S' - GNOME-enabled executable
 
 Package: r-doc-pdf
 Architecture: all
-Suggests: pdf-viewer | xpdf | acroread, r-base
+Section: doc
+Suggests: xpdf | acroread | pdf-viewer, r-base
 Description: `GNU S' documentation in pdf format
  R is described by its authors as "not unlike" S, which is a language
  developed at Bell Laboratories for statistical computing and graphics.
@@ -63,7 +64,7 @@ Description: `GNU S' documentation in pdf format
 
 Package: r-base-dev
 Architecture: all
-Depends: g77, atlas2-dev, wget|lynx
+Depends: g77, blas-dev (>= 1.0-9), make
 Description: Allow installation of auxillary R packages
  R is described by its authors as "not unlike" S, which is a language
  developed at Bell Laboratories for statistical computing and graphics.

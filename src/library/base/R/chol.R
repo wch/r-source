@@ -24,7 +24,7 @@ chol <- function(x)
 		  info=integer(1),
 		  DUP=FALSE, PACKAGE="base")
     if(z$info)
-	stop("singular matrix in chol")
+	stop("non-positive definite matrix in chol")
     z$v
 }
 

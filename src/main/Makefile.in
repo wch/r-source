@@ -147,6 +147,7 @@ $(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
 ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo:
 	(cd $(@D); $(MAKE) $(@F))
 
+$(srcdir)/gram.c: grammar
 grammar: @MAINTAINER_MODE_TRUE@ gram1
 gram1:
 	@echo "re-making gram.c"

@@ -1,78 +1,91 @@
-#include <Rmath.h>
+#include <R_ext/Boolean.h>
 #include <Rinternals.h>
 #include "mva.h"
 
 SEXP R_cutree(SEXP merge, SEXP which)
 {
+/* Return grouping vector from cutting a (binary) (cluster) tree
+ * into which[j] groups.
+ * merge = (n-1) x 2  matrix, described in help(hclust) */
     SEXP ans;
-    int n, k, l, nclust, m1, m2, ok, anscol;
-    int *x, *y, *y1;
-
-    x = (int *) R_alloc(nrows(merge)+2, sizeof(int));
-    y = (int *) R_alloc(nrows(merge)+2, sizeof(int));
-    y1 = (int *) R_alloc(nrows(merge)+2, sizeof(int));
+    int n, k, l, nclust, m1, m2, j, mm = 0;
+    Rboolean found_j, *sing;
+    int *m_nr, *z;
 
     merge = coerceVector(merge, INTSXP);
     which = coerceVector(which, INTSXP);
 
-    n=nrows(merge)+1;
+    n = nrows(merge)+1;
+    /* using 1-based indices ==> "--" */
+    sing = (Rboolean *) R_alloc(n, sizeof(Rboolean)); sing--;
+    m_nr = (int *) R_alloc(n, sizeof(int)); m_nr--;
+    z	 = (int *) R_alloc(n, sizeof(int)); z--;
     PROTECT(ans = allocMatrix(INTSXP, n, LENGTH(which)));
-	    
-    for(k=1; k<=n; k++){
-	x[k] = k;
-	y[k] = 0;
+
+    for(k = 1; k <= n; k++) {
+	sing[k] = TRUE;/* is k-th obs. still alone in cluster ? */
+	m_nr[k] = 0;/* containing last merge-step number of k-th obs. */
     }
 
-    for(k=1; k<=n-2; k++){
+    for(k = 1; k <= n-1; k++) {
+	/* k-th merge, from n-k+1 to n-k atoms: (m1,m2) = merge[ k , ] */
 	m1 = INTEGER(merge)[k-1];
 	m2 = INTEGER(merge)[n-1+k-1];
 
-	if((m1 < 0) && (m2 < 0)){
-	    y[-m1] = y[-m2] = k;
-	    x[-m1] = x[-m2] = 0;
+	if(m1 < 0 && m2 < 0) {/* merging atoms [-m1] and [-m2] */
+	    m_nr[-m1] = m_nr[-m2] = k;
+	    sing[-m1] = sing[-m2] = FALSE;
 	}
-	else if((m1 < 0) || (m2 < 0)){
-	    for(l=1; l<=n; l++){
-		if(y[l]==imax2(m1,m2)){
-		    y[l]=k;
-		}
-	    }
-	    y[-imin2(m1,m2)] = k;
-	    x[-imin2(m1,m2)] = 0;
+	else if(m1 < 0 || m2 < 0) {/* the other >= 0 */
+	    if(m1 < 0) { j = -m1; m1 = m2; } else j = -m2;
+	    /* merging atom j & cluster m1 */
+	    for(l = 1; l <= n; l++)
+		if (m_nr[l] == m1)
+		    m_nr[l] = k;
+	    m_nr[j] = k;
+	    sing[j] = FALSE;
 	}
-	else{
-	    for(l=1; l<=n; l++){
-		if( (y[l]==m1) || (y[l]==m2) ){
-		    y[l] = k;
-		}
+	else { /* both m1, m2 >= 0 */
+	    for(l=1; l <= n; l++) {
+		if( m_nr[l] == m1 || m_nr[l] == m2 )
+		    m_nr[l] = k;
 	    }
 	}
 
-	nclust=0;
-	for(l=1; l<=n; l++){
-	    y1[l] = 0;
-	}
-
-	ok = anscol = 0;
-	while(!ok && (anscol < LENGTH(which))){
-	    ok = ( k == n-INTEGER(which)[anscol++]);
-	}
-	
-	if(ok){
-	    for(l=1; l<=n; l++){
-		if(x[l] > 0){
-		    INTEGER(ans)[(anscol-1)*n + l-1] = ++nclust;
-		}
-		else{
-		    if(y1[y[l]] == 0){
-			y1[y[l]] = ++nclust;
+	/* does this k-th merge belong to a desired group size which[j] ?
+	 * if yes, find j (maybe multiple ones): */
+	found_j = FALSE;
+	for(j = 0; j < LENGTH(which); j++) {
+	    if(INTEGER(which)[j] == n - k) {
+		if(!found_j) { /* first match (and usually only one) */
+		    found_j = TRUE;
+		    for(l = 1; l <= n; l++)
+			z[l] = 0;
+		    nclust = 0;
+		    mm = j*n; /*may want to copy this column of ans[] */
+		    for(l = 1, m1 = mm; l <= n; l++, m1++) {
+			if(sing[l])
+			    INTEGER(ans)[m1] = ++nclust;
+			else {
+			    if (z[m_nr[l]] == 0)
+				z[m_nr[l]] = ++nclust;
+			    INTEGER(ans)[m1] = z[m_nr[l]];
+			}
 		    }
-		    INTEGER(ans)[(anscol-1)*n + l-1] = y1[y[l]];
 		}
-	    }
-	}
-    }
+		else { /* found_j: another which[j] == n-k : copy column */
+		    for(l = 1, m1 = j*n, m2 = mm; l <= n; l++, m1++, m2++)
+			INTEGER(ans)[m1] = INTEGER(ans)[m2];
+		}
+	    } /* if ( match ) */
+	} /* for(j .. which[j] ) */
+    } /* for(k ..) {merge} */
 
+    /* Dealing with trivial case which[] = n : */
+    for(j = 0; j < LENGTH(which); j++)
+	if(INTEGER(which)[j] == n)
+	    for(l = 1, m1 = j*n; l <= n; l++, m1++)
+		INTEGER(ans)[m1] = l;
 
     UNPROTECT(1);
     return(ans);

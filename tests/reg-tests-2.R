@@ -182,7 +182,6 @@ format(a, justify="right")
 ## PR 963
 svd(rbind(1:7))## $v lost dimensions in 1.2.3
 
-
 ## some tests that R supports logical variables in formula
 ## it coerced them to numeric prior to 1.4.0
 ## they should appear like 2-level factors, following S
@@ -210,3 +209,8 @@ diffinv(diff(x),xi=x[1])
 diffinv(diff(x,lag=1,differences=2),lag=1,differences=2,xi=x[1:2])
 ## last had wrong start and end
 detach("package:ts")
+
+## PR#1072  (Reading Inf and NaN values)
+as.numeric(as.character(NaN))
+as.numeric(as.character(Inf))
+## were NA on Windows at least under 1.3.0.

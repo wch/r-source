@@ -1,6 +1,6 @@
-#   File:       Makefile.mac
+#   File:       ctestLib.make
 #   Target:     ctestLib
-#   Created:    Jago, Aug 2001, Stefano M. Iacus
+#   Created:    Jago, Jul 2001, Stefano M. Iacus
 #
 #   This script assumes that R binary already exists in 
 #   folder 'src/macintosh/bin'
@@ -11,7 +11,6 @@
 #   MrC C Compiler 5.0.0d3c1
 #   Universal Headers 3.4
 #   CarbonLib 1.4
-#   MPW release  August 2001+Updates
 #
  
 DLib			= ctest
@@ -62,13 +61,10 @@ ObjFiles-PPC    =  ¶
 ### Libraries ###
 
 LibFiles-PPC    =  ¶
-				  "{PPCLibraries}CarbonStdCLib.o" ¶
 				  "{SharedLibraries}CarbonLib" ¶
-				  "{SharedLibraries}StdCLib" ¶
+#				  "{SharedLibraries}StdCLib" ¶
 				  ":::::R"  ¶
 				  "{PPCLibraries}PPCCRuntime.o" 
-
-
 
 
 ### Default Rules ### 
@@ -77,7 +73,7 @@ LibFiles-PPC    =  ¶
 	{PPCC} {depDir}{default}.c -o {targDir}{default}.o {PPCCOptions}
 
 
-### Build Rules ###
+### Build Rules ###          
 
  
 {DLib}Lib  ÄÄ  {ObjFiles-PPC} {LibFiles-PPC} {¥MondoBuild¥} 
@@ -91,7 +87,7 @@ LibFiles-PPC    =  ¶
 	 echo "Creating libs directory" "{LibDir}" 
      NewFolder "{LibDir}"
     end
-# Builds the library
+# Build the library	
 	PPCLink ¶
 		-o {LibDir}:{DLib}Lib ¶
 		{ObjFiles-PPC} ¶

@@ -1,6 +1,6 @@
-#   File:       Makefile.mac
+#   File:       nlsLib.make
 #   Target:     nlsLib
-#   Created:    Jago, Aug 2001, Stefano M. Iacus
+#   Created:    Jago, Jul 2001, Stefano M. Iacus
 #
 #   This script assumes that R binary already exists in 
 #   folder 'src/macintosh/bin'
@@ -11,7 +11,7 @@
 #   MrC C Compiler 5.0.0d3c1
 #   Universal Headers 3.4
 #   CarbonLib 1.4
-#   MPW release August 2001 + Updates
+#
 
 DLib			= nls
 MAKEFILE        = Makefile.mac
@@ -25,7 +25,8 @@ Sym-PPC         = -sym off
 PPCCOptions     = {Includes} {Sym-PPC} -opt off -includes unix -w 35,2 -shared_lib_export on -d HAVE_CONFIG_H -d Macintosh ¶
 					-d TARGET_API_MAC_CARBON=1 -prefix RHeaders.h -align power
 					
-### Library directory ###
+### Library directory ###            
+
 
 LibDir     		= :::::library:{DLib}:libs
 
@@ -41,7 +42,7 @@ ObjFiles-PPC    =  nls.o
 
 LibFiles-PPC    =  ¶
 				  "{SharedLibraries}CarbonLib" ¶
-				  "{SharedLibraries}StdCLib" ¶
+#				  "{SharedLibraries}StdCLib" ¶
 				  ":::::R"  ¶
 				  "{PPCLibraries}PPCCRuntime.o" 
 
@@ -56,7 +57,7 @@ LibFiles-PPC    =  ¶
 
 
 {DLib}Lib  ÄÄ  {ObjFiles-PPC} {LibFiles-PPC} {¥MondoBuild¥} 
-# creates export table
+#create export table
     if `Exists :expvar`
 	 delete :expvar
 	end
@@ -66,7 +67,7 @@ LibFiles-PPC    =  ¶
 	 echo "Creating libs directory" "{LibDir}" 
      NewFolder "{LibDir}"
     end
-# Builds the library	
+# Build the vfonts module	
 	PPCLink ¶
 		-o {LibDir}:{Dlib}Lib ¶
 		{ObjFiles-PPC} ¶
@@ -77,6 +78,10 @@ LibFiles-PPC    =  ¶
 		-c '????' ¶
 		-xm s ¶
 		-@export expvar     
+# Removing mass
+#    Delete   Å.x
+#	Delete   Å.o 
+#    Delete :expvar
 	
 ### Required Dependencies ###
 
