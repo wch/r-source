@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.0-5, 2000/04/07
-@set REL-VERSION 1.0.0
+@set FAQ-VERSION 1.0-6, 2000/04/16
+@set REL-VERSION 1.0.1
 @set DEV-VERSION 1.1.0
 @c %**end of header
 
@@ -1747,10 +1747,10 @@ run out of memory?}).
 To debug R ``from within Emacs'', there are several possibilities.  To
 use the Emacs GUD (Grand Unified Debugger) library with the recommended
 debugger GDB, type @kbd{M-x gdb} and give the path to the R
-@emph{binary}, typically @file{R.X11}, as argument.  At the gdb prompt,
-set @env{R_HOME} and other environment variables as needed (using e.g.@:
-@kbd{set env R_HOME /path/to/R/}, but see also below), and start the
-binary with the desired arguments (e.g., @kbd{run --vsize=12M}).
+@emph{binary} as argument.  At the gdb prompt, set @env{R_HOME} and
+other environment variables as needed (using e.g.@: @kbd{set env R_HOME
+/path/to/R/}, but see also below), and start the binary with the desired
+arguments (e.g., @kbd{run --vsize=12M}).
 
 If you have ESS, you can do @kbd{C-u M-x R @key{RET} - d @key{SPC} g d b
 @key{RET}} to start an inferior R process with arguments @option{-d

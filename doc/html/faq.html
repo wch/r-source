@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.0-5, 2000/04/07</h2>
+<h2>Version 1.0-6, 2000/04/16</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -327,7 +327,7 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 
 <h2>2.3 What is the current version of R?</h2>
 
-<p>The current stable Unix/Windows version is 1.0.0, the
+<p>The current stable Unix/Windows version is 1.0.1, the
 unstable one is 1.1.0.  Typically, new features are
 introduced in the development versions; updates of stable versions are
 for bug fixes mostly.  The version for the Mac is pre-alpha.
@@ -1823,10 +1823,10 @@ Up:<a rel=up href="#R%20and%20Emacs">R and Emacs</a>
 <p>To debug R "from within Emacs", there are several possibilities.  To
 use the Emacs GUD (Grand Unified Debugger) library with the recommended
 debugger GDB, type <kbd>M-x gdb</kbd> and give the path to the R
-<em>binary</em>, typically <code>R.X11</code>, as argument.  At the gdb prompt,
-set <code>R_HOME</code> and other environment variables as needed (using e.g. 
-<kbd>set env R_HOME /path/to/R/</kbd>, but see also below), and start the
-binary with the desired arguments (e.g., <kbd>run --vsize=12M</kbd>).
+<em>binary</em> as argument.  At the gdb prompt, set <code>R_HOME</code> and
+other environment variables as needed (using e.g. <kbd>set env R_HOME
+/path/to/R/</kbd>, but see also below), and start the binary with the desired
+arguments (e.g., <kbd>run --vsize=12M</kbd>).
 
 <p>If you have ESS, you can do <kbd>C-u M-x R &lt;RET&gt; - d &lt;SPC&gt; g d b
 &lt;RET&gt;</kbd> to start an inferior R process with arguments <code>-d

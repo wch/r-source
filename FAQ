@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.0-5, 2000/04/07
+Version 1.0-6, 2000/04/16
 Kurt Hornik
 
 
@@ -200,7 +200,7 @@ sparc-linux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current stable Unix/Windows version is 1.0.0, the unstable one is
+   The current stable Unix/Windows version is 1.0.1, the unstable one is
 1.1.0.  Typically, new features are introduced in the development versions;
 updates of stable versions are for bug fixes mostly.  The version for the
 Mac is pre-alpha.
@@ -1483,11 +1483,10 @@ memory?::).
 
    To debug R "from within Emacs", there are several possibilities.  To use
 the Emacs GUD (Grand Unified Debugger) library with the recommended
-debugger GDB, type `M-x gdb' and give the path to the R _binary_, typically
-`R.X11', as argument.  At the gdb prompt, set `R_HOME' and other
-environment variables as needed (using e.g.  `set env R_HOME /path/to/R/',
-but see also below), and start the binary with the desired arguments (e.g.,
-`run --vsize=12M').
+debugger GDB, type `M-x gdb' and give the path to the R _binary_ as
+argument.  At the gdb prompt, set `R_HOME' and other environment variables
+as needed (using e.g. `set env R_HOME /path/to/R/', but see also below),
+and start the binary with the desired arguments (e.g., `run --vsize=12M').
 
    If you have ESS, you can do `C-u M-x R <RET> - d <SPC> g d b <RET>' to
 start an inferior R process with arguments `-d gdb'.
