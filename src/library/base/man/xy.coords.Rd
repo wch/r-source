@@ -23,7 +23,7 @@ and the values plotted against their indices.}
 \item{log}{character, \code{"x"}, \code{"y"} or both, as for
     \code{\link{plot}}.  Sets negative values to \code{\link{NA}} and
     gives a warning.}
-\item{recycle}{logical; if \code{TRUE}, recyle (\code{\link{rep}}) the shorter
+\item{recycle}{logical; if \code{TRUE}, recycle (\code{\link{rep}}) the shorter
     of \code{x} or \code{y} if their lengths differ.}
 }
 \description{

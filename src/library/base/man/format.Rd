@@ -8,6 +8,10 @@ format.pval(x, digits= max(1,.Options$digits-2), eps = .Machine$double.eps)
 \alias{format}
 \alias{format.default}
 \alias{format.pval}
+\description{
+  Format an \R object for pretty printing: \code{format.pval} is
+  intended for formatting p--values.
+}
 \arguments{
   \item{x}{any \R object (conceptually); typically numeric.}
   \item{trim}{logical; if \code{TRUE}, leading blanks are trimmed off the
@@ -17,7 +21,7 @@ format.pval(x, digits= max(1,.Options$digits-2), eps = .Machine$double.eps)
     places will be used so that the smallest (in magnitude) number has
     this many significant digits.}
 }
-\description{
+\details{
 These functions convert their first argument to a vector (or array) of
 character strings which have a common format (as is done by
 \code{\link{print}}).
@@ -39,7 +43,7 @@ for several numbers, however.
 format(1:10)
 \testonly{for(i in c(1:5,10,15:17,20)) cat(i,":\t",format(pi,digits=i),"\n")
 }
-p _ c(47,13,2,.1,.023,.0045, 1e-100)/1000
+p <- c(47,13,2,.1,.023,.0045, 1e-100)/1000
 format.pval(p)
 format.pval(p / 0.9)
 format.pval(p / 0.9, dig=3)

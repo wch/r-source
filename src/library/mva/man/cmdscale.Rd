@@ -34,7 +34,7 @@ New York: Wiley.
 }
 \note{
 The S version of this function provides for computing an additional
-``fiddle'' factor suggested by Togerson.  \R does not provide this option.
+``fiddle'' factor suggested by Torgerson.  \R does not provide this option.
 }
 \seealso{
 \code{\link{dist}}. Also

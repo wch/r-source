@@ -30,9 +30,6 @@ check.options(new, name.opt, reset=FALSE, assign.opt=FALSE,
      checks are overriden and the changes made anyway.}
 }
 %% Source in ../R/postscript.R
-% \details{
-%  ~~ If necessary, more details than the __description__  above ~~
-% }
 \value{
     A list of components with the same names as the one called
     \code{name.opt}.

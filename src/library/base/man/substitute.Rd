@@ -25,7 +25,7 @@ quote(expr)
     to create labels for a plot which are character string versions
     of the actual arguments to the function \code{myplot}.
 
-    Substition takes place by examining each component of the parse tree
+    Substitution takes place by examining each component of the parse tree
     as follows: If it is not a bound symbol in \code{env}, it is
     unchanged. If it is a promise object, i.e. a formal argument to a
     function or explicitly created using \code{\link{delay}()}, the expression

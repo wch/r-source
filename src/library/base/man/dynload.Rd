@@ -57,7 +57,7 @@ the symbols in their own namespace is good practice, the ability to
 share symbols across related ``chapters'' is useful in many cases.
 Additionally, on certain platforms and versions of an operating
 system, certain libraries must have their symbols loaded globally to
-succesfully resolve all symbols.
+successfully resolve all symbols.
 
 One should be careful of the potential side-effect of using lazy
 loading via the `now' argument as `FALSE'. If a routine is called that

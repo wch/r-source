@@ -29,7 +29,7 @@ win.print(width = 7, height = 7, pointsize = 12)
 \description{
     A graphics device is opened. For \code{win.graph}, \code{windows},
     \code{x11} and \code{X11} this is a graphics window on the current
-    Windows display: the mutliple names are for compatibility with other
+    Windows display: the multiple names are for compatibility with other
     systems. \code{win.metafile} prints to a file and \code{win.print} to
     the Windows print system.
 }

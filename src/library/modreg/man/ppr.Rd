@@ -62,7 +62,7 @@ the contrasts to be used when any factor explanatory variables are coded.
 maximum number of terms to choose from when building the model.
 }
 \item{optlevel}{
-integer from 0 to 3 which determines the throughness of an
+integer from 0 to 3 which determines the thoroughness of an
 optimization routine in the SMART program. See the \bold{Details} section.
 }
 \item{sm.method}{

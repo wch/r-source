@@ -19,7 +19,7 @@
     cells of dry comb were filled with measured amounts of lime sulphur
     emulsion in sucrose solution.  Seven different concentrations of
     lime sulphur ranging from a concentration of 1/100 to 1/1,562,500 in
-    succesive factors of 1/5 were used as well as a solution containing
+    successive factors of 1/5 were used as well as a solution containing
     no lime sulphur. 
   
     The responses for the different solutions were obtained by releasing

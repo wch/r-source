@@ -2,7 +2,7 @@
 \title{Lawyers' Ratings of State Judges in the US Superior Court}
 \usage{data(USJudgeRatings)}
 \alias{USJudgeRatings}
-\format{A data frame contaning 43 observations on 12 variables.
+\format{A data frame containing 43 observations on 12 variables.
     \tabular{rlll}{
     	[,1]  \tab CONT  \tab numeric  \tab Number of contacts \cr
     	\tab \tab \tab of lawyer with judge. \cr

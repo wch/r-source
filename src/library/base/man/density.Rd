@@ -16,7 +16,7 @@ plot(dobj, main = NULL, xlab = NULL, ylab = "Density", type = "l",
 \alias{plot.density}
 \arguments{
 \item{x}{the data from which the estimate is to be computed.}
-\item{bw}{the smoothing bandwith to be used.  The kernels are scaled
+\item{bw}{the smoothing bandwidth to be used.  The kernels are scaled
   such that this is the standard deviation of the smoothing kernel.
   It defaults to 0.9 times the
   minimum of the standard deviation and the interquartile range divided by
@@ -26,7 +26,7 @@ plot(dobj, main = NULL, xlab = NULL, ylab = "Density", type = "l",
   The specified (or default) value of \code{bw} is multiplied by
   \code{adjust}.
 }
-\item{adjust}{the bandwith used is actually \code{adjust*bw}.
+\item{adjust}{the bandwidth used is actually \code{adjust*bw}.
   This makes it easy to specify values like ``half the default'' bandwidth.}
 \item{kernel,window}{a character string giving the smoothing kernel to be used.
   This must be one of \code{"gaussian"}, \code{"rectangular"},
@@ -156,9 +156,9 @@ data(precip)
 plot(density(precip, n=2^13))
 for(i in 2:length(kernels))
    lines(density(precip, kern= kernels[i], n=2^13), col=i)
-mtext(side=3, "same scale bandwiths, 7 different kernels")
+mtext(side=3, "same scale bandwidths, 7 different kernels")
 
-## Bandwith Adjustment for "Exactly Equivalent Kernels"
+## Bandwidth Adjustment for "Exactly Equivalent Kernels"
 h.f <- sapply(kernels, function(k)density(kern=k, give.Rkern=TRUE))
 (h.f <- (h.f["gaussian"] / h.f)^ .2)
 ## -> 1, 1.01, .995, 1.007,... close to 1 => adjustment barely visible..
@@ -166,7 +166,7 @@ h.f <- sapply(kernels, function(k)density(kern=k, give.Rkern=TRUE))
 plot(density(precip, n=2^13))
 for(i in 2:length(kernels))
    lines(density(precip, adjust = h.f[i], kern= kernels[i], n=2^13), col=i)
-mtext(side=3, "equivalent bandwiths, 7 different kernels")
+mtext(side=3, "equivalent bandwidths, 7 different kernels")
 legend(55,.035, leg=kernels, col=seq(kernels),lty=1)
 }
 \keyword{dplot}

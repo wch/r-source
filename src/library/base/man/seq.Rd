@@ -52,8 +52,8 @@ seq(1.575, 5.125, by=0.05)
 for (x in list(NULL, letters[1:6], list(1,pi)))
   cat("x=",deparse(x),";  seq(along = x):",seq(along = x),"\n")
 
-f1_ gl(2,3); f1
-f2_ gl(3,2); f2
+f1 <- gl(2,3); f1
+f2 <- gl(3,2); f2
 f1:f2 # a factor, the ``cross''  f1 x f2
 }
 \keyword{manip}

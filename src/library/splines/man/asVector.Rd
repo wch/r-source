@@ -16,7 +16,7 @@ asVector(object)
     a vector
 }
 \description{
-    Methods for vector coersion in new classes must be created for the
+    Methods for vector coercion in new classes must be created for the
     \code{asVector} generic instead of \code{as.vector}.
     The \code{as.vector} function is internal and not
     easily extended.  Currently the only class with an \code{asVector}

@@ -54,7 +54,7 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch}}
 \seealso{\code{\link{as.character}}}
 \examples{
-ii _ 0:8; names(ii) _ ii
+ii <- 0:8; names(ii) <- ii
 symnum(ii, cut= 2*(0:4), sym = c(".", "-", "+", "$"))
 symnum(ii, cut= 2*(0:4), sym = c(".", "-", "+", "$"), show.max=T)
 
