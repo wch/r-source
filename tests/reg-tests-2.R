@@ -488,8 +488,18 @@ median(x)
 quantile(x)
 ## 1.5.1 had -Inf not NaN in several places
 
+
 ## NAs in matrix dimnames
 z <- matrix(1:9, 3, 3)
 dimnames(z) <- list(c("x", "y", NA), c(1, NA, 3))
 z
 ## NAs in dimnames misaligned when printing in 1.5.1
+
+
+## weighted aov (PR#1930)
+r <- c(10,23,23,26,17,5,53,55,32,46,10,8,10,8,23,0,3,22,15,32,3)
+n <- c(39,62,81,51,39,6,74,72,51,79,13,16,30,28,45,4,12,41,30,51,7)
+trt <- factor(rep(1:4,c(5,6,5,5)))
+Y <- r/n
+z <- aov(Y ~ trt, weights=n)
+## 1.5.1 gave unweighted RSS

@@ -176,7 +176,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
     } else {
         if(rdf > 0) {
             resid <- as.matrix(x$residuals)
-            wt <- object$weights
+            wt <- x$weights
             if(!is.null(wt)) resid <- resid * wt^0.5
             nterms <- nterms + 1
             df <- c(df, rdf)
