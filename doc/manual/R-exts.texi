@@ -129,10 +129,30 @@ installation) for the tools that you need to have installed.
 @section Package structure
 @cindex Package structure
 
-A package consists of a subdirectory containing the files
-@file{DESCRIPTION} and optionally @file{INDEX}, and the subdirectories
+A package consists of a subdirectory containing a file
+@file{DESCRIPTION} and the subdirectories
 @file{R}, @file{data}, @file{demo}, @file{exec}, @file{inst},
 @file{man}, @file{src}, and @file{tests} (some of which can be missing).
+The package subdirectory may also contain files @file{INDEX}, 
+@file{install.R}, @file{R_PROFILE.R}, @file{NAMESPACE}, @file{configure}, 
+@file{cleanup}, and @file{COPYING}.
+
+The @file{DESCRIPTION}, @file{INDEX}, 
+@file{install.R} and @file{R_PROFILE.R} files are described in the sections
+below.  The @file{NAMESPACE} file is described in @ref{Package name spaces}.
+
+@cindex configure file
+@cindex cleanup file
+
+The optional files @file{configure} and @file{cleanup} are (Bourne shell) 
+script files which are executed before and
+(provided that option @option{--clean} was given) after installation on
+Unix, see @ref{Configure and cleanup}.
+
+@cindex COPYING file
+
+The optional file @file{COPYING} contains a copy of the license to the package,
+e.g. a copy of the GNU public license.
 
 The package subdirectory should be given the same name as the package.
 Because some file systems (e.g., those on Windows) are not
@@ -150,17 +170,13 @@ names.  In addition, files with names @samp{con}, @samp{prn},
 @samp{lpt1} to @samp{lpt3} after conversion to lower case and stripping
 possible ``extensions'', are disallowed.
 
-Optionally the package can contain (Bourne shell) script files
-@file{configure} and @file{cleanup} which are executed before and
-(provided that option @option{--clean} was given) after installation on
-Unix, see @ref{Configure and cleanup}.
-
 The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
 
 @menu
 * The DESCRIPTION file::        
-* The INDEX file::              
+* The INDEX file::     
+* The install.R and R_PROFILE.R files::
 * Package subdirectories::      
 * Package bundles::             
 @end menu
@@ -298,8 +314,9 @@ quoted.  Applicable OS-specific collate specifications take precedence.
 There should be no @samp{Built} or @samp{Packaged} fields, as these are
 added by the package management tools.
 
-@node The INDEX file, Package subdirectories, The DESCRIPTION file, Package structure
+@node The INDEX file, The install.R and R_PROFILE.R files, The DESCRIPTION file, Package structure
 @subsection The @file{INDEX} file
+@cindex INDEX file
 
 The optional file @file{INDEX} contains a line for each sufficiently
 interesting object in the package, giving its name and a description
@@ -310,7 +327,28 @@ automatically generated from the documentation sources (using
 and when using the package builder (@pxref{Checking and building
 packages}).
 
-@node Package subdirectories, Package bundles, The INDEX file, Package structure
+@node The install.R and R_PROFILE.R files, Package subdirectories, The INDEX file, Package structure
+@subsection The @file{install.R} and @file{R_PROFILE.R} files
+@cindex install.R file
+@cindex R_PROFILE.R file
+
+The optional file @file{install.R} serves two purposes.  First, its presence tells
+@code{R CMD INSTALL} to create a binary image of the package contents.
+A binary image is created by executing the code in the @file{R} 
+subdirectory and saving the resulting objects.  When the package
+is attached, the code is not executed again; it is simply added
+to the search list.  
+
+The second purpose for @file{install.R} is to hold code that needs
+to be executed each time the package is attached.  Most packages 
+have no need for such code so @file{install.R} is normally an empty file.
+
+The optional file @file{R_PROFILE.R} plays a similar role at the time a source
+package is installed.  It is executed before the code in
+the @file{R} subdirectory; objects it creates will not be saved to the
+binary image.
+
+@node Package subdirectories, Package bundles, The install.R and R_PROFILE.R files, Package structure
 @subsection Package subdirectories
 @cindex Package subdirectories
 
