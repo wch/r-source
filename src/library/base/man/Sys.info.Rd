@@ -25,12 +25,12 @@ Sys.info()
   \item{user}{The name of the real user ID, or \code{"unknown"} if it
     cannot be ascertained.}
 #ifdef unix
-The first five fields come from the \code{uname(2)} system call. The
+The first five fields come from the \code{uname(2)} system call.  The
 login name comes from \code{getlogin(2)}, and the user name from
 \code{getpwuid(getuid())}
 #endif
-#ifdef unix
-The information is obtained from Windows system calls. It is likely to
+#ifdef windows
+The information is obtained from Windows system calls.  It is likely to
 be most complete on Windows NT systems.
 #endif
 }
@@ -46,7 +46,7 @@ be most complete on Windows NT systems.
 \seealso{\code{\link{.Platform}}}
 
 \examples{
-Sys.info()
+cbind(Sys.info())
 ## An alternative (and probably better) way to get the login name on Unix
 Sys.getenv("LOGNAME")
 }
