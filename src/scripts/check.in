@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.155 $ ';
+my $revision = ' $Revision: 1.156 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -243,23 +243,59 @@ foreach my $pkg (@ARGV) {
 	    $log->print("Only *source* packages can be checked.\n");
 	    exit(1);
 	}
+	unlink(&file_path($pkgoutdir, "00install.out"));
 	if($opt_install) {
 	    if($opt_install ne "skip") {
+		my $use_install_log =
+		    ($ENV{"R_CHECK_USE_INSTALL_LOG"} ||
+		     !(-t STDIN && -t STDOUT));
 		## Option '--no-install' turns off installation and the
 		## tests which require the package to be installed.  When
 		## testing recommended packages bundled with R we can
 		## skip installation, and do so if '--install=skip' was
-		## given. 
-		print("\n");
+		## given.
 		my $cmd = "${R::Vars::R_CMD} INSTALL -l ${library}";
 		$cmd .= " --fake" if($opt_install eq "fake");
-		$cmd .= " ${pkgdir} 2>&1";
-		if(R_system($cmd)) {
-		    $log->error();
-		    $log->print("Installation failed.\n");
-		    exit(1);
+		$cmd .= " ${pkgdir}";
+		if(!$use_install_log) {
+		    print("\n");
+		    if(R_system($cmd)) {
+			$log->error();
+			$log->print("Installation failed.\n");
+			exit(1);
+		    }
+		    print("\n");
 		}
-		print("\n");
+		else {
+		    my $out = &file_path($pkgoutdir, "00install.out");
+		    $cmd .= " > $out 2>&1";
+		    $log->checking("whether package '$pkgname' " .
+				   "can be installed");
+		    if(R_system($cmd)) {
+			$log->error();
+			$log->print("Installation failed.\n");
+			$log->print("See '$out' for details.\n");
+			exit(1);
+		    }
+		    ## There could still be some important warnings that
+		    ## we'd like to report.  For the time being, start
+		    ## with compiler warnings about non ISO C code (Or
+		    ## at least, what looks like it.)  In theory, we
+		    ## should only do this when using GCC ...
+		    open(FILE, "< $out");
+		    my @lines = <FILE>;
+		    close(FILE);
+		    @lines = grep(/: warning: .*ISO C/, @lines);
+		    if(scalar(@lines) > 0) {
+			$log->warning();
+			$log->print("Found the following " .
+				    "significant warnings:\n");
+			$log->print("  " . join("\n  ", @lines));
+		    }
+		    else {
+			$log->print("OK");
+		    }
+		}
 	    }
 	    else {
 		$log->message("skipping installation test");
@@ -1429,8 +1465,8 @@ sub check_pkg {
 	    $log->print("Found the following significant warnings:\n");
 	    $log->print("  " . join("\n  ", @lines));
 	    $log->print(wrap("", "",
-			     ("These functions may be defunct as soon",
-			      "as of the next release of R.\n",
+			     ("Deprecated functions may be defunct as",
+			      "soon as of the next release of R.\n",
 			      "See ?Deprecated.\n")));
 	}
 	else {
