@@ -5,12 +5,11 @@ mahalanobis(x, center, cov, inverted=FALSE)
 }
 \alias{mahalanobis}
 \arguments{
- \item{x}{Vector or matrix of data.}
- \item{center}{Mean vector of the distribution or second data vector.}
- \item{cov}{Covariance matrix of the distribution or the QR
-   decomposition of the distribution.}
- \item{inverted}{If \code{TRUE}, \code{cov} is supposed to contain the
-   inverse of the covariance matrix.}
+  \item{x}{Vector or matrix of data.}
+  \item{center}{Mean vector of the distribution or second data vector.}
+  \item{cov}{Covariance matrix of the distribution.}
+  \item{inverted}{If \code{TRUE}, \code{cov} is supposed to contain the
+    inverse of the covariance matrix.}
 }
 \description{
   Returns the Mahalanobis distance of all rows in \code{x} and the
@@ -20,7 +19,7 @@ mahalanobis(x, center, cov, inverted=FALSE)
   }
 }
 \author{Friedrich Leisch}
-\seealso{\code{\link{qr}},\code{\link{cov}}}
+\seealso{\code{\link{cov}}}
 \examples{
 x <- matrix(rnorm(30),ncol=3)
 mahalanobis(x)

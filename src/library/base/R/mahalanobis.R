@@ -7,19 +7,13 @@ mahalanobis <- function(x, center, cov, inverted=FALSE)
   else {
     x <- as.matrix(x)
   }
-
-  if(missing(center)){
-    center <- rep(0, length=ncol(x))
-  }
   
-  if(missing(cov)){
-    cov <- diag(ncol(x))
-  }
-  else if((!inverted) && (!is.qr(cov))){
+  x <- sweep(x, 2, center)
+
+  if(!inverted){
     cov <- solve(cov)
   }
-
-  x <- sweep(x, 1, center)
+  
   retval <- apply((x%*%cov) * x, 1, sum)
   names(retval) <- rownames(x)
   retval
