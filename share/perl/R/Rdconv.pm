@@ -94,7 +94,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
     undef @section_title;
 
     $skipping = 0;
-    #-- remove comments (everything after a %)
+    ## remove comments (everything after a %)
     while(<rdfile>){
 	$_ = expand $_;
 	if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
@@ -110,7 +110,11 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	    next;
 	}
 	next if $skipping > 0;
-	next if /^\s*%/o;#- completely drop full comment lines
+	next if /^\s*%/o;	# completely drop full comment lines
+	## <FIXME>
+	## Argh.  This is a terrible hack.  Go away!
+	next if /^\\docType/;
+	## </FIXME>
 	my $loopcount = 0;
 	while(checkloop($loopcount++, $_, "\\%") &&
 	      s/^\\%|([^\\])\\%/$1escaped_percent_sign/go){};
