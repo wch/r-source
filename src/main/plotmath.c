@@ -1203,7 +1203,6 @@ static BBOX RenderSpace(SEXP expr, int draw)
     }
     else
 	error("invalid mathematical annotation\n");
-
 }
 
 static SymTab BinTable[] = {
@@ -1911,7 +1910,7 @@ static BBOX RenderDelim(int which, double dist, int draw)
 	break;
     default:
 	error("group is incomplete\n");
-	break;
+	return ansBBox;/*never reached*/
     }
     topBBox = GlyphBBox(top);
     extBBox = GlyphBBox(ext);
@@ -2893,7 +2892,7 @@ void GMathText(double x, double y, int coords, SEXP expr,
 void GMMathText(SEXP str, int side, double line, int outer,
 		double at, int las, DevDesc *dd)
 {
-    int coords;
+    int coords = 0;
     double a, xadj, yadj;
 
     MathDevice = dd;
@@ -2926,6 +2925,7 @@ void GMMathText(SEXP str, int side, double line, int outer,
 	    xadj = MathDevice->gp.adj;
 	    yadj = NA_REAL;
 	    break;
+	default: return;/* never happens */
 	}
 	GMathText(at, line, coords, str, xadj, yadj, a, dd);
     }
@@ -2999,6 +2999,7 @@ void GMMathText(SEXP str, int side, double line, int outer,
 	    }
 	    coords = MAR4;
 	    break;
+	default: return;/* never happens */
 	}
 	GMathText(at, line, coords, str, xadj, yadj, a, dd);
     }
