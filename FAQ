@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-49, 2001-05-03
+Version 1.2-50, 2001-05-05
 Kurt Hornik
 
 
@@ -1129,6 +1129,9 @@ works, was published in the Journal of Statistical Software
      generalisation of SVD also supporting non-identity metrics and
      penalisations.  Also includes some other multiway methods.
 
+*RArcInfo*
+     Functions to import Arc/Info V7.x coverages and data.
+
 *RMySQL*
      An interface between R and the MySQL database system.
 
@@ -1549,6 +1552,10 @@ Currently, there are
      An interface from R to an embedded, persistent Perl interpreter,
      allowing one to call arbitrary Perl subroutines, classes and methods.
 
+*RSPython*
+     Allows Python programs to invoke S functions, methods, etc., and S code
+     to call Python functionality.
+
 *SJava*
      An interface from R to Java to create and call Java objects and
      methods.
@@ -1559,6 +1566,10 @@ Currently, there are
 
 *SNetscape*
      Plugin for Netscape and JavaScript.
+
+*SXalan*
+     Process XML documents using XSL functions implemented in R and
+     dynamically substituting output from R.
 
    Jim Lindsey <jlindsey@luc.ac.be> has written a collection of R packages
 for nonlinear regression and repeated measurements, consisting of *event*

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-49, 2001-05-03
+@set FAQ-VERSION 1.2-50, 2001-05-05
 @set REL-VERSION 1.2.3
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -402,16 +402,16 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} at
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2001-05-03:
+@c Linux binaries as of 2001-05-04:
 @c
 @c debian   2.2 i386  1.2.2  Doug Bates <bates@stat.wisc.edu>
 @c          2.3 i386  1.2.2  Doug Bates <bates@stat.wisc.edu>
-@c linuxppc 5.0 ppc   1.2.2  Alex Buerkle <buerkle@hawaii.edu>
-@c mandrake 7.2 i386  1.2.2  Michele Alzetta <mikalzet@libero.it>
+@c linuxppc 5.0 ppc   1.2.3  Alex Buerkle <buerkle@hawaii.edu>
+@c mandrake 7.2 i386  1.2.3  Michele Alzetta <mikalzet@libero.it>
 @c redhat   6.x alpha 1.2.2  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c              i386  1.2.3  Martyn Plummer <plummer@iarc.fr>
 @c          7.x alpha 1.2.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.2.2  Martyn Plummer <plummer@iarc.fr>
+@c              i386  1.2.3  Martyn Plummer <plummer@iarc.fr>
 @c suse     7.0 i386  1.2.3  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
@@ -1399,6 +1399,8 @@ analyses using GLS.
 A multiway method to decompose a tensor (array) of any order, as a
 generalisation of SVD also supporting non-identity metrics and
 penalisations.  Also includes some other multiway methods.
+@item RArcInfo
+Functions to import Arc/Info V7.x coverages and data.
 @item RMySQL
 An interface between R and the MySQL database system.
 @item RODBC
@@ -1738,6 +1740,9 @@ M. Chambers, 1998, Springer NY.
 @item RSPerl
 An interface from R to an embedded, persistent Perl interpreter,
 allowing one to call arbitrary Perl subroutines, classes and methods.
+@item RSPython
+Allows Python programs to invoke S functions, methods, etc., and S code
+to call Python functionality.
 @item SJava
 An interface from R to Java to create and call Java objects and
 methods.
@@ -1746,6 +1751,9 @@ Functions and C support utilities to support S language programming
 that can work in both R and @SPLUS{}.
 @item SNetscape
 Plugin for Netscape and JavaScript.
+@item SXalan
+Process XML documents using XSL functions implemented in R and
+dynamically substituting output from R.
 @end table
 
 @email{jlindsey@@luc.ac.be, Jim Lindsey} has written a collection of R
