@@ -25,8 +25,8 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o   'version' argument added to pdf() device.  If this is set
-	to "1.4", the device will support transparent colours.
+    o	A 'version' argument has been added to pdf() device.  If this is
+	set to "1.4", the device will support transparent colours.
 
     o	Function file.edit() function added: like file.show(), but
 	allows editing.
@@ -35,22 +35,22 @@ NEW FEATURES
 	some platforms.
 
     o	The 'formula' method for boxplot() has a 'na.action' argument,
-	defaulting to na.pass().  This is mainly useful if the response
-	is a matrix when the previous default of na.omit() would omit
+	defaulting to 'na.pass'.  This is mainly useful if the response
+	is a matrix when the previous default of 'na.omit' would omit
 	entire rows.  (Related to PR#6846.)
 
 	boxplot() and bxp() now obey global 'par' settings and also
-	allow to specify graphical options in much detail, compatibly
-	with S-PLUS (fulfilling wishlist entry PR#6832) thanks to
-	contributions from Arni Magnusson.  For consistency, 'boxwex'
-	is not an explicit argument anymore.
+	allow the specification of graphical options in more detail,
+	compatibly with S-PLUS (fulfilling wishlist entry PR#6832)
+	thanks to contributions from Arni Magnusson.  For consistency,
+	'boxwex' is not an explicit argument anymore.
 
     o	The 'formula' method for pairs() has a 'na.action' argument,
-	defaulting to na.pass(), rather than the value of
+	defaulting to 'na.pass', rather than the value of
 	getOption("na.action").
 
     o	The 'formula' method for mosaicplot() has a 'na.action' argument
-	defaulting to na.omit.
+	defaulting to 'na.omit'.
 
     o	The way the comparison operators handle a list argument has
 	been rationalized so a few more cases will now work -- see
@@ -78,7 +78,7 @@ NEW FEATURES
 
     o	cumsum/prod/max/min() now preserve names.
 
-    o	Replaying a plot (with replayPlot or autoprinting) now
+    o	Replaying a plot (with replayPlot() or via autoprinting) now
 	automagically opens a device if none is open.
 
     o	Printing a character string with embedded nuls now prints the
@@ -150,7 +150,7 @@ NEW FEATURES
 
     o	rank() has two new 'ties.method's, "min" and "max".
 
-    o   power (x^y) is optimised for y==2
+    o   power (x^y) is optimised for y == 2.
 
     o   read.fwf reads multiline records, is faster for large files.
 
