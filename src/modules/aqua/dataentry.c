@@ -41,6 +41,10 @@
 
 # include <Carbon/Carbon.h>
 
+#include "Raqua.h"
+
+extern RAquaPrefs CurrentPrefs;
+
 #include <limits.h>
 
 
@@ -61,6 +65,8 @@ static void CreateDataEntry(WindowRef, ControlRef*);
 static ControlRef GetDataBrowserFromWindow(WindowRef window);
 static void InstallDataEntryCallbacks(ControlRef);
 
+static CellType get_col_type(int col);
+
 static pascal OSStatus deGetSetItemData(ControlRef browser, 
     DataBrowserItemID itemID, DataBrowserPropertyID property, 
     DataBrowserItemDataRef itemData, Boolean changeValue);
@@ -72,6 +78,10 @@ static pascal void deItemNotification(
 static pascal Boolean deItemComparison(
 	ControlRef browser, DataBrowserItemID itemOneID, 
 	DataBrowserItemID itemTwoID, DataBrowserPropertyID sortProperty);
+static pascal void deCustomDrawProc( ControlRef browser, DataBrowserItemID item, 
+        DataBrowserPropertyID property, DataBrowserItemState itemState, 
+        const Rect *theRect, SInt16 gdDepth, Boolean colorDevice);
+
 
 pascal OSStatus deEventHandler(EventHandlerCallRef, EventRef, void*);
 	
@@ -83,71 +93,29 @@ void CloseDataEntry(void);
 Boolean isDataEntryOpen = false;
 WindowRef DataEntryWindow = NULL;
 ControlRef DataEntryControl = NULL;
+CGContextRef		deContext;
 
-
-#define MaxRows  65000
-#define MaxCols  65000 
 int NumOfRows=0;
-int *RowID;
+DataBrowserItemID *RowID;
 
 static SEXP work, names, lens;
 static PROTECT_INDEX wpi, npi, lpi;
 static SEXP ssNA_STRING;
 static double ssNA_REAL;
 
-/* Global variables needed for the graphics */
- 
-static int box_w;                       /* width of a box */
-static int boxw[100];
-static int box_h;                       /* height of a box */
-static int windowWidth;                 /* current width of the window */
-static int fullwindowWidth;
-static int windowHeight;                /* current height of the window */
-static int fullwindowHeight;
-static int currentexp;                  /* boolean: whether an cell is active */
-static int crow;                        /* current row */
-static int ccol;                        /* current column */
-static int nwide, nhigh;
-static int colmax, colmin, rowmax, rowmin;
-static int ndecimal;                    /* count decimal points */
-static int ne;                          /* count exponents */
-static int nneg;			/* indicate whether its a negative */
-static int clength;                     /* number of characters currently entered */
-static char buf[30];
-static char *bufp;
-static int bwidth;			/* width of the border */
-static int hwidth;			/* width of header  */
-static int text_offset;
- 
 static SEXP ssNewVector(SEXPTYPE, int);
 extern bool		EditingFinished;
 
 extern TXNControlTag	RReadOnlyTag[];
 extern TXNControlData   RReadOnlyData[];
-
 extern TXNObject	RConsoleInObject;
 
 static char *get_col_name(int col);
-
-
-static Rboolean newcol, CellModified;
-static int nboxchars;
 static int xmaxused, ymaxused;
-static int box_coords[6];
-static char copycontents[30] = "";
-static int labdigs=4;
-static char labform[6];
 
 
  
    
-#ifndef max
-#define max(a, b) (((a)>(b))?(a):(b))
-#endif
-#ifndef min
-#define min(a, b) (((a)<(b))?(a):(b))
-#endif
-#define BOXW(x) (min(((x<100 && nboxchars==0)?boxw[x]:box_w), fullwindowWidth-boxw[0]-2*bwidth-2))
 
 /*
   Underlying assumptions (for this version R >= 1.8.0)
@@ -190,12 +158,6 @@ static char labform[6];
 
  */
 
-static char *menu_label[] =
-{
-    "Real",
-    "Character",
-    "Change Name",
-};
 
 /*
    ssNewVector is just an interface to allocVector but it lets us
@@ -275,7 +237,8 @@ Boolean OpenDataEntry(void)
     if(DataEntryWindow == NULL)
      return(FALSE);
      
-     	
+     CreateCGContextForPort( GetWindowPort(DataEntryWindow), &deContext );
+	
      InstallWindowEventHandler(DataEntryWindow, 
     		NewEventHandlerUPP(deEventHandler), 
     		sizeof(deEvents)/sizeof(EventTypeSpec), deEvents, NULL, NULL);
@@ -311,18 +274,19 @@ Boolean OpenDataEntry(void)
 	 return;
 	}
 	
-	
+	 
    NumOfRows = ymaxused;	
-   RowID = (int*)malloc(NumOfRows * sizeof(int));
+   RowID = (DataBrowserItemID*)malloc(NumOfRows * sizeof(DataBrowserItemID));
    for(i=1;i<=NumOfRows;i++)
     RowID[i-1] = i;
     
   AddDataBrowserItems(DataEntryControl, kDataBrowserNoItem, 
 				NumOfRows, RowID, kDataBrowserItemNoProperty);
 
-   //SetDataBrowserSortProperty (DataEntryControl,kDataBrowserItemNoProperty);
  
 
+    SetDataBrowserSelectionFlags( DataEntryControl, kDataBrowserCmdTogglesSelection );
+//SetAutomaticControlDragTrackingEnabledForWindow( DataEntryWindow, true );	
     ShowWindow(DataEntryWindow);
 
 
@@ -347,6 +311,7 @@ void CloseDataEntry(void)
      SetRect(&deBounds, 400, 400, 600, 800);
       
 	
+    CGContextRelease( deContext );    
     DisposeWindow(DataEntryWindow);
     DataEntryWindow = NULL;
     
@@ -461,7 +426,7 @@ static ControlRef GetDataBrowserFromWindow(WindowRef window)
 void InstallDataEntryCallbacks(ControlRef browser)
 {
     DataBrowserCallbacks myCallbacks;
-    
+    DataBrowserCustomCallbacks dbCustomCallbacks;
 
     myCallbacks.version = kDataBrowserLatestCallbacks;
     InitDataBrowserCallbacks(&myCallbacks);
@@ -475,8 +440,14 @@ void InstallDataEntryCallbacks(ControlRef browser)
      
     myCallbacks.u.v1.itemCompareCallback = 
 		NewDataBrowserItemCompareUPP(deItemComparison);
-
+	
     SetDataBrowserCallbacks(browser, &myCallbacks);
+
+    dbCustomCallbacks.version	= kDataBrowserLatestCallbacks;
+    InitDataBrowserCustomCallbacks( &dbCustomCallbacks );
+    dbCustomCallbacks.u.v1.drawItemCallback = NewDataBrowserDrawItemUPP( deCustomDrawProc );	
+    fprintf(stderr,"\n custom err=%d",SetDataBrowserCustomCallbacks( browser, &dbCustomCallbacks ));
+
 }
 
 
@@ -689,23 +660,11 @@ SEXP Raqua_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* initialize the constants */
 
-    bufp = buf;
-    ne = 0;
-    currentexp = 0;
-    nneg = 0;
-    ndecimal = 0;
-    clength = 0;
-    ccol = 1;
-    crow = 1;
-    colmin = 1;
-    rowmin = 1;
     ssNA_REAL = -NA_REAL;
     tvec = allocVector(REALSXP, 1);
     REAL(tvec)[0] = ssNA_REAL;
     PROTECT(ssNA_STRING = coerceVector(tvec, STRSXP)); nprotect++;
-    bwidth = 5;
-    hwidth = 30;
-
+    
     /* setup work, names, lens  */
     xmaxused = length(work); ymaxused = 0;
     PROTECT_WITH_INDEX(lens = allocVector(INTSXP, xmaxused), &lpi);
@@ -726,7 +685,7 @@ SEXP Raqua_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	INTEGER(lens)[i] = len;
 	ymaxused = max(len, ymaxused);
         type = TYPEOF(VECTOR_ELT(work, i));
-    if (LENGTH(colmodes) > i && !isNull(VECTOR_ELT(colmodes, i)))
+    if (LENGTH(colmodes) > 0 && !isNull(VECTOR_ELT(colmodes, i)))
 	    type = str2type(CHAR(STRING_ELT(VECTOR_ELT(colmodes, i), 0)));
 	if (type != STRSXP) type = REALSXP;
 	if (isNull(VECTOR_ELT(work, i))) {
@@ -874,6 +833,33 @@ static pascal Boolean deItemComparison(
        			
 }
 
+
+struct WindowinfoStruct
+{
+	OSType			windowidentifier;
+	CGContextRef		cgContext;
+};
+typedef struct WindowinfoStruct WindowinfoStruct;
+
+
+static pascal void deCustomDrawProc( ControlRef browser, DataBrowserItemID item, DataBrowserPropertyID property, DataBrowserItemState itemState, const Rect *theRect, SInt16 gdDepth, Boolean colorDevice)
+{
+        CFStringRef			cfString;
+                
+	cfString	= CFStringCreateWithFormat( NULL, NULL, CFSTR("Row %d"), item );
+	
+	if ( itemState == kDataBrowserItemIsSelected )		
+        	{
+		RGBForeColor( &CurrentPrefs.BGInputColor );
+		PaintRect( theRect );	//	First paint the hilite rect, then the text on top
+	}
+
+        RGBForeColor( &CurrentPrefs.FGInputColor );
+	DrawThemeTextBox( cfString, kThemeApplicationFont, kThemeStateActive, true, theRect, teFlushDefault, NULL );	//	
+
+	if ( cfString != NULL )	CFRelease( cfString );
+        fprintf(stderr,"\ncustom prop=%d, top=%d, left=%d, bottom=%d, right=%d", property, theRect->top, theRect->left, theRect->bottom, theRect->right);
+}
 
 
 

@@ -50,6 +50,9 @@
 #ifndef kDataBrowserListViewAppendColumn
 #define kDataBrowserListViewAppendColumn ULONG_MAX
 #endif
+#include "Raqua.h"
+
+extern RAquaPrefs CurrentPrefs;
 
 static void ConfigureDataBrowser(ControlRef);
 static void CreateDataBrowser(WindowRef, ControlRef*);
@@ -119,8 +122,8 @@ e		9			0
 */
 
 int		NumOfRoots = 0;
-int		*RootItems = NULL; 
-int		**SubItemsID;
+DataBrowserItemID		*RootItems = NULL; 
+DataBrowserItemID		**SubItemsID;
 int		CurrentID = 0;
 void	InitContainers(void);
 void	SetSubItems(int i);
@@ -253,7 +256,7 @@ SEXP Raqua_do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	IDNum[i] = INTEGER(id)[i];
     NumberOfItems[i] = INTEGER(numofit)[i];
-    ParentID[i] = INTEGER(parid)[i];
+    ParentID[i] = INTEGER(parid)[i]; 
     IsRoot[i] = LOGICAL(isroot)[i];
     IsContainer[i] = LOGICAL(iscont)[i];
   }
@@ -276,14 +279,14 @@ void InitContainers(void){
 	  NumOfRoots++;
 	if(RootItems) free(RootItems);
 	  
-	RootItems = (int)malloc(sizeof(int)*NumOfRoots);
-	SubItemsID = (int**)malloc(NumOfID * sizeof(int*));
+	RootItems = malloc(sizeof(DataBrowserItemID)*NumOfRoots);
+	SubItemsID = (DataBrowserItemID**)malloc(NumOfID * sizeof(DataBrowserItemID*));
 
 	for(i = 0; i < NumOfID; i++){
      if(IsRoot[i]) { RootItems[k] = IDNum[i]; k++;}     
      if(IsContainer[i]){
       l = 0;
-      SubItemsID[i] = malloc(sizeof(int)*NumberOfItems[i]);
+      SubItemsID[i] = malloc(sizeof(DataBrowserItemID)*NumberOfItems[i]);
       for(j=0; j<NumOfID; j++){
         if(ParentID[j] == IDNum[i]){
           SubItemsID[i][l] = IDNum[j];
@@ -444,9 +447,6 @@ static void CreateDataBrowser(WindowRef window, ControlRef *browser)
 		kControlDataBrowserIncludesFrameAndFocusTag,
 		sizeof(frameAndFocus), &frameAndFocus);
 }
-#include "Raqua.h"
-
-extern RAquaPrefs CurrentPrefs;
 
 static void ConfigureDataBrowser(ControlRef browser)
 {
@@ -485,7 +485,7 @@ static void ConfigureDataBrowser(ControlRef browser)
 			columnDesc.propertyDesc.propertyFlags = kDataBrowserPropertyIsMutable | 
 													kDataBrowserListViewDefaultColumnFlags;
 			
-		
+		 
 			columnDesc.headerBtnDesc.minimumWidth = 30;
 			columnDesc.headerBtnDesc.maximumWidth = 200;
 			

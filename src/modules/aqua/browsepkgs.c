@@ -206,8 +206,13 @@ void EmptyBrowsePkg(void)
 
 void CloseBrowsePkg(void)
 {
-int i;
-      
+    if(BrowsePkgWindow){
+     if( GetWindowBounds(BrowsePkgWindow,kWindowStructureRgn,&bpBounds) != noErr)
+      SetRect(&bpBounds, 400, 400, 600, 800);
+    }
+    else 
+     SetRect(&bpBounds, 400, 400, 600, 800);
+
     DisposeWindow(BrowsePkgWindow);
     BrowsePkgWindow = NULL;
     

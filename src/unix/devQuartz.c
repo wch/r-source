@@ -21,7 +21,7 @@
 #ifndef __QUARTZ_DEVICE__
 #define __QUARTZ_DEVICE__
 
-
+ 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

@@ -390,7 +390,7 @@ void Raqua_StartConsole(void)
                                           
          err = InstallApplicationEventHandler( NewEventHandlerUPP(RWinHandler), GetEventTypeCount(RGlobalWinEvents),
                                                 RGlobalWinEvents, 0, NULL);
-         err = AEInstallEventHandler(kCoreEventClass, kAEQuitApplication, NewAEEventHandlerUPP(QuitAppleEventHandler), 
+         err = AEInstallEventHandler(kCoreEventClass, kAEQuitApplication, NewAEEventHandlerUPP((AEEventHandlerProcPtr)QuitAppleEventHandler), 
                                     0, false );
 
         TXNFocus(RConsoleOutObject,true);
@@ -692,7 +692,7 @@ static OSStatus KeybHandler(EventHandlerCallRef inCallRef, EventRef REvent, void
 pascal void RAboutHandler(WindowRef window)
 {
     CFStringRef	text;
-    CFStringRef	appBundle;
+    CFBundleRef	appBundle;
     ControlID	versionInfoID = {kRAppSignature, kRVersionInfoID};
     ControlRef	versionControl;
     ControlFontStyleRec	controlStyle;
@@ -1042,7 +1042,7 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
                     err = noErr;
                 }
                 
-                if( GetWindowProperty(EventWindow, kRAppSignature, 1, sizeof(int), devsize, &devnum) == noErr)
+                if( GetWindowProperty(EventWindow, kRAppSignature, 1, sizeof(int), NULL, &devnum) == noErr)
                     if( (dd = ((GEDevDesc*) GetDevice(devnum))->dev) ){
                         dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top), dd);
                         GEplayDisplayList((GEDevDesc*) GetDevice(devnum));       
@@ -1112,7 +1112,7 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
               } 
               
              /* Are we closing any quartz device window ? */
-            if( GetWindowProperty(EventWindow, kRAppSignature, 1, sizeof(int), devsize, &devnum) == noErr){
+            if( GetWindowProperty(EventWindow, kRAppSignature, 1, sizeof(int), NULL, &devnum) == noErr){
                     sprintf(cmd,"dev.off(%d)",1+devnum);
                     consolecmd(cmd);
                     err= noErr; 
@@ -1952,7 +1952,7 @@ void mac_loadhistory(char *file)
     }
     fclose(fp);
 }
-
+ 
 
  
 void Raqua_GetQuartzParameters(double *width, double *height, double *ps, char *family, Rboolean *antialias, Rboolean *autorefresh){
