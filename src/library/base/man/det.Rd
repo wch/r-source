@@ -1,9 +1,11 @@
 \name{det}
 \title{Calculate the Determinant of a Matrix}
 \alias{det}
-\alias(determinant)
+\alias{ndet}
+\alias{determinant}
+\alias{determinant.matrix}
 \usage{
-det(x, \dots)
+ndet(x, \dots)
 determinant(x, logarithm, \dots)
 }
 \description{
@@ -28,9 +30,8 @@ determinant(x, logarithm, \dots)
 \note{
   Often, computing the determinant is \emph{not} what you should be doing
   to solve a given problem.
-}
-\note{
-  Prior to release 1.8.0 the \code{det} function had a \code{method}
+
+  Prior to version 1.8.0 the \code{det} function had a \code{method}
   argument to allow use of either a QR decomposition or an
   eigenvalue-eigenvector decomposition.  The \code{determinant} function now
   uses an LU decomposition and the \code{det} function is simply a
