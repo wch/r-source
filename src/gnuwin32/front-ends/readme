@@ -48,3 +48,6 @@ simple test main program for rproxy.dll.
 
 The interface can evaluate commands and transfer simple R objects (e.g.
 vectors and matrices).
+
+Look on CRAN under `platform-specific extension packages' for the
+automation server.
