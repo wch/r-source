@@ -176,6 +176,8 @@ BUG FIXES
     o	The X11 data editor scrolls cells and so allows more than ca 10
 	characters to be entered.
 
+    o	rpois(*, lambda) now works when lambda > .Machine$integer.max
+
 
 		CHANGES IN R VERSION 1.0.1
 
