@@ -495,8 +495,8 @@ int main(int ac, char **av)
 
 	/* Declarations to keep f77 happy */
 
-int MAIN_()  {return 0;}
-int MAIN__() {return 0;}
-int __main() {return 0;}
+int MAIN_(int ac, char **av)  {return 0;}
+int MAIN__(int ac, char **av) {return 0;}
+int __main(int ac, char **av) {return 0;}
 
 

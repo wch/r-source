@@ -1,6 +1,27 @@
 				Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       1.1 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 1.1.0
+
+
+NEW FEATURES
+
+    o   attach now works for R data files 
+
+    o   R (at least under Unix) can be sent SIGUSR1 to quit and
+        save or SIGUSR2 to quit and save without running .Last and
+        on.exit expressions.
+
+BUG FIXES
+
+
+	**************************************************
+	*						 *
 	*	       1.0 SERIES NEWS			 *
 	*						 *
 	**************************************************

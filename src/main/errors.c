@@ -58,6 +58,72 @@ void onintr()
     jump_to_toplevel();
 }
 
+/* SIGUSR1: save and quit
+   SIGUSR2: save and quit, don't run .Last or on.exit().
+*/
+void onsigusr1()
+{
+    RCNTXT *c;
+    SEXP s, t;
+    int nback=0;
+
+    inError = 1;
+
+    if( R_CollectWarnings ) {
+	inError = 2;
+	REprintf("In addition: ");
+	PrintWarnings();
+	inError = 1;
+    }
+
+
+    if (R_Inputfile != NULL)
+	fclose(R_Inputfile);
+    R_ResetConsole();
+    R_FlushConsole();
+    R_ClearerrConsole();
+    R_ParseError = 0;
+    vmaxset(NULL);
+    if (R_GlobalContext->cend != NULL)
+	(R_GlobalContext->cend) ();
+    for (c = R_GlobalContext; c; c = c->nextcontext) {
+	if (c->cloenv != R_NilValue && c->conexit != R_NilValue)
+	    eval(c->conexit, c->cloenv);
+	if (c->callflag == CTXT_RETURN || c->callflag == CTXT_GENERIC )
+	    nback++;
+	if (c->callflag == CTXT_RESTART) {
+		inError=0;
+		findcontext(CTXT_RESTART, c->cloenv, R_DollarSymbol);
+	}
+    }
+	R_CleanUp(SA_SAVE, 2, 1); /* quit, save,  .Last, status=2 */
+
+}
+
+
+void onsigusr2()
+{
+    inError = 1;
+    
+    if( R_CollectWarnings ) {
+	inError = 2;
+	REprintf("In addition: ");
+	PrintWarnings();
+	inError = 1;
+    }
+    
+    
+    if (R_Inputfile != NULL)
+	fclose(R_Inputfile);
+    R_ResetConsole();
+    R_FlushConsole();
+    R_ClearerrConsole();
+    R_ParseError = 0;
+    vmaxset(NULL);
+    R_CleanUp(SA_SAVE, 0, 0);
+}
+
+
 static void setupwarnings(void)
 {
     R_Warnings = allocVector(VECSXP, 50);

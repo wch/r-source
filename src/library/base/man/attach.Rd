@@ -5,8 +5,7 @@ attach(what, pos = 2, name = deparse(substitute(what)))
 }
 \alias{attach}
 \arguments{
-  \item{what}{``database'' to attach. Typically a \code{data.frame} or
-    \code{list}.}
+  \item{what}{``database'' or name of R data file to attach. Typically a \code{data.frame} or \code{list}.}
   \item{pos}{integer specifying position in \code{\link{search}()} where
     to attach.}
   \item{name}{alternative way to specify the database to be attached.}

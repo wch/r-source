@@ -438,6 +438,8 @@ extern int	R_ShowErrorMessages INI_as(1);  /* show error messages? */
 #define NewEnvironment		Rf_NewEnvironment
 #define OneIndex		Rf_OneIndex
 #define onintr			Rf_onintr
+#define onsigusr1               Rf_onsigusr1
+#define onsigusr2               Rf_onsigusr2
 #define parse			Rf_parse
 #define PrintGreeting		Rf_PrintGreeting
 #define PrintVersion		Rf_PrintVersion
@@ -555,6 +557,8 @@ SEXP mkSYMSXP(SEXP, SEXP);
 SEXP mkTrue(void);
 SEXP NewEnvironment(SEXP, SEXP, SEXP);
 void onintr();
+void onsigusr1();
+void onsigusr2();
 int OneIndex(SEXP, SEXP, int, int, SEXP*);
 SEXP parse(FILE*, int);
 void PrintGreeting(void);
