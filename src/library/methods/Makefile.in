@@ -69,6 +69,7 @@ $(top_builddir)/library/$(pkg)/R/$(pkg): $(srcdir)/install.R
 	@$(INSTALL_DATA) $(srcdir)/install.R $@
 
 $(top_builddir)/library/$(pkg)/R/all.rda: all.R
+	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
 	@echo "dumping R code in package '$(pkg)'"
 	@if test -f $(srcdir)/NAMESPACE; then \
 	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
