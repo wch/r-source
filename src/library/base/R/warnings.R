@@ -1,7 +1,8 @@
 warnings <- function(...)
 {
-    if(!exists("last.warning") || !(n <- length(last.warning)))
-	return()
+    if(!exists("last.warning", envir=.GlobalEnv)) return()
+    last.warning <- get("last.warning", envir=.GlobalEnv)
+    if(!(n <- length(last.warning))) return()
     names <- names(last.warning)
     cat("Warning message", if(n > 1)"s", ":\n", sep="")
     for(i in 1:n) {

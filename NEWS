@@ -79,6 +79,9 @@ NEW FEATURES
     o	R CMD check will now work on a source tarball and prints out
 	information about the version of R and the package.
 
+    o	warnings() now looks only in the workspace for `last.warning'
+	(suggested by PR#7363).
+
 
 UTILITIES
 
