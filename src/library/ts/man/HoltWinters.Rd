@@ -10,8 +10,8 @@
 }
 \usage{
 HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
-          seasonal = "additive", start.periods = 3,
-          l.start = NULL, b.start = NULL, s.start = NULL)
+            seasonal = "additive", start.periods = 3,
+            l.start = NULL, b.start = NULL, s.start = NULL)
 }
 \arguments{
   \item{x}{An object of class \code{ts}}

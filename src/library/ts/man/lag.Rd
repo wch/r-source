@@ -7,6 +7,8 @@
   back by a given number of observations.
 }
 \usage{
+lag(x, \dots)
+
 \method{lag}{default}(x, k = 1, \dots)
 }
 \arguments{

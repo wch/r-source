@@ -21,7 +21,7 @@ plot.spec.coherency(x, ci = 0.95, xlab = "frequency",
     main = NULL, ci.lty = 3, ci.col = "blue", \dots)
 }
 \usage{
-plot(x, add = FALSE, ci = 0.95, log = c("yes", "dB", "no"),
+\method{plot}{spec}(x, add = FALSE, ci = 0.95, log = c("yes", "dB", "no"),
      xlab = "frequency", ylab = NULL, type = "l", ci.col = "blue",
      main = NULL, sub = NULL,
      plot.type = c("marginal", "coherency", "phase"),

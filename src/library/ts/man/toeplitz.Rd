@@ -1,7 +1,7 @@
 \name{toeplitz}
 \title{Form Symmetric Toeplitz Matrix}
 \usage{
-toeplitz (x)
+toeplitz(x)
 }
 \alias{toeplitz}
 \arguments{

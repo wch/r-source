@@ -15,7 +15,9 @@
 acf(x, lag.max = NULL,
     type = c("correlation", "covariance", "partial"),
     plot = TRUE, na.action = na.fail, demean = TRUE, \dots)
+
 pacf(x, lag.max = NULL, plot = TRUE, na.action = na.fail, \dots)
+
 ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
     plot = TRUE, na.action = na.fail, \dots)
 }

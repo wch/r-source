@@ -7,6 +7,7 @@
 ecdf(x)
 
 \method{plot}{ecdf}(\dots, verticals = FALSE, col.01line = "gray70")
+
 \method{print}{ecdf}(x, digits= getOption("digits") - 2, \dots)
 }
 \arguments{

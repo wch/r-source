@@ -12,7 +12,7 @@ export(acf, acf2AR, ar, ar.burg, ar.mle, ar.ols, ar.yw, arima,
 
 # methods which are documented and registered
 # export(ar.burg.default, ar.burg.mts, ar.yw.default, ar.yw.mts,
-#        diffinv.default, diffinv.ts, diffinv.vector, kernapply.default,
+#        diffinv.default, diffinv.ts, kernapply.default,
 #        kernapply.ts, kernapply.tskernel, kernapply.vector,
 #        lag.default, monthplot.default, monthplot.stl,
 #        monthplot.StructTS, monthplot.ts, pacf.default,

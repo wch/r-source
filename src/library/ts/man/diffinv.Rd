@@ -2,7 +2,6 @@
 \alias{diffinv}
 \alias{diffinv.default}
 \alias{diffinv.ts}
-\alias{diffinv.vector}
 \title{Discrete Integration: Inverse of Differencing}
 \description{
   Computes the inverse function of the lagged differences function
@@ -14,8 +13,6 @@ diffinv.default(x, lag = 1, differences = 1,
     xi = rep(0, lag * differences * dim(as.matrix(x))[2]), ...) 
 diffinv.ts(x, lag = 1, differences = 1,
     xi = rep(0, lag * differences * NCOL(x)), ...) 
-diffinv.vector(x, lag = 1, differences = 1,
-    xi = rep(0, lag * differences), ...)
 }
 \usage{
 diffinv(x, lag = 1, differences = 1,

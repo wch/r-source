@@ -11,7 +11,7 @@
 }
 \usage{
 cpgram(ts, taper=0.1, main=
-         paste("Series: ", deparse(substitute(ts))), ci.col="blue")
+       paste("Series: ", deparse(substitute(ts))), ci.col="blue")
 }
 \arguments{
   \item{ts}{a univariate time series}

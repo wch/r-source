@@ -7,7 +7,8 @@ is.stepfun(x)
 knots(Fn, \dots)
 as.stepfun(x, \dots)
 
-\method{print}{stepfun}(x, digits= getOption("digits") - 2, \dots)
+\method{print}{stepfun}(x, digits = getOption("digits") - 2, \dots)
+
 \method{summary}{stepfun}(object, \dots)
 }
 \alias{stepfun}

@@ -6,7 +6,7 @@
 }
 \usage{
 \method{predict}{Arima}(object, n.ahead = 1, newxreg = NULL,
-     se.fit = TRUE, \dots)
+        se.fit = TRUE, \dots)
 }
 \arguments{
   \item{object}{The result of an \code{arima} fit.}

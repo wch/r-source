@@ -8,11 +8,10 @@
 }
 \usage{
 \method{plot}{HoltWinters}(x, predicted.values = NA, intervals = TRUE,
-        separator = TRUE, col = 1, col.predicted = 2,
-        col.intervals = 4, col.separator = 1, lty = 1,
-        lty.predicted = 1, lty.intervals = 1, lty.separator = 3,
-        ylab = "Observed / Fitted",
-        main = "Holt-Winters filtering", \dots)
+     separator = TRUE, col = 1, col.predicted = 2,
+     col.intervals = 4, col.separator = 1, lty = 1,
+     lty.predicted = 1, lty.intervals = 1, lty.separator = 3,
+     ylab = "Observed / Fitted", main = "Holt-Winters filtering", \dots)
 }
 \arguments{
   \item{x}{Object of class \code{"HoltWinters"}}

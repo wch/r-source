@@ -13,6 +13,7 @@
      pch = par("pch"), col.points=par("col"), cex.points=par("cex"),
      col.hor = par("col"), col.vert= par("col"),
      lty = par("lty"), lwd = par("lwd"), \dots)
+
 \method{lines}{stepfun}(x, \dots)
 }
 \arguments{
