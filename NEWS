@@ -91,6 +91,8 @@ BUG FIXES
     o	The xfig() driver was not closing unclosed polygons as the R
 	driver expected (but did not document).
 
+    o	spec.ar() now handles order 1 correctly.
+
 
 
 		CHANGES IN R VERSION 1.2.1
