@@ -668,10 +668,19 @@ The @code{\itemize} and @code{\enumerate} commands take a single
 argument, within which there may be one or more @code{\item} commands.
 The text following each @code{\item} is formatted as one or more
 paragraphs, suitably indented and with the first paragraph marked with
-a bullet point (@code{\itemize}) or a number (@code{\enumerate}: if
-possible, not currently for text processing).
+a bullet point (@code{\itemize}) or a number (@code{\enumerate}).
 
 @code{\itemize} and @code{\enumerate} commands may be nested.
+
+@findex \describe
+The @code{\describe} command is similar to @code{\itemize} but allows
+initial labels to be specified. The @code{\item}s take two arguments,
+the label and the body of the item, in exactly the same way as argument
+and value @code{\item}s.
+
+@code{\describe} commands are mapped to @code{\description} in @HTML and
+@code{\description} in La@TeX{}.
+
 
 @node Cross-references, Mathematics, Marking text, Writing R documentation
 @section Cross-references
@@ -732,24 +741,24 @@ For the @HTML{} and the ``direct'' (man-like) on-line help we get
 for x = 0, 1, 2, ....
 @end example
 
-For historic reasons mostly, the @TeX{}/La@TeX{} commands @code{\alpha},
-@code{\Alpha}, @code{\beta}, @code{\Gamma}, @code{\epsilon},
-@code{\lambda}, @code{\mu}, @code{\pi}, @code{\sigma}, @code{\left(} and
-@code{\right)} exist.  These can be used directly, without using the
-@code{\eqn} diversion.
-@findex \alpha
-@findex \Alpha
-@findex \beta
-@findex \Gamma
-@findex \epsilon
-@findex \lambda
-@findex \mu
-@findex \pi
-@findex \sigma
-@findex \left(
-@findex \right)
+@c  For historic reasons mostly, the @TeX{}/La@TeX{} commands @code{\alpha},
+@c  @code{\Alpha}, @code{\beta}, @code{\Gamma}, @code{\epsilon},
+@c  @code{\lambda}, @code{\mu}, @code{\pi}, @code{\sigma}, @code{\left(} and
+@c  @code{\right)} exist.  These can be used directly, without using the
+@c  @code{\eqn} diversion.
+@c  @findex \alpha
+@c  @findex \Alpha
+@c  @findex \beta
+@c  @findex \Gamma
+@c  @findex \epsilon
+@c  @findex \lambda
+@c  @findex \mu
+@c  @findex \pi
+@c  @findex \sigma
+@c  @findex \left(
+@c  @findex \right)
 
-@node Insertions, Platform-specific sections, Mathematics, Writing R documentation
+@Node Insertions, Platform-specific sections, Mathematics, Writing R documentation
 @section Insertions
 
 @findex \R
@@ -847,7 +856,6 @@ porting a package orginally written for the @Sl{} system to @R{}.
 
 Use each of the above commands with the @option{--help} option to obtain
 usage information.
-
 
 @node System and foreign language interfaces, R (internal) programming miscellania, Writing R documentation, Top
 @chapter System and foreign language interfaces

@@ -600,12 +600,17 @@ sub text2html {
 
     $text = replace_command($text, "itemize", "<UL>", "</UL>");
     $text = replace_command($text, "enumerate", "<OL>", "</OL>");
-
-    #$text = replace_command($text, "describe", "<DL>", "</DL>");
-    # If `\describe' is used, the  '\item' below will have an argument..
     $text =~ s/\\item\s+/<li>/go;
-    # (and be translated to <DL> ..<DD>..
 
+    # handle "\describe"
+    $text = replace_command($text, "describe", "<DL>", "</DL>");
+    while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
+    {
+	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+	$descitem = "<DT>" . text2html($arg) . "</DT>";
+	$descitem .= "<DD>" . text2html($desc) . "</DD>";
+	$text =~ s/\\itemnormal.*$id/$descitem/s;
+    }
     $text =~ s/\\([^\\])/$1/go;#-drop single "\" (as in ``\R'')
     $text =~ s/\\\\/\\/go;
     $text = html_unescape_codes($text);
@@ -1196,7 +1201,7 @@ sub rdoc2txt { # (filename); 0 for STDOUT
     }
 
     $Text::Wrap::columns=65;
-    $INDENT = 5;
+    $INDENT = 3;
 
     if ($pkgname) {
 	my $pad = 75 - length($blocks{"name"}) - length($pkgname) - 30;
@@ -1331,10 +1336,22 @@ sub text2txt {
 
     $text = replace_command($text,
 			    "enumerate",
-			    "\n.in +$INDENT\n",
-			    "\n.in -$INDENT\n");
+			    "\n.inen +$INDENT\n",
+			    "\n.inen -$INDENT\n");
 
     $text =~ s/\\item\s+/\n.ti * \n/go;
+
+    # handle "\describe"
+    $text = replace_command($text,
+			    "describe",
+			    "\n.in +$INDENT\n",
+			    "\n.in -$INDENT\n");
+    while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
+    {
+	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+	$descitem = "\n.ti " . text2txt($arg) . " \n\n" . text2txt($desc);
+	$text =~ s/\\itemnormal.*$id/$descitem/s;
+    }
 
     $text = txt_unescape_codes($text);
     unmark_brackets($text);
@@ -1393,6 +1410,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
     my @paras = split /\n\n/, $text;
     $indent1 = $pre1; $indent2 = $indent;
 
+    my $enumlevel = 0, @enum;
     foreach $para (@paras) {
 	# strip leading white space
 	$para  =~ s/^\s+//;
@@ -1402,13 +1420,26 @@ sub txt_fill { # pre1, base, "text to be formatted"
 	if ($para =~ s/^[\n]*\.ti //) {
 	    $indent1 = $indent;
 	    $indent2 = $indent1 . (" " x 3);
+	    if ($enum{$enumlevel} > 0) {
+		$para =~ s/\*/$enum{$enumlevel}./;
+		$enum{$enumlevel} += 1;
+	    }
 	}
 
-        # check for .in command
-	if ($para =~ s/^[\n]*\.in (.*)/\1/) {
+        # check for .in or .inen command
+	if ($para =~ s/^[\n]*\.in([^\ ]*) (.*)/\2/) {
 	    $INDENT = $INDENT + $para;
 	    $indent1 = $indent2 = $indent = " " x $INDENT;
-
+	    if ($para > 0) {
+		$enumlevel += 1;
+		if ($1 =~ /en/) {
+		    $enum{$enumlevel} = 1;
+		} else {
+		    $enum{$enumlevel} = 0;
+		}
+	    } else {
+		$enumlevel -= 1;
+	    }
         # check for a \deqn block
 	} elsif ($para0 =~ s/^\s*\.DS B\s*(.*)\.DE/\1/) {
 	    $para0 =~ s/\s*$//o;
@@ -1903,8 +1934,14 @@ sub text2latex {
     $text =~ s/\\itemize/\\Itemize/go;
     $text =~ s/\\enumerate/\\Enumerate/go;
     $text =~ s/\\tabular/\\Tabular/go;
-
     my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
+    {
+	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+	$descitem = "\\DITEM[" . text2latex($arg) . "] " . text2latex($desc);
+	$text =~ s/\\itemnormal.*$id/$descitem/s;
+    }
+
     while(checkloop($loopcount++, $text, "\\eqn")
 	  &&  $text =~ /\\eqn/){
 	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
@@ -1921,6 +1958,7 @@ sub text2latex {
 
     $text =~ s/\\eeeeqn/\\eqn/go;
     $text =~ s/\\dddeqn/\\deqn/og;
+    $text =~ s/\\DITEM/\\item/og;
 
     $text =~ s/&/\\&/go;
     $text =~ s/\\R(\s+)/\\R\{\}$1/go;
