@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2002  The R Development Core Team
+ *  Copyright (C) 1997--2004  The R Development Core Team
  *  Copyright (C) 2003	      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include <string.h>
@@ -45,7 +45,8 @@ static SEXP NaokSymbol = NULL;
 static SEXP DupSymbol = NULL;
 static SEXP PkgSymbol = NULL;
 
-/* Global variable that should go. Should actually be doing this in a much more straightforward manner. */
+/* Global variable that should go. Should actually be doing this in 
+   a much more straightforward manner. */
 #include <Rdynpriv.h>
 enum {FILENAME, DLL_HANDLE, R_OBJECT, NOT_DEFINED};
 typedef struct {
@@ -57,8 +58,6 @@ typedef struct {
 
 
 /* This looks up entry points in DLLs in a platform specific way. */
-#include <Rdynpriv.h>
-
 #define MAX_ARGS 65
 
 static DL_FUNC
@@ -83,19 +82,15 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun)
     if (isValidString(op))
 	return(0);
 
-    else if((TYPEOF(op) == EXTPTRSXP && R_ExternalPtrTag(op) == Rf_install("native symbol"))) {
-
+    else if((TYPEOF(op) == EXTPTRSXP && 
+	     R_ExternalPtrTag(op) == Rf_install("native symbol"))) {
 	if((*fun = R_ExternalPtrAddr(op)) == NULL)
 	    errorcall(call, "NULL value passed as symbol address.");
 	return(0);
-
-    } else if(inherits(op, "NativeSymbolInfo")) {
-
+    } else if(inherits(op, "NativeSymbolInfo"))
 	return(checkValidSymbolId(VECTOR_ELT(op, 1), call, fun));
-
-    }
-
-    errorcall(call, "function name must be a string (of length 1) or native symbol reference.");
+    errorcall(call, 
+	      "function name must be a string (of length 1) or native symbol reference.");
     return(0);
 }
 
@@ -181,14 +176,14 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 static Rboolean
 checkNativeType(int targetType, int actualType)
 {
-   if(targetType > 0) {
-      if(targetType == INTSXP || targetType == LGLSXP) {
-	  return(actualType == INTSXP || actualType == LGLSXP);
-      }
-      return(targetType == actualType);
-   }
+    if(targetType > 0) {
+	if(targetType == INTSXP || targetType == LGLSXP) {
+	    return(actualType == INTSXP || actualType == LGLSXP);
+	}
+	return(targetType == actualType);
+    }
 
-  return(TRUE);
+    return(TRUE);
 }
 
 
@@ -225,13 +220,13 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
     }
 
     if(checkNativeType(targetType, TYPEOF(s)) == FALSE) {
-     if(!dup) {
-       error("explicit request not to duplicate arguments in call to %s, but argument %d is of the wrong type (%d != %d)",
-	     name, narg + 1, targetType, TYPEOF(s));
-     }
+	if(!dup) {
+	    error("explicit request not to duplicate arguments in call to %s, but argument %d is of the wrong type (%d != %d)",
+		  name, narg + 1, targetType, TYPEOF(s));
+	}
 
-     if(targetType != SINGLESXP)
-        s = coerceVector(s, targetType);
+	if(targetType != SINGLESXP)
+	    s = coerceVector(s, targetType);
     }
 
     switch(TYPEOF(s)) {
@@ -433,7 +428,7 @@ comparePrimitiveTypes(R_NativePrimitiveArgType type, SEXP s, Rboolean dup)
 /* Foreign Function Interface.  This code allows a user to call C */
 /* or Fortran code which is either statically or dynamically linked. */
 
-/* NB: despite its name, this leaves NAOK and DUP arguments on the list */
+/* NB: this leaves NAOK and DUP arguments on the list */
 
 /* find NAOK and DUP, find and remove PACKAGE */
 static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
@@ -1374,8 +1369,8 @@ R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
     if(inherits(dll->obj, "DLLInfo")) {
 	SEXP tmp;
 /*XXX*/
-DL_FUNC R_dlsym(DllInfo *info, char const *name,
-		R_RegisteredNativeSymbol *symbol);
+	DL_FUNC R_dlsym(DllInfo *info, char const *name,
+			R_RegisteredNativeSymbol *symbol);
 	tmp = VECTOR_ELT(dll->obj, 4);
 	info = (DllInfo *) R_ExternalPtrAddr(tmp);
 	if(!info)
