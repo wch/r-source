@@ -45,9 +45,18 @@ notice identical to this one except for the removal of this paragraph
 Copyright @copyright{} 2000 R Development Core Team
 @end titlepage
 
+@ifnothtml
 @contents
+@end ifnothtml
 
+@ifnottex
 @node Top, Acknowledgements, (dir), (dir)
+@top R Data Import/Export
+
+This is a guide to importing and exporting data to and from R.
+
+The current version of this document is @value{VERSION}.
+@end ifnottex
 
 @menu
 * Acknowledgements::            

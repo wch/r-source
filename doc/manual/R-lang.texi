@@ -43,9 +43,21 @@ This is the R language definition.
 @permission{}
 @end titlepage
 
+@ifnothtml
 @contents
+@end ifnothtml
 
+@ifnottex
 @node Top, Introduction, (dir), (dir)
+@top R Language Definition
+
+This is an introduction to the @R{} language, explaining evaluation,
+parsing, object oriented programming, computing on the language, and so
+forth.
+
+The current version of this document is @value{VERSION} @b{DRAFT}.
+@end ifnottex
+
 @menu
 * Introduction::                
 * Objects::                     

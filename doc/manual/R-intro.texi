@@ -60,9 +60,26 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 
 @end titlepage
 
+@ifnothtml
 @contents
+@end ifnothtml
 
+@ifnottex
 @node Top, Preface, (dir), (dir)
+@top An Introduction to R
+
+This is an introduction to R (``GNU S''), a language and environment for
+statistical computing and graphics.  R is similar to the award-winning S
+system, which was developed at Bell Laboratories by John Chambers et al.
+It provides a wide variety of statistical and graphical techniques
+(linear and nonlinear modelling, statistical tests, time series
+analysis, classification, clustering, ...).
+
+This manual provides information on data types, programming elements,
+statistical modeling and graphics.
+
+The current version of this document is @value{VERSION}.
+@end ifnottex
 
 @menu
 * Preface::                     
