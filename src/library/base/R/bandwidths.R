@@ -22,7 +22,11 @@ bw.nrd <- function (x)
 bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
                   method = c("ste", "dpi"))
 {
-    if(length(x) < 2) stop("need at least 2 data points")
+    if((n <- length(x)) < 2) stop("need at least 2 data points")
+    if(!is.numeric(x)) stop("invalid x")
+    storage.mode(x) <- "double"
+    method <- match.arg(method)
+
     fSD <- function(h, x, alph2, c1, n, d)
         (c1/SDh(x, alph2 * h^(5/7), n, d))^(1/5) - h
     SDh <- function(x, h, n, d)
@@ -44,12 +48,6 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
            u = double(1),
            PACKAGE="base")$u
 
-    method <- match.arg(method)
-    if(!is.numeric(x) || !length(x))
-        stop("invalid x")
-    n <- length(x)
-    storage.mode(x) <- "double"
-    n <- length(x)
     Z <- .C("band_den_bin",
             as.integer(n),
             as.integer(nb),
@@ -66,10 +64,10 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
     TD  <- -TDh(cnt, b, n, d)
     if(!is.finite(TD) || TD <= 0)
         stop("sample is too sparse to find TD")
-    alph2 <- 1.357*(SDh(cnt, a, n, d)/TD)^(1/7)
     if(method == "dpi")
         res <- (c1/SDh(cnt,(2.394/(n * TD))^(1/7) , n, d))^(1/5)
     else {
+        alph2 <- 1.357*(SDh(cnt, a, n, d)/TD)^(1/7)
         if(!is.finite(alph2))
             stop("sample is too sparse to find alph2")
         if (fSD(lower, cnt, alph2, c1, n, d) *
@@ -84,7 +82,9 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
 
 bw.ucv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
 {
-    if(length(x) < 2) stop("need at least 2 data points")
+    if((n <- length(x)) < 2) stop("need at least 2 data points")
+    if(!is.numeric(x)) stop("invalid x")
+
     fucv <- function(h, x, n, d)
         .C("band_ucv_bin",
            as.integer(n),
@@ -95,9 +95,6 @@ bw.ucv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
            u = double(1),
            PACKAGE="base")$u
 
-    if(!is.numeric(x) || !length(x))
-        stop("invalid x")
-    n <- length(x)
     hmax <- 1.144 * sqrt(var(x)) * n^(-1/5)
     storage.mode(x) <- "double"
     Z <- .C("band_den_bin",
@@ -118,7 +115,9 @@ bw.ucv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
 
 bw.bcv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
 {
-    if(length(x) < 2) stop("need at least 2 data points")
+    if((n <- length(x)) < 2) stop("need at least 2 data points")
+    if(!is.numeric(x)) stop("invalid x")
+
     fbcv <- function(h, x, n, d)
         .C("band_bcv_bin",
            as.integer(n),
@@ -129,9 +128,6 @@ bw.bcv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
            u = double(1),
            PACKAGE="base")$u
 
-    if(!is.numeric(x) || !length(x))
-        stop("invalid x")
-    n <- length(x)
     hmax <- 1.144 * sqrt(var(x)) * n^(-1/5)
     storage.mode(x) <- "double"
     Z <- .C("band_den_bin",
@@ -143,8 +139,8 @@ bw.bcv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
             PACKAGE="base"
             )
     d <- Z$d; cnt <- as.integer(Z$cnt)
-    h<- optimize(fbcv, c(lower, upper), tol=0.1*lower,
-                 x=cnt, n=n, d=d)$minimum
+    h <- optimize(fbcv, c(lower, upper), tol=0.1*lower,
+                  x=cnt, n=n, d=d)$minimum
     if(h < 1.1*lower | h > upper-0.1*lower)
         warning("minimum occurred at one end of the range")
     h
