@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-22
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-24
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1666,6 +1666,9 @@ Functions for I/O, visualisation and analysis of functional Magnetic
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
+@item Bolstad
+Functions and data sets for the book ``Introduction to Bayesian
+Statistics'' by W. M. Bolstad, 2004, John Wiley and Sons.
 @item BradleyTerry
 Specify and fit the Bradley-Terry model and structured versions.
 @item BsMD
@@ -2779,6 +2782,8 @@ screeplot, PCA and related methods.
 The Penn World Table providing purchasing power parity and national
 income accounts converted to international prices for 168 countries for
 some or all of the years 1950--2000.
+@item pvclust
+Hierarchical clustering with @math{p}-value.
 @item qcc
 Quality Control Charts.  Shewhart quality control charts for continuous,
 attribute and count data.  Cusum and EWMA charts.  Operating
