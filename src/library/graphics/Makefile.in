@@ -28,6 +28,7 @@ all: Makefile DESCRIPTION
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg) $${f}
+	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
 	@for f in COPYRIGHTS INDEX SOURCES NAMESPACE; do \
 	  if test -f $(srcdir)/$${f}; then \
 	    $(INSTALL_DATA) $(srcdir)/$${f} \

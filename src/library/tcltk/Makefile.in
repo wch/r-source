@@ -29,6 +29,7 @@ all: Makefile DESCRIPTION
 	@if test @use_tcltk@ = yes; then \
 	  $(INSTALL_DATA) $(srcdir)/NAMESPACE \
 	    $(top_builddir)/library/$(pkg); \
+	  rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds; \
 	fi;
 	@for f in COPYRIGHTS INDEX SOURCES; do \
 	  if test -f $(srcdir)/$${f}; then \
