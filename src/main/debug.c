@@ -25,13 +25,16 @@
 
 SEXP do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP s;
     checkArity(op,args);
-    if (TYPEOF(CAR(args)) == STRSXP) {
-	PROTECT(s = install(CHAR(STRING(CAR(args))[0])));
-	CAR(args )= findFun(s, rho);
-	UNPROTECT(1);
+#define find_char_fun \
+    if (isValidString(CAR(args))) {				\
+	SEXP s;							\
+	PROTECT(s = install(CHAR(STRING(CAR(args))[0])));	\
+	CAR(args) = findFun(s, rho);				\
+	UNPROTECT(1);						\
     }
+    find_char_fun
+
     if (TYPEOF(CAR(args)) != CLOSXP)
 	errorcall(call, "argument must be a function\n");
     switch(PRIMVAL(op)) {
@@ -47,12 +50,15 @@ SEXP do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-SEXP do_trace(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_trace(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
+
+    find_char_fun
+
     if (TYPEOF(CAR(args)) != CLOSXP &&
 	TYPEOF(CAR(args)) != BUILTINSXP &&
-	TYPEOF(CAR(args)) != SPECIALSXP) 
+	TYPEOF(CAR(args)) != SPECIALSXP)
 	    errorcall(call, "argument must be a function\n");
 
     switch(PRIMVAL(op)) {
