@@ -26,9 +26,6 @@
   \url{http://www.gnu.org/software/plotutils/plotutils.html}
 }
 \examples{
-## These examples are only shown in an interactive session
-
-showJapanese <- function() {
 plot(1:9, type="n", axes=FALSE, frame=TRUE, ylab="",
      main= "example(Japanese)", xlab= "using Hershey fonts")
 par(cex=3)
@@ -755,7 +752,5 @@ draw.vf.cell2("#J6647", "#N5083", i, nr); i <- i + 1
 draw.vf.cell2("#J6d55", "#N4633", i, nr); i <- i + 1
 
 par(oldpar)
-}
-if(interactive()) showJapanese()
 }
 \keyword{aplot}
