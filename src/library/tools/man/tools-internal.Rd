@@ -27,6 +27,8 @@
 \alias{Rdcontents}
 \alias{Rdindex}
 \alias{Rd2contents}
+\alias{.installPackageDescription}
+\alias{.installPackageIndices}
 \description{
   Internal tools functions.
 }
@@ -45,6 +47,8 @@ Rdcontents(RdFiles)
 Rdindex(RdFiles, outFile = "", type = NULL,
         width = 0.9 * getOption("width"), indent = NULL)
 Rd2contents(dir, outFile = "")
+.installPackageDescription(dir, outDir)
+.installPackageIndices(dir, outDir)
 }
 \details{
   These are not to be called by the user.
