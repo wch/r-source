@@ -133,7 +133,7 @@ A copy of the @acronym{GNU} General Public License is available via WWW
 at
 
 @display
-@uref{http://www.gnu.org/copyleft/gpl.html}.
+@url{http://www.gnu.org/copyleft/gpl.html}.
 @end display
 
 @noindent
@@ -146,20 +146,20 @@ You can also obtain it by writing to the Free Software Foundation, Inc.,
 The latest version of this document is always available from
 
 @display
-@uref{http://CRAN.R-project.org/doc/FAQ/}
+@url{http://CRAN.R-project.org/doc/FAQ/}
 @end display
 
 From there, you can obtain versions converted to
-@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.txt,, plain
+@url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.txt,, plain
 @acronym{ASCII} text},
-@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.dvi.gz,, DVI},
-@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.info.gz,, @acronym{GNU}
-info}, @uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html,, @HTML{}},
-@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.pdf,, PDF},
-@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.ps.gz,, PostScript} as
-well as the @uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.texi,,
+@url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.dvi.gz,, DVI},
+@url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.info.gz,, @acronym{GNU}
+info}, @url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html,, @HTML{}},
+@url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.pdf,, PDF},
+@url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.ps.gz,, PostScript} as
+well as the @url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.texi,,
 Texinfo source} used for creating all these formats using the
-@uref{http://texinfo.org/, @acronym{GNU} Texinfo system}.
+@url{http://texinfo.org/, @acronym{GNU} Texinfo system}.
 
 You can also obtain the R @acronym{FAQ} from the @file{doc/FAQ}
 subdirectory of a @CRAN{} site (@pxref{What is CRAN?}).
@@ -185,9 +185,9 @@ most welcome.
 
 In particular, note that I do not have access to Windows or Macintosh
 systems.  Features specific to the Windows and Mac OS X ports of R are
-described in the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R
+described in the @url{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R
 for Windows @acronym{FAQ}''} and the
-@uref{http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
+@url{http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
 Mac OS X @acronym{FAQ}}.  If you have information on Macintosh or Windows
 systems that you think should be added to this document, please let me
 know.
@@ -226,7 +226,7 @@ script files.
 
 The design of R has been heavily influenced by two existing languages:
 Becker, Chambers & Wilks' S (@pxref{What is S?}) and Sussman's
-@uref{http://www.cs.indiana.edu/scheme-repository/home.html, Scheme}.
+@url{http://www.cs.indiana.edu/scheme-repository/home.html, Scheme}.
 Whereas the resulting language is very similar in appearance to S, the
 underlying implementation and semantics are derived from Scheme.
 @xref{What are the differences between R and S?}, for further details.
@@ -257,7 +257,7 @@ Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley, Martin
 Maechler, Duncan Murdoch, Paul Murrell, Martyn Plummer, Brian Ripley,
 Duncan Temple Lang, and Luke Tierney.
 
-R has a home page at @uref{http://www.R-project.org/}.  It is free
+R has a home page at @url{http://www.R-project.org/}.  It is free
 software distributed under a @acronym{GNU}-style copyleft, and an
 official part of the @acronym{GNU} project (``@acronym{GNU} S'').
 
@@ -270,7 +270,7 @@ systems.  Support for Mac OS Classic ended with R 1.7.1.
 The current version of R will configure and build under a number of
 common Unix platforms including @var{cpu}-linux-gnu for the i386, alpha,
 arm, hppa, ia64, m68k, mips/mipsel, powerpc, s390, sparc (e.g.,
-@uref{http://buildd.debian.org/build.php?&pkg=r-base}), and x86_64 CPUs,
+@url{http://buildd.debian.org/build.php?&pkg=r-base}), and x86_64 CPUs,
 i386-freebsd, i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix,
 @c <FIXME>
 @c Not sure anymore ...
@@ -299,7 +299,7 @@ New features are typically introduced in r-devel.
 Sources, binaries and documentation for R can be obtained via @CRAN{},
 the ``Comprehensive R Archive Network'' (see @ref{What is CRAN?}).
 
-Sources are also available via @uref{https://svn.r-project.org/R/}, the
+Sources are also available via @url{https://svn.r-project.org/R/}, the
 R Subversion repository, but currently not via anonymous rsync (nor
 CVS).
 
@@ -322,7 +322,7 @@ versions of R can be found at
 @c The rsync trees are created directly from the master CVS archive and are
 @c updated hourly.  The @option{-C} and in the @command{rsync} command
 @c is to cause it to skip the CVS directories.  Further information on
-@c @command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
+@c @command{rsync} is available at @url{http://rsync.samba.org/rsync/}.
 
 @c @c <NOTE>
 @c @c Keep in sync with R-admin.
@@ -334,7 +334,7 @@ versions of R can be found at
 @c @c </NOTE>
 
 @c The sources of the development version are also available via anonymous
-@c CVS.  See @uref{http://anoncvs.R-project.org} for more information.
+@c CVS.  See @url{http://anoncvs.R-project.org} for more information.
 
 @node How can R be installed?, Are there Unix binaries for R?, How can R be obtained?, R Basics
 @section How can R be installed?
@@ -380,7 +380,7 @@ If these commands execute successfully, the R binary and a shell script
 front-end called @file{R} are created and copied to the @file{bin}
 directory.  You can copy the script to a place where users can invoke
 it, for example to @file{/usr/local/bin}.  In addition, plain text help
-pages as well as @HTML{} and La@TeX{} versions of the documentation are
+pages as well as @HTML{} and @LaTeX{} versions of the documentation are
 built.
 
 Use @kbd{make dvi} to create DVI versions of the R manuals, such as
@@ -447,7 +447,7 @@ Murdoch} and @email{Brian.Ripley@@R-project.org, Brian D. Ripley}.
 For most installations the Windows installer program will be the easiest
 tool to use.
 
-See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R for
+See the @url{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R for
 Windows @acronym{FAQ}''} for more details.
 
 @node How can R be installed (Macintosh),  , How can R be installed (Windows), How can R be installed?
@@ -463,7 +463,7 @@ be used with RAqua corresponding to the ``@var{x}.@var{y}'' release of
 R. The installation of these packages is available through the
 ``Package'' menu of the RAqua GUI.  This port of R for Mac OS X is
 maintained by @email{Stefano.Iacus@@R-project.org, Stefano Iacus}.  The
-@uref{http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
+@url{http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
 Mac OS X @acronym{FAQ}} has more details.
 
 The @file{bin/macos} directory of a @CRAN{} site contains bin-hexed
@@ -503,7 +503,7 @@ packages.
 
 @quotation
 @multitable {VineLinux} {x86_64} {8.x/9/Fedora1/Fedora2/Fedora3} {James Henstridge}
-@item @tab CPU @tab Versions @tab Provider
+@headitem @tab CPU @tab Versions @tab Provider
 @item Mandrake @tab i386 @tab 10.0 @tab Michele Alzetta
 @item Red Hat  @tab i386 @tab 8/9/Fedora1/Fedora2/Fedora3 @tab Martyn
 Plummer
@@ -566,13 +566,13 @@ quoted.)
 
 This documentation can also be made available as one reference manual
 for on-line reading in @HTML{} and PDF formats, and as hardcopy via
-La@TeX{}, see @ref{How can R be installed?}.  An up-to-date @HTML{}
+@LaTeX{}, see @ref{How can R be installed?}.  An up-to-date @HTML{}
 version is always available for web browsing at
-@uref{http://stat.ethz.ch/R-manual/}.
+@url{http://stat.ethz.ch/R-manual/}.
 
 Printed copies of the R reference manual for some version(s) are
 available from Network Theory Ltd, at
-@uref{http://www.network-theory.co.uk/R/base/}.  For each set of manuals
+@url{http://www.network-theory.co.uk/R/base/}.  For each set of manuals
 sold, the publisher donates USD 10 to the R Foundation (@pxref{What is
 the R Foundation?}).
 
@@ -601,21 +601,21 @@ Books on R include
 @quotation
 P. Dalgaard (2002), ``Introductory Statistics with R'', Springer: New
 York, ISBN 0-387-95475-9.@*
-@uref{http://www.biostat.ku.dk/~pd/ISwR.html}.
+@url{http://www.biostat.ku.dk/~pd/ISwR.html}.
 
 J. Fox (2002), ``An R and @SPLUS{} Companion to Applied Regression'',
 Sage Publications, ISBN 0-761-92280-6 (softcover) or 0-761-92279-2
 (hardcover),@*
-@uref{http://socserv.socsci.mcmaster.ca/jfox/Books/Companion/}.
+@url{http://socserv.socsci.mcmaster.ca/jfox/Books/Companion/}.
 
 J. Maindonald and J. Braun (2003), ``Data Analysis and Graphics Using R:
 An Example-Based Approach'', Cambridge University Press, ISBN
 0-521-81336-0,@*
-@uref{http://wwwmaths.anu.edu.au/~johnm/}.
+@url{http://wwwmaths.anu.edu.au/~johnm/}.
 
 S. M. Iacus and G. Masarotto (2002), ``Laboratorio di statistica con
 R'', McGraw-Hill, ISBN 88-386-6084-0 (in Italian),@*
-@uref{http://www.ateneonline.it/LibroAteneo.asp?item_id=1436}.
+@url{http://www.ateneonline.it/LibroAteneo.asp?item_id=1436}.
 @end quotation
 
 @noindent
@@ -627,7 +627,7 @@ S.  Fourth Edition''.  Springer, ISBN 0-387-95457-0
 @end quotation
 
 @noindent
-has a home page at @uref{http://www.stats.ox.ac.uk/pub/MASS4/} providing
+has a home page at @url{http://www.stats.ox.ac.uk/pub/MASS4/} providing
 additional material.  Its companion is
 
 @quotation
@@ -639,7 +639,7 @@ ISBN 0-387-98966-8
 and provides an in-depth guide to writing software in the S language
 which forms the basis of both the commercial @SPLUS{} and the Open
 Source R data analysis software systems.  See
-@uref{http://www.stats.ox.ac.uk/pub/MASS3/Sprog/} for more information.
+@url{http://www.stats.ox.ac.uk/pub/MASS3/Sprog/} for more information.
 
 In addition to material written specifically or explicitly for R,
 documentation for S/@SPLUS{} (see @ref{R and S}) can be used in
@@ -663,7 +663,7 @@ J. C. Pinheiro and D. M. Bates (2000), ``Mixed-Effects Models in S and
 @noindent
 provides a comprehensive guide to the use of the @strong{nlme} package
 for linear and nonlinear mixed-effects models.
-@c This has a home page at @uref{http://nlme.stat.wisc.edu/MEMSS/}.
+@c This has a home page at @url{http://nlme.stat.wisc.edu/MEMSS/}.
 
 As an example of how R can be used in teaching an advanced introductory
 statistics course, see
@@ -678,19 +678,19 @@ Through Applications'', Springer Texts in Statistics, ISBN
 This integrates theory of statistics with the practice of statistics
 through a collection of case studies (``labs''), and uses R to analyze
 the data.  More information can be found at
-@uref{http://www.stat.Berkeley.EDU/users/statlabs/}.
+@url{http://www.stat.Berkeley.EDU/users/statlabs/}.
 
 Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in Ihaka & Gentleman (1996), ``R: A Language
 for Data Analysis and Graphics'',
-@uref{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
+@url{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
 Computational and Graphical Statistics}}, @strong{5}, 299--314.
 
 An annotated bibliography (Bib@TeX{} format) of R-related publications
 which includes most of the above references can be found at
 
 @display
-@uref{http://www.R-project.org/doc/bib/R.bib}
+@url{http://www.R-project.org/doc/bib/R.bib}
 @end display
 
 @node Citing R, What mailing lists exist for R?, What documentation exists for R?, R Basics
@@ -745,7 +745,7 @@ who maintain an active position in the development of R.
 @noindent
 Convenient access to information on these lists, subscription, and
 archives is provided by the web interface at
-@uref{http://stat.ethz.ch/mailman/listinfo/}.  One can also subscribe
+@url{http://stat.ethz.ch/mailman/listinfo/}.  One can also subscribe
 (or unsubscribe) via email, e.g.@: to R-help by sending @samp{subscribe}
 (or @samp{unsubscribe}) in the @emph{body} of the message (not in the
 subject!) to @email{R-help-request@@lists.R-project.org}.
@@ -768,10 +768,10 @@ code which reliably reproduces the problem.  Also, make sure that you
 include information on the system and version of R being used.  See
 @ref{R Bugs} for more details.
 
-Please read the @uref{http://www.R-project.org/posting-guide.html,
+Please read the @url{http://www.R-project.org/posting-guide.html,
 posting guide} @emph{before} sending anything to any mailing list.
 
-See @uref{http://www.R-project.org/mail.html} for more information on
+See @url{http://www.R-project.org/mail.html} for more information on
 the R mailing lists.
 
 The R Core Team can be reached at @email{R-core@@lists.R-project.org}
@@ -791,46 +791,46 @@ The @CRAN{} master site at TU Wien, Austria, can be found at the
 @quotation
 @c @multitable @columnfractions .45 .30
 @c @item
-@uref{http://cran.R-project.org/}
+@url{http://cran.R-project.org/}
 @c @tab (Austria)
 @c @end multitable
 @end quotation
 
 @noindent
-@c (which is the same as @uref{http://cran.at.R-project.org/})
+@c (which is the same as @url{http://cran.at.R-project.org/})
 Daily mirrors are available at @acronym{URL}s including
 
 @quotation
 @multitable @columnfractions .45 .40
-@item @uref{http://cran.at.R-project.org/}
+@item @url{http://cran.at.R-project.org/}
 @tab (TU Wien, Austria)
-@item @uref{http://cran.au.R-project.org/}
+@item @url{http://cran.au.R-project.org/}
 @tab (PlanetMirror, Australia)
-@item @uref{http://cran.br.R-project.org/}
+@item @url{http://cran.br.R-project.org/}
 @tab (Universidade Federal de Paran@'a, Brazil)
-@item @uref{http://cran.ch.R-project.org/}
+@item @url{http://cran.ch.R-project.org/}
 @tab (ETH Z@"urich, Switzerland)
-@item @uref{http://cran.dk.R-project.org/}
+@item @url{http://cran.dk.R-project.org/}
 @tab (SunSITE, Denmark)
-@item @uref{http://cran.es.R-project.org/}
+@item @url{http://cran.es.R-project.org/}
 @tab (Spanish National Research Network, Madrid, Spain)
-@item @uref{http://cran.fr.R-project.org/}
+@item @url{http://cran.fr.R-project.org/}
 @tab (INRA, Toulouse, France)
-@item @uref{http://cran.hu.R-project.org/}
+@item @url{http://cran.hu.R-project.org/}
 @tab (Semmelweis U, Hungary)
-@item @uref{http://cran.pt.R-project.org/}
+@item @url{http://cran.pt.R-project.org/}
 @tab (Universidade do Porto, Portugal)
-@item @uref{http://cran.uk.R-project.org/}
+@item @url{http://cran.uk.R-project.org/}
 @tab (U of Bristol, United Kingdom)
-@item @uref{http://cran.us.R-project.org/}
+@item @url{http://cran.us.R-project.org/}
 @tab (pair Networks, USA)
-@item @uref{http://cran.za.R-project.org/}
+@item @url{http://cran.za.R-project.org/}
 @tab (Rhodes U, South Africa)
 @end multitable
 @end quotation
 
 @noindent
-See @uref{http://cran.R-project.org/mirrors.html} for a complete list of
+See @url{http://cran.R-project.org/mirrors.html} for a complete list of
 mirrors.  Please use the @CRAN{} site closest to you to reduce network
 load.
 
@@ -843,16 +843,16 @@ documentation on R, existing mailing lists and the R Bug Tracking
 system.
 
 To ``submit'' to @CRAN{}, simply upload to
-@uref{ftp://cran.R-project.org/incoming/} and send an email to
+@url{ftp://cran.R-project.org/incoming/} and send an email to
 @email{cran@@R-project.org}.  Note that @CRAN{} generally does not
 accept submissions of precompiled binaries due to security reasons.  In
 particular, binary packages for Windows and Mac OS X are provided by the
 respective binary package maintainers.
 
-@quotation
-@strong{Note}:  It is very important that you indicate the copyright
-(license) information (@acronym{GPL}, @acronym{BSD}, Artistic, @dots{})
-in your submission.
+@quotation Note
+It is very important that you indicate the copyright (license)
+information (@acronym{GPL}, @acronym{BSD}, Artistic, @dots{}) in your
+submission.
 @end quotation
 
 Please always use the @acronym{URL} of the master site when referring to
@@ -861,7 +861,7 @@ Please always use the @acronym{URL} of the master site when referring to
 @node Can I use R for commercial purposes?, Why is R named R?, What is CRAN?, R Basics
 @section Can I use R for commercial purposes?
 
-R is released under the @uref{http://www.gnu.org/copyleft/gpl.html,,
+R is released under the @url{http://www.gnu.org/copyleft/gpl.html,,
 @acronym{GNU} General Public License (GPL)}.  If you have any questions
 regarding the legality of using R in any particular situation you should
 bring it up with your legal counsel.  We are in no position to offer
@@ -872,7 +872,7 @@ purposes (e.g., in business or in consulting).  The GPL, like all Open
 Source licenses, permits all and any use of the package.  It only
 restricts distribution of R or of other programs containing code from R.
 This is made clear in clause 6 (``No Discrimination Against Fields of
-Endeavor'') of the @uref{http://www.opensource.org/docs/definition.html,
+Endeavor'') of the @url{http://www.opensource.org/docs/definition.html,
 Open Source Definition}:
 
 @quotation
@@ -920,7 +920,7 @@ computing, provide a reference point for individuals, institutions or
 commercial enterprises that want to support or interact with the R
 development community, and to hold and administer the copyright of R
 software and documentation.  See
-@uref{http://www.R-project.org/foundation/} for more information.
+@url{http://www.R-project.org/foundation/} for more information.
 
 @node R and S, R Web Interfaces, R Basics, Top
 @chapter R and S
@@ -986,13 +986,13 @@ S designed by John Chambers to improve its usefulness at every stage of
 the programming process.
 @end itemize
 
-See @uref{http://cm.bell-labs.com/cm/ms/departments/sia/S/history.html}
+See @url{http://cm.bell-labs.com/cm/ms/departments/sia/S/history.html}
 for further information on ``Stages in the Evolution of S''.
 
 There is a huge amount of user-contributed code for S, available at the
-@uref{http://lib.stat.cmu.edu/S/, S Repository} at @acronym{CMU}.
+@url{http://lib.stat.cmu.edu/S/, S Repository} at @acronym{CMU}.
 
-@c The @uref{http://lib.stat.cmu.edu/S/faq, ``Frequently Asked Questions
+@c The @url{http://lib.stat.cmu.edu/S/faq, ``Frequently Asked Questions
 @c about S''} contains further information about S, but is not
 @c up-to-date.
 
@@ -1006,7 +1006,7 @@ regression, time series, survival analysis, multivariate analysis,
 classical statistical tests, quality control, and graphics drivers.
 Add-on modules add additional capabilities.
 
-See the @uref{http://www.insightful.com/products/splus/, Insightful
+See the @url{http://www.insightful.com/products/splus/, Insightful
 @SPLUS{} page} for further information.
 
 @node What are the differences between R and S?, Is there anything R can do that S-PLUS cannot?, What is S-PLUS?, R and S
@@ -1249,7 +1249,7 @@ Further information is provided in the standard R reference ``R: A
 Language for Data Analysis and Graphics'' (@pxref{What documentation
 exists for R?}) and in Robert Gentleman and Ross Ihaka (2000), ``Lexical
 Scope and Statistical Computing'',
-@uref{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
+@url{http://www.amstat.org/publications/jcgs/, , @emph{Journal of
 Computational and Graphical Statistics}}, @strong{9}, 491--508.
 
 Nested lexically scoped functions also imply a further major difference.
@@ -1277,11 +1277,11 @@ crashes.  Other possibilities are logging your sessions, or have your R
 commands stored in text files which can be read in using
 @code{source()}.
 
-@quotation
-@strong{Note}:  If you run R from within Emacs (see @ref{R and Emacs}),
-you can save the contents of the interaction buffer to a file and
-conveniently manipulate it using @code{ess-transcript-mode}, as well as
-save source copies of all functions and data used.
+@quotation Note
+If you run R from within Emacs (see @ref{R and Emacs}), you can save the
+contents of the interaction buffer to a file and conveniently manipulate
+it using @code{ess-transcript-mode}, as well as save source copies of
+all functions and data used.
 @end quotation
 
 @node Models, Others, Lexical scoping, What are the differences between R and S?
@@ -1305,9 +1305,9 @@ Terms objects are stored differently.  In S a terms object is an
 expression with attributes, in R it is a formula with attributes.  The
 attributes have the same names but are mostly stored differently.
 @item
-Finally, in R @code{y~x+0} is an alternative to @code{y~x-1} for
+Finally, in R @code{y ~ x + 0} is an alternative to @code{y ~ x - 1} for
 specifying a model with no intercept.  Models with no parameters at all
-can be specified by @code{y~0}.
+can be specified by @code{y ~ 0}.
 @end itemize
 
 @node Others,  , Models, What are the differences between R and S?
@@ -1513,7 +1513,7 @@ annotation in plot texts, via input expressions reminiscent of @TeX{}
 constructs.  See the help page for @code{plotmath}, which features an
 impressive on-line example.  More details can be found in Paul Murrell
 and Ross Ihaka (2000), ``An Approach to Providing Mathematical
-Annotation in Plots'', @uref{http://www.amstat.org/publications/jcgs/, ,
+Annotation in Plots'', @url{http://www.amstat.org/publications/jcgs/, ,
 @emph{Journal of Computational and Graphical Statistics}}, @strong{9},
 582--599.
 
@@ -1527,7 +1527,7 @@ There is no such thing.
 
 @strong{Rweb} is developed and maintained by
 @email{jeff@@math.montana.edu, Jeff Banfield}.  The
-@uref{http://www.math.montana.edu/Rweb/, Rweb Home Page} provides access
+@url{http://www.math.montana.edu/Rweb/, Rweb Home Page} provides access
 to all three versions of Rweb---a simple text entry form that returns
 output and graphs, a more sophisticated Javascript version that provides
 a multiple window environment, and a set of point and click modules that
@@ -1538,14 +1538,14 @@ datasets if a @acronym{URL} is provided.
 The paper ``Rweb: Web-based Statistical Analysis'', providing a detailed
 explanation of the different versions of Rweb and an overview of how
 Rweb works, was published in the Journal of Statistical Software
-(@uref{http://www.stat.ucla.edu/journals/jss/v04/i01/}).
+(@url{http://www.stat.ucla.edu/journals/jss/v04/i01/}).
 
 @email{ulfi@@cs.tu-berlin.de, Ulf Bartel} is working on
 @strong{R-Online}, a simple on-line programming environment for R which
 intends to make the first steps in statistical programming with R
 (especially with time series) as easy as possible.  There is no need for
 a local installation since the only requirement for the user is a
-JavaScript capable browser.  See @uref{http://osvisions.com/r-online/}
+JavaScript capable browser.  See @url{http://osvisions.com/r-online/}
 for more information.
 
 @email{http://www.warwick.ac.uk/go/dfirth, David Firth} has written
@@ -1564,11 +1564,11 @@ writing CGI scripts.  Graphical output was possible in PostScript or GIF
 formats and the executed code was presented to the user for revision.
 However, it is not clear if the project is still active.
 @c URL no longer seems to work ...
-@c See @uref{http://stats.mth.uea.ac.uk/Rcgi/} for more information.
+@c See @url{http://stats.mth.uea.ac.uk/Rcgi/} for more information.
 Currently, a modified version of @strong{Rcgi} by
 @email{mai@@ms.uky.edu, Mai Zhou} (actually, two versions: one with
 (bitmap) graphics and one without) as well as the original code are
-available from @uref{http://www.ms.uky.edu/~statweb/}.
+available from @url{http://www.ms.uky.edu/~statweb/}.
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
 @chapter R Add-On Packages
@@ -1731,7 +1731,7 @@ Functions useful for data analysis, high-level graphics, utility
 operations, functions for computing sample size and power, importing
 datasets, imputing missing values, advanced table making, variable
 clustering, character string manipulation, conversion of S objects to
-La@TeX{} code, recoding variables, and bootstrap repeated measures
+@LaTeX{} code, recoding variables, and bootstrap repeated measures
 analysis.
 @item HyperbolicDist
 Basic functions for the hyperbolic distribution: probability density
@@ -2187,7 +2187,7 @@ the Streitberg/Roehmel shift algorithm.
 The Rmetrics module for ``Markets, basic statistics, and date and time
 management''.  Rmetrics is an environment and software collection for
 teaching financial engineering and computational finance
-(@uref{http://www.Rmetrics.org/}).
+(@url{http://www.Rmetrics.org/}).
 @item fExtremes
 The Rmetrics module for ``Beyond the Sample, Dealing with Extreme
 Values''.
@@ -3042,7 +3042,7 @@ Robust statistical inference via a weighted likelihood approach.
 @item xgobi
 Interface to the XGobi and XGvis programs for graphical data analysis.
 @item xtable
-Export data to La@TeX{} and @HTML{} tables.
+Export data to @LaTeX{} and @HTML{} tables.
 @item zicounts
 Fit classical, zero-inflated and interval censored count data regression
 models.
@@ -3152,11 +3152,11 @@ matrix.
 @node Add-on packages from Omegahat, Add-on packages from Bioconductor, Add-on packages from CRAN, Which add-on packages exist for R?
 @subsection Add-on packages from Omegahat
 
-The @uref{http://www.omegahat.org/, Omegahat Project for Statistical
+The @url{http://www.omegahat.org/, Omegahat Project for Statistical
 Computing} provides a variety of open-source software for statistical
 applications, with special emphasis on web-based software, Java, the
 Java virtual machine, and distributed computing.  A @acronym{CRAN} style
-R package repository is available via @uref{http://www.omegahat.org/R/}.
+R package repository is available via @url{http://www.omegahat.org/R/}.
 
 Currently, there are the following packages.
 
@@ -3273,11 +3273,11 @@ that allows @XSL{} functions to be implemented via R functions.
 @node Add-on packages from Bioconductor, Other add-on packages, Add-on packages from Omegahat, Which add-on packages exist for R?
 @subsection Add-on packages from Bioconductor
 
-The @uref{http://www.bioconductor.org/, Bioconductor Project} produces an
+The @url{http://www.bioconductor.org/, Bioconductor Project} produces an
 open source software framework that will assist biologists and
 statisticians working in bioinformatics, with primary emphasis on
 inference using DNA microarrays.  A @acronym{CRAN} style R package
-repository is available via @uref{http://www.bioconductor.org/}.
+repository is available via @url{http://www.bioconductor.org/}.
 
 The following R packages are contained in the current release of
 Bioconductor, with more packages under development.
@@ -3578,7 +3578,7 @@ in the new edition of his book ``Models for Repeated Measurements''
 (1999, Oxford University Press) were carried out using these packages.
 Jim has also started @strong{dna}, a package with procedures for the
 analysis of DNA sequences.  Jim's packages can be obtained from
-@uref{http://www.luc.ac.be/~jlindsey/rcode.html}.
+@url{http://www.luc.ac.be/~jlindsey/rcode.html}.
 
 More code has been posted to the R-help mailing list, and can be
 obtained from the mailing list archive.
@@ -3771,7 +3771,7 @@ One place where functionality is still missing is the modeling software
 as described in ``Statistical Models in S'' (see @ref{What is S?}); some
 of the nonlinear modeling code is not there yet.
 
-The @uref{http://developer.R-project.org/, R Developer Page} acts as an
+The @url{http://developer.R-project.org/, R Developer Page} acts as an
 intermediate repository for more or less finalized ideas and plans for
 the R statistical system.  It contains (pointers to) TODO lists, RFCs,
 various other writeups, ideas lists, and CVS miscellanea.
@@ -3827,8 +3827,8 @@ editing saved transcripts, and re-evaluating commands from transcript
 files).
 
 The latest stable version of @acronym{ESS} are available via @CRAN{} or
-the @uref{http://ESS.R-project.org/, ESS web page}.  The @HTML{} version
-of the documentation can be found at @uref{http://stat.ethz.ch/ESS/}.
+the @url{http://ESS.R-project.org/, ESS web page}.  The @HTML{} version
+of the documentation can be found at @url{http://stat.ethz.ch/ESS/}.
 
 @acronym{ESS} comes with detailed installation instructions.
 
@@ -4874,7 +4874,7 @@ On Unix systems a bug report can be generated using the function
 @code{bug.report()}.  This automatically includes the version
 information and sends the bug to the correct address.  Alternatively the
 bug report can be emailed to @email{R-bugs@@R-project.org} or submitted
-to the Web page at @uref{http://bugs.R-project.org/}.
+to the Web page at @url{http://bugs.R-project.org/}.
 
 Bug reports on contributed packages should be sent first to the package
 maintainer, and only submitted to the R-bugs repository by package
