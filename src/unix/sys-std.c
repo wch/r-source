@@ -840,7 +840,6 @@ void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP sfile;
     char file[PATH_MAX], *p;
 
-    checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, "invalid file argument");
@@ -863,7 +862,6 @@ void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP sfile;
     char file[PATH_MAX], *p;
 
-    checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, "invalid file argument");
