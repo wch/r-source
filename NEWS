@@ -104,6 +104,10 @@ BUG FIXES
 
     o	quantile(x) now works when x contains several +/- Inf's.
 
+    o   guard against segfault in dataentry(0,0) (or, more
+        realistically, when mistyping data.entry(x,y) as
+	dataentry(x,y))
+
 
 	*********************************************************
 	*							*

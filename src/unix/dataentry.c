@@ -99,6 +99,8 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, j,len, nprotect;
     RCNTXT cntxt;
 
+    if (!isNewList(CAR(args))) error("invalid data argument");
+    if (!isNewList(CADR(args))) error("invalid modes argument");
     nprotect = 0;/* count the PROTECT()s */
     PROTECT(indata = VectorToPairList(CAR(args))); nprotect++;
     PROTECT(colmodes = VectorToPairList(CADR(args))); nprotect++;
