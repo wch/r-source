@@ -204,6 +204,8 @@ NEW FEATURES
 
     o	installed.packages() has a new argument `priority'.
 
+    o   termplot() uses factor levels rather than 1,2,3... for x-axis
+
 
 DEPRECATED & DEFUNCT
 

@@ -13,7 +13,8 @@ termplot(model, data=NULL, envir=environment(formula(model)),
          col.term = 2, lwd.term = 1.5,
          col.se = "orange", lty.se = 2, lwd.se = 1,
          col.res = "gray", cex = 1, pch = par("pch"),
-         ask = interactive() && nb.fig < n.tms && .Device != "postscript",
+         ask = interactive() && nb.fig < n.tms && .Device !="postscript",
+         use.factor.levels=TRUE,
          \dots)
 }
 \arguments{
@@ -39,6 +40,8 @@ termplot(model, data=NULL, envir=environment(formula(model)),
     \code{\link{points}}.}
    \item{ask}{logical; if \code{TRUE}, the user is \emph{ask}ed before
      each plot, see \code{\link{par}(ask=.)}.}
+   \item{use.factor.levels}{Should x-axis ticks use factor levels or
+     numbers for factor terms?}
   \item{\dots}{other graphical parameters}
 }
 \details{
@@ -55,13 +58,15 @@ termplot(model, data=NULL, envir=environment(formula(model)),
   that models with missing data using \code{na.action=na.omit} will need
   to specify a \code{data} argument. A work-around is to use
   \code{na.action=na.exclude} instead.
+
+  Nothing sensible happens for interaction terms. 
 }
 \seealso{For (generalized) linear models, \code{\link{plot.lm}} and
   \code{\link{predict.glm}}.}
 \examples{
 rs <- require(splines)
 x <- 1:100
-z <- factor(rep(1:4,25))
+z <- factor(rep(LETTERS[1:4],25))
 y <- rnorm(100,sin(x/10)+as.numeric(z))
 model <- glm(y ~ ns(x,6) + z)
 

@@ -6,6 +6,7 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
                      col.res= "gray", cex = 1, pch = par("pch"),
                      ask = interactive() && nb.fig < n.tms &&
                            .Device != "postscript",
+                     use.factor.levels=TRUE,
                      ...)
 {
     terms <- ## need if(), since predict.coxph() has non-NULL default terms :
@@ -86,7 +87,11 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
 		xlims[2] <- xlims[2]+0.03*diff(xlims)
 	    }
 	    plot(1,0, type = "n", xlab = xlabs[i], ylab = ylabs[i],
-                 xlim = xlims, ylim = ylims, main = main[i], ...)
+                 xlim = xlims, ylim = ylims, main = main[i],xaxt="n", ...)
+            if (use.factor.levels)
+                axis(1,at=seq(along=ll),labels=ll,...)
+            else
+                axis(1)
 	    for(j in seq(along=ll)) {
 		ww <- which(ff==ll[j])[c(1,1)]
 		jf <- j + c(-.4, .4)
