@@ -6,8 +6,7 @@ attach <- function(what, pos=2, name=deparse(substitute(what)))
         pos <- 2
     }
     if (is.character(what) && (length(what)==1)){
-        if (!file.exists(what))
-            stop(paste("File", what, " not found.", sep=""))
+        if (!file.exists(what)) stop("File ", what, " not found.")
         name <- paste("file:", what, sep="")
         value <- .Internal(attach(NULL, pos, name))
         load(what, envir=as.environment(pos))
