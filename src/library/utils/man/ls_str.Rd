@@ -46,7 +46,10 @@ lsf.str(pos = 1, \dots, envir = as.environment(pos))
 lsf.str()#- how do the functions look like which I am using?
 ls.str(mode = "list") #- what are the structured objects I have defined?
 
-print(ls.str(), max.level = 1)# don't show details
+## create a few objects
+example(glm, echo = FALSE)
+ll <- as.list(LETTERS)
+print(ls.str(), max.level = 0)# don't show details
 
 ## which base functions have "file" in their name ?
 lsf.str(pos = length(search()), pattern = "file")
