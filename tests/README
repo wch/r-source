@@ -1,5 +1,11 @@
-various tests on R  whose output can be compared with previous versions, etc
------
-in development!
------
+In this directory,
+various tests on R are made automatically by
+	make tests
+
+The Outputs can be compared with outputs of previous versions, etc.
+
+			      ---------------
+			      IN DEVELOPMENT!
+			      ---------------
+
 Martin Maechler

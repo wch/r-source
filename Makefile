@@ -22,6 +22,7 @@ build-docs build-help build-latex build-html test-Examples:
 	-@cd etc; make $@
 
 tests: test-Examples
+	-@cd tests; make $@
 
 patches:
 	@echo "Patches? Patches?  We don't need no stinking patches!"
@@ -46,7 +47,7 @@ realclean: acclean
 	@-rm -f bin/R*
 	@-rm -rf `echo library/* | sed 's@library/CVS *@@'`
 	@-rm -f doc/manual/pkg-*
-	@-rm -f doc/html/packages* doc/html/function* 
+	@-rm -f doc/html/packages* doc/html/function*
 	@cd demos/dynload; make $@
 	@echo "Really cleaning ./etc/"; cd etc; make $@
 	@echo "Really cleaning the source tree"; cd src; make $@
