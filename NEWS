@@ -736,6 +736,8 @@ BUG FIXES
     o	as.hclust.twins() now does provide proper `labels', `method' and
 	`call' components.
 
+    o	cycle() sometimes failed on a time series which started at a cycle
+	other than 1.
 
 
 	**************************************************

@@ -313,7 +313,7 @@ time.ts <- function (x, ...) as.ts(time.default(x, ...))
 cycle.default <- function(x, ...)
 {
     p <- tsp(hasTsp(x))
-    m <- floor((p[1] %% 1) * p[3])
+    m <- round((p[1] %% 1) * p[3])
     x <- (1:NROW(x) + m - 1) %% p[3] + 1
     tsp(x) <- p
     x
