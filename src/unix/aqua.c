@@ -174,12 +174,8 @@ void R_ProcessEvents(void)
     EventRef		theEvent;
     EventTargetRef	theTarget = GetEventDispatcherTarget();
 
-     if(CheckEventQueueForUserCancel()){  
-	Rprintf("\n");
-	error("user break");
-	raise(SIGINT);
-	return;
-    }
+     if(CheckEventQueueForUserCancel())
+      onintr();
 }
 
 
