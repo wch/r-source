@@ -1601,18 +1601,34 @@ SEXP do_libfixup(SEXP call, SEXP op, SEXP args, SEXP rho)
   do_pos2env
 
   This function returns the environment at a specified position in the
-  search path.	It will does soon.
+  search path or the environment of the caller of
+  pos.to.env (? but pos.to.env is usually used in arg lists and hence
+  is evaluated in the calling environment so this is one higher).
+	
+  When pos = -1 the environment of the closure that pos2env is
+  evaluated in is obtained. Note: this relies on pos.to.env being
+  a primitive.
 
  */
 static SEXP pos2env(int pos, SEXP call)
 {
     SEXP env;
+    RCNTXT *cptr;
+
     if (pos == NA_INTEGER || pos < -1 || pos == 0) {
 	errorcall(call, R_MSG_IA);
 	env = call;/* just for -Wall */
     }
     else if (pos == -1) {
-	env = R_GlobalContext->sysparent;
+	/* make sure the context is a funcall */
+	cptr = R_GlobalContext;
+	while( !(cptr->callflag & CTXT_FUNCTION) && cptr->nextcontext
+	       != NULL )
+	    cptr = cptr->nextcontext;
+	if( !(cptr->callflag & CTXT_FUNCTION) )
+	    errorcall(call, "no enclosing environment");
+
+	env = cptr->sysparent;
 	if (R_GlobalEnv != R_NilValue && env == R_NilValue)
 	    errorcall(call, R_MSG_IA);
     }
