@@ -71,3 +71,12 @@ toupper <- function(x) .Internal(toupper(x))
 
 casefold <- function(x, upper = FALSE)
     if(upper) toupper(x) else tolower(x)
+
+sQuote <- function(x) {
+    if(length(x) == 0) return(character())
+    paste("'", x, "'", sep = "")
+}
+dQuote <- function(x) {
+    if(length(x) == 0) return(character())
+    paste("\"", x, "\"", sep = "")
+}

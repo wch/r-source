@@ -5,7 +5,8 @@ read.dcf <- function(file, fields = NULL)
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
-        stop("argument `file' must be a character string or connection")
+        stop(paste("argument", sQuote("file"),
+                   "must be a character string or connection"))
     .Internal(readDCF(file, fields))
 }
 
@@ -26,7 +27,8 @@ function(x, file = "", append = FALSE,
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
-        stop("argument `file' must be a character string or connection")
+        stop(paste("argument", sQuote("file"),
+                   "must be a character string or connection"))
 
     nr <- nrow(x)
     nc <- ncol(x)

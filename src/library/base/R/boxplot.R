@@ -69,13 +69,13 @@ boxplot.formula <- function(formula, data = NULL, ..., subset)
 boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 {
     nna <- !is.na(x)
-    n <- sum(nna) # including +/- Inf
+    n <- sum(nna)                       # including +/- Inf
     stats <- fivenum(x, na.rm = TRUE)
     iqr <- diff(stats[c(2, 4)])
-    if(coef < 0) stop("`coef' must not be negative")
+    if(coef < 0) stop(paste(sQuote("coef"), "must not be negative"))
     if(coef == 0)
 	do.out <- FALSE
-    else { # coef > 0
+    else {                              # coef > 0
 	out <- x < (stats[2] - coef * iqr) | x > (stats[4] + coef * iqr)
 	if(any(out[nna])) stats[c(1, 5)] <- range(x[!out], na.rm = TRUE)
     }
@@ -101,7 +101,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	if(!any(is.na(stats))) {
             ## stats = +/- Inf:	polygon & segments should handle
 
-            ## Compute "x + w" -- ``correctly'' in log-coord. case:
+            ## Compute 'x + w' -- "correctly" in log-coord. case:
             xP <-
                 if(xlog) function(x,w) x * exp(w)
                 else function(x,w) x + w
@@ -154,7 +154,9 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     if(is.null(at))
         at <- 1:n
     else if(length(at) != n)
-        stop(paste("`at' must have same length as `z $ n', i.e.",n))
+        stop(paste(sQuote("at"), " must have same length as ",
+                   sQuote("z $ n"), ", i.e. ", n,
+                   sep = ""))
     ## just for compatibility with S
     if(is.null(z$out))
         z$out <- numeric()

@@ -11,7 +11,7 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
     if(!is.data.frame(x))
         x <- as.data.frame(x)
     if(!is.list(by))
-        stop("`by' must be a list")
+        stop(paste(sQuote("by"), "must be a list"))
     if(is.null(names(by)))
         names(by) <- paste("Group", seq(along = by), sep = ".")
     else {
@@ -21,7 +21,7 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
     }
     y <- lapply(x, tapply, by, FUN, ..., simplify = FALSE)
     if(any(sapply(unlist(y, recursive = FALSE), length) > 1))
-        stop("`FUN' must always return a scalar")
+        stop(paste(sQuote("FUN"), "must always return a scalar"))
     z <- y[[1]]
     d <- dim(z)
     w <- NULL

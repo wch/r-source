@@ -50,7 +50,8 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
            stop("This should not happen"),
            stop("This should not happen"),
            warning("Algorithm did not converge"),
-           stop("Incorrect specification of `table' or `start'"))
+           stop(paste("Incorrect specification of", sQuote("table"),
+                      "or", sQuote("start"))))
 
     if (print)
         cat(z$nlast, "iterations: deviation", z$dev[z$nlast], "\n")
@@ -72,7 +73,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
     ## Use a dyadic-style representation for the (possible) subsets B.
     ## Let u_i(B) = 1 if i is contained in B and 0 otherwise.  Then B
     ## <-> u(B) = (u_1(B),...,u_N(B)) <-> \sum_{i=1}^N u_i(B) 2^{i-1}.
-    ## See also the code for `dyadic' below which computes the u_i(B).
+    ## See also the code for 'dyadic' below which computes the u_i(B).
     subsets <- function(x) {
         y <- list(vector(mode(x), length = 0))
         for (i in seq(along = x)) {
@@ -115,7 +116,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
         parnam[1] <- "(Intercept)"
         fit <- fit - parval[[1]]
 
-        ## Get the u_i(B) in the rows of `dyadic', see above.
+        ## Get the u_i(B) in the rows of 'dyadic', see above.
         dyadic <- NULL
         while(any(terms > 0)) {
             dyadic <- cbind(dyadic, terms %% 2)

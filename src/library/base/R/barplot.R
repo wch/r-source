@@ -28,7 +28,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	height <- rbind(height)
 	beside <- TRUE
     } else if (!is.matrix(height))
-	stop("`height' must be a vector or a matrix")
+	stop(paste(sQuote("height"), "must be a vector or a matrix"))
 
     if(is.logical(legend.text))
 	legend.text <-

@@ -7,7 +7,7 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
     exdentString <- paste(rep.int(" ", exdent), collapse = "")
     y <- list()                         # return value
     z <- lapply(strsplit(x, "\n[ \t\n]*\n"), strsplit, "[ \t\n]")
-    ## Now z[[i]][[j]] is a character vector of all ``words'' in
+    ## Now z[[i]][[j]] is a character vector of all "words" in
     ## paragraph j of x[i].
 
     for(i in seq(along = z)) {

@@ -1,6 +1,6 @@
 .Defunct <- function() {
-    stop(paste("`", as.character(sys.call(sys.parent())[[1]]), "' ",
-	       "is defunct.\n",
+    stop(paste(sQuote(as.character(sys.call(sys.parent())[[1]])),
+	       " is defunct.\n",
 	       "See ?Defunct.",
 	       sep = ""))
 }

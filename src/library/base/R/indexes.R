@@ -12,7 +12,8 @@ function(file)
         }
     }
     if(!inherits(file, "connection"))
-        stop("argument `file' must be a character string or connection")
+        stop(paste("argument", sQuote("file"),
+                   "must be a character string or connection"))
 
     y <- matrix("", nr = 0, nc = 2)
     x <- paste(readLines(file), collapse = "\n")
@@ -65,7 +66,6 @@ function(file)
 print.libraryIQR <-
 function(x, ...)
 {
-    sQuote <- function(s) paste("'", s, "'", sep = "")
     db <- x$results
     ## Split according to LibPath.
     out <- if(nrow(db) == 0)
@@ -104,7 +104,6 @@ function(x, ...)
 print.packageIQR <-
 function(x, ...)
 {
-    sQuote <- function(s) paste("'", s, "'", sep = "")
     db <- x$results
     ## Split according to Package.
     out <- if(nrow(db) == 0)

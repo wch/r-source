@@ -67,8 +67,8 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     std <- match.arg(std)
 
     findTableWithOAM <- function(or, tab) {
-        ## Find a 2x2 table with given odds ratio `or' and the margins
-        ## of a given 2x2 table `tab'.
+        ## Find a 2x2 table with given odds ratio 'or' and the margins
+        ## of a given 2x2 table 'tab'.
         m <- rowSums(tab)[1]
         n <- rowSums(tab)[2]
         t <- colSums(tab)[1]
@@ -94,7 +94,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     }
 
     stdize <- function(tab, std, x) {
-        ## Standardize the 2 x 2 table `tab'.
+        ## Standardize the 2 x 2 table 'tab'.
         if(std == "margins") {
             if(all(sort(margin) == c(1, 2))) {
                 ## standardize to equal row and col margins
@@ -115,8 +115,8 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     }
 
     odds <- function(x) {
-        ## Given a 2 x 2 or 2 x 2 x k table `x', return a list with
-        ## components `or' and `se' giving the odds ratios and standard
+        ## Given a 2 x 2 or 2 x 2 x k table 'x', return a list with
+        ## components 'or' and 'se' giving the odds ratios and standard
         ## deviations of the log odds ratios.
         if(length(dim(x)) == 2) {
             dim(x) <- c(dim(x), 1)
@@ -139,8 +139,8 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     gamma <- 1.25                       # Scale factor for strata labels
     debug <- FALSE                      # Visualize the geometry.
                                         # Not settable by user!
-    angle.f <- c( 90, 180,  0, 270)     # `f' for `from'
-    angle.t <- c(180, 270, 90, 360)     # `t' for `to'
+    angle.f <- c( 90, 180,  0, 270)     # 'f' for 'from'
+    angle.t <- c(180, 270, 90, 360)     # 't' for 'to'
 
     opar <- par(mar = c(0, 0, ifelse(is.null(main), 0, 2.5), 0))
     on.exit(par(opar))

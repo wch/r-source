@@ -24,7 +24,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
             adj.x, adj.y, off, dir, color, lablevx, lablevy,
             maxdim, currlev, label)
     {
-        ## Recursive function doing `the job'
+        ## Recursive function doing "the job"
         ##
         ## explicitly relying on (1,1000)^2 user coordinates.
         p <- ncol(X) - 2
@@ -151,10 +151,12 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         x <- data.matrix(x)
     dimd <- length(dx <- dim(x))
     if(dimd == 0 || any(dx == 0))
-        stop("`x' must not have 0 dimensionality")
+        stop(paste(sQuote("x"), "must not have 0 dimensionality"))
     if(length(list(...)))
-        warning("extra argument(s) `", names(list(...)), "'  disregarded..")
-    ##-- Set up `Ind' matrix : to contain indices and data
+        warning(paste("extra argument(s)",
+                      paste(sQuote(names(list(...))), collapse = ", "),
+                      "disregarded."))
+    ##-- Set up 'Ind' matrix : to contain indices and data
     Ind <- 1:dx[1]
     if(dimd > 1) {
         Ind <- rep.int(Ind, prod(dx[2:dimd]))
@@ -166,15 +168,15 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         }
     }
     Ind <- cbind(Ind, c(x))
-    ## Ok, now the columns of `Ind' are the cell indices (which could
-    ## also have been created by `expand.grid()' and the corresponding
+    ## Ok, now the columns of 'Ind' are the cell indices (which could
+    ## also have been created by 'expand.grid()' and the corresponding
     ## cell counts.  We add two more columns for dealing with *EXTENDED*
-    ## mosaic plots which are produced unless `shade' is FALSE, which
+    ## mosaic plots which are produced unless 'shade' is FALSE, which
     ## currently is the default.  These columns have NAs for the simple
     ## case.  Otherwise, they specify the line type (1 for positive and
     ## 2 for negative residuals) and color (by giving the index in the
-    ## color vector which ranges from the ``most negative'' to the
-    ## ``most positive'' residuals.
+    ## color vector which ranges from the "most negative" to the "most
+    ## positive" residuals.
     if(is.logical(shade) && !shade) {
         extended <- FALSE
         Ind <- cbind(Ind, NA, NA)
@@ -255,8 +257,8 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         ## This code is extremely ugly, and certainly can be improved.
         ## In the case of extended displays, we also need to provide a
         ## legend for the shading and outline patterns.  The code works
-        ## o.k. with integer breaks in `shade'; rounding to two 2 digits
-        ## will not be good enough if `shade' has length 5.
+        ## o.k. with integer breaks in 'shade'; rounding to two 2 digits
+        ## will not be good enough if 'shade' has length 5.
         pin <- par("pin")
         rtxt <- "Standardized\nResiduals:"
         ## Compute cex so that the rotated legend text does not take up
@@ -274,10 +276,10 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
             strwidth(rtxt, units = "i", cex = rtxtCex) / pin[2]
         text(1000 * (1.05 + 0.5 * rtxtWidth), 0, labels = rtxt,
              adj = c(0, 0.25), srt = 90, cex = rtxtCex)
-        ## `len' is the number of positive or negative intervals of
-        ## residuals (so overall, there are `2 * len')
+        ## 'len' is the number of positive or negative intervals of
+        ## residuals (so overall, there are '2 * len')
         len <- length(shade) + 1
-        ## `bh' is the height of each box in the legend (including the
+        ## 'bh' is the height of each box in the legend (including the
         ## separating whitespace
         bh <- 0.95 * (0.95 - rtxtHeight) / (2 * len)
         x.l <- 1000 * 1.05
