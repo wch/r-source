@@ -1579,7 +1579,11 @@ static void outtext_close(Rconnection con)
 
 static void outtext_destroy(Rconnection con)
 {
+    Routtextconn this = (Routtextconn)con->private;
+    free(this->lastline);
 }
+
+#define LAST_LINE_LEN 256
 
 #define BUFSIZE 1000
 static int text_vfprintf(Rconnection con, const char *format, va_list ap)
@@ -1634,13 +1638,12 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	    UNPROTECT(1);
 	} else {
 	    /* retain the last line */
-	    if(strlen(p) < LAST_LINE_LEN) {
-		strcpy(this->lastline, p);
-	    } else {
-		strncpy(this->lastline, p, LAST_LINE_LEN - 1);
-		this->lastline[LAST_LINE_LEN - 1] = '\0';
-		warning("line truncated in output text connection");
+	    if(strlen(p) >= this->lastlinelength) {
+		int newlen = strlen(p) + 1;
+		this->lastline = realloc(this->lastline, newlen);
+		this->lastlinelength = newlen;
 	    }
+	    strcpy(this->lastline, p);
 	    con->incomplete = strlen(this->lastline) > 0;
 	    break;
 	}
@@ -1673,12 +1676,15 @@ static void outtext_init(Rconnection con, char *mode)
     this->len = LENGTH(val);
     this->data = val;
     this->lastline[0] = '\0';
+    this->lastlinelength = LAST_LINE_LEN;
 }
 
 
 static Rconnection newouttext(char *description, SEXP sfile, char *mode)
 {
     Rconnection new;
+    void *tmp;
+
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error("allocation of text connection failed");
     new->class = (char *) malloc(strlen("textConnection") + 1);
@@ -1702,6 +1708,12 @@ static Rconnection newouttext(char *description, SEXP sfile, char *mode)
     new->seek = &text_seek;
     new->private = (void*) malloc(sizeof(struct outtextconn));
     if(!new->private) {
+	free(new->description); free(new->class); free(new);
+	error("allocation of text connection failed");
+    }
+    ((Routtextconn)new->private)->lastline = tmp = malloc(LAST_LINE_LEN);
+    if(!tmp) {
+	free(new->private);
 	free(new->description); free(new->class); free(new);
 	error("allocation of text connection failed");
     }

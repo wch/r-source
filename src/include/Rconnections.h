@@ -69,12 +69,12 @@ typedef struct textconn {
     char save; /* pushback */
 } *Rtextconn;
 
-#define LAST_LINE_LEN 8096
 typedef struct outtextconn {
     int len;  /* number of lines */
     SEXP namesymbol;
     SEXP data;
-    char lastline[LAST_LINE_LEN];
+    char *lastline;
+    int lastlinelength; /* buffer size */
 } *Routtextconn;
 
 typedef enum {HTTPsh, FTPsh} UrlScheme;

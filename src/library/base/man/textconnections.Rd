@@ -44,9 +44,6 @@ textConnection(object, open = "r")
   A connection object of class \code{"textConnection"} which inherits
   from class \code{"connection"}.
 }
-\note{
-  Output text connections truncate lines longer than 8095 characters.
-}
 
 \seealso{
   \code{\link{connections}}, \code{\link{showConnections}},

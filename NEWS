@@ -106,6 +106,8 @@ NEW FEATURES
 	the DESCRIPTION file for specifying dependencies external to the
 	R system.
 
+     o	Output text connections no longer have a line-length limit.
+
 
 INSTALLATION CHANGES
 
