@@ -27,7 +27,7 @@
 \alias{Rdpp}
 \alias{Rdinfo}
 \alias{Rdcontents}
-\alias{Rdindex}
+%\alias{Rdindex} % already in use in base for R CMD Rdindex
 \alias{Rd2contents}
 \alias{.installPackageDescription}
 \alias{.installPackageIndices}
