@@ -1007,6 +1007,10 @@ function(package, lib.loc = NULL)
         if(!length(txt)) return(character())
         txt <- gsub("(.*):$", "\\1", as.character(txt))
         txt <- gsub("\\\\code\{(.*)\}:?", "\\1", txt)
+        ## Argh.  Of course, variable names can have a '_', which needs
+        ## to be escaped if not in \code{}, and the prompt() default is
+        ## not to put variable names inside \code{}.
+        txt <- gsub("\\\\_", "_", txt)
         txt <- unlist(strsplit(txt, ", *"))
         txt <- sub("^[[:space:]]*", "", txt)
         txt <- sub("[[:space:]]*$", "", txt)
