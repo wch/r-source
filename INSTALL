@@ -11,7 +11,7 @@ can be obtained from CRAN (see the RESOURCES file).
 R will configure and build under a number of common Unix-like platforms
 (including i386-freebsd, i386-linux, ppc-linux, mips-sgi-irix,
 alpha-linux, alpha-dec-osf4, rs6000-ibm-aix, hppa-hp-hpux, sparc-linux,
-and sparc-sun-solaris) and on Windows 9x/NT (see `src/gnuwin32/readme').
+and sparc-sun-solaris) and on Windows 9x/NT (see `src/gnuwin32/INSTALL').
 In general it is relatively easy to adapt R to new platforms.  See the
 section on new platforms for details.
 
