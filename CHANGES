@@ -2,7 +2,10 @@
 
 NEW FEATURES
 
-     o  New  find() function [relying on apropos(..)].
+     o  layout() documented and improved: starts default device if needed, and
+	returns number of figures.
+
+     o  New find() function [relying on apropos(..)].
 
      o  objects(<integer>) now works, being equivalent to
 	objects(pos=<int.>).
