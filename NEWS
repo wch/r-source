@@ -152,7 +152,7 @@ NEW FEATURES
 	display is local to the R process (as otherwise it might use a
 	browser running on an arbitrary machine).
 
-    o	*very* experimental browseEnv() for browsing objects in an
+    o	*Very* experimental browseEnv() for browsing objects in an
 	environment.
 
     o	cbind/rbind() used to ignore all zero-length vectors, an
@@ -165,8 +165,9 @@ NEW FEATURES
 
     o	plot.spec(x) now also works for other x than AR and Pgram results.
 
-    o	New functions La.chol and La.chol2inv for Cholesky decomposition
-	and inverse of positive definite matrices using Lapack.
+    o	New functions La.chol() and La.chol2inv() for Cholesky
+	decomposition and inverse of positive definite matrices using
+	Lapack.
 
     o   Changes to the tcltk package
 
@@ -226,8 +227,8 @@ DEPRECATED & DEFUNCT
 	removed in favor of the internal functions .dynLibs() and
 	.libPaths().
 
-    o   restart() is deprecated in preparation for proper exception
-	handling. Use try(), as has long been recommended.
+    o   restart() is deprecated in preparation for proper exception 
+	handling.  Use try(), as has long been recommended.
 
 
 DOCUMENTATION CHANGES
@@ -266,7 +267,6 @@ UTILITIES
         syntaxes. RweaveLatex() now gets its prompt from options() and
         uses the text width as linebreak cutoff for deparsing input
         statements.
-
 
 
 BUG FIXES
@@ -426,7 +426,7 @@ BUG FIXES
 
     o	plot.formula(ask=FALSE) now works. (PR#1923)
 
-    o	as.list(<logical>) now works properly (PR#1926).
+    o	as.list(<logical>) now works properly. (PR#1926).
 
     o	The residual SSq printed from an aov() fit with weights is
 	now the weighted SSq.  (PR#1930)
@@ -438,7 +438,11 @@ BUG FIXES
 	Only seen on Solaris. (PR#1934)
 
    o  	title(main=list("main")) printed garbage, as did similar calls
-	using quote() instead of expression() for plotmath (PR#1939)
+	using quote() instead of expression() for plotmath. (PR#1939)
+
+   o  	deparse() dropped parentheses in some case where they were
+	needed. (PR#1119, 1737, 1928, at least)
+
 
 
 		CHANGES IN R VERSION 1.5.1
