@@ -26,7 +26,7 @@ stripplot <- function(x, method="overplot", jitter=0.1, offset=1/3,
 	attr(groups, "names") <- 1:n
     dlim <- rep(NA, 2)
     for(i in groups)
-	dlim <- range(dlim, i, finite=TRUE)
+	dlim <- range(dlim, i[is.finite(i)], na.rm = TRUE)
     glim <- c(1, n)
     if(method == 2) { # jitter
 	glim <- glim +	jitter * if(n == 1) c(-5, 5) else c(-2, 2)

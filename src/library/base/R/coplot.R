@@ -181,8 +181,8 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
 		new = FALSE)
     on.exit(par(opar))
     plot.new()
-    xlim <- range(x, finite = TRUE)
-    ylim <- range(y, finite = TRUE)
+    xlim <- range(x[is.finite(x)])
+    ylim <- range(y[is.finite(y)])
     pch <- rep(pch, length=nobs)
     col <- rep(col, length=nobs)
     do.panel <- function(index) {
@@ -244,7 +244,8 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
 	par(fig = c(0, f.col, f.row, 1), mar = nmar, new=TRUE)
 	plot.new()
 	nint <- nrow(a.intervals)
-	plot.window(range(a.intervals, finite=TRUE), .5+c(0, nint), log="")
+	plot.window(range(a.intervals[is.finite(a.intervals)]),
+                    .5+c(0, nint), log="")
 	rect(a.intervals[,1], 1:nint-0.3,
 	     a.intervals[,2], 1:nint+0.3, col=gray(0.9))
 	axis(3)

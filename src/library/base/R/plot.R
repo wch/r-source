@@ -111,10 +111,10 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
     xlabel <- if (!missing(x)) deparse(substitute(x))	else NULL
     ylabel <- if (!missing(y)) deparse(substitute(y))	else NULL
     xy <- xy.coords(x, y, xlabel, ylabel, log)
-    xlab <- if (is.null(xlab)) xy$xlab	else xlab
-    ylab <- if (is.null(ylab)) xy$ylab	else ylab
-    xlim <- if (is.null(xlim)) range(xy$x, finite=TRUE) else xlim
-    ylim <- if (is.null(ylim)) range(xy$y, finite=TRUE) else ylim
+    xlab <- if (is.null(xlab)) xy$xlab else xlab
+    ylab <- if (is.null(ylab)) xy$ylab else ylab
+    xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
+    ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
     plot.new()
     plot.window(xlim, ylim, log, asp, ...)
     panel.first

@@ -99,7 +99,9 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     nmax <- 0
     for(i in 1:n) {
 	nmax <- max(nmax,z[[i]]$n)
-	limits <- range(limits, z[[i]]$stats, z[[i]]$out, finite=TRUE)
+	limits <- range(limits,
+                        z[[i]]$stats[is.finite(z[[i]]$stats)],
+                        z[[i]]$out[is.finite(z[[i]]$out)])
     }
     width <- if (!is.null(width)) {
 	if (length(width) != n | any(is.na(width)) | any(width <= 0))
