@@ -195,6 +195,8 @@ BUG FIXES
 	during an R session, as used by get.hist.quote{tseries}.
 	Caching has been supressed.  (PR#1116)
 
+    o   Some functions used the non-existing error() function instead
+        of stop().
 
 
 		CHANGES IN R VERSION 1.5.0
