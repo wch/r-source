@@ -12,7 +12,7 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
   \item{spans}{Vector of odd integers giving the widths of modified
     Daniell smoothers to be used to smooth the periodogram.}
   \item{kernel}{Alternatively, a kernel smoother of class
-    \code{"kernel"}.}
+    \code{"tskernel"}.}
   \item{taper}{Proportion of data to taper.  A split cosine bell taper
     is applied to this proportion of the data at the beginning and
     end of the series.}
