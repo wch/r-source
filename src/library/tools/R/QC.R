@@ -2066,7 +2066,10 @@ function(package, dir, file, lib.loc = NULL)
         stop(paste("you must specify ", sQuote("package"), ", ",
                    sQuote("dir"), " or ", sQuote("file"), sep = ""))
 
-    findTnFInFile <- function(file) {
+    findTnFInCode <- function(file, txt) {
+        ## If 'txt' is given, it contains the extracted examples from
+        ## the R documentation file 'file'.  Otherwise, 'file' gives a
+        ## file with (just) R code.
         matches <- list()
         TnF <- c("T", "F")
         findBadExprs <- function(e, p) {
@@ -2081,9 +2084,17 @@ function(package, dir, file, lib.loc = NULL)
                 for(i in seq(along = e)) Recall(e[[i]], e)
             }
         }
-        exprs <- try(parse(file = file, n = -1))
-        if(inherits(exprs, "try-error"))
-            stop(paste("parse error in file", sQuote(file)))
+        if(missing(txt)) {
+            exprs <- try(parse(file = file, n = -1))
+            if(inherits(exprs, "try-error"))
+                stop(paste("parse error in file", sQuote(file)))
+        }
+        else {
+            exprs <- try(parse(text = txt))
+            if(inherits(exprs, "try-error"))
+                stop(paste("parse error in examples from file",
+                           sQuote(file)))
+        }
         for(i in seq(along = exprs))
             findBadExprs(exprs[[i]], NULL)
         matches
@@ -2091,7 +2102,7 @@ function(package, dir, file, lib.loc = NULL)
 
     badExprs <- list()
     for(file in codeFiles) {
-        exprs <- findTnFInFile(file)
+        exprs <- findTnFInCode(file)
         if(length(exprs) > 0) {
             exprs <- list(exprs)
             names(exprs) <- file
@@ -2099,16 +2110,13 @@ function(package, dir, file, lib.loc = NULL)
         }
     }
     for(file in docsFiles) {
-        exampleFile <- tempfile()
-        .Script("perl", "extract-examples.pl", paste(file, exampleFile))
-        if(file.exists(exampleFile)) {
-            exprs <- findTnFInFile(exampleFile)
-            if(length(exprs) > 0) {
-                exprs <- list(exprs)
-                names(exprs) <- file
-                badExprs <- c(badExprs, exprs)
-            }
-            unlink(exampleFile)
+        txt <- paste(Rdpp(readLines(file)), collapse = "\n")
+        txt <- .getRdExampleCode(txt)
+        exprs <- findTnFInCode(file, txt)
+        if(length(exprs) > 0) {
+            exprs <- list(exprs)
+            names(exprs) <- file
+            badExprs <- c(badExprs, exprs)
         }
     }
     class(badExprs) <- "checkTnF"
