@@ -1744,10 +1744,11 @@ stopifnot(x == res) # can't have rounding error here
 
 
 ## matching NAs on Solaris (MM 2002-08-02)
-x <- as.double(NA)
-identical(x + 0, x)
-stopifnot(match(x + 0, x, 0) == 1)
+# x <- as.double(NA)
+# identical(x + 0, x)
+# stopifnot(match(x + 0, x, 0) == 1)
 ## match failed on Solaris with some compiler settings
+## NA+0 is not guaranteed to be NA: could be NaN
 
 
 ## identical on specials  (BDR 2002-08-02)
