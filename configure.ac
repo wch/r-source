@@ -22,7 +22,7 @@
 ### Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
 ### 02111-3307, USA.
 
-AC_PREREQ(2.53)
+AC_PREREQ(2.57)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -30,7 +30,7 @@ AC_PREREQ(2.53)
 ## shell command output has one, hence the patsubst() trick.
 m4_define([R_VERSION],
           patsubst(m4_esyscmd([cat VERSION]), [\([0-9.]*\)\(\w\|\W\)*], [\1]))
-AC_INIT([R], R_VERSION, [r-bugs@R-project.org])
+AC_INIT([R], R_VERSION, [r-bugs@R-project.org], [R])
 AC_CONFIG_SRCDIR([src/include/Defn.h])
 AC_CONFIG_AUX_DIR([tools])
 
@@ -393,7 +393,7 @@ R_PROG_BROWSER
 R_PROG_PDFVIEWER
 
 AC_PROG_CC
-AC_PROG_CC_STDC
+
 AC_PROG_GCC_TRADITIONAL
 AC_PROG_CPP
 R_PROG_CPP_CPPFLAGS
@@ -406,7 +406,7 @@ AC_PROG_CXXCPP
 ## Set up LD_LIBRARY_PATH or equivalent.
 ## <FIXME>
 ## What is this doing *HERE*?
-## Should be needed for tests using AC_TRY_RUN()?
+## Should be needed for tests using AC_RUN_IFELSE()?
 ## Make sure that non-standard directories specified via '-L' are really
 ## searched in the tests.
 ## Note: earlier versions used LIBS rather than LDFLAGS.
@@ -571,8 +571,8 @@ case "${host_cpu}" in
   alpha*)
     ## <NOTE>
     ## * ANSI C
-    ## The native C compiler needs @option{-std1}: AC_PROG_CC_STDC
-    ## passes all ANSI C tests with no extra flags but then __STDC__ is
+    ## The native C compiler needs @option{-std1}: AC_PROG_CC() passes
+    ## all ANSI C tests with no extra flags but then __STDC__ is
     ## undefined which breaks compilation of the connections code.
     ## * IEEE math
     ## We really need to use @option{-ieee_with_inexact} (called
@@ -1176,8 +1176,8 @@ LIBS="${LIBS1} ${LIBS2}"
 ## <FIXME>
 ## This should not be necessary when using libtool for linking.
 ## In any case, is this really good enough?
-for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} ${TCLTK_LIBS} \
-           ${GNOME_LIBS}; do
+for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
+           ${TCLTK_LIBS} ${GNOME_LIBS}; do
   case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
