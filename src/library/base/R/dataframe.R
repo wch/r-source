@@ -1017,7 +1017,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
 	cn <- names(e1)
 	rscalar <- length(e2) <= 1 # e2 might be null
 	if(isList(e2)) {
-	    if(scalar) e2 <- e2[[1]]
+	    if(rscalar) e2 <- e2[[1]]
 	    else if(length(e2) != ncol(e1))
 		stop(paste("list of length", length(e2), "not meaningful"))
 	} else {

@@ -325,6 +325,8 @@ BUG FIXES
     o	poly() was checking the degree against the number of points
 	even when predicting.
 
+    o	Comparison of a data frame and list failed due to typo. (PR#1889)
+
 
 
 	**************************************************
