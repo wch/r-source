@@ -18,6 +18,10 @@ BUG FIXES
 	afm files, and warn if characters are used in string width or
 	height calculations that are not in afm files.
 
+     o	The C function fprec was not handling very small denormalized
+	numbers correctly.  This affected the way they were printed on
+	Windows, for example.
+
 
 
 		CHANGES IN R VERSION 1.2.1
