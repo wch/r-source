@@ -119,6 +119,9 @@ lsf.str(pos = length(search()), pattern = "file")
  str(factor(character(0)))
  str(as.data.frame(NULL))
 }
+str(quote( { A+B; list(C,D) } ))
+
+% package attaching/detaching only when needed:
 \dontshow{
 had.stats4 <- "package:stats4" \%in\% search()
 if(!had.stats4)

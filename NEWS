@@ -242,6 +242,10 @@ NEW FEATURES
 	when displaying commands as they are parsed.
 
     o	str(obj) now displays more reasonably the STRucture of S4 objects.
+
+	It's also improved for language objects and lists with promise
+	components.
+
 	The method for class "dendrogram" has a new argument 'stem' and
 	indicates when it's not printing all levels (as typically when
 	e.g., 'max.level = 2').
