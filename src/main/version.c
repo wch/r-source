@@ -80,7 +80,7 @@ SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
 void PrintVersion(char *s)
 {
     char tmp[50];
-    sprintf(s, "Version %s.%s %s (%s %s, %s)\n",
+    sprintf(s, "R %s.%s %s (%s %s, %s)\n",
 	    R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
     sprintf(tmp, "Copyright (C) %s R Development Core Team\n\n", R_YEAR);
     strcat(s, tmp);
