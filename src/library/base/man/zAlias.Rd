@@ -37,5 +37,14 @@ all(names(mop) == names(Op) &
 mop$newslot <- pi #--->> 'newslot' ==> (shallow) COPY of 'mop'
 Op$newslot # R: still the old one, i.e. NULL
 all(names(mop) == names(Op))# no longer TRUE
+
+## Feel the power: `call by reference', a function modifying its argument:
+tst.Al <- function(x) {
+   y <- .Alias(x) ; attributes(y) <- NULL ; invisible()
+}
+(x0 <- structure(1:5, my.att = "Y"))
+tst.Al(x0) # *changes* x0 :
+x0
+stopifnot(is.null(attributes(x0)))
 }
 \keyword{programming}
