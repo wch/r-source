@@ -40,7 +40,7 @@ installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/demos
 	@$(MKINSTALLDIRS) $(rhome)/demos/dynload
 install-objects:
-	@$(INSTALL_PROGRAM) zero.$(SHLIB_EXT) $(rhome)/demos/dynload
+	@$(INSTALL_PROGRAM) zerofind.$(SHLIB_EXT) $(rhome)/demos/dynload
 install-sources:
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/demos/dynload; \
