@@ -73,8 +73,8 @@ boxplot.formula(formula, data = NULL, subset, na.action, \dots)
 }
 \details{
     This is a generic function.  It currently has a default method
-    (\code{\link{boxplot.default}}) and a formula interface
-    (\code{\link{boxplot.formula}}).
+    (\code{boxplot.default}) and a formula interface
+    (\code{boxplot.formula}).
 }
 \value{
   List with one component corresponding to each plot.  The
