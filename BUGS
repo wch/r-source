@@ -363,3 +363,7 @@ Date: Thu, 4 Nov 1999 11:16:49 +1300 (NZDT)
 Subject: R_OpenSiteFile: Do not use a null ptr as filename in fopen
 From: Thomas Hoffmann <hoffmann@ehmgs2.et.tu-dresden.de>
 Date: Thu, 4 Nov 1999 10:08:45 +0100 (MET)
+* PR# 313 *
+Subject: rpart problem
+From: "Potter, David M" <david_m_potter@groton.pfizer.com>
+Date: Fri, 5 Nov 1999 13:09:50 -0500 
