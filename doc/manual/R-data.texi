@@ -73,6 +73,7 @@ principal authors of the packages mentioned are
 
 @quotation
 @multitable {stataread  xxxx} {A longggggggggggggggggggggggggggggggggg description}
+@item @pkg{e1071} @tab Friedrich Leisch
 @item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy and Douglas Bates 
 @item @pkg{hdf5} @tab Marcus Daniels
 @item @pkg{netCDF} @tab Thomas Lumley
@@ -535,6 +536,7 @@ may be unavoidable if the originating system is not available.
 * SAS::                         
 * S-PLUS::                      
 * SPSS::                        
+* Octave::                      
 @end menu
 
 @node Stata, Minitab, Importing from other statistical systems, Importing from other statistical systems
@@ -570,6 +572,7 @@ format and return a list of data frames.
 @section S-PLUS
 @cindex S-PLUS
 @findex readSfile
+@findex data.restore
 
 Package @pkg{Rstreams} on @acronym{CRAN} contains a function
 @code{readSfile} which can read binary objects produced by S-PLUS 3.x,
@@ -578,7 +581,11 @@ OS). This is able to read many but not all @Sl{} objects: in particular
 it can read vectors, matrices and data frames and lists containing
 those.
 
-@node SPSS,  , S-PLUS, Importing from other statistical systems
+Package @pkg{Rstreams} also contains a function @code{data.restore} to
+read S-PLUS data dumps (created by @code{data.dump}) with the same
+restrictions.
+
+@node SPSS, Octave, S-PLUS, Importing from other statistical systems
 @section SPSS
 @cindex SPSS
 @cindex PSPP
@@ -587,6 +594,15 @@ There are currently no facilities to import SPSS data files, but it may
 be possible to use the @uref{http://pspp.stat.wisc.edu, PSPP package} to
 convert these files to a text format.
 
+@node Octave,  , SPSS, Importing from other statistical systems
+@section Octave
+@cindex Octave
+@findex read.octave
+
+Octave is a numerical linear algebra system, and function
+@code{read.octave} in package @pkg{e1071} can read the first vector or
+matrix from an Octave ASCII data file created using the Octave command
+@code{save -ascii}
 
 @node Relational databases, Binary files, Importing from other statistical systems, Top
 @chapter Relational databases
