@@ -67,7 +67,7 @@ DISTFILES = Makefile.in Makefile.win README \
 	gct-foot.R
 SUBDIRS = Embedding Examples
 
-R = LC_ALL=C $(top_builddir)/bin/R --vanilla
+R = LC_ALL=C SRCDIR=$(srcdir) $(top_builddir)/bin/R --vanilla
 RDIFF = $(top_builddir)/bin/Rdiff
 
 test-out-strict = $(test-src-strict:.R=.Rout)

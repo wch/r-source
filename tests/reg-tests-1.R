@@ -432,12 +432,22 @@ res <- type.convert("12345689012")
 stopifnot(typeof(res) == "double")
 ##  Comments: was integer in 1.4.0
 
+
 ## La.eigen() segfault
 e1 <- La.eigen(m <- matrix(1:9,3))
 stopifnot(e1$values == La.eigen(m, only.values = TRUE)$values)
 
 
-## This example last ##
+## PR#1267 hashing NaN
+load(file.path(Sys.getenv("SRCDIR"), "nanbug.rda"))
+bb <- b; bb[5] <- NaN
+identical(b, bb)            # TRUE
+unique(c(NaN, bb))          #[1] NaN 0 1 2 3 NA
+stopifnot(identical(unique(c(NaN, b)), unique(c(NaN, bb))))
+## 1.4.0 gives [1] NaN 0 1 2 NaN 3 NA   on most platforms
+
+
+## This example last: needed < 1.5.0 ##
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {
