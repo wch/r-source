@@ -1715,7 +1715,7 @@ sub latex_print_block {
     my ($block,$env) = @_;
 
     if(defined $blocks{$block}){
-	print latexout "\\begin\{$env\}\n";
+	print latexout "\\begin\{$env\}\\relax\n";
 	print latexout text2latex($blocks{$block});
 	print latexout "\\end\{$env\}\n";
     }
