@@ -11,6 +11,10 @@
 
 USER-VISIBLE CHANGES
 
+    o	The defaults for glm.control(epsilon=1e-8, maxit=25) have been
+	tightened: this will produce more accurate results, slightly
+	slower.
+
     o	sub, gsub, grep, regexpr, chartr, tolower, toupper, substr,
 	substring, abbreviate and strsplit now handle missing values
 	differently from "NA".
@@ -18,75 +22,133 @@ USER-VISIBLE CHANGES
     o	Saving data containing name space references no longer warns
 	about name spaces possibly being unavailable on load.
 
-    o	det() uses an LU decomposition and LAPACK.  The `method'
-	argument to det() no longer has any effect.
+
+CHANGES TO THE LANGUAGE
+
+    o	On Unix-like systems interrupt signals now set a flag that is
+	checked periodically rather than calling longjmp from the
+	signal handler.	 This is analogous to the behavior on Windows.
+	This reduces responsiveness to interrupts but prevents bugs
+	caused by interrupting computations in a way that leaves the
+	system in an inconsistent state.  It also reduces the number
+	of system calls, which can speed up computations on some
+	platforms and make R more usable with systems like Mosix.
+
+    o	Error and warning handling has been modified to incorporate a
+	flexible condition handling mechanism.	See the online
+	documentation of 'tryCatch' and 'signalCondition'.  Code that
+	does not use these new facilities should remain unaffected.
+
+    o	A triple colon operator can be used to access values of internal
+	variables in a name space (i.e. a:::b is the value of the internal
+	variable b in name space a).
+
+    o	Terms in formulae can now be quoted, to allow the use of
+	non-syntactic variable names: backticks as described in the
+	next item can also be used.  [Note that other code using terms
+	objects may expect syntactic names.]
+
+    o	Non-syntactic variable names can now be specified by inclusion
+	between backticks `Like This`. The deparse() code has been
+	changed to output non-syntactical names with this convention,
+	when they occur as operands in expressions. This is controlled
+	by a `backtick' argument, which is by default TRUE for
+	composite expressions and FALSE for single symbols. This
+	should give minimal interference with existing code.
 
 
 NEW FEATURES
 
-    o	R CMD check accepts "ORPHANED" as package maintainer. Package
-	maintainers can now officially orphanize a package, i.e.,
-	resign from maintaining a package.
+    o	New function bquote() does partial substitution like LISP backquote.
 
-    o	format.info() now also works with `nsmall' in analogy with
-	format.default()
-
-    o	There is a GUI (RAqua) for Mac OS X
-
-    o	eval of a promise forces the promise and printing a promise forces
-	the promise
-
-    o	rep() is now a generic function, with default, POSIXct and
-	POSIXlt methods.  For efficiency, the base code uses rep.int()
-	rather than rep() where possible.
-
-    o	print.summary.glm() now reports omitted coefficients in the
-	same way as print.summary.lm(), and both show them as NAs in
-	the table of coefficients.
-
-    o	stripchart() now has `log', `add' and `at' arguments.
-
-    o	New option("scipen") provides some user control over the
-	printing of numbers in fixed-point or exponential notation.
-	(Contributed by David Brahm.)
-
-    o	Arguments `unit' and `hmin' of plclust() are now implemented.
-
-    o	factanal() now returns the test statistic and P-value formerly
-	computed in the print method.
+    o	capture.output() takes arbitrary connections for `file' argument.
 
     o	contr.poly() has a new `scores' argument to use as the base set
 	for the polynomials.
 
-    o	The defaults for glm.control(epsilon=1e-8, maxit=25) have been
-	tightened: this will produce more accurate results, slightly
-	slower.
+    o	New utility function cov2cor() {Cov -> Corr matrix}.
 
-    o	The data editor is no longer limited to 65535 rows, and will
-	be substantially faster for large numbers of columns.
+    o	cut.POSIXt() now allows `breaks' to be more general intervals
+	as allowed for the `by' argument to seq.POSIXt().
 
-    o	prcomp() now accepts complex matrices, and there is biplot()
-	method for its output (in the real case).
+    o	data() now has an 'envir' argument.
 
-    o	A new entry, sizeof.pointer, has been added to .Machine.
+    o	det() uses an LU decomposition and LAPACK.  The `method'
+	argument to det() no longer has any effect.
 
-    o	strsplit(x, *) now preserves names() but won't work for
-	non-character `x' anymore {formerly used as.character(x),
-	destroying names(x)}.
+    o	dev.control() now accepts "enable" as well as "inhibit".
+	(Wishlist PR#3424)
 
-    o	which.min(x) and which.max(x) now preserve names.
+    o	*, - and / work more generally on "difftime" objects, which now
+	have a diff() method.
+
+    o	dt(*, ncp = V)	is now implemented, thanks to Claus Ekstroem.
+
+    o	dump() only quotes object names in the file where necessary.
+
+    o	eval() of a promise forces the promise and printing a promise forces
+	the promise
+
+    o	file.path() now returns an empty character vector if given at
+	least one zero-length argument.
+
+    o	format() and hence print() make an effort to handle corrupt
+	data frames, with a warning.
+
+    o	format.info() now also works with `nsmall' in analogy with
+	format.default()
 
     o	gamma(n) is very slightly more precise for integer n in 11:50.
 
-    o	New option `locatorBell' to control the confirmation beep
-	during the use of locator() and identify().
+    o	? and help() will accept more un-quoted arguments, e.g. NULL.
+
+    o	The "?" operator has new forms for querying documentation on
+	S4 methods.  See the online documentation.
+
+    o	New argument fixed = TRUE for grep() and regexpr() to avoid the
+	need to escape strings to match.
+
+    o	grep(x, ..., value = TRUE) preserves names of x.
+
+    o	hist.POSIXt() can now pass arguments to hist.default()
+
+    o	legend() and symbols() now make use of xy.coords() and accept
+	a wider range of coordinate specifications.
+
+    o	Added function library.dynam.unload() to call dyn.unload() on
+	a loaded DLL and tidy up.  This is called for all the standard
+	packages in namespaces with DLLs if their namespaces are unloaded.
+
+    o	lm(singular.ok = FALSE) is now implemented.
+
+    o	Empty lm() and glm() fits are now handled by the normal
+	code: there are no methods for classes "lm.null" and
+	"glm.null".  Zero-rank fits are handled consistently.
+
+    o	make.names() has improvements, and there is a new auxiliary
+	function make.unique().	 (Based on code contributed by Tom
+	Minka, since converted to a .Internal function.)  In
+	particular make.names() now recognises that names beginning
+	with a dot are valid and that reserved words are not.
 
     o	methods() has a print method which asterisks functions which
 	are not user-visible.  methods(class = "foo") now lists
 	non-visible functions, and checks that there is a matching generic.
 
-    o	library() has a pos argument, controlling where the package is
-	attached (defaulting to pos=2 as before).
+    o	model.matrix() now warns when it removes the response from the
+	rhs of the formula: that this happens is now documented on its
+	help page.
+
+    o	New option `locatorBell' to control the confirmation beep
+	during the use of locator() and identify().
+
+    o	New option("scipen") provides some user control over the
+	printing of numbers in fixed-point or exponential notation.
+	(Contributed by David Brahm.)
+
+    o	polygon() and rect() now interpret density < 0 or NA to mean
+	filling (by colour) is desired: this allows filling and
+	shading to be mixed in one call, e.g. from legend().
 
     o	The predict() methods for classes lm, glm, mlm and lqs take a
 	`na.action' argument that controls how missing values in
@@ -95,36 +157,49 @@ NEW FEATURES
 	this by default omitted cases with missing values, even if set
 	to `na.exclude'.]
 
-    o	xy.coords() coerces "POSIXt" objects to "POSIXct", allowing
-	lines etc to added to plot.POSIXlt() plots.
+    o	print.summary.glm() now reports omitted coefficients in the
+	same way as print.summary.lm(), and both show them as NAs in
+	the table of coefficients.
 
-    o	plot.ts() has a new argument `nc' controlling the number of
-	columns (with default the old behaviour for plot.mts).
+    o	read.table()'s 'as.is' argument can be character, naming columns
+	not to be converted.
 
-    o	capture.output() takes arbitrary connections for `file' argument.
+    o	rep() is now a generic function, with default, POSIXct and
+	POSIXlt methods.  For efficiency, the base code uses rep.int()
+	rather than rep() where possible.
 
-    o	Package tcltk is now in a namespace.  To remove it you will
-	now need to use unloadNamespace("tcltk").
+    o	New function replicate() for repeated evaluation of expression
+	and collection of results, wrapping a common use of sapply()
+	for simulation purposes.
+
+    o	sort(method = "quick", decreasing = TRUE) is now implemented.
+
+    o	sort.list() has methods "quick" (a wrapper for sort(method =
+	"quick", index.return = TRUE) and "radix" (a very fast method
+	for small integers).  The default "shell" method works faster
+	on long vectors with many ties.
+
+    o	stripchart() now has `log', `add' and `at' arguments.
+
+    o	strsplit(x, *) now preserves names() but won't work for
+	non-character `x' anymore {formerly used as.character(x),
+	destroying names(x)}.
 
     o	Using UseMethod() with more than two arguments now gives a
 	warning (as R-lang.texi has long claimed it did).
 
-    o	Standalone Rmath now has a get_seed function as requested (PR#3160).
+    o	New function vignette() for viewing or listing vignettes.
 
-    o	? and help() will accept more un-quoted arguments, e.g. NULL.
+    o	which.min(x) and which.max(x) now preserve names.
 
-    o	When coercion of a list fails, a meaningful error message is given.
+    o	xy.coords() coerces "POSIXt" objects to "POSIXct", allowing
+	lines etc to added to plot.POSIXlt() plots.
 
-    o	Setting dimnames to a factor now coerces to character, as S
-	does.  (Earlier versions of R used the internal codes.)
+    o	.Machine has a  new entry, sizeof.pointer.
 
-    o	cut.POSIXt() now allows `breaks' to be more general intervals
-	as allowed for the `by' argument to seq.POSIXt().
-
-    o	*, - and / work more generally on difftime objects, which now
-	have a diff() method.
-
-    o	hist.POSIXt() can now pass arguments to hist.default()
+    o	.Random.seed is only looked for and stored in the user's
+	workspace.  Previously the first place a variable of that name
+	was found on the search path was used.
 
     o	Subscripting for data.frames has been rationalized:
 
@@ -166,66 +241,56 @@ NEW FEATURES
 
 	- adf[x] <- list() failed if x was of length zero.
 
-    o	A triple colon operator can be used to access values of internal
-	variables in a name space (i.e. a:::b is the value of the internal
-	variable b in name space a).
+ 
+    o	Setting dimnames to a factor now coerces to character, as S
+	does.  (Earlier versions of R used the internal codes.)
 
-    o	file.path() now returns an empty character vector if given at
-	least one zero-length argument.
-
-    o	make.names() has improvements, and there is a new auxiliary
-	function make.unique().	 (Based on code contributed by Tom
-	Minka, since converted to a .Internal function.)  In
-	particular make.names() now recognises that names beginning
-	with a dot are valid and that reserved words are not.
-
-    o	format() and hence print() make an effort to handle corrupt
-	data frames, with a warning.
-
-    o	dump() only quotes object names in the file where necessary.
-
-    o	New function replicate() for repeated evaluation of expression
-	and collection of results, wrapping a common use of sapply()
-	for simulation purposes.
-
-    o	read.table's `as.is' argument can be character, naming columns
-	not to be converted.
-
-    o	Packages with name spaces can now be installed using --save.
+    o	When coercion of a list fails, a meaningful error message is given.
 
     o	Adding to NULL with [[ ]] generates a list if more than one
 	element is added (as S does).
 
-    o	Empty lm() and glm() fits are now handled by the normal
-	code: there are no methods for classes "lm.null" and
-	"glm.null".  Zero-rank fits are handled consistently.
+    o	There is a new command-line flag --args that causes the rest of
+	the command line to be skipped (but recorded in commandArgs()
+	for further processing).
 
-    o	Terms in formulae can now be quoted, to allow the use of
-	non-syntactic variable names.  [Note that other code using
-	terms objects may expect syntactic names.]
+    o	S4 generic functions and method dispatch have been modified to
+	make the generic functions more self-contained (e.g., usable
+	in apply-type operations) and potentially to speed dispatch.
 
-    o	Added function library.dynam.unload() to call dyn.unload() on
-	a loaded DLL and tidy up.  This is called for all the standard
-	packages in namespaces with DLLs if their namespaces are unloaded.
 
-    o	Non-syntactic variable names can now be specified by inclusion
-	between backticks `Like This`. The deparse() code has been
-	changed to output non-syntactical names with this convention,
-	when they occur as operands in expressions. This is controlled
-	by a `backtick' argument, which is by default TRUE for
-	composite expressions and FALSE for single symbols. This
-	should give minimal interference with existing code.
+    o	There is a GUI (RAqua) for Mac OS X
 
-    o	In the tcltk package, as.tclObj() has gained a `drop' argument
-	to decide what should happen for vectors of length one.
+    o	The data editor is no longer limited to 65535 rows, and will
+	be substantially faster for large numbers of columns.
 
-    o	New argument fixed = TRUE for grep() and regexpr() to avoid the
-	need to escape strings to match.
+    o	Standalone Rmath now has a get_seed function as requested (PR#3160).
 
-    o	grep(x, ..., value = TRUE) preserves names of x.
+    o	GC timing is not enabled until the first call to gc.time; it
+	can be disabled by calling gc.time(FALSE).  This can speed up
+	the garbage collector and reduce system calls on some
+	platforms.
 
-    o	legend() and symbols() now make use of xy.coords() and accept
-	a wider range of coordinate specifications.
+
+STANDARD PACKAGES
+
+    o	Changes in package 'mva':
+
+    	- factanal() now returns the test statistic and P-value formerly
+	  computed in the print method.
+
+	- Arguments `unit' and `hmin' of plclust() are now implemented.
+
+	- prcomp() now accepts complex matrices, and there is biplot()
+	  method for its output (in the real case).
+
+    o	Changes in package 'tcltk':
+
+    	- The package is now in a namespace.  To remove it you will
+ 	  now need to use unloadNamespace("tcltk").
+
+	- as.tclObj() has gained a `drop' argument
+	  to decide what should happen for vectors of length one.
 
     o	Changes in package 'tools':
 
@@ -252,73 +317,22 @@ NEW FEATURES
 	  for code/documentation consistency checking for S4 classes and
 	  data sets.
 
-    o	GC timing is not enabled until the first call to gc.time; it
-	can be disabled by calling gc.time(FALSE).  This can speed up
-	the garbage collector and reduce system calls on some
-	platforms.
+    o	Changes in package 'ts':
 
-    o	On Unix-like systems interrupt signals now set a flag that is
-	checked periodically rather than calling longjmp from the
-	signal handler.	 This is analogous to the behavior on Windows.
-	This reduces responsiveness to interrupts but prevents bugs
-	caused by interrupting computations in a way that leaves the
-	system in an inconsistent state.  It also reduces the number
-	of system calls, which can speed up computations on some
-	platforms and make R more usable with systems like Mosix.
+	- arima.sim() now checks for inconsistent order specification
+	  (as requested in PR#3495: it was previously documented not to).
 
-    o	New function vignette() for viewing or listing vignettes.
+	- plot.ts() has a new argument `nc' controlling the number of
+	  columns (with default the old behaviour for plot.mts).
 
-    o	arima.sim() now checks for inconsistent order specification
-	(as requested in PR#3495: it was previously documented not to).
+        - StructTS() now allows the first value of the series to be
+	  missing (although it is better to omit leading NAs). (PR#3990)
 
-    o	The "?" operator has new forms for querying documentation on
-	S4 methods.  See the online documentation.
 
-    o	sort(method = "quick", decreasing = TRUE) is now implemented.
+USING PACKAGES
 
-    o	sort.list() has methods "quick" (a wrapper for sort(method =
-	"quick", index.return = TRUE) and "radix" (a very fast method
-	for small integers).  The default "shell" method works faster
-	on long vectors with many ties.
-
-    o	data() now has an 'envir' argument.
-
-    o	Error and warning handling has been modified to incorporate a
-	flexible condition handling mechanism.	See the online
-	documentation of 'tryCatch' and 'signalCondition'.  Code that
-	does not use these new facilities should remain unaffected.
-
-    o	polygon() and rect() now interpret density < 0 or NA to mean
-	filling (by colour) is desired: this allows filling and
-	shading to be mixed in one call, e.g. from legend().
-
-    o	There is a new command-line flag --args that causes the rest of
-	the command line to be skipped (but recorded in commandArgs()
-	for further processing).
-
-    o	model.matrix() now warns when it removes the response from the
-	rhs of the formula: that this happens is now documented on its
-	help page.
-
-    o	lm(singular.ok = FALSE) is now implemented.
-
-    o	dev.control() now accepts "enable" as well as "inhibit".
-	(Wishlist PR#3424)
-
-    o	.Random.seed is only looked for and stored in the user's
-	workspace.  Previously the first place a variable of that name
-	was found on the search path was used.
-
-    o	bquote() does partial substitution like LISP backquote.
-
-    o	dt(*, ncp = V)	is now implemented, thanks to Claus Ekstroem.
-
-    o	packages that use S4 classes and methods should now work with
-	or without saved images (saved images are still recommended
-	for efficiency), writing setMethod(), etc. calls with the
-	default for argument `where'.  The topenv() function and
-	sys.source() have been changed correspondingly.	 See the
-	online help.
+    o	library() has a pos argument, controlling where the package is
+	attached (defaulting to pos=2 as before).
 
     o	require() now maintains a list of required packages in the
 	toplevel environment (typically, .GlobalEnv).  Two features
@@ -327,15 +341,14 @@ NEW FEATURES
 	with saved images no longer need to use require() in the
 	.First as well as in the main source.
 
-    o	S4 generic functions and method dispatch have been modified to
-	make the generic functions more self-contained (e.g., usable
-	in apply-type operations) and potentially to speed dispatch.
+    o	Packages with name spaces can now be installed using --save.
 
-    o	new utility cov2cor() {Cov -> Corr matrix}.
-
-    o	StructTS() now allows the first value of the series to be
-	missing (although it is better to omit leading NAs). (PR#3990)
-
+    o	Packages that use S4 classes and methods should now work with
+	or without saved images (saved images are still recommended
+	for efficiency), writing setMethod(), etc. calls with the
+	default for argument `where'.  The topenv() function and
+	sys.source() have been changed correspondingly.	 See the
+	online help.
 
 
 DEPRECATED & DEFUNCT
@@ -416,6 +429,10 @@ INSTALLATION CHANGES
 
 UTILITIES
 
+    o	R CMD check accepts "ORPHANED" as package maintainer. Package
+	maintainers can now officially orphanize a package, i.e.,
+	resign from maintaining a package.
+
     o	R CMD INSTALL (Unix only) is now 'safe': if the attempt to
 	install a package fails, leftovers are removed.	 If the package
 	was already installed, the old version is restored.
@@ -430,6 +447,46 @@ UTILITIES
 	\usage sections are no longer ignored.
 
     o	R CMD Rdindex has been removed.
+
+
+DEPRECATED & DEFUNCT
+
+    o	The assignment operator `_' has been removed.
+
+    o	printNoClass() is defunct.
+
+    o	The classic MacOS port is no longer supported, and its files
+	have been removed from the sources.
+
+    o	The deprecated argument 'white' of parse() has been removed.
+
+    o	Methods pacf/plot.mts() have been removed and their functionality
+	incorporated into pacf.default/plot.ts().
+
+    o	print.coefmat() is deprecated in favour of printCoefmat()
+	(which is identical apart from the default for na.print which
+	is changed from "" to "NA", and better handling of the 0-rank
+	case where all coefficients are missing).
+
+    o	codes() and codes<-() are deprecated, as almost all uses
+	misunderstood what they actually do.
+
+    o	The use of multi-argument return() calls is deprecated: use a
+	(named) list instead.
+
+    o	anovalist.lm (replaced in 1.2.0) is now deprecated.
+
+    o	- and Ops methods for POSIX[cl]t objects are removed: the
+	POSIXt methods have been used since 1.3.0.
+
+    o	glm.fit.null(), lm.fit.null() and lm.wfit.null() are deprecated.
+
+    o	Classes "lm.null" and "glm.null" are deprecated and all of their
+	methods have been removed.
+
+    o	Method weights.lm(), a copy of weights.default(), has been removed.
+
+    o	print.atomic() is now deprecated.
 
 
 BUG FIXES
