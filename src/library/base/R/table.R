@@ -1,4 +1,12 @@
-table <- function (..., exclude = c(NA, NaN), dnn = deparse.list(...)) {
+table <- function (..., exclude = c(NA, NaN), dnn = list.names(...)) {
+    list.names <- function (...) {
+        l <- as.list(substitute(list(...)))[-1]
+        nm <- names(l)
+        fixup <- if (is.null(nm)) seq(along=l) else nm==""
+        dep <- sapply(l[fixup], function(x)deparse(x)[1])
+        if (is.null(nm)) dep else {nm[fixup]<-dep ; nm}
+    }
+    
     args <- list(...)
     if (length(args) == 0)
 	stop("nothing to tabulate")
