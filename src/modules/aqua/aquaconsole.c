@@ -117,6 +117,8 @@ void GraphicCopy(WindowPtr window);
 
 /* item in the Window menu */
 #define kRNewQuartz             'nwqz'
+#define kRActivateDevice        'awqz'
+
 
 /* items in the Help Menu */
 #define kRHelpStart		'rhlp'
@@ -1653,7 +1655,12 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 	      /* Window Menu */
 	     case kRNewQuartz:
 	       consolecmd("quartz()");
-	       break;
+             break;
+             
+            case kRActivateDevice:
+                if( GetWindowProperty(window, kRAppSignature, 'QRTZ', sizeof(int), NULL, &devnum)  == noErr)
+                    selectDevice(devnum);
+            break;  
 
 /* Help Menu */
               case kRHelpStart:
@@ -1797,9 +1804,8 @@ step2:
         if( (saveURL = CFURLCreateFromFSRef(NULL, &fsRef)) == NULL){
             err = -1;
             goto step3;
-        }
-                     
-
+        }                     
+        FSDeleteObject(&fsRef);
         if( (dd = ((GEDevDesc*) GetDevice(devnum))->dev) ){
             QuartzDesc *xd = (QuartzDesc *) dd-> deviceSpecific;
             mediaBox = CGRectMake(0,0,xd->windowWidth,xd->windowHeight);
