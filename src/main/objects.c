@@ -728,15 +728,15 @@ R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t val) {
 
 SEXP do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-  SEXP arg, value;
-  if(!R_standardGeneric_ptr)
+  SEXP arg, value; R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr();
+  if(!ptr)
     error("Using standardGeneric before the methods package has been attached");
 
   checkArity(op, args);
 
   PROTECT(arg = CAR(args));
 
-  value = (*R_standardGeneric_ptr)(arg, env);
+  value = (*ptr)(arg, env);
   
   UNPROTECT(1);
   return value;
