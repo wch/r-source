@@ -427,4 +427,5 @@ distdir: $(DISTFILES)
 	fi
 #	$(distdir)/doc/html has already been created
 	$(TEXI2HTML) --no-headers --number-sections \
-	  $(srcdir)/R-admin.texi -o $(distdir)/../html/R-admin.html
+	  $(srcdir)/R-admin.texi -I$(srcdir) \
+	  -o $(distdir)/../html/R-admin.html
