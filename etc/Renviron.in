@@ -24,6 +24,7 @@ EDITOR=${EDITOR-${VISUAL-vi}}
 PAGER=${PAGER-'@PAGER@'}
 ## Use configure values
 AWK=${AWK-'@AWK@'}
+MAKE=${MAKE-'@MAKE@'}
 PERL=${PERL-'@PERL@'}
 TAR=${TAR-'@TAR@'}
 
