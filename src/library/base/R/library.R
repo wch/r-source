@@ -229,6 +229,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 				      package)
 		## create environment (not attached yet)
 		loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
+		## save the package name in the environment
+		assign(".packageName", package, envir = loadenv)
 		## source file into loadenv
 		if(file.exists(codeFile))
 		    sys.source(codeFile, loadenv, keep.source = keep.source)
@@ -243,8 +245,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		## the actual copy has to be done by C code to avoid forcing
 		## promises that might have been created using delay().
 		.Internal(lib.fixup(loadenv, env))
-		## save the package name in the environment
-		assign(".packageName", package, envir = env)
 
 		## run .First.lib
 		if(exists(".First.lib", mode = "function",

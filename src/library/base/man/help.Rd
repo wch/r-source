@@ -1,7 +1,7 @@
 \name{help}
 \alias{help}
 \alias{?}
-\alias{topicName}		% internal
+\alias{topicName}               % internal
 \title{Documentation}
 \description{
   These functions provide access to documentation.
@@ -25,8 +25,16 @@ help(topic, offline = FALSE, package = .packages(),
 type?topic
 }
 \arguments{
- \item{topic}{an object or string constant on which documentation is sought
-   (but \emph{not} a variable containing a character string!).}
+ \item{topic}{usually, the name on  which documentation is sought.
+   The name may be quoted or unquoted (but note that if \code{topic}
+   is the name of a
+   variable containing a character string  documentation is provided for
+   the name, not for the character string).
+
+   The \code{topic} argument may also be a function call, to ask for
+   documentation on a corresponding method.  See the section on method
+   documentation.
+ }
  \item{offline}{a logical indicating whether documentation should be
    displayed on-line to the screen (the default) or hardcopy of it
    should be produced.}
@@ -61,7 +69,9 @@ type?topic
   \item{type}{the special type of documentation to use for this topic;
       for example, if the type is \code{class}, documentation is
       provided for the class with name \code{topic}.  The function
-      \code{topicName} returns the actual name used in this case.}
+      \code{topicName} returns the actual name used in this case.
+    See the section on method documentation for the uses of
+      \code{type} to get help on formal methods.}
 }
 \details{
   In the case of unary and binary operators and control-flow special
@@ -113,6 +123,43 @@ type?topic
 #ifdef windows
   This is done on Windows for the larger packages.
 #endif
+}
+
+\section{Method Documentation.}{
+  The authors of formal (`S4') methods can provide documentation on
+  specific methods, as well as overall documentation on the methods of
+  a particular function.  The \code{"?"} operator allows access to
+  this documentation in three ways.
+
+  The expression \code{methods ? f} will look for the overall
+  documentation methods for the function \code{f}.  Currently, this
+  means the documentation file containing the alias \code{f-methods}.
+  
+  There are two different ways to look for documentation on a
+  particular method.  The first is to supply the \code{topic} argument
+  in the form of a function call, omitting the \code{type} argument.
+  The effect is to look for documentation on the method that would be
+  used if this function call were actually evaluated. See the examples
+  below.  If the function is not a generic (no S4 methods are defined
+  for it), the help reverts to documentation on the function name.
+
+  The \code{"?"} operator can also be called with \code{type} supplied
+  as \code{"method"}; in this case also, the \code{topic} argument is
+  a function call, but the arguments are now interpreted as specifying
+  the class of the argument, not the actual expression that will
+  appear in a real call to the function.  See the examples below.
+  
+  The first approach will be tedious if the actual call involves
+  complicated expressions, and may be slow if the arguments take a
+  long time to evaluate.  The second approach avoids these
+  difficulties, but you do have to know what the classes of the actual
+  arguments will be when they are evaluated.
+
+  Both approaches make use of any inherited methods; the signature of
+  the method to be looked up is found by using
+  \code{\link{selectMethod}}.
+
+  
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -251,6 +251,9 @@ NEW FEATURES
     o   arima.sim() now checks for inconsistent order specification
 	(as requested in PR#3495: it was previously documented not to).
 
+    o   The "?" operator has new forms for querying documentation on
+        S4 methods.  See the online documentation.
+
 
 DEPRECATED & DEFUNCT
 

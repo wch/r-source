@@ -1,24 +1,32 @@
 "?" <- function(e1, e2)
 {
-  if(is.name(substitute(e1))) e1 <- substitute(e1)
-  if(!is.character(e1)) e1 <- deparse(e1)
-  if(nargs() >= 2) {
-    if(is.name(substitute(e2))) e2 <- substitute(e2)
-    if(!is.character(e2)) e2 <- deparse(e2)
+    e1Expr <- substitute(e1)
+    if(missing(e2)) {
+        if(is.call(e1Expr))
+            return(.helpForCall(e1Expr, parent.frame()))
+        if(is.name(e1Expr))
+            e1 <- as.character(e1Expr)
+        eval(substitute(help(TOPIC), list(TOPIC = e1)))
+    }
+  else {
+      ## interpret e1 as a type, but to allow customization, do NOT force
+      ## arbitrary expressions to be single character strings (so that methods
+      ## can be defined for topicName).
+        if(is.name(e1Expr))
+            e1 <- as.character(e1Expr)
+      e2Expr <- substitute(e2)
+    if(is.name(e2Expr))
+      e2 <- as.character(e2Expr)
+        else if(is.call(e2Expr) && identical(e1, "method"))
+            return(.helpForCall(e2Expr, parent.frame(), FALSE))
     topic <- topicName(e1, e2)
-    opts <- options(error= function()TRUE, show.error.messages = FALSE)
-    on.exit(options(opts))
-    doHelp <- try(eval(substitute(help(TOPIC), list(TOPIC = topic))))
+    doHelp <- .tryHelp(topic)
     if(inherits(doHelp, "try-error")) {
-        options(opts)
-        on.exit()
         stop(paste("no documentation of type \"", e1,
                    "\" and topic \"", e2,
                    "\" (or error in processing help)", sep=""))
     }
   }
-  else
-      eval(substitute(help(TOPIC), list(TOPIC = e1)))
 }
 
 topicName <- function(type, topic) {
@@ -27,3 +35,72 @@ topicName <- function(type, topic) {
     else
         paste(paste(topic, collapse = ","), type, sep = "-")
 }
+
+.helpForCall <- function(expr, envir, doEval = TRUE) {
+    f <- expr[[1]] # the function specifier
+    if(is.name(f))
+        f <- as.character(f)
+    if(!.isMethodsDispatchOn() || !isGeneric(f)){
+        if(!is.character(f) || length(f) != 1)
+            stop("The object of class \"", class(f), "\" in the function call \"",
+                 deparse(expr), "\"could not be used as a documentation topic")
+        h <- .tryHelp(f)
+        if(inherits(h, "try-error"))
+            stop("No methods for \"", f, "\" and no documentation for it as a function")
+    }
+    else {
+        ## allow generic function objects or names
+        if(is(f, "genericFunction")) {
+            fdef <- f
+            f <- fdef@generic
+        }
+        else
+            fdef <- getGeneric(f)
+        call <- match.call(fdef, expr)
+        ## make the signature
+        sigNames <- fdef@signature
+        sigClasses <- rep("missing", length(sigNames))
+        names(sigClasses) <- sigNames
+        for(arg in sigNames) {
+            argExpr <- elNamed(call, arg)
+            if(!is.null(argExpr)) {
+                simple <- (is.character(argExpr) || is.name(argExpr))
+                ## TODO:  ideally, if doEval is TRUE, we would like to create
+                ## the same context used by applyClosure in eval.c, but then
+                ## skip the actual evaluation of the body.  If we could create
+                ## this environment then passing it to selectMethod is closer to
+                ## the semantics of the "real" function call than the code below.
+                ## But, seems to need a change to eval.c and a flag to the evaluator.
+                if(doEval || !simple) {
+                    argVal <- try(eval(argExpr, envir))
+                    if(is(argVal, "try-error"))
+                        stop("Error in trying to evaluate the expression for argument \"",
+                             arg, "\" (", deparse(argExpr), ")")
+                    elNamed(sigClasses, arg) <- class(argVal)
+                }
+                else
+                    elNamed(sigClasses, arg) <- as.character(argExpr)
+            }
+        }
+        method <- selectMethod(f, sigClasses, optional=TRUE, fdef = fdef)
+        if(is(method, "MethodDefinition"))
+            sigClasses <- method@defined
+        else
+            warning("No method defined for function \"", f,
+                    "\" and signature ",
+                    paste(sigNames, " = \"", sigClasses, "\"", sep = "", collapse = ", "))
+        topic <- topicName("method", c(f,sigClasses))
+        h <- .tryHelp(topic)
+        if(is(h, "try-error"))
+            stop("No documentation for function \"", f,
+                 "\" and signature ",
+                 paste(sigNames, " = \"", sigClasses, "\"", sep = "", collapse = ", "))
+    }
+}
+
+.tryHelp <- function(topic) {
+    opts <- options(error= function()TRUE, show.error.messages = FALSE)
+    on.exit(options(opts))
+    try(do.call("help", list(topic)))
+}
+
