@@ -65,3 +65,7 @@ print.table <- function(x, digits = .Options$digits, quote = FALSE,
     print.default(unclass(x), digits = digits, quote = quote,
                   na.print = na.print, ...)
 }
+prop.table<-function (x, margin) 
+sweep(x, margin, margin.table(x, margin), "/")
+margin.table<-function (x, margin) 
+apply(x, margin, sum)

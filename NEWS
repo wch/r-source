@@ -102,6 +102,20 @@ NEW FEATURES
 	(default) and `GNOME', provided that GNOME support is available.
 	Command line options \`-g' and `--gnome' are defunct.
 
+    o   power.t.test() and power.prop.test() functions added for power and
+        sample size calculations
+
+    o   edit() is now generic and a new edit.data.frame() function
+	calls up the spreadsheet data editor. This is still rather
+	rudimentary, since the data editor really only knows about
+	numeric and character vectors.
+
+    o   Modifications to the data editor so that one can use ESC to
+        quit a partial cell entry and entering an empty cell causes
+        the element to be set to NA.
+
+    o   prop.table() and margin.table() functions (these are *really*
+        trivial) 
 
 BUG FIXES
 
@@ -155,7 +169,8 @@ BUG FIXES
     o	system.time() now does sensible things in the non-HAVE_TIMES
 	case, and that and proc.time() have better documentation.
 
-
+    o   a couple of bugs in the data editor spreadsheet have been
+        eliminated. 
 
 		CHANGES IN R VERSION 0.90.1
 
