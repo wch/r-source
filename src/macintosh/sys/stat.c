@@ -28,6 +28,7 @@
 #include <RCarbon.h>
 
 #include <mpw_stat.h>
+#include "FullPath.h"
 
 int stat(char *fileName,struct stat *statbuf)
 {
@@ -92,4 +93,38 @@ int fstat(int fd,struct stat *statbuf)
 //	ioctl(fd,FIOFNAME,(long *) buf);
 	return stat(buf,statbuf);
 }
+
+int mkdir_mac(const char *path){
+
+ char path1[300];
+ HFileParam		fpb;
+ Str255			ppath;
+ OSErr err;
+
+
+  if (path) {
+   if( strncmp("::",path,2) == 0  )
+    strcpy(path1,&path[1]);
+   else{  
+    if(path[0] != ':')
+     strcat(path1,":",path); 
+    else
+     strcpy(path1,path); 
+   }
+  
+   CopyCStringToPascal(path1, ppath);
+		
+   fpb.ioNamePtr = ppath;
+   fpb.ioVRefNum = 0;
+   fpb.ioDirID = 0L;
+   err = PBDirCreateSync((HParmBlkPtr)&fpb);
+  }
+  if(err = -48) /* dir exists */
+   err = 0;
+   
+  return(err);
+ 
+}
+
+
 
