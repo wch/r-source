@@ -459,6 +459,10 @@ BUG FIXES
     o	Internal ftp client could crash R under error conditions such
 	as failing to parse the URL.
 
+    o	Internal clipping code for circles could attempt to allocate
+	a vector of length -1 (related to PR#1174)
+
+
 
 
 	**************************************************
