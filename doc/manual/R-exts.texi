@@ -4288,12 +4288,12 @@ Note that @code{NA}s are not handled (explicitly) and you should
 use different sorting functions if NAs can be present.
 @end deftypefun
 
-@deftypefun integer qsort4 (double precision @var{v}, integer @var{indx}, integer@var{ii}, integer @var{jj})
-@deftypefunx integer qsort3 (double precision @var{v}, integer @var{ii}, integer@var{jj})
+@deftypefun subroutine qsort4 (double precision @var{v}, integer @var{indx}, integer@var{ii}, integer @var{jj})
+@deftypefunx subroutine qsort3 (double precision @var{v}, integer @var{ii}, integer@var{jj})
 
 The FORTRAN interface routines for sorting double precision vectors are
 @code{qsort3} and @code{qsort4}, equivalent to @code{R_qsort} and 
-@code{R_qsort_I} respectively (and always returning 0).
+@code{R_qsort_I} respectively.
 
 @end deftypefun
 

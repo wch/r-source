@@ -1,3 +1,21 @@
+/*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 2002   The R Development Core Team.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 /* **********************************************************************
  * === This was 'sort()' in  gamfit's  mysort.f  [or sortdi() in sortdi.f ] :
@@ -78,15 +96,14 @@ SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* ORIGINALLY: Fortran a() was double precision -- for scratch space convenience
  * ---> change and change in modreg's calling function!!
  */
-int F77_NAME(qsort4)(double *v, int *indx, int *ii, int *jj)
+void F77_SUB(qsort4)(double *v, int *indx, int *ii, int *jj)
 {
     R_qsort_I(v, indx, *ii, *jj);
-    return 0;
 }
-int F77_NAME(qsort3)(double *v, int *ii, int *jj)
+
+void F77_SUB(qsort3)(double *v, int *ii, int *jj)
 {
     R_qsort(v, *ii, *jj);
-    return 0;
 }
 
 
@@ -112,10 +129,3 @@ void R_qsort(double *v, int i, int j)
 void R_qsort_int(int *v, int i, int j)
 #include "qsort-body.c"
 #undef NUMERIC
-
-/* Local variables:
- * mode: c
- * kept-old-versions: 12
- * kept-new-versions: 20
- * End:
- */
