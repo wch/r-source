@@ -148,18 +148,21 @@ typedef struct {
     int curx, cury; /* start of current dash */
 } DashStruct;
 
+static int npieces;
+
 static void CALLBACK  gLineHelper(int x, int y, LPARAM aa)
 {
     DashStruct *a = (DashStruct *) aa;
     int distx, disty;
 
-    distx = x-(a->curx);
-    disty = y-(a->cury);
-    if (distx*distx+disty*disty >= (a->len2)) {
+    npieces++;
+    distx = x - (a->curx);
+    disty = y - (a->cury);
+    if (distx*distx + disty*disty >= (a->len2)) {
 	if (a->on) 
-	    LineTo(a->dc,x,y);
+	    LineTo(a->dc, x, y);
 	else 
-	    MoveToEx(a->dc,x,y,NULL);
+	    MoveToEx(a->dc, x, y, NULL);
 	a->curx = x;
 	a->cury = y;
 	a->len2 = 0;
@@ -218,16 +221,17 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
 	SetROP2(dc, R2_COPYPEN);	
 	a.on = 1;
 	a.dc = dc;
-	a.len2 =(style & 15)*width;
-	a.len2 = (a.len2)*(a.len2); 
+	a.len2 = (style & 15) * width;
+	a.len2 = (a.len2) * (a.len2); 
 	a.curseg = 0;
 	a.style = style;
 	a.width = width;
 	a.curx = p[0].x;
 	a.cury = p[0].y;
 	MoveToEx(dc, p[0].x, p[0].y, NULL);
+	npieces = 0;
 	BeginPath(dc);
-        for ( i = 1; i < n; i++) {
+        for (i = 1; i < n; i++) {
  	  LineDDA(p[i-1].x, p[i-1].y, p[i].x, p[i].y, gLineHelper, 
 		  (LPARAM) &a);
 	  if ((p[i].x != a.curx) || (p[i].y != a.cury)) {
@@ -236,9 +240,15 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
 	      tmpx = (a.curx-p[i].x);
 	      tmpy = (a.cury-p[i].y);
 	      tmp = tmpx*tmpx + tmpy*tmpy;
-	      a.len2 = a.len2+tmp-2*sqrt((double)(tmp*a.len2));
+	      a.len2 = a.len2 + tmp - 2*sqrt((double)(tmp*a.len2));
 	      a.curx = p[i].x;
 	      a.cury = p[i].y;
+	  }
+	  if(npieces > 5000) {
+	      EndPath(dc);
+	      StrokePath(dc);
+	      npieces = 0;
+	      BeginPath(dc);
 	  }
         }
         if (closepath) {
