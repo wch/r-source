@@ -10,7 +10,8 @@ typedef enum {
 typedef enum {
     WINDOW, /* NB: have "type > WINDOW" below ... */
     PNG,
-    JPEG
+    JPEG,
+    XIMAGE
 } X_GTYPE;
 
 Rboolean X11DeviceDriver(DevDesc*, char*, double, double, double, double, 

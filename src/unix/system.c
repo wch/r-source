@@ -169,6 +169,7 @@ int Rf_initialize_R(int ac, char **av)
     ptr_GTKDeviceDriver = stub_GTKDeviceDriver;
     ptr_X11DeviceDriver = stub_X11DeviceDriver;
     ptr_dataentry = stub_dataentry;
+    ptr_R_GetX11Image = stub_R_GetX11Image;
 #ifdef HAVE_X11
     if(useX11) {
 	if(!usegnome) {

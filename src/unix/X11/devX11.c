@@ -118,6 +118,7 @@ typedef struct {
 
 } x11Desc;
 
+
 	/********************************************************/
 	/* If there are resources that are shared by all devices*/
 	/* of this type, you may wish to make them globals	*/
@@ -1111,7 +1112,12 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
 	xd->fp = fp;
 	type = JPEG;
 	p = "";
-    } else type = WINDOW;
+    } else if (!strcmp(dsp, "XImage")) {
+	type = XIMAGE;
+	xd->fp = NULL;
+	p = "";
+    }
+    else type = WINDOW;
     xd->type = type;
 
     /* If there is no server connection, establish one and */
@@ -1466,7 +1472,7 @@ static void X11_Close(DevDesc *dd)
 	XDestroyWindow(display, xd->window);
 	XSync(display, 0);
     } else {
-	if (xd->npages) {
+	if (xd->npages && xd->type != XIMAGE) {
 	    int i;
 	    XImage *xi;
 	    for (i = 0; i < 512; i++) knowncols[i] = -1;
@@ -1483,7 +1489,7 @@ static void X11_Close(DevDesc *dd)
 	}
 	XFreeGC(display, xd->wgc);
 	XFreePixmap(display, xd->window);
-	fclose(xd->fp);
+	if (xd->type != XIMAGE && xd->fp != NULL) fclose(xd->fp);
     }
 
     numX11Devices--;
@@ -2043,4 +2049,26 @@ X11DeviceDriver(DevDesc *dd,
     R_ProcessEvents((void*) NULL);
 
     return TRUE;
+}
+
+Rboolean R_GetX11Image(int d, XImage **pximage, int *pwidth, int *pheight)
+{
+    SEXP dev = elt(findVar(install(".Devices"), R_NilValue), d);
+
+    if (TYPEOF(dev) != STRSXP ||
+	!(strcmp(CHAR(STRING_ELT(dev, 0)), "XImage") == 0 ||
+	  strncmp(CHAR(STRING_ELT(dev, 0)), "PNG", 3) == 0 ||
+	  strncmp(CHAR(STRING_ELT(dev, 0)), "X11", 3) == 0))
+	return FALSE;
+    else {
+	DevDesc *dd = GetDevice(d);
+	x11Desc *xd = (x11Desc *) dd->deviceSpecific;
+
+	*pximage = XGetImage(display, xd->window, 0, 0, 
+			     xd->windowWidth, xd->windowHeight, 
+			     AllPlanes, ZPixmap);
+	*pwidth = xd->windowWidth;
+	*pheight = xd->windowHeight;
+	return TRUE;
+    }
 }

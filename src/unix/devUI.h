@@ -10,6 +10,7 @@
 extern Rboolean (*ptr_X11DeviceDriver)(DevDesc*, char*, 
 				       double, double, double, double,
 				       X_COLORTYPE, int);
+extern Rboolean (*ptr_R_GetX11Image)(int, void *, int *, int *);
 extern Rboolean (*ptr_GnomeDeviceDriver)(DevDesc*, char*, double, double, double);
 
 extern Rboolean (*ptr_GTKDeviceDriver)(DevDesc*, char*, double, double, double);
@@ -37,6 +38,7 @@ extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 
 Rboolean stub_X11DeviceDriver(DevDesc*, char*, double, double, double, double, 
 			      X_COLORTYPE, int);
+Rboolean stub_R_GetX11Image(int, void *, int *, int *);
 Rboolean stub_GnomeDeviceDriver(DevDesc*, char*, double, double, double);
 
 Rboolean stub_GTKDeviceDriver(DevDesc*, char*, double, double, double);

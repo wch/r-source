@@ -451,7 +451,7 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 #include <sys/types.h>
 #include <sys/stat.h>
 
-extern DL_FUNC ptr_X11DeviceDriver, ptr_dataentry, 
+extern DL_FUNC ptr_X11DeviceDriver, ptr_dataentry, ptr_R_GetX11Image,
     ptr_R_loadhistory, ptr_R_savehistory;
 
 void R_load_X11_shlib(void)
@@ -484,6 +484,8 @@ void R_load_X11_shlib(void)
     if(!ptr_X11DeviceDriver) R_Suicide("Cannot load X11DeviceDriver");
     ptr_dataentry = R_dlsym(handle, "RX11_dataentry");
     if(!ptr_dataentry) R_Suicide("Cannot load do_dataentry");
+    ptr_R_GetX11Image = R_dlsym(handle, "R_GetX11Image");
+    if(!ptr_R_GetX11Image) R_Suicide("Cannot load R_GetX11Image");
 }
 
 extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
