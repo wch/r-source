@@ -1388,7 +1388,15 @@ void setVar(SEXP symbol, SEXP value, SEXP rho)
     SEXP vl;
     while (rho != R_NilValue) {
 	R_DirtyImage = 1;
+#ifdef EXPERIMENTAL_NAMESPACES
+        if (rho == R_BaseNamespace && SYMVALUE(symbol) == R_UnboundValue)
+	    /* do not assign into base unless variable binding exists */
+	    vl = R_NilValue;
+	else
+	    vl = setVarInFrame(rho, symbol, value);
+#else
 	vl = setVarInFrame(rho, symbol, value);
+#endif
 	if (vl != R_NilValue) {
 	    return;
 	}
