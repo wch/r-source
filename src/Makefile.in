@@ -15,14 +15,15 @@ DISTFILES = Makefile.in
 
 SUBDIRS = include appl nmath unix main scripts library
 
-TARGETS = all install install-strip uninstall mostlyclean clean \
-	TAGS info dvi dist check R docs
+all install install-strip TAGS info dvi dist check R docs::
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@) || exit 1; \
+	done
 
-$(TARGETS)::
-	@for d in $(SUBDIRS); do (cd $$d && $(MAKE) $@); done
-
+uninstall mostlyclean clean::
+	@for d in $(SUBDIRS); do (cd $${d} && $(MAKE) $@); done
 distclean:
-	@for d in $(SUBDIRS); do (cd $$d && $(MAKE) $@); done
+	@for d in $(SUBDIRS); do (cd $${d} && $(MAKE) $@); done
 	@rm -f Makefile
 maintainer-clean: distclean
 

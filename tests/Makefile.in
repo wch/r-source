@@ -36,10 +36,10 @@ TESTout = $(TESTsrc:.R=.Rout)
 test-All: test-Examples $(TESTout)
 
 test-Examples:
-	-(cd $(Ex); $(MAKE) $@)
+	@cd $(Ex) && $(MAKE) $@
 
 $(top_builddir)/stamp-R:
-	-(cd $(top_builddir) && $(MAKE) R)
+	@cd $(top_builddir) && $(MAKE) R
 
 mostlyclean: clean
 clean:
