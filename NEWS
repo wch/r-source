@@ -33,6 +33,9 @@ BUG FIXES
     o	all.equal(3., 3:3) wasn't TRUE when the methods package was
 	present.
 
+    o	read.table() could remap non-syntactic names to duplicates,
+	and did not check for duplicated names.
+
 
 
 		CHANGES IN R VERSION 1.5.1

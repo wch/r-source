@@ -108,7 +108,7 @@ read.table <-
     if(cols == 0) stop("first five rows are empty: giving up")
 
 
-    if(check.names) col.names <- make.names(col.names)
+    if(check.names) col.names <- make.names(col.names, unique = TRUE)
     if (rlabp) col.names <- c("row.names", col.names)
 
     if(length(colClasses) < cols) colClasses <- rep(colClasses, len=cols)

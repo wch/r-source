@@ -108,7 +108,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \item{check.names}{logical.  If \code{TRUE} then the names of the
     variables in the data frame are checked to ensure that they are
     syntactically valid variable names.  If necessary they are adjusted
-    (by \code{\link{make.names}}) so that they are.}
+    (by \code{\link{make.names}}) so that they are, and also to ensure
+    that there are no duplicates.}
 
   \item{fill}{logical. If \code{TRUE} then in case the rows have unequal
     length, blank fields are implicitly added.  See Details.}
