@@ -24,7 +24,7 @@ par(\dots, no.readonly = FALSE)
   which are \emph{readonly}.
 
   \emph{\bold{R.O.}} Arguments := \bold{Read-only arguments}:
-  These may only be used in queries, i.e.,  they do \emph{not} set anything.
+  These may only be used in queries, i.e., they do \emph{not} set anything.
 
   All but these \emph{\bold{R.O.}} and the following \bold{low-level
     arguments} can be set as well in high-level and mid-level plot
@@ -91,15 +91,15 @@ par(\dots, no.readonly = FALSE)
     should be rotated.  It is unwise to expect values other than
     multiples of 90 to work.  Compare with \code{srt} which does string
     rotation.}
-  \item{csi}{\emph{\bold{R.O.}}. The height of (default sized)
-      characters in inches.}
+  \item{csi}{\emph{\bold{R.O.}}; height of (default sized) characters in
+    inches.}
   \item{cxy}{\emph{\bold{R.O.}}; size of default character
     \code{(width,height)} in user coordinate units.
     \code{par("cxy")} is \code{par("cin")/par("pin")} scaled to user
     coordinates.
     Note that \code{c(\link{strwidth}(ch),\link{strheight}(ch))} for a
     given string \code{ch} is usually much more precise.}
-  \item{din}{\emph{\bold{R.O.}}. The device dimensions in inches.}
+  \item{din}{\emph{\bold{R.O.}}; the device dimensions in inches.}
   \item{err}{(\emph{Unimplemented}; \R is silent when
     points outside the plot region are \emph{not} plotted.)
     The degree of error reporting desired.}
@@ -218,7 +218,11 @@ par(\dots, no.readonly = FALSE)
   \item{type}{character;  the default plot type desired, see
     \code{\link{plot.default}(type=\dots)}, defaulting to \code{"p"}.}
   \item{usr}{A vector of the form \code{c(x1, x2, y1, y2)} giving the
-    extremes of the user coordinates of the plotting region.}
+    extremes of the user coordinates of the plotting region.  When a
+    logarithmic scale is in use (i.e. \code{par("xlog")} is true, see
+    below), then the x-limits will be \code{10 ^ par("usr")[1:2]}.
+    Similarly for the y-axis. 
+  }
   \item{xaxp}{A vector of the form \code{c(x1, x2, n)} giving the
     coordinates of the extreme tick marks and the number of intervals
     between tick-marks.}
@@ -242,10 +246,10 @@ par(\dots, no.readonly = FALSE)
     plotted. The standard value is \code{"s"}: for compatibility with S
     values \code{"l"} and \code{"e"} are accepted but are equivalent
     to \code{"s"}.}
-  \item{xlog}{\emph{\bold{R.O.}}.  A logical value (see \code{log} in
-    \code{\link{plot.default}}).
-    If \code{TRUE} a logarithmic scale is in use. For a new device, it
-    defaults to \code{FALSE}, i.e., linear scale.}
+  \item{xlog}{\emph{\bold{R.O.}}; logical value (see \code{log} in
+    \code{\link{plot.default}}).  If \code{TRUE}, a logarithmic scale is
+    in use (e.g. after \code{plot(*, log = "x")}.  For a new device, it
+    defaults to \code{FALSE}, i.e., linear scale.} 
   \item{xpd}{A logical value or NA.
     If \code{FALSE}, all plotting is clipped to the plot region, if
     \code{TRUE}, all plotting is clipped to the figure region, and if
@@ -257,8 +261,7 @@ par(\dots, no.readonly = FALSE)
     calculation to be used for the y-axis. See \code{xaxs} above.}
   \item{yaxt}{A character which specifies the axis type.
     Specifying \code{"n"} causes an axis to be set up, but not plotted.}
-  \item{ylog}{\emph{\bold{R.O.}}.  A logical value (see \code{log} in
-    \code{\link{plot.default}}).  See \code{xlog} above.}
+  \item{ylog}{\emph{\bold{R.O.}}; a logical value; see \code{xlog} above.}
 }
 
 \value{
