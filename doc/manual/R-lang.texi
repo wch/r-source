@@ -1685,7 +1685,7 @@ last is the base package.  An @code{Autoloads} environment is used for
 holding proxy objects that may be loaded on demand.  Other environments
 are inserted in the path using @code{attach} or @code{library}.
 
-@node Evaluation of calls, Functions, Evaluation of expressions, Top
+@c @node Evaluation of calls, Functions, Evaluation of expressions, Top
 @c  @section Accessing and manipulating environments
 
 @c  @menu
