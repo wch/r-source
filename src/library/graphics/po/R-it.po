@@ -16,17 +16,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#, fuzzy
 msgid "'x' must be a 2-d contingency table"
-msgstr "x deve essere una tabella di contigenza a 2 vie"
+msgstr "'x' deve essere una tabella di contigenza a 2 vie"
 
-#, fuzzy
 msgid "all entries of 'x' must be nonnegative and finite"
-msgstr "tutti i termini di x devono essere non negativi e finiti"
+msgstr "tutti i termini di 'x' devono essere non negativi e finiti"
 
-#, fuzzy
 msgid "at least one entry of 'x' must be positive"
-msgstr "almeno un termine di x deve essere positivo"
+msgstr "almeno un termine di 'x' deve essere positivo"
 
 msgid "incorrect 'col': must be length 2"
 msgstr ""
@@ -40,9 +37,8 @@ msgstr "'axp' non valido"
 msgid "invalid 'log'"
 msgstr "'log' non valido"
 
-#, fuzzy
 msgid "invalid positive 'axp[3]'"
-msgstr "valore positivo axp[3] non valido"
+msgstr "valore positivo 'axp[3]' non valido"
 
 msgid "invalid 'usr'"
 msgstr "'usr' non valido"
@@ -56,9 +52,8 @@ msgstr "numero di nomi non corretto"
 msgid "invalid first argument"
 msgstr "primo argomento non valido"
 
-#, fuzzy
 msgid "'formula' missing or incorrect"
-msgstr "formula mancante o sbagliata"
+msgstr "'formula' mancante o sbagliata"
 
 msgid "'coef' must not be negative"
 msgstr "'coef' deve essere non negativo"
@@ -72,9 +67,8 @@ msgstr "larghezza boxplot non valida"
 msgid "no 'z' matrix specified"
 msgstr "la matrice 'z' non è stata specificata"
 
-#, fuzzy
 msgid "increasing 'x' and 'y' values expected"
-msgstr "i valori di x e y devono essere crescenti"
+msgstr "i valori di 'x' e 'y' devono essere crescenti"
 
 msgid "no proper 'z' matrix specified"
 msgstr "nessuna matrice 'z' opportuna specificata"
@@ -85,17 +79,14 @@ msgstr "formula di condizionamento non valida"
 msgid "incompatible variable lengths"
 msgstr "lunghezza delle variabili incompatibile"
 
-#, fuzzy
 msgid "'number' must be integer >= 1"
-msgstr "number deve essere un intero >= 1"
+msgstr "'number' deve essere un intero >= 1"
 
-#, fuzzy
 msgid "'overlap' must be < 1 (and typically >= 0)."
-msgstr "overlpa deve essere < 1 (e solitamente >= 0)."
+msgstr "'overlap' deve essere < 1 (e solitamente >= 0)."
 
-#, fuzzy
 msgid "invalid 'given.values'"
-msgstr "given.values non valido"
+msgstr "'given.values' non valido"
 
 msgid "rows * columns too small"
 msgstr "righe * colonne troppo piccolo"
@@ -106,9 +97,8 @@ msgstr "Righe mancanti"
 msgid "'expr' must be a function or an expression containing 'x'"
 msgstr "'expr' deve essere una funzione o un'espressione contenent 'x'"
 
-#, fuzzy
 msgid "'from' and 'to' must be > 0 with log=\"x\""
-msgstr "'from' e 'to' devono esser >0\t con log=\"x\""
+msgstr "'from' e 'to' devono esser >0 con log=\"x\""
 
 msgid "wrong method"
 msgstr "metodo errato"
@@ -116,24 +106,20 @@ msgstr "metodo errato"
 msgid "invalid specification of 'breaks'"
 msgstr "specificazine di 'breaks' non valida"
 
-#, fuzzy
 msgid "'x' must be an array"
-msgstr "x deve essere un array"
+msgstr "'x' deve essere un array"
 
-#, fuzzy
 msgid "'x' must be 2- or 3-dimensional"
-msgstr "x deve essere bi o tri-dimensionale"
+msgstr "'x' deve essere bi o tri-dimensionale"
 
 msgid "table for each stratum must be 2 by 2"
 msgstr "la table di ogni strato deve essere 2 per 2"
 
-#, fuzzy
 msgid "'conf.level' must be a single number between 0 and 1"
-msgstr "conf.level deve essere un singolo numero tra 0 e 1"
+msgstr "'conf.level' deve essere un singolo numero tra 0 e 1"
 
-#, fuzzy
 msgid "incorrect 'margin' specification"
-msgstr "marginali non correttamente specificate"
+msgstr "'margin' non correttamente specificate"
 
 msgid "incorrect geometry specification"
 msgstr "geometry non specificato correttamente"
@@ -147,13 +133,11 @@ msgstr "'nclass' non viene usata quando viene specificato 'breaks'"
 msgid "'include.lowest' ignored as 'breaks' is not a vector"
 msgstr "'include.lowest' ignorato poiché 'breaks' non è un vettore"
 
-#, fuzzy
 msgid "unknown 'breaks' algorithm"
 msgstr "algoritmo per 'breaks' sconosciuto"
 
-#, fuzzy
 msgid "invalid number of 'breaks'"
-msgstr "numero di breask non valido"
+msgstr "numero di 'breaks' non valido"
 
 msgid "hist.default: pretty() error, breaks="
 msgstr "hist.default: errore in pretty(), breaks="
@@ -178,7 +162,6 @@ msgstr "le AREE nel grafico sono sbagliate -- usare piuttosto freq=FALSE"
 msgid "'x' is wrongly structured"
 msgstr "'x' è strutturata in modo errato"
 
-#, fuzzy
 msgid "argument must be matrix-like"
 msgstr "l'argomento deve essere una matrice o simile"
 
@@ -214,9 +197,8 @@ msgstr "'title' non valido"
 msgid "invalid coordinate lengths"
 msgstr "lunghezza delle coordinate non valida"
 
-#, fuzzy
 msgid "'text.width' must be numeric, >= 0"
-msgstr "text.width deve essere numeric, >= 0"
+msgstr "'text.width' deve essere numeric, >= 0"
 
 msgid "horizontal specification overrides: Number of columns :="
 msgstr "la specificazione orizzontale eccede: Numero di colonne :="
@@ -224,9 +206,8 @@ msgstr "la specificazione orizzontale eccede: Numero di colonne :="
 msgid "not using pch[2..] since pch[1] has multiple chars"
 msgstr "non uso pch[2..] poiché pch[1] contiene più caratteri"
 
-#, fuzzy
 msgid "must specify at least one of 'x' and 'y'"
-msgstr "Si deve specificare almeno uno tra 'x' e 'y'"
+msgstr "si deve specificare almeno uno tra 'x' e 'y'"
 
 msgid "'x' and 'y' must have same number of rows"
 msgstr "'x' ed 'y' devono avere lo stesso numero di righe"
@@ -240,50 +221,42 @@ msgstr "valori mancanti nella tabella di contingenza"
 msgid "'x' must not have 0 dimensionality"
 msgstr "'x' non deve avere dimensione 0"
 
-#, fuzzy
 msgid "extra argument(s) %s will be disregarded"
-msgstr "non verrà considerato"
+msgstr ""
 
-#, fuzzy
 msgid "invalid 'shade' specification"
-msgstr "specificazione di shade non valida"
+msgstr "specificazione di 'shade' non valida"
 
 #, fuzzy
 msgid "length of 'sort' does not conform to 'dim(x)'"
 msgstr "length(sort) non conforme a dim(x)"
 
-#, fuzzy
 msgid "non-numeric argument to 'pairs'"
-msgstr "argomento non numerico a pairs"
+msgstr "argomento non numerico a 'pairs'"
 
-#, fuzzy
 msgid "only one column in the argument to 'pairs'"
-msgstr "solo una colonna come argomento di pairs"
+msgstr "solo una colonna come argomento di 'pairs'"
 
-#, fuzzy
 msgid "the 'panel' function made a new plot"
-msgstr "La funzione panel ha generato un nuovo grafico"
+msgstr "La funzione 'panel' ha generato un nuovo grafico"
 
 msgid "'x' values must be positive."
 msgstr "i valori di 'x' devono essere positiv"
 
-#, fuzzy
 msgid "'x' and 'y' lengths differ"
-msgstr "le lunghezze di x e y differiscono"
+msgstr "le lunghezze di 'x' e 'y' differiscono"
 
 msgid "invalid table 'x'"
 msgstr "table 'x' non valida"
 
-#, fuzzy
 msgid "cannot handle more than one 'x' coordinate"
-msgstr "non possono lavorare con piu' di una coordinata x"
+msgstr "non possono lavorare con piu' di una coordinata 'x'"
 
 msgid "must have a response variable"
 msgstr "deve avere una variabile risposta"
 
-#, fuzzy
 msgid "'plot.data.frame' applied to non data frame"
-msgstr "plot.data.frame applicato a un non data frame"
+msgstr "'plot.data.frame' applicato a un non data frame"
 
 msgid "'y' must be a numeric vector"
 msgstr "'y' deve essere un vettore numerico"
@@ -297,13 +270,11 @@ msgstr "tutte le colonne/componenti di 'x' devono essere di tipo factor"
 msgid "some levels of the factors are empty"
 msgstr "alcuni livelli dei factor sono vuoti"
 
-#, fuzzy
 msgid "'x' must be a dataframe or a formula"
-msgstr "x deve essere un data frame o una formula"
+msgstr "'x' deve essere un data frame o una formula"
 
-#, fuzzy
 msgid "a variable in 'y' is not numeric"
-msgstr "una variabile in y non è numerica"
+msgstr "una variabile in 'y' non è numerica"
 
 msgid "there must be at least one numeric variable!"
 msgstr "ci deve essere almeno una variabile numerica!"
@@ -320,35 +291,29 @@ msgstr "alcuni valori saranno tagliati"
 msgid "invalid screen number"
 msgstr "numero schermo non valido"
 
-#, fuzzy
 msgid "'figs' must be a vector or a matrix with 4 columns"
-msgstr "figs deve essere un vettore o una matrice con 4 colonne"
+msgstr "'figs' deve essere un vettore o una matrice con 4 colonne"
 
-#, fuzzy
 msgid "'figs' must specify at least one screen"
-msgstr "figs deve specificare almeno uno schermo"
+msgstr "'figs' deve specificare almeno uno schermo"
 
-#, fuzzy
 msgid "'x' must be a matrix or a data frame"
-msgstr "x deve essere una matrice o un data frame"
+msgstr "'x' deve essere una matrice o un data frame"
 
-#, fuzzy
 msgid "data in 'x' must be numeric"
-msgstr "i dati in x devoo essere numeric"
+msgstr "i dati in 'x' devoo essere numeric"
 
 msgid "nrow * ncol <  number of observations"
-msgstr "norw * ncol < numero delle osservazioni"
+msgstr "nrow * ncol < numero delle osservazioni"
 
 msgid "labels do not make sense for a single location"
 msgstr "non ha senso specificare 'labels' per una singola 'location'"
 
-#, fuzzy
 msgid "'locations' must be a 2-column matrix."
-msgstr "location deve essere una matrice di 2 colonne"
+msgstr "'locations' deve essere una matrice di 2 colonne"
 
-#, fuzzy
 msgid "number of rows of 'locations' and 'x' must be equal."
-msgstr "il numero di righe in locations e x deve essere uguale"
+msgstr "il numero di righe in 'locations' e 'x' deve essere uguale"
 
 #, fuzzy
 msgid "length of 'angles' must equal 'ncol(x)'"
@@ -357,9 +322,8 @@ msgstr "length(angles) deve essere pari a ncol(x)"
 msgid "no non-missing values"
 msgstr "nessun valore non missing"
 
-#, fuzzy
 msgid "'scale' must be positive"
-msgstr "scale deve essere positivo"
+msgstr "'scale' deve essere positivo"
 
 msgid "invalid plotting method"
 msgstr "metodo di disegno non valido"
@@ -368,9 +332,8 @@ msgstr "metodo di disegno non valido"
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at' deve avere lunghezza = no{groups}, ovvero"
 
-#, fuzzy
 msgid "'number' must have same length as 'x' and 'y'"
-msgstr "number deve avere la stessa lunghezza di x e y"
+msgstr "'number' deve avere la stessa lunghezza di 'x' e 'y'"
 
 msgid "exactly one symbol type must be specified"
 msgstr "esattamente un tipo di symbol deve essere specificato"
@@ -390,53 +353,25 @@ msgstr "primo argomento non valido [oggetto sbagliato]"
 msgid "at least 2 columns needed"
 msgstr "necessarie almeno 2 colonne"
 
-#, fuzzy
 msgid "'x', 'y' and 'z' lengths differ"
-msgstr "le lunghezze di x, y e z differiscono"
+msgstr "le lunghezze di 'x', 'y' e 'z' differiscono"
 
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"
 msgstr[0] "Dato anomale (%s) nel boxplot %d non disegnato"
 msgstr[1] "Dati anomali (%s) nel boxplot %d non disegnati"
 
-#, fuzzy
 msgid "%d x value <= 0 omitted from logarithmic plot"
 msgid_plural "%d x values <= 0 omitted from logarithmic plot"
-msgstr[0] "omesso un valore di x <= 0 dal grafico su scala logaritmica"
+msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
 msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
 
-#, fuzzy
 msgid "%d y value <= 0 omitted from logarithmic plot"
 msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-msgstr[0] "omesso un valore di y <= 0 dal grafico su scala logaritmica"
+msgstr[0] "omesso %d valore di y <= 0 dal grafico su scala logaritmica"
 msgstr[1] "omessi %d valori di y <= 0 dal grafico su scala logaritmica"
 
-#, fuzzy
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-msgstr[0] "omesso un valore di x <= 0 dal grafico su scala logaritmica"
+msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
 msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
-
-#~ msgid "incorrect color specification"
-#~ msgstr "specificazione colore non corretta"
-
-#~ msgid "extra argument(s)"
-#~ msgstr "argomenti in eccesso"
-
-#~ msgid ","
-#~ msgstr ","
-
-#~ msgid "x must be numeric"
-#~ msgstr "x deve essere numeric"
-
-#~ msgid "x value"
-#~ msgstr "valore x"
-
-#~ msgid "s"
-#~ msgstr "s"
-
-#~ msgid "y value"
-#~ msgstr "valore y"
-
-#~ msgid "z value"
-#~ msgstr "valore z"
