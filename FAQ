@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.65-12, 1999/11/15
+Version 0.90-1, 1999/11/16
 Kurt Hornik
 
 
@@ -198,8 +198,8 @@ distribution for more information.
 2.3 What is the current version of R?
 =====================================
 
-   The current stable Unix/Windows version is 0.65.1, the unstable one is
-0.90.0.  Typically, new features are introduced in the development
+   The current stable Unix/Windows version is 0.90.0, the unstable one is
+0.99.0.  Typically, new features are introduced in the development
 versions; updates of stable versions are for bug fixes mostly.  The version
 for the Mac is pre-alpha.
 
@@ -913,6 +913,12 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
      components, canonical correlations, metric multidimensional scaling,
      and hierarchical and k-means clustering.
 
+*nls*
+     Nonlinear regression routines.
+
+*splines*
+     Regression spline functions and classes.
+
 *stepfun*
      Code for dealing with step functions, including empirical cumulative
      distribution functions.
@@ -1059,9 +1065,6 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
      Functions for hierarchical clustering, partitioning, bond energy
      algorithm, Sammon mapping, PCA and correspondence analysis.
 
-*nls*
-     Nonlinear regression routines for R.
-
 *nnet*
      Software for single hidden layer perceptrons ("feed-forward neural
      networks"), and for multinomial log-linear models.  Contained in `VR'.
@@ -1114,11 +1117,6 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
      Functions for kriging and point pattern analysis from "Modern Applied
      Statistics with S-PLUS" by W. Venables and B. Ripley.  Contained in
      `VR'.
-
-*splines*
-     Functions and classes for defining B-spline representations or
-     polynomial spline representations of regression splines or
-     interpolation splines.
 
 *stable*
      Density, distribution, quantile and hazard functions of a stable
