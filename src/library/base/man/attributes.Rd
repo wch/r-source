@@ -16,7 +16,11 @@ side of the assignment, the object's attribute list.
 \code{\link{attr}}.
 }
 \examples{
-# strip an objects attributes
+x <- cbind(a=1:3, pi=pi) # simple matrix w/ dimnames
+attributes(x)
+
+# strip an objects attributes:
 attributes(x) <- NULL
+x # now just a vector of length 6
 }
 \keyword{attribute}
