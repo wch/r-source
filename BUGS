@@ -755,10 +755,6 @@ Date: Mon, 21 Apr 2003 17:01:53 -0400
 Subject: optim with constraints 
 From: aa@tango.stat.unipd.it (Adelchi Azzalini)
 Date: Mon, 23 Jun 2003 17:51:19 +0200 (CEST)
-* PR# 3424 *
-Subject: feature enhancement request & patch:  dev.control(displaylist='en
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Mon, 7 Jul 2003 13:49:48 -0400 
 * PR# 3486 *
 Subject: The two chisq.test p values differ when the contingency table is transposed!
 From: shitao@ucla.edu
@@ -771,7 +767,11 @@ Date: Wed, 6 Aug 2003 15:41:16 -0700
 Subject: segmentation fault: formula() with long variable names
 From: Jerome Asselin <jerome@hivnet.ubc.ca>
 Date: Thu, 7 Aug 2003 11:32:17 -0700
-* PR# 3681 *
-Subject: Editors' Choice Award
-From: a_todd2@dell.com
-Date: Fri, 8 Aug 2003 04:54:33 +0900
+* PR# 3690 *
+Subject: Wish
+From: a.buness@dkfz.de
+Date: Fri, 8 Aug 2003 15:50:27 +0200 (MET DST)
+* PR# 3694 *
+Subject: Re: .. heh
+From: beldridge@yahoo.com
+Date: Fri, 8 Aug 2003 16:46:06 -0700
