@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-16
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-17
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -476,10 +476,6 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 
 @c Linux binaries as of 2004-10-17:
 @c
-@c debian
-@c   woody   i386   1.8.0  Dirk Eddelbuettel <edd@debian.org>
-@c   sarge   i386   1.8.1  Dirk Eddelbuettel <edd@debian.org>
-@c   sid     i386   1.8.1  Dirk Eddelbuettel <edd@debian.org>
 @c mandrake
 @c   10.0    i386   2.0.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat
@@ -488,29 +484,33 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   Fedora1 i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
 @c           x86_64 1.8.1  James Henstridge <james@daa.com.au>
 @c   Fedora2 i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
+@c   Fedora3 i386   2.0.1  Martyn Plummer <plummer@iarc.fr>
 @c suse
 @c   7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   8.0     i386   1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   8.1     i386   1.9.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   8.2     i386   2.0.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   9.0     i586   2.0.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   9.1     i586   2.0.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c   9.1     i586   2.0.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c   9.2     i586   2.0.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c vinelinux
-@c   3.0     i386   2.0.0  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
+@c   3.0     i386   2.0.1  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains
 @c Debian stable/testing/unstable packages for the i386 platform (now part
 @c of the Debian distribution and maintained by Dirk Eddelbuettel),
 Mandrake 9.1/9.2/10.0 i386 packages by Michele Alzetta, Red Hat
-8.x/9/Fedora1/Fedora2 i386 and Fedora1 x86_64 packages by Martyn Plummer
-and James Henstridge, respectively, SuSE 7.3/8.0/8.1/8.2 i386 and
-9.0/9.1 i586 packages by Detlef Steuer, and VineLinux 2.6 i386 packages
-by Susunu Tanimura.
+8.x/9/Fedora1/Fedora2/Fedora3 i386 and Fedora1 x86_64 packages by Martyn
+Plummer and James Henstridge, respectively, SuSE 7.3/8.0/8.1/8.2 i386
+and 9.0/9.1/9.2 i586 packages by Detlef Steuer, and VineLinux 2.6 i386
+packages by Susunu Tanimura.
 
 Debian packages, maintained by Dirk Eddelbuettel, have long been part of
 the Debian distribution, and can be accessed through APT, the Debian
-package maintenance tool.  Use e.g.@:  @command{apt-get} to install the
-packages @code{r-base-dev} and @code{r-recommended}.
+package maintenance tool.  Use e.g.@: @code{apt-get install r-base
+r-recommended} to install the R environment and recommended packages.
+If you also want to build R packages from source, also run @code{apt-get
+install r-base-dev} to obtain the additional tools required for this.
 
 @c Simply add the line
 
