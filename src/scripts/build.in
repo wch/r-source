@@ -397,7 +397,7 @@ sub prepare_pkg {
 	    if(-r "Makefile") {
 		R_system("${R::Vars::MAKE} -f Makefile clean");
 	    } else {
-		foreach my $file (<*.o *s[lo]>) {
+		foreach my $file (<*.o *.s[lo] .dylib>) {
 		    unlink($file);
 		}
 		rmtree(".libs") if (-d ".libs");
