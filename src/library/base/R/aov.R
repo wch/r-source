@@ -85,8 +85,9 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
   else cat("Estimated effects are balanced\n")
   invisible(x)
 }
-summary.aov <-
-function(object, intercept = FALSE, keep.zero.df = TRUE, ...)
+
+summary.aov <- function(object, intercept = FALSE, keep.zero.df = TRUE,
+                        signif.stars= .Options$show.signif.stars, ...)
 {
   asgn <- object$assign
   nterms <- max(asgn)+1
@@ -106,8 +107,7 @@ function(object, intercept = FALSE, keep.zero.df = TRUE, ...)
     df <- ss <- numeric(nterms)
     nmrows <- character(nterms)
     for(i in 1:nterms) {
-      ai <- asgn==(i-1)
-      ai <- !is.na(object$coef) & ai
+      ai <- (asgn == i-1) & !is.na(object$coef)
       df[i] <- sum(ai)
       ss[i] <- sum(effects[ai]^2)
       nmrows[i] <- nmeffect[i]
@@ -133,6 +133,11 @@ function(object, intercept = FALSE, keep.zero.df = TRUE, ...)
     TT[nterms] <- TP[nterms] <- NA
     x$"F Value" <- TT
     x$"Pr(F)" <- TP
+    if(signif.stars)
+      x$Signif <- c(symnum(TP[ - nterms], corr = FALSE,
+                           cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1),
+                           symbols = c("***", "**", "*", ".", " ")),
+                    "") ## 'nterms' ~= 'Residuals' have no P-value
   }
   class(x) <- c("anova", "data.frame")
   row.names(x) <- format(nmrows)
