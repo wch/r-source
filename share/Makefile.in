@@ -38,8 +38,9 @@ install: install-message installdirs install-sources
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/share
 	@$(MKINSTALLDIRS) $(rhome)/share/perl
-	@$(MKINSTALLDIRS) $(rhome)/share/perl/R
-	@$(MKINSTALLDIRS) $(rhome)/share/perl/Text 
+	@for d in $(SUBDIRS_PERL); do \
+	  $(MKINSTALLDIRS) $(rhome)/share/perl/$${d}; \
+	done
 
 install-message:
 	@echo "installing share ..."
