@@ -501,19 +501,21 @@ function(chname, package = NULL, lib.loc = NULL,
         if(file.exists(file)) break else file <- ""
     }
     if(file == "")
-        stop(sprintf("shared library '%s' not found", chname))
+        stop(gettextf("shared library '%s' not found", chname),
+             domain = NA)
     ind <- sapply(dll_list, function(x) x$path == file)
     if(any(ind)) {
         if(verbose)
-            cat(gettext(sprintf("shared library '%s' already loaded",
-                                chname)), "\n")
-        return(dll_list[[ seq(along = dll_list)[ind] ]])
+            message(gettextf("shared library '%s' already loaded",
+                             chname),
+                    domain = NA)
+        return(invisible(dll_list[[ seq(along = dll_list)[ind] ]]))
     }
     if(verbose)
-        cat(gettext(sprintf("now dyn.load(\"%s\") ...", file)), "\n")
+        message(gettextf("now dyn.load(\"%s\") ...", file), domain = NA)
     dll <- dyn.load(file, ...)
     .dynLibs(c(dll_list, list(dll)))
-    dll
+    invisible(dll)
 }
         
 library.dynam.unload <-
@@ -537,18 +539,18 @@ function(chname, libpath, verbose = getOption("verbose"),
                       paste(chname, file.ext, sep = ""))
     pos <- which(sapply(dll_list, function(x) x$path == file))
     if(!length(pos))
-        stop(sprintf("shared library '%s' was not loaded", chname))
+        stop(gettextf("shared library '%s' was not loaded", chname),
+             domain = NA)
     
     if(!file.exists(file))
-        stop(sprintf("shared library '%s' not found", chname))
+        stop(gettextf("shared library '%s' not found", chname),
+             domain = NA)
     if(verbose)
-        cat(gettext(sprintf("now dyn.unload(\"%s\") ...", file)), "\n")
+        message(gettextf("now dyn.unload(\"%s\") ...", file),
+                domain = NA)
     dyn.unload(file)
     .dynLibs(dll_list[-pos])
-    ## <FIXME>
-    ## What should this really return?
     invisible(dll_list[[pos]])
-    ## </FIXME>
 }
     
 require <-
