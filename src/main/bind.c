@@ -427,8 +427,8 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
     case LISTSXP:
 	for (i = 0; i < n; i++) {
 	    namei = ItemName(names, i);
-	    if (recurse || !(isList(VECTOR(v)[i]) || 
-			     TYPEOF(VECTOR(v)[i]) == VECSXP) ) {
+	    if (recurse /* || !(isList(VECTOR(v)[i]) || 
+			     isNewList(VECTOR(v)[i])) */ ) {
 		NewExtractNames(CAR(v), base, namei, recurse);
 	    }
 	    else {
@@ -445,8 +445,8 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse)
     case EXPRSXP:
 	for (i = 0; i < n; i++) {
 	    namei = ItemName(names, i);
-	    if (recurse || !(isList(VECTOR(v)[i]) || 
-			     TYPEOF(VECTOR(v)[i]) == VECSXP) )
+	    if (recurse /* || !(isList(VECTOR(v)[i]) || 
+			     isNewList(VECTOR(v)[i])) */ )
 	    {
 		NewExtractNames(VECTOR(v)[i], base, namei, recurse);
 	    }
