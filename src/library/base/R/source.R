@@ -3,8 +3,8 @@ source <-
 	    verbose = getOption("verbose"), prompt.echo = getOption("prompt"),
 	    max.deparse.length = 150, chdir = FALSE)
 {
-    if(!(is.character(file) && file.exists(file)))
-	stop(paste('"',file,'" is not an existing file', sep=""))
+##-     if(!(is.character(file) && file.exists(file)))
+##- 	stop(paste('"',file,'" is not an existing file', sep=""))
     eval.with.vis <-
 	function (expr, envir = parent.frame(),
 		  enclos = if (is.list(envir) || is.pairlist(envir))
