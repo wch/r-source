@@ -461,7 +461,7 @@ fi
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(acosh asinh atanh bcopy finite isnan matherr memcpy \
-  memmove regcomp rint strcoll strtod strtol system times)
+  memmove regcomp rint strcoll strtod strtol system times __setfpucw)
 
 ### Header files
 
