@@ -1,0 +1,15 @@
+# Things you might want to change
+
+# options(width=80)
+# options(papersize="a4")
+# options(editor="notepad")
+# options(pager="internal")
+
+# use the following if unzip is already on PATH.
+# options(unzip="unzip.exe")
+
+# to prefer HTML help
+# options(htmlhelp=TRUE)
+
+# to prefer Windows help
+# options(winhelp=TRUE)

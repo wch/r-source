@@ -1,0 +1,10 @@
+.Library <- file.path(getenv("RHOME"), "library")
+
+.lib.loc <- unique(c(unlist(strsplit(getenv("RLIBS"), ";")), .Library))
+
+options(papersize="a4")
+options(device="X11")
+options(editor="notepad")
+options(pager="internal")
+options(unzip=file.path(R.home(), "unzip", "unzip.exe"))
+options(width=80)
