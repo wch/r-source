@@ -852,7 +852,7 @@ AC_OUTPUT_COMMANDS(
   tools/keyword-test \
   tools/keywords2html \
   tools/pkg2tex
-  echo timestamp > src/include/stamp-h
+  test -f src/include/stamp-h || echo timestamp > src/include/stamp-h
 )
 
 if test -z "${F77}"; then
