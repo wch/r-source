@@ -271,6 +271,10 @@ C-LEVEL FACILITIES
     o	Salloc and Srealloc are provided in S.h as wrappers for S_alloc
 	and S_realloc, since current S versions use these forms.
 
+    o	The type used for vector lengths is now R_len_t rather than
+	int, to allow this to de defined as long and so allow vectors
+	longer than 2^31 - 1 elements on 64-bit platforms.
+
 
 DEPRECATED & DEFUNCT
 

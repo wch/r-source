@@ -1691,12 +1691,12 @@ SEXP allocString(int length)
 
 /* Allocate a vector object on the heap */
 
-SEXP allocVector(SEXPTYPE type, int length)
+SEXP allocVector(SEXPTYPE type, R_len_t length)
 {
     SEXP s;     /* For the generational collector it would be safer to
 		   work in terms of a VECSEXP here, but that would
 		   require several casts below... */
-    int i;
+    R_len_t i;
     R_size_t size = 0, alloc_size, old_R_VSize;
     int node_class;
 

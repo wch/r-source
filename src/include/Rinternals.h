@@ -41,6 +41,10 @@
 
 #include <R_ext/libextern.h>
 
+/* type for length of vectors etc */
+typedef int R_len_t; /* will be long later */
+#define R_LEN_T_MAX INT_MAX
+
 /* Fundamental Data Types:  These are largely Lisp
  * influenced structures, with the exception of LGLSXP,
  * INTSXP, REALSXP, CPLXSXP and STRSXP which are the
@@ -149,8 +153,8 @@ struct sxpinfo_struct {
 }; /*		    Tot: 32 */
 
 struct vecsxp_struct {
-    int	length;
-    int	truelength;
+    R_len_t	length;
+    R_len_t	truelength;
 };
 
 struct primsxp_struct {
@@ -450,7 +454,7 @@ SEXP Rf_allocArray(SEXPTYPE, SEXP);
 SEXP Rf_allocMatrix(SEXPTYPE, int, int);
 SEXP Rf_allocSExp(SEXPTYPE);
 SEXP Rf_allocString(int);
-SEXP Rf_allocVector(SEXPTYPE, int);
+SEXP Rf_allocVector(SEXPTYPE, R_len_t);
 SEXP Rf_allocList(int);
 SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP Rf_asChar(SEXP);
@@ -458,6 +462,7 @@ Rcomplex Rf_asComplex(SEXP);
 int Rf_asInteger(SEXP);
 int Rf_asLogical(SEXP);
 double Rf_asReal(SEXP);
+R_len_t Rf_asVecSize(SEXP);
 SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
                        SEXP (*)(SEXP, int), SEXP);
 SEXP Rf_classgets(SEXP, SEXP);
@@ -539,8 +544,8 @@ SEXP Rf_lang3(SEXP, SEXP, SEXP);
 SEXP Rf_lang4(SEXP, SEXP, SEXP, SEXP);
 SEXP Rf_lastElt(SEXP);
 SEXP Rf_lcons(SEXP, SEXP);
-int Rf_length(SEXP);
-SEXP Rf_lengthgets(SEXP, int);
+R_len_t Rf_length(SEXP);
+SEXP Rf_lengthgets(SEXP, R_len_t);
 SEXP Rf_list1(SEXP);
 SEXP Rf_list2(SEXP, SEXP);
 SEXP Rf_list3(SEXP, SEXP, SEXP);
@@ -874,6 +879,7 @@ int R_system(char *);
 #define asInteger		Rf_asInteger
 #define asLogical		Rf_asLogical
 #define asReal			Rf_asReal
+#define asVecSize		Rf_asVecSize
 #define classgets		Rf_classgets
 #define coerceList		Rf_coerceList
 #define coerceVector		Rf_coerceVector

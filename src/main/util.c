@@ -213,6 +213,31 @@ SEXP asChar(SEXP x)
     return NA_STRING;
 }
 
+R_len_t asVecSize(SEXP x)
+{
+    int warn = 0, res;
+    double d;
+
+    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	    res = IntegerFromLogical(LOGICAL(x)[0], &warn);
+	    if(res == NA_INTEGER) error("vector size cannot be NA");
+	    return res;
+	case INTSXP:
+	    res = INTEGER(x)[0];
+	    if(res == NA_INTEGER) error("vector size cannot be NA");
+	    return res;
+	case REALSXP:
+	    d = REAL(x)[0];
+	    if(d < 0) error("vector size cannot be negative");
+	    if(d > R_LEN_T_MAX) error("vector size specified is too large");
+	    return (R_size_t) d;
+	}
+    }
+    return -1;
+}
+
 
 const static char type_msg[] = "invalid type passed to internal function\n";
 
