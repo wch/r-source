@@ -37,7 +37,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 
 .packages(all.available = FALSE, lib.loc = NULL)
 .path.package(package = .packages(), quiet = FALSE)
-.find.package(package, lib.loc = NULL, use.attached, quiet = FALSE,
+.find.package(package, lib.loc = NULL, quiet = FALSE,
               verbose = getOption("verbose"))
 .libPaths(new)
 
@@ -76,9 +76,6 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
     if the package(s) are not loaded?
     For \code{.find.package}, should this not give warnings or an error
     if the package(s) are not found?}
-  \item{use.attached}{a logical indicating whether attached packages
-    should be considered in addition to the ones installed in the given
-    libraries.}
   \item{new}{a character vector with the locations of \R library trees.}
 }
 \details{
@@ -148,10 +145,9 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   package is found more than once, the first match is used.  Unless
   \code{quiet = TRUE} a warning will be given about the named packages
   which are not found, and an error if none are.  If \code{verbose} is
-  true, warnings about packages found more than once are given.
-  Argument \code{use.attached} is deprecated.  This function is not
-  meant to be called by users, and its interface might change in future
-  versions.
+  true, warnings about packages found more than once are given.  This
+  function is not meant to be called by users, and its interface might
+  change in future versions.
 
   \code{.Autoloaded} contains the ``base names'' of the packages for
   which autoloading has been promised.
