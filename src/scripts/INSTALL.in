@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.131 $'
+revision='$Revision: 1.132 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -329,7 +329,10 @@ do_install_binary () {
 ### Install a *source* package from the current directory.
 
 do_install_source () {
-  pkg="${1}"
+  pkg_name="${1}"
+  pkg_dir="${4}"
+  ## (The basename of ${pkg_dir} might be different from ${pkg_name},
+  ## e.g., when building Debian packages from R packages.)
 
   ## Make the destination directories available to the developer's
   ## installation scripts (e.g. configure, etc.)
@@ -340,10 +343,10 @@ do_install_source () {
   export R_PACKAGE_DIR
   export R_PACKAGE_NAME
 
-  if test "${pkg}" = "${R_PACKAGE_NAME}"; then
-    message "Installing *source* package '${pkg}' ..."
+  if test "${pkg_name}" = "${R_PACKAGE_NAME}"; then
+    message "Installing *source* package '${pkg_name}' ..."
   else
-    message "Installing *source* package '${pkg}' as '${R_PACKAGE_NAME}' ..."
+    message "Installing *source* package '${pkg_name}' as '${R_PACKAGE_NAME}' ..."
   fi
 
   stars="**"
@@ -365,7 +368,7 @@ do_install_source () {
   if ${use_configure} && test -x ./configure ; then
     eval ${configure_vars} ./configure ${configure_args}
     if test ${?} -ne 0; then
-      echo "ERROR: configuration failed for package '${pkg}'"
+      echo "ERROR: configuration failed for package '${pkg_name}'"
       do_exit_on_error
     fi
   fi
@@ -395,7 +398,7 @@ do_install_source () {
       cd src;
       srcs=`ls *.[cfC] *.cc *.cpp 2>/dev/null`
       if test -n "${srcs}"; then
-	sh "${R_HOME}/bin/SHLIB" -o "${pkg}@SHLIB_EXT@" ${srcs} \
+	sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
           && cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs" \
 	  || error=true; \
 	if ${clean}; then
@@ -408,7 +411,7 @@ do_install_source () {
       cd ..
     fi
     if ${error}; then
-      echo "ERROR: compilation failed for package '${pkg}'"
+      echo "ERROR: compilation failed for package '${pkg_name}'"
       do_exit_on_error
     fi
     if ${debug}; then set +x; fi
@@ -509,7 +512,7 @@ do_install_source () {
     code_file="${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
     rda_file="${R_PACKAGE_DIR}/R/all.rda"
     if test -f NAMESPACE; then
-      code_cmd="echo saveNamespaceImage(\"${pkg}\", \"${rda_file}\", \"${lib}\")"
+      code_cmd="echo saveNamespaceImage(\"${pkg_name}\", \"${rda_file}\", \"${lib}\")"
       loader_file=nsrdaload.R
       R_SAVE_EXE="${R_EXE} --slave"
     else
@@ -522,11 +525,11 @@ do_install_source () {
       echo "invisible(.libPaths(c(\"${lib}\", .libPaths())))"; \
       ${code_cmd}) | ${R_SAVE_EXE} ${save_args}
     if test ${?} -ne 0; then
-      echo "ERROR: execution of package source for '${pkg}' failed"
+      echo "ERROR: execution of package source for '${pkg_name}' failed"
       do_exit_on_error
     fi
     test -f NAMESPACE || mv .RData "${rda_file}"
-    mv "${code_file}" "${R_PACKAGE_DIR}/R/${pkg}.R"
+    mv "${code_file}" "${R_PACKAGE_DIR}/R/${pkg_name}.R"
     cat "${R_HOME}/share/R/${loader_file}" > "${code_file}"
     ## If install.R is non-empty, arrange to evaluate the R code it
     ## contains after the package source (maybe for some kind of
@@ -544,8 +547,8 @@ do_install_source () {
       mkdir -p "${R_PACKAGE_DIR}/man"
       rm -f "${R_PACKAGE_DIR}/man/"*
       for f in ${Rdfiles}; do cat "${f}"; echo; echo '\eof'; done \
-        > "${R_PACKAGE_DIR}/man/${pkg}.Rd"
-      chmod 644 "${R_PACKAGE_DIR}/man/${pkg}.Rd"
+        > "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
+      chmod 644 "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
     fi
     ## Maybe build preformatted help pages ...
     if ${build_help}; then
@@ -553,12 +556,13 @@ do_install_source () {
 	echo "${NO_PERL5_MSG}"
       else
 	if ${debug}; then
-	  echo "DEBUG: build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib} ${R_PACKAGE_DIR}"
+	  echo "DEBUG: build-help ${BUILD_HELP_OPTS} ${pkg_dir} ${lib} ${R_PACKAGE_DIR} ${pkg_name}"
 	fi
 	${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" \
-	  ${build_help_opts} "../${pkg}" "${lib}" "${R_PACKAGE_DIR}"
+	  ${build_help_opts} \
+	  "${pkg_dir}" "${lib}" "${R_PACKAGE_DIR}" "${pkg_name}"
 	if test ${?} -ne 0; then
-	  echo "ERROR: building help failed for package '${pkg}'"
+	  echo "ERROR: building help failed for package '${pkg_name}'"
 	  do_exit_on_error
         fi
       fi
@@ -579,7 +583,7 @@ do_install_source () {
       fi
     fi
   else
-    echo "No man pages found in package '${pkg}'"
+    echo "No man pages found in package '${pkg_name}'"
   fi
 
   echo ".installPackageIndices(\".\", \"${R_PACKAGE_DIR}\")" | \
@@ -612,19 +616,20 @@ do_install_source () {
 
 do_install () {
   cd "${1}"
-  pkg=`get_dcf_field Package DESCRIPTION`
-  ## (The basename of ${1} might be different, e.g., when building
-  ## Debian packages from R packages.)
+  pkg_dir="${1}"
+  pkg_name=`get_dcf_field Package DESCRIPTION`
+  ## (The basename of ${pkg_dir} might be different from ${pkg_name},
+  ## e.g., when building Debian packages from R packages.)
 
   ## Set R_PACKAGE_DIR here at the top level.  If a version is being
   ## specified, tack that on.
   if ${with_package_versions}; then
     version=`get_dcf_field Version DESCRIPTION`
-    R_PACKAGE_NAME="${pkg}_${version}"
-    R_PACKAGE_DIR="${lib}/${pkg}_${version}"
+    R_PACKAGE_NAME="${pkg_name}_${version}"
+    R_PACKAGE_DIR="${lib}/${pkg_name}_${version}"
   else
-    R_PACKAGE_NAME="${pkg}"
-    R_PACKAGE_DIR="${lib}/${pkg}"
+    R_PACKAGE_NAME="${pkg_name}"
+    R_PACKAGE_DIR="${lib}/${pkg_name}"
   fi
   export R_PACKAGE_DIR
   export R_PACKAGE_NAME
@@ -643,7 +648,7 @@ do_install () {
       dep_ok=`expr ${R_VERSION} ${dep_operator} ${dep_version} `
       if test ${dep_ok} -eq 0; then
         echo "ERROR: This R is version ${R_VERSION}"
-        echo "       package '${pkg}' depends on R ${dep_version}"
+        echo "       package '${pkg_name}' depends on R ${dep_version}"
         do_exit_on_error;
       fi
     else
@@ -684,15 +689,17 @@ do_install () {
 
   if ${is_source_package}; then
     ## This is a source package ... hopefully.
-    do_install_source "${pkg}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}"
+    do_install_source \
+      "${pkg_name}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}" "${pkg_dir}"
   else  
     ## This is a binary package ... hopefully.
-    do_install_binary "${pkg}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}"
+    do_install_binary \
+      "${pkg_name}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}"
   fi
 
   chmod -R a+r "${R_PACKAGE_DIR}"
 
-  message "DONE (${pkg})"
+  message "DONE (${pkg_name})"
   is_first_package=no
 }
 
