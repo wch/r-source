@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.161 $ ';
+my $revision = ' $Revision: 1.162 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -312,7 +312,13 @@ foreach my $pkg (@ARGV) {
 		    ## should only do this when using GCC ...
 		    @lines = &read_lines($out)
 			unless($opt_install eq "check");
-		    @lines = grep(/: warning: .*ISO C/, @lines);
+		    my $warn_re =
+			"(" . join("|", ("^WARNING:",
+					 ": warning: .*ISO C",
+					 "missing link\\(s\\):",
+					 "missing text for \\\\item " .
+					 "in \\\\describe")) . ")";
+		    @lines = grep(/$warn_re/, @lines);
 		    if(scalar(@lines) > 0) {
 			$log->warning();
 			$log->print("Found the following " .
