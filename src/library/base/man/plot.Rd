@@ -13,14 +13,14 @@ plot(y ~ x, \dots)
   \item{xlim,ylim}{the ranges to be encompased by the x and y axes.}
   \item{type}{what type of plot should be drawn. Possible types are
     \itemize{
-      \item{\code{"p"}} for \bold{p}oints,
-      \item{\code{"l"}} for \bold{l}ines,
-      \item{\code{"b"}} for \bold{b}oth,
-      \item{\code{"o"}} for both ``\bold{o}verplotted'', 
-      \item{\code{"h"}} for ``\bold{h}istogram'' like vertical lines,
-      \item{\code{"s"}} for \bold{s}teps,
-      \item{\code{"S"}} for other \bold{s}teps,
-      \item{\code{"n"}} for no plotting.
+      \item \code{"p"} for \bold{p}oints,
+      \item \code{"l"} for \bold{l}ines,
+      \item \code{"b"} for \bold{b}oth,
+      \item \code{"o"} for both ``\bold{o}verplotted'', 
+      \item \code{"h"} for ``\bold{h}istogram'' like vertical lines,
+      \item \code{"s"} for \bold{s}teps,
+      \item \code{"S"} for other \bold{s}teps,
+      \item \code{"n"} for no plotting.
     }
   }
   \item{main}{an overall title for the plot.}

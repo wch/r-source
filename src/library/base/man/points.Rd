@@ -19,13 +19,13 @@ points.default(x, y=NULL, type="p", pch=1, col="black", bg=NA, cex=1, \dots)
     can be obtained with \code{pch=19:25} and can be colored and filled
     with different colors:
     \itemize{
-      \item{\code{pch=19}:} solid circle,
-      \item{\code{pch=20}:} bullet,
-      \item{\code{pch=21}:} circle,
-      \item{\code{pch=22}:} square,
-      \item{\code{pch=23}:} diamond,
-      \item{\code{pch=24}:} triangle point-up,
-      \item{\code{pch=25}:} triangle point down.
+      \item \code{pch=19}: solid circle,
+      \item \code{pch=20}: bullet,
+      \item \code{pch=21}: circle,
+      \item \code{pch=22}: square,
+      \item \code{pch=23}: diamond,
+      \item \code{pch=24}: triangle point-up,
+      \item \code{pch=25}: triangle point down.
     }
   }
   \item{col}{color code or name, see \code{\link{colors}},
