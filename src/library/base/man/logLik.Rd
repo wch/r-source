@@ -5,6 +5,7 @@
 logLik(object, ...)
 }
 \alias{logLik}
+\alias{print.logLik}
 \arguments{
  \item{object}{any object from which a log-likelihood value, or a
    contribution to a log-likelihood value, can be extracted.}
@@ -21,8 +22,9 @@ logLik(object, ...)
   \code{varFunc}. 
 }
 \value{
-  will depend on the method function used; see the appropriate
-  documentation.  
+  Returns an object of class \code{logLik} (for which there's a
+  \code{print} method); the details
+  depend on the method function used; see the appropriate documentation.  
 }
 \seealso{\code{\link{logLik.lm}}, \code{\link[nls]{logLik.nls}},
   \code{\link[nlme]{logLik.gls}}, \code{\link[nlme]{logLik.lme}}, etc.}

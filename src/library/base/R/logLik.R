@@ -31,3 +31,4 @@ logLik.lm <-
     val
 }
 
+print.logLik <- function(x, ...) print(c(x), ...)
