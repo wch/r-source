@@ -33,9 +33,6 @@ winMenuDelItem(menuname)
   \code{menuname} by slashes: as a consequence menu names may not
   contain slashes.
 }
-\note{
-  Deleting menus is currently disabled.
-}
 \value{
   \code{NULL}, invisibly. If an error occurs, an informative error
   message will be given.
