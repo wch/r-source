@@ -14,6 +14,23 @@ S
 @sc{html}
 @end macro
 
+@c NOTE: The "%" after the closing '$' in the tex part is important to
+@c	 suppress an extraneous line break !
+@macro eqn {t, a}
+@iftex
+@tex
+$ \t\ $%
+@end tex
+@end iftex
+@ifnottex
+\a\
+@end ifnottex
+@end macro
+
+@c Kurt, why does this fail ?
+@c @macro plusminus
+@c @eqn{\pm, +/-}
+@c @end macro
 @macro plusminus
 @ifinfo
 +/-
@@ -21,6 +38,7 @@ S
 @tex $\\pm$%
 @end tex
 @end macro
+
 
 @macro pkg {p}
 @strong{\p\}
