@@ -469,32 +469,52 @@ print.anova.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 	invisible(x)
 }
 
-predict.lm <- function(object, newdata = model.frame(object), se.fit = FALSE) {
+predict.lm <- function(object, newdata = model.frame(object),
+    se.fit = FALSE, scale = NULL, df = Inf,
+    interval=c("none","confidence","prediction"), level=.95)
+{
   X <- model.matrix(delete.response(terms(object)), newdata)
   n <- NROW(object$qr$qr)
   p <- object$rank
   p1 <- 1:p
   piv <- object$qr$pivot[p1]
-  r <- resid(object)
-  f <- fitted(object)
-  w <- weights(object)
-  if (is.null(w)) rss <- sum(r^2)
-  else rss <- sum(r^2 * w)
-  d.f. <- n - p
-  res.var <- rss/d.f.
+  if (is.null(scale)){
+    r <- resid(object)
+    f <- fitted(object)
+    w <- weights(object)
+    if (is.null(w)) rss <- sum(r^2)
+    else rss <- sum(r^2 * w)
+    df <- n - p
+    res.var <- rss/df
+  } else 
+    res.var <- scale^2
   R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
   vcov <- res.var * R
   est <- object$coefficients[piv]
   predictor <- c(X[, piv, drop = F] %*% est)
-  if(se.fit) {
+  interval <- match.arg(interval)
+  if(se.fit || interval != "none") {
     ip <- real(NROW(X))
     for (i in (1:NROW(X))) {
       xi <- X[i, piv]
       ip[i] <- xi %*% vcov %*% xi
     }
+  }
+  if (interval != "none")
+  {
+    tfrac <- qt((1 - level)/2,df)
+    w <- tfrac * switch(interval,
+      	confidence=sqrt(ip),
+	prediction=sqrt(ip+res.var)
+    )
+    predictor<-cbind(predictor,predictor+
+      w %o% c(1,-1))
+    colnames(predictor) <- c("fit","lwr","upr")
+  }
+  if (se.fit)
     list(fit = predictor, se.fit = sqrt(ip), 
-      df = d.f., residual.scale = sqrt(res.var))
-  } else predictor
+      df = df, residual.scale = sqrt(res.var))
+  else predictor
 }
 
 effects.lm <- function(...) .NotYetImplemented()
