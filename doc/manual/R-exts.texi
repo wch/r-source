@@ -152,7 +152,7 @@ Unix, see @ref{Configure and cleanup}.
 @cindex COPYING file
 
 The optional file @file{COPYING} contains a copy of the license to the
-package, e.g.@: a copy of the GNU public license.
+package, e.g.@: a copy of the @acronym{GNU} public license.
 
 The package subdirectory should be given the same name as the package.
 Because some file systems (e.g., those on Windows) are not
@@ -2939,8 +2939,8 @@ Similarly, variable @code{PKG_LIBS} in @file{Makevars} can be used for
 additional @samp{-l} and @samp{-L} flags to be passed to the linker when
 building the shared object.  Flags which are set in file
 @file{etc/Makeconf} can be overridden by the environment variable
-@samp{MAKEFLAGS} (at least for systems using GNU @code{make}), as in
-(Bourne shell syntax)
+@env{MAKEFLAGS} (at least for systems using @acronym{GNU} @code{make}),
+as in (Bourne shell syntax)
 
 @example
 MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
@@ -6406,9 +6406,9 @@ hand, Perl cannot be assumed at all for installing @emph{binary}
 (pre-built) versions of add-on packages, or at run time.
 
 @item
-Makeinfo version 4 is needed to build the Info files for the @R{}
+Makeinfo version 4.5 is needed to build the Info files for the @R{}
 manuals written in the @acronym{GNU} Texinfo system.  (Future
-distributions of @R{} will contain the Info files.)
+distributions of @R{} may contain the Info files.)
 @end itemize
 
 It is also important that code is written in a way that allows others to
