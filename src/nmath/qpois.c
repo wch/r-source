@@ -46,9 +46,7 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
     if(lambda < 0) ML_ERR_return_NAN;
 
     if (p == R_DT_0) return 0;
-#ifdef IEEE_754
     if (p == R_DT_1) return ML_POSINF;
-#endif
 
     if(lambda == 0) return 0;
 
@@ -56,11 +54,17 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
     sigma = sqrt(lambda);
     gamma = sigma;
 
-    /* FIXME: This is far from optimal :
-       -- "same" code in qpois.c, qbinom.c, qnbinom.c */
-    if(!lower_tail || log_p)
-	p = R_DT_qIv(p);
+    /* Note : "same" code in qpois.c, qbinom.c, qnbinom.c --
+     * FIXME: This is far from optimal [cancellation for p ~= 1, etc]: */
+    if(!lower_tail || log_p) {
+	p = R_DT_qIv(p); /* need check again (cancellation!): */
+	if (p == 0.) return 0;
+	if (p == 1.) return ML_POSINF;
+    }
+    /* temporary hack --- FIXME --- */
+    if (p + 1.01*DBL_EPSILON >= 1.) return ML_POSINF;
 
+    /* y := approx.value (Cornish-Fisher expansion) :  */
     z = qnorm(p, 0., 1., /*lower_tail*/LTRUE, /*log_p*/LFALSE);
     y = floor(mu + sigma * (z + gamma * (z*z - 1) / 6) + 0.5);
 
@@ -68,6 +72,10 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
 
     /* fuzz to ensure left continuity; 1 - 1e-7 may lose too much : */
     p *= 1 - 64*DBL_EPSILON;
+
+/*-- Fixme, here y can be way off --
+  should use interval search instead of primitive stepping down or up */
+
 #ifdef maybe_future
     if((lower_tail && z >= p) || (!lower_tail && z <= p)) {
 #else
