@@ -10,11 +10,7 @@
   value indicator.  \code{NA} can be freely coerced to any other vector
   type.
 
-  The generic function \code{is.na} returns a logical vector of the same
-  ``form'' as its argument \code{x}, containing \code{TRUE} for those
-  elements marked \code{NA} or \code{\link{NaN}} (!) and \code{FALSE}
-  otherwise.  \code{dim}, \code{dimnames} and \code{names} attributes
-  are preserved.
+  The generic function \code{is.na} indicates which elements are missing.
 
   The generic function \code{is.na<-} sets elements to \code{NA}.
 }
@@ -39,6 +35,17 @@ is.na(x) <- value
 
   Function \code{is.na<-} may provide a safer way to set missingness.
   It behaves differently for factors, for example.
+}
+\value{
+  The default method for \code{is.na} returns a logical vector of the same
+  ``form'' as its argument \code{x}, containing \code{TRUE} for those
+  elements marked \code{NA} or \code{\link{NaN}} (!) and \code{FALSE}
+  otherwise.  \code{dim}, \code{dimnames} and \code{names} attributes
+  are preserved.
+
+  The method \code{is.na.data.frame} returns a logical matrix with the
+  same dimensions as the data frame, and with dimnames taken from the
+  row and column names of the data frame.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
