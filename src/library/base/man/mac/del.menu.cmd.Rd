@@ -14,7 +14,7 @@ del.menu.cmd(label)
    the User's menu, the whole menu will be suppressed.}
 }
 \seealso{
-  \code{\link{add.menu.cmd},\link{del.num.cdm}}.
+  \code{\link{add.menu.cmd},\link{del.num.cmd}}.
 }
 \examples{
 # we create 3 menus
