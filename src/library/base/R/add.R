@@ -459,6 +459,8 @@ step <-
   fixFormulaObject <- function(object) {
     tt <- terms(object)
     tmp <- attr(tt, "term.labels")
+    if (!attr(tt, "intercept")) 
+    	tmp <- c(tmp, "0")
     tmp <- paste(deparse(formula(object)[[2]]), "~",
                  paste(tmp, collapse = " + "))
     if (length(offset <- attr(tt, "offset")))
@@ -558,6 +560,7 @@ step <-
   models[[nm]] <- list(deviance = deviance(fit), df.resid = n - edf, 
 		       change = "", AIC = bAIC)
   if(!is.null(keep)) keep.list[[nm]] <- keep(fit, bAIC)
+  usingCp <- FALSE
   while(steps > 0) {
     steps <- steps - 1
     AIC <- bAIC

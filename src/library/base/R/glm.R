@@ -104,6 +104,12 @@ glm.fit <-
     conv <- FALSE
     nobs <- NROW(y)
     nvars <- NCOL(x)
+    if (nvars == 0) {
+        ## oops, you'd want glm.fit.null, then 
+        cc <- match.call()
+        cc[[1]] <- as.name("glm.fit.null")
+        return(eval(cc, sys.frame(sys.parent())))
+    }
     ## define weights and offset if needed
     if (is.null(weights))
 	weights <- rep(1, nobs)
