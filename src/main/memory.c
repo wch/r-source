@@ -765,6 +765,7 @@ void R_chk_free(void *ptr)
 {
     if(!ptr) warning("attempt to free NULL pointer by Free");
     free(ptr);
+    ptr = NULL;  /* Berwin Turlach reports S does this */
 }
 
 /* This code keeps a list of objects which are not assigned to variables
