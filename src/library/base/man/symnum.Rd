@@ -17,7 +17,9 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
     \emph{augmented}, see \code{corr} below) \code{cutpoints}.
     \code{symbols[j]}\eqn{= s_j}{ == s[j]} are used as ``code'' for
     the (half open) interval \eqn{(c_j,c_{j+1}]}{(c[j], c[j+1]]}.}
-  \item{na}{character. How \code{\link{NA}s} are coded.}
+  \item{na}{character or logical. How \code{\link{NA}s} are coded.  If
+    \code{na == FALSE}, \code{NA}s are coded invisibly, \emph{including}
+    the \code{"legend"} attribute below, which otherwise mentions NA coding.}
   \item{eps}{absolute precision to be used at left and right boundary.}
   \item{corr}{logical.  If \code{TRUE}, \code{x} contains correlations.
     The cutpoints are augmented by \code{0} and \code{1} and  \code{abs(x)}
