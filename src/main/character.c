@@ -341,16 +341,18 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     fixed = asLogical(CADDDR(args));
     perl = asLogical(CAD4R(args));
 
-#ifdef SUPPORT_UTF8
-    if(utf8locale) options = PCRE_UTF8;
-    else if(mbcslocale)
-	warning("perl = TRUE is only fully implemented in UTF-8 locales");
-#endif
-
     if(!isString(x) || !isString(tok))
 	errorcall_return(call, "non-character argument in strsplit()");
     if(extended_opt == NA_INTEGER) extended_opt = 1;
     if(perl == NA_INTEGER) perl = 0;
+
+#ifdef SUPPORT_MBCS
+    if(perl) {
+	if(utf8locale) options = PCRE_UTF8;
+	else if(mbcslocale)
+	    warning("perl = TRUE is only fully implemented in UTF-8 locales");
+    }
+#endif
 
     eflags = 0;
     if(extended_opt) eflags = eflags | REG_EXTENDED;
