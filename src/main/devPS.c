@@ -432,12 +432,14 @@ static int GetNextItem(FILE *fp, char *dest, int c)
 	if (feof(fp)) { p = NULL; return 1; }
 	if (!p || *p == '\n' || *p == '\0') {
 #ifdef __MRC__
-	p = R_fgets(buf, 1000, fp);
+	    p = R_fgets(buf, 1000, fp);
 #else
 	    p = fgets(buf, 1000, fp);
 #endif
 
 	}
+	/* check for incomplete encoding file */
+	if(!p) return 1;
 	while (isspace((int)*p)) p++;
 	if (p == '\0' || *p == '%'|| *p == '\n') { p = NULL; continue; }
 	p0 = p;
