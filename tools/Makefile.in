@@ -16,7 +16,6 @@ SCRIPT_SOURCES = \
 	install-info.in \
 	keyword-test.in \
 	pkg2tex.in
-
 SCRIPT_OBJECTS = $(SCRIPT_SOURCES:.in=)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
@@ -51,6 +50,9 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
+	@(for f in $(SCRIPT_OBJECTS); do \
+	    echo "$${f}: $(srcdir)/$${f}.in"; \
+	  done) >> $@
 
 R: $(SCRIPT_OBJECTS)
 
@@ -68,3 +70,6 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
+
+## Automagically generated dependencies:
+

@@ -35,6 +35,9 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
+	@(for f in $(OBJECTS); do \
+	    echo "$${f}: $(srcdir)/$${f}.in"; \
+	  done) >> $@
 
 R: $(OBJECTS)
 	@if [ "$(srcdir)" != "." ]; then \
@@ -93,3 +96,6 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
+
+## Automagically generated dependencies:
+
