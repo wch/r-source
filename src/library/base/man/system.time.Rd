@@ -31,8 +31,18 @@ unix.time(expr)
   \code{NA}. The first two components are not available on Windows 9x,
   and so are reported as \code{NA}; they do return real values on
   Windows NT4 and 2000.
-#endif  
+#endif
+
+  The resolution of the times will be system-specific; it is common for
+  the elapsed time to be recorded to the nearest second, and CPU times
+  to of the order of 1/100 second.
 }
+#ifdef unix
+\note{
+  It is possible to compile \R without support for \code{system.time},
+  when all the values will be \code{NA}.
+}
+#endif
 \seealso{
   \code{\link{proc.time}}, \code{\link{time}} which is for time series.
 }
