@@ -29,7 +29,7 @@ pentagamma(x)
 choose(n, k)
 lchoose(n, k)
 factorial(x)
-lactorial(x)
+lfactorial(x)
 }
 \arguments{
   \item{a, b, x}{numeric vectors.}
