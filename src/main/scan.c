@@ -136,10 +136,11 @@ static double Strtod (const char *nptr, char **endptr, Rboolean NA, LocalData *d
 	    else if (d->convbuf[i] == '.')
 		d->convbuf[i] = d->decchar;
 	x = Rs_strtod(d->convbuf, &end, NA);
-	*endptr = (char *) nptr + (end - d->convbuf);
+	if(endptr)
+  	   *endptr = (char *) nptr + (end - d->convbuf);
 	return x;
     } 
-}	
+}
 
 static Rcomplex strtoc(const char *nptr, char **endptr, Rboolean NA, LocalData *d)
 {
