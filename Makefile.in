@@ -121,7 +121,7 @@ clean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	@if [ "$(srcdir)" != "." ]; then \
-	  rm -f $(INSTFILES);
+	  rm -f $(INSTFILES); \
 	fi
 distclean: clean
 	@for d in $(SUBDIRS); do \
