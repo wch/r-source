@@ -14,9 +14,10 @@ arch 		= $(shell dpkg --print-architecture)-linux
 build:
 	dh_testdir
 	R_UNZIPCMD=/usr/bin/miniunzip R_ZIPCMD=/usr/bin/minizip\
-	CFLAGS="-Wall -O2" FFLAGS="-Wall -O2"\
+	LIBS='-L/usr/lib/atlas'
+	CFLAGS='-Wall -O2' FFLAGS='-Wall -O2'\
 	PATH=${PATH}:/usr/bin/X11\   # so /usr/bin/X11/imake is found
-	SHLIBLDFLAGS="-shared -lc" ./configure --prefix=/usr 		 \
+	SHLIBLDFLAGS='-shared -lc' ./configure --prefix=/usr 		 \
 					--with-g77			 \
 					--mandir=$(debtmp)/usr/share/man \
 					--host $(arch)
@@ -45,7 +46,7 @@ binary-arch: build
 	dh_clean -k
 	dh_installdirs
 	make; make check; make install prefix=`pwd`/debian/tmp/usr
-	make info pdf
+	make info # pdf
 	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \
 	  < bin/R > debian/tmp/usr/bin/R
 	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \
