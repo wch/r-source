@@ -169,9 +169,8 @@ gram.c: $(srcdir)/gram.y
 	$(top_srcdir)/tools/move-if-change y.tab.c $(@F)
 
 install: installdirs
-	@@USE_LIBTOOL_FALSE@$(top_srcdir)/tools/copy-if-change libR.la \
-	  $(Rexeclibdir)/libR.$(SHLIB_EXT)
-	@@USE_LIBTOOL_TRUE@$(LIBTOOL) --mode=install $(INSTALL) libR.la $(Rexeclibdir)
+@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change libR.la $(Rexeclibdir)/libR.$(SHLIB_EXT)
+@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) libR.la $(Rexeclibdir)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexeclibdir)
 
