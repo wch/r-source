@@ -457,7 +457,7 @@ static void DEBUG_CHECK_NODE_COUNTS(char *where)
       }
     }
     REprintf("Class: %d, New = %d, Old = %d, OldToNew = %d, Total = %d\n",
-	     i, 
+	     i,
 	     NewCount, OldCount, OldToNewCount,
 	     NewCount + OldCount + OldToNewCount);
   }
@@ -525,7 +525,7 @@ static void GetNewPage(int node_class)
 
   node_size = NODE_SIZE(node_class);
   page_count = (R_PAGE_SIZE - sizeof(PAGE_HEADER)) / node_size;
- 
+
   page = malloc(R_PAGE_SIZE);
   if (page == NULL)
     mem_err_heap(NodeClassSize[node_class]);
@@ -584,7 +584,7 @@ static void TryToReleasePages(void)
       for (gen = 0; gen < NUM_OLD_GENERATIONS; gen++)
 	maxrel -= (1.0 + R_MaxKeepFrac) * R_GenHeap[i].OldCount[gen];
       maxrel_pages = maxrel > 0 ? maxrel / page_count : 0;
-      
+
       /* all nodes in New space should be both free and unmarked */
       for (page = R_GenHeap[i].pages, rel_pages = 0, last = NULL;
 	   rel_pages < maxrel_pages && page != NULL;) {
@@ -1532,7 +1532,7 @@ static void gc_start_timing(void)
   R_getProcTime(gcstarttimes);
 #endif /* HAVE_TIMES */
 }
-  
+
 static void gc_end_timing(void)
 {
 #ifdef HAVE_TIMES
@@ -1703,7 +1703,7 @@ static void markPhase(void)
 static void markSExp(SEXP s)
 {
     int i;
-    
+
  tailcall_entry:
     if (s && !NODE_IS_MARKED(s)) {
 	MARK_NODE(s);
@@ -1828,10 +1828,10 @@ static void scanPhase(void)
 
 /* "protect" push a single argument onto R_PPStack */
 
-/* In handling a stack overflow we have to be careful not to 
+/* In handling a stack overflow we have to be careful not to
    use PROTECT. error("protect(): stack overflow") would call
    deparse1, which uses PROTECT and segfaults */
-   
+
 SEXP protect(SEXP s)
 {
     if (R_PPStackTop >= R_PPStackSize)
@@ -1945,14 +1945,14 @@ void *R_chk_calloc(size_t nelem, size_t elsize)
 	return(NULL);
 #endif
     p = calloc(nelem, elsize);
-    if(!p) error("Calloc could not allocate memory");
+    if(!p) error("Calloc could not allocate (%d of %d) memory", nelem, elsize);
     return(p);
 }
 void *R_chk_realloc(void *ptr, size_t size)
 {
     void *p;
     p = realloc(ptr, size);
-    if(!p) error("Realloc could not re-allocate memory");
+    if(!p) error("Realloc could not re-allocate (size %d) memory", size);
     return(p);
 }
 void R_chk_free(void *ptr)
@@ -1990,7 +1990,7 @@ void R_ReleaseObject(SEXP object)
     R_PreciousList =  RecursiveRelease(object, R_PreciousList);
 }
 
-			   
+
 /* The following functions are replacements for the accessor macros.
    They are used by code that does not have direct access to the
    internal representation of objects.  The assignment functions
