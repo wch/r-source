@@ -656,6 +656,7 @@ FUNTAB R_FunTab[] =
 #endif
 #ifdef Macintosh
 {"Macintosh",	do_Macintosh,	0,	111,	4,	PP_FUNCALL},
+{"applescript",	do_applescript,	0,	111,	2,	PP_FUNCALL},
 #endif
 
 /* Graphics */
