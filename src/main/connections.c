@@ -949,7 +949,7 @@ static Rboolean bzfile_open(Rconnection con)
     FILE* fp;
     BZFILE* bfp;
     int bzerror;
-    char mode = "rb";
+    char mode[] = "rb";
 
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
