@@ -44,6 +44,11 @@ eigen(print(cbind(c(0,1i), c(-1i,0))))# Hermite ==> real Eigen values
 ## 3 x 3:
 eigen(cbind( 1,3:1,1:3))
 eigen(cbind(-1,c(1:2,0),0:2)) # complex values
+
+m <- matrix(rnorm(25),5,5) ; m <- m + t(m) #- a symmetric matrix
+em <- eigen(m); V <- em$vect; lam <- em$values
+all(c(    m     - V \%*\% diag(lam) \%*\% t(V)) < 60*.Machine$double.eps)
+all(c(m \%*\% V - V \%*\% diag(lam))            < 60*.Machine$double.eps)
 }
 \keyword{algebra}
 \keyword{array}
