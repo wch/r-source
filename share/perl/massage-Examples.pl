@@ -86,7 +86,7 @@ print <<_EOF_;
 assign("..nameEx", "__{must remake R-ex/*.R}__", env = .CheckExEnv) # for now
 assign("ptime", proc.time(), env = .CheckExEnv)
 graphics::postscript("$PKG-Examples.ps")
-assign("par.postscript", par(no.readonly = TRUE), env = .CheckExEnv)
+assign("par.postscript", graphics::par(no.readonly = TRUE), env = .CheckExEnv)
 options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
 _EOF_
 
@@ -126,7 +126,7 @@ foreach my $file (@Rfiles) {
 
     if($have_par) {
 	## if there were 'par()' calls, now reset them:
-	print "par(get(\"par.postscript\", env = .CheckExEnv))\n";
+	print "graphics::par(get(\"par.postscript\", env = .CheckExEnv))\n";
     }
     if($have_contrasts) {
 	## if contrasts were set, now reset them:

@@ -29,9 +29,9 @@ sin(pi/2)
 Now we look at Gaussian data:
 
 <<>>=
+library(stats)
 x <- rnorm(20)
 print(x)
-library(stats)
 print(t1 <- t.test(x))
 @
 Note that we can easily integrate some numbers into standard text: The
@@ -57,6 +57,7 @@ print(summary(iris))
 \begin{figure}[htbp]
   \begin{center}
 <<fig=TRUE>>=
+library(graphics)
 pairs(iris)
 @
     \caption{Pairs plot of the iris data.}
