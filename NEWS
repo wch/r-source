@@ -76,7 +76,7 @@ NEW FEATURES
 	should be deleted: they will be deleted at the end of the
 	session anyway (and can be deleted by the user at any time).
 
-    o	R CMD check will now work is a source tarball and prints out
+    o	R CMD check will now work on a source tarball and prints out
 	information about the version of R and the package.
 
 
