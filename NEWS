@@ -295,7 +295,8 @@ NEW FEATURES
     o	optim() now checks the length of an analytical gradient at
 	each evaluation.
 
-    o	traceback() is now printed un-quoted.
+    o	traceback() is now printed un-quoted and labelled by the
+	frame number.
 
     o	write.table() now quotes factor columns if quote=TRUE, and has
 	a new argument `qmethod' to control the escaping of
