@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-11, 2002-01-30
+@set FAQ-VERSION 1.4-12, 2002-01-31
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -1739,6 +1739,8 @@ ODEs are expressed as R functions.
 Functions for plotting Australia's coastline and state boundaries.
 @item panel
 Functions and datasets for fitting models to Panel data.
+@item pastecs
+Package for Analysis of Space-Time Ecological Series.
 @item pcurve
 Fits a principal curve to a numeric multivariate dataset in arbitrary
 dimensions.  Produces diagnostic plots.  Also calculates Bray-Curtis and
