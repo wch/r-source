@@ -7,9 +7,6 @@ X11(\dots)
 #ifdef windows
 windows(\dots)
 #endif
-#ifdef mac
-macintosh(\dots)
-#endif
 postscript(\dots)
 pdf(\dots)
 pictex(\dots)  
@@ -47,9 +44,6 @@ dev.interactive()
     \item \code{\link{png}} PNG bitmap device
     \item \code{\link{jpeg}} JPEG bitmap device
     \item \code{\link{bmp}} BMP bitmap device
-#endif
-#ifdef mac
-    \item \code{\link{macintosh}} The graphics driver for the Macintosh
 #endif
     \item \code{\link{xfig}} Device for XFIG graphics file format
     \item \code{\link{bitmap}} bitmap pseudo-device via

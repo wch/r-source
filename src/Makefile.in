@@ -14,7 +14,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
 SUBDIRS = scripts include appl nmath unix extra main modules library
-SUBDIRS_WITH_NO_BUILD = gnuwin32 macintosh
+SUBDIRS_WITH_NO_BUILD = gnuwin32
 
 all: Makefile R
 

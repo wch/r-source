@@ -538,21 +538,6 @@ FUNTAB R_FunTab[] =
 {"writeClipboard",do_writeClipboard,0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"chooseFiles", do_chooseFiles, 0,  11, 5,  {PP_FUNCALL, PREC_FN,   0}},
 #endif
-#ifdef Macintosh
-{"unlink",	do_unlink,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"int.unzip",	do_int_unzip,	0,	11,    -1,	{PP_FUNCALL, PREC_FN,	0}},
-{"dir.create",	do_dircreate,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"file.edit",	do_fileedit,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"new.file",	do_newfile,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"add.menu.cmd",do_addmenucmd,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"del.menu.cmd",do_delmenucmd,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"get.menu.cmd",do_getmenucmd,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"get.num.cmd",	do_getnumcmd,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"del.num.cmd",	do_delnumcmd,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"del.usr.cmd",	do_delusrcmd,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"wsbrowser",	do_wsbrowser,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
-{"truepath",	do_truepath,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-#endif
 #if defined(Unix) && defined(HAVE_AQUA)
 {"wsbrowser",	do_wsbrowser,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
@@ -706,11 +691,6 @@ FUNTAB R_FunTab[] =
 {"X11",		do_X11,		0,	111,	8,	{PP_FUNCALL, PREC_FN,	0}},
 {"gnome",	do_Gnome,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"GTK",		do_GTK,		0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
-{"Quartz",	do_Quartz,	0,	111,	7,	{PP_FUNCALL, PREC_FN,	0}},
-#endif
-#ifdef Macintosh
-{"Macintosh",	do_Macintosh,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
-{"applescript",	do_applescript,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"Quartz",	do_Quartz,	0,	111,	7,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 
