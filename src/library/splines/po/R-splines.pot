@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-06 11:41\n"
+"POT-Creation-Date: 2005-02-24 09:15\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,16 +14,13 @@ msgstr ""
 msgid "must have at least 'ord' knots"
 msgstr ""
 
-msgid "length of derivs must match length of x"
+msgid "length of 'derivs' must match length of 'x'"
 msgstr ""
 
 msgid "'ord' must be positive integer, at most the number of knots"
 msgstr ""
 
-msgid "need at least 2*ord -1 (="
-msgstr ""
-
-msgid ") knots"
+msgid "need at least 2*ord -1 (=%d) knots"
 msgstr ""
 
 msgid "The x data must be in the range"
@@ -38,31 +35,31 @@ msgstr ""
 msgid "outer.ok = TRUE"
 msgstr ""
 
-msgid "values of x must be distinct"
+msgid "values of 'x' must be distinct"
 msgstr ""
 
-msgid "formula must be of the form \"y ~ x\""
+msgid "'formula' must be of the form \"y ~ x\""
 msgstr ""
 
-msgid "lengths of x and y must match"
+msgid "lengths of 'x' and 'y' must match"
 msgstr ""
 
-msgid "values of x must be strictly increasing"
+msgid "values of 'x' must be strictly increasing"
 msgstr ""
 
 msgid "'ord' must be >= 2"
 msgstr ""
 
-msgid "the range of x values exceeds one period"
+msgid "the range of 'x' values exceeds one period"
 msgstr ""
 
 msgid "knot positions must be non-decreasing"
 msgstr ""
 
-msgid "lengths of x and y must be the same"
+msgid "lengths of 'x' and 'y' must be the same"
 msgstr ""
 
-msgid "deriv must be between 0 and"
+msgid "'deriv' must be between 0 and %d"
 msgstr ""
 
 msgid "knot positions must be strictly increasing"
@@ -77,5 +74,5 @@ msgstr ""
 msgid "'df' was too small; have used"
 msgstr ""
 
-msgid "some x values beyond boundary knots may cause ill-conditioned bases"
+msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
 msgstr ""
