@@ -1,6 +1,7 @@
 fisher.test <-
 function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
-         alternative = "two.sided", conf.level = 0.95) {
+         alternative = "two.sided", conf.level = 0.95)
+{
     DNAME <- deparse(substitute(x))
 
     if(is.data.frame(x))
@@ -8,19 +9,19 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
     if(is.matrix(x)) {
         if(any(dim(x) < 2))
             stop("x must have at least 2 rows and columns")
-        if(any(x < 0) || any(is.na(x))) 
+        if(any(x < 0) || any(is.na(x)))
             stop("all entries of x must be nonnegative and finite")
     }
     else {
-        if(is.null(y)) 
+        if(is.null(y))
             stop("if x is not a matrix, y must be given")
-        if(length(x) != length(y)) 
+        if(length(x) != length(y))
             stop("x and y must have the same length")
         DNAME <- paste(DNAME, "and", deparse(substitute(y)))
         OK <- complete.cases(x, y)
         x <- as.factor(x[OK])
         y <- as.factor(y[OK])
-        if((nlevels(x) < 2) || (nlevels(y) < 2)) 
+        if((nlevels(x) < 2) || (nlevels(y) < 2))
             stop("x and y must have at least 2 levels")
         x <- table(x, y)
     }
@@ -181,10 +182,10 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
             p <- pnhyper(x, 1, upper = TRUE)
             if(p > alpha)
                 uniroot(function(t) pnhyper(x, t, upper = TRUE) - alpha,
-                        c(0,1))$root 
+                        c(0,1))$root
             else if (p < alpha)
                 1 / uniroot(function(t) pnhyper(x, 1/t, upper = TRUE) -
-                            alpha, 
+                            alpha,
                             c(0,1))$root
             else
                 1
