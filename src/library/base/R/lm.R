@@ -523,7 +523,7 @@ anovalist.lm <- function (object, ..., test = NULL)
     p1 <- 1:p
     piv <- object$qr$pivot[p1]
 ## NB: Q[p1,]%*%X[,piv]=R[p1,p1]
-    beta<-coef(object)
+    beta <- object$coefficients
     predictor <- drop(X[, piv, drop = FALSE] %*% beta[piv])
     if ( !is.null(offset) ) predictor <- predictor + offset
     interval <- match.arg(interval)
