@@ -192,6 +192,8 @@ NEW FEATURES
 	`comment.char', default `#', that can be used to start
 	comments on a line.
 
+    o   integer addition, subtraction, and multiplication now return NA's
+	on overflow and issue a warning.
 
 
 
