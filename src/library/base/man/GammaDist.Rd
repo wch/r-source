@@ -27,12 +27,12 @@ and
 
 If \code{scale} is omitted, it assumes the default value of \code{1}.
 
-The gamma distribution with parameters \code{shape} \eqn{= a} and
-\code{scale} \eqn{= b} has density
+The gamma distribution with parameters \code{shape} \eqn{= \alpha}{= a} and
+\code{scale} \eqn{= \sigma}{= b} has density
 \deqn{
-  f(x) = \frac{1}{{b}^{a} \Gamma (a)} {x}^{a-1} {e}^{-x/b}%
+  f(x) = \frac{1}{{\sigma}^{\alpha}\Gamma(\alpha)} {x}^{\alpha-1} e^{-x/\sigma}%
 }{f(x) = 1/(b^a Gamma(a)) x^(a-1) e^-(x/b)}
-for \eqn{x > 0}, \eqn{a > 0} and \eqn{b > 0}.
+for \eqn{x > 0}, \eqn{\alpha > 0}{a > 0} and \eqn{\sigma > 0}{b > 0}.
 }
 \seealso{
 \code{\link{gamma}} for the gamma function, \code{\link{dbeta}} for
