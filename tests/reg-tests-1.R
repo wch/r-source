@@ -273,9 +273,9 @@ detach("package:ts")
 a <- data.frame(x = 1:4)
 b <- data.frame(x = 1:3, y = factor(c("NA", "a", "b"), exclude=""))
 (m <- merge(a, b, all.x = TRUE))
-stopifnot(is.na(m[4, 2])
+stopifnot(is.na(m[4, 2]))
 ## was level NA in 1.3.1
-stopifnot(!is.na(m[1, 2])
+stopifnot(!is.na(m[1, 2]))
 
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
