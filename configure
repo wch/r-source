@@ -575,7 +575,7 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_DAY "2"
+#define R_DAY "6"
 EOF
 
 cat >> confdefs.h <<\EOF
@@ -864,16 +864,15 @@ done
 fi
 fi
 
-#  Yacc et al:  Note that bison does not do the job.
-#  You must use byacc if you don't have a genuine yacc.
+#  yacc et al:  Note any of bison -y, yacc or byacc should do the job.
+#  The results of byacc are most portable.  Thats what we distribute.
 
-# AC_PROG_YACC
-for ac_prog in byacc yacc
+for ac_prog in 'bison -y' byacc
 do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:877: checking for $ac_word" >&5
+echo "configure:876: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_YACC'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -900,6 +899,7 @@ fi
 
 test -n "$YACC" && break
 done
+test -n "$YACC" || YACC="yacc"
 
 # Extract the first word of "ranlib", so it can be a program name with args.
 set dummy ranlib; ac_word=$2
@@ -2444,7 +2444,7 @@ EOF
 
 fi
 
-for ac_hdr in fcntl.h limits.h dlfcn.h dl.h elf.h time.h sys/times.h rpc/xdr.h
+for ac_hdr in fcntl.h limits.h dlfcn.h dl.h elf.h time.h sys/times.h rpc/xdr.h readline/history.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
