@@ -419,9 +419,10 @@ sub text2html {
     while(checkloop($loopcount++, $text, "\\link")
 	  &&  $text =~ /\\link/){
 	my ($id, $arg)	= get_arguments("link", $text, 1);
-	$htmlfile = "../../$htmlindex{$arg}";
+	$htmlfile = $htmlindex{$arg};
 	if($htmlfile){
-	    $text =~ s/\\link$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
+	    $text =~
+		s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
 	}
 	else{
 	    $text =~ s/\\link$id.*$id/$arg/s;
@@ -491,7 +492,8 @@ sub code2html {
 	my ($id, $arg)	= get_arguments("link", $text, 1);
 	$htmlfile = $htmlindex{$arg};
 	if($htmlfile){
-	    $text =~ s/\\link$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
+	    $text =~
+		s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
 	}
 	else{
 	    $text =~ s/\\link$id.*$id/$arg/s;
