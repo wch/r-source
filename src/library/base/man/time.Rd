@@ -7,7 +7,7 @@ frequency(x, \dots)
 deltat(x, \dots)
 }
 \synopsis{
-time(x \dots)
+time(x, \dots)
 time.default(x, offset=0, \dots)
 time.ts(x, \dots)
 cycle(x, \dots)
