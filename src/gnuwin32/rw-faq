@@ -95,8 +95,11 @@ files you need.  There are two versions of the distribution.
 1) `rw1062.exe' is about 19Mb and gives a complete installation.
 
 2) Directory `miniR' contains `miniR.exe' and eight files
-`miniR-?.bin'.  You can put  `miniR.exe' and `miniR-1.bin' on one
-floppy and the remaining `miniR-?.bin' on a floppy each.
+`miniR-?.bin'.  You can put `miniR.exe' and `miniR-1.bin' on one floppy
+and the remaining `miniR-?.bin' on a floppy each.  This is a small
+installation, containing the text and compiled HTML versions of the
+help files and the _An Introduction to R_ and _Data Import/Export_
+manuals in PDF.
 
 2.2 How do I install R for Windows?
 ===================================
@@ -458,8 +461,8 @@ If those all hold true, this works for us.
 If the help search system does not work _at all_, this probably
 indicates that Java support is either not installed or not enabled in
 your browser.  Recent versions of browsers have made Java support
-optional: for example it is optional in Netscape 6.x and Opera, and may
-not be installed for IE6 on Windows XP.
+optional: for example it is optional in Netscape 6/7 and in Opera, and
+may not be installed for IE6 on Windows XP.
 
 3.5 Loading a package fails.
 ============================
@@ -489,7 +492,7 @@ check.  From R, run `Sys.getenv("PATH")' to do so.)  Note that you do
 need 8.3.x and not 8.4.0: follow the links to 8.4.0 and you will find
 8.3.x available there.
 
-You then need to set the environment variable `TCL_LIBRARY'(*note How
+You then need to set the environment variable `TCL_LIBRARY' (*note How
 do I set environment variables?::), to something like `c:/Program
 Files/Tcl/lib/tcl8.3'.  (The startup code for the package will warn you
 if this is unset.  NB: do not quote the path, even if as here it

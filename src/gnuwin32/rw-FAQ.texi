@@ -119,8 +119,12 @@ the distribution.
 1) @code{@RWVER@.exe} is about 19Mb and gives a complete installation.
 
 2) Directory @code{miniR} contains @code{miniR.exe} and eight files
-@code{miniR-?.bin}.  You can put  @code{miniR.exe} and @code{miniR-1.bin}
+@code{miniR-?.bin}.  You can put @code{miniR.exe} and @code{miniR-1.bin}
 on one floppy and the remaining @code{miniR-?.bin} on a floppy each.
+This is a small installation, containing the text and compiled HTML
+versions of the help files and the @emph{An Introduction to R} and
+@emph{Data Import/Export} manuals in PDF.
+
 
 
 @node How do I install R for Windows?, How do I run it?, Where can I find the latest version?, Installation and Usage
@@ -533,8 +537,8 @@ If those all hold true, this works for us.
 If the help search system does not work @emph{at all}, this probably
 indicates that Java support is either not installed or not enabled in
 your browser.  Recent versions of browsers have made Java support
-optional: for example it is optional in Netscape 6.x and Opera, and may
-not be installed for IE6 on Windows XP.
+optional: for example it is optional in Netscape 6/7 and in Opera, and
+may not be installed for IE6 on Windows XP.
 
 @node Loading a package fails., Package TclTk does not work., My functions are not found by the HTML help search system., Packages
 @section Loading a package fails.
@@ -566,12 +570,12 @@ check.  From R, run @code{Sys.getenv("PATH")} to do so.)  Note that you
 do need 8.3.x and not 8.4.0: follow the links to 8.4.0 and you will find
 8.3.x available there.
 
-You then need to set the environment variable
-@code{TCL_LIBRARY}(@pxref{How do I set environment variables?}), to
-something like @code{c:/Program Files/Tcl/lib/tcl8.3}.  (The startup
-code for the package will warn you if this is unset.  NB: do not quote
-the path, even if as here it contains spaces. If you forget, you can set
-the variable inside R by something like
+You then need to set the environment variable @code{TCL_LIBRARY}
+(@pxref{How do I set environment variables?}), to something like
+@code{c:/Program Files/Tcl/lib/tcl8.3}.  (The startup code for the
+package will warn you if this is unset.  NB: do not quote the path, even
+if as here it contains spaces. If you forget, you can set the variable
+inside R by something like
 @smallexample
     Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
 @end smallexample
