@@ -205,6 +205,9 @@ static void namewalk(SEXP s, NameWalkData *d)
 	for(i=0 ; i<n ; i++)
 	    namewalk(VECTOR_ELT(s, i), d);
 	break;
+    default:
+	/* it seems the intention is to do nothing here! */
+	break;
     }
 }
 

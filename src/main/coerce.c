@@ -421,6 +421,8 @@ static SEXP coerceToSymbol(SEXP v)
     case RAWSXP:
 	ans = StringFromRaw(RAW(v)[0], &warn);
 	break;
+    default:
+	UNIMPLEMENTED_TYPE("coerceToSymbol", v);
     }
     if (warn) CoercionWarning(warn);/*2000/10/23*/
     ans = install(CHAR(ans));
@@ -455,6 +457,8 @@ static SEXP coerceToLogical(SEXP v)
 	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = LogicalFromInteger((int)RAW(v)[i], &warn);
 	break;
+    default:
+	UNIMPLEMENTED_TYPE("coerceToLogical", v);
     }
     if (warn) CoercionWarning(warn);
     UNPROTECT(1);
@@ -488,6 +492,8 @@ static SEXP coerceToInteger(SEXP v)
 	for (i = 0; i < n; i++)
 	    INTEGER(ans)[i] = (int)RAW(v)[i];
 	    break;
+    default:
+	UNIMPLEMENTED_TYPE("coerceToInteger", v);
     }
     if (warn) CoercionWarning(warn);
     UNPROTECT(1);
@@ -521,6 +527,8 @@ static SEXP coerceToReal(SEXP v)
 	for (i = 0; i < n; i++)
 	    REAL(ans)[i] = RealFromInteger((int)RAW(v)[i], &warn);
 	break;
+    default:
+	UNIMPLEMENTED_TYPE("coerceToReal", v);
     }
     if (warn) CoercionWarning(warn);
     UNPROTECT(1);
@@ -554,6 +562,8 @@ static SEXP coerceToComplex(SEXP v)
 	for (i = 0; i < n; i++)
 	    COMPLEX(ans)[i] = ComplexFromInteger((int)RAW(v)[i], &warn);
 	break;
+    default:
+	UNIMPLEMENTED_TYPE("coerceToComplex", v);
     }
     if (warn) CoercionWarning(warn);
     UNPROTECT(1);
@@ -618,6 +628,8 @@ static SEXP coerceToRaw(SEXP v)
 	    RAW(ans)[i] = (Rbyte) tmp;
 	}
 	break;
+    default:
+	UNIMPLEMENTED_TYPE("coerceToRaw", v);
     }
     if (warn) CoercionWarning(warn);
     UNPROTECT(1);
@@ -657,6 +669,8 @@ static SEXP coerceToString(SEXP v)
 	for (i = 0; i < n; i++)
 	    SET_STRING_ELT(ans, i, StringFromRaw(RAW(v)[i], &warn));
 	break;
+    default:
+	UNIMPLEMENTED_TYPE("coerceToString", v);
     }
     if (warn) CoercionWarning(warn);/*2000/10/23*/
     UNPROTECT(1);
@@ -695,6 +709,8 @@ static SEXP coerceToExpression(SEXP v)
 	    for (i = 0; i < n; i++)
 		SET_VECTOR_ELT(ans, i, ScalarRaw(RAW(v)[i]));
 	    break;
+	default:
+	    UNIMPLEMENTED_TYPE("coerceToExpression", v);
 	}
     }
     else {/* not used either */

@@ -356,6 +356,8 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    argi = VECTOR_ELT(args, i);
 	    namei = EnsureString(STRING_ELT(argnames, i));
 	    break;
+	default: /* already checked, but be safe here */
+	    UNIMPLEMENTED_TYPE("options", args);
 	}
 
 	if (*CHAR(namei)) { /* name = value  ---> assignment */

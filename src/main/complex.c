@@ -643,7 +643,7 @@ SEXP do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(z = coerceVector(z, CPLXSXP));
 	break;
     default:
-	errorcall(call, "invalid argument type");
+	UNIMPLEMENTED_TYPE("polyroot", z);
     }
     n = length(z);
     degree = 0;

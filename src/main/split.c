@@ -96,9 +96,7 @@ SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 		RAW(VECTOR_ELT(vec, j - 1))[k] = RAW(x)[i];
 		break;
 	    default:
-		errorcall(call, 
-			  "split for this type (%d) is not implemented", 
-			  TYPEOF(x));
+		UNIMPLEMENTED_TYPE("split", x);
 	    }
 	    if(have_names) {
 		nmj = getAttrib(VECTOR_ELT(vec, j - 1), R_NamesSymbol);

@@ -916,11 +916,13 @@ static SEXP dispatchNonGeneric(SEXP name, SEXP env, SEXP fdef)
 	fun = findVarInFrame3(rho, symbol, TRUE);
 	if(fun == R_UnboundValue) continue;
 	switch(TYPEOF(fun)) {
-	case BUILTINSXP:  case SPECIALSXP: break;
 	case CLOSXP:
 	    value = findVarInFrame3(CLOENV(fun), dot_Generic, TRUE);
 	    if(value == R_UnboundValue) break;
-	    /*in all other cases, go on to the parent environment */
+	case BUILTINSXP:  case SPECIALSXP:
+	default:
+	    /* in all other cases, go on to the parent environment */
+	    break;
 	}
 	fun = R_UnboundValue;
     }

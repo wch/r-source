@@ -335,7 +335,7 @@ SEXP do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 		RAW(ans)[k++] = RAW(x)[i];
 	break;
     default:
-	UNIMPLEMENTED_TYPE("do_duplicated", x);
+	UNIMPLEMENTED_TYPE("duplicated", x);
     }
     return ans;
 }
