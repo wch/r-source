@@ -75,7 +75,8 @@ RNGtype RNG_kind = WICHMANN_HILL;
  * & 037.. really does nothing when long=32bits, 
  * however does every compiler optimize this?  -- optimize ourselves!
  */
-#ifdef LONG_32_BITS
+
+#if (SIZEOF_LONG == 4)
 # define do32bits(N) (N)
 #else
 # define do32bits(N) ((N) & 037777777777)
@@ -223,4 +224,3 @@ void Randomize(RNGtype kind)
     
     RNG_Init(kind, (long) rand() | 01/* odd */);
 }
-
