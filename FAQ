@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-12-21
+Version 2.0.2004-12-22
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2910,11 +2910,14 @@ distributions of R.)
 *udunits*
      Interface to Unidata's routines to convert units.
 
+*urca*
+     Unit root and cointegration tests for time series data.
+
 *urn*
      Functions for sampling without replacement (simulated urns).
 
-*urca*
-     Unit root and cointegration tests for time series data.
+*uroot*
+     Unit root tests and graphics for seasonal time series.
 
 *vabayelMix*
      Variational Bayesian mixture model.
