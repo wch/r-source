@@ -1,6 +1,6 @@
 \name{demo}
 \title{Demonstrations of R functions}
-\usage{demo(topic, device = .Options$device)}
+\usage{demo(topic, device = getOption("device"))}
 \alias{demo}
 \arguments{
   \item{topic}{The topic which should be demonstrated.

@@ -5,7 +5,7 @@ str(object, \dots)
 str.data.frame(object, \dots)
 str.default(object, max.level = 0, vec.len = 4, digits.d = 3,
     give.attr = TRUE, give.length = TRUE,
-    wid = .Options$width,
+    wid = getOption("width"),
     nest.lev = 0,
     indent.str = paste(rep(" ", max(0, nest.lev + 1)), collapse = ".."))
 

@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.13 2000/01/24 11:48:08 maechler Exp $
+    ## $Id: str.R,v 1.14 2000/01/31 10:01:52 hornik Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -26,7 +26,7 @@ str.data.frame <- function(object, ...)
 
 str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 			give.attr = TRUE, give.length = TRUE,
-			wid = .Options$width,
+			wid = getOption("width"),
 			nest.lev = 0,
 			indent.str = paste(rep(" ", max(0, nest.lev + 1)),
 			collapse = "..")
@@ -41,7 +41,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## ------------------------------------------------------------------------
-    ## $Id: str.R,v 1.13 2000/01/24 11:48:08 maechler Exp $
+    ## $Id: str.R,v 1.14 2000/01/31 10:01:52 hornik Exp $
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)

@@ -438,7 +438,7 @@ model.frame.aovlist <- function(formula, data = NULL, ...)
 }
 
 print.mtable <-
-    function(x, ..., digits = .Options$digits, quote = FALSE, right = FALSE)
+    function(x, ..., digits = getOption("digits"), quote = FALSE, right = FALSE)
 {
     xxx <- x
     xx <- attr(x, "Notes")

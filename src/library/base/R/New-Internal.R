@@ -66,7 +66,7 @@ duplicated <- function(x, incomparables = FALSE) {
     .Internal(duplicated(x))
 }
 format.info <- function(x).Internal(format.info(x))
-gc <- function(verbose = .Options$verbose)
+gc <- function(verbose = getOption("verbose"))
     matrix(.Internal(gc(verbose))/c(1,1,1,1,10,10),2,3,
            dimnames = list(c("Ncells","Vcells"),c("free","total", "(Mb)")))
 gcinfo <- function(verbose).Internal(gcinfo(verbose))

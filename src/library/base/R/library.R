@@ -46,10 +46,12 @@ library <-
 			      sep = ""))
 	    else sys.source(file, env)
 	    .Internal(lib.fixup(env, .GlobalEnv))
-	    if (exists(".First.lib", envir = env, inherits = FALSE)) {
+	    if(exists(".First.lib", envir = env, inherits = FALSE)) {
 		firstlib <- get(".First.lib", envir = env, inherits = FALSE)
 		firstlib(which.lib.loc, package)
 	    }
+            if(!is.null(firstlib <- getOption(".First")[[package]]))
+                firstlib(which.lib.loc, package)
 	    if (warn.conflicts &&
 		!exists(".conflicts.OK",  envir = env, inherits = FALSE)) {
 		##-- Check for conflicts
@@ -79,7 +81,7 @@ library <-
 	    }
 	}
 	else {
-	    if (options()$verbose)
+	    if (getOption("verbose"))
 		warning(paste("Package",pkgname,"already present in search()"))
 	}
     }
@@ -127,7 +129,7 @@ library <-
 
 library.dynam <-
   function (chname, package = .packages(), lib.loc = .lib.loc,
-	    verbose = .Options$verbose, file.ext = .Platform$dynlib.ext)
+	    verbose = getOption("verbose"), file.ext = .Platform$dynlib.ext)
 {
   if (!exists(".Dyn.libs"))
     assign(".Dyn.libs", character(0), envir = .AutoloadEnv)

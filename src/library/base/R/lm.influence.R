@@ -125,7 +125,7 @@ influence.measures <- function(lm.obj)
     ans
 }
 
-print.infl <- function(x, digits = max(3, .Options$digits - 4), ...)
+print.infl <- function(x, digits = max(3, getOption("digits") - 4), ...)
 {
     ## `x' : as the result of  influence.measures(.)
     cat("Influence measures of\n\t", deparse(x$call),":\n\n")
@@ -136,7 +136,7 @@ print.infl <- function(x, digits = max(3, .Options$digits - 4), ...)
     invisible(x)
 }
 
-summary.infl <- function(object, digits = max(2, .Options$digits - 5), ...)
+summary.infl <- function(object, digits = max(2, getOption("digits") - 5), ...)
 {
     ## object must be as the result of	influence.measures(.)
     is.inf <- object$is.inf

@@ -347,7 +347,7 @@ pointwise <- function(results, coverage)
   list(fit = fit, lower = fit - lim, upper = fit + lim)
 }
 
-print.loess <- function(x, digits=max(3, .Options$digits-3), ...)
+print.loess <- function(x, digits=max(3, getOption("digits")-3), ...)
 {
   if(!is.null(cl <- x$call)) {
     cat("Call:\n")
@@ -366,7 +366,7 @@ summary.loess <- function(object, ...)
   object
 }
 
-print.summary.loess <- function(x, digits=max(3, .Options$digits-3), ...)
+print.summary.loess <- function(x, digits=max(3, getOption("digits")-3), ...)
 {
   if(!is.null(cl <- x$call)) {
     cat("Call:\n")

@@ -1,11 +1,13 @@
 \name{options}
+\alias{options}
+\alias{.Options}
+\alias{getOption}
 \title{Options Settings}
 \usage{
 options(\dots)
+getOption(x)
 .Options
 }
-\alias{options}
-\alias{.Options}
 \arguments{
   \item{\dots}{any options can be defined, using \code{name = value}.
     However, only the ones below are used in ``base \R''.
@@ -111,6 +113,7 @@ options(\dots)
     Defaults to "internal" when the internal unzip DLL is used.
 #endif
   }
+  \item{x}{a character string holding one of the above option names.}
 }
 \description{
   \code{options} allows the user to set and examine a variety of global
@@ -119,12 +122,9 @@ options(\dots)
 }
 \details{
   Invoking \code{options()} with no arguments returns a list with the
-  current values of the options.
-  \code{.Options} is another way to access this list \bold{``read only''}.
-
-  Accessing current options, usually will work with \code{.Options$width}
-  (e.g.), rather than \code{options("width")} which is a \emph{list} of
-  length one.
+  current values of the options.  To access the value of a single
+  option, one should use \code{getOption("width")}, e.g., rather than
+  \code{options("width")} which is a \emph{list} of length one.
 
   The default settings of some of these options are
   \tabular{llll}{

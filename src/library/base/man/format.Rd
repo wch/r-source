@@ -2,8 +2,8 @@
 \title{Encode in a Common Format}
 \usage{
 format(x, \dots)
-format.default(x, trim=FALSE, digits = .Options$digits)
-format.pval(x, digits= max(1,.Options$digits-2), eps = .Machine$double.eps)
+format.default(x, trim=FALSE, digits = getOption("digits"))
+format.pval(x, digits= max(1,getOption("digits")-2), eps = .Machine$double.eps)
 }
 \alias{format}
 \alias{format.default}

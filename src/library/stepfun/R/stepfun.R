@@ -26,7 +26,7 @@ knots <- function(...) UseMethod("knots")
 knots.stepfun <- function(Fn) eval(expression(x), env=environment(Fn))
 
 
-print.stepfun <- function (Fn, digits=.Options$digits -2, ...)
+print.stepfun <- function (Fn, digits=getOption("digits") -2, ...)
 {
     numform <- function(x)	paste(formatC(x, dig=digits), collapse=", ")
     i1 <- function(n) 1:min(3,n)

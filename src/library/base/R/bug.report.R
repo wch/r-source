@@ -1,5 +1,5 @@
 bug.report <- function(subject="", ccaddress=getenv("USER"),
-                       method=.Options$mailer,
+                       method=getOption("mailer"),
                        address="r-bugs@biostat.ku.dk",
                        file="R.bug.report")
 {
@@ -42,7 +42,7 @@ bug.report <- function(subject="", ccaddress=getenv("USER"),
         cat(disclaimer, file=file)        
 	body <- gsub("\\\\n", "\n", body)
 	cat(body, file=file, append=TRUE)
-	system(paste(.Options$editor, file))
+	system(paste(getOption("editor"), file))
         cat("The unsent bug report can be found in file", file, "\n")
     }
     else if(method == "mailx"){
@@ -52,7 +52,7 @@ bug.report <- function(subject="", ccaddress=getenv("USER"),
 
 	body <- gsub("\\\\n", "\n", body)
 	cat(body, file=file, append=FALSE)
-	system(paste(.Options$editor, file))
+	system(paste(getOption("editor"), file))
 
         if(is.character(ccaddress) && nchar(ccaddress)>0) {
             cmdargs <- paste("-s '", subject, "' -c", ccaddress,

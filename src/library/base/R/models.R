@@ -283,7 +283,7 @@ model.matrix.default <- function(formula, data = sys.frame(sys.parent()),
 	    stop("model frame and formula mismatch in model.matrix()")
 	data <- data[,reorder, drop=FALSE]
     }
-    contr.funs <- as.character(.Options$contrasts)
+    contr.funs <- as.character(getOption("contrasts"))
     isF <- sapply(data, is.factor)[-1]
     isOF <- sapply(data, is.ordered)
     namD <- names(data)

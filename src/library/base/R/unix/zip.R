@@ -1,7 +1,7 @@
 zip.file.extract <- function(file, zipname="R.zip")
 {
     ## somewhat system-specific.
-    unzip <- options()$unzip
+    unzip <- getOption("unzip")
     if(!length(unzip)) return(file)
     path <- sub("[^/]*$","", file)
     topic <- substr(file, nchar(path)+1, 1000)

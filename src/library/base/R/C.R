@@ -11,7 +11,7 @@ C <- function(object, contr, how.many, ...)
 			contr
 			)
     if(missing(contr)) {
-	oc <- .Options$contrasts
+	oc <- getOption("contrasts")
 	contr <-
 	    if(length(oc) < 2) # should not happen
 		if(is.ordered(object)) contr.poly else contr.treatment

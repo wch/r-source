@@ -2,7 +2,7 @@
 \title{X Window System Graphics}
 \usage{
 X11(display = "", width = 7, height = 7, pointsize = 12,
-    gamma = 1, colortype = options()$X11colortype,
+    gamma = 1, colortype = getOption("X11colortype"),
     maxcubesize = 256)
 }
 \alias{x11}

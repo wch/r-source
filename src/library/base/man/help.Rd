@@ -2,13 +2,13 @@
 \title{Documentation}
 \usage{
 help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
-     lib.loc = .lib.loc, verbose = .Options$verbose,
+     lib.loc = .lib.loc, verbose = getOption("verbose"),
 #ifdef unix
-     htmlhelp = .Options$htmlhelp)
+     htmlhelp = getOption("htmlhelp"))
 #endif
 #ifdef windows
-     chmhelp = .Options$chmhelp,
-     htmlhelp = .Options$htmlhelp, winhelp = .Options$winhelp)
+     chmhelp = getOption("chmhelp"),
+     htmlhelp = getOption("htmlhelp"), winhelp = getOption("winhelp"))
 #endif
 ?topic
 }

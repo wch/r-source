@@ -36,7 +36,7 @@ medpolish <- function (x, eps=0.01, maxiter=10, trace.iter = TRUE)
     ans
 }
 
-print.medpolish <- function(x, digits=.Options$digits, ...)
+print.medpolish <- function(x, digits=getOption("digits"), ...)
 {
     cat("\nMedian Polish Results (Dataset: \"", x$name, "\")\n", sep="")
     cat("\nOverall:", x$overall, "\n\nRow Effects:\n")

@@ -1,7 +1,7 @@
 \name{gc}
 \title{Garbage Collection}
 \usage{
-gc(verbose = .Options$verbose)
+gc(verbose = getOption("verbose"))
 gcinfo(verbose)
 }
 \alias{gc}

@@ -2,7 +2,7 @@
 \title{Time-Series Objects}
 \usage{
 ts(data = NA, start = 1, end = numeric(0), frequency = 1,
-   deltat = 1, ts.eps = .Options$ts.eps, class, names)
+   deltat = 1, ts.eps = getOption("ts.eps"), class, names)
 as.ts(x)
 is.ts(x)
 

@@ -219,7 +219,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
 	   df.residual = n - z$rank))
 }
 
-print.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
+print.lm <- function(x, digits = max(3, getOption("digits") - 3), ...)
 {
     cat("\nCall:\n",deparse(x$call),"\n\n",sep="")
     cat("Coefficients:\n")
@@ -288,8 +288,8 @@ summary.lm <- function (object, correlation = FALSE, ...)
 }
 
 print.summary.lm <-
-    function (x, digits = max(3, .Options$digits - 3), symbolic.cor = p > 4,
-	      signif.stars= .Options$show.signif.stars,	...)
+    function (x, digits = max(3, getOption("digits") - 3), symbolic.cor = p > 4,
+	      signif.stars= getOption("show.signif.stars"),	...)
 {
     cat("\nCall:\n")#S: ' ' instead of '\n'
     cat(paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")

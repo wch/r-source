@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.3 1999/12/28 22:16:30 bates Exp $
+### $Id: nls.R,v 1.4 2000/01/31 10:01:52 hornik Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -488,8 +488,8 @@ summary.nls <- function (object, ...)
 }
 
 print.summary.nls <-
-  function (x, digits = max(3, .Options$digits - 3), symbolic.cor = p > 
-            4, signif.stars = .Options$show.signif.stars, ...) 
+  function (x, digits = max(3, getOption("digits") - 3), symbolic.cor = p > 
+            4, signif.stars = getOption("show.signif.stars"), ...) 
 {
     cat("\nFormula: ")
     cat(paste(deparse(x$formula), sep = "\n", collapse = "\n"), 

@@ -1,7 +1,7 @@
 \name{edit}
 \title{Invoke a Text Editor}
 \usage{
-edit(name = NULL, file = "", editor = options()$editor)
+edit(name = NULL, file = "", editor = getOption("editor"))
 vi(name = NULL, file = "")
 emacs(name = NULL, file = "")
 pico(name = NULL, file = "")

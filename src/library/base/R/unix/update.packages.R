@@ -1,4 +1,4 @@
-install.packages <- function(pkgs, lib, CRAN=.Options$CRAN,
+install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                              contriburl=contrib.url(CRAN),
                              method="auto", available=NULL)
 {
@@ -85,7 +85,7 @@ download.file <- function(url, destfile, method="auto")
 }
 
 download.packages <- function(pkgs, destdir, available=NULL,
-                              CRAN=.Options$CRAN,
+                              CRAN=getOption("CRAN"),
                               contriburl=contrib.url(CRAN),
                               method="auto")
 {

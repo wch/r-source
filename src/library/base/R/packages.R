@@ -1,4 +1,4 @@
-CRAN.packages <- function(CRAN=.Options$CRAN, method="auto",
+CRAN.packages <- function(CRAN=getOption("CRAN"), method="auto",
                           contriburl=contrib.url(CRAN))
 {
     localcran <- length(grep("^file:", contriburl)) > 0
@@ -15,7 +15,7 @@ CRAN.packages <- function(CRAN=.Options$CRAN, method="auto",
               versionfix=TRUE)
 }
 
-update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
+update.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
                             contriburl=contrib.url(CRAN),
                             method="auto", instlib=NULL, ask=TRUE,
                             available=NULL)
@@ -56,7 +56,7 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
     }
 }
 
-old.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
+old.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
                          contriburl=contrib.url(CRAN),
                          method="auto", available=NULL)
 {

@@ -1,4 +1,4 @@
-zapsmall <- function(x, digits = .Options$digits)
+zapsmall <- function(x, digits = getOption("digits"))
 {
     if (length(digits) == 0)
         stop("invalid digits")

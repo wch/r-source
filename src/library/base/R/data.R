@@ -3,7 +3,7 @@
 data <-
 function (..., list = character(0),
           package = c(.packages(), .Autoloaded),
-          lib.loc = .lib.loc, verbose = .Options$verbose)
+          lib.loc = .lib.loc, verbose = getOption("verbose"))
 {
     names <- c(as.character(substitute(list(...))[-1]), list)
     if (!missing(package))

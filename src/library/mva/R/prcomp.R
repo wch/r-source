@@ -42,7 +42,7 @@ summary.prcomp <- function(object) {
     object
 }
 
-print.summary.prcomp <- function(x, digits = min(3, .Options$digits-3),
+print.summary.prcomp <- function(x, digits = min(3, getOption("digits")-3),
                                  ...) {
     cat("Importance of components:\n")
     print(x$importance, digits = digits)

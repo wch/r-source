@@ -316,7 +316,7 @@ glm.fit <-
 }
 
 
-print.glm <- function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
+print.glm <- function (x, digits= max(3, getOption("digits") - 3), na.print="", ...)
 {
     cat("\nCall: ", deparse(x$call), "\n\n")
     cat("Coefficients")
@@ -559,9 +559,9 @@ summary.glm <- function(object, dispersion = NULL,
     return(ans)
 }
 
-print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
+print.summary.glm <- function (x, digits = max(3, getOption("digits") - 3),
 			       na.print = "", symbolic.cor = p > 4,
-			       signif.stars= .Options$show.signif.stars, ...)
+			       signif.stars= getOption("show.signif.stars"), ...)
 {
     cat("\nCall:\n")
     cat(paste(deparse(x$call), sep="\n", collapse="\n"), "\n\n", sep="")

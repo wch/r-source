@@ -13,9 +13,9 @@ residuals(x, type = c("working", "pearson", "deviance"), \dots)
 weights(x)
 plot(x)
 
-print(summary.lm.obj, digits = max(3, .Options$digits - 3),
+print(summary.lm.obj, digits = max(3, getOption("digits") - 3),
       symbolic.cor = p > 4,
-      signif.stars= .Options$show.signif.stars, \dots)
+      signif.stars= getOption("show.signif.stars"), \dots)
 }
 \alias{anova.lm}
 \alias{anova.lm.null}

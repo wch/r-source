@@ -60,7 +60,7 @@ table <- function (..., exclude = c(NA, NaN),
     y
 }
 
-print.table <- function(x, digits = .Options$digits, quote = FALSE,
+print.table <- function(x, digits = getOption("digits"), quote = FALSE,
                         na.print = "", ...) {
     print.default(unclass(x), digits = digits, quote = quote,
                   na.print = na.print, ...)

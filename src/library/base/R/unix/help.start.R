@@ -1,4 +1,4 @@
-help.start <- function (gui = "irrelevant", browser = .Options$browser,
+help.start <- function (gui = "irrelevant", browser = getOption("browser"),
 			remote = NULL) {
     if(is.null(browser))
 	stop("Invalid browser name, check options(\"browser\").")

@@ -5,7 +5,7 @@ zip.file.extract <- function(file, zipname="R.zip")
     topic <- substr(ofile, nchar(path)+1, 1000)
     if(file.exists(file.path(path, zipname))) {
         tempdir <- sub("[^\\]*$","", tempfile())
-        if((unzip <- options()$unzip) != "internal") {
+        if((unzip <- getOption("unzip")) != "internal") {
             if(!system(paste(unzip, ' -oq "',
                              file.path(path, zipname), '" ', topic,
                              " -d ", tempdir, sep=""), invisible = TRUE))
@@ -27,7 +27,7 @@ zip.file.extract <- function(file, zipname="R.zip")
 zip.unpack <- function(zipname, dest)
 {
     if(file.exists(zipname)) {
-        if((unzip <- options()$unzip) != "internal") {
+        if((unzip <- getOption("unzip")) != "internal") {
             system(paste(unzip, "-oq", zipname, "-d", dest),
                    show = FALSE, invisible = TRUE)
         } else {

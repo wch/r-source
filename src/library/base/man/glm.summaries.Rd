@@ -11,9 +11,9 @@ family(x)
 fitted.values(x) ; fitted(x)
 residuals(x, type = c("deviance", "pearson", "working",
                       "response", "partial"), \dots)
-print.summary(summary.glm.obj, digits = max(3, .Options$digits - 3),
+print.summary(summary.glm.obj, digits = max(3, getOption("digits") - 3),
               na.print = "", symbolic.cor = p > 4,
-              signif.stars = .Options$show.signif.stars, \dots)
+              signif.stars = getOption("show.signif.stars"), \dots)
 }
 \alias{summary.glm}
 \alias{summary.glm.null}

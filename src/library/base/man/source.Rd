@@ -2,7 +2,7 @@
 \title{Redirect Input}
 \usage{
 source(file, local = FALSE, echo = verbose, print.eval = echo,
-       verbose = .Options$verbose,  prompt.echo = .Options$prompt,
+       verbose = getOption("verbose"),  prompt.echo = getOption("prompt"),
        max.deparse.length = 150, chdir = FALSE)
 }
 \alias{source}

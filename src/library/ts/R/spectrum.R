@@ -230,7 +230,7 @@ plot.spec <-
         ylab <- if(log == "dB") "spectrum (dB)" else "spectrum"
     if(is.logical(log))
         log <- if(log) "yes" else "no"
-    if(missing(log) && .Options$ts.S.compat) log <- "dB"
+    if(missing(log) && getOption("ts.S.compat")) log <- "dB"
     log <- match.arg(log)
     ylog <- ""
     if(log=="dB") x$spec <- 10 * log10(x$spec)

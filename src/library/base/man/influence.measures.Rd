@@ -2,8 +2,8 @@
 \title{Regression Diagnostics}
 \usage{
 influence.measures(lm.obj)
-summary.infl (object, digits = max(2, .Options$digits - 5), \dots)
-  print.infl (x, digits = max(3, .Options$digits - 4), \dots)
+summary.infl (object, digits = max(2, getOption("digits") - 5), \dots)
+  print.infl (x, digits = max(3, getOption("digits") - 4), \dots)
 
 rstandard(lm.obj,
           infl = lm.influence(lm.obj),

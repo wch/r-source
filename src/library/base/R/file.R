@@ -6,7 +6,7 @@ R.home <- function()
 
 file.show <-
 function (..., header=rep("", nfiles), title="R Information",
-          delete.file=FALSE, pager=options()$pager)
+          delete.file=FALSE, pager=getOption("pager"))
 {
     file <- c(...)
     nfiles <- length(file)

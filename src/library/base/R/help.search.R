@@ -1,8 +1,8 @@
 help.search <- function(topic, fields = c("name", "title"),
                         apropos, keyword, whatis, ignore.case = TRUE,
                         packages = NULL, lib.loc = .lib.loc,
-                        help.db = .Options$help.db,
-                        verbose = .Options$verbose,
+                        help.db = getOption("help.db"),
+                        verbose = getOption("verbose"),
                         rebuild = FALSE) {
     TABLE <- c("name", "alias", "title", "keyword")
     if (!missing(topic)) {

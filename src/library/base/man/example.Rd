@@ -2,7 +2,7 @@
 \title{Run an Examples Section from the Online Help}
 \usage{
 example(topic, package= .packages(), lib=.lib.loc,
-        echo=TRUE, verbose=.Options$verbose,
+        echo=TRUE, verbose=getOption("verbose"),
         prompt.echo = paste(abbreviate(topic, 6),"> ", sep=""),
         directory.sep= "/")
 }

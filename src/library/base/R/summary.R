@@ -1,6 +1,6 @@
 summary <- function (object, ...) UseMethod("summary")
 
-summary.default <- function(object, ..., digits = max(3, .Options$digits - 3))
+summary.default <- function(object, ..., digits = max(3, getOption("digits") - 3))
 {
     if(is.factor(object))
 	return(summary.factor(object, ...))

@@ -22,7 +22,7 @@ update.packages(lib.loc = .lib.loc, CRAN = options("CRAN"),
 installed.packages(lib.loc = .lib.loc)
 CRAN.packages(CRAN = options("CRAN"), method = "auto",
               contriburl = contrib.url(CRAN))
-old.packages(lib.loc = .lib.loc, CRAN = .Options$CRAN,
+old.packages(lib.loc = .lib.loc, CRAN = getOption("CRAN"),
              contriburl = contrib.url(CRAN),
              method = "auto", available = NULL)
 

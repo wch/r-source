@@ -1,5 +1,5 @@
 bug.report <- function(subject="", ccaddress=getenv("USER"),
-                       method=.Options$mailer, file = "R.bug.report",
+                       method=getOption("mailer"), file = "R.bug.report",
                        address="r-bugs@biostat.ku.dk", wait = TRUE)
 {
     body <- paste("\\n<<insert bug report here>>\\n\\n\\n\\n",
@@ -27,7 +27,7 @@ bug.report <- function(subject="", ccaddress=getenv("USER"),
     cat(disclaimer, file=file)
     body <- gsub("\\\\n", "\n", body)
     cat(body, file=file, append=TRUE)
-    system(paste(.Options$editor, file), wait = wait)
+    system(paste(getOption("editor"), file), wait = wait)
     cat("The unsent bug report can be found in file", file, "\n")
     invisible()
 }

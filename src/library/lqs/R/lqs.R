@@ -154,7 +154,7 @@ lqs.default <-
     z
 }
 
-print.lqs <- function (x, digits = max(3, .Options$digits - 3), ...)
+print.lqs <- function (x, digits = max(3, getOption("digits") - 3), ...)
 {
     if(!is.null(cl <- x$call)) {
 	cat("Call:\n")

@@ -275,9 +275,9 @@ summary.aov <- function(object, intercept = FALSE, keep.zero.df = TRUE, ...)
     ans
 }
 
-print.summary.aov <- function(x, digits = max(3, .Options$digits - 3),
+print.summary.aov <- function(x, digits = max(3, getOption("digits") - 3),
                               symbolic.cor = p > 4,
-                              signif.stars= .Options$show.signif.stars,	...)
+                              signif.stars= getOption("show.signif.stars"),	...)
 {
     if (length(x) == 1)  print(x[[1]], ...)
     else NextMethod()

@@ -2,7 +2,7 @@ edit <-
     function(name,...)UseMethod("edit")
 
 edit.default<-
-    function (name = NULL, file = "", editor = options()$editor)
+    function (name = NULL, file = "", editor = getOption("editor"))
     .Internal(edit(name, file, editor))
 
 edit.data.frame<-

@@ -56,7 +56,7 @@ format.char <- function(x, width = NULL, flag = "-")
 }
 
 
-format.pval <- function(pv, digits = max(1, .Options$digits-2),
+format.pval <- function(pv, digits = max(1, getOption("digits")-2),
 			eps = .Machine$double.eps, na.form = "NA")
 {
     ## Format  P values; auxiliary for print.summary.[g]lm(.)

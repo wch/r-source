@@ -153,7 +153,7 @@ plot.factor <- function(x, y, legend.text=levels(y), ...)
 plot.formula <- function(formula, data = NULL, subset, na.action,
 			 ylab=varnames[response],..., ask = TRUE)
 {
-    if (missing(na.action)) na.action <- options()$na.action
+    if (missing(na.action)) na.action <- getOption("na.action")
     m <- match.call(expand.dots = FALSE)
     if (is.matrix(eval(m$data, sys.frame(sys.parent()))))
 	m$data <- as.data.frame(data)

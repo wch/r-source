@@ -10,7 +10,7 @@ matlines  <- function(x, y, lty=1:5, lwd = 1, pch=NULL, col=1:6, ...)
 matplot <- function(x, y, type="p",
 		    lty = 1:5, lwd = 1, pch=NULL, col=1:6, cex=NULL,
 		    xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL, 
-		    ..., add= FALSE, verbose = .Options$verbose)
+		    ..., add= FALSE, verbose = getOption("verbose"))
 {
     types <- c("p", "l", "b", "o", "h", "n")
     paste.ch <- function(chv) paste('"',chv,'"', sep="", collapse=" ")

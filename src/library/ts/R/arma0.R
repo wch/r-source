@@ -97,7 +97,7 @@ arma0f <- function(p)
     .C("arma0fa", as.double(p), res=double(1), PACKAGE="ts")$res
 }
 
-print.arima0 <- function(x, digits = max(3, .Options$digits - 3),
+print.arima0 <- function(x, digits = max(3, getOption("digits") - 3),
                          se=TRUE, ...)
 {
     cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")

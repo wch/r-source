@@ -15,7 +15,7 @@ df.kernel(k)
 bandwidth.kernel(k)
 is.tskernel(k)
 
-print(k, digits = max(3,.Options$digits-3))
+print(k, digits = max(3,getOption("digits")-3))
 plot(k)
 }
 \arguments{

@@ -78,14 +78,14 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
         kernel <- list (coef=coef, m=m)
         attr(kernel, "name") <- name
         class(kernel) <- "tskernel"
-        eps <- .Options$ts.eps
+        eps <- getOption("ts.eps")
         if ((sum(kernel[-m:m]) > 1.0+eps) || (sum(kernel[-m:m]) < 1.0-eps))
             stop ("coefficients do not add to 1")
         kernel
     }
 }
 
-print.tskernel <- function (k, digits = max(3,.Options$digits-3))
+print.tskernel <- function (k, digits = max(3,getOption("digits")-3))
 {
     cat (attr(k,"name"),"\n")
     i <- -k$m:k$m

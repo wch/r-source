@@ -22,14 +22,14 @@ anova.lm.null <- function (object, ...)
                      paste("Response:", formula(object)[[2]])),
 	      class= c("anova", "data.frame"))# was "tabular"
 }
-print.lm.null <- function (x, digits = max(3, .Options$digits - 3), ...)
+print.lm.null <- function (x, digits = max(3, getOption("digits") - 3), ...)
 {
     cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
     cat("No coefficients:\n\n")
     invisible(x)
 }
 
-print.summary.lm.null <- function (x, digits = max(3, .Options$digits - 3), ...)
+print.summary.lm.null <- function (x, digits = max(3, getOption("digits") - 3), ...)
 {
     cat("\nCall:\n")
     cat(paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep = "")

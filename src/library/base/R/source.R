@@ -1,6 +1,6 @@
 source <-
   function (file, local = FALSE, echo = verbose, print.eval = echo,
-            verbose = .Options$verbose, prompt.echo = .Options$prompt,
+            verbose = getOption("verbose"), prompt.echo = getOption("prompt"),
             max.deparse.length = 150, chdir = FALSE)
 {
     eval.with.vis <-
@@ -98,7 +98,7 @@ sys.source <- function(file, envir = NULL) {
     invisible()
 }
 
-demo <- function(topic, device = .Options$device) {
+demo <- function(topic, device = getOption("device")) {
     if (is.character(device)) device <- get(device)
     Topics <-cbind(graphics	= c("graphics", "graphics.R",	"G"),
 		   image	= c("graphics", "image.R",	"G"),
@@ -141,7 +141,7 @@ demo <- function(topic, device = .Options$device) {
 
 example <-
 function (topic, package = .packages(), lib.loc = .lib.loc, echo = TRUE,
-          verbose = .Options$verbose,
+          verbose = getOption("verbose"),
           prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
 {
     topic <- substitute(topic)

@@ -3,9 +3,9 @@ index.search <- function(topic, path, file="AnIndex", type="help")
 
 help <-
     function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
-             lib.loc = .lib.loc, verbose = .Options$verbose,
-             chmhelp = .Options$chmhelp, htmlhelp = .Options$htmlhelp,
-             winhelp = .Options$winhelp)
+             lib.loc = .lib.loc, verbose = getOption("verbose"),
+             chmhelp = getOption("chmhelp"), htmlhelp = getOption("htmlhelp"),
+             winhelp = getOption("winhelp"))
 {
     chmhelp <- is.logical(chmhelp) && chmhelp
     htmlhelp <- is.logical(htmlhelp) && htmlhelp
@@ -116,7 +116,7 @@ help <-
                     FILE <- "Rdoc"
                     tFILE <- paste(FILE, ".tex", sep="")
                     cat("\\documentclass[",
-                        .Options$papersize,
+                        getOption("papersize"),
                         "paper]{article}",
                         "\n",
                         "\\usepackage[",

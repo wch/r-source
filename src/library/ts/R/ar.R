@@ -146,7 +146,7 @@ ar.yw.default <-
     res
 }
 
-print.ar <- function(x, digits = max(3, .Options$digits - 3), ...)
+print.ar <- function(x, digits = max(3, getOption("digits") - 3), ...)
 {
     cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
     nser <- NCOL(x$var.pred)

@@ -3,7 +3,7 @@
 \title{Display One or More Files}
 \usage{
 file.show(\dots, header, title="R Information",
-          delete.file=FALSE, pager=options()$pager)
+          delete.file=FALSE, pager=getOption("pager"))
 }
 \arguments{
  \item{\dots}{one or more character vectors containing the names of the

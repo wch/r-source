@@ -9,7 +9,7 @@ deltat    <- function(x, ...) UseMethod("deltat")
 options(ts.eps = 1e-5)   # default as S
 
 ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
-	       deltat = 1, ts.eps  =  .Options$ts.eps,
+	       deltat = 1, ts.eps  =  getOption("ts.eps"),
                class = if(nseries > 1) c("mts", "ts") else "ts",
                names = if(!is.null(dimnames(data))) colnames(data)
                else paste("Series", seq(nseries))
@@ -92,7 +92,7 @@ as.ts <- function (x)
 
 start.default <- function(x, ...)
 {
-    ts.eps <- .Options$ts.eps
+    ts.eps <- getOption("ts.eps")
     tsp <- attr(hasTsp(x), "tsp")
     is <- tsp[1]*tsp[3]
     if(abs(is-round(is)) < ts.eps) {
@@ -105,7 +105,7 @@ start.default <- function(x, ...)
 
 end.default <- function(x, ...)
 {
-    ts.eps <- .Options$ts.eps
+    ts.eps <- getOption("ts.eps")
     tsp <- attr(hasTsp(x), "tsp")
     is <- tsp[2]*tsp[3]
     if(abs(is-round(is)) < ts.eps) {
@@ -344,7 +344,7 @@ window.default <- function(x, start = NULL, end = NULL,
     xtsp <- tsp(x)
     xfreq <- xtsp[3]
     xtime <- time(x)
-    ts.eps <- .Options$ts.eps
+    ts.eps <- getOption("ts.eps")
 
     if(!is.null(frequency) && !is.null(deltat) &&
        abs(frequency*deltat - 1) > ts.eps)

@@ -1,8 +1,8 @@
 \name{print.coefmat}
 \title{Print Coefficient Matrices}
 \usage{
-print.coefmat(x, digits=max(3, .Options$digits - 2),
-              signif.stars = .Options$show.signif.stars,
+print.coefmat(x, digits=max(3, getOption("digits") - 2),
+              signif.stars = getOption("show.signif.stars"),
               dig.tst = max(1, min(5, digits - 1)),
               cs.ind = 1:k, tst.ind = k + 1, zap.ind = integer(0),
               P.values = NULL,

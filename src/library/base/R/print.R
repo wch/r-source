@@ -61,8 +61,8 @@ print.simple.list <- function(x, ...)
     print(noquote(cbind("_"=unlist(x))), ...)
 
 print.coefmat <-
-    function(x, digits = max(3, .Options$digits - 2),
-	     signif.stars= .Options$show.signif.stars,
+    function(x, digits = max(3, getOption("digits") - 2),
+	     signif.stars= getOption("show.signif.stars"),
 	     dig.tst = max(1, min(5, digits - 1)),
 	     cs.ind = 1:k, tst.ind = k+1, zap.ind = integer(0),
 	     P.values = NULL,
@@ -82,7 +82,7 @@ print.coefmat <-
 	stop("1st arg. 'x' must be coefficient matrix/d.f./...")
     nc <- d[2]
     if(is.null(P.values))
-	P.values <- has.Pvalue && .Options$show.coef.Pvalues
+	P.values <- has.Pvalue && getOption("show.coef.Pvalues")
     else if(P.values && !has.Pvalue)
 	stop("'P.values is TRUE, but has.Pvalue not!")
 
@@ -135,8 +135,8 @@ print.coefmat <-
     invisible(x)
 }
 
-print.anova <- function(x, digits = max(.Options$digits - 2, 3),
-			signif.stars= .Options$show.signif.stars, ...)
+print.anova <- function(x, digits = max(getOption("digits") - 2, 3),
+			signif.stars= getOption("show.signif.stars"), ...)
 {
     if (!is.null(heading <- attr(x, "heading")))
 	cat(heading, sep = "\n")

@@ -3,7 +3,7 @@
 \usage{
 summary(object, \dots)
 
-summary.default   (object, \dots, digits = max(3, .Options$digits -3))
+summary.default   (object, \dots, digits = max(3, getOption("digits") -3))
 summary.data.frame(object, maxsum = 7, \dots)
 summary.factor    (object, maxsum = 100, \dots)
 summary.matrix    (object, \dots)

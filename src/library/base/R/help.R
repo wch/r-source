@@ -5,8 +5,8 @@ index.search <- function(topic, path, file="AnIndex", type="help")
 
 help <-
     function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
-              lib.loc = .lib.loc, verbose = .Options$verbose,
-              htmlhelp = .Options$htmlhelp)
+              lib.loc = .lib.loc, verbose = getOption("verbose"),
+              htmlhelp = getOption("htmlhelp"))
 {
     htmlhelp <- is.logical(htmlhelp) && htmlhelp
     if (!missing(package))
@@ -40,9 +40,9 @@ help <-
                 if (htmlhelp) {
                     if(file.exists(file)) {
                         file <- paste("file:", file, sep="")
-                        if (is.null(.Options$browser))
+                        if (is.null(getOption("browser")))
                             stop("options(\"browser\") not set")
-                        browser <- .Options$browser
+                        browser <- getOption("browser")
                         system(paste(browser, " -remote \"openURL(",
                                      file, ")\" 2>/dev/null || ", browser, " ",
                                      file, " &", sep = ""))
@@ -78,7 +78,7 @@ help <-
                     FILE <- tempfile()
                     on.exit(unlink(FILE))
                     cat("\\documentclass[",
-                        .Options$papersize,
+                        getOption("papersize"),
                         "paper]{article}",
                         "\n",
                         "\\usepackage[",
@@ -101,8 +101,8 @@ help <-
                                  "PRINT",
                                  FILE,
                                  topic,
-                                 .Options$latexcmd,
-                                 .Options$dvipscmd))
+                                 getOption("latexcmd"),
+                                 getOption("dvipscmd")))
                     return(invisible())
                 }
                 else

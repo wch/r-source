@@ -3,7 +3,7 @@
 \title{Send a Bug Report}
 \usage{
 bug.report(subject = "", ccaddress = getenv("USER"),
-           method = .Options$mailer, address = "r-bugs@biostat.ku.dk",
+           method = getOption("mailer"), address = "r-bugs@biostat.ku.dk",
            file = "R.bug.report")
 }
 \arguments{
@@ -28,7 +28,7 @@ bug.report(subject = "", ccaddress = getenv("USER"),
   Currently direct submission of bug reports works only on Unix systems.
   If the submission method is \code{"mailx"}, then the default editor is
   used to write the bug report. Which editor is used can be controlled
-  using \code{\link{options}}, type \code{options()$editor} to see what
+  using \code{\link{options}}, type \code{getOption("editor")} to see what
   editor is currently defined. Please use the help pages of the
   respective editor for details of usage. After saving the bug report
   (in the temporary file opened) and exiting the editor

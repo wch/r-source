@@ -50,7 +50,7 @@ boxplot.formula <- function(formula, data = NULL, subset, na.action, ...)
     if(missing(formula) || (length(formula) != 3))
         stop("formula missing or incorrect")
     if(missing(na.action))
-        na.action <- options()$na.action
+        na.action <- getOption("na.action")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, sys.frame(sys.parent()))))
         m$data <- as.data.frame(data)
