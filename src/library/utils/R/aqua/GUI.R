@@ -41,12 +41,18 @@
            locn <- file.path(R.home(),"library")
        else
            locn <- .libPaths()[1]
-       if(length(ui.pkgs) > 0)
-           switch(type,
-                  source = install.packages(ui.pkgs, CRAN = getOption(where),
-                  contriburl=contriburl, lib = .libPaths()[1]),
-                  binary = install.binaries(ui.pkgs, CRAN = getOption(where),
-                  contriburl=contriburl, lib = .libPaths()[1]))
+    if (length(ui.pkgs) > 0) {
+     if(missing(contriburl)){
+            switch(type, source = install.packages(ui.pkgs, CRAN = getOption(where), 
+            lib = .libPaths()[1]), binary = install.binaries(ui.pkgs, 
+            CRAN = getOption(where), lib = .libPaths()[1]))
+      } else {
+            switch(type, source = install.packages(ui.pkgs, CRAN = getOption(where), 
+            contriburl = contriburl, lib = .libPaths()[1]), binary = install.binaries(ui.pkgs, 
+            CRAN = getOption(where), contriburl = contriburl, 
+            lib = .libPaths()[1]))      
+      }
+    }
    }
 
     browse.update.pkgs <- function(where = c("CRAN", "BIOC"),
