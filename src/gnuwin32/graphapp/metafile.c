@@ -28,7 +28,8 @@
  *
 */
 
-
+#define ENABLE_NLS 1
+#include "../win-nls.h"
 #include "internal.h"
 #include "rui.h"
 
@@ -51,7 +52,7 @@ static void private_delmetafile(metafile obj)
 	CloseClipboard())
 	return;
     else {
-	R_ShowMessage("Unable to save metafile to the clipboard");
+	R_ShowMessage(_("Unable to save metafile to the clipboard"));
 	DeleteEnhMetaFile(hm);
 	return;
     }
@@ -104,12 +105,12 @@ metafile newmetafile(char *name, double width, double height)
     hDC = CreateEnhMetaFile(NULL, strlen(name) ? name : NULL, &wr, 
 			    "GraphApp\0\0");
     if ( !hDC ) {
-	R_ShowMessage("Unable to create metafile");
+	R_ShowMessage(_("Unable to create metafile"));
 	return NULL;
     }
     obj = new_object(MetafileObject, (HANDLE) hDC, get_metafile_base());
     if ( !obj ) {
-	R_ShowMessage("Insufficient memory to create metafile");
+	R_ShowMessage(_("Insufficient memory to create metafile"));
 	DeleteEnhMetaFile(CloseEnhMetaFile(hDC));
 	return NULL;
     }

@@ -1344,7 +1344,7 @@ static void popupclose(control c)
 
     strcpy(buf, gettext(varname));
     if(!strlen(buf)) {
-	askok("column names cannot be blank");
+	askok(G_("column names cannot be blank"));
 	return;
     }
     if (popupcol > xmaxused) {
@@ -1388,14 +1388,14 @@ static void de_popupmenu(int x_pos, int y_pos, int col)
 
     popupcol = colmin + col - 1;
     blah = get_col_name(popupcol);
-    wconf = newwindow("Variable editor",
+    wconf = newwindow(G_("Variable editor"),
 		      rect(x_pos + r.x-150, y_pos + r.y-50, 300, 100),
 		      Titlebar | Closebox | Modal);
     setclose(wconf, popupclose);
     setbackground(wconf, bbg);
-    lwhat = newlabel("variable name", rect(10, 22, 90, 20), AlignLeft);
+    lwhat = newlabel(G_("variable name"), rect(10, 22, 90, 20), AlignLeft);
     varname = newfield(blah, rect(100, 20, 120, 20));
-    lrb = newlabel("type", rect(50, 62, 50, 20), AlignLeft);
+    lrb = newlabel(G_("type"), rect(50, 62, 50, 20), AlignLeft);
     rb_num = newradiobutton("numeric", rect(100, 60 , 80, 20), NULL);
     rb_char = newradiobutton("character", rect(180, 60 , 80, 20), NULL);
     isnumeric = (get_col_type(popupcol) == NUMERIC);

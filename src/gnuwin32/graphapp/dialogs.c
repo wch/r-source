@@ -571,7 +571,7 @@ char *askUserPass(char *title)
 	d->question = newlabel(G_("User"), rect(10, h, tw+4, h*2+2), AlignLeft);
 	bw = strwidth(SystemFont, G_("Password"));
 	d->text = newfield("", rect(20+bw, h, tw-6-bw, h*3/2));
-	newlabel("Password", rect(10, h*4, tw+4, h*2+2), AlignLeft);
+	newlabel(_("Password"), rect(10, h*4, tw+4, h*2+2), AlignLeft);
 	d->pass = newpassword("", rect(20+bw, h*4, tw-6-bw, h*3/2));
 	middle = (tw+30)/2;
 	bw = strwidth(SystemFont, CANCEL_STRING) * 3/2;
