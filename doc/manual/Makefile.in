@@ -16,7 +16,7 @@ SOURCES_TEXI = R-FAQ.texi R-admin.texi R-data.texi R-exts.texi \
 DISTFILES = \
 	README \
 	Makefile.in Makefile.win \
-	R-defs.texi dir texinfo.tex \
+	R-defs.texi dir pdfcolor.tex texinfo.tex \
 	$(SOURCES_TEXI) \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
@@ -182,7 +182,7 @@ refman.pdf: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-pdf
 stamp-refman-pdf: $(pkgsrcs)
 	@touch $@
 
-$(OBJECTS_PDF): $(srcdir)/texinfo.tex
+$(OBJECTS_PDF): $(srcdir)/texinfo.tex $(srcdir)/pdfcolor.tex
 R-admin.pdf: $(texiincludes)
 R-data.pdf: $(texiincludes)
 R-exts.pdf: $(texiincludes)

@@ -74,6 +74,10 @@ BUG FIXES
 	eval() now checks that a numeric `envir' has length one to prevent
         accidental passing of matrices instead of data frames.
 
+    o	pdfcolor.tex is now included in doc/manual, as pdftex seems no
+	longer to include it.
+
+
 
 		CHANGES IN R VERSION 1.3.0
 
