@@ -206,6 +206,9 @@ double atanh(double);
 #undef HAVE_X11
 #undef HAVE_GNOME
 
+/* Write barrier testing */
+#undef TESTING_WRITE_BARRIER
+
 /* for platform.c to put in .Platform */
 #ifdef Unix
 #define OSTYPE      "unix"
