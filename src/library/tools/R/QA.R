@@ -238,7 +238,7 @@ function(dir, use.values = FALSE, use.positions = TRUE,
     funs <- lsCode[sapply(lsCode, function(f) {
         f <- get(f, envir = .CodeEnv)
         is.function(f) && (length(formals(f)) > 0)
-    })]
+    }) == TRUE]
     if(ignore.generic.functions) {
         isS3Generic <- function(f) {
             any(grep("^UseMethod",
@@ -628,7 +628,7 @@ function(dir)
     ## Find the function objects in the given package.
     funs <-
         lsCode[sapply(lsCode, function(f)
-                      is.function(get(f, envir = .CodeEnv)))]
+                      is.function(get(f, envir = .CodeEnv))) == TRUE]
 
     ## Find all generic functions in the given package and (the current)
     ## base package.
@@ -644,7 +644,8 @@ function(dir)
     for(env in envList) {
         allObjs <- ls(envir = env, all.names = TRUE)
         allGenerics <-
-            c(allGenerics, allObjs[sapply(allObjs, isS3Generic, env)])
+            c(allGenerics,
+              allObjs[sapply(allObjs, isS3Generic, env) == TRUE])
     }
 
     ## Find all methods in the given package for the generic functions
@@ -893,7 +894,7 @@ function(dir)
     ## Find the function objects in the given package.
     funs <-
         lsCode[sapply(lsCode, function(f)
-                      is.function(get(f, envir = .CodeEnv)))]
+                      is.function(get(f, envir = .CodeEnv))) == TRUE]
 
     isS3Generic <- function(fname, envir) {
         f <- get(fname, envir = envir)
@@ -959,7 +960,7 @@ function(dir)
     for(env in envList) {
         allObjs <- ls(envir = env, all.names = TRUE)
         ## <FIXME>
-        genFuns <- allObjs[sapply(allObjs, isS3Generic, env)]
+        genFuns <- allObjs[sapply(allObjs, isS3Generic, env) == TRUE]
         ## This is not good enough for base where we also have generics
         ## which dispatch in C code.  We should also add group methods.
         ## </FIXME>
