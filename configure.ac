@@ -1047,11 +1047,13 @@ case "${host_os}" in
     ## at this point. S.I.
     ## </FIXME>
     ## </NOTE>
-    if test "x${want_aqua}" = xyes; then
-      LIBR_LDFLAGS="-dynamiclib -install_name /Applications/StartR.app/RAqua.app/Contents/Frameworks/libR.dylib"
-    else
-      LIBR_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libR.dylib"
-    fi
+    ##    if test "x${want_aqua}" = xyes; then
+    ##      LIBR_LDFLAGS="-dynamiclib -install_name /Applications/StartR.app/RAqua.app/Contents/Frameworks/libR.dylib"
+    ##    else
+##      LIBR_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libR.dylib"
+        LIBR_LDFLAGS="-dynamiclib"
+    ##     LIBR_LDFLAGS="-dynamiclib -install_name /Library/Frameworks/R.framework/Versions/${PACKAGE_VERSION}/Resources/lib/libR.dylib" 
+   ##    fi
     ## <FIXME>
     ## We need '-framework Carbon' because currently the Quartz device
     ## driver gets linked to the main binary and hence also the R dylib.
@@ -1392,6 +1394,7 @@ AC_CONFIG_FILES(
   src/modules/X11/Makefile
   src/modules/aqua/Makefile
   src/modules/aqua/AquaInstall
+  src/modules/aqua/Info.plist
   src/modules/gnome/Makefile
   src/modules/internet/Makefile
   src/modules/lapack/Makefile
