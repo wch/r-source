@@ -28,7 +28,7 @@ TESTsrc-strict-auto = \
 TESTsrc-sloppy-1 = \
 	print-tests.R
 TESTsrc-sloppy-auto = \
-	no-segfault.R
+#	no-segfault.R
 
 TESTsrc-strict = $(TESTsrc-strict-1) $(TESTsrc-strict-auto)
 TESTsrc-sloppy = $(TESTsrc-sloppy-1) $(TESTsrc-sloppy-auto)
@@ -74,8 +74,8 @@ FORCE:
 $(TESTsrc-auto): %.R : $(srcdir)/make-%.R
 	$(R) < $< > /dev/null
 # No Rdiff here:
-#no-segfault.Rout: no-segfault.R
-#	$(R) < $< > $@
+no-segfault.Rout: no-segfault.R
+	$(R) < $< > $@
 
 test-All: Makefile
 	@$(MAKE) test-Examples
