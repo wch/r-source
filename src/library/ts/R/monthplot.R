@@ -1,4 +1,4 @@
-monthplot <- function(x, ...) UseMethod("monthplot", x)
+monthplot <- function(x, ...) UseMethod("monthplot")
 
 monthplot.StructTS <-
     function (x, labels = NULL, ylab = choice, choice = "sea", ...)
