@@ -2112,36 +2112,130 @@ void *	xmlNanoHTTPOpen		(const char *URL, char **contentType);
 int	xmlNanoHTTPRead		(void *ctx, void *dest, int len);
 void	xmlNanoHTTPClose	(void *ctx);
 int 	xmlNanoHTTPReturnCode	(void *ctx);
+void	xmlNanoHTTPTimeout	(int delay);
 
 void *	xmlNanoFTPOpen		(const char *URL);
 int	xmlNanoFTPRead		(void *ctx, void *dest, int len);
 void	xmlNanoFTPClose		(void *ctx);
+#endif
+
+#ifdef USE_WININET
+#include <windows.h>
+#include <wininet.h>
+typedef struct wictxt {
+    HINTERNET hand;
+    HINTERNET session;
+} wIctxt, *WIctxt;
+#endif
+
+void * R_HTTPOpen(const char *url)
+{
+    void *ctxt = NULL;
+#ifdef HAVE_LIBXML
+    ctxt = xmlNanoHTTPOpen(url, NULL);
+    if(ctxt != NULL) {
+	int rc = xmlNanoHTTPReturnCode(ctxt);
+	if(rc != 200) {
+	    xmlNanoHTTPClose(ctxt);
+	    ctxt = NULL;
+	}
+    }
+#endif
+#ifdef USE_WININET
+    {
+	BOOL res = InternetAttemptConnect(0);
+	WIctxt  wictxt;
+
+	if (res != ERROR_SUCCESS) {
+	    warning("no Internet connection available");
+	    return NULL;
+	}
+	wictxt = (WIctxt) malloc(sizeof(wIctxt));
+	wictxt->hand = 
+	    InternetOpen("R", 
+			 INTERNET_OPEN_TYPE_PRECONFIG, 
+			 NULL, NULL, 0);
+	if(!wictxt->hand) error("cannot open");
+	wictxt->session = 
+	    InternetOpenUrl(wictxt->hand, url,
+			    NULL, 0, INTERNET_FLAG_KEEP_CONNECTION, 0);
+	if(!wictxt->session) error("cannot open2");
+	ctxt = (void *)wictxt;
+    }
+#endif
+    return ctxt;
+}
+
+int R_HTTPRead(void *ctx, void *dest, int len)
+{
+#ifdef USE_WININET
+    DWORD nread;
+    InternetReadFile(((WIctxt)ctx)->session, dest, len, &nread);
+    return (int) nread;
+#endif
+#ifdef HAVE_LIBXML
+    return xmlNanoHTTPRead(ctx, dest, len);
+#else
+    return -1;
+#endif
+}
+
+void R_HTTPClose(void *ctx)
+{
+#ifdef HAVE_LIBXML
+    xmlNanoHTTPClose(ctx);
+#endif
+#ifdef USE_WININET
+    {
+	InternetCloseHandle(((WIctxt)ctx)->session);
+	InternetCloseHandle(((WIctxt)ctx)->hand);
+	free(ctx);
+    }
+#endif
+}
+
+void * R_FTPOpen(const char *url)
+{
+    void *ctxt = NULL;
+#ifdef HAVE_LIBXML
+    ctxt = xmlNanoFTPOpen(url);
+#endif
+    return ctxt;
+}
+
+int R_FTPRead(void *ctx, void *dest, int len)
+{
+#ifdef HAVE_LIBXML
+    return xmlNanoFTPRead(ctx, dest, len);
+#else
+    return -1;
+#endif
+}
+
+void R_FTPClose(void *ctx)
+{
+#ifdef HAVE_LIBXML
+    xmlNanoFTPClose(ctx);
+#endif
+}
 
 static void url_open(Rconnection con)
 {
     void *ctxt;
     char *url = con->description;
     UrlScheme type = ((Rurlconn)(con->private))->type;
-    int rc;
 
     if(con->mode[0] != 'r')
 	error("can only open URLs for reading");
 
     switch(type) {
     case HTTPsh:
-	/* xmlNanoHTTPInit(); */
-	ctxt = xmlNanoHTTPOpen(url, NULL);
+	ctxt = R_HTTPOpen(url);
 	if(ctxt == NULL) error("cannot open URL `%s'", url);
-	rc = xmlNanoHTTPReturnCode(ctxt);
-	if(rc != 200) {
-	    xmlNanoHTTPClose(ctxt);
-	    error("cannot open URL `%s'", url);
-	}
 	((Rurlconn)(con->private))->ctxt = ctxt;
 	break;
     case FTPsh:
-	/* xmlNanoFTPInit(); */
-	ctxt = xmlNanoFTPOpen(url);
+	ctxt = R_FTPOpen(url);
 	if(ctxt == NULL) error("cannot open URL `%s'", url);
 	((Rurlconn)(con->private))->ctxt = ctxt;
 	break;
@@ -2162,10 +2256,10 @@ static void url_close(Rconnection con)
     UrlScheme type = ((Rurlconn)(con->private))->type;
     switch(type) {
     case HTTPsh:
-	xmlNanoHTTPClose(((Rurlconn)(con->private))->ctxt);
+	R_HTTPClose(((Rurlconn)(con->private))->ctxt);
 	break;
     case FTPsh:
-	xmlNanoFTPClose(((Rurlconn)(con->private))->ctxt);
+	R_FTPClose(((Rurlconn)(con->private))->ctxt);
 	break;
     }
     con->isopen = FALSE;
@@ -2186,10 +2280,10 @@ static int url_fgetc(Rconnection con)
 
     switch(type) {
     case HTTPsh:
-	n = xmlNanoHTTPRead(ctxt, &c, 1);
+	n = R_HTTPRead(ctxt, &c, 1);
 	break;
     case FTPsh:
-	n = xmlNanoFTPRead(ctxt, &c, 1);
+	n = R_FTPRead(ctxt, &c, 1);
 	break;
     }
     return (n == 1) ? c : R_EOF;
@@ -2204,10 +2298,10 @@ static size_t url_read(void *ptr, size_t size, size_t nitems,
 
     switch(type) {
     case HTTPsh:
-	n = xmlNanoHTTPRead(ctxt, ptr, size*nitems);
+	n = R_HTTPRead(ctxt, ptr, size*nitems);
 	break;
     case FTPsh:
-	n = xmlNanoFTPRead(ctxt, ptr, size*nitems);
+	n = R_FTPRead(ctxt, ptr, size*nitems);
 	break;
     }
     return n/size;
@@ -2255,7 +2349,7 @@ static Rconnection newurl(char *description, char *mode)
     }
     return new;
 }
-#endif
+
 
 /* url(description, open, encoding) */
 SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -2273,7 +2367,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(length(scmd) > 1)
 	warning("only first element of `description' argument used");
     url = CHAR(STRING_ELT(scmd, 0));
-#ifdef HAVE_LIBXML
+#if defined(HAVE_LIBXML) || defined(USE_WININET)
     if (strncmp(url, "http://", 7) == 0) {
 	type = HTTPsh;
     } else if (strncmp(url, "ftp://", 6) == 0) {
@@ -2281,7 +2375,6 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     } else
 #endif
 	error("unsupported URL scheme");
-
 
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
@@ -2295,7 +2388,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(strncmp(url, "file://", 7) == 0) {
        con = newfile(url + 7, strlen(open) ? open : "r");
        class2 = "file";
-#ifdef HAVE_LIBXML
+#if defined(HAVE_LIBXML) || defined(USE_WININET)
     } else if (strncmp(url, "http://", 7) == 0 ||
 	       strncmp(url, "ftp://", 6) == 0) {
        con = newurl(url, strlen(open) ? open : "r");
@@ -2382,7 +2475,7 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	    fwrite(buf, 1, n, out);
 	fclose(out); fclose(in);
 
-#ifdef HAVE_LIBXML
+#if defined(HAVE_LIBXML) || defined(USE_WININET)
     } else if (strncmp(url, "http://", 7) == 0) {
 
 	FILE *out;
@@ -2393,40 +2486,31 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	out = R_fopen(R_ExpandFileName(file), mode);
 	if(!out) error("cannot open destfile `%s'", file);
 
-	/* xmlNanoHTTPInit(); */
 	R_Busy(1);
 	if(!quiet) REprintf("trying URL `%s'\n", url);
-	ctxt = xmlNanoHTTPOpen(url, NULL);
+	ctxt = R_HTTPOpen(url);
 	if(ctxt == NULL) status = 1;
 	else {
-	    int rc = xmlNanoHTTPReturnCode(ctxt);
-	    if(rc != 200) {
-		xmlNanoHTTPClose(ctxt);
-		status = 1;
-		if(!quiet) REprintf("return code %d\n", rc);
-	    } else {
-		if(!quiet) REprintf("opened URL\n", url);
-		while ((len = xmlNanoHTTPRead(ctxt, buf, sizeof(buf))) > 0) {
-		    fwrite(buf, 1, len, out);
-		    nbytes += len;
-		    nnew = nbytes/1024;
-		    if(!quiet) putdots(&ndots, nnew);
+	    if(!quiet) REprintf("opened URL\n", url);
+	    while ((len = R_HTTPRead(ctxt, buf, sizeof(buf))) > 0) {
+		fwrite(buf, 1, len, out);
+		nbytes += len;
+		nnew = nbytes/1024;
+		if(!quiet) putdots(&ndots, nnew);
 #ifdef Win32
-		    R_ProcessEvents();
+		R_ProcessEvents();
 #endif
-		}
-		xmlNanoHTTPClose(ctxt);
-		fclose(out);
-		R_Busy(0);
-		if(!quiet) {
-		    if(nbytes > 10240)
-			REprintf("\ndownloaded %dKb\n\n", nbytes/1024, url);
-		    else
-			REprintf("\ndownloaded %d bytes\n\n", nbytes, url);
-		}
+	    }
+	    R_HTTPClose(ctxt);
+	    fclose(out);
+	    R_Busy(0);
+	    if(!quiet) {
+		if(nbytes > 10240)
+		    REprintf("\ndownloaded %dKb\n\n", nbytes/1024, url);
+		else
+		    REprintf("\ndownloaded %d bytes\n\n", nbytes, url);
 	    }
 	}
-	/* xmlNanoHTTPCleanup();  might have a url/http connection open */
 	if (status == 1) error("cannot open URL `%s'", url);
 
     } else if (strncmp(url, "ftp://", 6) == 0) {
@@ -2439,14 +2523,13 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	out = R_fopen(R_ExpandFileName(file), mode);
 	if(!out) error("cannot open destfile `%s'", file);
 
-	/* xmlNanoFTPInit(); */
 	R_Busy(1);
 	if(!quiet) REprintf("trying URL `%s'\n", url);
-	ctxt = xmlNanoFTPOpen(url);
+	ctxt = R_FTPOpen(url);
 	if(ctxt == NULL) status = 1;
 	else {
 	    if(!quiet) REprintf("opened URL\n", url);
-	    while ((len = xmlNanoFTPRead(ctxt, buf, sizeof(buf))) > 0) {
+	    while ((len = R_FTPRead(ctxt, buf, sizeof(buf))) > 0) {
 		fwrite(buf, 1, len, out);
 		nbytes += len;
 		nnew = nbytes/1024;
@@ -2455,7 +2538,7 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		R_ProcessEvents();
 #endif
 	    }
-	    xmlNanoFTPClose(ctxt);
+	    R_FTPClose(ctxt);
 	    fclose(out);
 	    R_Busy(0);
 	    if(!quiet) {
@@ -2465,7 +2548,6 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 		    REprintf("\ndownloaded %d bytes\n\n", nbytes, url);
 	    }
 	}
-	/* xmlNanoFTPCleanup();  might have a url/hhtp connection open */
 	if (status == 1) error("cannot open URL `%s'", url);
 #endif
 
