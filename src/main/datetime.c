@@ -28,7 +28,8 @@
 
     A particular problem is the setting of the timezone TZ on Unix/Linux.
     POSIX appears to require it, yet many Linux systems do not set it
-    and do not give the correct results/crash strftime if it is not set.
+    and do not give the correct results/crash strftime if it is not set
+    (or even if it is: see the workaround below).
     We use unsetenv() to work around this: that is a BSD construct but
     seems to be available on the affected platforms.
  */
@@ -571,6 +572,15 @@ SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(UseTZ == NA_LOGICAL)
 	error("invalid `usetz' argument");
     tz = getAttrib(x, install("tzone"));
+
+    /* workaround for glibc bug in strftime */
+#if defined __GNUC__ && __GNUC__ >= 2
+#ifdef __USE_BSD
+    tm.tm_zone = NULL;
+#else
+    tm.__tm_zone = NULL;
+#endif
+#endif
 
     /* coerce fields to integer, find length of longest one */
     for(i = 0; i < 9; i++) {
