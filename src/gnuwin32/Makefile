@@ -514,11 +514,22 @@ unpack-recommended:
 clean-recommended:
 	@for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do $(RM) -r ../library/$${i} ; done
 
+
+recommended: unpack-recommended
+ifeq ($(strip $(BUILD)),CROSS)
+	@$(ECHO) "use 'make recommended0' when cross-building"
+else
+	@$(ECHO) "--- Making recommended packages"
+	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
+	 $(RHOME)/bin/rcmd.exe INSTALL --unsafe --lazy ../library/$${p} || exit 1; \
+	done
+endif
+
 # this is really tricky for a bundle.
 # also note that as we are not using Rcmd INSTALL we do not get info
 # on LazyLoad / LazyData from the DESCRIPTION files.
 R_PKGS_RECOMMENDED_LAZYDATA = boot rpart
-recommended: unpack-recommended
+recommended0: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
 	@$(MAKE) --no-print-directory bundle-VR
 	@$(MAKE) --no-print-directory PKGDIR=../library/VR lazyload-MASS \

@@ -38,7 +38,7 @@ my @knownoptions = ("help|h", "version|v", "debug|d", "library|l:s",
 		    "clean|c", "docs:s", "save|s", "no-save",
 		    "with-package-versions",
 		    "use-zip", "use-zip-data", "use-zip-help", 
-		    "auto-zip", "build", "fake", 
+		    "auto-zip", "build", "fake", "unsafe",
 		    "lazy", "no-lazy", "lazy-data", "no-lazy-data");
 		    
 ##   	topLevelFiles will be files that sit in the top level of a
@@ -87,6 +87,10 @@ if($opt_docs) {
 	die "ERROR: invalid --docs value `$opt_docs'\n";
     }
 }
+
+my $safe = 1;
+$safe = 0 if $opt_unsafe;
+    print " *** safe is $safe ***\n" if $opt_debug;
 
 if((-e "$R_HOME/doc/html/R.css") && !(-e "$library/R.css")) {
     printf "installing R.css in $library\n";
@@ -191,17 +195,20 @@ foreach $pkg (@ARGV){
         }
     }
     ## Now we are ready to install
-    my $lockdir = $library . "/" . "00LOCK";
-    if(-d $lockdir || -f $lockdir) {
-	print "Failed to lock directory '${library}' for modifying\n";
-	print "Try removing '${lockdir}'\n";
-	exit 3;
-    }
-    mkpath($lockdir);
-    if(! -d $lockdir) {
-	print "Failed to lock directory '${library}' for modifying\n";
-	print "Permission problem?\n";
-	exit 3;
+    my $lockdir;
+    if($safe) {
+	$lockdir = $library . "/" . "00LOCK";
+	if(-d $lockdir || -f $lockdir) {
+	    print "Failed to lock directory '${library}' for modifying\n";
+	    print "Try removing '${lockdir}'\n";
+	    exit 3;
+	}
+	mkpath($lockdir);
+	if(! -d $lockdir) {
+	    print "Failed to lock directory '${library}' for modifying\n";
+	    print "Permission problem?\n";
+	    exit 3;
+	}
     }
 
     my $res;
@@ -215,7 +222,7 @@ foreach $pkg (@ARGV){
 	    $decpkgname = $pkgname;
 	}
 	# if exists, move existing installation to $lockdir
-	system("mv $dpkg $lockdir") if -d $dpkg;
+	system("mv $dpkg $lockdir") if ($safe && -d $dpkg);
 
 	$description = new R::Dcf("$pkgdir/$pkgname/DESCRIPTION");
 
@@ -317,7 +324,7 @@ foreach $pkg (@ARGV){
 	    rmtree($dpkg);
 	    # move back any previously installed package
 	    $dppkg = $lockdir . "/" . $decpkgname;
-	    system("mv $dppkg $library") if -d $dppkg;
+	    system("mv $dppkg $library") if ($safe && -d $dppkg);
 	    last;
 	}
     } # end of loop over bundle
@@ -337,7 +344,7 @@ foreach $pkg (@ARGV){
 	}
     }
     # wipe out lockdir
-    rmtree($lockdir);
+    rmtree($lockdir) if $safe;
     exit $res if $res;
     print("\* DONE\n");
 }
@@ -381,6 +388,7 @@ Options:
   --no-lazy-data        do not use lazy loading for data (current default)
 
   --fake		do minimal install for testing purposes
+  --unsafe		do not do safe loading
   -d, --debug		[x] turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
   --docs=TYPE	        type(s) of documentation to build and install
