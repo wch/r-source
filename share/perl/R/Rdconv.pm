@@ -67,7 +67,7 @@ my $ECMD = "escaped-command";	# maybe something better?
 ## their arguments need to be left alone (otherwise, e.g. \samp{--no}
 ## would give '-no' when converted to text).
 my @special_commands = ("command", "env", "file", "kbd", "option",
-			"samp", "url");
+			"samp", "url", "var");
 
 sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 
@@ -637,6 +637,7 @@ sub text2html {
     $text = replace_command($text, "option", "<SAMP>", "</SAMP>");
     $text = replace_command($text, "pkg", "<STRONG>", "</STRONG>");
     $text = replace_command($text, "samp", "<SAMP>", "</SAMP>");
+    $text = replace_command($text, "var", "<VAR>", "</VAR>");
 
     $text = replace_command($text, "sQuote", "&lsquo;", "&rsquo;");
     $text = replace_command($text, "dQuote", "&ldquo;", "&rdquo;");
@@ -1249,6 +1250,11 @@ sub text2txt {
     $text = replace_command($text, "option", "'", "'");
     $text = replace_command($text, "pkg", "'", "'");
     $text = replace_command($text, "samp", "'", "'");
+
+    ## <FIXME>
+    ## Maybe this should uppercase its argument a la Texinfo?
+    $text = undefine_command($text, "var");
+    ## </FIXME>
 
     $text = replace_command($text, "sQuote", "'", "'");
     $text = replace_command($text, "dQuote", "\"", "\"");
@@ -1900,6 +1906,8 @@ sub text2nroff {
     $text = replace_command($text, "option", "'", "'");
     $text = replace_command($text, "pkg", "'", "'");
     $text = replace_command($text, "samp", "'", "'");
+
+    $text = undefine_command($text, "var");
 
     $text = replace_command($text, "sQuote", "'", "'");
     $text = replace_command($text, "dQuote", "\"", "\"");
@@ -2610,6 +2618,8 @@ sub text2Ssgm {
     $text = replace_command($text, "option", "'<tt>", "</tt>'");
     $text = replace_command($text, "pkg", "'<tt>", "</tt>'");
     $text = replace_command($text, "samp", "'<tt>", "</tt>'");
+
+    $text = undefine_command($text, "var");
 
     $text = replace_command($text, "sQuote", "'", "'");
     $text = replace_command($text, "dQuote", "\"", "\"");

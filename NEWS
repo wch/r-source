@@ -221,7 +221,7 @@ NEW FEATURES
     o	New logical markup commands in R documentation format for
 	emphasizing (\strong) and quoting (\sQuote and \dQuote) text,
 	and for indicating specific kinds of text (\acronym, \cite,
-	\command, \dfn, \env, \kbd, \option, \pkg, \samp).
+	\command, \dfn, \env, \kbd, \option, \pkg, \samp, \var).
 
     o	Rdconv now produces more informative output from the special
 	\method{GENERIC}{CLASS} markup for indicating the usage of S3

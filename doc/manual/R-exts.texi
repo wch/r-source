@@ -1621,6 +1621,9 @@ Indicate an electronic mail address.
 Indicate a uniform resource locator (@acronym{URL}) for the World Wide
 Web.
 
+@item \var@{@var{metasyntactic-variable}@}
+@findex \var
+Indicate a metasyntactic variable.
 @item \env@{@var{environment-variable}@}
 @findex \env
 Indicate an environment variable.
