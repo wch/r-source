@@ -557,7 +557,7 @@ FORTRAN 77 code works on all R platforms.  Calls to the Autoconf macro
 @code{AC_F77_LIBRARY_LDFLAGS}, which would overwrite @code{FLIBS}, must
 not be used (and hence e.g.@: removed from @code{ACX_BLAS}).  (Recent
 versions of Autoconf in fact allow an already set @code{FLIBS} to
-override the test for the Fortran linker flags.  Also, recent versions
+override the test for the FORTRAN linker flags.  Also, recent versions
 of @R{} can detect external BLAS and LAPACK libraries.)
 
 You should bear in mind that the configure script may well not work on
@@ -2601,7 +2601,7 @@ R_CMethodDef cMethods[] = @{
 One can also specify whether each argument is used simply as input, or
 as output, or as both input and output.  The style field in the
 description of a method is used for this.  The purpose is to allow R to
-more efficiently transfer values across the S-C/Fortran interface by
+more efficiently transfer values across the S-C/FORTRAN interface by
 avoiding copying values when it is not necessary. Typically, one omits
 this information in the registration data.
 
@@ -4402,6 +4402,7 @@ $7 = 5
 * Optimization::                
 * Integration::                 
 * Utility functions::           
+* Allowing interrupts::         
 * Platform and version information::  
 * Standalone Mathlib::          
 @end menu
@@ -4586,6 +4587,7 @@ subroutine rwarn(@var{message})
 @end smallexample
 
 Messages of more than 255 characters are truncated, with a warning.
+
 
 @node Random numbers, Missing and IEEE values, Error handling, The R API
 @section Random number generation
@@ -5292,7 +5294,7 @@ arrays and the length of the second one as
 The comments in the source code in @file{src/appl/integrate.c} give
 more details, particularly about reasons for failure (@code{ier >= 1}).
 
-@node Utility functions, Platform and version information, Integration, The R API
+@node Utility functions, Allowing interrupts, Integration, The R API
 @section Utility functions
 @cindex Sort functions from C
 
@@ -5398,7 +5400,27 @@ this is defined.
 @end deftypefun
 
 
-@node Platform and version information, Standalone Mathlib, Utility functions, The R API
+@node Allowing interrupts, Platform and version information, Utility functions, The R API
+@section Allowing interrupts
+@cindex Interrupts
+
+As from @R{} 1.8.0 no port of @R{} can be interrupted whilst running
+long computations in compiled code, so programmers should make provision
+for the code to be interrupted at suitable points by calling from C
+@smallexample
+#include <R_Exts/Utils.h>
+
+void R_CheckUserInterrupt(void);
+@end smallexample
+and from FORTRAN
+@smallexample
+subroutine rchkusr()
+@end smallexample
+These check if the user has requested an interrupt, and if so branch to
+@R{}'s error handling functions.
+
+
+@node Platform and version information, Standalone Mathlib, Allowing interrupts, The R API
 @section Platform and version information
 @cindex Version information from C
 @findex R_Version
