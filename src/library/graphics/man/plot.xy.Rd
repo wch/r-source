@@ -26,6 +26,11 @@ plot.xy(xy, type, pch = 1, lty = "solid", col = par("fg"), bg = NA,
     \code{\link{lines}} and \code{\link{points}}.}
   \item{\dots}{further graphical parameters.}
 }
+\details{
+  The arguments \code{pch, col, bg, cex, lwd} are may be vectors and
+  recycled, depending on \code{type}, see \code{\link{points}} and
+  \code{\link{lines}} for specifics.
+}
 \seealso{
   \code{\link{plot}},
   \code{\link{plot.default}},
