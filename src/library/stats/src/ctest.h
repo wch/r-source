@@ -26,9 +26,9 @@ void chisqsim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
 	      int *b, double *expected, int *observed, double *fact,
 	      int *jwork, double *results);
 void d2x2xk(Sint *k, double *m, double *n, double *t, double *d);
-void fexact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
+void fexact(int *nrow, int *ncol, int *table, int *ldtabl,
 	    double *expect, double *percnt, double *emin, double *prt,
-	    double *pre, Sint *workspace);
+	    double *pre, int *workspace, int *mult);
 void pansari(Sint *len, double *x, Sint *m, Sint *n);
 void dansari(Sint *len, double *x, Sint *m, Sint *n);
 void pkendall(Sint *len, double *x, Sint *n);

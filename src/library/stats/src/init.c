@@ -35,8 +35,8 @@ static R_NativePrimitiveArgType dansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP}
 static R_NativePrimitiveArgType pansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
 static R_NativePrimitiveArgType qansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
 
-static R_NativePrimitiveArgType fexact_t[10] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP,
-					 REALSXP, REALSXP, REALSXP, REALSXP, INTSXP};
+static R_NativePrimitiveArgType fexact_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, REALSXP,
+					 REALSXP, REALSXP, REALSXP, REALSXP, INTSXP, INTSXP};
 
 static R_NativePrimitiveArgType pkendall_t[3] = {INTSXP, REALSXP, INTSXP};
 
@@ -57,7 +57,7 @@ static const R_CMethodDef CEntries[]  = {
     {"chisqsim", (DL_FUNC) &chisqsim, 11, chisqsim_t},
     {"d2x2xk", (DL_FUNC) &d2x2xk, 5, d2_t},
     {"dansari", (DL_FUNC) &dansari, 4, dansari_t},
-    {"fexact",   (DL_FUNC) &fexact, 10, fexact_t},
+    {"fexact",   (DL_FUNC) &fexact, 11, fexact_t},
     {"pansari",  (DL_FUNC)&pansari, 4, pansari_t},
     {"pkendall", (DL_FUNC)  &pkendall, 3, pkendall_t},
     {"pkstwo", (DL_FUNC) &pkstwo, 3, pkstwo_t},
@@ -73,16 +73,16 @@ static const R_CMethodDef CEntries[]  = {
     {"loess_ise", (DL_FUNC) &loess_ise, 15},
     {"Srunmed", (DL_FUNC) &Srunmed, 6, Srunmed_t},
     {"Trunmed", (DL_FUNC) &Trunmed, 9, Trunmed_t},
-    {"Rsm_3RSR", (DL_FUNC) &Rsm_3RSR, 5},  
+    {"Rsm_3RSR", (DL_FUNC) &Rsm_3RSR, 5},
     {"Rsm_3RSS", (DL_FUNC) &Rsm_3RSS, 5},
-    {"Rsm_3RS3R", (DL_FUNC) &Rsm_3RS3R, 5},  
-    {"Rsm_3R", (DL_FUNC) &Rsm_3R, 5},  
-    {"Rsm_3", (DL_FUNC) &Rsm_3, 5},  
-    {"Rsm_S", (DL_FUNC) &Rsm_S, 5},  
-    {"tukeyline", (DL_FUNC) &tukeyline, 6},  
-    {"dblcen", (DL_FUNC) &dblcen, 2},  
-    {"R_cutree", (DL_FUNC) &R_cutree, 2},  
-    {"R_distance", (DL_FUNC) &R_distance, 6},  
+    {"Rsm_3RS3R", (DL_FUNC) &Rsm_3RS3R, 5},
+    {"Rsm_3R", (DL_FUNC) &Rsm_3R, 5},
+    {"Rsm_3", (DL_FUNC) &Rsm_3, 5},
+    {"Rsm_S", (DL_FUNC) &Rsm_S, 5},
+    {"tukeyline", (DL_FUNC) &tukeyline, 6},
+    {"dblcen", (DL_FUNC) &dblcen, 2},
+    {"R_cutree", (DL_FUNC) &R_cutree, 2},
+    {"R_distance", (DL_FUNC) &R_distance, 6},
     {"acf", (DL_FUNC) &acf, 6},
     {"uni_pacf", (DL_FUNC) &uni_pacf, 3},
     {"artoma", (DL_FUNC) &artoma, 4},
@@ -134,8 +134,8 @@ static R_FortranMethodDef FortEntries[] = {
     {"qsbart", (DL_FUNC) &F77_SUB(qsbart), 21},
     {"bvalus", (DL_FUNC) &F77_SUB(bvalus), 7},
     {"supsmu", (DL_FUNC) &F77_SUB(supsmu), 10},
-    {"hclust", (DL_FUNC) &F77_SUB(hclust), 11}, 
-    {"hcass2", (DL_FUNC) &F77_SUB(hcass2), 6},  
+    {"hclust", (DL_FUNC) &F77_SUB(hclust), 11},
+    {"hcass2", (DL_FUNC) &F77_SUB(hcass2), 6},
     {"kmns", (DL_FUNC) &F77_SUB(kmns), 17},
     {"eureka", (DL_FUNC) &F77_SUB(eureka), 6},
     {"stl", (DL_FUNC) &F77_SUB(stl), 18},

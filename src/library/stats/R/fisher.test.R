@@ -1,6 +1,7 @@
 fisher.test <-
-function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
-         alternative = "two.sided", conf.level = 0.95)
+function(x, y = NULL, workspace = 200000, hybrid = FALSE,
+         control = list(),
+         or = 1, alternative = "two.sided", conf.level = 0.95)
 {
     DNAME <- deparse(substitute(x))
 
@@ -9,8 +10,17 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
     if(is.matrix(x)) {
         if(any(dim(x) < 2))
             stop("x must have at least 2 rows and columns")
-        if(any(x < 0) || any(is.na(x)))
+        if(!is.numeric(x) || any(x < 0) || any(is.na(x)))
             stop("all entries of x must be nonnegative and finite")
+        if(!is.integer(x)) {
+            xo <- x
+            x <- round(x)
+            if(any(x > .Machine$integer.max))
+                stop(sQuote("x")," has entries too large to be integer")
+            if(!identical(TRUE, (ax <- all.equal(xo, x))))
+                warning(sQuote("x")," has been rounded to integer: ", ax)
+            storage.mode(x) <- "integer"
+        }
     }
     else {
         if(is.null(y))
@@ -25,6 +35,11 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
             stop("x and y must have at least 2 levels")
         x <- table(x, y)
     }
+    ## x is integer
+    con <- list(mult = 30)
+    con[(namc <- names(control))] <- control
+    if((mult <- as.integer(con$mult)) < 2)
+        stop("'mult' must be integer >= 2, typically = 30")
 
     nr <- nrow(x)
     nc <- ncol(x)
@@ -43,41 +58,44 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
     }
 
     PVAL <- NULL
-    if((nr != 2)
-       || (nc != 2)
+    if(nr != 2  ||  nc != 2
        || (alternative == "two.sided") && (or == 1)) {
-        ## Note that it is more efficient to compute p-vaues in C for
+        ## Note that it is more efficient to compute p-values in C for
         ## the two-sided 2-by-2 case with odds ratio 1
         if(hybrid) {
             warning("p-values may be incorrect")
             PVAL <- .C("fexact",
-                       as.integer(nr),
-                       as.integer(nc),
-                       as.double(x),
-                       as.integer(nr),
-                       as.double(5),
-                       as.double(80),
-                       as.double(1),
-                       as.double(0),
-                       p = as.double(0),
+                       nr,
+                       nc,
+                       x,
+                       nr,
+                       ## Cochran condition for asym.chisq. decision:
+                       as.double(5),#  expect
+                       as.double(80),# percnt
+                       as.double(1),#  emin
+                       double(1),#  prt
+                       p = double(1),
                        as.integer(workspace),
+                       mult = as.integer(mult),
                        PACKAGE = "stats")$p
         } else
             PVAL <- .C("fexact",
-                       as.integer(nr),
-                       as.integer(nc),
-                       as.double(x),
-                       as.integer(nr),
-                       as.double(-1),
+                       nr,
+                       nc,
+                       x,
+                       nr,
+                       as.double(-1),#  expect < 0 : exact
                        as.double(100),
                        as.double(0),
-                       as.double(0),
-                       p = as.double(0),
+                       double(1),#   prt
+                       p = double(1),
                        as.integer(workspace),
+                       mult = as.integer(mult),
                        PACKAGE = "stats")$p
         RVAL <- list(p.value = PVAL)
     }
-    if((nr == 2) && (nc == 2)) {
+
+    if((nr == 2) && (nc == 2)) {## conf.int and more only in  2 x 2 case
         m <- sum(x[, 1])
         n <- sum(x[, 2])
         k <- sum(x[1, ])
@@ -191,6 +209,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
         ncp.L <- function(x, alpha) {
             if(x == lo)
                 return(0)
+
             p <- pnhyper(x, 1, upper = TRUE)
             if(p > alpha)
                 uniroot(function(t)
@@ -216,7 +235,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
                   list(conf.int = CINT,
                        estimate = ESTIMATE,
                        null.value = NVAL))
-    }
+    } ## end (2 x 2)
 
     RVAL <- c(RVAL,
               alternative = alternative,
