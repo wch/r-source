@@ -64,5 +64,5 @@ R_TempDir
 AllDevicesKilled
 RbitmapAlreadyLoaded
 hRbitmapDll
-graphicsx
-graphicsy
+Rwin_graphicsx
+Rwin_graphicsy

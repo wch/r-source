@@ -217,6 +217,8 @@ static void GA_Text(double x, double y, char *str,
 		    NewDevDesc *dd);
 static Rboolean GA_Open(NewDevDesc*, gadesc*, char*, double, double,
 			Rboolean, int, int, double, int, int, int);
+static Rboolean GA_NewFrameConfirm();
+
 
 	/********************************************************/
 	/* end of list of required device driver actions 	*/
@@ -1456,8 +1458,8 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     if (resize == 2) xd->rescale_factor = dw/dw0;
     {
 	int grx, gry;
-	grx = (xpos == NA_INTEGER) ? graphicsx : xpos;
-	gry = (ypos == NA_INTEGER) ? graphicsy : ypos;
+	grx = (xpos == NA_INTEGER) ? Rwin_graphicsx : xpos;
+	gry = (ypos == NA_INTEGER) ? Rwin_graphicsy : ypos;
 	if (grx < 0) grx = cw - iw + grx;
 	if (gry < 0) gry = ch - ih + gry;
 	if (!(xd->gawin = newwindow("R Graphics",
@@ -2547,6 +2549,7 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
     dd->mode = GA_Mode;
     dd->hold = GA_Hold;
     dd->metricInfo = GA_MetricInfo;
+    xd->newFrameConfirm = GA_NewFrameConfirm;
 
     /* set graphics parameters that must be set by device driver */
     /* Window Dimensions in Pixels */
@@ -2619,6 +2622,7 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 	    xd->timesince = 500;
 	}
     }
+    xd->newFrameConfirm = GA_NewFrameConfirm;
     dd->displayListOn = (xd->kind == SCREEN);
     if (RConsole && (xd->kind!=SCREEN)) show(RConsole);
     return TRUE;
@@ -2951,17 +2955,11 @@ static void GA_onExit(NewDevDesc *dd)
     GA_Activate(dd);
 }
 
-#if 0
-Rboolean winNewFrameConfirm()
+static Rboolean GA_NewFrameConfirm()
 {
     char msg[] = "Waiting to confirm page change...";
-    gadesc *xd;
     GEDevDesc *dd = GEcurrentDevice();
-
-    /* FIXME: Many of these checks would not be necessary if this were a standard device function */
-
-    if (!dd || dd->newDevStruct != 1 || !(dd->dev) || dd->dev->open != GA_Open) return FALSE;
-    xd = dd->dev->deviceSpecific;
+    gadesc *xd = dd->dev->deviceSpecific;
 
     if (!xd || xd->kind != SCREEN)
 	return FALSE;
@@ -2988,7 +2986,6 @@ Rboolean winNewFrameConfirm()
 
     return TRUE;
 }
-#endif
 
 static SEXP GA_getEvent(SEXP eventRho, char* prompt)
 {

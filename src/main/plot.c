@@ -36,16 +36,23 @@
 #endif
 
 /* FIXME:  NewFrameConfirm should be a standard device function */
-
-#ifdef cWin32
-extern Rboolean winNewFrameConfirm();
+#ifdef Win32
+Rboolean winNewFrameConfirm(void);
 #endif
 
 void NewFrameConfirm(void)
 {
     unsigned char buf[16];
-#ifdef cWin32
-    if (!winNewFrameConfirm())
+#ifdef Win32
+    int i;
+    Rboolean haveWindowsDevice;
+    SEXP dotDevices = findVar(install(".Devices"), R_NilValue); /* This is a pairlist! */
+
+    for(i = 0; i < curDevice(); i++)  /* 0-based */
+	dotDevices = CDR(dotDevices);
+    haveWindowsDevice = 
+	strcmp(CHAR(STRING_ELT(CAR(dotDevices), 0)), "windows") == 0;
+    if (!haveWindowsDevice || !winNewFrameConfirm())
 #endif
     R_ReadConsole("Hit <Return> to see next plot: ", buf, 16, 0);
 }

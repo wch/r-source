@@ -42,7 +42,7 @@
 void CleanTempDir();		/* from extra.c */
 void editorcleanall();                  /* from editor.c */
 
-int graphicsx = -25, graphicsy = 0;
+int Rwin_graphicsx = -25, Rwin_graphicsy = 0;
 
 R_size_t R_max_memory = INT_MAX;
 Rboolean UseInternet2 = FALSE;

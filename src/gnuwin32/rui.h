@@ -30,7 +30,7 @@ extern int MDIset;
 LibExtern int RguiMDI;
 LibExtern window RConsole;
 LibExtern window RFrame;
-LibExtern int graphicsx, graphicsy;
+LibExtern int Rwin_graphicsx, Rwin_graphicsy;
 LibExtern Rboolean AllDevicesKilled;
 #undef LibExtern
 

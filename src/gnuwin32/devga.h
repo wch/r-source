@@ -94,4 +94,5 @@ typedef struct {
     Rboolean enterkey; /* Set true when enter key is hit */
     SEXP eventRho;     /* Environment during event handling */
     SEXP eventResult;  /* Result of event handler */
+    Rboolean (*newFrameConfirm)();
 } gadesc;

@@ -483,10 +483,10 @@ void Rgui_configure()
 /* Graphics window */
     l_grx = newlabel("Graphics windows: initial left",
 		    rect(10, 250, 190, 20), AlignLeft);
-    sprintf(buf, "%d", graphicsx);
+    sprintf(buf, "%d", Rwin_graphicsx);
     f_grx = newfield(buf, rect(200, 250, 40, 20));
     l_gry = newlabel("top", rect(270, 250, 30, 20), AlignLeft);
-    sprintf(buf, "%d", graphicsy);
+    sprintf(buf, "%d", Rwin_graphicsy);
     f_gry = newfield(buf, rect(300, 250, 40, 20));
 
 /* Font colours */
