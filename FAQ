@@ -336,7 +336,7 @@ Gentleman, and is now being developed and maintained by Guido Masarotto
 <Guido.Masarotto@r-project.org> and Brian D. Ripley
 <Brian.Ripley@r-project.org>.
 
-   For most installations the installer `rwinst.exe' will be the easiest
+   For most installations the installer `SetupR.exe' will be the easiest
 tool to use.
 
    See the "R for Windows FAQ"
@@ -1406,6 +1406,10 @@ works, was published in the Journal of Statistical Software
 *gregmisc*
      Miscellaneous functions written/maintained by Gregory R. Warnes.
 
+*grid*
+     The Grid graphics package, a rewrite of the graphics layout
+     capabilities, plus some support for interaction.
+
 *gss*
      A comprehensive package for structural multivariate function estimation
      using smoothing splines.
@@ -1413,6 +1417,9 @@ works, was published in the Journal of Statistical Software
 *ineq*
      Inequality, concentration and poverty measures, and Lorenz curves
      (empirical and theoretic).
+
+*lattice*
+     Lattice graphics, an implementation of Trellis Graphics functions.
 
 *leaps*
      A package which performs an exhaustive search for the best subsets of a
@@ -1700,19 +1707,12 @@ these a try, of course.  This area of CRAN currently contains
 *ensemble*
      Ensembles of tree classifiers.
 
-*grid*
-     The Grid graphics package, a rewrite of the graphics layout
-     capabilities, plus some support for interaction.
-
 *hdf5*
      Interface to the NCSA HDF5 library.
 
 *hpower*
      A suite of functions to compute power and sample size for tests of the
      general linear hypothesis.
-
-*lattice*
-     Lattice graphics, an implementation of Trellis Graphics functions.
 
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive
