@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2000  The R Development Core Team
+ *  Copyright (C) 1998--2001  The R Development Core Team
  *  based on code (C) 1979 and later Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -100,7 +100,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 	s = 1 / (pp + pp - 1);
 	t = 1 / (qq + qq - 1);
 	h = 2 / (s + t);
-	w = y * sqrt(h + r) / h - (t - s) * (r + 5 / 6 - 2 / (3 * h));
+	w = y * sqrt(h + r) / h - (t - s) * (r + 5. / 6. - 2. / (3. * h));
 	xinbta = pp / (pp + qq * exp(w + w));
     } else {
 	r = qq + qq;
