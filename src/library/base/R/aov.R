@@ -420,7 +420,7 @@ alias.lm <- function(object, complete = TRUE, partial = FALSE,
                 X <- R[p1, p1]
                 Y <-  R[p1, -p1, drop = FALSE]
                 beta12 <- as.matrix(qr.coef(qr(X), Y))
-                dimnames(beta12) <- list(dn[p1], dn[ -p1])
+                # dimnames(beta12) <- list(dn[p1], dn[ -p1])
                 CompPatt(t(beta12))
             }
     }

@@ -1218,8 +1218,11 @@ SEXP do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    UNPROTECT(1);
 	    return(x);
 	}
-	else
-	    PROTECT(x = coerceVector(x, TYPEOF(y)));
+	else {
+	    /* bug PR#2590 coerce only if null */
+	    if(isNull(x)) PROTECT(x = coerceVector(x, TYPEOF(y)));
+	    else PROTECT(x);
+	}
     }
     else {
 	PROTECT(x);

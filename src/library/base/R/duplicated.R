@@ -44,8 +44,9 @@ unique.default <- function(x, incomparables = FALSE, ...)
 	.NotYetUsed("incomparables != FALSE")
     z <- .Internal(unique(x))
     if(is.factor(x))
-	z <- factor(z, levels = 1:nlevels(x), labels = levels(x))
-    z
+	factor(z, levels = 1:nlevels(x), labels = levels(x),
+               ordered =is.ordered(x))
+    else z
 }
 
 unique.data.frame <- function(x, incomparables = FALSE, ...)

@@ -580,6 +580,13 @@ BUG FIXES
 
     o	unz() connections could no longer be opened. (PR#2579)
 
+    o	unique(ordered factor) returned an unordered factor. (PR#2591)
+
+    o	x[] <- value coerced x to the mode of value if and only if x
+	had length 0! (Should only happen if x is null: PR#2590)
+
+    o	lm() mislabelled the cols of the qr decomposition. (cause of PR#2586)
+
 
 
 	**************************************************

@@ -2035,6 +2035,30 @@ AIC(lm1, lm2,  k=2)
 ## second failed in 1.6.2
 
 
+## PR#2591 unique on ordered factor
+f <- ordered(month.name, levels=month.name)
+(uf <- unique(f))
+stopifnot(is.ordered(uf))
+## gave factor in 1.6.2
+
+
+## PR#2587 coercion of length-0 vectors
+x <- numeric(0)
+x[1] <- NA
+stopifnot(identical(mode(x), "numeric"))
+##
+
+
+## PR#2586 labelling in alias()
+Y <- c(0,1,2)
+X1 <- c(0,1,0)
+X2 <- c(0,1,0)
+X3 <- c(0,0,1)
+(res <- alias(lm(Y ~ X1 + X2 + X3)))
+stopifnot(identical(rownames(res[[2]]),  "X2"))
+## the error was in lm.(w)fit
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
