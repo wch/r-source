@@ -95,6 +95,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
     option \code{"printcmd"}; this can also be selected as \code{"default"}.}
   \item{append}{logical; currently \bold{disregarded}; just there for
     compatibility reasons.}
+  \item{reset, override.check}{logical arguments passed to
+    \code{\link{check.options}}.  See the Examples.}
 }
 \details{
   \code{postscript(..)} opens the file \code{file} and the PostScript

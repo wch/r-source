@@ -11,7 +11,7 @@ jpeg(filename = "Rplot.jpeg", width = 480, height = 480, pointsize = 12,
 png(filename ="Rplot.png", width = 480, height = 480, pointsize = 12, \dots)
 }
 \synopsis{
-jpeg(filename = "Rplot.jpg", width = 480, height = 480, pointsize = 12,
+jpeg(filename = "Rplot.jpeg", width = 480, height = 480, pointsize = 12,
      quality = 75, gamma = 1,
      colortype = getOption("X11colortype"), maxcubesize = 256)
 png(filename ="Rplot.png", width = 480, height = 480, pointsize = 12,

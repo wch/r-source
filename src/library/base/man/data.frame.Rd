@@ -40,7 +40,7 @@
 data.frame(\dots, row.names = NULL, check.rows = FALSE,
         check.names = TRUE)
 
-as.data.frame(x, row.names = NULL, optional)
+as.data.frame(x, row.names = NULL, optional = FALSE)
 is.data.frame(x)
 
 row.names(x)

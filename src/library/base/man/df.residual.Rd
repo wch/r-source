@@ -6,10 +6,10 @@
   object.
 }
 \usage{
-df.residual(x, \dots)
+df.residual(object, \dots)
 }
 \arguments{
-  \item{x}{an object for which the degrees-of-freedom are desired.}
+  \item{object}{an object for which the degrees-of-freedom are desired.}
   \item{\dots}{additional optional arguments.}
 }
 \details{

@@ -1,4 +1,7 @@
 \name{lm}
+\alias{lm}
+\alias{print.lm}
+\alias{print.lm.null}
 \title{Fitting Linear Models}
 \description{
   \code{lm} is used to fit linear models.
@@ -12,7 +15,6 @@ lm(formula, data, subset, weights, na.action,
    method = "qr", model = TRUE, x = FALSE, y = FALSE, qr = TRUE,
    singular.ok = TRUE, contrasts = NULL, offset = NULL, \dots)
 }
-\alias{lm}
 \arguments{
   \item{formula}{a symbolic description of the model to be fit.
     The details of model specification are given below.}

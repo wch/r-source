@@ -20,6 +20,11 @@
 \alias{dotplot}
 \alias{stripplot}
 \alias{getenv}
+\alias{read.table.url}
+\alias{scan.url}
+\alias{source.url}
+\alias{httpclient}
+\alias{parse.dcf}
 %
 \description{
   The functions listed here are no longer part of \R as they are not
@@ -50,6 +55,14 @@ dotplot(\dots)
 stripplot(\dots)
 getenv(\dots)
 % </Removed 1.3.0>
+% Removed in 1.4.0
+read.table.url(url, method,\dots)
+scan.url(url, file = tempfile(), method, \dots)
+source.url(url, file = tempfile(), method, \dots)
+httpclient(url, port=80, error.is.fatal=TRUE, check.MIME.type=TRUE,
+           file=tempfile(), drop.ctrl.z=TRUE)
+parse.dcf(text = NULL, file = "", fields = NULL, versionfix = FALSE)
+% </Removed 1.4.0>
 }
 \details{
   \code{.Defunct} is the function to which defunct functions are set.
@@ -71,7 +84,18 @@ getenv(\dots)
   \code{\link{dotchart}} and \code{\link{stripchart}}, respectively.
 
   \code{getenv} has been replaced by \code{\link{Sys.getenv}}.
+
+
+  \code{*.url} are replaced by calling \code{read.table}, \code{scan} or
+  \code{source} on a \code{\link{url}} connection.
+
+  \code{httpclient} is used by the deprecated \code{"socket"} method
+  of \code{\link{download.file}}.
+
+  \code{parse.dcf} has been replaced by \code{read.dcf}, which is much
+  faster, but has a slightly different interface.
 }
 \seealso{\code{\link{Deprecated}}}
 \keyword{documentation}
 \keyword{utilities}
+\keyword{internal}

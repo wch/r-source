@@ -7,7 +7,7 @@ xyinch(xy=1, warn.log=TRUE)
 cm(x)
 }
 \arguments{
-  \item{x,y}{numeric vector}}
+  \item{x,y}{numeric vector}
   \item{xy}{numeric of length 1 or 2.}
   \item{warn.log}{logical; if \code{TRUE}, a warning is printed in case
     of active log scale.}

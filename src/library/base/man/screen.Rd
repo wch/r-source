@@ -4,7 +4,7 @@
 split.screen(figs, screen, erase = TRUE)
 screen(n, new = TRUE)
 erase.screen(n)
-close.screen(n, all.screens = TRUE)
+close.screen(n, all.screens = FALSE)
 }
 \alias{screen}
 \alias{split.screen}

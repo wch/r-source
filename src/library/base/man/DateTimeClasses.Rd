@@ -49,8 +49,6 @@ summary.POSIXlt(object, digits = 15, ...)
 time + number
 time - number
 time1 lop time2
-
-mean(time)
 }
 \arguments{
   \item{x, object}{An object to be printed or summarized.}

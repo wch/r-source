@@ -1,7 +1,7 @@
 \name{family}
 \title{Family Objects for Models}
 \usage{
-family(object)
+family(object, \dots)
 
 binomial(link = "logit")
 gaussian(link ="identity")
@@ -48,6 +48,7 @@ quasipoisson(link = "log")
   \item{object}{the function \code{family} accesses the \code{family}
     objects which are stored within objects created by modelling
     functions (e.g. \code{glm}).}
+  \item{\dots}{further arguments passed to methods.}
 }
 \description{
   Family objects provide a convenient way to specify the details of the

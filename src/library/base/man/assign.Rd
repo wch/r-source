@@ -38,7 +38,32 @@ x = value
   access the currently active function calls).
   The \code{envir} argument is an alternative way to specify an
   environment, but is primarily there for back compatibility.
-   }
+
+  \code{assign} does not dispatch assignment methods, so it cannot be
+  used to set elements of vectors, names, attributes, etc.
+}
+\section{Assignment Operators}{
+  There are three different assignment
+  operators. The operators \code{<-} and \code{=} assign into the
+  environment in which they are evaluated.  The \code{<-} can be used
+  anywhere, but the \code{=} is only allowed at the top level (that
+  is, in the complete expression typed by the user) or as one of the
+  subexpressions in a braced list of expressions.
+
+  
+  The operators \code{<<-} and \code{->>} cause a search to made
+  through the environment for an existing
+  definition of the variable being assigned.  If such a variable is
+  found then its value is redefined, otherwise assignment takes place
+  globally. Note that their differs from that in
+  the S language, but is useful in conjunction with the scoping rules of
+  R.
+
+  In all the assignment operator expressions, \code{x} can be a name
+  or an expression defining a part of an object to be replaced (e.g.,
+  \code{z[[1]]}).  The name does not need to be quoted, though it can
+  be.
+}
 \value{
   This function is invoked for its side effect, which is assigning
   \code{value} to the variable \code{x}.  If no \code{envir} is
@@ -53,39 +78,6 @@ x = value
 
   If \code{inherits} is \code{FALSE}, assignment takes place in the
   initial frame of \code{envir}.
-
-
-}
-\details{
-  The arrow forms of assignment provide shortcut ways to carry out
-  assignment.  The \code{<-} and \code{->} forms carry out assignment
-  in the local environment frame, while the \code{<<-} and \code{->>}
-  forms cause a search to made through the environment for an existing
-  definition of the variable being assigned.  If such a variable is
-  found then its value is redefined, otherwise assignment takes place
-  globally.
-
-  Note that the action of \code{<<-} and \code{->>} differs from that in
-  the S language, but is useful in conjunction with the scoping rules of
-  R.
-
-  \code{assign} does not dispatch assignment methods, so it cannot be
-  used to set elements of vectors, names, attributes, etc.
-  }
-\section{Assignment Operators}{There are three different assignment
-  operators. The operators \code{<-} and \code{=} assign into the
-  environment in which they are evaluated.  The \code{<-} can be used
-  anywhere, but the \code{=} is only allowed at the top level (that
-  is, in the complete expression typed by the user) or as one of the
-  subexpressions in a braced list of expressions.
-
-  The operator \code{<<-} performs an assignment in the environment of
-  the parent of the current call.
-
-  In all the assignment operator expressions, \code{x} can be a name
-  or an expression defining a part of an object to be replaced (e.g.,
-  \code{z[[1]]}).  The name does not need to be quoted, though it can
-  be.
 }
 
 \seealso{

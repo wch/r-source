@@ -26,4 +26,6 @@ print(x)
 summary(x)
 upgrade(x)
 x <- update(x)
-print(x)}}
+print(x)
+}}
+\keyword{utilities}

@@ -13,6 +13,10 @@ colors.
 The values returned by \code{rgb} can be used with a
 \code{col=} specification in graphics functions or in \code{par}.
 }
+\arguments{
+  \item{red, blue, green}{vector in \eqn{[0, 1]}.}
+  \item{names}{character. The names for the resulting vector.}
+}
 \seealso{
   \code{\link{col2rgb}} the ``inverse'' for translating \R colors to RGB
   vectors.\cr

@@ -99,6 +99,9 @@ NEW FEATURES
 
     o   order() and sort.list() now implement na.last = FALSE, NA.
 
+    o   Previously deprecated functions read.table.url(), scan.url(),
+	source.url(), httpclient() and parse.dcf() are defunct.
+
 
 
 

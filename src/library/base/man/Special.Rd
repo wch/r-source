@@ -24,8 +24,12 @@ digamma(x)
 trigamma(x)
 tetragamma(x)
 pentagamma(x)
-choose(n,k)
-lchoose(n,k)
+choose(n, k)
+lchoose(n, k)
+}
+\arguments{
+  \item{a, b, x}{numeric vectors.}
+  \item{n, k}{integer vectors.}
 }
 \details{
 %---- This should be improved! ---  want mathematical definitions

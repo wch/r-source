@@ -1,7 +1,7 @@
 \name{mtext}
 \title{Write Text into the Margins of a Plot}
 \usage{
-mtext(text, side = 3, line = 0, outer = FALSE, at = NULL,
+mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
       adj = NA, cex = NA, col = NA, font = NA, vfont = NULL, \dots)
 }
 \alias{mtext}

@@ -4,6 +4,7 @@
 prop.table(x, margin=NULL)
 }
 \alias{prop.table}
+\arguments{
  \item{x}{ table }
  \item{margin}{ index, or vector of indices to generate margin for}
 }
@@ -24,4 +25,4 @@ m<-matrix(1:4,2)
 m
 prop.table(m,1)
 }
-\keyword{ array }%-- one or more ...
+\keyword{ array }
