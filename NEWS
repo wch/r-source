@@ -33,6 +33,8 @@ NEW FEATURES
 	if an X server can be accessed, and so is more likely to be
 	accurate.
 
+    o	binomial() has a new "cauchit" link (suggested by Roger Koenker).
+
 
 DOCUMENTATION
 

@@ -59,6 +59,17 @@ make.link <- function (link)
                        pmax(dnorm(eta),.Machine$double.eps)
                    valideta <- function(eta) TRUE
                },
+               "cauchit" = {
+         	   linkfun <- function(mu) qcauchy(mu)
+         	   linkinv <- function(eta) {
+                       thresh <- -qcauchy(.Machine$double.eps)
+                       eta <- pmin(thresh, pmax(eta, -thresh))
+                       pcauchy(eta)
+         	   }
+         	   mu.eta <- function(eta)
+                       pmax(dcauchy(eta), .Machine$double.eps)
+         	   valideta <- function(eta) TRUE
+ 		},
                "cloglog" = {
                    linkfun <- function(mu) log(-log(1 - mu))
                    linkinv <- function(eta)
@@ -239,11 +250,11 @@ binomial <- function (link = "logit")
 	if (linktemp == "link")
 	    linktemp <- eval(link)
     }
-    if (any(linktemp == c("logit", "probit", "cloglog", "log")))
+    if (any(linktemp == c("logit", "probit", "cloglog", "cauchit", "log")))
 	stats <- make.link(linktemp)
     else stop(paste(linktemp, "link not available for binomial",
 		    "family, available links are \"logit\", ",
-		    "\"probit\", \"cloglog\" and \"log\""))
+		    "\"probit\", \"cloglog\", \"cauchit\" and \"log\""))
     variance <- function(mu) mu * (1 - mu)
     validmu <- function(mu) all(mu>0) && all(mu<1)
     dev.resids <- function(y, mu, wt)

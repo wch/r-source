@@ -27,8 +27,9 @@ quasipoisson(link = "log")
     The \code{gaussian} family accepts the links \code{"identity"},
     \code{"log"} and \code{"inverse"};
     the \code{binomial} family the links \code{"logit"},
-    \code{"probit"}, \code{"log"} and \code{"cloglog"} (complementary
-    log-log);
+    \code{"probit"}, \code{"cauchit"}, (corresponding to logistic,
+    normal and Cauchy CDFs respectively) \code{"log"} and
+    \code{"cloglog"} (complementary log-log);
     the \code{Gamma} family the links \code{"inverse"}, \code{"identity"}
      and \code{"log"};
     the \code{poisson} family the links \code{"log"}, \code{"identity"}, 
