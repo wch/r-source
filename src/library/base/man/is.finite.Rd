@@ -46,7 +46,7 @@ is.nan(0/0)# T
 !is.nan(NA)
 all(!is.nan(c(1,NA)))
 all(c(F,T,F) == is.nan(c   (1,NaN,NA)))
-all(c(F,T,F) == is.nan(list(1,NaN,NA)))#-> FALSE  'BUG' [coerce.c]
+all(c(F,T,F) == is.nan(list(1,NaN,NA)))#-> FALSE  'BUGlet' [coerce.c]
 				# However, S is different anyway.
 
 ( weird.values <- c(-20.9/0, 1/0, 0/0, NA) )

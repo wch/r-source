@@ -13,15 +13,17 @@ is found and used.
 If \code{fun} is not specified then the function calling \code{body}
 is used.
 
-The assignment form sets the body of a function to the list on the
-right hand side.
+The assignment form sets the body of a function \code{obj} to the
+\code{list} on the right hand side.
 }
 \seealso{
-\code{\link{args}}
+\code{\link{alist}}, \code{\link{args}}
 }
 \examples{
 body(body)
-f<-function(x)x^5
-body(f)<-expression(5^x)
+f <- function(x) x^5
+body(f) <- expression(5^x)
+f(3) # = 125
+str(body(f))
 }
 \keyword{programming}

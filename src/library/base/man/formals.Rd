@@ -24,8 +24,8 @@ right hand side.
 length(formals(lm))      # the number of formal arguments
 names(formals(boxplot))  # formal arguments names
 
-f<-function(x)a+b
-formals(f)<-alist(a=,b=3) # function(a,b=3)a+b
+f <- function(x)a+b
+formals(f) <- alist(a=,b=3) # function(a,b=3)a+b
 f(2) # result = 5
 }
 \keyword{programming}

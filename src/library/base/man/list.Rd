@@ -18,9 +18,9 @@ with each value either tagged or untagged,
 depending on how the argument was specified.
 
 \code{alist} is like \code{list}, except in the handling of tagged
-arguments with no value. These are handled as if they described 
-function arguments with no default (cf. \code{formals}), whereas
-\code{list} simply ignores them. 
+arguments with no value. These are handled as if they described
+function arguments with no default (cf. \code{\link{formals}}), whereas
+\code{list} simply ignores them.
 
 \code{as.list} attempts to coerce its argument to list type.
 For functions, this returns the concatenation of the list of formals
@@ -30,11 +30,11 @@ constituent calls is returned.
 \code{is.list} returns \code{TRUE} if its argument
 is a list and \code{FALSE} otherwise.
 
-To create an empty list it is necessary to use the
-function \code{vector} with a \code{mode} of \code{"list"}.
+To create an empty list, it is necessary to use the
+function \code{vector} with a \code{\link{mode}} of \code{"list"}.
 }
 \seealso{
-\code{\link{vector}}.
+\code{\link{vector}(., mode="list")}, \code{\link{c}}, for concatenation;
 \code{\link{formals}}.
 }
 \examples{
@@ -44,8 +44,8 @@ pts <- list(x=cars[,1], y=cars[,2])
 plot(pts)
 
 # Argument lists
-f<-function()x
-formals(f)<-alist(x=,y=2,...=) # Note the spec. of a "..." argument
+f <- function()x
+formals(f) <- alist(x=, y=2, ...=) # Note the spec. of a "..." argument
 f
 }
 \keyword{list}

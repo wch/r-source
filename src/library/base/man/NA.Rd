@@ -23,6 +23,10 @@ of the same length containing \code{TRUE} for those elements marked
   \code{\link{na.action}}, \code{\link{na.omit}}, \code{\link{na.fail}}
   on how methods can be tuned to deal with missing values.
 }
+\examples{
+is.na(c(1,NA))       #> F TRUE
+is.na(paste(c(1,NA)))#> F FALSE
+}
 \keyword{NA}
 \keyword{logic}
 \keyword{manip}
