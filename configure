@@ -35188,6 +35188,8 @@ cat >>confdefs.h <<\_ACEOF
 #define HAVE_X11 1
 _ACEOF
 
+  r_save_LIBS=${LIBS}
+  LIBS="${LIBS} ${X_LIBS}"
 
 
 
@@ -35310,6 +35312,7 @@ _ACEOF
 fi
 done
 
+  LIBS=${r_save_LIBS}
 else
   use_X11="no"
 fi
