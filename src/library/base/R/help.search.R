@@ -91,12 +91,7 @@ function(pattern, fields = c("alias", "concept", "title"),
     if(rebuild) {
 	## Check whether we can save the help db lateron.
 	save.db <- FALSE
-	dir <- switch(.Platform$OS.type,
-		      "windows" = Sys.getenv("R_USER"),
-		      "unix" = Sys.getenv("HOME"),
-		      "")
-	if(nchar(dir) == 0) dir <- getwd()
-	dir <- file.path(dir, ".R")
+        dir <- file.path(tempdir(), ".R")        
 	dbfile <- file.path(dir, "help.db")
 	if((tools::fileTest("-d", dir)
             || ((unlink(dir) == 0) && dir.create(dir)))
