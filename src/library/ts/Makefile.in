@@ -11,7 +11,7 @@ subdir = src/library/ts
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = INDEX TITLE Makefile.in
+DISTFILES = DESCRIPTION INDEX SOURCES TITLE Makefile.in
 
 pkg = ts
 
@@ -22,12 +22,20 @@ all: Makefile
 	  cat `ls $(srcdir)/R/*.R` > $${f}; \
 	  $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg))
+	@if test -f $(srcdir)/DESCRIPTION; then \
+	  $(INSTALL_DATA) $(srcdir)/DESCRIPTION \
+	    $(top_builddir)/library/$(pkg); \
+	fi
 	@if test -f $(srcdir)/INDEX; then \
 	  $(INSTALL_DATA) $(srcdir)/INDEX \
 	    $(top_builddir)/library/$(pkg); \
 	fi
 	@if test -f $(srcdir)/TITLE; then \
 	  $(INSTALL_DATA) $(srcdir)/TITLE\
+	     $(top_builddir)/library/$(pkg); \
+	fi
+	@if test -f $(srcdir)/SOURCES; then \
+	  $(INSTALL_DATA) $(srcdir)/SOURCES\
 	     $(top_builddir)/library/$(pkg); \
 	fi
 	@if test -d $(srcdir)/data; then \

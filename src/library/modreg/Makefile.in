@@ -11,7 +11,7 @@ subdir = src/library/modreg
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = COPYRIGHTS INDEX TITLE Makefile.in
+DISTFILES = COPYRIGHTS DESCRIPTION INDEX TITLE Makefile.in
 
 pkg = modreg
 
@@ -22,6 +22,10 @@ all: Makefile
 	  cat `ls $(srcdir)/R/*.R` > $${f}; \
 	  $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg))
+	@if test -f $(srcdir)/DESCRIPTION; then \
+	  $(INSTALL_DATA) $(srcdir)/DESCRIPTION \
+	    $(top_builddir)/library/$(pkg); \
+	fi
 	@if test -f $(srcdir)/INDEX; then \
 	  $(INSTALL_DATA) $(srcdir)/INDEX \
 	    $(top_builddir)/library/$(pkg); \

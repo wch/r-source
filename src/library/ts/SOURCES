@@ -12,5 +12,6 @@ stl code on netlib, presumably by the authors of
      Statistics Research Report, AT&T Bell Laboratories.
 
 Fortran package ts by B.D. Ripley, 1977--82, including starma.f which is
-Applied Statistics Algorithm AS154.
+Applied Statistics Algorithm AS154 and AS182.
+
 
