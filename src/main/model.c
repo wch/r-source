@@ -1741,7 +1741,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (ll) {
 		    var_i = VECTOR_ELT(variable, i);		    
 		    if (!first)
-			bufp = AppendString(bufp, ".");
+			bufp = AppendString(bufp, ":");
 		    first = 0;
 		    if (isFactor(var_i)) {
 			if (ll == 1) {

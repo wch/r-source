@@ -356,6 +356,8 @@ BUG FIXES
     o	polylines with more than 64K pieces will now work on more X
 	servers with the x11 device.
 
+    o	model.matrix now uses ";" not "." in labelling interaction
+	terms, as terms() and the prototype do (PR#701).
 
 
 	**************************************************
