@@ -595,6 +595,7 @@ FUNTAB R_FunTab[] =
 {"globalenv",	do_globalenv,	0,	1,	0,	PP_FUNCALL},
 {"environment",	do_envir,	0,	11,	1,	PP_FUNCALL},
 {"environment<-",do_envirgets,	0,	1,	2,	PP_FUNCALL},
+{"reg.finalizer",do_regFinaliz,	0,	1,	2,	PP_FUNCALL},
 {"options",	do_options,	0,	11,	1,	PP_FUNCALL},
 {"sink",	do_sink,	0,	111,	3,	PP_FUNCALL},
 {"sink.number",	do_sinknumber,	0,	11,	1,	PP_FUNCALL},

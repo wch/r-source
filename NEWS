@@ -279,6 +279,8 @@ NEW FEATURES
 	-  checkTnF() for finding expressions containing the symbols `T'
            and `F'.
 
+    o   New function reg.finalizer() to provide R interface to
+        finalization.  
 
 
 BUG FIXES

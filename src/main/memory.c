@@ -1053,6 +1053,21 @@ void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun)
     R_RegisterCFinalizerEx(s, fun, FALSE);
 }
 
+/* R interface function */
+
+SEXP do_regFinaliz(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+
+    if (TYPEOF(CAR(args)) != ENVSXP && TYPEOF(CAR(args)) != EXTPTRSXP)
+	errorcall(call, "1st arg must be environment or external pointer");
+    if (TYPEOF(CADR(args)) != CLOSXP)
+	errorcall(call, "2nd arg must be a function");
+    
+    R_RegisterFinalizer(CAR(args), CADR(args));
+    return R_NilValue;
+}
+
 
 /* The Generational Collector. */
 
