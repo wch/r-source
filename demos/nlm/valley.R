@@ -3,12 +3,9 @@
 ## Helical Valley Function
 ## Page 362 Dennis + Schnabel
 
-theta <- function(x1,x2) {
-    if(x1 > 0)
-	return((0.5/pi)*atan(x2/x1))
-    else
-	return((0.5/pi)*atan(x2/x1)+0.5)
-}
+theta <- function(x1,x2)
+    (0.5/pi)*(if(x1 > 0) atan(x2/x1) else atan(x2/x1) + pi)
+
 
 f <- function(x) {
     f1 <- 10*(x[3] - 10*theta(x[1],x[2]))
@@ -17,14 +14,13 @@ f <- function(x) {
     return(f1^2+f2^2+f3^2)
 }
 
-## explore surface
+## explore surface {at x3 = 0}
 x <- seq(-1, 2, len=50)
 y <- seq(-1, 1, len=50)
 z <- apply(as.matrix(expand.grid(x, y)), 1, function(x) f(c(x, 0)))
 contour(x, y, matrix(log10(z), 50, 50))
-
-nlm(f, c(-1,0,0), hessian=TRUE, print=0)
-
+str(nlm.f <- nlm(f, c(-1,0,0), hessian=TRUE, print=0))
+points(rbind(nlm.f$estim[1:2]), col = "red", pch = 20)
 
 ## the Rosenbrock banana valley function
 
@@ -35,17 +31,24 @@ f <- function(x)
 }
 
 ## explore surface
-x <- seq(-2, 2, len=100)
-y <- seq(-1, 1, len=100)
 fx <- function(x)
 {
     x1 <- x[,1]; x2 <- x[,2]
     100*(x2 - x1*x1)^2 + (1-x1)^2
 }
+x <- seq(-2, 2, len=100)
+y <- seq(-.5, 1.5, len=100)
 z <- fx(expand.grid(x, y))
+par(mfrow = c(2,1), mar = .1 + c(3,3,0,0))
 contour(x, y, matrix(log10(z), length(x)))
 
-nlm(f, c(-1.2,1), hessian=TRUE)
+str(nlm.f2 <- nlm(f, c(-1.2, 1), hessian=TRUE))
+points(rbind(nlm.f2$estim[1:2]), col = "red", pch = 20)
+
+x <- y <- seq(.9, 1.1, len=100)
+z <- fx(expand.grid(x, y))
+contour(x, y, matrix(log10(z), length(x)))
+points(rbind(nlm.f2$estim[1:2]), col = "red", pch = 20)
 
 
 fg <- function(x)
