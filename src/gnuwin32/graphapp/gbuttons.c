@@ -67,3 +67,9 @@ control newtoolbar(int height)
     addto(c);
     return (control) c->toolbar;
 }
+
+void scrolltext(textbox c, int lines)
+{
+    int linecount = sendmessage(c->handle, EM_GETLINECOUNT, 0, 0);
+    sendmessage(c->handle, EM_LINESCROLL, 0, linecount - lines);
+}

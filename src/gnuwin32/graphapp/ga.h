@@ -150,6 +150,8 @@ void gchangescrollbar(scrollbar sb, int which, int where, int max,
 		      int pagesize, int disablenoscroll);
 void gsetcursor(drawing d, cursor c);
 control newtoolbar(int height);
+void scrolltext(textbox c, int lines);
+
 
 /* cursor.c */
 extern cursor CrossCursor;
