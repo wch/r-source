@@ -128,6 +128,7 @@ trace <- function(what, tracer, exit, at, print, signature) {
 ## depend on the methods namespace.  But this assertion needs thorough testing.
 untrace <- function(what, signature = NULL) {
     MethodsDispatchOn <- .isMethodsDispatchOn()
+    where <- topenv(parent.frame())
     if(MethodsDispatchOn) {
         tState <- tracingState(FALSE)
         on.exit(tracingState(tState))
@@ -150,13 +151,14 @@ untrace <- function(what, signature = NULL) {
     if(!MethodsDispatchOn)
         return(.primUntrace(what)) ## can't have called trace exc. in primitive form
     if(is.null(signature)) {
-        where <- findFunction(what)
+        where <- findFunction(what, where = where)
         if(length(where) == 0)
             warning("No function \"", what, "\" to untrace")
         else {
-            f <- getFunction(what)
+            f <- getFunction(what, where = where[[1]])
             ## ensure that the version to assign is untraced (should be, but ...)
             if(is(f, "traceable")) {
+                ## FIXME:  needs to deal with locked bindings
                 assign(what, .untracedFunction(f), where[[1]])
             }
             else
@@ -164,12 +166,10 @@ untrace <- function(what, signature = NULL) {
         }
     }
     else {
-        where <- findMethod(what, signature)
-        if(length(where) == 0)
+        f <- getMethod(what, signature, where = where)
+        if(is.null(f))
             warning("No method for \"", what, "\" for this signature to untrace")
         else {
-            where <- where[[1]]
-            f <- getMethod(what, signature, where = where)
             if(is(f, "traceable"))
                 setMethod(what, signature, .untracedFunction(f), where = where)
             else
