@@ -85,6 +85,7 @@ draw.plotmath.cell(expression(plain(x)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(italic(x)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(bold(x)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(bolditalic(x)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(underline(x)), i, nr); i <- i + 1
 
 # Need fewer, wider columns for ellipsis ...
 nr <- 20
