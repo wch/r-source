@@ -307,6 +307,7 @@ distclean: clean
 	-@(cd Examples; $(MAKE) $@)
 	-@(cd Embedding; $(MAKE) $@)
 	-@rm -f Makefile $(test-out) $(test-src-auto) .RData
+	-@rm -rf *.Rcheck
 maintainer-clean: distclean
 
 R install install-strip uninstall TAGS info dvi:
