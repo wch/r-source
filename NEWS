@@ -155,6 +155,8 @@ NEW FEATURES
     o	The Bartlett, Fligner-Killeen, Friedman, Kruskal-Wallis, and
 	Quade tests in package ctest now have formula interfaces.
 
+    o   R::Dcf.pm now checks (a little bit) for continuation lines
+        without leading whitespace.
 
 
 BUG FIXES
