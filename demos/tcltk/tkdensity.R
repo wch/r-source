@@ -2,8 +2,9 @@
 
 require(tcltk)
 local({
-    y<-NULL
+    y <- NULL
     xlim <-NULL
+    bw <- 1 # in case replot.maybe is called too early
 
     replot <- function(...) {
         if (is.null(y)) return() # too early...
@@ -17,8 +18,7 @@ local({
 
     replot.maybe <- function(...)
     {
-        if (as.numeric(tclvar$bw) != bw)
-        replot()
+        if (as.numeric(tclvar$bw) != bw) replot()
     }
 
     regen <- function(...) {
@@ -81,7 +81,7 @@ local({
     tclvar$size  <- 50
     tclvar$dist  <- 1
     tclvar$kernel<- "gaussian"
-    tclvar$bw    <- bw <- 1
+    tclvar$bw    <- 1
     regen()
 })
 
