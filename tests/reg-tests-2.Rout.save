@@ -1,6 +1,6 @@
 
-R : Copyright 2002, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2002-12-30)
+R : Copyright 2003, The R Development Core Team
+Version 1.7.0 Under development (unstable) (2003-01-16)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1122,4 +1122,14 @@ y    2    5 8
 5   5 10 15 20  25
 > ## 1.6.1 treated matrix as a vector.
 > 
+> ## escapes in non-quoted printing
+> x <- "\\abc\\"
+> names(x) <- 1
+> x
+        1 
+"\\abc\\" 
+> print(x, quote=FALSE)
+      1 
+\\abc\\ 
+> ## 1.6.2 had label misaligned
 > 
