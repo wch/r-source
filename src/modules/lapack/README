@@ -12,7 +12,7 @@ if a full BLAS implementation is found at configure time.
 
 rgeev.f is a corrected (lines 180-1) version of dgeev.f, to allow
 LWORK queries to run.  (Late versions of dgeev.f are corrected.)  It
-calls DLANGE, which is missing in libsunperf, so a renamed copy of
+calls DLANGE, which was missing in libsunperf, so a renamed copy of
 that is included.  Similarly, a renamed copy of LSAME is included as
 that is not exported by MacOS's vecLib.
 
