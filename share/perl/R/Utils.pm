@@ -330,8 +330,11 @@ sub text2html {
 
 ## This is currently shared between build and check.
 sub check_package_description {
+    
     my ($pkgdir, $pkgname, $log, $in_bundle, $is_base_pkg, $full) = @_;
+    
     my ($dfile, $dir, $description);
+
     if($is_base_pkg) {
 	$dfile = "DESCRIPTION.in";
     }
@@ -369,7 +372,7 @@ sub check_package_description {
 	$fh->print(join("\n", @lines), "\n");
 	$fh->close();
     }
-    
+
     $log->checking("DESCRIPTION meta-information");
 
     my $description = new R::Dcf($dfile);
@@ -378,14 +381,16 @@ sub check_package_description {
 	my $Rcmd = "tools:::.check_package_description(\"$dfile\")";
 	my @out = R_runR($Rcmd, "--vanilla --quiet",
 			 "R_DEFAULT_PACKAGES=NULL");
-	rmtree(dirname($dir)) if($in_bundle);
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
+	    rmtree(dirname($dir)) if($in_bundle);
 	    $log->error();
 	    $log->print(join("\n", @out) . "\n");
 	    exit(1);
 	}
     }
+
+    rmtree(dirname($dir)) if($in_bundle);    
 
     ## Also check whether the package name has two dots, which is not
     ## portable as it is not guaranteed to work in Windows.  (Do this
