@@ -19,7 +19,7 @@ as.matrix.dist(dist.obj)
   \item{diag}{a logical value indicating whether the diagonal of the
     distance matrix should be printed by \code{print.dist}.}
   \item{upper}{a logical value indicating whether the upper triangle of the
-    distance matrix should be be printed by \code{print.dist}.}
+    distance matrix should be printed by \code{print.dist}.}
 }
 \description{
   This function computes and returns the distance matrix computed by
