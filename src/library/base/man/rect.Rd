@@ -21,6 +21,7 @@ rect(xleft, ybottom, xright, ytop,
   \code{rect} draws a rectangle (or sequence of rectangles) with the
   given coordinates.  It is a primitive function used in
   \code{\link{hist}}.
+}
 \details{
   The positions supplied, i.e., \code{xleft, \dots},
   are relative to the current plotting region.  If the x-axis goes from

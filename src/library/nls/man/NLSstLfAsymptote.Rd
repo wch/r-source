@@ -1,4 +1,4 @@
-% $Id: NLSstLfAsymptote.Rd,v 1.2 2000/01/17 16:23:10 ripley Exp $
+% $Id: NLSstLfAsymptote.Rd,v 1.3 2000/08/28 12:09:26 hornik Exp $
 \name{NLSstLfAsymptote}
 \title{Horizontal Asymptote on the Left Side}
 \alias{NLSstLfAsymptote}
@@ -21,8 +21,12 @@ NLSstLfAsymptote(xy)
   \code{x}. 
 }
 \author{Jose Pinheiro and Douglas Bates}
-\seealso{\code{\link{sortedXyData}},\code{\link{NLSstClosestX}},
-  \code{\link{NLSstRtAsymptote}},\code{\link{selfStart}}
+\seealso{
+  \code{\link{sortedXyData}},
+  \code{\link{NLSstClosestX}},
+  \code{\link{NLSstRtAsymptote}},
+  \code{\link{selfStart}}
+}
 \examples{
 library( nls )
 data( DNase )

@@ -20,6 +20,8 @@ profile(fitted, \dots)
   individual methods for further details.
 }
 \seealso{
-  \code{\link{profile.nls}} in package \code{nls},
-  \code{\link{profile.glm} in package \code{MASS}, \ldots}
-\keyword{models }
+  \code{\link[nls]{profile.nls}} in package \bold{nls},
+  \code{\link[MASS]{profile.glm}} in package \bold{MASS},
+  \ldots
+}
+\keyword{models}

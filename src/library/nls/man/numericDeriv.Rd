@@ -24,9 +24,7 @@ numericDeriv(expr, theta, rho=parent.frame())
     the derivatives of the value with respect to the variables listed in
     \code{theta}.
 }
-\author{Saikat DebRoy <saikat@stat.wisc.edu>}
-\seealso{
-
+\author{Saikat DebRoy \email{saikat@stat.wisc.edu}}
 \examples{
 myenv <- new.env()
 assign("mean", 0., env = myenv)

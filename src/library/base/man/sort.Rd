@@ -7,6 +7,7 @@ sort(x, partial = NULL, na.last = NA)
 \description{
   Sort \code{\link{numeric}} or  \code{\link{complex}}  \code{x}
   (partially) into ascending order.
+}
 \details{
   If \code{partial} is non \code{NULL}, it is taken to contain indexes
   of elements of \code{x} which are to be placed in their correct

@@ -6,6 +6,7 @@
   Perform cubic spline interpolation of given data points, returning
   either a list of points obtained by the interpolation or a function
   performing the interpolation.
+}
 \usage{
 splinefun(x, y, method = "fmm")
 spline(x, y, n = 3*length(x), method = "fmm",

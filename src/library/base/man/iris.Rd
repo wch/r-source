@@ -46,4 +46,5 @@ ii <- data.frame(matrix(aperm(iris3, c(1,3,2)), ncol=4,
                  Species = gl(3,50,lab=sub("S","s",sub("V","v",dni3[[3]]))))
 data(iris)
 all.equal(ii, iris) # TRUE
+}
 \keyword{datasets}

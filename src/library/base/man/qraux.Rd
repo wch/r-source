@@ -51,7 +51,10 @@ qr.R(qrstr, complete = FALSE)
   \code{nrow(X)} or \code{ncol(X)}, depending on whether \code{complete}
   is \code{TRUE} or \code{FALSE}.
 }
-\seealso{ \code{\link{qr}}, \code{\link{qr.qy}.}
+\seealso{
+  \code{\link{qr}},
+  \code{\link{qr.qy}}.
+}
 \examples{
 data(LifeCycleSavings)
 p <- ncol(x <- LifeCycleSavings[,-1]) # not the `sr'

@@ -11,9 +11,11 @@ dump.frames(dumpto = "last.dump", to.file = FALSE)
 debugger(dump = last.dump)
 }
 \arguments{
- \item{dumpto}{a character string. The name of the object or file to dump to.}
- \item{to.file}{logical. Should the dump be to an \R object or to a file?}
- \item{dump}{An \R dump object created by \code{dump.frames}}
+  \item{dumpto}{a character string. The name of the object or file to
+    dump to.}
+  \item{to.file}{logical. Should the dump be to an \R object or to a
+    file?}
+  \item{dump}{An \R dump object created by \code{dump.frames}.}
 }
 \details{
   To use post-mortem debugging, set the option \code{error} to be a call
@@ -41,16 +43,16 @@ debugger(dump = last.dump)
 }
 \author{B. D. Ripley}
 \note{
-  Functions such as \code{\link{sys.parent}} and \code{\link{environment}}
-  applied to closures will not work correctly inside \code{debugger}.
+  Functions such as \code{\link{sys.parent}} and
+  \code{\link{environment}} applied to closures will not work correctly
+  inside \code{debugger}.
 
   Of course post-mortem debugging will not work if \R is too damaged to
   produce and save the dump, for example if it has run out of workspace.
-
+}
 \seealso{
   \code{\link{options}} for setting \code{error} options.
 }
-
 \examples{
 \dontrun{
 options(error=quote(dump.frames("testdump", TRUE)))

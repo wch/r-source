@@ -11,7 +11,7 @@ lm.influence(lm.obj)
   This function provides the basic quantities which are
   used in forming a wide variety of diagnostics for
   checking the quality of regression fits.
-
+}
 \details{
   The functions listed in \bold{See Also} give a more direct way
   of computing a variety of regression diagnostics.

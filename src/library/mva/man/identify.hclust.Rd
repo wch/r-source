@@ -41,7 +41,10 @@ identify.hclust(HCOBJ, FUN=NULL, N=20, MAXCLUSTER=20, DEV.FUN=NULL, ...)
   Either a list of data point index vectors or a list of return values
   of \code{FUN}.
 }
-\seealso{\code{\link{hclust}, \code{\link{\rect.hclust}}}
+\seealso{
+  \code{\link{hclust}},
+  \code{\link{rect.hclust}}
+}
 \examples{
 \dontrun{
 library(mva)

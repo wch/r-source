@@ -22,7 +22,7 @@ forwardsolve(l, x, k= ncol(l), upper.tri = FALSE, transpose = FALSE)
   \item{upper.tri}{logical; if \code{TRUE} (default), the \emph{upper}
     \emph{tri}angular part of \code{r} is used.  Otherwise, the lower one.}
   \item{transpose}{logical; if \code{TRUE}, solve \eqn{r' * y = x} for
-    \eqn{y}, i.e., \code{t(r) \%*\% y == x}.
+    \eqn{y}, i.e., \code{t(r) \%*\% y == x}.}
 }
 \value{
   The solution of the triangular system.  The result will be a vector if

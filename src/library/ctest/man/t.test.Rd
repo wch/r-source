@@ -52,7 +52,9 @@ t.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     	performed.}
     \item{data.name}{a character string giving the name(s) of the data.}
 }
-\seealso{\code{\link{prop.test}}
+\seealso{
+  \code{\link{prop.test}}
+}
 \examples{
 t.test(1:10,y=c(7:20))      # P = .00001855
 t.test(1:10,y=c(7:20, 200)) # P = .1245    -- NOT significant anymore

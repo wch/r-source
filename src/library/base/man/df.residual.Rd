@@ -4,6 +4,7 @@
 \description{
   Returns the residual degrees-of-freedom extracted from a fitted model
   object.
+}
 \usage{
 df.residual(x, \dots)
 }

@@ -1,4 +1,4 @@
-% $Id: getInitial.Rd,v 1.3 2000/01/17 16:23:10 ripley Exp $
+% $Id: getInitial.Rd,v 1.4 2000/08/28 12:09:26 hornik Exp $
 \name{getInitial}
 \title{Get Initial Parameter Estimates}
 \alias{getInitial}
@@ -9,11 +9,11 @@
 getInitial(object, data, ...)
 }
 \arguments{
-    \item{object}{a formula or a \code{selfStart} model that defines a
-	nonlinear regression model}
-    \item{data}{a data frame in which the expressions in the formula or
-	arguments to the \code{selfStart} model can be evaluated}
-    \item{\dots}{optional additional arguments}
+  \item{object}{a formula or a \code{selfStart} model that defines a
+    nonlinear regression model}
+  \item{data}{a data frame in which the expressions in the formula or
+    arguments to the \code{selfStart} model can be evaluated}
+  \item{\dots}{optional additional arguments}
 }
 \description{
   This function evaluates initial parameter estimates for a nonlinear
@@ -40,6 +40,6 @@ data(Puromycin)
 PurTrt <- Puromycin[ Puromycin$state == "treated", ]
 getInitial( rate ~ SSmicmen( conc, Vm, K ), PurTrt )
 }
-\keyword{models
+\keyword{models}
 \keyword{nonlinear}
 \keyword{data}

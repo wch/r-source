@@ -12,12 +12,13 @@ url.show(url, title = url, file = tempfile(),
          delete.file = TRUE, \dots)
 }
 \arguments{
- \item{url}{The URL to read from}
- \item{method}{File transfer method: see \code{\link{download.file}}}
- \item{\dots}{Arguments to pass to \code{\link{read.table}},
-   \code{\link{scan}}, \code{\link{source}} or \code{\link{file.show}}
- \item{file}{File to copy to}
- \item{delete.file}{Delete the file afterwards?}
+  \item{url}{The URL to read from}
+  \item{method}{File transfer method: see \code{\link{download.file}}}
+  \item{\dots}{Arguments to pass to \code{\link{read.table}},
+    \code{\link{scan}}, \code{\link{source}} or
+    \code{\link{file.show}}.}
+  \item{file}{File to copy to.}
+  \item{delete.file}{Delete the file afterwards?}
 }
 \description{
   Extensions of \code{\link{read.table}}, \code{\link{scan}},

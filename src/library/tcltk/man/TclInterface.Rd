@@ -105,8 +105,10 @@ tclRequire(package)
 \note{ Strings containing unbalanced braces are currently not handled
   well in many circumstances.
 }
-\seealso{\code{\link{TkWidgets}}, \code{\link{TkCommands},
-    \code{\link{TkWidgetcmds}} 
+\seealso{
+  \code{\link{TkWidgets}},
+  \code{\link{TkCommands}},
+  \code{\link{TkWidgetcmds}}.
 }
 \examples{
 \dontrun{

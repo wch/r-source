@@ -42,8 +42,10 @@ se.contrast.aovlist(\dots)
   A vector giving the standard errors for each contrast.
 }
 \author{B.D. Ripley}
-\seealso{\code{\link{contrasts}}, \code{\link{model.tables}}
-
+\seealso{
+  \code{\link{contrasts}},
+  \code{\link{model.tables}}
+}
 \examples{
 ## From Venables and Ripley (1997) p.210.
 N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)

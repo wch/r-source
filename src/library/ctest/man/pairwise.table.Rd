@@ -17,7 +17,8 @@ pairwise.table(compare.levels, level.names, p.adjust.method)
 \details{
   Functions that do multiple group comparisons create separate
   \code{compare.levels} functions (assumed to be symmetrical in \code{i}
-  and \code{j}) and passes them to this function,
+  and \code{j}) and passes them to this function.
+}
 \value{
   Table of p values in lower triangular form.
 }

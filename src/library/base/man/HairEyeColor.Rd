@@ -43,6 +43,7 @@
   \code{\link{chisq.test}},
   \code{\link{loglin}},
   \code{\link{mosaicplot}}
+}
 \examples{
 data(HairEyeColor)
 ## Full mosaic

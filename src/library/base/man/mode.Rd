@@ -12,7 +12,7 @@ storage.mode(x) <- "<mode>"
 \alias{storage.mode<-}
 \description{
   Get or set the type or storage mode of an object.
-
+}
 \details{
   Both \code{mode} and \code{storage.mode} return a character string
   giving the (storage) mode of the object --- often the same --- both
@@ -24,8 +24,8 @@ storage.mode(x) <- "<mode>"
   the \code{mode} or \code{storage.mode} of object \code{x} to
   \code{newmode}.
 
-  As storage mode "single" is only a pseudo-mode in \R, it will not be
-  reported by \code{mode} or \code{storage.mode}: use
+  As storage mode \code{"single"} is only a pseudo-mode in \R, it will
+  not be reported by \code{mode} or \code{storage.mode}: use
   \code{attr(object, "Csingle")} to examine this. However, the
   assignment versions can be used to set the mode to \code{"single"},
   which sets the real mode to \code{"double"} and the \code{"Csingle"}

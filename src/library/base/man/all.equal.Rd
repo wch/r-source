@@ -1,6 +1,5 @@
 \name{all.equal}
 \title{Test if Two Objects are (Nearly) Equal}
-
 \alias{all.equal}
 \alias{all.equal.default}
 \alias{all.equal.numeric}
@@ -9,9 +8,7 @@
 \alias{all.equal.formula}
 \alias{all.equal.list}
 \alias{all.equal.language}
-
 \alias{attr.all.equal}
-%
 \usage{
 all.equal(target, current, \dots)
 
@@ -19,17 +16,15 @@ all.equal.numeric(target, current,
                   tolerance= .Machine$double.eps ^ 0.5, scale=NULL)
 }
 \arguments{
- \item{target}{\R object.}
- \item{current}{other \R object, to be compared with \code{target}.}
-
- \item{\dots}{Further arguments for different methods, notably the
-     following two, for numerical comparison:}
-
- \item{tolerance}{numeric \eqn{\ge}{>=} 0.  Differences smaller than
-     \code{tolerance} are not considered.}
- \item{scale}{numeric scalar > 0 (or \code{NULL});
-     if specified, compare the average \emph{absolute} difference with
-     \code{scale * tolerance}, see below.
+  \item{target}{\R object.}
+  \item{current}{other \R object, to be compared with \code{target}.}
+  \item{\dots}{Further arguments for different methods, notably the
+    following two, for numerical comparison:}
+  \item{tolerance}{numeric \eqn{\ge}{>=} 0.  Differences smaller than
+    \code{tolerance} are not considered.}
+  \item{scale}{numeric scalar > 0 (or \code{NULL});
+    if specified, compare the average \emph{absolute} difference with
+    \code{scale * tolerance}, see below.}
 }
 \description{
     \code{all.equal(x,y)} is a utility to compare \R objects \code{x}

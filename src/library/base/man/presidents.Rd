@@ -16,7 +16,7 @@
 \details{
   The data are actually a fudged version of the approval ratings.  See
   McNeil's book for details.
-
+}
 \references{
   McNeil, D. R. (1977) \emph{Interactive Data Analysis.}  New York:
   Wiley.

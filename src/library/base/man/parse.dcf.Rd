@@ -30,5 +30,6 @@ parse.dcf(file=file)
 
 ## same in 2 steps
 filecontent <- scan(file=file, what="", sep="\n")
-parse.dcf(text=filecontent) 
+parse.dcf(text=filecontent)
+}
 \keyword{utilities}
