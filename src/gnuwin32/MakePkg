@@ -131,7 +131,7 @@ endif
 ifeq ($(strip $(INSTFILES)),)
 	-@$(CP) -r $(OFILES3) $(OFILES) $(DPKG)/
 else
-	echo "  installing inst files"
+	@echo "  installing inst files"
 	-@$(CP) -r $(OFILES3) inst/* $(DPKG)/
 endif
 	@if test -f ${SPKG}/DESCRIPTION; then \

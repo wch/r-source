@@ -13,6 +13,8 @@ the `R_ENVIRON' environment variable) is now implemented on Windows.
 TITLE files in packages are no longer used, as since 1.6.0 a package has
 been required to have a DESCRIPTION file.
 
+The output when building R or source packages is much quieter.
+
 
 
 rw1061

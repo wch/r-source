@@ -105,11 +105,11 @@ COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 
 
 fixfiles:
-	$(MKDIR) -p ../../bin
+	@$(MKDIR) -p ../../bin
 	@$(MAKE) --no-print-directory -C ./fixed
 
 fixed/fixdesc:
-	sh fixed/GETDESC $(ALLPACKAGES)
+	@sh fixed/GETDESC $(ALLPACKAGES)
 
 dllversion.o: ../include/Rversion.h
 
@@ -137,27 +137,27 @@ libR.a:  R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
 
 R.exp: R.exp1
-	(diff R.exp R.exp1 > /dev/null) || $(CP) R.exp1 R.exp
+	@(diff R.exp R.exp1 > /dev/null) || $(CP) R.exp1 R.exp
 
 R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
-	$(ECHO) EXPORTS > $@
-	$(NM) R.a $(MAINLIBS) $(EXTRALIBS) > RDefs
-	$(SED) -n '/^........ [T] _/s/^........ [T] _/ /p' RDefs >> $@
-	$(CAT) exported-vars >> $@
-	$(RM) RDefs
+	@$(ECHO) EXPORTS > $@
+	@$(NM) R.a $(MAINLIBS) $(EXTRALIBS) > RDefs
+	@$(SED) -n '/^........ [T] _/s/^........ [T] _/ /p' RDefs >> $@
+	@$(CAT) exported-vars >> $@
+	@$(RM) RDefs
 
 # An additional import library needed for the modules that uses R.dll's malloc/.../free
 libRm.a:  Rm.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def Rm.exp --output-lib libRm.a
 
 Rm.exp: Rm.exp1
-	(diff Rm.exp Rm.exp1 > /dev/null) || $(CP) Rm.exp1 Rm.exp
+	@(diff Rm.exp Rm.exp1 > /dev/null) || $(CP) Rm.exp1 Rm.exp
 
 Rm.exp1: $(OBJS-EXTRA)
-	$(ECHO) EXPORTS > $@
-	$(NM) $(OBJS-EXTRA) > RDefs
-	$(SED) -n '/^........ [T] _/s/^........ [T] _/ /p' RDefs >> $@
-	$(RM) RDefs
+	@$(ECHO) EXPORTS > $@
+	@$(NM) $(OBJS-EXTRA) > RDefs
+	@$(SED) -n '/^........ [T] _/s/^........ [T] _/ /p' RDefs >> $@
+	@$(RM) RDefs
 
 ../../library/R.css: ../../doc/html/R.css
 	$(CP) $< $@
@@ -248,7 +248,7 @@ bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:
-	$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
+	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \

@@ -124,13 +124,13 @@ RESCOMP=$(BINPREF)windres
 
 %.dll:
 	@$(ECHO) ------- Building $@ from $^ --------
-	$(ECHO) LIBRARY $* > $*.def
-	$(ECHO) EXPORTS >> $*.def
-	$(NM) $^ > Defs
-	$(SED) -n '/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p' Defs >> $*.def
-	$(RM) Defs
+	@$(ECHO) LIBRARY $* > $*.def
+	@$(ECHO) EXPORTS >> $*.def
+	@$(NM) $^ > Defs
+	@$(SED) -n '/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p' Defs >> $*.def
+	@$(RM) Defs
 	$(DLL) --shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
-	$(RM) $*.def
+	@$(RM) $*.def
 
 lib%.a: %.def
 	@$(ECHO) -------- Building $@ from $^ --------
@@ -138,8 +138,8 @@ lib%.a: %.def
 
 %.a:
 	@$(ECHO) -------- Building $@ from $^ --------
-	$(AR) cr $@ $^
-	$(RANLIB) $@
+	@$(AR) cr $@ $^
+	@$(RANLIB) $@
 
 %.o: %.rc
 	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $< -o $@
