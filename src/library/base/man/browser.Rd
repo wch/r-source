@@ -19,6 +19,9 @@ statement following the call to
 Typing \code{n} causes the step-through-debugger, to start
 and it is possible to step through the remainder of
 the function one line at a time.
+
+Typing \code{Q} quits the current execution and returns you to the
+top--level prompt.
 }
 \seealso{
 \code{\link{debug}}, and \code{\link{traceback}} for the stack an error.

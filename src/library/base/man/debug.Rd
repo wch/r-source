@@ -24,6 +24,8 @@ Typing \code{c} or \code{cont} causes the debugger to continue to the
 end of the function.
 You can \code{debug} new functions before you step in to them from inside
 the debugger.
+Typing \code{Q} quits the current execution and returns you to the
+top--level prompt.
 If you have variables with names that are identical to the controls
 (eg. \code{c} or \code{n} ) then you need to use \code{print(c)} and
 \code{print(n)} to evaluate them.
