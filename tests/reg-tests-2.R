@@ -1258,6 +1258,7 @@ terms(y ~ offset(x) + offset(log(x)) + z, data=df)
 terms(y ~ offset(x) + z - z, data=df, simplify = TRUE)
 ## first fix failed for models with no non-offset terms.
 
+
 ## only the first two were wrong up to 1.8.1:
 3:4 * 1e-100
 8:11* 1e-100
@@ -1265,3 +1266,10 @@ terms(y ~ offset(x) + z - z, data=df, simplify = TRUE)
 1:2 * 1e+99
 8:11* 1e+99
 3:4 * 1e+100
+##
+
+
+## negative subscripts could be mixed with NAs
+x <- 1:3
+try(x[-c(1, NA)])
+## worked on some platforms, segfaulted on others in 1.8.1
