@@ -920,6 +920,11 @@ Rboolean R_BindingIsActive(SEXP sym, SEXP env);
 Rboolean R_HasFancyBindings(SEXP rho);
 #endif
 
+/* Experimental Changes in Dispatching */
+#ifdef EXPERIMENTAL_NAMESPACES
+void R_SetUseNamespaceDispatch(Rboolean val);
+#endif
+
 /* Save/Load Interface */
 #define R_XDR_DOUBLE_SIZE 8
 #define R_XDR_INTEGER_SIZE 4
