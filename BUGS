@@ -270,23 +270,31 @@ Date: Thu, 28 Dec 2000 17:54:47 +0100
 
 Directory:  incoming
 
-* PR# 801 *
-Subject: pos.to.env and sys.xxx documentation
-From: pperkins@ucsd.edu
-Date: Tue, 2 Jan 2001 21:14:31 +0100 (MET)
-* PR# 798 *
-Subject: Re: [Rd] editor in Windows doesn't like a data frame with row names
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Sun, 31 Dec 2000 07:54:47 +0000 (GMT)
+* PR# 803 *
+Subject: pairs(NxK_Matrix,panel=qqplot)
+From: mvondavier@ets.org
+Date: Fri, 5 Jan 2001 21:23:03 +0100 (MET)
 * PR# 797 *
 Subject: editor in Windows doesn't like a data frame with row names
 From: John Fox <jfox@mcmaster.ca>
 Date: Sat, 30 Dec 2000 18:17:33 -0500
-* PR# 800 *
-Subject: Re: [Rd] minor problems (if problems at all): <ESC> in RGui; finding
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Tue, 2 Jan 2001 15:35:24 +0000 (GMT)
 * PR# 799 *
 Subject: minor problems (if problems at all): <ESC> in RGui; finding some 
 From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
 Date: Tue, 2 Jan 2001 14:20:55 +0100 
+* PR# 798 *
+Subject: Re: [Rd] editor in Windows doesn't like a data frame with row names
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Sun, 31 Dec 2000 07:54:47 +0000 (GMT)
+* PR# 802 *
+Subject: crash with scan(..., what=list(,,))
+From: Emmanuel Paradis <paradis@isem.univ-montp2.fr>
+Date: Fri, 05 Jan 2001 17:10:42 +0100
+* PR# 801 *
+Subject: pos.to.env and sys.xxx documentation
+From: pperkins@ucsd.edu
+Date: Tue, 2 Jan 2001 21:14:31 +0100 (MET)
+* PR# 800 *
+Subject: Re: [Rd] minor problems (if problems at all): <ESC> in RGui; finding
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Tue, 2 Jan 2001 15:35:24 +0000 (GMT)
