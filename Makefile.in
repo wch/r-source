@@ -17,6 +17,10 @@ DISTFILES = $(INSTFILES) \
 	acconfig.h acinclude.m4 aclocal.m4 \
 	config.site configure configure.in \
 	date-stamp
+## FIXME:
+## Update when releasing 1.3.0
+CLEANFILES = $(INSTFILES) MIRROR-SITES
+## </FIXME>
 SUBDIRS = src afm demos doc etc share tests tools
 
 GZIP = --best
@@ -144,7 +148,7 @@ uninstall:
 	@rm -rf $(rhome)/bin
 	@rm -rf $(rhome)/gnome
 	@rm -f $(bindir)/R
-	@for f in $(INSTFILES); do \
+	@for f in $(CLEANFILES); do \
 	  rm -f $(rhome)/$${f}; \
 	done
 	@for d in afm demos doc etc share; do \
@@ -157,7 +161,7 @@ clean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	@if [ "$(srcdir)" != "." ]; then \
-	  rm -f $(INSTFILES); \
+	  rm -f $(CLEANFILES); \
 	fi
 distclean: clean
 	@for d in $(SUBDIRS); do \
