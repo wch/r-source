@@ -89,7 +89,7 @@ rlibs:
 	$(MAKE) -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) -C ./graphapp
 	$(MAKE) -C ./getline
-	$(MAKE) -C ../extra/xdr
+	$(MAKE) -C ../extra/xdr -f Makefile.win
 	$(MAKE) -C ./math
 
 rmodules: libRm.a
