@@ -7,8 +7,8 @@
   produced by \code{\link{hist}}.
 }
 \usage{
-\method{plot}{histogram}(x, freq = equidist, col = NULL, border = par("fg"),
-               angle = NULL, density = NULL,
+\method{plot}{histogram}(x, freq = equidist, density = NULL, angle = 45,
+               col = NULL, border = par("fg"),
                lty = NULL, main = paste("Histogram of", x$xname),
                xlim = range(x$breaks), ylim = range(y, 0),
                xlab = x$xname, ylab, axes = TRUE, labels = FALSE,

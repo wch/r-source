@@ -3,7 +3,7 @@ hist <- function(x, ...) UseMethod("hist")
 hist.default <-
     function (x, breaks = "Sturges", freq = NULL,
               probability = !freq, include.lowest= TRUE,
-              right= TRUE, angle = 45, density = NULL,
+              right= TRUE, density = NULL, angle = 45,
               col = NULL, border = NULL,
               main = paste("Histogram of" , xname),
               xlim = range(breaks), ylim = NULL,
@@ -106,8 +106,8 @@ hist.default <-
 }
 
 plot.histogram <-
-    function (x, freq = equidist, col = NULL, border = par("fg"),
-              angle = NULL, density = NULL, lty = NULL,
+    function (x, freq = equidist, density = NULL, angle = 45,
+              col = NULL, border = par("fg"),lty = NULL,
               main = paste("Histogram of", x$xname),
               xlim = range(x$breaks), ylim = NULL,
               xlab = x$xname, ylab,
