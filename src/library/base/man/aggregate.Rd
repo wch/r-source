@@ -19,7 +19,8 @@ aggregate.ts(x, nfrequency = 1, FUN = sum, ndeltat = 1,
   \item{x}{an R object.}
   \item{by}{a list of grouping elements, each as long as the variables
     in \code{x}.  Names for the grouping variables are provided if
-    they are not given.}
+    they are not given.  The elements of the list will be coerced to
+    factors (if they are not already factors).}
   \item{FUN}{a scalar function to compute the summary statistics which
     can be applied to all data subsets.}
   \item{nfrequency}{new number of observations per unit of time; must
@@ -32,7 +33,7 @@ aggregate.ts(x, nfrequency = 1, FUN = sum, ndeltat = 1,
   \item{\dots}{further arguments passed to or used by methods.}
 }
 \details{
-  \code{aggregate} is a generic functions with methods for data frames
+  \code{aggregate} is a generic function with methods for data frames
   and time series.
   
   The default method \code{aggregate.default} uses the time series
