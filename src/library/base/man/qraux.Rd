@@ -66,19 +66,8 @@ Q <- qr.Q(qrstr) # dim(Q) == dim(x)
 R <- qr.R(qrstr) # dim(R) == ncol(x)
 X <- qr.X(qrstr) # X == x
 range(X - as.matrix(x))# ~ < 6e-12
-
 ## X == Q \%*\% R :
-all((1 - X /( Q \%*\% R))< 100*.Machine$double.eps)#TRUE
-
-dim(Qc <- qr.Q(qrstr, complete=TRUE)) # Square: dim(Qc) == rep(nrow(x),2)
-all((crossprod(Qc) - diag(nrow(x))) < 10*.Machine $double.eps)
-
-QD <- qr.Q(qrstr, D=1:p)      # QD == Q \%*\% diag(1:p)
-all(QD - Q \%*\% diag(1:p)  < 8* .Machine$double.eps)
-
-dim(Rc <- qr.R(qrstr, complete=TRUE)) # == dim(x)
-dim(Xc <- qr.X(qrstr, complete=TRUE)) # square: nrow(x) ^ 2
-all(Xc[,1:p] == X)
+Q \%*\% R
 }
 \keyword{algebra}
 \keyword{array}

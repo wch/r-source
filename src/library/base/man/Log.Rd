@@ -52,12 +52,7 @@ log1p(x)
 }
 \examples{
 log(exp(3))
-all.equal(log(1:10), log(1:10, exp(1)))
-log10(30) == log(30, 10)
 log10(1e7)# = 7
-log2(2^pi) == 2^log2(pi)
-Mod(pi - log(exp(pi*1i)) / 1i) < .Machine$double.eps
-Mod(1+exp(pi*1i)) < .Machine$double.eps
 
 x <- 10^-(1+2*1:9)
 cbind(x, log(1+x), log1p(x), exp(x)-1, expm1(x))

@@ -32,7 +32,7 @@ This function is invoked for its side-effect.
 autoload("line","eda")
 search()
 ls("Autoloads")
-all(ls("Autoloads") == ls(envir = .AutoloadEnv))
+
 data(cars)
 plot(cars)
 z<-line(cars)

@@ -93,7 +93,6 @@ gf <- Gamma()
 gf
 str(gf)
 gf$linkinv
-all(1:10 == gf$linkfun(gf$linkinv(1:10)))# is TRUE
 gf$variance(-3:4) #- == (.)^2
 
 ## quasipoisson. compare with example(glm)

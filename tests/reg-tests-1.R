@@ -64,6 +64,24 @@ stopifnot(range(z) == z,
 ## end of moved from as.POSIXlt.Rd
 
 
+## autoload
+stopifnot(ls("Autoloads") == ls(envir = .AutoloadEnv))
+## end of moved from autoload.Rd
+
+
+## backsolve
+r <- rbind(c(1,2,3),
+           c(0,1,1),
+           c(0,0,2))
+( y <- backsolve(r, x <- c(8,4,2)) ) # -1 3 1
+r %*% y # == x = (8,4,2)
+( y2 <- backsolve(r, x, transpose = TRUE)) # 8 -12 -5
+stopifnot(all.equal(drop(t(r) %*% y2), x))
+stopifnot(all.equal(y, backsolve(t(r), x, upper = FALSE, transpose = TRUE)))
+stopifnot(all.equal(y2, backsolve(t(r), x, upper = FALSE, transpose = FALSE)))
+## end of moved from backsolve.Rd
+
+
 ## basename
 dirname(character(0))
 ## end of moved from basename.Rd
@@ -137,6 +155,9 @@ stopifnot(grC["red",] == grC["green",],
 ## complex
 z <- 0i ^ (-3:3)
 stopifnot(Re(z) == 0 ^ (-3:3))
+z <- complex(real = rnorm(100), imag = rnorm(100))
+stopifnot(Mod ( 1 -  sin(z) / ( (exp(1i*z)-exp(-1i*z))/(2*1i) ))
+          < 10 * .Machine$double.eps)
 ## end of moved from complex.Rd
 
 
@@ -242,6 +263,18 @@ stopifnot(abs(c(1 - abs(sV / V)))       <     1000*Meps)
 data(euro)
 stopifnot(euro == signif(euro,6), euro.cross == outer(1/euro, euro))
 ## end of moved from euro.Rd
+
+
+## Exponential
+r <- rexp(100)
+stopifnot(abs(1 - dexp(1, r) / (r*exp(-r))) < 1e-14)
+## end of moved from Exponential.Rd
+
+
+## family
+gf <- Gamma()
+stopifnot(1:10 == gf$linkfun(gf$linkinv(1:10)))
+## end of moved from family.Rd
 
 
 ## findint
@@ -408,10 +441,47 @@ stopifnot(kronecker(diag(1, 3), M) == diag(1, 3) %x% M)
 ## end of moved from kronecker.Rd
 
 
+## log
+stopifnot(all.equal(log(1:10), log(1:10, exp(1))))
+stopifnot(all.equal(log10(30), log(30, 10)))
+stopifnot(all.equal(log2(2^pi), 2^log2(pi)))
+stopifnot(Mod(pi - log(exp(pi*1i)) / 1i) < .Machine$double.eps)
+stopifnot(Mod(1+exp(pi*1i)) < .Machine$double.eps)
+## end of moved from Log.Rd
+
+
+## logistic
+eps <- 100 * .Machine$double.eps
+x <- c(0:4, rlogis(100))
+stopifnot(all.equal(plogis(x),  1 / (1 + exp(-x)), tol = eps))
+stopifnot(all.equal(plogis(x, lower=FALSE),  exp(-x)/ (1 + exp(-x)), tol = eps))
+stopifnot(all.equal(plogis(x, lower=FALSE, log=TRUE), -log(1 + exp(x)),
+                    tol = eps))
+stopifnot(all.equal(dlogis(x), exp(x) * (1 + exp(x))^-2, tol = eps))
+## end of moved from Logistic.Rd
+
+
+## Lognormal
+x <- rlnorm(1000)       # not yet always :
+stopifnot(abs(x  -  qlnorm(plnorm(x))) < 1e4 * .Machine$double.eps * x)
+## end of moved from Lognormal.Rd
+
+
 ## lower.tri
 ma <- matrix(1:20, 4, 5)
 stopifnot(lower.tri(ma) == !upper.tri(ma, diag=TRUE))
 ## end of moved from lower.tri.Rd
+
+
+## make.names
+stopifnot(make.names(letters) == letters)
+## end of make.names
+
+
+## mean
+x <- c(0:10, 50)
+stopifnot(all.equal(mean(x, trim = 0.5), median(x)))
+## moved from mean.Rd
 
 
 ## Multinom
@@ -466,6 +536,31 @@ stopifnot(all.equal(qr.X(qr(X)), X))
 ## end of moved from qr.Rd
 
 
+## qraux
+data(LifeCycleSavings)
+p <- ncol(x <- LifeCycleSavings[,-1]) # not the `sr'
+qrstr <- qr(x)   # dim(x) == c(n,p)
+Q <- qr.Q(qrstr) # dim(Q) == dim(x)
+R <- qr.R(qrstr) # dim(R) == ncol(x)
+X <- qr.X(qrstr) # X == x
+stopifnot(all.equal(X,  as.matrix(x)))
+
+## X == Q %*% R :
+stopifnot((1 - X /( Q %*% R))< 100*.Machine$double.eps)
+
+dim(Qc <- qr.Q(qrstr, complete=TRUE)) # Square: dim(Qc) == rep(nrow(x),2)
+stopifnot((crossprod(Qc) - diag(nrow(x))) < 10*.Machine $double.eps)
+
+QD <- qr.Q(qrstr, D=1:p)      # QD == Q \%*\% diag(1:p)
+stopifnot(QD - Q %*% diag(1:p)  < 8* .Machine$double.eps)
+
+dim(Rc <- qr.R(qrstr, complete=TRUE)) # == dim(x)
+dim(Xc <- qr.X(qrstr, complete=TRUE)) # square: nrow(x) ^ 2
+dimnames(X) <- NULL
+stopifnot(all.equal(Xc[,1:p], X))
+## end of moved from qraux.Rd
+
+
 ## quantile
 x <- rnorm(1001)
 n <- length(x) ## the following is exact, because 1/(1001-1) is exact:
@@ -477,7 +572,7 @@ ox <- c(ox, ox[n]) #- such that ox[n+1] := ox[n]
 p <- c(0,1,runif(100))
 i <- floor(r <- 1 + (n-1)*p)
 f <- r - i
-all(abs(quantile(x,p) - ((1-f)*ox[i] + f*ox[i+1])) < 20*.Machine$double.eps)
+stopifnot(abs(quantile(x,p) - ((1-f)*ox[i] + f*ox[i+1])) < 20*.Machine$double.eps)
 ## end of moved from quantile.Rd
 
 
@@ -625,6 +720,15 @@ stopifnot(dim(unique(iris)) == c(149, 5))
 stopifnot(length(which.min(numeric(0))) == 0)
 stopifnot(length(which.max( c(NA,NA) )) == 0)
 ## end of moved from which.min.Rd
+
+
+## Wilcoxon
+x <- -1:(4*6 + 1)
+fx <- dwilcox(x, 4, 6)
+stopifnot(fx == dwilcox(x, 6, 4))
+Fx <- pwilcox(x, 4, 6)
+stopifnot(abs(Fx - cumsum(fx)) < 10 * .Machine$double.eps)
+## end of moved from Wilcoxon.Rd
 
 
 ## .Machine

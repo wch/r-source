@@ -35,8 +35,6 @@ make.names(names, unique = FALSE)
 \examples{
 make.names(c("a and b", "a_and_b"), unique=TRUE)#-> "a.and.b"  "a.and.b1"
 
-all(make.names(letters) == letters)# TRUE
-
 data(state)
 state.name[make.names(state.name) != state.name]# those 10 with a space
 }

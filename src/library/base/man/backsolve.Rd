@@ -44,10 +44,7 @@ r <- rbind(c(1,2,3),
            c(0,0,2))
 ( y <- backsolve(r, x <- c(8,4,2)) ) # -1 3 1
 r \%*\% y # == x = (8,4,2)
-( y2 <- backsolve(r, x, transpose = TRUE)) # 8 -12 -5
-all(t(r) \%*\% y2 == x)# exactly on Linux (Pentium)
-all(y  == backsolve(t(r), x, upper = FALSE, transpose = TRUE))
-all(y2 == backsolve(t(r), x, upper = FALSE, transpose = FALSE))
+backsolve(r, x, transpose = TRUE) # 8 -12 -5
 }
 \keyword{algebra}
 \keyword{array}

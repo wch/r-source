@@ -57,7 +57,5 @@ rlnorm(n, meanlog = 0, sdlog = 1)
 }
 \examples{
 dlnorm(1) == dnorm(0)
-x <- rlnorm(1000)       # not yet always :
-all(abs(x  -  qlnorm(plnorm(x))) < 1e4 * .Machine$double.eps * x)
 }
 \keyword{distribution}
