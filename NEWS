@@ -612,6 +612,10 @@ BUG FIXES
     o   The data editor would segfault if closed with window manager
         controls (PR#1453)
 
+    o   Interrupt of Sys.sleep on UNIX no longer causes subsequent sleep
+	to segfault due to infinite recusion.
+
+
 	**************************************************
 	*						 *
 	*	       1.4 SERIES NEWS			 *

@@ -704,8 +704,15 @@ static void SleepHandler(void)
     OldHandler();
 }
 
+static void sleep_cleanup(void *ignored)
+{
+    R_PolledEvents = OldHandler;
+    R_wait_usec = OldTimeout;
+}
+
 SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    RCNTXT cntxt;
     checkArity(op, args);
     timeint = asReal(CAR(args));
     if (ISNAN(timeint) || timeint < 0)
@@ -714,6 +721,12 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_PolledEvents = SleepHandler;
     OldTimeout = R_wait_usec;
     if(OldTimeout == 0 || OldTimeout > 500000) R_wait_usec = 500000;
+
+    /* set up a context to restore R_PolledEvents and R_wait_usec if
+       there is an error or interrupt */
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+		 R_NilValue);
+    cntxt.cend = &sleep_cleanup;
 
     start = times(&timeinfo);
     if(setjmp(sleep_return) != 100)
@@ -730,6 +743,10 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     R_PolledEvents = OldHandler;
     R_wait_usec = OldTimeout;
+
+    /* end the cleanup context */
+    endcontext(&cntxt);
+
     return R_NilValue;
 }
 
