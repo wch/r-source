@@ -319,7 +319,7 @@ int isVectorAtomic(SEXP s)
     }
 }
 
-int isVector(SEXP s)/* isVectorList() or isVectorAtomic() */
+int isVector(SEXP s)/* === isVectorList() or isVectorAtomic() */
 {
     switch(TYPEOF(s)) {
     case LGLSXP:
@@ -327,6 +327,7 @@ int isVector(SEXP s)/* isVectorList() or isVectorAtomic() */
     case REALSXP:
     case CPLXSXP:
     case STRSXP:
+
     case VECSXP:
     case EXPRSXP:
 	return 1;
