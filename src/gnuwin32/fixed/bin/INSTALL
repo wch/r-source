@@ -26,7 +26,7 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.32 $ ';
+my $revision = ' $Revision: 1.33 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -37,7 +37,7 @@ $version = $1;
 my @knownoptions = ("help|h", "version|v", "debug|d", "library|l:s",
 		    "clean|c", "docs:s", "save|s", "no-save",
 		    "use-zip", "use-zip-data", "use-zip-help", 
-		    "auto-zip", "build");
+		    "auto-zip", "build", "fake");
 		    
 ##   	topLevelFiles will be files that sit in the top level of a
 ##      zip/tarball along with any included directories.
@@ -119,6 +119,7 @@ foreach $pkg (@ARGV){
     rmtree($pkgoutdir) if (-d $pkgoutdir);
 
     my $makecmd = "pkg";
+    $makecmd = "pkgfake" if $opt_fake;
     if(-r "$pkg/DESCRIPTION"){
 	$description = new R::Dcf("$pkg/DESCRIPTION");
     }
@@ -268,6 +269,7 @@ Options:
       --use-zip		combine \`--use-zip-data\' and \`--use-zip-help\'
       --auto-zip	select whether to zip automatically
       --build		zip-up the installation. Implies --auto-zip
+      --fake		do minimal install for testing purposes
 
 TYPE can be "none" or "normal" or "chm" (the default) or "winhlp" or "all"
 

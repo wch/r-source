@@ -64,9 +64,12 @@ EXECFILES=$(filter-out $(SPKG)/exec/CVS, $(wildcard $(SPKG)/exec/*))
 # Others
 INSTFILES=$(filter-out $(SPKG)/inst/CVS, $(wildcard $(SPKG)/inst/*))
 
-all:  $(DPKG)/zzzz Dynlib R $(DPKG)/demo $(DPKG)/exec $(DATA) mansrcs \
+all:  $(DPKG)/zzzz frontmatter Dynlib R $(DPKG)/demo $(DPKG)/exec $(DATA) mansrcs \
   indices
-bare: $(DPKG)/zzzz R $(DPKG)/demo
+bare: $(DPKG)/zzzz frontmatter R $(DPKG)/demo
+
+fake: zzzzfirst frontmatter R Rfake $(DPKG)/demo $(DPKG)/exec $(DATA) mansrcs \
+  indices
 
 include $(RHOME)/src/gnuwin32/MkRules
 
@@ -118,15 +121,7 @@ ifneq ($(strip $(EXECFILES)),)
 endif
 
 
-$(DPKG)/zzzz:
-ifeq ($(SPKG0),$(DPKG0))
-	@$(ECHO)
-	@$(ECHO) "  *** cannot install a package into its source directory ***"
-	@$(ECHO)
-	@exit 111
-endif
-	@$(ECHO)
-	@$(ECHO) "---------- Making package $(PKG) ------------"
+$(DPKG)/zzzz: zzzfirst
 	@if test -f ${SPKG}/configure.win; then \
 	  sh ${SPKG}/configure.win; \
 	else if test -f ${SPKG}/configure; then \
@@ -138,6 +133,20 @@ endif
 	    $(ECHO) ; \
 	  fi; \
 	fi
+
+zzzfirst:
+ifeq ($(SPKG0),$(DPKG0))
+	@$(ECHO)
+	@$(ECHO) "  *** cannot install a package into its source directory ***"
+	@$(ECHO)
+	@exit 111
+endif
+	@$(ECHO)
+	@$(ECHO) "---------- Making package $(PKG) ------------"
+	@$(MKDIR) -p $(DPKG)
+
+
+frontmatter:
 	@$(MKDIR) -p $(DPKG)
 ifneq ($(strip $(INSTFILES)),)
 	@$(ECHO) "  installing inst files"
@@ -160,6 +169,7 @@ else
 	@$(ECHO) ".installPackageDescription('.', '"$(DPKG)"')" | \
 	  $(RHOME)/bin/rterm.exe --vanilla --slave  R_DEFAULT_PACKAGES=tools> /dev/null
 endif
+
 
 $(DATA): $(DSOURCES)
 	@$(ECHO) "  installing data files"
@@ -189,12 +199,21 @@ else
 	@$(ECHO) "  ... done"
 endif
 
+# R
 AA=$(wildcard R/Makefile.win)
 ifeq ($(AA),)
  R: $(DPKG)/R/$(PKG)
 else
  include R/Makefile.win
 endif
+
+Rfake:
+	@if test -f $(SPKG)/NAMESPACE; then \
+	  echo ".onLoad <- function(list, pkg) NULL" >> $(DPKG)/R/$(PKG) ; \
+	else \
+	  echo ".First.lib <- function(lib, pkg) NULL" >> $(DPKG)/R/$(PKG) ;\
+	fi
+
 
 MANMAIN=$(wildcard $(SPKG)/man/*.[Rr]d)
 MANWIN32=$(wildcard $(SPKG)/man/windows/*.[Rr]d) 

@@ -291,6 +291,15 @@ endif
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB)  \
 	  -f $(RHOME)/src/gnuwin32/MakePkg md5sums
 
+pkgfake-%:
+	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
+	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
+	  -f $(RHOME)/src/gnuwin32/MakePkg fake
+# ifeq ($(strip $(HELP)),YES)
+# 	@$(ECHO) "  installing help"
+# 	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
+# endif
+
 pkgclean-%:
 	$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
 	  -C $(PKGDIR)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
