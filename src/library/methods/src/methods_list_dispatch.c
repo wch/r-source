@@ -660,7 +660,9 @@ static Rboolean is_missing_arg(SEXP symbol, SEXP ev)
 	    return MISSING(args);
 	args = CDR(args);
     }
-    error("Couldn't find symbol \"%s\" in frame of call", CHAR_STAR(symbol));
+    error("Couldn't find symbol \"%s\" in frame of call",
+	  CHAR_STAR(symbol));
+    return FALSE;		/* -Wall */
 }
 
 SEXP R_missingArg(SEXP symbol, SEXP ev) {
@@ -815,7 +817,6 @@ static SEXP R_loadMethod(SEXP def, SEXP fname, SEXP ev) {
     if(strcmp(CHAR_STAR(fname), "loadMethod") == 0)
 	return def;
     if(found < length(attrib)) {
-	int nprotect = 0;
 	SEXP e, val;
 	PROTECT(e = allocVector(LANGSXP, 4));
 	SETCAR(e, R_loadMethod_name); val = CDR(e);
