@@ -118,7 +118,7 @@
 /* PAUL MURRELL
    sys-defines.h not used 
 */
-// #include "sys-defines.h"
+/* #include "sys-defines.h" */
 
 /* PAUL MURRELL
    extern.h renamed g_extern.h

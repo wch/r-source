@@ -59,7 +59,7 @@
 /* PAUL MURRELL
    sys-defines.h not used
 */
-// #include "sys-defines.h"
+/* #include "sys-defines.h" */
 
 /* PAUL MURRELL
    extern.h renamed g_extern.h
@@ -209,7 +209,7 @@ unsigned short * _controlify (DevDesc *dd, const unsigned char *src,
 
       /* if current font is Hershey, first try to match each ligature
          pattern (no ligatures supported in non-Hershey fonts) */
-      if (1) // _plotter->drawstate->font_type == F_HERSHEY)
+      if (1) /* _plotter->drawstate->font_type == F_HERSHEY) */
 	{
 	  int i;
 	  bool matched = false;
@@ -235,7 +235,7 @@ unsigned short * _controlify (DevDesc *dd, const unsigned char *src,
       if (c != (unsigned char)'\\') /* ordinary char, may pass through */
 	{
 	  /* if current font is an ISO-Latin-1 Hershey font ... */
-	    if (1 // _plotter->drawstate->font_type == F_HERSHEY
+	    if (1 /* _plotter->drawstate->font_type == F_HERSHEY */
 	      && _hershey_font_info[raw_fontnum].iso8859_1)
 	    {
 	      int i;
@@ -334,7 +334,7 @@ unsigned short * _controlify (DevDesc *dd, const unsigned char *src,
 	  esc[2] = (unsigned char)'\0';	/* have an escape sequence */
 	  
 	  /* is this an escape seq. (e.g. \#H0001) for a raw Hershey glyph? */
-	  if (1 // _plotter->drawstate->font_type == F_HERSHEY
+	  if (1 /* _plotter->drawstate->font_type == F_HERSHEY */
 	      && esc[0] == '#' && esc[1] == 'H'
 	      && src[0] >= '0' && src[0] <= '9'
 	      && src[1] >= '0' && src[1] <= '9'
@@ -356,7 +356,7 @@ unsigned short * _controlify (DevDesc *dd, const unsigned char *src,
 #ifndef NO_KANJI
 	  /* is this an escape seq. (e.g. \#N0001) for a raw Japanese
              Hershey glyph (Kanji), as numbered in Nelson's dictionary? */
-	  if (1 // _plotter->drawstate->font_type == F_HERSHEY
+	  if (1 /* _plotter->drawstate->font_type == F_HERSHEY */
 	      && esc[0] == '#' && esc[1] == 'N'
 	      && src[0] >= '0' && src[0] <= '9'
 	      && src[1] >= '0' && src[1] <= '9'
@@ -378,7 +378,7 @@ unsigned short * _controlify (DevDesc *dd, const unsigned char *src,
 
 	  /* is this an escape seq. (e.g. \#J0001) for a raw Japanese
              Hershey glyph (JIS numbering, in hex)? */
-	  if (1 // _plotter->drawstate->font_type == F_HERSHEY
+	  if (1 /* _plotter->drawstate->font_type == F_HERSHEY */
 	      && esc[0] == '#' && esc[1] == 'J'
 	      && ((src[0] >= '0' && src[0] <= '9')
 		  || (src[0] >= 'a' && src[0] <= 'f')
@@ -506,7 +506,7 @@ unsigned short * _controlify (DevDesc *dd, const unsigned char *src,
 	  /* if current font is an ISO-Latin-1 Hershey font, is this an
 	     escape sequence for an 8-bit (non-ASCII) char, which due to
 	     nonexistence should be deligatured? */
-	  if (1 // _plotter->drawstate->font_type == F_HERSHEY
+	  if (1 /* _plotter->drawstate->font_type == F_HERSHEY */
 	      && _hershey_font_info[raw_fontnum].iso8859_1)
 	    {
 	      int i;
@@ -553,7 +553,7 @@ unsigned short * _controlify (DevDesc *dd, const unsigned char *src,
 		  && _plotter->drawstate->font_is_iso8859_1
 		  && raw_fontnum == 1))
 */
-	  if (1 // _plotter->drawstate->font_type == F_HERSHEY
+	  if (1 /* _plotter->drawstate->font_type == F_HERSHEY */
 	      && _hershey_font_info[raw_fontnum].iso8859_1)
 	    {
 	      bool matched = false;
@@ -568,7 +568,7 @@ unsigned short * _controlify (DevDesc *dd, const unsigned char *src,
 		{
 		  /* certain such characters are drawn in the Hershey fonts
                      as superscripts */
-		    if (1) // _plotter->drawstate->font_type == F_HERSHEY)
+		    if (1) /* _plotter->drawstate->font_type == F_HERSHEY) */
 		    {
 		      int k;
 		      bool matched2 = false;
@@ -622,7 +622,7 @@ unsigned short * _controlify (DevDesc *dd, const unsigned char *src,
 	  /* is this an escape seq. for a `special' (non-ISO, non-Symbol)
 	     Hershey glyph?  Such glyphs include astronomical signs, and
 	     `final s'. */
-	  if (1) // _plotter->drawstate->font_type == F_HERSHEY)
+	  if (1) /* _plotter->drawstate->font_type == F_HERSHEY) */
 	    {
 	      bool matched = false;
 
@@ -684,100 +684,98 @@ unsigned short * _controlify (DevDesc *dd, const unsigned char *src,
 	  /* PAUL MURRELL
 	     Only concerned with Hershey fonts
 	  */
-	  // if (strcmp ((char *)esc, "rn") == 0)
-	  //	    {
-	  //  if (_plotter->drawstate->font_type == F_POSTSCRIPT
-	  //  || _plotter->drawstate->font_type == F_PCL)
-	  // {
-	  //  dest[j++] 
-	  //    = (unsigned short)(CONTROL_CODE | C_LEFT_RADICAL_SHIFT);
-		  /* take `radicalex' glyph from PS symbol font */
-	  //  dest[j++] 
-	  //    = symbol_fontword | (unsigned short)RADICALEX; 
-	  //  dest[j++] 
-	  //    = (unsigned short)(CONTROL_CODE | C_RIGHT_RADICAL_SHIFT);
+	  /* if (strcmp ((char *)esc, "rn") == 0)
+	  cc	    {
+	  cc  if (_plotter->drawstate->font_type == F_POSTSCRIPT
+	  cc  || _plotter->drawstate->font_type == F_PCL)
+	  cc {
+	  cc  dest[j++] 
+	  cc    = (unsigned short)(CONTROL_CODE | C_LEFT_RADICAL_SHIFT);
+		  cc take `radicalex' glyph from PS symbol font 
+	  cc  dest[j++] 
+	  cc    = symbol_fontword | (unsigned short)RADICALEX; 
+	  cc  dest[j++] 
+	  cc    = (unsigned short)(CONTROL_CODE | C_RIGHT_RADICAL_SHIFT);
 
-	  //  continue;	/* back to top of while loop */
-	  // }
-	  // }
+	  cc  continue;	cc back to top of while loop 
+	  cc }
+	  cc }
 
-	  /* Attempt to parse as a font-change command, i.e. as one of the
+	  cc Attempt to parse as a font-change command, i.e. as one of the
 	     macros \f0, \f1, \f2, etc., or \fP.  \fR, \fI, \fB are the
-	     same as \f1, \f2, \f3 for troff compatibility. */
+	     same as \f1, \f2, \f3 for troff compatibility. cc
 
-	  /* PAUL MURRELL
-	     won't handle font commands
-	  */
-	  // if (esc[0] == 'f' && ((esc[1] >= '0' && esc[1] <= '9')
-	  //		|| esc[1] == 'P' || esc[1] == 'R'
-	  //		|| esc[1] == 'I' || esc[1] == 'B'))
-	  // {
-	      /* If a user-specified, device-specific font [e.g. an X font,
+	  cc if (esc[0] == 'f' && ((esc[1] >= '0' && esc[1] <= '9')
+	  cc		|| esc[1] == 'P' || esc[1] == 'R'
+	  cc		|| esc[1] == 'I' || esc[1] == 'B'))
+	  cc {
+	      cc If a user-specified, device-specific font [e.g. an X font,
 		 for which we have no internal table listing the other
 		 fonts in its family] is being used, we can't really do
 		 font switching, except via \f0, \f1.  These switch to the
 		 X symbol font and the current user-specified font,
-		 respectively.  (\fP is also supported.) */
-	  // if (_plotter->drawstate->font_type == F_OTHER
-	  //  && ((esc[1] >= '2' && esc[1] <= '9')
-	  //      || esc[1] == 'I' || esc[1] == 'B'))
-	  // esc[1] = '1'; /* treat as \f1 */
+		 respectively.  (\fP is also supported.) cc
+	  cc if (_plotter->drawstate->font_type == F_OTHER
+	  cc  && ((esc[1] >= '2' && esc[1] <= '9')
+	  cc      || esc[1] == 'I' || esc[1] == 'B'))
+	  cc esc[1] = '1'; cc treat as \f1 cc
 	      
-	      /* troff compatibility */
-	  // if (esc[1] == 'R')
-	  // esc[1] = '1';
-	  // else if (esc[1] == 'I')
-	  // esc[1] = '2';
-	  // else if (esc[1] == 'B')
-	  // esc[1] = '3';
+	  cc troff compatibility cc
+	  cc if (esc[1] == 'R')
+	  cc esc[1] = '1';
+	  cc else if (esc[1] == 'I')
+	  cc esc[1] = '2';
+	  cc else if (esc[1] == 'B')
+	  cc esc[1] = '3';
 
-	  // if (esc[1] == 'P') /* \fP seen, so go back to previous font */
-	  // raw_fontnum = previous_raw_fontnum;
-	  // else		/* font specified as index into typeface */
-	  // {
-	  //  int new_font_index = esc[1] - '0';
+	  cc if (esc[1] == 'P') cc \fP seen, so go back to previous font cc
+	  cc raw_fontnum = previous_raw_fontnum;
+	  cc else		cc font specified as index into typeface cc
+	  cc {
+	  cc  int new_font_index = esc[1] - '0';
 
-		  /* switch to specified font (OOB tests here now obsolete?) */
-	  //  previous_raw_fontnum = raw_fontnum;
-	  //  switch (_plotter->drawstate->font_type)
-	  //    {
-	  //    case F_HERSHEY:
-	  //      if ((new_font_index >= _hershey_typeface_info[_plotter->drawstate->typeface_index].numfonts)
-	  //	  || new_font_index < 0)
-	  //	new_font_index = 1; /* OOB -> use default font */
-	  //      raw_fontnum = _hershey_typeface_info[_plotter->drawstate->typeface_index].fonts[new_font_index];
-	  //      break;
-	  //    case F_PCL:
-	  //      if ((new_font_index >= _pcl_typeface_info[_plotter->drawstate->typeface_index].numfonts)
-	  //	  || new_font_index < 0)
-	  //	new_font_index = 1; /* OOB -> use default font */
-	  //      raw_fontnum = _pcl_typeface_info[_plotter->drawstate->typeface_index].fonts[new_font_index];
-	  //      break;
-	  //    case F_STICK:
-	  //      if ((new_font_index >= _stick_typeface_info[_plotter->drawstate->typeface_index].numfonts)
-	  //	  || new_font_index < 0)
-	  //	new_font_index = 1; /* OOB -> use default font */
-	  //      raw_fontnum = _stick_typeface_info[_plotter->drawstate->typeface_index].fonts[new_font_index];
-	  //      break;
-	  //    case F_POSTSCRIPT:
-	  //    default:
-	  //      if ((new_font_index >= _ps_typeface_info[_plotter->drawstate->typeface_index].numfonts)
-	  //	  || new_font_index < 0)
-	  //	new_font_index = 1; /* OOB -> use default font */
-	  //      raw_fontnum = _ps_typeface_info[_plotter->drawstate->typeface_index].fonts[new_font_index];
-	  //      break;
-	  //    case F_OTHER:
-	  //      if (new_font_index != 0 && new_font_index != 1)
-	  //	new_font_index = 1; /* OOB -> use default font */
-	  //      raw_fontnum = new_font_index;
-	  //      break;
-	  //    }
-	  // }
+		  cc switch to specified font (OOB tests here now obsolete?) cc
+	  cc  previous_raw_fontnum = raw_fontnum;
+	  cc  switch (_plotter->drawstate->font_type)
+	  cc    {
+	  cc    case F_HERSHEY:
+	  cc      if ((new_font_index >= _hershey_typeface_info[_plotter->drawstate->typeface_index].numfonts)
+	  cc	  || new_font_index < 0)
+	  cc	new_font_index = 1; cc OOB -> use default font cc
+	  cc      raw_fontnum = _hershey_typeface_info[_plotter->drawstate->typeface_index].fonts[new_font_index];
+	  cc      break;
+	  cc    case F_PCL:
+	  cc      if ((new_font_index >= _pcl_typeface_info[_plotter->drawstate->typeface_index].numfonts)
+	  cc	  || new_font_index < 0)
+	  cc	new_font_index = 1; cc OOB -> use default font cc
+	  cc      raw_fontnum = _pcl_typeface_info[_plotter->drawstate->typeface_index].fonts[new_font_index];
+	  cc      break;
+	  cc    case F_STICK:
+	  cc      if ((new_font_index >= _stick_typeface_info[_plotter->drawstate->typeface_index].numfonts)
+	  cc	  || new_font_index < 0)
+	  cc	new_font_index = 1; cc OOB -> use default font cc
+	  cc      raw_fontnum = _stick_typeface_info[_plotter->drawstate->typeface_index].fonts[new_font_index];
+	  cc      break;
+	  cc    case F_POSTSCRIPT:
+	  cc    default:
+	  cc      if ((new_font_index >= _ps_typeface_info[_plotter->drawstate->typeface_index].numfonts)
+	  cc	  || new_font_index < 0)
+	  cc	new_font_index = 1; cc OOB -> use default font cc
+	  cc      raw_fontnum = _ps_typeface_info[_plotter->drawstate->typeface_index].fonts[new_font_index];
+	  cc      break;
+	  cc    case F_OTHER:
+	  cc      if (new_font_index != 0 && new_font_index != 1)
+	  cc	new_font_index = 1; cc OOB -> use default font cc
+	  cc      raw_fontnum = new_font_index;
+	  cc      break;
+	  cc    }
+	  cc }
 
-	  //	      fontword = ((unsigned short)raw_fontnum) << FONT_SHIFT;
+	  cc	      fontword = ((unsigned short)raw_fontnum) << FONT_SHIFT;
 
-	  //  continue;		/* back to top of while loop */
-	  // }
+	  cc  continue;		cc back to top of while loop cc
+	  cc }
+	  */
 	  
 	  /* couldn't match; unknown escape seq., so pass through unchanged */
 	  dest[j++] = fontword | (unsigned short)'\\';

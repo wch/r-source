@@ -243,8 +243,8 @@ static int LabelInsideWindow(SEXP label, DevDesc *dd) {
 	x = REAL(label)[i];
 	y = REAL(label)[i+4];
 	GConvert(&x, &y, USER, NDC, dd);
-	//	x = GConvertXUnits(REAL(label)[i], USER, NDC, dd);
-	//	y = GConvertYUnits(REAL(label)[i+4], USER, NDC, dd);
+	/*	x = GConvertXUnits(REAL(label)[i], USER, NDC, dd);
+		y = GConvertYUnits(REAL(label)[i+4], USER, NDC, dd); */
 	
 	if ((x < 0) || (x > 1) ||
 	    (y < 0) || (y > 1))
@@ -718,7 +718,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 	        sprintf(buffer, " %.00f ", zc);
 
 		if (vectorFonts) {
-		    // 1, 1 => sans serif, basic font
+		    /* 1, 1 => sans serif, basic font */
 		    labelDistance = GVStrWidth(buffer, typeface, fontindex,
 					       INCHES, dd);
 		    labelHeight = GVStrHeight(buffer, typeface, fontindex,
@@ -850,7 +850,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 			    if (lowestVariance < 9999999)
 				gotLabel = 1;
 			}
-		    } // switch (method) 
+		    } /* switch (method) */
 		    
 		    if (method == 0) {
 			GPolyline(ns, xxx, yyy, USER, dd);
@@ -871,7 +871,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 
 			if (gotLabel) {
 			    /* find which plot edge we are closest to */
-			    int closest; // 0 = index,  1 = index+range
+			    int closest; /* 0 = index,  1 = index+range */
 			    double dx1, dx2, dy1, dy2, dmin;
 			    dx1 = fmin2((xxx[index] - dd->gp.usr[0]),
 					(dd->gp.usr[1] - xxx[index]));
@@ -971,8 +971,8 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 				*/
 				GConvert(&ux, &uy, USER, INCHES, dd);
 				GConvert(&vx, &vy, USER, INCHES, dd);
-				// 1, 1 => sans serif, basic font
-				// 0, .5 => left, centre justified
+				/* 1, 1 => sans serif, basic font
+				   0, .5 => left, centre justified */
 				if (vectorFonts) 
 				    GVText(ux, uy, INCHES, buffer, 
 					   typeface, fontindex,
@@ -986,9 +986,9 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 					  atan2(vy - uy, vx - ux), 
 					  dd);
 			    }
-			} // if (gotLabel)
-		    } // if (method == 0) else ...
-		} // if ((drawLabels == 1) && (labelDistance > 0))
+			} /* if (gotLabel) */
+		    } /* if (method == 0) else ... */
+		} /* if ((drawLabels == 1) && (labelDistance > 0)) */
 		else {
 		    GPolyline(ns, xxx, yyy, USER, dd);
 		}
@@ -1909,7 +1909,7 @@ static void PerspAxis(double *x, double *y, double *z,
 		      int axis, int axisType, int nTicks, int tickType, 
 		      char *label, DevDesc *dd) {
     Vector3d u1, u2, u3, u4, v1, v2, v3, v4;
-    double tickLength = .03; // proportion of axis length
+    double tickLength = .03; /* proportion of axis length */
     double min, max, *range;
     double axp[3];
     int nint, i;
