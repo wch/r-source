@@ -1,12 +1,11 @@
 \name{Deprecated}
-%------ NOTE:  ../R/Deprecated.R   must be synchronized with this!
-\title{Deprecated Functions}
+\title{Marking Objects as Deprecated}
 \alias{Deprecated}
 \alias{.Deprecated}
-%------ PLEASE: put \alias{.} here for EACH !
+
 \description{
-  These functions are provided for compatibility with older versions of
-  \R only, and may be defunct as soon as the next release.
+  When an object is about removed from \R it is first deprecated and
+  should include a call to \code{.Deprecated}.
 }
 \usage{
 .Deprecated(new, package=NULL)
@@ -22,13 +21,16 @@
 }
 \details{
   \code{.Deprecated("<new name>")} is called from deprecated
-  functions. The original help page for these functions is often
+  functions.  The original help page for these functions is often
   available at \code{help("oldName-deprecated")} (note the quotes).
-  Functions in packages other than the base package should be listed in
-  \code{help("pkg-deprecated")}.
+  Functions should be listed in \code{help("pkg-deprecated")} for an
+  appropriate \code{pkg}, including \code{base}. 
 }
 \seealso{
   \code{\link{Defunct}}
+
+  \code{\link{base-deprecated}} and so on which list the deprecated functions
+  in the packages.
 }
 \keyword{documentation}
 \keyword{utilities}

@@ -514,7 +514,7 @@ function(package, dir, lib.loc = NULL,
                  function(f) paste(Rdpp(f), collapse = "\n"))
     names(db) <- dbNames <- .get_Rd_names_from_Rd_db(db)
     if(isBase) {
-        ind <- dbNames %in% c("Defunct")
+        ind <- dbNames %in% c("base-defunct")
         db <- db[!ind]
         dbNames <- dbNames[!ind]
     }
@@ -1116,8 +1116,6 @@ function(package, dir, lib.loc = NULL)
     dbNames <- .get_Rd_names_from_Rd_db(db)
     ind <- sapply(dbKeywords,
                   function(x) any(grep("^ *internal *$", x)))
-    if(isBase)
-        ind <- ind | dbNames %in% c("Defunct", "Deprecated")
     if(any(ind)) {                      # exclude them
         db <- db[!ind]
         dbNames <- dbNames[!ind]
@@ -2382,7 +2380,7 @@ function(dir)
         c("name", "title", "description", "usage", "arguments",
           "format", "details", "value", "references", "source",
           "seealso", "examples", "note", "author", "synopsis")
-    
+
     files_with_surely_bad_Rd <- NULL
     files_with_likely_bad_Rd <- NULL
     files_with_missing_mandatory_tags <- NULL
@@ -2495,7 +2493,7 @@ print.check_Rd_files_in_man_dir <- function(x, ...) {
         }
         writeLines("These tags must be unique in an Rd file.\n")
     }
-    
+
     if(length(x$files_with_bad_keywords)) {
         writeLines("Rd files with non-standard keywords:")
         bad <- x$files_with_bad_keywords
@@ -2663,7 +2661,7 @@ function(x)
 
 .S3_method_markup_regexp <-
     "(\\\\(S3)?method{([.[:alnum:]]*)}{([.[:alnum:]]*)})"
-    
+
 ### * .S4_method_markup_regexp
 
 .S4_method_markup_regexp <-
