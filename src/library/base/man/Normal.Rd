@@ -22,10 +22,10 @@ rnorm(n, mean=0, sd=1)
   mean equal to \code{mean} and standard deviation equal to \code{sd}.
   \code{dnorm} gives the density, \code{pnorm} gives the distribution
   function \code{qnorm} gives the quantile function and \code{rnorm}
-  generates random deviates. 
+  generates random deviates.
 
   If \code{mean} or \code{sd} are not specified they assume the default
-  values of \code{0} and \code{1}, respectively. 
+  values of \code{0} and \code{1}, respectively.
 
   The normal distribution has density
   \deqn{
@@ -37,6 +37,7 @@ rnorm(n, mean=0, sd=1)
   \eqn{\sigma}{sigma} the standard deviation.
 }
 \seealso{
+  \code{\link{.Random.seed}} about random number generation, and
   \code{\link{dlnorm}} for the \emph{Log}normal distribution.
 }
 \examples{
