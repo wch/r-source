@@ -1,13 +1,13 @@
 mode <- function(x) {
     if(is.expression(x)) return("expression")
     if(is.call(x))
-	return(switch(deparse(x[[1]]),
+	return(switch(deparse(x[[1]])[1],
 		      "(" = "(",
 		      ## otherwise
 		      "call"))
     if(is.name(x)) "name" else
     switch(tx <- typeof(x),
-	   double=, real=, integer= "numeric",# 'real' not used anymore [4/98,MM]
+	   double=, integer= "numeric",# 'real=' dropped, 2000/Jan/14
 	   closure=, builtin=, special= "function",
 	   ## otherwise
 	   tx)
