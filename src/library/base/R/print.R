@@ -5,11 +5,12 @@ print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
                           print.gap = NULL, right = FALSE, ...)
 {
     ## cheapest test first: consider taking this internal
-    if(length(list(...)) == 0 && "package:methods" %in% search()) {
+    if(length(list(...)) == 0 && .isMethodsDispatchOn()) {
         cl <- oldClass(x)
         if(length(cl) == 1 && isClass(cl)) return(show(x))
     }
-    .Internal(print.default(x, digits, quote, na.print, print.gap, right))
+    .Internal(print.default(x, digits, quote, na.print, print.gap, right,
+                            TRUE))
 }
 
 
