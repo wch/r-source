@@ -12,8 +12,9 @@ include $(top_builddir)/Makeconf
 
 ## <NOTE>
 ## All functions/subroutines to be called via .C() or .Fortran() must
-## also have an entry in the appropriate table/array in @file{../main/registration.c} 
-## in order to be registered with the symbol lookup mechanism, i.e. 'pre-dyn.loaded';
+## also have an entry in the appropriate table/array in
+## @file{../main/registration.c} in order to be registered with the
+## symbol lookup mechanism, i.e., 'pre-dyn.loaded'.
 ## </NOTE>
 
 SOURCES_C = \
@@ -24,7 +25,7 @@ SOURCES_C = \
 	lbfgsb.c loglin.c lowess.c \
 	machar.c maxcol.c massdist.c \
 	pretty.c \
-	rowsum.c \
+	rcont.c rowsum.c \
 	splines.c stem.c strsignif.c \
 	tabulate.c \
 	uncmin.c \

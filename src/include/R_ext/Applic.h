@@ -98,9 +98,9 @@ void lowess(double *x, double *y, int *n,
 	    double *ys, double *rw, double *res);
 
 /* machar.c */
-void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep, int *negep,
-	int *iexp, int *minexp, int *maxexp, double *eps,
-	double *epsneg, double *xmin, double *xmax);
+void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep,
+	    int *negep, int *iexp, int *minexp, int *maxexp,
+	    double *eps, double *epsneg, double *xmin, double *xmax);
 
 /* massdist.c */
 void massdist(double *x, int *nx, double *xlow, double *xhigh,
@@ -110,10 +110,15 @@ void R_max_col(double *matrix, int *nr, int *nc, int *maxes);
 
 /* pretty.c */
 double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
-	       double shrink_sml, double high_u_fact[],
-	       int eps_correction, int return_bounds);
+		 double shrink_sml, double high_u_fact[],
+		 int eps_correction, int return_bounds);
 void R_pretty(double *lo, double *up, int *ndiv, int *min_n,
-	    double *shrink_sml, double *high_u_fact, int *eps_correction);
+	      double *shrink_sml, double *high_u_fact,
+	      int *eps_correction);
+
+/* rcont.c */
+void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
+	    double *fact, int *jwork, int *matrix);
 
 /* rowsum.c */
 void R_rowsum(int *dim, double *na_x, double *x, double *group);
@@ -134,15 +139,12 @@ void periodic_spline(int n, double *x, double *y,
 /* stem.c */
 Rboolean stemleaf(double *x, int *n, double *scale, int *width, double *atom);
 
-/* ...............*/
-
 /* strsignif.c */
 void str_signif(char *x, int *n, char **type, int *width, int *digits,
 		char **format, char **flag, char **result);
 
 /* tabulate.c */
 void R_tabulate(int *x, int *n, int *nbin, int *ans);
-
 
 /* uncmin.c : */
 
