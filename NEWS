@@ -84,7 +84,9 @@ NEW FEATURES
 	your workspace.)
 
     o	A package `methods' has been added, containing formal classes
-	and methods ("S4" methods).
+	and methods ("S4" methods), implementing the description in
+	the book "Programming with Data".  See "?Methods" and the
+	references there for more information.
 
 	- In support of this, the "@" operator has been added to the
 	  grammar.
@@ -97,11 +99,9 @@ NEW FEATURES
 	  primitives that use either DispatchGroup or DispatchOrEval
 	  internally.
 
-	- The methods package will be attached automatically if a call
-	  to standardGeneric is encountered.  This does not yet work
-	  if the generic encountered is a function needed for
-	  attaching.  That will be fixed, but for now you still need
-	  to have library(methods) in the .Rprofile file in this case.
+	- A version of the function "plot" in the methods package has
+          arguments "x" and "y", to allow methods for either or both.
+          See "?setMethod" for examples of such methods.
 
 	- The methods package now uses C-level code (from within
 	  DispatchOrEval) to dispatch any methods defined for
@@ -400,9 +400,14 @@ NEW FEATURES
 	environment variables set in R_HOME/etc/Renviron in a similar
 	way to most shells.
 
-    o	As an experiment only, "=" is now allowed as an assignment
-	operator in the grammar.  This is not a commitment that it
-	will be supported in future non-development versions.
+    o	The operator "=" is now allowed as an assignment
+	operator in the grammar, for consistency with other languages,
+	including recent versions of S-Plus.  Assignments with "=" are
+	basically allowed only at top-level and in braced or
+	parenthesized expressions, to make famous errors such as
+	"if(x=0) 1 else 2" illegal in the grammar.
+	(There is a plan to gradually eliminate the underscore as an
+	assignment in future versions of R.)
 
     o	Finalizers can be registered to be run on system exit for both
 	reachable and unreachable objects.
