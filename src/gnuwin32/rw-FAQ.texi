@@ -976,7 +976,7 @@ up numerical linear algebra.  There is support in the R sources for the
 The savings can be appreciable: on a 2.6GHz P4 and a 1000 x 1000 matrix
 @code{svd} took 16.2 sec with the standard BLAS and 7.8 sec with ATLAS.
 Because ATLAS is tuned to a particular chip we can't use it generally:
-the optimal routines for a PIII or an Athlon XP are quite different and
+the optimal routines for a P4 or an Athlon XP are quite different and
 neither will not run at all on a PII.
 
 BLAS support is supplied by the single DLL @file{R_HOME\bin\Rblas.dll},
