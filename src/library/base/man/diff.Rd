@@ -40,9 +40,8 @@ diff.default(x, lag=1, differences=1, \dots)
 diff(1:10, 2)
 diff(1:10, 2, 2)
 x <- cumsum(cumsum(1:10))
-stopifnot(diff(x, lag = 2) == x[(1+2):10] - x[1:(10 - 2)],
-          diff(x, lag = 2) == (3:10)^2,
-          diff(diff(x))    == diff(x, differences = 2))
+diff(x, lag = 2)
+diff(x, differences = 2)
 }
 \keyword{ts}
 \keyword{arith}

@@ -50,6 +50,11 @@ stopifnot(all.equal(aperm(x, c(2, 1)), t(x)))
 ## end of moved from aperm.Rd
 
 
+## append
+stopifnot(append(1:5, 0:1, after=3) == append(1:3, c(0:1, 4:5)))
+## end of moved from append.Rd
+
+
 ## as.POSIXlt
 z <- Sys.time()
 stopifnot(range(z) == z,
@@ -128,6 +133,13 @@ stopifnot(grC["red",] == grC["green",],
           grC["red", 1:4] == c(0,3,5,8))
 ## end of moved from col2rgb.Rd
 
+
+## complex
+z <- 0i ^ (-3:3)
+stopifnot(Re(z) == 0 ^ (-3:3))
+## end of moved from complex.Rd
+
+
 ## Constants
 stopifnot(
  nchar(letters) == 1,
@@ -156,6 +168,27 @@ stopifnot(r <= 1) # fails in R <= 1.3.x, for versions of Linux and Solaris
 (dls <- .leap.seconds[-1] - .leap.seconds[-22])
 table(dls)
 ## end of moved from DateTimeClasses.Rd
+
+
+## deriv
+trig.exp <- expression(sin(cos(x + y^2)))
+D.sc <- D(trig.exp, "x")
+dxy <- deriv(trig.exp, c("x", "y"))
+y <- 1
+stopifnot(eval(D.sc) ==
+          attr(eval(dxy),"gradient")[,"x"])
+ff <- y ~ sin(cos(x) * y)
+stopifnot(all.equal(deriv(ff, c("x","y"), func = TRUE ),
+                    deriv(ff, c("x","y"), func = function(x,y){ } )))
+## end of moved from deriv.Rd
+
+
+## diff
+x <- cumsum(cumsum(1:10))
+stopifnot(diff(x, lag = 2) == x[(1+2):10] - x[1:(10 - 2)],
+          diff(x, lag = 2) == (3:10)^2,
+          diff(diff(x))    == diff(x, differences = 2))
+## end of moved from diff.Rd
 
 
 ## duplicated
@@ -209,6 +242,24 @@ stopifnot(abs(c(1 - abs(sV / V)))       <     1000*Meps)
 data(euro)
 stopifnot(euro == signif(euro,6), euro.cross == outer(1/euro, euro))
 ## end of moved from euro.Rd
+
+
+## findint
+N <- 100
+X <- sort(round(rt(N, df=2), 2))
+tt <- c(-100, seq(-2,2, len=201), +100)
+it <- findInterval(tt, X)
+
+## See that this is N * Fn(.) :
+tt <- c(tt,X)
+eps <- 100 * .Machine$double.eps
+require(stepfun)
+stopifnot(it[c(1,203)] == c(0, 100),
+          all.equal(N * ecdf(X)(tt),
+                    findInterval(tt, X),  tol = eps),
+          findInterval(tt,X) ==  apply( outer(tt, X, ">="), 1, sum)
+          )
+## end of moved from findint.Rd
 
 
 ## format
@@ -415,6 +466,27 @@ stopifnot(all.equal(qr.X(qr(X)), X))
 ## end of moved from qr.Rd
 
 
+## quantile
+x <- rnorm(1001)
+n <- length(x) ## the following is exact, because 1/(1001-1) is exact:
+stopifnot(sort(x) == quantile(x, probs = ((1:n)-1)/(n-1), names=FALSE))
+
+n <- 777
+ox <- sort(x <- round(rnorm(n),1))# round() produces ties
+ox <- c(ox, ox[n]) #- such that ox[n+1] := ox[n]
+p <- c(0,1,runif(100))
+i <- floor(r <- 1 + (n-1)*p)
+f <- r - i
+all(abs(quantile(x,p) - ((1-f)*ox[i] + f*ox[i+1])) < 20*.Machine$double.eps)
+## end of moved from quantile.Rd
+
+
+## rep
+stopifnot(identical(rep(letters, 0), character(0)),
+          identical(rep.int(1:2, 0), integer(0)))
+## end of moved from rep.Rd
+
+
 ## Round
 x1 <- seq(-2, 4, by = .5)
 non.int <- ceiling(x1) != floor(x1)
@@ -437,6 +509,12 @@ stopifnot(
 
 
 ## sort
+data(swiss)
+x <- swiss$Education[1:25]
+stopifnot(!is.unsorted(sort(x)),
+          !is.unsorted(LETTERS),
+           is.unsorted(c(NA,1:3,2), na.rm = TRUE))
+
 for(n in 1:20) {
     z <- rnorm(n)
     for(x in list(z, round(z,1))) { ## 2nd one has ties

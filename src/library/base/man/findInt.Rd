@@ -58,16 +58,6 @@ X <- sort(round(rt(N, df=2), 2))
 tt <- c(-100, seq(-2,2, len=201), +100)
 it <- findInterval(tt, X)
 tt[it < 1 | it >= N] # only first and last are outside range(X)
-
-## See that this is N * Fn(.) :
-tt <- c(tt,X)
-eps <- 100 * .Machine$double.eps
-require(stepfun)
-stopifnot( it[c(1,203)] == c(0, 100),
-          all.equal(N * ecdf(X)(tt),
-                    findInterval(tt, X),  tol = eps),
-          findInterval(tt,X) ==  apply( outer(tt, X, ">="), 1, sum)
- )
 }
 \keyword{arith}
 \keyword{utilities}

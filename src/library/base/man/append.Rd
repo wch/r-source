@@ -17,8 +17,6 @@ append(x, values, after=length(x))
   \code{values} appended after the specified element of \code{x}.
 }
 \examples{
-stopifnot(
-    append(1:5, 0:1, after=3)
- == append(1:3, c(0:1, 4:5)))
+append(1:5, 0:1, after=3)
 }
 \keyword{manip}

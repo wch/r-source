@@ -68,9 +68,5 @@ rep(1, 40*(1-.8)+1e-7) # better
 ## replicate a list
 fred <- list(happy = 1:10, name = "squash")
 rep(fred, 5)
-
-## more esoteric:
-stopifnot(identical(rep(letters, 0), character(0)),
-          identical(rep.int(1:2, 0), integer(0)))
 }
 \keyword{manip}

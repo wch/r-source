@@ -104,13 +104,10 @@ all.equal(D(trig.exp[[1]], "x"), D.sc)
 y <- 1
 eval(dxy)
 eval(D.sc)
-stopifnot(eval(D.sc) ==
-          attr(eval(dxy),"gradient")[,"x"])
 
 ## function returned:
-deriv((ff <- y ~ sin(cos(x) * y)), c("x","y"), func = TRUE)
-stopifnot(all.equal(deriv(ff, c("x","y"), func = TRUE ),
-                    deriv(ff, c("x","y"), func = function(x,y){ } )))
+deriv((y ~ sin(cos(x) * y)), c("x","y"), func = TRUE)
+
 ## function with defaulted arguments:
 (fx <- deriv(y ~ b0 + b1 * 2^(-x/th), c("b0", "b1", "th"),
              function(b0, b1, th, x = 1:7){} ) )

@@ -78,10 +78,6 @@ x <- swiss$Education[1:25]
 x; sort(x); sort(x, partial = c(10, 15))
 median # shows you another example for `partial'
 
-stopifnot(!is.unsorted(sort(x)),
-          !is.unsorted(LETTERS),
-           is.unsorted(c(NA,1:3,2), na.rm = TRUE))
-
 ## illustrate `stable' sorting (of ties):
 sort(c(10:3,2:12), method = "sh", index=TRUE) # is stable
 ## $x : 2  3  3  4  4  5  5  6  6  7  7  8  8  9  9 10 10 11 12
