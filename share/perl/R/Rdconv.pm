@@ -2070,7 +2070,7 @@ sub nroff_tables {
 
 sub rdoc2ex { # (filename)
 
-    local($tit = striptitle($blocks{"title"}));
+    my $tit = striptitle($blocks{"title"});
 
     if(defined $blocks{"examples"}) {
 	local $Exout;
@@ -2083,13 +2083,13 @@ sub rdoc2ex { # (filename)
 
 	$tit =~ s/\s+/ /g;
 
-	$Exout->print(fill("### Name: ", "###   ", $blocks{"name"}),
+	$Exout->print(wrap("### Name: ", "###   ", $blocks{"name"}),
 		      "\n",
-		      fill("### Title: ", "###   ", $tit),
+		      wrap("### Title: ", "###   ", $tit),
 		      "\n",
-		      fill("### Aliases: ", "###   ", @aliases),
+		      wrap("### Aliases: ", "###   ", @aliases),
 		      "\n",
-		      fill("### Keywords: ", "###   ", @keywords),
+		      wrap("### Keywords: ", "###   ", @keywords),
 		      "\n\n");
 
 	ex_print_exampleblock("examples", "Examples");
