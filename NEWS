@@ -128,6 +128,11 @@ BUG FIXES
 	give a sensible answer (always 1:n).  Similarly, partial sorts
 	of a raw vector were accepted but did nothing.
 
+    o	require() without a version argument tried for an unversioned
+	load of a package even though a versioned install was already
+	loaded.  This often lead to a message that a required package
+	was being loaded when it was not actually being loaded.
+
 
 
 	*********************************************************
