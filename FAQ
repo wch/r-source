@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-28, 2003-12-24
+Version 1.8-29, 2004-12-31
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -121,7 +121,7 @@ questions about R.
 1.1 Legalese
 ============
 
-This document is copyright (C) 1998-2003 by Kurt Hornik.
+This document is copyright (C) 1998-2004 by Kurt Hornik.
 
    This document is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the Free
@@ -158,7 +158,7 @@ site (*note What is CRAN?::).
 1.3 Citing this document
 ========================
 
-In publications, please refer to this FAQ as Hornik (2003), "The R FAQ",
+In publications, please refer to this FAQ as Hornik (2004), "The R FAQ",
 and give the above, _official_ URL and the ISBN 3-900051-01-1.
 
 1.4 Notation
@@ -1974,6 +1974,10 @@ distributions of R.)
      additive regression splines (MARS), adaptive back-fitting splines
      (BRUTO), and penalized regression.
 
+*meanscore*
+     Mean Score method for missing covariate data in logistic regression
+     models.
+
 *merror*
      Accuracy and precision of measurements.
 
@@ -2375,6 +2379,10 @@ distributions of R.)
 *tseries*
      Package for time series analysis with emphasis on non-linear modelling.
 
+*twostage*
+     Functions for optimal design of two-stage-studies using the Mean Score
+     method.
+
 *udunits*
      Interface to Unidata's routines to convert units.
 
@@ -2432,16 +2440,8 @@ these a try, of course.  This area of CRAN currently contains
 *ensemble*
      Ensembles of tree classifiers.
 
-*meanscore*
-     Mean Score method for missing covariate data in logistic regression
-     models.
-
 *runStat*
      Running median and mean.
-
-*twostage*
-     Functions for optimal design of two-stage-studies using the Mean Score
-     method.
 
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
