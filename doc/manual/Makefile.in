@@ -107,7 +107,9 @@ version.texi: Makefile $(top_srcdir)/VERSION
 	  echo "@set VERSION $${v}" > $@)
 R-intro.dvi: stamp-images-eps
 stamp-images-eps:
-	@$(MAKE) rhome=$(top_builddir) install-images-eps
+	@if [ "$(srcdir)" != "." ]; then \
+	  $(MAKE) rhome=$(top_builddir) install-images-eps; \
+	fi
 	@touch $@
 
 info: $(OBJECTS_INFO)
@@ -142,7 +144,9 @@ $(OBJECTS_PDF): $(srcdir)/texinfo.tex
 R-exts.pdf: version.texi
 R-intro.pdf: stamp-images-pdf
 stamp-images-pdf:
-	@$(MAKE) rhome=$(top_builddir) install-images-pdf
+	@if [ "$(srcdir)" != "." ]; then \
+	  $(MAKE) rhome=$(top_builddir) install-images-pdf; \
+	fi
 	@touch $@
 
 MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
