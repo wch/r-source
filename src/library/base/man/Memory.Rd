@@ -63,7 +63,7 @@ R --vsize MB --nsize ncons
     \code{\link{gc}} for information on the garbage collector.
 }
 \examples{
-# Start R with 15MB of heap memory and 1 million cons cells
+## Start R with 15MB of heap memory and 1 million cons cells :
 
-R --vsize 15 --nsize 1000000
+#\%  R --vsize 15 --nsize 1000000
 }
