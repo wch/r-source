@@ -32,7 +32,7 @@ winDialogString(message, default)
   \code{Esc} cancels and the underlined initial letter (\code{Y} or
   \code{N}) can be used.
 }
-\seealso{\code{\link{winMenus}}\cr
+\seealso{\code{\link{winMenuAdd}}\cr
   \code{\link{file.choose}} to select a file\cr
   package \code{windlgs} in the package source distribution for ways to
   program dialogs in C in the \code{GraphApp} toolkit.}
