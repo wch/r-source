@@ -317,7 +317,7 @@ cleanwin:
 	$(MAKE) -C getline clean
 	$(MAKE) -C help clean
 	$(MAKE) -C front-ends clean
-	$(MAKE) -C ../extra/xdr clean
+	$(MAKE) -C ../extra/xdr -f Makefile.win clean
 	$(MAKE) -C math clean
 	$(MAKE) -C bitmap clean
 	-$(MAKE) -C installer clean ISclean
