@@ -36,12 +36,10 @@ determinant.matrix = function(x, logarithm = TRUE, ...)
     if (is.complex(x))
         stop("determinant not currently defined for complex matrices")
     storage.mode(x) = "double"
-    .Call("det_ge_real", x, logarithm)
+    .Call("det_ge_real", x, logarithm, PACKAGE = "base")
 #    dc = .Fortran("dgetrf", n, n, a=x, n, ipiv=integer(n), info=integer(1))
 #    if (dc$info) stop(paste("dgetrf returned error code", dc$info))
 #    modulus = sum(log(abs(da <- diag(dc$a))))
 #    return(list(modulus = ifelse(as.logical(logarithm)[1], modulus, exp(modulus)),
 #                sign = ifelse(sum(da < 0, dc$ipiv != 1:n) %% 2, -1, 1)))
 }
-
-
