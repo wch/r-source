@@ -1,4 +1,4 @@
-t.test.power <-
+power.t.test <-
     function(n=NULL, delta=NULL, sd=1, sig.level=0.05, power=NULL,
              type=c("two.sample", "one.sample", "paired"),
              alternative=c("two.sided", "one.sided"))
@@ -43,10 +43,10 @@ t.test.power <-
     structure(list(n=n, delta=delta, sd=sd,
                    sig.level=sig.level, power=power,
                    alternative=alternative, note=NOTE, method=METHOD),
-              class="htest.power")
+              class="power.htest")
 }
 
-prop.test.power <-
+power.prop.test <-
     function(n=NULL, p1=NULL, p2=NULL, sig.level=0.05, power=NULL,
              alternative=c("two.sided", "one.sided"))
 {
@@ -86,10 +86,10 @@ prop.test.power <-
     structure(list(n=n, p1=p1, p2=p2,
                    sig.level=sig.level, power=power,
                    alternative=alternative, note=NOTE, method=METHOD),
-              class="htest.power")
+              class="power.htest")
 }
 
-print.htest.power <- function(x)
+print.power.htest <- function(x)
 {
     cat("\n    ", x$method, "\n\n")
     note<-x$note

@@ -1,18 +1,18 @@
-\name{print.htest.power}
-\alias{print.htest.power}
+\name{print.power.htest}
+\alias{print.power.htest}
 \title{ Print method for power calculation object}
 \usage{
-print.htest.power(x)
+print.power.htest(x)
 }
 %- maybe also `usage' for other objects documented here.
 \arguments{
- \item{x}{ Object of class \code{htest.power} }
+ \item{x}{ Object of class \code{power.htest} }
 }
 \description{
- Print \code{htest.power} object in nice layout
+ Print \code{power.htest} object in nice layout
 }
 \details{
-  An \code{htest.power} object is just a named list of numbers and
+  A \code{power.htest} object is just a named list of numbers and
   strings, supplemented with \code{method} and \code{note} elements.
   The \code{method} is displayed as a title, the \code{note} as a
   footnote, and the remaining elements are given in an aligned `name =
@@ -23,6 +23,6 @@ print.htest.power(x)
 }
 \author{Peter Dalgaard}
 
-\seealso{\code{\link{t.test.power}}, \code{\link{prop.test.power}} }
+\seealso{\code{\link{power.t.test}}, \code{\link{power.prop.test}} }
 
 \keyword{ ~keyword }%-- one or more ...

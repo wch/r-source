@@ -1,10 +1,10 @@
-\name{prop.test.power}
-\alias{prop.test.power}
+\name{power.prop.test}
+\alias{power.prop.test}
 \title{Power calculations two sample test for of proportions}
 \usage{
-prop.test.power(n = NULL, p1 = NULL, p2 = NULL, sig.level = 0.05,
-                power = NULL,
-                alternative = c("two.sided", "one.sided"))
+power.prop.test(n=NULL, p1=NULL, p2=NULL, sig.level=0.05,
+                power=NULL,
+                alternative=c("two.sided", "one.sided"))
 }
 %- maybe also `usage' for other objects documented here.
 \arguments{
@@ -26,14 +26,14 @@ prop.test.power(n = NULL, p1 = NULL, p2 = NULL, sig.level = 0.05,
   it  computed.
 }
 \value{
-  Object of class \code{htest.power}, a list of the arguments (including
+  Object of class \code{power.htest}, a list of the arguments (including
   the computed one) augmented with \code{method} and \code{note}
   elements. 
 }
 \author{Peter Dalgaard.  Based on previous work by Claus Ekstrøm}
 \note{
   \code{uniroot} is used to solve power equation for unknowns, so
-  you may see see errors from it, notably about inability to bracket the
+  you may see errors from it, notably about inability to bracket the
   root when invalid arguments are given. If one of them is computed
   \code{p1 < p2} will hold, although this is not enforced when both are
   specified.
@@ -43,8 +43,8 @@ prop.test.power(n = NULL, p1 = NULL, p2 = NULL, sig.level = 0.05,
 
 
 \examples{
- prop.test.power(n=50, p1=.50, p2=.75)
- prop.test.power(p1=.50, p2=.75, power=.90)
- prop.test.power(n=50, p1=.5, power=.90)
+ power.prop.test(n=50, p1=.50, p2=.75)
+ power.prop.test(p1=.50, p2=.75, power=.90)
+ power.prop.test(n=50, p1=.5, power=.90)
 }
-\keyword{ htest }%-- one or more ...
+\keyword{ htest }

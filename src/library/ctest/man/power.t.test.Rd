@@ -1,8 +1,8 @@
-\name{t.test.power}
-\alias{t.test.power}
+\name{power.t.test}
+\alias{power.t.test}
 \title{Power calculations for one and two sample t tests}
 \usage{
-t.test.power(n=NULL, delta=NULL, sd=1, sig.level=0.05, power=NULL,
+power.t.test(n=NULL, delta=NULL, sd=1, sig.level=0.05, power=NULL,
              type=c("two.sample", "one.sample", "paired"),
              alternative=c("two.sided", "one.sided"))
 }
@@ -27,7 +27,7 @@ t.test.power(n=NULL, delta=NULL, sd=1, sig.level=0.05, power=NULL,
   compute them.
 }
 \value{
-  Object of class \code{htest.power}, a list of the arguments (including
+  Object of class \code{power.htest}, a list of the arguments (including
   the computed one) augmented with \code{method} and \code{note}
   elements. 
 }
@@ -35,15 +35,15 @@ t.test.power(n=NULL, delta=NULL, sd=1, sig.level=0.05, power=NULL,
 \author{Peter Dalgaard.  Based on previous work by Claus Ekstrøm}
 \note{
   \code{uniroot} is used to solve power equation for unknowns, so
-  you may see see errors from it, notably about inability to bracket the
+  you may see errors from it, notably about inability to bracket the
   root when invalid arguments are given.
 }
 \seealso{\code{\link{t.test}}, \code{\link{uniroot}}}
 
 \examples{
- t.test.power(n=20, delta=1)
- t.test.power(power=.90, delta=1)
- t.test.power(power=.90, delta=1, alt="one.sided")
+ power.t.test(n=20, delta=1)
+ power.t.test(power=.90, delta=1)
+ power.t.test(power=.90, delta=1, alt="one.sided")
 }
 \keyword{htest}
 
