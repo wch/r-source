@@ -2854,7 +2854,7 @@ SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
 /*     box(which="plot", lty="solid", ...)
        --- which is coded, 1 = plot, 2 = figure, 3 = inner, 4 = outer.
 */
-    int which, col, fg;
+    int which, col;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
@@ -2864,9 +2864,9 @@ SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
     if (which < 1 || which > 4)
 	errorcall(call, "invalid \"which\" specification");
     col= Rf_gpptr(dd)->col;	Rf_gpptr(dd)->col= NA_INTEGER;
-    fg = Rf_gpptr(dd)->col;	Rf_gpptr(dd)->fg = NA_INTEGER;
+    Rf_gpptr(dd)->fg = NA_INTEGER;
     ProcessInlinePars(args, dd, call);
-    if (Rf_gpptr(dd)->col == NA_INTEGER) {
+    if (Rf_gpptr(dd)->col == NA_INTEGER) {/* col := 'fg' or original 'col' */
 	if (Rf_gpptr(dd)->fg == NA_INTEGER)
 	    Rf_gpptr(dd)->col = col;
 	else
