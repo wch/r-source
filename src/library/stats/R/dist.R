@@ -65,13 +65,17 @@ as.dist <- function(m, diag = FALSE, upper = FALSE)
 	ans <- m
     else { ## matrix |-> dist
 	m <- as.matrix(m)
+        if(!is.numeric(m)) # coerce w/o losing attributes
+            storage.mode(m) <- "numeric"
+        p <- nrow(m)
+        if(ncol(m) != p) warning("non-square matrix")
 	ans <- m[row(m) > col(m)]
 	attributes(ans) <- NULL
 	if(!is.null(rownames(m)))
 	    attr(ans,"Labels") <- rownames(m)
 	else if(!is.null(colnames(m)))
 	    attr(ans,"Labels") <- colnames(m)
-	attr(ans,"Size") <- nrow(m)
+	attr(ans,"Size") <- p
 	attr(ans, "call") <- match.call()
 	class(ans) <- "dist"
     }
@@ -92,11 +96,17 @@ print.dist <-
     if(is.null(upper))
 	upper <- if(is.null(a <- attr(x,"Upper"))) FALSE else a
 
-    cf <- format(as.matrix(x), digits = digits, justify = justify)
+    m <- as.matrix(x)
+    cf <- format(m, digits = digits, justify = justify)
     if(!upper)
 	cf[row(cf) < col(cf)] <- ""
     if(!diag)
 	cf[row(cf) == col(cf)] <- ""
+
+### Better: use an improved prettyNum() function -> ../../base/R/format.R
+
+##-     if(any((i <- m == floor(m))))
+##-         cf[i] <- sub("0+$", "", cf[i])
     print(if(diag || upper) cf else cf[-1, -attr(x, "Size")],
 	  quote = FALSE, right = right, ...)
     invisible(x)

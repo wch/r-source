@@ -715,6 +715,9 @@ BUG FIXES
     o	points.formula() had problems if there was a subset argument
 	and no data argument.  (PR#6652)
 
+    o	as.dist() does a bit more checking of its first argument and now
+	warns when applied to non-square matrices.
+
 
 
 
