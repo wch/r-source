@@ -89,11 +89,15 @@ BUG FIXES
 
     o	dist() {mva} silently treated +/-Inf as NA.
 
-
+    
 INTERNALS
 
     o   Toplevel Makefile was missing dependency of "docs" on "R" (causing
         parallel makes to go wrong)
+
+    o   When building with recommended packages those were installed
+        into the first path in R_LIBS, if the environment variable was
+        present.
 
 
 		CHANGES IN R VERSION 1.6.0

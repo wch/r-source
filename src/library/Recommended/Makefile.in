@@ -34,7 +34,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 .tgz.ts:
-	$(R) CMD INSTALL $<
+	$(R) CMD INSTALL -l $(top_builddir)/library $<
 	@touch $@
 
 ## survival needs to be installed before boot
