@@ -204,6 +204,12 @@ isIncomplete(con)
   The default mode in \R is \code{"r"} except for socket
   connections. This differs from Svr4, where it is the equivalent of
   \code{"r+"}, known as \code{"*"}.
+
+  On platforms where \code{vsnprintf} does not return the needed length
+  of output (e.g. Windows) there is a 100,000 character output limit on the
+  length of line for \code{fifo}, \code{gzfile} and \code{bzfile}
+  connections: longer lines will be truncated with a warning.
+}
 }
 \references{
   Chambers, J. M. (1998)

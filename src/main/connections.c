@@ -21,11 +21,6 @@
 # include <config.h>
 #endif
 
-/* override for this file only */
-#ifndef HAVE_ZLIB
-# define HAVE_ZLIB 1
-#endif
-
 #include <Defn.h>
 #include <Fileio.h>
 #include <Rconnections.h>
@@ -143,14 +138,14 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	usedRalloc = TRUE;
 	b = R_alloc(res + 1, sizeof(char));
 	vsprintf(b, format, ap);
-    } else if(res < 0) { /* just a failure indication */
+    } else if(res < 0) { /* just a failure indication -- e.g. Windows */
 	usedRalloc = TRUE;
-	b = R_alloc(10*BUFSIZE, sizeof(char));
-	res = vsnprintf(b, 10*BUFSIZE, format, ap);
+	b = R_alloc(100*BUFSIZE, sizeof(char));
+	res = vsnprintf(b, 100*BUFSIZE, format, ap);
 	if (res < 0) {
-	    *(b + 10*BUFSIZE - 1) = '\0';
+	    *(b + 100*BUFSIZE - 1) = '\0';
 	    warning("printing of extremely long output is truncated");
-	    res = 10*BUFSIZE;
+	    res = 100*BUFSIZE;
 	}
     }
     con->write(b, 1, res, con);
@@ -762,7 +757,6 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- gzipped file connections --------------------- */
 
-#if defined(HAVE_ZLIB)
 #include <zlib.h>
 
 static Rboolean gzfile_open(Rconnection con)
@@ -927,13 +921,6 @@ SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 
     return ans;
 }
-#else
-SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    error("zlib is not available on this system");
-    return R_NilValue;		/* -Wall */
-}
-#endif
 
 /* ------------------- bzipped file connections --------------------- */
 
@@ -1120,7 +1107,7 @@ SEXP do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 SEXP do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    error("libbzip2 is not available on this system");
+    error("bzfile is not available on this system");
     return R_NilValue;		/* -Wall */
 }
 #endif
@@ -1217,7 +1204,6 @@ static void clp_close(Rconnection con)
     free(this->buff);
 }
 
-
 static int clp_fgetc(Rconnection con)
 {
     Rclpconn this = con->private;
@@ -1255,7 +1241,6 @@ static void clp_truncate(Rconnection con)
 	error("can only truncate connections open for writing");
     this->last = this->pos;
 }
-
 
 static int clp_fflush(Rconnection con)
 {
@@ -1585,7 +1570,6 @@ static void outtext_destroy(Rconnection con)
 
 #define LAST_LINE_LEN 256
 
-#define BUFSIZE 1000
 static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     Routtextconn this = (Routtextconn)con->private;
@@ -1612,8 +1596,8 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	strcpy(b, this->lastline);
 	p = b + already;
 	vsprintf(p, format, ap);
-    } else if(res < 0) { /* just a failure indication */
-#define NBUFSIZE (already + 10*BUFSIZE)
+    } else if(res < 0) { /* just a failure indication -- e.g. Windows */
+#define NBUFSIZE (already + 100*BUFSIZE)
 	usedRalloc = TRUE;
 	b = R_alloc(NBUFSIZE, sizeof(char));
 	strncpy(b, this->lastline, NBUFSIZE);

@@ -108,6 +108,10 @@ NEW FEATURES
 
      o	Output text connections no longer have a line-length limit.
 
+     o	On platforms where vsnprintf does not return the needed buffer
+	size the output line-length limit for fifo(), gzfile() and 
+	bzfile() has been raised from 10k to 100k chars.
+
 
 INSTALLATION CHANGES
 
