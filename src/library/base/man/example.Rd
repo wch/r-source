@@ -31,7 +31,7 @@ example(topic, package = .packages(), lib.loc = NULL,
     the example is run and the (saved) state is restored.  \code{setRNG
       = TRUE} sets the same state as \code{R CMD \link{check}} does for
     running a package's examples.  This is currently equivalent to
-    \code{setRNG = {RNGkind("default", "default"); set.seed(1)}.}
+    \code{setRNG = \{RNGkind("default", "default"); set.seed(1)\}}.}
   \item{prompt.echo}{character; gives the prompt to be used if
     \code{echo = TRUE}.}
 }
