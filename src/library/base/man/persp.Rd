@@ -1,4 +1,6 @@
 \name{persp}
+\alias{persp}
+\alias{persp.default}
 \title{Perspective Plots}
 \usage{
 persp(x, ...)
@@ -10,8 +12,6 @@ persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
       box = TRUE, axes = TRUE, nticks = 5, ticktype = "simple",
       ...) 
 }
-\alias{persp}
-\alias{persp.default}
 \arguments{
   \item{x, y}{locations of grid lines at which the values in \code{z} are
     measured.  These must be in ascending order.  By default, equally
@@ -23,8 +23,9 @@ persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
     convenience.}
   \item{xlim, ylim, zlim}{x-, y-  and z-limits.  The plot is produced
     so that the rectangular volume defined by these limits is visible.}
-  \item{xlab, ylab, zlab}{titles for the axes. N.B. These must the
-    character strings; expressions are not accepted.}
+  \item{xlab, ylab, zlab}{titles for the axes.  N.B. These must be
+    character strings; expressions are not accepted.  Numbers will be
+    coerced to character strings.}
   \item{main, sub}{main and sub title, as for \code{\link{title}}.}
   \item{theta, phi}{angles defining the viewing direction.
     \code{theta} gives the azimuthal direction and \code{phi}

@@ -575,6 +575,7 @@ stopifnot(!is.na(z), mode(z) == "numeric", z == -Inf)
 z <- max(integer(0))
 stopifnot(!is.na(z), mode(z) == "numeric", z == -Inf)
 
+
 ## more reading the code BDR 2002-03-31
 stopifnot(identical(range(), range(numeric(0))))
 ## in 1.4.1 range() was c(1,1)
@@ -586,6 +587,11 @@ x <- numeric(0)
 (rx <- range(x))
 stopifnot(identical(rx, c(min(x), max(x))))
 ## 1.4.1 had c(NA, NA)
+
+
+## PR 1431 persp() crashes with numeric values for [x,y,z]lab
+persp(1:2, 1:2, matrix(1:4, 2), xlab=1)
+## segfaulted in 1.4.1
 
 
 ## This example last: needed < 1.5.0 ##

@@ -38,7 +38,9 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     ticktype <- pmatch(ticktype, c("simple", "detailed"))
     r <- .Internal(persp(x, y, z, xlim, ylim, zlim, theta, phi, r, d,
                          scale, expand, col, border, ltheta, lphi, shade,
-                         box, axes, nticks, ticktype, xlab, ylab, zlab, ...))
+                         box, axes, nticks, ticktype,
+                         as.character(xlab), as.character(ylab),
+                         as.character(zlab), ...))
     if(!is.null(main) || !is.null(sub))
         title(main = main, sub = sub, ...)
     invisible(r)

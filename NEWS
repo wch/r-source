@@ -562,6 +562,8 @@ BUG FIXES
     o   filled.contour() was not checking consistency of x, y, z.
 	(PR#1432)
 
+    o   persp.default() no longer crashes with non-character labels.
+	(PR#1431)
 
 	**************************************************
 	*						 *
