@@ -31,6 +31,9 @@ INSTALLATION ISSUES
     o   Added patches to enable 64-bit builds on AIX 5.1: see the R-admin
 	manual for details.
 
+    o   Added some patches to allow non-IEEE-754 installations to work
+	reasonably well.
+
 
 BUG FIXES
 

@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003	    The R Development Core Team.
- *  Copyright (C) 2003		    The R Foundation
+ *  Copyright (C) 2003-4       	    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -211,7 +211,7 @@ int R_finite(double x)
     return (x != R_NaReal && x < R_PosInf && x > R_NegInf);
 # else
     int finite(double);
-    return finite(x);
+    return (x != R_NaReal &&  finite(x));
 # endif
 }
 #endif /* IEEE_754 */
