@@ -893,8 +893,9 @@ do_cleanup () {
       fi
     fi
   fi
-
-  rm -rf "${lockdir}"
+  if ${lock}; then
+    rm -rf "${lockdir}"
+  fi
 }
 
 ### 
