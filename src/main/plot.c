@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -3736,7 +3736,7 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
     case 5: /* thermometers */
 	if (nc != 3 && nc != 4)
 	    errorcall(call, "invalid thermometers data (need 3 or 4 columns)");
-	SymbolRange(REAL(p)+2*nr/* <-- pointer arith*/, 2 * nr, &pmax, &pmin);
+	SymbolRange(REAL(p)+2*nr/* <-- pointer arith*/, nr, &pmax, &pmin);
 	if (pmax < pmin)
 	    errorcall(call, "invalid thermometers[,%s]",(nc == 4)? "3:4" : "3");
 	if (pmin < 0. || pmax > 1.) /* S-PLUS has an error here */

@@ -406,6 +406,9 @@ BUG FIXES
 
     o	methods() was sorting by package, not by name.
 
+    o	symbols(thermometers=) was often giving spurious warning about
+	the range.
+
 
 
 	**************************************************
