@@ -10,6 +10,10 @@ NEW FEATURES
     o	print.default(.) now also works with a `right = TRUE' argument.
 	{{ print.matrix(.) is bound to become deprecated... }}
 
+    o   new help page `Memory' on the usage of command line options
+        --vsize and --nsize. Error message if R runs out of memory
+        points to help(Memory). 
+
 
 BUG FIXES
 
