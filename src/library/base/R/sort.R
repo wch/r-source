@@ -7,10 +7,10 @@ sort <- function(x, partial=NULL, na.last=NA)
     }
     nas <- x[is.na(x)]
     x <- c(x[!is.na(x)])
-    if(!is.null(partial))
+    if(!is.null(partial)) {
         if(!all(is.finite(partial))) stop("non-finite `partial'")
 	y <- .Internal(psort(x, partial))
-    else {
+    } else {
 	nms <- names(x)
 	if(!is.null(nms)) {
 	    o <- order(x)
