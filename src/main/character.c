@@ -187,7 +187,7 @@ SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	    AllocBuffer(slen);
 	    strcpy(buff, CHAR(STRING_ELT(x, i)));
 	    vlen = strlen(CHAR(STRING_ELT(value, i % v)));
-	    if(stop > start + vlen) stop = start + vlen;
+	    if(stop > start + vlen - 1) stop = start + vlen - 1;
 	    substrset(buff, CHAR(STRING_ELT(value, i % v)), start, stop);
 	    SET_STRING_ELT(s, i, mkChar(buff));
 	}

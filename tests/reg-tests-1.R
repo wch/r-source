@@ -216,6 +216,20 @@ nchar(zz)
 stopifnot(nchar(zz)[3] == 83)
 ## truncated in 1.3.0
 
+## substr<-, Tom Vogels, 2001-09-07
+x <- "abcdef"
+substr(x, 2, 3) <- "wx"
+stopifnot(x == "awxdef")
+
+x <- "abcdef"
+substr(x, 2, 3) <- "wxy"
+stopifnot(x == "awxdef")
+
+x <- "abcdef"
+substr(x, 2, 3) <- "w"
+## last was "aw" in 1.3.1
+
+
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {
    warnmsg <- paste(LETTERS[sample(1:26,n,replace=TRUE)],collapse="")
