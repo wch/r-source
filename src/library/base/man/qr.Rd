@@ -81,12 +81,11 @@ as.qr(x)
   \code{\link{qr.Q}},  \code{\link{qr.R}},  \code{\link{qr.X}} for
   reconstruction of the matrices.
   \code{\link{solve.qr}},  \code{\link{lsfit}},
-  \code{\link{eigen}}, \code{\link{svd}}.}
-\examples{
-## The determinant of a matrix  -- if you really must have it
-det2 <- function(x) prod(diag(qr(x)$qr))*(-1)^(ncol(x)-1)
-det2(print(cbind(1,1:3,c(2,0,1))))
+  \code{\link{eigen}}, \code{\link{svd}}.
 
+  \code{\link{det}} (using \code{qr}) to compute the determinant of a matrix.
+}
+\examples{
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 h9 <- hilbert(9); h9
 qr(h9)$rank           #--> only 7

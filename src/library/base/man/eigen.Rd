@@ -29,10 +29,6 @@ eigen(x, symmetric, only.values=FALSE)
     eigenvectors of \code{x}, or \code{NULL} if \code{only.values} is
     \code{TRUE}.}
 }
-\note{
-  To compute the determinant of a matrix (do you \emph{really} need it?),
-  it is much more efficient to use the QR decomposition, see \code{\link{qr}}.
-}
 \references{
   Smith, B. T, Boyle, J. M., Dongarra, J. J., Garbow, B. S., Ikebe,Y.,
   Klema, V., and  Moler, C. B. (1976).
@@ -40,8 +36,11 @@ eigen(x, symmetric, only.values=FALSE)
   Springer-Verlag Lecture Notes in Computer Science.
 }
 \seealso{
-\code{\link{svd}}, a generalization of \code{eigen}; \code{\link{qr}}, and
-\code{\link{chol}} for related decompositions.
+  \code{\link{svd}}, a generalization of \code{eigen}; \code{\link{qr}}, and
+  \code{\link{chol}} for related decompositions.
+
+  To compute the determinant of a matrix, the \code{\link{qr}}
+  decomposition is much more efficient: \code{\link{det}}.
 }
 \examples{
 eigen(cbind(c(1,-1),c(-1,1)))

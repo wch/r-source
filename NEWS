@@ -171,13 +171,16 @@ NEW FEATURES
 	variable and replay it.
 
     o	The handling of estimating the dispersion in glm fits has been
-	changed for consistency across methods.  For `binomial' and 
+	changed for consistency across methods.	 For `binomial' and
 	`poisson' families the dispersion is always taken as one.
 	For `quasibinomial' and `quasipoisson' families it is always
 	estimated (by residual deviance/residual df).
 
     o	add1.glm() and drop1.glm() now allow test="F", which is
-        appropriate for models with estimated dispersion.
+	appropriate for models with estimated dispersion.
+
+    o	New trivial function det() for determinant computation
+	(the example in ?qr did not seem to be sufficient).
 
 
 BUG FIXES
