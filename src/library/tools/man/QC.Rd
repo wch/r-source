@@ -1,5 +1,5 @@
-\name{QA}
-\alias{QA}
+\name{QC}
+\alias{QC}
 \alias{checkAssignFuns}
 \alias{checkDocArgs}
 \alias{checkDocStyle}
@@ -8,7 +8,7 @@
 \alias{print.checkDocArgs}
 \alias{print.checkDocStyle}
 \alias{print.checkMethods}
-\title{QA Checks for R Code and/or Documentation}
+\title{QC Checks for R Code and/or Documentation}
 \description{
   Functions for performing various quality checks.
 }

@@ -225,7 +225,7 @@ interesting object in the package, giving its name and a description
 (functions such as print methods not usually called explicitly might not
 be included).  If the file is missing, the corresponding information is
 automatically generated from the documentation sources (using
-@code{Rdinfo()} from package @pkg{tools}) when installing from source
+@code{Rdindex()} from package @pkg{tools}) when installing from source
 and when using the package builder (@pxref{Checking and building
 packages}).
 
@@ -752,7 +752,7 @@ PDF version in the package sources it is not necessary that the
 vignettes can be compiled at install time, i.e., the package author can
 use private La@TeX{} extensions which are only available on his machine.
 Only the @R{} code inside the vignettes is part of the checking
-procedure, typesetting manuals is not part of the package QA.
+procedure, typesetting manuals is not part of the package QC.
 
 By default @code{R CMD build} will run @code{Sweave} on all files in
 Sweave format.  If no @file{Makefile} is found in directory
@@ -1538,14 +1538,6 @@ files, which can be specified either explicitly or by the path to a
 directory with the sources of a package (or bundle).  In the latter
 case, a reference manual for all documented objects in the package is
 created, including the information in the @file{DESCRIPTION} files.
-
-@findex R CMD Rdindex
-Using @code{R CMD Rdindex} one can produce nicely formatted index files
-displaying names and titles of the Rd files specified as arguments.
-This can be used to create the @file{INDEX} of an add-on package, which
-typically is only necessary if the index information automatically
-generated from the Rd files (@pxref{The INDEX file}) needs manual
-editing.
 
 @findex R CMD Sd2Rd
 Finally, @code{R CMD Sd2Rd} converts @Sl{} version 3 documentation files

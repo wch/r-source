@@ -133,7 +133,7 @@ function(dir, type)
 function(package, lib.loc)
 {
     ## Load (reload if already loaded) @code{package} from
-    ## @code{lib.loc}, capturing all output and messages.  All QA
+    ## @code{lib.loc}, capturing all output and messages.  All QC
     ## functions use this for loading packages because R CMD check
     ## interprets all output as indicating a problem.
     outConn <- file(open = "w")         # anonymous tempfile
