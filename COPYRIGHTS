@@ -56,6 +56,12 @@ afm/*l.afm
 
 	Copyright 1999 by (URW)++ Design & Development
 
+afm/CM_*.afm
+
+	are derived from afms which are copyright by the American
+	Mathematical Society, but `the AMS does require that the 
+	AMS copyright notice be removed from any derivative versions
+	of the fonts which have been altered in any way'.
 
 doc/html/search/*.java
 
