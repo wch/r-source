@@ -293,7 +293,7 @@ SEXP do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
     case 2:
 	return binary(op, args);
     default:
-	error("operator with more than two arguments");
+	error("operator needs one or two arguments");
     }
     return ans;			/* never used; to keep -Wall happy */
 }
@@ -384,7 +384,7 @@ static SEXP binary(SEXP op, SEXP args)
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
 	    PROTECT(class = getAttrib(x, R_ClassSymbol));
 	}
-	else {			/* (yts) */ 
+	else {			/* (yts) */
 	    if (length(y) < length(x))
 		ErrorMessage(lcall, ERROR_TSVEC_MISMATCH);
 	    PROTECT(tsp = getAttrib(y, R_TspSymbol));
@@ -414,7 +414,7 @@ static SEXP binary(SEXP op, SEXP args)
 
     PROTECT(x);
     /* Don't set the dims if one argument is an array of size 0 and the
-       other isn't of size zero, cos they're wrong */ 
+       other isn't of size zero, cos they're wrong */
     if (dims != R_NilValue) {
 	if (!((xarray && (nx == 0) && (ny != 0)) ||
 	      (yarray && (ny == 0) && (nx != 0)))){
@@ -1033,7 +1033,7 @@ SEXP do_round(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
     case 2:
 	if (length(CADR(args)) == 0)
-	    errorcall(call, "illegal 2nd arg of length 0");	    
+	    errorcall(call, "illegal 2nd arg of length 0");
 	PROTECT(a = CAR(args));
 	PROTECT(b = CADR(args));
 	break;
@@ -1065,7 +1065,7 @@ SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return math1(op, CAR(args), R_log);
     case 2:
 	if (length(CADR(args)) == 0)
-	    errorcall(call, "illegal 2nd arg of length 0");	    
+	    errorcall(call, "illegal 2nd arg of length 0");
 	if (isComplex(CAR(args)) || isComplex(CDR(args)))
 	    return complex_math2(call, op, args, env);
 	else
@@ -1092,7 +1092,7 @@ SEXP do_signif(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
     case 2:
 	if (length(CADR(args)) == 0)
-	    errorcall(call, "illegal 2nd arg of length 0");	    
+	    errorcall(call, "illegal 2nd arg of length 0");
 	PROTECT(a = CAR(args));
 	PROTECT(b = CADR(args));
 	break;
