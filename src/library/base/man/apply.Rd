@@ -52,7 +52,7 @@ ma
 apply(ma, 1, table)  #--> a list of length 2
 apply(ma, 1, quantile)# 5 x n matrix with rownames
 
-all(dim(ma) == dim(apply(ma, 1:2, sum)))## apply BUG [R <= 0.63.0]
+all(dim(ma) == dim(apply(ma, 1:2, sum)))## wasn't ok before R 0.63.1
 
 \testonly{
  apply(x,  2, summary) # 6 x n matrix

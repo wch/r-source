@@ -58,8 +58,8 @@ apply <- function(X, MARGIN, FUN, ...)
 	return(array(ans, d.ans, dn.ans))
     if(len.a > 0 && len.a %% d2 == 0)
 	return(array(ans, c(len.a %/% d2, d.ans),
-		     dimnames = if(length(dn)) {
-                         if(is.null(dn.ans)) list(ans.names,NULL)
-                         else c(list(ans.names), dn.ans)}))
+                     if(is.null(dn.ans)) {
+                         if(!is.null(ans.names)) list(ans.names,NULL)
+                     } else c(list(ans.names), dn.ans)))
     return(ans)
 }
