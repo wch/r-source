@@ -1293,7 +1293,11 @@ int main () {
 if test "x${r_cv_func_log1p_works}" = xyes; then
   AC_DEFINE(HAVE_WORKING_LOG1P, 1,
             [Define if log1p() exists and is accurate enough.])
+  RMATH_HAVE_WORKING_LOG1P="# define HAVE_WORKING_LOG1P 1"
+else
+  RMATH_HAVE_WORKING_LOG1P="# undef HAVE_WORKING_LOG1P"
 fi
+AC_SUBST(RMATH_HAVE_WORKING_LOG1P)
 ])# R_FUNC_LOG1P
 
 ## R_FUNC_STRPTIME

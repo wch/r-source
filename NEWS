@@ -392,6 +392,10 @@ INSTALLATION CHANGES
 	and these are used for the dynamic Rmath library (which was
 	previously built as a shared object).
 
+    o	If a system function log1p is found, it is tested for accuracy
+	and if inadequate the substitute function in src/nmath is
+	used, with name remapped to Rlog1p.
+
 
 UTILITIES
 
@@ -453,6 +457,9 @@ DEPRECATED & DEFUNCT
     o	Method weights.lm(), a copy of weights.default(), has been removed.
 
     o	print.atomic() is now deprecated.
+
+    o	The back-compatibility entry point Rf_log1p in standalone
+	Rmath has been removed.
 
 
 BUG FIXES

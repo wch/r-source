@@ -32,10 +32,20 @@
 
 #ifndef HAVE_LOG1P
 @RMATH_HAVE_LOG1P@
+#endif
 
 #ifndef HAVE_EXPM1
 @RMATH_HAVE_EXPM1@
 #endif
+
+#ifndef HAVE_WORKING_LOG1P
+@RMATH_HAVE_WORKING_LOG1P@
+#endif
+
+#if defined(HAVE_LOG1P) && !defined(HAVE_WORKING_LOG1P)
+/* remap to avoid problems with getting the right entry point */
+double  Rlog1p(double);
+#define log1p Rlog1p
 #endif
 
 #include <errno.h>
