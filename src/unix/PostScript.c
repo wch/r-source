@@ -387,12 +387,12 @@ void PostScriptSetColor(FILE *fp, double r, double g, double b)
 	fprintf(fp,"%.4f %.4f %.4f rgb\n", r, g, b);
 }
 
-void PostScriptSetLineTexture(FILE *fp, int *lty, int nlty)
+void PostScriptSetLineTexture(FILE *fp, int *lty, int nlty, double lwd)
 {
 	int i;
 	fprintf(fp,"[");
 	for(i=0 ; i<nlty ; i++)
-		fprintf(fp," %d", lty[i]);
+		fprintf(fp," %.2f", lty[i] * lwd);
 	fprintf(fp,"] 0 setdash\n");
 }
 

@@ -370,7 +370,7 @@ static void SetLinetype(int newlty, DevDesc *dd)
 		ltyarray[i] = newlty&15;
 		newlty = newlty>>4;
 	}
-	PostScriptSetLineTexture(pd->psfp, ltyarray, i);
+	PostScriptSetLineTexture(pd->psfp, ltyarray, i, 0.75/* dd->gp.lwd */);
 }
 
 static void SetFont(int style, int size, DevDesc *dd)
