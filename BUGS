@@ -25,11 +25,7 @@ actual reference number, of course!).
 
 Directory:  Accuracy
 
-* PR# 138 *
-Subject: Re: [R] bug? and New bug.
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 10 Mar 1999 17:21:16 +0100
---pt() for large df. Solved, but problem remains for pf et al.
+none
 
 Directory:  Add-ons
 
@@ -53,27 +49,12 @@ Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
 Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --Don't think I (pd) got the point there...
-* PR# 225 *
-Subject: pch and mkh bug
-From: Stephen Harker <sjh@ph.adfa.edu.au>
-Date: Wed, 14 Jul 1999 13:10:31 +1000 (EST)
---(1) is an S incompatibility, but the S rules may not be a good model
---(2) is a bug, fixed for 0.65.0
---(3) has gone away in 0.65.0
-* PR# 230 *
-Subject: Use of lwd = 0, lty = 2 in segments.
-From: Douglas Bates <bates@stat.wisc.edu>
-Date: Sat, 17 Jul 1999 17:18:44 -0500 (CDT)
---still with us (0.90.1, Dec.1999)
+--The persp algorithm does not apply the occlusion rules to the frame, which
+--  is always plotted first.  A bug, but not very simple to fix.
 * PR# 267 *
 Subject: matplot(... panel.first=..) fails  <==> dealing with "..."
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 6 Sep 1999 11:04:03 +0200
-* PR# 287 *
-Subject: text( col=, cex=, font=) : doesn't allow more than length-1 arg
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 27 Sep 1999 11:12:08 +0200
---FIXME (still in 0.90.1)
 * PR# 308 *
 Subject:  R abnormal exit when plotting lm 
 From: Ulf Mehlig <umehlig@uni-bremen.de>
@@ -85,18 +66,6 @@ Subject: plot math - segfault and "frac", "^" bug(s)..
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Wed, 8 Dec 1999 18:27:03 +0100 (MET)
 --seg.fault fixed; "^" precedence is really bad
-* PR# 378 *
-Subject: plot()  after split.screen() on postscript() Device produces inconsistent PostScript file
-From: boble@usa.net
-Date: Fri, 17 Dec 1999 21:32:23 +0100 (MET)
-* PR# 384 *
-Subject: tck crash
-From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
-Date: Wed, 22 Dec 1999 10:05:48 +0100 (MET)
-* PR# 389 *
-Subject: coredump with plot(x,y,pch="+",cex=2.2)
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sun, 26 Dec 1999 18:14:10 -0500 (EST)
 * PR# 400 *
 Subject: X11 troubles
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -105,6 +74,8 @@ Date: 13 Jan 2000 14:31:42 +0100
 Subject:  graphics bugs: steep slopes and large values beyond ylim 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Mon, 7 Feb 2000 18:28:04 -0500
+--Followup on R-devel showed this was due to generating integer coordinates 
+--outside +/- 2^15 in the X11 driver.
 
 Directory:  In-Out
 
@@ -132,10 +103,6 @@ Subject: as.matrix.data.frame() modifies content of character columns
 From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
 Date: Wed, 22 Dec 1999 16:18:19 +0100
 --Now a (small) warning on the help page for format that " is escaped to \"
-* PR# 388 *
-Subject: data.frame(I(matrix)) ?
-From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
-Date: Thu, 23 Dec 1999 19:12:58 +0100
 * PR# 391 *
 Subject: Segfault in dataentry()
 From: Peter Dalgaard BSA <p.dalgaard@pubhealth.ku.dk>
@@ -159,6 +126,10 @@ Directory:  System-specific
 Subject: Installation of rpm file on Suse Linux 6.2
 From: luzi@stud.phys.ethz.ch
 Date: Thu, 17 Feb 2000 18:36:04 +0100 (MET)
+* PR# 452 *
+Subject: problem with glm
+From: Brad McNeney <mcneney@cs.sfu.ca>
+Date: Fri, 18 Feb 2000 17:51:54 -0800 (PST)
 
 Directory:  TooMuchAtOnce
 
@@ -185,11 +156,4 @@ none
 
 Directory:  incoming
 
-* PR# 452 *
-Subject: problem with glm
-From: Brad McNeney <mcneney@cs.sfu.ca>
-Date: Fri, 18 Feb 2000 17:51:54 -0800 (PST)
-* PR# 453 *
-Subject: $$$International Reps Needed$$$ 
-From: cals44@bigfoot.com
-Date: Mon, 21 Feb 00 17:08:21 EST
+none
