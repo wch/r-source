@@ -829,3 +829,7 @@ Date: Thu, 08 Apr 2004 12:00:02 +0900
 Subject: Macintosh -- changing working directory forces computer to restart
 From: paolillo@indiana.edu
 Date: Thu,  8 Apr 2004 21:24:56 +0200 (CEST)
+* PR# 6750 *
+Subject: Incorrect handling of NA's in cor()
+From: msa@biostat.mgh.harvard.edu
+Date: Fri,  9 Apr 2004 18:45:40 +0200 (CEST)
