@@ -578,7 +578,6 @@ SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 		else
 		    goto bad_mode;
 	}
-#ifdef NEWLIST
 	/* FIXME : Need to be careful with the use of isVector() */
 	/* since this includes the new list structure and expressions. */
 	else if (isNewList(CAR(s))) {
@@ -604,7 +603,6 @@ SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    
 	}
-#endif
 	else if (isMatrix(CAR(s))) {
 	    u = getAttrib(CAR(s), R_DimSymbol);
 	    if (len < 0)
@@ -660,7 +658,6 @@ SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 	    }
 	}
-#ifdef NEWLIST
 	if (isNewList(CAR(s))) {
 	    int it, nt;
 	    t = CAR(s);
@@ -693,7 +690,6 @@ SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 	    }
 	}
-#endif
 	else {
 	    for (i = 0; i < LENGTH(CAR(s)); i++) {
 		u = CAR(s);

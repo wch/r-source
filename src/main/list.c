@@ -25,8 +25,6 @@
  *  elsewhere.
  */
 
-/* This file processed for NEWLIST */
-
 #include "Defn.h"
 
 

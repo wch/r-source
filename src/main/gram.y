@@ -18,11 +18,10 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-    /* File processed for NEWLIST */
-
 #include "Defn.h"
 #include "IOStuff.h"
 #include "Parse.h"
+
 
     /* Useful defines so editors don't get confused ... */
 

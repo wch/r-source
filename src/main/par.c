@@ -16,20 +16,20 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- */
-
-/*
- *	GRZ-like state information.
  *
- *	This is a quick knock-off of the GRZ library to provide a basic
- *	S-like graphics capability for R.  Basically this bit of code
- *	provides the functionality of the "par" function in S.
  *
- *	"The horror, the horror ..."
- *		Marlon Brando in Apocalypse Now.
  *
- * Main functions:
- *	do_par(.)	and
+ *  GRZ-like state information.
+ *
+ *  This is a quick knock-off of the GRZ library to provide a basic
+ *  S-like graphics capability for R.  Basically this bit of code
+ *  provides the functionality of the "par" function in S.
+ *
+ *  "The horror, the horror ..."
+ *      Marlon Brando in Apocalypse Now.
+ *
+ *  Main functions:
+ *      do_par(.)	and
  *	do_layout(.)	implement R's  par(.), layout()rely on
  *
  *	Specify(.)	[ par(what = value) ]
@@ -39,18 +39,22 @@
 
 #include "Defn.h"
 #include "Mathlib.h"
-#include "Graphics.h"/* ../include/Graphics.h :	 "GPar" structure + COMMENTS */
+#include "Graphics.h"  /* ../include/Graphics.h : "GPar" structure + COMMENTS */
 
 
-static SEXP gcall;/* par(.)'s call */
+/* par(.)'s call */
+
+static SEXP gcall;
 
 SEXP LTYget(int);
 char *col2name(unsigned int);
+
 
 static void par_error(char *what)
 {
     error("invalid value specified for graphics parameter \"%s\".\n",  what);
 }
+
 
 static void lengthCheck(char *what, SEXP v, int n)
 {
@@ -58,11 +62,13 @@ static void lengthCheck(char *what, SEXP v, int n)
 	errorcall(gcall, "parameter \"%s\" has the wrong length\n", what);
 }
 
+
 static void nonnegIntCheck(int x, char *s)
 {
     if (x == NA_INTEGER || x < 0)
 	par_error(s);
 }
+
 
 static void posIntCheck(int x, char *s)
 {
@@ -70,11 +76,13 @@ static void posIntCheck(int x, char *s)
 	par_error(s);
 }
 
+
 static void posRealCheck(double x, char *s)
 {
     if (!FINITE(x) || x <= 0)
 	par_error(s);
 }
+
 
 static void nonnegRealCheck(double x, char *s)
 {
@@ -82,11 +90,13 @@ static void nonnegRealCheck(double x, char *s)
 	par_error(s);
 }
 
+
 static void naRealCheck(double x, char *s)
 {
     if (!FINITE(x))
 	par_error(s);
 }
+
 
 static void BoundsCheck(double x, double a, double b, char *s)
 {
@@ -1477,7 +1487,6 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
     new_spec = 0;
     args = CAR(args);
     nargs = length(args);
-#ifdef NEWLIST
     if (isNewList(args)) {
 	SEXP oldnames, newnames, tag, val;
 	int i;
@@ -1512,24 +1521,6 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(2);
     }
     else errorcall(call, "invalid parameter passed to \"par\"\n");
-#else
-    if (!isList(args))
-	errorcall(call, "invalid parameter passed to \"par\"\n");
-    PROTECT(value = allocList(length(args)));
-    for (vp = value, ap = args; ap != R_NilValue; vp = CDR(vp), ap = CDR(ap)) {
-	if (TAG(ap) != R_NilValue) {
-	    new_spec = 1;
-	    CAR(vp) = Query(CHAR(PRINTNAME(TAG(ap))), dd);
-	    TAG(vp) = TAG(ap);
-	    Specify(CHAR(PRINTNAME(TAG(ap))), CAR(ap), dd);
-	}
-	else if (TYPEOF(CAR(ap)) == STRSXP) {
-	    CAR(vp) = Query(CHAR(STRING(CAR(ap))[0]), dd);
-	    TAG(vp) = install(CHAR(STRING(CAR(ap))[0]));
-	}
-    }
-    UNPROTECT(1);
-#endif
     /* should really only do this if specifying new pars ?
      * yes! [MM] */
     if (new_spec && call != R_NilValue)
@@ -1537,102 +1528,122 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
     return value;
 }
 
+
+/*
+ *  Layout was written by Paul Murrell during 1997-1998 as a partial
+ *  implementation of ideas in his PhD thesis.  The orginal was
+ *  written in common lisp provides rather more general capabilities.
+ *
+ *  layout(
+ *      num.rows,
+ *      num.cols,
+ *      mat,
+ *      num.figures,
+ *      col.widths,
+ *      row.heights,
+ *      cm.widths,
+ *      cm.heights,
+ *      respect,
+ *      respect.mat
+ *  )
+ */
+
 SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-  /* layout(num.rows, num.cols, mat,
-	    num.figures,
-	    col.widths,	row.heights,
-	    cm.widths,	 cm.heights,
-	    respect,	respect.mat)
-   */
+    int i, j, nrow, ncol, ncmrow, ncmcol;
+    SEXP originalArgs = args;
+    DevDesc *dd;
 
-	int i, j, nrow, ncol, ncmrow, ncmcol;
-	SEXP originalArgs = args;
-	DevDesc *dd;
-
-	if (NoDevices()) {
-	  SEXP defdev = GetOption(install("device"), R_NilValue);
-	  if (isString(defdev) && length(defdev) > 0) {
+    if (NoDevices()) {
+	SEXP defdev = GetOption(install("device"), R_NilValue);
+	if (isString(defdev) && length(defdev) > 0) {
 	    PROTECT(defdev = lang1(install(CHAR(STRING(defdev)[0]))));
-	  }
-	  else errorcall(call, "No active or default device\n");
-	  eval(defdev, R_GlobalEnv);
-	  UNPROTECT(1);
 	}
+	else errorcall(call, "No active or default device\n");
+	eval(defdev, R_GlobalEnv);
+	UNPROTECT(1);
+    }
 
-	checkArity(op, args);
-	dd = CurrentDevice();
+    checkArity(op, args);
+    dd = CurrentDevice();
 
-	/* num.rows: */
-	nrow = dd->dp.numrows = dd->gp.numrows = INTEGER(CAR(args))[0];
-	args = CDR(args);
-	/* num.cols: */
-	ncol = dd->dp.numcols = dd->gp.numcols = INTEGER(CAR(args))[0];
-	args = CDR(args);
-	/* mat[i,j] == order[i][j] : */
-	for (i=0; i<nrow; i++)
-		for (j=0; j<ncol; j++)
-			dd->dp.order[i][j] = dd->gp.order[i][j] =
-				INTEGER(CAR(args))[i + j*nrow];
-	args = CDR(args);
+    /* num.rows: */
+    nrow = dd->dp.numrows = dd->gp.numrows = INTEGER(CAR(args))[0];
+    args = CDR(args);
+    /* num.cols: */
+    ncol = dd->dp.numcols = dd->gp.numcols = INTEGER(CAR(args))[0];
+    args = CDR(args);
+    /* mat[i,j] == order[i][j] : */
+    for (i = 0; i < nrow; i++)
+	for (j = 0; j < ncol; j++)
+	    dd->dp.order[i][j] = dd->gp.order[i][j] =
+		INTEGER(CAR(args))[i + j*nrow];
+    args = CDR(args);
 
-	/* num.figures: */
-	dd->dp.currentFigure = dd->gp.currentFigure =
+    /* num.figures: */
+    dd->dp.currentFigure = dd->gp.currentFigure =
 	dd->dp.lastFigure = dd->gp.lastFigure = INTEGER(CAR(args))[0];
-	args = CDR(args);
-	/* col.widths: */
-	for (j=0; j<ncol; j++)
-		dd->dp.widths[j] = dd->gp.widths[j] = REAL(CAR(args))[j];
-	args = CDR(args);
-	/* row.heights: */
-	for (i=0; i<nrow; i++)
-		dd->dp.heights[i] = dd->gp.heights[i] = REAL(CAR(args))[i];
-	args = CDR(args);
-	/* cm.widths: */
-	ncmcol = length(CAR(args));
-	for (j=0; j<ncol; j++)
-		dd->dp.cmWidths[j] = dd->gp.cmWidths[j] = 0;
-	for (j=0; j<ncmcol; j++)
-		dd->dp.cmWidths[INTEGER(CAR(args))[j]-1] =
-		dd->gp.cmWidths[INTEGER(CAR(args))[j]-1] = 1;
-	args = CDR(args);
-	/* cm.heights: */
-	ncmrow = length(CAR(args));
-	for (i=0; i<nrow; i++)
-		dd->dp.cmHeights[i] = dd->gp.cmHeights[i] = 0;
-	for (i=0; i<ncmrow; i++)
-		dd->dp.cmHeights[INTEGER(CAR(args))[i]-1] =
-		dd->gp.cmHeights[INTEGER(CAR(args))[i]-1] = 1;
-	args = CDR(args);
-	/* respect =  0 (FALSE), 1 (TRUE), or 2 (matrix) : */
-	dd->dp.rspct = dd->gp.rspct = INTEGER(CAR(args))[0];
-	args = CDR(args);
-	/* respect.mat */
-	for (i=0; i<nrow; i++)
-		for (j=0; j<ncol; j++)
-			dd->dp.respect[i][j] = dd->gp.respect[i][j] =
-				INTEGER(CAR(args))[i + j*nrow];
-	/*------------------------------------------------------*/
+    args = CDR(args);
+    /* col.widths: */
+    for (j = 0; j < ncol; j++)
+	dd->dp.widths[j] = dd->gp.widths[j] = REAL(CAR(args))[j];
+    args = CDR(args);
+    /* row.heights: */
+    for (i = 0; i < nrow; i++)
+	dd->dp.heights[i] = dd->gp.heights[i] = REAL(CAR(args))[i];
+    args = CDR(args);
+    /* cm.widths: */
+    ncmcol = length(CAR(args));
+    for (j = 0; j < ncol; j++)
+	dd->dp.cmWidths[j] = dd->gp.cmWidths[j] = 0;
+    for (j = 0; j < ncmcol; j++) {
+	dd->dp.cmWidths[INTEGER(CAR(args))[j] - 1]
+	    = dd->gp.cmWidths[INTEGER(CAR(args))[j] - 1]
+	    = 1;
+    }
+    args = CDR(args);
+    /* cm.heights: */
+    ncmrow = length(CAR(args));
+    for (i = 0; i < nrow; i++)
+	dd->dp.cmHeights[i] = dd->gp.cmHeights[i] = 0;
+    for (i = 0; i < ncmrow; i++) {
+	dd->dp.cmHeights[INTEGER(CAR(args))[i] - 1]
+	    = dd->gp.cmHeights[INTEGER(CAR(args))[i]-1]
+	    = 1;
+    }
+    args = CDR(args);
+    /* respect =  0 (FALSE), 1 (TRUE), or 2 (matrix) : */
+    dd->dp.rspct = dd->gp.rspct = INTEGER(CAR(args))[0];
+    args = CDR(args);
+    /* respect.mat */
+    for (i = 0; i < nrow; i++)
+	for (j = 0; j < ncol; j++)
+	    dd->dp.respect[i][j] = dd->gp.respect[i][j]
+		= INTEGER(CAR(args))[i + j * nrow];
 
-	if (nrow > 2 || ncol > 2) {
-		dd->gp.cexbase = dd->dp.cexbase = 0.5;
-		dd->gp.mex = dd->dp.mex = 1.0;
-	} else if (nrow == 2 && ncol == 2) {
-		dd->gp.cexbase = dd->dp.cexbase = 0.8;
-		dd->gp.mex = dd->dp.mex = 1.0;
-	} else {
-		dd->gp.cexbase = dd->dp.cexbase = 1.0;
-		dd->gp.mex = dd->dp.mex = 1.0;
-	}
+    /*------------------------------------------------------*/
 
-	dd->dp.defaultFigure = dd->gp.defaultFigure = 1;
-	dd->dp.layout = dd->gp.layout = 1;
+    if (nrow > 2 || ncol > 2) {
+	dd->gp.cexbase = dd->dp.cexbase = 0.5;
+	dd->gp.mex = dd->dp.mex = 1.0;
+    }
+    else if (nrow == 2 && ncol == 2) {
+	dd->gp.cexbase = dd->dp.cexbase = 0.8;
+	dd->gp.mex = dd->dp.mex = 1.0;
+    }
+    else {
+	dd->gp.cexbase = dd->dp.cexbase = 1.0;
+	dd->gp.mex = dd->dp.mex = 1.0;
+    }
 
-	GReset(dd);
+    dd->dp.defaultFigure = dd->gp.defaultFigure = 1;
+    dd->dp.layout = dd->gp.layout = 1;
 
-	if (call != R_NilValue)
-		recordGraphicOperation(op, originalArgs, dd);
-	return R_NilValue;
+    GReset(dd);
+
+    if (call != R_NilValue)
+	recordGraphicOperation(op, originalArgs, dd);
+    return R_NilValue;
 }
 
 

@@ -22,82 +22,55 @@
 
 void PrintGreeting(void)
 {
-	Rprintf("\nR : Copyright %s, The R Development Core Team\n", R_YEAR);
-	Rprintf("Version %s.%s %s (%s %s, %s)\n\n",
-		R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
+    Rprintf("\nR : Copyright %s, The R Development Core Team\n", R_YEAR);
+    Rprintf("Version %s.%s %s (%s %s, %s)\n\n",
+	    R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
 
-	Rprintf("R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
-	Rprintf("You are welcome to redistribute it under certain conditions.\n");
-	Rprintf("Type\t\"?license\" or \"?licence\" for distribution details.\n\n");
-	Rprintf("R is a collaborative project with many contributors.\n"
-		"Type\t\"?contributors\" for a list.\n\n");
+    Rprintf("R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
+    Rprintf("You are welcome to redistribute it under certain conditions.\n");
+    Rprintf("Type\t\"?license\" or \"?licence\" for distribution details.\n\n");
+    Rprintf("R is a collaborative project with many contributors.\n"
+	    "Type\t\"?contributors\" for a list.\n\n");
 
-	Rprintf("Type\t\"demo()\" for some demos,"
-		" \"help()\" for on-line help, or\n\t\"help.start()\""
-		" for a HTML browser interface to help.\n\n");
+    Rprintf("Type\t\"demo()\" for some demos,"
+	    " \"help()\" for on-line help, or\n\t\"help.start()\""
+	    " for a HTML browser interface to help.\n\n");
 }
 
-#ifdef NEWLIST
 SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	SEXP value, names;
-	char buf[128];
-	int i;
-	checkArity(op, args);
-	sprintf(buf,"%s, %s", R_CPU, R_OS);
-	PROTECT(value = allocVector(VECSXP,12));
-	PROTECT(names = allocVector(STRSXP,12));
-	STRING(names)[0]  = mkChar("platform");
-	VECTOR(value)[0]  = mkString(R_PLATFORM);
-	STRING(names)[1]  = mkChar("arch");
-	VECTOR(value)[1]  = mkString(R_CPU);
-	STRING(names)[2]  = mkChar("os");
-	VECTOR(value)[2]  = mkString(R_OS);
-	STRING(names)[3]  = mkChar("system");
-	VECTOR(value)[3]  = mkString(buf);
-	STRING(names)[4]  = mkChar("status");
-	VECTOR(value)[4]  = mkString(R_STATUS);
-	STRING(names)[5]  = mkChar("status.rev");
-	VECTOR(value)[5]  = mkString(R_STATUS_REV);
-	STRING(names)[6]  = mkChar("major");
-	VECTOR(value)[6]  = mkString(R_MAJOR);
-	STRING(names)[7]  = mkChar("minor");
-	VECTOR(value)[7]  = mkString(R_MINOR);
-	STRING(names)[8]  = mkChar("year");
-	VECTOR(value)[8]  = mkString(R_YEAR);
-	STRING(names)[9]  = mkChar("month");
-	VECTOR(value)[9]  = mkString(R_MONTH);
-	STRING(names)[10] = mkChar("day");
-	VECTOR(value)[10] = mkString(R_DAY);
-	STRING(names)[11] = mkChar("language");
-	VECTOR(value)[11] = mkString("R");
-	setAttrib(value, R_NamesSymbol, names);
-	UNPROTECT(2);
-	return value;
+    SEXP value, names;
+    char buf[128];
+    int i;
+    checkArity(op, args);
+    sprintf(buf,"%s, %s", R_CPU, R_OS);
+    PROTECT(value = allocVector(VECSXP,12));
+    PROTECT(names = allocVector(STRSXP,12));
+    STRING(names)[0]  = mkChar("platform");
+    VECTOR(value)[0]  = mkString(R_PLATFORM);
+    STRING(names)[1]  = mkChar("arch");
+    VECTOR(value)[1]  = mkString(R_CPU);
+    STRING(names)[2]  = mkChar("os");
+    VECTOR(value)[2]  = mkString(R_OS);
+    STRING(names)[3]  = mkChar("system");
+    VECTOR(value)[3]  = mkString(buf);
+    STRING(names)[4]  = mkChar("status");
+    VECTOR(value)[4]  = mkString(R_STATUS);
+    STRING(names)[5]  = mkChar("status.rev");
+    VECTOR(value)[5]  = mkString(R_STATUS_REV);
+    STRING(names)[6]  = mkChar("major");
+    VECTOR(value)[6]  = mkString(R_MAJOR);
+    STRING(names)[7]  = mkChar("minor");
+    VECTOR(value)[7]  = mkString(R_MINOR);
+    STRING(names)[8]  = mkChar("year");
+    VECTOR(value)[8]  = mkString(R_YEAR);
+    STRING(names)[9]  = mkChar("month");
+    VECTOR(value)[9]  = mkString(R_MONTH);
+    STRING(names)[10] = mkChar("day");
+    VECTOR(value)[10] = mkString(R_DAY);
+    STRING(names)[11] = mkChar("language");
+    VECTOR(value)[11] = mkString("R");
+    setAttrib(value, R_NamesSymbol, names);
+    UNPROTECT(2);
+    return value;
 }
-#else
-SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-	SEXP a, ans;
-	char buf[128];
-	checkArity(op, args);
-
-	PROTECT(a = ans = allocList(12));
-	TAG(a) = install("platform");
-	CAR(a) = mkString(R_PLATFORM);
-	a= CDR(a); TAG(a) = install("arch");	CAR(a) = mkString(R_CPU);
-	a= CDR(a); TAG(a) = install("os");	CAR(a) = mkString(R_OS);
-	a= CDR(a); sprintf(buf,"%s, %s", R_CPU, R_OS);
-	TAG(a) = install("system");		CAR(a) = mkString(buf);
-	a= CDR(a); TAG(a) = install("status");	CAR(a) = mkString(R_STATUS);
-	a= CDR(a); TAG(a)=install("status.rev");CAR(a) = mkString(R_STATUS_REV);
-	a= CDR(a); TAG(a) = install("major");	CAR(a) = mkString(R_MAJOR);
-	a= CDR(a); TAG(a) = install("minor");	CAR(a) = mkString(R_MINOR);
-	a= CDR(a); TAG(a) = install("year");	CAR(a) = mkString(R_YEAR);
-	a= CDR(a); TAG(a) = install("month");	CAR(a) = mkString(R_MONTH);
-	a= CDR(a); TAG(a) = install("day");	CAR(a) = mkString(R_DAY);
-	a= CDR(a); TAG(a) = install("language");CAR(a) = mkString("R");
-	UNPROTECT(1);
-	return ans;
-}
-#endif

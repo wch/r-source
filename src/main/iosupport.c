@@ -27,9 +27,8 @@
  *  previous anarchy.
  */
 
-/* This file processed for NEWLIST */
-
 #include "IOStuff.h"
+
 
 /* Move the iob->write_buf pointer to the next */
 /* BufferListItem in the chain. If there no next */

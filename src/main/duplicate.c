@@ -19,231 +19,220 @@
 
 #include "Defn.h"
 
-	/*  duplicate  -  object duplication  */
+/*  duplicate  -  object duplication  */
 
-	/*  Because we try to maintain the illusion of call by
-	 *  value, we often need to duplicate entire data
-	 *  objects.  There are a couple of points to note.
-	 *  First, duplication of list-like objects is done
-	 *  iteratively to prevent growth of the pointer
-	 *  protection stack, and second, the duplication of
-	 *  promises requires that the promises be forced and
-	 *  the value duplicated.  */
+/*  Because we try to maintain the illusion of call by
+ *  value, we often need to duplicate entire data
+ *  objects.  There are a couple of points to note.
+ *  First, duplication of list-like objects is done
+ *  iteratively to prevent growth of the pointer
+ *  protection stack, and second, the duplication of
+ *  promises requires that the promises be forced and
+ *  the value duplicated.  */
 
 SEXP duplicate(SEXP s)
 {
-	SEXP h, t, sp;
-#ifdef NEWLIST
-	int i, n;
-#endif
+    SEXP h, t, sp;
+    int i, n;
 
-	switch (TYPEOF(s)) {
-	case NILSXP:
-	case SYMSXP:
-	case ENVSXP:
-	case SPECIALSXP:
-	case BUILTINSXP:
-		return s;
-	case CLOSXP:
-		PROTECT(s);
-		t = allocSExp(CLOSXP);
-		FORMALS(t) = FORMALS(s);
-		BODY(t) = BODY(s);
-		CLOENV(t) = CLOENV(s);
-		ATTRIB(t) = duplicate(ATTRIB(s));
-		UNPROTECT(1);
-		break;
-	case LISTSXP:
-		PROTECT(sp = s);
-		PROTECT(h = t = CONS(R_NilValue, R_NilValue));
-		while(sp != R_NilValue) {
-			CDR(t) = CONS(duplicate(CAR(sp)), R_NilValue);
-			t = CDR(t);
-			TAG(t) = TAG(sp);
-			ATTRIB(t) = duplicate(ATTRIB(sp));
-			sp = CDR(sp);
-		}
-		t = CDR(h);
-		UNPROTECT(2);
-		break;
-	case LANGSXP:
-		PROTECT(sp = s);
-		PROTECT(h = t = CONS(R_NilValue, R_NilValue));
-		while(sp != R_NilValue) {
-			CDR(t) = CONS(duplicate(CAR(sp)), R_NilValue);
-			t = CDR(t);
-			TAG(t) = TAG(sp);
-			ATTRIB(t) = duplicate(ATTRIB(sp));
-			sp = CDR(sp);
-		}
-		t = CDR(h);
-		TYPEOF(t) = LANGSXP;
-		ATTRIB(t) = duplicate(ATTRIB(s));
-		UNPROTECT(2);
-		break;
-	case CHARSXP:
-		PROTECT(s);
-		PROTECT(t = allocString(strlen(CHAR(s))));
-		strcpy(CHAR(t), CHAR(s));
-		ATTRIB(t) = duplicate(ATTRIB(s));
-		UNPROTECT(2);
-		break;
-#ifdef NEWLIST
-	case EXPRSXP:
-	case VECSXP:
-		n = length(s);
-		PROTECT(s);
-		PROTECT(t = allocVector(TYPEOF(s), LENGTH(s)));
-		for(i = 0 ; i < n ; i++)
-			VECTOR(t)[i] = duplicate(VECTOR(s)[i]);
-		ATTRIB(t) = duplicate(ATTRIB(s));
-		UNPROTECT(2);
-		break;
-	case STRSXP:
-	case LGLSXP:
-	case INTSXP:
-	case REALSXP:
-	case CPLXSXP:
-#else
-	case STRSXP:
-	case LGLSXP:
-	case INTSXP:
-	case REALSXP:
-	case CPLXSXP:
-	case EXPRSXP:
-#endif
-		PROTECT(s);
-		t = allocVector(TYPEOF(s), LENGTH(s));
-		copyVector(t, s);
-		PROTECT(t);
-		ATTRIB(t) = duplicate(ATTRIB(s));
-		UNPROTECT(2);
-		break;
-	case PROMSXP: /* duplication requires that we evaluate the promise */
-#ifdef OLD
-		if (PRVALUE(s) == R_UnboundValue) {
-			t = eval(PREXPR(s), PRENV(s));
-			PRVALUE(s) = t;
-		}
-		t = duplicate(PRVALUE(s));
-#endif
-		return s;
-		break;
-	default:
-		UNIMPLEMENTED("duplicate");
-		t = s;/* for -Wall */
+    switch (TYPEOF(s)) {
+    case NILSXP:
+    case SYMSXP:
+    case ENVSXP:
+    case SPECIALSXP:
+    case BUILTINSXP:
+	return s;
+    case CLOSXP:
+	PROTECT(s);
+	t = allocSExp(CLOSXP);
+	FORMALS(t) = FORMALS(s);
+	BODY(t) = BODY(s);
+	CLOENV(t) = CLOENV(s);
+	ATTRIB(t) = duplicate(ATTRIB(s));
+	UNPROTECT(1);
+	break;
+    case LISTSXP:
+	PROTECT(sp = s);
+	PROTECT(h = t = CONS(R_NilValue, R_NilValue));
+	while(sp != R_NilValue) {
+	    CDR(t) = CONS(duplicate(CAR(sp)), R_NilValue);
+	    t = CDR(t);
+	    TAG(t) = TAG(sp);
+	    ATTRIB(t) = duplicate(ATTRIB(sp));
+	    sp = CDR(sp);
 	}
-	if(TYPEOF(t) == TYPEOF(s) ) /* surely it only makes sense in this case*/
-		OBJECT(t) = OBJECT(s);
-	return t;
+	t = CDR(h);
+	UNPROTECT(2);
+	break;
+    case LANGSXP:
+	PROTECT(sp = s);
+	PROTECT(h = t = CONS(R_NilValue, R_NilValue));
+	while(sp != R_NilValue) {
+	    CDR(t) = CONS(duplicate(CAR(sp)), R_NilValue);
+	    t = CDR(t);
+	    TAG(t) = TAG(sp);
+	    ATTRIB(t) = duplicate(ATTRIB(sp));
+	    sp = CDR(sp);
+	}
+	t = CDR(h);
+	TYPEOF(t) = LANGSXP;
+	ATTRIB(t) = duplicate(ATTRIB(s));
+	UNPROTECT(2);
+	break;
+    case CHARSXP:
+	PROTECT(s);
+	PROTECT(t = allocString(strlen(CHAR(s))));
+	strcpy(CHAR(t), CHAR(s));
+	ATTRIB(t) = duplicate(ATTRIB(s));
+	UNPROTECT(2);
+	break;
+    case EXPRSXP:
+    case VECSXP:
+	n = length(s);
+	PROTECT(s);
+	PROTECT(t = allocVector(TYPEOF(s), LENGTH(s)));
+	for(i = 0 ; i < n ; i++)
+	    VECTOR(t)[i] = duplicate(VECTOR(s)[i]);
+	ATTRIB(t) = duplicate(ATTRIB(s));
+	UNPROTECT(2);
+	break;
+    case STRSXP:
+    case LGLSXP:
+    case INTSXP:
+    case REALSXP:
+    case CPLXSXP:
+	PROTECT(s);
+	t = allocVector(TYPEOF(s), LENGTH(s));
+	copyVector(t, s);
+	PROTECT(t);
+	ATTRIB(t) = duplicate(ATTRIB(s));
+	UNPROTECT(2);
+	break;
+    case PROMSXP: /* duplication requires that we evaluate the promise */
+#ifdef OLD
+	if (PRVALUE(s) == R_UnboundValue) {
+	    t = eval(PREXPR(s), PRENV(s));
+	    PRVALUE(s) = t;
+	}
+	t = duplicate(PRVALUE(s));
+#endif
+	return s;
+	break;
+    default:
+	UNIMPLEMENTED("duplicate");
+	t = s;/* for -Wall */
+    }
+    if(TYPEOF(t) == TYPEOF(s) ) /* surely it only makes sense in this case*/
+	OBJECT(t) = OBJECT(s);
+    return t;
 }
 
 void copyVector(SEXP s, SEXP t)
 {
-	int i, ns, nt;
+    int i, ns, nt;
 
-	nt = LENGTH(t);
-	ns = LENGTH(s);
-	switch (TYPEOF(s)) {
-	case STRSXP:
-	case EXPRSXP:
-		for (i = 0; i < ns; i++)
-			VECTOR(s)[i] = VECTOR(t)[i % nt];
-		break;
-	case LGLSXP:
-		for (i = 0; i < ns; i++)
-			LOGICAL(s)[i] = LOGICAL(t)[i % nt];
-		break;
-	case INTSXP:
-		for (i = 0; i < ns; i++)
-			INTEGER(s)[i] = INTEGER(t)[i % nt];
-		break;
-	case REALSXP:
-		for (i = 0; i < ns; i++)
-			REAL(s)[i] = REAL(t)[i % nt];
-		break;
-	case CPLXSXP:
-		for (i = 0; i < ns; i++)
-			COMPLEX(s)[i] = COMPLEX(t)[i % nt];
-		break;
-	default:
-		UNIMPLEMENTED("copyVector");
-	}
+    nt = LENGTH(t);
+    ns = LENGTH(s);
+    switch (TYPEOF(s)) {
+    case STRSXP:
+    case EXPRSXP:
+	for (i = 0; i < ns; i++)
+	    VECTOR(s)[i] = VECTOR(t)[i % nt];
+	break;
+    case LGLSXP:
+	for (i = 0; i < ns; i++)
+	    LOGICAL(s)[i] = LOGICAL(t)[i % nt];
+	break;
+    case INTSXP:
+	for (i = 0; i < ns; i++)
+	    INTEGER(s)[i] = INTEGER(t)[i % nt];
+	break;
+    case REALSXP:
+	for (i = 0; i < ns; i++)
+	    REAL(s)[i] = REAL(t)[i % nt];
+	break;
+    case CPLXSXP:
+	for (i = 0; i < ns; i++)
+	    COMPLEX(s)[i] = COMPLEX(t)[i % nt];
+	break;
+    default:
+	UNIMPLEMENTED("copyVector");
+    }
 }
 
 void copyListMatrix(SEXP s, SEXP t, int byrow)
 {
-	SEXP pt, tmp;
-	int i, j, nr, nc, ns;
+    SEXP pt, tmp;
+    int i, j, nr, nc, ns;
 
-	nr = nrows(s);
-	nc = ncols(s);
-	ns = nr*nc;
-	pt = t;
-	if(byrow) {
-		PROTECT(tmp = allocVector(STRSXP, nr*nc));
-		for (i = 0; i < nr; i++)
-			for (j = 0; j < nc; j++) {
-				STRING(tmp)[i + j * nr] = duplicate(CAR(pt));
-				pt = CDR(pt);
-				if(pt == R_NilValue) pt = t;
-			}
-		for (i = 0; i < ns; i++) {
-			CAR(s) = STRING(tmp)[i++];
-			s = CDR(s);
-		}
-		UNPROTECT(1);
+    nr = nrows(s);
+    nc = ncols(s);
+    ns = nr*nc;
+    pt = t;
+    if(byrow) {
+	PROTECT(tmp = allocVector(STRSXP, nr*nc));
+	for (i = 0; i < nr; i++)
+	    for (j = 0; j < nc; j++) {
+		STRING(tmp)[i + j * nr] = duplicate(CAR(pt));
+		pt = CDR(pt);
+		if(pt == R_NilValue) pt = t;
+	    }
+	for (i = 0; i < ns; i++) {
+	    CAR(s) = STRING(tmp)[i++];
+	    s = CDR(s);
 	}
-	else {
-		for (i = 0; i < ns; i++) {
-			CAR(s) = duplicate(CAR(pt));
-			s = CDR(s);
-			pt = CDR(pt);
-			if(pt == R_NilValue) pt = t;
-		}
+	UNPROTECT(1);
+    }
+    else {
+	for (i = 0; i < ns; i++) {
+	    CAR(s) = duplicate(CAR(pt));
+	    s = CDR(s);
+	    pt = CDR(pt);
+	    if(pt == R_NilValue) pt = t;
 	}
+    }
 }
 
 void copyMatrix(SEXP s, SEXP t, int byrow)
 {
-	int i, j, k, nr, nc, nt;
+    int i, j, k, nr, nc, nt;
 
-	nr = nrows(s);
-	nc = ncols(s);
-	nt = LENGTH(t);
-	k = 0;
+    nr = nrows(s);
+    nc = ncols(s);
+    nt = LENGTH(t);
+    k = 0;
 
-	if (byrow) {
-		switch (TYPEOF(s)) {
-		case STRSXP:
-			for (i = 0; i < nr; i++)
-				for (j = 0; j < nc; j++)
-					STRING(s)[i + j * nr] = STRING(t)[k++ % nt];
-			break;
-		case LGLSXP:
-			for (i = 0; i < nr; i++)
-				for (j = 0; j < nc; j++)
-					LOGICAL(s)[i + j * nr] = LOGICAL(t)[k++ % nt];
-			break;
-		case INTSXP:
-			for (i = 0; i < nr; i++)
-				for (j = 0; j < nc; j++)
-					INTEGER(s)[i + j * nr] = INTEGER(t)[k++ % nt];
-			break;
-		case REALSXP:
-			for (i = 0; i < nr; i++)
-				for (j = 0; j < nc; j++)
-					REAL(s)[i + j * nr] = REAL(t)[k++ % nt];
-			break;
-		case CPLXSXP:
-			for (i = 0; i < nr; i++)
-				for (j = 0; j < nc; j++)
-					COMPLEX(s)[i + j * nr] = COMPLEX(t)[k++ % nt];
-			break;
-		default:
-			UNIMPLEMENTED("copyMatrix");
-		}
+    if (byrow) {
+	switch (TYPEOF(s)) {
+	case STRSXP:
+	    for (i = 0; i < nr; i++)
+		for (j = 0; j < nc; j++)
+		    STRING(s)[i + j * nr] = STRING(t)[k++ % nt];
+	    break;
+	case LGLSXP:
+	    for (i = 0; i < nr; i++)
+		for (j = 0; j < nc; j++)
+		    LOGICAL(s)[i + j * nr] = LOGICAL(t)[k++ % nt];
+	    break;
+	case INTSXP:
+	    for (i = 0; i < nr; i++)
+		for (j = 0; j < nc; j++)
+		    INTEGER(s)[i + j * nr] = INTEGER(t)[k++ % nt];
+	    break;
+	case REALSXP:
+	    for (i = 0; i < nr; i++)
+		for (j = 0; j < nc; j++)
+		    REAL(s)[i + j * nr] = REAL(t)[k++ % nt];
+	    break;
+	case CPLXSXP:
+	    for (i = 0; i < nr; i++)
+		for (j = 0; j < nc; j++)
+		    COMPLEX(s)[i + j * nr] = COMPLEX(t)[k++ % nt];
+	    break;
+	default:
+	    UNIMPLEMENTED("copyMatrix");
 	}
-	else
-		copyVector(s, t);
+    }
+    else
+	copyVector(s, t);
 }

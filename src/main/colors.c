@@ -21,8 +21,6 @@
 #include "Mathlib.h"
 #include "Graphics.h"
 
-/* This file processed for NEWLIST */
-
 static int StrMatch(char *s, char *t)
 {
     for (;;) {

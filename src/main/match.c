@@ -37,8 +37,8 @@
  *
  */
 
-/* File processed for NEWLIST */
 #include "Defn.h"
+
 
 int NonNullStringMatch(SEXP s, SEXP t)
 {

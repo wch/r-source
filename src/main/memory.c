@@ -47,10 +47,9 @@
  *	setvmax.
  */
 
-/* File processed for NEWLIST */
-
 #include "Defn.h"
 #include "Graphics.h"
+
 
 static int gc_reporting = 0;
 static int gc_count = 0;

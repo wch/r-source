@@ -240,18 +240,12 @@ int isUserBinop(SEXP s)
 }
 
 
-#ifdef NEWLIST
 int isNull(SEXP s)
 {
-    return (s == R_NilValue || 
-	    ((TYPEOF(s) == VECSXP || TYPEOF(s) == EXPRSXP) && LENGTH(s) == 0));
+    return (s == R_NilValue || ((TYPEOF(s) == VECSXP ||
+				 TYPEOF(s) == EXPRSXP)
+				&& LENGTH(s) == 0));
 }
-#else
-int isNull(SEXP s)
-{
-    return s == R_NilValue;
-}
-#endif
 
 
 int isFunction(SEXP s)
@@ -268,7 +262,6 @@ int isList(SEXP s)
 }
 
 
-#ifdef NEWLIST
 int isNewList(SEXP s)
 {
     return (s == R_NilValue || TYPEOF(s) == VECSXP);
@@ -325,7 +318,6 @@ int isVectorObject(SEXP s)
     }
     return ans;
 }
-#endif
 
 
 int isFrame(SEXP s)
@@ -370,9 +362,7 @@ int isVector(SEXP s)
     case REALSXP:
     case CPLXSXP:
     case STRSXP:
-#ifdef NEWLIST
     case VECSXP:
-#endif
     case EXPRSXP:
 	return 1;
 	break;
@@ -429,22 +419,6 @@ int tsConform(SEXP x, SEXP y)
 /* Check to see if a list can be made into a vector. */
 /* it must have every element being a vector of length 1. */
 
-#ifdef OLD
-int isVectorizable(SEXP s)
-{
-    int mode = 0;
-    if (isNull(s))
-	return 1;
-    else if (!isList(s))
-	return 0;
-    for ( ; s != R_NilValue; s = CDR(s)) {
-	if (!isVector(CAR(s)) || LENGTH(CAR(s)) > 1)
-	    return 0;
-	mode = (mode >= (int) TYPEOF(CAR(s))) ? mode : TYPEOF(CAR(s));
-    }
-    return mode;
-}
-#else
 int isVectorizable(SEXP s)
 {
     int mode = 0;
@@ -472,7 +446,7 @@ int isVectorizable(SEXP s)
     }
     else return 0;
 }
-#endif
+
 
 /* Check to see if the arrays "x" and "y" have the identical extents */
 
@@ -641,11 +615,7 @@ static struct {
 TypeTable[] = {
     { "NULL",		NILSXP     },  /* real types */
     { "symbol",		SYMSXP     },
-#ifdef NEWLIST
     { "pairlist",	LISTSXP	   },
-#else
-    { "list",		LISTSXP    },
-#endif
     { "closure",	CLOSXP     },
     { "environment",	ENVSXP     },
     { "promise",	PROMSXP    },
@@ -661,10 +631,7 @@ TypeTable[] = {
     { "...",		DOTSXP     },
     { "any",		ANYSXP     },
     { "expression",	EXPRSXP    },
-#ifdef NEWLIST
     { "list",		VECSXP	   },
-#endif
-
     { "numeric",	REALSXP    },  /* aliases */
     { "name",		SYMSXP	   },
 
@@ -765,9 +732,11 @@ static int isMissing(SEXP symbol, SEXP rho)
     while (rho != R_NilValue) {
 	vl = mfindVarInFrame(FRAME(rho), symbol);
 	if (vl != R_NilValue) {
-	    if (MISSING(vl) == 1) return 1;
-	    if (TYPEOF(CAR(vl)) == PROMSXP && TYPEOF(PREXPR(CAR(vl))) == SYMSXP)
-		return isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
+	    if (MISSING(vl) == 1)
+		return 1;
+	    if (TYPEOF(CAR(vl)) == PROMSXP && 
+		TYPEOF(PREXPR(CAR(vl))) == SYMSXP)
+		    return isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
 	    else
 		return 0;
 	}

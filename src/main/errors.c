@@ -17,9 +17,8 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/* File processed for NEWLIST */
-
 #include "Defn.h"
+
 
 void jump_to_toplevel();
 static void jump_now();

@@ -484,7 +484,6 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     subs = CDR(args);
     nsubs = length(subs);
 
-#ifdef NEWLIST
     type = TYPEOF(x);
     PROTECT(dim = getAttrib(x, R_DimSymbol));
     ndim = length(dim);
@@ -500,7 +499,7 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	else {
 	    PROTECT(ax = allocVector(VECSXP, length(x)));
-	    setAttrib(ax, R_NamesSymbol, getAttrib(x, R_DimNamesSymbol));
+	    setAttrib(ax, R_NamesSymbol, getAttrib(x, R_NamesSymbol));
 	}
 	for(px = x, i = 0 ; px != R_NilValue ; px = CDR(px))
 	    VECTOR(ax)[i++] = CAR(px);
@@ -545,55 +544,6 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     setAttrib(ans, R_ClassSymbol, R_NilValue);
     UNPROTECT(5);
     return ans;
-#else
-    if(isVector(x) || isList(x) || isLanguage(x)) {
-
-	PROTECT(dim = getAttrib(x, R_DimSymbol));
-	nsubs = length(subs);
-	
-	if(nsubs == 1) {
-	    ans = VectorSubset(x, CAR(subs), call);
-	}
-	else {
-	    if (nsubs != length(dim))
-		errorcall(call, "incorrect number of dimensions\n");
-	    if(isList(x)) {
-		PROTECT(ax = allocArray(STRSXP, dim));
-		for(px=x, i=0 ; px!=R_NilValue ; px = CDR(px))
-		    STRING(ax)[i++] = CAR(px);
-		setAttrib(ax, R_DimNamesSymbol,
-			  getAttrib(x, R_DimNamesSymbol));
-		if(nsubs == 2)
-		    ax = MatrixSubset(ax, subs, call, drop);
-		else
-		    ax = ArraySubset(ax, subs, call, drop);
-		PROTECT(ans = allocList(LENGTH(ax)));
-		for(px=ans, i=0 ; px!=R_NilValue ; px = CDR(px))
-		    CAR(px) = STRING(ax)[i++];
-		setAttrib(ans, R_DimSymbol,
-			  getAttrib(ax, R_DimSymbol));
-		setAttrib(ans, R_DimNamesSymbol,
-			  getAttrib(ax, R_DimNamesSymbol));
-		setAttrib(ans, R_NamesSymbol,
-			  getAttrib(ax, R_NamesSymbol));
-		UNPROTECT(2);
-	    }
-	    else {
-		if(nsubs == 2)
-		    ans = MatrixSubset(x, subs, call, drop);
-		else
-		    ans = ArraySubset(x, subs, call, drop);
-	    }
-	}
-	UNPROTECT(1);
-    }
-    else errorcall(call, "object is not subsetable\n");
-
-    setAttrib(ans, R_TspSymbol, R_NilValue);
-    setAttrib(ans, R_ClassSymbol, R_NilValue);
-    UNPROTECT(1);
-    return ans;
-#endif
 }
 
 
@@ -647,11 +597,7 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (offset < 0 || offset >= length(x)) {
 		/* a bold attempt to get the same */
 		/* behaviour for $ and [[ */
-#ifdef NEWLIST
 		if (offset < 0 && (isNewList(x) ||
-#else
-		if (offset < 0 && (
-#endif
 				   isExpression(x) ||
 				   isList(x) ||
 				   isLanguage(x))) {
@@ -684,7 +630,6 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else errorcall(call, "object is not subsettable\n");
 
-#ifdef NEWLIST
     if(isPairList(x)) {
 	ans = CAR(nthcdr(x, offset));
 	NAMED(ans) = NAMED(x);
@@ -692,15 +637,6 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if(isVectorList(x)) {
 	ans = duplicate(VECTOR(x)[offset]);
     }
-#else
-    if(isList(x) || isLanguage(x)) {
-	ans = CAR(nthcdr(x, offset));
-	NAMED(ans) = NAMED(x);
-    }
-    else if(isExpression(x) || TYPEOF(x) == VECSXP) {
-	ans = duplicate(VECTOR(x)[offset]);
-    }
-#endif
     else {
 	ans = allocVector(TYPEOF(x), 1);
 	switch (TYPEOF(x)) {
@@ -787,7 +723,6 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Optimisation to prevent repeated recalculation */
     slen = strlen(CHAR(input));
 
-#ifdef NEWLIST
     /* If this is not a list object we return NULL. */
     /* Or should this be allocVector(VECSXP, 0)? */
 
@@ -848,35 +783,4 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     UNPROTECT(1);
     return R_NilValue;
-#else
-    if (isList(x) || isLanguage(x)) {
-	SEXP xmatch;
-	int havematch;
-	UNPROTECT(1);
-	havematch = 0;
-	for (y = x ; y != R_NilValue ; y = CDR(y)) {
-	    switch(pstrmatch(TAG(y), input, slen)) {
-	    case EXACT_MATCH:
-		y = CAR(y);
-		NAMED(y) = NAMED(x);
-		return y;
-		break;
-	    case PARTIAL_MATCH:
-		if (havematch)
-		    return R_NilValue;
-		havematch = 1;
-		xmatch = y;
-		break;
-	    }
-	}
-	if (havematch) {
-	    y = CAR(xmatch);
-	    NAMED(y) = NAMED(x);
-	    return y;
-	}
-	return R_NilValue;
-    }
-    UNPROTECT(1);
-    return R_NilValue;
-#endif
 }

@@ -16,11 +16,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *
+ *  Model Formula Manipulation
+ *
+ *  Can you say ``recurse your brains out'';
+ *  I knew you could. -- Mr Ro(ss)gers
  */
-
-/* Model Formula Manipulation */
-/* Can you say ``recurse your brains out''; */
-/* I knew you could. -- Mr Ro(ss)gers */
 
 #include "Defn.h"
 
@@ -910,15 +912,9 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	n++;
     }
-#ifdef NEWLIST
     PROTECT(v = allocVector(VECSXP, 2));
     VECTOR(v)[0] = varnames;
     VECTOR(v)[1] = termlabs;
-#else
-    PROTECT(v = allocList(2));
-    CAR(v) = varnames;
-    CADR(v) = termlabs;
-#endif
     if (nterm > 0)
 	setAttrib(pattern, R_DimNamesSymbol, v);
 
@@ -1481,24 +1477,17 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* Get the variable names from the factor matrix */
 
-#ifdef NEWLIST
     vnames = getAttrib(factors, R_DimNamesSymbol);
     if (length(vnames) < 1 ||
 	(nvar - intercept > 0 && !isString(VECTOR(vnames)[0])))
 	errorcall(call, "invalid terms argument\n");
     vnames = VECTOR(vnames)[0];
-#else
-    vnames = CAR(getAttrib(factors, R_DimNamesSymbol));
-    if (nvar - intercept > 0 && !isString(vnames))
-	errorcall(call, "invalid terms argument\n");
-#endif
 
     /* Get the variables from the model frame.  First perform */
     /* elementary sanity checks.  Notes:  1) We need at least */
     /* one variable (lhs or rhs) to compute the number of cases. */
     /* 2) We don't type-check the response. */
 
-#ifdef NEWLIST
     vars = CADR(args);
     if (!isNewList(vars) || length(vars) < nvar)
 	errorcall(call, "invalid model frame\n");
@@ -1506,15 +1495,6 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "don't know how many cases\n");
     n = nrows(VECTOR(vars)[0]);
     rnames = getAttrib(vars, R_RowNamesSymbol);
-#else
-    vars = CADR(args);
-    if (!(isList(vars) || isFrame(vars)) || length(vars) < nvar)
-	errorcall(call, "invalid model frame\n");
-    if (length(vars) == 0)
-	errorcall(call, "don't know how many cases\n");
-    n = nrows(CAR(vars));
-    rnames = getAttrib(vars, R_RowNamesSymbol);
-#endif
 
     /* This section of the code checks the types of the variables */
     /* in the model frame.  Note that it should really only check */
@@ -1527,11 +1507,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     v = vars;
     for (i = 0; i < nvar; i++) {
-#ifdef NEWLIST
 	var_i = VECTOR(variable)[i] = VECTOR(vars)[i];
-#else
-	var_i = VECTOR(variable)[i] = CAR(v);
-#endif
 	if (nrows(var_i) != n)
 	    errorcall(call, "variable lengths differ\n");
 	if (i == response - 1) {
@@ -1556,10 +1532,8 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    INTEGER(nlevs)[i] = 0;
 	    INTEGER(columns)[i] = ncols(var_i);
 	}
-	else errorcall(call, "invalid variable type\n");
-#ifndef NEWLIST
-	v = CDR(v);
-#endif
+	else
+	    errorcall(call, "invalid variable type\n");
     }
 
     /* If there is no intercept we look through the factor pattern */
@@ -1791,15 +1765,9 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	jstart = jnext;
     }
-#ifdef NEWLIST
     PROTECT(tnames = allocVector(VECSXP, 2));
     VECTOR(tnames)[0] = rnames;
     VECTOR(tnames)[1] = xnames;
-#else
-    PROTECT(tnames = allocList(2));
-    CAR(tnames) = rnames;
-    CADR(tnames) = xnames;
-#endif
     setAttrib(x, R_DimNamesSymbol, tnames);
     setAttrib(x, install("assign"), assign);
     UNPROTECT(13);

@@ -306,7 +306,7 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
     return bns;
 }
 
-#ifdef NEWLIST
+
 static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 		      SEXP stripwhite)
 {
@@ -432,144 +432,6 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
     return ans;
 }
 
-#else
-
-static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
-		      SEXP stripwhite)
-{
-    SEXP a, ans, b, new, old, w;
-    char buffer[MAXELTSIZE];
-    int blksize, c, i, j, n, nc, linesread, colsread, strip, bch;
-    int badline;
-
-    nc = length(what);
-
-    if (maxlines > 0) blksize = maxlines;
-    else blksize = SCAN_BLOCKSIZE;
-
-    PROTECT(ans = allocList(nc));
-    a = ans;
-    w = what;
-    for (i = 0; i < nc; i++) {
-	if (!isVector(CAR(w))) {
-	    if (!ttyflag) fclose(fp);
-	    error("\"scan\" invalid \"what=\" specified\n");
-	}
-	CAR(a) = allocVector(TYPEOF(CAR(w)), blksize);
-	TAG(a) = TAG(w);
-	a = CDR(a);
-	w = CDR(w);
-    }
-
-    n = 0; linesread = 0; colsread = 0;
-    badline = 0;
-    bch = 1;
-
-    if (ttyflag) sprintf(ConsolePrompt, "1: ");
-
-    strip = asLogical(stripwhite);
-
-    a = ans;
-    for (;;) {
-
-	if (bch == R_EOF) {
-	    if (ttyflag) R_ClearerrConsole();
-	    goto done;
-	}
-	else if (bch == '\n') {
-	    linesread++;
-	    if (colsread != 0 && !badline)
-		badline=linesread;
-	    if (maxitems > 0 && nc*linesread >= maxitems)
-		goto done;
-	    if (maxlines > 0 && linesread == maxlines)
-		goto done;
-	    if (ttyflag)
-		sprintf(ConsolePrompt, "%d: ", n + 1);
-	}
-	if (n == blksize && colsread == 0) {
-	    b = ans;
-	    blksize = 2 * blksize;
-	    for (i = 0; i < nc; i++) {
-		old = CAR(b);
-		new = allocVector(TYPEOF(old), blksize);
-		copyVector(new, old);
-		CAR(b) = new;
-		b = CDR(b);
-	    }
-	}
-
-	bch = fillBuffer(buffer, TYPEOF(CAR(a)), strip);
-	if (colsread == 0 &&
-	    strlen(buffer) == 0 &&
-	    (bch =='\n' || bch == R_EOF)) {
-	    if (ttyflag || bch == R_EOF)
-		break;
-	}
-	else {
-	    extractItem(buffer, CAR(a), n);
-	    a = CDR(a);
-	    colsread++;
-	    if (length(stripwhite) == length(what))
-		strip=LOGICAL(stripwhite)[colsread];
-	    /* increment n and reset i after filling a row */
-	    if (colsread == nc) {
-		n++;
-		a = ans;
-		colsread = 0;
-		if (flush) {
-		    while (c != '\n' && c != R_EOF)
-			c=scanchar();
-		    unscanchar(c);
-		}
-		if (length(stripwhite) == length(what))
-		    strip=LOGICAL(stripwhite)[0];
-	    }
-	}
-    }
-
- done:
-    if (badline)
-	warning("line %d did not have %d elements\n",badline,nc);
-
-    if (colsread != 0) {
-	warning("number of items read is not a multiple of the number of columns\n");
-	a = nthcdr(ans, colsread);
-	buffer[0]='\0'; /* this is an NA */
-	while (a != R_NilValue) {
-	    extractItem(buffer, CAR(a), n);
-	    a = CDR(a);
-	}
-	n++;
-    }
-    if (!quiet) REprintf("Read %d lines\n", n);
-
-    a = ans;
-    for (i = 0; i < nc; i++) {
-	old = CAR(a);
-	new = allocVector(TYPEOF(old), n);
-	switch (TYPEOF(old)) {
-	case LGLSXP:
-	case INTSXP:
-	    for (j = 0; j < n; j++)
-		INTEGER(new)[j] = INTEGER(old)[j];
-	    break;
-	case REALSXP:
-	    for (j = 0; j < n; j++)
-		REAL(new)[j] = REAL(old)[j];
-	    break;
-	case STRSXP:
-	    for (j = 0; j < n; j++)
-		STRING(new)[j] = STRING(old)[j];
-	    break;
-	}
-	CAR(a) = new;
-	a = CDR(a);
-    }
-    UNPROTECT(1);
-    return ans;
-}
-#endif
 
 SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -578,36 +440,20 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     char *filename;
 
     checkArity(op, args);
-    file = CAR(args);
-    args = CDR(args);
 
-    what = CAR(args);
-    args = CDR(args);
-
-    nmax = asInteger(CAR(args));
-    args = CDR(args);
-
-    sep = CAR(args);
-    args = CDR(args);
-
-    nskip = asInteger(CAR(args));
-    args = CDR(args);
-
-    nlines = asInteger(CAR(args));
-    args = CDR(args);
-
-    NAstrings = CAR(args);
-    args = CDR(args);
-
-    flush = asLogical(CAR(args));
-    args = CDR(args);
-
-    stripwhite = CAR(args);
-    args = CDR(args);
-    
+    file = CAR(args);              args = CDR(args);
+    what = CAR(args);              args = CDR(args);
+    nmax = asInteger(CAR(args));   args = CDR(args);
+    sep = CAR(args);               args = CDR(args);
+    nskip = asInteger(CAR(args));  args = CDR(args);
+    nlines = asInteger(CAR(args)); args = CDR(args);
+    NAstrings = CAR(args);         args = CDR(args);
+    flush = asLogical(CAR(args));  args = CDR(args);
+    stripwhite = CAR(args);        args = CDR(args);
     quiet = asLogical(CAR(args));
-    if (quiet == NA_LOGICAL) quiet = 0;
 
+    if (quiet == NA_LOGICAL)
+	quiet = 0;
     if (nskip < 0 || nskip == NA_INTEGER)
 	nskip = 0;
     if (nlines < 0 || nlines == NA_INTEGER)
@@ -621,16 +467,14 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    sepchar = CHAR(STRING(sep)[0])[0];
     }
-    else errorcall(call, "invalid sep value\n");
-
+    else
+	errorcall(call, "invalid sep value\n");
     if (TYPEOF(stripwhite) != LGLSXP)
 	errorcall(call, "invalid strip.white value\n");
     if (length(stripwhite) != 1 && length(stripwhite) != length(what))
 	errorcall(call, "invalid strip.white length\n");
-
     if (TYPEOF(NAstrings) != STRSXP)
 	errorcall(call, "invalid na.strings value\n");
-
     if (isNull(file))
 	filename = NULL;
     else if (isString(file)) {
@@ -659,11 +503,7 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     case STRSXP:
 	ans = scanVector(TYPEOF(what), nmax, nlines, flush, stripwhite);
 	break;
-#ifdef NEWLIST
     case VECSXP:
-#else
-    case LISTSXP:
-#endif
 	ans = scanFrame(what, nmax, nlines, flush, stripwhite);
 	break;
     default:

@@ -66,27 +66,6 @@
 
 static SEXP gcall;
 
-#ifdef UNUSED
-static void SetArgsforUseMethod(SEXP x)
-{
-    char buf[4];
-    int i=1;
-
-    if (TAG(x) == R_NilValue)
-	TAG(x) = install("x");
-    for (x = CDR(x); x != R_NilValue; x = CDR(x)) {
-	if (TAG(x) == R_NilValue) {
-	    if (i<10)
-		sprintf(buf,"..%d",i);
-	    else
-		sprintf(buf,".%d",i);
-	    TAG(x)=install(buf);
-	    i++;
-	}
-    }
-}
-#endif
-
 static int R_BoundChecking = 0;
 
 SEXP do_checkbounds(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1592,93 +1571,87 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 	    TAG(x) = nlist;
 	}
     }
-    else if 
-#ifdef NEWLIST
-	   (isNewList(x) || isExpression(x))
-#else
-	   (isExpression(x))
-#endif
-	{
-	    int i, imatch, nx;
-	    SEXP names = getAttrib(x, R_NamesSymbol);
-	    nx = length(x);
-	    nlist = CADR(args);
-	    if (isString(nlist))
-		nlist = STRING(nlist)[0];
-	    else
-		nlist = PRINTNAME(nlist);
-	    if (isNull(val)) {
-		/* If "val" is NULL, this is an element deletion */
-		/* if there is a match to "nlist" otherwise "x" */
-		/* is unchanged.  The attributes need adjustment. */
-		if (names != R_NilValue) {
-		    imatch = -1;
-		    for (i = 0; i < nx; i++)
-			if (NonNullStringMatch(STRING(names)[i], nlist)) {
-			    imatch = i;
-			    break;
-			}
-		    if (imatch >= 0) {
-			SEXP ans, ansnames;
-			int ii;
-			PROTECT(ans = allocVector(VECSXP, nx - 1));
-			PROTECT(ansnames = allocVector(STRSXP, nx - 1));
-			for (i = 0, ii = 0; i < nx; i++)
-			    if (i != imatch) {
-				VECTOR(ans)[ii] = VECTOR(x)[i];
-				STRING(ansnames)[ii] = STRING(names)[i];
-				ii++;
-			    }
-			setAttrib(ans, R_NamesSymbol, ansnames);
-			copyMostAttrib(x, ans);
-			UNPROTECT(2);
-			x = ans;
-		    } 
-		    /* else x is unchanged */
-		}
-	    }
-	    else {
-		/* If "val" is non-NULL, we are either replacing */
-		/* an existing list element or we are adding a new */
-		/* element. */
+    else if (isNewList(x) || isExpression(x)) {
+	int i, imatch, nx;
+	SEXP names = getAttrib(x, R_NamesSymbol);
+	nx = length(x);
+	nlist = CADR(args);
+	if (isString(nlist))
+	    nlist = STRING(nlist)[0];
+	else
+	    nlist = PRINTNAME(nlist);
+	if (isNull(val)) {
+	    /* If "val" is NULL, this is an element deletion */
+	    /* if there is a match to "nlist" otherwise "x" */
+	    /* is unchanged.  The attributes need adjustment. */
+	    if (names != R_NilValue) {
 		imatch = -1;
-		if (!isNull(names)) {
-		    for (i = 0; i < nx; i++)
-			if (NonNullStringMatch(STRING(names)[i], nlist)) {
-			    imatch = i;
-			    break;
-			}
-		}
+		for (i = 0; i < nx; i++)
+		    if (NonNullStringMatch(STRING(names)[i], nlist)) {
+			imatch = i;
+			break;
+		    }
 		if (imatch >= 0) {
-		    /* We are just replacing an element */
-		    VECTOR(x)[imatch] = val;
-		}
-		else {
-		    /* We are introducing a new element. */
-		    /* Enlarge the list, add the new element */
-		    /* and finally, adjust the attributes. */
 		    SEXP ans, ansnames;
-		    PROTECT(ans = allocVector(VECSXP, nx + 1));
-		    PROTECT(ansnames = allocVector(STRSXP, nx + 1));
-		    for (i = 0; i < nx; i++)
-			VECTOR(ans)[i] = VECTOR(x)[i];
-		    if (isNull(names)) {
-			for (i = 0; i < nx; i++)
-			    STRING(ansnames)[i] = R_BlankString;
-		    }
-		    else {
-			for (i = 0; i < nx; i++)
-			    STRING(ansnames)[i] = STRING(names)[i];
-		    }
-		    VECTOR(ans)[nx] = val;
-		    STRING(ansnames)[nx] = nlist;
+		    int ii;
+		    PROTECT(ans = allocVector(VECSXP, nx - 1));
+		    PROTECT(ansnames = allocVector(STRSXP, nx - 1));
+		    for (i = 0, ii = 0; i < nx; i++)
+			if (i != imatch) {
+			    VECTOR(ans)[ii] = VECTOR(x)[i];
+			    STRING(ansnames)[ii] = STRING(names)[i];
+			    ii++;
+			}
 		    setAttrib(ans, R_NamesSymbol, ansnames);
 		    copyMostAttrib(x, ans);
 		    UNPROTECT(2);
 		    x = ans;
-		}
-	    } 
+		} 
+		/* else x is unchanged */
+	    }
 	}
+	else {
+	    /* If "val" is non-NULL, we are either replacing */
+	    /* an existing list element or we are adding a new */
+	    /* element. */
+	    imatch = -1;
+	    if (!isNull(names)) {
+		for (i = 0; i < nx; i++)
+		    if (NonNullStringMatch(STRING(names)[i], nlist)) {
+			imatch = i;
+			break;
+		    }
+	    }
+	    if (imatch >= 0) {
+		/* We are just replacing an element */
+		VECTOR(x)[imatch] = val;
+	    }
+	    else {
+		/* We are introducing a new element. */
+		/* Enlarge the list, add the new element */
+		/* and finally, adjust the attributes. */
+		SEXP ans, ansnames;
+		PROTECT(ans = allocVector(VECSXP, nx + 1));
+		PROTECT(ansnames = allocVector(STRSXP, nx + 1));
+		for (i = 0; i < nx; i++)
+		    VECTOR(ans)[i] = VECTOR(x)[i];
+		if (isNull(names)) {
+		    for (i = 0; i < nx; i++)
+			STRING(ansnames)[i] = R_BlankString;
+		}
+		else {
+		    for (i = 0; i < nx; i++)
+			STRING(ansnames)[i] = STRING(names)[i];
+		}
+		VECTOR(ans)[nx] = val;
+		STRING(ansnames)[nx] = nlist;
+		setAttrib(ans, R_NamesSymbol, ansnames);
+		copyMostAttrib(x, ans);
+		UNPROTECT(2);
+		x = ans;
+	    }
+	} 
+    }
     else error("$ used on non-list\n");
     UNPROTECT(2);
     NAMED(x) = 0;

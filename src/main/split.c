@@ -86,27 +86,7 @@ SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Now transfer the results from the vector */
     /* into a dotted-pair list.  When structures */
     /* are full based on vectors this won't be needed. */
-#ifdef NEWLIST
     setAttrib(vec, R_NamesSymbol, getAttrib(f, R_LevelsSymbol));
     UNPROTECT(2);
     return vec;
-#else
-    PROTECT(ans = allocList(nlevs));
-    x = ans;
-    for (i=0; i<nlevs; i++) {
-	CAR(x) = VECTOR(vec)[i];
-	x = CDR(x);
-    }
-    UNPROTECT(3);
-    x = ans;
-    if ((vec = getAttrib(f, R_LevelsSymbol)) != R_NilValue) {
-	if (!isString(vec))
-	    errorcall(call, "non character factor levels!\n");
-	for (i = 0; i < nlevs; i++) {
-	    TAG(x) = install(CHAR(STRING(vec)[i]));
-	    x = CDR(x);
-	}
-    }
-    return ans;
-#endif
 }

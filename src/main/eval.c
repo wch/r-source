@@ -17,11 +17,10 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/* File processed for NEWLIST */
-
 #define ARGUSED(x) LEVELS(x)
 
 #include "Defn.h"
+
 
 SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
 
@@ -434,9 +433,7 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ans = eval(body, rho);
 		break;
 	    case EXPRSXP:
-#ifdef NEWLIST
 	    case VECSXP:
-#endif
 		setVar(sym, VECTOR(val)[i], rho);
 		ans = eval(body, rho);
 		break;

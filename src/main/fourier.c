@@ -17,10 +17,9 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/* File processed for NEWLIST */
-
 #include "Defn.h"
 #include "FFDecl.h"
+
 
 /* Fourier Transform for Univariate Spatial and Time Series */
 
@@ -36,14 +35,14 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 
     z = CAR(args);
 
-    switch(TYPEOF(z)) {
+    switch (TYPEOF(z)) {
     case INTSXP:
     case LGLSXP:
     case REALSXP:
 	z = coerceVector(z, CPLXSXP);
 	break;
     case CPLXSXP:
-	if(NAMED(z)) z = duplicate(z);
+	if (NAMED(z)) z = duplicate(z);
 	break;
     default:
 	errorcall(call, "non-numeric argument\n");
@@ -54,15 +53,17 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
     /* +2 for backward transform, complex values */
 
     inv = asLogical(CADR(args));
-    if(inv == NA_INTEGER || inv == 0) inv = -2;
-    else inv = 2;
+    if (inv == NA_INTEGER || inv == 0)
+	inv = -2;
+    else
+	inv = 2;
 
-    if(LENGTH(z) > 1) {
+    if (LENGTH(z) > 1) {
 	vmax = vmaxget();
-	if(isNull(d = getAttrib(z, R_DimSymbol))) {  /* temporal transform */
+	if (isNull(d = getAttrib(z, R_DimSymbol))) {  /* temporal transform */
 	    n = length(z);
 	    fft_factor(n, &maxf, &maxp);
-	    if(maxf == 0)
+	    if (maxf == 0)
 		errorcall(call, "fft factorization error\n");
 	    work = (double*)R_alloc(4 * maxf, sizeof(double));
 	    iwork = (int*)R_alloc(maxp, sizeof(int));
@@ -73,13 +74,15 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 	    maxmaxf = 1;
 	    maxmaxp = 1;
 	    ndims = LENGTH(d);
-	    for(i=0 ; i<ndims ; i++) {
-		if(INTEGER(d)[i] > 1) {
+	    for (i = 0; i < ndims; i++) {
+		if (INTEGER(d)[i] > 1) {
 		    fft_factor(INTEGER(d)[i], &maxf, &maxp);
-		    if(maxf == 0)
+		    if (maxf == 0)
 			errorcall(call, "fft factorization error\n");
-		    if(maxf > maxmaxf) maxmaxf = maxf;
-		    if(maxp > maxmaxp) maxmaxp = maxp;
+		    if (maxf > maxmaxf)
+			maxmaxf = maxf;
+		    if (maxp > maxmaxp)
+			maxmaxp = maxp;
 		}
 	    }
 	    work = (double*)R_alloc(4 * maxmaxf, sizeof(double));
@@ -87,8 +90,8 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 	    nseg = LENGTH(z);
 	    n = 1;
 	    nspn = 1;
-	    for(i=0 ; i<ndims ; i++) {
-		if(INTEGER(d)[i] > 1) {
+	    for (i = 0; i < ndims; i++) {
+		if (INTEGER(d)[i] > 1) {
 		    nspn = nspn * n;
 		    n = INTEGER(d)[i];
 		    nseg = nseg/n;
@@ -120,7 +123,7 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
     z = CAR(args);
 
     d = getAttrib(z, R_DimSymbol);
-    if(length(d) > 2)
+    if (length(d) > 2)
 	errorcall(call, "vector-valued series required\n");
     n = INTEGER(d)[0];
     p = INTEGER(d)[1];
@@ -132,7 +135,7 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 	z = coerceVector(z, CPLXSXP);
 	break;
     case CPLXSXP:
-	if(NAMED(z)) z = duplicate(z);
+	if (NAMED(z)) z = duplicate(z);
 	break;
     default:
 	errorcall(call, "non-numeric argument\n");
@@ -143,17 +146,17 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
     /* +2 for backward transform, complex values */
 
     inv = asLogical(CADR(args));
-    if(inv == NA_INTEGER || inv == 0) inv = -2;
+    if (inv == NA_INTEGER || inv == 0) inv = -2;
     else inv = 2;
 
-    if(n > 1) {
+    if (n > 1) {
 	vmax = vmaxget();
 	fft_factor(n, &maxf, &maxp);
-	if(maxf == 0)
+	if (maxf == 0)
 	    errorcall(call, "fft factorization error\n");
 	work = (double*)R_alloc(4 * maxf, sizeof(double));
 	iwork = (int*)R_alloc(maxp, sizeof(int));
-	for(i=0 ; i<p ; i++)
+	for (i = 0; i < p; i++)
 	    fft_work(&(COMPLEX(z)[i*n].r), &(COMPLEX(z)[i*n].i),
 		     1, n, 1, inv, work, iwork);
 	vmaxset(vmax);
@@ -165,9 +168,10 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 static int ok(int n, int *f, int nf)
 {
     int i;
-    for(i=0 ; i<nf ; i++) {
+    for (i = 0; i < nf; i++) {
 	while(n % f[i] == 0) {
-	    if((n = n/f[i]) == 1) return 1;
+	    if ((n = n / f[i]) == 1)
+		return 1;
 	}
     }
     return n == 1;
@@ -192,16 +196,19 @@ SEXP do_nextn(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* check the factors */
 
-    if(nf == 0) errorcall(call, "no factors\n");
-    for(i=0 ; i<nf ; i++)
-	if(INTEGER(f)[i] == NA_INTEGER || INTEGER(f)[i] <= 1)
+    if (nf == 0) errorcall(call, "no factors\n");
+    for (i = 0; i < nf; i++)
+	if (INTEGER(f)[i] == NA_INTEGER || INTEGER(f)[i] <= 1)
 	    errorcall(call, "invalid factors\n");
 
     ans = allocVector(INTSXP, nn);
-    for(i=0 ; i<nn ; i++) {
-	if(INTEGER(n)[i] == NA_INTEGER) INTEGER(ans)[i] = NA_INTEGER;
-	else if(INTEGER(n)[i] <= 1) INTEGER(ans)[i] = 1;
-	else INTEGER(ans)[i] = nextn(INTEGER(n)[i], INTEGER(f), nf);
+    for (i = 0; i < nn; i++) {
+	if (INTEGER(n)[i] == NA_INTEGER)
+	    INTEGER(ans)[i] = NA_INTEGER;
+	else if (INTEGER(n)[i] <= 1)
+	    INTEGER(ans)[i] = 1;
+	else
+	    INTEGER(ans)[i] = nextn(INTEGER(n)[i], INTEGER(f), nf);
     }
     UNPROTECT(2);
     return ans;

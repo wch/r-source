@@ -17,12 +17,11 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/* File processed for NEWLIST */
-
 #include "Defn.h"
 #include "Graphics.h"
 #include "IOStuff.h"
 #include "Parse.h"
+
 
 /* The `real' main() program is in ../<SYSTEM>/system.c */
 /* e.g. ../unix/system.c */
