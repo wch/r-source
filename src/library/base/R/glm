@@ -32,7 +32,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	X <- if (is.empty.model(mt)) NULL else model.matrix(mt, mf)
 	Y <- model.response(mf, "numeric")
 	weights <- model.weights(mf)
-	offset <- model.offset(mf)
+	if(is.null(offset)) offset <- model.offset(mf)
 
 	## check weights and offset
 	if( !is.null(weights) && any(weights<0) )
