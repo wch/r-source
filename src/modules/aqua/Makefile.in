@@ -1,0 +1,83 @@
+#
+# ${R_HOME}/src/modules/aqua/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../..
+subdir = src/modules/aqua
+R_HOME = $(top_builddir)
+
+include $(top_builddir)/Makeconf
+
+SOURCES =
+HEADERS =
+DEPENDS = $(SOURCES:.c=.d)
+OBJECTS = $(SOURCES:.c=.lo)
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in $(SOURCES) $(HEADERS)
+
+## <FIXME>
+## Change to 'aqua.la' when using libtool for shlibs.
+## Remove when using automake ... also fix target 'install' then.
+aqua_la = aqua$(SHLIB_EXT)
+## </FIXME>
+Rexecmodulesdir_LTLIBRARIES = $(aqua_la)
+aqua_la_SOURCES = $(SOURCES)
+aqua_la_OBJECTS = $(OBJECTS)
+@USE_LIBTOOL_TRUE@aqua_la_LDFLAGS = -avoid-version -rpath $(Rexecmodulesdir) -module
+aqua_la_LIBADD = $(LIBR)
+
+all: Makefile Makedeps R
+
+Makefile: $(srcdir)/Makefile.in \
+  $(top_builddir)/config.status \
+  $(SOURCES)
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+Makedeps: Makefile $(DEPENDS)
+	@cat $(DEPENDS) >> Makefile
+	@touch $@
+
+R: Makefile
+	@$(MAKE) Makedeps
+	@$(MAKE) $(Rexecmodulesdir_LTLIBRARIES)
+
+$(aqua_la): $(aqua_la_OBJECTS) $(aqua_la_DEPENDENCIES)
+	$(SHLIB_LINK) -o $@ $(aqua_la_LDFLAGS) $(aqua_la_OBJECTS) $(aqua_la_LIBADD)
+## <FIXME>
+## Not sure if we want to do this ...
+	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
+## </FIXME>
+
+install: installdirs
+@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(aqua_la) $(Rexecmodulesdir)/aqua$(SHLIB_EXT)
+@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(aqua_la) $(Rexecmodulesdir)
+installdirs:
+	@$(MKINSTALLDIRS) $(Rexecmodulesdir)
+install-strip:
+	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+uninstall:
+	@rm -f $(Rexecmodulesdir)/aqua$(SHLIB_EXT)
+
+mostlyclean: clean
+clean:
+	@-rm -rf .libs _libs
+	@-rm -f Makedeps *.d *.o *.a *.lo *.la *$(SHLIB_EXT)
+distclean: clean
+	@-rm -f Makefile
+maintainer-clean: distclean
+
+TAGS info dvi check:
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+
+## Automagically generated dependencies:
+
