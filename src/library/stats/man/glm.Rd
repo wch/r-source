@@ -104,7 +104,10 @@ glm.fit(x, y, weights = rep(1, nobs),
   others success) or as a two-column matrix with the columns giving the
   numbers of successes and failures.  A terms specification of the form
   \code{first + second} indicates all the terms in \code{first} together
-  with all the terms in \code{second} with duplicates removed.
+  with all the terms in \code{second} with duplicates removed.  The terms in
+  the formula will be re-ordered so that main effects come first,
+  followed by the interactions, all second-order, all third-order and so
+  on: to avoid this pass a \code{terms} object as the formula.
 
   A specification of the form \code{first:second} indicates the
   the set of terms obtained by taking the interactions of
@@ -293,6 +296,10 @@ clotting <- data.frame(
     lot2 = c(69,35,26,21,18,16,13,12,12))
 summary(glm(lot1 ~ log(u), data=clotting, family=Gamma))
 summary(glm(lot2 ~ log(u), data=clotting, family=Gamma))
-}
+
+\dontrun{
+## for an example of the use of a terms object as a formula
+demo(glm.vr)
+}}
 \keyword{models}
 \keyword{regression}
