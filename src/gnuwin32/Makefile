@@ -1,7 +1,7 @@
 include MkRules
 
 HELP = YES
-WINHELP = BOTH # NO, CHM, BOTH
+WINHELP = CHM # NO, CHM, BOTH
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -20,7 +20,7 @@ else
  DLLFLAGS = -s
 endif
 
-R-DLLFLAGS =  $(STRIPFLAG) -mwindows
+R-DLLFLAGS = -mwindows
 R-DLLLIBS = -L. $(FLIBS) -lwsock32 -lcomctl32 -lversion
 SOURCES = $(wildcard *.c *.f)
 OBJS = $(foreach i, $(SOURCES), $(basename $i).o)
@@ -34,6 +34,9 @@ PKGCLEAN = $(foreach i, $(ALLPACKAGES), pkgclean-$i)
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
 all: rbuild rdemo rpackage
+
+# separate as Tcl/Rk headers are needed.
+tcl: pkg-tcltk
 
 CFLAGS = $(OPTFLAGS) -I../include -I../include/R_ext -I. -DHAVE_CONFIG_H
 FFLAGS = $(OPTFLAGS)
@@ -70,7 +73,7 @@ fixfiles:
 	$(RM) ../../unzip/*.h
 
 fixed/fixdesc:
-	sh fixed/GETDESC $(PACKAGES)
+	sh fixed/GETDESC $(ALLPACKAGES)
 
 dllversion.o: ../include/Rversion.h
 
@@ -95,7 +98,6 @@ R.a: $(OBJS)
 libR.a:  R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
 
-# This fails on djtools make:
 R.exp: R.exp1
 	(diff R.exp R.exp1 > /dev/null) || $(CP) R.exp1 R.exp
 
@@ -109,11 +111,6 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 # avoid building globalvar.h with errors
 ../include/globalvar.h: exported-vars
 	perl -n makeimps.pl exported-vars > $@
-
-tcl:
-	sh fixed/GETDESC tcltk
-	$(MAKE) pkg-tcltk
-
 
 ../../library/R.css: ../../doc/html/R.css
 	$(CP) $< $@
@@ -297,8 +294,14 @@ bindist: docfiles
 	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README
 	$(CP) -p rw-faq $(RPREFIX)/rw-FAQ
 	$(CP) -p CHANGES README.Rterm $(RPREFIX)
-	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/bin/*.bat
+# convert docs and batch files to CRLF: might already be on Windows, though.
+ifeq ($(strip $(BUILD)),CROSS)
+	zip -l dosfiles.zip $(RPREFIX)/* $(RPREFIX)/bin/*.bat
 	unzip -ao dosfiles.zip
+else
+	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/bin/*.bat
+	unzip -o dosfiles.zip
+endif
 	$(RM) dosfiles.zip
 	$(RM) -f $(RPREFIX)b1.zip $(RPREFIX)b2.zip $(RPREFIX)h.zip \
 	   $(RPREFIX)w.zip $(RPREFIX)l.zip $(RPREFIX)ch.zip
@@ -330,7 +333,7 @@ packagedist:
 	$(MKDIR) $(RPREFIX) $(RPREFIX)/bin $(RPREFIX)/src \
 	  $(RPREFIX)/src/include $(RPREFIX)/src/library \
 	  $(RPREFIX)/src/gnuwin32 $(RPREFIX)/src/gnuwin32/fixed
-	$(CP) -p ../../COPYING exported-vars R.exp MkRules MakePkg MakeDll \
+	$(CP) -p exported-vars R.exp MkRules MakePkg MakeDll \
 	  maketitle pwd.pl makeDllRes.pl $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
@@ -341,7 +344,7 @@ packagedist:
 	$(CP) -p $(foreach i,$(SRC_HEADERS) $(OBJ_HEADERS) $(GW32_HEADERS), \
 	  ../include/$i) $(RPREFIX)/src/include
 	$(CP) -pr ../include/R_ext $(RPREFIX)/src/include
-	$(CP) readme.packages $(RPREFIX)
+	$(SED) -e 3,5d readme.packages > $(RPREFIX)/readme.packages
 	$(MKDIR) $(RPREFIX)/share
 	$(CP) -r ../../share/perl $(RPREFIX)/share
 	$(CP) ../../bin/INSTALL ../../bin/REMOVE ../../bin/SHLIB \
