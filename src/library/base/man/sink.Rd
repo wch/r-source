@@ -44,7 +44,7 @@ sink.number(type = c("output", "message"))
   there is no stack of connections.
 }
 \value{
-  For \code{sink}.
+  \code{sink} returns \code{NULL}.
 
   For \code{sink.number()} the number (0, 1, 2, \dots) of diversions of
   output in place.
