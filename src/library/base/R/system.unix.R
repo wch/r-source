@@ -89,7 +89,7 @@ function(topic, package = c(.packages(),.Autoloaded), lib.loc =.lib.loc) {
 		     "help", "AnIndex", sep = "/", collapse = " ")
     file <- system(paste("${RHOME}/cmd/help '", topic, "' ", INDICES, sep=""),
 		   intern = TRUE)
-    cat ("Help file [Xroff, not source]=\n\t",file,"\n")
+    cat ("\t\t\t\t\t\tHelp file name '", sub(".*/","",file),".Rd'",sep="")
 
     if (file == "") { # try data .doc -- this is OUTDATED
       file <- system.file(paste("data", "/", topic, ".doc", sep = ""),
