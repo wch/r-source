@@ -48,7 +48,7 @@ binom.test <- function(x, n, p = 0.5, alternative = "two.sided",
                        }
                    })
     ## Determine p s.t. Prob(B(n,p) >= x) = alpha
-    p.U <- function(x, alpha) {
+    p.L <- function(x, alpha) {
         if(x == 0)                      # No solution
             0
         else
@@ -56,7 +56,7 @@ binom.test <- function(x, n, p = 0.5, alternative = "two.sided",
                     c(0, 1))$root
     }
     ## Determine p s.t. Prob(B(n,p) <= x) = alpha
-    p.L <- function(x, alpha) {
+    p.U <- function(x, alpha) {
         if(x == n)                      # No solution
             1
         else
