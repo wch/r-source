@@ -37,7 +37,9 @@ sin(3*pi/2) == cos(pi)
 x <- rnorm(99)
 all( sin(-x) == - sin(x))
 all( cos(-x) == cos(x))
-x <- abs(x); y <- abs(rnorm(x)); all(atan2(y, x) == atan(y/x))
+x <- abs(x); y <- abs(rnorm(x))
+all(abs(atan2(y, x) - atan(y/x)) <= .Machine$double.eps)# TRUE
+table(abs(atan2(y, x) - atan(y/x)) / .Machine$double.eps) # depends!
 
 x <- 1:99/100
 all(Mod(1 - (cos(x) + 1i*sin(x)) / exp(1i*x)) < 1.1 * .Machine$double.eps)
