@@ -9,7 +9,6 @@ top_builddir = ../../../..
 subdir = src/library/mva/src
 
 include $(top_builddir)/etc/Makeconf
-MKINSTALLDIRS = $(top_srcdir)/tools/mkinstalldirs
 R_HOME = $(top_builddir)
 
 pkg = mva
@@ -17,8 +16,8 @@ LIB = $(pkg).$(SHLIBEXT)
 OBJS = dblcen.o hclust.o kmns.o
 
 all: $(LIB)
-	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/libs
-	@cp $(LIB) $(top_builddir)/library/$(pkg)/libs
+	@$(top_srcdir)/tools/mkinstalldirs $(top_builddir)/library/$(pkg)/libs
+	@$(top_srcdir)/tools/copy-if-change $(LIB) $(top_builddir)/library/$(pkg)/libs
 
 $(LIB): $(OBJS)
 	$(SHLIBLD) $(SHLIBLDFLAGS) -o $@ $(OBJS) $(FLIBS)

@@ -9,7 +9,6 @@ top_builddir = ../../../..
 subdir = src/library/modreg/src
 
 include $(top_builddir)/etc/Makeconf
-MKINSTALLDIRS = $(top_srcdir)/tools/mkinstalldirs
 R_HOME = $(top_builddir)
 
 pkg = modreg
@@ -18,8 +17,8 @@ OBJS = bsplvd.o bvalue.o bvalus.o ksmooth.o loessc.o \
 	loessf.o ppr.o qsbart.o sbart.o sgram.o sinerp.o sslvrg.o stxwx.o
 
 all: $(LIB)
-	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/libs
-	@cp $(LIB) $(top_builddir)/library/$(pkg)/libs
+	@$(top_srcdir)/tools/mkinstalldirs $(top_builddir)/library/$(pkg)/libs
+	@$(top_srcdir)/tools/copy-if-change $(LIB) $(top_builddir)/library/$(pkg)/libs
 
 $(LIB): $(OBJS)
 	$(SHLIBLD) $(SHLIBLDFLAGS) -o $@ $(OBJS) $(FLIBS)
