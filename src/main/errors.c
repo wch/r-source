@@ -613,18 +613,24 @@ void jump_to_toplevel()
     jump_to_top_ex(FALSE, FALSE, TRUE, TRUE, TRUE);
 }
 
+static SEXP findCall(void)
+{
+    RCNTXT *cptr;
+    for (cptr = R_GlobalContext->nextcontext;
+	 cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
+	 cptr = cptr->nextcontext)
+	if (cptr->callflag & CTXT_FUNCTION)
+	    return cptr->call;
+    return R_NilValue;
+}
+    
 SEXP do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 /* error(.) : really doesn't return anything; but all do_foo() must be SEXP */
-    RCNTXT *cptr;
     SEXP c_call;
 
-    if(asLogical(CAR(args))) {/* find context -> "Error in ..:" */
-	cptr = R_GlobalContext->nextcontext;
-	while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->nextcontext != NULL)
-	    cptr = cptr->nextcontext;
-	c_call = cptr->call;
-    }
+    if(asLogical(CAR(args))) /* find context -> "Error in ..:" */
+	c_call = findCall();
     else
 	c_call = R_NilValue;
 
@@ -643,16 +649,11 @@ SEXP do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    RCNTXT *cptr;
     SEXP c_call;
 
-    if(asLogical(CAR(args))) {/* find context -> "... in: ..:" */
-	cptr = R_GlobalContext->nextcontext;
-	while ( !(cptr->callflag & CTXT_FUNCTION) && 
-		cptr->nextcontext != NULL)
-	    cptr = cptr->nextcontext;
-	c_call = cptr->call;
-    } else
+    if(asLogical(CAR(args))) /* find context -> "... in: ..:" */
+	c_call = findCall();
+    else
 	c_call = R_NilValue;
 
     args = CDR(args);
