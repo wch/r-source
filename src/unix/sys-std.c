@@ -158,6 +158,9 @@ removeInputHandler(InputHandler **handlers, InputHandler *it)
        to the second element. That's why we use the address of the first
        element as the first argument.
     */
+
+    if (it == NULL) return(0);
+
     if(*handlers == it) {
 	*handlers = (*handlers)->next;
 	return(1);

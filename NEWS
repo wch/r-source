@@ -116,6 +116,13 @@ BUG FIXES
 
     o   The pictex() driver was drawing polylines incorrectly (PR#845).
 
+    o   In the event of a fatal X11 error (this can be generated under FVWM
+        by selecting Destroy), the input handler would loop, leaving the
+        "please save work and shut down R" advice useless. There should now
+	be an opportunity for a relatively graceful exit.  
+
+    o   polyroot() misbehaved if all coefficients except that of the highest
+        degee term were zero
 
 
 		CHANGES IN R VERSION 1.2.1

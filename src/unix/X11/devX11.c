@@ -1064,6 +1064,17 @@ static int R_X11Err(Display *dsp, XErrorEvent *event)
 
 static int R_X11IOErr(Display *dsp)
 {
+    int fd = ConnectionNumber(display);
+    /*
+    while (nfonts--)  XFreeFont(display, fontcache[nfonts].font);
+    nfonts = 0;
+    */
+    removeInputHandler(&R_InputHandlers,
+		       getInputHandler(R_InputHandlers,fd));
+    /*
+    XCloseDisplay(display);
+    displayOpen = FALSE;
+    */
     error("X11 fatal IO error: please save work and shut down R");
     return 0; /* but should never get here */
 }
