@@ -48,7 +48,7 @@ deriv(expr, namevec, function.arg = NULL, tag = ".expr")
   This help page should be fixed up by one of R&R or someone else who
   fluently speaks the language in \file{\$R\_HOME/src/main/deriv.c}.
 
-  It's author, MM, has only got a vague idea and thinks that a help page
+  Its author, MM, has only got a vague idea and thinks that a help page
   is better than none.
 }
 \references{
