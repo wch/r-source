@@ -1,52 +1,61 @@
 "hist" <-
-function (x, breaks, freq = TRUE, col = NULL, border = par("fg"),
+function (x, breaks, freq = NULL, col = NULL, border = par("fg"),
 	main = paste("Histogram of" , deparse(substitute(x))),
 	xlim = range(breaks), ylim = range(counts, 0),
-	xlab = deparse(substitute(x)), ylab, axes=TRUE, ...)
+	xlab = deparse(substitute(x)), ylab,
+	axes=TRUE, plot = TRUE, ...)
 {
 	if (!is.numeric(x)) 
 		stop("hist: x must be numeric")
 	eval(main)
 	eval(xlab)
-	x<-x[!is.na(x)]
-	if (missing(breaks)) {
-		breaks <- range(x)
-		breaks <- pretty(breaks + c(0, diff(breaks)/1000),
-					1 + log2(length(x)))
-	}
-	else if (length(breaks) == 1) {
-		if (is.na(breaks) | breaks < 2) 
-			stop("invalid number of breaks")
-		nbreaks <- breaks
-		breaks <- range(x)
-		breaks <- pretty(breaks + c(0, diff(breaks)/1000), nbreaks)
-	}
-	breaks <- sort(breaks)
+	n <- length(x <- x[!is.na(x)])
+	use.br <- !missing(breaks) && length(breaks) > 1
+	breaks <-
+	  if(use.br) sort(breaks)
+	  else {
+		rx <- range(x)
+		pretty (rx + c(0, diff(rx)/1000), 
+			n = if(missing(breaks)) 1 + log2(n)
+			else { # breaks = `nclass'	
+				if (is.na(breaks) | breaks < 2) 
+				  stop("invalid number of breaks")
+				breaks
+			})
+	  }
+	nB <- length(breaks)
 	counts <- .C("bincount", 
 		as.double(x), 
-		length(x), 
+		n, 
 		as.double(breaks), 
-		length(breaks), 
-		counts = integer(length(breaks) - 1), 
-		TRUE
-	)[[5]]
+		nB,
+		counts = integer(nB - 1), 
+		NAOK = FALSE) $counts
 	if (any(counts < 0)) 
-		browser()
+	 stop("negative `counts'. Internal Error in C-code for \"bincount\"")
+	if (is.null(freq)) 
+	  freq <- if(use.br) {
+		##-- Do frequencies if breaks are evenly spaced ...
+		h <- diff(breaks)
+		diff(range(h)) < 1e-10 * h
+	  } else TRUE
 	if (!freq) {
-		counts <- counts/(sum(!is.na(x)) * diff(breaks))
+		counts <- counts/(sum(x) * diff(breaks))
 		if (missing(ylab)) 
 			ylab <- "Relative Frequency"
 	}
 	else if (missing(ylab)) 
 		ylab <- "Frequency"
-	plot.new()
-	plot.window(xlim, ylim, "")
-	title(main = main, xlab = xlab, ylab = ylab, ...)
-	if(axes) {
-		axis(1, ...)
-		axis(2, ...)
-	}
-	rect(breaks[-length(breaks)], 0, breaks[-1], counts,
-		col = col, border = border)
-	invisible(NULL)
+	if(plot) {
+		plot.new()
+		plot.window(xlim, ylim, "")
+		title(main = main, xlab = xlab, ylab = ylab, ...)
+		if(axes) {
+			axis(1, ...)
+			axis(2, ...)
+		}
+		rect(breaks[-length(breaks)], 0, breaks[-1], counts,
+		     col = col, border = border)
+		invisible(NULL)
+	} else list(breaks = breaks, counts = counts)
 }
