@@ -22,10 +22,14 @@ tapply <- function (x, INDEX, FUN=NULL, simplify=TRUE, ...)
 	}
 	if (is.null(FUN)) return(group)
 	ans <- lapply(split(x, group), FUN, ...)
-	ansmat <- array(dim=extent, dimnames=namelist)
-	if (simplify && all(unlist(lapply(ans, length)) == 1))
+	if (simplify && all(unlist(lapply(ans, length)) == 1)) {
+		ansmat <- array(dim=extent, dimnames=namelist)
 		ans <- unlist(ans, recursive = FALSE)
-	else  mode(ansmat) <- "list"
+	}
+	else  {
+		ansmat <- array(vector("list", prod(extent)),
+			dim=extent, dimnames=namelist)
+	}
 	ansmat[as.numeric(names(ans))] <- ans
 	ansmat
 }

@@ -1,8 +1,8 @@
 \name{Extremes}
 \title{Maxima and Minima}
 \usage{
-max(\dots, na.rm=TRUE)
-min(\dots, na.rm=TRUE)
+max(\dots, na.rm=FALSE)
+min(\dots, na.rm=FALSE)
 
 pmax(\dots, na.rm=FALSE)
 pmin(\dots, na.rm=FALSE)

@@ -9,3 +9,9 @@ max <- function(..., na.rm=FALSE)
 
 prod <- function(...,na.rm=FALSE)
 .Internal(prod(...,na.rm=na.rm))
+
+all <- function(...,na.rm=FALSE)
+.Internal(all(...,na.rm=na.rm))
+
+any <- function(...,na.rm=FALSE)
+.Internal(any(...,na.rm=na.rm))
