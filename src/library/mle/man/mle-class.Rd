@@ -10,19 +10,21 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{call}:}{Object of class \code{"language"}. The call to \code{mle}}
-    \item{\code{coef}:}{Object of class \code{"numeric"}. Estimated parameters}
+    \item{\code{call}:}{Object of class \code{"language"}.
+      The call to \code{\link{mle}}.}
+    \item{\code{coef}:}{Object of class \code{"numeric"}.  Estimated
+      parameters.}
     \item{\code{fullcoef}:}{Object of class \code{"numeric"}.
-      Fixed and estimated parameters}
-    \item{\code{vcov}:}{Object of class \code{"matrix"}. Approximate
-      variance-covariance matrix}
-    \item{\code{min}:}{Object of class \code{"numeric"}. Minimum value
+      Fixed and estimated parameters.}
+    \item{\code{vcov}:}{Object of class \code{"matrix"}.  Approximate
+      variance-covariance matrix.}
+    \item{\code{min}:}{Object of class \code{"numeric"}.  Minimum value
       of objective function.}
-    \item{\code{details}:}{Object of class \code{"list"}. List returned
-      from \code{optim} }
-    \item{\code{minuslogl}:}{Object of class \code{"function"}. The
+    \item{\code{details}:}{Object of class \code{"list"}.  List returned
+      from \code{\link{optim}}.}
+    \item{\code{minuslogl}:}{Object of class \code{"function"}.  The
       negative loglikelihood function.}
-    \item{\code{method}:}{Object of class \code{"character"}. The
+    \item{\code{method}:}{Object of class \code{"character"}.  The
       optimization method used.}
   }
 }
@@ -34,8 +36,7 @@
       log-likelihood.}
     \item{profile}{\code{signature(fitted = "mle")}: Likelihood profile
       generation.}
-    \item{show}{\code{signature(object = "mle")}: Display object
-      briefly.}
+    \item{show}{\code{signature(object = "mle")}: Display object briefly.}
     \item{summary}{\code{signature(object = "mle")}: Generate object summary.}
     \item{update}{\code{signature(object = "mle")}:  Update fit.}
     \item{vcov}{\code{signature(object = "mle")}: Extract

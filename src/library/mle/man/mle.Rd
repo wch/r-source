@@ -38,7 +38,7 @@ y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
 ll <- function(ymax=15, xhalf=6)
     -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE))
 (fit <- mle(ll))
-update(fit, fixed=list(xhalf=6))
+mle(ll, fixed=list(xhalf=6))
 
 summary(fit)
 logLik(fit)
