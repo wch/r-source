@@ -67,7 +67,7 @@ c
       end
 
 
-c	subroutine bakslv
+c	subroutine baksol
 c
 c	purpose
 c
@@ -89,7 +89,7 @@ c	if b is no longer required by calling routine,
 c	then vectors b and x may share the same storage.
 c
 cstatic
-      subroutine bakslv(nr,n,a,x,b)
+      subroutine baksol(nr,n,a,x,b)
       implicit double precision (a-h,o-z)
       dimension a(nr,1),x(n),b(n)
 c
@@ -1474,7 +1474,7 @@ c
 c
 c	back solve, result in x
 c
-      call bakslv(nr,n,a,x,x)
+      call baksol(nr,n,a,x,x)
       return
       end
 
