@@ -3,6 +3,8 @@
 Rdpp <-
 function(lines)
 {
+    ## Preprocess lines with Rd markup according to .Platform$OS.type.
+    
     if(!is.character(lines))
         stop(paste("argument", sQuote(lines),
                    "must be a character vector"))
@@ -354,6 +356,103 @@ function(dir, outFile = "")
 
     .writeContentsDCF(contents, packageName, outFile)
 }
+
+### * Rddb
+
+Rddb <-
+function(package, dir, lib.loc = NULL)
+{
+    ## Build an Rd 'data base' from an installed package or the unpacked
+    ## package sources as a list containing the 'raw' R documentation
+    ## objects obtained via readLines().
+    
+    ## Argument handling.
+    if(!missing(package)) {
+        if(length(package) != 1)
+            stop(paste("argument", sQuote("package"),
+                       "must be of length 1"))
+        dir <- .find.package(package, lib.loc)
+        ## Using package installed in @code{dir} ...
+        docsDir <- file.path(dir, "man")
+        if(!fileTest("-d", docsDir))
+            stop(paste("directory", sQuote(dir),
+                       "does not contain Rd objects"))
+        docsFiles <- listFilesWithType(docsDir, "docs")
+        db <- list()
+        for(f in docsFiles) {
+            lines <- readLines(f)
+            eofPos <- which(lines == "\\eof")
+            db <- c(db, split(lines,
+                              rep(seq(along = eofPos),
+                                  times = diff(c(0, eofPos)))))
+        }
+    }
+    else {
+        if(missing(dir))
+            stop(paste("you must specify", sQuote("package"),
+                       "or", sQuote("dir")))
+        ## Using sources from directory @code{dir} ...
+        if(!fileTest("-d", dir))
+            stop(paste("directory", sQuote(dir), "does not exist"))
+        else
+            dir <- filePathAsAbsolute(dir)
+        docsDir <- file.path(dir, "man")
+        if(!fileTest("-d", docsDir))
+            stop(paste("directory", sQuote(dir),
+                       "does not contain Rd sources"))
+        docsFiles <- listFilesWithType(docsDir, "docs")
+        db <- lapply(docsFiles, readLines)
+        
+    }
+
+    db
+
+}
+
+### * getRdSection
+    
+getRdSection <-
+function(txt, type, predefined = TRUE)
+{
+    ## Extract Rd section(s) 'type' from (preprocessed) Rd markup in the
+    ## character string 'txt'.  Use 'predefined = FALSE' for dealing
+    ## with user-defined sections.
+    
+    out <- character()
+    pattern <- paste("(^|\n)[[:space:]]*\\\\",
+                     ifelse(predefined, type,
+                            paste("section\\\\{", type, "}{",
+                                  sep = "")),
+                     "{",
+                     sep = "")
+    while((pos <- regexpr(pattern, txt)) != -1) {
+        txt <- substring(txt, pos + attr(pos, "match.length") - 1)
+        pos <- delimMatch(txt)
+        if(pos == -1) {
+            if((type == "alias") && predefined) {
+                ## \alias entries seem to be special (Paren.Rd).
+                ## The regexp below feels wrong, but is based on what is
+                ## used in Perl's R::Rdlists::build_index(), sort of.
+                pos <- regexpr("{([^\n]*)}(\n|$)", txt)
+            }
+            if(pos == -1)
+                stop(paste("unterminated section", sQuote(type)))
+            else {
+                out <- c(out, sub("{([^\n]*)}(\n|$).*", "\\1", txt))
+                txt <- substring(txt, pos + attr(pos, "match.length"))
+                next
+            }
+            
+        }
+        out <- c(out,
+                 substring(txt,
+                           pos + 1,
+                           pos + attr(pos, "match.length") - 2))
+        txt <- substring(txt, pos + attr(pos, "match.length"))
+    }
+    out
+}
+                
 
 ### Local variables: ***
 ### mode: outline-minor ***
