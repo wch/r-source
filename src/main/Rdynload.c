@@ -89,8 +89,7 @@
 #include <unistd.h>
 #endif
 
-/* Need "" rather than <> for the Macintosh, apparently. */
-#include "Defn.h"
+#include <Defn.h>
 #include <Rmath.h>
 
 #include <Rdynpriv.h>

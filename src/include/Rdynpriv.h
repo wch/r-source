@@ -46,7 +46,7 @@ typedef void *HINSTANCE;
 #endif
 
 
-#include "Defn.h"
+#include <Defn.h>
 #include <R_ext/Rdynload.h>
 
   /*
@@ -180,9 +180,6 @@ extern OSDynSymbol Rf_osDynSymbol, *R_osDynSymbol;
      more efficient. The most recently resolved symbols are stored in this 
      pool if CACHE_DLL_SYM is defined and repeated lookups check here first,
      before using the dynamic loader's lookup mechanism.
-
-     My hope is that we can sort out the differences in the caching mechanism
-     used for Macintosh and bring these back into Rdynload.c only.
    */
 typedef struct {
     char pkg[21];

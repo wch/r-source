@@ -201,7 +201,7 @@ static XFontStruct      *font_info;
    forth maintains values of ssNA_REAL and ssNA_STRING I have set
    ssNA_STRING to be coerceVector(ssNA_REAL), very weird but easy.
 
-   In Macintosh we need to call the main event loop to get
+   In Macintosh we needed to call the main event loop to get
    events. This ensures that the spreadsheet interacts well with the
    other windows. Under X windows we let the window manager handle
    those sorts of details.

@@ -236,12 +236,6 @@ wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
     close(Hfile)
 
     switch(.Platform$OS.type,
-	   mac = {
-	       url <- gsub(":", "/",
-			     if(is.null(browser) || !browser %in% c("netscape") )
-			     .Internal(truepath(fname))
-			     else  fname)
-	   },
 	   windows = , ## do we need anything here?
 	   unix = { url <- fname },
 	   )
