@@ -57,13 +57,18 @@
 #include <Carbon/Carbon.h>
 
 OSStatus 	InitMLTE(void);
-TXNObject	RConsoleObject = NULL;
+TXNObject	RConsoleOutObject = NULL;
+TXNObject	RConsoleInObject = NULL;
 bool 		WeHaveConsole = false;
 bool 		InputFinished = false;
 
 WindowRef	RAboutWindow;
 pascal void RAboutHandler(WindowRef window);
 #define kRAppSignature '????'
+
+static pascal OSStatus
+CommandHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
+
 
 void 	Raqua_StartConsole(void);
 void 	Raqua_WriteConsole(char *buf, int len);
@@ -101,6 +106,12 @@ static const EventTypeSpec kCommandEvents[] =
 	{ kEventClassCommand, kEventCommandUpdateStatus }
 };
 
+
+static const EventTypeSpec	RCmdEvents[] =
+{
+	{ kEventClassCommand, kEventCommandProcess },
+	{ kEventClassCommand, kEventCommandUpdateStatus }
+};
 
 void Raqua_StartConsole(void)
 {
@@ -167,39 +178,60 @@ void Raqua_StartConsole(void)
 
 	if (ConsoleWindow != NULL) 
 	{
-		TXNFrameID		frameID	= 0;
-		WindowPtr		paramWindow = NULL;
+		TXNFrameID		OutframeID	= 0;
+                TXNFrameID		InframeID	= 0;
 		TXNFrameOptions	frameOptions;
+		Rect OutFrame, InFrame, WinFrame;
+                
+                GetWindowPortBounds (ConsoleWindow,&WinFrame);
+                SetRect(&OutFrame,0,0,WinFrame.right,WinFrame.bottom-110);
+                SetRect(&InFrame,0,WinFrame.bottom-100,WinFrame.right,WinFrame.bottom);
+                
+                frameOptions = kTXNShowWindowMask; 
+		frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNReadOnlyMask;
 		
-		frameOptions = kTXNShowWindowMask; 
-		frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNDrawGrowIconMask;
-		
-		paramWindow = ConsoleWindow;
 
 		err = TXNNewObject(	NULL, 
-								paramWindow, 
-								nil, 
+								ConsoleWindow, 
+								&OutFrame, 
 								frameOptions,
 								kTXNTextEditStyleFrameType,
 								kTXNTextensionFile,
 								kTXNSystemDefaultEncoding,
-								&RConsoleObject,
-								&frameID, 
+								&RConsoleOutObject,
+								&OutframeID, 
 								0);
 		
+		frameOptions = kTXNShowWindowMask; 
+		frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNDrawGrowIconMask;
+		
+                err = TXNNewObject(	NULL, 
+								ConsoleWindow, 
+								&InFrame, 
+								frameOptions,
+								kTXNTextEditStyleFrameType,
+								kTXNTextensionFile,
+								kTXNSystemDefaultEncoding,
+								&RConsoleInObject,
+								&InframeID, 
+								0);
+
 		if (err == noErr)
 		{		
-			if (RConsoleObject != NULL) 
+			if ( (RConsoleOutObject != NULL) && (RConsoleInObject != NULL) ) 
 			{
 				/* sets the state of the scrollbars so they are drawn correctly */
-				err = TXNActivate(RConsoleObject, frameID, kScrollBarsSyncWithFocus);
+				err = TXNActivate(RConsoleOutObject, OutframeID, kScrollBarsSyncWithFocus);
+				err = TXNActivate(RConsoleInObject, InframeID, kScrollBarsSyncWithFocus);
 				if (err != noErr){ /* Check for availability of MLTE api */		
-                 goto fine;
+                                goto fine;
 		        }
 			
-				err = SetWindowProperty(ConsoleWindow,'GRIT','tFrm',sizeof(TXNFrameID),&frameID);
-				err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleObject);
-			}
+			//	err = SetWindowProperty(ConsoleWindow,'GRIT','tFrm',sizeof(TXNFrameID),&OutframeID);
+		//		err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleOutObject);
+				err = SetWindowProperty(ConsoleWindow,'GRIT','tFrm',sizeof(TXNFrameID),&InframeID);
+				err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleInObject);
+		}
 
 		} 
 	
@@ -208,6 +240,12 @@ void Raqua_StartConsole(void)
 	 InstallStandardEventHandler(GetApplicationEventTarget());
          err = InstallApplicationEventHandler( KeybHandler,
              GetEventTypeCount( KeybEvents ), KeybEvents, 0, NULL);
+        err = InstallApplicationEventHandler( NewEventHandlerUPP( CommandHandler ),
+									GetEventTypeCount( RCmdEvents ),
+									RCmdEvents,
+									0,
+									NULL );
+	    
          err = AEInstallEventHandler( kCoreEventClass, kAEQuitApplication,
                  NewAEEventHandlerUPP(QuitAppleEventHandler), 0, false );
 //         InstallEventHandler( GetWindowEventTarget( ConsoleWindow ), CommandHandler, GetEventTypeCount( kCommandEvents ),
@@ -245,9 +283,7 @@ void Raqua_WriteConsole(char *buf, int len)
     TXNOffset oEndOffset;
 
     if(WeHaveConsole){  
-     TXNGetSelection (RConsoleObject, &oStartOffset, &oEndOffset);
-     err =  TXNSetData (RConsoleObject, kTXNTextData, buf, strlen(buf), oStartOffset, oEndOffset);
-     LastStartOffset=oEndOffset;
+     err =  TXNSetData (RConsoleOutObject, kTXNTextData, buf, strlen(buf), kTXNEndOffset, kTXNEndOffset);
     }
     else{
      fprintf(stderr,"%s", buf);
@@ -287,35 +323,37 @@ int Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
    Handle DataHandle;
    TXNOffset oStartOffset; 
    TXNOffset oEndOffset;
-   int i, lg=0;
-         
+   int i, lg=0, pptlen;
+          
    if(!InputFinished)
      Aqua_RWrite(prompt);
-
+   TXNFocus(RConsoleInObject,true);
+    
     while(!InputFinished)
      RunApplicationEventLoop();
     
    if(InputFinished){
-    TXNGetSelection (RConsoleObject, &oStartOffset, &oEndOffset);
-    //fprintf(stderr,"\n range = %d -%d=%d", oEndOffset, LastStartOffset, 
-    // oEndOffset-LastStartOffset);
-     err = TXNGetDataEncoded(RConsoleObject, LastStartOffset, oEndOffset, &DataHandle, kTXNTextData);
-//    fprintf(stderr,"\n err GetData=%d", err );
-     lg = min(len,oEndOffset - LastStartOffset);
+    TXNGetSelection (RConsoleInObject, &oStartOffset, &oEndOffset);
+  //  fprintf(stderr,"\n range = %d -%d=%d", oEndOffset, oStartOffset, 
+  //   oEndOffset-oStartOffset);
+     err = TXNGetDataEncoded(RConsoleInObject, 0, oEndOffset, &DataHandle, kTXNTextData);
+     lg = min(len,oEndOffset);
      HLock( DataHandle );
-     for(i=0; i<lg-1; i++)
+     for(i=0; i<lg-1; i++){
        buf[i] = (*DataHandle)[i];
+       if(buf[i] == '\r') buf[i]= '\n';
+     }  
      HUnlock( DataHandle );
      if(DataHandle)
       DisposeHandle( DataHandle );
 	
      buf[lg-1] = '\n';
      buf[lg] = '\0';
-
- //  fprintf(stderr,"\t data=[%s],len=%d,lg=%d", buf,strlen(buf),lg);
-   
+//   fprintf(stderr,"\n buf=%s",buf);
      InputFinished = false;
-
+ /* copiare nella console out il comando dato */
+      TXNSetData(RConsoleInObject,kTXNTextData,NULL,0,kTXNStartOffset ,kTXNEndOffset );
+      Raqua_WriteConsole(buf,strlen(buf));
    }
  
   
@@ -330,10 +368,7 @@ void Aqua_RWrite(char *buf)
     TXNOffset oEndOffset;
 
     if(WeHaveConsole){  
-     TXNGetSelection (RConsoleObject, &oStartOffset, &oEndOffset);
-     err =  TXNSetData (RConsoleObject, kTXNTextData, buf, strlen(buf), oStartOffset, oEndOffset);
-     TXNGetSelection (RConsoleObject, &oStartOffset, &oEndOffset);
-     LastStartOffset=oEndOffset;
+     err =  TXNSetData (RConsoleOutObject, kTXNTextData, buf, strlen(buf), kTXNEndOffset, kTXNEndOffset);
     }
 }
 
@@ -429,7 +464,44 @@ static pascal OSErr QuitAppleEventHandler (const AppleEvent *appleEvt,
     fprintf(stderr,"\n quit app");
 } 
   
- 
+
+static pascal OSStatus
+CommandHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
+{
+	OSStatus 		err = eventNotHandledErr;
+	HICommand		command;
+	UInt32			eventKind = GetEventKind( inEvent );
+
+	switch ( GetEventClass( inEvent ) )
+	{
+         case kEventClassCommand:
+            GetEventParameter( inEvent, kEventParamDirectObject, typeHICommand, NULL,
+					sizeof( HICommand ), NULL, &command );
+            if ( eventKind == kEventCommandProcess ){
+             switch(command.commandID){
+
+              case kHICommandNew:
+               fprintf(stderr,"\n new");
+              break;
+             
+              case kHICommandPaste:
+               if(TXNIsScrapPastable()){
+                 TXNSetSelection(RConsoleInObject,kTXNEndOffset,kTXNEndOffset); 
+                 TXNPaste(RConsoleInObject); 
+               }
+               break;
+              
+              default:
+              break;
+             }
+            }
+        }    
+ 	
+	return err;
+}
+
+
+
 #endif /* HAVE_AQUA */
 
 #endif /* __AQUA_CONSOLE__ */
