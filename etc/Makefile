@@ -3,7 +3,7 @@
 TESTS   = ../tests
 Ex_Tests = $(TESTS)/Examples
 CleanMe1 = SHLIB COMPILE INSTALL REMOVE
-CleanMe2 = Rdconv Rdindex Rman2Rd Sd2Rd 
+CleanMe2 = Rdconv Rdindex Rman2Rd Sd2Rd
 CleanMe3 = build-help build-htmlpkglist help.pretty html2dos
 CleanMe  = $(CleanMe1) $(CleanMe2) $(CleanMe3)
 
@@ -51,7 +51,7 @@ $(Ex_Tests):
 
 clean:
 	@rm -f $(CleanMe1)
-	@(cd $(Ex_Tests); make $@)
+	@-(cd $(Ex_Tests) && make $@)
 
 distclean realclean:
 	@rm -fr $(Ex_Tests) $(CleanMe)
