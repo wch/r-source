@@ -17,7 +17,7 @@ colnames(x) <- namevector
 }
 \arguments{
   \item{x}{}
-  \item{do.NULL}{logical. Should this create names is they are \code{NULL}?}
+  \item{do.NULL}{logical. Should this create names if they are \code{NULL}?}
   \item{prefix}{for created names.}
 }
 \details{
