@@ -866,7 +866,7 @@ static SEXP arrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
 static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 {
-	SEXP index, yi, yp;
+	SEXP index, xi, yi, yp;
 	int i, ii, n, nx, ny, stretch=1;
 
 	if (length(s) > 1)
@@ -884,6 +884,7 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 		yi = allocList(length(y));
 		for(yp=yi ; yp!=R_NilValue ; yp=CDR(yp)) {
 			CAR(yp) = CAR(y);
+			TAG(yp) = TAG(y);
 			NAMED(CAR(yp)) = ny | NAMED(CAR(y));
 			y = CDR(y);
 		}
@@ -911,10 +912,19 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 		ii = INTEGER(index)[i];
 		if(ii == NA_INTEGER) continue;
 		ii = ii - 1;
+#ifdef OLD_STUFF
 		yi = CAR(nthcdr(y, i % ny));
 		if(NAMED(y) || NAMED(yi)) yi = duplicate(yi);
 		else NAMED(yi) = 1;
 		CAR(nthcdr(x, ii % nx)) = yi;
+#else
+		yi = nthcdr(y, i % ny);
+		xi = nthcdr(x, ii % nx);
+		if(NAMED(y) || NAMED(CAR(yi))) CAR(yi) = duplicate(CAR(yi));
+		else NAMED(CAR(yi)) = 1;
+		CAR(xi) = CAR(yi);
+		TAG(xi) = TAG(yi);
+#endif
 	}
 	UNPROTECT(3);
 	return x;
