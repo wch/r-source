@@ -1760,10 +1760,7 @@ Mozilla >= 1.4, Netscape 7.1 and FireFox) are compiled under @code{gcc
 plugin that was introduced with @code{j2re 1.4.2}, so the only Java
 version that we know to work is @code{j2re 1.4.2_01}.  Marc Schwartz has
 kindly made Linux @code{i586} distributions available: see
-
-@smallexample
-http://www.MedAnalytics.com/INSTALL
-@end smallexample
+@uref{http://www.MedAnalytics.com/INSTALL}.
 
 @noindent
 Other Java installations, for example those from Blackdown and IBM, have
