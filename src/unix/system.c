@@ -473,7 +473,7 @@ int main(int ac, char **av)
 		value = strtol(p, &p, 10);
 		if(*p) goto badargs;
 		if(value < 1 || value > 1000)
-		    REprintf("WARNING: invalid vector heap size ignored\n");
+		    REprintf("WARNING: invalid vector heap size '%d' ignored, using default = %g\n", value, R_VSize / 1048576.0);
 		else
 		    R_VSize = value * 1048576; /* 1 MByte := 2^20 Bytes*/
 	    }
@@ -492,11 +492,11 @@ int main(int ac, char **av)
 		    R_NSize = value;
 	    }
 	    else if (!strcmp(*av, "--nsize")) {
-		ac--; av++; p = *av;  
+		ac--; av++; p = *av;
 		value = strtol(p, &p, 10);
 		if(*p) goto badargs;
 		if(value < R_NSize || value > 1000000)
-		    REprintf("WARNING: invalid language heap size ignored\n");
+		    REprintf("WARNING: invalid language heap size '%d' ignored, using default = %d\n", value, R_NSize);
 		else
 		    R_NSize = value;
 	    }
@@ -509,25 +509,25 @@ int main(int ac, char **av)
 	    printf("ARGUMENT %s\n", *av);
 	}
     }
-    
+
     /* On Unix the console is a file; we just use stdio to write on it */
-    
+
     R_Interactive = isatty(0);
     R_Consolefile = stdout;
     R_Outputfile = stdout;
     R_Sinkfile = NULL;
-    
+
     if(!R_Interactive && DefaultSaveAction == 0)
 	R_Suicide("you must specify `--save' or `--no-save'");
-    
+
 #ifdef __FreeBSD__
     fpsetmask(0);
 #endif
-    
+
 #ifdef linux
     __setfpucw(_FPU_IEEE);
 #endif
-    
+
 #ifdef HAVE_LIBREADLINE
 #ifdef HAVE_READLINE_HISTORY_H
     if(isatty(0) && UsingReadline)
@@ -537,7 +537,7 @@ int main(int ac, char **av)
     mainloop();
     /*++++++  in ../main/main.c */
     return 0;
-    
+
 badargs:
     REprintf("invalid argument passed to R\n");
     exit(1);
