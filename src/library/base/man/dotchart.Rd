@@ -1,14 +1,14 @@
-\name{dotplot}
-\alias{dotplot}
+\name{dotchart}
+\alias{dotchart}
 \title{Cleveland Dot Plots}
 \description{
   Draw a Cleveland dot plot.
 }
 \usage{
-dotplot(x, labels = NULL, groups = NULL, gdata = NULL,
-        cex = par("cex"), pch = 21, gpch = 21, bg = par("bg"),
-        color = par("fg"), gcolor = par("fg"), lcolor = "gray",
-        main = NULL, xlab = NULL, ylab = NULL, \dots)
+dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
+         cex = par("cex"), pch = 21, gpch = 21, bg = par("bg"),
+         color = par("fg"), gcolor = par("fg"), lcolor = "gray",
+         main = NULL, xlab = NULL, ylab = NULL, \dots)
 }
 \arguments{
   \item{x}{either a vector or matrix of numeric values (\code{NA}s are
@@ -53,7 +53,7 @@ dotplot(x, labels = NULL, groups = NULL, gdata = NULL,
 }
 \examples{
 data(VADeaths)
-dotplot(VADeaths, main = "Death Rates in Virginia - 1940")
-dotplot(t(VADeaths), main = "Death Rates in Virginia - 1940")
+dotchart(VADeaths, main = "Death Rates in Virginia - 1940")
+dotchart(t(VADeaths), main = "Death Rates in Virginia - 1940")
 }
 \keyword{hplot}

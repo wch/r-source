@@ -77,7 +77,7 @@
   midpoints of each \emph{group} of bars, see example.
 }
 \seealso{
-  \code{\link{plot}(\dots, type="h")}, \code{\link{dotplot}},
+  \code{\link{plot}(\dots, type="h")}, \code{\link{dotchart}},
   \code{\link{hist}}.
 }
 \examples{

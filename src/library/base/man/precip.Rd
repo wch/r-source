@@ -19,7 +19,7 @@
 }
 \examples{
 data(precip)
-dotplot(precip[order(precip)], main = "precip data")
+dotchart(precip[order(precip)], main = "precip data")
 title(sub = "Average annual precipitation (in.)")
 }
 \keyword{datasets}
