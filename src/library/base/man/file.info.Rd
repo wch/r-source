@@ -55,17 +55,19 @@ may not be supplied on a non-POSIX Unix system.
 
   What is meant by file access time is system-dependent.
 }
-
 \section{Warning}{
   The format and handling of file dates will be changed before release.
 }
-
 \seealso{
   \code{\link{file}}, \code{\link{file.access}}, \code{\link{list.files}}
 }
-
 \examples{
-file.info(dir("../..", full.names=TRUE))
+%-- the output of this should be "diff"able
+ncol(finf <- file.info(dir()))# at least six
+\dontrun{finf # the whole list}
+## Those that are more than 100 days old :
+finf[ (Sys.time() - finf[,"mtime"]) > (24*60^2) * 100 , 1:4]
+
 file.info("no-such-file-exists")
 }
 \keyword{file}
