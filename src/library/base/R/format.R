@@ -94,7 +94,7 @@ formatC <- function (x, digits = NULL, width = NULL,
     blank.chars <- function(no)
 	sapply(no+1, function(n) paste(character(n), collapse=" "))
 
-    if (is.null(x) || !(n <- length(x))) return("")
+    if (!(n <- length(x))) return("")
     if (missing(mode))	  mode <- storage.mode(x)
     else if (any(mode == c("double", "real", "integer")))
 	storage.mode(x) <- if(mode=="real")"double" else mode

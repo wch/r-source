@@ -2,7 +2,7 @@ menu <- function(choices, graphics = FALSE, title = "")
 {
     nc <- length(choices)
     cat(title, "\n")
-    if(nc) for (i in 1:nc)
+    for (i in seq(length=nc))
 	cat(i, ":", choices[i]," \n", sep = "")
     repeat {
 	cat("Selection: ")
