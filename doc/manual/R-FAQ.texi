@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-16 @value{FAQ-YEAR}-05-19
+@set FAQ-VERSION 1.9-17 @value{FAQ-YEAR}-05-20
 @set REL-VERSION 1.9.0
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2519,8 +2519,14 @@ regression models (GLMs).
 Functions for fitting general linear Structural Equation Models (with
 observed and unobserved variables) by the method of maximum likelihood
 using the RAM approach.
-@item serialize
-Simple interfce for serializing to connections.
+@item seqmon
+Sequential monitoring of clinical trials.
+@c <COMMENT>
+@c Moved to the Archive as requested by the maintainer: serialize() et
+@c al are available in R 1.8 or better.
+@c @item serialize
+@c Simple interfce for serializing to connections.
+@c </COMMENT>
 @item session
 Functions for interacting with, saving and restoring R sessions.
 @item setRNG
