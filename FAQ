@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-28, 2003-01-23
+Version 1.6-29, 2003-02-03
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1422,6 +1422,9 @@ distributions of R.)
 *class*
      Functions for classification (k-nearest neighbor and LVQ).  Contained
      in the `VR' bundle.  _Recommended_.
+
+*clim.pact*
+     Climate analysis and downscaling for monthly and daily data.
 
 *cluster*
      Functions for cluster analysis.  _Recommended_.
