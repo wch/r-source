@@ -94,4 +94,3 @@ x0 <- seq(0.5,3.5, by = 0.25)
 rbind(x=x0, f.f0 = sfun0(x0), f.f02= sfun.2(x0), f.f1 = sfun1(x0))
 }
 \keyword{dplot}
-

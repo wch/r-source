@@ -6,7 +6,8 @@
   objects and utility for plotting piecewise constant functions.
 }
 \usage{
-\method{plot}{stepfun}(x, xval, xlim, xlab = "x", ylab = "f(x)", main = NULL,
+\method{plot}{stepfun}(x, xval, xlim, ylim,
+     xlab = "x", ylab = "f(x)", main = NULL,
      add = FALSE, verticals = TRUE, do.points = TRUE,
      pch = par("pch"), col.points=par("col"), cex.points=par("cex"),
      col.hor = par("col"), col.vert= par("col"),
@@ -16,7 +17,8 @@
   \item{x}{an \R object inheriting from \code{"stepfun"}.}
   \item{xval}{numeric vector of abscissa values at which to evaluate
     \code{x}.  Defaults to \code{\link{knots}(x)} restricted to \code{xlim}.}
-  \item{xlim}{numeric(2); range of \code{x} values to use.}
+  \item{xlim,ylim}{numeric(2) each; range of \code{x} or \code{y} values
+    to use.  Both have sensible defaults.}
   \item{xlab,ylab}{labels of x and y axis.}
   \item{main}{main title.}
   \item{add}{logical; if \code{TRUE} only \emph{add} to an existing plot.}
@@ -61,6 +63,10 @@ plot(sfun0, verticals= FALSE,
 for(i in 1:3)
   plot(list(sfun0,sfun.2,sfun1)[[i]], add=TRUE, col.h=i, col.v=i)
 legend(2.5, 1.9, paste("f =", c(0,0.2,1)), col=1:3, lty=1, y.inter=1); par(op)
+
+# Extend and/or restrict `viewport':
+plot(sfun0, xlim = c(0,5), ylim = c(0, 3.5),
+     main = "plot(stepfun(*), xlim= . , ylim = .)")
 
 ##-- this works too (automatic call to  ecdf(.)):
 plot.stepfun(rt(50, df=3), col.vert = "gray20")

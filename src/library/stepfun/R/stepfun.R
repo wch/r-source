@@ -67,12 +67,13 @@ summary.stepfun <- function(object, ...)
 ##	      1990, U.Washington, Seattle; improved, Dec.1993
 ##	      Ported to R :  Sept.1997.
 plot.stepfun <-
-    function(x, xval, xlim, xlab = "x", ylab = "f(x)", main = NULL,
-             add = FALSE, verticals = TRUE, do.points = TRUE,
+    function(x, xval, xlim, ylim = range(c(y,Fn.kn)),
+	     xlab = "x", ylab = "f(x)", main = NULL,
+	     add = FALSE, verticals = TRUE, do.points = TRUE,
 	     pch = par("pch"), col.points=par("col"), cex.points=par("cex"),
 	     col.hor = par("col"), col.vert= par("col"),
-             lty = par("lty"), lwd = par("lwd"),
-             ...)
+	     lty = par("lty"), lwd = par("lwd"),
+	     ...)
 {
     if(!is.stepfun(x)) { #- make it work when called explicitly with data
 	if(is.numeric(x)) {
@@ -111,7 +112,8 @@ plot.stepfun <-
     if (add)
 	segments(ti.l, y, ti.r, y, col=col.hor, lty=lty, lwd=lwd, ...)
     else {
-	plot(0,0, type="n", xlim=xlim, ylim=range(c(y,Fn.kn)),
+        if(missing(ylim)) ylim <- range(c(y,Fn.kn))
+	plot(0,0, type="n", xlim=xlim, ylim=ylim,
 	     xlab=xlab, ylab=ylab, main= main, ...)
 	segments(ti.l, y, ti.r, y, col=col.hor, lty=lty, lwd=lwd)
     }

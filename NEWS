@@ -6,6 +6,15 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.6.2
+
+
+BUG FIXES
+
+    o	plot.stepfun() now obeys a `ylim=.' specification.
+
+
+
 		CHANGES IN R VERSION 1.6.1
 
 
