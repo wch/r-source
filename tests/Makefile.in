@@ -71,7 +71,7 @@ DISTFILES = Makefile.in Makefile.win README \
 SUBDIRS = Embedding Examples Native
 
 R = LC_ALL=C SRCDIR=$(srcdir) $(top_builddir)/bin/R --vanilla
-RDIFF = $(top_builddir)/bin/Rdiff
+RDIFF = $(top_builddir)/bin/R CMD Rdiff
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)

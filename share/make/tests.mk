@@ -9,7 +9,7 @@ test-src = $(test-src-1) $(test-src-auto)
 test-out = $(test-src:.R=.Rout)
 
 R = srcdir=$(srcdir) $(R_HOME)/bin/R --vanilla
-RDIFF = $(R_HOME)/bin/Rdiff
+RDIFF = $(R_HOME)/bin/R CMD Rdiff
 USE_GCT = 0
 
 .SUFFIXES:
