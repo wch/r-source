@@ -122,7 +122,7 @@ static void fmingr(int n, double *p, double *df, void *ex)
 		df[i] = (val1 - val2)/(2 * eps);
 #define DO_df_x 							\
 		if(!R_FINITE(df[i])) 					\
-		    error("non-finite finite-difference value [%d]", i);\
+		    error("non-finite finite-difference value [%d]", i+1);\
 		REAL(x)[i] = p[i] * (OS->parscale[i])
 
 		DO_df_x;
