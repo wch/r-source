@@ -105,6 +105,15 @@ rank <- function(x, na.last = TRUE) {
 }
 readline <- function(prompt="").Internal(readline(prompt))
 search <- function().Internal(search())
+searchpaths <- function()
+{
+    s <- search()
+    paths <- lapply(1:length(s), function(i) attr(pos.to.env(i), "path"))
+    paths[[length(s)]] <- system.file()
+    m <- grep("^package:", s)
+    if(length(m)) paths[-m] <- as.list(s[-m])
+    unlist(paths)
+}
 
 sink <- function(file=NULL, append = FALSE)
     .Internal(sink(file, append))
