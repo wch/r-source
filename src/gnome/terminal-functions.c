@@ -112,7 +112,7 @@ static void file_open_ok(GtkWidget *widget, gpointer data)
 	switch (TYPEOF(img)) {
 	case LISTSXP:
 	    while (img != R_NilValue) {
-		setVarInFrame(R_GlobalEnv, TAG(img), CAR(img));
+		defineVar(TAG(img), CAR(img), R_GlobalEnv);
 		img = CDR(img);
 	    }
 	    break;
@@ -120,7 +120,7 @@ static void file_open_ok(GtkWidget *widget, gpointer data)
 	    for (i = 0; i < LENGTH(img); i++) {
 		lst = VECTOR(img)[i];
 		while (lst != R_NilValue) {
-		    setVarInFrame(R_GlobalEnv, TAG(lst), CAR(lst));
+		    defineVar(TAG(lst), CAR(lst), R_GlobalEnv);
 		    lst = CDR(lst);
 		}
 	    }
