@@ -1,7 +1,7 @@
 \name{match.fun}
-\title{Function Verification for Variables}
+\title{Function Verification for ``Function Variables''}
 \usage{
-match.fun(FUN, descend=FALSE)
+match.fun(FUN, descend=TRUE)
 }
 \alias{match.fun}
 \arguments{
@@ -12,16 +12,18 @@ match.fun(FUN, descend=FALSE)
 \description{
 Matches \code{FUN} to a function, where \code{FUN} can be a
 character (string), e.g., \code{"*"} or \code{"fred"},
-or a function such as \code{pmax}.  Returns an error if no matching
-function is found.
+or a function such as \code{pmax}.
+
+Returns an error if no matching function is found.
 }
 \details{
 If \code{descend=TRUE}, \code{match.fun} will look underneath
 non-function objects with the given name; otherwise if \code{FUN}
 points to a non-function object then an error is generated.
 
-Suggest that this be included in base functions such as
-\code{apply} and the like, \code{outer} and \code{sweep}.
+This is now used in base functions such as
+\code{\link{apply}}, \code{\link{lapply}}, \code{\link{outer}},
+\code{\link{sweep}}, and the like.
 }
 \value{A function matching \code{FUN} or an error is generated.
 }
@@ -35,14 +37,14 @@ search list with the same name.}
 \seealso{\code{\link{match.arg}}}
 
 \examples{
-# Same as get("*")
+# Same as get("*"):
 match.fun("*")
 # Overwrite outer with a vector
 outer <- 1:5
 \dontrun{
-match.fun(outer) #-> Error:  not a function
+match.fun(outer, descend = FALSE) #-> Error:  not a function
 }
-match.fun(outer, descend = TRUE)
-match.fun("outer")
+match.fun(outer) # finds it anyway
+is.function(match.fun("outer")) # as well
 }
 \keyword{programming}

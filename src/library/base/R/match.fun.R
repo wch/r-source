@@ -1,12 +1,12 @@
-match.fun <- function (FUN, descend = FALSE)
+match.fun <- function (FUN, descend = TRUE)
 {
     if (is.function(FUN)) FUN
     else if (is.character(FUN))
 	get(FUN, mode = "function")
     else {
-	FUN <- deparse(substitute(FUN))
-	if (descend)
-	    get(FUN, mode = "function")
-	else stop(paste("\"", FUN, "\" is not a function", sep = ""))
+	f <- substitute(FUN)
+	if(descend && is.name(f))
+	    get(as.character(f), mode = "function")
+	else stop(paste("\"", f, "\" is not a function", sep = ""))
     }
 }
