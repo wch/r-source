@@ -15,14 +15,6 @@ methods(generic.function, class)
   the object supplied as an argument to \code{UseMethod} or \code{NextMethod}.
 }
 \alias{.isMethodsDispatchOn}
-\note{
-  This scheme is called \emph{S3} (S version 3).  For new projects,
-  it is recommended to use the more flexible and robust \emph{S4} scheme
-  provided in the \file{methods} package after \code{library(methods)}.
-  \cr
-  The function \code{.isMethodsDispatchOn()} returns \code{TRUE} if the
-  new S4 methods are available but is meant for \R internal use only.
-}
 \arguments{
   \item{generic}{a character string naming a function.}
   \item{object}{an object whose class will determine the method to be
@@ -73,6 +65,13 @@ methods(generic.function, class)
 
 }
 \note{
+  This scheme is called \emph{S3} (S version 3).  For new projects,
+  it is recommended to use the more flexible and robust \emph{S4} scheme
+  provided in the \file{methods} package after \code{library(methods)}.
+  \cr
+  The function \code{.isMethodsDispatchOn()} returns \code{TRUE} if the
+  new S4 methods are available but is meant for \R internal use only.
+
   The \code{methods} function was written by Martin Maechler.
 }
 \seealso{

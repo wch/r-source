@@ -61,6 +61,11 @@ sys.save.image(name)
   \code{sys.save.image} is a system function that is called by \code{q()}
   and its GUI analogs; \code{sys.load.image} is called by the startup code.
   These functions should not be called directly and are subject to change.
+
+  \code{sys.save.image} closes all connections first, to ensure that it
+  is able to open a connection to save the image.  This is appropriate
+  when called from \code{q()} and allies, but reinforces the warning
+  that it should not be called directly.
 }
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}},
