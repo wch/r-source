@@ -208,7 +208,6 @@
 #define dwilcox		Rf_dwilcox
 #define fmax2		Rf_fmax2
 #define fmin2		Rf_fmin2
-#define fmod		Rf_fmod
 #define fprec		Rf_fprec
 #define fround		Rf_fround
 #define ftrunc		Rf_ftrunc
@@ -524,7 +523,6 @@ int	imin2(int, int);
 double	fmax2(double, double);
 double	fmin2(double, double);
 double	sign(double);
-double	fmod(double, double);
 double	fprec(double, double);
 double	fround(double, double);
 double	fsign(double, double);

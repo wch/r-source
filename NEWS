@@ -6,6 +6,18 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.2.3
+
+
+BUG FIXES
+
+    o	`Writing R Extensions' incorrectly described an entry point
+	`fmod' which was not included in the R binary on most systems.
+	The entry point has been removed, to avoid any confusion with
+	the standard C entry point of the same name.
+ 
+
+
 		CHANGES IN R VERSION 1.2.2
 
 

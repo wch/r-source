@@ -3757,10 +3757,6 @@ decimal digits.
 This is the function used by @R{}'s @code{signif()}.
 @end deftypefun
 
-@deftypefun double fmod (double @var{x})
-Returns the absolute value of value of @var{x}.
-@end deftypefun
-
 @deftypefun double ftrunc (double @var{x})
 Returns the value of @var{x} truncated (to an integer value) towards zero.
 @end deftypefun
