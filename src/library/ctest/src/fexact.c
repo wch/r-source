@@ -26,12 +26,12 @@ static void f3xact(Sint *nrow, Sint *irow, Sint *ncol,	Sint *icol,
 		  double *dlp, Sint *mm, double *fact, Sint *ico, Sint
 		  *iro, Sint *it, Sint *lb, Sint *nr, Sint *nt, Sint
 		  *nu, Sint *itc, Sint *ist, double *stv, double *alen,
-		  double *tol);
+		  const double *tol);
 static void f4xact(Sint *nrow, Sint *irow, Sint *ncol, Sint *icol,
 		  double *dsp, double *fact, Sint *icstk, Sint *ncstk,
 		  Sint *lstk, Sint *mstk, Sint *nstk, Sint *nrstk, Sint
-		  *irstk, double *ystk, double *tol);
-static void f5xact(double *pastp, double *tol, Sint *kval, Sint *key,
+		  *irstk, double *ystk, const double *tol);
+static void f5xact(double *pastp, const double *tol, Sint *kval, Sint *key,
 		  Sint *ldkey, Sint *ipoin, double *stp, Sint *ldstp,
 		  Sint *ifrq, Sint *npoin, Sint *nr, Sint *nl, Sint
 		  *ifreq, Sint *itop, Sint *ipsh);
@@ -847,7 +847,7 @@ void
 f3xact(Sint *nrow, Sint *irow, Sint *ncol, Sint *icol, double *dlp,
        Sint *mm, double *fact, Sint *ico, Sint *iro, Sint *it,
        Sint *lb, Sint *nr, Sint *nt, Sint *nu, Sint *itc, Sint *ist,
-       double *stv, double *alen, double *tol)
+       double *stv, double *alen, const double *tol)
 {
     /* Initialized data */
     static Sint ldst = 200;
@@ -1192,7 +1192,7 @@ L200: /* Pop item from stack */
 void
 f4xact(Sint *nrow, Sint *irow, Sint *ncol, Sint *icol, double *dsp,
        double *fact, Sint *icstk, Sint *ncstk, Sint *lstk, Sint *mstk,
-       Sint *nstk, Sint *nrstk, Sint *irstk, double *ystk, double *tol)
+       Sint *nstk, Sint *nrstk, Sint *irstk, double *ystk, const double *tol)
 {
     /* System generated locals */
     Sint ikh;
@@ -1415,7 +1415,7 @@ L100:
   */
 
 void
-f5xact(double *pastp, double *tol, Sint *kval, Sint *key, Sint *ldkey,
+f5xact(double *pastp, const double *tol, Sint *kval, Sint *key, Sint *ldkey,
        Sint *ipoin, double *stp, Sint *ldstp, Sint *ifrq, Sint *npoin,
        Sint *nr, Sint *nl, Sint *ifreq, Sint *itop, Sint *ipsh)
 {
