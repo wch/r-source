@@ -1,6 +1,6 @@
 
-R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Patched (2001-12-20)
+R : Copyright 2002, The R Development Core Team
+Version 1.5.0 Under development (unstable) (2002-03-29)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -113,10 +113,10 @@ Error in read.table("foo6", header = TRUE, fill = TRUE) :
 +     "3 1 2 3 NA TRUE def\n",
 +     sep = "", file = "foo7")
 > (res <- read.table("foo7"))
-   A   B       C  D     E   F
-1  1 1.1  1.1+0i NA FALSE abc
-2 NA  NA      NA NA    NA  NA
-3  1 2.0  3.0+0i NA  TRUE def
+   A   B       C  D     E    F
+1  1 1.1  1.1+0i NA FALSE  abc
+2 NA  NA      NA NA    NA   <NA>
+3  1 2.0  3.0+0i NA  TRUE  def
 > sapply(res, typeof)
         A         B         C         D         E         F 
 "integer"  "double" "complex" "logical" "logical" "integer" 
@@ -142,10 +142,10 @@ $F
 > (res2 <- read.table("foo7",
 +                     colClasses = c("character", rep("numeric", 2),
 +                     "complex", "integer", "logical", "character")))
-   A   B       C  D     E   F
-1  1 1.1  1.1+0i NA FALSE abc
-2 NA  NA      NA NA    NA  NA
-3  1 2.0  3.0+0i NA  TRUE def
+   A   B       C  D     E    F
+1  1 1.1  1.1+0i NA FALSE  abc
+2 NA  NA      NA NA    NA   <NA>
+3  1 2.0  3.0+0i NA  TRUE  def
 > sapply(res2, typeof)
           A           B           C           D           E           F 
    "double"    "double"   "complex"   "integer"   "logical" "character" 
