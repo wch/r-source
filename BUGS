@@ -293,10 +293,6 @@ Subject: return() undocumented
 From: Scot@Wilcoxon.Org
 Date: Sat, 10 Jan 2004 16:12:16 +0100 (CET)
 ..He meant in R-lang
-* PR# 6793 *
-Subject: rsync command in FAQ
-From: terra@gnome.org
-Date: Mon, 19 Apr 2004 18:29:57 +0200 (CEST)
 
 Directory:  Graphics
 
@@ -872,3 +868,11 @@ Date: Wed, 21 Apr 2004 15:59:01 +0200
 Subject: segfault in approx()
 From: kjetil@entelnet.bo
 Date: Wed, 21 Apr 2004 17:49:03 -0400
+* PR# 6810 *
+Subject: Re: jar acapulco
+From: Lucinda Starr <vsvaajhchgieq@loveable.com>
+Date: Thu, 22 Apr 2004 11:16:27 -0600
+* PR# 6811 *
+Subject: as.Date in dev release
+From: "Lyden, Scott" <slyden@us.nomura.com>
+Date: Thu, 22 Apr 2004 13:02:43 -0400
