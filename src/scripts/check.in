@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.184 $ ';
+my $revision = ' $Revision: 1.185 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -649,7 +649,8 @@ sub check_pkg {
 	}
 	if($found != 0) {
 	    $log->error();
-	    $log->print("Invalid package name: this is the name of a base package.\n");
+	    $log->print("Invalid package name.\n");
+	    $log->print("This is the name of a base package.\n");
 	    exit(1);
 	}
         $found = 0;
@@ -663,7 +664,7 @@ sub check_pkg {
 	    $log->error();
 	    $log->print("Invalid package name.\n");
 	    $log->print(wrap("", "",
-			     ("This name was been used for a base package",
+			     ("This name was used for a base package",
 			      "and is remapped by library().\n")));
 	    exit(1);
 	}
@@ -688,16 +689,12 @@ sub check_pkg {
     }
 
     ## Optional entries in DESCRIPTION:
-    ##   Depends, Namespace, Priority.
+    ##   Depends/Suggests, Namespace, Priority.
     ## These must be correct if present.
 
-    ## <FIXME>
-    ## We should also check Suggests here, but what precisely is allowed
-    ## for this?
-    ## </FIXME>
-
-    if($description->{"Depends"}) {
-	my @dependencies = split(/\,\s*/, $description->{"Depends"});
+    if($description->{"Depends"} || $description->{"Suggests"}) {
+	my @dependencies = split(/\,\s*/, ($description->{"Depends"},
+					   $description->{"Suggests"}));
 	my @matches;
 	my ($is_bad_dep_op, $is_bad_dep_version);
 	my ($bad_dep_value, @bad_dep_error);
@@ -737,7 +734,7 @@ sub check_pkg {
 	}
 	if($bad_dep_entry) {
 	    $log->error();
-	    $log->print("Malformed Depends field.\n");
+	    $log->print("Malformed Depends or Suggests field.\n");
 	    $log->print("Offending entry is: '$bad_dep_entry'.\n");
 	    $log->print(wrap("", "", @bad_dep_error));
 	    $log->print(wrap("", "", @msg_DESCRIPTION));
@@ -1078,6 +1075,11 @@ sub check_pkg {
     if(-d "R") {
 	$log->checking("for replacement functions with final arg not " .
 		       "named 'value'");
+
+	## <FIXME>
+	##   @msg_replace_funs
+	## </FIXME>
+
 	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkReplaceFuns(package = \"${pkgname}\")\n";
@@ -1374,6 +1376,11 @@ sub check_pkg {
 
     if($opt_codoc && (-d "man")) {
 	$log->checking("for code/documentation mismatches");
+
+	## <FIXME>
+	##   @msg_codoc
+	## </FIXME>
+
 	my $any = 0;
 
 	## Check for code/documentation mismatches in functions.
@@ -1438,6 +1445,10 @@ sub check_pkg {
 
     if(-d "man") {
 	$log->checking("Rd \\usage sections");
+
+	## <FIXME>
+	##   @msg_doc_files
+	## </FIXME>
 
 	my $Rcmd;
 	if($opt_install) {
@@ -1505,11 +1516,11 @@ sub check_pkg {
 	$log->creating("${pkgname}-Ex.R");
 	my $Rexdir = &file_path($library, $pkgname, "R-ex");
         ## $Rexdir might contain spaces (not on Windows)
-        my $iszipped = 0;
+        my $is_zipped = 0;
 	my $cmd;
 
         if(-e &file_path($Rexdir, "Rex.zip")) {
-            $iszipped = 1;
+            $is_zipped = 1;
 	    my $UNZIP = &R_getenv("R_UNZIPCMD", "unzip -q");
             my $Rexfile = &file_path($Rexdir, "Rex.zip");
 	    $cmd = join(" ",
@@ -1545,7 +1556,7 @@ sub check_pkg {
 			"${pkgname}-Ex.R failed.\n");
   	    exit(1);
         }
-        if($iszipped) {
+        if($is_zipped) {
             unlink(&list_files_with_exts($Rexdir, "R"));
         }
 
@@ -1671,19 +1682,17 @@ sub check_pkg {
 
     chdir($pkgoutdir);
 
-    if((-d &file_path($pkgdir, "inst", "doc"))
-       && &list_files_with_type(&file_path($pkgdir, "inst", "doc"),
-				"vignette")) {
-	$log->checking(join("",
-			    ("package vignettes in '",
-			     &file_path("inst", "doc"),
-			     "'")));
+    my $vignette_dir = &file_path($pkgdir, "inst", "doc");
+    if((-d $vignette_dir)
+       && &list_files_with_type($vignette_dir, "vignette")) {
+	$log->checking(join(" ",
+			    ("package vignettes in",
+			     &sQuote(&file_path("inst", "doc")))));
 	my $any = 0;
 
 	## Do PDFs exist for all package vignettes?
 	my @vignette_files =
-	  &list_files_with_type(&file_path($pkgdir, "inst", "doc"),
-				"vignette");
+	  &list_files_with_type($vignette_dir, "vignette");
 	my @bad_vignettes = ();
 	foreach my $file (@vignette_files) {
 	    my $pdf_file = $file;
@@ -1738,11 +1747,17 @@ sub check_pkg {
 	    $ENV{'TEXINPUTS'} =
 	      env_path(&file_path($R::Vars::R_HOME, "share", "texmf"),
 		       $ENV{'TEXINPUTS'});
-            my $was_zipped = 0;
+            my $is_zipped = 0;
             # latex files might have been zipped
-            if(-f &file_path($library, $pkgname, "latex", "Rhelp.zip")) {
-                $was_zipped = 1;
-                my $cmd = "cd $latex_dir; unzip -qo Rhelp.zip";
+            if(-f &file_path($latex_dir, "Rhelp.zip")) {
+                $is_zipped = 1;
+		my $UNZIP = &R_getenv("R_UNZIPCMD", "unzip -q");
+		my $latex_file = &file_path($latex_dir, "Rhelp.zip");
+		$cmd = join(" ",
+			    ("$UNZIP",
+			     &shell_quote_file_path($latex_file),
+			     "-d",
+			     &shell_quote_file_path($latex_dir)));
                 if(R_system($cmd)) {
 		    $log->error();
 		    $log->print("Unzipping latex files failed.\n");
@@ -1766,12 +1781,8 @@ sub check_pkg {
 	    }
 	    print MANUAL "\\end\{document\}\n";
 	    close(MANUAL);
-            if($was_zipped) {
-                if(R_system("rm -f $latex_dir/*.tex")) {
-		    $log->error();
-		    $log->print("Removing unzipped latex files failed.\n");
-		    exit(1);
-                }
+            if($is_zipped) {
+		unlink(&list_files_with_exts($latex_dir, "tex"));
             }
 	    $log->result("OK");
 	    if($HAVE_LATEX) {
