@@ -42,16 +42,19 @@ BUG FIXES
 	row i and col j.
 
     o	Even more user errors in recursive indexing of lists are now
-	caught.  (PR#4486)
+	caught.	 (PR#4486)
 
     o	cor(<matrix>, use = "pairwise") gave wrong result in 1.8.0 (only).
 	(PR#4646)
 
-    o   merge.data.frame could give incorrect names when one of the
-	arguments had only one column.  (PR#4299)
+    o	merge.data.frame could give incorrect names when one of the
+	arguments had only one column.	(PR#4299)
 
-    o   Subsetting a one-dimensional array dropped dimensions even when
+    o	Subsetting a one-dimensional array dropped dimensions even when
 	they were not of length one.  (Related to PR#4110)
+
+    o	The plot() method for `ecdf' objects, plot.ecdf(), now allows to
+	set a `ylab' argument (different from the default).
 
 
 

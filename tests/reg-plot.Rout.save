@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Under development (unstable) (2003-08-23)
+Version 1.8.0 Patched (2003-10-22)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -105,4 +105,8 @@ Warning in xy.coords(x = matrix(rep.int(tx, k), ncol = k), y = x, log = log) :
 > lo <- legend(2,2, substitute(hat(theta) == that, list(that= pi)))
 > stopifnot(length(lo$text$x) == 1)
 > ## length() was 3 till 1.7.x
+> 
+> library(stepfun)
+> plot(ecdf(c(1:4,8,12)), ylab = "ECDF", main=NULL)
+> ## ylab didn't work till 1.8.0
 > 
