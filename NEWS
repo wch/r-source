@@ -7,6 +7,18 @@
 
 NEW FEATURES
 
+    o	A new scheme for keeping source code with user-defined
+        functions has been implemented. In particular, comments
+	will no longer move about or disappear. The flip side of the
+	coin is that you can no longer rely on R to indent your
+	code for you. The stored-source facility can be turned
+	off with options(keep.source=FALSE), and for an individual
+	function by deleting the "source" attribute.
+
+	If the source attribute is absent, the function will be
+	deparsed for editing or printing, but any comments will be
+	lost.
+
     o	Preliminary version of package ts for time-series analysis.
 	This has fairly complete S-PLUS compatibility, but more features
 	are planned. See library(help=ts) for more details.
