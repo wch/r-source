@@ -28,12 +28,16 @@ do
  bf=`basename $file .R`
  #Dbg: echo $bf >&2
  if   [ $bf = 'on.exit' ];	then sed -e '$s/$/; par(opar)/' $file
- elif [ $bf = 'pictex' ];	then sed -e '4,$s/^/##LaTex /' $file
+ elif [ $bf = 'match.arg' ];	then sed -e '/^cent.*Error/s/^/##Test: /' $file
+ elif [ $bf = 'menu'  ];	then sed -e '6,$s/^/##INTERACTIVE> /' $file
+ elif [ $bf = 'na.fail' ];	then sed -e '/^na\.fail/s/^/##Test: /' $file
+ elif [ $bf = 'pictex' ];	then sed -e '6,$s/^/##LaTex /' $file
  elif [ $bf = 'postscript' ];	then sed -e '/^postscript(/s/^/## /' $file
  elif [ $bf = 'Random' ];	then sed -e '$s/$/; .Random.seed <- 9:7/' $file
  elif [ $bf = 'solve'  ];	then sed -e '/error:.*singular/s/^/## /' $file
+ elif [ $bf = 'traceback' ];	then sed -e '/^[a-z]*(/s/^/##Test: /' $file
  elif [ $bf = 'dataentry' ];	then 
-    sed -e '/^d[A-z.]*(/s/^/##INTERACTIVE> /' $file
+    sed -e '/^data/s/^/##INTERACTIVE> /' $file
  elif [ $bf = 'edit'   ];	then 
     sed -e '/edit(/s/^/##INTERACTIVE> /; /^vi(/s/^/##INTERACTIVE> /' $file
  else cat $file
