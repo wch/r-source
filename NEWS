@@ -43,6 +43,12 @@ BUG FIXES
 
     o	cor.test(*, meth="spear") {pkg ctest} now works (again) for n <= 6
 
+    o	scale = 0 in biplot.princomp() now works.
+
+    o	The scores given by princomp(, cor = TRUE) and the rotated 
+	values given by prcomp(, scale = TRUE) are now computed from the
+	scaled data.
+
 
 		CHANGES IN R VERSION 1.0.0
 
