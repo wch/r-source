@@ -44,9 +44,9 @@ endif
 
 ## =============== end of user-customizable parts  ===================
 
-REC_BUNDLES=KernSmooth boot cluster foreign grid lattice mgcv nlme rpart survival
-RECOMMENDED=VR $(REC_BUNDLES)
-REC_PKGS=$(REC_BUNDLES) MASS class nnet spatial
+REC_NONBUNDLES=KernSmooth boot cluster foreign grid lattice mgcv nlme rpart survival
+RECOMMENDED=VR $(REC_NONBUNDLES)
+REC_PKGS=$(REC_NONBUNDLES) MASS class nnet spatial
 
 ifeq ($(strip $(BUILD)),MINGW)
 BINPREF=

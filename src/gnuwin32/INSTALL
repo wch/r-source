@@ -219,7 +219,12 @@ The recommended packages can be built by
 
 	make recommended
 
-If you are using a cvs/rsync version of the sources, you need to
+and checked by
+
+	make check_recommended
+
+
+If you are using a cvs/rsync version of the R sources, you need to
 put the .tar.gz files for the recommended packages in ../../Recommended.
 If you have rsync installed,
 
@@ -240,9 +245,10 @@ Once everything is set up
 	make
 	make distribution
 	make recommended
+	make fullcheck
 	make rinstaller
 
-will make all the pieces and then make the installers.
+will make and check all the pieces and then make the installers.
 
 
 Cross-building on ix86 Linux

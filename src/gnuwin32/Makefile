@@ -308,6 +308,10 @@ clean: cleanwin $(PKGCLEAN)
 	-$(MAKE) -C ../modules -f Makefile.win clean
 	-$(MAKE) -C ../../tests -f Makefile.win clean
 	$(RM) -f ../library/methods/R/methods
+	$(RM) -f ../../Recommended/stamp
+	for p in $(RECOMMENDED); do \
+	  $(RM) -rf ../library/$$p; \
+	done
 
 distclean veryclean: clean
 	$(RM) -r ../../bin ../../library ../../modules
@@ -328,6 +332,7 @@ distclean veryclean: clean
 	@for pkg in $(ALLPACKAGES); do \
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
+	rm ../../Recommended/*.tar.gz
 	$(RM) Rpwd.exe # do this last of all
 
 cleanwin:
@@ -358,6 +363,10 @@ test-Specific:
 PKGS-CHK = $(foreach i, $(PACKAGES), pkgcheck-$i)
 pkgtests: $(PKGS-CHK)
 
+fullcheck: check check_recommended
+
+REC_PKGS-CHK = $(foreach i, $(REC_PKGS), pkgcheck-$i)
+check_recommended: $(REC_PKGS-CHK)
 
 #                          ===== documentation ======
 
@@ -497,15 +506,22 @@ docsdist: docs
 install:
 	cp *.zip /pub/bdr/RWin/Rpre
 
-REC_TGZ = $(wildcard ../../Recommended/*)
 
 get_recommended:
-	(cd ../..; rsync -rv --delete cran.r-project.org::CRAN/src/contrib/1.6.0/Recommended .)
+	(cd ../..; rsync -rvt --delete --exclude stamp cran.r-project.org::CRAN/src/contrib/1.6.0/Recommended .)
 
 recommended:
-	@echo "Making recommended packages"
-	for p in $(REC_TGZ); do \
-	  ../../bin/Rcmd INSTALL $${p}; \
+	@echo "--- Unpacking recommended packages"
+	@if [ -f ../../Recommended/stamp ] ; then \
+	  (cd ../../Recommended; find . -newer stamp -name \*.tar.gz -exec tar zxf {} -C $(RHOME)/src/library \;) ; \
+	else \
+	  (cd ../../Recommended; find . -name \*.tar.gz -exec tar zxf {} -C $(RHOME)/src/library \;) ; \
+	fi
+	@touch ../../Recommended/stamp
+	@echo "--- Making recommended packages"
+	@$(MAKE) --no-print-directory bundle-VR
+	@for p in $(REC_NONBUNDLES); do \
+	  $(MAKE) --no-print-directory pkg-$$p; \
 	done
 
 
