@@ -307,13 +307,29 @@ fi
 ])# R_PROG_CC_FLAG
 
 AC_DEFUN([R_PROG_CC_FLAG_D__NO_MATH_INLINES],
-[AC_EGREP_CPP([yes],
-[#include <math.h>
+[AC_CACHE_CHECK([whether C runtime needs -D__NO_MATH_INLINES],
+                [r_cv_c_no_math_inlines],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <math.h>
 #if defined(__GLIBC__)
-  yes
+int main () {
+  double x, y;
+  x = -0./1.;
+  y = exp(x);
+  exit (y != 0.);
+}
+#else
+int main () {
+  exit(0);
+}
 #endif
-],
-              [R_SH_VAR_ADD(R_XTRA_CFLAGS, [-D__NO_MATH_INLINES])])
+]])],
+              [r_cv_c_no_math_inlines=yes],
+              [r_cv_c_no_math_inlines=no],
+              [r_cv_c_no_math_inlines=no])])
+if test "${r_cv_c_no_math_inlines}" = yes; then
+  R_SH_VAR_ADD(R_XTRA_CFLAGS, [-D__NO_MATH_INLINES])
+fi
 ])# R_PROG_CC_FLAG_D__NO_MATH_INLINES
 
 AC_DEFUN([R_C_OPTIEEE],

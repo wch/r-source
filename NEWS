@@ -25,6 +25,10 @@ INSTALLATION CHANGES
 	(these days it is only passed to the linker and was only
 	invoked for compilation steps).
 
+    o	-D__NO_MATH_INLINES is only used on older ix86 glibc-based
+	systems which need it (tested at configure time).  This leads to
+	small improvements in speed and accuracy on modern systems.
+
     o	If makeinfo >= 4.5 is not available, warnings are given that
 	some of the HTML manuals will be missing, and the index page
 	given by help.start() will link to CRAN versions of those manuals.
