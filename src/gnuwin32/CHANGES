@@ -37,6 +37,8 @@ from R_LIBS if the latter is set.
 
 install.packages() can install source packages as well as binary ones.
 
+sQuote() now defaults to type="cmd" on Windows.
+
 
 
 R 2.0.1 patched

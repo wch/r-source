@@ -4,6 +4,7 @@ shQuote <- function(string, type = c("sh", "csh", "cmd"))
         xx <- strsplit(x, "'", fixed = TRUE)[[1]]
         paste(paste("'", xx, "'", sep = ""), collapse="\"'\"")
     }
+    if(missing(type) && .Platform$OS.type == "windows") type <- "cmd"
     type <- match.arg(type)
     if(type == "cmd") {
         paste('"', gsub('"', '\\\\"', string), '"', sep = "")

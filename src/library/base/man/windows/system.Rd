@@ -50,7 +50,9 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
 \details{
   \code{cmd} is parsed as a command plus arguments separated by spaces.
   So if the path to the command contains spaces, it must be
-  (double-)quoted.  See the examples.
+  (double-)quoted.  See the examples.  (Note: a Windows path name cannot
+  contain a double quote, so we do not need to worry about escaping
+  embedded quotes.)
 
   The command is run directly as a Windows command by the Windows API
   call \code{CreateProcess}: extensions of \code{.exe}, \code{.com},
@@ -81,8 +83,10 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
     may hang and then will probably hang \code{Rgui} too.
 }
 
-\seealso{\code{\link{shell}} or \code{\link{shell.exec}} for a less raw
-interface.}
+\seealso{
+  \code{\link{shell}} or \code{\link{shell.exec}} for a less raw
+  interface.
+}
 
 \examples{
 # launch an editor, wait for it to quit
