@@ -67,7 +67,7 @@ tcl:
 	@$(MAKE) --no-print-directory pkg-tcltk
 
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H -DR_DLL_BUILD
-FFLAGS = $(OPTFLAGS)
+FFLAGS = $(FOPTFLAGS)
 
 Rpwd.exe: front-ends/Rpwd.exe
 	$(CP) $< $@

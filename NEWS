@@ -257,6 +257,9 @@ NEW FEATURES
     o	New function gzcon() which wraps a connection and provides
 	(de)compression compatible with gzip.
 
+    o	%*% and crossprod() for complex arguments make use of BLAS
+	routines and so may be much faster on some platforms.
+
 
 INSTALLATION CHANGES
 
@@ -463,6 +466,8 @@ BUG FIXES
 
     o	page() was searching from the wrong environment, and so
 	searching base before the workspace.
+
+    o	crossprod(Z) for complex Z was returning nonsense.
 
 
 
