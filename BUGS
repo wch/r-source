@@ -480,23 +480,12 @@ none
 
 Directory:  Windows
 
-* PR# 1507 *
-Subject: copy or save to metafile from graphics device shrinks plots
-From: drew.tyre@csiro.au
-Date: Fri, 3 May 2002 04:26:07 +0200 (MET DST)
---report on 1.4.0, about copying of graphics.
---Awaiting test under 1.5.0.
 * PR# 1711 *
 Subject: GUI bug
 From: socrates@mail.ru
 Date: Thu, 27 Jun 2002 10:30:51 +0200 (MET DST)
 --A crash that is *very* hard to trigger (after several
 --minutes of continuous resizing)
-* PR# 1719 *
-Subject: rw1051 binary dist missing dyn.load documentation
-From: Setzer.Woodrow@epamail.epa.gov
-Date: Fri, 28 Jun 2002 10:36:30 -0400
---Problem with DM's binary build *only*
 
 Directory:  incoming
 
@@ -517,23 +506,3 @@ Subject: integrate function fails!
 From: jechacon@unex.es
 Date: Fri, 28 Jun 2002 13:53:05 +0200 (MET DST)
 --Perhaps a warning could be added?
-* PR# 1721 *
-Subject: Re: [R] browser/debug and for loop
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Fri, 28 Jun 2002 17:07:01 -0700 (PDT)
-* PR# 1723 *
-Subject: ¤¾ ¤? ¤© ¤? ¤µ ¤?  ??°?°? µ??µ?? ¾?µ¥???® ??µ¥~~!!
-From: ???? <2002world_cup_sang1254@japan.co.jp>
-Date: Sun, 30 Jun 2002 05:39:06 +0900
-* PR# 1724 *
-Subject: [±¤°?]?¾???°°?**?????­?²??µ??°?°**°??­????**°???????**?¾?±?­**?¾????**???¶????**±?´???????µ?µ?
-From: ¾¾?¥???? <test@test.net>
-Date: Sun, 30 Jun 2002 07:45:38 +0900
-* PR# 1725 *
-Subject: please kindly get back to me
-From: "SANDRA SAVIMBI" <san_sav@mail.com>
-Date: Sun, 30 Jun 2002 20:50:01 +0200
-* PR# 1726 *
-Subject: please kindly get back to me
-From: "SANDRA SAVIMBI" <san_sav@mail.com>
-Date: Sun, 30 Jun 2002 21:44:45 +0200
