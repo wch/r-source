@@ -8,7 +8,7 @@ biplot(x, \dots)
 biplot.default(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2),
                xlabs = NULL, ylabs = NULL, expand = 1,
                xlim  = NULL, ylim  = NULL, arrow.len = 0.1,
-               xlab = NULL, ylab = NULL, \dots)
+               main = NULL, sub = NULL, xlab = NULL, ylab = NULL, \dots)
 }
 \arguments{
   \item{x}{The \code{biplot}, a fitted object. For \code{biplot.default},
@@ -36,7 +36,7 @@ biplot.default(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2),
   \item{arrow.len}{The length of the arrow heads on the axes plotted in
     \code{var.axes} is true. The arrow head can be suppressed by
     \code{arrow.len = 0}.}
-  \item{xlim, ylim, xlab, ylab, \dots}{graphical parameters.}
+  \item{xlim, ylim, main, sub, xlab, ylab, \dots}{graphical parameters.}
 }
 \description{
   Plot a biplot on the current graphics device.
