@@ -5,6 +5,7 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     ists <- is.ts(x)
     if (!is.null(dim(x)))
         stop("MLE only implemented for univariate series")
+    if(aic && !demean) stop("AIC selection not implemented for demean=FALSE")
     x <- na.action(as.ts(x))
     if(any(is.na(x))) stop("NAs in x")
     if(ists)  xtsp <- tsp(x)
@@ -35,14 +36,19 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         order <- order.max
         fit <- arima0(x, order=c(order, 0, 0), include.mean=demean)
         coefs <- fit$coef
-        ar <- coefs[-length(coefs)]
-        x.mean <- coefs[length(coefs)]
+        if(demean) {
+            ar <- coefs[-length(coefs)]
+            x.mean <- coefs[length(coefs)]
+        } else {
+            ar <- coefs
+            x.mean <- 0
+        }
         var.pred <- fit$sigma2
         xaic <- structure(0, names=order)
     }
     if(order > 0)
-        resid <- c(rep(NA, order), embed(x, order+1) %*% c(1, -ar))
-    else resid <- as.vector(x)
+        resid <- c(rep(NA, order), embed(x - x.mean, order+1) %*% c(1, -ar))
+    else resid <- as.vector(x) - x.mean
     if(ists) {
         attr(resid, "tsp") <- xtsp
         attr(resid, "class") <- "ts"
@@ -53,7 +59,9 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                 partialacf=NULL, resid=resid, method = "MLE",
                 series = series, frequency = xfreq, call = match.call())
     xacf <- acf(x, type = "covariance", lag.max = order, plot=FALSE)$acf
-    if(order > 0) res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq(length=order)]))*var.pred/n.used
+    if(order > 0)
+        res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq(length=order)])) *
+            var.pred/n.used
     class(res) <- "ar"
     res
 }

@@ -73,7 +73,9 @@ BUG FIXES
 
     o	diag(x) now works (as pre 0.65.1) for 1-d arrays.
 
-    o	na.omit.ts and na.contiguous preserve classes
+    o	na.omit.ts and na.contiguous preserve classes.
+
+    o	ar(..., demean=F) works more consistently across methods.
 
     o	ts.union, cbind.ts, arithmetic on ts objects now allow
 	non-integer frequencies.

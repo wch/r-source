@@ -9,7 +9,7 @@
 \usage{
 acf(x, lag.max = NULL,
     type = c("correlation", "covariance", "partial"),
-    plot = TRUE, na.action, ...)
+    plot = TRUE, na.action, demean = TRUE, ...)
 pacf(x, lag.max = NULL, plot = TRUE, na.action, ...)
 ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
     plot = TRUE,na.action, ...)
@@ -30,6 +30,8 @@ plot.acf(acf.obj, ci=0.95, ci.col="blue", ci.type=c("white", "ma"), ...)
  	"correlation" (the default), "covariance" or "partial".}
 
     \item{na.action}{function to be called to handle missing values.}
+
+    \item{demean}{logical. Should the covariances be about the sample means?}
 
     \item{acf.obj}{an object of class \code{acf}.}
 

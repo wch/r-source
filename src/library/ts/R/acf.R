@@ -1,7 +1,7 @@
 acf <-
     function (x, lag.max = NULL,
               type = c("correlation", "covariance", "partial"),
-              plot = TRUE, na.action = na.fail, ...)
+              plot = TRUE, na.action = na.fail, demean= TRUE, ...)
 {
     type <- match.arg(type)
     if(type == "partial") {
@@ -21,22 +21,10 @@ acf <-
         lag.max <- floor(10 * (log10(sampleT) - log10(nser)))
     lag.max <- min(lag.max, sampleT - 1)
     if (lag.max < 1) stop("lag.max must be at least 1")
-    x <- sweep(x, 2, apply(x, 2, mean))
+    if(demean) x <- sweep(x, 2, apply(x, 2, mean))
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1
     acf <- array(NA, c(lag.max + 1, nser, nser))
-#    xp <- rbind(x, matrix(0, ncol = nser,
-#                          nrow = nextn(sampleT + lag.max) - sampleT))
-#    for (i in 1:nser) for (j in 1:nser) {
-#        acf[, i, j] <- convolve(xp[, i], xp[, j])[1:(lag.max + 1)]/sampleT
-#    }
-#     if (type == "correlation") {
-#         if(nser > 1) {
-#             var0 <- diag(acf[1, , ])
-#             acf0 <- sqrt(var0 %*% t(var0))
-#             acf <- sweep(acf, c(2, 3), acf0, "/")
-#         } else acf <- acf/acf[1, , ]
-#     }
     acf <- array(.C("acf",
                     as.double(x), as.integer(sampleT), as.integer(nser),
                     as.integer(lag.max), as.integer(type=="correlation"),

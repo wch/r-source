@@ -37,7 +37,7 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
 
     \item{na.action}{function to be called to handle missing values.}
 
-    \item{demean}{should mean be removed before fitting?}
+    \item{demean}{should a mean be estimated during fitting?}
 
     \item{series}{name for the series.  Defaults to
      	\code{deparse(substitute(x))}.}
@@ -64,8 +64,7 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
 
     Order selection is done by AIC if \code{aic} is true. This is
     problematic, as of the methods here only \code{ar.mle} performs
-    true maximum likelihood
-    estimation. The AIC is computed as if the variance
+    true maximum likelihood estimation. The AIC is computed as if the variance
     estimate were the MLE, omitting the determinant term from the
     likelihood. Note that this is not the same as the Gaussian likelihood
     evaluated at the estimated parameter values. In \code{ar.yw} the
@@ -82,8 +81,8 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
     (1998) discuss both.
 
     Remember that \code{ar} includes by default a constant in the model, by
-    removing the overall mean of \code{x} before fitting the AR model, or
-    (\code{ar.ols}) estimating an additive constant.
+    removing the overall mean of \code{x} before fitting the AR model,
+    or (\code{ar.ols} or \code{ar.mle}) estimating an additive constant.
 
     \code{ar.ols} fits the general AR model (containing an intercept
     if \code{demean = TRUE}) to a possibly non-stationary and/or
@@ -100,7 +99,7 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
   \item{var.pred}{The prediction variance: an estimate of the portion of the
       variance of the time series that is not explained by the
       autoregressive model.}
-  \item{x.mean}{The estimated mean of the series use in fitting and for
+  \item{x.mean}{The estimated mean of the series used in fitting and for
       use in prediction.}
   \item{aic}{The value of the \code{aic} argument.}
   \item{n.used}{The number of observations in the time series.}
