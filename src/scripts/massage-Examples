@@ -37,7 +37,7 @@ do
  bf=`basename $file .R`
  if [ -n "`grep '_ Examples _' $file`" ]
  then
-    echo '.Random.seed <- c(0,rep(7654,3)); rm(list = ls())'
+    echo 'rm(list = ls(all=TRUE)); .Random.seed <- c(0,rep(7654,3))'
  else
     if [ "$USER" = maechler ];then
 	## Remind certain people to upgrade the online help
