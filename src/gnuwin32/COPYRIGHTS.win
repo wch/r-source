@@ -2,6 +2,26 @@
 Windows version
 ===============
 
+src/gnuwin32/getline/*
+
+/*
+ * Copyright (C) 1991, 1992, 1993 by Chris Thewalt (thewalt@ce.berkeley.edu)
+ *
+ * Permission to use, copy, modify, and distribute this software 
+ * for any purpose and without fee is hereby granted, provided
+ * that the above copyright notices appear in all copies and that both the
+ * copyright notice and this permission notice appear in supporting
+ * documentation.  This software is provided "as is" without express or
+ * implied warranty.
+ *
+ * Thanks to the following people who have provided enhancements and fixes:
+ *   Ron Ueberschaer, Christoph Keller, Scott Schwartz, Steven List,
+ *   DaviD W. Sanderson, Goran Bostrom, Michael Gleason, Glenn Kasten,
+ *   Edin Hodzic, Eric J Bivona, Kai Uwe Rommel, Danny Quah, Ulrich Betzler
+ */
+
+
+
 src/gnuwin32/graphapp/*
 
 The files {arith, array, bitmap, buttons, context, controls, cursors,
@@ -22,4 +42,6 @@ src/gnuwin32/unzip/*
 src/gnuwin32/xdr/*
 
 	Copyright (undated) Sun Microsystems, Inc.
+
+	see the file src/gnuwin32/xdr/copyrght.txt
 
