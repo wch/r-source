@@ -34,7 +34,7 @@
 
 #include "Mathlib.h"
 
-static double eps = 1.e-12;
+const static double eps = 1.e-12;
 
 double qt(double p, double ndf)
 {
@@ -58,7 +58,7 @@ double qt(double p, double ndf)
 #endif
 	/* FIXME: This test should depend on  ndf  AND p  !!
 	 * -----  and in fact should be replaced by
-	 * something like Abramowitz & Stegun 26.7.5 (p.949) 
+	 * something like Abramowitz & Stegun 26.7.5 (p.949)
 	 */
 	if (ndf > 1e20) return qnorm(p, 0.0, 1.0);
 
@@ -74,7 +74,7 @@ double qt(double p, double ndf)
 	}
 	else if (ndf < 1 + eps) {
 		/* df ~= 1 */
-		prob = P * M_PI_half;
+		prob = P * M_PI_2;
 		q = cos(prob) / sin(prob);
 	}
 	else {
@@ -82,7 +82,7 @@ double qt(double p, double ndf)
 		a = 1 / (ndf - 0.5);
 		b = 48 / (a * a);
 		c = ((20700 * a / b - 98) * a - 16) * a + 96.36;
-		d = ((94.5 / (b + c) - 3) / b + 1) * sqrt(a * M_PI_half) * ndf;
+		d = ((94.5 / (b + c) - 3) / b + 1) * sqrt(a * M_PI_2) * ndf;
 		y = pow(d * P, 2 / ndf);
 
 		if (y > 0.05 + a) {

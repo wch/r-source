@@ -90,11 +90,11 @@
 #endif
 
 #ifndef M_2_PI
-#define M_2_PI		0.636619772367581343075535053490	/* 1/pi */
+#define M_2_PI		0.636619772367581343075535053490	/* 2/pi */
 #endif
 
 #ifndef M_2_SQRTPI
-#define M_2_SQRTPI	1.128379167095512573896158903122	/* 1/sqrt(pi) */
+#define M_2_SQRTPI	1.128379167095512573896158903122	/* 2/sqrt(pi) */
 #endif
 
 #ifndef M_SQRT2
@@ -106,12 +106,6 @@
 #endif
 
 /* Other, R-Specific Constants */
-/* Note there are some repeats of values above */
-/* Needs a cleanup */
-
-#ifndef M_1_SQRT_2
-#define M_1_SQRT_2	0.707106781186547524400844362105	/* 1/sqrt(2) */
-#endif
 
 #ifndef M_SQRT_32
 #define M_SQRT_32	5.656854249492380195206754896838	/* sqrt(32) */
@@ -119,10 +113,6 @@
 
 #ifndef M_LOG10_2
 #define M_LOG10_2	0.301029995663981195213738894724	/* log10(2) */
-#endif
-
-#ifndef M_PI_half
-#define M_PI_half	1.570796326794896619231321691640	/* pi/2 */
 #endif
 
 #ifndef M_SQRT_PI
