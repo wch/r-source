@@ -10,7 +10,7 @@
 
 NEW FEATURES
 
-    o   `unname' convenience function.
+    o   `unname' convenience function [experimental data.frame behavior].
 
     o   `examples' sections have been added to the documentation
         for most of the data sets in the base library.
