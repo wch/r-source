@@ -27,7 +27,7 @@ RDIFF = $(R_HOME)/bin/Rdiff
 .R.Rout:
 	@rm -f $@ $@.fail
 	@echo "  Running \`$<'"
-	@$(R) < $< > $@
+	@R_LIBS=$(R_LIBS) $(R) < $< > $@
 	@if test -f $@.save ; then \
 	  mv $@ $@.fail; \
 	  echo @ECHO_N@ "  Comparing \`$@' to \`$@.save' ...@ECHO_C@"; \
