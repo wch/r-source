@@ -372,7 +372,9 @@ dnl R_LIB_HDF5
 dnl
 AC_DEFUN(R_LIB_HDF5,
   [ AC_CHECK_LIB(hdf5, main,
-      [ AC_CACHE_CHECK([for HDF5 version >= 1.2],
+      [ ac_save_LIBS="${LIBS}"
+	LIBS="-lhdf5 ${LIBS}"
+	AC_CACHE_CHECK([for HDF5 version >= 1.2],
 	  r_cv_lib_hdf5,
 	  AC_TRY_LINK(
 	    [#include <hdf5.h>],
@@ -382,6 +384,8 @@ AC_DEFUN(R_LIB_HDF5,
 	    r_cv_lib_hdf5=no))
 	if test "${r_cv_lib_hdf5}" = yes; then
 	  AC_DEFINE(HAVE_HDF5)
+	else
+	  LIBS=${ac_save_LIBS}
 	fi
       ])
   ])
