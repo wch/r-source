@@ -18,12 +18,12 @@ BUG FIXES
 
     o	Insufficient information was being recorded in the display list
 	for the identify() function.  In particular, the "plot="
-	argument was ignored when replaying the display list.  [PR#1157]
+	argument was ignored when replaying the display list. (PR#1157)
 
     o	The vertical alignment of mathematical annotations was wrong.
 	When a vertical adjustment was not given, it was bottom-adjusting 
 	i.e,. it was treating adj=0 as adj=c(0, 0).  It now treats
-	adj=0 as adj=c(0, 0.5) as for "normal" text.  [PR#1302]
+	adj=0 as adj=c(0, 0.5) as for "normal" text. (PR#1302)
 
     o	the man page (doc/R.1) wasn't updated with the proper VERSION.
 
@@ -50,9 +50,11 @@ BUG FIXES
 	rhs's containing `.'.  (Broken by a `bug fix' (in reality an
 	API change) in 1.2.1.)
 
-    o	optim(method="BFGS") was not reporting termination by reaching
-	maxit in the convergence component of the return value.
+    o	optim(method="BFGS") was not reporting reaching `maxit' 
+	iterations in the convergence component of the return value.
 
+    o	aov and model.tables were failing on multistrata models with
+	excessively long Error formula. (PR#1315)
 
 
 		CHANGES IN R VERSION 1.4.1

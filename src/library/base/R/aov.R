@@ -30,12 +30,13 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         on.exit(options(opcons))
         allTerms <- Terms
         errorterm <-  attr(Terms, "variables")[[1 + indError]]
-        eTerm <- deparse(errorterm[[2]])
+        eTerm <- deparse(errorterm[[2]], width = 500)
         intercept <- attr(Terms, "intercept")
         ecall <- lmcall
-        ecall$formula <- as.formula(paste(deparse(formula[[2]]), "~", eTerm,
-                                          if(!intercept) "- 1"),
-                                    env=environment(formula))
+        ecall$formula <-
+            as.formula(paste(deparse(formula[[2]], width = 500), "~", eTerm,
+                             if(!intercept) "- 1"),
+                       env=environment(formula))
 
         ecall$method <- "qr"
         ecall$qr <- TRUE
