@@ -537,3 +537,19 @@ Date: Mon, 8 Jul 2002 13:58:16 +0200 (MET DST)
 Subject: ????????! ???­??°?°?º?´? 50%????! µµ??°?°???????±¤°???
 From: µµ?????? <perfume0123@hanmir.com>
 Date: Tue, 9 Jul 2002 03:12:05 +0900
+* PR# 1759 *
+Subject: as.character.octmode() and format.octmode()
+From: hb@maths.lth.se
+Date: Tue, 9 Jul 2002 00:49:33 +0200 (MET DST)
+* PR# 1760 *
+Subject: Your password
+From: jill_cheng <jill_cheng@hotmail.com>
+Date: Tue, 9 Jul 2002 11:52:31 +0800 (CST)
+* PR# 1761 *
+Subject: svd() very slow for wide matrix X but not for t(X)
+From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
+Date: Tue, 9 Jul 2002 11:39:15 -0400 
+* PR# 1762 *
+Subject: A  funny game
+From: genlpcm <genlpcm@tld.d>
+Date: Tue, 9 Jul 2002 14:57:04 -0700 (PDT)
