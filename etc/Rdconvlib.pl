@@ -1954,13 +1954,6 @@ sub text2latex {
     $text =~ s/\\enumerate/\\Enumerate/go;
     $text =~ s/\\tabular/\\Tabular/go;
     my $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
-    {
-	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
-	$descitem = "\\DITEM[" . text2latex($arg) . "] " . text2latex($desc);
-	$text =~ s/\\itemnormal.*$id/$descitem/s;
-    }
-
     while(checkloop($loopcount++, $text, "\\eqn")
 	  &&  $text =~ /\\eqn/){
 	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
@@ -1974,6 +1967,15 @@ sub text2latex {
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$text =~ s/\\deqn.*$id/\\dddeqn\{$eqn\}\{$ascii\}/s;
     }
+
+    $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
+    {
+	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+	$descitem = "\\DITEM[" . text2latex($arg) . "] " . text2latex($desc);
+	$text =~ s/\\itemnormal.*$id/$descitem/s;
+    }
+
 
     $text =~ s/\\eeeeqn/\\eqn/go;
     $text =~ s/\\dddeqn/\\deqn/og;
