@@ -384,7 +384,7 @@ DOCUMENTATION CHANGES
 	\method{GENERIC}{CLASS} markup for indicating the usage of S3
 	methods, providing the CLASS info in a comment.
 
-    o	\dontrun sections are no marked within comments in the
+    o	\dontrun sections are now marked within comments in the
 	user-readable versions of the converted help pages.
 
     o	\dontshow is now the preferred name for \testonly.
@@ -414,7 +414,8 @@ C-LEVEL FACILITIES
     o	There is a new installed header file R_ext/Parse.h which
 	allows R_ParseVector to be called by those writing extensions.
 	(Note that the interface is changed from that used in the
-	unexported header Parse.h in earlier versions.)
+	unexported header Parse.h in earlier versions, and is not
+	guaranteed to remain unchanged.)
 
     o   The header R_ext/Mathlib.h has been removed.  It was replaced by
 	Rmath.h in R 1.2.0.
@@ -423,8 +424,8 @@ C-LEVEL FACILITIES
 UTILITIES
 
     o	R CMD check accepts "ORPHANED" as package maintainer. Package
-	maintainers can now officially orphanize a package, i.e.,
-	resign from maintaining a package.
+	maintainers can now officially orphan a package, i.e., resign
+	from maintaining a package.
 
     o	R CMD INSTALL (Unix only) is now 'safe': if the attempt to
 	install a package fails, leftovers are removed.	 If the package
@@ -488,7 +489,7 @@ DEPRECATED & DEFUNCT
 BUG FIXES
 
     o   numericDeriv() was failing if the first argument was a name 
-	rather than a call (PR#3746)
+	rather than a call.  (PR#3746)
 
     o	cut.POSIXt() now passes on ... to cut.default(), as documented.
 
@@ -639,10 +640,10 @@ BUG FIXES
 
     o	Added some buffer overflow checking in gram.y.
 
-    o	qqnorm()'s result now keeps NAs from it's input. (PR#3750)
+    o	qqnorm()'s result now keeps NAs from its input. (PR#3750)
 
     o	trunc.POSIXt(x) for 0-length x does not return invalid structures
-	anymore (PR#3763).
+	anymore.  (PR#3763).
 
     o	On some platforms the wday component of the result of
 	as.POSIXlt() was corrupted when trying to guess the DST offset
