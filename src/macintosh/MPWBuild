@@ -78,6 +78,13 @@ begin
  Alert "Please identify Stuffit Expander"
  set   Stuffit "`GetFilename`" 
  {Stuffit} -wait :res:R.rsrc.hqx
+ duplicate -y :script :::
+ {Stuffit} -wait :::script:Å.hqx
+# {Stuffit} -wait :::script:demo.hqx
+# {Stuffit} -wait :::script:execute_cmd.hqx
+# {Stuffit} -wait :::script:source_file.hqx
+# {Stuffit} -wait :::script:zip.expand.hqx
+  delete -y :::script:Å.hqx
 end
 end
 
@@ -355,7 +362,6 @@ echo '	'"Rez :res:Raete.r -o :::R -a" >>MakeR
 echo " " >> MakeR
 echo "Creating dependencies..."
 echo " "
-
 echo "###" >> MakeR
 echo "### Auto-generated dependencies" >> MakeR
 echo "### Main R sources" >> MakeR
@@ -387,7 +393,6 @@ for f in {ExtraSrc}
    | sed "s/[^/]*:/:obj:\1/"` "Ä" '"'{f}'"' >>MakeR 
  end 
 end
-
 echo "### Fortran files" >> MakeR
 for f in {FortList}
  begin
@@ -395,7 +400,6 @@ for f in {FortList}
    | sed "s/[^/]*:/:obj:\1/"` "Ä" '"'{f}'"' >>MakeR
  end
 end
-
 echo " "
 echo "Done !"
 date
@@ -418,4 +422,3 @@ echo " "
 echo "Make -f MakeR R > MyMake"
 echo "MyMake"
 echo " "
-
