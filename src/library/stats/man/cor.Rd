@@ -65,7 +65,7 @@ cov2cor(V)
   of observations on those variables.
   This can result in covariance or correlation matrices which are not
   positive semidefinite. \code{"pairwise.complete.obs"} only works with
-  the \code{"pearson"} method for \cov{} and \var{}.
+  the \code{"pearson"} method for \code{cov} and \code{var}.
 
 
   The denominator \eqn{n - 1} is used which gives an unbiased estimator
