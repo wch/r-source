@@ -132,7 +132,7 @@ void ProcessInlinePars(SEXP s, DevDesc *dd, SEXP call)
     }
 }
 
-/* 
+/*
  * Extract specified par from list of inline pars
  */
 SEXP getInlinePar(SEXP s, char *name)
@@ -145,7 +145,7 @@ SEXP getInlinePar(SEXP s, char *name)
 		result = getInlinePar(CAR(s), name);
 		if (result)
 		    found = 1;
-	    } else 
+	    } else
 		if (TAG(s) != R_NilValue)
 		    if (!strcmp(CHAR(PRINTNAME(TAG(s))), name)) {
 			result = CAR(s);
@@ -153,7 +153,7 @@ SEXP getInlinePar(SEXP s, char *name)
 		    }
 	    s = CDR(s);
 	}
-    }    
+    }
     return result;
 }
 
@@ -1869,7 +1869,7 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (R_FINITE(xx0) && R_FINITE(yy0) && R_FINITE(xx1) && R_FINITE(yy1)) {
 	    if (isNAcol(rawcol, i, ncol))
 		Rf_gpptr(dd)->col = Rf_dpptr(dd)->col;
-	    else 
+	    else
 		Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
 	    if (nlty == 0 || INTEGER(lty)[i % nlty] == NA_INTEGER)
 		Rf_gpptr(dd)->lty = Rf_dpptr(dd)->lty;
@@ -2415,7 +2415,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	Rf_gpptr(dd)->font = (fontval == NA_INTEGER) ? fontsave : fontval;
 	if (isNAcol(rawcol, i, ncol))
 	    Rf_gpptr(dd)->col = colsave;
-	else 
+	else
 	    Rf_gpptr(dd)->col = colval;
 	Rf_gpptr(dd)->adj = ComputeAdjValue(adjval, sideval, Rf_gpptr(dd)->las);
 	atval = ComputeAtValue(atval, Rf_gpptr(dd)->adj, sideval, Rf_gpptr(dd)->las,
@@ -2908,12 +2908,12 @@ SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid \"which\" specification");
     /*
      * If specified non-NA col then use that, else ...
-     * 
+     *
      * if specified non-NA fg then use that, else ...
      *
      * else use par("col")
      */
-    col= Rf_gpptr(dd)->col;	
+    col= Rf_gpptr(dd)->col;
     ProcessInlinePars(args, dd, call);
     colsxp = getInlinePar(args, "col");
     if (isNAcol(colsxp, 0, 1)) {
@@ -2921,8 +2921,8 @@ SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (isNAcol(fgsxp, 0, 1))
 	    Rf_gpptr(dd)->col = col;
 	else
-	    Rf_gpptr(dd)->col = Rf_gpptr(dd)->fg;	    
-    } 
+	    Rf_gpptr(dd)->col = Rf_gpptr(dd)->fg;
+    }
     /* override par("xpd") and force clipping to device region */
     Rf_gpptr(dd)->xpd = 2;
     GMode(1, dd);
@@ -3198,99 +3198,60 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 }
 
+/* strheight(str, units)  ||  strwidth(str, units) */
+#define DO_STR_DIM(KIND) 						\
+{									\
+    SEXP ans, str, ch;							\
+    int i, n, units;							\
+    double cex, cexsave;						\
+    DevDesc *dd = CurrentDevice();					\
+									\
+    checkArity(op, args);						\
+    GCheckState(dd);							\
+									\
+    str = CAR(args);							\
+    if (isSymbol(str) || isLanguage(str))				\
+	str = coerceVector(str, EXPRSXP);				\
+    else if (!isExpression(str))					\
+	str = coerceVector(str, STRSXP);				\
+    PROTECT(str);							\
+    args = CDR(args);							\
+									\
+    if ((units = asInteger(CAR(args))) == NA_INTEGER || units < 0)	\
+	errorcall(call, "invalid units");				\
+    args = CDR(args);							\
+									\
+    if (isNull(CAR(args)))						\
+	cex = Rf_gpptr(dd)->cex;					\
+    else if (!R_FINITE(cex = asReal(CAR(args))) || cex <= 0.0)		\
+	errorcall(call, "invalid cex value");				\
+									\
+    n = LENGTH(str);							\
+    PROTECT(ans = allocVector(REALSXP, n));				\
+    cexsave = Rf_gpptr(dd)->cex;					\
+    Rf_gpptr(dd)->cex = cex * Rf_gpptr(dd)->cexbase;			\
+    for (i = 0; i < n; i++)						\
+	if (isExpression(str))						\
+	    REAL(ans)[i] = GExpression ## KIND(VECTOR_ELT(str, i),	\
+					     GMapUnits(units), dd);	\
+	else {								\
+	    ch = STRING_ELT(str, i);					\
+	    REAL(ans)[i] = (ch == NA_STRING) ? 0.0 :			\
+		GStr ## KIND(CHAR(ch), GMapUnits(units), dd);		\
+	}								\
+    Rf_gpptr(dd)->cex = cexsave;					\
+    UNPROTECT(2);							\
+    return ans;								\
+}
+
 SEXP do_strheight(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    /* strheight(str, units) */
-    SEXP ans, str, ch;
-    int i, n, units;
-    double cex, cexsave;
-    DevDesc *dd = CurrentDevice();
+DO_STR_DIM(Height)
 
-    checkArity(op,args);
-    GCheckState(dd);
+SEXP do_strwidth (SEXP call, SEXP op, SEXP args, SEXP env)
+DO_STR_DIM(Width)
 
-    str = CAR(args);
-    if (isSymbol(str) || isLanguage(str))
-	str = coerceVector(str, EXPRSXP);
-    else if (!isExpression(str))
-	str = coerceVector(str, STRSXP);
-    PROTECT(str);
-    args = CDR(args);
+#undef DO_STR_DIM
 
-    if ((units = asInteger(CAR(args))) == NA_INTEGER || units < 0)
-	errorcall(call, "invalid units");
-    args = CDR(args);
-
-    if (isNull(CAR(args)))
-	cex = Rf_gpptr(dd)->cex;
-    else if (!R_FINITE(cex = asReal(CAR(args))) || cex <= 0.0)
-	errorcall(call, "invalid cex value");
-
-    n = LENGTH(str);
-    PROTECT(ans = allocVector(REALSXP, n));
-    cexsave = Rf_gpptr(dd)->cex;
-    Rf_gpptr(dd)->cex = cex * Rf_gpptr(dd)->cexbase;
-    for (i = 0; i < n; i++)
-	if (isExpression(str))
-	    REAL(ans)[i] = GExpressionHeight(VECTOR_ELT(str, i),
-					     GMapUnits(units), dd);
-	else {
-	    ch = STRING_ELT(str, i);
-	    REAL(ans)[i] = (ch == NA_STRING) ? 0.0 :
-		GStrHeight(CHAR(ch), GMapUnits(units), dd);
-	}
-    Rf_gpptr(dd)->cex = cexsave;
-    UNPROTECT(2);
-    return ans;
-}
-
-
-SEXP do_strwidth(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    /* strwidth(str, units) */
-    SEXP ans, str, ch;
-    int i, n, units;
-    double cex, cexsave;
-    DevDesc *dd = CurrentDevice();
-
-    checkArity(op, args);
-    GCheckState(dd);
-
-    str = CAR(args);
-    if (isSymbol(str) || isLanguage(str))
-	str = coerceVector(str, EXPRSXP);
-    else if (!isExpression(str))
-	str = coerceVector(str, STRSXP);
-    PROTECT(str);
-
-    args = CDR(args);
-
-    if ((units = asInteger(CAR(args))) == NA_INTEGER || units < 0)
-	errorcall(call, "invalid units");
-    args = CDR(args);
-
-    if (isNull(CAR(args)))
-	cex = Rf_gpptr(dd)->cex;
-    else if (!R_FINITE(cex = asReal(CAR(args))) || cex <= 0.0)
-	errorcall(call, "invalid cex value");
-
-    n = LENGTH(str);
-    PROTECT(ans = allocVector(REALSXP, n));
-    cexsave = Rf_gpptr(dd)->cex;
-    Rf_gpptr(dd)->cex = cex * Rf_gpptr(dd)->cexbase;
-    for (i = 0; i < n; i++)
-	if (isExpression(str))
-	    REAL(ans)[i] = GExpressionWidth(VECTOR_ELT(str, i),
-					    GMapUnits(units), dd);
-	else {
-	    ch = STRING_ELT(str, i);
-	    REAL(ans)[i] = (ch == NA_STRING) ? 0.0 :
-		GStrWidth(CHAR(ch), GMapUnits(units), dd);
-	}
-    Rf_gpptr(dd)->cex = cexsave;
-    UNPROTECT(2);
-    return ans;
-}
 
 static int *dnd_lptr;
 static int *dnd_rptr;
