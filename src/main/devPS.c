@@ -35,7 +35,9 @@
 /* Define this to use hyphen except in -[0-9] */
 #undef USE_HYPHEN
 /* In ISOLatin1, minus is 45 and hyphen is 173 */
+#ifdef USE_HYPHEN
 static char PS_hyphen = 173;
+#endif
 
 #define USERAFM 999
 
