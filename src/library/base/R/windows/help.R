@@ -50,7 +50,8 @@ help <-
                                      sep = "")
                     if(verbose) print(hlpfile)
                     if(file.exists(hlpfile)) {
-                        err <- .C("Rchtml", hlpfile, topic, err=integer(1))$err
+                        err <- .C("Rchtml", hlpfile, topic,
+                                  err = integer(1), PACKAGE = "")$err
                         if(verbose)
                             cat("help() for `", topic,
                                 "' is shown in Compiled HTML\n",
