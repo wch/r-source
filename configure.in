@@ -134,6 +134,14 @@ AC_ARG_ENABLE(readline,
    fi],
   use_readline=true)
 
+AC_ARG_WITH(gnome,
+  [  --with-gnome            use GNOME (if available)],
+  [if test "${withval}" = no;
+    then use_gnome=false;
+    else use_gnome=true;
+   fi],
+  use_gnome=false)
+
 ### Programs.
 
 AC_PROG_INSTALL
@@ -434,8 +442,10 @@ if ${use_readline}; then
   AC_CHECK_LIB(readline, rl_callback_read_char)
 fi
 
-GNOME_INIT_HOOK([],cont)
-if test "$GNOMEUI_LIBS" = ""; then
+if ${use_gnome}; then
+  GNOME_INIT_HOOK([],cont)
+fi
+if test "${GNOMEUI_LIBS}" = ""; then
   GNOME_ENABLED="no"
   RGNOMEDIR=""
   RGNOMEBIN=""
