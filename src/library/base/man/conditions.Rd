@@ -42,15 +42,15 @@ simpleCondition(message, call = NULL)
 simpleError(message, call = NULL)
 simpleWarning(message, call = NULL)
 
-as.character.condition(x, ...)
-as.character.error(x, ...)
-print.condition(x, ...)
-print.restart(x, ...)
+\method{as.character}{condition}(x, ...)
+\method{as.character}{error}(x, ...)
+\method{print}{condition}(x, ...)
+\method{print}{restart}(x, ...)
 
 conditionCall(c)
-conditionCall.condition(c)
+\method{conditionCall}{condition}(c)
 conditionMessage(c)
-conditionMessage.condition(c)
+\method{conditionMessage}{condition}(c)
 
 withRestarts(expr, ...)
 
