@@ -353,6 +353,11 @@ BUG FIXES
     o   PR#757 was fixed incorrectly, causing improper subsetting of
         pch etc. in plot.formula.
 
+    o   library() no longer removes environments of functions that are not
+	defined in the top level package scope.  Also, packages loaded by
+	require when sourcing package code are now visible in the remaining
+	source evaluations.
+
 
 	**************************************************
 	*						 *

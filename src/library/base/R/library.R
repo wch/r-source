@@ -21,19 +21,31 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
             }
             which.lib.loc <- dirname(pkgpath)
             codeFile <- file.path(which.lib.loc, package, "R", package)
-	    ## create environment
-	    env <- attach(NULL, name = pkgname)
-            ## detach does not allow character vector args
-            on.exit(do.call("detach", list(name = pkgname)))
-            attr(env, "path") <- file.path(which.lib.loc, package)
-	    ## source file into env
+	    ## create environment (not attached yet)
+	    loadenv <- new.env(hash=TRUE, parent = .GlobalEnv)
+            ## add name attribute so env can be identified as a package env
+            attr(loadenv, "name") <- pkgname
+	    ## source file into loadenv
 	    if(file.exists(codeFile))
-                sys.source(codeFile, env, keep.source = keep.source)
+                sys.source(codeFile, loadenv, keep.source = keep.source)
             else
 		warning(paste("Package ",
                               fQuote(package),
                               "contains no R code"))
-	    .Internal(lib.fixup(env, .GlobalEnv))
+            ## now transfer contents of loadenv to an attached frame
+	    env <- attach(NULL, name = pkgname)
+            ## detach does not allow character vector args
+            on.exit(do.call("detach", list(name = pkgname)))
+            attr(env, "path") <- file.path(which.lib.loc, package)
+            for (name in ls(loadenv, all=T)) {
+                val <- get(name, env = loadenv)
+                rm(list=name, envir = loadenv, inherits = FALSE)
+	        if (typeof(val) == "closure" &&
+                    identical(environment(val), loadenv))
+                    environment(val) <- .GlobalEnv
+                assign(name, val, env = env)
+            }
+            ## run .First.lib
 	    if(exists(".First.lib", envir = env, inherits = FALSE)) {
 		firstlib <- get(".First.lib", envir = env, inherits = FALSE)
                 tt<- try(firstlib(which.lib.loc, package))
