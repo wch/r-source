@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000, 2001   The R Development Core Team.
+ *  Copyright (C) 2000-3   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -443,7 +443,8 @@ void *in_R_HTTPOpen(const char *url, int cacheOK)
 	int rc = RxmlNanoHTTPReturnCode(ctxt);
 	if(rc != 200) {
 	    RxmlNanoHTTPClose(ctxt);
-	    error("cannot open: HTTP status was `%d'", rc);
+	    error("cannot open: HTTP status was `%d %s'", rc,
+		  RxmlNanoHTTPStatusMsg(ctxt));
 	    return NULL;
 	} else {
 	    type = RxmlNanoHTTPContentType(ctxt);

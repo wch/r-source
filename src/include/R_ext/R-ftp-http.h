@@ -12,6 +12,7 @@ void *	RxmlNanoHTTPOpen(const char *URL, char **contentType, int cacheOK);
 int	RxmlNanoHTTPRead(void *ctx, void *dest, int len);
 void	RxmlNanoHTTPClose(void *ctx);
 int 	RxmlNanoHTTPReturnCode(void *ctx);
+char * 	RxmlNanoHTTPStatusMsg(void *ctx);
 int 	RxmlNanoHTTPContentLength(void *ctx);
 char *	RxmlNanoHTTPContentType(void *ctx);
 void	RxmlNanoHTTPTimeout(int delay);
