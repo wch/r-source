@@ -147,7 +147,11 @@ NEW FEATURES
 
 UTILITIES
 
-
+    o   Package utils now contains a much improved citation function
+        which also has a package argument. By default the citation is
+        auto-generated from the package DESCRIPTION, the file
+        `inst/CITATION' can be used to override this, see
+        help(citation) and help(citEntry).
 
 
 C-LEVEL FACILITIES
