@@ -363,7 +363,11 @@ examples.
 
 Use @kbd{R CMD check --help} to obtain more information about the usage
 of the @R{} package checker.  Under Windows the equivalent command is
-@kbd{make pkgcheck-mypkg}.
+@kbd{make pkgcheck-mypkg}.  Note that some packages will require more
+than the default workspace size to run their examples: this needs to be
+specified by setting the environment variables @code{R_NSIZE} and
+@code{R_VSIZE} or (Unix) the command-line options @code{--nsize} and
+@code{--vsize}.
 
 @findex R CMD build
 @cindex Package builder
@@ -3147,15 +3151,16 @@ There are a few other numerical utilities available as entry points.
 
 
 @findex R_pow
+@findex R_pow_di
 @smallexample
 double R_pow(double x, double y);
 double R_pow_di(double x, int i);
 @end smallexample
 @noindent
-@code{R_pow(x,y)} and @code{R_pow(x,i)} compute @code{x ^ y} and @code{x ^ i},
-respectively using @code{R_FINITE} checks and returning the proper result
-(the same as @R{}) for the cases where @code{x}, @code{y} or @code{i} are 0
-or missing or infinite or @code{NaN}.
+@code{R_pow(x,y)} and @code{R_pow_di(x,i)} compute @code{x ^ y} and
+@code{x ^ i}, respectively using @code{R_FINITE} checks and returning
+the proper result (the same as @R{}) for the cases where @code{x},
+@code{y} or @code{i} are 0 or missing or infinite or @code{NaN}.
 
 @findex pythag
 @smallexample
@@ -3210,7 +3215,7 @@ double fround(double x, double digits);
 @end smallexample
 @noindent
 @code{fround(x, dig)} returns the value of @code{x} rounded to @code{dig}
-decimal digits ``after the decimal point''. This is the function used
+decimal digits (after the decimal point). This is the function used
 by @R{}'s @code{round()}.
 @*
 @code{fprec(x, dig)} returns the value of @code{x} rounded to @code{dig}
