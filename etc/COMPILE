@@ -1,7 +1,16 @@
+#!/bin/sh
+#
+# ${RHOME}/etc/COMPILE
+
+MAKEOPTS=
+
 for i in $*; do
   case ${i} in
-    *.[fc])
-      make -f ${RHOME}/etc/Makeconf ${i%.*}.o
+    *.[cfr])
+      make -f ${RHOME}/etc/Makeconf ${MAKEOPTS} ${i%.*}.o
+      ;;
+    -D*|*=*)
+      MAKEOPTS="${MAKEOPTS} ${i}"
       ;;
     *)
       echo "ERROR:  don't know how to compile ${i}"
@@ -9,3 +18,8 @@ for i in $*; do
       ;;
   esac
 done
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indent: 2 ***
+### End: ***
