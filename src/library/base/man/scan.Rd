@@ -128,6 +128,9 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   copies.)  If you can, specify either \code{n} or \code{nmax} whenever
   inputting a large vector, and \code{nmax} or \code{nlines} when
   inputting a large list.
+
+  Strings of length greater than 8190 characters will be truncated, with
+  a warning. But \code{\link{readLines}} is preferable.
 }
 \seealso{
   \code{\link{read.table}} for more user-friendly reading of data

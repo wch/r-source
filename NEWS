@@ -102,6 +102,11 @@ BUG FIXES
 
     o	plot.mts() allows a type argument again (broken in 1.3.0: PR#1010).
 
+    o	scan() has a limit of 8190 on the length of char strings, and
+	now warns if it is exceeded (when the string has always been
+	truncated).
+
+
 
 
 		CHANGES IN R VERSION 1.3.0
