@@ -144,7 +144,7 @@ ntx$(OBJ): win32/nt.c win32/nt.h				# unzipsfx only
 	$(CC) $(CFLAGS) $(CVER) $(SFXFLAGS) -I. win32/nt.c
 
 win32f$(OBJ): win32/win32.c $(UNZIP_H) win32/nt.h		# funzip only
-	$(CC) $(CFLAGS) $(CVER) $(FFLAGS) -I. win32/win32.c
+	$(CC) $(CFLAGS) $(CVER) $(FFLAGS) -I. -UHAVE_INT64 win32/win32.c
 
 cryptf$(OBJ): crypt.c $(UNZIP_H) zip.h crypt.h ttyio.h		# funzip only
 	$(CC) $(CFLAGS) $(CVER) $(FFLAGS) crypt.c
