@@ -112,8 +112,10 @@ typedef struct {
     GC wgc;				/* GC for window */
     Cursor gcursor;			/* Graphics Cursor */
     XSetWindowAttributes attributes;	/* Window attributes */
+#if 0
     XColor fgcolor;			/* Foreground color */
     XColor bgcolor;			/* Background color */
+#endif
     XRectangle clip;			/* The clipping rectangle */
 
     int usefixed;
@@ -310,7 +312,7 @@ static void SetupGrayScale()
     /* try (256), 128, 64, 32, 16 grays */
     while (d >= 4 && !(res = GetGrayPalette(display, colormap, 1 << d)))
 	d--;
-    if(!res) {
+    if (!res) {
 	/* Can't find a sensible grayscale, so revert to monochrome */
 	warning("can't set grayscale: reverting to monochrome");
 	model = MONOCHROME;
@@ -716,7 +718,7 @@ static XFontStruct *RLoadFont(int face, int size)
 	char buf[128];
 	XFontStruct *tmp;
 
-	if(face == 5)
+	if (face == 5)
 	    sprintf(buf, symbolname, 10 * size);
 	else
 	    sprintf(buf, fontname,
@@ -727,7 +729,7 @@ static XFontStruct *RLoadFont(int face, int size)
 #endif
 	tmp = XLoadQueryFont(display, buf);
 #ifdef DEBUG_X11
-	if(tmp) Rprintf("success\n"); else Rprintf("failure\n");
+	if (tmp) Rprintf("success\n"); else Rprintf("failure\n");
 #endif
 	if (tmp)
 	    fontarray[size-6][face-1] = tmp;
@@ -747,14 +749,14 @@ static int SetBaseFont(x11Desc *xd)
     xd->usefixed = 0;
     fontname = fontname_R6;
     xd->font = RLoadFont(xd->fontface, xd->fontsize);
-    if(!xd->font) {
+    if (!xd->font) {
 	fontname = fontname_R5;
 	xd->font = RLoadFont(xd->fontface, xd->fontsize);
     }
-    if(!xd->font) {
+    if (!xd->font) {
 	xd->usefixed = 1;
 	xd->font = xd->fixedfont = XLoadQueryFont(display, "fixed");
-	if(!xd->fixedfont)
+	if (!xd->fixedfont)
 	    return 0;
     }
     return 1;
@@ -773,26 +775,26 @@ static void SetFont(int face, int size, DevDesc *dd)
 {
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
-    if(face < 1 || face > 5) face = 1;
+    if (face < 1 || face > 5) face = 1;
     size = 2 * size / 2;
-    if(size < SMALLEST) size = SMALLEST;
-    if(size > LARGEST) size = LARGEST;
+    if (size < SMALLEST) size = SMALLEST;
+    if (size > LARGEST) size = LARGEST;
 
-    if(!xd->usefixed && (size != xd->fontsize  || face != xd->fontface)) {
+    if (!xd->usefixed && (size != xd->fontsize  || face != xd->fontface)) {
 	while(size < dd->gp.ps) {
-	    if(fontarray[size-6][face-1]) goto found;
-	    if(!missingfont[size-6][face-1]) {
+	    if (fontarray[size-6][face-1]) goto found;
+	    if (!missingfont[size-6][face-1]) {
 		fontarray[size-6][face-1] = RLoadFont(face, size);
-		if(fontarray[size-6][face-1]) goto found;
+		if (fontarray[size-6][face-1]) goto found;
 		missingfont[size-6][face-1] = 1;
 	    }
 	    size += 2;
 	}
 	while(size >= dd->gp.ps) {
-	    if(fontarray[size-6][face-1]) goto found;
-	    if(!missingfont[size-6][face-1]) {
+	    if (fontarray[size-6][face-1]) goto found;
+	    if (!missingfont[size-6][face-1]) {
 		fontarray[size-6][face-1] = RLoadFont(face, size);
-		if(fontarray[size-6][face-1]) goto found;
+		if (fontarray[size-6][face-1]) goto found;
 		missingfont[size-6][face-1] = 1;
 	    }
 	    size -= 2;
@@ -855,7 +857,7 @@ static XFontStruct *RLoadFont(int face, int size)
 
     pixelsize = IS_100DPI ? R_rint(size * 1.43 - 0.4) : size;
 
-    if(face == 4)
+    if (face == 4)
 	sprintf(buf, symbolname,  pixelsize);
     else
 	sprintf(buf, fontname,
@@ -866,7 +868,7 @@ static XFontStruct *RLoadFont(int face, int size)
 #endif
     tmp = XLoadQueryFont(display, buf);
 #ifdef DEBUG_X11
-    if(tmp) Rprintf("success\n"); else Rprintf("failure\n");
+    if (tmp) Rprintf("success\n"); else Rprintf("failure\n");
 #endif
     if (!tmp || (force_nonscalable && !ADOBE_SIZE(size)) ){
  	static int near[]=
@@ -896,7 +898,7 @@ static XFontStruct *RLoadFont(int face, int size)
 	    pixelsize = 34;
 
 
-	if(face == 4)
+	if (face == 4)
 	    sprintf(buf, symbolname, pixelsize);
 	else
 	    sprintf(buf, fontname,
@@ -907,7 +909,7 @@ static XFontStruct *RLoadFont(int face, int size)
 #endif
 	tmp = XLoadQueryFont(display, buf);
 #ifdef DEBUG_X11
-	if(tmp) Rprintf("success\n"); else Rprintf("failure\n");
+	if (tmp) Rprintf("success\n"); else Rprintf("failure\n");
 #endif
     }
 
@@ -933,10 +935,10 @@ static int SetBaseFont(x11Desc *xd)
     xd->fontsize = xd->basefontsize;
     xd->usefixed = 0;
     xd->font = RLoadFont(xd->fontface, xd->fontsize);
-    if(!xd->font) {
+    if (!xd->font) {
 	xd->usefixed = 1;
 	xd->font = xd->fixedfont = XLoadQueryFont(display, "fixed");
-	if(!xd->fixedfont)
+	if (!xd->fixedfont)
 	    return 0;
     }
     return 1;
@@ -945,9 +947,9 @@ static void SetFont(int face, int size, DevDesc *dd)
 {
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
-    if(face < 1 || face > 5) face = 1;
+    if (face < 1 || face > 5) face = 1;
 
-    if(!xd->usefixed && (size != xd->fontsize  || face != xd->fontface)) {
+    if (!xd->usefixed && (size != xd->fontsize  || face != xd->fontface)) {
 	xd->font = RLoadFont(face, size);
 	xd->fontface = face;
 	xd->fontsize = size;
@@ -960,7 +962,7 @@ static void SetFont(int face, int size, DevDesc *dd)
 static void SetColor(int color, DevDesc *dd)
 {
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
-    if(color != xd->col) {
+    if (color != xd->col) {
 	blackpixel = GetX11Pixel(R_RED(color), R_GREEN(color), R_BLUE(color));
 	xd->col = color;
 	XSetState(display, xd->wgc, blackpixel, whitepixel, GXcopy, AllPlanes);
@@ -983,12 +985,12 @@ static void SetLinetype(int newlty, double nlwd, DevDesc *dd)
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
     newlwd = nlwd;
-    if(newlwd < 1)/* not less than 1 pixel */
+    if (newlwd < 1)/* not less than 1 pixel */
 	newlwd = 1;
-    if(newlty != xd->lty || newlwd != xd->lwd) {
+    if (newlty != xd->lty || newlwd != xd->lwd) {
 	xd->lty = newlty;
 	xd->lwd = newlwd;
-	if(newlty == 0) {/* special hack for  lty = 0 -- only for X11 */
+	if (newlty == 0) {/* special hack for  lty = 0 -- only for X11 */
 	    XSetLineAttributes(display,
 			       xd->wgc,
 			       newlwd,
@@ -1065,19 +1067,19 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
     XGCValues gcv;
     int DisplayOpened = 0; /* Indicates whether the display is created within this particular call. */
 
-    if(!strncmp(dsp, "png::", 5)) {
+    if (!strncmp(dsp, "png::", 5)) {
 	FILE *fp;
-	if(!(fp = R_fopen(R_ExpandFileName(dsp+5), "w")))
+	if (!(fp = R_fopen(R_ExpandFileName(dsp+5), "w")))
 	    error("could not open PNG file `%s'", dsp+6);
 	xd->fp = fp;
 	type = PNG;
 	p = "";
-    } else if(!strncmp(dsp, "jpeg::", 6)) {
+    } else if (!strncmp(dsp, "jpeg::", 6)) {
 	FILE *fp;
 	type = JPEG;
 	p = strchr(dsp+6, ':'); *p='\0';
 	xd->quality = atoi(dsp+6);
-	if(!(fp = R_fopen(R_ExpandFileName(p+1), "w")))
+	if (!(fp = R_fopen(R_ExpandFileName(p+1), "w")))
 	    error("could not open JPEG file `%s'", p+1);
 	xd->fp = fp;
 	p = "";
@@ -1110,7 +1112,7 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
         DisplayOpened = 1;
 	/* set error handlers */
 	XSetErrorHandler(R_X11Err);
-	XSetIOErrorHandler(R_X11IOErr);	
+	XSetIOErrorHandler(R_X11IOErr);
     }
     whitepixel = GetX11Pixel(255, 255, 255);
     blackpixel = GetX11Pixel(0, 0, 0);
@@ -1138,7 +1140,7 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
 	| StructureNotifyMask;
 
 
-    if(type == WINDOW) {
+    if (type == WINDOW) {
 	xd->windowWidth = iw = w/pixelWidth();
 	xd->windowHeight = ih = h/pixelHeight();
 	if ((xd->window = XCreateWindow(
@@ -1206,7 +1208,7 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
     xd->lwd = -1;
 
 
-    if(DisplayOpened) {
+    if (DisplayOpened) {
         addInputHandler(R_InputHandlers, ConnectionNumber(display),
 			R_ProcessEvents, XActivity);
     }
@@ -1256,12 +1258,12 @@ static void X11_MetricInfo(int c, double* ascent, double* descent,
     first = xd->font->min_char_or_byte2;
     last = xd->font->max_char_or_byte2;
 
-    if(c == 0) {
+    if (c == 0) {
 	*ascent = xd->font->ascent;
 	*descent = xd->font->descent;
 	*width = xd->font->max_bounds.width;
     }
-    else if(first <= c && c <= last) {
+    else if (first <= c && c <= last) {
 	*ascent = xd->font->per_char[c-first].ascent;
 	*descent = xd->font->per_char[c-first].descent;
 	*width = xd->font->per_char[c-first].width;
@@ -1304,7 +1306,7 @@ static void X11_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 
     XSetClipRectangles(display, xd->wgc, 0, 0, &(xd->clip), 1, Unsorted);
 #ifdef XSYNC
-    if(xd->type == WINDOW) XSync(display, 0);
+    if (xd->type == WINDOW) XSync(display, 0);
 #endif
 }
 
@@ -1343,18 +1345,20 @@ static void X11_NewPage(DevDesc *dd)
 {
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
-    if(xd->type > WINDOW) {
+    if (xd->type > WINDOW) {
 	if (xd->npages++)
 	    error("attempt to draw second page on pixmap device");
+	SetColor(xd->bg, dd);
+	XFillRectangle(display, xd->window, xd->wgc, 0, 0,
+		       xd->windowWidth, xd->windowHeight);
 	return;
     }
 
     FreeX11Colors();
-    if((model == PSEUDOCOLOR2) || (xd->bg != dd->dp.bg)) {
+    if ( (model == PSEUDOCOLOR2) || (xd->bg != dd->dp.bg)) {
 	xd->bg = dd->dp.bg;
 	whitepixel = GetX11Pixel(R_RED(xd->bg),R_GREEN(xd->bg),R_BLUE(xd->bg));
-	    XSetWindowBackground(display, xd->window, whitepixel);
-
+	XSetWindowBackground(display, xd->window, whitepixel);
     }
     XClearWindow(display, xd->window);
 #ifdef XSYNC
@@ -1385,8 +1389,8 @@ static unsigned long bitgp(XImage *xi, int x, int y)
     case GRAYSCALE:
     case PSEUDOCOLOR1:
     case PSEUDOCOLOR2:
-	if(i < 512) {
-	    if(knowncols[i] >= 0) return knowncols[i];
+	if (i < 512) {
+	    if (knowncols[i] >= 0) return knowncols[i];
 	    else {
 		xcol.pixel = i;
 		XQueryColor(display, colormap, &xcol);
@@ -1400,10 +1404,11 @@ static unsigned long bitgp(XImage *xi, int x, int y)
 	    return ((xcol.red>>8)<<16) | ((xcol.green>>8)<<8) | (xcol.blue>>8);
 	}
 	case TRUECOLOR:
-	    r = (i && RMask)>>RShift * 255 / RMask;
-	    g = (i && GMask)>>GShift * 255 / GMask;
-	    b = (i && BMask)>>BShift * 255 / BMask;
-	    return r<<16 | g<<8 | b;
+	    r = ((i>>RShift)&RMask) * 255 /(RMask);
+	    g = ((i>>GShift)&GMask) * 255 /(GMask);
+	    b = ((i>>BShift)&BMask) * 255 /(BMask);
+//	    Rprintf("i %x rgb %x %x %x ", i, r,g,b);
+	    return (r<<16) | (g<<8) | b;
     default:
 	return 0;
     }
@@ -1425,7 +1430,7 @@ static void X11_Close(DevDesc *dd)
 #endif
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
-    if(xd->type == WINDOW) {
+    if (xd->type == WINDOW) {
 	/* process pending events */
         /* set block on destroy events */
         inclose = 1;
@@ -1435,7 +1440,7 @@ static void X11_Close(DevDesc *dd)
 	XDestroyWindow(display, xd->window);
 	XSync(display, 0);
     } else {
-	if(xd->npages) {
+	if (xd->npages) {
 	    int i;
 	    XImage *xi;
 	    for (i = 0; i < 512; i++) knowncols[i] = -1;
@@ -1461,7 +1466,7 @@ static void X11_Close(DevDesc *dd)
 #ifdef OLD
 	for(i=0 ; i<NFONT ; i++)
 	    for(j=0 ; j<5 ; j++) {
-		if(fontarray[i][j] != NULL) {
+		if (fontarray[i][j] != NULL) {
 		    XUnloadFont(display, fontarray[i][j]->fid);
 		    fontarray[i][j] = NULL;
 		}
@@ -1496,7 +1501,7 @@ static void X11_Activate(DevDesc *dd)
     char num[3];
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
-    if(xd->type > WINDOW) return;
+    if (xd->type > WINDOW) return;
     strcpy(t, title);
     strcat(t, ": Device ");
     sprintf(num, "%i", deviceNumber(dd)+1);
@@ -1521,7 +1526,7 @@ static void X11_Deactivate(DevDesc *dd)
     char num[3];
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
-    if(xd->type > WINDOW) return;
+    if (xd->type > WINDOW) return;
     strcpy(t, title);
     strcat(t, ": Device ");
     sprintf(num, "%i", deviceNumber(dd)+1);
@@ -1571,6 +1576,9 @@ static void X11_Rect(double x0, double y0, double x1, double y1,
 	SetColor(bg, dd);
 	XFillRectangle(display, xd->window, xd->wgc, (int)x0, (int)y0,
 		       (int)x1 - (int)x0, (int)y1 - (int)y0);
+	SetColor(bg, dd);
+	XFillRectangle(display, xd->window, xd->wgc, (int)x0, (int)y0,
+		       (int)x1 - (int)x0, (int)y1 - (int)y0);
     }
     if (fg != NA_INTEGER) {
 	SetColor(fg, dd);
@@ -1579,7 +1587,7 @@ static void X11_Rect(double x0, double y0, double x1, double y1,
 		       (int)x1 - (int)x0, (int)y1 - (int)y0);
     }
 #ifdef XSYNC
-    if(xd->type == WINDOW) XSync(display, 0);
+    if (xd->type == WINDOW) XSync(display, 0);
 #endif
 }
 
@@ -1615,12 +1623,12 @@ static void X11_Circle(double x, double y, int coords,
     GConvert(&x, &y, coords, DEVICE, dd);
     ix = (int)x;
     iy = (int)y;
-    if(col != NA_INTEGER) {
+    if (col != NA_INTEGER) {
 	SetColor(col, dd);
 	XFillArc(display, xd->window, xd->wgc,
 		 ix-ir, iy-ir, 2*ir, 2*ir, 0, 23040);
     }
-    if(border != NA_INTEGER) {
+    if (border != NA_INTEGER) {
 	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
 	SetColor(border, dd);
 	XDrawArc(display, xd->window, xd->wgc,
@@ -1655,7 +1663,7 @@ static void X11_Line(double x1, double y1, double x2, double y2,
     SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
     XDrawLine(display, xd->window, xd->wgc, xx1, yy1, xx2, yy2);
 #ifdef XSYNC
-    if(xd->type == WINDOW) XSync(display, 0);
+    if (xd->type == WINDOW) XSync(display, 0);
 #endif
 }
 
@@ -1688,7 +1696,7 @@ static void X11_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
     SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
     XDrawLines(display, xd->window, xd->wgc, points, n, CoordModeOrigin);
 #ifdef XSYNC
-    if(xd->type == WINDOW) XSync(display, 0);
+    if (xd->type == WINDOW) XSync(display, 0);
 #endif
 
     C_free((char *) points);
@@ -1727,19 +1735,19 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
     GConvert(&devx, &devy, coords, DEVICE, dd);
     points[n].x = (int)(devx);
     points[n].y = (int)(devy);
-    if(bg != NA_INTEGER) {
+    if (bg != NA_INTEGER) {
 	SetColor(bg, dd);
 	XFillPolygon(display, xd->window, xd->wgc, points, n, Complex, CoordModeOrigin);
 #ifdef XSYNC
-	if(xd->type == WINDOW) XSync(display, 0);
+	if (xd->type == WINDOW) XSync(display, 0);
 #endif
     }
-    if(fg != NA_INTEGER) {
+    if (fg != NA_INTEGER) {
 	SetColor(fg, dd);
 	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
 	XDrawLines(display, xd->window, xd->wgc, points, n+1, CoordModeOrigin);
 #ifdef XSYNC
-	if(xd->type == WINDOW) XSync(display, 0);
+	if (xd->type == WINDOW) XSync(display, 0);
 #endif
     }
 
@@ -1771,7 +1779,7 @@ static void X11_Text(double x, double y, int coords,
     XRotDrawString(display, xd->font, rot, xd->window, xd->wgc,
 		   (int)x, (int)y, str);
 #ifdef XSYNC
-    if(xd->type == WINDOW) XSync(display, 0);
+    if (xd->type == WINDOW) XSync(display, 0);
 #endif
 }
 
@@ -1790,7 +1798,7 @@ static int X11_Locator(double *x, double *y, DevDesc *dd)
     caddr_t temp;
     int done = 0;
 
-    if(xd->type > WINDOW) return 0;
+    if (xd->type > WINDOW) return 0;
     R_ProcessEvents((void*)NULL);	/* discard pending events */
     XSync(display, 1);
     /* handle X events as normal until get a button */
@@ -1834,7 +1842,7 @@ static int X11_Locator(double *x, double *y, DevDesc *dd)
 static void X11_Mode(int mode, DevDesc *dd)
 {
 #ifdef XSYNC
-    if(mode == 0) XSync(display, 0);
+    if (mode == 0) XSync(display, 0);
 #else
     XSync(display, 0);
 #endif
@@ -1915,7 +1923,7 @@ int X11DeviceDriver(DevDesc *dd,
     /*	Font will load at first use.  */
 
     ps = pointsize;
-    if(ps < 6 || ps > 24) ps = 12;
+    if (ps < 6 || ps > 24) ps = 12;
     xd->fontface = -1;
     xd->fontsize = -1;
     xd->basefontface = 1;
