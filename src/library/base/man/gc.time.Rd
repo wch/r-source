@@ -20,8 +20,7 @@ gc.time()
   not available and will always be given as \code{NA}.
 }
 #endif
-\section{Warnings}
-{
+\section{Warnings}{
   This is experimental functionality, likely to be removed as soon as
   the next release.
 
