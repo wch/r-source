@@ -74,6 +74,9 @@ BUG FIXES
 
     o	A problem with "..." in substitutions has been fixed. 
 
+    o   Various strangeness with match.call() and "..." has been fixed
+        (PR#813).
+
     o	We now use match.fun() in tapply() so that it won't get trapped
 	by non-functions masking FUN.
 
