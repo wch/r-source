@@ -1338,6 +1338,9 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* usually, this will be na.omit */
 
     if (na_action != R_NilValue) {
+	/* some na.actions need this to distinguish responses from
+	   explanatory variables */
+	setAttrib(data, install("terms"), terms);
 	if (isString(na_action) && length(na_action) > 0)
 	    na_action = install(CHAR(STRING_ELT(na_action, 0)));
 	PROTECT(na_action);

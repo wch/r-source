@@ -261,6 +261,9 @@ NEW FEATURES
     o	Contingency tables created by xtabs() or table() now have a
 	summary() method.
 
+    o	model.frame() now calls na.action with the terms attribute
+	set on the data frame (needed to distiguish the response,
+	 for example).
 
 
 BUG FIXES
