@@ -100,10 +100,10 @@
  *
  *    int R_ShowFile(char *file)
  *
- *  This function appends the contents of the second file to the
- *  first.
  *
- *    int R_AppendFile(char *file1, char *file2)
+ *  Get the currelt local time and date as a string.
+ *
+ *    char *R_Date()
  *
  *  Platform dependent functions.
  *
@@ -834,34 +834,27 @@ int __main() {return 0;}
 
 /* New / Experimental API elements */
 
-#define APPENDBUFSIZE 512
+/* A (Unix) Portable Date Function */
+/* There does not seem to be a standard C function interface. */
 
-static char *Append_ErrMsg = "unable to open file %s for appending\n";
-
-void R_AppendFile(char *file1, char *file2)
+static char datebuf[64];
+char *R_Date()
 {
-    FILE *fp1, *fp2;
-    char buf[APPENDBUFSIZE];
-    int nchar;
-    if((fp1 = fopen(file1, "a")) == NULL) {
-	error("unable to open file %s for appending\n", file1);
-    }
-    if((fp2 = fopen(file2, "r")) == NULL) {
-	fclose(fp1);
-	error("unable to open file %s for reading\n", file2);
-    }
-    while((nchar = fread(buf, 1, APPENDBUFSIZE, fp2)) == APPENDBUFSIZE)
-	if(fwrite(buf, 1, APPENDBUFSIZE, fp1) != APPENDBUFSIZE)
-	    goto append_error;
-    if(fwrite(buf, 1, nchar, fp1) != nchar)
-	goto append_error;
-    fclose(fp1);
-    fclose(fp2);
- append_error:
-    error("error writing to file %s\n", file1);
+    FILE *fp;
+    char *p;
+    if ((fp = popen("date", "r")) == NULL)
+	error("unix pipe error in date function\n");
+    fgets(datebuf, 64, fp);
+    fclose(fp);
+    for (p = datebuf; *p ; p++)
+	if (*p == '\n') {
+	    *p = '\0';
+	    break;
+	}
+    return datebuf;
 }
 
-void R_ShowFile(char *file)
+void R_ShowFile(char *file, char *title)
 {
     FILE *fp;
     int c;

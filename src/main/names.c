@@ -538,8 +538,10 @@ FUNTAB R_FunTab[] =
 
 /* Platform Dependent Functions */
 
-{"show.file",	do_showfile,	0,	111,	1,	PP_FUNCALL},
+{"show.file",	do_showfile,	0,	111,	2,	PP_FUNCALL},
+{"remove.file",	do_removefile,	0,	111,	1,	PP_FUNCALL},
 {"append.file",	do_appendfile,	0,	111,	2,	PP_FUNCALL},
+{"date",	do_date,	0,	11,	0,	PP_FUNCALL},
 
 
 /* Complex Valued Functions */
