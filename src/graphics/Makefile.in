@@ -3,35 +3,8 @@ CFLAGS=@CFLAGS@ -I../include
 AR=@AR@
 RANLIB=@RANLIB@
 
-OBJS=	garrow.o \
-	gbox.o \
-	gcircle.o \
-	gclip.o \
-	gdevice.o \
-	gdefault.o \
-	ginit.o \
-	glineto.o \
-	glocator.o \
-	gmapping.o  \
-	gmetricinfo.o \
-	gmode.o \
-	gmoveto.o \
-	gmtext.o \
-	gnewplot.o \
-	gpolygon.o \
-	grect.o \
-	greset.o \
-	grestore.o \
-	gsavepars.o \
-	gsaveplot.o \
-	gscale.o \
-	gsetupaxis.o \
-	gstate.o \
-	gstrwidth.o \
-	gsymbol.o \
-	gtext.o \
-	gunits.o \
-	hsv2rgb.o
+OBJS=	gdevice.o \
+	graphics.o
 
 LIB=	../lib/libgraphics.a
 
