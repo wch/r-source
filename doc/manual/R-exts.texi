@@ -2264,7 +2264,7 @@ creates a new binding or changes the value of an existing binding in the
 specified environment frame; it is the equivalent of
 @code{assign(symbol, value, envir = rho, inherits = FALSE)}.
 @code{setVar} searches for an existing binding for @code{symbol} in
-frame @code{rho} or one of its parent frames.  If one is found, its
+@code{rho} or its enclosing environments.  If a binding is found, its
 value is changed to @code{value}.  Otherwise, a new binding with the
 specified value is created in the global environment.  This corresponds
 to @code{assign(symbol, value, envir = rho, inherits = TRUE)}.
