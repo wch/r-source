@@ -24,12 +24,13 @@ dnl Copyright (C) 1998 - 2002 R Core Team
 
 AC_PREREQ(2.50)
 
+AC_INIT([src/include/Defn.h])
+dnl AC_INIT(${PACKAGE}, ${VERSION}, [r-bugs@R-project.org])
+dnl AC_CONFIG_SRCDIR([src/include/Defn.h])
+AC_CONFIG_AUX_DIR([tools])
+
 PACKAGE="R"
 VERSION=`cat ${srcdir}/VERSION | cut -d" " -f1`
-
-AC_INIT(${PACKAGE}, ${VERSION}, [r-bugs@R-project.org])
-AC_CONFIG_SRCDIR([src/include/Defn.h])
-AC_CONFIG_AUX_DIR([tools])
 
 ## <FIXME>
 ## What is this doing here?  Why AM_CONFIG_HEADER?
