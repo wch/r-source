@@ -1,5 +1,15 @@
 #include <math.h>
 
+static int il(int n, double x)
+{
+	return (int)floor((n - 1) * x);
+}
+
+static int iu(int n, double x)
+{
+	return (int)ceil((n - 1) * x);
+}
+
 static line(double *x, double *y, double *z, double *w, int n, double *coef)
 {
 	int i, j, k;
@@ -12,50 +22,48 @@ static line(double *x, double *y, double *z, double *w, int n, double *coef)
 	}
 	rsort(z, n);
 
-	tmp1 = z[(int)(1*n/6.-0.01)];
-	tmp2 = z[(int)(1*n/6.+0.01)];
+	tmp1 = z[il(n, 1.0/6.0)];
+	tmp2 = z[iu(n, 1.0/6.0)];
 	xb = 0.5*(tmp1+tmp2);
 
-	tmp1 = z[(int)(2*n/6.-0.01)];
-	tmp2 = z[(int)(2*n/6.+0.01)];
+	tmp1 = z[il(n, 2.0/6.0)];
+	tmp2 = z[iu(n, 2.0/6.0)];
 	x1 = 0.5*(tmp1+tmp2);
 
-	tmp1 = z[(int)(4*n/6.-0.01)];
-	tmp2 = z[(int)(4*n/6.+0.01)];
+	tmp1 = z[il(n, 4.0/6.0)];
+	tmp2 = z[iu(n, 4.0/6.0)];
 	x2 = 0.5*(tmp1+tmp2);
 
-	tmp1 = z[(int)(5*n/6.-0.01)];
-	tmp2 = z[(int)(5*n/6.+0.01)];
+	tmp1 = z[il(n, 5.0/6.0)];
+	tmp2 = z[iu(n, 5.0/6.0)];
 	xt = 0.5*(tmp1+tmp2);
 
 	slope = 0.0;
-	j = 0;
-l2:     j++;
-	k = 0;
-	for( i=0 ; i<n ; i++ )
-		if( x[i]<=x1 )
-			z[k++] = w[i];
-	rsort(z,k);
-	yb = 0.5*(z[(int)(n/6.-0.01)]+z[(int)(n/6.+0.01)]);
-	k = 0;
-	for(i=0 ; i<n ; i++)
-		if( x[i]>=x2 )
-			z[k++] = w[i];
-	rsort(z,k);
-	yt = 0.5*(z[(int)(k-n/6.-0.01)]+z[(int)(k-n/6.+0.01)]);
-	slope += (yt-yb)/(xt-xb);
-	for(i=0 ; i<n ; i++) {
-		z[i] = y[i]-slope*x[i];
-		w[i] = z[i];
-	}
-	rsort(z,n);
-	yint = 0.5*(z[(int)(n/2.-0.01)]+z[(int)(n/2.+0.01)]);
-	if( j<2 ) {
-		goto l2;
+
+	for(j=1 ; j<=1 ; j++) {
+		k = 0;
+		for( i=0 ; i<n ; i++ )
+			if( x[i]<=x1 )
+				z[k++] = w[i];
+		rsort(z, k);
+		yb = 0.5 * (z[il(k, 0.5)] + z[iu(k, 0.5)]);
+		k = 0;
+		for(i=0 ; i<n ; i++)
+			if( x[i]>=x2 )
+				z[k++] = w[i];
+		rsort(z,k);
+		yt = 0.5 * (z[il(k, 0.5)] + z[iu(k, 0.5)]);
+		slope += (yt - yb)/(xt - xb);
+		for(i=0 ; i<n ; i++) {
+			z[i] = y[i]-slope*x[i];
+			w[i] = z[i];
+		}
+		rsort(z,n);
+		yint = 0.5 * (z[il(n, 0.5)] + z[iu(n, 0.5)]);
 	}
 	for( i=0 ; i<n ; i++ ) {
-		w[i] = yint+slope*x[i];
-		z[i] = y[i]-w[i];
+		w[i] = yint + slope*x[i];
+		z[i] = y[i] - w[i];
 	}
 	coef[0] = yint;
 	coef[1] = slope;
