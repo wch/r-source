@@ -191,7 +191,7 @@ void R_setStartTime(void) {}
 
 SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    error("proc.time is not implemented on this system");
+    error(_("proc.time() is not implemented on this system"));
     return R_NilValue;		/* -Wall */
 }
 #endif /* not _R_HAVE_TIMING_ */
@@ -207,7 +207,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if (!isValidStringF(CAR(args)))
-	errorcall(call, "non-empty character argument expected");
+	errorcall(call, _("non-empty character argument expected"));
     if (isLogical(CADR(args)))
 	read = INTEGER(CADR(args))[0];
     if (read) {
@@ -231,7 +231,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
 	return (rval);
 #else /* not HAVE_POPEN */
-	errorcall(call, "intern=TRUE is not implemented on this platform");
+	errorcall(call, _("intern=TRUE is not implemented on this platform"));
 	return R_NilValue;
 #endif /* not HAVE_POPEN */
     }
@@ -269,7 +269,7 @@ void InitTempDir()
 	R_system(tmp1);
 	sprintf(tmp1, "%s/Rtmp%u", tm, (unsigned int)getpid());
 	res = mkdir(tmp1, 0755);
-	if(res) R_Suicide("Can't mkdir R_TempDir");
+	if(res) R_Suicide(_("Can't mkdir R_TempDir"));
 	tmp = tmp1;
 	buf = (char *) malloc((strlen(tmp) + 20) * sizeof(char));
 	if(buf) {
@@ -281,7 +281,7 @@ void InitTempDir()
 
     len = strlen(tmp) + 1;
     p = (char *) malloc(len);
-    if(!p) R_Suicide("Can't allocate R_TempDir");
+    if(!p) R_Suicide(_("Can't allocate R_TempDir"));
     else {
 	R_TempDir = p;
 	strcpy(R_TempDir, tmp);
@@ -301,7 +301,7 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
         if(!R_FileExists(tm)) { done = 1; break; }
     }
     if(!done)
-	error("cannot find unused tempfile name");
+	error(_("cannot find unused tempfile name"));
     res = (char *) malloc((strlen(tm)+1) * sizeof(char));
     strcpy(res, tm);
     return res;
@@ -363,7 +363,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else /* not HAVE_SYS_UTSNAME_H */
 SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    warning("Sys.info is not implemented on this system");
+    warning(_("Sys.info() is not implemented on this system"));
     return R_NilValue;		/* -Wall */
 }
 #endif /* not HAVE_SYS_UTSNAME_H */

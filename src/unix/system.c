@@ -132,7 +132,7 @@ int Rf_initialize_R(int ac, char **av)
     R_GlobalContext = NULL; /* Make R_Suicide less messy... */
 
     if((R_Home = R_HomeDir()) == NULL)
-	R_Suicide("R home directory is not defined");
+	R_Suicide(_("R home directory is not defined"));
 
     process_system_Renviron();
 
@@ -259,7 +259,7 @@ int Rf_initialize_R(int ac, char **av)
  */
     if (!R_Interactive && Rp->SaveAction != SA_SAVE && 
 	Rp->SaveAction != SA_NOSAVE)
-	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
+	R_Suicide(_("you must specify `--save', `--no-save' or `--vanilla'"));
 
     R_setupHistory();
     if (R_RestoreHistory)
