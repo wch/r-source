@@ -917,7 +917,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-#ifdef HAVE_BSD_NETWORKING
+#if defined(HAVE_BSD_NETWORKING) && defined(HAVE_ARPA_INET_H)
 #include <netdb.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -955,7 +955,7 @@ SEXP do_nsl(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 SEXP do_nsl(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    error("nsl is not supported on this platform");
-    return R_NilValue; /* never reached */
+    warning("nsl is not supported on this platform");
+    return R_NilValue;
 }
 #endif

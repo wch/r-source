@@ -108,6 +108,9 @@ AC_DEFUN([R_PROG_PAGER], [
 ##
 ## R_PROG_PERL
 ##
+## <FIXME>
+## Autoconf 2.50 or better has the `@:>@' quadrigraph for producing `]'.
+## Use this rather than playing with the quote characters ...
 changequote(<<, >>)dnl
 define(PERL5_CHECK,
 <<
@@ -119,6 +122,7 @@ define(PERL5_CHECK,
   fi
 >>)
 changequote([, ]) dnl
+## </FIXME>
 AC_DEFUN([R_PROG_PERL],
  [AC_PATH_PROGS(PERL, [${PERL} perl])
   if test -n "${PERL}"; then
