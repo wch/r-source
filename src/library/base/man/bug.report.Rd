@@ -1,14 +1,16 @@
 \name{bug.report}
 \title{Send a bug report}
 \usage{
-bug.report(send=TRUE, method=.Options$mailer)
+bug.report(subject="", ccaddress=getenv("USER"),
+           method=.Options$mailer, address="r-bugs@biostat.ku.dk")
 }
-%- maybe also `usage' for other functions documented here.
 \alias{bug.report}
-%- Also NEED an `\alias' for EACH other function documented here.
 \arguments{
- \item{send}{Mail the report when it is done?}
- \item{method}{name of program to mail the report with}
+    \item{subject}{Subject of the email}
+    \item{ccaddress}{Optional email address for copies (default is
+	current user). Use \code{ccaddress=FALSE} for no copies.} 
+    \item{method}{Submission method.}
+    \item{address}{Recepient email address.}
 }
 \description{
     Invokes an editor to write a bug report and optionally mail it to
@@ -103,7 +105,6 @@ emailed to \code{r-bugs@biostat.ku.dk} or submitted to the Web page at
 \url{http://r-bugs.biostat.ku.dk/R}
 }
 \seealso{R FAQ} 
-\author{Adapted from the Emacs manual}
-
-\keyword{utilities }
+\author{This help page is adapted from the Emacs manual}
+\keyword{utilities}
 \keyword{error}
