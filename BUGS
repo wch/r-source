@@ -290,3 +290,11 @@ Date: 29 Dec 1999 11:59:50 +0100
 Subject: dataframes in glm
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Wed, 29 Dec 1999 14:22:17 +0100 (MET)
+* PR# 393 *
+Subject: links in faq file broken
+From: aim@uwo.ca
+Date: Mon, 3 Jan 2000 22:45:18 +0100 (MET)
+* PR# 394 *
+Subject: formatC (bug and fix)
+From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
+Date: Tue, 4 Jan 2000 10:31:53 +0100
