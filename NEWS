@@ -15,6 +15,9 @@ NEW FEATURES
 	and the configure check now requires PCRE >= 4.0.  This is in
 	preparation for documenting exactly what grep(perl=TRUE) does.
 
+	PCRE now uses character tables prepared for the locale in use
+	each time it is used, rather than those of the C locale.
+
 
 UTILITIES
 

@@ -15,14 +15,14 @@ PCRE_CPPFLAGS = -I$(srcdir)
 ALL_CPPFLAGS = $(BZIP2_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(MAIN_CFLAGS) $(CFLAGS)
 
-SOURCES = get.c pcre.c study.c
+SOURCES = get.c maketables.c pcre.c study.c
 
 HEADERS = internal.h pcre.h
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = LICENCE Makefile.in Makefile.win dftables.c maketables.c \
+DISTFILES = LICENCE Makefile.in Makefile.win dftables.c \
   chartables.h.win $(SOURCES) $(HEADERS)
 noinst_LIBRARIES = @BUILD_PCRE_TRUE@ libpcre.a
 libpcre_a_SOURCES = $(SOURCES)
