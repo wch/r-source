@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -141,7 +141,7 @@ SEXP allocArray(SEXPTYPE mode, SEXP dims)
 
 SEXP DropDims(SEXP x)
 {
-    SEXP q, dims, dimnames;
+    SEXP q, dims, dimnames, newnames = R_NilValue;
     int i, n, ndims;
 
     PROTECT(x);
@@ -168,7 +168,6 @@ SEXP DropDims(SEXP x)
 
     if (n <= 1) {
 	/* We have reduced to a vector result. */
-	SEXP newnames = R_NilValue;
 	if (dimnames != R_NilValue) {
 	    n = length(dims);
 	    if (TYPEOF(dimnames) == VECSXP) {
@@ -198,7 +197,7 @@ SEXP DropDims(SEXP x)
     }
     else {
 	/* We have a lower dimensional array. */
-	SEXP newdims, newdimnames;
+	SEXP newdims;
 	PROTECT(newdims = allocVector(INTSXP, n));
 	for (i = 0, n = 0; i < ndims; i++)
 	    if (INTEGER(dims)[i] != 1)
@@ -209,10 +208,10 @@ SEXP DropDims(SEXP x)
 		if (INTEGER(dims)[i] != 1 && VECTOR(dimnames)[i] != R_NilValue)
 		    havenames = 1;
 	    if (havenames) {
-		newdimnames = allocVector(VECSXP, n);
+		newnames = allocVector(VECSXP, n);
 		for (i = 0, n= 0; i < ndims; i++) {
 		    if (INTEGER(dims)[i] != 1)
-			VECTOR(newdimnames)[n++] = VECTOR(dimnames)[i];
+			VECTOR(newnames)[n++] = VECTOR(dimnames)[i];
 		}
 	    }
 	    else dimnames = R_NilValue;
@@ -220,9 +219,8 @@ SEXP DropDims(SEXP x)
 	PROTECT(dimnames);
 	setAttrib(x, R_DimNamesSymbol, R_NilValue);
 	setAttrib(x, R_DimSymbol, newdims);
-	if (dimnames != R_NilValue) {
-	    setAttrib(x, R_DimNamesSymbol, newdimnames);
-	}
+	if (dimnames != R_NilValue)
+	    setAttrib(x, R_DimNamesSymbol, newnames);
 	UNPROTECT(2);
     }
     UNPROTECT(1);
