@@ -231,28 +231,36 @@ none
 
 Directory:  incoming
 
-* PR# 618 *
-Subject: min(c()) = inf ???
-From: Peter Malewski <y0004379@tu-bs.de>
-Date: Wed, 26 Jul 2000 13:57:32 +0200 (METDST)
+* PR# 620 *
+Subject: crash with winDialogString("ABC", 1)
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Fri, 28 Jul 2000 20:38:30 +0200
+* PR# 614 *
+Subject: scoping problems
+From: halvorsen <kjetilh@umsanet.edu.bo>
+Date: Mon, 24 Jul 2000 17:48:49 -0400
 * PR# 613 *
 Subject: maketitle garbles the title in package nnet
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Sat, 22 Jul 2000 06:39:32 +0100 (BST)
 Date: 2000/07/11
-* PR# 615 *
-Subject: binomial()
-From: halvorsen <kjetilh@umsanet.edu.bo>
-Date: Mon, 24 Jul 2000 18:11:17 -0400
-* PR# 614 *
-Subject: scoping problems
-From: halvorsen <kjetilh@umsanet.edu.bo>
-Date: Mon, 24 Jul 2000 17:48:49 -0400
-* PR# 617 *
-Subject: Bug in stem?
-From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
-Date: Wed, 26 Jul 2000 11:28:04 +0200
 * PR# 616 *
 Subject: wishlist
 From: halvorsen <kjetilh@umsanet.edu.bo>
 Date: Tue, 25 Jul 2000 17:50:56 -0400
+* PR# 615 *
+Subject: binomial()
+From: halvorsen <kjetilh@umsanet.edu.bo>
+Date: Mon, 24 Jul 2000 18:11:17 -0400
+* PR# 619 *
+Subject: Re: [R] gremlin in rep()
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Fri, 28 Jul 2000 08:20:21 -0700 (PDT)
+* PR# 618 *
+Subject: min(c()) = inf ???
+From: Peter Malewski <y0004379@tu-bs.de>
+Date: Wed, 26 Jul 2000 13:57:32 +0200 (METDST)
+* PR# 617 *
+Subject: Bug in stem?
+From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
+Date: Wed, 26 Jul 2000 11:28:04 +0200
