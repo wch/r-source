@@ -14,22 +14,20 @@ acf <-
     x <- na.action(as.ts(x))
     x.freq <- frequency(x)
     x <- as.matrix(x)
-    if(any(is.na(x))) stop("NAs in x")
     sampleT <- nrow(x)
     nser <- ncol(x)
     if (is.null(lag.max))
         lag.max <- floor(10 * (log10(sampleT) - log10(nser)))
     lag.max <- min(lag.max, sampleT - 1)
     if (lag.max < 1) stop("lag.max must be at least 1")
-    if(demean) x <- sweep(x, 2, colMeans(x))
+    if(demean) x <- sweep(x, 2, colMeans(x, na.rm = TRUE))
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1
-    acf <- array(NA, c(lag.max + 1, nser, nser))
     acf <- array(.C("acf",
                     as.double(x), as.integer(sampleT), as.integer(nser),
                     as.integer(lag.max), as.integer(type=="correlation"),
-                    acf=double((lag.max+1) * nser * nser), PACKAGE="ts"
-                    )$acf, c(lag.max + 1, nser, nser))
+                    acf=double((lag.max+1) * nser * nser), NAOK = TRUE,
+                    PACKAGE = "ts")$acf, c(lag.max + 1, nser, nser))
     lag <- outer(0:lag.max, lag/x.freq)
     acf.out <- structure(.Data = list(acf = acf, type = type,
         n.used = sampleT, lag = lag, series = series, snames = colnames(x)),
@@ -53,7 +51,6 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
     }
     x <- na.action(as.ts(x))
     x.freq <- frequency(x)
-    if(any(is.na(x))) stop("NAs in x")
     if(is.matrix(x))
         if(ncol(x) > 1) stop("univariate ts method")
         else x <- drop(x)
@@ -63,7 +60,8 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
     lag.max <- min(lag.max, sampleT - 1)
     if (lag.max < 1) stop("lag.max must be at least 1")
     x <- scale(x, TRUE, FALSE)
-    acf <- drop(acf(x, lag.max = lag.max, plot = FALSE)$acf)
+    acf <- drop(acf(x, lag.max = lag.max, plot = FALSE,
+                    na.action = na.action)$acf)
     pacf <- array(.C("uni_pacf",
                as.double(acf),
                pacf = double(lag.max),

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1999, 2001   The R Development Core Team
+ *  Copyright (C) 1999, 2001, 2   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -91,20 +91,25 @@ filter2(double *x, int *n, double *filter, int *nfilt, double *out)
     }
 }
 
+/* now allows missing values */
 void
 acf(double *x, int *n, int *nser, int *nlag, int *correlation, double *acf)
 {
-    int i, u, v, lag, nl = *nlag, nn=*n, ns = *nser, d1 = nl+1, d2 = ns*d1;
+    int i, u, v, lag, nl = *nlag, nn=*n, ns = *nser, d1 = nl+1, d2 = ns*d1, 
+	nu;
     double sum, *se;
     
     se = (double *) R_alloc(nn, sizeof(double));
     for(u = 0; u < ns; u++)
 	for(v = 0; v < ns; v++)
 	    for(lag = 0; lag <= nl; lag++) {
-		sum = 0.0;
+		sum = 0.0; nu = 0;
 		for(i = 0; i < nn-lag; i++)
-		    sum += x[i + lag + nn*u] * x[i + nn*v];
-		acf[lag + d1*u + d2*v] = sum/nn;
+		    if(!ISNAN(x[i + lag + nn*u]) && !ISNAN(x[i + nn*v])) {
+			nu++;
+			sum += x[i + lag + nn*u] * x[i + nn*v];
+		    }
+		acf[lag + d1*u + d2*v] = (nu > 0) ? sum/(nu + lag) : NA_REAL;
 	    }
     if(*correlation) {
 	for(u = 0; u < ns; u++)

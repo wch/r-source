@@ -32,7 +32,8 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
     \code{"correlation"} (the default), \code{"covariance"} or
     \code{"partial"}.}
   \item{plot}{logical. If \code{TRUE} the acf is plotted.}
-  \item{na.action}{function to be called to handle missing values.}
+  \item{na.action}{function to be called to handle missing
+    values. \code{na.pass} can be used.}
   \item{demean}{logical.  Should the covariances be about the sample
     means?}
   \item{\dots}{further arguments to be passed to \code{plot.acf}.}
@@ -56,6 +57,13 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
 \details{
   For \code{type} = \code{"correlation"} and \code{"covariance"}, the
   estimates are based on the sample covariance.
+
+  By default, no missing values are allowed.  If the \code{na.action}
+  function passes through missing values (as \code{na.pass} does), the
+  covariances are computed from the complete cases.  This means that the
+  estimate computed may well not be a valid autocorrelation sequence,
+  and may contain missing values.  Missing values are not allowed when
+  computing the PACF of a multivariate time series.
 
   The partial correlation coefficient is estimated by fitting
   autoregressive models of successively higher orders up to
@@ -87,5 +95,9 @@ acf(ldeaths)
 acf(ldeaths, ci.type = "ma")
 acf(ts.union(mdeaths, fdeaths))
 ccf(mdeaths, fdeaths) # just the cross-correlations.
+
+data(presidents) # contains missing values
+acf(presidents, na.action = na.pass)
+pacf(presidents, na.action = na.pass)
 }
 \keyword{ts}
