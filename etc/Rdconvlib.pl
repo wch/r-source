@@ -585,13 +585,19 @@ sub code2html {
     while(checkloop($loopcount++, $text, "\\link")
 	  &&  $text =~ /\\link/){
 	my ($id, $arg)	= get_arguments("link", $text, 1);
-	$htmlfile = $htmlindex{$arg};
+
+	## fix conversions in key of htmlindex:
+	my $argkey = $arg;
+	$argkey =~ s/&lt;/</go;
+	$argkey =~ s/&gt;/>/go;
+	$htmlfile = $htmlindex{$argkey};
+	
 	if($htmlfile){
 	    $text =~
 		s/\\link$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
 	}
 	else{
-	    $misslink = $misslink . " " . $arg;
+	    $misslink = $misslink . " " . $argkey;
 	    $text =~ s/\\link$id.*$id/$arg/s;
 	}
     }
