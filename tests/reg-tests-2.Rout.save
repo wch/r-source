@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.0.0 Under development (unstable) (2004-08-08), ISBN 3-900051-00-3
+Version 2.0.0 Under development (unstable) (2004-08-16), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1858,11 +1858,11 @@ Coefficients:
 > for(k in 0:5)
 +     print(quantile(c(rep(-Inf,k+1), 0:k, rep(Inf, k)), pr=seq(0,1, .1)))
   0%  10%  20%  30%  40%  50%  60%  70%  80%  90% 100% 
--Inf  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN    0 
+-Inf -Inf -Inf -Inf -Inf -Inf -Inf -Inf -Inf -Inf    0 
   0%  10%  20%  30%  40%  50%  60%  70%  80%  90% 100% 
--Inf -Inf -Inf  NaN  NaN  0.0  0.4  0.8  Inf  Inf  Inf 
+-Inf -Inf -Inf -Inf -Inf  0.0  0.4  0.8  Inf  Inf  Inf 
   0%  10%  20%  30%  40%  50%  60%  70%  80%  90% 100% 
--Inf -Inf -Inf  NaN  NaN  0.5  1.2  1.9  Inf  Inf  Inf 
+-Inf -Inf -Inf -Inf -Inf  0.5  1.2  1.9  Inf  Inf  Inf 
   0%  10%  20%  30%  40%  50%  60%  70%  80%  90% 100% 
 -Inf -Inf -Inf -Inf    0    1    2    3  Inf  Inf  Inf 
   0%  10%  20%  30%  40%  50%  60%  70%  80%  90% 100% 
