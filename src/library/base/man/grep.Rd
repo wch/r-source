@@ -44,10 +44,14 @@ This function is based on the \emph{regex} regular expression library
 written by Henry Spencer of the University of Toronto.
 }
 \seealso{
-\code{\link{match}}, \code{\link{pmatch}}.
+\code{\link{charmatch}}, \code{\link{pmatch}}, \code{\link{match}}.
 }
 \examples{
 grep("[a-z]", letters)
+
+## Double all 'a' or 'b's;  "\\" must be escaped, i.e. `doubled'
+%% and escaped even once more in this *.Rd file!
+gsub("([ab])", "\\\\1_\\\\1_", "abc and ABC")
 
 txt <- c("The", "licenses", "for", "most", "software", "are",
   "designed", "to", "take", "away", "your", "freedom",

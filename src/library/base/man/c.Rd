@@ -20,6 +20,10 @@ a vector.
 \examples{
 c(1,7:9)
 c(1:5, 10.5, "next")
+
+c(list(A=c(B=1)),recursive=T)
+
 c(options(), recursive=T)
+c(list(A=c(B=1,C=2),B=c(E=7)),recursive=T)
 }
 \keyword{manip}
