@@ -155,6 +155,13 @@ read.table <-
 	i <- rep(FALSE, cols)
 	i[as.is] <- TRUE
 	as.is <- i
+    } else if(is.character(as.is)) {
+        i <- match(as.is, col.names, 0)
+        if(any(i <= 0))
+            warning("not all columns named in as.is exist")
+        i <- i[i > 0]
+        as.is <- rep(FALSE, cols)
+        as.is[i] <- TRUE
     } else if (length(as.is) != cols)
 	stop(paste("as.is has the wrong length",
 		   length(as.is),"!= cols =", cols))

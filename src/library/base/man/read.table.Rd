@@ -82,8 +82,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     character variables (which are not converted to logical, numeric or
     complex) to factors.  The variable \code{as.is}
     controls this conversion.  Its value is either a vector of logicals
-    (values are recycled if necessary), or a vector of numeric indices
-    which specify which columns should not be converted to factors.
+    (values are recycled if necessary), or a vector of numeric or
+    character indices which specify which columns should not be
+    converted to factors.
 
     Note: to suppress all conversions including those of numeric
     columns, set \code{colClasses = "character"}.

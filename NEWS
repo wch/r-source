@@ -167,6 +167,9 @@ NEW FEATURES
     o   New function replicate() for repeated evaluation of expression
         and collection of results, wrapping a common use of sapply()
         for simulation purposes.
+
+    o   read.table's as.is argument can be character, naming columns
+	not to be converted.
  
 
 DEPRECATED & DEFUNCT
