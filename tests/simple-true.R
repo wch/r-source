@@ -97,3 +97,9 @@ m <- cbind(a=1:2,b=c(R=10,S=11))
 all(sapply(dimnames(m), length) == c(2,2))
 ## [[ for matrix:
 m[[1,2]] == m[[3]] && m[[3]] == m[3] && m[3] == m[1,2]
+
+## bug in R <= 1.1.1 : unclass(*) didn't drop the class!
+d1 <- rbind(data.frame(a=1, b = I(TRUE)), new = c(7, "N"))
+is.null(class(unclass(d1$b)))
+
+

@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-09-22)
+Version 1.2.0 Under development (unstable) (2000-09-26)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -148,4 +148,11 @@ Type	"q()" to quit R.
 > ## [[ for matrix:
 > m[[1,2]] == m[[3]] && m[[3]] == m[3] && m[3] == m[1,2]
 [1] TRUE
+> 
+> ## bug in R <= 1.1.1 : unclass(*) didn't drop the class!
+> d1 <- rbind(data.frame(a=1, b = I(TRUE)), new = c(7, "N"))
+> is.null(class(unclass(d1$b)))
+[1] TRUE
+> 
+> 
 > 
