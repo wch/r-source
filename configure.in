@@ -169,9 +169,6 @@ AC_ARG_WITH(tcltk,
     fi],
   want_tcltk=yes)
 
-R_TCLTK
-AC_SUBST(use_tcltk)
-
 ### Programs.
 
 AC_PROG_AWK
@@ -761,6 +758,11 @@ if test "${use_gnome}" = yes; then
 fi
 
 AC_SUBST(R_GUIS)
+
+## Tcl/Tk
+
+R_TCLTK
+AC_SUBST(use_tcltk)
 
 ### Miscellaneous.
 
