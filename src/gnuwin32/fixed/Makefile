@@ -1,6 +1,6 @@
 include ../MkRules
 
-all: profiles fixh fixr fixbin fixetc
+all: profiles fixh fixhtml fixbin fixetc
 
 profiles: ../../../library/base/R/Rprofile
 
@@ -77,9 +77,9 @@ cp2bin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))
 	unzip -oaq bins -d  ../../..
 	$(RM) bins.zip
 
-fixr: $(wildcard ./r/*.html) ../../../doc/html/search/SearchEngine.html
-	$(CP) -p ./r/*.html ../../../doc/html
-	$(ECHO) done > fixr
+fixhtml: $(wildcard ./html/*.html) ../../../doc/html/search/SearchEngine.html
+	$(CP) -p ./html/*.html ../../../doc/html
+	$(ECHO) done > fixhtml
 
 fixetc: $(filter-out ./etc/CVS, $(wildcard ./etc/*))
 	$(CP) -p $^ ../../../etc

@@ -324,6 +324,9 @@ package, run at the R prompt.
 
      > link.html.help()
 
+This is done automatically when installing from the Packages menu or by
+`install.packages()'.
+
 3.4 My functions are not found by the HTML help search system.
 ==============================================================
 

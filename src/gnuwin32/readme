@@ -43,7 +43,6 @@ and the Introduction to R and Data Import/Export manuals in PDF.
 @RWVER@ch.zip				compiled HTML help
 @RWVER@w.zip				HTML help files
 @RWVER@l.zip				latex help files for offline help
-@RWVER@wh.zip				WinHlp help files
 @RWVER@d1.zip				PDF manuals except
 @RWVER@d2.zip				  PDF version of the reference manual
 @RWVER@sp.zip				files to build packages from source
@@ -85,7 +84,7 @@ as the working directory (where workspaces and files are saved and
 loaded from).
 
 You have a choice of interface:  SDI (lots of separate windows) or
-MDI (multiple child windows in one large window).  MSI is the default:
+MDI (multiple child windows in one large window).  MDI is the default:
 select SDI by adding --sdi in the Target field.
 
 Command-line editing is available: see Help | Console for details.
@@ -211,11 +210,11 @@ preferences item on the Edit menu in Rgui.exe.  This can change some
 of the settings (for example colours, font and window sizes) on the
 current running console.
 
-The mapping between Windows fonts and R font's number can be set by
-editing the file etc\Rdevga, and a copy with a user's settings can be
-put in the HOME or working directory (see the description of
-Rconsole).  This mapping applies to both the screen device and the
-printer device.
+The mapping between Windows fonts and the font number used in R's
+graphics can be set by editing the file etc\Rdevga, and a copy with a
+user's settings can be put in the HOME or working directory (see the
+description of Rconsole).  This mapping applies to both the screen
+device and the printer device.
 
 Many R defaults can be set in the file R_HOME\etc\Rprofile or a user's
 file .Rprofile.  In particular:
@@ -232,10 +231,9 @@ Adding packages
 ===============
 
 Binaries for many packages are available at CRAN/bin/windows/contrib.
-These are zip files which should be unpacked in @RWVER@\library.  They
-are then available for use.  You can also use the installer rwinst.exe
-to selectively unpack the zip files.  Perhaps the simplest option is
-to run the R function install.packages(): see its help page.
+These are zip files which should be unpacked in @RWVER@\library.
+Perhaps the simplest option is use the item on the Packages menu to
+install from a zip file.
 
 The list of packages and functions given by HTML help and used by the
 search engine can be updated from a running R process by the command
@@ -308,7 +306,8 @@ but with R you can always use the form
 TCL_LIBRARY="c:/Program Files/Tcl/lib/tcl8.3"
 at the end of the command line or Target field of a shortcut.
 
-The demos(tk*) will work on Windows.
+The demos(tk*) (available after loading the tcltk library) will work
+on Windows.
 
 
 Building From Source
