@@ -44,17 +44,21 @@ getVirtual(ClassDef)
   \item{ClassDef}{ the class definition object }
 }
 \details{
-  The functions should be replaced by direct access to the slots.
+  The functions should be replaced by direct access to the slots, or
+  by use of higher-level alternatives.
+
 The functions and corresponding slots are: 
-\code{getAccess}, slot \code{"access"};
-\code{getClassName}, slot \code{"className"};
-\code{getClassPackage}, slot \code{"package"};
-\code{getExtends}, slot \code{"contains"};
-\code{getProperties}, slot \code{"slots"};
-\code{getPrototype}, slot \code{"prototype"};
-\code{getSubclasses}, slot \code{"subclasses"};
-\code{getValidity}, slot \code{"validity"};
-\code{getVirtual}, slot \code{"virtual"}.
+\tabular{ll}{
+\code{getAccess} \tab \code{"access"} \cr
+\code{getClassName} \tab \code{"className"} \cr
+\code{getClassPackage} \tab \code{"package"} \cr
+\code{getExtends} \tab \code{"contains"} \cr
+\code{getProperties} \tab \code{"slots"} \cr
+\code{getPrototype} \tab \code{"prototype"} \cr
+\code{getSubclasses} \tab \code{"subclasses"} \cr
+\code{getValidity} \tab \code{"validity"} \cr
+\code{getVirtual} \tab \code{"virtual"}
+}
 
 }
 \seealso{ \code{\link{classRepresentation-class}} }
