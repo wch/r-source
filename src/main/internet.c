@@ -92,6 +92,8 @@ static void internet_Init(void)
 	 (DL_FUNC)R_FindSymbol("Rsockopen", "internet"))) return;
     if(!(ptr_socklisten = 
 	 (DL_FUNC)R_FindSymbol("Rsocklisten", "internet"))) return;
+    if(!(ptr_sockclose = 
+	 (DL_FUNC)R_FindSymbol("Rsockclose", "internet"))) return;
     if(!(ptr_sockconnect = 
 	 (DL_FUNC)R_FindSymbol("Rsockconnect", "internet"))) return;
     if(!(ptr_sockread = 
