@@ -4,18 +4,21 @@
 \alias{CRAN.packages}
 \alias{download.file}
 \alias{download.packages}
+\alias{install.packages}
 \alias{parse.description}
 \title{Download packages from CRAN}}
 \usage{
 update.packages(lib.loc=.lib.loc, CRAN=options("CRAN"),
-                method="wget")
+                method="auto", instlib=NULL)
 
 installed.packages(lib.loc = .lib.loc)
-CRAN.packages(CRAN=options("CRAN"), method="wget")
+CRAN.packages(CRAN=options("CRAN"), method="auto")
 
-download.file(url, destfile, method="wget")
+download.file(url, destfile, method="auto")
 download.packages(pkgs, destdir, available=NULL,
-                  CRAN=options("CRAN"), method="wget")
+                  CRAN=options("CRAN"), method="auto")
+install.packages(pkgs, lib, available=NULL,
+                  CRAN=options("CRAN"), method="auto")
 
 parse.description <- function(desc)
 }
@@ -26,9 +29,8 @@ parse.description <- function(desc)
      root such as \code{"http://www.ci.tuwien.ac.at/R"} or
      \code{"http://lib.stat.cmu.edu/R/CRAN"}.}
  \item{method}{Tool to be used for downloading files. Currently download
-     methods \code{"wget"} and \code{"lynx"} are available. The
-     respective program of the same name must be installed on your
-     system and in the PATH.}
+   methods \code{"auto"}, \code{"wget"}, \code{"lynx"} and \code{"cp"} are
+   available.}
  \item{url}{A character string with the URL of a file to be downloaded.}
  \item{destfile}{A character string with the name where the downloaded
      file is saved.}
@@ -38,7 +40,9 @@ parse.description <- function(desc)
  \item{available}{List of packages available at CRAN as returned by
      \code{CRAN.packages()}.}
  \item{desc}{A character vector with each element containing one line of
-     a package description file.}
+   a package description file.}
+ \item{lib,instlib}{A character string giving the library directory where to
+   install the packages.}
 \description{
     These functions can be used to automatically compare the version
     numbers of installed packages with the newest available version on
@@ -52,14 +56,18 @@ parse.description <- function(desc)
     \code{CRAN.packages()} returns a similar list, but corresponding to
     packages currently available in the contrib section of CRAN, the
     comprehensive R arcvhive network. The current list of packages is
-    downloaded over the internet. Both functions use
+    downloaded over the internet (or copied from a local CRAN
+    mirror). Both functions use
     \code{parse.description()} for parsing the description files.
 
     The function \code{download.file()} can be used to download a single
     file as described by \code{url} from the internet and store it in
     \code{destfile}. It makes a system call to the tool given by
     \code{method}, the respective program must be installed on your
-    system and be in the search path for executables.
+    system and be in the search path for executables. If \method{"cp"}
+    is used, then the \code{url} must start with \code{"file:"} and give
+    the path to a local file. Method \code{"auto"} (the default)
+    searches for available tools at runtime.
 
     \code{download.packages()} takes a list of package names and a
     destination directory, downloads the newest versions of the package
@@ -73,7 +81,12 @@ parse.description <- function(desc)
     and for each outdated package the user can specify if it should be
     automatically updated. If so, the package sources are
     downloaded from CRAN and installed in the respective library path
-    using the \R \code{\link{INSTALL}} mechanism. 
+    (or \code{instlib} if specified)
+    using the \R \code{\link{INSTALL}} mechanism.
+
+    \code{install.packages()} can be used to install new packages, it
+    takes a vector of package names and a destination directory,
+    downloads the packages from CRAN and installs them.
 }
 \seealso{\code{\link{INSTALL}}, \code{\link{REMOVE}},
     \code{\link{library}}, \code{\link{.packages}}
