@@ -17,17 +17,15 @@ capabilities(what = NULL)
     \item{jpeg}{Is the \code{\link{jpeg}} function operational?}
     \item{png}{Is the \code{\link{png}} function operational?}
     \item{tcltk}{Is the \pkg{tcltk} package operational?}
-    \item{X11}{(Unix)  Are \code{X11} and the data editor available?}
-    \item{GNOME}{(Unix)  Is the GNOME GUI in use and are \code{GTK} and
-      \code{GNOME} graphics devices available?}
-    \item{libz}{Is \code{\link{gzfile}} available?  From \R 1.5.0 this
-      will always be true.}
+    \item{X11}{(Unix)  Are the \code{X11} graphics device and the
+      X11-based data editor available?}
     \item{http/ftp}{Are \code{\link{url}} and the internal method for
       \code{\link{download.file}} available?}
     \item{sockets}{Are \code{\link{make.socket}} and related functions
       available?}
     \item{libxml}{Is there support for integrating \code{libxml} with
       the \R event loop?}
+    \item{fifo}{are FIFO connections supported?}
     \item{cledit}{Is command-line editing available in the current \R
       session?  This is false in non-interactive sessions.
 #ifdef unix
@@ -38,10 +36,6 @@ capabilities(what = NULL)
     \item{IEEE754}{Does this platform have IEEE 754 arithmetic?  Note
       that this is more correctly known by the international standard
       IEC 60559, and will always be true from \R version 2.0.0.}
-    \item{bzip2}{Is \code{\link{bzfile}} available?}
-    \item{PCRE}{Is the Perl-Compatible Regular Expression library
-      available?  This is needed for the \code{perl = TRUE} option to
-      \code{\link{grep}} are related function.}
 }
 \seealso{\code{\link{.Platform}}}
 

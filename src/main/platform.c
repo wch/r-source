@@ -1113,8 +1113,8 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     checkArity(op, args);
-    PROTECT(ans = allocVector(LGLSXP, 14));
-    PROTECT(ansnames = allocVector(STRSXP, 14));
+    PROTECT(ans = allocVector(LGLSXP, 10));
+    PROTECT(ansnames = allocVector(STRSXP, 10));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -1151,16 +1151,6 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif
-
-    SET_STRING_ELT(ansnames, i, mkChar("GNOME"));
-#ifdef Unix
-    LOGICAL(ans)[i++] = strcmp(R_GUIType, "GNOME") == 0;
-#else
-    LOGICAL(ans)[i++] = FALSE;
-#endif
-
-    SET_STRING_ELT(ansnames, i, mkChar("libz"));
-    LOGICAL(ans)[i++] = TRUE;	/* always true in this version */
 
     SET_STRING_ELT(ansnames, i, mkChar("http/ftp"));
 #if HAVE_INTERNET
@@ -1216,13 +1206,6 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif
-
-    SET_STRING_ELT(ansnames, i, mkChar("bzip2"));
-    LOGICAL(ans)[i++] = TRUE; /* we always have this */
-
-    SET_STRING_ELT(ansnames, i, mkChar("PCRE"));
-    LOGICAL(ans)[i++] = TRUE; /* we always have this */
-
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;

@@ -37,6 +37,8 @@ DEPRECATED & DEFUNCT
     o	The aqua module for MacOS X has been removed: --with-aqua now
 	refers to the unbundled Cocoa GUI.
 
+    o	Capabilities "bzip2", "GNOME, "libz" and "PCRE" are defunct.
+
 
 INSTALLATION CHANGES
 
@@ -74,6 +76,8 @@ BUG FIXES
 DEPRECATED & DEFUNCT
 
     o	The aqua module is MacOS X is deprecated.
+
+    o	Capabilities "bzip2", "GNOME, "libz" and "PCRE" are deprecated.
 
 
 INSTALLATION CHANGES
