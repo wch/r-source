@@ -159,13 +159,17 @@ NEW FEATURES
 UTILITIES
 
     o   Package utils now contains a much improved citation function
-        which also has a package argument. By default the citation is
+        which also has a package argument.  By default the citation is
         auto-generated from the package DESCRIPTION, the file
-        `inst/CITATION' can be used to override this, see
+        'inst/CITATION' can be used to override this, see
         help(citation) and help(citEntry).
 
     o   R CMD check now checks for file names in a directory that
 	differ only by case.
+
+    o	R CMD INSTALL now fails for packages with incomplete/invalid
+        DESCRIPTION metadata, using new code from package tools which is
+        also used by R CMD check.
 
 
 C-LEVEL FACILITIES
