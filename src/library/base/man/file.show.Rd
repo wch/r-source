@@ -41,6 +41,12 @@ file.show(\dots, header, title="R Information",
   same arguments as \code{file.show} and take care of interfacing to the
   GUI.
 
+  Not all implementations will honour \code{delete.file}.
+#ifdef windows
+  In particular, using an external pager on Windows does not, as there
+  is no way to know when the external application has finished with
+  the file.
+#endif
 }
 \author{Ross Ihaka, Brian Ripley.}
 \seealso{
