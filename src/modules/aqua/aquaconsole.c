@@ -797,11 +797,14 @@ void OpenStderrPipe(void){
 
 void CloseStdoutPipe(void){
   if(RAquaStdout) {  
+  freopen("/dev/null", "w", stdout);
     fclose(RAquaStdout);
 }
   RAquaStdout = (FILE *)NULL;  
-  if(RAquaStdoutBack)
+  if(RAquaStdoutBack){
+    freopen("/dev/null", "w", stderr);
     fclose(RAquaStdoutBack);
+  }
   RAquaStdoutBack = (FILE *)NULL;  
 }
 
