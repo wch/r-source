@@ -551,63 +551,27 @@ From: John Chambers <jmc@research.bell-labs.com>
 Date: Tue, 16 Jul 2002 16:59:22 -0400
 --follow up to 1796
 --stop() allows multiple args as from 1.6.0
-* PR# 1863 *
-Subject: glm crashes with "Illegal instruction"
-From: tkoulis@math.uwaterloo.ca
-Date: Thu, 1 Aug 2002 22:15:19 +0200 (MET DST)
-* PR# 1868 *
-Subject: Fw: Àt¤s½àÄH³b¡B®ü¤ô¢á¢Þ¢Ï¡B±mÃ¸¤ì®j¡A´»°²¬¡°Ê¶}©l¤F
-From: zq2v_lae11by@novartis.com
-Date: 02 Aug 2002 22:56:14 +0800
-* PR# 1869 *
-Subject: (±¤°?)?????µ??´?´?......
-From: ??????µ? ??±????? <bz119@korea.com>
-Date: Sat, 3 Aug 2002 10:25:45 +0900
-* PR# 1870 *
-Subject: A  nice game
-From: r-announce <r-announce@hypatia.math.ethz.ch>
-Date: Sat,  3 Aug 2002 14:46:22 +1200 (NZST)
-* PR# 1871 *
-Subject: Questionnaire
-From: yves_ysl <yves_ysl@hotmail.com>
-Date: Sun,  4 Aug 2002 03:58:34 +1200 (NZST)
-* PR# 1872 *
-Subject: YOUR CONSENT NEEDED!!!
-From: "BABATUNDE AYODELE" <babatunde@cutey.com>
-Date: Sat, 03 Aug 2002 15:47:13
-* PR# 1873 *
-Subject: =?big5?Q?=B3=D0=B7~=C2=E0=B7~=A4u=C5=AA=B7s=A6=E6=B7~=B6W=B0=D3=B3s=C2=EA=A5[=B7=F9?=
-From: 8@ms34.url.com.tw
-Date: Sat, 3 Aug 2002 22:38:50 +0200 (MET DST)
-* PR# 1874 *
-Subject: (±¤°?)¾?±??¦ ??¶???´? º? ²? º????? (?°¾? ?¤º? ?? °??? ????µµ ²? ??¾? º?????)
-From: º?º??ºº???ºñ <bobosbaby@bobosbaby.com>
-Date: Sun, 4 Aug 2002 07:51:56 +0900
-* PR# 1875 *
-Subject: (±¤°?)?????µ??´?´?......
-From: ??????µ? ??±????? <bz119@korea.com>
-Date: Mon, 5 Aug 2002 10:29:41 +0900
-* PR# 1876 *
-Subject: ?©?? ???²?º ???? ?? HOT SALE...[±¤°?]   
-From: ??????<beronica4642@dreamwiz.com>
-Date: Mon, 05 Aug 2002 10:45:59 -0600
-* PR# 1877 *
-Subject: (±¤°?)?????µ??´?´?......
-From: ??????µ? ??±????? <bz119@korea.com>
-Date: Tue, 6 Aug 2002 03:28:20 +0900
 * PR# 1878 *
 Subject: close.screen
 From: Martin.Schlather@uni-bayreuth.de
 Date: Mon, 5 Aug 2002 22:35:02 +0200 (MET DST)
-* PR# 1879 *
-Subject: options(digits)
-From: Gordon Geoff <gordong@epa.nsw.gov.au>
-Date: Tue, 6 Aug 2002 09:36:57 +1000 
 * PR# 1880 *
 Subject:  You requested this report 
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
 Date: Tue, 6 Aug 2002 16:57:54 +0800
-* PR# 1881 *
-Subject: polygon() draws non-transparent border, erase.screen draws non-transparent border
-From: oehl_list@gmx.de
-Date: Tue, 6 Aug 2002 18:15:09 +0200 (MEST)
+* PR# 1883 *
+Subject: =?ks_c_5601-1987?B?W7GksO1dIHItYnVnc7TUIMDnuczA1rTCILvnwLrHsMC7ILXluLO0z7TZLg==?=
+From: =?ks_c_5601-1987?B?x/a068SrteU=?= <pongpong10@kornet.net>
+Date: Thu, 08 Aug 2002 01:55:07 +0900
+* PR# 1884 *
+Subject: dput to full filesystem is silent
+From: stvjc@channing.harvard.edu
+Date: Wed, 7 Aug 2002 20:31:28 +0200 (MET DST)
+* PR# 1885 *
+Subject: read.table ignores first 5 lines
+From: Russell-Lenth@uiowa.edu
+Date: Wed, 7 Aug 2002 21:17:40 +0200 (MET DST)
+* PR# 1886 *
+Subject: Change in NA_REAL behavior
+From: larsendr@missouri.edu
+Date: Wed, 7 Aug 2002 22:50:32 +0200 (MET DST)
