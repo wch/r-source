@@ -38,5 +38,5 @@ static const R_CMethodDef cmethods[]  = {
 
 void R_init_ctest(DllInfo *dll)
 {
-    R_registerRoutines(dll, cmethods, NULL, NULL);
+    R_registerRoutines(dll, cmethods, NULL, NULL, NULL);
 }

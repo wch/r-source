@@ -37,7 +37,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
             aic = double(1 + order.max),
             order = integer(1),
             as.integer(aic),
-            as.integer(var.method),
+####        as.integer(var.method),
             PACKAGE = "ts")
     partialacf <- aperm(array(z$pacf, dim = c(nser, nser, order.max +
         1)), c(3, 2, 1))[-1, , , drop = FALSE]

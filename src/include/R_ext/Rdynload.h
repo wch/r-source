@@ -20,6 +20,8 @@
 #ifndef  R_FOREIGN_H
 #define  R_FOREIGN_H
 
+#include "R_ext/Boolean.h"
+
 typedef void * (*DL_FUNC)();
 
 /* 
@@ -46,21 +48,38 @@ typedef struct {
     const char *name;
     DL_FUNC     fun;
     int         numArgs;
- 
 } R_CallMethodDef;
+
+typedef struct {
+    const char *name;
+    DL_FUNC     fun;
+    int         numArgs;
+} R_ExternalMethodDef;
 
 
 typedef struct _DllInfo DllInfo;
 
+/* 
+  Currently ignore the graphics routines, accessible via .External.graphics()
+  and .Call.graphics().
+ */
 int R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
 		       const R_CallMethodDef * const callRoutines, 
-		       const R_FortranMethodDef * const fortranRoutines);
+		       const R_FortranMethodDef * const fortranRoutines,
+                       const R_ExternalMethodDef * const externalRoutines);
 
 DllInfo *R_getDllInfo(const char *name);
 
 
-DL_FUNC R_FindSymbol(char const *, char const *);
+typedef struct Rf_RegisteredNativeSymbol R_RegisteredNativeSymbol;
+typedef enum {R_ANY_SYM=0, R_C_SYM, R_CALL_SYM, R_FORTRAN_SYM, R_EXTERNAL_SYM} NativeSymbolType;
+
+
+DL_FUNC R_FindSymbol(char const *, char const *, 
+                       R_RegisteredNativeSymbol *symbol);
+
 int moduleCdynload(char *module, int local, int now);
 
+Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value);
 
 #endif /* End ifdef R_FOREIGN_H */

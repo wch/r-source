@@ -11,6 +11,19 @@
 
 NEW FEATURES
 
+    o	is.loaded() accepts an argument PACKAGE to search within
+	a specific DLL/shared library.
+
+    o	New mechanism for explicitly registering native routines in a
+	DLL/shared library accessible via .C(), .Call(), .Fortran()
+	and .External(). This is potentially more robust than the 
+	existing dynamic lookup, since it checks the number of arguments,
+	type of the routine.
+
+    o	New mechanism allowing registration of C routines for converting R
+	objects to C pointers in .C() calls. Useful for references to data
+	in other languages and libraries (e.g. C and hdf5).
+
     o	persp(), image() and qqnorm() are now generic functions.
 
     o	Changes to connections:

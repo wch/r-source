@@ -13,7 +13,7 @@
 dyn.load(x, local = TRUE, now = TRUE)
 dyn.unload(x)
 
-is.loaded(symbol)
+is.loaded(symbol, PACKAGE="")
 symbol.C(name)
 symbol.For(name)
 }
@@ -37,6 +37,14 @@ symbol.For(name)
 #endif
   }
   \item{symbol}{a character string giving a symbol name.}
+  \item{PACKAGE}{if supplied, confine the search for the \code{name} to
+    the DLL given by this argument (plus the conventional extension,
+    \code{.so}, \code{.sl}, \code{.dll}, \dots).  This is intended to
+    add safety for packages, which can ensure by using this argument
+    that no other package can override their external symbols.  Use
+    \code{PACKAGE="base"} for symbols linked in to \R. This is used in the
+    same way as in \code{\link{.C}}, \code{\link{.Call}}, \code{\link{.Fortran}}
+    and \code{\link{.External}} functions}
   \item{name}{a character string giving either the name of a C function
     or Fortran subroutine.  Fortran names probably need to be given
     entirely in lower case (but this may be system-dependent).}

@@ -232,5 +232,5 @@ const static R_CallMethodDef R_CallDef[] = {
 void
 R_init_splines(DllInfo *info)
 {
-    R_registerRoutines(info, NULL, R_CallDef, NULL);
+    R_registerRoutines(info, NULL, R_CallDef, NULL, NULL);
 }

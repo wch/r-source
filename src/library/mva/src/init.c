@@ -23,8 +23,12 @@
 
 static const R_CMethodDef CEntries[] = {
     {"dblcen", (DL_FUNC) &dblcen, 2},  
-    {"R_cutree", (DL_FUNC) &R_cutree, 6},  
-    {"R_distance", (DL_FUNC) &R_distance, 2},  
+    {"R_cutree", (DL_FUNC) &R_cutree, 2},  
+/*
+  Called with NAOK and DUP which are passed down to give 8 args.
+  Fix naokfind()
+    {"R_distance", (DL_FUNC) &R_distance, 6},  
+*/
     {NULL, NULL, 0}
 };
 
@@ -37,5 +41,5 @@ static const R_FortranMethodDef FortEntries[] = {
 
 void R_init_mva(DllInfo *dll)
 {
-    R_registerRoutines(dll, CEntries, NULL, FortEntries);
+    R_registerRoutines(dll, CEntries, NULL, FortEntries, NULL);
 }

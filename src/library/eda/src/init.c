@@ -34,5 +34,8 @@ R_CMethodDef CEntries[] = {
 
 void R_init_eda(DllInfo *dll)
 {
-    R_registerRoutines(dll, CEntries, NULL, NULL);
+/*
+    R_registerRoutines(dll, CEntries, NULL, NULL, NULL);
+*/
 }
+

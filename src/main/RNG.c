@@ -29,8 +29,9 @@
 #define RNG_DEFAULT MARSAGLIA_MULTICARRY
 #define N01_DEFAULT KINDERMAN_RAMAGE
 
-/* platform-specific, from dynload.c */
-DL_FUNC R_FindSymbol(char const *, char const *);
+
+#include "R_ext/Rdynload.h"
+
 static DL_FUNC User_unif_fun, User_unif_init, User_unif_nseed, 
     User_unif_seedloc;
 
@@ -208,12 +209,12 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 	RNG_Init_KT(seed);
 	break;
     case USER_UNIF:
-	User_unif_fun = R_FindSymbol("user_unif_rand", "");
+	User_unif_fun = R_FindSymbol("user_unif_rand", "", NULL);
 	if (!User_unif_fun) error("`user_unif_rand' not in load table");
-	User_unif_init = R_FindSymbol("user_unif_init", "");
+	User_unif_init = R_FindSymbol("user_unif_init", "", NULL);
 	if (User_unif_init) (void) User_unif_init(seed);
-	User_unif_nseed = R_FindSymbol("user_unif_nseed", "");
-	User_unif_seedloc = R_FindSymbol("user_unif_seedloc", "");
+	User_unif_nseed = R_FindSymbol("user_unif_nseed", "", NULL);
+	User_unif_seedloc = R_FindSymbol("user_unif_seedloc", "",  NULL);
 	if (User_unif_seedloc) {
 	    int ns = 0;
 	    if (!User_unif_nseed) {
@@ -355,7 +356,7 @@ static void Norm_kind(N01type kind)
     if (kind < 0 || kind > USER_NORM)
 	error("invalid Normal type in RNGkind");
     if (kind == USER_NORM) {
-	User_norm_fun = R_FindSymbol("user_norm_rand", "");
+	User_norm_fun = R_FindSymbol("user_norm_rand", "", NULL);
 	if (!User_norm_fun) error("`user_norm_rand' not in load table");
     }
     GetRNGstate(); /* might not be initialized */

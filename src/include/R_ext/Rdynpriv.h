@@ -23,6 +23,13 @@
 /*****************************************************
  These are internal routines and definitions subject
  to unannounced changes. Do not use for packages, etc.
+ 
+ There is a great deal of repetition in the definitions 
+ of the user-level method definitions and in the internal
+ definition structures. This is done to ensure that we
+ don't get into troubles needing different types, etc.
+ We could do it with typedef's and reduce the code, but it 
+ is done now and isn't too complicated yet.
 *****************************************************/
 
 
@@ -83,8 +90,9 @@ typedef struct {
     char       *name;
     DL_FUNC     fun;
     int         numArgs;
-
 } Rf_DotFortranSymbol;
+
+typedef Rf_DotFortranSymbol Rf_DotExternalSymbol;
 
 
   /*
@@ -100,6 +108,10 @@ struct _DllInfo {
     char	   *path;
     char	   *name;
     HINSTANCE	   handle;
+    Rboolean       useDynamicLookup; /* Flag indicating whether we use both registered
+                                        and dynamic lookup (TRUE) or just registered
+                                        values if there are any.
+                                      */
 
     int            numCSymbols;
     Rf_DotCSymbol     *CSymbols;
@@ -109,6 +121,20 @@ struct _DllInfo {
 
     int              numFortranSymbols;
     Rf_DotFortranSymbol *FortranSymbols;
+
+    int              numExternalSymbols;
+    Rf_DotExternalSymbol *ExternalSymbols;
+};
+
+
+struct Rf_RegisteredNativeSymbol {
+    NativeSymbolType type;
+    union {
+	Rf_DotCSymbol        *c;
+	Rf_DotCallSymbol     *call;
+	Rf_DotFortranSymbol  *fortran;
+	Rf_DotExternalSymbol *external;
+    } symbol;
 };
 
 
@@ -176,6 +202,10 @@ DL_FUNC Rf_lookupCachedSymbol(const char *name, const char *pkg, int all);
 Rf_DotCSymbol *Rf_lookupRegisteredCSymbol(DllInfo *info, const char *name);
 Rf_DotCallSymbol *Rf_lookupRegisteredCallSymbol(DllInfo *info, const char *name);
 DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path);
+
+
+DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name, 
+				  R_RegisteredNativeSymbol *symbol);
 
 #ifdef __cplusplus
 }

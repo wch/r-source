@@ -45,5 +45,5 @@ R_FortranMethodDef FortEntries[] = {
 
 void R_init_modreg(DllInfo *dll)
 {
-    R_registerRoutines(dll, CEntries, NULL, FortEntries);
+    R_registerRoutines(dll, CEntries, NULL, FortEntries, NULL);
 }
