@@ -26,21 +26,13 @@
 
 int Rf_initialize_R(int ac, char **av); /* in system.c */
 
-/* needed to force in xxxpr.o from library */
-#include<R_ext/RS.h>
-extern void F77_NAME(intpr)();
-
-void R_call_dummy1()
-{
-    int i=1;
-    
-    F77_CALL(intpr)("test", 4, i, 1);
-}
-
 
 int main(int ac, char **av)
 {
     Rf_initialize_R(ac, av);
+
+
+
     mainloop();
     /*++++++  in ../main/main.c */
     return 0;

@@ -23,19 +23,9 @@
 # include <config.h>
 #endif
 
-/* needed to force in xxxpr.o from library */
-#include<R_ext/RS.h>
-extern void F77_NAME(intpr)();
-
-void R_call_dummy2()
-{
-    int i=1;
-    
-    F77_CALL(intpr)("test", 4, i, 1);
-}
-
 int Rf_initialize_R(int ac, char **av); /* in system.c */
 void setup_Rmainloop(void); /* in main.c */
+
 
 /*
  This is the routine that can be called to initialize the R environment
