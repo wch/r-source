@@ -674,6 +674,14 @@ can specify a specific BLAS library by the configuration option
 @option{--with-blas} and not to use an external BLAS library by
 @option{--without-blas}.
 
+For systems with multiple processors it is in principle possible to use
+a multi-threaded version of ATLAS.  This is currently not supported.
+The problem is that @code{SIGINT} signals will not be handled properly
+when sent during a multi-threaded ATLAS computation, and this may result
+in a segmentation fault.  Changes in the R internals are needed to
+support the use of threaded libraries; this will hopefully be addressed
+in a future release.
+
 Note that the BLAS library will be used for several add-on packages as
 well as for @R{} itself.  This means that it is better to use a shared
 BLAS library, as most of a static library will be compiled into the @R{}
