@@ -40,7 +40,7 @@ options(\dots)
 \item{show.signif.stars, show.coef.Pvalues}{logical, affecting P value
     printing, see \code{\link{print.coefmat}}.}
 \item{ts.eps}{the relative tolerance for certain time series
-  (\code{\link{ts}}) computations.}
+  (\code{\link{ts}}) computations, such as \code{\link{time}}.}
 }
 \description{
   \code{options} allows the user to set and examine a variety of global

@@ -1,9 +1,13 @@
 \name{time}
 \title{Sampling Times of Time-Series}
 \usage{
-time(x, offset=0)
+%-- FIXME:  offset is NOT yet there
+time(x)
 start(x)
 end(x)
+time.ts (x, ts.eps = .Options$ts.eps)
+start.ts(x, ts.eps = .Options$ts.eps)
+end.ts  (x, ts.eps = .Options$ts.eps)
 frequency(x)
 tsp(x)
 tsp(x) <- value
@@ -24,6 +28,9 @@ tsp(x) <- value
 \alias{frequency.ts}
 \arguments{
 \item{x}{a time-series.}
+\item{ts.eps}{time series comparison tolerance.  Frequencies are
+    considered equal if their absolute difference is less than
+    \code{ts.eps}.}
 }
 \description{
   \code{time}, \code{start}, \code{end} and \code{frequency} are generic
@@ -33,11 +40,11 @@ tsp(x) <- value
 }
 \details{
   \code{time} creates the vector of times at which a time series was sampled.
-  \code{offset} can be used to indicate when sampling took place
-  in the time unit.
-  \code{0} indicates the start of the unit, \code{0.5} the middle and
-  \code{1} the end of the interval.
-
+%-- FIXME:  offset is NOT yet there
+%  \code{offset} can be used to indicate when sampling took place
+%  in the time unit.
+%  \code{0} indicates the start of the unit, \code{0.5} the middle and
+%  \code{1} the end of the interval.
   \code{start} and \code{end} extract
   the times the first and last observations were taken
   and \code{frequency} returns the number of samples per unit time.

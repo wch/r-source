@@ -102,12 +102,14 @@ end.ts <- function(x, ts.eps = .Options$ts.eps) {
 
 frequency.ts <- function(x) { attr(as.ts(x), "tsp")[3] }
 
-time.ts <- function (x) {
+##- FIXME:  offset argument is NOT yet there :
+time.ts <- function (x, ts.eps = .Options$ts.eps) {
     x <- as.ts(x)
     n <- if(is.matrix(x)) nrow(x) else length(x)
     xtsp <- attr(x, "tsp")
     ts(seq(xtsp[1], xtsp[2], length = n),
-       start = start(x), end = end(x), frequency = frequency(x))
+       start = start(x, ts.eps = ts.eps),
+       end   = end(x, ts.eps = ts.eps), frequency = frequency(x))
 }
 
 print.ts <- function(x, calendar, ...) {
