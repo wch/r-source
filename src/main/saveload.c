@@ -973,8 +973,8 @@ static void RestoreSEXP(SEXP s, FILE *fp)
 
 static SEXP DataLoad(FILE *fp)
 {
-    int i, j;
-    char *vmaxsave;
+    int i, j, vsmall, nsmall;
+    char *vmaxsave, msg[512], s[256];;
 
     /* read in the size information */
 
@@ -1017,11 +1017,19 @@ static SEXP DataLoad(FILE *fp)
     /* because nothing will have been protected */
 
     if(DLstartup) {
-	if ((VECREC *)vmaxget() - R_VTop < NVSize)
-	    R_Suicide("vector heap is too small to restore data\n");
-
-	if (R_Collected < NSave)
-	    R_Suicide("cons heap is too small to restore data\n");
+	vsmall = NVSize - ((VECREC *)vmaxget() - R_VTop) ;
+	nsmall = NSave - R_Collected;
+	msg[0] = '\0';
+	if(vsmall > 0) {
+	    sprintf(s, "vector heap is too small to restore data -- need about %dM\n", (int)ceil((16.*(R_VSize + vsmall))/Mega));
+	    strcat(msg, s);
+	}
+	if (nsmall > 0) {
+	    sprintf(s, "cons heap is too small to restore data -- need about %dk\n", (int)ceil((R_NSize + nsmall)/1000.));
+		    strcat(msg, s);
+	}
+	if(vsmall > 0 || nsmall > 0) 
+	   R_Suicide(msg);
     } else {
 	if ((VECREC *)vmaxget() - R_VTop < NVSize)
 	    error("vector heap is too small to restore data\n");
