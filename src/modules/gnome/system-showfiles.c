@@ -24,6 +24,9 @@
 
 #include "Defn.h"
 #include "Fileio.h"
+#ifdef HAVE_FCNTL_H
+# include <fcntl.h> /* for open and constants */
+#endif
 
 #include "terminal.h"
 #include "terminal-prefs.h"
