@@ -1,129 +1,4 @@
-### Internal functions.
-
-sQuote <- function(s) paste("'", s, "'", sep = "")
-
-.convertFilePathToAbsolute <- function(path) {
-    ## Turn a possibly relative file path absolute, performing tilde
-    ## expansion if necessary.
-    ## Seems the only way we can do this is 'temporarily' change the
-    ## working dir and see where this takes us.
-    if(!file.exists(epath <- path.expand(path)))
-        stop(paste("file", sQuote(path), "does not exist"))
-    cwd <- getwd()
-    on.exit(setwd(cwd))
-    setwd(dirname(epath))
-    file.path(getwd(), basename(epath))
-}
-
-.fileTest <- function(op, x, y) {
-    ## Provide shell-style '-f', '-d', '-nt' and '-ot' tests.
-    ## Note that file.exists() only tests existence ('test -e') but not
-    ## for being a regular file ('test -f').  We cannot really do this,
-    ## so our '-f' tests for existence and not being a directory.
-    ## Note: vectorized in x and y.
-    switch(op,
-           "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
-           "-d" = !is.na(isdir <- file.info(x)$isdir) & isdir,
-           "-nt" = (!is.na(mt.x <- file.info(x)$mtime)
-                    & !is.na(mt.y <- file.info(y)$mtime)
-                    & (mt.x > mt.y)),
-           "-ot" = (!is.na(mt.x <- file.info(x)$mtime)
-                    & !is.na(mt.y <- file.info(y)$mtime)
-                    & (mt.x < mt.y)),
-           stop(paste("test", sQuote(op), "is not available")))
-}
-           
-.isS3Generic <- function(fname, envir = NULL) {
-    ## Determine whether object named 'fname' in environment 'envir' is
-    ## (to be considered) an S3 generic function.  In most cases, these
-    ## just call UseMethod() in their body, so we test for this after
-    ## possibly stripping braces.  This fails when e.g. it is attempted
-    ## to dispatch on data.class, hence we need to hard-code a few known
-    ## exceptions.
-    ## <FIXME>
-    ## This is not good enough for generics which dispatch in C code
-    ## (base only?).
-    ## We should also add group methods.
-    ## </FIXME>
-    f <- get(fname, envir = envir)
-    if(!is.function(f)) return(FALSE)
-    if(fname %in% c("as.data.frame", "plot")) return(TRUE)
-    e <- body(f)
-    while(is.call(e) && (length(e) > 1) && (e[[1]] == as.name("{")))
-        e <- e[[2]]
-    is.call(e) && (e[[1]] == as.name("UseMethod"))
-}
-
-.listFilesWithExts <- function(dir, exts, path = TRUE) {
-    ## Return the paths or names of the files in @code{dir} with
-    ## extension in @code{exts}.
-    files <- list.files(dir)
-    files <- files[sub(".*\\.", "", files) %in% exts]
-    if(path)
-        files <- if(length(files) > 0)
-            file.path(dir, files)
-        else
-            character(0)
-    files
-}
-
-.loadPackageQuietly <- function(package, lib.loc) {
-    ## Load (reload if already loaded) @code{package} from
-    ## @code{lib.loc}, capturing all output and messages.  All QA
-    ## functions use this for loading packages because R CMD check
-    ## interprets all output as indicating a problem.
-    outConn <- file(open = "w")         # anonymous tempfile
-    sink(outConn, type = "output")
-    sink(outConn, type = "message")
-    yy <- try({
-        pos <- match(paste("package", package, sep = ":"), search())
-        if(!is.na(pos))
-            detach(pos = pos)
-        library(package, lib.loc = lib.loc, character.only = TRUE,
-                verbose = FALSE)
-    })
-    sink(type = "message")
-    sink(type = "output")
-    close(outConn)
-    if(inherits(yy, "try-error"))
-        stop(yy)
-}
-
-.makeS3MethodsStopList <- function(package) {
-    ## Return a character vector with the names of the functions in
-    ## @code{package} which 'look' like S3 methods, but are not.
-    switch(package,
-           base = c("boxplot.stats",
-           "close.screen", "close.socket",
-           "format.char", "format.info", "format.pval",
-           "plot.new", "plot.window", "plot.xy",
-           "split.screen",
-           "update.packages"),
-           quadprog = c("solve.QP", "solve.QP.compact"),
-           sm = "print.graph",
-           ts = "lag.plot",
-           character(0))
-}
-
-.sourceAssignments <- function(file, envir) {
-    ## Read and parse expressions from @code{file}, and then
-    ## successively evaluate the top-level assignments in @code{envir}.
-    ## Apart from only dealing with assignments, basically does the same
-    ## as @code{sys.source(file, envir, keep.source = FALSE)}.
-    oop <- options(keep.source = FALSE)
-    on.exit(options(oop))
-    assignmentSymbol <- as.name("<-")
-    exprs <- parse(n = -1, file = file)
-    if(length(exprs) == 0)
-        return(invisible())
-    for(e in exprs) {
-        if(e[[1]] == assignmentSymbol)
-            yy <- eval(e, envir)
-    }
-    invisible()
-}
-    
-### The real stuff.
+### * undoc
 
 undoc <-
 function(package, dir, lib.loc = NULL)
@@ -168,7 +43,7 @@ function(package, dir, lib.loc = NULL)
         isBase <- basename(dir) == "base"
 
         ## Find all documented topics from the Rd sources.
-        docsExts <- c("Rd", "rd")
+        docsExts <- .makeFileExts("docs")
         files <- .listFilesWithExts(docsDir, docsExts)
         docsOSDir <- file.path(docsDir, .Platform$OS)
         if(.fileTest("-d", docsOSDir))
@@ -189,7 +64,7 @@ function(package, dir, lib.loc = NULL)
             ## Collect code in codeFile.            
             codeFile <- tempfile("Rcode")
             on.exit(unlink(codeFile))
-            codeExts <- c("R", "r", "S", "s", "q")
+            codeExts <- .makeFileExts("code")
             files <- .listFilesWithExts(codeDir, codeExts)
             codeOSDir <- file.path(codeDir, .Platform$OS)
             if(.fileTest("-d", codeOSDir))
@@ -209,9 +84,7 @@ function(package, dir, lib.loc = NULL)
     dataObjs <- character(0)
     dataDir <- file.path(dir, "data")
     if(.fileTest("-d", dataDir)) {
-        dataExts <- c("R", "r",
-                      "RData", "rdata", "rda",
-                      "TXT", "txt", "tab", "CSV", "csv")
+        dataExts <- .makeFileExts("data")
         files <- .listFilesWithExts(dataDir, dataExts)
         files <- files[!duplicated(sub("\\.[A-Za-z]*$", "", files))]
         dataEnv <- new.env()
@@ -312,6 +185,8 @@ function(x, ...)
     invisible(x)
 }
 
+### * codoc
+
 codoc <-
 function(package, dir, lib.loc = NULL,
          use.values = FALSE, use.positions = TRUE,
@@ -367,7 +242,7 @@ function(package, dir, lib.loc = NULL,
         ## Collect code in codeFile.
         codeFile <- tempfile("Rcode")
         unlinkOnExitFiles <- c(unlinkOnExitFiles, codeFile)
-        codeExts <- c("R", "r", "S", "s", "q")
+        codeExts <- .makeFileExts("code")
         files <- .listFilesWithExts(codeDir, codeExts)
         codeOSDir <- file.path(codeDir, .Platform$OS)
         if(.fileTest("-d", codeOSDir))
@@ -436,7 +311,7 @@ function(package, dir, lib.loc = NULL,
     ## Collect usages into docsFile.
     docsFile <- tempfile("Rdocs")
     unlinkOnExitFiles <- c(unlinkOnExitFiles, docsFile)
-    docsExts <- c("Rd", "rd")
+    docsExts <- .makeFileExts("docs")
     files <- .listFilesWithExts(docsDir, docsExts)
     docsOSDir <- file.path(docsDir, .Platform$OS)
     if(.fileTest("-d", docsOSDir))
@@ -542,6 +417,8 @@ function(x, ...)
     invisible(x)
 }
 
+### * checkAssignFuns
+
 checkAssignFuns <-
 function(package, dir, lib.loc = NULL)
 {
@@ -583,7 +460,7 @@ function(package, dir, lib.loc = NULL)
         ## Collect code into codeFile.
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
-        codeExts <- c("R", "r", "S", "s", "q")
+        codeExts <- .makeFileExts("code")
         files <- .listFilesWithExts(codeDir, codeExts)
         codeOSDir <- file.path(codeDir, .Platform$OS)
         if(.fileTest("-d", codeOSDir))
@@ -621,6 +498,8 @@ function(x, ...)
     invisible(x)
 }
 
+### * checkDocArgs
+
 checkDocArgs <-
 function(package, dir, lib.loc = NULL)
 {
@@ -652,7 +531,7 @@ function(package, dir, lib.loc = NULL)
     ## Collect usages into docsFile.
     docsFile <- tempfile("Rdocs")
     on.exit(unlink(docsFile))
-    docsExts <- c("Rd", "rd")
+    docsExts <- .makeFileExts("docs")
     files <- .listFilesWithExts(docsDir, docsExts)
     docsOSDir <- file.path(docsDir, .Platform$OS)
     if(.fileTest("-d", docsOSDir))
@@ -745,6 +624,8 @@ function(x, ...)
     invisible(x)
 }
 
+### * checkDocStyle
+
 checkDocStyle <-
 function(package, dir, lib.loc = NULL)
 {
@@ -794,7 +675,7 @@ function(package, dir, lib.loc = NULL)
         ## Collect code into codeFile.
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
-        codeExts <- c("R", "r", "S", "s", "q")
+        codeExts <- .makeFileExts("code")
         files <- .listFilesWithExts(codeDir, codeExts)
         codeOSDir <- file.path(codeDir, .Platform$OS)
         if(.fileTest("-d", codeOSDir))
@@ -845,7 +726,7 @@ function(package, dir, lib.loc = NULL)
     ## Collect usages into docsFile.
     docsFile <- tempfile("Rdocs")
     on.exit(unlink(docsFile), add = TRUE)
-    docsExts <- c("Rd", "rd")
+    docsExts <- .makeFileExts("docs")
     files <- .listFilesWithExts(docsDir, docsExts)
     docsOSDir <- file.path(docsDir, .Platform$OS)
     if(.fileTest("-d", docsOSDir))
@@ -945,6 +826,8 @@ function(x, ...) {
     invisible(x)
 }
 
+### * checkFF
+
 checkFF <-
 function(package, dir, file, lib.loc = NULL,
          verbose = getOption("verbose"))
@@ -971,7 +854,7 @@ function(package, dir, file, lib.loc = NULL,
         if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
-        codeExts <- c("R", "r", "S", "s", "q")
+        codeExts <- .makeFileExts("code")
         codeFiles <- .listFilesWithExts(codeDir, codeExts)
         codeOSDir <- file.path(codeDir, .Platform$OS)
         if(.fileTest("-d", codeOSDir))
@@ -1060,6 +943,8 @@ function(x, ...)
     invisible(x)
 }
 
+### * checkMethods
+
 checkMethods <-
 function(package, dir, lib.loc = NULL)
 {
@@ -1101,7 +986,7 @@ function(package, dir, lib.loc = NULL)
         ## Collect code into codeFile.
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
-        codeExts <- c("R", "r", "S", "s", "q")
+        codeExts <- .makeFileExts("code")
         files <- .listFilesWithExts(codeDir, codeExts)
         codeOSDir <- file.path(codeDir, .Platform$OS)
         if(.fileTest("-d", codeOSDir))
@@ -1203,6 +1088,8 @@ function(x, ...)
     invisible(x)
 }
 
+### * checkTnF
+
 checkTnF <-
 function(package, dir, file, lib.loc = NULL)
 {
@@ -1232,7 +1119,7 @@ function(package, dir, file, lib.loc = NULL)
         if(!.fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
-        codeExts <- c("R", "r", "S", "s", "q")
+        codeExts <- .makeFileExts("code")
         codeFiles <- .listFilesWithExts(codeDir, codeExts)
         codeOSDir <- file.path(codeDir, .Platform$OS)
         if(.fileTest("-d", codeOSDir))
@@ -1240,7 +1127,7 @@ function(package, dir, file, lib.loc = NULL)
                            .listFilesWithExts(codeOSDir, codeExts))
         docsDir <- file.path(dir, "man")
         if(.fileTest("-d", docsDir)) {
-            docsExts <- c("Rd", "rd")
+            docsExts <- .makeFileExts("docs")
             docsFiles <- .listFilesWithExts(docsDir, docsExts)
             docsOSDir <- file.path(docsDir, .Platform$OS)
             if(.fileTest("-d", docsOSDir))
@@ -1321,3 +1208,8 @@ function(x, ...)
     }
     invisible(x)
 }
+
+### Local variables: ***
+### mode: outline-minor ***
+### outline-regexp: "### [*]+" ***
+### End: ***
