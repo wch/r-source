@@ -19,7 +19,7 @@ INSTALLATION CHANGES
 	invoked for compilation steps).
 
    o	If makeinfo >= 4.5 is not available, warnings are given that
-	some of the HTML manuals will be empty, and the index page
+	some of the HTML manuals will be missing, and the index page
 	given by help.start() will link to CRAN versions of those manuals.
 
    o	Files aclocal.m4 and acinclude.m4 used in maintainer builds
@@ -69,6 +69,9 @@ BUG FIXES
     o   packageDescription() now correctly reports that a package does
 	not exist, rather than that its DESCRIPTION file is 'missing
 	or broken'.
+
+    o   'make dist' from builddir != sourcedir was copying not linking
+	recommended packages to *.tgz.
 
 
 
