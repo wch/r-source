@@ -41,6 +41,7 @@ replacement malloc() (see INSTALL) need not be used.
 Changed the installer build code so that patch versions are named
 rwXXXXpat.exe and development versions are named rwXXXXdev.exe.
 
+Fixed bugs that caused crash when windows were resized repeatedly.(PR#1711)
 
 
 rw1070

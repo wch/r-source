@@ -97,13 +97,12 @@ as.dist(m, diag = FALSE, upper = FALSE)
     argument.}
 }
 \references{
-  Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979)
-  \emph{Multivariate Analysis.} London: Academic Press.
-}
-\references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979)
+  \emph{Multivariate Analysis.} London: Academic Press.
 }
 \seealso{
   \code{\link[cluster]{daisy}} in the \file{cluster} package with more
