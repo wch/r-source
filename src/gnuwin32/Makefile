@@ -62,7 +62,7 @@ rpackage: fixed/fixdesc ../../library/R.css
 	$(MAKE) STAMP=NO $(PKGS)
 
 rinstaller:
-	$(MAKE) -C installer PREFIX=$(RPREFIX)
+	$(MAKE) -C installer RPREFIX=$(RPREFIX)
 
 rlibs:
 	$(MAKE) -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
@@ -296,18 +296,18 @@ RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 docfiles: INSTALL FAQs
 SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 
-INSTALL: INSTALL.in ../../VERSION
+INSTALL: INSTALL.in ../../VERSION RWVERSION
 	$(SED) $(SEDVER) INSTALL.in > INSTALL
 
 FAQs: rw-faq fixed/html/rw-FAQ.html
 
-fixed/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION
+fixed/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION RWVERSION
 	@$(SED) $(SEDVER) $< > tmp.texi
 	makeinfo --html --no-headers --number-sections -o tmp.html tmp.texi
 	-tidy tmp.html > $@ 2> nul
 	@$(RM) tmp.texi tmp.html
 
-rw-faq: rw-FAQ.texi ../../VERSION
+rw-faq: rw-FAQ.texi ../../VERSION RWVERSION
 	$(SED) $(SEDVER) $< | \
 	  makeinfo --no-headers --number-sections -o $@
 
