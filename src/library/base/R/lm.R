@@ -379,7 +379,14 @@ weights.default <- function(object, ...) object$weights
 weights.lm <- .Alias(weights.default)
 df.residual.lm <- function(object, ...) object$df.residual
 deviance.lm <- function(object, ...) sum(weighted.residuals(object)^2)
-formula.lm <- function(object, ...) formula(object$terms)
+formula.lm <- function(object, ...) 
+{
+    form <- object$formula
+    if( !is.null(form) )
+        return(form)
+    formula(object$terms)
+}
+
 family.lm <- function(object, ...) { gaussian() }
 
 model.frame.lm <- function(formula, data, na.action, ...) {
