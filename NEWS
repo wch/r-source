@@ -123,7 +123,7 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   segfault in rbind of a vector without names fixed.
+    o   segfault in rbind of a vector without names fixed. cbind, too.
 
     o	apply should now work for all un-dimnamed arrays (PR#318).
 

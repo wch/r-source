@@ -1087,7 +1087,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 
     /* Adjustment of dimnames attributes. */
     if (have_cnames | have_rnames) {
-	SEXP nam, tnam;
+	SEXP nam, tnam,v;
 	PROTECT(dn = allocVector(VECSXP, 2));
 	if (have_cnames)
 	    nam = VECTOR(dn)[1] = allocVector(STRSXP, cols);
@@ -1100,13 +1100,13 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 
 		if (isMatrix(u)) {
 
-		    u = getAttrib(u, R_DimNamesSymbol);
-		    tnam = GetColNames(u);
+		    v = getAttrib(u, R_DimNamesSymbol);
+		    tnam = GetColNames(v);
 
 		    if (have_rnames &&
 			GetRowNames(dn) == R_NilValue &&
-			GetRowNames(u) != R_NilValue)
-			SetRowNames(dn, duplicate(GetRowNames(u)));
+			GetRowNames(v) != R_NilValue)
+			SetRowNames(dn, duplicate(GetRowNames(v)));
 
 		    /* rbind() does this only  if(have_?names) .. : */
 		    if (tnam != R_NilValue) {
