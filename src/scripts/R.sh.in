@@ -36,6 +36,7 @@ export R_UNZIPCMD R_ZIPCMD
 USE_R_ENVIRON=true
 
 # Argument loop
+DBG=
 while test -n "${1}"; do
   case ${1} in
     RHOME)
@@ -47,13 +48,7 @@ while test -n "${1}"; do
     -g|--gnome)
       R_BINARY="R.gnome" ;;
     -d|--debugger)
-      dbg="${2}"; shift 2; args="${@}"
-      if test -n "${args}"; then 
-	echo "*** Further command line arguments (\`$args') disregarded"
-	echo "*** (maybe use \`run ${args}'  from *inside* ${dbg}"
-	echo ""
-      fi
-      exec ${dbg} ${R_HOME}/bin/${R_BINARY} ;;
+      DBG="${2}"; shift 2 ;;
     --no-environ)
       USE_R_ENVIRON=false ;;
     --vanilla)
@@ -113,7 +108,17 @@ done
 if ${USE_R_ENVIRON}; then
   [ -r ${R_ENVIRON} ] && . ${R_ENVIRON}
 fi
-exec ${R_HOME}/bin/${R_BINARY} @R_BATCHSAVE@ ${ARGS}
+
+if test -z "${DBG}"; then
+  exec ${R_HOME}/bin/${R_BINARY} @R_BATCHSAVE@ ${ARGS}
+else
+  if test -n "${ARGS}"; then
+    echo "*** Further command line arguments (\`${ARGS}') disregarded"
+    echo "*** (maybe use \`run ${ARGS}' from *inside* ${DBG})"
+    echo ""
+  fi
+  exec ${DBG} ${R_HOME}/bin/${R_BINARY}
+fi
 
 ### Local Variables: ***
 ### mode: sh ***
