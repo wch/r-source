@@ -8,3 +8,6 @@ emacs <- function(name=NULL, file="") edit(name, file, editor="emacs")
 xemacs <- function(name=NULL, file="") edit(name, file, editor="xemacs")
 
 xedit <- function(name=NULL, file="") edit(name, file, editor="xedit")
+
+pico <- function(name=NULL, file="") edit(name, file, editor="pico")
+

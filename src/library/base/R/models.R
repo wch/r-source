@@ -230,22 +230,25 @@ function (data, type = "any")
         else return(NULL)
 }
 
-model.extract <- function(frame, component)
+"model.extract" <- function (frame, component) 
 {
-	component<-as.character(substitute(component))
-	rval<-switch(component,
-		response= model.response(frame),
-		offset = model.offset(frame),
-		weights = frame$"(weights)",
-		start = frame$"(start)"
-		)
-	if(length(rval) == nrow(frame))
-		names(rval)<-attr(frame, "row.names")
-	else if(is.matrix(rval) && nrow(rval)==nrow(frame)) {
-		t1<-dimnames(rval)
-		dimnames(rval)<-list(attr(frame, "row.names"),t1[[2]])
-	}
-	return(rval)
+        component <- as.character(substitute(component))
+        rval <- switch(component, response = model.response(frame), 
+                offset = model.offset(frame), weights = frame$"(weights)", 
+                start = frame$"(start)")
+        if (is.null(rval)) {
+                name <- paste("frame$\"(", component, ")\"", 
+                        sep = "")
+                rval <- eval(parse(text = name)[1])
+        }
+        if (length(rval) == nrow(frame)) 
+                names(rval) <- attr(frame, "row.names")
+        else if (is.matrix(rval) && nrow(rval) == nrow(frame)) {
+                t1 <- dimnames(rval)
+                dimnames(rval) <- list(attr(frame, "row.names"), 
+                        t1[[2]])
+        }
+        return(rval)
 }
 
 update <- function(x, ...) UseMethod("update")

@@ -137,6 +137,8 @@ NEW FEATURES
     o   new design of HTML help pages, including an index of all
 	functions from all installed packages.
 
+    o	new editor function pico()
+
 BUG FIXES (many of which resulted from the added features...)
 
     o   Rd files: leading whitespace of lines in user-defined sections
@@ -179,6 +181,7 @@ BUG FIXES (many of which resulted from the added features...)
     o	Many small code changes (eliminating extraneous variables, nested comm.)
 	in C code in order to satisfy `gcc -Wall' [Doug Bates].
 
+    o   model.extract() will now extract arbitrary model frame arguments.
 
 		CHANGES IN R VERSION 0.61.2
 
