@@ -164,6 +164,7 @@ NEW FEATURES
 
     o   autoload() accepts lib.loc and other arguments to library()
 
+    o	bxp() has new argument "frame.plot", as plot.default().
 
 
 BUG FIXES
@@ -223,6 +224,8 @@ BUG FIXES
     o	D(.) is now more correctly documented, has second argument
 	"name" instead of "namevec" (S compatibility), and gives a warning
 	when name has not length 1.
+
+    o	bxp(*) now obeys axes, xaxt, yaxt & ylim arguments (again?).
 
 
 	**************************************************

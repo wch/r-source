@@ -3,7 +3,7 @@
 \usage{
 bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
     boxwex = 0.8, border = par("fg"), col = NULL, log = "",
-    pars = NULL, \dots)
+    pars = NULL, frame.plot = axes, \dots)
 }
 \alias{bxp}
 \arguments{
@@ -30,24 +30,28 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
   multiple boxes}
 \item{log}{character, indicating if any axis should be drawn in
   logarithmic scale, as in \code{\link{plot.default}}.}
+\item{frame.plot}{logical, indicating if a ``frame''
+  (\code{\link{box}()}) should be drawn; defaults to \code{TRUE}, unless
+  \code{axes = FALSE} is specified.}
 \item{pars,\dots}{Graphical parameters can be passed as arguments to
   this function, either as a list (\code{pars}) or normally(\code{\dots}).}
 }
 \description{
- \code{bxp(..)} draws box plots based on the given summaries in \code{z}.
-  It is usually called from within \code{\link{boxplot}(..)}, but can be invoked
-  directly.
+  \code{bxp(..)} draws box plots based on the given summaries in
+  \code{z}.  It is usually called from within \code{\link{boxplot}(..)},
+  but can be invoked directly.
 }
 \value{An invisible vector with the x-coordinates of box centers, useful
   for adding to the plot.
 }
 \examples{
-str(bx.p <- boxplot(split(rnorm(100), gl(5,20)), plot = FALSE))
+str(bx.p <- boxplot(split(rnorm(100), gl(5,20))))
 op <- par(mfrow= c(2,2))
-bxp(bx.p)
-bxp(bx.p, notch = TRUE)
-bxp(bx.p, notch = TRUE, col= 'lightblue')
-bxp(bx.p, notch = TRUE, col= 'lightblue', border='red', log = 'x')
+bxp(bx.p, xaxt = "n")
+bxp(bx.p, notch = TRUE, axes = FALSE)
+bxp(bx.p, notch = TRUE, col= 'lightblue', frame = FALSE)
+bxp(bx.p, notch = TRUE, col= 'lightblue', border='red',
+    log = "x", ylim = c(-1,4), main = "bxp(*, log='x', ylim=*)")
 par(op)
 }
 \keyword{aplot}

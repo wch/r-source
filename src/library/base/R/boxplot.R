@@ -96,13 +96,14 @@ boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	        notch.frac = 0.5, boxwex = 0.8,
 		border=par("fg"), col=NULL, log="", pars=NULL,
-		 ...)
+                frame.plot = axes,
+                ...)
 {
+    pars <- c(pars, list(...))
+
     bplt <- function(x, wid, stats, out, conf, notch, border, col)
     {
-	## Draw single box plot.
-	pars <- c(pars, list(...))# from bxp(...).
-
+	## Draw single box plot
 	if(!any(is.na(stats))) {
 	    ## stats = +/- Inf:	 polygon & segments should handle
 	    wid <- wid/2
@@ -139,26 +140,26 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     if(!is.list(z) || 0 == (n <- length(z$n)))
 	stop("invalid first argument")
     ## just for compatibility with S
-    if(is.null(z$out))   z$out   <- vector(length=0)
+    if(is.null(z$out))	 z$out	 <- vector(length=0)
     if(is.null(z$group)) z$group <- vector(length=0)
-    if((comp.ylim <- is.null(pars$ylim)))
-        ylim <- range(z$stats[is.finite(z$stats)],
-                      z$out  [is.finite(z$out)],
-                      if(notch)
-                      z$conf [is.finite(z$conf)])
+    if(is.null(pars$ylim))
+	ylim <- range(z$stats[is.finite(z$stats)],
+		      z$out  [is.finite(z$out)],
+		      if(notch)
+		      z$conf [is.finite(z$conf)])
     else {
-        ylim <- pars$ylim
-        pars$ylim <- NULL
+	ylim <- pars$ylim
+	pars$ylim <- NULL
     }
     width <-
-        if(!is.null(width)) {
-            if(length(width) != n | any(is.na(width)) | any(width <= 0))
-                stop("invalid boxplot widths")
-            boxwex * width/max(width)
-        }
-        else if(varwidth) boxwex * sqrt(z$n/max(z$n))
-        else if(n == 1) 0.5 * boxwex
-        else rep(boxwex, n)
+	if(!is.null(width)) {
+	    if(length(width) != n | any(is.na(width)) | any(width <= 0))
+		stop("invalid boxplot widths")
+	    boxwex * width/max(width)
+	}
+	else if(varwidth) boxwex * sqrt(z$n/max(z$n))
+	else if(n == 1) 0.5 * boxwex
+	else rep(boxwex, n)
 
     if(missing(border) || length(border)==0)
 	border <- par("fg")
@@ -178,10 +179,11 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     axes <- is.null(pars$axes)
     if(!axes) { axes <- pars$axes; pars$axes <- NULL }
     if(axes) {
-	if(n > 1) axis(1, at=1:n, labels=z$names)
-	axis(2)
+	if(n > 1) axis(1, at=1:n, labels=z$names, xaxt = pars$xaxt)
+	axis(2, yaxt = pars$yaxt)
     }
     do.call("title", pars)
-    box()
+    if(frame.plot)
+        box()
     invisible(1:n)
 }
