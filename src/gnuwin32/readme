@@ -43,6 +43,7 @@ and the Introduction to R and Data Import/Export manuals in PDF.
 @RWVER@ch.zip				compiled HTML help
 @RWVER@w.zip				HTML help files
 @RWVER@l.zip				latex help files for offline help
+@RWVER@m.zip				installed .Rd files
 @RWVER@d1.zip				PDF manuals except
 @RWVER@d2.zip				  PDF version of the reference manual
 @RWVER@sp.zip				files to build packages from source
