@@ -1146,9 +1146,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     err = ReadTextFile(&tempeditFSS,Edit_Windows[Edit_Window-1]);
 
    	UniqueWinTitle(Edit_Windows[Edit_Window-1] );
-	if(Edit_Window>2)
-    	RepositionWindow(Edit_Windows[Edit_Window - 1], 
-        Edit_Windows[Edit_Window - 2],kWindowCascadeOnParentWindow);
+
     ShowWindow(Edit_Windows[Edit_Window - 1]);
     finished=false;
     while(!finished)

@@ -1122,9 +1122,6 @@ OSErr DoOpenText(Boolean editable)
 
     
    	UniqueWinTitle(Edit_Windows[Edit_Window-1]);
-	if(Edit_Window>2)
-    	RepositionWindow(Edit_Windows[Edit_Window - 1], 
-        Edit_Windows[Edit_Window - 2],kWindowCascadeOnParentWindow);
 
     SetWindowProxyFSSpec(Edit_Windows[Edit_Window - 1], &myfss);
     ShowWindow(Edit_Windows[Edit_Window - 1]);
@@ -1207,11 +1204,6 @@ OSErr R_EditFile(SEXP call, char *fname, Boolean isanewfile)
       
    	UniqueWinTitle(Edit_Windows[Edit_Window-1]);
 
-  
-	if(Edit_Window>2)
-    	RepositionWindow(Edit_Windows[Edit_Window - 1], 
-        Edit_Windows[Edit_Window - 2],kWindowCascadeOnParentWindow);
-
     SetWindowProxyFSSpec(Edit_Windows[Edit_Window - 1], &myfss);
     ShowWindow(Edit_Windows[Edit_Window - 1]);
     return err;
@@ -1278,9 +1270,7 @@ OSErr R_NewFile(SEXP call, char *fname)
     SelectWindow(Edit_Windows[Edit_Window-1]);
 
    	UniqueWinTitle(Edit_Windows[Edit_Window-1]);
-	if(Edit_Window>2)
-    	RepositionWindow(Edit_Windows[Edit_Window - 1], 
-        Edit_Windows[Edit_Window - 2],kWindowCascadeOnParentWindow);
+
     ShowWindow(Edit_Windows[Edit_Window - 1]);
     return err;
 }

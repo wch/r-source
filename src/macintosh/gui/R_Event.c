@@ -717,11 +717,8 @@ void DoWindowEvent( const EventRecord *event )
 	GetPortBounds ( GetWindowPort(Console_Window), & portRect ) ;
 	Console_Width = portRect.right - portRect.left ;
 	GetPort(&savePort);
-#if TARGET_API_MAC_CARBON
     SetPortWindowPort(Console_Window);
-#else
-	SetPort(Console_Window);
-#endif
+
 	TextFont(4);
 	TextSize(gTextSize);
 	NumofChar = (int)(((Console_Width - 15) / CharWidth('M')) -0.5) ;
@@ -900,10 +897,11 @@ static pascal OSErr HandleOpenDocument( const AppleEvent *ae,
         if( OnOpenSource )
         	SourceFile(&fileSpec);
         else {    
-        DoNew( false);
+        DoNew(false);
         RemWinMenuItem(Edit_Windows[Edit_Window-1] );
         ReadTextFile ( &fileSpec,  Edit_Windows[Edit_Window-1]  );
         UniqueWinTitle(Edit_Windows[Edit_Window-1] );
+        ShowWindow(Edit_Windows[Edit_Window-1] );
         }
     }else
 	if ((fileInfo.fdType == 'BINA')||(fileInfo.fdType == 'ROBJ')){

@@ -679,7 +679,6 @@ Boolean			DoContent( Point, const EventRecord *, WindowPtr );
 void			DoKey( short, const EventRecord * );
 void			DoUpdate( WindowPtr );
 void			DoActivate( Boolean, WindowPtr );
-//OSErr			CreateWindow( const FSSpec * );
 OSErr 			CreateWindow (const FSSpec * pFileSpec, Boolean editable);
 void			DestroyWindow( WindowPtr );
 void			Resize( Point, WindowPtr );

@@ -339,8 +339,6 @@ void DoLineTo()
 void R_Edit(char** lines, int nlines)
 {
     DoNew(true);
-    if(Edit_Window>2)
-     RepositionWindow(Edit_Windows[Edit_Window - 1], Edit_Windows[Edit_Window - 2],kWindowCascadeOnParentWindow);
     R_EditWindow(lines, nlines, Edit_Windows[Edit_Window -1]);
     ShowWindow(Edit_Windows[Edit_Window -1]);
         

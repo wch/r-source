@@ -1456,7 +1456,6 @@ OSStatus newWindow ( const FSSpec * pFileSpec, WindowRef * outWindow, int graphi
 
 
 	//	position the window
-	RepositionWindow ( window, FrontWindow ( ), kWindowCascadeOnParentWindow ) ;
 
 	//	finally!  show the document window
 	if(!Have_Console)
@@ -1493,7 +1492,8 @@ OSStatus newWindow ( const FSSpec * pFileSpec, WindowRef * outWindow, int graphi
 		    screenBits.bounds.bottom -4);
         GetWindowPortBounds ( window, & portRect ) ;
         MoveWindow(window, theWholeScreen.right - (portRect.right + 5), theWholeScreen.top + 20, true);
-//        ShowWindow(window);
+          if(Edit_Window>2)
+         RepositionWindow(Edit_Windows[Edit_Window - 1], Edit_Windows[Edit_Window - 2],kWindowCascadeOnParentWindow);
 	}
     }
     if (graphic){
@@ -1669,10 +1669,6 @@ int R_ShowFiles(int nfile, char **fileName, char **title,
 	RemWinMenuItem(Edit_Windows[Edit_Window-1]);
 
     Help_Windows[Help_Window] = Edit_Windows[Edit_Window-1];
-
-    if(Help_Window>1)
-     RepositionWindow ( Help_Windows[Help_Window], Help_Windows[Help_Window-1], kWindowCascadeOnParentWindow ) ;
-//    ShowWindow(Help_Windows[Help_Window]);
 
     Edit_Window --;
     Edit_Number --;
