@@ -117,26 +117,6 @@ void ProcessInlinePars(SEXP s, DevDesc *dd)
     }
 }
 
-/* GetPar is intended for looking through a list  -- typically that bound
- *	to ... --  for a particular parameter value.  This is easier than
- *	trying to match every graphics parameter in argument lists explicitly.
- * FIXME: This needs to be destructive, so that "ProcessInlinePars"
- *	can be safely called afterwards.
- * 2000/02/20: it is destructive of all but the first arg.
- */
-SEXP GetPar(char *which, SEXP parlist)
-{
-    SEXP w, p, prev = R_NilValue;
-    w = install(which);
-    for (p = parlist; p != R_NilValue; prev = p, p = CDR(p)) {
-	if (TAG(p) == w) {
-	    if(!isNull(prev)) CDR(prev) = CDR(p);
-	    return CAR(p);
-	}
-    }
-    return R_NilValue;
-}
-
 SEXP FixupPch(SEXP pch, int dflt)
 {
     int i, n;
@@ -1434,19 +1414,24 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
     sxr = CAR(args); nxr = length(sxr); args = CDR(args);
     syt = CAR(args); nyt = length(syt); args = CDR(args);
 
-    PROTECT(col = FixupCol(GetPar("col", args), NA_INTEGER));
+    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
     ncol = LENGTH(col);
+    args = CDR(args);
 
-    PROTECT(border =  FixupCol(GetPar("border", args), NA_INTEGER));
+    PROTECT(border =  FixupCol(CAR(args), NA_INTEGER));
     nborder = LENGTH(border);
+    args = CDR(args);
 
-    PROTECT(lty = FixupLty(GetPar("lty", args), dd->gp.lty));
+    PROTECT(lty = FixupLty(CAR(args), dd->gp.lty));
     nlty = length(lty);
+    args = CDR(args);
 
-    PROTECT(lwd = FixupLwd(GetPar("lwd", args), dd->gp.lwd));
+    PROTECT(lwd = FixupLwd(CAR(args), dd->gp.lwd));
     nlwd = length(lwd);
+    args = CDR(args);
 
-    xpd = asInteger(GetPar("xpd", args));
+    xpd = asInteger(CAR(args));
+    args = CDR(args);
 
     GSavePars(dd);
 
@@ -1514,30 +1499,37 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
     sx1 = CAR(args); nx1 = length(sx1); args = CDR(args);
     sy1 = CAR(args); ny1 = length(sy1); args = CDR(args);
 
-    hlength = asReal(GetPar("length", args));
+    hlength = asReal(CAR(args));
     if (!R_FINITE(hlength) || hlength <= 0)
 	errorcall(call, "invalid head length");
+    args = CDR(args);
 
-    angle = asReal(GetPar("angle", args));
+    angle = asReal(CAR(args));
     if (!R_FINITE(angle))
 	errorcall(call, "invalid head angle");
+    args = CDR(args);
 
-    code = asInteger(GetPar("code", args));
+    code = asInteger(CAR(args));
     if (code == NA_INTEGER || code < 0 || code > 3)
 	errorcall(call, "invalid arrow head specification");
+    args = CDR(args);
 
-    PROTECT(col = FixupCol(GetPar("col", args), NA_INTEGER));
+    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
     ncol = LENGTH(col);
+    args = CDR(args);
 
-    PROTECT(lty = FixupLty(GetPar("lty", args), dd->gp.lty));
+    PROTECT(lty = FixupLty(CAR(args), dd->gp.lty));
     nlty = length(lty);
+    args = CDR(args);
 
-    PROTECT(lwd = GetPar("lwd", args));/*need  FixupLwd ?*/
+    PROTECT(lwd = CAR(args));/*need  FixupLwd ?*/
     nlwd = length(lwd);
     if (nlwd == 0)
 	errorcall(call, "'lwd' must be numeric of length >=1");
+    args = CDR(args);
 
-    xpd = asInteger(GetPar("xpd", args));
+    xpd = asInteger(CAR(args));
+    args = CDR(args);
 
     GSavePars(dd);
 
@@ -1612,29 +1604,24 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
     if (ny != nx)
 	errorcall(call, "x and y lengths differ in polygon");
 
-    PROTECT(col = FixupCol(GetPar("col", args), NA_INTEGER));
+    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
     ncol = LENGTH(col);
+    args = CDR(args);
 
-    PROTECT(border = FixupCol(GetPar("border", args), NA_INTEGER));
+    PROTECT(border = FixupCol(CAR(args), dd->gp.fg));
     nborder = LENGTH(border);
+    args = CDR(args);
 
-    PROTECT(lty = FixupLty(GetPar("lty", args), dd->gp.lty));
+    PROTECT(lty = FixupLty(CAR(args), dd->gp.lty));
     nlty = length(lty);
+    args = CDR(args);
 
-    /*
-     * Have to use GetPar("xpd"...) here rather than ProcessInLinePars
-     * because ProcessInLinePars will choke on "border" (until GetPar
-     * is fixed - see GetPar)
-     * GetPar returning R_NilValue means xpd wasn't specified (so just
-     * use current setting of par(xpd))
-     * Need separate check for this because otherwise unspecified xpd
-     * is the same as xpd=NA (because asInteger(R_NilValue)==NA_INTEGER)
-     */
-    sxpd = GetPar("xpd", args);
+    sxpd = CAR(args);
     if (sxpd != R_NilValue)
 	xpd = asInteger(sxpd);
     else
 	xpd = dd->gp.xpd;
+    args = CDR(args);
 
     GSavePars(dd);
 
@@ -1759,17 +1746,21 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(vfont = FixupVFont(CAR(args)));
     if (!isNull(vfont))
 	vectorFonts = 1;
+    args = CDR(args);
 
-    PROTECT(cex = FixupCex(GetPar("cex", args), 1.0));
+    PROTECT(cex = FixupCex(CAR(args), 1.0));
     ncex = LENGTH(cex);
+    args = CDR(args);
 
-    PROTECT(col = FixupCol(GetPar("col", args), NA_INTEGER));
+    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
     ncol = LENGTH(col);
+    args = CDR(args);
 
-    PROTECT(font = FixupFont(GetPar("font", args), NA_INTEGER));
+    PROTECT(font = FixupFont(CAR(args), NA_INTEGER));
     nfont = LENGTH(font);
+    args = CDR(args);
 
-    xpd = asLogical(GetPar("xpd", args));
+    xpd = asLogical(CAR(args));
     if (xpd == NA_LOGICAL)
 	xpd = dd->gp.xpd; /* was 0 */
     args = CDR(args);
@@ -2585,6 +2576,7 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	return ans;
     }
 }
+
 
 SEXP do_dotplot(SEXP call, SEXP op, SEXP args, SEXP env)
 {

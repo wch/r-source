@@ -1083,14 +1083,17 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     args = CDR(args);
 
-    PROTECT(col = FixupCol(GetPar("col", args), NA_INTEGER));
+    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
     ncol = length(col);
+    args = CDR(args);
 
-    PROTECT(lty = FixupLty(GetPar("lty", args), dd->gp.lty));
+    PROTECT(lty = FixupLty(CAR(args), dd->gp.lty));
     nlty = length(lty);
+    args = CDR(args);
 
-    PROTECT(lwd = FixupLwd(GetPar("lwd", args), dd->gp.lwd));
+    PROTECT(lwd = FixupLwd(CAR(args), dd->gp.lwd));
     nlwd = length(lwd);
+    args = CDR(args);
 
     if (nx < 2 || ny < 2)
 	errorcall(call, "insufficient x or y values");
