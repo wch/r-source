@@ -84,8 +84,8 @@ barplot.default <-
 	    axis(if(horiz) 2 else 1, at = at.l, labels = names.arg, lty = 0)
 	}
 	if (!is.null(legend.text)) {
-	    legend.col <- col
-	    if((horiz & beside) | (!horiz & !beside)){
+	    legend.col <- rep(col,length=length(legend.text))
+	    if((horiz & beside) || (!horiz & !beside)){
 		legend.text <- rev(legend.text)
 		legend.col <- rev(legend.col)
 	    }
