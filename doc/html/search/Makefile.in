@@ -55,13 +55,13 @@ SearchEngine.html: \
 	@-$(PERL) $(top_srcdir)/tools/keywords2html.pl \
 	  $(top_srcdir)/doc/KEYWORDS.db >> $@
 	@cat $(srcdir)/SearchEngine-foot.html >> $@
-## <FIXME>
+## <NOTE>
 ## This is created via
 ##   (cd $(top_builddir)/src/library && make docs)
 index.txt:
 	@touch $@
 ## so we need to remove it ...
-## </FIXME>
+## </NOTE>
 
 install: install-message installdirs install-sources
 	@for f in $(OBJECTS); do \

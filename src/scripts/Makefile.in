@@ -22,10 +22,7 @@ SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SCRIPTS_S) $(SCRIPTS_B_IN) R.sh.in
 
-## <FIXME>
-## Remove eventually.
-CLEANFILES = Rdindex
-## </FIXME>
+CLEANFILES =
 DISTCLEANFILES = Makefile R.fe R.sh $(SCRIPTS_B)
 
 all: Makefile R
