@@ -306,12 +306,15 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]))))
         errorcall(call, "C-R function not in load table\n");
     args = CDR(args);
+
     for(nargs = 0, pargs = args ; pargs != R_NilValue; pargs = CDR(pargs)) {
         if (nargs == MAX_ARGS)
             errorcall(call, "too many arguments in foreign function call\n");
 	cargs[nargs] = CAR(pargs);
 	nargs++;
     }
+
+    retval = R_NilValue;	/* -Wall */
     switch (nargs) {
     case 0:
 	retval = (SEXP)fun();

@@ -694,14 +694,15 @@ SEXP do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
 		return mkPRIMSXP(i, R_FunTab[i].eval % 10);
 	}
     errorcall(call, "no such primitive function\n");
+    return(R_NilValue);		/* -Wall */
 }
 
 int StrToInternal(char *s)
 {
-	int i;
-	for (i = 0; R_FunTab[i].name; i++)
-		if (strcmp(s, R_FunTab[i].name) == 0) return i;
-	return 0;
+    int i;
+    for (i = 0; R_FunTab[i].name; i++)
+	if (strcmp(s, R_FunTab[i].name) == 0) return i;
+    return 0;
 }
 
 /* string hashing */
@@ -721,7 +722,6 @@ int hashpjw(char *s)
 
 extern void installFunTab(int i)
 {
-
     if ((R_FunTab[i].eval % 100 )/10)
 	INTERNAL(install(R_FunTab[i].name))
 	    = mkPRIMSXP(i, R_FunTab[i].eval % 10);

@@ -2809,6 +2809,7 @@ static void clipPolygon(int n, double *x, double *y, int coords,
     }
     else {
 	int npts;
+	xc = yc = 0;		/* -Wall */
 	npts = GClipPolygon(x, y, n, coords, 0, xc, yc, dd);
 	if (npts > 1) {
 	    vmax = vmaxget();
@@ -2906,6 +2907,7 @@ static void clipCircle(double x, double y, int coords,
 	    else {
 		int npts;
 		double *xcc, *ycc;
+		xcc = ycc = 0;	/* -Wall */
 		npts = GClipPolygon(xc, yc, numvert, coords, 0, xcc, ycc, dd);
 		if (npts > 1) {
 		    xcc = (double*)R_alloc(npts, sizeof(double));
@@ -2946,7 +2948,6 @@ static void clipRect(double x0, double y0, double x1, double y1, int coords,
 {
     char *vmax;
     double *xc, *yc;
-    int i;
     vmax = vmaxget();
     xc = (double*)R_alloc(5, sizeof(double));
     yc = (double*)R_alloc(5, sizeof(double));
@@ -2962,6 +2963,7 @@ static void clipRect(double x0, double y0, double x1, double y1, int coords,
     else {
 	int npts;
 	double *xcc, *ycc;
+	xcc = ycc = 0;		/* -Wall */	
 	npts = GClipPolygon(xc, yc, 4, coords, 0, xcc, ycc, dd);
 	if (npts > 1) {
 	    xcc = (double*)R_alloc(npts, sizeof(double));
