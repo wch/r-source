@@ -26,6 +26,7 @@ binom.test(x, n, p = 0.5, alternative = "two.sided",
   \item{parameter}{the number of trials, \code{n}.}
   \item{p.value}{the p-value of the test.}
   \item{conf.int}{a confidence interval for the probability of success.}
+  \item{estimate}{the estimated probability of success, \code{x / n}.}
   \item{null.value}{the probability of success under the null,
     \code{p}.}
   \item{alternative}{a character string describing the alternative
