@@ -196,14 +196,17 @@ MethodsListSelect <-
     if(!is.logical(useInherited))
         stop("useInherited must be TRUE, FALSE, or a named logical vector of those values; got an object of class \"",
              class(useInherited), "\"")
+    resetNeeded <- FALSE
     if(identical(mlist, getMethodsForDispatch(f, fdef))) {
+        resetNeeded <- TRUE
         ## On the initial call:
         ## turn off any further method dispatch on this function, to avoid recursive
         ## loops if f is a function used in MethodsListSelect.
         ## TODO: Using name spaces in the methods package would eliminate the need for this
         .setMethodsForDispatch(f, fdef, finalDefault)
-        if(is(mlist, "MethodsList"))
+        if(is(mlist, "MethodsList")) {
             on.exit(.setMethodsForDispatch(f, fdef, mlist))
+        }
     }
     argName <- slot(mlist, "argument")
     arg <- NULL ## => don't use instance-specific inheritance
@@ -291,9 +294,9 @@ MethodsListSelect <-
         ## top level
         if(is(value, "EmptyMethodsList")) ## selection failed
             value <- NULL
-        else {
+        if(resetNeeded) {
             on.exit() # cancel the restore, if any, of the original mlist
-            .setMethodsForDispatch(f, fdef, value)
+            .setMethodsForDispatch(f, fdef, if(is.null(value)) mlist else value)
         }
             
     }
