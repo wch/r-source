@@ -43,7 +43,7 @@ library <-
 	    # create environment
 	    env <- attach(NULL, name = pkgname)
             lastbit<- file.path("", "R", package)
-            path <- gsub(lastbit , "", file)
+            path <- gsub(paste(lastbit, "$", sep=""), "", file)
             attr(env, "path") <- path
 	    # "source" file into env
 	    if (file == "")
