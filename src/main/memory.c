@@ -653,11 +653,11 @@ static void ReleaseLargeFreeVectors(void)
 
 /* Heap Size Adjustment. */
 
-static void AdjustHeapSize(void)
+static void AdjustHeapSize(int size_needed)
 {
   double node_occup = ((double) R_NodesInUse) / R_NSize;
   double vect_occup =
-    ((double) (R_SmallVallocSize + R_LargeVallocSize)) / R_VSize;
+    ((double) (R_SmallVallocSize + R_LargeVallocSize + size_needed)) / R_VSize;
 
   if (node_occup > R_NGrowFrac)
     R_NSize += R_NGrowIncr;
@@ -667,7 +667,12 @@ static void AdjustHeapSize(void)
       R_NSize = orig_R_NSize;
   }
 
-  if (vect_occup > R_VGrowFrac)
+  if (vect_occup > 1.0) {
+    int k = (R_SmallVallocSize + R_LargeVallocSize + size_needed - R_VSize - 1)
+      / R_VGrowIncr + 1;
+    R_VSize += k * R_VGrowIncr;
+  }
+  else if (vect_occup > R_VGrowFrac)
     R_VSize += R_VGrowIncr;
   else if (vect_occup < R_VShrinkFrac) {
     R_VSize -= R_VShrinkIncr;
@@ -913,7 +918,7 @@ again:
 
   if (gens_collected == NUM_OLD_GENERATIONS) {
     /**** do some adjustment for intermediate collections? */
-    AdjustHeapSize();
+    AdjustHeapSize(size_needed);
     TryToReleasePages();
     DEBUG_CHECK_NODE_COUNTS("after heap adjustment");
   }
@@ -1001,15 +1006,23 @@ SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static void mem_err_heap(long size)
 {
+#ifdef USE_GENERATIONAL_GC
+    errorcall(R_NilValue, "vector memory exhausted");
+#else
     errorcall(R_NilValue, "heap memory (%ld Kb) exhausted [needed %ld Kb more]\n       See \"help(Memory)\" on how to increase the heap size.",
 	  (R_VSize * sizeof(VECREC))/1024,
   (size * sizeof(VECREC))/1024);
+#endif
 }
 
 
 static void mem_err_cons()
 {
+#ifdef USE_GENERATIONAL_GC
+    errorcall(R_NilValue, "cons memory exhausted");
+#else
     errorcall(R_NilValue, "cons memory (%ld cells) exhausted\n       See \"help(Memory)\" on how to increase the number of cons cells.", R_NSize);
+#endif
 }
 
 /* InitMemory : Initialise the memory to be used in R. */
