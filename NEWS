@@ -382,6 +382,10 @@ NEW FEATURES
 	range of values of time series to be replaced by specifying the
 	start and end times (and optionally a frequency).
 
+    o	If writeLines() is given a connection that is not open, it now
+	attempts to open it in mode = "wt" rather than the default
+	mode specified when creating the connection.
+
     o	The screen devices x11(), windows() and quartz() have a new
 	argument 'bg' to set the default background colour.
 

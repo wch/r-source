@@ -81,8 +81,11 @@ help pages (the man subdirectories of the libraries) -- these were
 not installed under Windows before.
 
 The RGui menu item for installing packages from CRAN make uses of the
-non-default setting of install.packages(dependencies = TRUE) to fetch
+(non-default) setting of install.packages(dependencies = TRUE) to fetch
 all the other packages needed to run those specified.
+
+Improvements to file("clipboard") connections -- see ?file plus some
+more warnings e.g. if the clipboard becomes full.
 
 
 

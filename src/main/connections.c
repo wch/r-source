@@ -848,9 +848,11 @@ static double gzfile_seek(Rconnection con, double where, int origin, int rw)
     case 3: error("whence = \"end\" is not implemented for gzfile connections");
     default: whence = SEEK_SET;
     }
-    if(where >= 0) res = gzseek(fp, (z_off_t) where, whence);
-    if(res == -1) 
-	warning("seek on a gzfile connection returned an internal error");
+    if(where >= 0) {
+	res = gzseek(fp, (z_off_t) where, whence);
+	if(res == -1) 
+	    warning("seek on a gzfile connection returned an internal error");
+    }
     return (double) pos;
 }
 
@@ -1190,17 +1192,18 @@ static Rboolean clp_open(Rconnection con)
 	    return FALSE;
 	}
     } else {
-	int len = 32*1024;
-	this->buff = (char *)malloc(len + 1);
-	this->len = len;
-	this->last = 0;
+	int len = (this->sizeKB)*1024;
+	this->buff = (char *) malloc(len + 1);
 	if(!this->buff) {
 	    warning("memory allocation to open clipboard failed");
 	    return FALSE;
 	}
+	this->len = len;
+	this->last = 0;
     }
     con->text = TRUE;
     con->save = -1000;
+    this->warned = FALSE;
 
     return TRUE;
 }
@@ -1302,6 +1305,9 @@ static size_t clp_write(const void *ptr, size_t size, size_t nitems,
     int i, len = size * nitems, used = 0;
     char c, *p = (char *)ptr, *q = this->buff + this->pos;
 
+    if(!con->canwrite) 
+	error("clipboard connection is open for reading only");
+
     /* clipboard requires CRLF termination */
     for(i = 0; i < len; i++) {
 	if(this->pos >= this->len) break;
@@ -1315,14 +1321,19 @@ static size_t clp_write(const void *ptr, size_t size, size_t nitems,
 	this->pos++;
 	used++;
     }
+    if (used < len && !this->warned) {
+	warning("clipboard buffer is full and output lost");
+	this->warned = TRUE;
+    }
     if(this->last < this->pos) this->last = this->pos;
     return (size_t) used/size;
 }
 
-static Rconnection newclp(char *mode)
+static Rconnection newclp(char *url, char *mode)
 {
     Rconnection new;
     char description[] = "clipboard";
+    int sizeKB = 32;
 
     if(strlen(mode) != 1 ||
        (mode[0] != 'r' && mode[0] != 'w'))
@@ -1356,6 +1367,12 @@ static Rconnection newclp(char *mode)
 	free(new->description); free(new->class); free(new);
 	error("allocation of clipboard connection failed");
     }
+    if (strncmp(url, "clipboard-", 10) == 0) {
+	sizeKB = atoi(url+10);
+	if(sizeKB < 32) sizeKB = 32;
+	/* Rprintf("setting clipboard size to %dKB\n", sizeKB); */
+    }
+    ((Rclpconn)new->private)->sizeKB = sizeKB;
     return new;
 }
 
@@ -2279,7 +2296,7 @@ static void writecon(Rconnection con, char *format, ...)
     va_end(ap);
 }
 
-/* writelines(text, con = stdout(), sep = "\n") */
+/* writeLines(text, con = stdout(), sep = "\n") */
 SEXP do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i;
@@ -2298,8 +2315,10 @@ SEXP do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!con->canwrite)
 	error("cannot write to this connection");
     wasopen = con->isopen;
-    if(!wasopen)
+    if(!wasopen) {
+	strcpy(con->mode, "wt");
 	if(!con->open(con)) error("cannot open the connection");
+    }
     for(i = 0; i < length(text); i++)
 	writecon(con, "%s%s", CHAR(STRING_ELT(text, i)),
 		 CHAR(STRING_ELT(sep, 0)));
@@ -3160,8 +3179,9 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(PRIMVAL(op)) { /* call to file() */
 	    if(strlen(url) == 0) open ="w+";
 #ifdef Win32
-	    if(strcmp(url, "clipboard") == 0)
-		con = newclp(strlen(open) ? open : "r");
+	    if(strcmp(url, "clipboard") == 0 || 
+	       strncmp(url, "clipboard-", 10) == 0)
+		con = newclp(url, strlen(open) ? open : "r");
 	    else
 #endif
 		con = newfile(url, strlen(open) ? open : "r");

@@ -197,6 +197,8 @@ isIncomplete(con)
   When writing to the clipboard, the output is
   copied to the clipboard only when the connection is closed or flushed.
   There is a 32Kb limit on the text to be written to the clipboard.
+  This can be raised by using e.g. \code{file("clipboard-128")} on
+  NT-based versions of Windows, to give 128Kb.
 }
 #endif
 \note{

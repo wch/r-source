@@ -111,7 +111,8 @@ typedef struct bzfileconn {
 #ifdef Win32
 typedef struct clpconn {
     char *buff;
-    int pos, len, last;
+    int pos, len, last, sizeKB;
+    Rboolean warned;
 } *Rclpconn;
 #endif
 
