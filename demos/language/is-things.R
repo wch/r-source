@@ -73,9 +73,13 @@ cmp.logical <- function(log.v)
     ## Author: Martin Maechler, Date: 13 Dec 96, 16:28
     if(!is.logical(log.v)) {
 	warning("coercing argument 'log.v' to logical")
-	log.v <- as.logical(log.v)
+	mode(log.v) <- "logical"
     }
     structure(if(length(log.v) == 0) "()" else c(".","|")[ 1+ log.v],
+              dim = dim(log.v),
+              dimnames = if(is.array(log.v) && !is.null(n <- dimnames(log.v)))
+                lapply(n, abbreviate, minlength=1),
+              names = if(!is.null(n <- names(log.v))) abbreviate(n,minlength=1),
 	      class = "noquote")
 }
 
