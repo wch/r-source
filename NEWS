@@ -25,6 +25,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	plot.factor or plot(<factor>) now obeys axes=FALSE and xaxt="n"
+
     o	Problems with realloc on some systems in AllocBuffer
 
     o	Problem with formatReal on non-IEEE systems
