@@ -209,11 +209,6 @@ none
 
 Directory:  System-specific
 
-* PR# 996 *
-Subject: Double inclusion of  "int R_OutputCon" from src/include/Rconnections.h 
-From: Thomas Hoffmann <thoffman@zappa.sax.de>
-Date: Wed, 27 Jun 2001 01:47:50 +0100
---os2_emx-only problem.
 * PR# 964 *
 Subject: R-1.2.3 OSF precompiled binary doesn't run under DU4.0D
 From: paul@gromit.dlib.vt.edu
@@ -246,6 +241,14 @@ Date: Wed, 27 Jun 2001 09:29:28 -0600
 Subject:  las=1 with log axis 
 From: Peter Dalgaard BSA <pd@pubhealth.ku.dk>
 Date: Wed, 27 Jun 2001 11:54:06 +0200
+* PR# 1002 *
+Subject: core dump running modreg-Ex.R
+From: WhiteG@dfo-mpo.gc.ca
+Date: Thu, 28 Jun 2001 19:14:18 +0200 (MET DST)
+* PR# 1001 *
+Subject: lm.influence doesn't work with na.exclude
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 28 Jun 2001 16:16:58 +0200
 * PR# 1000 *
 Subject: FREE Advertising at Mall.com
 From: "mall.com"<free@mall.com>
