@@ -31,7 +31,8 @@ Objects such as arrays or time-series can be operated on this
 way provided they are conformable.
 }
 \seealso{
-\code{\link{Math}}.
+\code{\link{Math}} for miscellaneous and \code{\link{Special}} for special
+mathematical functions.
 }
 \examples{
 x <- -1:12

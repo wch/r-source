@@ -23,6 +23,8 @@ lchoose(n,k)
 \alias{choose}
 \alias{lchoose}
 \description{
+%---- This should be improved! ---  want mathematical definitions
+%----   AND References to Abramowitz and Stegun
   The functions \code{beta} and \code{lbeta} return the beta function
   and the natural logarithm of the beta function.
 
@@ -35,6 +37,10 @@ lchoose(n,k)
 
   The functions \code{choose} and \code{lchoose} return binomial
   coefficients and their logarithms.
+}
+\seealso{
+\code{\link{Arithmetic}} for simple and \code{\link{Math}} for miscellaneous
+mathematical functions.
 }
 \examples{
 choose(5, 2)

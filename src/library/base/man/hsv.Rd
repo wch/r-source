@@ -1,7 +1,7 @@
 \name{hsv}
 \title{HSV Color Specification}
 \usage{
-hsv(h=1,s=1,v=1,gamma=1)
+hsv(h=1, s=1, v=1, gamma=1)
 }
 \alias{hsv}
 \arguments{
@@ -9,7 +9,7 @@ hsv(h=1,s=1,v=1,gamma=1)
   \code{[0,1]} for ``hue'', ``saturation'' and ``value''
   to be combined to form a vector of colors.  Values in shorter
   arguments are recycled.}
-\item{gamma}{}
+\item{gamma}{a ``gamma correction'', see ...}
 }
 \value{
 This function creates a vector of ``colors'' corresponding to

@@ -13,7 +13,7 @@ attach(what, pos = 2, name = deparse(substitute(what)))
 }
 \description{
   A new database is attached. This means that its objects are made
-  available to R.
+  available to \R.
 
   ------ should say more here ------
 }
