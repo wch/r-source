@@ -1379,13 +1379,15 @@ static SEXP InCHARSXP (FILE *fp)
 {
     SEXP s;
     char *tmp;
+    int len;
 
-    AllocBuffer(MAXELTSIZE - 1);
     /* FIXME: rather than use strlen, use actual length of string when
      * sized strings get implemented in R's save/load code.  */
     tmp = InString(fp);
-    s = allocVector(CHARSXP, strlen(tmp));
-    memcpy(CHAR(s), tmp, strlen(tmp));
+    len = strlen(tmp);
+    AllocBuffer(len);
+    s = allocVector(CHARSXP, len);
+    memcpy(CHAR(s), tmp, len+1);
     return s;
 }
 
