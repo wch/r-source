@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-02-26
+Version 2.0.2005-02-28
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2651,6 +2651,9 @@ distributions of R.)
 *pheno*
      Some easy-to-use functions for time series analyses of (plant-)
      phenological data sets.
+
+*phpSerialize*
+     Serialize R to PHP associative array.
 
 *phyloarray*
      Software to process data from phylogenetic or identification
