@@ -174,28 +174,36 @@ none
 
 Directory:  incoming
 
-* PR# 568 *
-Subject: problem with aperm?
-From: Jim Lemon <jim.lemon@uts.edu.au>
-Date: Tue, 13 Jun 2000 13:20:10 +1000
+* PR# 570 *
+Subject: extra comma in configure
+From: tov@ece.cmu.edu
+Date: Wed, 14 Jun 2000 21:45:35 +0200 (MET DST)
+* PR# 551 *
+Subject: Bus Error crash
+From: kjetikj@astro.uio.no
+Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
 * PR# 536 *
 Subject: Problem with match.arg()
 From: kjetikj@astro.uio.no
 Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
 --1.0.0 bug fixed for 1.0.1 ??
-* PR# 564 *
-Subject: "clipping error in x11()"
-From: Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-Date: Wed, 7 Jun 2000 23:06:54 +0200 (MET DST)
-* PR# 551 *
-Subject: Bus Error crash
-From: kjetikj@astro.uio.no
-Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
-* PR# 567 *
-Subject: ctest not works
-From: George Diniz <george@cpqam.fiocruz.br>
-Date: Sun, 12 Mar 2000 12:03:45 -0200
 * PR# 565 *
 Subject: Postscript device ignores title if it is too long.
 From: Stephen Eglen <stephen@anc.ed.ac.uk>
 Date: Fri, 9 Jun 2000 09:17:09 +0100 (BST)
+* PR# 564 *
+Subject: "clipping error in x11()"
+From: Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+Date: Wed, 7 Jun 2000 23:06:54 +0200 (MET DST)
+* PR# 567 *
+Subject: ctest not works
+From: George Diniz <george@cpqam.fiocruz.br>
+Date: Sun, 12 Mar 2000 12:03:45 -0200
+* PR# 569 *
+Subject: Typo in the documentation of prcomp.
+From: =?iso-8859-1?q?Bj=F8rn-Helge_Mevik?= <bhm@math.uio.no>
+Date: 14 Jun 2000 14:16:14 +0200
+* PR# 568 *
+Subject: problem with aperm?
+From: Jim Lemon <jim.lemon@uts.edu.au>
+Date: Tue, 13 Jun 2000 13:20:10 +1000
