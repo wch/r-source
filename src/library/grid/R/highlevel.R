@@ -148,7 +148,11 @@ grid.show.layout <- function(l, newpage=TRUE,
   invisible(vp.mid)
 }
 
-grid.show.viewport <- function(v, parent.layout=NULL, newpage=TRUE, vp=NULL) {
+grid.show.viewport <- function(v, parent.layout=NULL, newpage=TRUE,
+                               border.fill="light grey",
+                               vp.col="blue", vp.fill="light blue",
+                               scale.col="red",
+                               vp=NULL) {
   # if the viewport has a non-NULL layout.pos.row or layout.pos.col
   # AND the viewport has a parent AND the parent has a layout
   # represent the location of the viewport in the parent's layout ...
@@ -161,7 +165,7 @@ grid.show.viewport <- function(v, parent.layout=NULL, newpage=TRUE, vp=NULL) {
                            cell.label=FALSE, newpage=newpage)
     pushViewport(vp.mid)
     pushViewport(v)
-    gp.red <- gpar(col="red")
+    gp.red <- gpar(col=scale.col)
     grid.rect(gp=gpar(col="blue", fill="light blue"))
     at <- grid.pretty(v$xscale)
     grid.xaxis(at=c(min(at), max(at)), gp=gp.red)
@@ -175,7 +179,7 @@ grid.show.viewport <- function(v, parent.layout=NULL, newpage=TRUE, vp=NULL) {
       grid.newpage()
     if (!is.null(vp))
       pushViewport(vp)
-    grid.rect(gp=gpar(col=NULL, fill="light grey"))
+    grid.rect(gp=gpar(col=NULL, fill=border.fill))
     # generate a viewport within the "top" viewport (vp) to represent the
     # parent viewport of the viewport we are "show"ing (v).
     # This is so that annotations at the edges of the
@@ -188,9 +192,9 @@ grid.show.viewport <- function(v, parent.layout=NULL, newpage=TRUE, vp=NULL) {
     w <- v$width
     h <- v$height
     pushViewport(v)
-    grid.rect(gp=gpar(col="blue", fill="light blue"))
+    grid.rect(gp=gpar(col=vp.col, fill=vp.fill))
     # represent the "native" scale
-    gp.red <- gpar(col="red")
+    gp.red <- gpar(col=scale.col)
     at <- grid.pretty(v$xscale)
     grid.xaxis(at=c(min(at), max(at)), gp=gp.red)
     at <- grid.pretty(v$yscale)
@@ -204,15 +208,15 @@ grid.show.viewport <- function(v, parent.layout=NULL, newpage=TRUE, vp=NULL) {
     popViewport()
     # annotate the location and dimensions of the viewport
     grid.lines(unit.c(x, x), unit.c(unit(0, "npc"), y),
-           gp=gpar(col="red", lty="dashed"))
+           gp=gpar(col=scale.col, lty="dashed"))
     grid.lines(unit.c(unit(0, "npc"), x), unit.c(y, y),
-           gp=gpar(col="red", lty="dashed"))
+           gp=gpar(col=scale.col, lty="dashed"))
     grid.text(as.character(x), gp=gp.red,
           just=c("centre", "top"),
           x=x, y=unit(-.05, "inches"))
     grid.text(as.character(y), gp=gp.red,
-          just=c("right", "centre"),
-          x=unit(-.05, "inches"), y=y)
+          just=c("bottom"),
+          x=unit(-.05, "inches"), y=y, rot=90)
     popViewport()
     if (!is.null(vp))
       popViewport()

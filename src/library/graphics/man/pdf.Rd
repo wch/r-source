@@ -9,12 +9,14 @@
 }
 \synopsis{
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
-    width = 6, height = 6, onefile = TRUE, title = "R Graphics Output", \dots)
+    width = 6, height = 6, onefile = TRUE, title = "R Graphics Output",
+    fonts = NULL, version = "1.4", \dots)
 }
 \usage{
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width = 6, height = 6, onefile = TRUE, family = "Helvetica",
-    title = "R Graphics Output", encoding, bg, fg, pointsize)
+    title = "R Graphics Output", fonts = NULL, version = "1.4",
+    encoding, bg, fg, pointsize)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.}
@@ -41,6 +43,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.}
   \item{fg}{the default foreground color to be used.}
+  \item{fonts}{a character vector specifying font family names for fonts
+    which will be 
+    included in the PDF file.}
+  \item{version}{a string describing the PDF version that will be
+    used to produce output.}
 }
 \details{
   \code{pdf()} opens the file \code{file} and the PDF commands needed to
@@ -58,6 +65,13 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   At present the PDF is fairly simple, with each page being represented
   as a single stream.  The \R graphics model does not distinguish
   graphics objects at the level of the driver interface.
+
+  The \code{version} argument modifies the sort of PDF code that
+  gets produced.  At the moment this only concerns the production of
+  transparent output.  The version must be greater than 1.4 for
+  transparent output to be produced.  Specifying a lower version
+  number may be useful if you want to produce PDF output that can be
+  viewed on older PDF viewers.
 }
 \note{
   Acrobat Reader does not use the fonts specified but rather emulates

@@ -1359,7 +1359,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
  */
 SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP oargs, c, x, y, z, vfont, col, lty, lwd, labels;
+    SEXP oargs, c, x, y, z, vfont, col, rawcol, lty, lwd, labels;
     int i, j, nx, ny, nc, ncol, nlty, nlwd;
     int ltysave, colsave, lwdsave;
     double cexsave;
@@ -1424,7 +1424,8 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     args = CDR(args);
 
-    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
+    rawcol = CAR(args);
+    PROTECT(col = FixupCol(rawcol, NA_INTEGER));
     ncol = length(col);
     args = CDR(args);
 
@@ -1514,9 +1515,10 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 	Rf_gpptr(dd)->lty = INTEGER(lty)[i % nlty];
 	if (Rf_gpptr(dd)->lty == NA_INTEGER)
 	    Rf_gpptr(dd)->lty = ltysave;
-	Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
-	if (Rf_gpptr(dd)->col == NA_INTEGER)
+	if (isNAcol(rawcol, i, ncol))
 	    Rf_gpptr(dd)->col = colsave;
+	else 
+	    Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
 	Rf_gpptr(dd)->lwd = REAL(lwd)[i % nlwd];
 	if (Rf_gpptr(dd)->lwd == NA_REAL)
 	    Rf_gpptr(dd)->lwd = lwdsave;

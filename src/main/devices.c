@@ -258,6 +258,9 @@ SEXP do_XFig(SEXP call, SEXP op, SEXP args, SEXP env)
  *  ps		= pointsize
  *  onefile     = {TRUE: normal; FALSE: single page per file}
  *  title
+ *  fonts
+ *  versionMajor
+ *  versionMinor
  */
 
 SEXP do_PDF(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -267,8 +270,8 @@ SEXP do_PDF(SEXP call, SEXP op, SEXP args, SEXP env)
     char *vmax;
     char *file, *encoding, *family, *bg, *fg, *title;
     double height, width, ps;
-    int onefile;
-
+    int onefile, major, minor;
+    SEXP fonts;
 
     vmax = vmaxget();
     file = SaveString(CAR(args), 0, call);  args = CDR(args);
@@ -280,8 +283,12 @@ SEXP do_PDF(SEXP call, SEXP op, SEXP args, SEXP env)
     height = asReal(CAR(args));	      args = CDR(args);
     ps = asReal(CAR(args));           args = CDR(args);
     onefile = asLogical(CAR(args)); args = CDR(args);
-    title = SaveString(CAR(args), 0, call);
-
+    title = SaveString(CAR(args), 0, call); args = CDR(args);
+    fonts = CAR(args); args = CDR(args);
+    if (!isNull(fonts) && !isString(fonts))
+	errorcall(call, "invalid `fonts' parameter");
+    major = asInteger(CAR(args)); args = CDR(args);
+    minor = asInteger(CAR(args)); 
 
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
@@ -294,7 +301,8 @@ SEXP do_PDF(SEXP call, SEXP op, SEXP args, SEXP env)
 	 */
 	dev->savedSnapshot = R_NilValue;
 	if(!PDFDeviceDriver((DevDesc*) dev, file, family, encoding, bg, fg, 
-			    width, height, ps, onefile, title)) {
+			    width, height, ps, onefile, title, fonts,
+			    major, minor)) {
 	    free(dev);
 	    errorcall(call, "unable to start device pdf");
 	}

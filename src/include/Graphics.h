@@ -360,6 +360,7 @@ typedef struct {
 #define ScaleColor		Rf_ScaleColor
 #define str2col			Rf_str2col
 #define StrMatch		Rf_StrMatch
+#define isNAcol                 Rf_isNAcol
 
 /* Default the settings for general graphical parameters
  * (i.e., defaults that do not depend on the device type: */
@@ -391,6 +392,7 @@ char* col2name(unsigned int);
 
 unsigned int ScaleColor(double x);
 unsigned int CheckColor(int x);
+Rboolean isNAcol(SEXP col, int index, int ncol);
 
 char* RGB2rgb(unsigned int, unsigned int, unsigned int);
 

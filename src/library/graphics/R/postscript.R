@@ -146,7 +146,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
 
 pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                  width = 6, height = 6, onefile = TRUE,
-                 title = "R Graphics Output", ...)
+                 title = "R Graphics Output", fonts = NULL, version="1.4", ...)
 {
     new <- list(onefile=onefile, ...)# eval
     old <- check.options(new = new, envir = .PSenv,
@@ -156,8 +156,15 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
         old$encoding <- switch(.Platform$OS.type,
                                "windows" = "WinAnsi.enc",
                                "ISOLatin1.enc")
+    # Extract version
+    versions <- c("1.1", "1.2", "1.3", "1.4")
+    if (version %in% versions)
+      version <- as.integer(strsplit(version, "[.]")[[1]])
+    else
+      stop("Invalid PDF version")
     .Internal(PDF(file, old$family, old$encoding, old$bg, old$fg,
-                  width, height, old$pointsize, old$onefile, title))
+                  width, height, old$pointsize, old$onefile, title,
+                  fonts, version[1], version[2]))
 }
 
 .ps.prolog <- c(
@@ -219,12 +226,20 @@ checkPSFont <- function(font) {
   font
 }
 
+checkFontInUse <- function(names) {
+  for (i in names)
+    if (.Internal(Type1FontInUse(i)))
+      stop(paste("Font", i, "already in use"))
+}
+
 setPSFonts <- function(fonts, fontNames) {
   fonts <- lapply(fonts, checkPSFont)
   fontDB <- get(".PostScript.Fonts", envir=.PSenv)
   existingFonts <- fontNames %in% names(fontDB)
-  if (sum(existingFonts) > 0)
+  if (sum(existingFonts) > 0) {
+    checkFontInUse(fontNames[existingFonts])
     fontDB[fontNames[existingFonts]] <- fonts[existingFonts]
+  }
   if (sum(existingFonts) < length(fontNames))
     fontDB <- c(fontDB, fonts[!existingFonts])
   assign(".PostScript.Fonts", fontDB, envir=.PSenv)

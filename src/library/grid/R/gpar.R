@@ -12,6 +12,10 @@ is.gpar <- function(x) {
   inherits(x, "gpar")
 }
 
+print.gpar <- function(x, ...) {
+  print(unclass(x))
+}
+
 validGP <- function(gpars) {
   # Check a (non-NULL) gpar is not of length 0
   check.length <- function(gparname) {
@@ -44,6 +48,11 @@ validGP <- function(gpars) {
     else
       check.length("lty")
   }
+  # alpha should be 0 to 1
+  if (!is.na(match("alpha", names(gpars)))) {
+    if (any(gpars$alpha < 0 || gpars$alpha > 1))
+      stop("Invalid alpha value")
+  }    
   # font should be integer and not NULL
   if (!is.na(match("font", names(gpars)))) {
     if (is.null(gpars$font))

@@ -134,19 +134,38 @@ double gpAlpha(SEXP gp, int i) {
  * Historical reasons ...
  */
 
+/*
+ * Combine gpar alpha with alpha level stored in colour 
+ *
+ * finalAlpha = 1 - (1 - gpAlpha)*(1 - R_ALPHA*(col))
+ *
+ * Based on my reading of how group alpha and individual
+ * object alphas are combined in the SVG 1.0 docs
+ *
+ * Also has nice properties:
+ *  (i)   range of finalAlpha is 0 to 1.
+ *  (ii)  if either of gpAlpha or R_ALPHA(col) are 1 then finalAlpha = 1
+ *        (i.e., can never make fully transparent colour less transparent).
+ *  (iii) in order to get finalAlpah = 0, both gpAlpha and R_ALPHA(col)
+ *        must be 0 (i.e., only way to get fully opaque is if both
+ *        alpha levels are fully opaque).
+ */
+static unsigned int combineAlpha(double alpha, int col) 
+{
+    unsigned int newAlpha = (1 - (1 - alpha)*(1 - R_ALPHA(col)/255.0))*255;
+    return R_RGBA(R_RED(col), R_GREEN(col), R_BLUE(col), newAlpha);
+}
+
 /* 
  * Generate an R_GE_gcontext from a gpar
  */
 void gcontextFromgpar(SEXP gp, int i, R_GE_gcontext *gc) 
 {
     /* 
-     * FIXME: Need to pass gpAlpha down.
-     * It's not clear yet whether this needs to be passed as part
-     * of the col/fill or as a separate parameter in 
-     * R_GE_gcontext
+     * Combine gpAlpha with col and fill
      */
-    gc->col = gpCol(gp, i);
-    gc->fill = gpFill(gp, i);
+    gc->col = combineAlpha(gpAlpha(gp, i), gpCol(gp, i));
+    gc->fill = combineAlpha(gpAlpha(gp, i), gpFill(gp, i));
     gc->gamma = gpGamma(gp, i);
     gc->lwd = gpLineWidth(gp, i);
     gc->lty = gpLineType(gp, i);
@@ -259,7 +278,7 @@ void initGPar(GEDevDesc *dd)
     SET_STRING_ELT(gpfontfamily, 0, mkChar(""));
     SET_VECTOR_ELT(gpar, GP_FONTFAMILY, gpfontfamily);
     PROTECT(gpalpha = allocVector(REALSXP, 1));
-    REAL(gpalpha)[0] = 1;
+    REAL(gpalpha)[0] = 0;
     SET_VECTOR_ELT(gpar, GP_ALPHA, gpalpha);
     PROTECT(class = allocVector(STRSXP, 1));
     SET_STRING_ELT(class, 0, mkChar("gpar"));
