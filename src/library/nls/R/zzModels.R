@@ -1,4 +1,4 @@
-### $Id: zzModels.R,v 1.2.24.1 2001/03/24 00:16:18 bates Exp $
+### $Id: zzModels.R,v 1.2.24.2 2001/03/27 15:48:38 bates Exp $
 ###
 ###       Individual selfStarting nonlinear regression models
 ###
@@ -506,10 +506,10 @@ SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
               Rasym <- NLSstRtAsymptote(xy)
               Lasym <- NLSstLfAsymptote(xy)
               pars <- coef(lm(log(-log((Rasym - y)/(Rasym - Lasym))) ~ log(x),
-                             data = xy))
+                             data = xy, subset = x > 0))
               val <- coef(nls(y ~ cbind(1, -exp(-exp(lrc)*x^pwr)),
                                data = xy,
-                               alg = "plinear", trace = TRUE,
+                               alg = "plinear",
                                start = c(lrc = pars[[1]], pwr = pars[[2]])))[
                                                          c(3,4,1,2)]
               names(val) <- mCall[c("Asym", "Drop", "lrc", "pwr")]
