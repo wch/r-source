@@ -260,6 +260,10 @@ none
 
 Directory:  incoming
 
+* PR# 1045 *
+Subject: Palette changes on redraw
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 08 Aug 2001 19:08:01 +0200
 * PR# 1044 *
 Subject: Polymarsall.c
 From: pleu@hotmail.com
