@@ -44,7 +44,7 @@ Makefile: $(srcdir)/Makefile.in \
 	  $(SHELL) ./config.status
 
 Makedeps: Makefile
-	@cat $(DEPS) >> $<
+	@cat $(DEPS) >> Makefile
 	@touch $@
 
 R: Makefile

@@ -76,7 +76,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(DEPS)
 	  $(SHELL) ./config.status
 
 Makedeps: Makefile
-	@cat $(DEPS) >> $<
+	@cat $(DEPS) >> Makefile
 	@touch $@
 
 R: Makefile
