@@ -268,6 +268,27 @@ typedef struct PageMarginRec PageMarginRec, *PageMarginRecPtr, **PageMarginRecHa
 #define LoWrd(aLong)		((aLong) & 0xFFFF )
 #endif
 
+
+#define	rAppStringsID			128
+
+enum {
+	sApplicationName 		= 1,
+	sTranslationLockedErr,
+	sTranslationErr,
+	sOpeningErr,
+	sReadErr,				// 5
+	sWriteToBusyFileErr,
+	sBusyOpen,
+	sChooseFile,
+	sChooseFolder,
+	sChooseVolume,			// 10
+	sCreateFolder,
+	sChooseObject,
+	sChooseApp
+};
+
+#define kSelectFolderPrefKey	4
+
 enum {
 
 /*	R signature
@@ -377,8 +398,9 @@ enum {
     kItemPageSetup   = 11,
 	kItemPrint       = 12,
     kItemSave		 = 14,
-	kItemClose		 = 15,
-	kItemQuit		 = 17
+    kItemSaveAs		 = 15,
+	kItemClose		 = 16,
+	kItemQuit		 = 18
 };
 
 /*	Edit menu items
@@ -603,7 +625,7 @@ OSStatus		DoOpen( void );
 OSErr			OldDoOpen( void );
 OSErr			SaveWindow( const FSSpec *, WindowPtr );
 OSErr			DoSaveAs( const FSSpec *, WindowPtr );
-OSErr			DoSave( WindowPtr );
+OSStatus		DoSave( WindowPtr );
 OSErr			DoClose( ClosingOption, SavingOption, WindowPtr );
 OSErr			DoQuit( SavingOption );
 void			DoAppleChoice( short );
