@@ -23,9 +23,9 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                    demean = TRUE, series = NULL, ...)
 {
     if(is.null(series)) series <- deparse(substitute(x))
-    xfreq <- frequency(as.ts(x))
-    if(ists <- is.ts(x)) xtsp <- tsp(x)
+    ists <- is.ts(x)
     x <- na.action(as.ts(x))
+    if(ists)  xtsp <- tsp(x)
     xfreq <- frequency(x)
     x <- as.matrix(x)
     if(any(is.na(x))) stop("NAs in x")
