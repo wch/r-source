@@ -351,6 +351,7 @@ int isSymbol(SEXP);
 int isTs(SEXP);
 int isUnordered(SEXP);
 int isUserBinop(SEXP);
+int isValidString(SEXP);
 int isVector(SEXP);
 int isVectorizable(SEXP);
 int isVectorList(SEXP);
