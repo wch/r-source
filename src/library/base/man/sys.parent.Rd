@@ -41,12 +41,12 @@ parent.frame(n = 1)
   \code{sys.frame} with the appropriate index.
 
   The parent of a function evaluation is the environment in which the
-  function was called. It is not necessarily one less than the frame
-  number of the current evaluation, nor the environment from which it is
-  called.  \code{sys.parent} returns the number of the parent frame if
-  \code{n} is 1 (the default), the grandparent if \code{n} is 2, and so
-  on. \code{sys.frame} returns the environment associated with a given
-  frame number.
+  function was called. It is not necessarily numbered one less than the frame
+  number of the current evaluation, nor is it the environment within
+  which the function was defined.  \code{sys.parent} returns the number
+  of the parent frame if \code{n} is 1 (the default), the grandparent if
+  \code{n} is 2, and so on. \code{sys.frame} returns the environment
+  associated with a given frame number.
 
   \code{sys.call} and \code{sys.frame} both accept integer values
   for the argument \code{which}.  Non-negative values of
