@@ -1,9 +1,9 @@
 #! /bin/sh
 # texi2dvi --- produce DVI (or PDF) files from Texinfo (or LaTeX) sources.
-# $Id: texi2dvi,v 1.1 2002/04/05 11:34:23 leisch Exp $
+# $Id: texi2dvi,v 1.2 2003/01/08 14:37:06 hornik Exp $
 #
-# Copyright (C) 1992, 93, 94, 95, 96, 97, 98, 99, 2001, 02
-# Free Software Foundation, Inc.
+# Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2001,
+# 2002, 2003 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,10 +27,10 @@
 # the `--debug' option when making a bug report.
 
 # This string is expanded by rcs automatically when this file is checked out.
-rcs_revision='$Revision: 1.1 $'
+rcs_revision='$Revision: 1.2 $'
 rcs_version=`set - $rcs_revision; echo $2`
 program=`echo $0 | sed -e 's!.*/!!'`
-version="texi2dvi (GNU Texinfo 4.2) $rcs_version
+version="texi2dvi (GNU Texinfo 4.3) $rcs_version
 
 Copyright (C) 2002 Free Software Foundation, Inc.
 There is NO warranty.  You may redistribute this software
@@ -61,7 +61,7 @@ Operation modes:
 
 TeX tuning:
   -@                   use @input instead of \input; for preloaded Texinfo
-  -e, --expand         force macro expansion using makeinfo
+  -e, -E, --expand     force macro expansion using makeinfo
   -I DIR               search DIR for Texinfo files
   -l, --language=LANG  specify the LANG of FILE (LaTeX or Texinfo)
   -p, --pdf            use pdftex or pdflatex for processing
@@ -86,12 +86,12 @@ escape='\'
 expand=         # t for expansion via makeinfo
 miincludes=     # makeinfo include path
 oformat=dvi
-oname=		# --output
+oname=          # --output
 quiet=          # by default let the tools' message be displayed
 set_language=
 textra=
 tmpdir=${TMPDIR:-/tmp}/t2d$$  # avoid collisions on 8.3 filesystems.
-txincludes=     # TEXINPUTS extensions
+txincludes=     # TEXINPUTS extensions, with trailing colon
 txiprereq=19990129 # minimum texinfo.tex version to have macro expansion
 verbose=false   # echo for verbose mode
 
@@ -104,6 +104,12 @@ if test -n "$COMSPEC$ComSpec"; then
 else
   path_sep=":"
 fi
+
+# Pacify verbose cds.
+CDPATH=${ZSH_VERSION+.}$path_sep
+
+# In case someone crazy insists on using grep -E.
+: ${EGREP=egrep}
 
 # Save this so we can construct a new TEXINPUTS path for each file.
 TEXINPUTS_orig="$TEXINPUTS"
@@ -143,12 +149,12 @@ while test x"$1" != x"$arg_sep"; do
     -q | -s | --q* | --s*) quiet=t; batch=eval;;
     -c | --c*) clean=t;;
     -D | --d*) debug=t;;
-    -e | --e*) expand=t;;
+    -e | -E | --e*) expand=t;;
     -h | --h*) echo "$usage"; exit 0;;
     -I | --I*)
       shift
       miincludes="$miincludes -I $1"
-      txincludes="$txincludes$path_sep$1"
+      txincludes="$txincludes$1$path_sep"
       ;;
     -l | --l*) shift; set_language=$1;;
     -o | --o*)
@@ -262,7 +268,7 @@ cat <<\EOF >$get_xref_files
 # Get list of xref files (indexes, tables and lists).
 # Find all files having root filename with a two-letter extension,
 # saves the ones that are really Texinfo-related files.  .?o? catches
-# LaTeX tables and lists.
+# many files: .toc, .log, LaTeX tables and lists, FiXme's .lox, maybe more.
 for this_file in "$1".?o? "$1".aux "$1".?? "$1".idx; do
   # If file is empty, skip it.
   test -s "$this_file" || continue
@@ -305,7 +311,7 @@ for command_line_filename in ${1+"$@"}; do
 
   # If the COMMAND_LINE_FILENAME is not absolute (e.g., --debug.tex),
   # prepend `./' in order to avoid that the tools take it as an option.
-  echo "$command_line_filename" | egrep '^(/|[A-z]:/)' >/dev/null \
+  echo "$command_line_filename" | $EGREP '^(/|[A-z]:/)' >/dev/null \
   || command_line_filename="./$command_line_filename"
 
   # See if the file exists.  If it doesn't we're in trouble since, even
@@ -346,22 +352,67 @@ for command_line_filename in ${1+"$@"}; do
   # Make all those directories and give up if we can't succeed.
   mkdir $tmpdir_src $tmpdir_xtr $tmpdir_bak || exit 1
 
-  # Source file might include additional sources.  Put `.' and
-  # directory where source file(s) reside in TEXINPUTS before anything
-  # else.  `.' goes first to ensure that any old .aux, .cps,
+  # Source file might include additional sources.
+  # We want `.:$orig_pwd' before anything else.  (We'll add `.:' later
+  # after all other directories have been turned into absolute paths.)
+  # `.' goes first to ensure that any old .aux, .cps,
   # etc. files in ${directory} don't get used in preference to fresher
   # files in `.'.  Include orig_pwd in case we are in clean mode, where
   # we've cd'd to a temp directory.
-  common=".$path_sep$orig_pwd$path_sep$filename_dir$path_sep$txincludes$path_sep"
+  common="$orig_pwd$path_sep$filename_dir$path_sep$txincludes"
    TEXINPUTS="$common$TEXINPUTS_orig"
   INDEXSTYLE="$common$INDEXSTYLE_orig"
+
+  # Convert relative paths to absolute paths, so we can run in another
+  # directory (e.g., in --clean mode, or during the macro-support
+  # detection.)
+  #
+  # Empty path components are meaningful to tex.  We rewrite them
+  # as `EMPTY' so they don't get lost when we split on $path_sep.
+   TEXINPUTS=`echo $TEXINPUTS  |sed 's/^:/EMPTY:/;s/:$/:EMPTY/;s/::/:EMPTY:/g'`
+  INDEXSTYLE=`echo $INDEXSTYLE |sed 's/^:/EMPTY:/;s/:$/:EMPTY/;s/::/:EMPTY:/g'`
+  save_IFS=$IFS
+  IFS=$path_sep
+  set x $TEXINPUTS; shift
+  TEXINPUTS=.
+  for dir
+  do
+    case $dir in
+      EMPTY)
+        TEXINPUTS=$TEXINPUTS$path_sep
+        ;;
+      [\\/]* | ?:[\\/]*)        # Absolute paths don't need to be expansed.
+        TEXINPUTS=$TEXINPUTS$path_sep$dir
+        ;;
+      *)
+        abs=`cd "$dir" && pwd` && TEXINPUTS=$TEXINPUTS$path_sep$abs
+        ;;
+    esac
+  done
+  set x $INDEXSTYLE; shift
+  INDEXSTYLE=.
+  for dir
+  do
+    case $dir in
+      EMPTY)
+        INDEXSTYLE=$INDEXSTYLE$path_sep
+        ;;
+      [\\/]* | ?:[\\/]*)        # Absolute paths don't need to be expansed.
+        INDEXSTYLE=$INDEXSTYLE$path_sep$dir
+        ;;
+      *)
+        abs=`cd "$dir" && pwd` && INDEXSTYLE=$INDEXSTYLE$path_sep$abs
+        ;;
+    esac
+  done
+  IFS=$save_IFS
 
   # If the user explicitly specified the language, use that.
   # Otherwise, if the first line is \input texinfo, assume it's texinfo.
   # Otherwise, guess from the file extension.
   if test -n "$set_language"; then
     language=$set_language
-  elif sed 1q "$command_line_filename" | fgrep 'input texinfo' >/dev/null; then
+  elif sed 1q "$command_line_filename" | grep 'input texinfo' >/dev/null; then
     language=texinfo
   else
     language=
@@ -499,10 +550,14 @@ for command_line_filename in ${1+"$@"}; do
 
     # What we'll run texindex on -- exclude non-index files.
     # Since we know index files are last, it is correct to remove everything
-    # before .aux and .?o?.
+    # before .aux and .?o?.  But don't really do <anything>o<anything>
+    # -- don't match whitespace as <anything>.
+    # Otherwise, if orig_xref_files contains something like
+    #   foo.xo foo.whatever
+    # the space after the o will get matched.
     index_files=`echo "$orig_xref_files" \
                  | sed "s!.*\.aux!!g;
-                        s!./$filename_noext\..o.!!g;
+                        s!./$filename_noext\.[^ ]o[^ ]!!g;
                         s/^[ ]*//;s/[ ]*$//"`
     # Run texindex (or makeindex) on current index files.  If they
     # already exist, and after running TeX a first time the index
@@ -540,7 +595,7 @@ for command_line_filename in ${1+"$@"}; do
     # subdirs, since texi2dvi does not try to compare xref files in
     # subdirs.  Performing xref files test is still good since LaTeX
     # does not report changes in xref files.
-    if fgrep "Rerun to get" "$filename_noext.log" >/dev/null 2>&1; then
+    if grep "Rerun to get" "$filename_noext.log" >/dev/null 2>&1; then
       finished=
     fi
 
