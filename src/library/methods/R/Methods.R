@@ -250,7 +250,7 @@ setMethod <-
   ##
   ## Note that assigning methods anywhere but the global environment (`where==1') will
   ## not have a permanent effect beyond the current R session.
-  function(f, signature = character(), definition, where = topenv(), valueClass = NULL,
+  function(f, signature = character(), definition, where = topenv(parent.frame()), valueClass = NULL,
            sealed = FALSE)
 {
     ## Methods are stored in metadata in database where.  A generic function will be
@@ -262,11 +262,12 @@ setMethod <-
     ## For primitive functions, getGeneric returns the (hidden) generic function,
     ## even if no methods have been defined.  An explicit generic MUST NOT be
     ## for these functions, dispatch is done inside the evaluator.
-    fdef <- getGeneric(f, where = where)
+    searchWhere <- if(isNamespace(where)) where else .GlobalEnv
+    fdef <- getGeneric(f, where = searchWhere)
     hasMethods <- !is.null(fdef)
     deflt <- NULL
     gwhere <- NULL # where to insert the methods in generic
-    allWhere <- findFunction(f, where = where)
+    allWhere <- findFunction(f, where = searchWhere)
     generics <-logical(length(allWhere))
     if(length(allWhere)>0) { # put methods into existing generic
         for(i in seq(along = allWhere)) {
