@@ -59,6 +59,8 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
 plot(-1:1,-1:1, type = "n", xlab = "Re", ylab = "Im")
 K <- 16; text(exp(1i * 2 * pi * (1:K) / K), col = 2)
 
+## The following two examples use latin1 characters: these may not
+## appear correctly (or be omitted entirely).
 plot(1:10, 1:10, main = "text(..) examples\n~~~~~~~~~~~~~~",
      sub = "R is GNU ©, but not ® ..")
 mtext("«ISO-accents»: ± éè øØ å<Å æ<Æ", side=3)
@@ -74,8 +76,7 @@ text(4, 6.4, "expression(bar(x) == sum(frac(x[i], n), i==1, n))", cex = .6)
 text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ",
                             plain(e)^{frac(-(x-mu)^2, 2*sigma^2)})))
 
-## The following two examples use latin1 characters: these may not
-## appear correctly (or be omitted entirely).
+## Two more latin1 examples
 text(5,10.2,"Le français, c'est façile: Règles, Liberté, Egalité, Fraternité..")
 text(5,9.8, "Jetz no chli züritüütsch: (noch ein bißchen Zürcher deutsch)")
 }
