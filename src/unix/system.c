@@ -41,10 +41,9 @@
 #include "Devices.h"		/* KillAllDevices() [nothing else?] */
 
 #define __SYSTEM__
-#include "devUI.h"
+#include "devUI.h" /* includes Startup.h */
 #undef __SYSTEM__
 
-#include "Startup.h"
 #include "Runix.h"
 
 SA_TYPE SaveAction = SA_SAVEASK;
