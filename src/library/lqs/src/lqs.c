@@ -25,7 +25,7 @@
  * to be called as  .C(.)  in ../R/lqs.R
  */
 
-/* in R.h 
+/* in R.h
 #include <math.h>
 #include <limits.h> */
 
@@ -256,7 +256,8 @@ lqs_fitlots(double *x, double *y, int *n, int *p, int *qn,
 	    for(i = 0; i < pp; i++) bestcoef[i] = coef[i];
 	    bestcoef[0] += a;
 	}
-    }
+    }/* for(trial in 0:ntrials) */
+
     *crit = best;
     if(*sample) PutRNGstate();
     lqs_free();
