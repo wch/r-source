@@ -17,7 +17,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
 
 /* based on libxml2-2.3.6:
  * nanohttp.c: minimalist HTTP GET implementation to fetch external subsets.
@@ -36,6 +35,8 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+
+#if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
 
 #ifdef Win32
 #define INCLUDE_WINSOCK
