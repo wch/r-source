@@ -17,6 +17,9 @@ NEW FEATURES
 	'checkBuilt' to allow packages installed under earlier
 	versions of R to be updated.
 
+   o	na.contiguous() is now (S3) generic with first argument
+	renamed to 'object'.
+
 
 INSTALLATION CHANGES
 
