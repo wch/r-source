@@ -305,3 +305,7 @@ Date: Sun, 23 May 1999 07:58:40 +0100 (BST)
 Subject: help for trig functions
 From: Bill Simpson <wsi@gcal.ac.uk>
 Date: Wed, 26 May 1999 14:55:00 +0000
+* PR# 200 *
+Subject: Factor structures not preserved after dump/dput
+From: msa@biostat.mgh.harvard.edu
+Date: Thu, 27 May 1999 18:40:01 +0200 (MET DST)
