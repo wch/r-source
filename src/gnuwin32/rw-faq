@@ -142,7 +142,7 @@ It depends what you want to print.
 No, but you can set up a batch file using rterm.exe. A sample batch file
 might contain (as one line)
 
-path_to_R\bin\rterm.exe --vsize 10M --nsize 250k  --no-restore --no-save %1 > %1.out
+path_to_R\bin\rterm.exe --vsize 10M --nsize 250k  --no-restore --no-save < %1 > %1.out
 
 
 1.8) Can I use rw06xx with ESS and emacs?
