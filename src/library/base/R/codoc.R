@@ -19,13 +19,16 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
         stop("no package directory given")
     if(!file.exists(dir))
         stop(paste("directory", fQuote(dir), "does not exist"))
+    else
+        ## tilde expansion
+        dir <- file.path(dirname(dir), basename(dir))
     if(!file.exists(codeDir <- file.path(dir, "R")))
         stop(paste("directory", fQuote(dir),
                    "does not contain R code"))
     if(!file.exists(docsDir <- file.path(dir, "man")))
         stop(paste("directory", fQuote(dir),
                    "does not contain Rd sources"))
-
+    
     FILES <- NULL
     if(!keep.tempfiles)
         on.exit(unlink(FILES))
@@ -45,7 +48,12 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
     docsFile <- tempfile("Rdocs")
     FILES <- c(FILES, docsFile)
     docsExts <- c("Rd", "rd")
-    files <- listFilesWithExts(docsDir, docsExts)
+    files <- listFilesWithExts(docsDir, docsExts, path = FALSE)
+    if(basename(dir) == "base") {
+        baseStopList <- c("Devices.Rd") # add more if needed
+	files <- files[-grep(baseStopList, files, ignore.case = TRUE)]
+    }
+    files <- file.path(docsDir, files)
     if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
         files <- c(files, listFilesWithExts(docsOSDir, docsExts))
     docsList <- tempfile("Rdocs")
@@ -55,7 +63,8 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
         system(paste("Rcmd extract-usage", docsList, docsFile),
                invisible = TRUE)
     else
-        system(paste("R CMD extract-usage", docsList, docsFile))
+        system(paste(file.path(R.home(), "bin", "R"),
+                     "CMD extract-usage", docsList, docsFile))
 
     lib.source <- function(file, env) {
         oop <- options(keep.source = FALSE)
