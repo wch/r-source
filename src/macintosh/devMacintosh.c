@@ -67,24 +67,3 @@ SEXP do_Macintosh(SEXP call, SEXP op, SEXP args, SEXP env)
     vmaxset(vmax);
     return R_NilValue;
 }
-
-/*
-  R_CheckDeviceAvailable();
-    BEGIN_SUSPEND_INTERRUPTS {
-	if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
-	    return 0;
-
-	dd->displayList = R_NilValue;
-	GInit(&dd->dp);
-	if(!PSDeviceDriver(dd, file, paper, family, afms, bg, fg,
-			   width, height, (double)horizontal, ps, onefile,
-			   pagecentre, printit, cmd)) {
-	    free(dd);
-	    errorcall(call, "unable to start device PostScript");
-	}
-	gsetVar(install(".Device"), mkString("postscript"), R_NilValue);
-	addDevice(dd);
-	initDisplayList(dd);
-    } END_SUSPEND_INTERRUPTS;
-    
-*/

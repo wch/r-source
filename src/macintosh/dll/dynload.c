@@ -407,19 +407,17 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 
 static void GetFullDLLPath(SEXP call, char *buf, char *path)
 {
- if(path[0] != ':') {
-  if(R_Home == NULL){
-  if (!getcwd(buf, PATH_MAX))
-	    errorcall(call, "can't get working directory!");
-	 strcat(buf, path);
+    if(path[0] != ':') {
+	if(R_Home == NULL){
+	    if (!getcwd(buf, PATH_MAX))
+		errorcall(call, "can't get working directory!");
+	    strcat(buf, path);
 	}
 	else
-	 strcpy(buf,path); 
+	    strcpy(buf,path); 
     } else
-       strcpy(buf, path);
-	
-	
- return;
+	strcpy(buf, path);	
+    return;
 
 }
 
@@ -467,114 +465,6 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-/*
-   #include "Runix.h"
-   #include <sys/types.h>
-   #include <sys/stat.h>
-*/
-
-#ifndef macintosh
-
-extern DL_FUNC ptr_X11DeviceDriver, ptr_dataentry;
-
-
-void R_load_X11_shlib()
-{
-    char X11_DLL[PATH_MAX], buf[1000], *p;
-    void *handle;
-    struct stat sb;
-
-    p = getenv("R_HOME");
-    if(!p) {
-	sprintf(buf, "R_HOME was not set");
-	R_Suicide(buf);
-    }
-    strcpy(X11_DLL, p);
-    strcat(X11_DLL, "/bin/R_X11.");
-    strcat(X11_DLL, SHLIBEXT); /* from config.h */
-    if(stat(X11_DLL, &sb))
-	R_Suicide("Probably no X11 support: the shared library was not found");
-/* cannot use computeDLOpenFlag as warnings will crash R at this stage */
-
-#ifdef RTLD_NOW
-    handle = dlopen(X11_DLL, RTLD_NOW);
-#else
-    handle = dlopen(X11_DLL, 0);
-#endif
-    if(handle == NULL) {
-	sprintf(buf, "The X11 shared library could not be loaded.\n  The error was %s\n", dlerror());
-	R_Suicide(buf);
-    }
-    ptr_X11DeviceDriver = R_dlsym(handle, "X11DeviceDriver");
-    if(!ptr_X11DeviceDriver) R_Suicide("Cannot load X11DeviceDriver");
-    ptr_dataentry = R_dlsym(handle, "RX11_dataentry");
-    if(!ptr_dataentry) R_Suicide("Cannot load do_dataentry");
-}
-
-extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
-    ptr_R_WriteConsole, ptr_R_ResetConsole, ptr_R_FlushConsole,
-    ptr_R_ClearerrConsole, ptr_R_Busy, ptr_R_CleanUp, ptr_R_ShowFiles,
-    ptr_R_ChooseFile, ptr_gnome_start, 
-    ptr_GnomeDeviceDriver, ptr_GTKDeviceDriver;
-
-
-void R_load_gnome_shlib()
-{
-    char gnome_DLL[PATH_MAX], buf[1000], *p;
-    void *handle;
-    struct stat sb;
-
-    p = getenv("R_HOME");
-    if(!p) {
-	sprintf(buf, "R_HOME was not set");
-	R_Suicide(buf);
-    }
-    strcpy(gnome_DLL, p);
-    strcat(gnome_DLL, "/gnome/R_gnome.");
-    strcat(gnome_DLL, SHLIBEXT); /* from config.h */
-    if(stat(gnome_DLL, &sb))
-	R_Suicide("Probably no GNOME support: the shared library was not found");
-/* cannot use computeDLOpenFlag as warnings will crash R at this stage */
-#ifdef RTLD_NOW
-    handle = dlopen(gnome_DLL, RTLD_NOW);
-#else
-    handle = dlopen(gnome_DLL, 0);
-#endif
-    if(handle == NULL) {
-	sprintf(buf, "The GNOME shared library could not be loaded.\n  The error was %s\n", dlerror());
-	R_Suicide(buf);
-    }
-    ptr_R_Suicide = R_dlsym(handle, "Rgnome_Suicide");
-    if(!ptr_R_Suicide) Rstd_Suicide("Cannot load R_Suicide");
-    ptr_R_ShowMessage = R_dlsym(handle, "Rgnome_ShowMessage");
-    if(!ptr_R_ShowMessage) R_Suicide("Cannot load R_ShowMessage");
-    ptr_R_ReadConsole = R_dlsym(handle, "Rgnome_ReadConsole");
-    if(!ptr_R_ReadConsole) R_Suicide("Cannot load R_ReadConsole");
-    ptr_R_WriteConsole = R_dlsym(handle, "Rgnome_WriteConsole");
-    if(!ptr_R_WriteConsole) R_Suicide("Cannot load R_WriteConsole");
-    ptr_R_ResetConsole = R_dlsym(handle, "Rgnome_ResetConsole");
-    if(!ptr_R_ResetConsole) R_Suicide("Cannot load R_ResetConsole");
-    ptr_R_FlushConsole = R_dlsym(handle, "Rgnome_FlushConsole");
-    if(!ptr_R_FlushConsole) R_Suicide("Cannot load R_FlushConsole");
-    ptr_R_ClearerrConsole = R_dlsym(handle, "Rgnome_ClearerrConsole");
-    if(!ptr_R_ClearerrConsole) R_Suicide("Cannot load R_ClearerrConsole");
-    ptr_R_Busy = R_dlsym(handle, "Rgnome_Busy");
-    if(!ptr_R_Busy) R_Suicide("Cannot load R_Busy");
-    ptr_R_CleanUp = R_dlsym(handle, "Rgnome_CleanUp");
-    if(!ptr_R_CleanUp) R_Suicide("Cannot load R_CleanUp");
-    ptr_R_ShowFiles = R_dlsym(handle, "Rgnome_ShowFiles");
-    if(!ptr_R_ShowFiles) R_Suicide("Cannot load R_ShowFiles");
-    ptr_R_ChooseFile = R_dlsym(handle, "Rgnome_ChooseFile");
-    if(!ptr_R_ChooseFile) R_Suicide("Cannot load R_ChooseFile");
-    ptr_gnome_start = R_dlsym(handle, "gnome_start");
-    if(!ptr_gnome_start) R_Suicide("Cannot load gnome_start");
-    ptr_GTKDeviceDriver = R_dlsym(handle, "GTKDeviceDriver");
-    if(!ptr_GTKDeviceDriver) R_Suicide("Cannot load GTKDeviceDriver");
-/* Uncomment the next two lines to experiment with the gnome() device */
-/*    ptr_GnomeDeviceDriver = R_dlsym(handle, "GnomeDeviceDriver");
-      if(!ptr_GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");*/
-}
-#endif macintosh
 
 #else /* no dyn.load support */
 
@@ -606,18 +496,5 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
     error("no dyn.load support in this R version");
 }
 
-#ifndef macintosh
-
-void R_load_X11_shlib()
-{
-    R_Suicide("no support to load X11 shared library in this R version");
-}
-
-
-void R_load_gnome_shlib()
-{
-    R_Suicide("no support to load gnome shared library in this R version");
-}
-#endif macintosh
 
 #endif
