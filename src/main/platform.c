@@ -547,11 +547,11 @@ SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     STRING(ansnames)[1] = mkChar("isdir");
     mode  = VECTOR(ans)[2] = allocVector(INTSXP, n);
     STRING(ansnames)[2] = mkChar("mode");
-    mtime = VECTOR(ans)[3] = allocVector(INTSXP, n);
+    mtime = VECTOR(ans)[3] = allocVector(REALSXP, n);
     STRING(ansnames)[3] = mkChar("mtime");
-    ctime = VECTOR(ans)[4] = allocVector(INTSXP, n);
+    ctime = VECTOR(ans)[4] = allocVector(REALSXP, n);
     STRING(ansnames)[4] = mkChar("ctime");
-    atime = VECTOR(ans)[5] = allocVector(INTSXP, n);
+    atime = VECTOR(ans)[5] = allocVector(REALSXP, n);
     STRING(ansnames)[5] = mkChar("atime");
 #ifdef UNIX_EXTRAS
     uid = VECTOR(ans)[6] = allocVector(INTSXP, n);
@@ -569,9 +569,9 @@ SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    INTEGER(fsize)[i] = (int) sb.st_size;
 	    LOGICAL(isdir)[i] = (int) sb.st_mode & S_IFDIR;
 	    INTEGER(mode)[i]  = (int) sb.st_mode & 0007777;
-	    INTEGER(mtime)[i] = (int) sb.st_mtime;
-	    INTEGER(ctime)[i] = (int) sb.st_ctime;
-	    INTEGER(atime)[i] = (int) sb.st_atime;
+	    REAL(mtime)[i] = (double) sb.st_mtime;
+	    REAL(ctime)[i] = (double) sb.st_ctime;
+	    REAL(atime)[i] = (double) sb.st_atime;
 #ifdef UNIX_EXTRAS
 	    INTEGER(uid)[i] = (int) sb.st_uid;
 	    INTEGER(gid)[i] = (int) sb.st_gid;
@@ -586,9 +586,9 @@ SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    INTEGER(fsize)[i] = NA_INTEGER;
 	    LOGICAL(isdir)[i] = NA_INTEGER;
 	    INTEGER(mode)[i]  = NA_INTEGER;
-	    INTEGER(mtime)[i] = NA_INTEGER;
-	    INTEGER(ctime)[i] = NA_INTEGER;
-	    INTEGER(atime)[i] = NA_INTEGER;
+	    REAL(mtime)[i] = NA_REAL;
+	    REAL(ctime)[i] = NA_REAL;
+	    REAL(atime)[i] = NA_REAL;
 #ifdef UNIX_EXTRAS
 	    INTEGER(uid)[i] = NA_INTEGER;
 	    INTEGER(gid)[i] = NA_INTEGER;
