@@ -387,7 +387,7 @@ the sources and throughout the build process.
 
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
-from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000 and ME (at
+from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000, ME and XP (at
 least) on Intel and clones (but not on other platforms).
 
 You do need one of those Windows versions: Windows 3.11+win32s will not
@@ -422,8 +422,8 @@ lower case) did not work.  Open a commands window at a directory @emph{whose
 path does not contain spaces}, and run something like
 
 @smallexample
-tar zxvf R-1.5.0.tgz
-cd R-1.5.0\src\gnuwin32
+tar zxvf R-1.6.0.tgz
+cd R-1.6.0\src\gnuwin32
 make
 @end smallexample
 
@@ -608,7 +608,7 @@ FORTRAN}).  Some add-on packages also need a C++ compiler.
 
 You will need Perl version 5.004 or later, available via
 @uref{http://www.perl.com/CPAN/}, to build any of the on-line
-documentation.
+documentation, and version 5.005 is needed for some of the utilities,
 
 You will not be able to build the info files unless you have
 @command{makeinfo} version 4 or later installed (and some Linux
@@ -716,7 +716,9 @@ that on Sun Sparc using the native compilers the flag @option{-dalign}
 is needed so @code{libsunperf} can be used.
 
 An ATLAS `tuned' BLAS can also be used on Windows: see
-@file{src/gnuwin32/INSTALL} for how to enable this.
+@file{src/gnuwin32/INSTALL} for how to enable this when building from
+source, and @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
+@acronym{FAQ}} for adding pre-compiled support to binary versions.
 
 Note that under Unix (but not under Windows) if @R{} is compiled
 against a non-default BLAS, then all BLAS-using packages must also be.
@@ -831,7 +833,7 @@ To compile @R{}, you will most likely find it easiest to use GNU
 @command{make}.  On Solaris 2.6/7/8 in particular, you need a version of
 GNU @command{make} different from 3.77; 3.79 works fine, as does the Sun
 @command{make}.  The native @command{make} is reported to fail on SGI
-Irix 6.5.
+Irix 6.5 and Alpha/OSF1 (aka Tru64).
 
 To build in a separate directory you need a @command{make} that uses the
 @code{VPATH} variable, for example GNU @command{make}, or Sun
