@@ -10,6 +10,6 @@ which is built in to the \R interpreter.
 Only true \R wizards should even consider using this function.
 }
 \seealso{
-\code{\link{.C}}, \code{\link{.Fortran}}.
+\code{\link{.Primitive}}, \code{\link{.C}}, \code{\link{.Fortran}}.
 }
 \keyword{interface}
