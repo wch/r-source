@@ -1,3 +1,24 @@
+r-base (0.63.0-2) unstable; urgency=low
+
+  * 
+
+ --
+
+r-base (0.63.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Wed, 18 Nov 1998 13:33:58 -0600
+
+r-base (0.62.4-1) frozen unstable; urgency=low, closes=26444
+
+  * New upstream release
+  * Fixed link to html directory in /usr/doc (Bug#26444)
+  * Check for /usr/bin/paperconf in postinst and set default R_PAPERSIZE (Bug#26447)
+  * Remove src/lib directory in debian/rules clean (Bug#28545)
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Mon,  2 Nov 1998 09:29:20 -0600
+
 r-base (0.62.3-0) unstable; urgency=low
 
   * New upstream release
