@@ -233,12 +233,17 @@ will make all the pieces and then make the installers.
 Recommended packages
 ====================
 
-The recommended packages can in the main be built by
+The recommended packages can be built by
 
 	make recommended
 
 If you are using a cvs/rsync version of the sources, you need to
 put the .tar.gz files for the recommended packages in ../../Recommended.
+If you hav rsync,
+
+	make get_recommended
+
+does this from the CRAN master.
 
 
 Cross-building on ix86 Linux
