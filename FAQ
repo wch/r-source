@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.99-2, 2000/02/12
+Version 0.99-3, 2000/02/19
 Kurt Hornik
 
 
@@ -1341,77 +1341,15 @@ respectively.
 5.5 How can I create an R package?
 ==================================
 
-   A package consists of a subdirectory containing the files `DESCRIPTION',
-`INDEX', and `TITLE', and the subdirectories `R', `data', `exec', `inst',
-`man' and `src' (some of which can be missing).
+   A package consists of a subdirectory containing the files `DESCRIPTION'
+and `INDEX', and the subdirectories `R', `data', `exec', `inst', `man', and
+`src' (some of which can be missing).  Optionally the package can also
+contain script files `configure' and `cleanup' which are executed before
+and after installation.
 
-   The `DESCRIPTION' file contains basic information about the package in
-the following format:
-
-     Package: e1071
-     Version: 0.7-3
-     Author: Compiled by Fritz Leisch <Friedrich.Leisch@ci.tuwien.ac.at>.
-     Description: Miscellaneous functions used at the Department of
-             Statistics at TU Wien (E1071).
-     Depends:
-     License: GPL version 2 or later
-
-The license field should contain an explicit statement or a well-known
-abbreviation (such as `GPL', `LGPL', `BSD' and `Artistic'), maybe followed
-by a reference to the actual license file.  It is very important that you
-include this information!  Otherwise, it may not even be legally correct
-for others to distribute copies of the package.
-
-   The `TITLE' file contains a line giving the name of the package and a
-brief description.  `INDEX' contains a line for each sufficiently
-interesting object in the package, giving its name and a description
-(functions such as print methods not usually called explicitly might not be
-included).  Note that you can automatically create this file using
-something like `R CMD Rdindex man/*.Rd > INDEX' provided that Perl is
-available on your system.
-
-   The `R' subdirectory contains code files.  The code files to be
-installed must start with a (lower- or uppercase) letter and have one of
-the extensions `.R', `.S', `.q', `.r', or `.s'.  We recommend using `.R',
-as this extension seems to be not used by any other software.  It should be
-possible to read in the files using `source()', so R objects must be
-created by assignments.  Note that there has to be no connection between
-the name of the file and the R objects created by it.  If necessary, one of
-these files (historically `zzz.R') should use `library.dynam()' _inside_
-`.First.lib()' to load compiled code.
-
-   The `man' subdirectory should contain documentation files for the
-objects in the package.  The documentation files to be installed must also
-start with a (lower- or uppercase) letter and have the extension `.Rd' (the
-default) or `.rd', and are written in the R documentation format.  See
-section "Writing R documentation" in `Writing R Extensions' for more
-information.
-
-   C or FORTRAN source and optionally a `Makefile' for the compiled code is
-in `src'.  Note that the `Makefile' most likely is not needed.
-
-   The `data' subdirectory is for additional data files the package makes
-available for loading using `data()'.  Currently, data files can have one
-of three types as indicated by their extension:  plain R code (`.R' or
-`.r'), tables (`.tab', `.txt', or `.csv'), or `save()' images (`.RData' or
-`.rda').  The subdirectory should contain a `00Index' file that describes
-the datasets available.
-
-   The contents of the `inst' subdirectory will be copied recursively to
-the installation directory.
-
-   Finally, `exec' could contain additional executables the package needs,
-typically Shell or Perl scripts.  This mechanism is currently not used by
-any package, and still experimental.
-
-   You can also provide (Bourne) shell scripts `configure' and `cleanup'
-for configuration before installation (such as checking for additional
-software that might be needed by the package), and removing the files
-created in this process.  See the add-on package *e1071* on CRAN for an
-example of this mechanism.
-
-   See section "Creating R packages" in `Writing R Extensions' for more
-information.
+   See section "Creating R packages" in `Writing R Extensions', for details.
+This gives information on package structure, the configure and cleanup
+mechanisms, and on automated package checking and building.
 
    The web page `http://www.biostat.washington.edu/~thomas/Rlib.html'
 maintained by Thomas Lumley provides information on porting S packages to R.
@@ -1809,89 +1747,14 @@ cases you don't want anything printed.
 8.2 How can I debug dynamically loaded code?
 ============================================
 
-   According to Doug Bates, the secret of symbolic debugging of dynamically
-loaded code is to
-
-   * Call the debugger on the R executable.  In the shell, you can e.g. use
-     `R -d gdb'; see *Note Debugging R from within Emacs:: for debugging
-     from within Emacs.
-
-   * Start the R program.
-
-   * At the R prompt, use `dyn.load()' to load your library.
-
-   * Send an interrupt signal.  Inside of GUD mode in Emacs, you send `C-c
-     C-c'.  This will put you back to the debugger prompt.
-
-   * Set the breakpoints in your code.
-
-   * Continue execution of R by typing `signal 0<RET>'.
+   See section "Finding entry points in dynamically loaded code" in
+`Writing R Extensions'.
 
 8.3 How can I inspect R objects when debugging?
 ===============================================
 
-   In the C implementation underlying R, all objects are so-called SEXPs
-(from Lisp's "S-expressions" which comes from "symbolic expression"), which
-are pointers to data structures called SEXPRECs.  (See the file
-`src/include/Rinternals.h' in the R sources for the definition of the
-SEXPREC type.)  For example, let
-
-     R> DF <- data.frame(a = 1:3, b = 4:6)
-
-By setting a breakpoint at `do_get' and typing `get("DF")' at the R prompt,
-one can find out the address in memory of `DF', e.g.
-
-     Value returned is $1 = (SEXPREC *) 0x40583e1c
-     (gdb) p *$1
-     $2 = {
-       sxpinfo = {type = 19, obj = 1, named = 1, gp = 0,
-         mark = 0, debug = 0, trace = 0, = 0},
-       attrib = 0x40583e80,
-       u = {
-         vecsxp = {
-           length = 2,
-           type = {c = 0x40634700 "0>X@D>X@0>X@", i = 0x40634700,
-             f = 0x40634700, z = 0x40634700, s = 0x40634700},
-           truelength = 1075851272,
-         },
-         primsxp = {offset = 2},
-         symsxp = {pname = 0x2, value = 0x40634700, internal = 0x40203008},
-         listsxp = {carval = 0x2, cdrval = 0x40634700, tagval = 0x40203008},
-         envsxp = {frame = 0x2, enclos = 0x40634700},
-         closxp = {formals = 0x2, body = 0x40634700, env = 0x40203008},
-         promsxp = {value = 0x2, expr = 0x40634700, env = 0x40203008}
-       }
-     }
-
-(Debugger output reformatted for better legibility).
-
-   Using `R_PV()' one can "inspect" the values of the various elements of
-the SEXP, e.g.,
-
-     (gdb) p R_PV($1->attrib)
-     $names
-     [1] "a" "b"
-     
-     $row.names
-     [1] "1" "2" "3"
-     
-     $class
-     [1] "data.frame"
-     
-     $3 = void
-
-   To find out where exactly the corresponding information is stored, one
-needs to go "deeper":
-
-     (gdb) set $a = $1->attrib
-     (gdb) p $a->u.listsxp.tagval->u.symsxp.pname->u.vecsxp.type.c
-     $4 = 0x405d40e8 "names"
-     (gdb) p $a->u.listsxp.carval->u.vecsxp.type.s[1]->u.vecsxp.type.c
-     $5 = 0x40634378 "b"
-     (gdb) p $1->u.vecsxp.type.s[0]->u.vecsxp.type.i[0]
-     $6 = 1
-     (gdb) p $1->u.vecsxp.type.s[1]->u.vecsxp.type.i[1]
-     $7 = 5
+   See section "Inspecting R objects when debugging" in `Writing R
+Extensions'.
 
 9 R Bugs
 ********

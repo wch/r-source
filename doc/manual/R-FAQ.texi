@@ -3,7 +3,7 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ-VERSION 0.99-2, 2000/02/12
+@set FAQ-VERSION 0.99-3, 2000/02/19
 @set REL-VERSION 0.99.0
 @set DEV-VERSION 1.0.0
 @c %**end of header
@@ -1307,8 +1307,6 @@ A package which performs an exhaustive search for the best subsets of a
 given set of potential regressors, using a branch-and-bound algorithm,
 and also performs searches using a number of less time-consuming
 techniques.
-@c @item lme
-@c Fit and compare Gaussian linear mixed-effects models.
 @item lmtest
 A collection of tests on the assumptions of linear regression models
 from the book ``The linear regression model under test'' by W. Kraemer
@@ -1600,97 +1598,22 @@ respectively.
 @section How can I create an R package?
 
 A package consists of a subdirectory containing the files
-@file{DESCRIPTION}, @file{INDEX}, and @file{TITLE}, and the
-subdirectories @file{R}, @file{data}, @file{exec}, @file{inst},
-@file{man} and @file{src} (some of which can be missing).
-
-The @file{DESCRIPTION} file contains basic information about the package
-in the following format:
-
-@smallexample
-Package: e1071
-Version: 0.7-3
-Author: Compiled by Fritz Leisch <Friedrich.Leisch@@ci.tuwien.ac.at>.
-Description: Miscellaneous functions used at the Department of
-        Statistics at TU Wien (E1071). 
-Depends:
-License: GPL version 2 or later
-@end smallexample
-
-@noindent
-The license field should contain an explicit statement or a well-known
-abbreviation (such as @samp{GPL}, @samp{LGPL}, @samp{BSD} and
-@samp{Artistic}), maybe followed by a reference to the actual license
-file.  It is very important that you include this information!
-Otherwise, it may not even be legally correct for others to distribute
-copies of the package.
-
-The @file{TITLE} file contains a line giving the name of the package
-and a brief description.  @file{INDEX} contains a line for each
-sufficiently interesting object in the package, giving its name and a
-description (functions such as print methods not usually called
-explicitly might not be included).  Note that you can automatically
-create this file using something like @code{R CMD Rdindex man/*.Rd >
-INDEX} provided that Perl is available on your system.
-
-The @file{R} subdirectory contains code files.  The code files to be
-installed must start with a (lower- or uppercase) letter and have one of
-the extensions @file{.R}, @file{.S}, @file{.q}, @file{.r}, or @file{.s}.
-We recommend using @file{.R}, as this extension seems to be not used by
-any other software.  It should be possible to read in the files using
-@code{source()}, so R objects must be created by assignments.  Note that
-there has to be no connection between the name of the file and the R
-objects created by it.  If necessary, one of these files (historically
-@file{zzz.R}) should use @code{library.dynam()} @emph{inside}
-@code{.First.lib()} to load compiled code.
-
-The @file{man} subdirectory should contain documentation files for the
-objects in the package.  The documentation files to be installed must
-also start with a (lower- or uppercase) letter and have the extension
-@file{.Rd} (the default) or @file{.rd}, and are written in the R
-documentation format.
-@ifclear UseExternalXrefs
-See section ``Writing R documentation'' in @cite{Writing R Extensions}
-for more information.
-@end ifclear
-@ifset UseExternalXrefs
-@xref{Writing R documentation, Writing R docs, R Extensions, R-exts,
-Writing R Extensions}, for more information.
-@end ifset
-
-C or @FORTRAN{} source and optionally a @file{Makefile} for the compiled
-code is in @file{src}.  Note that the @file{Makefile} most likely is not
-needed.
-
-The @file{data} subdirectory is for additional data files the package
-makes available for loading using @code{data()}.  Currently, data files
-can have one of three types as indicated by their extension:  plain R
-code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt}, or
-@file{.csv}), or @code{save()} images (@file{.RData} or @file{.rda}).
-The subdirectory should contain a @file{00Index} file that describes
-the datasets available.
-
-The contents of the @file{inst} subdirectory will be copied recursively
-to the installation directory.
-
-Finally, @file{exec} could contain additional executables the package
-needs, typically Shell or Perl scripts.  This mechanism is currently not
-used by any package, and still experimental.
-
-You can also provide (Bourne) shell scripts @code{configure} and
-@code{cleanup} for configuration before installation (such as checking
-for additional software that might be needed by the package), and
-removing the files created in this process.  See the add-on package
-@strong{e1071} on CRAN for an example of this mechanism.
+@file{DESCRIPTION} and @file{INDEX}, and the subdirectories @file{R},
+@file{data}, @file{exec}, @file{inst}, @file{man}, and @file{src} (some
+of which can be missing).  Optionally the package can also contain
+script files @file{configure} and @file{cleanup} which are executed
+before and after installation.
 
 @ifclear UseExternalXrefs
-See section ``Creating R packages'' in @cite{Writing R Extensions} for
-more information.
+See section ``Creating R packages'' in @cite{Writing R Extensions}, for
+details.
 @end ifclear
 @ifset UseExternalXrefs
-@xref{Creating R packages, Creating R pkgs, R Extensions, R-exts,
-Writing R Extensions}, for more information.
+@xref{Creating R packages, , Creating R packages, R-exts, Writing R
+Extensions}, for details.
 @end ifset
+This gives information on package structure, the configure and cleanup
+mechanisms, and on automated package checking and building.
 
 The web page @uref{http://www.biostat.washington.edu/~thomas/Rlib.html}
 maintained by Thomas Lumley provides information on porting S packages
@@ -2161,102 +2084,26 @@ want anything printed.
 @node How can I debug dynamically loaded code?, How can I inspect R objects when debugging?, How should I write summary methods?, R Programming
 @section How can I debug dynamically loaded code?
 
-According to Doug Bates, the secret of symbolic debugging of dynamically
-loaded code is to
-
-@itemize @bullet
-@item
-Call the debugger on the R executable.  In the shell, you can e.g.@: use
-@kbd{R -d gdb}; see @ref{Debugging R from within Emacs} for debugging
-from within Emacs.
-@item
-Start the R program.
-@item
-At the R prompt, use @code{dyn.load()} to load your library.
-@item
-Send an interrupt signal.  Inside of GUD mode in Emacs, you send
-@kbd{C-c C-c}.  This will put you back to the debugger prompt.
-@item
-Set the breakpoints in your code.
-@item
-Continue execution of R by typing @kbd{signal 0@key{RET}}.
-@end itemize
+@ifclear UseExternalXrefs
+See section ``Finding entry points in dynamically loaded code'' in
+@cite{Writing R Extensions}.
+@end ifclear
+@ifset UseExternalXrefs
+@xref{Finding entry points, , Finding entry points in dynamically loaded
+code, R-exts, Writing R Extensions}.
+@end ifset
 
 @node How can I inspect R objects when debugging?,  , How can I debug dynamically loaded code?, R Programming
 @section How can I inspect R objects when debugging?
 
-In the C implementation underlying R, all objects are so-called SEXPs
-(from Lisp's ``S-expressions'' which comes from ``symbolic
-expression''), which are pointers to data structures called SEXPRECs.
-(See the file @file{src/include/Rinternals.h} in the R sources for the
-definition of the SEXPREC type.)  For example, let
-
-@smallexample
-R> DF <- data.frame(a = 1:3, b = 4:6)
-@end smallexample
-
-@noindent
-By setting a breakpoint at @code{do_get} and typing @kbd{get("DF")} at
-the R prompt, one can find out the address in memory of @code{DF}, e.g.
-
-@smallexample
-Value returned is $1 = (SEXPREC *) 0x40583e1c
-(gdb) p *$1
-$2 = @{
-  sxpinfo = @{type = 19, obj = 1, named = 1, gp = 0,
-    mark = 0, debug = 0, trace = 0, = 0@},
-  attrib = 0x40583e80,
-  u = @{
-    vecsxp = @{
-      length = 2, 
-      type = @{c = 0x40634700 "0>X@@D>X@@0>X@@", i = 0x40634700,
-        f = 0x40634700, z = 0x40634700, s = 0x40634700@},
-      truelength = 1075851272,
-    @},
-    primsxp = @{offset = 2@}, 
-    symsxp = @{pname = 0x2, value = 0x40634700, internal = 0x40203008@}, 
-    listsxp = @{carval = 0x2, cdrval = 0x40634700, tagval = 0x40203008@}, 
-    envsxp = @{frame = 0x2, enclos = 0x40634700@},
-    closxp = @{formals = 0x2, body = 0x40634700, env = 0x40203008@},
-    promsxp = @{value = 0x2, expr = 0x40634700, env = 0x40203008@}
-  @}
-@}
-@end smallexample
-
-@noindent
-(Debugger output reformatted for better legibility).
-
-Using @code{R_PV()} one can ``inspect'' the values of the various
-elements of the SEXP, e.g.,
-
-@smallexample
-(gdb) p R_PV($1->attrib)
-$names
-[1] "a" "b"
-
-$row.names
-[1] "1" "2" "3"
-
-$class
-[1] "data.frame"
-
-$3 = void
-@end smallexample
-
-To find out where exactly the corresponding information is stored, one
-needs to go ``deeper'':
-
-@smallexample
-(gdb) set $a = $1->attrib
-(gdb) p $a->u.listsxp.tagval->u.symsxp.pname->u.vecsxp.type.c
-$4 = 0x405d40e8 "names"
-(gdb) p $a->u.listsxp.carval->u.vecsxp.type.s[1]->u.vecsxp.type.c
-$5 = 0x40634378 "b"
-(gdb) p $1->u.vecsxp.type.s[0]->u.vecsxp.type.i[0]
-$6 = 1
-(gdb) p $1->u.vecsxp.type.s[1]->u.vecsxp.type.i[1]
-$7 = 5
-@end smallexample
+@ifclear UseExternalXrefs
+See section ``Inspecting R objects when debugging'' in @cite{Writing R
+Extensions}.
+@end ifclear
+@ifset UseExternalXrefs
+@xref{Inspecting R objects, , Inspecting R objects when debugging,
+R-exts, Writing R Extensions}.
+@end ifset
 
 @node R Bugs, Acknowledgments, R Programming, Top
 @chapter R Bugs
