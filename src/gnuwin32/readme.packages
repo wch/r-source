@@ -38,14 +38,10 @@ use our tool set, and make sure it is at the front of your path.
 
 You need a recent version of the Mingw port of gcc from
 http://sourceforge.net/projects/mingw/.  There will be a distribution
-called something like MinGW-3.0.0-1.exe.  Earlier versions may work,
-but mingw-runtime >= 2.0 and w32api >= 2.0 are essential.  The release
-candidates of gcc-3.3.1 have also been tested.
-
-No earlier Mingw compiler has been tested and support for using the
-Cygwin compiler has been withdrawn.  If you see errors about `-shared'
-not being understood or `__imp_foo' missing, you are not using the
-recommended compiler.
+called something like MinGW-3.1.0-1.exe (which is built from
+gcc-3.2.3).  Earlier versions may work, but mingw-runtime >= 2.0 and
+w32api >= 2.0 are essential.  The released versions of gcc-3.3.1 have
+also been tested.
 
 
 The Windows port of perl5, available via
