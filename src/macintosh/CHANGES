@@ -45,6 +45,15 @@ rm140
   command with the difference that you can specify the
   name of the new file to edit. For more details see
   man pages.
+* Added three functions to manipulate a User menu in the
+  R Console menubar. With add.menu.cmd(label,command) the
+  user can add menu item "label" to which is associated
+  an R command. Respectively with del.menu.cmd(label) and
+  get.menu.cmd(label) the user can remove or get the
+  command associated to the menu "label". See the help
+  pages for details and examples.
+   
+   
    
     
 
