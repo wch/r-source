@@ -410,11 +410,15 @@ int R_ChooseFile(int new, char *buf, int len)
 	/*--- Initialization Code ---*/
 
 #ifdef __FreeBSD__
+#ifdef HAVE_FLOATINGPOINT_H
 #include <floatingpoint.h>
+#endif
 #endif
 
 #ifdef linux
+#ifdef HAVE_FPU_CONTROL_H
 #include <fpu_control.h>
+#endif
 #endif
 
 void R_ShowMessage(char *s)
