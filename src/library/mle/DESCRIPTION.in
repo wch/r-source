@@ -1,8 +1,0 @@
-Package: mle
-Title: Defunct package for maximum likelihood estimation
-Version: @VERSION@
-Priority: defunct-base
-Author: Peter Dalgaard
-Description: A stub package -- contents merged into stats
-Maintainer: R Core Team <R-core@r-project.org>
-License: GPL

@@ -1,8 +1,0 @@
-Package: eda
-Version: @VERSION@
-Priority: defunct-base
-Title: Defunct Package for Exploratory Data Analysis
-Author: R Development Core Team
-Maintainer: R Core Team <R-core@r-project.org>
-Description: A stub package -- contents merged into stats
-License: GPL Version 2 or later.
