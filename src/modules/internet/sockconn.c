@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C)  2001   The R Development Core Team.
+ *  Copyright (C)  2001-5   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -145,7 +145,7 @@ static int sock_read_helper(Rconnection con, void *ptr, size_t size)
 }
 
 
-static int sock_fgetc(Rconnection con)
+static int sock_fgetc_internal(Rconnection con)
 {
     unsigned char c;
     int n;
@@ -189,7 +189,8 @@ Rconnection in_R_newsock(char *host, int port, int server, char *mode)
     new->open = &sock_open;
     new->close = &sock_close;
     new->vfprintf = &dummy_vfprintf;
-    new->fgetc = &sock_fgetc;
+    new->fgetc_internal = &sock_fgetc_internal;
+    new->fgetc = &dummy_fgetc;
     new->read = &sock_read;
     new->write = &sock_write;
     new->private = (void *) malloc(sizeof(struct sockconn));

@@ -141,10 +141,10 @@ isIncomplete(con)
   characters are mapped to a space in these encodings.
 }
 \value{
-  \code{file}, \code{pipe}, \code{fifo}, \code{url}, \code{gzfile} and
-  \code{socketConnection} return a connection object
-  which inherits from class \code{"connection"} and has a first more
-  specific class.
+  \code{file}, \code{pipe}, \code{fifo}, \code{url}, \code{gzfile},
+  \code{bzfile}, \code{unz} and \code{socketConnection} return a
+  connection object which inherits from class \code{"connection"} and
+  has a first more specific class.
 
   \code{isOpen} returns a logical value, whether the connection is
   currently open.
@@ -170,9 +170,7 @@ isIncomplete(con)
   non-default encoding will give an error when the connection is opened.
 #endif
 
-  Currently re-encoding of inputs is only implemented for \code{file}
-  connections, but re-encoding of output works on all connections (as
-  they share a common mechanism).
+  Re-encoding only works for connections in text mode.
 
   Exactly what happens when the requested translation cannot be done is
   in general undocumented.  Requesting a conversion that is not supported is
@@ -180,8 +178,6 @@ isIncomplete(con)
   result is likely to be that up to the error, with a warning.  On
   input, it will most likely be all or some of the input up to the
   error.
- 
-  Currently stateful encodings are not properly supported.
 }
 \section{Blocking}{
   The default condition for all but fifo and socket connections is to be in
@@ -226,6 +222,10 @@ isIncomplete(con)
   There is a 32Kb limit on the text to be written to the clipboard.
   This can be raised by using e.g. \code{file("clipboard-128")} on
   NT-based versions of Windows, to give 128Kb.
+
+  At least on NT-based versions of Windows the clipboard works in
+  Unicode wide characters, so encodings are likely not to work
+  as one might expect.
 }
 #endif
 \note{

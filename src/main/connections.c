@@ -130,7 +130,7 @@ Rconnection getConnection_no_err(int n)
 
 /* from sysutils.c */
 void * Riconv_open (const char* tocode, const char* fromcode);
-size_t Riconv (void * cd, char **inbuf, size_t *inbytesleft, 
+size_t Riconv (void * cd, char **inbuf, size_t *inbytesleft,
 	       char  **outbuf, size_t *outbytesleft);
 int Riconv_close (void * cd);
 
@@ -140,17 +140,28 @@ void set_iconv(Rconnection con)
     void *tmp;
     /* need to test if this is text, open for reading to writing or both,
        and set inconv and/or outconv */
-    if(!con->text || !strlen(con->encname) || 
+    if(!con->text || !strlen(con->encname) ||
        strcmp(con->encname, "native.enc") == 0) return;
     if(con->canread) {
+	unsigned int onb = 50;
+	char *ob = con->oconvbuff;
 	tmp = Riconv_open("", con->encname);
 	if(tmp != (void *)-1) con->inconv = tmp;
 	else error("conversion from %s is unsupported", con->encname);
+	con->EOF_signalled = FALSE;
+	/* initialize state, and prepare any initial bytes */
+	Riconv(tmp, NULL, NULL, &ob, &onb);
+	con->navail = 50-onb; con->inavail = 0;
     }
     if(con->canwrite) {
+	unsigned int onb = 25;
+	char *ob = con->init_out;
 	tmp = Riconv_open(con->encname, "");
 	if(tmp != (void *)-1) con->outconv = tmp;
 	else error("conversion to %s is unsupported", con->encname);
+	/* initialize state, and prepare any initial bytes */
+	Riconv(tmp, NULL, NULL, &ob, &onb);
+	ob[25-onb] = '\0';
     }
 }
 
@@ -201,14 +212,18 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	}
     }
 #ifdef HAVE_ICONV
-    /* FIXME this is not correct for stateful encodings */
     if(con->outconv) { /* translate the buffer */
 	char outbuf[BUFSIZE+1], *ib = b, *ob;
 	size_t inb = res, onb, ires;
 	Rboolean again = FALSE;
+	int ninit = strlen(con->init_out);
 	do {
 	    onb = BUFSIZE; /* space for nul */
 	    ob = outbuf;
+	    if(ninit) {
+		strcpy(ob, con->init_out);
+		ob += ninit; onb -= ninit; ninit = 0;
+	    }
 	    ires = Riconv(con->outconv, &ib, &inb, &ob, &onb);
 	    if(ires == (size_t)(-1) && errno == E2BIG) again = TRUE;
 	    if(ires == (size_t)(-1) && errno != E2BIG)
@@ -217,11 +232,54 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	    *ob = '\0';
 	    con->write(outbuf, 1, strlen(outbuf), con);
 	} while(again);
-    } else 
+    } else
 #endif
 	con->write(b, 1, res, con);
     if(usedRalloc) vmaxset(vmax);
     return res;
+}
+
+int dummy_fgetc(Rconnection con)
+{
+    int c;
+
+    if(con->inconv) {
+	if(con->navail <= 0) {
+	    unsigned int i, inb, onb, inew = 0;
+	    char *p = con->iconvbuff + con->inavail, *ib, *ob;
+	    size_t res;
+
+	    if(con->EOF_signalled) return R_EOF;
+	    for(i = con->inavail; i < 25; i++) {
+		c = con->fgetc_internal(con);
+		if(c == R_EOF){ con->EOF_signalled = TRUE; break; }
+		*p++ = c;
+		con->inavail++;
+		inew++;
+	    }
+	    if(inew == 0) return R_EOF;
+	    ib = con->iconvbuff; inb = con->inavail;
+	    ob = con->oconvbuff; onb = 50;
+	    res = Riconv(con->inconv, &ib, &inb, &ob, &onb);
+	    con->inavail = inb;
+	    if(res == (size_t)-1) { /* an error condition */
+		if(errno == EINVAL || errno == E2BIG) {
+		    /* incomplete input char or no space in output buffer */
+		    memmove(con->iconvbuff, ib, inb);
+  		} else {/*  EILSEQ invalid input */
+		    warning("invalid input found on input connection '%s'",
+			    con->description);
+		    con->inavail = 0;
+		    con->EOF_signalled = TRUE;
+		}
+	    }
+	    con->next = con->oconvbuff;
+	    con->navail = 50 - onb;
+	}
+	con->navail--;
+	return *con->next++;
+    } else
+	return con->fgetc_internal(con);
 }
 
 static int null_fgetc(Rconnection con)
@@ -273,7 +331,7 @@ void init_con(Rconnection new, char *description, char *mode)
     new->close = &null_close;
     new->destroy = &null_destroy;
     new->vfprintf = &null_vfprintf;
-    new->fgetc = &null_fgetc;
+    new->fgetc = new->fgetc_internal = &null_fgetc;
     new->seek = &null_seek;
     new->truncate = &null_truncate;
     new->fflush = &null_fflush;
@@ -337,7 +395,6 @@ static Rboolean file_open(Rconnection con)
     else con->text = TRUE;
     con->save = -1000;
     set_iconv(con);
-    this->navail = this->inavail = 0;
 
 #ifdef HAVE_FCNTL
     if(!con->blocking) {
@@ -369,7 +426,7 @@ static int file_vfprintf(Rconnection con, const char *format, va_list ap)
     else return vfprintf(this->fp, format, ap);
 }
 
-static int file_fgetc(Rconnection con)
+static int file_fgetc_internal(Rconnection con)
 {
     Rfileconn this = con->private;
     FILE *fp = this->fp;
@@ -380,45 +437,8 @@ static int file_fgetc(Rconnection con)
 	this->last_was_write = FALSE;
 	f_seek(this->fp, this->rpos, SEEK_SET);
     }
-    if(con->inconv) {
-	/* FIXME this is not correct for stateful encodings, and we
-	   could at least pass on all the current conversion on EILSEQ.
-	 */
-	if(this->navail <= 0) {
-	    unsigned int i, inb, onb, inew = 0;
-	    char *p = this->iconvbuff + this->inavail, *ib, *ob;
-	    size_t res;
-	    for(i = this->inavail; i < 25; i++) {
-		c = fgetc(fp);
-		if(feof(fp)) break;
-		*p++ = c;
-		this->inavail++;
-		inew++;
-	    }
-	    if(inew == 0) return R_EOF;
-	    ib = this->iconvbuff; inb = this->inavail;
-	    ob = this->oconvbuff; onb = 50;
-	    res = Riconv(con->inconv, &ib, &inb, &ob, &onb);
-	    this->inavail = inb;
-	    if(res == (size_t)-1) { /* an error condition */
-		if(errno == EINVAL || errno == E2BIG) { 
-		    /* incomplete input char or no space in output buffer */
-		    memmove(this->iconvbuff, ib, inb);
-  		} else {/*  EILSEQ invalid input */
-		    warning("invalid input found on input connection %s",
-			    con->description);
-		    return R_EOF;
-		}
-	    }
-	    this->next = this->oconvbuff;
-	    this->navail = 50 - onb;
-	}
-	this->navail--;
-	return *this->next++;
-    } else {
-	c = fgetc(fp);
-	return feof(fp) ? R_EOF : c;
-    }
+    c =fgetc(fp);
+    return feof(fp) ? R_EOF : c;
 }
 
 static double file_seek(Rconnection con, double where, int origin, int rw)
@@ -536,7 +556,8 @@ static Rconnection newfile(char *description, char *mode)
     new->open = &file_open;
     new->close = &file_close;
     new->vfprintf = &file_vfprintf;
-    new->fgetc = &file_fgetc;
+    new->fgetc_internal = &file_fgetc_internal;
+    new->fgetc = &dummy_fgetc;
     new->seek = &file_seek;
     new->truncate = &file_truncate;
     new->fflush = &file_fflush;
@@ -628,7 +649,7 @@ static void fifo_close(Rconnection con)
     con->isopen = FALSE;
 }
 
-static int fifo_fgetc(Rconnection con)
+static int fifo_fgetc_internal(Rconnection con)
 {
     Rfifoconn this = (Rfifoconn)con->private;
     unsigned char c;
@@ -675,7 +696,8 @@ static Rconnection newfifo(char *description, char *mode)
     new->open = &fifo_open;
     new->close = &fifo_close;
     new->vfprintf = &dummy_vfprintf;
-    new->fgetc = &fifo_fgetc;
+    new->fgetc_internal = &fifo_fgetc_internal;
+    new->fgetc = &dummy_fgetc;
     new->seek = &null_seek;
     new->truncate = &null_truncate;
     new->fflush = &null_fflush;
@@ -712,7 +734,7 @@ SEXP do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
     if(block == NA_LOGICAL)
 	error("invalid `block' argument");
     enc = CADDDR(args);
-    if(!isString(enc) || length(enc) != 1 || 
+    if(!isString(enc) || length(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100)
 	error("invalid `encoding' argument");
     open = CHAR(STRING_ELT(sopen, 0));
@@ -802,7 +824,8 @@ static Rconnection newpipe(char *description, char *mode)
     new->open = &pipe_open;
     new->close = &pipe_close;
     new->vfprintf = &file_vfprintf;
-    new->fgetc = &file_fgetc;
+    new->fgetc_internal = &file_fgetc_internal;
+    new->fgetc = &dummy_fgetc;
     new->fflush = &file_fflush;
     new->read = &file_read;
     new->write = &file_write;
@@ -839,10 +862,10 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("invalid `open' argument");
     open = CHAR(STRING_ELT(sopen, 0));
     enc = CADDR(args);
-    if(!isString(enc) || length(enc) != 1 || 
+    if(!isString(enc) || length(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100)
 	error("invalid `encoding' argument");
- 
+
     ncon = NextConnection();
 #ifdef Win32
     if(CharacterMode != RTerm)
@@ -912,7 +935,7 @@ static void gzfile_close(Rconnection con)
     con->isopen = FALSE;
 }
 
-static int gzfile_fgetc(Rconnection con)
+static int gzfile_fgetc_internal(Rconnection con)
 {
     gzFile fp = ((Rgzfileconn)(con->private))->fp;
     int c;
@@ -992,7 +1015,8 @@ static Rconnection newgzfile(char *description, char *mode, int compress)
     new->open = &gzfile_open;
     new->close = &gzfile_close;
     new->vfprintf = &dummy_vfprintf;
-    new->fgetc = &gzfile_fgetc;
+    new->fgetc_internal = &gzfile_fgetc_internal;
+    new->fgetc = &dummy_fgetc;
     new->seek = &gzfile_seek;
     new->fflush = &gzfile_fflush;
     new->read = &gzfile_read;
@@ -1023,7 +1047,7 @@ SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(sopen) || length(sopen) != 1)
 	error("invalid `open' argument");
     enc = CADDR(args);
-    if(!isString(enc) || length(enc) != 1 || 
+    if(!isString(enc) || length(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100)
 	error("invalid `encoding' argument");
     compress = asInteger(CADDDR(args));
@@ -1120,7 +1144,7 @@ static void bzfile_close(Rconnection con)
     con->isopen = FALSE;
 }
 
-static int bzfile_fgetc(Rconnection con)
+static int bzfile_fgetc_internal(Rconnection con)
 {
     BZFILE* bfp = (BZFILE *)((Rbzfileconn)(con->private))->bfp;
     char buf[1];
@@ -1172,7 +1196,9 @@ static Rconnection newbzfile(char *description, char *mode)
     new->open = &bzfile_open;
     new->close = &bzfile_close;
     new->vfprintf = &dummy_vfprintf;
-    new->fgetc = &bzfile_fgetc;
+    new->fgetc_internal = &bzfile_fgetc_internal;
+    new->fgetc = &dummy_fgetc;
+    new->fgetc = &dummy_fgetc;
     new->seek = &null_seek;
     new->fflush = &null_fflush;
     new->read = &bzfile_read;
@@ -1203,7 +1229,7 @@ SEXP do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(sopen) || length(sopen) != 1)
 	error("invalid `open' argument");
     enc = CADDR(args);
-    if(!isString(enc) || length(enc) != 1 || 
+    if(!isString(enc) || length(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100)
 	error("invalid `encoding' argument");
     open = CHAR(STRING_ELT(sopen, 0));
@@ -1325,7 +1351,7 @@ static void clp_close(Rconnection con)
     free(this->buff);
 }
 
-static int clp_fgetc(Rconnection con)
+static int clp_fgetc_internal(Rconnection con)
 {
     Rclpconn this = con->private;
 
@@ -1435,7 +1461,8 @@ static Rconnection newclp(char *url, char *mode)
     new->open = &clp_open;
     new->close = &clp_close;
     new->vfprintf = &dummy_vfprintf;
-    new->fgetc = &clp_fgetc;
+    new->fgetc_internal = &clp_fgetc_internal;
+    new->fgetc = &dummy_fgetc;
     new->seek = &clp_seek;
     new->truncate = &clp_truncate;
     new->fflush = &clp_fflush;
@@ -1928,7 +1955,7 @@ SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     open = CHAR(STRING_ELT(sopen, 0));
     args = CDR(args);
     enc = CAR(args);
-    if(!isString(enc) || length(enc) != 1 || 
+    if(!isString(enc) || length(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100)
 	error("invalid `encoding' argument");
 
@@ -1981,7 +2008,7 @@ SEXP do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(sopen) || length(sopen) != 1)
 	error("invalid `open' argument");
     enc = CADDR(args);
-    if(!isString(enc) || length(enc) != 1 || 
+    if(!isString(enc) || length(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100)
 	error("invalid `encoding' argument");
     open = CHAR(STRING_ELT(sopen, 0));
@@ -2608,7 +2635,7 @@ SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 			break;
 #endif
 		    default:
-			errorcall(call, "size %d is unknown on this machine", 
+			errorcall(call, "size %d is unknown on this machine",
 				  size);
 		    }
 		}
@@ -2627,7 +2654,7 @@ SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 			break;
 #endif
 		    default:
-			errorcall(call, "size %d is unknown on this machine", 
+			errorcall(call, "size %d is unknown on this machine",
 				  size);
 		    }
 		}
@@ -3255,7 +3282,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(block == NA_LOGICAL)
 	error("invalid `block' argument");
     enc = CADDDR(args);
-    if(!isString(enc) || length(enc) != 1 || 
+    if(!isString(enc) || length(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100)
 	error("invalid `encoding' argument");
 

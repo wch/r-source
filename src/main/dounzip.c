@@ -282,7 +282,7 @@ static void unz_close(Rconnection con)
     con->isopen = FALSE;
 }
 
-static int unz_fgetc(Rconnection con)
+static int unz_fgetc_internal(Rconnection con)
 {
     unzFile uf = ((Runzconn)(con->private))->uf;
     char buf[1];
@@ -346,7 +346,8 @@ Rconnection R_newunz(char *description, char *mode)
     new->open = &unz_open;
     new->close = &unz_close;
     new->vfprintf = &null_vfprintf;
-    new->fgetc = &unz_fgetc;
+    new->fgetc_internal = &unz_fgetc_internal;
+    new->fgetc = &dummy_fgetc;
     new->seek = &null_seek;
     new->fflush = &null_fflush;
     new->read = &unz_read;

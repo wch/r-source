@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-4   The R Development Core Team.
+ *  Copyright (C) 2000-5   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -115,7 +115,7 @@ static void url_close(Rconnection con)
     con->isopen = FALSE;
 }
 
-static int url_fgetc(Rconnection con)
+static int url_fgetc_internal(Rconnection con)
 {
     UrlScheme type = ((Rurlconn)(con->private))->type;
     void * ctxt = ((Rurlconn)(con->private))->ctxt;
@@ -173,7 +173,8 @@ static Rconnection in_R_newurl(char *description, char *mode)
     new->canwrite = FALSE;
     new->open = &url_open;
     new->close = &url_close;
-    new->fgetc = &url_fgetc;
+    new->fgetc_internal = &url_fgetc_internal;
+    new->fgetc = &dummy_fgetc;
     new->read = &url_read;
     new->private = (void *) malloc(sizeof(struct urlconn));
     if(!new->private) {

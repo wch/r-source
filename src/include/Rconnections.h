@@ -37,6 +37,7 @@ struct Rconn {
     void (*destroy)(struct Rconn *); /* when closing connection */
     int (*vfprintf)(struct Rconn *, const char *, va_list);
     int (*fgetc)(struct Rconn *);
+    int (*fgetc_internal)(struct Rconn *);
 /*    int (*ungetc)(int c, struct Rconn *); */
     double (*seek)(struct Rconn *, double, int, int);
     void (*truncate)(struct Rconn *);
@@ -51,6 +52,10 @@ struct Rconn {
     char encname[101];
     /* will be iconv_t, which is a pointer. NULL if not in use */
     void *inconv, *outconv;
+    /* The idea here is that no MBCS char will ever not fit */
+    char iconvbuff[25], oconvbuff[50], *next, init_out[25];
+    short navail, inavail;
+    Rboolean EOF_signalled;
     void *private;
 };
 
@@ -66,9 +71,6 @@ typedef struct fileconn {
 #endif
 #endif
     Rboolean last_was_write;
-    /* The idea here is that no MBCS char will ever not fit */
-    char iconvbuff[25], oconvbuff[50], *next;
-    short navail, inavail;
 } *Rfileconn;
 
 typedef struct fifoconn {
@@ -155,6 +157,7 @@ Rconnection R_newurl(char *description, char *mode);
 Rconnection R_newsock(char *host, int port, int server, char *mode);
 Rconnection in_R_newsock(char *host, int port, int server, char *mode);
 Rconnection R_newunz(char *description, char *mode);
+int dummy_fgetc(Rconnection con);
 int dummy_vfprintf(Rconnection con, const char *format, va_list ap);
 int getActiveSink(int n);
 
