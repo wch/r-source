@@ -24,7 +24,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.2 $ ';
+my $revision = ' $Revision: 1.3 $ ';
 my $version;
 my $name;
 
@@ -38,7 +38,7 @@ GetOptions (@knownoptions) || usage();
 &R_version($name, $version) if $opt_version;
 &usage() if $opt_help;
 
-$OSdir ="mac";
+$OSdir =":mac";
 $OSdir = $opt_os if $opt_os;
 
 $dir_mod = 0755;#- Permission ('mode') of newly created directories.
