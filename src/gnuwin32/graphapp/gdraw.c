@@ -480,13 +480,14 @@ void gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
     first = tm.tmFirstChar;
     last = tm.tmLastChar;
     extra = tm.tmExternalLeading + tm.tmInternalLeading - 1;
-    if(c < 0) { /* used of setting cra */
+    if(c < 0) { /* used for setting cra */
       SIZE size;
       char* cc="M";
       GetTextExtentPoint32(dc,(LPSTR) cc, 1, &size);
       *descent = tm.tmDescent ;
       *ascent = size.cy - *descent;
       *width = size.cx;
+      if(*width > size.cy) *width = size.cy;
     } else if(c == 0) {
 	*descent = tm.tmDescent ;
         *ascent = tm.tmHeight - *descent - extra ;
