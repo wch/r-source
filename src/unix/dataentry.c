@@ -31,6 +31,9 @@
 #include "MACconsole.h"
 #endif
 
+
+static void clearwindow(void);
+
 /*
    The spreadsheet function returns a list of vectors. The types of
    these vectors can be specified by the user as can their names. It
