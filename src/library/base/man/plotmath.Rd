@@ -12,105 +12,18 @@
   A mathematical expression must obey the normal rules of syntax for any
   \R expression, but it is interpreted according to very different rules
   than for normal \R expressions.
-  
-  \describe{
-    \item{\emph{Binary operators:}}{
-      addition, subtraction, multiplication, and division use the
-      standard \R syntax, although multiplication only juxtaposes the
-      arguments.
-      
-      For example, \code{a+b}, \code{a-b}, and \code{a/b}, produce
-      \eqn{a+b}, \eqn{a-b}, and \eqn{a/b}, but \code{a*b} produces
-      \eqn{ab}.}
-    
-    \item{\emph{Unary operators:}}{
-      positive and negative numbers are specified with standard syntax.
-      
-      For example, \code{+x} produces \eqn{+x} and \code{-y} produces
-      \eqn{-y}.}
-    
-    \item{\emph{Subscripts and superscripts:}}{
-      a subscript is specified using the subsetting syntax and a
-      superscript is specified using the power syntax.
-      
-      For example, \code{x[i]} produces \eqn{x_i} and \code{x^2}
-      produces \eqn{x^2}.}
-    
-    \item{\emph{Accents:}}{
-      accented expressions are specified using the special mathematical
-      functions \code{hat} and \code{bar}.}
-    
-    % For example, \code{hat(x)} produces \eqn{\hat{x}} and \code{bar(x)}
-    % produces \eqn{\bar{x}}.
-    
-    \item{\emph{Fractions:}}{
-      fractions are specified using the special mathematical function
-      \code{frac} (or its alias, \code{over}).}
-    
-    % For example, \code{frac(1,2)} produces \eqn{1\over2}.
-    
-    \item{\emph{Relations:}}{
-      equality or assignment of terms is specified using the \code{==}
-      relation.
-      
-      For example, \code{x == y} produces \eqn{x=y}.}
-    
-    \item{\emph{Visible grouping:}}{
-      terms are visibly grouped by placing them within parentheses.
-      
-      For example, \code{(x+y)} produces \eqn{(x+y)}.}
-    
-    \item{\emph{Invisible grouping:}}{
-      terms are invisibly grouped by placing them within curly braces.
 
-      For example, \code{x^{2*y}} produces \eqn{x^{2y}}, whereas
-      \code{x^2*y} produces \eqn{x^2y}.}
+  It is possible to produce many different mathematical symbols, generate
+  sub- or superscripts, produce fractions, etc.
 
-    \item{\emph{Big operators:}}{
-      a sum, product, or integral is specified using the special
-      mathematical function of the corresponding name.  Each of these
-      functions takes three arguments;  the first indicates what is
-      being summed/multiplied/integrated and the second and third
-      specify the limits of the summation/product/integral.
-      
-      For example, \code{sum(x[i], i==0, n)} produces
-      \deqn{\sum\limits_{i=0}^n x_i}{sum_{i=0}^n x_i}}
-
-    \item{\emph{Radicals:}}{
-      a square root expression is specified using the special
-      mathematical functions \code{root} and \code{sqrt}.}
-      
-    % For example, \code{sqrt(x)} produces \eqn{\sqrt x}.
-
-    \item{\emph{Absolute values:}}{
-      an absolute term is specified using the special mathematical
-      function \code{abs}.
-
-      For example, \code{abs(x)} produces \eqn{|x|}.}
-
-    \item{\emph{Juxtaposition:}}{
-      multiple terms are juxtaposed using the special mathematical
-      function \code{paste}.
-      
-      For example, \code{paste(over(b, 2), y, sum(x))} produces
-      \eqn{\frac{b}{2} y \sum x}{b/2 y sum(x)}.}
-   
-    \item{\emph{Typeface changes:}}{
-      the default font in mathematical expressions is italic (except for
-      terms which are symbols).  A new typeface is specified using the
-      special mathematical functions \code{bold}, \code{italic},
-      \code{plain}, and \code{bolditalic}.  Note that these font
-      specifications do not accumulate (i.e., \code{bold(italic(x)))}
-      gives an italic `x', whereas \code{bolditalic(x)} produces a bold,
-      italic `x').}
-
-    \item{\emph{General expressions:}}{
-      any functional expression which is not a special mathematical
-      function is simply reproduced as a function expression.
-
-      For example, \code{foo(x)} produces \eqn{foo(x)}.}
-  }
+  The output from \code{example(plotmath)} includes several tables which
+  show the available features.  In these tables, the columns of grey text
+  show sample \R expressions, and the columns of black text show the
+  resulting output.
 }
+\references{Murrell, P. and Ihaka, R. \emph{An approach to providing
+  mathematical annotation in plots}, Journal of Computational and Graphical
+  Statistics (In Press).}
 \seealso{
   \code{\link{axis}},
   \code{\link{mtext}},
@@ -139,5 +52,189 @@ text(4, 6.4, "expression(bar(x) == sum(frac(x[i], n), i==1, n))",
 text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ",
                             plain(e)^{frac(-(x-mu)^2, 2*sigma^2)})),
      cex= 1.2)
+
+######
+# create tables of mathematical annotation functionality
+######
+make.table <- function(nr, nc) {
+    savepar <- par(mar=rep(0, 4), pty="s")
+    plot(c(0, nc*2 + 1), c(0, -(nr + 1)), 
+         type="n", xlab="", ylab="", axes=F)
+    savepar
+}
+
+get.r <- function(i, nr) {
+    i \%\% nr + 1
+}
+
+get.c <- function(i, nr) {
+    i \%/\% nr + 1
+}
+
+draw.title.cell <- function(title, i, nr) {
+    r <- get.r(i, nr)
+    c <- get.c(i, nr)
+    text(2*c - .5, -r, title)
+    rect((2*(c - 1) + .5), -(r - .5), (2*c + .5), -(r + .5))
+}
+
+draw.plotmath.cell <- function(expr, i, nr, string = NULL) {
+    r <- get.r(i, nr)
+    c <- get.c(i, nr)
+    if (is.null(string)) {
+        string <- deparse(expr)
+	string <- substr(string, 12, nchar(string) - 1)
+    }
+    text((2*(c - 1) + 1), -r, string, col="grey")
+    text((2*c), -r, expr, adj=c(.5,.5))
+    rect((2*(c - 1) + .5), -(r - .5), (2*c + .5), -(r + .5), border="grey")
+}
+
+nr <- 20
+nc <- 2
+oldpar <- make.table(nr, nc)
+i <- 0
+draw.title.cell("Arithmetic Operators", i, nr); i <- i + 1
+draw.plotmath.cell(expression(x + y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x - y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x * y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x / y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%+-\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%/\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%*\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(-x), i, nr); i <- i + 1
+draw.plotmath.cell(expression(+x), i, nr); i <- i + 1
+draw.title.cell("Sub/Superscripts", i, nr); i <- i + 1
+draw.plotmath.cell(expression(x[i]), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x^2), i, nr); i <- i + 1
+draw.title.cell("Juxtaposition", i, nr); i <- i + 1
+draw.plotmath.cell(expression(x * y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(paste(x, y, z)), i, nr); i <- i + 1
+draw.title.cell("Lists", i, nr); i <- i + 1
+draw.plotmath.cell(expression(list(x, y, z)), i, nr); i <- i + 1
+# even columns up
+i <- 20
+draw.title.cell("Radicals", i, nr); i <- i + 1
+draw.plotmath.cell(expression(sqrt(x)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(sqrt(x, y)), i, nr); i <- i + 1
+draw.title.cell("Relations", i, nr); i <- i + 1
+draw.plotmath.cell(expression(x == y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x != y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x < y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x <= y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x > y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x >= y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%~~\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%=~\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%==\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%prop\% y), i, nr); i <- i + 1
+draw.title.cell("Typeface", i, nr); i <- i + 1
+draw.plotmath.cell(expression(plain(x)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(italic(x)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(bold(x)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(bolditalic(x)), i, nr); i <- i + 1
+
+# Need fewer, wider columns for ellipsis ...
+nr <- 20
+nc <- 2
+make.table(nr, nc)
+i <- 0
+draw.title.cell("Ellipsis", i, nr); i <- i + 1
+draw.plotmath.cell(expression(list(x[1], ..., x[n])), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x[1] + ... + x[n]), i, nr); i <- i + 1
+draw.plotmath.cell(expression(list(x[1], cdots, x[n])), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x[1] + ldots + x[n]), i, nr); i <- i + 1
+draw.title.cell("Set Relations", i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%subset\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%subseteq\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%supset\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%supseteq\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%notsubset\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%in\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%notin\% y), i, nr); i <- i + 1
+draw.title.cell("Accents", i, nr); i <- i + 1
+draw.plotmath.cell(expression(hat(x)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(tilde(x)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(ring(x)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(bar(xy)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(widehat(xy)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(widetilde(xy)), i, nr); i <- i + 1
+draw.title.cell("Arrows", i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%<->\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%->\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%<-\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%up\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%down\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%<=>\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%=>\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%<=\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%dblup\% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x \%dbldown\% y), i, nr); i <- i + 1
+draw.title.cell("Symbolic Names", i, nr); i <- i + 1
+draw.plotmath.cell(expression(Alpha - Omega), i, nr); i <- i + 1
+draw.plotmath.cell(expression(alpha - omega), i, nr); i <- i + 1
+draw.plotmath.cell(expression(infinity), i, nr); i <- i + 1
+draw.plotmath.cell(expression(32 * degree), i, nr); i <- i + 1
+draw.plotmath.cell(expression(60 * minute), i, nr); i <- i + 1
+draw.plotmath.cell(expression(30 * second), i, nr); i <- i + 1
+
+# Need even fewer, wider columns for typeface and style ...
+nr <- 20
+nc <- 1
+make.table(nr, nc)
+i <- 0
+draw.title.cell("Style", i, nr); i <- i + 1
+draw.plotmath.cell(expression(displaystyle(x)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(textstyle(x)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(scriptstyle(x)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(scriptscriptstyle(x)), i, nr); i <- i + 1
+draw.title.cell("Spacing", i, nr); i <- i + 1
+draw.plotmath.cell(expression(x ~~ y), i, nr); i <- i + 1
+
+# Need fewer, taller rows for fractions ...
+# cheat a bit to save pages
+par(new =T)
+nr <- 10
+nc <- 1
+make.table(nr, nc)
+i <- 4
+draw.plotmath.cell(expression(x + phantom(0) + y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x + over(1, phantom(0))), i, nr); i <- i + 1
+draw.title.cell("Fractions", i, nr); i <- i + 1
+draw.plotmath.cell(expression(frac(x, y)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(over(x, y)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(atop(x, y)), i, nr); i <- i + 1
+
+# Need fewer, taller rows and fewer, wider columns for big operators ...
+nr <- 10
+nc <- 1
+make.table(nr, nc)
+i <- 0
+draw.title.cell("Big Operators", i, nr); i <- i + 1
+draw.plotmath.cell(expression(sum(x[i], i=1, n)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(prod(plain(P)(X == x), x)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(integral(f(x) * dx, a, b)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(union(A[i], i==1, n)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(intersect(A[i], i==1, n)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(lim(f(x), x \%->\% 0)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(min(g(x), x >= 0)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(inf(S)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(sup(S)), i, nr); i <- i + 1
+
+make.table(nr, nc)
+i <- 0
+draw.title.cell("Grouping", i, nr); i <- i + 1
+draw.plotmath.cell(expression((x + y)*z), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x^y + z), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x^(y + z)), i, nr); i <- i + 1
+# have to do this one by hand
+draw.plotmath.cell(expression(x^{y + z}), i, nr, string="x^{y + z}"); i <- i + 1
+draw.plotmath.cell(expression(group("(", list(a, b), "]")), i, nr); i <- i + 1
+draw.plotmath.cell(expression(bgroup("(", atop(x, y), ")")), i, nr); i <- i + 1
+draw.plotmath.cell(expression(group(lceil, x, rceil)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(group(lfloor, x, rfloor)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(group("|", x, "|")), i, nr); i <- i + 1
+
+par(oldpar)
 }
 \keyword{aplot}

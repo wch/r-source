@@ -1803,9 +1803,9 @@ static int DelimCode(SEXP expr, SEXP head)
 	else if (NameMatch(head, "rfloor"))
 	    code = S_BRACKETRIGHTBT;
 	if (NameMatch(head, "lceil"))
-	    code = S_BRACKETLEFTBT;
+	    code = S_BRACKETLEFTTP;
 	else if (NameMatch(head, "rceil"))
-	    code = S_BRACKETRIGHTBT;
+	    code = S_BRACKETRIGHTTP;
     }
     else if (StringAtom(head) && length(head) > 0) {
 	if (StringMatch(head, "|"))
@@ -1869,11 +1869,11 @@ static BBOX RenderGroup(SEXP expr, int draw)
     code = DelimCode(expr, CADDDR(expr));
     MathDevice->gp.cex = DelimSymbolMag * MathDevice->gp.cex;
     if (code == 2) {
-	bbox = RenderSymbolChar('|', draw);
-	bbox = RenderSymbolChar('|', draw);
+	bbox = CombineBBoxes(bbox, RenderSymbolChar('|', draw));
+	bbox = CombineBBoxes(bbox, RenderSymbolChar('|', draw));
     }
     else if (code != '.')
-	bbox = RenderSymbolChar(code, draw);
+	bbox = CombineBBoxes(bbox, RenderSymbolChar(code, draw));
     MathDevice->gp.cex = cexSaved;
     return bbox;
 }
@@ -2153,7 +2153,8 @@ static BBOX RenderOpSymbol(SEXP op, int draw)
     int display = (GetStyle() > STYLE_T);
     int opId = OpAtom(op);
 
-    if (opId == S_SUM || opId == S_PRODUCT) {
+    if (opId == S_SUM || opId == S_PRODUCT ||
+	opId == S_UNION || opId == S_INTERSECTION) {
 	if (display) {
 	    MathDevice->gp.cex = OperatorSymbolMag * MathDevice->gp.cex;
 	    bbox = RenderSymbolChar(OpAtom(op), 0);
@@ -2425,6 +2426,7 @@ SymTab RelTable[] = {
     { ">=",		179 },	/* greater or equal */
     { "%==%",		186 },	/* equivalence */
     { "%~~%",		187 },	/* approxequal */
+    { "%prop%",         181 },  /* proportional to */
 
     { "%<->%",		171 },	/* Arrows */
     { "%<-%",		172 },
