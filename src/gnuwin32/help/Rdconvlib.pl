@@ -891,8 +891,11 @@ sub text2nroff {
     $text =~ s/\\left\(/\(/go;
     $text =~ s/\\right\)/\)/go;
     $text =~ s/\\R/R/go;
-    $text =~ s/---/\\(em/go;
-    $text =~ s/--/\\(en/go;
+# these are troff, not nroff
+#    $text =~ s/---/\\(em/go;
+#    $text =~ s/--/\\(en/go;
+    $text =~ s/---/--/go;
+    $text =~ s/--/-/go;
     $text =~ s/$EOB/\{/go;
     $text =~ s/$ECB/\}/go;
 
@@ -1421,6 +1424,7 @@ sub text2latex {
     $text =~ s/\\dddeqn/\\deqn/og;
 
     $text =~ s/&/\\&/go;
+    $text =~ s/\\R /\\R\{\} /go;
     $text =~ s/\\\\/\\bsl{}/go;
     $text =~ s/\\cr/\\\\\{\}/go;
     $text =~ s/\\tab(\s+)/&$1/go;
