@@ -13,7 +13,8 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
     call <- match.call()
 
     ## family
-    if(is.character(family)) family <- get(family)
+    if(is.character(family))
+        family <- get(family, mode="function", envir=parent.frame())
     if(is.function(family)) family <- family()
     if(is.null(family$family)) {
 	print(family)
@@ -383,7 +384,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
     if(nvars > 1) {
 	method <- object$method
 	if(!is.function(method))
-	    method <- get(method, mode = "function")
+	    method <- get(method, mode = "function", envir=parent.frame())
 	for(i in 1:(nvars-1)) {
 	    ## explanatory variables up to i are kept in the model
 	    ## use method from glm to find residual deviance

@@ -247,8 +247,10 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		assign(".packageName", package, envir = env)
 
 		## run .First.lib
-		if(exists(".First.lib", envir = env, inherits = FALSE)) {
-		    firstlib <- get(".First.lib", envir = env, inherits = FALSE)
+		if(exists(".First.lib", mode = "function",
+                          envir = env, inherits = FALSE)) {
+		    firstlib <- get(".First.lib", mode = "function",
+                                    envir = env, inherits = FALSE)
 		    tt<- try(firstlib(which.lib.loc, package))
 		    if(inherits(tt, "try-error"))
 			if (logical.return) return(FALSE)

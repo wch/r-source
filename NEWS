@@ -245,6 +245,11 @@ BUG FIXES
     o   as.data.frame.list(optional = TRUE) was converting names, and
 	hence data.frame(list(...), check.names = FALSE) was.  (PR#3280)
 
+    o   Functions anova.glm(), contrasts(), getS3method(), glm() and
+	make.tables() were applying get() without asking for a
+	function and/or not starting the search in the environment of
+	the caller.
+
 
 
 

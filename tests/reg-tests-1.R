@@ -2326,6 +2326,19 @@ stopifnot(identical(names(DF), "a*"))
 ## gave "a." in 1.7.1
 
 
+## functions using get() were not always looking for functions or in the
+## right place
+x <- factor(1:3)
+contrasts(x) <- "ctr"
+test <- function(x)
+{
+    ctr <- contr.treatment
+    contrasts(x)  # failed in 1.7.1
+}
+test(x)
+##
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

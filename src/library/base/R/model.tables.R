@@ -184,7 +184,8 @@ make.tables.aovproj <-
 	data <-
 	    if(length(terms) == 1) prjs[, terms]
 	    else prjs[, terms] %*% as.matrix(rep.int(1, length(terms)))
-	tables[[i]] <- tapply(data, mf[mf.cols[[i]]], get(fun))
+	tables[[i]] <- tapply(data, mf[mf.cols[[i]]],
+                              get(fun, mode="function"))
 	class(tables[[i]]) <- "mtable"
 	if(prt) print(tables[i], ..., quote = FALSE)
     }
@@ -218,7 +219,8 @@ make.tables.aovprojlist <-
 		    data <- mat %*% as.matrix(1/eff[eff.i])
 		}
 	    }
-	    tables[[i]] <- tapply(data, model[model.cols[[i]]], get(fun))
+	    tables[[i]] <- tapply(data, model[model.cols[[i]]],
+                                  get(fun, mode="function"))
 	    attr(tables[[i]], "strata") <- strata.cols[i]
 	    class(tables[[i]]) <- "mtable"
 	    if(prt) print(tables[i], ..., quote = FALSE)

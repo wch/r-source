@@ -23,7 +23,8 @@ methods <- function (generic.function, class)
     if (!missing(generic.function)) {
 	if (!is.character(generic.function))
 	    generic.function <- deparse(substitute(generic.function))
-        genfun <- get(generic.function, mode="function")
+        genfun <- get(generic.function, mode = "function",
+                      envir = parent.frame())
         gf <- paste(deparse(genfun), collapse="\n")
         if(length(grep("UseMethod", gf))) {
             ## look for the generic dispatched on: not 100% reliable!
@@ -32,7 +33,8 @@ methods <- function (generic.function, class)
                 warning(paste("Generic `", generic.function,
                               "' dispatches methods for generic `",
                               truegf, "'", sep=""))
-                genfun <- get(generic.function <- truegf, mode="function")
+                genfun <- get(generic.function <- truegf, mode = "function",
+                              envir = parent.frame())
             }
         }
 	name <- paste("^", generic.function, ".", sep = "")
@@ -99,19 +101,21 @@ data.class <- function(x) {
 getS3method <-  function(f, class, optional = FALSE)
 {
     groupGenerics <- c("Ops", "Math", "Summary")
-    gf <- paste(deparse(get(f, mode="function")), collapse="\n")
+    gf <- paste(deparse(get(f, mode = "function",
+                            envir = parent.frame())), collapse="\n")
     if(length(grep("UseMethod", gf))) {
         ## look for the generic dispatched on: not 100% reliable!
         truegf <- sub('(.*)UseMethod\\(\"([^"]*)(.*)', "\\2", gf)
         if(truegf != f) f <- truegf
     }
     method <- paste(f, class, sep=".")
-    if(exists(method, mode="function")) return(get(method, mode="function"))
+    if(exists(method, mode = "function", envir = parent.frame()))
+        return(get(method, mode = "function", envir = parent.frame()))
     ## also look for registered method in namespaces
     if(f %in% groupGenerics)
         defenv <- .BaseNamespaceEnv
     else {
-        genfun <- get(f, mode="function")
+        genfun <- get(f, mode="function", envir = parent.frame())
         defenv <- if (typeof(genfun) == "closure") environment(genfun)
         else .BaseNamespaceEnv
         S3Table <- get(".__S3MethodsTable__.", envir = defenv)
@@ -164,7 +168,8 @@ fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
         S3names <- sapply(S3, function(x) x[[3]])
         if(subx %in% S3names) {
             i <- match(subx, S3names)
-            genfun <- get(S3[[i]][[1]])
+            genfun <- get(S3[[i]][[1]], mode = "function",
+                          envir = parent.frame())
             defenv <- if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv
             S3Table <- get(".__S3MethodsTable__.", envir = defenv)

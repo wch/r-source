@@ -33,12 +33,11 @@ detach <- function(name, pos=2, version)
 	    stop("invalid name")
     }
     env <- as.environment(pos)
-    if(exists(".Last.lib", where = pos, inherits=FALSE)) {
-        .Last.lib <- get(".Last.lib", pos = pos, inherits=FALSE)
-        if(is.function(.Last.lib)) {
-            libpath <- attr(env, "path")
-            if(!is.null(libpath)) try(.Last.lib(libpath))
-        }
+    if(exists(".Last.lib", mode = "function", where = pos, inherits=FALSE)) {
+        .Last.lib <- get(".Last.lib",  mode = "function", pos = pos,
+                         inherits=FALSE)
+        libpath <- attr(env, "path")
+        if(!is.null(libpath)) try(.Last.lib(libpath))
     }
     if(.isMethodsDispatchOn()) {
         if(pos != match("package:methods", search()))
