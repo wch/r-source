@@ -132,7 +132,8 @@ Note 4: You can run a parallel make by e.g.
 but this is only likely to be worthwhile on a dual-processor (or
 perhaps a hyperthreaded P4) machine with ample (at least 384Mb) of
 memory.  On a dual AthlonXP it reduced the build time by about 30%
-whereas on a single P4HT it reduced it by 10%.
+whereas on a single P4HT it reduced it by 10%.  Note that this may
+sometimes stop and have to be restarted.
 
 
 You can test a build by (optionally) building the recommended packages
@@ -307,6 +308,8 @@ to NO.)
 
 You also need a working copy of *this version* of R on Linux: set
 R_EXE in MkRules to point to it.
+
+Then run `make' (and parallel make works reliably, unlike on Windows).
 
 Packages can be made in the same way as natively: see the file
 README.packages.
