@@ -10,7 +10,7 @@
 
 
 NEW FEATURES
-    o   persp and image are now generic functions
+    o	persp and image are now generic functions
 
     o	Changes to connections:
 
@@ -224,7 +224,7 @@ NEW FEATURES
 
     o	R CMD check now also checks the keyword entries against the list
 	of standard keywords and for sufficient file permissions (Unix
-	only).  It also has a new new command line option `--use-gct' to
+	only).	It also has a new new command line option `--use-gct' to
 	use `gctorture(TRUE)' when running R code.
 
     o	Matrix multiplication functions %*% and crossprod now use a
@@ -246,16 +246,16 @@ NEW FEATURES
 	brief introduction referencing that manual
 
     o	New functions La.eigen() and La.svd() for eigenvector and
-	singular value decompositions, based on LAPACK.  These are
+	singular value decompositions, based on LAPACK.	 These are
 	preferred to eigen() and svd() for new projects and can make
 	use of enhanced BLAS routines such as ATLAS.  They are
 	used in cancor(), cmdscale(), factanal() and princomp()
 	and this may lead to sign reversals in some of the output of
 	those functions.
 
-    o   Provided the Fortran compiler can handle COMPLEX*16, the
+    o	Provided the Fortran compiler can handle COMPLEX*16, the
 	following routines now handle complex arguments, based on
- 	LAPACK code.
+	LAPACK code.
 
 	qr, qr.coef, qr.solve, qr.qy, qr.qty, solve.default, svd, La.svd.
 
@@ -266,8 +266,8 @@ NEW FEATURES
 	set on the data frame (needed to distiguish the response,
 	for example).
 
-    o   print.htest() can now handle test names that are longer than
-        one line 
+    o	print.htest() can now handle test names that are longer than
+	one line 
 
     o	New generic functions naresid(), napredict() and naprint()
 	(formerly in packages survival5 and MASS, also used in rpart).
@@ -280,17 +280,15 @@ NEW FEATURES
     o	New argument `nsmall' to format.default(), for S-PLUS
 	compatibility (and used in various packages).
 
-    o	Generic function logLik() moved from nls to base, as well as
-	logLik.lm() from nlme.
-
-
+    o	Generic functions logLik() and AIC() moved from nls an nlme to
+	base, as well as their *.lm methods.
 
 
 BUG FIXES
 
-    o   pointer protection in deriv (PR#953)
+    o	pointer protection in deriv (PR#953)
 
-    o   Occasionally insane results of is.nan(NULL), is.na(NULL) (PR#952)
+    o	Occasionally insane results of is.nan(NULL), is.na(NULL) (PR#952)
 
     o	Unused entry points in `src/appl/fortran.c' and `Fortran.h'
 	have been removed.
