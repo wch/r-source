@@ -1021,14 +1021,12 @@ AC_OUTPUT(Makeconf
   src/scripts/INSTALL
   src/scripts/REMOVE
   src/scripts/R.sh
-  src/scripts/Rd2contents
   src/scripts/Rdconv
   src/scripts/Rdindex
   src/scripts/Rprof
   src/scripts/SHLIB
   src/scripts/Sd2Rd
   src/scripts/build
-  src/scripts/build-help
   src/scripts/check
   src/unix/Makefile
   tests/Makefile

@@ -109,7 +109,7 @@ version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	  echo "$${v}") > $@
 stamp-refman-dvi: $(pkgsrcs)
 	@touch $@
-$(pkgsrcs): FORCE $(top_builddir)/bin/build-help
+$(pkgsrcs): FORCE $(top_srcdir)/share/perl/build-help.pl
 	@(pkg=`basename $@ -pkg.tex`; \
 	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
@@ -119,9 +119,6 @@ $(pkgsrcs): FORCE $(top_builddir)/bin/build-help
 	  $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
 	fi)
 FORCE:
-$(top_builddir)/bin/build-help: $(top_srcdir)/src/scripts/build-help.in
-	@echo "creating $@"
-	@(cd $(top_builddir)/src/scripts; $(MAKE))
 
 $(OBJECTS_DVI): $(srcdir)/texinfo.tex
 R-admin.dvi: $(texiincludes)

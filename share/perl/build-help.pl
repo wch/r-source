@@ -1,7 +1,6 @@
-#! @PERL@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2000 R Development Core Team
+# Copyright (C) 1997-2001 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +24,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.28 $ ';
+my $revision = ' $Revision: 1.1 $ ';
 my $version;
 my $name;
 

@@ -1,5 +1,3 @@
-#! @PERL@
-
 use File::Basename;
 
 $ARGV[0] =~ /([^\/]*)$/;

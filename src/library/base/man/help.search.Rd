@@ -47,7 +47,7 @@ help.search(pattern, fields = c("alias", "title"),
     be rebuilt.}
 }
 \details{
-  Upon installation of a package, the Perl script \code{Rd2contents}
+  Upon installation of a package, the Perl script \file{Rd2contents.pl}
   creates a \file{CONTENTS} data base which contains the information on
   name, aliases, title and keywords (as well as the URL of the HTML
   version of the help file) in Debian Control Format.  This is the data
