@@ -82,7 +82,6 @@ xngettext <- function(dir, verbose = FALSE)
         if(is.call(e) && is.name(e[[1]])
            && as.character(e[[1]]) %in% "ngettext") {
              domain <- e[["domain"]]
-             suppress <- !is.null(domain) && is.na(domain)
              ## remove named domain arg
              if(!is.null(names(e))) e <- e[!names(e) %in% "domain"]
              ## for now, take second and third remaining args.

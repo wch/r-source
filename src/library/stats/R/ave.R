@@ -1,10 +1,10 @@
 ave <- function (x, ..., FUN = mean)
 {
-    n <- length(l <- list(...))
+    n <- length(list(...))
     if (n) {
 	g <- interaction(...)
 	split(x,g) <- lapply(split(x, g), FUN)
-    } else 
+    } else
         x[] <- FUN(x)
     x
 }
