@@ -640,12 +640,12 @@ AC_DEFUN([GNOME_INIT_HOOK], [
   AC_SUBST(GNOME_INCLUDEDIR)
 
   AC_ARG_WITH(gnome-includes,
-    [  --with-gnome-includes   Specify location of GNOME headers], [
+    [  --with-gnome-includes   specify location of GNOME headers], [
     CFLAGS="$CFLAGS -I$withval"
   ])
 	
   AC_ARG_WITH(gnome-libs,
-    [  --with-gnome-libs       Specify location of GNOME libs], [
+    [  --with-gnome-libs       specify location of GNOME libs], [
     LDFLAGS="$LDFLAGS -L$withval"
     gnome_prefix=$withval
   ])
@@ -796,7 +796,8 @@ AC_DEFUN(AM_PATH_LIBGLADE,
 dnl Get the cflags and libraries from the libglade-config script
 dnl
 AC_ARG_WITH(libglade-config,
-[  --with-libglade-config=LIBGLADE_CONFIG  Location of libglade-config],
+[  --with-libglade-config=LIBGLADE_CONFIG
+                          specify location of libglade-config],
 LIBGLADE_CONFIG="$withval")
 
 module_args=
@@ -828,19 +829,6 @@ fi
 AC_SUBST(LIBGLADE_CFLAGS)
 AC_SUBST(LIBGLADE_LIBS)
 ])
-
-AC_DEFUN(AM_CONDITIONAL, [
-  AC_SUBST($1_TRUE)
-  AC_SUBST($1_FALSE)
-  if $2; then
-    $1_TRUE=
-    $1_FALSE='#'
-  else
-    $1_TRUE='#'
-    $1_FALSE=
-  fi
-])
-
 
 dnl
 dnl R_BITMAPS
