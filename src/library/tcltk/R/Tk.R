@@ -259,7 +259,7 @@ as.tclObj <- function(x, drop=FALSE) {
                 logical =
                 .External("RTcl_ObjFromIntVector", as.integer(x), drop,
                           PACKAGE="tcltk"),
-                stop("cannot handle object of mode ", dQuote(storage.mode(x))))
+                stop("cannot handle object of mode ", sQuote(storage.mode(x))))
     class(z) <- "tclObj"
     z
 }

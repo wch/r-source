@@ -125,7 +125,7 @@ print.summary.table <-
 function(x, digits = max(1, getOption("digits") - 3), ...)
 {
     if(!inherits(x, "summary.table"))
-	stop("'x' must inherit from class ", dQuote("summary.table"))
+	stop("'x' must inherit from class \"summary.table\"")
     if(!is.null(x$call)) {
 	cat("Call: "); print(x$call)
     }

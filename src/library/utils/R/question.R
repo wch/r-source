@@ -45,7 +45,7 @@ topicName <- function(type, topic)
     if(!.isMethodsDispatchOn() || !isGeneric(f, where = where)) {
         if(!is.character(f) || length(f) != 1)
             stop("the object of class ", dQuote(class(f)),
-                 " in the function call ", dQuote(deparse(expr)),
+                 " in the function call ", sQuote(deparse(expr)),
                  " could not be used as a documentation topic")
         h <- .tryHelp(f)
         if(inherits(h, "try-error"))

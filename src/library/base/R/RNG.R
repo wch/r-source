@@ -16,7 +16,7 @@ RNGkind <- function(kind = NULL, normal.kind = NULL)
 	if(!is.character(kind) || length(kind) > 1)
 	    stop("'kind' must be a character string of length 1 (RNG to be used).")
 	if(is.na(i.knd <- pmatch(kind, kinds) - 1))
-	    stop(sQuote(kind), " is not a valid abbrevation of an RNG")
+	    stop(sQuote(kind), " is not a valid abbreviation of an RNG")
         if(i.knd == length(kinds) - 1) i.knd <- -1
     } else i.knd <- NULL
 
