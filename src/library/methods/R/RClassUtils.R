@@ -289,7 +289,7 @@ completeClassDefinition <-
         }
         if(any(undefClasses))
             warning("Undefined slot classes in definition of \"",
-                    classDef@className, "\": ",
+                    ClassDef@className, "\": ",
                     paste(names(properties)[undefClasses], "(class \"",
                           unlist(properties, recursive = FALSE)[undefClasses],
                           "\")", collapse = ", "))
