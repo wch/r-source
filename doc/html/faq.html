@@ -31,7 +31,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 2.0.2004-11-11</h2>
+<h2>Version 2.0.2004-11-14</h2>
 <h2>ISBN 3-900051-08-9</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -293,7 +293,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
 
 <h3 class="section">2.3 What is the current version of R?</h3>
 
-<p>The current released version is 2.0.0.  Based on this
+<p>The current released version is 2.0.1.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, a patched version of the current release (`r-patched')
 and one working towards the next minor or eventually major (`r-devel')
@@ -524,27 +524,28 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
 <!-- 9.1     i586   2.0.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de> -->
 <!-- vinelinux -->
 <!-- 3.0     i386   2.0.0  Susunu Tanimura <stanimura-ngs@umin.ac.jp> -->
-<p>The <span class="file">bin/linux</span> directory of a <acronym>CRAN</acronym> site contains Debian
-stable/testing/unstable packages for the i386 platform (now part of the
-Debian distribution and maintained by Dirk Eddelbuettel), Mandrake
-9.1/9.2/10.0 i386 packages by Michele Alzetta, Red Hat
+<p>The <span class="file">bin/linux</span> directory of a <acronym>CRAN</acronym> site contains
+<!-- Debian stable/testing/unstable packages for the i386 platform (now part -->
+<!-- of the Debian distribution and maintained by Dirk Eddelbuettel), -->
+Mandrake 9.1/9.2/10.0 i386 packages by Michele Alzetta, Red Hat
 8.x/9/Fedora1/Fedora2 i386 and Fedora1 x86_64 packages by Martyn Plummer
 and James Henstridge, respectively, SuSE 7.3/8.0/8.1/8.2 i386 and
 9.0/9.1 i586 packages by Detlef Steuer, and VineLinux 2.6 i386 packages
-by Susunu Tanimura.
+by Susunu Tanimura.  Debian packages, maintainer by Dirk Eddelbuettel,
+have long been part of the Debian distribution, and can be accessed
+through APT, the Debian package maintenance tool.
 
-   <p>The Debian packages can be accessed through APT, the Debian package
-maintenance tool.  Simply add the line
-
-<pre class="example">     deb http://cran.R-project.org/bin/linux/debian <var>distribution</var> main
-</pre>
-   <p class="noindent">(where <var>distribution</var> is either <span class="samp">stable</span> or <span class="samp">testing</span>;
-feel free to use a <acronym>CRAN</acronym> mirror instead of the master) to the file
-<span class="file">/etc/apt/sources.list</span>.  Once you have added that line the
-programs <span class="command">apt-get</span>, <span class="command">apt-cache</span>, and <span class="command">dselect</span>
-(using the apt access method) will automatically detect and install
-updates of the R packages.
-
+<!-- Simply add the line -->
+<!-- @example -->
+<!-- deb http://cran.R-project.org/bin/linux/debian @var{distribution} main -->
+<!-- @end example -->
+<!-- @noindent -->
+<!-- (where @var{distribution} is either @samp{stable} or @samp{testing}; -->
+<!-- feel free to use a @CRAN{} mirror instead of the master) to the file -->
+<!-- @file{/etc/apt/sources.list}.  Once you have added that line the -->
+<!-- programs @command{apt-get}, @command{apt-cache}, and @command{dselect} -->
+<!-- (using the apt access method) will automatically detect and install -->
+<!-- updates of the R packages. -->
 <!-- The @file{bin/osf} directory of a @CRAN{} site contains RPMs -->
 <!-- by Albrecht Gebhardt for alpha systems running Alpha Unix -->
 <!-- (OSF/Tru64). -->
