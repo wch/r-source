@@ -27,6 +27,10 @@ read.table <-
     }
     if(!inherits(file, "connection"))
         stop("argument `file' must be a character string or connection")
+    if(!isOpen(file)) {
+        open(file, "r")
+        on.exit(close(file))
+    }
 
     if(skip > 0) readLines(file, skip)
     ## read a few lines to determine header, no of cols.
