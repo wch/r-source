@@ -23,7 +23,7 @@
 \details{
   As from \R version 1.3.0, \code{a} or \code{b} can be complex, in
   which case LAPACK routine \code{ZESV} is used.
-  This uses double complex arithmetic which might not beavailable on all
+  This uses double complex arithmetic which might not be available on all
   platforms.
 }
 \seealso{
