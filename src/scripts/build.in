@@ -43,7 +43,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.64 $ ';
+my $revision = ' $Revision: 1.65 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -273,10 +273,29 @@ foreach my $pkg (@ARGV) {
 	    ## workaround for paths in Cygwin tar
 	    $filepath =~ s+^([A-Za-x]):+/cygdrive/\1+;
 	}
-	system("$tar chXf $exclude $filepath $pkgname");
+	## <FIXME>
+	## Is option '-h' portable?
+	system("$tar chf $filepath $pkgname");
+	## </FIXME>
+	my $tmpdir = "${R::Vars::TMPDIR}/Rbuild.$$";
+	## (Same as $libdir for building a binary package.)
+	rmtree($tmpdir) if(-d $tmpdir);
+	mkdir("$tmpdir", 0755)
+	    or die "Cannot create directory '$tmpdir'\n";
+	chdir($tmpdir);
+	system("$tar xhf $filepath");
+	open(EXCLUDE, "< $exclude");
+	while(<EXCLUDE>) {
+	    my @files = glob($_);
+	    print join(" :: ", @files), "\n";
+	    rmtree(@files);
+	}
+	close(EXCLUDE);
+	## unlink($exclude);	
+	system("$tar chf $filepath $pkgname");
+	rmtree($tmpdir);
 	chdir($startdir);
 	system("gzip -9f $filename");
-	unlink($exclude);
     }
     $log->close();
     print("\n");
