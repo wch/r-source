@@ -26,6 +26,8 @@ use Getopt::Long;
 use File::Basename;
 use Cwd;
 
+$OSdir ="unix";
+
 $cwd=getcwd();
 if($ENV{"R_HOME"}){
     $R_HOME=$ENV{"R_HOME"};
@@ -39,8 +41,10 @@ chdir($cwd);
 
 require "$R_HOME/etc/Rdconvlib.pl";
 
-@knownoptions = ("debug|d", "type|t:s", "help|h");
+@knownoptions = ("debug|d", "type|t:s", "help|h", "os|OS:s");
 GetOptions (@knownoptions) || usage();
+
+$OSdir = $opt_os if $opt_os;
 
 usage() if $opt_help;
 print stderr "R_HOME: '$R_HOME';  cwd='$cwd'\n" if $opt_debug;
@@ -71,7 +75,7 @@ else {
 sub usage {
 
     print "Rdconv\n";
-    print "Usage: Rdconv [--debug/-d] [--help/-h]";
+    print "Usage: Rdconv [--debug/-d] [--help/-h] [--os/--OS unix|mac|win]";
     print " [--type/-t html|nroff|txt|Sd|latex|example] file\n\n";
     exit 0;
 }

@@ -1199,9 +1199,9 @@ sub rdoc2txt { # (filename); 0 for STDOUT
     $INDENT = 5;
 
     if ($pkgname) {
-	my $pad = 65 - length($blocks{"name"}) - length($pkgname) - 30;
+	my $pad = 75 - length($blocks{"name"}) - length($pkgname) - 30;
 	$pad = int($pad/2);
-	print txtout  "   ", $blocks{"name"}, " " x $pad, 
+	print txtout  $blocks{"name"}, " " x $pad, 
 	"package:$pkgname", " " x $pad,"R Documentation\n\n";
     }
     print txtout txt_header(striptitle($blocks{"title"})), "\n";
