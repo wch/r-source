@@ -3,21 +3,22 @@ contour <- function(x=seq(0,1,len=nrow(z)), y=seq(0,1,len=ncol(z)), z,
 	xlim=range(x,na.rm=TRUE), ylim=range(y,na.rm=TRUE),
 	col=par("fg"), lty=par("lty"), add=FALSE, ...)
 {
-        ## labcex is disregarded since we do NOT yet put  ANY labels...
-        if(missing(z)) {
-                if(!missing(x)) {
+	## labcex is disregarded since we do NOT yet put  ANY labels...
+	if(missing(z)) {
+		if(!missing(x)) {
 			z <- x
 			x <- seq(0,1,len=nrow(z))
-                } else stop("no `z' matrix specified")
+		} else stop("no `z' matrix specified")
 	} else if(is.list(x)) {
-		x <- x$x
 		y <- x$y
-	} else	if(any(diff(x) <= 0) || any(diff(y) <= 0))
+		x <- x$x
+	}
+	if(any(diff(x) <= 0) || any(diff(y) <= 0))
 		stop("increasing x and y values expected")
 	if(!add) {
 		plot.new()
 		plot.window(xlim, ylim, "")
-                title(...)
+		title(...)
 	}
 	if(!is.matrix(z) || nrow(z) <= 1 || ncol(z) <= 1)
 		stop("no proper `z' matrix specified")
