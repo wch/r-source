@@ -82,3 +82,8 @@ will (un)install the header Rmath.h and shared and static libraries
 (if built) under ${prefix} (default /usr/local).  Add prefix=/path/to/here
 to the command line to change the installation directory.
 
+More precise control on where things are installed is available at 
+configure time: the location for the header files can be specified by
+--includedir= (or includedir= on the make command line) and that for the
+libraries by --libdir= (or libdir= on the make command line).
+

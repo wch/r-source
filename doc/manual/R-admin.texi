@@ -413,6 +413,9 @@ another directory by using
 make prefix=/path/to/here install
 @end smallexample
 
+More precise control is available at configure time via options: see
+@command{configure --help} for details.
+
 @cindex Manuals, installing
 
 To install DVI, info and PDF versions of the manuals, use one or more of
