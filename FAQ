@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-10, 2002-10-28
+Version 1.6-11, 2002-10-30
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -238,7 +238,7 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current released version is 1.6.0.  Based on this
+   The current released version is 1.6.1.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, working towards the next patch (`r-patched') and minor or
 eventually major (`r-devel') releases of R, respectively.  Version
@@ -373,8 +373,8 @@ directory of a CRAN site.
 
    The `bin/linux' directory of a CRAN site contains Debian stable/testing
 packages for the i386 platform (now part of the Debian distribution and
-maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x i386 and 7.x alpha
-packages (maintained by Stephen Eglen, Martyn Plummer and Naoki
+maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x/8.0 i386 and 7.x
+alpha packages (maintained by Stephen Eglen, Martyn Plummer and Naoki
 Takebayashi, respectively), SuSE 7.3/8.0/8.1 i386 packages by Detlef
 Steuer, and Mandrake 8.1/8.2/9.0 i386 packages by Michele Alzetta.
 
@@ -1185,6 +1185,9 @@ distributions of R.)
 *Bhat*
      Functions for general likelihood exploration (MLE, MCMC, CIs).
 
+*CGIwithR*
+     Facilities for the use of R to write CGI scripts.
+
 *CircStats*
      Circular Statistics, from "Topics in Circular Statistics" by S. Rao
      Jammalamadaka and A. SenGupta, 2001, World Scientific.
@@ -1256,6 +1259,9 @@ distributions of R.)
 
 *RMySQL*
      An interface between R and the MySQL database system.
+
+*RODBC*
+     An ODBC database interface.
 
 *ROracle*
      Oracle Database Interface driver for R.  Uses the ProC/C++ embedded
@@ -1912,9 +1918,6 @@ these a try, of course.  This area of CRAN currently contains
      Manipulation and analysis of phylogenetically simulated data sets (as
      obtained from PDSIMUL in package PDAP) and phylogenetically-based
      analyses using GLS.
-
-*RODBC*
-     An ODBC database interface.
 
 *RPgSQL*
      Provides methods for accessing data stored in PostgreSQL tables.
