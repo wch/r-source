@@ -12,17 +12,21 @@ OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)
 OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
-R_PAPERSIZE = a4
-# set the next to `ae' to omit the hyperlinks
-R_RD4PDF = ae,hyper
-
 MAKEINFO = makeinfo
 PDFLATEX = pdflatex
 PDFTEX = pdftex
+LATEX = latex
+TEX = tex
+
 MAKEINDEX = makeindex
 TEXINDEX = texindex
 RHOME=$(shell cd ../..; pwd)
-R_PKGS=base ctest eda lqs modreg mva nls splines stepfun ts
+R_PKGS=base ctest eda lqs modreg mva nls splines stepfun tcltk ts
+
+R_PAPERSIZE = a4
+R_RD4DVI = ae
+# set the next to `ae' to omit the hyperlinks
+R_RD4PDF = ae,hyper
 
 pkgsrcs = $(R_PKGS:=-pkg.tex)
 
@@ -39,12 +43,45 @@ pkg2tex.pl: $(top_srcdir)/tools/pkg2tex.in
 Rdnewer.pl: $(top_srcdir)/tools/Rdnewer.in
 	@sed -e 1d  $^ > $@
 
+.texi.dvi:
+	$(TEX) $<
+	$(TEX) $<
+
+.texi.info:
+	$(MAKEINFO)  -D UseExternalXrefs $<
+
 .texi.pdf:
 	$(PDFTEX) $<
 	$(PDFTEX) $<
 
-.texi.info:
-	$(MAKEINFO)  -D UseExternalXrefs $<
+
+dvi: refman.dvi $(OBJECTS_DVI)
+
+refman.dvi: $(pkgsrcs) version.tex Rd.sty refman.top refman.bot
+	@echo "DVI/LaTeX documentation: reference index ..."
+	@$(RM) -f *.aux refman.toc refman.ind
+	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
+	  echo "\\documentclass[$${opt}]{book}"; \
+	  opt="$${R_RD4DVI:-$(R_RD4DVI)}"; \
+	  echo "\\usepackage[$${opt}]{Rd}"; \
+	  cat refman.top; \
+	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
+	  cat refman.bot) > refman.tex
+	@$(LATEX) '\nonstopmode\input{refman.tex}'
+	@-$(MAKEINDEX) refman
+	@$(LATEX) '\nonstopmode\input{refman.tex}'
+
+R-exts.dvi: R-exts.texi $(texiincludes) 
+	$(TEX) R-exts.texi
+	$(TEXINDEX) R-exts.cp R-exts.fn R-exts.vr
+	$(TEX) R-exts.texi
+	$(TEX) R-exts.texi
+
+R-intro.dvi: R-intro.texi $(texiincludes) 
+	$(TEX) R-intro.texi
+	$(TEXINDEX) R-intro.cp R-intro.fn R-intro.vr
+	$(TEX) R-intro.texi
+	$(TEX) R-intro.texi
 
 info: $(OBJECTS_INFO)
 R-exts.info: version.texi
@@ -52,15 +89,21 @@ R-intro.info: version.texi
 
 pdf: refman.pdf $(OBJECTS_PDF)
 
-refman.tex: refman.top $(srcdir)/refman.bot
-	@echo "creating $@"
+refman.pdf: $(pkgsrcs) version.tex Rd.sty refman.top refman.bot
+	@echo " PDF/LaTeX documentation: reference index ..."
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$${R_RD4PDF:-$(R_RD4PDF)}"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
-	  cat $(srcdir)/refman.top; \
+	  cat refman.top; \
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
-	  cat $(srcdir)/refman.bot) > $@
+	  cat refman.bot) > $@
+	@$(RM) -f *.aux refman.toc refman.ind
+	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	@$(MAKEINDEX) refman
+	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
+
 
 version.tex: ../../bin/Rterm.exe $(top_srcdir)/VERSION
 	@echo "creating $(subdir)/$@"
@@ -76,14 +119,6 @@ version.tex: ../../bin/Rterm.exe $(top_srcdir)/VERSION
 	  perl pkg2tex.pl $*; \
 	fi
 FORCE:
-
-refman.pdf: refman.tex version.tex $(pkgsrcs) $(srcdir)/Rd.sty
-	@echo " PDF/LaTeX documentation: reference index ..."
-	@$(RM) -f *.aux refman.toc refman.ind
-	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
-	@$(MAKEINDEX) refman
-	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
-	@$(PDFLATEX) '\nonstopmode\input{refman.tex}'
 
 R-exts.pdf: R-exts.texi $(texiincludes) 
 	$(PDFTEX) R-exts.texi
@@ -112,6 +147,6 @@ clean:
 	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs \
 	  version.tex version.texi refman.tex *-pkg.tex 
 distclean: clean
-	@-rm -f pkg2tex.pl Rdnewer.pl *.pdf *.info*
+	@-rm -f pkg2tex.pl Rdnewer.pl *.pdf *.dvi *.info*
 maintainer-clean: distclean
 
