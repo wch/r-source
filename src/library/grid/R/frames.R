@@ -29,7 +29,7 @@ preDrawDetails.frame <- function(x) {
 
 postDrawDetails.frame <- function(x) {
   if (!is.null(x$framevp))
-    popViewport(recording=FALSE)
+    upViewport(recording=FALSE)
 }
 
 widthDetails.frame <- function(x) {

@@ -98,7 +98,6 @@ void dirtyGridDevice(GEDevDesc *dd) {
 	LOGICAL(griddev)[0] = TRUE;
 	SET_VECTOR_ELT(gsd, GSS_GRIDDEVICE, griddev);
 	UNPROTECT(1);
-	initVP(dd);
 	/*
 	 * Start the first page on the device
 	 * (But only if no other graphics system has not already done so)
@@ -110,8 +109,11 @@ void dirtyGridDevice(GEDevDesc *dd) {
 	    GENewPage(&gc, dd);
 	    GEdirtyDevice(dd);
 	}
-	/* The top-level viewport goes at the start of the display list
+	/*
+	 * Only initialise viewport once new page has started
+	 * (required for postscript output [at least])
 	 */
+	initVP(dd);
 	initDL(dd);
     }
 }

@@ -7,17 +7,23 @@
 
 }
 \usage{
-grid.set(gPath, newGrob, strict = FALSE, redraw = TRUE) 
-setGrob(gTree, gPath, newGrob, strict = FALSE) 
+grid.set(gPath, newGrob, strict = FALSE, grep = FALSE, redraw = TRUE) 
+setGrob(gTree, gPath, newGrob, strict = FALSE, grep = FALSE) 
 }
 \arguments{
   \item{gTree}{A gTree object.}
   \item{gPath}{ A gPath object. For \code{grid.set} this
     specifyies a grob on the display list.  For \code{setGrob} this
     specifies a descendant of the specified gTree. }
+  \item{newGrob}{ A grob object. }
   \item{strict}{ A boolean indicating whether the gPath must be
     matched exactly. }
-  \item{newGrob}{ A grob object. }
+  \item{grep}{A boolean indicating whether the \code{gPath} should
+    be treated as a regular expression.  Values are recycled across
+    elements of the \code{gPath} (e.g., \code{c(TRUE, FALSE)} means
+    that every odd element of the \code{gPath} will be treated as
+    a regular expression).
+  }
   \item{redraw}{A logical value to indicate whether to redraw the grob. }
 }
 \details{

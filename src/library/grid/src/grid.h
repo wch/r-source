@@ -125,13 +125,13 @@ typedef double LTransform[3][3];
 typedef double LLocation[3];
 
 typedef enum {
-    L_adding = 0,
-    L_subtracting = 1,
-    L_summing = 2,
-    L_plain = 3,
-    L_maximising = 4,
-    L_minimising = 5,
-    L_multiplying = 6
+    L_adding = 1,
+    L_subtracting = 2,
+    L_summing = 3,
+    L_plain = 4,
+    L_maximising = 5,
+    L_minimising = 6,
+    L_multiplying = 7
 } LNullArithmeticMode;
 
 /* NOTE: The order of the enums here must match the order of the
@@ -315,21 +315,25 @@ int pureNullUnit(SEXP unit, int index, GEDevDesc *dd);
 double transformX(SEXP x, int index, LViewportContext vpc, 
 		  R_GE_gcontext *gc,
 		  double widthCM, double heightCM,
+		  int nullLMode, int nullAMode,
 		  GEDevDesc *dd);
 
 double transformY(SEXP y, int index, LViewportContext vpc,
 		  R_GE_gcontext *gc,
 		  double widthCM, double heightCM,
+		  int nullLMode, int nullAMode,
 		  GEDevDesc *dd);
 
 double transformWidth(SEXP width, int index, LViewportContext vpc,
 		      R_GE_gcontext *gc,
 		      double widthCM, double heightCM,
+		      int nullLMode, int nullAMode,
 		      GEDevDesc *dd);
 
 double transformHeight(SEXP height, int index, LViewportContext vpc,
 		       R_GE_gcontext *gc,
 		       double widthCM, double heightCM,
+		       int nullLMode, int nullAMode,
 		       GEDevDesc *dd);
 
 double transformXtoINCHES(SEXP x, int index, LViewportContext vpc,

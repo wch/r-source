@@ -39,49 +39,10 @@ change.  The representation can be reloaded into R.
 Incompatibilities between versions should be handled gracefully by
 \R{}'s argument-matching, type-checking, and/or version-checking.
 
-\subsection*{Device output}
-
-Another way of creating a persistent version of \grid{} graphics is to
-``save'' it to a persistent device format (e.g., PostScript, PDF, ...).
-
-It is possible to edit this representation, but hardly convenient.
-
-The representation is persistent regardless of \R{} sessions or versions,
-but it cannot be reloaded into \R{}.
-
-\subsection*{Display lists}
-
-A third way of creating a persistent version of \grid{} graphics is to
-``save'' an \R{} display list using, for example, ...
-
-<<fig=true, include=false, label=grid>>=
-grid.grill()
-temp <- recordPlot()
-save(temp, file="mygridplot")
-
-@
-This representation is not editable\footnote{Well, there's nothing stopping
-you editing it, but you should take out life insurance first.  Display
-lists may become sensibly editable in the future.}, but it can be
-reloaded ...
-
-<<>>=
-load("mygridplot")
-temp
-
-@
-... and rerun to reproduce the output.
-
-\includegraphics{saveload-grid}
-
-The representation is persistent across \R{} sessions (although you have
-to make sure that \grid{} has been reloaded).  Differences between
-\grid{} versions may lead to segmentation faults if the API of the \grid{}
-code being called by the display list has changed sufficiently.
-
 \subsection*{\grid{} {\tt grob}s}
 
-Yet another way of creating a persistent version
+The next most flexible
+way of creating a persistent version
 of \grid{} graphics is to {\tt save()} a \grid{} {\tt grob} ...
 
 <<>>=
@@ -107,6 +68,50 @@ vulnerable to changes in the internal representation of \grid{}
 {\tt grob}s.  The advantage of this representation is that it is 
 possible to share and edit graphics produced by someone else,
 without seeing the code they used to produce it.
+
+\subsection*{Device output}
+
+A third way of creating a persistent version of \grid{} graphics is to
+``save'' it to a persistent device format (e.g., PostScript, PDF, ...).
+
+It is possible to edit these representations, but hardly convenient.
+In particular, none of the coordinate systems used in the
+construction of plots (e.g., axis scales) are available for editing.
+
+The representation is persistent regardless of \R{} sessions or versions,
+but it cannot be reloaded into \R{}.
+
+\subsection*{Display lists}
+
+This final option is \emph{not} recommended, but it is possible to do
+so its downsides need to be explained.
+
+What you can do is 
+``save'' an \R{} display list using, for example, ...
+
+<<>>=
+grid.grill()
+temp <- recordPlot()
+save(temp, file="mygridplot")
+
+@
+This representation is not editable\footnote{Well, there's nothing stopping
+you editing it, but you should take out life insurance first.}, but it can be
+reloaded 
+and rerun to reproduce the output ...
+
+<<>>=
+load("mygridplot")
+temp
+
+@
+The representation is persistent across \R{} sessions,
+but the saved information involves non-public interfaces and structures 
+which may change between \R{} versions.  You also
+have
+to make sure that \grid{} has been reloaded.  Differences between
+\grid{} and/or \R{} 
+versions may lead to segmentation faults.
 
 % Start a new page
 % Not echoed, not evaluated

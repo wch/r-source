@@ -161,22 +161,9 @@ grid.segments <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
 ######################################
 
 validDetails.arrows <- function(x) {
-  # If grob is specified, that overrides any x and y values
-  grobName <- childNames(x)
-  if (length(grobName) == 0) {
-    if (!is.unit(x$x) ||
-        !is.unit(x$y))
-      stop("x and y must be units")
-  } else {
-    lineThing <- getGrob(x, grobName)
-    # The grob can only be a "lines" or "segments"
-    # (splines would be another candidate if they existed)
-    if (!(inherits(lineThing, "lines") ||
-          inherits(lineThing, "segments") ||
-          inherits(lineThing, "line.to")))
-      stop("The grob argument must be a line.to, lines, or segments grob")
-    x$x <- x$y <- NULL
-  }
+  if ((!is.null(x$x) && !is.unit(x$x)) ||
+      (!is.null(x$y) && !is.unit(x$y)))
+    stop("x and y must be units or NULL")
   if (!is.unit(x$length))
     stop("Length must be a unit object")
   x$ends <- as.integer(match(x$ends, c("first", "last", "both")))
@@ -264,6 +251,21 @@ arrowsGrob <- function(x=c(0.25, 0.75), y=0.5,
       x <- unit(x, default.units)
     if (!is.unit(y))
       y <- unit(y, default.units)
+  }
+  # Check the grob here
+  # Not in validDetails.arrows because that is for checking
+  # slots of an arrows object (the grob is a child of the arrows object)
+  # A possible alternative design would have a copy of the grob
+  # stored in a slot of the arrows object;  then it could be checked
+  # in the validDetails AND it could be edited
+  if (!is.null(grob)) {
+    # The grob can only be a "lines" or "segments"
+    # (splines would be another candidate if they existed)
+    if (!(inherits(grob, "lines") ||
+          inherits(grob, "segments") ||
+          inherits(grob, "line.to")))
+      stop("The grob argument must be a line.to, lines, or segments grob")
+    x <- y <- NULL
   }
   gTree(x=x, y=y, children=if (is.null(grob)) NULL else gList(grob),
        angle=as.numeric(angle), length=length,

@@ -137,6 +137,11 @@ set.gpar <- function(gp) {
   if (!is.gpar(gp))
     stop("Argument must be a 'gpar' object")
   temp <- grid.Call("L_getGPar")
+  # Special case "cex" (make it cumulative)
+  if (match("cex", names(gp), nomatch=0))
+    tempcex <- temp$cex * gp$cex
+  else
+    tempcex <- temp$cex
   # Special case "alpha" (make it cumulative)
   if (match("alpha", names(gp), nomatch=0))
     tempalpha <- temp$alpha * gp$alpha
@@ -144,6 +149,7 @@ set.gpar <- function(gp) {
     tempalpha <- temp$alpha
   # All other gpars
   temp[names(gp)] <- gp
+  temp$cex <- tempcex
   temp$alpha <- tempalpha
   # Do this as a .Call.graphics to get it onto the base display list
   grid.Call.graphics("L_setGPar", temp)
@@ -162,4 +168,14 @@ get.gpar <- function(names=NULL) {
   result
 }
 
+# When editing a gp slot, only update the specified gpars
+# Assume gp is NULL or a gpar
+# assume newgp is a gpar (and not NULL)
+mod.gpar <- function(gp, newgp) {
+  if (is.null(gp))
+    gp <- newgp
+  else
+    gp[names(newgp)] <- newgp
+  gp
+}
 

@@ -324,6 +324,11 @@ print.path <- function(x, ...) {
   cat(as.character(x), "\n")
 }
 
+# Explode path$path
+explodePath <- function(path) {
+  unlist(strsplit(path, .grid.pathSep))
+}
+
 #############
 # Some handy viewport functions
 #############

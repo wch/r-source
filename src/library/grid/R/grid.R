@@ -129,7 +129,8 @@ downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
   if (result) {
     # Enforce the gpar settings for the viewport
     pvp <- grid.Call("L_currentViewport")
-    set.gpar(pvp$gpar)
+    # Do not call set.gpar because set.gpar accumulates cex
+    grid.Call.graphics("L_setGPar", pvp$gpar)
     # Record the viewport operation
     if (recording) {
       record(name)
@@ -167,7 +168,8 @@ pop.vp <- function(last.one, recording) {
     stop("Illegal to pop top-level viewport")
   # Assert the gpar settings of the parent (which is about to become "current")
   pgpar <- pvp$parent$gpar
-  set.gpar(pgpar)
+  # Do not call set.gpar because set.gpar accumulates cex
+  grid.Call.graphics("L_setGPar", pgpar)
   # Allow for recalculation of viewport transform if necessary
   # and do things like updating parent/children slots in
   # stored pushedvps
@@ -204,7 +206,8 @@ up.vp <- function(last.one, recording) {
   # Assert the gpar settings of the parent (which is about to become "current")
   pgpar <- pvp$parent$gpar
   class(pgpar) <- "gpar"
-  set.gpar(pgpar)
+  # Do not call set.gpar because set.gpar accumulates cex
+  grid.Call.graphics("L_setGPar", pgpar)
   # Allow for recalculation of viewport transform if necessary
   grid.Call.graphics("L_upviewport", last.one)
 }

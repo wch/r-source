@@ -2,7 +2,7 @@
 \alias{grid.grob}
 \alias{grob}
 \alias{gTree}
-\alias{gTreeChildren}
+\alias{childNames}
 \alias{gList}
 \title{Create a Grid Graphical Object}
 \description{
@@ -13,7 +13,7 @@ grid.grob(list.struct, cl = NULL, draw = TRUE)
 grob(..., name = NULL, gp = NULL, vp = NULL, cl = NULL) 
 gTree(..., name = NULL, gp = NULL, vp = NULL, children = NULL, 
       childrenvp = NULL, cl = NULL)
-gTreeChildren(gTree)
+childNames(gTree)
 gList(...)
 }
 \arguments{
@@ -50,7 +50,7 @@ gList(...)
   \code{upViewport}) so that the children can specify their location
   within the childrenvp via a vpPath.
 
-  The function \code{gTreeChildren} returns the names of the grobs
+  The function \code{childNames} returns the names of the grobs
   which are children of a gTree.
   
   All grid primitives (\code{grid.lines}, \code{grid.rect}, ...) and

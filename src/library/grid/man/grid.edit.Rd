@@ -25,12 +25,10 @@ editGrob(grob, gPath = NULL, ..., strict = FALSE, grep = FALSE,
     elements of the \code{gPath} (e.g., \code{c(TRUE, FALSE)} means
     that every odd element of the \code{gPath} will be treated as
     a regular expression).
-    NOT YET IMPLEMENTED.
   }
   \item{global}{ A boolean indicating whether the function should affect
     just the first match of the \code{gPath}, or whether all matches
     should be affected.
-    NOT YET IMPLEMENTED.
   }
   \item{allDevices}{ A boolean indicating whether all open devices
     should

@@ -53,6 +53,10 @@ get.gpar(names = NULL)
   
   The size of text is \code{fontsize}*\code{cex}.  The size of a line
   is \code{fontsize}*\code{cex}*\code{lineheight}.
+
+  The \code{cex} setting is cumulative;  if a viewport is pushed
+  with a \code{cex} of 0.5 then another viewport is pushed with a
+  \code{cex} of 0.5, the effective \code{cex} is 0.25.
   
   For most devices, the \code{fontfamily} is specified when the device
   is first opened and may not be changed thereafter -- i.e., specifying

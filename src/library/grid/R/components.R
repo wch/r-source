@@ -49,9 +49,9 @@ editDetails.xaxis <- function(x, specs) {
     # NOTE that grid.edit has already set x$at to the new value
     # We might set at to NULL to get ticks recalculated at redraw
     if (is.null(x$at)) {
-      removeGrob(x, "main", warn=FALSE)
-      removeGrob(x, "ticks", warn=FALSE)
-      removeGrob(x, "labels", warn=FALSE)
+      x <- removeGrob(x, "main", warn=FALSE)
+      x <- removeGrob(x, "ticks", warn=FALSE)
+      x <- removeGrob(x, "labels", warn=FALSE)
     } else {
       x <- addGrob(x, make.xaxis.major(x$at, x$main))
       x <- addGrob(x, make.xaxis.ticks(x$at, x$main))
@@ -155,9 +155,9 @@ editDetails.yaxis <- function(x, specs) {
   slot.names <- names(specs)
   if (match("at", slot.names, nomatch=0)) {
     if (is.null(x$at)) {
-      removeGrob(x, "main", warn=FALSE)
-      removeGrob(x, "ticks", warn=FALSE)
-      removeGrob(x, "labels", warn=FALSE)
+      x <- removeGrob(x, "main", warn=FALSE)
+      x <- removeGrob(x, "ticks", warn=FALSE)
+      x <- removeGrob(x, "labels", warn=FALSE)
     } else {
       x <- addGrob(x, make.yaxis.major(x$at, x$main))
       x <- addGrob(x, make.yaxis.ticks(x$at, x$main))

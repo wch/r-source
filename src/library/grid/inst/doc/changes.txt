@@ -45,6 +45,46 @@ Changes from grid_1.9.0 to grid_2.0.0:
       pushViewport(viewport(gp=gpar(alpha=0.5)))
       grid.rect(width=0.25, gp=gpar(fill="red"))   # alpha = 0.25 !
 
+7.  Editing a gp slot in a grob is now incremental.  For example ...
+
+      grid.lines(name="line")
+      grid.edit("line", gp=gpar(col="red")) # line turns red
+      grid.edit("line", gp=gpar(lwd=3)) # line becomes thick AND STAYS red
+      
+8.  The "cex" gpar is now cumulative.  For example ...
+      
+      grid.rect(height=unit(4, "char")) # cex = 1
+      pushViewport(viewport(gp=gpar(cex=0.5)))
+      grid.rect(height=unit(4, "char")) # cex = 0.5
+      pushViewport(viewport(gp=gpar(cex=0.5)))
+      grid.rect(height=unit(4, "char")) # cex = 0.125 !!!
+
+9.  New childNames() function to list the names of children
+    of a gTree.
+
+10. The "grep" and "global" arguments have been implemented for 
+    grid.[add|edit|get|remove]Grob() functions.
+
+    The "grep" argument has also been implemented for the
+    grid.set() and setGrob().
+
+11. New function grid.grab() which creates a gTree from the 
+    current display list (i.e., the current page of output can
+    be converted into a single gTree object with all grobs
+    on the current page as children of the gTree and all the 
+    viewports used in drawing the current page in the childrenvp
+    slot of the gTree).
+
+12. New "lineend", "linejoin", and "linemitre" gpar()s:
+
+      line end can be "round", "butt", or "square".
+      line join can be "round", "mitre", or "bevel".
+      line mitre can be any number larger than 1
+        (controls when a mitre join gets turned into a bevel join;  
+         proportional to angle between lines at join;
+	 very big number means that conversion only happens for lines
+	 that are almost parallel at join).
+
 
 Changes from grid_1.9.0 to grid_1.9.1:
 ------------------------------------

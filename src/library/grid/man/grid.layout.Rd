@@ -23,8 +23,12 @@ grid.layout(nrow = 1, ncol = 1,
     in the layout.}
   \item{default.units}{A string indicating the default units to use
     if \code{widths} or \code{heights} are only given as numeric vectors.}  
-  \item{respect}{A logical value indicating whether
-    row heights and column widths should respect each other.}
+  \item{respect}{A logical value or a numeric matrix.
+    If a logical, this indicates whether
+    row heights and column widths should respect each other.
+    If a matrix, non-zero values indicate that the corresponding
+    row and column should be respected (see examples below).
+  }
   \item{just}{A string vector indicating how the layout should be
     justified if it is not the same size as its parent viewport.
     If there are two values, the first
