@@ -22,8 +22,8 @@ a \%*\% b
 }
 \examples{
 x <- 1:4
-x \%*\% x              # scalar ("inner") product (1 x 1 matrix)
-drop(.Last.value)    # as scalar
+(z <- x \%*\% x)    # scalar ("inner") product (1 x 1 matrix)
+drop(z)             # as scalar
 
 y <- diag(x)
 z <- matrix(1:12, ncol = 3, nrow = 4)

@@ -14,8 +14,8 @@ crossprod(x, y=x)
 \code{\link{\%*\%}} and outer product \code{\link{\%o\%}}.
 }
 \examples{
-crossprod(1:4)    # = sum(1 + 2^2 + 3^2 + 4^2)
-drop(.Last.value) # scalarized
+(z <- crossprod(1:4))    # = sum(1 + 2^2 + 3^2 + 4^2)
+drop(z)                  # scalar
 }
 \keyword{algebra}
 \keyword{array}
