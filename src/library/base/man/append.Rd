@@ -25,3 +25,4 @@ append(x, values, after = length(x))
 append(1:5, 0:1, after=3)
 }
 \keyword{manip}
+\concept{insert}
