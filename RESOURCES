@@ -19,21 +19,21 @@ index page given by `help.start()').
 Thanks to Martin Maechler <Martin.Maechler@r-project.org> there are number
 of mailing lists which are used by R users and developers.  They are
 
-    `r-announce@lists.r-project.org'
+    <r-announce@lists.r-project.org>
           announcements of new R releases or applications;
 
-    `r-help@lists.r-project.org'
+    <r-help@lists.r-project.org>
           general inquiries and discussion about R;
 
-    `r-devel@lists.r-project.org'
+    <r-devel@lists.r-project.org>
           discussions about the future of R and pre-testing of new versions.
 
 To subscribe (or unsubscribe) to these mailing lists send `subscribe' (or
 `unsubscribe') in the _body_ of the message (not in the subject!) to
 
-     `r-announce-request@lists.r-project.org'
-     `r-help-request@lists.r-project.org'
-     `r-devel-request@lists.r-project.org'
+     <r-announce-request@lists.r-project.org>
+     <r-help-request@lists.r-project.org>
+     <r-devel-request@lists.r-project.org>
 
 Archives of the mailing lists are made available monthly; see the
 `doc/mail/mail.html' file on any CRAN node.  An HTML archive is available
