@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-5, @value{FAQ-YEAR}-10-14
+@set FAQ-VERSION 1.8-6, @value{FAQ-YEAR}-10-15
 @set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -176,7 +176,7 @@ prompt, and a @samp{$} for the shell prompt (where applicable).
 Feedback is of course most welcome.
 
 In particular, note that I do not have access to Windows or Macintosh
-systems.  Features specific to the Windows and MacOS~X ports of R are
+systems.  Features specific to the Windows and MacOS X ports of R are
 described in the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R
 for Windows @acronym{FAQ}''} and the
 @uref{http://cran.r-project.org/bin/macosx/RAqua-FAQ.html, ``R for
@@ -442,7 +442,7 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-10-14:
+@c Linux binaries as of 2003-10-15:
 @c
 @c debian    woody i386  1.7.1  Dirk Eddelbuettel <edd@debian.org>
 @c           sarge i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
@@ -455,12 +455,14 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c           8.0   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.1   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.2   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c vinelinux 2.6   i386  1.8.0  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains Debian
 stable/testing packages for the i386 platform (now part of the Debian
 distribution and maintained by Dirk Eddelbuettel), Mandrake 9.0/9.1 i386
 packages by Michele Alzetta, Red Hat 7.x/8.x/9 i386 packages by Martyn
-Plummer, and SuSE 7.3/8.0/8.1/8.2 i386 packages by Detlef Steuer.
+Plummer, SuSE 7.3/8.0/8.1/8.2 i386 packages by Detlef Steuer, and
+VineLinux 2.6 i386 packages by Susunu Tanimura.
  
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -2065,6 +2067,10 @@ continuous data.
 @item mlbench
 A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
+@item mmlcr
+Mixed-mode latent class regression (also known as mixed-mode mixture
+model regression or mixed-mode mixture regression models) which can
+handle both longitudinal and one-time responses.
 @item moc
 Fits a variety of mixtures models for multivariate observations with
 user-difined distributions and curves.
