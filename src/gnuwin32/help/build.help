@@ -58,7 +58,7 @@ else{
 }
 $R_HOME =~ s+\\+/+g; # Unix-style path
 
-require "$R_HOME/src/gnuwin32/help/Rdconvlib.pl";
+require "$R_HOME/etc/Rdconvlib.pl";
 require "$R_HOME/src/gnuwin32/help/buildlib.pl";
 
 chdir($cwd);
