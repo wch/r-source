@@ -149,14 +149,14 @@ rsync -rC rsync.r-project.org::@var{module} R
 @noindent
 to create a copy of the source tree specified by @var{module} in the
 subdirectory @file{R} of the current directory, where @var{module}
-specifies one of the three existing flavours of the @R{} sources, and
-can be one of @samp{r-release} (latest released version),
-@samp{r-release-patched} (latest released version with patches applied),
-and @samp{r-devel} (current development version).  The rsync trees are
-created directly from the master CVS archive and are updated hourly.
-The @option{-C} option in the @command{rsync} command is to cause it to
-skip the CVS directories.  Further information on @command{rsync} is
-available at @uref{http://rsync.samba.org/rsync/}.
+specifies one of the three existing flavours of the @R{} sources, and be
+one of @samp{r-release} (current released version), @samp{r-patched}
+(patched released version), and @samp{r-pre-release} (pre-release
+development version).  The rsync trees are created directly from the
+master CVS archive and are updated hourly.  The @option{-C} option in
+the @command{rsync} command is to cause it to skip the CVS directories.
+Further information on @command{rsync} is available at
+@uref{http://rsync.samba.org/rsync/}.
 
 
 @node Installing R under Unix, Installing R under Windows, Obtaining R, Top
