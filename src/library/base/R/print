@@ -30,7 +30,14 @@ noquote <- function(obj) {
 	obj
 }
 ## just like 'expression':
-"[.noquote" <- function (x, subs) structure(unclass(x)[subs], class = "noquote")
+##"[.noquote" <- function(x,subs) structure(unclass(x)[subs], class= "noquote")
+"[.noquote" <- function (x, ...) {
+	attr <- attributes(x,"legend")
+	r <- unclass(x)[...]
+	attributes(r) <- c(attributes(r),
+			   attr[is.na(match(names(attr),c("dim","dimnames")))])
+	r
+}
 
 print.noquote <- function(obj,...) {
 	## method for (character) objects of class 'noquote'
