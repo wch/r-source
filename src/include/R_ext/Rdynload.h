@@ -38,4 +38,7 @@ R_registerRoutines(DllInfo *info, R_CMethodDef *croutines,
 
 DllInfo *R_getDllInfo(const char *name);
 
+typedef void * (*DL_FUNC)();
+DL_FUNC R_FindSymbol(char const *, char const *);
+
 #endif /* End ifdef R_FOREIGN_H */

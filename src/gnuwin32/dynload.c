@@ -66,11 +66,8 @@
 #include <direct.h>
 #include <windows.h>
 
-/* DL_FUNC is in Defn.h */
-typedef struct {
-    char *name;
-    DL_FUNC func;
-} CFunTabEntry;
+#include "R_ext/Rdynload.h"
+#include "R_ext/Rdynpriv.h"
 
 #include "FFDecl.h"
 
@@ -84,96 +81,81 @@ static CFunTabEntry CFunTab[] =
     {NULL, NULL}
 };
 
-#define CACHE_DLL_SYM
-#ifdef CACHE_DLL_SYM
-/* keep a record of symbols that have been found */
-static struct {
-    char pkg[21];
-    char name[21];
-    DL_FUNC func;
-}  CPFun[100];
-static int nCPFun = 0;
-#endif
 
-
-void InitFunctionHashing()
-{
-}
-
-
-#define MAX_NUM_DLLS	100
-
-static int CountDLL = 0;
-
-static struct {
-    char  *path;
-    char  *name;
-    HINSTANCE dlh;
-} LoadedDLL[MAX_NUM_DLLS];
-
-	/* Remove the specified DLL from the current DLL list */
-	/* Returns 1 if the DLL was found and removed from */
-	/* the list and returns 0 otherwise. */
-
-static int DeleteDLL(char *path)
-{
-    int   i, loc;
-
-    for (i = 0; i < CountDLL; i++) {
-	if (!strcmp(path, LoadedDLL[i].path)) {
-	    loc = i;
-	    goto found;
-	}
-    }
-    return 0;
-found:
-#ifdef CACHE_DLL_SYM
-    for(i = nCPFun - 1; i >= 0; i--)
-	if(!strcmp(CPFun[i].pkg, LoadedDLL[loc].name)) {
-	    if(i < nCPFun - 1) {
-		strcpy(CPFun[i].name, CPFun[--nCPFun].name);
-		strcpy(CPFun[i].pkg, CPFun[nCPFun].pkg);
-		CPFun[i].func = CPFun[nCPFun].func;
-	    } else nCPFun--;
-	}
-#endif
-    free(LoadedDLL[loc].name);
-    free(LoadedDLL[loc].path);
-    FreeLibrary(LoadedDLL[loc].dlh);
-    for (i = loc + 1; i < CountDLL; i++) {
-	LoadedDLL[i - 1].path = LoadedDLL[i].path;
-	LoadedDLL[i - 1].name = LoadedDLL[i].name;
-	LoadedDLL[i - 1].dlh = LoadedDLL[i].dlh;
-    }
-    CountDLL--;
-    return 1;
-}
-
-#define DLLerrBUFSIZE 4000
-static char DLLerror[DLLerrBUFSIZE] = "";
 
         /* Inserts the specified DLL at the head of the DLL list */
         /* Returns 1 if the library was successfully added */
         /* and returns 0 if the library table is full or */
         /* or if LoadLibrary fails for some reason. */
 
-/*
-  The arguments asLocal and now are unused in this version.
-  They are here for consistency with the UNIX code.
- */
-static int AddDLL(char *path, int asLocal, int now)
+static void fixPath(char *path)
 {
-    HINSTANCE tdlh;
-    char *dpath, *name, DLLname[MAX_PATH], *p, *st;
+  char *p;
+    for(p = path; *p != '\0'; p++) if(*p == '\\') *p = '/';
+}
 
-    DeleteDLL(path);
-    if (CountDLL == MAX_NUM_DLLS) {
-	strcpy(DLLerror, "Maximal number of DLLs reached...");
-	return 0;
-    }
+static HINSTANCE R_loadLibrary(const char *path, int asLocal, int now);
+static DL_FUNC getRoutine(DllInfo *info, char const *name);
+static void R_deleteCachedSymbols(DllInfo *dll);
+
+static DL_FUNC getBaseSymbol(const char *name);
+
+static void R_getDLLError(char *buf, int len);
+static void GetFullDLLPath(SEXP call, char *buf, char *path);
+
+static void closeLibrary(HINSTANCE handle)
+{
+  FreeLibrary(handle);
+}
+
+void InitFunctionHashing()
+{
+    R_osDynSymbol->loadLibrary = R_loadLibrary;
+    R_osDynSymbol->dlsym = getRoutine;
+    R_osDynSymbol->closeLibrary = closeLibrary;
+    R_osDynSymbol->getError = R_getDLLError;
+    R_osDynSymbol->getBaseSymbol = getBaseSymbol;
+
+    R_osDynSymbol->deleteCachedSymbols = R_deleteCachedSymbols;
+    R_osDynSymbol->lookupCachedSymbol = Rf_lookupCachedSymbol;
+
+    R_osDynSymbol->CFunTab = CFunTab;
+
+    R_osDynSymbol->fixPath = fixPath;
+    R_osDynSymbol->getFullDLLPath = GetFullDLLPath;
+}
+
+static void R_deleteCachedSymbols(DllInfo *dll)
+{
+  int i;
+    for(i = nCPFun - 1; i >= 0; i--)
+	if(!strcmp(CPFun[i].pkg, dll->name)) {
+	    if(i < nCPFun - 1) {
+		strcpy(CPFun[i].name, CPFun[--nCPFun].name);
+		strcpy(CPFun[i].pkg, CPFun[nCPFun].pkg);
+		CPFun[i].func = CPFun[nCPFun].func;
+	    } else nCPFun--;
+	}
+}
+
+HINSTANCE R_loadLibrary(const char *path, int asLocal, int now)
+{
+  HINSTANCE tdlh;
     tdlh = LoadLibrary(path);
-    if (tdlh == NULL) {
-	LPVOID lpMsgBuf;
+
+ return(tdlh);
+}
+
+static DL_FUNC getRoutine(DllInfo *info, char const *name)
+{
+ DL_FUNC f;
+  f = (DL_FUNC) GetProcAddress(info->handle, name);
+  return(f);
+}
+
+static void R_getDLLError(char *buf, int len)
+{
+    LPVOID lpMsgBuf;
 	FormatMessage( 
 	    FORMAT_MESSAGE_ALLOCATE_BUFFER | 
 	    FORMAT_MESSAGE_FROM_SYSTEM | 
@@ -185,81 +167,18 @@ static int AddDLL(char *path, int asLocal, int now)
 	    0,
 	    NULL 
 	    );
-	strcpy(DLLerror, "LoadLibrary failure:  ");
-	strcat(DLLerror, lpMsgBuf);
+	strcpy(buf, "LoadLibrary failure:  ");
+	strcat(buf, lpMsgBuf);
 	LocalFree(lpMsgBuf);
-	return 0;
-    }
-
-    dpath = malloc(strlen(path)+1);
-    if(dpath == NULL) {
-	strcpy(DLLerror, "Couldn't allocate space for 'path'");
-	FreeLibrary(tdlh);
-	return 0;
-    }
-    strcpy(dpath, path);
-
-    strcpy(DLLname, path);
-    for(p = DLLname; *p != '\0'; p++) if(*p == '\\') *p = '/';
-    p = strrchr(path, '/');
-    if(!p) p = DLLname; else p++;
-    st = strchr(p, '.');
-    if(st) *st = '\0';
-    name = malloc(strlen(p)+1);
-    if(name == NULL) {
-	strcpy(DLLerror,"Couldn't allocate space for 'name'");
-	FreeLibrary(tdlh);
-	free(dpath);
-	return 0;
-    }
-    strcpy(name, p);
-
-    LoadedDLL[CountDLL].path = dpath;
-    LoadedDLL[CountDLL].name = name;
-    LoadedDLL[CountDLL].dlh = tdlh;
-    CountDLL++;
-
-    return 1;
 }
 
 
-        /* R_FindSymbol checks whether one of the libraries */
-        /* that have been loaded contains the symbol name and */
-        /* returns a pointer to that symbol upon success. */
-
-DL_FUNC R_FindSymbol(char const *name, char const *pkg)
+static DL_FUNC getBaseSymbol(const char *name)
 {
-    DL_FUNC fcnptr;
-    int   i, j, all=(strlen(pkg) == 0), doit;
-    static int NumStatic = 0;
-    int   mid, high, low, cmp;
-
-#ifdef CACHE_DLL_SYM
-    for (i = 0; i < nCPFun; i++)
-	if (!strcmp(name, CPFun[i].name) && 
-	    (all || !strcmp(pkg, CPFun[i].pkg)))
-	    return CPFun[i].func;
-#endif
-
-    for (i = CountDLL - 1; i >= 0; i--) {
-	doit = all;
-	if(!doit && !strcmp(pkg, LoadedDLL[i].name)) doit = 2;
-	if(doit) {
-	    fcnptr = (DL_FUNC) GetProcAddress(LoadedDLL[i].dlh, name);
-	    if (fcnptr != (DL_FUNC) NULL) {
-#ifdef CACHE_DLL_SYM
-		if(strlen(pkg) <= 20 && strlen(name) <= 20 && nCPFun < 100) {
-		    strcpy(CPFun[nCPFun].pkg, LoadedDLL[i].name);
-		    strcpy(CPFun[nCPFun].name, name);
-		    CPFun[nCPFun++].func = fcnptr;
-		}
-#endif
-		return fcnptr;
-	    }
-	}
-	if(doit > 1) return (DL_FUNC) NULL;/* Only look in the first-matching DLL*/
-    }
-    if (!NumStatic && (all || !strcmp(pkg, "base"))) {
+  static int NumStatic = 0;
+  int   mid, high, low, cmp;
+  if (!NumStatic) {
+        int i,j;
 	char *tname;
 	DL_FUNC tfunc;
 
@@ -293,9 +212,7 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 	return (DL_FUNC) NULL;
     else
 	return CFunTab[mid].func;
-    return (DL_FUNC) NULL;
 }
-
 
 static void GetFullDLLPath(SEXP call, char *buf, char *path)
 {
@@ -312,33 +229,3 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
     for (p = buf; *p; p++) if (*p == '\\') *p = '/';
 }
 
-        /* do_dynload implements the R-Interface for the */
-        /* loading of shared libraries */
-
-SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    char  buf[MAX_PATH];
-
-    checkArity(op, args);
-    if (!isString(CAR(args)) || length(CAR(args)) != 1)
-	errorcall(call, "character argument expected");
-    GetFullDLLPath(call, buf, CHAR(STRING_ELT(CAR(args), 0)));
-    DeleteDLL(buf);
-    if (!AddDLL(buf,LOGICAL(CADR(args))[0],LOGICAL(CADDR(args))[0]))
-	errorcall(call, "unable to load shared library \"%s\":\n  %s",
-		  buf, DLLerror);
-    return R_NilValue;
-}
-
-SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    char  buf[MAX_PATH];
-
-    checkArity(op, args);
-    if (!isString(CAR(args)) || length(CAR(args)) != 1)
-	errorcall(call, "character argument expected");
-    GetFullDLLPath(call, buf, CHAR(STRING_ELT(CAR(args), 0)));
-    if (!DeleteDLL(buf))
-	errorcall(call, "dynamic library \"%s\" was not loaded", buf);
-    return R_NilValue;
-}

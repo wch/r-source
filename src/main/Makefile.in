@@ -11,7 +11,7 @@ subdir = src/main
 include $(top_builddir)/Makeconf
 
 SOURCES_C = \
-	RNG.c \
+	Rdynload.c RNG.c \
 	apply.c arithmetic.c array.c attrib.c \
 	bind.c builtin.c \
 	character.c coerce.c colors.c complex.c connections.c context.c \
