@@ -18,13 +18,13 @@ Building on Windows
 
 We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
 from http://www.mingw.org/ or
-ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
+ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32.  You will also
 need suitable versions of at least make, sh, cat, cp, cut, diff, echo,
 egrep, expr, g(awk), grep, ls, mkdir, mv, rm, sed; we use those from
 the cygwin distribution (http://sourceware.cygnus.com/cygwin and
 several mirrors) or (make) compiled from the GNU sources ourselves.
 We have packaged a set at
-CRAN/bin/windows/windows-NT/base/etc/tools.zip.  BEWARE: `Native'
+CRAN/bin/windows/windows-NT/base/etc/tools.zip.  BEWARE: Most `native'
 ports of make are not suitable (including that at the mingw32 site),
 nor is the make dated 18-Jan-2000 in the Cygwin 1.1.0 net release.
 
@@ -51,9 +51,9 @@ All of these need to be installed and in your path, and the
 appropriate environment variables set.
 
 You also need: the R source (R-@RVER@.tgz), and to build the
-installer, unzip5.40.zip from any Info-Zip mirror.  Do remember to set
-MAKE_MODE to UNIX (set MAKE_MODE=UNIX at the Windows command-line).
-
+installer, unzip5.41.zip from any Info-Zip mirror.  Do remember to set
+MAKE_MODE to UNIX (set MAKE_MODE=UNIX at the Windows command-line)
+if using a cygwin version of make.
 
 Then: untar R-@RVER@.tgz somewhere (with no spaces in the path names),
 
@@ -87,7 +87,8 @@ can just copy this from a binary distribution.
 Note 2: we are aware that because of limitations in line length or in
 the shell used that the Makefiles do not work unchanged on all the
 possible combinations of tools, compilers and OSes.  We have tested
-the Cygwin make and shell under NT, and cross-building (see below).
+the tools in tools.zip under NT with the mingw32 and cygwin 1.1
+compilers, and cross-building (see below).
 
 
 Note 3: building libR.a is highly disk intensive and can take several
@@ -128,13 +129,15 @@ a cross-built version of binutils 2.9.4.
 You will need Perl, zip and unzip installed.
 
 You also need: the R source (R-@RVER@.tgz), and to build the installer,
-unzip5.40.zip from any Info-ZIP mirror.
+unzip5.41.zip from any Info-ZIP mirror.
 
 Then: untar R-@RVER@.tgz somewhere
 
 	cd /somewhere/R-@RVER@/src/gnuwin32
 
-Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
+Edit MkRules to set BUILD=CROSS and the appropriate paths (including
+HEADER) as needed.
+
 Edit Makefile to set the type(s) of help that you want built. (You
 will not be able to cross-build .chm or .hlp files, nor Rchmtl.dll,
 so set WINHELP to NO.)

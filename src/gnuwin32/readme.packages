@@ -14,8 +14,8 @@ and cat; we have packaged a set at
 CRAN/bin/windows/windows-NT/base/etc/tools.zip extracted from the
 cygwin distribution (http://sourceware.cygnus.com/cygwin and several
 mirrors) or (make) compiled from the GNU sources ourselves.  BEWARE:
-`Native' ports of make are _not_ suitable, and the 18 Jan 2000 cygwin
-port crashes when building packages.
+Most `native' ports of make are _not_ suitable, and the 18 Jan 2000
+cygwin port crashes when building packages.
 
 
 It is also possible to use the compilers from the cygwin 1.1 release
@@ -36,16 +36,16 @@ If you want to make Window help files you will need hcrtf.exe from a
 Windows compiler installation (this has been available for download at
 ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe), or hcp505.exe.
 
-For large packages it is helpful to make zipped help files: for that
-you need zip and unzip from the Info-ZIP project (www.info-zip.org and
-mirrors).
+For large packages it is helpful to make zipped help and/or data
+files: for that you need zip and unzip from the Info-ZIP project
+(www.info-zip.org and mirrors).
 
 All of these need to be installed and in your path, and the
 appropriate environment variables set.  Edit MkRules to set BUILD and
 the appropriate paths as needed.  (IMPORTANT: if you use cygwin you
 must edit MkRules and set BUILD=CYGWIN.)  Do remember to set MAKE_MODE
-to UNIX (set MAKE_MODE=UNIX at the Windows command-line).
-
+to UNIX (set MAKE_MODE=UNIX at the Windows command-line) if using a cygwin
+port of make.
 
 Then
 
@@ -92,7 +92,7 @@ but not remove the separate files: this can be used for testing.
 Using zipped data files
 =======================
 
-You will need zip installed, of course. Just run
+You will need zip installed. Just run
 
 	make zipdata-mypkg
 
@@ -202,8 +202,8 @@ First you need to set up the cross-compilers and tools (see INSTALL)
 and have them in your path. We will assume that your Linux
 installation has Perl5, unzip and zip.
 
-Edit MkRules to set BUILD=CROSS and the appropriate paths as needed,
-and check that Makefile has WINHELP set to NO.
+Edit MkRules to set BUILD=CROSS and the appropriate paths (including
+HEADER) as needed, and check that Makefile has WINHELP set to NO.
 
 Then packages can be made as natively, for example by
 
