@@ -21,7 +21,7 @@ diffinv.vector <- function (x, lag = 1, differences = 1,
     }
     else
         diffinv.vector(diffinv.vector(x, lag, differences-1,
-                                      xi[(lag+1):(lag*differences)]),
+                                      diff(xi, lag=lag, differences=1)),
                        lag, 1, xi[1:lag])
 }
 
@@ -52,7 +52,7 @@ diffinv.ts <- function (x, lag = 1, differences = 1,
         y <- diffinv.default(as.vector(x), lag, differences, xi)
     else
         y <- diffinv.default(as.matrix(x), lag, differences, xi)
-    ts(y, frequency = frequency(x), start = start(x))
+    ts(y, frequency = frequency(x), end = end(x))
 }
 
 toeplitz <- function (x)

@@ -203,3 +203,10 @@ lm(y ~ x*z - 1)
 options(oldCon)
 
 
+## diffinv, Adrian Trapletti, 2001-08-27
+library(ts)
+x <- ts(1:10)
+diffinv(diff(x),xi=x[1])
+diffinv(diff(x,lag=1,differences=2),lag=1,differences=2,xi=x[1:2])
+## last had wrong start and end
+detach("package:ts")

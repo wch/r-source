@@ -160,6 +160,7 @@ BUG FIXES
 	failing to record the contrasts for the first variable if it 
 	were a factor.
 
+    o	diffinv() could get the time base wrong in some cases.
 
 
 

@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-08-16)
+Version 1.4.0 Under development (unstable) (2001-08-31)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -549,4 +549,21 @@ Coefficients:
 > options(oldCon)
 > 
 > 
+> ## diffinv, Adrian Trapletti, 2001-08-27
+> library(ts)
+> x <- ts(1:10)
+> diffinv(diff(x),xi=x[1])
+Time Series:
+Start = 1 
+End = 10 
+Frequency = 1 
+ [1]  1  2  3  4  5  6  7  8  9 10
+> diffinv(diff(x,lag=1,differences=2),lag=1,differences=2,xi=x[1:2])
+Time Series:
+Start = 1 
+End = 10 
+Frequency = 1 
+ [1]  1  2  3  4  5  6  7  8  9 10
+> ## last had wrong start and end
+> detach("package:ts")
 > 
