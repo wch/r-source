@@ -17,6 +17,7 @@ test-src-gct = \
 	demos.R \
 	lm-tests.R \
 	primitive-funs.R \
+	ok-errors.R \
 	method-dispatch.R
 test-src-strict-1 = \
 	$(test-src-gct) \
@@ -38,6 +39,7 @@ test-src-internet = internet.R
 test-src-lapack = lapack.R
 test-src-nafns = nafns.R
 test-src-random = p-r-random-tests.R
+test-src-postscript = ps-tests.R
 
 test-src-reg-1 = \
 	reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R reg-plot.R
@@ -50,8 +52,15 @@ test-out-sloppy = $(test-src-sloppy:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-lapack = $(test-src-lapack:.R=.Rout)
 test-out-nafns = $(test-src-nafns:.R=.Rout)
+test-out-postscript = $(test-src-postscript:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
+
+all-extra-tests = Lapack Nafns Postscript Random Reg
+
+test-out = $(test-src:.R=.Rout) $(test-out-gct) \
+	$(test-out-internet) $(test-out-lapack) $(test-out-nafns) \
+	$(test-out-random) $(test-out-postscript) $(test-out-reg)
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout
@@ -82,6 +91,12 @@ test-Specific:
 	@$(MAKE) -f Makefile.win test-Specific-strict RVAL_IF_DIFF=1
 	@echo "running sloppy specific tests"
 	@$(MAKE) -f Makefile.win test-Specific-sloppy RVAL_IF_DIFF=0
+	@rm -f data F.Rd c0.Rd df0.Rd l0.Rd
+
+test-all-extras:
+	@for name in $(all-extra-tests); do \
+	  $(MAKE)  -f Makefile.win test-$${name} || exit 1; \
+	done
 
 test-Internet:
 	@echo "running tests of Internet and socket functions"
@@ -101,6 +116,10 @@ test-Nafns:
 
 test-Nafns-run: $(test-out-nafns)
 
+test-Postscript:
+	@echo "running tests of postscript() families"
+	@$(MAKE) -f Makefile.win $(test-out-postscript) RVAL_IF_DIFF=0
+
 test-Random:
 	@echo "running tests of random deviate generation"
 	@$(MAKE) -f Makefile.win test-Random-run RVAL_IF_DIFF=1
@@ -115,4 +134,4 @@ test-Reg-run: $(test-out-reg)
 
 
 clean:
-	@rm -f *.Rout *.Rout.fail Rplots.ps $(test-src-auto)
+	@rm -f *.Rout *.Rout.fail Rplots.ps reg-plot.ps $(test-src-auto)
