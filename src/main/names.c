@@ -639,7 +639,7 @@ FUNTAB R_FunTab[] =
 {"plot.window",	do_plot_window,	0,	111,	3,	PP_FUNCALL},
 {"axis",	do_axis,	0,	111,	7,	PP_FUNCALL},
 {"plot.xy",	do_plot_xy,	0,	111,	6,	PP_FUNCALL},
-{"text",	do_text,	0,	111,	6,	PP_FUNCALL},
+{"text",	do_text,	0,	111,	7,	PP_FUNCALL},
 {"mtext",	do_mtext,	0,	111,	5,	PP_FUNCALL},
 {"title",	do_title,	0,	111,	4,	PP_FUNCALL},
 {"abline",	do_abline,	0,	111,	6,	PP_FUNCALL},
@@ -654,7 +654,7 @@ FUNTAB R_FunTab[] =
 {"identify",	do_identify,	0,	11,	6,	PP_FUNCALL},
 {"strheight",	do_strheight,	0,	11,	3,	PP_FUNCALL},
 {"strwidth",	do_strwidth,	0,	11,	3,	PP_FUNCALL},
-{"contour",	do_contour,	0,	11,	6,	PP_FUNCALL},
+{"contour",	do_contour,	0,	11,	11,	PP_FUNCALL},
 {"image",	do_image,	0,	11,	5,	PP_FUNCALL},
 {"dend",	do_dend,	0,	111,	6,	PP_FUNCALL},
 {"dend.window",	do_dendwindow,	0,	111,	6,	PP_FUNCALL},
@@ -663,11 +663,6 @@ FUNTAB R_FunTab[] =
 {"dotplot",	do_dotplot,	0,	111,	1,	PP_FUNCALL},
 {"persp",	do_persp,	0,	111,	4,	PP_FUNCALL},
 {"filledcontour",do_filledcontour,0,    111,    5,      PP_FUNCALL},
-#ifdef NICK
-{"shade",       do_shade,       0,      111,    14,     PP_FUNCALL},
-{"surface",     do_surface,     0,      111,    18,     PP_FUNCALL},
-{"flatContour", do_flatContour, 0,      111,    9,      PP_FUNCALL},
-#endif
 
 /* Objects */
 {"UseMethod",	do_usemethod,	0,	 0,	-1,	PP_FUNCALL},
