@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-03-04
+Version 2.0.2005-03-07
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1515,6 +1515,9 @@ distributions of R.)
      ColorBrewer palettes for drawing nice maps shaded according to a
      variable.
 
+*RGrace*
+     Mouse/menu driven interactive plotting application.
+
 *RII*
      Estimation of the relative index of inequality for interval-censored
      data using natural cubic splines.
@@ -1875,6 +1878,9 @@ distributions of R.)
      Functions for the construction and randomization of balanced carryover
      balanced designs, to check given designs for balance, and for
      simulation studies on the validity of two randomization procedures.
+
+*ctv*
+     Server-side and client-side tools for CRAN task views.
 
 *cyclones*
      Cyclone identification.

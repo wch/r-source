@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-04
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-07
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1851,6 +1851,8 @@ Functions to import Arc/Info V7.x coverages and data.
 @item RColorBrewer
 ColorBrewer palettes for drawing nice maps shaded according to a
 variable.
+@item RGrace
+Mouse/menu driven interactive plotting application.
 @item RII
 Estimation of the relative index of inequality for interval-censored
 data using natural cubic splines.
@@ -2128,6 +2130,8 @@ Routine for the multivariate nonparametric Cramer test.
 Functions for the construction and randomization of balanced carryover
 balanced designs, to check given designs for balance, and for simulation
 studies on the validity of two randomization procedures.
+@item ctv
+Server-side and client-side tools for @acronym{CRAN} task views.
 @item cyclones
 Cyclone identification.
 @item date
