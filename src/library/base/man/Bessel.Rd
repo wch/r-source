@@ -49,7 +49,7 @@ gammaCody(x)
   Chapter 9: Bessel Functions of Integer Order.
 }
 \seealso{Other special mathematical functions, as the
-    \code{\link{gamma}}, \eqn{\Gamma(x)}, and  \code{\link{beta}},
+    \code{\link{gamma}}, \eqn{\Gamma(x)}, and \code{\link{beta}},
     \eqn{B(x)}.
 }
 \author{Original Fortran code:
@@ -112,18 +112,12 @@ legend(25,-.5, leg=paste("nu=",nus), col = nus+2, lwd=1)
  x <- seq(10,50000,by=10);yl <- c(-.1, .1)
  plot(x,x, ylim = yl, ylab="",type='n', main = "Bessel Functions  Y_nu(x)")
  for(nu in nus){xx <- x[x > .6*nu]; lines(xx,besselY(xx,nu=nu), col = nu+2)}
+ summary(bY <- besselY(2,nu = nu <- seq(0,100,len=501)))
+ which(bY >= 0)
+ summary(bY <- besselY(2,nu = nu <- seq(3,300,len=51)))
+ summary(bI <- besselI(x = x <- 10:700, 1))
 }
 
-\dontrun{##--- Exhibit (log-scale plot axis bugs):  [S-plus has them too!] ---
- ## GPretty():
- nu <- seq(0,100,len=501);plot(nu, -besselY(2,nu), type="l", log="y")
-
- ##Error: "Infinite axis extent:"
- nu <- seq(3,300,len=501);plot(nu, abs(besselY(2,nu)), type="l", log="y")
-
- ##Error: "Infinite axis extent:"
- x <- 10:700; plot(x, besselI(x,1), log="y",type="l")
-}
 }
 \keyword{math}
 
