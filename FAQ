@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-02-08
+Version 2.0.2005-02-09
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2451,6 +2451,10 @@ distributions of R.)
      Mixed-mode latent class regression (also known as mixed-mode mixture
      model regression or mixed-mode mixture regression models) which can
      handle both longitudinal and one-time responses.
+
+*moc*
+     Fits a variety of mixtures models for multivariate observations with
+     user-difined distributions and curves.
 
 *mscalib*
      Calibration and filtering of MALDI-TOF Peptide Mass Fingerprint data.
