@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-01-17
+Version 2.0.2005-01-18
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2221,6 +2221,9 @@ distributions of R.)
 *kza*
      Kolmogorov-Zurbenko Adpative filter for locating change points in a
      time series.
+
+*labdsv*
+     Laboratory for Dynamic Synthetic Vegephenomenology.
 
 *labstatR*
      Functions for the book "Laboratorio di statistica con R" by S. M.
