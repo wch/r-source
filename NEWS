@@ -164,8 +164,12 @@ BUG FIXES
     o   All braces in regular expressions used by Sweave() are now
         escaped by a backslash.
 
-    o	unloadNamespace failed because getNamespaceImports now coerces a
+    o	unloadNamespace() failed because getNamespaceImports() now coerces a
 	string argument to a name space.
+
+    o   deriv3 gave incorrect Hessians for some very simple
+	expressions such as expression(x*y) (since the comments in the
+	C code were incorrect).  (PR#2577)
 
 	
 
