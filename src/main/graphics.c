@@ -2848,6 +2848,17 @@ static void clipCircle(double x, double y, int coords,
     /* determine clipping region */
     double xmin, xmax, ymin, ymax;
     setClipRect(&xmin, &ymin, &xmax, &ymax, DEVICE, dd);
+
+    if (xmax < xmin) {
+	double swap = xmax;
+	xmax = xmin;
+	xmin = swap;
+    }
+    if (ymax < ymin) {
+	double swap = ymax;
+	ymax = ymin;
+	ymin = swap;
+    }
     /* convert x & y to DEVICE (radius already DEVICE) */
     GConvert(&x, &y, coords, DEVICE, dd);
     /* if circle is all within clipping rect draw all of it */
