@@ -193,6 +193,9 @@ BUG FIXES
     o	mtext(), persp(), plot.hclust() and title() no longer plot NA
 	character strings.
 
+    o	pdf() has been protected against the user who specified
+	non-existent fonts. (PR#1748)
+
 
 
 	**************************************************

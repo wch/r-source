@@ -3247,6 +3247,7 @@ static void PDF_Text(double x, double y, char *str,
     int face = font;
     double a, b, rot1;
 
+    if(face < 1 || face > 5) face = 1;
     rot1 = rot * DEG2RAD;
     a = size * cos(rot1);
     b = size * sin(rot1);
@@ -3278,6 +3279,7 @@ static double PDF_StrWidth(char *str, int font,
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
+    if(font < 1 || font > 5) font = 1;
     return floor(cex * ps + 0.5) *
 	PostScriptStringWidth((unsigned char *)str,
 			      &(pd->metrics[font-1]));
@@ -3289,6 +3291,7 @@ static void PDF_MetricInfo(int c, int font, double cex, double ps,
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
+    if(font < 1 || font > 5) font = 1;
     PostScriptMetricInfo(c, ascent, descent, width,
 			 &(pd->metrics[font-1]));
     *ascent = floor(cex * ps + 0.5) * *ascent;
