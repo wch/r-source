@@ -283,13 +283,16 @@ sub escape_preformats {
     while(checkloop($loopcount++, $complete_text,
 		    "while replacing all \\preformatted{...}") &&
 	  $complete_text =~ /\\preformatted/  ){
-	    my ($id, $arg) = get_arguments("preformatted", $complete_text, 1);
-	    $complete_text =~ s/\\preformatted$id(.*)$id/$EPREFORMAT$id/s;
-	    $epreformats{$id} = $1;
-	    $found_any = 1;
+	my ($id, $arg) = get_arguments("preformatted", $complete_text, 1);
+	$complete_text =~ s/\\preformatted$id(.*)$id/$EPREFORMAT$id/s;
+	my $txt = $1;
+	# strip spaces/tabs on last line from Rd formatting in emacs.
+	$txt =~ s/[ \t]+$//;
+	$epreformats{$id} = $txt;
+	$found_any = 1;
 
-	    print STDERR "," if $debug;
-	}
+	print STDERR "," if $debug;
+    }
 
     $complete_text
 }
@@ -1825,6 +1828,7 @@ sub rdoc2Sd { # (filename)
     }
 
     print $Sdout "\.\\\" -*- nroff -*- generated from \.Rd format\n";
+    print $Sdout ".de PF\n,br\n.ne 2\n.ft 3\n.nf\n..\n.de FP\n.br\n\.ne 2\n\.ft 1\n.fi\n..\n";
     print $Sdout ".BG\n";
     print $Sdout ".FN ", $blocks{"name"}, "\n";
     print $Sdout ".TL\n";
@@ -1837,6 +1841,7 @@ sub rdoc2Sd { # (filename)
     }
     Sd_print_argblock("arguments", ".RA");
     Sd_print_argblock("value", ".RT");
+    Sd_print_block("details", ".DT");
     Sd_print_sections();
     Sd_print_block("note", "Note");
     Sd_print_block("references", ".SH REFERENCES");
@@ -1864,9 +1869,16 @@ sub Sd_print_block {
 sub Sd_print_codeblock {
 
     my ($block, $macro) = @_;
+    my $ntext;
 
     if(defined $blocks{$block}){
-	print $Sdout $macro, code2nroff($blocks{$block});
+	$ntext = code2txt($blocks{$block});
+	# make sure there is precisely one leading "\n"
+	$ntext =~ s/^[\n]*//go;
+	$ntext = "\n". $ntext;
+	$ntext =~ s/\\&\././go;
+	$ntext =~ s/\\\\/\\/go;
+	print $Sdout $macro, $ntext;
     }
 }
 
@@ -1925,14 +1937,6 @@ sub Sd_print_sections {
 sub text2nroff {
 
     my $text = $_[0];
-
-    my $loopcount = 0;
-    while(checkloop($loopcount++, $text, "escaped preformat")
-	  && $text =~ /$EPREFORMAT($ID)/){
-	my $id = $1;
-	my $ec = code2nroff($epreformats{$id});
-	$text =~ s/$EPREFORMAT$id/\`$ec\'/;
-    }
 
     if($_[1]){
 	my $indent = $_[1];
@@ -2081,7 +2085,7 @@ sub nroff_unescape_codes {
 	  && $text =~ /$EPREFORMAT($ID)/){
 	my $id = $1;
 	my $ec = code2nroff($epreformats{$id});
-	$text =~ s/$EPREFORMAT$id/\`$ec\'/;
+	$text =~ s/$EPREFORMAT$id/.PF\n$ec.FP/;
     }
 
     $text;
@@ -2168,8 +2172,7 @@ sub nroff_tables {
 	}
 	$table .= ".TE\n";
 
-	$text =~ s/\\tabular.*$id/$table/s;
-    }
+	$text =~ s/\\tabular.*$id/$table/s;    }
 
     $text;
 }
