@@ -1635,19 +1635,17 @@ static void X11_Text(double x, double y, int coords,
     size = dd->gp.cex * dd->gp.ps + 0.5;
     GConvert(&x, &y, coords, DEVICE, dd);
     SetFont(dd->gp.font, size, 0.0, dd);
-    if (xc != 0.0 || yc != 0) {
-	xl = X11_StrWidth(str, dd);
-	yl = GConvertYUnits(1, CHARS, DEVICE, dd);
-	x += -xc * xl * cos(deg2rad * rot) +
-	    yc * yl * sin(deg2rad * rot);
-	y -= -xc * xl * sin(deg2rad * rot) -
-	    yc * yl * cos(deg2rad * rot);
-    }
     pixs = fontascent(xd->font) + fontdescent(xd->font) - 1;
-    if ((rot <= 45) || ((rot > 135) && (rot <= 225)) || (rot > 315))
+    xl = xc * X11_StrWidth(str, dd);
+    yl = yc * GConvertYUnits(1, CHARS, DEVICE, dd) - pixs;
+    x += -xl * cos(deg2rad * rot) + yl * sin(deg2rad * rot);
+    y -= -xl * sin(deg2rad * rot) - yl * cos(deg2rad * rot);
+
+    /* if ((rot <= 45) || ((rot > 135) && (rot <= 225)) || (rot > 315))
 	y -= pixs;
     else
-	x -= pixs;
+    x -= pixs;*/
+    
     SetFont(dd->gp.font, size, rot, dd);
     SetColor(dd->gp.col, dd);
 #ifdef NOCLIPTEXT
@@ -1658,7 +1656,7 @@ static void X11_Text(double x, double y, int coords,
 	gdrawstr(xd->bm, xd->font, xd->fgcolor, pt(x, y), str);
     }
 #else      
-    DRAW(gdrawstr(_d, xd->font, xd->fgcolor, pt(x,y), str));
+    DRAW(gdrawstr(_d, xd->font, xd->fgcolor, pt(x, y), str));
 #endif
 }
 
