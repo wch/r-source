@@ -50,7 +50,7 @@ DL_FUNC R_FindSymbol(char const *, char const *);
 
 /* Convert an R object to a non-moveable C/Fortran object and return
    a pointer to it.  This leaves pointers for anything other
-   than vectors and lists unaltered. 
+   than vectors and lists unaltered.
 */
 
 static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort)
@@ -62,7 +62,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort)
     complex *zptr;
     SEXP *lptr, CSingSymbol=install("Csingle");
     int i, l, n;
-    
+
     switch(TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
@@ -173,7 +173,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort)
     int i;
     SEXP s, t;
     SEXPTYPE type =TYPEOF(arg);
-    
+
     switch(type) {
     case LGLSXP:
     case INTSXP:
@@ -267,7 +267,6 @@ static SEXP naoktrim(SEXP s, int * len, int *naok, int *dup)
     else if(TAG(s) == PkgSymbol) {
 	value = naoktrim(CDR(s), len, naok, dup);
 	strcpy(DLLname, CHAR(STRING(CAR(s))[0]));
-	Rprintf("found %s\n", DLLname);
 	return value;
     }
     else {
@@ -282,43 +281,61 @@ static SEXP naoktrim(SEXP s, int * len, int *naok, int *dup)
 static SEXP naokfind(SEXP args, int * len, int *naok, int *dup)
 {
     SEXP s, ss;
-    int nargs, naokused=0, dupused=0, pkgused=0;
-    
+    int nargs=0, naokused=0, dupused=0, pkgused=0;
+
     *naok = 0;
     *dup = 1;
     *len = 0;
-    for(nargs = 0, s = args ; s != R_NilValue;) {
+    for(s = args; s != R_NilValue; ) {
 	if(TAG(s) == NaokSymbol) {
 	    *naok = asLogical(CAR(s));
 	    if(naokused++ == 1) warning("NAOK used more than once");
 	} else if(TAG(s) == DupSymbol) {
 	    *dup = asLogical(CAR(s));
 	    if(dupused++ == 1) warning("DUP used more than once");
-	}	    
+	}
+	/* Now look for PACKAGE=. We look at the next arg, unless
+	   this is the last one (which will only happen for one arg),
+	   and remove it */
 	ss = CDR(s);
+	if(ss == R_NilValue && TAG(s) == PkgSymbol) {
+	    if(pkgused++ == 1) warning("PACKAGE used more than once");
+	    strcpy(DLLname, CHAR(STRING(CAR(s))[0]));
+	    return R_NilValue;
+	}
 	if(TAG(ss) == PkgSymbol) {
 	    if(pkgused++ == 1) warning("PACKAGE used more than once");
 	    strcpy(DLLname, CHAR(STRING(CAR(ss))[0]));
-	    CDR(s) = CDR(ss); /* delete this arg */
-	} else  {
-	    s = CDR(s);
-	    nargs++;
+	    CDR(s) = CDR(ss); /* delete this arg, which is the next one */
 	}
+	nargs++;
+	s = CDR(s);
     }
-    *len = nargs;    
+    *len = nargs;
     return args;
 }
 
 static SEXP pkgtrim(SEXP args)
 {
     SEXP s, ss;
-    
+    int pkgused=0;
+
     for(s = args ; s != R_NilValue;) {
 	ss = CDR(s);
+	/* Look for PACKAGE=. We look at the next arg, unless
+	   this is the last one (which will only happen for one arg),
+	   and remove it */
+	if(ss == R_NilValue && TAG(s) == PkgSymbol) {
+	    if(pkgused++ == 1) warning("PACKAGE used more than once");
+	    strcpy(DLLname, CHAR(STRING(CAR(s))[0]));
+	    return R_NilValue;
+	}
 	if(TAG(ss) == PkgSymbol) {
+	    if(pkgused++ == 1) warning("PACKAGE used more than once");
 	    strcpy(DLLname, CHAR(STRING(CAR(ss))[0]));
 	    CDR(s) = CDR(ss);
-	} else  s = CDR(s);
+	}
+	s = CDR(s);
     }
     return args;
 }
@@ -1099,7 +1116,6 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 
     strcpy(DLLname, "");
     args = naokfind(CDR(args), &nargs, &naok, &dup);
-    /*Rprintf("Dllname=%s\n", DLLname);*/
     if(naok == NA_LOGICAL)
 	errorcall(call, "invalid naok value");
     if(nargs > MAX_ARGS)
@@ -1113,7 +1129,6 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 
     nargs = 0;
     for(pargs = args ; pargs != R_NilValue; pargs = CDR(pargs)) {
-	/*Rprintf("arg %d type %d\n", nargs, TYPEOF(CAR(pargs)));*/
 	cargs[nargs] = RObjToCPtr(CAR(pargs), naok, dup, nargs + 1, which);
 	nargs++;
     }
