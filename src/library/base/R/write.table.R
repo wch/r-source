@@ -7,15 +7,17 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 	x <- data.frame(x)
     else if (is.logical(quote) && quote)
 	quote <- which(unlist(lapply(x, is.character)))
-    if (dec != "."){
+    if(dec != ".") {
     	num <- which(unlist(lapply(x, is.numeric)))
 	x[num] <- lapply(x[num],
-	          function(z)gsub("\\.",",",as.character(z)))
+                         function(z) gsub("\\.", ",", as.character(z)))
     }
+    i <- is.na(x)
     x <- as.matrix(x)
+    if(any(i))
+        x[i] <- na
     p <- ncol(x)
     d <- dimnames(x)
-    x[is.na(x)] <- na
     if (is.logical(quote))
 	quote <- if (quote) 1 : p else NULL
     else if (is.numeric(quote)) {
