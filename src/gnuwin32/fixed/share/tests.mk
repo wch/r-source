@@ -8,13 +8,13 @@ ECHO_T =
 
 makevars =
 srcdir = .
-VPATH = .
 
 test-src = $(test-src-1) $(test-src-auto)
 test-out = $(test-src:.R=.Rout)
 
 R = srcdir=$(srcdir) $(R_HOME)/bin/Rterm.exe --vanilla
 RDIFF = $(R_HOME)/bin/Rcmd Rdiff.sh
+USE_GCT = 0
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout
@@ -26,13 +26,18 @@ RDIFF = $(R_HOME)/bin/Rcmd Rdiff.sh
 .R.Rout:
 	@rm -f $@ $@.fail
 	@echo "  Running \`$<'"
+	@if test "$(USE_GCT)" = 0; then \
+	  $(R) R_LIBS=$(R_LIBS) < $< > $@; \
+	else \
+	  (echo "gctorture(TRUE)"; cat $<) | $(R) R_LIBS=$(R_LIBS) > $@; \
+	fi
 	@$(R) R_LIBS="$(R_LIBS)" < $< > $@
 	@if test -f $(srcdir)/$@.save; then \
 	  mv $@ $@.fail; \
-	  echo -n "  Comparing \`$@' to \`$@.save' ..."; \
+	  echo $(ECHO_N) "  Comparing \`$@' to \`$@.save' ...$(ECHO_C)"; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save 0 || exit 1; \
 	  mv $@.fail $@; \
-	  echo "OK"; \
+	  echo "$(ECHO_T) OK"; \
 	fi
 
 all:
@@ -43,4 +48,3 @@ all:
 
 clean:
 	@rm -f $(test-out) $(test-src-auto) *.fail
-
