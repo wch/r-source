@@ -38,6 +38,9 @@ and make the manuals by (as many options as preferred from)
 	make pdf	to create PDF versions
 	make info	to create info files
 
+However, please read the notes in `R-admin.html' about making the
+reference manual.
+
 
 INSTALLATION
 

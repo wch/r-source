@@ -4,6 +4,7 @@
 %%% Modified 1998/07/07 by Martin Maechler
 %%% Modified 1999/11/20 by Brian Ripley
 %%% Modified 1999/12/26 by Kurt Hornik
+%%% and so on.
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{Rd}{}
@@ -12,8 +13,16 @@
 \newboolean{Rd@has@ae}
 \newboolean{Rd@use@ae}
 \newboolean{Rd@use@hyper}
+\newboolean{Rd@has@times}
+\newboolean{Rd@use@times}
+\newboolean{Rd@use@cm-super}
+\newboolean{Rd@has@lm}
+\newboolean{Rd@use@lm}
 \DeclareOption{ae}{\setboolean{Rd@use@ae}{true}}
 \DeclareOption{hyper}{\setboolean{Rd@use@hyper}{true}}
+\DeclareOption{times}{\setboolean{Rd@use@times}{true}}
+\DeclareOption{lm}{\setboolean{Rd@use@lm}{true}}
+\DeclareOption{cm-super}{\setboolean{Rd@use@cm-super}{true}}
 \ProcessOptions
 \RequirePackage{longtable}
 \setcounter{LTchunksize}{250}
@@ -216,6 +225,18 @@
   \input{t1aett.fd}
   \DeclareFontShape{T1}{aett}{bx}{n}{<->ssub*aett/m/n}{}}
   {\message{NOT loading ae}}
+\IfFileExists{times.sty}{\setboolean{Rd@has@times}{true}}{}
+\ifthenelse{\boolean{Rd@use@times}\and\boolean{Rd@has@times}}{%
+  \usepackage[T1]{fontenc}
+  \usepackage{times}}
+  {\message{NOT loading times}}
+\IfFileExists{lmodern.sty}{\setboolean{Rd@has@lm}{true}}{}
+\ifthenelse{\boolean{Rd@use@lm}\and\boolean{Rd@has@lm}}{%
+  \usepackage[T1]{fontenc}
+  \usepackage{lmodern}}
+  {\message{NOT loading lmodern}}
+\ifthenelse{\boolean{Rd@use@cm-super}}{%
+  \usepackage[T1]{fontenc}}{}
 
 \ifthenelse{\boolean{Rd@use@hyper}}{%
   \RequirePackage{color}    

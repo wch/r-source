@@ -161,7 +161,8 @@ NEW FEATURES
 	represent the DLL within R.
 
     o	help() now returns information about available documentation for
-	a given topic, and notifies about multiple matches.
+	a given topic, and notifies about multiple matches.  It has a
+	separate print() method.
 
     o	heatmap() has a new argument 'reorderfun'.
 
@@ -469,6 +470,10 @@ INSTALLATION CHANGES
 
     o   f2c is not allowed on 64-bit platforms, as it uses longs for
 	Fortran integers.
+
+    o   There are new options on how to make the PDF version of the
+	reference manual -- see the 'R Administration and Installation
+	Manual' section 2.2.
 
 
 PACKAGE INSTALLATION CHANGES

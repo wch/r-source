@@ -224,7 +224,7 @@ and configured to work with a large file: see doc/manual/README.  You
 also need texindex (included in our tool set).  Then the pdf manuals
 can be made by
 
-	make docs
+	make manuals
 
 If you want to make the info versions (not the Reference Manual), use
 
@@ -238,13 +238,10 @@ To make DVI versions of the manuals use
 
 (assuming you have tex and latex installed and in your path).
 
-To make HTML versions of the manuals (not the Reference Manual) use
-
-	cd ../../doc/manual
-	make -f Makefile.win html
-
 The fptex distribution of TeX (via www.fptex.org) includes a suitable
-port of pdftex.
+port of pdftex.  Please read the section in R-admin.html about how to
+make 'refman.pdf' and set the environment variables R_RD4DVI and
+R_RD4PDF suitably and ensure you have the required fonts installed.
 
 
 Building the installers
