@@ -1,6 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -112,7 +113,7 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 
 	/* This is called in the case of binary operations to copy */
 	/* most attributes from (one of) the input arguments to */
-	/* the output.  Note that the Dim and Names attributes */
+	/* the output.	Note that the Dim and Names attributes */
 	/* should have been assigned elsewhere. */
 
 void copyMostAttrib(SEXP inp, SEXP ans)
@@ -314,7 +315,7 @@ SEXP namesgets(SEXP vec, SEXP val)
 		/* Ensure that the labels are indeed */
 		/* a vector of character strings */
 
-	if( isList(val) )
+	if( isList(val) ) {
 		if( !isVectorizable(val) )
 			error("incompatible names argument\n");
 		else {
@@ -327,7 +328,7 @@ SEXP namesgets(SEXP vec, SEXP val)
 			UNPROTECT(1);
 			val = rval;
 		}
-	else val = coerceVector(val, STRSXP);
+	} else val = coerceVector(val, STRSXP);
 	UNPROTECT(1);
 	PROTECT(val);
 
@@ -381,7 +382,7 @@ SEXP do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP ans;
 	if(DispatchOrEval(call, op, args, env, &ans, 0))
-                return(ans);
+		return(ans);
 	PROTECT(args = ans);
 	checkArity(op, args);
 	if(NAMED(CAR(args)) > 2) CAR(args) = duplicate(CAR(args));
@@ -435,7 +436,7 @@ SEXP do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP ans;
 	if(DispatchOrEval(call, op, args, env, &ans, 0))
-                return(ans);
+		return(ans);
 	PROTECT(args = ans);
 	checkArity(op, args);
 	ans = getAttrib(CAR(args), R_DimNamesSymbol);
@@ -447,7 +448,7 @@ SEXP do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP ans;
 	if(DispatchOrEval(call, op, args, env, &ans, 0))
-                return(ans);
+		return(ans);
 	PROTECT(args = ans);
 	checkArity(op, args);
 	ans = getAttrib(CAR(args), R_DimSymbol);
@@ -459,7 +460,7 @@ SEXP do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP ans;
 	if(DispatchOrEval(call, op, args, env, &ans, 0))
-                return(ans);
+		return(ans);
 	PROTECT(args = ans);
 	checkArity(op, args);
 	if(NAMED(CAR(args)) > 1) CAR(args) = duplicate(CAR(args));
@@ -594,6 +595,7 @@ SEXP do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+ /*  attr(obj, "<name>")  <-  value  */
 	SEXP obj, name, value;
 
 	obj = eval(CAR(args), env);
@@ -606,8 +608,8 @@ SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (!isString(name))
 		error("attr<- : name must be of mode character\n");
 
-	/* rhs is already evaluated */
-	PROTECT(value = CAR(CDDR(args)));
+	/* no eval(.), RHS is already evaluated: */
+	PROTECT(value = CADDR(args));
 	setAttrib(obj, name, value);
 	UNPROTECT(3);
 	return obj;
