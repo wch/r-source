@@ -32,6 +32,11 @@ NEW FEATURES
     o   Function texi2dvi() in package tools can be used to compile
         latex files from within R.
 
+    o   Objects saved in pre-1.8 versions and loaded into the current
+        version have incompatible class attributes (no package
+        information).  A new function, fixPre1.8() in package methods
+        will fix the class attributes.  See the help for this function.
+
 
 BUG FIXES
 
