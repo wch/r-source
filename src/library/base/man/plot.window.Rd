@@ -11,8 +11,12 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
 \item{\dots}{further graphical parameters as in \code{\link{par}(..)}.}
 }
 \description{
-  This function sets up the world coordinates for a graphics
-  window.  Note that if \code{asp} is a finite positive value then
+  This function sets up the world coordinate system for a graphics
+  window.  It is called by higher level functions such as
+  \code{\link{plot.default}} (\emph{after} \code{\link{plot.new}}).
+}
+\details{
+  Note that if \code{asp} is a finite positive value then
   the window is set up so that one data unit in the y direction
   is equal in length to \code{asp} \eqn{\times}{*} one data unit in the
   x direction.
@@ -22,13 +26,11 @@ plot.window(xlim, ylim, log = "", asp = NA, \dots)
   with \code{asp < 1} can be used to produce more accurate maps when
   using latitude and longitude.
 
-Usually, one should rather use the higher level functions such as
-\code{\link{plot}}, \code{\link{hist}}, \code{\link{image}}, \dots,
-instead and refer to their help pages for explanation of the arguments.
+  Usually, one should rather use the higher level functions such as
+  \code{\link{plot}}, \code{\link{hist}}, \code{\link{image}}, \dots,
+  instead and refer to their help pages for explanation of the arguments.
 }
-\seealso{
-\code{\link{xy.coords}}, \code{\link{plot.xy}}, \code{\link{plot.default}}.
-}
+\seealso{\code{\link{xy.coords}}, \code{\link{plot.xy}}, \code{\link{plot.default}}.}
 \examples{
 ##--- An example for the use of  `asp' :
 library(mva)
