@@ -127,6 +127,8 @@ NEW FEATURES
    o	polyroot() now handles coefficient vectors with terminal
 	zeroes (as in S).
 
+   o	plclust() in package mva, for more S-PLUS compatibility.
+
 
 DEPRECATED & DEFUNCT
 

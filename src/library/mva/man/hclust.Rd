@@ -2,9 +2,11 @@
 \title{Hierarchical Clustering}
 \alias{hclust}
 \alias{plot.hclust}
+\alias{plclust}
 \alias{print.hclust}
 \description{
-  Performs a hierarchical cluster analysis on a set of dissimilarities.
+  Hierarchical cluster analysis on a set of dissimilarities and
+  methods for analyzing it.
 }
 \usage{
 hclust(d, method = "complete", members=NULL)
@@ -13,6 +15,11 @@ hclust(d, method = "complete", members=NULL)
             axes = TRUE, frame.plot = FALSE, ann = TRUE,
             main = "Cluster Dendrogram",
             sub = NULL, xlab = NULL, ylab = "Height", \dots)
+
+plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
+        square = TRUE, labels = NULL, plot. = TRUE,
+        axes = TRUE, frame.plot = FALSE, ann = TRUE,
+        main = "", sub = NULL, xlab = NULL, ylab = "Height")
 }
 \arguments{
   \item{d}{a dissimilarity structure as produced by \code{dist}.}
@@ -40,12 +47,14 @@ hclust(d, method = "complete", members=NULL)
     \code{\link{title}}.  \code{sub} and \code{xlab} have a non-NULL
     default when there's a \code{tree$call}.}
   \item{\dots}{Further graphical arguments.}
+
+  \item{unit, level, hmin, square}{as yet unimplemented arguments of
+    \code{plclust} for S-plus compatibility.}
 }
 \value{
   An object of class \bold{hclust} which describes the
   tree produced by the clustering process.
   The object is a list with components:
-
   \item{merge}{an \eqn{n-1} by 2 matrix.
     Row \eqn{i} of \code{merge} describes the merging of clusters
     at step \eqn{i} of the clustering.
@@ -77,6 +86,12 @@ hclust(d, method = "complete", members=NULL)
   \item{dist.method}{the distance that has been used to create \code{d}
     (only returned if the distance object has a \code{"method"}
     attribute).}
+
+  There is a \code{\link{print}} and a \code{\link{plot}} method for
+  \code{hclust} objects.
+  The \code{plclust()} function is basically the same the plot method,
+  \code{plot.hclust}, primarily for back compatibility with S-plus. Its
+  extra arguments are not yet implemented.
 }
 \details{
   This function performs a hierarchical cluster analysis
