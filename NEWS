@@ -73,6 +73,8 @@ BUG FIXES
 
     o	z[[1]] <- ~x probl fixed as suggested by J.Lindsey 
 
+    o   unlist(list(a=1:3,b="b",c=333), rec=F) should get the names
+	right again
 
 		CHANGES IN R VERSION 0.63
 
