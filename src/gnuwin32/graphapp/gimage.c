@@ -52,7 +52,7 @@ static image copy2image8 (drawing dw)
 	p.y = y;
 	for (x = 0; x < w; x++) {
 	    p.x = x;
-	    col = ggetpixel(dw,p);
+	    col = ggetpixel(dw, p);
 	    /* only allow one transparent colour in the cmap: */
 	    if (col & 0xF0000000UL)
 		col  = 0xFFFFFFFFUL;	/* transparent */
@@ -61,7 +61,7 @@ static image copy2image8 (drawing dw)
 	    /* binary search the cmap: */
 	    low = 0;  high = cmapsize - 1;
 	    while (low <= high) {
-		mid = (low+high)/2;
+		mid = (low + high)/2;
 		if      (col < cmap[mid]) high = mid - 1;
 		else if (col > cmap[mid]) low  = mid + 1;
 		else break;
@@ -71,7 +71,7 @@ static image copy2image8 (drawing dw)
 		/* didn't find colour in cmap, insert it: */
 		if (cmapsize >= 256)
 		    return NULL;
-		for (j=cmapsize; j > low; j--)
+		for (j = cmapsize; j > low; j--)
 		    cmap[j] = cmap[j-1];
 		cmap[low] = col;
 		cmapsize ++;
@@ -89,33 +89,32 @@ static image copy2image8 (drawing dw)
 
     pixel8 = (byte *) new_img->pixels;
 
-    for (y=0; y < h; y++)
-    {    p.y =y;
-    for (x=0; x < w; x++)
-    {  p.x = x;
-    col = ggetpixel(dw, p);
-    /* only allow one transparent colour in the cmap: */
-    if (col & 0xF0000000UL)
-	col  = 0xFFFFFFFFUL;	/* transparent */
-    else
-	col &= 0x00FFFFFFUL;	/* opaque */
-    /* binary search the cmap (the colour must be there): */
-    low = 0;  high = cmapsize - 1;
-    while (low <= high) {
-	mid = (low+high)/2;
-	if      (col < cmap[mid]) high = mid - 1;
-	else if (col > cmap[mid]) low  = mid + 1;
-	else break;
-    }
+    for (y = 0; y < h; y++) {
+	p.y = y;
+	for (x = 0; x < w; x++) {
+	    p.x =  x;
+	    col = ggetpixel(dw, p);
+	    /* only allow one transparent colour in the cmap: */
+	    if (col & 0xF0000000UL)
+		col  = 0xFFFFFFFFUL;	/* transparent */
+	    else
+		col &= 0x00FFFFFFUL;	/* opaque */
+	    /* binary search the cmap (the colour must be there): */
+	    low = 0;  high = cmapsize - 1;
+	    while (low <= high) {
+		mid = (low + high)/2;
+		if      (col < cmap[mid]) high = mid - 1;
+		else if (col > cmap[mid]) low  = mid + 1;
+		else break;
+	    }
 
-    if (high < low) {
-	/* impossible situation */
-	delimage(new_img);
-	return NULL;
-    }
-
-    *pixel8 = mid;  pixel8 += 1;
-    }
+	    if (high < low) {
+		/* impossible situation */
+		delimage(new_img);
+		return NULL;
+	    }
+	    *(pixel8++) = mid;
+	}
     }
     return new_img;
 }
@@ -142,8 +141,7 @@ static image copy2image32 (drawing dw)
 	p.y = y;
 	for (x = 0; x < w; x++) {
 	    p.x = x;
-	    *pixel32 = ggetpixel(dw, p);
-	    pixel32 += 1;
+	    *(pixel32++) = ggetpixel(dw, p);
 	}
     }
     return new_img;
@@ -159,6 +157,7 @@ image bitmaptoimage (drawing dw)
 {
     image new_img;
     rect r = ggetcliprect(dw);
+
     gsetcliprect(dw, getrect(dw));
     new_img = copy2image8(dw);
     if (!new_img)
@@ -166,11 +165,6 @@ image bitmaptoimage (drawing dw)
     gsetcliprect(dw, r);
     return new_img;
 }
-
-
-
-
-
 
 
 

@@ -3,14 +3,19 @@ rw0650
 
 The environment variables have been changed: R_HOME is now R's home
 and R_USER is the HOME for the user which will be used by R (and
-defaults to HOME, if set). (There are many other such changes in R:
-for example RLIBS becomes R_LIBS.)
+defaults to HOME, if set, then to ${HOMEDIR}${HOMEPATH}, if that is
+set). (There are many other such changes in R: for example RLIBS
+becomes R_LIBS.)
 
 Saving a plot as postscript will produce a portrait plot irrespective
 of the setting of ps.options().
 
 New flag --no-environ suppresses reading .Renviron and is implied by
 --vanilla.
+
+When rterm is used non-interactively either --save or --no-save must be
+specified: these is no longer a default of --no-save (for consistency 
+with Unix).
 
 More support for building R into other applications: see the examples
 in the front-ends directory of the source distribution.

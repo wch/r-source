@@ -44,7 +44,6 @@ FILE *R_OpenInitFile(void)
     FILE *fp;
 
     fp = NULL;
-
     if (LoadInitFile) {
 	if ((fp = R_fopen(".Rprofile", "r")))
 	    return fp;

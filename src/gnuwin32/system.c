@@ -657,16 +657,15 @@ int cmdlineoptions(int ac, char **av)
  */
     if (getenv("R_USER")) {
 	strcpy(RUser, getenv("HOME"));
-	p = RUser + (strlen(RUser) - 1);
-	if (*p == '/' || *p == '\\') *p = '\0';
-    } else {
-	if (getenv("HOME")) {
+    } else if (getenv("HOME")) {
 	    strcpy(RUser, getenv("HOME"));
-	    p = RUser + (strlen(RUser) - 1);
-	    if (*p == '/' || *p == '\\') *p = '\0';
-	} else
-	    GetCurrentDirectory(MAX_PATH, RUser);
-    }
+    } else if (getenv("HOMEDIR")) {
+	    strcpy(RUser, getenv("HOMEDIR"));
+	    strcat(RUser, getenv("HOMEPATH"));
+    } else
+	GetCurrentDirectory(MAX_PATH, RUser);
+    p = RUser + (strlen(RUser) - 1);
+    if (*p == '/' || *p == '\\') *p = '\0';
     Rp->home = RUser;
     R_SetParams(Rp);
 
