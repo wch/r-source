@@ -261,7 +261,6 @@ superClassDepth <-
         if(is.list(exti) && is.function(exti$coerce))
             ok[i] <- FALSE
     }
-    browser()
     ext <- ext[ok]
     immediate <- names(ext)
     ## watch out for loops (e.g., matrix/array have mutual is relationship)
