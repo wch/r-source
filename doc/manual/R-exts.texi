@@ -2060,7 +2060,7 @@ environment frame and to perform the equivalent of @code{assign(x,
 value, envir = rho, inherits = TRUE)} respectively.
 
 @node Changes in R version 1.2,  , Finding and setting variables, Handling R objects in C
-@subsection Changes in @R{} version 1.2
+@subsection Changes in R version 1.2
 
 @R{} version 1.2.0 introduced a new `generational' garbage collector
 which meant that strings and vectors (and language objects) are handled
