@@ -271,11 +271,12 @@ function(contents, type = NULL)
     index <- contents[idx, c("Name", "Title"), drop = FALSE]
     if(nrow(index)) {
         ## If a \name is not a valid \alias, replace it by the first
-        ## alias. 
+        ## alias.
         aliases <- contents[idx, "Aliases"]
         bad <- which(!mapply("%in%", index[, 1], aliases))
         if(any(bad)) {
-            tmp <- sapply(aliases[bad], "[[", 1)
+            ## was [[, but that applies to lists not char vectors
+            tmp <- sapply(aliases[bad], "[", 1)
             tmp[is.na(tmp)] <- ""
             index[bad, 1] <- tmp
         }
@@ -404,7 +405,7 @@ function(file, text = NULL)
                              "must be a character string or connection"))
         lines <- Rd_pp(.read_Rd_lines_quietly(file))
     }
-    
+
     ## Get meta data (need to agree on what precisely these are), and
     ## remove the corresponding lines (assuming that these entries are
     ## all one-liners).  We mostly do this because \alias (see Paren.Rd)
@@ -680,7 +681,7 @@ function(db, FUN, ...)
     if(any(idx)) {
         msg <- "Rd syntax errors found"
         for(i in which(idx))
-            msg <- c(msg, 
+            msg <- c(msg,
                      paste("Syntax error in documentation object ",
                            sQuote(names(db)[i]), ":", sep = ""),
                      db[[i]])
@@ -708,7 +709,7 @@ function(db)
             ## This should not happen.
             ## We cannot refer to the bad Rd objects because we do not
             ## know their names, and have no idea which file they came
-            ## from ...) 
+            ## from ...)
             stop("cannot deal with Rd objects with missing/empty names")
         }
         else {
