@@ -14,7 +14,11 @@ The files are as follows.
 	other systems as well, but we first need to split this into
 	pieces.
 	R_BLAS_LIBS is based on the AC_ARG_WITH(fastblas) code from
-	Octave, but with tests for Alpha CXML/DXML commented out.
+	Octave, but with tests for Alpha CXML/DXML and IRIX SCSL and
+	SGIMATH libraries commented out.
+	Some macros do not conform to the Autoconf $PKG_$CATEGORY_$FOO
+	naming scheme.  These test for `features' such as GNOME, zlib,
+	etc., are named R_$FEATURE, and typically define HAVE_$FEATURE.
 
   am-fixes.m4
   	contains R specific versions of
@@ -43,6 +47,5 @@ The files are as follows.
 	* In AC_ARG_WITH(libglade-config), standardize doc strings.
 
   libtool.m4
-	is from the libtool CVS.  We currently include a recent version
-	of libtool.m4 because the release version 1.3.3 e.g. refuses to
-	link a shared lib against a static one.
+	is from libtool 1.4.
+	Changes made: one typo fixed (fixed in 1.4a or better).

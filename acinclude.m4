@@ -774,28 +774,26 @@ int main () {
 ## R_FUNC_CALLOC
 ##
 AC_DEFUN([R_FUNC_CALLOC],
-  [ AC_CACHE_CHECK([whether calloc is broken],
-      r_cv_func_calloc_broken,
-      AC_TRY_RUN([
+[AC_CACHE_CHECK([for working calloc], r_cv_func_calloc_works,
+[AC_TRY_RUN([
 #include <stdlib.h>
 int main () {
   int *p = calloc(0, sizeof(int));
   return(p == 0);
 }],
-	r_cv_func_calloc_broken=no,
-	r_cv_func_calloc_broken=yes,
-	r_cv_func_calloc_broken=yes))
-    if test "${r_cv_func_calloc_broken}" = yes; then
-      AC_DEFINE(CALLOC_BROKEN)
-    fi
-  ])
+	    [r_cv_func_calloc_works=yes],
+	    [r_cv_func_calloc_works=no],
+	    [r_cv_func_calloc_works=no])])
+if test "x${r_cv_func_calloc_works}" = xyes; then
+  AC_DEFINE(HAVE_WORKING_CALLOC)
+fi
+])
 ##
 ## R_FUNC_FINITE
 ##
 AC_DEFUN([R_FUNC_FINITE],
-  [ AC_CACHE_CHECK([whether finite is broken],
-      r_cv_func_finite_broken,
-      AC_TRY_RUN([
+[AC_CACHE_CHECK([for working finite], r_cv_func_finite_works,
+[AC_TRY_RUN([
 #include <math.h>
 #include "confdefs.h"
 int main () {
@@ -805,20 +803,19 @@ int main () {
   return(0);
 #endif
 }],
-	r_cv_func_finite_broken=no,
-	r_cv_func_finite_broken=yes,
-	r_cv_func_finite_broken=yes))
-    if test "${r_cv_func_finite_broken}" = yes; then
-      AC_DEFINE(FINITE_BROKEN)
-    fi
-  ])
+	    [r_cv_func_finite_works=yes],
+	    [r_cv_func_finite_works=no],
+	    [r_cv_func_finite_works=no])])
+if test "x${r_cv_func_finite_works}" = yes; then
+  AC_DEFINE(HAVE_WORKING_FINITE)
+fi
+])
 ##
 ## R_FUNC_LOG
 ##
 AC_DEFUN([R_FUNC_LOG],
-  [ AC_CACHE_CHECK([whether log is broken],
-      r_cv_func_log_broken,
-      AC_TRY_RUN([
+[AC_CACHE_CHECK([for working log], r_cv_func_log_works,
+[AC_TRY_RUN([
 #include <math.h>
 #include "confdefs.h"
 int main () {
@@ -828,20 +825,19 @@ int main () {
   return(log(0.) != -1. / 0);
 #endif
 }],
-	r_cv_func_log_broken=no,
-	r_cv_func_log_broken=yes,
-	r_cv_func_log_broken=yes))
-    if test "${r_cv_func_log_broken}" = yes; then
-      AC_DEFINE(LOG_BROKEN)
-    fi
-  ])
+	    [r_cv_func_log_works=yes],
+	    [r_cv_func_log_works=no],
+	    [r_cv_func_log_works=no])])
+if test "x${r_cv_func_log_works}" = xyes; then
+  AC_DEFINE(HAVE_WORKING_LOG)
+fi
+])
 ##
 ## R_FUNC_STRPTIME
 ##
 AC_DEFUN([R_FUNC_STRPTIME],
-  [ AC_CACHE_CHECK([whether strptime is broken],
-      r_cv_func_strptime_broken,
-      AC_TRY_RUN([
+[AC_CACHE_CHECK([for working strptime], r_cv_func_strptime_works,
+[AC_TRY_RUN([
 #include <time.h>
 int main () {
 #ifdef HAVE_STRPTIME
@@ -854,13 +850,13 @@ int main () {
   return(1);
 #endif
 }],
-	r_cv_func_strptime_broken=no,
-	r_cv_func_strptime_broken=yes,
-	r_cv_func_strptime_broken=yes))
-    if test "${r_cv_func_strptime_broken}" = yes; then
-      AC_DEFINE(STRPTIME_BROKEN)
-    fi
-  ])
+	    [r_cv_func_strptime_works=yes],
+	    [r_cv_func_strptime_works=no],
+	    [r_cv_func_strptime_works=no])])
+if test "x${r_cv_func_strptime_works}" = xyes; then
+  AC_DEFINE(HAVE_WORKING_STRPTIME)
+fi
+])
 ##
 ## R_IEEE_754
 ##
