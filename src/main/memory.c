@@ -19,7 +19,7 @@
  */
 
 /*
- *	This code implements a non-moving generational collector 
+ *	This code implements a non-moving generational collector
  *      with two or three generations.
  *
  *	Memory allocated by R_alloc is maintained in a stack.  Code
@@ -109,7 +109,7 @@ static int R_PageReleaseFreq = 1;
    R_NGrowIncrMin + R_NGrowIncrFrac * R_NSize.  When the number of
    nodes in use falls below R_NShrinkFrac, R_NSize is decremented by
    R_NShrinkIncrMin * R_NShrinkFrac * R_NSize.  Analogous adjustments
-   are made to R_VSize. 
+   are made to R_VSize.
 
    This mechanism for adjusting the heap size constants is very
    primitive but hopefully adequate for now.  Some modeling and
@@ -152,12 +152,29 @@ static int R_VGrowIncrMin = 80000, R_VShrinkIncrMin = 0;
    never set below the current ones. */
 static int R_MaxVSize = INT_MAX;
 static int R_MaxNSize = INT_MAX;
+static int vsfac = 1; /* current units for vsize: changes at initialization */
 
-int R_GetMaxVSize(void) { return R_MaxVSize; }
-void R_SetMaxVSize(int size) { if (size >= R_VSize) R_MaxVSize = size; }
+int R_GetMaxVSize(void) 
+{
+    if (R_MaxVSize == INT_MAX) return INT_MAX;
+    return R_MaxVSize*vsfac;
+}
 
-int R_GetMaxNSize(void) { return R_MaxNSize; }
-void R_SetMaxNSize(int size) { if (size >= R_NSize) R_MaxNSize = size; }
+void R_SetMaxVSize(int size)
+{
+    if (size == INT_MAX) return;
+    if (size >= R_VSize * vsfac) R_MaxVSize = (size+1)/sizeof(VECREC);
+}
+
+int R_GetMaxNSize(void) 
+{ 
+    return R_MaxNSize;
+}
+
+void R_SetMaxNSize(int size)
+{
+    if (size >= R_NSize) R_MaxNSize = size;
+}
 
 
 /* Miscellaneous Globals. */
@@ -588,7 +605,7 @@ static void TryToReleasePages(void)
 		char *data = PAGE_DATA(page);
 
 		next = page->next;
-		for (in_use = 0, j = 0; j < page_count; 
+		for (in_use = 0, j = 0; j < page_count;
 		     j++, data += node_size) {
 		    s = (SEXP) data;
 		    if (NODE_IS_MARKED(s)) {
@@ -675,13 +692,13 @@ static void AdjustHeapSize(int size_needed)
     else if (node_occup < R_NShrinkFrac) {
 	R_NSize -= R_NShrinkIncrMin + R_NShrinkIncrFrac * R_NSize;
 	if (R_NSize < NNeeded)
-	    R_NSize = NNeeded;
+	    R_NSize = (NNeeded < R_MaxNSize) ? NNeeded: R_MaxNSize;
 	if (R_NSize < orig_R_NSize)
 	    R_NSize = orig_R_NSize;
     }
 
     if (vect_occup > 1.0)
-	R_VSize = VNeeded;
+	R_VSize = (VNeeded < R_MaxVSize)? VNeeded: R_MaxVSize;
     if (vect_occup > R_VGrowFrac) {
 	int change = R_VGrowIncrMin + R_VGrowIncrFrac * R_NSize;
 	if (R_MaxVSize - R_VSize >= change)
@@ -750,7 +767,7 @@ static void old_to_new(SEXP x, SEXP y)
    together and order nodes within pages.  This involves a sweep of the
    heap, so it should not be done too often, but doing it at least
    occasionally does seem essential.  Sorting on each full colllection is
-   probably sufficient. 
+   probably sufficient.
 */
 
 #define SORT_NODES
@@ -1000,17 +1017,21 @@ SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_gc();
     gc_reporting = ogc;
     /*- now return the [used , gc trigger size] for cells and heap */
-    PROTECT(value = allocVector(INTSXP, 8));
+    PROTECT(value = allocVector(INTSXP, 10));
     INTEGER(value)[0] = onsize - R_Collected;
     INTEGER(value)[1] = ovsize - VHEAP_FREE();
     INTEGER(value)[4] = R_NSize;
     INTEGER(value)[5] = R_VSize;
     /* next four are in 0.1Mb, rounded up */
-    INTEGER(value)[2] = 10.0 * (onsize - R_Collected)/1048576.0 * 
+    INTEGER(value)[2] = 10.0 * (onsize - R_Collected)/1048576.0 *
 	sizeof(SEXPREC) + 0.999;
     INTEGER(value)[3] = 10.0 * (ovsize - VHEAP_FREE())/131072.0 + 0.999;
     INTEGER(value)[6] = 10.0 * R_NSize/1048576.0 * sizeof(SEXPREC) + 0.999;
     INTEGER(value)[7] = 10.0 * R_VSize/131072.0 + 0.999;
+    INTEGER(value)[8] = (R_MaxNSize < INT_MAX) ? 
+	(10.0 * R_MaxNSize/1048576.0 * sizeof(SEXPREC) + 0.999) : NA_INTEGER;
+    INTEGER(value)[9] = (R_MaxVSize < INT_MAX) ? 
+	(10.0 * R_MaxVSize/131072.0 + 0.999) : NA_INTEGER;
     UNPROTECT(1);
     return value;
 }
@@ -1018,13 +1039,13 @@ SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static void mem_err_heap(long size)
 {
-    errorcall(R_NilValue, "vector memory exhausted");
+    errorcall(R_NilValue, "vector memory exhausted (limit reached?)");
 }
 
 
 static void mem_err_cons()
 {
-    errorcall(R_NilValue, "cons memory exhausted");
+    errorcall(R_NilValue, "cons memory exhausted (limit reached?)");
 }
 
 /* InitMemory : Initialise the memory to be used in R. */
@@ -1040,7 +1061,8 @@ void InitMemory()
 	R_Suicide("couldn't allocate memory for pointer stack");
     R_PPStackTop = 0;
 
-    R_VSize = (((R_VSize + 1)/ sizeof(VECREC)));
+    vsfac = sizeof(VECREC);
+    R_VSize = (((R_VSize + 1)/ vsfac));
 
     UNMARK_NODE(&UnmarkedNodeTemplate);
 
@@ -1430,7 +1452,10 @@ SEXP allocList(int n)
 
 /* "gc" a mark-sweep or in-place generational garbage collector */
 
-void R_gc(void) { R_gc_internal(0); }
+void R_gc(void)
+{
+    R_gc_internal(0);
+}
 
 #ifdef HAVE_TIMES
 double R_getClockIncrement(void);
@@ -1492,13 +1517,31 @@ static void R_gc_internal(int size_needed)
 		 R_Collected, (100 * R_Collected / R_NSize));
 	vcells = VHEAP_FREE();
 	vfrac = (100.0 * vcells) / R_VSize;
-	/* arrange for percentage to be rounded down, or we get 
+	/* arrange for percentage to be rounded down, or we get
 	   `100% free' ! */
 	REprintf("%.1f Mbytes of heap free (%d%%)\n",
 		 vcells * sizeof(VECREC) / Mega, (int)vfrac);
     }
 }
 
+SEXP do_memlimits(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans;
+    int nsize, vsize, tmp;
+    
+    checkArity(op, args);
+    nsize = asInteger(CAR(args));
+    vsize = asInteger(CADR(args));
+    if(nsize != NA_INTEGER) R_SetMaxNSize(nsize);
+    if(vsize != NA_INTEGER) R_SetMaxVSize(vsize);
+    PROTECT(ans = allocVector(INTSXP, 2));
+    tmp = R_GetMaxNSize();
+    INTEGER(ans)[0] = (tmp == INT_MAX) ? NA_INTEGER : tmp;
+    tmp = R_GetMaxVSize();
+    INTEGER(ans)[1] = (tmp == INT_MAX) ? NA_INTEGER : tmp;
+    UNPROTECT(1);
+    return ans;
+}
 
 SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
 {

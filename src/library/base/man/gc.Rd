@@ -28,7 +28,11 @@ primary purpose of calling \code{gc} is for the report on memory usage.
   \code{"total"}, each also interpreted in megabytes (rounded up to
   the next 0.1Mb).
 
-\code{gcinfo} returns the previous value of the flag.
+  If maxima have been set for either \code{"Ncells"} or \code{"Vcells"},
+  a fifth column is printed giving the current limits in Mb (with
+  \code{NA} denoting no limit).
+
+  \code{gcinfo} returns the previous value of the flag.
 }
 \seealso{\code{\link{Memory}} on \R's memory management
   and \code{\link{gctorture}} if you are an \R hacker.}

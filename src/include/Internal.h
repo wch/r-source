@@ -227,6 +227,7 @@ SEXP do_match(SEXP, SEXP, SEXP, SEXP);
 SEXP do_matchcall(SEXP, SEXP, SEXP, SEXP);
 SEXP do_matprod(SEXP, SEXP, SEXP, SEXP);
 SEXP do_matrix(SEXP, SEXP, SEXP, SEXP);
+SEXP do_memlimits(SEXP, SEXP, SEXP, SEXP);
 SEXP do_memoryprofile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_menu(SEXP, SEXP, SEXP, SEXP);
 SEXP do_missing(SEXP, SEXP, SEXP, SEXP);

@@ -16,7 +16,9 @@ NEW FEATURES
 	marginally but sometimes by double or more.  The workspace is
 	no longer statically sized and both the vector heap and the
 	number of nodes can grow as needed.  (They can shrink again,
-	but never below the initially allocated sizes.)
+	but never below the initially allocated sizes.)  See ?Memory
+	for a longer description, including the new command-line
+	options to manage the settings.
 
     o	Formula objects now have an environment and code manipulating
 	them needs to take care to preserve it or set an appropriate
@@ -52,7 +54,7 @@ NEW FEATURES
 	place in $R_HOME/share. Migration of existing files might take
 	a while, though.
 
-    o	values of --nsize up to 50M (2Gb on 64-bit Solaris) are allowed.
+    o	values of --min-nsize up to 50M (2Gb on 64-bit Solaris) are allowed.
 
     o	The commands history can be loaded with loadhistory(), saved
 	with savehistory() and displayed with history(), under Windows

@@ -584,6 +584,7 @@ FUNTAB R_FunTab[] =
 {"apply",	do_apply,	0,	11,	3,	PP_FUNCALL},
 {"Rprof",	do_Rprof,	0,	11,	3,	PP_FUNCALL},
 {"object.size",	do_objectsize,	0,	11,	1,	PP_FUNCALL},
+{"mem.limits",	do_memlimits,	0,	11,	2,	PP_FUNCALL},
 #if 0
 {"visibleflag", do_visibleflag,	0,	1,	0,	PP_FUNCALL},
 #endif
@@ -712,7 +713,7 @@ FUNTAB R_FunTab[] =
 {"loadhistory", do_loadhistory,	0,	11,	1,	PP_FUNCALL},
 {"savehistory", do_savehistory,	0,	11,	1,	PP_FUNCALL},
 
-/* data-time manipulations */
+/* date-time manipulations */
 {"Sys.time",	do_systime,	0,	11,	0,	PP_FUNCALL},
 {"as.POSIXct",	do_asPOSIXct,	0,	11,	2,	PP_FUNCALL},
 {"as.POSIXlt",	do_asPOSIXlt,	0,	11,	2,	PP_FUNCALL},

@@ -56,6 +56,8 @@ typedef struct
     SA_TYPE 	SaveAction;
     int vsize;
     int nsize;
+    int max_vsize;
+    int max_nsize;
 
       /* Permanent copy of the command line arguments and the number
          of them passed to the application.

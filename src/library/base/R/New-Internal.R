@@ -86,13 +86,23 @@ duplicated <- function(x, incomparables = FALSE) {
 }
 format.info <- function(x).Internal(format.info(x))
 gc <- function(verbose = getOption("verbose"))
-    matrix(.Internal(gc(verbose))/c(1,1,10,10,1,1,10,10),2,4,
-           dimnames = list(c("Ncells","Vcells"),
-           c("used", "(Mb)", "gc trigger", "(Mb)")))
+{
+    res <-.Internal(gc(verbose))/c(1, 1, 10, 10, 1, 1, rep(10,4))
+    res <- matrix(res, 2, 5,
+                  dimnames = list(c("Ncells","Vcells"),
+                  c("used", "(Mb)", "gc trigger", "(Mb)", "limit (Mb)")))
+    if(all(is.na(res[, 5]))) res[, -5] else res
+}
 gcinfo <- function(verbose).Internal(gcinfo(verbose))
 gctorture <- function(on=TRUE)invisible(.Internal(gctorture(on)))
 gray <- function(level).Internal(gray(level))
 grey <- .Alias(gray)
+
+mem.limits <- function(nsize=NA, vsize=NA)
+{
+    structure(.Internal(mem.limits(as.integer(nsize), as.integer(vsize))),
+              names=c("nsize", "vsize"))
+}
 
 nchar <- function(x).Internal(nchar(x))
 

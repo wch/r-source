@@ -131,14 +131,10 @@ test-Reg:
 	@echo "running regression tests"
 	@$(MAKE) $(test-out-reg) RVAL_IF_DIFF=0
 
-# Note: we need to increase nsize (in fact, twice the default) in what
-# follows to make sure we can load the base package twice.
 test-undoc:
 	@for p in $(R_PKGS); do \
 	  echo "undocumented objects in package \`$${p}':"; \
-	  nsize=`$(R) --print-nsize`; \
-	  nsize=`expr 2 \* $${nsize}`; \
-	  echo "undoc(\"$${p}\")" | $(R) --nsize=$${nsize} | grep "^ *\\["; \
+	  echo "undoc(\"$${p}\")" | $(R) | grep "^ *\\["; \
 	  echo; \
 	done
 
