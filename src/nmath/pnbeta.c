@@ -1,10 +1,10 @@
 /*
  *  Algorithm AS 226 Appl. Statist. (1987) Vol. 36, No. 2
  *  Incorporates modification AS R84 from AS Vol. 39, pp311-2, 1990
- * 
+ *
  *  Returns the cumulative probability of x for the non-central
  *  beta distribution with parameters a, b and non-centrality lambda.
- * 
+ *
  *  Auxiliary routines required:
  *    lgamma - log-gamma function
  *    pbeta  - incomplete-beta function
@@ -17,7 +17,8 @@ double pbeta(double, double, double);
 
 double pnbeta(double x, double a, double b, double lambda)
 {
-    double a0, ans, ax, beta, c, errbd, gx, q, sumq, temp, x0, xj;
+    double a0, ans, ax, beta, c, errbd, gx, q, sumq, temp, x0;
+    int j;
 
     static double zero = 0;
     static double one = 1;
@@ -56,25 +57,25 @@ double pnbeta(double x, double a, double b, double lambda)
 	q = exp(-c + x0 * log(c) - lgamma(x0 + one));
     else
 	q = exp(-c);
-    xj = zero;
+
     ax = q * temp;
     sumq = one - q;
     ans = ax;
 
         /* recur over subsequent terms */
         /* until convergence is achieved */
-
+    j = 0;
     do {
-	xj = xj + one;
-	temp = temp - gx;
-	gx = x * (a + b + xj - one) * gx / (a + xj);
-	q = q * c / xj;
-	sumq = sumq - q;
+	j++;
+	temp += - gx;
+	gx *= x * (a + b + j - one) / (a + j);
+	q *= c / j;
+	sumq += - q;
 	ax = temp * q;
-	ans = ans + ax;
+	ans += ax;
 	errbd = (temp - gx) * sumq;
     }
-    while (xj < itrmax || errbd > errmax);
+    while (j < itrmax || errbd > errmax);
 
     if (errbd > errmax) {
 	ML_ERROR(ME_PRECISION);
