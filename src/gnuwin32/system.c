@@ -525,12 +525,16 @@ static void Putenv(char *str)
 
 static void processRenviron()
 {
-    char *opt[2], optf[MAX_PATH], buf[80];
+    char *opt[2], optf[MAX_PATH], buf[80], *tmp;
     int   ok;
 
 
     if (!optopenfile(".Renviron")) {
-	sprintf(optf, "%s/.Renviron", getenv("R_USER"));
+	/* R_USER is not necessarily set yet, so we have to work harder */
+	tmp = getenv("R_USER");
+	if(!tmp) tmp = getenv("HOME");
+	if(!tmp) return;
+	sprintf(optf, "%s/.Renviron", tmp);
 	if (!optopenfile(optf)) return;
     }
     while ((ok = optread(opt, '='))) {
