@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-12 2004-05-07
+Version 1.9-13 2004-05-12
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2372,6 +2372,11 @@ distributions of R.)
 
 *randomForest*
      Breiman's random forest classifier.
+
+*rbugs*
+     Functions to prepare files needed for running BUGS in batch mode, and
+     running BUGS from R.  Support for Linux systems with Wine is
+     emphasized.
 
 *ref*
      Functions for creating references, reading from and writing ro
