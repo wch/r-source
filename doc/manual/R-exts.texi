@@ -286,12 +286,12 @@ imported from but which do not need to be attached.
 
 The optional @samp{Suggests} field uses the same syntax as
 @samp{Depends} and lists packages that are not necessarily needed.  This
-includes packages used only in examples or vignettes, and packages
-loaded in the body of functions.  E.g., consider an example from package
-@pkg{foo} uses a dataset from package @pkg{bar}. Then it is not
-necessary to have @pkg{bar} for routine use of @pkg{foo}, unless one
-wants to execute the examples: it is nice to have @pkg{bar}, but not
-necessary.  The general rules are
+includes packages used only in examples or vignettes (@pxref{Writing
+package vignettes}), and packages loaded in the body of functions.  E.g.,
+consider an example from package @pkg{foo} uses a dataset from package
+@pkg{bar}. Then it is not necessary to have @pkg{bar} for routine use of
+@pkg{foo}, unless one wants to execute the examples: it is nice to have
+@pkg{bar}, but not necessary.  The general rules are
 
 @itemize @bullet
 @item
@@ -948,6 +948,12 @@ excluded by default.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.
+
+Unless @kbd{R CMD build} is invoked with the @option{--no-vignettes}
+option, it will attempt to rebuild and vignettes (@pxref{Writing package
+vignettes}) in the package: for this to be possible the current version
+and any dependent packages need to be installed in an available library
+tree (see the Note: below).
 
 @code{R CMD build} can also build pre-compiled version of packages for
 binary distributions, but @code{R CMD INSTALL --build} is preferred (and
