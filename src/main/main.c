@@ -369,7 +369,7 @@ void setup_Rmainloop(void)
     /* Perhaps it makes more sense to quit gracefully? */
 
     fp = R_OpenLibraryFile("base");
-    R_Inputfile = fp;
+    R_Inputfile = NULL;
     if (fp == NULL) {
 	R_Suicide("unable to open the base package\n");
     }
@@ -384,7 +384,6 @@ void setup_Rmainloop(void)
 	doneit = 1;
 	R_ReplFile(fp, R_NilValue, 0, 0);
     }
-    R_Inputfile = NULL;
     fclose(fp);
 
     /* This is where we try to load a user's */
