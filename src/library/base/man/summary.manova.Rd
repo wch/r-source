@@ -7,8 +7,8 @@
 }
 \usage{
 \method{summary}{manova}(object,
-               test = c("Pillai", "Wilks", "Hotelling-Lawley", "Roy"),
-               intercept = FALSE, \dots)
+        test = c("Pillai", "Wilks", "Hotelling-Lawley", "Roy"),
+        intercept = FALSE, \dots)
 }
 \arguments{
   \item{object}{An object of class \code{"manova"} or an \code{aov}
