@@ -42,6 +42,10 @@ unless overridden.)
 
 doc/manual/Makefile.win now has targets for fullrefman.{dvi,pdf}.
 
+Added "Help | Search help..." menu item to Rgui as a front end to 
+help.search().
+
+
 
 Bug fixes
 ---------
