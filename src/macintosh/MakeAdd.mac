@@ -18,10 +18,10 @@ all Ä library
 
 
 ## ------------- library -----------
-PACKAGES =  mvtnorm #sn #acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack
-LIBF = mvtnorm #acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack
+PACKAGES =  tseries #mvtnorm #sn #acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack
+LIBF = tseries #mvtnorm #acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack
 
-DATA = #sn #akima bootstrap EMV evd gss pcurve qtl sm tripack
+DATA = tseries ##sn #akima bootstrap EMV evd gss pcurve qtl sm tripack
 DEMO = #
 INST = #evd qtl sm
 
@@ -39,11 +39,16 @@ mainfiles Ä $OutOfDate
 	   NewFolder {RHOME}library:{pkg}
 	  end
 	  if  `Exists ::library:{pkg}:DESCRIPTION`
-	  Duplicate -y ::library:{pkg}:DESCRIPTION {RHOME}library:{pkg}
+	  Duplicate -y ::library:{pkg}:DESCRIPTION {RHOME}library:{pkg}:DESCRIPTION
 	  end
 	  if  `Exists ::library:{pkg}:DESCRIPTION.in`
 	  Duplicate -y ::library:{pkg}:DESCRIPTION.in {RHOME}library:{pkg}:DESCRIPTION
 	  end
+	  if  `Exists {RHOME}library:{pkg}:DESCRIPTION`
+	   duplicate -y {RHOME}library:{pkg}:DESCRIPTION {RHOME}library:{pkg}:des
+	   catenate {RHOME}library:{pkg}:des :pkgver > {RHOME}library:{pkg}:DESCRIPTION
+       delete  {RHOME}library:{pkg}:des
+      end	  
 	  if  `Exists ::library:{pkg}:INDEX`
 	   Duplicate -y ::library:{pkg}:INDEX {RHOME}library:{pkg}
 	  end 

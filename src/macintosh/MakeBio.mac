@@ -41,11 +41,16 @@ mainfiles Ä $OutOfDate
 	   NewFolder {RHOME}library:{pkg}
 	  end
 	  if  `Exists ::library:{pkg}:DESCRIPTION`
-	  Duplicate -y ::library:{pkg}:DESCRIPTION {RHOME}library:{pkg}
+	  Duplicate -y ::library:{pkg}:DESCRIPTION {RHOME}library:{pkg}:DESCRIPTION
 	  end
 	  if  `Exists ::library:{pkg}:DESCRIPTION.in`
 	  Duplicate -y ::library:{pkg}:DESCRIPTION.in {RHOME}library:{pkg}:DESCRIPTION
 	  end
+	  if  `Exists {RHOME}library:{pkg}:DESCRIPTION`
+	   duplicate -y {RHOME}library:{pkg}:DESCRIPTION {RHOME}library:{pkg}:des
+	   catenate {RHOME}library:{pkg}:des :pkgver > {RHOME}library:{pkg}:DESCRIPTION
+       delete  {RHOME}library:{pkg}:des
+      end	  
 	  if  `Exists ::library:{pkg}:INDEX`
 	   Duplicate -y ::library:{pkg}:INDEX {RHOME}library:{pkg}
 	  end 
