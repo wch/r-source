@@ -27,6 +27,20 @@
 #include <Rmath.h>
 #include <Fileio.h>
 
+/* From time to time changes in R, such as the addition of a new SXP,
+ * may require changes in the save file format.  Here are some
+ * guidelines on handling format changes:
+ *
+ *    Starting with 1.4 there is a version number associated with save
+ *    file formats.  This version number should be incremented when
+ *    the format is changed so older versions of R can recognize and
+ *    reject the new format with a meaningful error message.
+ *
+ *    R should remain able to write older workspace formats.  An error
+ *    should be signaled if the contents to be saved is not compatible
+ *    with the requested format.
+ */
+
 #define R_MAGIC_ASCII_V1   1001
 #define R_MAGIC_BINARY_V1  1002
 #define R_MAGIC_XDR_V1     1003

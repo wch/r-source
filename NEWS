@@ -257,6 +257,10 @@ NEW FEATURES
         still need to have library(methods) in the .Rprofile file in
         this case.
 
+    o   save() now takes a version argument to specify the worspace file
+        format version to use.  This is in preparation for a change in
+        the default format.
+
 
 
 BUG FIXES

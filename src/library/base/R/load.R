@@ -1,11 +1,12 @@
 load <- function(file,envir = parent.frame())
     .Internal(load(file,envir))
 
-save <- function(..., list = character(0), file = "", ascii = FALSE)
+save <- function(..., list = character(0), file = "", ascii = FALSE,
+	         version = NULL)
 {
     names <- as.character( substitute( list(...)))[-1]
     list<- c(list, names)
-    invisible(.Internal(save(list, file, ascii)))
+    invisible(.Internal(save(list, file, ascii, version)))
 }
 
 save.image <- function (file = ".RData")

@@ -1,7 +1,7 @@
 \name{save}
 \title{Save R Objects}
 \usage{
-save(\dots, list = character(0), file = "", ascii = FALSE)
+save(\dots, list = character(0), file = "", ascii = FALSE, version = NULL)
 save.image(file = ".RData")
 }
 \alias{save}
@@ -15,6 +15,8 @@ save.image(file = ".RData")
     written.  This is useful for transporting data between machines of
     different types.  The default value of \code{ascii} is \code{FALSE}
     which leads to a more compact binary file being written.}
+  \item{version}{the workspace format version to use.  NULL specifies
+    the current default format.  Other values are not used yet.}
   }
 }
 \description{
