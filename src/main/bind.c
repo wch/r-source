@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 
 #include "Defn.h"
 
@@ -349,81 +348,76 @@ static void ExtractNames(SEXP args, int recurse, int check, SEXP base)
 	PROTECT(blank=mkChar(""));
 
 	while(args != R_NilValue) {
-		if(!isNull(CAR(args)))
-  		    if(isVector(CAR(args))) {
-			if(!isNull(TAG(args))) {
-				switch(length(CAR(args))) {
-				case 0:
-					break;
-				case 1:
-					STRING(ans_names)[ans_nnames++] = TagName(TAG(args),base, offset);
-					break;
-				default:
-					for(i=0 ; i<length(CAR(args)) ; i++)
-						STRING(ans_names)[ans_nnames++] = TagName(TAG(args), base, i+1+offset);
-				}
-			}
-			else {
-				if(base == R_NilValue) {
-					if(isNull(s = getAttrib(CAR(args), R_NamesSymbol))) {
-						for(i=0 ; i<length(CAR(args)) ; i++)
-							STRING(ans_names)[ans_nnames++] = blank;
-					}
-					else {
-						for(i=0 ; i<length(CAR(args)) ; i++)
-							STRING(ans_names)[ans_nnames++] = STRING(s)[i];
-					}
-				}
-				else {
-					if(isNull(s = getAttrib(CAR(args), R_NamesSymbol))) {
-						for(i=0 ; i<length(CAR(args)) ; i++)
-							STRING(ans_names)[ans_nnames++] = TagName(base,R_NilValue,i+1+offset);
-					}
-					else {
-						for(i=0 ; i<length(CAR(args)) ; i++)
-							STRING(ans_names)[ans_nnames++] = TagName(STRING(s)[i],base,offset);
-					}
-					offset+=i;
-				}
-			}
+	  if(!isNull(CAR(args))) {
+	    if(isVector(CAR(args))) {
+		if(!isNull(TAG(args))) {
+		  switch(length(CAR(args))) {
+		  case 0:
+		    break;
+		  case 1:
+		    STRING(ans_names)[ans_nnames++] = TagName(TAG(args),base, offset);
+		    break;
+		  default:
+		    for(i=0 ; i<length(CAR(args)) ; i++)
+		      STRING(ans_names)[ans_nnames++] = TagName(TAG(args), base, i+1+offset);
+		  }
+		} else {
+		  if(base == R_NilValue) {
+		    if(isNull(s = getAttrib(CAR(args), R_NamesSymbol))) {
+		      for(i=0 ; i<length(CAR(args)) ; i++)
+			STRING(ans_names)[ans_nnames++] = blank;
+		    }
+		    else {
+		      for(i=0 ; i<length(CAR(args)) ; i++)
+			STRING(ans_names)[ans_nnames++] = STRING(s)[i];
+		    }
+		  } else {
+		    if(isNull(s = getAttrib(CAR(args), R_NamesSymbol))) {
+		      for(i=0 ; i<length(CAR(args)) ; i++)
+			STRING(ans_names)[ans_nnames++] = TagName(base,R_NilValue,i+1+offset);
+		    } else {
+		      for(i=0 ; i<length(CAR(args)) ; i++)
+			STRING(ans_names)[ans_nnames++] = TagName(STRING(s)[i],base,offset);
+		    }
+		    offset+=i;
+		  }
 		}
-		else if(isList(CAR(args))) {
-			base = TAG(args);
-			if(recurse) {
-				ExtractNames(CAR(args), recurse, 0, base);
-			}
-			else {
-				i = 1;
-				s = CAR(args);
-				while(s != R_NilValue) {
-					if( isNull(base) ) {
-						if(!isNull(TAG(s)))
-							STRING(ans_names)[ans_nnames++] = TagName(TAG(s),base,0);
-						else
-							STRING(ans_names)[ans_nnames++] = blank;
-					}
-					else {
-						if( !isNull(TAG(s)) )
-							STRING(ans_names)[ans_nnames++] = TagName(TAG(s),base,0);
-						else
-							STRING(ans_names)[ans_nnames++] = TagName(TAG(s),base,i);
-					}
-					s = CDR(s);
-					i++;
-				}
-			}
-			base = R_NilValue;
+	    } else if(isList(CAR(args))) {
+		base = TAG(args);
+		if(recurse) {
+		  ExtractNames(CAR(args), recurse, 0, base);
+		} else {
+		  i = 1;
+		  s = CAR(args);
+		  while(s != R_NilValue) {
+		    if( isNull(base) ) {
+		      if(!isNull(TAG(s)))
+			STRING(ans_names)[ans_nnames++] = TagName(TAG(s),base,0);
+		      else
+			STRING(ans_names)[ans_nnames++] = blank;
+		    } else {
+		      if( !isNull(TAG(s)) )
+			STRING(ans_names)[ans_nnames++] = TagName(TAG(s),base,0);
+		      else
+			STRING(ans_names)[ans_nnames++] = TagName(TAG(s),base,i);
+		    }
+		    s = CDR(s);
+		    i++;
+		  }
 		}
-		else {
-			if(!isNull(TAG(args)))
-				STRING(ans_names)[ans_nnames++] = TAG(args);
-			else
-				STRING(ans_names)[ans_nnames++] = blank;
-		}
-		args = CDR(args);
-	}
+		base = R_NilValue;
+	    } else { /* neither	 Vector	 nor  List */
+		if(!isNull(TAG(args)))
+		  STRING(ans_names)[ans_nnames++] = TAG(args);
+		else
+		  STRING(ans_names)[ans_nnames++] = blank;
+	    }
+	  } /* if(! null...) */
+	  args = CDR(args);
+	} /* while */
 	if( check && ans_nnames != ans_length) {
-		printf("INTERNAL ERROR: ans_nnames = %d    ans_length = %d\n", ans_nnames, ans_length);
+		printf("INTERNAL ERROR: ans_nnames = %d	   ans_length = %d\n",
+		       ans_nnames, ans_length);
 		error("incorrect names vector length\n");
 	}
 	UNPROTECT(1);
@@ -570,7 +564,7 @@ SEXP substituteList(SEXP, SEXP);
 
 SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	int mode=ANYSXP; 	/* for -Wall; none from the ones below */
+	int mode=ANYSXP;	/* for -Wall; none from the ones below */
 	SEXP a, p, t;
 
 		/* First we check to see if any of the */
@@ -849,25 +843,25 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode)
 
 		/* check conformability of matrix arguments */
 
-        n = 0;
-        for (t = args; t != R_NilValue; t = CDR(t)) {
-                if (length(CAR(t))>0) {
-                        dims = getAttrib(CAR(t), R_DimSymbol);
-                        if (length(dims) == 2) {
-                                if (mcols == 0)
-                                        mcols = INTEGER(dims)[1];
-                                else if (mcols != INTEGER(dims)[1])
-                                        errorcall(call, "number of columns of matrices must match (see arg %d)\n", n + 1);
-                                rows += INTEGER(dims)[0];
-                        }
-                        else {
-                                cols = imax(cols, length(CAR(t)));
-                                rows += 1;
-                        }
-                }
-                n++;
-        }
-        if (mcols != 0) cols = mcols;
+	n = 0;
+	for (t = args; t != R_NilValue; t = CDR(t)) {
+		if (length(CAR(t))>0) {
+			dims = getAttrib(CAR(t), R_DimSymbol);
+			if (length(dims) == 2) {
+				if (mcols == 0)
+					mcols = INTEGER(dims)[1];
+				else if (mcols != INTEGER(dims)[1])
+					errorcall(call, "number of columns of matrices must match (see arg %d)\n", n + 1);
+				rows += INTEGER(dims)[0];
+			}
+			else {
+				cols = imax(cols, length(CAR(t)));
+				rows += 1;
+			}
+		}
+		n++;
+	}
+	if (mcols != 0) cols = mcols;
 
 		/* check conformability of vector arguments */
 		/* look for dimnames */

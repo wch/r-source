@@ -74,8 +74,8 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 		start = INTEGER(sa)[i % k];
 		stop = INTEGER(so)[i % l];
 		slen = strlen(CHAR(STRING(x)[i]));
-                if ( start < 1 )
-                        start = 1;
+		if ( start < 1 )
+			start = 1;
 		if (start > stop || start > slen) {
 			buff[0]='\0';
 			STRING(s)[i] = mkChar(buff);
@@ -102,7 +102,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP s, t, x, tok, w;
 	int i, j, len, tlen, ntok;
-	char buff[MAXELTSIZE], *pt, *split;
+	char buff[MAXELTSIZE], *pt, *split = "";
 
 	checkArity(op, args);
 	x = CAR(args);
@@ -122,11 +122,11 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			split = CHAR(STRING(tok)[i % tlen]);
 			ntok = 0;
 			if(strtok(buff, split) != NULL)
-			         do {
-			         	ntok++;
-			         } while (strtok(NULL, split) != NULL);
+				 do {
+					ntok++;
+				 } while (strtok(NULL, split) != NULL);
 		}
-		else 
+		else
 			ntok=strlen(buff);
 
 		PROTECT(t = allocVector(STRSXP, ntok));

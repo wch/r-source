@@ -130,11 +130,12 @@ char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
 	/* Latin1 types are (rightfully) upset */
 	/* WHAT NEEDS TO CHANGE */
 
-/* UNUSED: */
+#ifdef not_used
 static int hexdigit(unsigned int x)
 {
 	return ((x <= 9)? '0' :	 'A'-10) + x;
 }
+#endif
 
 int Rstrlen(char *s)
 {
@@ -238,7 +239,6 @@ char *EncodeString(char *s, int w, int quote, int right)
 
 char *EncodeElement(SEXP x, int index, int quote)
 {
-	SEXP lev;
 	int w, d, e, wi, di, ei;
 
 	switch(TYPEOF(x)) {

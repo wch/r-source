@@ -403,11 +403,12 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 			nextfun=findVar(t,env);
 			if( !isFunction(nextfun) )
 				error("No method to invoke\n");
-			if (TYPEOF(nextfun) == CLOSXP )
+			if (TYPEOF(nextfun) == CLOSXP ) {
 				if(INTERNAL(t) != R_NilValue )
 					nextfun = INTERNAL(t);
 				else
 					error("No method to invoke\n");
+			}
 		}
 	}
 	PROTECT(s = allocVector(STRSXP,length(class)-i));

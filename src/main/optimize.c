@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -218,12 +218,15 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* evaluate the call. */
 
 static SEXP R_fcall;	/* function */
-/*------ UNUSED */static SEXP R_gcall;	/* gradient */
-/*------ UNUSED */static SEXP R_hcall;	/* hessian */
 static SEXP R_env;	/* where to evaluate the calls */
 
-/*------ UNUSED */static int have_gradient;
-/*------ UNUSED */static int have_hessian;
+#ifdef NOT_yet_used
+static SEXP R_gcall;	/* gradient */
+static SEXP R_hcall;	/* hessian */
+
+static int have_gradient;
+static int have_hessian;
+#endif
 
 
 

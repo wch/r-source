@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -30,12 +30,13 @@ static char *ConsoleBufp;
 static int  ConsoleBufCnt;
 static char  ConsolePrompt[32];
 
-/* NOT Used ? */
+#ifdef NOT_used
 static void InitConsoleGetchar()
 {
 	ConsoleBufCnt = 0;
 	ConsolePrompt[0] = '\0';
 }
+#endif
 
 static int ConsoleGetchar()
 {
@@ -720,10 +721,10 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 
 			sortVector(levs);
 
-			PROTECT(a=match(levs, cvec, NA_INTEGER));	
-			for (i = 0; i < len; i++) 
+			PROTECT(a=match(levs, cvec, NA_INTEGER));
+			for (i = 0; i < len; i++)
 				INTEGER(rval)[i]=INTEGER(a)[i];
-	
+
 			setAttrib(rval, R_LevelsSymbol, levs);
 			PROTECT(a = allocVector(STRSXP, 1));
 			STRING(a)[0] = mkChar("factor");

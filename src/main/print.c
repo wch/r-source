@@ -262,7 +262,7 @@ static void printList(SEXP s)
 
 static void PrintExpression(SEXP s)
 {
-	SEXP u, v, nms;
+	SEXP u;
 	int i, n;
 
 #ifdef OLD

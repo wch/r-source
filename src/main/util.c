@@ -1,6 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -321,6 +322,7 @@ int ncols(SEXP s)
 		return length(s);
 	}
 	else error("object is not a matrix\n");
+	return -1;/*NOTREACHED*/
 }
 
 int nlevels(SEXP f)

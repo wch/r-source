@@ -464,8 +464,8 @@ static void GetAxisLimits(double left, double right, double *low, double *high)
 
 static SEXP labelformat(SEXP labels)
 {
-    SEXP l, ans = R_NilValue;/* -Wall*/
-    int save_digits, i, n, nl, w, d, e, wi, di, ei;
+    SEXP ans = R_NilValue;/* -Wall*/
+    int save_digits, i, n, w, d, e, wi, di, ei;
     char *strp;
     n = length(labels);
     save_digits = print_digits;

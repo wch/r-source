@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997 Robert Gentleman and Ross Ihaka
  *
  *  This source code module:
@@ -1702,7 +1702,6 @@ static BBOX operatorBBox(SEXP expr)
   }
   else
     error("Invalid Formula\n");
-
 }
 
 static void drawTheOperator(SEXP operator)

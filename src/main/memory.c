@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -51,7 +51,7 @@
  */
 
 static int gc_reporting = 0;
-	
+
 void installIntVector(SEXP, int, FILE *);
 
 SEXP do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -90,7 +90,7 @@ Handle  gVHeapH;
 
 	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 */
- 
+
 void CleanUpMemory( void )
 {
 	OSErr   result;
@@ -131,11 +131,11 @@ void InitMemory()
 		R_Suicide( "couldn't allocate system memory for pointer stack" );
 	TempHLock( gStackH, &result );
 	R_PPStack = (SEXP*)*gStackH;
-#else  
+#else
 	if (!(R_PPStack = (SEXP *) malloc(R_PPStackSize * sizeof(SEXP))))
 		R_Suicide("couldn't allocate memory for pointer stack");
 #endif
-     
+
 	R_PPStackTop = 0;
 
 #ifdef Macintosh
@@ -148,7 +148,7 @@ void InitMemory()
 	if (!(R_NHeap = (SEXPREC *) malloc(R_NSize * sizeof(SEXPREC))))
 		R_Suicide("couldn't allocate memory for node heap");
 #endif
-     
+
 	R_VSize = (((R_VSize + 1)/ sizeof(VECREC)));
 
 #ifdef Macintosh
@@ -164,7 +164,7 @@ void InitMemory()
 	if (!(R_VHeap = (VECREC *) malloc(R_VSize * sizeof(VECREC))))
 		R_Suicide("couldn't allocate memory for vector heap");
 #endif
-     
+
 	R_VTop = &R_VHeap[0];
 	R_VMax = &R_VHeap[R_VSize - 1];
 
@@ -302,7 +302,7 @@ SEXP allocVector(SEXPTYPE type, int length)
 {
 	SEXP s;
 	int i;
-	long size;
+	long size=0;
 
 	if (length < 0 )
 		errorcall(R_GlobalContext->call,

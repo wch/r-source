@@ -386,10 +386,10 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 			do_browser(call,op,args,rho);
 		}
 		begincontext(&cntxt, CTXT_LOOP, R_NilValue, R_NilValue, R_NilValue, R_NilValue);
-		if ((tmp = setjmp(cntxt.cjmpbuf)))
+		if ((tmp = setjmp(cntxt.cjmpbuf))) {
 			if (tmp == CTXT_BREAK) break;	/* break */
 			else continue;			/* next  */
-		else {
+		} else {
 			if (isVector(v)) {
 				UNPROTECT(1);
 				PROTECT(v = allocVector(TYPEOF(val), 1));
@@ -468,10 +468,10 @@ SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 
 		begincontext(&cntxt, CTXT_LOOP, R_NilValue, R_NilValue, R_NilValue, R_NilValue);
-		if ((cond = setjmp(cntxt.cjmpbuf)))
+		if ((cond = setjmp(cntxt.cjmpbuf))) {
 			if (cond == CTXT_BREAK) break;	/* break */
 			else continue;			/* next  */
-		else {
+		} else {
 			PROTECT(t = eval(CAR(CDR(args)), rho));
 			s = eval(CAR(args), rho);
 			UNPROTECT(1);
@@ -506,10 +506,10 @@ SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 
 		begincontext(&cntxt, CTXT_LOOP, R_NilValue, R_NilValue, R_NilValue,R_NilValue);
-		if ((cond = setjmp(cntxt.cjmpbuf)))
+		if ((cond = setjmp(cntxt.cjmpbuf))) {
 			if (cond == CTXT_BREAK) break;	/*break */
 			else continue;			/* next */
-		else {
+		} else {
 			t = eval(CAR(args), rho);
 			endcontext(&cntxt);
 		}
