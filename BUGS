@@ -54,10 +54,6 @@ Subject: Accuracy Bug 1228
 From: "David Heiser" <daheiser@gvn.net>
 Date: Mon, 5 Apr 2004 19:23:35 -0700
 ..This is really bug PR#1228 (in category 'Accuracy')
-* PR# 6756 *
-Subject: pcauchy precision
-From: terra@gnome.org
-Date: Sun, 11 Apr 2004 19:03:31 +0200 (CEST)
 * PR# 6772 *
 Subject: phyper accuracy and efficiency
 From: terra@gnome.org
@@ -228,7 +224,7 @@ Date: Wed,  3 Dec 2003 06:01:57 +0100 (CET)
 Subject: [R] lattice: levelplot: error: min not meaningful for factor
 From: Wolfram Fischer <wolfram@fischer-zim.ch>
 Date: Mon, 22 Dec 2003 17:29:49 +0100
-..Dot documented to work, but intended to.
+..Not documented to work, but intended to.
 * PR# 6597 *
 Subject: summary.rpart() in rpart package
 From: "Chen, Feiming" <feiming_chen@spectramarketing.com>
@@ -828,6 +824,8 @@ Date: Mon, 22 Sep 2003 02:26:31 +0200 (MET DST)
 Subject: save image as postscript side-effect
 From: martin.noellenburg@stud.uni-karlsruhe.de
 Date: Mon,  5 Apr 2004 17:51:13 +0200 (CEST)
+..This is saving from the windows() device menu.
+..Not reproducible
 
 Directory:  incoming
 
@@ -840,14 +838,6 @@ Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 Subject: Incorrect handling of NA's in cor()
 From: msa@biostat.mgh.harvard.edu
 Date: Fri,  9 Apr 2004 18:45:40 +0200 (CEST)
-* PR# 6768 *
-Subject: R CMD check on Win fails to detect failed installations
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Thu, 15 Apr 2004 11:18:57 +0200
-* PR# 6769 *
-Subject: R INSTALL resumes on Win in case of errors
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Thu, 15 Apr 2004 11:37:43 +0200
 * PR# 6776 *
 Subject: barplot() does not draw bars correctly in R 1.9.0
 From: "Philippe Grosjean" <phgrosjean@sciviews.org>
@@ -862,31 +852,3 @@ Subject: Re: [Rd] barplot() does not draw bars correctly in R 1.9.0
 From: Achim Zeileis <Achim.Zeileis@wu-wien.ac.at>
 Date: Fri, 16 Apr 2004 16:53:03 +0200
 ..part of 6776
-* PR# 6781 *
-Subject: type.convert
-From: hosking@watson.ibm.com
-Date: Fri, 16 Apr 2004 18:31:03 +0200 (CEST)
-* PR# 6784 *
-Subject: full space, this user is limit quota
-From: market@pchome.net
-Date: 17 Apr 2004 06:38:49 -0000
-* PR# 6785 *
-Subject: Urbg V~i_c_o`din H'y_d_roc_0_d_0`n_e Lortab Lorcet Norco Pain Killers
-From: "miguel ryder" <kennaweddell@spadespanker.com>
-Date: Fri, 16 Apr 2004 23:27:01 -1100
-* PR# 6786 *
-Subject: Wonder formula available
-From: "Priscilla O." <kambogmu@yahoo.com>
-Date: Tue, 17 Feb 2004 08:39:36 -0400
-* PR# 6787 *
-Subject: Wmoaq bvy V~i_c_o`din Pain Pills Now US Doctors US ph`armacy Next Day Service
-From: "chad amsberry" <lizettephann@city2city.com>
-Date: Sat, 17 Apr 2004 15:10:23 +0000
-* PR# 6788 *
-Subject: Srjygfywd V~i_c_o`din Now
-From: "theo klemencic" <tishanuack@mozartmail.com>
-Date: Sat, 17 Apr 2004 10:54:35 -0900
-* PR# 6789 *
-Subject: [patch] R-1.9.0: compile error without nl_langinfo(CODESET)
-From: Adrian Bunk <bunk@fs.tum.de>
-Date: Sun, 18 Apr 2004 00:18:22 +0200
