@@ -1,12 +1,11 @@
 \name{biplot}
 \title{Biplot of Multivariate Data}
 \usage{
-biplot(x, ...)
-}
-\usage{
-biplot.default(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2), 
+biplot(x, \dots)
+
+biplot.default(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2),
             xlabs = NULL, ylabs = NULL, expand = 1, xlim = NULL,
-            ylim = NULL, arrow.len = 0.1, ...) 
+            ylim = NULL, arrow.len = 0.1, \dots)
 }
 \alias{biplot}
 \alias{biplot.default}
@@ -41,8 +40,8 @@ biplot.default(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2),
   A biplot is plot which aims to represent both the observations and
   variables of a matrix of multivariate data on the same plot. There are
   many variations on biplots (see the references) and perhaps the most
-  widely used one is implemented by \code{biplot.princomp} in package
-  \code{MASS}.  The function \code{biplot.default} merely provides the
+  widely used one is implemented by \code{\link{biplot.princomp}}.
+  The function \code{biplot.default} merely provides the
   underlying code to plot two sets of variables on the same figure.
 
   Graphical parameters can also be given to \code{biplot}.
@@ -51,11 +50,11 @@ biplot.default(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2),
 a plot is produced on the current graphics device.
 }
 \references{
-  K. R. Gabriel (1971) The biplot graphical display of matrices with
+  K. R. Gabriel (1971).  The biplot graphical display of matrices with
   application to principal component analysis. \emph{Biometrika}
   \bold{58}, 453-467.
 
-  J.C. Gower and D. J. Hand (1996) \emph{Biplots.} Chapman \& Hall.
+  J.C. Gower and D. J. Hand (1996). \emph{Biplots}. Chapman & Hall.
 }
 \author{B.D. Ripley}
 
