@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-14, 2001-01-08
+@set FAQ-VERSION 1.2-15, 2001-01-09
 @set REL-VERSION 1.2.0
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1660,8 +1660,8 @@ matrix.
 @end table
 
 Directory @file{src/contrib/Omegahat} contains yet unreleased packages
-from the @uref{http://www.omegahat.org, Omegahat Project for Statistical
-Computing}.  Currently, there are
+from the @uref{http://www.omegahat.org/, Omegahat Project for
+Statistical Computing}.  Currently, there are
 
 @table @strong
 @item CORBA
@@ -1741,12 +1741,21 @@ trees are rooted.  You do not have to specify the default tree in
 @env{R_LIBS}.  E.g., to use a private tree in @file{$HOME/lib/R} and a
 public site-wide tree in @file{/usr/local/lib/R-contrib}, put
 
-@example
+@smallexample
 R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"; export R_LIBS
-@end example
+@end smallexample
 
 @noindent
-into your (Bourne) shell profile or your @file{~/.Renviron} file.
+into your (Bourne) shell profile or even preferably, add the line
+
+@smallexample
+R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"
+@end smallexample
+
+@noindent
+your @file{~/.Renviron} file.  (Note that no @code{export} statement is
+needed or allowed in this file; see the on-line help for @code{Startup}
+for more information.)
 
 @node How can add-on packages be used?, How can add-on packages be removed?, How can add-on packages be installed?, R Add-On Packages
 @section How can add-on packages be used?
