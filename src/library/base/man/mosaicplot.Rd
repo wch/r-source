@@ -5,12 +5,14 @@
 \title{Mosaic Plots}
 \usage{
 mosaicplot(x, \dots)
-mosaicplot.default (X, main = NULL, xlab = NULL, ylab = NULL,
-                    sort = NULL, off = NULL,
-                    dir = NULL, color = FALSE)
+mosaicplot.default(X, main = NULL, xlab = NULL, ylab = NULL,
+                   sort = NULL, off = NULL, dir = NULL,
+                   color = FALSE)
+mosaicplot.formula(formula, data = NULL, subset, na.action, \dots)
 }
 \arguments{
-  \item{x}{a contingency table, with optional category labels
+  \item{x}{an \R object.}
+  \item{X}{a contingency table, with optional category labels
     specified in the \code{dimnames(x)} attribute.  The table is
     best created by the \code{table()} command, which produces an
     object of type array.}
@@ -32,9 +34,21 @@ mosaicplot.default (X, main = NULL, xlab = NULL, ylab = NULL,
   \item{color}{(\code{TRUE} or vector of integer colors) for color
     shading or (\code{FALSE}, the default) for empty boxes with no
     shading.}
+  \item{formula}{a formula, such as \code{y ~ x}.
+  \item{data}{a data.frame (or list) from which the variables in
+    \code{formula} should be taken.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used in the fitting process.}
+  \item{na.action}{a function which indicates what should happen when
+    the data contain \code{NA}s.}
+  \item{\dots}{further arguments to the default mosaicplot method.}
 }
 \description{Plots a mosaic on the current graphics device.}
 \details{
+  This is a generic function.  It currently has a default method
+  (\code{\link{mosaicplot.default}}) and a formula interface
+  (\code{\link{mosaicplot.formula}}).
+
   See Emerson (1998) for more information and a case study with
   television viewer data from Nielsen Media Research.
 }
@@ -54,18 +68,22 @@ mosaicplot.default (X, main = NULL, xlab = NULL, ylab = NULL,
 
   Friendly, M. (1994).
   Mosaic displays for multi-way contingency tables.
-  \emph{Journal of the American Statistical Association}, \bold{89}, 190-200.\cr
+  \emph{Journal of the American Statistical Association}, \bold{89},
+  190-200.
+  \cr
   The home page of Michael Friendly
   (\url{http://hotspur.psych.yorku.ca/SCS/friendly.html}) provides
   information on various aspects of graphical methods for analyzing
   categorical data, including mosaic plots.
 }
 \examples{
-## Use interesting data!
+## FIXME: Use interesting data!
 
 ## Artificial 4-way table
 Y <- table(trunc(3*runif(1000)), trunc(3*runif(1000)),
            trunc(5*runif(1000))-10, trunc(3*runif(1000)))
 dimnames(Y)[[2]] <- c("Cat", "Dog", "Horse")
 mosaicplot(Y, main = "Sample Mosaic", color = TRUE)
+
+## FIXME: Provide an example for the formula interface
 }
