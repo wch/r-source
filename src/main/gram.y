@@ -1623,9 +1623,9 @@ static int SymbolValue(int c)
 		SourcePtr = FunctionSource + 8;
 	    }
 	    FunctionStart[FunctionLevel] = SourcePtr - 8;
-	    #if 0
-	    printf("%d,%d\n",SourcePtr - FunctionSource, FunctionLevel);
-	    #endif
+#if 0
+	    printf("%d,%d\n", SourcePtr - FunctionSource, FunctionLevel);
+#endif
 	}
 	return kw;
     }
