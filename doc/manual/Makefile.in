@@ -41,6 +41,8 @@ R_RD4PDF = @R_RD4PDF@
 
 pkgsrcs = $(R_PKGS:=-pkg.tex)
 
+texiincludes = version.texi $(srcdir)/R-defs.texi
+
 .SUFFIXES:
 .SUFFIXES: .dvi .info .texi .pdf
 
@@ -100,13 +102,13 @@ stamp-refman-dvi: $(pkgsrcs)
 FORCE:
 
 $(OBJECTS_DVI): $(srcdir)/texinfo.tex
-R-exts.dvi: version.texi
+R-exts.dvi: $(texiincludes)
 version.texi: Makefile $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@echo "creating $(subdir)/$@"
 	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
 	  v="$${v} (`sed 's|/| |g' $(top_srcdir)/date-stamp`)"; \
 	  echo "@set VERSION $${v}" > $@)
-R-intro.dvi: stamp-images-eps version.texi
+R-intro.dvi: stamp-images-eps $(texiincludes)
 stamp-images-eps:
 	@if [ "$(srcdir)" != "." ]; then \
 	  $(MAKE) rhome=$(top_builddir) install-images-eps; \
@@ -114,8 +116,8 @@ stamp-images-eps:
 	@touch $@
 
 info: $(OBJECTS_INFO)
-R-exts.info: version.texi
-R-intro.info: version.texi
+R-exts.info: $(texiincludes)
+R-intro.info: $(texiincludes)
 
 pdf: refman.pdf $(OBJECTS_PDF)
 refman.pdf: version.tex $(srcdir)/Rd.sty stamp-refman-pdf
@@ -143,8 +145,8 @@ stamp-refman-pdf: $(pkgsrcs)
 	@touch $@
 
 $(OBJECTS_PDF): $(srcdir)/texinfo.tex
-R-exts.pdf: version.texi
-R-intro.pdf: stamp-images-pdf version.texi
+R-exts.pdf: $(texiincludes)
+R-intro.pdf: stamp-images-pdf $(texiincludes)
 stamp-images-pdf:
 	@if [ "$(srcdir)" != "." ]; then \
 	  $(MAKE) rhome=$(top_builddir) install-images-pdf; \
