@@ -23,7 +23,7 @@ RDIFF = $(R_HOME)/bin/Rdiff
 	@rm -f $@ $@.fail
 	@echo "  Running \`$<'"
 	@R_LIBS=$(R_LIBS) $(R) < $< > $@
-	@if test -f $@.save ; then \
+	@if test -f $@.save; then \
 	  mv $@ $@.fail; \
 	  echo @ECHO_N@ "  Comparing \`$@' to \`$@.save' ...@ECHO_C@"; \
 	  $(RDIFF) $@.fail $@.save 0 || exit 1; \
@@ -34,7 +34,7 @@ RDIFF = $(R_HOME)/bin/Rdiff
 all:
 	@(out=`echo "$(test-out)" | sed 's/ //g'`; \
 	  if test -n "$${out}"; then \
-	    $(MAKE) -f $(R_HOME)/etc/Makeconf-tests "$${out}"; \
+	    $(MAKE) -f $(R_HOME)/etc/Makeconf-tests $(test-out); \
 	  fi)
 
 clean:

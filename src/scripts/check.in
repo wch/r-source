@@ -1,5 +1,5 @@
 #! @PERL@
-
+#-*- perl -*-
 
 use Cwd;
 use File::Basename;
@@ -11,7 +11,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.4 $ ';
+my $revision = ' $Revision: 1.5 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -19,6 +19,7 @@ $version = $1;
 ($name = $0) =~ s|.*/||;
 
 $latex = "@LATEX@";
+$make = "@MAKE@";
 
 
 my @knownoptions = ("help|h", "version|v", "outdir|o:s",
@@ -36,7 +37,7 @@ my $logdir=getcwd();
 chdir($startdir);
 
 my $tmpdir = R_getenv("TMPDIR", "/tmp");
-my $R_home = $ENV{'R_HOME'} ||
+my $R_HOME = $ENV{'R_HOME'} ||
     die "Error: Environment variable R_HOME not found\n";
 
 my $R_libs = $ENV{'R_LIBS'};
@@ -111,7 +112,7 @@ foreach $pkg (@ARGV){
     
     chdir($startdir);
     print "\n";
-    if(system("R INSTALL -l $library $pkg")){
+    if(system("${R_HOME}/bin/R INSTALL -l $library $pkg")){
 	$log->error("installation failed");
     }
     print("\n");
@@ -120,7 +121,7 @@ foreach $pkg (@ARGV){
 	chdir($pkglogdir);
 	if(-d "$library/$pkgname/R-ex"){
 	    $log->creating("examples.R");
-	    if(system("${R_home}/bin/massage-Examples ".
+	    if(system("${R_HOME}/bin/massage-Examples ".
 		      "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
 		      "> examples.R")){
 		$log->error();
@@ -128,15 +129,57 @@ foreach $pkg (@ARGV){
 	    }
 	    $log->result("OK");
 	    $log->checking("examples");
-	    if(system("R BATCH $R_opts examples.R")){
+	    if(system("${R_HOME}/bin/R BATCH $R_opts examples.R")){
 		$log->error("running examples.R failed");
 		exit(1);
 	    }
 	    $log->result("OK");
 	}
 
+	if(-d "$startdir/$pkg/tests"){
+	    my $testdir="$startdir/$pkg/tests";
+	    $log->checking("tests");
+	    my $makefiles="-f ${R_HOME}/etc/Makeconf-tests";
+	    my $makevars="";
+	    if(-r "$testdir/Makefile"){
+		$makefiles .= " -f $testdir/Makefile";
+	    }
+	    if(-r "$testdir/Makevars"){
+		$makevars = " -f $testdir/Makevars";
+	    }
+	    else{
+		open makevars, "> Makevars";
+		print makevars "test-src-1=";
+		while(<$testdir/*.R>){
+		    print makevars "\\\n " . basename($_);
+		}
+		print makevars "\n";
+		print makevars "test-src-auto=";
+		while(<$testdir/*.Rin>){
+		    s/Rin$/R/;
+		    print makevars "\\\n " . basename($_);
+		}
+		print makevars "\n";
+		close makevars;
+		$makevars = " -f Makevars";
+	    }
+	    print "\n";
+	    if(<$testdir/*.save>){
+		system("cp -f $testdir/*.save .");
+	    }
+	    if(system("$make $makefiles $makevars VPATH=$testdir")){
+		$log->error();
+		exit(1);
+	    }
+	    $log->result("OK");
+	}
+		
+	    
+
+
+		
 	if(-d "$library/$pkgname/latex"){
-	    $ENV{'TEXINPUTS'}="$R_home/doc/manual:$ENV{'TEXINPUTS'}";
+	    $ENV{'TEXINPUTS'}="$R_HOME/doc/manual:$ENV{'TEXINPUTS'}";
 	    $log->creating("manual.tex");
 	    open manual, "> manual.tex";
 	    print manual "\\documentclass\{article\}\n" .
@@ -156,7 +199,7 @@ foreach $pkg (@ARGV){
 	    if(-x $latex){
 		$log->checking("manual.tex");
 		print "\n";
-		if(system("latex manual")){
+		if(system("$latex manual")){
 		    $log->error();
 		    exit(1);
 		}
@@ -167,8 +210,8 @@ foreach $pkg (@ARGV){
 	    
     }
     else{
-	$log->message("Running examples and latex not yet implemented ".
-		      "for bundles");
+	$log->message("Running examples, tests and latex " .
+		      "not yet implemented for bundles");
     }
 
     if($log->{"warnings"}){
@@ -192,7 +235,7 @@ sub updateIndex {
 
     my ($oldindex, $Rdfiles) = @_;
     my $newindex = "$tmpdir/Rcheck.$$";
-    system("${R_home}/bin/Rdindex ${Rdfiles} > ${newindex}");
+    system("${R_HOME}/bin/Rdindex ${Rdfiles} > ${newindex}");
     my $diff = `diff -b $oldindex $newindex`;
     if($diff){
 	$log->result("NO");
@@ -372,7 +415,7 @@ sub check_pkg {
 	$log->checking("for undocumented objects");
 	my @out = split(/\n/,
 			`echo \"undoc(dir = \\\"${dir}\\\")\" | \
-                         ${R_home}/bin/R ${R_opts}`);
+                         ${R_HOME}/bin/R ${R_opts}`);
 	my @err = grep {s/^Error *//} @out;
 	@out = grep {/^ *\[/} @out;
 	if($#err<0){
