@@ -1,7 +1,7 @@
 \name{glm}
 \title{Fitting Generalized Linear Models}
 \usage{
-glm(formula, family=gaussian, data, weightst=NULL, subsett=NULL,
+glm(formula, family=gaussian, data, weights=NULL, subset=NULL,
         na.action=na.fail, start=NULL, offset=NULL,
         control=glm.control(epsilon=0.0001, maxit=10, trace=FALSE),
         model = TRUE, method = "glm.fit", x = FALSE, y = TRUE)
@@ -57,6 +57,8 @@ glm.fit(x, y, weights=rep(1, nrow(x)),
 Models for \code{glm} are specified by giving
 a symbolic description of the linear predictor and
 a description of the error distribution.
+}
+\details{
 A typical predictor has the form
 \code{response ~ terms} where \code{response} is the (numeric)
 response vector and \code{terms} is a series of terms which
