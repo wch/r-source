@@ -1,5 +1,7 @@
 include MkRules
 
+all: rbuild rpackage rdocs
+
 ## configuration macros
 HELP = YES
 WINHELP = CHM# NO, CHM, BOTH
@@ -55,7 +57,6 @@ endif
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
-all: rbuild rpackage rdocs
 
 # separate as Tcl/Tk headers are needed.
 tcl: 
@@ -81,6 +82,9 @@ rlibs:
 	$(MAKE) -C ./getline
 	$(MAKE) -C ../extra/xdr
 	$(MAKE) -C ./math
+ifdef USE_LIBXML
+	$(MAKE) -C ../extra/libxml OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
+endif
 
 
 COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
