@@ -19,14 +19,11 @@
 ##
 ## Send any bug reports to r-bugs@r-project.org
 
-## Usage: extract-usage FILE
-
 use Getopt::Long;
 use R::Rdtools;
 use R::Utils;
-use R::Rd;
 
-my $revision = ' $Revision: 1.6 $ ';
+my $revision = ' $Revision: 1.7 $ ';
 my $version;
 my $name;
 
@@ -76,7 +73,7 @@ while (<INFILE>) {
     open RDFILE, "< $_";
     print OUTFILE "# usages in file $_\n";
 
-    my $text = R::Rd::Rdpp($_, $OSdir);
+    my $text = &Rdpp($_, $OSdir);
 
     print OUTFILE "# arglist: ", join(" ", get_arglist($text)), "\n"
       unless ($opt_mode eq "codoc");

@@ -1,10 +1,12 @@
 package R::Rdtools;
 
-use Text::DelimMatch;
+use Carp;
 use Exporter;
+use FileHandle;
+use Text::DelimMatch;
 
 @ISA = qw(Exporter);
-@EXPORT = qw(get_section get_usages get_arglist);
+@EXPORT = qw(get_section get_usages get_arglist Rdpp);
 
 my $delimcurly = new Text::DelimMatch("\\{", "\\}");
 $delimcurly->escape("\\");
@@ -202,6 +204,34 @@ sub get_arglist {
     }
 
     @args;
+}
+
+sub Rdpp {
+
+    my ($file, $OS) = @_;
+    my $fh = new FileHandle "< $file" or croak "open($file): $!\n";
+    my $skipping;
+    my $text;
+    $OS = "unix" unless $OS;    
+    while(<$fh>) {
+        if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
+            if ($1 ne $OS) { $skipping = 1; }
+            next;
+        }
+        if (/^#ifndef\s+([A-Za-z0-9]+)/o) {
+            if ($1 eq $OS) { $skipping = 1; }
+            next;
+        }
+        if (/^#endif/o) {
+            $skipping = 0;
+            next;
+        }
+        next if $skipping > 0;
+	next if /^\s*%/o;
+        $text .= $_;
+    }
+    close($fh);
+    $text;
 }
 
 1;

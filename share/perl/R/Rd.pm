@@ -21,6 +21,7 @@ package R::Rd;
 use strict;
 use Carp;
 use FileHandle;
+use R::Rdtools;
 
 sub info {
 
@@ -43,35 +44,6 @@ sub info {
 	push @{$self->{"keywords"}}, $1;
     }
     bless $self, $class;
-}
-
-sub Rdpp {
-
-    my $file = $_[0];
-    my $OS = $_[1];
-    my $fh = new FileHandle "< $file" or croak "open($file): $!\n";
-    my $skipping;
-    my $text;
-    $OS = "unix" unless $OS;    
-    while(<$fh>) {
-        if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
-            if ($1 ne $OS) { $skipping = 1; }
-            next;
-        }
-        if (/^#ifndef\s+([A-Za-z0-9]+)/o) {
-            if ($1 eq $OS) { $skipping = 1; }
-            next;
-        }
-        if (/^#endif/o) {
-            $skipping = 0;
-            next;
-        }
-        next if $skipping > 0;
-	next if /^\s*%/o;
-        $text .= $_;
-    }
-    close($fh);
-    $text;
 }
 
 1;
