@@ -77,12 +77,10 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 all-basic-tests = Specific Reg Internet
 all-devel-tests = IsAs Lapack Nafns Postscript Random Demo Segfault \
    Standalone Packages
-all-extra-tests = Lapack Nafns Postscript Random \
-  DocArgs FF Methods codoc undoc
 
 all check: test-all-basics
 check-devel: check test-all-devel
-check-all: check-devel # test-Examples-Recommended
+check-all: check-devel
 
 
 .Rin.R:
@@ -118,6 +116,16 @@ reg-plot.Rout: reg-plot.R
 	@$(RDIFF) reg-plot.ps $(srcdir)/reg-plot.ps.save $(RVAL_IF_DIFF)
 	@echo "OK"
 
+test-all-basics:
+	@for name in $(all-basic-tests); do \
+	  $(MAKE)  -f Makefile.win test-$${name} || exit 1; \
+	done
+
+test-all-devel:
+	@for name in $(all-devel-tests); do \
+	  $(MAKE)  -f Makefile.win test-$${name} || exit 1; \
+	done
+
 test-Specific-strict: $(test-out-strict)
 test-Specific-sloppy: $(test-out-sloppy)
 test-Specific:
@@ -133,21 +141,6 @@ test-Packages:
 	  echo ; \
 	  echo "* checking package '$${p}'"; \
 	  rcmd check ../src/library/$${p} || echo; \
-	done
-
-test-all-basics:
-	@for name in $(all-basic-tests); do \
-	  $(MAKE)  -f Makefile.win test-$${name} || exit 1; \
-	done
-
-test-all-devel:
-	@for name in $(all-devel-tests); do \
-	  $(MAKE)  -f Makefile.win test-$${name} || exit 1; \
-	done
-
-test-all-extras:
-	@for name in $(all-extra-tests); do \
-	  $(MAKE)  -f Makefile.win test-$${name} || exit 1; \
 	done
 
 test-Demo:
@@ -192,7 +185,7 @@ test-Reg:
 test-Segfault:
 	@echo "running tests to possibly trigger segfaults"
 	@$(MAKE) -f Makefile.win $(test-out-segfault) RVAL_IF_DIFF=0
-	@$(RM) data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots.*
+	@rm -f data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots.*
 
 test-Standalone:
 	@echo "testing building standalone Rmath"

@@ -99,8 +99,6 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 all-basic-tests = Examples Specific Reg Internet
 all-devel-tests = IsAs Lapack Nafns Postscript Random Demo Segfault \
    Standalone Packages
-all-extra-tests = Lapack Nafns Postscript Random \
-  DocArgs FF Methods codoc undoc
 
 all check: Makefile test-all-basics
 check-devel: check test-all-devel
@@ -181,14 +179,17 @@ test-all-basics: Makefile
 	@for name in $(all-basic-tests); do \
 	  $(MAKE) test-$${name} || exit 1; \
 	done
+
 test-all-devel: Makefile
 	@for name in $(all-devel-tests); do \
 	  $(MAKE) test-$${name} || exit 1; \
 	done
+
 test-Examples:
 	@(cd Examples && $(MAKE) $@)
 test-Examples-Recommended:
 	@(cd Examples && $(MAKE) $@)
+
 test-Specific-strict: $(test-out-strict)
 test-Specific-sloppy: $(test-out-sloppy)
 test-Specific:
@@ -208,11 +209,6 @@ test-Packages:
 
 test-Gct: $(test-out-gct)
 
-test-all-extras: Makefile
-	@for name in $(all-extra-tests); do \
-	  $(MAKE) test-$${name} || exit 1; \
-	done
-
 test-Demo:
 	@echo "running demos from base and eda"
 	@$(MAKE) $(test-out-demo) RVAL_IF_DIFF=0
@@ -221,6 +217,7 @@ test-Demo:
 ## So allow this to fail: it may be slow doing so.
 test-Internet:
 	@echo "running tests of Internet and socket functions"
+	@echo "  expect some differences"
 	-@$(MAKE) $(test-out-internet) RVAL_IF_DIFF=0
 
 test-IsAs:
