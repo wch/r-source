@@ -266,6 +266,11 @@ DEPRECATED & DEFUNCT
 
 INSTALLATION CHANGES
 
+    o	[Experimental!]
+	New configure option --enable-utf8 to enable support for
+	UTF-8 locales.  [Does little as yet, and feasibility on the 
+	current platform is unchecked as yet.]
+
     o	R_XTRA_[CF]FLAGS are now used during the configuration tests,
 	and [CF]PICFLAGS if --enable-R-shlib was specified.  This
 	ensures that features such as inlining are only used if the

@@ -244,7 +244,12 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     pcre *re_pcre = NULL;
     pcre_extra *re_pe = NULL;
     const unsigned char *tables = NULL;
-    int options = 0/* PCRE_UTF8 */, erroffset, ovector[30];
+#ifdef SUPPORT_UTF8
+    int options = PCRE_UTF8;
+#else
+    int options = 0;
+#endif
+    int erroffset, ovector[30];
     const char *errorptr;
     Rboolean usedRegex = FALSE, usedPCRE = FALSE;
 

@@ -206,6 +206,12 @@ AC_ARG_ENABLE([linux-lfs],
 [want_linux_lfs="${enableval}"],
 [want_linux_lfs=no])
 
+AC_ARG_ENABLE([utf8],
+[AC_HELP_STRING([--enable-utf8],
+                [Enable support for UTF-8 locales @<:@no@:>@])],
+[want_utf8_support="${enableval}"],
+[want_utf8_support=no])
+
 
 ### ** Optional packages.
 
@@ -1345,6 +1351,12 @@ if test "x${want_linux_lfs}" = xyes; then
 R_LARGE_FILES
 fi
 
+## UTF-8 locales -- unchecked at present
+if test "x${want_utf8_support}" = xyes; then
+AC_DEFINE(SUPPORT_UTF8, 1, [Define this to enable support for UTF-8 locales.])
+fi
+AC_SUBST(SUPPORT_UTF8)
+
 
 ### * Miscellaneous.
 
@@ -1600,6 +1612,9 @@ fi
 ## always have these two on Unix.
 ## R_SH_VAR_ADD(r_capabilities, [bzip2], [, ])
 ## R_SH_VAR_ADD(r_capabilities, [PCRE], [, ])
+if test "${want_utf8_support}" = yes; then
+  R_SH_VAR_ADD(r_capabilities, [UTF8], [, ])
+fi
 r_options=
 if test "${want_R_framework}" = yes; then
   R_SH_VAR_ADD(r_options, [framework], [, ])

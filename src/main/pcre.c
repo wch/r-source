@@ -37,7 +37,12 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, vec, ind, ans;
     int i, j, n, nmatches;
-    int igcase_opt, value_opt, options = 0/* PCRE_UTF8 */, erroffset;
+    int igcase_opt, value_opt, erroffset;
+#ifdef SUPPORT_UTF8
+    int options = PCRE_UTF8;
+#else
+    int options = 0;
+#endif
     const char *errorptr;
     pcre *re_pcre;
     const unsigned char *tables;
@@ -192,7 +197,12 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, rep, vec, ans;
     int i, j, n, ns, nns, nmatch, offset, re_nsub;
-    int global, igcase_opt, options = 0/* PCRE_UTF8 */, erroffset;
+    int global, igcase_opt, erroffset;
+#ifdef SUPPORT_UTF8
+    int options = PCRE_UTF8;
+#else
+    int options = 0;
+#endif
     char *s, *t, *u, *uu;
     const char *errorptr;
     pcre *re_pcre;
@@ -299,6 +309,11 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ans, matchlen;
     int i, n, st, erroffset;
+#ifdef SUPPORT_UTF8
+    int options = PCRE_UTF8;
+#else
+    int options = 0;
+#endif
     const char *errorptr;
     pcre *re_pcre;
     const unsigned char *tables;
@@ -312,7 +327,7 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, R_MSG_IA);
 
     tables = pcre_maketables();
-    re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), 0/* PCRE_UTF8 */, 
+    re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options, 
 			   &errorptr, &erroffset, tables);
     if (!re_pcre) errorcall(call, "invalid regular expression");
     n = length(text);
