@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2003  The R Development Core Team.
+ *  Copyright (C) 2000-2004  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@
 #if defined(HAVE_GLIBC2) && !defined(__USE_BSD)
 # define __USE_BSD		/* so that we get unsetenv() */
 # include <stdlib.h>
-# undef __USE_BSD		/* just to make sure */
+# undef __USE_BSD		/* used later */
 #else
 # include <stdlib.h>
 #endif
@@ -574,7 +574,7 @@ SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     tz = getAttrib(x, install("tzone"));
 
     /* workaround for glibc bug in strftime */
-#if defined __GNUC__ && __GNUC__ >= 2
+#if defined HAVE_GLIBC2
 #ifdef __USE_BSD
     tm.tm_zone = NULL;
 #else
