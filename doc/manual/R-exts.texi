@@ -1990,7 +1990,8 @@ The Windows equivalent is the command @code{Rcmd SHLIB}; files
 @file{Makevars.win} or @file{Makefile.win} are used in preference to
 @file{Makevars} or @file{Makefile} if they exist.  (This does need the
 files in the @R{} binary Windows distribution for installing source
-packages to be installed.)
+packages to be installed.)  For details of building DLLs with 
+a variety of compilers, see @samp{readme.packages}.
 
 @node Interfacing C++ code, Handling R objects in C, Creating shared libraries, System and foreign language interfaces
 @section Interfacing C++ code
