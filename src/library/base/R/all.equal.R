@@ -56,24 +56,31 @@ function(target, current, tolerance = .Machine$double.eps ^ .5,
     if(is.na(xy) || xy > tolerance)
 	paste("Mean", what, if(cplx)"Mod", "difference:", format(xy)) else TRUE
 }
-
-all.equal.character <- function(target, current, ...)
+"all.equal.character" <-
+    function (target, current, ...) 
 {
     lt <- length(target)
     lc <- length(current)
-    if(lt != lc) {
-	msg <- paste("Lengths (", lt, ", ", lc,
-		     ") differ (string compare on first ", ll <- min(lt, lc),
-		     ")", sep = "")
-	ll <- seq(length = ll)
-	target <- target[ll]
-	current <- current[ll]
-    } else msg <- NULL
-    ne <- target != current
-    if(!any(ne) && is.null(msg)) TRUE
-    else if(any(ne)) c(msg, paste(sum(ne), "string mismatches"))
+    if (lt != lc) {
+        msg <- paste("Lengths (", lt, ", ", lc, ") differ (string compare on first ", 
+                     ll <- min(lt, lc), ")", sep = "")
+        ll <- seq(length = ll)
+        target <- target[ll]
+        current <- current[ll]
+    }
+    else msg <- NULL
+    nas<-is.na(target)
+    if (any(nas!=is.na(current)))
+         return(paste("`is.NA' value mismatches:", sum(is.na(current)), 
+            "in current,", sum(out), " in target"))
+    ne <- !nas & target != current
+    if (!any(ne) && is.null(msg)) 
+        TRUE
+    else if (any(ne)) 
+        c(msg, paste(sum(ne), "string mismatches"))
     else msg
 }
+
 
 all.equal.factor <- function(target, current, ...)
 {

@@ -86,7 +86,7 @@ format.octmode <- function(x, ...)
         y <- floor(y/8)
         ans0 <- paste(z, ans0, sep="")
     }
-    ans <- rep("NA", length(x))
+    ans <- rep(as.character(NA), length(x))
     ans[!isna] <- ans0
     ans
 }

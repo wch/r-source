@@ -910,7 +910,10 @@ static void NewMakeLists (SEXP obj, SEXP sym_list, SEXP env_list)
 static void OutCHARSXP (FILE *fp, SEXP s)
 {
     R_assert(TYPEOF(s) == CHARSXP);
-    OutString(fp, CHAR(s));
+    if (CHAR(s)==CHAR(NA_STRING)) /* blech */
+	    OutString(fp,(char *) 0);
+    else 
+	    OutString(fp, CHAR(s));
 }
 
 static void NewWriteVec (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp)
@@ -1081,6 +1084,7 @@ static SEXP InCHARSXP (FILE *fp)
     /* FIXME: rather than use strlen, use actual length of string when
      * sized strings get implemented in R's save/load code.  */
     tmp = InString(fp);
+    if (tmp==0) return NA_STRING;
     len = strlen(tmp);
     AllocBuffer(len);
     s = allocVector(CHARSXP, len);
@@ -1264,6 +1268,10 @@ static int InIntegerAscii(FILE *fp)
 static void OutStringAscii(FILE *fp, char *x)
 {
     int i, nbytes;
+    if (x==0) { /* String NA */
+	    fprintf(fp,"%d",-1);
+	    return;
+    }
     nbytes = strlen(x);
     fprintf(fp, "%d ", nbytes);
     for (i = 0; i < nbytes; i++) {
@@ -1303,6 +1311,7 @@ static char *InStringAscii(FILE *fp)
     /* FIXME : Ultimately we need to replace */
     /* this with a real string allocation. */
     /* All buffers must die! */
+    if (nbytes== -1) return( (char *) 0); /* String NA */
     if (nbytes >= buflen) {
 	char *newbuf = realloc(buf, nbytes + 1);
 	if (newbuf == NULL)
@@ -1432,6 +1441,7 @@ static char *InStringBinary(FILE *fp)
     static char *buf = NULL;
     static int buflen = 0;
     int nbytes = InIntegerBinary(fp);
+    if (nbytes==-1) return((char *) 0); /* String NA */
     if (nbytes >= buflen) {
 	char *newbuf = realloc(buf, nbytes + 1);
 	if (newbuf == NULL)
@@ -1482,6 +1492,7 @@ static void OutIntegerBinary(FILE *fp, int i)
 
 static void OutStringBinary(FILE *fp, char *s)
 {
+    if (s==0) OutIntegerBinary(fp, -1); /* String NA */
     int n = strlen(s);
     OutIntegerBinary(fp, n);
     if (fwrite(s, sizeof(char), n, fp) != n)
@@ -1558,7 +1569,12 @@ static int InIntegerXdr(FILE *fp)
 
 static void OutStringXdr(FILE *fp, char *s)
 {
-    unsigned int n = strlen(s);
+    unsigned int n;
+    if (s==0) { /* String NA */
+	    OutIntegerXdr(fp, -1);
+	    return;
+    }
+    n = strlen(s);
     OutIntegerXdr(fp, n);
     if (!xdr_bytes(&xdrs, &s, &n, n)) {
 	xdr_destroy(&xdrs);
@@ -1570,7 +1586,11 @@ static char *InStringXdr(FILE *fp)
 {
     static char *buf = NULL;
     static int buflen = 0;
-    unsigned int nbytes = InIntegerXdr(fp);
+    int nb=InIntegerXdr(fp);
+    unsigned int nbytes;
+    if (nb==-1)
+	    return( (char *) 0); /* String NA */
+    nbytes = (unsigned int) nb;
     if (nbytes >= buflen) {
 	char *newbuf = realloc(buf, nbytes + 1);
 	if (newbuf == NULL)

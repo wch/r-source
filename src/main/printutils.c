@@ -293,7 +293,7 @@ char *EncodeString(char *s, int w, int quote, int right)
 	for(i=0 ; i<b ; i++) *q++ = ' ';
     }
     if(quote) *q++ = quote;
-    if (s == CHAR(NA_STRING) )
+    if (s == CHAR(NA_STRING) ) 
 	p = CHAR(R_print.na_string);
     else	p = s;
     while(*p) {

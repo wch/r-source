@@ -71,8 +71,8 @@ double R_strtod(const char *c, char **end)
 {
     double x;
 
-    if (strncmp(c, "NA", 2) == 0){
-	x = NA_REAL; *end = (char *)c + 2; /* coercion for -Wall */
+    if (strncmp(c, "<NA>", 4) == 0){
+	x = NA_REAL; *end = (char *)c + 4; /* coercion for -Wall */
     }
     else if (strncmp(c, "NaN", 3) == 0) {
 	x = R_NaN; *end = (char *)c + 3;
@@ -281,28 +281,40 @@ SEXP StringFromLogical(int x, int *warn)
 {
     int w;
     formatLogical(&x, 1, &w);
-    return mkChar(EncodeLogical(x, w));
+    if (x==NA_LOGICAL) 
+      return NA_STRING;
+    else 
+      return mkChar(EncodeLogical(x, w));
 }
 
 SEXP StringFromInteger(int x, int *warn)
 {
     int w;
     formatInteger(&x, 1, &w);
-    return mkChar(EncodeInteger(x, w));
+    if (x==NA_INTEGER) 
+      return NA_STRING;
+    else
+      return mkChar(EncodeInteger(x, w));
 }
 
 SEXP StringFromReal(double x, int *warn)
 {
     int w, d, e;
     formatReal(&x, 1, &w, &d, &e, 0);
-    return mkChar(EncodeReal(x, w, d, e));
+    if (ISNAN(x))
+      return NA_STRING; /* NA and NaN. Is this right?*/
+    else
+      return mkChar(EncodeReal(x, w, d, e));
 }
 
 SEXP StringFromComplex(Rcomplex x, int *warn)
 {
     int wr, dr, er, wi, di, ei;
     formatComplex(&x, 1, &wr, &dr, &er, &wi, &di, &ei, 0);
-    return mkChar(EncodeComplex(x, wr, dr, er, wi, di, ei));
+    if (ISNAN(x.r) || ISNAN(x.i))
+      return NA_STRING; /* again, NA or NaN */
+    else
+      return mkChar(EncodeComplex(x, wr, dr, er, wi, di, ei));
 }
 
 /* Conversion between the two list types (LISTSXP and VECSXP). */

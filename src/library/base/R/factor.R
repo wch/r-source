@@ -88,7 +88,7 @@ as.vector.factor <- function(x, type="any")
 as.character.factor <- function(x,...)
 {
     cx <- levels(x)[x]
-    if("NA" %in% levels(x)) cx[is.na(x)] <- "<NA>"
+    #if("NA" %in% levels(x)) cx[is.na(x)] <- "<NA>"
     cx
 }
 

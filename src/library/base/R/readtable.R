@@ -12,7 +12,7 @@ count.fields <- function(file, sep = "", quote = "\"'", skip = 0,
 }
 
 
-type.convert <- function(x, na.strings = "NA", as.is = FALSE, dec = ".")
+type.convert <- function(x, na.strings = as.character(NA), as.is = FALSE, dec = ".")
     .Internal(type.convert(x, na.strings, as.is, dec))
 
 read.table <-

@@ -95,8 +95,8 @@ SEXP mkChar(const char *name)
 {
     SEXP c;
 
-    if (streql(name, "NA"))
-	return (NA_STRING);
+    /*    if (streql(name, "NA"))
+	  return (NA_STRING);*/
     c = allocString(strlen(name));
     strcpy(CHAR(c), name);
     return c;
