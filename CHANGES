@@ -12,6 +12,8 @@ NEW FEATURES
 
     o   A new `language' demo "is.things" has been provided.
 
+    o   model.matrix(.) now allows a  contrasts argument.
+
 
 BUG FIXES
 
