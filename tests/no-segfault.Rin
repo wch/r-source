@@ -49,6 +49,7 @@ cat('options(pager = "cat", error=expression(NULL))',
 cat(".proctime00 <- proc.time()\n",
     "c0 <- character(0)\n",
     "l0 <- logical(0)\n",
+    "m0 <- matrix(1,0,0)\n",
     "df0 <- as.data.frame(c0)\n", sep="")
 
 for (pkg in core.pkgs) {
@@ -69,7 +70,7 @@ for (pkg in core.pkgs) {
 	  cat("\n## ", nm, " :\n")
 	  cat("f <- get(\"",nm,"\", pos = ", this.pos, ")\n", sep="")
 	  cat("f()\nf(NULL)\nf(,NULL)\nf(NULL,NULL)\n",
-	      "f(list())\nf(l0)\nf(c0)\nf(df0)\nf(F)\n",
+	      "f(list())\nf(l0)\nf(c0)\nf(m0)\nf(df0)\nf(F)\n",
 	      "f(list(),list())\nf(l0,l0)\nf(c0,c0)\nf(df0,df0)\nf(F,F)\n",
 	      sep="")
       }
