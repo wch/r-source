@@ -2,15 +2,15 @@
 typedef int ssize_t;
 #include <size_t.h>
 #endif
-#ifdef _Windows
+#ifdef Win32
 typedef long ssize_t;
 #endif
 
 typedef unsigned short Sock_port_t;
 
 typedef struct Sock_error_t {
-  int error;
-  int h_error;
+    int error;
+    int h_error;
 } *Sock_error_t;
 
 int Sock_init(void);

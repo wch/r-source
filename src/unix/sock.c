@@ -14,7 +14,6 @@
 #include <errno.h>
 #if defined(_Windows)
 #  include <winsock.h>
-   typedef long ssize_t;
 #elif defined(MACINTOSH)
 #  include <GUSI.h>
 #else
