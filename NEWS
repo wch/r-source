@@ -375,6 +375,9 @@ NEW FEATURES
 	for creating executable programs linked against the R shared
 	library.
 
+    o   New functions reshapeLong and reshapeWide emulating Stata's
+        reshape command. These are still labeled experimental and
+        might be improved (or removed) in later versions.
 
 
 BUG FIXES
@@ -577,6 +580,8 @@ BUG FIXES
     o   R CMD Rdconv handles now .Rd in all cases as input file
         extension correctly. 
 
+    o   problem with subsetting and "..." arguments in plot.formula
+        (PR 757)
 
 
 
@@ -760,9 +765,6 @@ BUG FIXES
     o	Fixed unterminated string problem with lty (PR 584)
 
     o	Fixed scoping problem with quasi() family (PR 614)
-
-    o   problem with subsetting and "..." arguments in plot.formula
-        (PR 757)
 
 
 		CHANGES IN R VERSION 1.1.0
