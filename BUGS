@@ -55,6 +55,10 @@ none
 
 Directory:  Documentation
 
+* PR# 942 *
+Subject: Minor documentation issue
+From: jebacklund@dowagro.com
+Date: Wed, 16 May 2001 19:58:13 +0200 (MET DST)
 * PR# 899 *
 Subject: documentation problems in str.Rd
 From: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>
@@ -63,13 +67,14 @@ Date: Sat, 7 Apr 2001 23:08:23 +0200
 
 Directory:  Graphics
 
-* PR# 917 *
-Subject: boxplot
-From: skala@incoma.cz
-Date: Fri, 20 Apr 2001 08:43:29 +0200 (MET DST)
---fixed for 1.2.3  (one could consider the bug an `accidental feature',
---		  but the documentation and the other S implementations 
---		  differ).
+* PR# 943 *
+Subject: legend() with xpd=T; omission of initial plot character
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Sun, 20 May 2001 10:35:16 +1000
+* PR# 660 *
+Subject: identify.default ignores any setting of cex.
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -77,23 +82,15 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
-* PR# 750 *
-Subject: abline() does not obey "xpd" (clipping rules)
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 27 Nov 2000 18:27:11 +0100
-* PR# 660 *
-Subject: identify.default ignores any setting of cex.
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
-* PR# 791 *
-Subject:  par(lab= *) / axis(*) bug 
-From: maechler@stat.math.ethz.ch
-Date: Fri, 22 Dec 2000 10:59:26 +0100
 * PR# 776 *
 Subject: strwidth does not take font into account
 From: Martyn Plummer <plummer@iarc.fr>
 Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
 --This needs a substantial redesign.
+* PR# 750 *
+Subject: abline() does not obey "xpd" (clipping rules)
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 27 Nov 2000 18:27:11 +0100
 * PR# 820 *
 Subject: interaction.plot
 From: "Mark M. Span" <span@psy.uva.nl>
@@ -116,6 +113,10 @@ Date: Thu, 18 Jan 2001 14:54:32 +0100
 --mayhave side-effects in many other pieces of interpreted code 
 --(ii) do_mtext ignores dd->gp.cexbase unlike, for example, do_plot_xy 
 --and anything to do with cexbase needs extreme care.
+* PR# 791 *
+Subject:  par(lab= *) / axis(*) bug 
+From: maechler@stat.math.ethz.ch
+Date: Fri, 22 Dec 2000 10:59:26 +0100
 * PR# 831 *
 Subject: screen can't go back to (split) screen with log="y" plot
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -140,10 +141,6 @@ Date: Tue, 27 Feb 2001 10:00:30 +0100 (MET)
 Subject: screen doesn't handle redrawing properly
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 01 Feb 2001 14:20:52 -0500
-* PR# 916 *
-Subject:  par(mgp) bug 
-From: paul@stat.auckland.ac.nz
-Date: Fri, 20 Apr 2001 08:33:45 +1200 (NZST)
 * PR# 887 *
 Subject: axis(adj=anything) has no effect
 From: jhallman@frb.gov
@@ -152,6 +149,25 @@ Date: Wed, 28 Mar 2001 20:51:05 +0200 (MET DST)
 Subject:  axis(...,las=1) breaks postscript code in certain cases 
 From: maechler@stat.math.ethz.ch
 Date: Wed, 7 Mar 2001 18:08:58 +0100
+* PR# 917 *
+Subject: boxplot
+From: skala@incoma.cz
+Date: Fri, 20 Apr 2001 08:43:29 +0200 (MET DST)
+--fixed for 1.2.3  (one could consider the bug an `accidental feature',
+--		  but the documentation and the other S implementations 
+--		  differ).
+* PR# 916 *
+Subject:  par(mgp) bug 
+From: paul@stat.auckland.ac.nz
+Date: Fri, 20 Apr 2001 08:33:45 +1200 (NZST)
+* PR# 940 *
+Subject: GCircle(): fails for non-clippable devices under certain circumstances (see below)
+From: "Thomas Hoffmann" <thoffman@zappa.sax.de>
+Date: Tue, 15 May 01 23:34:17 +0100
+* PR# 932 *
+Subject: scoping error in xy.coords
+From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
+Date: Fri, 04 May 2001 11:20:57 -0400
 
 Directory:  In-Out
 
@@ -172,6 +188,18 @@ Date: Thu, 26 Apr 2001 19:56:59 +0200 (MET DST)
 
 Directory:  Language
 
+* PR# 937 *
+Subject: name creation with index arrays
+From: sint@oeaw.ac.at
+Date: Thu, 10 May 2001 23:31:58 +0200 (MET DST)
+* PR# 412 *
+Subject: anomalies with call objects
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 06 Feb 2000 01:18:50 +0100
+* PR# 408 *
+Subject: convolution bug
+From: wsimpson@gcal.ac.uk
+Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
 * PR# 921 *
 Subject:  Managed to confuse match.arg 
 From: J.C.Rougier@durham.ac.uk
@@ -181,22 +209,13 @@ Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 25 Sep 2000 10:17:15 +0200
 --status of AsIs columns
-* PR# 412 *
-Subject: anomalies with call objects
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 06 Feb 2000 01:18:50 +0100
-* PR# 408 *
-Subject: convolution bug
-From: wsimpson@gcal.ac.uk
-Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
 
 Directory:  Low-level
 
-* PR# 929 *
-Subject:  Segmentation fault linked to memory? 
-From: J.C.Rougier@durham.ac.uk
-Date: Mon, 30 Apr 2001 14:34:11 +0100 (BST)
---looks like 32-bit integer overflow error in counting allocation size
+* PR# 941 *
+Subject: Mistake in qbeta.c ?
+From: tlm21@cam.ac.uk
+Date: Wed, 16 May 2001 13:49:34 +0200 (MET DST)
 * PR# 505 *
 Subject: interrupted save 
 From: Thomas Lumley <thomas@biostat.washington.edu>
@@ -300,39 +319,4 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 944 *
-Subject: hist() ignores 'probability=T'
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Sun, 20 May 2001 10:42:13 +1000
-* PR# 937 *
-Subject: name creation with index arrays
-From: sint@oeaw.ac.at
-Date: Thu, 10 May 2001 23:31:58 +0200 (MET DST)
-* PR# 932 *
-Subject: scoping error in xy.coords
-From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
-Date: Fri, 04 May 2001 11:20:57 -0400
-* PR# 939 *
-Subject: Windows, RCMD INSTALL and path
-From: david.firth@nuf.ox.ac.uk
-Date: Fri, 11 May 2001 17:59:29 +0200 (MET DST)
-* PR# 938 *
-Subject: name creation with index arrays
-From: sint@oeaw.ac.at
-Date: Thu, 10 May 2001 23:39:53 +0200 (MET DST)
-* PR# 941 *
-Subject: Mistake in qbeta.c ?
-From: tlm21@cam.ac.uk
-Date: Wed, 16 May 2001 13:49:34 +0200 (MET DST)
-* PR# 940 *
-Subject: GCircle(): fails for non-clippable devices under certain circumstances (see below)
-From: "Thomas Hoffmann" <thoffman@zappa.sax.de>
-Date: Tue, 15 May 01 23:34:17 +0100
-* PR# 943 *
-Subject: legend() with xpd=T; omission of initial plot character
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Sun, 20 May 2001 10:35:16 +1000
-* PR# 942 *
-Subject: Minor documentation issue
-From: jebacklund@dowagro.com
-Date: Wed, 16 May 2001 19:58:13 +0200 (MET DST)
+none
