@@ -1,14 +1,21 @@
-page <- function(x)
+page <- function(x, method = c("dput", "print"), ...)
 {
     subx <- substitute(x)
     if( is.name(subx) )
 	subx <- deparse(subx)
     if (!is.character(subx) || length(subx) != 1)
 	stop("page requires a name")
+    method <- match.arg(method)
     if(exists(subx, inherits=TRUE)) {
         file <- tempfile("Rpage.")
-        dput(get(subx, inherits=TRUE), file)
-	file.show(file, title = subx, delete.file = TRUE)
+        if(method == "dput")
+            dput(get(subx, inherits=TRUE), file)
+        else {
+            sink(file)
+            print(get(subx, inherits=TRUE))
+            sink()
+        }
+	file.show(file, title = subx, delete.file = TRUE, ...)
     } else
 	stop(paste("no object named \"", subx, "\" to edit",sep=""))
 }
