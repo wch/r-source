@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-25, 2001-02-03
+Version 1.2-26, 2001-02-04
 Kurt Hornik
 
 
@@ -222,8 +222,8 @@ hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
 
    The current stable Unix/Windows version is 1.2.1, the unstable one is
 1.3.0.  Typically, new features are introduced in the development versions;
-updates of stable versions are for bug fixes mostly.  The version for the
-Mac is pre-alpha.
+updates of stable versions are for bug fixes mostly.  There is also a beta
+Mac port of 1.2.1.
 
 2.4 How can R be obtained?
 ==========================
@@ -335,8 +335,8 @@ more details.
 2.5.3 How can R be installed (Macintosh)
 ----------------------------------------
 
-   A binhexed self-extracting archive containing a pre-alpha port of R
-1.1.1 for MacOS has recently been made available by Stefano Iacus
+   A binhexed self-extracting archive containing a beta port of R 1.2.1 for
+MacOS has recently been made available by Stefano Iacus
 <stefano.iacus@unimi.it> at `http://www.eco-dip.unimi.it/R/'.
 
 2.6 Are there Unix binaries for R?
