@@ -81,7 +81,7 @@ function(x, ...)
     topic <- attr(x, "topic")
     paths <- as.character(x)
     if(!length(paths)) {
-        writeLines(c(gettextf("No documentation for '%s' specified packages and libraries:",
+        writeLines(c(gettextf("No documentation for '%s' in specified packages and libraries:",
                               topic),
                      gettextf("you could try 'help.search(\"%s\")'",
                               topic)))
