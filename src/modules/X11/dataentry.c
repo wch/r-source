@@ -956,6 +956,7 @@ static void handlechar(char *text)
     if ( c == '\033' ) {
 	CellModified = FALSE;
 	clength = 0;
+        bufp = buf;
 	drawelt(crow, ccol);
 	return;
     } else
