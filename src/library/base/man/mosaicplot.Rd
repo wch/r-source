@@ -9,7 +9,7 @@
                    sort = NULL, off = NULL, dir = NULL,
                    color = FALSE, shade = FALSE, margin = NULL,
                    type = c("pearson", "deviance", "FT"), \dots)
-\method{mosaicplot}{formula}(formula, data = NULL, \dots, subset, na.action)
+\method{mosaicplot}{formula}(formula, data = NULL, \dots, subset)
 }
 \arguments{
   \item{x}{a contingency table in array form, with optional category
@@ -49,15 +49,11 @@
     \code{"FT"} for the Freeman-Tukey residuals.  The value of this
     argument can be abbreviated.}
   \item{formula}{a formula, such as \code{y ~ x}.}
-  \item{data}{a data.frame (or list) from which the variables in
-    \code{formula} should be taken.}
+  \item{data}{a data.frame (or list), or a contingency table from which
+    the variables in \code{formula} should be taken.}
   \item{\dots}{further arguments to be passed to or from methods.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used for plotting.}
-  %% <FIXME>
-  %% Remove in 1.4.0.
-  \item{na.action}{deprecated.}
-  %% </FIXME>
 }
 \details{
   This is a generic function.  It currently has a default method
@@ -70,6 +66,22 @@
   standard normal distribution.)  Negative residuals are drawn in shaded
   of red and with broken outlines; positive ones are drawn in blue with
   solid outlines.
+
+  For the formula method, if \code{data} is an object inheriting from
+  classes \code{"table"} or \code{"ftable"}, or an array with more than
+  2 dimensions, it is taken as a contingency table, and hence all
+  entries should be nonnegative.  In this case, the left-hand side of
+  \code{formula} should be empty, and the variables on the right-hand
+  side should be taken from the names of the dimnames attribute of the
+  contingency table.  A marginal table of these variables is computed,
+  and a mosaic of this table is produced.
+
+  Otherwise, \code{data} should be a data frame or matrix, list or
+  environment containing the variables to be cross-tabulated.  In this
+  case, after possibly selecting a subset of the data as specified by
+  the \code{subset} argument, a contingency table is computed from the
+  variables given in \code{formula}, and a mosaic is produced from
+  this.
 
   See Emerson (1998) for more information and a case study with
   television viewer data from Nielsen Media Research.
@@ -105,6 +117,8 @@
 \examples{
 data(Titanic)
 mosaicplot(Titanic, main = "Survival on the Titanic", color = TRUE)
+## Formula interface for tabulated data:
+mosaicplot(~ Sex + Age + Survived, data = Titanic, color = TRUE)
 
 data(HairEyeColor)
 mosaicplot(HairEyeColor, shade = TRUE)
@@ -117,8 +131,8 @@ mosaicplot(HairEyeColor, shade = TRUE, margin = list(c(1,2), 3))
 ## overrepresented among people with brown hair and blue eyes, but not
 ## ``significantly''.
 
-## Formula interface: visualize crosstabulation of numbers of gears and
-## carburettors in Motor Trend car data.
+## Formula interface for raw data: visualize crosstabulation of numbers
+## of gears and carburettors in Motor Trend car data.
 data(mtcars)
 mosaicplot(~ gear + carb, data = mtcars, color = TRUE)
 }

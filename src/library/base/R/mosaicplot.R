@@ -318,18 +318,26 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
 }
 
 mosaicplot.formula <-
-function(formula, data = NULL, ..., subset, na.action)
+function(formula, data = NULL, ..., subset)
 {
-    ## <FIXME>
-    ## Remove `na.action' in 1.4.
-    if(!missing(na.action))
-        warning("argument `na.action' is deprecated")
     m <- match.call(expand.dots = FALSE)
-    if(is.matrix(eval(m$data, parent.frame())))
-        m$data <- as.data.frame(data)
-    m$... <- m$na.action <- NULL
-    ## </FIXME>
-    m[[1]] <- as.name("model.frame")
-    mf <- eval(m, parent.frame())
-    mosaicplot(table(mf), ...)
+    edata <- eval(m$data, parent.frame())
+    if(inherits(edata, "ftable")
+       || inherits(edata, "table")
+       || length(dim(edata)) > 2) {
+        data <- as.table(data)
+        varnames <- attr(terms(formula), "term.labels")
+        if(all(varnames != "."))
+            data <- margin.table(data,
+                                 match(varnames, names(dimnames(data))))
+        mosaicplot(data, ...)
+    }
+    else {
+        if(is.matrix(edata))
+            m$data <- as.data.frame(data)
+        m$... <- NULL
+        m[[1]] <- as.name("model.frame")
+        mf <- eval(m, parent.frame())
+        mosaicplot(table(mf), ...)
+    }
 }

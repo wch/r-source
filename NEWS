@@ -179,6 +179,9 @@ NEW FEATURES
 
     o   arrows() now allows length = 0 (and draws no arrows).
 
+    o	The formula interface to mosaicplot() now allows a contingency
+	table as data argument.
+
 
 
 BUG FIXES
