@@ -1,4 +1,4 @@
-sunspot.year <- ts(c(
+sunspot.year <- stats::ts(c(
 5.00,
 11.00,
 16.00,

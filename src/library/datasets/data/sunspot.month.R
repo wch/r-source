@@ -1,4 +1,4 @@
-sunspot.month <- ts(c(
+sunspot.month <- stats::ts(c(
 58.0,
 62.6,
 70.0,

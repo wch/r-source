@@ -1,4 +1,4 @@
-"treering" <- ts(c(
+"treering" <- stats::ts(c(
 1.34500,
 1.07700,
 1.54500,

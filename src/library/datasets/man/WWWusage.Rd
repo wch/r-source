@@ -20,10 +20,10 @@
   \emph{Forecasting: Methods and Applications.} Wiley.
 }
 \examples{
-require(stats)
 work <- diff(WWWusage)
 par(mfrow = c(2,1)); plot(WWWusage); plot(work)
 \dontrun{
+require(stats)
 aics <- matrix(, 6, 6, dimnames=list(p=0:5, q=0:5))
 for(q in 1:5) aics[1, 1+q] <- arima(WWWusage, c(0,1,q),
     optim.control = list(maxit = 500))$aic

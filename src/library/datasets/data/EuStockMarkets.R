@@ -1,4 +1,4 @@
-"EuStockMarkets" <- ts (t (matrix (data = c(
+"EuStockMarkets" <- stats::ts (t (matrix (data = c(
 1628.75 , 1678.1 , 1772.8 , 2443.6 ,
 1613.63 , 1688.5 , 1750.5 , 2460.2 ,
 1606.51 , 1678.6 , 1718 , 2448.2 ,
