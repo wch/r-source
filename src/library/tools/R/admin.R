@@ -285,15 +285,6 @@ function(dir, outDir)
     .saveRDS(vignetteIndex,
              file = file.path(outDir, "Meta", "vignette.rds"))
 
-    ## <FIXME>
-    ## Compatibility code for BioC vignette tools.
-    ## Remove eventually ...
-    vignetteIndex <-
-        vignetteIndex[vignetteIndex$PDF != "", c("PDF", "Title")]
-    writeLines(formatDL(vignetteIndex, style = "list"),
-               file.path(outVignetteDir, "00Index.dcf"))
-    ## </FIXME>
-
     invisible()
 }
 
