@@ -245,14 +245,6 @@ Date: Fri, 17 Dec 1999 09:10:50 +0100 (MET)
 Subject: plot()  after split.screen() on postscript() Device produces inconsistent PostScript file
 From: boble@usa.net
 Date: Fri, 17 Dec 1999 21:32:23 +0100 (MET)
-* PR# 382 *
-Subject:  aov-related segfault 
-From: Peter Dalgaard <pd@butterfly.kubism.ku.dk>
-Date: Mon, 20 Dec 1999 21:22:14 +0100
-* PR# 383 *
-Subject: BUG in format()?
-From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
-Date: Tue, 21 Dec 1999 17:34:34 +0100
 * PR# 384 *
 Subject: tck crash
 From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
@@ -286,19 +278,15 @@ Date: Tue, 28 Dec 1999 13:28:01 +0100
 Subject: Segfault in dataentry()
 From: Peter Dalgaard BSA <p.dalgaard@pubhealth.ku.dk>
 Date: 29 Dec 1999 11:59:50 +0100
-* PR# 392 *
-Subject: dataframes in glm
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Wed, 29 Dec 1999 14:22:17 +0100 (MET)
-* PR# 393 *
-Subject: links in faq file broken
-From: aim@uwo.ca
-Date: Mon, 3 Jan 2000 22:45:18 +0100 (MET)
 * PR# 394 *
 Subject: formatC (bug and fix)
 From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
 Date: Tue, 4 Jan 2000 10:31:53 +0100
-* PR# 395 *
-Subject: bug in glm.fit
-From: Peter Holzer <holzer@stat.math.ethz.ch>
-Date: Wed, 5 Jan 2000 19:08:23 +0100 (MET)
+* PR# 398 *
+Subject: a +1 shift overlaying lines/points on a boxplot
+From: acuster@nature.berkeley.edu
+Date: Tue, 11 Jan 2000 02:53:56 +0100 (MET)
+* PR# 400 *
+Subject: X11 troubles
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 13 Jan 2000 14:31:42 +0100
