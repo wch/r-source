@@ -373,6 +373,8 @@ BUG FIXES
 	in strptime() which were seen only on glibc-based systems
 	(PR#1155).
 
+    o	promax() was returning the wrong rotation matrix (PR#1149).
+
 
 
 	**************************************************

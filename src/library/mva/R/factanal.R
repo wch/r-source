@@ -282,7 +282,7 @@ promax <- function(x, m = 4)
     U <- U %*% diag(sqrt(d))
     dimnames(U) <- NULL
     z <- x %*% U
-    U <- U %*% xx$rotmat
+    U <- xx$rotmat %*% U
     dimnames(z) <- dn
     attr(z, "covariance") <- crossprod(U)
     list(loadings = z, rotmat = U)

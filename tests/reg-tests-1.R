@@ -284,6 +284,16 @@ y <- data.frame(b = LETTERS[3:4], c = 1:2)
 stopifnot(1 == nrow(merge(x, y)))
 stopifnot(4 == nrow(merge(x, y, all = TRUE)))
 
+## PR 1149.  promax was returning the wrong rotation matrix.
+library(mva)
+data(ability.cov)
+ability.FA <- factanal(factors = 2, covmat = ability.cov, rotation = "none")
+pm <- promax(ability.FA$loadings)
+tmp1 <- as.vector(ability.FA$loadings %*% pm$rotmat)
+tmp2 <- as.vector(pm$loadings)
+stopifnot(all.equal(tmp1, tmp2))
+detach("package:mva")
+rm(ability.cov)
 
 ## PR 1155. On some systems strptime was not setting the month or mday
 ## when yday was supplied.
