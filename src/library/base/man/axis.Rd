@@ -51,7 +51,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = 0,
 
   When \code{at = NULL}, pretty tick mark locations are computed internally,
   from \code{\link{par}("usr","lab")}, and \code{\link{par}("xlog")} (or
-  \code{ylog} respectively).  See also \code{\link{asTicks}()}.
+  \code{ylog} respectively).
 }
 \examples{
 plot(1:4, rnorm(4), axes=FALSE)
