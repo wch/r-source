@@ -284,6 +284,8 @@ stopifnot(1 == nrow(merge(x, y)))
 stopifnot(4 == nrow(merge(x, y, all = TRUE)))
 
 
+
+
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {
    warnmsg <- paste(LETTERS[sample(1:26,n,replace=TRUE)],collapse="")
@@ -292,5 +294,4 @@ provoke.bug <- function(n=9000) {
 provoke.bug()
 ## segfaulted in 1.2.2, will also on machines without vsnprintf.
 ##                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-## and hence keep the above line at the end of this file
-
+## and hence keep the above paragraph at the end of this file
