@@ -71,11 +71,11 @@ manual details and defines the @R{} language.
 
 The language syntax has a superficial similarity with C, but the
 semantics are of the FPL (functional programming language) variety with
-stronger affinities with Lisp and APL.  In particular, it allows
-``computing on the language'', which in turn makes it possible to write
-functions that take expressions as input, something that often comes in
-handy when writing interface functions for statistical modeling and
-graphics.
+stronger affinities with Lisp and @acronym{APL}.  In particular, it
+allows ``computing on the language'', which in turn makes it possible to
+write functions that take expressions as input, something that often
+comes in handy when writing interface functions for statistical modeling
+and graphics.
 
 It is possible to get quite far using @R{} interactively, executing
 simple expressions from the command line.  Some users may never need to
@@ -3184,9 +3184,10 @@ C as @code{float *} or FORTRAN as @code{REAL} by setting the attribute
 aid interfacing to existing C or FORTRAN code.
 
 Unless formal argument @code{NAOK} is true, all the other arguments are
-checked for missing values @code{NA} and for the IEEE special values
-@code{NaN}, @code{Inf} and @code{-Inf}, and the presence of any of these
-generates an error.  If it is true, these values are passed unchecked.
+checked for missing values @code{NA} and for the @acronym{IEEE} special
+values @code{NaN}, @code{Inf} and @code{-Inf}, and the presence of any
+of these generates an error.  If it is true, these values are passed
+unchecked.
 
 Argument @code{DUP} can be used to suppress copying.  It is dangerous:
 see the on-line help for arguments against its use.
@@ -3699,8 +3700,9 @@ In addition, there are four special constants, @code{NULL}, @code{NA},
 
 @code{NULL} is used to indicate the empty object.  @code{NA} is used for
 absent (``Not Available'') data values.  @code{Inf} denotes infinity and
-@code{NaN} is not-a-number in the IEEE floating point calculus (results
-of the operations respectively @math{1/0} and @math{0/0}, for instance).
+@code{NaN} is not-a-number in the @acronym{IEEE} floating point calculus
+(results of the operations respectively @math{1/0} and @math{0/0}, for
+instance).
 
 Logical constants are either @code{TRUE} or @code{FALSE}.
 

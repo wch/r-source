@@ -204,7 +204,8 @@ built into the base @R{} environment, but many are supplied as
 @emph{packages}. (Currently the distinction is largely a matter of
 historical accident.)  There are about 8 packages supplied with @R{}
 (called ``standard'' packages) and many more are available through the
-CRAN family of Internet sites (via @uref{http://cran.r-project.org}).
+@acronym{CRAN} family of Internet sites (via
+@uref{http://cran.r-project.org}).
 
 Most classical statistics and much of the latest methodology is
 available for use with @R{}, but users will need to be prepared to do a
@@ -2770,9 +2771,9 @@ will list all the datasets in all the currently attached packages (at
 least @pkg{base} and @pkg{nls}) and then load @code{Puromycin} from the
 first package in which such a dataset is found.
 
-User-contributed packages can be a rich source of datasets: indeed
-Dr.@: Venables' notes, the original source of this introduction, came
-with a set of datasets which is now available on CRAN as the package
+User-contributed packages can be a rich source of datasets: indeed Dr.@:
+Venables' notes, the original source of this introduction, came with a
+set of datasets which is now available on @acronym{CRAN} as the package
 @pkg{Rnotes}.
 
 
@@ -6508,8 +6509,8 @@ starting the @R{} executable from inside the debugger.
 @itemx -g @var{type}
 Use @var{type} as graphical user interface (note that this also includes
 interactive graphics).  Currently, possible values for @var{type} are
-@samp{X11} (the default), @samp{gnome} provided that GNOME support is
-available, and @samp{none}.
+@samp{X11} (the default), @samp{gnome} provided that @acronym{GNOME}
+support is available, and @samp{none}.
 @end table
 
 Note that input and output can be redirected in the usual way (using
@@ -6777,19 +6778,20 @@ to obtain usage information for each of the tools accessible via the
 
 @section Preliminaries
 
-When the GNU @strong{readline} library is available at the time @R{} is
-configured for compilation under UNIX, an inbuilt command line editor
-allowing recall, editing and re-submission of prior commands is used.
-Note: this appendix does @strong{not} apply to GNOME interface under
-UNIX, only to the standard command-line interface.
+When the @acronym{GNU} @strong{readline} library is available at the
+time @R{} is configured for compilation under UNIX, an inbuilt command
+line editor allowing recall, editing and re-submission of prior commands
+is used.  Note: this appendix does @strong{not} apply to @acronym{GNOME}
+interface under UNIX, only to the standard command-line interface.
 
 It can be disabled (useful for usage with ESS@footnote{The `Emacs Speaks
-Statistics' package; see the URL @uref{http://ess.stat.wisc.edu/}})
-using the startup option @option{--no-readline}.
+Statistics' package; see the @acronym{URL}
+@uref{http://ess.stat.wisc.edu/}}) using the startup option
+@option{--no-readline}.
 
-Windows versions of @R{} have somewhat simpler command-line editing:
-see @samp{Console} under the @samp{Help} menu of the GUI, and the file
-@file{README.Rterm} for command-line editing under @code{Rterm.exe}
+Windows versions of @R{} have somewhat simpler command-line editing: see
+@samp{Console} under the @samp{Help} menu of the @acronym{GUI}, and the
+file @file{README.Rterm} for command-line editing under @code{Rterm.exe}
 
 When using @R{} with @strong{readline} capabilities, the functions
 described below are available.

@@ -95,9 +95,10 @@ that can take far more time than the statistical analysis itself, even
 though most readers will find the latter far more appealing.
 
 This manual describes the import and export facilities available either
-in @R{} itself or via packages which are available from CRAN.  Some of
-the packages described are still under development (and hence in the
-Devel section on CRAN) but they already provide useful functionality.
+in @R{} itself or via packages which are available from @acronym{CRAN}.
+Some of the packages described are still under development (and hence in
+the Devel section on @acronym{CRAN}) but they already provide useful
+functionality.
 
 Unless otherwise stated, everything described in this manual is
 available for both Unix/Linux and Windows versions of @R{}.
@@ -543,37 +544,39 @@ may be unavoidable if the originating system is not available.
 @findex write.dta
 
 Import and export facilities for Stata @file{.dta} files and provided by
-package @pkg{stataread} on CRAN. This is a binary file format, and files
-from versions 5.0 and 6.0 of Stata can be read and (despite the package
-name) written by functions @code{read.dta} and @code{write.dta}.
+package @pkg{stataread} on @acronym{CRAN}. This is a binary file format,
+and files from versions 5.0 and 6.0 of Stata can be read and (despite
+the package name) written by functions @code{read.dta} and
+@code{write.dta}.
 
 @node Minitab, SAS, Stata, Importing from other statistical systems
 @section Minitab
 @findex read.mtp
 
-Package @pkg{foreign} in the Devel section on CRAN provides a function
-@code{read.mtp} to read a `Minitab Portable Worksheet'.  This returns
-the components of the worksheet as an @R{} list.
+Package @pkg{foreign} in the Devel section on @acronym{CRAN} provides a
+function @code{read.mtp} to read a `Minitab Portable Worksheet'.  This
+returns the components of the worksheet as an @R{} list.
 
 @node SAS, S-PLUS, Minitab, Importing from other statistical systems
 @section SAS
 @cindex SAS
 @findex read.xport
 
-Package @pkg{foreign} in the Devel section on CRAN provides a function
-@code{read.xport} to read a file in SAS Transport (XPORT) format and
-return a list of data frames.
+Package @pkg{foreign} in the Devel section on @acronym{CRAN} provides a
+function @code{read.xport} to read a file in SAS Transport (XPORT)
+format and return a list of data frames.
 
 @node S-PLUS, SPSS, SAS, Importing from other statistical systems
 @section S-PLUS
 @cindex S-PLUS
 @findex readSfile
 
-Package @pkg{Rstreams} on CRAN contains a function @code{readSfile}
-which can read binary objects produced by S-PLUS 3.x, 4.x or 2000 on
-Unix or Windows (and can read them on a different OS). This is able to
-read many but not all @Sl{} objects: in particular it can read vectors,
-matrices and data frames and lists containing those.
+Package @pkg{Rstreams} on @acronym{CRAN} contains a function
+@code{readSfile} which can read binary objects produced by S-PLUS 3.x,
+4.x or 2000 on Unix or Windows (and can read them on a different
+OS). This is able to read many but not all @Sl{} objects: in particular
+it can read vectors, matrices and data frames and lists containing
+those.
 
 @node SPSS,  , S-PLUS, Importing from other statistical systems
 @section SPSS
@@ -650,29 +653,30 @@ from a database for separate analysis.
 Traditionally there have been large (and expensive) commercial RDBMSs
 (@uref{http://www.informix.com, Informix}; @uref{http://www.oracle.com,
 Oracle}; @uref{http://www.sysbase.com, Sysbase}; IBM's DB/2; Microsoft
-SQL Server on Windows) and academic and small-system databases (such as
-MySQL, PostgreSQL, Microsoft Access, @dots{}), the former marked out by
-much greater emphasis on data security features.  The line is blurring,
-with the Open Source PostgreSQL having more and more high-end features,
-and `free' versions of Informix, Oracle and Sysbase being made available
-on Linux.
+@acronym{SQL} Server on Windows) and academic and small-system databases
+(such as MySQL, PostgreSQL, Microsoft Access, @dots{}), the former
+marked out by much greater emphasis on data security features.  The line
+is blurring, with the Open Source PostgreSQL having more and more
+high-end features, and `free' versions of Informix, Oracle and Sysbase
+being made available on Linux.
 
 @cindex ODBC
 @cindex Open Database Connectivity
 There are other commonly used data sources, including spreadsheets,
 non-relational databases and even text files (possibly compressed).
-Open Database Connectivity (ODBC) is a standard to use all of these data
-sources. It originated on Windows (see
+Open Database Connectivity (@acronym{ODBC}) is a standard to use all of
+these data sources.  It originated on Windows (see
 @uref{http://www.microsoft.com/data/odbc/}) but is also implemented on
 Linux.
 
 All of the packages described later in this chapter provide clients to
 client/server databases.  The database can reside on the same machine or
-(more often) remotely.  There is an ISO standard (in fact several:
-SQL-92 is ISO/IEC 9075, also known as ANSI X3.135-1992) for an interface
-language called SQL (Structured Query Language, sometimes pronounced
-`sequel': see Bowman @emph{et al.@:} 1996) which these DBMSs support to
-varying degrees.
+(more often) remotely.  There is an @acronym{ISO} standard (in fact
+several: @acronym{SQL}-92 is @acronym{ISO}/IEC 9075, also known as
+@acronym{ANSI} X3.135-1992) for an interface language called
+@acronym{SQL} (Structured Query Language, sometimes pronounced `sequel':
+see Bowman @emph{et al.@:} 1996) which these DBMSs support to varying
+degrees.
 
 
 @menu
@@ -681,14 +685,14 @@ varying degrees.
 @end menu
 
 @node SQL queries, Data types, Overview of RDBMSs, Overview of RDBMSs
-@subsection SQL queries
+@subsection @acronym{SQL} queries
 @cindex SQL queries
 
-The more comprehensive @R{} interfaces generate SQL behind the scenes
-for common operations, but direct use of SQL is needed for complex
-operations in all.  Conventionally SQL is written in upper case, but
-many users will find it more convenient to use lower case in the @R{}
-interface functions.
+The more comprehensive @R{} interfaces generate @acronym{SQL} behind the
+scenes for common operations, but direct use of @acronym{SQL} is needed
+for complex operations in all.  Conventionally @acronym{SQL} is written
+in upper case, but many users will find it more convenient to use lower
+case in the @R{} interface functions.
 
 A relational DBMS stores data as a database of @emph{tables} (or
 @emph{relations}) which are rather similar to @R{} data frames, in that
@@ -696,8 +700,8 @@ they are made up of @emph{columns} or @emph{fields} of one type
 (numeric, character, date, currency, @dots{}) and @emph{rows} or
 @emph{records} containing the observations for one entity.
 
-SQL `queries' are quite general operations on a relational database.
-The classical query is a SELECT statement of the type
+@acronym{SQL} `queries' are quite general operations on a relational
+database.  The classical query is a SELECT statement of the type
 
 @smallexample
 SELECT State, Murder FROM USArrests WHERE rape > 30 ORDER BY Murder
@@ -752,9 +756,9 @@ DELETE or UPDATE data.  A table is destroyed by a DROP TABLE `query'.
 @subsection Data types
 
 Data can be stored in a database in various data types.  The range of
-data types is DBMS-specific, but the SQL standard defines many types,
-including the following that are widely implemented (often not by the
-SQL name).
+data types is DBMS-specific, but the @acronym{SQL} standard defines many
+types, including the following that are widely implemented (often not by
+the @acronym{SQL} name).
 
 @c  @quotation
 @c  @multitable {Data type name varying} {A longgggggggggggggggggggg description}
@@ -805,13 +809,14 @@ conversion issues from the user.
 @node R interface packages,  , Overview of RDBMSs, Relational databases
 @section R interface packages
 
-There are four packages available on CRAN to help @R{} communicate with
-DBMSs.  They provide different levels of abstraction.  Some provide
-means to copy whole data frames to and from databases.  All have
-functions to select data within the database via SQL queries, and
-(except @pkg{RmSQL}) to retrieve the result as a whole as a data frame
-or in pieces (usually as groups of rows, but @pkg{RPgSQL} can retrieve
-columns).  All except @pkg{RODBC} are (currently) tied to one DBMS.
+There are four packages available on @acronym{CRAN} to help @R{}
+communicate with DBMSs.  They provide different levels of abstraction.
+Some provide means to copy whole data frames to and from databases.  All
+have functions to select data within the database via @acronym{SQL}
+queries, and (except @pkg{RmSQL}) to retrieve the result as a whole as a
+data frame or in pieces (usually as groups of rows, but @pkg{RPgSQL} can
+retrieve columns).  All except @pkg{RODBC} are (currently) tied to one
+DBMS.
 
 
 @menu
@@ -826,7 +831,7 @@ columns).  All except @pkg{RODBC} are (currently) tied to one DBMS.
 @cindex PostgreSQL database system
 
 Package @pkg{RPgSQL} at @uref{http://rpgsql.sourceforge.net/} and on
-CRAN provides an interface to @uref{http://www.postgresql.org,
+@acronym{CRAN} provides an interface to @uref{http://www.postgresql.org,
 PostgreSQL}.
 
 PostgreSQL is described by its developers as `the most advanced open
@@ -851,10 +856,10 @@ copies a PostgreSQL table to an @R{} data frame.
 @pkg{RPgSQL} has the interesting concept of a @emph{proxy data frame}.
 A data frame proxy is an @R{} object that inherits from the
 @code{"data.frame"} class, but contains no data.  All accesses to the
-proxy data frame generate the appropriate SQL query and retrieve the
-resulting data from the database.  A proxy data frame is set up by a
-call to @code{bind.db.proxy}.  To remove the proxy, just remove the
-object which @code{bind.db.proxy} created.
+proxy data frame generate the appropriate @acronym{SQL} query and
+retrieve the resulting data from the database.  A proxy data frame is
+set up by a call to @code{bind.db.proxy}.  To remove the proxy, just
+remove the object which @code{bind.db.proxy} created.
 
 @findex db.execute
 @findex db.result.columns
@@ -863,8 +868,8 @@ object which @code{bind.db.proxy} created.
 @findex db.fetch.result
 @findex db.clear.result
 @findex db.result.get.value
-A finer level of control is available via sending SQL queries to the
-PostgreSQL server via @code{db.execute}.  This leaves a result in
+A finer level of control is available via sending @acronym{SQL} queries
+to the PostgreSQL server via @code{db.execute}.  This leaves a result in
 PostgreSQL's result cache, unless flushed by @code{clear = TRUE} (the
 default).  Once a result is in the cache, @code{db.fetch.result} can be
 used to fetch the whole result as a data frame.  Functions such as
@@ -946,23 +951,24 @@ within a data frame and PostgreSQL types.
 @cindex ODBC
 @cindex Open Database Connectivity
 
-Package @pkg{RODBC} on CRAN provides an interface to database sources
-supporting an ODBC interface.  This is very widely available, and allows
-the same @R{} code to access different database systems.  @pkg{RODBC}
-runs on both Linux and Windows, and many database systems provide
-support ODBC, including most of those on Windows (such as Microsoft
-Access), and MySQL, Oracle and PostgreSQL on Unix/Linux.
+Package @pkg{RODBC} on @acronym{CRAN} provides an interface to database
+sources supporting an @acronym{ODBC} interface.  This is very widely
+available, and allows the same @R{} code to access different database
+systems.  @pkg{RODBC} runs on both Linux and Windows, and many database
+systems provide support @acronym{ODBC}, including most of those on
+Windows (such as Microsoft Access), and MySQL, Oracle and PostgreSQL on
+Unix/Linux.
 
-You will need an ODBC Driver Manager such as
+You will need an @acronym{ODBC} Driver Manager such as
 @uref{http://www.unixODBC.org, unixODBC} or @uref{http://www.iODBC.org,
 iOBDC} on Unix/Linux, and an installed driver for your database system.
 The @uref{http://www.jepstone.net/FreeODBC/, FreeODBC project} is a
-repository of information related to ODBC.
+repository of information related to @acronym{ODBC}.
 
 Two groups of interface functions are provided. The @code{odbc*} group
-provide a low-level interface to the basic ODBC functions: see the help
-page (@code{?RODBC}) for details.  The @code{sql*} group provide an
-interface between @R{} data frames and SQL tables.
+provide a low-level interface to the basic @acronym{ODBC} functions: see
+the help page (@code{?RODBC}) for details.  The @code{sql*} group
+provide an interface between @R{} data frames and @acronym{SQL} tables.
 
 @findex odbcConnect
 @findex odbcClose
@@ -984,23 +990,24 @@ data frame.
 @findex odbcQuery
 @findex sqlGetResults
 @findex odbcFetchRows
-An SQL query can be sent to the database by a call to @code{sqlQuery}.
-This returns the result in an @R{} data frame.  (@code{sqlCopy} sends a
-query to the database and saves the result as a table in the database.)
-A finer level of control is attained by first calling @code{odbcQuery}
-and then @code{sqlGetResults} to fetch the results.  The latter can be
-used within a loop to retrieve a limited number of rows at a time.
-@code{sqlGetResults} returns a data frame, but the raw results can be
-obtainedas a character matrix from @code{odbcFetchRows}.
+An @acronym{SQL} query can be sent to the database by a call to
+@code{sqlQuery}.  This returns the result in an @R{} data frame.
+(@code{sqlCopy} sends a query to the database and saves the result as a
+table in the database.)  A finer level of control is attained by first
+calling @code{odbcQuery} and then @code{sqlGetResults} to fetch the
+results.  The latter can be used within a loop to retrieve a limited
+number of rows at a time.  @code{sqlGetResults} returns a data frame,
+but the raw results can be obtainedas a character matrix from
+@code{odbcFetchRows}.
 
 @cindex PostgreSQL database system
-Here is an example using PostgreSQL, for which the ODBC driver maps
-column and data frame names to lower case.  We use a database
+Here is an example using PostgreSQL, for which the @acronym{ODBC} driver
+maps column and data frame names to lower case.  We use a database
 @code{testdb} we created earlier, and had the DSN (data source name) set
 up in @file{~/.odbc.ini} under @code{unixODBC}.  Exactly the same code
 worked using MyODBC to access a MySQL database under Windows NT (where
 MySQL also maps names to lowercase).  Under Windows, DSNs are set up in
-the ODBC applet in the Control Panel.
+the @acronym{ODBC} applet in the Control Panel.
 @cindex MySQL database system
 
 @smallexample
@@ -1045,11 +1052,12 @@ the ODBC applet in the Control Panel.
 @subsection Package RMySQL
 @cindex MySQL database system
 
-Package @pkg{RMySQL} in the Devel section on CRAN provides an interface
-to the MySQL database system (see @uref{http://www.mysql.com} and
-Dubois, 2000.).  This is part of a project to provide a common API for
-access from @R{} to relational DBMSs using SQL.  Currently this provides
-lower-level facilities than @pkg{RPgSQL} or @pkg{RODBC}.
+Package @pkg{RMySQL} in the Devel section on @acronym{CRAN} provides an
+interface to the MySQL database system (see @uref{http://www.mysql.com}
+and Dubois, 2000.).  This is part of a project to provide a common
+@acronym{API} for access from @R{} to relational DBMSs using
+@acronym{SQL}.  Currently this provides lower-level facilities than
+@pkg{RPgSQL} or @pkg{RODBC}.
 
 MySQL exists on Unix/Linux and Windows.  (Its current status appears to
 be that the source is freely available and beta versions are free but
@@ -1070,7 +1078,7 @@ function @code{close}.
 
 @findex dbExec
 @findex dbExecStatement
-SQL queries can be sent by either @code{dbExec} or
+@acronym{SQL} queries can be sent by either @code{dbExec} or
 @code{dbExecStatement}.  @code{dbExec} sends the query and retrieves the
 results as a list. (It will fail unless the results are from a
 SELECT-like statement.)  @code{dbExecStatement} sends the query and
@@ -1084,7 +1092,7 @@ all the rows have been fetched, and @code{getRowCount} returns the
 number of rows in the result.
 
 There is no simple way to load a data frame into the database, so we
-have to work harder using direct SQL statements.
+have to work harder using direct @acronym{SQL} statements.
 
 @smallexample
 > library(RMySQL)
@@ -1126,17 +1134,18 @@ have to work harder using direct SQL statements.
 @subsection Package RmSQL
 @cindex Mini SQL database system
 
-Package @pkg{RmSQL} on CRAN provides an interface to the Mini SQL
-database system (also known as mSQL, @url{http://www.hughes.com.au},
-Yarger @emph{et al.@:}, 1999). The package documentation describes mSQL
-as
+Package @pkg{RmSQL} on @acronym{CRAN} provides an interface to the Mini
+@acronym{SQL} database system (also known as mSQL,
+@url{http://www.hughes.com.au}, Yarger @emph{et al.@:}, 1999). The
+package documentation describes mSQL as
 @quotation
 Note that mSQL is NOT GPL licenced but free of charge for universities
 and noncommercial organisations.
 @end quotation
 @noindent
 @pkg{RmSQL} provides the most basic interface of those in this chapter,
-a wrapper to the C-API of mSQL with no additional functionality.
+a wrapper to the C-@acronym{API} of mSQL with no additional
+functionality.
 
 @findex msqlConnect
 @findex msqlSelect
@@ -1146,10 +1155,10 @@ a wrapper to the C-API of mSQL with no additional functionality.
 @findex msqlFreeResult
 A database connection is opened by first selecting a host with
 @code{msqlConnect} and then a database by @code{msqlSelect}. The
-connection is closed by a call to @code{msqlClose}.  Then an SQL query is
-sent by a call to @code{msqlQuery}, and the results stored by a call to
-@code{msqlStoreResult}.  When a query is finished with, the result can
-be freed by @code{msqlFreeResult}.
+connection is closed by a call to @code{msqlClose}.  Then an
+@acronym{SQL} query is sent by a call to @code{msqlQuery}, and the
+results stored by a call to @code{msqlStoreResult}.  When a query is
+finished with, the result can be freed by @code{msqlFreeResult}.
 
 @findex msqlFetchRow
 @findex msqlDataSeek
@@ -1175,9 +1184,9 @@ lengthy, but there is one in the @file{Example} directory of the package.
 @node Package Rstreams, Binary data formats, Binary files, Binary files
 @section Package Rstreams
 
-Package @pkg{Rstreams} on CRAN provides a low-level interface to read
-from and write to binary files.  It has been used to read in data from
-MRI experiments and Windows sound files, for example.
+Package @pkg{Rstreams} on @acronym{CRAN} provides a low-level interface
+to read from and write to binary files.  It has been used to read in
+data from MRI experiments and Windows sound files, for example.
 
 @findex openstream
 @findex closestream
@@ -1213,7 +1222,7 @@ can be read on a big-endian machine or @emph{vice versa} by setting
 @code{swapbytes = TRUE}.
 
 Character data can be read either as fixed-length blocks of bytes (by
-specifying @code{len}) or as ASCII-zero-delimited strings.
+specifying @code{len}) or as @acronym{ASCII}-zero-delimited strings.
 
 @findex writeint
 @findex writefloat
@@ -1249,10 +1258,10 @@ all data after that point is lost.
 @cindex Hierarchical Data Format
 @cindex network Common Data Form
 
-Packages @pkg{hdf5} and @pkg{netCDF} in the Devel area on CRAN provide
-experimental interfaces to NASA's HDF5 (Hierarchical Data Format, see
-@uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF data files
-(network Common Data Form, see
+Packages @pkg{hdf5} and @pkg{netCDF} in the Devel area on @acronym{CRAN}
+provide experimental interfaces to @acronym{NASA}'s HDF5 (Hierarchical
+Data Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's
+netCDF data files (network Common Data Form, see
 @uref{http://www.unidata.ucar.edu/packages/netcdf/}), respectively.
 
 Both of these are systems to store scientific data in array-oriented
@@ -1280,12 +1289,12 @@ across network connections.
 @node Reading from sockets, Using download.file, Network connections, Network connections
 @section Reading from sockets
 
-Base @R{} comes with some facilities to communicate @emph{via} BSD
-sockets on systems that support them (including the common Linux, Unix
-and Windows ports of @R{}).  One potential problem with using sockets is
-that these facilities are often blocked for security reasons or to force
-the use of Web caches, so these functions may be more useful on an
-intranet than externally.
+Base @R{} comes with some facilities to communicate @emph{via}
+@acronym{BSD} sockets on systems that support them (including the common
+Linux, Unix and Windows ports of @R{}).  One potential problem with
+using sockets is that these facilities are often blocked for security
+reasons or to force the use of Web caches, so these functions may be
+more useful on an intranet than externally.
 
 @findex make.socket
 @findex read.socket
@@ -1295,7 +1304,7 @@ intranet than externally.
 The low-level interface is given by functions @code{make.socket},
 @code{read.socket}, @code{write.socket} and @code{close.socket}.  The
 function @code{httpclient} builds on these to read (directly) from an
-HTTP server.
+@acronym{HTTP} server.
 
 @node Using download.file, DCOM interface, Reading from sockets, Network connections
 @section Using @code{download.file}
@@ -1306,37 +1315,38 @@ HTTP server.
 @cindex lynx
 There are functions @code{read.table.url} and @code{scan.url} that
 appear to work like @code{read.table} and @code{scan} but access a Web
-resource at a specified URL.  Appearances are deceptive, however, as
-these functions (and @code{url.show} and @code{source.url}) first
-download the Web resource to a local file and then apply the standard
-functions.  Various methods can be used to download the file, including
-the programs @code{wget} and @code{lynx} and the direct use of BSD
-sockets.
+resource at a specified @acronym{URL}.  Appearances are deceptive,
+however, as these functions (and @code{url.show} and @code{source.url})
+first download the Web resource to a local file and then apply the
+standard functions.  Various methods can be used to download the file,
+including the programs @code{wget} and @code{lynx} and the direct use of
+@acronym{BSD} sockets.
 
 
 @node DCOM interface, CORBA interface, Using download.file, Network connections
-@section DCOM interface
+@section @acronym{DCOM} interface
 @cindex DCOM
 
-DCOM is a Windows protocol for communicating between different programs,
-possibly on different machines.  Thomas Baier's @code{StatConnector}
-program available from CRAN under Software->Other->Non-standard provides
-an interface to the proxy DLL which ships with the Windows version of
-@R{} and makes an DCOM server.  This can be used to pass simple objects
-(vectors and matrices) to and from @R{} and to submit commands to @R{}.
+@acronym{DCOM} is a Windows protocol for communicating between different
+programs, possibly on different machines.  Thomas Baier's
+@code{StatConnector} program available from @acronym{CRAN} under
+Software->Other->Non-standard provides an interface to the proxy DLL
+which ships with the Windows version of @R{} and makes an @acronym{DCOM}
+server.  This can be used to pass simple objects (vectors and matrices)
+to and from @R{} and to submit commands to @R{}.
 
 The program comes with a Visual Basic demonstration, and there is an
-Excel plug-in by Erich Neuwirth available in the same area on CRAN.
-This interface is in the other direction to most of those considered
-here in that it is another application (Excel, or written in Visual
-Basic) that is the client and @R{} is the server.
+Excel plug-in by Erich Neuwirth available in the same area on
+@acronym{CRAN}.  This interface is in the other direction to most of
+those considered here in that it is another application (Excel, or
+written in Visual Basic) that is the client and @R{} is the server.
 
 @node CORBA interface,  , DCOM interface, Network connections
-@section CORBA interface
+@section @acronym{CORBA} interface
 @cindex CORBA
 
-An interface to @R{} providing communication via CORBA objects is
-available from the @uref{http://www.omeghat.org, Omegahat Project}.
+An interface to @R{} providing communication via @acronym{CORBA} objects
+is available from the @uref{http://www.omeghat.org, Omegahat Project}.
 
 @node References, Function and variable index, Network connections, Top
 @appendix References
@@ -1348,7 +1358,7 @@ and Graphics.}  Wadsworth & Brooks/Cole.
 
 @noindent
 J.@: Bowman, S.@: Emberson and M.@: Darnovsky. (1996) @emph{The
-Practical SQL Handbook. Using Structured Query Language.}
+Practical @acronym{SQL} Handbook. Using Structured Query Language.}
 Addison-Wesley.
 
 @noindent

@@ -152,10 +152,11 @@ and not have any continuation lines.  This information has been
 contained in a separate @file{TITLE} file in older versions of @R{},
 please use the title field in the @file{DESCRIPTION} file from now on.
 
-The optional @samp{URL} field may give a list of URLs separated by
-commas or whitespace, for example the homepage of the author or a page
-where additional material describing the software can be found.  These
-URLs are converted to active hyperlinks on CRAN.
+The optional @samp{URL} field may give a list of @acronym{URL}s
+separated by commas or whitespace, for example the homepage of the
+author or a page where additional material describing the software can
+be found.  These @acronym{URL}s are converted to active hyperlinks on
+@acronym{CRAN}.
 
 The optional @samp{Depends} field gives a comma-separated list of
 package names which this package depends on.  The package name may be
@@ -478,15 +479,15 @@ obtain more information about the usage of the @R{} package builder.
 binary distributions.
 
 @node Submitting a package to CRAN,  , Checking and building packages, Creating R packages
-@section Submitting a package to CRAN
+@section Submitting a package to @acronym{CRAN}
 @cindex CRAN
 @cindex CRAN submission
 @cindex Submitting to CRAN
 
-CRAN is a network of WWW sites holding the @R{} distributions and
-contributed code, especially @R{} packages.  Users of @R{} are
+@acronym{CRAN} is a network of WWW sites holding the @R{} distributions
+and contributed code, especially @R{} packages.  Users of @R{} are
 encouraged to join in the collaborative project and to submit their own
-packages to CRAN.
+packages to @acronym{CRAN}.
 
 Before submitting a package @strong{mypkg}, do run the following steps
 to test it is complete and will install properly.  (Unix procedures
@@ -515,8 +516,8 @@ When all the testing is done, upload the @file{.tar.gz} file to
 
 @noindent
 and send a message to @url{WWWadmin@@ci.tuwien.ac.at} about it.  The
-CRAN maintainers will run these tests before putting a submission in the
-main archive.
+@acronym{CRAN} maintainers will run these tests before putting a
+submission in the main archive.
 
 @node Writing R documentation, Tidying and profiling R code, Creating R packages, Top
 @chapter Writing R documentation
@@ -839,8 +840,9 @@ give a description of each column, preferably as a list or table.
 
 @item \source@{@dots{}@}
 @findex \source
-Details of the original source (a reference or URL).  In addition,
-section @code{\references} could give secondary sources and usages.
+Details of the original source (a reference or @acronym{URL}).  In
+addition, section @code{\references} could give secondary sources and
+usages.
 @end table
 
 Note also that when documenting data set @var{bar},
@@ -907,7 +909,7 @@ specific kinds of text.
 @tab for email addresses
 @item @code{\url@{@var{word}@}}
 @findex \url
-@tab for URLs
+@tab for @acronym{URL}s
 @end multitable
 @end quotation
 
@@ -1435,9 +1437,10 @@ intended only to be used to aid interfacing to existing C or FORTRAN
 code.
 
 Unless formal argument @code{NAOK} is true, all the other arguments are
-checked for missing values @code{NA} and for the IEEE special values
-@code{NaN}, @code{Inf} and @code{-Inf}, and the presence of any of these
-generates an error.  If it is true, these values are passed unchecked.
+checked for missing values @code{NA} and for the @acronym{IEEE} special
+values @code{NaN}, @code{Inf} and @code{-Inf}, and the presence of any
+of these generates an error.  If it is true, these values are passed
+unchecked.
 
 Argument @code{DUP} can be used to suppress copying.  It is dangerous:
 see the on-line help for arguments against its use.  It is not possible
@@ -1683,8 +1686,8 @@ Save workspace image? [y/n/c]: y
 destructor Y
 @end smallexample
 
-The R for Windows FAQ (@file{rw-FAQ}) contains details of how to compile
-this example under various Windows compilers.
+The R for Windows @acronym{FAQ} (@file{rw-FAQ}) contains details of how
+to compile this example under various Windows compilers.
 
 Using C++ iostreams, as in this example, is best avoided.  There is no
 guarantee that the output will appear in the R console, and indeed it
@@ -2560,15 +2563,15 @@ showArgs <- function(...) .Call("showArgs1", list(...))
 @cindex IEEE special values
 
 One piece of error-checking the @code{.C} call does (unless @code{NAOK}
-is true) is to check for missing (@code{NA}) and IEEE special values
-(@code{Inf}, @code{-Inf} and @code{NaN}) and give an error if any are
-found.  With the @code{.Call} interface these will be passed to our
-code.  In this example the special values are no problem, as IEEE
-arithmetic will handle them correctly.  In the current implementation
-this is also true of @code{NA} as it is a type of @code{NaN}, but it is
-unwise to rely on such details.  Thus we will re-write the code to
-handle @code{NA}s using macros defined in @file{Arith.h} included by
-@file{R.h}.
+is true) is to check for missing (@code{NA}) and @acronym{IEEE} special
+values (@code{Inf}, @code{-Inf} and @code{NaN}) and give an error if any
+are found.  With the @code{.Call} interface these will be passed to our
+code.  In this example the special values are no problem, as
+@acronym{IEEE} arithmetic will handle them correctly.  In the current
+implementation this is also true of @code{NA} as it is a type of
+@code{NaN}, but it is unwise to rely on such details.  Thus we will
+re-write the code to handle @code{NA}s using macros defined in
+@file{Arith.h} included by @file{R.h}.
 
 The code changes are the same in any of the versions of @code{convolve2}
 or @code{convolveE}:
@@ -3131,7 +3134,7 @@ $7 = 5
 @end smallexample
 
 @node The R API, R (internal) programming miscellania, System and foreign language interfaces, Top
-@chapter The R API: entry points for C code
+@chapter The R @acronym{API}: entry points for C code
 
 @menu
 * Memory allocation::           
@@ -3349,7 +3352,7 @@ enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
 
 
 @node Missing and IEEE values, Printing, Random numbers, The R API
-@section Missing and IEEE special values
+@section Missing and @acronym{IEEE} special values
 @cindex Missing values
 @cindex IEEE special values
 @findex ISNA
@@ -3360,15 +3363,15 @@ enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
 @findex R_NegInf
 @findex NA_REAL
 
-It is possible to compile @R{} on a platform without IEEE 754-compatible
-arithmetic, so users should not assume that it is available.  Rather a
-set of functions is provided to test for @code{NA}, @code{Inf},
-@code{-Inf} (which exists on all platforms) and @code{NaN}.  These
-functions are accessed via macros:
+It is possible to compile @R{} on a platform without @acronym{IEEE}
+754-compatible arithmetic, so users should not assume that it is
+available.  Rather a set of functions is provided to test for @code{NA},
+@code{Inf}, @code{-Inf} (which exists on all platforms) and @code{NaN}.
+These functions are accessed via macros:
 
 @example
 ISNA(@var{x})        @r{True for R's @code{NA} only}
-ISNAN(@var{x})       @r{True for R's @code{NA} and IEEE @code{NaN}}
+ISNAN(@var{x})       @r{True for R's @code{NA} and @acronym{IEEE} @code{NaN}}
 R_FINITE(@var{x})    @r{False for @code{Inf}, @code{-Inf}, @code{NA}, @code{NaN}}
 @end example
 
@@ -3401,8 +3404,8 @@ so you may need to test that they have not been generated inadvertently.
 The most useful function for printing from a C routine compiled into
 @R{} is @code{Rprintf}.  This is used in exactly the same way as
 @code{printf}, but is guaranteed to write to @R{}'s output (which might
-be a GUI console rather than a file).  It is wise to write complete
-lines (including the @code{"\n"}) before returning to @R{}.
+be a @acronym{GUI} console rather than a file).  It is wise to write
+complete lines (including the @code{"\n"}) before returning to @R{}.
 
 The function @code{REprintf} is similar but writes on the error stream
 (@code{stderr}) which may or may not be different from the standard
@@ -3417,7 +3420,7 @@ included by @file{R.h}.
 
 In theory FORTRAN @code{write} and @code{print} statements can be used,
 but the output may not interleave well with that of C, and will be
-invisible on GUI interfaces.  They are best avoided.
+invisible on @acronym{GUI} interfaces.  They are best avoided.
 
 Three subroutines are provided to ease the output of information from
 FORTRAN code.
@@ -3473,8 +3476,9 @@ for example numerical linear algebra computations and special functions.
 The header file @file{R_ext/Linpack.h} contains details of the LINPACK
 and EISPACK linear algebra functions include in @R{}.  These are
 expressed as calls to FORTRAN subroutines, and they will also be usable
-from users' FORTRAN code.  Although not part of the official API, this
-set of subroutines is unlikely to change (but might be supplemented).
+from users' FORTRAN code.  Although not part of the official
+@acronym{API}, this set of subroutines is unlikely to change (but might
+be supplemented).
 
 The header file @file{R_ext/Mathlib.h} lists other undocumented calls
 that are currently available, mainly special functions (such gamma, beta
@@ -3627,7 +3631,7 @@ missing or infinite or @code{NaN}.
 @code{pythag(@var{a}, @var{b})} computes @code{sqrt(@var{a}^2 +
 @var{b}^2)} without overflow or destructive underflow: for example it
 still works when both @var{a} and @var{b} are between @code{1e200} and
-@code{1e300} (in IEEE double precision).
+@code{1e300} (in @acronym{IEEE} double precision).
 @end deftypefun
 
 @deftypefun double log1p (@var{x})
@@ -4024,8 +4028,8 @@ packages distributed with @R{}), be careful to check if @code{make
 test-Specific} or particularly, @code{cd tests; make no-segfault.Rout}
 still works (without interactive user intervention, and on a standalone
 computer).  If the new function, for example, accesses the Internet, or
-requires GUI interaction, please add its name to the ``stop list'' in
-@file{tests/make-no-segfault.R}.
+requires @acronym{GUI} interaction, please add its name to the ``stop
+list'' in @file{tests/make-no-segfault.R}.
 
 @node R coding standards, Function and variable index, R (internal) programming miscellania, Top
 @appendix R coding standards
@@ -4036,39 +4040,41 @@ most variants of Unix as well as 32-bit Windows versions and eventually
 adding to the @R{} base distribution or by providing an add-on package,
 one should not rely on features specific to only a few supported
 platforms, if this can be avoided.  In particular, although most @R{}
-developers use GNU tools, they should not employ the GNU extensions to
-standard tools.  Whereas some other software packages explicitly rely on
-e.g.@: GNU make or the GNU C++ compiler, @R{} does not.  Nevertheless,
-@R{} is a GNU project, and the spirit of the @cite{GNU Coding Standards}
-should be followed if possible.
+developers use @acronym{GNU} tools, they should not employ the
+@acronym{GNU} extensions to standard tools.  Whereas some other software
+packages explicitly rely on e.g.@: @acronym{GNU} make or the
+@acronym{GNU} C++ compiler, @R{} does not.  Nevertheless, @R{} is a
+@acronym{GNU} project, and the spirit of the @cite{@acronym{GNU} Coding
+Standards} should be followed if possible.
 
 The following tools can ``safely be assumed'' for @R{} extensions.
 
 @itemize @bullet
 @item
-An ANSI C compiler.  If you do not have access to the ANSI standard,
-refer to the 2nd edition of Brian W. Kernighan & Dennis M. Ritchie,
-@cite{The C Programming Language}.  Any extensions, such as POSIX, must
-be tested for, typically using Autoconf (@pxref{Configure and cleanup}).
+An @acronym{ANSI} C compiler.  If you do not have access to the
+@acronym{ANSI} standard, refer to the 2nd edition of Brian W. Kernighan
+& Dennis M. Ritchie, @cite{The C Programming Language}.  Any extensions,
+such as POSIX, must be tested for, typically using Autoconf
+(@pxref{Configure and cleanup}).
 
 @item
 A FORTRAN 77 compiler or @command{f2c}, the FORTRAN-to-C converter.
 
 @item
 A simple @command{make}, considering the features of @command{make} in
-4.2 BSD systems as a baseline.
+4.2 @acronym{BSD} systems as a baseline.
 
-GNU or other extensions, including pattern rules using @samp{%}, the
-automatic variable @samp{$^}, the @samp{+=} syntax to append to the
-value of a variable, the (``safe'') inclusion of makefiles with no
-error, conditional execution, and many more, must not be used (see
-Chapter ``Features'' in the @cite{GNU Make Manual} for more
-information).  On the other hand, building @R{} in a separate directory
-(not containing the sources) should work provided that @command{make}
-supports the @code{VPATH} mechanism.
+@acronym{GNU} or other extensions, including pattern rules using
+@samp{%}, the automatic variable @samp{$^}, the @samp{+=} syntax to
+append to the value of a variable, the (``safe'') inclusion of makefiles
+with no error, conditional execution, and many more, must not be used
+(see Chapter ``Features'' in the @cite{@acronym{GNU} Make Manual} for
+more information).  On the other hand, building @R{} in a separate
+directory (not containing the sources) should work provided that
+@command{make} supports the @code{VPATH} mechanism.
 
-Windows-specific makefiles can assume GNU @command{make} 3.75 or later,
-as no other @command{make} is viable on that platform.
+Windows-specific makefiles can assume @acronym{GNU} @command{make} 3.75
+or later, as no other @command{make} is viable on that platform.
 
 @item
 A Bourne shell and the ``traditional'' Unix programming tools, including
@@ -4111,8 +4117,8 @@ hand, Perl cannot be assumed at all for installing @emph{binary}
 
 @item
 Makeinfo version 4 is needed to build the Info files for the @R{}
-manuals written in the GNU Texinfo system.  (Future distributions of
-@R{} will contain the Info files.)
+manuals written in the @acronym{GNU} Texinfo system.  (Future
+distributions of @R{} will contain the Info files.)
 @end itemize
 
 It is also important that code is written in a way that allows others to

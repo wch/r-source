@@ -11,7 +11,7 @@ S
 @end macro
 
 @macro HTML{}
-@sc{html}
+@acronym{HTML}
 @end macro
 
 @macro eqn {t, a}
