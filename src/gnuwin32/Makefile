@@ -364,7 +364,7 @@ packagedist:
 	  ../../bin/Rdindex ../../bin/Rdiff.sh ../../bin/Sd2Rd \
 	  ../../bin/Rcmd.exe \
           $(RPREFIX)/bin
-	$(CP) ../../etc/Makeconf-test $(RPREFIX)/etc
+	$(CP) ../../etc/Makeconf-tests $(RPREFIX)/etc
 	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
 	$(CP) -pr windlgs $(RPREFIX)/src/library
 	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
