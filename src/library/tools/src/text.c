@@ -1,4 +1,6 @@
-/* <UTF8> OK, provided the delimiters are ASCII */
+/* <UTF8> OK, provided the delimiters are ASCII 
+   match length is in bytes.
+*/
 
 #include <R.h>
 #include "tools.h"

@@ -255,6 +255,9 @@ INTERNATIONALIZATION
 
     o	read/writeChar() work in units of characters, not bytes.
 
+    o	.C() now accepts an ENCODING= argument where re-encoding is
+	supported.
+
 
 UTILITIES
 

@@ -49,6 +49,7 @@
 static SEXP NaokSymbol = NULL;
 static SEXP DupSymbol = NULL;
 static SEXP PkgSymbol = NULL;
+static SEXP EncSymbol = NULL;
 
 /* Global variable that should go. Should actually be doing this in 
    a much more straightforward manner. */
@@ -61,7 +62,6 @@ typedef struct {
     int type;
 } DllReference;
 
-
 /* This looks up entry points in DLLs in a platform specific way. */
 #define MAX_ARGS 65
 
@@ -72,6 +72,7 @@ R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
 static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
 		     DllReference *dll);
 static SEXP pkgtrim(SEXP args, DllReference *dll);
+static SEXP enctrim(SEXP args, char *name, int len);
 
 /*
   Checks whether the specified object correctly identifies a native routine.
@@ -199,10 +200,13 @@ checkNativeType(int targetType, int actualType)
 }
 
 
+#ifdef HAVE_ICONV_H
+#include <iconv.h>
+#endif
 
 static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 			const char *name, R_toCConverter **converter,
-			int targetType)
+			int targetType, char* encname)
 {
     int *iptr;
     float *sptr;
@@ -307,10 +311,42 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	    return (void*)fptr;
 	} else {
 	    cptr = (char**)R_alloc(n, sizeof(char*));
-	    for (i = 0 ; i < n ; i++) {
-		l = strlen(CHAR(STRING_ELT(s, i)));
-		cptr[i] = (char*)R_alloc(l + 1, sizeof(char));
-		strcpy(cptr[i], CHAR(STRING_ELT(s, i)));
+	    if(strlen(encname)) {
+#ifdef HAVE_ICONV
+		char *inbuf, *outbuf;
+		size_t inb, outb, outb0, res;
+		iconv_t obj = Riconv_open("", encname); /* (to, from) */
+		if(obj == (iconv_t)(-1))
+		    error("unsupported encoding '%s'", encname);
+		for (i = 0 ; i < n ; i++) {
+		    inbuf = CHAR(STRING_ELT(s, i)); inb = strlen(inbuf);
+		    outb0 = 3*inb;
+		restart_in:
+		    cptr[i] = outbuf = (char*)R_alloc(outb0 + 1, sizeof(char));
+		    outb = 3*inb;
+		    Riconv(obj, NULL, NULL, &outbuf, &outb);
+		    res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
+		    if(res == -1 && errno == E2BIG) {
+			outb0 *= 3;
+			goto restart_in;
+		    }
+		    if(res == -1) 
+			error("conversion problem in re-encoding to '%s'",
+			      encname);
+		    *outbuf = '\0';
+		}
+		Riconv_close(obj);
+	    } else 
+#else
+		warning("re-encoding is not supported on this system");
+	    }
+#endif
+	    {
+		for (i = 0 ; i < n ; i++) {
+		    l = strlen(CHAR(STRING_ELT(s, i)));
+		    cptr[i] = (char*)R_alloc(l + 1, sizeof(char));
+		    strcpy(cptr[i], CHAR(STRING_ELT(s, i)));
+		}
 	    }
 	    return (void*)cptr;
 	}
@@ -344,7 +380,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 
 
 static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
-		       R_NativePrimitiveArgType type)
+		       R_NativePrimitiveArgType type, char *encname)
 {
     int *iptr, n=length(arg);
     float *sptr;
@@ -392,8 +428,40 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 	} else {
 	    PROTECT(s = allocVector(type, n));
 	    cptr = (char**)p;
-	    for(i = 0 ; i < n ; i++) {
-		SET_STRING_ELT(s, i, mkChar(cptr[i]));
+	    if(strlen(encname)) {
+#ifdef HAVE_ICONV
+		char *inbuf, *outbuf, *p;
+		size_t inb, outb, outb0, res;
+		iconv_t obj = Riconv_open(encname, ""); /* (to, from) */
+		if(obj == (iconv_t)(-1))
+		    error("unsupported encoding '%s'", encname);
+		for (i = 0 ; i < n ; i++) {
+		    inbuf = cptr[i]; inb = strlen(inbuf);
+		    outb0 = 3*inb;
+		restart_out:
+		    p = outbuf = (char*)R_alloc(outb0 + 1, sizeof(char));
+		    outb = outb0;
+		    Riconv(obj, NULL, NULL, &outbuf, &outb);
+		    res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
+		    if(res == -1 && errno == E2BIG) {
+			outb0 *= 3;
+			goto restart_out;
+		    }
+		    if(res == -1) 
+			error("conversion problem in re-encoding from '%s'",
+			      encname);
+		    *outbuf = '\0';
+		    SET_STRING_ELT(s, i, mkChar(p));
+		}
+		Riconv_close(obj);
+	    } else 
+#else
+		warning("re-encoding is not supported on this system");
+	    }
+#endif
+	    {
+		for(i = 0 ; i < n ; i++)
+		    SET_STRING_ELT(s, i, mkChar(cptr[i]));
 	    }
 	    UNPROTECT(1);
 	}
@@ -544,6 +612,37 @@ static SEXP pkgtrim(SEXP args, DllReference *dll)
     return args;
 }
 
+static SEXP enctrim(SEXP args, char *name, int len)
+{
+    SEXP s, ss, sx;
+    int pkgused=0;
+
+    strcpy(name, "");
+    for(s = args ; s != R_NilValue;) {
+	ss = CDR(s);
+	/* Look for ENCODING=. We look at the next arg, unless
+	   this is the last one (which will only happen for one arg),
+	   and remove it */
+	if(ss == R_NilValue && TAG(s) == EncSymbol) {
+	    sx = CAR(s);
+	    if(pkgused++ == 1) warning("ENCODING used more than once");
+	    if(TYPEOF(sx) != STRSXP || length(sx) != 1)
+		error("ENCODING argument must be a single character string");
+	    strncpy(name, CHAR(STRING_ELT(sx, 0)), len);
+	    return R_NilValue;
+	}
+	if(TAG(ss) == EncSymbol) {
+	    sx = CAR(ss);
+	    if(pkgused++ == 1) warning("ENCODING used more than once");
+	    if(TYPEOF(sx) != STRSXP || length(sx) != 1)
+		error("ENCODING argument must be a single character string");
+	    strncpy(name, CHAR(STRING_ELT(sx, 0)), len);
+	    SETCDR(s, CDR(ss));
+	}
+	s = CDR(s);
+    }
+    return args;
+}
 
 
 SEXP do_symbol(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1425,18 +1524,22 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     R_RegisteredNativeSymbol symbol = {R_C_SYM, {NULL}, NULL};
     R_NativePrimitiveArgType *checkTypes = NULL;
     R_NativeArgStyle *argStyles = NULL;
-    char *vmax, symName[128];
+    char *vmax, symName[128], encname[101];
+
+
 
     if (NaokSymbol == NULL || DupSymbol == NULL || PkgSymbol == NULL) {
 	NaokSymbol = install("NAOK");
 	DupSymbol = install("DUP");
 	PkgSymbol = install("PACKAGE");
     }
+    if (EncSymbol == NULL) EncSymbol = install("ENCODING");
     vmax = vmaxget();
     which = PRIMVAL(op);
     if(which)
 	symbol.type = R_FORTRAN_SYM;
 
+    args = enctrim(args, encname, 100);
     args = resolveNativeRoutine(args, &fun, &symbol, symName, &nargs,
 				&naok, &dup, call);
 
@@ -1474,7 +1577,8 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 	cargs[nargs] = RObjToCPtr(CAR(pargs), naok, dup, nargs + 1,
 				  which, symName, argConverters + nargs,
-				  checkTypes ? checkTypes[nargs] : 0);
+				  checkTypes ? checkTypes[nargs] : 0,
+				  encname);
 	nargs++;
     }
 
@@ -2096,7 +2200,8 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		PROTECT(s);
 	    } else {
 		PROTECT(s = CPtrToRObj(cargs[nargs], CAR(pargs), which,
-				       checkTypes ? checkTypes[nargs] : TYPEOF(CAR(pargs))));
+				       checkTypes ? checkTypes[nargs] : TYPEOF(CAR(pargs)),
+				       encname));
 		SET_ATTRIB(s, duplicate(ATTRIB(CAR(pargs))));
 		SET_OBJECT(s, OBJECT(CAR(pargs)));
 	    }
@@ -2235,14 +2340,14 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
     case STRSXP:
 	if(nres > 0)
 	    results[0] = RObjToCPtr(s, 1, 1, 0, 0, (const char *)NULL,
-				    NULL, 0);
+				    NULL, 0, "");
 	break;
     case VECSXP:
 	n = length(s);
 	if (nres < n) n = nres;
 	for (i = 0 ; i < n ; i++) {
 	    results[i] = RObjToCPtr(VECTOR_ELT(s, i), 1, 1, 0, 0,
-				    (const char *)NULL, NULL, 0);
+				    (const char *)NULL, NULL, 0, "");
 	}
 	break;
     case LISTSXP:
@@ -2250,7 +2355,7 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
 	if(nres < n) n = nres;
 	for(i=0 ; i<n ; i++) {
 	    results[i] = RObjToCPtr(s, 1, 1, 0, 0, (const char *)NULL,
-				    NULL, 0);
+				    NULL, 0, "");
 	    s = CDR(s);
 	}
 	break;

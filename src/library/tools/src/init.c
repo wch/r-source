@@ -21,15 +21,28 @@
 #include "tools.h"
 #include <R_ext/Rdynload.h>
 
+/* a test for re-encoding */
+void Renctest(char **x)
+{
+    Rprintf("'%s', nbytes = %d\n", x[0], strlen(x[0]));
+}
+
+
 static const R_CallMethodDef callMethods[] = {
     {"delim_match", (DL_FUNC) &delim_match, 2},
     {"Rmd5", (DL_FUNC) &Rmd5, 1},
     {NULL, NULL, 0}
 };
 
+static const R_CMethodDef CEntries[]  = {
+    {"Renctest", (DL_FUNC) &Renctest, 1},
+    {NULL, NULL, 0}
+};
+
+
 void R_init_tools(DllInfo *dll)
 {
-    R_registerRoutines(dll, NULL, callMethods, NULL, NULL);
+    R_registerRoutines(dll, CEntries, callMethods, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }
 

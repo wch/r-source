@@ -2800,11 +2800,21 @@ see the on-line help for arguments against its use.  It is not possible
 to pass numeric vectors as @code{float *} or @code{REAL} if
 @code{DUP=FALSE}.
 
-Finally, argument @code{PACKAGE} confines the search for the symbol name
+Argument @code{PACKAGE} confines the search for the symbol name
 to a specific shared object (or use @code{"base"} for code compiled
 into @R{}).  Its use is highly desirable, as there is no way to avoid
 two package writers using the same symbol name, and such name clashes
 are normally sufficient to cause @R{} to crash.
+
+For @code{.C} only you can specify an @code{ENCODING} argument: this
+requests that (unless @code{DUP = FALSE}) character vectors be
+re-encoding to the requested encoding before being passed in, and
+re-encoded from the requested encoding when passed back.  Note that
+encoding names are not standardized, and not all @R{} builds support
+re-encoding. (The argument is ignored with a warning if re-encoding is
+not supported at all: @R{} code can test for this @emph{via}
+@code{capabilities("iconv")}.)  But this can be useful to allow code to
+work in a UTF-8 locale by specifiying @code{ENCODING = "latin1"}.
 
 Note that the compiled code should not return anything except through
 its arguments: C functions should be of type @code{void} and FORTRAN
