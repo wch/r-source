@@ -222,10 +222,12 @@ cov.rob <- function(x, cor = FALSE, quantile.used = floor((n+p+1)/2),
 		 crit=double(1), sing=integer(1), bestone=integer(n),
 		 PACKAGE="lqs"
 		 )
-	z$sing <- paste(z$sing, "singular samples of size", ps, "out of", nsamp)
+	z$sing <- paste(z$sing, "singular samples of size", ps,
+                        "out of", nsamp)
 	crit <- z$crit + 2*sum(log(divisor)) +
 	    if(method=="mcd") - p * log(qn - 1) else 0
 	best <- seq(n)[z$bestone != 0]
+        if(!length(best)) stop("x is probably collinear")
 	means <- colMeans(x[best, , drop = FALSE])
 	rcov <- var(x[best, , drop = FALSE]) * (1 + 15/(n - p))^2
 	dist <- mahalanobis(x, means, rcov)
