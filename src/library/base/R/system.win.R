@@ -19,7 +19,7 @@ data <- function(..., list = character(0), package = .packages(),
     invisible(names)
 }
 
-getenv <-function(names) .Internal(getenv(names))
+getenv <- function(names) .Internal(getenv(names))
 
 help <- function(topic, package = .packages(), lib.loc = .lib.loc) {
     cat("Please use the Help menu.\n")
@@ -31,7 +31,8 @@ library <- function(name, help, lib.loc = .lib.loc,
 }
 
 library.dynam <- function(chname, package = .packages(), lib.loc = .lib.loc) {
-    ## FIXME (this is == Unix  with changes 1) .dll instead of .so	 2) "\\" for "/"
+    ## FIXME (this is == Unix  with changes 
+    ## ----- 1) .dll instead of .so	 2) "\\" for "/"
     if (!exists(".Dyn.libs"))
 	assign(".Dyn.libs", character(0), envir = .AutoloadEnv)
     if(missing(chname) || (LEN <- nchar(chname)) == 0)
