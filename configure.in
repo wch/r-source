@@ -245,7 +245,15 @@ elif ${use_f2c}; then
   AC_MSG_RESULT([defining F2C to be ${F2C}])
 else
   if test -z "${FC}"; then
-    AC_CHECK_PROGS(F77, f77 g77 fort77 f90 xlf cf77 fc)
+    AC_PATH_PROGS(F77, g77 f77 fort77 f90 xlf cf77 fc)
+    if test -n "${F77}"; then
+      if test -n "`file ${F77} | grep script`"; then
+        ## If F77 found above is a shell or perl script, don't use it.
+	F77=
+      else
+        F77=`basename ${F77}`
+      fi
+    fi
   else
     F77=${FC}
   fi
