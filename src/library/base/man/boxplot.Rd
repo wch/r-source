@@ -6,16 +6,12 @@
   Produce box-and-whisker plot(s) of the given (grouped) values.
 }
 \usage{
-boxplot(x, \dots)
-boxplot.default(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
+\method{boxplot}{default}(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
         notch = FALSE, names, boxwex = 0.8, plot = TRUE,
         border = par("fg"), col = NULL, log = "", pars = NULL,
         horizontal = FALSE, add = FALSE, at = NULL)
 }
 \arguments{
-  \item{x}{an \R object.}
-  \item{\dots}{methods may have additional arguments.}
-
   \item{x, \dots}{for specifying data from which the boxplots are to be
     produced as well as for giving graphical parameters.  The named
     arguments in this (more precisely, in \code{list(x, ...)}) are
