@@ -239,7 +239,7 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
 	    else if(x[i] > 0) posinf = 1;
 	    else neginf = 1;
 #else
-	    nanflag = 1;
+	    naflag = 1;
 #endif
 	} else {
 	    scientific(&x[i], &sgn, &kpower, &nsig);
