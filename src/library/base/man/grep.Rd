@@ -75,7 +75,8 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE)
   For \code{regexpr} an integer vector of the same length as \code{text}
   giving the starting position of the first match, or \eqn{-1} if there
   is none, with attribute \code{"match.length"} giving the length of the
-  matched text (or \eqn{-1} for no match).
+  matched text (or \eqn{-1} for no match).  In a multi-byte locale these
+  quantities are in characters rather than bytes.
 
   If in a multi-byte locale any part of the input is invalid,
   an error is thrown.
@@ -87,7 +88,7 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE)
   \code{perl = TRUE} seems much faster and more reliable for such usages.
 
   The \code{perl = TRUE} option is only implemented for single-byte and
-  UTF-8 encodings, and will warn if used in a non-UTF-8 multibyte locale.
+  UTF-8 encodings, and will warn if used in a non-UTF-8 multi-byte locale.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -22,6 +22,7 @@
 /* <UTF8>
    regex code should be OK.
    substitution code does ASCII comparisons only.
+   regexpr returned pos and match length in bytes not chars.
 */
 
 #ifdef HAVE_CONFIG_H
@@ -31,6 +32,14 @@
 #include <sys/types.h>
 
 #include "Defn.h"
+#include "Rmath.h" /* imax2 */
+
+#ifdef HAVE_ALLOCA_H
+#include <alloca.h>
+#endif
+#if !HAVE_DECL_ALLOCA
+extern char *alloca(size_t);
+#endif
 
 #ifdef HAVE_PCRE_PCRE_H
 # include <pcre/pcre.h>
@@ -378,6 +387,25 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    st = ovector[0];
 	    INTEGER(ans)[i] = st + 1; /* index from one */
 	    INTEGER(matchlen)[i] = ovector[1] - st;
+	    if(mbcslocale) {
+		char *buff;
+		int mlen = ovector[1] - st;
+		/* Unfortunately these are in bytes, so we need to
+		   use chars instead */
+		buff = alloca(imax2(st, mlen+1));
+		if(st > 0) {
+		    memcpy(buff, CHAR(STRING_ELT(text, i)), st);
+		    buff[st] = '\0';
+		    INTEGER(ans)[i] = 1 + mbstowcs(NULL, buff, 0);
+		    if(INTEGER(ans)[i] <= 0) /* an invalid string */
+			INTEGER(ans)[i] = NA_INTEGER;
+		}
+		memcpy(buff, CHAR(STRING_ELT(text, i))+st, mlen);
+		buff[mlen] = '\0';
+		INTEGER(matchlen)[i] = mbstowcs(NULL, buff, 0);
+		if(INTEGER(matchlen)[i] < 0) /* an invalid string */
+		    INTEGER(matchlen)[i] = NA_INTEGER;
+	    }
 	} else {
 	    INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
 	}

@@ -30,7 +30,7 @@
    make.names worked at byte not char level.
    substr() should work at char not byte level.
    Semantics of nchar() have been fixed.
-   regexpr returns match length in bytes not chars.
+   regexpr returned pos and match length in bytes not chars.
    tolower/toupper added wchar versions
    chartr works at char not byte level.
  */
@@ -1208,8 +1208,17 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		    INTEGER(ans)[i] = st + 1; /* index from one */
 #ifdef SUPPORT_MBCS
 		    if(mbcslocale) {
-			/* we need the matched string. */
 			int mlen = regmatch[0].rm_eo - st;
+			/* Unfortunately these are in bytes, so we need to
+			   use chars instead */
+			if(st > 0) {
+			    AllocBuffer(st);
+			    memcpy(cbuff.data, CHAR(STRING_ELT(text, i)), st);
+			    cbuff.data[st] = '\0';
+			    INTEGER(ans)[i] = 1+mbstowcs(NULL, cbuff.data, 0);
+			    if(INTEGER(ans)[i] <= 0) /* an invalid string */
+				INTEGER(ans)[i] = NA_INTEGER;
+			}
 			AllocBuffer(mlen+1);
 			memcpy(cbuff.data, CHAR(STRING_ELT(text, i))+st, mlen);
 			cbuff.data[mlen] = '\0';
