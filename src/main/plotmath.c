@@ -1729,7 +1729,8 @@ static BBOX RenderAccent(SEXP expr, int draw, mathContext *mc,
 	InvalidAccent(expr);
     bodyBBox = RenderElement(body, 0, mc, gc, dd);
     italic = bboxItalic(bodyBBox);
-    if (code == 215) /* dotmath */
+    if (code == 176 || /* ring (as degree) */
+	code == 215)   /* dotmath */
 	accentBBox = RenderSymbolChar(code, 0, mc, gc, dd);
     else
 	accentBBox = RenderChar(code, 0, mc, gc, dd);
@@ -1746,7 +1747,8 @@ static BBOX RenderAccent(SEXP expr, int draw, mathContext *mc,
 	0.1 * XHeight(gc, dd);
     if (draw) {
 	PMoveTo(savedX + xoffset, savedY + yoffset, mc);
-	if (code == 215) /* dotmath */
+	if (code == 176 || /* ring (as degree) */
+	    code == 215) /* dotmath */
 	    RenderSymbolChar(code, draw, mc, gc, dd);
 	else
 	    RenderChar(code, draw, mc, gc, dd);
