@@ -1,50 +1,6 @@
 ### the following functions are currently only tested on unix, maybe
 ### we get them for more platforms soon.
 
-parse.description <- function(desc)
-{
-    ## remove empty lines
-    ok <- grep("^[ \t]+$", desc)
-    if(length(ok)>0){
-        desc <- desc[!ok]
-    }
-
-    ## put continuation lines into single fields\
-    ## remove leading whitespace
-    lastok <- 1
-    for(k in 1:length(desc)){
-        if(length(grep("^[ \t]+", desc[k])) > 0){
-            desc[lastok] <- paste(desc[lastok],
-                                  sub("^[ \t]+", "", desc[k]),
-                                  sep="\n")
-            desc[k] <- NA
-        }
-        else
-        {
-            lastok <- k
-        }
-    }
-    desc <- desc[!is.na(desc)]
-
-    retval <- list(Package=NA, Version=NA)
-
-    ## all before the first `:' is the field name, the rest is the
-    ## value of the field. For Version make sure that only the number
-    ## gets extracted (some people put dates or something else on the
-    ## same line).
-
-    for(d in desc){
-        x <- sub("^([^:]*):.*$", "\\1", d)
-        y <- sub("^[^:]*:[ \t]*(.*)$", "\\1", d)
-        if(x=="Version")
-            y <- unlist(strsplit(y, " "))[1]
-        retval[[x]] <- y
-    }
-    retval
-}
-
-
-
 installed.packages <- function(lib.loc = .lib.loc)
 {
     retval <- NULL
@@ -54,8 +10,7 @@ installed.packages <- function(lib.loc = .lib.loc)
         for(p in pkgs){
             descfile <- system.file("DESCRIPTION", pkg=p, lib=lib)
             if(descfile != ""){
-                desc <- scan("", file=descfile, sep="\n", quiet=TRUE)
-                desc <- parse.description(desc)
+                desc <- parse.dcf(file=descfile, versionfix=TRUE)
             }
             else
             {
@@ -82,18 +37,7 @@ CRAN.packages <- function(CRAN=.Options$CRAN, method="auto")
         download.file(url=paste(CRAN, "/src/contrib/PACKAGES", sep=""),
                       destfile=tmpf, method=method)
     }
-    alldesc <- scan("", file=tmpf, sep="\n", quiet=TRUE)
-    if(!localcran)
-        unlink(tmpf)
-
-    pkgstart <- c(grep("^Package:", alldesc), length(alldesc)+1)
-    retval <- NULL
-    for(k in 1:(length(pkgstart)-1)){
-        desc <- parse.description(alldesc[pkgstart[k]:(pkgstart[k+1]-1)])
-        retval <- rbind(retval, c(desc$Package, desc$Version))
-    }
-    colnames(retval) <- c("Package", "Version")
-    retval
+    parse.dcf(file=tmpf, fields=c("Package", "Version"), versionfix=TRUE)
 }
 
 
