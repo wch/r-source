@@ -77,7 +77,7 @@ struct GlobalsStruct
 };
 typedef struct GlobalsStruct GlobalsStruct;
 
-GlobalsStruct	g;	//	Globals
+GlobalsStruct	g;	/*	Globals */
 
 void Raqua_ProcessEvents(void);
 
@@ -117,6 +117,9 @@ TXNObject	RConsoleInObject = NULL;
 bool 		WeHaveConsole = false;
 bool 		InputFinished = false;
 bool		EditingFinished = true;
+Boolean HaveContent = false;
+Boolean HaveBigBuffer = false;
+
 
 TXNFrameID		OutframeID	= 0;
 TXNFrameID		InframeID	= 0;
@@ -135,7 +138,6 @@ extern void CopyPrefs(RAquaPrefsPointer From, RAquaPrefsPointer To);
 extern RAquaPrefs CurrentPrefs, TempPrefs;
 extern FMFontFamilyInstance    instance;
 extern FMFontSize              fontSize;       
-
 
 
 void RSetTab(void);
@@ -339,13 +341,11 @@ void Raqua_StartConsole(void)
         err = TXNNewObject(NULL, ConsoleWindow, &OutFrame, frameOptions, kTXNTextEditStyleFrameType,
                             kTXNTextensionFile, kTXNSystemDefaultEncoding, &RConsoleOutObject,
                             &OutframeID, 0);
-	// fprintf(stderr,"\n err(1) =%d",err);	
         frameOptions = kTXNShowWindowMask | kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNDrawGrowIconMask;
 		
         err = TXNNewObject(NULL, ConsoleWindow, &InFrame, frameOptions, kTXNTextEditStyleFrameType,
                             kTXNTextensionFile, kTXNSystemDefaultEncoding, &RConsoleInObject,
                             &InframeID, 0);
-//	fprintf(stderr,"\n err(2) =%d",err);	
 
         if (err == noErr){		
             if ( (RConsoleOutObject != NULL) && (RConsoleInObject != NULL) ){
@@ -355,7 +355,6 @@ void Raqua_StartConsole(void)
                 if (err != noErr)
                     goto noconsole;
 		        
-//	fprintf(stderr,"\n err(3) =%d",err);	
 			
                 err = SetWindowProperty(ConsoleWindow,'GRIT','tFrm',sizeof(TXNFrameID),&OutframeID);
                 err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleOutObject);
@@ -393,7 +392,6 @@ void Raqua_StartConsole(void)
                                                 RGlobalWinEvents, 0, NULL);
          err = AEInstallEventHandler(kCoreEventClass, kAEQuitApplication, NewAEEventHandlerUPP(QuitAppleEventHandler), 
                                     0, false );
-//	fprintf(stderr,"\n err(5) =%d",err);	
 
         TXNFocus(RConsoleOutObject,true);
         InstallWindowEventHandler(RAboutWindow, NewEventHandlerUPP(RAboutWinHandler), 1, &aboutSpec, 
@@ -529,16 +527,18 @@ OSStatus InitMLTE(void)
 
 
 
+SInt32                                   curBufPos, finalBufPos;
 
+Handle BufDataHandle=NULL;
+   
 int Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
 		     int addtohistory)
 {
-   OSStatus err = noErr;
-   Handle DataHandle;
-   TXNOffset oStartOffset; 
-   TXNOffset oEndOffset;
-   
-   int i, lg=0, pptlen, txtlen;
+   OSStatus 	err = noErr;
+   TXNOffset 	oStartOffset; 
+   TXNOffset 	oEndOffset;
+   char		TempBuf;
+   int 		i, lg=0, txtlen;
    
           
    if(!InputFinished)
@@ -546,31 +546,55 @@ int Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
    TXNFocus(RConsoleInObject,true);
    TXNSetTypeAttributes( RConsoleInObject, 1, RInAttr, 0, kTXNEndOffset );
 
-   while(!InputFinished)
+     
+   while(!InputFinished & !HaveBigBuffer)
      RunApplicationEventLoop();
-    
-   if(InputFinished){
-     txtlen = TXNDataSize(RConsoleInObject)/2;
-     err = TXNGetDataEncoded(RConsoleInObject, 0, txtlen, &DataHandle, kTXNTextData);
-     lg = min(len,txtlen+1); /* has to txtlen+1 as the string is no terminated */
-     HLock( DataHandle );
-     for(i=0; i<lg-1; i++){
-       buf[i] = (*DataHandle)[i];
-       if(buf[i] == '\r') buf[i]= '\n';
-     }  
-     HUnlock( DataHandle );
-     if(DataHandle)
-      DisposeHandle( DataHandle );
-	
-     buf[lg-1] = '\n';
-     buf[lg] = '\0';
-     InputFinished = false;
-     TXNSetData(RConsoleInObject,kTXNTextData,NULL,0,kTXNStartOffset ,kTXNEndOffset );
-     Raqua_WriteConsole(buf,strlen(buf));
-     Raqua_ProcessEvents();
-     if (strlen(buf) > 1)
-	maintain_cmd_History(buf);
-   }
+  
+
+  
+     if(!HaveBigBuffer){
+       txtlen = TXNDataSize(RConsoleInObject)/2;
+       finalBufPos = txtlen;
+       curBufPos = 0;
+       if(BufDataHandle) { 
+                 HUnlock(BufDataHandle);
+                 DisposeHandle(BufDataHandle);
+                 BufDataHandle =NULL;
+                }
+       err = TXNGetDataEncoded(RConsoleInObject, 0, txtlen, &BufDataHandle, kTXNTextData);
+       TXNSetData(RConsoleInObject,kTXNTextData,NULL,0,kTXNStartOffset ,kTXNEndOffset );
+       lg = min(len,txtlen+1); /* has to txtlen+1 as the string is not terminated */
+       HLock( BufDataHandle );
+       HaveBigBuffer = true;
+      }
+     if(HaveBigBuffer){
+      for (i = curBufPos; i <= finalBufPos; i++) {
+        TempBuf = (*BufDataHandle)[i];
+        if ((TempBuf == '\r') || (i == finalBufPos)){
+                strncpy(buf,*(BufDataHandle)+curBufPos,i-curBufPos+1);
+                buf[i-curBufPos] = '\n';
+                buf[i-curBufPos+1] = '\0';
+		Raqua_WriteConsole(buf,strlen(buf));
+                if (strlen(buf) > 1)
+                    maintain_cmd_History(buf);
+                curBufPos = i+1;
+                break;
+        }
+      } /* for */
+      
+     if(i != finalBufPos) {
+            HaveBigBuffer = true;
+            InputFinished = false;
+     } else { 	
+                
+                HaveBigBuffer = false;
+                InputFinished = false;
+                HUnlock(BufDataHandle);
+                DisposeHandle(BufDataHandle);
+                BufDataHandle = NULL;
+     }
+   } /* HaveBigBuffer */
+
  
   
    return(1);
@@ -611,6 +635,7 @@ void Raqua_ClearerrConsole ()
 {
 }
 
+
 static OSStatus KeybHandler(EventHandlerCallRef inCallRef, EventRef REvent, void *inUserData)
 {
  OSStatus	err = eventNotHandledErr;
@@ -631,8 +656,8 @@ static OSStatus KeybHandler(EventHandlerCallRef inCallRef, EventRef REvent, void
     switch(RKeyCode){
      
      case 36:
-      InputFinished = true;
-      QuitApplicationEventLoop();
+       InputFinished = true;
+       QuitApplicationEventLoop();
       err = noErr;
      break;
      
@@ -740,8 +765,8 @@ void RSetFontSize(void)
     typeAttr.size = kTXNFontSizeAttributeSize;
     typeAttr.data.dataValue = Long2Fix(CurrentPrefs.ConsoleFontSize);
 
-    TXNSetTypeAttributes(RConsoleOutObject, 1, &typeAttr, 0, kTXNEndOffset);//100000);
-    TXNSetTypeAttributes(RConsoleInObject, 1, &typeAttr, 0, kTXNEndOffset);//00);
+    TXNSetTypeAttributes(RConsoleOutObject, 1, &typeAttr, 0, kTXNEndOffset);
+    TXNSetTypeAttributes(RConsoleInObject, 1, &typeAttr, 0, kTXNEndOffset);
 
 }
 
@@ -932,6 +957,8 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 	return err;
 }
 
+
+
 void RescaleInOut(double prop)
 {  
   Rect 	WinBounds, InRect, OutRect;
@@ -980,7 +1007,6 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
              switch (eventKind)
              {
                     case kEventFontPanelClosed:                
-//                        fprintf(stderr,"\n font win closed");
                         GetFontName(instance.fontFamily,fontname);
                         if(isConsoleFont){
                          CopyPascalStringToC(fontname,TempPrefs.ConsoleFontName);
@@ -1027,11 +1053,12 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
              }
             break;
             
-      //      case kEventWindowFocusRelinquish:
-      //       SetFontInfoForSelection(kFontSelectionATSUIType,
-      //              0, NULL, NULL);
-      //      break;
-            
+      /*
+            case kEventWindowFocusRelinquish:
+             SetFontInfoForSelection(kFontSelectionATSUIType,
+                    0, NULL, NULL);
+            break;
+      */      
             case kEventWindowFocusAcquired:
                  MySetFontSelection();
             break;
@@ -1098,7 +1125,6 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
             }
             
             if( GetWindowProperty(EventWindow, 'RMAC', 'PKGB', sizeof(browser), NULL, &browser) == noErr){
-//                    fprintf(stderr,"\n closed dentry");
                     CloseBrowsePkg();
                     QuitApplicationEventLoop();
                     TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
@@ -1108,7 +1134,6 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
             }
 
             if( GetWindowProperty(EventWindow, 'RMAC', 'RDEY', sizeof(browser), NULL, &browser) == noErr){
-//                    fprintf(stderr,"\n closed dentry");
                     CloseDataEntry();
                     QuitApplicationEventLoop();
                     TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
@@ -1126,11 +1151,12 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
                     filename[fsize] = '\0';
                     buf = malloc(txtlen+1);
                     if(buf != NULL){
+                        strncpy(buf,*DataHandle,txtlen);
                         for(i=0;i<txtlen;i++){
-                            buf[i] = (*DataHandle)[i]; 
                         if( buf[i] == '\r') 
                             buf[i] = '\n';
                         } 
+                        buf[txtlen] = '\0';
                         if( (fp = R_fopen(R_ExpandFileName(filename), "w")) ){
                             fprintf(fp, "%s", buf);
                             fclose(fp);
@@ -1255,7 +1281,7 @@ int NewEditWindow(char *fileName)
     TXNFrameOptions	frameOptions;
     SInt16      tempFileRefNum;
     Boolean isDirectory;
-    char buf[300], filenm[300];
+    char buf[300], filenm[300], *fbuf=NULL;
     FInfo             fileInfo;
     TXNControlTag tabtag = kTXNTabSettingsTag;
     TXNControlData tabdata;
@@ -1263,8 +1289,8 @@ int NewEditWindow(char *fileName)
     TXNTypeAttributes	typeAttr;
         SInt16                  fontID;
         Str255			fontname;
-  int fsize;
-    
+  int fsize,flen;
+    FILE *fp;
                           
     frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNDrawGrowIconMask; 
     frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask;
@@ -1290,25 +1316,16 @@ int NewEditWindow(char *fileName)
     if(err != noErr)
      goto fail;
    
-    if(fileInfo.fdType == NULL){    
+    if(fileInfo.fdType == NULL)
         fileInfo.fdType = kTXNTextFile;
-        err = FSpSetFInfo(&fsspec,&fileInfo);
-        if(err != noErr)
-          goto fail;
-    }
     
     
-    err = TXNNewObject(&fsspec, EditWindow, NULL, frameOptions, kTXNTextEditStyleFrameType,
+    err = TXNNewObject(NULL, EditWindow, NULL, frameOptions, kTXNTextEditStyleFrameType,
                             fileInfo.fdType, kTXNSystemDefaultEncoding, &REditObject,
                             &EditFrameID, 0);       
    
-   // err = FSpOpenDF(&fsspec,fsRdWrPerm,&tempFileRefNum);
-   // FSClose(tempFileRefNum);
-   // fprintf(stderr,"\n FSpOpenDF err= %d, num=%d", err, tempFileRefNum);
-    
-   
      
-       if(err != noErr)
+    if(err != noErr)
      goto fail;
                                            
     err = TXNSetTXNObjectControls(REditObject, false, 1, REditTag, REditData);
@@ -1365,6 +1382,21 @@ int NewEditWindow(char *fileName)
                                           RCloseWinEvent, (void *)EditWindow, NULL);
                     
     TXNActivate(REditObject, EditFrameID, kScrollBarsAlwaysActive);
+    if( (fp = R_fopen(R_ExpandFileName(fileName), "r")) ){
+        fseek(fp, 0L, SEEK_END);
+        flen = ftell(fp);
+        rewind(fp);
+        fbuf = malloc(flen+1);
+        if(fbuf){
+         fread(fbuf, 1, flen, fp);
+         fbuf[flen] = '\0';
+         TXNSetData (REditObject, kTXNTextData, fbuf, strlen(fbuf), kTXNEndOffset, kTXNEndOffset);
+         free(fbuf);
+         }
+        fclose(fp);
+    }
+
+    TXNSetSelection(REditObject,0,0);              
     ShowWindow(EditWindow);
     BeginUpdate(EditWindow);
     TXNForceUpdate(REditObject);
@@ -1430,7 +1462,7 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
     SInt16 	refNum = 0;
     TXNFrameOptions	frameOptions;
     Boolean isDirectory;
-    char buf[300];
+    char buf[300], *fbuf=NULL;
     FInfo             fileInfo;
     TXNControlTag tabtag = kTXNTabSettingsTag;
     TXNControlData tabdata;
@@ -1438,7 +1470,8 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
     TXNTypeAttributes	typeAttr;
         SInt16                  fontID;
         Str255			fontname;
-    
+    FILE *fp;
+    int flen,i,j;
                           
     frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNDrawGrowIconMask; 
     frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNReadOnlyMask;
@@ -1463,15 +1496,11 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
     if(err != noErr)
      goto fail;
    
-    if(fileInfo.fdType == NULL){    
+    if(fileInfo.fdType == NULL)    
         fileInfo.fdType = kTXNTextFile;
-        err = FSpSetFInfo(&fsspec,&fileInfo);
-        if(err != noErr)
-          goto fail;
-    }
     
     
-    err = TXNNewObject(&fsspec, HelpWindow, NULL, frameOptions, kTXNTextEditStyleFrameType,
+    err = TXNNewObject(NULL, HelpWindow, NULL, frameOptions, kTXNTextEditStyleFrameType,
                             fileInfo.fdType, kTXNSystemDefaultEncoding, &RHelpObject,
                             &HelpFrameID, 0);       
     if(err != noErr)
@@ -1527,6 +1556,30 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
                                           RCloseWinEvent, (void *)HelpWindow, NULL);
                     
     TXNActivate(RHelpObject, HelpFrameID, kScrollBarsAlwaysActive);
+    
+    if( (fp = R_fopen(R_ExpandFileName(fileName), "r")) ){
+        fseek(fp, 0L, SEEK_END);
+        flen = ftell(fp);
+        rewind(fp);
+        fbuf = malloc(flen+1);
+        if(fbuf){
+         fread(fbuf, 1, flen, fp);
+         fbuf[flen] = '\0';
+         for(i=0;i<flen;++i)
+          if(fbuf[i] == '_'){
+           for(j=i;j<flen-1;j++)
+            fbuf[j] = fbuf[j+1]; 
+            flen--;
+            }
+         fbuf[flen] = '\0';   
+         TXNSetData (RHelpObject, kTXNTextData, fbuf, strlen(fbuf), kTXNEndOffset, kTXNEndOffset);
+         free(fbuf);
+         }
+        fclose(fp);
+    }
+ 
+    TXNSetSelection(RHelpObject,0,0); 
+    
     ShowWindow(HelpWindow);
     BeginUpdate(HelpWindow);
     TXNForceUpdate(RHelpObject);
@@ -1676,7 +1729,7 @@ OSStatus SelectFile(FSSpec *outFSSpec,  char *Title)
                 anErr = AECountItems(&(reply.selection), &count);
                            
                 count = 1L; /* we only select one file */
-                // Set up index for file list
+                /* Set up index for file list */
                 if (anErr == noErr)
                 {
                     long index;
