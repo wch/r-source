@@ -16,16 +16,17 @@ INSTFILES = \
 	left.jpg logo.jpg logosm.jpg right.jpg up.jpg \
 	about.html \
 	faq.html \
+	packages-head.html \
 	resources.html \
 	template.html \
 	thanks.html
 ## FIXME:
-## Remove resource.html when releasing 1.3.0
+## Remove resources.html when releasing 1.3.0
 ## build-help really should not create function.html and package.html
 ## in *this* directory.
 CLEANFILES = $(INSTFILES) function.html packages.html resource.html
 ## </FIXME>
-DISTFILES = Makefile.in $(INSTFILES) packages-head.html index-default.html
+DISTFILES = Makefile.in $(INSTFILES) index-default.html
 SUBDIRS = search
 
 OBJECTS = index.html
