@@ -499,6 +499,8 @@ BUG FIXES
 
    o	as.hclust(x) now also works (as identity) for "hclust" objects.
 
+   o	dotchart() now obeys `xlim ='.
+
 
 		CHANGES IN R VERSION 1.5.1
 
