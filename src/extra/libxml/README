@@ -1,5 +1,6 @@
-This is an extract from libxml2- 2.3.5 (ftp.xmlsoft.org), modified to
-work with R event loops, and with all redundant code removed.
+This is an extract from libxml2- 2.3.6 (ftp.xmlsoft.org), heavily
+modified to work with R event loops, and with all redundant code
+removed.
 
 The original code has:
 

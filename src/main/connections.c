@@ -2114,13 +2114,7 @@ SEXP do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 #define HAVE_LIBXML 1
 #endif
 
-void *R_HTTPOpen(const char *url);
-int   R_HTTPRead(void *ctx, void *dest, int len);
-void  R_HTTPClose(void *ctx);
-
-void *R_FTPOpen(const char *url);
-int   R_FTPRead(void *ctx, void *dest, int len);
-void  R_FTPClose(void *ctx);
+#include <R_ext/R-ftp-http.h>
 
 static Rboolean IDquiet=TRUE;
 
@@ -2470,16 +2464,6 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 #define INTERNET 1
 /* <FIXME> put these in a header file */
 
-void *	xmlNanoHTTPOpen		(const char *URL, char **contentType);
-int	xmlNanoHTTPRead		(void *ctx, void *dest, int len);
-void	xmlNanoHTTPClose	(void *ctx);
-int 	xmlNanoHTTPReturnCode	(void *ctx);
-void	xmlNanoHTTPTimeout	(int delay);
-
-void *	xmlNanoFTPOpen		(const char *URL);
-int	xmlNanoFTPRead		(void *ctx, void *dest, int len);
-void	xmlNanoFTPClose		(void *ctx);
-void	xmlNanoFTPTimeout	(int delay);
 
 void *R_HTTPOpen(const char *url)
 {
@@ -2488,12 +2472,12 @@ void *R_HTTPOpen(const char *url)
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
 
-    xmlNanoHTTPTimeout(timeout);
-    ctxt = xmlNanoHTTPOpen(url, NULL);
+    RxmlNanoHTTPTimeout(timeout);
+    ctxt = RxmlNanoHTTPOpen(url, NULL);
     if(ctxt != NULL) {
-	int rc = xmlNanoHTTPReturnCode(ctxt);
+	int rc = RxmlNanoHTTPReturnCode(ctxt);
 	if(rc != 200) {
-	    xmlNanoHTTPClose(ctxt);
+	    RxmlNanoHTTPClose(ctxt);
 	    ctxt = NULL;
 	}
     }
@@ -2502,12 +2486,12 @@ void *R_HTTPOpen(const char *url)
 
 int R_HTTPRead(void *ctx, void *dest, int len)
 {
-    return xmlNanoHTTPRead(ctx, dest, len);
+    return RxmlNanoHTTPRead(ctx, dest, len);
 }
 
 void R_HTTPClose(void *ctx)
 {
-    xmlNanoHTTPClose(ctx);
+    RxmlNanoHTTPClose(ctx);
 }
 
 void *R_FTPOpen(const char *url)
@@ -2515,18 +2499,18 @@ void *R_FTPOpen(const char *url)
     int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
-    xmlNanoFTPTimeout(timeout);
-    return xmlNanoFTPOpen(url);
+    RxmlNanoFTPTimeout(timeout);
+    return RxmlNanoFTPOpen(url);
 }
 
 int R_FTPRead(void *ctx, void *dest, int len)
 {
-    return xmlNanoFTPRead(ctx, dest, len);
+    return RxmlNanoFTPRead(ctx, dest, len);
 }
 
 void R_FTPClose(void *ctx)
 {
-    xmlNanoFTPClose(ctx);
+    RxmlNanoFTPClose(ctx);
 }
 #endif /* HAVE_LIBXML */
 
