@@ -26,7 +26,7 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.25 $ ';
+my $revision = ' $Revision: 1.26 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -36,7 +36,7 @@ $version = $1;
 
 my @knownoptions = ("help|h", "version|v", "debug|d", "library|l:s",
 		    "clean|c", "docs:s", "save|s", "no-save",
-		    "use-zip", "use-zip-data", "use-zip-help");
+		    "use-zip", "use-zip-data", "use-zip-help", "auto-zip");
 			
 GetOptions (@knownoptions) || usage();
 R_version($name, $version) if $opt_version;
@@ -148,8 +148,37 @@ foreach $pkg (@ARGV){
     $save = "true" if $opt_save;
     my $opt = "";
     if(!$is_bundle) {
-        $opt = "$pkgname-ZIPDATA=zip" if ($opt_use_zip || $opt_use_zip_data);
-        $opt = $opt . " $pkgname-HELP=ziponly" if ($opt_use_zip || $opt_use_zip_help);
+        if($opt_auto_zip) {
+	    my $dir = $pkgdir. "/" . $pkgname . "/data";
+	    if(-d $dir) {
+		my $Rout = "R.INSTALL/datacnt";
+		system("ls -s $dir | grep ^total > $Rout");
+		my $out;
+		open ROUT, "< $Rout";
+		while(<ROUT>) {
+		    if(/^total/) {
+			s/^total //;
+			$out = $_;
+		    }
+		}
+		close ROUT;
+		unlink $Rout;
+		$opt = "$pkgname-ZIPDATA=zip" if $out > 100;
+	    }
+	    $dir = $pkgdir. "/" . $pkgname . "/man";
+	    if(-d $dir) {
+		opendir(DIR, $dir) or die "cannot opendir $dir: $!";
+		@files = grep{ /\.Rd$/ } readdir(DIR);
+		closedir(DIR);
+		$opt = $opt . " $pkgname-HELP=ziponly" if @files > 20;
+	    }
+	    print "Using '$opt'\n";
+        } else {
+            $opt = "$pkgname-ZIPDATA=zip" 
+		if ($opt_use_zip || $opt_use_zip_data);
+            $opt = $opt . " $pkgname-HELP=ziponly"
+		if ($opt_use_zip || $opt_use_zip_help);
+        }
     } else {
         foreach $ppkg (@bundlepkgs) {
 	    $opt = $opt . " $ppkg-ZIPDATA=zip" if ($opt_use_zip || $opt_use_zip_data);
@@ -202,6 +231,7 @@ Options:
       --use-zip-data	collect data files in zip archive
       --use-zip-help	collect help and examples into zip archives
       --use-zip		combine \`--use-zip-data\' and \`--use-zip-help\'
+      --auto-zip	select whether to zip automatically
 
 TYPE can be "none" or "normal" or "chm" (the default) or "winhlp" or "all"
 
