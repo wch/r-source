@@ -403,6 +403,10 @@ BUG FIXES
 
     o	Rdconv detected \link{\url{}} only very slowly.  (PR#6496)
 
+    o	aov() with Error() term and no intercept incorrectly assigned
+	terms to strata. (PR#6510)
+
+
 
 
 	**************************************************

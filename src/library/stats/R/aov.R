@@ -45,7 +45,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         nmstrata <- attr(terms(er.fit), "term.labels")
         ## remove backticks from simple labels for strata (only)
         nmstrata <- sub("^`(.*)`$", "\\1", nmstrata)
-        if(intercept) nmstrata <- c("(Intercept)", nmstrata)
+        nmstrata <- c("(Intercept)", nmstrata)
         qr.e <- er.fit$qr
         rank.e <- er.fit$rank
         qty <- er.fit$resid
@@ -112,6 +112,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
             class(fiti) <- c(if(maov) "maov", "aov", oldClass(er.fit))
             result[[i]] <- fiti
         }
+        if(is.null(result[[1]])) result <- result[-1]
         class(result) <- c("aovlist", "listof")
         if(qr) attr(result, "error.qr") <- qr.e
         attr(result, "call") <- Call

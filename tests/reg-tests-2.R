@@ -1172,3 +1172,12 @@ matrix(list(), 1, 2)
 ## S compatibility change in 1.9.0
 rep(1:2, each=3, length=12)
 ## used to pad with NAs.
+
+
+## PR#6510: aov() with error and -1
+set.seed(1)
+test.df <- data.frame (y=rnorm(8), a=gl(2,1,8), b=gl(2,3,8),c=gl(2,4,8))
+aov(y ~ a + b + Error(c), data=test.df)
+aov(y ~ a + b - 1 + Error(c), data=test.df)
+## wrong assignment to strata labels < 1.9.0
+## Note this is unbalanced and not a good example

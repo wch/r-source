@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2004-01-24), ISBN 3-900051-00-3
+Version 1.9.0 Under development (unstable) (2004-02-02), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3620,4 +3620,61 @@ NULL
 > rep(1:2, each=3, length=12)
  [1] 1 1 1 2 2 2 1 1 1 2 2 2
 > ## used to pad with NAs.
+> 
+> 
+> ## PR#6510: aov() with error and -1
+> set.seed(1)
+> test.df <- data.frame (y=rnorm(8), a=gl(2,1,8), b=gl(2,3,8),c=gl(2,4,8))
+> aov(y ~ a + b + Error(c), data=test.df)
+
+Call:
+aov(formula = y ~ a + b + Error(c), data = test.df)
+
+Grand Mean: 0.8066534 
+
+Stratum 1: c
+
+Terms:
+                        b
+Sum of Squares  0.3176489
+Deg. of Freedom         1
+
+Estimated effects are balanced
+
+Stratum 2: Within
+
+Terms:
+                       a        b Residuals
+Sum of Squares  1.389453 2.148149  5.048689
+Deg. of Freedom        1        1         4
+
+Residual standard error: 1.123464 
+Estimated effects may be unbalanced
+> aov(y ~ a + b - 1 + Error(c), data=test.df)
+
+Call:
+aov(formula = y ~ a + b - 1 + Error(c), data = test.df)
+
+Stratum 1: c
+
+Terms:
+                       a        b
+Sum of Squares  5.205518 0.317649
+Deg. of Freedom        1        1
+
+1 out of 3 effects not estimable
+Estimated effects may be unbalanced
+
+Stratum 2: Within
+
+Terms:
+                       a        b Residuals
+Sum of Squares  1.389453 2.148149  5.048689
+Deg. of Freedom        1        1         4
+
+Residual standard error: 1.123464 
+1 out of 3 effects not estimable
+Estimated effects may be unbalanced
+> ## wrong assignment to strata labels < 1.9.0
+> ## Note this is unbalanced and not a good example
 > 
