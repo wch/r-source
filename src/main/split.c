@@ -105,6 +105,8 @@ SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(3);
 	x = ans;
 	if((vec = getAttrib(f, R_LevelsSymbol)) != R_NilValue) {
+		if (!isString(vec))
+			errorcall(call, "non character factor levels!\n");
 		for(i=0 ; i<nlevs ; i++) {
 			TAG(x) = install(CHAR(STRING(vec)[i]));
 			x = CDR(x);
