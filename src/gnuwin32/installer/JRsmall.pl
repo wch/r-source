@@ -29,7 +29,7 @@ my $iconpars="WorkingDir: \"{app}\"" ;
 ## add to the target command line as in the next example
 # my $iconpars="Parameters: \"--sdi\"; WorkingDir: \"{app}\"" ;
 
-open insfile, "> R.iss" || die "Cannot open R.iss\n";
+open insfile, "> Rsmall.iss" || die "Cannot open Rsmall.iss\n";
 print insfile <<END;
 [Setup]
 AppName=R for Windows
@@ -47,31 +47,37 @@ LicenseFile=${RW}\\COPYING
 DisableReadyPage=yes
 DisableStartupPrompt=yes
 OutputDir=.
-OutputBaseFilename=SetupR
+OutputBaseFilename=miniR
 WizardSmallImageFile=R.bmp
+DiskSpanning=yes
 
 [Types]
-Name: "user"; Description: "User installation"
-Name: "compact"; Description: "Minimal user installation"
-Name: "developer"; Description: "Developer installation"
+Name: "minimal"; Description: "Minimal user installation"
 Name: "custom"; Description: "Custom installation"; Flags: iscustom
 
 [Components]
-Name: "main"; Description: "Main Files"; Types: user compact developer custom; Flags: fixed
-Name: "chtml"; Description: "Compiled HTML Help Files"; Types: user developer custom
-Name: "html"; Description: "HTML Help Files"; Types: user developer custom
-Name: "latex"; Description: "Latex Help Files"; Types: developer custom
-Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: user developer custom
-Name: "refman"; Description: "Reference Manual"; Types: developer custom
-Name: "devel"; Description: "Source Package Installation Files"; Types: developer custom
+Name: "main"; Description: "Main Files"; Types: minimal custom; Flags: fixed
+Name: "chtml"; Description: "Compiled HTML Help Files"; Types: minimal custom
+Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: minimal custom
 
 [Tasks]
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4
 
 [Icons]
 Name: "{group}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; $iconpars
-Name: "{group}\\R $RVER Help"; Filename: "{app}\\doc\\html\\Rwin.html"; Components: html
 Name: "{userdesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: desktopicon; $iconpars
+
+[Registry] 
+Root: HKCU; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty
+Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty
+Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
+Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"
+
+[Messages]
+WelcomeLabel2=This will install [name/ver] on your computer.%n%nIt is strongly recommended that you close all other applications you have running before continuing. This will help prevent any conflicts during the installation process.%n%nThis is a minimal installation, not including HTML help etc..%n
+
 
 [Files]
 END
@@ -84,24 +90,9 @@ $path="${RW}ch\\${RW}";$component="chtml";chdir($path);
 find(\&listFiles, ".");
 
 chdir($startdir);
-$path="${RW}w\\${RW}";$component="html";chdir($path);
-find(\&listFiles, ".");
-
-chdir($startdir);
 $path="${RW}d1\\${RW}";$component="manuals";chdir($path);
 find(\&listFiles, ".");
 
-chdir($startdir);
-$path="${RW}d2\\${RW}";$component="refman";chdir($path);
-find(\&listFiles, ".");
-
-chdir($startdir);
-$path="${RW}sp\\${RW}";$component="devel";chdir($path);
-find(\&listFiles, ".");
-
-chdir($startdir);
-$path="${RW}l\\${RW}";$component="latex";chdir($path);
-find(\&listFiles, ".");
 
 close insfile;
 
