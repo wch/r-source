@@ -343,11 +343,6 @@ From: Gordon Lack <gml4410@ggr.co.uk>
 Date: Fri, 26 Oct 2001 19:04:04 +0100
 --error from using SGI libblas (not reported on other systems?)
 --use --without-blas
-* PR# 1215 *
-Subject: Error when library() called with no arguments
-From: rpeng@stat.ucla.edu
-Date: Thu, 13 Dec 2001 20:51:21 +0100 (MET)
---not reproducible even on other RH7.1 systems
 
 Directory:  TooMuchAtOnce
 
@@ -371,7 +366,7 @@ Directory:  incoming
 Subject: problem in predict.mlm
 From: Bob Gray <gray@jimmy.harvard.edu>
 Date: Sun, 23 Dec 2001 09:05:57 -0500
-* PR# 1231 *
-Subject: reshape error in 1.4
-From: Kevin.Wright@pioneer.com
-Date: Thu, 27 Dec 2001 22:52:57 +0100 (MET)
+* PR# 1232 *
+Subject: Slow 'read.table' in R 1.4.0
+From: james.holtman@convergys.com
+Date: Sat, 29 Dec 2001 15:28:55 -0500
