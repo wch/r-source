@@ -1,17 +1,30 @@
+%%-- see also ./is.symbol.Rd --- merge these two !! ------------
 \name{name}
-\title{Variable Names}
+\title{Variable Names or Symbols, respectively}
 \usage{
+as.symbol(x)
+is.symbol(y)
+
 as.name(x)
-is.name(x)
+is.name(y)
 }
+\alias{is.symbol}
+\alias{as.symbol}
 \alias{as.name}
 \alias{is.name}
 \description{
-  \code{as.name} coerces its argument to be a name.  The argument must
-  be of mode \code{"character"}.
+  \code{as.symbol} coerces its argument to be a \emph{symbol}, or
+  equivalently, a \emph{name}.  The argument must
+  be of mode \code{"character"}.  \code{as.name} is a
+  \code{\link{.Alias}} for \code{as.symbol}.
 
-  \code{is.name} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is a name or not.
+  \code{is.symbol} (and \code{is.name} equivalently) returns \code{TRUE}
+  or \code{FALSE} depending on whether its argument is a symbol
+  (i.e. name) or not.
+}
+\note{
+  The term ``symbol'' is from the lisp background of \R, whereas ``name''
+  has been the standard S term for this.
 }
 \seealso{
   \code{\link{call}}, \code{\link{is.language}}. For the internal
