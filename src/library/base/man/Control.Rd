@@ -34,7 +34,7 @@ next
   uses braces always, e.g. for \code{if} clauses.
 }
 \seealso{
-  \code{\link{Syntax}} for the basis \R syntax and operators,
+  \code{\link{Syntax}} for the basic \R syntax and operators,
   \code{\link{Paren}} for parentheses and braces; further,
   \code{\link{ifelse}}, \code{\link{switch}}.
 }
