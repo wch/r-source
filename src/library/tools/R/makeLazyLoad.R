@@ -90,7 +90,7 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
 
     mapfile <- paste(filebase, "rdx", sep = ".")
     datafile <- paste(filebase, "rdb", sep = ".")
-    close(file(datafile, "w")) # truncate to zero
+    close(file(datafile, "wb")) # truncate to zero
     table <- envtable()
     varenv <- new.env(hash = TRUE)
     envenv <- new.env(hash = TRUE)
@@ -104,6 +104,7 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
                              enclos = parent.env(e))
                 key <- lazyLoadDBinsertValue(data, datafile, ascii,
                                              compress, envhook)
+                key[1] <- pos; pos <<- pos + key[2]
                 assign(name, key, env = envenv)
             }
             name
@@ -122,12 +123,14 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
     }
     else stop("source must be an environment or a list");
 
+    pos <- as.integer(0)
     for (i in seq(along = vars)) {
-        if (is.null(from) || is.environment(from))
-            key <- lazyLoadDBinsertVariable(vars[i], from, datafile,
-                                            ascii, compress,  envhook)
-        else key <- lazyLoadDBinsertListElement(from, i, datafile, ascii,
-                                                compress, envhook)
+        key <- if (is.null(from) || is.environment(from))
+            lazyLoadDBinsertVariable(vars[i], from, datafile,
+                                     ascii, compress,  envhook)
+        else lazyLoadDBinsertListElement(from, i, datafile, ascii,
+                                         compress, envhook)
+        key[1] <- pos; pos <- pos + key[2]
         assign(vars[i], key, env = varenv)
     }
 
@@ -157,8 +160,7 @@ makeLazyLoading <-
     pkgpath <- findpack(package, lib.loc)
 
     if (package == "base")
-        loaderFile <- system.file("baseloader.R", package="base",
-                                  lib.loc=.Library)
+        loaderFile <- file.path(R.home(), "share", "R", "baseloader.R")
     else if (packageHasNamespace(package, dirname(pkgpath)))
         loaderFile <- file.path(R.home(), "share", "R", "nspackloader.R")
     else

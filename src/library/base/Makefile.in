@@ -71,11 +71,9 @@ DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 
 RfilesLazy:
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@$(INSTALL_DATA) $(top_builddir)/share/R/baseloader.R $(top_builddir)/library/base
 	@(cat $(srcdir)/../tools/R/makeLazyLoad.R $(top_builddir)/share/R/makebasedb.R; \
 	  echo "makeLazyLoading(\"$(pkg)\")") | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave
-	@rm -f $(top_builddir)/library/base/baseloader.R
 
 mostlyclean: clean
 clean:
