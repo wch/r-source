@@ -4,12 +4,9 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-22, 2002-09-17
+@set FAQ-VERSION 1.5-23, 2002-09-19
 @set REL-VERSION 1.5.1
 @set FAQ-ISBN 3-901167-51-X
-@c <FIXME 1.6.0> SetupR.exe => rw1060.exe
-@set WINDOWS-INSTALLER-PROGRAM SetupR.exe
-@c </FIXME>
 @c %**end of header
 
 @dircategory Programming
@@ -397,9 +394,8 @@ and maintained by @email{murdoch@@stats.uwo.ca, Duncan Murdoch} and
 @c aware that some decompression programs do not preserve long file names
 @c properly.
 
-For most installations the installer
-@command{@value{WINDOWS-INSTALLER-PROGRAM}} will be the easiest tool to
-use.
+For most installations the Windows installer program will be the easiest
+tool to use.
 
 See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R for
 Windows @acronym{FAQ}''} for more details.
@@ -1500,6 +1496,9 @@ Clustering genes using Self-Organizing Maps (SOMs).
 @item ISwR
 Data sets for ``Introductory Statistics with R'' by Peter Dalgaard,
 2002, Springer.
+@item KMsurv
+Data sets and functions for ``Survival Analysis, Techniques for Censored
+and Truncated Data'' by Klein and Moeschberger, 1997, Springer.
 @item KernSmooth
 Functions for kernel smoothing (and density estimation) corresponding to
 the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
@@ -1663,6 +1662,9 @@ any mixture of these.
 @item dblcens
 Calculates the NPMLE of the survival distribution for doubly censored
 data.
+@item deal
+Bayesian networks with continuous and/or discrete variables can be
+learned and compared from data.
 @item deldir
 Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
 tesselation (with respect to the entire plane) of a planar point set.
@@ -1728,6 +1730,10 @@ Genetic algorithm for curve fitting.
 @item gee
 An implementation of the Liang/Zeger generalized estimating equation
 approach to GLMs for dependent data.
+@item geepack
+Generalized estimating equations solver for parameters in mean, scale,
+and correlation structures, through mean link, scale link, and
+correlation link.  Can also handle clustered categorical responses.
 @item geoR
 Functions to perform geostatistical data analysis including model-based
 methods.
@@ -1750,6 +1756,9 @@ using smoothing splines.
 GTK graphics device driver that may be used independently of the R-GNOME
 interface and can be used to create R devices as embedded components in
 a GUI using a Gtk drawing area widget, e.g., using RGtk.
+@item haplo.score
+Score tests for association of traits with haplotypes when linkage phase
+is ambiguous.
 @item hdf5
 Interface to the @acronym{NCSA} HDF5 library.
 @item ifs
