@@ -2580,16 +2580,18 @@ drop control back to the debugger only works with some debuggers.
 
 The key to inspecting @R{} objects from compiled code is the function
 @code{PrintValue(SEXP s)} which uses the normal @R{} printing mechanisms
-to print the @R{} object pointed to by @code{s}.
+to print the @R{} object pointed to by @code{s}, or the safer version
+@code{R_PV(SEXP s)} which will only print `objects'.
 
 One way to make use to @code{PrintValue} is to insert suitable calls
 into the code to be debugged.
 
-Another way is to call @code{PrintValue} from the symbolic debugger.
-For example, from @code{gdb} we can use
+Another way is to call @code{R_PV} from the symbolic
+debugger.  (@code{PrintValue} is hidden as @code{Rf_PrintValue}.)  For
+example, from @code{gdb} we can use
 
 @example
-(gdb) p PrintValue(ab)
+(gdb) p R_PV(ab)
 @end example
 
 @noindent
@@ -2634,11 +2636,11 @@ $2 = @{
 @noindent
 (Debugger output reformatted for better legibility).
 
-Using @code{PrintValue()} one can ``inspect'' the values of the various
+Using @code{R_PV()} one can ``inspect'' the values of the various
 elements of the SEXP, for example,
 
 @smallexample
-(gdb) p PrintValue($1->attrib)
+(gdb) p R_PV($1->attrib)
 $names
 [1] "a" "b"
 
@@ -2651,9 +2653,6 @@ $class
 $3 = void
 @end smallexample
 
-@noindent
-(Make sure, however, to use @code{PrintValue()} on SEXPs with the `obj'
-bit turned on only.)
 
 To find out where exactly the corresponding information is stored, one
 needs to go ``deeper'':

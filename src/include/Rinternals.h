@@ -361,7 +361,7 @@ extern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 #define PairToVectorList	Rf_PairToVectorList
 #define pmatch			Rf_pmatch
 #define PrintDefaults		Rf_PrintDefaults
-/*#define PrintValue		Rf_PrintValue*/
+#define PrintValue		Rf_PrintValue
 #define PrintValueEnv		Rf_PrintValueEnv
 #define PrintValueRec		Rf_PrintValueRec
 #define protect			Rf_protect
