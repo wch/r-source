@@ -13,6 +13,8 @@ The files are as follows.
 	contains R specific macros.  Some of these might be useful for
 	other systems as well, but we first need to split this into
 	pieces.
+	R_BLAS_LIBS is based on the AC_ARG_WITH(fastblas) code from
+	Octave, but with tests for Alpha CXML/DXML commented out.
 
   am-fixes.m4
   	contains R specific versions of
