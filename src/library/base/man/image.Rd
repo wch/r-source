@@ -53,6 +53,11 @@ image(x, y, z, zlim, col = heat.colors(12),
   \code{\link{hsv}}, \code{\link{par}}.
 }
 \examples{
+\testonly{
+## Degenerate, should still work
+image(as.matrix(1))
+image(matrix(pi,2,4))
+}
 x <- y <- seq(-4*pi, 4*pi, len=27)
 r <- sqrt(outer(x^2, y^2, "+"))
 image(z = z <- cos(r^2)*exp(-r/6), col=gray((0:32)/32))
