@@ -15,7 +15,8 @@ SUBDIRS = Examples
 R = LC_ALL=C $(top_builddir)/bin/R --vanilla
 
 TESTsrc = simple-true.R arith-true.R arith.R d-p-q-r-tests.R \
-	 print-tests.R is-things.R primitive-funs.R eval-etc.R
+	 is-things.R primitive-funs.R eval-etc.R print-tests.R
+
 TESTout = $(TESTsrc:.R=.Rout)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
