@@ -23,8 +23,8 @@ apropos("lm")
 apropos("ls")
 apropos("lq")
 
-# need a DOUBLE backslash `\\' (in case you don't see it anymore)
-apropos("\\[")
+# need a DOUBLE backslash `\\\\' (in case you don't see it anymore)
+apropos("\\\\[")
 
 # everything
 length(apropos("."))
