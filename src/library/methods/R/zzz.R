@@ -43,6 +43,7 @@
         rm(.makeGeneric, .newClassRepresentation, envir = where)
         .InitMethodDefinitions(where)
         .InitShowMethods(where)
+        assign(".isPrototype", ..isPrototype, envir = where)
         ## TO DO: .InitSubsetMethods(where)
         assign(".saveImage", TRUE, envir = where)
         on.exit()

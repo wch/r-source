@@ -49,7 +49,7 @@ makePrototypeFromClassDef <-
     prototype <- ClassDef@prototype
     ## check for a formal prototype object (TODO:  sometime ensure that this happens
     ## at setClass() time, so prototype slot in classRepresentation can have that class
-    if(.isPrototype(prototype)) {
+    if(!identical(class(prototype), className) && .isPrototype(prototype)) {
         pnames <- prototype@slots
         prototype <- prototype@object
     }
