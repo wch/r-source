@@ -50,8 +50,9 @@ lchoose(n,k)
   Chapter 6: Gamma and Related Functions.
 }
 \seealso{
-\code{\link{Arithmetic}} for simple and \code{\link{Math}} for miscellaneous
-mathematical functions.
+    \code{\link{Arithmetic}} for simple, \code{\link{Math}} for
+    miscellaneous mathematical functions and \code{\link{Bessel}} for the
+    real Bessel functions.
 }
 \examples{
 choose(5, 2)
