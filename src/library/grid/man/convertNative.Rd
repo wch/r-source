@@ -33,7 +33,7 @@ convertNative(unit, dimension="x", type="location")
 
 \examples{
 grid.newpage()
-push.viewport(viewport(width=unit(.5, "npc"),
+pushViewport(viewport(width=unit(.5, "npc"),
                        height=unit(.5, "npc")))
 grid.rect()
 w <- convertNative(unit(1, "inches"))
@@ -42,7 +42,7 @@ h <- convertNative(unit(1, "inches"), "y")
 # resize the device it will no longer be 1in square
 grid.rect(width=unit(w, "native"), height=unit(h, "native"),
           gp=gpar(col="red"))
-pop.viewport(1)
+popViewport(1)
 
 # How to use grid.convert(), etc instead
 convertNative(unit(1, "inches")) ==

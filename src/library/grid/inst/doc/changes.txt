@@ -1,4 +1,17 @@
-Changes from grid_0.7-4 to grid_0.8:
+Changes from grid_1.8.0 to grid_1.9.0:
+------------------------------------
+
+1.  Renamed push/pop.viewport() to push/popViewport().
+
+2.  Added upViewport(), downViewport(), and seekViewport() to 
+    allow creation and navigation of viewport tree 
+    (rather than just viewport stack).
+
+3.  Added id and id.lengths arguments to grid.polygon() to allow
+    multiple polygons within single grid.polygon() call.
+
+
+Changes from grid_0.7-4 to grid_1.8.0:
 ------------------------------------
 
 1.  grid.text() now checks that the rot argument is numeric and finite.
@@ -78,6 +91,8 @@ Changes from grid_0.7-4 to grid_0.8:
 12. There is a new grid.arrows() primitive.  
 
     See the help file for example usage.
+
+13. Grid is now a base package (hence version number leap!)
 
 
 Changes from grid_0.7-3 to grid_0.7-4:

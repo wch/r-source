@@ -118,7 +118,8 @@ get.gpar <- function(names=NULL) {
   if (is.null(names))
     result <- grid.Call("L_getGPar")
   else {
-    if (!is.character(names))
+    if (!is.character(names) ||
+        !all(names %in% .grid.gpar.names))
       stop("Must specify only valid gpar names")
     result <- grid.Call("L_getGPar")[names]
   }

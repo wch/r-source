@@ -339,18 +339,162 @@ SEXP L_setviewport(SEXP vp, SEXP hasParent)
     return R_NilValue;
 }
 
-SEXP L_downviewport(SEXP vp) 
+/* 
+ * Find a viewport in the current viewport tree by name
+ *
+ * Have to do this in C code so that we get THE SEXP in
+ * the tree, NOT a copy of it.
+ */
+
+/*
+ * Some helper functions to call R code because I have no idea
+ * how to do this in C code
+ */
+static Rboolean noChildren(SEXP children) 
+{
+    SEXP result, fcall;
+    PROTECT(fcall = lang2(install("no.children"),
+			  children));
+    PROTECT(result = eval(fcall, R_gridEvalEnv)); 
+    UNPROTECT(2);
+    return LOGICAL(result)[0];
+}
+
+static Rboolean childExists(SEXP name, SEXP children) 
+{
+    SEXP result, fcall;
+    PROTECT(fcall = lang3(install("child.exists"),
+			  name, children));
+    PROTECT(result = eval(fcall, R_gridEvalEnv)); 
+    UNPROTECT(2);
+    return LOGICAL(result)[0];
+}
+
+static SEXP childList(SEXP children) 
+{
+    SEXP result, fcall;
+    PROTECT(fcall = lang2(install("child.list"),
+			  children));
+    PROTECT(result = eval(fcall, R_gridEvalEnv)); 
+    UNPROTECT(2);
+    return result;    
+}
+
+/*
+find.in.children <- function(name, children) {
+  cpvps <- ls(env=children)
+  ncpvp <- length(cpvps)
+  count <- 0
+  found <- FALSE
+  while (count < ncpvp && !found) {
+    result <- find.viewport(name, get(cpvps[count+1], env=children))
+    found <- result$found
+    count <- count + 1
+  }
+  if (!found)
+    result <- list(found=FALSE, pvp=NULL)
+  return(result)
+}
+*/
+static SEXP findViewport(SEXP name, SEXP vp);
+static SEXP findInChildren(SEXP name, SEXP children) 
+{
+    SEXP childnames = childList(children);
+    int n = LENGTH(childnames);
+    int count = 0;
+    Rboolean found = FALSE;
+    SEXP result;
+    PROTECT(result);
+    while (count < n && !found) {
+	result = findViewport(name,
+			      findVar(install(CHAR(STRING_ELT(childnames, count))),
+				      children));
+	found = LOGICAL(VECTOR_ELT(result, 0))[0];
+	count = count + 1;
+    }
+    if (!found) {
+	SEXP temp, false;
+	PROTECT(temp = allocVector(VECSXP, 2));
+	PROTECT(false = allocVector(LGLSXP, 1));
+	LOGICAL(false)[0] = FALSE;
+	temp = allocVector(VECSXP, 2);
+	SET_VECTOR_ELT(temp, 0, false);
+	SET_VECTOR_ELT(temp, 1, R_NilValue);
+	UNPROTECT(2);
+	result = temp;
+    }
+    UNPROTECT(1);
+    return result;
+}
+			   
+/*
+find.viewport <- function(name, pvp) {
+  found <- FALSE
+  if (length(ls(env=pvp$children)) == 0)
+    return(list(found=FALSE, pvp=NULL))
+  else 
+    if (exists(name, env=pvp$children, inherits=FALSE)) 
+      return(list(found=TRUE,
+                  pvp=get(name, env=pvp$children, inherits=FALSE)))
+    else 
+      find.in.children(name, pvp$children)
+}
+*/
+static SEXP findViewport(SEXP name, SEXP vp) 
+{
+    SEXP result, false, true;
+    PROTECT(result = allocVector(VECSXP, 2));
+    PROTECT(false = allocVector(LGLSXP, 1));
+    LOGICAL(false)[0] = FALSE;
+    PROTECT(true = allocVector(LGLSXP, 1));
+    LOGICAL(true)[0] = TRUE;
+    /* 
+     * If there are no children, we fail
+     */
+    if (noChildren(viewportChildren(vp))) {
+	SET_VECTOR_ELT(result, 0, false);
+	SET_VECTOR_ELT(result, 1, R_NilValue);
+    } else if (childExists(name, viewportChildren(vp))) {
+	SET_VECTOR_ELT(result, 0, true);
+	SET_VECTOR_ELT(result, 1, 
+		       /*
+			* Does this do inherits=FALSE?
+			*/
+		       findVar(install(CHAR(STRING_ELT(name, 0))), 
+			       viewportChildren(vp)));
+    } else {
+	result = findInChildren(name, viewportChildren(vp));
+    }
+    UNPROTECT(3);
+    return result;
+}
+
+
+SEXP L_downviewport(SEXP name) 
 {
     /* Get the current device 
      */
     GEDevDesc *dd = getDevice();
-    vp = doSetViewport(vp, TRUE, FALSE, dd);
-    /* Set the value of the current viewport for the current device
+    /* Get the value of the current viewport for the current device
      * Need to do this in here so that redrawing via R BASE display
      * list works 
+     */    
+    SEXP gvp = gridStateElement(dd, GSS_VP);
+    /* 
+     * Try to find the named viewport
      */
-    setGridStateElement(dd, GSS_VP, vp);
-    return R_NilValue;    
+    SEXP found, vp;
+    PROTECT(found = findViewport(name, gvp));
+    if (LOGICAL(VECTOR_ELT(found, 0))[0]) {
+	vp = doSetViewport(VECTOR_ELT(found, 1), FALSE, FALSE, dd);
+	/* Set the value of the current viewport for the current device
+	 * Need to do this in here so that redrawing via R BASE display
+	 * list works 
+	 */
+	setGridStateElement(dd, GSS_VP, vp);
+    }
+    UNPROTECT(1);    
+    return VECTOR_ELT(found, 0);    
 }
 
 /* This is similar to L_setviewport, except that it will NOT 
@@ -372,7 +516,15 @@ SEXP L_unsetviewport(SEXP last)
     /* NOTE that the R code has already checked that .grid.viewport$parent
      * is non-NULL
      */
-    PROTECT(newvp = getListElement(gvp, "parent"));
+    PROTECT(newvp = VECTOR_ELT(gvp, PVP_PARENT));
+    /* 
+     * Remove the parent from the child
+     * This is not strictly necessary, but it is conceptually
+     * more complete and makes it more likely that we will
+     * detect incorrect code elsewhere (because it is likely to
+     * trigger a segfault if other code is incorrect)
+     */
+    SET_VECTOR_ELT(gvp, PVP_PARENT, R_NilValue);
     /* 
      * Remove the child (gvp) from the parent's (newvp) "list" of
      * children
@@ -455,7 +607,7 @@ SEXP L_upviewport(SEXP last)
     /* NOTE that the R code has already checked that .grid.viewport$parent
      * is non-NULL
      */
-    PROTECT(newvp = getListElement(gvp, "parent"));
+    PROTECT(newvp = VECTOR_ELT(gvp, PVP_PARENT));
     if (LOGICAL(last)[0]) {
 	double devWidthCM, devHeightCM;
 	/* Get the current device size 

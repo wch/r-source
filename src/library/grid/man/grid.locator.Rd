@@ -47,13 +47,13 @@ if (interactive()) {
               just="left")
   }
   do.click("inches")
-  push.viewport(viewport(width=0.5, height=0.5,
+  pushViewport(viewport(width=0.5, height=0.5,
                          xscale=c(0, 100), yscale=c(0, 10)))
   grid.rect()
   grid.xaxis()
   grid.yaxis()
   do.click("native")
-  pop.viewport()  
+  popViewport()  
 }
 }
 \keyword{dplot}

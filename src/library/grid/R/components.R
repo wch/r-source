@@ -243,10 +243,10 @@ grid.grill <- function(h=unit(seq(0.25, 0.75, 0.25), "npc"),
   # FIXME:  Should replace for loop and call to grid.lines with call to grid.segments
   # once the latter exists
   if (!is.null(vp))
-    push.viewport(vp)
+    pushViewport(vp)
   grid.segments(v, unit(0, "npc"), v, unit(1, "npc"), gp=gp)
   grid.segments(unit(0, "npc"), h, unit(1, "npc"), h, gp=gp)
   if (!is.null(vp))
-    pop.viewport()
+    popViewport()
 }
 

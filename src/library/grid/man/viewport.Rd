@@ -13,7 +13,8 @@ viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
          gp = gpar(), clip = FALSE,
          xscale = c(0, 1), yscale = c(0, 1),
          angle = 0,
-         layout = NULL, layout.pos.row = NULL, layout.pos.col = NULL)
+         layout = NULL, layout.pos.row = NULL, layout.pos.col = NULL,
+         name=NULL)
 }
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-location.}
@@ -49,6 +50,8 @@ viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
   \item{layout.pos.col}{A numeric vector giving the
     columns occupied by this viewport in its
     parent's layout.}
+  \item{name}{A character value to uniquely identify the viewport
+    once it has been pushed onto the viewport tree.}
 }
 \details{
   The location and size of a viewport are relative to the coordinate
@@ -99,27 +102,27 @@ viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
 grid.show.viewport(viewport(x=0.6, y=0.6,
                    w=unit(1, "inches"), h=unit(1, "inches")))
 # Demonstrate viewport clipping
-clip.demo <- function(i, j, clip1, clip2, title) {
-  push.viewport(viewport(layout.pos.col=i,
+clip.demo <- function(i, j, clip1, clip2) {
+  pushViewport(viewport(layout.pos.col=i,
                          layout.pos.row=j))
-  push.viewport(viewport(width=0.6, height=0.6, clip=clip1))
+  pushViewport(viewport(width=0.6, height=0.6, clip=clip1))
   grid.rect(gp=gpar(fill="white"))
   grid.circle(r=0.55, gp=gpar(col="red", fill="pink"))
-  pop.viewport()
-  push.viewport(viewport(width=0.6, height=0.6, clip=clip2))
+  popViewport()
+  pushViewport(viewport(width=0.6, height=0.6, clip=clip2))
   grid.polygon(x=c(0.5, 1.1, 0.6, 1.1, 0.5, -0.1, 0.4, -0.1),
                y=c(0.6, 1.1, 0.5, -0.1, 0.4, -0.1, 0.5, 1.1),
                gp=gpar(col="blue", fill="light blue"))
-  pop.viewport(2)
+  popViewport(2)
 }
 
 grid.newpage()
 grid.rect(gp=gpar(fill="grey"))
-push.viewport(viewport(layout=grid.layout(2, 2)))
+pushViewport(viewport(layout=grid.layout(2, 2)))
 clip.demo(1, 1, FALSE, FALSE)
 clip.demo(1, 2, TRUE, FALSE)
 clip.demo(2, 1, FALSE, TRUE)
 clip.demo(2, 2, TRUE, TRUE)
-pop.viewport()
+popViewport()
 }
 \keyword{dplot}

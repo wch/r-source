@@ -164,7 +164,7 @@ grid.draw <- function(x, recording=TRUE) {
       list.struct <- get.value(x)
       # automatically push/pop the viewport and set/unset the gpar
       if (!is.null(list.struct$vp))
-        push.viewport(list.struct$vp, recording=FALSE)
+        pushViewport(list.struct$vp, recording=FALSE)
       if (!is.null(list.struct$gp)) {
         tempgpar <- get.gpar()
         set.gpar(list.struct$gp)
@@ -174,7 +174,7 @@ grid.draw <- function(x, recording=TRUE) {
       if (!is.null(list.struct$gp))
         set.gpar(tempgpar)
       if (!is.null(list.struct$vp))
-          pop.viewport(recording=FALSE)
+          popViewport(recording=FALSE)
       if (recording)
         record(x)
   }
@@ -198,19 +198,19 @@ draw.details.glist <- function(x, x.wrapped, recording) {
 }
 
 draw.details.viewport <- function(x, x.wrapped, recording) {
-  push.viewport(x, recording=FALSE)
+  pushViewport(x, recording=FALSE)
 }
 
 draw.details.down <- function(x, x.wrapped, recording) {
-  down.viewport(x, recording=FALSE)
+  downViewport(x, recording=FALSE)
 }
 
 draw.details.pop <- function(x, x.wrapped, recording) {
-  pop.viewport(x, recording=FALSE)
+  popViewport(x, recording=FALSE)
 }
 
 draw.details.up <- function(x, x.wrapped, recording) {
-  up.viewport(x, recording=FALSE)
+  upViewport(x, recording=FALSE)
 }
 
 print.grob <- function(x, ...) {

@@ -49,64 +49,64 @@ grid.arrows(x = c(0.25, 0.75), y = 0.5, default.units = "npc",
   \code{\link{grid.segments}}
 }
 \examples{
-push.viewport(viewport(layout=grid.layout(2, 4)))
-push.viewport(viewport(layout.pos.col=1,
+pushViewport(viewport(layout=grid.layout(2, 4)))
+pushViewport(viewport(layout.pos.col=1,
                        layout.pos.row=1))
 grid.rect(gp=gpar(col="grey"))
 grid.arrows()
-pop.viewport()
-push.viewport(viewport(layout.pos.col=2,
+popViewport()
+pushViewport(viewport(layout.pos.col=2,
                        layout.pos.row=1))
 grid.rect(gp=gpar(col="grey"))
 grid.arrows(angle=15, type="closed")
-pop.viewport()
-push.viewport(viewport(layout.pos.col=3,
+popViewport()
+pushViewport(viewport(layout.pos.col=3,
                        layout.pos.row=1))
 grid.rect(gp=gpar(col="grey"))
 grid.arrows(angle=5, length=unit(0.1, "npc"),
             type="closed", gp=gpar(fill="white"))
-pop.viewport()
-push.viewport(viewport(layout.pos.col=4,
+popViewport()
+pushViewport(viewport(layout.pos.col=4,
                        layout.pos.row=1))
 grid.rect(gp=gpar(col="grey"))
 grid.arrows(x=unit(0:80/100, "npc"),
             y=unit(1 - (0:80/100)^2, "npc"))
-pop.viewport()
-push.viewport(viewport(layout.pos.col=1,
+popViewport()
+pushViewport(viewport(layout.pos.col=1,
                        layout.pos.row=2))
 grid.rect(gp=gpar(col="grey"))
 grid.arrows(ends="both")
-pop.viewport()
-push.viewport(viewport(layout.pos.col=2,
+popViewport()
+pushViewport(viewport(layout.pos.col=2,
                        layout.pos.row=2))
 grid.rect(gp=gpar(col="grey"))
 # An arrow on a zero-length line
 grid.arrows(x=unit(0.5, "npc"))
-pop.viewport()
-push.viewport(viewport(layout.pos.col=3,
+popViewport()
+pushViewport(viewport(layout.pos.col=3,
                        layout.pos.row=2))
 grid.rect(gp=gpar(col="grey"))
 gs <- grid.segments(x0=unit(1:4/5, "npc"),
                     x1=unit(1:4/5, "npc"))
 grid.arrows(grob=gs, length=unit(0.1, "npc"),
             type="closed", gp=gpar(fill="white"))
-pop.viewport()
-push.viewport(viewport(layout.pos.col=4,
+popViewport()
+pushViewport(viewport(layout.pos.col=4,
                        layout.pos.row=2))
 grid.rect(gp=gpar(col="grey"))
 gl <- grid.lines(x=unit(0:80/100, "npc"),
                  y=unit((0:80/100)^2, "npc"))
 grid.arrows(grob=gl, angle=15, type="closed", gp=gpar(fill="black"))
-pop.viewport()
-push.viewport(viewport(layout.pos.col=1,
+popViewport()
+pushViewport(viewport(layout.pos.col=1,
                        layout.pos.row=2))
 grid.move.to(x=0.5, y=0.8)
-pop.viewport()
-push.viewport(viewport(layout.pos.col=4,
+popViewport()
+pushViewport(viewport(layout.pos.col=4,
                        layout.pos.row=1))
 glt <- grid.line.to(x=0.5, y=0.2, gp=gpar(lwd=3))
 grid.arrows(grob=glt, ends="first", gp=gpar(lwd=3))
-pop.viewport(2)
+popViewport(2)
 grid.edit(gl, y=unit((0:80/100)^3, "npc"))
 }
 \keyword{dplot}

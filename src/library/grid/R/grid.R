@@ -24,6 +24,11 @@ push.vp <- function(vps, index, len, recording) {
 }
 
 push.viewport <- function(..., recording=TRUE) {
+  .Deprecated("pushViewport")
+  pushViewport(..., recording=recording)
+}
+
+pushViewport <- function(..., recording=TRUE) {
   if (missing(...))
     stop("Must specify at least one viewport")
   else {
@@ -33,41 +38,23 @@ push.viewport <- function(..., recording=TRUE) {
   }
 }
 
-find.in.children <- function(name, children) {
-  cpvps <- ls(env=children)
-  ncpvp <- length(cpvps)
-  count <- 0
-  found <- FALSE
-  while (count < ncpvp && !found) {
-    result <- find.viewport(name, get(cpvps[count+1], env=children))
-    found <- result$found
-  }
-  if (!found)
-    result <- list(found=FALSE, pvp=NULL)
-  return(result)
+# Helper functions called from C
+no.children <- function(children) {
+  length(ls(env=children)) == 0
 }
 
-find.viewport <- function(name, pvp) {
-  found <- FALSE
-  if (length(ls(env=pvp$children)) == 0)
-    return(list(found=FALSE, pvp=NULL))
-  else 
-    if (exists(name, env=pvp$children, inherits=FALSE)) 
-      return(list(found=TRUE,
-                  pvp=get(name, env=pvp$children, inherits=FALSE)))
-    else 
-      find.in.children(name, pvp$children)
+child.exists <- function(name, children) {
+  exists(name, env=children, inherits=FALSE)
+}
+
+child.list <- function(children) {
+  ls(env=children)
 }
 
 # Rather than pushing a new viewport, navigate down to one that has
 # already been pushed
-down.viewport <- function(name, recording=TRUE) {
-  # Find the viewport
-  pvp <- grid.Call("L_currentViewport")
-  result <- find.viewport(name, pvp)
-  if (result$found) {
-    # "set" the viewport
-    grid.Call.graphics("L_downviewport", result$pvp)
+downViewport <- function(name, recording=TRUE) {
+  if (grid.Call.graphics("L_downviewport", name)) {
     if (recording) {
       class(name) <- "down"
       record(name)
@@ -80,10 +67,10 @@ down.viewport <- function(name, recording=TRUE) {
 # Similar to down.viewport() except it starts searching from the
 # top-level viewport, so the result may be "up" or even "across"
 # the current viewport tree
-seek.viewport <- function(name, recording=TRUE) {
+seekViewport <- function(name, recording=TRUE) {
   # up to the top-level
-  up.viewport(0, recording=recording)
-  down.viewport(name, recording=recording)
+  upViewport(0, recording=recording)
+  downViewport(name, recording=recording)
 }
 
 # Depth of the current viewport
@@ -112,7 +99,12 @@ pop.vp <- function(last.one, recording) {
   grid.Call.graphics("L_unsetviewport", last.one)
 }
 
-pop.viewport <- function(n=1, recording=TRUE) {
+pop.viewport <- function(n, recording=TRUE) {
+  .Deprecated("popViewport")
+  popViewport(n, recording=recording)
+}
+
+popViewport <- function(n=1, recording=TRUE) {
   if (n < 0)
     stop("Must pop at least one viewport")
   if (n == 0)
@@ -141,7 +133,7 @@ up.vp <- function(last.one, recording) {
 
 # Rather than removing the viewport from the viewport stack (tree),
 # simply navigate up, leaving pushed viewports in place.
-up.viewport <- function(n=1, recording=TRUE) {
+upViewport <- function(n=1, recording=TRUE) {
   if (n < 0)
     stop("Must navigate up at least one viewport")
   if (n == 0) 

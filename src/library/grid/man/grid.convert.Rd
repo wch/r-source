@@ -87,7 +87,7 @@ grid.convertX(unit(72, "bigpts"), "inches")
 grid.convertX(unit(1157/1238*72.27, "dida"), "inches")
 grid.convertX(unit(1/12*1157/1238*72.27, "cicero"), "inches")
 grid.convertX(unit(65536*72.27, "scaledpts"), "inches")
-push.viewport(viewport(width=unit(1, "inches"),
+pushViewport(viewport(width=unit(1, "inches"),
                        height=unit(2, "inches"),
                        xscale=c(0, 1),
                        yscale=c(1, 3)))
@@ -100,7 +100,7 @@ push.viewport(viewport(width=unit(1, "inches"),
   ## Convert several values at once
   grid.convertX(unit(c(0.5, 2.54), c("npc", "cm")),
                 c("inches", "native"))
-pop.viewport()
+popViewport()
 ## Convert a complex unit
 grid.convertX(unit(1, "strwidth", "Hello"), "native")
 }
