@@ -88,25 +88,25 @@
 
 
 #ifdef Macintosh
-extern char *strdup(); 
-#define R_DIR_SEPARATOR ':'
-#define HAVE_NO_SYMBOL_UNDERSCORE 
+  extern char *strdup(); 
+# define R_DIR_SEPARATOR ':'
+# define HAVE_NO_SYMBOL_UNDERSCORE 
 /* No "_" before function names under MacOS */
-#else   /* end of Macintosh */
-/* For MS Windows, we use the / separator in our internal representation of the
-   path. */
 
-#define R_DIR_SEPARATOR '/'
+#else   /* Unix or Win32 */
 
-#ifdef Win32
-#define HAVE_NO_SYMBOL_UNDERSCORE
-#else
-#ifndef HAVE_NO_SYMBOL_UNDERSCORE
-#ifdef HAVE_ELF_H
-#define HAVE_NO_SYMBOL_UNDERSCORE
-#endif /* HAVE_ELF_H */
-#endif /* HAE_NO_SYMBOL_UNDERSCORE */
-#endif /* Win32 */
+# define R_DIR_SEPARATOR '/'
+
+# ifdef Win32
+#  define HAVE_NO_SYMBOL_UNDERSCORE
+
+# else /* Unix */
+#  ifndef HAVE_NO_SYMBOL_UNDERSCORE
+#   ifdef HAVE_ELF_H
+#    define HAVE_NO_SYMBOL_UNDERSCORE
+#   endif /* HAVE_ELF_H */
+#  endif /* HAE_NO_SYMBOL_UNDERSCORE */
+# endif /* Win32 */
 #endif /* Macintosh*/
 
 
