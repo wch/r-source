@@ -102,15 +102,16 @@ function(pattern, fields = c("alias", "title"),
 	    || ((unlink(dir) == 0) && dir.create(dir)))
 	   && (unlink(dbfile) == 0))
 	    save.db <- TRUE
-	## If packages were given, only use these.
-        ## <NOTE>
-        ## Earlier versions were more aggresive, using the given
-        ## packages only if the help db cannot be saved.
-        ## </NOTE>
-	packagesInHelpDB <- if(is.null(package))
-            .packages(all.available = TRUE, lib.loc = lib.loc)
+        ## If we cannot save the help db only use the given packages.
+        ## <FIXME>
+        ## Why don't we just use the given packages?  The current logic
+        ## for rebuilding cannot figure out that rebuilding is needed
+        ## the next time (unless we use the same given packages) ...
+        packagesInHelpDB <- if(!is.null(package) && !save.db)
+            package
         else
-	    package
+            .packages(all.available = TRUE, lib.loc = lib.loc)
+        ## </FIXME>
 	## Create the help db.
 	contentsEnv <- new.env()
 	contentsDCFFields <-
@@ -213,11 +214,14 @@ function(pattern, fields = c("alias", "title"),
 					    sapply(aliases, length)),
 					p))
 		    keywords <- contents[, "Keywords"]
-		    dbKeywords <-
-			rbind(dbKeywords,
-			      cbind(unlist(keywords),
-				    rep(IDs, sapply(keywords, length)),
-				    p))
+                    ## And similarly if there are no keywords at all.
+                    if(length((k <- unlist(keywords)) > 0))
+                        dbKeywords <-
+                            rbind(dbKeywords,
+                                  cbind(k,
+                                        rep(IDs,
+                                            sapply(keywords, length)),
+                                        p))
 		    nEntries <- nEntries + nr
 		} else {
 		    warning(paste("Empty contents for package",
