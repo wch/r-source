@@ -801,7 +801,7 @@ esac
 ## Osman says that this is necessary.
 case ${host} in
   *hpux*)
-    INSTALL="\$\(top_srcdir\)/${INSTALL}" ;;
+    INSTALL="\$\(top_srcdir\)/aux/install-sh -c" ;;
 esac
 
 echo $ac_n "checking whether ln -s works""... $ac_c" 1>&6

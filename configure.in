@@ -146,7 +146,7 @@ esac
 ## Osman says that this is necessary.
 case ${host} in
   *hpux*)
-    INSTALL="\$\(top_srcdir\)/${INSTALL}" ;;
+    INSTALL="\$\(top_srcdir\)/aux/install-sh -c" ;;
 esac
 
 AC_PROG_LN_S
