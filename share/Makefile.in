@@ -14,7 +14,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
 ## subdirectories of R_HOME/share
-SUBDIRS = glade make perl sh texmf
+SUBDIRS = R glade make perl sh texmf
 ## subdirectories of R_HOME/share/perl
 SUBDIRS_PERL = R Text
 
@@ -27,6 +27,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
+.PHONY: R
 R:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  $(MAKE) rhome=$(top_builddir) install-sources; \
@@ -37,6 +38,7 @@ docs:
 install: install-message installdirs install-sources
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/share
+	@$(MKINSTALLDIRS) $(rhome)/share/R
 	@if test -n "$(GNOME_IF_FILES)"; then \
 	  $(MKINSTALLDIRS) $(rhome)/share/glade; \
 	fi
@@ -50,6 +52,9 @@ installdirs:
 install-message:
 	@echo "installing share ..."
 install-sources: installdirs
+	@for f in $(srcdir)/R/*.R; do \
+	  $(INSTALL_DATA) $${f} $(rhome)/share/R; \
+	done
 	@if test -n "$(GNOME_IF_FILES)"; then \
 	  for f in $(srcdir)/glade/*.glade; do \
 	    $(INSTALL_DATA) $${f} $(rhome)/share/glade; \
