@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-12, 2001-01-06
+@set FAQ-VERSION 1.2-13, 2001-01-07
 @set REL-VERSION 1.2.0
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -428,7 +428,7 @@ The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
 2.2/2.3 packages for the i386 platform (now part of the Debian
 distribution and maintained by Doug Bates), Red Hat 6.x/7.x packages for
 the alpha and i386 platforms and 6.x packages for the sparc platform
-(maintained by Naoki Takebayashi, Vin Everett, and Martyn Plummer,
+(maintained by Naoki Takebayashi, Martyn Plummer, and Vin Everett,
 respectively), SuSE 6.4/7.0 i386 packages by Albrecht Gebhardt, Mandrake
 7.1/7.2 i386 packages by Michele Alzetta, and Linuxppc 5.0 RPMs by Alex
 Buerkle.
@@ -2103,16 +2103,16 @@ available.
 @node Why does sourcing a correct file fail?, How can I set components of a list to NULL?, Why does R run out of memory?, R Miscellanea
 @section Why does sourcing a correct file fail?
 
-R sometimes has problems parsing a file which does not end in a newline.
-This can happen for example when Emacs is used for editing the file and
-@code{next-line-add-newlines} is set to @code{nil}.  To avoid the
-problem, either set @code{require-final-newline} to a non-@code{nil}
-value in one of your Emacs startup files, or make sure R-mode (@pxref{Is
-there Emacs support for R?}) is used for editing R source files (which
-locally ensures this setting).
+Versions of R prior to 1.2.1 may have had problems parsing files not
+ending in a newline.  Earlier R versions had a similar problem when
+reading in data files.  This should no longer happen.
 
-Earlier R versions had a similar problem when reading in data files, but
-this should have been taken care of now.
+@c  This can happen for example when Emacs is used for editing the file and
+@c  @code{next-line-add-newlines} is set to @code{nil}.  To avoid the
+@c  problem, either set @code{require-final-newline} to a non-@code{nil}
+@c  value in one of your Emacs startup files, or make sure R-mode (@pxref{Is
+@c  there Emacs support for R?}) is used for editing R source files (which
+@c  locally ensures this setting).
 
 @node How can I set components of a list to NULL?, How can I save my workspace?, Why does sourcing a correct file fail?, R Miscellanea
 @section How can I set components of a list to NULL?

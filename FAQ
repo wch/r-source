@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-12, 2001-01-06
+Version 1.2-13, 2001-01-07
 Kurt Hornik
 
 
@@ -346,7 +346,7 @@ more details.
 packages for the i386 platform (now part of the Debian distribution and
 maintained by Doug Bates), Red Hat 6.x/7.x packages for the alpha and i386
 platforms and 6.x packages for the sparc platform (maintained by Naoki
-Takebayashi, Vin Everett, and Martyn Plummer, respectively), SuSE 6.4/7.0
+Takebayashi, Martyn Plummer, and Vin Everett, respectively), SuSE 6.4/7.0
 i386 packages by Albrecht Gebhardt, Mandrake 7.1/7.2 i386 packages by
 Michele Alzetta, and Linuxppc 5.0 RPMs by Alex Buerkle.
 
@@ -1745,15 +1745,9 @@ available.
 7.2 Why does sourcing a correct file fail?
 ==========================================
 
-   R sometimes has problems parsing a file which does not end in a newline.
-This can happen for example when Emacs is used for editing the file and
-`next-line-add-newlines' is set to `nil'.  To avoid the problem, either set
-`require-final-newline' to a non-`nil' value in one of your Emacs startup
-files, or make sure R-mode (*note Is there Emacs support for R?::) is used
-for editing R source files (which locally ensures this setting).
-
-   Earlier R versions had a similar problem when reading in data files, but
-this should have been taken care of now.
+   Versions of R prior to 1.2.1 may have had problems parsing files not
+ending in a newline.  Earlier R versions had a similar problem when reading
+in data files.  This should no longer happen.
 
 7.3 How can I set components of a list to NULL?
 ===============================================
