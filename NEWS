@@ -74,10 +74,6 @@ USER-VISIBLE CHANGES
 	a syntax error.	 If this breaks existing code, just add
 	parentheses -- or braces in the case of plotmath.
 
-    o	str(*, max.level = 0) has a new meaning of suppressing all
-	hierarchical details.  The default behavior of giving all levels is
-	unchanged, but now specified by 'max.level = NA'.
-
 
 NEW FEATURES
 
@@ -360,6 +356,11 @@ NEW FEATURES
 
 	Specifying 'max.level = 0' now allows to suppress all but the top
 	level for hierarchical objects such as lists.
+
+    	str(*, max.level = 0) has a new meaning of suppressing all but
+	the top level for hierarchical objects such as lists.  The
+	default behavior of giving all levels is unchanged, but now
+	specified by 'max.level = NA'.
 
     o	system.time() has a new argument 'gcFirst' which, when TRUE,
 	forces a garbage collection before timing begins.
