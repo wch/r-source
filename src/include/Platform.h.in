@@ -67,6 +67,7 @@
 
 /* GNU Readline Library */
 #undef HAVE_LIBREADLINE
+#undef HAVE_READLINE_HISTORY_H
 
 #undef HAVE_LOCALE_H
 
