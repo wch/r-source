@@ -9,7 +9,8 @@ top_builddir = ../..
 
 include $(top_builddir)/Makeconf
 
-SRC_HEADERS = S.h S_compat.h f2c.h Fortran.h Blas.h Linpack.h
+SRC_HEADERS = S.h S_compat.h f2c.h Arith.h Complex.h Error.h Fortran.h \
+	Blas.h Linpack.h Mathlib.h
 OBJ_HEADERS = Platform.h
 
 all: R
