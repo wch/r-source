@@ -14,7 +14,7 @@ determinant(x, logarithm, \dots)
 \arguments{
   \item{x}{numeric matrix.}
   \item{logarithm}{logical; if \code{TRUE} return the logarithm of the
-    modulus of the determinant.  Default is \code{TRUE}.
+    modulus of the determinant.  Default is \code{TRUE}.}
 }
 \value{
   For \code{det}, the determinant of \code{x}.  For \code{determinant}, a
