@@ -1,8 +1,7 @@
-# Subroutines for converting R documentation into HTML, LaTeX, Nroff
+# Subroutines for converting R documentation into text, HTML, LaTeX, Nroff
 # and R (Examples) format
 
-# Copyright (C) 1997 Friedrich Leisch
-# Modifications for Windows (C) 1998, 1999 B. D. Ripley
+# Copyright (C) 1997-2000 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,20 +18,9 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-# Send any bug reports to Friedrich.Leisch@ci.tuwien.ac.at
+# Send any bug reports to R-bugs@lists.r-project.org
 
 # Bugs: still get ``\bsl{}'' in verbatim-like, see e.g. Examples of apropos.Rd
-
-## New: \verbatim{}: like \examples{}, but can appear 0-n times [MM].
-## ---	===========
-## Original idea:  Can have *SEVERAL* verbatim	 codeblocks which should
-## appear  (almost) WHERE they were initially !!
-## BUT, this is not really possible:
-##	we collect the block into a hash array and don't even remember
-##	their order in the *.Rd file
-##
-## ==> Consequence: Allow \verbatim{ ...}  only *within* other
-##     top-level blocks ...
 
 require "$R_HOME/etc/html-layout.pl";
 
@@ -2137,8 +2125,11 @@ sub latex_code_cmd {
     if($code =~ /[$LATEX_SPECIAL]/){
 	warn("\nERROR: found `\@' in \\code{...\}\n")
 	  if $code =~ /@/;
-	warn("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
-	  if $code =~ /HYPERLINK\(/;
+	if ($code =~ /HYPERLINK\(/) {
+	    $code =~ s/HYPERLINK\(([^)]*)\)/$1/go;
+	    warn("\nWarning: hyperlink for `$code' contains special chars\n" .
+		 "and will be omitted in latex\n");
+	}
 	## till 0.63.1
 	## $code = "\\verb@" . $code . "@";
 	##          [Problem: Fails in new Methods.Rd: verb NOT in command arg!
