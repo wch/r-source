@@ -1065,12 +1065,21 @@ static void doSpreadKey(int key, DEEvent * event)
 	advancerect(RIGHT);
     else if (iokey == XK_Up)
 	advancerect(UP);
+#ifdef _AIX
+    else if (iokey == XK_Prior) {
+	int i = rowmin - nhigh + 2;
+	jumpwin(colmin, max(1, i));
+    }
+    else if (iokey == XK_Next)
+	jumpwin(colmin, rowmax);
+#else
     else if (iokey == XK_Page_Up) {
 	int i = rowmin - nhigh + 2;
 	jumpwin(colmin, max(1, i));
     }
     else if (iokey == XK_Page_Down)
 	jumpwin(colmin, rowmax);
+#endif
     else if ((iokey == XK_BackSpace) || (iokey == XK_Delete)) {
 	if (clength > 0) {
 	    clength--;
