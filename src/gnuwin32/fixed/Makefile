@@ -39,8 +39,8 @@ fixh: h/config.h ../FFDecl.h ../FFTab.h \
 	sh ../../../tools/GV > $@
 	$(RM) ../../../tools/GV
 
-../../../bin/massage-Examples.sh: ../../scripts/massage-Examples
-	$(SED) -e 1d  -e 's/"contr.poly")/"contr.poly"), pager="console"'/ $< > $@
+../../../bin/massage-Examples.sh: ../../../share/sh/massage-Examples.sh
+	$(SED) -e 1d  -e 's/"contr.poly")/"contr.poly"), pager="console"/' $< > $@
 
 ../../../bin/check: ../../scripts/check.in
 	$(SED) -e 1d -e "s/R CMD/Rcmd/" $< > $@

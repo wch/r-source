@@ -32,7 +32,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.41 $ ';
+my $revision = ' $Revision: 1.42 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -529,13 +529,30 @@ sub check_pkg {
             system("unzip ${library}/${pkgname}/R-ex/R-ex.zip " .
                    "-d ${library}/${pkgname}/R-ex");
         }
-	$cmd = "${R_CMD} sh ${R_HOME}/share/sh/massage-Examples.sh ".
-	         "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
-		 "> ${pkgname}-Ex.R";
-	if(system($cmd)) {
-  	    $log->error();
-  	    exit(1);
-  	}
+        if($WINDOWS) {
+            $cmd = "${R_CMD} massage-Examples.sh ".
+  		     "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
+  		     "> ${pkgname}-Ex.R";
+            $cfile = "$TMPDIR/Rcmd.$$";
+            open cfile,  "> $cfile" || die "Cannot write to \`$cfile'\n";
+            print cfile "$cmd\n";
+            close cfile;
+            if(system("sh $cfile")) {
+	        $log->error();
+                unlink($cfile);
+	        exit(1);
+            } else {
+                unlink($cfile);
+            }
+        } else {
+	    $cmd = "${R_CMD} sh ${R_HOME}/share/sh/massage-Examples.sh ".
+	             "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
+		     "> ${pkgname}-Ex.R";
+ 	    if(system($cmd)) {
+  	        $log->error();
+  	        exit(1);
+  	    }
+        }
         if($iszipped) {
             unlink(<${library}/${pkgname}/R-ex/*.R>);
         }

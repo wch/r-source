@@ -27,11 +27,10 @@ USE_GCT = 0
 	@rm -f $@ $@.fail
 	@echo "  Running \`$<'"
 	@if test "$(USE_GCT)" = 0; then \
-	  $(R) R_LIBS=$(R_LIBS) < $< > $@; \
+	  $(R) R_LIBS="$(R_LIBS)" < $< > $@; \
 	else \
-	  (echo "gctorture(TRUE)"; cat $<) | $(R) R_LIBS=$(R_LIBS) > $@; \
+	  (echo "gctorture(TRUE)"; cat $<) | $(R) R_LIBS="$(R_LIBS)" > $@; \
 	fi
-	@$(R) R_LIBS="$(R_LIBS)" < $< > $@
 	@if test -f $(srcdir)/$@.save; then \
 	  mv $@ $@.fail; \
 	  echo $(ECHO_N) "  Comparing \`$@' to \`$@.save' ...$(ECHO_C)"; \
