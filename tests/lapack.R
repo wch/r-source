@@ -10,8 +10,17 @@ str(s <- La.svd(X)); D <- diag(s$d)
 stopifnot(abs(X - s$u %*% D %*% s$vt) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% t(s$vt)) < Eps)#  D = U' X V
 
+str(s <- La.svd(X, method = "dgesdd")); D <- diag(s$d)
+stopifnot(abs(X - s$u %*% D %*% s$vt) < Eps)#  X = U D V'
+stopifnot(abs(D - t(s$u) %*% X %*% t(s$vt)) < Eps)#  D = U' X V
+
 X <- cbind(1, 1:7)
 str(s <- La.svd(X)); D <- diag(s$d)
+stopifnot(abs(X - s$u %*% D %*% s$vt) < Eps)#  X = U D V'
+stopifnot(abs(D - t(s$u) %*% X %*% t(s$vt)) < Eps)#  D = U' X V
+
+X <- cbind(1, 1:7)
+str(s <- La.svd(X, method = "dgesdd")); D <- diag(s$d)
 stopifnot(abs(X - s$u %*% D %*% s$vt) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% t(s$vt)) < Eps)#  D = U' X V
 
@@ -40,7 +49,11 @@ La.eigen(print(cbind(c(0,1i), c(-1i,0))))# Hermite ==> real eigenvalues
 La.eigen(cbind( 1,3:1,1:3))
 La.eigen(cbind(-1,c(1:2,0),0:2)) # complex values
 
-Meps <- .Alias(.Machine$double.eps)
+La.eigen(cbind(c(1,-1),c(-1,1)), method = "dsyevr")
+
+
+set.seed(1234)
+Meps <- .Machine$double.eps
 m <- matrix(round(rnorm(25),3), 5,5)
 sm <- m + t(m) #- symmetric matrix
 em <- La.eigen(sm); V <- em$vect
@@ -49,6 +62,14 @@ print(lam <- em$values) # ordered DEcreasingly
 stopifnot(
  abs(sm %*% V - V %*% diag(lam))          < 60*Meps,
  abs(sm       - V %*% diag(lam) %*% t(V)) < 60*Meps)
+
+em <- La.eigen(sm, method="dsyevr"); V <- em$vect
+print(lam <- em$values) # ordered DEcreasingly
+
+stopifnot(
+ abs(sm %*% V - V %*% diag(lam))          < 60*Meps,
+ abs(sm       - V %*% diag(lam) %*% t(V)) < 60*Meps)
+
 
 ## symmetric = FALSE
 
@@ -87,6 +108,7 @@ sm <- matrix(rnorm(25), 5, 5)
 sm <- 0.5 * (sm + t(sm))
 eigenok(sm, eigen(sm))
 eigenok(sm, La.eigen(sm))
+eigenok(sm, La.eigen(sm, method="dsyevr"))
 eigenok(sm, La.eigen(sm, sym=FALSE))
 
 sm[] <- as.complex(sm)

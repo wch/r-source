@@ -4,7 +4,8 @@
 \title{Spectral Decomposition of a Matrix}
 \usage{
 eigen(x, symmetric, only.values = FALSE)
-La.eigen(x, symmetric, only.values = FALSE)
+La.eigen(x, symmetric, only.values = FALSE,
+         method = c("dsyev", "dsyevr"))
 }
 \arguments{
   \item{x}{a matrix whose spectral decomposition is to be computed.}
@@ -15,14 +16,15 @@ La.eigen(x, symmetric, only.values = FALSE)
   \item{only.values}{if \code{TRUE}, only the eigenvalues are computed
     and returned, otherwise both eigenvalues and eigenvectors are
     returned.}
+  \item{method}{The LAPACK routine to use.}
 }
 \description{
   Function \code{eigen} computes eigenvalues and eigenvectors by providing an
   interface to the EISPACK routines \code{RS}, \code{RG}, \code{CH}
   and \code{CG}.
 
-  Function \code{La.eigen} uses the LAPACK routines DSYEV, DGEEV, ZHEEV
-  and ZGEEV.
+  Function \code{La.eigen} uses the LAPACK routines DSYEV/DSYEVR,
+  DGEEV, ZHEEV and ZGEEV.
 }
 \details{
   If \code{symmetric} is unspecified, the code attempts to
@@ -31,7 +33,9 @@ La.eigen(x, symmetric, only.values = FALSE)
 
   \code{La.eigen} is preferred to \code{eigen} for new projects, but
   its eigenvectors may differ in sign and (in the asymmetric case) in
-  normalization.
+  normalization. The LAPACK routine DSYEVR is usually substantially
+  faster than DSYEV: see
+  \url{http://www.cs.berkeley.edu/~demmel/DOE2000/Report0100.html}.
 }
 \value{
   The spectral decomposition of \code{x} is returned

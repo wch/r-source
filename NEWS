@@ -382,6 +382,11 @@ NEW FEATURES
 	routine. This is used in embedding R in other applications and
 	languages.
 
+    o	La.eigen() and La.svd() have optional methods to use later
+	(and supposedly much faster) LAPACK routines.  If these prove
+	fast and reliable the new methods will become the default in
+	due course.
+
 
 DOCUMENTATION CHANGES
 
@@ -577,7 +582,7 @@ BUG FIXES
 	imaginary part of complex numbers.
 
     o	fifo() no longer tries to truncate on opening in modes
-	including "w". (Caused fifo example to fail on HP-UX.)
+	including "w". (Caused the fifo example to fail on HP-UX.)
 
     o   The GNOME console inherits standard emacs-style keyboard
         shortcuts from the GtkText widget for cursor motion, editing

@@ -6,38 +6,70 @@
 
 #include "Lapack.h"
 
-static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
+static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
+		      SEXP method)
 {
-    int *xdims, n, p, lwork, info;
+    int *xdims, n, p, lwork, info = 0;
     double *work, *xvals, tmp;
     SEXP val, nm;
+    char *meth;
 
     if (!(isString(jobu) && isString(jobv)))
 	error("jobu and jobv must be character objects");
+    if (!isString(method))
+	error("method must be a character object");
+    meth = CHAR(STRING_ELT(method, 0));
+#ifndef IEEE_754
+    if (strcmp(meth, "dgesdd") == 0)
+	error("method = \"dgesdd\" requires IEEE 754 arithmetic");
+#endif
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0]; p = xdims[1];
     xvals = (double *) R_alloc(n * p, sizeof(double));
     /* work on a copy of x */
     Memcpy(xvals, REAL(x), (size_t) (n * p));
 
-    /* ask for optimal size of work array */
-    lwork = -1;
-    F77_CALL(dgesvd)(CHAR(STRING_ELT(jobu, 0)), CHAR(STRING_ELT(jobv, 0)),
-		     &n, &p, xvals, &n, REAL(s),
-		     REAL(u), INTEGER(getAttrib(u, R_DimSymbol)),
-		     REAL(v), INTEGER(getAttrib(v, R_DimSymbol)),
-		     &tmp, &lwork, &info);
-    lwork = (int) tmp;
+    if(strcmp(meth, "dgesdd")) {
+	/* ask for optimal size of work array */
+	lwork = -1;
+	F77_CALL(dgesvd)(CHAR(STRING_ELT(jobu, 0)), CHAR(STRING_ELT(jobv, 0)),
+			 &n, &p, xvals, &n, REAL(s),
+			 REAL(u), INTEGER(getAttrib(u, R_DimSymbol)),
+			 REAL(v), INTEGER(getAttrib(v, R_DimSymbol)),
+			 &tmp, &lwork, &info);
+	lwork = (int) tmp;
     
-    work = (double *) R_alloc(lwork, sizeof(double));
-    F77_CALL(dgesvd)(CHAR(STRING_ELT(jobu, 0)), CHAR(STRING_ELT(jobv, 0)),
-		     &n, &p, xvals, &n, REAL(s),
-		     REAL(u), INTEGER(getAttrib(u, R_DimSymbol)),
-		     REAL(v), INTEGER(getAttrib(v, R_DimSymbol)),
-		     work, &lwork, &info);
-    if (info != 0)
-	error("error code %d from Lapack routine dgesvd", info);
+	work = (double *) R_alloc(lwork, sizeof(double));
+	F77_CALL(dgesvd)(CHAR(STRING_ELT(jobu, 0)), CHAR(STRING_ELT(jobv, 0)),
+			 &n, &p, xvals, &n, REAL(s),
+			 REAL(u), INTEGER(getAttrib(u, R_DimSymbol)),
+			 REAL(v), INTEGER(getAttrib(v, R_DimSymbol)),
+			 work, &lwork, &info);
+	if (info != 0)
+	    error("error code %d from Lapack routine dgesvd", info);
+    } else {
+	int ldu = INTEGER(getAttrib(u, R_DimSymbol))[0],
+	    ldvt = INTEGER(getAttrib(v, R_DimSymbol))[0];
+	/* ask for optimal size of work array */
+	lwork = -1;
+	
+	F77_CALL(dgesdd)(CHAR(STRING_ELT(jobu, 0)),
+			 &n, &p, xvals, &n, REAL(s),
+			 REAL(u), &ldu,
+			 REAL(v), &ldvt,
+			 &tmp, &lwork, &info);
+	lwork = (int) tmp;
 
+	work = (double *) R_alloc(lwork, sizeof(double));
+	F77_CALL(dgesdd)(CHAR(STRING_ELT(jobu, 0)),
+			 &n, &p, xvals, &n, REAL(s),
+			 REAL(u), &ldu,
+			 REAL(v), &ldvt,
+			 work, &lwork, &info);
+	if (info != 0)
+	    error("error code %d from Lapack routine dgesdd", info);
+    }
+    
     val = PROTECT(allocVector(VECSXP, 3));
     nm = PROTECT(allocVector(STRSXP, 3));
     SET_STRING_ELT(nm, 0, mkChar("d"));
@@ -51,13 +83,21 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
     return val;
 }
 
-static SEXP modLa_rs(SEXP xin, SEXP only_values)
+static SEXP modLa_rs(SEXP xin, SEXP only_values, SEXP method)
 {
-    int *xdims, n, lwork, info, ov;
-    char jobv[1], uplo[1];
-    SEXP values, ret, nm, x;
+    int *xdims, n, lwork, info = 0, ov;
+    char jobv[1], uplo[1], range[1];
+    SEXP values, ret, nm, x, z = R_NilValue;
     double *work, *rx, *rvalues, tmp;
+    char *meth;
 
+    if (!isString(method))
+	error("method must be a character object");
+    meth = CHAR(STRING_ELT(method, 0));
+#ifndef IEEE_754
+    if (strcmp(meth, "desyvr") == 0)
+	error("method = \"dseyvr\" requires IEEE 754 arithmetic");
+#endif
     PROTECT(x = duplicate(xin));
     rx = REAL(x);
     uplo[0] = 'L';
@@ -71,21 +111,53 @@ static SEXP modLa_rs(SEXP xin, SEXP only_values)
 
     PROTECT(values = allocVector(REALSXP, n));
     rvalues = REAL(values);
-    /* ask for optimal size of work array */
-    lwork = -1;
-    F77_CALL(dsyev)(jobv, uplo, &n, rx, &n, rvalues, &tmp, &lwork, &info);
-    lwork = (int) tmp;
-    if (lwork < 3*n-1) lwork = 3*n-1;  /* Sanity check */
-    work = (double *) R_alloc(lwork, sizeof(double));
-    F77_CALL(dsyev)(jobv, uplo, &n, rx, &n, rvalues, work, &lwork, &info);
-    if (info != 0)
-	error("error code %d from Lapack routine dsyev", info);
+    if(strcmp(meth, "dsyevr")) {
+	/* ask for optimal size of work array */
+	lwork = -1;
+	F77_CALL(dsyev)(jobv, uplo, &n, rx, &n, rvalues, &tmp, &lwork, &info);
+	lwork = (int) tmp;
+	if (lwork < 3*n-1) lwork = 3*n-1;  /* Sanity check */
+	work = (double *) R_alloc(lwork, sizeof(double));
+	F77_CALL(dsyev)(jobv, uplo, &n, rx, &n, rvalues, work, &lwork, &info);
+	if (info != 0)
+	    error("error code %d from Lapack routine dsyev", info);
+    } else {
+	int liwork, *iwork, itmp, m;
+	double vl, vu, abstol = 0.0;
+	int il, iu, *isuppz;
+	
+	range[0] = 'A';
+	PROTECT(z = allocMatrix(REALSXP, n, n));
+	isuppz = (int *) R_alloc(n, sizeof(int));
+	/* ask for optimal size of work arrays */
+	lwork = -1; liwork = -1;
+	F77_CALL(dsyevr)(jobv, range, uplo, &n, rx, &n, 
+			 &vl, &vu, &il, &iu, &abstol, &m, rvalues,
+			 REAL(z), &n, isuppz,
+			 &tmp, &lwork, &itmp, &liwork, &info);
+	lwork = (int) tmp;
+	liwork = itmp;
+	
+	work = (double *) R_alloc(lwork, sizeof(double));
+	iwork = (int *) R_alloc(liwork, sizeof(int));
+	F77_CALL(dsyevr)(jobv, range, uplo, &n, rx, &n, 
+			 &vl, &vu, &il, &iu, &abstol, &m, rvalues,
+			 REAL(z), &n, isuppz,
+			 work, &lwork, iwork, &liwork, &info);
+	if (info != 0)
+	    error("error code %d from Lapack routine dsyev", info);
+    }
 
     if (!ov) {
 	ret = PROTECT(allocVector(VECSXP, 2));
 	nm = PROTECT(allocVector(STRSXP, 2));
 	SET_STRING_ELT(nm, 1, mkChar("vectors"));
-	SET_VECTOR_ELT(ret, 1, x);
+	if(strcmp(meth, "dsyevr")) {
+	    SET_VECTOR_ELT(ret, 1, x);
+	} else {
+	    SET_VECTOR_ELT(ret, 1, z);
+	    UNPROTECT_PTR(z);
+	}
     } else {
 	ret = PROTECT(allocVector(VECSXP, 1));
 	nm = PROTECT(allocVector(STRSXP, 1));

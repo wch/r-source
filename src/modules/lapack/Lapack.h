@@ -33,12 +33,35 @@ void F77_NAME(dgesvd)(const char *jobu, const char *jobvt,
 		      double *vt, const int *ldvt,
 		      double *work, const int *lwork, int *info);
 
+/* DGESDD - compute the singular value decomposition (SVD); of a   */
+/* real M-by-N matrix A, optionally computing the left and/or      */
+/* right singular vectors.  If singular vectors are desired, it uses a */
+/* divide-and-conquer algorithm.                                   */
+void F77_NAME(dgesdd)(const char *jobz,
+		      const int *m, const int *n,
+		      double *a, const int *lda, double *s,
+		      double *u, const int *ldu,
+		      double *vt, const int *ldvt,
+		      double *work, const int *lwork, int *info);
+
 /* DSYEV - compute all eigenvalues and, optionally, eigenvectors   */
 /* of a real symmetric matrix A                                    */
 void F77_NAME(dsyev)(const char *jobz, const char *uplo,
 		     const int *n, double *a, const int *lda,
 		     double *w, double *work, const int *lwork,
 		     int *info);
+
+/* DSYEVR - compute all eigenvalues and, optionally, eigenvectors   */
+/* of a real symmetric matrix A                                    */
+void F77_NAME(dsyevr)(const char *jobz, const char *range, const char *uplo,
+		      const int *n, double *a, const int *lda,
+		      const double *vl, const double *vu,
+		      const int *il, const int *iu,
+		      const double *abstol, int *m, double *w, 
+		      double *z, const int *ldz, int *isuppz, 
+		      double *work, const int *lwork,
+		      int *iwork, const int *liwork,
+		      int *info);
 
 /* ZGESV computes the solution to a complex system of linear equations */
 void F77_NAME(zgesv)(const int *n, const int *nrhs, Rcomplex *a,

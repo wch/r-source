@@ -3,8 +3,9 @@
 
 #include "Rinternals.h"
 
-typedef SEXP (*Rf_La_svd)(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v);
-typedef SEXP (*Rf_La_rs)(SEXP x, SEXP only_values);
+typedef SEXP (*Rf_La_svd)(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, 
+			  SEXP v, SEXP method);
+typedef SEXP (*Rf_La_rs)(SEXP x, SEXP only_values, SEXP method);
 typedef SEXP (*Rf_La_rg)(SEXP x, SEXP only_values);
 typedef SEXP (*Rf_La_zgesv)(SEXP A, SEXP B);
 typedef SEXP (*Rf_La_zgeqp3)(SEXP A);

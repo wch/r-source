@@ -1,7 +1,13 @@
-La.eigen <- function (x, symmetric, only.values = FALSE)
+La.eigen <- function (x, symmetric, only.values = FALSE,
+                      method = c("dsyev", "dsyevr"))
 {
     if(!is.numeric(x) && !is.complex(x))
 	stop("argument to La.eigen must be numeric or complex")
+    method <- match.arg(method)
+    if(is.complex(x) && method == "dsyevr") {
+        warning("Method \"dysevr\" is not supported for complex matrices")
+        method <- "dsyev"
+    }
     x <- as.matrix(x)
     if (nrow(x) != ncol(x)) stop("non-square matrix in La.eigen")
     if (nrow(x) == 0) stop("0 x 0 matrix in La.eigen")
@@ -14,7 +20,7 @@ La.eigen <- function (x, symmetric, only.values = FALSE)
     if (is.numeric(x)) storage.mode(x) <- "double"
     if (symmetric) {
         z <- if(!complex.x)
-            .Call("La_rs", x, only.values, PACKAGE = "base")
+            .Call("La_rs", x, only.values, method, PACKAGE = "base")
         else
             .Call("La_rs_cmplx", x, only.values, PACKAGE = "base")
         ord <- rev(seq(along = z$values))
@@ -25,55 +31,81 @@ La.eigen <- function (x, symmetric, only.values = FALSE)
             .Call("La_rg_cmplx", x, only.values, PACKAGE = "base")
         ord <- rev(order(Mod(z$values)))
     }
-    list(values = z$values[ord], vectors = if (!only.values) z$vectors[, ord])
+    list(values = z$values[ord],
+         vectors = if (!only.values) z$vectors[, ord])
 }
 
-La.svd <- function(x, nu = min(n, p), nv = min(n, p))
+La.svd <- function(x, nu = min(n, p), nv = min(n, p),
+                   method = c("dgesvd", "dgesdd"))
 {
     if(!is.numeric(x) && !is.complex(x))
 	stop("argument to La.svd must be numeric or complex")
+    method <- match.arg(method)
+    if(is.complex(x) && method == "dgesdd") {
+        warning("Method \"dgesdd\" is not supported for complex matrices")
+        method <- "dgesvd"
+    }
     x <- as.matrix(x)
     n <- nrow(x)
     p <- ncol(x)
     if(!n || !p) stop("0 extent dimensions")
 
-    if(nu == 0) {
-	jobu <- 'N'
-	u <- double(0)
-    }
-    else if(nu == n) {
-	jobu <- ifelse(n > p, 'A', 'S')
-	u <- matrix(0, n, n)
-    }
-    else if(nu == p) {
-	jobu <- ifelse(n > p, 'S', 'A')
-	u <- matrix(0, n, p)
-    }
-    else
-	stop("nu must be 0, nrow(x) or ncol(x)")
+    if(method == "dgesvd") {
+        if(nu == 0) {
+            jobu <- 'N'
+            u <- double(0)
+        }
+        else if(nu == n) {
+            jobu <- ifelse(n > p, 'A', 'S')
+            u <- matrix(0, n, n)
+        }
+        else if(nu == p) {
+            jobu <- ifelse(n > p, 'S', 'A')
+            u <- matrix(0, n, p)
+        }
+        else
+            stop("nu must be 0, nrow(x) or ncol(x)")
 
-    if (nv == 0) {
-        jobv <- 'N'
-        v <- double(0)
+        if (nv == 0) {
+            jobv <- 'N'
+            v <- double(0)
+        }
+        else if (nv == n) {
+            jobv <- ifelse(n > p, 'A', 'S')
+            v <- matrix(0, min(n, p), p)
+        }
+        else if (nv == p) {
+            jobv <- ifelse(n > p, 'S', 'A')
+            v <- matrix(0, p, p)
+        }
+        else
+            stop("nv must be 0, nrow(x) or ncol(x)")
+    } else {
+        if(nu > 0 || nu > 0) {
+            jobu <- 'A'
+            u <- matrix(0, n, n)
+            v <- matrix(0, p, p)
+        } else {
+            jobu <- 'N'
+            # these dimensions _are_ checked, but unused
+            u <- matrix(0, 1, 1)
+            v <- matrix(0, 1, 1)
+        }
+        jobv <- ''
+        res <- .Call("La_svd", jobu, jobv, x, double(min(n,p)), u, v,
+                     method, PACKAGE = "base")
+        res <- res[c("d", if(nu) "u", if(nv) "vt")]
+        if(nu) res$u <- res$u[, 1:min(n, nu)]
+        return(res)
     }
-    else if (nv == n) {
-        jobv <- ifelse(n > p, 'A', 'S')
-        v <- matrix(0, min(n, p), p)
-    }
-    else if (nv == p) {
-        jobv <- ifelse(n > p, 'S', 'A')
-        v <- matrix(0, p, p)
-    }
-    else
-        stop("nv must be 0, nrow(x) or ncol(x)")
 
     if(is.complex(x)) {
         u[] <- as.complex(u)
         v[] <- as.complex(v)
-        res <- .Call("La_svd_cmplx", jobu, jobv, x, double(min(n,p)), u, v,
-                     PACKAGE="base")
+        res <- .Call("La_svd_cmplx", jobu, jobv, x, double(min(n, p)), u, v,
+                     PACKAGE = "base")
     } else
-        res <- .Call("La_svd", jobu, jobv, x, double(min(n,p)), u, v,
-                     PACKAGE="base")
+        res <- .Call("La_svd", jobu, jobv, x, double(min(n, p)), u, v,
+                     method, PACKAGE = "base")
     res[c("d", if(nu) "u", if(nv) "vt")]
 }

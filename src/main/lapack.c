@@ -28,7 +28,7 @@
 static R_LapackRoutines *ptr;
 
 /*
-SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
+SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v, SEXP method)
 SEXP La_rs(SEXP x, SEXP only_values)
 SEXP La_rg(SEXP x, SEXP only_values)
 SEXP La_zgesv(SEXP A, SEXP B)
@@ -52,11 +52,11 @@ static void La_Init(void)
     return;
 }
 
-SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
+SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v, SEXP method)
 {
     if(!initialized) La_Init();
     if(initialized > 0)
-	return (*ptr->svd)(jobu, jobv, x, s, u, v);
+	return (*ptr->svd)(jobu, jobv, x, s, u, v, method);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;
@@ -74,11 +74,11 @@ SEXP La_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
     }
 }
 
-SEXP La_rs(SEXP x, SEXP only_values)
+SEXP La_rs(SEXP x, SEXP only_values, SEXP method)
 {
     if(!initialized) La_Init();
     if(initialized > 0)
-	return (*ptr->rs)(x, only_values);
+	return (*ptr->rs)(x, only_values, method);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;

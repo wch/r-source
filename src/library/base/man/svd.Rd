@@ -4,7 +4,7 @@
 \title{Singular Value Decomposition of a Matrix}
 \usage{
 svd(x, nu = min(n, p), nv = min(n, p))
-La.svd(x, nu = min(n, p), nv = min(n, p))
+La.svd(x, nu = min(n, p), nv = min(n, p), method = c("dgesvd", "dgesdd"))
 }
 \arguments{
   \item{x}{a matrix whose SVD decomposition is to be computed.}
@@ -12,6 +12,7 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
     This must be one of \code{0}, \code{nrow(x)} and \code{ncol(x)}.}
   \item{nv}{the number of right singular vectors to be computed.
     This must be one of \code{0} and \code{ncol(x)}.}
+  \item{method}{The LAPACK routine to use.}
 }
 \description{
   Compute the singular-value decomposition of a rectangular matrix.
@@ -21,7 +22,10 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   statistical techniques.
 
   \code{svd} provides an interface to the LINPACK routine DSVDC.
-  \code{La.svd} provides an interface to the LAPACK routine DGESVD.
+  \code{La.svd} provides an interface to the LAPACK routines DGESVD and
+  DGESDD.  The latter is usually substantially faster if singular
+  vectors are required: see
+  \url{http://www.cs.berkeley.edu/~demmel/DOE2000/Report0100.html}.
 
   \code{La.svd} is preferred to \code{svd} for new projects, but it is
   not an exact replacement as it returns the transpose of the right
