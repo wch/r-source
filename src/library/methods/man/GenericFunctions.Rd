@@ -168,12 +168,11 @@ callGeneric(\dots)
   }
   \item{all}{in \code{removeMethods}, logical indicating if all
     (default) or only the first method found should be removed.}
-  }
   \item{searchForm}{In \code{getGenerics}, if \code{TRUE}, the
-      \code{package} slot of the returned result is in the form used
-      by \code{search()}, otherwise as the simple package name (e.g,
-      \code{"package:base"} vs \code{"base"}). }
-
+    \code{package} slot of the returned result is in the form used
+    by \code{search()}, otherwise as the simple package name (e.g,
+    \code{"package:base"} vs \code{"base"}).
+  }
 }
 
 \section{Details}{
