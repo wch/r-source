@@ -44,7 +44,7 @@ show-Ex:
 
 
 %.R: $(MANbaseDIR)/%.Rd
-	@$(RETC)/Rdconv -t example $< > $@
+	@RHOME=$(rRHOME) $(RETC)/Rdconv -t example $< > $@
 	@-echo $@
 
 All-Ex.R: $(R_src)

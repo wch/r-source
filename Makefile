@@ -50,7 +50,8 @@ realclean:
 	@-rm -rf `echo library/* | sed 's@library/CVS *@@'`
 	@-rm -f doc/manual/pkg-*
 	@-rm -f doc/html/packages* doc/html/function*
-	@cd demos/dynload; $(MAKE) $@
+	@cd demos/dynload; if [ -e Makefile ] ; then $(MAKE) $@ ; fi
+	@cd tests; $(MAKE) clean
 	@echo "Really cleaning ./etc/"; cd etc; $(MAKE) $@
 	@echo "Really cleaning the source tree"; cd src; $(MAKE) $@
 	$(MAKE) acclean
