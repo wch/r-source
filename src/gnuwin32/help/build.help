@@ -42,9 +42,13 @@ chdir($cwd);
 print STDERR "Current directory (cwd): '$cwd'\n" if $opt_debug;
 
 $tmpdir=$ENV{"TEMP"};
-if(!$tmpdir) {$tmpdir="c:/windows/temp";}
+if(!$tmpdir) {
+    if ($^O eq "Unix") {$tmpdir = "/tmp";}
+    else {$tmpdir = "c:/windows/temp";}
+}
 $tmpdir =~ s+\\+/+g;
 #print "temp=$temp\n";
+-d $tmpdir  or die "TEMP is set to `$tmpdir' which is not a directory\n";
 
 # if option --htmllists is set we only rebuild some list files and
 # exit
@@ -119,8 +123,10 @@ foreach $manfile (@mandir) {
 		$tmpfile = "$tmpdir/nr1";
 		$tmp2 = "$tmpdir/nr2";
 		Rdconv($manfile, "nroff", "", "$tmpfile");
-#		$dest2 = $destfile;
-#		$dest2 =~ s+/+\\+g;
+# Unix needs / : some Win32 Perls need \
+		if(!($^O eq "Unix")) {
+		    $tmp2 =~ s+/+\\+g;
+		}
 		$cmd = "tbl $tmpfile | troff -Tlatin1 -ms | grotty -buo > $tmp2";
 		system("$cmd");
 		unlink($tmpfile);
