@@ -27,7 +27,7 @@ done
 rm -f ${USER_R_HOME}/doc/html/packages.html
 # this needs to be copied for OS X 
 rm -f ${USER_R_HOME}/doc/html/index.html
-cp ${R_HOME}/doc/html/index.html ${USER_R_HOME}
+cp ${R_HOME}/doc/html/index.html ${USER_R_HOME}/doc/html
 
 # class files must be copied for mozilla to work
 for f in ${R_HOME}/doc/html/search/*.class; do
