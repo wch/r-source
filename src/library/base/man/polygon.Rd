@@ -1,10 +1,14 @@
 \name{polygon}
+\alias{polygon}
 \title{Polygon Drawing}
+\description{
+  \code{polygon} draws the polygons whose vertices are
+  given in \code{x} and \code{y}.
+}
 \usage{
 polygon(x, y = NULL, col = NA, border = NULL,
         lty = NULL, xpd = NULL, density = -1, angle = 45, \dots)
 }
-\alias{polygon}
 \arguments{
   \item{x,y}{vectors containing the coordinates of the vertices
     of the polygon.}
@@ -20,9 +24,16 @@ polygon(x, y = NULL, col = NA, border = NULL,
   \item{\dots}{graphical parameters can be given as arguments to
     \code{polygon}.}
 }
-\description{
-  \code{polygon} draws the polygons whose vertices are
-  given in \code{x} and \code{y}.
+\details{
+  The coordinates can be passed in a plotting structure
+  (a list with \code{x} and \code{y} components), a two-column matrix,
+  \dots.  See \code{\link{xy.coords}}.
+
+  It is assumed that the polygon is closed by joining the last point to
+  the first point.
+
+  The coordinates can contain missing values: see the description under
+  Details section of the help for \code{\link{lines}}. 
 }
 \seealso{
   \code{\link{segments}} for even more flexibility, \code{\link{lines}},
