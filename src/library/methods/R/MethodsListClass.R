@@ -34,8 +34,10 @@
                             signature = "character", default = "MethodsList",
                             skeleton = "call"))
     setClass("groupGenericFunction",
-             representation("genericFunction", groupMembers = "list"))
-    setClass("ObjectsWithPackage", representation("character", package = "character"))
+             representation("genericFunction", groupMembers = "list"),
+             sealed = TRUE, where = envir)
+    setClass("ObjectsWithPackage", representation("character", package = "character"),
+             sealed = TRUE, where = envir)
 
     TRUE
 }
