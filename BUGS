@@ -54,6 +54,10 @@ Subject: Accuracy Bug 1228
 From: "David Heiser" <daheiser@gvn.net>
 Date: Mon, 5 Apr 2004 19:23:35 -0700
 ..This is really bug PR#1228 (in category 'Accuracy')
+* PR# 6772 *
+Subject: phyper accuracy and efficiency
+From: terra@gnome.org
+Date: Thu, 15 Apr 2004 18:06:08 +0200 (CEST)
 
 Directory:  Add-ons
 
@@ -220,7 +224,7 @@ Date: Wed,  3 Dec 2003 06:01:57 +0100 (CET)
 Subject: [R] lattice: levelplot: error: min not meaningful for factor
 From: Wolfram Fischer <wolfram@fischer-zim.ch>
 Date: Mon, 22 Dec 2003 17:29:49 +0100
-..Dot documented to work, but intended to.
+..Not documented to work, but intended to.
 * PR# 6597 *
 Subject: summary.rpart() in rpart package
 From: "Chen, Feiming" <feiming_chen@spectramarketing.com>
@@ -260,10 +264,6 @@ From: "Francis Hsuan" <francis.hsuan@temple.edu> Add To Address Book
 Date: Tue, 2 Dec 2003 01:20:08 -0500 (EST)
 Date: Mon, 1 Dec 2003 21:53:06 -0500
 ..model.frame() fails on character input: should it coerce to factor?
-* PR# 6720 *
-Subject: optim-Bug
-From: kestler@neuro.informatik.uni-ulm.de
-Date: Tue, 30 Mar 2004 19:21:11 +0200 (CEST)
 
 Directory:  Documentation
 
@@ -293,6 +293,10 @@ Subject: return() undocumented
 From: Scot@Wilcoxon.Org
 Date: Sat, 10 Jan 2004 16:12:16 +0100 (CET)
 ..He meant in R-lang
+* PR# 6793 *
+Subject: rsync command in FAQ
+From: terra@gnome.org
+Date: Mon, 19 Apr 2004 18:29:57 +0200 (CEST)
 
 Directory:  Graphics
 
@@ -417,6 +421,14 @@ Date: Wed, 12 Mar 2003 23:35:59 +0100 (MET)
 Subject: persp - incorrect shading of triangular facets
 From: ihaka@stat.auckland.ac.nz
 Date: Thu, 23 Oct 2003 02:19:26 +0200 (MET DST)
+* PR# 6758 *
+Subject: axis annotation issue
+From: dgrove@fhcrc.org
+Date: Tue, 13 Apr 2004 01:45:28 +0200 (CEST)
+* PR# 6763 *
+Subject: postscript image problem
+From: jonathan_lees@unc.edu
+Date: Tue, 13 Apr 2004 23:38:56 +0200 (CEST)
 
 Directory:  In-Out
 
@@ -636,6 +648,12 @@ Date: Wed, 01 Oct 2003 07:45:41 +1200
 ..probably need to be enclosed in quote().
 ..
 ..S does exactly the same though
+* PR# 6799 *
+Subject: Re: [R] Unexpected behaviour of identical
+From: Peter Dalgaard <p.dalgaard@biostat.ku.dk>
+Date: 20 Apr 2004 13:38:49 +0200
+..This case is fixed for 1.9.1.
+..Whether identical should be so fussy is under consideration.
 
 Directory:  Models
 
@@ -809,6 +827,8 @@ Date: Mon, 22 Sep 2003 02:26:31 +0200 (MET DST)
 Subject: save image as postscript side-effect
 From: martin.noellenburg@stud.uni-karlsruhe.de
 Date: Mon,  5 Apr 2004 17:51:13 +0200 (CEST)
+..This is saving from the windows() device menu.
+..Not reproducible
 
 Directory:  incoming
 
@@ -817,43 +837,38 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6747 *
-Subject: Results of your commands
-From: SYMPA <sympa@ens.fr>
-Date: Wed, 7 Apr 2004 12:34:31 +0200 (CEST)
-* PR# 6748 *
-Subject: Mailman results for Cottage
-From: cottage-request@eg.e-cell.org
-Date: Thu, 08 Apr 2004 12:00:02 +0900
-* PR# 6749 *
-Subject: Macintosh -- changing working directory forces computer to restart
-From: paolillo@indiana.edu
-Date: Thu,  8 Apr 2004 21:24:56 +0200 (CEST)
 * PR# 6750 *
 Subject: Incorrect handling of NA's in cor()
 From: msa@biostat.mgh.harvard.edu
 Date: Fri,  9 Apr 2004 18:45:40 +0200 (CEST)
-* PR# 6751 *
-Subject: Udgllgij powerful stuff. i approve.
-From: "andrew beaudoin" <micahmcmorrisy@email2me.net>
-Date: Sat, 10 Apr 2004 02:12:08 -0800
-* PR# 6752 *
-Subject: We are unable to process your service request - MAR  (KMM48693904V2673L0KM)
-From: "announcements-account@paypal.com" <announcements-account@paypal.com>
-Date: Sat, 10 Apr 2004 08:11:46 -0500
-* PR# 6753 *
-Subject: Valium, Cialis, Phentermine, Xanax, Soma  - All here
-From: "Brad Schultz" <mfokwkvuynted@xtra.co.nz>
-Date: Sat, 10 Apr 2004 13:26:59 -0400
-* PR# 6754 *
-Subject: Re: Sat, 10 Apr 2004 13:07:38 -0500
-From: "My SW Software" <TX@fepg.net>
-Date: Sat, 10 Apr 2004 13:07:38 -0500
-* PR# 6755 *
-Subject: anyhow   
-From: "Mel Doty" <Odu@bellsouth.net>
-Date: Sun, 11 Apr 2004 12:25:58 +0200
-* PR# 6756 *
-Subject: pcauchy precision
-From: terra@gnome.org
-Date: Sun, 11 Apr 2004 19:03:31 +0200 (CEST)
+* PR# 6776 *
+Subject: barplot() does not draw bars correctly in R 1.9.0
+From: "Philippe Grosjean" <phgrosjean@sciviews.org>
+Date: Fri, 16 Apr 2004 11:40:00 +0200
+* PR# 6777 *
+Subject: Re: [Rd] barplot() does not draw bars correctly in R 1.9.0
+From: Achim Zeileis <Achim.Zeileis@wu-wien.ac.at>
+Date: Fri, 16 Apr 2004 15:44:52 +0200
+..part of 6776
+* PR# 6778 *
+Subject: Re: [Rd] barplot() does not draw bars correctly in R 1.9.0
+From: Achim Zeileis <Achim.Zeileis@wu-wien.ac.at>
+Date: Fri, 16 Apr 2004 16:53:03 +0200
+..part of 6776
+* PR# 6797 *
+Subject: R.spec
+From: joachim.geiger@ipp.mpg.de
+Date: Tue, 20 Apr 2004 11:51:40 +0200 (CEST)
+..About the source PRM for 1.9.0 under RedHat 8.0.
+* PR# 6804 *
+Subject: Re: [R] Error message during debug
+From: Duncan Murdoch <dmurdoch@pair.com>
+Date: Tue, 20 Apr 2004 14:15:05 -0400
+* PR# 6808 *
+Subject: InterScan MSS DomIsRelay-ATN(169.202.6.83) has deleted a message. (
+From: <DomIsRelay-ATN@absa.co.za>
+Date: Wed, 21 Apr 2004 15:59:01 +0200
+* PR# 6809 *
+Subject: segfault in approx()
+From: kjetil@entelnet.bo
+Date: Wed, 21 Apr 2004 17:49:03 -0400
