@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-31 2004-07-09
+Version 1.9-33 2004-07-16
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1408,6 +1408,10 @@ distributions of R.)
      by D. C. Montgomery, E. A. Peck, and C. G. Vining, 2001, John Wiley and
      Sons.
 
+*Malmig*
+     An implementation of Malecot migration model together with a number of
+     related functions.
+
 *Matrix*
      A Matrix package.
 
@@ -1538,6 +1542,9 @@ distributions of R.)
      Johnson distributions, normal scores and generalized hypergeometric
      distributions).
 
+*UNF*
+     Tools for creating universal numeric fingerprints for data.
+
 *VLMC*
      Functions, classes & methods for estimation, prediction, and simulation
      (bootstrap) of VLMC (Variable Length Markov Chain) models.
@@ -1550,6 +1557,10 @@ distributions of R.)
 
 *abind*
      Combine multi-dimensional arrays.
+
+*accuracy*
+     A suite of tools designed to test and improve the accuracy of
+     statistical computation.
 
 *acepack*
      ACE (Alternating Conditional Expectations) and AVAS (Additivity and
@@ -2713,6 +2724,10 @@ distributions of R.)
 
 *verify*
      Construction of test suites using verify objects.
+
+*vioplot*
+     Violin plots, which are a combination of a box plot and a kernel
+     density plot.
 
 *waveslim*
      Basic wavelet routines for time series analysis.
