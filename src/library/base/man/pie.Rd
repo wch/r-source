@@ -40,10 +40,10 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
   relative areas.  A bar chart or dot chart is a preferable way of
   displaying this type of data.
 
-  Cleveland (1985), p. 264: "Data that can be shown by pie charts always
+  Cleveland (1985), p. 264: ``Data that can be shown by pie charts always
   can be shown by a dot chart. This means that judgements of position
   along a common scale can be made instead of the less accurate angle
-  judgements." This statement is based on the empirical investigations
+  judgements.''  This statement is based on the empirical investigations
   of Cleveland and McGill as well as investigations by perceptual
   psychologists.
   
@@ -51,8 +51,9 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
   of a Trellis function, so the name was changed to be compatible with S.
 }
 \references{
-  Cleveland, W. S. (1985) \emph{The elements of graphing
-    data}. Wadsworth: Monterey, CA, USA.
+  Cleveland, W. S. (1985)
+  \emph{The elements of graphing data}.
+  Wadsworth: Monterey, CA, USA.
 }
 \seealso{
   \code{\link{dotchart}}.
