@@ -2,6 +2,8 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 		       p = rep(1 / length(x), length(x)))
 {
     DNAME <- deparse(substitute(x))
+    if (is.data.frame(x))
+        x <- as.matrix(x)
     if (is.matrix(x)) {
 	if (min(dim(x)) == 1)
 	    x <- as.vector(x)
