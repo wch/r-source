@@ -38,7 +38,7 @@ inherits(x, what, which = FALSE)
   is \code{TRUE} then an integer vector of the same length as
   \code{what} is returned. Each element indicates the position in the
   \code{class(x)} matched by the element of \code{what}; zero indicates
-  no match. If \code{what} is \code{FALSE} then \code{TRUE} is 
+  no match. If \code{which} is \code{FALSE} then \code{TRUE} is 
   returned by \code{inherits} if any of the names in \code{what} match
   with any \code{class}.
 }
