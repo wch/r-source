@@ -610,6 +610,20 @@ int yyparse(void);
 void yyprompt(char *format, ...);
 int yywrap(void);
 
+/* Macros for suspending interrupts */
+#ifdef HAVE_POSIX_SETJMP
+#define BEGIN_SUSPEND_INTERRUPTS do { \
+    sigset_t mask, omask; \
+    sigemptyset(&mask); \
+    sigaddset(&mask,SIGINT); \
+    sigprocmask(SIG_BLOCK, &mask, &omask);
+#define END_SUSPEND_INTERRUPTS sigprocmask(SIG_SETMASK, &omask, &mask); \
+    } while(0)
+#else
+#define BEGIN_SUSPEND_INTERRUPTS do {
+#define END_SUSPEND_INTERRUPTS } while (0)
+#endif
+
 #endif
 /*
  *- Local Variables:
