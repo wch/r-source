@@ -205,7 +205,7 @@ MethodsListSelect <-
   }
   else {
     thisClass <- get(as.character(argName), envir = env)
-    arg <- new(thisClass)
+    arg <- new(thisClass, .Force = TRUE)
   }
   fromClass <- thisClass ## will mark the class actually providing the method
   allMethods <- mlist@allMethods

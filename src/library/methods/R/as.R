@@ -54,8 +54,15 @@ as <-
       if(!is.null(asMethod))
         return(asMethod(object, Class, value))
     }
-    if(is(object, Class))
-      asMethod <- extendsReplace(thisClass, Class)
+    if(is(object, Class)) {
+        ## a candidate for replacing the whole object ?
+        if(isVirtualClass(Class))
+            asMethod <- eval(function(object, Class, value) {
+                attributes(value) <- attributes(object)
+                value}, .GlobalEnv)
+        else
+            asMethod <- extendsReplace(thisClass, Class)
+    }
     if(is.null(asMethod))
         stop(paste("No method or default for as() replacement of \"", thisClass,
                    "\" with Class=\"", Class, "\"", sep=""))
