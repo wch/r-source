@@ -90,13 +90,17 @@ rm(.Random.seed); runif(1); .Random.seed
 RNGkind("Wich")# (partial string matching on 'kind')
 p.WH <- c(30269, 30307, 30323)
 a.WH <- c(  171,   172,   170)
-R.seed <- function(i.seed = .Random.seed) (a.WH * i.seed) \%\% p.WH
+next.WHseed <- function(i.seed = .Random.seed[-1]) (a.WH * i.seed) \%\% p.WH
 my.runif1 <- function(i.seed = .Random.seed)
-  { ns <- R.seed(i.seed); sum(ns / p.WH) \%\% 1 }
+  { ns <- next.WHseed(i.seed[-1]); sum(ns / p.WH) \%\% 1 }
 
-## This shows how `runif(.)' works, just using  R functions :
+## This shows how `runif(.)'  for Wichmann-Hill, using only R functions:
 rs <- .Random.seed
-R.seed(rs); u <- runif(1); .Random.seed; c(u, my.runif1(rs))
+(WHs <- next.WHseed(rs[-1]))
+u <- runif(1)
+all(next.WHseed(rs[-1]) == .Random.seed[-1])
+u == my.runif1(rs)
+
 
 ## ----
 .Random.seed
