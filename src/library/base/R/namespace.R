@@ -603,7 +603,7 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
         miss <- expnames[! expnames %in% ex]
         stop("object(s) ", paste(sQuote(miss), collapse=", "),
              " are not exported by ",
-             sQuote(paste("namespace", getNamespaceName(expenv), sep=";"))
+             sQuote(paste("namespace", getNamespaceName(expenv), sep=":"))
              )
     }
     expnames <- unlist(lapply(expnames, get, env = exports, inherits = FALSE))
