@@ -62,5 +62,5 @@ summary(lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi,
 str(lmI <- lm.influence(lm.SR))
 
 ## For more `user level' examples, use example(influence.measures)
-
+}
 \keyword{regression}

@@ -34,7 +34,7 @@ parse.dcf(text = NULL, file = "", fields = NULL, versionfix = FALSE)
 
   \code{parse.dcf} has been replaced by \code{read.dcf}, which is much
   faster, but has a slightly different interface.
-
+}
 \seealso{\code{\link{Defunct}}}
 \keyword{documentation}
 \keyword{utilities}
