@@ -6,7 +6,7 @@ citEntry(entry="Manual",
          organization = "R Foundation for Statistical Computing",
          address      = "Vienna, Austria",
          year         = version$year,
-         note         = "ISBN 3-900051-07-0",
+         note         = "{ISBN} 3-900051-07-0",
          url          = "http://www.R-project.org",
          
          textVersion = 
