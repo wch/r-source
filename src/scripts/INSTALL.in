@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.76 $'
+revision='$Revision: 1.77 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -295,13 +295,15 @@ do_install () {
       Rsrcs=`ls R/*.[RSqrs] R/unix/*.[RSqrs] 2>/dev/null`
       if test -n "${Rsrcs}"; then
         mkdir -p ${lib}/${pkg}/R
-        cat  ${Rsrcs} > ${lib}/${pkg}/R/${pkg}
+	rm -f ${lib}/${pkg}/R/*
+        cat ${Rsrcs} > ${lib}/${pkg}/R/${pkg}
       fi
     fi
 
     if test -d data; then
       echo " data"
       mkdir -p ${lib}/${pkg}/data
+      rm -f ${lib}/${pkg}/data/*
       cp data/* ${lib}/${pkg}/data
       chmod 644 ${lib}/${pkg}/data/*
       if test -n "${use_zip_data}" \
@@ -316,6 +318,7 @@ do_install () {
     if test -d demo; then
       echo " demo"
       mkdir -p ${lib}/${pkg}/demo
+      rm -f ${lib}/${pkg}/demo/*
       cp demo/* ${lib}/${pkg}/demo
       chmod 644 ${lib}/${pkg}/demo/*
     fi
@@ -323,6 +326,7 @@ do_install () {
     if test -d exec; then
       echo " exec"
       mkdir -p ${lib}/${pkg}/exec
+      rm -f ${lib}/${pkg}/exec/*
       cp exec/* ${lib}/${pkg}/exec
       chmod 755 ${lib}/${pkg}/exec/*
     fi
@@ -397,6 +401,7 @@ do_install () {
       Rdfiles=`ls man/*.[Rr]d man/unix/*.[Rr]d 2>/dev/null`
       if test -n "${Rdfiles}"; then
 	mkdir -p ${lib}/${pkg}/man
+	rm -f ${lib}/${pkg}/man/*
 	cat ${Rdfiles} > ${lib}/${pkg}/man/${pkg}.Rd
 	chmod 644 ${lib}/${pkg}/man/${pkg}.Rd
       fi
