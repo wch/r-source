@@ -17,10 +17,17 @@
     setClass("vector", where = envir); clList <- c(clList, "vector")
     setClass("missing", where = envir); clList <- c(clList, "missing")
     vClasses <- c("logical", "numeric", "character",
-                "complex", "integer", "single", "double",
+                "complex", "integer", "single", "double", "raw",
                 "expression", "list")
     for(.class in vClasses) {
         setClass(.class, prototype = newBasic(.class), where = envir)
+    }
+    ## there is a bug that makes is.null(expression()) TRUE.  Until it's fixed,
+    ## the following kludge
+    { setClass("expression", prototype = expression(TRUE), where = envir)
+      .class <- getClass("expression", where = envir)
+      .class@prototype <- newBasic("expression")
+      assignClassDef("expression", .class, envir)
     }
     clList <- c(clList, vClasses)
     nullF <- function()NULL; environment(nullF) <- .GlobalEnv

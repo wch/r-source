@@ -118,9 +118,13 @@
                 cv <- class(value)
                 co <- class(.Object)
                 if(.identC(cv, co) && is.null(packageSlot(cv))) {
-                    warning("Missing package slot (", packageSlot(co), ") in object of class \"",
-                            class(.Object), "\" (package info added)")
-                   class(value) <- class(.Object)
+                    if(is.na(match(cv, .BasicClasses))) {
+                        warning("Missing package slot (", packageSlot(co), ") in object of class \"",
+                                class(.Object), "\" (package info added)")
+                        class(value) <- class(.Object)
+                    }
+                    else
+                        return(value)
                 }
                 else
                     stop(paste("Initialize method returned an object of class \"",

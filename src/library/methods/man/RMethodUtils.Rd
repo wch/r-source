@@ -20,6 +20,7 @@
 \alias{conformMethod}
 \alias{getGeneric}
 \alias{getGroup}
+\alias{getGroupMembers}
 \alias{getMethodsMetaData}
 \alias{assignMethodsMetaData}
 \alias{matchSignature}
@@ -54,6 +55,7 @@
 getGeneric(f, mustFind=FALSE, where)
 
 getGroup(fdef, recursive, where)
+getGroupMembers(f, recursive = FALSE, character = TRUE)
 
 getMethodsMetaData(f, where)
 assignMethodsMetaData (f, value, fdef, where, deflt)
@@ -108,7 +110,7 @@ addNextMethod(method, f, mlist, optional, envir)
   \describe{
 
     \item{\code{getGeneric}:}{
-      return the definition of the function named \code{f} as a generic.
+      returns the definition of the function named \code{f} as a generic.
 
       If no definition is found, throws an
       error or returns \code{NULL} according to the value of
@@ -125,10 +127,25 @@ addNextMethod(method, f, mlist, optional, envir)
     }
 
     \item{\code{getGroup}:}{
-      return the groups to which this generic belongs, searching from
+      returns the groups to which this generic belongs, searching from
       environment \code{where} (the global environment normally by default).
 
       If \code{recursive=TRUE}, also all the group(s) of these groups.
+    }
+
+    \item{\code{getGroupMembers}:}{
+      Return all the members of the group generic function named
+      \code{group}.
+      If \code{recursive} is \code{TRUE}, and some members are group
+      generics, includes their members as well.
+      If \code{character} is \code{TRUE}, returns just a character
+      vector of the names; otherwise returns a list, whose elements may
+      (or may not) include either names with a package attribute or
+      actual generic functions.
+
+      Note that members that are not defined as generic functions will
+    \emph{not} be included in the returned value.  To see the raw data,
+    use \code{getGeneric(group)@groupMembers}.
     }
 
     \item{\code{getMethodsMetaData},

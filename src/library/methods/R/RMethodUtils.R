@@ -608,24 +608,16 @@ cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(parent.
                 code <- "set"
         }
         else {
-            code <- "clear"
-            if(!missing(where)) {
-                dbs <- find(mlistMetaName(f))
-                if(is.numeric(where))
-                    where <- search()[where]
-                ## are there other methods for f still left?
-                if(is.environment(where)){
-                    if(length(dbs)>1)
-                        code <- "reset"
-                }
-                else if(any(is.na(match(dbs, where))))
-                    code <- "reset"
-            }
+            ## the methods supplied may not be correct (until primitives have their own
+            ## separate generics in namespaces) so must delete or reset methods explicitly
+            methods <- deletePrimMethods(f, where)
+            code <- "set"
         }
         switch(code,
                reset = setPrimitiveMethods(f, deflt, code, fdef, NULL),
                set = setPrimitiveMethods(f, deflt, code, fdef, methods),
-               clear = setPrimitiveMethods(f, deflt, code, NULL, NULL))
+##               clear = setPrimitiveMethods(f, deflt, code, NULL, NULL),
+               stop("internal error: bad code for setPrimitiveMethods: ", code))
     }
     else if(isGroup(f, fdef = fdef)) {
         members <- fdef@groupMembers
@@ -1121,4 +1113,54 @@ matchDefaults <- function(method, generic) {
     if(changes)
         formals(method, envir = environment(method)) <- margs
     method
+}
+
+getGroupMembers <- function(group, recursive = FALSE, character = TRUE) {
+    .recMembers <- function(members, where) {
+        all = vector("list", length(members))
+        for(i in seq(along=members)) {
+            what <- members[[i]]
+            f <- getGeneric(what, FALSE, where)
+            if(!is.null(f))
+                all[[i]] <- what
+            if(is(f, "groupGenericFunction")) {
+                newMem <- f@groupMembers
+                all <- c(all, Recall(newMem, where))
+            }
+        }
+        all
+    }
+    f <- getGeneric(group)
+    if(is.null(f)) {
+        warning("\"", f, "\" is not a generic function (or not visible here)" )
+        return(character())
+    }
+    else if(!is(f, "groupGenericFunction"))
+        character()
+    else {
+        members <- f@groupMembers
+        if(recursive)
+            members <- .recMembers(members, f@package)
+        if(character)
+            sapply(members, function(x){
+                if(is(x, "character"))
+                    x
+                else if(is(x, "genericFunction"))
+                    x@generic
+                else
+                    stop("Invalid element in the groupMembers slot (class \"",
+                         class(x), "\")")
+            })
+        else
+            members
+    }
+}
+
+deletePrimMethods <- function(f, env) {
+    toDelete <- getMethodsMetaData(f, env)
+    if(!is.null(toDelete)) {
+        fdef <- genericForPrimitive(f)
+        mlist <- getAllMethods(f, fdef, .GlobalEnv)
+        .genericAssign(f, fdef, mlist, .GlobalEnv, get(f))
+    }
 }
