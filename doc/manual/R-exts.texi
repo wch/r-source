@@ -106,7 +106,8 @@ help pages
 @end smallexample
 
 @noindent
-before reading on.
+before reading on.  If the package you are writing uses the
+@code{methods} package, look at the corresponding section in @code{?INSTALL}.
 
 @menu
 * Package structure::
