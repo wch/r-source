@@ -120,6 +120,8 @@ qnorm(1) ==  Inf && qnorm(0, log = TRUE) == Inf
 all.equal(qnorm(c( 0.25,  .001,	 1e-20)),
 	  c(-0.6744897501960817, -3.090232306167814, -9.262340089798408),
 	  tol = 1e-15)
+# extreme tail -- available on log scale only:
+all.equal(qnorm(-1e5, log = TRUE), -447.1974945)
 
 z <- rnorm(1000); all.equal(pnorm(z),  1 - pnorm(-z), tol= 1e-15)
 z <- c(-Inf,Inf,NA,NaN, rt(1000, df=2))

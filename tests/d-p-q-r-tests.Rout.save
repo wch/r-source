@@ -179,6 +179,9 @@ Warning messages:
 + 	  c(-0.6744897501960817, -3.090232306167814, -9.262340089798408),
 + 	  tol = 1e-15)
 [1] TRUE
+> # extreme tail -- available on log scale only:
+> all.equal(qnorm(-1e5, log = TRUE), -447.1974945)
+[1] TRUE
 > 
 > z <- rnorm(1000); all.equal(pnorm(z),  1 - pnorm(-z), tol= 1e-15)
 [1] TRUE
@@ -684,5 +687,5 @@ Warning messages:
 [1] TRUE
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  7.45 0.22 7.67 0 0 
+Time elapsed:  7.46 0.22 7.69 0 0 
 > 

@@ -61,6 +61,9 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
     if(sigma  < 0)	ML_ERR_return_NAN;
     if(sigma == 0)	return mu;
 
+    if (p == R_DT_0)	return ML_NEGINF;
+    if (p == R_DT_1)	return ML_POSINF;
+
     p_ = R_DT_qIv(p);/* real lower_tail prob. p */
     q = p_ - 0.5;
 
@@ -68,7 +71,6 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
     REprintf("qnorm(p=%10.7g, m=%g, s=%g, l.t.= %d, log= %d): q = %g\n",
 	     p,mu,sigma, lower_tail, log_p, q);
 #endif
-
 
 
 #ifdef OLD_qnorm
@@ -153,7 +155,6 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
         (original fortran code used PARAMETER(..) for the coefficients
          and provided hash codes for checking them...)
 */
-
     if (fabs(q) <= .425) {/* 0.075 <= p <= 0.925 */
         r = .180625 - q * q;
 	val =
@@ -175,16 +176,13 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 	else
 	    r = p_;/* = R_DT_Iv(p) ^=  p */
 
-	if (r <= 0.) { /* p = 0 or 1 {outside has been taken care!} */
-	    ML_ERROR(ME_RANGE);
-	    if(q < 0.)	return ML_NEGINF;
-	    else	return ML_POSINF;
-	}
-
 	r = sqrt(- ((log_p &&
 		     ((lower_tail && q <= 0) || (!lower_tail && q > 0))) ?
 		    p : /* else */ log(r)));
         /* r = sqrt(-log(r))  <==>  min(p, 1-p) = exp( - r^2 ) */
+#ifdef DEBUG_qnorm
+	REprintf("\t close to 0 or 1: r = %7g\n", r);
+#endif
 
         if (r <= 5.) { /* <==> min(p,1-p) >= exp(-25) ~= 1.3888e-11 */
             r += -1.6;
