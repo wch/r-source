@@ -212,36 +212,28 @@ GtkWidget *prefs_history_frame(void)
 {
   GtkWidget *frame, *table;
   GtkWidget *save;
-  GtkWidget *savetofile, *dummy, *nameentry, *namebutton;
+  GtkWidget *savewithws;
   GtkWidget *dontsave;
 
   frame = gtk_frame_new("Command history");
   
-  table = gtk_table_new(2, 4, FALSE);
+  table = gtk_table_new(2, 3, FALSE);
   gtk_container_set_border_width(GTK_CONTAINER(frame), GNOME_PAD_SMALL);
   gtk_container_add(GTK_CONTAINER(frame), table);
 
-  save = gtk_radio_button_new_with_label(NULL, "Save");
-  savetofile = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(save), "Save in this file:");
-  dummy = gtk_event_box_new();
-  nameentry = gnome_file_entry_new(NULL, "Command history file");
+  save = gtk_radio_button_new_with_label(NULL, "Always save");
+  savewithws = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(save), "Save if workspace saved");
   dontsave = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(save), "Don't save");
 
   gtk_table_attach(GTK_TABLE(table), save,
 		   0, 2, 0, 1,
 		   GTK_FILL, 0, GNOME_PAD, 0);
-  gtk_table_attach(GTK_TABLE(table), savetofile,
+  gtk_table_attach(GTK_TABLE(table), savewithws,
 		   0, 2, 1, 2,
 		   GTK_FILL, 0, GNOME_PAD, 0);
-  gtk_table_attach(GTK_TABLE(table), dummy,
-		   0, 1, 2, 3,
-		   GTK_FILL, 0, GNOME_PAD_BIG, 0);
-  gtk_table_attach(GTK_TABLE(table), nameentry,
-		   1, 2, 2, 3,
-		   GTK_FILL, 0, 0, 0);
   gtk_table_attach(GTK_TABLE(table), dontsave,
-		   0, 2, 3, 4,
-		   GTK_FILL, 0, GNOME_PAD, GNOME_PAD_SMALL);
+		   0, 2, 2, 3,
+		   GTK_FILL, 0, GNOME_PAD, 0);
 
   return frame;
 }

@@ -466,7 +466,7 @@ int main(int ac, char **av)
 
     R_gtk_terminal_new();
 
-    gtk_console_restore_history(GTK_CONSOLE(R_gtk_terminal_text), ".Rgnomehistory", 50, NULL);
+    gtk_console_restore_history(GTK_CONSOLE(R_gtk_terminal_text), ".Rhistory", 50, NULL);
 
     mainloop();
     /*++++++  in ../main/main.c */
@@ -495,6 +495,7 @@ void R_InitialData(void)
 void R_CleanUp(int ask)
 {
     GtkWidget *dialog;
+    gchar buf[128];
     gint which; /* yes = 0, no = 1, cancel = 2 || -1 */
 
     GList *curfile = R_gtk_editfiles;
@@ -508,20 +509,42 @@ void R_CleanUp(int ask)
 	    ask = DefaultSaveAction;
 
 	if(ask == 1) {
-	  dialog = gnome_message_box_new("Do you want to save your workspace image?\n\n\
+	  if(R_gtk_gui_quit == TRUE) {
+	    dialog = gnome_message_box_new("Do you want to save your workspace image?\n\n\
 Choose Yes to save an image and exit,\nchoose No to exit without saving,\nor choose Cancel to return to R.",
-					 GNOME_MESSAGE_BOX_QUESTION,
-					 GNOME_STOCK_BUTTON_YES,
-					 GNOME_STOCK_BUTTON_NO,
-					 GNOME_STOCK_BUTTON_CANCEL,
-					 NULL);
+					   GNOME_MESSAGE_BOX_QUESTION,
+					   GNOME_STOCK_BUTTON_YES,
+					   GNOME_STOCK_BUTTON_NO,
+					   GNOME_STOCK_BUTTON_CANCEL,
+					   NULL);
 
-	  gnome_dialog_set_parent(GNOME_DIALOG(dialog), GTK_WINDOW(R_gtk_main_window));
-	  gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-	  gnome_dialog_set_default(GNOME_DIALOG(dialog), 0);
-	  
-	  which = gnome_dialog_run_and_close(GNOME_DIALOG(dialog));
+	    gnome_dialog_set_parent(GNOME_DIALOG(dialog), GTK_WINDOW(R_gtk_main_window));
+	    gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+	    gnome_dialog_set_default(GNOME_DIALOG(dialog), 0);
+	    
+	    which = gnome_dialog_run_and_close(GNOME_DIALOG(dialog));
+	  }
+	  else {
+	    R_ReadConsole("Save workspace image? [y/n/c]: ",
+			  buf, 128, 0);
 
+	    switch(buf[0]) {
+	    case 'y':
+	    case 'Y':
+	      which = 0;
+	      break;
+
+	    case 'n':
+	    case 'N':
+	      which = 1;
+	      break;
+
+	    case 'c':
+	    case 'C':
+	      which = 2;
+	      break;
+	    }
+	  }
 	}
 	else if(ask == 2)
 	    which = 1;
@@ -533,7 +556,7 @@ Choose Yes to save an image and exit,\nchoose No to exit without saving,\nor cho
 	    R_SaveGlobalEnv();
 
 	    if(R_Interactive)
-	      gtk_console_save_history(GTK_CONSOLE(R_gtk_terminal_text), ".Rgnomehistory", 50, NULL);
+	      gtk_console_save_history(GTK_CONSOLE(R_gtk_terminal_text), ".Rhistory", 50, NULL);
 	    break;
 	case 1:
 	    break;
@@ -823,3 +846,11 @@ int R_HiddenFile(char *name)
     else return 1;
 }
 
+#include <sys/types.h>
+#include <sys/stat.h>
+
+int R_FileExists(char *path)
+{
+    struct stat sb;
+    return stat(R_ExpandFileName(path), &sb) == 0;
+}

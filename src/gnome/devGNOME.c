@@ -126,7 +126,7 @@ static void SetLineType(GdkBitmap *stipple, int newlty, int newlwd)
   }
 
   /* set dashes */
-  gdk_gc_set_dashes(gc, 0, dashlist, i);*/
+  /*  gdk_gc_set_dashes(gc, 0, dashlist, i);*/
 }
 
 /* signal functions */

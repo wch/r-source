@@ -93,6 +93,8 @@ void R_gtk_terminal_new()
   /* initialise list */
   R_gtk_editfiles = NULL;
 
+  R_gtk_gui_quit = FALSE;
+
   /* finish up */
   return;
 }

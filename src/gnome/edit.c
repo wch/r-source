@@ -50,6 +50,8 @@ void InitEd()
 
 SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+        errorcall(call, "edit() is unavailable\n");
+	/*
 	int i, status;
 	SEXP x, fn, envir, ed;
 	char *filename, *editcmd, *vmaxsave;
@@ -104,5 +106,5 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 		CLOENV(x) = envir;
 	UNPROTECT(1);
 	vmaxset(vmaxsave);
-	return (x);
+	return (x);*/
 }
