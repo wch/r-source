@@ -1,9 +1,9 @@
 #-*- Makefile -*-
 all:  $(DLLNAME).dll
 
-SOURCES=$(wildcard -f *.c *.f *.cc)
-CXXSOURCES=$(wildcard -f *.cc)
-OBJSA=$(foreach i,$(SOURCES),$(basename $i).o)
+SOURCES=$(wildcard -f *.c *.f)
+CXXSOURCES=$(wildcard -f *.cc *.cpp *.C)
+OBJSA=$(foreach i,$(SOURCES) $(CXXSOURCES),$(basename $i).o)
 
 include $(RHOME)/src/gnuwin32/MkRules
 
