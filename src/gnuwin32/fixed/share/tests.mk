@@ -20,20 +20,17 @@ USE_GCT = 0
 .SUFFIXES: .R .Rin .Rout
 
 .Rin.R:
-	@echo "Creating \`$@'"
+	@echo "Creating '$@'"
 	@$(R) < $< > /dev/null
 
 .R.Rout:
 	@rm -f $@ $@.fail
-	@echo "  Running \`$<'"
-	@if test "$(USE_GCT)" = 0; then \
-	  $(R) R_LIBS="$(R_LIBS)" < $< > $@; \
-	else \
-	  (echo "gctorture(TRUE)"; cat $<) | $(R) R_LIBS="$(R_LIBS)" > $@; \
-	fi
+	@echo "  Running '$<'"
+	@(if test "$(USE_GCT)" != 0; then echo "gctorture(TRUE)"; fi; \
+	  cat $<) | $(R) R_LIBS=$(R_LIBS) > $@
 	@if test -f $(srcdir)/$@.save; then \
 	  mv $@ $@.fail; \
-	  echo $(ECHO_N) "  Comparing \`$@' to \`$@.save' ...$(ECHO_C)"; \
+	  echo $(ECHO_N) "  Comparing '$@' to '$@.save' ...$(ECHO_C)"; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save 0 || exit 1; \
 	  mv $@.fail $@; \
 	  echo "$(ECHO_T) OK"; \
