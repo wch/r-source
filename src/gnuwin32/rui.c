@@ -43,7 +43,7 @@ extern int ConsoleAcceptCmd;
 static menubar RMenuBar;
 static menuitem msource, mdisplay, mload, msave, mpaste, mcopy, 
     mcopypaste, mlazy;
-static menuitem mls, mrm, msearch, mhelp, mmanmain, mmanref, 
+static menuitem mls, mrm, msearch, mhelp, /*mmanmain,*/ mmanref, 
     mmanext, mapropos, mhelpstart;
 static menu m;
 static char cmd[1024];
@@ -235,19 +235,19 @@ static void menuhelp(control m)
     }
 }
 
-static void menumainman(control m)
+/*static void menumainman(control m)
 {
     consolecmd(RConsole, "shell.exec('doc/manual/Manual.pdf')");
-}
+}*/
 
 static void menumainref(control m)
 {
-    consolecmd(RConsole, "shell.exec('doc/manual/Reference.pdf')");
+    consolecmd(RConsole, "shell.exec('doc/manual/refman.pdf')");
 }
 
 static void menumainext(control m)
 {
-    consolecmd(RConsole, "shell.exec('doc/manual/R-external.pdf')");
+    consolecmd(RConsole, "shell.exec('doc/manual/R-exts.pdf')");
 }
 
 static void menuapropos(control m)
@@ -301,6 +301,8 @@ static void menuact(control m)
 	enable(mrm);
 	enable(msearch);
 	enable(mhelp);
+	enable(mmanref);
+	enable(mmanext);
 	enable(mapropos);
 	enable(mhelpstart);
     }
@@ -324,6 +326,8 @@ static void menuact(control m)
 	disable(mrm);
 	disable(msearch);
 	disable(mhelp);
+	disable(mmanref);
+	disable(mmanext);
 	disable(mapropos);
 	disable(mhelpstart);
     }
@@ -625,9 +629,9 @@ int setupui()
     MCHECK(mhelp = newmenuitem("R language (html)", 0, menuhelpstart));
 
     MCHECK(newsubmenu(m, "Manuals"));
-    MCHECK(mmanmain = newmenuitem("R Manual", 0, menumainman));
+/*    MCHECK(mmanmain = newmenuitem("R Manual", 0, menumainman));*/
     MCHECK(mmanref = newmenuitem("R Reference Manual", 0, menumainref));
-    MCHECK(mmanext = newmenuitem(".Call and .External", 0, menumainext));
+    MCHECK(mmanext = newmenuitem("R Extension Writer's Manual", 0, menumainext));
     addto(m);
 
     MCHECK(mapropos = newmenuitem("Apropos", 0, menuapropos));

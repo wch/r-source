@@ -5,6 +5,7 @@ WINHELP=BOTH # NO, CHM, BOTH
 
 PACKAGES=base eda lqs modreg mva nls splines stepfun ts
 RPREFIX=rw0901
+
 RHOME=$(shell cd ../..; pwd)# must be absolute path
 RLIB=$(RHOME)/library
 PKGDIR=$(RHOME)/src/library
@@ -298,7 +299,7 @@ bundle-%:
 
 docs manuals:
 	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean
-	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win
+	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win R_PKGS="$(PACKAGES)"
 	$(RM) $(RHOME)/library/base/latex/*.tex
 
 docsdist:
