@@ -359,6 +359,26 @@ AC_DEFUN(R_FUNC___SETFPUCW,
    ])
  ])
 dnl
+dnl R_FUNC_CALLOC
+dnl
+AC_DEFUN(R_FUNC_CALLOC,
+ [AC_MSG_CHECKING([whether calloc works for 0 elements])
+  AC_TRY_RUN(
+    changequote(<<, >>)dnl
+    <<
+    #include <stdlib.h>
+    int main () {
+      int *p = calloc(0, sizeof(int));
+      return(p == 0);
+    }
+    >>,
+    changequote([, ])dnl
+    AC_MSG_RESULT(yes),
+    AC_MSG_RESULT(no)
+    AC_DEFINE(CALLOC_BROKEN),
+    AC_MSG_WARN(cannot determine when cross-compiling))
+ ])
+dnl
 dnl R_FUNC_FINITE
 dnl
 AC_DEFUN(R_FUNC_FINITE,

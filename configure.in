@@ -434,6 +434,7 @@ AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isfinite isnan \
   matherr memcpy memmove regcomp rint siglongjmp sigsetjmp strcoll  \
   strtod strtol system times)
 R_FUNC___SETFPUCW
+R_FUNC_CALLOC
 R_FUNC_FINITE
 R_FUNC_LOG
 

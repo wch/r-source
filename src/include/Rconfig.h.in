@@ -141,6 +141,7 @@
 
 /* Bug Workarounds */
 #undef HAVE_OSF_SPRINTF_BUG
+#undef CALLOC_BROKEN
 #undef FINITE_BROKEN
 #undef LOG_BROKEN
 

@@ -747,6 +747,10 @@ void C_free(char *p)
 void *R_chk_calloc(size_t nelem, size_t elsize)
 {
     void *p;
+#ifdef CALLOC_BROKEN
+    if(nelem == 0)
+	return(NULL);
+#endif
     p = calloc(nelem, elsize);
     if(!p) error("Calloc could not allocate memory\n");
     return(p);
