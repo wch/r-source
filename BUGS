@@ -29,6 +29,7 @@ Directory:  Accuracy
 Subject: bug with var(rep(1e30, 3))
 From: Emmanuel Paradis <paradis@isem.univ-montp2.fr>
 Date: Wed, 26 Dec 2001 13:03:31 +0100
+..needs a bit of work on src/main/cov.c
 * PR# 2894 *
 Subject: qbeta hang
 From: terra@gnome.org
@@ -40,6 +41,7 @@ Date: Thu, 1 May 2003 22:43:59 +0200 (MET DST)
 Subject: Bug in pbinom?
 From: Volkmar Liebscher <liebscher@gsf.de>
 Date: Fri, 12 Dec 2003 11:18:12 +0100
+..(really on of the infamous border case problem of pbeta)
 * PR# 6196 *
 Subject: Accuracy: Correct sums in rowSums(), colSums()
 From: Nick.Efthymiou@Schwab.com
@@ -47,6 +49,11 @@ Date: Tue, 30 Dec 2003 01:57:19 +0100 (CET)
 ..no requested patch against the current sources forthcoming.
 ..
 ..Seems unlikely to be worthwhile for rowSums and not sum!
+* PR# 6743 *
+Subject: Accuracy Bug 1228
+From: "David Heiser" <daheiser@gvn.net>
+Date: Mon, 5 Apr 2004 19:23:35 -0700
+..This is really bug PR#1228 (in category 'Accuracy')
 
 Directory:  Add-ons
 
@@ -798,6 +805,10 @@ Subject: creates directory that can't be deleted
 From: xiaobao_wang@yahoo.com
 Date: Mon, 22 Sep 2003 02:26:31 +0200 (MET DST)
 ..This is a Windows bug.  
+* PR# 6742 *
+Subject: save image as postscript side-effect
+From: martin.noellenburg@stud.uni-karlsruhe.de
+Date: Mon,  5 Apr 2004 17:51:13 +0200 (CEST)
 
 Directory:  incoming
 
@@ -806,43 +817,10 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6733 *
-Subject: humphrey phraseology
-From: "Young Rock" <claritygardenia@attbi.com>
-Date: Sat, 03 Apr 2004 06:24:29 -0400
-* PR# 6734 *
-Subject: Owning a winning stock is a gratifying experience
-From: "Pauline Swenson" <hyqhdzldyezyx@copper.net>
-Date: Sun, 04 Apr 2004 10:12:41 +0600
-* PR# 6735 *
-Subject: Owning a winning stock is a gratifying experience
-From: "Pauline Swenson" <hyqhdzldyezyx@copper.net>
-Date: Sun, 04 Apr 2004 10:12:41 +0600
-* PR# 6736 *
-Subject: Tomorrow's winners revealed today
-From: "Tanner Moser" <VYVPYIBZMNSW@copper.net>
-Date: Sat, 03 Apr 2004 22:26:28 -0500
-* PR# 6737 *
-Subject: Tomorrow's winners revealed today
-From: "Tanner Moser" <VYVPYIBZMNSW@copper.net>
-Date: Sat, 03 Apr 2004 22:26:28 -0500
-* PR# 6738 *
-Subject: Re: [Rd] Sporadic error in kalmanSmooth
-From: Duncan Murdoch <dmurdoch@pair.com>
-Date: Sun, 04 Apr 2004 10:22:08 -0400
-* PR# 6739 *
-Subject: fligner.test (ctest)
-From: karel.zvara@mff.cuni.cz
-Date: Mon,  5 Apr 2004 14:12:31 +0200 (CEST)
-* PR# 6740 *
-Subject: rect.hclust fails when k is specified
-From: ivan_yegorov@mail.ru
-Date: Mon,  5 Apr 2004 14:54:15 +0200 (CEST)
-* PR# 6741 *
-Subject: Vxvr bvy V~i_c_o`din at Unbelievable Prices
-From: "willard kwan" <edeimos@chefmail.com>
-Date: Mon, 05 Apr 2004 14:08:34 -1000
-* PR# 6742 *
-Subject: save image as postscript side-effect
-From: martin.noellenburg@stud.uni-karlsruhe.de
-Date: Mon,  5 Apr 2004 17:51:13 +0200 (CEST)
+* PR# 6745 *
+Subject: failure notice
+Subject: Mail Delivery (failure israel_lago@click21.com.br)
+From: click21_bounce@qmail-in.click21.com.br
+From: r-bugs\@r-project.org
+Date: 6 Apr 2004 21:17:06 -0000
+Date: Tue, 6 Apr 2004 16:44:23 -0300
