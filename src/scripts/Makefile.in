@@ -20,12 +20,17 @@ SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SCRIPTS_S) $(SCRIPTS_B_IN) R.sh.in
 
+.SUFFIXES:
+.SUFFIXES: .in
+
+.in:
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
 
 R: $(SCRIPTS_B) R.sh
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
@@ -39,10 +44,7 @@ R: $(SCRIPTS_B) R.sh
 	  $(INSTALL) $$f $(top_builddir)/bin; \
 	done
 
-.in: $(top_builddir)/config.status
-	cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
+$(SCRIPTS_B): $(top_builddir)/config.status
 
 mostlyclean: clean
 clean:
