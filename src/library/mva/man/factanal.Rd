@@ -102,6 +102,9 @@ factanal(x, factors, data, covmat = NULL, n.obs = NA, subset, na.action,
   right-hand side.  Bartlett's method minimizes the sum of squares of
   standardized errors over the choice of \eqn{f}, given (the fitted)
   \eqn{\Lambda}{Lambda}.
+
+  If \code{x} is a formula then the standard NA-handling is applied to
+  the scores (if requested): see \code{\link{napredict}}.
 }
 \value{
   An object of class \code{"factanal"} with components
@@ -119,6 +122,7 @@ factanal(x, factors, data, covmat = NULL, n.obs = NA, subset, na.action,
   \item{scores}{If requested, a matrix of scores.}
   \item{n.obs}{The number of observations if available, or \code{NA}.}
   \item{call}{The matched call.}
+  \item{na.action}{If relevant.}
 }
 
 \note{
@@ -159,7 +163,7 @@ factanal(x, factors, data, covmat = NULL, n.obs = NA, subset, na.action,
 \examples{
 # A little demonstration, v2 is just v1 with noise,
 # and same for v4 vs. v3 and v6 vs. v5
-# Last four cases in each vector are there to add noise
+# Last four cases are there to add noise
 # and introduce a positive manifold (g factor)
 v1 <- c(1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,4,5,6)
 v2 <- c(1,2,1,1,1,1,2,1,2,1,3,4,3,3,3,4,6,5)
@@ -172,8 +176,11 @@ cor(m1)
 factanal(m1, factors=3) # varimax is the default
 factanal(m1, factors=3, rotation="promax")
 # The following shows the g factor as PC1
-library(mva)
 prcomp(m1)
+
+## formula interface
+factanal(~v1+v2+v3+v4+v5+v6, factors = 3,
+         scores = "Bartlett")$scores
 
 ## a realistic example from Barthlomew (1987, pp. 61-65)
 example(ability.cov)

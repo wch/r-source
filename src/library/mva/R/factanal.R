@@ -22,6 +22,7 @@ factanal <-
         Lambda
     }
     cl <- match.call()
+    na.act <- NULL
     if (is.list(covmat)) {
         if (any(is.na(match(c("cov", "n.obs"), names(covmat)))))
             stop("covmat is not a valid covariance list")
@@ -39,6 +40,8 @@ factanal <-
         have.x <- TRUE
         if(inherits(x, "formula")) {
             mt <- terms(x, data = data)
+            if(attr(mt, "response") > 0)
+                stop("response not allowed in formula")
             attr(mt, "intercept") <- 0
             mf <- match.call(expand.dots = FALSE)
             names(mf)[names(mf) == "x"] <- "formula"
@@ -46,6 +49,7 @@ factanal <-
                 mf$rotation <- mf$control <- mf$... <- NULL
             mf[[1]] <- as.name("model.frame")
             mf <- eval(mf, parent.frame())
+            na.act <- attr(mf, "na.action")
             z <- model.matrix(mt, mf)
         } else {
             z <- as.matrix(x)
@@ -101,6 +105,7 @@ factanal <-
     }
     fit$loadings <- sortLoadings(load)
     class(fit$loadings) <- "loadings"
+    fit$na.action <- na.act
     if(have.x && scores != "none") {
         Lambda <- fit$loadings
         zz <- scale(z, TRUE, TRUE)
@@ -117,6 +122,7 @@ factanal <-
                })
         rownames(sc) <- rownames(z)
         colnames(sc) <- colnames(Lambda)
+        if(!is.null(na.act)) sc <- napredict(na.act, sc)
         fit$scores <- sc
     }
     fit$n.obs <- n.obs

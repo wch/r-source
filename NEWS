@@ -210,6 +210,11 @@ NEW FEATURES
     o   axis.POSIXct() allows the label date/times to be specified
 	via the news `at' argument.
 
+    o   princomp() has a formula interface.
+
+    o   factanal() and princomp() use napredict() on their scores, so
+	na.action = na.exclude is supported.
+
 
 
 BUG FIXES

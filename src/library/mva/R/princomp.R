@@ -1,5 +1,31 @@
-princomp <- function(x, cor = FALSE, scores = TRUE, covmat = NULL,
-                     subset = rep(TRUE, nrow(as.matrix(x))))
+princomp <- function(x, ...) UseMethod("princomp")
+
+princomp.formula <- function(x, data = NULL, subset, na.action, ...)
+{
+    mt <- terms(x, data = data)
+    if(attr(mt, "response") > 0) stop("response not allowed in formula")
+    attr(mt, "intercept") <- 0
+    cl <- match.call()
+    mf <- match.call(expand.dots = FALSE)
+    mf$... <- NULL
+    mf[[1]] <- as.name("model.frame")
+    names(mf)[names(mf) == "x"] <- "formula"
+    mf <- eval(mf, parent.frame())
+    na.act <- attr(mf, "na.action")
+    x <- model.matrix(mt, mf)
+    res <- princomp.default(x, ...)
+    res$call <- cl
+    if(!is.null(na.act)) {
+        res$na.action <- na.act
+        if(!is.null(sc <- res$scores))
+            res$scores <- napredict(na.act, sc)
+    }
+    res
+}
+
+princomp.default <-
+    function(x, cor = FALSE, scores = TRUE, covmat = NULL,
+             subset = rep(TRUE, nrow(as.matrix(x))), ...)
 {
     z <- if(!missing(x)) as.matrix(x)[subset, , drop = FALSE]
     if (is.list(covmat)) {

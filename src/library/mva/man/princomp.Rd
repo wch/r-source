@@ -1,16 +1,29 @@
 \name{princomp}
 \alias{princomp}
+\alias{princomp.formula}
+\alias{princomp.default}
 \alias{plot.princomp}
 \alias{print.princomp}
 \alias{predict.princomp}
 \title{Principal Components Analysis}
 \usage{
-princomp(x, cor = FALSE, scores = TRUE, covmat = NULL,
-         subset = rep(TRUE, nrow(as.matrix(x))))
+\method{princomp}{formula}(x, data = NULL, subset, na.action, ...)
+\method{princomp}{default}(x, cor = FALSE, scores = TRUE, covmat = NULL,
+         subset = rep(TRUE, nrow(as.matrix(x))), ...)
 }
 \arguments{
-  \item{x}{a matrix (or data frame) which provides the data for the
+  \item{x}{a formula or matrix (or data frame) which provides the data for the
     principal components analysis.}
+  \item{data}{an optional data frame containing the variables in the
+    formula \code{x}. By default the variables are taken from
+    \code{environment(x)}.}
+  \item{subset}{an optional vector used to select rows (observations) of the
+    data matrix \code{x}.}
+  \item{na.action}{a function which indicates what should happen
+    when the data contain \code{NA}s.  The default is set by
+    the \code{na.action} setting of \code{\link{options}}, and is
+    \code{\link{na.fail}} if that is unset. The ``factory-fresh''
+    default is \code{\link{na.omit}}.}
   \item{cor}{a logical value indicating whether the calculation should
     use the correlation matrix or the covariance matrix.}
   \item{scores}{a logical value indicating whether the score on each
@@ -19,8 +32,8 @@ princomp(x, cor = FALSE, scores = TRUE, covmat = NULL,
     \code{\link{cov.wt}}, \code{\link{cov.mve}} or \code{\link{cov.mcd}}.
     If supplied, this is used rather than the covariance matrix of
     \code{x}.}
-  \item{subset}{a vector used to select rows (observations) of the
-    data matrix \code{x}.}
+  \item{\dots}{arguments passed to or from other methods. If \code{x} is
+    a formula one might specify \code{cor} or \code{scores}.}
 }
 \description{
   \code{princomp} performs a principal components analysis on the given
@@ -41,8 +54,12 @@ princomp(x, cor = FALSE, scores = TRUE, covmat = NULL,
   \item{scores}{if \code{scores = TRUE}, the scores of the supplied
     data on the principal components.}
   \item{call}{the matched call.}
+  \item{na.action}{If relevant.}
 }
 \details{
+  \code{princomp} is a generic function with \code{"formula"} and
+  \code{"default"} methods.
+
   The calculation is done using \code{\link{eigen}} on the correlation or
   covariance matrix, as determined by \code{\link{cor}}.  This is done for
   compatibility with the S-PLUS result.  A preferred method of
@@ -55,6 +72,9 @@ princomp(x, cor = FALSE, scores = TRUE, covmat = NULL,
   results in a nice format and the \code{\link{plot}} method produces
   a scree plot (\code{\link{screeplot}}).  There is also a
   \code{\link{biplot}} method.
+
+  If \code{x} is a formula then the standard NA-handling is applied to
+  the scores (if requested): see \code{\link{napredict}}.
 }
 \references{
   Mardia, K. V., J. T. Kent and J. M. Bibby (1979).
@@ -78,9 +98,16 @@ princomp(USArrests, cor = TRUE) # =^= prcomp(USArrests, scale=TRUE)
 ## Similar, but different:
 ## The standard deviations differ by a factor of sqrt(49/50)
 
-summary(pc.cr <- princomp(USArrests, cor=TRUE))
+summary(pc.cr <- princomp(USArrests, cor = TRUE))
 loadings(pc.cr)  ## note that blank entries are small but not zero
 plot(pc.cr) # shows a screeplot.
 biplot(pc.cr)
+
+## Formula interface
+princomp(~ ., data = USArrests, cor = TRUE)
+# NA-handling
+USArrests[1, 2] <- NA
+pc.cr <- princomp(~ ., data = USArrests, na.action=na.exclude, cor = TRUE)
+pc.cr$scores
 }
 \keyword{multivariate}
