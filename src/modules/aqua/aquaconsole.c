@@ -95,6 +95,8 @@ TXNObject	RConsoleOutObject = NULL;
 TXNObject	RConsoleInObject = NULL;
 bool 		WeHaveConsole = false;
 bool 		InputFinished = false;
+bool		EditingFinished = true;
+
 TXNFrameID		OutframeID	= 0;
 TXNFrameID		InframeID	= 0;
 
@@ -140,7 +142,7 @@ int Raqua_ShowFiles(int nfile, char **fileName, char **title,
 		char *WinTitle, Rboolean del, char *pager);
 int Raqua_ChooseFile(int new, char *buf, int len);
 
-
+int Raqua_Edit(char *filename);
 void 	Raqua_StartConsole(void);
 void 	Raqua_WriteConsole(char *buf, int len);
 int 	Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
@@ -234,12 +236,24 @@ void Raqua_GetQuartzParameters(double *width, double *height, double *ps, char *
 TXNControlTag	ROutTag[] = {kTXNIOPrivilegesTag, kTXNNoUserIOTag, kTXNWordWrapStateTag};
 TXNControlData  ROutData[] = {kTXNReadWrite, kTXNReadOnly, kTXNNoAutoWrap};
 
+TXNControlTag	RReadOnlyTag[] = {kTXNNoUserIOTag};
+TXNControlData  RReadOnlyData[] = {kTXNReadOnly};
+
+TXNControlTag	RReadWriteTag[] = {kTXNNoUserIOTag};
+TXNControlData  RReadWriteData[] = {kTXNReadWrite};
+
 TXNControlTag	RInTag[] = { kTXNWordWrapStateTag};
 TXNControlData  RInData[] = {kTXNNoAutoWrap};
        
 TXNControlTag	RHelpTag[] = {kTXNIOPrivilegesTag, kTXNNoUserIOTag, kTXNWordWrapStateTag};
 TXNControlData  RHelpData[] = {kTXNReadWrite, kTXNReadOnly, kTXNNoAutoWrap};
        
+TXNControlTag	REditTag[] = {kTXNWordWrapStateTag};
+TXNControlData  REditData[] = {kTXNNoAutoWrap};
+           
+TXNControlTag   txnControlTag[1];
+TXNControlData  txnControlData[1];
+TXNMargins      txnMargins;
            
 void Raqua_StartConsole(void)
 {
@@ -332,6 +346,14 @@ void Raqua_StartConsole(void)
          TXNSetTXNObjectControls(RConsoleOutObject, false, 3, ROutTag, ROutData);
          TXNSetTXNObjectControls(RConsoleInObject, false, 1, RInTag, RInData);
         
+         txnControlTag[0] = kTXNMarginsTag;
+         txnControlData[0].marginsPtr = &txnMargins;
+  
+         txnMargins.leftMargin  = txnMargins.topMargin = 5;
+         txnMargins.rightMargin = txnMargins.bottomMargin = 5;
+         TXNSetTXNObjectControls(RConsoleOutObject,false,1,txnControlTag,txnControlData);
+         TXNSetTXNObjectControls(RConsoleInObject,false,1,txnControlTag,txnControlData);
+
   	 InstallStandardEventHandler(GetApplicationEventTarget());
          err = InstallApplicationEventHandler( KeybHandler, GetEventTypeCount(KeybEvents), KeybEvents, 0, NULL);
          err = InstallApplicationEventHandler( NewEventHandlerUPP(RCmdHandler), GetEventTypeCount(RCmdEvents),
@@ -419,8 +441,8 @@ void Raqua_WriteConsole(char *buf, int len)
     if(WeHaveConsole){
         TXNSetTypeAttributes( RConsoleOutObject, 1, ROutAttr, 0, kTXNEndOffset );
         err =  TXNSetData (RConsoleOutObject, kTXNTextData, buf, strlen(buf), kTXNEndOffset, kTXNEndOffset);
-    }
-    else{
+        TXNDraw(RConsoleOutObject, NULL);
+    } else {
      fprintf(stderr,"%s", buf);
     }
 
@@ -564,6 +586,9 @@ static OSStatus KeybHandler(EventHandlerCallRef inCallRef, EventRef REvent, void
  UInt32		RKeyCode;
  char c;
  
+ if(!EditingFinished)
+  return(err);
+  
  /* make sure that we're processing a keyboard event */
  if ( GetEventClass( REvent ) == kEventClassKeyboard )
  {
@@ -999,10 +1024,16 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
 	HICommand	command;
 	UInt32		eventKind = GetEventKind( inEvent ), RWinCode, devsize;
         int		devnum;
-        char 		cmd[255];
+        char 		cmd[255], filename[300];
         WindowRef 	EventWindow;
         EventRef	REvent;
-        TXNObject	RHlpObj  = NULL;
+        TXNObject	RHlpObj  = NULL, REdtObj = NULL;
+        SInt16		FileRefNum;
+        FSSpec    	fsspec;
+        int	fsize,txtlen;
+  Handle DataHandle;
+   FILE *fp;
+
 
 	
         if( GetEventClass(inEvent) != kEventClassWindow)
@@ -1029,11 +1060,37 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
                     err= noErr; 
             }
          
-           if( GetWindowProperty(EventWindow, kRAppSignature, 'HLPO', sizeof(TXNObject), NULL, &RHlpObj) == noErr){
+           if( GetWindowProperty(EventWindow, 'RHLP', 'robj', sizeof(TXNObject), NULL, &RHlpObj) == noErr){
                     TXNDeleteObject(RHlpObj);
                     HideWindow(EventWindow);
                     err= noErr; 
             }
+            
+            
+            if( GetWindowProperty(EventWindow, 'REDT', 'robj', sizeof(TXNObject), NULL, &REdtObj) == noErr){
+                    err = GetWindowProperty(EventWindow, 'REDT', 'fsiz', sizeof(int), NULL, &fsize);
+                    err = GetWindowProperty(EventWindow, 'REDT', 'fnam', fsize, NULL, filename);
+                    txtlen = TXNDataSize(REdtObj)/2;
+                    err = TXNGetDataEncoded(REdtObj, 0, txtlen, &DataHandle, kTXNTextData);
+                    HLock( DataHandle );
+                    filename[fsize] = '\0';
+                    fp = R_fopen(R_ExpandFileName(filename), "w");
+                    if(fp) { 
+                     fprintf(fp, "%s", *DataHandle);
+                     fclose(fp);
+                    }
+               //     fprintf(stderr,"\n file=%s, data=%s",filename,*DataHandle);
+                    HUnlock( DataHandle );
+                    if(DataHandle)
+                        DisposeHandle( DataHandle );
+
+                    TXNDeleteObject(REdtObj);
+                    HideWindow(EventWindow);
+                    QuitApplicationEventLoop();
+                    TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
+                    EditingFinished = true;
+                    err= noErr; 
+            } 
            break;
                 
             default:
@@ -1109,6 +1166,165 @@ OSErr DoSelectDirectory( void )
 	}
 		
 	return theErr;
+}
+
+
+int Raqua_Edit(char *filename)
+{
+    int rc = 0;
+    
+    TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadOnlyTag, RReadOnlyData);
+    EditingFinished = false;
+    
+    rc = NewEditWindow(filename);
+    
+    QuitApplicationEventLoop();
+    
+    RunApplicationEventLoop();
+    return 0;
+}
+
+int NewEditWindow(char *fileName)
+{
+    Rect	WinBounds;
+    OSStatus	err = noErr;
+    WindowRef 	EditWindow =  NULL;
+    Str255	Title;
+    FSSpec    	fsspec;
+    TXNObject	REditObject = NULL;
+    TXNFrameID	EditFrameID	= 0;
+    SInt16 	refNum = 0;
+    TXNFrameOptions	frameOptions;
+    SInt16      tempFileRefNum;
+    Boolean isDirectory;
+    char buf[300], filenm[300];
+    FInfo             fileInfo;
+    TXNControlTag tabtag = kTXNTabSettingsTag;
+    TXNControlData tabdata;
+    TXNBackground RBGInfo;   
+    TXNTypeAttributes	typeAttr;
+        SInt16                  fontID;
+        Str255			fontname;
+  int fsize;
+    
+                          
+    frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNDrawGrowIconMask; 
+    frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask;
+
+    SetRect(&WinBounds, 400, 400, 400 +400, 400 + 400 ) ;
+    
+    
+     if( (err = CreateNewWindow( kDocumentWindowClass, kWindowStandardHandlerAttribute | kWindowStandardDocumentAttributes, &WinBounds, &EditWindow) != noErr))
+     goto fail;
+    
+    InstallStandardEventHandler( GetWindowEventTarget(EditWindow));
+
+    err = FSPathMakeFSSpec(fileName, &fsspec, &isDirectory);
+    if(err != noErr)
+     goto fail;
+     
+    CopyPascalStringToC(fsspec.name,buf);
+
+    CopyCStringToPascal(buf,Title);
+    SetWTitle(EditWindow, Title);
+
+    err = FSpGetFInfo(&fsspec,&fileInfo);
+    if(err != noErr)
+     goto fail;
+   
+    if(fileInfo.fdType == NULL){    
+        fileInfo.fdType = kTXNTextFile;
+        err = FSpSetFInfo(&fsspec,&fileInfo);
+        if(err != noErr)
+          goto fail;
+    }
+    
+    
+    err = TXNNewObject(&fsspec, EditWindow, NULL, frameOptions, kTXNTextEditStyleFrameType,
+                            fileInfo.fdType, kTXNSystemDefaultEncoding, &REditObject,
+                            &EditFrameID, 0);       
+   
+   // err = FSpOpenDF(&fsspec,fsRdWrPerm,&tempFileRefNum);
+   // FSClose(tempFileRefNum);
+   // fprintf(stderr,"\n FSpOpenDF err= %d, num=%d", err, tempFileRefNum);
+    
+   
+     
+       if(err != noErr)
+     goto fail;
+                                           
+    err = TXNSetTXNObjectControls(REditObject, false, 1, REditTag, REditData);
+    TXNSetTXNObjectControls(REditObject,false,1,txnControlTag,txnControlData);
+
+    
+    tabdata.tabValue.value = (SInt16)(CurrentPrefs.TabSize*CurrentPrefs.ConsoleFontSize);
+    tabdata.tabValue.tabType = kTXNRightTab;
+    tabdata.tabValue.filler = 0;
+    
+    TXNSetTXNObjectControls(REditObject, false, 1, &tabtag, &tabdata);
+         
+   
+  
+/* setting FG colors */
+   TXNSetTypeAttributes( REditObject, 1, RInAttr, 0, kTXNEndOffset );
+  
+/* setting BG colors */
+   RBGInfo.bgType = kTXNBackgroundTypeRGB;
+   RBGInfo.bg.color = CurrentPrefs.BGInputColor;        
+   TXNSetBackground(REditObject, &RBGInfo);
+
+    
+    typeAttr.tag = kTXNQDFontSizeAttribute;
+    typeAttr.size = kTXNFontSizeAttributeSize;
+    typeAttr.data.dataValue = Long2Fix(CurrentPrefs.ConsoleFontSize);
+
+    TXNSetTypeAttributes(REditObject, 1, &typeAttr, 0, kTXNEndOffset);
+        
+        CopyCStringToPascal(CurrentPrefs.ConsoleFontName, fontname);
+        GetFNum(fontname,&fontID);
+    
+        typeAttr.tag = kTXNQDFontFamilyIDAttribute;
+        typeAttr.size = kTXNQDFontFamilyIDAttributeSize;
+        typeAttr.data.dataValue = fontID;
+    
+        TXNSetTypeAttributes(REditObject, 1, &typeAttr, 0, kTXNEndOffset);
+
+    if(err != noErr)
+     goto fail;
+
+    err = SetWindowProperty(EditWindow,'REDT','robj', sizeof(TXNObject), &REditObject);
+    err = SetWindowProperty(EditWindow,'REDT','rfrm', sizeof(TXNFrameID), &EditFrameID);
+    err = SetWindowProperty(EditWindow,'REDT', 'fssp', sizeof(fsspec), &fsspec);
+    fsize = strlen(fileName);
+    err = SetWindowProperty(EditWindow, 'REDT', 'fsiz', sizeof(int), &fsize);
+    err = SetWindowProperty(EditWindow, 'REDT', 'fnam', fsize, fileName);
+
+    SetWindowProxyFSSpec(EditWindow,&fsspec);
+    SetWindowModified(EditWindow,false);
+
+    err = InstallWindowEventHandler( EditWindow, NewEventHandlerUPP(DoCloseHandler), 
+                                          GetEventTypeCount(RCloseWinEvent),
+                                          RCloseWinEvent, (void *)EditWindow, NULL);
+                    
+    TXNActivate(REditObject, EditFrameID, kScrollBarsAlwaysActive);
+    ShowWindow(EditWindow);
+    BeginUpdate(EditWindow);
+    TXNForceUpdate(REditObject);
+    TXNDraw(REditObject, NULL);
+    EndUpdate(EditWindow); 				 	           
+
+    TXNFocus(REditObject,true);
+    return 0;
+    
+fail:
+   
+   if( REditObject )
+    TXNDeleteObject(REditObject);
+
+   if( EditWindow )
+    HideWindow(EditWindow);             
+    
+    return 1;
 }
 
 
@@ -1204,6 +1420,7 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
      goto fail;
                                            
     err = TXNSetTXNObjectControls(RHelpObject, false, 3, RHelpTag, RHelpData);
+    
 
     
     tabdata.tabValue.value = (SInt16)(CurrentPrefs.TabSize*CurrentPrefs.ConsoleFontSize);
@@ -1211,7 +1428,8 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
     tabdata.tabValue.filler = 0;
     
     TXNSetTXNObjectControls(RHelpObject, false, 1, &tabtag, &tabdata);
-         
+    TXNSetTXNObjectControls(RHelpObject,false,1,txnControlTag,txnControlData);
+     
   
 /* setting FG colors */
    TXNSetTypeAttributes( RHelpObject, 1, ROutAttr, 0, kTXNEndOffset );
@@ -1240,8 +1458,12 @@ int NewHelpWindow(char *fileName, char *title, char *WinTitle)
     if(err != noErr)
      goto fail;
 
-    err = SetWindowProperty(HelpWindow,kRAppSignature,'HLPO',sizeof(TXNObject), &RHelpObject);
-    err = SetWindowProperty(HelpWindow,kRAppSignature,'HLPO',sizeof(TXNFrameID), &HelpFrameID);
+    err = SetWindowProperty(HelpWindow, 'RHLP', 'robj', sizeof(TXNObject), &RHelpObject);
+    err = SetWindowProperty(HelpWindow, 'RHLP', 'rfrm', sizeof(TXNFrameID), &HelpFrameID);
+    
+    SetWindowProxyFSSpec(HelpWindow,&fsspec);
+    SetWindowModified(HelpWindow,false);
+  
     err = InstallWindowEventHandler( HelpWindow, NewEventHandlerUPP(DoCloseHandler), 
                                           GetEventTypeCount(RCloseWinEvent),
                                           RCloseWinEvent, (void *)HelpWindow, NULL);

@@ -407,7 +407,7 @@
                         <string name="bounds">212 56 228 142 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">1007</int>
-                        <string name="title">Output Color</string>
+                        <string name="title">Read Only</string>
                         <string name="helpTagText">This option applies to all read-only windows like R Console Out and any other read-only windows like R Help, etc.</string>
                       </object>
                       <object class="IBCarbonButton" id="257">
@@ -421,7 +421,7 @@
                         <string name="bounds">247 56 263 142 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">1008</int>
-                        <string name="title">Input Color</string>
+                        <string name="title">Read &amp; Write</string>
                         <string name="helpTagText">This option applies to all read-write windows like R Console In and any other read-write windows like R Edit, etc.</string>
                       </object>
                       <object class="IBCarbonButton" id="259">
@@ -615,7 +615,6 @@
             </array>
             <ostype name="controlSignature">PRTT</ostype>
             <int name="controlID">1000</int>
-            <int name="tabSelection">3</int>
             <array count="3" name="tabItems">
               <dictionary count="4">
                 <string>contentResID</string>
@@ -708,42 +707,42 @@
     <reference idRef="278"/>
     <reference idRef="279"/>
     <object class="IBCarbonUserPane" id="280">
-      <string name="bounds">-24675 -7914 -24377 -7474 </string>
+      <string name="bounds">13 -18606 311 -18166 </string>
       <array count="9" name="subviews">
         <object class="IBCarbonCheckBox" id="281">
-          <string name="bounds">-17318 -26 -17316 38 </string>
+          <string name="bounds">-23527 -7910 -23525 -7850 </string>
           <string name="title">AntiAliasing</string>
         </object>
         <object class="IBCarbonCheckBox" id="282">
-          <string name="bounds">-17318 18785 -17316 18875 </string>
+          <string name="bounds">-23527 10901 -23525 10987 </string>
           <string name="title">Auto Refresh</string>
         </object>
         <object class="IBCarbonStaticText" id="284">
-          <string name="bounds">-17218 18506 -17202 18899 </string>
+          <string name="bounds">-23641 10620 -23625 11013 </string>
           <string name="title">Font Name</string>
         </object>
         <object class="IBCarbonButton" id="283">
-          <string name="bounds">-17258 18558 -17238 18566 </string>
+          <string name="bounds">-23601 10674 -23581 10678 </string>
           <string name="title">Choose Font</string>
         </object>
         <object class="IBCarbonEditText" id="285">
-          <string name="bounds">-17246 18800 -17250 18805 </string>
+          <string name="bounds">-23594 10917 -23596 10916 </string>
           <string name="title">12</string>
         </object>
         <object class="IBCarbonStaticText" id="286">
-          <string name="bounds">-17256 18673 -17240 18749 </string>
+          <string name="bounds">-23603 10787 -23587 10863 </string>
           <string name="title">Point Size</string>
         </object>
         <object class="IBCarbonEditText" id="287">
-          <string name="bounds">-17117 18572 -17121 18572 </string>
+          <string name="bounds">-23723 10689 -23725 10683 </string>
           <string name="title">5</string>
         </object>
         <object class="IBCarbonStaticText" id="288">
-          <string name="bounds">-17128 18502 -17112 18549 </string>
+          <string name="bounds">-23731 10616 -23715 10663 </string>
           <string name="title">Width:</string>
         </object>
         <object class="IBCarbonStaticText" id="290">
-          <string name="bounds">-17128 18642 -17112 18689 </string>
+          <string name="bounds">-23731 10756 -23715 10803 </string>
           <string name="title">Height:</string>
         </object>
       </array>
