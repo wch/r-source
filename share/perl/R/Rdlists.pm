@@ -28,6 +28,7 @@ require  Exporter;
 use Cwd;
 use File::Basename;
 use R::Utils;
+use R::Vars;
 
 if($main::opt_dosnames) { $HTML = ".htm"; } else { $HTML = ".html"; }
 
@@ -71,13 +72,15 @@ sub buildinit {
     if($main::OSdir eq "windows") {
 	$tmp =~ s+\\+/+g; # need Unix-style path here
     }
-    elsif($main::OSdir eq "mac") {
+#    elsif($main::OSdir eq "mac") {
+    elsif($R::Vars::OSTYPE eq "mac"){
     $tmp = $pkg;
     }
     $pkg = basename($tmp);
 
     chdir "man" or die("There are no man pages in $pkg\n");
-    if($main::OSdir eq "mac") {
+    if($R::Vars::OSTYPE eq "mac"){
+  #  if($main::OSdir eq "mac") {
 	opendir man, ':';
     } else {
 	opendir man, '.';

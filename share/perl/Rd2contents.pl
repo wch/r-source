@@ -20,6 +20,7 @@ use Getopt::Long;
 use R::Rd;
 use R::Rdtools;
 use R::Utils;
+use R::Vars;
 
 my @knownoptions = ("o|output:s", "os|OS:s");
 
@@ -45,11 +46,16 @@ $OSdir = R_getenv("R_OSTYPE", "mac");
 ## </FIXME>
 $OSdir = $opt_os if $opt_os;
 
+$OSdir = ":mac" if($R::Vars::OSTYPE eq "mac");
+
 my $out = 0;
 $out = $opt_o if(defined $opt_o && length($opt_o));
 
 my $pkg;
-if($OSdir eq "mac") {
+
+
+#if($OSdir eq "mac") {
+  if($R::Vars::OSTYPE eq "mac"){
     $ARGV[0] =~ /([^\:]*)$/;
     $pkg = $1;
 } else {

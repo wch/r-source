@@ -63,12 +63,19 @@ sub file_path {
     my @args = @_;
     my $filesep = "/";
     my $outpath ="";
+    my $v;
     
-    $filesep = ":" if($R::Vars::OSTYPE eq "mac");
-    $outpath = join($filesep, @args);
-    $outpath =~ s/::/:/g;
-    return($outpath);
+    if($R::Vars::OSTYPE eq "mac") {
+     foreach $v (@args) {
+      $v =~ s/:\z//;
+     }         
+     $filesep = ":";
+    }
+    
+    join($filesep, @args);
 }
+
+
 
 sub env_path {
     my @args = @_;

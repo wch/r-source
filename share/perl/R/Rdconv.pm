@@ -29,6 +29,7 @@ require  Exporter;
 use Text::Tabs;
 use FileHandle;
 use R::Utils;
+use R::Vars;
 
 if($main::opt_dosnames) { $HTML = ".htm"; } else { $HTML = ".html"; }
 
@@ -718,7 +719,8 @@ sub code2html {
 			s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		}
 	    } else {
-	     if($main::OSdir eq "mac"){
+	     if($R::Vars::OSTYPE eq "mac") {
+#	     if($main::OSdir eq "mac"){
 	     my $uxfile = $htmlfile;
 		 $uxfile =~ s|:|\/|g;
 		 $text =~
