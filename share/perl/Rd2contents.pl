@@ -40,7 +40,7 @@ END
 
 ## <FIXME>
 ## Currently, R_OSTYPE is always set on Unix/Windows.
-my $OSdir = R_getenv("R_OSTYPE", "mac");
+$OSdir = R_getenv("R_OSTYPE", "mac");
 ## </FIXME>
 $OSdir = $opt_os if $opt_os;
 
