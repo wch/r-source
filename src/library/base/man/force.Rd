@@ -16,6 +16,9 @@ force(x)
   scoping rules and will later be altered by an explicit assignment or
   an implicit assignment in a loop or an apply function.
 }
+\note{
+  \code{force} does not force \link[delay]{promises}.
+}
 \examples{
 f <- function(y) function() y
 lf <- vector("list", 5)
