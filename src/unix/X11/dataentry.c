@@ -31,10 +31,12 @@
 static Atom _XA_WM_PROTOCOLS, protocol;
 
 
-static void clearwindow(void);
 static int newcol;
 static int xmaxused, ymaxused;
 static int CellModified;
+static int box_coords[6];
+static char copycontents[30] = "";
+
 
 #ifndef max
 #define max(a, b) (((a)>(b))?(a):(b))
@@ -235,7 +237,7 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 void drawwindow()
 {
-    int i, w, dw;
+    int i, st, w, dw;
     XWindowAttributes attribs;
 
     /* if there is an active cell enter the data in it */
@@ -271,12 +273,25 @@ void drawwindow()
     if (inputlist != R_NilValue)
 	for (i = colmin; i <= colmax; i++) drawcol(i);
 
-    /* draw the quit box */
+    /* draw the quit etc boxes */
 
     i = textwidth("Quit", 4);
-    drawrectangle(fullwindowWidth - 6 - bwidth - i, 3, i + 4,
-		  hwidth - 6, 1, 1);
-    drawtext(fullwindowWidth - 4 - bwidth - i, hwidth - 7, "Quit", 4);
+    box_coords[0] = st = fullwindowWidth - 6 - bwidth;
+    box_coords[1] = st - i;
+    drawrectangle(st - i, 3, i + 4, hwidth - 6, 1, 1);
+    drawtext(st + 2 - i, hwidth - 7, "Quit", 4);
+
+    box_coords[4] = st = st - 5*i;
+    i = textwidth("Paste", 5);
+    box_coords[5] = st - i;
+    drawrectangle(st - i, 3, i + 4, hwidth - 6, 1, 1);
+    drawtext(st + 2 - i, hwidth - 7, "Paste", 5);
+
+    box_coords[2] = st = st - 2*i;
+    i = textwidth("Copy", 4);
+    box_coords[3] = st - i;
+    drawrectangle(st - i, 3, i + 4, hwidth - 6, 1, 1);
+    drawtext(st + 2 - i, hwidth - 7, "Copy", 4);
 
     highlightrect();
 
@@ -893,14 +908,10 @@ void printlabs()
 /* find out whether the button click was in the quit box */
 static int checkquit(int xw)
 {
-    int wi;
-
-    wi = textwidth("Quit", 4);
-    if ((xw < fullwindowWidth - bwidth - 2)
-	&& (xw > fullwindowWidth - bwidth - wi - 6))
-	return 1;
-    else
-	return 0;
+    if (xw > box_coords[1] && xw < box_coords[0]) return 1;
+    if (xw > box_coords[3] && xw < box_coords[2]) return 2;
+    if (xw > box_coords[5] && xw < box_coords[4]) return 3;
+    return 0;
 }
 
 /* when a buttonpress event happens find the square that is being
@@ -920,13 +931,18 @@ static int findcell()
     XQueryPointer(iodisplay, iowindow, &root, &child,
 		  &xr, &yr, &xw, &yw, &keys);
 
-    if(keys & Button1Mask) { /* left click */
+    if (keys & Button1Mask) { /* left click */
 
 	/* check to see if the click was in the header */
 
 	if (yw < hwidth + bwidth) {
-	    if (checkquit(xw)) return 1; else return 0;
+	    i =  checkquit(xw);
+	    if (i == 1) return 1;
+	    else if (i == 2) copycell();
+	    else if (i == 3) pastecell(crow, ccol);
+	    return 0;
 	}
+	    
 
 	/* see if it is in the row labels */
 	if (xw < bwidth + boxw[0]) {
@@ -957,7 +973,20 @@ static int findcell()
 	    crow = wrow;
 	}
     }
-    if(keys & Button2Mask) { /* Paste: eventually */
+    if (keys & Button2Mask) { /* Paste */
+	int row, col = 0;
+	
+	if (yw < hwidth + bwidth || xw < bwidth + boxw[0]) return 0;
+
+	/* translate to box coordinates */
+	row = (yw - bwidth - hwidth) / box_h;
+	w = bwidth + boxw[0];
+	for (i = 1; i <= nwide; i++)
+	    if ((w += BOXW(i+colmin-1)) > xw) {
+		col = i;
+		break;
+	    }
+	pastecell(row, col);
     }
     highlightrect();
     return 0;
@@ -980,7 +1009,7 @@ static void eventloop()
 		drawwindow();
  		break;
 	    case mouseDown:
-		done = doMouseDown(&ioevent);
+		done  = doMouseDown(&ioevent);
 		break;
 	    case keyDown:
 		doSpreadKey(0, &ioevent);
@@ -1484,4 +1513,46 @@ void popdownmenu()
 {
     XUnmapWindow(iodisplay, menuwindow);
     XUnmapSubwindows(iodisplay, menuwindow);
+}
+
+static void copycell()
+{
+    int i, whichrow = crow + colmin - 1, whichcol = ccol + colmin -1;
+    SEXP tmp;
+    
+    if (whichrow == 0) {
+	/* won't have  cell here */
+    } else {
+	strcpy(copycontents, "");
+	if (length(inputlist) >= whichcol) {
+	    tmp = CAR(nthcdr(inputlist, whichcol - 1));
+	    if (tmp != R_NilValue &&
+		(i = whichrow - 1) < (int)LEVELS(tmp) ) {
+		PrintDefaults(R_NilValue);
+		if (TYPEOF(tmp) == REALSXP) {
+		    if (REAL(tmp)[i] != ssNA_REAL)
+			strcpy(copycontents, EncodeElement(tmp, i, 0));
+		} else if (TYPEOF(tmp) == STRSXP) {
+		    if (!streql(CHAR(STRING(tmp)[i]),
+				CHAR(STRING(ssNA_STRING)[0])))
+			strcpy(copycontents, EncodeElement(tmp, i, 0));
+		}
+	    }
+	}
+    }
+    highlightrect();
+}
+
+static void pastecell(int row, int col)
+{
+    downlightrect();
+    crow = row; ccol = col;
+    if (strlen(copycontents)) {
+	strcpy(buf, copycontents);
+	clength = strlen(copycontents);
+	bufp = buf + clength;
+	CellModified = 1;
+    }
+    closerect();
+    highlightrect();
 }

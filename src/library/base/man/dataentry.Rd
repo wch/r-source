@@ -147,7 +147,14 @@ de(\dots, Modes = NULL, Names = NULL)
   The Autosize item on the popup menu will resize the currently selected
   column.
 #endif
-
+#ifdef unix
+  The \code{Copy} button copies the currently selected cell:
+  \code{paste} copies the last copied value to the current cell, and
+  right-clicking selects a cell \emph{and} copies in the value.
+  Initially the value is blank, and attempts to paste a blank value will
+  have no effect.
+#endif
+  
   Control-L will refresh the display, recalculating field widths to fit
   the current entries.
 }
