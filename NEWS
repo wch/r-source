@@ -11,12 +11,16 @@ NEW FEATURES
     o   lty=0 now (again) makes lines invisible. Looks better for
     	barplot label axis.
 
+    o	collected warnings before an error are no longer lost but
+	are printed after the error message (unless the error makes
+	this impossible).
+
 
 BUG FIXES
 
     o 	Problems with realloc on some systems in AllocBuffer
 
-    o   Problem w/ formatReal on non IEEE systems
+    o   Problem with formatReal on non-IEEE systems
 
     o   Switch to <tt> in HTML pages since Linux Netscape mangles
         Courier.
