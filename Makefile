@@ -18,10 +18,9 @@ install:
 	@echo "Installing R"
 	@echo "SORRY, this hasn't been implemented yet."
 
-build-docs build-help build-latex build-html test-Examples:
+build-docs build-help build-latex build-html::
 	-@cd etc; make $@
-
-tests: test-Examples
+tests test-Examples::
 	-@cd tests; make $@
 
 patches:
