@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@
  *== see ./paste.c	 for do_paste() , do_format() and  do_formatinfo()
  *
  * These  formatFOO (.)	 functions determine the proper	 width, digits, etc:
- *   
+ *
  */
 
 
@@ -56,14 +56,14 @@ void formatLogical(int *x, int n, int *fieldwidth)
 
 	*fieldwidth = 1;
 	for(i=0 ; i<n ; i++) {
-		if (x[i] == 1 && *fieldwidth < 4) 
+		if (x[i] == 1 && *fieldwidth < 4)
 			*fieldwidth = 4;
 		if (x[i] == 0 && *fieldwidth < 5 ) {
 			*fieldwidth = 5;
 			break;
 			/* this is the widest it can be so stop */
 		}
-		if (x[i] == NA_LOGICAL && *fieldwidth <	 print_na_width) 
+		if (x[i] == NA_LOGICAL && *fieldwidth <	 print_na_width)
 			*fieldwidth =  print_na_width;
 	}
 }
@@ -135,19 +135,19 @@ void formatInteger(int *x, int n, int *fieldwidth)
  *    kpower+1+sgn	including sign
  */
 
-#define MAXDIG print_digits
+/*old #define MAXDIG print_digits */
 
 static double tbl[] =
 {
 	0.e0, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4, 1.e5, 1.e6, 1.e7, 1.e8, 1.e9
 };
 
-static double eps;/* = 10^{- print_digits};  
+static double eps;/* = 10^{- print_digits};
 			set in formatReal/Complex,  used in scientific() */
 
 static void scientific(double *x, int *sgn, int *kpower, int *nsig)
 {
-	/* for 1 number	 x , return 
+	/* for 1 number	 x , return
 	 *	sgn    = 1_{x < 0}  {0/1}
 	 *	kpower = Exponent of 10;
 	 *	nsig   = min(print_digits, #{significant digits of alpha}
@@ -219,12 +219,12 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
 		naflag = 1;
 	 } else {
 		scientific(&x[i], &sgn, &kpower, &nsig);
-		 
+
 		left = kpower + 1;
 		sleft = sgn + ((left <= 0) ? 1 : left); /* >= 1 */
 		right = nsig - left; /* #{digits} right of '.' ( > 0 often)*/
 		if (sgn) neg = 1; /* if any < 0, need extra space for sign */
-			
+
 					   /* Infinite precision "F" Format : */
 		if (right > rt) rt = right;	/* max digits to right of . */
 		if (left > mxl) mxl = left;	/* max digits to  left of . */
@@ -236,14 +236,14 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
 	/* F Format (NEW):  use "F" format
 	 *	    WHENEVER we use not more space than 'E'
 	 *		and still satisfy 'print_digits'
-	 
+
 	 * E Format has the form   [S]X[.XXX]E+XX[X]
 	 *
 	 * This is indicated by setting *e to non-zero (usually 1)
 	 * If the additional exponent digit is required *e is set to 2
 	 */
 
-	/*-- These  'mxsl' & 'rt'  are	used in	 F Format 
+	/*-- These  'mxsl' & 'rt'  are	used in	 F Format
 	 *   AND in the	 ____ if(.) "F" else "E" ___   below: */
 	if (mxl < 0) mxsl = 1 + neg;
 	/* old?? if (mxl != mnl && mxl + rt > MAXDIG) rt = MAXDIG - mxl; */
@@ -256,7 +256,7 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
 	else *e = 1;
 	*n = mxns - 1;
 	*m = neg + (*n > 0) + *n + 4 + *e; /* width m for E  format */
-	
+
 	if (mF <= *m) { /* IFF it needs less space : "F" (Fixpoint) format */
 		*e = 0;
 		*n = rt;
@@ -308,13 +308,13 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
 	  /* imaginary part */
 		/* this is always unsigned */
 		/* we explicitly put the sign in when we print */
-		
+
 		scientific(&(x[i].i), &sgn, &kpower, &nsig);
-		
+
 		left = kpower + 1;
 		sleft = ((left <= 0) ? 1 : left);
 		right = nsig - left;
-		
+
 		if (right > i_rt) i_rt = right;
 		if (left > i_mxl) i_mxl = left;
 		if (left < i_mnl) i_mnl = left;
