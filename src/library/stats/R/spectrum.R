@@ -116,9 +116,9 @@ spec.pgram <-
     xfft <- mvfft(x)
     pgram <- array(NA, dim = c(N, ncol(x), ncol(x)))
     for (i in 1:ncol(x)) {
-        for (j in 1:ncol(x)) {
-            pgram[, i, j] <- xfft[, i] * Conj(xfft[, j])/(N0*xfreq)# N0= #{non-0-padded}
-        ## value at zero is invalid as mean has been removed, so interpolate:
+        for (j in 1:ncol(x)) { # N0 = #{non-0-padded}
+            pgram[, i, j] <- xfft[, i] * Conj(xfft[, j])/(N0*xfreq)
+            ## value at zero is invalid as mean has been removed, so interpolate:
             pgram[1, i, j] <- 0.5*(pgram[2, i, j] + pgram[N, i, j])
         }
     }
@@ -126,12 +126,14 @@ spec.pgram <-
         for (i in 1:ncol(x)) for (j in 1:ncol(x))
                 pgram[, i, j] <- kernapply(pgram[, i, j], kernel,
                                            circular = TRUE)
-        df <- df.kernel(kernel)/(u4/u2^2)
-        bandwidth <- bandwidth.kernel(kernel) * xfreq/N
+        df <- df.kernel(kernel)
+        bandwidth <- bandwidth.kernel(kernel)
     } else {
-        df <- 2/(u4/u2^2)
-        bandwidth <- sqrt(1/12) * xfreq/N
+        df <- 2
+        bandwidth <- sqrt(1/12)
     }
+    df <- df/(u4/u2^2)
+    bandwidth <- bandwidth * xfreq/N
     pgram <- pgram[1+(1:Nspec),,, drop=FALSE]
     spec <- matrix(NA, nrow = Nspec, ncol = nser)
     for (i in 1:nser) spec[, i] <- Re(pgram[1:Nspec, i, i])
@@ -153,7 +155,7 @@ spec.pgram <-
     spg.out <-
         list(freq = freq, spec = spec, coh = coh, phase = phase,
              kernel = kernel, df = df,
-             bandwidth = bandwidth, n.used = nrow(x),
+             bandwidth = bandwidth, n.used = N, orig.n = N0,# "n.orig" = "n..."
              series = series, snames = colnames(x),
              method = ifelse(!is.null(kernel), "Smoothed Periodogram",
                              "Raw Periodogram"),
