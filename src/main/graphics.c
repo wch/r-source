@@ -4038,12 +4038,14 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	GText(at, line, coords, str, xadj, yadj, angle, dd);
     }
     else {
+        /* Note: I changed dd->gp.yLineBias to 0.3 here. */
+        /* Purely visual tuning. RI */
 	switch(side) {
 	case 1:
 	    if(las == 2 || las == 3) {
-		at = at - GConvertXUnits(dd->gp.yLineBias, LINES, USER, dd);
+		at = at + GConvertXUnits(0.3, LINES, USER, dd);
 		angle = 90;
-		yadj = 0.5;
+		yadj = 0;
 	    }
 	    else {
 		line = line + 1 - dd->gp.yLineBias;
@@ -4054,10 +4056,10 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	    break;
 	case 2:
 	    if(las == 1 || las == 2) {
-		at = at + GConvertYUnits(dd->gp.yLineBias, LINES, USER, dd);
+		at = at - GConvertYUnits(0.3, LINES, USER, dd);
 		angle = 0;
 		xadj = dd->gp.adj;
-		yadj = 0.5;
+		yadj = 0;
 	    }
 	    else {
 		line = line + dd->gp.yLineBias;
@@ -4068,9 +4070,9 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	    break;
 	case 3:
 	    if(las == 2 || las == 3) {
-		at = at - GConvertXUnits(dd->gp.yLineBias, LINES, USER, dd);
+		at = at + GConvertXUnits(0.3, LINES, USER, dd);
 		angle = 90;
-		yadj = 0.5;
+		yadj = 0;
 	    }
 	    else {
 		line = line + dd->gp.yLineBias;
@@ -4081,10 +4083,10 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	    break;
 	case 4:
 	    if(las == 1 || las == 2) {
-		at = at + GConvertYUnits(dd->gp.yLineBias, LINES, USER, dd);
+		at = at - GConvertYUnits(0.3, LINES, USER, dd);
 		angle = 0;
 		xadj = 0;
-		yadj = 0.5;
+		yadj = 0;
 	    }
 	    else {
 		line = line + 1 - dd->gp.yLineBias;
