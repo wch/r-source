@@ -18,16 +18,16 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-  
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
   
   $Source: /scratch/CVS-ARCHIVE/R/doc/html/search/Value.java,v $
   
-  $Revision: 1.2 $
+  $Revision: 1.3 $
 
-  $Date: 1999/03/04 17:15:19 $
+  $Date: 1999/08/10 09:56:03 $
   
-  $Author: leisch $
+  $Author: ripley $
 
 ==============================================================================*/
 
@@ -156,6 +156,10 @@ public class Value extends Object
   HISTORY:
   
   $Log: Value.java,v $
+  Revision 1.3  1999/08/10 09:56:03  ripley
+  change FSF address in copyrights
+  add some copyrights in src/gnome and elsewhere
+
   Revision 1.2  1999/03/04 17:15:19  leisch
   various bugfixes
 

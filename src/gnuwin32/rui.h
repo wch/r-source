@@ -14,8 +14,9 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
 #define RW_MDI         0x0001
 #define RW_TOOLBAR     0x0010
 #define RW_STATUSBAR   0x0100
