@@ -513,10 +513,10 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
 sub text2html {
 
     my $text = $_[0];
-    my $angles = $_[1];
-    my $incode = $_[2];
+    my $outerpass = $_[1];
+    my $inarglist = $_[2];
 
-    if($angles) { # should < and > be converted?
+    if($outerpass) {
         $text =~ s/&([^#])/&amp;\1/go; # might have explicit &# in source
 	$text =~ s/>/&gt;/go;
 	$text =~ s/</&lt;/go;
@@ -524,7 +524,7 @@ sub text2html {
 	$text =~ s/\\ge/&gt;=/go;
 	$text =~ s/\\%/%/go;
 
-	if($incode) {
+	if($inarglist) {
 	    $text =~ s/\n\s*\n/\n<br>\n/sgo;
 	} else {
 	    $text =~ s/\n\s*\n/\n<\/p>\n<p>\n/sgo;
@@ -639,11 +639,12 @@ sub text2html {
 	  &&  $text =~ /\\deqn/){
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$eqn = $ascii if $ascii;
-	$text =~ s/\\deqn(.*)$id/<p align="center"><i>$eqn<\/i><\/p>/s;
+	$text =~ s/\\deqn(.*)$id/<\/p><p align="center"><i>$eqn<\/i><\/p><p>/s;
     }
 
     $text = replace_command($text, "itemize", "<ul>", "</ul>");
     $text = replace_command($text, "enumerate", "<ol>", "</ol>");
+    $text =~ s/<\/p>\n<p>\s+\\item\s+/<li>/go;
     $text =~ s/\\item\s+/<li>/go;
 
     # handle "\describe"
@@ -651,16 +652,17 @@ sub text2html {
     while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
     {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
-	$descitem = "<dt>" . text2html($arg, 0, $incode) . "</dt>";
-	$descitem .= "<dd>" . text2html($desc, 0, $incode) . "</dd>";
+	$descitem = "<dt>" . text2html($arg, 0, $inarglist) . "</dt>";
+	$descitem .= "<dd>" . text2html($desc, 0, $inarglist) . "</dd>";
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
     }
-    $text =~ s/\\([^\\])/$1/go;#-drop single "\" (as in ``\R'')
-    $text =~ s/\\\\/\\/go;
-    # strip out some blank paras
-    $text =~ s/\n<p>\n<([table|ul|ol|dl])/\n<$1/g;
-    $text = html_unescape_codes($text);
-    unmark_brackets($text);
+    if($outerpass) {
+	$text =~ s/\\([^\\])/$1/go;#-drop single "\" (as in ``\R'')
+	$text =~ s/\\\\/\\/go;
+	$text = html_unescape_codes($text);
+	$text = unmark_brackets($text);
+    }
+    $text;
 }
 
 sub code2html {
@@ -814,10 +816,14 @@ sub html_print_a_section {
     my ($title, $body) = @_;
     my $htmlbody = text2html($body, 1, 0);
 
+    $htmlbody =~ s/<p>\s*<p/<p/g;  # before deqn
+    $htmlbody =~ s/<\/p>\s*<\/p>/<\/p>/g;
 # attempt to close paragraphs tags, and remove spurious closings.
-    $htmlbody =~ s/([^>]\n)<(table|dl|ul|ol)>/\1<\/p>\n<\2>/g;
-    $htmlbody =~ s/<\/(table|dl|ul|ol)>\n<\/p>\n/<\/\1>\n\n/g;
-    $htmlbody =~ s/<\/(table|dl|ul|ol)>\n(\w|<em|<code|<b)/<\/\1>\n<p>\n\2/g;
+# next one gets thrown by the unclosed <li> tags.
+#    $htmlbody =~ s/([^>]\n+)<(table|dl|ul|ol)/\1<\/p>\n<\2/g;
+    $htmlbody =~ s/<\/(table|dl|ul|ol|dd)>\n+<\/p>\n/<\/\1>\n\n/g;
+    $htmlbody =~ s/<\/(table|dl|ul|ol)>\n+(\w|<em|<code|<b)/<\/\1>\n<p>\n\2/g;
+    $htmlbody =~ s/<p>\s*<(table|dl|ul|ol|dt)/\n<\1/g;
 
 # top and tail with paragraph tags if needed.
     $htmlbody = "<p>\n". $htmlbody unless $htmlbody =~ /^<(table|dl|ul|ol)>/;
