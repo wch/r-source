@@ -17,20 +17,15 @@ OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
 OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
-MAKEINFO = makeinfo
+MAKEINFO = LC_ALL=C makeinfo
 PDFLATEX = pdflatex
 LATEX = latex
-ifeq ($(strip $(BUILD)),CROSS)
-PDFTEX = TEXINPUTS="../../share/texmf:$$TEXINPUTS"  pdftex
-TEX = TEXINPUTS="../../share/texmf:$$TEXINPUTS" tex
-else
-PDFTEX = TEXINPUTS="../../share/texmf;$$TEXINPUTS"  pdftex
-TEX = TEXINPUTS="../../share/texmf;$$TEXINPUTS" tex
-endif
+PDFTEX = pdftex
+TEX = tex
 
 
-MAKEINDEX = makeindex
-TEXINDEX = texindex
+MAKEINDEX = LC_ALL=C makeindex
+TEXINDEX = LC_ALL=C texindex
 ifneq ($(strip $(BUILD)),CROSS)
 RHOME=$(shell ../../src/gnuwin32/Rpwd.exe ../..)
 else
@@ -160,10 +155,10 @@ else
 endif
 
 R-admin.dvi: R-admin.texi $(texiincludes) 
-	TEXINPUTS="../../share/texmf:$$TEXINPUTS" $(TEX) R-admin.texi
-	TEXINPUTS="../../share/texmf:$$TEXINPUTS" $(TEXINDEX) R-admin.cp R-admin.fn R-admin.vr
-	TEXINPUTS="../../share/texmf:$$TEXINPUTS" $(TEX) R-admin.texi
-TEXINPUTS="../../share/texmf:$$TEXINPUTS" 	$(TEX) R-admin.texi
+	$(TEX) R-admin.texi
+	$(TEXINDEX) R-admin.cp R-admin.fn R-admin.vr
+	$(TEX) R-admin.texi
+	$(TEX) R-admin.texi
 
 R-data.dvi: R-data.texi $(texiincludes) 
 	$(TEX) R-data.texi
