@@ -65,7 +65,7 @@ function(dir)
         }
 
         lsArgs <- ls(envir = .ArgsEnv, all.names = TRUE)
-        
+
         if(argList != "# arglist: *internal*") {
             argsInArgList <-
                 unlist(strsplit(gsub("# arglist:", "", argList), " +"))
@@ -81,19 +81,19 @@ function(dir)
                                  ":", sep = ""))
                 print(unique(argsInUsageMissingInArgList))
             }
+            if(any(duplicated(argsInArgList))) {
+                writeLines(paste("Duplicated \\argument entries",
+                                 gsub("^# usages", "", whereAmI),
+                                 ":", sep = ""))
+                print(argsInArgList[duplicated(argsInArgList)])
+            }
         }
 
-        if(any(duplicated(argsInArgList))) {
-            writeLines(paste("Duplicated \\argument entries",
-                             gsub("^# usages", "", whereAmI),
-                             ":", sep = ""))
-            print(argsInArgList[duplicated(argsInArgList)])
-        }
-        
+
         ## Clean up .ArgsEnv
         rm(list = lsArgs, envir = .ArgsEnv)
     }
-    
+
     return(invisible())
 }
 
