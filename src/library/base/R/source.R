@@ -78,10 +78,10 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    dep <- substr(paste(deparse(ei, control = c("showAttributes","useSource")),
 	    		  collapse = "\n"), 12, 1e+06)
 	    # -1: drop ")"
-            ## <FIXME> really want widths here, not #chars.
-	    nd <- nchar(dep, type="c") - 1
+            ## We really do want chars here as \n\t may be embedded.
+	    nd <- nchar(dep, "chars") - 1
 	    do.trunc <- nd > max.deparse.length
-	    dep <- strtrim(dep, if (do.trunc) max.deparse.length else nd)
+	    dep <- substr(dep, 1, if (do.trunc) max.deparse.length else nd)
 	    cat("\n", prompt.echo, dep, if (do.trunc)
 		paste(if (length(grep(sd, dep)) && length(grep(oddsd, dep)))
 		      " ...\" ..."

@@ -14,8 +14,9 @@ strtrim(x, width)
 }
 \details{
   \sQuote{Width} is interpreted as the display width in a monospaced
-  font.  What happens with non-printable characters (such as backspace)
-  is implementation-dependent.
+  font.  What happens with non-printable characters (such as backspace, tab)
+  is implementation-dependent and may depend on the locale (e.g. they
+  may be included in the count or they may be omitted).
 
   Using this function rather than \code{\link{substr}} is important when
   there might be double-width characters in character vectors
