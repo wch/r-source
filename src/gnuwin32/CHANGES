@@ -36,6 +36,8 @@ rw1082
 
 Fixed list.files() to properly handle paths like "C:", etc.
 
+Fixed unlink() to accept empty file list for Unix consistency.
+
 
 
 rw1081

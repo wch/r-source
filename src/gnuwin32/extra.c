@@ -151,13 +151,15 @@ SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     fn = CAR(args);
     nfiles = length(fn);
-    if (!isString(fn) || nfiles < 1)
-	errorcall(call, "invalid file name argument");
-    recursive = asLogical(CADR(args));
-    if (recursive == NA_LOGICAL)
-	errorcall(call, "invalid recursive argument");
-    for(i = 0; i < nfiles; i++)
-	failures += R_unlink(CHAR(STRING_ELT(fn, i)), recursive);
+    if (nfiles > 0) {
+    	if (!isString(fn))
+	    errorcall(call, "invalid file name argument");
+	recursive = asLogical(CADR(args));
+    	if (recursive == NA_LOGICAL)
+	    errorcall(call, "invalid recursive argument");
+    	for(i = 0; i < nfiles; i++)
+	    failures += R_unlink(CHAR(STRING_ELT(fn, i)), recursive);
+    }
     PROTECT(ans = allocVector(INTSXP, 1));
     if (!failures)
 	INTEGER(ans)[0] = 0;
