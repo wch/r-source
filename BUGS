@@ -341,3 +341,11 @@ Date: Thu, 2 Sep 1999 12:23:43 +0200
 Subject: trouble with the 'exclude' parameter of factor()
 From: gautier@lion-ag.de
 Date: Thu, 2 Sep 1999 17:40:47 +0200 (MET DST)
+* PR# 266 *
+Subject: Re: [R] data frame component replacement: feature or bug?
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 06 Sep 1999 00:03:29 +0200
+* PR# 267 *
+Subject: matplot(... panel.first=..) fails  <==> dealing with "..."
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 6 Sep 1999 11:04:03 +0200
