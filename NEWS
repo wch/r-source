@@ -30,6 +30,9 @@ BUG FIXES
     o   as.data.frame.matrix will now ensure the columns added have
 	non-empty names.
 
+    o   some (strange?) model formulas could cause memory corruption
+        (thanks to John Fox for digging this up).
+ 
 
 		CHANGES IN R VERSION 1.0.0
 

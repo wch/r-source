@@ -607,6 +607,10 @@ void compactPhase(void)
 	}
 	size = 1 + BYTE2VEC(size);
 	if (MARK(s)) {
+#if 0 /* help debug heap problems */
+	    if (CHAR(s) != (char *) (vfrom + 1))
+		error("inconsistency during heap compaction");
+#endif
 	    if (vfrom != vto) {
 		for (i = 0; i < size; i++)
 		    vto[i] = vfrom[i];

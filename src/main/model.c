@@ -842,6 +842,9 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(formula = EncodeVars(CAR(args)));
     nterm = length(formula);
 
+    nvar = length(varlist) - 1; /* need to recompute, in case
+                                   EncodeVars stretched it */
+
     /* Step 3: Reorder the model terms. */
     /* Horrible kludge -- write the addresses */
     /* into a vector, simultaneously computing the */
