@@ -570,8 +570,9 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
     return(invisible(substring(s[substr(s, 1, 8) == "package:"], 9)))
 }
 
-.path.package <- function(package = .packages(), quiet = FALSE)
+.path.package <- function(package = NULL, quiet = FALSE)
 {
+    if(is.null(package)) package <- .packages()
     if(length(package) == 0) return(character(0))
     s <- search()
     searchpaths <-

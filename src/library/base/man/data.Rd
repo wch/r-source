@@ -16,7 +16,7 @@ data(\dots, list = character(0), package = NULL,
   \item{package}{a character vector giving the package(s) to look
     in for data sets, or \code{NULL}.
 
-    By default, all packages in the search path are used, \emph{after}
+    By default, all packages in the search path are used, then
     the \file{data} subdirectory (if present) of the current working
     directory.
   }
@@ -75,9 +75,9 @@ data(\dots, list = character(0), package = NULL,
   \code{"packageIQR"}.  The structure of this class is experimental.
 
   If \code{lib.loc} and \code{package} are both \code{NULL} (the
-  default), the data sets are searched for in the \file{data} directory
-  (if any) of the current working directory followed by those packages
-  currently loaded.
+  default), the data sets are searched for in all the currently loaded
+  packages then in the \file{data} directory (if any) of the current
+  working directory.
 
   If \code{lib.loc = NULL} but \code{package} is specified as a
   character vector, the specified package(s) are searched for first
@@ -114,10 +114,10 @@ data(\dots, list = character(0), package = NULL,
 }
 \examples{
 require(utils)
-data()                      # list all available data sets
-data(package = "rpart")     # list the data sets in the rpart package
-data(USArrests, "VADeaths") # load the data sets 'USArrests' and 'VADeaths'
-help(USArrests)             # give information on data set 'USArrests'
+data()                       # list all available data sets
+try(data(package = "rpart") )# list the data sets in the rpart package
+data(USArrests, "VADeaths")  # load the data sets 'USArrests' and 'VADeaths'
+help(USArrests)              # give information on data set 'USArrests'
 }
 \keyword{documentation}
 \keyword{datasets}

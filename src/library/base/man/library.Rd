@@ -41,7 +41,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 .Last.lib(libpath)
 
 .packages(all.available = FALSE, lib.loc = NULL)
-.path.package(package = .packages(), quiet = FALSE)
+.path.package(package, quiet = FALSE)
 .find.package(package, lib.loc = NULL, quiet = FALSE,
               verbose = getOption("verbose"))
 .libPaths(new)
