@@ -341,8 +341,8 @@ update.lm <- function(lm.obj, formula, data, weights, subset, na.action)
 }
 
 residuals.lm <- function(z) z$residuals
-fitted.values.lm <- function(z) z$fitted.values
-coefficients.lm <- function(z) z$coefficients
+fitted.lm <- function(z) z$fitted.values
+coef.lm <- function(z) z$coefficients
 weights.lm <- function(z) z$weights
 df.residual.lm <- function(z) z$df.residual
 deviance.lm <- function(z) sum((z$residuals)^2)

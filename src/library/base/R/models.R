@@ -84,18 +84,18 @@ function (x, specials = NULL, abb = NULL, data = NULL, keep.order = FALSE)
 	terms
 }
 
-coefficients <- function(x, ...)UseMethod("coefficients")
-coef <- coefficients
-coefficients.default <- function(x, ...) x$coefficients
+coef <- function(x, ...) UseMethod("coef")
+coef.default <- function(x, ...) x$coefficients
+coefficients <- coef
 
 residuals <- function(x, ...) UseMethod("residuals")
 resid <- residuals
 
-deviance <- function(x, ...)UseMethod("deviance")
+deviance <- function(x, ...) UseMethod("deviance")
 
-fitted.values <- function(x, ...) UseMethod("fitted.values")
-fitted <- fitted.values
-fitted.values.default <- function(x) x$fitted
+fitted <- function(x, ...) UseMethod("fitted")
+fitted.default <- function(x) x$fitted
+fitted.values <- fitted
 
 anova <- function(x, ...)UseMethod("anova")
 

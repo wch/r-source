@@ -648,10 +648,10 @@ print.anova.glm <- function(x, digits = max(3, .Options$digits - 3),
 
 # GLM Methods for Generic Functions :
 
-coefficients.glm <- function(object) object$coefficients
-deviance.glm	 <- function(object) object$deviance
-effects.glm	 <- function(object) object$effects
-fitted.values.glm<- function(object) object$fitted.values
+coef.glm <- function(object) object$coefficients
+deviance.glm <- function(object) object$deviance
+effects.glm <- function(object) object$effects
+fitted.glm<- function(object) object$fitted.values
 
 family.glm <- function(object) {
 	family <- get(as.character(object$family$family), mode="function")
