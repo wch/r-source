@@ -17,7 +17,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_dev.c,v 1.6 2003/09/13 15:14:09 murdoch Exp $
+ *  $Id: rproxy_dev.c,v 1.7 2003/11/26 20:50:15 murrell Exp $
  */
 
 /* virtual device size */
@@ -53,8 +53,8 @@ static void R_Proxy_Graphics_Activate (NewDevDesc* pDD)
 
 static void R_Proxy_Graphics_Activate(NewDevDesc *dd);
 static void R_Proxy_Graphics_Circle(double x, double y, double r,
-		      int col, int fill, double gamma, int lty, double lwd,
-		      NewDevDesc *dd);
+				    R_GE_gcontext *gc,
+				    NewDevDesc *dd);
 static void R_Proxy_Graphics_Clip(double x0, double x1, double y0, double y1,
 		     NewDevDesc *dd);
 static void R_Proxy_Graphics_Close(NewDevDesc *dd);
@@ -62,34 +62,37 @@ static void R_Proxy_Graphics_Deactivate(NewDevDesc *dd);
 static void R_Proxy_Graphics_Hold(NewDevDesc *dd);
 static Rboolean R_Proxy_Graphics_Locator(double *x, double *y, NewDevDesc *dd);
 static void R_Proxy_Graphics_Line(double x1, double y1, double x2, double y2,
-		    int col, double gamma, int lty, double lwd,
-		    NewDevDesc *dd);
-static void R_Proxy_Graphics_MetricInfo(int c, int font, double cex, double ps,
-			  double* ascent, double* descent,
-			  double* width, NewDevDesc *dd);
+				  R_GE_gcontext *gc,
+				  NewDevDesc *dd);
+static void R_Proxy_Graphics_MetricInfo(int c, 
+					R_GE_gcontext *gc,
+					double* ascent, double* descent,
+					double* width, NewDevDesc *dd);
 static void R_Proxy_Graphics_Mode(int mode, NewDevDesc *dd);
-static void R_Proxy_Graphics_NewPage(int fill, double gamma, NewDevDesc *dd);
+static void R_Proxy_Graphics_NewPage(R_GE_gcontext *gc,
+				     NewDevDesc *dd);
 static void R_Proxy_Graphics_Polygon(int n, double *x, double *y,
-		       int col, int fill, double gamma, int lty, double lwd,
-		       NewDevDesc *dd);
+				     R_GE_gcontext *gc,
+				     NewDevDesc *dd);
 static void R_Proxy_Graphics_Polyline(int n, double *x, double *y,
-			int col, double gamma, int lty, double lwd,
-			NewDevDesc *dd);
+				      R_GE_gcontext *gc,
+				      NewDevDesc *dd);
 static void R_Proxy_Graphics_Rect(double x0, double y0, double x1, double y1,
-		    int col, int fill, double gamma, int lty, double lwd,
-		    NewDevDesc *dd);
+				  R_GE_gcontext *gc,
+				  NewDevDesc *dd);
 static void R_Proxy_Graphics_Size(double *left, double *right,
-		    double *bottom, double *top,
-		    NewDevDesc *dd);
+				  double *bottom, double *top,
+				  NewDevDesc *dd);
 #ifdef UNUSED
 static void R_Proxy_Graphics_Resize(NewDevDesc *dd);
 #endif
-static double R_Proxy_Graphics_StrWidth(char *str, int font,
-			  double cex, double ps, NewDevDesc *dd);
+static double R_Proxy_Graphics_StrWidth(char *str, 
+					R_GE_gcontext *gc,
+					NewDevDesc *dd);
 static void R_Proxy_Graphics_Text(double x, double y, char *str,
-		    double rot, double hadj,
-		    int col, double gamma, int font, double cex, double ps,
-		    NewDevDesc *dd);
+				  double rot, double hadj,
+				  R_GE_gcontext *gc,
+				  NewDevDesc *dd);
 static Rboolean R_Proxy_Graphics_Open (NewDevDesc* pDD,
 				       void* pAXD,
 				       char* pDisplay,
@@ -102,11 +105,7 @@ static Rboolean R_Proxy_Graphics_Open (NewDevDesc* pDD,
 static void R_Proxy_Graphics_Circle (double pX,
 				     double pY,
 				     double pRad,
-				     int pCol,
-				     int pFill,
-				     double pGamma,
-				     int pLty,
-				     double pLwd,
+				     R_GE_gcontext *gc,
 				     NewDevDesc* pDD)
 {
   if (__graphics_device)
@@ -115,10 +114,10 @@ static void R_Proxy_Graphics_Circle (double pX,
 				       pX,
 				       pY,
 				       pRad,
-				       pFill,
-				       pCol,
-				       pLty,
-				       pLwd);
+				       gc->fill,
+				       gc->col,
+				       gc->lty,
+				       gc->lwd);
       return;
     }
 
@@ -174,18 +173,15 @@ static void R_Proxy_Graphics_Line (double pX0,
 				   double pY0,
 				   double pX1,
 				   double pY1,
-				   int pCol,
-				   double pGamma,
-				   int pLty,
-				   double pLwd,
+				   R_GE_gcontext *gc,
 				   NewDevDesc* pDD)
 {
   if (__graphics_device)
     {
 
       __graphics_device->vtbl->line (__graphics_device,
-				     pX0,pY0,pX1,pY1,pCol,
-				     pLty,pLwd);
+				     pX0,pY0,pX1,pY1,gc->col,
+				     gc->lty,gc->lwd);
       return;
     }
 
@@ -214,8 +210,7 @@ static void R_Proxy_Graphics_Mode (int pMode, NewDevDesc *dd)
 
   MessageBox (GetDesktopWindow (),"Mode()","R_Proxy_Graphics",MB_OK);
 }
-static void R_Proxy_Graphics_NewPage (int pFill,
-				      double pGamma,
+static void R_Proxy_Graphics_NewPage (R_GE_gcontext *gc,
 				      NewDevDesc* pDD)
 {
   if (__graphics_device)
@@ -248,11 +243,7 @@ static Rboolean R_Proxy_Graphics_Open (NewDevDesc* pDD,
 static void R_Proxy_Graphics_Polygon (int pCount,
 				      double* pX,
 				      double* pY,
-				      int pCol,
-				      int pFill,
-				      double pGamma,
-				      int pLty,
-				      double pLwd,
+				      R_GE_gcontext *gc,
 				      NewDevDesc* pDD)
 {
   if (__graphics_device)
@@ -270,10 +261,10 @@ static void R_Proxy_Graphics_Polygon (int pCount,
 
 	}
 
-      /*      sprintf (x,"device::Polygon: bg is %08x, fg is %08x\n",pFill,pCol); */
+      /*      sprintf (x,"device::Polygon: bg is %08x, fg is %08x\n",fill,col); */
       /*      OutputDebugString (x); */
       __graphics_device->vtbl->polygon (__graphics_device,
-					pCount,lX,lY,pFill,pCol);
+					pCount,lX,lY,gc->fill,gc->col);
 
       free (lX);
       free (lY);
@@ -287,10 +278,7 @@ static void R_Proxy_Graphics_Polygon (int pCount,
 static void R_Proxy_Graphics_Polyline (int pCount,
 				       double* pX,
 				       double* pY,
-				       int pCol,
-				       double pGamma,
-				       int pLty,
-				       double pLwd,
+				       R_GE_gcontext *gc,
 				       NewDevDesc* pDD)
 {
   if (__graphics_device)
@@ -314,7 +302,7 @@ static void R_Proxy_Graphics_Polyline (int pCount,
 	}
 
       __graphics_device->vtbl->polyline (__graphics_device,
-					 pCount,lX,lY,pCol);
+					 pCount,lX,lY,gc->col);
 
       free (lX);
       free (lY);
@@ -329,19 +317,15 @@ static void R_Proxy_Graphics_Rect (double pX0,
 				   double pY0,
 				   double pX1,
 				   double pY1,
-				   int pCol,
-				   int pFill,
-				   double pGamma,
-				   int pLty,
-				   double pLwd,
+				   R_GE_gcontext *gc,
 				   NewDevDesc* pDD)
 {
   if (__graphics_device)
     {
 
       __graphics_device->vtbl->rect (__graphics_device,
-				     pX0,pY0,pX1,pY1,pFill,pCol,
-				     pLty,pLwd);
+				     pX0,pY0,pX1,pY1,gc->fill,gc->col,
+				     gc->lty,gc->lwd);
       return;
     }
 
@@ -372,17 +356,15 @@ static void R_Proxy_Graphics_Resize (NewDevDesc* pDD)
 
 /* 00-06-22 | baier | added font and size parameters */
 static double R_Proxy_Graphics_StrWidth (char* pString,
-					 int pFont,
-					 double pCex,
-					 double pPs,
+					 R_GE_gcontext *gc,
 					 NewDevDesc* pDD)
 {
   if (__graphics_device)
     {
-      int lSize = pCex * pPs + 0.5;
+      int lSize = gc->cex * gc->ps + 0.5;
       return __graphics_device->vtbl->strwidth (__graphics_device,
 						pString,
-						pFont,
+						gc->fontface,
 						lSize);
     }
 
@@ -396,20 +378,16 @@ static void R_Proxy_Graphics_Text (double pX,
 				   char* pString,
 				   double pRot,
 				   double pHadj,
-				   int pCol,
-				   double pGamma,
-				   int pFont,
-				   double pCex,
-				   double pPs,
+				   R_GE_gcontext *gc,
 				   NewDevDesc* pDD)
 {
   if (__graphics_device)
     {
-      int lSize = pCex * pPs + 0.5;
+      int lSize = gc->cex * gc->ps + 0.5;
 
       __graphics_device->vtbl->text (__graphics_device,
 				     pX,pY,pString,pRot,pHadj,
-				     pCol,pFont,lSize);
+				     gc->col,gc->fontface,lSize);
       return;
     }
 
@@ -417,13 +395,12 @@ static void R_Proxy_Graphics_Text (double pX,
 }
 
 /* 00-06-22 | baier | added font and size parameters */
-static void R_Proxy_Graphics_MetricInfo(int c, int font, double cex, double ps,
-			  double* ascent, double* descent,
-			  double* width, NewDevDesc *dd);
+static void R_Proxy_Graphics_MetricInfo(int c, 
+					R_GE_gcontext *gc,
+					double* ascent, double* descent,
+					double* width, NewDevDesc *dd);
 static void R_Proxy_Graphics_MetricInfo (int pC,
-					 int pFont,
-					 double pCex,
-					 double pPs,
+					 R_GE_gcontext *gc,
 					 double* pAscent,
 					 double* pDescent,
 					 double* pWidth,
@@ -431,13 +408,13 @@ static void R_Proxy_Graphics_MetricInfo (int pC,
 {
   if (__graphics_device)
     {
-      int lSize = pCex * pPs + 0.5;
+      int lSize = gc->cex * gc->ps + 0.5;
       __graphics_device->vtbl->metricinfo (__graphics_device,
 					   pC,
 					   pAscent,
 					   pDescent,
 					   pWidth,
-					   pFont,
+					   gc->fontface,
 					   lSize);
       return;
     }

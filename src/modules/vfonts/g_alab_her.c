@@ -62,20 +62,26 @@
 #define BEGINNING_OF_KANA 4195
 
 /* PAUL MURRELL
-   Temporary global - should be passed down
+   Structure to contain vfont current position
 */
-static int g_col;
-static double g_gamma;
-static double g_cex;
-static double g_ps;
+typedef struct {
+    double currX;
+    double currY;
+    double angle;
+} vfontContext;
 
 /* forward references */
 static bool _composite_char (unsigned char *composite, 
 			     unsigned char *character, 
 			     unsigned char *accent);
-static void _draw_stroke (GEDevDesc *dd, bool pendown, double deltax, double deltay);
-static double _label_width_hershey (GEDevDesc *dd, const unsigned short *label); 
-static void _draw_hershey_string (GEDevDesc *dd, const unsigned short *string);
+static void _draw_stroke (vfontContext *vc, R_GE_gcontext *gc, 
+			  GEDevDesc *dd, 
+			  bool pendown, double deltax, double deltay);
+static double _label_width_hershey (R_GE_gcontext *gc, GEDevDesc *dd, 
+				    const unsigned short *label); 
+static void _draw_hershey_string (vfontContext *vc, R_GE_gcontext *gc, 
+				  GEDevDesc *dd, 
+				  const unsigned short *string);
 
 /* _draw_hershey_stroke() draws a stroke, taking into account the
    transformation from Hershey units to user units, and also the current
@@ -87,36 +93,31 @@ static void _draw_hershey_string (GEDevDesc *dd, const unsigned short *string);
 */
 
 static
-void _draw_hershey_stroke (GEDevDesc *dd, bool pendown, 
-			   double deltax, double deltay)
+void _draw_hershey_stroke (vfontContext *vc, R_GE_gcontext *gc, GEDevDesc *dd, 
+			   bool pendown, double deltax, double deltay)
 {
-    _draw_stroke(dd, pendown, 
+    _draw_stroke(vc, gc, dd, pendown, 
 		 fromDeviceWidth(HERSHEY_UNITS_TO_USER_UNITS (deltax), 
 				 GE_INCHES, dd),
 		 fromDeviceHeight(HERSHEY_UNITS_TO_USER_UNITS (deltay),
 				  GE_INCHES, dd));
 }
 
-/* PAUL MURRELL
-   The R graphics engine only has a GELine to draw from (x1,y1) to (x2,y2)
-   So need to keep track of a local (xcurr,ycurr)
-*/
-static double currX;
-static double currY;
-
-static void moverel(double dx, double dy) {
-    currX += dx;
-    currY += dy;
+static void moverel(double dx, double dy, vfontContext *vc) {
+    vc->currX += dx;
+    vc->currY += dy;
 }
 
-static void linerel(double dx, double dy, GEDevDesc *dd) {
-    GELine(toDeviceX(currX, GE_INCHES, dd), 
-	   toDeviceY(currY, GE_INCHES, dd),
-	   toDeviceX(currX+dx, GE_INCHES, dd), 
-	   toDeviceY(currY+dy, GE_INCHES, dd),
-	   g_col, g_gamma, 0 /* lty */, 1 /* lwd */, dd);
-    currX += dx;
-    currY += dy;
+static void linerel(double dx, double dy, 
+		    vfontContext *vc, R_GE_gcontext *gc, 
+		    GEDevDesc *dd) {
+    GELine(toDeviceX(vc->currX, GE_INCHES, dd), 
+	   toDeviceY(vc->currY, GE_INCHES, dd),
+	   toDeviceX(vc->currX+dx, GE_INCHES, dd), 
+	   toDeviceY(vc->currY+dy, GE_INCHES, dd),
+	   gc, dd);
+    vc->currX += dx;
+    vc->currY += dy;
 }
 
 /* e.g. for some Windows headers */
@@ -124,20 +125,21 @@ static void linerel(double dx, double dy, GEDevDesc *dd) {
 #define M_PI		3.141592653589793238462643383279502884197169399375
 #endif
 
-static void _draw_stroke (GEDevDesc *dd, bool pendown, double deltax, double deltay)
+static void _draw_stroke (vfontContext *vc, R_GE_gcontext *gc, GEDevDesc *dd, 
+			  bool pendown, double deltax, double deltay)
 {
   double dx, dy;
   double theta;
   
-  theta = M_PI * Rf_gpptr((DevDesc *) dd)->srt / 180.0;
+  theta = M_PI * vc->angle / 180.0;
   
   dx = cos(theta) * deltax - sin(theta) * deltay;
   dy = sin(theta) * deltax + cos(theta) * deltay;
 
   if (pendown)
-      linerel(dx, dy, dd);
+      linerel(dx, dy, vc, gc, dd);
   else
-      moverel(dx, dy);
+      moverel(dx, dy, vc);
 }
 
 /* PAUL MURRELL
@@ -150,8 +152,7 @@ static void _draw_stroke (GEDevDesc *dd, bool pendown, double deltax, double del
    case when the current Plotter font is a Hershey font; called in
    g_flabelwidth () */
 static double R_VF_VStrWidth (const unsigned char *s, 
-			      int typeface, int fontindex,
-			      double lineheight, double cex, double ps, 
+			      R_GE_gcontext *gc,
 			      GEDevDesc *dd)
 {
   double label_width;
@@ -164,16 +165,10 @@ static double R_VF_VStrWidth (const unsigned char *s,
 
   char *vmax = vmaxget();
 
-  /* PAUL MURRELL
-     Temporary global - should be passed down
-  */
-  g_cex = cex;
-  g_ps = ps;
-
   /* convert string to a codestring, including annotations */
-  codestring = _controlify (dd, s, typeface, fontindex);
+  codestring = _controlify (dd, s, gc->fontface, gc->fontfamily[0]);
 
-  label_width = _label_width_hershey (dd, codestring);
+  label_width = _label_width_hershey (gc, dd, codestring);
 
   vmaxset(vmax);
   /*  free (codestring); */
@@ -185,14 +180,15 @@ static double R_VF_VStrWidth (const unsigned char *s,
    Added _label_height_hershey and GVStrHeight function
 */
 
-static double _label_height_hershey (GEDevDesc *dd, const unsigned short *label)
+static double _label_height_hershey (R_GE_gcontext *gc, 
+				     GEDevDesc *dd, 
+				     const unsigned short *label)
 {
     return( HERSHEY_UNITS_TO_USER_UNITS(HERSHEY_LARGE_CAPHEIGHT) );
 }
 
 static double R_VF_VStrHeight (const unsigned char *s, 
-			       int typeface, int fontindex,
-			       double lineheight, double cex, double ps, 
+			       R_GE_gcontext *gc,
 			       GEDevDesc *dd)
 {
   double label_height;
@@ -200,16 +196,10 @@ static double R_VF_VStrHeight (const unsigned char *s,
   
   char *vmax = vmaxget();
 
-  /* PAUL MURRELL
-     Temporary global - should be passed down
-  */
-  g_cex = cex;
-  g_ps = ps;
-
   /* convert string to a codestring, including annotations */
-  codestring = _controlify (dd, s, typeface, fontindex);
+  codestring = _controlify (dd, s, gc->fontface, gc->fontfamily[0]);
 
-  label_height = _label_height_hershey (dd, codestring);
+  label_height = _label_height_hershey (gc, dd, codestring);
 
   vmaxset(vmax);
   
@@ -229,18 +219,14 @@ static double R_VF_VStrHeight (const unsigned char *s,
 /* this is the version of the falabel() method that is specific
    to the case when the current Plotter font is a Hershey font */
 static void R_VF_VText (double x, double y, char *s, 
-			int typeface, int fontindex,
 			double x_justify, double y_justify, double rotation,
-			int col, double gamma, double lineheight,
-			double cex, double ps,
+			R_GE_gcontext *gc,
 			GEDevDesc *dd)
 {
   unsigned short *codestring;
   double label_width, label_height;
   double x_offset, y_offset;
   double x_displacement;
-  double srtsave, lwdsave;
-  int ltysave;
   
   /* PAUL MURRELL
      _controlify using R_alloc instead of xmalloc so need to do
@@ -249,22 +235,22 @@ static void R_VF_VText (double x, double y, char *s,
   char *vmax = vmaxget();
 
   /* PAUL MURRELL
-     Temporary global - should be passed down
-  */
-  g_col = col;
-  g_gamma = gamma;
-  g_cex = cex;
-  g_ps = ps;
-
-  /* PAUL MURRELL
      initialise the local currX and currY
      work in INCHES because that is what moverel and linerel work in
   */
-  currX = fromDeviceX(x, GE_INCHES, dd);
-  currY = fromDeviceY(y, GE_INCHES, dd);
+  vfontContext vc;
+  vc.currX = fromDeviceX(x, GE_INCHES, dd);
+  vc.currY = fromDeviceY(y, GE_INCHES, dd);
+  vc.angle = rotation;
+
+  /* PAUL MURRELL
+   * Override gc settings for lty and lwd 
+   */
+  gc->lty = LTY_SOLID;
+  gc->lwd = 1;
 
   /* convert string to a codestring, including annotations */
-  codestring = _controlify (dd, (unsigned char *)s, typeface, fontindex);
+  codestring = _controlify (dd, (unsigned char *)s, gc->fontface, gc->fontfamily[0]);
 
   
   /* PAUL MURRELL
@@ -278,8 +264,8 @@ static void R_VF_VText (double x, double y, char *s,
   */
 
   /* dimensions of the string, in user units */
-  label_width = _label_width_hershey (dd, codestring);
-  label_height = _label_height_hershey(dd, codestring);
+  label_width = _label_width_hershey (gc, dd, codestring);
+  label_height = _label_height_hershey(gc, dd, codestring);
 
   if (!R_FINITE(x_justify))
       x_justify = 0.5;
@@ -291,19 +277,6 @@ static void R_VF_VText (double x, double y, char *s,
 
   y_offset = 0 - y_justify * 1.0;
 
-/* PAUL MURRELL
-   Replaced saving and restoring of "plotter" state
-   with saving and restoring of Rf_gpptr((DevDesc *) dd)->*
-*/
-
-  srtsave = Rf_gpptr((DevDesc *) dd)->srt;
-  Rf_gpptr((DevDesc *) dd)->srt = rotation;
-  /* Rf_gpptr((DevDesc *) dd)->lwd set in _draw_hershey_string */
-  lwdsave = Rf_gpptr((DevDesc *) dd)->lwd;
-  /* When drawing vector font, always use "solid" lines */
-  ltysave = Rf_gpptr((DevDesc *) dd)->lty;
-  Rf_gpptr((DevDesc *) dd)->lty = LTY_SOLID;
-  
   /* save relevant drawing attributes, and restore them later */
 
   {
@@ -341,14 +314,14 @@ static void R_VF_VText (double x, double y, char *s,
 	 arguments now in INCHES because _draw_stroke does rotation
 	 so it needs to use absolute coordinates
       */
-      _draw_stroke (dd,
+      _draw_stroke (&vc, gc, dd,
 		    false, 
 		    fromDeviceWidth(x_offset * label_width, GE_INCHES, dd),
 		    fromDeviceHeight(y_offset * label_height, GE_INCHES, dd));
     /* call stroker on the sequence of strokes obtained from each char (the
        stroker may manipulate the line width) */
       /* _draw_hershey_stroke (dd, true, 0, HERSHEY_EM);     */
-      _draw_hershey_string (dd, codestring);
+      _draw_hershey_string (&vc, gc, dd, codestring);
     
     /* Restore original values of relevant drawing attributes, free
        storage.  endpath() will be invoked in here automatically, flushing
@@ -367,10 +340,6 @@ static void R_VF_VText (double x, double y, char *s,
     /* return to original position */
       /*    _plotter->fmove (R___(_plotter) oldposx, oldposy); */
   }
-
-  Rf_gpptr((DevDesc *) dd)->srt = srtsave;
-  Rf_gpptr((DevDesc *) dd)->lwd = lwdsave;
-  Rf_gpptr((DevDesc *) dd)->lty = ltysave;
 
   /* amount by which to shift after printing label (user units) */
 /*
@@ -411,7 +380,8 @@ static void R_VF_VText (double x, double y, char *s,
 /* _label_width_hershey() computes the width (total delta x) of a
    controlified character string to be rendered in a vector font, in user
    units */
-static double _label_width_hershey (GEDevDesc *dd, const unsigned short *label) 
+static double _label_width_hershey (R_GE_gcontext *gc, GEDevDesc *dd, 
+				    const unsigned short *label) 
 { 
   const unsigned short *ptr = label;
   unsigned short c;
@@ -569,14 +539,15 @@ static double _label_width_hershey (GEDevDesc *dd, const unsigned short *label)
    specified.  This is used for repositioning during rendering of
    composite (accented) characters. */
 static
-void _draw_hershey_penup_stroke(GEDevDesc *dd,
+void _draw_hershey_penup_stroke(vfontContext *vc, R_GE_gcontext *gc, 
+				GEDevDesc *dd,
 				double dx, double dy, 
 				double charsize, bool oblique)
 {
   double shear;
 
   shear = oblique ? (SHEAR) : 0.0;
-  _draw_hershey_stroke (dd,
+  _draw_hershey_stroke (vc, gc, dd,
 			false,	/* pen up */
 			charsize * (dx + shear * dy), 
 			charsize * dy);
@@ -586,7 +557,8 @@ void _draw_hershey_penup_stroke(GEDevDesc *dd,
    glyph, specified by index in the occidental or oriental glyph arrays.
    Size scaling and obliquing (true/false) are specified. */
 static 
-void _draw_hershey_glyph (GEDevDesc *dd, int glyphnum, 
+void _draw_hershey_glyph (vfontContext *vc, R_GE_gcontext *gc, GEDevDesc *dd,
+			  int glyphnum, 
 			  double charsize, int type, bool oblique)
 {
   double xcurr, ycurr;
@@ -632,7 +604,7 @@ void _draw_hershey_glyph (GEDevDesc *dd, int glyphnum,
 		   - ((int)glyph[1] + (double)HERSHEY_BASELINE));
 	      dx = xnew - xcurr;
 	      dy = ynew - ycurr;
-	      _draw_hershey_stroke (dd,
+	      _draw_hershey_stroke (vc, gc, dd,
 				    pendown, dx + shear * dy, dy);
 	      xcurr = xnew, ycurr = ynew;
 	      pendown = true;
@@ -644,7 +616,7 @@ void _draw_hershey_glyph (GEDevDesc *dd, int glyphnum,
       /* final penup stroke, to end where we should */
       dx = xfinal - xcurr;
       dy = yfinal - ycurr;
-      _draw_hershey_stroke (dd, false, dx + shear * dy, dy);
+      _draw_hershey_stroke (vc, gc, dd, false, dx + shear * dy, dy);
     }
 }
 
@@ -652,7 +624,8 @@ void _draw_hershey_glyph (GEDevDesc *dd, int glyphnum,
    which is taken to be on the string's baseline.  Besides invoking move()
    and cont(), it invokes linewidth(). */
 static
-void _draw_hershey_string (GEDevDesc *dd, const unsigned short *string)
+void _draw_hershey_string (vfontContext *vc, R_GE_gcontext *gc, GEDevDesc *dd,
+			   const unsigned short *string)
 {
   unsigned short c;
   const unsigned short *ptr = string;
@@ -671,10 +644,10 @@ void _draw_hershey_string (GEDevDesc *dd, const unsigned short *string)
 	{
 	  if (line_width_type != 1)
 	    {
-	      Rf_gpptr((DevDesc *) dd)->lwd = HERSHEY_UNITS_TO_USER_UNITS (HERSHEY_STROKE_WIDTH);
+	      gc->lwd = HERSHEY_UNITS_TO_USER_UNITS (HERSHEY_STROKE_WIDTH);
 	      line_width_type = 1;
 	    }
-	  _draw_hershey_glyph (dd,
+	  _draw_hershey_glyph (vc, gc, dd,
 			       c & GLYPH_SPEC, charsize, OCCIDENTAL, false);
 	}
 
@@ -682,10 +655,10 @@ void _draw_hershey_string (GEDevDesc *dd, const unsigned short *string)
 	{
 	  if (line_width_type != 2)
 	    {
-	      Rf_gpptr((DevDesc *) dd)->lwd = HERSHEY_UNITS_TO_USER_UNITS (HERSHEY_STROKE_WIDTH);
+	      gc->lwd = HERSHEY_UNITS_TO_USER_UNITS (HERSHEY_STROKE_WIDTH);
 	      line_width_type = 2;
 	    }
-	  _draw_hershey_glyph (dd,
+	  _draw_hershey_glyph (vc, gc, dd,
 			       c & GLYPH_SPEC, charsize, ORIENTAL, false);
 	}
 
@@ -693,7 +666,7 @@ void _draw_hershey_string (GEDevDesc *dd, const unsigned short *string)
 	switch (c & ~CONTROL_CODE) /* parse control codes */
 	  {
 	  case C_BEGIN_SUPERSCRIPT :
-	    _draw_hershey_stroke (dd,
+	    _draw_hershey_stroke (vc, gc, dd,
 				  false, 
 				  SUPERSCRIPT_DX * charsize * HERSHEY_EM,
 				  SUPERSCRIPT_DY * charsize * HERSHEY_EM);
@@ -702,14 +675,14 @@ void _draw_hershey_string (GEDevDesc *dd, const unsigned short *string)
 		
 	  case C_END_SUPERSCRIPT:
 	    charsize /= SCRIPTSIZE;
-	    _draw_hershey_stroke (dd,
+	    _draw_hershey_stroke (vc, gc, dd,
 				  false, 
 				  - SUPERSCRIPT_DX * charsize * HERSHEY_EM,
 				  - SUPERSCRIPT_DY * charsize * HERSHEY_EM);
 	    break;
 		
 	  case C_BEGIN_SUBSCRIPT:
-	    _draw_hershey_stroke (dd,
+	    _draw_hershey_stroke (vc, gc, dd,
 				  false, 
 				  SUBSCRIPT_DX * charsize * HERSHEY_EM,
 				  SUBSCRIPT_DY * charsize * HERSHEY_EM);
@@ -718,7 +691,7 @@ void _draw_hershey_string (GEDevDesc *dd, const unsigned short *string)
 		
 	  case C_END_SUBSCRIPT:
 	    charsize /= SCRIPTSIZE;
-	    _draw_hershey_stroke (dd,
+	    _draw_hershey_stroke (vc, gc, dd,
 				  false, 
 				  - SUBSCRIPT_DX * charsize * HERSHEY_EM,
 				  - SUBSCRIPT_DY * charsize * HERSHEY_EM);
@@ -737,52 +710,52 @@ void _draw_hershey_string (GEDevDesc *dd, const unsigned short *string)
 	    break;
 		
 	  case C_RIGHT_ONE_EM:
-	    _draw_hershey_stroke (dd,
+	    _draw_hershey_stroke (vc, gc, dd,
 				  false, charsize * HERSHEY_EM, 0.0);
 	    break;
 		
 	  case C_RIGHT_HALF_EM:
-	    _draw_hershey_stroke (dd,
+	    _draw_hershey_stroke (vc, gc, dd,
 				  false, charsize * HERSHEY_EM / 2.0, 0.0);
 	    break;
 		
 	  case C_RIGHT_QUARTER_EM:
-	    _draw_hershey_stroke (dd,
+	    _draw_hershey_stroke (vc, gc, dd,
 				  false, charsize * HERSHEY_EM / 4.0, 0.0);
 	    break;
 		
 	  case C_RIGHT_SIXTH_EM:
-	    _draw_hershey_stroke (dd,
+	    _draw_hershey_stroke (vc, gc, dd,
 				  false, charsize * HERSHEY_EM / 6.0, 0.0);
 	    break;
 		
 	  case C_RIGHT_EIGHTH_EM:
-	    _draw_hershey_stroke (dd,
+	    _draw_hershey_stroke (vc, gc, dd,
 				  false, charsize * HERSHEY_EM / 8.0, 0.0);
 	    break;
 		
 	  case C_LEFT_ONE_EM:
-	    _draw_hershey_stroke (dd,
+	    _draw_hershey_stroke (vc, gc, dd,
 				  false, - charsize * HERSHEY_EM, 0.0);
 	    break;
 		
 	  case C_LEFT_HALF_EM:
-	    _draw_hershey_stroke (dd,
+	    _draw_hershey_stroke (vc, gc, dd,
 				  false, - charsize * HERSHEY_EM / 2.0, 0.0);
 	    break;
 		
 	  case C_LEFT_QUARTER_EM:
-	    _draw_hershey_stroke (dd,
+	    _draw_hershey_stroke (vc, gc, dd,
 				  false, - charsize * HERSHEY_EM / 4.0, 0.0);
 	    break;
 		
 	  case C_LEFT_SIXTH_EM:
-	    _draw_hershey_stroke (dd,
+	    _draw_hershey_stroke (vc, gc, dd,
 				  false, - charsize * HERSHEY_EM / 6.0, 0.0);
 	    break;
 		
 	  case C_LEFT_EIGHTH_EM:
-	    _draw_hershey_stroke (dd,
+	    _draw_hershey_stroke (vc, gc, dd,
 				  false, - charsize * HERSHEY_EM / 8.0, 0.0);
 	    break;
 		
@@ -858,49 +831,49 @@ void _draw_hershey_string (GEDevDesc *dd, const unsigned short *string)
 	      /* draw the character */
 	      if (line_width_type != 1)
 	      {
-		  Rf_gpptr((DevDesc *) dd)->lwd = HERSHEY_UNITS_TO_USER_UNITS (HERSHEY_STROKE_WIDTH);
+		  gc->lwd = HERSHEY_UNITS_TO_USER_UNITS (HERSHEY_STROKE_WIDTH);
 		  line_width_type = 1;
 		}
-	      _draw_hershey_glyph (dd,
+	      _draw_hershey_glyph (vc, gc, dd,
 				   char_glyphnum, charsize, 
 				   OCCIDENTAL, oblique);
 	      /* back up to draw accent */
-	      _draw_hershey_penup_stroke (dd,
+	      _draw_hershey_penup_stroke (vc, gc, dd,
 					  -0.5 * (double)char_width
 					  -0.5 * (double)accent_width,
 					  0.0, charsize, oblique);
 
 	      /* repositioning for uppercase and uppercase italic */
 	      if (glyphnum == ACC1)
-		_draw_hershey_penup_stroke (dd,
+		_draw_hershey_penup_stroke (vc, gc, dd,
 					    0.0, 
 					    (double)(ACCENT_UP_SHIFT),
 					    charsize, oblique);
 	      else if (glyphnum == ACC2)
-		_draw_hershey_penup_stroke (dd,
+		_draw_hershey_penup_stroke (vc, gc, dd,
 					    (double)(ACCENT_RIGHT_SHIFT),
 					    (double)(ACCENT_UP_SHIFT),
 					    charsize, oblique);
 
 	      /* draw the accent */
-	      _draw_hershey_glyph (dd,
+	      _draw_hershey_glyph (vc, gc, dd,
 				   accent_glyphnum, charsize, 
 				   OCCIDENTAL, oblique);
 
 	      /* undo special repositioning if any */
 	      if (glyphnum == ACC1)
-		_draw_hershey_penup_stroke (dd,
+		_draw_hershey_penup_stroke (vc, gc, dd,
 					    0.0, 
 					    -(double)(ACCENT_UP_SHIFT),
 					    charsize, oblique);
 	      else if (glyphnum == ACC2)
-		_draw_hershey_penup_stroke (dd,
+		_draw_hershey_penup_stroke (vc, gc, dd,
 					    -(double)(ACCENT_RIGHT_SHIFT),
 					    -(double)(ACCENT_UP_SHIFT),
 					    charsize, oblique);
 
 	      /* move forward, to end composite char where we should */
-	      _draw_hershey_penup_stroke (dd,
+	      _draw_hershey_penup_stroke (vc, gc, dd,
 					  0.5 * (double)char_width
 					  -0.5 * (double)accent_width,
 					  0.0, charsize, oblique);
@@ -923,19 +896,19 @@ void _draw_hershey_string (GEDevDesc *dd, const unsigned short *string)
 		  /* draw small Kana, preceded and followed by a penup
 		     stroke in order to traverse the full width of an
 		     ordinary Kana */
-		  _draw_hershey_penup_stroke (dd,
+		  _draw_hershey_penup_stroke (vc, gc, dd,
 					      shift * (double)kana_width,
 					      0.0, charsize, oblique);
 		  if (line_width_type != 2)
 		    {
-			Rf_gpptr((DevDesc *) dd)->lwd = HERSHEY_UNITS_TO_USER_UNITS (HERSHEY_STROKE_WIDTH);
+			gc->lwd = HERSHEY_UNITS_TO_USER_UNITS (HERSHEY_STROKE_WIDTH);
 		      line_width_type = 2;
 		    }
-		  _draw_hershey_glyph (dd,
+		  _draw_hershey_glyph (vc, gc, dd,
 				       glyphnum, 
 				       (SMALL_KANA_SIZE) * charsize,
 				       OCCIDENTAL, oblique);
-		  _draw_hershey_penup_stroke (dd,
+		  _draw_hershey_penup_stroke (vc, gc, dd,
 					      shift * (double)kana_width,
 					      0.0, charsize, oblique);
 		}
@@ -948,17 +921,17 @@ void _draw_hershey_string (GEDevDesc *dd, const unsigned short *string)
 		    {
 		      if (line_width_type != 2)
 			{
-			Rf_gpptr((DevDesc *) dd)->lwd = HERSHEY_UNITS_TO_USER_UNITS (HERSHEY_ORIENTAL_STROKE_WIDTH);
+			gc->lwd = HERSHEY_UNITS_TO_USER_UNITS (HERSHEY_ORIENTAL_STROKE_WIDTH);
 			  line_width_type = 2;
 			}
 		    }
 		  else
 		      if (line_width_type != 1)
 			{
-			Rf_gpptr((DevDesc *) dd)->lwd = HERSHEY_UNITS_TO_USER_UNITS (HERSHEY_STROKE_WIDTH);
+			gc->lwd = HERSHEY_UNITS_TO_USER_UNITS (HERSHEY_STROKE_WIDTH);
 			  line_width_type = 1;
 			}
-		_draw_hershey_glyph (dd,
+		_draw_hershey_glyph (vc, gc, dd,
 				     glyphnum, charsize, 
 				     OCCIDENTAL, oblique);
 		}

@@ -341,7 +341,7 @@ double evaluateGrobWidthUnit(SEXP grob,
     SEXP savedgpar;
     SEXP width;
     LViewportContext vpc;
-    LGContext gc;
+    R_GE_gcontext gc;
     double resultINCHES, result;
     /* 
      * Save the current gpar state and restore it at the end
@@ -428,7 +428,7 @@ double evaluateGrobHeightUnit(SEXP grob,
     SEXP savedgpar;
     SEXP height;
     LViewportContext vpc;
-    LGContext gc;
+    R_GE_gcontext gc;
     double resultINCHES, result;
     /* 
      * Save the current gpar state and restore it at the end
@@ -487,7 +487,7 @@ double evaluateGrobHeightUnit(SEXP grob,
 
 double transform(double value, int unit, SEXP data,
 		 double scalemin, double scalemax,
-		 LGContext *gc,
+		 R_GE_gcontext *gc,
 		 double thisCM, double otherCM,
 		 GEDevDesc *dd)
 {
@@ -511,11 +511,11 @@ double transform(double value, int unit, SEXP data,
      */
     case L_CHAR:
     case L_MYCHAR:  /* FIXME: Remove this when I can */
-	result = result*gc->fontsize*gc->cex/(72*thisCM/2.54);
+	result = result * gc->ps * gc->cex/(72*thisCM/2.54);
 	break;	
     case L_LINES:
     case L_MYLINES: /* FIXME: Remove this when I can */
-	result = result*gc->fontsize*gc->cex*gc->lineheight/(72*thisCM/2.54);
+	result = result * gc->ps * gc->cex*gc->lineheight/(72*thisCM/2.54);
 	break;
     case L_SNPC:        
 	if (thisCM <= otherCM)
@@ -550,20 +550,12 @@ double transform(double value, int unit, SEXP data,
     case L_MYSTRINGWIDTH: /* FIXME: Remove this when I can */
 	if (isExpression(data))
 	    result = result*
-		fromDeviceWidth(GEExpressionWidth(VECTOR_ELT(data, 0),
-						  gc->font, 
-						  gc->cex, 
-						  gc->fontsize, dd),
+		fromDeviceWidth(GEExpressionWidth(VECTOR_ELT(data, 0), gc, dd),
 				GE_INCHES, dd)*
 		2.54/thisCM;
 	else
 	    result = result*
-		fromDeviceWidth(GEStrWidth(CHAR(STRING_ELT(data, 0)), 
-					   gc->fontfamily, 
-					   gc->font, 
-					   gc->lineheight,
-					   gc->cex, 
-					   gc->fontsize, dd),
+		fromDeviceWidth(GEStrWidth(CHAR(STRING_ELT(data, 0)), gc, dd),
 				GE_INCHES, dd)*
 		2.54/thisCM;
 	break;
@@ -571,20 +563,14 @@ double transform(double value, int unit, SEXP data,
     case L_MYSTRINGHEIGHT: /* FIXME: Remove this when I can */
 	if (isExpression(data))
 	    result = result*
-		fromDeviceHeight(GEExpressionHeight(VECTOR_ELT(data, 0),
-						    gc->font, 
-						    gc->cex, 
-						    gc->fontsize, dd),
+		fromDeviceHeight(GEExpressionHeight(VECTOR_ELT(data, 0), 
+						    gc, dd),
 				 GE_INCHES, dd)*
 		2.54/thisCM;
 	else
 	    result = result*
 		fromDeviceHeight(GEStrHeight(CHAR(STRING_ELT(data, 0)),
-					     gc->fontfamily, 
-					     gc->font, 
-					     gc->lineheight,
-					     gc->cex, 
-					     gc->fontsize, dd),
+					     gc, dd),
 				 GE_INCHES, dd)*
 		2.54/thisCM;
 	break;
@@ -606,7 +592,7 @@ double transform(double value, int unit, SEXP data,
 /* FIXME:  scales are only linear at the moment */
 double transformLocation(double location, int unit, SEXP data,
 			 double scalemin, double scalemax,
-			 LGContext *gc,
+			 R_GE_gcontext *gc,
 			 double thisCM, double otherCM,
 			 GEDevDesc *dd)
 {
@@ -624,13 +610,13 @@ double transformLocation(double location, int unit, SEXP data,
 
 double transformXArithmetic(SEXP x, int index,
 			    LViewportContext vpc,
-			    LGContext *gc,
+			    R_GE_gcontext *gc,
 			    double widthCM, double heightCM,
 			    GEDevDesc *dd);
 
 double transformX(SEXP x, int index,
 		  LViewportContext vpc,
-		  LGContext *gc,
+		  R_GE_gcontext *gc,
 		  double widthCM, double heightCM,
 		  GEDevDesc *dd)
 {
@@ -658,13 +644,13 @@ double transformX(SEXP x, int index,
 
 double transformYArithmetic(SEXP y, int index,
 			    LViewportContext vpc,
-			    LGContext *gc,
+			    R_GE_gcontext *gc,
 			    double widthCM, double heightCM,
 			    GEDevDesc *dd);
 
 double transformY(SEXP y, int index, 
 		  LViewportContext vpc,
-		  LGContext *gc,
+		  R_GE_gcontext *gc,
 		  double widthCM, double heightCM,
 		  GEDevDesc *dd)
 {
@@ -692,7 +678,7 @@ double transformY(SEXP y, int index,
 
 double transformDimension(double dim, int unit, SEXP data,
 			  double scalemin, double scalemax,
-			  LGContext *gc,
+			  R_GE_gcontext *gc,
 			  double thisCM, double otherCM,
 			  GEDevDesc *dd)
 {
@@ -710,13 +696,13 @@ double transformDimension(double dim, int unit, SEXP data,
 
 double transformWidthArithmetic(SEXP width, int index,
 				LViewportContext vpc,
-				LGContext *gc,
+				R_GE_gcontext *gc,
 				double widthCM, double heightCM,
 				GEDevDesc *dd);
 
 double transformWidth(SEXP width, int index, 
 		      LViewportContext vpc,
-		      LGContext *gc,
+		      R_GE_gcontext *gc,
 		      double widthCM, double heightCM,
 		      GEDevDesc *dd)
 {
@@ -744,13 +730,13 @@ double transformWidth(SEXP width, int index,
 
 double transformHeightArithmetic(SEXP height, int index,
 				 LViewportContext vpc,
-				 LGContext *gc,
+				 R_GE_gcontext *gc,
 				 double widthCM, double heightCM,
 				 GEDevDesc *dd);
 
 double transformHeight(SEXP height, int index,
 		       LViewportContext vpc,
-		       LGContext *gc,
+		       R_GE_gcontext *gc,
 		       double widthCM, double heightCM,
 		       GEDevDesc *dd)
 {
@@ -778,7 +764,7 @@ double transformHeight(SEXP height, int index,
 
 double transformXArithmetic(SEXP x, int index,
 			    LViewportContext vpc,
-			    LGContext *gc,
+			    R_GE_gcontext *gc,
 			    double widthCM, double heightCM,
 			    GEDevDesc *dd)
 {
@@ -846,7 +832,7 @@ double transformXArithmetic(SEXP x, int index,
 
 double transformYArithmetic(SEXP y, int index,
 			    LViewportContext vpc,
-			    LGContext *gc,
+			    R_GE_gcontext *gc,
 			    double widthCM, double heightCM,
 			    GEDevDesc *dd)
 {
@@ -914,7 +900,7 @@ double transformYArithmetic(SEXP y, int index,
 
 double transformWidthArithmetic(SEXP width, int index,
 				LViewportContext vpc,
-				LGContext *gc,
+				R_GE_gcontext *gc,
 				double widthCM, double heightCM,
 				GEDevDesc *dd)
 {
@@ -982,7 +968,7 @@ double transformWidthArithmetic(SEXP width, int index,
 
 double transformHeightArithmetic(SEXP height, int index,
 				 LViewportContext vpc,
-				 LGContext *gc,
+				 R_GE_gcontext *gc,
 				 double widthCM, double heightCM,
 				 GEDevDesc *dd)
 {
@@ -1069,7 +1055,7 @@ double transformHeightArithmetic(SEXP height, int index,
  */
 double transformXtoINCHES(SEXP x, int index, 
 			  LViewportContext vpc, 
-			  LGContext *gc,
+			  R_GE_gcontext *gc,
 			  double widthCM, double heightCM,
 			  GEDevDesc *dd)
 {
@@ -1079,7 +1065,7 @@ double transformXtoINCHES(SEXP x, int index,
 
 double transformYtoINCHES(SEXP y, int index, 
 			  LViewportContext vpc,
-			  LGContext *gc,
+			  R_GE_gcontext *gc,
 			  double widthCM, double heightCM,
 			  GEDevDesc *dd)
 {
@@ -1089,7 +1075,7 @@ double transformYtoINCHES(SEXP y, int index,
 
 void transformLocn(SEXP x, SEXP y, int index, 
 		   LViewportContext vpc,
-		   LGContext *gc,
+		   R_GE_gcontext *gc,
 		   double widthCM, double heightCM,
 		   GEDevDesc *dd,
 		   LTransform t,
@@ -1111,7 +1097,7 @@ void transformLocn(SEXP x, SEXP y, int index,
 
 double transformWidthtoINCHES(SEXP w, int index,
 			      LViewportContext vpc,
-			      LGContext *gc,
+			      R_GE_gcontext *gc,
 			      double widthCM, double heightCM,
 			      GEDevDesc *dd)
 {
@@ -1121,7 +1107,7 @@ double transformWidthtoINCHES(SEXP w, int index,
 
 double transformHeighttoINCHES(SEXP h, int index,
 			       LViewportContext vpc,
-			       LGContext *gc,
+			       R_GE_gcontext *gc,
 			       double widthCM, double heightCM,
 			       GEDevDesc *dd)
 {
@@ -1131,7 +1117,7 @@ double transformHeighttoINCHES(SEXP h, int index,
 
 void transformDimn(SEXP w, SEXP h, int index, 
 		   LViewportContext vpc,
-		   LGContext *gc,
+		   R_GE_gcontext *gc,
 		   double widthCM, double heightCM,
 		   GEDevDesc *dd,
 		   double rotationAngle,
@@ -1162,7 +1148,7 @@ void transformDimn(SEXP w, SEXP h, int index,
  */
 
 double transformFromINCHES(double value, int unit, 
-			   LGContext *gc,
+			   R_GE_gcontext *gc,
 			   double thisCM, double otherCM,
 			   GEDevDesc *dd)
 {
@@ -1188,10 +1174,10 @@ double transformFromINCHES(double value, int unit,
      * or somesuch.
      */
     case L_CHAR:
-	result = result*(72*thisCM/2.54)/(gc->fontsize*gc->cex);
+	result = result*(72*thisCM/2.54)/(gc->ps*gc->cex);
 	break;	
     case L_LINES:
-	result = result*(72*thisCM/2.54)/(gc->fontsize*gc->cex*gc->lineheight);
+	result = result*(72*thisCM/2.54)/(gc->ps*gc->cex*gc->lineheight);
 	break;
     case L_MM:
 	result = result*10*thisCM;
@@ -1251,7 +1237,7 @@ double transformFromINCHES(double value, int unit,
  */
 double transformXYFromINCHES(double location, int unit, 
 			     double scalemin, double scalemax,
-			     LGContext *gc,
+			     R_GE_gcontext *gc,
 			     double thisCM, double otherCM,
 			     GEDevDesc *dd)
 {
@@ -1269,7 +1255,7 @@ double transformXYFromINCHES(double location, int unit,
 
 double transformWidthHeightFromINCHES(double dimension, int unit, 
 				      double scalemin, double scalemax,
-				      LGContext *gc,
+				      R_GE_gcontext *gc,
 				      double thisCM, double otherCM,
 				      GEDevDesc *dd)
 {

@@ -80,7 +80,7 @@ void allocateKnownWidths(SEXP layout,
 			 int *relativeWidths, 
 			 double parentWidthCM, double parentHeightCM,
 			 LViewportContext parentContext,
-			 LGContext *parentgc,
+			 R_GE_gcontext *parentgc,
 			 GEDevDesc *dd,
 			 double *npcWidths, double *widthLeftCM) 
 {
@@ -99,7 +99,7 @@ void allocateKnownHeights(SEXP layout,
 			  int *relativeHeights,
 			  double parentWidthCM, double parentHeightCM,
 			  LViewportContext parentContext,
-			  LGContext *parentgc,
+			  R_GE_gcontext *parentgc,
 			  GEDevDesc *dd,
 			  double *npcHeights, double *heightLeftCM) 
 {
@@ -149,7 +149,7 @@ int rowRespected(int row, SEXP layout) {
  */
 double totalWidth(SEXP layout, int *relativeWidths,
 		  LViewportContext parentContext,
-		  LGContext *parentgc,
+		  R_GE_gcontext *parentgc,
 		  GEDevDesc *dd)
 {
     int i;
@@ -173,7 +173,7 @@ double totalWidth(SEXP layout, int *relativeWidths,
 
 double totalHeight(SEXP layout, int *relativeHeights,
 		   LViewportContext parentContext,
-		   LGContext *parentgc,
+		   R_GE_gcontext *parentgc,
 		   GEDevDesc *dd)
 {
     int i;
@@ -200,7 +200,7 @@ void allocateRespected(SEXP layout,
 		       double hmult, double vmult,
 		       double *reducedWidthCM, double *reducedHeightCM,
 		       LViewportContext parentContext,
-		       LGContext *parentgc,
+		       R_GE_gcontext *parentgc,
 		       GEDevDesc *dd,
 		       double *npcWidths, double *npcHeights)
 {
@@ -270,7 +270,7 @@ void allocateRespected(SEXP layout,
  */
 double totalUnrespectedWidth(SEXP layout, int *relativeWidths,
 			     LViewportContext parentContext,
-			     LGContext *parentgc,
+			     R_GE_gcontext *parentgc,
 			     GEDevDesc *dd)
 {
     int i;
@@ -295,7 +295,7 @@ double totalUnrespectedWidth(SEXP layout, int *relativeWidths,
 
 double totalUnrespectedHeight(SEXP layout, int *relativeHeights,
 			      LViewportContext parentContext,
-			      LGContext *parentgc,
+			      R_GE_gcontext *parentgc,
 			      GEDevDesc *dd)
 {
     int i;
@@ -321,7 +321,7 @@ double totalUnrespectedHeight(SEXP layout, int *relativeHeights,
 void allocateRemainingWidth(SEXP layout, int *relativeWidths,
 			    double multiplier, 
 			    LViewportContext parentContext, 
-			    LGContext *parentgc,
+			    R_GE_gcontext *parentgc,
 			    GEDevDesc *dd,
 			    double *npcWidths)
 {
@@ -349,7 +349,7 @@ void allocateRemainingWidth(SEXP layout, int *relativeWidths,
 void allocateRemainingHeight(SEXP layout, int *relativeHeights,
 			     double multiplier, 
 			     LViewportContext parentContext,
-			     LGContext *parentgc,
+			     R_GE_gcontext *parentgc,
 			     GEDevDesc *dd,
 			     double *npcHeights)
 {
@@ -423,7 +423,7 @@ void calcViewportLayout(SEXP viewport,
 			double parentWidthCM,
 			double parentHeightCM,
 			LViewportContext parentContext,
-			LGContext *parentgc,
+			R_GE_gcontext *parentgc,
 			GEDevDesc *dd)
 {
     int i;

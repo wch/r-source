@@ -1,7 +1,3 @@
-/**************************
- * A first hack at a possible new device API
- **************************
- */
 
 /* New device driver structure
  * NOTES:
@@ -25,21 +21,15 @@
  *    to decide when to ask for which sort of value, and to decide
  *    what to do when font metric information is not available.
  *    And why not a dev_StrHeight?
- * 4. Replaced dev_Resize with dev_Size
- * 5. Do I make "cex" and "ps" part of the graphics engine or
- *    part of R base graphics?  If not part of the graphics engine,
- *    then how should the graphics engine specify text size?
- *    For now, they are part of the graphics engine.
- *    Similar comments apply for "font".
- * 6. Should "ipr", "asp", and "cra" be in the device description?
+ * 4. Should "ipr", "asp", and "cra" be in the device description?
  *    If not, then where?
  *    I guess they don't need to be if no device makes use of them.
  *    On the other hand, they would need to be replaced by a device
  *    call that R base graphics could use to get enough information
  *    to figure them out.  (e.g., some sort of dpi() function to
  *    complement the size() function.)
- * 7. Is dev_Dot used anywhere?
  */
+
 typedef struct {
     /* The first element is a boolean indicating whether this is 
      * a new device driver (always 1) -- the old device driver structure
@@ -121,6 +111,25 @@ typedef struct {
     /********************************************************
      * Device procedures.
      ********************************************************/
+
+    /*
+     * ---------------------------------------
+     * GENERAL COMMENT ON GRAPHICS PARAMETERS:
+     * ---------------------------------------
+     * Graphical parameters are now passed in a graphics context
+     * structure (R_GE_gcontext*) rather than individually.
+     * Each device action should extract the parameters it needs
+     * and ignore the others.  Thought should be given to which 
+     * parameters are relevant in each case -- the graphics engine
+     * does not REQUIRE that each parameter is honoured, but if
+     * a parameter is NOT honoured, it might be a good idea to
+     * issue a warning when a parameter is not honoured (or at
+     * the very least document which parameters are not honoured
+     * in the user-level documentation for the device).  [An example
+     * of a parameter that may not be honoured by many devices is
+     * transparency.]
+     */
+
     /*
      * device_Activate is called when a device becomes the	
      * active device.  For example, it can be used to change the
@@ -146,10 +155,11 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Circle(double x, double y, double r,
-     *		              int col, int fill, double gamma,
-     *                        int lty, double lwd,
+     *                        R_GE_gcontext *gc,
      *                        NewDevDesc *dd);
      *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   col, fill, gamma, lty, lwd
      */
     void (*circle)();
     /*
@@ -218,9 +228,11 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Line(double x1, double y1, double x2, double y2,
-     *		            int col, double gamma, int lty, double lwd,
+     *                      R_GE_gcontext *gc,
      *                      NewDevDesc *dd);
      *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   col, gamma, lty, lwd
      */
     void (*line)();
     /*
@@ -233,9 +245,13 @@ typedef struct {
      * it MUST return 0.0 for ascent, descent, and width.
      * An example is ...
      *
-     * static void X11_MetricInfo(int c, int font, double cex, double ps,
+     * static void X11_MetricInfo(int c,
+     *                            R_GE_gcontext *gc,
      *                            double* ascent, double* descent,
      *                            double* width, NewDevDesc *dd);
+     *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   font, cex, ps
      */
     void (*metricInfo)();
     /*
@@ -257,7 +273,8 @@ typedef struct {
      * An example is ...
      *
      *
-     * static void X11_NewPage(int fill, double gamma, NewDevDesc *dd);
+     * static void X11_NewPage(R_GE_gcontext *gc,
+     *                         NewDevDesc *dd);
      *
      */
     void (*newPage)();
@@ -289,10 +306,11 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Polygon(int n, double *x, double *y, 
-     *		               int col, int fill, double gamma,
-     *                         int lty, double lwd,
+     *                         R_GE_gcontext *gc,
      *                         NewDevDesc *dd);
      *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   col, fill, gamma, lty, lwd
      */
     void (*polygon)();
     /*
@@ -302,10 +320,11 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Polyline(int n, double *x, double *y, 
-     *		               int col, double gamma,
-     *                         int lty, double lwd,
+     *                          R_GE_gcontext *gc,
      *                          NewDevDesc *dd);
      *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   col, gamma, lty, lwd
      */
     void (*polyline)();
     /*
@@ -320,8 +339,7 @@ typedef struct {
      * An example is ...
      *
      * static void X11_Rect(double x0, double y0, double x1, double y1,
-     *		            int col, int fill, double gamma,
-     *                      int lty, double lwd,
+     *                      R_GE_gcontext *gc,
      *                      NewDevDesc *dd);
      *
      */
@@ -341,6 +359,8 @@ typedef struct {
      *                      double *bottom, double *top,
      *                      NewDevDesc *dd);
      *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   col, fill, gamma, lty, lwd
      */
     void (*size)();
     /*
@@ -348,9 +368,12 @@ typedef struct {
      * string in DEVICE units.				
      * An example is ...
      *
-     * static double X11_StrWidth(char *str, int font, double cex, double ps,
+     * static double X11_StrWidth(char *str, 
+     *                            R_GE_gcontext *gc,
      *                            NewDevDesc *dd)
      *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   font, cex, ps
      */
     double (*strWidth)();
     /*
@@ -361,10 +384,11 @@ typedef struct {
      *
      * static void X11_Text(double x, double y, char *str, 
      *                      double rot, double hadj, 
-     *		            int col, double gamma,
-     *                      int font, double cex, double ps,
+     *                      R_GE_gcontext *gc,
      * 	                    NewDevDesc *dd);
      *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   font, cex, ps, col, gamma
      */
     void (*text)();
 } NewDevDesc;

@@ -152,9 +152,9 @@ SEXP gridCallback(GEevent task, GEDevDesc *dd, SEXP data) {
     SEXP gridState;
     GESystemDesc *sd;
     SEXP currentgp;
-    SEXP fillsxp;
     SEXP gsd;
     SEXP devsize;
+    R_GE_gcontext gc;
     switch (task) {
     case GE_InitState:
 	/* Create the initial grid state for a device
@@ -218,7 +218,8 @@ SEXP gridCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 		 * to the dev->newPage primitive
 		 */ 
 		currentgp = gridStateElement(dd, GSS_GPAR);
-		fillsxp = gpFillSXP(currentgp);
+		gcontextFromgpar(currentgp, 0, &gc);
+		GENewPage(&gc, dd);
 		/*
 		 * Instead of using the current fill, use ".grid.redraw.fill"
 		 * because if the current fill is transparent then the 
@@ -243,10 +244,6 @@ SEXP gridCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 		 gpLineType(currentgp), gpLineWidth(currentgp), dd);
 		 
 		*/
-		if (isNull(fillsxp))
-		    GENewPage(NA_INTEGER, gpGamma(currentgp, 0), dd);
-		else
-		    GENewPage(RGBpar(fillsxp, 0), gpGamma(currentgp, 0), dd);
 		initGPar(dd);
 		initVP(dd);
 	    } else {

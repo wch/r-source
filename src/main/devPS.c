@@ -1039,8 +1039,7 @@ PostScriptDesc;
 
 static void PS_Activate(NewDevDesc *dd);
 static void PS_Circle(double x, double y, double r,
-		      int col, int fill, double gamma,
-		      int lty, double lwd,
+		      R_GE_gcontext *gc,
 		      NewDevDesc *dd);
 static void PS_Clip(double x0, double x1, double y0, double y1,
 		     NewDevDesc *dd);
@@ -1049,34 +1048,34 @@ static void PS_Deactivate(NewDevDesc *dd);
 static void PS_Hold(NewDevDesc *dd);
 static Rboolean PS_Locator(double *x, double *y, NewDevDesc *dd);
 static void PS_Line(double x1, double y1, double x2, double y2,
-		    int col, double gamma, int lty, double lwd,
+		    R_GE_gcontext *gc,
 		    NewDevDesc *dd);
-static void PS_MetricInfo(int c, int font, double cex, double ps,
-			      double* ascent, double* descent,
-			      double* width, NewDevDesc *dd);
+static void PS_MetricInfo(int c, 
+			  R_GE_gcontext *gc,
+			  double* ascent, double* descent,
+			  double* width, NewDevDesc *dd);
 static void PS_Mode(int mode, NewDevDesc *dd);
-static void PS_NewPage(int fill, double gamma, NewDevDesc *dd);
+static void PS_NewPage(R_GE_gcontext *gc,
+		       NewDevDesc *dd);
 static Rboolean PS_Open(NewDevDesc*, PostScriptDesc*);
 static void PS_Polygon(int n, double *x, double *y,
-		       int col, int fill, double gamma,
-		       int lty, double lwd,
+		       R_GE_gcontext *gc,
 		       NewDevDesc *dd);
 static void PS_Polyline(int n, double *x, double *y,
-			int col, double gamma, int lty, double lwd,
+			R_GE_gcontext *gc,
 			NewDevDesc *dd);
 static void PS_Rect(double x0, double y0, double x1, double y1,
-		    int col, int fill, double gamma,
-		    int lty, double lwd,
+		    R_GE_gcontext *gc,
 		    NewDevDesc *dd);
 static void PS_Size(double *left, double *right,
 		     double *bottom, double *top,
 		     NewDevDesc *dd);
-static double PS_StrWidth(char *str, int font,
-			      double cex, double ps, NewDevDesc *dd);
+static double PS_StrWidth(char *str, 
+			  R_GE_gcontext *gc,
+			  NewDevDesc *dd);
 static void PS_Text(double x, double y, char *str,
 		    double rot, double hadj,
-		    int col, double gamma,
-		    int font, double cex, double ps,
+		    R_GE_gcontext *gc,
 		    NewDevDesc *dd);
 
 
@@ -1570,7 +1569,8 @@ static void PS_Size(double *left, double *right,
 
 static void PostScriptClose(NewDevDesc *dd);
 
-static void PS_NewPage(int fill, double gamma, NewDevDesc *dd)
+static void PS_NewPage(R_GE_gcontext *gc,
+		       NewDevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
@@ -1585,13 +1585,12 @@ static void PS_NewPage(int fill, double gamma, NewDevDesc *dd)
     PostScriptStartPage(pd->psfp, pd->pageno);
     Invalidate(dd);
 
-    if(R_ALPHA(fill) == 0) {
-	PS_Rect(0, 0, 72.0 * pd->pagewidth, 72.0 * pd->pageheight,
-		NA_INTEGER, fill, 1, /* gamma cannot be set for PS device */
-		1, 1, /* lty and lwd settings don't matter because
-		       * no border is drawn.
-		       */
-		dd);
+    if(R_ALPHA(gc->fill) == 0) {
+	/*
+	 * Override some gc settings
+	 */
+	gc->col = NA_INTEGER;
+	PS_Rect(0, 0, 72.0 * pd->pagewidth, 72.0 * pd->pageheight, gc, dd);
     }
 }
 
@@ -1638,34 +1637,35 @@ static void PS_Close(NewDevDesc *dd)
 static void PS_Activate(NewDevDesc *dd) {}
 static void PS_Deactivate(NewDevDesc *dd) {}
 
-static double PS_StrWidth(char *str, int font, double cex, double ps,
+static double PS_StrWidth(char *str,
+			  R_GE_gcontext *gc,
 			  NewDevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
-    int face = font;
+    int face = gc->fontface;
 
     if(face < 1 || face > 5) face = 1;
-    return floor(cex * ps + 0.5) *
+    return floor(gc->cex * gc->ps + 0.5) *
 	PostScriptStringWidth((unsigned char *)str,
 			      &(pd->metrics[face-1]));
 }
 
-static void PS_MetricInfo(int c, int font, double cex, double ps,
+static void PS_MetricInfo(int c, 
+			  R_GE_gcontext *gc,
 			  double* ascent, double* descent,
 			  double* width, NewDevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     PostScriptMetricInfo(c, ascent, descent, width,
-			 &(pd->metrics[font-1]));
-    *ascent = floor(cex * ps + 0.5) * *ascent;
-    *descent = floor(cex * ps + 0.5) * *descent;
-    *width = floor(cex * ps + 0.5) * *width;
+			 &(pd->metrics[gc->fontface-1]));
+    *ascent = floor(gc->cex * gc->ps + 0.5) * *ascent;
+    *descent = floor(gc->cex * gc->ps + 0.5) * *descent;
+    *width = floor(gc->cex * gc->ps + 0.5) * *width;
 }
 
 static void PS_Rect(double x0, double y0, double x1, double y1,
-		    int col, int fill, double gamma,
-		    int lty, double lwd,
+		    R_GE_gcontext *gc,
 		    NewDevDesc *dd)
 {
     int code;
@@ -1677,14 +1677,14 @@ static void PS_Rect(double x0, double y0, double x1, double y1,
     /* code == 2, fill only */
     /* code == 3, outline and fill */
 
-    code = 2 * (R_ALPHA(fill) == 0) + (R_ALPHA(col) == 0);
+    code = 2 * (R_ALPHA(gc->fill) == 0) + (R_ALPHA(gc->col) == 0);
 
     if (code) {
 	if(code & 2)
-	    SetFill(fill, dd);
+	    SetFill(gc->fill, dd);
 	if(code & 1) {
-	    SetColor(col, dd);
-	    SetLineStyle(lty, lwd, dd);
+	    SetColor(gc->col, dd);
+	    SetLineStyle(gc->lty, gc->lwd, dd);
 	}
 	PostScriptRectangle(pd->psfp, x0, y0, x1, y1);
 	fprintf(pd->psfp, "p%d\n", code);
@@ -1692,8 +1692,7 @@ static void PS_Rect(double x0, double y0, double x1, double y1,
 }
 
 static void PS_Circle(double x, double y, double r,
-		      int col, int fill, double gamma,
-		      int lty, double lwd,
+		      R_GE_gcontext *gc,
 		      NewDevDesc *dd)
 {
     int code;
@@ -1705,14 +1704,14 @@ static void PS_Circle(double x, double y, double r,
     /* code == 2, fill only */
     /* code == 3, outline and fill */
 
-    code = 2 * (R_ALPHA(fill) == 0) + (R_ALPHA(col) == 0);
+    code = 2 * (R_ALPHA(gc->fill) == 0) + (R_ALPHA(gc->col) == 0);
 
     if (code) {
 	if(code & 2)
-	    SetFill(fill, dd);
+	    SetFill(gc->fill, dd);
 	if(code & 1) {
-	    SetColor(col, dd);
-	    SetLineStyle(lty, lwd, dd);
+	    SetColor(gc->col, dd);
+	    SetLineStyle(gc->lty, gc->lwd, dd);
 	}
 	PostScriptCircle(pd->psfp, x, y, r);
 	fprintf(pd->psfp, "p%d\n", code);
@@ -1720,15 +1719,15 @@ static void PS_Circle(double x, double y, double r,
 }
 
 static void PS_Line(double x1, double y1, double x2, double y2,
-		    int col, double gamma, int lty, double lwd,
+		    R_GE_gcontext *gc,
 		    NewDevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     /* FIXME : clip to the device extents here */
-    if(R_ALPHA(col) == 0) {
-	SetColor(col, dd);
-	SetLineStyle(lty, lwd, dd);
+    if(R_ALPHA(gc->col) == 0) {
+	SetColor(gc->col, dd);
+	SetLineStyle(gc->lty, gc->lwd, dd);
 	PostScriptStartPath(pd->psfp);
 	PostScriptMoveTo(pd->psfp, x1, y1);
 	PostScriptRLineTo(pd->psfp, x1, y1, x2, y2);
@@ -1738,8 +1737,7 @@ static void PS_Line(double x1, double y1, double x2, double y2,
 }
 
 static void PS_Polygon(int n, double *x, double *y,
-		       int col, int fill, double gamma,
-		       int lty, double lwd,
+		       R_GE_gcontext *gc,
 		       NewDevDesc *dd)
 {
     PostScriptDesc *pd;
@@ -1753,14 +1751,14 @@ static void PS_Polygon(int n, double *x, double *y,
     /* code == 2, fill only */
     /* code == 3, outline and fill */
 
-    code = 2 * (R_ALPHA(fill) == 0) + (R_ALPHA(col) == 0);
+    code = 2 * (R_ALPHA(gc->fill) == 0) + (R_ALPHA(gc->col) == 0);
 
     if (code) {
 	if(code & 2)
-	    SetFill(fill, dd);
+	    SetFill(gc->fill, dd);
 	if(code & 1) {
-	    SetColor(col, dd);
-	    SetLineStyle(lty, lwd, dd);
+	    SetColor(gc->col, dd);
+	    SetLineStyle(gc->lty, gc->lwd, dd);
 	}
 	fprintf(pd->psfp, "np\n");
 	fprintf(pd->psfp, " %.2f %.2f m\n", x[0], y[0]);
@@ -1771,21 +1769,21 @@ static void PS_Polygon(int n, double *x, double *y,
 }
 
 static void PS_Polyline(int n, double *x, double *y,
-			int col, double gamma, int lty, double lwd,
+			R_GE_gcontext *gc,
 			NewDevDesc *dd)
 {
     PostScriptDesc *pd;
     int i;
 
     pd = (PostScriptDesc*) dd->deviceSpecific;
-    if(R_ALPHA(col) == 0) {
-	SetColor(col, dd);
-	SetLineStyle(lty, lwd, dd);
+    if(R_ALPHA(gc->col) == 0) {
+	SetColor(gc->col, dd);
+	SetLineStyle(gc->lty, gc->lwd, dd);
 	fprintf(pd->psfp, "np\n");
 	fprintf(pd->psfp, "%.2f %.2f m\n", x[0], y[0]);
 	for(i = 1 ; i < n ; i++) {
 	    /* split up solid lines (only) into chunks of size 1000 */
-	    if(lty == 0 && i%1000 == 0)
+	    if(gc->lty == 0 && i%1000 == 0)
 		fprintf(pd->psfp, "currentpoint o m\n");
 	    PostScriptRLineTo(pd->psfp, x[i-1], y[i-1], x[i], y[i]);
 	}
@@ -1796,15 +1794,14 @@ static void PS_Polyline(int n, double *x, double *y,
 
 static void PS_Text(double x, double y, char *str,
 		    double rot, double hadj,
-		    int col, double gamma,
-		    int font, double cex, double ps,
+		    R_GE_gcontext *gc,
 		    NewDevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
-    SetFont(font, (int)floor(cex * ps + 0.5), dd);
-    if(R_ALPHA(col) == 0) {
-	SetColor(col, dd);
+    SetFont(gc->fontface, (int)floor(gc->cex * gc->ps + 0.5), dd);
+    if(R_ALPHA(gc->col) == 0) {
+	SetColor(gc->col, dd);
 	PostScriptText(pd->psfp, x, y, str, hadj, 0.0, rot);
     }
 }
@@ -1967,9 +1964,8 @@ static int XF_SetLty(int lty)
 
 static void XFig_Activate(NewDevDesc *dd);
 static void XFig_Circle(double x, double y, double r,
-		       int col, int fill, double gamma,
-			int lty, double lwd,
-		       NewDevDesc *dd);
+			R_GE_gcontext *gc,
+			NewDevDesc *dd);
 static void XFig_Clip(double x0, double x1, double y0, double y1,
 		     NewDevDesc *dd);
 static void XFig_Close(NewDevDesc *dd);
@@ -1977,33 +1973,33 @@ static void XFig_Deactivate(NewDevDesc *dd);
 static void XFig_Hold(NewDevDesc *dd);
 static Rboolean XFig_Locator(double *x, double *y, NewDevDesc *dd);
 static void XFig_Line(double x1, double y1, double x2, double y2,
-		     int col, double gamma, int lty, double lwd,
-		     NewDevDesc *dd);
-static void XFig_MetricInfo(int c, int font, double cex, double ps,
-			      double* ascent, double* descent,
-			      double* width, NewDevDesc *dd);
+		      R_GE_gcontext *gc,
+		      NewDevDesc *dd);
+static void XFig_MetricInfo(int c, 
+			    R_GE_gcontext *gc,
+			    double* ascent, double* descent,
+			    double* width, NewDevDesc *dd);
 static void XFig_Mode(int mode, NewDevDesc *dd);
-static void XFig_NewPage(int fill, double gamma, NewDevDesc *dd);
+static void XFig_NewPage(R_GE_gcontext *gc, NewDevDesc *dd);
 static void XFig_Polygon(int n, double *x, double *y,
-			int col, int fill, double gamma,
-			 int lty, double lwd,
-			NewDevDesc *dd);
+			 R_GE_gcontext *gc,
+			 NewDevDesc *dd);
 static void XFig_Polyline(int n, double *x, double *y,
-			    int col, double gamma, int lty, double lwd,
-			    NewDevDesc *dd);
+			  R_GE_gcontext *gc,
+			  NewDevDesc *dd);
 static void XFig_Rect(double x0, double y0, double x1, double y1,
-		     int col, int fill, double gamma,
-		      int lty, double lwd,
-		     NewDevDesc *dd);
+		      R_GE_gcontext *gc,
+		      NewDevDesc *dd);
 static void XFig_Size(double *left, double *right,
 		     double *bottom, double *top,
 		     NewDevDesc *dd);
-static double XFig_StrWidth(char *str, int font,
-			      double cex, double ps, NewDevDesc *dd);
+static double XFig_StrWidth(char *str, 
+			    R_GE_gcontext *gc,
+			    NewDevDesc *dd);
 static void XFig_Text(double x, double y, char *str,
-		     double rot, double hadj,
-		     int col, double gamma, int font, double cex, double ps,
-		     NewDevDesc *dd);
+		      double rot, double hadj,
+		      R_GE_gcontext *gc,
+		      NewDevDesc *dd);
 static Rboolean XFig_Open(NewDevDesc*, XFigDesc*);
 
 static const int XFig_basenums[] = {4, 8, 12, 16, 20, 24, 28, 0};
@@ -2275,7 +2271,8 @@ static void XFig_Size(double *left, double *right,
 }
 
 #define CHUNK 10000
-static void XFig_NewPage(int fill, double gamma, NewDevDesc *dd)
+static void XFig_NewPage(R_GE_gcontext *gc,
+			 NewDevDesc *dd)
 {
     char buf[PATH_MAX];
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
@@ -2306,8 +2303,8 @@ static void XFig_NewPage(int fill, double gamma, NewDevDesc *dd)
 	pd->XFigColors[7] = 0xffffff;
 	pd->nXFigColors = 32;
     }
-     if(R_ALPHA(fill) == 0) {
-	 int cbg = XF_SetColor(fill, pd);
+     if(R_ALPHA(gc->fill) == 0) {
+	 int cbg = XF_SetColor(gc->fill, pd);
 	 int ix0, iy0, ix1, iy1;
 	 double x0 = 0.0, y0 = 0.0, x1 = 72.0 * pd->pagewidth,
 	     y1 = 72.0 * pd->pageheight;
@@ -2354,17 +2351,17 @@ static void XFig_Activate(NewDevDesc *dd) {}
 static void XFig_Deactivate(NewDevDesc *dd) {}
 
 static void XFig_Rect(double x0, double y0, double x1, double y1,
-		      int col, int fill, double gamma, int inlty, double inlwd,
+		      R_GE_gcontext *gc,
 		      NewDevDesc *dd)
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
     int ix0, iy0, ix1, iy1;
-    int cbg = XF_SetColor(fill, pd), cfg = XF_SetColor(col, pd), cpen,
-	dofill, lty = XF_SetLty(inlty), lwd = inlwd*0.833 + 0.5;
+    int cbg = XF_SetColor(gc->fill, pd), cfg = XF_SetColor(gc->col, pd), cpen,
+	dofill, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
 
-    cpen = (R_ALPHA(col) == 0)? cfg: -1;
-    dofill = (R_ALPHA(fill) == 0)? 20: -1;
+    cpen = (R_ALPHA(gc->col) == 0)? cfg: -1;
+    dofill = (R_ALPHA(gc->fill) == 0)? 20: -1;
 
     XFconvert(&x0, &y0, pd);
     XFconvert(&x1, &y1, pd);
@@ -2383,18 +2380,17 @@ static void XFig_Rect(double x0, double y0, double x1, double y1,
 }
 
 static void XFig_Circle(double x, double y, double r,
-			int col, int fill, double gamma,
-			int inlty, double inlwd,
+			R_GE_gcontext *gc,
 			NewDevDesc *dd)
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
     int ix, iy, ir;
-    int cbg = XF_SetColor(fill, pd), cfg = XF_SetColor(col, pd), cpen,
-	dofill, lty = XF_SetLty(inlty), lwd = inlwd*0.833 + 0.5;
+    int cbg = XF_SetColor(gc->fill, pd), cfg = XF_SetColor(gc->col, pd), cpen,
+	dofill, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
 
-    cpen = (R_ALPHA(col) == 0)? cfg: -1;
-    dofill = (R_ALPHA(fill) == 0)? 20: -1;
+    cpen = (R_ALPHA(gc->col) == 0)? cfg: -1;
+    dofill = (R_ALPHA(gc->fill) == 0)? 20: -1;
 
     XFconvert(&x, &y, pd);
     ix = (int)x; iy = (int)y; ir = (int)(16.667*r);
@@ -2409,19 +2405,19 @@ static void XFig_Circle(double x, double y, double r,
 }
 
 static void XFig_Line(double x1, double y1, double x2, double y2,
-		      int col, double gamma, int inlty, double inlwd,
+		      R_GE_gcontext *gc,
 		      NewDevDesc *dd)
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
-    int lty = XF_SetLty(inlty), lwd = inlwd*0.833 + 0.5;
+    int lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
 
     XFconvert(&x1, &y1, pd);
     XFconvert(&x2, &y2, pd);
-    if(R_ALPHA(col) == 0) {
+    if(R_ALPHA(gc->col) == 0) {
 	fprintf(fp, "2 1 "); /* Polyline */
 	fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
-	fprintf(fp, "%d %d ", XF_SetColor(col, pd), 7);
+	fprintf(fp, "%d %d ", XF_SetColor(gc->col, pd), 7);
 	/* pen colour fill colour */
 	fprintf(fp, "100 0 -1 "); /* depth, pen style, area fill */
 	fprintf(fp, "%.2f 0 0 -1 0 0 ", 4.0*lwd); /* style value, join .... */
@@ -2431,19 +2427,18 @@ static void XFig_Line(double x1, double y1, double x2, double y2,
 }
 
 static void XFig_Polygon(int n, double *x, double *y,
-			 int col, int fill, double gamma,
-			 int inlty, double inlwd,
+			 R_GE_gcontext *gc,
 			 NewDevDesc *dd)
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
     double xx, yy;
     int i;
-    int cbg = XF_SetColor(fill, pd), cfg = XF_SetColor(col, pd), cpen,
-	dofill, lty = XF_SetLty(inlty), lwd = inlwd*0.833 + 0.5;
+    int cbg = XF_SetColor(gc->fill, pd), cfg = XF_SetColor(gc->col, pd), cpen,
+	dofill, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
 
-    cpen = (R_ALPHA(col) == 0)? cfg: -1;
-    dofill = (R_ALPHA(fill) == 0)? 20: -1;
+    cpen = (R_ALPHA(gc->col) == 0)? cfg: -1;
+    dofill = (R_ALPHA(gc->fill) == 0)? 20: -1;
 
     fprintf(fp, "2 3 "); /* Polyline */
     fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
@@ -2461,18 +2456,18 @@ static void XFig_Polygon(int n, double *x, double *y,
 }
 
 static void XFig_Polyline(int n, double *x, double *y,
-			  int col, double gamma, int inlty, double inlwd,
+			  R_GE_gcontext *gc,
 			  NewDevDesc *dd)
 {
     XFigDesc *pd = (XFigDesc*) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
     double xx, yy;
-    int i, lty = XF_SetLty(inlty), lwd = inlwd*0.833 + 0.5;
+    int i, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
 
-    if(R_ALPHA(col) == 0) {
+    if(R_ALPHA(gc->col) == 0) {
 	fprintf(fp, "2 1 "); /* Polyline */
 	fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
-	fprintf(fp, "%d %d ", XF_SetColor(col, pd), 7); /* pen colour fill colour */
+	fprintf(fp, "%d %d ", XF_SetColor(gc->col, pd), 7); /* pen colour fill colour */
 	fprintf(fp, "100 0 -1 "); /* depth, pen style, area fill */
 	fprintf(fp, "%.2f 0 0 -1 0 0 ", 4.0*lwd); /* style value, join .... */
 	fprintf(fp, "%d\n", n); /* number of points */
@@ -2489,13 +2484,13 @@ static const int styles[4] = {0,2,1,3};
 
 static void XFig_Text(double x, double y, char *str,
 		      double rot, double hadj,
-		      int col, double gamma, int font, double cex, double ps,
+		      R_GE_gcontext *gc,
 		      NewDevDesc *dd)
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
-    int fontnum, style = font;
-    double size = floor(cex * ps + 0.5);
+    int fontnum, style = gc->fontface;
+    double size = floor(gc->cex * gc->ps + 0.5);
 
     if(style < 1 || style > 5) style = 1;
     pd->fontsize = size;
@@ -2504,9 +2499,9 @@ static void XFig_Text(double x, double y, char *str,
     else fontnum = pd->fontnum + styles[style-1];
 
     XFconvert(&x, &y, pd);
-    if(R_ALPHA(col) == 0) {
+    if(R_ALPHA(gc->col) == 0) {
 	fprintf(fp, "4 %d ", (int)floor(2*hadj)); /* Text, how justified */
-	fprintf(fp, "%d 100 0 ", XF_SetColor(col, pd));
+	fprintf(fp, "%d 100 0 ", XF_SetColor(gc->col, pd));
 	/* color, depth, pen_style */
 	fprintf(fp, "%d %d %.4f 4 ", fontnum, (int)size, rot * DEG2RAD);
 	/* font pointsize angle flags (Postscript font) */
@@ -2539,27 +2534,29 @@ static void XFig_Hold(NewDevDesc *dd)
 {
 }
 
-static double XFig_StrWidth(char *str, int font,
-			    double cex, double ps, NewDevDesc *dd)
+static double XFig_StrWidth(char *str, 
+			    R_GE_gcontext *gc,
+			    NewDevDesc *dd)
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
 
-    return floor(cex * ps + 0.5) *
+    return floor(gc->cex * gc->ps + 0.5) *
 	PostScriptStringWidth((unsigned char *)str,
-			      &(pd->metrics[font-1]));
+			      &(pd->metrics[gc->fontface-1]));
 }
 
-static void XFig_MetricInfo(int c, int font, double cex, double ps,
+static void XFig_MetricInfo(int c, 
+			    R_GE_gcontext *gc,
 			    double* ascent, double* descent,
 			    double* width, NewDevDesc *dd)
 {
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
 
     PostScriptMetricInfo(c, ascent, descent, width,
-			 &(pd->metrics[font-1]));
-    *ascent = floor(cex * ps + 0.5) * *ascent;
-    *descent = floor(cex * ps + 0.5) * *descent;
-    *width = floor(cex * ps + 0.5) * *width;
+			 &(pd->metrics[gc->fontface-1]));
+    *ascent = floor(gc->cex * gc->ps + 0.5) * *ascent;
+    *descent = floor(gc->cex * gc->ps + 0.5) * *descent;
+    *width = floor(gc->cex * gc->ps + 0.5) * *width;
 }
 
 
@@ -2621,7 +2618,7 @@ PDFDesc;
 static Rboolean PDF_Open(NewDevDesc*, PDFDesc*);
 static void PDF_Activate(NewDevDesc *dd);
 static void PDF_Circle(double x, double y, double r,
-		       int col, int fill, double gamma, int lty, double lwd,
+		       R_GE_gcontext *gc,
 		       NewDevDesc *dd);
 static void PDF_Clip(double x0, double x1, double y0, double y1,
 		     NewDevDesc *dd);
@@ -2630,30 +2627,32 @@ static void PDF_Deactivate(NewDevDesc *dd);
 static void PDF_Hold(NewDevDesc *dd);
 static Rboolean PDF_Locator(double *x, double *y, NewDevDesc *dd);
 static void PDF_Line(double x1, double y1, double x2, double y2,
-		     int col, double gamma, int lty, double lwd,
+		     R_GE_gcontext *gc,
 		     NewDevDesc *dd);
-static void PDF_MetricInfo(int c, int font, double cex, double ps,
-			      double* ascent, double* descent,
-			      double* width, NewDevDesc *dd);
+static void PDF_MetricInfo(int c, 
+			   R_GE_gcontext *gc,
+			   double* ascent, double* descent,
+			   double* width, NewDevDesc *dd);
 static void PDF_Mode(int mode, NewDevDesc *dd);
-static void PDF_NewPage(int fill, double gamma, NewDevDesc *dd);
+static void PDF_NewPage(R_GE_gcontext *gc, NewDevDesc *dd);
 static void PDF_Polygon(int n, double *x, double *y,
-			int col, int fill, double gamma, int lty, double lwd,
+			R_GE_gcontext *gc,
 			NewDevDesc *dd);
 static void PDF_Polyline(int n, double *x, double *y,
-			    int col, double gamma, int lty, double lwd,
-			    NewDevDesc *dd);
+			 R_GE_gcontext *gc,
+			 NewDevDesc *dd);
 static void PDF_Rect(double x0, double y0, double x1, double y1,
-		     int col, int fill, double gamma, int lty, double lwd,
+		     R_GE_gcontext *gc,
 		     NewDevDesc *dd);
 static void PDF_Size(double *left, double *right,
 		     double *bottom, double *top,
 		     NewDevDesc *dd);
-static double PDF_StrWidth(char *str, int font,
-			      double cex, double ps, NewDevDesc *dd);
+static double PDF_StrWidth(char *str,
+			   R_GE_gcontext *gc,
+			   NewDevDesc *dd);
 static void PDF_Text(double x, double y, char *str,
 		     double rot, double hadj,
-		     int col, double gamma, int font, double cex, double ps,
+		     R_GE_gcontext *gc,
 		     NewDevDesc *dd);
 
 static Rboolean
@@ -3083,7 +3082,8 @@ static void PDF_endpage(PDFDesc *pd)
 	    here - pd->startstream);
 }
 
-static void PDF_NewPage(int fill, double gamma, NewDevDesc *dd)
+static void PDF_NewPage(R_GE_gcontext *gc,
+			NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     char buf[512];
@@ -3122,8 +3122,8 @@ static void PDF_NewPage(int fill, double gamma, NewDevDesc *dd)
     pd->startstream = (int) ftell(pd->pdffp);
     fprintf(pd->pdffp, "1 J 1 j 10 M q\n");
     PDF_Invalidate(dd);
-    if(R_ALPHA(fill) == 0) {
-	PDF_SetFill(fill, dd);
+    if(R_ALPHA(gc->fill) == 0) {
+	PDF_SetFill(gc->fill, dd);
 	fprintf(pd->pdffp, "0 0 %.2f %.2f re f\n",
 		72.0 * pd->width, 72.0 * pd->height);
     }
@@ -3143,20 +3143,20 @@ static void PDF_Activate(NewDevDesc *dd) {}
 static void PDF_Deactivate(NewDevDesc *dd) {}
 
 static void PDF_Rect(double x0, double y0, double x1, double y1,
-		      int col, int fill, double gamma, int lty, double lwd,
-		      NewDevDesc *dd)
+		     R_GE_gcontext *gc,
+		     NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     int code;
 
-    code = 2 * (R_ALPHA(fill) == 0) + (R_ALPHA(col) == 0);
+    code = 2 * (R_ALPHA(gc->fill) == 0) + (R_ALPHA(gc->col) == 0);
     if (code) {
 	if(pd->inText) textoff(pd);
 	if(code & 2)
-	    PDF_SetFill(fill, dd);
+	    PDF_SetFill(gc->fill, dd);
 	if(code & 1) {
-	    PDF_SetLineColor(col, dd);
-	    PDF_SetLineStyle(lty, lwd, dd);
+	    PDF_SetLineColor(gc->col, dd);
+	    PDF_SetLineStyle(gc->lty, gc->lwd, dd);
 	}
 	fprintf(pd->pdffp, "%.2f %.2f %.2f %.2f re", x0, y0, x1-x0, y1-y0);
 	switch(code){
@@ -3169,21 +3169,21 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
 
 /* r is in device coords */
 static void PDF_Circle(double x, double y, double r,
-		       int col, int fill, double gamma, int lty, double lwd,
+		       R_GE_gcontext *gc,
 		       NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     int code, tr;
     double xx, yy, a;
 
-    code = 2 * (R_ALPHA(fill) == 0) + (R_ALPHA(col) == 0);
+    code = 2 * (R_ALPHA(gc->fill) == 0) + (R_ALPHA(gc->col) == 0);
 
     if (code) {
 	if(code & 2)
-	    PDF_SetFill(fill, dd);
+	    PDF_SetFill(gc->fill, dd);
 	if(code & 1) {
-	    PDF_SetLineColor(col, dd);
-	    PDF_SetLineStyle(lty, lwd, dd);
+	    PDF_SetLineColor(gc->col, dd);
+	    PDF_SetLineStyle(gc->lty, gc->lwd, dd);
 	}
 	if(r > 10) { /* somewhat arbitrary, use font up to 20pt */
             /* Use four Bezier curves, hand-fitted to quadrants */
@@ -3212,7 +3212,7 @@ static void PDF_Circle(double x, double y, double r,
 	    a = 2./0.722 * r;
 	    xx = x - 0.396*a;
 	    yy = y - 0.347*a;
-	    tr = (R_ALPHA(fill) == 0) + 2 * (R_ALPHA(col) == 0) - 1;
+	    tr = (R_ALPHA(gc->fill) == 0) + 2 * (R_ALPHA(gc->col) == 0) - 1;
 	    if(!pd->inText) texton(pd);
 	    fprintf(pd->pdffp,
 		    "/F6 1 Tf %d Tr %.2f 0 0 %.2f %.2f %.2f Tm",
@@ -3223,36 +3223,36 @@ static void PDF_Circle(double x, double y, double r,
 }
 
 static void PDF_Line(double x1, double y1, double x2, double y2,
-		     int col, double gamma, int lty, double lwd,
+		     R_GE_gcontext *gc,
 		     NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
-    if(R_ALPHA(col) == 0) {
-	PDF_SetLineColor(col, dd);
-	PDF_SetLineStyle(lty, lwd, dd);
+    if(R_ALPHA(gc->col) == 0) {
+	PDF_SetLineColor(gc->col, dd);
+	PDF_SetLineStyle(gc->lty, gc->lwd, dd);
 	if(pd->inText) textoff(pd);
 	fprintf(pd->pdffp, "%.2f %.2f m %.2f %.2f l S\n", x1, y1, x2, y2);
     }
 }
 
 static void PDF_Polygon(int n, double *x, double *y,
-			int col, int fill, double gamma, int lty, double lwd,
+			R_GE_gcontext *gc,
 			NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     double xx, yy;
     int i, code;
 
-    code = 2 * (R_ALPHA(fill) == 0) + (R_ALPHA(col) == 0);
+    code = 2 * (R_ALPHA(gc->fill) == 0) + (R_ALPHA(gc->col) == 0);
 
     if (code) {
 	if(pd->inText) textoff(pd);
 	if(code & 2)
-	    PDF_SetFill(fill, dd);
+	    PDF_SetFill(gc->fill, dd);
 	if(code & 1) {
-	    PDF_SetLineColor(col, dd);
-	    PDF_SetLineStyle(lty, lwd, dd);
+	    PDF_SetLineColor(gc->col, dd);
+	    PDF_SetLineStyle(gc->lty, gc->lwd, dd);
 	}
 	xx = x[0];
 	yy = y[0];
@@ -3272,7 +3272,7 @@ static void PDF_Polygon(int n, double *x, double *y,
 }
 
 static void PDF_Polyline(int n, double *x, double *y,
-			 int col, double gamma, int lty, double lwd,
+			 R_GE_gcontext *gc,
 			 NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc*) dd->deviceSpecific;
@@ -3280,9 +3280,9 @@ static void PDF_Polyline(int n, double *x, double *y,
     int i;
 
     if(pd->inText) textoff(pd);
-    if(R_ALPHA(col) == 0) {
-	PDF_SetLineColor(col, dd);
-	PDF_SetLineStyle(lty, lwd, dd);
+    if(R_ALPHA(gc->col) == 0) {
+	PDF_SetLineColor(gc->col, dd);
+	PDF_SetLineStyle(gc->lty, gc->lwd, dd);
 	xx = x[0];
 	yy = y[0];
 	fprintf(pd->pdffp, "%.2f %.2f m\n", xx, yy);
@@ -3298,12 +3298,12 @@ static void PDF_Polyline(int n, double *x, double *y,
 
 static void PDF_Text(double x, double y, char *str,
 		     double rot, double hadj,
-		     int col, double gamma, int font, double cex, double ps,
+		     R_GE_gcontext *gc,
 		     NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    int size = (int)floor(cex * ps + 0.5);
-    int face = font;
+    int size = (int)floor(gc->cex * gc->ps + 0.5);
+    int face = gc->fontface;
     double a, b, rot1;
 
     if(face < 1 || face > 5) face = 1;
@@ -3311,8 +3311,8 @@ static void PDF_Text(double x, double y, char *str,
     a = size * cos(rot1);
     b = size * sin(rot1);
     if(!pd->inText) texton(pd);
-    if(R_ALPHA(col) == 0) {
-	PDF_SetFill(col, dd);
+    if(R_ALPHA(gc->col) == 0) {
+	PDF_SetFill(gc->col, dd);
 	fprintf(pd->pdffp, "/F%d 1 Tf %.2f %.2f %.2f %.2f %.2f %.2f Tm ",
 		face, a, b, -b, a, x, y);
 	PostScriptWriteString(pd->pdffp, str);
@@ -3333,27 +3333,29 @@ static void PDF_Hold(NewDevDesc *dd)
 {
 }
 
-static double PDF_StrWidth(char *str, int font,
-			   double cex, double ps, NewDevDesc *dd)
+static double PDF_StrWidth(char *str,
+			   R_GE_gcontext *gc,
+			   NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
-    if(font < 1 || font > 5) font = 1;
-    return floor(cex * ps + 0.5) *
+    if(gc->fontface < 1 || gc->fontface > 5) gc->fontface = 1;
+    return floor(gc->cex * gc->ps + 0.5) *
 	PostScriptStringWidth((unsigned char *)str,
-			      &(pd->metrics[font-1]));
+			      &(pd->metrics[gc->fontface-1]));
 }
 
-static void PDF_MetricInfo(int c, int font, double cex, double ps,
+static void PDF_MetricInfo(int c, 
+			   R_GE_gcontext *gc,
 			   double* ascent, double* descent,
 			   double* width, NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
-    if(font < 1 || font > 5) font = 1;
+    if(gc->fontface < 1 || gc->fontface > 5) gc->fontface = 1;
     PostScriptMetricInfo(c, ascent, descent, width,
-			 &(pd->metrics[font-1]));
-    *ascent = floor(cex * ps + 0.5) * *ascent;
-    *descent = floor(cex * ps + 0.5) * *descent;
-    *width = floor(cex * ps + 0.5) * *width;
+			 &(pd->metrics[gc->fontface-1]));
+    *ascent = floor(gc->cex * gc->ps + 0.5) * *ascent;
+    *descent = floor(gc->cex * gc->ps + 0.5) * *descent;
+    *width = floor(gc->cex * gc->ps + 0.5) * *width;
 }
