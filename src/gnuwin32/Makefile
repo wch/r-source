@@ -1,7 +1,7 @@
 include MkRules
 
 HELP = YES
-WINHELP = CHM # NO, CHM, BOTH
+WINHELP = BOTH # NO, CHM, BOTH
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -50,9 +50,9 @@ rdemo:  libR.a
 	make -C ../../demos/dynload -f $(RHOME)/src/gnuwin32/MkDyndemo
 
 rlibs:
-	$(MAKE) -C ../appl OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
-	$(MAKE) -C ../main OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
-	$(MAKE) -C ../nmath OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
+	$(MAKE) -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
+	$(MAKE) -C ../main  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
+	$(MAKE) -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) -C ./graphapp
 	$(MAKE) -C ./getline
 	$(MAKE) -C ./xdr
@@ -102,7 +102,7 @@ R.exp: R.exp1
 R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 	$(ECHO) EXPORTS > $@
 	$(NM) R.a $(MAINLIBS) $(EXTRALIBS) > RDefs
-	$(SED) -n "/^........ [T] _/s/^........ [T] _/ /p" RDefs >> $@
+	$(SED) -n '/^........ [T] _/s/^........ [T] _/ /p' RDefs >> $@
 	$(CAT) exported-vars >> $@
 	$(RM) RDefs
 
@@ -228,7 +228,7 @@ bundle-%:
 
 docs manuals:
 	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean
-	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win R_PKGS="$(PACKAGES)"
+	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win R_PKGS='$(PACKAGES)'
 	@$(MAKE) ziponly-base
 
 

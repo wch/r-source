@@ -13,7 +13,7 @@ RDIFF = $(RHOME)/src/scripts/Rdiff
 
 run: $(PKG)-Ex.R
 	@$(ECHO) "Running examples in '$(PKG)-Ex.R' ..."
-	$(R) R_LIBS="$(RLIB);$(R_LIBS)" < $(PKG)-Ex.R > $(PKG)-Ex.Rout
+	$(R) R_LIBS='$(RLIB);$(R_LIBS)' < $(PKG)-Ex.R > $(PKG)-Ex.Rout
 
 
 $(PKG)-Ex.R: $(RLIB)/$(PKG)/R-ex/*.R

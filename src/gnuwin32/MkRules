@@ -76,7 +76,7 @@ RESCOMP=$(BINPREF)windres
 	$(ECHO) LIBRARY $* > $*.def
 	$(ECHO) EXPORTS >> $*.def
 	$(NM) $^ > Defs
-	$(SED) -n "/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p" Defs >> $*.def
+	$(SED) -n '/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p' Defs >> $*.def
 	$(RM) Defs
 ifeq ($(strip $(HAVE_SHARED)),YES)
 	$(DLL) --shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@  $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
