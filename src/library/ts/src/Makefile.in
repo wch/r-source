@@ -11,7 +11,7 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SOURCES_C = PPsum.c burg.c carray.c filter.c init.c mburg.c myw.c \
+SOURCES_C = PPsum.c arima.c burg.c carray.c filter.c init.c mburg.c myw.c \
   pacf.c qr.c starma.c
 SOURCES_F = eureka.f stl.f
 DEPENDS = $(SOURCES_C:.c=.d)
