@@ -14,4 +14,9 @@
 \references{Brown, R. G. (1963).  Smoothing, Forcasting and Prediction
   of Discrete Time Series.  Prentice-Hall.
 }
+\examples{
+data(airmiles)
+plot(airmiles, main = "airmiles data",
+     xlab = "Passenger-miles flown by U.S. commercial airlines", col = 4)
+}
 \keyword{datasets}
