@@ -9,15 +9,68 @@ top_builddir = ../..
 
 include $(top_builddir)/Makeconf
 
+MANSRC = $(srcdir)/*/man/*.Rd
+
 all: R
 
 R:
+	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@cd base; $(MAKE)
 	@cd profile; $(MAKE)
-	@sh LIBSETUP
+	@for pkg in `ls $(srcdir) | \
+	    sed '/CVS/d; /Makefile.in/d; /base/d; /profile/d'`; do \
+	  RHOME=`cd $(top_builddir); pwd`; export RHOME; \
+	  $(SHELL) $${RHOME}/bin/INSTALL --no-docs $(srcdir)/$${pkg}; \
+	done
 
+docs: stamp-docs $(MANSRC) $(top_builddir)/library/LibIndex
+help: stamp-help $(MANSRC) $(top_builddir)/library/LibIndex
+html: stamp-html $(MANSRC)
+latex: stamp-latex $(MANSRC)
+
+stamp-docs:
+	@echo "Building ALL documentation (help, HTML, LaTeX)"
+	@$(MAKE) DOCS
+	@touch $@
+	@touch stamp-help
+	@touch stamp-html
+	@touch stamp-latex
+stamp-help:
+	@OPTS="--nroff" $(MAKE) DOCS
+	@touch $@
+stamp-html:
+	@OPTS="--html"  $(MAKE) DOCS
+	@touch $@
+stamp-latex:
+	@OPTS="--latex" $(MAKE) DOCS
+	@touch $@
+
+$(MANSRC):
+
+$(top_builddir)/library/LibIndex:
+	@if [ ! -f $@ ]; then touch $@; fi
+
+DOCS:
+	@for pkg in `ls $(srcdir) | \
+	    sed '/CVS/d; /Makefile.in/d; /profile/d'`; do \
+	  RHOME=`cd $(top_builddir); pwd`; export RHOME; \
+	  $${RHOME}/bin/build-help $${OPTS} $(srcdir)/$${pkg}; \
+	done
+
+mostlyclean: clean
 clean:
 	@echo Cleaning in src/library
-	@sh LIBCLEAN
+	@for pkg in `ls $(srcdir) | \
+	    sed '/CVS/d; /Makefile.in/d; /base/d; /profile/d'`; do \
+	  if test -d $${pkg}/src; then \
+	    (cd $${pkg}/src; rm -f *.o *.so); \
+	  fi; \
+	done
+	@rm -f stamp-*
+distclean:
+	cd base; $(MAKE) $@
+	cd profile; $(MAKE) $@
+	@rm -f Makefile
+maintainer-clean: distclean
 
-realclean: clean
+install install-strip uninstall TAGS info dvi check::
