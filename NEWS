@@ -46,6 +46,8 @@ BUG FIXES
     o	methods() could return duplicates if a method in a namespace
 	was both exported and registered.
 
+    o	The internal zip.unpack() could crash if more that 500 files
+	were to be extracted. (PR#2827)
 
 
 		CHANGES IN R VERSION 1.7.0
