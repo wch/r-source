@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-26, 2001-02-04
+@set FAQ-VERSION 1.2-27, 2001-02-20
 @set REL-VERSION 1.2.1
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1523,6 +1523,8 @@ algorithm, Sammon mapping, PCA and correspondence analysis.
 ML estimation for multivariate normal data with missing values.
 @item mvtnorm
 Multivariate normal and @math{t} distributions.
+@item netCDF
+Read data from netCDF files.
 @item nlme
 Fit and compare Gaussian linear and nonlinear mixed-effects models.
 @item nnet
@@ -1654,8 +1656,6 @@ Interface to the @acronym{NCSA} HDF5 library.
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
-@item netCDF
-Read data from netCDF files.
 @item npConfRatio
 Nonparametric confidence intervals for the ratios of medians.
 @item regexp
