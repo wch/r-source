@@ -1,8 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the
- *			      R Development Core Team
+ *  Copyright (C) 1998--1999  Marcus G. Daniels <mgd@swarm.org>
+ *  Copyright (C) 1998--1999  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,8 +18,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* FIXME : I think this should bear Marcus' copyright ... RI */
-
 #ifdef HAVE_CONFIG_H
 #include <Rconfig.h>
 #endif
@@ -31,12 +28,10 @@
 
 #ifdef HAVE_HDF5
 #include <hdf5.h>
-#endif
-
-#ifdef HAVE_HDF5
 
 #define STRING2REF_CONV "string->ref"
 #define REF2STRING_CONV "ref->string"
+/* FIXME: should really use SEXP R_RowNamesSymbol : */
 #define ROWNAMES "row.names"
 
 static herr_t
@@ -414,7 +409,7 @@ hdf5_write_vector (SEXP call, hid_t id, const char *symname, SEXP val)
 			      H5P_DEFAULT)) < 0)
       errorcall (call, "Unable to create dataset");
 
-    vector_io (call, TRUE, dataset, space, val);
+    vector_io (call, LTRUE, dataset, space, val);
     hdf5_save_attributes (call, dataset, val);
 
     if (type == LGLSXP || type == STRSXP)
@@ -1084,7 +1079,7 @@ hdf5_process_object (hid_t id, const char *name, void *client_data)
       if ((space = H5Dget_space (dataset)) < 0)
 	errorcall (iinfo->call, "unable to get dataset space");
 
-      if (H5Sis_simple (space) != TRUE)
+      if (H5Sis_simple (space) != LTRUE)
 	errorcall (iinfo->call, "space not simple");
 
       if ((rank = H5Sget_simple_extent_ndims (space)) < 0)
@@ -1180,7 +1175,7 @@ hdf5_process_object (hid_t id, const char *name, void *client_data)
 	    PROTECT (obj = ((rank == 1)
 			    ? allocVector (type, dims[0])
 			    : allocMatrix (type, dims[0], dims[1])));
-	    vector_io (iinfo->call, FALSE, dataset, space, obj);
+	    vector_io (iinfo->call, LFALSE, dataset, space, obj);
 	    iinfo->add (iinfo, name, obj);
 	    hdf5_load_attributes (iinfo->call, dataset, obj, name);
 	    UNPROTECT (1);
