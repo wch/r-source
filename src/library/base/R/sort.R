@@ -8,8 +8,8 @@ sort <- function(x, partial=NULL, na.last=NA,
     } else if(!is.atomic(x))
         stop("`x' must be atomic")
     if(has.na <- any(ina <- is.na(x))) {
-        x <- x[!ina]
         nas <- x[ina]
+        x <-  x[!ina]
     }
     if(!is.null(partial)) {
         if(!all(is.finite(partial))) stop("non-finite `partial'")
