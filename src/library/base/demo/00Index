@@ -1,0 +1,10 @@
+glm.vr
+graphics
+image
+is.things
+lm.glm			Some linear and generalized linear modelling
+			examples from `An Introduction to Statistical
+			Modelling' by Annette Dobson
+nlm
+recursion		Using recursion for adaptive integration.
+scoping			An illustration of lexical scoping.
