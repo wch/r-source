@@ -115,13 +115,14 @@ int main (int argc, char **argv)
 	sa.lpSecurityDescriptor = NULL;
 	sa.bInheritHandle = TRUE;
 
-	hIN = CreateFile(infile, GENERIC_READ, 0, &sa, OPEN_EXISTING, 0, NULL);
+	hIN = CreateFile(infile, GENERIC_READ, FILE_SHARE_READ, 
+			 &sa, OPEN_EXISTING, 0, NULL);
 	if (hIN == INVALID_HANDLE_VALUE) {
 	    fprintf(stderr, "unable to open input file\n");
 	    exit(1);
 	}
-	hOUT = CreateFile(outfile, GENERIC_WRITE, 0, &sa, CREATE_ALWAYS, 0, 
-			  NULL);
+	hOUT = CreateFile(outfile, GENERIC_WRITE, FILE_SHARE_READ,
+			  &sa, CREATE_ALWAYS, 0, NULL);
 	if (hOUT == INVALID_HANDLE_VALUE) {
 	    fprintf(stderr, "unable to open output file\n");
 	    exit(2);
