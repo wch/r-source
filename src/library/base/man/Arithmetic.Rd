@@ -17,16 +17,22 @@ x \%/\% y
 \alias{\%\%}
 \alias{\%/\%}
 \alias{Arithmetic}
-\value{
+\description{
 These binary operators perform arithmetic on vector objects.
+}
+\value{
 They return numeric vectors containing the result of the element
 by element operations.  The elements of shorter vectors are recycled
 as necessary.  The operators are \code{+} for addition, \code{-} for
 subtraction \code{*} for multiplication, \code{/} for division and
 \code{^} for exponentiation.
-\code{\%\%} indicates \code{x mod y} and \code{\%/\%} indicates integer
-division.
 
+\code{\%\%} indicates \code{x mod y} and \code{\%/\%} indicates integer
+division. It is guaranteed that \code{x  ==  (x \%\% y)  +  y * ( x \%/\% y )}
+unless \code{y == 0} where the result is \code{\link{NA}} or
+\code{\link{NaN}} (depending on the \code{\link{typeof}} of the arguments).
+
+ 
 Objects such as arrays or time-series can be operated on this
 way provided they are conformable.
 }
@@ -38,7 +44,7 @@ mathematical functions.
 x <- -1:12
 x + 1
 2 * x + 3
-x \%\% 2
+x \%\% 2 #-- is periodic
 x \%/\% 5
 }
 \keyword{arith}

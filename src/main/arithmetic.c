@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998  The R core team.
+ *  Copyright (C) 1998-1999	The R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 
 #include "Defn.h"
 #include "Mathlib.h"
+#include "Applic.h"/* machar */
 #include "arithmetic.h"
 
 /* Error Handling for Floating Point Errors */
@@ -144,9 +145,6 @@ void InitArithmetic()
 
 
 /* Machine Constants */
-
-void machar(int*, int*, int*, int*, int*, int*,
-	int*, int*, int*, double*, double*, double*, double*);
 
 SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -457,6 +455,13 @@ static SEXP real_unary(int code, SEXP s1)
     return s1;/* never used; to keep -Wall happy */
 }
 
+static double myfmod(double x1, double x2)
+{
+    double q = x1 / x2;
+    return x1 - floor(q) * x2;
+}
+
+
 /* i1 = i % n1; i2 = i % n2;
  * this macro is quite a bit faster than having real modulo calls
  * in the loop (tested on Intel and Sparc)
@@ -548,7 +553,8 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
 		INTEGER(ans)[i] = NA_INTEGER;
 	    else {
-		INTEGER(ans)[i] = x1 % x2;
+		INTEGER(ans)[i] = (int)myfmod((double)x1,(double)x2);
+		/* till 0.63.2:	 x1 % x2 */
 	    }
 	}
 	break;
@@ -578,12 +584,6 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 	copyMostAttrib(s2, ans);
 
     return ans;
-}
-
-static double myfmod(double x1, double x2)
-{
-    double q = x1 / x2;
-    return x1 - ((x1 < 0.0) ?  ceil(q) : floor(q)) * x2;
 }
 
 static SEXP real_binary(int code, SEXP s1, SEXP s2)
