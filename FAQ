@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-53 2004-03-18
+Version 1.8-54 2004-03-20
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2553,6 +2553,9 @@ distributions of R.)
 *vegan*
      Various help functions for vegetation scientists and community
      ecologists.
+
+*verify*
+     Construction of test suites using verify objects.
 
 *waveslim*
      Basic wavelet routines for time series analysis.
