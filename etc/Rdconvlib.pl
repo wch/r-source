@@ -551,7 +551,7 @@ sub text2html {
 		    $tmp = $htmlfile;
 		    ($base, $topic) = ($tmp =~ m+(.*)/(.*)+);
 		    $base =~ s+/html$++;
-		    $htmlfile = "ms-its:../../$base/winhlp/$base.chm::/$topic";
+		    $htmlfile = "ms-its:../../$base/chtml/$base.chm::/$topic";
 #		    print "$htmlfile\n";
 		}
 		$text =~
