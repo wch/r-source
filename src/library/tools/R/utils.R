@@ -115,6 +115,25 @@ function(dir, type, all.files = FALSE, full.names = TRUE)
     files
 }
 
+### **  extract_Rd_file
+extract_Rd_file <-
+function(file, topic)
+{
+    ## extract an Rd file from the man dir.
+    if(is.character(file)) {
+        file <- if(length(grep("\\.gz$", file))) gzfile(file, "r")
+        else file(file, "r")
+        on.exit(close(file))
+    }
+    lines <- readLines(file)
+    patt <- paste("^% --- Source file:.*/", topic, ".Rd ---$", sep="")
+    if(length(top <- grep(patt, lines)) != 1)
+        stop("no or more than one match")
+    eofs <- grep("^\\\\eof$", lines)
+    end <- min(eofs[eofs > top]) - 1
+    lines[top:end]
+}
+
 ### * Text utilities.
 
 ### ** delimMatch

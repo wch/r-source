@@ -174,6 +174,9 @@ NEW FEATURES
 	a given topic, and notifies about multiple matches.  It has a
 	separate print() method.
 
+	If the latex help files were not installed, help() will offer
+	to create a latex file on-the-fly from the installed .Rd file.
+
     o	heatmap() has a new argument 'reorderfun'.
 
     o	Most versions of install.packages() have an new optional
@@ -249,17 +252,6 @@ NEW FEATURES
 	All of these settings are currently only available via par()
 	(i.e., not in-line as arguments to plot(), lines(), ...)
 
-    o   It is now possible to specify colours with a full alpha
-	transparency channel via the new 'alpha' argument to the
-	rgb() and hsv() functions, or as a string of the form "#RRGGBBAA".
-
-	NOTE: most devices draw nothing if a colour is not opaque,
-	but PDF and Quartz devices will render semitransparent colours.
-
-    o   A new argument 'alpha' to the function col2rgba() 
-        provides the ability to return the alpha component of
-	colours (as well as the red, green, and blue components).
-
     o	A 'version' argument has been added to pdf() device.  If this is
 	set to "1.4", the device will support transparent colours.
 
@@ -305,6 +297,17 @@ NEW FEATURES
 	(History...Get from variable) issues a similar warning.
 
     o	reshape() can handle multiple 'id' variables.
+
+    o   It is now possible to specify colours with a full alpha
+	transparency channel via the new 'alpha' argument to the
+	rgb() and hsv() functions, or as a string of the form "#RRGGBBAA".
+
+	NOTE: most devices draw nothing if a colour is not opaque,
+	but PDF and Quartz devices will render semitransparent colours.
+
+	A new argument 'alpha' to the function col2rgba() 
+        provides the ability to return the alpha component of
+	colours (as well as the red, green, and blue components).
 
     o	source() with 'echo = TRUE' uses the function source attribute
 	when displaying commands as they are parsed.
@@ -361,7 +364,7 @@ NEW FEATURES
 
     o   Objects created from a formally defined class now include the
         name of the corresponding package as an attribute in the
-        object's class. This allows packages with namespaces to have
+        object's class.  This allows packages with namespaces to have
         private (non-exported) classes.
 
 

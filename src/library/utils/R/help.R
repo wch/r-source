@@ -158,9 +158,32 @@ function(x, ...)
         else if(type == "latex") {
             zfile <- zip.file.extract(file, "Rhelp.zip")
             if(zfile != file) on.exit(unlink(zfile))
-            if(file.exists(zfile))
+            if(file.exists(zfile)) {
                 .show_help_on_topic_offline(zfile, topic)
-            else
+                ok <- TRUE
+            } else if(interactive()) {
+                ## look for stored Rd files
+                path <- dirname(file) # .../pkg/latex
+                dirpath <- dirname(path)
+                pkgname <- basename(dirpath) # versioning? ...
+                Rdpath <- file.path(dirpath, "man",
+                                    paste(pkgname, "Rd.gz", sep="."))
+                if(file.exists(Rdpath)) {
+                    ans <- readline("No latex file is available: shall I try to create it? (y/n) ")
+                    if (substr(ans, 1, 1) == "y") {
+                        lines <- tools:::extract_Rd_file(Rdpath, topic)
+                        tf <- tempfile("Rd")
+                        tf2 <- tempfile("Rlatex")
+                        writeLines(lines, tf)
+                        cmd <- paste("R CMD Rdconv -t latex", tf, ">", tf2)
+                        res <- system(cmd)
+                        if(res) stop("problems running R CMD Rdconv")
+                        .show_help_on_topic_offline(tf2, topic)
+                        ok <- TRUE
+                    }
+                }
+            }
+            if(!ok)
                 stop(paste("No offline help for ", sQuote(topic),
                            " is available:\n",
                            "corresponding file is missing.",

@@ -95,6 +95,9 @@ type?topic
   \file{Rhelp.cfg} somewhere in your LaTeX search path.
 #endif
 
+  If LaTeX versions of help pages were not built at the installation of
+  the package, the \code{print} method will ask if conversion with
+  \code{R CMD Rdconv} (which requires Perl) should be attempted.
 }
 \note{
   Unless \code{lib.loc} is specified explicitly, the loaded packages are
@@ -113,7 +116,7 @@ type?topic
   The help files can be many small files.  On some file systems it is
   desirable to save space, and the text files in the \file{help} directory
   of an installed package can be zipped up as a zip archive
-  \file{Rhelp.zip}. Ensure that file \file{AnIndex} remains un-zipped.
+  \file{Rhelp.zip}.  Ensure that file \file{AnIndex} remains un-zipped.
   Similarly, all the files in the \file{latex} directory can be zipped
   to \file{Rhelp.zip}.
 #ifdef windows
@@ -121,7 +124,7 @@ type?topic
 #endif
 }
 
-\section{Method Documentation.}{
+\section{Method Documentation}{
   The authors of formal (\sQuote{S4}) methods can provide documentation
   on specific methods, as well as overall documentation on the methods
   of a particular function.  The \code{"?"} operator allows access to
