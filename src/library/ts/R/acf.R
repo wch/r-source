@@ -205,7 +205,7 @@ ccf <- function(x, y, lag.max = NULL,
     type <- match.arg(type)
     if(is.matrix(x) || is.matrix(y))
         stop("univariate time series only")
-    X <- na.action(ts.union(x, y))
+    X <- na.action(ts.union(as.ts(x), as.ts(y)))
     colnames(X) <- c(deparse(substitute(x)), deparse(substitute(y)))
     acf.out <- acf(X, lag.max = lag.max, plot = FALSE, type = type)
     lag <- c(rev(acf.out$lag[-1,2,1]), acf.out$lag[,1,2])

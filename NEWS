@@ -149,6 +149,8 @@ NEW FEATURES
 
      o	New function Sys.getpid() to get the process ID of the R session.
 
+     o	ccf() now coerces its x and y arguments to class "ts".
+
 
 INSTALLATION CHANGES
 
@@ -256,6 +258,7 @@ BUG FIXES
     o	wilcox.test() could give integer overflow warnings on very long 
 	vectors.  Also added tests for numeric inputs, as per the help
 	page.  (PR#2453)
+
 
 
 	**************************************************
