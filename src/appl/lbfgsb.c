@@ -638,6 +638,7 @@ static void mainlb(int n, int m, double *x,
 	gd = 0.;
 	sbgnrm = 0.;
 	stp = 0.;
+	xstep = 0.;
 	stpmx = 0.;
 	gdold = 0.;
 	dtd = 0.;
