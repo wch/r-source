@@ -65,7 +65,7 @@ It is planned to adopt sRGB as the standard R color description
 in future.
 }
 \seealso{
-\code{link{hsv}},
+\code{\link{hsv}},
 \code{\link{rgb}}.
 }
 \examples{
