@@ -437,6 +437,31 @@ static void readline_handler(char *line)
     }
     rl_top->readline_gotaline = 1;
 }
+
+/*
+ An extension or override for the standard interrupt handler (Ctrl-C)
+ that pops the readline stack and then calls the regular/standard
+ interrupt handler. This could be done in a nicer and more general way.
+ It may be necessary for embedding, etc. although it may not be an issue
+ there (as the host application will presumably handle signals).
+ by allowing us to add C routines to be called
+ at the conclusion of the context. At the moment there is only one such routine
+ allowed, and so we would have to chain them. This just leads to a different set of
+ maintenance problems when we rely on the authors of individual routines to 
+ not break the chain!
+ Note that the readline stack is not popped when a SIGUSR1 or SIGUSR2 occurs
+ during the select. But of course, we are about to terminate the R session at 
+ that point so it shouldn't be relevant except in the embedded case. But
+ the host application will probably not let things get that far and trap the
+ signals itself.
+*/
+static void
+handleInterrupt()
+{ 
+    popReadline();
+    onintr();
+}
+
 #endif /* HAVE_LIBREADLINE */
 
 /* Fill a text buffer from stdin or with user typed console input. */
@@ -477,6 +502,7 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	    rl_data.prev = rl_top;
 	    rl_top = &rl_data;
 	    pushReadline(prompt, readline_handler);
+	    signal(SIGINT, handleInterrupt);
 	}
 	else
 #endif /* HAVE_LIBREADLINE */
