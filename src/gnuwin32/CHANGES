@@ -29,6 +29,9 @@ several times faster.
 
 Rcmd INSTALL now allows Windows-style paths to a tar file.
 
+rproxy.dll is now built for StatConnector version 0.99: earlier versions
+are no longer supported.
+
 
 
 rw1022
