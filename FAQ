@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.4-24, 2002-03-18
+Version 1.4-25, 2002-03-20
 Kurt Hornik
 
 
@@ -1587,6 +1587,11 @@ works, was published in the Journal of Statistical Software
 *norm*
      Analysis of multivariate normal datasets with missing values.
 
+*npmc*
+     Nonparametric Multiple Comparisons:  provides simultaneous rank test
+     procedures for the one-way layout without presuming a certain
+     distribution.
+
 *odesolve*
      An interface for the Ordinary Differential Equation (ODE) solver lsoda.
      ODEs are expressed as R functions.
@@ -1692,6 +1697,16 @@ works, was published in the Journal of Statistical Software
 *spatstat*
      Data analysis and modelling of two-dimensional point patterns,
      including multitype points and spatial covariates.
+
+*spdep*
+     A collection of functions to create spatial weights matrix objects from
+     polygon contiguities, from point patterns by distance and tesselations,
+     for summarising these objects, and for permitting their use in spatial
+     data analysis; a collection of tests for spatial autocorrelation,
+     including global Moran's I and Geary's C, local Moran's I, saddlepoint
+     approximations for global and local Moran's I; and functions for
+     estimating spatial simultaneous autoregressive (SAR) models.  Was
+     formerly the three packages: *spweights*, *sptests*, and *spsarlm*.
 
 *splancs*
      Spatial and space-time point pattern analysis functions.
