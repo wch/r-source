@@ -78,7 +78,7 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@code{1.8.0} or later); the current version is often called something like
+(@code{1.9.0} or later); the current version is often called something like
 @code{@value{VERSION}} (although not officially).
 
 
@@ -272,13 +272,13 @@ If you are running a version of Windows which supports more than 2Gb per
 process, you can let the R executables use it by marking their headers
 suitably.  If you have Visual Studio use
 @smallexample
-editbin /LARGEADDRESSAWARE \path\to\rw1081\bin\Rgui.exe
-editbin /LARGEADDRESSAWARE \path\to\rw1081\bin\Rterm.exe
+editbin /LARGEADDRESSAWARE \path\to\rwxxxx\bin\Rgui.exe
+editbin /LARGEADDRESSAWARE \path\to\rwxxxx\bin\Rterm.exe
 @end smallexample
 and check this by
 @smallexample
-dumpbin /headers \path\to\rw1081\bin\Rgui.exe
-dumpbin /headers \path\to\rw1081\bin\Rterm.exe
+dumpbin /headers \path\to\rwxxxx\bin\Rgui.exe
+dumpbin /headers \path\to\rwxxxx\bin\Rterm.exe
 @end smallexample
 
 
@@ -321,7 +321,7 @@ LaTeX installed you can print help files by @code{help(fn_name, offline=TRUE)}.
 @section Can I use @code{R BATCH}?
 
 Yes.  The Windows analogue is @code{Rcmd BATCH}: use @code{Rcmd BATCH
---help} for full details.  (Perl is no longer required as from R 1.8.0.)
+--help} for full details.  (Perl is no longer required.)
 
 You can set also up a batch file using @code{Rterm.exe}.  A sample
 batch file might contain (as one line)
@@ -333,8 +333,8 @@ path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out 2>&1
 The purpose of @code{2>&1} is to redirect warnings and errors to the
 same file as normal output, and users of Windows 95/98/ME's default
 @code{command.com} `shell' will need to omit it. (That program has no
-means to redirect @file{stderr}, and as from R 1.8.0 @code{Rterm.exe}
-sends warnings and errors to the normal output file on such systems.)
+means to redirect @file{stderr}, and @code{Rterm.exe} sends warnings and
+errors to the normal output file on such systems.)
 
 
 @node Can I use @RWVER@ with ESS and (X)emacs?, What are HOME and working directories?, Can I use R BATCH?, Installation and Usage
@@ -569,7 +569,7 @@ You can install pre-compiled packages either from CRAN or from a local
 There are menu items on the @code{Packages} menu to provide a
 point-and-click interface to package installation.  The packages for
 each minor (1.x) version will be stored in a separate area, so for R
-1.8.? the files are in @code{bin/windows/contrib/1.8}.  You can try
+1.9.? the files are in @code{bin/windows/contrib/1.9}.  You can try
 those compiled for earlier versions, at your own risk.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
