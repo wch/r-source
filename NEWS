@@ -139,6 +139,8 @@ BUG FIXES
     o	parse.dcf() and hence package.contents() now work with a warning
 	for empty contents' files.
 
+    o	which.min() and which.max() now properly work for 0-length and
+	NA-only arguments.
 
 
 		CHANGES IN R VERSION 1.2.1
