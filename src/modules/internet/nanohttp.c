@@ -987,7 +987,7 @@ RxmlNanoHTTPConnectHost(const char *host, int port)
 
 	s = RxmlNanoHTTPConnectAttempt(addr);
 	if (s != -1) {
-	    RxmlMessage(2, "connected to '%s' on port %d.", host, port);
+	    RxmlMessage(1, "connected to '%s' on port %d.", host, port);
 	    return(s);
 	}
     }
@@ -1241,7 +1241,7 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
        authentication failure */
     if(proxy && !nAuthenticate && ctxt->returnValue == 407) {
 	char *env;
-	Rprintf("%s\n%s\n", "Proxy authentication failed:",
+	REprintf("%s\n%s\n", "Proxy authentication failed:",
 		"\tplease re-enter the credentials or hit Cancel");
 	R_FlushConsole(); R_ProcessEvents();
 	env = askUserPass("Proxy Authentication");

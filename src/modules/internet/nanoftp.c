@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2  The R Development Core Team.
+ *  Copyright (C) 2001-3  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -359,7 +359,7 @@ RxmlNanoFTPScanProxy(const char *URL) {
     if (URL == NULL)
 	RxmlMessage(0, "Removing FTP proxy info");
     else
-	RxmlMessage(0, "Using FTP proxy %s", URL);
+	RxmlMessage(1, "Using FTP proxy %s", URL);
     if (URL == NULL) return;
     buf[indx] = 0;
     while (*cur != 0) {
