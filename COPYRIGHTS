@@ -169,7 +169,7 @@ src/main/RNG.c
   and is used unchanged.
 
 
-src/modules/lapack/double.f, cmplx.f
+src/modules/lapack/double.f, cmplx.f, rgeev.f, rsyev.f
 
   Extracted from
   *  -- LAPACK routine (version 3.0) --
