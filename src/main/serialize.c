@@ -23,11 +23,6 @@
 #include <config.h>
 #endif
 
-/* we substitute if XDR is not found */
-#ifndef HAVE_XDR
-# define HAVE_XDR 1
-#endif
-
 #define NEED_CONNECTION_PSTREAMS
 #include <Defn.h>
 #include <Rmath.h>
@@ -473,13 +468,8 @@ static void InString(R_inpstream_t stream, char *buf, int length)
 static void OutFormat(R_outpstream_t stream)
 {
     if (stream->type == R_pstream_binary_format) {
-#ifdef HAVE_XDR
 	warning("binary format is deprecated; using xdr instead");
 	stream->type = R_pstream_xdr_format;
-#else
-	warning("portable binary format is not available; using ascii");
-	stream->type = R_pstream_ascii_format;
-#endif
     }
     switch (stream->type) {
     case R_pstream_ascii_format:  stream->OutBytes(stream, "A\n", 2); break;

@@ -436,7 +436,7 @@ AC_HEADER_SYS_WAIT
 ## includes.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
   fpu_control.h grp.h ieee754.h ieeefp.h locale.h netdb.h netinet/in.h \
-  pwd.h readline/history.h readline/readline.h rpc/rpc.h strings.h \
+  pwd.h readline/history.h readline/readline.h strings.h \
   sys/param.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
   sys/times.h sys/utsname.h unistd.h)
 ## </NOTE>

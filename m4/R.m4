@@ -1799,22 +1799,24 @@ AC_SUBST(BLAS_LIBS)
 ## R_XDR
 ## -----
 ## Try finding XDR library functions and headers.
-## In theory we only need rpc/xdr.h, but on some platforms
-## that is not usable without rpc/types.h, so we just
-## include rpc/rpc.h which seems to work everywhere.
+## FreeBSD in particular needs rpc/types.h before rpc/xdr.h
 AC_DEFUN([R_XDR],
 [AC_CACHE_CHECK([for XDR support],
                 [r_cv_xdr],
-[if test "${ac_cv_header_rpc_rpc_h}" = yes \
-    && test "${ac_cv_search_xdr_string}" != no ; then
-  r_cv_xdr=yes
-else
-  r_cv_xdr=no
-fi])
-if test "${r_cv_xdr}" = yes; then
-  AC_DEFINE(HAVE_XDR, 1,
-            [Define if you have the XDR headers and library routines.])
-fi
+[
+  AC_CHECK_HEADER(rpc/types.h)
+  if test "${ac_cv_header_rpc_types_h}" = yes ; then
+    AC_CHECK_HEADER(rpc/xdr.h, , , [#include <rpc/types.h>])
+    if test "${ac_cv_header_rpc_xdr_h}" = yes \
+      && test "${ac_cv_search_xdr_string}" != no ; then
+      r_cv_xdr=yes
+    else
+      r_cv_xdr=no
+    fi
+  else
+    r_cv_xdr=no
+  fi
+])
 AM_CONDITIONAL(BUILD_XDR, [test "x${r_cv_xdr}" = xno])
 ])# R_XDR
 
