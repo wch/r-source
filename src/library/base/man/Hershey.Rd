@@ -7,9 +7,8 @@ Hershey
 \description{
   If the \code{vfont} argument to one of the text-drawing functions
   (\code{\link{text}}, \code{\link{mtext}}, \code{\link{title}},
-  \code{\link{axis}}, and \code{\link{contour}})
-  is a character vector of length 2, hershey vector fonts are used to
-  render the text.
+  \code{\link{axis}}, and \code{\link{contour}}) is a character vector
+  of length 2, hershey vector fonts are used to render the text.
 
   These fonts have two advantages:\cr
   \enumerate{
@@ -21,7 +20,7 @@ Hershey
     for rotated and 3d text.
     \item this implementation was adapted from the GNU libplot library
     which provides support for non-ASCII and non-English fonts.  This means
-    that it is possible, for example, to produce wierd plotting symbols and
+    that it is possible, for example, to produce weird plotting symbols and
     Japanese characters.
   }
 

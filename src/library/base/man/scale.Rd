@@ -1,11 +1,11 @@
 \name{scale}
-\title{Scaling and Centering of Matrix-like Objects}
-\description{
-  \code{scale} is generic function who's default method
-  centers and/or scales the columns of a numeric matrix.
-}
 \alias{scale}
 \alias{scale.default}
+\title{Scaling and Centering of Matrix-like Objects}
+\description{
+  \code{scale} is generic function whose default method centers and/or
+  scales the columns of a numeric matrix.
+}
 \usage{
 scale(x, center = TRUE, scale = TRUE)
 }
