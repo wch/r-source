@@ -2720,17 +2720,16 @@ any other version of the Cygwin dlls in your path.
 @node The command line tools, Perl, The Windows toolset, The Windows toolset
 @section The command line tools
 
-You will need suitable versions of at least @code{basename,}
-@code{cat,} @code{comm,} @code{cp,} @code{cut,} @code{diff,}
-@code{echo,} @code{egrep,} @code{expr,} @code{find,} @code{gawk},
-@code{grep,} @code{gzip,} @code{ls,} @code{make,} @code{makeinfo,}
-@code{mkdir,} @code{mv,} @code{rm,} @code{sed,} @code{sh,}
-@code{sort,}  @code{texindex} and @code{touch}; we use those from the
-Cygwin distribution (@url{http://www.cygwin.com}) or compiled from the
-sources.  You will also need @code{zip} and @code{unzip} from the
-Info-ZIP project (@url{http://www.info-zip.org}).  We have packaged a
-set of all of these tools at
-@url{http://www.murdoch-sutherland.com/Rtools/tools.zip}.
+You will need suitable versions of at least @code{basename}, @code{cat},
+@code{comm}, @code{cp}, @code{cut}, @code{diff}, @code{echo},
+@code{egrep}, @code{expr}, @code{find}, @code{gawk}, @code{grep},
+@code{gzip}, @code{ls}, @code{make}, @code{makeinfo}, @code{mkdir},
+@code{mv}, @code{rm}, @code{sed}, @code{sh}, @code{sort},
+@code{texindex} and @code{touch}; we use those from the Cygwin
+distribution (@url{http://www.cygwin.com}) or compiled from the sources.
+You will also need @code{zip} and @code{unzip} from the Info-ZIP project
+(@url{http://www.info-zip.org}).  We have packaged a set of all of these
+tools at @url{http://www.murdoch-sutherland.com/Rtools/tools.zip}.
 
 @strong{Beware}: `Native' ports of make are @strong{not} suitable
 (including that at the mingw site).  There were also problems with
