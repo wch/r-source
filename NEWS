@@ -209,9 +209,8 @@ NEW FEATURES
     o   An extended version of the trace() function is available,
         compatible with the function in S-Plus.  Calls to R functions
         can be inserted on entry, on exit, and before any
-        subexpressions. Calls to browser and recover are useful.  The
-        trace() function requires the methods package, but can be
-        applied to any R function.  See ?trace (after library(methods)).
+        subexpressions. Calls to browser and recover are useful.
+        See ?trace.
 
     o   New assignment forms of split(); new function unsplit().
 
