@@ -324,7 +324,6 @@ distclean veryclean: clean clean-recommended
 	$(RM) -r ../library/*/check
 	$(RM) ../library/tcltk/src/tcl$(TCL_VERSION).def \
 	../library/tcltk//src/tk$(TCL_VERSION).def
-#	$(RM) ../library/Recommended/*.tgz ../library/Recommended/*.tar.gz
 	$(RM) R.exp Rm.exp COPYRIGHTS
 	$(RM) ../../doc/html/search/index.txt ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
