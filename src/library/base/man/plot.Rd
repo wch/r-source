@@ -23,7 +23,8 @@ plot(y ~ x, \dots)
       \item \code{"b"} for \bold{b}oth,
       \item \code{"c"} for the lines part alone of \code{"b"},
       \item \code{"o"} for both ``\bold{o}verplotted'',
-      \item \code{"h"} for ``\bold{h}istogram'' like vertical lines,
+      \item \code{"h"} for ``\bold{h}istogram'' like (or
+      ``high-density'') vertical lines,
       \item \code{"s"} for stair \bold{s}teps,
       \item \code{"S"} for other \bold{s}teps, see \emph{Details} below,
       \item \code{"n"} for no plotting.
