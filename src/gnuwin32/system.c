@@ -69,6 +69,19 @@ static void (*my_R_Busy)(int);
  *   Called at I/O, during eval etc to process GUI events.
  */
 
+#ifdef HAVE_TCLTK
+extern void Tcl_ServiceAll();
+#endif
+#ifdef HAVE_TCLTK
+typedef char *(* DL1)(char *);
+typedef int (* DL2)();
+typedef void (* DL3)();
+char *(* tk_eval)(char *);
+int (* tcltk_init)();
+void (* R_tcldo)();
+#endif
+
+
 void R_ProcessEvents(void)
 {
     while (peekevent()) doevent();
@@ -77,6 +90,13 @@ void R_ProcessEvents(void)
 	raise(SIGINT);
     }
     R_CallBackHook();
+#ifdef HAVE_TCLTK
+    R_tcldo();
+#endif
+}
+
+static void tcl_do_none()
+{
 }
 
 
@@ -705,6 +725,26 @@ int cmdlineoptions(int ac, char **av)
     }
     Rp->rhome = getRHOME();
 
+#ifdef HAVE_TCLTK
+    {
+	HINSTANCE tdlh;
+	char path[MAX_PATH];
+	strcpy(path, Rp->rhome);
+	strcat(path, "/bin/");
+	strcat(path, "Rtcltk.dll");
+	tdlh = LoadLibrary(path);
+	R_tcldo = tcl_do_none;
+	if (tdlh == NULL) {
+	    R_ShowMessage("Tcl/Tk LoadLibrary failure\n");
+	} else {
+	    tcltk_init = (DL2) GetProcAddress(tdlh, "tcltk_init");	
+	    if(tcltk_init() == 0) {
+		tk_eval = (DL1) GetProcAddress(tdlh, "_tk_eval");
+		R_tcldo = (DL3) GetProcAddress(tdlh, "R_tcldo");
+	    }
+	}
+    }
+#endif
 /*
  * try R_USER then HOME then working directory
  */

@@ -30,6 +30,10 @@ LIBFILES=$(foreach i, $(PACKAGES), ../../library/$i)
 PKGS=$(foreach i, $(PACKAGES), pkg-$i)
 PKGCLEAN=$(foreach i, $(PACKAGES), pkgclean-$i)
 
+## Optional Tcl/Tk support
+TCLTK = -DHAVE_TCLTK
+system-CFLAGS += $(TCLTK)
+
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
 all: rbuild rdemo rpackage
@@ -37,7 +41,7 @@ all: rbuild rdemo rpackage
 CFLAGS=$(OPTFLAGS) -I../include -I../include/R_ext -I. -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
 
-rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
+rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a tcl CHTML \
 	../include/globalvar.h front-ends COPYRIGHTS
 
 rpackage: fixed/fixdesc $(PKGS)
@@ -50,7 +54,7 @@ rdemo:  libR.a
 
 rlibs: 
 	$(MAKE) -C ../appl OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
-	$(MAKE) -C ../main OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
+	$(MAKE) -C ../main OPTFLAGS="$(OPTFLAGS) $(TCLTK)" -f Makefile.win
 	$(MAKE) -C ../nmath OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
 	$(MAKE) -C ./graphapp
 	$(MAKE) -C ./getline
@@ -109,6 +113,12 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 ../include/globalvar.h: exported-vars
 	$(AWK) -- '//{if ($$1 != "") print "#define " $$1 " (*_imp__" $$1 ")"}' \
 	           exported-vars > ../include/globalvar.h
+
+tcl:
+ifneq ($(strip $(TCLTK)),)
+	$(MAKE) -C ./tcltk
+endif
+
 
 CHTML:
 ifeq ($(strip $(HELP)),YES)
@@ -194,6 +204,7 @@ cleanwin:
 	$(MAKE) -C xdr clean
 	$(MAKE) -C math clean
 	$(MAKE) -C bitmap clean
+	$(MAKE) -C tcltk clean
 	-$(MAKE) -C installer clean
 
 
@@ -334,6 +345,8 @@ packagedist:
 	$(CP) readme.packages $(RPREFIX)
 	$(CP) ../../etc/Rdconvlib.pl ../../etc/buildlib.pl \
 	   ../../etc/html-layout.pl $(RPREFIX)/etc
+	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
+	$(CP) -pr windlgs $(RPREFIX)/src/library
 	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
 	$(RM) -r $(RPREFIX)
 
