@@ -44,7 +44,7 @@ summary(model2 <- glm(case ~ age+parity+education+spontaneous+induced,
 ## which is in the survival package
 if(require(survival)){
   model3 <- clogit(case~spontaneous+induced+strata(stratum),data=infert)
-  summary(model3)
+  print(summary(model3))
   detach()# survival (conflicts)
 }
 }
