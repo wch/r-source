@@ -43,6 +43,8 @@ static SEXP GetObject(RCNTXT *cptr)
 	PROTECT(b = findFun(CAR(funcall), sysp));
     else
 	PROTECT(b = eval(CAR(funcall), sysp));
+    /**** use R_sysfunction here insteas */
+    if (TYPEOF(b) != CLOSXP) error("non-closure generic function");
     formals = FORMALS(b);
 
     tag = TAG(formals);

@@ -716,6 +716,7 @@ static SEXP R_dot_target = NULL;
 SEXP R_execMethod(SEXP op, SEXP rho)
 {
     SEXP call, arglist, callerenv, newrho, next, val;
+    RCNTXT *cptr;
 
     if (R_dot_Generic == NULL) {
 	R_dot_Generic = install(".Generic");
@@ -749,15 +750,21 @@ SEXP R_execMethod(SEXP op, SEXP rho)
     defineVar(R_dot_Generic, findVar(R_dot_Generic, rho), newrho);
     defineVar(R_dot_Methods, findVar(R_dot_Methods, rho), newrho);
 
+    /* Find the calling context.  Should be R_GlobalContext unless
+       profiling has inserted a CTXT_BUILTIN frame. */
+    cptr = R_GlobalContext;
+    if (cptr->callflag & CTXT_BUILTIN)
+	cptr = cptr->nextcontext;
+
     /* The calling environment should either be the environment of the
        generic, rho, or the environment of the caller of the generic,
        the current sysparent. */
-    callerenv = R_GlobalContext->sysparent; /* or rho? */
+    callerenv = cptr->sysparent; /* or rho? */
 
     /* get the rest of the stuff we need from the current context,
        execute the method, and return the result */
-    call = R_GlobalContext->call;
-    arglist = R_GlobalContext->promargs;
+    call = cptr->call;
+    arglist = cptr->promargs;
     val = R_execClosure(call, op, arglist, callerenv, newrho);
     UNPROTECT(1);
     return val;
