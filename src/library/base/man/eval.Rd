@@ -1,9 +1,12 @@
 \name{eval}
-\title{Evaluate an (Unevaluated) Expression}
 \alias{eval}
 \alias{evalq}
 \alias{eval.parent}
 \alias{local}
+\title{Evaluate an (Unevaluated) Expression}
+\description{
+  Evaluate an \R expression in a specified environment.
+}
 \usage{
 eval(expr, envir = sys.frame(sys.parent()), 
      enclos = if(is.list(envir) || is.pairlist(envir)) 
@@ -23,9 +26,6 @@ local(expr, envir = new.env())
     \code{envir}.}
   \item{n}{parent generations to go back}
 }
-\description{
-  Evaluate an \R expression in a specified environment.
-}
 \details{
   \code{eval} evaluates the expression \code{expr} argument in the
   environment specified by \code{envir} and returns the computed value.
@@ -35,6 +35,9 @@ local(expr, envir = new.env())
 
   The \code{evalq} form is equivalent to \code{eval(quote(expr), ...)}.
   %% FIXME: This is not what the code says?
+  As \code{eval} evaluates its first argument before passing it to the
+  evaluator, it allows you to assign complicated expressions to symbols
+  and then evaluate them.  \code{evalq} avoids this.
 
   \code{eval.parent(expr, n)} is a shorthand for \code{eval(expr,
     parent.frame(n))}. 
@@ -48,11 +51,6 @@ local(expr, envir = new.env())
 \seealso{
   \code{\link{expression}}, \code{quote}, \code{\link{sys.frame}},
   \code{\link{environment}}. 
-}
-\details{
-  As \code{eval} evaluates its first argument before passing it to the
-  evaluator, it allows you to assign complicated expressions to symbols
-  and then evaluate them.  \code{evalq} avoids this.
 }
 \note{
   Due to the difference in scoping rules, there are some differences
