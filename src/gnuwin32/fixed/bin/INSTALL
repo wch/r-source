@@ -60,7 +60,7 @@ usage() if $opt_help;
 ## ===== to allow to be converted for use when cross-compiling =====
 my $BUILD = "MINGW";
 my $Rversion;
-if($BUILD == "CROSS") {
+if($BUILD eq "CROSS") {
     my $startdir = cwd();
     chdir("../..");
     $R_HOME = cwd();

@@ -255,6 +255,9 @@ NEW FEATURES
 
     o	tail() of a matrix now displays the original row numbers.
 
+    o	TukeyHSD() now labels comparisons when applied to an
+	interaction in an aov() fit.
+
     o	There is now a replacement method for window(), to allow a
 	range of values of time series to be replaced by specifying the
 	start and end times (and optionally a frequency).

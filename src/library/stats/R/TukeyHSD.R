@@ -35,8 +35,12 @@ TukeyHSD.aov <-
     names(out) <- names(tabs)
     MSE <- sum(resid(x)^2)/x$df.residual
     for (nm in names(tabs)) {
-        means <- as.vector(tabs[[nm]])
-        nms <- names(tabs[[nm]])
+        tab <- tabs[[nm]]
+        means <- as.vector(tab)
+        nms <- if(length(d <- dim(tab)) > 1) {
+            dn <- dimnames(tab)
+            apply(do.call("expand.grid", dn), 1, paste, collapse=":")
+        } else names(tab)
         n <- nn[[nm]]
         ## expand n to the correct length if necessary
         if (length(n) < length(means)) n <- rep.int(n, length(means))
