@@ -65,3 +65,17 @@ deparse(f(b, a)) == "list(b, a)" &&
 deparse(f(x, y)) == "list(x, y)" &&
 deparse(f(y, x)) == "list(y, x)"
 
+## Parser:
+1 <
+    2
+2 <=
+    3
+4 >=
+    3
+3 >
+    2
+2 ==
+    2
+## bug till ...
+1 !=
+    3
