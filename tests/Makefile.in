@@ -43,6 +43,7 @@ test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
 
 test-src-random = p-r-random-tests.R
+test-src-internet = internet.R
 
 DISTFILES = Makefile.in README \
 	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
@@ -51,6 +52,7 @@ DISTFILES = Makefile.in README \
 	$(test-src-reg) reg-IO.Rout.save reg-IO2.Rout.save \
 	reg-plot.Rout.save  reg-tests-2.Rout.save \
 	$(test-src-random)  p-r-random-tests.Rout.save \
+	$(test-src-internet) internet.Rout.save \
 	gct-foot.R
 SUBDIRS = Examples
 
@@ -62,6 +64,7 @@ test-out-sloppy = $(test-src-sloppy:.R=.Rout)
 test-out-gct = $(test-src-gct:.R=.Rout-gct)
 test-out-reg = $(test-src-reg:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
+test-out-internet = $(test-src-internet:.R=.Rout)
 
 test-out = $(test-src:.R=.Rout) $(test-out-gct) $(test-out-reg) \
            $(test-out-random)
@@ -143,6 +146,10 @@ test-Reg:
 test-Random:
 	@echo "running tests of random deviate generation"
 	@$(MAKE) $(test-out-random) RVAL_IF_DIFF=1
+
+test-Internet:
+	@echo "running tests of Internet and socket functions"
+	@$(MAKE) $(test-out-internet) RVAL_IF_DIFF=1
 
 test-undoc:
 	@for p in $(R_PKGS); do \
