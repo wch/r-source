@@ -26,7 +26,7 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.8 $ ';
+my $revision = ' $Revision: 1.9 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -40,10 +40,10 @@ my @knownoptions = ("help|h", "version|v", "debug|d", "library|l:s",
 			
 GetOptions (@knownoptions) || usage();
 R_version($name, $version) if $opt_version;
-usage() if $opt_help;
 
 my $R_HOME = $ENV{'R_HOME'} ||
     die "Error: Environment variable R_HOME not found\n";
+usage() if $opt_help;
 
 my $startdir = getcwd();
 if($opt_library){
@@ -160,7 +160,7 @@ sub usage {
 Usage: Rcmd $name [options] pkgs
 
 Install the add-on packages specified by pkgs into the default R library
-tree (${R_HOME}/library) or the tree specified via \`--library'.  The
+tree ($R_HOME/library) or the tree specified via \`--library'.  The
 elements of pkgs can be relative or absolute paths to directories with
 the package (bundle) sources, or to gzipped package \`tar' archives.
 
