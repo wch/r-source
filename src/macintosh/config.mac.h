@@ -158,7 +158,7 @@
 #define HAVE_XDR 1
 
 /* Define if you have the zlib headers and libraries. */
-#undef HAVE_ZLIB
+#define HAVE_ZLIB 1
 
 /* Define if you have IEEE 754 floating point arithmetic. */
 #define IEEE_754 1
