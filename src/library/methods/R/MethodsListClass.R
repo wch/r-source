@@ -184,7 +184,7 @@
         else if(length(sigArgs) > 0 && any(is.na(match(sigArgs, formalNames))))
             stop("The names in signature for method (",
                        paste(sigArgs, collapse = ", "), ") don't match function's arguments (",
-                       paste(formalNames, collapse = ", "),")", sep="")
+                       paste(formalNames, collapse = ", "),")")
         ## the named classes become the signature object
         class(signature) <- class(object)
         signature

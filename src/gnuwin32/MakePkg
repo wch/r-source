@@ -24,9 +24,12 @@ SRC = src
 #source directory
 SSPKG=$(SPKG)/$(SRC)
 
+# src Makefile?
+SRCMAKE=$(wildcard $(SSPKG)/Makefile.win)
+
 LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f $(SSPKG)/*.cc \
 	$(SSPKG)/*.cpp $(SSPKG)/*.C)
-ifeq ($(strip $(LSOURCES)),)
+ifeq ($(strip $(LSOURCES) $(SRCMAKE)),)
   LOBJS=
   DYNLIB=
 else
@@ -61,9 +64,6 @@ EXECFILES=$(filter-out $(SPKG)/exec/CVS, $(wildcard $(SPKG)/exec/*))
 
 # Others
 INSTFILES=$(filter-out $(SPKG)/inst/CVS, $(wildcard $(SPKG)/inst/*))
-
-# src Makefile?
-SRCMAKE=$(wildcard $(SSPKG)/Makefile.win)
 
 all:  $(DPKG)/zzzz $(DYNLIB) R $(DPKG)/demo $(DPKG)/exec $(DATA) mansrcs \
   indices

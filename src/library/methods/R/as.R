@@ -21,7 +21,7 @@ as <-
                 asMethod <- possibleExtends(thisClass, Class)
                 if(identical(asMethod, FALSE))
                     stop("Internal problem in as():  \"", thisClass, "\" is(object, \"",
-                         Class, "\) is TRUE, but the metadata asserts that the is relation is FALSE", sep="")
+                         Class, "\) is TRUE, but the metadata asserts that the is relation is FALSE")
                 else if(identical(asMethod, TRUE)) 
                     asMethod <- .makeAsMethod(quote(from), TRUE, Class)
                 else {

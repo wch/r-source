@@ -312,6 +312,8 @@ BUG FIXES
     o	The apparently never used `method' argument to loess() did not
 	work.  (PR#3332)
 
+    o	Fixed some malformed error messages in methods package.
+
 
 
 

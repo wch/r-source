@@ -494,8 +494,8 @@ stopifnot(kronecker(diag(1, 3), M) == diag(1, 3) %x% M)
 stopifnot(all.equal(log(1:10), log(1:10, exp(1))))
 stopifnot(all.equal(log10(30), log(30, 10)))
 stopifnot(all.equal(log2(2^pi), 2^log2(pi)))
-stopifnot(Mod(pi - log(exp(pi*1i)) / 1i) < .Machine$double.eps)
-stopifnot(Mod(1+exp(pi*1i)) < .Machine$double.eps)
+stopifnot(Mod(pi - log(exp(pi*1i)) / 1i) < 10*.Machine$double.eps)
+stopifnot(Mod(1+exp(pi*1i)) < 10*.Machine$double.eps)
 ## end of moved from Log.Rd
 
 

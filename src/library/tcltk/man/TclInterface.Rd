@@ -17,7 +17,6 @@
 \alias{tclvalue.tclVar}
 \alias{tclvalue<-.tclVar}
 \alias{tclvalue.tclObj}
-\alias{tclvalue<-.tclObj}
 \alias{as.character.tclObj}
 \alias{as.integer.tclObj}
 \alias{as.double.tclObj}
@@ -73,7 +72,6 @@ is.tclObj(x)
 \method{as.integer}{tclObj}(x, ...)
 \method{as.double}{tclObj}(x, ...)
 \method{tclvalue}{tclObj}(x)
-\method{tclvalue}{tclObj}(x) <- value
 
 # Default methods for tclvalue: use as.character(x) as Tcl name
 \method{tclvalue}{default}(x)

@@ -30,7 +30,9 @@ cutree(tree, k=NULL, h=NULL)
   where each column corresponds to the elements of \code{k} or \code{h},
   respectively (which are also used as column names).
 }
-\seealso{\code{\link{hclust}}}
+\seealso{
+  \code{\link{hclust}}, \code{\link{dendrogram}} for cutting trees themselves.
+}
 \examples{
 require(mva)
 data(USArrests)
