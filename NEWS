@@ -9,9 +9,12 @@
 
 NEW FEATURES
 
-    o   Packages can now have a configure script. If a file
-        `configure' is found it is executed before anything else is
-        done by R INSTALL.
+    o	New command line option `--no-environ' (under Unix) to prevent
+	sourcing the `~/.Renviron' file.  Implied by `--vanilla'.
+
+    o   Packages can now have a configure script.  If a file `configure'
+	is found it is executed before anything else is done by R
+	INSTALL.
 
     o   If HTML help files are asked for but not available, text help 
 	is used. 
