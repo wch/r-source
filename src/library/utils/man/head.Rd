@@ -20,22 +20,30 @@
 head(x, \dots)
 \method{head}{default}(x, n=6, \dots)
 \method{head}{data.frame}(x, n=6, \dots)
+\method{head}{matrix}(x, n=6, \dots)
 
 tail(x, \dots)
 \method{tail}{default}(x, n=6, \dots)
 \method{tail}{data.frame}(x, n=6, \dots)
+\method{tail}{matrix}(x, n=6, addrownums=TRUE, \dots)
 }
 \arguments{
   \item{x}{an object}
   \item{n}{size for the resulting object: number of elements for a
     vector (including lists), rows for a matrix or data frame or
     lines for a function.}
+  \item{addrownums}{if there are no row names, create them from the row numbers.}
   \item{\dots}{arguments to be passed to or from other methods.}
 }
 \details{
   For matrices and data frames, the first/last \code{n} rows are returned.
   For functions, the first/last \code{n} lines of the deparsed function are
   returned as character strings.
+  
+  If a matrix has no row names, then \code{tail()} will add row names of
+  the form \code{"[n,]"} to the result, so that it looks similar to the last lines of \code{x}
+  when printed.  Setting \code{addrownums = FALSE} suppresses this behaviour.
+  
 }
 \value{
   An object (usually) like \code{x} but generally smaller.

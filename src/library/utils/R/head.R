@@ -29,10 +29,20 @@ tail.default <- function(x, n=6, ...)
     if(length(dim(x)) == 1) array(ans, n, list(names(ans))) else ans
 }
 
-tail.data.frame <- tail.matrix <- function(x, n=6, ...)
+tail.data.frame <- function(x, n=6, ...)
 {
     nrx <- nrow(x)
     x[seq(to=nrx, length=min(n, nrx)), , drop=FALSE]
+}
+
+tail.matrix <- function(x, n=6, addrownums=TRUE, ...)
+{
+    nrx <- nrow(x)
+    sel <- seq(to=nrx, length=min(n, nrx))
+    ans <- x[sel, , drop=FALSE]
+    if (addrownums && is.null(rownames(x))) 
+    	rownames(ans) <- paste("[", sel, ",]", sep="")
+    ans
 }
 
 tail.function <- function(x, n=6, ...)

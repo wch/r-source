@@ -20,6 +20,8 @@ USER-VISIBLE CHANGES
 
     o	dir.create() now expands '~' in filenames.
 
+    o	tail() of a matrix now displays the original row numbers.
+
 
 NEW FEATURES
 
