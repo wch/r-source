@@ -24,11 +24,11 @@ summary.matrix    (object, \dots)
     summaries of the results of various model fitting functions.  The
     function invokes particular \code{\link{methods}} which depend on
     the \code{\link{class}} of the first argument. 
-
-    For \code{\link{factor}}s, the frequency of the first \code{maxsum -
-	1} most frequent levels is shown, where the less frequent levels
-    are summarized in \code{"(Others)"} (resulting in \code{maxsum}
-    frequencies).
+}
+\details{
+    For \code{\link{factor}}s, the frequency of the first \code{maxsum - 1}
+    most frequent levels is shown, where the less frequent levels are
+    summarized in \code{"(Others)"} (resulting in \code{maxsum} frequencies).
 
     The functions \code{summary.lm} and \code{summary.glm} are examples
     of particular methods which summarise the results produced by
@@ -39,10 +39,7 @@ summary.matrix    (object, \dots)
     class of its argument.  See the documentation of the particular
     methods for details of what is produced by that method.
 }
-\seealso{
-\code{\link{anova}},
-\code{\link{summary.glm}},
-\code{\link{summary.lm}}.
+\seealso{\code{\link{anova}},\code{\link{summary.glm}},\code{\link{summary.lm}}.
 }
 \examples{
 options(digits=5)
