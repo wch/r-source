@@ -52,7 +52,7 @@ SOURCES_F = \
 	dposl.f \
 	dqrdc.f \
 	dqrdc2.f \
-        dqrls.f \
+	dqrls.f \
 	dqrsl.f \
 	dqrutl.f \
 	dsvdc.f \

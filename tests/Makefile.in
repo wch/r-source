@@ -130,7 +130,7 @@ distdir: $(DISTFILES)
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
-        done
+	done
 	@for d in $(SUBDIRS); do \
 	  test -d $(distdir)/$${d} \
 	    || mkdir $(distdir)/$${d} \
@@ -138,7 +138,7 @@ distdir: $(DISTFILES)
 	  chmod 755 $(distdir)/$${d}; \
 	  (cd $${d} && $(MAKE) distdir) \
 	    || exit 1; \
-        done
+	done
 
 ## Automagically generated dependencies:
 

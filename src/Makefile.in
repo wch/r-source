@@ -43,7 +43,7 @@ distdir:
 	  chmod 755 $(distdir)/$${d}; \
 	  (cd $${d} && $(MAKE) distdir) \
 	    || exit 1; \
-        done
+	done
 	@((cd $(srcdir); \
 	      $(TAR) -c -f - --exclude=CVS macintosh windows) \
 	    | (cd $(distdir); $(TAR) -x -f -)) \

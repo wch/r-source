@@ -41,7 +41,7 @@ install-html:
 	@echo "Installing doc ..."
 	@for f in $(srcdir)/html/*.html \
 	          $(srcdir)/html/*.jpg \
-		  $(srcdir)/html/*.css; do \
+	          $(srcdir)/html/*.css; do \
 	  $(INSTALL_DATA) $$f $(rhome)/doc/html; \
 	done
 	@for f in $(srcdir)/html/search/*.class \
@@ -98,7 +98,7 @@ distdir: $(DISTFILES)
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
-        done
+	done
 	@for d in $(SUBDIRS); do \
 	  if test -f $${d}/Makefile; then \
 	    test -d $(distdir)/$${d} \

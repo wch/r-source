@@ -79,7 +79,7 @@ distdir: $(DISTFILES)
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
-        done
+	done
 	@((cd $(srcdir); \
 	      $(TAR) -c -f - --exclude=CVS $(SUBDIRS)) \
 	    | (cd $(distdir); $(TAR) -x -f -)) \
