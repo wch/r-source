@@ -5,8 +5,8 @@ export(isoreg, ksmooth, loess, loess.control,
        smooth.spline, smoothEnds, supsmu)
 
 # methods which are documented and registered
-# export(as.stepfun.isoreg, plot.isoreg, plot.ppr,
-#        predict.loess, predict.smooth.spline)
+export(as.stepfun.isoreg, plot.isoreg, plot.ppr,
+       predict.loess, predict.smooth.spline)
 
 # match.call requires
 export(ppr.default, ppr.formula)
