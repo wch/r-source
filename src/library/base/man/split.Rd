@@ -6,6 +6,7 @@
 \alias{split<-}
 \alias{split<-.default}
 \alias{split<-.data.frame}
+\alias{split.data.frame<-}
 \alias{unsplit}
 \description{
   \code{split} divides the data in the vector \code{x} into the groups
