@@ -241,12 +241,14 @@ function (data, type = "any")
                         sep = "")
                 rval <- eval(parse(text = name)[1])
         }
-        if (length(rval) == nrow(frame)) 
-                names(rval) <- attr(frame, "row.names")
-        else if (is.matrix(rval) && nrow(rval) == nrow(frame)) {
-                t1 <- dimnames(rval)
-                dimnames(rval) <- list(attr(frame, "row.names"), 
-                        t1[[2]])
+        if(!is.null(rval)){
+          if (length(rval) == nrow(frame)) 
+            names(rval) <- attr(frame, "row.names")
+          else if (is.matrix(rval) && nrow(rval) == nrow(frame)) {
+            t1 <- dimnames(rval)
+            dimnames(rval) <- list(attr(frame, "row.names"), 
+                                   t1[[2]])
+          }
         }
         return(rval)
 }
