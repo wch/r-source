@@ -624,7 +624,7 @@ set of @file{.R} source files and target output files
 
 @item
 The code in package vignettes (@pxref{Writing package vignettes}) is
-executed. 
+executed.
 
 @item
 If a working @command{latex} program is available, the @file{.dvi}
@@ -3541,6 +3541,7 @@ $7 = 5
 * Calling C from FORTRAN and vice versa::
 * Numerical analysis subroutines::
 * Optimization::
+* Integration::
 * Utility functions::
 * Platform and version information::
 * Standalone Mathlib::
@@ -4230,7 +4231,7 @@ Further, the included header @file{R_ext/Boolean.h} has constants
 provide a way of using ``logical'' variables in C consistently.
 
 
-@node Optimization, Utility functions, Numerical analysis subroutines, The R API
+@node Optimization, Integration, Numerical analysis subroutines, The R API
 @section Optimization
 @cindex optimization
 
@@ -4317,7 +4318,94 @@ be found from the help page for @code{optim}: see the source code
 specifies which bounds are to be used.
 
 
-@node Utility functions, Platform and version information, Optimization, The R API
+@node Integration, Utility functions, Optimization, The R API
+@section Integration
+@cindex integration
+
+The C code underlying @code{integrate} can be accessed directly.  The user
+needs to supply a @emph{vectorizing} C function to compute the
+function to be integrated, of the type
+
+@smallexample
+typedef void integr_fn(double *x, int n, void *ex);
+@end smallexample
+
+@noindent
+where @code{x[]} is both input and output and has length @code{n},
+i.e., a  C function, say @code{fn}, of type
+@code{integr_fn} must basically do @code{for(i in 1:n) x[i] := f(x[i],ex)}.
+The vectorization requirement can be used to speed up the integrand
+instead of calling it @code{n} times.  Note that in the current
+implementation built on QUADPACK, @code{n} will be either 15 or 21.
+@*
+The @code{ex} argument is a pointer passed down from the calling
+routine, normally used to carry auxiliary information.
+
+There are interfaces for definite and for indefinite integrals.
+`Indefinite' means that at least one of the integration boundaries is
+not finite.
+
+@itemize @bullet
+@item Finite:
+@findex Rdqags
+@smallexample
+void Rdqags(integr_fn f, void *ex, double *a, double *b,
+            double *epsabs, double *epsrel,
+            double *result, double *abserr, int *neval, int *ier,
+            int *limit, int *lenw, int *last,
+            int *iwork, double *work);
+@end smallexample
+
+@item Indefinite:
+@findex Rdqagi
+@smallexample
+void Rdqagi(integr_fn f, void *ex, double *bound, int *inf,
+            double *epsabs, double *epsrel,
+            double *result, double *abserr, int *neval, int *ier,
+            int *limit, int *lenw, int *last,
+            int *iwork, double *work);
+@end smallexample
+
+@end itemize
+
+@noindent
+Only the 3rd and 4th argument differ for the two integrators;
+for the definite integral, using @code{Rdqags}, @code{a} and @code{b}
+are the integration interval bounds, whereas for an indefinite
+integral, using @code{Rdqagi}, @code{bound} is the finite bound of the
+integration (if the integral is not doubly-infinite) and @code{inf} is
+a code indicating the kind of integration range,
+@table @code
+@item inf = 1
+      corresponds to (bound, +Inf),
+@item inf = -1
+      corresponds to (-Inf, bound),
+@item inf = 2
+      corresponds to (-Inf, +Inf),
+@end table
+
+@code{f} and @code{ex} define the integrand function, see above;
+@code{epsabs} and @code{epsrel} specify the absolute and relative
+accuracy requested, @code{result}, @code{abserr} and @code{last} are the output
+components @code{value}, @code{abs.err} and @code{subdivisions} of the
+@R{} function integrate, where @code{neval} gives the number of
+integrand function evaluations, and the error code @code{ier} is
+translated to @R{}'s @code{integrate() $ message}, look at that function
+definition.
+@*
+@code{limit} corresponds to @code{integrate(..., subdivisions = *)}.
+It seems you should always define the two work arrays
+and the length of the second one as
+@smallexample
+    lenw = 4 * limit;
+    iwork =   (int *) R_alloc(limit, sizeof(int));
+    work = (double *) R_alloc(lenw,  sizeof(double));
+@end smallexample
+
+The comments in the source code in @file{src/appl/integrate.c} give
+more details, particularly about reasons for failure (@code{ier >= 1}).
+
+@node Utility functions, Platform and version information, Integration, The R API
 @section Utility functions
 @cindex Sort functions from C
 
@@ -4358,7 +4446,7 @@ the left, larger ones to the right.
 These routines sort @code{v[i:j]} or @code{iv[i:j]} (using 1-indexing,
 i.e. @code{v[1]} is the first element) calling the quicksort algorithm
 as used by @R{}'s @code{sort(v, method = "quick")} and documented on the
-help page for the @R{} function @code{sort}. 
+help page for the @R{} function @code{sort}.
 The @code{..._I()} versions also return the @code{sort.index()} vector in
 @code{I}.  Note that the ordering is @emph{not} stable, so tied values
 may be permuted.
@@ -4371,7 +4459,7 @@ use different sorting functions if NAs can be present.
 @deftypefunx subroutine qsort3 (double precision @var{v}, integer @var{ii}, integer@var{jj})
 
 The FORTRAN interface routines for sorting double precision vectors are
-@code{qsort3} and @code{qsort4}, equivalent to @code{R_qsort} and 
+@code{qsort3} and @code{qsort4}, equivalent to @code{R_qsort} and
 @code{R_qsort_I} respectively.
 
 @end deftypefun

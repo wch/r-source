@@ -370,9 +370,9 @@ C-LEVEL FACILITIES
 	back-compatibility entry point Rf_log1p is provided.
 	Applications using libRmath may need to be re-compiled.
 
-    o	The methods used by optim() have entry points in R_ext/Applic.h
-	and have a more general interface documented in `Writing R
-	Extensions'.
+    o	The methods used by optim() and integrate() have entry points in
+	R_ext/Applic.h and have a more general interface documented in
+	`Writing R Extensions'.
 
     o	The bessel_? entry points are now suitable to be called
 	repeatedly from code loaded by .C().  (They did not free

@@ -61,10 +61,21 @@ integrate(f, lower, upper, subdivisions=100,
 \examples{
 integrate(dnorm, -1.96, 1.96)
 integrate(dnorm, -Inf, Inf)
+\testonly{
+ ii <- integrate(dnorm, -1.96, 1.96); ii
+ i1 <- integrate(dnorm, -Inf, Inf)  ; i1
+ stopifnot(all.equal(0.9500042097, ii$val, tol = ii$abs.err, scale=1),
+           all.equal( 1,           i1$val, tol = i1$abs.err, scale=1))
+}
 
 ## a slowly-convergent integral
 integrand <- function(x) {1/((x+1)*sqrt(x))}
 integrate(integrand, lower = 0, upper = Inf)
+\testonly{
+  ii <- integrate(integrand, lower = 0, upper = Inf, rel.tol = 1e-10)
+  ii
+  stopifnot(all.equal(pi, ii$val, tol = ii$abs.err, scale=1))
+}
 integrate(integrand, lower = 0, upper = 10)
 integrate(integrand, lower = 0, upper = 100000)
 integrate(integrand, lower = 0, upper = 1000000, stop.on.error = FALSE)

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001  the R Development Core Team
+ *  Copyright (C) 2001-2002  the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,16 +15,24 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+
+ * C backend of R's integrate() --- via
+ *	 .External("call_dqags", ...) -> Rdqags()  -- for finite     interval
+ *	 .External("call_dqagi", ...) -> Rdqagi()  -- for indefinite interval
+*/
 
 #include <Rinternals.h>
-#include <R_ext/Boolean.h>
-#ifdef Macintosh
-#include <fp.h>
-#else
-#include <math.h>
-#endif
 #include <Rmath.h>
+#include <R_ext/Applic.h> /* exporting the API , particularly */
+/*--- typedef void integr_fn(double *x, int n, void *ex) ---
+ * vectorizing function   f(x[1:n], ...) -> x[]  {overwriting x[]}.
+ * Vectorization can be used to speed up the integrand
+ * instead of calling it  n  times.
+*/
+
+/* Only these two are called via .External(.) :*/
+SEXP call_dqags(SEXP args);
+SEXP call_dqagi(SEXP args);
 
 typedef struct int_struct
 {
@@ -32,21 +40,13 @@ typedef struct int_struct
     SEXP env;  /* where to evaluate the calls */
 } int_struct, *IntStruct;
 
-static void Rdqags(IntStruct IS, double *lower, double *upper, 
-		   double *epsabs, double *epsrel, double *result,
-		   double *abserr, int *neval, int *ier, int *limit, 
-		   int *lenw, int *last, int *iwork, double *work);
 
-static void Rdqagi(IntStruct IS, double *bound, int *inf, 
-		   double *epsabs, double *epsrel, double *result,
-		   double *abserr, int *neval, int *ier, int *limit, 
-		   int *lenw, int *last, int *iwork, double *work);
-
-
-static void Rintfn(double *x, int n, IntStruct IS)
+/* This is *the* ``integr_fn f'' used when called from R : */
+static void Rintfn(double *x, int n, void *ex)
 {
     SEXP args, resultsxp;
     int i;
+    IntStruct IS = (IntStruct) ex;
 
     PROTECT(args = allocVector(REALSXP, n));
     for(i = 0; i < n; i++) REAL(args)[i] = x[i];
@@ -54,16 +54,15 @@ static void Rintfn(double *x, int n, IntStruct IS)
     PROTECT(resultsxp = eval(lang2(IS->f , args), IS->env));
 
     if(length(resultsxp) != n)
-	error("evaluation of function gave a result of wrong length");    
+	error("evaluation of function gave a result of wrong length");
     for(i = 0; i < n; i++) {
 	x[i] = REAL(resultsxp)[i];
 	if(!R_FINITE(x[i]))
 	    error("non-finite function value");
     }
     UNPROTECT(2);
-    return;   
+    return;
 }
-
 
 SEXP call_dqags(SEXP args)
 {
@@ -84,7 +83,8 @@ SEXP call_dqags(SEXP args)
     iwork = (int *) R_alloc(limit, sizeof(int));
     work = (double *) R_alloc(lenw, sizeof(double));
 
-    Rdqags(&is, &lower, &upper, &epsabs, &epsrel, &result,
+    Rdqags(Rintfn, (void*)&is,
+	   &lower, &upper, &epsabs, &epsrel, &result,
 	   &abserr, &neval, &ier, &limit, &lenw, &last, iwork, work);
 
     PROTECT(ans = allocVector(VECSXP, 4));
@@ -125,7 +125,7 @@ SEXP call_dqagi(SEXP args)
     iwork = (int *) R_alloc(limit, sizeof(int));
     work = (double *) R_alloc(lenw, sizeof(double));
 
-    Rdqagi(&is, &bound,&inf,&epsabs,&epsrel,&result,
+    Rdqagi(Rintfn, (void*)&is, &bound,&inf,&epsabs,&epsrel,&result,
 	   &abserr,&neval,&ier,&limit,&lenw,&last,iwork,work);
 
     PROTECT(ans = allocVector(VECSXP, 4));
@@ -147,27 +147,28 @@ SEXP call_dqagi(SEXP args)
     return ans;
 }
 
+
 /* f2c-ed translations + modifications of QUADPACK functions from here down */
 
-
-static void rdqagie(IntStruct IS, double *, int *, double * , double *, int *, 
-		    double *, double *, int *, 
+static void rdqagie(integr_fn f, void *ex,
+		    double *, int *, double * , double *, int *,
+		    double *, double *, int *,
 		    int *, double *, double *, double *, double *,
 		    int *, int *);
 
-static void  rdqk15i(IntStruct IS, double *, int *, double * , double *, 
-		     double *, double *, double *, double *);
+static void rdqk15i(integr_fn f, void *ex,
+		    double *, int *, double * , double *,
+		    double *, double *, double *, double *);
 
-static void  rdqelg(int *, double *, double *, double *, double *, int *);
+static void rdqagse(integr_fn f, void *ex, double *, double *,
+		    double *, double *, int *, double *, double *,
+		    int *, int *, double *, double *, double *,
+		    double *, int *, int *);
+
+static void rdqk21(integr_fn f, void *ex,
+		   double *, double *, double *, double *, double *, double *);
 
 static void rdqpsrt(int *, int *, int *, double *, double *, int *, int *);
-
-static void  rdqagse(IntStruct IS, double *, double *, 
-		     double *, double *, int *, double *, double *,
-		     int *, int *, double *, double *, double *, 
-		     double *, int *, int *);
-
-static void rdqk21(IntStruct IS, double *, double *, double *, double *, double *, double *);
 
 static void rdqelg(int *, double *, double *, double *, double *, int *);
 
@@ -176,11 +177,11 @@ static void rdqelg(int *, double *, double *, double *, double *, int *);
 static double c_b6 = 0.;
 static double c_b7 = 1.;
 
-static
-void Rdqagi(IntStruct IS, double *bound, int *inf, double *
-	    epsabs, double *epsrel, double *result, double *abserr, 
-	    int *neval, int *ier, int *limit, int *lenw, int *
-	    last, int *iwork, double *work)
+void Rdqagi(integr_fn f, void *ex, double *bound, int *inf,
+	    double *epsabs, double *epsrel,
+	    double *result, double *abserr, int *neval, int *ier,
+	    int *limit, int *lenw, int *last,
+	    int *iwork, double *work)
 {
     int l1, l2, l3;
 
@@ -199,7 +200,7 @@ void Rdqagi(IntStruct IS, double *bound, int *inf, double *
            or i = integral of f over (-infinity,bound)
            or i = integral of f over (-infinity,+infinity)
            hopefully satisfying following claim for accuracy
-           abs(i-result).le.max(epsabs,epsrel*abs(i)).
+           abs(i-result) <= max(epsabs,epsrel*abs(i)).
 ***description
 
        integration over infinite intervals
@@ -226,8 +227,8 @@ void Rdqagi(IntStruct IS, double *bound, int *inf, double *
                     absolute accuracy requested
            epsrel - double precision
                     relative accuracy requested
-                    if  epsabs.le.0
-                    and epsrel.lt.max(50*rel.mach.acc.,0.5d-28),
+                    if  epsabs <= 0
+                    and epsrel < max(50*rel.mach.acc.,0.5d-28),
                     the routine will end with ier = 6.
 
 
@@ -246,7 +247,7 @@ void Rdqagi(IntStruct IS, double *bound, int *inf, double *
                     ier = 0 normal and reliable termination of the
                             routine. it is assumed that the requested
                             accuracy has been achieved.
-                  - ier.gt.0 abnormal termination of the routine. the
+                  - ier > 0 abnormal termination of the routine. the
                             estimates for result and error are less
                             reliable. it is assumed that the requested
                             accuracy has not been achieved.
@@ -286,9 +287,9 @@ void Rdqagi(IntStruct IS, double *bound, int *inf, double *
                             divergence can occur with any other value
                             of ier.
                         = 6 the input is invalid, because
-                            (epsabs.le.0 and
-                             epsrel.lt.max(50*rel.mach.acc.,0.5d-28))
-                             or limit.lt.1 or leniw.lt.limit*4.
+                            (epsabs <= 0 and
+                             epsrel < max(50*rel.mach.acc.,0.5d-28))
+                             or limit < 1 or leniw < limit*4.
                             result, abserr, neval, last are set to
                             zero. exept when limit or leniw is
                             invalid, iwork(1), work(limit*2+1) and
@@ -300,13 +301,13 @@ void Rdqagi(IntStruct IS, double *bound, int *inf, double *
                    dimensioning parameter for iwork
                    limit determines the maximum number of subintervals
                    in the partition of the given integration interval
-                   (a,b), limit.ge.1.
-                   if limit.lt.1, the routine will end with ier = 6.
+                   (a,b), limit >= 1.
+                   if limit < 1, the routine will end with ier = 6.
 
            lenw  - int
                    dimensioning parameter for work
                    lenw must be at least limit*4.
-                   if lenw.lt.limit*4, the routine will end
+                   if lenw < limit*4, the routine will end
                    with ier = 6.
 
            last  - int
@@ -322,7 +323,7 @@ void Rdqagi(IntStruct IS, double *bound, int *inf, double *
                    to the error estimates over the subintervals,
                    such that work(limit*3+iwork(1)),... ,
                    work(limit*3+iwork(k)) form a decreasing
-                   sequence, with k = last if last.le.(limit/2+2), and
+                   sequence, with k = last if last <= (limit/2+2), and
                    k = limit+1-last otherwise
 
            work  - double precision
@@ -357,21 +358,20 @@ void Rdqagi(IntStruct IS, double *bound, int *inf, double *
     l2 = *limit + l1;
     l3 = *limit + l2;
 
-    rdqagie(IS, bound, inf, epsabs, epsrel, limit, result, abserr, neval, ier, 
+    rdqagie(f, ex, bound, inf, epsabs, epsrel, limit, result, abserr, neval, ier,
 	    &work[1], &work[l1], &work[l2], &work[l3], &iwork[1], last);
 
     return;
 } /* Rdqagi */
 
 static
-void rdqagie(IntStruct IS, double *bound, int *inf, double *
-	     epsabs, double *epsrel, int *limit, double *result, 
+void rdqagie(integr_fn f, void *ex, double *bound, int *inf, double *
+	     epsabs, double *epsrel, int *limit, double *result,
 	     double *abserr, int *neval, int *ier, double *alist__,
 	     double *blist, double *rlist, double *elist, int *
 	     iord, int *last)
 {
     /* System generated locals */
-    int i__1, i__2;
     double d__1, d__2;
 
     /* Local variables */
@@ -414,7 +414,7 @@ void rdqagie(IntStruct IS, double *bound, int *inf, double *
            or i = integral of f over (-infinity,bound)
            or i = integral of f over (-infinity,+infinity),
            hopefully satisfying following claim for accuracy
-           abs(i-result).le.max(epsabs,epsrel*abs(i))
+           abs(i-result) <= max(epsabs,epsrel*abs(i))
 ***description
 
 integration over infinite intervals
@@ -439,13 +439,13 @@ standard fortran subroutine
                     absolute accuracy requested
            epsrel - double precision
                     relative accuracy requested
-                    if  epsabs.le.0
-                    and epsrel.lt.max(50*rel.mach.acc.,0.5d-28),
+                    if  epsabs <= 0
+                    and epsrel < max(50*rel.mach.acc.,0.5d-28),
                     the routine will end with ier = 6.
 
            limit  - int
                     gives an upper bound on the number of subintervals
-                    in the partition of (a,b), limit.ge.1
+                    in the partition of (a,b), limit >= 1
 
         on return
            result - double precision
@@ -462,7 +462,7 @@ standard fortran subroutine
                     ier = 0 normal and reliable termination of the
                             routine. it is assumed that the requested
                             accuracy has been achieved.
-                  - ier.gt.0 abnormal termination of the routine. the
+                  - ier > 0 abnormal termination of the routine. the
                             estimates for result and error are less
                             reliable. it is assumed that the requested
                             accuracy has not been achieved.
@@ -502,8 +502,8 @@ standard fortran subroutine
                             divergence can occur with any other value
                             of ier.
                         = 6 the input is invalid, because
-                            (epsabs.le.0 and
-                             epsrel.lt.max(50*rel.mach.acc.,0.5d-28),
+                            (epsabs <= 0 and
+                             epsrel < max(50*rel.mach.acc.,0.5d-28),
                             result, abserr, neval, last, rlist(1),
                             elist(1) and iord(1) are set to zero.
                             alist(1) and blist(1) are set to 0
@@ -537,7 +537,7 @@ standard fortran subroutine
                     error estimates over the subintervals,
                     such that elist(iord(1)), ..., elist(iord(k))
                     form a decreasing sequence, with k = last
-                    if last.le.(limit/2+2), and k = limit+1-last
+                    if last <= (limit/2+2), and k = limit+1-last
                     otherwise
 
            last   - int
@@ -625,8 +625,6 @@ standard fortran subroutine
     rlist[1] = 0.;
     elist[1] = 0.;
     iord[1] = 0;
-/* Computing MAX */
-    d__1 = epmach * 50.;
     if (*epsabs <= 0. && (*epsrel < fmax2(epmach * 50., 5e-29))) *ier = 6;
     if (*ier == 6) return;
 
@@ -642,7 +640,7 @@ standard fortran subroutine
     if (*inf == 2) {
 	boun = 0.;
     }
-    rdqk15i(IS, &boun, inf, &c_b6, &c_b7, result, abserr, &defabs, &resabs);
+    rdqk15i(f, ex, &boun, inf, &c_b6, &c_b7, result, abserr, &defabs, &resabs);
 
 /*           test on accuracy */
 
@@ -651,9 +649,7 @@ standard fortran subroutine
     elist[1] = *abserr;
     iord[1] = 1;
     dres = fabs(*result);
-/* Computing MAX */
-    d__1 = *epsabs, d__2 = *epsrel * dres;
-    errbnd = fmax2(d__1,d__2);
+    errbnd = fmax2(*epsabs, *epsrel * dres);
     if (*abserr <= epmach * 100. * defabs && *abserr > errbnd) *ier = 2;
     if (*limit == 1) *ier = 1;
     if (*ier != 0 || (*abserr <= errbnd && *abserr != resabs)
@@ -688,8 +684,7 @@ standard fortran subroutine
 /*           main do-loop */
 /*           ------------ */
 
-    i__1 = *limit;
-    for (*last = 2; *last <= i__1; ++(*last)) {
+    for (*last = 2; *last <= *limit; ++(*last)) {
 
 /*           bisect the subinterval with nrmax-th largest error estimate. */
 
@@ -698,11 +693,11 @@ standard fortran subroutine
 	a2 = b1;
 	b2 = blist[maxerr];
 	erlast = errmax;
-	rdqk15i(IS, &boun, inf, &a1, &b1, &area1, &error1, &resabs, &defab1);
-	rdqk15i(IS, &boun, inf, &a2, &b2, &area2, &error2, &resabs, &defab2);
+	rdqk15i(f, ex, &boun, inf, &a1, &b1, &area1, &error1, &resabs, &defab1);
+	rdqk15i(f, ex, &boun, inf, &a2, &b2, &area2, &error2, &resabs, &defab2);
 
-/*           improve previous approximations to integral */
-/*           and error and test for accuracy. */
+/*           improve previous approximations to integral
+	     and error and test for accuracy. */
 
 	area12 = area1 + area2;
 	erro12 = error1 + error2;
@@ -711,7 +706,7 @@ standard fortran subroutine
 	if (defab1 == error1 || defab2 == error2) {
 	    goto L15;
 	}
-	if ((d__1 = rlist[maxerr] - area12, fabs(d__1)) > fabs(area12) * 1e-5 ||
+	if (fabs(rlist[maxerr] - area12) > fabs(area12) * 1e-5 ||
 		 erro12 < errmax * .99) {
 	    goto L10;
 	}
@@ -728,32 +723,26 @@ L10:
 L15:
 	rlist[maxerr] = area1;
 	rlist[*last] = area2;
-/* Computing MAX */
-	d__1 = *epsabs, d__2 = *epsrel * fabs(area);
-	errbnd = fmax2(d__1,d__2);
+	errbnd = fmax2(*epsabs, *epsrel * fabs(area));
 
 /*           test for roundoff error and eventually set error flag. */
 
-	if (iroff1 + iroff2 >= 10 || iroff3 >= 20) {
+	if (iroff1 + iroff2 >= 10 || iroff3 >= 20)
 	    *ier = 2;
-	}
-	if (iroff2 >= 5) {
+	if (iroff2 >= 5)
 	    ierro = 3;
-	}
 
-/*           set error flag in the case that the number of */
-/*           subintervals equals limit. */
+/*           set error flag in the case that the number of
+	     subintervals equals limit. */
 
-	if (*last == *limit) {
+	if (*last == *limit)
 	    *ier = 1;
-	}
 
-/*           set error flag in the case of bad integrand behaviour */
-/*           at some points of the integration range. */
+/*           set error flag in the case of bad integrand behaviour
+	     at some points of the integration range. */
 
-/* Computing MAX */
-	d__1 = fabs(a1), d__2 = fabs(b2);
-	if (fmax2(d__1,d__2) <= (epmach * 100. + 1.) * (fabs(a2) + uflow * 1e3)) 
+	if (fmax2(fabs(a1), fabs(b2)) <=
+	    (epmach * 100. + 1.) * (fabs(a2) + uflow * 1e3))
 		{
 	    *ier = 4;
 	}
@@ -778,36 +767,31 @@ L20:
 	elist[maxerr] = error2;
 	elist[*last] = error1;
 
-/*           call subroutine dqpsrt to maintain the descending ordering */
-/*           in the list of error estimates and select the subinterval */
-/*           with nrmax-th largest error estimate (to be bisected next). */
+/*           call subroutine dqpsrt to maintain the descending ordering
+	     in the list of error estimates and select the subinterval
+	     with nrmax-th largest error estimate (to be bisected next). */
 
 L30:
 	rdqpsrt(limit, last, &maxerr, &errmax, &elist[1], &iord[1], &nrmax);
 	if (errsum <= errbnd) {
 	    goto L115;
 	}
-	if (*ier != 0) {
-	    goto L100;
-	}
-	if (*last == 2) {
-	    goto L80;
-	}
-	if (noext) {
-	    goto L90;
-	}
+	if (*ier != 0)	    goto L100;
+	if (*last == 2)     goto L80;
+	if (noext) 	    goto L90;
+
 	erlarg -= erlast;
-	if ((d__1 = b1 - a1, fabs(d__1)) > small) {
+	if (fabs(b1 - a1) > small) {
 	    erlarg += erro12;
 	}
 	if (extrap) {
 	    goto L40;
 	}
 
-/*           test whether the interval to be bisected next is the */
-/*           smallest interval. */
+/*           test whether the interval to be bisected next is the
+	     smallest interval. */
 
-	if ((d__1 = blist[maxerr] - alist__[maxerr], fabs(d__1)) > small) {
+	if (fabs(blist[maxerr] - alist__[maxerr]) > small) {
 	    goto L90;
 	}
 	extrap = TRUE;
@@ -817,20 +801,19 @@ L40:
 	    goto L60;
 	}
 
-/*           the smallest interval has the largest error. */
-/*           before bisecting decrease the sum of the errors over the */
-/*           larger intervals (erlarg) and perform extrapolation. */
+/*           the smallest interval has the largest error.
+	     before bisecting decrease the sum of the errors over the
+	     larger intervals (erlarg) and perform extrapolation. */
 
 	id = nrmax;
 	jupbnd = *last;
 	if (*last > *limit / 2 + 2) {
 	    jupbnd = *limit + 3 - *last;
 	}
-	i__2 = jupbnd;
-	for (k = id; k <= i__2; ++k) {
+	for (k = id; k <= jupbnd; ++k) {
 	    maxerr = iord[nrmax];
 	    errmax = elist[maxerr];
-	    if ((d__1 = blist[maxerr] - alist__[maxerr], fabs(d__1)) > small) {
+	    if (fabs(blist[maxerr] - alist__[maxerr]) > small) {
 		goto L90;
 	    }
 	    ++nrmax;
@@ -934,11 +917,9 @@ L110:
 
 L115:
     *result = 0.;
-    i__1 = *last;
-    for (k = 1; k <= i__1; ++k) {
+    for (k = 1; k <= *last; ++k)
 	*result += rlist[k];
-/* L120: */
-    }
+
     *abserr = errsum;
 L130:
     *neval = *last * 30 - 15;
@@ -951,15 +932,14 @@ L130:
     return;
 } /* rdqagie_ */
 
-static
-void Rdqags(IntStruct IS, double *a, double *b, double *epsabs,
-	    double *epsrel, double *result, double *abserr, int *
-	    neval, int *ier, int *limit, int *lenw, int *last, 
-	    int *iwork, double *work)
+void Rdqags(integr_fn f, void *ex, double *a, double *b,
+	    double *epsabs, double *epsrel,
+	    double *result, double *abserr, int *neval, int *ier,
+	    int *limit, int *lenw, int *last, int *iwork, double *work)
 {
     int l1, l2, l3;
 
-/* 
+/*
 ***begin prologue  dqags
 ***date written   800101   (yymmdd)
 ***revision date  830518   (yymmdd)
@@ -972,7 +952,7 @@ void Rdqags(IntStruct IS, double *a, double *b, double *epsabs,
 ***purpose  the routine calculates an approximation result to a given
            definite integral  i = integral of f over (a,b),
            hopefully satisfying following claim for accuracy
-           abs(i-result).le.max(epsabs,epsrel*abs(i)).
+           abs(i-result) <= max(epsabs,epsrel*abs(i)).
 ***description
 
        computation of a definite integral
@@ -997,8 +977,8 @@ void Rdqags(IntStruct IS, double *a, double *b, double *epsabs,
                     absolute accuracy requested
            epsrel - double precision
                     relative accuracy requested
-                    if  epsabs.le.0
-                    and epsrel.lt.max(50*rel.mach.acc.,0.5d-28),
+                    if  epsabs <= 0
+                    and epsrel < max(50*rel.mach.acc.,0.5d-28),
                     the routine will end with ier = 6.
 
         on return
@@ -1016,7 +996,7 @@ void Rdqags(IntStruct IS, double *a, double *b, double *epsabs,
                     ier = 0 normal and reliable termination of the
                             routine. it is assumed that the requested
                             accuracy has been achieved.
-                    ier.gt.0 abnormal termination of the routine
+                    ier > 0 abnormal termination of the routine
                             the estimates for integral and error are
                             less reliable. it is assumed that the
                             requested accuracy has not been achieved.
@@ -1056,9 +1036,9 @@ void Rdqags(IntStruct IS, double *a, double *b, double *epsabs,
                             divergence can occur with any other value
                             of ier.
                         = 6 the input is invalid, because
-                            (epsabs.le.0 and
-                             epsrel.lt.max(50*rel.mach.acc.,0.5d-28)
-                            or limit.lt.1 or lenw.lt.limit*4.
+                            (epsabs <= 0 and
+                             epsrel < max(50*rel.mach.acc.,0.5d-28)
+                            or limit < 1 or lenw < limit*4.
                             result, abserr, neval, last are set to
                             zero.except when limit or lenw is invalid,
                             iwork(1), work(limit*2+1) and
@@ -1070,13 +1050,13 @@ void Rdqags(IntStruct IS, double *a, double *b, double *epsabs,
                    dimensioning parameter for iwork
                    limit determines the maximum number of subintervals
                    in the partition of the given integration interval
-                   (a,b), limit.ge.1.
-                   if limit.lt.1, the routine will end with ier = 6.
+                   (a,b), limit >= 1.
+                   if limit < 1, the routine will end with ier = 6.
 
            lenw  - int
                    dimensioning parameter for work
                    lenw must be at least limit*4.
-                   if lenw.lt.limit*4, the routine will end
+                   if lenw < limit*4, the routine will end
                    with ier = 6.
 
            last  - int
@@ -1092,7 +1072,7 @@ void Rdqags(IntStruct IS, double *a, double *b, double *epsabs,
                    to the error estimates over the subintervals
                    such that work(limit*3+iwork(1)),... ,
                    work(limit*3+iwork(k)) form a decreasing
-                   sequence, with k = last if last.le.(limit/2+2),
+                   sequence, with k = last if last <= (limit/2+2),
                    and k = limit+1-last otherwise
 
            work  - double precision
@@ -1136,48 +1116,37 @@ void Rdqags(IntStruct IS, double *a, double *b, double *epsabs,
     l2 = *limit + l1;
     l3 = *limit + l2;
 
-    rdqagse(IS, a, b, epsabs, epsrel, limit, result, abserr, neval, ier, 
+    rdqagse(f, ex, a, b, epsabs, epsrel, limit, result, abserr, neval, ier,
 	    &work[1], &work[l1], &work[l2], &work[l3], &iwork[1], last);
 
     return;
 } /* rdqags_ */
 
-static 
-void rdqagse(IntStruct IS, double *a, double *b, double *
-	     epsabs, double *epsrel, int *limit, double *result, 
+static
+void rdqagse(integr_fn f, void *ex, double *a, double *b, double *
+	     epsabs, double *epsrel, int *limit, double *result,
 	     double *abserr, int *neval, int *ier, double *alist__,
 	     double *blist, double *rlist, double *elist, int *
 	     iord, int *last)
 {
-    /* System generated locals */
-    int i__1, i__2;
-    double d__1, d__2;
-
     /* Local variables */
-    double area, dres;
-    int ksgn, nres;
-    double area1, area2, area12;
-    int k;
-    double small = 0.0, erro12;
+    Rboolean noext, extrap;
+    int k,ksgn, nres;
     int ierro;
-    double a1, a2, b1, b2, defab1, defab2, oflow;
     int ktmin, nrmax;
-    double uflow;
-    Rboolean noext;
     int iroff1, iroff2, iroff3;
-    double res3la[3], error1, error2;
     int id;
-    double rlist2[52];
     int numrl2;
-    double defabs, epmach, erlarg = 0.0, abseps, correc = 0.0, errbnd, resabs;
     int jupbnd;
-    double erlast, errmax;
     int maxerr;
-    double reseps;
-    Rboolean extrap;
-    double ertest = 0.0, errsum;
+    double res3la[3];
+    double rlist2[52];
+    double abseps, area, area1, area2, area12, dres, epmach;
+    double a1, a2, b1, b2, defabs, defab1, defab2, oflow, uflow, resabs, reseps;
+    double error1, error2, erro12, errbnd, erlast, errmax, errsum;
 
-/* 
+    double correc = 0.0, erlarg = 0.0, ertest = 0.0, small = 0.0;
+/*
 ***begin prologue  dqagse
 ***date written   800101   (yymmdd)
 ***revision date  830518   (yymmdd)
@@ -1190,7 +1159,7 @@ void rdqagse(IntStruct IS, double *a, double *b, double *
 ***purpose  the routine calculates an approximation result to a given
            definite integral i = integral of f over (a,b),
            hopefully satisfying following claim for accuracy
-           abs(i-result).le.max(epsabs,epsrel*abs(i)).
+           abs(i-result) <= max(epsabs,epsrel*abs(i)).
 ***description
 
        computation of a definite integral
@@ -1214,8 +1183,8 @@ void rdqagse(IntStruct IS, double *a, double *b, double *
                     absolute accuracy requested
            epsrel - double precision
                     relative accuracy requested
-                    if  epsabs.le.0
-                    and epsrel.lt.max(50*rel.mach.acc.,0.5d-28),
+                    if  epsabs <= 0
+                    and epsrel < max(50*rel.mach.acc.,0.5d-28),
                     the routine will end with ier = 6.
 
            limit  - int
@@ -1237,7 +1206,7 @@ void rdqagse(IntStruct IS, double *a, double *b, double *
                     ier = 0 normal and reliable termination of the
                             routine. it is assumed that the requested
                             accuracy has been achieved.
-                    ier.gt.0 abnormal termination of the routine
+                    ier > 0 abnormal termination of the routine
                             the estimates for integral and error are
                             less reliable. it is assumed that the
                             requested accuracy has not been achieved.
@@ -1278,8 +1247,8 @@ void rdqagse(IntStruct IS, double *a, double *b, double *
                             divergence can occur with any other value
                             of ier.
                         = 6 the input is invalid, because
-                            epsabs.le.0 and
-                            epsrel.lt.max(50*rel.mach.acc.,0.5d-28).
+                            epsabs <= 0 and
+                            epsrel < max(50*rel.mach.acc.,0.5d-28).
                             result, abserr, neval, last, rlist(1),
                             iord(1) and elist(1) are set to zero.
                             alist(1) and blist(1) are set to a and b
@@ -1313,7 +1282,7 @@ void rdqagse(IntStruct IS, double *a, double *b, double *
                     error estimates over the subintervals,
                     such that elist(iord(1)), ..., elist(iord(k))
                     form a decreasing sequence, with k = last
-                    if last.le.(limit/2+2), and k = limit+1-last
+                    if last <= (limit/2+2), and k = limit+1-last
                     otherwise
 
            last   - int
@@ -1401,12 +1370,10 @@ void rdqagse(IntStruct IS, double *a, double *b, double *
     blist[1] = *b;
     rlist[1] = 0.;
     elist[1] = 0.;
-/* Computing MAX */
-    d__1 = epmach * 50.;
-    if (*epsabs <= 0. && (*epsrel < fmax2(d__1,5e-29))) {
+    if (*epsabs <= 0. && *epsrel < fmax2(epmach * 50., 5e-29)) {
 	*ier = 6;
+	return;
     }
-    if (*ier == 6) return;
 
 /*           first approximation to the integral */
 /*           ----------------------------------- */
@@ -1414,25 +1381,21 @@ void rdqagse(IntStruct IS, double *a, double *b, double *
     uflow = DBL_MIN;
     oflow = DBL_MAX;
     ierro = 0;
-    rdqk21(IS, a, b, result, abserr, &defabs, &resabs);
+    rdqk21(f, ex, a, b, result, abserr, &defabs, &resabs);
 
 /*           test on accuracy. */
 
     dres = fabs(*result);
-/* Computing MAX */
-    d__1 = *epsabs, d__2 = *epsrel * dres;
-    errbnd = fmax2(d__1,d__2);
+    errbnd = fmax2(*epsabs, *epsrel * dres);
     *last = 1;
     rlist[1] = *result;
     elist[1] = *abserr;
     iord[1] = 1;
-    if (*abserr <= epmach * 100. * defabs && *abserr > errbnd) {
+    if (*abserr <= epmach * 100. * defabs && *abserr > errbnd)
 	*ier = 2;
-    }
-    if (*limit == 1) {
+    if (*limit == 1)
 	*ier = 1;
-    }
-    if (*ier != 0 || (*abserr <= errbnd && *abserr != resabs) 
+    if (*ier != 0 || (*abserr <= errbnd && *abserr != resabs)
 	|| *abserr == 0.) goto L140;
 
 /*           initialization */
@@ -1461,22 +1424,20 @@ void rdqagse(IntStruct IS, double *a, double *b, double *
 /*           main do-loop */
 /*           ------------ */
 
-    i__1 = *limit;
-    for (*last = 2; *last <= i__1; ++(*last)) {
+    for (*last = 2; *last <= *limit; ++(*last)) {
 
-/*           bisect the subinterval with the nrmax-th largest error */
-/*           estimate. */
+/*           bisect the subinterval with the nrmax-th largest error estimate. */
 
 	a1 = alist__[maxerr];
 	b1 = (alist__[maxerr] + blist[maxerr]) * .5;
 	a2 = b1;
 	b2 = blist[maxerr];
 	erlast = errmax;
-	rdqk21(IS, &a1, &b1, &area1, &error1, &resabs, &defab1);
-	rdqk21(IS, &a2, &b2, &area2, &error2, &resabs, &defab2);
+	rdqk21(f, ex, &a1, &b1, &area1, &error1, &resabs, &defab1);
+	rdqk21(f, ex, &a2, &b2, &area2, &error2, &resabs, &defab2);
 
-/*           improve previous approximations to integral */
-/*           and error and test for accuracy. */
+/*           improve previous approximations to integral
+	     and error and test for accuracy. */
 
 	area12 = area1 + area2;
 	erro12 = error1 + error2;
@@ -1485,7 +1446,7 @@ void rdqagse(IntStruct IS, double *a, double *b, double *
 	if (defab1 == error1 || defab2 == error2) {
 	    goto L15;
 	}
-	if ((d__1 = rlist[maxerr] - area12, fabs(d__1)) > fabs(area12) * 1e-5 ||
+	if (fabs(rlist[maxerr] - area12) > fabs(area12) * 1e-5 ||
 		 erro12 < errmax * .99) {
 	    goto L10;
 	}
@@ -1502,88 +1463,70 @@ L10:
 L15:
 	rlist[maxerr] = area1;
 	rlist[*last] = area2;
-/* Computing MAX */
-	d__1 = *epsabs, d__2 = *epsrel * fabs(area);
-	errbnd = fmax2(d__1,d__2);
+	errbnd = fmax2(*epsabs, *epsrel * fabs(area));
 
 /*           test for roundoff error and eventually set error flag. */
 
-	if (iroff1 + iroff2 >= 10 || iroff3 >= 20) {
+	if (iroff1 + iroff2 >= 10 || iroff3 >= 20)
 	    *ier = 2;
-	}
-	if (iroff2 >= 5) {
+	if (iroff2 >= 5)
 	    ierro = 3;
-	}
 
-/*           set error flag in the case that the number of subintervals */
-/*           equals limit. */
-
-	if (*last == *limit) {
+/* set error flag in the case that the number of subintervals equals limit. */
+	if (*last == *limit)
 	    *ier = 1;
-	}
 
-/*           set error flag in the case of bad integrand behaviour */
-/*           at a point of the integration range. */
+/*           set error flag in the case of bad integrand behaviour
+	     at a point of the integration range. */
 
-/* Computing MAX */
-	d__1 = fabs(a1), d__2 = fabs(b2);
-	if (fmax2(d__1,d__2) <= (epmach * 100. + 1.) * (fabs(a2) + uflow * 1e3)) 
-		{
+	if (fmax2(fabs(a1), fabs(b2)) <=
+	    (epmach * 100. + 1.) * (fabs(a2) + uflow * 1e3)) {
 	    *ier = 4;
 	}
 
 /*           append the newly-created intervals to the list. */
 
 	if (error2 > error1) {
-	    goto L20;
+	    alist__[maxerr] = a2;
+	    alist__[*last] = a1;
+	    blist[*last] = b1;
+	    rlist[maxerr] = area2;
+	    rlist[*last] = area1;
+	    elist[maxerr] = error2;
+	    elist[*last] = error1;
+	} else {
+	    alist__[*last] = a2;
+	    blist[maxerr] = b1;
+	    blist[*last] = b2;
+	    elist[maxerr] = error1;
+	    elist[*last] = error2;
 	}
-	alist__[*last] = a2;
-	blist[maxerr] = b1;
-	blist[*last] = b2;
-	elist[maxerr] = error1;
-	elist[*last] = error2;
-	goto L30;
-L20:
-	alist__[maxerr] = a2;
-	alist__[*last] = a1;
-	blist[*last] = b1;
-	rlist[maxerr] = area2;
-	rlist[*last] = area1;
-	elist[maxerr] = error2;
-	elist[*last] = error1;
 
-/*           call subroutine dqpsrt to maintain the descending ordering */
-/*           in the list of error estimates and select the subinterval */
-/*           with nrmax-th largest error estimate (to be bisected next). */
+/*           call subroutine dqpsrt to maintain the descending ordering
+	     in the list of error estimates and select the subinterval
+	     with nrmax-th largest error estimate (to be bisected next). */
 
-L30:
+/*L30:*/
 	rdqpsrt(limit, last, &maxerr, &errmax, &elist[1], &iord[1], &nrmax);
-/* ***jump out of do-loop */
-	if (errsum <= errbnd) {
-	    goto L115;
-	}
-/* ***jump out of do-loop */
-	if (*ier != 0) {
-	    goto L100;
-	}
-	if (*last == 2) {
-	    goto L80;
-	}
-	if (noext) {
-	    goto L90;
-	}
+
+	if (errsum <= errbnd)   goto L115;/* ***jump out of do-loop */
+	if (*ier != 0)		goto L100;/* ***jump out of do-loop */
+
+	if (*last == 2)		goto L80;
+	if (noext)		goto L90;
+
 	erlarg -= erlast;
-	if ((d__1 = b1 - a1, fabs(d__1)) > small) {
+	if (fabs(b1 - a1) > small) {
 	    erlarg += erro12;
 	}
 	if (extrap) {
 	    goto L40;
 	}
 
-/*           test whether the interval to be bisected next is the */
-/*           smallest interval. */
+/*           test whether the interval to be bisected next is the
+	     smallest interval. */
 
-	if ((d__1 = blist[maxerr] - alist__[maxerr], fabs(d__1)) > small) {
+	if (fabs(blist[maxerr] - alist__[maxerr]) > small) {
 	    goto L90;
 	}
 	extrap = TRUE;
@@ -1593,22 +1536,20 @@ L40:
 	    goto L60;
 	}
 
-/*           the smallest interval has the largest error. */
-/*           before bisecting decrease the sum of the errors over the */
-/*           larger intervals (erlarg) and perform extrapolation. */
+/*           the smallest interval has the largest error.
+	     before bisecting decrease the sum of the errors over the
+	     larger intervals (erlarg) and perform extrapolation. */
 
 	id = nrmax;
 	jupbnd = *last;
 	if (*last > *limit / 2 + 2) {
 	    jupbnd = *limit + 3 - *last;
 	}
-	i__2 = jupbnd;
-	for (k = id; k <= i__2; ++k) {
+	for (k = id; k <= jupbnd; ++k) {
 	    maxerr = iord[nrmax];
 	    errmax = elist[maxerr];
-/* ***jump out of do-loop */
-	    if ((d__1 = blist[maxerr] - alist__[maxerr], fabs(d__1)) > small) {
-		goto L90;
+	    if (fabs(blist[maxerr] - alist__[maxerr]) > small) {
+		goto L90;/* ***jump out of do-loop */
 	    }
 	    ++nrmax;
 /* L50: */
@@ -1631,12 +1572,9 @@ L60:
 	*abserr = abseps;
 	*result = reseps;
 	correc = erlarg;
-/* Computing MAX */
-	d__1 = *epsabs, d__2 = *epsrel * fabs(reseps);
-	ertest = fmax2(d__1,d__2);
-/* ***jump out of do-loop */
+	ertest = fmax2(*epsabs, *epsrel * fabs(reseps));
 	if (*abserr <= ertest) {
-	    goto L100;
+	    goto L100;/* ***jump out of do-loop */
 	}
 
 /*           prepare bisection of the smallest interval. */
@@ -1656,7 +1594,7 @@ L70:
 	erlarg = errsum;
 	goto L90;
 L80:
-	small = (d__1 = *b - *a, fabs(d__1)) * .375;
+	small = fabs(*b - *a) * .375;
 	erlarg = errsum;
 	ertest = errbnd;
 	rlist2[1] = area;
@@ -1664,43 +1602,27 @@ L90:
 	;
     }
 
-/*           set final result and error estimate. */
-/*           ------------------------------------ */
 
-L100:
-    if (*abserr == oflow) {
-	goto L115;
-    }
-    if (*ier + ierro == 0) {
-	goto L110;
-    }
-    if (ierro == 3) {
+L100:/*		set final result and error estimate. */
+/*		------------------------------------ */
+    if (*abserr == oflow) 	goto L115;
+    if (*ier + ierro == 0) 	goto L110;
+    if (ierro == 3)
 	*abserr += correc;
-    }
-    if (*ier == 0) {
+    if (*ier == 0)
 	*ier = 3;
-    }
-    if (*result != 0. && area != 0.) {
-	goto L105;
-    }
-    if (*abserr > errsum) {
-	goto L115;
-    }
-    if (area == 0.) {
-	goto L130;
-    }
+    if (*result != 0. && area != 0.) goto L105;
+    if (*abserr > errsum) 	goto L115;
+    if (area == 0.) 		goto L130;
     goto L110;
+
 L105:
     if (*abserr / fabs(*result) > errsum / fabs(area)) {
 	goto L115;
     }
 
-/*           test on divergence. */
-
-L110:
-/* Computing MAX */
-    d__1 = fabs(*result), d__2 = fabs(area);
-    if (ksgn == -1 && fmax2(d__1,d__2) <= defabs * .01) {
+L110:/*		test on divergence. */
+    if (ksgn == -1 && fmax2(fabs(*result), fabs(area)) <= defabs * .01) {
 	goto L130;
     }
     if (.01 > *result / area || *result / area > 100. || errsum > fabs(area)) {
@@ -1708,41 +1630,41 @@ L110:
     }
     goto L130;
 
-/*           compute global integral sum. */
-
-L115:
+L115:/*		compute global integral sum. */
     *result = 0.;
-    i__1 = *last;
-    for (k = 1; k <= i__1; ++k) {
+    for (k = 1; k <= *last; ++k)
 	*result += rlist[k];
-/* L120: */
-    }
     *abserr = errsum;
 L130:
-    if (*ier > 2) 
+    if (*ier > 2)
 L140:
     *neval = *last * 42 - 21;
     return;
 } /* rdqagse_ */
 
-static void rdqk15i(IntStruct IS, double *boun, int *inf, double *a, 
-		    double *b, double *result, double *abserr, double *
-		    resabs, double *resasc)
+
+static void rdqk15i(integr_fn f, void *ex,
+		    double *boun, int *inf, double *a, double *b,
+		    double *result,
+		    double *abserr, double *resabs, double *resasc)
 {
     /* Initialized data */
 
-    static double wg[8] = { 0.,.129484966168869693270611432679082,0.,
-	    .27970539148927666790146777142378,0.,
-	    .381830050505118944950369775488975,0.,
-	    .417959183673469387755102040816327 };
-    static double xgk[8] = { .991455371120812639206854697526329,
+    static double wg[8] = {
+	    0., .129484966168869693270611432679082,
+	    0., .27970539148927666790146777142378,
+	    0., .381830050505118944950369775488975,
+	    0., .417959183673469387755102040816327 };
+    static double xgk[8] = {
+	    .991455371120812639206854697526329,
 	    .949107912342758524526189684047851,
 	    .864864423359769072789712788640926,
 	    .741531185599394439863864773280788,
 	    .58608723546769113029414483825873,
 	    .405845151377397166906606412076961,
-	    .207784955007898467600689403773245,0. };
-    static double wgk[8] = { .02293532201052922496373200805897,
+	    .207784955007898467600689403773245, 0. };
+    static double wgk[8] = {
+	    .02293532201052922496373200805897,
 	    .063092092629978553290700663189204,
 	    .104790010322250183839876322541518,
 	    .140653259715525918745189590510238,
@@ -1751,9 +1673,6 @@ static void rdqk15i(IntStruct IS, double *boun, int *inf, double *a,
 	    .204432940075298892414161999234649,
 	    .209482141084727828012999174891714 };
 
-    /* System generated locals */
-    double d__1, d__2, d__3;
-
     /* Local variables */
     double absc, dinf, resg, resk, fsum, absc1, absc2, fval1, fval2;
     int j;
@@ -1761,7 +1680,7 @@ static void rdqk15i(IntStruct IS, double *boun, int *inf, double *a,
     double tabsc1, tabsc2, fc, epmach;
     double fv1[7], fv2[7], vec[15], vec2[15];
 
-/* 
+/*
 ***begin prologue  dqk15i
 ***date written   800101   (yymmdd)
 ***revision date  830518   (yymmdd)
@@ -1830,7 +1749,7 @@ static void rdqk15i(IntStruct IS, double *boun, int *inf, double *a,
 
 ***references  (none)
 ***end prologue  dqk15i
- 
+
 
           the abscissae and weights are supplied for the interval
           (-1,1).  because of symmetry only the positive abscissae and
@@ -1869,7 +1788,8 @@ static void rdqk15i(IntStruct IS, double *boun, int *inf, double *a,
           ---------------------------
 
           epmach is the largest relative spacing.
-          uflow is the smallest positive magnitude. */
+          uflow is the smallest positive magnitude.
+*/
 
 /* ***first executable statement  dqk15i */
     epmach = DBL_EPSILON;
@@ -1897,14 +1817,14 @@ static void rdqk15i(IntStruct IS, double *boun, int *inf, double *a,
 	}
 /* L5: */
     }
-    Rintfn(vec, 15, IS);
-    if (*inf == 2) Rintfn(vec2, 15, IS);
+    f(vec, 15, ex); /* -> new vec[] overwriting old vec[] */
+    if (*inf == 2) f(vec2, 15, ex);
     fval1 = vec[0];
     if (*inf == 2) fval1 += vec2[0];
     fc = fval1 / centr / centr;
 
-/*           compute the 15-point kronrod approximation to */
-/*           the integral, and estimate the error. */
+/*           compute the 15-point kronrod approximation to
+	     the integral, and estimate the error. */
 
     resg = wg[7] * fc;
     resk = wgk[7] * fc;
@@ -1934,26 +1854,21 @@ static void rdqk15i(IntStruct IS, double *boun, int *inf, double *a,
 /* L10: */
     }
     reskh = resk * .5;
-    *resasc = wgk[7] * (d__1 = fc - reskh, fabs(d__1));
+    *resasc = wgk[7] * fabs(fc - reskh);
     for (j = 1; j <= 7; ++j) {
-	*resasc += wgk[j - 1] * ((d__1 = fv1[j - 1] - reskh, fabs(d__1)) + (
-		d__2 = fv2[j - 1] - reskh, fabs(d__2)));
+	*resasc += wgk[j - 1] * (fabs(fv1[j - 1] - reskh) +
+				 fabs(fv2[j - 1] - reskh));
 /* L20: */
     }
     *result = resk * hlgth;
     *resasc *= hlgth;
     *resabs *= hlgth;
-    *abserr = (d__1 = (resk - resg) * hlgth, fabs(d__1));
+    *abserr = fabs((resk - resg) * hlgth);
     if (*resasc != 0. && *abserr != 0.) {
-/* Computing MIN */
-	d__3 = *abserr * 200. / *resasc;
-	d__1 = 1., d__2 = pow(d__3, 1.5);
-	*abserr = *resasc * fmin2(d__1,d__2);
+	*abserr = *resasc * fmin2(1., pow(*abserr * 200. / *resasc, 1.5));
     }
     if (*resabs > uflow / (epmach * 50.)) {
-/* Computing MAX */
-	d__1 = epmach * 50. * *resabs;
-	*abserr = fmax2(d__1,*abserr);
+	*abserr = fmax2(epmach * 50. * *resabs, *abserr);
     }
     return;
 } /* rdqk15i_ */
@@ -1961,24 +1876,11 @@ static void rdqk15i(IntStruct IS, double *boun, int *inf, double *a,
 static void rdqelg(int *n, double *epstab, double *
 		   result, double *abserr, double *res3la, int *nres)
 {
-    /* System generated locals */
-    int i__1;
-    double d__1, d__2, d__3;
-
     /* Local variables */
-    int indx;
-    double e1abs;
-    int i__;
-    double e0, e1, e2, e3, error, oflow;
-    int k1;
-    int k2, k3;
-    double delta1, delta2, delta3;
-    int ib, ie;
-    double epmach, ss, epsinf;
-    int newelm, ib2, limexp;
-    double res;
-    int num;
-    double err1, err2, err3, tol1, tol2, tol3;
+    int i__, indx, ib, ib2, ie, k1, k2, k3, num, newelm, limexp;
+    double delta1, delta2, delta3, e0, e1, e1abs, e2, e3, epmach, epsinf;
+    double oflow, ss, res;
+    double errA, err1, err2, err3, tol1, tol2, tol3;
 
 /* ***begin prologue  dqelg
 ***refer to  dqagie,dqagoe,dqagpe,dqagse
@@ -2038,11 +1940,10 @@ static void rdqelg(int *n, double *epstab, double *
           e3                 e0
                        e3    e1    new
                              e2
-          newelm - number of elements to be computed in the new
-                   diagonal
-          error  - error = abs(e1-e0)+abs(e2-e1)+abs(new-e2)
-          result - the element in the new diagonal with least value
-                   of error
+
+          newelm - number of elements to be computed in the new diagonal
+          errA   - errA = abs(e1-e0)+abs(e2-e1)+abs(new-e2)
+          result - the element in the new diagonal with least value of errA
 
           machine dependent constants
           ---------------------------
@@ -2073,8 +1974,7 @@ static void rdqelg(int *n, double *epstab, double *
     epstab[*n] = oflow;
     num = *n;
     k1 = *n;
-    i__1 = newelm;
-    for (i__ = 1; i__ <= i__1; ++i__) {
+    for (i__ = 1; i__ <= newelm; ++i__) {
 	k2 = k1 - 1;
 	k3 = k1 - 2;
 	res = epstab[k1 + 2];
@@ -2084,72 +1984,54 @@ static void rdqelg(int *n, double *epstab, double *
 	e1abs = fabs(e1);
 	delta2 = e2 - e1;
 	err2 = fabs(delta2);
-/* Computing MAX */
-	d__1 = fabs(e2);
-	tol2 = fmax2(d__1,e1abs) * epmach;
+	tol2 = fmax2(fabs(e2), e1abs) * epmach;
 	delta3 = e1 - e0;
 	err3 = fabs(delta3);
-/* Computing MAX */
-	d__1 = e1abs, d__2 = fabs(e0);
-	tol3 = fmax2(d__1,d__2) * epmach;
-	if (err2 > tol2 || err3 > tol3) {
-	    goto L10;
+	tol3 = fmax2(e1abs, fabs(e0)) * epmach;
+	if (err2 <= tol2 && err3 <= tol3) {
+	    /*           if e0, e1 and e2 are equal to within machine
+			 accuracy, convergence is assumed. */
+	    *result = res;/*		result = e2 */
+	    *abserr = err2 + err3;/*	abserr = fabs(e1-e0)+fabs(e2-e1) */
+
+	    goto L100;	/* ***jump out of do-loop */
 	}
 
-/*           if e0, e1 and e2 are equal to within machine */
-/*           accuracy, convergence is assumed. */
-/*           result = e2 */
-/*           abserr = fabs(e1-e0)+fabs(e2-e1) */
-
-	*result = res;
-	*abserr = err2 + err3;
-/* ***jump out of do-loop */
-	goto L100;
-L10:
 	e3 = epstab[k1];
 	epstab[k1] = e1;
 	delta1 = e1 - e3;
 	err1 = fabs(delta1);
-/* Computing MAX */
-	d__1 = e1abs, d__2 = fabs(e3);
-	tol1 = fmax2(d__1,d__2) * epmach;
+	tol1 = fmax2(e1abs, fabs(e3)) * epmach;
 
-/*           if two elements are very close to each other, omit */
-/*           a part of the table by adjusting the value of n */
+/*           if two elements are very close to each other, omit
+	     a part of the table by adjusting the value of n */
 
-	if (err1 <= tol1 || err2 <= tol2 || err3 <= tol3) {
-	    goto L20;
+	if (err1 > tol1 && err2 > tol2 && err3 > tol3) {
+	    ss = 1. / delta1 + 1. / delta2 - 1. / delta3;
+	    epsinf = fabs(ss * e1);
+
+/*           test to detect irregular behaviour in the table, and
+	     eventually omit a part of the table adjusting the value of n. */
+
+	    if (epsinf > 1e-4) {
+		goto L30;
+	    }
 	}
-	ss = 1. / delta1 + 1. / delta2 - 1. / delta3;
-	epsinf = (d__1 = ss * e1, fabs(d__1));
 
-/*           test to detect irregular behaviour in the table, and */
-/*           eventually omit a part of the table adjusting the value */
-/*           of n. */
-
-	if (epsinf > 1e-4) {
-	    goto L30;
-	}
-L20:
 	*n = i__ + i__ - 1;
-/* ***jump out of do-loop */
-	goto L50;
+	goto L50;/* ***jump out of do-loop */
 
-/*           compute a new element and eventually adjust */
-/*           the value of result. */
 
-L30:
+L30:/* compute a new element and eventually adjust the value of result. */
+
 	res = e1 + 1. / ss;
 	epstab[k1] = res;
 	k1 += -2;
-	error = err2 + (d__1 = res - e2, fabs(d__1)) + err3;
-	if (error > *abserr) {
-	    goto L40;
+	errA = err2 + fabs(res - e2) + err3;
+	if (errA <= *abserr) {
+	    *abserr = errA;
+	    *result = res;
 	}
-	*abserr = error;
-	*result = res;
-L40:
-	;
     }
 
 /*           shift the table. */
@@ -2158,52 +2040,41 @@ L50:
     if (*n == limexp) {
 	*n = (limexp / 2 << 1) - 1;
     }
-    ib = 1;
-    if (num / 2 << 1 == num) {
-	ib = 2;
-    }
+
+    if (num / 2 << 1 == num) ib = 2; else ib = 1;
     ie = newelm + 1;
-    i__1 = ie;
-    for (i__ = 1; i__ <= i__1; ++i__) {
+    for (i__ = 1; i__ <= ie; ++i__) {
 	ib2 = ib + 2;
 	epstab[ib] = epstab[ib2];
 	ib = ib2;
-/* L60: */
     }
-    if (num == *n) {
-	goto L80;
+    if (num != *n) {
+	indx = num - *n + 1;
+	for (i__ = 1; i__ <= *n; ++i__) {
+	    epstab[i__] = epstab[indx];
+	    ++indx;
+	}
     }
-    indx = num - *n + 1;
-    i__1 = *n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	epstab[i__] = epstab[indx];
-	++indx;
-/* L70: */
-    }
-L80:
+    /*L80:*/
     if (*nres >= 4) {
-	goto L90;
+	/* L90: */
+	*abserr = fabs(*result - res3la[3]) +
+	          fabs(*result - res3la[2]) +
+	          fabs(*result - res3la[1]);
+	res3la[1] = res3la[2];
+	res3la[2] = res3la[3];
+	res3la[3] = *result;
+    } else {
+	res3la[*nres] = *result;
+	*abserr = oflow;
     }
-    res3la[*nres] = *result;
-    *abserr = oflow;
-    goto L100;
 
-/*           compute error estimate */
-
-L90:
-    *abserr = (d__1 = *result - res3la[3], fabs(d__1)) + (d__2 = *result - 
-	    res3la[2], fabs(d__2)) + (d__3 = *result - res3la[1], fabs(d__3));
-    res3la[1] = res3la[2];
-    res3la[2] = res3la[3];
-    res3la[3] = *result;
-L100:
-/* Computing MAX */
-    d__1 = *abserr, d__2 = epmach * 5. * fabs(*result);
-    *abserr = fmax2(d__1,d__2);
+L100:/* compute error estimate */
+    *abserr = fmax2(*abserr, epmach * 5. * fabs(*result));
     return;
 } /* rdqelg_ */
 
-static void  rdqk21(IntStruct IS, double *a, double *b, double *result,
+static void  rdqk21(integr_fn f, void *ex, double *a, double *b, double *result,
 		    double *abserr, double *resabs, double *resasc)
 {
     /* Initialized data */
@@ -2235,17 +2106,13 @@ static void  rdqk21(IntStruct IS, double *a, double *b, double *result,
 	    .147739104901338491374841515972068,
 	    .149445554002916905664936468389821 };
 
-    /* System generated locals */
-    double d__1, d__2, d__3;
-
 
     /* Local variables */
+    double fv1[10], fv2[10], vec[21];
     double absc, resg, resk, fsum, fval1, fval2;
-    int jtwm1, j;
     double hlgth, centr, reskh, uflow;
     double fc, epmach, dhlgth;
-    double fv1[10], fv2[10], vec[21];
-    int jtw;
+    int j, jtw, jtwm1;
 
 /* ***begin prologue  dqk21
 ***date written   800101   (yymmdd)
@@ -2349,8 +2216,8 @@ bell labs, nov. 1981.
     hlgth = (*b - *a) * .5;
     dhlgth = fabs(hlgth);
 
-/*           compute the 21-point kronrod approximation to */
-/*           the integral, and estimate the absolute error. */
+/*           compute the 21-point kronrod approximation to
+	     the integral, and estimate the absolute error. */
 
     resg = 0.;
     vec[0] = centr;
@@ -2365,10 +2232,9 @@ bell labs, nov. 1981.
 	jtwm1 = (j << 1) - 1;
 	absc = hlgth * xgk[jtwm1 - 1];
 	vec[(j << 1) + 9] = centr - absc;
-/* L6: */
 	vec[(j << 1) + 10] = centr + absc;
     }
-    Rintfn(vec, 21, IS);
+    f(vec, 21, ex);
     fc = vec[0];
     resk = wgk[10] * fc;
     *resabs = fabs(resk);
@@ -2398,192 +2264,157 @@ bell labs, nov. 1981.
 /* L15: */
     }
     reskh = resk * .5;
-    *resasc = wgk[10] * (d__1 = fc - reskh, fabs(d__1));
+    *resasc = wgk[10] * fabs(fc - reskh);
     for (j = 1; j <= 10; ++j) {
-	*resasc += wgk[j - 1] * ((d__1 = fv1[j - 1] - reskh, fabs(d__1)) + (
-		d__2 = fv2[j - 1] - reskh, fabs(d__2)));
+	*resasc += wgk[j - 1] * (fabs(fv1[j - 1] - reskh) +
+				 fabs(fv2[j - 1] - reskh));
 /* L20: */
     }
     *result = resk * hlgth;
     *resabs *= dhlgth;
     *resasc *= dhlgth;
-    *abserr = (d__1 = (resk - resg) * hlgth, fabs(d__1));
+    *abserr = fabs((resk - resg) * hlgth);
     if (*resasc != 0. && *abserr != 0.) {
-/* Computing MIN */
-	d__3 = *abserr * 200. / *resasc;
-	d__1 = 1., d__2 = pow(d__3, 1.5);
-	*abserr = *resasc * fmin2(d__1,d__2);
+	*abserr = *resasc * fmin2(1., pow(*abserr * 200. / *resasc, 1.5));
     }
     if (*resabs > uflow / (epmach * 50.)) {
-/* Computing MAX */
-	d__1 = epmach * 50. * *resabs;
-	*abserr = fmax2(d__1,*abserr);
+	*abserr = fmax2(epmach * 50. * *resabs, *abserr);
     }
     return;
 } /* rdqk21_ */
 
-static void rdqpsrt(int *limit, int *last, int *maxerr, 
+static void rdqpsrt(int *limit, int *last, int *maxerr,
 		    double *ermax, double *elist, int *iord, int *nrmax)
 {
-    /* System generated locals */
-    int i__1;
-
     /* Local variables */
-    int ibeg, jbnd, i__, j, k, isucc, jupbn;
+    int i, j, k, ido, jbnd, isucc, jupbn;
     double errmin, errmax;
-    int ido;
 
-/* ***begin prologue  dqpsrt */
-/* ***refer to  dqage,dqagie,dqagpe,dqawse */
-/* ***routines called  (none) */
-/* ***revision date  810101   (yymmdd) */
-/* ***keywords  sequential sorting */
-/* ***author  piessens,robert,appl. math. & progr. div. - k.u.leuven */
-/*           de doncker,elise,appl. math. & progr. div. - k.u.leuven */
-/* ***purpose  this routine maintains the descending ordering in the */
-/*            list of the local error estimated resulting from the */
-/*            interval subdivision process. at each call two error */
-/*            estimates are inserted using the sequential search */
-/*            method, top-down for the largest error estimate and */
-/*            bottom-up for the smallest error estimate. */
-/* ***description */
+/* ***begin prologue  dqpsrt
+ ***refer to  dqage,dqagie,dqagpe,dqawse
+ ***routines called  (none)
+ ***revision date  810101   (yymmdd)
+ ***keywords  sequential sorting
+ ***author  piessens,robert,appl. math. & progr. div. - k.u.leuven
+           de doncker,elise,appl. math. & progr. div. - k.u.leuven
+ ***purpose  this routine maintains the descending ordering in the
+            list of the local error estimated resulting from the
+            interval subdivision process. at each call two error
+            estimates are inserted using the sequential search
+            method, top-down for the largest error estimate and
+            bottom-up for the smallest error estimate.
+ ***description
 
-/*           ordering routine */
-/*           standard fortran subroutine */
-/*           double precision version */
+           ordering routine
+           standard fortran subroutine
+           double precision version
 
-/*           parameters (meaning at output) */
-/*              limit  - int */
-/*                       maximum number of error estimates the list */
-/*                       can contain */
+           parameters (meaning at output)
+              limit  - int
+                       maximum number of error estimates the list
+                       can contain
 
-/*              last   - int */
-/*                       number of error estimates currently in the list */
+              last   - int
+                       number of error estimates currently in the list
 
-/*              maxerr - int */
-/*                       maxerr points to the nrmax-th largest error */
-/*                       estimate currently in the list */
+              maxerr - int
+                       maxerr points to the nrmax-th largest error
+                       estimate currently in the list
 
-/*              ermax  - double precision */
-/*                       nrmax-th largest error estimate */
-/*                       ermax = elist(maxerr) */
+              ermax  - double precision
+                       nrmax-th largest error estimate
+                       ermax = elist(maxerr)
 
-/*              elist  - double precision */
-/*                       vector of dimension last containing */
-/*                       the error estimates */
+              elist  - double precision
+                       vector of dimension last containing
+                       the error estimates
 
-/*              iord   - int */
-/*                       vector of dimension last, the first k elements */
-/*                       of which contain pointers to the error */
-/*                       estimates, such that */
-/*                       elist(iord(1)),...,  elist(iord(k)) */
-/*                       form a decreasing sequence, with */
-/*                       k = last if last.le.(limit/2+2), and */
-/*                       k = limit+1-last otherwise */
+              iord   - int
+                       vector of dimension last, the first k elements
+                       of which contain pointers to the error
+                       estimates, such that
+                       elist(iord(1)),...,  elist(iord(k))
+                       form a decreasing sequence, with
+                       k = last if last <= (limit/2+2), and
+                       k = limit+1-last otherwise
 
-/*              nrmax  - int */
-/*                       maxerr = iord(nrmax) */
+              nrmax  - int
+                       maxerr = iord(nrmax)
 
-/* ***end prologue  dqpsrt */
+***end prologue  dqpsrt
+*/
 
 
-/*           check whether the list contains more than */
-/*           two error estimates. */
-
-/* ***first executable statement  dqpsrt */
     /* Parameter adjustments */
     --iord;
     --elist;
 
     /* Function Body */
-    if (*last > 2) {
-	goto L10;
+
+/*           check whether the list contains more than
+	     two error estimates. */
+    if (*last <= 2) {
+	iord[1] = 1;
+	iord[2] = 2;
+	goto Last;
     }
-    iord[1] = 1;
-    iord[2] = 2;
-    goto L90;
+/*           this part of the routine is only executed if, due to a
+	     difficult integrand, subdivision increased the error
+	     estimate. in the normal case the insert procedure should
+	     start after the nrmax-th largest error estimate. */
 
-/*           this part of the routine is only executed if, due to a */
-/*           difficult integrand, subdivision increased the error */
-/*           estimate. in the normal case the insert procedure should */
-/*           start after the nrmax-th largest error estimate. */
-
-L10:
     errmax = elist[*maxerr];
-    if (*nrmax == 1) {
-	goto L30;
-    }
-    ido = *nrmax - 1;
-    i__1 = ido;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	isucc = iord[*nrmax - 1];
-/* ***jump out of do-loop */
-	if (errmax <= elist[isucc]) {
-	    goto L30;
+    if (*nrmax > 1) {
+	ido = *nrmax - 1;
+	for (i = 1; i <= ido; ++i) {
+	    isucc = iord[*nrmax - 1];
+	    if (errmax <= elist[isucc])
+		break; /* out of for-loop */
+	    iord[*nrmax] = isucc;
+	    --(*nrmax);
+	    /* L20: */
 	}
-	iord[*nrmax] = isucc;
-	--(*nrmax);
-/* L20: */
     }
 
-/*           compute the number of elements in the list to be maintained */
-/*           in descending order. this number depends on the number of */
-/*           subdivisions still allowed. */
-
-L30:
-    jupbn = *last;
-    if (*last > *limit / 2 + 2) {
+/*L30:       compute the number of elements in the list to be maintained
+	     in descending order. this number depends on the number of
+	     subdivisions still allowed. */
+    if (*last > *limit / 2 + 2)
 	jupbn = *limit + 3 - *last;
-    }
+    else
+	jupbn = *last;
+
     errmin = elist[*last];
 
-/*           insert errmax by traversing the list top-down, */
-/*           starting comparison from the element elist(iord(nrmax+1)). */
+/*           insert errmax by traversing the list top-down,
+	     starting comparison from the element elist(iord(nrmax+1)). */
 
     jbnd = jupbn - 1;
-    ibeg = *nrmax + 1;
-    if (ibeg > jbnd) {
-	goto L50;
-    }
-    i__1 = jbnd;
-    for (i__ = ibeg; i__ <= i__1; ++i__) {
-	isucc = iord[i__];
-/* ***jump out of do-loop */
-	if (errmax >= elist[isucc]) {
-	    goto L60;
+    for (i = *nrmax + 1; i <= jbnd; ++i) {
+	isucc = iord[i];
+	if (errmax >= elist[isucc]) {/* ***jump out of do-loop */
+	    /* L60: insert errmin by traversing the list bottom-up. */
+	    iord[i - 1] = *maxerr;
+	    for (j = i, k = jbnd; j <= jbnd; j++, k--) {
+		isucc = iord[k];
+		if (errmin < elist[isucc]) {
+		    /* goto L80; ***jump out of do-loop */
+		    iord[k + 1] = *last;
+		    goto Last;
+		}
+		iord[k + 1] = isucc;
+	    }
+	    iord[i] = *last;
+	    goto Last;
 	}
-	iord[i__ - 1] = isucc;
-/* L40: */
+	iord[i - 1] = isucc;
     }
-L50:
+
     iord[jbnd] = *maxerr;
     iord[jupbn] = *last;
-    goto L90;
 
-/*           insert errmin by traversing the list bottom-up. */
+Last:/* set maxerr and ermax. */
 
-L60:
-    iord[i__ - 1] = *maxerr;
-    k = jbnd;
-    i__1 = jbnd;
-    for (j = i__; j <= i__1; ++j) {
-	isucc = iord[k];
-/* ***jump out of do-loop */
-	if (errmin < elist[isucc]) {
-	    goto L80;
-	}
-	iord[k + 1] = isucc;
-	--k;
-/* L70: */
-    }
-    iord[i__] = *last;
-    goto L90;
-L80:
-    iord[k + 1] = *last;
-
-/*           set maxerr and ermax. */
-
-L90:
     *maxerr = iord[*nrmax];
     *ermax = elist[*maxerr];
     return;
