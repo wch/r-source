@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-8, 2000-12-28
+Version 1.2-9, 2001-01-02
 Kurt Hornik
 
 
@@ -72,6 +72,7 @@ Table of Contents
   7.15 What are the enclosing and parent environments?
   7.16 How can I substitute into a plot label?
   7.17 What are valid names?
+  7.18 Are GAMs implemented in R?
 
 8 R Programming
   8.1 How should I write summary methods?
@@ -1523,7 +1524,6 @@ at the R prompt.
      class        Functions for classification
      cluster      Functions for clustering
      ctest        Classical tests
-     date         Functions for handling dates
      eda          Exploratory Data Analysis
      gee          Generalized Estimating Equation models
      locfit       Local regression, likelihood and density estimation
@@ -1593,8 +1593,8 @@ certainly of great value.
 
    One place where functionality is still missing is the modeling software
 as described in "Statistical Models in S" (see *Note What is S?::);
-Generalized Additive Models (*gam*) and some of the nonlinear modeling code
-are not there yet.
+Generalized Additive Models (*note Are GAMs implemented in R?::) and some
+of the nonlinear modeling code are not there yet.
 
    The R Developer Page (http://developer.r-project.org/) acts as an
 intermediate repository for more or less finalized ideas and plans for the
@@ -2050,6 +2050,17 @@ language:
      system for reading, writing, etc.  It really has nothing much to do
      with names in the language, but it is traditional to call these
      strings file "names".
+
+7.18 Are GAMs implemented in R?
+===============================
+
+   There is a `gam()' function for Generalized Additive Models in package
+*mgcv*, but it is not an exact clone of what is described in the White Book
+(no `lo()' for example).  Package *gss* can fit spline-based GAMs too.  And
+if you can accept regression splines you can use `glm()'.  For gaussian
+GAMs you can use `bruto()' from package *mda*.  The long-term plan is to
+have something better than `gam()' for additive models, perhaps along the
+lines of BRUTO.
 
 8 R Programming
 ***************
