@@ -67,7 +67,9 @@
 #undef HAVE_MEMCPY
 #undef HAVE_BCOPY
 
-/* Comptibility for setjmp / longjmp */
+/* Compatibility for setjmp / longjmp */
+#undef HAVE_SIGSETJMP
+
 #ifdef HAVE_SIGSETJMP
 #define JMP_BUF sigjmp_buf
 #define SETJMP(x) sigsetjmp(x,1)
