@@ -79,14 +79,6 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
-* PR# 726 *
-Subject: par(las=.)  gives wrong "adj" for mtext()
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 7 Nov 2000 13:03:58 +0100
-* PR# 660 *
-Subject: identify.default ignores any setting of cex.
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
 * PR# 776 *
 Subject: strwidth does not take font into account
 From: Martyn Plummer <plummer@iarc.fr>
@@ -95,6 +87,10 @@ Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
 Subject: abline() does not obey "xpd" (clipping rules)
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 27 Nov 2000 18:27:11 +0100
+* PR# 660 *
+Subject: identify.default ignores any setting of cex.
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
 * PR# 820 *
 Subject: interaction.plot
 From: "Mark M. Span" <span@psy.uva.nl>
@@ -118,14 +114,14 @@ Date: Thu, 18 Jan 2001 14:54:32 +0100
 Subject:  par(lab= *) / axis(*) bug 
 From: maechler@stat.math.ethz.ch
 Date: Fri, 22 Dec 2000 10:59:26 +0100
+* PR# 830 *
+Subject: Disappearing x axis in plot.factor
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 30 Jan 2001 00:27:13 -0500
 * PR# 828 *
 Subject: termplot fails for composite non-factor terms
 From: John Maindonald <john.maindonald@anu.edu.au>
 Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
-* PR# 823 *
-Subject: adjustment of expressions with mtext(..., las=2)
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Wed, 24 Jan 2001 20:12:43 +0100
 * PR# 837 *
 Subject: screen doesn't handle redrawing properly
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -134,10 +130,6 @@ Date: 01 Feb 2001 14:20:52 -0500
 Subject: screen can't go back to (split) screen with log="y" plot
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 30 Jan 2001 00:39:41 -0500
-* PR# 830 *
-Subject: Disappearing x axis in plot.factor
-From: Thomas Vogels <tov@ece.cmu.edu>
-Date: 30 Jan 2001 00:27:13 -0500
 
 Directory:  In-Out
 
@@ -245,10 +237,17 @@ none
 
 Directory:  incoming
 
-* PR# 845 *
-Subject: Bug in pictex output.
-From: Patrick Lindsey <patrick.lindsey@luc.ac.be>
-Date: Sun, 11 Feb 2001 14:53:20 +0100 (MET)
+* PR# 848 *
+Subject: X11 device doesn't handle destroy events correcly
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 13 Feb 2001 17:40:46 -0500
+* PR# 842 *
+Subject: dnbinom(,size<1,)=0
+Subject: Re: [R] Goodness of fit to Poisson / NegBinomial
+From: Thomas Lumley <tlumley@u.washington.edu>
+From: Yudi Pawitan <yudi@stat.ucc.ie>
+Date: Thu, 8 Feb 2001 11:44:21 -0800 (PST)
+Date: Thu, 08 Feb 2001 17:10:23 +0000
 * PR# 844 *
 Subject: default data= arg to glm()
 From: pperkins@ucsd.edu
@@ -257,10 +256,15 @@ Date: Fri, 9 Feb 2001 23:04:42 +0100 (MET)
 Subject: Minor doc bug
 From: bwheeler@echip.com (Bob Wheeler)
 Date: Fri, 09 Feb 2001 12:35:03 -0500
-* PR# 842 *
-Subject: dnbinom(,size<1,)=0
-Subject: Re: [R] Goodness of fit to Poisson / NegBinomial
-From: Thomas Lumley <tlumley@u.washington.edu>
-From: Yudi Pawitan <yudi@stat.ucc.ie>
-Date: Thu, 8 Feb 2001 11:44:21 -0800 (PST)
-Date: Thu, 08 Feb 2001 17:10:23 +0000
+* PR# 847 *
+Subject: RE: [R] silly question about spec
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Tue, 13 Feb 2001 12:20:53 +0100 (CET)
+* PR# 846 *
+Subject: Sticky levels
+From: bwheeler@echip.com (Bob Wheeler)
+Date: Mon, 12 Feb 2001 19:37:52 -0500
+* PR# 845 *
+Subject: Bug in pictex output.
+From: Patrick Lindsey <patrick.lindsey@luc.ac.be>
+Date: Sun, 11 Feb 2001 14:53:20 +0100 (MET)
