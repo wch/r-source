@@ -254,11 +254,11 @@ Directory:  incoming
 Subject:  do.call() mangles expressions in arguments 
 From: Peter Dalgaard BSA <pd@biostat.ku.dk>
 Date: Wed, 21 Apr 1999 19:39:53 +0200
-* PR# 176 *
-Subject: mvfft
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Thu, 22 Apr 1999 18:59:44 +0200 (CEST)
 * PR# 177 *
 Subject: R won't compile on Redhat 5.2
 From: pgutwin@us.ibm.com
 Date: Fri, 23 Apr 1999 20:08:55 +0200 (MET DST)
+* PR# 178 *
+Subject: Multivariate ts -- arithmetic bug [ for SOME time-series ]
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 27 Apr 1999 19:33:18 +0200
