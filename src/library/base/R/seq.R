@@ -16,9 +16,11 @@ function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
 		if(missing(by))
 			from:to
 		else {
-			n <- (to - from)/by + 0.4 # fuzz needed
+			n <- (to - from)/by
 			if(n < 0)
 				stop("Wrong sign in by= argument")
+                        n <- as.integer(n + 1e-10)
+                        if(n*by + from > to) n <- n - 1
 			from + (0:n) * by
 		}
 	else if(length.out < 0)
