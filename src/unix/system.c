@@ -556,7 +556,7 @@ int main(int ac, char **av)
 #endif
 
 #ifdef linux
-#ifdef HAVE____SETFPUCW
+#ifdef HAVE___SETFPUCW
     __setfpucw(_FPU_IEEE);
 #endif    
 #endif
@@ -639,7 +639,7 @@ void R_CleanUp(int ask)
 #endif
 
 #ifdef linux
-#ifdef HAVE____SETFPUCW
+#ifdef HAVE___SETFPUCW
     __setfpucw(_FPU_DEFAULT);
 #endif    
 #endif
