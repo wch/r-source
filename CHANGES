@@ -6,7 +6,7 @@ NEW FEATURES
 	encoding.  This should allow Western Europeans to render
 	their languages correctly.  It is likely that additional
 	encodings will be added (e.g. Latin2) when we figure out
-	how to set the correct font encoding in printers,
+	how to set the correct font encoding in printers.
 
     o	The mathematical annotation code has been reworked.  Italic
 	correction works better.  Additional functionality will be
@@ -23,7 +23,7 @@ NEW FEATURES
 	of some efficiency gains in list operations).
 
     o	Subscripting matches that of S more closely.  It is now
-	possible to use subscripting beyond that the end of vecors
+	possible to use subscripting beyond that the end of vectors
 	and lists.
 
     o	Element labelling in "c" and "unlist" should match that of
@@ -46,7 +46,7 @@ BUG FIXES
     o	Changes to the PostScript device driver mean that the volume
 	of output has been reduced to about a third of what it was.
 
-    o   Fixes and restructuring to name generation in connection with 
+    o   Fixes and restructuring to name generation in connection with
 	unlist() and c().
 
 
@@ -56,7 +56,7 @@ NEW FEATURES
 
     o   preserve factor levels and contrast settings in model objects
 
-    o   factor[...,drop=T] reduces level set 
+    o   factor[...,drop=T] reduces level set
 
     o   added dblepr, intpr
 
@@ -80,9 +80,9 @@ NEW FEATURES
     o   R_PRINTCMD and R_PAPERSIZE can now be set via users' environment,
 	overriding setting in startup script.
 
-    o   enhanced identify() 
+    o   enhanced identify()
 
-    o   new function print.coefmat() 
+    o   new function print.coefmat()
 
     o   added unix() as .Deprecated("system")
 
@@ -91,7 +91,7 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   substitute would re-substitute after expanding ... 
+    o   substitute would re-substitute after expanding ...
 
     o   indexing modified object in some cases
 
@@ -99,7 +99,7 @@ BUG FIXES
 
     o   minor changes in aov()
 
-    o	builds should now actually work on systems that do not add 
+    o	builds should now actually work on systems that do not add
 	underscores to Fortran symbols
 
     o   biplot[.default]() was redundant in "base" package; now only in "mva".
@@ -158,7 +158,7 @@ BUG FIXES
         should restore the source tree to its original form.
 
     o   a leftover "colours <- colors" caused trouble when collating
-	sequence changes caused files to go into the "base" file in a 
+	sequence changes caused files to go into the "base" file in a
 	different order
 
 		CHANGES IN R VERSION 0.62.2
