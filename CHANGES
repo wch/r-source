@@ -1,3 +1,15 @@
+		CHANGES IN R VERSION 0.61.3
+
+BUG FIXES
+
+    o   1%o%1 would segfault
+
+    o   .Dyn.libs would linger in .RData causing code not to be dyn.loaded.
+	Now removed in .First(), if necessary
+
+    o	system.time() expression could not access local variables in 
+	functions.
+
 		CHANGES IN R VERSION 0.61.2
 
 BUG FIXES
