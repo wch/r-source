@@ -2,6 +2,9 @@
 
 NEW FEATURES
 
+    o   New options "show.coef.Pvalue" (= TRUE).  If FALSE, print.summary.[g]lm
+	does not print P values.
+
     o   New 'R --vanilla' is equivalent to
 	R --no-save --no-restore --no-site-file --no-init-file
 
@@ -81,6 +84,8 @@ NEW FEATURES
 	and is subject to internal and interface changes.
 
 BUG FIXES
+
+    o	formatC(numeric(0)) now works.
 
     o	R --help  gives more
 
