@@ -17,7 +17,12 @@ FAQs: rw-faq fixed/html/rw-FAQ.html
 fixed/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION RWVERSION
 	@$(SED) $(SEDVER) $< > tmp.texi
 	makeinfo --no-split --html --no-headers --number-sections -o tmp.html tmp.texi
-	-tidy tmp.html > $@ 2> /dev/null
+	-tidy tmp.html > tmp2.html 2> /dev/null
+	@if [ ! -s tmp2.html ] ; then \
+	  echo "*** tidy appears to be non-functional ***" ; \
+	  exit 111 ; \
+	fi
+	@mv -f tmp2.html $@
 	@rm tmp.texi tmp.html
 
 rw-faq: rw-FAQ.texi ../../VERSION RWVERSION
