@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.2-8, 2000-12-28
+@set FAQ-VERSION 1.2-9, 2001-01-02
 @set REL-VERSION 1.2.0
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1773,7 +1773,6 @@ base         The R base package
 class        Functions for classification
 cluster      Functions for clustering
 ctest        Classical tests
-date         Functions for handling dates
 eda          Exploratory Data Analysis
 gee          Generalized Estimating Equation models
 locfit       Local regression, likelihood and density estimation
@@ -1865,14 +1864,8 @@ certainly of great value.
 
 One place where functionality is still missing is the modeling software
 as described in ``Statistical Models in S'' (see @ref{What is S?});
-Generalized Additive Models (@strong{gam}) and some of the nonlinear
-modeling code are not there yet.
-
-@c FIXME:
-@c Simon Wood <snw@mcs.st-and.ac.uk> says that for GAMs,
-@c   You might want to try the packages mgcv, which has a version of
-@c   gam(), or gss which will fit a wide range of spline models.
-@c Something about this should be added once it is proven to work.
+Generalized Additive Models (@pxref{Are GAMs implemented in R?}) and
+some of the nonlinear modeling code are not there yet.
 
 The @uref{http://developer.r-project.org/, R Developer Page} acts as an
 intermediate repository for more or less finalized ideas and plans for
@@ -2032,6 +2025,7 @@ dir /opt/R/src/unix
 * What are the enclosing and parent environments?::  
 * How can I substitute into a plot label?::  
 * What are valid names?::       
+* Are GAMs implemented in R?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -2430,7 +2424,7 @@ title(substitute(hat(a) == ahat, list(ahat = ahat)))
 (note that it is @samp{==} and not @samp{=}).  There are more worked
 examples in the mailing list achives.
 
-@node What are valid names?,  , How can I substitute into a plot label?, R Miscellanea
+@node What are valid names?, Are GAMs implemented in R?, How can I substitute into a plot label?, R Miscellanea
 @section What are valid names?
 
 When creating data frames using @code{data.frame} or @code{read.table},
@@ -2477,6 +2471,23 @@ to do with names in the language, but it is traditional to call these
 strings file ``names''.
 @end enumerate
 
+@node Are GAMs implemented in R?,  , What are valid names?, R Miscellanea
+@section Are GAMs implemented in R?
+
+There is a @code{gam()} function for Generalized Additive Models in
+package @strong{mgcv}, but it is not an exact clone of what is described
+in the White Book (no @code{lo()} for example).  Package @strong{gss}
+can fit spline-based GAMs too.  And if you can accept regression splines
+you can use @code{glm()}.  For gaussian GAMs you can use @code{bruto()}
+from package @strong{mda}.  The long-term plan is to have something
+better than @code{gam()} for additive models, perhaps along the lines of
+BRUTO.
+
+@c FIXME:
+@c Simon Wood <snw@mcs.st-and.ac.uk> says that for GAMs,
+@c   You might want to try the packages mgcv, which has a version of
+@c   gam(), or gss which will fit a wide range of spline models.
+@c Something about this should be added once it is proven to work.
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming

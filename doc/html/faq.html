@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.2-8, 2000-12-28</h2>
+<h2>Version 1.2-9, 2001-01-02</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -94,6 +94,7 @@
 <li><a href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">7.15 What are the enclosing and parent environments?</a>
 <li><a href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">7.16 How can I substitute into a plot label?</a>
 <li><a href="#What%20are%20valid%20names%3f">7.17 What are valid names?</a>
+<li><a href="#Are%20GAMs%20implemented%20in%20R%3f">7.18 Are GAMs implemented in R?</a>
 </ul>
 <li><a href="#R%20Programming">8 R Programming</a>
 <ul>
@@ -1799,7 +1800,6 @@ base         The R base package
 class        Functions for classification
 cluster      Functions for clustering
 ctest        Classical tests
-date         Functions for handling dates
 eda          Exploratory Data Analysis
 gee          Generalized Estimating Equation models
 locfit       Local regression, likelihood and density estimation
@@ -1894,8 +1894,8 @@ certainly of great value.
 
 <p>One place where functionality is still missing is the modeling software
 as described in "Statistical Models in S" (see <a href="#What%20is%20S%3f">What is S?</a>);
-Generalized Additive Models (<strong>gam</strong>) and some of the nonlinear
-modeling code are not there yet.
+Generalized Additive Models (see <a href="#Are%20GAMs%20implemented%20in%20R%3f">Are GAMs implemented in R?</a>) and
+some of the nonlinear modeling code are not there yet.
 
 <p>The <a href="http://developer.r-project.org/">R Developer Page</a> acts as an
 intermediate repository for more or less finalized ideas and plans for
@@ -2080,6 +2080,7 @@ Up:<a rel=up href="#Top">Top</a>
 <li><a href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>: 
 <li><a href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>: 
 <li><a href="#What%20are%20valid%20names%3f">What are valid names?</a>: 
+<li><a href="#Are%20GAMs%20implemented%20in%20R%3f">Are GAMs implemented in R?</a>: 
 </ul>
 
 <p><hr>
@@ -2500,6 +2501,7 @@ examples in the mailing list achives.
 
 <p><hr>
 Node:<a name="What%20are%20valid%20names%3f">What are valid names?</a>,
+Next:<a rel=next href="#Are%20GAMs%20implemented%20in%20R%3f">Are GAMs implemented in R?</a>,
 Previous:<a rel=previous href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>,
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
@@ -2544,6 +2546,23 @@ operating system for reading, writing, etc.  It really has nothing much
 to do with names in the language, but it is traditional to call these
 strings file "names".
 </ol>
+
+<p><hr>
+Node:<a name="Are%20GAMs%20implemented%20in%20R%3f">Are GAMs implemented in R?</a>,
+Previous:<a rel=previous href="#What%20are%20valid%20names%3f">What are valid names?</a>,
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
+<br>
+
+<h2>7.18 Are GAMs implemented in R?</h2>
+
+<p>There is a <code>gam()</code> function for Generalized Additive Models in
+package <strong>mgcv</strong>, but it is not an exact clone of what is described
+in the White Book (no <code>lo()</code> for example).  Package <strong>gss</strong>
+can fit spline-based GAMs too.  And if you can accept regression splines
+you can use <code>glm()</code>.  For gaussian GAMs you can use <code>bruto()</code>
+from package <strong>mda</strong>.  The long-term plan is to have something
+better than <code>gam()</code> for additive models, perhaps along the lines of
+BRUTO.
 
 <p><hr>
 Node:<a name="R%20Programming">R Programming</a>,
