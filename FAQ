@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-1, 2004-04-11
+Version 1.7-2, 2004-04-14
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1760,6 +1760,10 @@ distributions of R.)
 *multcomp*
      Multiple comparison procedures for the one-way layout.
 
+*multidim*
+     Multidimensional descriptive statistics: factorial methods and
+     classification.
+
 *multiv*
      Functions for hierarchical clustering, partitioning, bond energy
      algorithm, Sammon mapping, PCA and correspondence analysis.
@@ -1787,6 +1791,10 @@ distributions of R.)
 
 *norm*
      Analysis of multivariate normal datasets with missing values.
+
+*normalp*
+     A collection of utilities for normal of order p distributions (General
+     Error Distributions).
 
 *normix*
      One-dimensional normal mixture models classes, for, e.g., density
@@ -2047,10 +2055,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *ensemble*
      Ensembles of tree classifiers.
-
-*multidim*
-     Code for correspondence analysis and other multidimensional descriptive
-     statistics.
 
 *pls*
      Univariate Partial Least Squares Regression.
