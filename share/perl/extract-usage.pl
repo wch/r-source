@@ -24,7 +24,7 @@ use R::Rdtools;
 use R::Utils;
 use R::Vars;
 
-my $revision = ' $Revision: 1.11 $ ';
+my $revision = ' $Revision: 1.12 $ ';
 my $version;
 my $name;
 
@@ -105,17 +105,26 @@ while (<INFILE>) {
 
 	print OUTFILE "# usages in documentation object $1\n";
 	print OUTFILE "# arglist: ", join(" ", get_arglist($text)), "\n"
-	  unless ($opt_mode eq "codoc");
+	  unless($opt_mode eq "codoc");
+
+	my %usages;
+	my %funs;
 
 	{
 	    local $/;		# unset for get_usages()
 	    %usages = get_usages($text, $opt_mode, $opt_verbose);
 	}
 
-	foreach my $key (keys(%usages)){
-	    $usages{$key} =~ s/ *\\.?dots/ .../g;
+	if($opt_mode eq "codoc") {
+	    print OUTFILE "# vars: ", join(" ", @{$usages{"vars"}}), "\n";
+	    print OUTFILE "# data: ", join(" ", @{$usages{"data"}}), "\n";
+	}
+
+	%funs = @{$usages{"funs"}};
+	foreach my $key (keys(%funs)){
+	    $funs{$key} =~ s/ *\\.?dots/ .../g;
 	    if ($key !~ /^</) {
-		print OUTFILE "$key <- function$usages{$key} NULL\n";
+		print OUTFILE "$key <- function$funs{$key} NULL\n";
 	    }
 	}
 
