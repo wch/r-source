@@ -29,11 +29,8 @@ help <-
         else if (!is.na(match(topic, c("&", "&&", "|", "||", "!"))))
             topic <- "Logic"
         else if (!is.na(match(topic, c("%*%"))))
-            topic<- "matmult"
-        type <- "help"
-        if(offline) type <- "latex"
-        else if (htmlhelp) type <- "html"
-        ## no longer, with index.search()! topic <- gsub("\\[","\\\\[", topic)
+            topic <- "matmult"
+        type <- if(offline) "latex" else if (htmlhelp) "html" else "help"
         INDICES <- system.file(pkg=package, lib=lib.loc)
         file <- index.search(topic, INDICES, "AnIndex", type)
         if (file == "") {

@@ -1,10 +1,12 @@
+###-- NOTE: This is for  NON-Windows only  (cf. windows/help.R )
+
 index.search <- function(topic, path, file="AnIndex", type="help")
     .Internal(index.search(topic, path, file, .Platform$file.sep, type))
 
-"help" <-
-function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
-          lib.loc = .lib.loc, verbose = .Options$verbose,
-          htmlhelp = .Options$htmlhelp)
+help <-
+    function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
+              lib.loc = .lib.loc, verbose = .Options$verbose,
+              htmlhelp = .Options$htmlhelp)
 {
     htmlhelp <- is.logical(htmlhelp) && htmlhelp
     if (!missing(package))
@@ -26,11 +28,8 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
         else if (!is.na(match(topic, c("&", "&&", "|", "||", "!"))))
             topic <- "Logic"
         else if (!is.na(match(topic, c("%*%"))))
-            topic<- "matmult"
-        type <- "help"
-        if(offline) type <- "latex"
-        else if (htmlhelp) type <- "html"
-        ## no longer, with index.search()! topic <- gsub("\\[","\\\\[", topic)
+            topic <- "matmult"
+        type <- if(offline) "latex" else if (htmlhelp) "html" else "help"
         INDICES <- system.file(pkg=package, lib=lib.loc)
         file <- index.search(topic, INDICES, "AnIndex", type)
         if (length(file) && file != "") {
@@ -61,7 +60,13 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
                 ## experimental code
                 zfile <- zip.file.extract(file, "Rhelp.zip")
                 ## end of experimental code
-                file.show(zfile, delete.file = (zfile!=file))
+                if(file.exists(zfile))
+                    file.show(zfile,
+                              header = paste("Help for `", topic, "'", sep=""),
+                              delete.file = (zfile!=file))
+                else
+                    stop(paste("The help file for `", topic, "' is missing",
+                               sep = ""))
                 return(invisible())
             }
             else {
@@ -89,12 +94,9 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
                 else
                     stop(paste("No offline documentation for", topic, "is available"))
             }
-
-
-
         }
-        else stop(paste("No documentation for `", topic, "'",
-            sep = ""))
+        else
+            stop(paste("No documentation for `", topic, "'", sep = ""))
     }
     else if (!missing(package))
         library(help = package, lib = lib.loc, character.only = TRUE)
@@ -102,4 +104,3 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
         library(lib = lib.loc)
     else help("help", package = "base", lib.loc = .Library)
 }
-
