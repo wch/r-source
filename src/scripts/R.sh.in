@@ -157,7 +157,7 @@ else
   case "`${debugger} --version 2>/dev/null`" in
     "GNU gdb"*)
       if ${debugger} --help 2>/dev/null | \
-          grep -e --args >/dev/null; then
+          grep ' *--args' >/dev/null; then
 	args_ok=yes
 	debugger_args="${debugger_args} --args"
       fi
