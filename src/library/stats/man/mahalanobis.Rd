@@ -1,7 +1,7 @@
 \name{mahalanobis}
 \title{Mahalanobis Distance}
 \usage{
-mahalanobis(x, center, cov, inverted=FALSE, tol.inv = 1e-7)
+mahalanobis(x, center, cov, inverted=FALSE, ...)
 }
 \alias{mahalanobis}
 \arguments{
@@ -11,8 +11,8 @@ mahalanobis(x, center, cov, inverted=FALSE, tol.inv = 1e-7)
   \item{cov}{covariance matrix (\eqn{p \times p}{p x p}) of the distribution.}
   \item{inverted}{logical.  If \code{TRUE}, \code{cov} is supposed to
     contain the \emph{inverse} of the covariance matrix.}
-  \item{tol.inv}{tolerance to be used for computing the inverse (if
-    \code{inverted} is false), see \code{\link{solve}}.}
+  \item{...}{passed to \code{\link{solve}} for computing the inverse of
+    the covariance matrix (if \code{inverted} is false).}
 }
 \description{
   Returns the Mahalanobis distance of all rows in \code{x} and the
