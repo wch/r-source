@@ -253,6 +253,21 @@ static SEXP binary(SEXP op, SEXP args)
 	mismatch = 0;
 	xarray = isArray(x);
 	yarray = isArray(y);
+
+	/*if either x or y is a matrix with length 1 and the other
+	  is a vector we want to coerce the matrix to be a vector
+	*/
+	if( xarray || yarray && !(xarray*yarray) ) {
+		if(xarray && length(x)==1) {
+			x = CAR(args)=duplicate(x);
+			setAttrib(x,R_DimSymbol,R_NilValue);
+		}
+		if(yarray && length(y)==1) {
+			y = CADR(args) = duplicate(y);
+			setAttrib(y, R_DimSymbol, R_NilValue);
+		}
+	}
+
 	xts = isTs(x);
 	yts = isTs(y);
 	if (xarray || yarray) {
