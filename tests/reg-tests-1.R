@@ -2206,6 +2206,27 @@ bar()
 ## the call to body() failed in 1.7.0
 
 
+## string NAs shouldn't be substringable.(PR#3078)
+a<-c("NA",NA)
+a1<-substr(a,1,1)
+stopifnot(is.na(a1)==is.na(a))
+a2<-substring(a,1,1)
+stopifnot(is.na(a2)==is.na(a))
+a3<-sub("A","X",a)
+stopifnot(is.na(a3)==is.na(a))
+a3<-gsub("A","X",a)
+stopifnot(is.na(a3)==is.na(a))
+substr(a3,1,1)<-"A"
+stopifnot(is.na(a3)==is.na(a))
+stopifnot(agrep("A",a)==1)
+stopifnot(grep("A",a)==1)
+a4<-abbreviate(a)
+stopifnot(is.na(a4)==is.na(a))
+a5<-chartr("A","B",a)
+stopifnot(is.na(a5)==is.na(a))
+## but nchar doesn't fit this pattern
+stopifnot(all(!is.na(nchar(a))))
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

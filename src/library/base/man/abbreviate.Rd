@@ -30,6 +30,8 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   If a single string is passed it is abbreviated in the same manner as a
   vector of strings.
 
+  Missing (\code{NA}) values are not abbreviated.
+  
   If \code{use.classes} is \code{FALSE} then the only distinction is to
   be between letters and space.  This has NOT been implemented.
 }

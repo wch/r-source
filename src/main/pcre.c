@@ -64,6 +64,10 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     nmatches = 0;
     for (i = 0 ; i < n ; i++) {
 	int rc, ovector;
+	if (STRING_ELT(vec,i)==NA_STRING){
+	    INTEGER(ind)[i]=0;
+	    continue;
+	}
 	char *s = CHAR(STRING_ELT(vec, i));
 	rc = pcre_exec(re_pcre, NULL, s, strlen(s), 0, 0, &ovector, 0);
 	if (rc >= 0) {
@@ -189,6 +193,10 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	int ovector[30];
 	offset = 0;
 	nmatch = 0;
+	if (STRING_ELT(vec,i) == NA_STRING){
+	    SET_STRING_ELT(ans, i, NA_STRING);
+	    continue;
+	}
 	s = CHAR(STRING_ELT(vec, i));
 	t = CHAR(STRING_ELT(rep, 0));
 	ns = strlen(s);
@@ -264,6 +272,10 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0 ; i < n ; i++) {
 	int rc, ovector[3];
 	char *s = CHAR(STRING_ELT(text, i));
+	if (STRING_ELT(text,i)==NA_STRING){
+	    INTEGER(ans)[i]=INTEGER(matchlen)[i]=R_NaInt;
+	    continue;
+	}
 	rc = pcre_exec(re_pcre, NULL, s, strlen(s), 0, 0, ovector, 3);
 	if (rc >= 0) {
 	    st = ovector[0];

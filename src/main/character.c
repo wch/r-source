@@ -129,6 +129,10 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid substring argument(s) in substr()");
 
       for (i = 0; i < len; i++) {
+	if (STRING_ELT(x,i)==NA_STRING){
+	    SET_STRING_ELT(s,i,NA_STRING);
+	    continue;
+	}
 	start = INTEGER(sa)[i % k];
 	stop = INTEGER(so)[i % l];
 	slen = strlen(CHAR(STRING_ELT(x, i)));
@@ -187,6 +191,10 @@ SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid rhs in substr<-()");
 
       for (i = 0; i < len; i++) {
+	if (STRING_ELT(x,i)==NA_STRING){
+	    SET_STRING_ELT(s,i,NA_STRING);
+	    continue;
+	}
 	start = INTEGER(sa)[i % k];
 	stop = INTEGER(so)[i % l];
 	slen = strlen(CHAR(STRING_ELT(x, i)));
@@ -243,6 +251,13 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     tlen = LENGTH(tok);
     PROTECT(s = allocVector(VECSXP, len));
     for(i = 0; i < len; i++) {
+	if (STRING_ELT(x,i)==NA_STRING){
+	    PROTECT(t=allocVector(STRSXP,1));
+	    SET_STRING_ELT(t,0,NA_STRING);
+	    SET_VECTOR_ELT(s,i,t);
+	    UNPROTECT(1);
+	    continue;
+	}
 	AllocBuffer(strlen(CHAR(STRING_ELT(x, i))));
 	strcpy(buff, CHAR(STRING_ELT(x, i)));
 	if(tlen > 0) {
@@ -447,8 +462,12 @@ SEXP do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(STRSXP, len));
     minlen = asInteger(CADR(args));
     uclass = asLogical(CAR(CDDR(args)));
-    for (i = 0 ; i < len ; i++)
-	SET_STRING_ELT(ans, i, stripchars(STRING_ELT(CAR(args), i), minlen));
+    for (i = 0 ; i < len ; i++) {
+	if (STRING_ELT(CAR(args),i)==NA_STRING)
+	    SET_STRING_ELT(ans,i,NA_STRING);
+	else
+	    SET_STRING_ELT(ans, i, stripchars(STRING_ELT(CAR(args), i), minlen));
+    }
 
     UNPROTECT(1);
     return(ans);
@@ -521,9 +540,10 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     ind = allocVector(LGLSXP, n);
     nmatches = 0;
     for (i = 0 ; i < n ; i++) {
-	if (regexec(&reg, CHAR(STRING_ELT(vec, i)), 0, NULL, 0) == 0) {
-	    INTEGER(ind)[i] = 1;
-	    nmatches++;
+        if (STRING_ELT(vec,i)!=NA_STRING
+	    && regexec(&reg, CHAR(STRING_ELT(vec, i)), 0, NULL, 0) == 0) {
+		INTEGER(ind)[i] = 1;
+		nmatches++;
 	}
 	else INTEGER(ind)[i] = 0;
     }
@@ -645,6 +665,10 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(STRSXP, n));
 
     for (i = 0 ; i < n ; i++) {
+	if (STRING_ELT(vec,i)==NA_STRING){
+	    SET_STRING_ELT(ans,i,NA_STRING);
+	    continue;
+	}
 	offset = 0;
 	nmatch = 0;
 	s = CHAR(STRING_ELT(vec, i));
@@ -722,7 +746,9 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(matchlen = allocVector(INTSXP, n));
 
     for (i = 0 ; i < n ; i++) {
-	if(regexec(&reg, CHAR(STRING_ELT(text, i)), 1, regmatch, 0) == 0) {
+	if (STRING_ELT(text,i) == NA_STRING){
+	    INTEGER(matchlen)[i] = INTEGER(ans)[i] = R_NaInt;
+	} else if(regexec(&reg, CHAR(STRING_ELT(text, i)), 1, regmatch, 0) == 0) {
 	    st = regmatch[0].rm_so;
 	    INTEGER(ans)[i] = st + 1; /* index from one */
 	    INTEGER(matchlen)[i] = regmatch[0].rm_eo - st;
@@ -756,7 +782,10 @@ do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for(i = 0; i < n; i++) {
 	for(p = CHAR(STRING_ELT(y, i)); *p != '\0'; p++) {
-	    *p = tolower(*p);
+	    if (STRING_ELT(x,i)==NA_STRING) 
+		SET_STRING_ELT(y,i,NA_STRING);
+	    else
+		*p = tolower(*p);
 	}
     }
     UNPROTECT(1);
@@ -783,7 +812,10 @@ do_toupper(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for(i = 0; i < n; i++) {
 	for(p = CHAR(STRING_ELT(y, i)); *p != '\0'; p++) {
-	    *p = toupper(*p);
+	    if (STRING_ELT(x,i)==NA_STRING) 
+		SET_STRING_ELT(y,i,NA_STRING);
+	    else
+	        *p = toupper(*p);
 	}
     }
     UNPROTECT(1);
@@ -941,9 +973,12 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     for(i = 0; i < length(y); i++) {
-	for(p = (unsigned char *)CHAR(STRING_ELT(y, i)); *p != '\0'; p++) {
-	    *p = xtable[*p];
-	}
+	if (STRING_ELT(x,i)==NA_STRING)
+	    SET_STRING_ELT(y,i,NA_STRING);
+	else
+	    for(p = (unsigned char *)CHAR(STRING_ELT(y, i)); *p != '\0'; p++) {
+	        *p = xtable[*p];
+	    }
     }
 
     UNPROTECT(1);
@@ -996,6 +1031,10 @@ do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ind = allocVector(LGLSXP, n));
     nmatches = 0;
     for(i = 0 ; i < n ; i++) {
+	if (STRING_ELT(vec,i)==NA_STRING){
+		INTEGER(ind)[i]=0;
+		continue;
+	}
 	str = CHAR(STRING_ELT(vec, i));
 	/* Set case ignore flag for the whole string to be matched. */
 	if(!apse_set_caseignore_slice(aps, 0,
@@ -1028,7 +1067,7 @@ do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     else {
 	for(j = i = 0 ; i < n ; i++) {
-	    if(INTEGER(ind)[i])
+	    if(INTEGER(ind)[i]==1)
 		INTEGER(ans)[j++] = i + 1;
 	}
     }
