@@ -90,9 +90,9 @@ setIs <-
     classDef1 <- getClassDef(class1, where)
     classDef2 <- getClassDef(class2, where)
     if(is.null(classDef1) && is.null(classDef2))
-        Stop("Neither \"", class1, "\" nor \"", class2,
+        stop(paste("Neither \"", class1, "\" nor \"", class2,
              "\" has a definition in database ", where,
-             ": can't store the setIs information")
+             ": can't store the setIs information", sep=""))
     if(!is.null(classDef1)) {
         ext <- getExtends(classDef1)
         oldExt <- ext
