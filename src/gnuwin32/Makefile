@@ -212,12 +212,14 @@ ifeq ($(strip $(USE_ATLAS)),YES)
 blas00.o: blas00.c
 	$(CC) -O2  -c $< -o $@
 else
-../../bin/Rblas.dll: blas.o cmplxblas.o dllversion.o
+../../bin/Rblas.dll: blas.o cmplxblas.o zgemm.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L. -lR
 
 blas.o: ../appl/blas.f
 	$(F77) $(FFLAGS) -c $< -o $@
+zgemm.o: ../appl/zgemm.f
+	$(F77) $(FOPTFLAGS) -c $< -o $@
 cmplxblas.o: ../modules/lapack/cmplxblas.f
 	$(F77) $(FOPTFLAGS) -c $< -o $@
 endif

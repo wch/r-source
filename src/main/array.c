@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2002   The R Development Core Team.
+ *  Copyright (C) 1998-2003   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -353,7 +353,8 @@ static void matprod(double *x, int nrx, int ncx,
 #endif
 }
 
-/* DGEMM - perform one of the matrix-matrix operations    */
+#ifdef HAVE_DOUBLE_COMPLEX
+/* ZGEMM - perform one of the matrix-matrix operations    */
 /* C := alpha*op( A )*op( B ) + beta*C */
 extern void 
 F77_NAME(zgemm)(const char *transa, const char *transb, const int *m,
@@ -361,11 +362,12 @@ F77_NAME(zgemm)(const char *transa, const char *transb, const int *m,
 		const Rcomplex *a, const int *lda,
 		const Rcomplex *b, const int *ldb,
 		const Rcomplex *beta, Rcomplex *c, const int *ldc);
+#endif
 
 static void cmatprod(Rcomplex *x, int nrx, int ncx,
 		     Rcomplex *y, int nry, int ncy, Rcomplex *z)
 {
-#ifdef IEEE_754
+#if defined(HAVE_DOUBLE_COMPLEX) && defined(IEEE_754)
     char *transa = "N", *transb = "N";
     int i;
     Rcomplex one, zero;

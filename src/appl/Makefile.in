@@ -37,7 +37,8 @@ SOURCES_F = \
 	eigen.f \
 	lminfl.f
 DEPENDS = $(SOURCES_C:.c=.d)
-OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) $(BLAS)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) \
+  @USE_EXTERNAL_BLAS_FALSE@ blas.o @COMPILE_DOUBLE_COMPLEX_FALSE@ zgemm.o
 HEADERS =
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
@@ -46,7 +47,7 @@ DISTFILES = COPYRIGHT COPYRIGHT.ftn README lowess.doc \
 	$(HEADERS) \
 	$(SOURCES_C) \
 	$(SOURCES_F) \
-	blas.f
+	blas.f zgemm.f
 
 noinst_LIBRARIES = libappl.a
 libappl_a_SOURCES = $(SOURCES)
