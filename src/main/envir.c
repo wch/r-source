@@ -410,7 +410,9 @@ SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
 void InitGlobalEnv()
 {
     R_GlobalEnv = NewEnvironment(R_NilValue, R_NilValue, R_NilValue);
+#ifdef NEW
     HASHTAB(R_GlobalEnv) = R_NewHashTable(100, HASHTABLEGROWTHRATE);
+#endif
 }
 
 
