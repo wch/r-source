@@ -3312,6 +3312,42 @@ Function @code{lang2} creates an executable `list' of two elements, but
 this will only be clear to those with a knowledge of a LISP-like
 language.
 
+As a more comprehensive example of constructing an @R{} call in C code
+and evaluating, consider the following fragment of
+@code{printAttributes} in @file{src/main/print.c}.
+@smallexample
+    /* Need to construct a call to
+       print(CAR(a), digits=digits)
+       based on the R_print structure, then eval(call, env).
+       See do_docall for the template for this sort of thing.
+    */
+    SEXP s, t;
+    PROTECT(t = s = allocList(3));
+    SET_TYPEOF(s, LANGSXP);
+    CAR(t) = install("print"); t = CDR(t);
+    CAR(t) = CAR(a); t = CDR(t);
+    CAR(t) = allocVector(INTSXP, 1);
+    INTEGER(CAR(t))[0] = digits;
+    SET_TAG(t, install("digits"));
+    eval(s, env);
+    UNPROTECT(1);
+@end smallexample
+
+@noindent
+At this point @code{CAR(a)} is the @R{} object to be printed, the
+current attribute.  There are three steps: the call is constructed as
+a pairlist of length 3, the list is filled in, and the expression
+represented by the pairlist is evaluated.
+
+A pairlist is quite distinct from a generic vector list, the only
+user-visible form of list in @R{}.  A pairlist is a linked list (with
+@code{CDR(t)} computing the next entry), with items (accessed by
+@code{CAR(t)}) and names or tags (set by @code{SET_TAG}).  In this call
+there are to be three items, a symbol (pointing to the function to be
+called) and two argument values, the first unnamed and the second named.
+Setting the type makes this a call which can be evaluated.
+
+
 @subsection Zero-finding
 @cindex Zero-finding
 
@@ -3836,8 +3872,12 @@ should be regarded as undocumented and unstable.
 
 An alternative is to include the header file @file{S.h}, which may be
 useful when porting code from @Sl{}.  This includes rather less than
-@file{R.h}, and has some compatibility definitions (for example the
-@code{S_complex} type from @Sl{}).
+@file{R.h}, and has extra some compatibility definitions (for example
+the @code{S_complex} type from @Sl{}).
+
+The defines used for compatibility with @Sl{} sometimes causes
+conflicts@footnote{notably with Windows headers}, and the known
+problematic defines can be removed by defining @code{STRICT_R_HEADERS}.
 
 Most of these header files, including all those included by @file{R.h},
 can be used from C++ code.
@@ -3847,6 +3887,12 @@ can be used from C++ code.
 clashes with user code, it is @emph{essential} to include the
 appropriate header files when using these entry points.
 @end quotation
+
+This remapping can cause problems@footnote{known problems are redefining
+@code{error}, @code{length}, @code{vector} and @code{warning}}, and it
+can be eliminated by defining @code{R_NO_REMAP} and prepending
+@code{Rf_} to @emph{all} the function names used from
+@file{Rinternals.h} and @file{R_exts/Error.h}.
 
 @node Memory allocation, Error handling, The R API, The R API
 @section Memory allocation
@@ -3949,8 +3995,8 @@ simplest case can be called with a single character string argument
 giving the error message. (Don't do this if the string contains @samp{%}
 or might otherwise be interpreted as a format.)
 
-There is also an @Sl{}-compatibility interface which uses calls of the
-form
+If @code{STRICT_R_HEADERS} is not defined there is also an
+@Sl{}-compatibility interface which uses calls of the form
 
 @smallexample
 @group
@@ -4311,6 +4357,9 @@ distributions.
 
 @noindent
 Entries marked only have @samp{p} and @samp{q} functions available.
+After a call to @code{dwilcox}, @code{pwilcox} or @code{qwilcox} the
+function @code{wilcox_free()} should be called, and similarly for the
+signed rank functions.
 
 The argument names are not all quite the same as the @R{} ones.
 @c ^^^ FIXME ?? (argument names in the C code wouldn't change the API ..) ^^
@@ -4489,9 +4538,10 @@ use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
 @end multitable
 @end quotation
 
-There are a set of constants (@code{PI}, @code{DOUBLE_EPS}) defined in
-the included header @file{R_ext/Constants.h}, the latter two mainly for
-compatibility with @Sl{}.
+There are a set of constants (@code{PI}, @code{DOUBLE_EPS}) (and so on)
+defined@footnote{unless @code{STRICT_R_HEADERS} is defined} in the
+included header @file{R_ext/Constants.h}, mainly for compatibility with
+@Sl{}.
 
 @findex TRUE
 @findex FALSE
