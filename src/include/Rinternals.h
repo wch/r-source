@@ -269,6 +269,7 @@ typedef union { SEXPREC s; double align; } SEXPREC_ALIGN;
 typedef struct SEXPREC *SEXP;
 #define CONS(a, b)	cons((a), (b))		/* data lists */
 #define LCONS(a, b)	lcons((a), (b))		/* language lists */
+#define CHAR(x)		R_CHAR(x)
 #endif /* USE_RINTERNALS */
 
 /* Pointer Protection and Unprotection */
@@ -650,7 +651,7 @@ void (SET_NAMED)(SEXP x, int v);
 /* Vector Access Macros */
 int (LENGTH)(SEXP x);
 int (TRUELENGTH)(SEXP x);
-char *(CHAR)(SEXP x);
+char *(R_CHAR)(SEXP x);
 SEXP (STRING_ELT)(SEXP x, int i);
 void (SETLENGTH)(SEXP x, int v);
 void (SET_TRUELENGTH)(SEXP x, int v);

@@ -1936,7 +1936,7 @@ void (SET_NAMED)(SEXP x, int v) { SET_NAMED(x, v); }
 /* Vector Accessors */
 int (LENGTH)(SEXP x) { return LENGTH(x); }
 int (TRUELENGTH)(SEXP x) { return TRUELENGTH(x); }
-char *(CHAR)(SEXP x) { return CHAR(x); }
+char *(R_CHAR)(SEXP x) { return CHAR(x); }
 SEXP (STRING_ELT)(SEXP x, int i) { return STRING_ELT(x, i); }
 SEXP (VECTOR_ELT)(SEXP x, int i) { return VECTOR_ELT(x, i); }
 int (LEVELS)(SEXP x) { return LEVELS(x); }
