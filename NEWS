@@ -286,10 +286,14 @@ BUG FIXES
 	contain "NA".  This affected read.table().
 
     o   Internal match function did not check for nor handle 0-length
-	vectors.  (The R function match() did.)
+	vectors.  (The R function match() did.)  This could cause
+	type.convert() to segfault.
 
     o   The line length limit in output text connections has been
 	raised to 8095 chars.
+
+    o   Sweave now uses anonymous file rather than text connections
+	to avoid the limits of the latter (see previous item).
 
 
 		CHANGES IN R VERSION 1.6.1
