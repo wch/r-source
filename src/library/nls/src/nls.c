@@ -1,10 +1,10 @@
 /*
- *  $Id: nls.c,v 1.8.2.1 2001/01/08 22:26:35 bates Exp $
+ *  $Id: nls.c,v 1.8.2.2 2001/02/21 10:59:47 ripley Exp $
  *
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
  *
- *  Copyright 1999-1999 Douglas M. Bates <bates@stat.wisc.edu>,
+ *  Copyright 1999-2001 Douglas M. Bates <bates@stat.wisc.edu>,
  *                      Saikat DebRoy <saikat@stat.wisc.edu>
  *
  *  This program is free software; you can redistribute it and/or modify

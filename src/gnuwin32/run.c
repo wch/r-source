@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file run.c: a simple 'reading' pipe (and a command executor)
- *  Copyright (C) 1999, 2000  Guido Masarotto  and Brian Ripley
+ *  Copyright (C) 1999-2001  Guido Masarotto  and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2000   Saikat DebRoy and the
+ *  Copyright (C) 1997-2001   Saikat DebRoy and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
