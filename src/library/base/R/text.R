@@ -26,7 +26,8 @@ Hershey <-
 ## List of valid combinations : ../man/Hershey.Rd
 ## *checking* of allowed combinations is done in
 ## (via max{#}) in    FixupVFont() ../../../main/plot.c
-## The basic "table" really is in  ../../../main/g_fontdb.c
+## The basic "table" really is in  ../../../modules/vfonts/g_fontdb.c
+
          allowed = rbind(cbind(1, 1:8), cbind(2, 1:5), cbind(3,1:4),
                          cbind(4:6, 1), cbind(7, 1:5), cbind(8,1:3))
          )

@@ -41,7 +41,8 @@ Hershey
   available as list components of the variable \code{Hershey}.
   The allowed pairs for \code{(typeface, fontindex)} are:
 %% This is checked (via max{#}) in FixupVFont() ../../../main/plot.c
-%% The basic "table" really is in  ../../../main/g_fontdb.c
+%% The basic "table" really is in  ../../../modules/vfonts/g_fontdb.c
+
   \tabular{ll}{
     serif \tab plain \cr
     serif \tab italic \cr
