@@ -15,7 +15,7 @@ mosaicplot(x, \dots)
                    type = c("pearson", "deviance", "FT"), \dots)
 
 \method{mosaicplot}{formula}(formula, data = NULL, \dots,
-          main = deparse(substitute(data)), subset, na.action = na.omit)
+          main = deparse(substitute(data)), subset, na.action = stats::na.omit)
 }
 \arguments{
   \item{x}{a contingency table in array form, with optional category

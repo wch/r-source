@@ -48,7 +48,6 @@ beaver2
 }
 \examples{
 %% consider converting times to POSIXct (using 'yday' ?)
-
 (yl <- range(beaver1$temp, beaver2$temp))
 
 beaver.plot <- function(bdat, ...) {

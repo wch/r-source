@@ -22,6 +22,7 @@
   change-point problem.  \emph{Biometrika} \bold{65}, 243--51.
 }
 \examples{
+require(stats)
 par(mfrow = c(2,2))
 plot(Nile)
 acf(Nile)

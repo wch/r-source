@@ -47,6 +47,7 @@
     S and S-PLUS}, Springer.
 }
 \examples{
+require(stats)
 coplot(weight ~ Time | Chick, data = ChickWeight,
     type = "b", show = FALSE)
 ## fit a representative chick

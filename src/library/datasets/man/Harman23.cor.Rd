@@ -13,6 +13,7 @@
   University of Chicago Press, Table 2.3.
 }
 \examples{
+require(stats)
 (Harman23.FA <- factanal(factors = 1, covmat = Harman23.cor))
 for(factors in 2:4) print(update(Harman23.FA, factors = factors))
 }

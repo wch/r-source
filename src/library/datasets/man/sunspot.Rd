@@ -38,6 +38,7 @@ sunspot.year
   Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(stats)
 ## Compare the monthly series 
 plot (sunspot.month, main = "sunspot.month [stats]", col = 2)
 lines(sunspots) # "very barely" see something

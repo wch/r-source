@@ -15,6 +15,7 @@
   Second Edition.  Springer.  Example 1.1.
 }
 \examples{
+require(stats)
 JJ <- log10(JohnsonJohnson)
 plot(JJ)
 (fit <- StructTS(JJ, type="BSM"))

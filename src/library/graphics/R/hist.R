@@ -69,7 +69,7 @@ hist.default <-
     ## As one break point could be very much larger than the others,
     ## as from 1.9.1 we no longer use the range. (PR#6931)
     ## diddle <- 1e-7 * max(abs(range(breaks)))
-    diddle <- 1e-7 * median(diff(breaks))
+    diddle <- 1e-7 * stats::median(diff(breaks))
     fuzz <- if(right)
 	c(if(include.lowest) - diddle else diddle,
           rep.int(diddle, length(breaks) - 1))

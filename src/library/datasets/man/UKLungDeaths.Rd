@@ -27,6 +27,7 @@ P. J. Diggle (1990)
 Oxford, table A.3
 }
 \examples{
+require(stats) # for time
 plot(ldeaths) 
 plot(mdeaths, fdeaths) 
 ## Better labels:

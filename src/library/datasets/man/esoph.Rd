@@ -37,7 +37,7 @@
 \author{Thomas Lumley}
 \examples{
 require(stats)
-require(graphics)
+require(graphics) # for mosaicplot
 summary(esoph)
 ## effects of alcohol, tobacco and interaction, age-adjusted
 model1 <- glm(cbind(ncases, ncontrols) ~ agegp + tobgp * alcgp,

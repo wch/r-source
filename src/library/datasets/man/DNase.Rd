@@ -34,6 +34,7 @@
     S and S-PLUS}, Springer.
 }
 \examples{
+require(stats)
 coplot(density ~ conc | Run, data = DNase,
     show = FALSE, type = "b")
 coplot(density ~ log(conc) | Run, data = DNase,

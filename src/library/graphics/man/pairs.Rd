@@ -9,7 +9,7 @@
 }
 \synopsis{
 pairs(x, \dots)
-pairs.formula(formula, data = NULL, \dots, subset, na.action = na.pass)
+pairs.formula(formula, data = NULL, \dots, subset, na.action = stats::na.pass)
 pairs.default(x, labels, panel = points, \dots,
               main = NULL, oma = NULL,
               font.main = par("font.main"), cex.main = par("cex.main"),

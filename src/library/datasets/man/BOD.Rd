@@ -29,6 +29,7 @@
   M.Sc. Thesis, University of Wisconsin -- Madison.
 }
 \examples{
+require(stats)
 # simplest form of fitting a first-order model to these data
 fm1 <- nls(demand ~ A*(1-exp(-exp(lrc)*Time)), data = BOD,
    start = c(A = 20, lrc = log(.35)))

@@ -49,7 +49,7 @@ local({
       }
       n
   }
-  mycols <- rainbow(attr(dhc21,"members"))
+  mycols <- graphics::rainbow(attr(dhc21,"members"))
   i <- 0
  })
 dL <- dendrapply(dhc21, colLab)

@@ -54,7 +54,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 }
 
 boxplot.formula <-
-    function(formula, data = NULL, ..., subset, na.action = na.pass)
+    function(formula, data = NULL, ..., subset, na.action = stats::na.pass)
 {
     if(missing(formula) || (length(formula) != 3))
         stop("formula missing or incorrect")

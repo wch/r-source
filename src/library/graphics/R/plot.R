@@ -15,7 +15,7 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 	}
 	else if(inherits(x, "ts")) {
 	    y <- if(is.matrix(x)) x[,1] else x
-	    x <- time(x)
+	    x <- stats::time(x)
 	    xlab <- "Time"
 	}
 	else if(is.complex(x)) {
