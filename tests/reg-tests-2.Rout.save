@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.3.0 Under development (unstable) (2001-06-11)
+Version 1.4.0 Under development (unstable) (2001-08-16)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -433,6 +433,7 @@ Error in var(numeric(0)) : `x' is empty
 [2,] "  b" "  d" "  f" "  h"
 > ## lost dimensions in 1.2.3
 > 
+> 
 > ## PR 963
 > svd(rbind(1:7))## $v lost dimensions in 1.2.3
 $d
@@ -452,5 +453,100 @@ $v
 [6,] 0.50709255
 [7,] 0.59160798
 
+> 
+> 
+> ## some tests that R supports logical variables in formula
+> ## it coerced them to numeric prior to 1.4.0
+> ## they should appear like 2-level factors, following S
+> 
+> oldCon <- options("contrasts")
+> y <- rnorm(10)
+> x <- rep(c(T,F), 5)
+> model.matrix(y ~ x)
+   (Intercept) xTRUE
+1            1     1
+2            1     0
+3            1     1
+4            1     0
+5            1     1
+6            1     0
+7            1     1
+8            1     0
+9            1     1
+10           1     0
+attr(,"assign")
+[1] 0 1
+attr(,"contrasts")
+attr(,"contrasts")$x
+[1] "contr.treatment"
+
+> lm(y ~ x)
+
+Call:
+lm(formula = y ~ x)
+
+Coefficients:
+(Intercept)        xTRUE  
+     0.1230       0.3170  
+
+> DF <- data.frame(x, y)
+> lm(y ~ x, data=DF)
+
+Call:
+lm(formula = y ~ x, data = DF)
+
+Coefficients:
+(Intercept)        xTRUE  
+     0.1230       0.3170  
+
+> options(contrasts=c("contr.helmert", "contr.tratment"))
+> model.matrix(y ~ x)
+   (Intercept) x1
+1            1  1
+2            1 -1
+3            1  1
+4            1 -1
+5            1  1
+6            1 -1
+7            1  1
+8            1 -1
+9            1  1
+10           1 -1
+attr(,"assign")
+[1] 0 1
+attr(,"contrasts")
+attr(,"contrasts")$x
+[1] "contr.helmert"
+
+> lm(y ~ x, data=DF)
+
+Call:
+lm(formula = y ~ x, data = DF)
+
+Coefficients:
+(Intercept)           x1  
+     0.2814       0.1585  
+
+> z <- 1:10
+> lm(y ~ x*z)
+
+Call:
+lm(formula = y ~ x * z)
+
+Coefficients:
+(Intercept)           x1            z         x1:z  
+    0.49064     -0.68273     -0.02433      0.15074  
+
+> lm(y ~ x*z - 1)
+
+Call:
+lm(formula = y ~ x * z - 1)
+
+Coefficients:
+  xFALSE     xTRUE         z      x1:z  
+ 1.17337  -0.19209  -0.02433   0.15074  
+
+> options(oldCon)
+> 
 > 
 > 
