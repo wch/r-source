@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.6.0 Under development (unstable) (2002-08-23)
+Version 1.6.1 Patched (2002-11-17)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1095,4 +1095,29 @@ y    2    5 8
 > Y <- r/n
 > z <- aov(Y ~ trt, weights=n)
 > ## 1.5.1 gave unweighted RSS
+> 
+> 
+> ## rbind (PR#2266)
+> test <- as.data.frame(matrix(1:25, 5, 5))
+> test1 <- matrix(-(1:10), 2, 5)
+> rbind(test, test1)
+   V1 V2 V3 V4  V5
+1   1  6 11 16  21
+2   2  7 12 17  22
+3   3  8 13 18  23
+4   4  9 14 19  24
+5   5 10 15 20  25
+11 -1 -3 -5 -7  -9
+22 -2 -4 -6 -8 -10
+> rbind(test1, test)
+   V1 V2 V3 V4  V5
+1  -1 -3 -5 -7  -9
+2  -2 -4 -6 -8 -10
+11  1  6 11 16  21
+22  2  7 12 17  22
+3   3  8 13 18  23
+4   4  9 14 19  24
+5   5 10 15 20  25
+> ## 1.6.1 treated matrix as a vector.
+> 
 > 
