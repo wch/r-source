@@ -939,3 +939,64 @@ void CleanTempDir()
 {
     R_unlink(R_TempDir, 1);
 }
+
+SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans = allocVector(STRSXP, 0);
+    HGLOBAL hglb;
+    char *pc;
+
+    checkArity(op, args);
+    if(clipboardhastext() &&
+       OpenClipboard(NULL) &&
+       (hglb = GetClipboardData(CF_TEXT)) &&
+       (pc = (char *)GlobalLock(hglb))) {
+	    PROTECT(ans = allocVector(STRSXP, 1));
+	    SET_STRING_ELT(ans, 0, mkChar(pc));
+	    GlobalUnlock(hglb);
+	    CloseClipboard();
+	    UNPROTECT(1);
+    }
+    return ans;
+}
+
+SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, text;
+    int i, n;
+    HGLOBAL hglb;
+    char *s, *p;
+    Rboolean success = FALSE;
+
+    checkArity(op, args);
+    text = CAR(args);
+    if(!isString(text))
+	errorcall(call, "argument must be a character vector");
+    n = length(text);
+    if(n > 0) {
+	int len = 1;
+	for(i = 0; i < n; i++) len += strlen(CHAR(STRING_ELT(text, i))) + 2;
+	if ( (hglb = GlobalAlloc(GHND, len)) &&
+	     (s = (char *)GlobalLock(hglb)) ) {
+	    for(i = 0; i < n; i++) {
+		p = CHAR(STRING_ELT(text, i));
+		while(*p) *s++ = *p++;
+		*s++ = '\r'; *s++ = '\n';
+	    }
+	    *s = '\0';
+	    GlobalUnlock(hglb);
+	    if (!OpenClipboard(NULL) || !EmptyClipboard()) {
+		R_ShowMessage("Unable to open the clipboard");
+		GlobalFree(hglb);
+	    } else {
+		SetClipboardData(CF_TEXT, hglb);
+		CloseClipboard();
+		success = TRUE;
+	    }
+	}
+    }
+    PROTECT(ans = allocVector(LGLSXP, 1));
+    LOGICAL(ans)[0] = success;
+    UNPROTECT(1);
+    return ans;
+}
