@@ -1,4 +1,4 @@
-### $Id: nls-profile.R,v 1.1 2003/12/11 07:16:02 ripley Exp $
+### $Id: nls-profile.R,v 1.2 2004/01/05 09:07:39 ripley Exp $
 ###
 ### Profiling nonlinear least squares for R
 ###
@@ -186,7 +186,6 @@ profile.nls <-
 plot.profile.nls <- function(x, levels, conf = c(99, 95, 90, 80, 50)/100,
                              nseg = 50, absVal = TRUE, ...)
 {
-  require(splines)
   obj <- x
   dfres <- attr(obj, "summary")$df[2]
   confstr <- NULL
@@ -206,8 +205,8 @@ plot.profile.nls <- function(x, levels, conf = c(99, 95, 90, 80, 50)/100,
   opar <- par(mar = c(5, 4, 1, 1) + 0.1)
   if (absVal) {
     for (i in seq(along = nm)) {
-      sp <- interpSpline(obj[[i]]$par.vals[,i], obj[[i]]$tau)
-      bsp <- backSpline(sp)
+      sp <- splines::interpSpline(obj[[i]]$par.vals[,i], obj[[i]]$tau)
+      bsp <- splines::backSpline(sp)
       xlim <- predict(bsp, c(-mlev, mlev))$y
       if (is.na(xlim[1])) xlim[1] <- min(x[[i]]$par.vals[, i])
       if (is.na(xlim[2])) xlim[2] <- max(x[[i]]$par.vals[, i])
@@ -226,8 +225,8 @@ plot.profile.nls <- function(x, levels, conf = c(99, 95, 90, 80, 50)/100,
     }
   } else {
     for (i in seq(along = nm)) {
-      sp <- interpSpline(obj[[i]]$par.vals[,i], obj[[i]]$tau)
-      bsp <- backSpline(sp)
+      sp <- splines::interpSpline(obj[[i]]$par.vals[,i], obj[[i]]$tau)
+      bsp <- splines::backSpline(sp)
       xlim <- predict(bsp, c(-mlev, mlev))$y
       if (is.na(xlim[1])) xlim[1] <- min(x[[i]]$par.vals[, i])
       if (is.na(xlim[2])) xlim[2] <- max(x[[i]]$par.vals[, i])

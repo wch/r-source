@@ -153,7 +153,6 @@ function (x, levels, conf = c(99, 95, 90, 80, 50)/100, nseg = 50,
 {
     ## Plot profiled likelihood
     ## Based on profile.nls (package stats)
-    require(splines)
     obj <- x@profile
 
     confstr <- NULL
@@ -174,9 +173,9 @@ function (x, levels, conf = c(99, 95, 90, 80, 50)/100, nseg = 50,
     if (absVal) {
         for (i in seq(along = nm)) {
             ## <FIXME> This does not need to be monotonic
-            sp <- interpSpline(obj[[i]]$par.vals[, i], obj[[i]]$z,
+            sp <- splines::interpSpline(obj[[i]]$par.vals[, i], obj[[i]]$z,
                                na.action=na.omit)
-            bsp <- backSpline(sp)
+            bsp <-splines:: backSpline(sp)
             ## </FIXME>
             xlim <- predict(bsp, c(-mlev, mlev))$y
             if (is.na(xlim[1]))
@@ -206,9 +205,11 @@ function (x, levels, conf = c(99, 95, 90, 80, 50)/100, nseg = 50,
     }
     else {
         for (i in seq(along = nm)) {
-            sp <- interpSpline(obj[[i]]$par.vals[, i], obj[[i]]$z,
+            ## <FIXME> This does not need to be monotonic
+            sp <- splines::interpSpline(obj[[i]]$par.vals[, i], obj[[i]]$z,
                                na.action=na.omit)
-            bsp <- backSpline(sp)
+            bsp <- splines::backSpline(sp)
+            ## </FIXME>
             xlim <- predict(bsp, c(-mlev, mlev))$y
             x0 <- predict(bsp, 0)$y
             if (is.na(xlim[1]))
