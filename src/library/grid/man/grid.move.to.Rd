@@ -1,7 +1,6 @@
 \name{grid.move.to}
 \alias{grid.move.to}
 \alias{grid.line.to}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Move to a Specified Position }
 \description{
   Grid has the notion of a current location.  This function
@@ -11,7 +10,6 @@
 grid.move.to(x=0, y=0, default.units="npc", draw=TRUE, vp=NULL)
 grid.line.to(x=1, y=1, default.units="npc", draw=TRUE, gp=gpar(), vp=NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{x}{A numeric value or a unit object specifying an x-value.}
   \item{y}{A numeric value or a unit object specifying a y-value.}
@@ -41,5 +39,4 @@ grid.grill()
 grid.line.to(0.5, 0.5)
 pop.viewport()
 }
-\keyword{ dplot }%-- one or more ...
-
+\keyword{dplot}

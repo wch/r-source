@@ -1,6 +1,5 @@
 \name{grid.current.viewport}
 \alias{grid.current.viewport}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Get the Default Grid Viewport}
 \description{
   Returns the viewport that Grid is going to draw into.
@@ -8,7 +7,6 @@
 \usage{
 current.viewport(vp=NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{vp}{A Grid viewport object.}
 }
@@ -26,8 +24,7 @@ current.viewport(vp=NULL)
   A Grid viewport object.
 }
 \author{Paul Murrell}
-\seealso{\code{\link{viewport}}}
-
-\examples{
+\seealso{
+  \code{\link{viewport}}
 }
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

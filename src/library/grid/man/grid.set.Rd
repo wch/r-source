@@ -1,6 +1,5 @@
 \name{grid.set}
 \alias{grid.set}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Set the Contents of a Grid Graphical Object}
 \description{
   A Grid graphical object contains a list structure;  this
@@ -9,7 +8,6 @@
 \usage{
 grid.set(grob, ...)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{grob}{An object of class \code{"grob"}.}
   \item{\dots}{Zero or more element-specifiers, plus a list structure.
@@ -22,7 +20,7 @@ grid.set(grob, ...)
   and the list structure of the \code{grob} has a corresponding
   element, and that element is an object of class \code{"grob"},
   then the contents of that element are set to be the list structure.
-  And so on ...
+  And so on \ldots
 
   This is ONLY for setting the list structure contents of a
   graphical object.  See \code{grid.edit} for setting the values
@@ -37,7 +35,4 @@ grid.set(grob, ...)
 \seealso{
   \code{\link{grid.grob}}.
 }
-
-\examples{
-}
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

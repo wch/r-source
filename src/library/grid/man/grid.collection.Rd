@@ -1,6 +1,5 @@
 \name{grid.collection}
 \alias{grid.collection}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Create a Coherent Group of Grid Graphical Objects}
 \description{
   This function creates a graphical object which contains
@@ -10,9 +9,8 @@
   It may be convenient to name the elements of the collection.
 }
 \usage{
-grid.collection(..., gp=gpar(), draw=T, vp=NULL)
+grid.collection(..., gp=gpar(), draw=TRUE, vp=NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{\dots}{Zero or more objects of class \code{"grob"}.}
   \item{gp}{An object of class \code{gpar}, typically the output
@@ -30,7 +28,6 @@ grid.collection(..., gp=gpar(), draw=T, vp=NULL)
 \seealso{
   \code{\link{grid.grob}}.
 }
-
 \examples{
 grid.newpage()
 lc <- grid.collection(l1=grid.lines(draw=FALSE),
@@ -38,4 +35,4 @@ lc <- grid.collection(l1=grid.lines(draw=FALSE),
 grid.edit(lc, gp=gpar(col="blue"))
 grid.edit(lc, "children", "l2", gp=gpar(col="red"))
 }
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

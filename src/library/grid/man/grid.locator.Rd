@@ -1,6 +1,5 @@
 \name{grid.locator}
 \alias{grid.locator}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Capture a Mouse Click }
 \description{
   Allows the user to click the mouse once within the current
@@ -11,7 +10,6 @@
 \usage{
 grid.locator(unit = "native")
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{unit}{ The coordinate system in which to return the location
     of the mouse click.
@@ -31,7 +29,7 @@ grid.locator(unit = "native")
   \code{\link{locator}} }
 \examples{
 if (interactive()) {
-  # Need to write a more sophisticated unit as.character method
+  ## Need to write a more sophisticated unit as.character method
   unittrim <- function(unit) {
     sub("^([0-9]+|[0-9]+[.][0-9])[0-9]*", "\\\\1", as.character(unit))
   }
@@ -58,4 +56,4 @@ if (interactive()) {
   pop.viewport()  
 }
 }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{dplot}

@@ -1,6 +1,5 @@
 \name{grid.layout}
 \alias{grid.layout}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Create a Grid Layout}
 \description{
   This function returns a Grid layout, which describes a subdivision
@@ -12,7 +11,6 @@ grid.layout(nrow = 1, ncol = 1,
         heights = unit(rep(1, nrow), "null", unit.per = T), 
         default.units = "null", respect = FALSE)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{nrow}{An integer describing the number of rows in the layout.}
   \item{ncol}{An integer describing the number of columns in the layout.}
@@ -60,7 +58,7 @@ grid.layout(nrow = 1, ncol = 1,
   \code{\link{layout}}}
 
 \examples{
-# A variety of layouts (some a bit mid-bending ...)
+## A variety of layouts (some a bit mid-bending ...)
 layout.torture()
 }
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

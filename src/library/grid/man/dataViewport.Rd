@@ -1,6 +1,5 @@
 \name{dataViewport}
 \alias{dataViewport}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Create a Viewport with Scales based on Data }
 \description{
   This is a convenience function for producing a viewport with
@@ -10,7 +9,6 @@
 dataViewport(xData = NULL, yData = NULL, xscale = NULL, yscale = NULL,
              extension = 0.05, ...)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{xData}{ A numeric vector of data. }
   \item{yData}{ A numeric vector of data. }
@@ -25,11 +23,13 @@ dataViewport(xData = NULL, yData = NULL, xscale = NULL, yscale = NULL,
   used to generate an x-scale based on the range of \code{x}, extended
   by the proportion specified in \code{extension}.  Similarly for the
   y-scale.
-  }
+}
 \value{
   A grid viewport object.
 }
 \author{ Paul Murrell }
-\seealso{ \code{\link{viewport}} and \code{\link{plotViewport}}. }
-
-\keyword{ dplot }% __ONLY ONE__ keyword per line
+\seealso{
+  \code{\link{viewport}} and
+  \code{\link{plotViewport}}.
+}
+\keyword{dplot}

@@ -1,6 +1,5 @@
 \name{grid.pack}
 \alias{grid.pack}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Pack an Object within a Frame }
 \description{
   This function, together with \code{grid.frame} is part of a
@@ -15,7 +14,6 @@ grid.pack(frame, grob, grob.name="", draw=TRUE, side=NULL,
           width=NULL, height=NULL,
           force.width=FALSE, force.height=FALSE, border=NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{frame}{ An object of class \code{frame}, typically the output
   from a call to \code{grid.frame}. }
@@ -68,9 +66,7 @@ grid.pack(frame, grob, grob.name="", draw=TRUE, side=NULL,
   None.
 }
 \author{ Paul Murrell }
-\seealso{\code{\link{grid.frame}} }
-
-\examples{
+\seealso{
+  \code{\link{grid.frame}}
 }
-\keyword{ dplot }%-- one or more ...
-
+\keyword{dplot}

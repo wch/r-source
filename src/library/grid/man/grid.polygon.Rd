@@ -1,6 +1,5 @@
 \name{grid.polygon}
 \alias{grid.polygon}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Draw a Polygon }
 \description{
   This function draws a polygon.  The final point will automatically
@@ -11,7 +10,6 @@ grid.polygon(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
              default.units="npc",
              gp=gpar(), draw=TRUE, vp=NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-locations.}
   \item{y}{A numeric vector or unit object specifying y-locations.}
@@ -36,7 +34,4 @@ grid.polygon(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
   \link{Grid},
   \code{\link{viewport}}
 }
-
-\examples{
-}
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

@@ -1,6 +1,5 @@
 \name{gpar}
 \alias{gpar}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Function to produce a Graphical Parameter Object}
 \description{
   This function returns an object of class \code{"gpar"}.  This is
@@ -9,7 +8,6 @@
 \usage{
 gpar(...)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{\dots}{ Any number of named arguments. }
 }
@@ -76,9 +74,9 @@ grid.collection(grid.rect(gp=gpar(col="red"), draw=FALSE),
 grid.text("This text is the colour set by the viewport (blue)",
           y=1, just=c("center", "bottom"), gp=gpar(fontsize=20), vp=vp)
 grid.newpage()
-# example with multiple values for a parameter
+## example with multiple values for a parameter
 push.viewport(viewport())
 grid.points(1:10/11, 1:10/11, gp=gpar(col=1:10))
 pop.viewport()
 }
-\keyword{ dplot }%-- one or more ...
+\keyword{ dplot }

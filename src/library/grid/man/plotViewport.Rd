@@ -1,6 +1,5 @@
 \name{plotViewport}
 \alias{plotViewport}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Create a Viewport with a Standard Plot Layout }
 \description{
   This is a convenience function for producing a viewport with
@@ -11,7 +10,6 @@
 \usage{
 plotViewport(margins, ...)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{margins}{ A numeric vector interpreted in the same way
     as \code{par(mar)} in base graphics. }
@@ -22,6 +20,8 @@ plotViewport(margins, ...)
   A grid viewport object.
 }
 \author{ Paul Murrell }
-\seealso{ \code{\link{viewport}} and \code{\link{dataViewport}}. }
-
-\keyword{ dplot }% __ONLY ONE__ keyword per line
+\seealso{
+  \code{\link{viewport}} and
+  \code{\link{dataViewport}}.
+}
+\keyword{dplot}

@@ -1,9 +1,8 @@
 \name{push.viewport}
 \alias{push.viewport}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Push a Viewport onto the Grid Viewport Stack}
 \description{
-  Grid maintains a viewport stack - a list of nested drawing
+  Grid maintains a viewport stack --- a list of nested drawing
   contexts.
   
   This function makes the specified viewport the default viewport
@@ -13,9 +12,9 @@
 \usage{
 push.viewport(..., recording=TRUE)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
-  \item{\dots}{One or more objects of class \code{"viewport"} or NULL.}
+  \item{\dots}{One or more objects of class \code{"viewport"}, or
+    \code{NULL}.}
   \item{recording}{A logical value to indicate whether the set-viewport
     operation should be recorded on the Grid display list.}
 }
@@ -26,7 +25,4 @@ push.viewport(..., recording=TRUE)
 \seealso{
   \code{\link{pop.viewport}}.
 }
-
-\examples{
-}
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

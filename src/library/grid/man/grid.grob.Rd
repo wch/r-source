@@ -1,6 +1,5 @@
 \name{grid.grob}
 \alias{grid.grob}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Create a Grid Graphical Object}
 \description{
   Creates a Grid graphical object.
@@ -8,7 +7,6 @@
 \usage{
 grid.grob(list.struct, cl = NULL, draw = TRUE)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{list.struct}{A list (preferably with each element named).}
   \item{cl}{A string giving the class attribute for the \code{list.struct}}
@@ -33,20 +31,22 @@ grid.grob(list.struct, cl = NULL, draw = TRUE)
 }
 \author{Paul Murrell}
 \seealso{
-  \code{\link{grid.draw}}, \code{\link{grid.edit}}, \code{\link{grid.get}},
+  \code{\link{grid.draw}},
+  \code{\link{grid.edit}},
+  \code{\link{grid.get}},
   \code{\link{grid.copy}}.
 }
 
 \examples{
-# Create a graphical object
+## Create a graphical object
 l <- grid.lines(draw=FALSE)
-# View the list.struct
+## View the list.struct
 grid.get(l)
-# Copy by reference
+## Copy by reference
 l2 <- l
-# Edit the common list.struct
+## Edit the common list.struct
 grid.edit(l2, gp=gpar(col="green"))
-# Copy by value
+## Copy by value
 l3 <- grid.copy(l)
 }
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

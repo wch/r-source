@@ -1,6 +1,5 @@
 \name{grid.display.list}
 \alias{grid.display.list}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Control the Grid Display List}
 \description{
   Turn the Grid display list on or off.
@@ -8,7 +7,6 @@
 \usage{
 grid.display.list(on=TRUE)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{on}{A logical value to indicate whether the display list
     should be on or off.}
@@ -26,7 +24,7 @@ grid.display.list(on=TRUE)
 }
 \author{Paul Murrell}
 
-\section{WARNING }{Turning the display list on causes the display list
-to be erased !} 
-
-\keyword{ dplot }%-- one or more ...
+\section{WARNING}{
+  Turning the display list on causes the display list to be erased!
+}
+\keyword{dplot}

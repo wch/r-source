@@ -1,6 +1,5 @@
 \name{absolute.size}
 \alias{absolute.size}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Absolute Size of a Grob }
 \description{
   This function converts a unit object into absolute units.
@@ -10,7 +9,6 @@
 \usage{
 absolute.size(unit)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{unit}{ An object of class \code{"unit"}. }
 }
@@ -32,4 +30,4 @@ absolute.size(unit)
 
   The file \file{grid/doc/notes/parentchild.ps}.
 }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{ dplot }

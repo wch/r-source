@@ -1,6 +1,5 @@
 \name{grid.place}
 \alias{grid.place}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Place an Object within a Frame }
 \description{
   This function provides a simpler interface to the \code{grid.pack()}
@@ -14,7 +13,6 @@
 \usage{
 grid.place(frame, grob, grob.name="", draw=TRUE, row=1, col=1)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{frame}{ An object of class \code{frame}, typically the output
   from a call to \code{grid.frame}. }
@@ -30,8 +28,8 @@ grid.place(frame, grob, grob.name="", draw=TRUE, row=1, col=1)
     the-number-of-cols-currently-in-the-frame.  }
 }
 \author{ Paul Murrell }
-\seealso{\code{\link{grid.frame}} and \code{\link{grid.pack}} }
-
-\examples{
+\seealso{
+  \code{\link{grid.frame}} and
+  \code{\link{grid.pack}}
 }
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

@@ -1,6 +1,5 @@
 \name{grid.frame}
 \alias{grid.frame}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Create a Frame for Packing Objects }
 \description{
   This function, together with \code{grid.pack} is part of a
@@ -11,7 +10,6 @@
 \usage{
 grid.frame(layout=NULL, vp=NULL, gp=gpar(), draw=FALSE)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{layout}{ A Grid layout, or NULL. This can be used to initialise
     the frame with a number of rows and columns, with initial widths
@@ -28,12 +26,13 @@ grid.frame(layout=NULL, vp=NULL, gp=gpar(), draw=FALSE)
   An object of class \code{"grob"}.
 }
 \author{ Paul Murrell }
-\seealso{ \code{\link{grid.pack}} }
-
+\seealso{
+  \code{\link{grid.pack}}
+}
 \examples{
 grid.newpage()
 gf <- grid.frame(draw=TRUE)
 grid.pack(gf, grid.rect(draw=FALSE, gp=gpar(fill="grey")))
 grid.pack(gf, grid.text("hi there", draw=FALSE), side="right")
 }
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

@@ -1,6 +1,5 @@
 \name{convertNative}
 \alias{convertNative}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Convert a Unit Object to Native units }
 \description{
   \bold{This function is deprecated in grid version 0.8 and will be
@@ -16,7 +15,6 @@
 \usage{
 convertNative(unit, dimension="x", type="location")
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{unit}{ A unit object. }
   \item{dimension}{ Either "x" or "y". }
@@ -52,4 +50,4 @@ convertNative(unit(1, "inches")) ==
 convertNative(unit(1, "inches"), "y", "dimension") ==
   grid.convertHeight(unit(1, "inches"), "native", valueOnly=TRUE)
 }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{ dplot }

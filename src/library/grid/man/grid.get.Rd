@@ -1,6 +1,5 @@
 \name{grid.get}
 \alias{grid.get}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Get the Contents of a Grid Graphical Object}
 \description{
   A Grid graphical object contains a list structure;  this
@@ -9,7 +8,6 @@
 \usage{
 grid.get(grob, ...)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{grob}{An object of class \code{"grob"}.}
   \item{\dots}{Zero or more element-specifiers.  Each specifier
@@ -34,7 +32,6 @@ grid.get(grob, ...)
 \seealso{
   \code{\link{grid.grob}}.
 }
-
 \examples{
 xa <- grid.xaxis(draw=FALSE)
 grid.get(xa)
@@ -43,4 +40,4 @@ grid.get(xa, "ticks")
 temp <- grid.collection(axis=grid.xaxis(draw=FALSE), draw=FALSE)
 grid.get(temp, "children", "axis", "ticks")
 }
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

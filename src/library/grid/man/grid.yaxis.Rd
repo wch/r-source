@@ -1,6 +1,5 @@
 \name{grid.yaxis}
 \alias{grid.yaxis}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Draw a Y-Axis on a Grid Viewport}
 \description{
   This function draws a y-axis.
@@ -9,7 +8,6 @@
 grid.yaxis(at = NA, label = TRUE, main = TRUE, gp=gpar(),
            draw = TRUE, vp = NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{at}{A numeric vector of y-value locations for the tick marks.}
   \item{label}{A logical value indicating whether to draw the labels
@@ -36,7 +34,4 @@ grid.yaxis(at = NA, label = TRUE, main = TRUE, gp=gpar(),
   \code{\link{viewport}},
   \code{\link{grid.xaxis}}
 }
-
-\examples{
-}
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

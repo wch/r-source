@@ -1,6 +1,5 @@
 \name{grid.show.layout}
 \alias{grid.show.layout}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Draw a Diagram of a Grid Layout}
 \description{
   This function uses Grid graphics to draw a diagram of a
@@ -11,7 +10,6 @@ grid.show.layout(l, newpage=TRUE,
              cell.border = "blue", cell.fill = "light blue",
              cell.label = TRUE, vp = NULL) 
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{l}{A Grid layout object.}
   \item{newpage}{A logical value indicating whether to move on
@@ -43,10 +41,10 @@ grid.show.layout(l, newpage=TRUE,
 }
 
 \examples{
-# Diagram of a simple layout 
+## Diagram of a simple layout 
 grid.show.layout(grid.layout(4,2,
                      heights=unit(rep(1, 4),
                                   c("lines", "lines", "lines", "null")),
                      widths=unit(c(1, 1), "inches")))
 }
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

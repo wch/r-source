@@ -1,6 +1,5 @@
 \name{grid.lines}
 \alias{grid.lines}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Draw Lines in a Grid Viewport}
 \description{
   This function draws a series of lines within a Grid viewport.
@@ -11,7 +10,6 @@ grid.lines(x = unit(c(0, 1), "npc", units.per.obs),
        default.units = "npc", units.per.obs = FALSE,
        gp=gpar(), draw = TRUE, vp = NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-values.}
   \item{y}{A numeric vector or unit object specifying y-values.}
@@ -37,7 +35,4 @@ grid.lines(x = unit(c(0, 1), "npc", units.per.obs),
   \link{Grid},
   \code{\link{viewport}}
 }
-
-\examples{
-}
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

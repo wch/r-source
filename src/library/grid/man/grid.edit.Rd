@@ -1,6 +1,5 @@
 \name{grid.edit}
 \alias{grid.edit}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Edit the Description of a Grid Graphical Object}
 \description{
   Changes the value of one or more elements of the list structure
@@ -9,7 +8,6 @@
 \usage{
 grid.edit(grob, ..., redraw=TRUE)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{grob}{An object of class \code{"grob"}.}
   \item{\dots}{Zero or more element-specifiers, plus a single
@@ -39,11 +37,10 @@ grid.edit(grob, ..., redraw=TRUE)
 \seealso{
   \code{\link{grid.grob}}
 }
-
 \examples{
 grid.newpage()
 xa <- grid.xaxis(vp=viewport(width=.5, height=.5))
 grid.edit(xa, gp=gpar(col="red"))
 grid.edit(xa, "ticks", gp=gpar(col="green"))
 }
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

@@ -1,6 +1,5 @@
 \name{grid.show.viewport}
 \alias{grid.show.viewport}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Draw a Diagram of a Grid Viewport}
 \description{
   This function uses Grid graphics to draw a diagram of
@@ -9,7 +8,6 @@
 \usage{
 grid.show.viewport(v, parent.layout = NULL, newpage = TRUE, vp = NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{v}{A Grid viewport object.}
   \item{parent.layout}{A grid layout object.  If this is not NULL and
@@ -40,10 +38,10 @@ grid.show.viewport(v, parent.layout = NULL, newpage = TRUE, vp = NULL)
 }
 
 \examples{
-# Diagram of a sample viewport
+## Diagram of a sample viewport
 grid.show.viewport(viewport(x=0.6, y=0.6,
                             w=unit(1, "inches"), h=unit(1, "inches")))
 grid.show.viewport(viewport(layout.pos.row=2, layout.pos.col=2:3),
                    grid.layout(3, 4))
 }
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

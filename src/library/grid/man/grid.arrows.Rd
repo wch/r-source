@@ -1,6 +1,5 @@
 \name{grid.arrows}
 \alias{grid.arrows}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Draw Arrows }
 \description{
   This will draw arrows at either end of a line or an existing
@@ -13,7 +12,6 @@ grid.arrows(x = c(0.25, 0.75), y = 0.5, default.units = "npc",
             ends = "last", type = "open",
             gp = gpar(), draw = TRUE, vp = NULL)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-values.}
   \item{y}{A numeric vector or unit object specifying y-values.}
@@ -111,4 +109,4 @@ grid.arrows(grob=glt, ends="first", gp=gpar(lwd=3))
 pop.viewport(2)
 grid.edit(gl, y=unit((0:80/100)^3, "npc"))
 }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{dplot}

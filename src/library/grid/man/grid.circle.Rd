@@ -1,6 +1,5 @@
 \name{grid.circle}
 \alias{grid.circle}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Draw a Circle }
 \description{
   This function draws a circle.  
@@ -9,7 +8,6 @@
 grid.circle(x=0.5, y=0.5, r=0.5, default.units="npc",
             gp=gpar(), draw=TRUE, vp=NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-locations.}
   \item{y}{A numeric vector or unit object specifying y-locations.}
@@ -42,7 +40,4 @@ grid.circle(x=0.5, y=0.5, r=0.5, default.units="npc",
   \link{Grid},
   \code{\link{viewport}}
 }
-
-\examples{
-}
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

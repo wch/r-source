@@ -1,7 +1,6 @@
 \name{unit.pmin}
 \alias{unit.pmin}
 \alias{unit.pmax}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Parallel Unit Minima and Maxima }
 \description{
   Returns a unit object whose i'th value is the minimum (or maximum)
@@ -11,7 +10,6 @@
 unit.pmin(...)
 unit.pmax(...)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{\dots}{ One or more unit objects. }
 }
@@ -27,4 +25,4 @@ unit.pmax(...)
 max(unit(1:3, "cm"), unit(0.5, "npc"))
 unit.pmax(unit(1:3, "cm"), unit(0.5, "npc"))
 }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{dplot}

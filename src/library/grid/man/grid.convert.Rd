@@ -4,7 +4,6 @@
 \alias{grid.convertY}
 \alias{grid.convertWidth}
 \alias{grid.convertHeight}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Convert Between Different grid Coordinate Systems }
 \description{
   These functions take a unit object and convert it to an
@@ -21,7 +20,6 @@ grid.convert(x, unitTo,
              axisTo = axisFrom, typeTo = typeFrom,
              valueOnly = FALSE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{ A unit object. }
   \item{unitTo}{ The coordinate system to convert the unit to.
@@ -78,9 +76,9 @@ grid.convert(x, unitTo,
   }
 \seealso{ \code{\link{unit}} }
 \examples{
-# A tautology
+## A tautology
 grid.convertX(unit(1, "inches"), "inches")
-# The physical units
+## The physical units
 grid.convertX(unit(2.54, "cm"), "inches")
 grid.convertX(unit(25.4, "mm"), "inches")
 grid.convertX(unit(72.27, "points"), "inches")
@@ -93,17 +91,17 @@ push.viewport(viewport(width=unit(1, "inches"),
                        height=unit(2, "inches"),
                        xscale=c(0, 1),
                        yscale=c(1, 3)))
-  # Location versus dimension
+  ## Location versus dimension
   grid.convertY(unit(2, "native"), "inches")
   grid.convertHeight(unit(2, "native"), "inches")
-  # From "x" to "y" (the conversion is via "inches")
+  ## From "x" to "y" (the conversion is via "inches")
   grid.convert(unit(1, "native"), "native",
                axisFrom="x", axisTo="y")
-  # Convert several values at once
+  ## Convert several values at once
   grid.convertX(unit(c(0.5, 2.54), c("npc", "cm")),
                 c("inches", "native"))
 pop.viewport()
-# Convert a complex unit
+## Convert a complex unit
 grid.convertX(unit(1, "strwidth", "Hello"), "native")
 }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{dplot}

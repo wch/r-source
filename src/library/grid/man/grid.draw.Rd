@@ -1,6 +1,5 @@
 \name{grid.draw}
 \alias{grid.draw}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Draw a Grid Graphical Object}
 \description{
   Produces graphical output from a graphical object.
@@ -8,7 +7,6 @@
 \usage{
 grid.draw(x, recording=TRUE)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{x}{An object of class \code{"grob"} or NULL.}
   \item{recording}{A logical value to indicate whether the drawing
@@ -31,9 +29,9 @@ grid.draw(x, recording=TRUE)
 
 \examples{
 grid.newpage()
-# Create a graphical object, but don't draw it
+## Create a graphical object, but don't draw it
 l <- grid.lines(draw=FALSE)
-# Draw it
+## Draw it
 grid.draw(l)
 }
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

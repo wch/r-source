@@ -1,6 +1,5 @@
 \name{grid.rect}
 \alias{grid.rect}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Draw a rectangle in a Grid Viewport}
 \description{
   This function draws a rectangle.
@@ -11,7 +10,6 @@ grid.rect(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
       just = "centre", default.units = "npc", 
       gp=gpar(), draw = TRUE, vp = NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-location.}
   \item{y}{A numeric vector or unit object specifying y-location.}
@@ -42,7 +40,4 @@ grid.rect(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
   \link{Grid},
   \code{\link{viewport}}
 }
-
-\examples{
-}
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

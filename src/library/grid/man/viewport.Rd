@@ -1,6 +1,5 @@
 \name{viewport}
 \alias{viewport}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Create a Grid Viewport}
 \description{
   This function creates a viewport, which describes a rectangular region
@@ -16,7 +15,6 @@ viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
          angle = 0,
          layout = NULL, layout.pos.row = NULL, layout.pos.col = NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-location.}
   \item{y}{A numeric vector or unit object specifying y-location.}
@@ -124,4 +122,4 @@ clip.demo(2, 1, FALSE, TRUE)
 clip.demo(2, 2, TRUE, TRUE)
 pop.viewport()
 }
-\keyword{dplot}%-- one or more ...
+\keyword{dplot}

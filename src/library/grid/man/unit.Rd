@@ -1,16 +1,14 @@
 \name{unit}
 \alias{unit}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Function to Create a Unit Object}
 \description{
-  This function creates a unit object - a vector of unit values.
-  A unit value is typically just a single numeric
-  value with an associated unit.  
+  This function creates a unit object --- a vector of unit values.
+  A unit value is typically just a single numeric value with an
+  associated unit.
 }
 \usage{
 unit(x, units, data=NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{x}{A numeric vector.}
   \item{units}{A character vector specifying the units for the
@@ -113,4 +111,4 @@ min(unit(0.5, "npc"), unit(1, "inches"))
 unit.c(unit(0.5, "npc"), unit(2, "inches") + unit(1:3/4, "npc"),
        unit(1, "strwidth", "hi there"))
 }
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

@@ -1,6 +1,5 @@
 \name{grid.grill}
 \alias{grid.grill}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Draw a Grill}
 \description{
   This function draws a grill within a Grid viewport.
@@ -10,7 +9,6 @@ grid.grill(h = unit(seq(0.25, 0.75, 0.25), "npc"),
            v = unit(seq(0.25, 0.75, 0.25), "npc"),
            default.units = "npc", gp=gpar(), vp = NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{h}{A numeric vector or unit object
     indicating the horizontal location of the
@@ -33,8 +31,4 @@ grid.grill(h = unit(seq(0.25, 0.75, 0.25), "npc"),
   \link{Grid},
   \code{\link{viewport}}.
 }
-
-\examples{
-}
-\keyword{ dplot }%-- one or more ...
-
+\keyword{dplot}

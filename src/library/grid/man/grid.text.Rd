@@ -1,6 +1,5 @@
 \name{grid.text}
 \alias{grid.text}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Draw Text in a Grid Viewport}
 \description{
   This function draws a piece of text.
@@ -11,7 +10,6 @@ grid.text(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
           check.overlap = FALSE, default.units = "npc",
           gp=gpar(), draw = TRUE, vp = NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{label}{A vector of strings or expressions to draw.}
   \item{x}{A numeric vector or unit object specifying x-values.}
@@ -53,10 +51,10 @@ grid.newpage()
 x <- runif(20)
 y <- runif(20)
 rot <- runif(20, 0, 360)
-grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot, gp=gpar(fontsize=20, 
-          col="grey"))
-grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot, gp=gpar(fontsize=20), 
-          check=TRUE)
+grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,
+          gp=gpar(fontsize=20, col="grey"))
+grid.text("SOMETHING NICE AND BIG", x=x, y=y, rot=rot,
+          gp=gpar(fontsize=20), check=TRUE)
 grid.newpage()
 draw.text <- function(just, i, j) {
   grid.text("ABCD", x=x[j], y=y[i], just=just)
@@ -83,4 +81,4 @@ draw.text(c("left"), 2, 4)
 draw.text(c("right"), 3, 4)
 draw.text(c("centre"), 4, 4)
 }
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

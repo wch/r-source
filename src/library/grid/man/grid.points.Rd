@@ -1,6 +1,5 @@
 \name{grid.points}
 \alias{grid.points}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Draw Data Symbols in a Grid Viewport}
 \description{
   This function draws data symbols.
@@ -12,7 +11,6 @@ grid.points(x = unit(runif(10), "native"),
             default.units = "native", 
             gp=gpar(), draw = TRUE, vp = NULL)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-values.}
   \item{y}{A numeric vector or unit object specifying y-values.}
@@ -39,7 +37,4 @@ grid.points(x = unit(runif(10), "native"),
   \link{Grid},
   \code{\link{viewport}}
 }
-
-\examples{
-}
-\keyword{ dplot }%-- one or more ...
+\keyword{dplot}

@@ -1,6 +1,5 @@
 \name{grid.plot.and.legend}
 \alias{grid.plot.and.legend}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ A Simple Plot and Legend Demo }
 \description{
   This function is just a wrapper for a simple demonstration of how
@@ -13,4 +12,4 @@ grid.plot.and.legend()
 \examples{
 grid.plot.and.legend()
 }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{dplot}
