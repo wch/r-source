@@ -51,6 +51,8 @@ BUG FIXES
 
     o	read.table() could fail when the row.names were looking like numbers.
 
+    o	seq(length= <n>) now always returns "integer" storage.
+
     o	labels.lm was broken. (PR#7417)
 
     o	The hashing used for character vectors in object.size() was
@@ -65,6 +67,8 @@ BUG FIXES
 
     o	The print method for getDLLRegisteredRoutines() was badly
 	designed, and failed for all the standard packages' DLLs.
+
+    o	getDLLRegisteredRoutines.character() was broken.
 
     o	write.table(x, row.names=FALSE) was incorrect for a 0-column x.
 
