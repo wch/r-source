@@ -33,4 +33,5 @@ fm2 <- aov(sqrt(count) ~ spray, data = InsectSprays)
 summary(fm2)
 plot(fm2)
 par(opar)
+}
 \keyword{datasets}

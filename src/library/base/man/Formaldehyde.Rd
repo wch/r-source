@@ -29,4 +29,5 @@ summary(fm1)
 opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 plot(fm1)
 par(opar)
+}
 \keyword{datasets}
