@@ -725,6 +725,7 @@ void SymbolShortcuts()
     R_LastvalueSymbol = install(".Last.value");
     R_TspSymbol = install("tsp");
     R_CommentSymbol = install("comment");
+    R_SourceSymbol = install("source");
 }
 
 /* initialize the symbol table */
