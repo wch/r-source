@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-10-29
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-10-31
 @set REL-VERSION 2.0.0
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1019,8 +1019,7 @@ function.  Free variables are those which are neither formal parameters
 (created by assigning to them in the body of the function).  In S, the
 values of free variables are determined by a set of global variables
 (similar to C, there is only local and global scope).  In R, they are
-determined by the bindings that were in effect at the time the function
-was created.
+determined by the environment in which the function was created.
 
 Consider the following function:
 
