@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-02-09
+Version 2.0.2005-02-15
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1466,6 +1466,9 @@ distributions of R.)
      Probabilistic weather field forecasts using the Geostatistical Output
      Perturbation method introduced by Gel, Raftery and Gneiting (2004).
 
+*R.oo*
+     R object-oriented programming with or without references.
+
 *R2HTML*
      Functions for exporting R objects & graphics in an HTML document.
 
@@ -1943,6 +1946,10 @@ distributions of R.)
      E-statistics (energy) tests for comparing distributions: multivariate
      normality, Poisson test, multivariate k-sample test for equal
      distributions, hierarchical clustering by e-distances.
+
+*ensembleBMA*
+     Probabilistic forecasting using Bayesian Model Averaging of ensembles
+     using a mixture of normal distributions.
 
 *epitools*
      Basic tools for applied epidemiology.
@@ -4599,6 +4606,14 @@ simplest one you have found.
 
    Invoking R with the `--vanilla' option may help in isolating a bug.
 This ensures that the site profile and saved data files are not read.
+
+   Before you submit a bug report, you should check whether the bug has
+been reported and/or fixed before.  First, try the "Search Existing
+Reports" facility in the Bug Tracking page at `http://bugs.R-project.org'.
+Second, consult `https://svn.R-project.org/R/trunk/NEWS', which records
+changes that will appear in the _next_ release of R, including some bug
+fixes that do not appear in Bug Tracking.  If a bug has already been
+reported or fixed, please do not submit further bug reports on it.
 
    On Unix systems a bug report can be generated using the function
 `bug.report()'.  This automatically includes the version information and

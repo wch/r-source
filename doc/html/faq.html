@@ -31,7 +31,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 2.0.2005-02-09</h2>
+<h2>Version 2.0.2005-02-15</h2>
 <h2>ISBN 3-900051-08-9</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -1805,6 +1805,7 @@ generalisation of SVD also supporting non-identity metrics and
 penalisations.  Also includes some other multiway methods. 
 <br><dt><strong>ProbForecastGOP</strong><dd>Probabilistic weather field forecasts using the Geostatistical Output
 Perturbation method introduced by Gel, Raftery and Gneiting (2004). 
+<br><dt><strong>R.oo</strong><dd>R object-oriented programming with or without references. 
 <br><dt><strong>R2HTML</strong><dd>Functions for exporting R objects &amp; graphics in an <acronym>HTML</acronym> document. 
 <br><dt><strong>R2WinBUGS</strong><dd>Running WinBUGS from R: call a BUGS model, summarize inferences and
 convergence in a table and graph, and save the simulations in arrays for
@@ -2048,6 +2049,8 @@ right censored data.
 <br><dt><strong>energy</strong><dd>E-statistics (energy) tests for comparing distributions: multivariate
 normality, Poisson test, multivariate k-sample test for equal
 distributions, hierarchical clustering by e-distances. 
+<br><dt><strong>ensembleBMA</strong><dd>Probabilistic forecasting using Bayesian Model Averaging of ensembles
+using a mixture of normal distributions. 
 <br><dt><strong>epitools</strong><dd>Basic tools for applied epidemiology. 
 <br><dt><strong>epsi</strong><dd>Edge Preserving Smoothing for Images. 
 <br><dt><strong>evd</strong><dd>Functions for extreme value distributions.  Extends simulation,
@@ -4507,6 +4510,15 @@ the problem, preferably the simplest one you have found.
    <p>Invoking R with the <span class="option">--vanilla</span> option may help in isolating a
 bug.  This ensures that the site profile and saved data files are not
 read.
+
+   <p>Before you submit a bug report, you should check whether the bug has
+been reported and/or fixed before.  First, try the &ldquo;Search Existing
+Reports&rdquo; facility in the Bug Tracking page at
+<a href="http://bugs.R-project.org">http://bugs.R-project.org</a>.  Second, consult
+<a href="https://svn.R-project.org/R/trunk/NEWS">https://svn.R-project.org/R/trunk/NEWS</a>, which records changes that
+will appear in the <em>next</em> release of R, including some bug fixes
+that do not appear in Bug Tracking.  If a bug has already been reported
+or fixed, please do not submit further bug reports on it.
 
    <p>On Unix systems a bug report can be generated using the function
 <code>bug.report()</code>.  This automatically includes the version
