@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/build
 
-revision='$Revision: 1.7 $'
+revision='$Revision: 1.8 $'
 version=`set - ${revision}; echo ${2}`
 version="R package builder ${version}
 
@@ -90,11 +90,52 @@ updateIndex () {
     if ${force}; then
       echo "overwriting \`${oldindex}' as \`--force' was given"
       cp ${newindex} ${oldindex}
-      else
-	echo "use \`--force' to overwrite the existing \`${oldindex}'"
-      fi
+    else
+      echo "use \`--force' to overwrite the existing \`${oldindex}'"
     fi
+  fi
   rm -f ${newindex}
+}
+
+## For updating `TITLE'
+updateTitle () {
+  oldtitle=TITLE
+  newtitle=${TMPDIR:-/tmp}/Rbuild${$}
+  awk "BEGIN{printf(\"%-15s %s\n\", \"${1}\", \"${2}\");}" > ${newtitle}  
+  foo=`cat TITLE`
+  package=`set - ${foo}; echo ${1}`
+  title=`set - ${foo}; shift; echo ${*}`
+  if test "${package}" != "${1}"; then
+    if ${force}; then
+      result "NO"
+      echo "overwriting \`${oldtitle} as \`--force' was given"
+      cp ${newtitle} ${oldtitle}
+    else
+      result "ERROR: package names do not match"
+      echo "use \`--force' to overwrite the existing \`${oldtitle}'"
+      exit 1
+    fi
+  elif test "${title}" != "${2}"; then
+    if ${force}; then
+      result "NO"
+      echo "overwriting \`${oldtitle} as \`--force' was given"
+      cp ${newtitle} ${oldtitle}
+    else
+      result "WARNING: titles do not match"
+      echo "use \`--force' to overwrite the existing \`${oldtitle}'"
+    fi      
+  elif cmp ${newtitle} ${oldtitle} > /dev/null; then
+    result "OK"
+  else
+    result "NO"
+    if ${force}; then
+      echo "overwriting \`${oldtitle} as \`--force' was given"
+      cp ${newtitle} ${oldtitle}
+    else
+      echo "use \`--force' to overwrite the existing \`${oldtitle}'"
+    fi
+  fi
+  rm -f ${newtitle}
 }
 
 start_dir=`pwd`
@@ -126,7 +167,7 @@ buildpkg () {
   checking "\`DESCRIPTION' license entry"
   foo=`grep "^License" DESCRIPTION`
   foo=`set - ${foo}; echo ${2}`
-  if test -z ${foo}; then
+  if test -z "${foo}"; then
     result "ERROR: no license entry in \`DESCRIPTION'"
     exit 1
   fi
@@ -134,7 +175,7 @@ buildpkg () {
   checking "\`DESCRIPTION' package entry"
   foo=`grep "^Package" DESCRIPTION`
   package=`set - ${foo}; echo ${2}`
-  if test -z ${package}; then
+  if test -z "${package}"; then
     result "ERROR: no package entry in \`DESCRIPTION'"
     exit 1
   fi
@@ -146,49 +187,42 @@ buildpkg () {
   checking "\`DESCRIPTION' version entry"
   foo=`grep "^Version" DESCRIPTION`
   version=`set - ${foo}; echo ${2}`
-  if test -z ${version}; then
+  if test -z "${version}"; then
     result "ERROR: no version entry in \`DESCRIPTION'"
     exit 1
   fi
   result "OK"
 
-  ## Check for `TITLE'
+  ## Check for title entry and/or `TITLE'
   checking "\`DESCRIPTION' title entry"
   title=`grep -s "^Title:" DESCRIPTION | sed "s/^Title:[ \t]*//"`
   if test -z "${title}"; then
-    result "WARNING: No Title field in Description"
-    if test -r TITLE; then
-      echo "using \`TITLE' file"
-    else
-      result "ERROR: file \`TITLE' not found"
-      exit 1
-    fi
+    result "WARNING: no title entry in \`DESCRIPTION'"
   else
     result "OK"
-    if test -f TITLE; then
-      if ${force}; then
-        echo "writing \`TITLE' file as \`--force' was given"
-        awk "BEGIN{printf(\"%-15s %s\n\", \"$package\", \"$title\");}" \
-          > TITLE
-      else 
-        checking "if TITLE agrees with DESCRIPTION"
-        foo=`cat TITLE`
-        package1=`set - ${foo}; echo ${1}`
-        title1=`set - ${foo}; shift; echo ${*}`
-        if test "${package}" != "${package1}"; then
-          result "ERROR: package names do not match"
-	  exit 1
-        fi
-        if test "${title}" != "${title1}"; then
-          result "ERROR: titles do not match"
-	  exit 1
-        fi
+  fi
+  checking "for \`TITLE'"
+  if test -r TITLE; then
+    result "OK"
+    if test -n "${title}"; then
+      checking "whether \`TITLE' is up-to-date"
+      updateTitle "${package}" "${title}"
+    fi
+  else
+    result "NO"
+    if test -n "${title}"; then
+      message "creating \`TITLE' from \`DESCRIPTION' title entry"
+      awk "BEGIN{printf(\"%-15s %s\n\", \"${package}\", \"${title}\");}" \
+        > TITLE
+      if test ${?} -ne 0; then
+	result "ERROR"
+	exit 1
+      else
 	result "OK"
       fi
     else
-      echo "writing \`TITLE' file"
-      awk "BEGIN{printf(\"%-15s %s\n\", \"$package\", \"$title\");}" \
-        > TITLE
+      result "ERROR: no \`TITLE' and no \`DESCRIPTION' title entry"
+      exit 1
     fi
   fi
 
@@ -311,8 +345,16 @@ buildpkg () {
 
   ## And finally build the package
   cd ..
+  exclude_file=${TMPDIR:-/tmp}/Rbuild${$}
+  rm -f ${exclude_file} 2>/dev/null \
+    || (echo "cannot create file with exclude patterns" && exit 2)
+  for pattern in "*~" "CVS" "GNUMakefile"; do
+    echo "${pattern}" >> ${exclude_file}
+  done
   message "building \`${start_dir}/${package}_${version}.tar.gz'"
-  tar zcf ${start_dir}/${package}_${version}.tar.gz ${package}
+  tar zch -X ${exclude_file} \
+    -f ${start_dir}/${package}_${version}.tar.gz ${package}
+  rm -f ${exclude_file}
 }
 
 ## The main loop
