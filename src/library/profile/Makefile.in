@@ -16,10 +16,15 @@ DISTFILES = Common.R Makefile.in Rprofile.mac Rprofile.unix Rprofile.win
 ## Configure (not yet): Replace `unix' by `win' or `mac'
 ## Should be EASY
 
-all: $(srcdir)/Common.R $(srcdir)/Rprofile.unix
+all: Makefile $(srcdir)/Common.R $(srcdir)/Rprofile.unix
 	@echo "building system startup profile"
 	@cat $(srcdir)/Common.R $(srcdir)/Rprofile.unix \
-		> $(top_builddir)/library/base/R/Rprofile
+	  > $(top_builddir)/library/base/R/Rprofile
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
 
 mostlyclean: clean
 clean:
