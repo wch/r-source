@@ -159,7 +159,7 @@ if test "${want_R_framework}" = yes; then
     warn_framework_and_prefix="overriding 'prefix' for installing the R framework"
     AC_MSG_WARN([${warn_framework_and_prefix}])
   fi
-  prefix="${R_framework_dir}"
+  prefix="${R_FRAMEWORK_DIR}"
   rhome="${prefix}/Versions/${VERSION}/Resources"
   bindir="${rhome}"
   mandir="${rhome}"
