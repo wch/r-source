@@ -267,23 +267,6 @@ system.file <- function(file = "", pkg = .packages(), lib = .lib.loc) {
     system(paste("${RHOME}/bin/filename", FILES), intern = TRUE)
 }
 
-system.time <- function(expr) {
-    ## Purpose: Return CPU (and other) times that `expr' used ..
-    ## Argument	 expr: `any' valid R expression
-    loc.frame <- sys.frame(sys.parent(1))
-    on.exit(cat("Timing stopped at:", proc.time() - time, "\n"))
-    expr <- substitute(expr)
-    time <- proc.time()
-    eval(expr, envir = loc.frame)
-    new.time <- proc.time()
-    on.exit()
-    if(length(new.time) == 3)	new.time <- c(new.time, 0, 0)
-    if(length(time) == 3)	time	 <- c(	  time, 0, 0)
-    new.time - time
-}
-
-unix.time <- .Alias(system.time)
-
 tempfile <- function(pattern = "file") {
     system(paste("for p in", paste(pattern, collapse = " "), ";",
 		 "do echo /tmp/$p$$; done"),
