@@ -1,5 +1,0 @@
-TclInterface             Low-level Tcl/Tk Interface
-TkCommands               Tk non-widget commands
-TkWidgetcmds             Tk widget commands
-TkWidgets                Tk widgets
-tkpager                  Tk file viewer
