@@ -627,7 +627,6 @@ round.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
     value <- as.POSIXlt(value)
     cl <- class(x)
     class(x) <- class(value) <- NULL
-    browser()
     for(n in names(x)) x[[n]][i] <- value[[n]]
     class(x) <- cl
     x
