@@ -34,8 +34,14 @@ R.version.string
   \item{day}{the day the version was released}
   \item{language}{always \code{"R"}.}
 }
+\note{
+  Do \emph{not} use \code{R.version$os} to test the platform the
+  code is running on: use \code{.Platform$OS.type} instead.  Slightly
+  different versions of the OS may report different values of
+  \code{R.version$os}, as may different versions of \R.
+}
 \seealso{
-\code{\link{.Platform}}.
+  \code{\link{.Platform}}.
 }
 \examples{
 R.version$os # to check how lucky you are ...
