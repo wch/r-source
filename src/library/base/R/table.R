@@ -148,7 +148,7 @@ as.data.frame.table <- function(x, row.names = NULL, optional = FALSE,
                                 responseName = "Freq", ...)
 {
     x <- as.table(x)
-    ex <- Quote(data.frame(do.call("expand.grid", dimnames(x)),
+    ex <- quote(data.frame(do.call("expand.grid", dimnames(x)),
                            Freq = c(x),
                            row.names = row.names))
     names(ex)[3] <- responseName
