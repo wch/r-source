@@ -264,10 +264,6 @@ From: "Francis Hsuan" <francis.hsuan@temple.edu> Add To Address Book
 Date: Tue, 2 Dec 2003 01:20:08 -0500 (EST)
 Date: Mon, 1 Dec 2003 21:53:06 -0500
 ..model.frame() fails on character input: should it coerce to factor?
-* PR# 6720 *
-Subject: optim-Bug
-From: kestler@neuro.informatik.uni-ulm.de
-Date: Tue, 30 Mar 2004 19:21:11 +0200 (CEST)
 
 Directory:  Documentation
 
@@ -863,7 +859,16 @@ Date: Fri, 16 Apr 2004 16:53:03 +0200
 Subject: R.spec
 From: joachim.geiger@ipp.mpg.de
 Date: Tue, 20 Apr 2004 11:51:40 +0200 (CEST)
+..About the source PRM for 1.9.0 under RedHat 8.0.
 * PR# 6804 *
 Subject: Re: [R] Error message during debug
 From: Duncan Murdoch <dmurdoch@pair.com>
 Date: Tue, 20 Apr 2004 14:15:05 -0400
+* PR# 6808 *
+Subject: InterScan MSS DomIsRelay-ATN(169.202.6.83) has deleted a message. (
+From: <DomIsRelay-ATN@absa.co.za>
+Date: Wed, 21 Apr 2004 15:59:01 +0200
+* PR# 6809 *
+Subject: segfault in approx()
+From: kjetil@entelnet.bo
+Date: Wed, 21 Apr 2004 17:49:03 -0400
