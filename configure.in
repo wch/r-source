@@ -402,11 +402,8 @@ AC_CHECK_LIB(ncurses, main,,
 ))
 AC_CHECK_LIB(dl, dlopen)
 
-AC_CHECK_LIB(z, main)
-AC_CHECK_LIB(hdf5, main)
-if test $ac_cv_lib_hdf5_main = yes && test $ac_cv_lib_z_main = yes; then
-  AC_CHECK_HEADERS(hdf5.h)
-fi
+AC_CHECK_LIB(z, main,
+  AC_CHECK_LIB(hdf5, main))
 
 BLAS="blas.o"
 if ${use_dxml}; then
@@ -440,7 +437,7 @@ AC_CHECK_FUNCS(acosh asinh atanh bcopy finite isnan matherr memcpy \
 
 AC_HEADER_STDC
 AC_CHECK_HEADERS(dl.h dlfcn.h elf.h locale.h readline/history.h \
-  rpc/xdr.h sys/times.h time.h ieeefp.h ieee754.h unistd.h)
+  rpc/xdr.h sys/times.h time.h ieeefp.h ieee754.h unistd.h hdf5.h)
 
 ### Typedefs
 
