@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001   The R Development Core Team.
+ *  Copyright (C) 2001-2   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,6 +42,7 @@
 #define INCLUDE_WINSOCK
 #include "win32config.h"
 #define _WINSOCKAPI_
+extern void R_ProcessEvents(void);
 #endif
 
 #include <R_ext/R-ftp-http.h>

@@ -51,8 +51,12 @@
 # endif
 #endif /* SunOS4 */
 
-/* PSIGNAL may be defined on Win32 in config.h */
-#ifdef PSIGNAL
+#ifdef Win32
+#define PLOTHISTORY
+void R_ProcessEvents(void);
+#endif
+
+#ifdef Win32
 # include <psignal.h>
 #else
 # include <signal.h>

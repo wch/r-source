@@ -39,6 +39,7 @@
 #define INCLUDE_WINSOCK
 #include "win32config.h"
 #define _WINSOCKAPI_
+extern void R_ProcessEvents(void);
 #endif
 
 #include <R_ext/R-ftp-http.h>

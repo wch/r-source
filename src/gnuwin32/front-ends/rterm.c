@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2001  R Development Core Team
+ *  Copyright (C) 1998--2002  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@
 #include <io.h> /* for isatty */
 #include "Rversion.h"
 #include "Startup.h"
-#define PSIGNAL
 #include "psignal.h"
 #include "../getline/getline.h"
 

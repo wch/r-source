@@ -24,6 +24,7 @@
 
 #ifdef Win32
 #define USE_MDI 1
+extern void R_ProcessEvents(void);
 #endif
 
 #include <windows.h>

@@ -499,23 +499,19 @@
 #define vfork fork
 
 /* Windows-specific */
-#define PSIGNAL
-#define PLOTHISTORY
 
 #define snprintf  _snprintf
 #define vsnprintf  _vsnprintf
 
-extern int _isnan(double);
-extern int _finite(double);
 #define isnan(a) _isnan((a))
 #define finite(a) _finite((a))
 
+/*
 #ifndef max
 #define max(a,b)	(((a)>(b))?(a):(b))
 #define min(a,b)	(((a)<(b))?(a):(b))
 #endif
-
-void R_ProcessEvents(void);
+*/
 
 /* 27/03/2000 win32-api needs this for ANSI compliance */
 #define NONAMELESSUNION
