@@ -670,7 +670,7 @@ static Rboolean	Quartz_Open(NewDevDesc *dd, QuartzDesc *xd, char *dsp,
     
 	SetRect(&devBounds, 400, 400, 400 + xd->windowWidth, 400 + xd->windowHeight ) ;
     
-    err = CreateNewWindow( kDocumentWindowClass, kWindowVerticalZoomAttribute | kWindowCollapseBoxAttribute , 
+    err = CreateNewWindow( kDocumentWindowClass, kWindowStandardHandlerAttribute|kWindowVerticalZoomAttribute | kWindowCollapseBoxAttribute , 
 		& devBounds, & devWindow);
  
     
