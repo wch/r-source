@@ -498,6 +498,7 @@ seq.POSIXt <-
                 yr <- seq(r1$year, to$year, by)
             }
             r1$year <- yr
+            r1$isdst <- -1
         } else {
             if(missing(to)) {
                 mon <- seq(r1$mon, by = by, length = length.out)
@@ -506,6 +507,7 @@ seq.POSIXt <-
                 mon <- seq(r1$mon, 12*(to$year - r1$year) + to$mon, by)
             }
             r1$mon <- mon
+            r1$isdst <- -1
         }
         return(as.POSIXct(r1))
     }

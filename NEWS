@@ -70,6 +70,12 @@ BUG FIXES
 
     o	cmdscale(*, k = 1) now works properly.
 
+    o	Options by = "month" and "year" to seq.POSIXt() will always
+	take account of changes to/from daylight savings time: this
+	was not working on some platforms.
+
+
+
 		CHANGES IN R VERSION 1.4.0
 
 
