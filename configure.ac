@@ -1056,11 +1056,11 @@ case "${host_os}" in
     ##    else
 ##      LIBR_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libR.dylib"
    ##     LIBR_LDFLAGS="-dynamiclib"
-   if test -z ${Rframework_path}; then
-    Rframework_path=/Library/Frameworks
+   if test -z "${R_FW_PATH}"; then
+    R_FW_PATH=/Library/Frameworks
    fi
-
-        LIBR_LDFLAGS="-dynamiclib -install_name ${Rframework_path}/R.framework/Versions/${PACKAGE_VERSION}/Resources/bin/libR.dylib -compatibility_version ${PACKAGE_VERSION}  -current_version ${PACKAGE_VERSION}"
+   R_SH_VAR_ADD(R_FW_PATH)
+        LIBR_LDFLAGS="-dynamiclib -install_name ${R_FW_PATH}/R.framework/Versions/${PACKAGE_VERSION}/Resources/bin/libR.dylib -compatibility_version ${PACKAGE_VERSION}  -current_version ${PACKAGE_VERSION}"
    ##    fi
     ## <FIXME>
     ## We need '-framework Carbon' because currently the Quartz device
@@ -1117,6 +1117,7 @@ system.])
 AM_CONDITIONAL(USE_EXPORTFILES, [test "x${use_exportfiles}" = xyes])
 AC_SUBST(DYLIB_EXT)
 AC_SUBST(LIBR_LDFLAGS)
+AC_SUBST(R_FW_PATH)
 AC_SUBST(RLAPACK_LDFLAGS)
 AC_SUBST(LAPACK_LDFLAGS)
 

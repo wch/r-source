@@ -162,37 +162,29 @@ reset-recommended:
 	@(cd src/library/Recommended && $(MAKE) clean)
 
 install-Rframework:
-	@if test -z ${Rframework_path} ; then \
-	echo "please define the variable Rframework_path first"; \
-	exit 1 ;\
-	fi
 	@(cd $(top_builddir) && \
 	$(MAKE) install \
-	rhome="${Rframework_path}/R.framework/Versions/$(VERSION)/Resources" \
-	mandir="${Rframework_path}/R.framework/Versions/$(VERSION)/Resources" \
-	bindir="${Rframework_path}/R.framework/Versions/$(VERSION)/Resources" )
+	rhome="@R_FW_PATH@/R.framework/Versions/$(VERSION)/Resources" \
+	mandir="@R_FW_PATH@/R.framework/Versions/$(VERSION)/Resources" \
+	bindir="@R_FW_PATH@/R.framework/Versions/$(VERSION)/Resources" )
 	@(cd $(top_builddir)/src/modules/aqua && \
-	cp Info.plist "${Rframework_path}/R.framework/Versions/$(VERSION)/Resources")
-	@(cd "${Rframework_path}/R.framework/Versions/$(VERSION)" && \
+	cp Info.plist "@R_FW_PATH@/R.framework/Versions/$(VERSION)/Resources")
+	@(cd "@R_FW_PATH@/R.framework/Versions/$(VERSION)" && \
 	ln -f -s Resources/include Headers && \
 	ln -f -s Resources/bin/libR.dylib R)
-	@(cd "${Rframework_path}/R.framework/Versions" && \
+	@(cd "@R_FW_PATH@/R.framework/Versions" && \
 	ln -f -s $(VERSION) Current)
-	@(cd "${Rframework_path}/R.framework"  && \
+	@(cd "@R_FW_PATH@/R.framework"  && \
 	ln -f -s Versions/Current/Headers Headers&& \
 	ln -f -s Versions/Current/R R && \
 	ln -f -s Versions/Current/Resources Resources)
 	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
-	cp -R * "${Rframework_path}/R.framework/Resources/bin")
-	@(cd "${Rframework_path}/R.framework/Resources/bin" && \
+	cp -R * "@R_FW_PATH@/R.framework/Resources/bin")
+	@(cd "@R_FW_PATH@/R.framework/Resources/bin" && \
 	sed 's/^args=/args=--gui=aqua/' < R > RAqua && \
 	chmod 755 RAqua)
 
 install-aqua:
-	@if test -z ${Rframework_path} ; then \
-	echo "please define the variable Rframework_path first"; \
-	exit 1 ;\
-	fi
 	@(rm -rf /Applications/R.app)
 	@(mkdir -p /Applications/R.app/Contents/Resources)
 	@(cd "$(srcdir)/src/modules/aqua/Contents" && \
@@ -200,9 +192,9 @@ install-aqua:
 	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
 	cp -R * /Applications/R.app/Contents/Resources)
 	@(mkdir -p /Applications/R.app/Contents/MacOS)
-	@test -f "${Rframework_path}/R.framework/Resources/bin/RAqua"  \
+	@test -f "@R_FW_PATH@/R.framework/Resources/bin/RAqua"  \
 	|| (echo "please, make install-Rframework first" &&  exit 1)
 	@(cd /Applications/R.app/Contents/MacOS && \
-	ln -f "${Rframework_path}/R.framework/Resources/bin/RAqua" R && \
+	ln -f "@R_FW_PATH@/R.framework/Resources/bin/RAqua" R && \
 	chmod 755 R)
 TAGS:
