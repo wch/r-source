@@ -752,7 +752,7 @@ removeMethods <-
                 default <- as(default, "function") # strict, removes slots
                 rm(list=f, pos = db)
                 if(!existsFunction(f, FALSE, db)) {
-                    message(gettextf("restoring default function definition of \"%s\"",
+                    message(gettextf("restoring default function definition of \'%s'",
                                      f), domain = NA)
                     assign(f, default, db)
                 }
