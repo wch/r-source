@@ -5,7 +5,9 @@ Valerio Aimale		<valerio.aimale@biosgroup.com>
 Thomas Baier		<Thomas.Baier@ci.tuwien.ac.at>
 Roger Bivand		<Roger.Bivand@nhh.no>
 Ben Bolker		<ben@zoo.ufl.edu>
+David Brahm		<brahm@alum.mit.edu>
 Göran Broström		<gb@stat.umu.se>
+Patrick Burns		<pburns@pburns.seanet.com>
 Vince Carey		<stvjc@channing.harvard.edu>
 Saikat DebRoy		<saikat@stat.wisc.edu>
 Brian D'Urso		<durso@hussle.harvard.edu>
@@ -30,6 +32,7 @@ Steve Oncley		<oncley@atd.ucar.edu>
 Richard O'Keefe		<ok@cs.otago.ac.nz>
 Hubert Palme		<palme@uni-wuppertal.de>
 José C. Pinheiro	<jose.pinheiro@pharma.novartis.com>
+Anthony Rossini		<rossini@blindglobe.net>
 Jonathan Rougier	<J.C.Rougier@durham.ac.uk>
 Deepayan Sarkar		<deepayan@stat.wisc.edu>
 Günther Sawitzki	<gs@statlib.uni-heidelberg.de>
@@ -37,12 +40,13 @@ Bill Simpson		<wsi@gcal.ac.uk>
 Gordon Smyth		<smyth@wehi.edu.au>
 Adrian Trapletti	<a.trapletti@bluewin.ch>
 Terry Therneau		<therneau.terry@mayo.edu>
+Simon Urbanek		<Simon.Urbanek@math.uni-augsburg.de>
 Bill Venables		<William.Venables@cmis.CSIRO.AU>
 Gregory R. Warnes	<warnes@biostat.washington.edu>
 Andreas Weingessel	<Andreas.Weingessel@ci.tuwien.ac.at>
 Morten Welinder		<terra@gnome.org>
 Simon Wood		<snw@mcs.st-and.ac.uk>
-Achim Zeileis           <Achim.Zeileis@wu-wien.ac.at>
+Achim Zeileis		<Achim.Zeileis@wu-wien.ac.at>
 
 We have probably omitted some important names here because of incomplete
 record keeping.	 If we have overlooked you, please let us know and we'll
