@@ -157,6 +157,11 @@ function(pattern, fields = c("alias", "concept", "title"),
                 hDB <- .readRDS(hsearch_file)
             }
             else {
+                ## <FIXME PRE-R-NG>
+                ## Hsearch 'Meta/hsearch.rds' indices were introduced in
+                ## R 1.8.0.  If they are missing, we really cannot use
+                ## the package (as library() will refuse to load it), so
+                ## perhaps we should exclude such packages anyway?
                 hDB <- contents <- NULL
                 ## Read the contents info from the respective Rd meta
                 ## files.
@@ -182,6 +187,7 @@ function(pattern, fields = c("alias", "concept", "title"),
                             sQuote(p), " in ",
                             sQuote(dirname(path)))
                 }
+                ## </FIXME>
             }
             if(!is.null(hDB)) {
                 ## Fill up possibly missing information.
