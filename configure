@@ -567,7 +567,7 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_STATUS "Alpha"
+#define R_STATUS ""
 EOF
 
 cat >> confdefs.h <<\EOF
@@ -575,11 +575,11 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_DAY "NN"
+#define R_DAY "3"
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_MONTH "XXXX"
+#define R_MONTH "May"
 EOF
 
 cat >> confdefs.h <<\EOF

@@ -6,6 +6,12 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   Remove "Alpha" revision from opening blurb. Didn't make sense
+	with our development model
+
+    o   set SHELL=/bin/sh in Makefile and use $(MAKE). Avoid use of 
+	wildcards in $(MANSRC) for non-gnu "make" (notably Solaris).
+
     o   rhyper gave wrong results in degenerate cases
 
     o   Using get with pos=length(search()) or envir=NULL was
