@@ -61,11 +61,12 @@ AC_DEFUN([R_PROG_PERL],
 if test -n "${PERL}"; then
   _R_PROG_PERL_VERSION
 else
-  ## <FIXME>
-  ## Add some explanation why we do this ...
+  ## <NOTE>
+  ## Need a full path for '@PERL@' substitutions when starting Perl
+  ## scripts with a line of the form '#! FOO'.
   AC_PATH_PROGS(FALSE, false)
   PERL="${FALSE}"
-  ## </FIXME>
+  ## </NOTE>
 fi
 if test "${r_cv_prog_perl_v5}" = yes; then
   NO_PERL5=false
@@ -79,7 +80,7 @@ AC_SUBST(NO_PERL5)
 
 AC_DEFUN([_R_PROG_PERL_VERSION],
 [AC_CACHE_CHECK([whether perl version is at least 5.004],
-                r_cv_prog_perl_v5,
+                [r_cv_prog_perl_v5],
 [if ${PERL} -e 'require 5.004 or exit 1'; then
   r_cv_prog_perl_v5=yes
 else
@@ -93,15 +94,23 @@ AC_PATH_PROGS(DVIPS, [${DVIPS} dvips], false)
 AC_PATH_PROGS(TEX, [${TEX} tex], false)
 AC_PATH_PROGS(LATEX, [${LATEX} latex], false)
 if test -z "${ac_cv_path_LATEX}" ; then
+  ## <FIXME>
+  ## This is not quite true: need LaTeX for refman, and TeX for the 
+  ## Texinfo manuals.
   warn_dvi="you cannot build DVI versions of the R manuals"
   AC_MSG_WARN([${warn_dvi}])
+  ## </FIXME>
 fi
 AC_PATH_PROGS(MAKEINDEX, [${MAKEINDEX} makeindex], false)
 AC_PATH_PROGS(PDFTEX, [${PDFTEX} pdftex], false)
 AC_PATH_PROGS(PDFLATEX, [${PDFLATEX} pdflatex], false)
 if test -z "${ac_cv_path_PDFLATEX}" ; then
+  ## <FIXME>
+  ## This is not quite true: need pdfLaTeX for refman, and pdfTeX for
+  ## the Texinfo manuals.
   warn_pdf="you cannot build PDF versions of the R manuals"
   AC_MSG_WARN([${warn_pdf}])
+  ## </FIXME>
 fi
 AC_PATH_PROGS(MAKEINFO_CMD, [${MAKEINFO} makeinfo])
 if test "${PERL}" = "${FALSE}"; then
@@ -133,7 +142,7 @@ fi
 
 AC_DEFUN([_R_PROG_MAKEINFO_VERSION],
 [AC_CACHE_CHECK([whether makeinfo version is at least 4],
-                r_cv_prog_makeinfo_v4,
+                [r_cv_prog_makeinfo_v4],
 [makeinfo_version=`${MAKEINFO_CMD} --version | \
   grep "^makeinfo" | sed 's/[[^)]]*) \(.\).*/\1/'`
 if test -z "${makeinfo_version}"; then
@@ -147,7 +156,7 @@ fi])
 
 AC_DEFUN([R_PROG_CC_M],
 [AC_CACHE_CHECK([whether ${CC} accepts -M for generating dependencies],
-                r_cv_prog_cc_m,
+                [r_cv_prog_cc_m],
 [echo "#include <math.h>" > conftest.c
 if test -n "`${CC} -M conftest.c 2>/dev/null | grep conftest`"; then
   r_cv_prog_cc_m=yes
@@ -158,7 +167,7 @@ fi])
 
 AC_DEFUN([R_PROG_CC_C_O_LO],
 [AC_CACHE_CHECK([whether ${CC} supports -c -o FILE.lo],
-                r_cv_prog_cc_c_o_lo,
+                [r_cv_prog_cc_c_o_lo],
 [test -d TMP || mkdir TMP
 echo "int some_variable = 0;" > conftest.c
 ac_try='${CC} ${CFLAGS} -c conftest.c -o TMP/conftest.lo 1>&AS_MESSAGE_LOG_FD'
@@ -212,7 +221,7 @@ AC_SUBST_FILE(cc_rules_frag)
 AC_DEFUN([R_PROG_CC_FLAG],
 [ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
 AC_MSG_CHECKING([whether ${CC-cc} accepts $1])
-AC_CACHE_VAL(r_cv_prog_cc_flag_${ac_safe},
+AC_CACHE_VAL([r_cv_prog_cc_flag_${ac_safe}],
 [AC_LANG_PUSH(C)
 r_save_CFLAGS="${CFLAGS}"
 CFLAGS="${CFLAGS} $1"
@@ -243,7 +252,7 @@ AC_DEFUN([R_PROG_CC_FLAG_D__NO_MATH_INLINES],
 AC_DEFUN([R_PROG_CXX_M],
 [AC_REQUIRE([R_PROG_CC_M])
 AC_CACHE_CHECK([whether ${CXX} accepts -M for generating dependencies],
-               r_cv_prog_cxx_m,
+               [r_cv_prog_cxx_m],
 [echo "#include <math.h>" > conftest.cc
 if test -n "`${CXX} -M conftest.cc 2>/dev/null | grep conftest`"; then
   r_cv_prog_cxx_m=yes
@@ -255,7 +264,7 @@ fi])
 AC_DEFUN([R_PROG_CXX_C_O_LO],
 [cxx_o_lo_rules_frag=Makefrag.cxx
 AC_CACHE_CHECK([whether ${CXX} supports -c -o FILE.lo],
-               r_cv_prog_cxx_c_o_lo,
+               [r_cv_prog_cxx_c_o_lo],
 [test -d TMP || mkdir TMP
 echo "int some_variable = 0;" > conftest.cc
 ac_try='${CXX} ${CXXFLAGS} -c conftest.cc -o TMP/conftest.lo 1>&AS_MESSAGE_LOG_FD'
@@ -337,7 +346,7 @@ AC_SUBST_FILE(cxx_rules_frag)
 AC_DEFUN([R_PROG_CXX_FLAG],
 [ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
 AC_MSG_CHECKING([whether ${CXX-c++} accepts $1])
-AC_CACHE_VAL(r_cv_prog_cxx_flag_${ac_safe},
+AC_CACHE_VAL([r_cv_prog_cxx_flag_${ac_safe}],
 [AC_LANG_PUSH(C++)
 r_save_CXXFLAGS="${CXXFLAGS}"
 CXXFLAGS="${CXXFLAGS} $1"
@@ -399,7 +408,7 @@ else
 fi
 if test -n "${F77}"; then
   ## If the above 'found' a FORTRAN 77 compiler, we run AC_PROG_F77 as
-  ## this does additional testing.
+  ## this does additional testing (GNU, '-g', ...).
   AC_PROG_F77
 elif test -z "${F2C}"; then
   AC_MSG_ERROR([Neither an F77 compiler nor f2c found])
@@ -421,7 +430,10 @@ done
 FLIBS="${flibs}"
 if test "${G77}" = yes; then
   r_save_LIBS="${LIBS}"
-  flibs=`echo ${ac_cv_flibs} | sed 's/-lg2c/-lg2c-pic/'`
+  ## <FIXME>
+  ## Potentially dangerous ...
+  flibs=`echo "${ac_cv_flibs}" | sed 's/-lg2c/-lg2c-pic/'`
+  ## </FIXME>
   LIBS="${LIBS} ${flibs}"
   AC_LANG_PUSH(C)
   AC_TRY_LINK([], [], [FLIBS="${flibs}"])
@@ -432,14 +444,14 @@ fi
 
 AC_DEFUN([R_PROG_F77_APPEND_UNDERSCORE],
 [AC_REQUIRE([AC_F77_WRAPPERS])
-case ${ac_cv_f77_mangling} in
+case "${ac_cv_f77_mangling}" in
   "upper "*)
     AC_MSG_WARN([FORTRAN compiler uses uppercase external names])
     AC_MSG_ERROR([cannot use FORTRAN])
     ;;
 esac
-AC_CACHE_VAL(r_cv_prog_f77_append_underscore,
-[case ${ac_cv_f77_mangling} in
+AC_CACHE_VAL([r_cv_prog_f77_append_underscore],
+[case "${ac_cv_f77_mangling}" in
   *", underscore, "*)
     r_cv_prog_f77_append_underscore=yes
     ;;
@@ -460,7 +472,7 @@ fi
 AC_DEFUN([R_PROG_F77_CC_COMPAT],
 [AC_REQUIRE([AC_CHECK_LIBM])
 AC_MSG_CHECKING([whether ${F77-f77} and ${CC-cc} agree on int and double])
-AC_CACHE_VAL(r_cv_prog_f77_cc_compat,
+AC_CACHE_VAL([r_cv_prog_f77_cc_compat],
 [cat > conftestf.f <<EOF
       subroutine cftest(a, b, x, y)
       integer a(3), b(2)
@@ -535,7 +547,7 @@ fi
 AC_DEFUN([R_PROG_F77_CC_COMPAT_COMPLEX],
 [AC_REQUIRE([AC_CHECK_LIBM])
 AC_MSG_CHECKING([whether ${F77-f77} and ${CC-cc} agree on double complex])
-AC_CACHE_VAL(r_cv_prog_f77_cc_compat_complex,
+AC_CACHE_VAL([r_cv_prog_f77_cc_compat_complex],
 [cat > conftestf.f <<EOF
       subroutine cftest(x)
       complex*16 x(3)
@@ -603,14 +615,17 @@ if test -n "${r_cv_prog_f77_cc_compat_complex}"; then
             [Define if C's Rcomplex and Fortran's COMPLEX*16 can be
              interchanged, and can do arithmetic on the latter.])
 else
+  ## <FIXME>
+  ## Use warn_f77_cc_double_complex ...
   AC_MSG_WARN([${F77-f77} and ${CC-cc} disagree on double complex])
+  ## </FIXME>
 fi
 AC_SUBST(HAVE_DOUBLE_COMPLEX)
 ])# R_PROG_F77_CC_COMPAT_COMPLEX
 
 AC_DEFUN([R_PROG_F77_C_O_LO],
 [AC_CACHE_CHECK([whether ${F77} supports -c -o FILE.lo],
-                r_cv_prog_f77_c_o_lo,
+                [r_cv_prog_f77_c_o_lo],
 [test -d TMP || mkdir TMP
 cat > conftest.f <<EOF
       program conftest
@@ -654,8 +669,8 @@ AC_SUBST_FILE(f77_rules_frag)
 AC_DEFUN([R_PROG_F2C_FLIBS],
 [AC_REQUIRE([AC_PROG_RANLIB])
 AC_REQUIRE([AC_CHECK_LIBM])
-AC_CACHE_VAL(r_cv_f2c_flibs,
-[## This seems to be necessary on some Linux system. -- you bet! -pd
+AC_CACHE_VAL([r_cv_f2c_flibs],
+[
 AC_LANG_PUSH(C)
 cat > conftest.${ac_ext} << EOF
 int MAIN_ () { exit(0); }
@@ -668,12 +683,15 @@ if AC_TRY_EVAL(ac_compile); then
   fi
 fi
 AC_LANG_POP(C)
-AC_CHECK_LIB(f2c, f_open, flibs=-lf2c, flibs=, [-L. -lconftest ${LIBM}])
+AC_CHECK_LIB(f2c, f_open, 
+             [flibs=-lf2c],
+             [flibs=],
+             [-L. -lconftest ${LIBM}])
 rm -f libconftest*
 if test -z "${flibs}"; then
-  AC_CHECK_LIB(F77, d_sin, flibs=-lF77, flibs=, [${LIBM}])
+  AC_CHECK_LIB(F77, d_sin, [flibs=-lF77], [flibs=], [${LIBM}])
   if test -n "${flibs}"; then
-    AC_CHECK_LIB(I77, f_rew, flibs="${flibs} -lI77", flibs=, -lF77)
+    AC_CHECK_LIB(I77, f_rew, [flibs="${flibs} -lI77"], [flibs=], [-lF77])
   fi
 fi
 r_cv_f2c_flibs="${flibs}"])
@@ -717,7 +735,7 @@ AC_SUBST_FILE(f77_rules_frag)
 AC_DEFUN([R_FUNC___SETFPUCW],
 [AC_CHECK_FUNC(__setfpucw, 
 [AC_CACHE_CHECK([whether __setfpucw is needed],
-	        r_cv_func___setfpucw_needed,
+	        [r_cv_func___setfpucw_needed],
 AC_TRY_RUN(
 [int main () {
 #include <fpu_control.h>
@@ -729,7 +747,7 @@ AC_TRY_RUN(
 	   [r_cv_func___setfpucw_needed=no],
 	   [r_cv_func___setfpucw_needed=yes],
 	   [r_cv_func___setfpucw_needed=no]))
-if test "${r_cv_func___setfpucw_needed}" = yes; then
+if test "x${r_cv_func___setfpucw_needed}" = xyes; then
   AC_DEFINE(NEED___SETFPUCW, 1,
 	    [Define if your system needs __setfpucw() to control
              FPU rounding. 
@@ -737,12 +755,11 @@ if test "${r_cv_func___setfpucw_needed}" = yes; then
              rounding and floating point exceptions on older Linux
              systems. 
              As of GLIBC 2.1 this function is not used anymore.])
-fi
-])
+fi])
 ])# R_FUNC___SETFPUCW
 
 AC_DEFUN([R_FUNC_CALLOC],
-[AC_CACHE_CHECK([for working calloc], r_cv_func_calloc_works,
+[AC_CACHE_CHECK([for working calloc], [r_cv_func_calloc_works],
 [AC_TRY_RUN(
 [#include <stdlib.h>
 int main () {
@@ -759,7 +776,7 @@ fi
 ])# R_FUNC_CALLOC
 
 AC_DEFUN([R_FUNC_FINITE],
-[AC_CACHE_CHECK([for working finite], r_cv_func_finite_works,
+[AC_CACHE_CHECK([for working finite], [r_cv_func_finite_works],
 [AC_TRY_RUN(
 [#include <math.h>
 #include "confdefs.h"
@@ -780,7 +797,7 @@ fi
 ])# R_FUNC_FINITE
 
 AC_DEFUN([R_FUNC_LOG],
-[AC_CACHE_CHECK([for working log], r_cv_func_log_works,
+[AC_CACHE_CHECK([for working log], [r_cv_func_log_works],
 [AC_TRY_RUN(
 [#include <math.h>
 #include "confdefs.h"
@@ -801,7 +818,7 @@ fi
 ])# R_FUNC_LOG
 
 AC_DEFUN([R_FUNC_STRPTIME],
-[AC_CACHE_CHECK([for working strptime], r_cv_func_strptime_works,
+[AC_CACHE_CHECK([for working strptime], [r_cv_func_strptime_works],
 [AC_TRY_RUN(
 [#include <time.h>
 int main () {
@@ -831,10 +848,10 @@ AC_DEFUN([R_HEADER_SETJMP],
                  [r_cv_header_setjmp_posix=yes],
                  [r_cv_header_setjmp_posix=no])
 if test "${r_cv_header_setjmp_posix}" = yes; then
-  AC_EGREP_HEADER(siglongjmp, setjmp.h, , [r_cv_header_setjmp_posix=no])
+  AC_EGREP_HEADER([siglongjmp], setjmp.h, [], [r_cv_header_setjmp_posix=no])
 fi
 if test "${r_cv_header_setjmp_posix}" = yes; then
-  AC_EGREP_HEADER(sigsetjmp, setjmp.h, , [r_cv_header_setjmp_posix=no])
+  AC_EGREP_HEADER([sigsetjmp], setjmp.h, [], [r_cv_header_setjmp_posix=no])
 fi
 ])
 if test "${r_cv_header_setjmp_posix}" = yes; then
@@ -845,7 +862,7 @@ fi
 
 AC_DEFUN([R_HEADER_GLIBC2],
 [AC_CACHE_CHECK([for GNU C library with version >= 2],
-                r_cv_header_glibc2,
+                [r_cv_header_glibc2],
 [AC_EGREP_CPP([yes],
 [#include <stdio.h>
 #if defined __GLIBC__ && __GLIBC__ >= 2
@@ -868,7 +885,7 @@ AC_DEFUN([R_TYPE_SOCKLEN],
 [AC_CHECK_HEADER(sys/socket.h)
 AC_MSG_CHECKING([for type of socket length])
 if test "${ac_cv_header_sys_socket_h}" = yes; then
-  AC_CACHE_VAL(r_cv_type_socklen, 
+  AC_CACHE_VAL([r_cv_type_socklen],
     [for t in socklen_t size_t int; do
       AC_TRY_COMPILE(
 [#include <stddef.h>
@@ -892,7 +909,7 @@ AC_DEFINE_UNQUOTED(SOCKLEN_T, ${r_cv_type_socklen},
 
 AC_DEFUN([R_C_OPTIEEE],
 [AC_CACHE_CHECK([whether C compiler needs -OPT:IEEE_NaN_inf=ON],
-                r_cv_c_optieee,
+                [r_cv_c_optieee],
 AC_TRY_RUN(
 [#include <math.h>
 #include <ieeefp.h>
@@ -910,14 +927,13 @@ fi
 
 AC_DEFUN([R_GNOME], 
 [if test ${want_gnome} = yes; then
-  GNOME_INIT_HOOK([], cont)
+  GNOME_INIT_HOOK([], [cont])
   if test "${GNOMEUI_LIBS}"; then
-  AM_PATH_LIBGLADE(
-    [use_gnome="yes"
-     GNOME_IF_FILES="gnome-interface.glade"],
-    [warn_libglade_version="GNOME support requires libglade version >= 0.3"
-     AC_MSG_WARN([${warn_libglade_version}])],
-    gnome)
+    AM_PATH_LIBGLADE([use_gnome="yes"
+                      GNOME_IF_FILES="gnome-interface.glade"],
+                     [warn_libglade_version="GNOME support requires libglade version >= 0.3"
+                      AC_MSG_WARN([${warn_libglade_version}])],
+                     [gnome])
   fi
 fi
 if test "${use_gnome}" != yes; then
@@ -936,7 +952,7 @@ AC_DEFUN([R_IEEE_754],
 [AC_CHECK_FUNCS([finite isnan])
 AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
 AC_CACHE_CHECK([whether you have IEEE 754 floating-point arithmetic],
-               r_cv_ieee_754,
+               [r_cv_ieee_754],
 [if (test "${ac_cv_func_finite}" = yes \
       || test "${ac_cv_have_decl_isfinite}" = yes) \
     && (test "${ac_cv_func_isnan}" = yes \
@@ -953,7 +969,7 @@ fi
 
 AC_DEFUN([R_BSD_NETWORKING],
 [AC_CACHE_CHECK([for BSD networking],
-                r_cv_bsd_networking,
+                [r_cv_bsd_networking],
 [if test "${ac_cv_header_netdb_h}" = yes \
      && test "${ac_cv_header_netinet_in_h}" = yes \
      && test "${ac_cv_header_sys_socket_h}" = yes \
@@ -1012,7 +1028,7 @@ AC_SUBST(BITMAP_LIBS)
 
 AC_DEFUN([_R_HEADER_JPEGLIB],
 [AC_CACHE_CHECK([if jpeglib version >= 6b],
-                r_cv_header_jpeglib,
+                [r_cv_header_jpeglib],
 AC_EGREP_CPP([yes],
 [#include <jpeglib.h>
 #if (JPEG_LIB_VERSION >= 62)
@@ -1025,7 +1041,7 @@ AC_EGREP_CPP([yes],
 
 AC_DEFUN([_R_HEADER_PNG],
 [AC_CACHE_CHECK([if libpng version >= 1.0.5], 
-                r_cv_header_png,
+                [r_cv_header_png],
 AC_EGREP_CPP([yes],
 [#include <png.h>
 #if (PNG_LIBPNG_VER >= 10005)
@@ -1242,7 +1258,9 @@ acx_blas_ok=no
 case "${with_blas}" in
   yes | "") ;;
   no) acx_blas_ok=disable ;;
-  -* | */* | *.a | *.so | *.so.* | *.o) BLAS_LIBS="${with_blas}" ;;
+  -* | */* | *.a | *.so | *.so.* | *.sl | *.sl.* | *.o)
+    BLAS_LIBS="${with_blas}" 
+    ;;
   *) BLAS_LIBS="-l${with_blas}" ;;
 esac
 
@@ -1275,10 +1293,8 @@ fi
 if test "${acx_blas_ok}" = no; then
   AC_CHECK_LIB(atlas, ATL_xerbla,
                [AC_CHECK_LIB(f77blas, ${sgemm},
-		             [AC_CHECK_LIB(cblas, cblas_dgemm,
-			                   [acx_blas_ok=yes
-			                    BLAS_LIBS="-lcblas -lf77blas -latlas"],
-			                   [], [-lf77blas -latlas])],
+                             [acx_blas_ok=yes
+                              BLAS_LIBS="-lf77blas -latlas"],
 			     [], [-latlas])])
 fi
 
@@ -1326,7 +1342,7 @@ AC_SUBST(BLAS_LIBS)
 
 AC_DEFUN([R_XDR],
 [AC_CACHE_CHECK([for XDR support],
-                r_cv_xdr,
+                [r_cv_xdr],
 [if test "${ac_cv_header_rpc_xdr_h}" = yes \
     && test "${ac_cv_search_xdr_string}" != no ; then
   r_cv_xdr=yes
@@ -1337,7 +1353,7 @@ if test "${r_cv_xdr}" = yes; then
   AC_DEFINE(HAVE_XDR, 1,
             [Define if you have the XDR headers and library routines.])
 fi
-AM_CONDITIONAL(BUILD_XDR, test "x${r_cv_xdr}" = xno)
+AM_CONDITIONAL(BUILD_XDR, [test "x${r_cv_xdr}" = xno])
 ])# R_XDR
 
 AC_DEFUN([R_ZLIB],
@@ -1366,7 +1382,7 @@ AM_CONDITIONAL(USE_MMAP_ZLIB,
 
 AC_DEFUN([_R_HEADER_ZLIB],
 [AC_CACHE_CHECK([if zlib version >= 1.1.3],
-                r_cv_header_zlib,
+                [r_cv_header_zlib],
 AC_TRY_RUN(
 [#include <string.h>
 #include <zlib.h>
@@ -1384,7 +1400,7 @@ int main() {
 
 AC_DEFUN([_R_ZLIB_MMAP],
 [AC_CACHE_CHECK([mmap support for zlib],
-                r_cv_zlib_mmap,
+                [r_cv_zlib_mmap],
 AC_TRY_RUN(
 [#include <sys/types.h>
 #include <sys/mman.h>
@@ -1399,7 +1415,7 @@ caddr_t hello() {
 
 AC_DEFUN([R_SYS_POSIX_LEAPSECONDS],
 [AC_CACHE_CHECK([whether leap seconds are treated according to POSIX],
-                r_cv_sys_posix_leapseconds,
+                [r_cv_sys_posix_leapseconds],
 AC_TRY_RUN([
 #include <stdlib.h>
 #include <time.h>
