@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-34, 2003-07-29
+Version 1.7-35, 2003-08-04
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -2042,6 +2042,9 @@ distributions of R.)
 *rpvm*
      R interface to PVM (Parallel Virtual Machine).  Provides interface to
      PVM APIs, and examples and documentation for its use.
+
+*rqmcmb2*
+     Markov chain marginal bootstrap for quantile regression.
 
 *rsprng*
      Provides interface to SPRNG (Scalable Parallel Random Number
