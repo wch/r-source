@@ -379,6 +379,99 @@ NEW FEATURES
         object's class.  This allows packages with namespaces to have
         private (non-exported) classes.
 
+    o	Changes to package 'grid':
+
+	- Calculation of number of circles to draw in circleGrob now
+	  looks at length of y and r as well as length of x.
+
+	- Calculation of number of rectangles to draw in rectGrob now
+	  looks at length of y, w, and h as well as length of x.
+
+	- All primitives (rectangles, lines, text, ...) now handle 
+	  non-finite values (NA, Inf, -Inf, NaN) for locations and
+	  sizes.
+
+	  Non-finite values for locations, sizes, and scales of
+	  viewports result in error messages.
+
+	  There is a new vignette("nonfinite") which describes this
+	  new behaviour.
+
+	- Fixed (unreported) bug in drawing circles.  Now checks that
+          radius is non-negative.
+
+	- downViewport() now reports the depth it went down to find a 
+	  viewport.  Handy for "going back" to where you started, e.g., ...
+
+	    depth <- downViewport("vpname")
+	    <draw stuff>
+	    upViewport(depth)
+
+	- The "alpha" gpar() is now combined with the alpha channel of
+          colours when creating a gcontext as follows:
+
+            finalAlpha = gpar("alpha")*(R_ALPHA(col)/255)
+
+	  This means that gpar(alpha=) settings now affect internal
+	  colours so grid alpha transparency settings now are sent to
+	  graphics devices.
+
+	  The alpha setting is also cumulative.  For example, ...
+      
+	    grid.rect(width=0.5, height=0.5, 
+                      gp=gpar(fill="blue"))              # alpha = 1
+            pushViewport(viewport(gp=gpar(alpha=0.5)))
+            grid.rect(height=0.25, gp=gpar(fill="red"))  # alpha = 0.5
+            pushViewport(viewport(gp=gpar(alpha=0.5)))
+            grid.rect(width=0.25, gp=gpar(fill="red"))   # alpha = 0.25 !
+
+	- Editing a gp slot in a grob is now incremental.  For example ...
+
+            grid.lines(name="line")
+	    grid.edit("line", gp=gpar(col="red")) # line turns red
+	    grid.edit("line", gp=gpar(lwd=3)) # line becomes thick 
+                                              # AND STAYS red
+      
+        - The "cex" gpar is now cumulative.  For example ...
+      
+            grid.rect(height=unit(4, "char")) # cex = 1
+	    pushViewport(viewport(gp=gpar(cex=0.5)))
+	    grid.rect(height=unit(4, "char")) # cex = 0.5
+	    pushViewport(viewport(gp=gpar(cex=0.5)))
+	    grid.rect(height=unit(4, "char")) # cex = 0.125 !!!
+
+	- New childNames() function to list the names of children
+          of a gTree.
+
+	- The "grep" and "global" arguments have been implemented for 
+          grid.[add|edit|get|remove]Grob() functions.
+
+          The "grep" argument has also been implemented for the
+	  grid.set() and setGrob().
+
+	- New function grid.grab() which creates a gTree from the 
+	  current display list (i.e., the current page of output can
+	  be converted into a single gTree object with all grobs
+	  on the current page as children of the gTree and all the 
+	  viewports used in drawing the current page in the childrenvp
+	  slot of the gTree).
+
+	- New "lineend", "linejoin", and "linemitre" gpar()s:
+
+	  line end can be "round", "butt", or "square".
+	  line join can be "round", "mitre", or "bevel".
+	  line mitre can be any number larger than 1
+            (controls when a mitre join gets turned into a bevel join;  
+	     proportional to angle between lines at join;
+	     very big number means that conversion only happens for lines
+	     that are almost parallel at join).
+
+	- New grid.prompt() function for controlling whether the user is
+	  prompted before starting a new page of output.
+
+	  Grid no longer responds to the par(ask) setting in the "graphics"
+	  package.
+
 
 UTILITIES
 
