@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-19, 2003-06-20
+Version 1.7-20, 2003-06-25
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1722,6 +1722,9 @@ distributions of R.)
 
 *lgtdl*
      A set of methods for longitudinal data objects.
+
+*lme4*
+     Fit linear and generalized linear mixed-effects models.
 
 *lmtest*
      A collection of tests on the assumptions of linear regression models
