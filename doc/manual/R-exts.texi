@@ -245,10 +245,10 @@ Description: Functions for kriging and point pattern analysis.
 @comment  node-name,  next,  previous,  up
 @section Configure / cleanup
 
-If your packge needs some system-dependent configuration before
+If your package needs some system-dependent configuration before
 installation you can include a script @file{configure} in your package
-which is executed by @code{R INSTALL} before any other action is
-performed if present. This can be a script created by the autoconf
+which (if present) is executed by @code{R INSTALL} before any other action is
+performed. This can be a script created by the autoconf
 mechanism, but may also be a script written by yourself. Use this to
 detect if any nonstandard libraries are present such that corresponding
 code in the package can be disabled at install time rather than giving
@@ -256,9 +256,9 @@ error messages when the package is compiled or used. To summarize, the
 full power of autoconf is available for your extension package
 (including variable substitution, searching for libraries, etc.).
 
-The script @file{cleanup} as last thing by @code{R INSTALL} if present
-and can be used to clean up the package source tree, especially remove
-files created by @file{configure}.
+The script @file{cleanup} is executed as last thing by @code{R INSTALL}
+if present and can be used to clean up the package source tree,
+especially remove files created by @file{configure}.
 
 As an example consider we want to use functionality provided by
 @file{libfoo}. Then we can write a configure script using
