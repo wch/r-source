@@ -1024,15 +1024,15 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
 	HICommand	command;
 	UInt32		eventKind = GetEventKind( inEvent ), RWinCode, devsize;
         int		devnum;
-        char 		cmd[255], filename[300];
+        char 		cmd[255], filename[300], *buf;
         WindowRef 	EventWindow;
         EventRef	REvent;
         TXNObject	RHlpObj  = NULL, REdtObj = NULL;
         SInt16		FileRefNum;
         FSSpec    	fsspec;
-        int	fsize,txtlen;
-  Handle DataHandle;
-   FILE *fp;
+        int		fsize, txtlen, i;
+        Handle 		DataHandle;
+        FILE 		*fp;
 
 
 	
@@ -1074,16 +1074,22 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
                     err = TXNGetDataEncoded(REdtObj, 0, txtlen, &DataHandle, kTXNTextData);
                     HLock( DataHandle );
                     filename[fsize] = '\0';
-                    fp = R_fopen(R_ExpandFileName(filename), "w");
-                    if(fp) { 
-                     fprintf(fp, "%s", *DataHandle);
-                     fclose(fp);
+                    buf = malloc(txtlen+1);
+                    if(buf != NULL){
+                        for(i=0;i<txtlen;i++){
+                            buf[i] = (*DataHandle)[i]; 
+                        if( buf[i] == '\r') 
+                            buf[i] = '\n';
+                        } 
+                        if( (fp = R_fopen(R_ExpandFileName(filename), "w")) ){
+                            fprintf(fp, "%s", buf);
+                            fclose(fp);
+                        }
+                        free(buf);
                     }
-               //     fprintf(stderr,"\n file=%s, data=%s",filename,*DataHandle);
                     HUnlock( DataHandle );
                     if(DataHandle)
                         DisposeHandle( DataHandle );
-
                     TXNDeleteObject(REdtObj);
                     HideWindow(EventWindow);
                     QuitApplicationEventLoop();

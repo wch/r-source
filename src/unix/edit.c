@@ -35,6 +35,12 @@
 # include "run.h"
 #endif
 
+#ifdef HAVE_AQUA
+extern  DL_FUNC ptr_Raqua_Edit;
+
+int Raqua_Edit(char *filename) {ptr_Raqua_Edit(filename);}
+#endif
+
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>		/* for unlink() */
 #endif
@@ -128,8 +134,12 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (rc != 0)
 	warningcall(call, "editor ran but returned error status");
 #else
+# if defined(HAVE_AQUA)
+    rc = Raqua_Edit(filename);
+# else
     sprintf(editcmd, "%s %s", cmd, filename);
     rc = system(editcmd);
+# endif
     if (rc != 0)
 	errorcall(call, "problem with running editor %s", cmd);
 #endif
