@@ -1,14 +1,15 @@
+## 'format' is <primitive>  defined in	../../../main/paste.c
 "formatC" <-
-function (x, digits=NULL, width=max(0, digits) + 1, format=NULL, 
-	flag="", mode=NULL) 
+function (x, digits=NULL, width=max(0, digits) + 1, format=NULL,
+	flag="", mode=NULL)
 {
 	# Copyright (C) Martin Maechler, 1994
 	bl.string <- function(no) paste(rep(" ", no), collapse = "")
 	if (is.null(x)) return("")
 	n <- length(x)
-	if (missing(mode)) 
+	if (missing(mode))
 		mode <- storage.mode(x)
-	else if (any(mode == c("real", "integer"))) 
+	else if (any(mode == c("real", "integer")))
 		storage.mode(x) <- mode
 	else stop("\"mode\" must be \"real\" or \"integer\"")
 	if (mode == "character" || (!is.null(format) && format == "s")) {
@@ -27,9 +28,9 @@ function (x, digits=NULL, width=max(0, digits) + 1, format=NULL,
 			pad[sapply(pad,length) == 0] <- list("")
 			pad <- unlist(pad)
 		}
-		if (flag == "-") 
+		if (flag == "-")
 			return(paste(x, pad, sep = ""))
-		else    return(paste(pad, x, sep = ""))
+		else	return(paste(pad, x, sep = ""))
 	}
 	some.special <- !all(Ok <- is.finite(x))
 	if (some.special) {
@@ -38,40 +39,40 @@ function (x, digits=NULL, width=max(0, digits) + 1, format=NULL,
 		#-- number of characters to add
 		x[!Ok] <- 0
 	}
-	if (missing(format) || is.null(format)) 
-		format <- if (mode == "integer") 
+	if (missing(format) || is.null(format))
+		format <- if (mode == "integer")
 			"d"
 		else "g"
 	else {
 		if (any(format == c("f", "e", "E", "g", "G"))) {
-			if (mode == "integer") 
+			if (mode == "integer")
 				mode <- storage.mode(x) <- "single"
 		}
 		else if (format == "d") {
-			if (mode != "integer") 
+			if (mode != "integer")
 				mode <- storage.mode(x) <- "integer"
 		}
 		else stop("\"format\" must be in {\"f\",\"e\",\"E\",\"g\",\"G\", \"s\"}" )
 	}
-	if (missing(digits) || is.null(digits)) 
-		digits <- if (mode == "integer") 
+	if (missing(digits) || is.null(digits))
+		digits <- if (mode == "integer")
 			2
 		else 4
-	if (width == 0) 
+	if (width == 0)
 		stop("\"width\" must not be 0")
-	r <- .C("str_signif", 
-		x = x, 
-		n = n, 
-		mode = as.character(mode), 
-		width = as.integer(width), 
-		digits = as.integer(digits), 
-		format = as.character(format), 
-		flag = as.character(flag), 
+	r <- .C("str_signif",
+		x = x,
+		n = n,
+		mode = as.character(mode),
+		width = as.integer(width),
+		digits = as.integer(digits),
+		format = as.character(format),
+		flag = as.character(flag),
 		result = rep(bl.string(abs(width) + 10), n)
 	)$result
-	if (some.special) 
+	if (some.special)
 		r[!Ok] <- rQ
-	if (!is.null(x.atr <- attributes(x))) 
+	if (!is.null(x.atr <- attributes(x)))
 		attributes(r) <- x.atr
 	r
 }
