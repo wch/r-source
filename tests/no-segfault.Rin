@@ -1,5 +1,5 @@
 ###-*- R -*-
-###--- This "make-<name>" script is only used to create the real script <name> :
+###--- This "foo.Rin" script is only used to create the real script "foo.R" :
 
 ###--- We need to use such a long "real script" instead of a for loop,
 ###--- because "error --> jump_to_toplevel", i.e., outside any loop.
