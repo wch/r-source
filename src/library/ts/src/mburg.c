@@ -35,6 +35,7 @@
 */
 
 #include <R.h>
+#include "ts.h"
 #include "carray.h"
 #include "qr.h"
 
@@ -44,7 +45,7 @@
 void multi_burg(int *pn, double *x, int *pomax, int *pnser, double *coef,
     double *pacf, double *var, double *aic, int *porder, int *useaic,
     int *vmethod);
-static void burg(int omax, Array resid_f, Array resid_b, Array *A, Array *B,
+static void burg0(int omax, Array resid_f, Array resid_b, Array *A, Array *B,
     Array P, Array V, int vmethod);
 static void burg2(Array ss_ff, Array ss_bb, Array ss_fb, Array E,
     Array KA, Array KB);
@@ -77,7 +78,7 @@ void multi_burg(int *pn, double *x, int *pomax, int *pnser, double *coef,
     copy_array(xarr, resid_b);
     resid_f_tmp = make_zero_matrix(nser, n);
 
-    burg(omax, resid_f, resid_b, A, B, P, V, *vmethod);
+    burg0(omax, resid_f, resid_b, A, B, P, V, *vmethod);
 
     /* Model order selection */
 
@@ -119,7 +120,7 @@ void multi_burg(int *pn, double *x, int *pomax, int *pnser, double *coef,
 }
 
 
-static void burg(int omax, Array resid_f, Array resid_b, Array *A, Array *B,
+static void burg0(int omax, Array resid_f, Array resid_b, Array *A, Array *B,
     Array P, Array V, int vmethod)
 {
     int i, j, m, n = NCOL(resid_f), nser=NROW(resid_f);

@@ -11,7 +11,7 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-OBJS = bsplvd.o bvalue.o bvalus.o ksmooth.o loessc.o loessf.o \
+OBJS = bsplvd.o bvalue.o bvalus.o init.o ksmooth.o loessc.o loessf.o \
 	ppr.o qsbart.o sbart.o sgram.o sinerp.o sslvrg.o stxwx.o
 SHLIB = $(pkg).@SHLIB_EXT@
 

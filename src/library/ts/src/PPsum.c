@@ -15,7 +15,10 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-void R_pp_sum (double* u, int* n, int* l, double* sum)
+#include <R.h>
+#include "ts.h"
+
+void R_pp_sum (double *u, int *n, int *l, double *sum)
 {
   int i, j;
   double tmp1, tmp2;
@@ -36,7 +39,7 @@ void R_pp_sum (double* u, int* n, int* l, double* sum)
   (*sum) += tmp1;
 }
 
-void R_intgrt_vec (double* x, double* y, int* lag, int* n)
+void R_intgrt_vec (double *x, double *y, int *lag, int *n)
 {
   int i;
 

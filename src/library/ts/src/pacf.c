@@ -18,6 +18,7 @@
  */
 
 #include <R.h>
+#include "ts.h"
 
 #ifdef Macintosh
 #include <fp.h>

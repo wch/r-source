@@ -415,3 +415,19 @@ mve_fitlots(double *x, int *n, int *p, int *qn, int *mcd,
     if(*sample) PutRNGstate();
     mve_free();
 }
+
+#include "Rinternals.h"
+#include "R_ext/Rdynload.h"
+
+static R_CMethodDef R_CDef[] = {
+   {"lqs_fitlots", &lqs_fitlots, 17},
+   {"mve_fitlots", &mve_fitlots, 11},
+   {NULL, NULL, 0},
+};
+
+void
+R_init_lqs(DllInfo *info)
+{
+    R_registerRoutines(info, R_CDef, NULL, NULL);
+}
+

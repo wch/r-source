@@ -11,7 +11,7 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-OBJS = PPsum.o burg.o eureka.o filter.o pacf.o starma.o stl.o \
+OBJS = PPsum.o burg.o eureka.o filter.o init.o pacf.o starma.o stl.o \
        carray.o mburg.o myw.o qr.o
 SHLIB = $(pkg).@SHLIB_EXT@
 
