@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-4, 2004-04-22
+Version 1.7-5, 2004-04-25
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -224,7 +224,7 @@ project ("GNU S").
 ================================
 
    R is being developed for the Unix, Windows and Mac families of operating
-systems.
+systems.  Support for Mac OS Classic will end with the 1.7 series.
 
    The current version of R will configure and build under a number of
 common Unix platforms including i386-freebsd, CPU-linux-gnu for the i386,
@@ -405,7 +405,7 @@ name may need to be be quoted.)
    This documentation can also be made available as one reference manual
 for on-line reading in HTML and PDF formats, and as hardcopy via LaTeX, see
 *Note How can R be installed?::.  An up-to-date HTML version is always
-available for web browsing at `http://stat.ethz.ch/R/manual/'.
+available for web browsing at `http://stat.ethz.ch/R-manual/'.
 
    The R distribution also comes with the following manuals.
 
@@ -1020,8 +1020,8 @@ the same time being as compatible as possible with S.
      opinion that treatment contrasts are more natural.
 
    * In R, the last argument (which corresponds to the right hand side) of
-     an assignment function must be named `value'.  E.g., `fun(a) <- b' is
-     evaluated as `(fun<-)(a, value = b)'.
+     an assignment function must be named `value'.  E.g., `f(a) <- b' is
+     evaluated as `a <- "f<-"(a, value = b)'.
 
    * In S, `substitute()' searches for names for substitution in the given
      expression in three places: the actual and the default arguments of
@@ -1355,6 +1355,9 @@ distributions of R.)
 *XML*
      Facilities for reading XML documents and DTDs.
 
+*abind*
+     Combine multi-dimensional arrays.
+
 *acepack*
      ACE (Alternating Conditional Expectations) and AVAS (Additivity and
      VAriance Stabilization for regression) methods for selecting regression
@@ -1661,6 +1664,13 @@ distributions of R.)
      Improved predictive models by direct and indirect bootstrap aggregation
      in classification and regression as well as resampling based estimators
      of prediction error.
+
+*ismev*
+     Functions to support the computations carried out in "An Introduction
+     to Statistical Modeling of Extreme Values;' by S. Coles, 2001,
+     Springer.  The functions may be divided into the following groups;
+     maxima/minima, order statistics, peaks over thresholds and point
+     processes.
 
 *knnTree*
      Construct or predict with k-nearest-neighbor classifiers, using

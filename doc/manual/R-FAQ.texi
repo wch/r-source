@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-4, 2004-04-22
+@set FAQ-VERSION 1.7-5, 2004-04-25
 @set REL-VERSION 1.7.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -251,7 +251,7 @@ official part of the @acronym{GNU} project (``@acronym{GNU} S'').
 @section What machines does R run on?
 
 R is being developed for the Unix, Windows and Mac families of operating
-systems.
+systems.  Support for Mac OS Classic will end with the 1.7 series.
 
 The current version of R will configure and build under a number of
 common Unix platforms including i386-freebsd, @var{cpu}-linux-gnu for
@@ -445,9 +445,9 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @c                 i386  1.7.0  Martyn Plummer <plummer@iarc.fr>
 @c           8.x   i386  1.7.0  Martyn Plummer <plummer@iarc.fr>
 @c           9     i386  1.7.0  Martyn Plummer <plummer@iarc.fr>
-@c suse      7.3   i386  1.6.2  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           8.0   i386  1.6.2  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           8.1   i386  1.6.2  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c suse      7.3   i386  1.7.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.0   i386  1.7.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.1   i386  1.7.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c vinelinux 2.6   i386  1.6.2  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
@@ -498,7 +498,7 @@ This documentation can also be made available as one reference manual
 for on-line reading in @HTML{} and PDF formats, and as hardcopy via
 La@TeX{}, see @ref{How can R be installed?}.  An up-to-date @HTML{}
 version is always available for web browsing at
-@uref{http://stat.ethz.ch/R/manual/}.
+@uref{http://stat.ethz.ch/R-manual/}.
 
 The R distribution also comes with the following manuals.
 
@@ -1316,8 +1316,8 @@ opinion that treatment contrasts are more natural.
 
 @item
 In R, the last argument (which corresponds to the right hand side) of an
-assignment function must be named @samp{value}.  E.g., @code{fun(a) <-
-b} is evaluated as @code{(fun<-)(a, value = b)}.
+assignment function must be named @samp{value}.  E.g., @code{f(a) <- b}
+is evaluated as @code{a <- "f<-"(a, value = b)}. 
 
 @item
 In S, @code{substitute()} searches for names for substitution in the
@@ -1626,6 +1626,8 @@ Functions, classes & methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models.
 @item XML
 Facilities for reading @XML{} documents and DTDs.
+@item abind
+Combine multi-dimensional arrays.
 @item acepack
 ACE (Alternating Conditional Expectations) and AVAS (Additivity and
 VAriance Stabilization for regression) methods for selecting regression
@@ -1862,6 +1864,11 @@ Inequality, concentration and poverty measures, and Lorenz curves
 Improved predictive models by direct and indirect bootstrap aggregation
 in classification and regression as well as resampling based estimators
 of prediction error.
+@item ismev
+Functions to support the computations carried out in ``An Introduction
+to Statistical Modeling of Extreme Values;' by S. Coles, 2001, Springer.
+The functions may be divided into the following groups; maxima/minima,
+order statistics, peaks over thresholds and point processes.
 @item knnTree
 Construct or predict with @math{k}-nearest-neighbor classifiers, using
 cross-validation to select @math{k}, choose variables (by forward or
