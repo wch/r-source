@@ -68,7 +68,12 @@ sub list_files_with_exts {
     my ($dir, $exts) = @_;
     $exts = ".*" unless $exts;
     opendir(DIR, $dir) or die "cannot opendir $dir: $!";
+    if($main::OSdir eq "mac"){
     my @files = grep { /$exts$/ && -f "$dir/$_" } readdir(DIR);
+    }
+    else{
+    my @files = grep { /\.$exts$/ && -f "$dir:$_" } readdir(DIR);
+    }
     closedir(DIR);
     ## We typically want the paths to the files, see also the R variant
     ## listFilesWithExts() used in some of the QA tools.
