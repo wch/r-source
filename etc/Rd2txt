@@ -1,9 +1,0 @@
-#!/bin/sh
-
-RHOME=`R RHOME`
-
-$RHOME/etc/Rdconv -t nroff $1 \
-  | tbl \
-  | nroff -ms 2> /dev/null \
-  | $RHOME/etc/help.pretty
-
