@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.132 $'
+revision='$Revision: 1.133 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -419,12 +419,15 @@ do_install_source () {
 
   if test -d R; then
     message "R"
-    Rfiles=`LC_COLLATE=C ls R/*.[RSqrs] R/${R_OSTYPE}/*.[RSqrs] 2>/dev/null`
-    if test -n "${Rfiles}"; then
+    echo "collater(\".\",pkg=\"${R_PACKAGE_NAME}\")" | \
+      R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla > /dev/null
       mkdir -p "${R_PACKAGE_DIR}/R"
-      rm -f "${R_PACKAGE_DIR}/R/"*
-      cat ${Rfiles} >> "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
-    fi
+      if test -e "R/${R_PACKAGE_NAME}"; then
+	mv "R/${R_PACKAGE_NAME}" "${R_PACKAGE_DIR}/R"
+      else	
+	echo "ERROR: Unable to collate files for package '${pkg}'"
+	exit 5
+     fi
     if ${fake}; then
       if test -f NAMESPACE; then
         echo ".onLoad <- function(list, pkg) NULL" >> \
