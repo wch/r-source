@@ -265,7 +265,7 @@ BUG FIXES
     o	add1.glm and drop1.glm gave incorrect results in the "Chisq"
         test option when the scale was estimated.
 
-
+    o   rgeom(,prob=1) gives 0 rather than NA
 
 		CHANGES IN R VERSION 1.0.1
 
