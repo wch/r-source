@@ -200,7 +200,7 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args);
 
     tryS4 = asLogical(CAR(args));
-    if(R_print.right == NA_LOGICAL)
+    if(tryS4 == NA_LOGICAL)
 	errorcall(call, "invalid tryS4 internal parameter");
 
     if(tryS4 && isObject(x) && isMethodsDispatchOn()) {
@@ -711,13 +711,13 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		SETCAR(t, allocVector(INTSXP, 1));
 		INTEGER(CAR(t))[0] = digits;
 		SET_TAG(t, install("digits")); /* t = CDR(t);
-		CAR(t) = allocVector(LGLSXP, 1);
+		SETCAR(t, allocVector(LGLSXP, 1));
 		LOGICAL(CAR(t))[0] = quote;
 		SET_TAG(t, install("quote")); t = CDR(t);
-		CAR(t) = allocVector(LGLSXP, 1);
+		SETCAR(t, allocVector(LGLSXP, 1));
 		LOGICAL(CAR(t))[0] = right;
 		SET_TAG(t, install("right")); t = CDR(t);
-		CAR(t) = allocVector(INTSXP, 1);
+		SETCAR(t, allocVector(INTSXP, 1));
 		INTEGER(CAR(t))[0] = gap;
 		SET_TAG(t, install("gap")); */
 		eval(s, env);
@@ -753,9 +753,9 @@ void PrintValueEnv(SEXP s, SEXP env)
     tagbuf[0] = '\0';
     PROTECT(s);
     if(isObject(s)) {
-	/* The intention here is call show() on S4 objects, otherwise
+	/* The intention here is to call show() on S4 objects, otherwise
 	   print(), so S4 methods for show() have precedence over those for
-	   print(). We decided not to do this, at least for now
+	   print(). We decided not to do this, at least for now.
 	*/
         /*if(isMethodsDispatchOn()) {
 	    SEXP class = getAttrib(s, R_ClassSymbol);

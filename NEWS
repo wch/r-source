@@ -410,6 +410,9 @@ BUG FIXES
 
     o	cut.POSIXt() now passes on ... to cut.default(), as documented.
 
+    o	seq.POSIXt(from, to, by="DSTday") was failing or calculating
+	the length incorrectly.
+
 
 
 		CHANGES IN R VERSION 1.7.0
