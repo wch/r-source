@@ -15,7 +15,11 @@ arima <- function(x, order = c(0, 0, 0),
         if(p > 0) mod$T[1:p, 1] <- phi
         if(r > 1)
             mod$Pn[1:r, 1:r] <- .Call("getQ0", phi, theta, PACKAGE = "stats")
-        else mod$Pn[1, 1] <- 1/(1 - phi^2)
+        else if (p > 0)
+            mod$Pn[1, 1] <- 1/(1 - phi^2)
+        else
+            mod$Pn[1,1] <- 1
+        # End change
         mod$a[] <- 0
         mod
     }
@@ -68,11 +72,11 @@ arima <- function(x, order = c(0, 0, 0),
         roots <- polyroot(c(1, ma[1:q0]))
         ind <- Mod(roots) < 1
         if(all(!ind)) return(ma)
-        if(q0 == 1) return(c(1/ma[1], rep(0, q-q0)))
+        if(q0 == 1) return(c(1/ma[1], rep(0, q - q0)))
         roots[ind] <- 1/roots[ind]
         x <- 1
-        for(r in roots) x <- c(x, 0) - c(0, x)/r
-        c(Re(x[-1]), rep(0, q-q0))
+        for (r in roots) x <- c(x, 0) - c(0, x)/r
+        c(Re(x[-1]), rep(0, q - q0))
     }
 
     series <- deparse(substitute(x))
@@ -107,7 +111,6 @@ arima <- function(x, order = c(0, 0, 0),
     arma <- as.integer(c(order[-2], seasonal$order[-2], seasonal$period,
                          order[2], seasonal$order[2]))
     narma <- sum(arma[1:4])
-    if(narma == 0) stop("no AR nor MA terms to be fitted")
 
     xtsp <- tsp(x)
     tsp(x) <- NULL
@@ -151,10 +154,12 @@ arima <- function(x, order = c(0, 0, 0),
     if (is.null(fixed)) fixed <- rep(NA, narma + ncxreg)
     else if(length(fixed) != narma + ncxreg) stop("wrong length for fixed")
     mask <- is.na(fixed)
-    if(!any(mask)) stop("all parameters were fixed")
+##    if(!any(mask)) stop("all parameters were fixed")
+    no.optim <- !any(mask)
+    if(no.optim) transform.pars <- FALSE
     if(transform.pars) {
         ind <- arma[1] + arma[2] + seq(length=arma[3])
-        if(any(!mask[1:arma[1]]) || any(!mask[ind]) ) {
+        if (any(!mask[1:arma[1]]) || any(!mask[ind])) {
             warning("some AR parameters were fixed: setting transform.pars = FALSE")
             transform.pars <- FALSE
         }
@@ -163,16 +168,16 @@ arima <- function(x, order = c(0, 0, 0),
     parscale <- rep(1, narma)
     if (ncxreg) {
         cn <- colnames(xreg)
-        orig.xreg <- (ncxreg == 1) || any(!mask[narma + 1:ncxreg] )
-        if(!orig.xreg) {
+        orig.xreg <- (ncxreg == 1) || any(!mask[narma + 1:ncxreg])
+        if (!orig.xreg) {
             S <- svd(na.omit(xreg))
             xreg <- xreg %*% S$v
         }
         fit <- lm(x ~ xreg - 1, na.action = na.omit)
         n.used <- sum(!is.na(resid(fit))) - length(Delta)
         init0 <- c(init0, coef(fit))
-        ses <- summary(fit)$coef[,2]
-        parscale <- c(parscale, 10*ses)
+        ses <- summary(fit)$coef[, 2]
+        parscale <- c(parscale, 10 * ses)
     }
     if (n.used <= 0) stop("too few non-missing observations")
 
@@ -199,8 +204,11 @@ arima <- function(x, order = c(0, 0, 0),
        optim.control$parscale <- parscale[mask]
 
     if(method == "CSS") {
-        res <- optim(init[mask], armaCSS,  method = "BFGS", hessian = TRUE,
-                     control = optim.control)
+        res <- if(no.optim)
+            list(convergence=0,par=numeric(0),value=armaCSS(numeric(0)))
+        else
+            optim(init[mask], armaCSS,  method = "BFGS", hessian = TRUE,
+                  control = optim.control)
         if(res$convergence > 0)
             warning(paste("possible convergence problem: optim gave code=",
                           res$convergence))
@@ -214,11 +222,14 @@ arima <- function(x, order = c(0, 0, 0),
         val <- .Call("ARIMA_CSS", x, arma, trarma[[1]], trarma[[2]],
                      as.integer(ncond), TRUE, PACKAGE = "stats")
         sigma2 <- val[[1]]
-        var <- solve(res$hessian * n.used)
+        var <- if(no.optim) numeric(0) else solve(res$hessian * n.used)
     } else {
         if(method == "CSS-ML") {
-            res <- optim(init[mask], armaCSS,  method = "BFGS",
-                         hessian = FALSE, control = optim.control)
+            res <- if(no.optim)
+                list(convergence=0,par=numeric(0),value=armaCSS(numeric(0)))
+            else
+                optim(init[mask], armaCSS,  method = "BFGS",
+                      hessian = FALSE, control = optim.control)
             if(res$convergence == 0) init[mask] <- res$par
             ## check stationarity
             if(arma[1] > 0)
@@ -244,9 +255,13 @@ arima <- function(x, order = c(0, 0, 0),
         trarma <- .Call("ARIMA_transPars", init, arma, transform.pars,
                         PACKAGE = "stats")
         mod <- makeARIMA(trarma[[1]], trarma[[2]], Delta, kappa)
-        res <- optim(init[mask], armafn,  method = "BFGS",
-                     hessian = TRUE, control = optim.control,
-                     trans = as.logical(transform.pars))
+        res <- if(no.optim)
+            list(convergence = 0, par = numeric(0),
+                 value = armafn(numeric(0), as.logical(transform.pars)))
+        else
+            optim(init[mask], armafn,  method = "BFGS",
+                  hessian = TRUE, control = optim.control,
+                  trans = as.logical(transform.pars))
         if(res$convergence > 0)
             warning(paste("possible convergence problem: optim gave code=",
                           res$convergence))
@@ -278,7 +293,7 @@ arima <- function(x, order = c(0, 0, 0),
             A <- A[mask, mask]
             var <- t(A) %*% solve(res$hessian * n.used) %*% A
             coef <- .Call("ARIMA_undoPars", coef, arma, PACKAGE = "stats")
-        } else var <- solve(res$hessian * n.used)
+        } else var <- if(no.optim) numeric(0) else solve(res$hessian * n.used)
         trarma <- .Call("ARIMA_transPars", coef, arma, FALSE,
                         PACKAGE = "stats")
         mod <- makeARIMA(trarma[[1]], trarma[[2]], Delta, kappa)
@@ -306,7 +321,7 @@ arima <- function(x, order = c(0, 0, 0),
         }
     }
     names(coef) <- nm
-    dimnames(var) <- list(nm[mask], nm[mask])
+    if(!no.optim) dimnames(var) <- list(nm[mask], nm[mask])
     resid <- val[[2]]
     tsp(resid) <- xtsp
     class(resid) <- "ts"
@@ -323,15 +338,17 @@ print.Arima <-
     function (x, digits = max(3, getOption("digits") - 3), se = TRUE, ...)
 {
     cat("\nCall:", deparse(x$call, width = 75), "", sep = "\n")
-    cat("Coefficients:\n")
-    coef <- round(x$coef, digits = digits)
-    if (se && nrow(x$var.coef)) {
-        ses <- rep(0, length(coef))
-        ses[x$mask] <- round(sqrt(diag(x$var.coef)), digits = digits)
-        coef <- matrix(coef, 1, dimnames = list(NULL, names(coef)))
-        coef <- rbind(coef, s.e. = ses)
+    if (length(x$coef) > 0) {
+        cat("Coefficients:\n")
+        coef <- round(x$coef, digits = digits)
+        if (se && nrow(x$var.coef)) {
+            ses <- rep(0, length(coef))
+            ses[x$mask] <- round(sqrt(diag(x$var.coef)), digits = digits)
+            coef <- matrix(coef, 1, dimnames = list(NULL, names(coef)))
+            coef <- rbind(coef, s.e. = ses)
+        }
+        print.default(coef, print.gap = 2)
     }
-    print.default(coef, print.gap = 2)
     cm <- x$call$method
     if(is.null(cm) || cm != "CSS")
         cat("\nsigma^2 estimated as ", format(x$sigma2, digits = digits),
@@ -368,7 +385,8 @@ predict.Arima <-
             newxreg <- cbind(intercept = rep(1, n.ahead), newxreg)
             ncxreg <- ncxreg + 1
         }
-        xm <- drop(as.matrix(newxreg) %*% coefs[-(1:narma)])
+        xm <- if(narma == 0) drop(as.matrix(newxreg) %*% coefs)
+        else drop(as.matrix(newxreg) %*% coefs[-(1:narma)])
     }
     else xm <- 0
     if (arma[2] > 0) {

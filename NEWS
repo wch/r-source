@@ -120,7 +120,10 @@ NEW FEATURES
     o   as.matrix.data.frame() now coerces an all-logical data frame
 	to a logical matrix.
 
-    o   New function assignInNamespace() paralling fixInNamespace.
+    o   New function assignInNamespace() parallelling fixInNamespace.
+
+    o   arima() allows models with no free parameters to be fitted (to
+	find log-likelihood and AIC values, thanks to Rob Hyndman).
 
 
 UTILITIES
