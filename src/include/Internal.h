@@ -37,6 +37,7 @@ SEXP do_datamanger(SEXP, SEXP, SEXP, SEXP);
 SEXP do_packagemanger(SEXP, SEXP, SEXP, SEXP);
 SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
 SEXP do_hsbrowser(SEXP, SEXP, SEXP, SEXP);
+SEXP do_aqua_custom_print(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 
