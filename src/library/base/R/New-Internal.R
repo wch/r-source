@@ -89,7 +89,7 @@ rank <- function(x, na.last = TRUE) {
 	stop("rank(.., na.last != TRUE) does not yet work in R.")
     .Internal(rank(x))
 }
-readline <- function().Internal(readline())
+readline <- function(prompt="").Internal(readline(prompt))
 search <- function().Internal(search())
 
 sink <- function(file=NULL, append = FALSE)

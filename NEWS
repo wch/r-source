@@ -11,6 +11,8 @@
 
 NEW FEATURES
 
+    o	readline has now an argument  prompt = ""
+
     o	coplot() now labels levels when conditioning variable is factor
 	(John Maindonald).
 
@@ -64,6 +66,8 @@ NEW FEATURES
 	values when the example script is run.
 
 BUG FIXES
+
+    o	readline() accidentally inherited menu()'s prompt.
 
     o	.C() and .Fortran() now correctly report that there might be
 	NaN/Infs, not just NAs, unless NAOK=TRUE.

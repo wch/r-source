@@ -499,7 +499,7 @@ FUNTAB R_FunTab[] =
 {"substitute",	do_substitute,	0,	0,	-1,	PP_FUNCALL},
 {"quit",	do_quit,	0,	111,	1,	PP_FUNCALL},
 {"interactive",	do_interactive,	0,	0,	0,	PP_FUNCALL},
-{"readline",	do_readln,	0,	11,	0,	PP_FUNCALL},
+{"readline",	do_readln,	0,	11,	1,	PP_FUNCALL},
 {"menu",	do_menu,	0,	11,	1,	PP_FUNCALL},
 {"print.default",do_printdefault,0,	111,	6,	PP_FUNCALL},
 {"print.matrix",do_printmatrix, 0,	111,	5,	PP_FUNCALL},
