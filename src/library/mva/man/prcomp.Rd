@@ -8,6 +8,7 @@ plot.prcomp(prcomp.obj)
 }
 \alias{print.prcomp}
 \alias{plot.prcomp}
+\alias{prcomp}
 \arguments{
 \item{x}{a matrix (or data frame) which provides the data
 for the principal components analysis.}
@@ -48,3 +49,4 @@ data(crimes)
 prcomp(crimes)
 prcomp(crimes,scale=TRUE)
 }
+\keyword{multivariate}

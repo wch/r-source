@@ -3,6 +3,7 @@
 \usage{
 cmdscale(d, k=2, eig=FALSE)
 }
+\alias{cmdscale}
 \arguments{
 \item{d}{a distance structure such as that returned by \code{dist}
 or a full symmetric matrix containing the dissimilarities.}
@@ -49,3 +50,4 @@ plot(x, y, type="n",
 	xlab="", ylab="")
 text(x, y, names(eurodist), cex=0.5)
 }
+\keyword{multivariate}

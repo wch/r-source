@@ -3,6 +3,7 @@
 \usage{
 cancor(x, y, xcenter=TRUE, ycenter=TRUE)
 }
+\alias{cancor}
 \arguments{
 \item{x}{a matrix containing the x coordinates.}
 \item{y}{a matrix containing the y coordinates.}
@@ -44,3 +45,4 @@ soil <- evap.x[,1:3]
 air <- evap.x[,-(1:3)]
 airsoil <- cancor(air, soil)
 }
+\keyword{multivariate}

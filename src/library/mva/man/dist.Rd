@@ -6,6 +6,9 @@ dist(x, method = "euclidian", diag = FALSE, upper=FALSE)
 print.dist(dist.obj, diag = NULL, upper = NULL)
 as.matrix.dist(dist.obj)
 }
+\alias{dist}
+\alias{print.dist}
+\alias{as.matrix.dist}
 \arguments{
   \item{x}{a matrix or (data frame).  Distances between the rows of
     \code{x} will be computed.}
@@ -57,3 +60,5 @@ dist(x, diag = TRUE)
 dist(x, upper = TRUE)
 as.matrix(dist(x))
 }
+\keyword{multivariate}
+\keyword{cluster}
