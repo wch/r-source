@@ -5,12 +5,14 @@ print.family <- function(x, ...)
     cat("\nFamily:", x$family, "\n")
     cat("Link function:", x$link, "\n\n")
 }
-## FIXME:  power(lam) for 0 < lam != 1 shouldn't give identity!
-power <- function(lambda = 1)
-{
+
+power <- function(lambda = 1) {
     if(lambda <= 0)
-	return("log")
-    return(lambda)
+	make.link("log")
+    else if(lambda == 1)
+        make.link("identity")
+    else
+        make.link(lambda)
 }
 
 ## Written by Simon Davies Dec 1995
@@ -18,64 +20,67 @@ power <- function(lambda = 1)
 ## added valideta(eta) function..
 make.link <- function (link)
 {
-    if(!is.character(link) && !is.na(lambda <- as.numeric(link))) {
+    if (is.character(link) && length(grep("^power", link) > 0))
+        return(eval(parse(text = link)))
+    else if(!is.character(link) && !is.na(lambda <- as.numeric(link))) {
         linkfun <- function(mu) mu^lambda
         linkinv <- function(eta) eta^(1/lambda)
         mu.eta <- function(eta) (1/lambda) * eta^(1/lambda - 1)
         valideta <- function(eta) all(eta>0)
-    } else
-    switch (link,
-	    "logit" = {
-		linkfun <- function(mu) log(mu/(1 - mu))
-		linkinv <- function(eta) exp(eta)/(1 + exp(eta))
-		mu.eta <- function(eta) exp(eta)/(1 + exp(eta))^2
-		valideta <- function(eta) TRUE
-	    },
-	    "probit" = {
-		linkfun <- function(mu) qnorm(mu)
-		linkinv <- pnorm
-		mu.eta <- function(eta) 0.3989422 * exp(-0.5 * eta^2)
-		valideta <- function(eta) TRUE
-	    },
-	    "cloglog" = {
-		linkfun <- function(mu) log(-log(1 - mu))
-		linkinv <- function(eta) 1 - exp(-exp(eta))
-		mu.eta <- function(eta) exp(eta) * exp(-exp(eta))
-		valideta <- function(eta) TRUE
-	    },
-	    "identity" = {
-		linkfun <- function(mu) mu
-		linkinv <- function(eta) eta
-		mu.eta <- function(eta) rep(1, length(eta))
-		valideta <- function(eta) TRUE
-	    },
-	    "log" = {
-		linkfun <- function(mu) log(mu)
-		linkinv <- function(eta) exp(eta)
-		mu.eta <- function(eta) exp(eta)
-		valideta <- function(eta) TRUE
-	    },
-	    "sqrt" = {
-		linkfun <- function(mu) mu^0.5
-		linkinv <- function(eta) eta^2
-		mu.eta <- function(eta) 2 * eta
-		valideta <- function(eta) all(eta>0)
-	    },
-	    "1/mu^2" = {
-		linkfun <- function(mu) 1/mu^2
-		linkinv <- function(eta) 1/eta^0.5
-		mu.eta <- function(eta) -1/(2 * eta^1.5)
-		valideta <- function(eta) all(eta>0)
-	    },
-	    "inverse" = {
-		linkfun <- function(mu) 1/mu
-		linkinv <- function(eta) 1/eta
-		mu.eta <- function(eta) -1/(eta^2)
-		valideta <- function(eta) all(eta!=0)
-	    },
-	    ## else :
-	    stop(paste(link, "link not recognised"))
-	    )# end switch(.)
+    }
+    else
+        switch(link,
+               "logit" = {
+                   linkfun <- function(mu) log(mu/(1 - mu))
+                   linkinv <- function(eta) exp(eta)/(1 + exp(eta))
+                   mu.eta <- function(eta) exp(eta)/(1 + exp(eta))^2
+                   valideta <- function(eta) TRUE
+               },
+               "probit" = {
+                   linkfun <- function(mu) qnorm(mu)
+                   linkinv <- pnorm
+                   mu.eta <- function(eta) 0.3989422 * exp(-0.5 * eta^2)
+                   valideta <- function(eta) TRUE
+               },
+               "cloglog" = {
+                   linkfun <- function(mu) log(-log(1 - mu))
+                   linkinv <- function(eta) 1 - exp(-exp(eta))
+                   mu.eta <- function(eta) exp(eta) * exp(-exp(eta))
+                   valideta <- function(eta) TRUE
+               },
+               "identity" = {
+                   linkfun <- function(mu) mu
+                   linkinv <- function(eta) eta
+                   mu.eta <- function(eta) rep(1, length(eta))
+                   valideta <- function(eta) TRUE
+               },
+               "log" = {
+                   linkfun <- function(mu) log(mu)
+                   linkinv <- function(eta) exp(eta)
+                   mu.eta <- function(eta) exp(eta)
+                   valideta <- function(eta) TRUE
+               },
+               "sqrt" = {
+                   linkfun <- function(mu) mu^0.5
+                   linkinv <- function(eta) eta^2
+                   mu.eta <- function(eta) 2 * eta
+                   valideta <- function(eta) all(eta>0)
+               },
+               "1/mu^2" = {
+                   linkfun <- function(mu) 1/mu^2
+                   linkinv <- function(eta) 1/eta^0.5
+                   mu.eta <- function(eta) -1/(2 * eta^1.5)
+                   valideta <- function(eta) all(eta>0)
+               },
+               "inverse" = {
+                   linkfun <- function(mu) 1/mu
+                   linkinv <- function(eta) 1/eta
+                   mu.eta <- function(eta) -1/(eta^2)
+                   valideta <- function(eta) all(eta!=0)
+               },
+               ## else :
+               stop(paste(link, "link not recognised"))
+               )# end switch(.)
     list(linkfun = linkfun, linkinv = linkinv,
 	 mu.eta = mu.eta, valideta = valideta)
 }
