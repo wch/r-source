@@ -111,7 +111,7 @@ static void *dlhandle;
 void InitFunctionHashing()
 {
 #ifdef DL_SEARCH_PROG
-    dlhandle = dlopen(0, RTLD_LAZY);
+    dlhandle = dlopen(0, RTLD_NOW);
 #endif
 }
 
@@ -170,7 +170,7 @@ static int AddDLL(char *path)
 	strcpy(DLLerror, "Maximal number of DLLs reached...");
 	return 0;
     }
-    handle = dlopen(path, RTLD_LAZY);
+    handle = dlopen(path, RTLD_NOW);
     if(handle == NULL) {
 	strcpy(DLLerror, dlerror());
 	return 0;
