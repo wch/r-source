@@ -74,36 +74,201 @@ void Rstd_Suicide(char *s)
 	 */
 
 
-/* block on select until either stdin or X11 connection is ready to read
-   (return 1 if X11 connection ready to read, 2 if stdin ready to read)
-   */
 
-#define XActivity 1
-#define StdinActivity 2
+#include "eventloop.h"
 
-static int waitForActivity()
+/*
+   This oject is used for the standard input and its file descriptor
+   value is reset by setSelectMask() each time to ensure that it points
+   to the correct value of stdin.
+ */
+static InputHandler BasicInputHandler = {StdinActivity, -1, NULL};
+
+/* 
+   This can be reset by the initialization routines which
+   can ignore stdin, etc.. 
+*/
+InputHandler *InputHandlers = &BasicInputHandler;
+
+/*
+  Initialize the input source handlers used to check for input on the 
+  different file descriptors.
+ */
+InputHandler *
+initStdinHandler(void)
 {
-    int maxfd;
-    fd_set readMask;
-    int stdinfd = fileno(stdin);
-    int connectionfd = X11ConnectionNumber();
+ InputHandler *inputs;
+ extern void R_processEvents(void);
+ 
+  inputs = addInputHandler(InputHandlers, fileno(stdin), NULL, StdinActivity);
+    /* Defer the X11 registration until it is loaded and actually used. */
 
-    FD_ZERO(&readMask);
-    FD_SET(stdinfd, &readMask);
-    maxfd = stdinfd;
-    if (connectionfd > 0) {
-	FD_SET(connectionfd, &readMask);
-	if (connectionfd > stdinfd)
-	    maxfd = connectionfd;
+ return(inputs);
+}
+
+/*
+  Creates and registers a new InputHandler with the linked list `handlers'.
+  This sets the global variable InputHandlers if it is not already set.
+  In the standard interactive case, this will have been set to be the
+  BasicInputHandler object.
+ */
+InputHandler *
+addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler, int activity)
+{
+ InputHandler *input, *tmp;
+    input = (InputHandler*) calloc(1, sizeof(InputHandler));
+
+  input->activity = activity;
+  input->fileDescriptor = fd;
+  input->handler = handler;
+
+  tmp = handlers;
+
+  if(handlers == NULL) {
+     InputHandlers = input;
+     return(input);
+  }
+
+    /* Go to the end of the list to append the new one.  */
+  while(tmp->next != NULL) {
+    tmp = tmp->next;
+  }
+  tmp->next = input;
+
+ return(handlers);
+}
+
+/*
+  Removes the specified handler from the linked list.
+
+  See getInputHandler() for first locating the target handler instance.
+ */
+int
+removeInputHandler(InputHandler **handlers, InputHandler *it)
+{
+  InputHandler *tmp;
+
+  /* If the handler is the first one in the list, move the list to point
+     to the second element. That's why we use the address of the first element
+     as the first argument.
+   */
+  if(*handlers == it) {
+    *handlers = (*handlers)->next;
+    return(1);
+  }
+
+  tmp = *handlers;
+
+  while(tmp) {
+    if(tmp->next == it) {
+      tmp->next = it->next;
+      return(1);
     }
+  }
+
+  return(0);
+}
+
+
+InputHandler *
+getInputHandler(InputHandler *handlers, int fd)
+{
+  InputHandler *tmp;
+  tmp = handlers;
+
+  while(tmp != NULL) {
+    if(tmp->fileDescriptor == fd)
+      return(tmp);
+    tmp = tmp->next;
+  }
+
+  return(tmp);
+}
+
+/*
+ Arrange to wait until there is some activity or input pending
+ on one of the file descriptors to which we are listening.
+
+ We could make the file descriptor mask persistent across
+ calls and change it only when a listener is added or deleted.
+ Later.
+
+
+ This replaces the previous version which looked only on stdin and the X11
+ device connection.  This allows more than one X11 device to be open on a different 
+ connection. Also, it allows connections a la S4 to be developed on top of this 
+ mechanism. The return type of this routine has changed.
+ */
+static InputHandler* waitForActivity()
+{
+  int maxfd;
+  fd_set readMask;
+
+    maxfd = setSelectMask(InputHandlers, &readMask);
+
     select(maxfd+1, &readMask, NULL, NULL, NULL);
 
-    if (connectionfd > 0)
-	if (FD_ISSET(connectionfd, &readMask))
-	    return XActivity;
-    if (FD_ISSET(stdinfd, &readMask))
-	return StdinActivity;
-    return 0;			/* for -Wall*/
+  return(getSelectedHandler(InputHandlers, &readMask));
+}
+
+/*
+  Create the mask representing the file descriptors select() should
+  monitor and return the maximum of these file descriptors so that 
+  it can be passed directly to select().
+
+  If the first element of the handlers is the standard input handler
+  then we set its file descriptor to the current value of stdin - its
+  file descriptor.
+ */
+int
+setSelectMask(InputHandler *handlers, fd_set *readMask)
+{
+  int maxfd = -1;
+    InputHandler *tmp = handlers;
+    FD_ZERO(readMask);
+
+      /* If we are dealing with BasicInputHandler Always put stdin */
+    if(handlers == &BasicInputHandler) 
+       handlers->fileDescriptor = fileno(stdin);
+    
+    while(tmp) {
+      FD_SET(tmp->fileDescriptor, readMask);
+      maxfd = maxfd < tmp->fileDescriptor ? tmp->fileDescriptor : maxfd;
+      tmp = tmp->next;
+    }
+
+    return(maxfd);
+}
+
+/*
+  Determine which handler was identified as having input pending
+  by the call to select().
+  We have a very simple version of scheduling. We skip the first one
+  if it is the standard input one. This allows the others to not be `starved'.
+  Change this as one wants by not skipping the first one.
+ */
+InputHandler *
+getSelectedHandler(InputHandler *handlers, fd_set *readMask)
+{
+    InputHandler *tmp = handlers;
+
+      /*
+          Temporarily skip the first one if a) there is another one, and
+           b) thi is the BasicInputHandler.
+        */
+    if(handlers == &BasicInputHandler && handlers->next)
+      tmp = handlers->next;
+   
+    while(tmp) {
+      if(FD_ISSET(tmp->fileDescriptor, readMask))
+        return(tmp);
+      tmp = tmp->next;
+    }
+       /* Now deal with the first one. */
+    if(FD_ISSET(handlers->fileDescriptor, readMask))
+       return(handlers);
+
+  return((InputHandler*) NULL);
 }
 
 
@@ -172,13 +337,14 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	    fflush(stdout);
 	}
 
+	if(InputHandlers == NULL)
+	  initStdinHandler();
+
 	for (;;) {
-	    int what = waitForActivity();
-	    switch (what) {
-	    case XActivity:
-		pR_ProcessEvents();
-		break;
-	    case StdinActivity:
+	    InputHandler *what = waitForActivity();
+	    if(what != NULL) {
+              if(what->fileDescriptor == fileno(stdin)) {
+  	        /* We could make this a regular handler, but we need to pass additional arguments. */
 #ifdef HAVE_LIBREADLINE
 		if (UsingReadline) {
 		    rl_callback_read_char();
@@ -195,6 +361,8 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 		    else
 			return 1;
 		}
+	      } else
+                 what->handler((void*) NULL);
 	    }
 	}
     }
