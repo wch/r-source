@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2003   The R Development Core Team.
+ *  Copyright (C) 1997--2003  The R Development Core Team.
+ *  Copyright (C) 2003        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -151,17 +152,12 @@ static const double tbl[] =
     0.e0, 1.e0, 1.e1, 1.e2, 1.e3, 1.e4, 1.e5, 1.e6, 1.e7, 1.e8, 1.e9
 };
 
-#if 0
-static double eps;/* = 10^{- R_print.digits};
-			set in formatReal/Complex,  used in scientific() */
-#endif
-
 static void scientific(double *x, int *sgn, int *kpower, int *nsig, double eps)
 {
-    /* for 1 number	 x , return
+    /* for a number x , determine
      *	sgn    = 1_{x < 0}  {0/1}
      *	kpower = Exponent of 10;
-     *	nsig   = min(R_print.digits, #{significant digits of alpha}
+     *	nsig   = min(R_print.digits, #{significant digits of alpha})
      *
      * where  |x| = alpha * 10^kpower	and	 1 <= alpha < 10
      */
@@ -195,8 +191,8 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig, double eps)
 	 */
 	else if (kp <= R_dec_min_exponent) {
 	    alpha = (r * 1e+30)/pow(10.0, (double)(kp+30));
-	} 
-	else 
+	}
+	else
 	    alpha = r / pow(10.0, (double)kp);
 
 	/* make sure that alpha is in [1,10) AFTER rounding */
@@ -259,9 +255,8 @@ void formatReal(double *x, int l, int *m, int *n, int *e, int nsmall)
 	    if (nsig > mxns) mxns = nsig;	/* max sig digits */
 	}
     }
-    /* F Format (NEW):	use "F" format
-     *	    WHENEVER we use not more space than 'E'
-     *		and still satisfy 'R_print.digits'
+    /* F Format: use "F" format WHENEVER we use not more space than 'E'
+     *		and still satisfy 'R_print.digits' {but as if nsmall==0 !}
      *
      * E Format has the form   [S]X[.XXX]E+XX[X]
      *
@@ -269,12 +264,12 @@ void formatReal(double *x, int l, int *m, int *n, int *e, int nsmall)
      * If the additional exponent digit is required *e is set to 2
      */
 
-    /*-- These	'mxsl' & 'rgt'  are used in F Format
+    /*-- These	'mxsl' & 'rgt'	are used in F Format
      *	 AND in the	____ if(.) "F" else "E" ___   below: */
     if (mxl < 0) mxsl = 1 + neg;
-    /*old: if (mxl != mnl && mxl + rgt > R_print.digits) rgt = R_print.digits - mxl;*/
-    if (rgt < nsmall) rgt = nsmall;
-    /* NO! else if (rgt > R_print.digits) rgt = R_print.digits; */
+
+    /* use nsmall only *after* comparing "F" vs "E": */
+    if (rgt < 0) rgt = 0;
     mF = mxsl + rgt + (rgt != 0);	/* width m for F  format */
 
     /*-- 'see' how "E" Exponential format would be like : */
@@ -285,6 +280,10 @@ void formatReal(double *x, int l, int *m, int *n, int *e, int nsmall)
 
     if (mF <= *m  + R_print.scipen) { /* Fixpoint if it needs less space */
 	*e = 0;
+	if (nsmall > rgt) {
+	    rgt = nsmall;
+	    mF = mxsl + rgt + (rgt != 0);
+	}
 	*n = rgt;
 	*m = mF;
     } /* else : "E" Exponential format -- all done above */
@@ -385,7 +384,7 @@ void formatComplex(Rcomplex *x, int l, int *mr, int *nr, int *er,
 
     if (mxl != INT_MIN) {
 	if (mxl < 0) mxsl = 1 + neg;
-	if (rt < nsmall) rt = nsmall;
+	if (rt < 0) rt = 0;
 	mF = mxsl + rt + (rt != 0);
 
 	if (mxl > 100 || mnl < -99) *er = 2;
@@ -394,6 +393,10 @@ void formatComplex(Rcomplex *x, int l, int *mr, int *nr, int *er,
 	*mr = neg + (*nr > 0) + *nr + 4 + *er;
         if (mF <= *mr + R_print.scipen) { /* Fixpoint if it needs less space */
 	    *er = 0;
+	    if (nsmall > rt) {
+		rt = nsmall;
+		mF = mxsl + rt + (rt != 0);
+	    }
 	    *nr = rt;
 	    *mr = mF;
 	}
@@ -411,7 +414,7 @@ void formatComplex(Rcomplex *x, int l, int *mr, int *nr, int *er,
 
     if (i_mxl != INT_MIN) {
 	if (i_mxl < 0) i_mxsl = 1;
-	if (i_rt < nsmall) i_rt = nsmall;
+	if (i_rt < 0) i_rt = 0;
 	mF = i_mxsl + i_rt + (i_rt != 0);
 
 	if (i_mxl > 100 || i_mnl < -99) *ei = 2;
@@ -420,6 +423,10 @@ void formatComplex(Rcomplex *x, int l, int *mr, int *nr, int *er,
 	*mi = (*ni > 0) + *ni + 4 + *ei;
         if (mF <= *mi + R_print.scipen) { /* Fixpoint if it needs less space */
 	    *ei = 0;
+	    if (nsmall > i_rt) {
+		i_rt = nsmall;
+		mF = mxsl + i_rt + (i_rt != 0);
+	    }
 	    *ni = i_rt;
 	    *mi = mF;
 	}

@@ -382,8 +382,8 @@ BUG FIXES
 NEW FEATURES
 
     o	R CMD check accepts "ORPHANED" as package maintainer. Package
-        maintainers can now officially orphanize a package, i.e.,
-        resign from maintaining a package.
+	maintainers can now officially orphanize a package, i.e.,
+	resign from maintaining a package.
 
     o	format.info() now also works with `nsmall' in analogy with
 	format.default()
@@ -436,8 +436,11 @@ BUG FIXES
 
     o	str(x) gives better output when x is of mode "(".
 
-    o	Lapack error messages corrected (PR#3494) and incorrect call to 
+    o	Lapack error messages corrected (PR#3494) and incorrect call to
 	DGEQP3 (PR#2867).
+
+    o	format(*, nsmall = m) with m > 0 now returns exponential format
+	less often.
 
 
 
