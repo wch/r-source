@@ -1,8 +1,8 @@
 Package: ts
 Version: @VERSION@
 Priority: base
-Title: Time Series Functions
-Author: Collected by Brian Ripley. See SOURCES.
+Title: Defunct Package of Time Series Functions
+Author: Collected by Brian Ripley.
 Maintainer: R Core Team <R-core@r-project.org>
 Description: Time series functions
 License: GPL Version 2 or later.
