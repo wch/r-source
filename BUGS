@@ -307,10 +307,6 @@ Directory:  Low-level
 Subject: "[.data.frame" allows un-named 3rd subscript
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
 Date: Mon, 18 Jun 2001 13:13:46 -0700 (PDT)
-* PR# 1063 *
-Subject: interrupting Sys.sleep
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Mon, 20 Aug 2001 13:55:29 -0700 (PDT)
 * PR# 1068 *
 Subject: Interrupts (was Re: [Rd] X11 protocol errors ...)
 From: Luke Tierney <luke@nokomis.stat.umn.edu>
@@ -463,3 +459,11 @@ Date: Thu, 11 Apr 2002 22:52:53 +0900
 Subject: segmentation violation when closing the data entry window
 From: Stephen Eglen <eglen@pcg.wustl.edu>
 Date: Thu, 11 Apr 2002 13:53:52 -0500
+* PR# 1454 *
+Subject: Maritime Newsletter (Week 15)
+From: "Marine Digital Inc."<newsletter@marinedigital.com>
+Date: Fri, 12 Apr 2002 21:29:16 +0900
+* PR# 1455 *
+Subject: Interviewing 
+From: "April Adams" <AAdams@geologics.com>
+Date: Fri, 12 Apr 2002 14:42:53 -0400
