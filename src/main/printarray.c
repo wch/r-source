@@ -489,7 +489,8 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
     }
 }
 
-static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
+static void printArrayGeneral(SEXP x, SEXP dim, int quote, int right, 
+                              SEXP dimnames)
 {
 /* == printArray(.) */
     SEXP dn, dnn;
@@ -563,7 +564,7 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
 		break;
 	    case STRSXP:
 		if (quote) quote = '"';
-		printStringMatrix(x, i * b, nr, nc, quote, 0, dn0, dn1, rn, cn);
+		printStringMatrix(x, i * b, nr, nc, quote, right, dn0, dn1, rn, cn);
 		break;
 	    }
 	    Rprintf("\n");
@@ -571,7 +572,7 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
     }
 }
 
-void printArray(SEXP x, SEXP dim, int quote, SEXP dimnames)
+void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
 {
-    printArrayGeneral(x, dim, quote, dimnames);
+    printArrayGeneral(x, dim, quote, right, dimnames);
 }

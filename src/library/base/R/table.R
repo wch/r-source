@@ -85,7 +85,12 @@ function (x, digits = getOption("digits"), quote = FALSE, na.print = "",
     if(is.integer(x) && zero.print != "0" && any(i0 <- !ina & x == 0))
 	## MM thinks this should be an option for many more print methods...
 	xx[i0] <- sub("0", zero.print, xx[i0])
-    print(xx, quote = quote, ...)
+    ## Numbers get right-justified by format(), irrespective of 'justify'.
+    ## We need to keep column headers aligned.
+    if (is.numeric(x) || is.complex(x))
+        print(xx, quote = quote, right = TRUE, ...)
+    else
+        print(xx, quote = quote, ...)
     invisible(x)
 }
 
