@@ -2033,6 +2033,7 @@ open(con)
 line <- readLines(con, 1)
 pushBack(line, con)
 (y <- readLines(con))
+close(con)
 unlink(tmp)
 stopifnot(identical(x, y))
 ## pushback problems in 1.6.2 only
