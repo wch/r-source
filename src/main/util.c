@@ -867,6 +867,9 @@ SEXP dcdr(SEXP l)
 }
 
 /* Functions for getting and setting the working directory. */
+#ifdef Win32
+#include <windows.h>
+#endif
 
 SEXP
 do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
@@ -896,4 +899,57 @@ do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
     if(chdir(path) < 0)
 	errorcall(call, "cannot change working directory\n");
     return(R_NilValue);
+}
+
+/* remove portion of path before file separator if one exists */
+SEXP
+do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP s;
+    char  buf[PATH_MAX], *p, fsp = FILESEP[0];
+
+    checkArity(op, args);
+    s = CAR(args);
+    if (!isString(s))
+	errorcall(call, "character argument expected\n");
+    strcpy (buf, R_ExpandFileName(CHAR(STRING(s)[0])));
+#ifdef Win32
+    for (p = buf; *p != '\0'; p++)
+	if (*p == '\\') *p = '/';
+#endif
+    /* remove trailing file separator(s) */
+    while ( *(p = buf + strlen(buf) - 1) == fsp ) *p = '\0';
+    if ((p = strrchr(buf, fsp)))
+	p++;
+    else
+	p = buf;
+    return(mkString(p));
+}
+
+/* remove portion of path after last file separator if one exists, else
+   return "." */
+SEXP
+do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP s;
+    char  buf[PATH_MAX], *p, fsp = FILESEP[0];
+
+    checkArity(op, args);
+    s = CAR(args);
+    if(!isString(s))
+	errorcall(call, "character argument expected\n");
+    strcpy(buf, R_ExpandFileName(CHAR(STRING(s)[0])));
+#ifdef Win32
+    for(p = buf; *p != '\0'; p++)
+	if(*p == '\\') *p = '/';
+#endif
+    /* remove trailing file separator(s) */
+    while ( *(p = buf + strlen(buf) - 1) == fsp ) *p = '\0';
+    if((p = strrchr(buf, fsp))) {
+	*p = '\0';
+	/* remove excess trailing file separator(s), as in /a///b  */
+	while ( *(--p) == fsp ) *p = '\0';
+    } else
+	strcpy(buf, ".");
+    return(mkString(buf));
 }

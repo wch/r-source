@@ -17,7 +17,7 @@ NEW FEATURES
 	simulation (in the standard case of a 2-d contigency table).
 
     o	New functions getwd() and setwd() for getting and setting the R
-	working directory.
+	working directory, basename() and dirname() for manipulating paths.
 
     o	source() has a new argument `chdir' for changing the working
 	directory to that of the file being sourced when evaluating.

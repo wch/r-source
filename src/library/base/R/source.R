@@ -23,12 +23,10 @@ source <-
         cat("--> parsed", Ne, "expressions; now eval(.)ing them:\n")
     if (Ne == 0)
         return(invisible())
-    if (chdir) {
-        owd <- getwd();
-        on.exit(setwd(owd));
-        ## What we really want is the dirname of `file':
-        fsep <- .Platform$file.sep
-        setwd(sub(paste(fsep, "[^", fsep, "]*$", sep = ""), "", file))
+    if (chdir && (path <- dirname(file)) != ".") {
+        owd <- getwd()
+        on.exit(setwd(owd))
+        setwd(path)
     }
     #-- ass1 :  the  `<-' symbol/name
     ass1 <- expression(y <- x)[[1]][[1]]
