@@ -653,11 +653,21 @@ For package @code{tcltk} to work (try @code{demo(tkdensity)} or
 @code{demo(tkttest)} after @code{library(tcltk)}) you need to have Tcl
 installed.  This is an optional part of the installation by
 @code{@value{VERSION}.exe}, although it is selected by default.
+If the message is
+@smallexample
+Tcl/Tk support files were not installed
+@end smallexample
+the optional files were not installed, and you need to go back to the
+installer and install them.  (Note: package @code{tcltk} is not part of
+the @code{miniR} installer.)
 
-If you have the environment variable @code{MY_TCLTK} set to a non-empty
-value, it is assumed that you want to use a different Tcl/Tk 8.4.x
-installation, and that this is set up correctly (with the DLLs in your
-path and @code{TCL_LIBRARY}).
+Alternatively, if you have the environment variable @code{MY_TCLTK} set
+to a non-empty value, it is assumed that you want to use a different
+Tcl/Tk 8.4.x installation, and that this is set up correctly (with the
+DLLs in your path and @code{TCL_LIBRARY} set).  In that case you do not
+need the Tcl/Tk support files installed (but they can be).  Note that
+you do need 8.4.x and not 8.3.x as from R 1.7.0.  (If you build R from
+the sources yourself you can configure it to use 8.3.x.)
 
 
 @c Download ActiveTcl 8.4.x from
