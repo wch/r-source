@@ -24,15 +24,16 @@ USER-VISIBLE CHANGES
 	Packages ctest, eda, modreg, mva, nls and ts have been merged
 	into stats, and lqs has been returned to MASS.  In all cases a
 	stub has been left that will issue a warning and ensure that
-	the appropriate new home is loaded.
+	the appropriate new home is loaded.  All the time series
+	datasets have been moved to package stats.
 
-	A few packages made assumptions about where functions were and
-	will need updating.
+	A few user-contributed packages have made assumptions about
+	where functions were and so will need updating.
 
 	Users may notice that code in .Rprofile is run only with the
 	new base loaded and so functions may now not be found.  For
 	example, ps.options(horizontal = TRUE) should be preceded by
-	library(graphics).
+	library(graphics) or called as graphics::ps.options.
 
 
 NEW FEATURES
@@ -53,7 +54,8 @@ NEW FEATURES
 	can be used to check that the variables supplied for
 	prediction are of the same type as those used for fitting.
 	(It is currently used by predict() methods for classes "lm",
-	"mlm", "glm", "lqs" and "ppr".)
+	"mlm", "glm" and "ppr", as well as methods in packages MASS,
+	rpart and tree.)
 
     o	read.table() now allows embedded newlines in quoted fields. (PR#4555)
 
@@ -107,7 +109,7 @@ NEW FEATURES
     o   New functions in the tools package: pkgDepends, getDepList and
         installFoundDepends.  These provide functionality for assessing
         dependencies and the availability of them (either locally or
-        from on line repositories).
+        from on-line repositories).
 
     o   ppr() is now interruptible at suitable places in the
 	underlying FORTRAN code.
@@ -132,9 +134,9 @@ UTILITIES
 	(uniform & normal) and set.seed(1).
 	example(*, setRNG = TRUE) does the same.
 
-    o	undoc() in `tools' has a new default of `use.values = NULL'
-	which produces a warning whenever the default values of function
-	arguments differ between documentation and code.
+    o	undoc() in package `tools' has a new default of `use.values =
+	NULL' which produces a warning whenever the default values of
+	function arguments differ between documentation and code.
 	Note that this affects "R CMD check" as well.
 
 
@@ -217,7 +219,7 @@ BUG FIXES
         subsetting rules from an object of class "formula".
 
     o   The standalone Rmath library did not build correctly on systems
-        with innaccurate log1p.
+        with inaccurate log1p.
 
 
 
