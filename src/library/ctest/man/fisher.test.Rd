@@ -12,12 +12,12 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
 \arguments{
   \item{x}{either a two-dimensional contingency table in matrix form,
     or a factor object.}
-  \item{y}{a factor object; ignored if \code{x} is a matrix.} 
+  \item{y}{a factor object; ignored if \code{x} is a matrix.}
   \item{workspace}{an integer specifying the size of the workspace
     used in the network algorithm.}
   \item{hybrid}{a logical indicating whether the exact probabilities
     (default) or a hybrid approximation thereof should be computed.
-    In the hybrid case, asymptotic chi-square probabilies are only
+    In the hybrid case, asymptotic chi-square probabilities are only
     used provided that the ``Cochran'' conditions are satisfied.}
   \item{or}{the hypothesized odds ratio.  Only used in the 2 by 2 case.}
   \item{alternative}{indicates the alternative hypothesis and must be
@@ -39,7 +39,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   \item{null.value}{the odds ratio under the null, \code{or}.
     Only present in the 2 by 2 case.}
   \item{alternative}{a character string describing the alternative
-    hypothesis.} 
+    hypothesis.}
   \item{method}{the string \code{"Fisher's Exact Test for Count Data"}.}
   \item{data.name}{a character string giving the names of the data.}
 }
@@ -84,7 +84,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   on unordered \eqn{r*c} contingency tables.
   \emph{ACM Transactions on Mathematical Software}, \bold{12},
   154--161.
-    
+
   Douglas B. Clarkson, Yuan-an Fan & Harry Joe (1993).
   A Remark on Algorithm 643: FEXACT: An Algorithm for Performing
   Fisher's Exact Test in \eqn{r \times c}{r x c} Contingency Tables.
