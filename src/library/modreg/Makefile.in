@@ -31,6 +31,8 @@ all: Makefile DESCRIPTION
 	@if test -f $(top_builddir)/$(subdir)/DESCRIPTION; then \
 	  $(INSTALL_DATA) $(top_builddir)/$(subdir)/DESCRIPTION \
 	    $(top_builddir)/library/$(pkg); \
+	  echo "Built: R" @VERSION@\;  @R_PLATFORM@\;  `date` >> \
+	    $(top_builddir)/library/$(pkg)/DESCRIPTION; \
 	fi
 	@if test -d $(srcdir)/data; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
