@@ -7,26 +7,27 @@
   Creates or tests for arrays.
 }
 \usage{
-array(data, dim = length(x), dimnames = NULL)
+array(data = NA, dim = length(data), dimnames = NULL)
 as.array(x)
 is.array(x)
 }
 \arguments{
   \item{data}{a vector giving data to fill the array.}
-  \item{dim}{the dim attribute for the array to be reated, that is a
-    vector of length one or more giving the maximal idices in each dimension.}
+  \item{dim}{the dim attribute for the array to be created, that is a
+    vector of length one or more giving the maximal indices in
+    each dimension.}
   \item{dimnames}{the names for the dimensions. This is a list with one
-    compoent for each dimension, either NULL or a character vector of
+    component for each dimension, either NULL or a character vector of
     the length given by \code{dim} for that dimension.  The list can be
     names, and the names will be used as names for the dimensions.}
   \item{x}{an \R object.}
 }
 \value{
   \code{array} returns an array with the extents specified in \code{dim}
-  and naming information in \code{dimnames}.  The values in \code{x} are
+  and naming information in \code{dimnames}.  The values in \code{data} are
   taken to be those in the array with the leftmost subscript moving
-  fastest.  If there are too few elements in \code{x} to fill the array,
-  then the elements in \code{x} are recycled.
+  fastest.  If there are too few elements in \code{data} to fill the array,
+  then the elements in \code{data} are recycled.
 
   \code{as.array()} coerces its argument to be an array by attaching a
   \code{\link{dim}} attribute to it.  It also attaches
