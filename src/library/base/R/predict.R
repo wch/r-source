@@ -1,5 +1,8 @@
-predict <- function(fit,...) UseMethod("predict")
+predict <- function(object,...) UseMethod("predict")
 
+## This is not used anywhere anymore, is it ?
+## It would only work with objects very much like  "lm", would it?
+if(FALSE)
 predict.default <- function (object, ...) {
     namelist <- list(...)
     names(namelist) <- substitute(list(...))[-1]
@@ -10,22 +13,18 @@ predict.default <- function (object, ...) {
     if (object$intercept)
 	X <- cbind(rep(1, NROW(X)), X)
     k <- NCOL(X)
+    n <- NROW(X)
     if (length(object$coef) != k)
 	stop("Wrong number of predictors")
     predictor <- X %*% object$coef
-    ip <- real(NROW(X))
-    for (i in (1:NROW(X))) ip[i] <- sum(X[i, ] *
-					(object$covmat %*% X[i, ]))
+    ip <- numeric(n)
+    names(ip) <- paste("P", 1:n, sep = "")
+    for (i in 1:n)
+	ip[i] <- sum(X[i, ] * (object$covmat %*% X[i, ]))
     stderr1 <- sqrt(ip)
     stderr2 <- sqrt(object$rms^2 + ip)
     tt <- qt(0.975, object$df)
-    conf.l <- predictor - tt * stderr1
-    conf.u <- predictor + tt * stderr1
-    pred.l <- predictor - tt * stderr2
-    pred.u <- predictor + tt * stderr2
-    z <- cbind(predictor, conf.l, conf.u, pred.l, pred.u)
-    rownames(z) <- paste("P", 1:NROW(X), sep = "")
-    colnames(z) <- c("Predicted", "Conf lower", "Conf upper",
-		     "Pred lower", "Pred upper")
-    z
+    predictor + tt * cbind(Predicted=0,
+                           "Conf lower"=-stderr1, "Conf upper"=stderr1,
+                           "Pred lower"=-stderr2, "Pred upper"=stderr2)
 }
