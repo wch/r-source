@@ -103,10 +103,6 @@ Subject: cex/col/etc. in title(): documentation?
 From: Ben Bolker <ben@zoo.ufl.edu>
 Date: Mon, 22 Oct 2001 11:55:14 -0400 (EDT)
 --MM:actually the documentation still could elaborate a bit..
-* PR# 1554 *
-Subject: R-admin docs, Installing packages
-From: david.firth@nuffield.ox.ac.uk
-Date: Tue, 14 May 2002 17:13:14 +0200 (MET DST)
 * PR# 1582 *
 Subject: No documentation for class AsIs
 From: "David Kane  <David Kane" <a296180@mica.fmr.com>
@@ -488,10 +484,19 @@ Directory:  incoming
 Subject: lib.fixup, .GlobalEnv, and R1.5.0
 From: mark.bravington@csiro.au
 Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
-* PR# 1669 *
-Subject: minor quirk in rnbinom
-Subject: Re: [R] minor quirk in rnbinom
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Fri, 14 Jun 2002 18:49:24 +0200
-Date: Fri, 14 Jun 2002 18:47:59 +0200
+* PR# 1672 *
+Subject: [??????´º?º] ??~?ð?????© ?????¶°­°? µ??µ?? °?°?!! ????±? ???????? ??°?!!   
+From: "??¶???????´?..............."<erokorea17@hotmail.com>
+Date: Sat, 15 Jun 2002 17:08:44 -0600
+* PR# 1673 *
+Subject: Late Make Problem with Readline
+From: jerfox@stanford.edu
+Date: Sat, 15 Jun 2002 12:00:07 +0200 (MET DST)
+* PR# 1674 *
+Subject: ???? ¾?´? ???? ??µ??? 8°­ !!! [±¤°?]
+From: ????´???<mhpark@hananet.net>
+Date: Sat, 15 Jun 2002 12:45:33 +0200 (MET DST)
+* PR# 1675 *
+Subject: ¢????????? ????????[±?±???][±¤°?]
+From: ?º?¾?? <eunjw234@dreamwiz.com>
+Date: Tue, 16 Apr 2002 02:44:59 +0900
