@@ -170,7 +170,7 @@ function()
       "tetragamma", "pentagamma", "cumsum", "cumprod", "cummax", "cummin",
       "+", "-", "*", "/", "^", "%%", "%/%", "&", "|", "!", "==", "!=",
       "<", "<=", ">=", ">",
-      "all", "any", "sum", "prod", "man", "min", "range",
+      "all", "any", "sum", "prod", "max", "min", "range",
       "Arg", "Conj", "Im", "Mod", "Re"
       )
 }
@@ -307,7 +307,7 @@ function(package)
     ## @code{package} which 'look' like S3 methods, but are not.
     ## using package=NULL returns all known examples
     stopList <-
-        list(base = c("anova.lmlist",
+        list(base = c("all.names", "all.vars", "anova.lmlist",
              "boxplot.stats",
              "close.screen", "close.socket",
              "fitted.values",
@@ -315,6 +315,7 @@ function(package)
              "format.char", "format.info", "format.pval",
              "influence.measures",
              "kappa.tri",
+             "max.col",
              "plot.design", "plot.new", "plot.window", "plot.xy",
              "print.atomic", "print.coefmat",
              "rep.int",
