@@ -422,23 +422,28 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 		      int fill, SEXP stripwhite, int blskip)
 {
-    SEXP ans, new, old;
+    SEXP ans, new, old, w;
     char buffer[MAXELTSIZE];
     int blksize, c, i, ii, j, n, nc, linesread, colsread, strip, bch;
     int badline;
 
     nc = length(what);
+    if (!nc) {
+	    if (!ttyflag & !wasopen) con->close(con);
+	    error("empty `what=' specified");	
+    }
 
     if (maxlines > 0) blksize = maxlines;
     else blksize = SCAN_BLOCKSIZE;
 
     PROTECT(ans = allocVector(VECSXP, nc));
     for (i = 0; i < nc; i++) {
-	if (!isVector(VECTOR_ELT(what, i))) {
+	w = VECTOR_ELT(what, i);
+	if (!isVector(w)) {
 	    if (!ttyflag & !wasopen) con->close(con);
-	    error("\"scan\": invalid \"what=\" specified");
+	    error("invalid `what=' specified");
 	}
-	SET_VECTOR_ELT(ans, i, allocVector(TYPEOF(VECTOR_ELT(what, i)), blksize));
+	SET_VECTOR_ELT(ans, i, allocVector(TYPEOF(w), blksize));
     }
     setAttrib(ans, R_NamesSymbol, getAttrib(what, R_NamesSymbol));
 
