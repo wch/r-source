@@ -63,8 +63,11 @@ NEW FEATURES
 	guaranteed for user-supplied random-number generators, nor
 	when the standalone Rmath library is used.
 
-     o  New function constrOptim for optimisation under linear inequality
-        constraints
+     o  New function constrOptim() for optimisation under linear inequality
+        constraints.
+
+     o  if() and while() give a warning if called with a vector condition.
+
 
 INSTALLATION CHANGES
 
