@@ -49,7 +49,7 @@ winhelp-%:
 
 latex-%:
 	@$(MAKE) --no-print-directory -C $(RLIB)/$* -f $(RHOME)/src/gnuwin32/help/Makefile PKG=$* unzipit
-	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -latex $(PKGDIR)/$*
+	PERL5LIB=$(RHOME)/share/perl $(PERL) ../../../share/perl/build-help-windows.pl ${DOS} -latex $(PKGDIR)/$*
 
 clean:
 	$(RM) -fr *~ *.o *.obj *.dll *.def *.a
