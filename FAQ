@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-10-31
+Version 2.0.2004-11-03
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2476,6 +2476,10 @@ distributions of R.)
 
 *plotrix*
      Various useful functions for enhancing plots.
+
+*plugdensity*
+     Kernel density estimation with global bandwidth selection via
+     "plug-in".
 
 *pls.pcr*
      Multivariate regression by PLS and PCR.

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-10-31
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-03
 @set REL-VERSION 2.0.0
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2598,6 +2598,9 @@ Functions for import, export, plotting and other manipulations of
 bitmapped images.
 @item plotrix
 Various useful functions for enhancing plots.
+@item plugdensity
+Kernel density estimation with global bandwidth selection via
+``plug-in''.
 @item pls.pcr
 Multivariate regression by PLS and PCR.
 @c <COMMENT>
