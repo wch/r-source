@@ -284,10 +284,6 @@ Date: Fri, 26 Oct 2001 15:23:45 -0400
 Subject: x-axis label in persp()
 From: Rolf Turner <rolf@maths.uwa.edu.au>
 Date: Wed, 7 Nov 2001 18:07:22 +0800 (WST)
-* PR# 1207 *
-Subject: boxplot labels incorrect when horizontal = TRUE
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sun, 9 Dec 2001 21:46:32 -0500 (EST)
 * PR# 1235 *
 Subject: Axes labelling with logarithmic scales
 From: tobias.hoevekamp@ilw.agrl.ethz.ch
@@ -333,10 +329,6 @@ Date: Tue, 12 Nov 2002 13:50:44 +0200
 Subject: "trace" argument in legend()
 From: jerome@hivnet.ubc.ca
 Date: Mon, 24 Feb 2003 18:53:29 +0100 (MET)
-* PR# 2628 *
-Subject: cex.axis in boxplot
-From: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
-Date: Wed, 12 Mar 2003 17:27:34 +0100 (CET)
 * PR# 2630 *
 Subject: plot() with type="s" and lty=2
 From: jerome@hivnet.ubc.ca
@@ -349,15 +341,8 @@ Date: Sun, 25 May 2003 18:33:49 +0200
 Subject: inconsistent handling of NA lty
 From: paul@stat.auckland.ac.nz
 Date: Tue, 10 Jun 2003 01:23:42 +0200 (MET DST)
-* PR# 3504 *
-Subject: Incorrect tick mark length when `tck' != NA
-From: BoersN@pac.dfo-mpo.gc.ca
-Date: Thu, 17 Jul 2003 19:54:26 +0200 (MET DST)
-* PR# 3550 *
-Subject: bug?
-From: Yashaswini Mittal <mittal@math.arizona.edu>
-Date: Thu, 24 Jul 2003 10:28:34 -0700
-..problem is with legend()
+..The issue here is that the graphics engine sets lty to NA_INTEGER,
+..and no one told the device drivers to handle that case.
 
 Directory:  In-Out
 
@@ -826,3 +811,51 @@ Date: Mon, 01 Sep 03 03:09:15 GMT
 Subject: Largest Govt. Sponsored Free Loan Program
 From: "Norbert Belanger" <gmje42@dasher.net>
 Date: Sun, 31 Aug 03 16:21:30 GMT
+* PR# 4030 *
+Subject: Satisfy your lover with an increased penis size  charon
+From: "Cindy Holman" <42dt67ffmm2@cnnb.net>
+Date: Mon, 01 Sep 03 03:57:08 GMT
+* PR# 4031 *
+Subject: Thank you!
+From: <70760.3134@compuserve.com>
+Date: Mon, 1 Sep 2003 5:21:13 --0700
+* PR# 4032 *
+Subject: (광고)세스영어.,이벤트/무료샘플,무료배송!
+From: 경품정보<mnbvc748596@yahoo.co.kr>
+Date: Mon, 1 Sep 2003 13:16:49 +0900
+* PR# 4033 *
+Subject: BE OUR AGENT
+From: "DR. MARCUS COLE" <drmarcole@indiatimes.com>
+Date: Mon, 1 Sep 2003 04:06:32 +0200
+* PR# 4034 *
+Subject: (광고)외국어 이젠 할리/미즈노/보챙과 함께하세요(무료증정)
+From: 아이센스<5454tygfd@hotmail.com>
+Date: Mon, 1 Sep 2003 20:36:10 +0900
+* PR# 4035 *
+Subject: URGENT
+From: dianedlamini200@netscape.net
+Date: Mon, 1 Sep 2003 04:19:29 +0200
+* PR# 4036 *
+Subject: From Blaise Bouguiba Samuel
+From: "From Bouguiba Samuel Blaise" <sa_guiba101@simbamail.fm>
+Date: Sat, 19 Apr 2003 09:27:00 +0400
+* PR# 4039 *
+Subject: Re: Approved
+From: <rweisgerber@mtroyal.ab.ca>
+Date: Mon, 1 Sep 2003 20:50:25 +0200
+* PR# 4042 *
+Subject: Re: Wicked screensaver
+From: <pilott38@aol.com>
+Date: Mon, 1 Sep 2003 21:40:22 --0700
+* PR# 4043 *
+Subject: Re: [R] File Reading Problem
+From: Duncan Murdoch <dmurdoch@pair.com>
+Date: Mon, 01 Sep 2003 16:32:26 -0400
+* PR# 4044 *
+Subject: Re: [R] File Reading Problem
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 01 Sep 2003 22:55:20 +0200
+* PR# 4045 *
+Subject: Sincere Regards,
+From: "Michael Stevens Junior." <michael_stevensj@yahoo.co.uk>
+Date: Sun, 8 Sep 2002 02:34:20 +0200
