@@ -9,4 +9,4 @@ libs:
 clean:
 	@echo Cleaning in library..
 	@sh LIBCLEAN
-	@rm LIBSETUP LIBCLEAN
+	@rm LIBCLEAN
