@@ -63,9 +63,16 @@ install: installdirs
 	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(rhome)/bin/R
 	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R
-	@for f in `ls bin/* | grep -v '^bin/R\**$$' \
-	                    | grep -v '^bin/R.bin\**$$'`; do \
-	  $(INSTALL) $${f} $(rhome)/bin; \
+	@if test -n "$(R_GUIS)"; then \
+	  for g in $(R_GUIS); do \
+	    $(INSTALL_PROGRAM) bin/R_$${g}.$(SHLIBEXT) $(rhome)/bin; \
+	  done; \
+	fi
+	@for f in `find bin -type f -print \
+	             | grep -v '^bin/R' \
+	             | grep -v '^bin/R_' \
+	             | grep -v '^bin/R.bin'`; do \
+	  $(INSTALL_SCRIPT) $${f} $(rhome)/bin; \
 	done
 	@echo "installing headers ..."
 	@for f in include/*.h; do \
