@@ -24,6 +24,9 @@ window(x, start, end, frequency, deltat)
     The default method applies to objects with a \code{\link{tsp}}
     attribute, or vectors or matrices (which are assumed to have
     been observed at times \code{1} to \code{NROW(x)}).
+
+    The start and end times are \emph{rounded} to the nearest sampling
+    time. This is for S compatibility.
 }
 \value{
     An object with a \code{tsp} attribute, and with class that of the

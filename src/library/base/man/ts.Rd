@@ -7,7 +7,7 @@ as.ts(x)
 is.ts(x)
 
 print(ts.obj, calendar, ...)
-plot(ts.obj, ...)
+plot(ts.obj, plot.type=c("multiple", "single"), ...)
 lines(ts.obj, ...)
 }
 \alias{ts}
@@ -37,6 +37,11 @@ lines(ts.obj, ...)
     \item{calendar}{enable/disable the display of information about
 	month names, quarter names or year when printing. The default is
 	\code{TRUE} for a frequency of 4 or 12, \code{FALSE} otherwise.}
+
+    \item{plot.type}{for multivariate time series, should the series by
+	plotted separately (with a common time axis) or on a single
+	plot?}
+    \item{\dots}{additional arguments to print or plot.}
 }
 \description{
     The function \code{ts} is used to create time-series objects.  These
@@ -83,7 +88,9 @@ gnp <- ts(cumsum(1 + round(rnorm(100), 2)),
 plot(gnp) # using `plot.ts' for time-series plot
 
 ## Multivariate
- z <- ts(matrix(rnorm(300),100,3), start=c(1961,1), frequency=12)
+z <- ts(matrix(rnorm(300),100,3), start=c(1961,1), frequency=12)
+plot(z)
+plot(z, plot.type="single", lty=1:3)
 \testonly{
 ts(1:5, start=2, end=4) # truncate
 ts(1:5, start=3, end=17)# repeat
@@ -95,7 +102,7 @@ all(z-z == 0)
 data(nhtemp)
 plot(nhtemp, c(nhtemp[-1],NA), cex = .8, col="blue",
      main="Lag plot of New Haven temperatures")
-## a better way to do this would be
+## a clearer way to do this would be
 \dontrun{library(ts)
 plot(nhtemp, lag(nhtemp,1), cex = .8, col="blue",
      main="Lag plot of New Haven temperatures")

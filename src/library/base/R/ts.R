@@ -157,18 +157,24 @@ print.ts <- function(x, calendar, ...)
     if(NCOL(x) == 1) { # could be 1-col matrix
         if(calendar) {
             if(fr.x > 1) {
-                start.pad <- start(x)[2] - 1
-                end.pad <- fr.x - end(x)[2]
-                dn1 <- start(x)[1]:end(x)[1]
                 dn2 <-
-                    if(fr.x == 12)	month.abb
+                    if(fr.x == 12) month.abb
                     else if(fr.x == 4) {
-                        dn1 <- paste(dn1, ":" , sep = "")
                         c("Qtr1", "Qtr2", "Qtr3", "Qtr4")
                     } else paste("p", 1:fr.x, sep = "")
-                x <- matrix(c(rep(NA, start.pad), x,
-                              rep(NA, end.pad)), nc =  fr.x, byrow = TRUE,
-                            dimnames = list(dn1, dn2))
+                if(NROW(x) <= fr.x) { # not more than one period
+                    dn1 <- start(x)[1]
+                    dn2 <- dn2[1 + (start(x)[2] - 2 + seq(along=x))%%fr.x]
+                    x <- matrix(format(x, ...), nrow = 1 , byrow = TRUE,
+                                dimnames = list(dn1, dn2))
+                } else { # more than one period
+                    start.pad <- start(x)[2] - 1
+                    end.pad <- fr.x - end(x)[2]
+                    dn1 <- start(x)[1]:end(x)[1]
+                    x <- matrix(c(rep("", start.pad), format(x, ...),
+                                  rep("", end.pad)), nc =  fr.x, byrow = TRUE,
+                                dimnames = list(dn1, dn2))
+                }
             } else { ## fr.x == 1
                 tx <- time(x)
                 attributes(x) <- NULL
@@ -178,7 +184,7 @@ print.ts <- function(x, calendar, ...)
             header(x)
             attr(x, "class") <- attr(x, "tsp") <- NULL
         }
-    } else { # matrix
+    } else { # multi-column matrix
         if(calendar && fr.x > 1) {
             tm <- time(x)
             t2 <- 1 + floor(fr.x*(tm %%1))
@@ -198,7 +204,7 @@ print.ts <- function(x, calendar, ...)
         }
         attr(x, "class") <- attr(x, "tsp") <- NULL
     }
-    NextMethod("print", ...)
+    NextMethod("print", x, quote = FALSE, right = TRUE, ...)
     invisible(x.orig)
 }
 
@@ -207,10 +213,16 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL, xlab =
           "Time", ylab, log = "", col = par("col"), bg = NA, pch =
           par("pch"), cex = par("cex"), lty = par("lty"), lwd =
           par("lwd"), axes = TRUE, frame.plot = axes, ann = par("ann"),
-          main = NULL, ...)
+          main = NULL, plot.type = c("multiple", "single"), ...)
 {
     xlabel <- if (!missing(x)) deparse(substitute(x)) else NULL
     ylabel <- if (!missing(y)) deparse(substitute(y)) else NULL
+    plot.type <- match.arg(plot.type)
+    if(plot.type == "multiple" && NCOL(x) > 1) {
+        m <- match.call()
+        m[[1]] <- as.name("plot.mts")
+        return(eval(m, parent.frame()))
+    }
     x <- as.ts(x)
     if(!is.null(y)) {
 	## want ("scatter") plot of y ~ x
@@ -268,6 +280,55 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL, xlab =
 
 lines.ts <- function(x, ...)
     lines.default(time(as.ts(x)), x, ...)
+
+plot.mts <- function (x, plot.type = c("multiple", "single"),
+                      log = "", col = par("col"),  bg = NA, pch = par("pch"),
+                      cex = par("cex"), lty = par("lty"), lwd = par("lwd"),
+                      ann = par("ann"),  xlab = "Time", main=NULL,
+                      oma=c(6, 0, 5, 0),...)
+{
+    addmain <- function(main, cex.main=par("cex.main"),
+                        font.main=par("font.main"),
+                        col.main=par("col.main"), ...)
+    {
+            mtext(main, 3, 3, cex=cex.main, font=font.main, col=col.main, ...)
+    }
+    plot.type <- match.arg(plot.type)
+    nser <- NCOL(x)
+    if(plot.type == "single" || nser == 1) {
+        m <- match.call()
+        m[[1]] <- as.name("plot.ts")
+        m$plot.type <- "single"
+        return(eval(m, parent.frame()))
+    }
+    if(nser > 10) stop("Can't plot more than 10 series")
+    if(is.null(main)) main <- deparse(substitute(x))
+    nm <- colnames(x)
+    if(is.null(nm)) nm <- paste("Series", 1:nser)
+    nc <- if(nser >  4) 2 else 1
+    oldpar <- par("mar", "oma", "mfcol")
+    on.exit(par(oldpar))
+    par(mar = c(0, 5.1, 0, 2.1), oma = oma)
+    nr <- ceiling(nser %/% nc)
+    par(mfcol = c(nr, nc))
+    for(i in 1:nser) {
+        plot(x[, i], axes = F, xlab="", ylab="",
+             log = log, col = col, bg = bg, pch = pch, ann = ann,
+             ...)
+        box()
+        axis(2, xpd=NA)
+        mtext(nm[i], 2, 3)
+        if(i%%nr==0 || i==nser) axis(1, xpd=NA)
+    }
+    if(ann) {
+        mtext(xlab, 1, 3, ...)
+        if(!is.null(main)) {
+            par(mfcol=c(1,1))
+            addmain(main, ...)
+        }
+    }
+    invisible()
+}
 
 window.default <- function(x, start = NULL, end = NULL,
                            frequency = NULL, deltat = NULL, ...)
