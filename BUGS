@@ -343,3 +343,7 @@ Date: Sat, 27 Nov 1999 17:03:53 CET (+0100)
 Subject: rstandard forgotten?
 From: Rashid Nassar <rnassar@duke.edu>
 Date: Sat, 27 Nov 1999 12:41:09 -0500 (EST)
+* PR# 351 *
+Subject: rbind crash
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Mon, 29 Nov 1999 15:53:10 +0100 (MET)
