@@ -10,7 +10,7 @@ if(nchar(Sys.getenv("R_PAPERSIZE")) > 0) {
         options(papersize = "letter")
     else options(papersize = "a4")
 }
-options(device="windows")
+if(interactive()) options(device="windows") else options(device = "postscript")
 options(graphics.record=FALSE)
 options(editor="notepad")
 if(any(grep("--ess", commandArgs()))) options(pager="console") else options(pager="internal")
