@@ -262,7 +262,7 @@ NEW FEATURES
     o   save() now takes an envir argument for specifying where items to
 	be saved are to be found.
 
-    o   save() now takes a version argument to specify the worspace file
+    o   save() now takes a version argument to specify the workspace file
         format version to use.  This is in preparation for a change in
         the default format.
 
@@ -336,6 +336,8 @@ BUG FIXES
 
     o	sink.number was (accidentally) returning the result invisibly.
 
+    o	as.POSIXct("NA") (or ..lt) now work; hence, merge(*, all=TRUE) now
+	works with dataframes containing POSIXt date columns.
 
 
 	**************************************************

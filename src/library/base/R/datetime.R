@@ -7,7 +7,14 @@ as.POSIXlt <- function(x, tz = "")
 {
     fromchar <- function(x) {
 	xx <- x[1]
-	if(!is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%S")) ||
+        if(is.na(xx)) {
+            j <- 1
+            while(is.na(xx) && (j <- j+1) <= length(x))
+                xx <- x[j]
+            if(is.na(xx)) f <- "%Y-%m-%d" # all NAs
+        }
+	if(is.na(xx) ||
+           !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%S")) ||
 	   !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%S")) ||
 	   !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M")) ||
 	   !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M")) ||
@@ -24,6 +31,7 @@ as.POSIXlt <- function(x, tz = "")
     if(inherits(x, "POSIXlt")) return(x)
     if(inherits(x, "date") || inherits(x, "dates")) x <- as.POSIXct(x)
     if(is.character(x)) return(fromchar(x))
+    if(is.factor(x))	return(fromchar(as.character(x)))
     if(!inherits(x, "POSIXct"))
 	stop(paste("Don't know how to convert `", deparse(substitute(x)),
 		   "' to class \"POSIXlt\"", sep=""))
@@ -64,9 +72,10 @@ as.POSIXct.POSIXlt <- function(x, tz = "")
 as.POSIXct.default <- function(x, tz = "")
 {
     if(inherits(x, "POSIXct")) return(x)
-    if(is.character(x)) return(as.POSIXct(as.POSIXlt(x), tz))
+    if(is.character(x) || is.factor(x))
+	return(as.POSIXct(as.POSIXlt(x), tz))
     stop(paste("Don't know how to convert `", deparse(substitute(x)),
-               "' to class \"POSIXct\"", sep=""))
+	       "' to class \"POSIXct\"", sep=""))
 }
 
 format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)

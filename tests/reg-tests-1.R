@@ -277,6 +277,12 @@ stopifnot(is.na(m[4, 2]))
 ## was level NA in 1.3.1
 stopifnot(!is.na(m[1, 2]))
 
+## merging with POSIXct columns:
+x <- data.frame(a = as.POSIXct(Sys.time() + (1:3)*10000), b = LETTERS[1:3])
+y <- data.frame(b = LETTERS[3:4], c = 1:2)
+stopifnot(1 == nrow(merge(x, y)))
+stopifnot(4 == nrow(merge(x, y, all = TRUE)))
+
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {
