@@ -438,19 +438,12 @@ SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* (if it is vectorizable). We could probably be fairly */
 /* clever with memory here if we wanted to. */
 
-SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP lengthgets(SEXP x, int len)
 {
-    int len, lenx, i;
-    SEXP rval, x, names, xnames, t;
-    checkArity(op, args);
-    x = CAR(args);
+    int lenx, i;
+    SEXP rval, names, xnames, t;
     if (!isVector(x) && !isVectorizable(x))
-	error("length<- invalid first argument");
-    if (length(CADR(args)) != 1)
-	error("length<- invalid second argument");
-    len = asInteger(CADR(args));
-    if (len == NA_INTEGER)
-	error("length<- missing value for length");
+	error("can not set length of non-vector");
     lenx = length(x);
     if (lenx == len)
 	return (x);
@@ -522,6 +515,24 @@ SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return rval;
 }
+
+
+SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int len;
+    SEXP x;
+    checkArity(op, args);
+    x = CAR(args);
+    if (!isVector(x) && !isVectorizable(x))
+       error("length<- invalid first argument");
+    if (length(CADR(args)) != 1)
+       error("length<- invalid second argument");
+    len = asInteger(CADR(args));
+    if (len == NA_INTEGER)
+       error("length<- missing value for length");
+    return lengthgets(x, len);
+}
+
 
 
 /* For switch, evaluate the first arg, if it is a character then try */

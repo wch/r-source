@@ -336,6 +336,7 @@ extern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 #define lastElt			Rf_lastElt
 #define lcons			Rf_lcons
 #define length(x)		Rf_length(x)
+#define lengthgets		Rf_lengthgets
 #define list1			Rf_list1
 #define list2			Rf_list2
 #define list3			Rf_list3
@@ -510,6 +511,7 @@ SEXP lang4(SEXP, SEXP, SEXP, SEXP);
 SEXP lastElt(SEXP);
 SEXP lcons(SEXP, SEXP);
 int length(SEXP);
+SEXP lengthgets(SEXP, int);
 SEXP list1(SEXP);
 SEXP list2(SEXP, SEXP);
 SEXP list3(SEXP, SEXP, SEXP);
