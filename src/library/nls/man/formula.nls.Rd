@@ -1,9 +1,9 @@
-% $Id: formula.nls.Rd,v 1.5 2001/08/16 09:24:26 ripley Exp $
+% $Id: formula.nls.Rd,v 1.5.10.1 2003/06/12 11:30:10 ripley Exp $
 \name{formula.nls}
 \alias{formula.nls}
 \title{Extract Model Formula from nls Object}
 \usage{
-\method{formula}{nls}(x, ...)
+\method{formula}{nls}(x, \dots)
 }
 \arguments{
  \item{x}{an object inheriting from class \code{nls}, representing

@@ -8,9 +8,8 @@
   way that \code{\link{with}} is related to \code{\link{attach}}.
 }
 \usage{
-capture.output(..., file = NULL, append = FALSE)
+capture.output(\dots, file = NULL, append = FALSE)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{\dots}{Expressions to be evaluated}
   \item{file}{A file name or file connection, or \code{NULL} to return

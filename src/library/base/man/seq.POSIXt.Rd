@@ -5,7 +5,7 @@
   The method for \code{\link{seq}} for data-time classes.
 }
 \usage{
-\method{seq}{POSIXt}(from, to, by, length.out=NULL, along.with=NULL, ...)
+\method{seq}{POSIXt}(from, to, by, length.out=NULL, along.with=NULL, \dots)
 }
 \arguments{
   \item{from}{starting date. Required}

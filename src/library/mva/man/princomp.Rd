@@ -7,9 +7,9 @@
 \alias{predict.princomp}
 \title{Principal Components Analysis}
 \usage{
-\method{princomp}{formula}(formula, data = NULL, subset, na.action, ...)
+\method{princomp}{formula}(formula, data = NULL, subset, na.action, \dots)
 \method{princomp}{default}(x, cor = FALSE, scores = TRUE, covmat = NULL,
-         subset = rep(TRUE, nrow(as.matrix(x))), ...)
+         subset = rep(TRUE, nrow(as.matrix(x))), \dots)
 }
 \arguments{
   \item{formula}{a formula with no response variable.}

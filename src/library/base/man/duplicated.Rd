@@ -15,8 +15,8 @@ duplicated(x, incomparables = FALSE, ...)
 \method{duplicated}{array}(x, incomparables = FALSE, MARGIN = 1, ...)
 }
 \usage{
-duplicated(x, incomparables = FALSE, ...)
-duplicated.array(x, incomparables = FALSE, MARGIN = 1, ...)
+duplicated(x, incomparables = FALSE, \dots)
+duplicated.array(x, incomparables = FALSE, MARGIN = 1, \dots)
 }
 \arguments{
   \item{x}{an atomic vector or a data frame or an array.}

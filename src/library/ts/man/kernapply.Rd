@@ -13,7 +13,7 @@ kernapply.vector(x, k, circular = FALSE, ...)
 kernapply.tskernel(x, k2, ...)
 }
 \usage{
-kernapply(x, k, circular = FALSE, ...) 
+kernapply(x, k, circular = FALSE, \dots) 
 kernapply(k1, k2)
 }
 \arguments{

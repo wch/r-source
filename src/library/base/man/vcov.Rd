@@ -20,7 +20,7 @@ vcov(object, \dots)
   \item{object}{
     a fitted model object.
   }
-  \item{...}{
+  \item{\dots}{
     additional arguments for method functions.  For the
     \code{\link{glm}} method this can be used to pass a
     \code{dispersion} parameter.

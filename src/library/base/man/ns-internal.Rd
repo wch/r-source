@@ -20,7 +20,7 @@ getNamespaceInfo(ns, which)
 importIntoEnv(impenv, impnames, expenv, expnames)
 isBaseNamespace(ns)
 namespaceExport(ns, vars)
-namespaceImport(self, ...)
+namespaceImport(self, \dots)
 namespaceImportFrom(self, ns, vars)
 packageHasNamespace(package, package.lib)
 parseNamespaceFile(package, package.lib, mustExist = TRUE)
@@ -43,7 +43,7 @@ setNamespaceInfo(ns, which, val)
   \item{envir}{environment.}
   \item{which}{character.}
   \item{val}{any object.}
-  \item{...}{character arguments.}
+  \item{\dots}{character arguments.}
 }
 \description{
   Internal name space support functions.  Not intended to be called directly.

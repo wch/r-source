@@ -14,7 +14,7 @@ arima0(x, order = c(0, 0, 0),
        transform.pars = TRUE, fixed = NULL, init = NULL,
        method = c("ML", "CSS"), n.cond, optim.control = list())
 
-\method{predict}{arima0}(object, n.ahead = 1, newxreg, se.fit = TRUE, ...)
+\method{predict}{arima0}(object, n.ahead = 1, newxreg, se.fit = TRUE, \dots)
 }
 \arguments{
   \item{x}{a univariate time series}

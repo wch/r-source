@@ -3,7 +3,7 @@
 \title{Estimate Spectral Density of a Time Series from AR Fit}
 \usage{
 spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action = na.fail,
-        method = "yule-walker", ...)
+        method = "yule-walker", \dots)
 }
 \arguments{
   \item{x}{A univariate (not yet:or multivariate) time series or the

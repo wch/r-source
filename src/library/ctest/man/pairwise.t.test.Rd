@@ -1,13 +1,12 @@
 \name{pairwise.t.test}
 \alias{pairwise.t.test}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Pairwise t tests}
 \description{
  Calculate pairwise comparisons between group levels with corrections
  for multiple testing 
 }
 \usage{
-pairwise.t.test(x, g, p.adjust.method=p.adjust.methods, pool.sd=TRUE, ...)
+pairwise.t.test(x, g, p.adjust.method=p.adjust.methods, pool.sd=TRUE, \dots)
 }
 \arguments{
  \item{x}{ Response vector }

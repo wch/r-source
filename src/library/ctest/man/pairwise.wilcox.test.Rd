@@ -7,9 +7,8 @@
  for multiple testing 
 }
 \usage{
-pairwise.wilcox.test(x, g, p.adjust.method=p.adjust.methods, ...)
+pairwise.wilcox.test(x, g, p.adjust.method=p.adjust.methods, \dots)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
  \item{x}{ Response vector }
  \item{g}{ Grouping vector or factor }
@@ -29,4 +28,4 @@ pairwise.wilcox.test(Ozone, Month)
 pairwise.wilcox.test(Ozone, Month, p.adj = "bonf")
 detach()
 }
-\keyword{ htest }%-- one or more ...
+\keyword{ htest }

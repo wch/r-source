@@ -6,7 +6,7 @@
   file systems.
 }
 \usage{
-file.info(...)
+file.info(\dots)
 }
 \arguments{
   \item{\dots}{character vectors containing file names.}

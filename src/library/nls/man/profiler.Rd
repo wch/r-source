@@ -1,9 +1,9 @@
-% $Id: profiler.Rd,v 1.4 2000/06/27 22:26:18 pd Exp $
+% $Id: profiler.Rd,v 1.4.22.1 2003/06/12 11:30:10 ripley Exp $
 \name{profiler}
 \alias{profiler}
 \title{ Constructor for Profiler Objects for Nonlinear Models}
 \usage{
-profiler(fitted, ...)
+profiler(fitted, \dots)
 }
 \arguments{
  \item{fitted}{ the original fitted model object.}

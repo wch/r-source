@@ -14,8 +14,8 @@ unique(x, incomparables = FALSE, ...)
 \method{unique}{array}(x, incomparables = FALSE, MARGIN = 1, ...)
 }
 \usage{
-unique(x, incomparables = FALSE, ...)
-unique.array(x, incomparables = FALSE, MARGIN = 1, ...)
+unique(x, incomparables = FALSE, \dots)
+unique.array(x, incomparables = FALSE, MARGIN = 1, \dots)
 }
 \arguments{
   \item{x}{an atomic vector or a data frame or an array.}

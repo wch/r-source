@@ -10,7 +10,7 @@
 }
 \usage{
 \method{quantile}{default}(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
-         names = TRUE, ...)
+         names = TRUE, \dots)
 }
 \arguments{
   \item{x}{numeric vectors whose sample quantiles are wanted.}

@@ -6,7 +6,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
       parametric = FALSE, drop.square = FALSE, normalize = TRUE,
       family = c("gaussian", "symmetric"),
       method = c("loess", "model.frame"),
-      control = loess.control(...), ...)
+      control = loess.control(\dots), \dots)
 }
 \alias{loess}
 %\alias{anova.loess}

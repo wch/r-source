@@ -23,7 +23,7 @@ Plot ridge functions for projection pursuit regression fit.
   \item{type}{
     the type of line to draw
   }
-  \item{...}{
+  \item{\dots}{
     further graphical parameters
   }
 }
