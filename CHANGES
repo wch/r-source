@@ -2,12 +2,26 @@
 
 NEW FEATURES
 
+    o   Old-style long command line options (`-save' etc) changed to
+	GNU-style (`--save' etc).
+	Debugging options (`-ddd', `-gdb', `-xxgdb') unified into the
+	new `--debugger' (`-d').
+	New command line options `--version' (`-V') and `--help' (`-h')
+	which print useful information and exit.
+
+    o	The loading of profiles at startup now works as follows.
+	Unless the new `--no-site-file' was given, a site profile is
+	sought (as specified via the environment variable `RPROFILE',
+	or if this is unset defaulting to `${RHOME}/etc/Rprofile'.
+	Then, unless the new `--no-init-file' was given, the user
+	profiles (`.Rprofile' and `~/.Rprofile') are sought.
+
     o   New functions subset() and transform() intended primarily to
 	make life with dataframes easier. 
 
     o   The graphics system has been through a major overhaul.
 	It is now possible to have multiple active device drivers
-	and to control them with full suite of dev.xxx functions
+	and to control them with full suite of dev.xxx() functions
 	available in S.  Display lists are now kept for interactive
 	devices.  When an on-screen graphics window is resized,
 	the content of that window is redrawn at the new size.
@@ -23,15 +37,15 @@ NEW FEATURES
     o   Some of the t, F, and chisq distribution/probability functions
 	now allow a noncentrality parameter `ncp'.
 
-    o   Functions ptukey and qtukey provide the distribution and
+    o   Functions ptukey() and qtukey() provide the distribution and
 	quantile functions for the maximum of several studentized
 	ranges.
 
     o   system.file()  [now documented] returns all files matched by
 	wildcards.
 
-    o   data() now supports the new .tab file format, for
-	data to be read by  read.table(file, header=TRUE).
+    o   data() now supports the new .tab file format, for data to be
+	read by `read.table(file, header=TRUE)'. 
 
     o	Rdconv: new tabular environment, new sections `\format' and
         `\source', new output format `-type Sd' for S documentation
@@ -50,17 +64,18 @@ NEW FEATURES
 	corr. = FALSE  which is consistent with  summary.lm().
 	predict() now works again for glm objects.
 
-    o   the 'flag' argument in formatC(.) can now have more than one character.
+    o   the `flag' argument in formatC(.) can now have more than one
+	character.
 
     o	nlm() returns the number of iterations used [from J.Lindsey].
 
     o	cut, diff, hist, mean, quantile, seq, trunc()  are now all generic.
-	cut() has a 'include.lowest' argument as S.
+	cut() has an `include.lowest' argument as S.
 
-    o	save.image() as short-cut to save the current session in .RData
+    o	save.image() as short-cut to save the current session in .RData.
 
     o   new design of HTML help pages, including an index of all
-        functions from all installed packages
+	functions from all installed packages.
 
 
 BUG FIXES
