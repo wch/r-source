@@ -29,14 +29,15 @@ plot.stepfun(Fn, x, xlim, xlab = "x", ylab = "f(x)", main = NULL,
 \description{
   Method of the generic \code{\link{plot}} for \code{\link{stepfun}}
   objects and utility for plotting piecewise constant functions.
-
 }
 \value{
   A list with two components
   \item{t}{abscissa (x) values, including the two outermost ones.}
   \item{y}{y values `in between' the \code{t[]}.}
 }
-\seealso{\code{\link{ecdf}} for empricial distribution functions as
+\author{Martin Maechler \email{<maechler@stat.math.ethz.ch>}, 1990,
+    1993; ported to \R, 1997.}
+\seealso{\code{\link{ecdf}} for empirical distribution functions as
   special step functions,
   \code{\link{approxfun}} and \code{\link{splinefun}}.
 }
