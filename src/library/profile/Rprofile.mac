@@ -6,7 +6,7 @@ options(papersize = "a4")
 options(device="macintosh")
 options(editor="macintosh")
 options(pager="macintosh")
-options(unzip="mac.unzip")
+options(unzip="internal")
 options(mailer="none")
 
 MacRoman <- 0:255
@@ -32,3 +32,4 @@ WinAnsi <- as.integer(c(0:126, 32, 219, 32, 226, 196, 227, 201, 160,
 136, 135, 137, 139, 138, 140, 190, 141, 143, 142, 144, 145, 147, 146,
 148, 149, 32, 150, 152, 151, 153, 155, 154, 214, 191, 157, 156, 158,
 159, 32, 32, 216))
+
