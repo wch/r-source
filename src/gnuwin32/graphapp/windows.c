@@ -672,3 +672,18 @@ int ismdi() {
  return (hwndClient!=NULL);
 }
 
+PROTECTED
+rect GetCurrentWinPos(object obj)
+{
+    rect r;
+    WINDOWPLACEMENT W;
+
+    if (! obj || obj->kind != WindowObject) return rect(0,0,0,0);
+    W.length = sizeof(WINDOWPLACEMENT);
+    GetWindowPlacement(obj->handle, &W);
+    r.x = W.rcNormalPosition.left;
+    r.y = W.rcNormalPosition.top;
+    r.width = W.rcNormalPosition.right - r.x;
+    r.height = W.rcNormalPosition.bottom - r.y;
+    return r;
+}

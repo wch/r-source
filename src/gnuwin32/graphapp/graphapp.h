@@ -488,6 +488,7 @@ void	drawbrighter(image img, rect dr, rect sr);
 window	newwindow(char *name, rect r, long flags);
 void	show(window w);
 void	hide(window w);
+rect    GetCurrentWinPos(window obj);
 
 /*
  *  Window creation flags.

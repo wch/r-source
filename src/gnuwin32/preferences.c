@@ -375,6 +375,7 @@ static void cSDI(button b)
 void Rgui_configure()
 {
     char buf[100], *style;
+    rect r;
     ConsoleData p = (ConsoleData) getdata(RConsole);
 
     wconfig = newwindow("Rgui Configuration Editor", rect(0, 0, 550, 400),
@@ -445,11 +446,12 @@ void Rgui_configure()
     c_resize = newcheckbox("set options(width) on resize?", 
 			   rect(50, 175, 200, 20), NULL);
     if(setWidthOnResize) check(c_resize);
-    l_cx = newlabel("Initial x", rect(270, 175, 70, 20), AlignLeft);
-    sprintf(buf, "%d", consolex);
+    r = GetCurrentWinPos(RConsole);
+    l_cx = newlabel("Initial left", rect(270, 175, 70, 20), AlignLeft);
+    sprintf(buf, "%d", r.x);
     f_cx = newfield(buf, rect(350, 175, 40, 20));
-    l_cy = newlabel("y", rect(450, 175, 30, 20), AlignLeft);
-    sprintf(buf, "%d", consoley);
+    l_cy = newlabel("top", rect(430, 175, 30, 20), AlignLeft);
+    sprintf(buf, "%d", r.y);
     f_cy = newfield(buf, rect(480, 175, 40, 20));
 
 /* Pager size */
