@@ -39,7 +39,7 @@ use Text::DelimMatch;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.82 $ ';
+my $revision = ' $Revision: 1.83 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -268,7 +268,7 @@ sub check_pkg {
     ##   755.  This includes `.' and src.
     ## Given time, the above could be implemented.
 
-    if($opt_perms && ($OS eq "unix")) {
+    if($opt_perms && ($R_OSTYPE eq "unix")) {
 	$log->checking("for sufficient/correct file permissions");
 	my @badfiles = ();
 	my @excludepatterns = ("^.Rbuildignore\$", "\~\$", "\\.swp\$",
@@ -559,7 +559,7 @@ sub check_pkg {
     if(-d "man") {
 	$log->checking("Rd files");
 	my @rdfiles = &list_files_with_exts("man", "[Rr]d");
-	my $manOSdir = &file_path("man", $OS);
+	my $manOSdir = &file_path("man", $R_OSTYPE);
 	if(-d $manOSdir) {
 	    @rdfiles = (@rdfiles,
 			&list_files_with_exts($manOSdir, "[Rr]d"));
@@ -628,7 +628,7 @@ sub check_pkg {
 	    my $text = "";
 	    ## Read the Rd file via Rdpp, and get rid of the \alias
 	    ## entries as these may have unbalanced braces (Paren.Rd).
-	    my @lines = split(/\n/, &Rdpp($rdfile, $OS));
+	    my @lines = split(/\n/, &Rdpp($rdfile, $R_OSTYPE));
 	    foreach my $line (@lines) {
 		$text .= "\n$line" unless ($line =~ /^\\alias/);
 	    }
