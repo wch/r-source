@@ -79,6 +79,9 @@ BUG FIXES
     o	pcauchy(x, .., log.p) is now more accurate for large x,
 	particularly when log.p = TRUE	(PR#6756).
 
+    o	pgeom(q, prob, lower.tail, log.p) is now (sometimes much) more
+	accurate when prob is very small (PR#6792).
+
     o	makeARIMA() was not handling an ARMA(0, 0) model correctly.
 
     o	as.Date() was failing on factors.  (PR#6779)
@@ -92,7 +95,8 @@ BUG FIXES
 	(PR#6781, not needed for its primary use in read.table.)
 
     o	src/modules/X11/dataentry.c would not build on some XFree
-	4.4.0 systems.
+	4.4.0 systems.  (This is a bug in their header files but we have
+	added a workaround.)
 
 
 
