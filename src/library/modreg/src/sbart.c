@@ -80,8 +80,8 @@ void F77_SUB(sbart)
    xwy			X'Wy
    hs0,hs1,hs2,hs3	the diagonals of the X'WX matrix
    sg0,sg1,sg2,sg3	the diagonals of the Gram matrix SIGMA
-   abd(ld4,nk)		[ X'WX + lambda*SIGMA ] in diagonal form
-   p1ip(ld4,nk)	inner products between columns of L inverse
+   abd (ld4,nk)		[ X'WX + lambda*SIGMA ] in diagonal form
+   p1ip(ld4,nk)		inner products between columns of L inverse
    p2ip(ldnk,nk)	all inner products between columns of L inverse
                         where  L'L = [X'WX + lambda*SIGMA]  NOT REFERENCED
 */
