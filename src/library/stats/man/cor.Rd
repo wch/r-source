@@ -2,8 +2,13 @@
 \title{Correlation, Variance and Covariance (Matrices)}
 \usage{
 var(x, y = NULL, na.rm = FALSE, use)
-cov(x, y = NULL, use = "all.obs", method = c("pearson", "kendall", "spearman"))
-cor(x, y = NULL, use = "all.obs", method = c("pearson", "kendall", "spearman"))
+
+cov(x, y = NULL, use = "all.obs",
+    method = c("pearson", "kendall", "spearman"))
+
+cor(x, y = NULL, use = "all.obs",
+     method = c("pearson", "kendall", "spearman"))
+
 cov2cor(V)
 }
 \alias{var}
@@ -64,7 +69,7 @@ cov2cor(V)
   The denominator \eqn{n - 1} is used which gives an unbiased estimator
   of the (co)variance for i.i.d. observations.
   These functions return \code{\link{NA}} when there is only one
-  observation (whereas S-plus has been returning \code{NaN}), and %from \R 1.2.3
+  observation (whereas S-PLUS has been returning \code{NaN}), and %from \R 1.2.3
   fail if \code{x} has length zero.
 
   For \code{cor()}, if \code{method} is \code{"kendall"} or
@@ -91,9 +96,11 @@ cov2cor(V)
 }
 \seealso{
   \code{\link{cor.test}} (package \pkg{ctest}) for confidence
-  intervals (and tests).\cr
-  \code{\link{cov.wt}} for \emph{weighted} covariance
-  computation, \code{\link{sd}} for standard deviation (vectors).
+  intervals (and tests).
+  
+  \code{\link{cov.wt}} for \emph{weighted} covariance computation.
+
+  \code{\link{sd}} for standard deviation (vectors).
 }
 \examples{
 var(1:10)# 9.166667
