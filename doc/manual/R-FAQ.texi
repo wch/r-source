@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-24, @value{FAQ-YEAR}-07-07
+@set FAQ-VERSION 1.7-25, @value{FAQ-YEAR}-07-08
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -434,9 +434,9 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-06-22:
+@c Linux binaries as of 2003-07-08:
 @c
-@c debian    woody i386  1.7.0  Dirk Eddelbuettel <edd@debian.org>
+@c debian    woody i386  1.7.1  Dirk Eddelbuettel <edd@debian.org>
 @c           sarge i386  1.7.0  Dirk Eddelbuettel <edd@debian.org>
 @c mandrake  8.0   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
 @c           8.1   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
@@ -1540,6 +1540,13 @@ Functions for generating and manipulating generalised binned kernel
 density estimates.
 @item GeneSOM
 Clustering genes using Self-Organizing Maps (SOMs).
+@item Hmisc
+Functions useful for data analysis, high-level graphics, utility
+operations, functions for computing sample size and power, importing
+datasets, imputing missing values, advanced table making, variable
+clustering, character string manipulation, conversion of S objects to
+La@TeX{} code, recoding variables, and bootstrap repeated measures
+analysis.
 @item ISwR
 Data sets for ``Introductory Statistics with R'' by Peter Dalgaard,
 2002, Springer.
@@ -2030,6 +2037,8 @@ distribution.
 @item odesolve
 An interface for the Ordinary Differential Equation (ODE) solver lsoda.
 ODEs are expressed as R functions.
+@item orientlib
+Representations, conversions and display of orientation SO(3) data.
 @item oz
 Functions for plotting Australia's coastline and state boundaries.
 @item pamr
@@ -2121,6 +2130,8 @@ units included in the sample.
 Plots a three dimensional (3D) point cloud perspectively.
 @item seao
 Simple Evolutionary Algorithm Optimization.
+@item seao.gui
+Simple Evolutionary Algorithm Optimization: graphical user interface.
 @item sem
 Functions for fitting general linear Structural Equation Models (with
 observed and unobserved variables) by the method of maximum likelihood
