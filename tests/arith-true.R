@@ -5,6 +5,7 @@
 
 ### --> d-p-q-r-tests.R  for distribution things
 
+.proctime00 <- proc.time()
 opt.conformance <- 0
 Meps <- .Machine $ double.eps
 
@@ -144,3 +145,28 @@ oo <- options(warn = -1)# These four lines each would give 3-4 warnings :
  all( pmax(m2, 1:7) == pmax(1:7, m2) & pmax(1:7, m2) == pmax(1:7, m1))
  all( pmin(m2, 1:7) == pmin(1:7, m2) & pmin(1:7, m2) == c(1:3,2,2,2,2))
 options(oo)
+
+## pretty()
+stopifnot(pretty(1:15)	    == seq(0,16, by=2),
+	  pretty(1:15, h=2) == seq(0,15, by=5),
+	  pretty(1)	    == 0:1,
+	  pretty(pi)	    == c(2,4),
+	  pretty(pi, n=6)   == 2:4,
+	  pretty(pi, n=10)  == 2:5,
+	  pretty(pi, shr=.1)== c(3, 3.5))
+
+## gave infinite loop [R 0.64; Solaris], seealso PR#390 :
+all(pretty((1-1e-5)*c(1,1+3*Meps), 7) == seq(0,1,len=3))
+
+n <- 1000
+x12 <- matrix(NA, 2,n); x12[,1] <- c(2.8,3) # Bug PR#673
+for(j in 1:2) x12[j, -1] <- round(rnorm(n-1), dig = rpois(n-1, lam=3.5) - 2)
+for(i in 1:n) {
+    lp <- length(p <- pretty(x <- sort(x12[,i])))
+    stopifnot(p[1] <= x[1] & x[2] <= p[lp],
+              all(x==0) || all.equal(p, rev(-pretty(-x)), tol = 10*Meps))
+}
+
+
+## Last Line:
+cat('Time elapsed: ', proc.time() - .proctime00,'\n')
