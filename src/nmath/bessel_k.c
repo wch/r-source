@@ -24,7 +24,6 @@
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
 #include "Mathlib.h"
-#include "Error.h"
 
 static double xmax = 705.342;/* maximal x for UNscaled answer, see below */
 
@@ -43,11 +42,11 @@ double bessel_k(double x, double alpha, double expo)
     K_bessel(&x, &alpha, &nb, &ize, bk, &ncalc);
     if(ncalc != nb) {/* error input */
       if(ncalc < 0)
-	warning("bessel_k(%g): ncalc (=%d) != nb (=%d); alpha=%g.%s\n",
-		x, ncalc, nb, alpha," Arg. out of range?");
+	MATHLIB_WARNING4("bessel_k(%g): ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n",
+			 x, ncalc, nb, alpha);
       else
-	warning("bessel_k(%g,nu=%g): precision lost in result\n",
-		x, alpha+nb-1);
+	MATHLIB_WARNING2("bessel_k(%g,nu=%g): precision lost in result\n",
+			 x, alpha+nb-1);
     }
     x = bk[nb-1];
     free(bk);

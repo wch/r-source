@@ -17,7 +17,7 @@
 	- bad precision / in some cases
  */
 #ifdef DEBUG_pnch
-#include "PrtUtil.h"
+# include "PrtUtil.h"
 #endif
 
 double pnchisq(double x, double f, double theta)

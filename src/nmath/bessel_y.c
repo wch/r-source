@@ -24,7 +24,6 @@
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
 #include "Mathlib.h"
-#include "Error.h"
 
 double bessel_y(double x, double alpha)
 {
@@ -42,11 +41,11 @@ double bessel_y(double x, double alpha)
 	if(ncalc == -1)
 	    return ML_POSINF;
 	else if(ncalc < -1)
-	    warning("bessel_y(%g): ncalc (=%d) != nb (=%d); alpha=%g.%s\n",
-		    x, ncalc, nb, alpha," Arg. out of range?");
+	    MATHLIB_WARNING4("bessel_y(%g): ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n",
+			     x, ncalc, nb, alpha);
 	else /* ncalc >= 0 */
-	    warning("bessel_y(%g,nu=%g): precision lost in result\n",
-		    x, alpha+nb-1);
+	    MATHLIB_WARNING2("bessel_y(%g,nu=%g): precision lost in result\n",
+			     x, alpha+nb-1);
     }
     x = by[nb-1];
     free(by);
