@@ -78,7 +78,7 @@ docs: html
 .texi.html:
 	@if test "$(MAKEINFO)" = false; then \
           echo "'makeinfo' v4.5 or later needed to make HTML docs but missing on your system."; \
-	  exit 1; \
+	  cp $(srcdir)/dummy.html $@; \
 	else \
 	  echo "creating doc/manual/$@"; \
 	  $(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@; \
@@ -98,7 +98,7 @@ docs: html
 	fi
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2PDF) $<
 
-## we have to be careful not to install a local R-admin.html made prior to
+## We have to be careful not to install a local R-admin.html made prior to
 ## texinfo 4.7, as doc/html/SearchEngine.html links to it.
 ## So use that in the sources if we can -- it is not in the svn archive.
 ## There are no cross-references, external or not.
@@ -108,7 +108,7 @@ R-admin.html:
 	else \
           if test "$(MAKEINFO)" = false; then \
             echo "'makeinfo' v4.5 or later needed to make HTML docs but missing on your system."; \
-	    exit 1; \
+	    cp $(srcdir)/dummy.html $@; \
           else \
 	    echo "creating doc/manual/R-admin.html"; \
 	    $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@; \

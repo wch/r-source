@@ -12,7 +12,7 @@
 NEW FEATURES
 
    o	Faster algorithm in summaryRprof().
-	
+
 
 INSTALLATION CHANGES
 
@@ -24,6 +24,9 @@ INSTALLATION CHANGES
 	ensures that features such as inlining are only used if the
 	compilation flags specified support them.  (PR#7257)
 
+   o	If makeinfo >= 4.5 is not available, placeholders are created
+	for the HTML manuals in doc/manual (rather than empty files
+	as in 2.0.0).
 
 
 BUG FIXES
@@ -45,11 +48,20 @@ BUG FIXES
 		CHANGES IN R VERSION 2.0.0 patched
 
 
-BUG FIXES
+INSTALLATION CHANGES
 
-    o	First lattice plot (first grid.newpage() call) did not start
-	a new page IF there had been a previous traditional graphics
-	plot (on the same device).
+    o   Building on Alpha OSF/1 no longer forces the C flag -std1,
+	which appears to be no longer needed.  (PR#7257)
+
+    o	The compiler flag -mieee-fp is no longer used on i386 Linux
+	(these days it is only passed to the linker and was only
+	invoked for compilation steps).
+
+   o	If makeinfo >= 4.5 is not available, warnings are given that
+	some of the HTML manuals will be empty.
+
+
+BUG FIXES
 
     o	model.frame.default() takes row names from the response
 	variable if that has suitable names and there is no 'data'
@@ -67,16 +79,9 @@ BUG FIXES
 
     o   dlogis() gave NaN not 0 for large negative arguments.
 
-    o   Building on Alpha OSF/1 no longer forces the C flag -std1,
-	which appears to be no longer needed.  (PR#7257)
-
     o   Importing from another namespace was broken for versioned
 	installs, incorrectly reporting something like 
 	"package 'imported_from' does not have a name space".
-
-    o	The compiler flag -mieee-fp is no longer used on i386 Linux
-	(these days it is only passed to the linker and was only
-	invoked for compilation steps).
 
     o   The GNOME interface under Linux/Unix was broken. (PR#7276)
 
@@ -84,6 +89,10 @@ BUG FIXES
 	circumstances clipping needed to be cleared before starting a
 	new page.  (PR#7270, which has been the case since the devices
 	were introduced in 1.1.0.)
+
+    o	First lattice plot (first grid.newpage() call) did not start
+	a new page IF there had been a previous traditional graphics
+	plot (on the same device).
 
 
 
