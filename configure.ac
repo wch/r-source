@@ -522,6 +522,8 @@ if test "${use_readline}" = yes; then
     AC_CHECK_LIB(readline, rl_callback_read_char)
     use_readline="${ac_cv_lib_readline_rl_callback_read_char}"
   fi
+  ## the NetBSD version as used in MacOS X does not have this
+  AC_CHECK_FUNCS(history_truncate_file)
   READLINE_LIBS="${LIBS}"
   LIBS="${r_save_LIBS}"
 fi
