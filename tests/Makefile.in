@@ -104,7 +104,7 @@ all-devel-tests = IsAs Lapack Nafns Postscript Random Demo Segfault \
 
 all check: Makefile test-all-basics
 check-devel: check test-all-devel
-check-all: check-devel test-Examples-Recommended
+check-all: check-devel test-Packages-Recommended
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@

@@ -418,6 +418,9 @@ INSTALLATION CHANGES
 	those depending on recommended packages (which cannot be
 	assumed to be present).
 
+    o	The target make check-all now runs R CMD check on all the
+	recommended packages (and not just runs their examples).
+
     o	There are new macros DYLIB_* for building dynamic libraries,
 	and these are used for the dynamic Rmath library (which was
 	previously built as a shared object).
