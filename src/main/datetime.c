@@ -301,7 +301,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 
     /* month within year */
     for (mon = 0;
-	 day >= (tmp = (days_in_month[mon]) + ((mon==1 && isleap(y))?1:0));
+	 day >= (tmp = (days_in_month[mon]) + ((mon==1 && isleap(y+1900))?1:0));
 	 day -= tmp, mon++);
     res->tm_mon = mon;
     res->tm_mday = day + 1;
