@@ -24,6 +24,8 @@ R_BROWSER=${R_BROWSER-'@R_BROWSER@'}
 EDITOR=${EDITOR-${VISUAL-vi}}
 ## Default pager
 PAGER=${PAGER-'@PAGER@'}
+## Default PDF viewer
+R_PDFVIEWER=${R_PDFVIEWER-'@R_PDFVIEWER@'}
 ## Use configure values
 AWK=${AWK-'@AWK@'}
 MAKE=${MAKE-'@MAKE@'}

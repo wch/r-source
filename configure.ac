@@ -1441,6 +1441,9 @@ fi
 if test -n "${warn_browser}"; then
   AC_MSG_WARN([${warn_browser}])
 fi
+if test -n "${warn_pdfviewer}"; then
+  AC_MSG_WARN([${warn_pdfviewer}])
+fi
 
 ### Local variables: ***
 ### mode: outline-minor ***
