@@ -34,6 +34,10 @@ Date: Mon, 17 Dec 2001 11:04:27 -0500
 Subject: bug with var(rep(1e30, 3))
 From: Emmanuel Paradis <paradis@isem.univ-montp2.fr>
 Date: Wed, 26 Dec 2001 13:03:31 +0100
+* PR# 1244 *
+Subject: possible bug in det using method="qr"
+From: armin@approximity.com
+Date: Sat, 5 Jan 2002 01:48:13 +0100 (MET)
 
 Directory:  Add-ons
 
@@ -67,6 +71,11 @@ Date: Tue, 20 Nov 2001 23:38:17 +0100
 Subject: pixmap: infinite recursion with nonascii pnm-files
 From: thomas.baumann@ch.tum.de
 Date: Fri, 7 Dec 2001 11:07:52 +0100 (CET)
+* PR# 1242 *
+Subject: copy metafile from window() device fails when lattice/grid is
+From: "Liaw, Andy" <andy_liaw@merck.com>
+Date: Fri, 04 Jan 2002 14:43:08 -0500
+--grid/lattice has spurious initial blank page on current versions
 
 Directory:  Analyses
 
@@ -201,6 +210,14 @@ Date: Wed, 7 Nov 2001 18:07:22 +0800 (WST)
 Subject: boxplot labels incorrect when horizontal = TRUE
 From: Rashid Nassar <rnassar@duke.edu>
 Date: Sun, 9 Dec 2001 21:46:32 -0500 (EST)
+* PR# 1235 *
+Subject: Axes labelling with logarithmic scales
+From: tobias.hoevekamp@ilw.agrl.ethz.ch
+Date: Thu, 3 Jan 2002 15:29:02 +0100 (MET)
+* PR# 1243 *
+Subject: abline and log plots
+From: stephen@cogsci.ed.ac.uk
+Date: Sat, 5 Jan 2002 01:11:47 +0100 (MET)
 
 Directory:  In-Out
 
@@ -256,6 +273,10 @@ Subject: syntax questtion, maybe a bug
 From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
 Date: Thu, 13 Dec 2001 13:46:54 -0500 (EST)
 --Is .2logl meant to be a valid name in R? It is S
+* PR# 1241 *
+Subject:  Problem with "missing" in "local" 
+From: J.C.Rougier@durham.ac.uk
+Date: Fri, 4 Jan 2002 13:34:34 GMT
 
 Directory:  Low-level
 
@@ -342,15 +363,7 @@ Date: Fri, 26 Oct 2001 19:04:04 +0100
 
 Directory:  TooMuchAtOnce
 
-* PR# 1110 *
-Subject: Several R vs S-Plus issues
-From: David Brahm  <a215020@agate.fmr.com>
-Date: Wed, 3 Oct 2001 11:35:58 -0400 (EDT)
---1. is perhaps a bug -- the best handling of string NAs is under discussion
---
---2 & 4 are just S-PLUS incompatibilities
---
---3. May be a bug -- worth checking.
+none
 
 Directory:  Windows
 
@@ -358,59 +371,19 @@ none
 
 Directory:  incoming
 
-* PR# 1233 *
-Subject: Help for installation
-From: "Dr. N.T.S. Wijesekera" <sohanw@ait.ac.th>
-Date: Wed, 2 Jan 2002 14:24:35 +0700
-* PR# 1234 *
-Subject: R1.4.0 under Windows NT, package grid/lattice
-From: H.Rinner@tirol.gv.at
-Date: Wed, 2 Jan 2002 16:09:58 +0100 (MET)
-* PR# 1235 *
-Subject: Axes labelling with logarithmic scales
-From: tobias.hoevekamp@ilw.agrl.ethz.ch
-Date: Thu, 3 Jan 2002 15:29:02 +0100 (MET)
-* PR# 1236 *
-Subject: type.convert()
-From: dxsun@bell-labs.com
-Date: Thu, 3 Jan 2002 17:00:18 +0100 (MET)
-* PR# 1237 *
-Subject: trellis plot and postscript file
-From: dxsun@bell-labs.com
-Date: Thu, 3 Jan 2002 18:25:46 +0100 (MET)
-* PR# 1238 *
-Subject:  identify.default() fails when x is a structure/matrix 
-From: David James <dj@localhost.localdomain>
-Date: Thu, 3 Jan 2002 17:17:12 -0500
-* PR# 1239 *
-Subject: R CMD check, file permissions
-From: Christian Hoffmann <christian.hoffmann@wsl.ch>
-Date: Fri, 04 Jan 2002 12:38:54 +0100
 * PR# 1240 *
 Subject:  R CMD check 
 From: hoffmann@wsl.ch
 Date: Fri, 4 Jan 2002 12:51:15 +0100 (MET)
-* PR# 1241 *
-Subject:  Problem with "missing" in "local" 
-From: J.C.Rougier@durham.ac.uk
-Date: Fri, 4 Jan 2002 13:34:34 GMT
-* PR# 1242 *
-Subject: copy metafile from window() device fails when lattice/grid is
-From: "Liaw, Andy" <andy_liaw@merck.com>
-Date: Fri, 04 Jan 2002 14:43:08 -0500
-* PR# 1243 *
-Subject: abline and log plots
-From: stephen@cogsci.ed.ac.uk
-Date: Sat, 5 Jan 2002 01:11:47 +0100 (MET)
-* PR# 1244 *
-Subject: possible bug in det using method="qr"
-From: armin@approximity.com
-Date: Sat, 5 Jan 2002 01:48:13 +0100 (MET)
-* PR# 1245 *
-Subject: Meilleurs Voeux pour 2002 : ann?e de m?moire, de mobilisation, d'action, de justice et de s?r?nit? - Appel au soutien moral et financier
-From: Habib HAIBI<haibi@free.fr>
-Date: Sat, 5 Jan 2002 21:19:49 +0100
-* PR# 1246 *
-Subject: Meilleurs Voeux pour 2002 : ann?e de m?moire, de mobilisation, d'action, de justice et de s?r?nit? - Appel au soutien moral et financier
-From: Habib HAIBI<haibi@wanadoo.fr>
-Date: Sat, 5 Jan 2002 22:50:23 +0100
+* PR# 1247 *
+Subject: Mishandling missing "..."
+From: David Brahm  <brahm@alum.mit.edu>
+Date: Mon, 7 Jan 2002 10:52:09 -0500
+* PR# 1248 *
+Subject: piechart default colour
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 07 Jan 2002 18:54:02 +0100
+* PR# 1249 *
+Subject: cluster - clusplot.default
+From: Kjetilh Halvorsen <kjetilh@umsanet.edu.bo>
+Date: Mon, 7 Jan 2002 14:55:27 -0400 (BOT)
