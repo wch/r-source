@@ -35,7 +35,7 @@
 
 /* Define if you have the Aqua headers and libraries, and want the Aqua GUI to
    be built. */
-/* undef HAVE_AQUA */
+/* #undef HAVE_AQUA */
 
 /* Define to 1 if you have the <arpa/inet.h> header file. */
 /* #undef HAVE_ARPA_INET_H */
@@ -48,9 +48,6 @@
 
 /* Define if you have BSD networking headers and libraries. */
 /* #undef HAVE_BSD_NETWORKING */
-
-/* Define if you have the bzip2 headers and libraries. */
-#define HAVE_BZLIB 1
 
 /* Define to 1 if you have the `chdir' function. */
 #define HAVE_CHDIR 1
@@ -210,9 +207,7 @@
 #define HAVE_LOCALE_H 1
 
 /* Define to 1 if you have the `log1p' function. */
-#if __MINGW32_MAJOR_VERSION >= 2
 #define HAVE_LOG1P 1
-#endif
 
 /* Define to 1 if you have the `matherr' function. */
 /* #undef HAVE_MATHERR */
@@ -304,7 +299,7 @@
 #define HAVE_STRDUP 1
 
 /* Define to 1 if you have the <strings.h> header file. */
-/* #undef HAVE_STRINGS_H */
+#define HAVE_STRINGS_H 1
 
 /* Define to 1 if you have the <string.h> header file. */
 #define HAVE_STRING_H 1
@@ -330,7 +325,7 @@
 /* #undef HAVE_SYS_NDIR_H */
 
 /* Define to 1 if you have the <sys/param.h> header file. */
-/* #undef HAVE_SYS_PARAM_H */
+#define HAVE_SYS_PARAM_H 1
 
 /* Define to 1 if you have the <sys/select.h> header file. */
 /* #undef HAVE_SYS_SELECT_H */
@@ -416,13 +411,13 @@
 #define PACKAGE_NAME "R"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "R 1.6.0"
+#define PACKAGE_STRING "R 1.7.0"
 
 /* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "r"
+#define PACKAGE_TARNAME "R"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.6.0"
+#define PACKAGE_VERSION "1.7.0"
 
 /* Define as the return type of signal handlers (`int' or `void'). */
 #define RETSIGTYPE void
@@ -496,7 +491,7 @@
 /* #undef Unix */
 
 /* Version number of package */
-#define VERSION "1.6.0"
+#define VERSION "1.7.0"
 
 /* Define to 1 if your processor stores words with the most significant byte
    first (like Motorola and SPARC, unlike Intel and VAX). */
@@ -520,15 +515,5 @@
 
 /* Define to `unsigned' if <sys/types.h> does not define. */
 /* #undef size_t */
-
-
-#ifdef Win32
-# define snprintf _snprintf
-# define vsnprintf _vsnprintf
-# define isnan(a) _isnan(a)
-# define finite(a) _finite(a)
-/* 2000-03-27 win32-api needs this for ANSI compliance */
-# define NONAMELESSUNION
-#endif /* Win32 */
 
 #endif /* not _CONFIG_H */

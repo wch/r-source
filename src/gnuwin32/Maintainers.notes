@@ -6,10 +6,10 @@ achieved by overrides in the configure script.
 
 You will need a few more tools (ln, pwd, tr, ...), and I put a cygwin
 toolchain at the end of my path.  (You do need /bin/sh, which cygwin
-might mount for you.)  Then with the R sources in /R/rw1060, I used in
+might mount for you.)  Then with the R sources in /R/rw1070, I used in
 /TEMP/R (any other directory will do, except the sources)
 
-/R/rw1060/configure --build=i386-pc-mingw32
+/R/rw1070/configure --build=i386-pc-mingw32
 
 This ran fairly slowly, producing a src/include/config.h that differs only
 
@@ -22,5 +22,6 @@ This ran fairly slowly, producing a src/include/config.h that differs only
  - watch out for versions of the header files. <strings.h> is in
    mingw-runtime-1.2 and later, but not in the Mingw-1.1 bundle.
 
+ - SOCKLEN_T should be int, but configure finds size_t.
 
 BDR 2002-04-15

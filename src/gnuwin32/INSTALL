@@ -34,9 +34,9 @@ use our tool set, and make sure it is at the front of your path.
 To compile this version you need a recent version of the Mingw port of
 gcc from http://sourceforge.net/projects/mingw/.  There will probably
 be a distribution called something like MinGW-2.0.0-3.exe, or you can
-get the components (binutils-2.13, gcc-3.2, mingw-runtime-2.2 and
-w32api-2.0 or later.)  Earlier versions will probably work, but
-mingw-runtime >= 1.3 and w32api >= 1.5 are essential.
+get the components (binutils-2.13, gcc-3.2, mingw-runtime-2.3 and
+w32api-2.1 or later.)  Earlier versions will probably work, but
+mingw-runtime >= 2.0 and w32api >= 2.0 are essential.
 
 No earlier Mingw compiler has been tested and support for using the
 Cygwin compiler has been withdrawn.  If you see errors about `-shared'
