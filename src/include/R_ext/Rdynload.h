@@ -17,8 +17,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef  R_FOREIGN_H
-#define  R_FOREIGN_H
+#ifndef  R_EXT_DYNLOAD_H_
+#define  R_EXT_DYNLOAD_H_
 
 #include "R_ext/Boolean.h"
 
@@ -82,4 +82,4 @@ int moduleCdynload(char *module, int local, int now);
 
 Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value);
 
-#endif /* End ifdef R_FOREIGN_H */
+#endif /* R_EXT_DYNLOAD_H_ */
