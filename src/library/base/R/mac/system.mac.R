@@ -13,7 +13,7 @@ unlink <- function(x, recursive=FALSE)
 
 help.start <- function(gui = "irrelevant", browser = "irrelevant")
 {
-    a <- system.file("index.html", pkg="doc:html", lib=R.home())
+    a <- system.file("rmac.html", pkg="doc:html", lib=R.home())
     if (a == "")
         stop("I can't find the html help")
     else {

@@ -6,4 +6,4 @@
 
 #define Macintosh 1
 
-#include "Rconfig.h"
+#include "config.h"

@@ -2,7 +2,7 @@
 ## files necessary for the Macintosh build.
 
 RHOME = ../..
-all: profiles library headers
+all: profiles library headers html
 
 ## ------------- headers -----------
 headers: ../include/config.h Rconfig.h Rversion.h FFDecl.h FFTab.h
@@ -46,6 +46,7 @@ fixdesc:
 	@sh ../gnuwin32/fixed/GETDESC $(PACKAGES)
 
 library: mainfiles datafiles help zipfiles
+
 mainfiles: fixdesc
 	@mkdir -p $(RHOME)/library
 	@for pkg in $(PACKAGES); do \
@@ -84,6 +85,11 @@ zipfiles:
 	  zip -jqm Rhelp * -x 00Titles AnIndex)
 	(cd $(RHOME)/library/base/R-ex; zip -jqmX Rex *.R)
 	(cd $(RHOME)/library/base/latex; zip -jqmX Rhelp *.tex)
+
+## ------------- html -----------
+
+html:
+	cp html/*.html $(RHOME)/doc/html
 
 distribution:
 	rm -f dist.zip
