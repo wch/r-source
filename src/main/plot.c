@@ -603,11 +603,6 @@ void GetAxisLimits(double left, double right, double *low, double *high)
 
 /* axis(side, at, labels, ...) */
 
-/*
-<FIXME>
-Do we really want to plot NAs?
-</FIXME>
-*/
 SEXP labelformat(SEXP labels)
 {
     /* format(labels): i.e. from numbers to strings */
@@ -654,11 +649,6 @@ SEXP labelformat(SEXP labels)
 	UNPROTECT(1);
 	break;
     case STRSXP:
-/*
-<FIXME>
-Handle NAs, perhaps?
-</FIXME>
-*/
 	PROTECT(ans = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
 	    SET_STRING_ELT(ans, i, STRING_ELT(labels, i));
@@ -819,7 +809,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     double gap, labw, low, high, line, pos;
     double axis_base, axis_tick, axis_lab, axis_low, axis_high;
 
-    SEXP originalArgs = args;
+    SEXP originalArgs = args, label;
     DevDesc *dd = CurrentDevice();
 
     /* Arity Check */
@@ -1110,9 +1100,12 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 			/* Check room for perpendicular labels. */
 			if (Rf_gpptr(dd)->las == 2 || Rf_gpptr(dd)->las == 3 ||
 			    tnew - tlast >= gap) {
-			    GMtext(CHAR(STRING_ELT(lab, ind[i])), side,
-				   axis_lab, 0, x, Rf_gpptr(dd)->las, dd);
-			    tlast = temp + 0.5 *labw;
+			    label = STRING_ELT(lab, ind[i]);
+			    if(label != NA_STRING) {
+				GMtext(CHAR(label), side, axis_lab, 0, x, 
+				       Rf_gpptr(dd)->las, dd);
+				tlast = temp + 0.5 *labw;
+			    }
 			}
 		    }
 		}
@@ -1212,9 +1205,12 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 			/* Check room for perpendicular labels. */
 			if (Rf_gpptr(dd)->las == 1 || Rf_gpptr(dd)->las == 2 ||
 			    tnew - tlast >= gap) {
-			    GMtext(CHAR(STRING_ELT(lab, ind[i])), side,
-				   axis_lab, 0, y, Rf_gpptr(dd)->las, dd);
-			    tlast = temp + 0.5 *labw;
+			    label = STRING_ELT(lab, ind[i]);
+			    if(label != NA_STRING) {
+				GMtext(CHAR(label), side, axis_lab, 0, y, 
+				       Rf_gpptr(dd)->las, dd);
+				tlast = temp + 0.5 *labw;
+			    }
 			}
 		    }
 		}

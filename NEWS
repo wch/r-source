@@ -223,6 +223,9 @@ NEW FEATURES
 	-  sort.list() (and order with just one vector) is several
 	   times faster for numeric, integer and logical vectors.
 
+	-  axis() now omits labels which are NA (but still draws the
+	   tick mark.
+
 
 DEPRECATED & DEFUNCT
 
