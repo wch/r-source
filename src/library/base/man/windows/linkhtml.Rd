@@ -26,10 +26,10 @@ make.search.html(lib.loc=.Library)
 }
 \value{
   No value is returned. The file(s)
-  \code{R\_HOME\\doc\\html\\packages.html} and/or
-  \code{R\_HOME\\doc\\html\\search\\index.txt} is (re-)created.
+  \file{R\_HOME\\doc\\html\\packages.html} and/or
+  \file{R\_HOME\\doc\\html\\search\\index.txt} is (re-)created.
 }
 \author{Guido Masarotto and Brian Ripley}
-\note{You will need write permission in the \code{R\_HOME\\doc\\html}
+\note{You will need write permission in the \file{R\_HOME\\doc\\html}
   directory.}
 \keyword{utilities}
