@@ -269,7 +269,8 @@ all the parts in the sequence:
 	htmldocs (the HTML documentation)
 	bitmapdll (the bitmap support files)
 	recommended (the recommended packages)
-	vignettes (the vignettes in package grid)
+	vignettes (the vignettes in package grid:
+		   only need if building from svn checkout)
 	manuals (the PDF manuals)
 	rinstaller (the install program)
 	crandir (the CRAN distribution directory)
