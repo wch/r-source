@@ -10,6 +10,7 @@ R_HOME = ../../..
 RHOME=$(shell perl ../pwd.pl ../../..)
 PKGDIR=../../library
 RLIB=$(RHOME)/library
+CHM=
 
 indices:
 	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
@@ -26,7 +27,8 @@ pkg-% help-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
 	  PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	    $(R_HOME)/share/perl/build-help-windows.pl ${DOS} \
-	    -txt -html -example -latex $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
+	    -txt -html -example -latex $(CHM) \
+	    $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	fi
 
 pkgfake-%:
@@ -38,9 +40,6 @@ pkgfake-%:
 
 chm-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
-	  PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	    $(R_HOME)/share/perl/build-help-windows.pl ${DOS} \
-	    -chm $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	  $(MAKE)  --no-print-directory -C $(PKGDIR)/$*/chm \
 	    -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm ; \
 	  $(MKDIR) -p $(DPKG)/chtml ;\
