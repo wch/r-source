@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2000		R Development Core Team
+ *  Copyright (C) 2003		The R Foundation
  *  based on AS 89 (C) 1975 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -36,7 +37,7 @@
  - new argument lower_tail --> potentially increased precision in extreme cases.
 */
 void
-prho(int *n, int *is, double *pv, int *ifault, int *lower_tail)
+prho(int *n, double *is, double *pv, int *ifault, int *lower_tail)
 {
 /*	Algorithm AS 89	  Appl. Statist. (1975) Vol.24, No. 3, P377.
 
@@ -64,36 +65,41 @@ prho(int *n, int *is, double *pv, int *ifault, int *lower_tail)
 	c12= 4.6e-4;
 
     /* Local variables */
-    double b, u, x, y;
-    int l[6];
-    int nfac, i, m, n1, js, mt, ifr, ise;
+    double b, u, x, y, n3;/*, js */
+
+#define n_small 9
+/* originally: n_small = 6 (speed!);
+ * even n_small = 10 (and n = 10) needs quite a bit longer than the approx!
+ * larger than 12 ==> integer overflow in nfac and (probably) ifr
+*/
+    int l[n_small];
+    int nfac, i, m, mt, ifr, ise, n1;
 
     /* Test admissibility of arguments and initialize */
     *pv = *lower_tail ? 0. : 1.;
     if (*n <= 1) { *ifault = 1; return; }
 
     *ifault = 0;
-    if (*is <= 0) return;/* with p = 1 */
+    if (*is <= 0.) return;/* with p = 1 */
 
-    *pv = 1 - *pv;
-    n1 = *n * (*n * *n - 1) / 3;
-    if (*is > n1)
-	return;
-
-    js = *is;
-    if(js % 2)/* if js is not even, make it */
-	++js;
-
-
-    if (*n <= 6) { /* 2 <= n <= 6 : Exact evaluation of probability */
-
-	nfac = 1;
+    n3 = (double)*n;
+    n3 *= (n3 * n3 - 1.) / 3.;/* = (n^3 - n)/3 */
+    if (*is > n3) { /* larger than maximal value */
+	*pv = 1 - *pv; return;
+    }
+    /* NOT rounding to even anymore:  with ties, S, may even be non-integer!
+     * js = *is;
+     * if(fmod(js, 2.) != 0.) ++js;
+     */
+    if (*n <= n_small) { /* 2 <= n <= n_small :
+			  * Exact evaluation of probability */
+	nfac = 1.;
 	for (i = 1; i <= *n; ++i) {
 	    nfac *= i;
 	    l[i - 1] = i;
 	}
 	/* KH mod next line: was `!=' in the code but `.eq.' in the paper */
-	if (js == n1) {
+	if (*is == n3) {
 	    ifr = 1;
 	}
 	else {
@@ -104,7 +110,7 @@ prho(int *n, int *is, double *pv, int *ifault, int *lower_tail)
 		    n1 = i + 1 - l[i];
 		    ise += n1 * n1;
 		}
-		if (js <= ise)
+		if (*is <= ise)
 		    ++ifr;
 
 		n1 = *n;
@@ -118,13 +124,14 @@ prho(int *n, int *is, double *pv, int *ifault, int *lower_tail)
 	    }
 	}
 	*pv = (*lower_tail ? nfac-ifr : ifr) / (double) nfac;
-    } /* exact for n <= 6 */
+    } /* exact for n <= n_small */
 
     else { /* n >= 7 :	Evaluation by Edgeworth series expansion */
 
 	y = (double) (*n);
 	b = 1 / y;
-	x = (6. * (js - 1) * b / (y * y - 1) - 1) * sqrt(y - 1);
+	x = (6. * (*is - 1) * b / (y * y - 1) - 1) * sqrt(y - 1);
+	/* = rho * sqrt(n-1)  ==  rho / sqrt(var(rho))  ~  (0,1) */
 	y = x * x;
 	u = x * b * (c1 + b * (c2 + c3 * b) +
 		     y * (-c4 + b * (c5 + c6 * b) -

@@ -22,21 +22,20 @@
 
 #include <Rinternals.h>
 
-static R_NativePrimitiveArgType chisqsim_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP, 
+static R_NativePrimitiveArgType chisqsim_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
 					   INTSXP, REALSXP, INTSXP, REALSXP, INTSXP, REALSXP};
 static R_NativePrimitiveArgType d2_t[5] = {INTSXP, REALSXP, REALSXP, REALSXP, REALSXP};
 static R_NativePrimitiveArgType dansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
 static R_NativePrimitiveArgType pansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
 static R_NativePrimitiveArgType qansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
 
-static R_NativePrimitiveArgType fexact_t[10] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, 
+static R_NativePrimitiveArgType fexact_t[10] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP,
 					 REALSXP, REALSXP, REALSXP, REALSXP, INTSXP};
 
 static R_NativePrimitiveArgType pkendall_t[3] = {INTSXP, REALSXP, INTSXP};
-static R_NativePrimitiveArgType kendall_tau_t[4] = {INTSXP, REALSXP, REALSXP, REALSXP};
 
 static R_NativePrimitiveArgType pkstwo_t[3] = {INTSXP, REALSXP, REALSXP};
-static R_NativePrimitiveArgType prho_t[5] = {INTSXP, INTSXP, REALSXP, INTSXP, LGLSXP};
+static R_NativePrimitiveArgType prho_t[5] = {INTSXP, REALSXP, REALSXP, INTSXP, LGLSXP};
 static R_NativePrimitiveArgType psmirnov2x_t[3] = {REALSXP, INTSXP, INTSXP};
 
 static R_NativePrimitiveArgType swilk_t[9] = {LGLSXP, SINGLESXP, INTSXP, INTSXP, INTSXP,
@@ -44,11 +43,10 @@ static R_NativePrimitiveArgType swilk_t[9] = {LGLSXP, SINGLESXP, INTSXP, INTSXP,
 
 
 static const R_CMethodDef cMethods[]  = {
-  {"chisqsim", (DL_FUNC) &chisqsim, 11, chisqsim_t},  
+  {"chisqsim", (DL_FUNC) &chisqsim, 11, chisqsim_t},
   {"d2x2xk", (DL_FUNC) &d2x2xk, 5, d2_t},
   {"dansari", (DL_FUNC) &dansari, 4, dansari_t},
   {"fexact",   (DL_FUNC) &fexact, 10, fexact_t},
-  {"kendall_tau", (DL_FUNC) &kendall_tau, 4, kendall_tau_t},
   {"pansari",  (DL_FUNC)&pansari, 4, pansari_t},
   {"pkendall", (DL_FUNC)  &pkendall, 3, pkendall_t},
   {"pkstwo", (DL_FUNC) &pkstwo, 3, pkstwo_t},

@@ -1,14 +1,14 @@
-/* kendall.c
-   Compute Kendall's rank correlation tau and the exact distribution of
-   T = (n * (n - 1) * tau + 1) / 4, the number of concordant ordered
-   pairs.
-   */
-
+/* Kendall's rank correlation tau and its exact distribution in case of no ties
+*/
 #include <R.h>
 #include <Rmath.h>
 
 #include "ctest.h"
 
+/* The R code now builds on cor(x,y, method="kendall")
+   with C code in ../../../main/cov.c
+ */
+#ifdef pre_R_180
 void
 kendall_tau(Sint *n, double *x, double *y, double *tau) {
     double c = 0, vx = 0, vy = 0, sx, sy;
@@ -23,9 +23,14 @@ kendall_tau(Sint *n, double *x, double *y, double *tau) {
 	    c += sx * sy;
 	}
     }
-
     *tau = c / (sqrt(vx) * sqrt(vy));
 }
+#endif
+
+/*
+   and the exact distribution of  T = (n * (n - 1) * tau + 1) / 4,
+   which is -- if there are no ties -- the number of concordant ordered pairs
+*/
 
 static double
 ckendall(int k, int n, double **w) {
