@@ -75,9 +75,10 @@ int do_unzip(char *zipname, char *dest, int nfiles, char **files,
 			  2 = no messages */
     lpDCL->ntflag = 0; /* test zip file if true */
     lpDCL->nvflag = 0; /* give a verbose listing if true */
-    lpDCL->nUflag = 0; /* Do not extract only newer */
+    lpDCL->ExtractOnlyNewer = 0; /* Do not extract only newer */
     lpDCL->nzflag = 0; /* display a zip file comment if true */
     lpDCL->ndflag = 1; /* Recreate directories if true */
+    lpDCL->nfflag = 0; /* Do not freshen existing files only */
     lpDCL->noflag = over > 0; /* Over-write all files if true */
     lpDCL->naflag = 0; /* Do not convert CR to CRLF */
     lpDCL->lpszZipFN = zipname; /* The archive name */

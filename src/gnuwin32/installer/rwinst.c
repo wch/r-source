@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file rwinst.c
- *  Copyright (C) 1999  B. D. Ripley
+ *  Copyright (C) 1999-2000  B. D. Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
