@@ -967,6 +967,14 @@ for example as plot labels.  Where needed they are denoted by a sequence
 of characters delimited by the double quote character, e.g.,
 @code{"x-values"}, @code{"New iteration results"}.
 
+Character strings are entered using either double (@code{"}) or single
+(@code{'}) quotes, but are printed using double quotes (or sometimes
+without quotes).  They use C-style escape sequences, using @code{\} as
+the escape character, so @code{\\} is entered and printed as @code{\\},
+and inside double quotes @code{"} is entered as @code{\"}.  Other
+useful escape sequences are @code{\n}, newline, @code{\t}, tab and
+@code{\b}, backspace.
+
 Character vectors may be concatenated into a vector by the @code{c()}
 function; examples of their use will emerge frequently.
 @findex c
