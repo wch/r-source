@@ -21,38 +21,39 @@ Type `q()' to quit R.
 > # test do_download.
 > CRAN.packages()[, 1]
 trying URL `http://cran.r-project.org/src/contrib/PACKAGES'
-Content type `text/plain' length 46880 bytes
+Content type `text/plain' length 46989 bytes
 opened URL
 .......... .......... .......... .......... .....
 downloaded 45Kb
 
-  [1] "CoCoAn"         "Devore5"        "GLMMGibbs"      "GenKern"       
-  [5] "GeneSOM"        "KernSmooth"     "Matrix"         "NISTnls"       
-  [9] "Oarray"         "PHYLOGR"        "PTAk"           "RArcInfo"      
- [13] "RMySQL"         "RODBC"          "RPgSQL"         "RmSQL"         
- [17] "Rstreams"       "SASmixed"       "SuppDists"      "VR"            
- [21] "XML"            "acepack"        "akima"          "ash"           
- [25] "bindata"        "blighty"        "boot"           "bootstrap"     
- [29] "cclust"         "cfa"            "chron"          "cluster"       
- [33] "cmprsk"         "coda"           "conf.design"    "cramer"        
- [37] "date"           "dse"            "e1071"          "event.chart"   
- [41] "exactRankTests" "fdim"           "foreign"        "fracdiff"      
- [45] "gafit"          "gee"            "geoR"           "gld"           
- [49] "gregmisc"       "gss"            "hpower"         "ineq"          
- [53] "integrate"      "leaps"          "lgtdl"          "lmtest"        
- [57] "locfit"         "logspline"      "lpridge"        "maptree"       
- [61] "mclust"         "mda"            "meanscore"      "mgcv"          
- [65] "mlbench"        "muhaz"          "multiv"         "mvnmle"        
- [69] "mvtnorm"        "netCDF"         "nlme"           "nlrq"          
- [73] "norm"           "odesolve"       "oz"             "panel"         
- [77] "permax"         "pinktoe"        "pls"            "polymars"      
- [81] "polynom"        "princurve"      "pspline"        "quadprog"      
- [85] "quantreg"       "rmeta"          "rpart"          "scatterplot3d" 
- [89] "sgeostat"       "sm"             "sma"            "sn"            
- [93] "sna"            "splancs"        "stable"         "survival5"     
- [97] "tensor"         "tree"           "tripack"        "tseries"       
-[101] "twostage"       "wavethresh"     "wle"            "xgobi"         
-[105] "xtable"         "zmatrix"       
+  [1] "AnalyzeIO"      "CoCoAn"         "Devore5"        "GLMMGibbs"     
+  [5] "GenKern"        "GeneSOM"        "KernSmooth"     "Matrix"        
+  [9] "NISTnls"        "Oarray"         "PHYLOGR"        "PTAk"          
+ [13] "RArcInfo"       "RMySQL"         "RODBC"          "RPgSQL"        
+ [17] "RmSQL"          "Rstreams"       "SASmixed"       "SuppDists"     
+ [21] "VR"             "XML"            "acepack"        "akima"         
+ [25] "ash"            "bindata"        "blighty"        "boot"          
+ [29] "bootstrap"      "bqtl"           "cclust"         "cfa"           
+ [33] "chron"          "cluster"        "cmprsk"         "coda"          
+ [37] "conf.design"    "cramer"         "date"           "dse"           
+ [41] "e1071"          "ellipse"        "event.chart"    "exactRankTests"
+ [45] "fdim"           "foreign"        "fracdiff"       "gafit"         
+ [49] "gee"            "geoR"           "gld"            "gregmisc"      
+ [53] "gss"            "hpower"         "ineq"           "integrate"     
+ [57] "leaps"          "lgtdl"          "lmtest"         "locfit"        
+ [61] "logspline"      "lpridge"        "maptree"        "mclust"        
+ [65] "mda"            "meanscore"      "mgcv"           "mlbench"       
+ [69] "muhaz"          "multiv"         "mvnmle"         "mvtnorm"       
+ [73] "netCDF"         "nlme"           "nlrq"           "norm"          
+ [77] "odesolve"       "oz"             "panel"          "permax"        
+ [81] "pinktoe"        "pls"            "polymars"       "polynom"       
+ [85] "princurve"      "pspline"        "quadprog"       "quantreg"      
+ [89] "rmeta"          "rpart"          "scatterplot3d"  "sgeostat"      
+ [93] "sm"             "sma"            "sn"             "sna"           
+ [97] "splancs"        "stable"         "survival5"      "tensor"        
+[101] "tree"           "tripack"        "tseries"        "twostage"      
+[105] "wavethresh"     "wle"            "xgobi"          "xtable"        
+[109] "zmatrix"       
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
