@@ -46,8 +46,6 @@ cd ${top_builddir}/${subdir}/
 gcc aqualaunch.c
 mkdir -p /Applications/StartR.app/Contents/MacOS
 mv a.out /Applications/StartR.app/Contents/MacOS/StartR
-# Modifies Rprofile according to AQUA needs
-cat  /Applications/StartR.app/RAqua.app/Contents/library/base/R/Rprofile ${top_srcdir}/${subdir}/aqua.R > Rprofile
-mv Rprofile /Applications/StartR.app/RAqua.app/Contents/library/base/R/
+
 echo "Note: execute this script one time only!"
 
