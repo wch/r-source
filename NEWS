@@ -39,14 +39,13 @@ NEW FEATURES
 	option "show.error.messages" to control the printing of error
 	messages.
 
+    o	persp() now labels its axes.
+
+    o	?plotmath documents the plotting expressions facility much
+	more comprehensively, with tables in the examples.
+
 
 BUG FIXES
-
-    o   rpois sometimes had problems with mu=0, now special-cased
-
-    o	C functions fprec() and fround() [= R's signif() and round()],
-	now use R_pow_di(10., n) which is clean and more efficient.
-	This changes some results in the least significant bits.
 
     o	printutils.c compiles on platforms where va_list is not
 	a pointer.
@@ -76,9 +75,16 @@ BUG FIXES
 
     o	Lots of help examples now tidy up the files they created.
 
-    o	library(help=foo) lists only contents of first pkg if multiple
-	are found along lib.loc
+    o	library(help=foo) lists only contents of first version if 
+	multiple matches are found on lib.loc.
 
+    o	C functions fprec() and fround() [= R's signif() and round()],
+	now use R_pow_di(10., n) which is clean and more efficient.
+	This changes some results in the least significant bits.
+
+    o   rpois sometimes had problems with mu=0, now special-cased
+
+    o   --nsize and --vsize arguments to R CMD check now work
 
 
 	**************************************************
