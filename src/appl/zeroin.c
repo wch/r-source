@@ -53,7 +53,7 @@
  ************************************************************************
  */
 
-#include <math.h>
+#include "Mathlib.h"
 #define EPSILON DBL_EPSILON
 
 double zeroin(ax,bx,f,info,Tol,Maxit)	/* An estimate to the root	*/
