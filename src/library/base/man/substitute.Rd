@@ -1,15 +1,15 @@
 \name{substitute}
 \title{Actual Arguments}
 \usage{
-substitute(arg, env=NULL)
-quote(arg, env=NULL)
+substitute(expr, env=NULL)
+quote(expr, env=NULL)
 }
 \alias{substitute}
 \alias{quote}
 \description{
 \code{substitute} returns the expression which was typed
-as the value of a formal argument.  \code{quote} is a synonym useful to lisp
-programmers.
+as the value of a formal argument.
+\code{quote} is a synonym useful to lisp programmers.
 
 The typical use of this is to create informative
 labels for data sets and plots.
