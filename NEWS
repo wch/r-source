@@ -9,6 +9,11 @@
 
 		CHANGES IN R VERSION 0.63.4
 
+NEW FEATURES
+
+    o	pairs.formula() allows formula notations for scatter plot matrix.
+
+
 BUG FIXES
 
     o	Missing values didn't work in log plot
@@ -19,7 +24,13 @@ BUG FIXES
 
     o	example() now works again in all cases [AnIndex spaces].
 
-    o   typos fixed in nlm() message, glm help
+    o	typos fixed in nlm() message, glm help
+
+    o	pt() now works better for extreme `df'.
+
+    o   fixed some glitches with formatC() and its doc.
+
+    o   several fixes in *.c code to make -Wall happy
 
 
 		CHANGES IN R VERSION 0.63.3
@@ -62,18 +73,18 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   system(command, intern=FALSE, ignore.errors=FALSE) 
+    o	system(command, intern=FALSE, ignore.errors=FALSE) 
 	changed 1st & 3rd argument names and is better documented.
 
-    o   "/Font5 /Symbol findfont definefont" confused some printers
+    o	"/Font5 /Symbol findfont definefont" confused some printers
 
-    o   Bounding box rotated 90 deg for landscape (shouldn't be)
+    o	Bounding box rotated 90 deg for landscape (shouldn't be)
 
-    o   Legend skipped symbol for pch=0
+    o	Legend skipped symbol for pch=0
 
-    o   compilation on non-Intel Linux systems no longer looks for __setfpucw
+    o	compilation on non-Intel Linux systems no longer looks for __setfpucw
 
-    o   a %% b -- is now periodic instead of symmetric; more S compatible.
+    o	a %% b -- is now periodic instead of symmetric; more S compatible.
 
     o	locator(n=512) -- default: MANY points, not just one.
 
