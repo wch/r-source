@@ -4,7 +4,7 @@
 : ${R_HOME=R_HOME_DIR}
 export R_HOME
 
-R_BINARY="R.X11"
+R_binary="R.X11"
 
 # Default printer paper size
 # Choose one of the following:
@@ -37,9 +37,9 @@ export R_UNZIPCMD R_ZIPCMD
 
 # Default environment file -- used if there's none in current
 : ${R_ENVIRON="${HOME}/.Renviron"}
-USE_R_ENVIRON=true
+use_r_environ=true
 
-USAGE_MSG="
+usage="
 Usage: R [OPTIONS] [< INFILE] [> OUTFILE]
    or  R command      [arguments]
    or  R CMD Rcommand [arguments]
@@ -81,7 +81,7 @@ Commands:
 
 Rcommands:
   Rdconv		Convert Rd format to various other formats
-  Rd2dvi		Convert Rd format to DVI
+  Rd2dvi		Convert Rd format to DVI/PDF
   Rd2txt		Convert Rd format to pretty text
   Rdindex		Extract index information from Rd files
   Sd2Rd			Convert S documentation to Rd format
@@ -104,20 +104,20 @@ while test -n "${1}"; do
     CMD)
       shift; PATH="${R_HOME}/bin:${PATH}" exec "${@}" ;;
     -g|--gnome)
-      R_BINARY="R.gnome" ;;
+      R_binary="R.gnome" ;;
     -d)
       debugger="${2}"; shift ;;
     --debugger=*)
       debugger=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     --no-environ)
-      USE_R_ENVIRON=false ;;
+      use_r_environ=false ;;
     --vanilla)
       args="${args} ${1}"
-      USE_R_ENVIRON=false ;;
+      use_r_environ=false ;;
     -h|--help)
-      echo "${USAGE_MSG}"; exit 0 ;;
+      echo "${usage}"; exit 0 ;;
     --version)
-      exec ${R_HOME}/bin/${R_BINARY} --version ;;
+      exec ${R_HOME}/bin/${R_binary} --version ;;
     *)
       args="${args} ${1}" ;;
   esac
@@ -125,23 +125,25 @@ while test -n "${1}"; do
 done
 
 # Startup
-if ${USE_R_ENVIRON}; then # use the one in current dir, or default
-  if [ -r ./.Renviron ]; then
+if ${use_r_environ}; then # use the one in current dir, or default
+  if test -r ./.Renviron; then
     . ./.Renviron
-  else
-    [ -r ${R_ENVIRON} ] && . ${R_ENVIRON}
+    export `sed 's/^ *#.*//; s/^\(.*\)=.*/\1/' ./.Renviron`
+  elif test -r ${R_ENVIRON}; then
+    . ${R_ENVIRON}
+    export `sed 's/^ *#.*//; s/^\(.*\)=.*/\1/' ${R_ENVIRON}`
   fi
 fi
 
 if test -z "${debugger}"; then
-  exec ${R_HOME}/bin/${R_BINARY} @R_BATCHSAVE@ ${args}
+  exec ${R_HOME}/bin/${R_binary} @R_BATCHSAVE@ ${args}
 else
   if test -n "${args}"; then
     echo "*** Further command line arguments (\`${args}') disregarded"
     echo "*** (maybe use \`run ${args}' from *inside* ${debugger})"
     echo ""
   fi
-  exec ${debugger} ${R_HOME}/bin/${R_BINARY}
+  exec ${debugger} ${R_HOME}/bin/${R_binary}
 fi
 
 ### Local Variables: ***
