@@ -9,6 +9,8 @@
 
 NEW FEATURES
 
+    o   barplot() and boxplot() are now generic
+
     o   relevel function to reorder levels in factors.
 
     o   contr.treatment now has a base= argument for selecting the
