@@ -1,7 +1,9 @@
 
 			THE BASIC R README
 
+
 	   (See "RESOURCES" for additional resources)
+	   (See "INSTALL"   for help on installation)
 
 
 
@@ -26,7 +28,7 @@ this list.
 R was initially written by Robert Gentleman and Ross Ihaka of the
 Statistics Department of the University of Auckland.  In addition,
 a large group of individuals has contributed to R by sending code
-and bug reports. 
+and bug reports.
 
 Since mid-1997 there has been a core group who can modify the R
 source code CVS archive.  The group currently consists of
