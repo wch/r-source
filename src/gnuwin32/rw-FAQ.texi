@@ -125,7 +125,7 @@ possibilities.
 
 1) @code{SetupR.exe}, is about 15Mb and gives a complete installation.
 
-2) Directory @code{miniR} contains @code{miniR.exe} and six files
+2) Directory @code{miniR} contains @code{miniR.exe} and seven files
 @code{miniR-?.bin}.  You can put  @code{miniR.exe} and @code{miniR-1.bin}
 on one floppy and the remaining @code{miniR-?.bin} on a floppy each.
 
@@ -914,14 +914,14 @@ version (5.6.1, build 628 was current at the time of writing).
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2001 June 21 by Professor B. D. Ripley
+Last edited 2001 August 24 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2001 June 21 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2001 August 24 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
