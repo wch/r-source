@@ -47,6 +47,10 @@ USER-VISIBLE CHANGES
     o	Errors and warnings are sent to stderr not stdout on
 	command-line versions of R (Unix and Windows).
 
+    o   The default random number generators have been changed to
+        Mersenne-Twister and Inversion. A new RNGversion() function
+        allows you to restore the generators of an earlier R version
+        if reproducibility is required. 
 
 NEW FEATURES
 

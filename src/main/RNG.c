@@ -26,8 +26,9 @@
 #include "Defn.h"
 #include <R_ext/Random.h>
 
-#define RNG_DEFAULT MARSAGLIA_MULTICARRY
-#define N01_DEFAULT KINDERMAN_RAMAGE
+/* Normal generator is not actually set here but in nmath/snorm.c */
+#define RNG_DEFAULT MERSENNE_TWISTER
+#define N01_DEFAULT INVERSION
 
 
 #include <R_ext/Rdynload.h>

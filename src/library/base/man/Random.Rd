@@ -2,6 +2,7 @@
 \alias{.Random.seed}
 \alias{RNG}
 \alias{RNGkind}
+\alias{RNGversion}
 \alias{set.seed}
 \title{Random Number Generation}
 \description{
@@ -12,6 +13,9 @@
   \code{RNGkind} is a more friendly interface to query or set the kind
   of RNG in use.
 
+  \code{RNGversion} can be used to set the random generators as they
+  were in an earlier \R{} version (for reproducibility).
+  
   \code{set.seed} is the recommended way to specify seeds.
 }
 \usage{
@@ -19,6 +23,7 @@
 save.seed <- .Random.seed
 
 RNGkind(kind = NULL, normal.kind = NULL)
+RNGversion(vstr)
 set.seed(seed, kind = NULL)
 }
 \arguments{
@@ -30,6 +35,8 @@ set.seed(seed, kind = NULL)
     string, set the method of Normal generation. Use \code{"default"}
     to return to the \R default.}
   \item{seed}{a single value, interpreted as an integer.}
+  \item{vstr}{a character string containing a version number,
+    e.g. \code{"1.6.2"}}
   \item{rng.kind}{integer code in \code{0:k} for the above \code{kind}.}
   \item{n1, n2, \dots}{integers. See the details for how many are required
     (which depends on \code{rng.kind}).}
@@ -136,7 +143,8 @@ set.seed(seed, kind = NULL)
 
   \code{RNGkind} returns a two-element character vector of the RNG and
   normal kinds in use \emph{before} the call, invisibly if either
-  argument is not \code{NULL}.
+  argument is not \code{NULL}. \code{RNGversion} returns the same
+  information.
 
   \code{set.seed} returns \code{NULL}, invisibly.
 }

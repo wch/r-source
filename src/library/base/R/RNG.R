@@ -49,3 +49,18 @@ set.seed <- function(seed, kind = NULL)
 
     invisible(.Internal(set.seed(seed, i.knd)))
 }
+
+# Compatibility function to set RNGkind as in a given R version
+
+RNGversion <- function(vstr) 
+{
+    vnum <- as.numeric(strsplit(vstr,"\\.")[[1]])
+    if (length(vnum) < 2) 
+	stop("Malformed version string")
+    if (vnum[1] == 0 && vnum[2] < 99) 
+        RNGkind("Wichmann-Hill", "Kinderman-Ramage")
+    else if (vnum[1] == 0 || vnum[1] == 1 && vnum[2] <= 6) 
+	RNGkind("Marsaglia-Multicarry", "Kinderman-Ramage")
+    else
+	RNGkind("Mersenne-Twister", "Inversion")
+}

@@ -39,7 +39,7 @@ static
 #endif
 double BM_norm_keep = 0.0;
 
-N01type N01_kind = KINDERMAN_RAMAGE;
+N01type N01_kind = INVERSION;
 
 #ifndef MATHLIB_STANDALONE
 typedef void * (*DL_FUNC)();

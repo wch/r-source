@@ -402,12 +402,6 @@ void setup_Rmainloop(void)
 
     InitConnections(); /* needed to get any output at all */
 
-    /* Print a platform and version dependent */
-    /* greeting and a pointer to the copyleft. */
-
-    if(!R_Quiet)
-	PrintGreeting();
-
     /* Initialize the interpreter's */
     /* internal structures. */
 
@@ -507,6 +501,12 @@ void setup_Rmainloop(void)
     R_LoadProfile(R_OpenSysInitFile(), baseEnv);
     R_LoadProfile(R_OpenSiteFile(), baseEnv);
     R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
+
+    /* Print a platform and version dependent */
+    /* greeting and a pointer to the copyleft. */
+
+    if(!R_Quiet)
+	PrintGreeting();
 
     /* This is where we try to load a user's saved data.
        The right thing to do here is very platform dependent.
