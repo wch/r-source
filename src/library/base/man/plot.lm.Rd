@@ -96,7 +96,6 @@ plot(lm.SR, id.n = 5, labels.id = NULL)# 5 id numbers
 plot(lm.SR, panel = panel.smooth)
 ## Gives a smoother curve
 plot(lm.SR, panel = function(x,y) panel.smooth(x, y, span = 1))
-## Warnings:  panel = panel.smoth, span = 1
 
 par(mfrow=c(2,1))# same oma as above
 plot(lm.SR, which = 1:2, sub.caption = "Saving Rates, n=50, p=5")

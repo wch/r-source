@@ -60,7 +60,7 @@ Chapter 5 of Paul Murrell's Ph.D. thesis.
 and \code{\link{par}(mfg=..)}
 }
 \examples{
- def.par <- par()# save default, for resetting...
+ def.par <- par(no.readonly=TRUE)# save default, for resetting...
 
  ## divide the device into two rows and two columns
  ## allocate figure 1 all of row 1
