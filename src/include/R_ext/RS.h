@@ -20,6 +20,7 @@
 #ifndef R_RS_H
 #define R_RS_H
 
+#include <string.h> /* for memcpy */
 #include "Rconfig.h" /* for F77_SYMBOL */
 
 /* S Like Error Handling */
@@ -46,6 +47,7 @@ extern void R_chk_free(void *);
 #define Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (size_t)((n) * sizeof(t)) )
 /* S-PLUS 3.x but not 5.x NULLs the pointer in the following */
 #define Free(p)        (R_chk_free( (void *)(p) ), (p) = NULL)
+
 #define Memcpy(p,q,n)  memcpy( p, q, (size_t)( (n) * sizeof(*p) ) )
 
 /* S Like Fortran Interface */

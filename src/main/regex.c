@@ -33,6 +33,8 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+#define STDC_HEADERS 1
+/* assumed in R */
 
 /* The `emacs' switch turns on certain matching commands
    that make sense only in Emacs. */
