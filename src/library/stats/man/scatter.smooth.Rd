@@ -9,7 +9,8 @@
 scatter.smooth(x, y, span = 2/3, degree = 1,
     family = c("symmetric", "gaussian"),
     xlab = deparse(substitute(x)), ylab = deparse(substitute(y)),
-    ylim = range(y, prediction$y), evaluation = 50, \dots)
+    ylim = range(y, prediction$y, na.rm = TRUE),
+    evaluation = 50, \dots)
 
 loess.smooth(x, y, span = 2/3, degree = 1,
     family = c("symmetric", "gaussian"), evaluation = 50, \dots)

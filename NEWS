@@ -47,6 +47,9 @@ NEW FEATURES
     o   dir.create() has a new argument 'recursive' serving the same
 	purpose as Unix's mkdir -p.
 
+    o   scatter.smooth() and loess.smooth() now handle missing values
+	in their inputs.
+
 
 DOCUMENTATION
 
