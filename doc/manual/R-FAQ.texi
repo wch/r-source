@@ -303,6 +303,15 @@ updated hourly.  The @option{-C} and in the @command{rsync} command
 is to cause it to skip the CVS directories.  Further information on
 @command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
 
+@c <NOTE>
+@c Keep in sync with R-admin.
+Note that the sources available via rsync do not include the recommended
+packages, whereas these are included in the tarballs of released
+versions.  To install the appropriate sources for the recommended
+packages, run @command{./tools/rsync-recommended} from the top-level of
+the R sources that you pulled by rsync.
+@c </NOTE>
+
 The sources of the development version are also available via anonymous
 CVS.  See @uref{http://anoncvs.R-project.org} for more information.
 

@@ -326,6 +326,12 @@ updated hourly.  The <code>-C</code> and in the <code>rsync</code> command
 is to cause it to skip the CVS directories.  Further information on
 <code>rsync</code> is available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
 
+   <p>Note that the sources available via rsync do not include the recommended
+packages, whereas these are included in the tarballs of released
+versions.  To install the appropriate sources for the recommended
+packages, run <code>./tools/rsync-recommended</code> from the top-level of
+the R sources that you pulled by rsync.
+
    <p>The sources of the development version are also available via anonymous
 CVS.  See <a href="http://anoncvs.R-project.org">http://anoncvs.R-project.org</a> for more information.
 
