@@ -92,7 +92,8 @@ density <-
                         a <- bw/sqrt(1-8/pi^2)
                         ifelse(abs(kords) < a, pi/4*cos(pi*kords/(2*a))/a, 0)}
                     )
-    kords <- convolve(y, kords, type = "circular", conj = TRUE)[1:n]
+    kords <- fft( fft(y)* Conj(fft(kords)), inv=TRUE)
+    kords <- Re(kords)[1:n]/length(y)
     xords <- seq(lo, up, length = n)
     keep <- (xords >= from) & (xords <= to)
     x <- seq(from, to, length = n.user)

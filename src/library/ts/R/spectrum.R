@@ -123,33 +123,6 @@ spec.pgram <-
     }
     ## value at zero is invalid as mean has been removed, so interpolate
     pgram[1, i, j] <- 0.5*(pgram[2, i, j] + pgram[N, i, j])
-#     if(length(spans) > 0) {
-#         filter.list <- vector("list", length(spans))
-#         for (i in 1:length(spans)) {
-#             m <- floor(spans[i]/2)
-#             spans[i] <- 2 * m + 1
-#             filter.list[[i]] <-
-#                 if (m > 0) c(0.5, rep(1, 2 * m - 1), 0.5)/(2 * m) else 1
-#         }
-#         filter <- filter.list[[1]]
-#         if (length(spans) > 1)
-#             for (i in 2:length(spans)) filter <- convolve(filter.list[[i]],
-#                                                           filter, type="open")
-#         if (length(filter) > 1) {
-#             ndiff <- nrow(pgram) - length(filter)
-#             m <- floor(length(filter)/2)
-#             if (ndiff < 0)
-#                 stop("filter too long!")
-#             else for (i in 1:ncol(x)) for (j in 1:ncol(x)) {
-#                 pgram[, i, j] <- convolve(pgram[, i, j],
-#                                           c(filter[(m + 1):(2 * m + 1)],
-#                                             rep(0, ndiff), filter[1:m]))
-#             }
-#         }
-#         df <- 2/(sum(filter^2) * u4/u2^2)
-#         m <- floor(length(filter)/2)
-#         bandwidth <- sqrt(sum((1/12 + (-m:m)^2) * filter)) * xfreq/N
-#    } else if(!is.null(kernel)) {
     if(!is.null(kernel)) {
         for (i in 1:ncol(x)) for (j in 1:ncol(x))
                 pgram[, i, j] <- kernapply(pgram[, i, j], kernel,
