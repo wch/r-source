@@ -6732,12 +6732,12 @@ Print more information about progress.
 Set @code{Rterm} up for use by @code{R-inferior-mode} in @acronym{ESS}.
 @end table
 
-The command @code{R CMD} allows the invokation of various tools which
+The command @code{Rcmd} allows the invokation of various tools which
 are useful in conjunction with @R{}, but not intended to be called
 ``directly''.  The general form is
 
 @example
-R CMD @var{command} @var{args}
+Rcmd @var{command} @var{args}
 @end example
 
 @noindent
