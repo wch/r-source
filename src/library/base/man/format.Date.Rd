@@ -42,7 +42,7 @@ as.Date(x, \ldots)
 
   The \code{as.Date} methods accept character strings, factors, logical
   \code{NA} and objects of classes \code{"\link{POSIXlt}"} and
-  \code{"\link{POSIXlct}"}.  (The last are converted to days by
+  \code{"\link{POSIXct}"}.  (The last are converted to days by
   ignoring the time after midnight in the
   representation of the time in UTC.)  Also objects of class
   \code{"date"} (from package \pkg{\link[date:as.date]{date}} or
