@@ -19,6 +19,6 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   ## timestamp as the file they point to.
 
   for i in ${PKGS} ; do
-    ln -s $i*.tar.gz ${i}_tgz
+    ln -sf $i*.tar.gz ${i}_tgz
   done
 )
