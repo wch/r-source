@@ -683,10 +683,9 @@ Versions of Tcl/TK from 8.0 to 8.4.0 have been used successfully.
 @subsection Linear algebra
 @cindex BLAS library
 
-The linear algebra routines in @R{} can make use of enhanced BLAS
-(Basic Linear Algebra Subprograms,
-@uref{http://www.netlib.org/blas/faq.html}) routines.  Some are
-compiler-system-specific (@code{libsunperf} on Sun
+The linear algebra routines in @R{} can make use of enhanced BLAS (Basic
+Linear Algebra Subprograms, @uref{http://www.netlib.org/blas/faq.html})
+routines.  Some are compiler-system-specific (@code{libsunperf} on Sun
 Sparc@footnote{Using the SunPro @command{cc} and @command{f95}
 compilers}, @code{libessl} on IBM) but ATLAS
 (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned'' BLAS that
@@ -1179,9 +1178,6 @@ you may need to set it to avoid finding 32-bit addons (as in the
 @cindex HP-UX
 
 @R{} has been built successfully on HP-UX 10.2 and HP-UX 11.0 using both
-=======
-@R{} has been built successfully on HP-UX 10.2 and HP-UX 11.0 using both
->>>>>>> 1.62.2.7
 native compilers and @command{gcc}.  However, 10.2 has not been tested
 since R 1.4.0.  By default, R is configured to use @command{gcc} and
 @command{g77} on HP-UX (if available).  Some installations of
