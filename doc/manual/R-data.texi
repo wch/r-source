@@ -551,10 +551,7 @@ to specify @code{comment.char = ""}, @code{colClasses} as one of the
 atomic vector types (logical, integer, numeric, complex, character or
 perhaps raw) for each column, and to give @code{nrows}, the number of
 rows to be read (and a mild over-estimate is better than not specifying
-this at all).  Here is an example
-
-@example
-@end example
+this at all).  See the examples below.
 
 
 @node Fixed-width-format files, Using scan directly, Variations on read.table, Spreadsheet-like data
@@ -644,7 +641,7 @@ used naively.
 
 
 Note that timings can depend on the type read and the data. 
-Consider reading a million integers:
+Consider reading a million distinct integers:
 @example
 writeLines(as.character((1+1e6):2e6), "ints.dat")
 xi <- scan("ints.dat", what=integer(0), n=1e6)   # 0.77s
@@ -654,19 +651,19 @@ xf <- as.factor(xc)                              # 2.2s
 DF <- read.table("ints.dat")                     # 4.5s
 @end example
 @noindent
-and a million distinct codes:
+and a million examples of a small set of codes:
 @example
 code <- c("LMH", "SJC", "CHCH", "SPC", "SOM")
 writeLines(sample(code, 1e6, replace=TRUE), "code.dat")
-y <- scan("code.dat", what=character(0), n=1e6) # 0.44s
-yf <- as.factor(y)                              # 0.21s
-DF <- read.table("code.dat")                    # 4.9s
-DF <- read.table("code.dat", nrows=1e6)         # 3.6s
+y <- scan("code.dat", what=character(0), n=1e6)  # 0.44s
+yf <- as.factor(y)                               # 0.21s
+DF <- read.table("code.dat")                     # 4.9s
+DF <- read.table("code.dat", nrows=1e6)          # 3.6s
 @end example
 
-Note that these timings depend heavily on the system (the basic reads in
-Windows take at least as twice as long as these Linux times) and on the
-precise state of the garbage collector.
+Note that these timings depend heavily on the operating system (the
+basic reads in Windows take at least as twice as long as these Linux
+times) and on the precise state of the garbage collector.
 
 
 @node Re-shaping data, Flat contingency tables, Using scan directly, Spreadsheet-like data
