@@ -2440,6 +2440,10 @@ Local polynomial (ridge) regression.
 @item mAr
 Estimation of multivariate AR models through a computationally efficient
 stepwise least-squares algorithm.
+@item maanova
+Analysis of N-dye Micro Array experiments using mixed model effect.
+Contains anlysis of variance, permutation and bootstrap, cluster and
+consensus tree.
 @item magic
 A variety of methods for creating magic squares of any order greater
 than 2, and various magic hypercubes.
