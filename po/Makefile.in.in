@@ -26,9 +26,8 @@ include $(top_builddir)/Makeconf
 
 prefix = @prefix@
 exec_prefix = @exec_prefix@
-datadir = @datadir@
+datadir = ${rhome}/share
 localedir = $(datadir)/locale
-gettextsrcdir = $(datadir)/gettext/po
 
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
@@ -78,7 +77,7 @@ CATALOGS = @CATALOGS@
 	mv t-$@ $@
 
 R: all
-	@$(MAKE) install prefix=${top_builddir}
+	@$(MAKE) install datadir=${top_builddir}/share
 
 all: all-@USE_NLS@
 
@@ -235,13 +234,6 @@ installcheck:
 uninstall: uninstall-exec uninstall-data
 uninstall-exec:
 uninstall-data: uninstall-data-@USE_NLS@
-	if test "$(PACKAGE)" = "gettext-tools"; then \
-	  for file in $(DISTFILES.common) Makevars.template; do \
-	    rm -f $(DESTDIR)$(gettextsrcdir)/$$file; \
-	  done; \
-	else \
-	  : ; \
-	fi
 uninstall-data-no:
 uninstall-data-yes:
 	catalogs='$(CATALOGS)'; \
