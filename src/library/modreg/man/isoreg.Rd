@@ -45,8 +45,17 @@ isoreg(x, y = NULL)
     \emph{original} \code{x}.}
   \item{call}{the \code{\link{call}} to \code{isoreg()} used.}
 }
+\note{
+  The code should be improved to accept \emph{weights} additionally and
+  solve the corresponding weighted least squares problem.\cr
+  ``Patches are welcome!''
+}
 \references{
-  %% Add at least one!  `original' ??  __ FIXME __
+  Barlow, R. E., Bartholomew, D. J., Bremner, J. M., and Brunk, H. D. (1972)
+  \emph{Statistical inference under order restrictions}; Wiley, London.
+
+  Robertson, T., Wright,F.T. and Dykstra, R.L. (1988)
+  \emph{Order Restricted Statistical Inference}; Wiley, New York.
 }
 %%\author{Original C code by Brian Ripley; all else: Martin Maechler}
 \seealso{the plotting method \code{\link{plot.isoreg}} with more examples;
