@@ -4,7 +4,8 @@
 .First <- function() { \dots\dots }
 }
 \alias{Startup}
-\alias{RProfile}
+\alias{Rprofile}
+\alias{.Rprofile}
 \alias{.First}
 \description{
     In \R, the startup mechanism is as follows.  \R first searches for
