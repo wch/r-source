@@ -5393,14 +5393,16 @@ unsigned int LTYpar(SEXP value, int ind)
     }
     else if(isInteger(value)) {
 	code = INTEGER(value)[ind];
-	if(code == NA_INTEGER || code < 0) error("invalid line type");
+	if(code == NA_INTEGER || code < 0) 
+	    error("invalid line type");
 	if (code > 0)
 	    code = (code-1) % nlinetype + 1;
 	return linetype[code].pattern;
     }
     else if(isReal(value)) {
 	rcode = REAL(value)[ind];
-	if(!R_FINITE(rcode) || rcode < 0) error("invalid line type");
+	if(!R_FINITE(rcode) || rcode < 0) 
+	    error("invalid line type");
 	code = rcode;
 	if (code > 0)
 	    code = (code-1) % nlinetype + 1;
