@@ -1227,6 +1227,8 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* readTableHead(file, nlines, comment.char, blank.lines.skip, quote) */
 /* simplified version of readLines, with skip of blank lines and
    comment-only lines */
+/* <FIXME>  This does not handle escaped quotes, nor does it appear to
+   use the blank.lines.skip arg */
 #define BUF_SIZE 1000
 SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
