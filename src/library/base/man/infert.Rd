@@ -4,19 +4,19 @@
 \alias{infert}
 \format{
   \tabular{rll}{
-    1.        \tab Education	\tab 0 = 0-5  years \cr
-        \tab		\tab 1 = 6-11 years \cr
-        \tab		\tab 2 = 12+  years  \cr
-    2.        \tab age	\tab age in years of case \cr
-    3.        \tab parity	\tab count \cr
+    1.        \tab Education        \tab 0 = 0-5  years \cr
+        \tab                \tab 1 = 6-11 years \cr
+        \tab                \tab 2 = 12+  years  \cr
+    2.        \tab age        \tab age in years of case \cr
+    3.        \tab parity        \tab count \cr
     4.        \tab number of prior \tab 0 = 0 \cr
-        \tab		\tab induced abortions 1 = 1 \cr
-        \tab		\tab 2 = 2 or more \cr
+        \tab                \tab induced abortions 1 = 1 \cr
+        \tab                \tab 2 = 2 or more \cr
     5.        \tab case status\tab 1 = case \cr
-        \tab		\tab 0 = control \cr
+        \tab                \tab 0 = control \cr
     6.        \tab number of prior \tab 0 = 0 \cr
-        \tab		\tab spontaneous abortions 1 = 1 \cr
-        \tab		\tab 2 = 2 or more \cr
+        \tab                \tab spontaneous abortions 1 = 1 \cr
+        \tab                \tab 2 = 2 or more \cr
     7.        \tab matched set number \tab 1-83 \cr
     8.        \tab stratum number \tab 1-63 \cr
   }
