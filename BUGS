@@ -155,3 +155,27 @@ Date: Tue, 7 Mar 2000 16:35:59 +0100 (MET)
 Subject: Printing graphs on W98 laptop
 From: P.J.Green@bristol.ac.uk
 Date: Wed, 8 Mar 2000 18:23:33 +0100 (MET)
+* PR# 480 *
+Subject: problem with plot(...., xlim=c(5,0))
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sun, 12 Mar 2000 20:19:16 -0500 (EST)
+* PR# 481 *
+Subject: check does not accept --vsize option
+From: neteler@geog.uni-hannover.de
+Date: Mon, 13 Mar 2000 19:04:50 +0100 (MET)
+* PR# 482 *
+Subject: plot(1:10,c(1)$nothing)  yields index plot
+From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
+Date: Mon, 13 Mar 2000 11:13:18 -0800
+* PR# 483 *
+Subject: error in par option xaxt
+From: aim@uwo.ca
+Date: Mon, 13 Mar 2000 22:02:42 +0100 (MET)
+* PR# 484 *
+Subject: error in par option xaxt
+From: aim@uwo.ca
+Date: Mon, 13 Mar 2000 22:03:00 +0100 (MET)
+* PR# 485 *
+Subject: Install R1.0.0
+From: Lynn Zhang <lyzhang@umich.edu>
+Date: Mon, 13 Mar 2000 16:10:52 -0500 (EST)
