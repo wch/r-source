@@ -1302,7 +1302,7 @@ static char fontname[LF_FACESIZE+1];
 static int fontsty, pointsize;
 static int consoler = 25, consolec = 80;
 static int pagerrow = 25, pagercol = 80;
-static int pagerMultiple = 1;
+static int pagerMultiple = 1, haveusedapager = 0;
 
 void
 setconsoleoptions(char *fnname,int fnsty, int fnpoints,
@@ -1819,6 +1819,7 @@ pager newpager(char *title, char *filename, char *header, int deleteonexit)
         c = newpager1win(wtitle, filename, deleteonexit);
     else
         c = newpagerNwin(wtitle, filename, deleteonexit);
+    haveusedapager++;
     return c;
 }
 
@@ -1826,6 +1827,27 @@ pager newpager(char *title, char *filename, char *header, int deleteonexit)
 
 #include <string.h>
 #include <ctype.h>
+
+/* current state */
+
+struct structGUI 
+{
+    int MDI;
+    int toolbar;
+    int statusbar;
+    int pagerMultiple;
+    char font[50];
+    int tt_font;
+    int pointsize;
+    char style[20];
+    int crows, ccols, setWidthOnResize, prows, pcols;
+    rgb bg, fg, user, hlt;
+};
+typedef struct structGUI *Gui;
+static struct structGUI curGUI, newGUI;
+
+
+
 
 extern char *ColorName[]; /* from graphapp/rgb.c */
 
@@ -1843,7 +1865,7 @@ static int cmatch(char *col, char **list)
 
 static char *StyleList[] = {"normal", "bold", "italic", NULL};
 static char *PointsList[] = {"6", "7", "8", "9", "10", "11", "12", "14", "16", "18", NULL};
-static char *FontsList[] = {"", "Courier", "Courier New", "FixedSys", "FixedFont", "Lucida Console", "Terminal", NULL};
+static char *FontsList[] = {"Courier", "Courier New", "FixedSys", "FixedFont", "Lucida Console", "Terminal", NULL};
 
 
 static window wconfig;
@@ -1857,7 +1879,52 @@ static checkbox toolbar, statusbar, tt_font, c_resize;
 static field f_crows, f_ccols, f_prows, f_pcols;
 
 
-void cleanup()
+static void getGUIstate(Gui p)
+{
+    p->MDI = ischecked(rb_mdi);
+    p->toolbar = ischecked(toolbar);
+    p->statusbar = ischecked(statusbar);
+    p->pagerMultiple = ischecked(rb_mwin);
+    strcpy(p->font, gettext(f_font));
+    p->tt_font = ischecked(tt_font);
+    p->pointsize = atoi(gettext(d_point));
+    strcpy(p->style, gettext(f_style));
+    p->crows = atoi(gettext(f_crows));
+    p->ccols = atoi(gettext(f_ccols));
+    p->setWidthOnResize = ischecked(c_resize);
+    p->prows = atoi(gettext(f_prows));
+    p->pcols = atoi(gettext(f_pcols));
+    p->bg = nametorgb(gettext(bgcol));
+    p->fg = nametorgb(gettext(fgcol));
+    p->user = nametorgb(gettext(usercol));
+    p->hlt = nametorgb(gettext(highlightcol));
+}
+
+
+static int has_changed()
+{
+    Gui a=&curGUI, b=&newGUI;
+    return a->MDI != b->MDI ||
+	a->toolbar != b->toolbar ||
+	a->statusbar != b->statusbar ||
+	a->pagerMultiple != b->pagerMultiple ||
+	strcmp(a->font, b->font) ||
+	a->tt_font != b->tt_font ||
+	a->pointsize != b->pointsize ||
+	strcmp(a->style, b->style) ||
+	a->crows != b->crows ||
+	a->ccols != b->ccols ||
+	a->setWidthOnResize != b->setWidthOnResize ||
+	a->prows != b->prows ||
+	a->pcols != b->pcols ||
+	a->bg != b->bg ||
+	a->fg != b->fg ||
+	a->user != b->user ||
+	a->hlt != b->hlt;
+}
+
+
+static void cleanup()
 {
     hide(wconfig);
     delobj(l_mdi); delobj(rb_mdi); delobj(rb_sdi); 
@@ -1879,43 +1946,106 @@ void cleanup()
 }
 
 
-void apply(button b)
+static void apply(button b)
 {
     rect r = getrect(RConsole);
+    ConsoleData p = (ConsoleData) getdata(RConsole);
+    int havenewfont = 0;
 
-    ConsoleData p=(ConsoleData) getdata(RConsole);
-/*    consoler = atoi(gettext(f_crows));
-    consolec = atoi(gettext(f_ccols));
-    r.width = (consoler + 1) * FW;
-    r.height = (consolec + 1) * FH;
-    resize(RConsole, r);
-    consoleresize(RConsole, rect(0, 0, WIDTH, HEIGHT));*/
-    p->fg = consolefg = nametorgb(gettext(fgcol));
-    p->ufg = consoleuser = nametorgb(gettext(usercol));
-    p->bg = consolebg = nametorgb(gettext(bgcol));
-    drawconsole(RConsole, getrect(RConsole));
-    pagerhighlight = nametorgb(gettext(highlightcol));
+    getGUIstate(&newGUI);
+    if(!has_changed()) return;
 
-    pagerrow = atoi(gettext(f_prows));
-    pagercol = atoi(gettext(f_pcols));
-    pagerMultiple = ischecked(rb_mwin) ? 1 : 0;
-    setWidthOnResize = ischecked(c_resize) ? 1 : 0;
+    if(newGUI.MDI != curGUI.MDI || newGUI.toolbar != curGUI.toolbar ||
+       newGUI.statusbar != curGUI.statusbar)
+	askok("The overall console properties cannot be changed\non a running console.\n\nSave the preferences and restart Rgui to apply them.\n");
+
     
-    askok("Not really yet implemented");
+/*  Set a new font? */
+    if(strcmp(newGUI.font, curGUI.font) || 
+       newGUI.pointsize != curGUI.pointsize ||
+       newGUI.style != curGUI.style)
+    {
+	char msg[LF_FACESIZE + 128]; 
+	int sty = Plain;
+	
+	if(newGUI.tt_font) strcpy(fontname, "TT "); else strcpy(fontname, "");
+	strcat(fontname,  newGUI.font);
+	if (!strcmp(newGUI.style, "bold")) sty = Bold;
+	if (!strcmp(newGUI.style, "italic")) sty = Italic;
+	pointsize = newGUI.pointsize;
+	fontsty = sty;
+	/* Don't delete font: open pagers may be using it */
+	if (strcmp(fontname, "FixedFont"))
+	    consolefn = gnewfont(NULL, fontname, fontsty, pointsize, 0.0);
+	else consolefn = FixedFont;
+	if (!consolefn) {
+	    sprintf(msg,
+		    "Font %s-%d-%d  not found.\nUsing system fixed font.",
+		    fontname, fontsty | FixedWidth, pointsize);
+	    R_ShowMessage(msg);
+	    consolefn = FixedFont;
+	}
+	if (!ghasfixedwidth(consolefn)) {
+	    sprintf(msg,
+		    "Font %s-%d-%d has variable width.\nUsing system fixed font.",
+		    fontname, fontsty, pointsize);
+	    R_ShowMessage(msg);
+	    consolefn = FixedFont;
+	}
+	p->f = consolefn;
+	FH = fontheight(p->f);
+	FW = fontwidth(p->f);
+	havenewfont = 1;
+    }
+
+/* resize console, possibly with new font */
+    if (consoler != newGUI.crows || consolec != newGUI.ccols || havenewfont) {
+	char buf[20];
+	consoler = newGUI.crows;
+	consolec = newGUI.ccols;
+	r.width = (consolec + 1) * FW;
+	r.height = (consoler + 1) * FH;
+	resize(RConsole, r);
+	sprintf(buf, "%d", ROWS); settext(f_crows, buf);
+	sprintf(buf, "%d", COLS); settext(f_ccols, buf);
+    }
+    
+/* Set colours and redraw */
+    p->fg = consolefg = newGUI.fg;
+    p->ufg = consoleuser = newGUI.user;
+    p->bg = consolebg = newGUI.bg;
+    drawconsole(RConsole, r);
+    pagerhighlight = newGUI.hlt;
+
+    if(haveusedapager && 
+       (newGUI.prows != curGUI.prows || newGUI.pcols != curGUI.pcols))
+	askok("Changes in pager size will not apply to any open pagers");
+    pagerrow = newGUI.prows;
+    pagercol = newGUI.pcols;
+
+    if(haveusedapager && newGUI.pagerMultiple != pagerMultiple) {
+	if(askokcancel("Do not change pager type if any pager is open\nProceed?") 
+	   == YES)  pagerMultiple = newGUI.pagerMultiple;
+	else if(pagerMultiple) {
+	    check(rb_mwin); uncheck(rb_swin);
+	} else {check(rb_swin); uncheck(rb_mwin);}
+    }
+    
+    setWidthOnResize = newGUI.setWidthOnResize;
+    getGUIstate(&curGUI);
 }
 
-void save(button b)
+static void save(button b)
 {
     char *file, buf[256], *p;
     FILE *fp;
 
     setuserfilter("All files (*.*)\0*.*\0\0");
     file = askfilesave("Select directory for Rconsole", "Rconsole");
-    if(!strlen(file)) return;
+    if(!file) return;
     strcpy(buf, file);
     p = buf + strlen(buf) - 2;
     if(!strncmp(p, ".*", 2)) *p = '\0';
-    askok(buf);
     
     fp = fopen(buf, "w");
     if(fp == NULL) {
@@ -1969,26 +2099,30 @@ void save(button b)
     fclose(fp);
 }
 
-void cancel(button b)
+static void cancel(button b)
 {
     cleanup();
     show(RConsole);
 }
 
-void finish(button b)
+static void finish(button b)
 {
-    /* read off results here! */
+    getGUIstate(&newGUI);
+    if(has_changed()) {
+	if(askokcancel("Changes have been made and not applied\nProceed?") 
+	   == CANCEL) return;
+    }
     cleanup();
     show(RConsole);
 }
 
-void cMDI(button b)
+static void cMDI(button b)
 {
     enable(toolbar);
     enable(statusbar);
 }
 
-void cSDI(button b)
+static void cSDI(button b)
 {
     disable(toolbar);
     disable(statusbar);
@@ -1998,6 +2132,7 @@ void cSDI(button b)
 void Rgui_configure()
 {
     char buf[100], *style;
+    ConsoleData p = (ConsoleData) getdata(RConsole);
 
     wconfig = newwindow("Rgui Configuration Editor", rect(0, 0, 550, 400),
 			Titlebar | Centered | Modal);
@@ -2013,11 +2148,9 @@ void Rgui_configure()
     statusbar = newcheckbox("MDI statusbar", rect(420, 10, 100, 20), NULL);
     if(RguiMDI & RW_STATUSBAR) check(statusbar);
     if(RguiMDI & RW_MDI) {
-	check(rb_mdi);
-	cMDI(rb_mdi);
+	check(rb_mdi); cMDI(rb_mdi);
     } else {
-	check(rb_sdi);
-	cSDI(rb_sdi);
+	check(rb_sdi); cSDI(rb_sdi);
     }
 
     l_mwin = newlabel("Pager style", rect(10, 50, 90, 20), AlignLeft);
@@ -2032,33 +2165,33 @@ void Rgui_configure()
     
     f_font = newdropfield(FontsList, rect(60, 100, 120, 20), NULL);
     tt_font = newcheckbox("TrueType only", rect(190, 100, 100, 20), NULL);
-    if ((strlen(fontname) > 1) && (fontname[0] == 'T') && (fontname[1] == 'T')) {
-        char *pf;
-	check(tt_font);
-        for (pf = fontname+2; isspace(*pf) ; pf++);
-        settext(f_font, pf);
-    } else {
-        settext(f_font, fontname);
+    {
+	char *pf;
+	if ((strlen(fontname) > 1) && 
+	    (fontname[0] == 'T') && (fontname[1] == 'T')) {
+	    check(tt_font);
+	    for (pf = fontname+2; isspace(*pf) ; pf++);
+	} else pf = fontname;
+	setlistitem(f_font, cmatch(pf, FontsList));
     }
 
-    l_point = newlabel("pointsize", rect(310, 100, 50, 20), AlignLeft);
-    d_point = newdropfield(PointsList, rect(370, 100, 50, 20), NULL);
+    l_point = newlabel("size", rect(310, 100, 30, 20), AlignLeft);
+    d_point = newdropfield(PointsList, rect(350, 100, 50, 20), NULL);
     sprintf(buf, "%d", pointsize);
     setlistitem(d_point, cmatch(buf, PointsList));
-    l_style = newlabel("style", rect(430, 100, 40, 20), AlignLeft);
-    f_style = newdropfield(StyleList, rect(470, 100, 80, 20), NULL);
+    l_style = newlabel("style", rect(410, 100, 40, 20), AlignLeft);
+    f_style = newdropfield(StyleList, rect(450, 100, 80, 20), NULL);
     style = "normal";
     if (fontsty & Italic) style = "italic";
     if (fontsty & Bold) style = "Bold";
     setlistitem(f_style, cmatch(style, StyleList));
-    
 
 /* Console size, set widthonresize */
     l_crows = newlabel("Console   rows", rect(10, 150, 70, 20), AlignLeft);
-    sprintf(buf, "%d", consoler);
+    sprintf(buf, "%d", ROWS);
     f_crows = newfield(buf, rect(100, 150, 30, 20));
     l_ccols = newlabel("columns", rect(150, 150, 60, 20), AlignLeft);
-    sprintf(buf, "%d", consolec);
+    sprintf(buf, "%d", COLS);
     f_ccols = newfield(buf, rect(220, 150, 30, 20));
     c_resize = newcheckbox("set options(width) on resize?", 
 			   rect(300, 150, 200, 20), NULL);
@@ -2094,4 +2227,5 @@ void Rgui_configure()
     bFinish = newbutton("Finish", rect(350, 360, 70, 25), finish);
     bCancel = newbutton("Cancel", rect(430, 360, 70, 25), cancel); 
     show(wconfig);
+    getGUIstate(&curGUI);
 }

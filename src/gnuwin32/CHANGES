@@ -10,15 +10,17 @@ rw1010
 Console preferences editor on the Edit menu in Rgui.
 
 The postscript() device can now spool plots to a printer. You will
-need a suitable program to send a file to the spooler (or even to
-interpret PostScript for the printer): the RedMon suite available from
-http://www.cs.wisc.edu/~ghost/rjl.html shoudl provide suitable tools.
+need a suitable program to send a file to the spooler (or even to set
+it to ghostscript to interpret PostScript for the printer): the RedMon
+suite available from http://www.cs.wisc.edu/~ghost/rjl.html should
+provide suitable tools.
 
 
 rw1001
 ======
 
-The installer, rwinst.exe, now checks for ZIP files as well as zip files.
+The installer, rwinst.exe, now checks for ZIP files as well as zip files,
+as some browsers manage to map filenames to uppercase.
 
 Under rare conditions (lots of very short input lines) the history buffer
 could overrun and so cause crashes. This has been possible since rw0623,
@@ -26,7 +28,7 @@ but first caused reported problems in rw1000 and has now been fixed.
 
 Certain HP printer drivers (e.g. the 6/6MP-Postscript driver) reset the
 FPU and so were causing crashes.  This has been circumvented in this
-version.
+version by restoring the settings before and after each page.
 
 Building on a non-default drive should be more reliable, as Perl is
 used to find the current drive.
