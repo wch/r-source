@@ -2,10 +2,13 @@
 \alias{sunspots}
 \title{Monthly Mean Relative Sunspot Numbers}
 \usage{data(sunspots)}
-\description{Zurich monthly sunspot numbers from 1749 to 1983.}
-\format{A time series of 229 cases (years from 1749 to 1983) on 12
-    variables (the mean relative sunspot numbers in the months January
-    to December).  The last case is incomplete.
+\description{
+    Monthly sunspot numbers from 1749 to 1983. Collected at Swiss
+    Federal Observatory, Zurich until 1960, then Tokyo Astronomical
+    Observatory.
+}
+\format{
+    A time series of monthly data from 1749 to 1983.
 }
 \source{
     D. F. Andrews and A. M. Herzberg (1985).
