@@ -10,17 +10,19 @@
 \usage{
 rle(x)
 \method{print}{rle}(x, digits = getOption("digits"), \dots)
-inverse.rle(x)
+inverse.rle(x, \dots)
 }
 \arguments{
   \item{x}{a simple vector [as argument of rle()],\cr
     a class "rle" object [as argument of \code{print()} or
-    \code{invers.rle()}].}
+    \code{inverse.rle()}].}
   \item{digits, \dots}{potentially further arguments to the
     corresponding method.}
+  \item{\dots}{further arguments (unused by these methods).}
 }
 \value{
-  \code{rle()} returns an object of class "rle" which is a list with components
+  \code{rle()} returns an object of class "rle" which is a list with
+  components
   \item{lengths}{an integer vector containing the length of each run.}
   \item{values}{a vector of the same length as \code{lengths} with the
     corresponding values.}
