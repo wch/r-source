@@ -942,8 +942,11 @@ if test -z "${TCLTK_CPPFLAGS}"; then
       ## Look for tk.h in
       ##   ${TK_PREFIX}/include/tk${TK_VERSION}
       ##   ${TK_PREFIX}/include
-      OLD_CPPFLAGS=$CPPFLAGS
-      CPPFLAGS="$CPPFLAGS -I$x_includes $TCLTK_CPPFLAGS"
+      ## As the AC_CHECK_HEADER test tries including the header file and
+      ## tk.h includes tcl.h and X11/Xlib.h, we need to change CPPFLAGS
+      ## for the check.
+      save_CPPFLAGS="${CPPFLAGS}"
+      CPPFLAGS="${CPPFLAGS} ${TK_XINCLUDES} ${TCLTK_CPPFLAGS}"
       AC_CHECK_HEADER(${TK_PREFIX}/include/tk${TK_VERSION}/tk.h,
         [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include/tk${TK_VERSION}"
 	  found_tk_h=yes])
@@ -952,7 +955,7 @@ if test -z "${TCLTK_CPPFLAGS}"; then
           [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include"
             found_tk_h=yes])
       fi
-      CPPFLAGS=$OLD_CPPFLAGS
+      CPPFLAGS="${save_CPPFLAGS}"
     fi
     if test "${found_tk_h}" = no; then
       AC_CHECK_HEADER(tk.h, , have_tcltk=no)
@@ -1047,8 +1050,17 @@ if test "$with_blas" = "no"; then
   BLAS_LIBS=" "
 elif test "$with_blas" != "yes"; then
   # user specified a BLAS library to try on the command line
-  AC_CHECK_LIB($with_blas, $dgemm_func, 
-	       BLAS_LIBS="-l$with_blas", , $FLIBS)
+  # Safeguard against users giving the location of the lib.
+  blas_lib_dir=`dirname ${with_blas}`
+  if test "x${blas_lib_dir}" = x; then
+    AC_CHECK_LIB($with_blas, $dgemm_func, 
+                 BLAS_LIBS="-l$with_blas", , $FLIBS)
+  else
+    blas_lib_name=`basename ${with_blas} | sed 's/^lib\([[^.]]*\).*$/\1/'`
+    AC_CHECK_LIB($blas_lib_name, $dgemm_func,
+      BLAS_LIBS="-L${blas_lib_dir} -l${blas_lib_name}", ,
+      [-L${blas_lib_dir} ${FLIBS}])
+  fi
 fi
 
 if test "x$BLAS_LIBS" = x; then
