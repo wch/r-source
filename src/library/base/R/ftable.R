@@ -193,9 +193,22 @@ print.ftable <- function(x, digits = getOption("digits"), ...)
 read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
                         col.vars, skip = 0)
 {
+    ## <NOTE>
+    ## Currently, `file' must really be a character string naming a
+    ## file, connections are not supported.  We need to count.fields()
+    ## on the whole thing, so we could extend this to connections which
+    ## can seek the origin (file connections only, it seems).
+    ## </NOTE>
+    
     z <- count.fields(file, sep, quote, skip)
     n.row.vars <- z[max(which(z == max(z)))] - z[length(z)] + 1
     i <- which(z == n.row.vars)
+
+    ## Open a file connection so that we do not have to play with skips.
+    file <- file(file, "r")
+    on.exit(close(file))
+    readLines(file, skip)
+    
     if((length(i) != 1) || (i == 1)) {
         ## This is not really an ftable.
         if((z[1] == 1) && z[2] == max(z)) {
@@ -208,15 +221,14 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
             n.col.vars <- 1
             col.vars <- vector("list", length = n.col.vars)
             s <- scan(file, what = "", sep = sep, quote = quote,
-                      nlines = 2, skip = skip, quiet = TRUE)
+                      nlines = 2, quiet = TRUE)
             names(col.vars) <- s[1]
             s <- s[-1]
             row.vars <- vector("list", length = n.row.vars)
             i <- 1 : n.row.vars
             names(row.vars) <- s[i]
             col.vars[[1]] <- s[-i]
-            z <- z[3 : length(z)]
-            skip <- skip + 2
+            z <- z[-(1 : 2)]
         }
         else {
             ## Case B.
@@ -254,26 +266,24 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
         n <- c(1, z[1 : n.col.vars] - 1)
         for(k in seq(from = 1, to = n.col.vars)) {
             s <- scan(file, what = "", sep = sep, quote = quote,
-                      nlines = 1, skip = skip + k - 1, quiet = TRUE)
+                      nlines = 1, quiet = TRUE)
             col.vars[[k]] <- s[-1]
             names(col.vars)[k] <- s[1]
         }
         row.vars <- vector("list", length = n.row.vars)
         names(row.vars) <- scan(file, what = "", sep = sep, quote =
-                                quote, nlines = 1, skip = skip +
-                                n.col.vars, quiet = TRUE)
-        z <- z[(n.col.vars + 2) : length(z)]
-        skip <- skip + n.col.vars + 1
+                                quote, nlines = 1, quiet = TRUE)
+        z <- z[-(1 : (n.col.vars + 1))]
     }
     p <- 1
     n <- integer(n.row.vars)
     for(k in seq(from = 1, to = n.row.vars)) {
-        n[k] <- sum(z == max(z) - k + 1) / p
+        n[k] <- sum(z >= max(z) - k + 1) / p
+        p <- p * n[k]
     }
     is.row.lab <- rep(rep(c(TRUE, FALSE), length(z)),
                       c(rbind(z - min(z) + 1, min(z) - 1)))
-    s <- scan(file, what = "", sep = sep, quote = quote, quiet = TRUE,
-              skip = skip)
+    s <- scan(file, what = "", sep = sep, quote = quote, quiet = TRUE)
     values <- as.numeric(s[!is.row.lab])
     tmp <- s[is.row.lab]
     len <- length(tmp)
@@ -283,8 +293,10 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
         tmp <- tmp[seq(from = 2, to = len / n[k])]
         len <- length(tmp)
     }
-    dim(values) <- c(prod(sapply(row.vars, length)),
-                     prod(sapply(col.vars, length)))
+    values <- matrix(values,
+                     nr = prod(sapply(row.vars, length)),
+                     nc = prod(sapply(col.vars, length)),
+                     byrow = TRUE)
     structure(values,
               row.vars = row.vars,
               col.vars = col.vars,
