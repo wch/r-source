@@ -82,7 +82,7 @@ options are used. This is done by setting either of the options
 \code{verbose} or \code{warn} to be non-zero via the
 \code{\link{options}} function.  Currently, we know of only 2
 platforms that do not provide a value for local load
-(RTLD_LOCAL). These are IRIX6.4 and unpatched versions of Solaris
+(RTLD\_LOCAL). These are IRIX6.4 and unpatched versions of Solaris
 2.5.1. 
 
 
