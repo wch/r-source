@@ -50,6 +50,28 @@ as.matrix.dist <- function(obj)
     df
 }
 
+
+as.dist <- function(m, diag = FALSE, upper=FALSE)
+{
+    m <- as.matrix(m)
+    
+    retval <-  m[row(m) > col(m)]
+
+    attributes(retval) <- NULL
+
+    if(!is.null(rownames(m)))
+        attr(retval,"Labels") <- rownames(m)
+    else if(!is.null(colnames(m)))
+        attr(retval,"Labels") <- colnames(m)
+
+    attr(retval,"Size") <- nrow(m)
+    attr(retval,"Diag") <- diag
+    attr(retval,"Upper") <- upper
+    class(retval) <- "dist"
+    retval
+}
+
+
 print.dist <- function(obj, diag=NULL, upper=NULL)
 {
     if(is.null(diag))
