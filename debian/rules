@@ -3,7 +3,7 @@
 # Copyright 1997-2003 by Douglas Bates <bates@stat.wisc.edu> 
 #                    and Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.45 2003/03/26 23:10:07 bates Exp $
+# $Id: rules,v 1.46 2003/04/03 22:26:00 bates Exp $
 
 corepackage	= r-base-core
 latexpackage	= r-base-latex
@@ -37,12 +37,6 @@ ifeq ($(gnome),0)
 gnomeconfig 	= --without-gnome
 else
 gnomeconfig	= --with-gnome
-endif
-
-# edd 08 Mar 2003  allow not to do r-recommended (e.g. for R-devel snapshots)
-rrecommended	= 1
-ifeq ($(rrecommeneded),0)
-		@echo "*** Not running r-recommended installation commands ***"
 endif
 
 #export DH_VERBOSE = 1
@@ -99,8 +93,8 @@ upstream:
 	links http://cran.us.r-project.org/src/base
 
 upstreamdevel:
-	links ftp://ftp.stat.math.ethz.ch/Software/R
-	#links http://cran.us.r-project.org/src/base
+	#links ftp://ftp.stat.math.ethz.ch/Software/R
+	links http://cran.us.r-project.org/src/base
 
 build: build-arch build-indep
 
@@ -278,10 +272,7 @@ endif
 
         # move files for r-recommended
         # doing this before html/latex moves ensure they keep their tex/latex
-ifeq ($(rrecommeneded),0)
-	@echo "*** Not running r-recommended installation commands ***"
 	dh_movefiles	-p$(recdpackage)
-endif
         # move the html manual files in r-doc-html.files into r-doc-html 
         # these get built in make-arch too ...
 	dh_movefiles	-p$(htmlpackage)		
@@ -307,9 +298,11 @@ endif
 			ln -s ../lib/R/include/Rmath.h .)
 
         # now deal with $R_HOME/etc <--> /etc/R
-	(cd $(debetc); 	mv Makeconf Renviron	../../../../etc/R/; 	    \
+	# edd 03 Apr 2003  patch Renviron for new R_LIBS standard
+	(cd $(debetc); 	cat $(debbase)/Renviron-R_LIBS.patch | patch; 	\
+			mv Makeconf Renviron	../../../../etc/R/; 	\
 			ln -s  /etc/R/Makeconf  .; \
-			ln -s  /etc/R/Renviron  .)
+			ln -s  /etc/R/Renviron  .  )
         #
 	touch install-arch-stamp
 
@@ -398,11 +391,8 @@ binary-arch: build-arch install-arch check
         # install lintian "silencer"
 	install -p -m 0644  debian/$(corepackage).lintian \
 	   $(debbase)/$(corepackage)/usr/share/lintian/overrides/$(corepackage)
-ifeq ($(rrecommeneded),0)
-	@echo "*** Not running r-recommended installation commands ***"
 	install -p -m 0644  debian/$(recdpackage).lintian \
 	   $(debbase)/$(recdpackage)/usr/share/lintian/overrides/$(recdpackage)
-endif
         #dh_undocumented -a
 	dh_installchangelogs -a	-k NEWS 
 	dh_strip -a

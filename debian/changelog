@@ -1,3 +1,34 @@
+r-base (1.6.2.cvs.20030403-1) unstable; urgency=low
+
+  * Upgraded to release candidate dated 2003-04-03 of R 1.7.0
+  * debian/rules: Add R_LIBS setting to /etc/R/Renviron such that 
+    user-installed packages will be in /usr/local/lib/R/site-library,
+    Debian packages will install into /usr/lib/R/site-library and
+    the r-base-core and r-recommended packages will use the standard
+    /usr/lib/R/library directory
+  * debian/r-base-core.dirs: Add /usr/lib/R/site-library
+  * debian/r-base-core.postinst: Add failsafe creation of directory
+    /usr/local/lib/R/site-library as per Policy section 10.1.2
+  * debian/r-base-core.prerm: Add failsafe creation of directory
+    /usr/local/lib/R/site-library as per Policy section 10.1.2
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu,  3 Apr 2003 10:16:06 -0600
+
+r-base (1.6.2.cvs.20030331-1) unstable; urgency=low
+
+  * Upgraded to release candidate dated 2003-03-30 of R 1.7.0
+  * debian/control: Added lapack-dev to Depends for r-base-dev
+  * debian/rules: Removed rrecommended tests
+   
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 31 Mar 2003 09:01:22 -0600
+
+r-base (1.6.2.cvs.20030330-1) unstable; urgency=low
+
+  * Upgraded to release candidate dated 2003-03-30 of R 1.7.0
+  * Upstream sources fix the problem reported in #186857 (Closes: #186857)
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Sun, 30 Mar 2003 16:08:48 -0600
+
 r-base (1.6.2.cvs.20030326-1) unstable; urgency=low
 
   * Upgraded to release candidate dated 2003-03-26 of R 1.7.0

@@ -20,6 +20,24 @@ case "$1" in
 	then 
 	    update-menus 
 	fi
+
+	# edd 03 Apr 2003  cf Section 10.1.2 of Debian Policy
+	if [ ! -e /usr/local/lib/R ]
+	then
+	    if mkdir /usr/local/lib/R 2>/dev/null
+	    then 
+		chown root:staff /usr/local/lib/R
+		chmod 2775 /usr/local/lib/R
+	    fi
+	fi
+	if [ ! -e /usr/local/lib/R/site-library ]
+	then
+	    if mkdir /usr/local/lib/R/site-library 2>/dev/null
+	    then 
+		chown root:staff /usr/local/lib/R/site-library
+		chmod 2775 /usr/local/lib/R/site-library
+	    fi
+	fi
     ;;
     abort-upgrade|abort-remove|abort-deconfigure)
     ;;

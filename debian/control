@@ -82,7 +82,7 @@ Description: GNU R Gnome gui for statistical computing system
 Package: r-base-dev
 Architecture: all
 Section: devel
-Depends: r-base-core, blas-dev (>= 1.0-9), build-essential, g77 (>= 3.2.2), gcc (>= 3.2.2), g++ (>= 3.2.2), libncurses5-dev, libreadline4-dev
+Depends: r-base-core, blas-dev (>= 1.0-9), build-essential, g77 (>= 3.2.2), gcc (>= 3.2.2), g++ (>= 3.2.2), libncurses5-dev, libreadline4-dev, lapack-dev
 Description: GNU R installation of auxiliary GNU R packages 
  R is `GNU S' - A language and environment for statistical computing
  and graphics. R is similar to the award-winning S system, which was

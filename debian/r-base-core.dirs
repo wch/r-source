@@ -1,5 +1,6 @@
 etc/R
 usr/bin
 usr/lib/R
+usr/lib/R/site-library
 usr/share/doc/r-base-core/doc
 usr/share/lintian/overrides
