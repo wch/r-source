@@ -18,6 +18,11 @@ interaction(\dots, drop=FALSE)
 \value{
   A factor which represents the interaction of the given factors.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{factor}}.}%% even more ":" for factors!
 
 \examples{
