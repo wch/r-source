@@ -647,14 +647,17 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     if(rnames != R_NilValue || cnames != R_NilValue) {
 	PROTECT(dimnames = allocVector(VECSXP, 2));
-	PROTECT(ndimnamesnames = allocVector(VECSXP, 2));
 	VECTOR(dimnames)[0] = cnames;
 	VECTOR(dimnames)[1] = rnames;
-	STRING(ndimnamesnames)[1] = STRING(dimnamesnames)[0];
-	STRING(ndimnamesnames)[0] = STRING(dimnamesnames)[1];
-	setAttrib(dimnames, R_NamesSymbol, ndimnamesnames);
+	if (!isNull(dimnamesnames)) {
+	    PROTECT(ndimnamesnames = allocVector(VECSXP, 2));
+	    STRING(ndimnamesnames)[1] = STRING(dimnamesnames)[0];
+	    STRING(ndimnamesnames)[0] = STRING(dimnamesnames)[1];
+	    setAttrib(dimnames, R_NamesSymbol, ndimnamesnames);
+	    UNPROTECT(1);
+	}
 	setAttrib(r, R_DimNamesSymbol, dimnames);
-	UNPROTECT(2);
+	UNPROTECT(1);
     }
     copyMostAttrib(a, r);
     UNPROTECT(1);
