@@ -9,6 +9,8 @@ tempfile() can have argument `pattern' of length greater than 1.
 A bug in tab expansion in the console and internal pager has been
 corrected.
 
+link.html.help() is able to cope with packages with missing TITLE files.
+
 
 rw0990
 ======
