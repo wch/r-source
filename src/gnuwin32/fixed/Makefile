@@ -43,20 +43,30 @@ fixh: h/config.h ../FFDecl.h ../FFTab.h \
 	$(SED) -e 1d  -e 's/"contr.poly")/"contr.poly"), pager="console"'/ $< > $@
 
 ../../../bin/check: ../../scripts/check.in
-	$(CP) $< $@
+	$(SED) -e 1d -e "s/R CMD/Rcmd/" $< > $@
 
 ../../../bin/build: ../../scripts/build.in
-	$(CP) $< $@
+	$(SED) -e 1d -e "s/R CMD/Rcmd/" $< > $@
+
+../../../bin/Sd2Rd: ../../scripts/Sd2Rd.in
+	$(SED) -e 1d -e "s/R CMD/Rcmd/" $< > $@
+
+../../../bin/Rdconv: ../../scripts/Rdconv.in
+	$(SED) -e 1d -e s/\"unix\"/\"windows\"/ -e "s/R CMD/Rcmd/" $< > $@
 
 ../../../bin/Rdindex: ../../scripts/Rdindex.in
-	$(SED) -e s/unix/windows/ -e "s/R CMD/Rcmd/" $< > $@
+	$(SED) -e 1d -e s/\"unix\"/\"windows\"/ -e "s/R CMD/Rcmd/" $< > $@
+
+../../../bin/extract-usage: ../../scripts/extract-usage.in
+	$(SED) -e 1d -e s/unix/windows/  $< > $@
 
 ../../../bin/Rdiff.sh: ../../scripts/Rdiff
-	$(SED) -e 1d <$< > $@
+	$(SED) -e 1d $< > $@
 
 fixbin: ../../../bin/massage-Examples.sh ../../../bin/build \
-	 ../../../bin/check  ../../../bin/Rdindex  ../../../bin/Rdiff.sh \
-	cp2bin
+	   ../../../bin/check ../../../bin/Rdconv ../../../bin/Rdindex \
+	   ../../../bin/Sd2Rd ../../../bin/extract-usage \
+	   ../../../bin/Rdiff.sh cp2bin
 	$(ECHO) done > fixbin
 
 cp2bin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))
