@@ -8,8 +8,10 @@ formula.formula(formula.obj)
 formula.terms(terms.obj)
 formula.data.frame(df)
 as.formula(object)
+I(name)
 }
 \alias{~}
+\alias{I}
 \alias{formula}
 \alias{formula.default}
 \alias{formula.formula}
@@ -60,6 +62,7 @@ When such arithmetic expressions involve
 operators which are also used symbolically
 in model formulae, there can be confusion between
 arithmetic and symbolic operator use.
+
 To avoid this confusion, the function \code{I()}
 can be used to bracket those portions of a model
 formula where the operators are used in their
