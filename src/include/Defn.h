@@ -35,8 +35,8 @@
 #define Mega 1048576. /* 1 Mega Byte := 2^20 (= 1048576) Bytes */
 
 /*	R_PPSSIZE  The pointer protection stack size  */
-/*	R_NSIZE    The number of cons cells	 */
-/*	R_VSIZE    The vector heap size in bytes */
+/*	R_NSIZE	   The number of cons cells	 */
+/*	R_VSIZE	   The vector heap size in bytes */
 
 #ifndef R_PPSSIZE
 #define	R_PPSSIZE	10000L
@@ -71,7 +71,7 @@
 #endif
 
 #define HSIZE	    211	/* The size of the hash table for symbols */
-#define MAXELTSIZE  512 /* The largest string size */
+#define MAXELTSIZE 8192 /* The largest string size */
 #define MAXIDSIZE   256	/* Largest symbol size possible */
 
 
@@ -445,7 +445,7 @@ void	R_Busy(int);
 void	R_CleanUp(int);
 void	R_StartUp(void);
 int	R_ShowFile(char*, char*);
-int     R_ShowFiles(int, char **, char **, char *, int, char *);
+int	R_ShowFiles(int, char **, char **, char *, int, char *);
 int	R_ChooseFile(int, char*, int);
 char*	R_HomeDir(void);
 int	R_HiddenFile(char*);

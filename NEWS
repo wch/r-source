@@ -96,6 +96,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   strsplit(), scan() and friends use a much larger char buffer
+	 (still fixed size; this will change again)
+
     o   ts() allows a data-frame argument `data'.
 
     o   anova.lm handles singular models better, and deparses responses.
@@ -137,7 +140,8 @@ BUG FIXES
 
     o	typos fixed in nlm() message, glm help
 
-    o	pt() now works better for extreme `df' arguments.
+    o	pt() now works better for extreme `df' arguments and gives
+	at least an approximate answer for ncp > 37.6. __more to change__
 
     o	fixed some glitches with formatC() and its docs.
 
