@@ -20,12 +20,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include <Defn.h>
 #include <R_ext/Random.h>
-#include <Rmath.h> /* for rxxx functions, MATH_CHECK  */
+#include <Rmath.h>		/* for rxxx functions, MATH_CHECK  */
 
 static void invalid(SEXP call)
 {
@@ -260,7 +260,7 @@ SEXP do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
 	switch (PRIMVAL(op)) {
 	    RAND3(0, rhyper);
 	default:
-	    error("internal error in do_random2");
+	    error("internal error in do_random3");
 	}
 	if (naflag)
 	    warningcall(call,"NAs produced");
