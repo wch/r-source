@@ -2,9 +2,10 @@
 \alias{chartr}
 \alias{tolower}
 \alias{toupper}
-\title{Character Translation}
+\title{Character Translation and Casefolding}
 \description{
-  Translate characters in character vectors.
+  Translate characters in character vectors, in particular from upper to
+  lower case or vice versa.
 }
 \usage{
 chartr(old, new, x)

@@ -1,6 +1,11 @@
 \name{sunflowerplot}
 \alias{sunflowerplot}
 \title{Produce a Sunflower Scatter Plot}
+\description{
+  Multiple points are plotted as ``sunflowers'' with multiple leaves
+  (``petals'') such that overplotting is visualized instead of accidental and
+  invisible.
+}
 \usage{
 sunflowerplot(x, y = NULL, number, log = "", digits = 6,
              xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
@@ -43,11 +48,6 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
   \item{seg.lwd}{numeric; the line width for the leaves' segments.}
   \item{\dots}{further arguments to \code{\link{plot}} [if
     \code{add=FALSE}].}
-}
-\description{
-  Multiple points are plotted as ``sunflowers'' with multiple leaves
-  such that overplotting is visualized instead of accidental and
-  invisible.
 }
 \details{
   For \code{number[i]==1}, a (slightly enlarged) usual plotting symbol

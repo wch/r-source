@@ -89,3 +89,4 @@ stars(USJudgeRatings, locations = cbind(0,0), scale=FALSE,radius = FALSE,
       key.loc=c(0,0), main="US Judges rated")
 }
 \keyword{hplot}
+\keyword{multivariate}

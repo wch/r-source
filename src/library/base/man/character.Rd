@@ -32,6 +32,13 @@ is.character(x)
   characters (was about 70 before 1.3.1).
 }
 \seealso{
+  \code{\link{paste}}, \code{\link{substr}} and \code{\link{strsplit}}
+  for character concatenation and splitting,
+  \code{\link{chartr}} for character translation and casefolding (e.g. upper
+  to lower case) and \code{\link{sub}}, \code{\link{grep}} etc for
+  string matching and substitutions.  Note that
+  \code{help.search(keyword = "character")} gives even more links.
+%
   \code{\link{deparse}}, which is normally preferable to
   \code{as.character} for language objects.
 }
@@ -42,4 +49,3 @@ deparse(form)       ## like the input
 }
 \keyword{character}
 \keyword{classes}
-
