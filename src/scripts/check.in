@@ -214,7 +214,8 @@ foreach my $pkg (@ARGV) {
 
     if($istar) {
 	my $dir = &file_path("$pkgoutdir", "00_pkg_src");
-	mkdir($dir, 0755);
+	mkdir($dir, 0755)
+	  or die("Error: cannot create directory '$dir'\n");
 	if($WINDOWS) {
 	    ## workaround for paths in Cygwin tar
 	    $pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
