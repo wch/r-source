@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-30, 2003-02-04
+Version 1.6-31, 2003-02-07
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1468,14 +1468,17 @@ distributions of R.)
      Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
      tesselation (with respect to the entire plane) of a planar point set.
 
-*dichromat*
-     Color schemes for dichromats: collapse red-green distinctions to
-     simulate the effects of colour-blindness.
-
 *diamonds*
      Functions for illustrating aperture-4 diamond partitions in the plane,
      or on the surface of an octahedron or icosahedron, for use as analysis
      or sampling grids.
+
+*dichromat*
+     Color schemes for dichromats: collapse red-green distinctions to
+     simulate the effects of colour-blindness.
+
+*dispmod*
+     Functions for modelling dispersion in GLMs.
 
 *dr*
      Functions, methods, and datasets for fitting dimension reduction
