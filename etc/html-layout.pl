@@ -3,6 +3,8 @@
 #  $title      of the page
 #  $top        relative path to $RHOME/doc/html (must be "." if we
 #              already are there)
+#  $up         filename of the upper file
+#  $uptext     alternate text for upper file
 #  $prev       filename of the previous file (for button bar)
 #  $prevtext   alternate text for previous file
 #  $next       filename of next file
@@ -13,7 +15,7 @@
 
 sub html_pagehead
 {
-    my ($title, $top, $prev, $prevtext, $next, $nextext) = @_;
+    my ($title, $top, $up, $uptext, $prev, $prevtext, $next, $nextext) = @_;
 
     my $retval = "<HEAD><TITLE>R: $title</TITLE></HEAD>\n" .
 	"<BODY TEXT=\"#000000\" BGCOLOR=\"#FFFFFF\" " .
@@ -32,8 +34,9 @@ sub html_pagehead
 	    if $prev;
     
     $retval .=
-	"<A HREF=\"$top/index.html\"><IMG SRC=\"$top/up.jpg\"" .
-        "ALT=\"[Top]\" WIDTH=30 HEIGHT=30 BORDER=0></A>\n";
+	"<A HREF=\"$up\"><IMG SRC=\"$top/up.jpg\"" .
+        "ALT=\"[$uptext]\" WIDTH=30 HEIGHT=30 BORDER=0></A>\n"
+	    if $up;
 
     $retval .= "<A HREF=\"$next\"><IMG SRC=\"$top/right.jpg\"\n" .
     "ALT=\"[$nextext]\" WIDTH=30 HEIGHT=30 BORDER=0></A>\n"

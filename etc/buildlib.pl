@@ -220,7 +220,10 @@ sub build_htmlpkglist {
 
     open(htmlfile, ">$RHOME/doc/html/packages.$HTML");
 
-    print htmlfile html_pagehead("Package Index", ".");
+    print htmlfile html_pagehead("Package Index", ".",
+				 "index.$HTML", "Top",
+				 "", "",
+				 "function.$HTML", "Functions");
 
     print htmlfile "<P><TABLE align=center>\n";
 
@@ -309,6 +312,7 @@ sub build_index {
     open(htmlfile, ">$lib/$pkg/html/00Index.$HTML");
 
     print htmlfile html_pagehead("$title", "../../../doc/html",
+				 "../../../doc/html/index.$HTML", "Top",
 				 "../../../doc/html/packages.$HTML",
 				 "Package List");
 
@@ -357,7 +361,9 @@ sub build_htmlfctlist {
 
     open(htmlfile, ">$RHOME/doc/html/function.$HTML");
 
-    print htmlfile html_pagehead("All Installed Functions", ".");
+    print htmlfile html_pagehead("All Installed Functions", ".",
+				 "index.$HTML", "Top",
+				 "packages.$HTML", "Packages");
 
     print htmlfile html_alphabet();
 
