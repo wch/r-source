@@ -6,15 +6,20 @@ prompt.default <-
     function(object, filename = paste0(name, ".Rd"), force.function = FALSE)
 {
     paste0 <- function(...) paste(..., sep = "")
-    is.missing.arg <- function(arg) typeof(arg) == "symbol" && deparse(arg) == ""
+    is.missing.arg <- function(arg)
+        typeof(arg) == "symbol" && deparse(arg) == ""
     name <- substitute(object)
     if(is.language(name) && !is.name(name)) name <- eval(name)
     name <- as.character(name)
     fn <- get(name)
-    ##-- 'file' [character(NN)] will contain the lines to be put in the Rdoc file
+    ## `file' [character(NN)] will contain the lines to be put in the
+    ## Rdoc file 
     file <- paste0("\\name{", name, "}")
     if(is.function(fn) || force.function) {
-	file <- c(file, "\\title{ ~~function to do ... ~~}")
+        file <- c(file,
+                  paste0("\\alias{", name, "}"),
+                  "%- Also NEED an `\\alias' for EACH other topic documented here.",
+                  "\\title{ ~~function to do ... ~~}")
 	s <- seq(length = n <- length(argls <- formals(fn)))
 	if(n > 0) {
 	    arg.names <- arg.n <- names(argls)
@@ -29,11 +34,7 @@ prompt.default <-
 	    if(i != n) call <- paste0(call, ", ")
 	}
 	file <- c(file, "\\usage{", paste0(call, ")"), "}",
-		  "%- maybe also `usage' for other functions documented here.",
-		  paste0("\\alias{", name, "}"),
-		  "%- Also NEED an `\\alias' for EACH other function documented here."
-		  )
-
+		  "%- maybe also `usage' for other objects documented here.")
 	if(length(s))
 	    file <- c(file, "\\arguments{",
 		      paste0(" \\item{", arg.n, "}{",
@@ -57,7 +58,7 @@ prompt.default <-
 		  "}",
 
 		  "\\references{ ~put references to the literature/web site here ~ }",
-		  "\\author{ ~~if you are not one of R & R ..~~ }",
+		  "\\author{ ~~who you are~~ }",
 		  "\\note{ ~~further notes~~ }",
 		  "",
 		  " ~Make other sections like WARNING with \\section{WARNING }{....} ~",
@@ -77,7 +78,7 @@ prompt.default <-
 	file <- c(file,"\\non_function{}",
 		  paste("\\title{ ~~data-name / kind ...  }"),
 		  "\\description{",
-		  "~~ a precise description of what the function does. ~~",
+		  "~~ a precise description of what the object does. ~~",
 		  "}")
     }
     cat(file, file = filename, sep = "\n")
