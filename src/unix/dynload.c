@@ -440,16 +440,22 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 #include "Runix.h"
+#include <sys/types.h>
+#include <sys/stat.h>
 
 extern DL_FUNC X11DeviceDriver, ptr_dataentry;
 
 void R_load_X11_shlib()
 {
-    char X11_DLL[PATH_MAX];
+    char X11_DLL[PATH_MAX], buf[1000];
     void *handle;
+    struct stat sb;
+
     strcpy(X11_DLL, getenv("R_HOME"));
     strcat(X11_DLL, "/bin/R_X11.");
     strcat(X11_DLL, SHLIBEXT); /* from config.h */
+    if(stat(X11_DLL, &sb))
+	R_Suicide("Probably no X11 support: the shared library was not found");
 /* cannot use computeDLOpenFlag as warnings will crash R at this stage */
 #ifdef RTLD_NOW
     handle = dlopen(X11_DLL, RTLD_NOW);
@@ -457,8 +463,8 @@ void R_load_X11_shlib()
     handle = dlopen(X11_DLL, 0);
 #endif
     if(handle == NULL) {
-	printf("error was %s\n", dlerror());fflush(stdout);
-	R_Suicide("Cannot load the X11 shared library");
+	sprintf(buf, "The X11 shared library could not be loaded.\n  The error was %s\n", dlerror());
+	R_Suicide(buf);
     }
     X11DeviceDriver = R_dlsym(handle, "X11DeviceDriver");
     if(!X11DeviceDriver) R_Suicide("Cannot load X11DeviceDriver");
@@ -474,11 +480,15 @@ extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
 
 void R_load_gnome_shlib()
 {
-    char gnome_DLL[PATH_MAX];
+    char gnome_DLL[PATH_MAX], buf[1000];
     void *handle;
+    struct stat sb;
+
     strcpy(gnome_DLL, getenv("R_HOME"));
     strcat(gnome_DLL, "/bin/R_gnome.");
     strcat(gnome_DLL, SHLIBEXT); /* from config.h */
+    if(stat(gnome_DLL, &sb))
+	R_Suicide("Probably no GNOME support: the shared library was not found");
 /* cannot use computeDLOpenFlag as warnings will crash R at this stage */
 #ifdef RTLD_NOW
     handle = dlopen(gnome_DLL, RTLD_NOW);
@@ -486,8 +496,8 @@ void R_load_gnome_shlib()
     handle = dlopen(gnome_DLL, 0);
 #endif
     if(handle == NULL) {
-/*	printf("error was %s\n", dlerror());fflush(stdout);*/
-	R_Suicide("Probably no GNOME support: cannot load the shared library");
+	sprintf(buf, "The GNOME shared library could not be loaded.\n  The error was %s\n", dlerror());
+	R_Suicide(buf);
     }
     ptr_R_Suicide = R_dlsym(handle, "Rgnome_Suicide");
     if(!ptr_R_Suicide) Rstd_Suicide("Cannot load R_Suicide");
