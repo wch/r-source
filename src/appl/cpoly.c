@@ -682,7 +682,8 @@ void scale(int *nn, double *pt,
 void cdivid(double *ar, double *ai, double *br, double *bi,
 	    double *cr, double *ci)
 {
-    /* complex division c = a/b, avoiding overflow. */
+/* complex division c = a/b, i.e., (cr +i*ci) = (ar +i*ai) / (br +i*bi),
+   avoiding overflow. */
 
     static double d, r;
 
