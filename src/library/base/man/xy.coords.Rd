@@ -1,7 +1,7 @@
 \name{xy.coords}
 \title{Extracting Plotting Structures}
 \usage{
-xy.coords(x, y, xlab=NULL, ylab=NULL)
+xy.coords(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 }
 \alias{xy.coords}
 \arguments{
@@ -20,6 +20,11 @@ is assumed to contain the x values and the second the
 y values; in any other case, the argument is coerced to a vector
 and the values plotted against their indices.}
 \item{xlab,ylab}{names for the x and y variables to be extracted.}
+\item{log}{character, \code{"x"}, \code{"y"} or both, as for
+    \code{\link{plot}}.  Sets negative values to \code{\link{NA}} and
+    gives a warning.}
+\item{recycle}{logical; if \code{TRUE}, recyle (\code{\link{rep}}) the shorter
+    of \code{x} or \code{y} if their lengths differ.}
 }
 \description{
 \code{xy.coords} is used by many function to obtain
@@ -41,5 +46,9 @@ A list with the components
 xy.coords(fft(c(1:10)), NULL)
 data(cars) ; attach(cars)
 xy.coords(dist ~ speed, NULL)$xlab # = "speed"
+
+str(xy.coords(1:3, 1:2, recycle=TRUE))
+str(xy.coords(-2:10,NULL, log="y")) 
+##> warning: 3 y values <=0 omitted ..
 }
 \keyword{dplot}

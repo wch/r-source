@@ -1,12 +1,14 @@
 ## Author: Martin Maechler, Date: 27 Jun 97
 
-matpoints <- function(x, y, lty=1:5, pch=NULL, col=1:6, ...)
-    matplot(x=x, y=y, type = 'p', lty=lty, pch=pch, col=col, add=TRUE, ...)
-matlines  <- function(x, y, lty=1:5, pch=NULL, col=1:6, ...)
-    matplot(x=x, y=y, type = 'l', lty=lty, pch=pch, col=col, add=TRUE, ...)
+matpoints <- function(x, y, lty=1:5, lwd = 1, pch=NULL, col=1:6, ...)
+    matplot(x=x, y=y, type = 'p', lty=lty, lwd=lwd, pch=pch, col=col,
+            add=TRUE, ...)
+matlines  <- function(x, y, lty=1:5, lwd = 1, pch=NULL, col=1:6, ...)
+    matplot(x=x, y=y, type = 'l', lty=lty, lwd=lwd, pch=pch, col=col,
+            add=TRUE, ...)
 
 matplot <- function(x, y, type="p",
-		    lty=1:5, pch=NULL, col=1:6,
+		    lty = 1:5, lwd = 1, pch=NULL, col=1:6,
 		    xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL,
 		    ..., add= FALSE, verbose = .Options$verbose)
 {
@@ -57,6 +59,7 @@ matplot <- function(x, y, type="p",
     ylim <- if (is.null(ylim)) range(xy$y, finite = TRUE)  else ylim
     if(length(type)< k) type<- rep(type,length= k)
     if(length(lty) < k) lty <- rep(lty, length= k)
+    if(length(lwd) < k) lwd <- rep(lwd, length= k)
     if(length(pch) < k) pch <- rep(pch, length= k)
     if(length(col) < k) col <- rep(col, length= k)
     ii <- 1:k
@@ -64,12 +67,13 @@ matplot <- function(x, y, type="p",
 	ii <- ii[-1]
 	plot(x[,1],y[,1], type=type[1], xlab=xlab, ylab=ylab,
 	     xlim = xlim, ylim = ylim,
-	     lty=lty[1], pch=pch[1], col=col[1], ...)
+	     lty=lty[1], lwd=lwd[1], pch=pch[1], col=col[1], ...)
     }
     for (i in ii) {
 	tp <- type[i]
 	if(tp=='l' || tp=='b'|| tp=='o'|| tp=='h')
-	    lines(x[,i],y[,i], type=tp, lty=lty[i],pch=pch[i],col=col[i])
+	    lines(x[,i],y[,i], type=tp,
+                  lty=lty[i], lwd=lwd[i],pch=pch[i],col=col[i])
 	if(do.points && tp=='p')
 	    points(x[,i],y[,i], pch=pch[i], col=col[i])
     }

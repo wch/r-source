@@ -57,21 +57,22 @@ de.setup <- function(ilist, list.names, incols)
 		i <- i+1
 	    }
 	}
-	else stop("wrong argument to dataentry")
+	else stop("de.setup: wrong argument to dataentry")
     }
     names(ivec) <- inames
     return(ivec)
 }
 
-## take the data in inlist and restore it to the format described by ncols and coltypes
-
 de.restore <- function(inlist, ncols, coltypes, argnames, args)
 {
-    rlist <- vector("list", length=length(ncols))
-    rnames <- vector("character", length=length(ncols))
+    ## take the data in inlist and restore it
+    ## to the format described by ncols and coltypes
+    p <- length(ncols)
+    rlist <- vector("list", length=p)
+    rnames <- vector("character", length=p)
     j <- 1
     lnames <- names(inlist)
-    for( i in 1:length(ncols) ) {
+    if(p) for(i in 1:p) {
 	if(coltypes[i]==2) {
 	    tlen <- length(inlist[[j]])
 	    x <- matrix(0, nrow=tlen, ncol=ncols[i])
@@ -116,21 +117,18 @@ de.restore <- function(inlist, ncols, coltypes, argnames, args)
     return(rlist)
 }
 
-de <- function(..., Modes=NULL, Names=NULL)
+de <- function(..., Modes=list(), Names=NULL)
 {
     sdata <- list(...)
     snames <- as.character(substitute(list(...))[-1])
     if( is.null(sdata) ) {
 	if( is.null(Names) ) {
-	    if( !is.null(Modes) ) {
-		odata <- vector("list", length=length(Modes))
-	    }
-	    else odata <- vector("list", length=1)
+	    odata <- vector("list", length=max(1,length(Modes)))
 	}
 	else {
-	    if( (length(Names) != length(Modes)) && !is.null(Modes) ) {
+	    if( (length(Names) != length(Modes)) && length(Modes) ) {
 		warning("modes argument ignored")
-		Modes <- NULL
+		Modes <- list()
 	    }
 	    odata <- vector("list", length=length(Names))
 	    names(odata) <- Names
@@ -143,21 +141,23 @@ de <- function(..., Modes=NULL, Names=NULL)
 	coltypes <- ncols[, 2]
 	ncols <- ncols[, 1]
 	odata <- de.setup(sdata, snames, ncols)
-	if( !is.null(Names) )
+	if(length(Names))
 	    if( length(Names) != length(odata) )
 		warning("names argument ignored")
 	    else names(odata) <- Names
-	if( !is.null(Modes) )
-	    if( length(Modes) != length(odata) ) {
+	if(length(Modes))
+	    if(length(Modes) != length(odata)) {
 		warning("modes argument ignored")
-		Modes <- NULL
+		Modes <- list()
 	    }
     }
-    rdata <- dataentry(odata, Modes)
-    t1 <- length(rdata)==sum(ncols)
-    if( t1 && any(coltypes!=1) )
-	rdata <- de.restore(rdata, ncols, coltypes, snames, sdata)
-    else if( any(coltypes!=1) ) warning("could not restore data types properly")
+    rdata <- dataentry(odata, as.list(Modes))
+
+    if(any(coltypes != 1)) {
+	if(length(rdata) == sum(ncols))
+	    rdata <- de.restore(rdata, ncols, coltypes, snames, sdata)
+	else warning("could not restore data types properly")
+    }
     return(rdata)
 }
 
@@ -165,9 +165,11 @@ data.entry <- function(..., Modes=NULL, Names=NULL)
 {
     tmp1 <- de(..., Modes=Modes, Names=Names)
     j <- 1
-    for(i in names(tmp1) ) {
+    nn <- names(tmp1)
+    for(i in nn) {
 	assign(i, tmp1[[j]], env=.GlobalEnv)
 	j <- j+1
     }
-    invisible(NULL)
+    if(j==1) warning("not assigned anything!")
+    invisible(nn)
 }

@@ -17,7 +17,7 @@ our installation procedures.
 	sparc-sun-solaris2.5.1		gcc / g77
 		"			gcc / f77
 		"			cc  / f77
-
+	sparc-sun-solaris2.6		gcc / f77 
 
 	OLD (pre 0.62 systems)
 

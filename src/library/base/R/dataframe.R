@@ -231,7 +231,7 @@ data.frame <- function(..., row.names = NULL, check.rows = FALSE, check.names = 
 	    else vnames[[i]] <- paste(vnames[[i]], namesi, sep=".")
 	}
 	else if(length(namesi) > 0) vnames[[i]] <- namesi
-	else if(no.vn[[i]]) vnames[[i]] <- deparse(object[[i]])
+	else if(no.vn[[i]]) vnames[[i]] <- deparse(object[[i]])[1]
 	nrows[[i]] <- length(rowsi)
 	if(missing(row.names) && rowsi[[1]]!="")
 	    row.names <- data.row.names(row.names, rowsi, i)
@@ -724,7 +724,8 @@ rbind.data.frame <- function(..., deparse.level = 1)
     }
     for(j in 1:nvar) {
 	xj <- value[[j]]
-	if(!has.dim[j] && (is.character(xj) || is.logical(xj)))
+	if(!has.dim[j] && !inherits(xj, "AsIs") && 
+	   	(is.character(xj) || is.logical(xj)))
 	    value[[j]] <- factor(xj)
     }
     rlabs <- unlist(rlabs)

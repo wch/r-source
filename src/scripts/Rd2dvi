@@ -12,27 +12,29 @@ D2L="${Pwd}/Rdconv -t latex"
 #
 call_dir=`pwd`
 
-if [ -f Rd0.tex ]
+if [ -f Rd2.tex ]
 then
-    echo "'Rd0.tex' already exists -- renaming it to  Rd0.tex.Older"
+    echo "'Rd2.tex' already exists -- renaming it to  Rd2.tex.Older"
     echo " -------- "
-    mv Rd0.tex Rd0.tex.Older
+    mv Rd2.tex Rd2.tex.Older
 fi
-$D2L $@ > Rd0.tex
+$D2L $@ > Rd2.tex
 echo "MANTEXDIR= '$MANTEXDIR'"
-if [ ! -f Man0.tex ]; then ln -s ${MANTEXDIR}/Man0.tex . ; fi
+if [ ! -f Rd2dvi.tex ]; then ln -s ${MANTEXDIR}/Rd2dvi.tex . ; fi
 if [ ! -f Rd.sty ]; then
- sed 's/markright{#1}/markboth{#1}{#1}/' ${MANTEXDIR}/Rd.sty > Rd0.sty
+ sed 's/markright{#1}/markboth{#1}{#1}/' ${MANTEXDIR}/Rd.sty > Rd2.sty
 fi
 #exit
 #---------------------
-latex Man0
-makeindex Man0
-latex Man0
+latex Rd2dvi
+if [ -x `/usr/bin/which makeindex` ]
+then makeindex Rd2dvi
+     latex Rd2dvi
+fi
 if [ -x `/usr/bin/which xdvi` ]
-then  xdvi Man0 &
+then  xdvi Rd2dvi &
 fi
 echo ''
 echo 'Rd2dvi: You may want to clean up by'
-echo '    rm Man0.* Rd0.sty Rd0.tex'
+echo '    rm -f Rd2dvi.* Rd2.sty Rd2.tex*'
 echo ''

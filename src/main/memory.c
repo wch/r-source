@@ -122,7 +122,7 @@ SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 void mem_err_heap(long size)
 {
-    error("heap memory (%ld Kb) exhausted [needed %ld Kb more]\n",
+    error("heap memory (%ld Kb) exhausted [needed %ld Kb more]\n       See \"help(Memory)\" on how to increase the heap size.\n",
 	  (R_VSize * sizeof(VECREC))/1024,
   (size * sizeof(VECREC))/1024);
 }
@@ -130,7 +130,7 @@ void mem_err_heap(long size)
 
 void mem_err_cons()
 {
-    error("cons memory (%ld cells) exhausted\n", R_NSize);
+    error("cons memory (%ld cells) exhausted\n       See \"help(Memory)\" on how to increase the number of cons cells.\n", R_NSize);
 }
 
 #ifdef Macintosh

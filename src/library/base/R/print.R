@@ -2,8 +2,9 @@ print <- function(x, ...)UseMethod("print")
 
 ##- Need '...' such that it can be called as  NextMethod("print", ...):
 print.default <-
-    function(x,digits=NULL,quote=TRUE,na.print=NULL,print.gap=NULL, ...)
-    .Internal(print.default(x,digits,quote,na.print,print.gap))
+    function(x,digits=NULL,quote=TRUE,na.print=NULL,print.gap=NULL,right=FALSE,
+             ...)
+    .Internal(print.default(x,digits,quote,na.print,print.gap,right))
 
 print.atomic <- function(x,quote=TRUE,...) print.default(x,quote=quote)
 
@@ -125,7 +126,7 @@ print.coefmat <-
 		Signif <- symnum(pv, corr = FALSE, na = FALSE,
 				 cutpoints = c(0,  .001,.01,.05, .1, 1),
 				 symbols   =  c("***","**","*","."," "))
-		Cf <- cbind(Cf, Signif)
+		Cf <- cbind(Cf, format.char(Signif)) #format.ch: right=TRUE
 	    }
 	} else signif.stars <- FALSE
     } else signif.stars <- FALSE

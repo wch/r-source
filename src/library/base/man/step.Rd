@@ -13,43 +13,35 @@ step(object, scope, scale=0, direction=c("both", "backward", "forward"),
 \arguments{
 \item{object}{
   an object representing a model of an appropriate class.
-  This is used as the initial model in the stepwise search.
-}
+  This is used as the initial model in the stepwise search.}
 \item{scope}{
-  defines the range of models examined in the stepwise search. 
-}
+  defines the range of models examined in the stepwise search.}
 \item{scale}{
   used in the definition of the AIC statistic for selecting the models,
-  currently only for \code{lm}, \code{aov} and \code{glm} models.
-}
+  currently only for \code{\link{lm}}, \code{\link{aov}} and
+  \code{\link{glm}} models.}
 \item{direction}{
   the mode of stepwise search, can be one of \code{"both"}, \code{"backward"}, 
   or \code{"forward"}, with a default of \code{"both"}. 
   If the \code{scope} argument is missing, 
-  the default for \code{direction} is \code{"backward"}. 
-}
+  the default for \code{direction} is \code{"backward"}.}
 \item{trace}{
-  if positive, information is printed during the running of \code{step}.
-}
+  if positive, information is printed during the running of \code{step}.}
 \item{keep}{
   a filter function whose input is a fitted model object and the 
   associated \code{AIC} statistic, and whose output is arbitrary. 
   Typically \code{keep} will select a subset of the components of 
-  the object and return them. The default is not to keep anything.
-}
+  the object and return them. The default is not to keep anything.}
 \item{steps}{
   the maximum number of steps to be considered.  The default is 1000
   (essentially as many as required).  It is typically used to stop the
-  process early.
-}
+  process early.}
 \item{k}{
   the multiple of the number of degrees of freedom used for the penalty.
   Only \code{k=2} gives the genuine AIC: \code{k = log(n)} is sometimes
-  referred to as BIC or SBC.
+  referred to as BIC or SBC.}
+\item{\dots}{any additional arguments to \code{\link{extractAIC}}.}
 }
-\item{...}{
-  any additional arguments to \code{extractAIC}.
-}}
 \value{
   the stepwise-selected model is returned, with up to two additional
   components.  There is an \code{"anova"} component corresponding to the
@@ -61,15 +53,15 @@ step(object, scope, scale=0, direction=c("both", "backward", "forward"),
   (thus excluding \code{lm}, \code{aov} and \code{survreg} fits, for example).
 }
 \description{
-  \code{step} used \code{add1} and \code{drop1} repeatedly; it will work
-  for any method for which they work, and that is determined by having a
-  valid method for \code{extractAIC}.  When the additive constant can be
-  chosen so that AIC is  equal to Mallows' Cp this is done and the
-  tables are labelled appropriately.
+  \code{step} uses \code{\link{add1}} and \code{\link{drop1}}
+  repeatedly; it will work for any method for which they work, and that
+  is determined by having a valid method for \code{\link{extractAIC}}.
+  When the additive constant can be chosen so that AIC is equal to
+  Mallows' Cp, this is done and the tables are labelled appropriately.
 
-  There is a potential problem in using \code{glm} fits with a variable
+  There is a potential problem in using \code{\link{glm}} fits with a variable
   \code{scale}, as in that case the deviance is not simply related to the
-  maximized log-likelihood. The function \code{extractAIC.glm} makes the
+  maximized log-likelihood. The function \code{\link{extractAIC.glm}} makes the
   appropriate adjustment for a \code{gaussian} family, but may need to be
   amended for other cases. (The \code{binomial} and \code{poisson}
   families have fixed \code{scale} by default and do not correspond
@@ -81,4 +73,14 @@ step(object, scope, scale=0, direction=c("both", "backward", "forward"),
 \code{\link{add1}}, \code{\link{drop1}}
 }
 \author{B.D. Ripley}
+\examples{
+example(lm)
+step(lm.D9)  
+
+data(swiss)
+summary(lm1 <- lm(Fertility ~ ., data = swiss))
+slm1 <- step(lm1)
+summary(slm1)
+slm1 $ anova
+}
 \keyword{models}

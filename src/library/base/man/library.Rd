@@ -9,7 +9,7 @@ provide(name)
 
 .First.lib(libname, pkgname)
 
-.packages()
+.packages(all.available = FALSE, lib.loc = .lib.loc)
 .lib.loc
 .Library
 .Provided
@@ -39,10 +39,21 @@ provide(name)
   \item{quietly}{a logical.  If \code{TRUE}, a warning will not be
     printed if the package cannot be found.}
   \item{libname}{a character string giving the library directory where
-    the package was found.}
+      the package was found.}
   \item{pkgname}{a character string giving the name of the package.}
+  \item{all.available}{logical; if \code{TRUE} return \code{character}
+      vector of all available packages in \code{lib.loc}.}
 }
 \description{
+    \code{library(name)} and \code{require(name)} both load the package
+    named \code{name}.  \code{provide} allows code to register services that
+    it provides.
+    
+    \code{.First.lib()} is called when a package is loaded by \code{library()}. 
+    \code{.packages()} and the \code{.xxx} variables return information about
+    package availability.
+}
+\details{
   \code{library(name)} and \code{require(name)} both load the package
   with name \code{name}.  \code{require} is designed for use inside
   other functions; it returns \code{FALSE} and optionally gives a
@@ -64,13 +75,16 @@ provide(name)
   \code{require(splines)} rather than \code{library(splines)} to load
   the spline package only if their functionality is not already available.
 
-  If \code{library} is called with no argument, it gives a list of all
-  available packages.  \code{library(help = name)} prints information on
+  If \code{library} is called with no \code{name} or \code{help}
+  argument, it gives a list of all available packages in \code{lib.loc}
+  and invisibly returns their names (same as \code{.packages(all=T)}).
+
+  \code{library(help = name)} prints information on
   the package \code{name}, typically by listing the most important user
   level objects it contains.
 
   \code{.First.lib()} is called when a package is loaded by
-  \code{library()}.  It is called with two arguments, the name of the
+  \code{library(.)}.  It is called with two arguments, the name of the
   library tree where the package was found (i.e., the corresponding
   element of \code{lib.loc}), and the name of the package (in that
   order).  It is a good place to put calls to \code{library.dynam()}
@@ -82,7 +96,9 @@ provide(name)
   environment in which the package is stored.
 
   \code{.packages()} returns the ``base names'' of the currently attached
-  packages \emph{invisibly}.
+  packages \emph{invisibly} whereas \code{.packages(all.available =TRUE)}
+  gives \emph{all} packages available in the library location path
+  \code{lib.loc}.
 
   \code{.Autoloaded} contains the ``base names'' of the packages for
   which autoloading has been promised.
@@ -163,11 +179,13 @@ provide(name)
   not used by any package, and still experimental.
 }
 \value{
-  \code{library} returns the list of loaded packages (or \code{TRUE} if
-  \code{logical.return} is \code{TRUE}).
+  \code{library} returns the list of loaded (or available) packages (or
+  \code{TRUE} if \code{logical.return} is \code{TRUE}).
   \code{require} returns a logical indicating whether the required
   package is available.
 }
+\author{R core;  Guido Masarotto for the \code{all.available=TRUE}
+    part of \code{.packages}.}
 \seealso{
   \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
   \code{\link{objects}}, \code{\link{autoload}},
@@ -177,6 +195,7 @@ provide(name)
 }
 \examples{
 ( .packages() )	    	    # maybe just "base"
+.packages(all = TRUE)       # return all available as char.vector
 library()		    # list all available packages
 library(lib = .Library)	    # list all packages in the default library
 library(help = eda)	    # documentation on package "eda"

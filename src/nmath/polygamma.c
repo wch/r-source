@@ -20,7 +20,7 @@
  *
  *    #include "Mathlib.h"
  *    void dpsifn(double x, int n, int kode, int m,
- *                double *ans, int *nz, int *ierr)
+ *		  double *ans, int *nz, int *ierr)
  *    double digamma(double x);
  *    double trigamma(double x)
  *    double tetragamma(double x)
@@ -35,26 +35,26 @@
  *
  *    Definition 1
  *
- *       psi(x) = d/dx (ln(gamma(x)),  the first derivative of
- *                                     the log gamma function.
+ *	 psi(x) = d/dx (ln(gamma(x)),  the first derivative of
+ *				       the log gamma function.
  *
  *    Definition 2
- *                   k   k
- *       psi(k,x) = d /dx (psi(x)),    the k-th derivative
- *                                     of psi(x).
+ *		     k	 k
+ *	 psi(k,x) = d /dx (psi(x)),    the k-th derivative
+ *				       of psi(x).
  *
  *
  *    "dpsifn" computes a sequence of scaled derivatives of
  *    the psi function; i.e. for fixed x and m it computes
  *    the m-member sequence
  *
- *                ((-1)**(k+1)/gamma(k+1))*psi(k,x)
- *                   for k = n,...,n+m-1
+ *		  ((-1)**(k+1)/gamma(k+1))*psi(k,x)
+ *		     for k = n,...,n+m-1
  *
  *    where psi(k,x) is as defined above.   For kode=1, dpsifn
  *    returns the scaled derivatives as described.  kode=2 is
  *    operative only when k=0 and in that case dpsifn returns
- *    -psi(x) + ln(x).  That is, the logarithmic behavior for
+ *    -psi(x) + ln(x).	That is, the logarithmic behavior for
  *    large x is removed when kode=2 and k=0.  When sums or
  *    differences of psi functions are computed the logarithmic
  *    terms can be combined analytically and computed separately
@@ -64,39 +64,39 @@
  *
  *  INPUT
  *
- *        x      - argument, x > 0.
+ *	x     - argument, x > 0.
  *
- *        n      - first member of the sequence, 0 <= n <= 100
- *                 n == 0 gives ans(1) = -psi(x)       for kode=1
- *                                       -psi(x)+ln(x) for kode=2
+ *	n     - first member of the sequence, 0 <= n <= 100
+ *		n == 0 gives ans(1) = -psi(x)	    for kode=1
+ *					 -psi(x)+ln(x) for kode=2
  *
- *        kode   - selection parameter
- *                 kode == 1 returns scaled derivatives of the
- *                 psi function.
- *                 kode == 2 returns scaled derivatives of the
- *                 psi function except when n=0. In this case,
- *                 ans(1) = -psi(x) + ln(x) is returned.
+ *	kode  - selection parameter
+ *		kode == 1 returns scaled derivatives of the
+ *		psi function.
+ *		kode == 2 returns scaled derivatives of the
+ *		psi function except when n=0. In this case,
+ *		ans(1) = -psi(x) + ln(x) is returned.
  *
- *        m      - number of members of the sequence, m >= 1
+ *	m     - number of members of the sequence, m >= 1
  *
  *  OUTPUT
  *
- *        ans    - a vector of length at least m whose first m
- *                 components contain the sequence of derivatives
- *                 scaled according to kode.
+ *	ans   - a vector of length at least m whose first m
+ *		components contain the sequence of derivatives
+ *		scaled according to kode.
  *
- *        nz     - underflow flag
- *                 nz == 0, a normal return
- *                 nz != 0, underflow, last nz components of ans are
- *                          set to zero, ans(m-k+1)=0.0, k=1,...,nz
+ *	nz    - underflow flag
+ *		nz == 0, a normal return
+ *		nz != 0, underflow, last nz components of ans are
+ *			 set to zero, ans(m-k+1)=0.0, k=1,...,nz
  *
- *        ierr   - error flag
- *                 ierr=0, a normal return, computation completed
- *                 ierr=1, input error,     no computation
- *                 ierr=2, overflow,        x too small or n+m-1 too
- *                         large or both
- *                 ierr=3, error,           n too large. dimensioned
- *                         array trmr(nmax) is not large enough for n
+ *	ierr  - error flag
+ *		ierr=0, a normal return, computation completed
+ *		ierr=1, input error,	 no computation
+ *		ierr=2, overflow,	 x too small or n+m-1 too
+ *			large or both
+ *		ierr=3, error,		 n too large. dimensioned
+ *			array trmr(nmax) is not large enough for n
  *
  *    The nominal computational accuracy is the maximum of unit
  *    roundoff (d1mach(4)) and 1e-18 since critical constants
@@ -106,11 +106,11 @@
  *    for large x >= xmin followed by backward recursion on a two
  *    term recursion relation
  *
- *           w(x+1) + x**(-n-1) = w(x).
+ *	     w(x+1) + x**(-n-1) = w(x).
  *
  *    this is supplemented by a series
  *
- *           sum( (x+k)**(-n-1) , k=0,1,2,... )
+ *	     sum( (x+k)**(-n-1) , k=0,1,2,... )
  *
  *    which converges rapidly for large n. both xmin and the
  *    number of terms of the series are calculated from the unit
@@ -290,7 +290,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 
     if (mm!=1) {
 
-	/* generate higher derivatives,  j > n */
+	/* generate higher derivatives,	 j > n */
 
 	tol = wdtol / 5.0;
 	for(j=2 ; j<=mm ; j++) {
@@ -477,26 +477,3 @@ double pentagamma(double x)
     }
     return 6.0 * ans;
 }
-
-#undef TESTING
-
-#ifdef TESTING
-main()
-{
-	int n, kode, m, nz, ierr;
-	double x, ans[10];
-
-	n = 0;
-	m = 3;
-	kode = 1;
-	for(;;) {
-		scanf("%lf",&x);
-		dpsifn(x, n, kode, m, ans, &nz, &ierr);
-		printf("%g ", x);
-		printf("%g ", ans[0]);
-		printf("%g ", ans[1]);
-		printf("%g ", ans[2]);
-		printf("\n");
-	}
-}
-#endif

@@ -35,7 +35,6 @@
  *    Journal of Statistical Computation and Simulation 22, 127-145.
  */
 
-#include "PrtUtil.h"
 #include "Mathlib.h"
 
 /* afc(i) :=  ln( i! )	[logarithm of the factorial i.
@@ -60,7 +59,7 @@ static double afc(int i)
 {
     double di, value;
     if (i < 0) {
-      REprintf("rhyper.c: afc(i), i=%d < 0 -- SHOULD NOT HAPPEN!\n",i);
+      MATHLIB_WARNING("rhyper.c: afc(i), i=%d < 0 -- SHOULD NOT HAPPEN!\n",i);
       return -1;/* unreached (Wall) */
     } else if (i <= 7) {
 	value = al[i + 1];

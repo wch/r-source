@@ -1,3 +1,6 @@
+#define TRYIT
+/*
+*/
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
@@ -773,21 +776,21 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (!recurse) {
 	    if (TYPEOF(args) == VECSXP) {
 		SEXP names = getAttrib(args, R_NamesSymbol);
+		ans_nnames = 0;
+		seqno = 0;
+		firstpos = 0;
+		count = 0;
 		for (i = 0; i < n; i++) {
-		    ans_nnames = 0;
-		    seqno = 0;
-		    firstpos = 0;
-		    count = 0;
 		    NewExtractNames(VECTOR(args)[i], R_NilValue,
 				    ItemName(names, i), recurse);
 		}
 	    }
 	    else if (TYPEOF(args) == LISTSXP) {
+	        ans_nnames = 0;
+		seqno = 0;
+		firstpos = 0;
+		count = 0;
 		while (args != R_NilValue) {
-		    ans_nnames = 0;
-		    seqno = 0;
-		    firstpos = 0;
-		    count = 0;
 		    NewExtractNames(CAR(args), R_NilValue,
 				    TAG(args), recurse);
 		    args = CDR(args);
@@ -801,7 +804,7 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 	    firstpos = 0;
 	    count = 0;
 	    NewExtractNames(args, R_NilValue, R_NilValue, recurse);
-#ifdef TRY
+#ifdef TRYIT
 	}
 #endif
 	setAttrib(ans, R_NamesSymbol, ans_names);

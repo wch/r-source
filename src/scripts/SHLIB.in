@@ -4,15 +4,18 @@
 
 # @configure_input@
 
-VERSION="0.1-1"
+VERSION="0.1-2"
 USAGE_MSG="Usage:  R SHLIB [-o lib] obj_1 ... obj_n"
 
+lib=
 OBJS=
 DEBUG=false
 MAKE=${MAKE-@MAKE@}
 
 while test -n "${1}"; do
-  # if ${DEBUG}; then  echo "$0 -- DEBUG: arg = '${1}'"; fi
+  if ${DEBUG}; then
+    echo "$0 -- DEBUG: arg = \`${1}'";
+  fi
   case ${1} in
     -h|--help|-\?)
        echo "${USAGE_MSG}"; exit 0 ;;
@@ -22,25 +25,17 @@ while test -n "${1}"; do
       DEBUG=true ;;
     -o)
       lib=${2}; shift ;;
-    *)
-      if [ x$lib = x ]; then
-	lib=`echo ${1}|sed 's/\.[^\.][^\.]*$/.@SHLIBEXT@/'`
-      else
-	OBJS="${OBJS} `echo ${1}|sed 's/\.[^\.][^\.]*$/.o/'`"
+    *.?)
+      if test -z "${lib}"; then
+	lib="`echo ${1} | sed 's/\.[^\.][^\.]*$/.@SHLIBEXT@/'`"
       fi
+      OBJS="${OBJS} `echo ${1} | sed 's/\.[^\.][^\.]*$/.o/'`"
       ;;
   esac
   shift
 done
 
-${MAKE} -f ${RHOME}/etc/Makeconf ${OBJS}
-
-if ${DEBUG}; then
-  echo "$0 -- DEBUG: Before Linking '${lib}'.."
-  set -x
-fi
-
-@SHLIBLD@ @SHLIBLDFLAGS@ -o ${lib} ${OBJS} @FLIBS@
+${MAKE} -f ${RHOME}/etc/Makeconf SHLIB="${lib}" OBJS="${OBJS}"
 
 ### Local Variables: ***
 ### mode: sh ***

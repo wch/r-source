@@ -1,657 +1,658 @@
 #### copyright (C) 1998 B. D. Ripley
 add1 <- function(object, ...) UseMethod("add1")
 
-add1.default <-
-  function(object, scope, scale = 0, test=c("none", "Chisq"),
-           k = 2, trace = FALSE, ...)
+add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
+			 k = 2, trace = FALSE, ...)
 {
-  if(missing(scope) || is.null(scope)) stop("no terms in scope")
-  if(!is.character(scope))
-    scope <- add.scope(object, update.formula(object, scope))
-  if(!length(scope))
-    stop("no terms in scope for adding to object")
-  ns <- length(scope)
-  ans <- matrix(nrow = ns + 1, ncol = 2)
-  dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
-  ans[1,  ] <- extractAIC(object, scale, k = k, ...)
-  for(i in seq(ns)) {
-    tt <- scope[i]
-    if(trace > 1) cat("trying +", tt, "\n")
-    nfit <- update(object, as.formula(paste("~ . +", tt)))
-    ans[i+1,  ] <- extractAIC(nfit, scale, k = k, ...)
-  }
-  dfs <- ans[,1] - ans[1,1]
-  dfs[1] <- NA
-  aod <- data.frame(Df = dfs, AIC = ans[,2])
-  test <- match.arg(test)
-  if(test == "Chisq") {
-    dev <- ans[,2] - k*ans[, 1]
-    dev <- dev[1] - dev; dev[1] <- NA
-    nas <- !is.na(dev)
-    P <- dev
-    P[nas] <- 1 - pchisq(dev[nas], dfs[nas])
-    aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
-  }
-  head <- c("Single term additions", "\nModel:",
-            deparse(as.vector(formula(object))))
-  if(scale > 0)
-    head <- c(head, paste("\nscale: ", format(scale), "\n"))
-  class(aod) <- c("anova", "data.frame")
-  attr(aod, "heading") <- head
-  aod
+    if(missing(scope) || is.null(scope)) stop("no terms in scope")
+    if(!is.character(scope))
+	scope <- add.scope(object, update.formula(object, scope))
+    if(!length(scope))
+	stop("no terms in scope for adding to object")
+    ns <- length(scope)
+    ans <- matrix(nrow = ns + 1, ncol = 2)
+    dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
+    ans[1, ] <- extractAIC(object, scale, k = k, ...)
+    for(i in seq(ns)) {
+	tt <- scope[i]
+	if(trace > 1) cat("trying +", tt, "\n")
+	nfit <- update(object, as.formula(paste("~ . +", tt)))
+	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
+    }
+    dfs <- ans[,1] - ans[1,1]
+    dfs[1] <- NA
+    aod <- data.frame(Df = dfs, AIC = ans[,2])
+    test <- match.arg(test)
+    if(test == "Chisq") {
+	dev <- ans[,2] - k*ans[, 1]
+	dev <- dev[1] - dev; dev[1] <- NA
+	nas <- !is.na(dev)
+	P <- dev
+	P[nas] <- 1 - pchisq(dev[nas], dfs[nas])
+	aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
+    }
+    head <- c("Single term additions", "\nModel:",
+	      deparse(as.vector(formula(object))),
+	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
+    class(aod) <- c("anova", "data.frame")
+    attr(aod, "heading") <- head
+    aod
 }
 
-add1.lm <-
-  function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
-                    x = NULL, k = 2,...)
+add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
+		    x = NULL, k = 2,...)
 {
-  Fstat <- function(table, RSS, rdf) {
-    dev <- table$"Sum of Sq"
-    df <- table$Df
-    rms <- (RSS - dev)/(rdf - df)
-    Fs <- (dev/df)/rms
-    Fs[df < .Machine$double.eps] <- NA
-    P <- Fs
-    nnas <- !is.na(Fs)
-    P[nnas] <- 1 - pf(Fs[nnas], df[nnas], rdf - df[nnas])
-    list(Fs, P)    
-  }
+    Fstat <- function(table, RSS, rdf) {
+	dev <- table$"Sum of Sq"
+	df <- table$Df
+	rms <- (RSS - dev)/(rdf - df)
+	Fs <- (dev/df)/rms
+	Fs[df < .Machine$double.eps] <- NA
+	P <- Fs
+	nnas <- !is.na(Fs)
+	P[nnas] <- 1 - pf(Fs[nnas], df[nnas], rdf - df[nnas])
+	list(Fs=Fs, P=P)
+    }
 
-  if(missing(scope) || is.null(scope)) stop("no terms in scope")
-  if(!is.character(scope))
-    scope <- add.scope(object, update.formula(object, scope))
-  if(!length(scope))
-    stop("no terms in scope for adding to object")
-  oTerms <- attr(object$terms, "term.labels")
-  int <- attr(object$terms, "intercept")
-  ns <- length(scope)
-  y <- object$residuals + predict(object)
-  dfs <- numeric(ns+1)
-  RSS <- numeric(ns+1)
-  names(dfs) <- names(RSS) <- c("<none>", scope)
-  dfs[1] <- object$rank
-  RSS[1] <- deviance.lm(object)
-  add.rhs <- paste(scope, collapse = "+")
-  add.rhs <- eval(parse(text = paste("~ . +", add.rhs)))
-  new.form <- update.formula(object, add.rhs)
-  Terms <- terms(new.form)
-  if(is.null(x)) {
-    fc <- object$call
-    fc$formula <- Terms
-    fob <- list(call = fc)
-    class(fob) <- class(object)
-    m <- model.frame(fob, xlev = object$xlevels)
-    x <- model.matrix(Terms, m, contrasts = object$contrasts)
-  }
-  n <- nrow(x)
-  Terms <- attr(Terms, "term.labels")
-  asgn <- attr(x, "assign")
-  ousex <- match(asgn, match(oTerms, Terms), 0) > 0
-  if(int) ousex[1] <- TRUE
-  iswt <- !is.null(wt <- object$weights)
-  for(tt in scope) {
-    usex <- match(asgn, match(tt, Terms), 0) > 0
-    X <- x[, usex|ousex, drop = FALSE]
-    z <- if(iswt) lm.wfit(X, y, wt) else lm.fit(X, y)
-    dfs[tt] <- z$rank
-    RSS[tt] <- deviance.lm(z)
-  }
-  if(scale > 0) aic <- RSS/scale - n + k*dfs
-  else aic <- n * log(RSS/n) + k*dfs
-  dfs <- dfs - dfs[1]
-  dfs[1] <- NA
-  aod <- data.frame(Df = dfs, "Sum of Sq" = c(NA, RSS[1] - RSS[-1]), 
-                    RSS = RSS, AIC = aic, row.names = names(dfs),
-                    check.names = FALSE)
-  if(scale > 0) names(aod) <- c("Df", "Sum of Sq", "RSS", "Cp")
-  test <- match.arg(test)
-  if(test == "Chisq") {
-    dev <- aod$"Sum of Sq"
-    nas <- !is.na(dev)
-    dev[nas] <- 1 - pchisq(dev[nas]/scale, aod$Df[nas])
-    aod[, "Pr(Chi)"] <- dev
-  } else if(test == "F") {
-    rdf <- object$df.resid
-    aod[, c("F Value", "Pr(F)")] <- Fstat(aod, aod$RSS[1], rdf)
-  }
-  head <- c("Single term additions", "\nModel:",
-            deparse(as.vector(formula(object))))
-  if(scale > 0)
-    head <- c(head, paste("\nscale: ", format(scale), "\n"))
-  class(aod) <- c("anova", "data.frame")
-  attr(aod, "heading") <- head
-  aod
+    if(missing(scope) || is.null(scope)) stop("no terms in scope")
+    if(!is.character(scope))
+	scope <- add.scope(object, update.formula(object, scope))
+    if(!length(scope))
+	stop("no terms in scope for adding to object")
+    oTerms <- attr(object$terms, "term.labels")
+    int <- attr(object$terms, "intercept")
+    ns <- length(scope)
+    y <- object$residuals + predict(object)
+    dfs <- numeric(ns+1)
+    RSS <- numeric(ns+1)
+    names(dfs) <- names(RSS) <- c("<none>", scope)
+    dfs[1] <- object$rank
+    RSS[1] <- deviance.lm(object)
+    add.rhs <- paste(scope, collapse = "+")
+    add.rhs <- eval(parse(text = paste("~ . +", add.rhs)))
+    new.form <- update.formula(object, add.rhs)
+    Terms <- terms(new.form)
+    if(is.null(x)) {
+	fc <- object$call
+	fc$formula <- Terms
+	fob <- list(call = fc)
+	class(fob) <- class(object)
+	m <- model.frame(fob, xlev = object$xlevels)
+	x <- model.matrix(Terms, m, contrasts = object$contrasts)
+    }
+    n <- nrow(x)
+    Terms <- attr(Terms, "term.labels")
+    asgn <- attr(x, "assign")
+    ousex <- match(asgn, match(oTerms, Terms), 0) > 0
+    if(int) ousex[1] <- TRUE
+    iswt <- !is.null(wt <- object$weights)
+    for(tt in scope) {
+	usex <- match(asgn, match(tt, Terms), 0) > 0
+	X <- x[, usex|ousex, drop = FALSE]
+	z <- if(iswt) lm.wfit(X, y, wt) else lm.fit(X, y)
+	dfs[tt] <- z$rank
+	RSS[tt] <- deviance.lm(z)
+    }
+    if(scale > 0) aic <- RSS/scale - n + k*dfs
+    else aic <- n * log(RSS/n) + k*dfs
+    dfs <- dfs - dfs[1]
+    dfs[1] <- NA
+    aod <- data.frame(Df = dfs, "Sum of Sq" = c(NA, RSS[1] - RSS[-1]),
+		      RSS = RSS, AIC = aic,
+                      row.names = names(dfs), check.names = FALSE)
+    if(scale > 0) names(aod) <- c("Df", "Sum of Sq", "RSS", "Cp")
+    test <- match.arg(test)
+    if(test == "Chisq") {
+	dev <- aod$"Sum of Sq"
+	nas <- !is.na(dev)
+	dev[nas] <- 1 - pchisq(dev[nas]/scale, aod$Df[nas])
+	aod[, "Pr(Chi)"] <- dev
+    } else if(test == "F") {
+	rdf <- object$df.resid
+	aod[, c("F value", "Pr(F)")] <- Fstat(aod, aod$RSS[1], rdf)
+    }
+    head <- c("Single term additions", "\nModel:",
+	      deparse(as.vector(formula(object))),
+	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
+    class(aod) <- c("anova", "data.frame")
+    attr(aod, "heading") <- head
+    aod
 }
 
-add1.glm <- 
-  function(object, scope, scale = 0, test=c("none", "Chisq"),
-           x = NULL, k = 2,  ...)
+add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq"),
+		     x = NULL, k = 2, ...)
 {
-  if(!is.character(scope))
-    scope <- add.scope(object, update.formula(object, scope))
-  if(!length(scope))
-    stop("no terms in scope for adding to object")
-  oTerms <- attr(object$terms, "term.labels")
-  int <- attr(object$terms, "intercept")
-  ns <- length(scope)
-  dfs <- dev <- numeric(ns+1)
-  names(dfs) <- names(dev) <- c("<none>", scope)
-  dfs[1] <- object$rank
-  dev[1] <- object$deviance
-  add.rhs <- paste(scope, collapse = "+")
-  add.rhs <- eval(parse(text = paste("~ . +", add.rhs)))
-  new.form <- update.formula(object, add.rhs)
-  Terms <- terms(new.form)
-  if(is.null(x)) {
-    fc <- object$call
-    fc$formula <- Terms
-    fob <- list(call = fc)
-    class(fob) <- class(object)
-    m <- model.frame(fob, xlev = object$xlevels)
-    x <- model.matrix(Terms, m, contrasts = object$contrasts)
-  }
-  n <- nrow(x)
-  y <- object$y
-  if(is.null(y)) y <- model.response(model.frame(object), "numeric")
-  wt <- model.weights(model.frame(object))
-  if(is.null(wt)) wt <- rep(1, n)
-  Terms <- attr(Terms, "term.labels")
-  asgn <- attr(x, "assign")
-  ousex <- match(asgn, match(oTerms, Terms), 0) > 0
-  if(int) ousex[1] <- TRUE
-  for(tt in scope) {
-    usex <- match(asgn, match(tt, Terms), 0) > 0
-    X <- x[, usex|ousex, drop = FALSE]
-    z <-  glm.fit(X, y, wt, offset=object$offset,
-                  family=object$family, control=object$control)
-    dfs[tt] <- z$rank
-    dev[tt] <- z$deviance
-  }
-  if (is.null(scale) || scale == 0) 
-    dispersion <- summary(object, dispersion = NULL)$dispersion
-  else dispersion <- scale
-  if(object$family$family == "gaussian") {
-    if(scale > 0) loglik <- dev/scale - n
-    else loglik <- n * log(dev/n)
-  } else loglik <- dev/dispersion
-  aic <- loglik + k * dfs
-  dfs <- dfs - dfs[1]
-  dfs[1] <- NA
-  aod <- data.frame(Df = dfs, Deviance = dev, AIC = aic,
-                    row.names = names(dfs), check.names = FALSE)
-  test <- match.arg(test)
-  if(test == "Chisq") {
-    dev <- loglik[1] - loglik
-    dev[1] <- NA
-    aod[, "LRT"] <- dev
-    nas <- !is.na(dev)
-    dev[nas] <- 1 - pchisq(dev[nas]/dispersion, aod$Df[nas])
-    aod[, "Pr(Chi)"] <- dev
-  }
-  head <- c("Single term additions", "\nModel:",
-            deparse(as.vector(formula(object))))
-  if(scale > 0)
-    head <- c(head, paste("\nscale: ", format(scale), "\n"))
-  class(aod) <- c("anova", "data.frame")
-  attr(aod, "heading") <- head
-  aod
+    if(!is.character(scope))
+	scope <- add.scope(object, update.formula(object, scope))
+    if(!length(scope))
+	stop("no terms in scope for adding to object")
+    oTerms <- attr(object$terms, "term.labels")
+    int <- attr(object$terms, "intercept")
+    ns <- length(scope)
+    dfs <- dev <- numeric(ns+1)
+    names(dfs) <- names(dev) <- c("<none>", scope)
+    dfs[1] <- object$rank
+    dev[1] <- object$deviance
+    add.rhs <- paste(scope, collapse = "+")
+    add.rhs <- eval(parse(text = paste("~ . +", add.rhs)))
+    new.form <- update.formula(object, add.rhs)
+    Terms <- terms(new.form)
+    if(is.null(x)) {
+	fc <- object$call
+	fc$formula <- Terms
+	fob <- list(call = fc)
+	class(fob) <- class(object)
+	m <- model.frame(fob, xlev = object$xlevels)
+	x <- model.matrix(Terms, m, contrasts = object$contrasts)
+    }
+    n <- nrow(x)
+    y <- object$y
+    if(is.null(y)) y <- model.response(model.frame(object), "numeric")
+    wt <- model.weights(model.frame(object))
+    if(is.null(wt)) wt <- rep(1, n)
+    Terms <- attr(Terms, "term.labels")
+    asgn <- attr(x, "assign")
+    ousex <- match(asgn, match(oTerms, Terms), 0) > 0
+    if(int) ousex[1] <- TRUE
+    for(tt in scope) {
+	usex <- match(asgn, match(tt, Terms), 0) > 0
+	X <- x[, usex|ousex, drop = FALSE]
+	z <-  glm.fit(X, y, wt, offset=object$offset,
+		      family=object$family, control=object$control)
+	dfs[tt] <- z$rank
+	dev[tt] <- z$deviance
+    }
+    if (is.null(scale) || scale == 0)
+	dispersion <- summary(object, dispersion = NULL)$dispersion
+    else dispersion <- scale
+    if(object$family$family == "gaussian") {
+	if(scale > 0) loglik <- dev/scale - n
+	else loglik <- n * log(dev/n)
+    } else loglik <- dev/dispersion
+    aic <- loglik + k * dfs
+    dfs <- dfs - dfs[1]
+    dfs[1] <- NA
+    aod <- data.frame(Df = dfs, Deviance = dev, AIC = aic,
+		      row.names = names(dfs), check.names = FALSE)
+    test <- match.arg(test)
+    if(test == "Chisq") {
+	dev <- loglik[1] - loglik
+	dev[1] <- NA
+	aod[, "LRT"] <- dev
+	nas <- !is.na(dev)
+	dev[nas] <- 1 - pchisq(dev[nas]/dispersion, aod$Df[nas])
+	aod[, "Pr(Chi)"] <- dev
+    }
+    head <- c("Single term additions", "\nModel:",
+	      deparse(as.vector(formula(object))),
+	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
+    class(aod) <- c("anova", "data.frame")
+    attr(aod, "heading") <- head
+    aod
 }
 
 add1.mlm <- function(...)
-  stop("no add1 method implemented for mlm models")
+    stop("no add1 method implemented for mlm models")
 
 drop1 <- function(object, ...) UseMethod("drop1")
 
-drop1.default <- 
-  function(object, scope, scale = 0, test=c("none", "Chisq"),
-           k = 2, trace = FALSE, ...)
+drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
+			  k = 2, trace = FALSE, ...)
 {
-  tl <- attr(object$terms, "term.labels")
-  if(missing(scope)) scope <- drop.scope(object)
-  else {
-    if(!is.character(scope))
-      scope <- attr(terms(update.formula(object, scope)), "term.labels")
-    if(!all(match(scope, tl, FALSE)))
-      stop("scope is not a subset of term labels")
-  }
-  ns <- length(scope)
-  ans <- matrix(nrow = ns + 1, ncol = 2)
-  dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
-  ans[1,  ] <- extractAIC(object, scale, k = k, ...)
-  for(i in seq(ns)) {
-    tt <- scope[i]
-    if(trace > 1) cat("trying -", tt, "\n")
-    nfit <- update(object, as.formula(paste("~ . -", tt)))
-    ans[i+1,  ] <- extractAIC(nfit, scale, k = k, ...)
-  }
-  dfs <- ans[1,1] - ans[,1]
-  dfs[1] <- NA
-  aod <- data.frame(Df = dfs, AIC = ans[,2])
-  head <- c("Single term deletions", "\nModel:",
-            deparse(as.vector(formula(object))))
-  if(test == "Chisq") {
-    dev <- ans[, 2] - k*ans[, 1]
-    dev <- dev - dev[1] ; dev[1] <- NA
-    nas <- !is.na(dev)
-    P <- dev
-    P[nas] <- 1 - pchisq(dev[nas], dfs[nas])
-    aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
-  }
-  if(scale > 0)
-    head <- c(head, paste("\nscale: ", format(scale), "\n"))
-  class(aod) <- c("anova", "data.frame")
-  attr(aod, "heading") <- head
-  aod
+    tl <- attr(object$terms, "term.labels")
+    if(missing(scope)) scope <- drop.scope(object)
+    else {
+	if(!is.character(scope))
+	    scope <- attr(terms(update.formula(object, scope)), "term.labels")
+	if(!all(match(scope, tl, FALSE)))
+	    stop("scope is not a subset of term labels")
+    }
+    ns <- length(scope)
+    ans <- matrix(nrow = ns + 1, ncol = 2)
+    dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
+    ans[1, ] <- extractAIC(object, scale, k = k, ...)
+    for(i in seq(ns)) {
+	tt <- scope[i]
+	if(trace > 1) cat("trying -", tt, "\n")
+	nfit <- update(object, as.formula(paste("~ . -", tt)))
+	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
+    }
+    dfs <- ans[1,1] - ans[,1]
+    dfs[1] <- NA
+    aod <- data.frame(Df = dfs, AIC = ans[,2])
+    if(test == "Chisq") {
+	dev <- ans[, 2] - k*ans[, 1]
+	dev <- dev - dev[1] ; dev[1] <- NA
+	nas <- !is.na(dev)
+	P <- dev
+	P[nas] <- 1 - pchisq(dev[nas], dfs[nas])
+	aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
+    }
+    head <- c("Single term deletions", "\nModel:",
+	      deparse(as.vector(formula(object))),
+	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
+    class(aod) <- c("anova", "data.frame")
+    attr(aod, "heading") <- head
+    aod
 }
 
 drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
-                     test=c("none", "Chisq", "F"), k = 2, ...)
+		     test=c("none", "Chisq", "F"), k = 2, ...)
 {
-  setdiff <- function(x, y)
-      if(length(x) == 0 || length(y) == 0) x else x[match(x, y, 0) == 0]
+    setdiff <- function(x, y)
+	if(length(x) == 0 || length(y) == 0) x else x[match(x, y, 0) == 0]
 
-  x <- model.matrix(object)
-  iswt <- !is.null(wt <- object$weights)
-  n <- nrow(x)
-  asgn <- attr(x, "assign")
-  tl <- attr(object$terms, "term.labels")
-  if(missing(scope)) scope <- drop.scope(object)
-  else {
-    if(!is.character(scope))
-      scope <- attr(terms(update.formula(object, scope)), "term.labels")
-    if(!all(match(scope, tl, FALSE)))
-      stop("scope is not a subset of term labels")
-  }
-  ndrop <- match(scope, tl)
-  ns <- length(scope)
-  rdf <- object$df.resid
-  chisq <- deviance.lm(object)
-  dfs <- numeric(ns)
-  RSS <- numeric(ns)
-  y <- object$residuals + predict(object)
-  rank <- object$rank
-  for(i in 1:ns) {
-    ii <- seq(along=asgn)[asgn == ndrop[i]]                 
-    if(all.cols) jj <- setdiff(seq(ncol(x)), ii)
-    else jj <- setdiff(na.coef, ii)
-    z <- if(iswt) lm.wfit(x[, jj, drop = FALSE], y, wt)
-         else lm.fit(x[, jj, drop = FALSE], y)
-    dfs[i] <- z$rank
-    RSS[i] <- deviance.lm(z)
-  }
-  scope <- c("<none>", scope)
-  dfs <- c(object$rank, dfs)
-  RSS <- c(chisq, RSS)
-  if(scale > 0) aic <- RSS/scale - n + k*dfs
-  else aic <- n * log(RSS/n) + k*dfs
-  dfs <- dfs[1] - dfs
-  dfs[1] <- NA
-  aod <- data.frame(Df = dfs, "Sum of Sq" = c(NA, RSS[-1] - RSS[1]), 
-                    RSS = RSS, AIC = aic, row.names = scope,
-                    check.names = FALSE)
-  if(scale > 0) names(aod) <- c("Df", "Sum of Sq", "RSS", "Cp")
-  test <- match.arg(test)
-  if(test == "Chisq") {
-    dev <- aod$"Sum of Sq"
-    nas <- !is.na(dev)
-    dev[nas] <- 1 - pchisq(dev[nas]/scale, aod$Df[nas])
-    aod[, "Pr(Chi)"] <- dev
-  } else if(test == "F") {
-    dev <- aod$"Sum of Sq"
-    dfs <- aod$Df
+    x <- model.matrix(object)
+    iswt <- !is.null(wt <- object$weights)
+    n <- nrow(x)
+    asgn <- attr(x, "assign")
+    tl <- attr(object$terms, "term.labels")
+    if(missing(scope)) scope <- drop.scope(object)
+    else {
+	if(!is.character(scope))
+	    scope <- attr(terms(update.formula(object, scope)), "term.labels")
+	if(!all(match(scope, tl, FALSE)))
+	    stop("scope is not a subset of term labels")
+    }
+    ndrop <- match(scope, tl)
+    ns <- length(scope)
     rdf <- object$df.resid
-    rms <- aod$RSS[1]/rdf
-    Fs <- (dev/dfs)/rms
-    Fs[dfs < 1e-4] <- NA
-    P <- Fs
-    nas <- !is.na(Fs)
-    P[nas] <- 1 - pf(Fs[nas], dfs[nas], rdf)
-    aod[, c("F Value", "Pr(F)")] <- list(Fs, P)
-  }
-  head <- c("Single term deletions", "\nModel:",
-            deparse(as.vector(formula(object))))
-  if(scale > 0)
-    head <- c(head, paste("\nscale: ", format(scale), "\n"))
-  class(aod) <- c("anova", "data.frame")
-  attr(aod, "heading") <- head
-  aod
+    chisq <- deviance.lm(object)
+    dfs <- numeric(ns)
+    RSS <- numeric(ns)
+    y <- object$residuals + predict(object)
+    rank <- object$rank
+    for(i in 1:ns) {
+	ii <- seq(along=asgn)[asgn == ndrop[i]]
+	if(all.cols) jj <- setdiff(seq(ncol(x)), ii)
+	else jj <- setdiff(na.coef, ii)
+	z <- if(iswt) lm.wfit(x[, jj, drop = FALSE], y, wt)
+	else lm.fit(x[, jj, drop = FALSE], y)
+	dfs[i] <- z$rank
+	RSS[i] <- deviance.lm(z)
+    }
+    scope <- c("<none>", scope)
+    dfs <- c(object$rank, dfs)
+    RSS <- c(chisq, RSS)
+    if(scale > 0) aic <- RSS/scale - n + k*dfs
+    else aic <- n * log(RSS/n) + k*dfs
+    dfs <- dfs[1] - dfs
+    dfs[1] <- NA
+    aod <- data.frame(Df = dfs, "Sum of Sq" = c(NA, RSS[-1] - RSS[1]),
+		      RSS = RSS, AIC = aic,
+                      row.names = scope, check.names = FALSE)
+    if(scale > 0) names(aod) <- c("Df", "Sum of Sq", "RSS", "Cp")
+    test <- match.arg(test)
+    if(test == "Chisq") {
+	dev <- aod$"Sum of Sq"
+	nas <- !is.na(dev)
+	dev[nas] <- 1 - pchisq(dev[nas]/scale, aod$Df[nas])
+	aod[, "Pr(Chi)"] <- dev
+    } else if(test == "F") {
+	dev <- aod$"Sum of Sq"
+	dfs <- aod$Df
+	rdf <- object$df.resid
+	rms <- aod$RSS[1]/rdf
+	Fs <- (dev/dfs)/rms
+	Fs[dfs < 1e-4] <- NA
+	P <- Fs
+	nas <- !is.na(Fs)
+	P[nas] <- 1 - pf(Fs[nas], dfs[nas], rdf)
+	aod[, c("F value", "Pr(F)")] <- list(Fs, P)
+    }
+    head <- c("Single term deletions", "\nModel:",
+	      deparse(as.vector(formula(object))),
+	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
+    class(aod) <- c("anova", "data.frame")
+    attr(aod, "heading") <- head
+    aod
 }
 
 drop1.mlm <- function(object, ...)
-  stop("drop1 not implemented for mlm models")
+    stop("drop1 not implemented for mlm models")
 
-drop1.glm <-
-  function(object, scope, scale = 0, test=c("none", "Chisq"), k = 2, ...)
+drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq"),
+		      k = 2, ...)
 {
-  setdiff <- function(x, y)
-    if(length(x) == 0 || length(y) == 0) x else x[match(x, y, 0) == 0]
+    setdiff <- function(x, y)
+	if(length(x) == 0 || length(y) == 0) x else x[match(x, y, 0) == 0]
 
-  x <- model.matrix(object)
-  iswt <- !is.null(wt <- object$weights)
-  n <- nrow(x)
-  asgn <- attr(x, "assign")
-  tl <- attr(object$terms, "term.labels")
-  if(missing(scope)) scope <- drop.scope(object)
-  else {
-    if(!is.character(scope))
-      scope <- attr(terms(update.formula(object, scope)), "term.labels")
-    if(!all(match(scope, tl, FALSE)))
-      stop("scope is not a subset of term labels")
-  }
-  ndrop <- match(scope, tl)
-  ns <- length(scope)
-  rdf <- object$df.resid
-  chisq <- object$deviance
-  dfs <- numeric(ns)
-  dev <- numeric(ns)
-  y <- object$y
-  if(is.null(y)) y <- model.response(model.frame(object), "numeric")
-  na.coef <- (1:length(object$coefficients))[!is.na(object$coefficients)]
-  wt <- model.weights(model.frame(object))
-  if(is.null(wt)) wt <- rep(1, n)
-  rank <- object$rank
-  for(i in 1:ns) {
-    ii <- seq(along=asgn)[asgn == ndrop[i]]                 
-    jj <- setdiff(seq(ncol(x)), ii)
-    z <-  glm.fit(x[, jj, drop = FALSE], y, wt, offset=object$offset,
-                  family=object$family, control=object$control)
-    dfs[i] <- z$rank
-    dev[i] <- z$deviance
-  }
-  scope <- c("<none>", scope)
-  dfs <- c(object$rank, dfs)
-  dev <- c(chisq, dev)
-  if (is.null(scale) || scale == 0) 
-    dispersion <- summary(object, dispersion = NULL)$dispersion
-  else dispersion <- scale
-  if(object$family$family == "gaussian") {
-    if(scale > 0) loglik <- dev/scale - n
-    else loglik <- n * log(dev/n)
-  } else loglik <- dev/dispersion
-  aic <- loglik + k * dfs
-  dfs <- dfs[1] - dfs
-  dfs[1] <- NA
-  aod <- data.frame(Df = dfs, Deviance = dev, AIC = aic,
-                    row.names = scope, check.names = FALSE)
-  test <- match.arg(test)
-  if(test == "Chisq") {
-    dev <- loglik - loglik[1]
-    dev[1] <- NA
-    nas <- !is.na(dev)
-    aod[, "LRT"] <- dev
-    dev[nas] <- 1 - pchisq(dev[nas]/dispersion, aod$Df[nas])
-    aod[, "Pr(Chi)"] <- dev
-  }
-  head <- c("Single term deletions", "\nModel:",
-            deparse(as.vector(formula(object))))
-  if(scale > 0)
-    head <- c(head, paste("\nscale: ", format(scale), "\n"))
-  class(aod) <- c("anova", "data.frame")
-  attr(aod, "heading") <- head
-  aod
+    x <- model.matrix(object)
+    iswt <- !is.null(wt <- object$weights)
+    n <- nrow(x)
+    asgn <- attr(x, "assign")
+    tl <- attr(object$terms, "term.labels")
+    if(missing(scope)) scope <- drop.scope(object)
+    else {
+	if(!is.character(scope))
+	    scope <- attr(terms(update.formula(object, scope)), "term.labels")
+	if(!all(match(scope, tl, FALSE)))
+	    stop("scope is not a subset of term labels")
+    }
+    ndrop <- match(scope, tl)
+    ns <- length(scope)
+    rdf <- object$df.resid
+    chisq <- object$deviance
+    dfs <- numeric(ns)
+    dev <- numeric(ns)
+    y <- object$y
+    if(is.null(y)) y <- model.response(model.frame(object), "numeric")
+    na.coef <- (1:length(object$coefficients))[!is.na(object$coefficients)]
+    wt <- model.weights(model.frame(object))
+    if(is.null(wt)) wt <- rep(1, n)
+    rank <- object$rank
+    for(i in 1:ns) {
+	ii <- seq(along=asgn)[asgn == ndrop[i]]
+	jj <- setdiff(seq(ncol(x)), ii)
+	z <-  glm.fit(x[, jj, drop = FALSE], y, wt, offset=object$offset,
+		      family=object$family, control=object$control)
+	dfs[i] <- z$rank
+	dev[i] <- z$deviance
+    }
+    scope <- c("<none>", scope)
+    dfs <- c(object$rank, dfs)
+    dev <- c(chisq, dev)
+    if (is.null(scale) || scale == 0)
+	dispersion <- summary(object, dispersion = NULL)$dispersion
+    else dispersion <- scale
+    if(object$family$family == "gaussian") {
+	if(scale > 0) loglik <- dev/scale - n
+	else loglik <- n * log(dev/n)
+    } else loglik <- dev/dispersion
+    aic <- loglik + k * dfs
+    dfs <- dfs[1] - dfs
+    dfs[1] <- NA
+    aod <- data.frame(Df = dfs, Deviance = dev, AIC = aic,
+		      row.names = scope, check.names = FALSE)
+    test <- match.arg(test)
+    if(test == "Chisq") {
+	dev <- loglik - loglik[1]
+	dev[1] <- NA
+	nas <- !is.na(dev)
+	aod[, "LRT"] <- dev
+	dev[nas] <- 1 - pchisq(dev[nas]/dispersion, aod$Df[nas])
+	aod[, "Pr(Chi)"] <- dev
+    }
+    head <- c("Single term deletions", "\nModel:",
+	      deparse(as.vector(formula(object))),
+	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
+    class(aod) <- c("anova", "data.frame")
+    attr(aod, "heading") <- head
+    aod
 }
 
 add.scope <- function(terms1, terms2)
 {
-  terms1 <- terms(as.formula(terms1))
-  terms2 <- terms(as.formula(terms2))
-  factor.scope(attr(terms1, "factor"), list(add = attr(terms2, "factor")))$add
+    terms1 <- terms(as.formula(terms1))
+    terms2 <- terms(as.formula(terms2))
+    factor.scope(attr(terms1, "factor"),
+		 list(add = attr(terms2, "factor")))$add
 }
 
 drop.scope <- function(terms1, terms2)
 {
-  terms1 <- terms(as.formula(terms1))
-  f2 <- if(missing(terms2)) numeric(0)
-  else attr(terms(as.formula(terms2)), "factor")
-  factor.scope(attr(terms1, "factor"), list(drop = f2))$drop
+    terms1 <- terms(as.formula(terms1))
+    f2 <- if(missing(terms2)) numeric(0)
+    else attr(terms(as.formula(terms2)), "factor")
+    factor.scope(attr(terms1, "factor"), list(drop = f2))$drop
 }
 
 factor.scope <- function(factor, scope)
 {
-  drop <- scope$drop
-  add <- scope$add
+    drop <- scope$drop
+    add <- scope$add
 
-  if(length(factor) && !is.null(drop)) {# have base model
-    nmdrop <- colnames(drop)
-    facs <- factor
-    if(length(drop)) {
-      nmfac <- colnames(factor)
-      where <- match(nmdrop, nmfac, 0)
-      if(any(!where)) stop("lower scope is not included in model")
-      nmdrop <- nmfac[-where]
-      facs <- factor[, -where, drop = FALSE]
-    } else nmdrop <- colnames(factor)
-    if(ncol(facs) > 1) {
-      # now check no interactions will be left without margins.
-      keep <- rep(TRUE, ncol(facs))
-      f <- crossprod(facs > 0)
-      for(i in seq(keep)) keep[i] <- max(f[i,  - i]) != f[i, i]
-      nmdrop <- nmdrop[keep]
-    }
-  } else nmdrop <- character(0)
+    if(length(factor) && !is.null(drop)) {# have base model
+	nmdrop <- colnames(drop)
+	facs <- factor
+	if(length(drop)) {
+	    nmfac <- colnames(factor)
+	    where <- match(nmdrop, nmfac, 0)
+	    if(any(!where)) stop("lower scope is not included in model")
+	    nmdrop <- nmfac[-where]
+	    facs <- factor[, -where, drop = FALSE]
+	} else nmdrop <- colnames(factor)
+	if(ncol(facs) > 1) {
+					# now check no interactions will be left without margins.
+	    keep <- rep(TRUE, ncol(facs))
+	    f <- crossprod(facs > 0)
+	    for(i in seq(keep)) keep[i] <- max(f[i, - i]) != f[i, i]
+	    nmdrop <- nmdrop[keep]
+	}
+    } else nmdrop <- character(0)
 
-  if(is.null(add)) nmadd <- character(0)
-  else {
-    nmfac <- colnames(factor)
-    nmadd <- colnames(add)
-    if(!is.null(nmfac)) {
-      where <- match(nmfac, nmadd, 0)
-      if(any(!where)) stop("upper scope does not include model")
-      nmadd <- nmadd[-where]
-      add <- add[, -where, drop = FALSE]
+    if(is.null(add)) nmadd <- character(0)
+    else {
+	nmfac <- colnames(factor)
+	nmadd <- colnames(add)
+	if(!is.null(nmfac)) {
+	    where <- match(nmfac, nmadd, 0)
+	    if(any(!where)) stop("upper scope does not include model")
+	    nmadd <- nmadd[-where]
+	    add <- add[, -where, drop = FALSE]
+	}
+	if(ncol(add) > 1) {
+					# now check marginality:
+	    keep <- rep(TRUE, ncol(add))
+	    f <- crossprod(add > 0)
+	    for(i in seq(keep)) keep[-i] <- keep[-i] & (f[i, -i] < f[i, i])
+	    nmadd <- nmadd[keep]
+	}
     }
-    if(ncol(add) > 1) {
-      # now check marginality: 
-      keep <- rep(TRUE, ncol(add))
-      f <- crossprod(add > 0)
-      for(i in seq(keep)) keep[-i] <- keep[-i] & (f[i, -i] < f[i, i])
-      nmadd <- nmadd[keep]
-    }
-  }
-  list(drop = nmdrop, add = nmadd)
+    list(drop = nmdrop, add = nmadd)
 }
 
-step <-
-  function(object, scope, scale = 0,
-           direction = c("both", "backward", "forward"),
-           trace = 1, keep = NULL, steps = 1000, k = 2, ...)
+step <- function(object, scope, scale = 0,
+		 direction = c("both", "backward", "forward"),
+		 trace = 1, keep = NULL, steps = 1000, k = 2, ...)
 {
-  fixFormulaObject <- function(object) {
-    tmp <- attr(terms(object), "term.labels")
-    formula(paste(deparse(formula(object)[[2]]), "~",
-                  paste(tmp, collapse=" + ")))
-  }
+    fixFormulaObject <- function(object) {
+	tt <- terms(object)
+	tmp <- attr(tt, "term.labels")
+	if (!attr(tt, "intercept"))
+	    tmp <- c(tmp, "0")
+	if (!length(tmp))
+	    tmp <- "1"
+	tmp <- paste(deparse(formula(object)[[2]]), "~",
+		     paste(tmp, collapse = " + "))
+	if (length(offset <- attr(tt, "offset")))
+	    tmp <- paste(tmp, deparse(attr(tt, "variables")[offset + 1]),
+			 sep = " + ")
+	formula(tmp)
+    }
 
-  cut.string <- function(string)
-  {
-    if(length(string) > 1)
-      string[-1] <- paste("\n", string[-1], sep = "")
-    string
-  }
-  re.arrange <- function(keep)
-  {
-    namr <- names(k1 <- keep[[1]])
-    namc <- names(keep)
-    nc <- length(keep)
-    nr <- length(k1)
-    array(unlist(keep, recursive = FALSE), c(nr, nc), list(namr, namc))
-  }
+    cut.string <- function(string)
+    {
+	if(length(string) > 1)
+	    string[-1] <- paste("\n", string[-1], sep = "")
+	string
+    }
+    re.arrange <- function(keep)
+    {
+	namr <- names(k1 <- keep[[1]])
+	namc <- names(keep)
+	nc <- length(keep)
+	nr <- length(k1)
+	array(unlist(keep, recursive = FALSE), c(nr, nc), list(namr, namc))
+    }
 
-  step.results <- function(models, fit, object, usingCp=FALSE)
-  {
-    change <- sapply(models, "[[", "change")
-    rd <- sapply(models, "[[", "deviance")
-    dd <- c(NA, diff(rd))
-    rdf <- sapply(models, "[[", "df.resid")
-    ddf <- c(NA, diff(rdf))
-    AIC <- sapply(models, "[[", "AIC")
-    heading <- c("Stepwise Model Path \nAnalysis of Deviance Table",
-                 "\nInitial Model:", deparse(as.vector(formula(object))),
-                 "\nFinal Model:", deparse(as.vector(formula(fit))), 
-                 "\n")
-    aod <-
-      if(usingCp)
-        data.frame(Step = change, Df = ddf, Deviance = dd, 
-                   "Resid. Df" = rdf, "Resid. Dev" = rd,
-                   Cp = AIC, check.names = FALSE)
-      else data.frame(Step = change, Df = ddf, Deviance = dd, 
-                      "Resid. Df" = rdf, "Resid. Dev" = rd,
-                      AIC = AIC, check.names = FALSE)
-    attr(aod, "heading") <- heading
-    attr(aod, "class") <- "data.frame"
-    #attr(aod, "class") <- c("anova", "data.frame")
-    fit$anova <- aod
-    fit
-  }
+    step.results <- function(models, fit, object, usingCp=FALSE)
+    {
+	change <- sapply(models, "[[", "change")
+	rd <- sapply(models, "[[", "deviance")
+	dd <- c(NA, diff(rd))
+	rdf <- sapply(models, "[[", "df.resid")
+	ddf <- c(NA, diff(rdf))
+	AIC <- sapply(models, "[[", "AIC")
+	heading <- c("Stepwise Model Path \nAnalysis of Deviance Table",
+		     "\nInitial Model:", deparse(as.vector(formula(object))),
+		     "\nFinal Model:", deparse(as.vector(formula(fit))),
+		     "\n")
+	aod <- data.frame(Step = I(change), Df = ddf, Deviance = dd,
+                          "Resid. Df" = rdf, "Resid. Dev" = rd, AIC = AIC,
+                          check.names = FALSE)
+        if(usingCp) {
+            cn <- colnames(aod); cn[cn == "AIC"] <- "Cp"; colnames(aod) <- cn
+        }
+	attr(aod, "heading") <- heading
+        ##stop gap attr(aod, "class") <- c("anova", "data.frame")
+	fit$anova <- aod
+	fit
+    }
 
-  # need to fix up . in formulae in R
-  object$formula <- fixFormulaObject(object)
-  Terms <- object$formula
-  object$call$formula <- object$formula
-  attributes(Terms) <- attributes(object$terms)
-  object$terms <- Terms
-  if(missing(direction)) direction <- "both"
-  else direction <- match.arg(direction)
-  backward <- direction == "both" | direction == "backward"
-  forward <- direction == "both" | direction == "forward"
-  if(missing(scope)) {
-    fdrop <- numeric(0)
-    fadd <- NULL
-  } else {
-    if(is.list(scope)) {
-      fdrop <- if(!is.null(fdrop <- scope$lower))
-	attr(terms(update.formula(object, fdrop)), "factors")
-	else numeric(0)
-      fadd <- if(!is.null(fadd <- scope$upper))
-	attr(terms(update.formula(object, fadd)), "factors")
+    ## need to fix up . in formulae in R
+    object$formula <- fixFormulaObject(object)
+    Terms <- object$formula
+    object$call$formula <- object$formula
+    attributes(Terms) <- attributes(object$terms)
+    object$terms <- Terms
+    if(missing(direction)) direction <- "both"
+    else direction <- match.arg(direction)
+    backward <- direction == "both" | direction == "backward"
+    forward <- direction == "both" | direction == "forward"
+    if(missing(scope)) {
+	fdrop <- numeric(0)
+	fadd <- NULL
     } else {
-      fadd <- if(!is.null(fadd <- scope))
-	attr(terms(update.formula(object, scope)), "factors")
-      fdrop <- numeric(0)
+	if(is.list(scope)) {
+	    fdrop <- if(!is.null(fdrop <- scope$lower))
+		attr(terms(update.formula(object, fdrop)), "factors")
+	    else numeric(0)
+	    fadd <- if(!is.null(fadd <- scope$upper))
+		attr(terms(update.formula(object, fadd)), "factors")
+	} else {
+	    fadd <- if(!is.null(fadd <- scope))
+		attr(terms(update.formula(object, scope)), "factors")
+	    fdrop <- numeric(0)
+	}
     }
-  }
-  if(is.null(fadd)) {
-    backward <- TRUE
-    forward <- FALSE
-  }
-  models <- vector("list", steps)
-  if(!is.null(keep)) {
-    keep.list <- vector("list", steps)
-    nv <- 1
-  }
-  n <- length(object$residuals)
-  fit <- object
-  bAIC <- extractAIC(fit, scale, k = k, ...)
-  edf <- bAIC[1]
-  bAIC <- bAIC[2]
-  nm <- 1
-  Terms <- fit$terms
-  if(trace)
-    cat("Start:  AIC=", format(round(bAIC, 2)), "\n",
-        cut.string(deparse(as.vector(formula(fit)))), "\n\n")
-
-  models[[nm]] <- list(deviance = deviance(fit), df.resid = n - edf, 
-		       change = "", AIC = bAIC)
-  if(!is.null(keep)) keep.list[[nm]] <- keep(fit, bAIC)
-  while(steps > 0) {
-    steps <- steps - 1
-    AIC <- bAIC
-    bfit <- fit
-    ffac <- attr(Terms, "factors")
-    scope <- factor.scope(ffac, list(add = fadd, drop = fdrop))
-    aod <- NULL
-    change <- NULL
-    if(backward && length(scope$drop)) {
-      aod <- drop1(fit, scope$drop, scale = scale, trace = trace, k = k, ...)
-        rn <- row.names(aod)
-        row.names(aod) <- c(rn[1], paste("-", rn[-1], sep=" "))
-      # drop all zero df terms first.
-      if(any(aod$Df == 0, na.rm=TRUE)) {
-        zdf <- aod$Df == 0 & !is.na(aod$Df)
-        change <- paste(rownames(aod)[zdf])
-      }
+    if(is.null(fadd)) {
+	backward <- TRUE
+	forward <- FALSE
     }
-    if(is.null(change)) {
-      if(forward && length(scope$add)) {
-        aodf <- add1(fit, scope$add, scale = scale, trace = trace, k = k, ...)
-        rn <- row.names(aodf)
-        row.names(aodf) <- c(rn[1], paste("+", rn[-1], sep=" "))
-        if(is.null(aod)) aod <- aodf
-        else aod <- rbind(aod, aodf[-1, , drop = FALSE])
-      }
-      attr(aod, "heading") <- NULL
-      # need to remove any terms with zero df from consideration
-      nzdf <- aod$Df != 0 | is.na(aod$Df)
-      aod <- aod[nzdf, ]
-      if(is.null(aod) || ncol(aod) == 0) break
-      nc <- match(c("Cp", "AIC"), names(aod))
-      nc <- nc[!is.na(nc)][1]
-      o <- order(aod[, nc])
-      if(trace) print(aod[o,  ])
-      if(o[1] == 1) break
-      change <- rownames(aod)[o[1]]
+    models <- vector("list", steps)
+    if(!is.null(keep)) {
+	keep.list <- vector("list", steps)
+	nv <- 1
     }
-    usingCp <- match("Cp", names(aod), 0) > 0
-    fit <- update(fit, paste("~ .", change))
-    fit$formula <- fixFormulaObject(fit)
-    Terms <- fit$formula
-    attributes(Terms) <- attributes(fit$terms)
-    fit$terms <- Terms
+    n <- length(object$residuals)
+    fit <- object
     bAIC <- extractAIC(fit, scale, k = k, ...)
     edf <- bAIC[1]
     bAIC <- bAIC[2]
+    nm <- 1
+    Terms <- fit$terms
     if(trace)
-      cat("\nStep:  AIC=", format(round(bAIC, 2)), "\n", 
-          cut.string(deparse(as.vector(formula(fit)))), "\n\n")
-    if(bAIC >= AIC) break
-    nm <- nm + 1
-    edf <- models[[nm]] <-
-      list(deviance = deviance(fit), df.resid = n - edf,
-           change = change, AIC = bAIC)
+	cat("Start:  AIC=", format(round(bAIC, 2)), "\n",
+	    cut.string(deparse(as.vector(formula(fit)))), "\n\n")
+
+    models[[nm]] <- list(deviance = deviance(fit), df.resid = n - edf,
+			 change = "", AIC = bAIC)
     if(!is.null(keep)) keep.list[[nm]] <- keep(fit, bAIC)
-  }
-  if(!is.null(keep)) fit$keep <- re.arrange(keep.list[seq(nm)])
-  step.results(models = models[seq(nm)], fit, object, usingCp)
+    usingCp <- FALSE
+    while(steps > 0) {
+	steps <- steps - 1
+	AIC <- bAIC
+	bfit <- fit
+	ffac <- attr(Terms, "factors")
+	scope <- factor.scope(ffac, list(add = fadd, drop = fdrop))
+	aod <- NULL
+	change <- NULL
+	if(backward && length(scope$drop)) {
+	    aod <- drop1(fit, scope$drop, scale = scale,
+                         trace = trace, k = k, ...)
+	    rn <- row.names(aod)
+	    row.names(aod) <- c(rn[1], paste("-", rn[-1], sep=" "))
+            ## drop all zero df terms first.
+	    if(any(aod$Df == 0, na.rm=TRUE)) {
+		zdf <- aod$Df == 0 & !is.na(aod$Df)
+		change <- paste(rownames(aod)[zdf])
+	    }
+	}
+	if(is.null(change)) {
+	    if(forward && length(scope$add)) {
+		aodf <- add1(fit, scope$add, scale = scale,
+                             trace = trace, k = k, ...)
+		rn <- row.names(aodf)
+		row.names(aodf) <- c(rn[1], paste("+", rn[-1], sep=" "))
+		aod <-
+                    if(is.null(aod)) aodf
+                    else rbind(aod, aodf[-1, , drop = FALSE])
+	    }
+	    attr(aod, "heading") <- NULL
+					# need to remove any terms with zero df from consideration
+	    nzdf <- if( !is.null(aod$Df) )
+		aod$Df != 0 | is.na(aod$Df)
+	    aod <- aod[nzdf, ]
+	    if(is.null(aod) || ncol(aod) == 0) break
+	    nc <- match(c("Cp", "AIC"), names(aod))
+	    nc <- nc[!is.na(nc)][1]
+	    o <- order(aod[, nc])
+	    if(trace) print(aod[o, ])
+	    if(o[1] == 1) break
+	    change <- rownames(aod)[o[1]]
+	}
+	usingCp <- match("Cp", names(aod), 0) > 0
+	fit <- update(fit, paste("~ .", change))
+	fit$formula <- fixFormulaObject(fit)
+	Terms <- fit$formula
+	attributes(Terms) <- attributes(fit$terms)
+	fit$terms <- Terms
+	bAIC <- extractAIC(fit, scale, k = k, ...)
+	edf <- bAIC[1]
+	bAIC <- bAIC[2]
+	if(trace)
+	    cat("\nStep:  AIC=", format(round(bAIC, 2)), "\n",
+		cut.string(deparse(as.vector(formula(fit)))), "\n\n")
+	if(bAIC >= AIC) break
+	nm <- nm + 1
+	edf <- models[[nm]] <-
+	    list(deviance = deviance(fit), df.resid = n - edf,
+		 change = change, AIC = bAIC)
+	if(!is.null(keep)) keep.list[[nm]] <- keep(fit, bAIC)
+    }
+    if(!is.null(keep)) fit$keep <- re.arrange(keep.list[seq(nm)])
+    step.results(models = models[seq(nm)], fit, object, usingCp)
 }
 
 extractAIC <- function(fit, scale, k = 2, ...) UseMethod("extractAIC")
 
 extractAIC.coxph <- function(fit, scale, k = 2, ...)
 {
-  edf <- length(fit$coef)
-  c(edf, -2 * fit$loglik[2] + k * edf)
+    edf <- length(fit$coef)
+    c(edf, -2 * fit$loglik[2] + k * edf)
 }
 
 extractAIC.survreg <- function(fit, scale, k = 2, ...)
 {
-  n <- length(fit$residuals)
-  edf <- n  - fit$df.residual
-  c(edf, -2 * fit$loglik[2] + k * edf)
+    n <- length(fit$residuals)
+    edf <- n  - fit$df.residual
+    c(edf, -2 * fit$loglik[2] + k * edf)
 }
 
 extractAIC.glm <- function(fit, scale = 0, k = 2, ...)
 {
-  n <- length(fit$residuals)
-  edf <- n  - fit$df.residual
-  dev <- fit$deviance
-  if(scale > 0) dev <- dev/scale
-  if(scale == 0 && fit$family$family == "Gaussian") dev <- n * log(dev/n)
-  c(edf,  dev + k * edf)
+    n <- length(fit$residuals)
+    edf <- n  - fit$df.residual
+    dev <- fit$deviance
+    if(scale > 0) dev <- dev/scale
+    if(scale == 0 && fit$family$family == "Gaussian") dev <- n * log(dev/n)
+    c(edf, dev + k * edf)
 }
 
-extractAIC.aov <-
 extractAIC.lm <- function(fit, scale = 0, k = 2, ...)
 {
-  n <- length(fit$residuals)
-  edf <- n  - fit$df.residual
-  RSS <- deviance.lm(fit)
-  dev <- if(scale > 0) RSS/scale - n else n * log(RSS/n)
-  c(edf, dev + k * edf)
+    n <- length(fit$residuals)
+    edf <- n  - fit$df.residual
+    RSS <- deviance.lm(fit)
+    dev <- if(scale > 0) RSS/scale - n else n * log(RSS/n)
+    c(edf, dev + k * edf)
 }
+extractAIC.aov <- .Alias(extractAIC.lm)
 
 extractAIC.negbin <- function(fit, scale, k = 2, ...)
 {
-  n <- length(fit$residuals)
-  edf <- n - fit$df.residual
-  c(edf,  -fit$twologlik + k * edf)
+    n <- length(fit$residuals)
+    edf <- n - fit$df.residual
+    c(edf, -fit$twologlik + k * edf)
 }

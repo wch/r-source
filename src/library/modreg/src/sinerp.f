@@ -2,7 +2,7 @@
       implicit double precision(a-h,o-z)
       integerflag,ld4,nk,ldnk,i,j,k
       double precision abd(ld4,nk),p1ip(ld4,nk),p2ip(ldnk,nk),wjm3(3),
-&     wjm2(2),wjm1(1),c0,c1,c2,c3
+     &wjm2(2),wjm1(1),c0,c1,c2,c3
       wjm3(1)=0e0
       wjm3(2)=0e0
       wjm3(1)=0e0
@@ -42,7 +42,7 @@
       p1ip(2,j) = 0e0- (c1*wjm3(2)+c2*wjm2(1)+c3*wjm2(2))
       p1ip(3,j) = 0e0- (c1*wjm3(3)+c2*wjm2(2)+c3*wjm1(1))
       p1ip(4,j) = c0**2 +c1**2*wjm3(1)+2.*c1*c2*wjm3(2)+2.*c1*c3*wjm3(3)
-&      +c2**2*wjm2(1)+2.*c2*c3*wjm2(2) +c3**2*wjm1(1)
+     & +c2**2*wjm2(1)+2.*c2*c3*wjm2(2) +c3**2*wjm1(1)
       wjm3(1)=wjm2(1) 
       wjm3(2)=wjm2(2) 
       wjm3(3)=p1ip(2,j)
@@ -71,7 +71,7 @@
       c2 = abd(2,k+2)*c0 
       c3 = abd(3,k+1)*c0
       p2ip(k,j) = 0e0- ( c1*p2ip(k+3,j) +c2*p2ip(k+2,j) +c3*p2ip(k+1,j) 
-&     ) 
+     &) 
       k=k-1
       goto 23019
 23021 continue

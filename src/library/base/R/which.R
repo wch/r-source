@@ -4,7 +4,7 @@ which <- function(logic, arr.ind = FALSE)
 	stop("argument to \"which\" is not logical")
     if(0 == (n <- length(logic)))
 	return(integer(0))
-    wh <- (1:n)[logic]
+    wh <- (1:n)[logic & !is.na(logic)]
     if ((m <- length(wh)) > 0) {
 	dl <- dim(logic)
 	if (is.null(dl) || !arr.ind) {

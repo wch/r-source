@@ -34,7 +34,8 @@ void PrintGreeting(void)
 
     Rprintf("Type\t\"demo()\" for some demos,"
 	    " \"help()\" for on-line help, or\n\t\"help.start()\""
-	    " for a HTML browser interface to help.\n\n");
+	    " for a HTML browser interface to help.\n");
+    Rprintf("Type\t\"q()\" to quit R.\n\n");
 }
 
 SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)

@@ -1,5 +1,4 @@
-pmin <-
-    function (..., na.rm = FALSE)
+pmin <- function (..., na.rm = FALSE)
 {
     elts <- list(...)
     minmm <- as.vector(elts[[1]])
@@ -13,5 +12,6 @@ pmin <-
 	if (!na.rm) work[,1][nas[,1]+nas[,2] > 0] <- NA
 	minmm <- work[,1]
     }
+    attributes(minmm) <- attributes(elts[[1]])
     minmm
 }

@@ -16,6 +16,10 @@ afm/*
 
 	Copyright (c) 1984 Adobe Systems Incorporated.
 
+src/library/base/R/mosaicplot.R
+
+	Copyright (C) 1998 John W. Emerson
+
 src/library/base/R/aov.R
 src/library/base/R/biplot.R
 src/library/base/R/contr.poly.R

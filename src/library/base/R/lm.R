@@ -63,6 +63,12 @@ lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
 {
     if(is.null(n <- nrow(x))) stop("'x' must be a matrix")
     p <- ncol(x)
+    if (p == 0) {
+        ## oops, null model
+        cc <- match.call()
+        cc[[1]] <- as.name("lm.fit.null")
+        return(eval(cc, sys.frame(sys.parent())))
+    }
     ny <- NCOL(y)
     ## treat one-col matrix as vector
     if ( is.matrix(y) && ny == 1 ) y <- drop(y)
@@ -137,6 +143,12 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
 	y  <- if (ny > 1) y[ ok, , drop = FALSE] else y[ok]
     }
     p <- ncol(x)
+    if (p == 0) {
+        ## oops, null model
+        cc <- match.call()
+        cc[[1]] <- as.name("lm.wfit.null")
+        return(eval(cc, sys.frame(sys.parent())))
+    }
     storage.mode(y) <- "double"
     wts <- sqrt(w) 
     z <- .Fortran("dqrls",

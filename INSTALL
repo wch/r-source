@@ -72,7 +72,7 @@ This will install to the following directories:
 
 	$prefix/bin		(some) executables
 	$prefix/man/man1	man pages
-	$prefix/lib/R		all the rest (libraries, online help
+	$prefix/share/R		all the rest (libraries, online help
 				system, ...)
 
 where prefix is determined during configuration (typically /usr/local)
@@ -93,6 +93,14 @@ and so on, as described further above.  This has the advantage of always
 keeping your source tree `clean'.
 
 
+USING MAKE
+
+To compile R, you currently most likely need GNU make.  (To be more
+precise, you need a version of make which accepts shell wildcards in
+dependencies.)  On Solaris 2.6 in particular, you need a version of
+GNU make different from 3.77 (the current one); 3.76.1 works fine.
+
+
 USING FORTRAN
 
 To compile R, you need a FORTRAN compiler or f2c, the FORTRAN-to-C
@@ -103,20 +111,6 @@ mechanism can be changed using the `--with-g77', `--with-f77', and
 `--with-f2c' command line options to configure.  If your FORTRAN
 compiler is in a non-standard location, you should set the enviroment
 vaiable PATH accordingly before running configure.
-
-
-TWO-LEVEL MAKE
-
-If you don't need to supply any special arguments to "configure", you
-can actually build R simply by typing "make", which will automatically
-run "configure" if the configuration files are absent. Since the build
-process depends on the results of "configure", the top-level Makefile
-does little more than passing control to Makefile.2nd after ensuring
-that "configure" has been run.
-
-This has the curious, but harmless, consequence that "make distclean"
-and the like may run "configure" and remove the configuration files a
-moment later. This looks odd, but is fairly hard to avoid.
 
 
 NEW PLATFORMS (Standards Hah!)

@@ -1,7 +1,10 @@
 #ifndef MATHLIB_H
 #define MATHLIB_H
 
+#define MATHLIB_IN_R/*-- Mathlib as part of R --*/
+
 #include "Arith.h"
+#include "Random.h"
 
 #ifdef FORTRAN_H
 #error __MUST__include "Mathlib.h"  _before_  "Fortran.h"
@@ -55,9 +58,24 @@
 #endif
 
 
+#ifdef MATHLIB_IN_R/* Mathlib in R */
 
-#define MATHLIB_ERROR(x)   { printf("%s\n",x); exit(1); }
-#define MATHLIB_WARNING(x) { printf("%s\n",x); }
+#include "Error.h"
+# define MATHLIB_ERROR(fmt,x)		error(fmt,x);
+# define MATHLIB_WARNING(fmt,x)		warning(fmt,x)
+# define MATHLIB_WARNING2(fmt,x,x2)	warning(fmt,x,x2)
+# define MATHLIB_WARNING3(fmt,x,x2,x3)	warning(fmt,x,x2,x3)
+# define MATHLIB_WARNING4(fmt,x,x2,x3,x4) warning(fmt,x,x2,x3,x4)
+
+#else/* Mathlib standalone */
+
+#include <stdio.h>
+# define MATHLIB_ERROR(fmt,x)   { printf(fmt,x); exit(1) }
+# define MATHLIB_WARNING(fmt,x)		printf(fmt,x)
+# define MATHLIB_WARNING2(fmt,x,x2)	printf(fmt,x,x2)
+# define MATHLIB_WARNING3(fmt,x,x2,x3)	printf(fmt,x,x2,x3)
+# define MATHLIB_WARNING4(fmt,x,x2,x3,x4) printf(fmt,x,x2,x3,x4)
+#endif
 
 #define ME_NONE		0
 #define ME_DOMAIN	1
@@ -113,16 +131,13 @@ extern double m_tiny;
 	/* Name Hiding to Avoid Clashes with Fortran */
 
 #ifdef HIDE_NAMES
-#define d1mach	c_d1mach
-#define i1mach	c_i1mach
+# define d1mach	c_d1mach
+# define i1mach	c_i1mach
 #endif
 
 #define	rround	fround
 #define	prec	fprec
 #define	trunc	ftrunc
-/* NO!  fsign(.) has 2 arguments;  sign(.) has 1..
- #define	sign	fsign
-*/
 
 	/* Machine Characteristics */
 
@@ -135,13 +150,13 @@ int	i1mach_(int*);
 
 int	imax2(int, int);
 int	imin2(int, int);
-double	sign(double);
 double	fmax2(double, double);
 double	fmin2(double, double);
 double	fmod(double, double);
 double	fprec(double, double);
 double	fround(double, double);
 double	ftrunc(double);
+double	sign(double);
 double	fsign(double, double);
 double	fsquare(double);
 double	fcube(double);

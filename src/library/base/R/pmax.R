@@ -1,5 +1,4 @@
-pmax <-
-    function (..., na.rm = FALSE)
+pmax <- function (..., na.rm = FALSE)
 {
     elts <- list(...)
     maxmm <- as.vector(elts[[1]])
@@ -13,5 +12,6 @@ pmax <-
 	if (!na.rm) work[,1][nas[,1]+nas[,2] > 0] <- NA
 	maxmm <- work[,1]
     }
+    attributes(maxmm) <- attributes(elts[[1]])
     maxmm
 }

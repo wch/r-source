@@ -8,8 +8,9 @@ array <- function(data = NA, dim = length(data), dimnames = NULL)
 	if( length(data) != vl )
 	    data <- data[1:vl]
     }
-    dim(data) <- dim
-    if(is.list(dimnames))
+    if(length(dim))
+	dim(data) <- dim
+    if(is.list(dimnames) && length(dimnames))
 	dimnames(data) <- dimnames
     data
 }

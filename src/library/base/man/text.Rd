@@ -8,7 +8,8 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL, \dots)
 \alias{text.default}
 \arguments{
   \item{x, y}{numeric vectors of coordinates where the text
-    \code{labels} should be written.}
+    \code{labels} should be written.  If the length of \code{x} and
+    \code{y} differs, the shorter one is recycled.}
   \item{labels}{character or expression with the \emph{text} to be
     written.}
   \item{adj}{character or expression with the \emph{text} to be

@@ -148,13 +148,34 @@ na.fail <- function(frame)
     if(all(ok)) frame else stop("missing values in data frame");
 }
 
-na.omit <- function(frame)
-{
-    ok <- complete.cases(frame)
-    if (all(ok))
-	frame
-    else frame[ok, ]
-}
+na.omit <- function(frame)  {
+    n <- length(frame)
+    omit <- FALSE
+    vars <- seq(length = n)
+    for(j in vars) {
+	x <- frame[[j]]
+	if(!is.atomic(x)) next
+    # variables are assumed to be either some sort of matrix, numeric or cat'y
+	x <- is.na(x)
+	d <- dim(x)
+	if(is.null(d) || length(d) != 2)
+		omit <- omit | x
+	else {
+	    for(ii in 1:d[2])
+		    omit <- omit | x[, ii]
+	    }
+	}
+    xx <- frame[!omit,  , drop = F]
+    if (any(omit)) {
+	temp <- seq(omit)[omit]
+	names(temp) <- row.names(frame)[omit]
+	attr(temp, 'class') <- 'omit'
+	attr(xx, "na.action") <- temp
+	}
+    xx
+    }
+
+
 
 ##-- used nowhere (0.62)
 ##- model.data.frame <- function(...) {

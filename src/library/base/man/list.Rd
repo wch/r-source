@@ -73,6 +73,7 @@ is.null(pairlist())
 !is.list(NULL)
 is.pairlist(pairlist())
 is.null(as.pairlist(list()))
+is.null(as.pairlist(NULL))
 }
 \keyword{list}
 \keyword{manip}

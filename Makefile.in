@@ -26,19 +26,13 @@ Makefile:
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
-R: stamp-R
-stamp-R: $(top_builddir)/src/include/Platform.h \
-	  $(top_srcdir)/src/*/*.[chfy] \
-	  $(top_srcdir)/src/library/*/R/*.R \
-	  $(top_srcdir)/src/library/*/src/*.[chf]
-	@rm -f $@
+R: 
 	@for d in afm demos doc etc src; do \
-	  (cd $$d && $(MAKE) R); \
+	  (cd $${d} && $(MAKE) R) || exit 1; \
 	done
 	@if [ ! -f src/library/stamp-docs ]; then \
 	  echo "You should \`make docs' now ..."; \
 	fi
-	@touch $@
 
 $(top_builddir)/src/include/Platform.h: $(srcdir)/date-stamp
 	$(top_srcdir)/configure --srcdir $(top_srcdir)
@@ -49,11 +43,11 @@ FORCE:
 
 install: all installdirs
 	@for d in afm demos doc etc; do \
-	  (cd $$d && $(MAKE) $@); \
+	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@(cd $(srcdir); \
 	  for f in COPYING COPYRIGHTS MIRROR-SITES RESOURCES; do \
-	    $(INSTALL_DATA) $$f $(rhome); \
+	    $(INSTALL_DATA) $${f} $(rhome); \
 	  done)
 	@echo "Installing executables ..."
 	@$(INSTALL_PROGRAM) bin/R.binary $(rhome)/bin
@@ -61,14 +55,14 @@ install: all installdirs
 	@cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin
 	@for f in `ls bin/* | grep -v '^R\|R.binary'`; do \
-	  $(INSTALL) $$f $(rhome)/bin; \
+	  $(INSTALL) $${f} $(rhome)/bin; \
 	done
 	@for f in Rd2txt Rdconv Rdindex Sd2Rd; do \
-	  $(INSTALL) bin/$$f $(bindir); \
+	  $(INSTALL) bin/$${f} $(bindir); \
 	done
 	@echo "Installing headers ..."
 	@for f in include/*.h; do \
-	  $(INSTALL_DATA) $$f $(rhome)/include; \
+	  $(INSTALL_DATA) $${f} $(rhome)/include; \
 	done
 	@echo "Installing library ..."
 	@cd library; $(TAR) cf - [a-z]* | (cd $(rhome)/library; tar xf -)
@@ -86,7 +80,7 @@ install-strip:
 uninstall:
 	@echo "Uninstalling library ..."
 	@(cd $(rhome)/library; \
-	  for p in base eda modreg mva stepfun; do rm -rf $$p; done)
+	  for p in base eda modreg mva stepfun; do rm -rf $${p}; done)
 	@echo "  Rebuilding help index ..."
 	@(cd $(rhome)/library; cat */TITLE > LibIndex 2> /dev/null)
 	@echo "  Rebuilding HTML index ..."
@@ -96,21 +90,21 @@ uninstall:
 	@echo "Uninstalling executables ..."
 	@rm -rf $(rhome)/bin
 	@for f in R Rd2txt Rdconv Rdindex Sd2Rd; do \
-	  rm -f $(bindir)/$$f; \
+	  rm -f $(bindir)/$${f}; \
 	done
 	@for f in COPYING COPYRIGHTS MIRROR-SITES RESOURCES; do \
-	  rm -f $(rhome)/$$f; \
+	  rm -f $(rhome)/$${f}; \
 	done
 	@for d in afm demos doc etc; do \
-	  (cd $$d && $(MAKE) $@); \
+	  (cd $${d} && $(MAKE) $@); \
 	done
 
 mostlyclean: clean
 clean:
 	@for d in $(SUBDIRS); do \
-	  (cd $$d && $(MAKE) $@); \
+	  (cd $${d} && $(MAKE) $@); \
 	done
-	@rm -f stamp-R
+
 distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \

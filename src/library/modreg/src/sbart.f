@@ -1,14 +1,14 @@
       subroutine sbart(penalt,dofoff,xs,ys,ws,n,knot,nk,coef,sz,lev,
-&     crit,icrit,spar,ispar,lspar,uspar,tol,isetup,xwy,hs0,hs1,hs2,hs3,
-&     sg0,sg1,sg2,sg3,abd,p1ip,p2ip,ld4,ldnk,ier)
+     &crit,icrit,spar,ispar,lspar,uspar,tol,isetup,xwy,hs0,hs1,hs2,hs3,
+     &sg0,sg1,sg2,sg3,abd,p1ip,p2ip,ld4,ldnk,ier)
       implicit double precision(a-h,o-z)
       integer n,nk,isetup,icrit,ispar,ld4,ldnk,ier
       double precision penalt,dofoff,xs(n),ys(n),ws(n),knot(nk+4),coef(
-&     nk),sz(n),lev(n),crit,spar,lspar,uspar,tol,xwy(nk),hs0(nk),hs1(nk)
-&     ,hs2(nk),hs3(nk), sg0(nk),sg1(nk),sg2(nk),sg3(nk),abd(ld4,nk),
-&     p1ip(ld4,nk),p2ip(ldnk,nk)
+     &nk),sz(n),lev(n),crit,spar,lspar,uspar,tol,xwy(nk),hs0(nk),hs1(nk)
+     &,hs2(nk),hs3(nk), sg0(nk),sg1(nk),sg2(nk),sg3(nk),abd(ld4,nk),
+     &p1ip(ld4,nk),p2ip(ldnk,nk)
       double precisiont1,t2,ratio, a,b,c,d,e,eps,xm,p,q,r,tol1,tol2,u,v,
-&     w, fu,fv,fw,fx,x,ax,bx
+     &w, fu,fv,fw,fx,x,ax,bx
       common /XXXsbart/q
       integer i
       i=1
@@ -35,8 +35,8 @@
 23005 continue
       if(.not.(ispar.eq.1))goto 23011
       call sslvrg(penalt,dofoff,xs,ys,ws,n,knot,nk,coef,sz,lev,crit,
-&     icrit,spar,ratio,xwy,hs0,hs1,hs2,hs3,sg0,sg1,sg2,sg3,abd,p1ip,
-&     p2ip,ld4,ldnk,ier)
+     &icrit,spar,ratio,xwy,hs0,hs1,hs2,hs3,sg0,sg1,sg2,sg3,abd,p1ip,
+     &p2ip,ld4,ldnk,ier)
       return
 23011 continue
       ax=lspar 
@@ -58,8 +58,8 @@ c      eps = sqrt(eps)
       e = 0.0
       spar = x
       call sslvrg(penalt,dofoff,xs,ys,ws,n,knot,nk,coef,sz,lev,crit,
-&     icrit,spar,ratio,xwy,hs0,hs1,hs2,hs3,sg0,sg1,sg2,sg3,abd,p1ip,
-&     p2ip,ld4,ldnk,ier)
+     &icrit,spar,ratio,xwy,hs0,hs1,hs2,hs3,sg0,sg1,sg2,sg3,abd,p1ip,
+     &p2ip,ld4,ldnk,ier)
       fx = crit
       fv = fx
       fw = fx
@@ -116,8 +116,8 @@ c
 23037 continue
       spar = u
       call sslvrg(penalt,dofoff,xs,ys,ws,n,knot,nk,coef,sz,lev,crit,
-&     icrit,spar,ratio,xwy,hs0,hs1,hs2,hs3,sg0,sg1,sg2,sg3,abd,p1ip,
-&     p2ip,ld4,ldnk,ier)
+     &icrit,spar,ratio,xwy,hs0,hs1,hs2,hs3,sg0,sg1,sg2,sg3,abd,p1ip,
+     &p2ip,ld4,ldnk,ier)
       fu = crit
 c
 c  update  a, b, v, w, and x
