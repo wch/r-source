@@ -21,7 +21,7 @@ Resistant Regression
 lqs(x, \dots)
 lqs.formula(formula, data = NULL, \dots,
             method = c("lts", "lqs", "lms", "S", "model.frame"),
-            subset, na.action = na.fail, model = TRUE, 
+            subset, na.action = na.fail, model = TRUE,
             x = FALSE, y = FALSE, contrasts = NULL)
 lqs.default(x, y, intercept, method = c("lts", "lqs", "lms", "S"),
             quantile, control = lqs.control(\dots), k0 = 1.548, seed, \dots)
@@ -64,7 +64,7 @@ residuals.lqs(x)
   \code{ltsreg} forces \code{"lms"} and \code{"lts"} respectively.
 }
 \item{quantile}{
-  the quantile to be used: see \code{Details}. This is over-ridden if 
+  the quantile to be used: see \code{Details}. This is over-ridden if
   \code{method = "lms"}.
 }
 \item{control}{
@@ -140,11 +140,11 @@ The \code{control} argument is a list with components
 }
 \author{B.D. Ripley}
 \references{
-P. J. Rousseeuw and A. M. Leroy (1987) 
+P. J. Rousseeuw and A. M. Leroy (1987)
 \emph{Robust Regression and Outlier Detection.}
 Wiley.
 
-A. Marazzi (1993) 
+A. Marazzi (1993)
 \emph{Algorithms, Routines and S Functions for Robust Statistics.}
 Wadsworth and Brooks/Cole.
 
@@ -161,6 +161,6 @@ data(stackloss)
 lqs(stack.loss ~ ., data=stackloss)
 lqs(stack.loss ~ ., data=stackloss, method="S", nsamp="exact")
 }
-\keyword{model}
+\keyword{models}
 \keyword{robust}
 % Converted by Sd2Rd version 0.3-2.

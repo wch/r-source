@@ -26,6 +26,6 @@ zip.file.extract(file, zipname="R.zip")
     it may be altered at any time, and may differ between platforms. Do
     NOT use in user code.}
 
-\author{B. D.  Ripley}
+\author{B. D. Ripley}
 
-\keyword{files}
+\keyword{file}

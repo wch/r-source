@@ -87,10 +87,12 @@ par(\dots, no.readonly = FALSE)
   \item{col.main}{The color to be used for plot main titles.}
   \item{col.sub}{The color to be used for plot sub-titles.}
   \item{cra}{\emph{\bold{R.O.}}. }
-  \item{crt}{A numerical value specifying (in degrees) how strings
+  \item{crt}{A numerical value specifying (in degrees) how single characters
     should be rotated.  It is unwise to expect values other than
-    multiples of 90 to work.}
-  \item{csi}{\emph{\bold{R.O.}}. The height of (default sized) characters in inches.}
+    multiples of 90 to work.  Compare with \code{srt} which does string
+    rotation.}
+  \item{csi}{\emph{\bold{R.O.}}. The height of (default sized)
+      characters in inches.}
   \item{din}{\emph{\bold{R.O.}}. The device dimensions in inches.}
   \item{err}{(\emph{Unimplemented}) The degree of error reporting desired.}
   \item{fg}{The color to be used for the foreground of plots.
@@ -116,11 +118,17 @@ par(\dots, no.readonly = FALSE)
     tickmarks on the x and y axes and
     \code{len} specifies the label size.
     \emph{Currently}, \code{len} \emph{is unimplemented}.}
-  \item{las}{numeric in \{0,1,2\}; the style of axis labels.
+  \item{las}{numeric in \{0,1,2,3\}; the style of axis labels.
+
+%-- use \describe{} or \itemize{} when it will finally work for nroff/ascii !
     0 = always parallel to the axis [\emph{default}],
     1 = always horizontal,
+
     2 = always perpendicular to the axis,
     3 = always vertical.
+
+    Note that other string/character rotation (via  \code{par(srt = ..)})
+    does \emph{not} affect the axis labels.
   }
   \item{lty}{The line type.
     Line types can either be specified as an integer (1=solid, 2=dashed,
@@ -132,7 +140,7 @@ par(\dots, no.readonly = FALSE)
     drawn and skipped.  For example, \code{"44"} is dashed and
     \code{"13"} is dotted.}
   \item{lwd}{The line width, a \emph{positive} numerical, defaulting to
-      \code{1}.} 
+      \code{1}.}
   \item{mai}{A numerical vector of the form \code{c(bottom, left, top, right)}
     which gives the margin size specified in inches.}
   \item{mar}{A numerical vector of the form \code{c(bottom, left, top, right)}
@@ -144,7 +152,7 @@ par(\dots, no.readonly = FALSE)
     Subsequent figures will be drawn in an \code{nr}-by-\code{nc}
     array on the device by \emph{columns} (\code{mfcol}), or
     \emph{rows} (\code{mfrow}), respectively.
-      
+
     Consider the alternatives, \code{\link{layout}(..)} and
     \code{\link{split.screen}(..)}.
   }
@@ -177,9 +185,10 @@ par(\dots, no.readonly = FALSE)
     \code{"s"} generates a square plotting region and \code{"m"}
     generates the maximal plotting region.}
   \item{smo}{(\emph{Unimplemented}) a value which indicates how smooth
-    circles and circular arc should be.}
-  \item{srt}{The string rotation in degrees.  Causes \code{srt} to be
-    set to the same value.}
+      circles and circular arc should be.}
+  \item{srt}{The string rotation in degrees.
+% NOT true for R (but for S): Causes \code{srt} to be set to the same value.
+  }
   \item{tck}{The length of tick marks as a fraction of the smaller of
     the width or height of the plotting region.
     If \code{tck=1}, grid lines are drawn. The default setting is
