@@ -25,7 +25,8 @@ void PrintGreeting(void)
 	Rprintf("Version %s.%s %s (%s %s, %s)\n\n", R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
 	Rprintf("R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
 	Rprintf("You are welcome to redistribute it under certain conditions.\n");
-	Rprintf("Type \"license()\" for details.\n\n");
+	Rprintf("Type\t\"license()\" for details."
+		"\n\nType\t\"demo()\" for some demos, or\n\t\"help.start()\" for a HTML browser with on-line help.\n\n");
 }
 
 SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -34,37 +35,21 @@ SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
 	char buf[128];
 	checkArity(op, args);
 
-	PROTECT(a = ans = allocList(10));
+	PROTECT(a = ans = allocList(12));
 	TAG(a) = install("platform");
 	CAR(a) = mkString(R_PLATFORM);
-	a= CDR(a);
-	TAG(a) = install("arch");
-	CAR(a) = mkString(R_CPU);
-	a= CDR(a);
-	TAG(a) = install("os");
-	CAR(a) = mkString(R_OS);
-	a= CDR(a);
-	sprintf(buf,"%s, %s", R_CPU, R_OS);
-	TAG(a) = install("system");
-	CAR(a) = mkString(buf);
-	a= CDR(a);
-	TAG(a) = install("status");
-	CAR(a) = mkString(R_STATUS);
-	a= CDR(a);
-	TAG(a) = install("status.rev");
-	CAR(a) = mkString(R_STATUS_REV);
-	a= CDR(a);
-	TAG(a) = install("major");
-	CAR(a) = mkString(R_MAJOR);
-	a= CDR(a);
-	TAG(a) = install("minor");
-	CAR(a) = mkString(R_MINOR);
-	a= CDR(a);
-	TAG(a) = install("year");
-	CAR(a) = mkString(R_YEAR);
-	a= CDR(a);
-	TAG(a) = install("language");
-	CAR(a) = mkString("R");
+	a= CDR(a); TAG(a) = install("arch");	CAR(a) = mkString(R_CPU);
+	a= CDR(a); TAG(a) = install("os");	CAR(a) = mkString(R_OS);
+	a= CDR(a); sprintf(buf,"%s, %s", R_CPU, R_OS);
+	TAG(a) = install("system");		CAR(a) = mkString(buf);
+	a= CDR(a); TAG(a) = install("status");	CAR(a) = mkString(R_STATUS);
+	a= CDR(a); TAG(a)=install("status.rev");CAR(a) = mkString(R_STATUS_REV);
+	a= CDR(a); TAG(a) = install("major");	CAR(a) = mkString(R_MAJOR);
+	a= CDR(a); TAG(a) = install("minor");	CAR(a) = mkString(R_MINOR);
+	a= CDR(a); TAG(a) = install("year");	CAR(a) = mkString(R_YEAR);
+	a= CDR(a); TAG(a) = install("month");	CAR(a) = mkString(R_MONTH);
+	a= CDR(a); TAG(a) = install("day");	CAR(a) = mkString(R_DAY);
+	a= CDR(a); TAG(a) = install("language");CAR(a) = mkString("R");
 	UNPROTECT(1);
 	return ans;
 }
