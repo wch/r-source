@@ -130,7 +130,7 @@ dllversion.o: ../include/Rversion.h
 
 R.dll: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
-Rdll: makeMakedeps ../../bin/R.dll
+Rdll: makeMakedeps libRblas.a ../../bin/R.dll
 
 ../../bin/R.dll: fixfiles rlibs R.dll
 	@$(MKDIR) -p ../../bin
