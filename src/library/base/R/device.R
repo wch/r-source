@@ -121,9 +121,9 @@ dev.print <- function(device = postscript,  ...)
         if(is.null(paper)) paper <- ps.options()$paper
         if(paper == "default") paper <- getOption("papersize")
         paper <- tolower(paper)
-        if(paper == "a4") {wp <- 8; hp <- 14.0 - 0.5}
-        ## Letter is defaults.
-        if(paper == "legal") {wp <- 8.27 - 0.5; hp <- 11.69 - 0.5}
+        if(paper == "legal") {wp <- 8; hp <- 14.0 - 0.5}
+        ## Letter is default.
+        if(paper == "a4") {wp <- 8.27 - 0.5; hp <- 11.69 - 0.5}
         if(paper == "executive") {wp <- 7.25 - 0.5; hp <- 10.5 - 0.5}
         if(is.null(hz)) hz <- ps.options()$horizontal
         if(w > wp && w < hp && h < wp) { horizontal <- TRUE }
