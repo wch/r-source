@@ -302,6 +302,9 @@ NEW FEATURES
 	connections. local = TRUE means the variable containing the output
 	is assigned in the frame of the caller.
 
+    o   serialize() and unserialize() functions are available for
+	low-level serialization to connections.
+
 
 STANDARD PACKAGES
 
