@@ -5,9 +5,9 @@ sort(x, partial = NULL, na.last = NA)
 }
 \alias{sort}
 \description{
-  If \code{partial} is \code{NULL}, \code{sort} returns the values in
-  \code{x} sorted into ascending order.
-
+  Sort \code{\link{numeric}} or  \code{\link{complex}}  \code{x}
+  (partially) into ascending order.
+\details{
   If \code{partial} is non \code{NULL}, it is taken to contain indexes
   of elements of \code{x} which are to be placed in their correct
   positions by partial sorting.  After the sort, the values specified in
