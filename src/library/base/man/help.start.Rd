@@ -10,7 +10,7 @@ help.start(gui = "irrelevant", browser = "irrelevant")
 }
 \alias{help.start}
 \arguments{
-  \item{gui}{just for compatibility}
+  \item{gui}{just for compatibility with S-PLUS.}
   \item{browser}{the name of the program to be used as hypertext browser.}
 #ifdef unix  
   \item{remote}{A character giving a valid URL for the
@@ -27,7 +27,9 @@ help.start(gui = "irrelevant", browser = "irrelevant")
 
   The \code{browser} needs to work with a \code{"-remote openURL(...)"}
   call. Then, the hypertext \R help interface is opened in any already
-  running browser or a new one if necessary.
+  running browser or a new one if necessary.  Browsers that support this
+  interface include Netscape 4.x, 6.2 (but not 6.0/1), Opera 5 and
+  Mozilla 0.9.5.
 
   All future help requests are sent to the browser specified by
   \code{options("browser")} (the default for the \code{browser} argument).
