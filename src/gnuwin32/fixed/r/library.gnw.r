@@ -1,4 +1,4 @@
-##-- Keep  'library' and 'library.dynam'  PLATFORM-Indepedent !
+##-- Keep  'library' and 'library.dynam'  PLATFORM-Independent !
 ##-- Use  .Platform  in	 ./system.unix.R [./system.win.R , ...] to configure!
 ##	  ~~~~~~~~~
 
@@ -10,6 +10,8 @@ library <-
         if (!character.only)
             name <- as.character(substitute(name))
         lib.source <- function(file, env) {
+	    oop <- options(keep.source = FALSE)
+            on.exit(options(oop))
             exprs <- parse(n = -1, file = file)
             if (length(exprs) == 0)
                 return(invisible())
@@ -62,30 +64,31 @@ library <-
                                ".Random.seed")
                 ## Currently, package is ALWAYS at "pos=2"
                 lib.pos <- 2
-                ob <- objects(lib.pos)
-                ipos <- seq(along = sp <- search())[-c(lib.pos,
-                            match("Autoloads", sp))]
-                for (i in ipos) {
-                    obj.same <- match(objects(i), ob, nomatch = 0)
-                    fst <- TRUE
-                    if (any(obj.same > 0) && length(same <- (ob <- ob[obj.same])[!ob %in% dont.mind])) {
+		ob <- objects(lib.pos)
+		fst <- TRUE
+		ipos <- seq(along = sp <- search())[-c(lib.pos,
+			    match("Autoloads", sp))]
+		for (i in ipos) {
+		    obj.same <- match(objects(i), ob, nomatch = 0)
+		    if (any(obj.same > 0) &&
+			length(same <- (obs <- ob[obj.same])
+			       [!obs %in% dont.mind])) {
                         if (fst) {
                             fst <- FALSE
                             cat("\nAttaching Package \"", pkgname,
                                 "\":\n\n", sep = "")
                         }
-                        cat("\n\tThe following object(s) are masked",
-                            if (i < lib.pos)
-                            "by"
-                            else "from", sp[i], ":\n\n\t", same, "\n\n")
-                    }
-                }
-            }
-        }
-        else {
-            if (options()$verbose)
-                warning(paste("Package", pkgname, "already present in search()"))
-        }
+			cat("\n\tThe following object(s) are masked",
+			    if (i < lib.pos) "_by_" else "from", sp[i],
+			    ":\n\n\t", same, "\n\n")
+		    }
+		}
+	    }
+	}
+	else {
+	    if (options()$verbose)
+		warning(paste("Package",pkgname,"already present in search()"))
+	}
     }
     else if (!missing(help)) {
         if (!character.only)

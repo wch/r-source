@@ -183,7 +183,7 @@ bindist:
 	unzip anindex.zip
 	$(RM) anindex.zip
 	zip -rmX $(RPREFIX)w.zip $(RPREFIX)/doc/html $(RPREFIX)/library/*/html
-	zip -rmX $(RPREFIX)l.zip $(RPREFIX)/library/*/latex
+	zip -rmX $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/doc/manual
 	zip -rX $(RPREFIX)b.zip $(RPREFIX)
 	$(RM) -rf $(RPREFIX)
 
