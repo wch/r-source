@@ -51,7 +51,7 @@
   Martyn Plummer,
   Jonathan Rougier,
   Bill Simpson,
-  Adrian Trapetti,
+  Adrian Trapletti,
   Terry Therneau,
   Bill Venables,
   Gregory R. Warnes,
