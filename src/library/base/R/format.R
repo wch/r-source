@@ -1,14 +1,8 @@
-
 format <- function(x, ...) UseMethod("format")
 
-### .format.Internal <- format## <primitive>  defined in ../../../main/paste.c
-###----- FIXME:  we should rather use .Internal(format(...))
-### FIXED: I made the function below do just this.
-### Without it there was an infinite recursion.  Ross
-
 ###	 -----
-###----- FIXME ----- the 'digits handling should rather happen in
-###	 ----- ----- in .format.Internal(..)  ../../main/paste.c !!!
+###----- FIXME ----- the digits handling should rather happen in
+###	 -----       in .Internal(format(...))   in  ../../main/paste.c !
 format.default <- function(x, trim=FALSE, digits=NULL)
 {
         if(!is.null(digits)) {
