@@ -38,7 +38,7 @@ double BM_norm_keep = 0.0;
 N01type N01_kind = KINDERMAN_RAMAGE;
 
 typedef void * (*DL_FUNC)();
-DL_FUNC  User_norm_fun; /* set in ../main/RNG.c */
+extern DL_FUNC  User_norm_fun; /* declared and set in ../main/RNG.c */
 
 /*
  *  REFERENCE
