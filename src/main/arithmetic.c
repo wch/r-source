@@ -237,47 +237,47 @@ SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ans = allocVector(VECSXP, 14));
     PROTECT(nms = allocVector(STRSXP, 14));
-    STRING(nms)[0] = mkChar("double.eps");
-    VECTOR(ans)[0] = ScalarReal(eps);
+    SET_STRING_ELT(nms, 0, mkChar("double.eps"));
+    SET_VECTOR_ELT(ans, 0, ScalarReal(eps));
 
-    STRING(nms)[1] = mkChar("double.neg.eps");
-    VECTOR(ans)[1] = ScalarReal(epsneg);
+    SET_STRING_ELT(nms, 1, mkChar("double.neg.eps"));
+    SET_VECTOR_ELT(ans, 1, ScalarReal(epsneg));
 
-    STRING(nms)[2] = mkChar("double.xmin");
-    VECTOR(ans)[2] = ScalarReal(xmin);
+    SET_STRING_ELT(nms, 2, mkChar("double.xmin"));
+    SET_VECTOR_ELT(ans, 2, ScalarReal(xmin));
 
-    STRING(nms)[3] = mkChar("double.xmax");
-    VECTOR(ans)[3] = ScalarReal(xmax);
+    SET_STRING_ELT(nms, 3, mkChar("double.xmax"));
+    SET_VECTOR_ELT(ans, 3, ScalarReal(xmax));
 
-    STRING(nms)[4] = mkChar("double.base");
-    VECTOR(ans)[4] = ScalarInteger(ibeta);
+    SET_STRING_ELT(nms, 4, mkChar("double.base"));
+    SET_VECTOR_ELT(ans, 4, ScalarInteger(ibeta));
 
-    STRING(nms)[5] = mkChar("double.digits");
-    VECTOR(ans)[5] = ScalarInteger(it);
+    SET_STRING_ELT(nms, 5, mkChar("double.digits"));
+    SET_VECTOR_ELT(ans, 5, ScalarInteger(it));
 
-    STRING(nms)[6] = mkChar("double.rounding");
-    VECTOR(ans)[6] = ScalarInteger(irnd);
+    SET_STRING_ELT(nms, 6, mkChar("double.rounding"));
+    SET_VECTOR_ELT(ans, 6, ScalarInteger(irnd));
 
-    STRING(nms)[7] = mkChar("double.guard");
-    VECTOR(ans)[7] = ScalarInteger(ngrd);
+    SET_STRING_ELT(nms, 7, mkChar("double.guard"));
+    SET_VECTOR_ELT(ans, 7, ScalarInteger(ngrd));
 
-    STRING(nms)[8] = mkChar("double.ulp.digits");
-    VECTOR(ans)[8] = ScalarInteger(machep);
+    SET_STRING_ELT(nms, 8, mkChar("double.ulp.digits"));
+    SET_VECTOR_ELT(ans, 8, ScalarInteger(machep));
 
-    STRING(nms)[9] = mkChar("double.neg.ulp.digits");
-    VECTOR(ans)[9] = ScalarInteger(negep);
+    SET_STRING_ELT(nms, 9, mkChar("double.neg.ulp.digits"));
+    SET_VECTOR_ELT(ans, 9, ScalarInteger(negep));
 
-    STRING(nms)[10] = mkChar("double.exponent");
-    VECTOR(ans)[10] = ScalarInteger(iexp);
+    SET_STRING_ELT(nms, 10, mkChar("double.exponent"));
+    SET_VECTOR_ELT(ans, 10, ScalarInteger(iexp));
 
-    STRING(nms)[11] = mkChar("double.min.exp");
-    VECTOR(ans)[11] = ScalarInteger(minexp);
+    SET_STRING_ELT(nms, 11, mkChar("double.min.exp"));
+    SET_VECTOR_ELT(ans, 11, ScalarInteger(minexp));
 
-    STRING(nms)[12] = mkChar("double.max.exp");
-    VECTOR(ans)[12] = ScalarInteger(maxexp);
+    SET_STRING_ELT(nms, 12, mkChar("double.max.exp"));
+    SET_VECTOR_ELT(ans, 12, ScalarInteger(maxexp));
 
-    STRING(nms)[13] = mkChar("integer.max");
-    VECTOR(ans)[13] = ScalarInteger(INT_MAX);
+    SET_STRING_ELT(nms, 13, mkChar("integer.max"));
+    SET_VECTOR_ELT(ans, 13, ScalarInteger(INT_MAX));
     setAttrib(ans, R_NamesSymbol, nms);
     UNPROTECT(2);
     return ans;
@@ -407,9 +407,9 @@ static SEXP binary(SEXP op, SEXP args)
 
     /* fix up NULL */
     if (isNull(x))
-	x = CAR(args) = allocVector(REALSXP,0);
+	x = SETCAR(args, allocVector(REALSXP,0));
     if (isNull(y))
-	y = CADR(args) = allocVector(REALSXP,0);
+	y = SETCADR(args, allocVector(REALSXP,0));
 
     if (!(isNumeric(x) || isComplex(x)) || !(isNumeric(y) || isComplex(y))) {
 	errorcall(lcall, "non-numeric argument to binary operator");
@@ -431,11 +431,11 @@ static SEXP binary(SEXP op, SEXP args)
      */
     if (xarray != yarray) {
 	if (xarray && length(x)==1 && length(y)!=1) {
-	    x = CAR(args) = duplicate(x);
+	    x = SETCAR(args, duplicate(x));
 	    setAttrib(x, R_DimSymbol, R_NilValue);
 	}
 	if (yarray && length(y)==1 && length(x)!=1) {
-	    y = CADR(args) = duplicate(y);
+	    y = SETCADR(args, duplicate(y));
 	    setAttrib(y, R_DimSymbol, R_NilValue);
 	}
     }
@@ -496,14 +496,14 @@ static SEXP binary(SEXP op, SEXP args)
 	warningcall(lcall, "longer object length\n\tis not a multiple of shorter object length");
 
     if (TYPEOF(x) == CPLXSXP || TYPEOF(y) == CPLXSXP) {
-	x = CAR(args) = coerceVector(x, CPLXSXP);
-	y = CADR(args) = coerceVector(y, CPLXSXP);
+	x = SETCAR(args, coerceVector(x, CPLXSXP));
+	y = SETCADR(args, coerceVector(y, CPLXSXP));
 	x = complex_binary(PRIMVAL(op), x, y);
     }
     else
 	if (TYPEOF(x) == REALSXP || TYPEOF(y) == REALSXP) {
-	    x = CAR(args) = coerceVector(x, REALSXP);
-	    y = CADR(args) = coerceVector(y, REALSXP);
+	    x = SETCAR(args, coerceVector(x, REALSXP));
+	    y = SETCADR(args, coerceVector(y, REALSXP));
 	    x = real_binary(PRIMVAL(op), x, y);
 	}
 	else {
@@ -918,8 +918,8 @@ static SEXP math1(SEXP sa, double(*f)())
     if(naflag)
 	warningcall(lcall, R_MSG_NA);
 
-    ATTRIB(sy) = duplicate(ATTRIB(sa));
-    OBJECT(sy) = OBJECT(sa);
+    SET_ATTRIB(sy, duplicate(ATTRIB(sa)));
+    SET_OBJECT(sy, OBJECT(sa));
     UNPROTECT(2);
     return sy;
 }
@@ -1022,12 +1022,12 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)())
 	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
-	ATTRIB(sy) = duplicate(ATTRIB(sa));	\
-	OBJECT(sy) = OBJECT(sa);		\
+	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
+	SET_OBJECT(sy, OBJECT(sa));		\
     }						\
     else if (n == nb) {				\
-	ATTRIB(sy) = duplicate(ATTRIB(sb));	\
-	OBJECT(sy) = OBJECT(sb);		\
+	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
+	SET_OBJECT(sy, OBJECT(sb));		\
     }						\
     UNPROTECT(3)
 
@@ -1318,16 +1318,16 @@ static SEXP math3(SEXP sa, SEXP sb, SEXP sc, double (*f)())
 	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
-	ATTRIB(sy) = duplicate(ATTRIB(sa));	\
-	OBJECT(sy) = OBJECT(sa);		\
+	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
+	SET_OBJECT(sy, OBJECT(sa));		\
     }						\
     else if (n == nb) {				\
-	ATTRIB(sy) = duplicate(ATTRIB(sb));	\
-	OBJECT(sy) = OBJECT(sb);		\
+	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
+	SET_OBJECT(sy, OBJECT(sb));		\
     }						\
     else if (n == nc) {				\
-	ATTRIB(sy) = duplicate(ATTRIB(sc));	\
-	OBJECT(sy) = OBJECT(sc);		\
+	SET_ATTRIB(sy, duplicate(ATTRIB(sc)));	\
+	SET_OBJECT(sy, OBJECT(sc));		\
     }						\
     UNPROTECT(4)
 
@@ -1535,20 +1535,20 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
 	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
-	ATTRIB(sy) = duplicate(ATTRIB(sa));	\
-	OBJECT(sy) = OBJECT(sa);		\
+	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
+	SET_OBJECT(sy, OBJECT(sa));		\
     }						\
     else if (n == nb) {				\
-	ATTRIB(sy) = duplicate(ATTRIB(sb));	\
-	OBJECT(sy) = OBJECT(sb);		\
+	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
+	SET_OBJECT(sy, OBJECT(sb));		\
     }						\
     else if (n == nc) {				\
-	ATTRIB(sy) = duplicate(ATTRIB(sc));	\
-	OBJECT(sy) = OBJECT(sc);		\
+	SET_ATTRIB(sy, duplicate(ATTRIB(sc)));	\
+	SET_OBJECT(sy, OBJECT(sc));		\
     }						\
     else if (n == nd) {				\
-	ATTRIB(sy) = duplicate(ATTRIB(sd));	\
-	OBJECT(sy) = OBJECT(sd);		\
+	SET_ATTRIB(sy, duplicate(ATTRIB(sd)));	\
+	SET_OBJECT(sy, OBJECT(sd));		\
     }						\
     UNPROTECT(5)
 
@@ -1736,24 +1736,24 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
 	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
-	ATTRIB(sy) = duplicate(ATTRIB(sa));	\
-	OBJECT(sy) = OBJECT(sa);		\
+	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
+	SET_OBJECT(sy, OBJECT(sa));		\
     }						\
     else if (n == nb) {				\
-	ATTRIB(sy) = duplicate(ATTRIB(sb));	\
-	OBJECT(sy) = OBJECT(sb);		\
+	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
+	SET_OBJECT(sy, OBJECT(sb));		\
     }						\
     else if (n == nc) {				\
-	ATTRIB(sy) = duplicate(ATTRIB(sc));	\
-	OBJECT(sy) = OBJECT(sc);		\
+	SET_ATTRIB(sy, duplicate(ATTRIB(sc)));	\
+	SET_OBJECT(sy, OBJECT(sc));		\
     }						\
     else if (n == nd) {				\
-	ATTRIB(sy) = duplicate(ATTRIB(sd));	\
-	OBJECT(sy) = OBJECT(sd);		\
+	SET_ATTRIB(sy, duplicate(ATTRIB(sd)));	\
+	SET_OBJECT(sy, OBJECT(sd));		\
     }						\
     else if (n == ne) {				\
-	ATTRIB(sy) = duplicate(ATTRIB(se));	\
-	OBJECT(sy) = OBJECT(se);		\
+	SET_ATTRIB(sy, duplicate(ATTRIB(se)));	\
+	SET_OBJECT(sy, OBJECT(se));		\
     }						\
     UNPROTECT(6)
 

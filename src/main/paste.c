@@ -59,7 +59,7 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     sep = CADR(args);
     if (!isString(sep) || LENGTH(sep) <= 0)
 	errorcall(call, "invalid separator");
-    sep = STRING(sep)[0];
+    sep = STRING_ELT(sep, 0);
     sepw = LENGTH(sep);
 
     collapse = CADDR(args);
@@ -73,10 +73,10 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     nx = length(x);
     maxlen = 0;
     for (j = 0; j < nx; j++) {
-	if (!isString(VECTOR(x)[j]))
+	if (!isString(VECTOR_ELT(x, j)))
 	    error("non-string argument to Internal paste");
-	if(length(VECTOR(x)[j]) > maxlen)
-	    maxlen = length(VECTOR(x)[j]);
+	if(length(VECTOR_ELT(x, j)) > maxlen)
+	    maxlen = length(VECTOR_ELT(x, j));
     }
     if(maxlen == 0)
 	return mkString("");
@@ -86,36 +86,36 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < maxlen; i++) {
 	pwidth = 0;
 	for (j = 0; j < nx; j++) {
-	    k = length(VECTOR(x)[j]);
+	    k = length(VECTOR_ELT(x, j));
 	    if (k > 0)
-		pwidth += LENGTH(STRING(VECTOR(x)[j])[i % k]);
+		pwidth += LENGTH(STRING_ELT(VECTOR_ELT(x, j), i % k));
 	}
 	pwidth += (nx - 1) * sepw;
 	tmpchar = allocString(pwidth);
 	buf = CHAR(tmpchar);
 	for (j = 0; j < nx; j++) {
-	    k = length(VECTOR(x)[j]);
+	    k = length(VECTOR_ELT(x, j));
 	    if (k > 0) {
-		s = CHAR(STRING(VECTOR(x)[j])[i % k]);
+		s = CHAR(STRING_ELT(VECTOR_ELT(x, j), i % k));
 		sprintf(buf, "%s", s);
-		buf += LENGTH(STRING(VECTOR(x)[j])[i % k]);
+		buf += LENGTH(STRING_ELT(VECTOR_ELT(x, j), i % k));
 	    }
 	    if (j != nx - 1 && sepw != 0) {
 		sprintf(buf, "%s", CHAR(sep));
 		buf += sepw;
 	    }
 	}
-	STRING(ans)[i] = tmpchar;
+	SET_STRING_ELT(ans, i, tmpchar);
     }
 
     /* Now collapse, if required. */
 
     if(collapse != R_NilValue && (nx=LENGTH(ans)) != 0) {
-	sep = STRING(collapse)[0];
+	sep = STRING_ELT(collapse, 0);
 	sepw = LENGTH(sep);
 	pwidth = 0;
 	for (i = 0; i < nx; i++)
-	    pwidth += LENGTH(STRING(ans)[i]);
+	    pwidth += LENGTH(STRING_ELT(ans, i));
 	pwidth += (nx - 1) * sepw;
 	tmpchar = allocString(pwidth);
 	buf = CHAR(tmpchar);
@@ -124,7 +124,7 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		sprintf(buf, "%s", CHAR(sep));
 		buf += sepw;
 	    }
-	    s = CHAR(STRING(ans)[i]);
+	    s = CHAR(STRING_ELT(ans, i));
 	    sprintf(buf, "%s", s);
 	    while (*buf)
 		buf++;
@@ -132,7 +132,7 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(tmpchar);
 	ans = allocVector(STRSXP, 1);
 	UNPROTECT(1);
-	STRING(ans)[0] = tmpchar;
+	SET_STRING_ELT(ans, 0, tmpchar);
     }
     UNPROTECT(1);
     return ans;
@@ -177,7 +177,7 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	    formatLogical(LOGICAL(x), n, &w);
 	for (i = 0; i < n; i++) {
 	    strp = EncodeLogical(LOGICAL(x)[i], w);
-	    STRING(y)[i] = mkChar(strp);
+	    SET_STRING_ELT(y, i, mkChar(strp));
 	}
 	UNPROTECT(1);
 	break;
@@ -188,7 +188,7 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	else formatInteger(INTEGER(x), n, &w);
 	for (i = 0; i < n; i++) {
 	    strp = EncodeInteger(INTEGER(x)[i], w);
-	    STRING(y)[i] = mkChar(strp);
+	    SET_STRING_ELT(y, i, mkChar(strp));
 	}
 	UNPROTECT(1);
 	break;
@@ -199,7 +199,7 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(y = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
 	    strp = EncodeReal(REAL(x)[i], w, d, e);
-	    STRING(y)[i] = mkChar(strp);
+	    SET_STRING_ELT(y, i, mkChar(strp));
 	}
 	UNPROTECT(1);
 	break;
@@ -210,18 +210,18 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(y = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
 	    strp = EncodeComplex(COMPLEX(x)[i], w, d, e, wi, di, ei);
-	    STRING(y)[i] = mkChar(strp);
+	    SET_STRING_ELT(y, i, mkChar(strp));
 	}
 	UNPROTECT(1);
 	break;
 
     case STRSXP:
-	formatString(STRING(x), n, &w, 0);
+	formatString(STRING_PTR(x), n, &w, 0);
 	if (trim) w = 0;
 	PROTECT(y = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
-	    strp = EncodeString(CHAR(STRING(x)[i]), w, 0, Rprt_adj_left);
-	    STRING(y)[i] = mkChar(strp);
+	    strp = EncodeString(CHAR(STRING_ELT(x, i)), w, 0, Rprt_adj_left);
+	    SET_STRING_ELT(y, i, mkChar(strp));
 	}
 	UNPROTECT(1);
 	break;
@@ -278,7 +278,7 @@ SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
 
     case STRSXP:
-	formatString(STRING(x), n, &w, 0);
+	formatString(STRING_PTR(x), n, &w, 0);
 	break;
 
     default:

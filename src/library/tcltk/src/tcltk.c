@@ -38,7 +38,7 @@ static int R_eval(ClientData clientData,
 
     text = PROTECT(allocVector(STRSXP, argc - 1));
     for (i = 1 ; i < argc ; i++)
-	STRING(text)[i-1] = mkChar(argv[i]);
+	SET_STRING_ELT(text, i-1, mkChar(argv[i]));
 
     expr = PROTECT(R_ParseVector(text, -1, &status));
     if (status != PARSE_OK) {
@@ -53,7 +53,7 @@ static int R_eval(ClientData clientData,
 	int i, n;
 	n = length(expr);
 	for(i = 0 ; i < n ; i++)
-	    ans = eval(VECTOR(expr)[i], R_GlobalEnv);
+	    ans = eval(VECTOR_ELT(expr, i), R_GlobalEnv);
     }
     UNPROTECT(2);
     return TCL_OK;
@@ -110,7 +110,7 @@ SEXP dotTcl(SEXP args)
     char *val;
     if(!isValidString(CADR(args)))
 	error("invalid argument");
-    cmd = CHAR(STRING(CADR(args))[0]);
+    cmd = CHAR(STRING_ELT(CADR(args), 0));
     val = tk_eval(cmd);
     ans = mkString(val);
     return ans;

@@ -34,8 +34,8 @@ static char *SaveString(SEXP sxp, int offset)
     char *s;
     if(!isString(sxp) || length(sxp) <= offset)
 	errorcall(gcall, "invalid string argument");
-    s = R_alloc(strlen(CHAR(STRING(sxp)[offset]))+1, sizeof(char));
-    strcpy(s, CHAR(STRING(sxp)[offset]));
+    s = R_alloc(strlen(CHAR(STRING_ELT(sxp, offset)))+1, sizeof(char));
+    strcpy(s, CHAR(STRING_ELT(sxp, offset)));
     return s;
 }
 
@@ -73,7 +73,7 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!isValidString(CAR(args)))
 	error("invalid colortype passed to X11 driver");
-    cname = CHAR(STRING(CAR(args))[0]);
+    cname = CHAR(STRING_ELT(CAR(args), 0));
     if (strcmp(cname, "mono") == 0)
 	colormodel = 0;
     else if (strcmp(cname, "gray") == 0 || strcmp(cname, "grey") == 0)

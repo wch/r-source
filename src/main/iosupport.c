@@ -189,8 +189,8 @@ int R_TextBufferInit(TextBuffer *txtb, SEXP text)
 	n = length(text);
 	l = 0;
 	for (i = 0; i < n; i++) {
-	    if (STRING(text)[i] != R_NilValue) {
-		k = strlen(CHAR(STRING(text)[i]));
+	    if (STRING_ELT(text, i) != R_NilValue) {
+		k = strlen(CHAR(STRING_ELT(text, i)));
 		if (k > l)
 		    l = k;
 	    }
@@ -202,7 +202,7 @@ int R_TextBufferInit(TextBuffer *txtb, SEXP text)
 	txtb->ntext = n;
 	txtb->offset = 0;
 	transferChars(txtb->buf,
-		      CHAR(STRING(txtb->text)[txtb->offset]));
+		      CHAR(STRING_ELT(txtb->text, txtb->offset)));
 	txtb->offset++;
 	return 1;
     }
@@ -238,7 +238,7 @@ int R_TextBufferGetc(TextBuffer *txtb)
 	}
 	else {
 	    transferChars(txtb->buf,
-			  CHAR(STRING(txtb->text)[txtb->offset]));
+			  CHAR(STRING_ELT(txtb->text, txtb->offset)));
 	    txtb->bufp = txtb->buf;
 	    txtb->offset++;
 	}

@@ -110,8 +110,8 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
     if(mismatch)
 	warningcall(call, "longer object length\n\tis not a multiple of shorter object length");
 
-    x = CAR(args) = coerceVector(x, LGLSXP);
-    y = CADR(args) = coerceVector(y, LGLSXP);
+    x = SETCAR(args, coerceVector(x, LGLSXP));
+    y = SETCADR(args, coerceVector(y, LGLSXP));
     PROTECT(x = binaryLogic(PRIMVAL(op), x, y));
 
     if (dims != R_NilValue) {

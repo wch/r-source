@@ -178,8 +178,8 @@ SEXP deparse1(SEXP call, int abbrev)
     if (abbrev == 1) {
 	AllocBuffer(0);
 	buff[0] = '\0';
-	strncat(buff, CHAR(STRING(svec)[0]), 10);
-	if (strlen(CHAR(STRING(svec)[0])) > 10)
+	strncat(buff, CHAR(STRING_ELT(svec, 0)), 10);
+	if (strlen(CHAR(STRING_ELT(svec, 0))) > 10)
 	    strcat(buff, "...");
 	svec = mkString(buff);
     }
@@ -216,11 +216,11 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
     saveenv = R_NilValue;	/* -Wall */
     if (TYPEOF(tval) == CLOSXP) {
 	PROTECT(saveenv = CLOENV(tval));
-	CLOENV(tval) = R_GlobalEnv;
+	SET_CLOENV(tval, R_GlobalEnv);
     }
     tval = deparse1(tval, 0);
     if (TYPEOF(CAR(args)) == CLOSXP) {
-	CLOENV(CAR(args)) = saveenv;
+	SET_CLOENV(CAR(args), saveenv);
 	UNPROTECT(1);
     }
     file = CADR(args);
@@ -228,16 +228,16 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "file name must be a valid character string");
 
     fp = NULL;
-    if (strlen(CHAR(STRING(file)[0])) > 0) {
-	fp = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "w");
+    if (strlen(CHAR(STRING_ELT(file, 0))) > 0) {
+	fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file, 0))), "w");
 	if (!fp)
 	    errorcall(call, "unable to open file");
     }/* else: "Stdout" */
     for (i = 0; i < LENGTH(tval); i++)
 	if (fp == NULL)
-	    Rprintf("%s\n", CHAR(STRING(tval)[i]));
+	    Rprintf("%s\n", CHAR(STRING_ELT(tval, i)));
 	else
-	    fprintf(fp, "%s\n", CHAR(STRING(tval)[i]));
+	    fprintf(fp, "%s\n", CHAR(STRING_ELT(tval, i)));
     if (fp != NULL)
 	fclose(fp);
     return (CAR(args));
@@ -264,33 +264,33 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(o = objs = allocList(nobjs));
 
     for(i = 0 ; i < nobjs ; i++) {
-	CAR(o) = eval(install(CHAR(STRING(names)[i])), rho);
+	SETCAR(o, eval(install(CHAR(STRING_ELT(names, i))), rho));
 	o = CDR(o);
     }
 
     o = objs;
-    if(strlen(CHAR(STRING(file)[0])) == 0) {
+    if(strlen(CHAR(STRING_ELT(file, 0))) == 0) {
 	for (i = 0; i < nobjs; i++) {
-	    Rprintf("\"%s\" <-\n", CHAR(STRING(names)[i]));
+	    Rprintf("\"%s\" <-\n", CHAR(STRING_ELT(names, i)));
 	    if (TYPEOF(CAR(o)) != CLOSXP || 
 		isNull(tval = getAttrib(CAR(o), R_SourceSymbol)))
 	    tval = deparse1(CAR(o), 0);
 	    for (j = 0; j<LENGTH(tval); j++) {
-		Rprintf("%s\n", CHAR(STRING(tval)[j]));
+		Rprintf("%s\n", CHAR(STRING_ELT(tval, j)));
 	    }
 	    o = CDR(o);
 	}
     }
     else {
-	if(!(fp = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "w")))
+	if(!(fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file, 0))), "w")))
 	    errorcall(call, "unable to open file");
 	for (i = 0; i < nobjs; i++) {
-	    fprintf(fp, "\"%s\" <-\n", CHAR(STRING(names)[i]));
+	    fprintf(fp, "\"%s\" <-\n", CHAR(STRING_ELT(names, i)));
 	    if (TYPEOF(CAR(o)) != CLOSXP || 
 		isNull(tval = getAttrib(CAR(o), R_SourceSymbol)))
 	    tval = deparse1(CAR(o), 0);
 	    for (j = 0; j<LENGTH(tval); j++) {
-		fprintf(fp, "%s\n", CHAR(STRING(tval)[j]));
+		fprintf(fp, "%s\n", CHAR(STRING_ELT(tval, j)));
 	    }
 	    o = CDR(o);
 	}
@@ -381,7 +381,7 @@ static void printcomment(SEXP s)
 
     if(isList(TAG(s)) && !isNull(TAG(s))) {
 	for (s = TAG(s); s != R_NilValue; s = CDR(s)) {
-	    print2buff(CHAR(STRING(CAR(s))[0]));
+	    print2buff(CHAR(STRING_ELT(CAR(s), 0)));
 	    writeline();
 	}
     }
@@ -389,7 +389,7 @@ static void printcomment(SEXP s)
 	cmt = getAttrib(s, R_CommentSymbol);
 	ncmt = length(cmt);
 	for(i = 0 ; i < ncmt ; i++) {
-	    print2buff(CHAR(STRING(cmt)[i]));
+	    print2buff(CHAR(STRING_ELT(cmt, i)));
 	    writeline();
 	}
     }
@@ -643,8 +643,8 @@ static void deparse2buff(SEXP s)
 		    print2buff("$");
 		    /*temp fix to handle printing of x$a's */
 		    if( isString(CADR(s)) &&
-			isValidName(CHAR(STRING(CADR(s))[0])))
-			deparse2buff(STRING(CADR(s))[0]);
+			isValidName(CHAR(STRING_ELT(CADR(s), 0))))
+			deparse2buff(STRING_ELT(CADR(s), 0));
 		    else
 			deparse2buff(CADR(s));
 		    break;
@@ -745,7 +745,7 @@ static void deparse2buff(SEXP s)
 static void writeline()
 {
     if (strvec != R_NilValue)
-	STRING(strvec)[linenumber] = mkChar(buff);
+	SET_STRING_ELT(strvec, linenumber, mkChar(buff));
     linenumber++;
     /* reset */
     len = 0;
@@ -835,18 +835,18 @@ static void vec2buff(SEXP v)
 	if (i > 0)
 	    print2buff(", ");
 	linebreak(&lbreak);
-	if (!isNull(nv) && !isNull(STRING(nv)[i])
-	    && *CHAR(STRING(nv)[i])) {
-	    if( isValidName(CHAR(STRING(nv)[i])) )
-		deparse2buff(STRING(nv)[i]);
+	if (!isNull(nv) && !isNull(STRING_ELT(nv, i))
+	    && *CHAR(STRING_ELT(nv, i))) {
+	    if( isValidName(CHAR(STRING_ELT(nv, i))) )
+		deparse2buff(STRING_ELT(nv, i));
 	    else {
 		print2buff("\"");
-		deparse2buff(STRING(nv)[i]);
+		deparse2buff(STRING_ELT(nv, i));
 		print2buff("\"");
 	    }
 	    print2buff(" = ");
 	}
-	deparse2buff(VECTOR(v)[i]);
+	deparse2buff(VECTOR_ELT(v, i));
     }
     if (lbreak)
 	indent--;

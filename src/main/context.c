@@ -390,7 +390,7 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(rval=allocList(nframe));
 	t=rval;
 	for(i=1 ; i<=nframe; i++, t=CDR(t))
-	    CAR(t)=R_syscall(i,cptr);
+	    SETCAR(t, R_syscall(i,cptr));
 	UNPROTECT(1);
 	return rval;
     case 6: /* sys.frames */
@@ -398,7 +398,7 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(rval=allocList(nframe));
 	t=rval;
 	for(i=1 ; i<=nframe ; i++, t=CDR(t))
-	    CAR(t)=R_sysframe(i,cptr);
+	    SETCAR(t, R_sysframe(i,cptr));
 	UNPROTECT(1);
 	return rval;
     case 7: /* sys.on.exit */

@@ -139,22 +139,31 @@ SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
 static clock_t StartTime;
 static struct tms timeinfo;
 
-void R_setStartTime()
+void R_setStartTime(void)
 {
     StartTime = times(&timeinfo);
 }
 
-SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
+void R_getProcTime(double *data)
 {
-    SEXP ans;
     double elapsed;
     elapsed = (times(&timeinfo) - StartTime) / (double)CLK_TCK;
-    ans = allocVector(REALSXP, 5);
-    REAL(ans)[0] = timeinfo.tms_utime / (double)CLK_TCK;
-    REAL(ans)[1] = timeinfo.tms_stime / (double)CLK_TCK;
-    REAL(ans)[2] = elapsed;
-    REAL(ans)[3] = timeinfo.tms_cutime / (double)CLK_TCK;
-    REAL(ans)[4] = timeinfo.tms_cstime / (double)CLK_TCK;
+    data[0] = timeinfo.tms_utime / (double)CLK_TCK;
+    data[1] = timeinfo.tms_stime / (double)CLK_TCK;
+    data[2] = elapsed;
+    data[3] = timeinfo.tms_cutime / (double)CLK_TCK;
+    data[4] = timeinfo.tms_cstime / (double)CLK_TCK;
+}
+
+double R_getClockIncrement(void)
+{
+  return 1.0 / (double) CLK_TCK;
+}
+
+SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans = allocVector(REALSXP, 5);
+    R_getProcTime(REAL(ans));
     return ans;
 }
 #endif /* HAVE_TIMES */
@@ -175,7 +184,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (read) {
 #ifdef HAVE_POPEN
 	PROTECT(tlist);
-	fp = popen(CHAR(STRING(CAR(args))[0]), x);
+	fp = popen(CHAR(STRING_ELT(CAR(args), 0)), x);
 	for (i = 0; fgets(buf, 120, fp); i++) {
 	    read = strlen(buf);
 	    buf[read - 1] = '\0';
@@ -186,7 +195,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	pclose(fp);
 	rval = allocVector(STRSXP, i);;
 	for (j = (i - 1); j >= 0; j--) {
-	    STRING(rval)[j] = CAR(tlist);
+	    SET_STRING_ELT(rval, j, CAR(tlist));
 	    tlist = CDR(tlist);
 	}
 	UNPROTECT(1);
@@ -199,7 +208,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     else {
 	tlist = allocVector(INTSXP, 1);
 	fflush(stdout);
-	INTEGER(tlist)[0] = system(CHAR(STRING(CAR(args))[0]));
+	INTEGER(tlist)[0] = system(CHAR(STRING_ELT(CAR(args), 0)));
 	R_Visible = 0;
 	return tlist;
     }
@@ -238,10 +247,10 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid file name argument");
     PROTECT(ans = allocVector(STRSXP, slen));
     for(i = 0; i < slen; i++) {
-	tn = CHAR(STRING(CAR(args))[i]);
+	tn = CHAR(STRING_ELT(CAR(args), i));
 	/* try to get a new file name */
 	tm = Runix_tmpnam(tn);
-	STRING(ans)[i] = mkChar(tm);
+	SET_STRING_ELT(ans, i, mkChar(tm));
 	free(tm);
     }
     UNPROTECT(1);

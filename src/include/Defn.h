@@ -23,6 +23,15 @@
 
 #define COUNTING
 
+/* To test the write barrier used by the generational collector,
+   define TESTING_WRITE_BARRIER.  This makes the internal structure of
+   SEXPREC's visible only inside of files that explicitly define
+   USE_RINTERNALS, and all uses of SEXPREC fields that do not go
+   through the appropriate functions or macros will become compiler
+   errors.  Since this does impose a small but noticable performance
+   penalty, code that includes Defs.h (or code that explicitly defines
+   USE_RINTERNALS) can access SEXPREC's fielrd directly. */
+ 
 #ifndef TESTING_WRITE_BARRIER
 # define USE_RINTERNALS
 #endif
@@ -332,9 +341,9 @@ extern int	R_VSize		INI_as(R_VSIZE);/* Size of the vector heap */
 extern SEXP	R_NHeap;	    /* Start of the cons cell heap */
 extern SEXP	R_FreeSEXP;	    /* Cons cell free list */
 #ifndef USE_GENERATIONAL_GC
-extern VECREC*	R_VHeap;	    /* Base of the vector heap */
-extern VECREC*	R_VTop;		    /* Current top of the vector heap */
-extern VECREC*	R_VMax;		    /* bottom of R_alloc'ed heap */
+extern VECP	R_VHeap;	    /* Base of the vector heap */
+extern VECP	R_VTop;		    /* Current top of the vector heap */
+extern VECP	R_VMax;		    /* bottom of R_alloc'ed heap */
 #endif
 extern long	R_Collected;	    /* Number of free cons cells (after gc) */
 extern SEXP	R_PreciousList;	    /* List of Persistent Objects */
@@ -482,7 +491,7 @@ extern char*	R_GUIType	INI_as("unknown");
 #define tspgets			Rf_tspgets
 #define type2str		Rf_type2str
 #define unbindVar		Rf_unbindVar
-#ifdef USE_GENERATIONAL_GC
+#ifndef USE_GENERATIONAL_GC
 #define unmarkPhase		Rf_unmarkPhase
 #endif
 #define usemethod		Rf_usemethod

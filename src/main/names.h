@@ -259,6 +259,7 @@ SEXP do_polyroot(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pos2env(SEXP, SEXP, SEXP, SEXP);
 #ifdef HAVE_TIMES
 SEXP do_proctime(SEXP, SEXP, SEXP, SEXP);
+SEXP do_gctime(SEXP, SEXP, SEXP, SEXP);
 #endif
 SEXP do_abline(SEXP, SEXP, SEXP, SEXP);
 SEXP do_plot_xy(SEXP, SEXP, SEXP, SEXP);

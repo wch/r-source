@@ -91,9 +91,9 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isString(fn))
 	error("invalid argument to edit()");
 
-    if (LENGTH(STRING(fn)[0]) > 0) {
-	filename = R_alloc(strlen(CHAR(STRING(fn)[0])), sizeof(char));
-	strcpy(filename, CHAR(STRING(fn)[0]));
+    if (LENGTH(STRING_ELT(fn, 0)) > 0) {
+	filename = R_alloc(strlen(CHAR(STRING_ELT(fn, 0))), sizeof(char));
+	strcpy(filename, CHAR(STRING_ELT(fn, 0)));
     }
     else filename = DefaultFileName;
 
@@ -101,28 +101,28 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	if((fp=R_fopen(R_ExpandFileName(filename), "w")) == NULL)
 	    errorcall(call, "unable to open file");
-	if (LENGTH(STRING(fn)[0]) == 0) EdFileUsed++;
+	if (LENGTH(STRING_ELT(fn, 0)) == 0) EdFileUsed++;
 	if (TYPEOF(x) != CLOSXP || isNull(t = getAttrib(x, R_SourceSymbol)))
 	    t = deparse1(x, 0);
 	for (i = 0; i < LENGTH(t); i++)
-	    fprintf(fp, "%s\n", CHAR(STRING(t)[i]));
+	    fprintf(fp, "%s\n", CHAR(STRING_ELT(t, i)));
 	fclose(fp);
     }
 
     ed = CAR(CDDR(args));
     if (!isString(ed))
 	error("editor type not valid");
-    editcmd = R_alloc(strlen(CHAR(STRING(ed)[0]))+strlen(filename)+2,
+    editcmd = R_alloc(strlen(CHAR(STRING_ELT(ed, 0)))+strlen(filename)+2,
 		      sizeof(char));
 #ifdef Win32
-    sprintf(editcmd, "%s \"%s\"", CHAR(STRING(ed)[0]), filename);
+    sprintf(editcmd, "%s \"%s\"", CHAR(STRING_ELT(ed, 0)), filename);
     rc = runcmd(editcmd, 1, 1, "");
     if (rc == NOLAUNCH)
 	errorcall(call, "unable to run editor");
     if (rc != 0)
 	warningcall(call, "editor ran but returned error status");
 #else
-    sprintf(editcmd, "%s %s", CHAR(STRING(ed)[0]), filename);
+    sprintf(editcmd, "%s %s", CHAR(STRING_ELT(ed, 0)), filename);
     rc = system(editcmd);
 #endif
 
@@ -141,11 +141,11 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	n = LENGTH(x);
 	for (i = 0 ; i < n ; i++)
-	    tmp = eval(VECTOR(x)[i], R_GlobalEnv);
+	    tmp = eval(VECTOR_ELT(x, i), R_GlobalEnv);
 	x = tmp;
     }
     if (TYPEOF(x) == CLOSXP && envir != R_NilValue)
-	CLOENV(x) = envir;
+	SET_CLOENV(x, envir);
     UNPROTECT(2);
     vmaxset(vmaxsave);
     return (x);

@@ -418,10 +418,10 @@ static SEXP D(SEXP expr, SEXP var)
 	}
 	else if (CAR(expr) == SqrtSymbol) {
 	    PROTECT(expr1 = allocList(3));
-	    TYPEOF(expr1) = LANGSXP;
-	    CAR(expr1) = PowerSymbol;
-	    CADR(expr1) = CADR(expr);
-	    CADDR(expr1) = Constant(0.5);
+	    SET_TYPEOF(expr1, LANGSXP);
+	    SETCAR(expr1, PowerSymbol);
+	    SETCADR(expr1, CADR(expr));
+	    SETCADDR(expr1, Constant(0.5));
 	    ans = D(expr1, var);
 	    UNPROTECT(1);
 	}
@@ -475,45 +475,45 @@ static SEXP AddParens(SEXP expr)
     if (TYPEOF(expr) == LANGSXP) {
 	e = CDR(expr);
 	while(e != R_NilValue) {
-	    CAR(e) = AddParens(CAR(e));
+	    SETCAR(e, AddParens(CAR(e)));
 	    e = CDR(e);
 	}
     }
     if (isPlusForm(expr)) {
 	if (isPlusForm(CADDR(expr))) {
-	    CADDR(expr) = lang2(ParenSymbol, CADDR(expr));
+	    SETCADDR(expr, lang2(ParenSymbol, CADDR(expr)));
 	}
     }
     else if (isMinusForm(expr)) {
 	if (isPlusForm(CADDR(expr)) || isMinusForm(CADDR(expr))) {
-	    CADDR(expr) = lang2(ParenSymbol, CADDR(expr));
+	    SETCADDR(expr, lang2(ParenSymbol, CADDR(expr)));
 	}
     }
     else if (isTimesForm(expr)) {
 	if (isPlusForm(CADDR(expr)) || isMinusForm(CADDR(expr))
 	    || isTimesForm(CADDR(expr)) || isDivideForm(CADDR(expr))) {
-	    CADDR(expr) = lang2(ParenSymbol, CADDR(expr));
+	    SETCADDR(expr, lang2(ParenSymbol, CADDR(expr)));
 	}
 	if (isPlusForm(CADR(expr)) || isMinusForm(CADR(expr))) {
-	    CADR(expr) = lang2(ParenSymbol, CADR(expr));
+	    SETCADR(expr, lang2(ParenSymbol, CADR(expr)));
 	}
     }
     else if (isDivideForm(expr)) {
 	if (isPlusForm(CADDR(expr)) || isMinusForm(CADDR(expr))
 	    || isTimesForm(CADDR(expr)) || isDivideForm(CADDR(expr))) {
-	    CADDR(expr) = lang2(ParenSymbol, CADDR(expr));
+	    SETCADDR(expr, lang2(ParenSymbol, CADDR(expr)));
 	}
 	if (isPlusForm(CADR(expr)) || isMinusForm(CADR(expr))) {
-	    CADR(expr) = lang2(ParenSymbol, CADR(expr));
+	    SETCADR(expr, lang2(ParenSymbol, CADR(expr)));
 	}
     }
     else if (isPowerForm(expr)) {
 	if (isPowerForm(CADR(expr))) {
-	    CADR(expr) = lang2(ParenSymbol, CADR(expr));
+	    SETCADR(expr, lang2(ParenSymbol, CADR(expr)));
 	}
 	if (isPlusForm(CADDR(expr)) || isMinusForm(CADDR(expr))
 	    || isTimesForm(CADDR(expr)) || isDivideForm(CADDR(expr))) {
-	    CADDR(expr) = lang2(ParenSymbol, CADDR(expr));
+	    SETCADDR(expr, lang2(ParenSymbol, CADDR(expr)));
 	}
     }
     return expr;
@@ -523,12 +523,12 @@ SEXP do_D(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP expr, var;
     checkArity(op, args);
-    if (isExpression(CAR(args))) expr = VECTOR(CAR(args))[0];
+    if (isExpression(CAR(args))) expr = VECTOR_ELT(CAR(args), 0);
     else expr = CAR(args);
     var = CADR(args);
     if (!isString(var) || length(var) < 1)
 	errorcall(call, "variable must be a character string");
-    var = install(CHAR(STRING(var)[0]));
+    var = install(CHAR(STRING_ELT(var, 0)));
     InitDerivSymbols();
     PROTECT(expr = D(expr, var));
     expr = AddParens(expr);
@@ -584,7 +584,7 @@ static int Accumulate(SEXP expr)
 	if (equal(expr, CAR(e)))
 	    return k;
     }
-    CDR(e) = CONS(expr, R_NilValue);
+    SETCDR(e, CONS(expr, R_NilValue));
     return k + 1;
 }
 
@@ -598,7 +598,7 @@ static int Accumulate2(SEXP expr)
 	e = CDR(e);
 	k = k + 1;
     }
-    CDR(e) = CONS(expr, R_NilValue);
+    SETCDR(e, CONS(expr, R_NilValue));
     return k + 1;
 }
 
@@ -607,7 +607,7 @@ static SEXP tag;
 static SEXP MakeVariable(int k)
 {
     char buf[64];
-    sprintf(buf, "%s%d", CHAR(STRING(tag)[0]), k);
+    sprintf(buf, "%s%d", CHAR(STRING_ELT(tag, 0)), k);
     return install(buf);
 }
 
@@ -636,7 +636,7 @@ static int FindSubexprs(SEXP expr)
 	    e = CDR(expr);
 	    while(e != R_NilValue) {
 		if ((k = FindSubexprs(CAR(e))) != 0)
-		    CAR(e) = MakeVariable(k);
+		    SETCAR(e, MakeVariable(k));
 		e = CDR(e);
 	    }
 	    return Accumulate(expr);
@@ -670,8 +670,8 @@ static SEXP Replace(SEXP sym, SEXP expr, SEXP lst)
 	else return lst;
     case LISTSXP:
     case LANGSXP:
-	CAR(lst) = Replace(sym, expr, CAR(lst));
-	CDR(lst) = Replace(sym, expr, CDR(lst));
+	SETCAR(lst, Replace(sym, expr, CAR(lst)));
+	SETCDR(lst, Replace(sym, expr, CDR(lst)));
 	return lst;
     default:
 	return lst;
@@ -684,20 +684,20 @@ static SEXP CreateGrad(SEXP names)
     int i, n;
     n = length(names);
     PROTECT(dimnames = lang3(R_NilValue, R_NilValue, R_NilValue));
-    CAR(dimnames) = install("list");
+    SETCAR(dimnames, install("list"));
     p = install("c");
     PROTECT(q = allocList(n));
-    CADDR(dimnames) = LCONS(p, q);
+    SETCADDR(dimnames, LCONS(p, q));
     UNPROTECT(1);
     for(i=0 ; i<n ; i++) {
-	CAR(q) = allocVector(STRSXP, 1);
-	STRING(CAR(q))[0] = STRING(names)[i];
+	SETCAR(q, allocVector(STRSXP, 1));
+	SET_STRING_ELT(CAR(q), 0, STRING_ELT(names, i));
 	q = CDR(q);
     }
     PROTECT(dim = lang3(R_NilValue, R_NilValue, R_NilValue));
-    CAR(dim) = install("c");
-    CADR(dim) = lang2(install("length"), install(".value"));
-    CADDR(dim) = allocVector(REALSXP, 1);
+    SETCAR(dim, install("c"));
+    SETCADR(dim, lang2(install("length"), install(".value")));
+    SETCADDR(dim, allocVector(REALSXP, 1));
     REAL(CADDR(dim))[0] = length(names);
     PROTECT(data = allocVector(REALSXP, 1));
     REAL(data)[0] = 0;
@@ -712,8 +712,8 @@ static SEXP DerivAssign(SEXP name, SEXP expr)
     SEXP ans, newname;
     PROTECT(ans = lang3(install("<-"), R_NilValue, expr));
     PROTECT(newname = allocVector(STRSXP, 1));
-    STRING(newname)[0] = name;
-    CADR(ans) = lang4(install("["), install(".grad"), R_MissingArg, newname);
+    SET_STRING_ELT(newname, 0, name);
+    SETCADR(ans, lang4(install("["), install(".grad"), R_MissingArg, newname));
     UNPROTECT(2);
     return ans;
 }
@@ -734,7 +734,7 @@ static SEXP Prune(SEXP lst)
 {
     if (lst == R_NilValue)
 	return lst;
-    CDR(lst) = Prune(CDR(lst));
+    SETCDR(lst, Prune(CDR(lst)));
     if (CAR(lst) == R_MissingArg)
 	return CDR(lst);
     else return lst ;
@@ -750,7 +750,7 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     vmax = vmaxget();
     InitDerivSymbols();
     PROTECT(exprlist = LCONS(install("{"), R_NilValue));
-    if (isExpression(CAR(args))) PROTECT(expr = VECTOR(CAR(args))[0]);
+    if (isExpression(CAR(args))) PROTECT(expr = VECTOR_ELT(CAR(args), 0));
     else PROTECT(expr = CAR(args));
     args = CDR(args);
     names = CAR(args);
@@ -761,7 +761,7 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     tag = CAR(args);
     if (!isString(tag) || length(tag) < 1
-	|| length(STRING(tag)[0]) < 1 || length(STRING(tag)[0]) > 60)
+	|| length(STRING_ELT(tag, 0)) < 1 || length(STRING_ELT(tag, 0)) > 60)
 	errorcall(call, "invalid tag");
     /* NOTE: FindSubexprs is destructive, hence the duplication */
     PROTECT(ans = duplicate(expr));
@@ -770,7 +770,7 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     d_index = (int*)R_alloc(nderiv, sizeof(int));
     for(i=0 ; i<nderiv ; i++) {
 	PROTECT(ans = duplicate(expr));
-	PROTECT(ans = D(ans, install(CHAR(STRING(names)[i]))));
+	PROTECT(ans = D(ans, install(CHAR(STRING_ELT(names, i)))));
 	d_index[i] = FindSubexprs(ans);
 	UNPROTECT(2);
     }
@@ -790,7 +790,7 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	else {
 	    PROTECT(ans = duplicate(expr));
-	    PROTECT(ans = D(ans, install(CHAR(STRING(names)[i]))));
+	    PROTECT(ans = D(ans, install(CHAR(STRING_ELT(names, i)))));
 	    Accumulate2(ans);
 	    UNPROTECT(2);
 	}
@@ -802,51 +802,52 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     ans = CDR(exprlist);
     while (i < nexpr) {
 	if (CountOccurrences(MakeVariable(i+1), CDR(ans)) < 2) {
-	    CDR(ans) = Replace(MakeVariable(i+1), CAR(ans), CDR(ans));
-	    CAR(ans) = R_MissingArg;
+	    SETCDR(ans, Replace(MakeVariable(i+1), CAR(ans), CDR(ans)));
+	    SETCAR(ans, R_MissingArg);
 	}
-	else CAR(ans) = lang3(install("<-"), MakeVariable(i+1), AddParens(CAR(ans)));
+	else SETCAR(ans, lang3(install("<-"), MakeVariable(i+1), AddParens(CAR(ans))));
 	i = i + 1;
 	ans = CDR(ans);
     }
     /* .value <- ... */
-    CAR(ans) = lang3(install("<-"), install(".value"), AddParens(CAR(ans)));
+    SETCAR(ans, lang3(install("<-"), install(".value"), AddParens(CAR(ans))));
     ans = CDR(ans);
     /* .grad <- ... */
-    CAR(ans) = CreateGrad(names);
+    SETCAR(ans, CreateGrad(names));
     ans = CDR(ans);
     /* .grad[, "..."] <- ... */
     for (i = 0 ; i < nderiv ; i++) {
-	CAR(ans) = DerivAssign(STRING(names)[i], AddParens(CAR(ans)));
+	SETCAR(ans, DerivAssign(STRING_ELT(names, i), AddParens(CAR(ans))));
 	ans = CDR(ans);
     }
     /* attr(.value, "gradient") <- .grad */
-    CAR(ans) = AddGrad();
+    SETCAR(ans, AddGrad());
     ans = CDR(ans);
     /* .value */
-    CAR(ans) = install(".value");
+    SETCAR(ans, install(".value"));
     /* Prune the expression list */
     /* removing eliminated sub-expressions */
-    CDR(exprlist) = Prune(CDR(exprlist));
+    SETCDR(exprlist, Prune(CDR(exprlist)));
     if (TYPEOF(funarg) == CLOSXP) {
-	BODY(funarg) = exprlist;
+	SET_BODY(funarg, exprlist);
     }
     else if (isString(funarg)) {
 	PROTECT(names = duplicate(funarg));
 	funarg = allocSExp(CLOSXP);
-	FORMALS(funarg) = ans = allocList(length(names));
+	ans = allocList(length(names));
+	SET_FORMALS(funarg, ans);
 	for(i=0 ; i<length(names) ; i++) {
-	    TAG(ans) = install(CHAR(STRING(names)[i]));
-	    CAR(ans) = R_MissingArg;
+	    SET_TAG(ans, install(CHAR(STRING_ELT(names, i))));
+	    SETCAR(ans, R_MissingArg);
 	    ans = CDR(ans);
 	}
-	BODY(funarg) = exprlist;
-	CLOENV(funarg) = R_GlobalEnv;
+	SET_BODY(funarg, exprlist);
+	SET_CLOENV(funarg, R_GlobalEnv);
 	UNPROTECT(1);
     }
     else {
 	funarg = allocVector(EXPRSXP, 1);
-	VECTOR(funarg)[0] = exprlist;
+	SET_VECTOR_ELT(funarg, 0, exprlist);
 	/* funarg = lang2(install("expression"), exprlist); */
     }
     UNPROTECT(3);

@@ -201,19 +201,19 @@ SEXP eval(SEXP e, SEXP rho)
 	    PROTECT(tmp);
 	    tmp = eval(tmp, rho);
 #ifdef old
-	    if (NAMED(tmp) == 1) NAMED(tmp) = 2;
-	    else NAMED(tmp) = 1;
+	    if (NAMED(tmp) == 1) SET_NAMED(tmp, 2);
+	    else SET_NAMED(tmp, 1);
 #else
-	    NAMED(tmp) = 2;
+	    SET_NAMED(tmp, 2);
 #endif
 	    UNPROTECT(1);
 	}
 #ifdef OLD
 	else if (!isNull(tmp))
-	    NAMED(tmp) = 1;
+	    SET_NAMED(tmp, 1);
 #else
 	else if (!isNull(tmp) && NAMED(tmp) < 1)
-	    NAMED(tmp) = 1;
+	    SET_NAMED(tmp, 1);
 #endif
 	break;
     case PROMSXP:
@@ -221,10 +221,10 @@ SEXP eval(SEXP e, SEXP rho)
 	    if(PRSEEN(e))
 		errorcall(R_GlobalContext->call,
 			  "recursive default argument reference");
-	    PRSEEN(e) = 1;
+	    SET_PRSEEN(e, 1);
 	    val = eval(PREXPR(e), PRENV(e));
-	    PRSEEN(e) = 0;
-	    PRVALUE(e) = val;
+	    SET_PRSEEN(e, 0);
+	    SET_PRVALUE(e, val);
 	}
 	tmp = PRVALUE(e);
 	break;
@@ -234,7 +234,7 @@ SEXP eval(SEXP e, SEXP rho)
 	    int i, n;
 	    n = LENGTH(e);
 	    for(i=0 ; i<n ; i++)
-		tmp = eval(VECTOR(e)[i], rho);
+		tmp = eval(VECTOR_ELT(e, i), rho);
 	}
 	break;
 #endif
@@ -338,8 +338,8 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     a = actuals;
     while (f != R_NilValue) {
 	if (CAR(a) == R_MissingArg && CAR(f) != R_MissingArg) {
-	    CAR(a) = mkPROMISE(CAR(f), newrho);
-	    MISSING(a) = 2;
+	    SETCAR(a, mkPROMISE(CAR(f), newrho));
+	    SET_MISSING(a, 2);
 	}
 	f = CDR(f);
 	a = CDR(a);
@@ -353,12 +353,12 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 		if (TAG(a) == TAG(tmp))
 		    break;
 	    if (a == R_NilValue) {
-		FRAME(newrho) = CONS(CAR(tmp), FRAME(newrho));
-		TAG(FRAME(newrho)) = TAG(tmp);
+		SET_FRAME(newrho, CONS(CAR(tmp), FRAME(newrho)));
+		SET_TAG(FRAME(newrho), TAG(tmp));
 	    }
 	}
     }
-    NARGS(newrho) = nargs;
+    SET_NARGS(newrho, nargs);
 
     /*  Terminate the previous context and start a new one with the
         correct environment. */
@@ -382,7 +382,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 
     /* Debugging */
 
-    DEBUG(newrho) = DEBUG(op);
+    SET_DEBUG(newrho, DEBUG(op));
     if (DEBUG(op)) {
 	Rprintf("debugging in: ");
 	PrintValueRec(call,rho);
@@ -468,7 +468,7 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho)
     PROTECT(vl = duplicate(vl));
     defineVar(symbol, vl, rho);
     UNPROTECT(1);
-    NAMED(vl) = 1;
+    SET_NAMED(vl, 1);
     return vl;
 }
 
@@ -486,16 +486,16 @@ static SEXP replaceCall(SEXP fun, SEXP val, SEXP args, SEXP rhs)
     PROTECT(val);
     ptmp = tmp = allocList(length(args)+3);
     UNPROTECT(4);
-    CAR(ptmp) = fun; ptmp = CDR(ptmp);
-    CAR(ptmp) = val; ptmp = CDR(ptmp);
+    SETCAR(ptmp, fun); ptmp = CDR(ptmp);
+    SETCAR(ptmp, val); ptmp = CDR(ptmp);
     while(args != R_NilValue) {
-	CAR(ptmp) = CAR(args);
+	SETCAR(ptmp, CAR(args));
 	ptmp = CDR(ptmp);
 	args = CDR(args);
     }
-    CAR(ptmp) = rhs;
-    TAG(ptmp) = install("value");
-    TYPEOF(tmp) = LANGSXP;
+    SETCAR(ptmp, rhs);
+    SET_TAG(ptmp, install("value"));
+    SET_TYPEOF(tmp, LANGSXP);
     return tmp;
 }
 
@@ -599,13 +599,13 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ans = eval(body, rho);
 		break;
 	    case STRSXP:
-		STRING(v)[0] = STRING(val)[i];
+		SET_STRING_ELT(v, 0, STRING_ELT(val, i));
 		setVar(sym, v, rho);
 		ans = eval(body, rho);
 		break;
 	    case EXPRSXP:
 	    case VECSXP:
-		setVar(sym, VECTOR(val)[i], rho);
+		setVar(sym, VECTOR_ELT(val, i), rho);
 		ans = eval(body, rho);
 		break;
 	    case LISTSXP:
@@ -618,7 +618,7 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     UNPROTECT(4);
     R_Visible = 0;
-    DEBUG(rho) = dbg;
+    SET_DEBUG(rho, dbg);
     return ans;
 }
 
@@ -662,7 +662,7 @@ SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
     R_Visible = 0;
-    DEBUG(rho) = dbg;
+    SET_DEBUG(rho, dbg);
     return t;
 }
 
@@ -699,7 +699,7 @@ SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
     R_Visible = 0;
-    DEBUG(rho) = dbg;
+    SET_DEBUG(rho, dbg);
     return t;
 }
 
@@ -753,9 +753,9 @@ SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
     while (!isNull(a)) {
 	nv += 1;
 	if (isNull(TAG(a)) && isSymbol(CAR(a)))
-	    TAG(v) = CAR(a);
+	    SET_TAG(v, CAR(a));
 	if (NAMED(CAR(v)) > 1)
-	    CAR(v) = duplicate(CAR(v));
+	    SETCAR(v, duplicate(CAR(v)));
 	a = CDR(a);
 	v = CDR(v);
     }
@@ -824,7 +824,7 @@ static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal, SEXP tmploc)
     else if (isLanguage(expr)) {
 	PROTECT(expr);
 	PROTECT(val = evalseq(CADR(expr), rho, forcelocal, tmploc));
-	CAR(tmploc) = CAR(val);
+	SETCAR(tmploc, CAR(val));
 	PROTECT(nexpr = LCONS(TAG(tmploc), CDDR(expr)));
 	PROTECT(nexpr = LCONS(CAR(expr), nexpr));
 	nval = eval(nexpr, rho);
@@ -892,9 +892,9 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
 	tmp = install(buf);
 	UNPROTECT(1);
-	CAR(tmploc) = CAR(lhs);
+	SETCAR(tmploc, CAR(lhs));
 	PROTECT(tmp2 = mkPROMISE(rhs, rho));
-	PRVALUE(tmp2) = rhs;
+	SET_PRVALUE(tmp2, rhs);
 	PROTECT(rhs = replaceCall(tmp, TAG(tmploc), CDDR(expr), tmp2));
 	rhs = eval(rhs, rho);
 	UNPROTECT(2);
@@ -903,9 +903,9 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	expr = CADR(expr);
     }
     sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
-    CAR(tmploc) = CAR(lhs);
+    SETCAR(tmploc, CAR(lhs));
     PROTECT(tmp = mkPROMISE(CADR(args), rho));
-    PRVALUE(tmp) = rhs;
+    SET_PRVALUE(tmp, rhs);
     PROTECT(expr = assignCall(install(asym[PRIMVAL(op)]), CDR(lhs),
 			      install(buf), TAG(tmploc), CDDR(expr), tmp));
     expr = eval(expr, rho);
@@ -918,7 +918,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_alias(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op,args);
-    NAMED(CAR(args)) = 0;
+    SET_NAMED(CAR(args), 0);
     return CAR(args);
 }
 
@@ -931,7 +931,7 @@ SEXP do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(args) != 2)
 	WrongArgCount(asym[PRIMVAL(op)]);
     if (isString(CAR(args)))
-	CAR(args) = install(CHAR(STRING(CAR(args))[0]));
+	SETCAR(args, install(CHAR(STRING_ELT(CAR(args), 0))));
 
     switch (PRIMVAL(op)) {
     case 1:						/* <- */
@@ -948,7 +948,7 @@ SEXP do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    R_Visible = 0;
 	    defineVar(CAR(args), s, rho);
 	    UNPROTECT(1);
-	    NAMED(s) = 1;
+	    SET_NAMED(s, 1);
 	    return (s);
 	}
 	else if (isLanguage(CAR(args))) {
@@ -965,7 +965,7 @@ SEXP do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    R_Visible = 0;
 	    setVar(CAR(args), s, ENCLOS(rho));
 	    UNPROTECT(1);
-	    NAMED(s) = 1;
+	    SET_NAMED(s, 1);
 	    return s;
 	}
 	else if (isLanguage(CAR(args)))
@@ -1005,8 +1005,8 @@ SEXP evalList(SEXP el, SEXP rho)
 	    h = findVar(CAR(el), rho);
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
-		    CDR(tail) = CONS(eval(CAR(h), rho), R_NilValue);
-		    TAG(CDR(tail)) = CreateTag(TAG(h));
+		    SETCDR(tail, CONS(eval(CAR(h), rho), R_NilValue));
+		    SET_TAG(CDR(tail), CreateTag(TAG(h)));
 		    tail = CDR(tail);
 		    h = CDR(h);
 		}
@@ -1015,9 +1015,9 @@ SEXP evalList(SEXP el, SEXP rho)
 		error("... used in an incorrect context");
 	}
 	else if (CAR(el) != R_MissingArg) {
-	    CDR(tail) = CONS(eval(CAR(el), rho), R_NilValue);
+	    SETCDR(tail, CONS(eval(CAR(el), rho), R_NilValue));
 	    tail = CDR(tail);
-	    TAG(tail) = CreateTag(TAG(el));
+	    SET_TAG(tail, CreateTag(TAG(el)));
 	}
 	el = CDR(el);
     }
@@ -1052,10 +1052,10 @@ SEXP evalListKeepMissing(SEXP el, SEXP rho)
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
 		    if (CAR(h) == R_MissingArg)
-			CDR(tail) = CONS(R_MissingArg, R_NilValue);
+			SETCDR(tail, CONS(R_MissingArg, R_NilValue));
 		    else
-			CDR(tail) = CONS(eval(CAR(h), rho), R_NilValue);
-		    TAG(CDR(tail)) = CreateTag(TAG(h));
+			SETCDR(tail, CONS(eval(CAR(h), rho), R_NilValue));
+		    SET_TAG(CDR(tail), CreateTag(TAG(h)));
 		    tail = CDR(tail);
 		    h = CDR(h);
 		}
@@ -1064,14 +1064,14 @@ SEXP evalListKeepMissing(SEXP el, SEXP rho)
 		error("... used in an incorrect context");
 	}
 	else if (CAR(el) == R_MissingArg) {
-	    CDR(tail) = CONS(R_MissingArg, R_NilValue);
+	    SETCDR(tail, CONS(R_MissingArg, R_NilValue));
 	    tail = CDR(tail);
-	    TAG(tail) = CreateTag(TAG(el));
+	    SET_TAG(tail, CreateTag(TAG(el)));
 	}
 	else {
-	    CDR(tail) = CONS(eval(CAR(el), rho), R_NilValue);
+	    SETCDR(tail, CONS(eval(CAR(el), rho), R_NilValue));
 	    tail = CDR(tail);
-	    TAG(tail) = CreateTag(TAG(el));
+	    SET_TAG(tail, CreateTag(TAG(el)));
 	}
 	el = CDR(el);
     }
@@ -1108,8 +1108,8 @@ SEXP promiseArgs(SEXP el, SEXP rho)
 	    h = findVar(CAR(el), rho);
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
-		    CDR(tail) = CONS(mkPROMISE(CAR(h), rho), R_NilValue);
-		    TAG(CDR(tail)) = CreateTag(TAG(h));
+		    SETCDR(tail, CONS(mkPROMISE(CAR(h), rho), R_NilValue));
+		    SET_TAG(CDR(tail), CreateTag(TAG(h)));
 		    tail = CDR(tail);
 		    h = CDR(h);
 		}
@@ -1118,14 +1118,14 @@ SEXP promiseArgs(SEXP el, SEXP rho)
 		error("... used in an incorrect context");
 	}
 	else if (CAR(el) == R_MissingArg) {
-	    CDR(tail) = CONS(R_MissingArg, R_NilValue);
+	    SETCDR(tail, CONS(R_MissingArg, R_NilValue));
 	    tail = CDR(tail);
-	    TAG(tail) = CreateTag(TAG(el));
+	    SET_TAG(tail, CreateTag(TAG(el)));
 	}
 	else {
-	    CDR(tail) = CONS(mkPROMISE(CAR(el), rho), R_NilValue);
+	    SETCDR(tail, CONS(mkPROMISE(CAR(el), rho), R_NilValue));
 	    tail = CDR(tail);
-	    TAG(tail) = CreateTag(TAG(el));
+	    SET_TAG(tail, CreateTag(TAG(el)));
 	}
 	el = CDR(el);
     }
@@ -1174,13 +1174,13 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case LISTSXP:
 	PROTECT(env = allocSExp(ENVSXP));
-	FRAME(env) = duplicate(CADR(args));
-	ENCLOS(env) = encl;
+	SET_FRAME(env, duplicate(CADR(args)));
+	SET_ENCLOS(env, encl);
 	break;
     case VECSXP:
 	PROTECT(env = allocSExp(ENVSXP));
-	FRAME(env) = VectorToPairList(CADR(args));
-	ENCLOS(env) = encl;
+	SET_FRAME(env, VectorToPairList(CADR(args)));
+	SET_ENCLOS(env, encl);
 	break;
     case INTSXP:
     case REALSXP:
@@ -1211,7 +1211,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args);
 	if (!SETJMP(cntxt.cjmpbuf))
 	    for(i=0 ; i<n ; i++)
-		tmp = eval(VECTOR(expr)[i], env);
+		tmp = eval(VECTOR_ELT(expr, i), env);
 	endcontext(&cntxt);
 	UNPROTECT(1);
 	expr = tmp;
@@ -1220,10 +1220,10 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(expr);
 	PROTECT(env = allocVector(VECSXP, 2));
 	PROTECT(encl = allocVector(STRSXP, 2));
-	STRING(encl)[0] = mkChar("value");
-	STRING(encl)[1] = mkChar("visible");
-	VECTOR(env)[0] = expr;
-	VECTOR(env)[1] = ScalarLogical(R_Visible);
+	SET_STRING_ELT(encl, 0, mkChar("value"));
+	SET_STRING_ELT(encl, 1, mkChar("visible"));
+	SET_VECTOR_ELT(env, 0, expr);
+	SET_VECTOR_ELT(env, 1, ScalarLogical(R_Visible));
 	setAttrib(env, R_NamesSymbol, encl);
 	expr = env;
 	UNPROTECT(3);
@@ -1294,7 +1294,7 @@ int DispatchOrEval(SEXP call, SEXP op, SEXP args, SEXP rho,
 
     if( isObject(x) && (pt == NULL || strcmp(pt,".default")) ) {
 	/* PROTECT(args = promiseArgs(args, rho)); */
-	PRVALUE(CAR(args)) = x;
+	SET_PRVALUE(CAR(args), x);
 	sprintf(buf, "%s",CHAR(PRINTNAME(CAR(call))));
 	begincontext(&cntxt, CTXT_RETURN, call, rho, rho, args);
 	if(usemethod(buf, x, call, args, rho, ans)) {
@@ -1306,7 +1306,7 @@ int DispatchOrEval(SEXP call, SEXP op, SEXP args, SEXP rho,
     }
     /* else PROTECT(args); */
     *ans = CONS(x, EvalArgs(CDR(args), rho, dropmissing));
-    TAG(*ans) = CreateTag(TAG(args));
+    SET_TAG(*ans, CreateTag(TAG(args)));
     UNPROTECT(2);
     return 0;
 }
@@ -1325,14 +1325,14 @@ static void findmethod(SEXP class, char *group, char *generic,
     /* eg if class(x) is "foo" "bar" then x>3 should invoke */
     /* "Ops.foo" rather than ">.bar" */
     for (whichclass = 0 ; whichclass < len ; whichclass++) {
-	sprintf(buf, "%s.%s", generic, CHAR(STRING(class)[whichclass]));
+	sprintf(buf, "%s.%s", generic, CHAR(STRING_ELT(class, whichclass)));
 	*meth = install(buf);
 	*sxp = findVar(*meth, rho);
 	if (isFunction(*sxp)) {
 	    *gr = mkString("");
 	    break;
 	}
-	sprintf(buf, "%s.%s", group, CHAR(STRING(class)[whichclass]));
+	sprintf(buf, "%s.%s", group, CHAR(STRING_ELT(class, whichclass)));
 	*meth = install(buf);
 	*sxp = findVar(*meth, rho);
 	if (isFunction(*sxp)) {
@@ -1429,16 +1429,16 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	set = 0;
 	if (isString(t)) {
 	    for (j = 0 ; j < length(t) ; j++) {
-		if (!strcmp(CHAR(STRING(t)[j]),
-			    CHAR(STRING(lclass)[lwhich]))) {
-		    STRING(m)[i] = mkChar(lbuf);
+		if (!strcmp(CHAR(STRING_ELT(t, j)),
+			    CHAR(STRING_ELT(lclass, lwhich)))) {
+		    SET_STRING_ELT(m, i, mkChar(lbuf));
 		    set = 1;
 		    break;
 		}
 	    }
 	}
 	if( !set )
-	    STRING(m)[i] = R_BlankString;
+	    SET_STRING_ELT(m, i, R_BlankString);
 	s = CDR(s);
     }
 
@@ -1451,7 +1451,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     set=length(lclass)-lwhich;
     PROTECT(t = allocVector(STRSXP, set));
     for(j=0 ; j<set ; j++ )
-	STRING(t)[j] = duplicate(STRING(lclass)[lwhich++]);
+	SET_STRING_ELT(t, j, duplicate(STRING_ELT(lclass, lwhich++)));
     defineVar(install(".Class"), t, newrho);
     UNPROTECT(1);
 
@@ -1465,7 +1465,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     if (length(s) != length(args))
 	errorcall(call,"dispatch error");
     for (m = s ; m != R_NilValue ; m = CDR(m), args = CDR(args) )
-	PRVALUE(CAR(m)) = CAR(args);
+	SET_PRVALUE(CAR(m), CAR(args));
 
     *ans = applyClosure(t, lsxp, s, rho, newrho);
     UNPROTECT(5);

@@ -721,13 +721,13 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 		buffer[0] = ' ';
 		if (!isNull(labels)) {
 		    int numl = length(labels);
-		    strcpy(&buffer[1], CHAR(STRING(labels)[cnum % numl]));
+		    strcpy(&buffer[1], CHAR(STRING_ELT(labels, cnum % numl)));
 		}
 		else {
 		    PROTECT(lab = allocVector(REALSXP, 1));
 		    REAL(lab)[0] = zc;
 		    lab = labelformat(lab);
-		    strcpy(&buffer[1], CHAR(STRING(lab)[0]));
+		    strcpy(&buffer[1], CHAR(STRING_ELT(lab, 0)));
 		    UNPROTECT(1);
 		}
 		buffer[strlen(buffer)+1] = '\0';
@@ -2037,7 +2037,7 @@ static void PerspAxis(double *x, double *y, double *z,
 	    GLine(v1[0]/v1[3], v1[1]/v1[3],
 		  v2[0]/v2[3], v2[1]/v2[3], USER, dd);
 	    /* Draw tick label */
-	    GText(v3[0]/v3[3], v3[1]/v3[3], USER, CHAR(STRING(lab)[i]),
+	    GText(v3[0]/v3[3], v3[1]/v3[3], USER, CHAR(STRING_ELT(lab, i)),
 		  .5, .5, 0, dd);
 	}
 	UNPROTECT(2);
@@ -2255,8 +2255,8 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
         PerspBox(0, REAL(xlim), REAL(ylim), REAL(zlim), dd);
 	if (doaxes)
 	    PerspAxes(REAL(xlim), REAL(ylim), REAL(zlim),
-		      CHAR(STRING(xlab)[0]), CHAR(STRING(ylab)[0]),
-		      CHAR(STRING(zlab)[0]),
+		      CHAR(STRING_ELT(xlab, 0)), CHAR(STRING_ELT(ylab, 0)),
+		      CHAR(STRING_ELT(zlab, 0)),
 		      nTicks, tickType, dd);
     }
 

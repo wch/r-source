@@ -54,7 +54,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     len = LENGTH(x);
     PROTECT(s = allocVector(INTSXP, len));
     for (i = 0; i < len; i++)
-	INTEGER(s)[i] = strlen(CHAR(STRING(x)[i]));
+	INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
     if ((d = getAttrib(x, R_DimSymbol)) != R_NilValue)
 	setAttrib(s, R_DimSymbol, d);
     if ((d = getAttrib(x, R_DimNamesSymbol)) != R_NilValue)
@@ -119,7 +119,7 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < len; i++) {
 	start = INTEGER(sa)[i % k];
 	stop = INTEGER(so)[i % l];
-	slen = strlen(CHAR(STRING(x)[i]));
+	slen = strlen(CHAR(STRING_ELT(x, i)));
 	if (start < 1)
 	    start = 1;
 	if (start > stop || start > slen) {
@@ -134,9 +134,9 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 		stop = MAXELTSIZE;
 		warningcall(call, "a string was truncated in substr()");
 		}*/
-	    substr(buff, CHAR(STRING(x)[i]), start, stop);
+	    substr(buff, CHAR(STRING_ELT(x, i)), start, stop);
 	}
-	STRING(s)[i] = mkChar(buff);
+	SET_STRING_ELT(s, i, mkChar(buff));
     }
     UNPROTECT(1);
     AllocBuffer(-1);
@@ -167,11 +167,11 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     tlen = LENGTH(tok);
     PROTECT(s = allocVector(VECSXP, len));
     for(i = 0; i < len; i++) {
-	AllocBuffer(strlen(CHAR(STRING(x)[i])));
-	strcpy(buff, CHAR(STRING(x)[i]));
+	AllocBuffer(strlen(CHAR(STRING_ELT(x, i))));
+	strcpy(buff, CHAR(STRING_ELT(x, i)));
 	if(tlen > 0) {
 	    /* find out how many splits there will be */
-	    split = CHAR(STRING(tok)[i % tlen]);
+	    split = CHAR(STRING_ELT(tok, i % tlen));
 	    ntok = 0;
 	    /* Careful: need to distinguish empty (rm_eo == 0) from
 	       non-empty (rm_eo > 0) matches.  In the former case, the
@@ -211,10 +211,10 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    pt[1] = '\0';
 		    buff++;
 		}
-		STRING(t)[j] = mkChar(pt);
+		SET_STRING_ELT(t, j, mkChar(pt));
 	    }
 	    if(*bufp != '\0')
-		STRING(t)[ntok] = mkChar(bufp);
+		SET_STRING_ELT(t, ntok, mkChar(bufp));
 	}
 	else {
 	    char bf[2];
@@ -223,11 +223,11 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    bf[1]='\0';
 	    for (j = 0; j < ntok; j++) {
 		bf[0]=buff[j];
-		STRING(t)[j] = mkChar(bf);
+		SET_STRING_ELT(t, j, mkChar(bf));
 	    }
 	}
 	UNPROTECT(1);
-	VECTOR(s)[i] = t;
+	SET_VECTOR_ELT(s, i, t);
     }
     UNPROTECT(1);
     AllocBuffer(-1);
@@ -364,7 +364,7 @@ SEXP do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     minlen = asInteger(CADR(args));
     uclass = asLogical(CAR(CDDR(args)));
     for (i = 0 ; i < len ; i++)
-	STRING(ans)[i] = stripchars(STRING(CAR(args))[i], minlen);
+	SET_STRING_ELT(ans, i, stripchars(STRING_ELT(CAR(args), i), minlen));
 
     UNPROTECT(1);
     return(ans);
@@ -384,17 +384,17 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
     n = length(arg);
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0 ; i < n ; i++) {
-	l = strlen(CHAR(STRING(arg)[i]));
-	if (isalpha(CHAR(STRING(arg)[i])[0])) {
-	    STRING(ans)[i] = allocString(l);
-	    strcpy(CHAR(STRING(ans)[i]), CHAR(STRING(arg)[i]));
+	l = strlen(CHAR(STRING_ELT(arg, i)));
+	if (isalpha(CHAR(STRING_ELT(arg, i))[0])) {
+	    SET_STRING_ELT(ans, i, allocString(l));
+	    strcpy(CHAR(STRING_ELT(ans, i)), CHAR(STRING_ELT(arg, i)));
 	}
 	else {
-	    STRING(ans)[i] = allocString(l + 1);
-	    strcpy(CHAR(STRING(ans)[i]), "X");
-	    strcat(CHAR(STRING(ans)[i]), CHAR(STRING(arg)[i]));
+	    SET_STRING_ELT(ans, i, allocString(l + 1));
+	    strcpy(CHAR(STRING_ELT(ans, i)), "X");
+	    strcat(CHAR(STRING_ELT(ans, i)), CHAR(STRING_ELT(arg, i)));
 	}
-	p = CHAR(STRING(ans)[i]);
+	p = CHAR(STRING_ELT(ans, i));
 	while (*p) {
 	    if (!isalnum(*p) && *p != '.')
 		*p = '.';
@@ -430,14 +430,14 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (extended_opt) eflags = eflags | REG_EXTENDED;
     if (igcase_opt) eflags = eflags | REG_ICASE;
 
-    if (regcomp(&reg, CHAR(STRING(pat)[0]), eflags))
+    if (regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
 	errorcall(call, "invalid regular expression");
 
     n = length(vec);
     ind = allocVector(LGLSXP, n);
     nmatches = 0;
     for (i = 0 ; i < n ; i++) {
-	if (regexec(&reg, CHAR(STRING(vec)[i]), 0, NULL, 0) == 0) {
+	if (regexec(&reg, CHAR(STRING_ELT(vec, i)), 0, NULL, 0) == 0) {
 	    INTEGER(ind)[i] = 1;
 	    nmatches++;
 	}
@@ -450,7 +450,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	j = 0;
 	for (i = 0 ; i < n ; i++)
 	    if (INTEGER(ind)[i]) {
-		STRING(ans)[j++] = STRING(vec)[i];
+		SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
 		/* FIXME: Want to inherit 'names(vec)': [the following is wrong]
 		   TAG	 (ans)[j]   = TAG(vec)[i]; */
 	    }
@@ -554,7 +554,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (extended_opt) eflags = eflags | REG_EXTENDED;
     if (igcase_opt) eflags = eflags | REG_ICASE;
 
-    if (regcomp(&reg, CHAR(STRING(pat)[0]), eflags))
+    if (regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
 	errorcall(call, "invalid regular expression");
 
     n = length(vec);
@@ -563,8 +563,8 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0 ; i < n ; i++) {
 	offset = 0;
 	nmatch = 0;
-	s = CHAR(STRING(vec)[i]);
-	t = CHAR(STRING(rep)[0]);
+	s = CHAR(STRING_ELT(vec, i));
+	t = CHAR(STRING_ELT(rep, 0));
 	ns = strlen(s);
 	while (regexec(&reg, &s[offset], 10, regmatch, 0) == 0) {
 	    nmatch += 1;
@@ -578,14 +578,14 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		break;
 	}
 	if (nmatch == 0)
-	    STRING(ans)[i] = STRING(vec)[i];
+	    SET_STRING_ELT(ans, i, STRING_ELT(vec, i));
 	else {
-	    STRING(ans)[i] = allocString(ns);
+	    SET_STRING_ELT(ans, i, allocString(ns));
 	    offset = 0;
 	    nmatch = 0;
-	    s = CHAR(STRING(vec)[i]);
-	    t = CHAR(STRING(rep)[0]);
-	    u = CHAR(STRING(ans)[i]);
+	    s = CHAR(STRING_ELT(vec, i));
+	    t = CHAR(STRING_ELT(rep, 0));
+	    u = CHAR(STRING_ELT(ans, i));
 	    ns = strlen(s);
 	    while (regexec(&reg, &s[offset], 10, regmatch, 0) == 0) {
 		for (j = 0; j < regmatch[0].rm_so ; j++)
@@ -631,14 +631,14 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     eflags = extended_opt ? REG_EXTENDED : 0;
 
-    if (regcomp(&reg, CHAR(STRING(pat)[0]), eflags))
+    if (regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
 	errorcall(call, "invalid regular expression");
     n = length(text);
     PROTECT(ans = allocVector(INTSXP, n));
     PROTECT(matchlen = allocVector(INTSXP, n));
 
     for (i = 0 ; i < n ; i++) {
-	if(regexec(&reg, CHAR(STRING(text)[i]), 1, regmatch, 0) == 0) {
+	if(regexec(&reg, CHAR(STRING_ELT(text, i)), 1, regmatch, 0) == 0) {
 	    st = regmatch[0].rm_so;
 	    INTEGER(ans)[i] = st + 1; /* index from one */
 	    INTEGER(matchlen)[i] = regmatch[0].rm_eo - st;
@@ -666,12 +666,12 @@ do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
     n = LENGTH(x);
     PROTECT(y = allocVector(STRSXP, n));
     for(i = 0; i < n; i++) {
-	STRING(y)[i] = allocString(strlen(CHAR(STRING(x)[i])));
-	strcpy(CHAR(STRING(y)[i]), CHAR(STRING(x)[i]));
+	SET_STRING_ELT(y, i, allocString(strlen(CHAR(STRING_ELT(x, i)))));
+	strcpy(CHAR(STRING_ELT(y, i)), CHAR(STRING_ELT(x, i)));
     }
 
     for(i = 0; i < n; i++) {
-	for(p = CHAR(STRING(y)[i]); *p != '\0'; p++) {
+	for(p = CHAR(STRING_ELT(y, i)); *p != '\0'; p++) {
 	    *p = tolower(*p);
 	}
     }
@@ -693,12 +693,12 @@ do_toupper(SEXP call, SEXP op, SEXP args, SEXP env)
     n = LENGTH(x);
     PROTECT(y = allocVector(STRSXP, n));
     for(i = 0; i < n; i++) {
-	STRING(y)[i] = allocString(strlen(CHAR(STRING(x)[i])));
-	strcpy(CHAR(STRING(y)[i]), CHAR(STRING(x)[i]));
+	SET_STRING_ELT(y, i, allocString(strlen(CHAR(STRING_ELT(x, i)))));
+	strcpy(CHAR(STRING_ELT(y, i)), CHAR(STRING_ELT(x, i)));
     }
 
     for(i = 0; i < n; i++) {
-	for(p = CHAR(STRING(y)[i]); *p != '\0'; p++) {
+	for(p = CHAR(STRING_ELT(y, i)); *p != '\0'; p++) {
 	    *p = toupper(*p);
 	}
     }
@@ -826,8 +826,8 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     trs_new->type = TR_INIT;
     trs_new->next = NULL;
     /* Build the old and new tr_spec lists. */
-    tr_build_spec(CHAR(STRING(old)[0]), trs_old);
-    tr_build_spec(CHAR(STRING(new)[0]), trs_new);
+    tr_build_spec(CHAR(STRING_ELT(old, 0)), trs_old);
+    tr_build_spec(CHAR(STRING_ELT(new, 0)), trs_new);
     /* Initilize the pointers for walking through the old and new
        tr_spec lists and retrieving the next chars from the lists.
        */
@@ -852,12 +852,12 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     n = LENGTH(x);
     PROTECT(y = allocVector(STRSXP, n));
     for(i = 0; i < n; i++) {
-	STRING(y)[i] = allocString(strlen(CHAR(STRING(x)[i])));
-	strcpy(CHAR(STRING(y)[i]), CHAR(STRING(x)[i]));
+	SET_STRING_ELT(y, i, allocString(strlen(CHAR(STRING_ELT(x, i)))));
+	strcpy(CHAR(STRING_ELT(y, i)), CHAR(STRING_ELT(x, i)));
     }
 
     for(i = 0; i < length(y); i++) {
-	for(p = CHAR(STRING(y)[i]); *p != '\0'; p++) {
+	for(p = CHAR(STRING_ELT(y, i)); *p != '\0'; p++) {
 	    *p = xtable[*p];
 	}
     }

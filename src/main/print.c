@@ -94,9 +94,9 @@ SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (!isString(file) || length(file) != 1)
 	    errorcall(call, "invalid file name");
 	if (append)
-	    fp = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "a");
+	    fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file, 0))), "a");
 	else
-	    fp = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "w");
+	    fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(file, 0))), "w");
 	if (!fp)
 	    errorcall(call, "unable to open file");
 	R_Sinkfile = fp;
@@ -208,7 +208,7 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho){
     if(!isNull(naprint))  {
 	if(!isString(naprint) || LENGTH(naprint) < 1)
 	    errorcall(call, "invalid na.print specification");
-	R_print.na_string = STRING(naprint)[0];
+	R_print.na_string = STRING_ELT(naprint, 0);
 	R_print.na_width = strlen(CHAR(R_print.na_string));
     }
     args = CDR(args);
@@ -246,7 +246,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	PROTECT(dims);
 	PROTECT(t = allocArray(STRSXP, dims));
 	for (i = 0 ; i < ns ; i++) {
-	    switch(TYPEOF(PROTECT(tmp = VECTOR(s)[i]))) {
+	    switch(TYPEOF(PROTECT(tmp = VECTOR_ELT(s, i)))) {
 	    case NILSXP:
 		pbuf = Rsprintf("NULL");
 		break;
@@ -275,7 +275,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		break;
 	    }
 	    UNPROTECT(1); /* tmp */
-	    STRING(t)[i] = mkChar(pbuf);
+	    SET_STRING_ELT(t, i, mkChar(pbuf));
 	}
 	if (LENGTH(dims) == 2) {
 	    SEXP rl, cl;
@@ -294,22 +294,22 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	taglen = strlen(tagbuf);
 	ptag = tagbuf + taglen;
 	PROTECT(newcall = allocList(2));
-	CAR(newcall) = install("print");
-	TYPEOF(newcall) = LANGSXP;
+	SETCAR(newcall, install("print"));
+	SET_TYPEOF(newcall, LANGSXP);
 
 	if(ns > 0) {
 	for (i = 0 ; i < ns ; i++) {
 	    if (i > 0) Rprintf("\n");
 	    if (names != R_NilValue &&
-		STRING(names)[i] != R_NilValue &&
-		*CHAR(STRING(names)[i]) != '\0') {
-		if (taglen + strlen(CHAR(STRING(names)[i])) > TAGBUFLEN)
+		STRING_ELT(names, i) != R_NilValue &&
+		*CHAR(STRING_ELT(names, i)) != '\0') {
+		if (taglen + strlen(CHAR(STRING_ELT(names, i))) > TAGBUFLEN)
 		    sprintf(ptag, "$...");
 		else {
-		    if( isValidName(CHAR(STRING(names)[i])) )
-			sprintf(ptag, "$%s", CHAR(STRING(names)[i]));
+		    if( isValidName(CHAR(STRING_ELT(names, i))) )
+			sprintf(ptag, "$%s", CHAR(STRING_ELT(names, i)));
 		    else
-			sprintf(ptag, "$\"%s\"", CHAR(STRING(names)[i]));
+			sprintf(ptag, "$\"%s\"", CHAR(STRING_ELT(names, i)));
 		}
 	    }
 	    else {
@@ -319,11 +319,11 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		    sprintf(ptag, "[[%d]]", i+1);
 	    }
 	    Rprintf("%s\n", tagbuf);
-	    if(isObject(VECTOR(s)[i])) {
-		CADR(newcall) = VECTOR(s)[i];
+	    if(isObject(VECTOR_ELT(s, i))) {
+		SETCADR(newcall, VECTOR_ELT(s, i));
 		eval(newcall, env);
 	    }
-	    else PrintValueRec(VECTOR(s)[i], env);
+	    else PrintValueRec(VECTOR_ELT(s, i), env);
 	    *ptag = '\0';
 	}
 	Rprintf("\n");
@@ -380,7 +380,7 @@ static void printList(SEXP s, SEXP env)
 		pbuf = Rsprintf("?");
 		break;
 	    }
-	    STRING(t)[i++] = mkChar(pbuf);
+	    SET_STRING_ELT(t, i++, mkChar(pbuf));
 	    s = CDR(s);
 	}
 	if (LENGTH(dims) == 2) {
@@ -400,8 +400,8 @@ static void printList(SEXP s, SEXP env)
 	taglen = strlen(tagbuf);
 	ptag = tagbuf + taglen;
 	PROTECT(newcall = allocList(2));
-	CAR(newcall) = install("print");
-	TYPEOF(newcall) = LANGSXP;
+	SETCAR(newcall, install("print"));
+	SET_TYPEOF(newcall, LANGSXP);
 	while (TYPEOF(s) == LISTSXP) {
 	    if (i > 1) Rprintf("\n");
 	    if (TAG(s) != R_NilValue && isSymbol(TAG(s))) {
@@ -422,7 +422,7 @@ static void printList(SEXP s, SEXP env)
 	    }
 	    Rprintf("%s\n", tagbuf);
 	    if(isObject(CAR(s))) {
-		CADR(newcall) = CAR(s);
+		SETCADR(newcall, CAR(s));
 		eval(newcall, env);
 	    }
 	    else PrintValueRec(CAR(s),env);
@@ -448,7 +448,7 @@ static void PrintExpression(SEXP s)
     u = deparse1(s, 0);
     n = LENGTH(u);
     for (i = 0; i < n ; i++) {
-	Rprintf(CHAR(STRING(u)[i]));
+	Rprintf(CHAR(STRING_ELT(u, i)));
 	Rprintf("\n");
     }
 }
@@ -488,7 +488,7 @@ void PrintValueRec(SEXP s,SEXP env)
 	if (isNull(t))
 	    t = deparse1(s, 0);
 	for (i = 0; i < LENGTH(t); i++)
-	    Rprintf("%s\n", CHAR(STRING(t)[i]));
+	    Rprintf("%s\n", CHAR(STRING_ELT(t, i)));
 	if (TYPEOF(s) == CLOSXP) t = CLOENV(s);
 	else t = R_GlobalEnv;
 	if (t != R_GlobalEnv)
@@ -519,14 +519,14 @@ void PrintValueRec(SEXP s,SEXP env)
 	if (TYPEOF(t) == INTSXP) {
 	    if (LENGTH(t) == 1) {
 		PROTECT(t = getAttrib(s, R_DimNamesSymbol));
-		if (t != R_NilValue && VECTOR(t)[0] != R_NilValue) {
+		if (t != R_NilValue && VECTOR_ELT(t, 0) != R_NilValue) {
 		    SEXP nn = getAttrib(t, R_NamesSymbol);
 		    char *title = NULL;
 
 		    if (!isNull(nn))
-		        title = CHAR(STRING(nn)[0]);
+		        title = CHAR(STRING_ELT(nn, 0));
 
-		    printNamedVector(s, VECTOR(t)[0], R_print.quote, title);
+		    printNamedVector(s, VECTOR_ELT(t, 0), R_print.quote, title);
 		}
 		else
 		    printVector(s, 1, R_print.quote);

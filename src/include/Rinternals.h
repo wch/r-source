@@ -77,6 +77,9 @@ typedef unsigned int SEXPTYPE;
 
 #define FUNSXP      99    /* Closure or Builtin */
 
+#define USE_WRITE_BARRIER
+#define USE_GENERATIONAL_GC
+
 #ifdef TESTING_RINTERNALS
 #define USE_RINTERNALS
 #define STRING(x)	((x)->u.vecsxp.type.s)

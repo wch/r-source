@@ -163,7 +163,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	lengthCheck(what, value, 1);
 	if (!isString(value))
 	    par_error(what);
-	ix = CHAR(STRING(value)[0])[0];
+	ix = CHAR(STRING_ELT(value, 0))[0];
 	switch (ix) {
 	case 'o': case 'O':
 	case 'l': case 'L':
@@ -580,7 +580,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	if (!isVector(value) || LENGTH(value) < 1)
 	    par_error(what);
 	if (isString(value)) {
-	    ix = CHAR(STRING(value)[0])[0];
+	    ix = CHAR(STRING_ELT(value, 0))[0];
 	}
 	else if (isNumeric(value)) {
 	    ix = asInteger(value);
@@ -623,7 +623,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "pty")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
-	ix = CHAR(STRING(value)[0])[0];
+	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 'm' || ix == 's')
 	    dd->dp.pty = dd->gp.pty = ix;
 	else par_error(what);
@@ -666,7 +666,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "type")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
-	ix = CHAR(STRING(value)[0])[0];
+	ix = CHAR(STRING_ELT(value, 0))[0];
 	switch (ix) {
 	case 'p':
 	case 'l':
@@ -739,7 +739,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "xaxs")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
-	ix = CHAR(STRING(value)[0])[0];
+	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'e' || ix == 'i' || ix == 'r' || ix == 'd')
 	    dd->dp.xaxs = dd->gp.xaxs = ix;
 	else par_error(what);
@@ -747,7 +747,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "xaxt")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
-	ix = CHAR(STRING(value)[0])[0];
+	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'l' || ix == 't' || ix == 'n')
 	    dd->dp.xaxt = dd->gp.xaxt = ix;
 	else par_error(what);
@@ -779,7 +779,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "yaxs")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
-	ix = CHAR(STRING(value)[0])[0];
+	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'e' || ix == 'i' || ix == 'r' || ix == 'd')
 	    dd->dp.yaxs = dd->gp.yaxs = ix;
 	else par_error(what);
@@ -787,7 +787,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "yaxt")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
-	ix = CHAR(STRING(value)[0])[0];
+	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'l' || ix == 't' || ix == 'n')
 	    dd->dp.yaxt = dd->gp.yaxt = ix;
 	else par_error(what);
@@ -831,7 +831,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	lengthCheck(what, value, 1);
 	if (!isString(value))
 	    par_error(what);
-	ix = CHAR(STRING(value)[0])[0];
+	ix = CHAR(STRING_ELT(value, 0))[0];
 	switch (ix) {
 	case 'o': case 'O':
 	case 'l': case 'L':
@@ -987,7 +987,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	if (!isVector(value) || LENGTH(value) < 1)
 	    par_error(what);
 	if (isString(value)) {
-	    ix = CHAR(STRING(value)[0])[0];
+	    ix = CHAR(STRING_ELT(value, 0))[0];
 	}
 	else if (isNumeric(value)) {
 	    ix = asInteger(value);
@@ -1024,7 +1024,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "type")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
-	ix = CHAR(STRING(value)[0])[0];
+	ix = CHAR(STRING_ELT(value, 0))[0];
 	switch (ix) {
 	case 'p':
 	case 'l':
@@ -1054,7 +1054,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "xaxs")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
-	ix = CHAR(STRING(value)[0])[0];
+	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'e' || ix == 'i' || ix == 'r' || ix == 'd')
 	    dd->gp.xaxs = ix;
 	else par_error(what);
@@ -1062,7 +1062,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "xaxt")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
-	ix = CHAR(STRING(value)[0])[0];
+	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'l' || ix == 't' || ix == 'n')
 	    dd->gp.xaxt = ix;
 	else par_error(what);
@@ -1088,7 +1088,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "yaxs")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
-	ix = CHAR(STRING(value)[0])[0];
+	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'e' || ix == 'i' || ix == 'r' || ix == 'd')
 	    dd->gp.yaxs = ix;
 	else par_error(what);
@@ -1096,7 +1096,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "yaxt")) {
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
-	ix = CHAR(STRING(value)[0])[0];
+	ix = CHAR(STRING_ELT(value, 0))[0];
 	if (ix == 's' || ix == 'l' || ix == 't' || ix == 'n')
 	    dd->gp.yaxt = ix;
 	else par_error(what);
@@ -1126,7 +1126,7 @@ static SEXP Query(char *what, DevDesc *dd)
     }
     else if (streql(what, "bg")) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	STRING(value)[0] = mkChar(col2name(dd->dp.bg));
+	SET_STRING_ELT(value, 0, mkChar(col2name(dd->dp.bg)));
 	UNPROTECT(1);
     }
     else if (streql(what, "bty")) {
@@ -1134,7 +1134,7 @@ static SEXP Query(char *what, DevDesc *dd)
 	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = dd->dp.bty;
 	buf[1] = '\0';
-	STRING(value)[0] = mkChar(buf);
+	SET_STRING_ELT(value, 0, mkChar(buf));
 	UNPROTECT(1);
     }
     else if (streql(what, "cex")) {
@@ -1164,27 +1164,27 @@ static SEXP Query(char *what, DevDesc *dd)
     }
     else if (streql(what, "col")) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	STRING(value)[0] = mkChar(col2name(dd->dp.col));
+	SET_STRING_ELT(value, 0, mkChar(col2name(dd->dp.col)));
 	UNPROTECT(1);
     }
     else if (streql(what, "col.main")) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	STRING(value)[0] = mkChar(col2name(dd->dp.colmain));
+	SET_STRING_ELT(value, 0, mkChar(col2name(dd->dp.colmain)));
 	UNPROTECT(1);
     }
     else if (streql(what, "col.lab")) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	STRING(value)[0] = mkChar(col2name(dd->dp.collab));
+	SET_STRING_ELT(value, 0, mkChar(col2name(dd->dp.collab)));
 	UNPROTECT(1);
     }
     else if (streql(what, "col.sub")) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	STRING(value)[0] = mkChar(col2name(dd->dp.colsub));
+	SET_STRING_ELT(value, 0, mkChar(col2name(dd->dp.colsub)));
 	UNPROTECT(1);
     }
     else if (streql(what, "col.axis")) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	STRING(value)[0] = mkChar(col2name(dd->dp.colaxis));
+	SET_STRING_ELT(value, 0, mkChar(col2name(dd->dp.colaxis)));
 	UNPROTECT(1);
     }
     else if (streql(what, "cra")) {
@@ -1219,7 +1219,7 @@ static SEXP Query(char *what, DevDesc *dd)
     }
     else if (streql(what, "fg")) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	STRING(value)[0] = mkChar(col2name(dd->dp.fg));
+	SET_STRING_ELT(value, 0, mkChar(col2name(dd->dp.fg)));
 	UNPROTECT(1);
     }
     else if (streql(what, "fig")) {
@@ -1354,7 +1354,7 @@ static SEXP Query(char *what, DevDesc *dd)
 	    PROTECT(value = allocVector(STRSXP, 1));
 	    buf[0] = dd->dp.pch;
 	    buf[1] = '\0';
-	    STRING(value)[0] = mkChar(buf);
+	    SET_STRING_ELT(value, 0, mkChar(buf));
 	}
 	UNPROTECT(1);
     }
@@ -1379,7 +1379,7 @@ static SEXP Query(char *what, DevDesc *dd)
 	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = dd->dp.pty;
 	buf[1] = '\0';
-	STRING(value)[0] = mkChar(buf);
+	SET_STRING_ELT(value, 0, mkChar(buf));
 	UNPROTECT(1);
     }
     else if (streql(what, "smo")) {
@@ -1407,7 +1407,7 @@ static SEXP Query(char *what, DevDesc *dd)
 	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = dd->dp.type;
 	buf[1] = '\0';
-	STRING(value)[0] = mkChar(buf);
+	SET_STRING_ELT(value, 0, mkChar(buf));
 	UNPROTECT(1);
     }
     else if (streql(what, "usr")) {
@@ -1440,7 +1440,7 @@ static SEXP Query(char *what, DevDesc *dd)
 	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = dd->dp.xaxs;
 	buf[1] = '\0';
-	STRING(value)[0] = mkChar(buf);
+	SET_STRING_ELT(value, 0, mkChar(buf));
 	UNPROTECT(1);
     }
     else if (streql(what, "xaxt")) {
@@ -1448,7 +1448,7 @@ static SEXP Query(char *what, DevDesc *dd)
 	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = dd->dp.xaxt;
 	buf[1] = '\0';
-	STRING(value)[0] = mkChar(buf);
+	SET_STRING_ELT(value, 0, mkChar(buf));
 	UNPROTECT(1);
     }
     else if (streql(what, "xlog")) {
@@ -1473,7 +1473,7 @@ static SEXP Query(char *what, DevDesc *dd)
 	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = dd->dp.yaxs;
 	buf[1] = '\0';
-	STRING(value)[0] = mkChar(buf);
+	SET_STRING_ELT(value, 0, mkChar(buf));
 	UNPROTECT(1);
     }
     else if (streql(what, "yaxt")) {
@@ -1481,7 +1481,7 @@ static SEXP Query(char *what, DevDesc *dd)
 	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = dd->dp.yaxt;
 	buf[1] = '\0';
-	STRING(value)[0] = mkChar(buf);
+	SET_STRING_ELT(value, 0, mkChar(buf));
 	UNPROTECT(1);
     }
     else if (streql(what, "ylog")) {
@@ -1505,7 +1505,7 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
     if (NoDevices()) {
 	SEXP defdev = GetOption(install("device"), R_NilValue);
 	if (isString(defdev) && length(defdev) > 0) {
-	    PROTECT(defdev = lang1(install(CHAR(STRING(defdev)[0]))));
+	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
 	}
 	else errorcall(call, "No active or default device");
 	eval(defdev, R_GlobalEnv);
@@ -1523,26 +1523,26 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 	oldnames = getAttrib(args, R_NamesSymbol);
 	for (i = 0 ; i < nargs ; i++) {
 	    if (oldnames != R_NilValue)
-		tag = STRING(oldnames)[i];
+		tag = STRING_ELT(oldnames, i);
 	    else
 		tag = R_NilValue;
-	    val = VECTOR(args)[i];
+	    val = VECTOR_ELT(args, i);
 	    if (tag != R_NilValue && CHAR(tag)[0]) {
 		new_spec = 1;
-		VECTOR(value)[i] = Query(CHAR(tag), dd);
-		STRING(newnames)[i] = tag;
+		SET_VECTOR_ELT(value, i, Query(CHAR(tag), dd));
+		SET_STRING_ELT(newnames, i, tag);
 		Specify(CHAR(tag), val, dd);
 	    }
 	    else if (isString(val) && length(val) > 0) {
-		tag = STRING(val)[0];
+		tag = STRING_ELT(val, 0);
 		if (tag != R_NilValue && CHAR(tag)[0]) {
-		    VECTOR(value)[i] = Query(CHAR(tag), dd);
-		    STRING(newnames)[i] = tag;
+		    SET_VECTOR_ELT(value, i, Query(CHAR(tag), dd));
+		    SET_STRING_ELT(newnames, i, tag);
 		}
 	    }
 	    else {
-		VECTOR(value)[i] = R_NilValue;
-		STRING(newnames)[i] = R_NilValue;
+		SET_VECTOR_ELT(value, i, R_NilValue);
+		SET_STRING_ELT(newnames, i, R_NilValue);
 	    }
 	}
 	setAttrib(value, R_NamesSymbol, newnames);
@@ -1587,7 +1587,7 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
     if (NoDevices()) {
 	SEXP defdev = GetOption(install("device"), R_NilValue);
 	if (isString(defdev) && length(defdev) > 0) {
-	    PROTECT(defdev = lang1(install(CHAR(STRING(defdev)[0]))));
+	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
 	}
 	else errorcall(call, "No active or default device");
 	eval(defdev, R_GlobalEnv);

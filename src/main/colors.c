@@ -56,11 +56,11 @@ SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Record the current palette */
     PROTECT(ans = allocVector(STRSXP, R_ColorTableSize));
     for (i = 0; i < R_ColorTableSize; i++)
-	STRING(ans)[i] = mkChar(col2name(R_ColorTable[i]));
+	SET_STRING_ELT(ans, i, mkChar(col2name(R_ColorTable[i])));
     val = CAR(args);
     if (!isString(val)) errorcall(call, "invalid argument type");
     if ((n=length(val)) == 1) {
-	if (StrMatch("default", CHAR(STRING(val)[0])))
+	if (StrMatch("default", CHAR(STRING_ELT(val, 0))))
 	    setpalette(DefaultPalette);
 	else errorcall(call, "unknown palette (need >= 2 colors)");
     }
@@ -68,7 +68,7 @@ SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (n > COLOR_TABLE_SIZE)
 	     errorcall(call, "maximum number of colors exceeded");
 	for (i = 0; i < n; i++)
-	    ncols[i] = char2col(CHAR(STRING(val)[i]));
+	    ncols[i] = char2col(CHAR(STRING_ELT(val, i)));
 	for (i = 0; i < n; i++)
 	    R_ColorTable[i] = ncols[i];
 	R_ColorTableSize = n;
@@ -86,8 +86,10 @@ SEXP do_colors(SEXP call, SEXP op, SEXP args, SEXP rho)
 	n++;
     PROTECT(ans = allocVector(STRSXP, n));
     n = 0;
-    while (ColorDataBase[n].name!=NULL)
-	STRING(ans)[n++] = mkChar(ColorDataBase[n].name);
+    while (ColorDataBase[n].name!=NULL) {
+	SET_STRING_ELT(ans, n, mkChar(ColorDataBase[n].name));
+	n++;
+    }
     UNPROTECT(1);
     return ans;
 }
@@ -132,9 +134,9 @@ SEXP do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 	r = pow(r, gg);
 	g = pow(g, gg);
 	b = pow(b, gg);
-	STRING(c)[i] = mkChar(RGB2rgb(ScaleColor(r),
-				      ScaleColor(g),
-				      ScaleColor(b)));
+	SET_STRING_ELT(c, i, mkChar(RGB2rgb(ScaleColor(r),
+					    ScaleColor(g),
+					    ScaleColor(b))));
     }
     UNPROTECT(5);
     return c;
@@ -167,7 +169,7 @@ SEXP do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
 	ri = ScaleColor(REAL(r)[i%nr]);
 	gi = ScaleColor(REAL(g)[i%ng]);
 	bi = ScaleColor(REAL(b)[i%nb]);
-	STRING(c)[i] = mkChar(RGB2rgb(ri, gi, bi));
+	SET_STRING_ELT(c, i, mkChar(RGB2rgb(ri, gi, bi)));
     }
     if (length(n) != 0)
 	setAttrib(c, R_NamesSymbol, n);
@@ -191,7 +193,7 @@ SEXP do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (ISNAN(level) || level < 0 || level > 1)
 	    errorcall(call, "invalid gray level, must be in [0,1].");
 	ilevel = 255 * level + 0.5;
-	STRING(ans)[i] = mkChar(RGB2rgb(ilevel, ilevel, ilevel));
+	SET_STRING_ELT(ans, i, mkChar(RGB2rgb(ilevel, ilevel, ilevel)));
     }
     UNPROTECT(2);
     return ans;

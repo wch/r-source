@@ -43,14 +43,14 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     PROTECT(value = allocVector(VECSXP, 4));
     PROTECT(names = allocVector(STRSXP, 4));
-    STRING(names)[0] = mkChar("OS.type");
-    STRING(names)[1] = mkChar("file.sep");
-    STRING(names)[2] = mkChar("dynlib.ext");
-    STRING(names)[3] = mkChar("GUI");
-    VECTOR(value)[0] = mkString(R_OSType);
-    VECTOR(value)[1] = mkString(R_FileSep);
-    VECTOR(value)[2] = mkString(R_DynLoadExt);
-    VECTOR(value)[3] = mkString(R_GUIType);
+    SET_STRING_ELT(names, 0, mkChar("OS.type"));
+    SET_STRING_ELT(names, 1, mkChar("file.sep"));
+    SET_STRING_ELT(names, 2, mkChar("dynlib.ext"));
+    SET_STRING_ELT(names, 3, mkChar("GUI"));
+    SET_VECTOR_ELT(value, 0, mkString(R_OSType));
+    SET_VECTOR_ELT(value, 1, mkString(R_FileSep));
+    SET_VECTOR_ELT(value, 2, mkString(R_DynLoadExt));
+    SET_VECTOR_ELT(value, 3, mkString(R_GUIType));
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(2);
     return value;
@@ -98,13 +98,13 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     fn = CAR(args);
     tl = CADR(args);
-    if (!isString(fn) || length(fn) < 1 || STRING(fn)[0] == R_NilValue)
+    if (!isString(fn) || length(fn) < 1 || STRING_ELT(fn, 0) == R_NilValue)
 	errorcall(call, "invalid filename");
-    if (!isString(tl) || length(tl) < 1 || STRING(tl)[0] == R_NilValue)
+    if (!isString(tl) || length(tl) < 1 || STRING_ELT(tl, 0) == R_NilValue)
 	errorcall(call, "invalid filename");
-    if (!R_ShowFile(R_ExpandFileName(CHAR(STRING(fn)[0])),
-                    CHAR(STRING(tl)[0])))
-	error("unable to display file \"%s\"", CHAR(STRING(fn)[0]));
+    if (!R_ShowFile(R_ExpandFileName(CHAR(STRING_ELT(fn, 0))),
+                    CHAR(STRING_ELT(tl, 0))))
+	error("unable to display file \"%s\"", CHAR(STRING_ELT(fn, 0)));
     return R_NilValue;
 }
 #else
@@ -132,21 +132,21 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     f = (char**)R_alloc(n, sizeof(char*));
     h = (char**)R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
-	if (!isNull(STRING(fn)[i]))
-	    f[i] = CHAR(STRING(fn)[i]);
+	if (!isNull(STRING_ELT(fn, i)))
+	    f[i] = CHAR(STRING_ELT(fn, i));
 	else
 	    f[i] = CHAR(R_BlankString);
-	if (!isNull(STRING(hd)[i]))
-	    h[i] = CHAR(STRING(hd)[i]);
+	if (!isNull(STRING_ELT(hd, i)))
+	    h[i] = CHAR(STRING_ELT(hd, i));
 	else
 	    h[i] = CHAR(R_BlankString);
     }
-    if (length(tl) >= 1 || !isNull(STRING(tl)[0]))
-	t = CHAR(STRING(tl)[0]);
+    if (length(tl) >= 1 || !isNull(STRING_ELT(tl, 0)))
+	t = CHAR(STRING_ELT(tl, 0));
     else
 	t = CHAR(R_BlankString);
-    if (length(pg) >= 1 || !isNull(STRING(pg)[0]))
-	pager = CHAR(STRING(pg)[0]);
+    if (length(pg) >= 1 || !isNull(STRING_ELT(pg, 0)))
+	pager = CHAR(STRING_ELT(pg, 0));
     else
 	pager = CHAR(R_BlankString);
     R_ShowFiles(n, f, h, t, dl, pager);
@@ -210,12 +210,12 @@ SEXP do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = (n1 > n2) ? n1 : n2;
     PROTECT(ans = allocVector(LGLSXP, n));
     for(i = 0; i < n; i++) {
-        if (STRING(f1)[i%n1] == R_NilValue || STRING(f2)[i%n2] == R_NilValue)
+        if (STRING_ELT(f1, i%n1) == R_NilValue || STRING_ELT(f2, i%n2) == R_NilValue)
             LOGICAL(ans)[i] = 0;
         else
             LOGICAL(ans)[i] =
-		R_AppendFile(CHAR(STRING(f1)[i%n1]),
-			     CHAR(STRING(f2)[i%n2]));
+		R_AppendFile(CHAR(STRING_ELT(f1, i%n1)),
+			     CHAR(STRING_ELT(f2, i%n2)));
     }
     UNPROTECT(1);
     return ans;
@@ -234,8 +234,8 @@ SEXP do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
 	LOGICAL(ans)[i] = 0;
-	if (STRING(fn)[i] != R_NilValue &&
-	    (fp = R_fopen(R_ExpandFileName(CHAR(STRING(fn)[i])), "w"))
+	if (STRING_ELT(fn, i) != R_NilValue &&
+	    (fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(fn, i))), "w"))
 	    != NULL) {
 	    LOGICAL(ans)[i] = 1;
 	    fclose(fp);
@@ -256,9 +256,9 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = length(f);
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
-	if (STRING(f)[i] != R_NilValue)
+	if (STRING_ELT(f, i) != R_NilValue)
 	    LOGICAL(ans)[i] =
-		(remove(R_ExpandFileName(CHAR(STRING(f)[i]))) == 0);
+		(remove(R_ExpandFileName(CHAR(STRING_ELT(f, i)))) == 0);
     }
     UNPROTECT(1);
     return ans;
@@ -313,18 +313,18 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid directory argument");
     p = CAR(args);  args = CDR(args);
     pattern = 0;
-    if (isString(p) && length(p) >= 1 && STRING(p)[0] != R_NilValue)
+    if (isString(p) && length(p) >= 1 && STRING_ELT(p, 0) != R_NilValue)
 	pattern = 1;
     else if (!isNull(p) && !(isString(p) && length(p) < 1))
 	errorcall(call, "invalid pattern argument");
     allfiles = asLogical(CAR(args)); args = CDR(args);
     fullnames = asLogical(CAR(args));
     ndir = length(d);
-    if (pattern && regcomp(&reg, CHAR(STRING(p)[0]), REG_EXTENDED))
+    if (pattern && regcomp(&reg, CHAR(STRING_ELT(p, 0)), REG_EXTENDED))
         errorcall(call, "invalid pattern regular expression");
     count = 0;
     for (i = 0; i < ndir ; i++) {
-	dnp = R_ExpandFileName(CHAR(STRING(d)[i]));
+	dnp = R_ExpandFileName(CHAR(STRING_ELT(d, i)));
 	if (strlen(dnp) >= PATH_MAX)  /* should not happen! */
 	    error("directory/folder path name too long");
 	strcpy(dirname, dnp);
@@ -348,7 +348,7 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(STRSXP, count));
     count = 0;
     for (i = 0; i < ndir ; i++) {
-	dnp = R_ExpandFileName(CHAR(STRING(d)[i]));
+	dnp = R_ExpandFileName(CHAR(STRING_ELT(d, i)));
 /*	if (strlen(dnp) >= PATH_MAX) We've already checked!
 	error("directory/folder path name too long"); */
 	strcpy(dirname, dnp);
@@ -361,10 +361,10 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (allfiles || !R_HiddenFile(de->d_name)) {
 		    if (pattern) {
 			if (regexec(&reg, de->d_name, 0, NULL, 0) == 0)
-			    STRING(ans)[count++] = filename(dnp, de->d_name);
+			    SET_STRING_ELT(ans, count++, filename(dnp, de->d_name));
 		    }
 		    else
-			STRING(ans)[count++] = filename(dnp, de->d_name);
+			SET_STRING_ELT(ans, count++, filename(dnp, de->d_name));
 		}
 	    }
 	    closedir(dir);
@@ -372,7 +372,7 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (pattern)
 	regfree(&reg);
-    ssort(STRING(ans), count);
+    ssort(STRING_PTR(ans), count);
     UNPROTECT(1);
     return ans;
 }
@@ -397,8 +397,8 @@ SEXP do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
     ans = allocVector(LGLSXP, nfile);
     for(i = 0; i < nfile; i++) {
 	LOGICAL(ans)[i] = 0;
-        if (STRING(file)[i] != R_NilValue)
-	    LOGICAL(ans)[i] = R_FileExists(CHAR(STRING(file)[i]));
+        if (STRING_ELT(file, i) != R_NilValue)
+	    LOGICAL(ans)[i] = R_FileExists(CHAR(STRING_ELT(file, i)));
     }
     return ans;
 }
@@ -440,16 +440,16 @@ SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
     type = CAR(args);
     if(!isString(type) || length(type) < 1 || isNull(type))
 	error("invalid \"type\" argument");
-    strcpy(ctype, CHAR(STRING(type)[0]));
-    sprintf(topicbuf, "%s\t", CHAR(STRING(topic)[0]));
+    strcpy(ctype, CHAR(STRING_ELT(type, 0)));
+    sprintf(topicbuf, "%s\t", CHAR(STRING_ELT(topic, 0)));
     ltopicbuf = strlen(topicbuf);
     npath = length(path);
     for (i = 0; i < npath; i++) {
 	sprintf(linebuf, "%s%s%s%s%s",
-		CHAR(STRING(path)[i]),
-		CHAR(STRING(sep)[0]),
-		"help", CHAR(STRING(sep)[0]),
-		CHAR(STRING(indexname)[0]));
+		CHAR(STRING_ELT(path, i)),
+		CHAR(STRING_ELT(sep, 0)),
+		"help", CHAR(STRING_ELT(sep, 0)),
+		CHAR(STRING_ELT(indexname, 0)));
 	if ((fp = R_fopen(R_ExpandFileName(linebuf), "rt")) != NULL){
 	    while (filbuf(linebuf, fp)) {
 		if(strncmp(linebuf, topicbuf, ltopicbuf) == 0) {
@@ -458,27 +458,27 @@ SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    fclose(fp);
 		    if (!strcmp(ctype, "html"))
 			sprintf(topicbuf, "%s%s%s%s%s%s",
-				CHAR(STRING(path)[i]),
-				CHAR(STRING(sep)[0]),
-				"html", CHAR(STRING(sep)[0]),
+				CHAR(STRING_ELT(path, i)),
+				CHAR(STRING_ELT(sep, 0)),
+				"html", CHAR(STRING_ELT(sep, 0)),
 				p, ".html");
 		    else if (!strcmp(ctype, "R-ex"))
 			sprintf(topicbuf, "%s%s%s%s%s%s",
-				CHAR(STRING(path)[i]),
-				CHAR(STRING(sep)[0]),
-				"R-ex", CHAR(STRING(sep)[0]),
+				CHAR(STRING_ELT(path, i)),
+				CHAR(STRING_ELT(sep, 0)),
+				"R-ex", CHAR(STRING_ELT(sep, 0)),
 				p, ".R");
 		    else if (!strcmp(ctype, "latex"))
 			sprintf(topicbuf, "%s%s%s%s%s%s",
-				CHAR(STRING(path)[i]),
-				CHAR(STRING(sep)[0]),
-				"latex", CHAR(STRING(sep)[0]),
+				CHAR(STRING_ELT(path, i)),
+				CHAR(STRING_ELT(sep, 0)),
+				"latex", CHAR(STRING_ELT(sep, 0)),
 				p, ".tex");
 		    else /* type = "help" */
 			sprintf(topicbuf, "%s%s%s%s%s",
-				CHAR(STRING(path)[i]),
-				CHAR(STRING(sep)[0]),
-				ctype, CHAR(STRING(sep)[0]), p);
+				CHAR(STRING_ELT(path, i)),
+				CHAR(STRING_ELT(sep, 0)),
+				ctype, CHAR(STRING_ELT(sep, 0)), p);
 		    return mkString(topicbuf);
 		}
 	    }

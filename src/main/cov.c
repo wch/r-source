@@ -291,7 +291,7 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
     cor = PRIMVAL(op);
 
     /* Arg.1: x */
-    x = CAR(args) = coerceVector(CAR(args), REALSXP);
+    x = SETCAR(args, coerceVector(CAR(args), REALSXP));
     if ((ansmat = isMatrix(x))) {
 	n = nrows(x);
 	ncx = ncols(x);
@@ -307,7 +307,7 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	ncy = ncx;
     }
     else {
-	y = CAR(args) = coerceVector(CAR(args), REALSXP);
+	y = SETCAR(args, coerceVector(CAR(args), REALSXP));
 	if (isMatrix(y)) {
 	    if (nrows(y) != n)
 		errorcall(call, "incompatible dimensions");
@@ -371,10 +371,10 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
     if (ansmat) {
 	if (isNull(y)) {
 	    x = getAttrib(x, R_DimNamesSymbol);
-	    if (!isNull(x) && !isNull(VECTOR(x)[1])) {
+	    if (!isNull(x) && !isNull(VECTOR_ELT(x, 1))) {
 		PROTECT(ind = allocVector(VECSXP, 2));
-		VECTOR(ind)[0] = duplicate(VECTOR(x)[1]);
-		VECTOR(ind)[1] = duplicate(VECTOR(x)[1]);
+		SET_VECTOR_ELT(ind, 0, duplicate(VECTOR_ELT(x, 1)));
+		SET_VECTOR_ELT(ind, 1, duplicate(VECTOR_ELT(x, 1)));
 		setAttrib(ans, R_DimNamesSymbol, ind);
 		UNPROTECT(1);
 	    }
@@ -382,13 +382,13 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {
 	    x = getAttrib(x, R_DimNamesSymbol);
 	    y = getAttrib(y, R_DimNamesSymbol);
-	    if ((!isNull(x) && !isNull(VECTOR(x)[1])) ||
-		(!isNull(y) && !isNull(VECTOR(y)[1]))) {
+	    if ((!isNull(x) && !isNull(VECTOR_ELT(x, 1))) ||
+		(!isNull(y) && !isNull(VECTOR_ELT(y, 1)))) {
 		PROTECT(ind = allocVector(VECSXP, 2));
-		if (!isNull(x) && !isNull(VECTOR(x)[1]))
-		    VECTOR(ind)[0] = duplicate(VECTOR(x)[1]);
-		if (!isNull(y) && !isNull(VECTOR(y)[1]))
-		    VECTOR(ind)[1] = duplicate(VECTOR(y)[1]);
+		if (!isNull(x) && !isNull(VECTOR_ELT(x, 1)))
+		    SET_VECTOR_ELT(ind, 0, duplicate(VECTOR_ELT(x, 1)));
+		if (!isNull(y) && !isNull(VECTOR_ELT(y, 1)))
+		    SET_VECTOR_ELT(ind, 1, duplicate(VECTOR_ELT(y, 1)));
 		setAttrib(ans, R_DimNamesSymbol, ind);
 		UNPROTECT(1);
 	    }
