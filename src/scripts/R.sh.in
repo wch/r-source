@@ -4,13 +4,13 @@
 : ${R_HOME=R_HOME_DIR}
 export R_HOME
 
-: ${R_LD_LIBRARY_PATH=@R_LD_LIBRARY_PATH@}
-if test -z "${LD_LIBRARY_PATH}"; then
-  LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}"
+: ${R_LD_LIBRARY_PATH=${R_HOME}/bin}
+if test -z "${@shlibpath_var@}"; then
+  @shlibpath_var@="${R_LD_LIBRARY_PATH}"
 else
-  LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}"
+  @shlibpath_var@="${R_LD_LIBRARY_PATH}:${@shlibpath_var@}"
 fi
-export LD_LIBRARY_PATH
+export @shlibpath_var@
 
 R_binary="R.bin"
 
