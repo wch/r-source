@@ -85,14 +85,14 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                qu <- qsignrank(alpha, n)
                                if(qu == 0) qu <- 1
                                uci <- diffs[qu]
-                               c(uci, NA)
+                               c(uci, +Inf)
                            },
                            "less"= {
                                qu <- qsignrank(alpha, n)
                                if(qu == 0) qu <- 1
                                ql <- n*(n+1)/2 - qu
                                lci <- diffs[ql+1]
-                               c(NA, lci)        
+                               c(-Inf, lci)        
                            })
                 attr(cint, "conf.level") <- conf.level    
             }
@@ -129,6 +129,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ## wdiff(d, zq) returns the absolute difference between
                 ## the asymptotic Wilcoxon statistic of x - mu - d and
                 ## the quantile zq.
+                CORRECTION.CI <- 0
                 wdiff <- function(d, zq) {
                     xd <- x - d
                     xd <- xd[xd != 0]
@@ -147,7 +148,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                    "less" = -0.5)
                     }
                     zd <- (zd - CORRECTION.CI) / SIGMA.CI
-                    abs(zd - zq)
+                    zd - zq
                 }
                 ## Here we optimize the function wdiff in d over the set
                 ## c(mumin, mumax).
@@ -160,19 +161,19 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ##
                 ## As in the exact case, interchange quantiles.
                 cint <- switch(alternative, "two.sided" = {
-                    l <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha/2, lower=FALSE))$minimum
-                    u <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha/2))$minimum
+                    l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                                  zq=qnorm(alpha/2, lower=FALSE))$root
+                    u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                                  zq=qnorm(alpha/2))$root
                     c(l, u)
                 }, "greater"= {
-                    l <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha, lower=FALSE))$minimum
-                    c(l, NA)
+                    l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                                  zq=qnorm(alpha, lower=FALSE))$root
+                    c(l, +Inf)
                 }, "less"= {
-                    u <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha))$minimum
-                    c(NA, u)
+                    u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                                  zq=qnorm(alpha))$root
+                    c(-Inf, u)
                 })
                 attr(cint, "conf.level") <- conf.level    
             }
@@ -240,14 +241,14 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                qu <- qwilcox(alpha, n.x, n.y)
                                if(qu == 0) qu <- 1
                                uci <- diffs[qu]
-                               c(uci, NA)
+                               c(uci, +Inf)
                            },
                            "less"= {
                                qu <- qwilcox(alpha, n.x, n.y)
                                if(qu == 0 ) qu <- 1
                                ql <- n.x*n.y - qu
                                lci <- diffs[ql + 1]
-                               c(NA, lci)
+                               c(-Inf, lci)
                            })
                 attr(cint, "conf.level") <- conf.level    
             }
@@ -282,8 +283,9 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 alpha <- 1 - conf.level
                 mumin <- min(x) - max(y)
                 mumax <- max(x) - min(y)
+                CORRECTION.CI <- 0
                 wdiff <- function(d, zq) {
-                    dr <- rank(c(x - mu - d, y))
+                    dr <- rank(c(x - d, y))
                     NTIES.CI <- table(dr)
                     dz <- (sum(dr[seq(along = x)])
                            - n.x * (n.x + 1) / 2 - n.x * n.y / 2)
@@ -299,22 +301,22 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                       - sum(NTIES.CI^3 - NTIES.CI)
                                       / ((n.x + n.y) * (n.x + n.y - 1))))
                     dz <- (dz - CORRECTION.CI) / SIGMA.CI
-                    abs(dz - zq)
+                    dz - zq
                 }
                 cint <- switch(alternative, "two.sided" = {
-                    l <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha/2, lower=FALSE))$minimum
-                    u <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha/2))$minimum
+                    l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                                  zq=qnorm(alpha/2, lower=FALSE))$root
+                    u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                                  zq=qnorm(alpha/2))$root
                     c(l, u)
                 }, "greater"= {
-                    l <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha, lower=FALSE))$minimum
-                    c(l, NA)
+                    l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                                  zq=qnorm(alpha, lower=FALSE))$root
+                    c(l, +Inf)
                 }, "less"= {
-                    u <- optimize(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha))$minimum
-                    c(NA, u)
+                    u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                                  zq=qnorm(alpha))$root
+                    c(-Inf, u)
                 })
                 attr(cint, "conf.level") <- conf.level    
             }
