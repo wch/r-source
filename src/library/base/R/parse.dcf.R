@@ -27,10 +27,9 @@ parse.dcf <- function(text=NULL, file="", fields=NULL, versionfix=FALSE)
                 y <- unlist(strsplit(y, " "))[1]
 
             if(any(fields==x))
-                if(is.na(retval[[x]]))
-                    retval[[x]] <- y
-                else
-                    retval[[x]] <- paste(retval[[x]], y, sep="\n")
+                retval[[x]] <-
+                    if(is.na(retval[[x]])) y
+                    else paste(retval[[x]], y, sep="\n")
         }
         retval
     }
@@ -38,11 +37,15 @@ parse.dcf <- function(text=NULL, file="", fields=NULL, versionfix=FALSE)
     if(missing(text))
         text <- scan(file=file, what="",  quote="", sep="\n", quiet=TRUE)
 
+    if(length(text) == 0) {
+        warning("zero length `text'")
+        return(list())
+    }
+        
     ## remove empty lines
     notok <- grep("^[ \t]+$", text)
-    if (length(notok) > 0){
+    if (length(notok) > 0)
         text <- text[-notok]
-    }
 
     ## use the field name of the first line as record separator
     recsep <- sub("^([^:]*):.*$", "\\1", text[1])
@@ -50,17 +53,16 @@ parse.dcf <- function(text=NULL, file="", fields=NULL, versionfix=FALSE)
     start <- grep(paste("^", recsep, ":", sep=""), text)
     start <- c(start, length(text)+1)
     retval <- list()
-    for(k in 1:(length(start)-1)){
+    for(k in seq(length = length(start)-1)) {
         retval[[k]] <- parse.dcf.entry(text[start[k]:(start[k+1]-1)],
-                                               fields=fields,
-                                               versionfix=versionfix)
+                                       fields = fields,
+                                       versionfix = versionfix)
     }
-
-    if(!is.null(fields))
-        retval <- t(sapply(retval, unlist))
-    else if(length(retval)==1)
-        retval <- unlist(retval, recursive=FALSE)
-
+   if(!is.null(fields))
+        return( t(sapply(retval, unlist)) )
+    if(length(retval) == 1)
+        return( unlist(retval, recursive=FALSE) )
+    ## else
     retval
 }
 
