@@ -9,14 +9,14 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option)
 # any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details. 
-# 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
+# General Public License for more details.
+#
 # A copy of the GNU General Public License is available via WWW at
-# http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
+# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
 # writing to the Free Software Foundation, Inc., 675 Mass Ave,
 # Cambridge, MA 02139, USA.
 
@@ -26,11 +26,6 @@ use Getopt::Long;
 use File::Basename;
 use Cwd;
 
-@knownoptions = ("debug|d", "type|t:s", "help|h");
-GetOptions (@knownoptions) || usage();
-
-usage() if $opt_help;
-
 $cwd=getcwd();
 if($ENV{"RHOME"}){
     $RHOME=$ENV{"RHOME"};
@@ -39,11 +34,16 @@ else{
     chdir(dirname($0) . "/..");
     $RHOME=getcwd();
 }
+
 chdir($cwd);
+require "$RHOME/etc/Rdconvlib.pl";#- need for usage(.) below
 
-print stderr "RHOME: $RHOME\n" if $opt_debug;
+@knownoptions = ("debug|d", "type|t:s", "help|h");
+GetOptions (@knownoptions) || usage();
 
-require "$RHOME/etc/Rdconvlib.pl";
+usage() if $opt_help;
+print stderr "RHOME: '$RHOME';  cwd='$cwd'\n" if $opt_debug;
+
 
 if($opt_type =~ /html/i){
     open(htmlout, "| cat");
