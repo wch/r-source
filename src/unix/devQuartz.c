@@ -860,6 +860,8 @@ static void 	Quartz_NewPage(R_GE_gcontext *gc,
     area.origin = origin;
     area.size = size;
 
+	Quartz_Clip(0,size.width, 0, size.height, dd);
+	
     if(gc->fill == NA_INTEGER)
       gc->fill = R_RGB(255, 255, 255);
       
