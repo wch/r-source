@@ -80,6 +80,12 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
   its arguments.
 }
 
+\section{Warning}{
+  These functions are designed to be called from other functions which
+  check the validity of the arguments passed, so very little checking is
+  done.
+}
+
 \references{
   Durbin, J. and Koopman, S. J. (2001) \emph{Time Series Analysis by
     State Space Methods.}  Oxford University Press.
@@ -87,6 +93,6 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 \author{B. D. Ripley}
 
 \seealso{
-   \code{\link{arima}}, \code{\link{tsSmooth}}.
+   \code{\link{arima}}, \code{\link{StructTS}}. \code{\link{tsSmooth}}.
  }
 \keyword{ts}
