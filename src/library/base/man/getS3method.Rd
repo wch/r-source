@@ -10,7 +10,8 @@ getS3method(f, class, optional = FALSE)
 \arguments{
   \item{f}{character: name of the generic.}
   \item{class}{character: name of the class.}
-  \item{optional}{logical: should failure to find a method be allowed?}
+  \item{optional}{logical: should failure to find the generic or a
+    method be allowed?}
 }
 \details{
   S3 methods may be hidden in packages with namespaces, and will not

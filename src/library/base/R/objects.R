@@ -159,6 +159,10 @@ getS3method <-  function(f, class, optional = FALSE)
     groupGenerics <- c("Ops", "Math", "Summary")
     truegf <- findGeneric(f, parent.frame())
     if(nchar(truegf)) f <- truegf
+    else {
+        if(optional) return(NULL)
+        else stop("no function '", f, "' could be found")
+    }
     method <- paste(f, class, sep=".")
     if(exists(method, mode = "function", envir = parent.frame()))
         return(get(method, mode = "function", envir = parent.frame()))

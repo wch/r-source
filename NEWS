@@ -366,6 +366,9 @@ BUG FIXES
     o   Printing `nls' objects misbehaved when `data' was a composite
         expression. 
 
+    o   getS3method(f, cl, optional=TRUE) now returns NULL if `f' does
+	not exist.
+
 
 
 
