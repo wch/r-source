@@ -35,7 +35,7 @@ the `R_ENVIRON' environment variable) is now implemented on Windows.
 The variable .SavedPlots in which plots are stored has been moved from
 package:base to the user's workspace.
 
-Added (temporarily?) a warning to the internal dyn.load() 
+Added an optional warning to the internal dyn.load() 
 whenever the loaded DLL changes the floating point control word.
 If changed, it will be changed back to the R default.  NB:  if 
 the warning says "DLL attempted to change FPU control word from 
