@@ -75,7 +75,8 @@ data(InsectSprays)
 boxplot(count ~ spray, data = InsectSprays, col = "lightgray")
 
 data(OrchardSprays)
-boxplot(decrease ~ treatment, data = OrchardSprays, log = "y", col="bisque")
+boxplot(decrease ~ treatment, data = OrchardSprays,
+        log = "y", col="bisque")
 
 ## boxplot(.) for a matrix:
 mat <- cbind(Uni05= (1:100)/21, Norm= rnorm(100),

@@ -103,7 +103,7 @@ bug.report(subject = "", ccaddress = getenv("USER"),
   unnecessary work for us.
 
   For example, suppose that on a data set which you know to be quite
-  large the command \code{data.frame(x,y,z,monday,tuesday)} never
+  large the command \code{data.frame(x, y, z, monday, tuesday)} never
   returns.  Do not report that \code{data.frame()} fails for large data
   sets.  Perhaps it fails when a variable name is a day of the week.  If
   this is so then when we got your report we would try out the

@@ -36,8 +36,8 @@ pi
   \code{\link{data}}.
 }
 \examples{
- all(nchar(letters) == 1)                    # TRUE
- all(month.abb == substr(month.name, 1, 3))  # TRUE
+all(nchar(letters) == 1)                    # TRUE
+all(month.abb == substr(month.name, 1, 3))  # TRUE
 
 eps <- .Machine$double.eps
 all.equal(pi, 4*atan(1), tol= 2*eps)

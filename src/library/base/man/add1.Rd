@@ -41,7 +41,7 @@ drop1.glm(object, scope, scale = 0, test=c("none", "Chisq"),
    \code{\link{aov}} models. The \eqn{\chi^2}{Chisq} test can be an exact test
    (\code{lm} models with known scale) or a likelihood-ratio test depending
    on the method.}
- \item{k}{the penalty constant in AIC/Cp.}
+ \item{k}{the penalty constant in AIC / Cp.}
  \item{trace}{if \code{TRUE}, print out progress reports.}
  \item{x}{a model matrix containing columns for the fitted model and all
    terms in the upper scope.  Useful if \code{add1} is to be called
@@ -67,7 +67,7 @@ drop1.glm(object, scope, scale = 0, test=c("none", "Chisq"),
   \code{fit} methods directly.
 
   The default output table gives AIC, defined as minus twice log
-  likeliihood plus \eqn{2p} where \eqn{p} is the rank of the model (the
+  likelihood plus \eqn{2p} where \eqn{p} is the rank of the model (the
   number of effective parameters).  This is only defined up to an
   additive constant (like log-likelhoods).  For linear Gaussian models
   with fixed scale, the constant is chosen to give Mallows' Cp,

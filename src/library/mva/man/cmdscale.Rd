@@ -48,8 +48,7 @@ data(eurodist)
 loc <- cmdscale(eurodist)
 x <- loc[,1]
 y <- -loc[,2]
-plot(x, y, type="n",
-	xlab="", ylab="")
+plot(x, y, type="n", xlab="", ylab="")
 text(x, y, names(eurodist), cex=0.5)
 }
 \keyword{multivariate}

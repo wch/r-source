@@ -18,11 +18,11 @@ An integer matrix with the same dimensions as \code{x} and whose
 }
 \examples{
 # extract an off-diagonal of a matrix
-ma <- matrix(1:12, 3,4)
-ma[row(ma)==col(ma) + 1]
+ma <- matrix(1:12, 3, 4)
+ma[row(ma) == col(ma) + 1]
 
 # create an identity 5-by-5 matrix
-x <- matrix(0,nr=5,nc=5)
-x[row(x)==col(x)] <- 1
+x <- matrix(0, nr=5, nc=5)
+x[row(x) == col(x)] <- 1
 }
 \keyword{array}

@@ -83,7 +83,8 @@ barplot(height, width = 1, space = NULL, names.arg = NULL,
 \examples{
 tN <- table(Ni <- rpois(100, lambda=5))
 r <- barplot(tN, col='gray')
-lines(r, tN, type='h', col='red', lwd=2)#- type = "h" plotting *is* `bar'plot
+#- type = "h" plotting *is* `bar'plot
+lines(r, tN, type='h', col='red', lwd=2)
 
 barplot(tN, space = 1.5, axisnames=FALSE,
         sub = "barplot(...., space= 1.5, axisnames = FALSE)")

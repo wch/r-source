@@ -38,8 +38,8 @@ print(summary.lm.obj, digits = max(3, .Options$digits - 3),
 \alias{print.summary.lm}
 \alias{print.summary.lm.null}
 \arguments{
-  \item{object,x}{an object of class \code{lm}, usually, a result of
-    \code{\link{lm}(..)}.}
+  \item{object, x}{an object of class \code{lm}, usually, a result of a
+    call to \code{\link{lm}}.}
 }
 \description{
 All these functions are \code{\link{methods}} for class \code{lm} or
@@ -69,7 +69,7 @@ various useful features of the value returned by \code{lm}.
     \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{R_i^2},}{%
       sigma^2 = 1/(n-p) Sum(R[i]^2),}
     where \eqn{R_i}{R[i]} is the \eqn{i}-th residual, \code{residuals[i]}.}
-  \item{df}{degrees of freedom, a 3-vector \eqn{(p,n-p,p*)} ...}
+  \item{df}{degrees of freedom, a 3-vector \eqn{(p, n-p, p*)}.}
   \item{fstatistic}{a 3-vector with the value of the F-statistic with
     its numerator and denominator degrees of freedom.}
   \item{r.squared}{\eqn{R^2}, the ``fraction of variance explained by
@@ -81,9 +81,9 @@ various useful features of the value returned by \code{lm}.
   \item{adj.r.squared}{the above \eqn{R^2} statistic
     \emph{``adjusted''}, penalizing for higher \eqn{p}.}
   \item{cov.unscaled}{a \eqn{p \times p}{p x p} matrix of (unscaled)
-    covariances of the \eqn{\hat\beta_j}{coef..[j]}, \eqn{j=1,\dots,p}.}
+    covariances of the \eqn{\hat\beta_j}{coef[j]}, \eqn{j=1, \dots, p}.}
   %%-- Rdconv just deletes the following line. This IS a bug !
-  and if \code{correlation = TRUE} was specified,%- don't need anymore..
+  and if \code{correlation = TRUE} was specified,%- don't need anymore.
   \item{correlation}{the correlation matrix corresponding to the above
     \code{cov.unscaled}, if \code{correlation = TRUE} is specified.}
 }
