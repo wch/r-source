@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-46, 2001-04-24
+@set FAQ-VERSION 1.2-47, 2001-04-29
 @set REL-VERSION 1.2.3
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1374,6 +1374,8 @@ Data sets and sample analyses from ``Probability and Statistics for
 Engineering and the Sciences (5th ed)'' by Jay L. Devore, 2000, Duxbury.
 @item GLMMGibbs
 Generalised Linear Mixed Models by Gibbs sampling.
+@item GeneSOM
+Clustering genes using Self-Organizing Maps (SOMs).
 @item GenKern
 Functions for generating and manipulating generalised binned kernel
 density estimates.
