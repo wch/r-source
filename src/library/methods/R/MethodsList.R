@@ -187,7 +187,7 @@ MethodsListSelect <-
     }
     if(!is(mlist, "MethodsList")) {
         if(is.function(mlist)) # call to f, inside MethodsListSelect
-            return(mlist)
+            {on.exit(); return(mlist)}
         if(is.null(f)) # recursive recall of MethodsListSelect
             stop("Invalid method sublist")
         else if(!is.null(mlist)) # NULL => 1st call to genericFunction
@@ -282,7 +282,7 @@ MethodsListSelect <-
            && !is.null(f) && !is.null(finalDefault)) {
             ## only use the final default method after exhausting all
             ## other possibilities, at all levels.
-            method <- insertMethodInEmptyList(selection, finalDefault)
+            method <- finalDefault
             fromClass <- "ANY"
         }
         if(is.null(method) || is(method, "EmptyMethodsList"))
@@ -344,13 +344,10 @@ finalDefaultMethod <-
   ## turned off.)
   function(mlist, fname = "NULL")
 {
-    if(is.null(mlist)) ## return the function, or NULL
-        getFunction(fname, mustFind = FALSE)
-    else {
-        while(is(mlist, "MethodsList"))
-            mlist <- elNamed(slot(mlist, "methods"), "ANY")
-        mlist
-    }
+    value <- NULL
+    while(is(mlist, "MethodsList"))
+            mlist <- value <- elNamed(slot(mlist, "methods"), "ANY")
+    value
 }
 
 

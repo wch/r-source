@@ -5,8 +5,7 @@
 ## Makes a generic function object corresponding to the given function name.
 ## and definition.
   function(f, fdef,
-           fdefault =
-             .derivedDefaultMethod(getFunction)(f, generic = FALSE, mustFind = FALSE),
+           fdefault,
            group = list(), valueClass = character(), package, signature = NULL,
            genericFunction = NULL) {
       checkTrace <- function(fun, what, f) {
@@ -210,7 +209,7 @@ getAllMethods <-
   ##
   ## The slot "allMethods" of the merged methods list is set to a copy of the methods slot;
   ## this is the slot where inherited methods are stored.
-  function(f, fdef, where = topenv()) {
+  function(f, fdef, where = topenv(parent.frame())) {
       search <- missing(fdef)
       basicDef <- elNamed(.BasicFunsList, f)
       ## for basic functions (primitives), a generic is not on the search list
@@ -408,7 +407,7 @@ getGeneric <-
   ##
   ## If there is no definition, throws an error or returns
   ## NULL according to the value of mustFind.
-  function(f, mustFind = FALSE, where = topenv()) {
+  function(f, mustFind = FALSE, where = topenv(parent.frame())) {
     if(is.function(f) && is(f, "genericFunction"))
         return(f)
     value <- .Call("R_getGeneric", f, FALSE, as.environment(where), PACKAGE = "methods")
@@ -443,7 +442,7 @@ getGeneric <-
 getGroup <-
   ## return the groups to which this generic belongs.  If `recursive=TRUE', also all the
   ## group(s) of these groups.
-  function(fdef, recursive = FALSE, where = topenv())
+  function(fdef, recursive = FALSE, where = topenv(parent.frame()))
 {
     if(is.character(fdef))
         fdef <- getGeneric(fdef, where = where)
@@ -555,7 +554,7 @@ is.primitive <-
            FALSE)
     
 
-cacheMetaData <- function(where, attach = TRUE, searchWhere = topenv()) {
+cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(where)) {
     ## a collection of actions performed on attach or detach
     ## to update class and method information.
     generics <- getGenerics(where)
@@ -570,7 +569,7 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = topenv()) {
     }
 }
 
-cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(),
+cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(parent.frame()),
                                   package, methods = getMethods(f, where)) {
     if(!is(fdef, "genericFunction")) {
         warning("No methods found for \"", f, "\"; cacheGenericsMetaData will have no effect")
@@ -629,7 +628,7 @@ setPrimitiveMethods <-
 
 
 
-findUnique <- function(what, message, where = topenv())
+findUnique <- function(what, message, where = topenv(parent.frame()))
 {
     where <- .findAll(what, where = where)
     if(length(where) > 1) {
@@ -958,16 +957,19 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
 }
 
 ## The search list, or a namespace's static search list, or an environment
-.envSearch <- function(env = topenv()) {
+.envSearch <- function(env = topenv(parent.frame())) {
     if(identical(env, .GlobalEnv))
         seq(along = search())
-    else if(isNamespace(env)) { # the static environments for this namespace
+    else if(isNamespace(env) && !isBaseNamespace(env)) {
+        ## the static environments for this namespace, ending with the base namespace
         value <- list(env)
-        while(!isBaseNamespace(env)) {
+        repeat {
             if(is.null(env))
                 stop("Botched namespace: Failed to find base namespace in its parents")
-            value <- c(value, list(env))
             env <- parent.env(env)
+            value <- c(value, list(env))
+            if(isBaseNamespace(env))
+                break
         }
         value
     }
@@ -1005,7 +1007,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     ## go back nmax at most (e.g., a function in the methods package that knows it's never
     ## called more than nmax levels in could supply this argument
     if(nmax < 1) stop("Got a negative maximum number of frames to look at")
-    ev <- topenv() # .GlobalEnv or the environment in which methods is being built.
+    ev <- topenv(parent.frame()) # .GlobalEnv or the environment in which methods is being built.
     for(back in seq(start = -n, length = nmax)) {
         fun <- sys.function(back)
         if(is(fun, "function")) {
@@ -1061,8 +1063,11 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     }
 }
 
+## Mark the method as derived from a non-generic.
+## FIXME:  This can't work for primitives, which cannot have slots
+## However, primitives are not to be restored locally in any case.
 .derivedDefaultMethod <- function(fdef) {
-    if(is.function(fdef)) {
+    if(is.function(fdef) && !is.primitive(fdef)) {
         value <- new("derivedDefaultMethod")
         value@.Data <- fdef
         value

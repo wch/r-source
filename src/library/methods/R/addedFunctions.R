@@ -21,29 +21,28 @@ allNames <-
 }
 
 getFunction <-  function(name, generic = TRUE, mustFind = TRUE,
-           where = -1)
+           where = topenv(parent.frame()))
       ## find the object as a function.
 {
     found <- FALSE
-    if(identical(where, -1))
-      where <- .envSearch()
-    else if(is.environment(where)) where <- list(where)
-    ## unfortunately, if `where' turns out to be an environment, the for
-    ## loop will generate an error.
-    for(i in where)
-        if(exists(name, i, inherits = FALSE)) {
-            f <- get(name, i)
-            if(is.function(f) && (generic || !is(f, "genericFunction"))) {
-                found <- TRUE
-                break
-            }
+    where <- as.environment(where)
+    f <- NULL
+    ## parent.env sequence of a namespace ends in the base package namespace,
+    ## of a non-namespace ends in NULL (equiv. to base environment) [sigh]
+    lastEnv <- if(isNamespace(where)) function(where) isBaseNamespace(where) else
+    function(where) is.null(where)
+    repeat {
+        if(exists(name, envir = where, mode = "function", inherits = FALSE)) {
+            f <- get(name, envir = where)
+            found <- generic || !is(f, "genericFunction")
         }
-    if(found)
-        f
-    else if(mustFind)
-        stop(paste("no function \"", name, "\" as requested", sep=""))
-    else
-        NULL
+        if(found || lastEnv(where))
+            break
+        where <- parent.env(where)
+    }
+    if(!found && mustFind)
+        stop("no ", if(generic) "" else "non-generic ", "function \"", name, "\" found")
+    f
 }
 
 el <-
@@ -115,9 +114,9 @@ findFunction <-
   ## return a list of all the places where a function
   ## definition for `name' exists.  If `generic' is FALSE, ignore generic
   ## functions.
-  function(f, generic = TRUE, where = topenv())
+  function(f, generic = TRUE, where = topenv(parent.frame()))
 {
-    allWhere <- .findAll(f, .envSearch(where))
+    allWhere <- .findAll(f, where)
     ok <- rep(FALSE, length(allWhere))
     for(i in seq(along = ok)) {
         wherei <- allWhere[[i]]

@@ -1,6 +1,6 @@
 ## assumes oldClass has been defined as a virtual class
 
-setOldClass <- function(Classes, where = topenv(), test = FALSE) {
+setOldClass <- function(Classes, where = topenv(parent.frame()), test = FALSE) {
     if(test)
         return(.setOldIs(Classes, where))
     prevClass <- "oldClass"

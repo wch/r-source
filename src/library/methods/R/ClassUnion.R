@@ -12,7 +12,7 @@
     setClassUnion("PossibleMethod", c("function", "MethodDefinition"))
 }
 
-setClassUnion <- function(name, members = character(), where = topenv()) {
+setClassUnion <- function(name, members = character(), where = topenv(parent.frame())) {
     if(length(members)>0) {
         membersDefined <- sapply(members, isClass, where = as.environment(where))
         if(!all(membersDefined))

@@ -177,13 +177,25 @@ static SEXP R_element_named(SEXP obj, char * what)
 	return VECTOR_ELT(obj, offset);
 }
 
-#ifdef UNUSED
 static SEXP R_insert_element(SEXP mlist, char * what, SEXP object)
 {
     SEXP sym = install(what);
     return R_subassign3_dflt(R_NilValue, mlist, sym, object);
 }
-#endif
+
+SEXP R_el_named(SEXP object, SEXP what)
+{
+    char * str;
+    str = CHAR_STAR(what);
+    return R_element_named(object, str); 
+}
+
+SEXP R_set_el_named(SEXP object, SEXP what, SEXP value)
+{
+    char * str;
+    str = CHAR_STAR(what);
+    return R_insert_element(object, what, value);
+}
 
 /*  */
 static SEXP ov_mlists[50], ov_methods[50];
@@ -271,6 +283,8 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist, SEXP fdef)
 		SET_PRVALUE(object,  tmp);
 		object = tmp;
 	    }
+	    else
+		object = PRVALUE(object);
 	}
 	class = CHAR(asChar(R_data_class(object, TRUE)));
 	value = R_element_named(methods, class);

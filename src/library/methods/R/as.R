@@ -133,7 +133,7 @@ as <-
 
 
 setAs <- 
-  function(from, to, def, replace = NULL, where = topenv())
+  function(from, to, def, replace = NULL, where = topenv(parent.frame()))
   {
     ## where there is an "is" relation, modify it
     if(extends(from, to, TRUE)) {

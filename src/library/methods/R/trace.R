@@ -20,12 +20,13 @@
     }
     if(nargs() == 1)
         return(.primTrace(what)) # for back compatibility
+    where <- topenv(parent.frame())
     if(is.null(signature)) {
-        def <- getFunction(what)
+        def <- getFunction(what, where = where)
         where <- findFunction(what)[[1]]
     }
     else {
-        whereM <- findMethod(what, signature)
+        whereM <- findMethod(what, signature, where = where)
         if(length(whereM) == 0) {
             def <- selectMethod(what, signature)
             where <- findFunction(what)[[1]]

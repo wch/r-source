@@ -150,7 +150,7 @@ makeClassRepresentation <-
 
 getClassDef <-
   ## Get the definition of the class supplied as a string.
-  function(Class, where = topenv(), package = "")
+  function(Class, where = topenv(parent.frame()), package = "")
 {
     cname <- classMetaName(Class)
     if(nchar(package)>0)
@@ -164,7 +164,7 @@ getClassDef <-
 getClass <-
   ## Get the complete definition of the class supplied as a string,
   ## including all slots, etc. in classes that this class extends.
-  function(Class, .Force = FALSE, where = topenv())
+  function(Class, .Force = FALSE, where = topenv(parent.frame()))
 {
     value <- getClassDef(Class, where)
     if(is.null(value)) {
@@ -241,7 +241,7 @@ slotNames <-
 
 removeClass <-  function(Class, where) {
     if(missing(where)) {
-        where <- findClass(Class, topenv())
+        where <- findClass(Class, topenv(parent.frame()))
         if(length(where) == 0) {
             warning("\"", Class, "\" is not a class (no action taken)")
             return(FALSE)
@@ -258,7 +258,7 @@ removeClass <-  function(Class, where) {
 
 isClass <-
   ## Is this a formally defined class?
-  function(Class, formal=TRUE, where = topenv())
+  function(Class, formal=TRUE, where = topenv(parent.frame()))
 {
     ## argument formal is for Splus compatibility & is ignored.  (All classes that
     ## are defined must have a class definition object.)
@@ -360,7 +360,7 @@ validObject <- function(object, test = FALSE) {
 }
 
 setValidity <-
-  function(Class, method, where = topenv()) {
+  function(Class, method, where = topenv(parent.frame())) {
     if(isClassDef(Class)) {
         ClassDef <- Class
         Class <- ClassDef@className
@@ -492,19 +492,15 @@ initialize <- function(.Object, ...) {
     .Object
 }
 
-findClass <- function(Class, where, unique = "") {
+findClass <- function(Class, where = topenv(parent.frame()), unique = "") {
     if(is(Class, "classRepresentation")) {
         Class <- Class@className
         pkg <- Class@package
     }
     else
         pkg <- ""
-    if(missing(where)) {
-        if(nchar(pkg))
+    if(missing(where) && nchar(pkg))
             where <- .requirePackage(pkg)
-        else
-            where <- .envSearch()
-    }
     else
         where <- as.environment(where)
     what <- classMetaName(Class)
@@ -522,18 +518,18 @@ findClass <- function(Class, where, unique = "") {
     where
 }
 
-isSealedClass <- function(Class) {
+isSealedClass <- function(Class, where = topenv(parent.frame())) {
     if(is.character(Class))
-            Class <- getClass(Class, TRUE)
+            Class <- getClass(Class, TRUE, where)
     if(!is(Class, "classRepresentation"))
         FALSE
     else
         Class@sealed
 }
 
-sealClass <- function(Class, where) {
+sealClass <- function(Class, where = topenv(parent.frame())) {
     if(missing(where))
-        where <- findClass(Class, unique = "sealing the class")
+        where <- findClass(Class, unique = "sealing the class", where = where)
     classDef <- getClassDef(Class, where)
     if(!classDef@sealed) {
         classDef@sealed <- TRUE

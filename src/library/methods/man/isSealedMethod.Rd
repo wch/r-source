@@ -8,8 +8,8 @@
   re-defined.
 }
 \usage{
-isSealedMethod(f, signature, fdef)
-isSealedClass(Class)
+isSealedMethod(f, signature, fdef, where)
+isSealedClass(Class, where)
 }
 \arguments{
   \item{f}{ The quoted name of the generic function. }
@@ -18,6 +18,12 @@ isSealedClass(Class)
   \item{fdef}{ Optional, and usually omitted:  the generic function
       definition for \code{f}. }
   \item{Class}{The quoted name of the class.}
+
+  \item{where}{where to search for the method or class definition.  By
+    default, searches from the top environment of the call to
+    \code{isSealedMethod} or \code{isSealedClass}, typically the
+    global environment or the namespace of a package containing a call
+    to one of the functions.}
 }
 \details{
   In the R implementation of classes and methods, it is possible to

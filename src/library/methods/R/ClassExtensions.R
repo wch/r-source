@@ -175,16 +175,17 @@ makeExtends <- function(Class, to,
     
 }
 
-.findAll <- function(what, where = .envSearch()) {
+.findAll <- function(what, where = topenv(parent.frame())) {
     ## search in envir. & parents thereof
     ## must avoid R's find() function because it uses
     ## regular expressions
     value <- list()
     if(is.environment(where))
-        while(!is.null(where)) {
+        repeat {
             if(exists(what, where, inherits = FALSE))
                 value <- c(value, list(where))
-            if(isNamespace(where))
+            ## two forms of test for the end of the parent env. chain
+            if(isBaseNamespace(where) || is.null(where))
                 break
             where <- parent.env(where)
         }

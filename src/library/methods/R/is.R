@@ -77,7 +77,7 @@ setIs <-
   ## more elaborate one.  If the `replace' argument is supplied as an S replacement
   ## function, this function will be used to implement `as(obj, class2) <- value'.
   function(class1, class2, test = NULL, coerce = NULL,
-           replace = NULL, by = character(), where = topenv(),
+           replace = NULL, by = character(), where = topenv(parent.frame()),
            classDef = getClass(class1, TRUE), extensionObject = NULL, doComplete = TRUE)
 {
     ## class2 should exist
