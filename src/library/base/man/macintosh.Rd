@@ -1,7 +1,7 @@
 \name{macintosh}
 \title{Macintosh Quickdraw Graphics}
 \usage{
-macintosh()
+macintosh(width = 5, height = 5, pointsize = 12)
 }
 \alias{macintosh}
 \description{
