@@ -49,7 +49,7 @@ extern "C" {
   extern void call_R();
 #define call_S call_R
   extern void seed_in(long *);
-  extern void seed_out();
+  extern void seed_out(long *);
   extern double unif_rand(void);
   extern double norm_rand(void);
 

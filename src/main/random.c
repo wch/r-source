@@ -525,7 +525,7 @@ void seed_in(long *ignored)
     GetSeeds();
 }
 
-void seed_out()
+void seed_out(long *ignored)
 {
     PutSeeds();
 }
