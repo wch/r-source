@@ -188,6 +188,8 @@ BUG FIXES
 
     o	Text clipping now works in the X11 driver.
 
+    o	par("yaxt") is now ok.
+
     o	Problems with realloc on some systems in AllocBuffer.
 
     o	Problem with formatReal on non-IEEE systems.
