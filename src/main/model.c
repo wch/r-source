@@ -456,14 +456,14 @@ static SEXP CrossTerms(SEXP left, SEXP right)
 static SEXP PowerTerms(SEXP left, SEXP right)
 {
     SEXP term, l, r, t;
-    int i, pow;
-    pow = asInteger(right);
-    if (pow==NA_INTEGER || pow <= 1)
+    int i, ip;
+    ip = asInteger(right);
+    if (ip==NA_INTEGER || ip <= 1)
 	error("Invalid power in formula");
     term = R_NilValue;		/* -Wall */
     PROTECT(left = EncodeVars(left));
     right = left;
-    for (i=1; i<pow; i++)  {
+    for (i=1; i < ip; i++)  {
 	PROTECT(right);
 	PROTECT(term = allocList(length(left) * length(right)));
 	t = term;
@@ -1481,8 +1481,8 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP xnames, tnames, rnames;
     SEXP count, contrast, contr1, contr2, nlevs, ordered, columns, x;
     SEXP variable, var_i;
-    int fik, first, i, j, k, kk, ll, n, nc, nterms, nvar;
-    int intercept, jstart, jnext, response, indx, rhs_response;
+    int fik, first, i, j, k, kk, ll, n, nc, nterms, nVar;
+    int intrcept, jstart, jnext, risponse, indx, rhs_response;
     char buf[BUFSIZE], *bufp, *addp;
 
     checkArity(op, args);
@@ -1492,29 +1492,29 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     terms = CAR(args);
 
-    intercept = asLogical(getAttrib(terms, install("intercept")));
-    if (intercept == NA_INTEGER)
-	intercept = 0;
+    intrcept = asLogical(getAttrib(terms, install("intercept")));
+    if (intrcept == NA_INTEGER)
+	intrcept = 0;
 
-    response = asLogical(getAttrib(terms, install("response")));
-    if (response == NA_INTEGER)
-	response = 0;
+    risponse = asLogical(getAttrib(terms, install("response")));
+    if (risponse == NA_INTEGER)
+	risponse = 0;
 
     /* Get the factor pattern matrix.  We duplicate this because */
     /* we may want to alter it if we are in the no-intercept case. */
-    /* Note: the values of "nvar" and "nterms" are the REAL number of */
+    /* Note: the values of "nVar" and "nterms" are the REAL number of */
     /* variables in the model data frame and the number of model terms. */
 
-    nvar = nterms = 0;		/* -Wall */
+    nVar = nterms = 0;		/* -Wall */
     PROTECT(factors = duplicate(getAttrib(terms, install("factors"))));
     if (length(factors) == 0) {
-	if (intercept == 0)
+	if (intrcept == 0)
 	    errorcall(call, "illegal model (zero parameters).");
-	nvar = 1;
+	nVar = 1;
 	nterms = 0;
     }
     else if (isInteger(factors) && isMatrix(factors)) {
-	nvar = nrows(factors);
+	nVar = nrows(factors);
 	nterms = ncols(factors);
     }
     else errorcall(call, "invalid terms argument");
@@ -1524,7 +1524,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     vnames = getAttrib(factors, R_DimNamesSymbol);
     if (length(factors) > 0) {
 	if (length(vnames) < 1 ||
-	    (nvar - intercept > 0 && !isString(VECTOR_ELT(vnames, 0))))
+	    (nVar - intrcept > 0 && !isString(VECTOR_ELT(vnames, 0))))
 	    errorcall(call, "invalid terms argument");
 	vnames = VECTOR_ELT(vnames, 0);
     }
@@ -1535,7 +1535,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* 2) We don't type-check the response. */
 
     vars = CADR(args);
-    if (!isNewList(vars) || length(vars) < nvar)
+    if (!isNewList(vars) || length(vars) < nVar)
 	errorcall(call, "invalid model frame");
     if (length(vars) == 0)
 	errorcall(call, "don't know how many cases");
@@ -1546,16 +1546,16 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* in the model frame.  Note that it should really only check */
     /* the variables if they appear in a term in the model. */
 
-    PROTECT(variable = allocVector(VECSXP, nvar));
-    PROTECT(nlevs = allocVector(INTSXP, nvar));
-    PROTECT(ordered = allocVector(LGLSXP, nvar));
-    PROTECT(columns = allocVector(INTSXP, nvar));
+    PROTECT(variable = allocVector(VECSXP, nVar));
+    PROTECT(nlevs = allocVector(INTSXP, nVar));
+    PROTECT(ordered = allocVector(LGLSXP, nVar));
+    PROTECT(columns = allocVector(INTSXP, nVar));
 
-    for (i = 0; i < nvar; i++) {
+    for (i = 0; i < nVar; i++) {
 	var_i = SET_VECTOR_ELT(variable, i, VECTOR_ELT(vars, i));
 	if (nrows(var_i) != n)
 	    errorcall(call, "variable lengths differ");
-	/*if (i == response - 1) {
+	/*if (i == risponse - 1) {
 	    LOGICAL(ordered)[0] = 0;
 	    INTEGER(nlevs)[0] = 0;
 	    INTEGER(columns)[0] = 0;
@@ -1586,12 +1586,12 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* matrix and adjust the code for the first factor found so that */
     /* it will be coded by dummy variables rather than contrasts. */
 
-    if (!intercept) {
+    if (!intrcept) {
 	for (j = 0; j < nterms; j++) {
-	    for (i = response; i < nvar; i++) {
+	    for (i = risponse; i < nVar; i++) {
 		if (INTEGER(nlevs)[i] > 1
-		    && INTEGER(factors)[i + j * nvar] == 1) {
-		    INTEGER(factors)[i + j * nvar] = 2;
+		    && INTEGER(factors)[i + j * nVar] == 1) {
+		    INTEGER(factors)[i + j * nVar] = 2;
 		    goto alldone;
 		}
 	    }
@@ -1605,8 +1605,8 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* the required arguments at call time.  The calls have the following */
     /* form: (contrast.type nlevs contrasts) */
 
-    PROTECT(contr1 = allocVector(VECSXP, nvar));
-    PROTECT(contr2 = allocVector(VECSXP, nvar));
+    PROTECT(contr1 = allocVector(VECSXP, nVar));
+    PROTECT(contr2 = allocVector(VECSXP, nVar));
 
     PROTECT(expr = allocList(3));
     SET_TYPEOF(expr, LANGSXP);
@@ -1619,13 +1619,13 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* I.e. we would search the list of constrast specs before */
     /* we try the evaluation below. */
 
-    for (i = 0; i < nvar; i++) {
+    for (i = 0; i < nVar; i++) {
 	if (INTEGER(nlevs)[i]) {
 	    k = 0;
 	    for (j = 0; j < nterms; j++) {
-		if (INTEGER(factors)[i + j * nvar] == 1)
+		if (INTEGER(factors)[i + j * nVar] == 1)
 		    k |= 1;
-		else if (INTEGER(factors)[i + j * nvar] == 2)
+		else if (INTEGER(factors)[i + j * nVar] == 2)
 		    k |= 2;
 	    }
 	    SETCADR(expr, VECTOR_ELT(variable, i));
@@ -1644,11 +1644,11 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
        in the model matrix (but interactions involving the response do). */
 
     rhs_response = -1;
-    if (response > 0) /* there is a response specified */
+    if (risponse > 0) /* there is a response specified */
 	for (j = 0; j < nterms; j++)
-	    if (INTEGER(factors)[response - 1 + j * nvar]) {
-		for (i = 0, k = 0; i < nvar; i++)
-		    k += INTEGER(factors)[i + j * nvar] > 0;
+	    if (INTEGER(factors)[risponse - 1 + j * nVar]) {
+		for (i = 0, k = 0; i < nVar; i++)
+		    k += INTEGER(factors)[i + j * nVar] > 0;
 		if (k == 1) {
 		    rhs_response = j;
 		    break;
@@ -1662,7 +1662,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* for each term in the model and "nc" gives the total column count. */
 
     PROTECT(count = allocVector(INTSXP, nterms));
-    if (intercept)
+    if (intrcept)
 	nc = 1;
     else
 	nc = 0;
@@ -1672,10 +1672,10 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    continue;
 	}
 	k = 1;
-	for (i = 0; i < nvar; i++) {
-	    if (INTEGER(factors)[i + j * nvar]) {
+	for (i = 0; i < nVar; i++) {
+	    if (INTEGER(factors)[i + j * nVar]) {
 		if (INTEGER(nlevs)[i]) {
-		    switch(INTEGER(factors)[i + j * nvar]) {
+		    switch(INTEGER(factors)[i + j * nVar]) {
 		    case 1:
 			k *= ncols(VECTOR_ELT(contr1, i));
 			break;
@@ -1696,7 +1696,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(assign = allocVector(INTSXP, nc));
     k = 0;
-    if (intercept) INTEGER(assign)[k++] = 0;
+    if (intrcept) INTEGER(assign)[k++] = 0;
     for (j = 0; j < nterms; j++)
 	for (i = 0; i < INTEGER(count)[j]; i++)
 	    INTEGER(assign)[k++] = j+1;
@@ -1723,7 +1723,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* in its own function. */
 
     k = 0;
-    if (intercept)
+    if (intrcept)
 	SET_STRING_ELT(xnames, k++, mkChar("(Intercept)"));
 
     for (j = 0; j < nterms; j++) {
@@ -1732,8 +1732,8 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    first = 1;
 	    indx = kk;
 	    bufp = &buf[0];
-	    for (i = 0; i < nvar; i++) {
-		ll = INTEGER(factors)[i + j * nvar];
+	    for (i = 0; i < nVar; i++) {
+		ll = INTEGER(factors)[i + j * nVar];
 		if (ll) {
 		    var_i = VECTOR_ELT(variable, i);		    
 		    if (!first)
@@ -1802,7 +1802,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* a) Begin with a column of 1s for the intercept. */
 
-    if ((jnext = jstart = intercept) != 0) {
+    if ((jnext = jstart = intrcept) != 0) {
 	for (i = 0; i < n; i++) {
 	    REAL(x)[i] = 1.0;
 	}
@@ -1813,11 +1813,11 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     contrast = R_NilValue;	/* -Wall */
     for (k = 0; k < nterms; k++) {
 	if (k == rhs_response) continue;
-	for (i = 0; i < nvar; i++) {
+	for (i = 0; i < nVar; i++) {
 	    if (INTEGER(columns)[i] == 0)
 		continue;
 	    var_i = VECTOR_ELT(variable, i);
-	    fik = INTEGER(factors)[i + k * nvar];
+	    fik = INTEGER(factors)[i + k * nVar];
 	    if (fik) {
 		switch(fik) {
 		case 1:
