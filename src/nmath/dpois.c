@@ -37,7 +37,11 @@
 
 double dpois_raw(double x, double lambda, int give_log)
 {
+    /*       x >= 0 "integer",
+        lambda >= 0
+    */
     if (lambda == 0) return( (x == 0) ? R_D__1 : R_D__0 );
+    if (!R_finite(lambda)) return R_D__0;
     if (x == 0) return( R_D_exp(-lambda) );
     if (x < 0)  return( R_D__0 );
 
@@ -53,7 +57,9 @@ double dpois(double x, double lambda, int give_log)
 
     if (lambda < 0) ML_ERR_return_NAN;
     R_D_nonint_check(x);
-    if (x < 0 || !R_FINITE(x)) return R_D__0;
+    if (x < 0 || !R_FINITE(x))
+	return R_D__0;
+
     x = R_D_forceint(x);
 
     return( dpois_raw(x,lambda,give_log) );

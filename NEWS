@@ -524,6 +524,8 @@ BUG FIXES
     o	X11() font selection was looking for any symbol font, and
 	sometimes got e.g. bold italic if the server has such a font.
 
+    o	dpois(*, lambda=Inf) now return 0 (or -Inf for log).
+
 
 
 
