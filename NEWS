@@ -270,8 +270,6 @@ NEW FEATURES
     o	The header file R.h and those included from it are now usable
 	with C++ code.
 
-    o	R now by default uses GNU libtool to deal with shared libraries.
-
     o   Formatting (and printing) of data.frames with complex objects is
         improved. toString was added as a new function.
 
