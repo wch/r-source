@@ -6619,8 +6619,8 @@ trap 'rm -fr `echo "Makeconf
   doc/Makefile
   doc/keyword-test
   doc/manual/Makefile
-  doc/manual/Reference.tex
   doc/manual/lib2tex
+  doc/manual/refman.top
   etc/Makefile
   etc/Makeconf
   src/Makefile
@@ -6844,8 +6844,8 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   doc/Makefile
   doc/keyword-test
   doc/manual/Makefile
-  doc/manual/Reference.tex
   doc/manual/lib2tex
+  doc/manual/refman.top
   etc/Makefile
   etc/Makeconf
   src/Makefile
