@@ -4,6 +4,8 @@ binom.test               Exact Binomial Test
 chisq.test               Pearson's Chi-square Test for Count Data
 cor.test                 Test for Zero Correlation
 fisher.test              Fisher's Exact Test for Count Data
+fligner.test             Fligner-Killeen Test for Homogeneity of
+                         Variances
 friedman.test            Friedman Rank Sum Test
 kruskal.test             Kruskal-Wallis Rank Sum Test
 ks.test                  Kolmogorov-Smirnov Tests
