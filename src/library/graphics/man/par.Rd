@@ -2,6 +2,75 @@
 \alias{par}
 \alias{.Pars}
 \alias{.Pars.readonly}
+\concept{adj}
+\concept{ann}
+\concept{ask}
+\concept{bg}
+\concept{bty}
+\concept{cex.axis}
+\concept{cex.lab}
+\concept{cex.main}
+\concept{cex.sub}
+\concept{cex}
+\concept{cin}
+\concept{col.axis}
+\concept{col.lab}
+\concept{col.main}
+\concept{col.sub}
+\concept{col}
+\concept{cra}
+\concept{crt}
+\concept{csi}
+\concept{cxy}
+\concept{din}
+\concept{err}
+\concept{fg}
+\concept{fig}
+\concept{fin}
+\concept{font.axis}
+\concept{font.lab}
+\concept{font.main}
+\concept{font.sub}
+\concept{font}
+\concept{gamma}
+\concept{lab}
+\concept{las}
+\concept{lty}
+\concept{lwd}
+\concept{mai}
+\concept{mar}
+\concept{mex}
+\concept{mfcol}
+\concept{mfg}
+\concept{mfrow}
+\concept{mgp}
+\concept{mkh}
+\concept{new}
+\concept{oma}
+\concept{omd}
+\concept{omi}
+\concept{pch}
+\concept{pin}
+\concept{plt}
+\concept{ps}
+\concept{pty}
+\concept{smo}
+\concept{srt}
+\concept{tck}
+\concept{tcl}
+\concept{tmag}
+\concept{type}
+\concept{usr}
+\concept{xaxp}
+\concept{xaxs}
+\concept{xaxt}
+\concept{xlog}
+\concept{xpd}
+\concept{yaxp}
+\concept{yaxs}
+\concept{yaxt}
+\concept{ylog}
+
 \title{Set or Query Graphical Parameters}
 
 %% The 'real documentation' is the code	in ../../../main/par.c
@@ -17,7 +86,7 @@
 \usage{
 par(\dots, no.readonly = FALSE)
 
-<highlevel plot> (\dots, <tag> = <value>)
+plot> (\dots, <tag> = <value>)
 }
 
 \arguments{
@@ -36,7 +105,7 @@ par(\dots, no.readonly = FALSE)
   \code{par()} (no arguments) or \code{par(no.readonly=TRUE)} is used to
   get \emph{all} the graphical parameters (as a named list).  Their
   names are currently taken from the variable \code{.Pars}.
-  \code{.Pars.readonly} contains the names of the \code{par} arguments
+rs.readonly} contains the names of the \code{par} arguments
   which are \emph{readonly}.
 
   \emph{\bold{R.O.}} indicates \emph{\bold{read-only arguments}}: These
@@ -47,22 +116,22 @@ par(\dots, no.readonly = FALSE)
   mid-level plot functions, such as \code{\link{plot}},
   \code{\link{points}}, \code{\link{lines}}, \code{\link{axis}},
   \code{\link{title}}, \code{\link{text}}, \code{\link{mtext}}:
-  \itemize{
-    \item \code{"ask"}
+
+item \code{"ask"}
     \item \code{"fig"}, \code{"fin"}
     \item \code{"mai"}, \code{"mar"}, \code{"mex"}
     \item \code{"mfrow"}, \code{"mfcol"}, \code{"mfg"}
     \item \code{"new"}
-    \item \code{"oma"}, \code{"omd"}, \code{"omi"}
+code{"oma"}, \code{"omd"}, \code{"omi"}
     \item \code{"pin"}, \code{"plt"}, \code{"ps"}, \code{"pty"}
-    \item \code{"usr"}
+code{"usr"}
     \item \code{"xlog"}, \code{"ylog"}
   }
 }
 
 \value{
   When parameters are set, their former values are returned in an
-  invisible named list.  Such a list can be passed as an argument to
+isible named list.  Such a list can be passed as an argument to
   \code{par} to restore the parameter values.
   Use \code{par(no.readonly = TRUE)} for the full list of parameters
   that can be restored.
