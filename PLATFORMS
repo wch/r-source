@@ -7,11 +7,13 @@ our installation procedures.
 
 	PLATFORM			COMPILER
 
-	alpha-dec-osf3.2		cc
-	hppa1.1-hp-hpux9.07		gcc or c89
-	i386-unknown-freebsd2.1.5	gcc
+	i386-unknown-freebsd2.2.2	gcc
 	i686-unknown-linux		gcc
 	mips-sgi-irix6.2		cc
 	sparc-sun-solaris2.5.1		gcc
-	sparc-sun-sunos4.1.4		gcc
 
+
+	OLD
+
+	alpha-dec-osf3.2		cc
+	hppa1.1-hp-hpux9.07		gcc or c89
