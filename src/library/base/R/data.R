@@ -18,12 +18,12 @@ function (..., list = character(0),
         else
             show.data(lib.loc = lib.loc)
     } else for (name in names) {
-        paths <-
-            if(missing(lib.loc)) {
-                paths <- file.path(c(.path.package(package), getwd()), "data")
-                paths[file.exists(paths)]
-            } else
-                system.file("data", pkg = package, lib = lib.loc)
+        paths <- system.file("data", pkg = package, lib = lib.loc)
+        if(missing(lib.loc)) {
+            paths0 <- file.path(c(.path.package(package, TRUE), getwd()),
+                                "data")
+            paths <- c(paths0[file.exists(paths0)], paths)
+        }
         files <- NULL
         for (p in paths) {
             if(file.exists(file.path(p, "Rdata.zip"))) {
@@ -87,11 +87,9 @@ show.data <-
     file.create(file)
     first <- TRUE
     nodata <- noindex <- character(0)
-    paths <-
-        if(missing(lib.loc)) {
-            paths <- c(.path.package(package), getwd())
-        } else
-            system.file(pkg = package, lib = lib.loc)
+    paths <- system.file(pkg = package, lib = lib.loc)
+    if(missing(lib.loc))
+        paths <- c(.path.package(package, TRUE), getwd(), paths)
     for (path in paths) {
         pkg <- sub(".*/([^/]*)$", "\\1", path) # may not work on Mac
         if(!file.exists(path)) next

@@ -5,7 +5,7 @@ WINHELP = BOTH # NO, CHM, BOTH
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
-RPREFIX = rw1010
+RPREFIX = rw1011
 
 RHOME = $(shell perl pwd.pl ../..)# must be absolute path
 RLIB = $(RHOME)/library
@@ -41,7 +41,7 @@ FFLAGS = $(OPTFLAGS)
 rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
 	../include/globalvar.h front-ends COPYRIGHTS
 
-rpackage: fixed/fixdesc $(PKGS)
+rpackage: fixed/fixdesc $(PKGS) ../../library/R.css
 
 rinstaller:
 	$(MAKE) -C installer PREFIX=$(RPREFIX)
@@ -115,6 +115,12 @@ tcl:
 	$(MAKE) pkg-tcltk
 
 
+../../library/R.css: ../../doc/html/R.css
+	$(CP) $< $@
+
+
+#                          ===== Packages ======
+
 CHTML:
 ifeq ($(strip $(HELP)),YES)
 ifeq ($(strip $(WINHELP)),CHM)
@@ -125,8 +131,10 @@ ifeq ($(strip $(WINHELP)),BOTH)
 endif
 endif
 
-
 base-HELP = ziponly
+
+bundle-%:
+	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:  libR.a #../include/globalvar.h
 	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
@@ -171,6 +179,9 @@ zipdata-%:
 
 bootstrap-DLLNM=boott
 
+
+#                          ===== cleaning ======
+
 clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps fixed/fixdesc
 	-$(MAKE) -C ../../doc/manual -f Makefile.win distclean
@@ -203,7 +214,8 @@ cleanwin:
 	-$(MAKE) -C installer clean
 
 
-# tests
+#                          ===== testing ======
+
 check: all test
 test: test-Specific pkgtests
 
@@ -223,16 +235,16 @@ pkgcheck-base:
 	  -f ../../../gnuwin32/check/PkgCheck
 	@(cd ../../library/base/R-ex; rm -f *.R)
 
-bundle-%:
-	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
+
+#                          ===== documentation ======
 
 docs manuals:
 	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean
-	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win R_PKGS='$(PACKAGES)'
+	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win R_PKGS='$(ALLPACKAGES)'
 	@$(MAKE) ziponly-base
 
 
-## ============= Maintainer targets ========================
+## ===================== Maintainer targets ========================
 
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 
@@ -276,10 +288,10 @@ bindist: docfiles
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README
 	$(CP) -p rw-faq $(RPREFIX)/rw-FAQ
-	$(CP) -p CHANGES $(RPREFIX)/CHANGES
-	zip docs.zip $(RPREFIX)/*
-	unzip -a -o docs.zip
-	$(RM) docs.zip
+	$(CP) -p CHANGES README.Rterm $(RPREFIX)
+	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/bin/*.bat
+	unzip -ao dosfiles.zip
+	$(RM) dosfiles.zip
 	$(RM) -f $(RPREFIX)b1.zip $(RPREFIX)b2.zip $(RPREFIX)h.zip \
 	   $(RPREFIX)w.zip $(RPREFIX)l.zip $(RPREFIX)ch.zip
 	$(RM) anindex.zip

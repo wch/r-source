@@ -35,7 +35,7 @@ read.csv2(file, header = TRUE, sep = ";", quote="\"", dec=",", \dots)
 
   \item{sep}{the field separator character.  Values on each line of the
     file are separated by this character.}
-  
+
   \item{quote}{the set of quoting characters. To disable quoting
     altogether, use \code{quote=""}.}
 
@@ -92,7 +92,8 @@ read.csv2(file, header = TRUE, sep = ";", quote="\"", dec=",", \dots)
   \code{\link{scan}},
   \code{\link{read.fwf}} for reading \emph{f}ixed \emph{w}idth
   \emph{f}ormatted input;
+  \code{\link{read.table.url}} for ``reading'' data from the internet;
   \code{\link{write.table}};
-  \code{\link{data.frame}}. 
+  \code{\link{data.frame}}.
 }
 \keyword{file}

@@ -24,7 +24,7 @@ pmatch(x, table, nomatch = NA, duplicates.ok = FALSE)
   all remaining elements of \code{x} are regarded as unmatched.
   In addition, an empty string can match nothing, not even an exact
   match to an empty string.  This is the appropriate behaviour for
-  partial matching of character indices, for example
+  partial matching of character indices, for example.
 
   If \code{duplicates.ok} is \code{FALSE}, values of \code{table} once
   matched are excluded from the search for subsequent matches.  This
@@ -61,8 +61,8 @@ pmatch("", "")                             # returns NA
 pmatch("m",   c("mean", "median", "mode")) # returns NA
 pmatch("med", c("mean", "median", "mode")) # returns 2
 
-pmatch(c("", "ab", "ab"), c("abc", "ab"), dup=F)
-pmatch(c("", "ab", "ab"), c("abc", "ab"), dup=T)
+pmatch(c("", "ab", "ab"), c("abc", "ab"), dup=FALSE)
+pmatch(c("", "ab", "ab"), c("abc", "ab"), dup=TRUE)
 ## compare
 charmatch(c("", "ab", "ab"), c("abc", "ab"))
 }

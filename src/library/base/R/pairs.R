@@ -1,6 +1,8 @@
 pairs <- function(x, ...) UseMethod("pairs")
 
-if(FALSE){
+## For new version, see below
+
+if(FALSE){ ## old version
 pairs.default <- function(x, labels, panel=points, main = NULL,
 			  font.main=par("font.main"),
 			  cex.main=par("cex.main"),  oma=NULL, ...)

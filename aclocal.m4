@@ -1,6 +1,6 @@
 dnl aclocal.m4 -- extra macros for configuring R
 dnl
-dnl Copyright (C) 1998, 1999 R Core Team
+dnl Copyright (C) 1998, 1999, 2000 R Core Team
 dnl
 ### This file is part of R.
 ###
@@ -20,6 +20,35 @@ dnl
 ### Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
 ### 02111-3307, USA.
 dnl
+dnl
+dnl R_ARG_WITH_EXCLUSIVE
+dnl
+AC_DEFUN(R_ARG_WITH_EXCLUSIVE,
+ [if test "${with_$1+set}" = set; then
+    if test "${with_$2+set}" = set; then
+      if test "$with_$2" = no; then
+	true
+      else
+	$3
+      fi
+    fi
+  fi])
+dnl
+dnl R_ARG_USE
+dnl
+AC_DEFUN(R_ARG_USE,
+ [if test "${withval}" = no; then
+    use_$1=false
+  else
+    use_$1=true
+  fi])
+dnl
+dnl R_PROG_AR
+dnl
+AC_DEFUN(R_PROG_AR,
+ [AC_CHECK_PROGS(AR, [${AR} ar])
+  : ${ARFLAGS="rc"}
+  AC_SUBST(ARFLAGS)])
 dnl
 dnl R_PROG_ECHO_N
 dnl
@@ -42,7 +71,30 @@ AC_DEFUN(R_PROG_ECHO_N,
   AC_SUBST(ECHO_C)
   AC_SUBST(ECHO_N)
   AC_SUBST(ECHO_T)
- ])    
+ ])
+dnl
+dnl R_PROG_INSTALL
+dnl
+AC_DEFUN(R_PROG_INSTALL,
+ [AC_REQUIRE([AC_PROG_INSTALL])
+  warn_install="redefining INSTALL to be `pwd`/tools/install-sh -c"
+  case "${INSTALL}" in
+    [[!/]]*install-sh*)
+      ## Fix a bug in older versions of autoconf---the path of the
+      ## install shell script is not cached.  Could also use an absolute
+      ## path in AC_CONFIG_AUX_DIR().
+      INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
+      AC_MSG_WARN([${warn_install}])
+      ;;
+  esac
+  case "${host}" in
+    *aix*|*hpux*)
+      ## installbsd on AIX does not seem to work?
+      INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
+      AC_MSG_WARN([${warn_install}])
+      ;;
+  esac
+ ])
 dnl
 dnl R_PROG_PERL
 dnl
@@ -68,7 +120,8 @@ AC_DEFUN(R_PROG_PERL,
   if test "${r_cv_prog_perl_v5}" = yes; then
     NO_PERL5=false
   else
-    AC_MSG_WARN([you cannot build the object documentation system])
+    warn_perl5="you cannot build the object documentation system"
+    AC_MSG_WARN(${warn_perl5})
     NO_PERL5=true
   fi
   AC_SUBST(NO_PERL5)
@@ -81,14 +134,16 @@ AC_DEFUN(R_PROG_TEXMF,
   AC_PATH_PROGS(DVIPS, [${DVIPS} dvips], false)
   AC_PATH_PROGS(TEX, [${TEX} tex], false)
   AC_PATH_PROGS(LATEX, [${LATEX} latex], false)
-  if test "{ac_cv_path_LATEX}" = false; then
-    AC_MSG_WARN([you cannot build DVI versions of the R manuals])
+  if test -z "${ac_cv_path_LATEX}" ; then
+    warn_dvi="you cannot build DVI versions of the R manuals"
+    AC_MSG_WARN(${warn_dvi})
   fi
   AC_PATH_PROGS(MAKEINDEX, [${MAKEINDEX} makeindex], false)
   AC_PATH_PROGS(PDFTEX, [${PDFTEX} pdftex], false)
   AC_PATH_PROGS(PDFLATEX, [${PDFLATEX} pdflatex], false)
-  if test "{ac_cv_path_PDFLATEX}" = false; then
-    AC_MSG_WARN([you cannot build PDF versions of the R manuals])
+  if test -z "${ac_cv_path_PDFLATEX}" ; then
+    warn_pdf="you cannot build PDF versions of the R manuals"
+    AC_MSG_WARN(${warn_pdf})
   fi
   AC_PATH_PROGS(MAKEINFO, [${MAKEINFO} makeinfo])
   if test -n "${MAKEINFO}"; then
@@ -106,7 +161,8 @@ AC_DEFUN(R_PROG_TEXMF,
       ])
   fi
   if test "${r_cv_prog_makeinfo_v4}" != yes; then
-    AC_MSG_WARN([you cannot build info versions of the R manuals])
+    warn_info="you cannot build info versions of the R manuals"
+    AC_MSG_WARN(${warn_info})
     MAKEINFO=false
   fi
   if test "${PERL}" != false; then
@@ -210,6 +266,7 @@ dnl
 dnl Determine whether the Fortran 77 compiler works (in the sense that
 dnl we can create executables, but not necessarily run them).  This
 dnl tests in particular whether all Fortran libraries are available.
+dnl
 AC_DEFUN(R_PROG_F77_WORKS, [
     AC_CACHE_CHECK([whether the Fortran 77 compiler (${FC} ${FFLAGS} ${LDFLAGS}) works],
     r_cv_prog_f77_works, [
@@ -346,6 +403,9 @@ int main () {
 EOF
       changequote([, ])
       if ${CC-cc} ${CFLAGS} -c conftest.c 1>&AC_FD_CC 2>&AC_FD_CC; then
+	## FIXME
+	## This should really use MAINLD, and hence come after this is
+	## determined.  Or maybe we can always use ${CC} eventually?
 	if ${CC-cc} ${LDFLAGS} ${MAINLDFLAGS} -o conftest conftest.o conftestf.o \
             ${FLIBS} -lm 1>&AC_FD_CC 2>&AC_FD_CC; then
           output=`./conftest 2>&1`
@@ -391,7 +451,8 @@ EOF
       r_cv_f2c_flibs="${flibs}"])
   FLIBS="${r_cv_f2c_flibs}"
   if test -z "${FLIBS}"; then
-    AC_MSG_WARN([I found f2c but not libf2c, or libF77 and libI77])
+    warn_f2c_flibs="I found f2c but not libf2c, or libF77 and libI77"
+    AC_MSG_WARN(${warn_f2c_flibs})
   fi])
 dnl
 dnl R_FUNC___SETFPUCW
@@ -550,7 +611,8 @@ AC_DEFUN(R_GNOME, [
       AM_PATH_LIBGLADE(
         [use_gnome="yes"
 	  GNOME_IF_FILES="gnome-interface.glade"],
-        [AC_MSG_WARN([GNOME support requires libglade version >= 0.3])],
+        [ warn_libglade="GNOME support requires libglade version >= 0.3"
+	  AC_MSG_WARN(${warn_libglade})],
         gnome)
     fi
   fi
@@ -784,77 +846,188 @@ dnl
 dnl R_BITMAPS
 dnl
 AC_DEFUN(R_BITMAPS, [
-BITMAP_LIBS=
-AC_CHECK_HEADER(jpeglib.h, [
-  AC_CHECK_LIB(jpeg, jpeg_destroy_compress, 
-    [ 
+  BITMAP_LIBS=
+  AC_EGREP_HEADER(jpeg_error_mgr, jpeglib.h, [
+    AC_CHECK_LIB(jpeg, jpeg_destroy_compress, [
       BITMAP_LIBS=-ljpeg
       AC_DEFINE(HAVE_JPEG)
     ], , ${LIBS})
   ])
-AC_CHECK_HEADER(png.h, [
-  AC_CHECK_LIB(png, png_create_write_struct, 
-    [
-      BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
-      AC_DEFINE(HAVE_PNG)
-    ], , ${LIBS})
+  AC_CHECK_LIB(z, main, [
+    AC_CHECK_HEADER(png.h, [
+      AC_CHECK_LIB(png, png_create_write_struct, [
+        BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
+	AC_DEFINE(HAVE_PNG)
+      ], , ${LIBS})
+    ])
   ])
-## echo "using libraries \`${BITMAP_LIBS}' for bitmap functions"
-AC_SUBST(BITMAP_LIBS)
-])
-
+  AC_SUBST(BITMAP_LIBS)])
 dnl
-dnl R_TCLTK
+dnl Try finding {tcl,tk}Config.sh
+dnl
+dnl R_TCLTK_CONFIG()
+dnl
+AC_DEFUN(R_TCLTK_CONFIG,
+[libpath="${tcltk_prefix}:${LD_LIBRARY_PATH}"
+libpath="${libpath}:/opt/lib:/usr/local/lib:/usr/lib:/lib"
+AC_PATH_PROG(TCL_CONFIG, [${TCL_CONFIG} tclConfig.sh], , ${libpath})
+AC_PATH_PROG(TK_CONFIG, [${TK_CONFIG} tkConfig.sh], , ${libpath})
+if test -z "${TCLTK_CPPFLAGS}" -o -z "${TCLTK_LIBS}"; then
+  ## Check whether the versions found via the *Config.sh files are at
+  ## least 8; otherwise, issue a warning and turn off Tcl/Tk support.
+  ## Note that in theory a system could have outdated versions of the
+  ## *Config.sh scripts and yet up-to-date installations of Tcl/Tk in
+  ## standard places ...
+  if test -n "${TCL_CONFIG}"; then
+    . ${TCL_CONFIG}
+    if test ${TCL_MAJOR_VERSION} -lt 8; then
+      warn_tcltk_version="Tcl/Tk support requires Tcl version >= 8"
+      AC_MSG_WARN(${warn_tcltk_version})
+      have_tcltk=no
+    fi
+  fi
+  if test -n "${TK_CONFIG}" -a -z "${warn_tcltk_version}"; then
+    . ${TK_CONFIG}
+    if test ${TK_MAJOR_VERSION} -lt 8; then
+      warn_tcltk_version="Tcl/Tk support requires Tk version >= 8"
+      AC_MSG_WARN(${warn_tcltk_version})
+      have_tcltk=no
+    fi
+  fi
+fi
+])
+dnl
+dnl Need to ensure that we can find the tcl.h and tk.h headers, which
+dnl may be in non-standard and/or version-dependent directories, such as
+dnl on FreeBSD systems.
+dnl
+dnl The logic is as follows.  If TCLTK_CPPFLAGS was specified, then we
+dnl do not investigate any further.  Otherwise, if we still think we
+dnl have Tcl/Tk, then first try via the corresponding *Config.sh file,
+dnl or else try the obvious.
+dnl
+dnl R_TCLTK_CPPFLAGS()
+dnl
+AC_DEFUN(R_TCLTK_CPPFLAGS,
+[AC_REQUIRE([R_TCLTK_CONFIG])
+if test -z "${TCLTK_CPPFLAGS}"; then
+  ## We have to do the work.
+  if test "${have_tcltk}" = yes; then
+    ## Part 1.  Check for tcl.h.
+    found_tcl_h=no
+    if test -n "${TCL_CONFIG}"; then
+      . ${TCL_CONFIG}
+      ## Look for tcl.h in
+      ##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}
+      ##   ${TCL_PREFIX}/include
+      AC_CHECK_HEADER(${TCL_PREFIX}/include/tcl${TCL_VERSION}/tcl.h,
+        [TCLTK_CPPFLAGS="-I${TCL_PREFIX}/include/tcl${TCL_VERSION}"
+	  found_tcl_h=yes])
+      if test "${found_tcl_h}" = no; then
+	AC_CHECK_HEADER(${TCL_PREFIX}/include/tcl.h,
+	  [TCLTK_CPPFLAGS="-I${TCL_PREFIX}/include"
+            found_tcl_h=yes])
+      fi
+    fi
+    if test "${found_tcl_h}" = no; then
+      AC_CHECK_HEADER(tcl.h, , have_tcltk=no)
+    fi
+    unset found_tcl_h
+  fi
+  if test "${have_tcltk}" = yes; then
+    ## Part 2.  Check for tk.h.
+    found_tk_h=no
+    if test -n "${TK_CONFIG}"; then
+      . ${TK_CONFIG}
+      ## Look for tk.h in
+      ##   ${TK_PREFIX}/include/tk${TK_VERSION}
+      ##   ${TK_PREFIX}/include
+      AC_CHECK_HEADER(${TK_PREFIX}/include/tk${TK_VERSION}/tk.h,
+        [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include/tk${TK_VERSION}"
+	  found_tk_h=yes])
+      if test "${found_tk_h}" = no; then
+	AC_CHECK_HEADER(${TK_PREFIX}/include/tk.h,
+          [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include"
+            found_tk_h=yes])
+      fi
+    fi
+    if test "${found_tk_h}" = no; then
+      AC_CHECK_HEADER(tk.h, , have_tcltk=no)
+    fi
+    unset found_tk_h
+  fi
+fi])
+dnl
+dnl Find the tcl and tk libraries.
+dnl
+dnl R_TCLTK_LIBS()
+dnl
+AC_DEFUN(R_TCLTK_LIBS,
+[AC_REQUIRE([AC_PATH_XTRA])
+AC_REQUIRE([R_TCLTK_CONFIG])
+if test -z "${TCLTK_LIBS}"; then
+  ## We have to do the work.
+  if test "${have_tcltk}" = yes; then
+    ## Part 1.  Try finding the tcl library.
+    if test -n "${TCL_CONFIG}"; then
+      . ${TCL_CONFIG}
+      TCLTK_LIBS="${TCL_LIB_SPEC}"
+    else
+      AC_CHECK_LIB(tcl, Tcl_CreateInterp,
+        TCLTK_LIBS=-ltcl,
+        have_tcltk=no)
+    fi
+  fi
+  if test "${have_tcltk}" = yes; then
+    ## Part 2.  Try finding the tk library.
+    if test -n "${TK_CONFIG}"; then
+      . ${TK_CONFIG}
+      TCLTK_LIBS="${TCLTK_LIBS} ${TK_LIB_SPEC} ${TK_LIBS}"
+    else
+      AC_CHECK_LIB(tk, Tk_Init, , , ${TCLTK_LIBS})
+      if test "${ac_cv_lib_tk_Tk_Init}" = no; then
+	## Grr, simple -ltk does not work.
+	## But maybe we simply need to add X11 libs.
+	unset ac_cv_lib_tk_Tk_Init
+	AC_CHECK_LIB(tk, Tk_Init,
+          [TCLTK_LIBS="${TCLTK_LIBS} -ltk ${X_LIBS}"],
+	  have_tcltk=no,
+          [${TCLTK_LIBS} ${X_LIBS}])
+      fi
+    fi
+  fi
+fi
+])
+dnl
+dnl R_TCLTK()
 dnl
 AC_DEFUN(R_TCLTK,
-  [ have_tcltk=no
-    TCLTK_LIBS=
-    if test "${want_tcltk}" = yes; then
-      AC_CHECK_LIB(tcl, Tcl_CreateInterp, [ TCLTK_LIBS="-ltcl"])
-      if test -n "${TCLTKLIBS}"; then
-        AC_CHECK_LIB(tk, Tk_Init,
-          [ TCLTK_LIBS="-ltcl -ltk" have_tcltk=yes ],, ${TCLTKLIBS})
-        if test "${have_tcltk}" = no; then
-        ## Try X11 libs
-          echo "checking with X11 libraries:"
-	  unset ac_cv_lib_tk_Tk_Init
-            AC_CHECK_LIB(tk, Tk_Init,
-              [ TCLTK_LIBS="-ltcl -ltk ${X_LIBS}"
-	        have_tcltk=yes ], , [-ltcl ${X_LIBS}])
-        fi
-      fi
-      if test "${have_tcltk}" = no; then
-	## Try finding {tcl,tk}Config.sh
-	libpath="${tcltk_prefix}:${LD_LIBRARY_PATH}"
-	libpath="${libpath}:/opt/lib:/usr/local/lib:/usr/lib:/lib"
-	TCL_CONFIG=
-	AC_PATH_PROG(TCL_CONFIG, tclConfig.sh, , ${libpath})
-	if test -n "${TCL_CONFIG}"; then
-	  . ${TCL_CONFIG}	# get TCL_VERSION
-	  AC_CHECK_LIB(tcl${TCL_VERSION}, Tcl_CreateInterp,
-	    [ TCLTK_LIBS="-ltcl${TCL_VERSION}" ],
-	    [ want_tcltk=no ])
-	  if test "${want_tcltk}" = yes; then
-	    TK_CONFIG=
-	    AC_PATH_PROG(TK_CONFIG, tkConfig.sh, , ${libpath})
-	    if test -n "${TK_CONFIG}"; then
-	      . ${TK_CONFIG}	# get TK_VERSION
-	      AC_CHECK_LIB(tk${TK_VERSION}, Tk_Init,
-	        [ TCLTK_LIBS="${TCLTK_LIBS} -ltk${TK_VERSION}  ${TK_XLIBSW}"
-		  have_tcltk=yes ], , [${TCLTK_LIBS} ${TK_XLIBSW}] )
-	    fi
-	  fi
-	fi
-      fi
-    fi
-    if test "${have_tcltk}" = yes; then
-      AC_DEFINE(HAVE_TCLTK)
-      use_tcltk=yes
-    else
-      use_tcltk=no
-    fi
-    AC_SUBST(TCLTK_LIBS)
-  ])
+[if test "${want_tcltk}" = yes; then
+  have_tcltk=yes
+  R_TCLTK_CONFIG
+  R_TCLTK_CPPFLAGS  
+  R_TCLTK_LIBS
+else
+  have_tcltk=no
+  ## Just making sure.
+  TCLTK_CPPFLAGS=
+  TCLTK_LIBS=
+fi
+if test "${have_tcltk}" = yes; then
+  AC_DEFINE(HAVE_TCLTK)
+  use_tcltk=yes
+  if test -n "${TK_XINCLUDES}"; then
+    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${TK_XINCLUDES}"
+  else
+    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${X_CFLAGS}"
+  fi
+else
+  use_tcltk=no
+fi
+AC_SUBST(TCLTK_CPPFLAGS)
+AC_SUBST(TCLTK_LIBS)
+AC_SUBST(use_tcltk)
+])
 
 dnl Local Variables: ***
 dnl mode: sh ***

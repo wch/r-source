@@ -25,8 +25,9 @@ log1p(x)
   The general form \code{log(x, base)} computes logarithms with base
   \code{base} (\code{log10} and \code{log2} are only special cases).
 
-  \code{log1p(x)} computes log\eqn{(1+x)} accurately also for
-  \eqn{|x| \ll 1}{|x| << 1} (and less accurately when x ~= -1).
+  \code{log1p(x)} computes \eqn{\log(1+x)}{log(1+x)} accurately also for
+  \eqn{|x| \ll 1}{|x| << 1} (and less accurately when \eqn{x \approx
+    -1}{x is approximately -1}).
 
   \code{exp} computes the exponential function.
 }

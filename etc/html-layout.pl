@@ -37,7 +37,7 @@ sub html_pagehead
     my ($title, $top, $up, $uptext, $prev, $prevtext, $next, $nextext) = @_;
 
     my $retval = "<HTML><HEAD><TITLE>R: $title</TITLE>" .
-	"<LINK REL=STYLESHEET TYPE=\"text/css\" SRC=\"$top/R.css\">" .
+	"<LINK REL=STYLESHEET TYPE=\"text/css\" HREF=\"$top/R.css\">" .
 	"</HEAD><BODY>\n" .
 	"<h1>$title " .
 	"<img class=toplogo src=\"$top/logo.jpg\" alt=\"[R logo]\"></h1>\n\n" .
@@ -71,7 +71,7 @@ sub html_functionhead
     my ($title, $pkgname, $name) = @_;
 
     my $retval = "<HTML><HEAD><TITLE>R: $title</TITLE>\n" .
-	"<LINK REL=STYLESHEET TYPE=\"text/css\" SRC=\"../../../doc/html/R.css\">" .
+	"<LINK REL=STYLESHEET TYPE=\"text/css\" HREF=\"../../R.css\">" .
 	"</HEAD><BODY>\n\n";
 
     if($pkgname){

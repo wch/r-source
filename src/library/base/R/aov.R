@@ -25,9 +25,9 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
     } else {
         ##  helmert contrasts can be helpful: do we want to force them?
         ##  this version does for the Error model.
-        cons <- options("contrasts")
+        opcons <- options("contrasts")
         options(contrasts=c("contr.helmert", "contr.poly"))
-        on.exit(options(cons))
+        on.exit(options(opcons))
         allTerms <- Terms
         errorterm <-  attr(Terms, "variables")[[1 + indError]]
         eTerm <- deparse(errorterm[[2]])
@@ -39,7 +39,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         ecall$qr <- TRUE
         ecall$contrasts <- NULL
         er.fit <- eval(ecall, sys.frame(sys.parent()))
-        options(cons)
+        options(opcons)
         nmstrata <- attr(terms(er.fit),"term.labels")
         if(intercept) nmstrata <- c("(Intercept)", nmstrata)
         qr.e <- er.fit$qr

@@ -32,12 +32,19 @@ png(filename="Rplot.png", width=480, height=480, pointsize=12)
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
 }
+\note{
+  These devices effectively plot on a hidden screen and then copy the
+  image to the required format.  This means that they have the same
+  colour handling as the actual screen device, and work best if that is
+  set to a 24-bit or 32-bit colour mode.
+}
 
 \author{Guido Masarotto}
 
-\seealso{\code{\link{Devices}}, \code{\link{dev.print}}}
+\seealso{\code{\link{Devices}}, \code{\link{dev.print}},
+  \code{\link{bitmap}}}
 \examples{
 ## copy current plot to a (large) PNG file
-\dontrun{dev.print(png, file="myplot.png", width=1024, height=768}
+\dontrun{dev.print(png, file="myplot.png", width=1024, height=768)}
 }
 \keyword{device}

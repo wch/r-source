@@ -6,6 +6,13 @@ optim <- function(par, fn, gr = NULL,
     fn1 <- function(par) fn(par,...)
     gr1 <- if (!is.null(gr)) function(par) gr(par,...)
     method <- match.arg(method)
+    if((length(lower) > 1 || length(upper) > 1 ||
+       lower[1] != -Inf || upper[1] != Inf)
+       && method != "L-BFGS-B") {
+        warning("bounds can only be used with method L-BFGS-B")
+        method <- "L-BFGS-B"
+    }
+    ## Defaults :
     con <- list(trace = 0, fnscale = 1, parscale = rep(1, length(par)),
                 ndeps = rep(1e-3, length(par)),
                 maxit = 100, abstol = -Inf, reltol=sqrt(.Machine$double.eps),
@@ -16,14 +23,12 @@ optim <- function(par, fn, gr = NULL,
                 tmax = 10, temp = 10.0)
     if (method == "Nelder-Mead") con$maxit <- 500
     if (method == "SANN") con$maxit <- 10000
-    con[names(control)] <- control
+
+    con[(namc <- names(control))] <- control
+    if (method == "L-BFGS-B" &&
+        any(!is.na(match(c("reltol","abstol"), namc))))
+        warning("Method L-BFGS-B uses `factr' (& `pgtol') instead of `reltol' and `abstol'")
     npar <- length(par)
-    if((length(lower) > 1 || length(upper) > 1 ||
-       lower[1] != -Inf || upper[1] != Inf)
-       && method != "L-BFGS-B") {
-        warning("bounds can only be used with method L-BFGS-B")
-        method <- "L-BFGS-B"
-    }
     lower <- as.double(rep(lower, , npar))
     upper <- as.double(rep(upper, , npar))
     res <- .Internal(optim(par, fn1, gr1,

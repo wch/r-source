@@ -34,9 +34,10 @@ plot.acf(acf.obj, ci=0.95, ci.col="blue", ci.type=c("white", "ma"), ...)
 
   \item{na.action}{function to be called to handle missing values.}
 
-  \item{demean}{logical. Should the covariances be about the sample means?}
+  \item{demean}{logical.  Should the covariances be about the sample
+    means?}
 
-  \item{acf.obj}{an object of class \code{acf}.}
+  \item{acf.obj}{an object of class \code{"acf"}.}
 
   \item{ci}{coverage probability for confidence interval.  Plotting of
     the confidence interval is suppressed if \code{ci} is
@@ -45,7 +46,7 @@ plot.acf(acf.obj, ci=0.95, ci.col="blue", ci.type=c("white", "ma"), ...)
   \item{ci.col}{colour to plot the confidence interval lines.}
 
   \item{ci.type}{should the confidence limits assume a white noise
-    input or for lag \code{k} an MA(\code{k-1}) input?}
+    input or for lag \eqn{k} an MA(\eqn{k-1}) input?}
 
   \item{\dots}{graphical parameters.}
 }
@@ -57,7 +58,8 @@ plot.acf(acf.obj, ci=0.95, ci.col="blue", ci.type=c("white", "ma"), ...)
   Function \code{ccf} computes the cross-correlation or
   cross-covariance of two univariate series.
 
-  The generic function \code{plot} has a method for \code{acf} objects.
+  The generic function \code{plot} has a method for objects of class
+  \code{"acf"}.
 }
 \details{
   For \code{type} = \code{"correlation"} and \code{"covariance"}, the
@@ -68,7 +70,7 @@ plot.acf(acf.obj, ci=0.95, ci.col="blue", ci.type=c("white", "ma"), ...)
   \code{lag.max}.
 }
 \value{
-  An object of class \code{acf}, which is a list with the following
+  An object of class \code{"acf"}, which is a list with the following
   elements:
 
   \item{lag}{A three dimensional array containing the lags at which

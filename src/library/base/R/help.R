@@ -6,6 +6,7 @@ index.search <- function(topic, path, file="AnIndex", type="help")
 help <-
     function (topic, offline = FALSE, package = .packages(),
               lib.loc = .lib.loc, verbose = getOption("verbose"),
+              try.all.packages = getOption("help.try.all.packages"),
               htmlhelp = getOption("htmlhelp"))
 {
     htmlhelp <- is.logical(htmlhelp) && htmlhelp
@@ -31,9 +32,10 @@ help <-
             topic <- "matmult"
         type <- if(offline) "latex" else if (htmlhelp) "html" else "help"
         INDICES <-
-            if(missing(lib.loc)) .path.package(package)
+            if(missing(lib.loc))
+                c(.path.package(package, TRUE),
+                  system.file(pkg = package, lib = lib.loc))
             else system.file(pkg = package, lib = lib.loc)
-#        INDICES <- system.file(pkg=package, lib=lib.loc)
         file <- index.search(topic, INDICES, "AnIndex", type)
         if (length(file) && file != "") {
             if (verbose)
@@ -42,6 +44,22 @@ help <-
             if (!offline) {
                 if (htmlhelp) {
                     if(file.exists(file)) {
+                        ofile <- file
+                        base.pos <- match("package:base", search())
+                        if (exists("help.start.has.been.run",
+                                   where=base.pos, mode="logical") &&
+                            get("help.start.has.been.run",
+                                   pos=base.pos, mode="logical")) {
+                        ## we need to use the version in ~/.R if we can.
+                            lnkfile <-
+                                file.path(getenv("HOME"), ".R", "library",
+                                          package, "html",
+                                          paste(topic, "html", sep="."))
+                            if (file.exists(lnkfile)) file <- lnkfile
+                        }
+                        if (file == ofile) {
+                            warning("Using non-linked HTML file: style sheet and hyperlinks may be incorrect")
+                        }
                         file <- paste("file:", file, sep="")
                         if (is.null(getOption("browser")))
                             stop("options(\"browser\") not set")
@@ -113,8 +131,45 @@ help <-
                                "is available"))
             }
         }
-        else
-            stop(paste("No documentation for `", topic, "'", sep = ""))
+        else {
+            if(is.null(try.all.packages) || !is.logical(try.all.packages))
+                try.all.packages <- FALSE
+            if(try.all.packages && missing(package) && missing(lib.loc)) {
+                ## try all the remaining packages
+                packages <- .packages(all.available = TRUE, lib.loc = lib.loc)
+                packages <- packages[is.na(match(packages, .packages()))]
+                pkgs <- libs <- character(0)
+                for (lib in lib.loc)
+                    for (pkg in packages) {
+                        INDEX <- system.file(pkg = pkg, lib = lib)
+                        file <- index.search(topic, INDEX, "AnIndex", "help")
+                        if(length(file) && file != "") {
+                            pkgs <- c(pkgs, pkg)
+                            libs <- c(libs, lib)
+                        }
+                    }
+                if(length(pkgs) == 1) {
+                    cat("  topic `", topic, "' is not in any loaded package\n",
+                        "  but can be found in package `", pkgs,
+                        "' in library `", libs, "'\n", sep = "")
+                } else if(length(pkgs) > 1) {
+                    cat("  topic `", topic, "' is not in any loaded package\n",
+                        "  but can be found in the following packages:\n\n",
+                        sep="")
+                    A <- cbind(package=pkgs, library=libs)
+                    rownames(A) <- 1:nrow(A)
+                    print(A, quote=F)
+                } else {
+                    stop(paste("No documentation for `", topic,
+                               "' in specified packages and libraries",
+                               sep = ""))
+                }
+            } else {
+                    stop(paste("No documentation for `", topic,
+                               "' in specified packages and libraries",
+                               sep = ""))
+            }
+        }
     }
     else if (!missing(package))
         library(help = package, lib = lib.loc, character.only = TRUE)

@@ -10,10 +10,10 @@ subdir = src/scripts
 
 include $(top_builddir)/Makeconf
 
-SCRIPTS_S = BATCH Rdiff Rd2dvi build filename help help.links \
+SCRIPTS_S = BATCH Rdiff Rd2dvi Rd2txt build filename help help.links \
 	maketitle massage-Examples pager
 SCRIPTS_B_IN = COMPILE.in INSTALL.in REMOVE.in Rd2contents.in \
-	Rd2txt.in Rdconv.in Rdindex.in SHLIB.in Sd2Rd.in \
+	Rdconv.in Rdindex.in SHLIB.in Sd2Rd.in \
 	build-help.in check.in
 SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 

@@ -22,11 +22,11 @@ plot.hclust(hclust.obj, labels, hang = 0.1, \dots)
 
   \item{hclust.obj}{an object of the type produced by \code{hclust}.}
 
-  \item{hang}{The fraction of the plot height which labels should hang
+  \item{hang}{The fraction of the plot height by which labels should hang
     below the rest of the plot.
     A negative value will cause the labels to hang down from 0.}
 
-  \item{labels}{A character vector of of labels for the leaves of the
+  \item{labels}{A character vector of labels for the leaves of the
     tree. By default the row names or row numbers of the original data are
     used. If \code{labels=FALSE} no labels at all are plotted.}
 }
@@ -78,7 +78,7 @@ plot.hclust(hclust.obj, labels, hang = 0.1, \dots)
   by the Lance--Williams dissimilarity update formula
   according to the particular clustering method being used.
 
-  An number of different clustering methods are provided.
+  A number of different clustering methods are provided.
   \emph{Ward's} minimum variance method aims at finding compact,
   spherical clusters.  The \emph{complete linkage} method finds
   similar clusters. The \emph{single linkage} method

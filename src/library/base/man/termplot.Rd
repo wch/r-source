@@ -47,7 +47,9 @@ termplot(model, data=model.frame(model), partial.resid=FALSE, rug=FALSE,
 
   It is often necessary to specify the \code{data} argument, because it is
   not possible to reconstruct eg \code{x} from a model frame containing
-  \code{sin(x)}.
+  \code{sin(x)}.  The \code{data} argument must have exactly the same
+  rows as the model frame of the model object so, for example, missing
+  data must  have been removed in the same way.
 }
 \seealso{For (generalized) linear models, \code{\link{plot.lm}} and
   \code{\link{predict.glm}}.}
@@ -60,9 +62,10 @@ model <- glm(y ~ ns(x,6) + z)
 
 par(mfrow=c(2,2)) ## 2 x 2 plots for same model :
 termplot(model, main = paste("termplot( ", deparse(model$call)," ..)"))
-termplot(model, rug=T)
-termplot(model, partial=T, rug= TRUE, main="termplot(..,partial = T, rug = T)")
-termplot(model, partial=T, se = TRUE, main = TRUE)
+termplot(model, rug=TRUE)
+termplot(model, partial=TRUE, rug= TRUE,
+         main="termplot(..,partial = T, rug = T)")
+termplot(model, partial=TRUE, se = TRUE, main = TRUE)
 if(rs) detach("package:splines")
 }
 \keyword{hplot}

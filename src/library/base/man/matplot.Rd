@@ -15,10 +15,10 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL, col = 1:6, \dots)
     rows should match.  If one of them are missing, the other is taken
     as \code{y} and an \code{x} vector of \code{1:n} is used.
     Missing values (\code{NA}s) are allowed.}
-  \item{type}{character string, telling which type of plot (\code{"p"},
-    points; \code{"l"}, lines; \code{"b"}, both; \code{"o"}, overplotted
-    both; \code{"n"}, none; or \code{"h"}, high-density) should be done
-    for each column of \code{y}.  The first character of \code{type}
+  \item{type}{character string (length 1 vector) or vector of 1-character
+    strings indicating the type of plot for each
+    column of \code{y}, see \code{\link{plot}} for all possible
+    \code{type}s.  The first character of \code{type}
     defines the first plot, the second character the second, etc.
     Characters in \code{type} are cycled through; e.g., \code{"pl"}
     alternately plots points and lines.}
@@ -27,11 +27,12 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL, col = 1:6, \dots)
     the second column, etc., even if lines are not plotted for all
     columns. Line types will be used cyclically until all plots are
     drawn.}
-  \item{pch}{character string (length 1 vector) or vector of 1-character
-    strings for plotting-characters.
+  \item{pch}{character string or vector of 1-characters or integers for
+    plotting characters, see \code{\link{points}}.
     The first character is the plotting-character for the first plot,
     the second for the second, etc.  The default is the digits (1
     through 9, 0) then the letters.
+%%__FIXME__ Which of the following is still true; what's the "right" UI ?
 %  To mix special plotting symbols (those specified by integers) and
 %  plotting characters, either use character escapes \code{pch="Xe002"}
 %  or figure out the numeric equivalent of the ASCII character,
@@ -73,13 +74,17 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL, col = 1:6, \dots)
   \code{\link{matrix}}, \code{\link{par}}.
 }
 \examples{
-matplot((-4:5)^2, main = "Quadratic")
+matplot((-4:5)^2, main = "Quadratic") # almost identical to plot(*)
 sines <- outer(1:20, 1:4, function(x, y) sin(x / 20 * pi * y))
-matplot(sines, type = "o", col = rainbow(ncol(sines)))
+matplot(sines, pch = 1:4, type = "o", col = rainbow(ncol(sines)))
 
-x <- 0:100/100
-matplot(x, outer(x, 1:8, function(x, k) sin(k * pi * x)),
-        type = "l", col = 1:8, ylim = c(-2,2))
+x <- 0:50/50
+matplot(x, outer(x, 1:8, function(x, k) sin(k*pi * x)),
+        ylim = c(-2,2), type = "plobcsSh",
+        main= "matplot(,type = \"plobcsSh\" )")
+## pch & type =  vector of 1-chars :
+matplot(x, outer(x, 1:4, function(x, k) sin(k*pi * x)),
+        pch = letters[1:4], type = c("b","p","o"))
 
 data(iris)                  # is data.frame with  `Species' factor
 table(iris$Species)

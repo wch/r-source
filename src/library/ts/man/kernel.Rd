@@ -39,15 +39,15 @@ plot(k)
   named specific kernels. The modified Daniell kernel
   halves the end coefficients (as used by S-PLUS).
   
-  \code{df.kernel} returns the "equivalent degrees of freedom" of a
-  smoothing kernel as defined in Brockwell and Davies (1991), p. 362,
+  \code{df.kernel} returns the ``equivalent degrees of freedom'' of a
+  smoothing kernel as defined in Brockwell and Davies (1991), page 362,
   and \code{bandwidth.kernel} returns the equivalent bandwidth as
   defined in Bloomfield (1991), p. 201, with a continuity correction.
 }
 \value{
   \code{kernel} returns a list with class \code{"tskernel"}, and
   components the coefficients \code{coef} and the kernel dimension
-  \code{m}. An additional attribute is \code{"name"}.
+  \code{m}.  An additional attribute is \code{"name"}.
 }
 \author{A. Trapletti; modifications by B.D. Ripley}
 \seealso{

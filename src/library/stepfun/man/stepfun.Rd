@@ -4,8 +4,8 @@
 fn <- stepfun(x, y, f=0)
 is.stepfun(fn)
 knots(fn)
-plot(fn, \dots)
-print(fn, ...)
+
+print(fn, \dots)
 summary(fn)
 }
 \alias{stepfun}
@@ -43,22 +43,21 @@ summary(fn)
 }
 \value{
   A function of class \code{"stepfun"}, say \code{fn}.
-  There are methods available for
-  summarizing (\code{"summary(.)"}), representing
-  (\code{"print(.)"}) and plotting  (\code{"plot(.)"}, see
+%
+  There are methods available for summarizing (\code{"summary(.)"}),
+  representing (\code{"print(.)"}) and plotting  (\code{"plot(.)"}, see
   \code{\link{plot.stepfun}}) \code{"stepfun"} objects.
 
   The \code{\link{environment}} of \code{fn} contains all the
   information needed;
-%%  \itemize{
-%% have "\ \ " instead of "\item:
-    \ \ \code{"x","y"}: the original arguments;
-    \ \ \code{"n"}: number of knots (x values);
-    \ \ \code{"f"}: continuity parameter;
-    \ \ \code{"yleft", "yright"} the function values \emph{outside} the knots;
-    \ \ \code{"method"} (always \code{== "constant"}; not used, from
-        \code{\link{approxfun}(.)}).
-%%  }
+  \itemize{
+    \item{"x","y"}{the original arguments}
+    \item{"n"}{number of knots (x values)}
+    \item{"f"}{continuity parameter}
+    \item{"yleft", "yright"}{the function values \emph{outside} the knots;}
+    \item{"method"}{(always \code{== "constant"}, from
+      \code{\link{approxfun}(.)}).}
+  }
   The knots are also available by \code{\link{knots}(fn)}.
 }
 \author{
@@ -83,5 +82,5 @@ summary(sfun.2)
 x0 <- seq(0.5,3.5, by = 0.25)
 rbind(x=x0, f.f0 = sfun0(x0), f.f02= sfun.2(x0), f.f1 = sfun1(x0))
 }
-\keyword{iplot}
+\keyword{dplot}
 

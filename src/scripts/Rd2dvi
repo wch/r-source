@@ -1,12 +1,12 @@
 #!/bin/sh
-#  Rd2dvi -- check man pages (*.Rd help files) by LaTeX..
+#  Rd2dvi -- Convert man pages (*.Rd help files) via LaTeX to DVI/PDF.
 #
 # Examples:
 #  R CMD Rd2dvi /path/to/Rsrc/src/library/base/man/Normal.Rd
 #  R CMD Rd2dvi `grep -l "\\keyword{distr" \
 #                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
-revision='$Revision: 1.18 $'
+revision='$Revision: 1.18.4.3 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi ${version}" 
 
@@ -21,7 +21,7 @@ Options:
   -h, --help		print short help message and exit
   --no-clean		do not remove created temporary files
   --no-preview		do not preview generated output file
-  --output=FILE		write output to FILE
+  -o, --output=FILE	write output to FILE
   --pdf			generate PDF output
   --title=NAME		use NAME as the title of the document
   -v, --version		print version info and exit
@@ -33,7 +33,7 @@ start_dir=`pwd`
 
 clean=true
 debug=false
-dvi_ext="dvi"
+out_ext="dvi"
 output=""
 preview=xdvi
 verbose=false
@@ -55,12 +55,20 @@ while test -n "${1}"; do
     --no-preview)
       preview=false ;;
     --pdf)
-      dvi_ext="pdf";
+      out_ext="pdf";
       preview=false;
       R_RD4DVI=${R_RD4PDF:-"ae,hyper"};
       R_LATEXCMD=${PDFLATEX:-pdflatex};;
     --title=*)
       title=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+    -o)
+      if test -n "`echo ${2} | sed 's/^-.*//'`"; then      
+	output="${2}"; shift
+      else
+	echo "ERROR: option \`${1}' requires an argument"
+	exit 1
+      fi
+      ;;
     --output=*)
       output=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     -V|--verbose)
@@ -72,20 +80,21 @@ while test -n "${1}"; do
 done
 
 if test -z "${output}"; then
-  output=Rd2.${dvi_ext}
+  output=Rd2.${out_ext}
 fi
 
 if ${debug}; then set -x; fi
 
-toc="\\Rdcontents{\\R{} objects documented:}"
-if [ ${#} -eq 1 -a -d ${1} ]; then
+toc="\\Rdcontents{\\R{} topics documented:}"
+if [ ${#} -eq 1 -a -d "${1}" ]; then
   if test -d ${1}/man; then
     dir=${1}/man
   else
     dir=${1}
   fi
   ${verbose} "Rd2dvi: \`Rdconv -t latex' ${dir}/ Rd files ..."
-  files=`find ${dir} -name "*.[Rr]d" -print | sort`
+  files=`LC_ALL=C find ${dir} -name "*.[Rr]d" -print | \
+    sed -e '/windows\//d' | sort`
   subj="all in \\file{`echo ${dir} | sed ${file_sed}`}"
   ${verbose} "files = ${files}"
 else
@@ -97,7 +106,6 @@ else
     toc=
   fi
   subj="\\file{`echo ${1} | sed ${file_sed}`}${subj}"
-  ${verbose} "Rd2dvi: Collecting files and \`Rdconv -t latex'ing them ..."
 fi
 
 ${verbose} ""
@@ -130,11 +138,12 @@ cat > ${build_dir}/Rd2.tex <<EOF
 {\\textbf{\\huge ${title}}}
 \\par\\medskip{\\large \\today}
 \\end{center}
-${TOC}
+${toc}
 EOF
 
+echo "Converting Rd files to LaTeX ..."
 for f in ${files}; do
-  ${verbose} ${f}
+  echo ${f}
   R CMD Rdconv -t latex ${f} >> ${build_dir}/Rd2.tex
 done
 
@@ -143,12 +152,13 @@ cat >> ${build_dir}/Rd2.tex <<EOF
 \\end{document}
 EOF
 
+echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
 ${R_LATEXCMD:-latex} Rd2
 ${R_MAKEINDEXCMD:-makeindex} Rd2
 ${R_LATEXCMD:-latex} Rd2
-cp Rd2.${dvi_ext} ../${output}
 cd ${start_dir}
+cp ${build_dir}/Rd2.${out_ext} ${output}
 if ${clean}; then
   rm -rf ${build_dir}
 else

@@ -14,8 +14,8 @@
 \alias{weights.nls}
 \title{Nonlinear Least Squares}
 \usage{
-nls(formula, data, start, control=nls.control(),
-    algorithm="default", trace=F, subset, na.action)
+nls(formula, data, start, control = nls.control(),
+    algorithm = "default", trace = FALSE, subset, na.action)
 }
 %- maybe also `usage' for other objects documented here.
 \arguments{

@@ -55,11 +55,12 @@ install-html:
 	          $(srcdir)/html/search/*.html; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/doc/html/search; \
 	done
-	@if test -f $(top_builddir)/doc/html/search/index.txt \
-	         -a "$(top_builddir)" != "$(rhome)"; then \
-	  $(INSTALL_DATA) $(top_builddir)/doc/html/search/index.txt \
-	                  $(rhome)/doc/html/search; \
-	fi
+	@for f in $(top_builddir)/doc/html/search/index.txt \
+                  $(top_builddir)/doc/html/search/SearchEngine.html; do \
+	  if test -f $${f} -a "$(top_builddir)" != "$(rhome)"; then \
+	    $(INSTALL_DATA) $${f} $(rhome)/doc/html/search; \
+	  fi \
+	done
 install-man:
 	@$(INSTALL_DATA) $(srcdir)/R.1 $(mandir)/man1
 install-message:
@@ -99,8 +100,7 @@ maintainer-clean: distclean
 
 maintainer-build: $(srcdir)/R.1
 $(srcdir)/R.1: $(top_srcdir)/src/scripts/R.sh.in $(srcdir)/R.aux
-	@sed "s@R_HOME_DIR*@`cd $(top_builddir); pwd`@" \
-	  < $(top_srcdir)/src/scripts/R.sh.in > $(top_builddir)/bin/R
+	@(cd $(top_builddir)/src/scripts && $(MAKE) R)
 	@$(HELP2MAN) --include=$(srcdir)/R.aux --no-info --output=$@ \
 	  --name="a language for data analysis and graphics" \
 	  $(top_builddir)/bin/R

@@ -25,9 +25,7 @@
 #include "Startup.h"
 #define PSIGNAL
 #include "psignal.h"
-
-#define CharacterMode (*_imp__CharacterMode)
-#define UserBreak     (*_imp__UserBreak)
+#include "globalvar.h"
 
 extern void cmdlineoptions(int, char **);
 extern void readconsolecfg();
@@ -36,6 +34,7 @@ extern int initapp(int, char **);
 extern void Rf_mainloop(void);
 extern UImode CharacterMode;
 extern int UserBreak;
+extern int R_Interactive;
 
 extern char *getDLLVersion();
 
@@ -69,7 +68,7 @@ int AppMain (int argc, char **argv)
     signal(SIGBREAK, my_onintr);
     initapp(0, NULL);
     readconsolecfg();
-    gl_loadhistory(".Rhistory");
+    if(R_Interactive) gl_loadhistory(".Rhistory");
     Rf_mainloop();
     /* NOTREACHED */
     return 0;

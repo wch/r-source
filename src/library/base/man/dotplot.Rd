@@ -30,9 +30,9 @@ dotplot(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
   \item{gpch}{the plotting character or symbol to be usea for group
     values.}
   \item{bg}{the background color to be used.}
-  \item{color}{the color to be used for points an labels.}
-  \item{gcolor}{the color to be used for group labels and values.}
-  \item{lcolor}{the color to be used for the horizontal lines.}
+  \item{color}{the color(s) to be used for points an labels.}
+  \item{gcolor}{the single color to be used for group labels and values.}
+  \item{lcolor}{the color(s) to be used for the horizontal lines.}
   \item{\dots}{graphical parameters can also be specified as arguments.}
 }
 \value{

@@ -1,10 +1,11 @@
 Building from a source-code library under Windows
 =================================================
 
-If your package has neither C nor Fortran source, see `Simple ports' 
+If your package has no C nor Fortran nor C++ sources, see `Simple ports' 
 near the bottom of this file.
 
-First collect the tools that you need.
+First collect the tools that you need.  There is a `portal' with
+current links at http://www.stats.ox.ac.uk/pub/Rtools/.
 
 We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
 from http://www.mingw.org/ or
@@ -12,20 +13,20 @@ ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
 need suitable versions of make, sh, cat, cp, diff, echo, g(awk),
 mkdir, mv, rm, sed; we have packaged a set at
 http://www.stats.ox.ac.uk/pub/Rtools/tools.zip extracted from the
-cygwin distribution (http://sourceware.cygnus.com/cygwin/mirrors.html)
+cygwin distribution (http://sources.redhat.com/cygwin/mirrors.html)
 or (gzip, tar) compiled from the sources.
 
 BEWARE: `Native' ports of make are _not_ suitable, and the 18 Jan 2000
 cygwin port of make crashes when building packages.  There are also
-problems with version 1.1.1 of the cygwin1.dll and we have used
-version 1.1.2.  To avoid frustration, please use our tool set.
+problems with earlier versions of the cygwin1.dll and we have used
+version 1.1.4.  To avoid frustration, please use our tool set.
 
 
-It is also possible to use the compilers from the cygwin 1.1 release
-with the -mno-cygwin flag.  (You will need the cygwin*, gcc* and
-binutils* bundles. You will need to ensure that you have only one
+It may also be possible to use the compilers from the cygwin 1.1
+release with the -mno-cygwin flag.  (You will need the cygwin*, gcc*
+and binutils* bundles. You will need to ensure that you have only one
 version of cygwin1.dll in your path, and there is one in our tools
-distribution.)  
+distribution.)
 
 We have also successfully used the variant of mingw32 that uses the
 MSVCRT run-time system, and in the case of the mclust library we found
@@ -153,6 +154,11 @@ If you build a debug version of the DLL in the development
 environment, you can debug the DLL code there just by setting the
 executable to be debugged as the full path to the R front-end.
 
+Extra care is needed when referencing variables (rather than
+functions) exported from R.dll.  These must be declared
+__declspec(dllimport).  A list of the relevant variables is in the
+file `exported-vars'.
+
 
 Using Borland C++
 =================
@@ -160,7 +166,7 @@ Using Borland C++
 Borland C++5.5 is available as a free download from
 http://www.borland.com/bcppbuilder/freecompiler/ and as part of C++
 Builder 5.  The following will make convolve.dll from convolve.c (flag
--6 optimizes for a Pentium Pro/II/III)
+-6 optimizes for a Pentium Pro/II/III, and -u- removes extra underscores)
 
 bcc32 -u- -6 -O2 -WDE convolve.c
 
@@ -170,15 +176,22 @@ using
 implib R.lib R.def
 
 and then add R.lib to the bcc32 command line, for example (from
-`S Programming')
+Venables & Ripley's `S Programming')
 
 bcc32 -u- -6 -O2 -WDE -I\R\rw1010\src\include VCrndR.c R.lib
+
+We presume further steps are needed to reference variables (as
+distinct from functions) exported from R.dll, but have not
+investigated.
 
 
 Using other compilers and languages
 ===================================
 
-To use C++ see the section in the R for Windows FAQ.
+To use C++ see the section in the R for Windows FAQ.  You can include
+C++ code in packages as from R 1.1.1, and the supplied Makefiles will
+compile with g++ and link the DLL using g++ (and hence link against
+libstc++.a).
 
 For other compilers you will need to arrange to produce a DLL with
 cdecl (also known as _cdecl or __cdecl) linkage.  The mingw32 port
@@ -197,12 +210,17 @@ Care is needed in passing character strings to and from a DLL by .C:
 they must be equivalent to the C type char** and null-terminated.  Not
 even the mingw32 g77 Fortran uses null-terminated strings.
 
+WARNING: DLLs made with some compilers reset the FPU in their
+startup code (Delphi is one), and this will cause operations such as 0./0.
+to crash R.  You can re-set the FPU to the correct values by a call
+to the C entry point Rwin_fpset().
+
 
 Simple Ports
 ============
 
-If your package has neither C nor Fortran source, several steps can
-be omitted.
+If your package has no C nor Fortran not C++ sources, several steps
+can be omitted.
 
 You will need 
 

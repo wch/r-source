@@ -3,7 +3,8 @@
 \usage{
 text (x, \dots)
 text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
-              pos = NULL, offset = 0.5, vfont = NULL, \dots)
+       pos = NULL, offset = 0.5, vfont = NULL,
+       cex = 1, col = NULL, font = NULL, xpd = NULL, \dots)
 }
 \alias{text}
 \alias{text.default}
@@ -26,8 +27,14 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
   \item{vfont}{if a character vector of length 2 is specified, then Hershey
     vector fonts are used.  The first element of the vector
     selects a typeface and the second element selects a style.}
-  \item{\dots}{further graphical parameters (from \code{\link{par}}),
-    such as \code{cex}, etc.}
+  \item{cex}{numeric \bold{c}haracter \bold{ex}pansion factor; multiplied
+    by \code{\link{par}("cex")} yields the final character size.}
+  \item{col, font}{the color and font to be used; these default to the
+    values of the global graphical parameters in \code{\link{par}()}.}
+  \item{xpd}{(where) should clipping take place?  Defaults to
+    \code{\link{par}("xpd")}.}
+  \item{\dots}{further graphical parameters (from \code{\link{par}}).}
+%% such as ???, etc.
 }
 \description{
   \code{text} draws the strings given in the vector \code{labels} at the

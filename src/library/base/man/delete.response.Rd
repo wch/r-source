@@ -39,7 +39,7 @@ ff <- y ~ z + x + w
 tt <- terms(ff)
 tt
 delete.response(tt)
-drop.terms(tt, 2:3, keep.response = T)
+drop.terms(tt, 2:3, keep.response = TRUE)
 reformulate(attr(tt, "term.labels"))
 }
 \keyword{programming}

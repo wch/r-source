@@ -11,6 +11,7 @@
   USA.  The values for the first six months of 1979 are 7798 7406 8363
   8460 9217 9316.
 }
+\usage{data(USAccDeaths)}
 \source{
   P. J. Brockwell and R. A. Davis (1991)
   \emph{Time Series: Theory and Methods.}

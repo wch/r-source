@@ -345,8 +345,11 @@ SEXP FixupVFont(SEXP vfont) {
     return ans;
 }
 
-/* list("label", cex=, col=, font=, vfont=) */
-
+/* GetTextArg() : extract from call and possibly set text arguments
+ *  ("label", cex=, col=, font=, vfont=)
+ *
+ * Called from  do_title()  [only]
+ */
 static void GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
 		    int *pcol, double *pcex, int *pfont, int*pvfont)
 {
@@ -363,6 +366,7 @@ static void GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
 
     switch (TYPEOF(spec)) {
     case LANGSXP:
+    case SYMSXP:
 	UNPROTECT(1);
 	PROTECT(txt = coerceVector(spec, EXPRSXP));
 	break;
@@ -896,7 +900,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	outer = NPC;
     else
 	outer = NIC;
-    
+
     args = CDR(args);
 
     /* Retrieve relevant "par" values. */
@@ -974,7 +978,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* At this point we know the value of "xaxt" and "yaxt" */
     /* so we test to see whether the relevant one is "n". */
     /* If it is, we just bail out at this point. */
-    
+
     if (((side == 1 || side == 3) && dd->gp.xaxt == 'n') ||
 	((side == 2 || side == 4) && dd->gp.yaxt == 'n')) {
 	GRestorePars(dd);
@@ -1203,30 +1207,37 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     if (length(args) < 6)
 	errorcall(call, "too few arguments");
 
-    sx = R_NilValue;            /* -Wall */
-    sy = R_NilValue;            /* -Wall */
-
     /* Required Arguments */
-    sxy = CAR(args);
-    if (isNewList(sxy) && length(sxy) >= 2) {
-	internalTypeCheck(call, sx = VECTOR(sxy)[0], REALSXP);
-	internalTypeCheck(call, sy = VECTOR(sxy)[1], REALSXP);
-    }
-    else if (isList(sxy) && length(sxy) >= 2) {
-	internalTypeCheck(call, sx = CAR(sxy), REALSXP);
-	internalTypeCheck(call, sy = CADR(sxy), REALSXP);
-    }
-    else
-	errorcall(call, "invalid plotting structure");
-    if (LENGTH(sx) != LENGTH(sy))
-	error("x and y lengths differ for plot");
-    n = LENGTH(sx);
-    args = CDR(args);
+#define PLOT_XY_DEALING(subname)				\
+    sx = R_NilValue;            /* -Wall */			\
+    sy = R_NilValue;            /* -Wall */			\
+    sxy = CAR(args);						\
+    if (isNewList(sxy) && length(sxy) >= 2) {			\
+	internalTypeCheck(call, sx = VECTOR(sxy)[0], REALSXP);	\
+	internalTypeCheck(call, sy = VECTOR(sxy)[1], REALSXP);	\
+    }								\
+    else if (isList(sxy) && length(sxy) >= 2) {			\
+	internalTypeCheck(call, sx = CAR(sxy), REALSXP);	\
+	internalTypeCheck(call, sy = CADR(sxy), REALSXP);	\
+    }								\
+    else							\
+	errorcall(call, "invalid plotting structure");		\
+    if (LENGTH(sx) != LENGTH(sy))				\
+	error("x and y lengths differ in" subname "().");	\
+    n = LENGTH(sx);						\
+    args = CDR(args)
+
+    PLOT_XY_DEALING("plot.xy");
 
     if (isNull(CAR(args))) type = 'p';
     else {
-	if (isString(CAR(args)) && LENGTH(CAR(args)) == 1)
-	    type = CHAR(STRING(CAR(args))[0])[0];
+	if (isString(CAR(args)) && LENGTH(CAR(args)) == 1 &&
+	    LENGTH(pch = STRING(CAR(args))[0]) >= 1) {
+	    if(LENGTH(pch) > 1)
+		warningcall(call, "plot type '%s' truncated to first character",
+			    CHAR(pch));
+	    type = CHAR(pch)[0];
+	}
 	else errorcall(call, "invalid plot type");
     }
     args = CDR(args);
@@ -1270,7 +1281,9 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
      * GClip(dd);
      */
 
-    if (type == 'l' || type == 'o') {
+    switch(type) {
+    case 'l':
+    case 'o':
 	/* lines and overplotted lines and points */
 	dd->gp.col = INTEGER(col)[0];
 	xold = NA_REAL;
@@ -1295,9 +1308,11 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    xold = xx;
 	    yold = yy;
 	}
-    }
-    else if (type == 'b' || type == 'c') {
-	/* points connected with broken lines */
+	break;
+
+    case 'b':
+    case 'c': /* broken lines (with points in between if 'b') */
+    {
 	double d, f;
 	d = GConvertYUnits(0.5, CHARS, INCHES, dd);
 	dd->gp.col = INTEGER(col)[0];
@@ -1321,7 +1336,10 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yold = yy;
 	}
     }
-    else if (type == 's') { /* step function  I */
+    break;
+
+    case 's': /* step function  I */
+    {
 	double xtemp[3], ytemp[3];
 	dd->gp.col = INTEGER(col)[0];
 	xold = x[0];
@@ -1342,7 +1360,10 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yold = yy;
 	}
     }
-    else if (type == 'S') { /* step function  II */
+    break;
+
+    case 'S': /* step function  II */
+    {
 	double xtemp[3], ytemp[3];
 	dd->gp.col = INTEGER(col)[0];
 	xold = x[0];
@@ -1363,7 +1384,9 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yold = yy;
 	}
     }
-    else if (type == 'h') { /* h[istogram] (bar plot) */
+    break;
+
+    case 'h': /* h[istogram] (bar plot) */
 	dd->gp.col = INTEGER(col)[0];
 	if (dd->gp.ylog)
 	    yold = dd->gp.usr[2];/* DBL_MIN fails.. why ???? */
@@ -1378,7 +1401,17 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 		GLine(xx, yold, xx, yy, DEVICE, dd);
 	    }
 	}
-    }
+	break;
+
+    case 'p':
+    case 'n': /* nothing here */
+	break;
+
+    default:/* OTHERWISE */
+	errorcall(call, "invalid plot type '%c'", type);
+
+    } /* End {switch(type)} */
+
     if (type == 'p' || type == 'b' || type == 'o') {
 	for (i = 0; i < n; i++) {
 	    xx = x[i];
@@ -1690,9 +1723,14 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* polygon(x, y, col, border) */
+    /* polygon(x, y, col, border, lty, xpd, ...) */
     SEXP sx, sy, col, border, lty, sxpd;
-    int nx=1, ny=1, ncol, nborder, nlty, xpd, i, start=0;
+#ifdef Older
+    int nx=1, ny=1;
+#else
+    int nx;
+#endif
+    int ncol, nborder, nlty, xpd, i, start=0;
     int num = 0;
     double *x, *y, xx, yy, xold, yold;
 
@@ -1702,7 +1740,7 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
     GCheckState(dd);
 
     if (length(args) < 2) errorcall(call, "too few arguments");
-
+#ifdef Older
     if (!isNumeric(CAR(args)) || (nx = LENGTH(CAR(args))) <= 0)
 	errorcall(call, "first argument invalid");
     sx = CAR(args) = coerceVector(CAR(args), REALSXP);
@@ -1715,18 +1753,21 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (ny != nx)
 	errorcall(call, "x and y lengths differ in polygon");
+#else
+    /* (x,y) is checked in R via xy.coords() ; no need here : */
+    sx = CAR(args) = coerceVector(CAR(args), REALSXP);  args = CDR(args);
+    sy = CAR(args) = coerceVector(CAR(args), REALSXP);  args = CDR(args);
+    nx = LENGTH(sx);
+#endif
 
-    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
+    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));	args = CDR(args);
     ncol = LENGTH(col);
-    args = CDR(args);
 
-    PROTECT(border = FixupCol(CAR(args), dd->gp.fg));
+    PROTECT(border = FixupCol(CAR(args), dd->gp.fg));	args = CDR(args);
     nborder = LENGTH(border);
-    args = CDR(args);
 
-    PROTECT(lty = FixupLty(CAR(args), dd->gp.lty));
+    PROTECT(lty = FixupLty(CAR(args), dd->gp.lty));	args = CDR(args);
     nlty = length(lty);
-    args = CDR(args);
 
     sxpd = CAR(args);
     if (sxpd != R_NilValue)
@@ -1736,6 +1777,8 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     GSavePars(dd);
+    RecordGraphicsCall(call);
+    ProcessInlinePars(args, dd);
 
     if (xpd == NA_INTEGER)
 	dd->gp.xpd = 2;
@@ -1788,11 +1831,13 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-
 SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP sx, sy, sxy, txt, adj, pos, cex, col, font, vfont;
-    int i, n, ncex, ncol, nfont, ntxt, xpd;
+/* text(xy, labels, adj, pos, offset,
+ *	vfont, cex, col, font, xpd, ...)
+ */
+    SEXP sx, sy, sxy, sxpd, txt, adj, pos, cex, col, font, vfont;
+    int i, n, npos, ncex, ncol, nfont, ntxt, xpd;
     double adjx = 0, adjy = 0, offset = 0.5;
     double *x, *y;
     double xx, yy;
@@ -1804,27 +1849,13 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (length(args) < 3) errorcall(call, "too few arguments");
 
-    sx = R_NilValue;            /* -Wall */
-    sy = R_NilValue;            /* -Wall */
+    PLOT_XY_DEALING("text");
 
-    sxy = CAR(args);
-    if (isNewList(sxy) && length(sxy) >= 2) {
-	    internalTypeCheck(call, sx = VECTOR(sxy)[0], REALSXP);
-	    internalTypeCheck(call, sy = VECTOR(sxy)[1], REALSXP);
-    }
-    else if (isList(sxy) && length(sxy) >= 2) {
-	    internalTypeCheck(call, sx = CAR(sxy), REALSXP);
-	    internalTypeCheck(call, sy = CADR(sxy), REALSXP);
-    }
-    else
-	errorcall(call, "invalid plotting structure");
-    if (LENGTH(sx) != LENGTH(sy))
-	error("x and y lengths differ for plot");
-    n = LENGTH(sx);
-    args = CDR(args);
-
+    /* labels */ 
     txt = CAR(args);
-    if (!isExpression(txt))
+    if (isSymbol(txt) || isLanguage(txt))
+	txt = coerceVector(txt, EXPRSXP);
+    else if (!isExpression(txt))
 	txt = coerceVector(txt, STRSXP);
     PROTECT(txt);
     if (length(txt) <= 0)
@@ -1850,7 +1881,8 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     PROTECT(pos = coerceVector(CAR(args), INTSXP));
-    for (i = 0; i < length(pos); i++)
+    npos = length(pos);
+    for (i = 0; i < npos; i++)
         if (INTEGER(pos)[i] < 1 || INTEGER(pos)[i] > 4)
 	    errorcall(call, "invalid pos value");
     args = CDR(args);
@@ -1875,9 +1907,11 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     nfont = LENGTH(font);
     args = CDR(args);
 
-    xpd = asLogical(CAR(args));
-    if (xpd == NA_LOGICAL)
-	xpd = dd->gp.xpd; /* was 0 */
+    sxpd = CAR(args); /* xpd: NULL -> par("xpd") */
+    if (sxpd != R_NilValue)
+	xpd = asInteger(sxpd);
+    else
+	xpd = dd->gp.xpd;
     args = CDR(args);
 
     x = REAL(sx);
@@ -1888,6 +1922,8 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     GSavePars(dd);
     RecordGraphicsCall(call);
     ProcessInlinePars(args, dd);
+
+    dd->gp.xpd = (xpd == NA_INTEGER)? 2 : xpd;
 
     GMode(1, dd);
     for (i = 0; i < n; i++) {
@@ -1907,8 +1943,8 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 		dd->gp.font = INTEGER(font)[i % nfont];
 	    else
 		dd->gp.font = dd->dp.font;
-	    if (length(pos) > 0) {
-		switch(INTEGER(pos)[i%length(pos)]) {
+	    if (npos > 0) {
+		switch(INTEGER(pos)[i % npos]) {
 		case 1:
 		    yy = yy - offset;
 		    adjx = 0.5;
@@ -1935,15 +1971,12 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 		GVText(xx, yy, INCHES, CHAR(STRING(txt)[i % ntxt]),
 		       INTEGER(vfont)[0], INTEGER(vfont)[1],
 		       adjx, adjy, dd->gp.srt, dd);
-	    else
-		if (isExpression(txt))
-		    GMathText(xx, yy, INCHES,
-			      VECTOR(txt)[i % ntxt],
-			      adjx, adjy, dd->gp.srt, dd);
-		else
-		    GText(xx, yy, INCHES,
-			  CHAR(STRING(txt)[i % ntxt]),
+	    else if (isExpression(txt))
+		GMathText(xx, yy, INCHES, VECTOR(txt)[i % ntxt],
 			  adjx, adjy, dd->gp.srt, dd);
+	    else
+		GText(xx, yy, INCHES, CHAR(STRING(txt)[i % ntxt]),
+		      adjx, adjy, dd->gp.srt, dd);
 	}
     }
     GMode(0, dd);
@@ -2033,8 +2066,10 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Arg1 : text= */
     text = CAR(args);
-    if (!isExpression(text))
-	text = coerceVector( CAR(args), STRSXP);
+    if (isSymbol(text) || isLanguage(text))
+	text = coerceVector(text, EXPRSXP);
+    else if (!isExpression(text))
+	text = coerceVector(text, STRSXP);
     PROTECT(text);
     n = ntext = length(text);
     if (ntext <= 0)
@@ -2209,7 +2244,7 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 
     outer = asLogical(CAR(args));
     if (outer == NA_LOGICAL) outer = 0;
-    args = CDR(args);    
+    args = CDR(args);
 
     GSavePars(dd);
     RecordGraphicsCall(call);
@@ -2319,7 +2354,7 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	    where = 0;
 	}
 	if (isExpression(xlab))
-	    GMMathText(VECTOR(xlab)[0], 1, vpos + i, where,
+	    GMMathText(VECTOR(xlab)[0], 1, vpos, where,
 		       hpos, 0, dd);
 	else {
 	    n = length(xlab);
@@ -3268,6 +3303,7 @@ SEXP do_playDL(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     if(!isList(theList = CAR(args)))
        errorcall(call, "invalid argument");
+    dd->displayList = theList;
     if (theList != R_NilValue) {
 	ask = dd->gp.ask;
 	dd->gp.ask = 1;

@@ -10,17 +10,18 @@ points.default(x, y=NULL, type="p", pch=1, col="black", bg=NA, cex=1, \dots)
   \item{x, y}{coordinate vectors of points to plot.}
   \item{type}{character indicating the type of plotting; actually any of
     the \code{type}s as in \code{\link{plot}(..)}.}
-  \item{pch}{plotting `character', i.e. symbol to use.  \code{pch} can
+  \item{pch}{plotting ``character'', i.e. symbol to use.  \code{pch} can
     either be a \code{\link{character}} or an integer code for a set of
     graphics symbols.  The full set of S symbols is available with
-    \code{pch=0:18}.
+    \code{pch=0:18}, see the last picture from \code{example(points)},
+    i.e., the examples below. %(currently, \R uses circles instead of octagons).
 
     In addition, there is a special set of \R plotting symbols which
-    can be obtained with \code{pch=19:25} and can be colored and filled
-    with different colors:
+    can be obtained with \code{pch=19:25} and \code{21:25} can be
+    colored and filled with different colors:
     \itemize{
       \item \code{pch=19}: solid circle,
-      \item \code{pch=20}: bullet,
+      \item \code{pch=20}: bullet (smaller circle),
       \item \code{pch=21}: circle,
       \item \code{pch=22}: square,
       \item \code{pch=23}: diamond,
@@ -53,14 +54,14 @@ points(rnorm(200), rnorm(200), col = "red")
 points(rnorm(100)/2, rnorm(100)/2, col = "blue", cex = 1.5)
 
 ##-------- Showing all the extra & some char graphics symbols ------------
-Pex <- 3 ## now (0.90) good for both .Device=="postscript" and "x11"
+Pex <- 3 ## good for both .Device=="postscript" and "x11"
 ipch <- 1:(np <- 25+11); k <- floor(sqrt(np)); dd <- c(-1,1)/2
 rx <- dd + range(ix <- (ipch-1) \%/\% k)
 ry <- dd + range(iy <- 3 + (k-1)-(ipch-1) \%\% k)
 pch <- as.list(ipch)
 pch[25+ 1:11] <- as.list(c("*",".", "o","O","0","+","-",":","|","\%","#"))
-plot(rx, ry, type="n", axes = F, xlab = "", ylab = "",
-     main = paste("plot symbols :  points (..  pch = *, cex =",Pex,")"))
+plot(rx, ry, type="n", axes = FALSE, xlab = "", ylab = "",
+     main = paste("plot symbols :  points (..  pch = *, cex =", Pex,")"))
 abline(v = ix, h = iy, col = "lightgray", lty = "dotted")
 for(i in 1:np) {
   pc <- pch[[i]]

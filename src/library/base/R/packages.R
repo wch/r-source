@@ -107,7 +107,7 @@ package.contents <- function(pkg, lib=.lib.loc){
         return(NA)
     }
 
-    contents <- scan("", file=file, sep="\n", quiet=TRUE)
+    contents <- scan("", file=file, quote="", sep="\n", quiet=TRUE)
     parse.dcf(contents, fields=c("Entry", "Keywords", "Description"))
 }
 
@@ -127,7 +127,7 @@ package.description <- function(pkg, lib=.lib.loc, fields=NULL){
         return(retval)
     }
 
-    contents <- scan("", file=file, sep="\n", quiet=TRUE)
+    contents <- scan("", file=file, quote="", sep="\n", quiet=TRUE)
     parse.dcf(contents, fields=fields, versionfix=TRUE)
 }
 

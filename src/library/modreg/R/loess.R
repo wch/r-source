@@ -166,7 +166,7 @@ simpleLoess <-
 				 double(N),
 				 pseudovalues = double(N),
 				 PACKAGE="modreg")$pseudovalues
-	z <- .C("loess_raw",
+	zz <- .C("loess_raw",
 		as.double(pseudovalues),
 		as.double(x),
 		as.double(weights),
@@ -192,7 +192,7 @@ simpleLoess <-
 		delta2 = double(1),
 		as.integer(0),
 		PACKAGE="modreg")
-	pseudo.resid <- pseudovalues - z$temp
+	pseudo.resid <- pseudovalues - zz$temp
     }
     sum.squares <- if(iterations <= 1) sum(weights * fitted.residuals^2)
     else sum(weights * pseudo.resid^2)
@@ -262,7 +262,7 @@ predLoess <-
 		    as.double(y),
 		    as.double(x),
 		    as.double(x.evaluate),
-		    as.double(weights),
+		    as.double(weights*robust),
 		    as.double(robust),
 		    as.integer(family =="gaussian"),
 		    as.double(span),
@@ -284,7 +284,7 @@ predLoess <-
 		      as.double(y),
 		      as.double(x),
 		      as.double(x.evaluate),
-		      as.double(weights),
+		      as.double(weights*robust),
 		      as.double(span),
 		      as.integer(degree),
 		      as.integer(nonparametric),
@@ -299,7 +299,7 @@ predLoess <-
     }
     else { ## interpolate
 	## need to eliminate points outside original range - not in pred_
-	inside <- matrix(F, M, ncol = D)
+	inside <- matrix(FALSE, M, ncol = D)
 	ranges <- apply(x, 2, range)
 	inside <- (x.evaluate <= rep(ranges[2,], rep(M, D))) &
 	(x.evaluate >= rep(ranges[1,], rep(M, D)))
@@ -447,7 +447,7 @@ loess.smooth <-
 ## panel.smooth is currently defined in ../../base/R/coplot.R :
 ## panel.smooth <-
 ##   function(x, y, span = 2/3, degree = 1, family = c("symmetric", "gaussian"),
-##	   zero.line = F, evaluation = 50, ...)
+##	   zero.line = FALSE, evaluation = 50, ...)
 ## {
 ##   points(x, y, ...)
 ##   lines(loess.smooth(x, y, span, degree, family, evaluation), ...)

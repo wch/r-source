@@ -30,11 +30,13 @@ png(filename="Rplot.png", width=480, height=480, pointsize=12)
 }
 \note{
   These are based on the \code{\link{X11}} device, so the additional
-  arguments to that device work, but are rarely appropriate.
+  arguments to that device work, but are rarely appropriate.  The
+  colour handling will be that of the \code{X11} device in use.
 }
 \author{Guido Masarotto and Brian Ripley}
 
-\seealso{\code{\link{Devices}}, \code{\link{dev.print}}}
+\seealso{\code{\link{Devices}}, \code{\link{dev.print}},
+  \code{\link{bitmap}}}
 \examples{
 ## copy current plot to a PNG file
 \dontrun{dev.print(png, file="myplot.png", width=480, height=480)}

@@ -67,7 +67,7 @@ Rterm --vsize=v --nsize=n
   The defaults for \code{--nsize} and \code{--vsize} can be changed by
   setting the environment variables \code{R_NSIZE} and \code{R_VSIZE}
   respectively, perhaps most conveniently in the file \file{.Renviron}
-  or \file{~/.Renviron}.
+  or \file{\eqn{\sim}{~}/.Renviron}.
 
   When using \code{\link{read.table}}, the memory requirements are in
   fact higher than anticipated, because the file is first read in as one

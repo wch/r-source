@@ -55,6 +55,8 @@
 	o <- rev(order(as.numeric(groups)))
 	x <- x[o]
 	groups <- groups[o]
+        color <- rep(color, length=length(groups))[o]
+        lcolor <- rep(lcolor, length=length(groups))[o]
 	offset <- cumsum(c(0, diff(as.numeric(groups)) != 0))
 	y <- 1:n + 2 * offset
 	ylim <- range(0, y + 2)

@@ -9,7 +9,8 @@
 }
 \usage{
 write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
-            eol = "\n", na = NA, row.names = TRUE, col.names = TRUE)
+            eol = "\n", na = "NA", dec = ".", row.names = TRUE,
+	    col.names = TRUE)
 }
 \arguments{
   \item{x}{the object to be written, typically a data frame.  If not, it
@@ -28,6 +29,7 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
     numeric vector, its elements are taken as the indices of the
     variable (columns) to quote.  In both cases, row and columns names
     are always quoted if they are written.} 
+  \item{dec}{the string to use for decimal points}
   \item{na}{the string to use for missing values in the data.}
   \item{eol}{the character(s) to print at the end of each line (row).}
 }

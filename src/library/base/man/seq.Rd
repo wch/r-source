@@ -17,6 +17,13 @@ seq(from, to, by=)
 seq(from, to, length=)
 seq(along)
 }
+\arguments{
+  \item{from}{starting value of sequence.}
+  \item{to}{(maximal) end value of the sequence.}
+  \item{by}{increment of the sequence.}
+  \item{length}{desired length of the sequence.}
+  \item{along}{take the length from the length of this argument.}
+}
 \details{
   The operator \code{:} and the first \code{seq(.)} form generate the
   sequence \code{from, from+1}, \ldots, \code{to}.
@@ -35,7 +42,7 @@ seq(along)
 }
 \value{
   The result is of \code{mode} \code{"integer"} if \code{from} is
-  (numerically equal to an) integer.
+  (numerically equal to an) integer and \code{by} is not specified.
 }
 \seealso{
   \code{\link{rep}},

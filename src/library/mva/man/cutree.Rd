@@ -18,7 +18,7 @@ cutree(tree, k=NULL, h=NULL)
  overrides \code{h} if both are given.
 }
 \value{
-  \code{cutree} returns an vector with group meberships if \code{k} or
+  \code{cutree} returns a vector with group memberships if \code{k} or
   \code{h} are scalar, otherwise a matrix with group meberships is returned
   where each column corresponds to the elements of \code{k} or \code{h},
   respectively (which are also used as column names).

@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.40 $'
+revision='$Revision: 1.40.2.2 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}"
 
@@ -52,7 +52,7 @@ get_dcf_field () {
 }
   
 
-# get the full path names to all packages contained in $1; modzifies pkgs
+# get the full path names to all packages contained in $1; modifies pkgs
 get_packages () {
   if grep -s "^Contains:" "${1}/DESCRIPTION"; then
     bundlepkg=`get_dcf_field Contains "${1}/DESCRIPTION"`
@@ -147,6 +147,7 @@ fi
 
 if test -d ${lib} -a -w ${lib} || mkdir ${lib} 2> /dev/null; then
   lib=`cd ${lib}; pwd`
+  cp ${R_HOME}/doc/html/R.css ${lib}
 else
   echo "ERROR: cannot write to or create directory \`${lib}'"
   exit 2

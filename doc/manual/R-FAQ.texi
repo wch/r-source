@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-0, 2000/06/12
-@set REL-VERSION 1.1.0
+@set FAQ-VERSION 1.1-8, 2000-08-14
+@set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
 
@@ -198,8 +198,20 @@ Becker, Chambers & Wilks' S (@pxref{What is S?}) and Sussman's
 @uref{http://www.cs.indiana.edu/scheme-repository/home.html, Scheme}.
 Whereas the resulting language is very similar in appearance to S, the
 underlying implementation and semantics are derived from Scheme.
-@xref{What are the differences between R and S?}, for a discussion of
-the differences between R and S.
+@xref{What are the differences between R and S?}, for further details.
+
+The core of R is an interpreted computer language which allows branching
+and looping as well as modular programming using functions.  Most of the
+user-visible functions in R are written in R.  It is possible for the
+user to interface to procedures written in the C, C++, or Fortran
+languages for efficiency.  The R distribution contains functionality for
+a large number of statistical procedures.  Among these are: linear and
+generalized linear models, nonlinear regression models, time series
+analysis, classical parametric and nonparametric tests, clustering and
+smoothing.  There is also a large set of functions which provide a
+flexible graphical environment for creating various kinds of data
+presentations.  Additional modules (``add-on packages'') are available
+for a variety of specific purposes (@pxref{R Add-On Packages}).
 
 R was initially written by @email{Ross.Ihaka@@r-project.org, Ross Ihaka}
 and @email{Robert.Gentleman@@r-project.org, Robert Gentleman}, who are
@@ -387,27 +399,26 @@ distribution is available.  We hope that this will change soon.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2000/06/12:
+@c Linux binaries as of 2000-07-09:
 @c
-@c debian   2.1 i386  1.0.0  Doug Bates
-@c          2.2 i386  1.0.1  Doug Bates
-@c          2.3 i386  1.0.1  Doug Bates
-@c linuxppc 5.0 ppc   1.0.1  Alex Buerkle <buerkle@hawaii.edu>
-@c redhat   6.x alpha 1.0.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.0.1  Martyn Plummer <plummer@iarc.fr>
-@c              sparc 1.0.0  Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
+@c debian   2.2 i386  1.1.0  Doug Bates
+@c          2.3 i386  1.1.0  Doug Bates
+@c linuxppc 5.0 ppc   1.1.0  Alex Buerkle <buerkle@hawaii.edu>
+@c redhat   6.x alpha 1.1.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c              i386  1.1.0  Martyn Plummer <plummer@iarc.fr>
+@c              sparc 1.1.0  Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
 @c suse     5.3 i386  1.0.1  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-@c          6.4 i386  1.0.1  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+@c          6.4 i386  1.1.0  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
-The @file{bin/linux} directory of a CRAN site contains Debian
-2.1/2.2/2.3 packages for the i386 platform (now part of the Debian
-distribution and maintained by Doug Bates), Red Hat 6.x packages for the
-alpha, i386 and sparc platforms (maintained by Naoki Takebayashi, Martyn
-Plummer, and Vin Everett, respectively), SuSE 5.3/6.4 i386 packages by
-Albrecht Gebhardt, and Linuxppc 5.0 RPMs by Alex Buerkle.
+The @file{bin/linux} directory of a CRAN site contains Debian 2.2/2.3
+packages for the i386 platform (now part of the Debian distribution and
+maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386 and
+sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer, and
+Vin Everett, respectively), SuSE 5.3/6.4 i386 packages by Albrecht
+Gebhardt, and Linuxppc 5.0 RPMs by Alex Buerkle.
 
-The @file{bin/osf} directory of a CRAN site contains RPMs for alpha
-systems running Digital Unix 4.0 by Albrecht Gebhardt.
+The @file{bin/osf} directory of a CRAN site contains RPMs by Albrecht
+Gebhardt for alpha systems running Digital Unix 4.0.
 
 @c There are also `tar' distributions for NEXTSTEP on the i386 and m68k
 @c platforms in @file{bin/nextstep/i386} and @file{bin/nextstep/m68k}.
@@ -502,7 +513,8 @@ for linear and nonlinear mixed-effects models.  This has a home page at
 Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in:
 
-@example
+@smallexample
+@group
 @@article@{,
   author =    @{Ross Ihaka and Robert Gentleman@},
   title =     @{R: A Language for Data Analysis and Graphics@},
@@ -512,7 +524,8 @@ implementing R is described in:
   number =    3,
   pages =     @{299--314@}
 @}
-@end example
+@end group
+@end smallexample
 
 @node Citing R, What mailing lists exist for R?, What documentation exists for R?, R Basics
 @section Citing R
@@ -569,8 +582,8 @@ include information on the system and version of R being used.  See
 @ref{R Bugs} for more details.
 
 Archives of the above three mailing lists are made available on the net
-in a monthly schedule via the @file{doc/mail/mail.html} file in CRAN.
-An @HTML{} archive of the lists are available via
+in a monthly schedule via the @file{doc/html/mail.html} file in CRAN.
+Searchable archives of the lists are available via
 @uref{http://www.ens.gu.edu.au/robertk/R/}.
 
 The R Core Team can be reached at @email{r-core@@lists.r-project.org}
@@ -601,6 +614,8 @@ currently being mirrored daily at
 @item @uref{http://cran.dk.r-project.org/}
 @c @uref{http://SunSITE.auc.dk/R/}
 @tab (Denmark)
+@item @uref{http://cran.hu.r-project.org/}
+@tab (Hungary)
 @item @uref{http://cran.it.r-project.org/}
 @c @uref{http://www.stat.unipg.it/pub/stat/statlib/R/CRAN/}
 @tab (Italy)
@@ -662,62 +677,91 @@ Please always use the URL of the master site when referring to CRAN.
 @section What is S?
 
 S is a very high level language and an environment for data analysis and
-graphics.  S was written by Richard A. Becker, John M. Chambers, and
-Allan R. Wilks of AT&T Bell Laboratories Statistics Research Department.
+graphics.  In 1998, the Association for Computing Machinery (ACM)
+presented its Software System Award to John M. Chambers, the principal
+designer of S, for
 
-The primary references for S are two books by the creators of S.
+@quotation
+the S system, which has forever altered the way people analyze,
+visualize, and manipulate data @dots{}
+
+S is an elegant, widely accepted, and enduring software system, with
+conceptual integrity, thanks to the insight, taste, and effort of John
+Chambers.
+@end quotation
+
+The evolution of the S language is characterized by four books by John
+Chambers and coauthors, which are also the primary references for S.
 
 @itemize @bullet
 @item
-Richard A. Becker, John M. Chambers and Allan R. Wilks (1988), ``The New
-S Language,'' Chapman & Hall, London.
+Richard A. Becker and John M. Chambers (1984), ``S.  An Interactive
+Environment for Data Analysis and Graphics,'' Monterey: Wadsworth and
+Brooks/Cole.
 
-This book is often called the ``@emph{Blue Book}''.
+This is also referred to as the ``@emph{Brown Book}'', and of historical
+interest only.
+
+@item
+Richard A. Becker, John M. Chambers and Allan R. Wilks (1988), ``The New
+S Language,'' London: Chapman & Hall.
+
+This book is often called the ``@emph{Blue Book}'', and introduced what
+is now known as S version 2.
+
 @item
 John M. Chambers and Trevor J. Hastie (1992), ``Statistical Models in
-S,'' Chapman & Hall, London. 
+S,''  London: Chapman & Hall.
 
-This is also called the ``@emph{White Book}''.
+This is also called the ``@emph{White Book}'', and introduced S version
+3, which added structures to facilitate statistical modeling in S.
+
+@item
+John M. Chambers (1998), ``Programming with Data,'' New York: Springer,
+ISBN 0-387-98503-4
+(@url{http://cm.bell-labs.com/cm/ms/departments/sia/Sbook/}).
+
+This ``@emph{Green Book}'' describes version 4 of S, a major revision of
+S designed by John Chambers to improve its usefulness at every stage of
+the programming process.
 @end itemize
 
-Version 4 of S, a major revision of S designed by John Chambers to
-improve its usefulness at every stage of the programming process, is
-described in @uref{http://cm.bell-labs.com/cm/ms/departments/sia/Sbook/,
-``Programming with Data''} by John M. Chambers (1998), Springer: New
-York, ISBN 0-387-98503-4.
-
-In 1998, the Association for Computing Machinery (ACM) presented its
-Software System Award to John Chambers for the design of the S system.
-The ACM citation stated that ``S has forever altered the way people
-analyze, visualize, and manipulate data @dots{}.  S is an elegant,
-widely accepted, and enduring software system, with conceptual
-integrity, thanks to the insight, taste, and effort of John Chambers.''
 See @uref{http://cm.bell-labs.com/cm/ms/departments/sia/S/history.html}
-for ``Stages in the Evolution of S''.
+for further information on ``Stages in the Evolution of S''.
 
 There is a huge amount of user-contributed code for S, available at the
 @uref{http://lib.stat.cmu.edu/S/, S Repository} at CMU.
 
-The @uref{http://lib.stat.cmu.edu/S/faq, ``Frequently Asked Questions
-about S''} contains further information about S, but is not up-to-date.
+@c The @uref{http://lib.stat.cmu.edu/S/faq, ``Frequently Asked Questions
+@c about S''} contains further information about S, but is not
+@c up-to-date.
 
 @node What is S-PLUS?, What are the differences between R and S?, What is S?, R and S
 @section What is @sc{S-Plus}?
 
-@SPLUS{} is a value-added version of S sold by Statistical Sciences,
-Inc.@: (now a division of Mathsoft, Inc.).  Based on the S language,
-@SPLUS{} provides functionality in a wide variety of areas, including
-robust regression, modern non-parametric regression, time series,
-survival analysis, multivariate analysis, classical statistical tests,
-quality control, and graphics drivers.  Add-on modules add additional
-capabilities for wavelet analysis, spatial statistics, GARCH models, and
-design of experiments.
+@SPLUS{} is a value-added version of S sold by Mathsoft, Inc.  Based on
+the S language, @SPLUS{} provides functionality in a wide variety of
+areas, including robust regression, modern non-parametric regression,
+time series, survival analysis, multivariate analysis, classical
+statistical tests, quality control, and graphics drivers.  Add-on
+modules add additional capabilities for wavelet analysis, spatial
+statistics, GARCH models, and design of experiments.
 
 See the @uref{http://www.mathsoft.com/splus/, MathSoft @SPLUS{} page}
 for further information.
 
 @node What are the differences between R and S?, Is there anything R can do that S-PLUS cannot?, What is S-PLUS?, R and S
 @section What are the differences between R and S?
+
+We can regard S as a language with three current implementations or
+``engines'', the ``old S engine'' (S version 3; @SPLUS{} 3.x and 4.x),
+the ``new S engine'' (S version 4; @SPLUS{} 5.x and above), and R.
+Given this understanding, asking for ``the differences between R and S''
+really amounts to asking for the specifics of the R implementation of
+the S language, i.e., the difference between the R and S engines.
+
+For the remainder of this section, ``S'' refers to the S engines and not
+the S language.
 
 @menu
 * Lexical scoping::             
@@ -728,9 +772,8 @@ for further information.
 @node Lexical scoping, Models, What are the differences between R and S?, What are the differences between R and S?
 @subsection Lexical scoping
 
-Whereas the developers of R have tried to stick to the S language as
-defined in ``The New S Language'' (Blue Book, see @ref{What is S?}),
-they have adopted the evaluation model of Scheme.
+Contrary to other implementations of the S language, R has adopted the
+evaluation model of Scheme.
 
 This difference becomes manifest when @emph{free} variables occur in a
 function.  Free variables are those which are neither formal parameters
@@ -1001,8 +1044,8 @@ can be specified by @code{y~0}.
 @subsection  Others
 
 Apart from lexical scoping and its implications, R follows the S
-language definition in the Blue Book as much as possible, and hence
-really is an ``implementation'' of S.  There are some intentional
+language definition in the Blue and White Books as much as possible, and
+hence really is an ``implementation'' of S.  There are some intentional
 differences where the behavior of S is considered ``not clean''.  In
 general, the rationale is that R should help you detect programming
 errors, while at the same time being as compatible as possible with S.
@@ -1260,6 +1303,8 @@ the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
 Functions and datasets from the main package of Venables and Ripley,
 ``Modern Applied Statistics with @SPLUS{}''.  Contained in the @file{VR}
 bundle.
+@item Matrix
+A Matrix package.
 @item NISTnls
 A set of test nonlinear least squares examples from NIST, the
 U.S. National Institute for Standards and Technology.
@@ -1455,10 +1500,15 @@ contains
 @table @strong
 @item HTML
 Functions for exporting R objects as @HTML{} tables.
+@item Java
+An interface from R to Java to create and call Java objects and
+methods.
 @item RMySQL
 An interface between R and the MySQL database system.
 @item RPgSQL
 An interface between R and the PostgreSQL database system.
+@item Rstreams
+Binary file stream support functions.
 @item cmprsk
 Estimation, testing and regression modeling of subdistribution functions
 in competing risks.
@@ -1468,6 +1518,8 @@ A small C++ test package.
 Finding D-optimal experimental designs.
 @item dse
 Multivariate time series.
+@item exactDistr
+Exact distributions for rank tests.
 @item foreign
 Functions for reading data stored by statistical software like Minitab,
 SAS, SPSS, etc.
@@ -1479,6 +1531,8 @@ Interface to the NCSA HDF5 library.
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
+@item netCDF
+Read data from netCDF files.
 @item syskern
 Functions for writing code that is OS and R/S independent.
 @item tframe
@@ -1592,6 +1646,7 @@ nnet         Software for feed-forward neural networks with a single
 splines      Regression spline functions and classes
 stepfun      Step functions, including empirical distributions
 survival5    Survival analysis
+tcltk        Interface to Tcl/Tk
 ts           Time series functions
 @end smallexample
 
@@ -1639,10 +1694,10 @@ respectively.
 
 A package consists of a subdirectory containing the files
 @file{DESCRIPTION} and @file{INDEX}, and the subdirectories @file{R},
-@file{data}, @file{exec}, @file{inst}, @file{man}, and @file{src} (some
-of which can be missing).  Optionally the package can also contain
-script files @file{configure} and @file{cleanup} which are executed
-before and after installation.
+@file{data}, @file{exec}, @file{inst}, @file{man}, @file{src}, and
+@file{tests} (some of which can be missing).  Optionally the package can
+also contain script files @file{configure} and @file{cleanup} which are
+executed before and after installation.
 
 @ifclear UseExternalXrefs
 See section ``Creating R packages'' in @cite{Writing R Extensions}, for
@@ -1875,6 +1930,13 @@ When using @code{read.table()}, the memory requirements are in fact
 higher than anticipated, because the file is first read in as one long
 string which is then split again.  Use @code{scan()} if possible in
 case you run out of memory when reading in a large table.
+
+R version 1.2.0 introduces a new ``generational'' garbage collector,
+which will increase the memory available to R as needed.  The interface
+for controlling the generational collector is still experimental and in
+flux.  Currently, the command line arguments and environment variables
+described above can be used to supply minimal values for the sizes of
+the node and vector heaps.
 
 @node Why does sourcing a correct file fail?, How can I set components of a list to NULL?, Why does R run out of memory?, R Miscellania
 @section Why does sourcing a correct file fail?
@@ -2119,7 +2181,7 @@ to get the numbers back.  More efficient, but harder to remember, is
 as.numeric(levels(f))[as.integer(f)]
 @end example
 
-In any case, do not call @code{as.numeric} or their likes directly.
+In any case, do not call @code{as.numeric()} or their likes directly.
 
 @node Are Trellis displays implemented in R?, What are the enclosing and parent environments?, How do I convert factors to numeric?, R Miscellania
 @section Are Trellis displays implemented in R?

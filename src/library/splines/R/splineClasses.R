@@ -1,12 +1,12 @@
-## $Id: splineClasses.R,v 1.1 1999/11/10 21:14:35 bates Exp $
+## $Id: splineClasses.R,v 1.1.18.1 2000/06/21 08:40:30 ripley Exp $
 ##
 ## Classes and methods for determining and manipulating interpolation
 ## splines.
 ## Major classes:
-##   spline - a virtual class of representations of piecewise 
+##   spline - a virtual class of representations of piecewise
 ##            polynomial functions.  The join points of the polynomials
 ##            are called "knots".  The order of the spline is the number
-##            of coefficients in the polynomial pieces. 
+##            of coefficients in the polynomial pieces.
 ##   bSpline - splines represented as linear combinations of B-splines
 ##   polySpline - splines represented as polynomials
 ## Minor classes:
@@ -34,7 +34,7 @@
 ## Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ##
 
-splineDesign <- 
+splineDesign <-
   ## Creates the "design matrix" for a collection of B-splines.
   function(knots, x, ord = 4, derivs = integer(nx))
 {
@@ -72,11 +72,11 @@ splineDesign <-
 
 interpSpline <-
   ## Determine the natural interpolation spline.
-  function(obj1, obj2, bSpline = F, period = NULL, na.action = na.fail)
+  function(obj1, obj2, bSpline = FALSE, period = NULL, na.action = na.fail)
     UseMethod("interpSpline")
 
 interpSpline.default <-
-  function(obj1, obj2, bSpline = F, period = NULL, na.action = na.fail)
+  function(obj1, obj2, bSpline = FALSE, period = NULL, na.action = na.fail)
 {
   frm <- na.action(data.frame(x = as.numeric(obj1), y = as.numeric(obj2)))
   frm <- frm[order(frm$x), ]
@@ -138,7 +138,7 @@ interpSpline.default <-
 }
 
 interpSpline.formula <-
-  function(obj1, obj2, bSpline = F, period = NULL, na.action = na.fail)
+  function(obj1, obj2, bSpline = FALSE, period = NULL, na.action = na.fail)
 {
   form <-  as.formula(obj1)
   if (length(form) != 3) {
@@ -157,12 +157,12 @@ interpSpline.formula <-
   value
 }
 
-periodicSpline <- 
+periodicSpline <-
   ## Determine the periodic interpolation spline.
   function(obj1, obj2, knots, period = 2 * pi, ord = 4)
   UseMethod("periodicSpline")
 
-periodicSpline.default <- 
+periodicSpline.default <-
   function(obj1, obj2, knots, period = 2 * pi, ord = 4)
 {
   x <-  as.numeric(obj1)
@@ -202,7 +202,7 @@ periodicSpline.default <-
   value
 }
 
-periodicSpline.formula <- 
+periodicSpline.formula <-
   function(obj1, obj2, knots, period = 2 * pi, ord = 4)
 {
   form <-  as.formula(obj1)
@@ -218,7 +218,7 @@ periodicSpline.formula <-
     value <-  periodicSpline(as.numeric(eval(form[[3]], local)),
 			     as.numeric(eval(form[[2]], local)),
 			     period = period, ord = ord)
-  } else { 
+  } else {
     value <-  periodicSpline(as.numeric(eval(form[[3]], local)),
 			     as.numeric(eval(form[[2]], local)),
 			     knots = knots, period = period, ord = ord)
@@ -260,7 +260,7 @@ polySpline.bSpline <-
   value
 }
 
-polySpline.nbSpline <- 
+polySpline.nbSpline <-
   function(object, ...)
 {
   value <- NextMethod("polySpline")
@@ -298,7 +298,7 @@ splineOrder.polySpline <-
 
 ## xyVector is a class of numeric vectors that represent responses and
 ## carry with them the corresponding inputs x.  Very similar in purpose
-## to the "track" class in JMC's book draft.  All methods for predict 
+## to the "track" class in JMC's book draft.  All methods for predict
 ## applied to spline objects produce such objects as their value.
 
 xyVector <-
@@ -444,12 +444,12 @@ predict.pbSpline <-
   x.original <- x
   ind <- x < knots[ord]
   if(any(ind)) {
-    x[ind] <- x[ind] + period * (1 + (knots[ord] - x[ind]) %/% 
+    x[ind] <- x[ind] + period * (1 + (knots[ord] - x[ind]) %/%
 				 period)
   }
   ind <- x > knots[ncoeff + 1]
   if(any(ind)) {
-    x[ind] <- x[ind] - period * (1 + (x[ind] - knots[ncoeff + 1]) %/% 
+    x[ind] <- x[ind] - period * (1 + (x[ind] - knots[ncoeff + 1]) %/%
 				 period)
   }
   ind <- order(x)
@@ -514,7 +514,7 @@ predict.ppolySpline <-
   }
   ind <- x > knots[nknot]
   if(any(ind)) {
-    x[ind] <- x[ind] - period * (1 + (x[ind] - knots[nknot]) %/% 
+    x[ind] <- x[ind] - period * (1 + (x[ind] - knots[nknot]) %/%
 				 period)
   }
   value <- NextMethod("predict")
@@ -537,7 +537,7 @@ plot.spline <-
   do.call("plot", args[unique(names(args))])
 }
 
-print.polySpline <- 
+print.polySpline <-
   function(x, ...)
 {
   coeff <- coef(x)

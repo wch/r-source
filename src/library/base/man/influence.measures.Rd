@@ -70,7 +70,7 @@ hat(xmat)
   \emph{Regression Diagnostics.}
   New York: Wiley.
 
-  Cook, R. D. and Weisber,g S. (1982)
+  Cook, R. D. and Weisberg, S. (1982)
   \emph{Residuals and Influence in Regression.}
   London: Chapman and Hall.
 }

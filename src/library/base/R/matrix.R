@@ -12,7 +12,7 @@ nrow <- function(x) dim(x)[1]
 ncol <- function(x) dim(x)[2]
 
 NROW <- function(x) if(is.array(x)||is.data.frame(x)) nrow(x) else length(x)
-NCOL <- function(x) if(is.array(x)||is.data.frame(x)) ncol(x) else as.integer(1)
+NCOL <- function(x) if(is.array(x) && length(dim(x)) > 1||is.data.frame(x)) ncol(x) else as.integer(1)
 
 rownames <- function(x, do.NULL = TRUE, prefix = "row")
 {

@@ -1,4 +1,4 @@
-### $Id: profile.R,v 1.5 2000/02/20 15:32:13 bates Exp $
+### $Id: profile.R,v 1.5.6.1 2000/06/21 08:40:30 ripley Exp $
 ###
 ### Profiling nonlinear least squares for R
 ###
@@ -45,7 +45,7 @@ profiler.nls <-
                    fittedModel$setVarying()
                    fittedModel$setPars(fittedPars)
                    assign("defaultPars", fittedPars, envir = thisEnv)
-                   assign("defaultVary", rep(T, length(defaultPars)),
+                   assign("defaultVary", rep(TRUE, length(defaultPars)),
                                              envir = thisEnv)
                  } else {
                    if(!missing(params)) {

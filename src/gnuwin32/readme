@@ -2,11 +2,14 @@ R @RVER@ for Windows
 ===================
 
 This distribution contains a binary distribution of R-@RVER@ to run on
-Windows 95, 98, NT4.0 and 2000 on Intel/clone chips. It is designed to be
+Windows 95, 98, NT4.0 and 2000 on Intel/clone chips.  It is designed to be
 as close as possible to the implementation on Unix, but see the list
-of differences below. The port was by Guido Masarotto and Brian Ripley.
+of differences below.  The port was by Guido Masarotto and Brian Ripley.
 
 See the file `CHANGES' for the new features of this version.
+
+[Testing on Windows 2000 has not been extensive, and a few features
+have been reported to not work there.]
 
 
 Installation
@@ -29,12 +32,13 @@ The simplest way to install is to run the installer (double-click on
 the icon for rwinst.exe and navigate its wizard-like pages).
 
 To install manually, unpack @RWVER@b1.zip and @RWVER@b2.zip anywhere you
-like. They will unpack to a directory tree under @RWVER@. The help,
+like.  They will unpack to a directory tree under @RWVER@.  The help,
 compiled HTML, HTML and latex help files are in separate files
 @RWVER@h.zip, @RWVER@ch.zip @RWVER@w.zip and @RWVER@l.zip which should be
-unpacked in the same directory you unpacked @RWVER@b1.zip.  Files
-@RWVER@d1.zip and @RWVER@d2.zip contains PDF versions of the manuals for
-R, which unpack into @RWVER@/doc/manual.
+unpacked in the same directory you unpacked @RWVER@b1.zip.
+
+Files @RWVER@d1.zip and @RWVER@d2.zip contains PDF versions of the
+manuals for R, which unpack into @RWVER@/doc/manual.
 
 You should install at least one of the text help and the compiled HTML help.
 
@@ -47,9 +51,9 @@ There are two executables in @RWVER@\bin:
 GUI:
 
 Rgui.exe runs as a standard Windows GUI executable and provides an R
-console in its own window. It takes the standard R command-line
+console in its own window.  It takes the standard R command-line
 arguments; these are most easily set by making a shortcut to
-...\@RWVER@\bin\rgui.exe and adding the arguments in the Target field.
+...\@RWVER@\bin\Rgui.exe and adding the arguments in the Target field.
 Set the `Start in' field of the shortcut to the directory you want to use
 as the working directory (where workspaces and files are saved and
 loaded from).
@@ -61,16 +65,16 @@ apropos, ls, load, save.image, search.
 
 The `load' menu items (Source R code, Load image) keep track of the
 directory that was last used, and start their dialog boxes from that
-directory the next time they are used. That directory can be made the
+directory the next time they are used.  That directory can be made the
 working directory by the File | Change dir menu item.  All the `save'
 menu items start dialog boxes at the current working directory: this
-includes `Save image' and the various ways to save graphics, as well as
+includes `Save Image' and the various ways to save graphics, as well as
 saving the workspace at the end of the session.
 
-Note that the text help files use the latin1 encoding. To see all the
+Note that the text help files use the latin1 encoding.  To see all the
 characters you must use an appropriate font (European-language True
-Type fonts should be OK). To check if your preferred font has latin1
-capability, try "help(text)" and look at the examples.  [Note: only a
+Type fonts should be OK).  To check if your preferred font has latin1
+capability, try "help(text)" and look at the examples.   [Note: only a
 few help files make use of latin1 characters not contained in the
 standard ASCII set so if you like a font without latin1 capability,
 use it.]
@@ -82,8 +86,9 @@ Rterm.exe will run from a command line such as an MS-DOS or Commands
 Window running the standard shells, command.com (9x) and cmd.exe (NT),
 as well as the ports of bash and tcsh that we use.  Its primary
 purpose is to allow batch operation, but it does provide all the
-facilities needed for interactive use, including simple command-line
-editing.
+facilities needed for interactive use, including command-line editing
+(see the file README.Rterm).  [We have had reports that this does
+not work under Windows 2000.]
 
 Batch use: At its simplest, Rterm.exe can be used in a batch mode by
 commands like
@@ -95,23 +100,24 @@ to run batch jobs.
 
 
 Use with ESS: You can use Rterm.exe to provide inferior R-mode in ESS
-under NTEmacs, for example with ess-5.1.13.  The pager is
+under NTEmacs, for example with ess-5.1.16.  The pager is
 automatically set to "console" so help will be displayed in emacs
-buffers.
+buffers.  [We have had reports that this does not work under Windows
+2000.]
 
 
 GRAPHICS:
 
-The screen device is called windows(). This is launched automatically,
+The screen device is called windows().  This is launched automatically,
 and can also be launched explicitly by windows() or win.graph() (or
 x11()) from both Rgui.exe and Rterm.exe.  A printer device can be
 opened using win.print(), and graphs drawn as metafiles by
 win.metafile().
 
-The graphics device pops up a separate window which has two menus. The
+The graphics device pops up a separate window which has two menus.  The
 device's File menu allows saving or printing or to run dev.off().
 
-The History menu allows the recording of plots. When plots have been
+The History menu allows the recording of plots.  When plots have been
 recorded they can be reviewed by PgUp and PgDn, saved and replaced.
 Recording can be turned on automatically (the Recording item on the
 list) or individual plots can be added (Add or the INS key).
@@ -126,7 +132,7 @@ HELP:
 There are several options for help, depending on which help files you
 installed.
 
-(i) Text help. This is the default, and the fallback option.
+(i) Text help.  This is the default, and the fallback option.
 It will display in the currently set pager (use options(pager=) to change).
 
 (ii) Compiled HTML files.  Set this as the default by
@@ -137,15 +143,15 @@ or later installed and a recent version of Windows or (not Windows
 2000) use the updater hhupd.exe at
 http://msdn.microsoft.com/library/tools/htmlhelp/wkshp/download.htm.
 
-(iii) Windows .hlp files. Set this as the default by
+(iii) Windows .hlp files.  Set this as the default by
 options(winhelp=T) or for individual help items by help(topic,
-winhelp=T).  Full text search is available from the Search tab. The
+winhelp=T).  Full text search is available from the Search tab.  The
 conversion to this format is a little rough, and tables may be
-incomplete. The help on Hershey and Japanese fonts has been omitted.
+incomplete.  The help on Hershey and Japanese fonts has been omitted.
 
 (iv) HTML help to be displayed in your normal browser.  Set this as
 the default by options(htmlhelp=T) or for individual help items by
-help(topic, htmlhelp=T).  Using help.start() sets the browser to the 
+help(topic, htmlhelp=T).  Using help.start() sets the browser to the
 top-level page, from which you can access a search engine.
 
 (v) Latex help files are available for use with help(topic, offline=T).
@@ -165,12 +171,12 @@ exist HOME\.Renviron.
 Many aspects of the console (size, appearance, font, font size,
 colours) can be customized by editing the file etc\Rconsole, and a
 copy with a user's settings can be put in her HOME directory or in the
-working directory. (The exact sequence is to search the directory
+working directory.  (The exact sequence is to search the directory
 pointed to by the first found of the environment variables R_USER then
 HOME then {HOMEDRIVE}{HOMEPATH} then the working directory, finally
 R_HOME\etc.  This also applies to .Renviron and other uses of `HOME'
 in our documentation.)  The file contains a description of the
-settings that can be altered. See also ?Rconsole.
+settings that can be altered.  See also ?Rconsole.
 
 An alternative way to edit the Rconsole file is to use the GUI
 preferences item on the Edit menu in Rgui.exe.  This can change some
@@ -180,26 +186,26 @@ current running console.
 The mapping between Windows fonts and R font's number can be set by
 editing the file etc\Rdevga, and a copy with a user's settings can be
 put in the HOME or working directory (see the description of
-Rconsole). This mapping applies to both the screen device and the
+Rconsole).  This mapping applies to both the screen device and the
 printer device.
 
 Many R defaults can be set in the file R_HOME\etc\Rprofile or a user's
-file .Rprofile. In particular:
+file .Rprofile.  In particular:
 
-- The pager is set by options(pager=). The default is "internal" which
-  brings up a separate console-like window. The internal pager can use
+- The pager is set by options(pager=).  The default is "internal" which
+  brings up a separate console-like window.  The internal pager can use
   a single window or a different window for each topic shown
-  (configurable in Rconsole). Other possibilities we have
+  (configurable in Rconsole).  Other possibilities we have
   used are "notepad" and "pfe32 /v", and "console" to list the files in
-  the console (rgui.exe) or terminal window (rterm.exe).
+  the console (Rgui.exe) or terminal window (Rterm.exe).
 
 
 Adding packages
 ===============
 
 Binaries for many packages are available at
-CRAN/bin/windows/windows-NT/contrib. These are zip files which should
-be unpacked in @RWVER@\library. They are then available for use. You
+CRAN/bin/windows/windows-NT/contrib.  These are zip files which should
+be unpacked in @RWVER@\library.  They are then available for use.  You
 can also use the installer rwinst.exe to selectively unpack the zip
 files.
 
@@ -216,7 +222,7 @@ installed you can (and should in preference) use
 	make indices
 
 Private libraries of packages can be used and can be specified by the
-environment variable R_LIBS. (Separate directories by ";" in this
+environment variable R_LIBS.  (Separate directories by ";" in this
 version.)  They will not be linked to HTML help.  In more detail, to
 use packages installed in directory R:\libraries\gm, set
 
@@ -230,7 +236,7 @@ add the line
 to your .Rprofile or at the end of R_HOME\etc\Rprofile.
 
 To install a package from source code you need the source-package
-distribution @RWVER@sp.zip installed (but not the R sources). This
+distribution @RWVER@sp.zip installed (but not the R sources).  This
 contains detailed instructions.
 
 
@@ -242,12 +248,13 @@ Differences from Unix versions of R
   under NTemacs.
 
 - Command-line editing is always available, but is much simpler than
-  under readline-based input on Unix.
+  under readline-based input on Unix.  For Rgui.exe, see the menu item
+  `Help | Console', for Rterm.exe the file README.Rterm.
 
 - The commands history is always saved between sessions.
 
-- The HTML function and package lists and search datasbase are not
-  re-generated automatically by html.start().  Use link.html.help().
+- The HTML function and package lists and search database are not
+  re-generated automatically by help.start().  Use link.html.help().
 
 - Paths to files can be specified with "/" or "\\".
 
@@ -258,6 +265,24 @@ Differences from Unix versions of R
   See its help page and that of shell().
 
 - graphics device bmp() is available in this version.
+
+
+Using package tcltk
+===================
+
+The package tcltk introduced in version 1.1.0 provides somewhat
+experimental support for building graphical interfaces with Tcl/Tk.  To
+use this you need to install tcl831.exe from dev.scriptics.com, and
+you will need the Tcl and Tk dlls in your path.  Also, you need to set
+the environment variable TCL_LIBRARY, to something like
+c:/Program Files/Tcl/lib/tcl8.3.
+
+How you set environmental variables under Windows is system-dependent,
+but with R you can always use the form
+TCL_LIBRARY="c:/Program Files/Tcl/lib/tcl8.3"
+at the end of the command line or Target field of a shortcut.
+
+The demos(tk*) will work on Windows.
 
 
 Building From Source

@@ -450,7 +450,7 @@ anova.glmlist <- function(object, dispersion=NULL, test=NULL, ...)
     ## construct table and title
 
     table <- data.frame(resdf, resdev, c(NA, -diff(resdf)),
-                        c(NA, pmax(0, -diff(resdev)) ) )
+                        c(NA, -diff(resdev)) )
     variables <- as.character(lapply(object, function(x) {
 	deparse(formula(x)[[3]])} ))
     dimnames(table) <- list(variables, c("Resid. Df", "Resid. Dev", "Df",
@@ -461,14 +461,14 @@ anova.glmlist <- function(object, dispersion=NULL, test=NULL, ...)
     ## calculate test statistic if needed
 
     if(!is.null(test)) {
-	bigmodel <- object[[(rdf <- order(resdf)[1])]]
+	bigmodel <- object[[order(resdf)[1]]]
         dispersion <- summary(bigmodel, dispersion=dispersion)$dispersion
-        df.dispersion <- if (dispersion == 1) Inf else rdf
+        df.dispersion <- if (dispersion == 1) Inf else min(resdf)
 	table <- stat.anova(table=table, test=test,
 			    scale=dispersion, df.scale=df.dispersion,
 			    n=length(bigmodel$residuals))
     }
-    structure(table, heading = title, class= c("anova", "data.frame"))
+    structure(table, heading = title, class = c("anova", "data.frame"))
 }
 
 

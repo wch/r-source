@@ -21,7 +21,7 @@ spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action,
   (and by default plots) the spectral density of the fitted model.
 }
 \value{
-  An object of class \code{\link{spec}}.
+  An object of class \code{"spec"}.
   The result is returned invisibly if \code{plot} is true.
 }
 \references{
@@ -30,7 +30,7 @@ spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action,
 
   Venables, W.N. and Ripley, B.D. (1997) \emph{Modern Applied
     Statistics with S-PLUS.} Second edition. Springer. (Especially
-  p. 448.)
+  page 448.)
 }
 \section{Warning}{
   Some authors, for example Thomson (1990), warn strongly

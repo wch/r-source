@@ -4,6 +4,7 @@ formula.default <- function (x, ...)
     if (!is.null(x$formula))		eval(x$formula)
     else if (!is.null(x$call$formula))	eval(x$call$formula)
     else if (!is.null(x$terms))		x$terms
+    else if (!is.null(attr(x, "formula"))) attr(x, "formula")
     else switch(mode(x),
 		NULL = structure(NULL, class = "formula"),
 		character = formula(eval(parse(text = x)[[1]])),
@@ -208,7 +209,7 @@ na.omit.data.frame <- function(object)
 	    for(ii in 1:d[2])
 		omit <- omit | x[, ii]
     }
-    xx <- object[!omit, , drop = F]
+    xx <- object[!omit, , drop = FALSE]
     if (any(omit)) {
 	temp <- seq(omit)[omit]
 	names(temp) <- row.names(object)[omit]

@@ -4,6 +4,7 @@ index.search <- function(topic, path, file="AnIndex", type="help")
 help <-
     function(topic, offline = FALSE, package = .packages(),
              lib.loc = .lib.loc, verbose = getOption("verbose"),
+             try.all.packages = getOption("help.try.all.packages"),
              chmhelp = getOption("chmhelp"), htmlhelp = getOption("htmlhelp"),
              winhelp = getOption("winhelp"))
 {
@@ -32,9 +33,10 @@ help <-
             topic <- "matmult"
         type <- if(offline) "latex" else if (htmlhelp) "html" else "help"
         INDICES <-
-            if(missing(lib.loc)) .path.package(package)
+            if(missing(lib.loc))
+                c(.path.package(package, TRUE),
+                  system.file(pkg = package, lib = lib.loc))
             else system.file(pkg = package, lib = lib.loc)
-#        INDICES <- system.file(pkg=package, lib=lib.loc)
         file <- index.search(topic, INDICES, "AnIndex", type)
         if (length(file) && file != "") {
             if (verbose)
@@ -136,7 +138,7 @@ help <-
                                  '"', sep="")
                     texpath <- gsub("\\\\", "/",
                                     file.path(R.home(), "doc", "manual"))
-                    system(paste(cmd, FILE, topic, texpath), wait=F)
+                    system(paste(cmd, FILE, topic, texpath), wait = FALSE)
                     return(invisible())
                 }
                 else
@@ -144,8 +146,45 @@ help <-
                                "is available"))
             }
         }
-        else
-            stop(paste("No documentation for `", topic, "'", sep = ""))
+        else {
+            if(is.null(try.all.packages) || !is.logical(try.all.packages))
+                try.all.packages <- FALSE
+            if(try.all.packages && missing(package) && missing(lib.loc)) {
+                ## try all the remaining packages
+                packages <- .packages(all.available = TRUE, lib.loc = lib.loc)
+                packages <- packages[is.na(match(packages, .packages()))]
+                pkgs <- libs <- character(0)
+                for (lib in lib.loc)
+                    for (pkg in packages) {
+                        INDEX <- system.file(pkg = pkg, lib = lib)
+                        file <- index.search(topic, INDEX, "AnIndex", "help")
+                        if(length(file) && file != "") {
+                            pkgs <- c(pkgs, pkg)
+                            libs <- c(libs, lib)
+                        }
+                    }
+                if(length(pkgs) == 1) {
+                    cat("  topic `", topic, "' is not in any loaded package\n",
+                        "  but can be found in package `", pkgs,
+                        "' in library `", libs, "'\n", sep = "")
+                } else if(length(pkgs) > 1) {
+                    cat("  topic `", topic, "' is not in any loaded package\n",
+                        "  but can be found in the following packages:\n\n",
+                        sep="")
+                    A <- cbind(package=pkgs, library=libs)
+                    rownames(A) <- 1:nrow(A)
+                    print(A, quote=F)
+                } else {
+                    stop(paste("No documentation for `", topic,
+                               "' in specified packages and libraries",
+                               sep = ""))
+                }
+            } else {
+                    stop(paste("No documentation for `", topic,
+                               "' in specified packages and libraries",
+                               sep = ""))
+            }
+        }
     }
     else if (!missing(package))
         library(help = package, lib = lib.loc, character.only = TRUE)

@@ -14,12 +14,11 @@ matplot <- function(x, y, type="p",
 		    xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL,
 		    ..., add= FALSE, verbose = getOption("verbose"))
 {
-    types <- c("p", "l", "b", "o", "h", "n")
     paste.ch <- function(chv) paste('"',chv,'"', sep="", collapse=" ")
-    str2vec <- function(string)
-	if((nch <- nchar(string))>1) substr(rep(string[1], nch), 1:nch, 1:nch)
-	else string
-    ##--- These are from  plot.default ----
+    str2vec <- function(string) {
+	if(nchar(string)[1] > 1) strsplit(string[1], NULL)[[1]] else string
+    }
+    ## These from plot.default :
     xlabel <- if (!missing(x)) deparse(substitute(x))  else NULL
     ylabel <- if (!missing(y)) deparse(substitute(y))  else NULL
     ##
@@ -30,7 +29,6 @@ matplot <- function(x, y, type="p",
 	y <- x;		ylabel <- xlabel
 	x <- 1:NROW(y); xlabel <- ""
     }
-    ##
     kx <- ncol(x <- as.matrix(x))
     ky <- ncol(y <- as.matrix(y))
     n <- nrow(x)
@@ -41,17 +39,18 @@ matplot <- function(x, y, type="p",
     if(kx == 1) x <- matrix(x, nrow = n, ncol = ky)
     if(ky == 1) y <- matrix(y, nrow = n, ncol = kx)
     k <- max(kx,ky)## k == kx == ky
+
     type <- str2vec(type)
-    do.points <- any(type=='p') || any(type=='o')
-    if(do.points) {
-	if(is.null(pch)) pch <- c(paste(c(1:9,0)),letters)[1:k]
-	else if(is.character(pch)) pch <- str2vec(pch)
-    }
+    if(is.null(pch))
+        pch <- c(paste(c(1:9,0)),letters)[1:k]
+    else if(is.character(pch))
+        pch <- str2vec(pch)
+    ## else pch is numeric supposedly
     if(verbose)
 	cat("matplot: doing ", k, " plots with ",
 	    paste(" col= (", paste.ch(col), ")", sep=''),
-	    if(do.points) paste(" pch= (", paste.ch(pch), ")", sep=''),
-	    " ...\n\n")
+            paste(" pch= (", paste.ch(pch), ")", sep=''),
+            " ...\n\n")
     ii <- match("log", names(xargs <- list(...)), nomatch = 0)
     log <- if (ii == 0) NULL else xargs[[ii]]
     xy <- xy.coords(x, y, xlabel, ylabel, log=log)
@@ -73,11 +72,7 @@ matplot <- function(x, y, type="p",
 	     lty=lty[1], lwd=lwd[1], pch=pch[1], col=col[1], cex=cex[1], ...)
     }
     for (i in ii) {
-	tp <- type[i]
-	if(tp=='l' || tp=='b'|| tp=='o'|| tp=='h')
-	    lines(x[,i],y[,i], type=tp,
-		  lty=lty[i], lwd=lwd[i],pch=pch[i],col=col[i], cex=cex[i])
-	if(do.points && tp=='p')
-	    points(x[,i],y[,i], pch=pch[i], col=col[i], cex=cex[i])
+        lines(x[,i], y[,i], type=type[i], lty=lty[i],
+              lwd=lwd[i], pch=pch[i], col=col[i], cex=cex[i])
     }
 }

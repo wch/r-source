@@ -13,7 +13,7 @@
 
 <body>
 <h1 align="center">R for Windows FAQ</h1>
-<h2>Version for <tt>rw1010</tt></h2>
+<h2>Version for <tt>rw1011</tt></h2>
 <address>B. D. Ripley</address>
 <p><p><hr><p>
 
@@ -86,7 +86,7 @@ that version. The main R FAQ can be found at
 
 <p>The information here applies only to recent versions of R for Windows,
 (<code>rw1000</code> or later); the current version is often called something like
-<code>rw1010</code> (although not officially).
+<code>rw1011</code> (although not officially).
 
 <p><hr>
 
@@ -455,9 +455,9 @@ Rdevga, and use them by
 <h2>6.2 I don't see characters with accents at the R console, for example in ?text.</h2>
 
 <p>You need to specify a font in Rconsole (see Q4.2) that supports latin1
-encoding. The default, Courier New, does on our systems, as does FixedSys. 
-This may be a problem in other locales, especially for non-Western European
-languages.
+encoding. The default, <code>Courier New</code>, does on our systems, as does
+<code>FixedSys</code>.  This may be a problem in other locales, especially for
+non-Western European languages.
 
 <a name="The%20output%20to%20the%20console%20seems%20to%20be%20delayed"></a>
 
@@ -569,7 +569,7 @@ the <code>cygwin gdb</code> was able to catch but which terminated the
 
 <p>If you have an X server available on the PC, there is a version of
 <code>DDD</code> available that runs under the cygwin emulation layer (follow
-the links at <a href="http://sourceware.cygnus.com/cygwin">http://sourceware.cygnus.com/cygwin</a>) and provides a
+the links at <a href="http://sources.redhat.com/cygwin">http://sources.redhat.com/cygwin</a>) and provides a
 graphical user interface to <code>gdb</code>.  Another (Windows-native) GUI
 for <code>gdb</code> is <code>Insight</code>, part of the latest <code>cygwin</code>
 version of <code>gdb</code>
@@ -586,11 +586,17 @@ version of <code>gdb</code>
 <p>(b) Include the C++ libraries in the link to make the DLL. Suppose
 <code>X.cc</code> contains your C++ code, and <code>X_main.cc</code> is the wrapper,
 as in the example in `<em>Writing R Extensions</em>'. Then build the DLL by
-(<code>gcc-2.95.x</code>)
+(<code>gcc-2.95</code>)
 
 <pre>g++ -c X.cc X_main.cc
 dlltool --export-all-symbols --output-def X.def X_main.o
 dllwrap -o X.dll --def X.def X.o X_main.o -lstdc++
+</pre>
+
+<p>or if you have <code>--shared</code> (<code>mingw32 gcc-2.95.1</code> or
+<code>cygwin 1.1</code>)
+
+<pre>g++ -shared -o X.dll X.cc X_main.cc
 </pre>
 
 <p>or (VC++, which requires extension <code>.cpp</code>)
@@ -608,8 +614,12 @@ link /dll /out:X.dll /export:X_main X.obj X_main.obj
 Construction of static variables will occur when the DLL is loaded, and
 destruction when the DLL is unloaded, usually when R terminates.
 
-<p>Note that you may not see the messages from this example in the GUI
+<p>Note that you will not see the messages from this example in the GUI
 console: see the next section.
+
+<p>This example is in package <code>cxx_0.0-0.tar.gz</code> in the
+<code>src/contrib/Devel</code> section on CRAN, and that can be compiled as
+package in the usual way on Windows.
 
 <a name="The%20output%20from%20my%20C%20code%20disappears."></a>
 

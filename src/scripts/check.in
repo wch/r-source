@@ -2,7 +2,7 @@
 
 # ${R_HOME}/bin/check for checking installed add-on packages
 
-revision='$Revision: 1.3 $'
+revision='$Revision: 1.3.4.2 $'
 version=`set - ${revision}; echo ${2}`
 version="R package checker ${version}
 
@@ -140,17 +140,18 @@ checkpkg () {
     if test -r Makefile; then
       makefiles="${makefiles} -f Makefile"
     fi
-    if test -r Makevars; then
-      makevars="-f Makevars"
-    else
-      makevars="\
-	test-src-1=`ls *.R 2>/dev/null` \
-	test-src-auto=`ls *.Rin 2>/dev/null | sed 's/Rin$/R/'`"
-    fi
     cp * ../${check_dir}
-    cd ../${check_dir}
     echo " Running specific tests in package \`${pkg}' ..."
-    ${MAKE} ${makefiles} ${makevars} R_LIBS=${R_LIBS} all
+    if test -r Makevars; then
+      cd ../${check_dir}
+      ${MAKE} ${makefiles} -f Makevars R_LIBS=${R_LIBS} all
+    else
+      test_src1="`ls *.R 2>/dev/null | sed 's/R$/Rout/'`"
+      test_src2="`ls *.Rin 2>/dev/null | sed 's/Rin$/Rout/'`"
+      test_out=`echo ${test_src1} ${test_src2}`
+      cd ../${check_dir}
+      ${MAKE} ${makefiles} R_LIBS=${R_LIBS} ${test_out}    
+    fi
     if test ${?} -eq 0; then
       echo " OK"
     else
@@ -161,7 +162,11 @@ checkpkg () {
   if ${clean}; then
     cd .. && rm -rf ${check_dir}
   else
-    echo " Results of check are available in directory \`${check_dir}'"
+    if ${use_man}; then 
+      echo " Results of check are available in directory \`${pkg}/${check_dir}'"
+    else
+      echo " Results of check are available in directory \`${check_dir}'"
+    fi
   fi
 }
   

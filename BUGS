@@ -25,14 +25,26 @@ actual reference number, of course!).
 
 Directory:  Accuracy
 
-none
+* PR# 631 *
+Subject: svd error 
+From: =?iso-8859-1?Q?J=F6rg?= Polzehl <polzehl@wias-berlin.de>
+Date: Thu, 10 Aug 2000 16:54:46 +0200
+* PR# 630 *
+Subject: lda and svd error
+From: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
+Date: Thu, 10 Aug 2000 15:13:38 +0200 (CEST)
+* PR# 594 *
+Subject: svd() (Linpack) problems/bug for ill-conditioned matrices
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Wed, 5 Jul 2000 18:32:01 +0200 (CEST)
 
 Directory:  Add-ons
 
-* PR# 563 *
-From: Setzer.Woodrow@epamail.epa.gov
-Date: Tue, 06 Jun 2000 14:21:35 -0400
---gls{nlme}; should formula.default() look for attr(*,"formula") ?
+* PR# 567 *
+Subject: ctest not works
+From: George Diniz <george@cpqam.fiocruz.br>
+Date: Sun, 12 Mar 2000 12:03:45 -0200
+--possibly the RH6.2 Fortran bug
 * PR# 503 *
 Subject: dmvnorm() bug in e1071
 From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
@@ -53,6 +65,11 @@ none
 
 Directory:  Graphics
 
+* PR# 625 *
+Subject: Re: [Rd] Re: [R] problem clipping R postscript plots within latex
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Wed, 2 Aug 2000 21:38:31 +0100 (GMT Daylight Time)
+--Believed to be fixed in 1.2. Patch on r-bugs website.
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -67,22 +84,19 @@ none
 
 Directory:  Installation
 
-* PR# 485 *
-Subject: Install R1.0.0
-From: Lynn Zhang <lyzhang@umich.edu>
-Date: Mon, 13 Mar 2000 16:10:52 -0500 (EST)
-* PR# 467 *
-Subject: Re: [R] Re: R-1.0.0 is released
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 01 Mar 2000 20:26:40 +0100
---followup to PR#466
-* PR# 466 *
-Subject: Re: R-1.0.0 is released
-From: bhoel@server.python.net (Berthold=?iso-8859-1?q?_H=F6llmann?=)
-Date: 01 Mar 2000 16:00:54 +0100
+* PR# 597 *
+Subject: multiply defined symbols
+From: plucas@csd.abdn.ac.uk
+Date: Fri, 7 Jul 2000 12:23:44 +0200 (MET DST)
+--Probably system-specific due to use of fort77
 
 Directory:  Language
 
+* PR# 587 *
+Subject: dim(a <- ...) sets invisible flag erronously
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
+--Not specific to dim: R differs from S for most functions here.
 * PR# 412 *
 Subject: anomalies with call objects
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -94,10 +108,22 @@ Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
 
 Directory:  Low-level
 
+* PR# 551 *
+Subject: Bus Error crash
+From: kjetikj@astro.uio.no
+Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
+--- ??? -- not (yet) reproducible with small examples
+--- after load()ing large objects
+--- on two different DEC alpha versions
 * PR# 545 *
 Subject: Segmentation Fault of unknown cause
 From: kjetikj@astro.uio.no
 Date: Mon, 15 May 2000 16:29:29 +0200 (MET DST)
+* PR# 536 *
+Subject: Problem with match.arg()
+From: kjetikj@astro.uio.no
+Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
+--1.0.0 bug fixed for 1.0.1 ??
 * PR# 505 *
 Subject: interrupted save 
 From: Thomas Lumley <thomas@biostat.washington.edu>
@@ -109,7 +135,22 @@ none
 
 Directory:  Models
 
-none
+* PR# 633 *
+Subject: Possible bug
+From: Agustin Alonso Rodriguez <agusalon@mcr.ucm.es>
+Date: Sun, 13 Aug 2000 20:59:56 +0200
+--ordered factors behave different from Splus when used w/o intercept
+* PR# 628 *
+Subject: Re: [Rd] predict.lm is broken in 1.1.0-patched (2000-August-7)
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Mon, 7 Aug 2000 22:41:50 +0100 (BST)
+--We've fixed the predict() problem, but need to make coef.lm and coef.aov
+--consistent
+* PR# 621 *
+Subject: anova() on three or more objects behaves inconsistently
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Tue, 1 Aug 2000 10:02:18 +0100 (BST)
+--BDR will fix as suggested for 1.2.0
 
 Directory:  Startup
 
@@ -122,26 +163,32 @@ Date: Tue, 14 Mar 2000 10:32:43 +0100 (MET)
 
 Directory:  System-specific
 
+* PR# 592 *
+Subject: tseries bug
+From: przemat@itti.com.pl
+Date: Tue, 4 Jul 2000 14:52:17 +0200 (MET DST)
+--Still broken?
+* PR# 452 *
+Subject: problem with glm
+From: Brad McNeney <mcneney@cs.sfu.ca>
+Date: Fri, 18 Feb 2000 17:51:54 -0800 (PST)
+--Problems on Alpha's with glm. Status unclear
+* PR# 533 *
+Subject: acepack, akima and tripack will not load 
+From: mallen@tntech.edu
+Date: Thu, 4 May 2000 19:18:59 +0200 (MET DST)
+--related to PR#521: probably compiler-specific
+* PR# 521 *
+Subject: akima core dumps on loading
+From: santini@dsi.unimi.it
+Date: Mon, 17 Apr 2000 11:30:41 +0200 (MET DST)
+--Probably compiler-specific
 * PR# 547 *
 Subject: system(.., ignore.stderr = TRUE)  problem on Solaris
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 19 May 2000 21:12:02 +0200 (CEST)
 --redirection of stderr to /dev/null in system occurs before the command
 --is tried on some systems and after on others.
-* PR# 452 *
-Subject: problem with glm
-From: Brad McNeney <mcneney@cs.sfu.ca>
-Date: Fri, 18 Feb 2000 17:51:54 -0800 (PST)
---Problems on Alpha's with glm. Status unclear
-* PR# 521 *
-Subject: akima core dumps on loading
-From: santini@dsi.unimi.it
-Date: Mon, 17 Apr 2000 11:30:41 +0200 (MET DST)
---Probably compiler-specific
-* PR# 490 *
-Subject: R-1.0.0 on alpha/osf1 memory glitch
-From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
-Date: Fri, 17 Mar 2000 11:25:30 +1300 (NZDT)
 * PR# 537 *
 Subject: eigen broken on AIX with R-devel?
 From: Thomas J Vogels <tov@ece.cmu.edu>
@@ -152,21 +199,10 @@ Subject: wsfe bug report just made
 From: mallen@tntech.edu
 Date: Thu, 4 May 2000 19:20:35 +0200 (MET DST)
 --follow up to PR#533
-* PR# 533 *
-Subject: acepack, akima and tripack will not load 
-From: mallen@tntech.edu
-Date: Thu, 4 May 2000 19:18:59 +0200 (MET DST)
---related to PR#521: probably compiler-specific
 
 Directory:  TooMuchAtOnce
 
-* PR# 532 *
-Subject: Bug report -- 1.0.1, HP-UX
-From: Russ Lenth <russell-lenth@uiowa.edu>
-Date: Wed, 03 May 2000 12:15:26 -0500
---1) is a user error.
---2) command-line history has no information
---3) help.start looks like a permissions problem. 
+none
 
 Directory:  Windows
 
@@ -174,36 +210,4 @@ none
 
 Directory:  incoming
 
-* PR# 570 *
-Subject: extra comma in configure
-From: tov@ece.cmu.edu
-Date: Wed, 14 Jun 2000 21:45:35 +0200 (MET DST)
-* PR# 551 *
-Subject: Bus Error crash
-From: kjetikj@astro.uio.no
-Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
-* PR# 536 *
-Subject: Problem with match.arg()
-From: kjetikj@astro.uio.no
-Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
---1.0.0 bug fixed for 1.0.1 ??
-* PR# 565 *
-Subject: Postscript device ignores title if it is too long.
-From: Stephen Eglen <stephen@anc.ed.ac.uk>
-Date: Fri, 9 Jun 2000 09:17:09 +0100 (BST)
-* PR# 564 *
-Subject: "clipping error in x11()"
-From: Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-Date: Wed, 7 Jun 2000 23:06:54 +0200 (MET DST)
-* PR# 567 *
-Subject: ctest not works
-From: George Diniz <george@cpqam.fiocruz.br>
-Date: Sun, 12 Mar 2000 12:03:45 -0200
-* PR# 569 *
-Subject: Typo in the documentation of prcomp.
-From: =?iso-8859-1?q?Bj=F8rn-Helge_Mevik?= <bhm@math.uio.no>
-Date: 14 Jun 2000 14:16:14 +0200
-* PR# 568 *
-Subject: problem with aperm?
-From: Jim Lemon <jim.lemon@uts.edu.au>
-Date: Tue, 13 Jun 2000 13:20:10 +1000
+none

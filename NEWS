@@ -6,6 +6,181 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.1.1
+
+
+NEW FEATURES
+
+    o	data(), example() and help() now search the loaded packages, then
+	in their .lib.loc argument, the latter as pre-0.99.0.  See
+	their help pages for the precise details.
+
+    o	help() has a new argument `try.all.packages' set by the option
+	"help.try.all.packages". If help is not found in the normal
+	path and this is TRUE then a search is made of all packages
+	for possible matches.
+
+    o	Improved detection of Tcl/Tk at configure time.  One can either
+	set configure variables TCLTK_CPPFLAGS and TCLTK_LIBS, or give
+	the locations of the tclConfig.sh and tkConfig.sh scripts via
+	the `--with-tcl-config' and `--with-tk-config' arguments.
+
+    o   prop.trend.test() - test for trend in proportions.
+
+    o   write.table() has new argument `dec' for setting the decimal
+        separator (SPSS/Windows and probably others want commas in
+	continental European locales).
+
+    o   Advance warning: save(, oldstyle=TRUE) will no longer be
+	available after this release.
+
+    o   Symbols can now be coerced to expressions, making
+	as.expression(quote(a)) work
+        
+
+BUG FIXES
+
+    o	data() now works correctly with data-only packages.
+
+    o	Standalone Mathlib can now be made if builddir = srcdir
+	(working around an undocumented autoconf `feature').
+
+    o	Check for pre-1.1.0 saved object .Postscript.options in postscript().
+
+    o	More stringent checks on the arguments to dataentry().
+
+    o   Specifying xlab as an expression now works again.
+
+    o   dev2bitmap() works again.
+
+    o   Numerous uses of `F' and `T' replaced by `FALSE' and `TRUE'.
+
+    o	bxp() now extends `ylim' properly when notch=TRUE (and a
+	notch is more extreme than other stats).
+	Also, varwidth is okay again, see example(split).
+
+    o   Making manuals without making R first now works.
+
+    o	princomp() now works when some eigenvalues are tiny negative
+	values (which are treated as zero).
+
+    o   SearchEngine.html was not installed when builddir != srcdir.
+
+    o	lm.{w}fit(x,y,..) now work when x has no column names.
+	These functions no longer add and subtract n zeros when there's no
+	offset.  They are now documented somewhat.
+
+    o   Some HTML files used src="R.css" instead of href="R.css"
+        causing some browsers to ignore the style sheet. R.css now
+	passes the w3c CSS validator and gives the intended results
+	with Internet Explorer. R.css is copied to all library directories.
+
+    o	The data editor no longer crashes when entries contain more than
+	45 characters, and works correctly if the field width is
+	larger than the window width.
+
+    o	Recording plots used to ignore graphics events before the last
+	replay.
+
+    o	plot(), points(), etc now give warnings and error for invalid
+	`type' arguments.
+
+    o	matplot() now allows the same `type's as plot().
+
+    o	dev.print() and dev.copy2eps() now work when called from a
+	function, such as dev2bitmap().
+
+    o	anova.glmlist works correctly with decreasing models and
+	test="F" now gets the correct residual df.
+
+    o	Functions created (not just edited) with fix() now get
+	environment .GlobalEnv not the body of fix.
+
+    o	Rdconv was ignoring OS-specific parts of the files with some
+	Perl versions. (This did not affect installing packages.)
+
+    o	R CMD check  did not run more than one specific test.
+
+    o	keyword2html omitted items when changing up a level, so
+	the HTML search engine keyword list was missing `data' and
+	`utilities', for example.
+
+    o	aov() with multiple strata was setting some spurious options.
+
+    o	Under UNIX, help(, htmlhelp=TRUE) uses the linked copy of the
+	HTML file in ~/.R if help.start() has been run recently in the
+	session, so the style sheet and hyperlinks should now be found.
+
+    o	dotplot's arguments `color' and `lcolor' are now interpreted
+	correctly if they are vectors of length > 1.  (It is not clear
+	from the help that this was ever intended.)
+
+    o	Error messages of e.g. do.call() are now spaced properly.
+
+    o	summary(.matrix | .data.frame) now respects a `digits' argument.
+
+    o   scan() recognises quoted strings by default again. The default
+	for the quote= argument got set wrongly when it was
+	introduced. They are, however, turned off when using sep="\n",
+	since you probably want unprocessed lines of text in that
+	case.
+
+    o   fixed buglet where scan() would double a character following a
+        terminating quote symbol.
+
+    o	kmeans was failing on vector inputs (although not documented
+	to accept such).
+
+    o   fixes in predict.lm (John Maindonald)
+
+    o   NCOL got confused by 1D arrays, which it now reports have 1
+	column rather than NA.
+
+    o   rep(1:2,c(1,-1)) segfaulted (PR 619)
+
+    o   x[["a"]] <- y rejected some object types for y (e.g.
+        expressions) which were accepted in x$a <- y (PR
+
+    o   data editor froze on empty data frame, and more generally on
+	zero-length cols.
+
+    o   data editor did not handle factors properly in numeric-edit
+        mode.
+
+    o   table() misbehaved on empty (or all-NA) data
+
+    o   data editor now handles empty data frames, allowing data entry
+        to begin with  dd<-edit(data.frame())  or
+	dd<-data.frame() ; fix(dd)
+
+    o   plotting math expressions when specified as a LANGSXP or
+        SYMSXP didn't work in several cases: plot(1,main=quote(a))
+        would segfault and there were problems with title(), text(),
+        and mtext() as well.
+
+    o	optim(): no more segfault for REPORT=0; corrected error msg; ..
+	maxit default is now okay also when "L-*-B" is chosen automatically.
+        Using (abs|rel)tol with that method now gives a warning.
+
+    o	text() did not respect its `xpd' argument, the default of which
+        is still to use par("xpd"); gave a wrong error message in one case.
+
+    o	polygon() had an incorrect documentation and silently disregarded
+	"..." arguments.
+
+    o	predict.loess was giving incorrect results (those for the
+	non-robust fit) in the case of a fit with family = "symmetric"
+	and surface = "direct" and prediction with se = FALSE.  The
+	fitted values were missing for such fits.
+
+    o	Better rendering of ^ and ~ in latex in \code{} (and they should
+	not appear outside code and verbatim sections).
+
+    o   Fixed unterminated string problem with lty (PR 584)
+
+    o   Fixed scoping problem with quasi() family (PR 614)
+
+
 		CHANGES IN R VERSION 1.1.0
 
 
@@ -24,7 +199,7 @@ NEW FEATURES
 	experimental so don't go churning out thousands of lines of
 	GUI code and then blame us for changing the API later on. It does
 	not currently work with GNOME because of event loop differences.
-	See demo(tkttest) and demo(tkdensity). 
+	See demo(tkttest) and demo(tkdensity).
 
     o	Internally using global R_Expressions [getOption("expressions")]
 	dramatically speeds up eval.c.

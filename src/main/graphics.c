@@ -3932,7 +3932,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 		     NA_INTEGER, dd);
 	    break;
 
-	case 18:
+	case 18: /* S filled diamond */
 	    xc = RADIUS * GSTR_0;
 	    GConvert(&x, &y, coords, INCHES, dd);
 	    xx[0] = x;	  yy[0] = y-xc;
@@ -3949,7 +3949,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 	    break;
 
 
-	case 20: /* R Dot */
+	case 20: /* R `Dot' (small circle) */
 	    xc = SMALL * GSTR_0;
 	    GCircle(x, y, coords, xc, dd->gp.col, dd->gp.col, dd);
 	    break;
@@ -4877,10 +4877,10 @@ unsigned int R_ColorTable[COLOR_TABLE_SIZE];
 static unsigned int hexdigit(int digit)
 {
     if('0' <= digit && digit <= '9') return digit - '0';
-    else if('A' <= digit && digit <= 'F') return 10 + digit - 'A';
-    else if('a' <= digit && digit <= 'f') return 10 + digit - 'a';
-    else error("invalid hex digit in color");
-    return digit - '0';	/* never occurs but avoid compiler warnings */
+    if('A' <= digit && digit <= 'F') return 10 + digit - 'A';
+    if('a' <= digit && digit <= 'f') return 10 + digit - 'a';
+    /*else */ error("invalid hex digit in color or lty");
+    return digit; /* never occurs (-Wall) */
 }
 
 #ifdef UNUSED
@@ -5080,38 +5080,38 @@ unsigned int LTYpar(SEXP value, int index)
     int i, code, shift, digit;
 
     if(isString(value)) {
-	for(i = 0; linetype[i].name; i++) {
+	for(i = 0; linetype[i].name; i++) { /* is it the i-th name ? */
 	    if(!strcmp(CHAR(STRING(value)[index]), linetype[i].name))
 		return linetype[i].pattern;
 	}
+	/* otherwise, a string of hex digits: */
 	code = 0;
 	shift = 0;
 	for(p = CHAR(STRING(value)[index]); *p; p++) {
 	    digit = hexdigit(*p);
-	    code = code | (digit<<shift);
-	    shift = shift + 4;
+	    code  |= (digit<<shift);
+	    shift += 4;
 	}
 	return code;
     }
     else if(isInteger(value)) {
 	code = INTEGER(value)[index];
-	if(code==NA_INTEGER || code < 0)
-	    return NA_INTEGER;
-	if (code > 0)
-	    code = (code-1) % nlinetype + 1;
+#define LTY_do_int				\
+	if(code==NA_INTEGER || code < 0)	\
+	    return NA_INTEGER;			\
+	if (code > 0)				\
+	    code = (code-1) % nlinetype + 1;	\
 	return linetype[code].pattern;
+	LTY_do_int;
     }
     else if(isReal(value)) {
 	code = REAL(value)[index];
-	if(!R_FINITE(code) || code < 0)
-	    return NA_INTEGER;
-        if (code > 0)
-	    code = (code-1) % nlinetype + 1;
-	return linetype[code].pattern;
+	LTY_do_int;
+#undef LTY_do_int
     }
-    else error("invalid line type");
-    /*NOTREACHED*/
-    return 0;		/* never occurs but avoid compiler warnings */
+    else {
+	error("invalid line type"); /*NOTREACHED, for -Wall : */ return 0;
+    }
 }
 
 SEXP LTYget(unsigned int lty)
@@ -5121,21 +5121,22 @@ SEXP LTYget(unsigned int lty)
     unsigned char dash[8];
     unsigned int l;
 
-    for(i = 0; linetype[i].name; i++) {
+    for (i = 0; linetype[i].name; i++) {
 	if(linetype[i].pattern == lty)
 	    return mkString(linetype[i].name);
     }
 
     l = lty; ndash = 0;
-    for(i = 0; i < 8 && l & 15; i++) {
+    for (i = 0; i < 8 && l & 15; i++) {
 	dash[ndash++] = l&15;
 	l = l >> 4;
     }
     PROTECT(ans = allocVector(STRSXP, 1));
     STRING(ans)[0] = allocString(ndash);
-    for(i=0 ; i<ndash ; i++) {
+    for (i = 0 ; i < ndash ; i++) {
 	CHAR(STRING(ans)[0])[i] = HexDigits[dash[i]];
     }
+    CHAR(STRING(ans)[0])[ndash] = '\0';
     UNPROTECT(1);
     return ans;
 }

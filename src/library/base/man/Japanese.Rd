@@ -26,7 +26,7 @@
   \url{http://www.gnu.org/software/plotutils/plotutils.html}
 }
 \examples{
-plot(1:9, type="n", axes=F, xlab="", ylab="")
+plot(1:9, type="n", axes=FALSE, xlab="", ylab="")
 box()
 par(cex=3)
 text(4, 2, "\\\\#J2438\\\\#J2421\\\\#J2451\\\\#J2473", vfont=c("serif", "plain"))
@@ -45,7 +45,7 @@ text(8, 8, "English")
 make.table <- function(nr, nc) {
     savepar <- par(mar=rep(0, 4), pty="s")
     plot(c(0, nc*2 + 1), c(0, -(nr + 1)), 
-         type="n", xlab="", ylab="", axes=F)
+         type="n", xlab="", ylab="", axes=FALSE)
     savepar
 }
 
@@ -74,7 +74,7 @@ draw.vf.cell <- function(typeface, fontindex, string, i, nr, raw.string=NULL) {
 make.table2 <- function(nr, nc) {
     savepar <- par(mar=rep(0, 4), pty="s")
     plot(c(0, nc*3 + 1), c(0, -(nr + 1)), 
-         type="n", xlab="", ylab="", axes=F)
+         type="n", xlab="", ylab="", axes=FALSE)
     savepar
 }
 

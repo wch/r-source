@@ -1841,14 +1841,15 @@ number of rows and columns in the matrix @code{A} respectively.
 @findex ncol
 
 @menu
-* Multiplication and inversion::
+* Multiplication::
+* Linear equations and inversion::
 * Eigenvalues and eigenvectors::
 * Singular value decomposition and determinants::
 * Least squares fitting and the QR decomposition::
 @end menu
 
-@node  Multiplication and inversion, Eigenvalues and eigenvectors, Matrix facilities, Matrix facilities
-@subsection Multiplication, inversion and solving linear equations
+@node  Multiplication, Linear equations and inversion, Matrix facilities, Matrix facilities
+@subsection Matrix multiplication
 
 @cindex Matrix multiplication
 The operator @code{%*%} is used for matrix multiplication.
@@ -1908,7 +1909,42 @@ vector as the diagonal entries.  On the other hand @code{diag(M)}, where
 numeric value then @code{diag(k)} is the @code{k} by @code{k} identity
 matrix!
 
-@node Eigenvalues and eigenvectors, Singular value decomposition and determinants, Multiplication and inversion, Matrix facilities
+@node Linear equations and inversion, Eigenvalues and eigenvectors, Multiplication, Matrix facilities
+@subsection Linear equations and inversion
+
+@cindex Linear equations
+@findex solve
+Solving linear equations is the inverse of matrix multiplication.
+When after
+
+@example
+> b <- A %*% x
+@end example
+
+only @code{A} and @code{b} are given, the vector @code{x} is the solution
+of that linear equation system.  In @R{},
+
+@example
+> solve(A,b)
+@end example
+
+solves the system, returning @code{x} (up to some accuracy loss).
+Note that in linear algebra, formally @code{x = A^@{-1@} %*% b} where
+@code{A^@{-1@}} denotes the @emph{inverse} of @code{A}, which can be
+computed by
+
+@example
+solve(A)
+@end example
+
+but rarely is needed.  Numerically, it is both inefficient and unstable to
+compute @code{x <- solve(A) %*% b} instead of @code{solve(A,b)}.
+
+The quadratic form @ @code{x %*% A^@{-1@} %*% x} @
+which is used in multivariate computations, should be computed by something like
+@code{x %*% solve(A,x)}, rather than computing the inverse of @code{A}.
+
+@node Eigenvalues and eigenvectors, Singular value decomposition and determinants, Linear equations and inversion, Matrix facilities
 @subsection Eigenvalues and eigenvectors
 @cindex Eigenvalues and eigenvectors
 
@@ -2638,23 +2674,23 @@ mode character and the remaining two of mode numeric, and the file is
 three vectors as a list, as follows
 
 @example
-> in <- scan("input.dat", list("",0,0))
+> inp <- scan("input.dat", list("",0,0))
 @end example
 
 The second argument is a dummy list structure that establishes the mode
-of the three vectors to be read.  The result, held in @code{in}, is a
+of the three vectors to be read.  The result, held in @code{inp}, is a
 list whose components are the three vectors read in.  To separate the
 data items into three separate vectors, use assignments like
 
 @example
-> label <- in[[1]]; x <- in[[2]]; y <- in[[3]]
+> label <- inp[[1]]; x <- inp[[2]]; y <- inp[[3]]
 @end example
 
 More conveniently, the dummy list can have named components, in which
 case the names can be used to access the vectors read in.  For example
 
 @example
-> in <- scan("input.dat", list(id="", x=0, y=0))
+> inp <- scan("input.dat", list(id="", x=0, y=0))
 @end example
 
 If you wish to access the variables separately they may either be
@@ -4701,20 +4737,10 @@ y ~ B(n, F(beta_0 + beta_1 x))
 $$ y \sim {\rm B}(n, F(\beta_0 + \beta_1 x)) $$
 @end tex
 where for the probit case,
-@ifinfo
-F(z) = Phi(z)
-@end ifinfo
-@tex
-$F(z) = \Phi(z)$
-@end tex
+@eqn{F(z) = \Phi(z), F(z) = Phi(z)}
 is the standard normal distribution function, and in the logit case,
 (the default),
-@ifinfo
-F(z) = e^z/(1+e^z).
-@end ifinfo
-@tex
-$F(z) = e^z/(1+e^z)$.
-@end tex
+@eqn{F(z) = e^z/(1+e^z),F(z) = e^z/(1+e^z)}.
 In both cases the LD50 is
 @ifinfo
 LD50 = - beta_0/beta_1
@@ -4805,12 +4831,7 @@ For all families the variance of the response will depend on the mean
 and will have the scale parameter as a multiplier.  The form of
 dependence of the variance on the mean is a characteristic of the
 response distribution; for example for the poisson distribution
-@ifinfo
-Var(y) = mu.
-@end ifinfo
-@tex
-$\hbox{Var}[y] = \mu$.
-@end tex
+@eqn{\hbox{Var}[y] = \mu,Var(y) = mu}.
 
 For quasi-likelihood estimation and inference the precise response
 distribution is not specified, but rather only a link function and the
@@ -6703,13 +6724,16 @@ Set @code{Rterm} up for use by @code{R-inferior-mode} in ESS.
 When the GNU @strong{readline} library is available at the time @R{} is
 configured for compilation under UNIX, an inbuilt command line editor
 allowing recall, editing and re-submission of prior commands is used.
+Note: this appendix does @strong{not} apply to GNOME interface under
+UNIX, only to the standard command-line interface.
 
 It can be disabled (useful for usage with ESS@footnote{The `Emacs Speaks
 Statistics' package; see the URL @uref{http://ess.stat.wisc.edu/}})
 using the startup option @option{--no-readline}.
 
 Windows versions of @R{} have somewhat simpler command-line editing:
-see @samp{Console} under the @samp{Help} menu of the GUI.
+see @samp{Console} under the @samp{Help} menu of the GUI, and the file
+@file{README.Rterm} for command-line editing under @code{Rterm.exe}
 
 When using @R{} with @strong{readline} capabilities, the functions
 described below are available.

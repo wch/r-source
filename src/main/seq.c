@@ -134,7 +134,7 @@ static SEXP rep2(SEXP s, SEXP ncopy)
     nc = length(ncopy);
     na = 0;
     for (i = 0; i < nc; i++) {
-	if (INTEGER(t)[i] == NA_INTEGER)
+	if (INTEGER(t)[i] == NA_INTEGER || INTEGER(t)[i]<0)
 	    error("invalid number of copies in \"rep\"");
 	na += INTEGER(t)[i];
     }

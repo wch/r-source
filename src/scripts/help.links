@@ -23,7 +23,21 @@ for f in ${R_HOME}/doc/html/search/*; do
 done
 
 rm -f ${PKGLIST}
+rm -f ${SEARCHINDEX}
 cp ${R_HOME}/doc/html/packages-head.html ${PKGLIST}
+
+get_unique () {
+  if test -r ${1}; then
+    x="1"
+    while test -r ${1}.${x}; do
+      x=`echo "$x+1" | bc`
+    done
+    echo ${1}.${x}           
+  else
+    echo $1
+  fi
+}
+     
 
 for lib in $*; do
     echo "<P><h3>Packages in ${lib}</h3>" >> ${PKGLIST}
@@ -31,18 +45,25 @@ for lib in $*; do
     if test -d ${lib}; then
       for pkg in `ls -d ${lib}/* | sed '/CVS$/d; /profile$/d'`; do
 	if test -d ${pkg}; then
-	    rm -f ${USER_R_HOME}/library/${pkg}
-	    ln -s ${pkg} ${USER_R_HOME}/library
 	    pkgname=`basename ${pkg}`
+	    target=`get_unique ${USER_R_HOME}/library/${pkgname}`
+	    targetname=`basename ${target}`
+	    ln -s ${pkg} ${target}	    
 	    if test -r ${pkg}/TITLE; then
 		pkgtitle=`cat ${pkg}/TITLE | sed "s/^${pkgname}//"`
 	    else
 		pkgtitle=""
 	    fi
 	    echo "<TR ALIGN=LEFT VALIGN=TOP>
-		    <TD width=25%><A HREF=\"../../library/${pkgname}/html/00Index.html\">
+		    <TD width=25%><A HREF=\"../../library/${targetname}/html/00Index.html\">
 		    ${pkgname}</A><TD>${pkgtitle}</TD></TR>" \
 		>> ${PKGLIST}
+
+	    cat ${pkg}/CONTENTS | \
+	      sed "s/\/library\/${pkgname}\//\/library\/${targetname}\//;" \
+	      >> ${SEARCHINDEX}
+
+
 	fi
       done
     fi
@@ -51,9 +72,7 @@ for lib in $*; do
 done
 
 cat ${R_HOME}/doc/html/packages-foot.html >> ${PKGLIST}
-
-rm -f ${SEARCHINDEX}
-cat ${USER_R_HOME}/library/*/CONTENTS > ${SEARCHINDEX}
+ln -s ${R_HOME}/doc/html/R.css ${USER_R_HOME}/library
 
 ### Local Variables: ***
 ### mode: sh ***

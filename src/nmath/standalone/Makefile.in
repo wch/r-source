@@ -1,7 +1,7 @@
 #
 # ${R_HOME}/src/nmath/standalone/Makefile
 
-VPATH = @srcdir@/..
+VPATH = @srcdir@:@srcdir@/..
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
@@ -58,23 +58,25 @@ ALL_CFLAGS = $(R_XTRA_CFLAGS) $(SH_CFLAGS) $(CFLAGS)
 
 
 all: Makefile Makedeps archive shared
-archive: Makefile
+archive: Makefile ../../include/Rconfig.h
 	@$(MAKE) Makedeps
 	$(RM) *.o
 	@$(MAKE) $(LIB)
 
-shared: Makefile
+shared: Makefile ../../include/Rconfig.h
 	@$(MAKE) Makedeps
 	$(RM) *.o
 	@SH_CFLAGS=$(CPICFLAGS) $(MAKE) $(SHLIB)
 
+../../include/Rconfig.h:
+	(cd ../../include; $(MAKE) Rconfig.h)
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(SOURCES)
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-Makedeps: Makefile $(DEPENDS)
+Makedeps: Makefile ../../include/Rconfig.h $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
@@ -85,9 +87,6 @@ $(LIB): $(OBJECTS)
 
 $(SHLIB): $(OBJECTS)
 	$(SHLIBLD) $(SHLIBLDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS)
-
-sunif.o: $(srcdir)/sunif.c
-	$(CC) -c -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $<
 
 test: $(srcdir)/test.c
 	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $< -L. -lRmath -lm

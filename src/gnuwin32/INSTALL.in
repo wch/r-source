@@ -25,21 +25,21 @@ ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32.  You will also
 need suitable versions of at least make, sh, cat, cp, cut, diff, echo,
 egrep, expr, g(awk), grep, ls, mkdir, mv, rm, sed, touch; we use those
 from the cygwin distribution
-(http://sourceware.cygnus.com/cygwin/mirrors.html) or (gzip, tar,
+(http://sources.redhat.com/cygwin/mirrors.html) or (gzip, tar,
 makeinfo, texindex) compiled from the sources.  We have packaged a set
 at http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
 
 BEWARE: `Native' ports of make are not suitable (including that at the
 mingw32 site), nor is the make dated 18-Jan-2000 in the Cygwin 1.1 net
-release.  There are also problems with version 1.1.1 of the
-cygwin1.dll and we have used 1.1.2. To avoid frustration, please use
+release.  There have been problems with earlier versions of the
+cygwin1.dll and we have used 1.1.4. To avoid frustration, please use
 our tool set.
 
-It is also possible to use the compilers from the cygwin 1.1 release
-with the -mno-cygwin flag.  (You will need the cygwin*, gcc* and
-binutils* bundles.)   As of R 1.1.0 it is no longer possible to build
-R with the cygwin-b20.1 release, but you will probably be able to use
-that to build packages.  You will need to ensure that you have
+It may also be possible to use the compilers from the cygwin 1.1
+release with the -mno-cygwin flag.  (You will need the cygwin*, gcc*
+and binutils* bundles.)  As of R 1.1.0 it is no longer possible to
+build R with the cygwin-b20.1 release, but you will probably be able
+to use that to build packages.  You will need to ensure that you have
 only one version of cygwin1.dll in your path (and there is one in our
 tools distribution).
 
@@ -148,9 +148,17 @@ Instructions for building a cross-compiler are given at
 
     http://www.nanotech.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
 
-At the time of writing these were somewhat outdated.  Apart from the
-compiler, you need the mingw32 runtime system and a cross-built
-version of binutils 2.9.4.
+At the time of writing these were somewhat outdated.  There is another set
+at
+
+    http://www.devolution.com/%7Eslouken/SDL/Xmingw32/
+
+(There is also a cross-compiler there, but omitting g77 which you
+will need.  Cross-building g77 and the Fortran libraries is the trickiest
+part.)
+
+Apart from the compiler, you need the mingw32 runtime system and a
+cross-built version of binutils 2.9.4.
 
 You will need Perl, zip and unzip installed.
 
@@ -194,10 +202,8 @@ There is no provision to make DVI versions of the manuals, although
 ../../doc/manuals/Makefile.win could easily be edited to do so.
 
 The fptex distribution of TeX (from
-ftp://ftp.ese-metz.fr/pub/tex/win32-beta/fptex-0.4alpha3/ at present)
-includes pdftex and makeinfo 4.0 and texindex (in texinfo.zip).  (The
-cygwin makeinfo, even in release 1.1, is 3.12, but the fptex version
-is supplied in our tools.zip.)
+ftp://ftp.ese-metz.fr/pub/tex/win32-beta/fptex-0.4beta1/ at present)
+includes a suitable port of pdftex.
 
 
 

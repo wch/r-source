@@ -37,7 +37,7 @@ AC_DEFINE_UNQUOTED(R_VENDOR, "${host_vendor}")
 AC_DEFINE_UNQUOTED(R_OS, "${host_os}")
 
 PACKAGE="R"
-VERSION=`cat ${srcdir}/VERSION | cut -d' ' -f1`
+VERSION=`cat ${srcdir}/VERSION | cut -d" " -f1`
 AC_SUBST(PACKAGE)
 AC_SUBST(VERSION)
 
@@ -58,88 +58,58 @@ AC_SUBST(config_opts)
 ## Allow the user to force us to use f2c.
 AC_ARG_WITH(f2c,
   [  --with-f2c              use f2c even if FORTRAN compiler is available],
-  [ if test "${withval}" = no; then
-      use_f2c=false;
-    else
-      use_f2c=true;
-    fi],
+  R_ARG_USE(f2c),
   use_f2c=false)
-
 ## Allow the user to force us to use g77.
 AC_ARG_WITH(g77,
   [  --with-g77              use g77 to compile FORTRAN subroutines],
-  [ if test "${withval}" = no; then
-      use_g77=false;
-    else
-      use_g77=true;
-    fi],
+  R_ARG_USE(g77),
   use_g77=false)
-
 ## Allow the user to force us to use f77.
 AC_ARG_WITH(f77,
   [  --with-f77              use f77 to compile FORTRAN subroutines],
-  [ if test "${withval}" = no; then
-      use_f77=false;
-    else
-      use_f77=true;
-    fi],
+  R_ARG_USE(f77),
   use_f77=false)
 
-## Here we should maybe check that only one of the above options for
-## dealing with FORTRAN were specified.
+## Make sure only one of the above options for Fortran compilers was
+## specified.
+R_ARG_WITH_EXCLUSIVE(f77, g77,
+ [warn_f77_and_g77="--with-f77 and --with-g77 both given!  Using f77 ..."
+  AC_MSG_WARN(${warn_f77_and_g77})
+  use_g77=false])
+R_ARG_WITH_EXCLUSIVE(f77, f2c,
+ [warn_f77_and_f2c="--with-f77 and --with-f2c both given!  Using f77 ..."
+  AC_MSG_WARN(${warn_f77_and_f2c})
+  use_f2c=false])
+R_ARG_WITH_EXCLUSIVE(g77, f2c,
+ [warn_g77_and_f2c="--with-g77 and --with-f2c both given!  Using g77 ..."
+  AC_MSG_WARN(${warn_g77_and_f2c})
+  use_f2c=false])
 
 AC_ARG_WITH(libmoto,
   [  --with-libmoto          use libmoto math library (if available)],
-  [ if test "${withval}"=no; then
-      use_libmoto=false;
-    else
-      use_libmoto=true;
-    fi],
+  R_ARG_USE(libmoto),
   use_libmoto=true)
-
 AC_ARG_WITH(blas,
   [  --with-blas             use BLAS library (if available)],
-  [ if test "${withval}" = no; then
-      use_blas=false;
-    else
-      use_blas=true;
-    fi],
+  R_ARG_USE(blas),
   use_blas=true)
-
 AC_ARG_WITH(blas_risc,
   [  --with-blas_risc        use RISC Optimized BLAS library (if available)],
-  [ if test "${withval}" = no; then
-      use_blas_risc=false;
-    else
-      use_blas_risc=true;
-    fi],
+  R_ARG_USE(blas_risc),
   use_blas_risc=true)
-
 AC_ARG_WITH(dxml,
   [  --with-dxml             use DXML library (if available)],
-  [ if test "${withval}" = no; then
-      use_dxml=false;
-    else
-      use_dxml=true;
-    fi],
+  R_ARG_USE(dxml),
   use_dxml=true)
-
 AC_ARG_WITH(atlas,
   [  --with-atlas            use ATLAS library (if available)],
-  [ if test "${withval}" = no; then
-      use_atlas=false;
-    else
-      use_atlas=true;
-    fi],
+  R_ARG_USE(atlas),
   use_atlas=true)
 
 AC_ARG_WITH(readline,
   [  --with-readline         use readline library (if available)],
-  [ if test "${withval}" = no; then
-      use_readline=false;
-    else
-      use_readline=true;
-    fi],
+  R_ARG_USE(readline),
   use_readline=true)
 
 AC_ARG_WITH(gnome,
@@ -168,43 +138,32 @@ AC_ARG_WITH(tcltk,
       tcltk_prefix=${withval}
     fi],
   want_tcltk=yes)
-
+AC_ARG_WITH(tcl-config,
+  [  --with-tcl-config=TCL_CONFIG
+                          specify location of tclConfig.sh],
+  TCL_CONFIG=${withval},
+  TCL_CONFIG="")
+AC_ARG_WITH(tk-config,
+  [  --with-tk-config=TK_CONFIG
+                          specify location of tkConfig.sh],
+  TK_CONFIG=${withval},
+  TK_CONFIG="")
+    
 ### Programs.
 
 AC_PROG_AWK
-AC_PROG_INSTALL
-warn_install="redefining INSTALL to be `pwd`/tools/install-sh -c"
-case "${INSTALL}" in
-  [[!/]]*install-sh*)
-    ## Fix a bug in older versions of autoconf---the path of the install
-    ## shell script is not cached.  Could also use an absolute path in
-    ## AC_CONFIG_AUX_DIR().
-    INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
-    AC_MSG_WARN([${warn_install}])
-    ;;
-esac
-case "${host}" in
-  *aix*|*hpux*)
-    ## installbsd on AIX does not seem to work?
-    INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
-    AC_MSG_WARN([${warn_install}])
-    ;;
-esac
 AC_PROG_LN_S
 AC_PROG_RANLIB
 AC_PROG_YACC
-## Ar.
-AC_CHECK_PROGS(AR, [${AR} ar], ar)
-: ${ARFLAGS="rc"}
-AC_SUBST(ARFLAGS)
-## Echo.
+R_PROG_AR
 R_PROG_ECHO_N
-## Make.
+R_PROG_INSTALL
+## Make
 : ${MAKE=make}
 AC_SUBST(MAKE)
-## Perl.
+## Perl
 R_PROG_PERL
-## Tar.
+## Tar
 : ${TAR=tar}
 AC_SUBST(TAR)
 ## TeXMF stuff
@@ -219,8 +178,8 @@ AC_PROG_CC
 AC_PROG_CPP
 AC_PROG_GCC_TRADITIONAL
 
-CPPFLAGS=${CPPFLAGS:-"-I/usr/local/include"}
-LIBS=${LIBS:-"-L/usr/local/lib"}
+: ${CPPFLAGS="-I/usr/local/include"}
+: ${LIBS="-L/usr/local/lib"}
 
 dnl Yes, we already need this at configure time ...
 case "${host}" in
@@ -247,7 +206,7 @@ R_PROG_CC_M
 
 ## FORTRAN compiler
 
-## If we haven't been forced to use a particular FORTRAN compiler, try
+## If we have not been forced to use a particular FORTRAN compiler, try
 ## to find one using one of the several common names.
 ##
 ## The configure options `--with-g77', `--with-f77', or `--with-f2c'
@@ -294,7 +253,7 @@ else
     fi
   done
   if test -z "${F77}"; then
-    AC_CHECK_PROG(F2C, f2c)
+    AC_CHECK_PROG(F2C, f2c, f2c, [])
   fi
 fi
 
@@ -334,7 +293,7 @@ AC_SUBST_FILE(f77_rules_frag)
 for arg in ${LIBS}; do
   case ${arg} in
     -L*)
-      lib=`echo ${arg} | sed 's/^-L//'`
+      lib=`echo ${arg} | sed "s/^-L//"`
       if test -z "${R_LD_LIBRARY_PATH}"; then
         R_LD_LIBRARY_PATH="${lib}"
       else
@@ -352,7 +311,7 @@ fi
 export LD_LIBRARY_PATH
 
 ## C++ compiler.
-## needs to follow Libraries as -lstdc++ might well be in /usr/local/lib
+## Needs to follow Libraries as -lstdc++ might well be in /usr/local/lib
 ## and so not found at run time.
 
 AC_PROG_CXX
@@ -438,7 +397,7 @@ R_FUNC_CALLOC
 R_FUNC_FINITE
 R_FUNC_LOG
 
-### Header files
+### Header files.
 
 AC_HEADER_STDC
 AC_HEADER_TIME
@@ -454,6 +413,7 @@ case "${host}" in
     AC_DEFINE(SunOS4) ;;
 esac
 R_HEADER_SETJMP
+
 AC_MSG_CHECKING([for BSD networking])
 if test "${ac_cv_header_netdb_h}" = yes \
   -a "${ac_cv_header_netinet_in_h}" = yes \
@@ -468,6 +428,8 @@ if test "${ac_cv_header_netdb_h}" = yes \
 else
   AC_MSG_RESULT([no])
 fi
+
+R_BITMAPS
 
 ### Typedefs.
 
@@ -589,12 +551,14 @@ if test -n "${XMKMF}"; then
   echo > Imakefile
   ${XMKMF} > /dev/null
   cc=`${srcdir}/tools/GETMAKEVAL CC`
+  cc=`echo ${cc} | sed "s/ .*//"`
   if test "`which ${cc}`" = "`which ${CC}`"; then
     shlibldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
     cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
     fpicflags=${cpicflags}
   fi
   cxx=`${srcdir}/tools/GETMAKEVAL CXX`
+  cxx=`echo ${cxx} | sed "s/ .*//"`
   if test "`which ${cxx}`" = "`which ${CXX}`"; then
     cxxpicflags=`${srcdir}/tools/GETMAKEVAL CXXPICFLAGS`
   fi
@@ -617,27 +581,33 @@ AC_MSG_RESULT(done)
 case "${host}" in
   *aix4.[[2-9]]*)
     EXPORTFILE="\$(top_builddir)/etc/R.exp"
-    mainld=ld
-    mainldflags="-bdynamic -bE:${EXPORTFILE} -bM:SRE"
-    if test "${GCC}" = yes; then
-      mainldflags="${mainldflags} `${CC} -print-libgcc-file-name`"
-    fi
-    shlibld=ld
-    shlibldflags="-bM:SRE -H512 -T512 -bnoentry -bexpall \
-      -bI:\$(R_HOME)/etc/R.exp"
-    ;;
-  alpha*osf*)
-    mainld="${FC} -g -nofor_main -fpe3 "
     cpicflags=
     cxxpicflags=
-    shlibld=${FC}
-    shlibldflags=-shared
+    fpicflags=
+    if test "${GCC}" = yes; then
+      wl="-Xlinker "
+    else
+      wl=
+    fi
+    mainldflags="${wl}-bdynamic ${wl}-bE:${EXPORTFILE} ${wl}-bM:SRE"
+    # FIXME: is this really necessary?
+    #     if test "${GCC}" = yes; then
+    #       mainldflags="${mainldflags} `${CC} -print-libgcc-file-name`"
+    #     fi
+    shlibldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry \
+      ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
+    ;;
+  alpha*osf*)
+    cpicflags=
+    cxxpicflags=
+    fpicflags=
+    shlibldflags="-shared"
     ;;
   alpha*linux*)
-    mainldflags=-export-dynamic
+    mainldflags="-export-dynamic"
     ;;
   *freebsd[[3-4]].*)
-    mainldflags=-export-dynamic
+    mainldflags="-export-dynamic"
     shlibldflags="-shared"
     ;;
   *hpux*)
@@ -650,15 +620,18 @@ case "${host}" in
         fpicflags="+z" ;;
     esac
     mainldflags="-Wl,-E"
-    shlibld=ld
-    shlibldflags="-b"
+    if test "${GCC}" = yes; then
+      shlibldflags="-shared -fPIC"
+    else
+      shlibldflags="-b"
+    fi
     SHLIBEXT=sl
     ;;
   *linux*aout)
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
     ;;
   *linux*)
-    mainldflags=-export-dynamic
+    mainldflags="-export-dynamic"
     ;;
   *netbsd*)
     if ${CPP} - -dM < /dev/null | grep -q __ELF__; then
@@ -702,17 +675,20 @@ case "${host}" in
     ;;
 esac
 
-: ${MAINLD=${mainld}}
-#: ${MAINLDFLAGS=${mainldflags}}
-if test -n "${MAINLDFLAGS}" ; then
-  MAINLDFLAGS="${MAINLDFLAGS} ${mainldflags}"
-else
-  MAINLDFLAGS=${mainldflags}
+if test -z "${MAINLD}"; then
+  MAINLD=${mainld}
+  if test -z "${MAINLDFLAGS}"; then
+    MAINLDFLAGS=${mainldflags}
+  else
+    MAINLDFLAGS="${MAINLDFLAGS} ${mainldflags}"
+  fi
 fi
 
 : ${CPICFLAGS=${cpicflags}}
 if test -z "${CPICFLAGS}"; then
   case "${host}" in
+    *aix4.[[2-9]]*)
+      ;;
     alpha*osf*)
       ;;
     *)
@@ -725,22 +701,25 @@ fi
 : ${CXXPICFLAGS=${cxxpicflags}}
 if test -z "${CXXPICFLAGS}"; then
   case "${host}" in
+    *aix4.[[2-9]]*)
+      ;;
     alpha*osf*)
       ;;
     *)
-      AC_MSG_WARN([Could not determine CXXPICFLAGS.])
+      warn_cxxpicflags="I could not determine CXXPICFLAGS"
+      AC_MSG_WARN(${cxxpicflags})
       ;;
   esac
 fi
-: ${SHLIBLD=${shlibld}}
-#: ${SHLIBLDFLAGS=${SHLIBLDFLAGS} ${shlibldflags}}
 
-if test -n "${SHLIBLDFLAGS}" ; then
-  SHLIBLDFLAGS="${SHLIBLDFLAGS} ${shlibldflags}"
-else
-  SHLIBLDFLAGS=${shlibldflags}
+if test -z "${SHLIBLD}"; then
+  SHLIBLD=${shlibld}
+  if test -z "${SHLIBLDFLAGS}"; then
+    SHLIBLDFLAGS=${shlibldflags}
+  else
+    SHLIBLDFLAGS="${SHLIBLDFLAGS} ${shlibldflags}"
+  fi
 fi
-
 if test -z "${SHLIBLDFLAGS}"; then
   AC_MSG_WARN([Could not determine SHLIBLDFLAGS.])
   AC_MSG_ERROR([See the file INSTALL for more information.])
@@ -787,7 +766,6 @@ AC_SUBST(R_GUIS)
 ## Tcl/Tk
 
 R_TCLTK
-AC_SUBST(use_tcltk)
 
 ### Miscellaneous.
 
@@ -806,7 +784,11 @@ papersize=`${PAPERCONF}`
 : ${R_PAPERSIZE=${papersize:-a4}}
 AC_SUBST(R_PAPERSIZE)
 
-R_BITMAPS
+## Saving.
+
+AC_SUBST(R_BATCHSAVE)
+
+## Final cleanups/rewrites.
 
 ## Make sure -L terms come first in LIBS, separate out as LIBPATHS
 LIBS1=""
@@ -827,15 +809,11 @@ if test -n "${LIBS1}"; then
 fi
 AC_SUBST(LIBPATHS)
 
-## Saving.
-
-AC_SUBST(R_BATCHSAVE)
-
-### Output.
-
 if test "${PERL}" = false; then
   PERL="/bin/sh false"
 fi
+
+### Output.
 
 AC_OUTPUT(Makeconf
   Makefile
@@ -892,7 +870,6 @@ AC_OUTPUT(Makeconf
   src/scripts/REMOVE
   src/scripts/R.sh
   src/scripts/Rd2contents
-  src/scripts/Rd2txt
   src/scripts/Rdconv
   src/scripts/Rdindex
   src/scripts/SHLIB
@@ -942,6 +919,40 @@ R is now configured for ${host}
   Gnome support:            ${use_gnome}
   Tcl/Tk support:           ${use_tcltk}
 ])
+
+if test -n "${warn_f77_and_g77}"; then
+  AC_MSG_WARN(${warn_f77_and_g77})
+fi
+if test -n "${warn_f77_and_f2c}"; then
+  AC_MSG_WARN(${warn_f77_and_f2c})
+fi
+if test -n "${warn_g77_and_f2c}"; then
+  AC_MSG_WARN(${warn_g77_and_f2c})
+fi
+if test -n "${warn_f2c_flibs}"; then
+  AC_MSG_WARN(${warn_f2c_flibs})
+fi
+if test -n "${warn_cxxpicflags}"; then
+  AC_MSG_WARN(${warn_cxxpicflags})
+fi
+if test -n "${warn_libglade}"; then
+  AC_MSG_WARN(${warn_libglade})
+fi
+if test -n "${warn_tcltk_version}"; then
+  AC_MSG_WARN(${warn_tcltk_version})
+fi
+if test -n "${warn_perl5}"; then
+  AC_MSG_WARN(${warn_perl5})
+fi
+if test -n "${warn_dvi}"; then
+  AC_MSG_WARN(${warn_dvi})
+fi
+if test -n "${warn_info}"; then
+  AC_MSG_WARN(${warn_info})
+fi
+if test -n "${warn_pdf}"; then
+  AC_MSG_WARN(${warn_pdf})
+fi
 
 dnl Local Variables: ***
 dnl mode: sh ***

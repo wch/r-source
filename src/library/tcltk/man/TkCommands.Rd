@@ -209,7 +209,8 @@ tkplace.slaves(...)
 \details{
   \code{tkcmd} provides a generic interface to calling any Tk or Tcl
   command by simply running \code{.Tcl.args} on the arguments and passing the
-  result to \code{.Tcl}. Most of the other commands with a particular
+  result to \code{.Tcl}. Most of the other commands simply call
+  \code{tkcmd} with a particular
   first argument and sometimes also a second argument giving the
   subcommand.
 

@@ -14,21 +14,24 @@ plot.spec(spec.obj, add=FALSE, ci=0.95,
 \arguments{
   \item{x}{A univariate or multivariate time series.}
 
-  \item{method}{String specifying the method used to estimate the spectral 
-    density. Allowed methods are "pgram" (the default) and "ar".}
+  \item{method}{String specifying the method used to estimate the
+    spectral density.  Allowed methods are \code{"pgram"} (the default)
+    and \code{"ar"}.} 
 
-  \item{plot}{logical. If \code{TRUE} then the spectral density is plotted.}
+  \item{plot}{logical. If \code{TRUE} then the spectral density is
+    plotted.}
 
   \item{\dots}{Further arguments to specific spec methods or
     \code{plot.spec}.}
 
-  \item{spec.obj}{An object of class \code{spec}.}
+  \item{spec.obj}{An object of class \code{"spec"}.}
 
   \item{add}{logical. If \code{TRUE} then lines are added to the
     existing plot.}
 
-  \item{ci}{Coverage probability for confidence interval. Plotting of the
-    confidence bar is omitted unless \code{ci} is strictly positive.}
+  \item{ci}{Coverage probability for confidence interval.  Plotting of
+    the confidence bar is omitted unless \code{ci} is strictly
+    positive.}
 
   \item{log}{If \code{"dB"}, plot on log10 (decibel) scale (as S-PLUS),
     otherwise use conventional log scale or linear scale. Logical values
@@ -54,7 +57,7 @@ plot.spec(spec.obj, add=FALSE, ci=0.95,
   series or pairs plots of the coherency and phase of the cross-spectra.
 }
 \value{
-  An object of class \code{spec}, which is a list containing at
+  An object of class \code{"spec"}, which is a list containing at
   least the following elements:
   \item{freq}{vector of frequencies at which the spectral
     density is estimated. (Possibly approximate Fourier frequencies.)}
@@ -87,16 +90,17 @@ plot.spec(spec.obj, add=FALSE, ci=0.95,
   following S-PLUS. This makes the spectral density a density over the
   range \code{(-frequency(x)/2, +frequency(x)/2]}, whereas a more
   common scaling is \eqn{2\pi} and range  \eqn{(-0.5, 0.5]}
-  (e.g. Bloomfield) or 1 and range \eqn{(-\pi, \pi]}.
+  (e.g., Bloomfield) or 1 and range \eqn{(-\pi, \pi]}.
 
   If available, a confidence interval will be plotted by
   \code{plot.spec}: this is asymmetric, and the width of the centre
   mark indicates the equivalent bandwidth.
 }
 \note{
-  The default plot for \code{spec} objects is quite complex, including an
-  error bar and default title, subtitle and axis labels. The defaults can
-  all be overridden by supplying the appropriate graphical parameters.
+  The default plot for objects of class \code{"spec"} is quite complex,
+  including an error bar and default title, subtitle and axis
+  labels.  The defaults can all be overridden by supplying the
+  appropriate graphical parameters.
 }
 \references{
   Bloomfield, P. (1976) \emph{Fourier Analysis of Time Series: An
@@ -107,7 +111,7 @@ plot.spec(spec.obj, add=FALSE, ci=0.95,
 
   Venables, W. N. and Ripley, B. D. (1997) \emph{Modern Applied
     Statistics with S-PLUS.} Second edition. Springer. (Especially
-  pp. 437--442.)
+  pages 437--442.)
 }
 \author{Martyn Plummer, B.D. Ripley}
 \seealso{\code{\link{spec.pgram}}}

@@ -9,10 +9,12 @@ machine()
   environment \R is being run in.
 }
 \seealso{
-  \code{\link{Machine}} for the computer's characteristics in arithmetics.
+  \code{\link{.Platform}} which provides more than \code{machine()};
+  \code{\link{Machine}} for the computer's characteristics in arithmetics;
 }
 \examples{
 machine()# to see yours
+tolower(machine()) == .Platform $ OS ## --> often TRUE
 if (machine() == "Macintosh")
   cat("You are using a Macintosh computer\n")
 }

@@ -19,6 +19,10 @@
 /* l-bfgs-b.f -- translated by f2c (version 19991025).
 */
 
+/* Exports setulb()
+ *         ======
+ * called from lbfgsb() in ../main/optim.c */
+
 #include <math.h>
 #include <string.h>
 #include "R.h" /* for F77_CALL */

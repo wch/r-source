@@ -4,6 +4,48 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+rw1011
+======
+
+New file README.Rterm providing basic documentation on Rterm.exe.
+
+undoc() is now available under Windows.
+
+There is a new script R_HOME/bin/build.sh, a version of R CMD build.
+You will need R_HOME set as an environment variable to use it, and you
+will need the full set of tools from tools.zip (see readme.packages)
+in your path.
+
+The batch wrappers to Perl files Rdconv.bat Rdindex.bat Rd2txt.bat
+Sd2Rd.bat have been revised to work on more Perl/OS versions.
+
+Setting cell widths from the menu in the data editor now works reliably.
+
+Having an empty line at the beginning of .Rhistory no longer breaks the
+history-recall mechanism in Rgui.
+
+Characters using the AltGr key now work in interactive use of Rterm.
+(AltGr used to work like Alt.)
+
+Ctrl+V now works as described in a pager (pasting to the console).
+
+Other versions of Tcl/Tk may be used by setting TCL_VERSION in 
+MkRules (but only 8.31 has been tested).
+
+A file Makevars.win in the src directory of a package will be used in
+preference to a file Makevars.
+
+The Makefiles for packages now allow C++ code (with extension .cc or
+.cpp or .C) in the src directory.
+
+If you use a private library and HTML help, you need to copy R.css
+from rw1011\library to each private library directory.
+
+Function win.version() should give slightly more information (the
+latest service pack number x.y) on Windows 2000.
+
+
+
 rw1010
 ======
 
@@ -62,7 +104,7 @@ There is an example package `windlgs' in the package sources
 distribution that shows how to use graphapp to build dialog boxes to
 be called from menus, with a worked example of a t test done in three
 ways.  More details of graphapp, including a tutorial and a reference
-manual, are at http://www.cs.usyd.edu.au/~loki/GraphApp.
+manual, are at http://www.cs.usyd.edu.au/~loki/graphapp.
 
 Optional support for the Tcl/Tk interface.  To use this you need to
 install tcl831.exe from dev.scriptics.com, and you will need the Tcl

@@ -3,18 +3,9 @@
 \usage{
 lm(formula, data, subset, weights, na.action,
    method = "qr", model = TRUE, x = FALSE, y = FALSE, qr = TRUE,
-   singular.ok = TRUE contrasts = NULL, offset = NULL, \dots)
-
-lm.fit (x, y,    offset = NULL, method = "qr", tol = 1e-7, \dots)
-lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7, \dots)
-lm.fit.null (x, y,    method = "qr", tol = 1e-7, \dots)
-lm.wfit.null(x, y, w, method = "qr", tol = 1e-7, \dots)
+   singular.ok = TRUE, contrasts = NULL, offset = NULL, \dots)
 }
 \alias{lm}
-\alias{lm.fit}
-\alias{lm.wfit}
-\alias{lm.fit.null}
-\alias{lm.wfit.null}
 \arguments{
   \item{formula}{a symbolic description of the model to be fit.
     The details of model specification are given below.}
@@ -37,14 +28,14 @@ lm.wfit.null(x, y, w, method = "qr", tol = 1e-7, \dots)
     \code{\link{na.fail}} if that is unset. The ``factory-fresh''
     default is \code{\link{na.omit}}.}
 
+  \item{method}{currently, only \code{method="qr"} is supported.}
+
   \item{model, x, y, qr}{logicals.  If \code{TRUE} the corresponding
     components of the fit (the model frame, the model matrix, the
     response, the QR decomposition) are returned.}
 
   \item{singular.ok}{logical, defaulting to
     \code{TRUE}. \emph{\code{FALSE} is not yet implemented}.}
-
-  \item{method}{currently, only \code{method="qr"} is supported.}
 
   \item{contrasts}{an optional list. See the \code{contrasts.arg}
     of \code{model.matrix.default}.}
@@ -53,9 +44,6 @@ lm.wfit.null(x, y, w, method = "qr", tol = 1e-7, \dots)
     known component to be included in the linear predictor
     during fitting.  An \code{\link{offset}} term can be included in the
     formula instead or as well, and if both are specified their sum is used.}
-
-  \item{tol}{tolerance for the \code{\link{qr}} decomposition. Default
-    is 1e-7.}
 
   \item{\dots}{currently disregarded.}
 }
@@ -73,11 +61,15 @@ lm.wfit.null(x, y, w, method = "qr", tol = 1e-7, \dots)
   linear predictor for \code{response}.  A terms specification of the form
   \code{first+second} indicates all the terms in \code{first} together
   with all the terms in \code{second} with duplicates removed.  A
-  specification of the form \code{first:second} indicates the the set of
+  specification of the form \code{first:second} indicates the set of
   terms obtained by taking the interactions of all terms in \code{first}
   with all terms in \code{second}.  The specification \code{first*second}
   indicates the \emph{cross} of \code{first} and \code{second}.  This is
   the same as \code{first+second+first:second}.
+
+  \code{lm} calls the lower level functions
+  \code{\link{lm.fit}}, etc, see below, for the actual numerical
+  computations.  For programming only, you may consider doing likewise.
 }
 \value{
   \code{lm} returns an object of \code{\link{class}} \code{"lm"} or for
@@ -103,6 +95,10 @@ lm.wfit.null(x, y, w, method = "qr", tol = 1e-7, \dots)
 
   \code{\link{lm.influence}} for regression diagnostics, and
   \code{\link{glm}} for \bold{generalized} linear models.
+
+  The underlying low level functions,
+  \code{\link{lm.fit}} for plain, and \code{\link{lm.wfit}} for weighted
+  regression fitting.
 }
 \note{
   Offsets specified by \code{offset} will not be included in predictions

@@ -56,7 +56,7 @@
 
 # Header file search directory (`-IDIR') and any other miscellaneous
 # options for the C preprocessor and compiler.
-# If unset defaults to -I/usr/local/include
+# If unset defaults to `-I/usr/local/include'.
 # CPPFLAGS=
 
 # The command which runs the the FORTRAN compiler.
@@ -86,8 +86,8 @@
 # The flags which are necessary for loading main program which will load
 # DLLs at runtime.  HP-UX and Linux-elf are examples of platforms which
 # use this.  These platforms are already taken care of by configure,
-# and anything set here will be in addition.  For example, one can set
-# flags for profiling here.
+# and anything set here will be in addition unless MAINLD is given.
+# For example, one can set flags for profiling here.
 # MAINLDFLAGS=
 
 # Any special flags which must be used when compiling C code to be
@@ -101,14 +101,20 @@
 # of CPICFLAGS above is used.
 # FPICFLAGS=
 
-# Any special flags which are required by `ld' when creating shared
-# libraries.  This is usually automatically detected by configure,
-# and anything set here will be in addition.
+# The command to be used to load shared libraries.
+# This is usually the C compiler or `ld', but the automatic choice can
+# be overridden by means of this variable.
+# SHLIBLD=
+
+# Any special flags which are required by the linker when creating
+# shared libraries.  This is usually automatically detected by
+# configure, and anything set here will be in addition unless SHLIB is
+# given.
 # SHLIBLDFLAGS=
 
 # For `-l' and `-L' options to pass to the linker.
 # `-L' options set here will be prepended to LD_LIBRARY_PATH at run time
-# If unset defaults to -L/usr/local/lib
+# If unset defaults to `-L/usr/local/lib'.
 # LIBS=
 
 # The command which runs the C++ compiler.  It not specified, configure
@@ -124,3 +130,10 @@
 # configure.
 # CXXPICFLAGS=
 
+# Tcl/Tk settings.
+# Use TCLTK_LIBS for all ALL `-L' and `-l' options needed for linking
+# against the Tcl and Tk library.
+# TCLTK_LIBS=
+# Use TCLTK_CPPFLAGS for all `-I' options needed for finding the tcl.h
+# and tk.h headers.
+# TCLTK_CPPFLAGS=

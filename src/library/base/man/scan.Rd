@@ -2,7 +2,8 @@
 \title{Read Data Values}
 \usage{
 scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
-     quote = "", dec = ".", skip = 0, nlines = 0, na.strings = "NA",
+     quote = if (sep=="\n") "" else "'\"", dec = ".",
+     skip = 0, nlines = 0, na.strings = "NA",
      flush = FALSE, strip.white = FALSE, quiet = FALSE)
 }
 \alias{scan}
@@ -62,7 +63,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   If \code{sep} is nondefault, the fields may be quoted in the style of
   .csv format files where separators inside quotes (\code{''} or
   \code{""}) are ignored and quotes may be put inside strings by
-  doubling them.
+  doubling them. However, if \code{sep} is \code{"\n"} it is assumed
+  by default that one wants to read entire lines verbatim.
   
   Keyboard entry is terminated by typing a blank line.
 }

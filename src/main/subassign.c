@@ -66,6 +66,10 @@
  *  2000/02/17  Altered to allow closures/primitives in lists (VECSXPs) BDR
  */
 
+/*
+ *  2000/08/01  Also promises, expressions, environments when using [[ PD
+ */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -209,12 +213,15 @@ static void SubassignTypeFix(SEXP *x, SEXP *y,
 	break;
 
     case 1901:  /* vector     <- symbol   */
+    case 1904:  /* vector     <- environment   */
+    case 1905:  /* vector     <- promise   */
     case 1906:  /* vector     <- language   */
     case 1910:  /* vector     <- logical    */
     case 1913:  /* vector     <- integer    */
     case 1914:  /* vector     <- real       */
     case 1915:  /* vector     <- complex    */
     case 1916:  /* vector     <- character  */
+    case 1920:  /* vector     <- expression  */
     case 1903: case 1907: case 1908: case 1999: /* functions */
 
 	if (level == 1) {
@@ -1403,13 +1410,16 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1519:      /* complex    <- vector     */
 	case 1619:      /* character  <- vector     */
 
-	case 1901:	/* vector     <- symbol	    */
-	case 1906:	/* vector     <- language   */
-	case 1910:      /* vector     <- logical    */
-	case 1913:      /* vector     <- integer    */
-	case 1914:      /* vector     <- real       */
-	case 1915:      /* vector     <- complex    */
-	case 1916:      /* vector     <- character  */
+	case 1901:  /* vector     <- symbol     */
+	case 1904:  /* vector     <- environment*/
+	case 1905:  /* vector     <- promise    */
+	case 1906:  /* vector     <- language   */
+	case 1910:  /* vector     <- logical    */
+	case 1913:  /* vector     <- integer    */
+	case 1914:  /* vector     <- real       */
+	case 1915:  /* vector     <- complex    */
+	case 1916:  /* vector     <- character  */
+	case 1920:  /* vector     <- expression */
 	case 1903: case 1907: case 1908: case 1999: /* functions */
 
 	    VECTOR(x)[offset] = VECTOR(y)[0];

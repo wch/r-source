@@ -46,7 +46,7 @@ static int R_de_up;
 #ifndef min
 #define min(a, b) (((a)<(b))?(a):(b))
 #endif
-#define BOXW(x) ((x<100 && nboxchars==0)?boxw[x]:box_w)
+#define BOXW(x) (min(((x<100 && nboxchars==0)?boxw[x]:box_w),WIDTH-boxw[0]-2*bwidth-2))
 
 #define FIELDWIDTH 10
 
@@ -455,6 +455,7 @@ static int get_col_width(int col)
 	}
 	if(w < 5) w = 5;
 	if(w < 8) w++;
+	if(w > 50) w = 50;
 	return w;
     }
     return fw;
@@ -674,7 +675,7 @@ static SEXP getccol()
     len = LENGTH(CAR(tmp));
     type = TYPEOF(CAR(tmp));
     if (len < wrow) {
-	for (newlen = len * 2 ; newlen < wrow ; newlen *= 2)
+	for (newlen = max(len * 2, 10) ; newlen < wrow ; newlen *= 2)
 	    ;
 	tmp2 = ssNewVector(type, newlen);
 	for (i = 0; i < len; i++)
@@ -762,26 +763,28 @@ static void closerect()
 
 static void printstring(char *ibuf, int buflen, int row, int col, int left)
 {
-    int x_pos, y_pos, bw, fw;
-    char buf[45], *pc = buf;
+    int x_pos, y_pos, bw, fw, bufw;
+    char buf[201];
 
     find_coords(row, col, &x_pos, &y_pos);
     if (col == 0) bw = boxw[0]; else bw = BOXW(col+colmin-1);
     cleararea(x_pos + 1, y_pos + 1, bw - 1, box_h - 1,
 	      (row==0 || col==0) ? bbg:p->bg);
-    strncpy(buf, ibuf, buflen);
-    buf[buflen] = '\0';
-    fw = (bw - 8)/FW;
+    fw = min(200, (bw - 8)/FW);
+    bufw = min(fw, buflen);
+    strncpy(buf, ibuf, bufw);
+    buf[bufw] = '\0';
     if (buflen > fw) {
 	if(left) {
-	    pc += buflen - fw;
-	    *pc = '<';
+	    strncpy(buf, ibuf + buflen - fw, fw);
+	    buf[fw + 1] = '\0';
+	    *buf = '<';
 	} else {
-	    *(pc + fw - 1) = '>';
-	    *(pc + fw) = '\0';
+	    *(buf + fw - 1) = '>';
+	    *(buf + fw) = '\0';
 	}
     }
-    de_drawtext(x_pos + text_xoffset, y_pos - text_yoffset, pc);
+    de_drawtext(x_pos + text_xoffset, y_pos - text_yoffset, buf);
 }
 
 static void clearrect()
@@ -1050,12 +1053,12 @@ static void de_ctrlkeyin(control c, int key)
 
 static char *get_cell_text()
 {
-    int  wrow = rowmin + crow - 2;
+    int  wrow = rowmin + crow - 2, wcol = colmin + ccol - 1;
     char *prev = "";
     SEXP tvec;
 
-    if (ccol <= length(inputlist)) {
-	tvec = CAR(nthcdr(inputlist, ccol - 1));
+    if (wcol <= length(inputlist)) {
+	tvec = CAR(nthcdr(inputlist, wcol - 1));
 	if (tvec != R_NilValue && wrow < (int)LEVELS(tvec)) {
 	    PrintDefaults(R_NilValue);
 	    if (TYPEOF(tvec) == REALSXP) {
@@ -1381,6 +1384,8 @@ static void de_delete(control c)
 static void de_autosize(control c)
 {
     int col = ccol + colmin - 1;
+
+    closerect();
     if(col < 100) {
 	boxw[col] = get_col_width(col)*FW + 8;
 	deredraw();
@@ -1405,13 +1410,16 @@ static void vw_close(control c)
     int x;
     if (ischecked(varwidths)) x = 0;
     else x = atoi(gettext(varname)); /* 0 if error */
+    x = min(x, 50);
     if (x != nboxchars) {
 	nboxchars = x;
+	box_w = ((nboxchars >0)?nboxchars:FIELDWIDTH)*FW + 8;
 	deredraw();
     }
     hide(devw);
     del(devw);
     if (nboxchars > 0) check(de_mvw);
+    else uncheck(de_mvw);
     addto(de);
 }
 

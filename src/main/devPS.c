@@ -458,7 +458,7 @@ double PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
 	p1 = p[0]; p2 = p[1];
 	for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
 	/* second test is a safety check: should all start with p1  */
-	    if(metrics->KernPairs[i].c2 == p2 && 
+	    if(metrics->KernPairs[i].c2 == p2 &&
 	       metrics->KernPairs[i].c1 == p1) {
 		sum += metrics->KernPairs[i].kern;
 		break;
@@ -1030,10 +1030,12 @@ static void SetLineStyle(int newlty, double newlwd, DevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
     int i, ltyarray[8];
+
     if (pd->lty != newlty || pd->lwd != newlwd) {
 	pd->lwd = newlwd;
 	pd->lty = newlty;
 	PostScriptSetLineWidth(pd->psfp, dd->gp.lwd*0.75);
+	/* process lty : */
 	for(i = 0; i < 8 && newlty & 15 ; i++) {
 	    ltyarray[i] = newlty & 15;
 	    newlty = newlty >> 4;
@@ -1449,7 +1451,7 @@ typedef struct {
     FILE *tmpfp;         /* temp file */
     char tmpname[PATH_MAX];
 
-    int onefile; 
+    int onefile;
     int ymax;            /* used to invert coord system */
 } XFigDesc;
 
@@ -1521,7 +1523,7 @@ static int XF_SetColor(int color, XFigDesc *pd)
 	error("run out of colors in xfig()");
     }
     /* new colour */
-    fprintf(pd->psfp, "0 %d #%02x%02x%02x\n", pd->nXFigColors,  
+    fprintf(pd->psfp, "0 %d #%02x%02x%02x\n", pd->nXFigColors,
 	    R_RED(color), R_GREEN(color), R_BLUE(color));
     pd->XFigColors[pd->nXFigColors] = color;
     return pd->nXFigColors++;
@@ -1547,7 +1549,7 @@ static int XF_SetLty(int lty)
     case LTY_DOTDASH:
 	return 3;
     default:
-	warning("unimplemented line texture %u: using Dash-double-dotted", 
+	warning("unimplemented line texture %u: using Dash-double-dotted",
 		lty);
 	return 4;
     }
@@ -1851,7 +1853,7 @@ static void XFig_NewPage(DevDesc *dd)
      if(dd->dp.bg != R_RGB(255,255,255)) {
 	 int cbg = XF_SetColor(dd->dp.bg, pd);
 	 int ix0, iy0, ix1, iy1;
-	 double x0 = 0.0, y0 = 0.0, x1 = 72.0 * pd->pagewidth, 
+	 double x0 = 0.0, y0 = 0.0, x1 = 72.0 * pd->pagewidth,
 	     y1 = 72.0 * pd->pageheight;
 	 XFconvert(&x0, &y0, pd); XFconvert(&x1, &y1, pd);
 	 ix0 = (int)x0; iy0 = (int)y0; ix1 = (int)x1; iy1 = (int)y1;
@@ -1865,7 +1867,7 @@ static void XFig_NewPage(DevDesc *dd)
 	 fprintf(fp, "%d %d ", ix1, iy1);
 	 fprintf(fp, "%d %d ", ix1, iy0);
 	 fprintf(fp, "%d %d\n", ix0, iy0);
-   }   
+   }
 }
 
 #ifdef HAVE_UNISTD_H
@@ -1901,7 +1903,7 @@ static void XFig_Rect(double x0, double y0, double x1, double y1, int coords,
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
     int ix0, iy0, ix1, iy1;
-    int cbg = XF_SetColor(bg, pd), cfg = XF_SetColor(fg, pd), cpen, 
+    int cbg = XF_SetColor(bg, pd), cfg = XF_SetColor(fg, pd), cpen,
 	dofill, lty = XF_SetLty(dd->gp.lty), lwd = dd->gp.lwd*0.833 + 0.5;
 
     cpen = (fg != NA_INTEGER)? cfg: -1;
@@ -1929,7 +1931,7 @@ static void XFig_Circle(double x, double y, int coords, double r,
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
     int ix, iy, ir;
-    int cbg = XF_SetColor(bg, pd), cfg = XF_SetColor(fg, pd), cpen, 
+    int cbg = XF_SetColor(bg, pd), cfg = XF_SetColor(fg, pd), cpen,
 	dofill, lty = XF_SetLty(dd->gp.lty), lwd = dd->gp.lwd*0.833 + 0.5;
 
     cpen = (fg != NA_INTEGER)? cfg: -1;
@@ -1943,7 +1945,7 @@ static void XFig_Circle(double x, double y, int coords, double r,
     fprintf(fp, "%d %d ", cpen, cbg); /* pen colour fill colour */
     fprintf(fp, "100 0 %d ", dofill); /* depth, pen style, area fill */
     fprintf(fp, "%.2f 1 0 ", 4.0*lwd); /* style value, direction, x, angle */
-    fprintf(fp, "  %d %d %d %d %d %d %d %d \n", 
+    fprintf(fp, "  %d %d %d %d %d %d %d %d \n",
 	    ix, iy, ir, ir, ix, iy, ix+ir, iy);
 }
 
@@ -1953,12 +1955,12 @@ static void XFig_Line(double x1, double y1, double x2, double y2,
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
     int lty = XF_SetLty(dd->gp.lty), lwd = dd->gp.lwd*0.833 + 0.5;
-    
+
     GConvert(&x1, &y1, coords, DEVICE, dd); XFconvert(&x1, &y1, pd);
     GConvert(&x2, &y2, coords, DEVICE, dd); XFconvert(&x2, &y2, pd);
     fprintf(fp, "2 1 "); /* Polyline */
     fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
-    fprintf(fp, "%d %d ", XF_SetColor(dd->gp.col, pd), 7); 
+    fprintf(fp, "%d %d ", XF_SetColor(dd->gp.col, pd), 7);
       /* pen colour fill colour */
     fprintf(fp, "100 0 -1 "); /* depth, pen style, area fill */
     fprintf(fp, "%.2f 0 0 -1 0 0 ", 4.0*lwd); /* style value, join .... */
@@ -1973,7 +1975,7 @@ static void XFig_Polygon(int n, double *x, double *y, int coords,
     FILE *fp = pd->tmpfp;
     double xx, yy;
     int i;
-    int cbg = XF_SetColor(bg, pd), cfg = XF_SetColor(fg, pd), cpen, 
+    int cbg = XF_SetColor(bg, pd), cfg = XF_SetColor(fg, pd), cpen,
 	dofill, lty = XF_SetLty(dd->gp.lty), lwd = dd->gp.lwd*0.833 + 0.5;
 
 
@@ -2025,7 +2027,7 @@ static void XFig_Text(double x, double y, int coords,
     FILE *fp = pd->tmpfp;
     int fontnum, style = dd->gp.font;
     double size = floor(dd->gp.cex * dd->gp.ps + 0.5);
-    
+
     if(style < 1 || style > 5) style = 1;
     pd->fontsize = size;
     pd->fontstyle = style;
@@ -2034,7 +2036,7 @@ static void XFig_Text(double x, double y, int coords,
 
     GConvert(&x, &y, coords, DEVICE, dd); XFconvert(&x, &y, pd);
     fprintf(fp, "4 %d ", (int)floor(2*hadj)); /* Text, how justified */
-    fprintf(fp, "%d 100 0 ", XF_SetColor(dd->gp.col, pd)); 
+    fprintf(fp, "%d 100 0 ", XF_SetColor(dd->gp.col, pd));
       /* color, depth, pen_style */
     fprintf(fp, "%d %d %.4f 4 ", fontnum, (int)size, rot * DEG2RAD);
       /* font pointsize angle flags (Postscript font) */

@@ -1,6 +1,6 @@
 R for Windows FAQ
 Frequently Asked Questions on R for Windows
-Version for rw1010
+Version for rw1011
 Brian Ripley
 
 
@@ -62,7 +62,7 @@ that version. The main R FAQ can be found at
 
 The information here applies only to recent versions of R for Windows,
 (`rw1000' or later); the current version is often called something like
-`rw1010' (although not officially).
+`rw1011' (although not officially).
 
 
 2 Installation and Usage
@@ -381,8 +381,8 @@ these (up to 13 more) or replace them.
 ===============================================================================
 
 You need to specify a font in Rconsole (see Q4.2) that supports latin1
-encoding. The default, Courier New, does on our systems, as does
-FixedSys.  This may be a problem in other locales, especially for
+encoding. The default, `Courier New', does on our systems, as does
+`FixedSys'.  This may be a problem in other locales, especially for
 non-Western European languages.
 
 6.3 When using Rgui the output to the console seems to be delayed.
@@ -481,9 +481,9 @@ However, note
 
 If you have an X server available on the PC, there is a version of
 `DDD' available that runs under the cygwin emulation layer (follow the
-links at `http://sourceware.cygnus.com/cygwin') and provides a
-graphical user interface to `gdb'.  Another (Windows-native) GUI for
-`gdb' is `Insight', part of the latest `cygwin' version of `gdb'
+links at `http://sources.redhat.com/cygwin') and provides a graphical
+user interface to `gdb'.  Another (Windows-native) GUI for `gdb' is
+`Insight', part of the latest `cygwin' version of `gdb'
 
 7.3 How do I include C++ code?
 ==============================
@@ -496,11 +496,15 @@ You need to do two things:
 (b) Include the C++ libraries in the link to make the DLL. Suppose
 `X.cc' contains your C++ code, and `X_main.cc' is the wrapper, as in
 the example in `_Writing R Extensions_'. Then build the DLL by
-(`gcc-2.95.x')
+(`gcc-2.95')
 
      g++ -c X.cc X_main.cc
      dlltool --export-all-symbols --output-def X.def X_main.o
      dllwrap -o X.dll --def X.def X.o X_main.o -lstdc++
+
+or if you have `--shared' (`mingw32 gcc-2.95.1' or `cygwin 1.1')
+
+     g++ -shared -o X.dll X.cc X_main.cc
 
 or (VC++, which requires extension `.cpp')
 
@@ -515,8 +519,12 @@ and call the entry point(s) in `X_R', such as `X_main'.  Construction
 of static variables will occur when the DLL is loaded, and destruction
 when the DLL is unloaded, usually when R terminates.
 
-Note that you may not see the messages from this example in the GUI
+Note that you will not see the messages from this example in the GUI
 console: see the next section.
+
+This example is in package `cxx_0.0-0.tar.gz' in the
+`src/contrib/Devel' section on CRAN, and that can be compiled as
+package in the usual way on Windows.
 
 7.4 The output from my C code disappears. Why?
 ==============================================

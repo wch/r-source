@@ -43,11 +43,9 @@ END {
       }
       old = ""
       for (j = 1; j < lc; j++) { old = old " " }
-      old = old " " a[i]
+      new = old " " a[i]
     }
-    else {
-      old = new
-    }
+    old = new
   }
   if (length(s) > 0) {
     s = s "\n" new

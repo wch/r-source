@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.15 2000/03/29 11:07:55 maechler Exp $
+    ## $Id: str.R,v 1.15.4.2 2000/08/04 08:29:43 maechler Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -40,7 +40,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## ------------------------------------------------------------------------
-    ## $Id: str.R,v 1.15 2000/03/29 11:07:55 maechler Exp $
+    ## $Id: str.R,v 1.15.4.2 2000/08/04 08:29:43 maechler Exp $
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
@@ -182,12 +182,9 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 			  if(nl)'"', if(ml < nl)",..", ":", sep="")
 	    std.attr <- c("levels","class")
 	} else if(has.class) {
-	    ## str1 <- paste("Class '",cl,"' of length ", le, " :", sep="")
-	    ##===== NB. cl may be of length > 1 !!! ===========
-	    cat("Class ", cl, " ", sep="'")
-	    ## has.method <- exists( paste("str", cl, sep=".") )
-	    ##== If there is a str.METHOD,
-	    ##== it should have been called BEFORE this !
+            cat("Class", if(length(cl) > 1) "es",
+                " '", paste(cl, collapse = "', '"), "' ", sep="")
+	    ## If there's a str.<method>, it should have been called before!
 	    str(unclass(object),
 		max.level = max.level, vec.len = vec.len, digits.d = digits.d,
 		indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1,

@@ -47,10 +47,10 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 
 @contents
 
-@node Top, Acknowledgments, (dir), (dir)
+@node Top, Acknowledgements, (dir), (dir)
 
 @menu
-* Acknowledgments::             
+* Acknowledgements::            
 * Creating R packages::         
 * Writing R documentation::     
 * System and foreign language interfaces::  
@@ -61,15 +61,15 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 * Concept index::               
 @end menu
 
-@node Acknowledgments, Creating R packages, Top, Top
-@unnumbered Acknowledgments
+@node Acknowledgements, Creating R packages, Top, Top
+@unnumbered Acknowledgements
 
 
 The contributions of Saikat DebRoy (who wrote the first draft of a guide
 to using @code{.Call} and @code{.External}) and of Adrian Trapletti (who
 provided information on the C++ interface) are gratefully acknowledged.
 
-@node Creating R packages, Writing R documentation, Acknowledgments, Top
+@node Creating R packages, Writing R documentation, Acknowledgements, Top
 @chapter Creating R packages
 @cindex Packages
 @cindex Creating packages
@@ -320,7 +320,7 @@ configure script which checks for the library, sets variable
 @code{HAVE_FOO} to @code{TRUE} if it was found and with @code{FALSE}
 otherwise, and then substitutes this value into output files (by
 replacing instances of @samp{@@HAVE_FOO@@} in input files with the value
-of @code{HAVE_FOO}).  for example, if a function named @code{bar} is to
+of @code{HAVE_FOO}).  For example, if a function named @code{bar} is to
 be made available by linking against library @code{foo} (i.e., using
 @option{-lfoo}), one could use
 
@@ -405,7 +405,13 @@ works correctly should be performed using @code{R CMD check} prior to
 invoking the build procedure.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
-of the @R{} package builder.  There is no Windows equivalent.
+of the @R{} package builder.  The Windows equivalent is to set
+@code{R_HOME} and then run
+@smallexample
+sh $@{R_HOME@}/bin/build.sh pkgname
+@end smallexample
+@noindent
+(Replace @file{pkgname} by @file{--help} for further details.)
 
 @node Submitting a package to CRAN,  , Checking and building packages, Creating R packages
 @section Submitting a package to CRAN
@@ -723,7 +729,7 @@ info).
 
 @item \keyword@{@var{key}@}
 Each @code{\keyword} entry should specify one of the standard keywords
-(as listed in thefile @file{$R_HOME/doc/KEYWORDS}).  There must be at
+(as listed in the file @file{$R_HOME/doc/KEYWORDS}).  There must be at
 least one @code{\keyword} entry, but can be more that one if the @R{}
 object being documented falls into more than one category.
 @end table
@@ -820,7 +826,7 @@ For consistency with the pre-assigned sections, the section name (the
 first argument to @code{\section}) should be capitalized (but not all
 upper case).
 
-Note that the additonal named sections are always inserted at fixed
+Note that the additional named sections are always inserted at fixed
 positions in the output (before @code{\note}, @code{\seealso} and the
 examples), no matter where they appear in the input.
 
@@ -1022,9 +1028,10 @@ currently must escape most La@TeX{} special characters, i.e., besides
 @samp{%}, @samp{@{}, and @samp{@}}, the four specials @samp{$},
 @samp{#}, and @samp{_} are produced by preceding each with a @samp{\}.
 (@samp{&} can also be escaped, but need not be.) Further, enter @samp{^}
-as @code{\eqn@{\hat@{@}@}@{^@}}, and @samp{~} by
-@code{\eqn@{\tilde@{@}@}@{~@}}.  Also, @samp{<}, @samp{>}, and @samp{|}
-must only be used in math mode, i.e., within @code{\eqn} or
+as @code{\eqn@{\mbox@{\textasciicircum@}@}@{^@}}, and @samp{~} by
+@code{\eqn@{\mbox@{\textasciitilde@}@}@{~@}} or @code{\eqn@{\sim@}@{~@}}
+(for a short and long tilde respectively).  Also, @samp{<}, @samp{>},
+and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 @code{\deqn}.
 
 @node  Platform-specific sections, Processing Rd format, Insertions, Writing R documentation
@@ -1078,7 +1085,7 @@ provides two user-level programs for processing Rd format.
 file, and is particularly useful as a previewer when writing Rd format
 documentation within Emacs.  @code{R CMD Rd2dvi} generates DVI (or, if
 option @option{--pdf} is given, PDF) output from documentation in
-Rd files, which can be specified either explictly or by the path to a
+Rd files, which can be specified either explicitly or by the path to a
 directory with the sources of a package.  In the latter case, a
 reference manual for all documented objects in the package is created.
 Future versions will also add the information in the @file{DESCRIPTION}
@@ -1095,7 +1102,7 @@ used to automatically create these indices when building a package.
 @findex R CMD Sd2Rd
 Finally, @code{R CMD Sd2Rd} converts @Sl{} version 3 documentation files
 (which use an extended Nroff format) to Rd format.  This is useful when
-porting a package orginally written for the @Sl{} system to @R{}.
+porting a package originally written for the @Sl{} system to @R{}.
 
 The exact usage and a detailed list of available options for each of the
 above commands can be obtained by running @code{R CMD command --help},
@@ -1448,7 +1455,7 @@ Save workspace image? [y/n/c]: y
 destructor Y
 @end smallexample
 
-The R for Windows FAQ (@file{rw-FAQ}) contains details of how to compie
+The R for Windows FAQ (@file{rw-FAQ}) contains details of how to compile
 this example under various Windows compilers.
 
 Using C++ iostreams, as in this example, is best avoided.  There is no
@@ -1584,6 +1591,7 @@ force the variant object to the right type.
 * Classes::                     
 * Handling lists::              
 * Finding and setting variables::  
+* Changes in R version 1.2::    
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -1597,7 +1605,7 @@ We need to know a little about the way @R{} handles memory allocation.
 The memory allocated for @R{} objects is not freed by the user; instead,
 the memory is from time to time @dfn{garbage collected}.  That is, all
 the allocated memory not being used is freed, and the objects that are
-in use may be moved. 
+in use may be moved.
 
 The @R{} object types are represented by a C structure defined by a
 typedef @code{SEXPREC} in @file{Rinternals.h}. It contains several
@@ -1682,7 +1690,7 @@ use.  In particular, this applies to function arguments.
 There is a less-used macro @code{UNPROTECT_PTR(@var{s})} that unprotects the
 object pointed to by the @code{SEXP} @var{s}, even if it is not the top
 item on the pointer protection stack. This is rarely needed outside the
-parser (the R sources have one example, in @file{plot3d.c}). 
+parser (the R sources have one example, in @file{plot3d.c}).
 @findex UNPROTECT_PTR
 
 @node Allocating storage, Details of R types, Garbage Collection, Handling R objects in C
@@ -1976,7 +1984,7 @@ and enables us to say
   g = REAL(getListElement(a, "g"))[0];
 @end example
 
-@node Finding and setting variables,  , Handling lists, Handling R objects in C
+@node Finding and setting variables, Changes in R version 1.2, Handling lists, Handling R objects in C
 @subsection Finding and setting variables
 @cindex Finding variables
 @cindex Setting variables
@@ -2021,6 +2029,78 @@ void setVar(SEXP symbol, SEXP value, SEXP rho)
 can be used to assign values to @R{} objects, in the specified
 environment frame and to perform the equivalent of @code{assign(x,
 value, envir = rho, inherits = TRUE)} respectively.
+
+@node Changes in R version 1.2,  , Finding and setting variables, Handling R objects in C
+@subsection Changes in R version 1.2
+
+@R{} version 1.2.0 introduces a new ``generational'' garbage collector
+which means that strings and vectors (and language objects) are handled
+differently from the numerical atomic types.
+
+Earlier code was written in a style like
+@smallexample
+  VECTOR(dimnames)[0] = getAttrib(x, R_NamesSymbol);
+@end smallexample
+
+@noindent
+but that is no longer allowed.  The functions @code{VECTOR_ELT} and
+@code{SET_VECTOR_ELT} must now be used to access and set elements of a
+generic vector.  There are analogous functions @code{STRING_ELT} and
+@code{SET_STRING_ELT} for character vectors.
+@findex VECTOR_ELT
+@findex SET_VECTOR_ELT
+@findex STRING_ELT
+@findex SET_STRING_ELT
+
+To convert existing code, use the following replacements.
+
+@quotation
+@multitable @columnfractions 0.35 0.5
+
+@item @strong{Original} @tab @strong{Replacement}
+
+@item @code{foo = VECTOR(bar)[i]} @tab @code{foo = VECTOR_ELT(bar, i)}
+@item @code{VECTOR(foo)[j] = bar} @tab @code{SET_VECTOR_ELT(foo, j, bar)}
+@item @code{foo = STRING(bar)[i]} @tab @code{foo = STRING_ELT(bar, i)}
+@item @code{STRING(foo)[j] = bar} @tab @code{SET_STRING_ELT(foo, j, bar)}
+
+@end multitable 
+@end quotation
+
+The new garbage collector requires that all assignments into fields
+containing @code{SEXP} values go through functions such as
+@code{SET_VECTOR_ELT}.  Packages compiled under older versions of @R{}
+may contain binary code that modifies these fields directly.  These
+packages @emph{must} be recompiled and re-installed.  Failure to do so
+may confuse the memory manager and result in heap corruption.
+
+In order to achieve maximal source compatibility in the @R{} 1.x series,
+add-on packages should either use conditionals of the form
+
+@smallexample
+#if R_VERSION >= R_Version(1, 2, 0)
+  @var{new-style-code}
+#else
+  @var{old-style-code}
+#endif
+@end smallexample
+
+@noindent
+or, maybe preferably in order to avoid unnecessarily duplicating code, use
+the new-style interface along with a @strong{private} header file
+containing the following code:
+
+@smallexample
+#if R_VERSION < R_Version(1, 2, 0)
+# define STRING_ELT(x,i)        (STRING(x)[i])
+# define VECTOR_ELT(x,i)        (VECTOR(x)[i])
+# define SET_STRING_ELT(x,i,v)  (STRING(x)[i] = (v))
+# define SET_VECTOR_ELT(x,i,v)  (VECTOR(x)[i] = (v))
+#endif
+@end smallexample
+
+More extensive changes may be needed in code which manipulates language
+objects.
 
 @node Interface functions .Call and .External, Evaluating R expressions from C, Handling R objects in C, System and foreign language interfaces
 @section Interface functions @code{.Call} and @code{.External}
@@ -2140,8 +2220,8 @@ SEXP convolveE(SEXP args)
   double *xa, *xb, *xab;
   SEXP a, b, ab;
 
-  PROTECT(a = coerceVector(CADR(args), REALSXP)));
-  PROTECT(b = coerceVector(CADDR(args), REALSXP)));
+  PROTECT(a = coerceVector(CADR(args), REALSXP));
+  PROTECT(b = coerceVector(CADDR(args), REALSXP));
     ...
 @}
 @end example
@@ -2178,10 +2258,12 @@ handle calls with a variable number of arguments, as @code{length(args)}
 will give the number of arguments supplied (of which the first is
 ignored).  We may need to know the names (`tags') given to the actual
 arguments, which we can by using the @code{TAG} macro and using
-something like the following example, that print the names and the first
+something like the following example, that prints the names and the first
 value of its arguments if they are vector types.
 
 @example
+#include "R_ext/PrtUtil.h"
+
 SEXP showArgs(SEXP args)
 @{
   int i, nargs;
@@ -2194,22 +2276,22 @@ SEXP showArgs(SEXP args)
       name = CHAR(PRINTNAME(TAG(args)));
       switch(TYPEOF(CAR(args))) @{
       case REALSXP:
-        printf("[%d] '%s' %f\n", i+1, name, REAL(CAR(args))[0]);
+        Rprintf("[%d] '%s' %f\n", i+1, name, REAL(CAR(args))[0]);
         break;
       case LGLSXP:
       case INTSXP:
-        printf("[%d] '%s' %d\n", i+1, name, INTEGER(CAR(args))[0]);
+        Rprintf("[%d] '%s' %d\n", i+1, name, INTEGER(CAR(args))[0]);
         break;
       case CPLXSXP:
         cpl = COMPLEX(CAR(args))[0];
-        printf("[%d] '%s' %f + %fi\n", i+1, name, cpl.r, cpl.i);
+        Rprintf("[%d] '%s' %f + %fi\n", i+1, name, cpl.r, cpl.i);
         break;
       case STRSXP:
-        printf("[%d] '%s' %s\n", i+1, name,
+        Rprintf("[%d] '%s' %s\n", i+1, name,
                CHAR(STRING(CAR(args))[0]));
         break;
       default:
-        printf("[%d] '%s' R type\n", i+1, name);
+        Rprintf("[%d] '%s' R type\n", i+1, name);
       @}
     @}
   @}
@@ -2332,7 +2414,7 @@ obscure) to do this in C code.  The following is based on the code in
 SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
 @{
   int i, n = length(list);
-  SEXP R_fcall, s, ans;
+  SEXP R_fcall, ans;
 
   if(!isNewList(list)) error("`list' must be a list");
   if(!isFunction(fn)) error("`fn' must be a function");
@@ -2409,7 +2491,6 @@ SEXP zero(SEXP f, SEXP guesses, SEXP stol, SEXP rho)
     double x0 = REAL(guesses)[0], x1 = REAL(guesses)[1],
            tol = REAL(stol)[0];
     double f0, f1, fc, xc;
-    SEXP res;
 
     if(tol <= 0.0) error("non-positive tol value");
     f0 = feval(x0, f, rho); f1 = feval(x1, f, rho);
@@ -2503,7 +2584,7 @@ SEXP numeric_deriv(SEXP args)
   expr = CADR(args);
   if(!isString(theta = CADDR(args)))
     error("theta should be of type character");
-  if(!isEnvironment(rho = CADDR(args)))
+  if(!isEnvironment(rho = CADDDR(args)))
     error("rho should be an environment");
 
   PROTECT(ans = coerceVector(eval(expr, rho), REALSXP));
@@ -2538,7 +2619,7 @@ The code to handle the arguments is
   expr = CADR(args);
   if(!isString(theta = CADDR(args)))
     error("theta should be of type character");
-  if(!isEnvironment(rho = CADDR(args)))
+  if(!isEnvironment(rho = CADDDR(args)))
     error("rho should be an environment");
 @end example
 
@@ -2813,7 +2894,7 @@ $7 = 5
 * Random numbers::              
 * Missing and IEEE values::     
 * Printing::                    
-* Calling C from Fortran::      
+* Calling C from Fortran and vice versa::  
 * Numerical analysis subroutines::  
 * Distribution functions::      
 * Mathematical Utilities::      
@@ -3061,7 +3142,7 @@ which could occur in ordinary computations which run out of control,
 so you may need to test that they have not been generated inadvertently.
 
 
-@node Printing, Calling C from Fortran, Missing and IEEE values, The R API
+@node Printing, Calling C from Fortran and vice versa, Missing and IEEE values, The R API
 @section Printing
 @cindex Printing from C
 @findex Rprintf
@@ -3084,7 +3165,7 @@ These routines are declared in @file{R_ext/PrtUtil.h} which is not
 included by @file{R.h}.
 
 @subsection Printing from Fortran
-@cindex Printing from C
+@cindex Printing from Fortran
 
 In theory Fortran @code{write} and @code{print} statements can be used,
 but the output may not interleave well with that of C, and will be
@@ -3109,9 +3190,9 @@ line and then print @var{data} as if it were an @R{} vector on
 subsequent line(s).  They work with zero @var{ndata}, and so can be used
 to print a label alone.
 
-@node Calling C from Fortran, Numerical analysis subroutines, Printing, The R API
-@section Calling C from Fortran
-@cindex Calling C from Fortran
+@node Calling C from Fortran and vice versa, Numerical analysis subroutines, Printing, The R API
+@section Calling C from Fortran and vice versa
+@cindex Calling C from Fortran and vice versa
 
 Naming conventions for symbols generated by Fortran differ by platform:
 it is not safe to assume that Fortran names appear to C with a trailing
@@ -3132,7 +3213,7 @@ to access a Fortran common block from C
 @end table
 
 
-@node Numerical analysis subroutines, Distribution functions, Calling C from Fortran, The R API
+@node Numerical analysis subroutines, Distribution functions, Calling C from Fortran and vice versa, The R API
 @section Numerical analysis subroutines
 @cindex Numerical analysis subroutines from C
 
@@ -3492,7 +3573,7 @@ can be built in the directory @file{src/nmath/standalone}. See the file
 and link against @code{-lRmath}.  There is an example file @file{test.c}.
 
 A little care is needed to use the random-number routines. You will
-need to supply the uniform random number generator 
+need to supply the uniform random number generator
 @smallexample
 double unif_rand(void)
 @end smallexample
@@ -3680,7 +3761,7 @@ When you (as @R{} developer) add new functions to the R base (all the
 packages distributed with @R{}), be careful to check if @code{make
 test-Specific} or particularly, @code{cd tests; make no-segfault.Rout}
 still works (without interactive user intervention, and on a standalone
-computer).  If the new function, for example, accesses the internet, or
+computer).  If the new function, for example, accesses the Internet, or
 requires GUI interaction, please add its name to the ``stop list'' in
 @file{tests/make-no-segfault.R}.
 
@@ -3796,11 +3877,11 @@ files.
             ;; ess-else-offset                   0   0   0   0   0
             ;; ess-close-brace-offset            0   0   0   0   0
             (add-hook 'local-write-file-hooks
-                      '(lambda ()
+                      (lambda ()
                         (nuke-trailing-whitespace)))))
 ;;; Perl
 (add-hook 'perl-mode-hook
-          '(lambda () (setq perl-indent-level 4)))
+          (lambda () (setq perl-indent-level 4)))
 @end smallexample
 
 @noindent

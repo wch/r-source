@@ -2,13 +2,14 @@
 
 include ../MkRules
 UNZIPDIR=unzip
+PREFIX=rw1011
 
 .PHONY: GA UZ
 
 all: R.ico GA UZ rwinst.exe
 
 # O1 for small rather than fast
-CFLAGS=-I../graphapp -I../../include -I$(UNZIPDIR)/windll -Wall -O1 
+CFLAGS=-I../graphapp -I../../include -I$(UNZIPDIR)/windll -Wall -O1 -DRVER=\"$(PREFIX)\"
 
 GA:
 	$(MAKE) -C ../graphapp

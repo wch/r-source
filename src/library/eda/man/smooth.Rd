@@ -19,6 +19,14 @@ smooth(x)
 \note{
   \emph{3R} stands for \bold{R}epeated running \code{\link{median}}s
   of \bold{3}.
+
+  S and S-PLUS use a different Tukey smoother in \code{smooth(*)}.
+
+% MM (Aug.13,2000; see comments in the src code for R 1.2 !)
+  The implementation does \emph{not} really implement Tukey's
+  definitions, since it uses an incorrect version of the end-point rule
+  repeatedly instead of once.
+  This might be corrected in a future version of \R.
 }
 \references{
   Tukey, J. W. (1977).

@@ -49,10 +49,10 @@ test-out = $(test-src:.R=.Rout)
 	fi
 
 tests:
-	@(out=$(shell echo \"$(test-out)\" | sed 's/ //g');\
+	@(out=$(shell echo \"$(test-out)\");\
 	  if test -n "$${out}"; then \
 	    echo "Running specific tests"; \
-	    $(MAKE) -f $(R_HOME)/src/gnuwin32/check/PkgCheck "$${out}"; \
+	    $(MAKE) -f $(R_HOME)/src/gnuwin32/check/PkgCheck $${out}; \
 	  fi)
 
 clean:

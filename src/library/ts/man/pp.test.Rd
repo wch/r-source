@@ -1,6 +1,6 @@
 \name{PP.test}
 \alias{PP.test}
-\title{Phillips--Perron Unit Root Test}
+\title{Phillips-Perron Unit Root Test}
 \usage{
 PP.test(x, lshort = TRUE)
 }
@@ -20,8 +20,8 @@ PP.test(x, lshort = TRUE)
   \code{sigma^2} the Newey-West estimator is used.  If \code{lshort}
   is \code{TRUE}, then the truncation lag parameter is set to
   \code{trunc(4*(n/100)^0.25)}, otherwise
-  \code{trunc(12*(n/100)^0.25)} is used.  The p-values are
-  interpolated from Table 4.2, p. 103 of Banerjee \emph{et al.}
+  \code{trunc(12*(n/100)^0.25)} is used.  The \eqn{p}-values are
+  interpolated from Table 4.2, page 103 of Banerjee \emph{et al.}
   (1993).
   
   Missing values are not handled.
@@ -30,7 +30,7 @@ PP.test(x, lshort = TRUE)
   A list with class \code{"htest"} containing the following components:
   \item{statistic}{the value of the test statistic.}
   \item{parameter}{the truncation lag parameter.}
-  \item{p.value}{the p-value of the test.}
+  \item{p.value}{the \eqn{p}-value of the test.}
   \item{method}{a character string indicating what type of test was
     performed.} 
   \item{data.name}{a character string giving the name of the data.}

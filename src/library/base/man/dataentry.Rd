@@ -12,7 +12,7 @@ de(\dots, Modes = NULL, Names = NULL)
 \alias{de.restore}
 \alias{de.setup}
 \description{
-  A spreadsheet-lie editor for entering or editing data.
+  A spreadsheet-like editor for entering or editing data.
 }
 \arguments{
   \item{...}{A list of variables: currently these should be numeric or
@@ -20,8 +20,8 @@ de(\dots, Modes = NULL, Names = NULL)
   \item{Modes}{The modes to be used for the variables.}
   \item{Names}{The names to be used for the variables.}
   \item{data}{A list of numeric and/or character vectors.}
-  \item{modes}{A list of the the same length as \code{data} giving the
-    modes of the variables.}
+  \item{modes}{A list of length up to that of \code{data} giving the
+    modes of (some of) the variables. \code{list()} is allowed.}
 }
 \details{
   The data entry editor is only available on some platforms and GUIs.
@@ -162,7 +162,14 @@ de(\dots, Modes = NULL, Names = NULL)
   of each column, with a default of 10 characters for empty columns.
   you can specify fixed column widths by setting option
   \code{de.cellwidth} to the required fixed width (in characters).
-  (set it to zero to return to variable widths).
+  (set it to zero to return to variable widths).  The displayed
+  width of any field is limited to
+#ifdef unix
+  600 pixels (and by the window width).
+#endif
+#ifdef windows
+  50 characters (and by the window width).
+#endif
 }
 \seealso{
   \code{\link{vi}}, \code{\link{edit}}: \code{edit} uses

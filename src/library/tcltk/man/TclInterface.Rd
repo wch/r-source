@@ -111,7 +111,7 @@ tclvar$xyzzy <- 7913 ; .Tcl("set xyzzy")
 
 top <- tktoplevel() # a Tk widget, see Tk-widgets
 ls(envir=top, all=TRUE)
-ls(envir=.TkRoot, all=T)# .Tcl.args put a callback ref in here
+ls(envir=.TkRoot, all=TRUE)# .Tcl.args put a callback ref in here
 }
 }
 \keyword{ misc }
