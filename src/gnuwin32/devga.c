@@ -1682,7 +1682,7 @@ static void GA_Text(double x, double y, int coords,
     size = dd->gp.cex * dd->gp.ps + 0.5;
     GConvert(&x, &y, coords, DEVICE, dd);
     SetFont(dd->gp.font, size, 0.0, dd);
-    pixs = fontascent(xd->font) + fontdescent(xd->font) - 1;
+    pixs = - 1;
     xl = 0.0;
     yl = -pixs;
     rot1 = rot * DEG2RAD;
@@ -1692,13 +1692,13 @@ static void GA_Text(double x, double y, int coords,
     SetColor(dd->gp.col, dd);
 #ifdef NOCLIPTEXT
     gsetcliprect(xd->gawin, getrect(xd->gawin));
-    gdrawstr(xd->gawin, xd->font, xd->fgcolor, pt(x, y), str);
+    gdrawstr1(xd->gawin, xd->font, xd->fgcolor, pt(x, y), str, hadj);
     if (xd->kind==SCREEN) {
 	gsetcliprect(xd->bm, getrect(xd->bm));
-	gdrawstr(xd->bm, xd->font, xd->fgcolor, pt(x, y), str);
+	gdrawstr1(xd->bm, xd->font, xd->fgcolor, pt(x, y), str, hadj);
     }
 #else
-    DRAW(gdrawstr(_d, xd->font, xd->fgcolor, pt(x, y), str));
+    DRAW(gdrawstr1(_d, xd->font, xd->fgcolor, pt(x, y), str, hadj));
 #endif
 }
 
@@ -1898,7 +1898,7 @@ int GADeviceDriver(DevDesc *dd, char *display, double width,
     dd->dp.canRotateText = 1;
     dd->dp.canResizeText = 1;
     dd->dp.canClip = 1;
-    dd->dp.canHAdj = 0;
+    dd->dp.canHAdj = 1; /* 0, 0.5, 1 */
 
     /* initialise device description (most of the work */
     /* has been done in GA_Open) */

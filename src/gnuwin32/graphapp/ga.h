@@ -127,6 +127,7 @@ void  gdrawpolyline(drawing d, int width, int style, rgb c,
 #define gdrawpolygon(d,w,s,c,p,n) gdrawpolyline(d,w,s,c,p,n,1)
 void  gfillpolygon(drawing d, rgb fill, point *p, int n);
 int   gdrawstr(drawing d, font f, rgb c, point p, char *s);
+void  gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj);
 rect  gstrrect(drawing d, font f, char *s);
 point gstrsize(drawing d, font f, char *s);
 int   gstrwidth(drawing d ,font f, char *s);
