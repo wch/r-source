@@ -7,8 +7,8 @@ undoc(package, dir, lib.loc = NULL)
 }
 \description{
   Finds the objects in a package which are undocumented, in the sense
-  that they are visible to the user (or data objects provided by the
-  package), but no documentation entry exists.
+  that they are visible to the user (or data objects or S4 classes
+  provided by the package), but no documentation entry exists.
 }
 \arguments{
   \item{package}{a character string naming an installed package.}
@@ -38,6 +38,6 @@ undoc(package, dir, lib.loc = NULL)
   contained in such objects.
 }
 \examples{
-undoc("eda")                   # Undocumented objects in `eda'
+undoc("eda")                   # Undocumented objects in 'eda'
 }
 \keyword{documentation}

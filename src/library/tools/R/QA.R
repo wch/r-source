@@ -148,12 +148,12 @@ function(package, dir, lib.loc = NULL)
 
     dataObjs <- character(0)
     if(file.exists(dataDir <- file.path(dir, "data"))) {
-        dataExts <- c("R", "r", "RData", "rdata", "rda", "TXT", "txt",
-                      "tab", "CSV", "csv")
+        dataExts <- c("R", "r",
+                      "RData", "rdata", "rda",
+                      "TXT", "txt", "tab", "CSV", "csv")
         files <- .listFilesWithExts(dataDir, dataExts)
         files <- files[!duplicated(sub("\\.[A-Za-z]*$", "", files))]
         dataEnv <- new.env()
-        dataObjs <- NULL
         if(any(i <- grep("\\.\(R\|r\)$", files))) {
             for(f in files[i]) {
                 yy <- try(sys.source(f, envir = dataEnv, chdir = TRUE))
@@ -196,14 +196,24 @@ function(package, dir, lib.loc = NULL)
         ##                            ".First.lib", ".Last.lib")]
         ## i.e., only exclude '.First.lib' and '.Last.lib'.
         codeObjs <- grep("^[^.].*", codeObjs, value = TRUE)
-        ## Also, maybe we should do something special about S4 meta
-        ## objects (with names starting with '.__C__' or '.__M__')
-        ## eventually ...
+        ## Note that this also allows us to get rid of S4 meta objects
+        ## (with names starting with '.__C__' or '.__M__'; well, as long
+        ## as there are none in base).
         ## </FIXME>
     }
 
     undocObjs <- list(code = codeObjs[! codeObjs %in% allDocTopics],
                       data = dataObjs[! dataObjs %in% allDocTopics])
+
+    if(!is.na(match("package:methods", search()))) {
+        S4ClassObjs <- getClasses(codeEnv)
+        undocObjs <-
+            c(undocObjs,
+              list("S4 class" =
+                   S4ClassObjs[! topicName("class", S4ClassObjs)
+                               %in% allDocTopics]))
+    }
+    
     class(undocObjs) <- "undoc"
     undocObjs
 }
