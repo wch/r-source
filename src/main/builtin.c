@@ -145,7 +145,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     FILE *savefp;
     int havefile, append;
     int w, i, iobj, n, nobjs, pwidth, width, sepw, lablen, ntot, nlsep, nlines;
-    char *p, buf[512];
+    char *p = "", buf[512];
 
     checkArity(op, args);
 

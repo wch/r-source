@@ -61,7 +61,7 @@ void warningcall(SEXP call, char *format, ...)
     if( s!= R_NilValue ) {
         if( !isLanguage(s) &&  ! isExpression(s) )
             error("invalid option \"warning.expression\"\n"); 
-        cptr=R_GlobalContext;
+        cptr = R_GlobalContext;
         while (cptr->callflag != CTXT_RETURN && cptr->callflag )
             cptr = cptr->nextcontext;
         eval(s, cptr->cloenv);
@@ -118,7 +118,6 @@ void warningcall(SEXP call, char *format, ...)
 void PrintWarnings(void) 
 {
     int i;
-    char* pout;
     SEXP names, s, t;
 
     inWarning = 1;
@@ -165,20 +164,19 @@ void PrintWarnings(void)
 
 void errorcall(SEXP call, char *format,...)
 {
-    RCNTXT *cptr;
-
     va_list(ap);
     char *dcall;
     if (inError )
 	jump_now();
 #ifdef FOO
-    cptr=R_GlobalContext;
+    RCNTXT *cptr;
+    cptr = R_GlobalContext;
     while (cptr->callflag != CTXT_RETURN && cptr->nextcontext != NULL)
         cptr = cptr->nextcontext;
     if( cptr->callflag == CTXT_RETURN )
         do_browser(cptr->call, R_NilValue, R_NilValue, cptr->cloenv);
 #endif
-    if( call != R_NilValue ) {
+    if(call != R_NilValue ) {
         dcall = CHAR(STRING(deparse1(call, 0))[0]);
         REprintf("Error in %s : ", dcall);
     }
@@ -298,8 +296,7 @@ SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *cptr;
 
-    cptr = 
-    cptr=R_GlobalContext->nextcontext;
+    cptr = R_GlobalContext->nextcontext;
     while (cptr->callflag != CTXT_RETURN && cptr->nextcontext != NULL)
 	cptr = cptr->nextcontext;
     if (CAR(args) != R_NilValue) {

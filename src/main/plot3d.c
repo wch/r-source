@@ -1366,9 +1366,9 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     double ltheta, lphi;
     double expand, xc, yc, zc, xs, ys, zs;
     int i, j, scale, ncol, dobox;
-    DevDesc *dd;
+    DevDesc *dd = CurrentDevice();
 
-    /* dd = CurrentDevice(); GCheckState(dd); */
+    GCheckState(dd);
 
     if (length(args) < 18)
 	errorcall(call, "too few parameters\n");

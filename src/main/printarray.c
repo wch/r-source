@@ -462,6 +462,7 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
 	nb = 1;
 	for (i = 2 ; i < ndim ; i++)
 	    nb *= INTEGER(dim)[i];
+	dnn = R_NilValue;	/* -Wall */
 	if (dimnames == R_NilValue) {
 	    dn0 = R_NilValue;
 	    dn1 = R_NilValue;

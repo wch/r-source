@@ -1213,7 +1213,7 @@ SEXP do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP terms, data, names, variables, varnames, dots, dotnames, na_action;
-    SEXP ans, row_names, subset, tmp,tmp2;
+    SEXP ans, row_names, subset, tmp;
     char buf[256];
     int i, nr, nc;
     int nvars, ndots;
@@ -1308,7 +1308,8 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (subset != R_NilValue) {
 #if 0
-        PROTECT(tmp2=allocVector(VECSXP, length(data)));
+	SEXP tmp2;
+        PROTECT(tmp2 = allocVector(VECSXP, length(data)));
 	for (i =nc; i--;){
 	    VECTOR(tmp2)[i]=allocVector(INTSXP,1);
 	    copyMostAttrib(VECTOR(data)[i],VECTOR(tmp2)[i]);

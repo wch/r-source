@@ -113,6 +113,7 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     tl = CAR(args); args = CDR(args);
     dl = asLogical(CAR(args)); args = CDR(args);
     pg = CAR(args);
+    n = 0;			/* -Wall */
     if (!isString(fn) || (n = length(fn)) < 1)
 	errorcall(call, "invalid filename specification\n");
     if (!isString(hd) || length(hd) != n)

@@ -27,24 +27,25 @@
 /*
  * ed, vi etc have 3 parameters. the data, a file and an editor
  * 
- * if file is specified then the given file is used (and not removed on exit) if
- * file is not specified then a temporary file is used; since only one
- * temporary file is used for an entire session previous editing is lost
+ * if file is specified then the given file is used (and not removed on
+ * exit) if file is not specified then a temporary file is used; since
+ * only one temporary file is used for an entire session previous
+ * editing is lost 
  * 
  * if data is specified then it is passed out to be edited; if data is not
  * specified then either file (if specified) or the temporary file is used
  * (thus errors can be re-editied by calling edit a second time with no
  * arguments).
  * 
- * if the editor is specified then the specified editor is invoked if possible
- * and an error message reported otherwise
+ * if the editor is specified then the specified editor is invoked if
+ * possible and an error message reported otherwise
  */
 
 static char *DefaultFileName;
 
 void InitEd()
 {
-	DefaultFileName = tmpnam(NULL);
+    DefaultFileName = tmpnam(NULL);
 }
 
 
@@ -103,7 +104,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_ResetConsole();
     {   /* can't just eval(x) here */
 	int i, n;
-	SEXP tmp;
+	SEXP tmp = R_NilValue;
 
 	n = LENGTH(x);
 	for (i = 0 ; i < n ; i++)
