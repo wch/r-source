@@ -688,7 +688,7 @@ int findsquare()
 static SEXP getccol()
 {
     SEXP tmp, tmp2;
-    int i, len, wcol, wrow;
+    int i, len, newlen, wcol, wrow;
     SEXPTYPE type;
     char cname[10];
 
@@ -710,7 +710,9 @@ static SEXP getccol()
     len = LENGTH(CAR(tmp));
     type = TYPEOF(CAR(tmp));
     if (len < wrow) {
-	tmp2 = ssNewVector(type, 2 * len);
+	for (newlen = len * 2 ; newlen < wrow ; newlen *= 2)
+	    ;
+	tmp2 = ssNewVector(type, newlen);
 	for (i = 0; i < len; i++)
 	    if (type == REALSXP)
 		REAL(tmp2)[i] = REAL(CAR(tmp))[i];
