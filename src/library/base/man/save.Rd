@@ -21,9 +21,10 @@ save.image()
   specified file.  The objects can be read back from the file at a later
   date by using the function \code{load}.
 
-  \code{save.image()} is just a short-cut for ``save my current work'',
+  \code{save.image()} is just a short-cut for ``save my current
+  environment'',
   i.e., \code{save(list = ls(), file = ".RData")}. It is what also
-  happens with \code{\link{q}("yes")}/
+  happens with \code{\link{q}("yes")}.
 }
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}}.
