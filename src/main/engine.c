@@ -2102,8 +2102,10 @@ void GEplayDisplayList(GEDevDesc *dd)
 	    for (i=0; i<numGraphicsSystems; i++)
 		if (dd->gesd[i] != NULL)
 		    if (!LOGICAL((dd->gesd[i]->callback)(GE_CheckPlot, dd, 
-							 R_NilValue))[0])
+							 R_NilValue))[0]) {
 			plotok = 0;
+			warning("Display list redraw incomplete");
+		    }
 	    theList = CDR(theList);
 	}
 	selectDevice(savedDevice);
