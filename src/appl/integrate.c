@@ -19,7 +19,11 @@
 
 #include <Rinternals.h>
 #include <R_ext/Boolean.h>
+#ifdef Macintosh
+#include <fp.h>
+#else
 #include <math.h>
+#endif
 #include <Rmath.h>
 
 typedef struct int_struct
