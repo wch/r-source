@@ -36,7 +36,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
     center points \emph{when there are flower leaves},
     i.e. \code{cex / cex.fact} is used for these.}
   \item{size}{of sunflower leaves in inches, 1[in] := 2.54[cm].
-    Default: 1/8\" ~= 3.2mm.}
+    Default: 1/8\", approximately 3.2mm.}
   \item{seg.col}{color to be used for the \bold{seg}ments which make the
     sunflowers leaves, see \code{\link{par}(col=)};
     \code{col = "gold"} reminds of real sunflowers.}

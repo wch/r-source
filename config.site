@@ -133,6 +133,7 @@
 # configure.
 # CXXPICFLAGS=
 
+
 # The command to be used to load shared libraries which contain object
 # files from a C++ compiler.  This is usually the C++ compiler/linker,
 # but the automatic choice can be overridden by means of this variable.
@@ -143,3 +144,12 @@
 # automatically detected by configure, and anything set here will be in
 # addition unless SHLIB_CXXLD is given.
 # SHLIB_CXXLDFLAGS=
+
+# Tcl/Tk settings.
+# Use TCLTK_LIBS for all ALL `-L' and `-l' options needed for linking
+# against the Tcl and Tk library.
+# TCLTK_LIBS=
+# Use TCLTK_CPPFLAGS for all `-I' options needed for finding the tcl.h
+# and tk.h headers.
+# TCLTK_CPPFLAGS=
+

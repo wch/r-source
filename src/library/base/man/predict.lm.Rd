@@ -20,7 +20,7 @@ predict[.lm](object, newdata, se.fit = FALSE, scale = NULL, df = Inf,
  \item{interval}{Type of interval calculation}
  \item{level}{Tolerance/confidence level}
  \item{type}{Type of prediction (response or model term)}
- \item{terms}{If model term prediction, which term}
+ \item{terms}{If \code{type="terms"}, which terms (default is all terms)}
 }
 \details{
   \code{predict.lm} produces predicted values, obtained by evaluating

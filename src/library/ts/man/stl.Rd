@@ -42,9 +42,9 @@ stl(x, s.window = NULL, s.degree = 0, t.window = NULL, t.degree = 1,
 \value{
   An object of class \code{"stl"} with components
   \item{time.series}{a multiple time series with columns
-    \code{seasonal}, \code{trend} and \code{remainder},}
+    \code{seasonal}, \code{trend} and \code{remainder}.}
   \item{weights}{the final robust weights (all one if fitting is not
-    done robustly,}
+    done robustly).}
   \item{call}{the matched call.}
 }
 \references{

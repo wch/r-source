@@ -7,7 +7,7 @@
   Plot Cumulative Periodogram
 }
 \description{
-  Plots a cumulative periodogram
+  Plots a cumulative periodogram.
 }
 \usage{
 cpgram(ts, taper=0.1, main=

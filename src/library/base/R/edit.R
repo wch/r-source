@@ -18,7 +18,8 @@ edit.data.frame <-
             return (edit.default(name, ...))
 
     is.vector.unclass <- function(x) is.vector(unclass(x))
-    if (!all(sapply(name, is.vector.unclass) | sapply(name, is.factor)))
+    if (length(name) > 0 && !all(sapply(name, is.vector.unclass)
+                                 | sapply(name, is.factor)))
         stop("Can only handle vector and factor elements")
 
     factor.mode <- match.arg(factor.mode)
@@ -33,7 +34,11 @@ edit.data.frame <-
 
     attrlist <- lapply(name, attributes)
     datalist <- lapply(name, as.num.or.char)
-    factors <- which(sapply(name, is.factor))
+    factors <- if (length(name) > 0)
+        which(sapply(name, is.factor))
+    else
+        numeric(0)
+    
     modes <- lapply(datalist, mode)
     if (edit.row.names) {
         datalist <- c(list(row.names=row.names(name)), datalist)
@@ -59,8 +64,8 @@ edit.data.frame <-
             if (any(!ok)) {
                 warning(paste("invalid factor levels in", names(out)[i]))
                 o[!ok] <- NA
-                attributes(o) <- a
             }
+	    attributes(o) <- a
         } else {
             o <- out[[i]]
             if (any(new <- is.na(match(o, c(a$levels, NA))))) {

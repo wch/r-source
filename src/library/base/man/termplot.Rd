@@ -47,7 +47,9 @@ termplot(model, data=model.frame(model), partial.resid=FALSE, rug=FALSE,
 
   It is often necessary to specify the \code{data} argument, because it is
   not possible to reconstruct eg \code{x} from a model frame containing
-  \code{sin(x)}.
+  \code{sin(x)}.  The \code{data} argument must have exactly the same
+  rows as the model frame of the model object so, for example, missing
+  data must  have been removed in the same way.
 }
 \seealso{For (generalized) linear models, \code{\link{plot.lm}} and
   \code{\link{predict.glm}}.}

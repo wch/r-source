@@ -676,7 +676,7 @@ static SEXP getccol()
     len = LENGTH(CAR(tmp));
     type = TYPEOF(CAR(tmp));
     if (len < wrow) {
-	for (newlen = len * 2 ; newlen < wrow ; newlen *= 2)
+	for (newlen = max(len * 2, 10) ; newlen < wrow ; newlen *= 2)
 	    ;
 	tmp2 = ssNewVector(type, newlen);
 	for (i = 0; i < len; i++)

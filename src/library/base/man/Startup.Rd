@@ -11,7 +11,8 @@
 \alias{.First}
 \description{
   In \R, the startup mechanism is as follows. If a file
-  \file{.Renviron}, or failing that \file{~/.Renviron}, exists, it is
+  \file{.Renviron}, or failing that \file{\eqn{\sim}{~}/.Renviron},
+  exists, it is
   sourced, usually to set environmental variables. This is suppressed
   by the flag \code{--no-environ}. Then \R searches for
   the site-wide startup profile unless the command line option

@@ -12,10 +12,10 @@ winDialog(type = c("ok", "okcancel", "yesno", "yesnocancel"), message)
 winDialogString(message, default)
 }
 \arguments{
-  \item{type}{The type of dialog box. It will have the buttons implied
-    by its name.}
-  \item{message}{The information field of the dialog box.}
-  \item{default}{The default string.}
+  \item{type}{character. The type of dialog box. It will have the
+    buttons implied by its name.}
+  \item{message}{character. The information field of the dialog box.}
+  \item{default}{character. The default string.}
 }
 }
 \value{
@@ -24,7 +24,7 @@ winDialogString(message, default)
   choice.
 
   For \code{winDialogString} a string giving the contents of the text
-  box when \code{Ok} was pressed, or \code{NULL} if code{Cancel} was pressed.
+  box when \code{Ok} was pressed, or \code{NULL} if \code{Cancel} was pressed.
 }
 \note{
   The standard keyboard accelerators work with these dialog boxes:

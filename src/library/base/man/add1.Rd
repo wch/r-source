@@ -92,8 +92,9 @@ drop1.glm(object, scope, dispersion = 0, test = c("none", "Chisq", "F"),
 \section{Warning}{
   The model fitting must apply the models to the same dataset. This
   may be a problem if there are missing values and \R's default of
-  \code{na.action = na.omit} is used, although it is not for the methods for
-  \code{"lm"} and \code{"glm"}.
+  \code{na.action = na.omit} is used, although it is not for the
+  \code{drop1} methods for \code{"lm"} and \code{"glm"}.  Only use
+  these functions with data containing missing values with great care.
 }
 \seealso{\code{\link{step}}, \code{\link{aov}}, \code{\link{lm}},
     \code{\link{extractAIC}}.}

@@ -72,9 +72,6 @@ in your path.
 The batch wrappers to Perl files Rdconv.bat Rdindex.bat Rd2txt.bat
 Sd2Rd.bat have been revised to work on more Perl/OS versions.
 
-Other versions of Tcl/Tk may be used by setting TCL_VERSION in 
-MkRules (but only 8.31 has been tested).
-
 Setting cell widths from the menu in the data editor now works reliably.
 
 Having an empty line at the beginning of .Rhistory no longer breaks the
@@ -82,6 +79,11 @@ history-recall mechanism in Rgui.
 
 Characters using the AltGr key now work in interactive use of Rterm.
 (AltGr used to work like Alt.)
+
+Ctrl+V now works as described in a pager (pasting to the console).
+
+Other versions of Tcl/Tk may be used by setting TCL_VERSION in 
+MkRules (but only 8.31 has been tested).
 
 A file Makevars.win in the src directory of a package will be used in
 preference to a file Makevars.

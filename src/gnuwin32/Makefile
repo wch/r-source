@@ -221,8 +221,8 @@ cleanwin:
 
 #                          ===== testing ======
 
-# tests
-check test: test-Specific pkgtests
+check: all test
+test: test-Specific pkgtests
 
 test-Specific:
 	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests clean

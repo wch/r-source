@@ -242,7 +242,7 @@ binomial <- function (link = "logit")
 	stats <- make.link(linktemp)
     else stop(paste(linktemp, "link not available for binomial",
 		    "family, available links are \"logit\", ",
-		    "\"probit\" and \"cloglog\""))
+		    "\"probit\", \"cloglog\" and \"log\""))
     variance <- function(mu) mu * (1 - mu)
     validmu <- function(mu) all(mu>0) && all(mu<1)
     dev.resids <- function(y, mu, wt)

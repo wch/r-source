@@ -27,6 +27,11 @@ save.image(file = ".Rdata")
   i.e., \code{save(list = ls(all=TRUE), file = ".RData")}. It is what also
   happens with \code{\link{q}("yes")}.
 }
+\details{
+  Almost all current \R platforms (including Windows) use the XDR
+  representation of binary objects in binary save-d files, and these are
+  portable across all XDR-compliant implementations.
+}
 \seealso{
   \code{\link{dput}}, \code{\link{dump}}, \code{\link{load}}.
 }

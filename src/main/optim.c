@@ -598,7 +598,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
 {
     char action[50];
     int C;
-    Boolean calcvert, notcomp = false, shrinkfail = false;
+    Boolean calcvert, shrinkfail = false;
     double convtol, f;
     int funcount=0, H, i, j, L=0;
     int n1=0;
@@ -659,8 +659,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
 			for (i = 0; i < n; i++)
 			    Bvec[i] = P[i][j];
 			f = fminfn(n, Bvec, OS);
-			if (notcomp)
-			    f = big;
+			if (!R_FINITE(f)) f = big;
 			funcount++;
 			P[n1 - 1][j] = f;
 		    }
@@ -948,6 +947,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
     *grcount = gradcount;
 }
 
+/* from ../appl/lbfgsb.c : */
 void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    double *f, double *g, double factr, double *pgtol,
 	    double *wa, int * iwa, char *task, int iprint,

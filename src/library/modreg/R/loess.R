@@ -166,7 +166,7 @@ simpleLoess <-
 				 double(N),
 				 pseudovalues = double(N),
 				 PACKAGE="modreg")$pseudovalues
-	z <- .C("loess_raw",
+	zz <- .C("loess_raw",
 		as.double(pseudovalues),
 		as.double(x),
 		as.double(weights),
@@ -192,7 +192,7 @@ simpleLoess <-
 		delta2 = double(1),
 		as.integer(0),
 		PACKAGE="modreg")
-	pseudo.resid <- pseudovalues - z$temp
+	pseudo.resid <- pseudovalues - zz$temp
     }
     sum.squares <- if(iterations <= 1) sum(weights * fitted.residuals^2)
     else sum(weights * pseudo.resid^2)
@@ -262,7 +262,7 @@ predLoess <-
 		    as.double(y),
 		    as.double(x),
 		    as.double(x.evaluate),
-		    as.double(weights),
+		    as.double(weights*robust),
 		    as.double(robust),
 		    as.integer(family =="gaussian"),
 		    as.double(span),
@@ -284,7 +284,7 @@ predLoess <-
 		      as.double(y),
 		      as.double(x),
 		      as.double(x.evaluate),
-		      as.double(weights),
+		      as.double(weights*robust),
 		      as.double(span),
 		      as.integer(degree),
 		      as.integer(nonparametric),

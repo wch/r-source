@@ -101,9 +101,10 @@ optim(par, fn, gr = NULL,
       no other stopping criteria. Defaults to \code{10000}.}
     \item{\code{abstol}}{The absolute convergence tolerance. Only
       useful for non-negative functions, as a tolerance for reaching zero.}
-    \item{\code{reltol}}{Relative convergence tolerance. The algorithm
+    \item{\code{reltol}}{Relative convergence tolerance.  The algorithm
       stops if it is unable to reduce the value by a factor of
-      \code{reltol * (abs(val) + reltol)} at a step.}
+      \code{reltol * (abs(val) + reltol)} at a step.  Defaults to
+      \code{sqrt(.Machine$double.eps)}, typically about \code{1e-8}.}
     \item{\code{alpha}, \code{beta}, \code{gamma}}{Scaling parameters
       for the \code{"Nelder-Mead"} method. \code{alpha} is the reflection
       factor (default 1.0), \code{beta} the contraction factor (0.5) and
@@ -183,7 +184,8 @@ optim(par, fn, gr = NULL,
   that the code can be made freely available.
 
   The code for method \code{"L-BFGS-B"} is based on Fortran code by
-  Zhu, Byrd, Lu-Chen and Nocedal obtained from Netlib.
+  Zhu, Byrd, Lu-Chen and Nocedal obtained from Netlib
+  (file \code{opt/lbfgs_bcm.shar}: another version is in \code{toms/778}).
 
   The code for method \code{"SANN"} was contributed by A. Trapletti.
 }
@@ -191,19 +193,17 @@ optim(par, fn, gr = NULL,
 \seealso{\code{\link{nlm}}, \code{\link{optimize}}}
 
 \examples{
-## Rosenbrock Banana function
-fr <- function(x) {
+fr <- function(x) {   ## Rosenbrock Banana function
     x1 <- x[1]
     x2 <- x[2]
     100 * (x2 - x1 * x1)^2 + (1 - x1)^2
 }
-
-grr <- function(x) {
+grr <- function(x) { ## Gradient of `fr'
     x1 <- x[1]
     x2 <- x[2]
-    c(-400 * x1 * (x2 - x1 * x1) - 2 * (1 - x1), 200 * (x2 - x1 * x1))
+    c(-400 * x1 * (x2 - x1 * x1) - 2 * (1 - x1),
+       200 *      (x2 - x1 * x1))
 }
-
 optim(c(-1.2,1), fr)
 optim(c(-1.2,1), fr, grr, method = "BFGS")
 optim(c(-1.2,1), fr, NULL, method = "BFGS", hessian = TRUE)
@@ -212,19 +212,22 @@ optim(c(-1.2,1), fr, grr, method = "CG", control=list(type=2))
 optim(c(-1.2,1), fr, grr, method = "L-BFGS-B")
 
 flb <- function(x)
-     sum(c(1, rep(4, length(x)-1))*(x - c(1, x[-length(x)])^2)^2)
+    { p <- length(x); sum(c(1, rep(4, p-1)) * (x - c(1, x[-p])^2)^2) }
+## 25-dimensional box constrained
 optim(rep(3, 25), flb, NULL, "L-BFGS-B",
-      lower=rep(2, 25), upper=rep(4, 25))
+      lower=rep(2, 25), upper=rep(4, 25)) # par[24] is *not* at boundary
 
-## "wild" function
+## "wild" function , global minimum at about -15.81515
 fw <- function (x)
     10*sin(0.3*x)*sin(1.3*x^2) + 0.00001*x^4 + 0.2*x+80
+plot(fw, -50, 50, n=1000, main = "optim() minimising `wild function'")
 
-plot(fw, -50, 50, n=1000)  # global minimum at about -15.81515
 res <- optim(50, fw, method="SANN",
              control=list(maxit=20000, temp=20, parscale=20))
 res
-optim(res$par, fw, method="BFGS")
+## Now improve locally
+(r2 <- optim(res$par, fw, method="BFGS"))
+points(r2$par, r2$val, pch = 8, col = "red", cex = 2)
 }
 \keyword{nonlinear}
 \keyword{optimize}

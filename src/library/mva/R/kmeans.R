@@ -8,7 +8,7 @@ kmeans <- function(x, centers, iter.max = 10)
 	k <- centers
 	if(m < k)
 	    stop("more cluster centers than data points.")
-	centers <- x[sample(1:m, k), ]
+	centers <- x[sample(1:m, k), , drop=FALSE]
     } else {
 	centers <- as.matrix(centers)
 	k <- nrow(centers)

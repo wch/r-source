@@ -3,7 +3,7 @@
 \usage{
 lm(formula, data, subset, weights, na.action,
    method = "qr", model = TRUE, x = FALSE, y = FALSE, qr = TRUE,
-   singular.ok = TRUE contrasts = NULL, offset = NULL, \dots)
+   singular.ok = TRUE, contrasts = NULL, offset = NULL, \dots)
 }
 \alias{lm}
 \arguments{

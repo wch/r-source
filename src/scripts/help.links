@@ -27,9 +27,9 @@ rm -f ${SEARCHINDEX}
 cp ${R_HOME}/doc/html/packages-head.html ${PKGLIST}
 
 get_unique () {
-  if test -e ${1}; then
+  if test -r ${1}; then
     x="1"
-    while test -e ${1}.${x}; do
+    while test -r ${1}.${x}; do
       x=`echo "$x+1" | bc`
     done
     echo ${1}.${x}           
@@ -72,6 +72,7 @@ for lib in $*; do
 done
 
 cat ${R_HOME}/doc/html/packages-foot.html >> ${PKGLIST}
+ln -s ${R_HOME}/doc/html/R.css ${USER_R_HOME}/library
 
 ### Local Variables: ***
 ### mode: sh ***

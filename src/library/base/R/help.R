@@ -44,6 +44,22 @@ help <-
             if (!offline) {
                 if (htmlhelp) {
                     if(file.exists(file)) {
+                        ofile <- file
+                        base.pos <- match("package:base", search())
+                        if (exists("help.start.has.been.run",
+                                   where=base.pos, mode="logical") &&
+                            get("help.start.has.been.run",
+                                   pos=base.pos, mode="logical")) {
+                        ## we need to use the version in ~/.R if we can.
+                            lnkfile <-
+                                file.path(getenv("HOME"), ".R", "library",
+                                          package, "html",
+                                          paste(topic, "html", sep="."))
+                            if (file.exists(lnkfile)) file <- lnkfile
+                        }
+                        if (file == ofile) {
+                            warning("Using non-linked HTML file: style sheet and hyperlinks may be incorrect")
+                        }
                         file <- paste("file:", file, sep="")
                         if (is.null(getOption("browser")))
                             stop("options(\"browser\") not set")
