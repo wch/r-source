@@ -32,53 +32,67 @@ static char RunError[256] = "";
 static char * expandcmd(char *cmd)
 {
     char  c;
-    char *s, *p, *q, *f;
-    char  drv[3], dir[MAX_PATH], name[MAX_PATH], ext[MAX_PATH];
-    int   d;
-    int   l = MAX_PATH + strlen(cmd);
+    char *s, *p, *q, *f, *dest, *src;
+    char  fl[MAX_PATH], fn[MAX_PATH];
+    int   d , ext;
 
     if (!(s = (char *) winmalloc(MAX_PATH + strlen(cmd)))) {
-	strcpy(RunError, "Insufficient memory (expandcmd)");
+	strcpy(RunError, "Insufficient memory (expandcmd)\n");
 	return NULL;
     }
     for (p = cmd; *p && isspace(*p); p++);
-    for (q = p; *q && !isspace(*q); q++);
+    for (q = p, d = 0; *q && ( d || !isspace(*q) ); q++)
+      if (*q=='\"') d = d ? 0 : 1;
+    if (d) {
+	strcpy(RunError, "A \" is missing(expandcmd)\n");
+	return NULL;
+    }
     c = *q;
     *q = '\0';
+    
 /*
  * I resort to this since SearchPath returned FOUND also
  * for file name without extension -> explicitly set
  *  extension
 */
-   _splitpath(p,drv,dir,name,ext);
-   if (ext[0])
+   for ( f = p, ext = 0 ; *f ; f++) {
+     if ((*f=='\\') || (*f=='/')) ext = 0;
+     else if (*f == '.') ext = 1;
+   } 
+   /* SearchFile doesn't like \" */
+   for ( dest=fl , src=p; *src ; src++) if (*src!='\"') *dest++ = *src;
+   *dest = '\0';
+   if (ext) {
    /*
     * user set extension; we don't check that it is executable;
     * it might get an error after; but maybe sometimes
     * in the future every extension will be executable
    */
-      d = SearchPath(NULL,p,NULL,l,s,&f);
-   else {
-      char fl[MAX_PATH];
-      _makepath(fl,drv,dir,name,".exe");
-      if (!(d=SearchPath(NULL,fl,NULL,l,s,&f))) {
-         _makepath(fl,drv,dir,name,".com");
-         if (!(d=SearchPath(NULL,fl,NULL,l,s,&f))) {
-              _makepath(fl,drv,dir,name,".cmd");
-	      if (!(d=SearchPath(NULL,fl,NULL,l,s,&f))) {
-		   _makepath(fl,drv,dir,name,".bat");
-		   d=SearchPath(NULL,fl,NULL,l,s,&f);
-	      }
-	 }
-      }
+      d = SearchPath(NULL,fl,NULL,MAX_PATH,fn,&f);
+   } else {
+     int iexts = 0;
+     char *exts[] = { ".exe" , ".com" , ".cmd" , ".bat" , NULL };
+     while (exts[iexts]) {
+       strcpy(dest,exts[iexts]);
+       if ((d=SearchPath(NULL,fl,NULL,MAX_PATH,fn,&f))) break;
+       iexts ++ ;
+     }
    }
    if (!d) {
        winfree(s);
        strncpy(RunError,p, 200);
-       strcat(RunError," not found");
+       strcat(RunError," not found \n");
        *q = c;
        return NULL;
    }
+   /* 
+      Paranoia : on my system switching to short names is not needed
+      since SearchPath already returns 'short names'. However,
+      this is not documented so I prefer to be explicit.
+      Problem is that we have removed \" from the executable since
+      SearchPath seems dislikes them
+   */
+   GetShortPathName(fn,s,MAX_PATH);  
    *q = c;
    strcat(s,q);
    return s;
@@ -157,7 +171,7 @@ static HANDLE pcreate(char* cmd,char *finput,
     if (!ret) {
 	strcpy(RunError, "Impossible to run '");
 	strncat(RunError, ecmd, 200);
-	strcat(RunError, "'");
+	strcat(RunError, "'\n");
 	winfree(ecmd);
 	return NULL;
     }
@@ -218,13 +232,13 @@ rpipeOpen(char *cmd, int visible, char *finput)
     DWORD id;
 
     if (!(r = (rpipe *) winmalloc(sizeof(struct structRPIPE)))) {
-	strcpy(RunError, "Insufficient memory (rpipeOpen)");
+	strcpy(RunError, "Insufficient memory (rpipeOpen)\n");
 	return NULL;
     }
     r->process = NULL;
     if (CreatePipe(&hTemp, &(r->write), NULL, 0) == FALSE) {
 	rpipeClose(r);
-	strcpy(RunError, "Inpossible to create pipe");
+	strcpy(RunError, "Inpossible to create pipe\n");
 	return NULL;
     }
     hTHIS = GetCurrentProcess();
@@ -246,7 +260,7 @@ rpipeOpen(char *cmd, int visible, char *finput)
 	return NULL;
     if (!(hThread = CreateThread(NULL, 0, threadedwait, r, 0, &id))) {
 	rpipeClose(r);
-	strcpy(RunError, "Inpossible to create thread/pipe");
+	strcpy(RunError, "Inpossible to create thread/pipe \n");
 	return NULL;
     }
     CloseHandle(hThread);
@@ -328,3 +342,10 @@ rpipeClose(rpipe * r)
     winfree(r);
     return i;
 }
+
+
+
+
+
+
+
