@@ -7,43 +7,45 @@ convolve(x, y, conj = TRUE, type = c("circular", "open", "filter"))
 \arguments{
 \item{x,y}{numeric sequences \emph{of the same length} to be convolved.}
 \item{conj}{logical; if \code{TRUE}, take the complex \emph{conjugate}
-    before back-transforming (default, and used for usual convolution).}
+  before back-transforming (default, and used for usual convolution).}
 \item{type}{character; one of \code{"circular"}, \code{"open"},
-    \code{"filter"} (beginning of word is ok).
-    For \code{circular}, the two sequences are treated as
-    \emph{circular}, i.e., periodic.
+  \code{"filter"} (beginning of word is ok).
+  For \code{circular}, the two sequences are treated as
+  \emph{circular}, i.e., periodic.
 
-    For \code{open} and \code{filter}, the sequences are padded with
-    \code{0}s (from left and right) first;
-    \code{"filter"} returns a the middle sub-vector of \code{"open"},
-    namely, the result of running a weighted mean of \code{x} with
-    weights \code{y}.}
+  For \code{open} and \code{filter}, the sequences are padded with
+  \code{0}s (from left and right) first;
+  \code{"filter"} returns the middle sub-vector of \code{"open"},
+  namely, the result of running a weighted mean of \code{x} with
+  weights \code{y}.}
 }
 \description{
-    Use the Fast Fourier Transform to compute the
-    several kinds of convolutions of two sequences.
+  Use the Fast Fourier Transform to compute the
+  several kinds of convolutions of two sequences.
 }
 \details{
-    The Fast Fourier Transform, \code{\link{fft}}, is used for efficiency.
+  The Fast Fourier Transform, \code{\link{fft}}, is used for efficiency.
 
-    The input sequences \code{x} and  \code{y} must have the same length if
-    \code{circular = TRUE}).
+  The input sequences \code{x} and  \code{y} must have the same length if
+  \code{circular} is true.
+
+  Note that the usual definition of convolution of two sequences
+  \code{x} and \code{y} is given by \code{convolve(x, rev(y), type = "o")}.
 }
 \value{
-    If \code{r <- convolve(x,y, conj=TRUE, type)}
-    and \code{n <- length(x)}, then
-    \deqn{r_k = \sum_{i=1}^n x_i y_{k-i}}{r[k] = sum(i=1,..,n;  x[i] * y[k-i])}
-    for \eqn{k = 1,\dots,n}.
+  If \code{r <- convolve(x,y, type = "open")}
+  and \code{n <- length(x)}, \code{m <- length(y)}, then
+  \deqn{r_k = \sum_{i} x_{k-m+i} y_{i}}{r[k] = sum(i; x[k-m+i] * y[i])}
+  where the sum is over all valid indices \eqn{i}, for \eqn{k = 1,\dots, n+m-1}
 
-%%-MM: TODO: Polish --- circular / open / filter
-%% --  ----  specify the length of the result for different  `type' !
-    If \code{type == "circular"}, then
-    \eqn{y_{j} = y_{n+j}}{y[j] == y[n+j]} for \eqn{j < 0}.
+  If \code{type == "circular"}, \eqn{n = m} is required, and the above is
+  true for \eqn{i , k = 1,\dots,n} when
+  \eqn{x_{j} := x_{n+j}}{x[j] := x[n+j]} for \eqn{j < 1}.
 }
 \references{
-Brillinger, D. R. (1981).
-\emph{Time Series: Data Analysis and Theory}, Second Edition.
-San Francisco: Holden-Day.
+  Brillinger, D. R. (1981).
+  \emph{Time Series: Data Analysis and Theory}, Second Edition.
+  San Francisco: Holden-Day.
 }
 \seealso{\code{\link{fft}}, \code{\link{nextn}}.
 }
