@@ -3,11 +3,11 @@
 index.search <- function(topic, path, file="AnIndex", type="help")
     .Internal(index.search(topic, path, file, .Platform$file.sep, type))
 
-help <-
-    function (topic, offline = FALSE, package = .packages(),
-              lib.loc = .lib.loc, verbose = getOption("verbose"),
-              try.all.packages = getOption("help.try.all.packages"),
-              htmlhelp = getOption("htmlhelp"))
+help <- function(topic, offline = FALSE, package = .packages(),
+                 lib.loc = .lib.loc, verbose = getOption("verbose"),
+                 try.all.packages = getOption("help.try.all.packages"),
+                 htmlhelp = getOption("htmlhelp"),
+                 pager = getOption("pager"))
 {
     htmlhelp <- is.logical(htmlhelp) && htmlhelp
     if (!missing(package))
@@ -83,8 +83,9 @@ help <-
                 ## end of experimental code
                 if(file.exists(zfile))
                     file.show(zfile,
-                              ##header= paste("Help for `", topic, "'", sep=""),
-                              delete.file = (zfile!=file))
+                              title = paste("R Help on `", topic, "'", sep=""),
+                              delete.file = (zfile!=file),
+                              pager = pager)
                 else
                     stop(paste("The help file for `", topic, "' is missing",
                                sep = ""))

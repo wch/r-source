@@ -5,12 +5,13 @@ help(topic, offline = FALSE, package = .packages(),
      lib.loc = .lib.loc, verbose = getOption("verbose"),
      try.all.packages = getOption("help.try.all.packages"),
 #ifdef unix
-     htmlhelp = getOption("htmlhelp"))
+     htmlhelp = getOption("htmlhelp"),
 #endif
 #ifdef windows
      chmhelp = getOption("chmhelp"),
-     htmlhelp = getOption("htmlhelp"), winhelp = getOption("winhelp"))
+     htmlhelp = getOption("htmlhelp"), winhelp = getOption("winhelp"),
 #endif
+     pager = getOption("pager"))
 ?topic
 }
 \alias{help}
@@ -42,6 +43,7 @@ help(topic, offline = FALSE, package = .packages(),
   \item{winhelp}{logical (or \code{NULL}).  If \code{TRUE}, a Windows
     \code{.hlp} file will be used if one is available.}
 #endif
+  \item{pager}{the pager to be used for \code{\link{file.show}}.}
 }
 \description{
   These functions provide access to documentation.

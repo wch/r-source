@@ -6,7 +6,8 @@ help <-
              lib.loc = .lib.loc, verbose = getOption("verbose"),
              try.all.packages = getOption("help.try.all.packages"),
              chmhelp = getOption("chmhelp"), htmlhelp = getOption("htmlhelp"),
-             winhelp = getOption("winhelp"))
+             winhelp = getOption("winhelp"),
+             pager = getOption("pager"))
 {
     chmhelp <- is.logical(chmhelp) && chmhelp
     htmlhelp <- is.logical(htmlhelp) && htmlhelp
@@ -107,7 +108,7 @@ help <-
                 if(file.exists(zfile))
                     file.show(zfile,
                               header = paste("Help for `", topic, "'", sep=""),
-                              delete.file = (zfile!=file))
+                              delete.file = (zfile!=file), pager = pager)
                 else
                     stop(paste("The help file for `", topic, "' is missing",
                                sep = ""))
