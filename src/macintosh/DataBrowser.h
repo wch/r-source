@@ -33,7 +33,8 @@ enum {
 	kMyDataBrowser		= 'Brsr',
 	kObjectColumn		= 'objs',
 	kTypeColumn			= 'type',
-	kSizeColumn			= 'size'
+	kSizeColumn			= 'size',
+	kDontKnow			= '????'
 };
 
  
