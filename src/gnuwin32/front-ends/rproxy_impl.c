@@ -20,6 +20,8 @@
  *  License along with this library; if not, write to the Free
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
+ *
+ *  $Id: rproxy_impl.c,v 1.2.4.2 1999/12/09 16:47:17 ripley Exp $
  */
 
 #include <windows.h>
@@ -35,17 +37,10 @@
 #include "IOStuff.h"
 #include "Parse.h"
 
-#ifndef _MSC_VER
 #define R_GlobalEnv (*__imp_R_GlobalEnv)
 #define R_Visible (*__imp_R_Visible)
 #define R_EvalDepth (*__imp_R_EvalDepth)
 #define R_DimSymbol (*__imp_R_DimSymbol)
-#else
-#define R_GlobalEnv (*_imp__R_GlobalEnv)
-#define R_Visible (*_imp__R_Visible)
-#define R_EvalDepth (*_imp__R_EvalDepth)
-#define R_DimSymbol (*_imp__R_DimSymbol)
-#endif
 
 extern SEXP R_GlobalEnv;
 extern int R_Visible;
@@ -60,6 +55,8 @@ extern void setup_term_ui(void);
 extern char *getRHOME();
 extern void setup_Rmainloop(), end_Rmainloop(), R_ReplDLLinit();
 extern void askok(char *);
+
+extern SC_CharacterDevice* __output_device;
 
 void R_Proxy_askok (char* pMsg)
 {
@@ -79,6 +76,10 @@ int R_Proxy_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 
 void R_Proxy_WriteConsole(char *buf, int len)
 {
+  if (__output_device)
+    {
+      __output_device->vtbl->write_string (__output_device,buf);
+    }
 }
 
 void R_Proxy_CallBack()
@@ -155,8 +156,8 @@ int SEXP2BDX_Data (SEXP pExpression,BDX_Data** pData)
       // break;
     default:
 #if 0
-      printf (">> cannot handle symbol %s of type %d\n",
-	      pSymbol,TYPEOF (pExpression));
+      printf (">> cannot handle symbol of type %d\n",
+	      TYPEOF (pExpression));
 #endif
       //      UNPROTECT (1);
       free (lData);
@@ -299,8 +300,8 @@ int SEXP2BDX_Data (SEXP pExpression,BDX_Data** pData)
 		      lData->raw_data[i].double_value = REAL (pExpression)[i];
 		      break;
 		    case BDX_STRING:
-		      lData->raw_data[i].string_value = strdup ("test");
-		      // lData->raw_data[0].string_value = strdup (STRING (pExpression)[0]);
+		      //lData->raw_data[i].string_value = strdup ("test");
+		      lData->raw_data[i].string_value = strdup (CHAR (STRING (pExpression)[i]));
 		      break;
 		    }
 		}
@@ -638,6 +639,7 @@ int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData)
 	  {
 	  case BDX_BOOL:
 	    lData = PROTECT (allocVector (LGLSXP,lTotalSize));
+	    setAttrib (lData,R_DimSymbol,lDimensions);
 
 	    for (i = 0;i < lTotalSize;i++)
 	      {
@@ -646,6 +648,8 @@ int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData)
 	    break;
 	  case BDX_INT:
 	    lData = PROTECT (allocVector (INTSXP,lTotalSize));
+	    setAttrib (lData,R_DimSymbol,lDimensions);
+
 	    for (i = 0;i < lTotalSize;i++)
 	      {
 		INTEGER(lData)[i] = pData->raw_data[i].int_value;
@@ -653,6 +657,8 @@ int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData)
 	    break;
 	  case BDX_DOUBLE:
 	    lData = PROTECT (allocVector (REALSXP,lTotalSize));
+	    setAttrib (lData,R_DimSymbol,lDimensions);
+
 	    for (i = 0;i < lTotalSize;i++)
 	      {
 		REAL(lData)[i] = pData->raw_data[i].double_value;
@@ -661,10 +667,12 @@ int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData)
 	  case BDX_STRING:
 	    {
 	      lData = PROTECT (allocVector (STRSXP,lTotalSize));
+	      setAttrib (lData,R_DimSymbol,lDimensions);
 
 	      for (i = 0;i < lTotalSize;i++)
 		{
-		  SEXP lStringSExp =
+		  SEXP lStringSExp;
+		  lStringSExp = 
 		    allocString (strlen (pData->raw_data[i].string_value));
 		  PROTECT (lStringSExp); lProtectCount++;
 		  strcpy (CHAR(lStringSExp),pData->raw_data[i].string_value);

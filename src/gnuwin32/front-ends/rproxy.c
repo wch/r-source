@@ -16,24 +16,41 @@
  *  License along with this library; if not, write to the Free
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
+ *
+ *  $Id: rproxy.c,v 1.2.4.1 1999/12/09 16:47:17 ripley Exp $
  */
 
 #include <windows.h>
 #include <stdio.h>
+#include "Rconfig.h"
+#include "Rversion.h"
 #include "bdx.h"
 #include "SC_proxy.h"
 #include "rproxy_impl.h"
 #include <assert.h>
 #include <stdlib.h>
 
-// magic number for data structure
-#define R_BDX_MAGIC 0x8a35df01
+// static connector information
+#define CONNECTOR_NAME          "R Statistics Interpreter Connector"
+#define CONNECTOR_DESCRIPTION   "Implements abstract connector interface to R"
+#define CONNECTOR_COPYRIGHT     "(C) 1999, Thomas Baier"
+#define CONNECTOR_LICENSE       "GNU General Public License version 2 or greater"
+#define CONNECTOR_VERSION_MAJOR "0"
+#define CONNECTOR_VERSION_MINOR "91"
+
+// interpreter information here at the moment until I know better...
+#define INTERPRETER_NAME        "R"
+#define INTERPRETER_DESCRIPTION "A Computer Language for Statistical Data Analysis"
+#define INTERPRETER_COPYRIGHT   "(C) R Development Core Team"
+#define INTERPRETER_LICENSE     "GNU General Public License version 2 or greater"
 
 typedef enum
 {
   ps_none,
   ps_initialized
 } R_Proxy_Object_State;
+
+SC_CharacterDevice* __output_device;
 
 typedef struct _R_Proxy_Object_Impl
 {
@@ -75,6 +92,7 @@ int SYSCALL R_init (R_Proxy_Object_Impl* object)
     {
       object->state = ps_initialized;
     }
+
   return lRc;
 }
 
@@ -138,6 +156,12 @@ int SYSCALL R_release (R_Proxy_Object_Impl* object)
       return SC_PROXY_ERR_INITIALIZED;
     }
   
+  if (__output_device)
+    {
+      __output_device->vtbl->release (__output_device);
+      __output_device = NULL;
+    }
+
   free (object);
   
   return SC_PROXY_OK;
@@ -158,7 +182,7 @@ int SYSCALL R_set_symbol (R_Proxy_Object_Impl* object,
       return SC_PROXY_ERR_INVALIDARG;
     }
   
-  if (data->magic != R_BDX_MAGIC)
+  if (data->version != BDX_VERSION)
     {
       return SC_PROXY_ERR_INVALIDFORMAT;
     }
@@ -187,7 +211,7 @@ int SYSCALL R_get_symbol (R_Proxy_Object_Impl* object,
 
   if (lRc == SC_PROXY_OK)
     {
-      (*data)->magic = R_BDX_MAGIC;
+      (*data)->version = BDX_VERSION;
     }
 
   return lRc;
@@ -241,7 +265,7 @@ int SYSCALL R_query_types (R_Proxy_Object_Impl* object,
       return SC_PROXY_ERR_INVALIDARG;
     }
 
-  *type_mask = 0;
+  *type_mask = (SC_TM_SCALAR_ALL | SC_TM_ARRAY_ALL | SC_TM_VECTOR_ALL);
 
   return SC_PROXY_OK;
 }
@@ -258,7 +282,7 @@ int SYSCALL R_query_ops (R_Proxy_Object_Impl* object,
 
   *op_mask = 0;
 
-  return SC_PROXY_OK;
+  return SC_PROXY_ERR_NOTIMPL;
 }
 
 int SYSCALL R_free_data_buffer (R_Proxy_Object_Impl* object,
@@ -270,16 +294,125 @@ int SYSCALL R_free_data_buffer (R_Proxy_Object_Impl* object,
       return SC_PROXY_ERR_INVALIDARG;
     }
 
-  if (data->magic != R_BDX_MAGIC)
+  if (data->version != BDX_VERSION)
     {
       return SC_PROXY_ERR_INVALIDFORMAT;
     }
   
   assert (data != NULL);
-  assert (data->magic == R_BDX_MAGIC);
+  assert (data->version == BDX_VERSION);
 
   bdx_free (data);
   //  free (data);
+
+  return SC_PROXY_OK;
+}
+
+int SYSCALL R_set_output_device (R_Proxy_Object_Impl* object,
+				 struct _SC_CharacterDevice* device)
+{
+  unsigned long lCurrentVersion = 0;
+
+  if (object == NULL)
+    {
+      return SC_PROXY_ERR_INVALIDARG;
+    }
+
+  if (__output_device)
+    {
+      __output_device->vtbl->release (__output_device);
+      __output_device = NULL;
+    }
+
+  if (device == NULL)
+    {
+      return SC_PROXY_OK;
+    }
+
+  __output_device = device;
+
+  if (__output_device->vtbl->get_version (__output_device,
+					  &lCurrentVersion) != SC_PROXY_OK)
+    {
+      return SC_PROXY_ERR_UNKNOWN;
+    }
+
+  if (lCurrentVersion != SC_CHARACTERDEVICE_VERSION)
+    {
+      return SC_PROXY_ERR_INVALIDINTERFACEVERSION;
+    }
+
+  __output_device->vtbl->retain (device);
+
+  return SC_PROXY_OK;
+}
+
+int SYSCALL R_query_info (R_Proxy_Object_Impl* object,
+			  long main_key,
+			  long sub_key,
+			  char const** information)
+{
+  if ((object == NULL)
+      || (information == NULL))
+    {
+      return SC_PROXY_ERR_INVALIDARG;
+    }
+
+  switch (main_key)
+    {
+    case SC_INFO_MAIN_CONNECTOR:
+      switch (sub_key)
+	{
+	case SC_INFO_SUB_NAME:
+	  *information = INTERPRETER_NAME;
+	  break;
+	case SC_INFO_SUB_DESCRIPTION:
+	  *information = INTERPRETER_DESCRIPTION;
+	  break;
+	case SC_INFO_SUB_COPYRIGHT:
+	  *information = INTERPRETER_COPYRIGHT;
+	  break;
+	case SC_INFO_SUB_LICENSE:
+	  *information = INTERPRETER_LICENSE;
+	  break;
+	case SC_INFO_SUB_MINORVERSION:
+	  *information = R_MINOR;
+	  break;
+	case SC_INFO_SUB_MAJORVERSION:
+	  *information = R_MAJOR;
+	  break;
+	default:
+	  *information = "";
+	}
+      break;
+    case SC_INFO_MAIN_INTERPRETER:
+      switch (sub_key)
+	{
+	case SC_INFO_SUB_NAME:
+	  *information = CONNECTOR_NAME;
+	  break;
+	case SC_INFO_SUB_DESCRIPTION:
+	  *information = CONNECTOR_DESCRIPTION;
+	  break;
+	case SC_INFO_SUB_COPYRIGHT:
+	  *information = CONNECTOR_COPYRIGHT;
+	  break;
+	case SC_INFO_SUB_LICENSE:
+	  *information = CONNECTOR_LICENSE;
+	  break;
+	case SC_INFO_SUB_MINORVERSION:
+	  *information = CONNECTOR_VERSION_MINOR;
+	  break;
+	case SC_INFO_SUB_MAJORVERSION:
+	  *information = CONNECTOR_VERSION_MAJOR;
+	  break;
+	default:
+	  *information = "";
+	}
+      break;
+    default:
+      *information = "";
+    }
 
   return SC_PROXY_OK;
 }
@@ -299,14 +432,16 @@ SC_Proxy_Object_Vtbl global_proxy_object_vtbl =
   (SC_PROXY_EVALUATE_NORETURN) R_evaluate_noreturn,
   (SC_PROXY_QUERY_TYPES) R_query_types,
   (SC_PROXY_QUERY_OPS) R_query_ops,
-  (SC_PROXY_FREE_DATA_BUFFER) R_free_data_buffer
+  (SC_PROXY_FREE_DATA_BUFFER) R_free_data_buffer,
+  (SC_PROXY_SET_CHARACTERDEVICE) R_set_output_device,
+  (SC_PROXY_QUERY_INFO) R_query_info
 };
 
 int SYSCALL EXPORT SC_Proxy_get_object (SC_Proxy_Object** obj,
 					unsigned long version)
 {
   R_Proxy_Object_Impl* proxy_object = NULL;
-  
+
   if (obj == NULL)
     {
       return SC_PROXY_ERR_INVALIDARG;
@@ -314,7 +449,7 @@ int SYSCALL EXPORT SC_Proxy_get_object (SC_Proxy_Object** obj,
   
   if (version != SC_PROXY_INTERFACE_VERSION)
     {
-      return SC_PROXY_ERR_INVALIDINTERPRETERVERSION;
+      return SC_PROXY_ERR_INVALIDINTERFACEVERSION;
     }
 
   proxy_object = (R_Proxy_Object_Impl*) malloc (sizeof (R_Proxy_Object_Impl));
@@ -324,6 +459,6 @@ int SYSCALL EXPORT SC_Proxy_get_object (SC_Proxy_Object** obj,
   proxy_object->ref_count = 1;
 
   *obj = (SC_Proxy_Object*) proxy_object;
-  
+
   return SC_PROXY_OK;
 }

@@ -16,12 +16,22 @@
  *  License along with this library; if not, write to the Free
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
+ *
+ *  $Id: bdx.h,v 1.2.4.1 1999/12/09 16:47:17 ripley Exp $
  */
 
 #ifndef _BDX_H_
 #define _BDX_H_
 
 // BDX: Binary Data eXchange Format
+
+/*
+ * BDX version information
+ *
+ * 1 ... first version, never set
+ * 2 ... removed magic, added version, changed data type defines
+ */
+#define BDX_VERSION 2
 
 #if 1
 /*
@@ -43,19 +53,19 @@
 
 #define BDX_SCALAR 0x00010000
 #define BDX_ARRAY  0x00020000
-#define BDX_VECTOR 0x00030000
-#define BDX_CMASK 0x00030000
+#define BDX_VECTOR 0x00040000
+#define BDX_CMASK  0x00070000
 
 #define BDX_BOOL   0x00000001
 #define BDX_INT    0x00000002
-#define BDX_DOUBLE 0x00000003
-#define BDX_STRING 0x00000004
-#define BDX_NULL   0x00000005
-#define BDX_SMASK  0x00000007
+#define BDX_DOUBLE 0x00000004
+#define BDX_STRING 0x00000008
+#define BDX_NULL   0x00000010
+#define BDX_SMASK  0x0000001f
 
 typedef long BDX_Dimension;
 typedef unsigned long BDX_Count;
-typedef unsigned long BDX_Magic;
+typedef unsigned long BDX_Version;
 typedef unsigned long BDX_Type;
 
 typedef union _BDX_RawData
@@ -68,7 +78,7 @@ typedef union _BDX_RawData
 
 typedef struct _BDX_Data
 {
-  BDX_Magic      magic;
+  BDX_Version    version;
   BDX_Type       type;
   BDX_Count      dim_count;
   BDX_Dimension* dimensions;
