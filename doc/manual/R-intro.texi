@@ -2436,9 +2436,9 @@ factors, numeric matrices, lists, or other data frames.
 Matrices, lists, and data frames provide as many variables to the new
 data frame as they have columns, elements, or variables, respectively.
 @item
-Numeric vectors and factors are included as is, and non-numeric
-(character and logical) vectors are coerced to be factors, whose levels
-are the unique values appearing in the vector.
+Numeric vectors, logicals and factors are included as is, and character
+vectors are coerced to be factors, whose levels are the unique values
+appearing in the vector.
 @item
 Vector structures appearing as variables of the data frame must all have
 the @emph{same length}, and matrix structures must all have the same
