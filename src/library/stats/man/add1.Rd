@@ -68,6 +68,8 @@ drop1(object, scope, \dots)
   to be added or dropped: all main effects contained in a second-order
   interaction must remain, and so on.
 
+  In a \code{scope} formula \code{.} means \sQuote{what is already there}.
+
   The methods for \code{\link{lm}} and \code{\link{glm}} are more
   efficient in that they do not recompute the model matrix and call the
   \code{fit} methods directly.
@@ -106,8 +108,8 @@ drop1(object, scope, \dots)
   The model fitting must apply the models to the same dataset. Most
   methods will attempt to use a subset of the data with no missing
   values for any of the variables if \code{na.action=na.omit}, but
-  this may give biased results.  Only use
-  these functions with data containing missing values with great care.
+  this may give biased results.  Only use these functions with data
+  containing missing values with great care.
 }
 \seealso{
   \code{\link{step}}, \code{\link{aov}}, \code{\link{lm}},

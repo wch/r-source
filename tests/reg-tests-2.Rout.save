@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.0.0 beta (2004-10-01), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2004-10-05), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4202,4 +4202,21 @@ Warning message:
   "integer"    "factor"   "integer" "character"    "factor"    "factor" 
 > unlink(foo)
 > ## added in 2.0.0
+> 
+> 
+> ## write.table with complex columns (PR#7260, in part)
+> write.table(data.frame(x = 0.5+1:4, y = 1:4 + 1.5i), file = "")
+"x" "y"
+"1" 1.5 1+1.5i
+"2" 2.5 2+1.5i
+"3" 3.5 3+1.5i
+"4" 4.5 4+1.5i
+> # printed all as complex in 2.0.0.
+> write.table(data.frame(x = 0.5+1:4, y = 1:4 + 1.5i), file = "", dec=",")
+"x" "y"
+"1" 1,5 1+1,5i
+"2" 2,5 2+1,5i
+"3" 3,5 3+1,5i
+"4" 4,5 4+1,5i
+> ## used '.' not ',' in 2.0.0
 > 
