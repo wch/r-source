@@ -3,8 +3,8 @@
 \usage{
 dist(x, method = "euclidean", diag = FALSE, upper = FALSE)
 
-print.dist(x, diag = NULL, upper = NULL, \dots)
-as.matrix.dist(x)
+\method{print}{dist}(x, diag = NULL, upper = NULL, \dots)
+\method{as.matrix}{dist}(x)
 as.dist(m, diag = FALSE, upper = FALSE)
 }
 \alias{dist}
@@ -15,8 +15,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
 \alias{names<-.dist}
 \alias{as.dist}
 \arguments{
-  \item{x}{numeric matrix or (data frame).  Distances between the rows of
-    \code{x} will be computed.}
+  \item{x}{a numeric matrix, data frame or \code{"dist"} object.}
   \item{method}{the distance measure to be used. This must be one of
     \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"},
     \code{"canberra"} or \code{"binary"}.
