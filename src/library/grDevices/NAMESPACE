@@ -1,8 +1,8 @@
-export(check.options, col2rgb, colors, colours, dev.control, dev.copy,
-       dev.copy2eps, dev.cur, dev.interactive, dev.list, dev.next,
-       dev.off, dev.prev, dev.print, dev.set, graphics.off, gray,
-       grey, hsv, palette, pdf, pictex, postscript,
-       ps.options, rainbow, recordPlot, replayPlot, rgb, rgb2hsv, xfig)
+export(Hershey, check.options, col2rgb, colors, colours, dev.control,
+       dev.copy, dev.copy2eps, dev.cur, dev.interactive, dev.list,
+       dev.next, dev.off, dev.prev, dev.print, dev.set, graphics.off,
+       gray, grey, hsv, palette, pdf, pictex, postscript, ps.options,
+       rainbow, recordPlot, replayPlot, rgb, rgb2hsv, xfig)
 
 export(cm.colors, heat.colors, terrain.colors, topo.colors)
 export(postscriptFont, postscriptFonts)

@@ -1,9 +1,9 @@
 import(grDevices)
 
-### temp measure for lattice, user hooks
-export(dev.list, cm.colors, gray, heat.colors, ps.options)
+### temp measure for user hooks
+export(ps.options)
 
-export(Hershey, abline, arrows, assocplot, axTicks, axis, axis.Date,
+export(abline, arrows, assocplot, axTicks, axis, axis.Date,
        axis.POSIXct, barplot, barplot, box, boxplot, boxplot.stats,
        bxp, close.screen, co.intervals, contour, contourLines, coplot,
        curve, dotchart, erase.screen, filled.contour, fourfoldplot,
