@@ -297,3 +297,15 @@ Date: Mon, 20 Dec 1999 21:22:14 +0100
 Subject: BUG in format()?
 From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
 Date: Tue, 21 Dec 1999 17:34:34 +0100
+* PR# 384 *
+Subject: tck crash
+From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
+Date: Wed, 22 Dec 1999 10:05:48 +0100 (MET)
+* PR# 385 *
+Subject: Apply dimnames
+From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
+Date: Wed, 22 Dec 1999 11:22:27 +0000 (GMT)
+* PR# 386 *
+Subject: as.matrix.data.frame() modifies content of character columns
+From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
+Date: Wed, 22 Dec 1999 16:18:19 +0100
