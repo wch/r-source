@@ -94,7 +94,7 @@
 
 /* Define if your Fortran compiler appends an underscore to external
    names. */
-#undef HAVE_F77_UNDERSCORE
+#define HAVE_F77_UNDERSCORE 1
 
 /* Define if you have the GNU C library version >= 2.
    This is needed to fix a problem with getting the prototype of

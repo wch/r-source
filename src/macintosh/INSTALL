@@ -47,7 +47,12 @@ fortran files in src/appl directory.  The R.mcp project assumes that
 you have converted the files with F2C and put the *.c sources in
 /src/appl directory.  The CW6 distribution includes Mac F2C. You just
 need to drag and drop fortran *.f files on the Mac F2C icon to convert
-the files.
+the files. 
+
+Please note: take care to remove or rename the file "fp.h" in the
+f2clib directory of Mac F2C distribution. This file conflicts
+with the standard "fp.h" in the Apple Universal Libraries that
+is needed in order to use IEEE 754 arithmetics.
 
 Once you have built the R application, copy the "R" binary from
 "src/macintosh/bin" in the folder where you put also the "library"
@@ -59,6 +64,9 @@ demo/		(dir)
 library/	(dir)
 R		(file)
 tests/		(dir)
+
+You should also copy the ".Renviron" file in the same directory.
+
 
 Before building R :
 ===================

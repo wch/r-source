@@ -438,8 +438,7 @@ void mac_loadhistory(char *file)
     if (!file || *file==NULL) return;
     fp = fopen(file, "r");
     if (!fp) {
-    sprintf(buf,"\nUnable to open history file \"%s\" for reading\n", file);
-    warning(buf);
+    REprintf("\nUnable to open history file \"%s\" for reading\n", file);
 	return;
     }
 
