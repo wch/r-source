@@ -28,7 +28,6 @@ SSasympOrig(input, Asym, lrc)
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{
-data( Loblolly )
 Lob.329 <- Loblolly[ Loblolly$Seed == "329", ]
 SSasympOrig( Lob.329$age, 100, -3.2 )  # response only
 Asym <- 100; lrc <- -3.2

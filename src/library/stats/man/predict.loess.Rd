@@ -52,7 +52,6 @@
 \seealso{\code{\link{loess}}}
 
 \examples{
-data(cars)
 cars.lo <- loess(dist ~ speed, cars)
 predict(cars.lo, data.frame(speed=seq(5, 30, 1)), se=TRUE)
 # to get extrapolation

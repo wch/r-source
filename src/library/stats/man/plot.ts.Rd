@@ -71,7 +71,6 @@ plot(z, type = "b")    # multiple
 plot(z, plot.type="single", lty=1:3, col=4:2)
 
 ## A phase plot:
-data(nhtemp)
 plot(nhtemp, c(nhtemp[-1], NA), cex = .8, col="blue",
      main = "Lag plot of New Haven temperatures")
 ## a clearer way to do this would be
@@ -80,11 +79,9 @@ plot(nhtemp, lag(nhtemp, 1), cex = .8, col="blue",
      main = "Lag plot of New Haven temperatures")
 }
 
-data(sunspots)
 ## xy.lines and xy.labels are FALSE for large series:
 plot(lag(sunspots, 1), sunspots, pch = ".")
 
-data(EuStockMarkets)
 SMI <- EuStockMarkets[, "SMI"]
 plot(lag(SMI,  1), SMI, pch = ".")
 plot(lag(SMI, 20), SMI, pch = ".", log = "xy",

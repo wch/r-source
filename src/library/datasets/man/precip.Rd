@@ -6,7 +6,7 @@
   The average amount of precipitation (rainfall) in inches for each of
   70 United States (and Puerto Rico) cities.
 }
-\usage{data(precip)}
+\usage{precip}
 \format{
   A named vector of length 70.
 }
@@ -20,7 +20,6 @@
 }
 \examples{
 require(graphics)
-data(precip)
 dotchart(precip[order(precip)], main = "precip data")
 title(sub = "Average annual precipitation (in.)")
 }

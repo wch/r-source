@@ -51,23 +51,21 @@
 % get(devNam <- getOption("device"))()
 % if (dev.interactive()) {
 \dontrun{
-  data(USArrests)
-  hca <- hclust(dist(USArrests))
-  plot(hca)
-  (x <- identify(hca)) ##  Terminate with 2nd mouse button !!
+hca <- hclust(dist(USArrests))
+plot(hca)
+(x <- identify(hca)) ##  Terminate with 2nd mouse button !!
 
-  data(iris)
-  hci <- hclust(dist(iris[,1:4]))
-  plot(hci)
-  identify(hci, function(k) print(table(iris[k,5])))
+hci <- hclust(dist(iris[,1:4]))
+plot(hci)
+identify(hci, function(k) print(table(iris[k,5])))
 
-  # open a new device (one for dendrogram, one for bars):
-  get(getOption("device"))()# << make that narrow (& small) and *beside* 1st one
-  nD <- dev.cur()           # to be for the barplot
-  dev.set(dev.prev())# old one for dendrogram
-  plot(hci)
-  ## select subtrees in dendrogram and "see" the species distribution:
-  identify(hci, function(k) barplot(table(iris[k,5]),col=2:4), DEV.FUN = nD)
+# open a new device (one for dendrogram, one for bars):
+get(getOption("device"))()# << make that narrow (& small) and *beside* 1st one
+nD <- dev.cur()           # to be for the barplot
+dev.set(dev.prev())# old one for dendrogram
+plot(hci)
+## select subtrees in dendrogram and "see" the species distribution:
+identify(hci, function(k) barplot(table(iris[k,5]),col=2:4), DEV.FUN = nD)
 }
 % dev.off()
 }

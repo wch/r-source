@@ -2,7 +2,7 @@
 \docType{data}
 \alias{WWWusage}
 \title{Internet Usage per Minute}
-\usage{data(WWWusage)}
+\usage{WWWusage}
 \description{
   A time series of the numbers of users connected to the Internet
   through a server every minute.
@@ -20,7 +20,6 @@
   \emph{Forecasting: Methods and Applications.} Wiley.
 }
 \examples{
-data(WWWusage)
 work <- diff(WWWusage)
 par(mfrow = c(2,1)); plot(WWWusage); plot(work)
 \dontrun{

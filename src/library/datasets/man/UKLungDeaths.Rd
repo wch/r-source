@@ -11,7 +11,9 @@
 Monthly Deaths from Lung Diseases in the UK
 }
 \usage{
-data(UKLungDeaths)
+ldeaths
+fdeaths
+mdeaths
 }
 \description{
     Three time series giving the monthly deaths from bronchitis,
@@ -25,7 +27,6 @@ P. J. Diggle (1990)
 Oxford, table A.3
 }
 \examples{
-data(UKLungDeaths)
 plot(ldeaths) 
 plot(mdeaths, fdeaths) 
 ## Better labels:

@@ -169,7 +169,6 @@ method functions.
 }
 \examples{
 # Note: your numerical values may differ
-data(rock)
 attach(rock)
 area1 <- area/10000; peri1 <- peri/10000
 rock.ppr <- ppr(log(perm) ~ area1 + peri1 + shape,

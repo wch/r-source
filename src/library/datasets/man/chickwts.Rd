@@ -6,7 +6,7 @@
   An experiment was conducted to measure and compare the effectiveness
   of various feed supplements on the growth rate of chickens.
 }
-\usage{data(chickwts)}
+\usage{chickwts}
 \format{
   A data frame with 71 observations on 2 variables.
   \describe{
@@ -30,7 +30,6 @@
 }
 \examples{
 require(stats)
-data(chickwts)
 boxplot(weight ~ feed, data = chickwts, col = "lightgray",
     varwidth = TRUE, notch = TRUE, main = "chickwt data",
     ylab = "Weight at six weeks (gm)")

@@ -8,7 +8,7 @@
   by various workers to estimate the attenuating affect of distance
   on ground acceleration.
 }
-\usage{data(attenu)}
+\usage{attenu}
 \format{
   A data frame with 182 observations on 5 variables.
   \tabular{rlll}{
@@ -49,7 +49,6 @@
   Manuscript.
 }
 \examples{
-data(attenu)
 ## check the data class of the variables
 sapply(attenu, data.class)
 summary(attenu)

@@ -6,7 +6,7 @@
   A macroeconomic data set which provides a well-known example for a
   highly collinear regression.
 }
-\usage{data(longley)}
+\usage{longley}
 \format{
   A data frame with 7 economical variables, observed yearly from 1947 to
   1962 (\eqn{n=16}).
@@ -38,7 +38,6 @@
 }
 \examples{
 ## give the data set in the form it is used in S-PLUS:
-data(longley)
 longley.x <- data.matrix(longley[, 1:6])
 longley.y <- longley[, "Employed"]
 pairs(longley, main = "longley data")

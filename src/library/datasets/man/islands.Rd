@@ -6,7 +6,7 @@
   The areas in thousands of square miles of the landmasses which exceed
   10,000 square miles.
 }
-\usage{data(islands)}
+\usage{islands}
 \format{A named vector of length 48.}
 \source{The World Almanac and Book of Facts, 1975, page 406.}
 \references{
@@ -16,7 +16,6 @@
 }
 \examples{
 require(graphics)
-data(islands)
 dotchart(log(islands, 10),
    main = "islands data: log10(area) (log10(sq. miles))")
 dotchart(log(islands[order(islands)], 10),

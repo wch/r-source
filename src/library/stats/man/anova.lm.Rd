@@ -75,7 +75,6 @@ anova.lmlist(object, \dots, scale = 0, test = "F")
 }
 \examples{
 ## sequential table
-data(LifeCycleSavings)
 fit <- lm(sr ~ ., data = LifeCycleSavings)
 anova(fit)
 

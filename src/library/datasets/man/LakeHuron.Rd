@@ -5,7 +5,7 @@
 \description{
   Annual measurements of the level, in feet, of Lake Huron 1875--1972.
 }
-\usage{data(LakeHuron)}
+\usage{LakeHuron}
 \format{
   A time series of length 98.
 }

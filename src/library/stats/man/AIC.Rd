@@ -50,7 +50,6 @@ AIC(object, \dots, k = 2)
   \code{\link{extractAIC}}, \code{\link{logLik}}.
 }
 \examples{
-data(swiss)
 lm1 <- lm(Fertility ~ . , data = swiss)
 AIC(lm1)
 stopifnot(all.equal(AIC(lm1),

@@ -7,7 +7,7 @@
   statistical properties (mean, variance, correlation, regression line,
   etc.), yet are quite different.
 }
-\usage{data(anscombe)}
+\usage{anscombe}
 \format{
   A data frame with 11 observations on 8 variables.
   \tabular{rl}{
@@ -26,7 +26,6 @@
 }
 \examples{
 require(stats)
-data(anscombe)
 summary(anscombe)
 
 ##-- now some "magic" to do the 4 regressions in a loop:

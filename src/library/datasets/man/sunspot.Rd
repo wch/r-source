@@ -11,7 +11,8 @@
   Monthly and yearly number of sunspots. 
 }
 \usage{
-data(sunspot)
+sunspot.month
+sunspot.year
 }
 \format{
   The univariate time series \code{sunspot.year} and
@@ -38,8 +39,6 @@ data(sunspot)
 }
 \examples{
 ## Compare the monthly series 
-data(sunspots)
-data(sunspot)
 plot (sunspot.month, main = "sunspot.month [stats]", col = 2)
 lines(sunspots) # "very barely" see something
 

@@ -11,7 +11,7 @@
   A regular time series giving the luteinizing hormone in blood
   samples at 10 mins intervals from a human female, 48 samples.
 }
-\usage{data(lh)}
+\usage{lh}
 \source{
   P.J. Diggle (1990)
   \emph{Time Series: A Biostatistical Introduction.}

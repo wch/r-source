@@ -8,7 +8,7 @@
   automobile design and performance for 32 automobiles (1973--74
   models).
 }
-\usage{data(mtcars)}
+\usage{mtcars}
 \format{
   A data frame with 32 observations on 11 variables.
   \tabular{rll}{
@@ -31,7 +31,6 @@
   \emph{Biometrics}, \bold{37}, 391--411.
 }
 \examples{
-data(mtcars)
 pairs(mtcars, main = "mtcars data")
 coplot(mpg ~ disp | as.factor(cyl), data = mtcars,
        panel = panel.smooth, rows = 1)

@@ -113,7 +113,6 @@ var(1:5,1:5)# 2.5
 cor(1:10,2:11)# == 1
 
 ## Correlation Matrix of Multivariate sample:
-data(longley)
 (Cl <- cor(longley))
 ## Graphical Correlation Matrix:
 symnum(Cl) # highly correlated
@@ -134,7 +133,6 @@ stopifnot(all.equal(Cl, cov2cor(cov(longley))),
             cov2cor(cov(longley, method="kendall"))))
 
 ##--- Missing value treatment:
-data(swiss)
 C1 <- cov(swiss)
 range(eigen(C1, only=TRUE)$val) # 6.19	1921
 swM <- swiss

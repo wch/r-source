@@ -31,12 +31,10 @@ cpgram(ts, taper=0.1, main=
 }
 \examples{
 par(pty = "s", mfrow = c(1,2))
-data(lh)
 cpgram(lh)
 lh.ar <- ar(lh, order.max = 9)
 cpgram(lh.ar$resid, main = "AR(3) fit to lh")
 
-data(UKLungDeaths)
 cpgram(ldeaths)
 }
 \keyword{ts}

@@ -2,7 +2,7 @@
 \docType{data}
 \alias{UKgas}
 \title{UK Quarterly Gas Consumption}
-\usage{data(UKgas)}
+\usage{UKgas}
 \description{
   Quarterly UK gas consumption from 1960Q1 to 1986Q4, in millions of therms.
 }
@@ -15,7 +15,6 @@
   \url{http://www.ssfpack.com/dkbook/}
 }
 \examples{
-data(UKgas)
 ## maybe str(UKgas) ; plot(UKgas) ...
 }
 \keyword{datasets}

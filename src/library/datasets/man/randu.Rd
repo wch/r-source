@@ -6,7 +6,7 @@
   400 triples of successive random numbers were taken from the VAX
   FORTRAN function RANDU running under VMS 1.5.
 }
-\usage{data(randu)}
+\usage{randu}
 \details{
   In three dimensional displays it is evident that the triples fall on
   15 parallel planes in 3-space. This can be shown theoretically to be

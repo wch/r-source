@@ -7,7 +7,7 @@
   biochemical oxygen demand versus time in an evaluation of water
   quality.
 }
-\usage{data(BOD)}
+\usage{BOD}
 \format{
   This data frame contains the following columns:
   \describe{
@@ -29,7 +29,6 @@
   M.Sc. Thesis, University of Wisconsin -- Madison.
 }
 \examples{
-data(BOD)
 # simplest form of fitting a first-order model to these data
 fm1 <- nls(demand ~ A*(1-exp(-exp(lrc)*Time)), data = BOD,
    start = c(A = 20, lrc = log(.35)))

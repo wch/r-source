@@ -11,7 +11,7 @@
   omitted.
 }
 \usage{
-data(EuStockMarkets)
+EuStockMarkets
 }
 \format{
   A multivariate time series with 1860 observations on 4 variables.

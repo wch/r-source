@@ -6,7 +6,7 @@
   The data give the speed of cars and the distances taken to stop.
   Note that the data were recorded in the 1920s.
 }
-\usage{data(cars)}
+\usage{cars}
 \format{
   A data frame with 50 observations on 2 variables.
   \tabular{rlll}{
@@ -26,7 +26,6 @@
 }
 \examples{
 require(stats)
-data(cars)
 plot(cars, xlab = "Speed (mph)", ylab = "Stopping distance (ft)",
      las = 1)
 lines(lowess(cars$speed, cars$dist, f = 2/3, iter = 3), col = "red")

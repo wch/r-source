@@ -11,7 +11,15 @@
 \title{US State Facts and Figures}
 \description{Data sets related to the 50 states of the United States of
   America.}
-\usage{data(state)}
+\usage{
+state.abb
+state.area
+state.center
+state.division
+state.name
+state.region
+state.x77
+}
 \details{
   \R currently contains the following \dQuote{state} data sets.  Note
   that all data are arranged according to alphabetical order of the

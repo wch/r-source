@@ -36,11 +36,10 @@ cophenetic(x)
 \seealso{\code{\link{dist}}, \code{\link{hclust}}}
 
 \examples{
- data(USArrests)
- d1 <- dist(USArrests)
- hc <- hclust(d1, "ave")
- d2 <- cophenetic(hc)
- cor(d1,d2) # 0.7659
+d1 <- dist(USArrests)
+hc <- hclust(d1, "ave")
+d2 <- cophenetic(hc)
+cor(d1,d2) # 0.7659
 
 ## Example from Sneath & Sokal, Fig. 5-29, p.279
 d0 <- c(1,3.8,4.4,5.1, 4,4.2,5, 2.6,5.3, 5.4)

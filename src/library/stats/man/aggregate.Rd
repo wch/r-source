@@ -77,8 +77,6 @@ aggregate(x, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-data(state)
-
 ## Compute the averages for the variables in 'state.x77', grouped
 ## according to the region (Northeast, South, North Central, West) that
 ## each state belongs to.
@@ -92,7 +90,6 @@ aggregate(state.x77,
           mean)
 ## (Note that no state in 'South' is THAT cold.)
 
-data(presidents)
 ## Compute the average annual approval ratings for American presidents.
 aggregate(presidents, nf = 1, FUN = mean)
 ## Give the summer less weight.

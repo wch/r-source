@@ -11,8 +11,8 @@
   \emph{versicolor}, and \emph{virginica}.
 }
 \usage{
-data(iris)
-data(iris3)
+iris
+iris3
 }
 \format{
   \code{iris} is a data frame with 150 cases (rows) and 5 variables
@@ -47,13 +47,11 @@ data(iris3)
   \code{iris}.
 }
 \examples{
-data(iris3)
 dni3 <- dimnames(iris3)
 ii <- data.frame(matrix(aperm(iris3, c(1,3,2)), ncol=4,
                    dimnames=list(NULL, sub(" L.",".Length",
                                            sub(" W.",".Width", dni3[[2]])))),
                  Species = gl(3,50,lab=sub("S","s",sub("V","v",dni3[[3]]))))
-data(iris)
 all.equal(ii, iris) # TRUE
 }
 \keyword{datasets}

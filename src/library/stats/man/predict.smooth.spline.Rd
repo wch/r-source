@@ -23,7 +23,6 @@
 \seealso{\code{\link{smooth.spline}}
 }
 \examples{
-data(cars)
 attach(cars)
 cars.spl <- smooth.spline(speed, dist, df=6.4)
 \dontshow{

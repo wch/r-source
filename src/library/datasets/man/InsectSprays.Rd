@@ -6,7 +6,7 @@
   The counts of insects in agricultural experimental units treated with
   different insecticides.
 }
-\usage{data(InsectSprays)}
+\usage{InsectSprays}
 \format{
   A data frame with 72 observations on 2 variables.
   \tabular{rlll}{
@@ -25,7 +25,6 @@
 }
 \examples{
 require(stats)
-data(InsectSprays)
 boxplot(count ~ spray, data = InsectSprays,
         xlab = "Type of spray", ylab = "Insect count",
         main = "InsectSprays data", varwidth = TRUE, col = "lightgray")

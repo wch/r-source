@@ -38,7 +38,6 @@ Plot ridge functions for projection pursuit regression fit.
   \code{\link{ppr}}, \code{\link{par}}
 }
 \examples{
-data(rock)
 attach(rock)
 area1 <- area/10000; peri1 <- peri/10000
 par(mfrow=c(3,2))# maybe: , pty="s")

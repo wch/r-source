@@ -31,7 +31,6 @@ line(x, y)
   \code{\link{lm}}.
 }
 \examples{
-data(cars)
 plot(cars)
 (z <- line(cars))
 abline(coef(z))

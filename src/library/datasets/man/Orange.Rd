@@ -6,7 +6,7 @@
   The \code{Orange} data frame has 35 rows and 3 columns of records of
   the growth of orange trees.
 }
-\usage{data(Orange)}
+\usage{Orange}
 \format{
   This data frame contains the following columns:
   \describe{
@@ -32,7 +32,6 @@
     in S and S-PLUS}, Springer.
 }
 \examples{
-data(Orange)
 coplot(circumference ~ age | Tree, data = Orange, show = FALSE)
 fm1 <- nls(circumference ~ SSlogis(age, Asym, xmid, scal),
            data = Orange, subset = Tree == 3)

@@ -7,7 +7,7 @@
 \description{
   Freeny's data on quarterly revenue and explanatory variables.
 }
-\usage{data(freeny)}
+\usage{freeny}
 \format{
   There are three \sQuote{freeny} data sets.
 
@@ -33,7 +33,6 @@
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-data(freeny)
 summary(freeny)
 pairs(freeny, main = "freeny data")
 summary(fm1 <- lm(y ~ ., data = freeny))

@@ -104,7 +104,6 @@ friedman.test(RoundingTimes)
 ## => strong evidence against the null that the methods are equivalent
 ##    with respect to speed
 
-data(warpbreaks)
 wb <- aggregate(warpbreaks$breaks,
                 by = list(w = warpbreaks$wool,
                           t = warpbreaks$tension),

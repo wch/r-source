@@ -7,7 +7,7 @@
   reaction velocity versus substrate concentration in an enzymatic
   reaction involving untreated cells or cells treated with Puromycin.
 }
-\usage{data(Puromycin)}
+\usage{Puromycin}
 \format{
   This data frame contains the following columns:
   \describe{
@@ -43,7 +43,6 @@
   Toronto. 
 }
 \examples{
-data(Puromycin)
 plot(rate ~ conc, data = Puromycin, las = 1,
      xlab = "Substrate concentration (ppm)",
      ylab = "Reaction velocity (counts/min/min)",

@@ -76,7 +76,6 @@ symnum(ii, cut= 2*(0:4), sym = c(".", "-", "+", "$"), show.max=TRUE)
 symnum(1:12 \%\% 3 == 0)# use for logical
 
 ##-- Symbolic correlation matrices:
-data(attitude)
 symnum(cor(attitude), diag = FALSE)
 symnum(cor(attitude), abbr.= NULL)
 symnum(cor(attitude), abbr.= FALSE)

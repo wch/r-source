@@ -20,7 +20,6 @@ na.contiguous(frame)
   \code{\link{na.fail}}
 }
 \examples{
-data(presidents)
 na.contiguous(presidents)
 }
 \keyword{ts}

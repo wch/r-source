@@ -31,7 +31,6 @@ SSasymp(input, Asym, R0, lrc)
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{
-data( Loblolly )
 Lob.329 <- Loblolly[ Loblolly$Seed == "329", ]
 SSasymp( Lob.329$age, 100, -8.5, -3.2 )  # response only
 Asym <- 100

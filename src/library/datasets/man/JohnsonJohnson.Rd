@@ -5,7 +5,7 @@
 \description{
   Quarterly earnings (dollars) per Johnson \& Johnson share 1960--80.
 }
-\usage{data(JohnsonJohnson)}
+\usage{JohnsonJohnson}
 \format{
   A quarterly time series
 }
@@ -15,7 +15,6 @@
   Second Edition.  Springer.  Example 1.1.
 }
 \examples{
-data(JohnsonJohnson)
 JJ <- log10(JohnsonJohnson)
 plot(JJ)
 (fit <- StructTS(JJ, type="BSM"))

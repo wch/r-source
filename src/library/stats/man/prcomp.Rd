@@ -82,7 +82,6 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
 \examples{
 ## the variances of the variables in the
 ## USArrests data vary by orders of magnitude, so scaling is appropriate
-data(USArrests)
 prcomp(USArrests)  # inappropriate
 prcomp(USArrests, scale = TRUE)
 plot(prcomp(USArrests))

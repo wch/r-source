@@ -131,7 +131,6 @@ density(x, bw = "nrd0", adjust = 1,
 plot(density(c(-20,rep(0,98),20)), xlim = c(-4,4))# IQR = 0
 
 # The Old Faithful geyser data
-data(faithful)
 d <- density(faithful$eruptions, bw = "sj")
 d
 plot(d)
@@ -168,7 +167,6 @@ legend(0.6, 1.0, legend = kernels, col = seq(kernels), lty = 1)
 100*round(RKs["epanechnikov",]/RKs, 4) ## Efficiencies
 
 if(interactive()) {
-data(precip)
 bw <- bw.SJ(precip) ## sensible automatic choice
 plot(density(precip, bw = bw, n = 2^13),
      main = "same sd bandwidths, 7 different kernels")

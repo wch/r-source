@@ -67,7 +67,6 @@
   if it was supplied.
 }
 \examples{
-data( BOD )
 fm <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 predict(fm)              # fitted values at observed times
 ## Form data plot and smooth line for the predictions

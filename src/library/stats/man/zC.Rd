@@ -36,7 +36,6 @@ C(object, contr, how.many, \dots)
 \examples{
 ## reset contrasts to defaults
 options(contrasts=c("contr.treatment", "contr.poly"))
-data(warpbreaks)
 attach(warpbreaks)
 tens <- C(tension, poly, 1)
 attributes(tens)
@@ -48,7 +47,7 @@ aov(breaks ~ wool + tens + tension, data=warpbreaks)
 summary(lm(breaks ~ wool + C(tension, base=2), data=warpbreaks))
 
 
-data(esoph) # following on from help(esoph)
+# following on from help(esoph)
 model3 <- glm(cbind(ncases, ncontrols) ~ agegp + C(tobgp, , 1) +
      C(alcgp, , 1), data = esoph, family = binomial())
 summary(model3)

@@ -6,7 +6,7 @@
   Data which show the effect of two soporific drugs (increase in hours
   of sleep) on groups consisting of 10 patients each.
 }
-\usage{data(sleep)}
+\usage{sleep}
 \format{
   A data frame with 20 observations on 2 variables.
   \tabular{rlll}{
@@ -26,7 +26,6 @@
 }
 \examples{
 require(stats)
-data(sleep)
 ## ANOVA
 anova(lm(extra ~ group, data = sleep))
 }

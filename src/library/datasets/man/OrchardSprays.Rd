@@ -7,7 +7,7 @@
   constituents of orchard sprays in repelling honeybees, using a
   Latin square design.
 }
-\usage{data(OrchardSprays)}
+\usage{OrchardSprays}
 \format{
   A data frame with 64 observations on 4 variables.
   \tabular{rlll}{
@@ -51,7 +51,6 @@
   New York: Wiley.
 }
 \examples{
-data(OrchardSprays)
 pairs(OrchardSprays, main = "OrchardSprays data")
 }
 \keyword{datasets}

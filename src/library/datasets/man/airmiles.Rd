@@ -6,7 +6,7 @@
   The revenue passenger miles flown by commercial airlines in
   the United States for each year from 1937 to 1960.
 }
-\usage{data(airmiles)}
+\usage{airmiles}
 \format{
   A time series of 24 observations; yearly, 1937--1960.
 }
@@ -17,7 +17,6 @@
   Prentice-Hall.
 }
 \examples{
-data(airmiles)
 plot(airmiles, main = "airmiles data",
      xlab = "Passenger-miles flown by U.S. commercial airlines", col = 4)
 }

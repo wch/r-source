@@ -7,7 +7,7 @@
   experiment on the cold tolerance of the grass species
   \emph{Echinochloa crus-galli}.
 }
-\usage{data(CO2)}
+\usage{CO2}
 \format{
   This data frame contains the following columns:
   \describe{
@@ -52,7 +52,6 @@
   \emph{Mixed-effects Models in S and S-PLUS}, Springer.
 }
 \examples{
-data(CO2)
 coplot(uptake ~ conc | Plant, data = CO2, show = FALSE, type = "b")
 ## fit the data for the first plant
 fm1 <- nls(uptake ~ SSasymp(conc, Asym, lrc, c0),

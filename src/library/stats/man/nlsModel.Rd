@@ -69,7 +69,6 @@ nlsModel(form, data, start)
   \code{\link{nls}}
 }
 \examples{
-data( DNase )
 DNase1 <- DNase[ DNase$Run == 1, ]
 mod <-
  nlsModel(density ~ SSlogis( log(conc), Asym, xmid, scal ),

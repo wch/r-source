@@ -6,7 +6,7 @@
   This data set gives the average heights and weights for American women
   aged 30--39.
 }
-\usage{data(women)}
+\usage{women}
 \format{A data frame with 15 observations on 2 variables.
   \tabular{rlll}{
     \code{[,1]}  \tab \code{height}  \tab numeric  \tab Height (in)\cr
@@ -28,7 +28,6 @@
   Wiley.
 }
 \examples{
-data(women)
 plot(women, xlab = "Height (in)", ylab = "Weight (lb)",
      main = "women data: American women aged 30-39")
 }

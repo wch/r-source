@@ -73,7 +73,6 @@ local({
         file.path(system.file(package = "tcltk"), "demo", "tkttest.R"),
         "\n******************************************************\n")
 
-    data(airquality)
     xvar <- tclVar("Ozone[Month==5]")
     yvar <- tclVar("Ozone[Month==8]")
     with(airquality, dialog.t.test())

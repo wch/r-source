@@ -8,7 +8,7 @@
   operation, medical and health, personal care, and private education
   for the years 1940, 1945, 1950, 1955 and 1960.
 }
-\usage{data(USPersonalExpenditure)}
+\usage{USPersonalExpenditure}
 \format{A matrix with 5 rows and 5 columns.}
 \source{The World Almanac and Book of Facts, 1962, page 756.}
 \references{
@@ -22,7 +22,6 @@
 }
 \examples{
 require(stats) # for medpolish
-data(USPersonalExpenditure)
 USPersonalExpenditure
 medpolish(log10(USPersonalExpenditure))
 }

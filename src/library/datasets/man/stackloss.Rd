@@ -8,7 +8,7 @@
   Operational data of a plant for the oxidation of ammonia to nitric
   acid.
 }
-\usage{data(stackloss)}
+\usage{stackloss}
 \format{
   \code{stackloss} is a data frame with 21 observations on 4 variables.
 
@@ -60,7 +60,6 @@
   \emph{Lecture Notes in Statistics} \bold{109}, Springer-Verlag, New York.
 }
 \examples{
-data(stackloss)
 summary(lm.stack <- lm(stack.loss ~ stack.x))
 }
 \keyword{datasets}

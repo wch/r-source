@@ -46,7 +46,6 @@ oneway.test(formula, data, subset, na.action, var.equal = FALSE)
   test for equal location parameters in a one-way layout.
 }
 \examples{
-data(sleep)
 ## Not assuming equal variances
 oneway.test(extra ~ group, data = sleep)
 ## Assuming equal variances

@@ -5,7 +5,7 @@
 \description{
   Distribution of hair and eye color and sex in 592 statistics students.
 }
-\usage{data(HairEyeColor)}
+\usage{HairEyeColor}
 \format{
   A 3-dimensional array resulting from cross-tabulating 592 observations
   on 3 variables.  The variables and their levels are as follows:
@@ -47,7 +47,6 @@
 }
 \examples{
 require(graphics)
-data(HairEyeColor)
 ## Full mosaic
 mosaicplot(HairEyeColor)
 ## Aggregate over sex:

@@ -6,7 +6,7 @@
   The data set give the locations of 1000 seismic events of MB > 4.0.
   The events occurred in a cube near Fiji since 1964.
 }
-\usage{data(quakes)}
+\usage{quakes}
 \format{
   A data frame with 1000 observations on 5 variables.
   \tabular{rlll}{
@@ -29,7 +29,6 @@
   observations.
 }
 \examples{
-data(quakes)
 pairs(quakes, main = "Fiji Earthquakes, N = 1000", cex.main=1.2, pch=".")
 }
 \keyword{datasets}

@@ -43,7 +43,6 @@ makepredictcall(var, call)
 }
 \examples{
 ## using poly: this did not work in R < 1.5.0
-data(women)
 fm <- lm(weight ~ poly(height, 2), data = women)
 plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
 ht <- seq(57, 73, len = 200)

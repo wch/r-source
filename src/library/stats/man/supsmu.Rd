@@ -55,7 +55,6 @@ supsmu(x, y, wt, span = "cv", periodic = FALSE, bass = 0)
 \seealso{\code{\link{ppr}}}
 
 \examples{
-data(cars)
 with(cars, {
     plot(speed, dist)
     lines(supsmu(speed, dist))

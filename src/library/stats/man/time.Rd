@@ -54,7 +54,6 @@ deltat(x, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-data(presidents)
 cycle(presidents)
 # a simple series plot: c() makes the x and y arguments into vectors
 plot(c(time(presidents)), c(presidents), type="l")

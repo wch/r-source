@@ -116,7 +116,6 @@ princomp(x, \dots)
 \examples{
 ## The variances of the variables in the
 ## USArrests data vary by orders of magnitude, so scaling is appropriate
-data(USArrests)
 (pc.cr <- princomp(USArrests))  # inappropriate
 princomp(USArrests, cor = TRUE) # =^= prcomp(USArrests, scale=TRUE)
 ## Similar, but different:

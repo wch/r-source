@@ -6,7 +6,7 @@
   This data set gives the population of the United States (in millions)
   as recorded by the decennial census for the period 1790--1970.
 }
-\usage{data(uspop)}
+\usage{uspop}
 \format{A time series of 19 values.}
 \source{
   McNeil, D. R. (1977)
@@ -15,7 +15,6 @@
 }
 % FIXME: missing \references{}
 \examples{
-data(uspop)
 plot(uspop, log = "y", main = "uspop data", xlab = "Year",
      ylab = "U.S. Population (millions)")
 }

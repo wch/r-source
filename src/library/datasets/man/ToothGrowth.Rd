@@ -8,7 +8,7 @@
   mg) with each of two delivery methods (orange juice or ascorbic
   acid).
 }
-\usage{data(ToothGrowth)}
+\usage{ToothGrowth}
 \format{
   A data frame with 60 observations on 3 variables.
   \tabular{rlll}{
@@ -28,7 +28,6 @@
   New York: Wiley.
 }
 \examples{
-data(ToothGrowth)
 coplot(len ~ dose | supp, data = ToothGrowth, panel = panel.smooth,
        xlab = "ToothGrowth data: length vs dose, given type of supplement")
 }

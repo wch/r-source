@@ -6,7 +6,7 @@
   Aggregate data on applicants to graduate school at Berkeley for the
   six largest departments in 1973 classified by admission and sex.
 }
-\usage{data(UCBAdmissions)}
+\usage{UCBAdmissions}
 \format{
   A 3-dimensional array resulting from cross-tabulating 4526
   observations on 3 variables.  The variables and their levels are as
@@ -46,7 +46,6 @@
 }
 \examples{
 require(graphics)
-data(UCBAdmissions)
 ## Data aggregated over departments
 apply(UCBAdmissions, c(1, 2), sum)
 mosaicplot(apply(UCBAdmissions, c(1, 2), sum),

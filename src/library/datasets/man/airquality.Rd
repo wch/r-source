@@ -5,7 +5,7 @@
 \description{
   Daily air quality measurements in New York, May to September 1973.
 }
-\usage{data(airquality)}
+\usage{airquality}
 \format{
   A data frame with 154 observations on 6 variables.
 
@@ -45,7 +45,6 @@
   Belmont, CA: Wadsworth.
 }
 \examples{
-data(airquality)
 pairs(airquality, panel = panel.smooth, main = "airquality data")
 }
 \keyword{datasets}

@@ -35,7 +35,6 @@ getInitial(object, data, \dots)
     \code{\link{selfStart.default}}, \code{\link{selfStart.formula}}
 }
 \examples{
-data(Puromycin)
 PurTrt <- Puromycin[ Puromycin$state == "treated", ]
 getInitial( rate ~ SSmicmen( conc, Vm, K ), PurTrt )
 }

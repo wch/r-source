@@ -42,10 +42,8 @@ spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action = na.fail,
 \note{The multivariate case is not yet implemented.}
 
 \examples{
-data(lh)
 spec.ar(lh)
 
-data(UKLungDeaths)
 spec.ar(ldeaths)
 spec.ar(ldeaths, method="burg")
 }

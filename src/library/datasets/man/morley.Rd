@@ -8,7 +8,7 @@
   consecutive \sQuote{runs}.  The response is the speed of light
   measurement, suitably coded.
 }
-\usage{data(morley)}
+\usage{morley}
 \format{
   A data frame contains the following components:
   \describe{
@@ -30,7 +30,6 @@
   London: Edward Arnold.
 }
 \examples{
-data(morley)
 morley$Expt <- factor(morley$Expt)
 morley$Run <- factor(morley$Run)
 attach(morley)

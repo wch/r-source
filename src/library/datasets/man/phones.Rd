@@ -6,7 +6,7 @@
   The number of telephones in various regions of the world (in
   thousands).
 }
-\usage{data(phones)}
+\usage{phones}
 \format{
   A matrix with 7 rows and 8 columns.  The columns of the matrix give
   the figures for a given region, and the rows the figures for a year.
@@ -19,13 +19,15 @@
 \source{
   AT&T (1961) \emph{The World's Telephones}.
 }
+\section{Warning}{
+  Package \pkg{MASS} has a different dataset of the same name.
+}
 \references{
   McNeil, D. R. (1977)
   \emph{Interactive Data Analysis}.
   New York: Wiley.
 }
 \examples{
-data(phones)
 matplot(rownames(phones), phones, type = "b", log = "y",
         xlab = "Year", ylab = "Number of telephones (1000's)")
 legend(1951.5, 80000, colnames(phones), col = 1:6, lty = 1:5, pch = rep(21, 7))

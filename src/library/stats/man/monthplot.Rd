@@ -69,7 +69,6 @@ monthplot(x, labels = NULL, times, phase, base, choice, \ldots)
 
 \examples{
 ## The CO2 data
-data(co2)
 fit <- stl(log(co2), s.window = 20, t.window = 20)
 plot(fit)
 op <- par(mfrow = c(2,2))

@@ -30,17 +30,16 @@ order.dendrogram(x)
 \seealso{\code{\link{reorder}}, \code{\link{dendrogram}}.
 }
 \examples{
-  set.seed(123)
-  x <- rnorm(10)
-  hc <- hclust(dist(x))
-  hc$order
-  dd <- as.dendrogram(hc)
-  order.dendrogram(dd) ## the same :
-  stopifnot(hc$order == order.dendrogram(dd))
+set.seed(123)
+x <- rnorm(10)
+hc <- hclust(dist(x))
+hc$order
+dd <- as.dendrogram(hc)
+order.dendrogram(dd) ## the same :
+stopifnot(hc$order == order.dendrogram(dd))
 
-  data(USArrests)
-  d2 <- as.dendrogram(hclust(dist(USArrests)))
-  labels(d2) ## in this case the same as
-  stopifnot(labels(d2) == rownames(USArrests)[order.dendrogram(d2)])
+d2 <- as.dendrogram(hclust(dist(USArrests)))
+labels(d2) ## in this case the same as
+stopifnot(labels(d2) == rownames(USArrests)[order.dendrogram(d2)])
 }
 \keyword{manip}

@@ -6,7 +6,7 @@
   The mean annual temperature in degrees Fahrenheit in New Haven,
   Connecticut, from 1912 to 1971.
 }
-\usage{data(nhtemp)}
+\usage{nhtemp}
 \format{A time series of 60 observations.}
 \source{
   Vaux, J. E. and Brinker, N. B. (1972)
@@ -18,7 +18,6 @@
   New York: Wiley.
 }
 \examples{
-data(nhtemp)
 plot(nhtemp, main = "nhtemp data",
   ylab = "Mean annual temperature in New Haven, CT (deg. F)")
 }

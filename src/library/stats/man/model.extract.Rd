@@ -40,7 +40,6 @@ model.weights(x)
 \seealso{\code{\link{model.frame}}, \code{\link{offset}}}
 
 \examples{
-data(esoph)
 a <- model.frame(cbind(ncases,ncontrols) ~ agegp+tobgp+alcgp, data=esoph)
 model.extract(a, "response")
 stopifnot(model.extract(a, "response") == model.response(a))

@@ -32,7 +32,6 @@ sortedXyData(x, y, data)
   \code{\link{NLSstLfAsymptote}}, \code{\link{NLSstRtAsymptote}}
 }
 \examples{
-data( DNase )
 DNase.2 <- DNase[ DNase$Run == "2", ]
 sortedXyData( expression(log(conc)), expression(density), DNase.2 )
 }

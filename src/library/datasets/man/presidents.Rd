@@ -7,7 +7,7 @@
   United states from the first quarter of 1945 to the last quarter of
   1974.
 }
-\usage{data(presidents)}
+\usage{presidents}
 \format{
   A time series of 120 values.
 }
@@ -24,7 +24,6 @@
   New York: Wiley.
 }
 \examples{
-data(presidents)
 plot(presidents, las = 1, ylab = "Approval rating (\%)",
      main = "presidents data")
 }

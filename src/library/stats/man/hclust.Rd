@@ -188,7 +188,6 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   \code{\link{cutree}}, \code{\link{dendrogram}}, \code{\link{kmeans}}.
 }
 \examples{
-data(USArrests)
 hc <- hclust(dist(USArrests), "ave")
 plot(hc)
 plot(hc, hang = -1)

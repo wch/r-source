@@ -7,7 +7,7 @@
   obtained during development of an ELISA assay for the recombinant
   protein DNase in rat serum.
 }
-\usage{data(DNase)}
+\usage{DNase}
 \format{
   This data frame contains the following columns:
   \describe{
@@ -34,7 +34,6 @@
     S and S-PLUS}, Springer.
 }
 \examples{
-data(DNase)
 coplot(density ~ conc | Run, data = DNase,
     show = FALSE, type = "b")
 coplot(density ~ log(conc) | Run, data = DNase,

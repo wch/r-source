@@ -21,7 +21,7 @@
   Bartholomew gives both covariance and correlation matrices,
   but these are inconsistent.  Neither are in the original paper.
 }
-\usage{data(ability.cov)}
+\usage{ability.cov}
 \source{
   Barthlomew, D. J. (1987) \emph{Latent Variable Analysis and Factor
     Analysis.} Griffin.  
@@ -35,7 +35,6 @@
   performance. \emph{Intelligence}, \bold{7}, 353--368.
 }
 \examples{
-data(ability.cov)
 (ability.FA <- factanal(factors = 1, covmat=ability.cov))
 update(ability.FA, factors=2)
 update(ability.FA, factors=2, rotation="promax")

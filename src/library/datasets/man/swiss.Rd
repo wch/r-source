@@ -6,7 +6,7 @@
   Standardized fertility measure and socio-economic indicators for each
   of 47 French-speaking provinces of Switzerland at about 1888.
 }
-\usage{data(swiss)}
+\usage{swiss}
 \format{
   A data frame with 47 observations on 6 variables, \emph{each} of which
   is in percent, i.e., in \eqn{[0,100]}.
@@ -66,7 +66,6 @@
   are averages for 1887, 1888 and 1889.
 }
 \examples{
-data(swiss)
 pairs(swiss, panel = panel.smooth, main = "swiss data",
       col = 3 + (swiss$Catholic > 50))
 summary(lm(Fertility ~ . , data = swiss))

@@ -6,7 +6,7 @@
   Waiting time between eruptions and the duration of the eruption for
   the Old Faithful geyser in Yellowstone National Park, Wyoming, USA.
 }
-\usage{data(faithful)}
+\usage{faithful}
 \format{A data frame with 272 observations on 2 variables.
   \tabular{rlll}{
     [,1]  \tab eruptions  \tab numeric  \tab Eruption time in mins \cr
@@ -37,7 +37,6 @@
   \code{geyser} in package \pkg{MASS} for the Azzalini-Bowman version.
 }
 \examples{
-data(faithful)
 f.tit <-  "faithful data: Eruptions of Old Faithful"
 
 ne60 <- round(e60 <- 60 * faithful$eruptions)

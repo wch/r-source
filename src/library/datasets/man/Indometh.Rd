@@ -6,7 +6,7 @@
   The \code{Indometh} data frame has 66 rows and 3 columns of data on
   the pharmacokinetics of indomethicin.
 }
-\usage{data(Indometh)}
+\usage{Indometh}
 \format{
   This data frame contains the following columns:
   \describe{
@@ -40,7 +40,6 @@
     S and S-PLUS}, Springer.
 }
 \examples{
-data(Indometh)
 fm1 <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2),
            data = Indometh, subset = Subject == 1)
 summary(fm1)

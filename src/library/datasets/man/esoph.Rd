@@ -6,7 +6,7 @@
   Data from a case-control study of (o)esophageal cancer in
   Ile-et-Vilaine, France.
 }
-\usage{data(esoph)}
+\usage{esoph}
 \format{
   A data frame with records for 88 age/alcohol/tobacco combinations.
 
@@ -38,7 +38,6 @@
 \examples{
 require(stats)
 require(graphics)
-data(esoph)
 summary(esoph)
 ## effects of alcohol, tobacco and interaction, age-adjusted
 model1 <- glm(cbind(ncases, ncontrols) ~ agegp + tobgp * alcgp,

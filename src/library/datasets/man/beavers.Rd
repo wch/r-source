@@ -7,7 +7,10 @@
 \alias{beaver1}
 \alias{beaver2}
 \title{Body Temperature Series of Two Beavers}
-\usage{data(beavers)}
+\usage{
+beaver1
+beaver2
+}
 \description{
   Reynolds (1994) describes a small part of a study of the long-term
   temperature dynamics of beaver \emph{Castor canadensis} in
@@ -44,7 +47,6 @@
   New York: John Wiley and Sons.
 }
 \examples{
-data(beavers)
 %% consider converting times to POSIXct (using 'yday' ?)
 
 (yl <- range(beaver1$temp, beaver2$temp))

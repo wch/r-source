@@ -6,7 +6,7 @@
   Data on the relation between temperature in degrees Celsius and vapor
   pressure of mercury in millimeters (of mercury).
 }
-\usage{data(pressure)}
+\usage{pressure}
 \format{
   A data frame with 19 observations on 2 variables.
   \tabular{rlll}{
@@ -25,7 +25,6 @@
   New York: Wiley.
 }
 \examples{
-data(pressure)
 plot(pressure, xlab = "Temperature (deg C)",
      ylab = "Pressure (mm of Hg)",
      main = "pressure data: Vapor Pressure of Mercury")

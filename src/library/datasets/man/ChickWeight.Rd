@@ -6,7 +6,7 @@
   The \code{ChickWeight} data frame has 578 rows and 4 columns from an
   experiment on the effect of diet on early growth of chicks.
 }
-\usage{data(ChickWeight)}
+\usage{ChickWeight}
 \format{
   This data frame contains the following columns:
   \describe{
@@ -47,7 +47,6 @@
     S and S-PLUS}, Springer.
 }
 \examples{
-data(ChickWeight)
 coplot(weight ~ Time | Chick, data = ChickWeight,
     type = "b", show = FALSE)
 ## fit a representative chick

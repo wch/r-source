@@ -47,7 +47,6 @@ Y[t] = T[t] * S[t] + e[t]
 \seealso{\code{\link{stl}}}
 
 \examples{
-data(co2)
 m <- decompose(co2)
 m$figure
 plot(m)

@@ -18,9 +18,6 @@ dendrapply(X, FUN, ...)
     altered version of the same node.}
   \item{\dots}{potential further arguments passed to \code{FUN}.}
 }
-%\details{
-%  ~~ If necessary, more details than the __description__  above ~~
-%}
 \value{
   Usually a dendrogram of the same (graph) structure as \code{X}.
   For that, the function must be conceptually of the form
@@ -35,7 +32,6 @@ dendrapply(X, FUN, ...)
 }
 \examples{
 ## a smallish simple dendrogram
-data(USArrests)
 dhc <- as.dendrogram(hc <- hclust(dist(USArrests), "ave"))
 (dhc21 <- dhc[[2]][[1]])
 

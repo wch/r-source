@@ -9,7 +9,7 @@
   The objects are of class \code{"ts"}.
 }
 \usage{
-data(BJsales)
+BJsales
 }
 \source{
   The data are given in Box & Jenkins (1976).

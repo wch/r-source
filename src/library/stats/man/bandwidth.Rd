@@ -84,7 +84,6 @@ bw.SJ(x, nb = 1000, lower, upper, method = c("ste", "dpi"))
   Springer.
 }
 \examples{
-data(precip)
 plot(density(precip, n = 1000))
 rug(precip)
 lines(density(precip, bw="nrd"), col = 2)

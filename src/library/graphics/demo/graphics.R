@@ -105,7 +105,6 @@ title(main="1000 Normal Random Variates", font.main=3)
 ## A scatterplot matrix
 ## The good old Iris data (yet again)
 
-data("iris")
 pairs(iris[1:4], main="Edgar Anderson's Iris Data", font.main=4, pch=19)
 pairs(iris[1:4], main="Edgar Anderson's Iris Data", pch=21,
       bg=c("red", "green3", "blue")[unclass(iris$Species)])
@@ -114,7 +113,6 @@ pairs(iris[1:4], main="Edgar Anderson's Iris Data", pch=21,
 ## Contour plotting
 ## This produces a topographic map of one of Auckland's many volcanic "peaks".
 
-data("volcano")
 x <- 10*1:nrow(volcano)
 y <- 10*1:ncol(volcano)
 l <- pretty(range(volcano), 10)
@@ -142,7 +140,6 @@ mtext("10 Meter Contour Spacing", side=3, line=0.35, outer=FALSE,
 ## Conditioning plots
 
 par(bg="cornsilk")
-data(quakes)
 coplot(lat ~ long | depth, data=quakes, pch=21, bg="green3")
 
 par(opar)

@@ -7,7 +7,7 @@
   million (ppm) and reported in the preliminary 1997 SIO manometric mole
   fraction scale.
 }
-\usage{data(co2)}
+\usage{co2}
 \format{
   A time series of 468 observations; monthly from 1959 to 1997.
 }
@@ -30,7 +30,6 @@
   New Jersey: Summit Press.
 }
 \examples{
-data(co2)
 plot(co2, ylab = expression("Atmospheric concentration of CO"[2]),
      las = 1)
 title(main = "co2 data set")

@@ -2,7 +2,7 @@
 \docType{data}
 \alias{Nile}
 \title{Flow of the River Nile}
-\usage{data(Nile)}
+\usage{Nile}
 \description{
   Measurements of the annual flow of the river Nile at Ashwan 1871--1970.
 }
@@ -22,7 +22,6 @@
   change-point problem.  \emph{Biometrika} \bold{65}, 243--51.
 }
 \examples{
-data(Nile)
 par(mfrow = c(2,2))
 plot(Nile)
 acf(Nile)

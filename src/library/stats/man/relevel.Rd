@@ -25,7 +25,6 @@ relevel(x, ref, \dots)
 \seealso{\code{\link{factor}}, \code{\link{contr.treatment}}}
 
 \examples{
-data(warpbreaks)
 warpbreaks$tension <- relevel(warpbreaks$tension, ref="M")
 summary(lm(breaks ~ wool + tension, data=warpbreaks))
 }

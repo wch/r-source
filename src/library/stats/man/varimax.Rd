@@ -49,7 +49,6 @@ promax(x, m = 4)
 \seealso{\code{\link{factanal}}, \code{\link[datasets]{Harman74.cor}}.}
 
 \examples{
-data(swiss)
 ## varimax with normalize = TRUE is the default
 fa <- factanal( ~., 2, data = swiss)
 varimax(loadings(fa), normalize = FALSE)

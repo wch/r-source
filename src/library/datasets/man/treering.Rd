@@ -8,7 +8,7 @@
   Contains normalized tree-ring widths in dimensionless units.
 }
 \usage{
-data(treering)
+treering
 }
 \format{
   A univariate time series with 7981 observations. The object is of

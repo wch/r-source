@@ -99,18 +99,16 @@ acf.obj[i, j]
 }
 \examples{
 ## Examples from Venables & Ripley
-data(lh)
 acf(lh)
 acf(lh, type = "covariance")
 pacf(lh)
 
-data(UKLungDeaths)
 acf(ldeaths)
 acf(ldeaths, ci.type = "ma")
 acf(ts.union(mdeaths, fdeaths))
 ccf(mdeaths, fdeaths) # just the cross-correlations.
 
-data(presidents) # contains missing values
+presidents # contains missing values
 acf(presidents, na.action = na.pass)
 pacf(presidents, na.action = na.pass)
 }

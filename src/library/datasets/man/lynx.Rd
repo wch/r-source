@@ -7,7 +7,7 @@
   Brockwell & Davis (1991), this appears to be the series considered
   by Campbell & Walker (1977).
 }
-\usage{data(lynx)}
+\usage{lynx}
 \source{
   Brockwell, P. J. and Davis, R. A. (1991) \emph{Time
     Series and Forecasting Methods.}  Second edition.

@@ -62,8 +62,9 @@ is.tskernel(k)
     Methods.} Second edition. Springer, pp. 350--365.
 }
 \examples{
-data(EuStockMarkets)    # Demonstrate a simple trading strategy for the 
-x <- EuStockMarkets[,1]  # financial time series German stock index DAX.
+# Demonstrate a simple trading strategy for the 
+ # financial time series German stock index DAX.
+x <- EuStockMarkets[,1] 
 k1 <- kernel("daniell", 50)  # a long moving average
 k2 <- kernel("daniell", 10)  # and a short one
 plot(k1) 
@@ -74,7 +75,7 @@ plot(x)
 lines(x1, col = "red")    # go long if the short crosses the long upwards
 lines(x2, col = "green")  # and go short otherwise
 
-data(sunspot)     # Reproduce example 10.4.3 from Brockwell and Davies (1991)
+# Reproduce example 10.4.3 from Brockwell and Davies (1991)
 spectrum(sunspot.year, kernel=kernel("daniell", c(11,7,3)), log="no")
 }
 \keyword{ts}

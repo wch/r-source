@@ -4,7 +4,7 @@
 \alias{euro.cross}
 \title{Conversion Rates of Euro Currencies}
 \description{Conversion rates between the various Euro currencies.}
-\usage{data(euro)}
+\usage{euro}
 \format{
   \code{euro} is a named vector of length 11, \code{euro.cross} a named
   matrix of size 11 by 11.
@@ -24,7 +24,6 @@
   \code{outer(1 / euro, euro)}.
 }
 \examples{
-data(euro)
 cbind(euro)
 
 ## These relations hold:

@@ -5,7 +5,7 @@
 \description{
   Death rates per 100 in Virginia in 1940.
 }
-\usage{data(VADeaths)}
+\usage{VADeaths}
 \format{A matrix with 5 rows and 5 columns.}
 \details{
   The death rates are cross-classified by age group (rows) and
@@ -28,7 +28,6 @@
 }
 \examples{
 require(stats)
-data(VADeaths)
 n <- length(dr <- c(VADeaths))
 nam <- names(VADeaths)
 d.VAD <- data.frame(

@@ -30,7 +30,6 @@ SSlogis(input, Asym, xmid, scal)
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{
-data( ChickWeight )
 Chick.1 <- ChickWeight[ChickWeight$Chick == 1, ]
 SSlogis( Chick.1$Time, 368, 14, 6 )  # response only
 Asym <- 368; xmid <- 14; scal <- 6

@@ -283,7 +283,6 @@ structure(list(Treat = structure(c(2, 2, 2, 2, 2, 2, 2, 2, 2,
 \dontrun{
 ## Need the anorexia data from a recent version of the package 'MASS':
 library(MASS)
-data(anorexia)
 }
 anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
             family = gaussian, data = anorexia)

@@ -81,7 +81,6 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
 \seealso{\code{\link{stack}}, \code{\link{aperm}}}
 
 \examples{
-data(Indometh)
 summary(Indometh)
 wide <- reshape(Indometh, v.names="conc", idvar="Subject",
                 timevar="time", direction="wide")
@@ -113,7 +112,6 @@ reshape(df3, direction="long", varying=3:5,
 
 
 ## an example that isn't longitudinal data
-data(state)
 state.x77 <- as.data.frame(state.x77)
 long <- reshape(state.x77, idvar="state", ids=row.names(state.x77),
                 times=names(state.x77), timevar="Characteristic",

@@ -6,7 +6,7 @@
   This data set gives the lengths (in miles) of 141 \dQuote{major}
   rivers in North America, as compiled by the US Geological Survey.
 }
-\usage{data(rivers)}
+\usage{rivers}
 \format{A vector containing 141 observations.}
 \source{World Almanac and Book of Facts, 1975, page 406.}
 \references{

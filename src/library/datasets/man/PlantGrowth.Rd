@@ -7,7 +7,7 @@
   weight of plants) obtained under a control and two different treatment
   conditions.
 }
-\usage{data(PlantGrowth)}
+\usage{PlantGrowth}
 \format{
   A data frame of 30 cases on 2 variables.
 
@@ -21,7 +21,6 @@
 \examples{
 ## One factor ANOVA example from Dobson's book, cf. Table 7.4:
 require(stats)
-data(PlantGrowth)
 boxplot(weight ~ group, data = PlantGrowth, main = "PlantGrowth data",
         ylab = "Dried weight of plants", col = "lightgray",
         notch = TRUE, varwidth = TRUE)

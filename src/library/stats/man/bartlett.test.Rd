@@ -70,7 +70,6 @@ bartlett.test(x, \dots)
 }
 \examples{
 % FIXME: could use something more interesting here
-data(InsectSprays)
 plot(count ~ spray, data = InsectSprays)
 bartlett.test(InsectSprays$count, InsectSprays$spray)
 bartlett.test(count ~ spray, data = InsectSprays)

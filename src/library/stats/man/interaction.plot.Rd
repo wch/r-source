@@ -68,14 +68,12 @@ interaction.plot(x.factor, trace.factor, response, fun = mean,
 }
 
 \examples{
-data(ToothGrowth)
 attach(ToothGrowth)
 interaction.plot(dose, supp, len, fixed=TRUE)
 dose <- ordered(dose)
 interaction.plot(dose, supp, len, fixed=TRUE, col = 2:3, leg.bty = "o")
 detach()
 
-data(OrchardSprays)
 with(OrchardSprays, {
   interaction.plot(treatment, rowpos, decrease)
   interaction.plot(rowpos, treatment, decrease, cex.axis=0.8)
@@ -84,7 +82,6 @@ with(OrchardSprays, {
   interaction.plot(rowpos, treatment, decrease, col = 2:9, lty = 1)
 })
 
-data(esoph)
 with(esoph, {
   interaction.plot(agegp, alcgp, ncases/ncontrols)
   interaction.plot(agegp, tobgp, ncases/ncontrols, trace.label="tobacco",

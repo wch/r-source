@@ -6,7 +6,7 @@
   This data set gives the number of warp breaks per loom, where a loom
   corresponds to a fixed length of yarn.
 }
-\usage{data(warpbreaks)}
+\usage{warpbreaks}
 \format{
   A data frame with 54 observations on 3 variables.
   \tabular{rlll}{
@@ -36,7 +36,6 @@
   \code{\link[stats]{xtabs}} for ways to display these data as a table.
 }
 \examples{
-data(warpbreaks)
 summary(warpbreaks)
 opar <- par(mfrow = c(1,2), oma = c(0, 0, 1.1, 0))
 plot(breaks ~ tension, data = warpbreaks, col = "lightgray",

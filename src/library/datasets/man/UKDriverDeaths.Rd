@@ -14,8 +14,8 @@
   \code{Seatbelts} is more information on the same problem.
 }
 \usage{
-data(UKDriverDeaths)
-data(Seatbelts)
+UKDriverDeaths
+Seatbelts
 }
 \format{
   \code{Seatbelts} is a multiple time series, with columns
@@ -47,7 +47,6 @@ data(Seatbelts)
   series B, \bold{149}, 187--227.
 }
 \examples{
-data(UKDriverDeaths)
 ## work with pre-seatbelt period to identify a model, use logs
 work <- window(log10(UKDriverDeaths), end = 1982+11/12)
 par(mfrow = c(3,1))
@@ -59,7 +58,6 @@ ts.plot(log10(UKDriverDeaths), z$pred, z$pred+2*z$se, z$pred-2*z$se,
         lty = c(1,3,2,2), col = c("black", "red", "blue", "blue"))
 
 ## now see the effect of the explanatory variables
-data(Seatbelts)
 X <- Seatbelts[, c("kms", "PetrolPrice", "law")]
 X[, 1] <- log10(X[, 1]) - 4
 arima(log10(Seatbelts[, "drivers"]), c(1,0,0),

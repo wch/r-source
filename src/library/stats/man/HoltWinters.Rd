@@ -110,19 +110,15 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
 }
 
 \examples{
-data(co2)
-
 ## Seasonal Holt-Winters
 (m <- HoltWinters(co2))
 plot(m)
 plot(fitted(m))
 
-data(AirPassengers)
 (m <- HoltWinters(AirPassengers, seasonal = "mult"))
 plot(m)
 
 ## Non-Seasonal Holt-Winters
-data(uspop)
 x <- uspop + rnorm(uspop, sd = 5)
 m <- HoltWinters(x, gamma = 0)
 plot(m)

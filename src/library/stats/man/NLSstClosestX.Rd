@@ -21,7 +21,6 @@ NLSstClosestX(xy, yval)
 \seealso{\code{\link{sortedXyData}}, \code{\link{NLSstLfAsymptote}},
   \code{\link{NLSstRtAsymptote}}, \code{\link{selfStart}}}
 \examples{
-data( DNase )
 DNase.2 <- DNase[ DNase$Run == "2", ]
 DN.srt <- sortedXyData( expression(log(conc)), expression(density), DNase.2 )
 NLSstClosestX( DN.srt, 1.0 )

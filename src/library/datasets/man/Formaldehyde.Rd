@@ -8,7 +8,7 @@
   acid and concentrated sulpuric acid and the reading of the resulting
   purple color on a spectophotometer.
 }
-\usage{data(Formaldehyde)}
+\usage{Formaldehyde}
 \format{
   A data frame with 6 observations on 2 variables.
   \tabular{rlll}{
@@ -27,7 +27,6 @@
 }
 \examples{
 require(stats)
-data(Formaldehyde)
 plot(optden ~ carb, data = Formaldehyde,
      xlab = "Carbohydrate (ml)", ylab = "Optical Density",
      main = "Formaldehyde data", col = 4, las = 1)

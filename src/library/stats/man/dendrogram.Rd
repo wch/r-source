@@ -152,7 +152,6 @@ is.leaf(object)
   for dendrograms.
 }
 \examples{
-data(USArrests)
 hc <- hclust(dist(USArrests), "ave")
 (dend1 <- as.dendrogram(hc)) # "print()" method
 str(dend1) # "str()" method

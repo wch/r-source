@@ -6,7 +6,7 @@
   The \code{Loblolly} data frame has 84 rows and 3 columns of records of
   the growth of Loblolly pine trees.
 }
-\usage{data(Loblolly)}
+\usage{Loblolly}
 \format{
   This data frame contains the following columns:
   \describe{
@@ -32,7 +32,6 @@
   \emph{Mixed-effects Models in S and S-PLUS}, Springer.
 }
 \examples{
-data(Loblolly)
 plot(height ~ age, data = Loblolly, subset = Seed == 329,
      xlab = "Tree age (yr)", las = 1,
      ylab = "Tree height (ft)",

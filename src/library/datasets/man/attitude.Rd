@@ -8,7 +8,7 @@
   approximately 35 employees for each of 30 (randomly selected)
   departments.  The numbers give the percent proportion of favourable
   responses to seven questions in each department.}
-\usage{data(attitude)}
+\usage{attitude}
 \format{
   A dataframe with 30 observations on 7 variables. The first column are
   the short names from the reference, the second one the variable names
@@ -30,7 +30,6 @@
 }
 \examples{
 require(stats)
-data(attitude)
 pairs(attitude, main = "attitude data")
 summary(attitude)
 summary(fm1 <- lm(rating ~ ., data = attitude))

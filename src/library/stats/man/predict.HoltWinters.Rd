@@ -39,7 +39,6 @@
 \seealso{\code{\link{HoltWinters}}}
 
 \examples{
-data(co2)
 m <- HoltWinters(co2)
 p <- predict(m, 50, prediction.interval = TRUE)
 plot(m, p)

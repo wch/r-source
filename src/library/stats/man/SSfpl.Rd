@@ -33,7 +33,6 @@ SSfpl(input, A, B, xmid, scal)
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{
-data( ChickWeight )
 Chick.1 <- ChickWeight[ChickWeight$Chick == 1, ]
 SSfpl( Chick.1$Time, 13, 368, 14, 6 )  # response only
 A <- 13; B <- 368; xmid <- 14; scal <- 6

@@ -7,7 +7,7 @@
   Swiss Federal Observatory, Zurich until 1960, then Tokyo Astronomical
   Observatory.
 }
-\usage{data(sunspots)}
+\usage{sunspots}
 \format{
   A time series of monthly data from 1749 to 1983.
 }
@@ -20,7 +20,6 @@
 \seealso{\code{\link[stats]{sunspot.month}} (package \pkg{stats}) has a
   longer (and a bit different) series.} 
 \examples{
-data(sunspots)
 plot(sunspots, main = "sunspots data", xlab = "Year",
      ylab = "Monthly sunspot numbers")
 }

@@ -34,7 +34,6 @@ SSbiexp(input, A1, lrc1, A2, lrc2)
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{
-data( Indometh )
 Indo.1 <- Indometh[Indometh$Subject == 1, ]
 SSbiexp( Indo.1$time, 3, 1, 0.6, -1.3 )  # response only
 A1 <- 3; lrc1 <- 1; A2 <- 0.6; lrc2 <- -1.3

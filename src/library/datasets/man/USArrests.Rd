@@ -7,7 +7,7 @@
   for assault, murder, and rape in each of the 50 US states in 1973.
   Also given is the percent of the population living in urban areas.
 }
-\usage{data(USArrests)}
+\usage{USArrests}
 \format{
   A data frame with 50 observations on 4 variables.
 
@@ -34,7 +34,6 @@
   New York: Wiley.
 }
 \examples{
-data(USArrests)
 pairs(USArrests, panel = panel.smooth, main = "USArrests data")
 }
 \keyword{datasets}

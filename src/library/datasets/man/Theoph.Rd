@@ -5,7 +5,7 @@
 \description{
   The \code{Theoph} data frame has 132 rows and 5 columns of data from
   an experiment on the pharmacokinetics of theophylline.}
-\usage{data(Theoph)}
+\usage{Theoph}
 \format{
   This data frame contains the following columns:
   \describe{
@@ -55,7 +55,6 @@
 }
 \seealso{\code{\link{SSfol}}}
 \examples{
-data(Theoph)
 coplot(conc ~ Time | Subject, data = Theoph, show = FALSE)
 Theoph.4 <- subset(Theoph, Subject == 4)
 fm1 <- nls(conc ~ SSfol(Dose, Time, lKe, lKa, lCl),

@@ -50,7 +50,6 @@ cancor(x, y, xcenter = TRUE, ycenter = TRUE)
   \code{\link{qr}}, \code{\link{svd}}.
 }
 \examples{
-data(LifeCycleSavings)
 pop <- LifeCycleSavings[, 2:3]
 oec <- LifeCycleSavings[, -(2:3)]
 cancor(pop, oec)

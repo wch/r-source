@@ -6,7 +6,7 @@
  The classic Box \& Jenkins airline data.  Monthly totals of
  international airline passengers, 1949 to 1960.
 }
-\usage{data(AirPassengers)}
+\usage{AirPassengers}
 \format{
   A monthly time series, in thousands.
 }
@@ -18,7 +18,6 @@
  \examples{
 \dontrun{## These are quite slow and so not run by example(AirPassengers)
 
-data(AirPassengers)
 ## The classic 'airline model', by full ML
 (fit <- arima(log10(AirPassengers), c(0, 1, 1),
               seasonal = list(order=c(0, 1 ,1), period=12)))

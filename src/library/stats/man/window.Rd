@@ -68,7 +68,6 @@ window(x, start, end, frequency, deltat, ...) <- value
 }
 \seealso{\code{\link{time}}, \code{\link{ts}}.}
 \examples{
-data(presidents)
 window(presidents, 1960, c(1969,4)) # values in the 1960's
 window(presidents, deltat=1)  # All Qtr1s
 window(presidents, start=c(1945,3), deltat=1)  # All Qtr3s

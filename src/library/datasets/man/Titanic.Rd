@@ -7,7 +7,7 @@
   fatal maiden voyage of the ocean liner \sQuote{Titanic}, summarized according
   to economic status (class), sex, age and survival.
 }
-\usage{data(Titanic)}
+\usage{Titanic}
 \format{
   A 4-dimensional array resulting from cross-tabulating 2201
   observations on 4 variables.  The variables and their levels are as
@@ -58,7 +58,6 @@
 }
 \examples{
 require(graphics)
-data(Titanic)
 mosaicplot(Titanic, main = "Survival on the Titanic")
 ## Higher survival rates in children?
 apply(Titanic, c(3, 4), sum)

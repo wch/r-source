@@ -8,7 +8,7 @@
   diameter of the tree (in inches) measured at 4 ft 6 in above the
   ground.
 }
-\usage{data(trees)}
+\usage{trees}
 \format{
   A data frame with 31 observations on 3 variables.
   \tabular{rlll}{
@@ -30,7 +30,6 @@
   Oxford University Press.
 }
 \examples{
-data(trees)
 pairs(trees, panel = panel.smooth, main = "trees data")
 plot(Volume ~ Girth, data = trees, log = "xy")
 coplot(log(Volume) ~ log(Girth) | Height, data = trees,

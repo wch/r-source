@@ -82,7 +82,6 @@
 \examples{
 ## Analysis of the life-cycle savings data
 ## given in Belsley, Kuh and Welsch.
-data(LifeCycleSavings)
 plot(lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings))
 
 ## 4 plots on 1 page; allow room for printing model formula in outer margin:

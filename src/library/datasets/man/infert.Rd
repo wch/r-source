@@ -6,7 +6,7 @@
   This is a matched case-control study dating from before the
   availability of conditional logistic regression.
 }
-\usage{data(infert)}
+\usage{infert}
 \format{
   \tabular{rll}{
     1.  \tab Education  \tab 0 = 0-5  years \cr
@@ -35,7 +35,6 @@
 }
 \examples{
 require(stats)
-data(infert)
 model1 <- glm(case ~ spontaneous+induced, data=infert,family=binomial())
 summary(model1)
 ## adjusted for other potential confounders:

@@ -98,18 +98,15 @@ stl(x, s.window, s.degree = 0,
   used in \code{stl}).
 } 
 \examples{
-data(nottem)
 plot(stl(nottem, "per"))
 plot(stl(nottem, s.win = 4, t.win = 50, t.jump = 1))
     
-data(co2)
 plot(stllc <- stl(log(co2), s.window=21))
 summary(stllc)
 ## linear trend, strict period.
 plot(stl(log(co2), s.window="per", t.window=1000))
 
 ## Two STL plotted side by side :    
-data(UKLungDeaths)
         stmd <- stl(mdeaths, s.w = "per") # un-robust
 summary(stmR <- stl(mdeaths, s.w = "per", robust = TRUE))
 op <- par(mar = c(0, 4, 0, 3), oma = c(5, 0, 4, 0), mfcol = c(4, 2))

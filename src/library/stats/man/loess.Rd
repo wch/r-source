@@ -103,7 +103,6 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
   different defaults!).
 }
 \examples{
-data(cars)
 cars.lo <- loess(dist ~ speed, cars)
 predict(cars.lo, data.frame(speed = seq(5, 30, 1)), se = TRUE)
 # to allow extrapolation

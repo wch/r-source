@@ -88,7 +88,6 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
 
 \examples{
 ## Examples from Venables & Ripley
-data(UKLungDeaths)
 spectrum(ldeaths)
 spectrum(ldeaths, spans = c(3,5))
 spectrum(ldeaths, spans = c(5,7))
@@ -107,14 +106,12 @@ mfdeaths.spc <- spec.pgram(ts.intersect(mdeaths, lag(fdeaths, 4)),
 plot(mfdeaths.spc, plot.type = "coherency")
 plot(mfdeaths.spc, plot.type = "phase")
 
-data(EuStockMarkets)
 stocks.spc <- spectrum(EuStockMarkets, kernel("daniell", c(30,50)),
                        plot = FALSE)
 plot(stocks.spc, plot.type = "marginal") # the default type
 plot(stocks.spc, plot.type = "coherency")
 plot(stocks.spc, plot.type = "phase")
 
-data(BJsales)
 sales.spc <- spectrum(ts.union(BJsales, BJsales.lead),
                       kernel("modified.daniell", c(5,7)))
 plot(sales.spc, plot.type = "coherency")
