@@ -104,3 +104,8 @@ lm.wfit.null <-
 function (x, y, w, method = "qr", tol = 1e-07, ...)
 list(coefficients = numeric(0), residuals = y, fitted.values = 0 *
     y, weights = w, rank = 0, df.residual = length(y))
+
+model.matrix.lm.null<-function(x,...){
+  rval<-matrix(ncol=0,nrow=length(object$y))
+  attr(rval,"assign")<-integer(0)
+}

@@ -468,11 +468,27 @@ anovalist.lm <- function (object, ..., test = NULL)
 predict.lm <- function(object, newdata,
 		       se.fit = FALSE, scale = NULL, df = Inf,
 		       interval=c("none","confidence","prediction"),
-                       level=.95, ...)
+                       level=.95,  type=c("response","terms"),
+                       terms=NULL, ...)
 {
+    attrassign<-function (object, ...) UseMethod("attrassign")
+    attrassign.lm<-function (lmobj)  attrassign(model.matrix(lmobj), terms(lmobj))
+    attrassign.default<-function (mmat, tt) {
+      if (!inherits(tt, "terms")) 
+        stop("need terms object")
+      aa <- attr(mmat, "assign")
+      if (is.null(aa)) 
+        stop("argument is not really a model matrix")
+      ll <- attr(tt, "term.labels")
+      if (attr(tt, "intercept") > 0) 
+        ll <- c("(Intercept)", ll)
+      aaa <- factor(aa, labels = ll)
+      split(order(aa), aaa)
+    }
     if(missing(newdata)) {
         X <- model.matrix(object)
         offset <- object$offset
+        tt<-terms(object)
     }
     else {
         tt <- terms(object)
@@ -491,6 +507,7 @@ predict.lm <- function(object, newdata,
     predictor <- drop(X[, piv, drop = FALSE] %*% est)
     if ( !is.null(offset) ) predictor <- predictor + offset
     interval <- match.arg(interval)
+    type<-match.arg(type)
     if(se.fit || interval != "none") {
 	if (is.null(scale)) {
 	    r <- resid(object)
@@ -504,11 +521,49 @@ predict.lm <- function(object, newdata,
 	}
 	R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
 	vcov <- res.var * R
-	ip <- real(NROW(X))
-	for (i in (1:NROW(X))) {
-	    xi <- X[i, piv]
-	    ip[i] <- xi %*% vcov %*% xi
+        if (type != "terms"){
+            ip <- real(NROW(X))
+	    for (i in (1:NROW(X))) {
+	       xi <- X[i, piv]
+	       ip[i] <- xi %*% vcov %*% xi
+            }
 	}
+    }
+    if (type=="terms"){
+      asgn <- attrassign(object)
+      beta<-coef(object)
+      hasintercept<-attr(tt,"intercept")>0
+      if (hasintercept)
+        asgn$"(Intercept)"<-NULL
+      nterms<-length(asgn)
+      predictor<-matrix(ncol=nterms,nrow=NROW(X))
+      dimnames(predictor)<-list(rownames(X),names(asgn))
+      if (se.fit){
+        ip<-matrix(ncol=nterms,nrow=NROW(X))
+        dimnames(ip)<-list(rownames(X),names(asgn))
+      }
+      for (i in seq(1,nterms,length=nterms)){
+        if (hasintercept)
+          i0<-1
+        else
+          i0<-NULL
+        ii<-piv[asgn[[i]]]
+        predictor[,i]<-X[,ii,drop=F]%*%(beta[ii])
+        X[,ii]<-X[,ii]-mean(X[,ii])
+        if (se.fit){
+          vci<-R[ii,ii]*res.var
+          for(j in (1:NROW(X))){
+            xi<-X[j,ii,drop=F]*(beta[ii])
+            ip[j,i]<-sum(xi%*% vci %*%t(xi))
+          }
+        }
+      }
+      if (!is.null(terms)){
+        predictor<-predictor[,terms,drop=F]
+        if (se.fit)
+          ip<-ip[,terms,drop=F]
+      }
+      attr(predictor, 'constant') <- if (hasintercept) coef(object)["(Intercept)"] else 0
     }
     if(interval != "none") {
 	tfrac <- qt((1 - level)/2,df)

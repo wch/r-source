@@ -613,7 +613,7 @@ family.glm <- function(object, ...) object$family
 
 residuals.glm <- function(object, type="deviance", ...)
 {
-    ntyp <- match(type, c("deviance", "pearson", "working", "response"))
+    ntyp <- match(type, c("deviance", "pearson", "working", "response", "partial"))
     if(is.na(ntyp))
 	stop(paste("invalid `type':", type))
     y  <- object$y
@@ -626,7 +626,8 @@ residuals.glm <- function(object, type="deviance", ...)
 	   } else rep(0, length(mu)),
 	   pearson	 = object$residuals * sqrt(object$weights),
 	   working	 = object$residuals,
-	   response = y - mu
+	   response = y - mu,
+           partial=object$residuals+predict(object,type="terms")
 	   )
 }
 

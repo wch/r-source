@@ -1,24 +1,28 @@
 #### copyright (C) 1998 W. N. Venables and B. D. Ripley
+## "terms" added 10/99 T Lumley
 
 predict.glm <-
-    function(object, newdata = NULL, type = c("link", "response"),
-	     se.fit = FALSE, dispersion = NULL, ...)
+  function(object, newdata = NULL, type = c("link", "response", "terms"),
+           se.fit = FALSE, dispersion = NULL, terms=NULL, ...)
 {
     ## 1998/06/23 KH:  predict.lm() now merged with the version in lm.R
 
     type <- match.arg(type)
-    if(!se.fit) {
+    if (!se.fit) {
 	## No standard errors
 	if(missing(newdata))
 	    pred <- switch(type,
 			   link = object$linear.predictors,
-			   response = object$fitted)
+			   response = object$fitted,
+                           terms = predict.lm(object,  se.fit=se.fit, scale = 1,
+                             type=type, terms=terms)
+                           )
 	else {
-	    pred <- predict.lm(object, newdata, se.fit, scale = 1)
+	    pred <- predict.lm(object, newdata, se.fit, scale = 1, type=type, terms=terms)
 	    switch(type,
 		   response = {pred <- family(object)$linkinv(pred)},
-		   link = )
-	}
+		   link =, terms= )
+          }
     } else {
 	## summary.survreg has no ... argument.
 	if(inherits(object, "survreg")) dispersion <- 1.
@@ -26,7 +30,8 @@ predict.glm <-
 	    dispersion <- summary(object, dispersion=dispersion)$dispersion
 	residual.scale <- as.vector(sqrt(dispersion))
 	if ( missing(newdata) ) newdata <- model.frame(object)
-	pred <- predict.lm(object, newdata, se.fit, scale = residual.scale)
+	pred <- predict.lm(object, newdata, se.fit, scale = residual.scale,
+                           type=type, terms=terms)
 	fit <- pred$fit
 	se.fit <- pred$se.fit
 	switch(type,
@@ -34,7 +39,7 @@ predict.glm <-
 		   fit <- family(object)$linkinv(fit)
 		   se.fit <- se.fit * abs(family(object)$mu.eta(fit))
 	       },
-	       link = )
+	       link =, terms=)
 	pred <- list(fit=fit, se.fit=se.fit, residual.scale=residual.scale)
     }
     pred
