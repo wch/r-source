@@ -379,7 +379,9 @@ void error(const char *format, ...)
     va_start(ap, format);
     Rvsnprintf(buf, BUFSIZE, format, ap);
     va_end(ap);
-    errorcall(R_GlobalContext->call, "%s", buf);
+    /* This can be called before R_GlobalContext is defined, so... */
+    errorcall(R_GlobalContext ?
+	      R_GlobalContext->call : R_NilValue, "%s", buf);
 }
 
 /* Unwind the call stack in an orderly fashion */

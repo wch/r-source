@@ -114,6 +114,8 @@ int Rf_initialize_R(int ac, char **av)
     ptr_R_loadhistory = Rstd_loadhistory;
     ptr_R_savehistory = Rstd_savehistory;
 
+    R_GlobalContext = NULL; /* Make R_Suicide less messy... */
+
     if((R_Home = R_HomeDir()) == NULL)
 	R_Suicide("R home directory is not defined");
 
