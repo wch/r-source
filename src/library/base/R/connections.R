@@ -88,7 +88,7 @@ showConnections <- function(all = FALSE)
     ans <- matrix("", length(set), 7)
     for(i in seq(along=set)) ans[i, ] <- unlist(summary.connection(set[i]))
     rownames(ans) <- set
-    colnames(ans) <- c("class", "description", "mode", "text", "isopen",
+    colnames(ans) <- c("description", "class", "mode", "text", "isopen",
                        "can read", "can write")
     if(!all) ans[ans[, 5] == "opened", , drop = FALSE]
     else ans[, , drop = FALSE]
