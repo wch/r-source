@@ -6,7 +6,8 @@ srcdir = .
 top_srcdir = ../..
 subdir = doc/manual
 
-SOURCES_TEXI = R-FAQ.texi R-data.texi R-exts.texi R-intro.texi R-lang.texi
+SOURCES_TEXI = R-FAQ.texi R-admin.texi R-data.texi R-exts.texi \
+  R-intro.texi R-lang.texi
 
 OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)
 OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
@@ -72,6 +73,12 @@ refman.dvi: $(pkgsrcs) version.tex ../../share/texmf/Rd.sty \
 	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
 
+R-admin.dvi: R-admin.texi $(texiincludes) 
+	$(TEX) R-admin.texi
+	$(TEXINDEX) R-admin.cp R-admin.fn R-admin.vr
+	$(TEX) R-admin.texi
+	$(TEX) R-admin.texi
+
 R-data.dvi: R-data.texi $(texiincludes) 
 	$(TEX) R-data.texi
 	$(TEXINDEX) R-data.cp R-data.fn R-data.vr
@@ -91,12 +98,14 @@ R-intro.dvi: R-intro.texi $(texiincludes)
 	$(TEX) R-intro.texi
 
 html: $(OBJECTS_HTML)
+R-admin.html: $(texiincludes)
 R-data.html: $(texiincludes)
 R-exts.html: $(texiincludes)
 R-intro.html: $(texiincludes)
 R-lang.html: $(texiincludes)
 
 info: $(OBJECTS_INFO)
+R-admin.info: $(texiincludes)
 R-data.info: $(texiincludes)
 R-exts.info: $(texiincludes)
 R-intro.info: $(texiincludes)
@@ -138,6 +147,12 @@ version.tex: ../../bin/Rterm.exe $(top_srcdir)/VERSION
 	  perl ../../tools/pkg2tex.pl $*; \
 	fi
 FORCE:
+
+R-admin.pdf: R-admin.texi $(texiincludes) 
+	$(PDFTEX) R-admin.texi
+	$(TEXINDEX) R-admin.cp R-admin.fn R-admin.vr
+	$(PDFTEX) R-admin.texi
+	$(PDFTEX) R-admin.texi
 
 R-data.pdf: R-data.texi $(texiincludes) 
 	$(PDFTEX) R-data.texi

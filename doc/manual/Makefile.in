@@ -11,7 +11,8 @@ subdir = doc/manual
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-SOURCES_TEXI = R-FAQ.texi R-data.texi R-exts.texi R-intro.texi R-lang.texi
+SOURCES_TEXI = R-FAQ.texi R-admin.texi R-data.texi R-exts.texi \
+  R-intro.texi R-lang.texi
 DISTFILES = \
 	README \
 	Makefile.in Makefile.win \
@@ -123,6 +124,7 @@ $(top_builddir)/bin/build-help: $(top_srcdir)/src/scripts/build-help.in
 	@(cd $(top_builddir)/src/scripts; $(MAKE))
 
 $(OBJECTS_DVI): $(srcdir)/texinfo.tex
+R-admin.dvi: $(texiincludes)
 R-data.dvi: $(texiincludes)
 R-exts.dvi: $(texiincludes)
 version.texi: Makefile $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
@@ -141,12 +143,14 @@ R-lang.dvi: $(texiincludes)
 html: $(OBJECTS_HTML)
 	@(cd ../html; $(MAKE) index.html)
 
+R-admin.html: $(texiincludes)
 R-data.html: $(texiincludes)
 R-exts.html: $(texiincludes)
 R-intro.html: $(texiincludes)
 R-lang.html: $(texiincludes)
 
 info: $(OBJECTS_INFO)
+R-admin.info: $(texiincludes)
 R-data.info: $(texiincludes)
 R-exts.info: $(texiincludes)
 R-intro.info: $(texiincludes)
@@ -182,6 +186,7 @@ stamp-refman-pdf: $(pkgsrcs)
 	@touch $@
 
 $(OBJECTS_PDF): $(srcdir)/texinfo.tex
+R-admin.pdf: $(texiincludes)
 R-data.pdf: $(texiincludes)
 R-exts.pdf: $(texiincludes)
 R-intro.pdf: stamp-images-pdf $(texiincludes)

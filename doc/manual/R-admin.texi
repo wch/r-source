@@ -1,0 +1,433 @@
+\input texinfo
+@c %**start of header
+@setfilename R-exts.info
+@settitle Writing R Extensions
+@setchapternewpage on
+@c %**end of header
+
+@syncodeindex fn vr
+
+@dircategory Programming
+@direntry
+* R Administration: (R-admin).      R Installation and Adminstration.
+@end direntry
+
+@finalout
+
+@include R-defs.texi
+@include version.texi
+
+@ifinfo
+This is a guide to installation and administration for R.
+
+@Rcopyright{2001}
+
+@ignore
+Permission is granted to process this file through TeX and print the
+results, provided the printed document carries a copying permission
+notice identical to this one except for the removal of this paragraph
+(this paragraph not being relevant to the printed manual).
+
+@end ignore
+
+@permission{}
+@c ---------- ^- read that
+@end ifinfo
+
+@titlepage
+@title R Installation and Adminstration
+@subtitle Version @value{VERSION}
+@author R Development Core Team
+@page
+@vskip 0pt plus 1filll
+@permission{}
+
+@Rcopyright{2001}
+@end titlepage
+
+@ifnothtml
+@contents
+@end ifnothtml
+
+@ifnottex
+@node Top, Obtaining R, (dir), (dir)
+@top R Installation and Adminstration
+
+This is a guide to installation and administration for R.
+
+The current version of this document is @value{VERSION}.
+@end ifnottex
+
+@menu
+* Obtaining R::                 
+* Installing R under Unix::     
+* Installing R under Windows::  
+* Installing R on Classic MacOS::  
+* Add-on Packages::             
+* Configuration on Unix::       
+* Function and variable index::  
+* Concept index::               
+@end menu
+
+@node Obtaining R, Installing R under Unix, Top, Top
+@chapter Obtaining R
+
+Sources, binaries and documentation for R can be obtained via
+@acronym{CRAN}, the ``Comprehensive R Archive Network''.
+
+
+@menu
+* Getting and Unpacking the Sources::  
+* Using rsync::                 
+@end menu
+
+@node Getting and Unpacking the Sources, Using rsync, Obtaining R, Obtaining R
+@section Getting and Unpacking the Sources
+
+The simplest way is to download the most recent @code{R-x.y.z.tgz} package,
+and unpack it with
+@smallexample
+	tar xvfz R-x.y.z.tgz
+@end smallexample
+@noindent
+on systems that have GNU tar installed.  On other systems you need at
+least to have the @code{gzip} program installed.  Then you can use
+@smallexample
+	gzip -dc R-x.y.z.tgz | tar xvf -
+@end smallexample
+
+If you need to transport the sources on floppy disks, you can download
+the @code{R-x.y.z.tgz-split.*} files and paste them together at the
+destination with
+@smallexample
+	cat R-x.y.z.tgz-split.* > R-x.y.z.tgz
+@end smallexample
+@noindent
+and proceed as above.  If you want the build to be usable by a group
+of users, set umask before unpacking so that the files will be
+readable by the target group (e.g. @code{umask 022} to be usable by all
+users).
+
+Finally, for minor-minor releases (@code{x.y.z} with @code{z != 0} ), a
+patch against the preceding release is made available in
+@code{R-x.y.{z-1}-x.y.z.diff.gz} (e.g., @code{R-0.63.2-0.63.3.diff.gz}),
+which is generally a much shorter file that the @code{.tgz} files.  Such
+a file can be applied to the sources of the previous version by changing
+to the top directory of it and
+@smallexample
+	gzip -dc /path/to/it/R-x.y.{z-1}-x.y.z.diff.gz | patch -E -p1
+@end smallexample
+@noindent
+Beware that this does not necessarily work if the older sources have
+been modified (e.g., by building in their directories).
+
+@node Using rsync,  , Getting and Unpacking the Sources, Obtaining R
+@section Using rsync
+
+Sources are also available via anonymous rsync.  Use
+
+@example
+rsync -rC rsync.r-project.org::@var{module} R
+@end example
+
+@noindent
+to create a copy of the source tree specified by @var{module} in the
+subdirectory @file{R} of the current directory, where @var{module}
+specifies one of the three existing flavors of the R sources, and can be
+one of @samp{r-release} (latest released version),
+@samp{r-release-patched} (latest released version with patches applied),
+and @samp{r-devel} (current development version).  The rsync trees are
+created directly from the master CVS archive and are updated hourly.
+The @option{-C} option in the rsync command is to cause it to skip the
+CVS directories.  Further information on rsync is available at
+@uref{http://rsync.samba.org/rsync/}.
+
+
+
+@node Installing R under Unix, Installing R under Windows, Obtaining R, Top
+@chapter Installing R under Unix
+
+@R{} will configure and build from source under a number of common
+Unix-like platforms, including @code{i386-freebsd}, @code{i386-linux},
+@code{i386-sun-solaris}, @code{ppc-linux}, @code{mips-sgi-irix},
+@code{alpha-linux}, @code{alpha-dec-osf4}, @code{rs6000-ibm-aix},
+@code{hppa-hp-hpux}, @code{sparc-linux}, and @code{sparc-sun-solaris}
+
+In addition, binary distributions are available for most common Linux
+distributions, Compaq Alpha systems running Unix 4.0, and for MacOS X.
+See the FAQ for current details.  These are installed in
+platform-specific ways.  So for the rest of this chapter we consider
+only building from the sources.
+
+
+@menu
+* Simple Compilation::          
+* Making the Manuals::          
+* Actual Installation::         
+@end menu
+
+@node Simple Compilation, Making the Manuals, Installing R under Unix, Installing R under Unix
+@section Simple Compilation
+
+Choose a place to install the R tree (R is not just a binary, but has
+additional data sets, help files, font metrics etc).  Let's call this
+place @file{R_HOME}.  Untar the source code.  This should create directories
+src, doc, and several more.  Issue the following commands:
+
+@smallexample
+	./configure
+	make
+@end smallexample
+@noindent
+
+(See USING MAKE below if your make is not called `make'.)
+
+Then check the built system worked correctly, by
+
+@smallexample
+	make check
+@end smallexample
+@noindent
+
+Failures are not necessarily problems as they might be caused by missing
+functionality, but you should look carefully at any reported discrepancies.
+
+If these commands execute successfully, the R binary will be copied to
+the @file{${R_HOME}/bin} directory.  In addition, a shell script
+front-end called "@file{R} will be created and copied to the same
+directory.  You can copy this script to a place where users can invoke
+it, for example to @file{/usr/local/bin/R}.  You could also copy the man
+page @file{R.1} to a place where your @code{man} reader finds it, such
+as @file{/usr/local/man/man1}.  If you want to install the complete R
+tree to, e.g., @file{/usr/local/lib/R}, see section INSTALLATION below.
+
+You do not necessarily have to build R in the top-level source directory
+(say, @file{TOP_SRCDIR}).  To build in @file{BUILDDIR}, @code{cd} there
+and run
+@smallexample
+	TOP_SRCDIR/configure
+	make
+@end smallexample
+@noindent
+and so on, as described further below.  This has the advantage of always
+keeping your source tree ``clean''.  (You may need GNU @code{make} to allow
+this.)
+
+If you need or want to set certain configure variables to something
+other than their default, you can do that by either editing the file
+@file{config.site} (which documents all the variables you might want to set)
+or on the command line as
+
+@smallexample
+	VAR="..." ./configure		   # Bourne shell compatibles
+	(setenv VAR "..."; ./configure)	   # C shell
+@end smallexample
+@noindent
+One common variable to change is @code{R_PAPERSIZE}, which defaults to
+@code{a4}, not @code{letter}.
+
+If you have libraries and header files, e.g., for GNU readline, in
+non-system directories, use the variables @code{LIBS} (for libraries)
+and @code{CPPFLAGS} (for header files), respectively, to specify these
+locations.  These default to @file{/usr/local/lib} and
+@file{/usr/local/include} to catch the most common cases.  If libraries
+are still not found, then maybe your compiler/linker does not support
+re-ordering of @code{-L} and @code{-l} flags (this has been reported to be a
+problem on HP-UX with native @code{cc}).  In this case, use a different
+compiler (or a front end shell script which does the re-ordering).
+
+If you find you need to alter configure variables, it is worth noting
+that some settings are cached in the file @file{config.cache}, and it is
+a good idea to remove that file before re-configuring.
+
+Make will also build plain text help pages as well as HTML and LaTeX
+versions of the R object documentation (the three kinds can also be
+generated separately using `make help', `make html' and `make latex').
+Note that you need Perl version 5, available via
+http://www.perl.com/CPAN/, to build this documentation.  If this is not
+available on your system, you can obtain PDF versions of the
+documentation files via the Comprehensive R Archive Network (CRAN), see
+the file `RESOURCES' for information on CRAN.
+
+Now rehash if necessary, type `R', and read the R manuals and the R FAQ
+(files `FAQ' or `doc/html/faq.html' or the latest version at
+http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html).
+
+The GNOME interface for R will only be built if you specify it: see the
+GNOME section below.
+
+@node Making the Manuals, Actual Installation, Simple Compilation, Installing R under Unix
+@section Making the Manuals
+
+There is a set of manuals that can be built from the sources,
+
+@smallexample
+	refman		Printed versions of all the help pages.
+	R-FAQ		R FAQ (which is already built for you).
+	R-intro		``An Introduction to R''.
+	R-data		``R Data Import/Export''.
+	R-exts		``Writing R Extensions''.
+	R-lang		``The R Language Definition''.
+@end smallexample
+
+
+To make these, cd to the `doc/manual' directory and use
+
+@smallexample
+	make dvi	to create DVI versions
+	make pdf	to create PDF versions
+	make info	to create info files (not refman)
+@end smallexample
+@noindent
+
+You will not be able to build the info files unless you have
+@code{makeinfo} version 4 or later installed (and some Linux
+distributions have 3.12).
+
+The DVI versions can be previewed and printed using standard programs
+such as `xdvi' and `dvips'.  The PDF versions can be viewed using
+Acrobat Reader or (recent versions of) ghostscript: they have
+hyperlinks that can be followed in Acrobat Reader.  The info files are
+suitable for reading online with Emacs or the standalone GNU Info.
+
+@node Actual Installation,  , Making the Manuals, Installing R under Unix
+@section  Actual Installation
+After
+
+@smallexample
+	./configure
+	make
+	make check
+@end smallexample
+@noindent
+have been completed successfully, you can install the complete R tree
+to your system by typing
+@smallexample
+	make install
+@end smallexample
+@noindent
+
+This will install to the following directories:
+
+@smallexample
+	${prefix}/bin		the front-end shell script
+	${prefix}/man/man1	the man page
+	${prefix}/lib/R		all the rest (libraries, on-line help
+				system, ...)
+@end smallexample
+@noindent
+where @code{prefix} is determined during configuration (typically
+@code{/usr/local}) and can be set by running configure with the option
+@smallexample
+	./configure --prefix=/where/you/want/R/to/go
+@end smallexample
+@noindent
+This installs the R executable to @file{/where/you/want/R/to/go/bin}, and so
+on.  The prefix of the installation directories can also be seen in the
+status message that is displayed at the end of configure.  You can
+install into another directory by using
+
+@smallexample
+	make prefix=/path/to/here install
+@end smallexample
+
+
+To install DVI, info and PDF versions of the manuals, use one or more of
+
+@smallexample
+	make install-dvi
+	make install-info
+	make install-pdf
+@end smallexample
+@noindent
+To ensure that the installed tree is usable by the right group of users,
+set @code{umask} appropriately (perhaps to @code{022}) before unpacking the
+sources and throughout the build process.
+
+
+
+@node Installing R under Windows, Installing R on Classic MacOS, Installing R under Unix, Top
+@chapter Installing R under Windows
+
+The @file{bin/windows} directory of a @acronym{CRAN} site contains
+binaries for a base distribution and a large number of add-on packages
+from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000 and ME (at
+least) on Intel and clones (but not on other platforms).
+
+You do need one of those Windows versions: Windows 3.11+win32s will not
+work. 
+
+Your file system must allow long file names (as is likely except
+perhaps for some network-mounted systems).
+
+The simplest way is to use @code{SetupR.exe} or @code{miniR.exe}. Just
+double-click on the icon and follow the instructions.  If you installed
+R this way you can uninstall it from the Control Panel or Start Menu
+(unless you supressed making a group for R).
+
+For more details see the
+@uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
+@acronym{FAQ}}.
+
+
+@node Installing R on Classic MacOS, Add-on Packages, Installing R under Windows, Top
+@chapter Installing R on Classic MacOS
+
+The @file{bin/macos} directory of a @acronym{CRAN} site contains
+bin-hexed (@file{hqx}) and stuffit (@file{sit}) self-extracting binaries
+for a base distribution and a large number of add-on packages to run
+under MacOS 8.6 to MacOS 9.1 or MacOS X under Classic Environment.  The
+Mac version of R and the Mac binaries are maintained by
+@email{stefano.iacus@@unimi.it, Stefano Iacus}.
+
+There is also a port to MacOS X which is considered to be a Unix variant
+in this document.
+
+@node Add-on Packages, Configuration on Unix, Installing R on Classic MacOS, Top
+@chapter Add-on Packages
+
+@menu
+* Installing packages::         
+* Updating packages::           
+@end menu
+
+This chapter applies to Unix-like and Windows versions of @R{}, but not
+to the Classic MacOS port.
+
+It is helpful to use the correct terminology.  A @emph{package} is
+loaded from a @emph{library} by the function @code{library}.  Thus a
+library is a directory containing installed packages; the main library
+is @file{R_HOME/library}, but others can be used, for example by setting
+the environment variable @code{R_LIBS} or the @R{} object @code{.lib.loc}.
+
+@node Installing packages, Updating packages, Add-on Packages, Add-on Packages
+@section Installing packages
+
+Note that you need to specify implicitly or explicitly the library to
+which the package is to be installed.  This is only an issue if you have
+more than one library, if course.
+
+@node Updating packages,  , Installing packages, Add-on Packages
+@section Updating packages
+
+The command @code{update.packages()} is the simplest way to ensure that
+all the packages on your system are up to date.
+
+@node Configuration on Unix, Function and variable index, Add-on Packages, Top
+@appendix Configuration on Unix
+
+@node Function and variable index, Concept index, Configuration on Unix, Top
+@unnumbered Function and variable index
+
+@printindex vr
+
+@node Concept index,  , Function and variable index, Top
+@unnumbered Concept index
+
+@printindex cp
+
+@bye
+
+@c Local Variables: ***
+@c mode: TeXinfo ***
+@c End: ***
