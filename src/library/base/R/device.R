@@ -24,12 +24,12 @@ dev.set <-
     function(which = dev.next())
 {
     which <- .Internal(dev.set(as.integer(which)))
-    if(exists(".Devices")) {
-	assign(".Device", get(".Devices")[[which]])
-    }
-    else {
-	.Devices <- list("null device")
-    }
+#     if(exists(".Devices")) {
+# 	assign(".Device", get(".Devices")[[which]])
+#     }
+#     else {
+# 	.Devices <- list("null device")
+#     }
     names(which) <- .Devices[[which]]
     which
 }
@@ -59,16 +59,7 @@ dev.off <-
 {
     if(which == 1)
 	stop("Cannot shut down device 1 (the null device)")
-    if(exists(".Devices")) {
-	.Devices <- get(".Devices")
-    }
-    else {
-	.Devices <- list("null device")
-    }
-    .Devices[[which]] <- ""
-    assign(".Devices", .Devices)
     .Internal(dev.off(as.integer(which)))
-    assign(".Device", .Devices[[dev.cur()]])
     dev.cur()
 }
 
