@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-20, 2002-08-31
+@set FAQ-VERSION 1.5-21, 2002-09-12
 @set REL-VERSION 1.5.1
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -2102,6 +2102,8 @@ Univariate Partial Least Squares Regression.
 @c @item regexp
 @c Simple regular expression interface.
 @c </COMMENT>
+@item runStats
+Running median and mean.
 @item write.snns
 Function for writing a @acronym{SNNS} pattern file from a data frame or
 matrix.
