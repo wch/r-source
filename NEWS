@@ -128,6 +128,9 @@ NEW FEATURES
     o	prop.table() and margin.table() functions (these are *really*
 	trivial)
 
+    o	optimize() can now be used recursively.
+
+
 BUG FIXES
 
     o	str() now works with Surv(.) objects from library(survival5).
