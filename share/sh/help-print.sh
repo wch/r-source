@@ -1,29 +1,32 @@
 #! /bin/sh
 
 ## Usage is
-##   sh help-print.sh FILE topic LATEX DVIPS
-## see src/library/base/R/unix/help.R.
+##   sh help-print.sh FILE TOPIC LATEX DVIPS
+## see src/library/utils/R/unix/help.R.
 
+FILE="${1}"
+TOPIC="${2}"
 LATEX="${3}"
 if test "${LATEX}" = "false"; then
     echo "Cannot print, latex seems to be unavailable"
     exit 1
 fi
-DVIPS="${4}"
+shift 3
+DVIPS="${@}"
 if test "${DVIPS}" = "false"; then
     echo "Cannot print, dvips seems to be unavailable"
     exit 2
 fi
 ODIR=`pwd`
-cd `(dirname "${1}") 2>/dev/null || \
-     echo "${1}" | sed -e 's,[^/]*$,,;s,/$,,;s,^$,.,'`
-${LATEX} "\\nonstopmode\\input{${1}}" >/dev/null 2>&1
-${DVIPS} "${1}" 2>/dev/null
-if test -f "${1}.ps"; then
-    echo "Saving help page to '${2}.ps'"
-    mv "${1}.ps" "${ODIR}/${2}.ps"
+cd `(dirname "${FILE}") 2>/dev/null || \
+     echo "${FILE}" | sed -e 's,[^/]*$,,;s,/$,,;s,^$,.,'`
+${LATEX} "\\nonstopmode\\input{${FILE}}" >/dev/null 2>&1
+${DVIPS} "${FILE}" 2>/dev/null
+if test -f "${FILE}.ps"; then
+    echo "Saving help page to '${TOPIC}.ps'"
+    mv "${FILE}.ps" "${ODIR}/${TOPIC}.ps"
 fi
-rm -f "${1}.aux" "${1}.dvi" "${1}.log"
+rm -f "${FILE}.aux" "${FILE}.dvi" "${FILE}.log"
 
 ### Local Variables: ***
 ### mode: sh ***
