@@ -1891,7 +1891,6 @@ SEXP R_LoadFromFile(FILE *fp, int startup)
 	return R_Unserialize(&in);
 #endif /* HAVE_XDR */
     default:
-	fclose(fp);
 	switch (magic) {
 	case R_MAGIC_EMPTY:
 	    error("restore file may be empty -- no data loaded");
