@@ -62,9 +62,7 @@ int matherr(struct exception *exc)
 
 #ifdef IEEE_754
 double R_Zero_Hack = 0.0;  /* Silence the Sun compiler */
-#endif
 
-#ifdef IEEE_754
 typedef union
 {
   double value;

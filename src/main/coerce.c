@@ -1371,16 +1371,16 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef IEEE_754
 	    LOGICAL(ans)[i] = R_IsNaN(REAL(x)[i]);
 #else
-	LOGICAL(ans)[i] = 0;
+	    LOGICAL(ans)[i] = 0;
 #endif
 	break;
     case CPLXSXP:
 	for (i = 0; i < n; i++)
 #ifdef IEEE_754
-	    LOGICAL(ans)[i] = (R_IsNaN(COMPLEX(x)[i].r)
-			       || R_IsNaN(COMPLEX(x)[i].i));
+	    LOGICAL(ans)[i] = (R_IsNaN(COMPLEX(x)[i].r) ||
+			       R_IsNaN(COMPLEX(x)[i].i));
 #else
-	LOGICAL(ans)[i] = 0;
+	    LOGICAL(ans)[i] = 0;
 #endif
 	break;
     case LISTSXP:
@@ -1403,8 +1403,8 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    break;
 		case CPLXSXP:
 #ifdef IEEE_754
-		    LOGICAL(ans)[i] = (R_IsNaN(COMPLEX(CAR(x))[0].r)
-				       || R_IsNaN(COMPLEX(CAR(x))[0].i));
+		    LOGICAL(ans)[i] = (R_IsNaN(COMPLEX(CAR(x))[0].r) ||
+				       R_IsNaN(COMPLEX(CAR(x))[0].i));
 #else
 		    LOGICAL(ans)[i] = 0;
 #endif

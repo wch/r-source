@@ -19,8 +19,8 @@
 
 #include "Defn.h"
 #include "Mathlib.h"
-#include "Fortran.h"/*- for POW_DI */
-
+#include "Fortran.h"/* POW_DI */
+#include "Applic.h"/* cpoly */
 
 static int naflag;
 
@@ -449,10 +449,9 @@ static void z_asin(complex *r, complex *z)
 
 static void z_acos(complex *r, complex *z)
 {
-    static double pi2 = 1.57079632679489661923;
     complex asin;
     z_asin(&asin, z);
-    r->r = pi2 - asin.r;
+    r->r = M_PI_half - asin.r;
     r->i = - asin.i;
 }
 
@@ -471,7 +470,6 @@ static void z_atan(complex *r, complex *z)
 
 static void z_atan2(complex *r, complex *csn, complex *ccs)
 {
-    static double pi = 3.14159265358979323846;
     complex tmp;
     if (ccs->r == 0 && ccs->i == 0) {
 	if(csn->r == 0 && csn->r == 0) {
@@ -479,15 +477,15 @@ static void z_atan2(complex *r, complex *csn, complex *ccs)
 	    r->i = NA_REAL;
 	}
 	else {
-	    r->r = fsign(0.5*pi, csn->r);
+	    r->r = fsign(M_PI_half, csn->r);
 	    r->i = 0;
 	}
     }
     else {
 	complex_div(&tmp, csn, ccs);
 	z_atan(r, &tmp);
-	if(ccs->r < 0) r->r += pi;
-	if(r->r > pi) r->r -= 2 * pi;
+	if(ccs->r < 0) r->r += M_PI;
+	if(r->r > M_PI) r->r -= 2 * M_PI;
     }
 }
 
@@ -726,8 +724,6 @@ SEXP do_complex(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-
-int F77_SYMBOL(cpoly)(double*, double*, int*, double*, double*, int*);
 
 SEXP do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
