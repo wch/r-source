@@ -756,6 +756,11 @@ BUG FIXES
     o	Internals for complex assignment did not check that function name
 	was a symbol, which could cause a segfault.
 
+    o   Fixed bug in S4 methods dispatch that made local variables in the
+	generic visible when executing the body of a method, thus violating
+	lexical scope.
+
+
 
 
 	**************************************************
