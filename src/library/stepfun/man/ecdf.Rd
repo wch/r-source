@@ -12,7 +12,8 @@ ecdf(x)
 \method{summary}{ecdf}(object, \dots)
 }
 \arguments{
-  \item{x}{numeric vector with the ``observations''.}
+  \item{x}{numeric vector of ``observations'' in \code{ecdf};  for the
+    methods \code{x} is as \code{object} below.}
   \item{\dots}{arguments to be passed to \code{\link{plot.stepfun}}, the
     first of which should be an \R object of class \code{"ecdf"}.}
   \item{verticals}{see \code{\link{plot.stepfun}}.}
@@ -20,7 +21,7 @@ ecdf(x)
     horizontal lines at y=0 and 1, see \code{\link{colors}}.}
 
 % For the Methods :
-  \item{x, object}{object of class \code{"ecdf"}, typically.}
+  \item{object}{(or \code{x}:) object of class \code{"ecdf"}, typically.}
   \item{digits}{number of significant digits to use, see \code{\link{print}}.}
 }
 \description{
