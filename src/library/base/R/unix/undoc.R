@@ -70,19 +70,9 @@ undoc <- function(pkg, dir)
         dataDir <- file.path(dir, "data")        
     }
 
-    lib.source <- function(file, env) {
-        oop <- options(keep.source = FALSE)
-        on.exit(options(oop))
-        exprs <- parse(n = -1, file = file)
-        if (length(exprs) == 0)
-            return(invisible())
-        for (i in exprs) yy <- eval(i, env)
-        invisible()
-    }
-
     if(file.exists(codeFile)) {
         codeEnv <- new.env()
-        lib.source(codeFile, env = codeEnv)
+        sys.source(codeFile, env = codeEnv)
         allObjs <- ls(envir = codeEnv, all.names = TRUE)
     }
     else

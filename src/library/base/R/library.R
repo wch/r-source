@@ -9,15 +9,6 @@ library <-
     if (!missing(name)) {
         if (!character.only)
             name <- as.character(substitute(name))
-        lib.source <- function(file, env) {
-	    oop <- options(keep.source = FALSE)
-            on.exit(options(oop))
-            exprs <- parse(n = -1, file = file)
-            if (length(exprs) == 0)
-                return(invisible())
-            for (i in exprs) yy <- eval(i, env)
-            invisible()
-        }
         pkgname <- paste("package", name, sep = ":")
         if (is.na(match(pkgname, search()))) {
             packagedir <- system.file("", pkg = name, lib = lib.loc)
@@ -53,8 +44,8 @@ library <-
             if (file == "")
                 warning(paste("Package `", name, "' contains no R code",
                               sep = ""))
-            else lib.source(file, env)
-            lib.fixup(env, .GlobalEnv)
+            else sys.source(file, env)
+            .Internal(lib.fixup(env, .GlobalEnv))
             if (exists(".First.lib", envir = env, inherits = FALSE)) {
                 firstlib <- get(".First.lib", envir = env, inherits = FALSE)
                 firstlib(which.lib.loc, name)

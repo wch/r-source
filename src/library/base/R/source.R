@@ -86,18 +86,19 @@ source <-
     invisible(yy)
 }
 
-sys.source <- function (file)
-{
+sys.source <- function(file, envir = NULL) {
+    oop <- options(keep.source = FALSE)
+    on.exit(options(oop))
     exprs <- parse(n = -1, file = file)
-    if (length(exprs) == 0) return(invisible())
+    if (length(exprs) == 0)
+        return(invisible())
     for (i in exprs) {
-	yy <- eval(i, NULL)
+	yy <- eval(i, envir)
     }
-    invisible(yy)
+    invisible()
 }
 
-demo <- function(topic, device = .Options$device)
-{
+demo <- function(topic, device = .Options$device) {
     if (is.character(device)) device <- get(device)
     Topics <-cbind(graphics	= c("graphics", "graphics.R",	"G"),
 		   image	= c("graphics", "image.R",	"G"),
