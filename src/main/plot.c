@@ -751,19 +751,6 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     if (side < 1 || side > 4)
 	errorcall(call, "invalid axis number");
 
-    /* Check the axis type parameter, if it is 'n', */
-    /* there is nothing to do */
-
-    if (side == 1 || side == 3) {
-	if (dd->gp.xaxt == 'n') {
-	    GRestorePars(dd);	    return R_NilValue;
-	}
-    } else if (side == 2 || side == 4) {
-	if (dd->gp.yaxt == 'n') {
-	    GRestorePars(dd);	    return R_NilValue;
-	}
-    }
-
     args = CDR(args);
 
     /* tick-label locations;  these are coerced lower down */
@@ -872,6 +859,13 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     switch (side) {
     case 1: /*--- x-axis -- horizontal --- */
     case 3:
+    /* Check the axis type parameter, if it is 'n', */
+    /* there is nothing to do */
+	if (dd->gp.xaxt == 'n') {
+	    GRestorePars(dd);
+	    UNPROTECT(3);
+	    return R_NilValue;
+	}
 	GetAxisLimits(dd->gp.usr[0], dd->gp.usr[1], &low, &high);
 	if (side == 3) {
 	    y = dd->gp.usr[3];
@@ -966,6 +960,13 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
     case 2: /*--- y-axis -- vertical --- */
     case 4:
+    /* Check the axis type parameter, if it is 'n', */
+    /* there is nothing to do */
+	if (dd->gp.yaxt == 'n') {
+	    GRestorePars(dd);
+	    UNPROTECT(3);
+	    return R_NilValue;
+	}
 	GetAxisLimits(dd->gp.usr[2], dd->gp.usr[3], &low, &high);
 	if (side == 4) {
 	    x = dd->gp.usr[1];
