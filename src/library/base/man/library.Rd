@@ -30,19 +30,18 @@ provide(name)
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through.}
   \item{character.only}{a logical indicating whether \code{name} or
-    \code{help} can be assumed to be character strings}
-  \item{quietly}{if \code{TRUE}, a warning will not be printed if the
-    package cannot be found.}
+    \code{help} can be assumed to be character strings.}
+  \item{quietly}{a logical.  If \code{TRUE}, a warning will not be
+    printed if the package cannot be found.}
   \item{libname}{a character string giving the library directory where
     the package was found.}
   \item{pkgname}{a character string giving the name of the package.}
 }
 \description{
   \code{library(name)} and \code{require(name)} both load the package
-  with name \code{name}.
-  \code{require} is designed for use inside other functions; it returns
-  \code{FALSE} and optionally gives a warning, rather than giving an
-  error, if the package does not exist.
+  with name \code{name}.  \code{require} is designed for use inside
+  other functions; it returns \code{FALSE} and optionally gives a
+  warning, rather than giving an error, if the package does not exist.
   Both functions check and update the list of currently loaded packages
   and do not reload code that is already loaded.  \code{require} also
   checks the list \code{.Provided}.
@@ -50,7 +49,7 @@ provide(name)
   \code{provide} allows code to register services that it provides.  The
   argument is stored in the list \code{.Provided}.  \code{provide}
   returns \code{FALSE} if the name was already present in
-  \code{.Provided} or among the packages in \code{search()}.  The main
+  \code{.Provided} or among the packages in \code{search()}.  The main 
   use for \code{provide} is when multiple packages share code.	This is
   most likely when the code implements features present in S(-PLUS) but
   not in R. For example, the spline functions \code{ns}, \code{bs} and
@@ -93,24 +92,18 @@ provide(name)
 }
 
 \section{Creating Packages}{
-  Packages provide a mechanism for loading optional code and its
-  documentation as needed.  The \R distribution provides the two example
-  packages \code{eda} and \code{mva}.
+  Packages provide a mechanism for loading optional code and attached
+  documentation as needed.  The \R distribution provides the example
+  packages \code{eda}, \code{mva}, and \code{stepfun}.
 
-  A package consists of a subdirectory containing a \file{TITLE},
-  \file{INDEX} and \file{DESCRIPTION} file, and subdirectories \file{R},
-  \file{man} and optionally \file{src}, \file{src-c}, \file{data}, and
-  \file{exec}.
-
-  The \file{TITLE} file contains a line giving the name of the package
-  and a brief description.  \file{INDEX} contains a line for each
-  sufficiently interesting object in the package, giving its name and a
-  description (functions such as print methods not usually called
-  explicitly might not be included).
-
+  A package consists of a subdirectory containing the files
+  \file{DESCRIPTION}, \file{INDEX}, and \file{TITLE}, and the
+  subdirectories \file{R}, \file{data}, \file{exec}, \file{man}, and
+  \file{src} (some of which can be missing).
+  
   The \file{DESCRIPTION} file contains information about authors,
   version, copyright, etc., and looks like
-  \cr
+
   Package:\cr
   Version:\cr
   Author:\cr
@@ -119,41 +112,47 @@ provide(name)
   License:
 
   Continuation lines (e.g., for descriptions longer than one line) start
-  with a whitespace character.
+  with a whitespace character.  The license field should contain an
+  explicit statement or a well-known abbreviation (such as `GPL',
+  `LGPL', `BSD' and `Artistic'), maybe followed by a reference to the
+  actual license file.  It is very important that this information is
+  included---otherwise, it may not even be legally correct for others
+  to distribute copies of the package.
 
-  The \file{R} subdirectory contains \R code files with names beginning
-  with lowercase letters.  To load any necessary compiled code, one of
-  these files should use \code{library.dynam()} \emph{inside}
-  \code{.First.lib()}.
+  The \file{TITLE} file contains a line giving the name of the package
+  and a brief description.  \file{INDEX} contains a line for each
+  sufficiently interesting object in the package, giving its name and a
+  description (functions such as print methods not usually called
+  explicitly might not be included).  Note that you can automatically
+  create this file using the \code{Rdindex} program in \file{RHOME/etc},
+  provided that Perl is available on your system.
+  
+  The \file{R} subdirectory contains \R code files.  The code files to
+  be installed must start with a (lower- or uppercase) letter and have
+  one of the extensions \file{.R}, \file{.S}, \file{.q}, \file{.r}, or
+  \file{.s}.  We recommend using \file{.R}, as this extension seems to
+  be not used by any other software.  If necessary, one of these files
+  (historically \file{zzz.R}) should use \code{library.dynam()}
+  \emph{inside} \code{.First.lib()} to load compiled code.
 
   The \file{man} subdirectory should contain \R documentation files for
-  the objects in the package.
+  the objects in the package.  The documentation files to be installed
+  must also start with a (lower- or uppercase) letter and have the
+  extension \file{.Rd} (the default) or \file{.rd}.
 
-  Source and a Makefile for the compiled code is in \file{src}, and a
-  pure C version of the source should be in \file{src-c}.  In the common
-  case when all the source is in C it may be convenient to make one of
-  these directories a symbolic link to the other. The Makefile will be
+  Source and a Makefile for the compiled code is in \file{src},
+  containing C, FORTRAN, or Ratfor source.  The Makefile will be
   passed various machine-dependent compile and link flags, examples of
   which can be seen in the \code{eda} package.
 
   The \file{data} subdirectory is for additional data files the package
   makes available for loading using \code{data()}.  Note that (at least
   currently) all such files are in fact R code files, and must have the
-  extension `.R'.
+  extension \file{.R}.
 
-  Finally, \file{exec} could contain executables, typically (shell or
-  Perl) scripts, the package needs.  Note that this mechanism currently
-  only is experimental.
-}
-\section{Installing and Removing Packages}{
-  To install a package, do \code{R INSTALL pkg}, where \code{pkg} is the
-  directory containing the package.  If you want to install into the
-  library tree \code{lib} instead of the default one, use
-  \code{R INSTALL pkg lib}.
-
-  To remove the package \code{pkg} from the default library or the
-  library \code{lib}, do \code{R REMOVE pkg} or \code{R REMOVE pkg lib},
-  respectively.
+  Finally, \file{exec} could contain additional executables the package
+  needs, typically Shell or Perl scripts.  This mechanism is currently
+  not used by any package, and still experimental.
 }
 \value{
   \code{library} returns the list of loaded packages (or \code{TRUE} if
@@ -164,7 +163,8 @@ provide(name)
 \seealso{
   \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
   \code{\link{objects}}, \code{\link{autoload}},
-  \code{\link{library.dynam}}
+  \code{\link{library.dynam}};
+  \code{\link{INSTALL}}, \code{\link{REMOVE}}
 }
 \examples{
 print(.packages())	    # maybe just "base"
