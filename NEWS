@@ -97,6 +97,9 @@ NEW FEATURES
     o   Modified `save' internals to improve performance when saving large
 	collections of code.
 
+    o   As an experiment only, "=" is now allowed as an assignment
+        operator in the grammar.  This is not a commitment that it
+        will be supported in future non-development versions.
 
 
 BUG FIXES

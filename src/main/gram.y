@@ -168,7 +168,7 @@ expr_or_assign  :    expr                       { $$ = $1; }
                 |    equal_assign               { $$ = $1; }
                 ;
 
-equal_assign    :    expr EQ_ASSIGN expr              { $$ = xxbinary($2,$1,$3); }
+equal_assign    :    expr EQ_ASSIGN expr_or_assign              { $$ = xxbinary($2,$1,$3); }
                 ;
 
 expr	: 	NUM_CONST			{ $$ = $1; }
@@ -177,7 +177,7 @@ expr	: 	NUM_CONST			{ $$ = $1; }
 	|	SYMBOL				{ $$ = $1; }
 
 	|	'{' exprlist '}'		{ $$ = xxexprlist($1,$2); }
-	|	'(' expr ')'			{ $$ = xxparen($1,$2); }
+	|	'(' expr_or_assign ')'			{ $$ = xxparen($1,$2); }
 
 	|	'-' expr %prec UMINUS		{ $$ = xxunary($1,$2); }
 	|	'+' expr %prec UMINUS		{ $$ = xxunary($1,$2); }
@@ -205,14 +205,14 @@ expr	: 	NUM_CONST			{ $$ = $1; }
 
 	|	expr LEFT_ASSIGN expr 		{ $$ = xxbinary($2,$1,$3); }
 	|	expr RIGHT_ASSIGN expr 		{ $$ = xxbinary($2,$3,$1); }
-	|	FUNCTION '(' formlist ')' cr expr %prec LOW
+	|	FUNCTION '(' formlist ')' cr expr_or_assign %prec LOW
 						{ $$ = xxdefun($1,$3,$6); }
 	|	expr '(' sublist ')'		{ $$ = xxfuncall($1,$3); }
-	|	IF ifcond expr 			{ $$ = xxif($1,$2,$3); }
-	|	IF ifcond expr ELSE expr	{ $$ = xxifelse($1,$2,$3,$5); }
-	|	FOR forcond expr %prec FOR 	{ $$ = xxfor($1,$2,$3); }
-	|	WHILE cond expr			{ $$ = xxwhile($1,$2,$3); }
-	|	REPEAT expr			{ $$ = xxrepeat($1,$2); }
+	|	IF ifcond expr_or_assign 			{ $$ = xxif($1,$2,$3); }
+	|	IF ifcond expr_or_assign ELSE expr_or_assign	{ $$ = xxifelse($1,$2,$3,$5); }
+	|	FOR forcond expr_or_assign %prec FOR 	{ $$ = xxfor($1,$2,$3); }
+	|	WHILE cond expr_or_assign			{ $$ = xxwhile($1,$2,$3); }
+	|	REPEAT expr_or_assign			{ $$ = xxrepeat($1,$2); }
 	|	expr LBB sublist ']' ']'	{ $$ = xxsubscript($1,$2,$3); }
 	|	expr '[' sublist ']'		{ $$ = xxsubscript($1,$2,$3); }
 	|	expr '$' SYMBOL			{ $$ = xxbinary($2,$1,$3); }
