@@ -69,7 +69,8 @@
     adjacent bars will be drawn.}
   \item{plot}{logical.  If \code{FALSE}, nothing is plotted.}
   \item{\dots}{further graphical parameters (\code{\link{par}}) are
-    passed to \code{\link{plot.window}()} and \code{\link{title}()}}
+    passed to \code{\link{plot.window}()}, \code{\link{title}()} and
+    \code{\link{axis}}.}
 }
 \description{
   Creates a bar plot with vertical or horizontal bars.

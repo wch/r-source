@@ -54,7 +54,7 @@ NEW FEATURES
     o	scan() allows unlimited (by R) lengths of input lines, instead
 	of a limit of 8190 chars.
 
-    o	Ops, cbind, diff and na.omit methods for time series objects
+    o	Ops(), cbind(), diff() and na.omit() methods for time series objects
 	moved from package ts to package base.
 
     o   Started work on new package management system: package.status()
@@ -76,7 +76,7 @@ NEW FEATURES
 	not), *and* then for a user `.Renviron' file in the current or
 	the user's home directory.
 
-    o	Modifications to access functions for more consistency with S:
+    o	Modifications to the access functions for more consistency with S:
 	arguments `name', `pos' and `where' are more flexible in
 	assign(), exists(), get(), ls(), objects(), remove() and rm().
 
@@ -124,16 +124,17 @@ NEW FEATURES
 
     o	barplot() now respects an inline `cex.axis' argument and has a
 	separate `cex.names' argument so names and the numeric axis 
-	labels can be scaled separately.
+	labels can be scaled separately.  Also, graphics parameters
+	intended for axix() such as `las' can now be used.
 
     o   Three new primitive functions have been added to base:
         dataClass(), objWithClass(), and as.environment().  The first two
-        are support routines for class and class<- in package
-        methods.  The third replaces pos.to.env in the functions get,
-        exists, and friends.
+        are support routines for class() and class<-() in package
+        methods.  The third replaces pos.to.env() in the functions get(),
+        exists(), and friends.
 
-    o   read.table() has new arguments nrows and colClasses.  If the
-	latter is "unknown" (the default),  conversion is attempted to
+    o   read.table() has new arguments `nrows' and `colClasses'.  If the
+	latter is "unknown" (the default), conversion is attempted to
 	logical, integer, numeric or complex, not just to numeric.
 
     o   An enhanced function type.convert() is now a documented
@@ -151,8 +152,9 @@ BUG FIXES
 	the end returns.
 
     o	The code in model.matrix.default() handling contrasts was
-	assuming a response was present, and so failing to record
-	the contrasts for the first variable if it were a factor.
+	assuming a response was present, and so without a response was
+	failing to record the contrasts for the first variable if it 
+	were a factor.
 
 
 

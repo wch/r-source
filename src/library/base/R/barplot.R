@@ -91,7 +91,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 		    stop("incorrect number of names")
 	    } else w.m
 	    axis(if(horiz) 2 else 1, at = at.l,
-                 labels = names.arg, lty = 0, cex.axis = cex.names)
+                 labels = names.arg, lty = 0, cex.axis = cex.names, ...)
 	}
 	if(!is.null(legend.text)) {
 	    legend.col <- rep(col, length = length(legend.text))
@@ -105,7 +105,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 		   xjust = 1, yjust = 1)
 	}
 	title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
-	if(axes) axis(if(horiz) 1 else 2, cex.axis = cex.axis)
+	if(axes) axis(if(horiz) 1 else 2, cex.axis = cex.axis, ...)
 	invisible(w.m)
     } else w.m
 }
