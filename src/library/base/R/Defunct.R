@@ -17,6 +17,17 @@ getenv <- function(...) .Defunct()
 ## <entry>
 ## Deprecated in 1.2.3
 ## Defunct in 1.3.0
-dotplot <- function(...) .Defunct()
-stripplot <- function(...) .Defunct()
+## Removed in 1.4.0: conflicts with lattice
+#dotplot <- function(...) .Defunct()
+#stripplot <- function(...) .Defunct()
+## </entry>
+
+## <entry>
+## Deprecated in 1.3.0
+## Defunct in 1.4.0
+read.table.url <- function(...) .Defunct()
+scan.url <- function(...) .Defunct()
+source.url <- function(...) .Defunct()
+httpclient <- function(...) .Defunct()
+parse.dcf <- function(...) .Defunct()
 ## </entry>
