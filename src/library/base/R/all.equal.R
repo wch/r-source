@@ -13,20 +13,22 @@ all.equal.default <- function(target, current, ...)
 		      data.class(current), sep = "") else
 		switch (mode(target),
 			logical = ,
+                        complex = ,
 			numeric	  = all.equal.numeric(target, current, ...),
 			character = all.equal.character(target, current, ...),
-			complex	  = all.equal.complex(target, current, ...),
 			NULL))
     if(is.null(msg)) TRUE else msg
 }
 
 all.equal.numeric <- function(target, current,
-			      tolerance = .Machine$double.eps ^ .5, scale)
+			      tolerance = .Machine$double.eps ^ .5, scale=NULL)
 {
     lt <- length(target)
     lc <- length(current)
+    cplx <- is.complex(target)
     if(lt != lc)
-	return(paste("Numeric: lengths (", lt, ", ", lc, ") differ"), sep = "")
+	return(paste(if(cplx)"Complex" else "Numeric",
+                     ": lengths (", lt, ", ", lc, ") differ"), sep = "")
     else msg <- NULL
     target <- as.vector(target)
     current <- as.vector(current)
@@ -34,13 +36,13 @@ all.equal.numeric <- function(target, current,
     if(any(out != is.na(current)))
 	return(paste("`is.NA' value mismatches:", sum(is.na(current)),
 		     "in current,", sum(out), " in target"))
-    out <- out | (target == current)
+    out <- out | target == current
     if(all(out)) return(TRUE)
     target <- target[!out]
     current <- current[!out]
-    xy <- mean(abs(target - current))
+    xy <- mean((if(cplx)Mod else abs)(target - current))
     what <-
-	if(missing(scale)) {
+	if(is.null(scale)) {
 	    xn <- mean(abs(target))
 	    if(xn > tolerance) {
 		xy <- xy/xn
@@ -51,7 +53,7 @@ all.equal.numeric <- function(target, current,
 	    "scaled"
 	}
     if(is.na(xy) || xy > tolerance)
-	paste("Mean", what, "difference:", format(xy)) else TRUE
+	paste("Mean", what, if(cplx)"Mod", "difference:", format(xy)) else TRUE
 }
 
 all.equal.character <- function(target, current, ...)
@@ -70,27 +72,6 @@ all.equal.character <- function(target, current, ...)
     if(!any(ne) && is.null(msg)) TRUE
     else if(any(ne)) c(msg, paste(sum(ne), "string mismatches"))
     else msg
-}
-
-all.equal.complex <-
-    function(target, current, tolerance = .Machine$double.eps ^ .5, ...)
-{
-    lt <- length(target)
-    lc <- length(current)
-    if(lt != lc)
-	return(paste("Complex: lengths (", lt, ", ", lc, ") differ", sep = ""))
-    out <- is.na(target)
-    if(any(out != is.na(current)))
-	return(paste(sum(out != is.na(current)), "missing value mismatches"))
-    out <- out | (target == current)
-    if(all(out)) return(TRUE)
-    if(any(out)) {
-	target <- target[!out]
-	current <- current[!out]
-    }
-    xy <- if((xn <- mean(Mod(target))) > tolerance)
-	mean(Mod(target - current))/xn else mean(Mod(target - current))
-    if(xy < tolerance) TRUE else paste("mean Mod difference:", format(xy))
 }
 
 all.equal.factor <- function(target, current, ...)
