@@ -36,6 +36,15 @@ double qf(double p, double n1, double n2, int lower_tail, int log_p)
     R_Q_P01_check(p);
     if (p == R_DT_0)
 	return 0;
+
+    /* fudge the extreme DF cases -- qbeta doesn't do this well */
+
+    if (n2 > 4e5)
+	return qchisq(p, n1, lower_tail, log_p) / n1;
+
+    if (n1 > 4e5)
+	return 1/qchisq(p, n2, !lower_tail, log_p) * n2;
+
     p = (1. / qbeta(R_DT_CIv(p), n2/2, n1/2, LTRUE, LFALSE) - 1.) * (n2 / n1);
     return ML_VALID(p) ? p : ML_NAN;
 }

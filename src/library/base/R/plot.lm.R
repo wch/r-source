@@ -26,10 +26,9 @@ plot.lm <- function (x, which = 1:4,
         r.w <- if(is.null(w)) .Alias(r) else (sqrt(w)*r)[w!=0]
         rs <- r.w/(s * sqrt(1 - hii))
     }
-    if (any(show[c(1,3)])) {
-        l.fit <- paste(if(inherits(x,"glm")) "Predict" else "Fit","ed values",
-                       sep="")
-    }
+    if (any(show[c(1,3)]))
+        l.fit <- if(inherits(x,"glm"))
+            "Predicted values" else "Fitted values"
     if (is.null(id.n))
 	id.n <- 0
     else {
