@@ -41,6 +41,10 @@ mode ("Rgui --sdi").
 Changed win.graph() so that new windows fit within the MDI client
 area.
 
+Installing (binary) package bundles now checks the MD5 sums and
+reports success, just as for packages.
+
+
 
 rw1082
 ======

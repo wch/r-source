@@ -17,10 +17,10 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
         on.exit(setwd(cDir), add = TRUE)
         res <- zip.unpack(pkg, tmpDir)
         setwd(tmpDir)
-        res <- tools::checkMD5sums(pkgname, file.path(tmpDir,pkgname))
+        res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
         if(!is.na(res) && res)
-            cat("package ", pkgname,
-                " successfully unpacked and MD5 sums checked\n")
+            cat("package", sQuote(pkgname),
+                "successfully unpacked and MD5 sums checked\n")
 
         ## Check to see if this is a bundle or a single package
         if (file.exists("DESCRIPTION")) {
@@ -30,6 +30,13 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                 stop("Malformed bundle DESCRIPTION file, no Contains field")
             else
                 pkgs <- strsplit(conts," ")[[1]]
+            ## now check the MD5 sums
+            res <- TRUE
+            for (curPkg in pkgs) res <- res &
+            tools::checkMD5sums(pkgname, file.path(tmpDir, curPkg))
+            if(!is.na(res) && res)
+                cat("bundle", sQuote(pkgname),
+                    "successfully unpacked and MD5 sums checked\n")
         } else pkgs <- pkgname
 
         for (curPkg in pkgs) {
@@ -84,15 +91,14 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
         pkgnames <- pkgnames[!inuse]
     }
     if(is.null(CRAN) & missing(contriburl)) {
-        for(i in seq(along=pkgs)) {
+        for(i in seq(along=pkgs))
             unpackPkg(pkgs[i], pkgnames[i], lib, installWithVers)
-        }
         link.html.help(verbose=TRUE)
         return(invisible())
     }
     localcran <- length(grep("^file:", contriburl)) > 0
     if(!localcran) {
-        if (is.null(destdir)){
+        if (is.null(destdir)) {
             tmpd <- tempfile("Rinstdir")
             dir.create(tmpd)
         } else tmpd <- destdir
@@ -102,12 +108,10 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                                    available=available,
                                    contriburl=contriburl, method=method)
 
-    if(!is.null(foundpkgs))
-    {
+    if(!is.null(foundpkgs)) {
         update <- cbind(pkgs, lib)
         colnames(update) <- c("Package", "LibPath")
-        for(lib in unique(update[,"LibPath"]))
-        {
+        for(lib in unique(update[,"LibPath"])) {
             oklib <- lib==update[,"LibPath"]
             for(p in update[oklib, "Package"])
             {
@@ -118,7 +122,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
             }
         }
         cat("\n")
-        if(!localcran && is.null(destdir)){
+        if(!localcran && is.null(destdir)) {
             answer <- substr(readline("Delete downloaded files (y/N)? "), 1,
 1)
             if(answer == "y" | answer == "Y") {
@@ -129,9 +133,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
             cat("\n")
         }
         link.html.help(verbose=TRUE)
-    }
-    else
-        unlink(tmpd)
+    } else unlink(tmpd)
     invisible()
 }
 
@@ -179,7 +181,7 @@ contrib.url <- function(CRAN) {
 }
 
 
-### the following function supports update.packages()
+### the following function supports install.packages()
 
 zip.unpack <- function(zipname, dest)
 {
