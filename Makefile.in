@@ -51,7 +51,7 @@ docs help html latex examples:: FORCE
 	-@(cd src/library && $(MAKE) $@)
 FORCE:
 
-install: all installdirs
+install: installdirs
 	@for d in afm demos doc etc; do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
