@@ -49,6 +49,7 @@ R: Makefile stamp-R $(TIMESTAMPS)
 stamp-R:
 	@$(MKINSTALLDIRS) $(top_builddir)/include
 	@touch $@
+$(TIMESTAMPS): stamp-R
 
 config.h: stamp-h
 stamp-h: $(srcdir)/config.h.in $(top_builddir)/config.status

@@ -35,7 +35,7 @@ DISTCLEANFILES = Makefile
 .SUFFIXES:
 .SUFFIXES: .h .ts
 
-.h.ts:
+.h.ts: 
 	@$(INSTALL_DATA) $< $(top_builddir)/include/R_ext/`basename $<`
 	@touch $@
 
@@ -48,6 +48,7 @@ R: Makefile stamp-R $(TIMESTAMPS)
 stamp-R: 
 	@$(MKINSTALLDIRS) $(top_builddir)/include/R_ext
 	@touch $@
+$(TIMESTAMPS): stamp-R
 
 install: installdirs
 	@for f in $(R_EXT_HEADERS); do \
