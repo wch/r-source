@@ -192,7 +192,7 @@
 #define HAVE_FTRUNCATE 1
 
 /* Define to 1 if you have the `fwprintf' function. */
-/* #undef HAVE_FWPRINTF */
+#define HAVE_FWPRINTF 1
 
 /* Define to 1 if you have the `getcwd' function. */
 #define HAVE_GETCWD 1
@@ -210,7 +210,7 @@
 /* #undef HAVE_GETGRGID */
 
 /* Define to 1 if you have the `getpagesize' function. */
-/* #undef HAVE_GETPAGESIZE */
+#define HAVE_GETPAGESIZE 1
 
 /* Define to 1 if you have the `getpwuid' function. */
 /* #undef HAVE_GETPWUID */
@@ -527,7 +527,7 @@
 /* #undef HAVE_UNSETENV */
 
 /* Define if you have the 'unsigned long long' type. */
-/* #undef HAVE_UNSIGNED_LONG_LONG */
+#define HAVE_UNSIGNED_LONG_LONG 1
 
 /* Define to 1 if you have the `vsnprintf' function. */
 #define HAVE_VSNPRINTF 1
@@ -645,7 +645,7 @@
 #define IEEE_754 1
 
 /* Define if integer division by zero raises signal SIGFPE. */
-#define INTDIV0_RAISES_SIGFPE 0
+#define INTDIV0_RAISES_SIGFPE 1
 
 /* Define if you have 32 bit ints. */
 #define INT_32_BITS 1
