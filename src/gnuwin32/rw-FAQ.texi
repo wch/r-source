@@ -120,7 +120,7 @@ for a list), navigate to the @code{bin/windows/base}
 directory and collect the files you need.  There are two versions of
 the distribution.
 
-1) @code{@RWVER@.exe} is about 21Mb.  This contains all the components
+1) @code{@RWVER@.exe} is about 19Mb.  This contains all the components
 and allows as complete as installation as you choose.
 
 2) Directory @code{miniR} contains @code{miniR.exe} and eight files
@@ -1175,14 +1175,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2004 January 20 by Professor B. D. Ripley
+Last edited 2004 February 21 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2004 January 20 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2004 February 21 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
