@@ -99,6 +99,13 @@ test-Specific:
 	@echo "running sloppy specific tests"
 	@$(MAKE) test-Specific-sloppy RVAL_IF_DIFF=0
 
+test-undoc:
+	@for p in $(R_PKGS); do \
+	  echo "Undocumented objects in package \`$${p}':"; \
+	  echo "undoc(\"$${p}\")" | $(R) | grep "^ *\\["; \
+	  echo; \
+	done
+
 $(TESTout): Makefile stamp-R
 
 stamp-R: $(top_builddir)/bin/R.X11 $(top_builddir)/library/base/R/base
