@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-03
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-04
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1652,6 +1652,9 @@ area.  (Packages denoted as @emph{Recommended} are to be included in all
 binary distributions of R.)
 
 @table @strong
+@item AMORE
+A MORE flexible neural network package, providing the TAO robust neural
+network algorithm.
 @item AlgDesign
 Algorithmic experimental designs.  Calculates exact and approximate
 theory experimental designs for D, A, and I criteria.
@@ -1717,6 +1720,8 @@ a range of R functions to match the interface metadata structures.
 @item GenKern
 Functions for generating and manipulating generalised binned kernel
 density estimates.
+@item GeneNT
+Relevance or Dependency network and signaling pathway discovery.
 @item GeneTS
 A package for analysing multiple gene expression time series data.
 Currently, implements methods for cell cycle analysis and for inferring
