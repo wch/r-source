@@ -114,9 +114,9 @@ for a list), navigate to the @code{bin/windows/base}
 directory and collect the files you need.  There are three versions of
 the distribution.
 
-1) @code{SetupR.exe} is about 18Mb and gives a complete installation.
+1) @code{SetupR.exe} is about 19Mb and gives a complete installation.
 
-2) Directory @code{miniR} contains @code{miniR.exe} and seven files
+2) Directory @code{miniR} contains @code{miniR.exe} and eight files
 @code{miniR-?.bin}.  You can put  @code{miniR.exe} and @code{miniR-1.bin}
 on one floppy and the remaining @code{miniR-?.bin} on a floppy each.
 
@@ -396,6 +396,7 @@ later installed).
 * Loading a package fails.::    
 * Package TclTk does not work.::  
 * Hyperlinks in Compiled HTML do not work.::  
+* update.packages() fails::     
 @end menu
 
 
@@ -550,13 +551,22 @@ you forget, you can set the variable inside R by something like
 .)
 
 
-@node  Hyperlinks in Compiled HTML do not work.,  , Package TclTk does not work., Packages
+@node  Hyperlinks in Compiled HTML do not work., update.packages() fails, Package TclTk does not work., Packages
 @section Hyperlinks in Compiled HTML sometimes do not work.
 
 They may well not work between packages installed in different
 libraries.  This is solved under Unix using symbolic links which Windows
 does not implement.
 
+@node update.packages() fails,  , Hyperlinks in Compiled HTML do not work., Packages
+@section @code{update.packages()} fails
+
+You may not be able to update a package which is in use: Windows `locks'
+the package's DLL when it is loaded.  So use @code{update.packages()}
+(or the menu equivalent) in a new session.
+
+If you put @code{library(foo)} in your @file{.Rprofile} you will need to
+start R with @code{--vanilla} to be able to update package @code{foo}.
 
 @newchap{}
 @node Windows Features, Workspaces, Packages, Top
@@ -804,7 +814,7 @@ Fast BLAS (Basic Linear Algebra Subprograms,
 @uref{http://www.netlib.org/blas/faq.html}) routines are used to speed
 up numerical linear algebra.  If you compile R from sources yourself,
 there is support for the `tuned' BLAS called ATLAS
-(@uref{http://www.netlib.org/atlas/}).  The savings can be appreciable:
+(@uref{http://math-atlas.sourceforge.net}).  The savings can be appreciable:
 on a 366MHz PIIM and a 1000 x 1000 matrix @code{La.svd} took 182 sec
 with the standard BLAS and 59 sec with ATLAS.  Because ATLAS is tuned to
 a particular chip we can't use it generally: the optimal routines for a
@@ -818,7 +828,9 @@ libraries yourself: none of the binaries we have seen are compiled for
 the correct compiler.
 
 BLAS support is supplied by the single DLL @file{R_HOME\bin\Rblas.dll},
-and you can add a fast BLAS just by replacing that.
+and you can add a fast BLAS just by replacing that.  Replacements for
+some of the more common chips are available on CRAN in directory
+@file{bin/windows/contrib/ATLAS}.
 
 
 @node  How do I include compiled C code?, How do I debug code that I have compiled and dyn.load-ed?, Can I use a fast BLAS?, Building from Source
