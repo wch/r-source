@@ -201,7 +201,7 @@ fake=false
 lazy="auto"
 lazy_data=false
 lock=true
-tarup=false
+tar_up=false
 
 while test -n "${1}"; do
   ##DBG echo "   in 'R INSTALL' --arg checking-- \$1 = '${1}'" # Debugging
@@ -265,7 +265,7 @@ while test -n "${1}"; do
     --no-lock)
       lock=false ;;
     --build)
-      tarup=true ;;
+      tar_up=true ;;
     *)
       if test -f "${1}"; then
 	##DBG echo "  in 'R INSTALL' --arg checking-- FILE '${1}'"
@@ -298,7 +298,7 @@ while test -n "${1}"; do
   shift
 done
 
-if (${tarup} && ${fake}); then
+if (${tar_up} && ${fake}); then
   error "building a fake installation is disallowed"
   do_cleanup_tmpdir;
   exit 1
@@ -401,7 +401,7 @@ do_install_binary () {
     error "installing binary package failed"
     do_exit_on_error
   fi
-  if ${tarup} ; then
+  if ${tar_up} ; then
     echo "${pkg} was already a binary package and will not be rebuilt"
   fi
 }
@@ -451,7 +451,7 @@ do_install_source () {
     fi
     ## check if we are in a bundle so we can back out the whole bundle
     if grep "^Bundle:" DESCRIPTION >/dev/null; then
-      if ${tarup} ; then
+      if ${tar_up} ; then
         error "cannot build (nor INSTALL) binary versions of bundles"
         do_exit_on_error
       fi
@@ -685,8 +685,8 @@ do_install_source () {
   if test ! -d R ; then
     thislazy=false
   fi
-  ## this test is designed to fail if a loader is used.
-  ## beware: the wc format is not portable -- some systems give
+  ## This test is designed to fail if a loader is used.
+  ## Beware: the wc format is not portable -- some systems give
   ## size in a left-space-padded first field, and some do not pad.
   if test "x$thislazy" = "xauto" ; then
     Rcodesize=`cat ${R_PACKAGE_DIR}/R/${pkg_name} | wc -c`
@@ -784,8 +784,7 @@ do_install_source () {
   ## Remove stuff we should not have installed in the first place.
   ## When installing from a source directory under CVS control, we
   ## should really exclude the CVS subdirs.  The same applies for the
-  ## .svn Subversion subdirs.  (In fact, we should also exclude
-  ## everything in @file{.Rbuildignore}, but that's another story ...)
+  ## .svn Subversion subdirs.
   find "${R_PACKAGE_DIR}" -name CVS -type d -prune \
     -exec rm -rf \{\} \; 2>/dev/null
   find "${R_PACKAGE_DIR}" -name .svn -type d -prune \
@@ -809,14 +808,14 @@ do_install_source () {
   fi
 
   ## now repackage as a tarball if requested
-  if ${tarup} ; then
+  if ${tar_up} ; then
     version=`get_dcf_field Version DESCRIPTION`
     ## R_PLATFORM is set by R CMD
-    filename="${pkgname}_${version}_R_${R_PLATFORM}.tar"
+    filename="${R_PACKAGE_NAME}_${version}_R_${R_PLATFORM}.tar"
     filepath="${startdir}/$filename"
     ${TAR} -chf "$filepath" -C "${R_LIBRARY_DIR}" ${R_PACKAGE_NAME}
     gzip -9f "$filepath"
-    echo "packaged installation of '${pkgname}' as ${filename}.gz"
+    echo "packaged installation of '${R_PACKAGE_NAME}' as ${filename}.gz"
   fi
 
   stars="*"

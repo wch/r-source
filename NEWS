@@ -8,6 +8,7 @@
 
 		CHANGES IN R VERSION 2.1.0
 
+
 USER-VISIBLE CHANGES
 
     o	box plots {by boxplot() or bxp()} now have the median line three
@@ -145,14 +146,28 @@ UTILITIES
 	when installing packages) ensures files are separated by a
 	line feed.
 
-    o   vignette() returns now objects of the same name, the print()
-        method opens the corresponidng PDF file.  The edit() method can
-        be used to open the code of the vignette in an editor.
+    o	vignette() now returns an object of class "vignette" whose
+        print() method opens the corresponding PDF file.  The edit()
+        method can be used to open the code of the vignette in an
+        editor.
 
     o	R CMD build now changes src files to LF line endings if necessary.
 
     o	R CMD INSTALL on Unix has a new option '--build' matching 
 	that on Windows, to package as tarball the installed package.
+
+    o	R CMD build now behaves consistently between source and binary
+	builds: in each case it prepares a source directory and then
+	either packages that as a tarball or call R CMD INSTALL
+	--build on the prepared sources.
+
+	This means that R CMD build --binary now respects
+	.Rbuildignore and will rebuild vignettes (unless the option
+	--no-vignettes is used).
+
+	[Currently R CMD build --binary does not work for bundles.
+	On Windows Rcmd INSTALL --build works, and on Unix
+	R CMD INSTALL is not able to install a binary bundle.]
 
 
 DOCUMENTATION

@@ -60,7 +60,7 @@ if($WINDOWS) {
 	unless (-e ${R::Vars::TMPDIR});
     @known_options = ("help|h", "version|v", "binary", "docs:s",
 		      "auto-zip",
-		      "use-zip", "use-zip-help", "use-zip-data", 
+		      "use-zip", "use-zip-help", "use-zip-data",
 		      "force", "no-vignettes");
 }
 
@@ -90,7 +90,7 @@ if($WINDOWS) {
 ## Once we have a 'global' log file, use $log->warning() instead of just
 ## print().
 if(!$opt_binary && $INSTALL_opts ne "") {
-    print "** Options '$INSTALL_opts' for '--binary' ignored\n";
+    print "** Options '$INSTALL_opts' only for '--binary' ignored\n";
 }
 ## </FIXME>
 
@@ -114,260 +114,186 @@ foreach my $pkg (@ARGV) {
 	exit(1);
     }
 
-    if($opt_binary) {                # build a binary distribution
-	my $libdir = &file_path(${R::Vars::TMPDIR}, "Rbuild.$$");
+    my @bundlepkgs;
+    if($description->{"Contains"}) {
+	$log->message("looks like '${pkg}' is a package bundle");
+	$is_bundle = 1;
+	if($opt_binary) {
+	    if($WINDOWS) {
+		die "Error: cannot build binary bundles -- use INSTALL --build\n";
+	    } else {
+		die "Error: cannot build or INSTALL binary bundles\n";
+	    }
+	}
+	@bundlepkgs = split(/\s+/, $description->{"Contains"});
+	foreach my $ppkg (@bundlepkgs) {
+	    $log->message("preparing '$ppkg' in bundle '$pkg':");
+	    $log->setstars("**");
+	    chdir($startdir);
+	    prepare_pkg(&file_path("$pkg", "$ppkg"), $is_bundle,
+			$description, $log);
+	    $log->setstars("*");
+	}
+    } else {
+	$is_bundle = 0;
+	chdir($startdir);
+	$log->message("preparing '$pkg':");
+	prepare_pkg("$pkg", $is_bundle, $description, $log);
+    }
+
+    chdir($startdir);
+
+    $log->message("removing junk files");
+    find(\&unlink_junk_files, $pkg);
+
+    my $exclude = &file_path(${R::Vars::TMPDIR}, "Rbuild-exclude.$$");
+    open(EXCLUDE, "> $exclude")
+	or die "Error: cannot open file '$exclude' for writing\n";
+    binmode EXCLUDE if $WINDOWS;
+    ## <NOTE>
+    ## For bundles, the .Rbuildignore mechanism is not consistent
+    ## between build and check: the latter always works on a per
+    ## package basis.
+    if(-f &file_path($pkg, ".Rbuildignore")) {
+	open(RBUILDIGNORE, &file_path($pkg, ".Rbuildignore"));
+	while(<RBUILDIGNORE>) {
+	    chop;
+	    push(@exclude_patterns, $_) if $_;
+	}
+	close(RBUILDIGNORE);
+    }
+    ## </NOTE>
+    sub find_exclude_files {
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^check$/);
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^chm$/);
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /[Oo]ld$/);
+	print EXCLUDE "$File::Find::name\n" if /^GNUMakefile$/;
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^CVS$/);
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.svn$/);
+	if($WINDOWS) {
+	    ## exclude stray dependency files
+	    print EXCLUDE "$File::Find::name\n" if /\.d$/;
+	    print EXCLUDE "$File::Find::name\n" if /^Makedeps$/;
+	    ## and the DLL resource file
+	    my $resname = $pkgname . "_res.rc";
+	    print EXCLUDE "$File::Find::name\n" if /^$resname$/;
+	}
+	my $filename = $File::Find::name;
+	$filename =~ s/^[^\/]*\///;
+	foreach my $p (@exclude_patterns) {
+	    if($WINDOWS) {
+		## Argh: Windows is case-honoring but not
+		## case-insensitive ...
+		print EXCLUDE "$File::Find::name\n"
+		    if($filename =~	/$p/i);
+	    }
+	    else {
+		if($filename =~ /$p/) {
+		    ## Seems that the Tar '-X' option uses exclude
+		    ## *shell* patterns, where '*', '?', and '[...]'
+		    ## are the usual shell wildcards and '\' escapes
+		    ## them.  Hence we need to escape the wildcard
+		    ## characters in file names.  On Windows, the
+		    ## first two are invalid (and hence rejected by
+		    ## R CMD check), and the last two do not need
+		    ## escaping.
+		    $filename = "$File::Find::name";
+		    $filename =~ s/\[/\\\[/g;
+		    $filename =~ s/\]/\\\]/g;
+		    print EXCLUDE "$filename\n";
+		}
+	    }
+	}
+    }
+    chdir(&file_path("$pkg", ".."));
+    find(\&find_exclude_files, "$pkgname");
+    close(EXCLUDE);
+
+    my $filename = "${pkgname}_" . $description->{"Version"} . ".tar";
+    my $filepath = &file_path($startdir, $filename);
+    ## under Windows, need separate Cygwin and Windows versions of path.
+    my $origfilepath = $filepath;
+    if($WINDOWS) {
+	## workaround for paths in Cygwin tar
+	$filepath =~ s+^([A-Za-x]):+/cygdrive/\1+;
+    }
+    R_system(join(" ",
+		  ("$tar chf",
+		   &shell_quote_file_path($filepath),
+		   "$pkgname")));
+    my $tmpdir = &file_path(${R::Vars::TMPDIR}, "Rbuild.$$");
+    rmtree($tmpdir) if(-d $tmpdir);
+    mkdir("$tmpdir", 0755)
+	or die "Error: cannot create directory '$tmpdir'\n";
+    chdir($tmpdir);
+    R_system(join(" ",
+		  ("$tar xhf",
+		   &shell_quote_file_path($filepath))));
+    ## Remove exclude files.
+    open(EXCLUDE, "< $exclude");
+    while(<EXCLUDE>) {
+	rmtree(glob($_));
+    }
+    close(EXCLUDE);
+    unlink($exclude);
+    unlink($origfilepath);
+    ## Fix permissions.
+    sub fix_permissions {
+	## Note that when called via File::Find::find, $_ holds the
+	## file name within the current directory.
+	if(-d $_) {
+	    ## Directories should really be mode 00755 if possible.
+	    chmod(00755, $_);
+	}
+	elsif(-f $_) {
+	    ## Files should be readable by everyone, and writable
+	    ## only for user.  This leaves a bit of uncertainty
+	    ## about the execute bits.
+	    chmod(((stat $_)[2] | 00644) & 00755, $_);
+	}
+    }
+    find(\&fix_permissions, "${pkgname}") if(!$WINDOWS);
+    ## Add build stamp to the DESCRIPTION file.
+    &add_build_stamp_to_description_file(&file_path($pkgname,
+						    "DESCRIPTION"));
+    $log->message("checking for LF line-endings in source files");
+    if($is_bundle) {
+	foreach my $ppkg (@bundlepkgs) {
+	    &fix_CRLF_in_source_files(&file_path($pkgname, $ppkg));
+	}
+    } else {
+	&fix_CRLF_in_source_files($pkgname);
+    }
+
+    ## Finalize.
+    if($opt_binary) {
+	$log->message("building binary distribution");
+	chdir($startdir);
+	my $libdir = &file_path(${R::Vars::TMPDIR}, "Rinst.$$");
 	mkdir("$libdir", 0755)
 	    or die "Error: cannot create directory '$libdir'\n";
-
+	my $srcdir = &file_path($tmpdir, $pkgname);
 	my $cmd;
 	if($WINDOWS) {
 	    $cmd = join(" ",
 			("Rcmd.exe INSTALL -l",
 			 &shell_quote_file_path($libdir),
-			 "$INSTALL_opts",
-			 &shell_quote_file_path($pkg)));
+			 "--build $INSTALL_opts",
+			 &shell_quote_file_path($srcdir)));
 	} else {
 	    $cmd = join(" ",
 			(&shell_quote_file_path(${R::Vars::R_EXE}),
 			 "CMD INSTALL -l",
 			 &shell_quote_file_path($libdir),
-			 "$INSTALL_opts",
-			 &shell_quote_file_path($pkg)));
+			 "--build $INSTALL_opts",
+			 &shell_quote_file_path($srcdir)));
 	}
+	## print "$cmd\n";
 	if(R_system($cmd)) {
 	    $log->error("installation failed");
 	}
-	print("\n");
-	chdir($libdir);
-
-	my $pkgs = $pkgname;
-	## JG: top_level_files will be files that sit in the top level
-	## of a zip/tarball along with any included directories.
-	my $top_level_files;
-	if($description->{"Contains"}) {
-	    $log->message("looks like '${pkg}' is a package bundle");
-	    $is_bundle = 1;
-	    my @bundlepkgs = split(/\s+/, $description->{"Contains"});
-	    $pkgs = join(" ", @bundlepkgs);
-	    ## JG: Get a copy of the bundle's DESCRIPTION file and add
-	    ## it into the zip archive.
-	    $log->message("copying '$pkg/DESCRIPTION'");
-	    copy(&file_path($startdir, $pkg, "DESCRIPTION"),
-		 "DESCRIPTION");
-	    $top_level_files = "DESCRIPTION";
-	}
-
-	my $filename;
-	if($WINDOWS) {
-	    $filename = "${pkgname}_" . $description->{"Version"};
-	    $log->message("building '$filename.zip'");
-	    unlink(&file_path($startdir, "$filename.zip"));
-	}
-	else {
-	    $filename = "${pkgname}_" . $description->{"Version"} .
-		"_R_${R_platform}.tar";
-	    $log->message("building '$filename.gz'");
-	}
-	## <FIXME>
-	## As R CMD INSTALL recursively copies all of 'inst', we at
-	## least need to make sure that CVS and .svn subdirs are
-	## excluded.
-	## It is not clear whether more patterns should be excluded,
-	my $exclude =
-	    &file_path(${R::Vars::TMPDIR}, "Rbuild-exclude.$$");
-	open(EXCLUDE, "> $exclude")
-	    or die "Error: cannot open file '$exclude' for writing\n";
-	sub find_exclude_files {
-	    print EXCLUDE "$File::Find::name\n" if(-d $_ && /^CVS$/);
-	    print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.svn$/);
-	}
-	foreach my $p (split(/\s+/, $pkgs)) {
-	    find(\&find_exclude_files, "$p");
-	}
-	close(EXCLUDE);
-	## Remove exclude files.
-	open(EXCLUDE, "< $exclude");
-	while(<EXCLUDE>) {
-	    rmtree($_);
-	}
-	close(EXCLUDE);
-	unlink($exclude);
-	## </FIXME>
-
-	## <NOTE>
-	## We maybe should add some build stamps as well ...
-	## (But not just 'Packaged', as then binary packages created
-	## from source packages would record conflicting data.)
-	## </NOTE>
-
-	my $filepath = &file_path($startdir, $filename);
-	if($WINDOWS) {
-	    R_system(join(" ",
-			  ("zip -r9X",
-			   &shell_quote_file_path($filepath.".zip"),
-			   "$pkgs $top_level_files")));
-	}
-	else {
-	    R_system(join(" ",
-			  ("$tar chf ",
-			   &shell_quote_file_path($filepath),
-			   "$pkgs $top_level_files")));
-	    R_system(join(" ",
-			  ("gzip -9f ",
-			   &shell_quote_file_path($filepath))));
-	}
-
-	chdir($startdir);
 	rmtree($libdir);
-    }
-    else {                    # Build a source tarball
-	my @bundlepkgs;
-	if($description->{"Contains"}) {
-	    $log->message("looks like '${pkg}' is a package bundle");
-	    $is_bundle = 1;
-	    @bundlepkgs = split(/\s+/, $description->{"Contains"});
-	    foreach my $ppkg (@bundlepkgs) {
-		$log->message("preparing '$ppkg' in bundle '$pkg':");
-		$log->setstars("**");
-		chdir($startdir);
-		prepare_pkg(&file_path("$pkg", "$ppkg"), $is_bundle,
-			    $description, $log);
-		$log->setstars("*");
-	    }
-	}
-	else {
-	    $is_bundle = 0;
-	    chdir($startdir);
-	    $log->message("preparing '$pkg':");
-	    prepare_pkg("$pkg", $is_bundle, $description, $log);
-	}
-
-	chdir($startdir);
-
-	$log->message("removing junk files");
-	find(\&unlink_junk_files, $pkg);
-
-	my $exclude =
-	    &file_path(${R::Vars::TMPDIR}, "Rbuild-exclude.$$");
-	open(EXCLUDE, "> $exclude")
-	  or die "Error: cannot open file '$exclude' for writing\n";
-	binmode EXCLUDE if $WINDOWS;
-	## <NOTE>
-	## For bundles, the .Rbuildignore mechanism is not consistent
-	## between build and check: the latter always works on a per
-	## package basis.  Maybe fix this once we know whether we want
-	## to keep bundles ...
-	if(-f &file_path($pkg, ".Rbuildignore")) {
-	    open(RBUILDIGNORE, &file_path($pkg, ".Rbuildignore"));
-	    while(<RBUILDIGNORE>) {
-		chop;
-		push(@exclude_patterns, $_) if $_;
-	    }
-	    close(RBUILDIGNORE);
-	}
-	## </NOTE>
-	sub find_exclude_files {
-	    print EXCLUDE "$File::Find::name\n" if(-d $_ && /^check$/);
-	    print EXCLUDE "$File::Find::name\n" if(-d $_ && /^chm$/);
-	    print EXCLUDE "$File::Find::name\n" if(-d $_ && /[Oo]ld$/);
-	    print EXCLUDE "$File::Find::name\n" if /^GNUMakefile$/;
-	    print EXCLUDE "$File::Find::name\n" if(-d $_ && /^CVS$/);
-	    print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.svn$/);
-	    if($WINDOWS) {
-		## exclude stray dependency files
-		print EXCLUDE "$File::Find::name\n" if /\.d$/;
-		print EXCLUDE "$File::Find::name\n" if /^Makedeps$/;
-		## and the DLL resource file
-		my $resname = $pkgname . "_res.rc";
-		print EXCLUDE "$File::Find::name\n" if /^$resname$/;
-	    }
-	    my $filename = $File::Find::name;
-	    $filename =~ s/^[^\/]*\///;
-	    foreach my $p (@exclude_patterns) {
-		if($WINDOWS) {
-		    ## Argh: Windows is case-honoring but not
-		    ## case-insensitive ...
-		    print EXCLUDE "$File::Find::name\n"
-			if($filename =~	/$p/i);
-		}
-		else {
-		    if($filename =~ /$p/) {
-			## Seems that the Tar '-X' option uses exclude
-                        ## *shell* patterns, where '*', '?', and '[...]'
-                        ## are the usual shell wildcards and '\' escapes
-			## them.  Hence we need to escape the wildcard
-			## characters in file names.  On Windows, the
-			## first two are invalid (and hence rejected by
-			## R CMD check), and the last two do not need
-			## escaping.
-			$filename = "$File::Find::name";
-			$filename =~ s/\[/\\\[/g;
-			$filename =~ s/\]/\\\]/g;
-			print EXCLUDE "$filename\n";
-		    }
-		}
-	    }
-	}
-	chdir(&file_path("$pkg", ".."));
-	find(\&find_exclude_files, "$pkgname");
-	close(EXCLUDE);
-
-	my $filename = "${pkgname}_" . $description->{"Version"} . ".tar";
-	my $filepath = &file_path($startdir, $filename);
-	## under Windows, need separate Cygwin and Windows versions of path.
-	my $origfilepath = $filepath;
-	if($WINDOWS) {
-	    ## workaround for paths in Cygwin tar
-	    $filepath =~ s+^([A-Za-x]):+/cygdrive/\1+;
-	}
-	R_system(join(" ",
-		      ("$tar chf",
-		       &shell_quote_file_path($filepath),
-		       "$pkgname")));
-	my $tmpdir = &file_path(${R::Vars::TMPDIR}, "Rbuild.$$");
-	## (Same as $libdir for building a binary package.)
-	rmtree($tmpdir) if(-d $tmpdir);
-	mkdir("$tmpdir", 0755)
-	    or die "Error: cannot create directory '$tmpdir'\n";
-	chdir($tmpdir);
-	R_system(join(" ",
-		      ("$tar xhf",
-		       &shell_quote_file_path($filepath))));
-	## Remove exclude files.
-	open(EXCLUDE, "< $exclude");
-	while(<EXCLUDE>) {
-	    rmtree(glob($_));
-	}
-	close(EXCLUDE);
-	unlink($exclude);
-	## Fix permissions.
-	sub fix_permissions {
-	    ## Note that when called via File::Find::find, $_ holds the
-	    ## file name within the current directory.
-	    if(-d $_) {
-		## Directories should really be mode 00755 if possible.
-		chmod(00755, $_);
-	    }
-	    elsif(-f $_) {
-		## Files should be readable by everyone, and writable
-		## only for user.  This leaves a bit of uncertainty
-		## about the execute bits.
-		chmod(((stat $_)[2] | 00644) & 00755, $_);
-	    }
-	}
-	find(\&fix_permissions, "${pkgname}") if(!$WINDOWS);
-	## Add build stamp to the DESCRIPTION file.
-	&add_build_stamp_to_description_file(&file_path($pkgname,
-							"DESCRIPTION"));
-	$log->message("checking for LF line-endings in source files");
-	if($is_bundle) {
-	    foreach my $ppkg (@bundlepkgs) {
-		&fix_CRLF_in_source_files(&file_path($pkgname, $ppkg));
-	    }
-	} else {
-	    &fix_CRLF_in_source_files($pkgname);
-	}
-	## Finalize.
+    } else {
 	$log->message("building '$filename.gz'");
 	R_system(join(" ",
 		      ("$tar chf",
@@ -376,10 +302,9 @@ foreach my $pkg (@ARGV) {
 	R_system(join(" ",
 		      ("gzip -9f",
 		       &shell_quote_file_path($origfilepath))));
-	
-	chdir($startdir);
-	rmtree($tmpdir);
     }
+    chdir($startdir);
+    rmtree($tmpdir);
     $log->close();
     print("\n");
 }
@@ -387,7 +312,7 @@ foreach my $pkg (@ARGV) {
 
 sub add_build_stamp_to_description_file {
     my ($dpath) = @_;
-    
+
     my @lines = &read_lines($dpath);
     @lines = grep(!/^\s*$/, @lines); # Remove blank lines.
     my $user_name;
@@ -400,7 +325,7 @@ sub add_build_stamp_to_description_file {
     my $fh = new IO::File($dpath, "w")
 	or die "Error: cannot open file '$dpath' for writing\n";
     ## Do not keep previous build stamps.
-    @lines = grep(!/^Packaged:/, @lines); 
+    @lines = grep(!/^Packaged:/, @lines);
     $fh->print(join("\n", @lines), "\n");
     $fh->print("Packaged: ",
 	       scalar(localtime()), "; ",
@@ -527,7 +452,7 @@ sub update_Rd_index {
 
     my $Rcmd = "Rdindex(\"${Rd_files}\", \"${newindex}\")\n";
 
-    my %result = 
+    my %result =
 	R_run_R($Rcmd, "--vanilla --quiet", "R_DEFAULT_PACKAGES=tools");
     if($result{"status"}) {
 	## This is a bit silly ... but just in case this fails, we want
@@ -565,7 +490,7 @@ sub fix_CRLF_in_source_files {
 	    if ($has_CRLF) {
 		print("    file '$file' had CRLF line endings\n");
 		unlink($file); # should not be necessary, but is on Windows
-		rename("$file.tmp", $file) 
+		rename("$file.tmp", $file)
 		    or die "Error: cannot rename '$file.tmp'\n";
 	    } else {
 		unlink($file.tmp);
@@ -580,7 +505,7 @@ sub usage {
 Usage: R CMD $name [options] pkgdirs
 
 Build R packages from package sources in the directories specified by
-pkgdirs. 
+pkgdirs.
 
 Options:
   -h, --help		print short help message and exit
