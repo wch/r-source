@@ -11,7 +11,7 @@ export R_CMD
 R_OSTYPE="unix"
 export R_OSTYPE
 
-## Add `share/perl' to the perl library path.
+## Add 'share/perl' to the perl library path.
 if test -n "${PERL5LIB}"; then
   PERL5LIB="${R_HOME}/share/perl:${PERL5LIB}"
   export PERL5LIB
@@ -19,6 +19,10 @@ else
   PERLLIB="${R_HOME}/share/perl:${PERLLIB}"
   export PERLLIB
 fi
+
+## Add 'share/texmf' to TeX's input search path.
+TEXINPUTS=".:${R_HOME}/share/texmf:${TEXINPUTS}"
+export TEXINPUTS
 
 . ${R_HOME}/etc/Renviron
 export `sed 's/^ *#.*//; s/^\(.*\)=.*/\1/' ${R_HOME}/etc/Renviron`
