@@ -133,7 +133,7 @@ FORCE:
 .R.Rout:
 	@rm -f $@ $@.fail
 	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
-	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
+	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
 	@echo "$(ECHO_T) OK"
 	@if test -f $(srcdir)/$@.save ; then \
 	  mv $@ $@.fail; \
@@ -147,7 +147,7 @@ FORCE:
 reg-plot.Rout: reg-plot.R
 	@rm -f $@ $@.fail
 	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
-	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
+	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
 	@echo "$(ECHO_T) OK"
 	@if test -f $(srcdir)/$@.save ; then \
 	  mv $@ $@.fail; \
@@ -165,7 +165,7 @@ reg-plot.Rout: reg-plot.R
 .R.Rout-gct:
 	@echo "running gctorture() + '$<'"
 	@(echo '.ptime <- proc.time(); gctorture()' ; \
-	  cat $< $(srcdir)/gct-foot.R) | $(R) > $@
+	  cat $< $(srcdir)/gct-foot.R) | $(R) > $@ 2>&1
 	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
 	  if test ! -r $$Ro ; then $(MAKE) $$Ro ; fi; \
 	  echo $(ECHO_N) "comparing '$@' to '$$Ro' ...$(ECHO_C)"; \
