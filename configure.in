@@ -706,12 +706,14 @@ case "${host}" in
     ;;
   *solaris*)
     shlib_ldflags="-G"
+    shlib_cxxldflags="-G"
     if test "${GCC}" = yes; then
       ld=`${CC} -print-prog-name=ld`
       ldoutput=`${ld} -v 2>&1 | grep GNU`
       if test -n "${ldoutput}"; then
 	main_ldflags="-Wl,-export-dynamic"
 	shlib_ldflags="-shared"
+        shlib_cxxldflags="-shared"
       fi
     else
       cpicflags="-KPIC"
