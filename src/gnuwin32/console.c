@@ -24,6 +24,8 @@
 #endif
 
 #include "win-nls.h"
+#include <R_ext/Boolean.h>
+extern Rboolean mbcslocale;
 
 /* Use of strchr here is MBCS-safe */
 
@@ -50,7 +52,7 @@ extern char *alloca(size_t);
 
 extern UImode  CharacterMode;
 
-#ifdef SUPPORT_GUI_MBCS
+#ifdef SUPPORT_MBCS
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 static int wcwidth(wchar_t ucs)
 {
@@ -109,21 +111,22 @@ int inline mb_char_len(char *buf, int clength)
 
 void setCURCOL(ConsoleData p)
 {
-#ifdef SUPPORT_GUI_MBCS
-    char *P = LINE(NUMLINES - 1) + prompt_len;
-    int w0 = 0, used;
-    wchar_t wc;
-    mbs_init(&mb_st);
-    while (P < LINE(NUMLINES - 1) + prompt_len + cur_byte) {
-	used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
-	if(used <= 0) break;
-	w0 += wcwidth(wc);
-	P += used;
-    }
-    CURCOL = w0 + prompt_wid;
-#else
-    CURCOL = cur_byte + prompt_wid;
+#ifdef SUPPORT_MBCS
+    if(mbcslocale) {
+	char *P = LINE(NUMLINES - 1) + prompt_len;
+	int w0 = 0, used;
+	wchar_t wc;
+	mbs_init(&mb_st);
+	while (P < LINE(NUMLINES - 1) + prompt_len + cur_byte) {
+	    used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+	    if(used <= 0) break;
+	    w0 += wcwidth(wc);
+	    P += used;
+	}
+	CURCOL = w0 + prompt_wid;
+    } else
 #endif
+	CURCOL = cur_byte + prompt_wid;
 }
 
 
@@ -368,10 +371,9 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 			    rgb fgr, rgb bgr, int j, int len, char *s)
 {
     rect  r;
-#ifndef SUPPORT_GUI_MBCS
     int last;
     char ch, chf, chl;
-#else
+#ifdef SUPPORT_MBCS
     int i, used, w0;
     char *buff, *P = s, *q;
     wchar_t wc;
@@ -384,55 +386,58 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 
     if (len > FC+fch) {
 	/* Some of the string is visible: */
-#ifndef SUPPORT_GUI_MBCS
-	/* we don't know the string length, so modify it in place */
-	if (FC && (fch == 0)) {chf = s[FC]; s[FC] = '$';} else chf = '\0';
-	if ((len > FC+COLS) && (lch == COLS - 1)) {
-	    chl = s[FC+lch]; s[FC+lch] = '$';
-	}
-	else chl = '\0';
-	last = FC + lch + 1;
-	if (len > last) {ch = s[last]; s[last] = '\0';} else ch = '\0';
-	gdrawstr(p->bm, p->f, fgr, pt(r.x, r.y), &s[FC+fch]);
-	/* restore the string */
-	if (ch) s[last] = ch;
-	if (chl) s[FC+lch] = chl;
-	if (chf) s[FC] = chf;
-#else
-	q = buff = alloca(strlen(s) + 1); /* overkill */
+#ifdef SUPPORT_MBCS
+	if(mbcslocale) {
+	    q = buff = alloca(strlen(s) + 1); /* overkill */
 
-	leftedge = FC && (fch == 0);
-	if(leftedge) fch++;
-	mbs_init(&mb_st);
-	for (w0 = -FC; w0 < fch && *P; ) { /* should have enough ... */
-	    P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
-	    w0 += wcwidth(wc);
-	}
-	/* Now we have got to on or just after the left edge.
-	   Possibly have a widechar hanging over.
-	   If so, fill with blanks.
-	*/
-	if(w0 > fch) for(i = 0; i < w0 - fch; i++) *q++ = ' ';
+	    leftedge = FC && (fch == 0);
+	    if(leftedge) fch++;
+	    mbs_init(&mb_st);
+	    for (w0 = -FC; w0 < fch && *P; ) { /* should have enough ... */
+		P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+		w0 += wcwidth(wc);
+	    }
+	    /* Now we have got to on or just after the left edge.
+	       Possibly have a widechar hanging over.
+	       If so, fill with blanks.
+	    */
+	    if(w0 > fch) for(i = 0; i < w0 - fch; i++) *q++ = ' ';
 
-	if (leftedge) *q++ = '$';
+	    if (leftedge) *q++ = '$';
 
-	while (w0 < lch) {
-	    used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
-	    if(used <= 0) break;
-	    w0 += wcwidth(wc);
-	    if(w0 > lch) break; /* char straddling the right edge
-				   is not displayed */
-	    for(j = 0; j < used; j++) *q++ = *P++;
-	}
-	*q = 0;
-	if((len > FC+COLS) && (lch == COLS - 1)) *q++ = '$';
-	else {
-	    used = mbrtowc(NULL, P, MB_CUR_MAX, &mb_st);
-	    for(j = 0; j < used; j++) *q++ = *P++;
-	}
-	*q = '\0';
-	gdrawstr(p->bm, p->f, fgr, pt(r.x, r.y), buff);
+	    while (w0 < lch) {
+		used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+		if(used <= 0) break;
+		w0 += wcwidth(wc);
+		if(w0 > lch) break; /* char straddling the right edge
+				       is not displayed */
+		for(j = 0; j < used; j++) *q++ = *P++;
+	    }
+	    *q = 0;
+	    if((len > FC+COLS) && (lch == COLS - 1)) *q++ = '$';
+	    else {
+		used = mbrtowc(NULL, P, MB_CUR_MAX, &mb_st);
+		for(j = 0; j < used; j++) *q++ = *P++;
+	    }
+	    *q = '\0';
+	    gdrawstr(p->bm, p->f, fgr, pt(r.x, r.y), buff);
+	} else
 #endif
+	{
+	    /* we don't know the string length, so modify it in place */
+	    if (FC && (fch == 0)) {chf = s[FC]; s[FC] = '$';} else chf = '\0';
+	    if ((len > FC+COLS) && (lch == COLS - 1)) {
+		chl = s[FC+lch]; s[FC+lch] = '$';
+	    }
+	    else chl = '\0';
+	    last = FC + lch + 1;
+	    if (len > last) {ch = s[last]; s[last] = '\0';} else ch = '\0';
+	    gdrawstr(p->bm, p->f, fgr, pt(r.x, r.y), &s[FC+fch]);
+	    /* restore the string */
+	    if (ch) s[last] = ch;
+	    if (chl) s[FC+lch] = chl;
+	    if (chf) s[FC] = chf;
+	}
     }
 }
 
@@ -444,17 +449,18 @@ static int writeline(ConsoleData p, int i, int j)
     char *s;
     int   insel, len, col1, d;
     int   c1, c2, c3, x0, y0, x1, y1;
-#ifdef SUPPORT_GUI_MBCS
+#ifdef SUPPORT_MBCS
     rect r;
 #endif
 
     if ((i < 0) || (i >= NUMLINES)) return 0;
     s = LINE(i);
-#ifdef SUPPORT_GUI_MBCS
-    len = mbswidth(s);
-#else
-    len = strlen(s);
+#ifdef SUPPORT_MBCS
+    if(mbcslocale)
+	len = mbswidth(s);
+    else
 #endif
+	len = strlen(s);
     col1 = COLS - 1;
     insel = p->sel ? ((i - p->my0) * (i - p->my1)) : 1;
     if (insel < 0) {
@@ -476,8 +482,8 @@ static int writeline(ConsoleData p, int i, int j)
     /* This is the cursor, and it may need to be variable-width */
     if ((p->r >= 0) && (CURCOL >= FC) && (CURCOL < FC + COLS) &&
 	(i == NUMLINES - 1)) {
-#ifdef SUPPORT_GUI_MBCS
-	{ /* determine the width of the current char */
+#ifdef SUPPORT_MBCS
+	if(mbcslocale) { /* determine the width of the current char */
 	    int w0, used = 0, ii;
 	    wchar_t wc;
 	    char *P = s, nn[10];
@@ -494,10 +500,9 @@ static int writeline(ConsoleData p, int i, int j)
 	    for(ii = 0; ii < used; ii++) nn[ii] = P[ii];
 	    nn[used] = '\0';
 	    gdrawstr(p->bm, p->f, p->bg, pt(r.x, r.y), nn);
-	}
-#else
-	WLHELPER(CURCOL - FC, CURCOL - FC, p->bg, p->ufg);
+	} else
 #endif
+	    WLHELPER(CURCOL - FC, CURCOL - FC, p->bg, p->ufg);
     }
     if (insel != 0) return len;
     c1 = (p->my0 < p->my1);
@@ -602,11 +607,12 @@ void setfirstcol(control c, int newcol)
     ll = (NUMLINES < ROWS) ? NUMLINES : ROWS;
     if (newcol > 0) {
 	for (i = 0, ml = 0; i < ll; i++) {
-#ifdef SUPPORT_GUI_MBCS
- 	    li = mbswidth(LINE(NEWFV + i));
-#else
- 	    li = strlen(LINE(NEWFV + i));
+#ifdef SUPPORT_MBCS
+	    if(mbcslocale)
+		li = mbswidth(LINE(NEWFV + i));
+	    else
 #endif
+		li = strlen(LINE(NEWFV + i));
 	    ml = (ml < li) ? li : ml;
 	}
 	ml = ml - COLS;
@@ -887,44 +893,48 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
     int ll, i, j;
     char *s;
 
-#ifdef SUPPORT_GUI_MBCS
+#ifdef SUPPORT_MBCS
     int w0 = 0 /* -Wall */, used=0, x00, x11=100000;
     wchar_t wc;
     char *P;
+    if(mbcslocale) {
 
-    i = y0; x00 = x0; ll = 1; /* terminator */
-    while (i <= y1) {
-	P = LINE(i);
-	mbs_init(&mb_st);
-	for (w0 = 0; w0 < x00 && *P; ) {
-	    P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
-	    w0 += wcwidth(wc);
-	}
-	x00 = 0;
-	if(i == y1) x11 = x1+1; /* cols are 0-based */
-	while (w0 < x11 && *P) {
-	    used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
-	    ll += used;
-	    P += used;
-	    w0 += wcwidth(wc);
-	}
-	if(w0 < x11) ll += 2;  /* \r\n */
-	i++;
-    }
-#else
-    i = y0; j = x0; ll = 1; /* terminator */
-    while ((i < y1) || ((i == y1) && (j <= x1))) {
-	if (LINE(i)[j]) {
-	    ll++;
-	    j++;
-	}
-	else {
-	    ll += 2;
+	i = y0; x00 = x0; ll = 1; /* terminator */
+	while (i <= y1) {
+	    P = LINE(i);
+	    mbs_init(&mb_st);
+	    for (w0 = 0; w0 < x00 && *P; ) {
+		P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+		w0 += wcwidth(wc);
+	    }
+	    x00 = 0;
+	    if(i == y1) x11 = x1+1; /* cols are 0-based */
+	    while (w0 < x11 && *P) {
+		used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+		ll += used;
+		P += used;
+		w0 += wcwidth(wc);
+	    }
+	    if(w0 < x11) ll += 2;  /* \r\n */
 	    i++;
-	    j = 0;
+	}
+    } else
+#endif
+    {
+	i = y0; j = x0; ll = 1; /* terminator */
+	while ((i < y1) || ((i == y1) && (j <= x1))) {
+	    if (LINE(i)[j]) {
+		ll++;
+		j++;
+	    }
+	    else {
+		ll += 2;
+		i++;
+		j = 0;
+	    }
 	}
     }
-#endif
+
     if (!(hglb = GlobalAlloc(GHND, ll))){
         R_ShowMessage(_("Insufficient memory: text not copied to the clipboard"));
         return;
@@ -933,39 +943,42 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
         R_ShowMessage(_("Insufficient memory: text not copied to the clipboard"));
         return;
     }
-#ifdef SUPPORT_GUI_MBCS
-    i = y0; x00 = x0; x11=100000;
-    while (i <= y1) {
-	P = LINE(i);
-	mbs_init(&mb_st);
-	for (w0 = 0; w0 < x00 && *P; ) {
-	    P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
-	    w0 += wcwidth(wc);
-	}
-	x00 = 0;
-	if(i == y1) x11 = x1+1;
-	while (w0 < x11 && *P) {
-	    used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
-	    w0 += wcwidth(wc);
-	    for(j = 0; j < used; j++) *s++ = *P++;
-	}
-	if(w0 < x11) *s++ = '\r'; *s++ = '\n';
-	i++;
-    }
-#else
-    i = y0; j = x0;
-    while ((i < y1) || ((i == y1) && (j <= x1))) {
-	char ch = LINE(i)[j];
-	if (ch) {
- 	    *s++ = ch;
-	    j++;
-	} else {
-	    *s++ = '\r'; *s++ = '\n';
+#ifdef SUPPORT_MBCS
+    if(mbcslocale) {
+	i = y0; x00 = x0; x11=100000;
+	while (i <= y1) {
+	    P = LINE(i);
+	    mbs_init(&mb_st);
+	    for (w0 = 0; w0 < x00 && *P; ) {
+		P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+		w0 += wcwidth(wc);
+	    }
+	    x00 = 0;
+	    if(i == y1) x11 = x1+1;
+	    while (w0 < x11 && *P) {
+		used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+		w0 += wcwidth(wc);
+		for(j = 0; j < used; j++) *s++ = *P++;
+	    }
+	    if(w0 < x11) *s++ = '\r'; *s++ = '\n';
 	    i++;
-	    j = 0;
+	}
+    } else
+#endif
+    {
+	i = y0; j = x0;
+	while ((i < y1) || ((i == y1) && (j <= x1))) {
+	    char ch = LINE(i)[j];
+	    if (ch) {
+		*s++ = ch;
+		j++;
+	    } else {
+		*s++ = '\r'; *s++ = '\n';
+		i++;
+		j = 0;
+	    }
 	}
     }
-#endif
     *s = '\0';
     GlobalUnlock(hglb);
     if (!OpenClipboard(NULL) || !EmptyClipboard()) {
@@ -1318,10 +1331,13 @@ int consolereads(control c, char *prompt, char *buf, int len, int addtohistory)
     xbufadds(p->lbuf, prompt, 1);
     if (!xbufmakeroom(p->lbuf, len + 1)) return 1;
     aLine = LINE(NUMLINES - 1);
-    prompt_wid = prompt_len = strlen(aLine);
-#ifdef SUPPORT_GUI_MBCS
-    prompt_wid = mbswidth(aLine);
+    prompt_len = strlen(aLine);
+#ifdef SUPPORT_MBCS
+    if(mbcslocale) 
+	prompt_wid = mbswidth(aLine);
+    else
 #endif
+	prompt_wid = prompt_len;
     if (NUMLINES > ROWS) {
 	p->r = ROWS - 1;
 	p->newfv = NUMLINES - ROWS;
@@ -1428,12 +1444,13 @@ int consolereads(control c, char *prompt, char *buf, int len, int addtohistory)
 		{
 		    int j, l_len = mb_char_len(cur_line, cur_byte-1), r_len;
 		    /* we should not reset the state here */
-#ifdef SUPPORT_GUI_MBCS
-		    r_len = mbrtowc(NULL, cur_line+cur_byte, MB_CUR_MAX,
-				    &mb_st);
-#else
-		    r_len = 1;
+#ifdef SUPPORT_MBCS
+		    if(mbcslocale)
+			r_len = mbrtowc(NULL, cur_line+cur_byte, MB_CUR_MAX,
+					&mb_st);
+		    else
 #endif
+			r_len = 1;
 		    for (i = 0; i < r_len; i++)
 			for(j = 0; j < l_len; j++) {
 			    cur_char = cur_line[cur_byte+i-j];

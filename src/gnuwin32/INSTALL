@@ -33,7 +33,7 @@ use our tool set, and make sure it is at the front of your path
 (including before the Windows system directories).  If you are using a
 Windows shell, type PATH at the prompt to find out.
 
-For international character support, you will need iconv.dll.  Extract
+For international charset support, you will need iconv.dll.  Extract
 this from http://www.murdoch-sutherland.com/Rtools/iconv.zip and put
 it in R_HOME/src/gnuwin32/unicode.
 
@@ -205,26 +205,25 @@ Internationalization
 --------------------
 
 This version of R can be built with support for some multibyte
-character sets such as UTF-8 and (some of) those used in Chinese,
-Japanese and Korean.  This is experimental and only of interest to
-users in such locales.  It is currently untested under Windows
-95/98/ME.
+character sets such those used in Chinese, Japanese and Korean.
 
-Define SUPPORT_GUI_MBCS in MkRules to enable support for MBCS in the
-RGui console, pager, data and script editors (this is based loosely on
-the Japanization patches by Nakama and Okada).  You need to also to
-define SUPPORT_MBCS in config.h: see below.
+Define SUPPORT_MBCS in config.h to enable support in the R engine for
+multi-byte character sets.  This is only useful if you have an `East
+Asian' version of Windows, as only those versions have multi-byte
+locales.  We have only tested this under Windows XP, but it is
+expected to work under Windows 95/98/ME as well as NT-based versions
+of Windows.
 
-Define SUPPORT_UTF8 in config.h to enable support in the R engine and
-in the Windows graphics device for UTF-8 character sets.  Since there
-are no UTF-8 locales on Windows, this sets the locale to be UTF-8 and
-expects input/output in UTF-8 so is only useful with a customized
-front-end to R.dll.
+This also enables support for multi-byte locales in the RGui console,
+pager, data and script editors (this is based loosely on the
+Japanization patches by Nakama and Okada).  The Rterm command-line
+editor is not supported in such locales.
 
-Define SUPPORT_MBCS in MkRules AND config.h to enable support in the R
-engine for muli-byte character sets.  This is only useful if you have
-an `East Asian' version of Windows, as only those versions have
-multibyte locales.  (It is also needed for UTF-8 support.)
+Define both SUPPORT_MBCS and SUPPORT_UTF8 in config.h to enable
+support in the R engine and in the Windows graphics device for UTF-8
+character sets.  Since there are no UTF-8 locales on Windows, this
+sets the locale to be UTF-8 and expects input/output in UTF-8 so is
+only useful with a customized front-end to R.dll.
 
 If any of these is defined you need the DLL msvcp60.dll to be
 installed.  It is on recent versions of Windows, and can be obtained
@@ -311,6 +310,7 @@ gnuwin32/cran subdirectory, then check the build.  This works by building
 all the parts in the sequence:
 
 	Rpwd.exe (a utility needed in the build)
+	rbuild-no-mbcs (the non-East Asian version of R.dll)
 	rbuild (the executables, the FAQ docs etc.)
 	rpackage (the base packages)
 	htmldocs (the HTML documentation)
@@ -325,8 +325,10 @@ all the parts in the sequence:
 The parts can be made individually if a full build is not needed, but
 earlier parts must be built before later ones.  (The Makefile doesn't
 enforce this dependency---some build targets force a lot of
-computation even if all files are up to date.)  The first four targets
-are the default build if just "make" is run.
+computation even if all files are up to date.)  The first, third,
+fourth and fifth targets are the default build if just "make" is run,
+but the second (which builds the default version of R.dll) needs to be
+run first.
 
 If you want to customize the installation by adding extra packages,
 replace `make rinstaller' by something like

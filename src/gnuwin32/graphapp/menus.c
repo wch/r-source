@@ -111,10 +111,12 @@ static void private_delmenu(menu m)
  *  Return -1 if not found, or a number from 0 to strlen(str)-1
  *  to indicate where the char is.
  */
+char *Rf_strchr(const char *s, int c); /* from util.c, MBCS-aware */
+
 static int find_char(int ch, char *str)
 {
+/*
 	int where;
-
 #ifdef SUPPORT_GUI_MBCS
 	for (where=0; str[where] != '\0'; where++)
 	{
@@ -131,6 +133,10 @@ static int find_char(int ch, char *str)
 	    if (str[where] == ch) return where;
 #endif
 	return -1;
+*/
+	char *p;
+	p = Rf_strchr(str, ch);
+	if(!p) return -1; else return p - str;
 }
 
 /*

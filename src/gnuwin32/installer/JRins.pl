@@ -121,6 +121,7 @@ Name: "refman"; Description: "PDF Reference Manual"; Types: full custom
 Name: "libdocs"; Description: "Docs for Packages grid and survival"; Types: user full custom
 Name: "devel"; Description: "Source Package Installation Files"; Types: user full custom
 Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom
+Name: "mbcs"; Description: "Version for East Asian languages"; Types: custom
 Name: "Rd"; Description: "Source Files for Help Pages"; Types: full custom
 
 [Files]
@@ -166,6 +167,7 @@ sub listFiles {
     $fn = $File::Find::name;
     $fn =~ s+^./++;
     my $mini = 1;
+    my $newname = "";
     if (!(-d $_)) {
 	$fn =~ s+/+\\+g;
 	$dir = $fn;
@@ -243,11 +245,16 @@ sub listFiles {
 	} elsif ($_ eq "modules\\iconv.dll") {
 	    $component = "main";
 	    $mini = 0;
+	} elsif ($_ eq "bin\\Rmbcs.dll") {
+	    $component = "mbcs";
+	    $mini = 0;
+	    $newname = "R.dll";
 	} else {
 	    $component = "main";
 	}
 
 	$lines="Source: \"$path\\$fn\"; DestDir: \"{app}$dir\"; Flags: ignoreversion; Components: $component\n";
+	$lines="Source: \"$path\\$fn\"; DestDir: \"{app}$dir\"; DestName: \"$newname\"; Flags: ignoreversion; Components: $component\n" if $newname ne "";
 
 	print insfile $lines;
 	if ($mini) {

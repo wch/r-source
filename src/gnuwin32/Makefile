@@ -47,7 +47,8 @@ else
 R-DLLFLAGS = -mwindows
 endif
 
-R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion $(LIBEXTRAS)
+## we may not need msvcp60, but no harm to include it.
+R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion -lmsvcp60 $(LIBEXTRAS)
 dllversion-RESFLAGS =--include-dir ../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c extra.c \
@@ -74,10 +75,6 @@ endif
 
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS = $(FOPTFLAGS)
-
-ifdef SUPPORT_GUI_MBCS
-CFLAGS += -DSUPPORT_GUI_MBCS
-endif
 
 Rpwd.exe: front-ends/Rpwd.exe
 	$(CP) $< $@
@@ -170,6 +167,7 @@ rlibs:
 rmodules:
 	$(MAKE) --no-print-directory -C ../modules \
 	  OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
+	$(CP) unicode/iconv.dll ../../modules/
 
 COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
@@ -190,12 +188,13 @@ Rdll: makeMakedeps libRblas.a ../../bin/R.dll
 
 ../../bin/R.dll: FORCE
 	@$(MAKE) --no-print-directory fixfiles
+	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory rlibs
 	@$(MAKE) --no-print-directory makeMakedeps
 	@$(MAKE) --no-print-directory R.dll
 	@$(MKDIR) -p ../../bin
 	$(CP) R.dll ../../bin/
-	$(CP) unicode/iconv.dll ../../modules/
+	@$(MKDIR) -p ./../modules/
 ifdef USE_UNICOWS
 	$(CP) unicode/opencow.dll ../../bin/
 endif
@@ -603,8 +602,23 @@ crandir:
 	  -e "s/@DATE@/$(DATE)/g" \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/mini.in > cran/mini/index.html
 
+rbuild-no-mbcs:
+	@$(MAKE) --no-print-directory fixfiles
+	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
+	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
+	@$(SED) -e '/SUPPORT_MBCS/d' fixed/h/config.h > ../include/config.h
+	@$(MAKE) --no-print-directory libRblas.a
+	@$(MAKE) --no-print-directory ../../bin/R.dll
+	@mv ../../bin/R.dll ../../bin/Rnombcs.dll
+	@$(RM) ../include/config.h ../include/Rconfig.h
+
 distribution:
-	$(MAKE) all
+	@$(MAKE) Rpwd.exe
+	@$(MAKE) rbuild-no-mbcs
+	@$(MAKE) rbuild
+	@$(MAKE) rpackage
+	@$(MAKE) htmldocs
+	@$(MAKE) -C ../../po -f Makefile.win
 	$(MAKE) bitmapdll
 	$(MAKE) recommended
 	$(MAKE) vignettes

@@ -17,15 +17,24 @@ download it from
 
 a self-extracting zip archive that contains instructions.
 
+For support for East Asian languages you also need mscvp60.dll
+installed: again all recent versions of Windows have it and many
+applications install it.  So first do a search on your machine and then
+on the internet.
+
 
 Installation
 ============
 
 The distribution can be obtained in two versions:
 
-1) A 23Mb file @RWVER@.exe.  Just run this for a Windows-XP style
+1) A 24Mb file @RWVER@.exe.  Just run this for a Windows-XP style
 installer.  It contains all the R components, and you can select what
-want installed.
+want installed.  If you are using an East Asian version of Windows
+(certainly Chinese, Japanese, Korean and perhaps Thai and Vietnamese)
+you need to select the component which supplies support for those
+languages.  (This replace R.dll with a version that is aware of
+multi-byte locales and depends on mscvp60.dll.)
 
 
 2) Files miniR.exe and miniR-1.bin to miniR-7.bin.  If you need to,

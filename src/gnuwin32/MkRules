@@ -34,11 +34,6 @@ HHWDIR=C:/Program Files/HTML Help Workshop
 TCL_HOME = $(RHOME)/Tcl
 TCL_VERSION = 84
 
-# Internationalization support
-# Define if RGui is to support multi-byte characters.
-# SUPPORT_GUI_MBCS = YES
-# Define if R engine is to support multi-byte characters & also in config.h
-# SUPPORT_MBCS = YES
 # Define to use unicows
 # USE_UNICOWS = YES
 
@@ -80,12 +75,7 @@ DEPARG=-M
 endif
 
 ifdef SUPPORT_GUI_MBCS
-LIBEXTRAS = -lmsvcp60
 CFLAGS+=-DSUPPORT_GUI_MBCS
-else
-ifdef SUPPORT_MBCS
-LIBEXTRAS = -lmsvcp60
-endif
 endif
 
 ifdef USE_UNICOWS

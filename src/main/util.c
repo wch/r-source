@@ -1232,6 +1232,16 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, void *ps)
 { return (size_t)(-1);}
 Rboolean mbcsValid(char *str) { return TRUE; }
 void mbcsToLatin1(char *in, char *out) {}
+#undef Rf_strchr
+char *Rf_strchr(const char *s, int c)
+{
+    return strchr(s, c);
+}
+#undef Rf_strrchr
+char *Rf_strrchr(const char *s, int c)
+{
+    return strrchr(s, c);
+}
 #endif
 
 #ifdef Win32

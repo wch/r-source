@@ -92,6 +92,7 @@ The information here applies only to recent versions of R for Windows,
 @menu
 * Where can I find the latest version?::  
 * How do I install R for Windows?::  
+* I want to run R in Chinese/Japanese/Korean::  
 * Can I customize the installation?::  
 * How do I run it?::            
 * Can I run R from a CD or USB drive?::  
@@ -121,7 +122,7 @@ for a list), navigate to the @code{bin/windows/base} directory and
 collect the files you need.  There are two versions of the distribution
 of the current release.
 
-1) @code{@RWVER@.exe} is about 23Mb.  This contains all the components
+1) @code{@RWVER@.exe} is about 24Mb.  This contains all the components
 and allows as complete as installation as you choose.
 
 2) Directory @code{miniR} contains @code{miniR.exe} and seven files
@@ -139,7 +140,7 @@ versions of R.  The @code{r-patched} build includes bug fixes to the
 current release, and @code{r-devel} contains changes that will eventually
 make it into the next major @code{x.y.0} release.
 
-@node How do I install R for Windows?, Can I customize the installation?, Where can I find the latest version?, Installation and Usage
+@node How do I install R for Windows?, I want to run R in Chinese/Japanese/Korean, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
 You need Windows 95/98/ME/NT4/2000/XP/2003 Server: Windows 3.11+win32s
@@ -167,7 +168,27 @@ field (@emph{after} any final double quote), for example @code{--sdi
 --max-mem-size=1Gb}.  You can also set environment variables at the end
 of the Target field, for example @code{R_LIBS=p:/myRlib}.
 
-@node Can I customize the installation?, How do I run it?, How do I install R for Windows?, Installation and Usage
+
+@node I want to run R in Chinese/Japanese/Korean, Can I customize the installation?, How do I install R for Windows?, Installation and Usage
+@section I want to run R in Chinese/Japanese/Korean
+
+As from R 2.1.0 this is possible by installing R with support for `East
+Asian' languages (with a suitable version of Windows -- Western
+installations of Windows XP do not by default have such support). You
+will need @file{msvcp60.dll} installed: it is part of modern versions of
+Windows, and is often installed by other programs.  So it is worth
+searching your machine and copying it from another program's directory
+to R's @file{bin} directory.
+
+In such locales @file{Rterm.exe} should be used for batch use only, but
+@file{RGui.exe} will support single- and double-width characters.
+
+It will be necessary to select suitable fonts in @file{Rconsole} and
+@file{Rdevga}; in the latter you can replace @code{Arial} by @code{Arial
+Unicode MS}, and we used @code{FixedSys} in @file{Rconsole}.
+
+
+@node Can I customize the installation?, How do I run it?, I want to run R in Chinese/Japanese/Korean, Installation and Usage
 @section Can I customize the installation?
 
 The normal way to customize the installation is by selecting components
@@ -188,7 +209,7 @@ set the default Start-menu group name
 set the initial list of components.  This is only useful with
 @code{@RWVER@.exe}, which has components @code{main}, @code{chtml},
 @code{html}, @code{latex}, @code{manuals},  @code{refman},
-@code{libdocs}, @code{devel}, @code{tcl} and @code{Rd}.
+@code{libdocs}, @code{devel}, @code{tcl}, @code{mbcs} and @code{Rd}.
 @end table
 
 @noindent
@@ -242,11 +263,9 @@ directory.  This should be no problem on a properly configured NT-based
 version of Windows, but otherwise does mean that it may not be possible
 to run R without creating a shortcut in a writable folder.
 
-R will run more slowly from a slow storage medium, and will access it
-through the session.  Some tests in late 2004 showed it was acceptable
-run from a desktop CD drive or from a USB 2.0 thumbdrive, but was
-noticeably slow when run from a older laptop CD drive and unacceptably
-slow from a USB 1.1 thumbdrive.
+R 2.0.x ran more slowly from a slow storage medium but this is no longer
+true as from 2.1.0.
+
 
 @node How do I UNinstall R?, What's the best way to upgrade?, Can I run R from a CD or USB drive?, Installation and Usage
 @section How do I UNinstall R?
@@ -918,8 +937,8 @@ interchangeable (for the same 2.x.? version of R, at least).
 for example, in the console and to annotate graphs.  Similar comments
 apply to any non-Western European language.
 
-We believe this is possible by setting suitable fonts in the Rconsole
-and Rdevga configuration files (see Q4.2 and the next Q).  You can
+We believe this is possible by setting suitable fonts in the @file{Rconsole}
+and @file{Rdevga} configuration files (see Q4.2 and the next Q).  You can
 specify additional fonts in Rdevga, and use them by
 
 @example
