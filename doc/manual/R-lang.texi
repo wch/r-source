@@ -71,13 +71,13 @@ graphics, interfaces to other languages and debugging facilities.  This
 manual details and defines the @R{} language.
 
 The @R{} language is a dialect of @Sl{} which was designed in the 1980s
-and has been in widespread use in the statistical community since then.
-The principal designer, John M. Chambers was awarded the 1998 ACM
+and has been in widespread use in the statistical community since.
+Its principal designer, John M. Chambers, was awarded the 1998 ACM
 Software Systems Award for @Sl{}.  
 
 The language syntax has a superficial similarity with C, but the
 semantics are of the FPL (functional programming language) variety with
-stronger affinities with Lisp and @acronym{APL}. In particular, it
+stronger affinities with Lisp and @acronym{APL}.  In particular, it
 allows ``computing on the language'', which in turn makes it possible to
 write functions that take expressions as input, something that is often
 useful for statistical modeling and graphics.
@@ -3208,7 +3208,7 @@ via @code{dyn.load}.  They are primarily intended for compiled @C{} and
 FORTRAN code respectively, but the @code{.C} function can be used with
 other languages which can generate C interfaces, for example C++.
 
-Functions @code{Call} and @code{External} provide interfaces which allow
+Functions @code{.Call} and @code{.External} provide interfaces which allow
 compiled code (primarily compiled @C{} code) to mainipulate @R{} objects.
 
 @node .Internal and .Primitive,  , Foreign language interfaces, System and foreign language interfaces

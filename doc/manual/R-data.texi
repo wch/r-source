@@ -84,10 +84,10 @@ principal authors of the packages mentioned are
 @item @pkg{RmSQL} @tab  Torsten Hothorn
 @item @pkg{RMySQL} @tab David James and Saikat DebRoy
 @item @pkg{RODBC} @tab Michael Lapsley
-@item @pkg{RPgSQL} @tab Timothy Keitt
-@item @pkg{Rstreams} @tab Brian Ripley and Duncan Murdoch
 @item @pkg{RSPerl} @tab Duncan Temple Lang
+@item @pkg{RPgSQL} @tab Timothy Keitt
 @item @pkg{RSPython} @tab Duncan Temple Lang
+@item @pkg{Rstreams} @tab Brian Ripley and Duncan Murdoch
 @end multitable
 @end quotation
 
@@ -109,17 +109,18 @@ functionality.
 Unless otherwise stated, everything described in this manual is
 available for both Unix/Linux and Windows versions of @R{}.
 
-In general statistical systems like @R{} are not particularly well
+In general, statistical systems like @R{} are not particularly well
 suited to manipulations of large-scale data.  Some other systems are
 better than @R{} at this, and part of the thrust of this manual is to
 suggest that rather than duplicating functionality in @R{} we can make
 the other system do the work!  (For example Therneau & Grambsch (2000)
 comment that they prefer to do data manipulation in SAS and then use
-@pkg{survival5} in @Sl{} for the analysis.) Several new packages allow
-functionality developed in languages such as @code{Java}, @code{perl}
-and @code{python} to be directly integrated with @R{} code, making the
-use of facilities in these languages even more appropriate. (See the
-@pkg{Java}, @pkg{RSPerl} and @pkg{RSPython} packages.)
+@pkg{survival5} in @Sl{} for the analysis.)  Several recent packages
+allow functionality developed in languages such as @code{Java},
+@code{perl} and @code{python} to be directly integrated with @R{} code,
+making the use of facilities in these languages even more
+appropriate. (See the @pkg{Java}, @pkg{RSPerl} and @pkg{RSPython}
+packages.)
 
 
 
@@ -289,21 +290,22 @@ and the @code{options(width)} setting may need to be increased.
 @section XML
 @cindex XML
 
-When reading data from text files, it is the responsibility of the
-user to know and specify the conventions used to create that file,
-e.g. the comment character, whether a header line is present, the
-value separator, representation for missing values, etc. described in
-@ref{Export to text files}. A markup language which can be used to
-describe not only content, but also the structure of the content can
-make a file self-describing so that one need not provide these details
+When reading data from text files, it is the responsibility of the user
+to know and to specify the conventions used to create that file,
+e.g. the comment character, whether a header line is present, the value
+separator, the representation for missing values (and so on) described
+in @ref{Export to text files}.  A markup language which can be used to
+describe not only content but also the structure of the content can
+make a file self-describing, so that one need not provide these details
 to the software reading the data.
- The eXtensible Markup Language -- more commonly know simply as
+
+The eXtensible Markup Language -- more commonly know simply as
 @acronym{XML} -- can be used to provide such structure, not only for
-standard datasets but also, more complex data structures.
+standard datasets but also more complex data structures.
 @acronym{XML} is becoming extremely popular and is emerging as a
-standard for general data markup and exchange. It is being used by
-different communities to describe geographical data such as maps;
-graphical displays; mathematics; and so on.
+standard for general data markup and exchange.  It is being used by
+different communities to describe geographical data such as maps,
+graphical displays, mathematics and so on.
 
 The @pkg{XML} package provides general facilities for reading and
 writing @acronym{XML} documents within both @R{} and S-PLUS in the hope
@@ -312,14 +314,13 @@ people are exploring how we can use @acronym{XML} for, amongst other
 things, representing datasets to be shared across different
 applications; storing @R{} and S-PLUS objects so they can be shared by
 both systems; representing plots via @acronym{SVG} (Scalable Vector
-Graphics), a dialect of @acronym{XML}; representing function
+Graphics, a dialect of @acronym{XML}); representing function
 documentation; generating ``live'' analyses/reports that contain text,
 data and code.
 
-A reasonable description of the @pkg{XML} package are currently
-outside the scope of this document and are described on the package's
-@uref{http://www.omegahat.org/RSXML, Web page} along
-with different examples.
+A description of the facilities of the @pkg{XML} package is outside the
+scope of this document: see the package's
+@uref{http://www.omegahat.org/RSXML, Web page} for details and examples.
 
 
 @node Spreadsheet-like data, Importing from other statistical systems, Introduction, Top
@@ -432,7 +433,7 @@ use argument @code{strip.white = TRUE}.
 
 By default, @code{read.table} ignores empty lines. This can be changed
 by setting @code{blank.lines.skip = FALSE}, which will only be useful in
-connection with @code{fill = TRUE}, perhaps to indicate missing data in
+conjunction with @code{fill = TRUE}, perhaps to indicate missing data in
 a regular layout.
 
 @end enumerate
