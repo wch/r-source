@@ -135,10 +135,8 @@ function(package, dir, lib.loc = NULL)
             codeObjs <-
                 codeObjs[sapply(codeObjs, function(f) {
                     f <- get(f, envir = codeEnv)
-                    fAttr <- c(class(f), attr(f, "package"))
-                    (length(fAttr) == 2
-                     && fAttr[1] == "genericFunction"
-                     && fAttr[2] != basename(dir))
+                    (is(f, "genericFunction")
+                     && identical(f@package, basename(dir)))
                 }) == FALSE]
         }
         ## </FIXME>
@@ -171,12 +169,14 @@ function(package, dir, lib.loc = NULL)
         ## Undocumented S4 methods?
         methodsSignatures <- function(f) {
             mlist <- getMethods(f, codeEnv)
-            meths <-
-                linearizeMlist(mlist, FALSE)
+            meths <- linearizeMlist(mlist, FALSE)
             classes <- meths@classes
-            default <- as.logical(lapply(classes, function(x)identical(all(x== "ANY"),TRUE)))
+            default <-
+                as.logical(lapply(classes,
+                                  function(x)
+                                  identical(all(x == "ANY"), TRUE)))
             if(any(default)) {
-                ## don't look for doc on a generated default method
+                ## Don't look for doc on a generated default method.
                 if(is(finalDefaultMethod(mlist), "derivedDefaultMethod"))
                     classes <- classes[!default]
             }
