@@ -1558,7 +1558,7 @@ c Var
       return
       end
 
-c lowesd() : Initialize iv(*) and v(1:4)
+c lowesd() : Initialize iv(*) and v(1:4)
 c ------     called only by loess_workspace()  in ./loessc.c
       subroutine lowesd(versio,iv,liv,lv,v,d,n,f,ideg,nvmax,setlf)
       integer versio,liv,lv,d,n,ideg,nvmax
