@@ -397,9 +397,9 @@ int StrMatch(char *s, char *t);
 
 double R_Log10(double);
 
-#include "GraphicsDevice.h"
-#include "GraphicsEngine.h"
-#include "GraphicsBase.h"
+#include <R_ext/GraphicsDevice.h>
+#include <R_ext/GraphicsEngine.h>
+#include <R_ext/GraphicsBase.h>
 
 /* FIXME: Make this a macro to avoid function call overhead?
  */
