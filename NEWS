@@ -14,6 +14,7 @@ USER-VISIBLE CHANGES
     o	The default colour palette now has "grey" instead of "white"
 	in location 8.	See palette().
 
+
 NEW FEATURES
 
     o	New operator :: in the grammar, for name spaces.
@@ -53,7 +54,9 @@ NEW FEATURES
     o	axis() has three new optional arguments `col', `lty', and `lwd'
 	all for drawing the axis line and tick marks.
 
-    o	Function vcov() (formerly in MASS).
+    o	Function vcov() (formerly in MASS), a generic function to
+	return the variance-covariance matrix of the parameter
+	estimates of a fitted model.
 
     o	duplicated() and unique() have methods for matrices and arrays
 	(based on ideas from Jens Oehlschlägel).
@@ -94,6 +97,9 @@ NEW FEATURES
     o	print.factor() has new arguments `max.levels' (with a smart default)
 	and `width'.  print.ordered() is no longer needed.
 
+    o	.Platform$canonical.name gives the canonical name
+	(cpu-vendor-os) of the platform in use.
+
 
 DEPRECATED & DEFUNCT
 
@@ -110,7 +116,7 @@ DEPRECATED & DEFUNCT
 
 DOCUMENTATION CHANGES
 
-    o	new demo(persp) containing some of the former example(persp) ones
+    o	New demo(persp) containing some of the former example(persp) ones
 	and more.
 
 

@@ -41,13 +41,14 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP value, names;
     char *tmp;
     checkArity(op, args);
-    PROTECT(value = allocVector(VECSXP, 5));
-    PROTECT(names = allocVector(STRSXP, 5));
+    PROTECT(value = allocVector(VECSXP, 6));
+    PROTECT(names = allocVector(STRSXP, 6));
     SET_STRING_ELT(names, 0, mkChar("OS.type"));
     SET_STRING_ELT(names, 1, mkChar("file.sep"));
     SET_STRING_ELT(names, 2, mkChar("dynlib.ext"));
     SET_STRING_ELT(names, 3, mkChar("GUI"));
     SET_STRING_ELT(names, 4, mkChar("endian"));
+    SET_STRING_ELT(names, 5, mkChar("canonical.name"));
     SET_VECTOR_ELT(value, 0, mkString(R_OSType));
     SET_VECTOR_ELT(value, 1, mkString(R_FileSep));
     tmp = (char *) malloc(strlen(SHLIB_EXT) + 1);
@@ -62,6 +63,7 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     SET_VECTOR_ELT(value, 4, mkString("little"));
 #endif
+    SET_VECTOR_ELT(value, 5, mkString(R_PLATFORM));
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(2);
     return value;

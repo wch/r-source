@@ -32,6 +32,10 @@ Platform()
   \item{endian}{character, \code{"big"} or \code{"little"}, giving the
     endianness of the processor in use.
   }
+  \item{canonical.name}{character, the canonical name (cpu-vendor-os)
+    of the platform, derived from the \code{R_PLATFORM} variable found
+    at configuration.
+  }
 }
 \seealso{
   \code{\link{machine}} for another view of the OS,
