@@ -16,10 +16,11 @@ NEW FEATURES
     o	coplot() now labels levels when conditioning variable is factor
 	(John Maindonald).
 
-    o	A new function filled.contour() has been added.	 It produces a
-	variant contour plots where the area between contours is filled
-	with a solid colour.  The function (currently) uses the layout()
-	function and so is restricted to a full page display.
+    o	A new function filled.contour() has been added.	 It produces
+	a variant of contour plots where the area between contours
+	is filled with a solid colour.  The function (currently)
+	uses the layout() function and so is restricted to a full
+	page display.
 
     o	The function terrain.colors() has been modified to remove a
 	visual discontinuity (at yellow).  In addition, a function
@@ -43,12 +44,17 @@ NEW FEATURES
 
     o	Gnome support added.
 
-    o	The X11 graphics driver no longer produces "color allocation"
-	error messages.	 On pseudocolor displays, the driver allocates
-	the best color cube it can at startup and approximates the
-	user-specified colors as best it can from the cube.  On
-	truecolor displays, you get exactly the color you request.
-	(Directcolor and staticcolor displays are not supported yet).
+    o	The X11 graphics driver can now use a variety of strategies
+	for handing color.  This means that it is now possible to
+	use black and white or grayscale graphics on color displays.
+	There are two strategies for handing color on pseudocolor
+	displays.  The original "allocate-colors-until-they-run-out"
+	strategy has been supplemented by one which allocates a
+	color cube at startup and approximates requested colors
+	by those in the cube.  On truecolor displays, there is no
+	limit on the number of colors which can be displayed and
+	you get exactly the color you request.  (Note that
+	Directcolor and staticcolor displays are not supported yet).
 
     o	The "persp" function now allows shading of the rendered
 	surface using a simple lighting model.
