@@ -25,10 +25,14 @@ plot.function(fn, from = 0, to = 1, xlim, \dots)
 }
 \details{
   The evaluation of \code{expr} is at \code{n} points equally spaced
-  over the range \code{[from, to]}.  The points determined in this way
-  are then joined with straight lines.  \code{fn(x)} or \code{expr}
-  (with \code{x} inside) must return a numeric of the same length as
-  \code{x}.
+  over the range \code{[from, to]}, possibly adapted to log scale.  The
+  points determined in this way are then joined with straight lines.
+  \code{fn(x)} or \code{expr} (with \code{x} inside) must return a
+  numeric of the same length as \code{x}.
+
+  If \code{add = TRUE}, \code{c(from,to)} default to \code{xlim} which
+  defaults to the current x-limits.  Further, \code{log} is taken from the
+  current plot when \code{add} is true.
 
   This used to be a quick hack which now seems to serve a useful purpose,
   but can give bad results for functions which are not smooth.
@@ -39,7 +43,7 @@ plot.function(fn, from = 0, to = 1, xlim, \dots)
   \code{\link{splinefun}} for spline interpolation, \code{\link{lines}}.
 }
 \examples{
-par(mfrow=c(2,2))
+op <- par(mfrow=c(2,2))
 curve(x^3-3*x, -2, 2)
 curve(x^2-2, add = TRUE, col = "violet")
 
@@ -47,8 +51,10 @@ plot(cos, xlim = c(-pi,3*pi), n = 1001, col = "blue")
 
 chippy <- function(x) sin(cos(x)*exp(-x/2))
 curve(chippy, -8, 7, n=2001)
+curve(chippy, -8, -5)
 
 for(ll in c("","x","y","xy"))
-   curve(log(1+x), 1,100, log=ll, sub=paste("log=",ll))
+   curve(log(1+x), 1,100, log=ll, sub=paste("log= '",ll,"'",sep=""))
+par(op)
 }
 \keyword{hplot}
