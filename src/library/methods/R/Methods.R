@@ -216,6 +216,8 @@ getMethodsForDispatch <-
     }
 }
 
+##NB used internally in MethodsListSelect.  Must NOT use the standard version
+## to prevent recursion
 .getMethodsForDispatch <- function(f, fdef) {
     ev <- .evBasic(fdef)
     if(.existsBasic(".Methods", envir = ev)) {

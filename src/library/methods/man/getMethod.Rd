@@ -51,7 +51,7 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
     are not likely to find this approach convenient, but it is used
     internally and is marginally more efficient.)
   }
-  \item{where}{ The position or environment in which to look for the method:  by default,
+  \item{where}{ The position or environment in which to look for the method(s):  by default,
       anywhere in
     the current search list.}
   \item{optional}{ If the selection does not produce a unique result,
@@ -124,7 +124,10 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
   particular generic (in the form of a generic function with the
   methods information in its environment).  The function is called
   from the evaluator to merge method information, and is not intended
-  to be called directly.
+  to be called directly.  Note that it gets \emph{all} the visible
+  methods for the specified functions.  If you want only the methods
+  defined explicitly in a particular environment, use the function
+  \code{\link{getMethodsMetaData}} instead.
 
   The function \code{MethodsListSelect} performs a full search
   (including all inheritance and group generic information: see the

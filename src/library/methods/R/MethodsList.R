@@ -174,8 +174,13 @@ MethodsListSelect <-
 {
     if(!resetAllowed) # ensure we restore the real methods for this function
         resetMlist <- .getMethodsForDispatch(f, fdef)
-    if(is.null(mlist))
-        mlist <- .getMethodsForDispatch(f, fdef)
+    ## look for call from C dispatch code during another call to MethodsListSelect
+    if(is.null(f)) {} # Recall, not from C
+    else {
+        fMethods <- .getMethodsForDispatch(f, fdef)
+        if(is.null(mlist) || (evalArgs && is.function(fMethods)))
+            mlist <- fMethods
+    }
     resetNeeded <- .setIfBase(f, fdef, mlist) # quickly protect against recursion -- see Methods.R
     if(resetNeeded) {
         on.exit(.setMethodsForDispatch(f, fdef, mlist))
@@ -192,7 +197,7 @@ MethodsListSelect <-
     if(!is.logical(useInherited))
         stop("useInherited must be TRUE, FALSE, or a named logical vector of those values; got an object of class \"",
              class(useInherited), "\"")
-    if(identical(mlist, getMethodsForDispatch(f, fdef))) {
+    if(identical(mlist, .getMethodsForDispatch(f, fdef))) {
         resetNeeded <- TRUE
         ## On the initial call:
         ## turn off any further method dispatch on this function, to avoid recursive

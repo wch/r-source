@@ -638,6 +638,9 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
     char *class;
     SEXP arg_slot, arg_sym, method, value = R_NilValue;
     int nprotect = 0;
+    /* check for dispatch turned off inside MethodsListSelect */
+    if(isFunction(mlist))
+	return mlist;
     PROTECT(arg_slot = R_do_slot(mlist, s_argument)); nprotect++;
     if(arg_slot == R_NilValue) {
 	error("Object of class \"%s\" used as methods list for function \"%s\" ( no \"argument\" slot)",
