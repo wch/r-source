@@ -1,0 +1,138 @@
+# This Makefile is inted as a facility to
+# build recommended packages and their
+# help files
+#
+# Jago April 2002, Stefano M. Iacus
+#
+#
+
+
+RHOME = :::
+all Ä library 
+	
+# PACKAGES = list of pkgs you want to build the R code of
+# LIBF     = list of pkgs that need a dll code to be built
+# DATA     = list of pkgs that contains data directory 
+# DEMO     = list of pkgs that contains demo folder
+# INST     = list of pkgs that has additional inst files
+
+
+## ------------- library -----------
+PACKAGES =  boot cluster foreign grid KernSmooth lattice mgcv ¶
+            nlme rpart survival class MASS spatial nnet
+LIBF = cluster foreign grid KernSmooth lattice mgcv ¶
+       nlme rpart survival class MASS spatial nnet
+DATA = boot cluster KernSmooth lattice MASS nlme rpart spatial survival
+DEMO = lattice
+INST = class grid lattice MASS nlme nnet spatial survival
+
+
+library Ä mainfiles Libfiles datafiles instfiles help demofiles
+
+mainfiles Ä $OutOfDate
+    if ! `Exists -d {RHOME}library`
+	 NewFolder {RHOME}library
+	end
+	for pkg in {PACKAGES}
+	 Begin
+	  if ! `Exists -d {RHOME}library:{pkg}`
+	   NewFolder {RHOME}library:{pkg}
+	  end
+	  if  `Exists ::library:{pkg}:DESCRIPTION`
+	  Duplicate -y ::library:{pkg}:DESCRIPTION {RHOME}library:{pkg}
+	  end
+	  if  `Exists ::library:{pkg}:INDEX`
+	   Duplicate -y ::library:{pkg}:INDEX {RHOME}library:{pkg}
+	  end 
+	  if  `Exists ::library:{pkg}:TITLE`
+	     Duplicate -y ::library:{pkg}:TITLE {RHOME}library:{pkg}
+      end
+	  echo "installing R files in {pkg}"
+	  if ! `Exists -d {RHOME}library:{pkg}:R`
+	   NewFolder {RHOME}library:{pkg}:R
+	  end
+	  catenate ::library:{pkg}:R:Å.Å > {RHOME}library:{pkg}:R:{pkg}
+	  if `Exists -d ::library:{pkg}:R:mac`
+	    catenate ::library:{pkg}:R:mac:Å.R >> {RHOME}library:{pkg}:R:{pkg}
+	  end
+	  Duplicate {RHOME}library:{pkg}:R:{pkg} {RHOME}library:{pkg}:R:{pkg}.ux
+      translate ¶0x0a ¶0x0d <{RHOME}library:{pkg}:R:{pkg}.ux >{RHOME}library:{pkg}:R:{pkg}
+      delete -y {RHOME}library:{pkg}:R:{pkg}.ux
+	 end
+	 
+    end 
+
+
+Libfiles Ä $OutOfDate
+	for pkg in {LIBF}
+	  Begin
+	   echo "building dylib code for {pkg}"
+	   if ! `Exists -d {RHOME}library:{pkg}:libs`
+	    NewFolder {RHOME}library:{pkg}:libs
+	   end
+	   Duplicate -y :makefiles:{pkg}.mac  ::library:{pkg}:src:Makefile.mac
+	   Directory ::library:{pkg}:src
+	   Make -f Makefile.mac >build
+	   build
+	   Directory ::::macintosh
+	  end
+	 end 
+
+
+datafiles Ä $OutOfDate
+	for pkg in {DATA}
+	  Begin
+	   echo "installing data files in {pkg}"
+	   if ! `Exists -d {RHOME}library:{pkg}:data`
+	    NewFolder {RHOME}library:{pkg}:data
+	   end
+	   Duplicate -y ::library:{pkg}:data:00Index ¶
+	    ::library:{pkg}:data:Å.Å {RHOME}library:{pkg}:data
+	  end
+	 end 
+
+instfiles Ä $OutOfDate
+	for pkg in {INST}
+	  Begin
+	   echo "installing supplementary files for {pkg}"
+	   Duplicate -y ::library:{pkg}:inst:Å :::library:{pkg}:
+	  end
+	 end 
+
+demofiles Ä $OutOfDate
+	for pkg in {DEMO}
+	 Begin
+	  echo "installing demo files in {pkg}"
+	  if ! `Exists -d  {RHOME}library:{pkg}:demo`
+	   NewFolder {RHOME}library:{pkg}:demo
+	  end
+	  Duplicate -y ::library:{pkg}:demo:00Index ¶
+         ::library:{pkg}:demo:Å.Å {RHOME}library:{pkg}:demo
+	 end
+	end 
+
+
+help Ä $OutOfDate
+	for pkg in {PACKAGES}
+	 Begin
+	  SetDirectory {RHOME}share:perl
+	  perl  build-help-mac.pl -txt -html -example -latex :::src:library:{pkg} :::library
+	  perl Rd2contents.pl --os="mac" >:::library:{pkg}:CONTENTS :::src:library:{pkg}
+      SetDirectory :::src:macintosh:
+      if {pkg} == base
+	    catenate funclist.txt :::library:{pkg}:help:AnIndex >tmpfile
+        duplicate -y tmpfile :::library:{pkg}:help:AnIndex
+        delete -y tmpfile
+      end
+	 end
+	end 
+	catenate {RHOME}library:Å:CONTENTS > {RHOME}doc:html:search:index.txt
+	SetDirectory {RHOME}share:perl
+	perl build-help-mac.pl  -htmllists -rhome ::
+    SetDirectory :::src:macintosh:
+
+
+
+     	
+
+
