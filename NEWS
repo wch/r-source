@@ -249,6 +249,7 @@ BUG FIXES
 
     o	Improved logic in the re-scaling of plots in dev.print.
 
+    o	all(NULL == NULL) is TRUE now.
 
 
 	**************************************************
