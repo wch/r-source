@@ -44,10 +44,11 @@ library <-
                        "See the Note in ?library"))
     }
 
-    checkConflicts <- function(package, pkgname, pkgpath)
+    checkConflicts <- function(package, pkgname, pkgpath, nogenerics)
     {
         dont.mind <- c("last.dump", "last.warning", ".Last.value",
-                       ".Random.seed", ".First.lib", ".packageName")
+                       ".Random.seed", ".First.lib", ".packageName",
+                       ".noGenerics")
         sp <- search()
         lib.pos <- match(pkgname, sp)
         if(file.exists(objectsFile <-
@@ -57,8 +58,10 @@ library <-
                        && ob$origpkg !=package), 1]
         } else {
             ob <- objects(lib.pos, all = TRUE)
-            if("package:methods" %in% sp) {
+            if(!nogenerics && "package:methods" %in% sp) {
                 ## ignore generics not defined for the package
+                ## this gets all the objects so is very slow
+                ## and evaluates all promises: a *very* bad idea
                 if( length(ob) > 0 )
                     ob <- ob[sapply(ob, function(f) {
                         f <- get(f, pos = lib.pos)
@@ -133,8 +136,7 @@ library <-
 	    if(file.exists(codeFile))
                 sys.source(codeFile, loadenv, keep.source = keep.source)
             else if(verbose)
-		warning(paste("Package ",
-                              sQuote(package),
+		warning(paste("Package ", sQuote(package),
                               "contains no R code"))
             ## now transfer contents of loadenv to an attached frame
 	    env <- attach(NULL, name = pkgname)
@@ -161,13 +163,13 @@ library <-
                     if (logical.return) return(FALSE)
                     else stop(".First.lib failed")
             }
-
+            nogenerics <- exists(".noGenerics", envir = env, inherits = FALSE)
 	    if(warn.conflicts &&
                !exists(".conflicts.OK", envir = env, inherits = FALSE))
-                checkConflicts(package, pkgname, pkgpath)
+                checkConflicts(package, pkgname, pkgpath, nogenerics)
 
-            if(hadMethods && !identical(pkgname, "package:methods"))
-               cacheMetaData(env, TRUE)
+            if(!nogenerics && hadMethods &&
+               !identical(pkgname, "package:methods")) cacheMetaData(env, TRUE)
             on.exit()
 	}
 	else if(verbose)

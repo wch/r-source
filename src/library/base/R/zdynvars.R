@@ -26,3 +26,5 @@
             .lib.loc
     }
 })
+
+.noGenerics <- TRUE
