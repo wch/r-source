@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2000   Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1999-2001   Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,12 @@
 #endif
 
 #include <Rmath.h> /* fmax2, imin2, imax2 */
-#include "R_ext/Applic.h"  /* prototypes for lowess and clowess */
+#include "R_ext/Applic.h" /* prototypes for lowess and clowess */
+#include "R_ext/Boolean.h"
+#include "R_ext/Utils.h"  /* rPsort() */
+#ifdef DEBUG_lowess
+# include "R_ext/Print.h"
+#endif
 
 static double fsquare(double x)
 {
@@ -36,50 +41,9 @@ static double fcube(double x)
     return x * x * x;
 }
 
-
-static void sort(double *x, int n)
-{
-    int i, ir, j, l;
-    double xt;
-
-    x--;
-
-    l = (n/2)+1;
-    ir = n;
-    for(;;) {
-	if (l > 1) {
-	    l--;
-	    xt = x[l];
-	}
-	else {
-	    xt = x[ir];
-	    x[ir] = x[1];
-	    ir--;
-	    if (ir == 1)
-		break;
-	}
-	i = l;
-	j = 2*l;
-	while (j <= ir) {
-	    if (j < ir && x[j] < x[j+1])
-		j++;
-	    if (xt >= x[j])
-		j = ir+1;
-	    else {
-		x[i] = x[j];
-		i = j;
-		j += i;
-	    }
-	}
-	x[i] = xt;
-    }
-    x[1] = xt;
-}
-
-
 static void lowest(double *x, double *y, int n, double *xs, double *ys,
 	int nleft, int nright, double *w,
-	int userw, double *rw, int *ok)
+	Rboolean userw, double *rw, Rboolean *ok)
 {
     int nrt, j;
     double a, b, c, h, h1, h9, r, range;
@@ -96,23 +60,23 @@ static void lowest(double *x, double *y, int n, double *xs, double *ys,
 
     /* sum of weights */
 
-    a = 0.0;
+    a = 0.;
     j = nleft;
-    while (j<=n) {
+    while (j <= n) {
 
 	/* compute weights */
 	/* (pick up all ties on right) */
 
-	w[j] = 0.0;
+	w[j] = 0.;
 	r = fabs(x[j] - *xs);
 	if (r <= h9) {
 	    if (r <= h1)
-		w[j] = 1.0;
+		w[j] = 1.;
 	    else
-		w[j] = fcube(1.0-fcube(r/h));
+		w[j] = fcube(1.-fcube(r/h));
 	    if (userw)
-		w[j] = rw[j]*w[j];
-	    a = a+w[j];
+		w[j] *= rw[j];
+	    a += w[j];
 	}
 	else if (x[j] > *xs)
 	    break;
@@ -123,41 +87,41 @@ static void lowest(double *x, double *y, int n, double *xs, double *ys,
     /* than nright because of ties) */
 
     nrt = j-1;
-    if (a <= 0.0)
-	*ok = 0;
+    if (a <= 0.)
+	*ok = FALSE;
     else {
-	*ok = 1;
+	*ok = TRUE;
 
 	/* weighted least squares */
 	/* make sum of w[j] == 1 */
 
 	for(j=nleft ; j<=nrt ; j++)
-	    w[j] = w[j]/a;
-	if (h > 0.0) {
-	    a = 0.0;
+	    w[j] /= a;
+	if (h > 0.) {
+	    a = 0.;
 
 	    /*  use linear fit */
 	    /* weighted center of x values */
 
 	    for(j=nleft ; j<=nrt ; j++)
-		a = a + w[j] * x[j];
+		a += w[j] * x[j];
 	    b = *xs - a;
-	    c = 0.0;
+	    c = 0.;
 	    for(j=nleft ; j<=nrt ; j++)
-		c = c+w[j]*fsquare(x[j]-a);
-	    if (sqrt(c)>0.001*range) {
-		b = b/c;
+		c += w[j]*fsquare(x[j]-a);
+	    if (sqrt(c) > 0.001*range) {
+		b /= c;
 
 		/* points are spread out */
 		/* enough to compute slope */
 
-		for(j=nleft ; j<=nrt ; j++)
-		    w[j] = w[j]*(b*(x[j]-a)+1.0);
+		for(j=nleft; j <= nrt; j++)
+		    w[j] *= (b*(x[j]-a) + 1.);
 	    }
 	}
-	*ys = 0.0;
-	for(j=nleft ; j<=nrt ; j++)
-	    *ys = *ys + w[j] * y[j];
+	*ys = 0.;
+	for(j=nleft; j <= nrt; j++)
+	    *ys += w[j] * y[j];
     }
 }
 
@@ -166,23 +130,25 @@ void clowess(double *x, double *y, int n,
 	     double f, int nsteps, double delta,
 	     double *ys, double *rw, double *res)
 {
-    int i, iter, j, last, m1, m2, nleft, nright, ns, ok;
+    int i, iter, j, last, m1, m2, nleft, nright, ns;
+    Rboolean ok;
     double alpha, c1, c9, cmad, cut, d1, d2, denom, r;
 
+    if (n < 2) {
+	ys[0] = y[0]; return;
+    }
+
+    /* nleft, nright, last, etc. must all be shifted to get rid of these: */
     x--;
     y--;
     ys--;
-    rw--;
-    res--;
 
-    if (n < 2) {
-	ys[1] = y[1];
-	return;
-    }
 
-    /* at least two,  at most n points */
-
-    ns = imax2(imin2((int)(f*n), n), 2);
+    /* at least two, at most n points */
+    ns = imax2(2, imin2(n, (int)(f*n + 1e-7)));
+#ifdef DEBUG_lowess
+    REprintf("lowess(): ns = %d\n", ns);
+#endif
 
     /* robustness iterations */
 
@@ -199,8 +165,8 @@ void clowess(double *x, double *y, int n,
 		/* move nleft,  nright to right */
 		/* if radius decreases */
 
-		d1 = x[i]-x[nleft];
-		d2 = x[nright+1]-x[i];
+		d1 = x[i] - x[nleft];
+		d2 = x[nright+1] - x[i];
 
 		/* if d1 <= d2 with */
 		/* x[nright+1] == x[nright], */
@@ -212,8 +178,8 @@ void clowess(double *x, double *y, int n,
 		    /* decrease by */
 		    /* move right */
 
-		    nleft = nleft+1;
-		    nright = nright+1;
+		    nleft++;
+		    nright++;
 		    continue;
 		}
 	    }
@@ -221,7 +187,7 @@ void clowess(double *x, double *y, int n,
 	    /* fitted value at x[i] */
 
 	    lowest(&x[1], &y[1], n, &x[i], &ys[i],
-		   nleft, nright, &res[1], iter>1, &rw[1], &ok);
+		   nleft, nright, res, iter>1, rw, &ok);
 	    if (!ok) ys[i] = y[i];
 
 	    /* all weights zero */
@@ -233,11 +199,9 @@ void clowess(double *x, double *y, int n,
 		/* skipped points -- interpolate */
 		/* non-zero - proof? */
 
-		j = last+1;
-		while (j < i) {
+		for(j = last+1; j < i; j++) {
 		    alpha = (x[j]-x[last])/denom;
-		    ys[j] = alpha*ys[i]+(1.0-alpha)*ys[last];
-		    j = j+1;
+		    ys[j] = alpha*ys[i] + (1.-alpha)*ys[last];
 		}
 	    }
 
@@ -246,50 +210,61 @@ void clowess(double *x, double *y, int n,
 
 	    /* x coord of close points */
 	    cut = x[last]+delta;
-	    i = last+1;
-	    while (i <= n) {
+	    for (i = last+1; i <= n; i++) {
 		if (x[i] > cut)
 		    break;
 		if (x[i] == x[last]) {
 		    ys[i] = ys[last];
 		    last = i;
 		}
-		i = i+1;
 	    }
 	    i = imax2(last+1, i-1);
 	    if (last >= n)
 		break;
 	}
 	/* residuals */
-	for(i=1 ; i<=n ; i++)
-	    res[i] = y[i] - ys[i];
+	for(i=0; i < n; i++)
+	    res[i] = y[i+1] - ys[i+1];
 
 	/* compute robustness weights */
 	/* except last time */
 
 	if (iter > nsteps)
 	    break;
-	for(i=1 ; i<=n ; i++)
+	/* Note: The following code, biweight_{6 MAD|Ri|} 
+	   is also used in stl(), loess and several other places.
+	   --> should provide API here (MM) */
+	for(i=0 ; i<n ; i++)
 	    rw[i] = fabs(res[i]);
-	sort(&rw[1], n);
-	m1 = n/2+1;
-	m2 = n-m1+1;
 
-	/* 6 median abs resid */
-
-	cmad = 3.0*(rw[m1]+rw[m2]);
+	/* Compute   cmad := 6 * median(rw[], n)  ---- */
+	/* FIXME: We need C API in R for Median ! */
+	m1 = n/2;
+	/* partial sort, for m1 & m2 */
+	rPsort(rw, n, m1);
+	if(n % 2 == 0) {
+	    m2 = n-m1-1;
+	    rPsort(rw, n, m2);
+	    cmad = 3.*(rw[m1]+rw[m2]);
+	} 
+	else { /* n odd */
+	    cmad = 6.*rw[m1];
+	}
+#ifdef DEBUG_lowess
+	REprintf("   cmad = %12g\n", cmad);
+#endif
 	c9 = 0.999*cmad;
 	c1 = 0.001*cmad;
-	for(i=1 ; i<=n ; i++) {
+	for(i=0 ; i<n ; i++) {
 	    r = fabs(res[i]);
 	    if (r <= c1)
-		rw[i] = 1.0;
+		rw[i] = 1.;
 	    else if (r <= c9)
-		rw[i] = fsquare(1.0-fsquare(r/cmad));
+		rw[i] = fsquare(1.-fsquare(r/cmad));
 	    else
-		rw[i] = 0.0;
+		rw[i] = 0.;
 	}
-	iter = iter+1;
+	iter++;
     }
 }
 
