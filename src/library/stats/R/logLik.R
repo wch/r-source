@@ -42,12 +42,13 @@ logLik.glm <- function(object, ...)
 ## log-likelihood for lm objects
 logLik.lm <- function(object, REML = FALSE, ...)
 {
-    res <- resid(object)
+    res <- object$residuals # not resid(object) because of NA methods
     p <- object$rank
     N <- length(res)
     if(is.null(w <- object$weights)) {
         w <- rep.int(1, N)
     } else {
+        ## this is OK as both resids and weights are for the cases used
         excl <- w == 0			# eliminating zero weights
         if (any(excl)) {
             res <- res[!excl]
