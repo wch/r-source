@@ -37,6 +37,8 @@ BUG FIXES
 	related diagnostic measures now handle lm() fits with 
 	na.action=na.exclude.
 
+    o	Eliminated segmentation fault in while loops without braces
+	in their bodies.
 
 
 
