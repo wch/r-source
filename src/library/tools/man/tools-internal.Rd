@@ -39,9 +39,9 @@
 % \alias{.buildVignetteIndex}
 % \alias{.buildDemoIndex}
 % \alias{.buildDataIndex}
-% \alias{.checkVignetteIndex}
+\alias{.checkVignetteIndex}
 % \alias{print.checkVignetteIndex}
-% \alias{.checkDemoIndex}
+\alias{.checkDemoIndex}
 % \alias{print.checkDemoIndex}
 % \alias{.stripRdComments}
 \description{
@@ -75,8 +75,8 @@
 % .installPackageRdIndices(dir, outDir)
 % .installPackageVignetteIndex(dir, outDir)
 % .installPackageDemoIndex(dir, outDir)
-% .checkDemoIndex(demoDir)
-% .checkVignetteIndex(vignetteDir)
+.checkDemoIndex(demoDir)
+.checkVignetteIndex(vignetteDir)
 }
 \details{
   These are not to be called by the user.

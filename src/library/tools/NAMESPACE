@@ -6,8 +6,12 @@ export( .installMD5sums, Rdindex, Rtangle, RtangleSetup, RweaveLatex,
        checkDocArgs, checkDocStyle, checkFF, checkMD5sums,
        checkMethods, checkTnF, checkVignettes, codoc, md5sum, undoc)
 
-## documented as internal but called from INSTALL scripts
-export(.installPackageDescription, .installPackageIndices)
+## documented as internal but called from scripts
+export(.installPackageDescription, .installPackageIndices, 
+       .checkDemoIndex, .checkVignetteIndex)
+
+## these seem to need to be exported
+exportPattern("^print")
 
 S3method(print, checkAssignFuns)
 S3method(print, checkDemoIndex)
