@@ -1,4 +1,3 @@
-%%-- see also ./is.symbol.Rd --- merge these two !! ------------
 \name{name}
 \title{Variable Names or Symbols, respectively}
 \usage{
