@@ -3535,7 +3535,8 @@ SEXP do_setGPar(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* symbols(..) in ../library/base/R/symbols.R  : */
 
-static void SymbolSize(double *x, int n, double *xmax, double *xmin)
+/* utility just computing range() */
+static Rboolean SymbolRange(double *x, int n, double *xmax, double *xmin)
 {
     int i;
     *xmax = -DBL_MAX;
@@ -3545,6 +3546,7 @@ static void SymbolSize(double *x, int n, double *xmax, double *xmin)
 	    if (*xmax < x[i]) *xmax = x[i];
 	    if (*xmin > x[i]) *xmin = x[i];
 	}
+    return(*xmax >= *xmin && *xmin >= 0);
 }
 
 static void CheckSymbolPar(SEXP call, SEXP p, int *nr, int *nc)
@@ -3575,12 +3577,11 @@ static void CheckSymbolPar(SEXP call, SEXP p, int *nr, int *nc)
 SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, p, fg, bg;
-    double pmax, pmin, inches, rx, ry;
     int i, j, nr, nc, nbg, nfg, type;
+    double pmax, pmin, inches, rx, ry;
     double xx, yy, p0, p1, p2, p3, p4;
     double *pp, *xp, *yp;
     char *vmax;
-    int units;
 
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
@@ -3619,17 +3620,16 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
     switch (type) {
     case 1: /* circles */
 	if (nc != 1)
-	    errorcall(call, "invalid circle data");
-	SymbolSize(REAL(p), nr, &pmax, &pmin);
-	if (pmin > pmin || pmin < 0)
+	    errorcall(call, "invalid circles data");
+	if (!SymbolRange(REAL(p), nr, &pmax, &pmin))
 	    errorcall(call, "invalid symbol parameter");
 	for (i = 0; i < nr; i++) {
-	    if (R_FINITE(REAL(x)[i]) && R_FINITE(REAL(y)[i])
-		&& R_FINITE(REAL(p)[i])) {
+	    if (R_FINITE(REAL(x)[i]) && R_FINITE(REAL(y)[i]) &&
+		R_FINITE(REAL(p)[i])) {
 		rx = REAL(p)[i];
 		if (inches > 0)
-		    rx = (rx / pmax) * inches;
-		else
+		    rx *= inches / pmax;
+		else/* FIXME : INCHES in the following ??? */
 		    rx = GConvertXUnits(rx, USER, INCHES, dd);
 		GCircle(REAL(x)[i], REAL(y)[i],	USER, rx,
 			INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg],	dd);
@@ -3637,51 +3637,47 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	break;
     case 2: /* squares */
-	if (nc != 1)
-	    errorcall(call, "invalid square data");
-	SymbolSize(REAL(p), nr, &pmax, &pmin);
-	if (pmin > pmin || pmin < 0)
+	if(nc != 1)
+	    errorcall(call, "invalid squares data");
+	if(!SymbolRange(REAL(p), nr, &pmax, &pmin))
 	    errorcall(call, "invalid symbol parameter");
-	units = DEVICE;
 	for (i = 0; i < nr; i++) {
-	    if (R_FINITE(REAL(x)[i]) && R_FINITE(REAL(y)[i])
-		&& R_FINITE(REAL(p)[i])) {
+	    if (R_FINITE(REAL(x)[i]) && R_FINITE(REAL(y)[i]) &&
+		R_FINITE(REAL(p)[i])) {
 		p0 = REAL(p)[i];
 		xx = REAL(x)[i];
 		yy = REAL(y)[i];
-		GConvert(&xx, &yy, USER, units, dd);
+		GConvert(&xx, &yy, USER, DEVICE, dd);
 		if (inches > 0) {
 		    p0 = p0 / pmax * inches;
-		    rx = GConvertXUnits(0.5 * p0, INCHES, units, dd);
-		    ry = GConvertYUnits(0.5 * p0, INCHES, units, dd);
+		    rx = GConvertXUnits(0.5 * p0, INCHES, DEVICE, dd);
+		    ry = GConvertYUnits(0.5 * p0, INCHES, DEVICE, dd);
 		}
 		else {
-		    rx = GConvertXUnits(0.5 * p0, USER, units, dd);
-		    ry = GConvertYUnits(0.5 * p0, USER, units, dd);
+		    rx = GConvertXUnits(0.5 * p0, USER, DEVICE, dd);
+		    ry = GConvertYUnits(0.5 * p0, USER, DEVICE, dd);
 		}
-		GRect(xx - rx, yy - rx, xx + rx, yy + rx, units,
+		GRect(xx - rx, yy - rx, xx + rx, yy + rx, DEVICE,
 		      INTEGER(bg)[i%nbg], INTEGER(fg)[i%nfg], dd);
-
 	    }
 	}
 	break;
     case 3: /* rectangles */
 	if (nc != 2)
-	    errorcall(call, "invalid square data");
-	SymbolSize(REAL(p), 2 * nr, &pmax, &pmin);
-	if (pmin > pmax || pmin < 0)
+	    errorcall(call, "invalid rectangles data (need 2 columns)");
+	if (!SymbolRange(REAL(p), 2 * nr, &pmax, &pmin))
 	    errorcall(call, "invalid symbol parameter");
 	for (i = 0; i < nr; i++) {
-	    if (R_FINITE(REAL(x)[i]) && R_FINITE(REAL(y)[i])
-		&& R_FINITE(REAL(p)[i]) && R_FINITE(REAL(p)[i+nr])) {
+	    if (R_FINITE(REAL(x)[i]) && R_FINITE(REAL(y)[i]) &&
+		R_FINITE(REAL(p)[i]) && R_FINITE(REAL(p)[i+nr])) {
 		xx = REAL(x)[i];
 		yy = REAL(y)[i];
 		GConvert(&xx, &yy, USER, DEVICE, dd);
 		p0 = REAL(p)[i];
 		p1 = REAL(p)[i+nr];
 		if (inches > 0) {
-		    p0 = p0 / pmax * inches;
-		    p1 = p1 / pmax * inches;
+		    p0 *= inches / pmax;
+		    p1 *= inches / pmax;
 		    rx = GConvertXUnits(0.5 * p0, INCHES, DEVICE, dd);
 		    ry = GConvertYUnits(0.5 * p1, INCHES, DEVICE, dd);
 		}
@@ -3698,8 +3694,7 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
     case 4: /* stars */
 	if (nc < 3)
 	    errorcall(call, "invalid stars data");
-	SymbolSize(REAL(p), nc, &pmax, &pmin);
-	if (pmin > pmax || pmin < 0)
+	if (!SymbolRange(REAL(p), nc, &pmax, &pmin))
 	    errorcall(call, "invalid symbol parameter");
 	vmax = vmaxget();
 	pp = (double*)R_alloc(nc, sizeof(double));
@@ -3739,9 +3734,8 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
     case 5: /* thermometers */
 	if (nc != 3 && nc != 4)
-	    errorcall(call, "invalid thermometer data");
-	SymbolSize(REAL(p), 2 * nr, &pmax, &pmin);
-	if (pmin > pmax || pmin < 0)
+	    errorcall(call, "invalid thermometers data (need 3 or 4 columns)");
+	if (!SymbolRange(REAL(p), 2 * nr, &pmax, &pmin))
 	    errorcall(call, "invalid symbol parameter");
 	for (i = 0; i < nr; i++) {
 	    xx = REAL(x)[i];
@@ -3750,20 +3744,15 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 		p0 = REAL(p)[i];
 		p1 = REAL(p)[i + nr];
 		p2 = REAL(p)[i + 2 * nr];
-		if (nc == 4)
-		    p3 = REAL(p)[i + 3 * nr];
-		else
-		    p3 = 0;
-		if (R_FINITE(p0) && R_FINITE(p0)
-		    && R_FINITE(p0) && R_FINITE(p0)) {
-		    if (p2 < 0) p2 = 0;
-		    if (p2 > 1) p2 = 1;
-		    if (p3 < 0) p3 = 0;
-		    if (p3 > 1) p3 = 1;
+		p3 = (nc == 4)? REAL(p)[i + 3 * nr] : 0.;
+		if (R_FINITE(p0) && R_FINITE(p1) &&
+		    R_FINITE(p2) && R_FINITE(p3)) {
+		    if (p2 < 0) p2 = 0; else if (p2 > 1) p2 = 1;
+		    if (p3 < 0) p3 = 0; else if (p3 > 1) p3 = 1;
 		    GConvert(&xx, &yy, USER, NDC, dd);
 		    if (inches > 0) {
-			p0 = p0 / pmax * inches;
-			p1 = p1 / pmax * inches;
+			p0 *= inches / pmax;
+			p1 *= inches / pmax;
 			rx = GConvertXUnits(0.5 * p0, INCHES, NDC, dd);
 			ry = GConvertYUnits(0.5 * p1, INCHES, NDC, dd);
 		    }
@@ -3786,7 +3775,7 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
     case 6: /* boxplots */
 	if (nc != 5)
-	    errorcall(call, "invalid boxplot data");
+	    errorcall(call, "invalid boxplots data (need 5 columns)");
 	pmax = -DBL_MAX;
 	pmin =	DBL_MAX;
 	for(i = 0; i < nr; i++) {
@@ -3799,7 +3788,7 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (pmin > p0) pmin = p0;
 	    }
 	}
-	if (pmin > pmax)
+	if (pmin > pmax || pmin <= 0)
 	    errorcall(call, "invalid symbol parameter");
 	for (i = 0; i < nr; i++) {
 	    xx = REAL(x)[i];
@@ -3810,14 +3799,14 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 		p2 = REAL(p)[i + 2 * nr];
 		p3 = REAL(p)[i + 3 * nr];
 		p4 = REAL(p)[i + 4 * nr];
-		if (R_FINITE(p0) && R_FINITE(p1)
-			&& R_FINITE(p2) && R_FINITE(p3) && R_FINITE(p4)) {
+		if (R_FINITE(p0) && R_FINITE(p1) &&
+		    R_FINITE(p2) && R_FINITE(p3) && R_FINITE(p4)) {
 		    GConvert(&xx, &yy, USER, NDC, dd);
 		    if (inches > 0) {
-			p0 = (p0 / pmax) * inches;
-			p1 = (p1 / pmax) * inches;
-			p2 = (p2 / pmax) * inches;
-			p3 = (p2 / pmax) * inches;
+			p0 *= inches / pmax;
+			p1 *= inches / pmax;
+			p2 *= inches / pmax;
+			p3 *= inches / pmax;
 			p0 = GConvertXUnits(p0, INCHES, NDC, dd);
 			p1 = GConvertYUnits(p1, INCHES, NDC, dd);
 			p2 = GConvertYUnits(p2, INCHES, NDC, dd);
