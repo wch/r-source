@@ -20,8 +20,10 @@
 .libPaths <- local({
     .lib.loc <- character(0)            # Profiles need to set this.
     function(new) {
-        if(!missing(new))
-            .lib.loc <<- unique(c(new, .Library))
+        if(!missing(new)) {
+            paths <- unique(c(new, .Library))
+            .lib.loc <<- paths[file.exists(paths)]
+        }
         else
             .lib.loc
     }

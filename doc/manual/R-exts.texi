@@ -1749,6 +1749,9 @@ Indicate an acronym (an abbreviation written in all capital letters),
 such as @acronym{GNU}.
 @end table
 
+Note that unless explicitly stated otherwise, special characters
+(@pxref{Insertions}) must be escaped inside the above markup commands.
+
 
 @node Lists and tables, Cross-references, Marking text, Writing R documentation files
 @section Lists and tables

@@ -288,6 +288,7 @@ function(package)
              XML = "text.SAX",
              ctest = "t.test",
              quadprog = c("solve.QP", "solve.QP.compact"),
+             reposTools = "update.packages2",
              sm = "print.graph",
              ts = "lag.plot")
     if(is.null(package)) return(unlist(stopList))

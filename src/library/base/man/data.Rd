@@ -15,7 +15,7 @@ data(\dots, list = character(0), package = .packages(),
   \item{list}{a character vector.}
   \item{package}{a name or character vector giving the packages to look
     into for data sets.  By default, all packages in the search path are
-    used, then the \file{data} directory (if present) of the current
+    used, then the \file{data} subdirectory (if present) of the current
     working directory.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
