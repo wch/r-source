@@ -4,7 +4,7 @@ cut <- function (x, breaks, labels=NULL, right=TRUE, dig.lab=3)
 	if (length(breaks) == 1) {
 		if (is.na(breaks) | breaks < 2)
 		  stop("invalid number of intervals")
-		nb <- breaks + 1# one more than #{intervals}
+		nb <- as.integer(breaks + 1)# one more than #{intervals}
 		dx <- diff(rx <- range(x,na.rm=TRUE))
 		if(dx==0) dx <- rx[1]
 		breaks <- seq(rx[1] - dx/1000,
@@ -23,12 +23,12 @@ cut <- function (x, breaks, labels=NULL, right=TRUE, dig.lab=3)
 		  else paste("Range", 1:(nb - 1),sep="_")
 	} else if (length(labels) != nb-1)
 		stop("labels/breaks length conflict")
-	codes <- .C(if(right) "bincode2" else "bincode",
-		    as.double(x),
-		    length(x),
-		    as.double(breaks),
-		    length(breaks),
-		    integer(length(x)),
-		    TRUE)[[5]]
-	factor(codes, seq(labels), labels)
+	code <- .C(if(right) "bincode2" else "bincode",
+		   as.double(x),
+		   length(x),
+		   as.double(breaks),
+		   nb,
+		   code= integer(length(x)),
+		   NAOK= TRUE) $code
+	factor(code, seq(labels), labels)
 }
