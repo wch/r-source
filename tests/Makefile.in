@@ -169,9 +169,9 @@ reg-plot.Rout: reg-plot.R
 	@(echo '.ptime <- proc.time(); gctorture()' ; \
 	  cat $< $(srcdir)/gct-foot.R) | $(R) > $@ 2>&1
 	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
-	  if test ! -r $$Ro ; then $(MAKE) $$Ro ; fi; \
-	  echo $(ECHO_N) "comparing '$@' to '$$Ro' ...$(ECHO_C)"; \
-	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $$Ro  1 || exit 1; \
+	  if test ! -r $${Ro}; then $(MAKE) $${Ro}; fi; \
+	  echo $(ECHO_N) "comparing '$@' to '$${Ro}' ...$(ECHO_C)"; \
+	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $${Ro} 1 || exit 1; \
 	  mv $@.fail $@; \
 	  echo "$(ECHO_T) OK"
 
@@ -213,12 +213,14 @@ test-Demo:
 	@echo "running demos from base and eda"
 	@$(MAKE) $(test-out-demo) RVAL_IF_DIFF=0
 
-## These depend on an internet connection, and the sites being up
+## <NOTE>
+## These depend on an internet connection, and the sites being up.
 ## So allow this to fail: it may be slow doing so.
 test-Internet:
 	@echo "running tests of Internet and socket functions"
 	@echo "  expect some differences"
 	-@$(MAKE) $(test-out-internet) RVAL_IF_DIFF=0
+## </NOTE>
 
 test-IsAs:
 	@echo "running tests of consistency of as/is.*"
@@ -249,10 +251,13 @@ test-Segfault:
 	@$(MAKE) $(test-out-segfault) RVAL_IF_DIFF=0
 	@rm -f data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots.*
 
-## note: not all platforms can build standalone, so allowed to fail.
+## <NOTE>
+## Not all platforms can build standalone.
+## So allow this to fail.
 test-Standalone:
 	@echo "testing building standalone Rmath"
 	-@(cd $(top_builddir)/src/nmath/standalone; $(MAKE) check)
+## </NOTE>
 
 test-Ts:
 	@echo "running tests of package ts functions"
