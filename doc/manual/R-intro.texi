@@ -463,9 +463,9 @@ line is a comment.
 If a command is not complete at the end of a line, @R{} will
 give a different prompt, by default
 
-@smallexample
+@example
 +
-@end smallexample
+@end example
 
 @noindent
 on second and subsequent lines and continue to read input until the
@@ -2743,7 +2743,7 @@ to be read as a data frame might look as follows.
 
 @quotation
 @cartouche
-@smallexample
+@example
 @r{Input file form with names and row labels:}
 
      Price    Floor     Area   Rooms     Age  Cent.heat
@@ -2753,7 +2753,7 @@ to be read as a data frame might look as follows.
 04   57.50    131.0      690     6       8.8      no
 05   59.75     93.0      900     5       1.9     yes
 ...
-@end smallexample
+@end example
 @end cartouche
 @end quotation
 
@@ -2774,7 +2774,7 @@ the following.
 
 @quotation
 @cartouche
-@smallexample
+@example
 @r{Input file form without row labels:}
 
 Price    Floor     Area   Rooms     Age  Cent.heat
@@ -2784,7 +2784,7 @@ Price    Floor     Area   Rooms     Age  Cent.heat
 57.50    131.0      690     6       8.8      no
 59.75     93.0      900     5       1.9     yes
 ...
-@end smallexample
+@end example
 @end cartouche
 @end quotation
 
@@ -5551,9 +5551,9 @@ is @code{1:length(x)}.
 
 @strong{Note}: This function is often used in the sequence
 
-@smallexample
+@example
 > plot(x, y, type="n"); text(x, y, names)
-@end smallexample
+@end example
 
 @noindent
 The graphics parameter @code{type="n"} suppresses the points but sets up
@@ -5640,18 +5640,18 @@ than a character string in any one of @code{text}, @code{mtext}, @code{axis},
 or @code{title}.   For example, the following code draws the formula for
 the Binomial probability function:
 
-@smallexample
+@example
 > text(x, y, expression(paste(bgroup("(", atop(n, x), ")"), p^x, q^@{n-x@})))
-@end smallexample
+@end example
 
 More information, including a full listing of the features available can
 obtained from within @R{} using the commands:
 
-@smallexample
+@example
 > help(plotmath)
 > example(plotmath)
 > demo(plotmath)
-@end smallexample
+@end example
 
 @node Hershey vector fonts,  , Mathematical annotation, Low-level plotting commands
 @subsection Hershey vector fonts
@@ -5675,12 +5675,12 @@ Hershey fonts provide cyrillic and japanese (Kana and Kanji) characters.
 More information, including tables of Hershey characters can be obtained from
 within @R{} using the commands:
 
-@smallexample
+@example
 > help(Hershey)
 > demo(Hershey)
 > help(Japanese)
 > demo(Japanese)
-@end smallexample
+@end example
 
 @node Interacting with graphics, Using graphics parameters, Low-level plotting commands, Graphics
 @section Interacting with graphics

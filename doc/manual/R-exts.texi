@@ -101,10 +101,10 @@ including its @samp{lib.loc} argument, and we also assume basic
 knowledge of the @code{INSTALL} utility.  Otherwise, please look at @R{}'s
 help pages
 
-@smallexample
+@example
 ?library
 ?INSTALL
-@end smallexample
+@end example
 
 @noindent
 before reading on.  If the package you are writing uses the
@@ -618,7 +618,7 @@ For example, if a function named @code{bar} is to be made available by
 linking against library @code{foo} (i.e., using @option{-lfoo}), one
 could use
 
-@smallexample
+@example
 @group
 AC_CHECK_LIB(foo, @var{fun}, [HAVE_FOO=TRUE], [HAVE_FOO=FALSE])
 AC_SUBST(HAVE_FOO)
@@ -626,34 +626,34 @@ AC_SUBST(HAVE_FOO)
 AC_CONFIG_FILES([foo.R])
 AC_OUTPUT
 @end group
-@end smallexample
+@end example
 
 @noindent
 in @file{configure.ac} (assuming Autoconf 2.50 or better).
 
 The definition of the respective R function in @file{foo.R.in} could be
 
-@smallexample
+@example
 @group
 foo <- function(x) @{
     if(!@@HAVE_FOO@@)
       stop(paste("Sorry, library", sQuote("foo"), "is not available"))
     ...
 @end group
-@end smallexample
+@end example
 
 @noindent
 From this file @command{configure} creates the actual R source file
 @file{foo.R} looking like
 
-@smallexample
+@example
 @group
 foo <- function(x) @{
     if(!FALSE)
       stop(paste("Sorry, library", sQuote("foo"), "is not available"))
     ...
 @end group
-@end smallexample
+@end example
 
 @noindent
 if library @code{foo} was not found (with the desired functionality).
@@ -667,7 +667,7 @@ compiler flags are used in the @file{configure} tests as when compiling
 @R{} or your package.  Under Unix, you can achieve this by including the
 following fragment early in @file{configure.ac}
 
-@smallexample
+@example
 @group
 : $@{R_HOME=`R RHOME`@}
 if test -z "$@{R_HOME@}"; then
@@ -677,7 +677,7 @@ fi
 CC=`"$@{R_HOME@}/bin/R" CMD config CC`
 CFLAGS=`"$@{R_HOME@}/bin/R" CMD config CFLAGS`
 @end group
-@end smallexample
+@end example
 
 @noindent
 (using @samp{$@{R_HOME@}/bin/R} rather than just @samp{R} is necessary
@@ -700,14 +700,14 @@ Autoconf qualifies as a FORTRAN 77 compiler.  E.g., to check for an
 external BLAS library using the @code{ACX_BLAS} macro from the Official
 Autoconf Macro Archive, one can simply do
 
-@smallexample
+@example
 @group
 F77=`"$@{R_HOME@}/bin/R" CMD config F77`
 AC_PROG_F77
 FLIBS=`"$@{R_HOME@}/bin/R" CMD config FLIBS`
 ACX_BLAS([], AC_MSG_ERROR([could not find your BLAS library], 1))
 @end group
-@end smallexample
+@end example
 
 Note that @code{FLIBS} as determined by R must be used to ensure that
 FORTRAN 77 code works on all R platforms.  Calls to the Autoconf macro
@@ -1067,9 +1067,9 @@ warnings that you understand and have reasons not to eliminate.
 
 When all the testing is done, upload the @file{.tar.gz} file to
 
-@smallexample
+@example
 @url{ftp://ftp.ci.tuwien.ac.at/incoming}
-@end smallexample
+@end example
 
 @noindent
 and send a message to @url{cran@@r-project.org} about it.  The
@@ -1094,20 +1094,20 @@ targeted for and defaults to @samp{R}, and @var{type} indicated whether
 the file contains source or binaries for a certain platform, and
 defaults to @samp{source}.  I.e.,
 
-@smallexample
+@example
 @group
 OOP_0.1-3.tar.gz
 OOP_0.1-3_R.tar.gz
 OOP_0.1-3_R_source.tar.gz
 @end group
-@end smallexample
+@end example
 
 @noindent
 are all equivalent and indicate an R source package, whereas
 
-@smallexample
+@example
 OOP_0.1-3_Splus6_sparc-sun-solaris.tar.gz
-@end smallexample
+@end example
 
 @noindent
 is a binary package for installation under Splus6 on the given
@@ -1171,9 +1171,9 @@ Exports are specified using the @code{export} directive in the
 @file{NAMESPACE} file.  A directive of the form
 
 @findex export
-@smallexample
+@example
 export(f, g)
-@end smallexample
+@end example
 
 @noindent
 specifies that the variables @code{f} and @code{g} are to be exported.
@@ -1185,9 +1185,9 @@ specify the names to export with a regular expression using
 @code{exportPattern}.  The directive
 
 @findex exportPattern
-@smallexample
+@example
 exportPattern("^[^\\.]")
-@end smallexample
+@end example
 
 @noindent
 exports all variables that do not start with a period.
@@ -1199,9 +1199,9 @@ imports all exported variables from the specified package(s).  Thus the
 directives
 
 @findex import
-@smallexample
+@example
 import(foo, bar)
-@end smallexample
+@end example
 
 @noindent
 specifies that all exported variables in the packages @pkg{foo} and
@@ -1210,9 +1210,9 @@ package are needed, then they can be imported using @code{importFrom}.
 The directive
 
 @findex importFrom
-@smallexample
+@example
 importFrom(foo, f, g)
-@end smallexample
+@end example
 
 @noindent
 specifies that the exported variables @code{f} and @code{g} of the
@@ -1239,9 +1239,9 @@ a package defines a function @code{print.foo} intended to be used as a
 @code{print} method for class @code{foo}, then the directive
 
 @findex S3method
-@smallexample
+@example
 S3method(print, foo)
-@end smallexample
+@end example
 
 @noindent
 ensures that the method is registered and available for @code{UseMethod}
@@ -1283,9 +1283,9 @@ The @code{useDynLib} directive allows shared objects that need to be
 loaded to be specified in the @file{NAMESPACE} file.  The directive
 
 @findex useDynLib
-@smallexample
+@example
 useDynLib(foo)
-@end smallexample
+@end example
 
 @noindent
 registers the shared object @code{foo} for loading with
@@ -1305,12 +1305,12 @@ As an example consider two packages named @pkg{foo} and @pkg{bar}.  The
 
 @quotation
 @cartouche
-@smallexample
+@example
 x <- 1
 f <- function(y) c(x,y)
 foo <- function(x) .Call("foo", x, PACKAGE="foo")
 print.foo <- function(x, ...) cat("<a foo>\n")
-@end smallexample
+@end example
 @end cartouche
 @end quotation
 
@@ -1320,11 +1320,11 @@ appropriate extension).  The @file{NAMESPACE} file for this package is
 
 @quotation
 @cartouche
-@smallexample
+@example
 useDynLib(foo)
 export(f, foo)
 S3method(print, foo)
-@end smallexample
+@end example
 @end cartouche
 @end quotation
 
@@ -1333,11 +1333,11 @@ The second package @pkg{bar} has code file @file{bar.R}
 
 @quotation
 @cartouche
-@smallexample
+@example
 c <- function(...) sum(...)
 g <- function(y) f(c(y, 7))
 h <- function(y) y+9
-@end smallexample
+@end example
 @end cartouche
 @end quotation
 
@@ -1346,10 +1346,10 @@ and @file{NAMESPACE} file
 
 @quotation
 @cartouche
-@smallexample
+@example
 import(foo)
 export(g, h)
-@end smallexample
+@end example
 @end cartouche
 @end quotation
 
@@ -1358,10 +1358,10 @@ Calling @code{library(bar)} loads @pkg{bar} and attaches its exports to
 the search path.  Package @pkg{foo} is also loaded but not attached to
 the search path.  A call to @code{g} produces
 
-@smallexample
+@example
 > g(6)
 [1]  1 13
-@end smallexample
+@end example
 
 @noindent
 This is consistent with the definitions of @code{c} in the two settings:
@@ -1398,9 +1398,9 @@ Some additional steps are needed for packages which make use of formal
 internally).  There needs to be an @code{.onLoad} action to
 ensure that the methods package is loaded @emph{and} attached:
 
-@smallexample
+@example
 .onLoad <- function(lib, pkg) require(methods)
-@end smallexample
+@end example
 
 @noindent
 and any classes and methods which are to be exported need to be declared
@@ -1410,12 +1410,12 @@ as such in the @file{NAMESPACE} file.  For example, the now-defunct
 @findex exportClasses
 @findex exportMethods
 
-@smallexample
+@example
 importFrom(graphics, plot)
 importFrom(stats, profile, confint)
 exportClasses("mle", "profile.mle", "summary.mle")
 exportMethods("confint", "plot", "profile", "summary", "show")
-@end smallexample
+@end example
 
 @noindent
 All formal classes need to be listed in an @code{exportClasses}
@@ -1431,10 +1431,10 @@ package needs to import them, with directives
 @findex importClassesFrom
 @findex importMethodsFrom
 
-@smallexample
+@example
 importClassesFrom(package, ...)
 importMethodsFrom(package, ...)
-@end smallexample
+@end example
 
 @noindent
 listing the classes and functions with methods respectively.  Suppose we
@@ -1443,11 +1443,11 @@ Then they could have @code{NAMESPACE} files
 
 @quotation
 @cartouche
-@smallexample
+@example
 export(f1, ng1)
 exportMethods("[")
 exportClasses(c1)
-@end smallexample
+@end example
 @end cartouche
 @end quotation
 
@@ -1456,14 +1456,14 @@ and
 
 @quotation
 @cartouche
-@smallexample
+@example
 importFrom(A, ng1)
 importClassesFrom(A, c1)
 importMethodsFrom(A, f1)
 export(f4, f5)
 exportMethods(f6, "[")
 exportClasses(c1, c2)
-@end smallexample
+@end example
 @end cartouche
 @end quotation
 
@@ -1515,9 +1515,9 @@ access to Linux on an @code{ix86} platform you can use @code{valgrind}
 (@uref{http://valgrind.kde.org/}) to look out for possible problems.
 To run some examples under @code{valgrind} use something like
 
-@smallexample
+@example
 R -d "valgrind --tool=memcheck --leak-check=yes" --vanilla < mypkg-Ex.R
-@end smallexample
+@end example
 
 @noindent
 where @file{mypkg-Ex.R} is a set of examples, e.g. the file created in
@@ -1538,10 +1538,10 @@ It is possible to run all the examples, tests and vignettes covered by
 @code{--use-valgrind}.  If you do this you will need to select the
 @code{valgrind} options some other way, for example by having a
 @file{~/.valgrindrc} file containing
-@smallexample
+@example
 --tool=memcheck
 --memcheck:leak-check=yes
-@end smallexample
+@end example
 @noindent
 or setting the environment variable @env{VALGRIND_OPTS}.
 
@@ -1690,7 +1690,7 @@ file @file{Normal.Rd} documents the density, distribution function,
 quantile function and generation of random variates for the normal
 distribution, and hence starts with
 
-@smallexample
+@example
 @group
 \name@{Normal@}
 \alias@{dnorm@}
@@ -1698,7 +1698,7 @@ distribution, and hence starts with
 \alias@{qnorm@}
 \alias@{rnorm@}
 @end group
-@end smallexample
+@end example
 
 Note that the @code{\name} is not necessarily a topic documented.
 
@@ -1730,7 +1730,7 @@ For example, @code{abline} is a function for adding a straight line to a
 plot which can be used in several different ways, depending on the named
 arguments specified.  Hence, @file{abline.Rd} contains
 
-@smallexample
+@example
 @group
 \synopsis@{
 abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
@@ -1744,7 +1744,7 @@ abline(v=, \dots)
 @r{@dots{}}
 @}
 @end group
-@end smallexample
+@end example
 
 @findex \method
 Use @code{\method@{@var{generic}@}@{@var{class}@}} to indicate the name
@@ -1756,13 +1756,13 @@ methods should not be invoked directly but via method dispatch), but
 
 For example, @file{print.ts.Rd} contains
 
-@smallexample
+@example
 @group
 \usage@{
 \method@{print@}@{ts@}(x, calendar, \dots)
 @}
 @end group
-@end smallexample
+@end example
 
 Usage for replacement functions should be given in the style of
 @code{dim(x) <- value} rather than explicitly indicating the name of the
@@ -1776,9 +1776,9 @@ from class @code{"@var{class}"}.
 @findex \arguments
 Description of the function's arguments, using an entry of the form
 
-@smallexample
+@example
 \item@{@var{arg_i}@}@{@var{Description of arg_i}.@}
-@end smallexample
+@end example
 
 @noindent
 for each element of the argument list.  There may be optional text
@@ -1797,9 +1797,9 @@ Description of the function's return value.
 If a list with multiple values is returned, you can use entries of the
 form
 
-@smallexample
+@example
 \item@{@var{comp_i}@}@{@var{Description of comp_i}.@}
-@end smallexample
+@end example
 
 @noindent
 for each component of the list returned.  Optional text may precede this
@@ -1816,7 +1816,7 @@ Use this for a special note you want to have pointed out.
 
 For example, @file{pie.Rd} contains
 
-@smallexample
+@example
 @group
 \note@{
   Pie charts are a very bad way of displaying information.
@@ -1825,7 +1825,7 @@ For example, @file{pie.Rd} contains
   ...
 @}
 @end group
-@end smallexample
+@end example
 
 @item \author@{@dots{}@}
 @findex \author
@@ -1862,13 +1862,13 @@ will be run by @code{example()}.  (Previously this was called
 
 For example,
 
-@smallexample
+@example
 @group
 x <- runif(10)       # @r{Shown and run.}
 \dontrun@{plot(x)@}    # @r{Only shown.}
 \dontshow@{log(x)@}    # @r{Only run.}
 @end group
-@end smallexample
+@end example
 
 Thus, example code not included in @code{\dontrun} must be executable!
 In addition, it should not use any system-specific features or require
@@ -2036,9 +2036,9 @@ In addition to the predefined sections (such as @code{\description@{@}},
 @findex \section
 For example
 
-@smallexample
+@example
 \section@{Warning@}@{You must not call this function unless @dots{}@}
-@end smallexample
+@end example
 
 @noindent
 For consistency with the pre-assigned sections, the section name (the
@@ -2237,13 +2237,13 @@ Both commands can also be used as @code{\eqn@{@var{latexascii}@}} (only
 
 The following example is from @file{Poisson.Rd}:
 
-@smallexample
+@example
 @group
   \deqn@{p(x) = \frac@{\lambda^x e^@{-\lambda@}@}@{x!@}@}@{%
         p(x) = lambda^x exp(-lambda)/x!@}
   for \eqn@{x = 0, 1, 2, \ldots@}.
 @end group
-@end smallexample
+@end example
 
 @iftex
 For the La@TeX{} manual, this becomes
@@ -2262,11 +2262,11 @@ For @HTML{} and text on-line help we get
 
 @quotation
 @cartouche
-@smallexample
+@example
     p(x) = lambda^x exp(-lambda)/x!
 
 for x = 0, 1, 2, ....
-@end smallexample
+@end example
 @end cartouche
 @end quotation
 
@@ -2341,11 +2341,11 @@ In addition, it is possible to provide ``concept index entries'' using
 E.g., file @file{cor.test.Rd} in the standard package @pkg{stats}
 contains
 
-@smallexample
+@example
 \concept@{Kendall correlation coefficient@}
 \concept@{Pearson correlation coefficient@}
 \concept@{Spearman correlation coefficient@}
-@end smallexample
+@end example
 
 @noindent
 so that e.g.@: @kbd{help.search("Spearman")} will succeed in finding the
@@ -2364,24 +2364,24 @@ Sometimes the documentation needs to differ by platform.  Currently two
 OS-specific options are available, @samp{unix} and @samp{windows}, and
 lines in the help source file can be enclosed in
 
-@smallexample
+@example
 @group
 #ifdef @var{OS}
    ...
 #endif
 @end group
-@end smallexample
+@end example
 
 @noindent
 or
 
-@smallexample
+@example
 @group
 #ifndef @var{OS}
    ...
 #endif
 @end group
-@end smallexample
+@end example
 
 @noindent
 for OS-specific inclusion or exclusion.
@@ -2478,9 +2478,9 @@ is loaded into @R{}.
 The stored source code can be removed by removing the @code{source}
 attribute, for example by
 
-@smallexample
+@example
 attr(myfun, "source") <- NULL
-@end smallexample
+@end example
 
 @end enumerate
 
@@ -2491,13 +2491,13 @@ layout.
 Suppose we have a file of functions @file{myfuns.R} that we want to
 tidy up.  Create a file @file{tidy.R} containing
 
-@smallexample
+@example
 @group
 options(keep.source = FALSE)
 source("myfuns.R")
 dump(ls(all = TRUE), file = "new.myfuns.R")
 @end group
-@end smallexample
+@end example
 
 @noindent
 and run @R{} with this as the source file, for example by @kbd{R
@@ -2770,7 +2770,7 @@ To fix ideas, let us consider a very simple example which convolves two
 finite sequences. (This is hard to do fast in interpreted @R{} code, but
 easy in C code.)  We could do this using @code{.C} by
 
-@smallexample
+@example
 @group
 void convolve(double *a, int *na, double *b, int *nb, double *ab)
 @{
@@ -2783,12 +2783,12 @@ void convolve(double *a, int *na, double *b, int *nb, double *ab)
       ab[i + j] += a[i] * b[j];
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 called from @R{} by
 
-@smallexample
+@example
 @group
 conv <- function(a, b)
   .C("convolve",
@@ -2798,7 +2798,7 @@ conv <- function(a, b)
      as.integer(length(b)),
      ab = double(length(a) + length(b) - 1))$ab
 @end group
-@end smallexample
+@end example
 
 Note that we take care to coerce all the arguments to the correct @R{}
 storage mode before calling @code{.C}; mistakes in matching the types
@@ -2826,9 +2826,9 @@ path to the object.  Programmers should not assume a specific file
 extension for the object/DLL (such as @samp{.so}) but use a construction
 like
 
-@smallexample
+@example
 file.path(path1, path2, paste("mylib", .Platform$dynlib.ext, sep=""))
-@end smallexample
+@end example
 
 @noindent
 for platform independence.  On Unix systems the path supplied to
@@ -2840,9 +2840,9 @@ Loading is most often done via a call to @code{library.dynam}
 @findex library.dynam
 in the @code{.First.lib} function of a package.  This has the form
 
-@smallexample
+@example
 library.dynam("libname", package, lib.loc)
-@end smallexample
+@end example
 
 @noindent
 where @code{libname} is the object/DLL name @emph{with the extension
@@ -2862,9 +2862,9 @@ loading a DLL, R will look for a routine within that DLL named
 @code{R_init_@var{lib}} where @var{lib} is the name of the DLL file with
 the extension removed.  For example, in the command
 
-@smallexample
+@example
 library.dynam("mylib", package, lib.loc)
-@end smallexample
+@end example
 
 @noindent
 R looks for the symbol named @code{R_init_mylib}.  Similarly, when
@@ -2879,7 +2879,7 @@ The following example shows templates for the initialization and
 unload routines for the @code{mylib} DLL.
 
 @cartouche
-@smallexample
+@example
 #include <Rdefines.h>
 #include <R_ext/Rdynload.h>
 
@@ -2894,7 +2894,7 @@ R_unload_mylib(DllInfo *info)
 @{
   /* Release resources. */
 @}
-@end smallexample
+@end example
 @end cartouche
 
 If a shared object/DLL is loaded more than once the most recent version is
@@ -2952,19 +2952,19 @@ invoked via the @code{.External} interface, one specifies @math{-1} for
 the number of arguments which tells R not to check the actual number
 passed.  For example, if we had a routine named @code{myCall} defined as
 
-@smallexample
+@example
 SEXP myCall(SEXP a, SEXP b, SEXP c);
-@end smallexample
+@end example
 
 @noindent
 we would describe this as
 
-@smallexample
+@example
 R_CallMethodDef callMethods[]  = @{
   @{"myCall",  &myCall, 3@},
   @{NULL, NULL, 0@}
 @};
-@end smallexample
+@end example
 
 @noindent
 along with any other routines for the @code{.Call} interface.
@@ -2996,18 +2996,18 @@ following table:
 
 Consider a C routine, @code{myC}, declared as
 
-@smallexample
+@example
 void myC(double *x, int *n, char **names, int *status);
-@end smallexample
+@end example
 
 We would register it as
 
-@smallexample
+@example
 R_CMethodDef cMethods[] = @{
    @{"myC", &myC, 4, @{REALSXP, INTSXP, STRSXP, LGLSXP@}@},
    @{NULL, NULL, 0@}
 @};
-@end smallexample
+@end example
 
 One can also specify whether each argument is used simply as input, or
 as output, or as both input and output.  The style field in the
@@ -3022,13 +3022,13 @@ actually register them with R.  We do this by calling
 above for the routines accessed by the @code{.C} and @code{.Call}
 we would use the following code:
 
-@smallexample
+@example
 void
 R_init_myLib(DllInfo *info)
 @{
    R_registerRoutines(info, cMethods, callMethods, NULL, NULL);
 @}
-@end smallexample
+@end example
 
 This routine will be invoked when R loads the shared object/DLL named
 @code{myLib}.  The last two arguments in the call to
@@ -3133,7 +3133,7 @@ the two files @file{X.hh} and @file{X.cc}, and implementing the two
 classes @code{X} and @code{Y} which we want to use in @R{}.
 
 @cartouche
-@smallexample
+@example
 // X.hh
 
 class X @{
@@ -3143,11 +3143,11 @@ public: X (); ~X ();
 class Y @{
 public: Y (); ~Y ();
 @};
-@end smallexample
+@end example
 @end cartouche
 
 @cartouche
-@smallexample
+@example
 // X.cc
 
 #include <iostream>
@@ -3159,24 +3159,24 @@ X::X()  @{ std::cout << "constructor X" << std::endl; @}
 X::~X() @{ std::cout << "destructor X"  << std::endl; @}
 Y::Y()  @{ std::cout << "constructor Y" << std::endl; @}
 Y::~Y() @{ std::cout << "destructor Y"  << std::endl; @}
-@end smallexample
+@end example
 @end cartouche
 
 To use with @R{}, the only thing we have to do is writing a wrapper
 function and ensuring that the function is enclosed in
 
-@smallexample
+@example
 @group
 extern "C" @{
 
 @}
 @end group
-@end smallexample
+@end example
 
 For example,
 
 @cartouche
-@smallexample
+@example
 // X_main.cc:
 
 #include "X.hh"
@@ -3188,7 +3188,7 @@ void X_main () @{
 @}
 
 @} // extern "C"
-@end smallexample
+@end example
 @end cartouche
 
 Compiling and linking should be done with the C++ compiler-linker
@@ -3197,15 +3197,15 @@ C++ initialization code (and hence the constructor of the static
 variable @code{Y}) are not called.  On a properly configured Unix or
 Windows system, one can simply use
 
-@smallexample
+@example
 R CMD SHLIB X.cc X_main.cc
-@end smallexample
+@end example
 
 @noindent
 to create the shared object, typically @file{X.so} (the file name
 extension may be different on your platform).  Now starting R yields
 
-@smallexample
+@example
 @group
 R : Copyright 2000, The R Development Core Team
 Version 1.1.0 Under development (unstable) (April 14, 2000)
@@ -3224,7 +3224,7 @@ R> q()
 Save workspace image? [y/n/c]: y
 destructor Y
 @end group
-@end smallexample
+@end example
 
 The R for Windows @acronym{FAQ} (@file{rw-FAQ}) contains details of how
 to compile this example under various Windows compilers.
@@ -3268,16 +3268,16 @@ general.
 
 A call to @code{.Call} is very similar to @code{.C}, for example
 
-@smallexample
+@example
 .Call("convolve2", a, b)
-@end smallexample
+@end example
 
 @noindent
 The first argument should be a character string giving a C symbol name
 of code that has already been loaded into @R{}.  Up to 65 @R{} objects
 can passed as arguments.  The C side of the interface is
 
-@smallexample
+@example
 @group
 #include <R.h>
 #include <Rinternals.h>
@@ -3285,18 +3285,18 @@ can passed as arguments.  The C side of the interface is
 SEXP convolve2(SEXP a, SEXP b)
  ...
 @end group
-@end smallexample
+@end example
 
 A call to @code{.External} is almost identical
 
-@smallexample
+@example
 .External("convolveE", a, b)
-@end smallexample
+@end example
 
 @noindent
 but the C side of the interface is different, having only one argument
 
-@smallexample
+@example
 @group
 #include <R.h>
 #include <Rinternals.h>
@@ -3304,7 +3304,7 @@ but the C side of the interface is different, having only one argument
 SEXP convolveE(SEXP args)
  ...
 @end group
-@end smallexample
+@end example
 
 @noindent
 Here @code{args} is a @code{LISTSXP}, a Lisp-style list from which the
@@ -3419,7 +3419,7 @@ the housekeeping is wrong.
 Here is a small example of creating an @R{} numeric vector in C code.
 First we use the macros in @file{Rdefines.h}:
 
-@smallexample
+@example
 @group
 #include <R.h>
 #include <Rdefines.h>
@@ -3431,12 +3431,12 @@ First we use the macros in @file{Rdefines.h}:
   NUMERIC_POINTER(ab)[1] = 67.89;
   UNPROTECT(1);
 @end group
-@end smallexample
+@end example
 
 @noindent
 and then those in @file{Rinternals.h}:
 
-@smallexample
+@example
 @group
 #include <R.h>
 #include <Rinternals.h>
@@ -3448,7 +3448,7 @@ and then those in @file{Rinternals.h}:
   REAL(ab)[1] = 67.89;
   UNPROTECT(1);
 @end group
-@end smallexample
+@end example
 
 Now, the reader may ask how the @R{} object could possibly get removed
 during those manipulations, as it is just our C code that is running.
@@ -3485,13 +3485,13 @@ can be used to replace the protected value using @code{REPROTECT}.
 @findex PROTECT_WITH_INDEX
 @findex REPROTECT
 For example (from the internal code for @code{optim})
-@smallexample
+@example
     PROTECT_INDEX ipx;
 
     ....
     PROTECT_WITH_INDEX(s = eval(OS->R_fcall, OS->R_env), &ipx);
     REPROTECT(s = coerceVector(s, REALSXP), ipx);
-@end smallexample
+@end example
 
 
 @node Allocating storage, Details of R types, Garbage Collection, Handling R objects in C
@@ -3568,16 +3568,16 @@ object to the correct type.  For example, if you find that an
 @code{SEXP} is of the type @code{INTEGER}, but you need a @code{REAL}
 object, you can change the type by using, equivalently,
 
-@smallexample
+@example
 PROTECT(@var{newSexp} = coerceVector(@var{oldSexp}, REALSXP));
-@end smallexample
+@end example
 
 @noindent
 or
 
-@smallexample
+@example
 PROTECT(@var{newSexp} = AS_NUMERIC(@var{oldSexp}));
-@end smallexample
+@end example
 
 @noindent
 Protection is needed as a new @emph{object} is created; the object
@@ -3606,13 +3606,13 @@ To illustrate this, let us write code to take the outer product of two
 vectors (which @code{outer} and @code{%o%} already do).  As usual the
 @R{} code is simple
 
-@smallexample
+@example
 out <- function(x, y)
 @{
    storage.mode(x) <- storage.mode(y) <- "double"
    .Call("out", x, y)
 @}
-@end smallexample
+@end example
 
 @noindent
 where we expect @code{x} and @code{y} to be numeric vectors (possibly
@@ -3621,7 +3621,7 @@ calling @R{} code.
 
 C code to do the computations is
 
-@smallexample
+@example
 @group
 #include <R.h>
 #include <Rinternals.h>
@@ -3643,14 +3643,14 @@ SEXP out(SEXP x, SEXP y)
   return(ans);
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 but we would like to set the @code{dimnames} of the result.  Although
 @code{allocMatrix} provides a short cut, we will show how to set the
 @code{dim} attribute directly.
 
-@smallexample
+@example
 #include <R.h>
 #include <Rinternals.h>
 
@@ -3690,7 +3690,7 @@ SEXP out(SEXP x, SEXP y)
   return(ans);
 @}
 @end group
-@end smallexample
+@end example
 
 This example introduces several new features.  The @code{getAttrib} and
 @code{setAttrib}
@@ -3712,7 +3712,7 @@ need to add a symbol for it @emph{via} a call to
 @code{install}.  Suppose for illustration we wanted to add an attribute
 @code{"version"} with value @code{3.0}.  We could use
 
-@smallexample
+@example
 @group
   SEXP version;
   PROTECT(version = allocVector(REALSXP, 1));
@@ -3720,7 +3720,7 @@ need to add a symbol for it @emph{via} a call to
   setAttrib(ans, install("version"), version);
   UNPROTECT(1);
 @end group
-@end smallexample
+@end example
 
 Using @code{install} when it is not needed is harmless and provides a
 simple way to retrieve the symbol from the symbol table if it is already
@@ -3735,7 +3735,7 @@ be handled as such, but there is a shortcut @code{classgets}.  Suppose
 we want to give the return value in our example the class @code{"mat"}.
 We can use
 
-@smallexample
+@example
 @group
 #include <R.h>
 #include <Rdefines.h>
@@ -3749,7 +3749,7 @@ We can use
   return(ans);
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 As the value is a character vector, we have to know how to create that
@@ -3769,25 +3769,25 @@ result, the appropriate test for an object of mode @code{list} is
 List elements can be retrieved or set by direct access to the elements
 of the generic vector.  Suppose we have a list object
 
-@smallexample
+@example
 a <- list(f=1, g=2, h=3)
-@end smallexample
+@end example
 
 @noindent
 Then we can access @code{a$g} as @code{a[[2]]} by
 
-@smallexample
+@example
 @group
   double g;
     ....
   g = REAL(VECTOR_ELT(a, 1))[0];
 @end group
-@end smallexample
+@end example
 
 This can rapidly become tedious, and the following function (based on
 one in package @pkg{nls}) is very useful:
 
-@smallexample
+@example
 @group
 /* get the list element named str, or return NULL */
 
@@ -3806,17 +3806,17 @@ SEXP getListElement(SEXP list, char *str)
   return elmt;
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 and enables us to say
 
-@smallexample
+@example
 @group
   double g;
   g = REAL(getListElement(a, "g"))[0];
 @end group
-@end smallexample
+@end example
 
 @node Finding and setting variables, Named objects and copying, Handling lists, Handling R objects in C
 @subsection Finding and setting variables
@@ -3829,7 +3829,7 @@ possible to find the values of @R{} objects from within the C given
 their names.  The following code is the equivalent of @code{get(name,
 envir = rho)}.
 
-@smallexample
+@example
 @group
 SEXP getvar(SEXP name, SEXP rho)
 @{
@@ -3844,7 +3844,7 @@ SEXP getvar(SEXP name, SEXP rho)
   return(R_NilValue);
 @}
 @end group
-@end smallexample
+@end example
 
 The main work is done by
 @findex findVar
@@ -3854,12 +3854,12 @@ in the symbol table.  As we wanted the value for internal use, we return
 
 Similar functions with syntax
 
-@smallexample
+@example
 @group
 void defineVar(SEXP symbol, SEXP value, SEXP rho)
 void setVar(SEXP symbol, SEXP value, SEXP rho)
 @end group
-@end smallexample
+@end example
 @findex defineVar
 @findex setVar
 
@@ -3885,10 +3885,10 @@ rho, inherits = TRUE)}.
 
 When assignments are done in @R{} such as
 
-@smallexample
+@example
 x <- 1:10
 y <- x
-@end smallexample
+@end example
 
 @noindent
 the named object is not necessarily copied, so after those two
@@ -3935,17 +3935,17 @@ The case @code{NAMED(foo) == 1} allows some optimization, but it can be
 ignored (and duplication done whenever @code{NAMED(foo) > 0}).  This
 optimization is unlikely to be worthwhile in user code.  It is intended
 for use within assignment functions.  Suppose we used
-@smallexample
+@example
 x <- 1:10
 foo(x) <- 3
-@end smallexample
+@end example
 
 @noindent
 which is computed as
-@smallexample
+@example
 x <- 1:10
 x <- "foo<-"(x)
-@end smallexample
+@end example
 
 @noindent
 Then inside @code{"foo<-"} the object pointing to the current value of
@@ -3985,15 +3985,15 @@ complex but allows a variable number of arguments.
 Let us convert our finite convolution example to use @code{.Call}, first
 using the @file{Rdefines.h} macros.  The calling function in @R{} is
 
-@smallexample
+@example
 conv <- function(a, b) .Call("convolve2", a, b)
-@end smallexample
+@end example
 
 @noindent
 which could hardly be simpler, but as we shall see all the type checking
 must be transferred to the C code, which is
 
-@smallexample
+@example
 @group
 #include <R.h>
 #include <Rdefines.h>
@@ -4017,7 +4017,7 @@ SEXP convolve2(SEXP a, SEXP b)
   return(ab);
 @}
 @end group
-@end smallexample
+@end example
 
 Note that unlike the macros in @Sl{} version 4, the @R{} versions of
 these macros do check that coercion can be done and raise an error if it
@@ -4027,7 +4027,7 @@ it often is simpler to do the necessary coercions in the @R{} code.
 
 Now for the version in @R{}-internal style.  Only the C code changes.
 
-@smallexample
+@example
 @group
 #include <R.h>
 #include <Rinternals.h>
@@ -4051,7 +4051,7 @@ SEXP convolve2(SEXP a, SEXP b)
   return(ab);
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 This is called in exactly the same way.
@@ -4064,16 +4064,16 @@ This is called in exactly the same way.
 We can use the same example to illustrate @code{.External}.  The @R{}
 code changes only by replacing @code{.Call} by @code{.External}
 
-@smallexample
+@example
 conv <- function(a, b) .External("convolveE", a, b)
-@end smallexample
+@end example
 
 @noindent
 but the main change is how the arguments are passed to the C code, this
 time as a single SEXP.  The only change to the C code is how we handle
 the arguments.
 
-@smallexample
+@example
 @group
 #include <R.h>
 #include <Rinternals.h>
@@ -4089,20 +4089,20 @@ SEXP convolveE(SEXP args)
     ...
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 Once again we do not need to protect the arguments, as in the @R{} side
 of the interface they are objects that are already in use.  The macros
 
-@smallexample
+@example
 @group
   first = CADR(args);
   second = CADDR(args);
   third = CADDDR(args);
   fourth = CAD4R(args);
 @end group
-@end smallexample
+@end example
 
 @noindent
 provide convenient ways to access the first four arguments.  More
@@ -4111,12 +4111,12 @@ generally we can use the
 @findex CDR
 @code{CDR} and @code{CAR} macros as in
 
-@smallexample
+@example
 @group
   args = CDR(args); a = CAR(args);
   args = CDR(args); b = CAR(args);
 @end group
-@end smallexample
+@end example
 
 @noindent
 which clearly allows us to extract an unlimited number of arguments
@@ -4130,7 +4130,7 @@ arguments, which we can by using the @code{TAG} macro and using
 something like the following example, that prints the names and the first
 value of its arguments if they are vector types.
 
-@smallexample
+@example
 @group
 #include <R_ext/PrtUtil.h>
 
@@ -4178,21 +4178,21 @@ SEXP showArgs(SEXP args)
   return(R_NilValue);
 @}
 @end group
-@end smallexample
+@end example
 
 This can be called by the wrapper function
 
-@smallexample
+@example
 showArgs <- function(...) .External("showArgs", ...)
-@end smallexample
+@end example
 
 @noindent
 Note that this style of programming is convenient but not necessary, as
 an alternative style is
 
-@smallexample
+@example
 showArgs <- function(...) .Call("showArgs1", list(...))
-@end smallexample
+@end example
 
 @node Missing and special values,  , Calling .External, Interface functions .Call and .External
 @subsection Missing and special values
@@ -4213,7 +4213,7 @@ re-write the code to handle @code{NA}s using macros defined in
 The code changes are the same in any of the versions of @code{convolve2}
 or @code{convolveE}:
 
-@smallexample
+@example
 @group
     ...
   for(i = 0; i < na; i++)
@@ -4224,7 +4224,7 @@ or @code{convolveE}:
           xab[i + j] += xa[i] * xb[j];
     ...
 @end group
-@end smallexample
+@end example
 
 @findex ISNA
 @findex ISNAN
@@ -4248,9 +4248,9 @@ We noted that the @code{call_R} interface could be used to evaluate @R{}
 expressions from C code, but the current interfaces are much more
 convenient to use.  The main function we will use is
 
-@smallexample
+@example
 SEXP eval(SEXP expr, SEXP rho);
-@end smallexample
+@end example
 
 @noindent
 the equivalent of the interpreted @R{} code @code{eval(expr, envir =
@@ -4260,17 +4260,17 @@ and @code{findFun} (which restricts the search to functions).
 To see how this might be applied, here is a simplified internal version
 of @code{lapply} for expressions, used as
 
-@smallexample
+@example
 @group
 a <- list(a = 1:5, b = rnorm(10), test = runif(100))
 .Call("lapply", a, quote(sum(x)), new.env())
 @end group
-@end smallexample
+@end example
 
 @noindent
 with C code
 
-@smallexample
+@example
 @group
 SEXP lapply(SEXP list, SEXP expr, SEXP rho)
 @{
@@ -4289,7 +4289,7 @@ SEXP lapply(SEXP list, SEXP expr, SEXP rho)
   return(ans);
 @}
 @end group
-@end smallexample
+@end example
 
 It would be closer to @code{lapply} if we could pass in a function
 rather than an expression.  One way to do this is @emph{via} interpreted
@@ -4297,7 +4297,7 @@ rather than an expression.  One way to do this is @emph{via} interpreted
 obscure) to do this in C code.  The following is based on the code in
 @file{src/main/optimize.c}.
 
-@smallexample
+@example
 @group
 SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
 @{
@@ -4318,14 +4318,14 @@ SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
   return(ans);
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 used by
 
-@smallexample
+@example
 .Call("lapply2", a, sum, new.env())
-@end smallexample
+@end example
 
 @noindent
 Function @code{lang2} creates an executable `list' of two elements, but
@@ -4335,7 +4335,7 @@ language.
 As a more comprehensive example of constructing an @R{} call in C code
 and evaluating, consider the following fragment of
 @code{printAttributes} in @file{src/main/print.c}.
-@smallexample
+@example
     /* Need to construct a call to
        print(CAR(a), digits=digits)
        based on the R_print structure, then eval(call, env).
@@ -4351,7 +4351,7 @@ and evaluating, consider the following fragment of
     SET_TAG(t, install("digits"));
     eval(s, env);
     UNPROTECT(1);
-@end smallexample
+@end example
 
 @noindent
 At this point @code{CAR(a)} is the @R{} object to be printed, the
@@ -4381,7 +4381,7 @@ Chambers & Wilks (1988) on finding a zero of a univariate function,
 which used to be used as an example for @code{call_R} in the now defunct
 @code{demo(dynload)}.  The @R{} code and an example are
 
-@smallexample
+@example
 zero <- function(f, guesses, tol = 1e-7) @{
   f.check <- function(x) @{
     x <- f(x)
@@ -4394,13 +4394,13 @@ zero <- function(f, guesses, tol = 1e-7) @{
 
 cube1 <- function(x) (x^2 + 1) * (x - 1.5)
 zero(cube1, c(0, 5))
-@end smallexample
+@end example
 
 @noindent
 where this time we do the coercion and error-checking in the @R{} code.
 The C code is
 
-@smallexample
+@example
 @group
 SEXP mkans(double x)
 @{
@@ -4450,7 +4450,7 @@ SEXP zero(SEXP f, SEXP guesses, SEXP stol, SEXP rho)
     @}
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 The C code is essentially unchanged from the @code{call_R} version, just
@@ -4468,7 +4468,7 @@ may be needed as part of a larger C calculation.
 
 An interpreted @R{} version and an example are
 
-@smallexample
+@example
 @group
 numeric.deriv <- function(expr, theta, rho=sys.frame(sys.parent()))
 @{
@@ -4490,7 +4490,7 @@ numeric.deriv <- function(expr, theta, rho=sys.frame(sys.parent()))
 omega <- 1:5; x <- 1; y <- 2
 numeric.deriv(sin(omega*x*y), c("x", "y"))
 @end group
-@end smallexample
+@end example
 
 @noindent
 where @code{expr} is an expression, @code{theta} a character vector of
@@ -4498,24 +4498,24 @@ variable names and @code{rho} the environment to be used.
 
 For the compiled version the call from @R{} will be
 
-@smallexample
+@example
 .External("numeric_deriv", @var{expr}, @var{theta}, @var{rho})
-@end smallexample
+@end example
 
 @noindent
 with example usage
 
-@smallexample
+@example
 .External("numeric_deriv", quote(sin(omega*x*y)),
           c("x", "y"), .GlobalEnv)
-@end smallexample
+@end example
 
 @noindent
 Note the need to quote the expression to stop it being evaluated.
 
 Here is the complete C code which we will explain section by section.
 
-@smallexample
+@example
 @group
 #include <R.h> /* for DOUBLE_EPS */
 #include <Rinternals.h>
@@ -4565,11 +4565,11 @@ SEXP numeric_deriv(SEXP args)
   return ans;
 @}
 @end group
-@end smallexample
+@end example
 
 The code to handle the arguments is
 
-@smallexample
+@example
 @group
   expr = CADR(args);
   if(!isString(theta = CADDR(args)))
@@ -4577,7 +4577,7 @@ The code to handle the arguments is
   if(!isEnvironment(rho = CADDDR(args)))
     error("rho should be an environment");
 @end group
-@end smallexample
+@end example
 
 @noindent
 Note that we check for correct types of @code{theta} and @code{rho} but
@@ -4589,28 +4589,28 @@ arguments are not of the correct mode.
 The first step in the code is to evaluate the expression in the
 environment @code{rho}, by
 
-@smallexample
+@example
   PROTECT(ans = coerceVector(eval(expr, rho), REALSXP));
-@end smallexample
+@end example
 
 @noindent
 We then allocate space for the calculated derivative by
 
-@smallexample
+@example
   PROTECT(gradient = allocMatrix(REALSXP, LENGTH(ans), LENGTH(theta)));
-@end smallexample
+@end example
 
 @noindent
 The first argument to @code{allocMatrix} gives the @code{SEXPTYPE} of
 the matrix: here we want it to be @code{REALSXP}.  The other two
 arguments are the numbers of rows and columns.
 
-@smallexample
+@example
 @group
   for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) @{
     PROTECT(par = findVar(install(CHAR(STRING_ELT(theta, i))), rho));
 @end group
-@end smallexample
+@end example
 
 @noindent
 Here, we are entering a for loop.  We loop through each of the
@@ -4622,7 +4622,7 @@ corresponding to the @code{i}'th element of the @code{STRSXP}
 returns a pointer.  We then install the name and use @code{findVar} to
 find its value.
 
-@smallexample
+@example
 @group
     tt = REAL(par)[0];
     xx = fabs(tt);
@@ -4630,7 +4630,7 @@ find its value.
     REAL(par)[0] += delta;
     PROTECT(ans1 = coerceVector(eval(expr, rho), REALSXP));
 @end group
-@end smallexample
+@end example
 
 @noindent
 We first extract the real value of the parameter, then calculate
@@ -4641,7 +4641,7 @@ environment @code{rho} again.  Because we are directly dealing with
 original @R{} memory locations here, @R{} does the evaluation for the
 changed parameter value.
 
-@smallexample
+@example
 @group
     for(j = 0; j < LENGTH(ans); j++)
       REAL(gradient)[j + start] =
@@ -4650,13 +4650,13 @@ changed parameter value.
     UNPROTECT(2);
   @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 Now, we compute the @code{i}'th column of the gradient matrix.  Note how
 it is accessed: @R{} stores matrices by column (like FORTRAN).
 
-@smallexample
+@example
 @group
   PROTECT(dimnames = allocVector(VECSXP, 2));
   SET_VECTOR_ELT(dimnames, 1, theta);
@@ -4666,7 +4666,7 @@ it is accessed: @R{} stores matrices by column (like FORTRAN).
   return ans;
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 First we add column names to the gradient matrix.  This is done by
@@ -4691,7 +4691,7 @@ current interface: it is liable to change.}.
 An example of the usage can be found in the (example) Windows package
 @pkg{windlgs} included in the @R{} source tree.  The essential part is
 
-@smallexample
+@example
 @group
 #include <Rinternals.h>
 #include <R_ext/Parse.h>
@@ -4719,7 +4719,7 @@ SEXP menu_ttest3()
     return ans;
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 Note that a single line of text may give rise to more than one @R{}
@@ -4771,7 +4771,7 @@ Under Windows the @R{} engine is itself in a DLL, and the procedure is
 Start @R{} under the debugger after setting a breakpoint for
 @code{WinMain}.
 
-@smallexample
+@example
 @group
 gdb .../bin/Rgui.exe
 (gdb) break WinMain
@@ -4782,7 +4782,7 @@ gdb .../bin/Rgui.exe
 [ stops with console running ]
 (gdb) continue
 @end group
-@end smallexample
+@end example
 
 @item
 At the @R{} prompt, use @code{dyn.load} or @code{library} to load your DLL.
@@ -4791,12 +4791,12 @@ Set the breakpoints in your code.
 @item
 Use
 
-@smallexample
+@example
 @group
 (gdb) clear R_ReadConsole
 (gdb) continue
 @end group
-@end smallexample
+@end example
 
 @noindent
 to continue running with the breakpoints set.
@@ -4823,9 +4823,9 @@ Another way is to call @code{R_PV} from the symbolic debugger.
 (@code{PrintValue} is hidden as @code{Rf_PrintValue}.)  For example,
 from @code{gdb} we can use
 
-@smallexample
+@example
 (gdb) p R_PV(ab)
-@end smallexample
+@end example
 
 @noindent
 using the object @code{ab} from the convolution example, if we have
@@ -4834,16 +4834,16 @@ placed a suitable breakpoint in the convolution C code.
 To examine an arbitrary @R{} object we need to work a little harder.
 For example, let
 
-@smallexample
+@example
 R> DF <- data.frame(a = 1:3, b = 4:6)
-@end smallexample
+@end example
 
 @noindent
 By setting a breakpoint at @code{do_get} and typing @kbd{get("DF")} at
 the R prompt, one can find out the address in memory of @code{DF}, for
 example
 
-@smallexample
+@example
 @group
 Value returned is $1 = (SEXPREC *) 0x40583e1c
 (gdb) p *$1
@@ -4867,7 +4867,7 @@ $2 = @{
   @}
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 (Debugger output reformatted for better legibility).
@@ -4875,7 +4875,7 @@ $2 = @{
 Using @code{R_PV()} one can ``inspect'' the values of the various
 elements of the SEXP, for example,
 
-@smallexample
+@example
 @group
 (gdb) p R_PV($1->attrib)
 $names
@@ -4889,12 +4889,12 @@ $class
 
 $3 = void
 @end group
-@end smallexample
+@end example
 
 To find out where exactly the corresponding information is stored, one
 needs to go ``deeper'':
 
-@smallexample
+@example
 @group
 (gdb) set $a = $1->attrib
 (gdb) p $a->u.listsxp.tagval->u.symsxp.pname->u.vecsxp.type.c
@@ -4906,7 +4906,7 @@ $6 = 1
 (gdb) p $1->u.vecsxp.type.s[1]->u.vecsxp.type.i[1]
 $7 = 5
 @end group
-@end smallexample
+@end example
 
 @node The R API, Generic functions and methods, System and foreign language interfaces, Top
 @chapter The R @acronym{API}: entry points for C code
@@ -4937,9 +4937,9 @@ be changed with considerable notice.
 The recommended procedure to use these is to include the header file
 @file{R.h} in your C code by
 
-@smallexample
+@example
 #include <R.h>
-@end smallexample
+@end example
 
 @noindent
 This will include several other header files from the directory
@@ -4997,29 +4997,29 @@ has full control (and responsibility).
 Here @R{} will reclaim the memory at the end of the call to @code{.C}.
 Use
 
-@smallexample
+@example
 char* R_alloc(long @var{n}, int @var{size})
-@end smallexample
+@end example
 
 @noindent
 which allocates @var{n} units of @var{size} bytes each.  A typical usage
 (from package @pkg{stats}) is
 
-@smallexample
+@example
 x = (int *) R_alloc(nrows(merge)+2, sizeof(int));
-@end smallexample
+@end example
 
 There is a similar calls, @code{S_alloc} (for compatibility with older
 versions of @Sl{}) which zeroes the memory allocated,
-@smallexample
+@example
 char* S_alloc(long @var{n}, int @var{size})
-@end smallexample
+@end example
 
 and
 
-@smallexample
+@example
 char* S_realloc(char *@var{p}, long @var{new}, long @var{old}, int @var{size})
-@end smallexample
+@end example
 
 @noindent
 which changes the allocation size from @var{old} to @var{new} units, and
@@ -5027,10 +5027,10 @@ zeroes the additional units.
 
 For compatibility with current versions of @Sl{}, header @file{S.h}
 (only) defines wrapper macros equivalent to
-@smallexample
+@example
 type* Salloc(long @var{n}, int @var{type})
 type* Srealloc(char *@var{p}, long @var{new}, long @var{old}, int @var{type})
-@end smallexample
+@end example
 
 This memory is taken from the heap, and released at the end of the
 @code{.C}, @code{.Call} or @code{.External} call.  Users can also manage
@@ -5054,13 +5054,13 @@ workspace.
 
 The interface functions are
 
-@smallexample
+@example
 @group
 @var{type}* Calloc(size_t @var{n}, @var{type})
 @var{type}* Realloc(@var{any} *@var{p}, size_t @var{n}, @var{type})
 void Free(@var{any} *@var{p})
 @end group
-@end smallexample
+@end example
 
 @noindent
 providing analogues of @code{calloc}, @code{realloc} and @code{free}.
@@ -5085,12 +5085,12 @@ use @code{free} or @code{strdup} with it.
 The basic error handling routines are the equivalents of @code{stop} and
 @code{warning} in @R{} code, and use the same interface.
 
-@smallexample
+@example
 @group
 void error(const char * @var{format}, ...);
 void warning(const char * @var{format}, ...);
 @end group
-@end smallexample
+@end example
 
 @noindent
 These have the same call sequences as calls to @code{printf}, but in the
@@ -5101,14 +5101,14 @@ or might otherwise be interpreted as a format.)
 If @code{STRICT_R_HEADERS} is not defined there is also an
 @Sl{}-compatibility interface which uses calls of the form
 
-@smallexample
+@example
 @group
 PROBLEM ...... ERROR
 MESSAGE ...... WARN
 PROBLEM ...... RECOVER(NULL_ENTRY)
 MESSAGE ...... WARNING(NULL_ENTRY)
 @end group
-@end smallexample
+@end example
 
 @noindent
 the last two being the forms available in all @Sl{} versions.  Here
@@ -5127,12 +5127,12 @@ There are two interface function provided to call @code{error} and
 @code{warning} from FORTRAN code, in each case with a simple character
 string argument.  They are defined as
 
-@smallexample
+@example
 @group
 subroutine rexit(@var{message})
 subroutine rwarn(@var{message})
 @end group
-@end smallexample
+@end example
 
 Messages of more than 255 characters are truncated, with a warning.
 
@@ -5151,28 +5151,28 @@ Messages of more than 255 characters are truncated, with a warning.
 
 The interface to @R{}'s internal random number generation routines is
 
-@smallexample
+@example
 @group
 double unif_rand();
 double norm_rand();
 double exp_rand();
 @end group
-@end smallexample
+@end example
 
 @noindent
 giving one uniform, normal or exponential pseudo-random variate.
 However, before these are used, the user must call
 
-@smallexample
+@example
 GetRNGstate();
-@end smallexample
+@end example
 
 @noindent
 and after all the required variates have been generated, call
 
-@smallexample
+@example
 PutRNGstate();
-@end smallexample
+@end example
 
 @noindent
 These essentially read in (or create) @code{.Random.seed} and write it
@@ -5209,13 +5209,13 @@ enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
 A set of functions is provided to test for @code{NA}, @code{Inf},
 @code{-Inf} and @code{NaN}.  These functions are accessed via macros:
 
-@smallexample
+@example
 @group
 ISNA(@var{x})        @r{True for R's @code{NA} only}
 ISNAN(@var{x})       @r{True for R's @code{NA} and @acronym{IEEE} @code{NaN}}
 R_FINITE(@var{x})    @r{False for @code{Inf}, @code{-Inf}, @code{NA}, @code{NaN}}
 @end group
-@end smallexample
+@end example
 
 @noindent
 and via function @code{R_IsNaN} which is true for @code{NaN} but not
@@ -5272,13 +5272,13 @@ invisible on @acronym{GUI} interfaces.  They are best avoided.
 Three subroutines are provided to ease the output of information from
 FORTRAN code.
 
-@smallexample
+@example
 @group
 subroutine dblepr(@var{label}, @var{nchar}, @var{data}, @var{ndata})
 subroutine realpr(@var{label}, @var{nchar}, @var{data}, @var{ndata})
 subroutine intpr (@var{label}, @var{nchar}, @var{data}, @var{ndata})
 @end group
-@end smallexample
+@end example
 
 @noindent
 Here @var{label} is a character label of up to 255 characters,
@@ -5319,7 +5319,7 @@ For example, suppose we want to call R's normal random numbers from
 FORTRAN.  We need a C wrapper along the lines of
 
 @cindex Random numbers in FORTRAN
-@smallexample
+@example
 @group
 #include <R.h>
 
@@ -5327,12 +5327,12 @@ void F77_SUB(rndstart)(void) @{ GetRNGstate(); @}
 void F77_SUB(rndend)(void) @{ PutRNGstate(); @}
 double F77_SUB(normrnd)(void) @{ return norm_rand(); @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 to be called from FORTRAN as in
 
-@smallexample
+@example
 @group
       subroutine testit()
       double precision normrnd, x
@@ -5342,7 +5342,7 @@ to be called from FORTRAN as in
       call rndend()
       end
 @end group
-@end smallexample
+@end example
 
 @noindent
 Note that this is not guaranteed to be portable, for the return
@@ -5396,7 +5396,7 @@ distributions are available as entry points.
 The arguments for the entry points follow the pattern of those for the
 normal distribution:
 
-@smallexample
+@example
 @group
 double dnorm(double @var{x}, double @var{mu}, double @var{sigma}, int @var{give_log});
 double pnorm(double @var{x}, double @var{mu}, double @var{sigma}, int @var{lower_tail},
@@ -5405,7 +5405,7 @@ double qnorm(double @var{p}, double @var{mu}, double @var{sigma}, int @var{lower
              int @var{log_p});
 double rnorm(double @var{mu}, double @var{sigma});
 @end group
-@end smallexample
+@end example
 
 @noindent
 That is, the first argument gives the position for the density and CDF
@@ -5422,9 +5422,9 @@ Note that you directly get the cumulative (or ``integrated'')
 @emph{hazard} function, @eqn{H(t) = - \log(1 - F(t)), H(t) = - log(1 -
 F(t))}, by using
 
-@smallexample
+@example
 - p@var{dist}(t, ..., /*lower_tail = */ FALSE, /* give_log = */ TRUE)
-@end smallexample
+@end example
 
 @noindent
 or shorter (and more cryptic) @code{- p@var{dist}(t, ..., 0, 1)}.
@@ -5677,9 +5677,9 @@ The C code underlying @code{optim} can be accessed directly.  The user
 needs to supply a function to compute the function to be minimized, of
 the type
 
-@smallexample
+@example
 typedef double optimfn(int n, double *par, void *ex);
-@end smallexample
+@end example
 
 @noindent
 where the first argument is the number of parameters in the second
@@ -5688,9 +5688,9 @@ routine, normally used to carry auxiliary information.
 
 Some of the methods also require a gradient function
 
-@smallexample
+@example
 typedef void optimgr(int n, double *par, double *gr, void *ex);
-@end smallexample
+@end example
 
 @noindent
 which passes back the gradient in the @code{gr} argument.  No function
@@ -5702,47 +5702,47 @@ The interfaces (defined in header @file{R_ext/Applic.h}) are
 @itemize @bullet
 @item Nelder Mead:
 @findex nmmin
-@smallexample
+@example
 void nmmin(int n, double *xin, double *x, double *Fmin, optimfn fn,
            int *fail, double abstol, double intol, void *ex,
            double alpha, double beta, double gamma, int trace,
            int *fncount, int maxit);
-@end smallexample
+@end example
 
 @item BFGS:
 @findex vmmin
-@smallexample
+@example
 void vmmin(int n, double *x, double *Fmin,
            optimfn fn, optimgr gr, int maxit, int trace,
            int *mask, double abstol, double reltol, int nREPORT,
            void *ex, int *fncount, int *grcount, int *fail);
-@end smallexample
+@end example
 
 @item Conjugate gradients:
 @findex cgmin
-@smallexample
+@example
 void cgmin(int n, double *xin, double *x, double *Fmin,
            optimfn fn, optimgr gr, int *fail, double abstol,
            double intol, void *ex, int type, int trace,
            int *fncount, int *grcount, int maxit);
-@end smallexample
+@end example
 
 @item Limited-memory BFGS with bounds:
 @findex lbfgsb
-@smallexample
+@example
 void lbfgsb(int n, int lmm, double *x, double *lower,
             double *upper, int *nbd, double *Fmin, optimfn fn,
             optimgr gr, int *fail, void *ex, double factr,
             double pgtol, int *fncount, int *grcount,
             int maxit, char *msg, int trace, int nREPORT);
-@end smallexample
+@end example
 
 @item Simulated annealing:
 @findex samin
-@smallexample
+@example
 void samin(int n, double *x, double *Fmin, optimfn fn, int maxit,
            int tmax, double temp, int trace, void *ex);
-@end smallexample
+@end example
 
 @end itemize
 
@@ -5764,9 +5764,9 @@ The C code underlying @code{integrate} can be accessed directly.  The
 user needs to supply a @emph{vectorizing} C function to compute the
 function to be integrated, of the type
 
-@smallexample
+@example
 typedef void integr_fn(double *x, int n, void *ex);
-@end smallexample
+@end example
 
 @noindent
 where @code{x[]} is both input and output and has length @code{n}, i.e.,
@@ -5785,23 +5785,23 @@ one of the integration boundaries is not finite.
 @itemize @bullet
 @item Finite:
 @findex Rdqags
-@smallexample
+@example
 void Rdqags(integr_fn f, void *ex, double *a, double *b,
             double *epsabs, double *epsrel,
             double *result, double *abserr, int *neval, int *ier,
             int *limit, int *lenw, int *last,
             int *iwork, double *work);
-@end smallexample
+@end example
 
 @item Indefinite:
 @findex Rdqagi
-@smallexample
+@example
 void Rdqagi(integr_fn f, void *ex, double *bound, int *inf,
             double *epsabs, double *epsrel,
             double *result, double *abserr, int *neval, int *ier,
             int *limit, int *lenw, int *last,
             int *iwork, double *work);
-@end smallexample
+@end example
 
 @end itemize
 
@@ -5833,11 +5833,11 @@ definition.  @code{limit} corresponds to @code{integrate(...,
 subdivisions = *)}.  It seems you should always define the two work
 arrays and the length of the second one as
 
-@smallexample
+@example
     lenw = 4 * limit;
     iwork =   (int *) R_alloc(limit, sizeof(int));
     work = (double *) R_alloc(lenw,  sizeof(double));
-@end smallexample
+@end example
 
 The comments in the source code in @file{src/appl/integrate.c} give
 more details, particularly about reasons for failure (@code{ier >= 1}).
@@ -5967,15 +5967,15 @@ this is defined.
 As from @R{} 1.8.0 no port of @R{} can be interrupted whilst running
 long computations in compiled code, so programmers should make provision
 for the code to be interrupted at suitable points by calling from C
-@smallexample
+@example
 #include <R_ext/Utils.h>
 
 void R_CheckUserInterrupt(void);
-@end smallexample
+@end example
 and from FORTRAN
-@smallexample
+@example
 subroutine rchkusr()
-@end smallexample
+@end example
 These check if the user has requested an interrupt, and if so branch to
 @R{}'s error handling functions.
 
@@ -6006,13 +6006,13 @@ used to test if the version of @R{} is late enough, or to include
 back-compatibility features.  For protection against earlier versions of
 @R{} which did not have this macro, use a construction such as
 
-@smallexample
+@example
 @group
 #if defined(R_VERSION) && R_VERSION >= R_Version(1, 9, 0)
   ...
 #endif
 @end group
-@end smallexample
+@end example
 
 More detailed information is available in the macros @code{R_MAJOR},
 @code{R_MINOR}, @code{R_YEAR}, @code{R_MONTH} and @code{R_DAY}: see the
@@ -6029,14 +6029,14 @@ inlining.  Portable code can be written using the macro @code{R_INLINE}
 (defined in file @code{Rconfig.h} included by @code{R.h}), as for
 example from package @pkg{cluster}
 
-@smallexample
+@example
 #include <R.h>
 
 static R_INLINE int ind_2(int l, int j)
 @{
 ...
 @}
-@end smallexample
+@end example
 
 Be aware that using inlining with functions in more than one compilation
 unit is almost impossible to do portably: see
@@ -6058,12 +6058,12 @@ be built in the directory @file{src/nmath/standalone} in the @R{}
 sources: see the file @file{README} there.  To use the code in your own
 C program include
 
-@smallexample
+@example
 @group
 #define MATHLIB_STANDALONE
 #include <Rmath.h>
 @end group
-@end smallexample
+@end example
 
 @noindent
 and link against @samp{-lRmath}.  There is an example file
@@ -6072,25 +6072,25 @@ and link against @samp{-lRmath}.  There is an example file
 A little care is needed to use the random-number routines. You will
 need to supply the uniform random number generator
 
-@smallexample
+@example
 double unif_rand(void)
-@end smallexample
+@end example
 
 @noindent
 or use the one supplied (and with a dynamic library or DLL you will have
 to use the one supplied, which is the Marsaglia-multicarry with an entry
 points
 
-@smallexample
+@example
 set_seed(unsigned int, unsigned int)
-@end smallexample
+@end example
 
 @noindent
 to set its seeds and
 
-@smallexample
+@example
 get_seed(unsigned int *, unsigned int *)
-@end smallexample
+@end example
 
 @noindent
 to read the seeds).
@@ -6102,7 +6102,7 @@ The header files which @R{} installs are in directory
 @file{R_HOME/include}.  This currently contains
 
 @quotation
-@multitable {R_ext/RConvertors.h}   {RRR storage.mode DOUBLE PRECISION}
+@multitable {R_ext/RConvertors.h}   {Needed to register compiled code in packages}
 @item @code{R.h} @tab includes many other files
 @item @code{S.h} @tab different version for code ported from @Sl{}
 @item @code{Rinternals.h} @tab definitions for using @R{}'s internal structures
@@ -6129,7 +6129,7 @@ routines, not all of which are included in @R{}
 
 The following headers are included by @code{R.h}:
 @quotation
-@multitable {R_ext/RConvertors.h}   {RRR storage.mode DOUBLE PRECISION}
+@multitable {R_ext/RConvertors.h}   {definitions for exports from R.dll on Windows.}
 @item @code{Rconfig.h} @tab configuration info that is made available
 @item @code{R_ext/Arith.h} @tab handling for NAs, NaNa, +/-Inf
 @item @code{R_ext/Boolean.h} @tab TRUE/FALSE type
@@ -6142,7 +6142,7 @@ The following headers are included by @code{R.h}:
 @item @code{R_ext/RS.h} @tab definitions common to @code{R.h} and
 @code{S.h}, including @code{F77_CALL} etc.
 @item @code{R_ext/Utils.h} @tab sorting and other utilities
-@item @code{R_ext/libextern.h} @tab definitions for exports from R.dll
+@item @code{R_ext/libextern.h} @tab definitions for exports from @code{R.dll}
 on Windows.
 @end multitable
 @end quotation
@@ -6171,7 +6171,7 @@ next method.  It is quite typical for a method function to make a few
 changes to its arguments, dispatch to the next method, receive the
 results and modify them a little.  An example is
 
-@smallexample
+@example
 @group
 t.data.frame <- function(x)
 @{
@@ -6179,7 +6179,7 @@ t.data.frame <- function(x)
     NextMethod("t")
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent
 Also consider @code{predict.glm}: it happens that in @R{} for historical
@@ -6226,29 +6226,29 @@ generic.}
 To see the scale of this problem, consider the generic function
 @code{scale}, defined (in @R{} 1.4.0) as
 
-@smallexample
+@example
 @group
 scale <- function (x, center = TRUE, scale = TRUE)
     UseMethod("scale")
 @end group
-@end smallexample
+@end example
 
 @noindent
 Suppose an unthinking package writer created methods such as
 
-@smallexample
+@example
 scale.foo <- function(x, scale = FALSE, ...) @{ @}
-@end smallexample
+@end example
 
 @noindent
 Then for @code{x} of class @code{"foo"} the calls
 
-@smallexample
+@example
 @group
 scale(x, , TRUE)
 scale(x, scale = TRUE)
 @end group
-@end smallexample
+@end example
 
 @noindent
 would do most likely do different things, to the justifiable
@@ -6257,9 +6257,9 @@ consternation of the end user.
 To add a further twist, which default is used when a user calls
 @code{scale(x)} in our example?  What if
 
-@smallexample
+@example
 scale.bar <- function(x, center, scale = TRUE) NextMethod("scale")
-@end smallexample
+@end example
 
 @noindent
 and @code{x} has class @code{c("bar", "foo")}?  We are not going to give
@@ -6303,12 +6303,12 @@ making a function generic with the old definition as the default method
 does have a small performance cost.  It is never necessary, as a package
 can take over a function in the base package and make it generic by
 
-@smallexample
+@example
 @group
 foo <- function(object, ...) UseMethod("foo")
 foo.default <- get("foo", pos = NULL, mode = "function")
 @end group
-@end smallexample
+@end example
 
 @noindent
 (If the thus defined default method needs a @samp{...} added to its
@@ -6320,9 +6320,9 @@ order of packages on the search path cannot be controlled, except that
 all precede the base package.  Where the name of the package is known
 and it is in a namespace another way to access the original form is
 
-@smallexample
+@example
 foo.default <- base::foo
-@end smallexample
+@end example
 
 
 @node Linking GUIs and other front-ends to R, R (internal) programming miscellanea, Generic functions and methods, Top
@@ -6348,7 +6348,7 @@ example, and the unbundled @acronym{GNOME} and MacOS X consoles are
 others.  The source for @file{R_HOME/bin/exec/R} is in file
 @file{src/main/Rmain.c} and is very simple
 
-@smallexample
+@example
 int Rf_initialize_R(int ac, char **av); /* in ../unix/system.c */
 void Rf_mainloop();                     /* in main.c */
 
@@ -6358,7 +6358,7 @@ int main(int ac, char **av)
     Rf_mainloop(); /* does not return */
     return 0;
 @}
-@end smallexample
+@end example
 
 @noindent
 indeed, misleadingly simple.  Remember that @file{R_HOME/bin/exec/R} is
@@ -6409,7 +6409,7 @@ are not part of the automated test procedures and so little tested.} in the
 @file{tests/Embedding} directory.  These make use of
 @code{Rf_initEmbeddedR} in @file{src/main/Rembedded.c}, and essentially
 use
-@smallexample
+@example
 int Rf_initEmbeddedR(int argc, char **argv)
 @{ /* This is already compiled into R */
     Rf_initialize_R(argc, argv);
@@ -6429,16 +6429,16 @@ int main(int ac, char **av)
     end_Rmainloop();
     return 0;
 @}
-@end smallexample
+@end example
 
 @noindent
 If you don't want to pass @R{} arguments, you can fake an @code{argv}
 array, for example by
 
-@smallexample
+@example
     char *argv[]= @{"REmbeddedPostgres", "--gui=none", "--silent"@};
     Rf_initEmbeddedR(sizeof(argv)/sizeof(argv[0]), argv);
-@end smallexample
+@end example
 
 However, to make a GUI we do want to run @code{run_Rmainloop} after
 setting up various parts of @R{} to talk to our GUI, and arranging for
@@ -6457,7 +6457,7 @@ As from @R{} version 2.1.0 there is a public header file
 callbacks used by @R{} in a documented way.  This defines pointers (if
 @code{R_INTERFACE_PTRS} is defined)
 
-@smallexample
+@example
 extern void (*ptr_R_Suicide)(char *);
 extern void (*ptr_R_ShowMessage)(char *);
 extern int  (*ptr_R_ReadConsole)(char *, unsigned char *, int, int);
@@ -6472,7 +6472,7 @@ extern int  (*ptr_R_ChooseFile)(int, char *, int);
 extern int  (*ptr_R_EditFile)(char *);
 extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
-@end smallexample
+@end example
 
 @noindent
 which allow standard @R{} callbacks to be redirected to your GUI.
@@ -6536,7 +6536,7 @@ Send a file to an editor window.
 @code{savehistory}: these are called after checking the number of
 arguments.  If the console has no history mechanism these can be as
 simple as
-@smallexample
+@example
 SEXP R_loadhistory (SEXP call, SEXP op , SEXP args, SEXP env)
 @{
     errorcall(call, "loadhistory is not implemented");
@@ -6547,13 +6547,13 @@ SEXP R_savehistory (SEXP call, SEXP op , SEXP args, SEXP env)
     errorcall(call, "savehistory is not implemented");
     return R_NilValue;
 @}
-@end smallexample
+@end example
 @end deftypefun
 
 @deftypefun void R_Suicide (char *message)
 This should abort @R{} as rapidly as possible, displaying the message.
 A possible implementation is
-@smallexample
+@example
 void R_Suicide (char *message)
 @{
     char  pp[1024];
@@ -6561,14 +6561,14 @@ void R_Suicide (char *message)
     R_ShowMessage(pp);
     R_CleanUp(SA_SUICIDE, 2, 0);
 @}
-@end smallexample
+@end example
 @end deftypefun
 
 @deftypefun void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 
 This function invokes any actions which occur at system termination.
 It needs to be quite complex:
-@smallexample
+@example
 #include <Rinterface.h>
 #include <Rdevices.h>    /* for KillAllDevices */
 
@@ -6609,7 +6609,7 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 
     exit(status);    
 @}
-@end smallexample
+@end example
 @end deftypefun
 
 
@@ -6676,14 +6676,14 @@ during events of the second type.  This is not handled very well in the
 existing examples.  The GNOME front-end runs its own handler for polled
 events by setting
 
-@smallexample
+@example
 extern int (*R_timeout_handler)();
 extern long R_timeout_val;
 
       if (R_timeout_handler && R_timeout_val)
           gtk_timeout_add(R_timeout_val, R_timeout_handler, NULL);
       gtk_main ();
-@end smallexample
+@end example
 
 @noindent
 whilst it is waiting for console input.  This obviously handles events
@@ -6906,7 +6906,7 @@ needed -- two ways are provided to allow this:
 @code{ProcessEvents} calls the callback registered by
 @code{Rp->callback}.  A version of this is used to run package Tcl/Tk
 for @pkg{tcltk} under Windows, for the code is
-@smallexample
+@example
 void R_ProcessEvents(void)
 @{
     while (peekevent()) doevent(); /* Windows events for GraphApp */
@@ -6914,7 +6914,7 @@ void R_ProcessEvents(void)
     R_CallBackHook();
     if(R_tcldo) R_tcldo();
 @}
-@end smallexample
+@end example
 
 @item
 The mainloop can be split up to allow the calling application to take
@@ -6967,12 +6967,12 @@ In general, all such functions use @code{.Internal()} as this is safer
 and in particular allows for transparent handling of named and default
 arguments.  For example, @code{axis} is defined as
 
-@smallexample
+@example
 @group
 axis <- function(side, at = NULL, labels = NULL, ...)
     .Internal(axis(side, at, labels, ...))
 @end group
-@end smallexample
+@end example
 
 However, for reasons of convenience and also efficiency (as there is
 some overhead in using the @code{.Internal} interface), there are
@@ -6990,19 +6990,19 @@ currently, it includes the following.
 ``Special functions'' which really are @emph{language} elements, however
 exist as ``primitive'' functions in @R{}:
 
-@smallexample
+@example
 @group
 @{       (         if     for      while  repeat  break  next
 return  function  quote  on.exit
 @end group
-@end smallexample
+@end example
 
 @item
 Basic @emph{operator}s (i.e., functions usually @emph{not} called as
 @code{foo(a, b, ...)}) for subsetting, assignment, arithmetic and logic.
 These are the following 1-, 2-, and @math{N}-argument functions:
 
-@smallexample
+@example
 @group
           [    [[    $
 <-   <<-  [<-  [[<-  $<-
@@ -7011,7 +7011,7 @@ These are the following 1-, 2-, and @math{N}-argument functions:
 <    <=   ==   !=    >=   >
 |    ||   &    &&    !
 @end group
-@end smallexample
+@end example
 
 @item
 ``Low level'' 0- and 1-argument functions which belong to one of the
@@ -7021,7 +7021,7 @@ following groups of functions:
 @item
 Basic mathematical functions with a single argument, i.e.,
 
-@smallexample
+@example
 @group
 sign    abs
 floor   ceiling  trunc
@@ -7044,12 +7044,12 @@ cummax  cummin
 Im      Re
 Arg     Conj     Mod
 @end group
-@end smallexample
+@end example
 
 @noindent Note however that the @R{} function @code{log} has an optional
 named argument @code{base}, and therefore is defined as
 
-@smallexample
+@example
 @group
 log <- function(x, base = exp(1)) @{
   if(missing(base))
@@ -7058,7 +7058,7 @@ log <- function(x, base = exp(1)) @{
     .Internal(log(x, base))
 @}
 @end group
-@end smallexample
+@end example
 
 @noindent in order to ensure that @code{log(x = pi, base = 2)} is
 identical to @code{log(base = 2, x = pi)}.
@@ -7067,7 +7067,7 @@ identical to @code{log(base = 2, x = pi)}.
 Functions rarely used outside of ``programming'' (i.e., mostly used
 inside other functions), such as
 
-@smallexample
+@example
 @group
 nargs        missing
 interactive  is.@emph{xxx}
@@ -7075,7 +7075,7 @@ interactive  is.@emph{xxx}
 symbol.C     symbol.For
 globalenv    pos.to.env  unclass
 @end group
-@end smallexample
+@end example
 
 @noindent
 (where @emph{xxx} stands for almost 30 different notions, such as
@@ -7084,19 +7084,19 @@ globalenv    pos.to.env  unclass
 @item
 The programming and session management utilities
 
-@smallexample
+@example
 @group
 debug    undebug    trace  untrace
 browser  proc.time
 @end group
-@end smallexample
+@end example
 
 @end enumerate
 
 @item
 The following basic assignment and extractor functions
 
-@smallexample
+@example
 @group
 length      length<-
 class       class<-
@@ -7106,21 +7106,21 @@ dim         dim<-
 dimnames    dimnames<-
             environment<-
 @end group
-@end smallexample
+@end example
 
 @item
 The following few @math{N}-argument functions are ``primitive'' for
 efficiency reasons.  Care is taken in order to treat named arguments
 properly:
 
-@smallexample
+@example
 @group
 :          ~          c           list        unlist
 call       as.call    expression  substitute
 UseMethod  invisible
 .C         .Fortran   .Call
 @end group
-@end smallexample
+@end example
 
 @end enumerate
 
