@@ -102,3 +102,15 @@ plot.hclust <-
     invisible()
 }
 
+as.hclust <- function(x, ...) UseMethod("as.hclust")
+
+as.hclust.twins <- function(x)
+{
+    retval <- list(merge = x$merge,
+                   height = sort(x$height),
+                   order = x$order,
+                   labels = rownames(x$data))
+    class(retval) <- "hclust"
+    retval
+}
+
