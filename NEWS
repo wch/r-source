@@ -249,9 +249,9 @@ NEW FEATURES
 	representing widgets in the R workspace when the windows are
 	destroyed (e.g. using window manager controls)	
 
-    o   termplot() now has an `ask' argument.
+    o	termplot() now has an `ask' argument.
 
-    o   options(width) now admits to a limit (previously 200, now
+    o	options(width) now admits to a limit (previously 200, now
 	10000) and gives a more informative message is out of range
 	(as it does now for digits and expressions).
 
@@ -382,19 +382,21 @@ BUG FIXES
 
     o	strsplit had two memory leaks.
 
-    o   plot.lm() has a better default for its `ask' argument.
+    o	plot.lm() has a better default for its `ask' argument.
 
-    o   Changing column modes from factor/character to numeric in
+    o	Changing column modes from factor/character to numeric in
 	edit.data.frame (and fix on data frames) is now allowed.
 
-    o   smooth.spline()'s GCV method now uses a more accurate formula
+    o	smooth.spline()'s GCV method now uses a more accurate formula
 	when there are repeated x points.
 
-    o	The `ask' argument of plot.new() can now be used... <<<<not yet>>
+    o	plot.new() does *NOT* allow an argument (`ask') anymore.
+	This has not been working (since ~ R 0.49), is low-level and
+	hence should not break anything.
 
-    o   hsv() truncation bug fixed (hopefully correctly this time...)
+    o	hsv() truncation bug fixed (hopefully correctly this time...)
 
-    o   effectively zero-length arrows are omitted (rather than getting
+    o	effectively zero-length arrows are omitted (rather than getting
 	a system- and device-dependent arbitrary angle).
 
     o	phantom(expr) in plotmath was used to calculate the bounding
@@ -402,10 +404,10 @@ BUG FIXES
 	expression (PR#622).
 
     o	gctorture did return a value although documented not to, that of
-	gcinfo.  It now returns the previous setting of gctorture.
+	gcinfo.	 It now returns the previous setting of gctorture.
 
     o	In prop.test(), the conf.int. now contains the estimate,
-        even when that is 0 or 1 (PR#714).
+	even when that is 0 or 1 (PR#714).
 
 
 	**************************************************

@@ -2194,7 +2194,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     if ((tickType == NA_INTEGER) || (tickType < 1) || (tickType > 2))
 	errorcall(call, "invalid ticktype value");
 
-    dd = GNewPlot(GRecording(call), NA_LOGICAL);
+    dd = GNewPlot(GRecording(call));
 
     PROTECT(col = FixupCol(col, dd->gp.bg));
     ncol = LENGTH(col);

@@ -1738,10 +1738,9 @@ SEXP savedDisplayList;
 GPar savedGPar;
 #endif
 
-DevDesc *GNewPlot(Rboolean recording, int ask)/* ask can be NA */
+DevDesc *GNewPlot(Rboolean recording)
 {
     DevDesc *dd;
-    Rboolean asksave;
 
     /* If there are no active devices
      * check the options for a "default device".
@@ -1761,18 +1760,7 @@ DevDesc *GNewPlot(Rboolean recording, int ask)/* ask can be NA */
 
     dd = CurrentDevice();
     GRestore(dd);
-    if (ask == NA_LOGICAL)
-	ask = dd->dp.ask;
-    asksave = dd->gp.ask; 
-/* FIXME: The above cannot be correct, since `ask' is not used
- *	  anymore now.
- * maybe add something like
- *
- *   if(asksave == NA_LOGICAL) asksave = dd->dp.ask;
- *   dd->gp.ask = (Rboolean)ask;
 
- * and use `ask' instead of  `dd->gp.ask'  7 lines below ..
-*/
     if (!dd->gp.new) {
 	dd->dp.currentFigure += 1;
 	dd->gp.currentFigure = dd->dp.currentFigure;
@@ -1829,7 +1817,6 @@ DevDesc *GNewPlot(Rboolean recording, int ask)/* ask can be NA */
     } else
 	dd->dp.valid = dd->gp.valid = TRUE;
 
-    dd->gp.ask = asksave;
     return dd;
 }
 #undef G_ERR_MSG

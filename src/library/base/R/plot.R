@@ -337,6 +337,6 @@ plot.xy <- function(xy, type, pch = 1, lty = "solid", col = par("fg"),
     .Internal(plot.xy(xy, type, pch, lty, col, bg, cex, ...))
 }
 
-plot.new <- function(ask = NA) .Internal(plot.new(ask))
+plot.new <- function() .Internal(plot.new())
 
 frame <- .Alias(plot.new)

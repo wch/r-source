@@ -1,14 +1,11 @@
 \name{frame}
 \title{Create / Start a New Plot Frame}
 \usage{
-plot.new(ask = NA)
-   frame(ask = NA)
+plot.new()
+frame()
 }
 \alias{plot.new}
 \alias{frame}
-\arguments{
-  \item{ask}{logical, defaulting to \code{par("ask")}.}
-}
 \description{
   This function (\code{frame} is a \code{\link{.Alias}} for
   \code{plot.new}) causes the completion of plotting in the current plot

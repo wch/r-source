@@ -430,21 +430,13 @@ GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
 
 SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* plot.new(ask) - create a new plot "frame" */
+    /* plot.new() - create a new plot "frame" */
 
-    Rboolean asksave;
-    int ask;/* maybe NA */
     DevDesc *dd;
 
     checkArity(op, args);
 
-    dd = GNewPlot(GRecording(call), ask);
-
-    ask = asLogical(CAR(args));
-    if (ask == NA_LOGICAL)
-	ask = dd->dp.ask;
-    asksave = dd->gp.ask;
-    dd->gp.ask = ask;
+    dd = GNewPlot(GRecording(call));
 
     dd->dp.xlog = dd->gp.xlog = FALSE;
     dd->dp.ylog = dd->gp.ylog = FALSE;
@@ -454,7 +446,6 @@ SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
     GMapWin2Fig(dd);
     GSetState(1, dd);
 
-    dd->gp.ask = asksave;
     if (GRecording(call))
 	recordGraphicOperation(op, args, dd);
     return R_NilValue;
@@ -2936,7 +2927,7 @@ SEXP do_dotplot(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* compute the plot layout */
 
-    dd = GNewPlot(GRecording(call), NA_LOGICAL);
+    dd = GNewPlot(GRecording(call));
     lw = 0;
     gw = 0;
     ht = GStrHeight("M", INCHES, dd);

@@ -650,7 +650,7 @@ FUNTAB R_FunTab[] =
 {"gray",	do_gray,	0,	11,	1,	PP_FUNCALL},
 {"colors",	do_colors,	0,	11,	0,	PP_FUNCALL},
 {"palette",	do_palette,	0,	11,	1,	PP_FUNCALL},
-{"plot.new",	do_plot_new,	0,	111,	1,	PP_FUNCALL},
+{"plot.new",	do_plot_new,	0,	111,	0,	PP_FUNCALL},
 {"plot.window",	do_plot_window,	0,	111,	3,	PP_FUNCALL},
 {"axis",	do_axis,	0,	111,	7,	PP_FUNCALL},
 {"plot.xy",	do_plot_xy,	0,	111,	6,	PP_FUNCALL},

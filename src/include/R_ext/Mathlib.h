@@ -554,7 +554,7 @@ double	chebyshev_eval(double, double *, int);
 
 void	gammalims(double*, double*);
 double	lgammacor(double);/* log(gamma) correction */
-double  stirlerr(int);/* Stirling expansion "error"  */
+double  stirlerr(double);/* Stirling expansion "error"  */
 double	gammafn(double);
 double	gamma_cody(double);
 double	lgammafn(double);

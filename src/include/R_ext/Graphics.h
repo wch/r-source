@@ -489,7 +489,7 @@ void GReset(DevDesc*);
 void GMapWin2Fig(DevDesc*);
 /* Set up the device for a new plot by Resetting graphics parameters
  * and Resetting the regions and coordinate Systems */
-DevDesc *GNewPlot(Rboolean, int);
+DevDesc *GNewPlot(Rboolean);
 /* Set up the user coordinates based on the axis limits */
 void GScale(double, double, int, DevDesc*);
 /* Set up the axis limits based on the user coordinates */
