@@ -209,10 +209,9 @@ coplot <-
 	ylim <- range(as.numeric(y), finite = TRUE)
     pch <- rep(pch, length=nobs)
     col <- rep(col, length=nobs)
-    do.panel <- function(index, subscripts = FALSE) {
+    do.panel <- function(index, subscripts = FALSE, id) {
 	## Use `global' variables
-	##	id;	rows, columns,	total.rows, total.columns, nplots
-	##		xlim, ylim
+	##	rows, columns,	total.rows, total.columns, nplots, xlim, ylim
         Paxis <- function(side, x) {
             if(nlevels(x)) {
                 lab <- axlabels(x)
@@ -253,14 +252,14 @@ coplot <-
 	    for(j in 1:columns) {
 		id <- ((a.intervals[j,1] <= a) & (a <= a.intervals[j,2]) &
 		       (b.intervals[i,1] <= b) & (b <= b.intervals[i,2]))
-		do.panel(count, subscripts)
+		do.panel(count, subscripts, id)
 		count <- count + 1
 	    }
 	}
     } else {
 	for (i in 1:nplots) {
 	    id <- ((a.intervals[i,1] <= a) & (a <= a.intervals[i,2]))
-	    do.panel(i, subscripts)
+	    do.panel(i, subscripts, id)
 	}
     }
     mtext(xlab[1], side=1, at=0.5*f.col, outer=TRUE, line=3.5, xpd=NA)
