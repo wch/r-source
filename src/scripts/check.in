@@ -41,7 +41,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.102 $ ';
+my $revision = ' $Revision: 1.103 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -657,6 +657,30 @@ sub check_pkg {
 	    $log->print(join("\n", @out) . "\n");
 	    ## exit(1);
             ## </FIXME>
+	}
+	else {
+	    $log->result("OK");
+	}
+    }
+
+    ## Check foreign function calls.
+
+    if(-d "R") {
+	$log->checking("foreign function calls");
+
+	my $Rcmd = "library(tools)\n";
+	if($opt_install && ($R::Vars::OSTYPE eq "unix")) {
+	    $Rcmd .= "checkFF(package = \"${pkgname}\")\n";
+	}
+        else {
+	    $Rcmd .= "checkFF(dir = \"${pkgdir}\")\n";
+	}
+
+        my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	@out = grep(!/^\>/, @out);
+	if($#out>=0) {
+	    $log->warning();
+	    $log->print(join("\n", @out) . "\n");
 	}
 	else {
 	    $log->result("OK");
