@@ -438,7 +438,8 @@ function(file)
     ## (Use the same regexp as in .get_Rd_metadata_from_Rd_lines().)
     i <- grep(paste("^[[:space:]]*\\\\",
                     "(alias|concept|keyword|docType)",
-                    "{[[:space:]]*(.*)[[:space:]]*}.*", sep = ""),
+                    "{[[:space:]]*([^}]*[^}[:space:]])[[:space:]]*}.*",
+                    sep = ""),
               lines)
     if(any(i)) lines <- lines[-i]
     ## Collapse into one character string.
