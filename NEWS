@@ -178,6 +178,9 @@ BUG FIXES
 	only of the first object matching a regular expression found 
 	in a package.
 
+    o	Memory leaks in [dpq]wilcox have been plugged.  (PR#5314, plus
+	another potential leak.)
+
 
 
 		CHANGES IN R VERSION 1.8.1
