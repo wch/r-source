@@ -20,7 +20,7 @@ latex: build-latex
 dvi: build-dvi
 
 build-docs build-help build-latex build-html build-dvi::
-	-@cd etc; MANSRC=../src/library/*/man/*.Rd $(MAKE) $@
+	-@cd etc; MANSRC=`echo ../src/library/*/man/*.Rd` $(MAKE) $@
 
 tests test-Examples::
 	-@cd tests; $(MAKE) $@
@@ -40,10 +40,11 @@ moreclean: clean acclean
 acclean:
 	@echo "Cleaning configure files"
 	@rm -f config.cache config.log config.status
+	@echo > Makeconf
 
 distclean: realclean
 
-realclean: acclean
+realclean: 
 	@echo "Cleaning at top level"
 	@-rm -f bin/R*
 	@-rm -rf `echo library/* | sed 's@library/CVS *@@'`
@@ -52,6 +53,7 @@ realclean: acclean
 	@cd demos/dynload; $(MAKE) $@
 	@echo "Really cleaning ./etc/"; cd etc; $(MAKE) $@
 	@echo "Really cleaning the source tree"; cd src; $(MAKE) $@
+	@make acclean
 
 install: all
 	$(INSTALL) -d $(bindir) $(mandir)/man1

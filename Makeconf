@@ -1,0 +1,42 @@
+AR=ar
+BLAS=blas.o
+CC=gcc
+CFLAGS=-g -O2
+CPICFLAGS=-fpic
+DLLFLAGS=
+FC=g77
+FFLAGS=-O2
+FPICFLAGS=-fpic
+F2C=
+F2CFLAGS=
+INSTALL=/home/sfe/pd/R-Sol/R-devel/R/etc/install-sh -c
+INSTALL_DATA=${INSTALL} -m 644
+INSTALL_PROGRAM=${INSTALL}
+LDCMD=g77
+LDFLAGS=
+LIBS=-ldl -ltermcap -lm 
+RANLIB=ranlib
+SHLIBLDFLAGS=-G
+SHELL=/bin/sh
+X_CFLAGS= -I/usr/openwin/include
+X_LIBS= -L/usr/openwin/lib -R/usr/openwin/lib -lX11
+X_PRE_LIBS=
+X_EXTRA_LIBS=-lsocket  -lnsl
+YACC=bison -y
+
+
+
+.f.c:
+
+.f.o:
+	$(FC) $(FFLAGS) -c $< -o $@
+
+.c.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c $<
+
+prefix=/usr/local
+exec_prefix=${prefix}
+bindir=${exec_prefix}/bin
+libdir=${exec_prefix}/lib
+mandir=${prefix}/man
+rhome=${exec_prefix}/lib/R

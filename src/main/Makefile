@@ -1,6 +1,6 @@
 include ../../Makeconf
 
-CFLAGS := $(CFLAGS) -I../include
+INCLUDES= -I../include
 
 RLIBS=	\
 		../lib/libgraphics.a \

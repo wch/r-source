@@ -1,6 +1,6 @@
 include ../../Makeconf
 
-CFLAGS := $(CFLAGS) -I../include
+INCLUDES= -I ../include
 
 OBJS=	graphics.o
 

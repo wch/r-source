@@ -25,6 +25,8 @@ X_EXTRA_LIBS=@X_EXTRA_LIBS@
 YACC=@YACC@
 
 @f77_rules_frag@
+.c.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c $<
 
 prefix=@prefix@
 exec_prefix=@exec_prefix@
