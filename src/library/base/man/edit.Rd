@@ -29,7 +29,8 @@ the object called \code{name}.
 Instead, a copy of name is made and it is that copy which is changed.
 Should you want the changes to apply to the object \code{name}
 you must assign the result of \code{edit} to \code{name}.
-
+(Try \code{\link{fix}} if you want to make permanent changes to an object.)
+  
 In the form \code{edit(name)},
 \code{edit} deparses \code{name} into a temporary file and invokes the
 editor \code{editor} on this file. Quiting from the editor causes
