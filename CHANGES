@@ -2,6 +2,22 @@
 
 NEW FEATURES
 
+    o	configure now also checks for fort77.
+
+    o	Usage of R INSTALL now is
+	  R INSTALL [options] [-l lib] pkg_1 ... pkg_n
+	The +/- options were replaced by GNU-style `--no-docs' and
+	`--no-text', `--no-html', and `--no-latex'.
+
+    o	Usage of R REMOVE now is
+	  R REMOVE [options] [-l lib] pkg_1 ... pkg_n
+
+    o	Usage of R COMPILE now is R COMPILE [options] srcfiles, where
+	through options one can set e.g. CFLAGS or FFLAGS.
+
+    o	Usage of R SHLIB now is R SHLIB [-o libname] files, where the 
+	file names can be that of source or object files.
+
     o   Data files are now also documented using the Rd format, all
         data documentation in the base package has been converted
         accordingly. Rd files for data have a \keyword{datasets} as
