@@ -566,7 +566,7 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
 #    getInternalExportName <- function(name, ns) {
 #        if (! exists(name, env = exports, inherits = FALSE))
 #            stop(paste(name, "is not an exported object"))
-        get(name, env = exports, inherits = FALSE)
+#        get(name, env = exports, inherits = FALSE)
 #    }
     ex <- .Internal(ls(exports, TRUE))
     if(!all(expnames %in% ex)) {
