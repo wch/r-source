@@ -491,37 +491,36 @@ sub text2html {
     my $text = $_[0];
     my $angles = $_[1]; # should < and > be converted?
 
-    $text =~ s/&([^#])/&amp;\1/go; # might have explicit &# in source
     if($angles) {
+        $text =~ s/&([^#])/&amp;\1/go; # might have explicit &# in source
 	$text =~ s/>/&gt;/go;
 	$text =~ s/</&lt;/go;
+	$text =~ s/\\le/&lt;=/go;
+	$text =~ s/\\ge/&gt;=/go;
+	$text =~ s/\\%/%/go;
+
+	$text =~ s/\n\s*\n/\n<P>\n/sgo;
+	$text =~ s/\\dots/.../go;
+	$text =~ s/\\ldots/.../go;
+
+	$text =~ s/\\Gamma/&Gamma/go;
+	$text =~ s/\\alpha/&alpha/go;
+	$text =~ s/\\Alpha/&Alpha/go;
+	$text =~ s/\\pi/&pi/go;
+	$text =~ s/\\mu/&mu/go;
+	$text =~ s/\\sigma/&sigma/go;
+	$text =~ s/\\Sigma/&Sigma/go;
+	$text =~ s/\\lambda/&lambda/go;
+	$text =~ s/\\beta/&beta/go;
+	$text =~ s/\\epsilon/&epsilon/go;
+	$text =~ s/\\left\(/\(/go;
+	$text =~ s/\\right\)/\)/go;
+	$text =~ s/\\R/<FONT FACE=\"Courier New,Courier\" COLOR=\"\#666666\"><b>R<\/b><\/FONT>/go;
+	$text =~ s/---/&#151;/go; # HTML 4.01 has &mdash; and &#8212;
+	$text =~ s/--/&#150;/go; # HTML 4.01 has &ndash; and &#8211;
+	$text =~ s/$EOB/\{/go;
+	$text =~ s/$ECB/\}/go;
     }
-    $text =~ s/\\le/&lt;=/go;
-    $text =~ s/\\ge/&gt;=/go;
-    $text =~ s/\\%/%/go;
-
-    $text =~ s/\n\s*\n/\n<P>\n/sgo;
-    $text =~ s/\\dots/.../go;
-    $text =~ s/\\ldots/.../go;
-
-    $text =~ s/\\Gamma/&Gamma/go;
-    $text =~ s/\\alpha/&alpha/go;
-    $text =~ s/\\Alpha/&Alpha/go;
-    $text =~ s/\\pi/&pi/go;
-    $text =~ s/\\mu/&mu/go;
-    $text =~ s/\\sigma/&sigma/go;
-    $text =~ s/\\Sigma/&Sigma/go;
-    $text =~ s/\\lambda/&lambda/go;
-    $text =~ s/\\beta/&beta/go;
-    $text =~ s/\\epsilon/&epsilon/go;
-    $text =~ s/\\left\(/\(/go;
-    $text =~ s/\\right\)/\)/go;
-    $text =~ s/\\R/<FONT FACE=\"Courier New,Courier\"
-	COLOR=\"\#666666\"><b>R<\/b><\/FONT>/go;
-    $text =~ s/---/&#151;/go; # HTML 4.01 has &mdash; and &#8212;
-    $text =~ s/--/&#150;/go; # HTML 4.01 has &ndash; and &#8211;
-    $text =~ s/$EOB/\{/go;
-    $text =~ s/$ECB/\}/go;
 
     $text = replace_command($text, "emph", "<EM>", "</EM>");
     $text = replace_command($text, "bold", "<B>", "</B>");
