@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.1.0 Under development (unstable) (June 7, 2000)
+Version 1.2.0 Under development (unstable) (2000-09-15)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -126,5 +126,17 @@ B(a = x + y, named = 3)
 > ## bug till ...
 > 1 !=
 +     3
+[1] TRUE
+> 
+> all(NULL == NULL)
+[1] TRUE
+> 
+> ## PR #656 (related)
+> u <- runif(1);	length(find(".Random.seed")) == 1
+[1] TRUE
+> 
+> MyVaR <<- "val";length(find("MyVaR")) == 1
+[1] TRUE
+> rm(MyVaR);	length(find("MyVaR")) == 0
 [1] TRUE
 > 

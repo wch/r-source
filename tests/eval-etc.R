@@ -83,3 +83,11 @@ a <- list(b=3); tt(a$b) == "a$b" # tends to break when ...
 ## bug till ...
 1 !=
     3
+
+all(NULL == NULL)
+
+## PR #656 (related)
+u <- runif(1);	length(find(".Random.seed")) == 1
+
+MyVaR <<- "val";length(find("MyVaR")) == 1
+rm(MyVaR);	length(find("MyVaR")) == 0
