@@ -142,7 +142,7 @@ Package: e1071
 Version: 0.9-3
 Date: 2000/01/04
 Title: Misc Functions collected at TU Wien, Department E1071
-Author: Compiled by Friedrich Leisch <Friedrich.Leisch@ci.tuwien.ac.at>.
+Author: Compiled by Friedrich Leisch <Friedrich.Leisch@@ci.tuwien.ac.at>.
 Description: Miscellaneous functions written by members of the Department of
         Statistics at TU Wien (E1071). Includes independent component
         analysis, reading and writing of pnm/pbm/ppm images, ...
