@@ -60,7 +60,7 @@ extern Boolean RunningOnCarbonX(void);
 static OSErr error;
 
 #ifdef __MRC__
-static char cwdir[FILENAME_MAX];
+static char cwdir[256];
 #endif
 
 /*
