@@ -31,7 +31,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 2.0.2005-03-01</h2>
+<h2>Version 2.0.2005-03-02</h2>
 <h2>ISBN 3-900051-08-9</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -4395,7 +4395,24 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Programming">R Programming</a>
 
 <p>Suppose you have C code file for dynloading into R, but you want to use
 <code>R CMD SHLIB</code> with compilation flags other than the default ones
-(which were determined when R was built).  You could change the file
+(which were determined when R was built).
+
+   <p>Starting with R 2.1.0, users can provide personal Makevars configuration
+files in <span class="file">HOME/.R</span> to override the default flags. 
+<!-- <FIXME> -->
+<!-- 2.1.0 -->
+<!-- Provide refs/xrefs. -->
+<!-- @ifclear UseExternalXrefs -->
+<!-- See section ``Add-on packages'' in @cite{R Installation and -->
+<!-- Administration}. -->
+<!-- @end ifclear -->
+<!-- @ifset UseExternalXrefs -->
+<!-- @xref{Add-on packages, , Add-on packages, R-admin, -->
+<!-- R Installation and Administration} -->
+<!-- @end ifset -->
+<!-- </FIXME> -->
+
+   <p>For earlier versions of R, you could change the file
 <span class="file">R_HOME/etc/Makeconf</span> to reflect your preferences, or (at
 least for systems using <acronym>GNU</acronym> Make) override them by the
 environment variable <span class="env">MAKEFLAGS</span>. 
