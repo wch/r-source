@@ -4,9 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-13, 2001-07-31
+@set FAQ-VERSION 1.3-14, 2001-08-01
 @set REL-VERSION 1.3.0
-@set DEV-VERSION 1.4.0
 @c %**end of header
 
 @dircategory Programming
@@ -248,10 +247,13 @@ If you know about other platforms, please drop us a note.
 @node What is the current version of R?, How can R be obtained?, What machines does R run on?, R Basics
 @section What is the current version of R?
  
-The current stable version is @value{REL-VERSION}, the unstable one is
-@value{DEV-VERSION}.  Typically, new features are introduced in the
-development versions; updates of stable versions are for bug fixes
-mostly.
+The current released version is @value{REL-VERSION}.  Conforming to this
+`major.minor.patchlevel' numbering scheme, there are three development
+versions of R, working towards the next patch (`r-patched'), minor
+(`r-devel'), and major (`r-ng') releases of R, respectively.  Version
+r-patched is for bug fixes mostly.  New features are typically
+introduced in r-devel.  Version r-ng will eventually become the next
+generation of R.
 
 @node How can R be obtained?, How can R be installed?, What is the current version of R?, R Basics
 @section How can R be obtained?
@@ -269,14 +271,14 @@ rsync -rC rsync.r-project.org::@var{module} R
 @noindent
 to create a copy of the source tree specified by @var{module} in the
 subdirectory @file{R} of the current directory, where @var{module}
-specifies one of the three existing flavors of the R sources, and can be
+specifies one of the four existing flavors of the R sources, and can be
 one of @samp{r-release} (current released version), @samp{r-patched}
-(patched released version), and @samp{r-pre-release} (pre-release
-development version).  The rsync trees are created directly from the
-master CVS archive and are updated hourly.  The @option{-C} option in
-the rsync command is to cause it to skip the CVS directories.  Further
-information on rsync is available at
-@uref{http://rsync.samba.org/rsync/}.
+(patched released version), and @samp{r-devel} (development version,
+less stable), and @samp{r-ng} (next generation, unstable).  The rsync
+trees are created directly from the master CVS archive and are updated
+hourly.  The @option{-C} option in the @command{rsync} command is to
+cause it to skip the CVS directories.  Further information on
+@command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
 
 @node How can R be installed?, Are there Unix binaries for R?, How can R be obtained?, R Basics
 @section How can R be installed?
@@ -686,6 +688,8 @@ and is currently being mirrored daily at
 @tab (U of Bristol, United Kingdom)
 @item @uref{http://cran.us.r-project.org/}
 @tab (U of Wisconsin, USA)
+@item @uref{http://cran.za.r-project.org/}
+@tab (Rhodes U, South Africa)
 @end multitable
 @end quotation
 

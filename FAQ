@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-13, 2001-07-31
+Version 1.3-14, 2001-08-01
 Kurt Hornik
 
 
@@ -224,9 +224,12 @@ hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current stable version is 1.3.0, the unstable one is 1.4.0.
-Typically, new features are introduced in the development versions; updates
-of stable versions are for bug fixes mostly.
+   The current released version is 1.3.0.  Conforming to this
+`major.minor.patchlevel' numbering scheme, there are three development
+versions of R, working towards the next patch (`r-patched'), minor
+(`r-devel'), and major (`r-ng') releases of R, respectively.  Version
+r-patched is for bug fixes mostly.  New features are typically introduced
+in r-devel.  Version r-ng will eventually become the next generation of R.
 
 2.4 How can R be obtained?
 ==========================
@@ -239,13 +242,13 @@ of stable versions are for bug fixes mostly.
      rsync -rC rsync.r-project.org::MODULE R
 
 to create a copy of the source tree specified by MODULE in the subdirectory
-`R' of the current directory, where MODULE specifies one of the three
+`R' of the current directory, where MODULE specifies one of the four
 existing flavors of the R sources, and can be one of `r-release' (current
-released version), `r-patched' (patched released version), and
-`r-pre-release' (pre-release development version).  The rsync trees are
-created directly from the master CVS archive and are updated hourly.  The
-`-C' option in the rsync command is to cause it to skip the CVS
-directories.  Further information on rsync is available at
+released version), `r-patched' (patched released version), and `r-devel'
+(development version, less stable), and `r-ng' (next generation, unstable).
+The rsync trees are created directly from the master CVS archive and are
+updated hourly.  The `-C' option in the `rsync' command is to cause it to
+skip the CVS directories.  Further information on `rsync' is available at
 `http://rsync.samba.org/rsync/'.
 
 2.5 How can R be installed?
@@ -561,6 +564,7 @@ and is currently being mirrored daily at
      `http://cran.uk.r-project.org/'(U of Bristol, United
                                   Kingdom)
      `http://cran.us.r-project.org/'(U of Wisconsin, USA)
+     `http://cran.za.r-project.org/'(Rhodes U, South Africa)
 
 Please use the CRAN site closest to you to reduce network load.
 
