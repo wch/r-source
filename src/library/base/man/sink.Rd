@@ -3,7 +3,7 @@
 \alias{sink.number}
 \title{Send R Output to a File}
 \usage{
-sink(file = NULL, append = FALSE, type = c("output", "message"))
+sink(file = NULL, append = FALSE, type = c("output", "message"), split=FALSE)
 sink.number(type = c("output", "message"))
 }
 \arguments{
@@ -12,7 +12,10 @@ sink.number(type = c("output", "message"))
   \item{append}{logical. If \code{TRUE}, output will be appended to
     \code{file}; otherwise, it will overwrite the contents of
     \code{file}.}
-  \item{type}{character. Either the output stream or the messages stream.}
+  \item{type}{character. Either the output stream or the messages
+    stream.}
+  \item{split}{logical: if \code{TRUE}, output will be sent to the new
+    sink and to the current output stream.}
 }
 \description{
   \code{sink} diverts \R output to a connection.

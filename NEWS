@@ -55,6 +55,9 @@ NEW FEATURES
 	character tables prepared for the locale currently in use each
 	time it is used, rather than those of the C locale.
 
+    o   sink() now has a split= argument to direct output to both the
+    	sink and the current output connection.
+
     o	The `package' argument to data() is no longer allowed to be a
 	(unquoted) name and so can be a variable name or a quoted
 	character string.

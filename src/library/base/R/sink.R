@@ -1,11 +1,12 @@
-sink <- function(file=NULL, append = FALSE, type = c("output", "message"))
+sink <- function(file=NULL, append = FALSE, type = c("output", "message"), split=FALSE)
 {
     type <- match.arg(type)
     if(type == "message") {
         if(is.null(file)) file <- stderr()
         else if(!inherits(file, "connection") || !isOpen(file))
            stop("`file' must be NULL or an already open connection")
-        .Internal(sink(file, FALSE, TRUE))
+        if (split) stop("Can't split the message connection")
+        .Internal(sink(file, FALSE, TRUE, FALSE))
     } else {
         closeOnExit <- FALSE
         if(is.null(file)) file <- -1
@@ -14,7 +15,7 @@ sink <- function(file=NULL, append = FALSE, type = c("output", "message"))
             closeOnExit <- TRUE
         } else if(!inherits(file, "connection"))
             stop("`file' must be NULL, a connection or a character string")
-        .Internal(sink(file, closeOnExit, FALSE))
+        .Internal(sink(file, closeOnExit, FALSE,split))
     }
 }
 
