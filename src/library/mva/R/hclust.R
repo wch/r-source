@@ -89,8 +89,7 @@ plot.hclust <-
     function (tree, labels = NULL, hang = 0.1,
               axes = TRUE, frame.plot = FALSE, ann = TRUE,
               main = "Cluster Dendrogram",
-              sub = paste(deparse(tree$call[[1]])," (*, \"", tree$method,"\")",sep=""),
-              xlab = deparse(tree$call[[2]]), ylab = "Height", ...)
+              sub = NULL, xlab = NULL, ylab = "Height", ...)
 {
     merge <- tree$merge
     if (!is.matrix(merge) || ncol(merge) != 2)
@@ -98,7 +97,7 @@ plot.hclust <-
     n <- nrow(merge)
     height <- as.double(tree$height)
     order <- as.double(order(tree$order))
-
+    
     labels <-
 	if(missing(labels)){
 	    if (is.null(tree$labels))
@@ -111,7 +110,7 @@ plot.hclust <-
 	    else
 		as.character(labels)
 	}
-
+    
     plot.new()
     .Internal(dend.window(n, merge, height, order, hang, labels, ...))
     .Internal(dend(n, merge, height, order, hang, labels, ...))
@@ -119,8 +118,13 @@ plot.hclust <-
         axis(2, at=pretty(range(height)))
     if (frame.plot) 
         box(...)
-    if (ann) 
+    if (ann) {
+        if(is.null(sub) && !is.null(cl <- tree$call))
+            sub <- paste(deparse(cl[[1]])," (*, \"", tree$method,"\")",sep="")
+        if(is.null(xlab) && !is.null(cl))
+            xlab <- deparse(cl[[2]])
         title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
+    }
     invisible()
 }
 
