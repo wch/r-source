@@ -267,6 +267,9 @@ NEW FEATURES
     o	options(check.bounds = TRUE)  makes each vector extension
 	by sub-assignment ("x[.] <- .") produce a warning.
 
+    o	The header file R.h and those included from it are now usable
+	with C++ code.
+
 
 BUG FIXES
 
