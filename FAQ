@@ -3025,6 +3025,10 @@ distributions of R.)
 *superpc*
      Supervised principal components.
 
+*survBayes*
+     Fits a proportional hazards model to time to event data by a Bayesian
+     approach.
+
 *survey*
      Summary statistics, generalized linear models, and general maximum
      likelihood estimation for stratified, cluster-sampled, unequally

@@ -3061,6 +3061,9 @@ optimal under various criteria.
 Methodology for supervised grouping of predictor variables.
 @item superpc
 Supervised principal components.
+@item survBayes
+Fits a proportional hazards model to time to event data by a Bayesian
+approach.
 @item survey
 Summary statistics, generalized linear models, and general maximum
 likelihood estimation for stratified, cluster-sampled, unequally
