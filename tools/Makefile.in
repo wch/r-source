@@ -14,7 +14,6 @@ SCRIPT_SOURCES = \
 	Rdnewer.in \
 	help2man.in \
 	install-info.in \
-	keyword-test.in \
 	pkg2tex.in
 SCRIPT_OBJECTS = $(SCRIPT_SOURCES:.in=)
 
@@ -29,6 +28,7 @@ DISTFILES = Makefile.in \
 	keywords2html.pl \
 	ldAIX4 \
 	linkcheck.pl \
+	ltmain.sh \
 	mdate-sh \
 	missing \
 	mkinstalldirs \
