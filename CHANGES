@@ -8,6 +8,12 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   Return statements of the form return(x,y) will now return
+        a list with named components.
+
+    o   Parsing of nested "if" statments was broken.  This is fixed now.
+	(Reported by Paul Gilbert).
+
     o   Wrong declaration of ConsoleBufCnt in src/main/scan.c caused crash
 	in Irix (George White <gwhite@bodnext.bio.dfo.ca>)
 
