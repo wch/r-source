@@ -30,9 +30,9 @@ lsf.str(pos = 1, \dots, envir = as.environment(pos))
   object.  It calls \code{\link{args}} for (non-primitive) function objects.
 
   \code{\link{ls.str}} and \code{\link{lsf.str}} are useful \dQuote{versions}
-  of \code{\link{ls}}, calling \code{str} on each object.  They are not
-  foolproof and should rather not be used for programming, but are
-  provided for their usefulness.
+  of \code{\link{ls}}, calling \code{str} on each object (functions only
+  for \code{\link{lsf.str}}).  They are not foolproof and should rather
+  not be used for programming, but are provided for their usefulness.
 }
 \arguments{
   \item{object}{any \R object about which you want to have some
