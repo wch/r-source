@@ -708,6 +708,8 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, n = LENGTH(string);
     
     checkArity(op, args);
+    /* warning(NULL) is allowed, although no longer gets here */
+    if(isNull(string) || !n) return string;
     if(isNull(CAR(args))) {
 	RCNTXT *cptr;
 	SEXP rho = R_NilValue;

@@ -45,8 +45,11 @@ suppressWarnings(expr)
   is available.  If this restart is invoked with \code{invokeRestart},
   then \code{warning} returns immediately.
 
-   \code{suppressWarnings} evaluates its expression in a context that
-   ignores all warnings.
+  An attempt is made to coerce other types of inputs to \code{warning}
+  to character vectors.
+
+  \code{suppressWarnings} evaluates its expression in a context that
+  ignores all warnings.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -57,6 +60,9 @@ suppressWarnings(expr)
   \code{\link{stop}} for fatal errors,
   \code{\link{warnings}},
   and \code{\link{options}} with argument \code{warn=}.
+
+  \code{\link{gettext}} for the mechanisms for the automated translation
+  of messages.
 }
 \examples{
 \dontshow{oldopt <- options(warn=1)}

@@ -12,16 +12,16 @@ bindtextdomain(domain, dirname = NULL)
 }
 \arguments{
   \item{domain}{The \sQuote{domain} for the translation.}
-  \item{\dots}{One of more character vectors.}
+  \item{\dots}{One or more character vectors.}
   \item{dirname}{The directory in which to find translated message
     catalogs for the domain.}
 }
 \details{
-  If \code{domain} is \code{NULL} or \code{""}, a domain is found from
-  the package or namespace which contains the function calling \code{gettext}.
-  If a suitable domain can be found, each character string is offered
-  for translation, and replaced by its translation into the current
-  language if one is found.
+  If \code{domain} is \code{NULL} or \code{""}, a domain is searched for
+  based on the package or namespace which contains the function calling
+  \code{gettext}. If a suitable domain can be found, each character
+  string is offered for translation, and replaced by its translation
+  into the current language if one is found.
 
   Conventionally the domain for \R warning/error messages in package
   \pkg{pkg} is \code{"R-pkg"}, and that for C-level messages is \code{"pkg"}.
@@ -38,7 +38,11 @@ bindtextdomain(domain, dirname = NULL)
   For \code{bindtextdomain}, a character string giving the current base
   directory, or \code{NULL} if setting it failed.
 }
-\example{
+\seealso{
+  \code{\link{stop}} and \code{\link{warning}} make use of \code{gettext} to
+  translate messages.
+}
+\examples{
 bindtextdomain("R")  # non-null iff NLS is enabled
 }
 \keyword{ utilities }

@@ -35,9 +35,11 @@ geterrmessage()
 
   Errors will be truncated to \code{getOption("warning.length")}
   characters, default 1000.
+
+  An attempt is made to coerce other types of inputs to character vectors.
 }
 \value{
-  \code{geterrmessage} gives the last error message, as character string
+  \code{geterrmessage} gives the last error message, as a character string
   ending in \code{"\\n"}.
 }
 \references{
@@ -51,6 +53,9 @@ geterrmessage()
   \code{\link{stopifnot}} for validity testing.  \code{tryCatch}
   and \code{withCallingHandlers} can be used to establish custom handlers
   while executing an expression.
+
+  \code{\link{gettext}} for the mechanisms for the automated translation
+  of messages.
 }
 \examples{
 options(error = expression(NULL))

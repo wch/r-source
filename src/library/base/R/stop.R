@@ -10,6 +10,7 @@ stop <- function(..., call. = TRUE)
     }
     else {
         if (length(args) > 0) {
+            args <- lapply(list(...), as.character)
             ## don't simplify this, as call sequence matters.
             args <- .Internal(gettext(NULL, unlist(args)))
             message <- paste(args, collapse = "")
@@ -45,6 +46,7 @@ warning <- function(..., call. = TRUE, immediate. = FALSE)
     }
     else {
         if (length(args) > 0) {
+            args <- lapply(list(...), as.character)
             ## don't simplify this, as call sequence matters.
             args <- .Internal(gettext(NULL, unlist(args)))
             message <- paste(args, collapse = "")
@@ -53,8 +55,10 @@ warning <- function(..., call. = TRUE, immediate. = FALSE)
     }
 }
 
-gettext <- function(..., domain = NULL)
-    .Internal(gettext(domain, unlist(list(...))))
+gettext <- function(..., domain = NULL) {
+    args <- lapply(list(...), as.character)
+    .Internal(gettext(domain, unlist(args)))
+}
 
 bindtextdomain <- function(domain, dirname = NULL)
     .Internal(bindtextdomain(domain, dirname))
