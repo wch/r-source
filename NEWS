@@ -129,6 +129,9 @@ BUG FIXES
     o   x[["a"]] <- y rejected some object types for y (e.g.
         expressions) which were accepted in x$a <- y (PR
  
+    o   data editor froze on empty data frame, and more generally on
+	zero-length cols.
+
 
 		CHANGES IN R VERSION 1.1.0
 
