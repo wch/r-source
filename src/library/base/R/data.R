@@ -42,7 +42,7 @@ function(..., list = character(0),
             if(file.exists(INDEX)) {
                 writeLines(paste(ifelse(first, "", "\n"),
                                  "Data sets in package `",
-                                 pkg, "':\n\n", sep = ""),
+                                 pkg, "':\n", sep = ""),
                            outConn)
                 writeLines(readLines(INDEX), outConn)
                 first <- FALSE

@@ -131,7 +131,7 @@ demo <- function(topic, device = getOption("device"),
                 writeLines(paste(ifelse(first, "", "\n"),
                                  "Demos in package ",
                                  fQuote(basename(path)),
-                                 ":\n\n", sep = ""),
+                                 ":\n", sep = ""),
                            outConn)
                 writeLines(readLines(INDEX), outConn)
                 first <- FALSE
