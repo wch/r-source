@@ -590,6 +590,7 @@ static SEXP integer_unary(ARITHOP_TYPE code, SEXP s1)
 	return s1;
     case MINUSOP:
 	ans = duplicate(s1);
+	SET_TYPEOF(ans, INTSXP);
 	n = LENGTH(s1);
 	for (i = 0; i < n; i++) {
 	    x = INTEGER(s1)[i];
