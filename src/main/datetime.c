@@ -721,3 +721,109 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(3);
     return ans;
 }
+
+SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x, ans, ansnames, class;
+    int n, i, valid;
+    long day;
+    int y, tmp, mon;
+    struct tm tm;
+
+    checkArity(op, args);
+    PROTECT(x = coerceVector(CAR(args), REALSXP));
+    n = LENGTH(x);
+    PROTECT(ans = allocVector(VECSXP, 9));
+    for(i = 0; i < 9; i++)
+	SET_VECTOR_ELT(ans, i, allocVector(INTSXP, n));
+
+    PROTECT(ansnames = allocVector(STRSXP, 9));
+    for(i = 0; i < 9; i++)
+	SET_STRING_ELT(ansnames, i, mkChar(ltnames[i]));
+
+    for(i = 0; i < n; i++) {
+	if(R_FINITE(REAL(x)[i])) {
+	    day = (long) REAL(x)[i];
+	    tm.tm_hour = tm.tm_min = tm.tm_sec = 0;
+	    /* weekday: 1970-01-01 was a Thursday */
+	    if ((tm.tm_wday = ((4 + day) % 7)) < 0) tm.tm_wday += 7;
+
+	    /* year & day within year */
+	    y = 1970;
+	    if (day >= 0)
+		for ( ; day >= (tmp = days_in_year(y)); day -= tmp, y++);
+	    else
+		for ( ; day < 0; --y, day += days_in_year(y) );
+	    
+	    y = tm.tm_year = y - 1900;
+	    tm.tm_yday = day;
+
+	    /* month within year */
+	    for (mon = 0;
+		 day >= (tmp = (days_in_month[mon]) + 
+			 ((mon==1 && isleap(y+1900))?1:0));
+		 day -= tmp, mon++);
+	    tm.tm_mon = mon;
+	    tm.tm_mday = day + 1;
+	    tm.tm_isdst = 0; /* no dst in GMT */
+
+	    valid = 1;
+	} else valid = 0;
+	makelt(&tm, ans, i, valid);
+    }
+    setAttrib(ans, R_NamesSymbol, ansnames);
+    PROTECT(class = allocVector(STRSXP, 2));
+    SET_STRING_ELT(class, 0, mkChar("POSIXt"));
+    SET_STRING_ELT(class, 1, mkChar("POSIXlt"));
+    classgets(ans, class);
+    UNPROTECT(4);
+
+    return ans;
+}
+
+SEXP do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x, ans, class;
+    int i, n = 0, nlen[9];
+    struct tm tm;
+
+    checkArity(op, args);
+    x = CAR(args);
+    if(!isVectorList(x) || LENGTH(x) != 9)
+	error("invalid `x' argument");
+
+    for(i = 3; i < 6; i++)
+	if((nlen[i] = LENGTH(VECTOR_ELT(x, i))) > n) n = nlen[i];
+    if((nlen[8] = LENGTH(VECTOR_ELT(x, 8))) > n) n = nlen[8];
+    if(n > 0) {
+	for(i = 3; i < 6; i++)
+	    if(nlen[i] == 0)
+		error("zero length component in non-empty POSIXlt structure");
+	if(nlen[8] == 0)
+	    error("zero length component in non-empty POSIXlt structure");
+    }
+    /* coerce fields to integer */
+    for(i = 0; i < 6; i++)
+	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
+    SET_VECTOR_ELT(x, 8, coerceVector(VECTOR_ELT(x, 8), INTSXP));
+
+    PROTECT(ans = allocVector(REALSXP, n));
+    for(i = 0; i < n; i++) {
+	tm.tm_sec = tm.tm_min = tm.tm_hour = 0;
+	tm.tm_mday  = INTEGER(VECTOR_ELT(x, 3))[i%nlen[3]];
+	tm.tm_mon   = INTEGER(VECTOR_ELT(x, 4))[i%nlen[4]];
+	tm.tm_year  = INTEGER(VECTOR_ELT(x, 5))[i%nlen[5]];
+	/* mktime ignores tm.tm_wday and tm.tm_yday */
+	tm.tm_isdst = 0;
+	if(tm.tm_mday == NA_INTEGER || tm.tm_mon == NA_INTEGER || 
+	   tm.tm_year == NA_INTEGER || validate_tm(&tm) < 0)
+	    REAL(ans)[i] = NA_REAL;
+	else REAL(ans)[i] = mktime00(&tm)/86400;
+    }
+
+    PROTECT(class = allocVector(STRSXP, 1));
+    SET_STRING_ELT(class, 0, mkChar("Date"));
+    classgets(ans, class);
+    UNPROTECT(2);
+    return ans;
+}
