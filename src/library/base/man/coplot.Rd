@@ -7,7 +7,7 @@ coplot(formula, data, given.values, panel = points, rows, columns,
        xlab = c(x.name, paste("Given :", a.name)),
        ylab = c(y.name, paste("Given :", b.name)),
        subscripts = FALSE,
-       axlabels = function(f) abbreviate(levels(f))
+       axlabels = function(f) abbreviate(levels(f)),
        number = 6, overlap = 0.5, xlim, ylim, \dots) 
 co.intervals(x, number = 6, overlap = 0.5)
 }
