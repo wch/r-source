@@ -76,7 +76,7 @@ void R_CheckUserInterrupt(void)
        to run at this point then we end up with concurrent R
        evaluations and that can cause problems until we have proper
        concurrency support. LT */
-#if  ( (defined(__APPLE_CC__) && defined(HAVE_AQUA)) || defined(Win32) ) 
+#if  ( defined(HAVE_AQUA) || defined(Win32) ) 
     R_ProcessEvents();
 #else
     if (R_interrupts_pending)
