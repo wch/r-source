@@ -504,7 +504,6 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     RCNTXT thiscontext, returncontext, *cptr;
     int savestack;
     int savebrowselevel;
-    int saveEvalDepth;
     SEXP topExp;
 
     /* Save the evaluator state information */
@@ -515,7 +514,6 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(topExp = R_CurrentExpr);
     saveToplevelContext = R_ToplevelContext;
     saveGlobalContext = R_GlobalContext;
-    saveEvalDepth = R_EvalDepth;
 
     if (!DEBUG(rho)) {
 	cptr=R_GlobalContext;
@@ -556,7 +554,6 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_CurrentExpr = topExp;
     R_ToplevelContext = saveToplevelContext;
     R_GlobalContext = saveGlobalContext;
-    R_EvalDepth = saveEvalDepth;
     R_BrowseLevel--;
     return R_ReturnedValue;
 }
