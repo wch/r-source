@@ -76,6 +76,9 @@ void RSetTab(int tabsize);
 void RSetFontSize(int size);
 
 /* Items for the Tools menu */
+#define kRCmdFileShow		'fshw'
+
+/* Items for the Tools menu */
 #define kRCmdShowWSpace		'dols'
 #define kRCmdClearWSpace	'dorm'
 #define kRCmdBrowseWSpace	'shwb'
@@ -110,6 +113,7 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 void RescaleInOut(double prop);
 
 OSErr DoSelectDirectory( void );
+OSStatus SelectFile(FSSpec *outFSSpec,  char *Title);
 OSStatus FSPathMakeFSSpec(const UInt8 *path, FSSpec *spec, Boolean *isDirectory);
 OSStatus FSMakePath(SInt16 volRefNum, SInt32 dirID, ConstStr255Param name, UInt8 *path,
 	UInt32 maxPathSize);
@@ -419,7 +423,7 @@ int Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
      Aqua_RWrite(prompt);
    TXNFocus(RConsoleInObject,true);
    TXNSetTypeAttributes( RConsoleInObject, 1, RInAttr, 0, kTXNEndOffset );
- 
+
     while(!InputFinished)
      RunApplicationEventLoop();
     
@@ -579,9 +583,11 @@ void RSetTab(int tabsize){
 static pascal OSStatus
 RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 {
-	OSStatus 		err = eventNotHandledErr;
+	OSStatus 		err = eventNotHandledErr, result = noErr;
 	HICommand		command;
 	UInt32			eventKind = GetEventKind( inEvent );
+        FSSpec 			tempfss;
+        char			buf[300],cmd[2500];
 
 	switch ( GetEventClass( inEvent ) )
 	{
@@ -591,8 +597,26 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
             if ( eventKind == kEventCommandProcess ){
              switch(command.commandID){
 /* File Menu */
+              case kHICommandOpen:
+               result = SelectFile(&tempfss,"Select File to Source");
+               if(result != noErr)
+                return err;
+               result = FSMakePath(tempfss.vRefNum, tempfss.parID, tempfss.name, buf, 300);  
+               sprintf(cmd,"source(\"%s\")\r",buf);
+               consolecmd(cmd);
+              break;
+              
+              case kRCmdFileShow:
+               result = SelectFile(&tempfss,"Select File to Show");
+               if(result != noErr)
+                return err;
+               result = FSMakePath(tempfss.vRefNum, tempfss.parID, tempfss.name, buf, 300);  
+               sprintf(cmd,"file.show(\"%s\")\r",buf);
+               consolecmd(cmd);
+              break;
+              
               case kHICommandNew:
-               fprintf(stderr,"\n new");
+               fprintf(stderr,"\n open a new editable window");
               break;
              
 /* Edit Menu */             
@@ -1120,6 +1144,86 @@ BadParameter:
 
 	return ( result );
 }
+
+
+OSStatus SelectFile(FSSpec *outFSSpec,  char *Title)
+{
+    NavDialogOptions    dialogOptions;
+    NavEventUPP         eventProc = nil; 
+    NavObjectFilterUPP  filterProc = nil;
+    OSErr               anErr = noErr;
+    
+    
+    /*  Specify default options for dialog box */
+    anErr = NavGetDefaultDialogOptions(&dialogOptions);
+
+    CopyCStringToPascal(Title,dialogOptions.message);
+
+         
+    if (anErr == noErr)
+    {
+        /*  Adjust the options to fit our needs
+            Set default location option
+         */   
+        dialogOptions.dialogOptionFlags |= kNavSelectDefaultLocation;
+        dialogOptions.dialogOptionFlags |= kNavAllowInvisibleFiles;
+        dialogOptions.dialogOptionFlags |= kNavAllFilesInPopup;
+                        
+        if (anErr == noErr)
+        {
+            /* Get 'open' resource. A nil handle being returned is OK, */
+            /* this simply means no automatic file filtering. */
+            NavReplyRecord reply;
+            NavTypeListHandle deftypeList = nil; /* we apply no filter for the moment */
+            
+            /* Call NavGetFile() with specified options and
+               declare our app-defined functions and type list
+             */
+             anErr = NavGetFile (nil, &reply, &dialogOptions,
+                                nil, nil, nil,
+                                deftypeList, nil);     
+               
+            if (anErr == noErr && reply.validRecord)
+            {
+                /*  Deal with multiple file selection */
+                long    count;
+                
+                anErr = AECountItems(&(reply.selection), &count);
+                           
+                count = 1L; /* we only select one file */
+                // Set up index for file list
+                if (anErr == noErr)
+                {
+                    long index;
+                    
+                    for (index = 1; index <= count; index++)
+                    {
+                        AEKeyword   theKeyword;
+                        DescType    actualType;
+                        Size        actualSize;
+                        
+                        /* Get a pointer to selected file */
+                        anErr = AEGetNthPtr(&(reply.selection), index,
+                                            typeFSS, &theKeyword,
+                                            &actualType,outFSSpec,
+                                            sizeof(FSSpec),
+                                            &actualSize);
+                             
+                        
+                    }
+                }
+                /*  Dispose of NavReplyRecord, resources, descriptors */
+                NavDisposeReply(&reply);
+            }
+           
+        }
+    }
+
+cleanup:  
+      return anErr;
+}
+
+
 #endif /* HAVE_AQUA */
 
 #endif /* __AQUA_CONSOLE__ */

@@ -39,6 +39,7 @@
               <object class="IBCarbonMenuItem" id="227">
                 <string name="title">File Show...</string>
                 <string name="keyEquivalent">f</string>
+                <ostype name="command">fshw</ostype>
               </object>
               <object class="IBCarbonMenuItem" id="133">
                 <boolean name="separator">TRUE</boolean>
