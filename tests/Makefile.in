@@ -227,7 +227,7 @@ test-FF:
 	  echo @ECHO_N@ "$${out} '$${p}' ...@ECHO_C@"; \
 	  out=`(echo "library(tools)"; \
 	        echo "checkFF(package = \"$${p}\")") | \
-	       $(R) -q | sed '/^>/d; /^loading/d'`; \
+	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \
 	    echo "$${out}"; \
@@ -276,7 +276,7 @@ test-undoc:
 	  echo @ECHO_N@ "$${out} '$${p}' ...@ECHO_C@"; \
 	  out=`(echo "library(tools)"; \
 	        echo "undoc(package = \"$${p}\")") | \
-	       $(R) -q | sed '/^>/d; /^character/d'`; \
+	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \
 	    echo "$${out}"; \
