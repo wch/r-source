@@ -1,6 +1,4 @@
-/* xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
-   JobDialogAppend.c
-   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
+/* JobDialogAppend.c
 */
 #include "Printing.h"
 
@@ -22,12 +20,12 @@ pascal TPPrDlg  initialisationFunction(THPrint hPrint)
     MenuHandle		menuHdl;
     SInt16		numberOfItems, a, fontNumber;
     Str255		fontName;
-		
+
     /* append the DITL */
 
     doAppendTheDITL(gTPrDlgStructurePtr);
 
-    /*  make pop-up menu WYSIWYG, 
+    /*  make pop-up menu WYSIWYG,
 	check second radio button, set fractional widths off */
 
     GetDialogItemAsControl((DialogPtr) gTPrDlgStructurePtr,
@@ -48,7 +46,7 @@ pascal TPPrDlg  initialisationFunction(THPrint hPrint)
 			   gFirstAppendedItemNo + 2, &controlHdl);
     SetControlValue(controlHdl,1);
 
-		
+
     GetDialogItemAsControl((DialogPtr) gTPrDlgStructurePtr,
 			   gFirstAppendedItemNo + 4, &controlHdl);
     SetControlValue(controlHdl,0);
@@ -89,7 +87,7 @@ pascal void  itemEvaluationFunction(TPPrDlg theDialog,short itemHit)
     ControlHandle	controlHdl;
     MenuHandle		menuHdl;
     Str255		itemName;
-	
+
     localizedItemNo = itemHit - gFirstAppendedItemNo + 1;
 
     if(localizedItemNo > 0) {
@@ -103,7 +101,7 @@ pascal void  itemEvaluationFunction(TPPrDlg theDialog,short itemHit)
 	    GetMenuItemText(menuHdl,controlValue,itemName);
 	    /* GetFNum(itemName,&gFontNumber); */
 	}
-	else if(localizedItemNo >= iRadioButton10pt && 
+	else if(localizedItemNo >= iRadioButton10pt &&
 		localizedItemNo <= iRadioButton14pt) {
 	    GetDialogItemAsControl((DialogPtr)theDialog,gFirstAppendedItemNo +1,
 				   &controlHdl);
@@ -117,7 +115,7 @@ pascal void  itemEvaluationFunction(TPPrDlg theDialog,short itemHit)
 
 	    GetDialogItemAsControl((DialogPtr) theDialog,itemHit,&controlHdl);
 	    SetControlValue(controlHdl,1);
- 		
+
 	}
 	else if(localizedItemNo == iCheckboxFracWidths) {
 	    GetDialogItemAsControl((DialogPtr)theDialog,gFirstAppendedItemNo +4,
@@ -142,7 +140,7 @@ pascal Boolean eventFilter(DialogPtr dialogPtr,EventRecord *eventStrucPtr,
 
     handledEvent = false;
 
-    if((eventStrucPtr->what == updateEvt) && 
+    if((eventStrucPtr->what == updateEvt) &&
        ((WindowPtr) eventStrucPtr->message != dialogPtr)) {
 	doUpdate(eventStrucPtr);
     }

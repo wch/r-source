@@ -1,11 +1,11 @@
 /* This program:
-  
+
   o Opens a window in which the contents of the main fields of the
     TPrint, TPrJob, TPrStl and TPrInfo structures are displayed when the
     user dismisses the style dialog box, and in which the first part of
     a document is displayed when the user hits the Print button in the
     job dialog box.
-  
+
   o Adds a pop-up menu button, three radio buttons, a checkbox, and a
     group box to the job dialog box.
 
@@ -14,16 +14,16 @@
     the fractional widths setting, specified using the items added to
     the job dialog box.
 
-  The program utilises the following resources: 
+  The program utilises the following resources:
 
-  o  'MBAR' resource and associated 'MENU' resources (preload, non-purgeable). 
-  o  A 'WIND' resource (purgeable). 
-  o  A 'TEXT' resource (non-purgeable) used for printing. 
-  o  A 'PICT' resource (non-purgeable) used for printing. 
-  o  'CNTL' resources (purgeable) for controls added to the job dialog box. 
-  o  A 'DITL' resource (purgeable) specifying the items to be appended 
+  o  'MBAR' resource and associated 'MENU' resources (preload, non-purgeable).
+  o  A 'WIND' resource (purgeable).
+  o  A 'TEXT' resource (non-purgeable) used for printing.
+  o  A 'PICT' resource (non-purgeable) used for printing.
+  o  'CNTL' resources (purgeable) for controls added to the job dialog box.
+  o  A 'DITL' resource (purgeable) specifying the items to be appended
      to the job dialog box.
-  o  A 'MENU' resource (preload, non-purgeable) for the pop-up menu button. 
+  o  A 'MENU' resource (preload, non-purgeable) for the pop-up menu button.
 
 */
 
