@@ -2,7 +2,7 @@ zip.file.extract <- function(file, zipname = "R.zip")
 {
     ## somewhat system-specific.
     unzip <- getOption("unzip")
-    if(!length(unzip)) return(file)
+    if(!nshar(unzip)) unzip <- "internal"
     path <- dirname(file)
     topic <- basename(file)
     if(file.exists(file.path(path, zipname))) {
@@ -13,7 +13,8 @@ zip.file.extract <- function(file, zipname = "R.zip")
                              " > /dev/null")))
                 file <- file.path(tempdir, topic)
         } else {
-            rc <- .Internal(int.unzip(file.path(path, zipname), topic, tempdir))
+            rc <- .Internal(int.unzip(file.path(path, zipname),
+                                      topic, tempdir))
             if (rc == 0)
                 file <- file.path(tempdir, topic)
         }

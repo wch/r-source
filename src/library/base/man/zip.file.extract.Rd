@@ -14,7 +14,10 @@ zip.file.extract(file, zipname = "R.zip")
   if possible, and write it in a temporary location.
 }
 \details{
-  The method used is selected by \code{options(unzip=)}.
+  The method used is selected by \code{options(unzip=)}. All platforms
+  support an \code{"internal"} unzip: this is the default under
+  Windows and MacOS, and the fall-back under Unix if no \code{unzip}
+  program was found during configuration and \code{R\_UNZIPCMD} is not set.
   
   The file will be extracted if it is in the archive and any required
   \code{unzip} utility is available.  It will probably be extracted to
@@ -22,12 +25,11 @@ zip.file.extract(file, zipname = "R.zip")
   that name.
 }
 \value{
-  The name of the original or extracted file.
+  The name of the original or extracted file.  Success is indicated by
+  returning a different name.
 }
 \note{
-  The implementation differs by platform: it might do nothing.
-  The \code{"internal"} method is very simple, and will not create
-  parent directories nor set file dates.
+  The \code{"internal"} method is very simple, and will not set file dates.
 }
 
 \author{B. D. Ripley}
