@@ -8,4 +8,4 @@ setdiff <- function(x, y)
     else unique(x[match(x, y, 0) == 0])
 }
 
-is.element <- function(el, set) match(el, set, 0) > 0
+is.element <- function(el, set = NULL) match(el, set, 0) > 0

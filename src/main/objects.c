@@ -294,14 +294,12 @@ static SEXP fixcall(SEXP call, SEXP args)
 
 SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    char buf[128];
+    char buf[128], b[512], tbuf[10];
     SEXP ans, s, t, class, method, matchedarg, generic, nextfun;
     SEXP sysp, m, formals, actuals, tmp, newcall;
-    SEXP a;
+    SEXP a, group, basename;
     RCNTXT *cptr;
     int i,j;
-    SEXP group,realgroup;
-    char tbuf[10];
 
     cptr = R_GlobalContext;
 
@@ -413,8 +411,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
       the second argument to NextMethod is another option but
       isn't currently used).
     */
-
-    class = dynamicfindVar(install(".Class"), R_GlobalContext);
+    class = findVarInFrame( R_GlobalContext->sysparent, install(".Class"));
 
     if (class == R_UnboundValue) {
 	s = GetObject(cptr);
@@ -423,58 +420,78 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	class = getAttrib(s, R_ClassSymbol);
     }
 
-    generic = eval(CAR(args), env);
-    if (generic == R_NilValue) {
-	generic = dynamicfindVar(install(".Generic"), R_GlobalContext);
-	if (generic == R_UnboundValue)
-	    generic = mkString(CHAR(PRINTNAME(CAR(cptr->call))));
-    }
+    /* the generic comes from either the sysparent or it's named */
+    generic = findVarInFrame(R_GlobalContext->sysparent, install(".Generic"));
+    if (generic == R_UnboundValue)
+	generic = eval(CAR(args), env);
+    if( generic == R_NilValue )
+	errorcall(call,"generic function not specified");
     PROTECT(generic);
 
     if (!isString(generic) || length(generic) > 1)
 	errorcall(call,"invalid generic argument to NextMethod");
+    
     if (strlen(CHAR(STRING(generic)[0])) == 0)
 	errorcall(call,"generic function not specified");
 
-    group = dynamicfindVar(install(".Group"), R_GlobalContext);
-    PROTECT(realgroup = duplicate(group));
+    /* determine whether we are in a Group dispatch */
+
+    group = findVarInFrame(R_GlobalContext->sysparent,install(".Group") );
     if (group == R_UnboundValue){
-	group = generic;
-	UNPROTECT(1);
-	PROTECT(realgroup = mkString(""));
+	PROTECT(group = mkString(""));
     }
+    else
+	PROTECT(group);
+
     if (!isString(group) || length(group) > 1)
 	errorcall(call, "invalid group argument found in NextMethod");
-    if (strlen(CHAR(STRING(group)[0])) == 0)
-	group = generic;
+
+    /* determine the root: either the group or the generic will be it */
+
+    if( strlen(CHAR(STRING(group)[0])) == 0 )
+	basename = generic;
+    else
+	basename = group;
+
+    nextfun = R_NilValue;
+
+    /* find the method currently being invoked and jump over the current call */
+    /* if t is R_UnboundValue then we called the current method directly */
+
+    method = findVarInFrame(R_GlobalContext->sysparent,install(".Method") );
+    if( method != R_UnboundValue) {
+	if( !isString(method) ) 
+	    error("Wrong value for .Method");
+	for( i=0; i<length(method); i++ ) {
+	  sprintf(b,"%s", CHAR(STRING(method)[i]));
+	  if( strlen(b) )
+	    break;
+	}
+    }
+    else {
+      sprintf(b,"%s", CHAR(PRINTNAME(CAR(cptr->call))));	
+    }
 
     /* we need the value of i on exit from the for loop to figure out
        how many classes to drop
     */
 
-    nextfun = R_NilValue;
-    /* jump over the current call */
-    t = CAR(cptr->call);
     for (j = 0; j < length(class); j++) {
-	sprintf(buf,"%s.%s", CHAR(STRING(group)[0]),
-		CHAR(STRING(class)[j]));
-	if (install(buf) == t)
-	    break;
-	sprintf(buf,"%s.%s",CHAR(STRING(generic)[0]),
-		CHAR(STRING(class)[j]));
-	if (install(buf) == t)
-	    break;
+      sprintf(buf,"%s.%s", CHAR(STRING(basename)[0]),
+	CHAR(STRING(class)[j]));
+      if ( !strcmp(buf,b) ) 
+        break;
     }
 
-    for (i = j + 1; i < length(class); i++) {
+    if ( !strcmp(buf,b) ) /* we found a match and start from there */
+      j++;
+    else
+      j = 0;  /*no match so start with the first element of .Class */
+
+    for (i = j ; i < length(class); i++) {
 	sprintf(buf, "%s.%s", CHAR(STRING(generic)[0]),
 		CHAR(STRING(class)[i]));
 	nextfun = findVar(install(buf),env);
-	if (isFunction(nextfun))
-	    break;
-	sprintf(buf,"%s.%s",CHAR(STRING(group)[0]),
-		CHAR(STRING(class)[i]));
-	nextfun = findVar(install(buf), env);
 	if (isFunction(nextfun))
 	    break;
     }
@@ -507,12 +524,11 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     defineVar(install(".Generic"), generic, m);
 
-    defineVar(install(".Group"), realgroup, m);
+    defineVar(install(".Group"), group, m);
 
     CAR(newcall) = method;
     ans = applyMethod(newcall, nextfun, matchedarg, env, m);
-    UNPROTECT(9);
-    UNPROTECT(1);
+    UNPROTECT(10);
     return(ans);
 }
 
