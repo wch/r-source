@@ -93,10 +93,20 @@ library <-
     else if (!missing(help)) {
 	if (!character.only)
 	    help <- as.character(substitute(help))
+        help <- help[1]         # only give help on one package
 	file <- system.file("INDEX", pkg=help, lib=lib.loc)
 	if (file == "")
 	    stop(paste("No documentation for package `", help, "'", sep = ""))
-	else file.show(file, title = paste("Contents of package", help))
+        if(length(file) > 1) {
+	    which.lib.loc <-
+                lib.loc[match(system.file("", pkg = help, lib =
+                                          lib.loc)[1],
+                              file.path(lib.loc, help))]
+            warning(paste("Package `", help, "' found more than once,\n  ", 
+                          "using the one found in `", which.lib.loc, 
+                          "'", sep = ""))
+        }
+	file.show(file[1], title = paste("Contents of package", help))
     }
     else {
 	## library():
