@@ -45,47 +45,49 @@ BUG FIXES
 	(PR#6781, not needed for its primary use in read.table.)
 
     o	src/modules/X11/dataentry.c would not build on some XFree
-	4.4.0 systems.  (This is a bug in their header files but we have
+	4.4.0 systems.	(This is a bug in their header files but we have
 	added a workaround.)
 
-    o   Fixed the clipping problem in the quartz() device.
+    o	Fixed the clipping problem in the quartz() device.
 
-    o   Subsetting a factor swapped the order of the attributes, which
+    o	Subsetting a factor swapped the order of the attributes, which
 	identical() cares about.  (PR#6799)
 
-    o   The L-BFGS-B option of optim() apparently needs part of its
+    o	The L-BFGS-B option of optim() apparently needs part of its
 	workspace zeroed.  (PR#6720)
 
-    o   extractAIC.survreg() needed updating.
+    o	extractAIC.survreg() needed updating.
 
-    o   When using the header Rmath.h in standalone mode, the case where
-        TRUE, FALSE are already defined is now handled correctly.
+    o	When using the header Rmath.h in standalone mode, the case where
+	TRUE, FALSE are already defined is now handled correctly.
 
     o	Package utils now exports several functions that are needed for
-        writing Sweave drivers.
+	writing Sweave drivers.
 
     o	Comparison of two lists/expressions was giving nonsensical
 	(and often random) answers, and is now an error.
 
     o	The C-level function ncols was returning a random answer
 	(often 0) for a 1D array.  This caused model.matrix to()
-	misbehave (perhaps segfault) if a term was a 1D array.  (PR#6838)
+	misbehave (perhaps segfault) if a term was a 1D array.	(PR#6838)
 
-    o   The configure script now finds the pdf viewers ggv and gpdf.
+    o	The configure script now finds the pdf viewers ggv and gpdf.
 
-    o   Workaround for the problems strptime on MacOS X has with dates
+    o	Workaround for the problems strptime on MacOS X has with dates
 	before 1900.
 
-    o   'R CMD build' works in a directory whose path contains spaces.
+    o	'R CMD build' works in a directory whose path contains spaces.
 	(PR#6830 under Unix/Linux: it already worked under Windows.)
 	Also 'R CMD check'.
 
-    o   mosaicplot() stops cleanly if given a table containing missing values.
+    o	mosaicplot() stops cleanly if given a table containing missing values.
 
-    o   install.packages() from a local CRAN was broken.
+    o	install.packages() from a local CRAN was broken.
 
-    o   Building with gcc 3.4.0 on ix86 platforms failed: the critical
+    o	Building with gcc 3.4.0 on ix86 platforms failed: the critical
 	LAPACK routines are now compiled with -ffloat-store.
+
+    o	bxp() fixed for e.g.,  boxplot(..., border=2:4)
 
 
 
