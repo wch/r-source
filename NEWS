@@ -23,8 +23,8 @@ NEW FEATURES
 
     o   `vsize' and `nsize' can be set by the environment variables
 	R_VSIZE and R_NSIZE respectively, perhaps most conveniently from
-	`~/.Renviron' under Unix.  Command-line settings will take
-	priority.
+	`~/.Renviron' under Unix or Windows.  Command-line settings will
+	take precedence.
 
         The defaults have been increased to 6M and 250k.
 
@@ -37,6 +37,8 @@ NEW FEATURES
     o	`R CMD check' can now also be used for installed packages without
 	the corresponding sources.
 
+    o	The sources for the Windows port are included in src/gnuwin32.
+	See src/gnuwin32/readme.
 
 BUG FIXES
 
