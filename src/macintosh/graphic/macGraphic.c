@@ -689,7 +689,7 @@ static void Mac_Line(double x1, double y1, double x2, double y2,
     SetPort(port);
    
     Mac_SetFill(col, dd);
-    SetLinetype(lty, ceil(lwd), dd);
+    SetLinetype(lty, round(lwd), dd);
     /* For some reason SetLineType does not work ! */
     /* so we have fixed lwd to 1            */
     /* It was:                                     */
