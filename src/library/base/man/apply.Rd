@@ -31,10 +31,13 @@ apply(x, MARGIN, FUN, \dots)
 \examples{
 ## Compute row and column sums for a matrix:
 x <- cbind(x1 = 3, x2 = c(4:1, 2:5))
+dimnames(x)[[1]] <- letters[1:8] 
 apply(x, 2, mean, trim = .2)
 col.sums <- apply(x, 2, sum)
 row.sums <- apply(x, 1, sum)
 rbind(cbind(x, Rtot = row.sums), Ctot = c(col.sums, sum(col.sums)))
+
+all( apply(x,2, is.vector)) # TRUE [was not in R <= 0.63.2]
 
 ## Sort the columns of a matrix
 apply(x, 2, sort)
