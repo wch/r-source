@@ -87,8 +87,10 @@ setSelectMask(InputHandler *handlers, fd_set *readMask)
     FD_ZERO(readMask);
 
     while(tmp) {
-	FD_SET(tmp->fileDescriptor, readMask);
-	maxfd = maxfd < tmp->fileDescriptor ? tmp->fileDescriptor : maxfd;
+	if(tmp->fileDescriptor > 0) {
+	    FD_SET(tmp->fileDescriptor, readMask);
+	    maxfd = maxfd < tmp->fileDescriptor ? tmp->fileDescriptor : maxfd;
+	}
 	tmp = tmp->next;
     }
 
