@@ -20,6 +20,13 @@
 #ifndef R_EXT_EVENTLOOP_H
 #define R_EXT_EVENTLOOP_H
 
+/* NOTE:
+   Needed at least on FreeBSD so that fd_set is defined.
+   This will not work on Mac OS Classic (where we want <types.h>) which
+   however currently does not use <R_ext/eventloop.h>.
+*/
+#include <sys/types.h>
+
 #ifdef  __cplusplus
 extern "C" {
 #endif
