@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-28 @value{FAQ-YEAR}-06-27
+@set FAQ-VERSION 1.9-29 @value{FAQ-YEAR}-07-02
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2716,6 +2716,8 @@ Functions for optimal design of two-stage-studies using the Mean Score
 method.
 @item udunits
 Interface to Unidata's routines to convert units.
+@item urn
+Functions for sampling without replacement (simulated urns).
 @item urca
 Unit root and cointegration tests for time series data.
 @item vardiag
