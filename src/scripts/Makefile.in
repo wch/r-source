@@ -20,7 +20,7 @@ SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 ## </NOTE>
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in $(SCRIPTS_S) $(SCRIPTS_B_IN) R.sh.in
+DISTFILES = Makefile.in Makefile.win $(SCRIPTS_S) $(SCRIPTS_B_IN) R.sh.in
 
 CLEANFILES =
 DISTCLEANFILES = Makefile R.fe R.sh $(SCRIPTS_B)

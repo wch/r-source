@@ -52,7 +52,7 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	done
 	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
-	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
+	  ((cd $(srcdir); $(TAR) -c -f - --exclude=.svn --exclude=CVS $${d}) \
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done

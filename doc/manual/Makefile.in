@@ -425,7 +425,7 @@ distdir: $(DISTFILES)
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
 	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
-	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
+	  ((cd $(srcdir); $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
