@@ -36,10 +36,17 @@ Directory:  Add-ons
 Subject: funfits
 From: "Alvaro A. Novo" <novo@uiuc.edu>
 Date: Tue, 9 Mar 1999 22:24:54 -0600
+* PR# 164 *
+Subject: Re: [R] repeated measurements libraries v0.4
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Sun, 11 Apr 1999 22:52:34 +0100 (BST)
 
 Directory:  Analyses
 
-none
+* PR# 144 *
+Subject: glm throws erroneous(?)'names attribute must be the same length as the vector' 
+From: wagman@enteract.com
+Date: Thu, 18 Mar 1999 08:58:47 +0100
 
 Directory:  Documentation
 
@@ -115,6 +122,7 @@ Date: 25 Mar 1999 21:22:44 +0100
 Subject: R: error report
 From: Adelchi Azzalini <adelchi.azzalini@jrc.it>
 Date: Fri, 26 Mar 1999 09:39:05 +0000
+--Really  pictex() bug -- resurfaced as # 173
 * PR# 153 *
 Subject: image + x11
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
@@ -140,6 +148,10 @@ From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Fri, 15 Jan 1999 11:00:25 +0100 (MET)
 --An incident where the 0.63.2 patches didn't take. So far the only one. 
 --Maybe caused by patching unclean sources?
+* PR# 165 *
+Subject: make check
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Tue, 13 Apr 1999 12:03:42 +0200 (CEST)
 
 Directory:  Language
 
@@ -174,10 +186,40 @@ Subject: Function parsing
 From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
 Date: Wed, 10 Feb 1999 13:42:01 +0000 (GMT)
 --comment placement.
+* PR# 132 *
+Subject: Re: [R] zero-offset matrices
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 02 Mar 1999 16:59:48 +0100
 * PR# 139 *
 Subject: : for factors
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
 Date: Thu, 11 Mar 1999 09:30:04 +0100
+* PR# 148 *
+Subject: Missing Warning in :
+From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
+Date: Thu, 25 Mar 1999 13:34:12 +0100
+* PR# 151 *
+Subject: problems with formals and get
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Mon, 29 Mar 1999 09:29:05 +0200 (MET DST)
+* PR# 166 *
+Subject: outer fails with group generic operations on factors
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Tue, 13 Apr 1999 18:28:53 +0100 (BST)
+* PR# 167 *
+Subject: R's UseMethod() does not dispatch on changed class()
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Wed, 14 Apr 1999 11:22:10 +0200
+--Did this get resolved into the "S has the bug, 
+--one shouldn't try that" category?
+* PR# 168 *
+Subject: Segfault from evalq(return())
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 16 Apr 1999 14:05:12 +0200
+* PR# 169 *
+Subject: deparse drops () sometimes
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 16 Apr 1999 14:10:39 +0200
 
 Directory:  Low-level
 
@@ -197,10 +239,6 @@ Date: Tue, 9 Mar 1999 13:18:37 -0000
 --lm (?) AND Windows problem;  Win solved (fudged) for 0.63.3
 --
 --Another low-level buffer-size problem
-* PR# 140 *
-Subject: rbind dimnames with complex
-From: oncley@ucar.edu
-Date: Thu, 11 Mar 1999 17:15:14 +0100
 
 Directory:  Misc
 
@@ -229,7 +267,14 @@ Date: Fri, 21 Aug 1998 13:29:16 -0000 ()
 
 Directory:  System-specific
 
-none
+* PR# 145 *
+Subject: R-0.63.3 package on IRIX 6.5 machine
+From: Jayshree Sarma <jsarma@cs.gmu.edu>
+Date: Tue, 23 Mar 1999 16:54:20 -0500 (EST)
+* PR# 163 *
+Subject: IRIX compile
+From: mtim@farm.ecs.umass.edu
+Date: Sat, 10 Apr 1999 19:35:43 +0200
 
 Directory:  TooMuchAtOnce
 
@@ -248,55 +293,15 @@ none
 
 Directory:  incoming
 
-* PR# 132 *
-Subject: Re: [R] zero-offset matrices
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 02 Mar 1999 16:59:48 +0100
-* PR# 144 *
-Subject: glm throws erroneous(?)'names attribute must be the same length as the vector' 
-From: wagman@enteract.com
-Date: Thu, 18 Mar 1999 08:58:47 +0100
-* PR# 145 *
-Subject: R-0.63.3 package on IRIX 6.5 machine
-From: Jayshree Sarma <jsarma@cs.gmu.edu>
-Date: Tue, 23 Mar 1999 16:54:20 -0500 (EST)
-* PR# 148 *
-Subject: Missing Warning in :
-From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
-Date: Thu, 25 Mar 1999 13:34:12 +0100
-* PR# 151 *
-Subject: problems with formals and get
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Mon, 29 Mar 1999 09:29:05 +0200 (MET DST)
-* PR# 160 *
-Subject: core dump
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Wed, 7 Apr 1999 16:30:39 +0200 (MET DST)
-* PR# 163 *
-Subject: IRIX compile
-From: mtim@farm.ecs.umass.edu
-Date: Sat, 10 Apr 1999 19:35:43 +0200
-* PR# 164 *
-Subject: Re: [R] repeated measurements libraries v0.4
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Sun, 11 Apr 1999 22:52:34 +0100 (BST)
-* PR# 165 *
-Subject: make check
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Tue, 13 Apr 1999 12:03:42 +0200 (CEST)
-* PR# 166 *
-Subject: outer fails with group generic operations on factors
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Tue, 13 Apr 1999 18:28:53 +0100 (BST)
-* PR# 167 *
-Subject: R's UseMethod() does not dispatch on changed class()
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 14 Apr 1999 11:22:10 +0200
-* PR# 168 *
-Subject: Segfault from evalq(return())
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 16 Apr 1999 14:05:12 +0200
-* PR# 169 *
-Subject: deparse drops () sometimes
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 16 Apr 1999 14:10:39 +0200
+* PR# 173 *
+Subject: GConvert error when using pictex
+From: pwhiting@sprint.net
+Date: Wed, 21 Apr 1999 13:37:45 +0200
+* PR# 174 *
+Subject:  do.call() mangles expressions in arguments 
+From: Peter Dalgaard BSA <pd@biostat.ku.dk>
+Date: Wed, 21 Apr 1999 19:39:53 +0200
+* PR# 175 *
+Subject: Assigning to a list within a loop
+From: Bill Venables <wvenable@arcola.stats.adelaide.edu.au>
+Date: Thu, 22 Apr 1999 13:16:38 +0930 (CST)
