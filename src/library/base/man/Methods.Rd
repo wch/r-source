@@ -136,6 +136,9 @@ Summary.factor(x, \dots)
 methods("Math")
 methods("Ops")
 methods("Summary")
+
+d.fr <- data.frame(x=1:9, y=rnorm(9))
+data.class(1 + d.fr) == "data.frame" ##-- add to d.f. ...
 }
 \keyword{methods}
 
