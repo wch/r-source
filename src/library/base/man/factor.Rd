@@ -1,8 +1,8 @@
 \name{factor}
 \title{Factors}
 \usage{
-factor(x, levels = sort(unique(x), na.last = TRUE), labels,
-       exclude = NA, ordered = FALSE)
+factor(x, levels = sort(unique(x), na.last = TRUE), labels = levels,
+       exclude = NA, ordered = is.ordered(x))
 ordered(x, \dots)
 
 is.factor(x)
@@ -37,7 +37,7 @@ as.ordered(x)
   \item{exclude}{a vector of values to be excluded when forming the
     set of levels. This should be of the same type as \code{x}, and
     will be coerced if necessary.}
-  \item{ordered}{logical flag to determine if the levels should be regraded
+  \item{ordered}{logical flag to determine if the levels should be regarded
     as ordered (in the order given).}
   \item{\dots}{(in \code{ordered(.)}): any of the above, apart from
     \code{ordered} itself.}
