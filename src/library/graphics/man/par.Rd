@@ -259,11 +259,16 @@ par(\dots, no.readonly = FALSE)
 	left, top, right)} which gives the margin size specified in
       inches.}
     \item{\code{mar}}{A numerical vector of the form \code{c(bottom,
-	left, top, right)} which gives the lines of margin to be
+	left, top, right)} which gives the number of lines of margin to be
       specified on the four sides of the plot.
       The default is \code{c(5, 4, 4, 2) + 0.1}.}
-    \item{\code{mex}}{\code{mex} is a character size expansion factor
-      which is used to describe coordinates in the margins of plots.}
+    \item{\code{mex}}{
+      \code{mex} is a character size expansion factor
+      which is used to describe coordinates in the margins of plots.
+      Note that this does not change the font size, rather specifies the
+      size of font used to convert between \code{mar} and \code{mai},
+      and between \code{oma} and \code{omi}.
+    }
     \item{\code{mfcol, mfrow}}{A vector of the form \code{c(nr, nc)}.
       Subsequent figures will be drawn in an \code{nr}-by-\code{nc}
       array on the device by \emph{columns} (\code{mfcol}), or
