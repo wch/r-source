@@ -51,7 +51,10 @@ Step by step instructions
 
 0) Fit all the requirements !
 
-1) Open MPW shell and change the directory to the folder where this
+1) Uncompress the file "res:R.rsrc.hqx". Otherwise the makefile
+   will generate an error at compile time.
+
+2) Open MPW shell and change the directory to the folder where this
    file is.
    
    execute MPWBuild
@@ -61,22 +64,25 @@ Step by step instructions
    based on you configuration.
    MPW_Build make copies of "f2cLib" and "WasteLib" to the R_HOME
    folder.
-2) To build R you simply write on the MPW shell the following two
+3) To build R you simply write on the MPW shell the following two
    lines:
           Make -f MakeR R > MyMake
           MyMake
 
    MyMake is charged to do many things:
- + Generates the files: Rconfig.h, Rversion.h, FFDecl.h, FFTab.h 
+ + Generates the files: Rconfig.h, Rversion.h, FFDecl.h, 
+   FFTab.h and res:RVerDefs.h 
  + Moves config_mac.h to ::include:config.h
  + Duplicates your copy of the "f2cLib" to R_HOME
  + Duplicates your copy of WasteLib to R_HOME
  + Builds R binary
-3) When you are done you can execute Makefile.mac.
+
+4) When you are done you can execute Makefile.mac.
    a) type "Make -f Makefile.mac" and execute it in the MPW Shell.
    b) select the output and run it. This will take some time
       because of building of help files.
-4) You can now build packages and libraries.
+
+5) You can now build packages and libraries.
    Change MPW Shell directory to R_HOME:src:library
    Execute "BuildAll.mac"
    If all wnet right you can build modules.
@@ -92,6 +98,7 @@ be built (independently from the compiler you use).
 
 In particular:
 GETVERSION	:	MPW script that generates "Rversion.h"
+                        and "res:RVerDefs.h"
 FF_CREATE	:	MPW script that generates "FFTab.h" and
 				"FFDecl.h"
 GETDESC		:	fixes DESCRIPTION.in files
@@ -116,7 +123,7 @@ One other good place to look for Unix-like tools for MPW is also
 
 ftp://sunsite.cnlab-switch.ch/software/platform/macos/src/mpw_c
 
-August 21, 2001				Stefano M. Iacus
+September 11, 2001				Stefano M. Iacus
 						(stefano.iacus@unimi.it)
 
 
