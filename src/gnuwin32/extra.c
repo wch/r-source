@@ -66,7 +66,7 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn, ans;
-    char *tmp;
+    char *p, tmp[MAX_PATH], dir[MAX_PATH];
     WIN32_FIND_DATA find_data;
     HANDLE fh;
     int i, nfiles, failures = 0;
@@ -77,17 +77,23 @@ SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(fn) || nfiles < 1)
 	errorcall(call, "invalid file name argument\n");
     for(i = 0; i < nfiles; i++) {
-	tmp = CHAR(STRING(fn)[i]);
+	strcpy(tmp, CHAR(STRING(fn)[i]));
+	for(p = tmp; *p != '\0'; p++)
+	    if(*p == '/') *p = '\\';
+	strcpy(dir, tmp);
+	if ((p = strrchr(dir, '\\'))) *(++p) = '\0'; else *dir = '\0';
 	/* check for wildcard matches */
 	fh = FindFirstFile(tmp, &find_data);
 	if (fh) {
-	    failures += (unlink(find_data.cFileName) !=0);
-	    while(FindNextFile(fh, &find_data))
-		failures += (unlink(find_data.cFileName) !=0);
-	    unlink(find_data.cFileName);
+	    strcpy(tmp, dir); strcat(tmp, find_data.cFileName);
+	    failures += (unlink(tmp) !=0);
+	    while(FindNextFile(fh, &find_data)) {
+		strcpy(tmp, dir); strcat(tmp, find_data.cFileName);
+		failures += (unlink(tmp) !=0);
+	    }
 	    FindClose(fh);
-	} else failures++;
-    }
+	} else failures++;}
+
     PROTECT(ans = allocVector(STRSXP, 1));
     if (!failures)
 	STRING(ans)[0] = mkChar("0");
