@@ -849,7 +849,8 @@ static R_ToplevelCallbackEl *Rf_ToplevelTaskHandlers = NULL;
   position).
  */
 R_ToplevelCallbackEl *
-Rf_addTaskCallback(R_ToplevelCallback cb, void *data, void (*finalizer)(void *), const char *name, int *pos)
+Rf_addTaskCallback(R_ToplevelCallback cb, void *data, 
+		   void (*finalizer)(void *), const char *name, int *pos)
 {
     int which;
     R_ToplevelCallbackEl *el;
@@ -976,20 +977,20 @@ Rf_removeTaskCallbackByIndex(int id)
 SEXP
 R_removeTaskCallback(SEXP which)
 {
-   int id;
-   Rboolean val;
-   SEXP status;
+    int id;
+    Rboolean val;
+    SEXP status;
 
-   if(TYPEOF(which) == STRSXP) {
-       val = Rf_removeTaskCallbackByName(CHAR(STRING_ELT(which, 0)));
-   } else {
-       id = asInteger(which) - 1;
-       val = Rf_removeTaskCallbackByIndex(id);
-   }
-   status = allocVector(LGLSXP, 1);
-   LOGICAL(status)[0] = val;
+    if(TYPEOF(which) == STRSXP) {
+	val = Rf_removeTaskCallbackByName(CHAR(STRING_ELT(which, 0)));
+    } else {
+	id = asInteger(which) - 1;
+	val = Rf_removeTaskCallbackByIndex(id);
+    }
+    status = allocVector(LGLSXP, 1);
+    LOGICAL(status)[0] = val;
 
-   return(status);
+    return(status);
 }
 
 SEXP
@@ -1032,7 +1033,8 @@ R_getTaskCallbackNames()
 static Rboolean Rf_RunningToplevelHandlers = FALSE;
 
 void
-Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded, Rboolean visible)
+Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded, 
+			Rboolean visible)
 {
     R_ToplevelCallbackEl *h, *prev = NULL;
     Rboolean again;
@@ -1045,7 +1047,8 @@ Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded, Rboolean visi
     while(h) {
 	again = (h->cb)(expr, value, succeeded, visible, h->data);
 	if(R_CollectWarnings) {
-	    REprintf("warning messages from top-level task callback `%s'\n", h->name);
+	    REprintf("warning messages from top-level task callback `%s'\n", 
+		     h->name);
 	    PrintWarnings();
 	}
         if(again) {
@@ -1071,7 +1074,7 @@ Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded, Rboolean visi
 
 Rboolean
 R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
-                          Rboolean visible, void *userData)
+		      Rboolean visible, void *userData)
 {
     SEXP f = (SEXP) userData;
     SEXP e, tmp, val, cur;
@@ -1125,16 +1128,17 @@ R_addTaskCallback(SEXP f, SEXP data, SEXP useData, SEXP name)
 
     internalData = allocVector(VECSXP, 3);
     R_PreserveObject(internalData);
-       SET_VECTOR_ELT(internalData, 0, f);
-       SET_VECTOR_ELT(internalData, 1, data);
-       SET_VECTOR_ELT(internalData, 2, useData);
+    SET_VECTOR_ELT(internalData, 0, f);
+    SET_VECTOR_ELT(internalData, 1, data);
+    SET_VECTOR_ELT(internalData, 2, useData);
 
     if(length(name))
 	tmpName = CHAR(STRING_ELT(name, 0));
 
     PROTECT(index = allocVector(INTSXP, 1));
     el = Rf_addTaskCallback(R_taskCallbackRoutine,  internalData,
-                             (void (*)(void*)) R_ReleaseObject, tmpName, INTEGER(index));
+			    (void (*)(void*)) R_ReleaseObject, tmpName, 
+			    INTEGER(index));
 
     if(length(name) == 0) {
 	PROTECT(name = allocVector(STRSXP, 1));

@@ -98,7 +98,7 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			fmt[chunk-1] = 's';
 			sprintf(bit, fmt, "NA");
 		    } else
-		    sprintf(bit, fmt, x);
+			sprintf(bit, fmt, x);
 		    break;
 		}
 		case REALSXP:
