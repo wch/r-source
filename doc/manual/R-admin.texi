@@ -421,8 +421,8 @@ lower case) did not work.  Open a commands window at a directory @emph{whose
 path does not contain spaces}, and run something like
 
 @smallexample
-tar zxvf R-1.6.0.tgz
-cd R-1.6.0\src\gnuwin32
+tar zxvf R-@value{VERSIONno}.tgz
+cd R-@value{VERSIONno}\src\gnuwin32
 make
 @end smallexample
 
