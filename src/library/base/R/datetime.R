@@ -659,11 +659,12 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
         if(d > 86400*7) incr <- 86400*7
         if(d > 86400*28) incr <- 86400*28
         if(d > 86400*366) incr <- 86400*366
+        breaks.num <- FALSE
     } else {
         start <- as.POSIXlt(min(x, na.rm = TRUE))
         maxx <- max(x, na.rm = TRUE)
-        brks.number <- is.numeric(breaks) && length(breaks) == 1
-        if(brks.number) {
+        breaks.num <- is.numeric(breaks) && length(breaks) == 1
+        if(breaks.num) {
         ## specified number of breaks
         } else if(is.character(breaks) && length(breaks) == 1) {
             valid <-
@@ -697,7 +698,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
         plot(res, xlab = xlab, axes = FALSE, freq = freq, ...)
         if(axes) {
             axis(2, ...)
-            if(brks.number) {
+            if(breaks.num) {
                 warning("number of breaks implementation is still somewhat flawed")
                 ## We should use   res$breaks and re-transform these
                 ## to POSIXt class  -- how ?!?
