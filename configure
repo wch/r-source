@@ -4227,7 +4227,7 @@ case "${host}" in
 #define HAVE_NO_SYMBOL_UNDERSCORE 1
 EOF
 
-    R_XTRA_CPPFLAGS="${R_XTRA_CPPFLAGS} -D_XOPEN_SOURCE_EXTENDED=2"
+    R_XTRA_CPPFLAGS="${R_XTRA_CPPFLAGS} -D_ALL_SOURCE"
      ac_safe=`echo "-mno-fp-in-toc" | sed 'y%./+-%__p_%'`
     echo $ac_n "checking whether ${CC-cc} accepts -mno-fp-in-toc""... $ac_c" 1>&6
 echo "configure:4234: checking whether ${CC-cc} accepts -mno-fp-in-toc" >&5

@@ -454,7 +454,7 @@ fi
 case "${host}" in
   *aix4.[[2-9]]*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
-    R_XTRA_CPPFLAGS="${R_XTRA_CPPFLAGS} -D_XOPEN_SOURCE_EXTENDED=2"
+    R_XTRA_CPPFLAGS="${R_XTRA_CPPFLAGS} -D_ALL_SOURCE"
     R_PROG_CC_FLAG(-mno-fp-in-toc,
       R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mno-fp-in-toc")
     ;;
