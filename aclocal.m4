@@ -980,11 +980,8 @@ AC_DEFUN([R_FUNC_LOG],
 #include <math.h>
 #include "confdefs.h"
 int main () {
-#ifdef HAVE_ISNAN
+/* we require isnan as from R 2.0.0 */
   exit(!(log(0.) == -1. / 0. && isnan(log(-1.))));
-#else
-  exit(log(0.) != -1. / 0);
-#endif
 }
 ]])],
                [r_cv_func_log_works=yes],

@@ -1179,6 +1179,9 @@ AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
 ## might report corresponding HAVE_FOO conditionals.
 ## </NOTE>
 
+## IEEE 754. We rely on this in e.g. the working log test.
+R_IEEE_754
+
 ## check whether nl_langinfo(CODESET) is in langinfo.h
 ## defines HAVE_LANGINFO_CODESET if it's there
 AM_LANGINFO_CODESET
@@ -1274,9 +1277,6 @@ AC_SUBST(use_aqua)
 
 ## Tcl/Tk.
 R_TCLTK
-
-## IEEE 754.
-R_IEEE_754
 
 ## BSD networking.
 R_BSD_NETWORKING
