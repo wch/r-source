@@ -40,7 +40,7 @@ fixh: h/config.h ../../include/FFDecl.h ../../include/FFTab.h \
 	$(RM) ../../../tools/GV
 
 ../../../bin/massage-Examples.sh: ../../scripts/massage-Examples
-	sed -e 1d $< > $@
+	$(SED) -e 1d  -e 's/"contr.poly")/"contr.poly"), pager="console"'/ $< > $@
 
 ../../../bin/check: ../../scripts/check.in
 	$(CP) $< $@
