@@ -167,6 +167,8 @@ BUG FIXES
     o   save(..., ascii=TRUE) created broken files when saving strings
         containing special characters (ASCII code > 127).
 	
+    o	mean(c(1,NA,NA,NA)[-1], trim = .1, na.rm = TRUE) doesn't give an
+	error anymore.		
 
 
 		CHANGES IN R VERSION 1.2.0
