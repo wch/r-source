@@ -1565,6 +1565,9 @@ distributions of R.)
      A platform-independent basic-statistics GUI (graphical user interface)
      for R, based on the *tcltk* package.
 
+*ResistorArray*
+     Electrical properties of resistor networks.
+
 *Rlab*
      Functions and data sets for the NCSU ST370 class.
 
