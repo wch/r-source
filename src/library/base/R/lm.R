@@ -233,28 +233,28 @@ summary.lm <- function (object, correlation = FALSE, ...)
 {
     z <- .Alias(object)
     Qr <- .Alias(object$qr)
+    if (is.null(z$terms) || is.null(Qr))
+	stop("invalid \'lm\' object:  no terms or qr component")
     n <- NROW(Qr$qr)
     p <- z$rank
     rdf <- n - p
+    if(rdf != z$df.residual)
+        warning("inconsistent residual degrees of freedom. -- please report!")
     p1 <- 1:p
     r <- resid(z)
     f <- fitted(z)
     w <- weights(z)
-    if (is.null(z$terms)) {
-	stop("invalid \'lm\' object:  no terms component")
+    if (is.null(w)) {
+        mss <- if (attr(z$terms, "intercept"))
+            sum((f - mean(f))^2) else sum(f^2)
+        rss <- sum(r^2)
     } else {
-	if (is.null(w)) {
-	    mss <- if (attr(z$terms, "intercept"))
-		sum((f - mean(f))^2) else sum(f^2)
-	    rss <- sum(r^2)
-	} else {
-	    mss <- if (attr(z$terms, "intercept")) {
-		m <- sum(w * f /sum(w))
-		sum(w * (f - m)^2)
-	    } else sum(w * f^2)
-	    rss <- sum(w * r^2)
-	    r <- sqrt(w) * r
-	}
+        mss <- if (attr(z$terms, "intercept")) {
+            m <- sum(w * f /sum(w))
+            sum(w * (f - m)^2)
+        } else sum(w * f^2)
+        rss <- sum(w * r^2)
+        r <- sqrt(w) * r
     }
     resvar <- rss/rdf
     R <- chol2inv(Qr$qr[p1, p1, drop = FALSE])
