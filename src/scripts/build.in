@@ -276,6 +276,9 @@ foreach my $pkg (@ARGV) {
 		## exclude stray dependency files
 		print EXCLUDE "$File::Find::name\n" if /\.d$/;
 		print EXCLUDE "$File::Find::name\n" if /^Makedeps$/;
+		## and the DLL resource file
+		my $resname = $pkgname . "_res.rc";
+		print EXCLUDE "$File::Find::name\n" if /^$resname$/;
 	    }
 	    my $filename = $File::Find::name;
 	    $filename =~ s/^[^\/]*\///;
