@@ -1676,8 +1676,12 @@ rather than @code{@var{pkg}}.  Translation of terms in @code{stop} and
 @code{warning} calls is automatically enabled, as well as other messages
 enclosed in calls to @code{gettext}.
 
-Tools to prepare the @file{R-@var{pkg}.pot} file are under development.
-
+Tools to prepare the @file{R-@var{pkg}.pot} file are provided in package
+@pkg{tools}: @code{xgettext2pot} will prepare a file from all strings
+occurring inside @code{gettext}, @code{stop} and @code{warning} calls.
+Some of these are likely to be spurious and so the file is likely to
+need manual editing.  @code{xgettext} extracts the actual calls and so
+is more useful when tidying up error messages.
 
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top

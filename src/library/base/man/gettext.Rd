@@ -7,7 +7,7 @@
   translate character vectors or set where the translations are to be found.
 }
 \usage{
-gettext(domain = NULL, \dots)
+gettext(\dots, domain = NULL)
 bindtextdomain(domain, dirname = NULL)
 }
 \arguments{
@@ -26,11 +26,12 @@ bindtextdomain(domain, dirname = NULL)
   Conventionally the domain for \R warning/error messages in package
   \pkg{pkg} is \code{"R-pkg"}, and that for C-level messages is \code{"pkg"}.
 
-  Soon, leading and trailing whitespace will be ignored for the translation.
+  Leading and trailing whitespace is ignored when looking for the
+  translation.
 }
 \value{
   For \code{gettext}, a character vector, one element per string in
-  \code{\dots}. If translation is not enabled or no domain is found or
+  \code{\dots}.  If translation is not enabled or no domain is found or
   no translation is found in that domain, the original strings are
   returned.
 

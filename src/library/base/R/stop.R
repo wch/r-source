@@ -53,7 +53,7 @@ warning <- function(..., call. = TRUE, immediate. = FALSE)
     }
 }
 
-gettext <- function(domain = NULL, ...)
+gettext <- function(..., domain = NULL)
     .Internal(gettext(domain, unlist(list(...))))
 
 bindtextdomain <- function(domain, dirname = NULL)

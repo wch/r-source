@@ -697,7 +697,7 @@ void jump_to_toplevel()
     jump_to_top_ex(FALSE, FALSE, TRUE, TRUE, TRUE);
 }
 
-/* #define DEBUG_GETTEXT  1 */
+/* #define DEBUG_GETTEXT 1 */
 
 /* gettext(domain, string) */
 SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -741,15 +741,39 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(strlen(domain)) {
 	PROTECT(ans = allocVector(STRSXP, n));
 	for(i = 0; i < n; i++) {
-	    char *this = CHAR(STRING_ELT(string, i)), *tmp;
+	    int ihead = 0, itail = 0;
+	    char *this = CHAR(STRING_ELT(string, i)), 
+		*tmp, *head = NULL, *tail = NULL, *p, *tr;
 	    tmp = alloca(strlen(this) + 1);
 	    strcpy(tmp, this);
-	    /* FIXME string leading and trailing white spaces 
-	       and add back after translation */
+	    /* strip leading and trailing white spaces and 
+	       add back after translation */
+	    for(p = tmp; *p && (*p == ' ' || *p == '\t'); p++, ihead++) ;
+	    if(ihead > 0) {
+		head = alloca(ihead + 1);
+		strncpy(head, tmp, ihead);
+		head[ihead] = '\0';
+		tmp += ihead;
+		}
+	    if(strlen(tmp))
+		for(p = tmp+strlen(tmp)-1; 
+		    p >= tmp && (*p == ' ' || *p == '\t');
+		    p--, itail++) ;
+	    if(itail > 0) {
+		tail = alloca(itail + 1);
+		strcpy(tail, tmp+strlen(tmp)-itail);
+		tmp[strlen(tmp)-itail] = '\0';
+		}
 #ifdef DEBUG_GETTEXT
 	    REprintf("translating '%s' in domain '%s'\n", tmp, domain);
 #endif
-	    SET_STRING_ELT(ans, i, mkChar(dgettext(domain, this)));
+	    tr = dgettext(domain, tmp);
+	    tmp = alloca(strlen(tr) + ihead + itail + 1);
+	    tmp[0] ='\0';
+	    if(ihead > 0) strcat(tmp, head);
+	    strcat(tmp, tr);
+	    if(itail > 0) strcat(tmp, tail);
+	    SET_STRING_ELT(ans, i, mkChar(tmp));
 	}
 	UNPROTECT(1);
 	return ans;
