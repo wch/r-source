@@ -1,18 +1,26 @@
 \name{codoc}
 \alias{codoc}
+\alias{codocClasses}
+\alias{codocData}
 \alias{print.codoc}
+\alias{print.codocClasses}
+\alias{print.codocData}
 \title{Check Code/Documentation Consistency}
 \usage{
 codoc(package, dir, lib.loc = NULL,
       use.values = FALSE, use.positions = TRUE,
       ignore.generic.functions = FALSE,
       verbose = getOption("verbose"))
+codocClasses(package, lib.loc = NULL)
+codocData(package, lib.loc = NULL)
 }
 \description{
-  Find inconsistencies between actual and documented usage of \R
-  function objects in a package, by comparing names and optionally also
-  corresponding positions and default values of the arguments of the
-  functions.
+  Find inconsistencies between actual and documented \dQuote{structure}
+  of \R objects in a package.  \code{codoc} compares names and
+  optionally also corresponding positions and default values of the
+  arguments of functions.  \code{codocClasses} and \codoc{codocData}
+  compare slot names of S4 classes and variable names of data sets,
+  respectively.
 }
 \arguments{
   \item{package}{a character string naming an installed package.}
@@ -34,7 +42,7 @@ codoc(package, dir, lib.loc = NULL,
     printed.}
 }
 \details{
-  The purpose of this function is to check whether the documented usage
+  The purpose of \code{codoc} is to check whether the documented usage
   of function objects agrees with their formal arguments as defined in
   the \R code.  This is not always straightforward, in particular as the
   usage information for methods to generic functions often employs the
@@ -45,28 +53,43 @@ codoc(package, dir, lib.loc = NULL,
   already loaded version of the package.  Otherwise, if the sources are
   used, the \R code files of the package are collected and sourced in a
   new environment.  Then, the usage sections of the Rd files are
-  extracted and manipulated in order to give function stubs
-  corresponding to the indicated usage, which are then sourced in
-  another new environment.  For interpreted functions in both the code
-  and docs environment, the formals are compared according to the values
-  of the arguments \code{use.positions} and \code{use.values}.
+  extracted and parsed \dQuote{as much as possible} to give the formals
+  documented.  For interpreted functions in the code environment, the
+  formals are compared between code and documentation according to the
+  values of the arguments \code{use.positions} and \code{use.values}.
+  Synopsis sections are used if present; their occurrence is reported if
+  \code{verbose} is true.
 
-  Currently, synopsis sections are used, but multiple usage examples
-  (such as in \code{\link{abline}}) are not combined when building the
-  stubs.  Occurences of synopsis sections are reported if \code{verbose}
-  is true.
+  Currently, the R documentation format has no high-level markup for the
+  basic \dQuote{structure} of classes and data sets (similar to the
+  usage sections for function synopses).  Variable names for data frames
+  in documentation objects obtained by suitably editing \dQuote{shells}
+  created by \code{\link{prompt}} are recognized by \code{codocData} and 
+  used provided that the documentation object is for a single data frame
+  (i.e., only has one alias).  \code{codocClasses} analogously handles
+  slot names for classes in documentation objects obtained by editing
+  shells created by \code{\link[methods]{promptClass}}.
 }
 \value{
-  An object of class \code{"codoc"} which is a list the names of which
-  are the names of the functions where an inconsistency was found.  The
-  elements of the list are lists of length 2 with elements \code{code}
-  and \code{docs}, giving the corresponding arguments obtained from the
-  function's code and documented usage.
+  \code{codoc} returns an object of class \code{"codoc"}.  Currently,
+  this is a list which, for each Rd object in the package where an
+  inconsistency was found, contains an element with a list of the
+  mismatches (which in turn are lists with elements \code{code} and
+  \code{docs}, giving the corresponding arguments obtained from the
+  function's code and documented usage).
 
-  There is a \code{print} method for nicely displaying the information
+  \code{codocClasses} and \code{codocData} return objects of class
+  \code{"codocClasses"} and \code{"codocData"}, respectively, with a
+  structure similar to class \code{"codoc"}.
+
+  There are \code{print} methods for nicely displaying the information
   contained in such objects.
 }
 \seealso{
   \code{\link{undoc}}
+}
+\section{Warning}{
+  Both \code{codocClasses} and \code{codocData} are still experimental.
+  Names, interfaces and values might change in future versions.
 }
 \keyword{documentation}
