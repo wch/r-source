@@ -25,7 +25,7 @@
   subsetting syntax and a superscript is specified using the power
   syntax.  For example, \code{x[i]} produces \eqn{x_i} and \code{x^2}
   produces \eqn{x^2}.
-  
+
   \emph{Accents:} accented expressions are specified using the special
   mathematical functions \code{hat} and \code{bar}.
   % For example, \code{hat(x)} produces \eqn{\hat{x}} and \code{bar(x)}
@@ -38,7 +38,7 @@
   \emph{Relations:} equality or assignment of terms is specified using
   the \code{==} relation.  For example, \code{x == y} produces
   \eqn{x=y}.
-  
+
   \emph{Visible grouping:} terms are visibly grouped by placing them
   within parentheses.  For example, \code{(x+y)} produces \eqn{(x+y)}.
 
@@ -105,4 +105,5 @@ text(4, 7, expression(bar(x) == sum(frac(x[i], n), i==1, n)))
 text(4, 6.4, "expression(bar(x) == sum(frac(x[i], n), i==1, n))", cex = .6)
 text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ",
                             plain(e)^{frac(-(x-mu)^2, 2*sigma^2)})))
+}
 \keyword{aplot}
