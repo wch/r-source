@@ -53,7 +53,7 @@ double pt(double x, double n, int lower_tail, int log_p)
 	lower_tail = !lower_tail;
 
     if(log_p) {
-	if(lower_tail) return log(1 - 0.5*exp(val));
+	if(lower_tail) return log1p(-0.5*exp(val));
 	else return val - M_LN2; /* = log(.5* pbeta(....)) */
     }
     else {
