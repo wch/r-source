@@ -273,7 +273,6 @@ pkg-%:
 ifeq ($(strip $(HELP)),YES)
 	@$(ECHO) "  installing help"
 	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
-	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 ifeq ($(strip $(WINHELP)),CHM)
 	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) chm-$*
 endif

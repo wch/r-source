@@ -198,4 +198,8 @@ else
 	@$(ECHO) "library(tools); .installPackageIndices('.', '"$(DPKG)"')" | \
 	  $(RHOME)/bin/rterm.exe --vanilla --slave > /dev/null
 endif
-	@$(ECHO)
+# need not have HTML installed when building packages
+	@$(MKDIR) -p $(RHOME)/doc/html/search
+	@$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt	
+	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	  $(RHOME)/share/perl/build-help-windows.pl -htmllists

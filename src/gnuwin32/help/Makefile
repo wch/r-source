@@ -35,16 +35,6 @@ winhlp-%: chm-%
 	$(MKDIR) -p $(RLIB)/$*/winhlp
 	$(CP) $(PKGDIR)/$*/chm/$*.cnt $(PKGDIR)/$*/chm/$*.hlp $(RLIB)/$*/winhlp
 
-# need not have HTML installed when building packages
-contents-%:
-	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	  ../../../share/perl/Rd2contents.pl \
-	  --os=windows -o $(RLIB)/$*/CONTENTS $(PKGDIR)/$*
-	@$(MKDIR) -p $(RHOME)/doc/html/search
-	@$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
-	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	  ../../../share/perl/build-help-windows.pl ${DOS} -htmllists
-
 ziphelp-%:
 	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
 	  -f $(RHOME)/src/gnuwin32/help/Makefile ZIPFLAGS=jqX  PKG=$* zipit

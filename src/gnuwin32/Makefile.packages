@@ -53,8 +53,8 @@ pkg-%:
 	  $(MAKE) --no-print-directory $($*-ZIPDATA)data-$* ; \
 	fi
 ifeq ($(strip $(HELP)),YES)
+	@$(ECHO) "  installing help"
 	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
-	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 ifeq ($(strip $(WINHELP)),CHM)
 	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) chm-$*
 endif
@@ -84,7 +84,7 @@ ziponly-%:
 	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziponlyhelp-$*
 
 zipdata-%:
-	@echo "  zipping data"
+	@$(ECHO) "  zipping data"
 	@(cd $(RLIB)/$*/data; \
 	  if test -f Rdata.zip ; then \
 	    unzip -qou Rdata; \
@@ -94,4 +94,4 @@ zipdata-%:
 	  zip -rmq9X Rdata * -x filelist 00Index)
 
 data-%:
-	@echo "  not zipping data"
+	@$(ECHO) "  not zipping data"
