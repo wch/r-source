@@ -484,12 +484,6 @@ int main(int ac, char **av)
     mainloop();
     /*++++++  in ../main/main.c */
     return 0;
-
-#ifdef Old_usage
-badargs:
-    REprintf("invalid argument passed to R\n");
-    exit(1);
-#endif
 }
 
 
