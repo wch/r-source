@@ -110,7 +110,7 @@ void GraphicCopy(WindowPtr window);
 #define kRCmdFileShow		'fshw'
 #define kRCmdEditFile		'edtf'
 
-#define kRCmdIsRAquaUpdated	'nraq'
+#define kRCmdRappUpdates	'nraq'
 
 /* Items for the Tools menu */
 #define kRCmdShowWSpace		'dols'
@@ -1551,8 +1551,8 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
                    RPrefsHandler(RPrefsWindow);
               break;
               
-              case kRCmdIsRAquaUpdated:
-                consolecmd("is.RAqua.updated()");
+              case kRCmdRappUpdates:
+                consolecmd("Rapp.updates()");
               break;
               
 /* File Menu */
