@@ -2916,9 +2916,6 @@ distributions of R.)
 *urn*
      Functions for sampling without replacement (simulated urns).
 
-*uroot*
-     Unit root tests and graphics for seasonal time series.
-
 *vabayelMix*
      Variational Bayesian mixture model.
 

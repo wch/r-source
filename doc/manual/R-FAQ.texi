@@ -2986,8 +2986,12 @@ Interface to Unidata's routines to convert units.
 Unit root and cointegration tests for time series data.
 @item urn
 Functions for sampling without replacement (simulated urns).
-@item uroot
-Unit root tests and graphics for seasonal time series.
+@c <COMMENT>
+@c Removed on 2004-12-23 as there are severe problems and email to the
+@c maintainer bounces.
+@c @item uroot
+@c Unit root tests and graphics for seasonal time series.
+@c </COMMENT>
 @item vabayelMix
 Variational Bayesian mixture model.
 @item vardiag
