@@ -12,9 +12,9 @@
 hclust(d, method = "complete", members=NULL)
 
 \method{plot}{hclust}(x, labels = NULL, hang = 0.1,
-            axes = TRUE, frame.plot = FALSE, ann = TRUE,
-            main = "Cluster Dendrogram",
-            sub = NULL, xlab = NULL, ylab = "Height", \dots)
+     axes = TRUE, frame.plot = FALSE, ann = TRUE,
+     main = "Cluster Dendrogram",
+     sub = NULL, xlab = NULL, ylab = "Height", \dots)
 
 plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
         square = TRUE, labels = NULL, plot. = TRUE,
@@ -30,7 +30,8 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
     \code{"average"}, \code{"mcquitty"}, \code{"median"} or
     \code{"centroid"}.}
 
-  \item{members}{\code{NULL} or a vector with length size of \code{d}.}
+  \item{members}{\code{NULL} or a vector with length size of
+    \code{d}. See the Details section.}
 
   \item{x,tree}{an object of the type produced by \code{hclust}.}
 
@@ -48,8 +49,14 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
     default when there's a \code{tree$call}.}
   \item{\dots}{Further graphical arguments.}
 
-  \item{unit, level, hmin, square, plot.}{as yet unimplemented arguments of
-    \code{plclust} for S-plus compatibility.}
+  \item{unit}{logical.  If true, the splits are plotted at
+    equally-spaced heights rather than at the height in the object.}
+
+  \item{hmin}{numeric.  All heights less than \code{hmin} are regarded
+    as being \code{hmin}: this can be used to suppress detail at the
+    bottom of the tree.}
+  \item{level, square, plot.}{as yet unimplemented arguments of
+    \code{plclust} for S-PLUS compatibility.}
 }
 \value{
   An object of class \bold{hclust} which describes the

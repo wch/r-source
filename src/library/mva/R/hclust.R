@@ -135,11 +135,12 @@ plclust <- function(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
                     axes = TRUE, frame.plot = FALSE, ann = TRUE,
                     main = "", sub = NULL, xlab = NULL, ylab = "Height")
 {
-    if(!missing(unit) && unit)		.NotYetUsed("unit", error = FALSE)
     if(!missing(level) && level)	.NotYetUsed("level", error = FALSE)
     if(!missing(hmin) && hmin != 0)	.NotYetUsed("hmin",  error = FALSE)
     if(!missing(square) && !square)	.NotYetUsed("square",error = FALSE)
     if(!missing(plot.) && !plot.)	.NotYetUsed("plot.", error = TRUE)
+    if(!missing(hmin)) tree$height <- pmax(tree$height, hmin)
+    if(unit) tree$height <- rank(tree$height)
     plot.hclust(x = tree, labels = labels, hang = hang,
                 axes = axes, frame.plot = frame.plot, ann = ann,
                 main = main, sub = sub, xlab = xlab, ylab = ylab)

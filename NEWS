@@ -32,6 +32,8 @@ NEW FEATURES
 	printing of numbers in fixed-point or exponential notation.
 	(Contributed by David Brahm.)
 
+    o	Arguments `unit' and `hmin' of pclust() are now implemented.
+
 
 DEPRECATED & DEFUNCT
 
@@ -51,6 +53,8 @@ INSTALLATION CHANGES
 
     o	The zlib code in the sources is used unless the external
 	version found is at least version 1.1.4 (up from 1.1.3).
+
+    o	The regression checks now have to be passed exactly.
 
 
 BUG FIXES
