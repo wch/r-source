@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0-0 @value{FAQ-YEAR}-09-30
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-10-04
 @set REL-VERSION 2.0.0
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2415,6 +2415,10 @@ multiple smoothing parameter selection by GCV or UBRE.
 @emph{Recommended}.
 @item mimR
 An R interface to MIM for graphical modeling in R.
+@item minpack.lm
+R interface for two functions from the MINPACK least squares
+optimization library, solving the nonlinear least squares problem by a
+modification of the Levenberg-Marquardt algorithm.
 @item mitools
 Tools to perform analyses and combine results from multiple-imputation
 datasets.
@@ -2493,7 +2497,7 @@ Fit and compare Gaussian linear and nonlinear mixed-effects models.
 Combine the @strong{nlme} and @strong{odesolve} packages for
 mixed-effects modelling using differential equations.
 @item nlrq
-Nonlinear quantile regression.
+Nonlinear quantile regression routines.  @emph{Defunct}.
 @item nnet
 Software for single hidden layer perceptrons (``feed-forward neural
 networks''), and for multinomial log-linear models.  Contained in the
@@ -2519,7 +2523,7 @@ Nonparametric Multiple Comparisons:  provides simultaneous rank test
 procedures for the one-way layout without presuming a certain
 distribution.
 @item nprq
-Nonparametric and sparse quantile regression methods.
+Nonparametric quantile regression.  @emph{Defunct}.
 @item odesolve
 An interface for the Ordinary Differential Equation (ODE) solver lsoda.
 ODEs are expressed as R functions.
@@ -2577,6 +2581,9 @@ polymars, by C. Kooperberg and co-authors.
 @item polynom
 A collection of functions to implement a class for univariate polynomial
 manipulations.
+@item ppc
+Sample classification of protein mass spectra by peak probabilty
+contrasts.
 @item pps
 Functions to select samples using PPS (probability proportional to size)
 sampling, for stratified simple random sampling, and to compute joint

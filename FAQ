@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0-0 2004-09-30
+Version 2.0.2004-10-04
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2268,6 +2268,11 @@ distributions of R.)
 *mimR*
      An R interface to MIM for graphical modeling in R.
 
+*minpack.lm*
+     R interface for two functions from the MINPACK least squares
+     optimization library, solving the nonlinear least squares problem by a
+     modification of the Levenberg-Marquardt algorithm.
+
 *mitools*
      Tools to perform analyses and combine results from multiple-imputation
      datasets.
@@ -2357,7 +2362,7 @@ distributions of R.)
      using differential equations.
 
 *nlrq*
-     Nonlinear quantile regression.
+     Nonlinear quantile regression routines.  _Defunct_.
 
 *nnet*
      Software for single hidden layer perceptrons ("feed-forward neural
@@ -2391,7 +2396,7 @@ distributions of R.)
      distribution.
 
 *nprq*
-     Nonparametric and sparse quantile regression methods.
+     Nonparametric quantile regression.  _Defunct_.
 
 *odesolve*
      An interface for the Ordinary Differential Equation (ODE) solver lsoda.
@@ -2461,6 +2466,10 @@ distributions of R.)
 *polynom*
      A collection of functions to implement a class for univariate
      polynomial manipulations.
+
+*ppc*
+     Sample classification of protein mass spectra by peak probabilty
+     contrasts.
 
 *pps*
      Functions to select samples using PPS (probability proportional to
