@@ -671,6 +671,7 @@ void Rstd_Busy(int which)
    If ask = SA_SUICIDE, no save, no .Last, possibly other things.
  */
 
+
 void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
     unsigned char buf[1024];
