@@ -2576,7 +2576,7 @@ void GMetricInfo(int c, double *ascent, double *descent, double *width,
     else
 	error("detailed character metric information unavailable\n");
 #else
-    dd->dp.metricInfo(c, ascent, descent, width, dd);
+    dd->dp.metricInfo(c & 0xFF, ascent, descent, width, dd);
 #endif
     if (units != DEVICE) {
 	*ascent = GConvertYUnits(*ascent, DEVICE, units, dd);
@@ -3173,7 +3173,7 @@ void GText(double x, double y, int coords, char *str,
 			    double maxDepth = 0;
 			    char *ss;
 			    for (ss=sbuf; *ss; ss++) {
-				GMetricInfo(*ss, &h, &d, &w,
+				GMetricInfo((unsigned char) *ss, &h, &d, &w,
 					    INCHES, dd);
 				if (h > maxHeight) maxHeight = h;
 				if (d > maxDepth) maxDepth = d;
