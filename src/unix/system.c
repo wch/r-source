@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka
  *			      and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -117,6 +117,8 @@ int Rf_initialize_R(int ac, char **av)
     ptr_R_ChooseFile = Rstd_ChooseFile;
     ptr_R_loadhistory = Rstd_loadhistory;
     ptr_R_savehistory = Rstd_savehistory;
+    ptr_GnomeDeviceDriver = stub_GnomeDeviceDriver;
+    ptr_R_GetX11Image = R_GetX11Image;
     R_timeout_handler = NULL;
     R_timeout_val = 0;
 
@@ -131,7 +133,6 @@ int Rf_initialize_R(int ac, char **av)
     R_setStartTime();
 #endif
     R_DefParams(Rp);
-/*    R_SizeFromEnv(Rp); */
     /* Store the command line arguments before they are processed
        by the R option handler. These are stored in Rp and then moved
        to the global variable CommandLineArgs in R_SetParams.
@@ -183,18 +184,16 @@ int Rf_initialize_R(int ac, char **av)
 	}
     }
 
-    ptr_GnomeDeviceDriver = stub_GnomeDeviceDriver;
-    ptr_R_GetX11Image = R_GetX11Image;
 #ifdef HAVE_X11
     if(useX11) {
 	if(!usegnome) {
-	    R_GUIType="X11";
+	    R_GUIType = "X11";
 	} else {
 #ifndef HAVE_GNOME
 	    R_Suicide("GNOME GUI is not available in this version");
 #endif
 	    R_load_gnome_shlib();
-	    R_GUIType="GNOME";
+	    R_GUIType = "GNOME";
 	    ptr_gnome_start(ac, av, Rp);
 	    /* this will never return, but for safety */
 	    return 0;
@@ -203,13 +202,13 @@ int Rf_initialize_R(int ac, char **av)
 #endif /* HAVE_X11 */
 #ifdef HAVE_AQUA
     if(useaqua) {
-	    R_load_aqua_shlib();
-	    R_GUIType="AQUA";
+	R_load_aqua_shlib();
+	R_GUIType = "AQUA";
     }
 #endif
 #ifdef HAVE_TCLTK
     if(useTk) {
-	    R_GUIType="Tk";
+	R_GUIType = "Tk";
     }
 #endif
     R_common_command_line(&ac, av, Rp);
@@ -221,7 +220,9 @@ int Rf_initialize_R(int ac, char **av)
 		break;
 	    } else {
 #ifdef HAVE_AQUA
-           if(!strncmp(*av,"-psn",4)) { break; } else
+		if(!strncmp(*av, "-psn", 4)) 
+		    break; 
+		else
 #endif
 		snprintf(msg, 1024, "WARNING: unknown option %s\n", *av);
 		R_ShowMessage(msg);
@@ -241,15 +242,15 @@ int Rf_initialize_R(int ac, char **av)
 
 #ifdef HAVE_AQUA
     if(useaqua)
-      R_Interactive = useaqua;
+	R_Interactive = useaqua;
     else
 #endif
     R_Interactive = isatty(0);
 
 #ifdef HAVE_AQUA
     if(useaqua){
-     R_Outputfile = NULL;
-     R_Consolefile = NULL;
+	R_Outputfile = NULL;
+	R_Consolefile = NULL;
     } else {
 #endif
     R_Outputfile = stdout;
@@ -282,7 +283,7 @@ int Rf_initialize_R(int ac, char **av)
 
 #ifdef HAVE_AQUA
     if(useaqua)
-     R_StartConsole(TRUE);
+	R_StartConsole(TRUE);
 #endif
 
  return(0);
@@ -311,7 +312,7 @@ int R_EditFiles(int nfile, char **file, char **title, char *editor)
 	    R_ShowMessage("WARNING: Only editing the first in the list of files");
 
 #if defined(HAVE_AQUA)
-	if (!strcmp(R_GUIType,"AQUA"))
+	if (!strcmp(R_GUIType, "AQUA"))
 	    Raqua_Edit(file[0]);
 	else {
 #endif
