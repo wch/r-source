@@ -62,7 +62,7 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	@USE_EXTERNAL_LAPACK_FALSE@ @$(MAKE) $(Rlapack_la) Rlapack_install
+@USE_EXTERNAL_LAPACK_FALSE@	@$(MAKE) $(Rlapack_la) Rlapack_install
 	@$(MAKE) $(Rexecmodulesdir_LTLIBRARIES)
 
 $(lapack_la): $(lapack_la_OBJECTS) $(lapack_la_DEPENDENCIES)
