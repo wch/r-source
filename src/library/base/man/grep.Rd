@@ -47,7 +47,9 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
   \item{useBytes}{logical.  If \code{TRUE} the matching is done
     byte-by-byte rather than character-by-character.  See Details.}
   \item{replacement}{a replacement for matched pattern in \code{sub} and
-    \code{gsub}.  Coerced to character if possible.}
+    \code{gsub}.  Coerced to character if possible.  This can include
+    backreferences \code{"\\1"} to \code{"\\9"} to parenthesized
+    subexpressions of \code{pattern}.}
 }
 \details{
   Arguments which should be character strings or character vectors are
@@ -55,8 +57,7 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
 
   The two \code{*sub} functions differ only in that \code{sub} replaces
   only the first occurrence of a \code{pattern} whereas \code{gsub}
-  replaces all occurrences.  An initial zero-length match
-  (e.g. \code{pattern = "^"}) is not substituted.
+  replaces all occurrences.
 
   For \code{regexpr} it is an error for \code{pattern} to be \code{NA},
   otherwise \code{NA} is permitted and matches only itself.
@@ -99,7 +100,12 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
   The standard regular-expression code has been reported to be very slow
   when applied to extremely long character strings
   (tens of thousands of characters or more): the code used when
-  \code{perl = TRUE} seems much faster and more reliable for such usages.
+  \code{perl = TRUE} seems much faster and more reliable for such
+  usages.
+
+  The standard versions of \code{sub} and \code{gsub} do not substitute
+  zero-length matches at the beginning of a search (of the string, or
+  from the current point).  Use \code{perl = TRUE} for such matches.
 
   The \code{perl = TRUE} option is only implemented for single-byte and
   UTF-8 encodings, and will warn if used in a non-UTF-8 multi-byte

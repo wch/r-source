@@ -332,7 +332,7 @@ NEW FEATURES
     o	grep(), gsub(), sub() and regexpr() now always attempt to
 	coerce their 'pattern', 'x', 'replacement' and 'text'
 	arguments to character.  Previously this was undocumented but
-	done by [g]sub() and regexpr() for some values of the 
+	done by [g]sub() and regexpr() for some values of their
 	other arguments.  (Wish of PR#7742.)
 
 
@@ -542,9 +542,9 @@ DEPRECATED & DEFUNCT
 
     o	Option "repositories" is no longer used and so not set.
 
-    o	loadURL() is deprecated.
+    o	loadURL() is deprecated in favour of load(url()).
 
-    o 	delay() is deprecated.
+    o 	delay() is deprecated.  Use delayAssign() instead.
 
 
 INSTALLATION CHANGES
@@ -811,7 +811,9 @@ BUG FIXES
         original algorithm.  (PR#7314)
 
     o   [g]sub(perl = TRUE) was giving random results for a 0-length
-	initial match.  (Part of PR#7742.)
+	initial match.  Now such matches (and internal 0-length
+	matches such as those at word boundaries) are handled
+	correctly.  (Parts of PR#7742.)
 
 
 
