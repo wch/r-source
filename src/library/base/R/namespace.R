@@ -811,6 +811,9 @@ registerS3methods <- function(info, env)
         else {genfun <- get(genname, envir = envir)
               if (typeof(genfun) == "closure") environment(genfun)
               else .BaseNamespaceEnv}
+        if (! exists(".__S3MethodsTable__.", envir = defenv, inherits = FALSE))
+            assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = NULL),
+                   envir = defenv)
         table <- get(".__S3MethodsTable__.", envir = defenv, inherits = FALSE)
         assign(nm, wrap(method, envir), envir = table)
     }
