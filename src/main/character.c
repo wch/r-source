@@ -67,9 +67,8 @@ static void AllocBuffer(int len)
 	}
     } else {
 	if(bufsize == MAXELTSIZE) return;
- /* frees if non-zero */
-	realloc(buff, 0);
-	buff = (char *) realloc(buff, MAXELTSIZE);
+	free(buff);
+	buff = (char *) malloc(MAXELTSIZE);
 	bufsize = MAXELTSIZE;
     }
 }
