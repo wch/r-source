@@ -1,11 +1,12 @@
 \name{fix}
 \title{Fix an Object}
 \usage{
-fix(x)
+fix(x, ...)
 }
 \alias{fix}
 \arguments{
   \item{x}{An \R object}
+  \item{...}{Arguments to pass to editor}
 }
 \description{
     \code{fix} invokes the editor specified in
@@ -17,6 +18,9 @@ fix(x)
  ## Assume  `my.fun' is a user defined function :
  fix(my.fun)
  ## now my.fun is changed
+ ## Also,
+ fix(my.data.frame) # calls up data editor
+ fix(my.data.frame, factor.mode="char") # use of ...
 }
 \testonly{
  if(machine() != "Macintosh") {
