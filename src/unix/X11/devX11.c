@@ -65,6 +65,8 @@
 #define IS_100DPI ((int) (1./pixelHeight() + 0.5) == 100)
 
 
+#define X_BELL_VOLUME 50 /* integer between -100 and 100 for the volume 
+                            of the bell in locator. */
 
 	/********************************************************/
 	/* If there are resources that are shared by all devices*/
@@ -1795,8 +1797,9 @@ static Rboolean X11_Locator(double *x, double *y, DevDesc *dd)
 		if (event.xbutton.button == Button1) {
 		    *x = event.xbutton.x;
 		    *y = event.xbutton.y;
-		    fprintf(stderr, "\07");
-		    fflush(stderr);
+  		       /* Make a beep! Was print "\07", but that 
+                          messes up some terminals. */
+                    XBell(display, X_BELL_VOLUME);
 		    XSync(display, 0);
 		    done = 1;
 		}
