@@ -7,6 +7,9 @@
 
 NEW FEATURES
 
+    o   Interpret NaN and Inf in character->numeric conversions (and
+	thereby in read.table)
+
     o	All R environment variables are now of the form `R_xxx'.  In
 	particular, `RHOME', `RLIBS' and `RPROFILE' are now called
 	`R_HOME', `R_LIBS', and `R_PROFILE'.

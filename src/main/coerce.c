@@ -58,6 +58,27 @@ void CoercionWarning(int warn)
 	warning("imaginary parts discarded in coercion");
 }
 
+double R_strtod(char *c, char **end)
+{
+    double x;
+
+    if (strncmp(c, "NA", 2) == 0){
+	x = NA_REAL; *end = c + 2;
+    }
+    else if (strncmp(c, "NaN", 3) == 0) {
+	x = R_NaN; *end = c + 3;
+    }
+    else if (strncmp(c, "Inf", 3) == 0) {
+	x = R_PosInf; *end = c + 3;
+    }
+    else if (strncmp(c, "-Inf", 4) == 0) {
+	x = R_NegInf; *end = c + 4;
+    }
+    else
+        x = strtod(c, end);
+    return x;
+}
+
 int LogicalFromInteger(int x, int *warn)
 {
     return (x == NA_INTEGER) ?
@@ -133,7 +154,7 @@ int IntegerFromString(SEXP x, int *warn)
     double xdouble;
     char *endp;
     if (x != R_NaString) {
-	xdouble = strtod(CHAR(x), &endp);
+	xdouble = R_strtod(CHAR(x), &endp);
 	if (*endp == '\0') {
 	    if (xdouble > INT_MAX) {
 		*warn |= WARN_INACC;
@@ -179,7 +200,7 @@ double RealFromString(SEXP x, int *warn)
     double xdouble;
     char *endp;
     if (x != R_NaString) {
-	xdouble = strtod(CHAR(x), &endp);
+	xdouble = R_strtod(CHAR(x), &endp);
 	if (*endp == '\0')
 	    return xdouble;
 	else
@@ -237,13 +258,13 @@ complex ComplexFromString(SEXP x, int *warn)
     char *endp = CHAR(x);;
     z.r = z.i = NA_REAL;
     if (x != R_NaString) {
-	xr = strtod(endp, &endp);
+	xr = R_strtod(endp, &endp);
 	if (*endp == '\0') {
 	    z.r = xr;
 	    z.i = 0.0;
 	}
 	else if (*endp == '+' || *endp == '-') {
-	    xi = strtod(endp, &endp);
+	    xi = R_strtod(endp, &endp);
 	    if (endp[0] == 'i' && endp[1] == '\0') {
 		z.r = xr;
 		z.i = xi;
