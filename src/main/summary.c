@@ -552,6 +552,45 @@ badmode:
     errorcall(call, "invalid \"mode\" of argument\n");
     return R_NilValue;/*-Wall */
 }/* do_summary */
+
+SEXP do_range(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x, y, ans, tmp;
+
+    for(tmp = args; tmp != R_NilValue; tmp = CDR(tmp)) {
+	switch(TYPEOF(CAR(tmp))) {
+	case LGLSXP:
+	    break;
+	case INTSXP:
+	    break;
+	case REALSXP:
+	    break;
+	default:
+	    errorcall(call, "invalid \"mode\" of argument\n");
+	    return(R_NilValue);
+	}
+    }
+
+    PROTECT(op = findFun(install("min"), env));
+    x = applyClosure(call, op, args, env, R_NilValue);
+    UNPROTECT(1);
+    PROTECT(op = findFun(install("max"), env)); 
+    y = applyClosure(call, op, args, env, R_NilValue);
+    UNPROTECT(1);
+
+    if ((TYPEOF(x) == INTSXP) && (TYPEOF(y) == INTSXP)) {
+	ans = allocVector(INTSXP, 2);
+	INTEGER(ans)[0] = INTEGER(x)[0];
+	INTEGER(ans)[1] = INTEGER(y)[0];
+	return(ans);
+    }
+    else {
+	ans = allocVector(REALSXP, 2);
+	REAL(ans)[0] = REAL(x)[0];
+	REAL(ans)[1] = REAL(y)[0];
+	return(ans);
+    }
+}
 
 
 SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
