@@ -294,6 +294,8 @@ void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	 (Postscript files of these papers are available via anonymous
 	  ftp to ece.nwu.edu in the directory pub/lbfgs/lbfgs_bcm.)
 
+	  [Aug 2000: via http://www.ece.nwu.edu/~nocedal/lbfgsb.html]
+
 			     *	*  *
 
        NEOS, November 1994. (Latest revision April 1997.)
