@@ -45,6 +45,9 @@ C-LEVEL FACILITIES
     o   The header Rmath.h contains a definition for R_VERSION_STRING 
         which can be used to track different versions of R and libRmath.
 
+    o   The Makefile in src/nmath/standalone now has 'install' and
+	'uninstall' targets -- see the README file in that directory. 
+
 
 DEPRECATED & DEFUNCT
 
