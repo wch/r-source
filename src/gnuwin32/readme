@@ -2,14 +2,14 @@ R @RVER@ for Windows
 ===================
 
 This distribution contains a binary distribution of R-@RVER@ to run on
-Windows 95, 98, NT4.0 and 2000 on Intel/clone chips.  It is designed to be
+Windows 95, 98, NT4 and 2000 on Intel/clone chips.  It is designed to be
 as close as possible to the implementation on Unix, but see the list
 of differences below.  The port was by Guido Masarotto and Brian Ripley.
 
 See the file `CHANGES' for the new features of this version.
 
 As of rw1020 you will need MSVCRT.dll installed.  It is installed on
-all Windows 98, ME, NT4.0 and 2000 machines, but not all 95 machines.
+all Windows 98, ME, NT4 and 2000 machines, but not all 95 machines.
 You can download it from
 
 	ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe
@@ -48,10 +48,11 @@ manuals for R, which unpack into @RWVER@/doc/manual.
 You should install at least one of the text help and the compiled HTML help.
 
 WARNING: we have had reports that a program called VirusScan
-(attributed to Dr Solomon's or McAfee) interferes with rwinst.exe to
-the extent of making the PC unusable.  If you have this, please either
-disable it during installation or install manually.  No other
-virus-checking software seems to exhibit this fault.
+(attributed to Dr Solomon's or McAfee) interferes with installation of
+previous versions by rwinst.exe to the extent of making the PC
+unusable.  If you have this, please either disable it during
+installation or install manually.  Hopefully we have circumvented the
+problem in this release.
 
 
 Usage

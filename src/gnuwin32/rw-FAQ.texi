@@ -68,13 +68,13 @@ Brian Ripley                                @*
 @node Top, Introduction, (dir), (dir)
 
 @menu
-* Introduction::
-* Installation and Usage::
-* Packages::
-* Windows Features::
-* Workspaces::
-* The R Console and Fonts::
-* Building from Source::
+* Introduction::                
+* Installation and Usage::      
+* Packages::                    
+* Windows Features::            
+* Workspaces::                  
+* The R Console and Fonts::     
+* Building from Source::        
 @end menu
 
 @newchap{}
@@ -99,14 +99,14 @@ The information here applies only to recent versions of R for Windows,
 @chapter Installation and Usage
 
 @menu
-* Where can I find the latest version?::
-* How do I install R for Windows?::
-* How do I run it?::
-* How can I keep workspaces for different projects in different directories?::
-* How do I print from R?::
-* Can I use R BATCH?::
-* Can I use rwXxxx with ESS and emacs?::
-* What are HOME and working directories?::
+* Where can I find the latest version?::  
+* How do I install R for Windows?::  
+* How do I run it?::            
+* How can I keep workspaces for different projects in different directories?::  
+* How do I print from R?::      
+* Can I use R BATCH?::          
+* Can I use rwXxxx with ESS and emacs?::  
+* What are HOME and working directories?::  
 @end menu
 
 @node Where can I find the latest version?, How do I install R for Windows?, Installation and Usage, Installation and Usage
@@ -133,7 +133,7 @@ Optionally, you can download the installer, @code{rwinst.exe}.
 @node How do I install R for Windows?, How do I run it?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-First, you need Windows 95 or 98 or NT4 or 2000: Windows 3.11+win32s
+First, you need Windows 95 or 98 or ME or NT4 or 2000: Windows 3.11+win32s
 will not work. Your file system must allow long file names (as is
 likely except perhaps for some network-mounted systems).
 
@@ -238,11 +238,11 @@ You can find this from R code by @code{Sys.getenv("R_USER")}.
 
 
 @menu
-* Can I install packages (libraries) in this version?::
-* I don't have permission to write to the rwXxxx/library directory::
-* The packages I installed do not appear in the HTML help system::
-* My functions are not found by the HTML help search system.::
-* Package TclTk does not work.::
+* Can I install packages (libraries) in this version?::  
+* I don't have permission to write to the rwXxxx/library directory::  
+* The packages I installed do not appear in the HTML help system::  
+* My functions are not found by the HTML help search system.::  
+* Package TclTk does not work::  
 @end menu
 
 @node Can I install packages (libraries) in this version?, I don't have permission to write to the rwXxxx/library directory, Packages, Packages
@@ -337,7 +337,7 @@ make indices
 instead.)
 
 
-@node My functions are not found by the HTML help search system., Package TclTk does not work., The packages I installed do not appear in the HTML help system, Packages
+@node My functions are not found by the HTML help search system., Package TclTk does not work, The packages I installed do not appear in the HTML help system, Packages
 @section My functions are not found by the HTML help search system.
 
 The following conditions need to hold for functions in a package you installed.
@@ -352,17 +352,17 @@ installing the package.
 @noindent
 If those all hold true, this works for us.
 
-@node Package TclTk does not work.,  , My functions are not found by the HTML help search system., Packages
-@section Package TclTk does not work.
+@node Package TclTk does not work,  , My functions are not found by the HTML help search system., Packages
+@section Package TclTk does not work
 
-For package tcltk to work (try @code{demo(tkdensity)} or @code{demo(tkttest)}
+For package tcltk to work (try @code{demo(tkdensity)} or @code{demo(tkttest)})
 you need to have Tcl installed.  Download @file{tcl832.exe} (or use
 @file{tcl831.exe} if you already have it) from @url{dev.scriptics.com}
 and install it. (That will put the @file{bin} directory containing the
-Tcl and Tk DLLs in your path). You then need to set the environmental variable
+Tcl and Tk DLLs in your path). You then need to set the environment variable
 @code{TCL_LIBRARY}, to something like @code{c:/Program
 Files/Tcl/lib/tcl8.3}.  (The startup code for the package will warn you
-if this is unset.)
+if this is unset, and Q3.2 explains how to set them.)
 
 
 
@@ -371,8 +371,8 @@ if this is unset.)
 @chapter Windows Features
 
 @menu
-* What should I expect to behave differently from the Unix version of R?::
-* I hear about some nifty features. Please tell me about them!::
+* What should I expect to behave differently from the Unix version of R?::  
+* I hear about some nifty features. Please tell me about them!::  
 @end menu
 
 @node  What should I expect to behave differently from the Unix version of R?, I hear about some nifty features. Please tell me about them!, Windows Features, Windows Features
@@ -440,9 +440,9 @@ can be used to edit the file @file{Rconsole}.
 
 
 @menu
-* My workspace gets saved in a strange place. how do I stop this?::
-* How do I store my workspace in a different place?::
-* Can I load workspaces saved under Unix/GNU-Linux?::
+* My workspace gets saved in a strange place. how do I stop this?::  
+* How do I store my workspace in a different place?::  
+* Can I load workspaces saved under Unix/GNU-Linux?::  
 @end menu
 
 @node My workspace gets saved in a strange place. how do I stop this?, How do I store my workspace in a different place?, Workspaces, Workspaces
@@ -472,10 +472,10 @@ Yes. The converse (saving on Windows, loading on Unix) also works.
 
 
 @menu
-* I would like to be able to use Japanese fonts::
-* I don't see characters with accents at the R console::
-* The output to the console seems to be delayed::
-* Long lines seem to be truncated.::
+* I would like to be able to use Japanese fonts::  
+* I don't see characters with accents at the R console::  
+* The output to the console seems to be delayed::  
+* Long lines seem to be truncated.::  
 @end menu
 
 @node I would like to be able to use Japanese fonts, I don't see characters with accents at the R console, The R Console and Fonts, The R Console and Fonts
@@ -528,12 +528,12 @@ scrollbar or the @key{CTRL+arrow} keys to scroll horizontally.
 @chapter Building from Source
 
 @menu
-* How can I compile R from source?::
-* How do I debug code that I have compiled and dyn.load-ed?::
-* How do I include C++ code?::
-* The output from my C code disappears.::
-* The output from my Fortran code disappears.::
-* The console freezes when my compiled code is running::
+* How can I compile R from source?::  
+* How do I debug code that I have compiled and dyn.load-ed?::  
+* How do I include C++ code?::  
+* The output from my C code disappears.::  
+* The output from my Fortran code disappears.::  
+* The console freezes when my compiled code is running::  
 @end menu
 
 @node How can I compile R from source?, How do I debug code that I have compiled and dyn.load-ed?, Building from Source, Building from Source
@@ -707,14 +707,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 August 22 by Brian Ripley
+Last edited 2000 November 1 by Brian Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2000 August 22 by Brian Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2000 November 1 by Brian Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

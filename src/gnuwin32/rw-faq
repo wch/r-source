@@ -25,7 +25,7 @@ Table of Contents
   3.2 I don't have permission to write to the `rwXxxx/library' directory.
   3.3 The packages I installed do not appear in the HTML help system.
   3.4 My functions are not found by the HTML help search system.
-  3.5 Package TclTk does not work.
+  3.5 Package TclTk does not work
 
 4 Windows Features
   4.1 What should I expect to behave differently from the Unix version of R?
@@ -89,9 +89,9 @@ Optionally, you can download the installer, `rwinst.exe'.
 2.2 How do I install R for Windows?
 ===================================
 
-First, you need Windows 95 or 98 or NT4 or 2000: Windows 3.11+win32s
-will not work. Your file system must allow long file names (as is
-likely except perhaps for some network-mounted systems).
+First, you need Windows 95 or 98 or ME or NT4 or 2000: Windows
+3.11+win32s will not work. Your file system must allow long file names
+(as is likely except perhaps for some network-mounted systems).
 
 The simplest way is to run the installer (double-click on the icon for
 `rwinst.exe' and navigate its wizard-like pages).  Alternatively, choose
@@ -225,7 +225,7 @@ OR use a package by, e.g.
 
      library(MASS, lib.loc="p:/mylibs")
 
-How you set an environment variable is system specific: in Windows 9x/ME
+How you set an environment variable is system specific: in Windows 9x
 you can set them in autoexec.bat or in an MS-DOS window from which you
 launch `Rgui' / `Rterm'. Under Windows NT/2000 you can use the control
 panel or the properties of `My Computer'. You can also set them on the
@@ -278,16 +278,17 @@ installed.
 
 If those all hold true, this works for us.
 
-3.5 Package TclTk does not work.
-================================
+3.5 Package TclTk does not work
+===============================
 
-For package tcltk to work (try `demo(tkdensity)' or `demo(tkttest)' you
-need to have Tcl installed.  Download `tcl832.exe' (or use `tcl831.exe'
-if you already have it) from <dev.scriptics.com> and install it. (That
-will put the `bin' directory containing the Tcl and Tk DLLs in your
-path). You then need to set the environmental variable `TCL_LIBRARY',
-to something like `c:/Program Files/Tcl/lib/tcl8.3'.  (The startup code
-for the package will warn you if this is unset.)
+For package tcltk to work (try `demo(tkdensity)' or `demo(tkttest)')
+you need to have Tcl installed.  Download `tcl832.exe' (or use
+`tcl831.exe' if you already have it) from <dev.scriptics.com> and
+install it. (That will put the `bin' directory containing the Tcl and
+Tk DLLs in your path). You then need to set the environment variable
+`TCL_LIBRARY', to something like `c:/Program Files/Tcl/lib/tcl8.3'.
+(The startup code for the package will warn you if this is unset, and
+Q3.2 explains how to set them.)
 
 
 4 Windows Features
@@ -561,5 +562,5 @@ then `R_ProcessEvents()'.
 
 
 
-Last edited 2000 August 22 by Brian Ripley <ripley@stats.ox.ac.uk>
+Last edited 2000 November 1 by Brian Ripley <ripley@stats.ox.ac.uk>
 
