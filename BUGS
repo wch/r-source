@@ -51,13 +51,6 @@ none
 
 Directory:  Graphics
 
-* PR# 69 *
-Subject: Some graphics bugs
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Fri, 04 Dec 1998 11:42:50 -0000 ()
-Date: 04-Dec-98
---Various anomalies with text size and alignment. 2B appears to be solved. The 
---rest is still there (22feb99)
 * PR# 120 *
 Subject: graphics bug: type="l"
 From: Matthew Wiener <mcw@ln.nimh.nih.gov>
@@ -81,26 +74,10 @@ Date: Wed, 14 Jul 1999 13:10:31 +1000 (EST)
 --(1) is an S incompatibility, but the S rules may not be a good model
 --(2) is a bug, fixed for 0.65.0
 --(3) has gone away in 0.65.0
-* PR# 229 *
-Subject: dev.print scaling bug?
-From: John.Peters@tip.csiro.au (John Peters)
-Date: Fri, 16 Jul 1999 12:10:48 +1000 (EST)
 * PR# 230 *
 Subject: Use of lwd = 0, lty = 2 in segments.
 From: Douglas Bates <bates@stat.wisc.edu>
 Date: Sat, 17 Jul 1999 17:18:44 -0500 (CDT)
-* PR# 249 *
-Subject: axis ignores srt/crt
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Mon, 16 Aug 1999 15:51:49 -0700 (PDT)
---`its's not a bug it is an imcomptibility'
-* PR# 258 *
-Subject: Greek letters in outer margins.
-From: "BXC (Bendix Carstensen)" <BXC@NOVO.dk>
-Date: Thu, 26 Aug 1999 12:09:17 +0200
---Uses *current* plot margins. 
---
---remove paste() from repro. instr.
 * PR# 267 *
 Subject: matplot(... panel.first=..) fails  <==> dealing with "..."
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -191,22 +168,11 @@ Date: Tue, 9 Mar 1999 13:18:37 -0000
 --lm (?) AND Windows problem;  Win solved (fudged) for 0.63.3
 --
 --Another low-level buffer-size problem
-* PR# 185 *
-Subject: Re: [R] R_problem_buf in the S.h files & lists in .C
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 05 May 1999 00:32:49 +0200
---S objects in .C calls (not just lists) are now documented in the help file
---Should we not make the buffer static?
 * PR# 197 *
 Subject: glm crash
 From: Cor en Aylin <Cor.Berrevoets@gironet.nl>
 Date: Fri, 21 May 1999 19:44:23 +0200
 --Obscure report. Cannot reproduce from given info.
-* PR# 210 *
-Subject: definition of R_problem_buf in S.h
-From: vogels@ieee.org
-Date: Mon, 14 Jun 1999 17:56:04 +0200 (MET DST)
---Same as #185
 * PR# 296 *
 Subject: source(,echo=T) doesn't echo comments
 From: Thomas Lumley <thomas@biostat.washington.edu>
@@ -235,16 +201,6 @@ Directory:  System-specific
 * PR# 214 *
 From: Charles Taylor <charles@amsta.leeds.ac.uk>
 Date: Thu, 24 Jun 1999 11:20:06 +0100 (BST)
-* PR# 222 *
-Subject: Use of R-Coda
-From: =?iso-8859-1?Q?Jette_Halkj=E6r_Jakobsen?=
-Date: Fri, 9 Jul 1999 10:54:16 +0200 
---In Danish (?)  Looks as if PR#246 is the same in English
-* PR# 234 *
-Subject: R-bugs
-From: =?iso-8859-1?Q?Jette_Halkj=E6r_Jakobsen?=
-Date: Tue, 27 Jul 1999 13:49:31 +0200
---Looks like PR#222 again, in Danish. See PR#246 for English version
 * PR# 246 *
 Subject: R-Coda on rs6000-ibm-aix4.2.1.0
 From: =?iso-8859-1?Q?Jette_Halkj=E6r_Jakobsen?=
@@ -297,3 +253,19 @@ Date: Sun, 14 Nov 1999 22:51:43 GMT
 Subject: R 0.65.1 config bug
 From: "Dr K.M. Briggs" <kmb28@cus.cam.ac.uk>
 Date: Mon, 15 Nov 1999 13:38:42 +0000 (GMT)
+* PR# 325 *
+Subject: xlim, ylim problem in barplot
+From: Matthew Wiener <mcw@ln.nimh.nih.gov>
+Date: Mon, 15 Nov 1999 16:07:43 -0500 (EST)
+* PR# 326 *
+Subject: Inf in expression
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Tue, 16 Nov 1999 08:51:13 +0100 (MET)
+* PR# 327 *
+Subject: spikes in contour and persp
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Tue, 16 Nov 1999 08:56:57 +0100 (MET)
+* PR# 328 *
+Subject: Installation of package fails
+From: sunadmin@statistik.uni-dortmund.de
+Date: Tue, 16 Nov 1999 15:21:34 +0100 (MET)
