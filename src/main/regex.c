@@ -3238,7 +3238,7 @@ re_match_2 (bufp, string1, size1, string2, size2, pos, regs, stop)
      matched any of the pattern so far this time through the reg_num-th
      subexpression.  These two fields get reset each time through any
      loop their register is in.  */
-  register_info_type *reg_info; 
+  register_info_type *reg_info = NULL; 
 
   /* The following record the register info as found in the above
      variables when we find a match better than any we've seen before. 
@@ -3259,7 +3259,7 @@ re_match_2 (bufp, string1, size1, string2, size2, pos, regs, stop)
 
   /* Used when we pop values we don't care about.  */
   const char **reg_dummy = NULL;
-  register_info_type *reg_info_dummy;
+  register_info_type *reg_info_dummy = NULL;
 
 #ifdef DEBUG
   /* Counts the total number of registers pushed.  */
