@@ -1082,7 +1082,7 @@ SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
     }
     if(offset >= maxMethodsOffset) {
 	int n;
-	n = offset;
+	n = offset+1;
 	if(n < DEFAULT_N_PRIM_METHODS)
 	    n = DEFAULT_N_PRIM_METHODS;
 	if(n < 2*maxMethodsOffset)
