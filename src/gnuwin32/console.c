@@ -533,7 +533,8 @@ void drawconsole(control c, rect r)
     int i, ll, wd, maxwd = 0;
 
     ll = min(NUMLINES, ROWS);
-    if(!BM) return;;     /* This is a workaround for PR#1711.  BM should never be null here */
+    if(!BM) return;;     /* This is a workaround for PR#1711.
+			    BM should never be null here */
     gfillrect(BM, p->bg, getrect(BM));
     if(!ll) return;;
     for (i = 0; i < ll; i++) {
@@ -888,11 +889,37 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
     int ll, i, j;
     char ch, *s;
 
-    i = y0; j = x0; ll = 1;
+#ifdef SUPPORT_MBCS
+    int w0 = 0 /* -Wall */, used=0, x00, x11=100000;
+    wchar_t wc;
+    char *P;
+
+    i = y0; x00 = x0; ll = 1; /* terminator */
+    while (i <= y1) {
+	P = LINE(i);
+	memset(&mb_st, 0, sizeof(mbstate_t));
+	for (w0 = 0; w0 < x00 && *P; ) {
+	    P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+	    w0 += wcwidth(wc);
+	}
+	x00 = 0;
+	if(i == y1) x11 = x1+1; /* cols are 0-based */
+	while (w0 < x11 && *P) {
+	    used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+	    ll += used;
+	    P += used;
+	    w0 += wcwidth(wc);
+	}
+	if(w0 < x11) ll += 2;  /* \r\n */
+	i++;
+    }
+    Rprintf(" copied %d chars, w0 %d, x11 %d\n", ll, w0, x11);
+#else
+    i = y0; j = x0; ll = 1; /* terminator */
     while ((i < y1) || ((i == y1) && (j <= x1))) {
 	if (LINE(i)[j]) {
-	    ll += 1;
-	    j += 1; /* FIXME need to advance by cols here */
+	    ll++;
+	    j++;
 	}
 	else {
 	    ll += 2;
@@ -900,26 +927,48 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
 	    j = 0;
 	}
     }
+#endif
     if (!(hglb = GlobalAlloc(GHND, ll))){
         R_ShowMessage("Insufficient memory: text not copied to the clipboard");
-        return;;
+        return;
     }
     if (!(s = (char *)GlobalLock(hglb))){
         R_ShowMessage("Insufficient memory: text not copied to the clipboard");
-        return;;
+        return;
     }
+#ifdef SUPPORT_MBCS
+    i = y0; x00 = x0; x11=100000;
+    while (i <= y1) {
+	P = LINE(i);
+	memset(&mb_st, 0, sizeof(mbstate_t));
+	for (w0 = 0; w0 < x00 && *P; ) {
+	    P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+	    w0 += wcwidth(wc);
+	}
+	x00 = 0;
+	if(i == y1) x11 = x1+1;
+	while (w0 < x11 && *P) {
+	    used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+	    w0 += wcwidth(wc);
+	    for(j = 0; j < used; j++) *s++ = *P++;
+	}
+	if(w0 < x11) *s++ = '\r'; *s++ = '\n';
+	i++;
+    }
+#else
     i = y0; j = x0;
     while ((i < y1) || ((i == y1) && (j <= x1))) {
 	ch = LINE(i)[j];
 	if (ch) {
  	    *s++ = ch;
-	    j++; /* FIXME need to advance by cols here */
+	    j++;
 	} else {
 	    *s++ = '\r'; *s++ = '\n';
 	    i++;
 	    j = 0;
 	}
     }
+#endif
     *s = '\0';
     GlobalUnlock(hglb);
     if (!OpenClipboard(NULL) || !EmptyClipboard()) {
