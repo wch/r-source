@@ -775,14 +775,14 @@ they are made up of @emph{columns} or @emph{fields} of one type
 database.  The classical query is a SELECT statement of the type
 
 @smallexample
-SELECT State, Murder FROM USArrests WHERE rape > 30 ORDER BY Murder;
+SELECT State, Murder FROM USArrests WHERE rape > 30 ORDER BY Murder
 
 SELECT t.sch, c.meanses, t.sex, t.achieve
-  FROM student as t, school as c WHERE t.sch = c.id;
+  FROM student as t, school as c WHERE t.sch = c.id
 
-SELECT sex, COUNT(*) FROM student GROUP BY sex;
+SELECT sex, COUNT(*) FROM student GROUP BY sex
 
-SELECT sch, AVG(sestat) FROM student GROUP BY sch LIMIT 10;
+SELECT sch, AVG(sestat) FROM student GROUP BY sch LIMIT 10
 @end smallexample
 
 @noindent
@@ -1067,26 +1067,24 @@ An @acronym{SQL} query can be sent to the database by a call to
 table in the database.)  A finer level of control is attained by first
 calling @code{odbcQuery} and then @code{sqlGetResults} to fetch the
 results.  The latter can be used within a loop to retrieve a limited
-number of rows at a time.  @code{sqlGetResults} returns a data frame,
-but the raw results can be obtainedas a character matrix from
-@code{odbcFetchRows}.
+number of rows at a time.  @code{sqlGetResults} by default returns a
+data frame, but the raw results can also be obtained as a character
+matrix.
 
 @cindex PostgreSQL database system
 Here is an example using PostgreSQL, for which the @acronym{ODBC} driver
 maps column and data frame names to lower case.  We use a database
 @code{testdb} we created earlier, and had the DSN (data source name) set
 up in @file{~/.odbc.ini} under @code{unixODBC}.  Exactly the same code
-worked using MyODBC to access a MySQL database under Windows NT (where
-MySQL also maps names to lowercase).  Under Windows, DSNs are set up in
-the @acronym{ODBC} applet in the Control Panel.
+worked using MyODBC to access a MySQL database under Linux or Windows NT
+(where MySQL also maps names to lowercase).  Under Windows, DSNs are set
+up in the @acronym{ODBC} applet in the Control Panel.
 @cindex MySQL database system
 
 @smallexample
 > library(RODBC)
 ## tell it to map names to l/case
-> (channel <- odbcConnect("testdb", uid="ripley", case="tolower"))
-[1] 0
-## check it worked as failure is indicated by returning -1
+> channel <- odbcConnect("testdb", uid="ripley", case="tolower")
 ## load a data frame into the database
 > data(USArrests)
 > sqlSave(channel, USArrests, rownames="state")
@@ -1096,10 +1094,10 @@ the @acronym{ODBC} applet in the Control Panel.
   TABLE_QUALIFIER TABLE_OWNER TABLE_NAME TABLE_TYPE REMARKS
 1              NA          NA  usarrests      TABLE      NA
 ## list it
-> sqlFetch(channel,"USArrests")
-            state murder assault urbanpop rape
-1         Alabama   13.2     236       58 21.2
-2          Alaska   10.0     263       48 44.5
+> sqlFetch(channel, "USArrests", rownames = TRUE)
+               murder assault urbanpop rape
+Alabama          13.2     236       58 21.2
+Alaska           10.0     263       48 44.5
     ...
 ## an SQL query, originally on one line
 > sqlQuery(channel, "select state, murder from USArrests
@@ -1176,8 +1174,8 @@ have to work harder using direct @acronym{SQL} statements.
 ## write the values to a file
 > write.table(USArrests, "/tmp/arrests.dat", sep="\t",
               row.names = FALSE, col.names = FALSE)
+## delete any existing table
 > if(!is.na(match("arrests", getTables(con)[[1]])))
-    ## delete any existing table
     dbExecStatement(con, "drop table arrests")
 ## character string here needs to be on one line
 > dbExecStatement(con,
