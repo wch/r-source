@@ -968,6 +968,10 @@ static int findcell()
 		highlightrect();
 		bell();
 	    }
+	} else if (wrow > nhigh - 1 || wcol > nwide -1) {
+		/* off the grid */
+		highlightrect();
+		bell();
 	} else if (wcol != ccol || wrow != crow) {
 	    ccol = wcol;
 	    crow = wrow;
@@ -1200,7 +1204,7 @@ static int R_X11IOErr(Display *dsp)
 
 int initwin()
 {
-    int i, twidth, w;
+    int i, twidth, w, minwidth;
     int ioscreen;
     unsigned long iowhite, ioblack;
     char ioname[] = "R DataEntryWindow";
@@ -1246,6 +1250,9 @@ int initwin()
     }
     if(windowWidth == 0) windowWidth = w;
     windowWidth += 2;
+    /* allow enough width for buttons */
+    minwidth = 7.5 * textwidth("Paste", 5);
+    if(windowWidth < minwidth) windowWidth = minwidth;
 
     ioscreen = DefaultScreen(iodisplay);
     iowhite = WhitePixel(iodisplay, ioscreen);
