@@ -5,7 +5,7 @@
 
 /* (Long) Integers */
 
-#undef LONG_32_BITS
+#undef SIZEOF_LONG
 
 /* Floating Point Arithmetic */
 #undef HAVE_MATHERR		/* System V */
@@ -104,6 +104,7 @@
 
 /* Bug Workarounds */
 #undef HAVE_OSF_SPRINTF_BUG
+#undef LOG_BROKEN
 
 /* Some platforms other than ELF drop the leading _ */
 #undef HAVE_NO_SYMBOL_UNDERSCORE
