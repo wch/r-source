@@ -52,7 +52,7 @@ x$name <- value
 
   If \code{[} returns a data frame it will have unique (and non-missing)
   row names, if necessary transforming the row names using
-  \code{\link{make.unique}.  Similarly, column names
+  \code{\link{make.unique}}.  Similarly, column names
   will be transformed (if columns are selected more than once).
 
   When \code{drop =TRUE}, this is applied to the subsetting of any
