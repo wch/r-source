@@ -140,13 +140,13 @@ double atanh(double);
 #define R_CPU		"x86"
 #define R_VENDOR	"IBM"
 #define R_OS		"Win32"
-#define R_MAJOR		"0"
-#define R_MINOR		"64.0"
-#define R_STATUS	"Patched"
-#define R_STATUS_REV	"0"
-#define R_DAY		"5"
-#define R_MONTH		"May"
-#define R_YEAR		"1999"
+#define R_MAJOR		@R_MAJOR@
+#define R_MINOR		@R_MINOR@
+#define R_STATUS	@R_STATUS@
+#define R_STATUS_REV	@R_STATUS_REV@
+#define R_DAY		@R_DAY@
+#define R_MONTH		@R_MONTH@
+#define R_YEAR		@R_YEAR@
 
 
 #ifndef M_PI
