@@ -932,20 +932,13 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     mode = NILSXP;
-    if (data.ans_flags >= 128) {
-	if (data.ans_flags & 128)
-	    mode = LISTSXP;
-    }
-    else if (data.ans_flags >= 64) {
-	if (data.ans_flags & 64)
-	    mode = STRSXP;
-    }
-    else {
-	if (data.ans_flags & 1)	mode = LGLSXP;
-	if (data.ans_flags & 8)	mode = INTSXP;
-	if (data.ans_flags & 16)	mode = REALSXP;
-	if (data.ans_flags & 32)	mode = CPLXSXP;
-    }
+    if (data.ans_flags & 256)	   mode = EXPRSXP;
+    else if (data.ans_flags & 128) mode = VECSXP;
+    else if (data.ans_flags &  64) mode = STRSXP;
+    else if (data.ans_flags &  32) mode = CPLXSXP;
+    else if (data.ans_flags &  16) mode = REALSXP;
+    else if (data.ans_flags &	8) mode = INTSXP;
+    else if (data.ans_flags &	1) mode = LGLSXP;
 
     switch(mode) {
     case NILSXP:
@@ -954,7 +947,10 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     case REALSXP:
     case CPLXSXP:
     case STRSXP:
+    case VECSXP:
 	break;
+	/* we don't handle expressions: we could, but coercion of a matrix 
+	   to an expression is not ideal */
     default:
 	errorcall(call, "cannot create a matrix from these types");
     }
@@ -1090,6 +1086,19 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho)
 		idx = (!isMatrix(u)) ? rows : k;
 		for (i = 0; i < idx; i++)
 		    SET_STRING_ELT(result, n++, STRING_ELT(u, i % k));
+	    }
+	}
+    }
+    else if (mode == VECSXP) {
+	for (t = args; t != R_NilValue; t = CDR(t)) {
+	    u = PRVALUE(CAR(t));
+	    if (isMatrix(u) || length(u) >= lenmin) {
+		u = coerceVector(u, mode);
+		k = LENGTH(u);
+		idx = (!isMatrix(u)) ? rows : k;
+		for (i = 0; i < idx; i++)
+		    SET_VECTOR_ELT(result, n++, 
+				   duplicate(VECTOR_ELT(u, i % k)));
 	    }
 	}
     }
@@ -1292,6 +1301,21 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho)
 		    for (j = 0; j < cols; j++)
 		      SET_STRING_ELT(result, i + n + (j * rows),
 				     STRING_ELT(u, (i + j * mrows) % k));
+		n += mrows;
+	    }
+	}
+    }
+    else if (mode == VECSXP) {
+	for (t = args; t != R_NilValue; t = CDR(t)) {
+	    u = PRVALUE(CAR(t));
+	    if (isMatrix(u) || length(u) >= lenmin) {
+		u = coerceVector(u, mode);
+		k = LENGTH(u);
+		mrows = (isMatrix(u)) ? nrows(u) : (k > 0);
+		for (i = 0; i < mrows; i++)
+		    for (j = 0; j < cols; j++)
+		      SET_VECTOR_ELT(result, i + n + (j * rows),
+				     duplicate(VECTOR_ELT(u, (i + j * mrows) % k)));
 		n += mrows;
 	    }
 	}

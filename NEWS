@@ -798,6 +798,8 @@ BUG FIXES
 
     o   seq.POSIXt(from, to, by="DSTdays") was shorter than expected
 	for rare times in the UK time zone.  (PR#4558)
+
+    o   c/rbind() did not support vectors/matrices of mode "list".  (PR#6702)
  
 
 
