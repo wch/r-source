@@ -26,7 +26,7 @@ abbreviate <-
     function(names.arg, minlength = 4, use.classes = TRUE, dot = FALSE)
 {
     ## we just ignore use.classes
-    if(minlength<=0)
+    if(minlength <= 0)
 	return(rep("",length(names.arg)))
     names.arg <- as.character(names.arg)
     dups <- duplicated(names.arg)
@@ -42,18 +42,20 @@ abbreviate <-
 	if(!any(dup2))
 	    break
 	minlength <- minlength+1
-	dup2 <- dup2 | match(x, x[duplicated(x)], 0)
+	dup2 <- dup2 | match(x, x[dup2], 0)
 	these <- names.arg[dup2]
     }
     if(any(dups))
 	x <- x[match(old,names.arg)]
-    if(dot)
-	x <- paste(x,".",sep="")
+    if(dot) { # add "." where we did abbreviate:
+        chgd <- x != old
+	x[chgd] <- paste(x[chgd],".",sep = "")
+    }
     names(x) <- old
     x
 }
 
-make.names <- function(names, unique=FALSE)
+make.names <- function(names, unique = FALSE)
 {
     names <- .Internal(make.names(as.character(names)))
     if(unique) {
