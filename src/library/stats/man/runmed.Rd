@@ -85,7 +85,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
 \seealso{
   \code{\link{smoothEnds}} which implements Tukey's end point rule and
   is called by default from \code{runmed(*, endrule = "median")}.
-  \code{\link[eda]{smooth}} (from \pkg{eda} package) uses running
+  \code{\link{smooth}} uses running
   medians of 3 for its compound smoothers.
 }
 \examples{

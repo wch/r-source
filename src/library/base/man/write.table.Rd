@@ -62,7 +62,7 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
   
   \code{\link{read.table}}, \code{\link{write}}.
 
-  \code{\link[MASS]{write.matrix}}.
+  \code{\link[MASS]{write.matrix}} in package \pkg{MASS}.
 }
 
 \examples{

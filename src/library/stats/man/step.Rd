@@ -101,8 +101,8 @@ step(object, scope, scale = 0,
   This function differs considerably from the function in S, which uses a
   number of approximations and does not compute the correct AIC.
 
-  This is a minimal implementation. Use \code{\link[MASS]{stepAIC}} for
-  a wider range of object classes.
+  This is a minimal implementation. Use \code{\link[MASS]{stepAIC}}
+  in package \pkg{MASS} for a wider range of object classes.
 }
 \section{Warning}{
   The model fitting must apply the models to the same dataset. This
@@ -111,7 +111,8 @@ step(object, scope, scale = 0,
   missing values first.
 }
 \seealso{
-  \code{\link[MASS]{stepAIC}}, \code{\link{add1}}, \code{\link{drop1}}
+  \code{\link[MASS]{stepAIC}} in \pkg{MASS}, \code{\link{add1}},
+  \code{\link{drop1}}
 }
 \references{
   Hastie, T. J. and Pregibon, D. (1992)

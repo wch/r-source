@@ -144,7 +144,7 @@ hist(x, \dots)
 
 \seealso{
   \code{\link{nclass.Sturges}}, \code{\link{stem}},
-  \code{\link{density}},  \code{\link[MASS]{truehist}}.
+  \code{\link{density}},  \code{\link[MASS]{truehist}} in package \pkg{MASS}.
 }
 
 \examples{

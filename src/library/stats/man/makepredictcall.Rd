@@ -37,9 +37,9 @@ makepredictcall(var, call)
   the terms.
 }
 \seealso{
-  \code{\link{model.frame}}, \code{\link{poly}}, \code{\link{scale}},
-  \code{\link[splines]{bs}}, \code{\link[splines]{ns}},
-  \code{\link[datasets]{cars}}
+  \code{\link{model.frame}}, \code{\link{poly}}, \code{\link{scale}};
+  \code{\link[splines]{bs}} and \code{\link[splines]{ns}} in package
+  \pkg{splines}, \code{\link[datasets]{cars}}
 }
 \examples{
 ## using poly: this did not work in R < 1.5.0
