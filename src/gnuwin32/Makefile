@@ -542,6 +542,7 @@ crandir:
 	 $(ECHO) 'cat(md5sum("$(RPREFIX).exe"),"*$(RPREFIX).exe")' \
          | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=tools >md5sum.txt)
 	$(CP) installer/mini*.* cran/mini
+	$(CP) ../../doc/html/rw-FAQ.html cran
 	(cd cran/mini;\
 	 $(ECHO) 'fn <- dir(pattern="mini*"); cat(paste(md5sum(fn)," *",fn,sep=""),sep="\n")' \
 	 | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=tools >md5sum.txt)
@@ -559,7 +560,10 @@ crandir:
 	  -e s/@RVER@/$(RVER)/g \
 	  -e 's/@DATE@/$(DATE)/g' cran/rpatched.in > cran/rpatched.html	  
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g cran/release.in > cran/release.htm
-
+	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
+	  -e s/@RVER@/$(RVER)/g \
+	  -e 's/@DATE@/$(DATE)/g' cran/mini.in > cran/mini/index.html
+	   
 distribution:
 	$(MAKE) all
 	$(MAKE) bitmapdll

@@ -2,7 +2,7 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="../../../R.css">
+<link rel="stylesheet" type="text/css" href="http://cran.r-project.org/R.css">
 <title>R-@RVER@ development build for Windows</title>
 </head>
 
@@ -48,8 +48,8 @@ to the current release are incorporated in the build available <a href="rpatched
   </tr>
 </TBODY>
 </table>
-<p> Please see the <a href="../../../doc/FAQ/R-FAQ.html">R FAQ</a> for general
-information about R and the <a href="../rw-FAQ.html">R Windows FAQ</a> for Windows-specific information,
+<p> Please see the <a href="http://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for general
+information about R and the <a href="rw-FAQ.html">R Windows FAQ</a> for Windows-specific information,
 including upgrade advice.</p>
 
 <hr>
