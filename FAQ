@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-44, 2001-04-20
+Version 1.2-45, 2001-04-23
 Kurt Hornik
 
 
@@ -337,13 +337,15 @@ more details.
 2.5.3 How can R be installed (Macintosh)
 ----------------------------------------
 
-   A binhexed self-extracting archive containing a binary distribution of R
-for the Mac (to run under MacOS 8.6 to MacOS 9.1 or MacOS X under Classic
-Environment) has been made available by Stefano Iacus
-<stefano.iacus@unimi.it> at `http://www.eco-dip.unimi.it/R/'.
+   The `bin/macos' directory of a CRAN site contains bin-hexed (`hqx') and
+stuffit (`sit') self-extracting binaries for a base distribution and a
+large number of add-on packages to run under MacOS 8.6 to MacOS 9.1 or
+MacOS X under Classic Environment.  The Mac version of R and the Mac
+binaries are maintained by Stefano Iacus <stefano.iacus@unimi.it>.
 
-   In the near future, Mac binaries will also be made available in the
-`bin/macos' directory of a CRAN site.
+   Binaries of base distributions for MacOS X (Darwin) with X11 are made
+available by Jan de Leeuw <deleeuw@stat.ucla.edu> at
+`http://www.stat.ucla.edu/~deleeuw/R/'.
 
 2.6 Are there Unix binaries for R?
 ==================================
@@ -1398,6 +1400,9 @@ works, was published in the Journal of Statistical Software
      Software linked to the book "Applied Smoothing Techniques for Data
      Analysis:  The Kernel Approach with S-PLUS Illustrations" by A. W.
      Bowman and A. Azzalini (1997), Oxford University Press.
+
+*sma*
+     Functions for exploratory (statistical) microarray analysis.
 
 *sn*
      Functions for manipulating skew-normal probability distributions and
