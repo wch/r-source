@@ -287,8 +287,10 @@ void R_DefParams(Rstart Rp)
 #endif
 }
 
-#define Max_Nsize 20000000	/* must be < LONG_MAX (= 2^32 - 1 =)
+#define Max_Nsize 50000000	/* must be < LONG_MAX (= 2^32 - 1 =)
 				   2147483647 = 2.1e9 */
+                                /* limit was 2e7, changed to 5e7, which gives
+                                   nearly 2Gb of cons cells */ 
 #define Max_Vsize (2048*Mega)	/* 2048*Mega = 2^(11+20) must be < LONG_MAX */
 
 #define Min_Nsize 160000
@@ -318,7 +320,8 @@ static void SetSize(int vsize, int nsize)
 {
     char msg[1024];
 
-    if (vsize < 1000) {
+    /* vsize >0 to catch long->int overflow */
+    if (vsize < 1000 && vsize > 0) {
 	R_ShowMessage("WARNING: vsize ridiculously low, Megabytes assumed\n");
 	vsize *= Mega;
     }

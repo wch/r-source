@@ -33,6 +33,7 @@ NEW FEATURES
         place in $R_HOME/share. Migration of existing files might take
         a while, though.
 
+    o   --nsize up to 50M (2Gb on 64-bit Solaris) allowed
 
 
 	**************************************************
