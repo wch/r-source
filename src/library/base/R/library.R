@@ -42,7 +42,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                        "See the Note in ?library"))
     }
 
-    sQuote <- function(s) paste("`", s, "'", sep = "")
+    sQuote <- function(s) paste("'", s, "'", sep = "")
     if(!missing(package)) {
 	if(!character.only)
 	    package <- as.character(substitute(package))
@@ -243,7 +243,7 @@ library.dynam <-
 function(chname, package = .packages(), lib.loc = NULL, verbose =
          getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
 {
-    sQuote <- function(s) paste("`", s, "'", sep = "")
+    sQuote <- function(s) paste("'", s, "'", sep = "")
 
     .Dyn.libs <- .dynLibs()
     if(missing(chname) || (ncChname <- nchar(chname)) == 0)
@@ -332,7 +332,7 @@ function(package = .packages(), quiet = FALSE)
 function(package, lib.loc = NULL, quiet = FALSE,
          verbose = getOption("verbose"))
 {
-    sQuote <- function(s) paste("`", s, "'", sep = "")
+    sQuote <- function(s) paste("'", s, "'", sep = "")
 
     useAttached <- FALSE
     if(is.null(lib.loc)) {
@@ -382,7 +382,7 @@ print.packageInfo <-
 function(x, ...)
 {
     if(!inherits(x, "packageInfo")) stop("wrong class")
-    sQuote <- function(s) paste("`", s, "'", sep = "")
+    sQuote <- function(s) paste("'", s, "'", sep = "")
     outFile <- tempfile("RpackageInfo")
     outConn <- file(outFile, open = "w")
     vignetteMsg <-
