@@ -602,8 +602,15 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
         for(lib in lib.loc) {
             a <- list.files(lib, all.files = FALSE, full.names = FALSE)
             for(nam in a) {
-                if(file.exists(file.path(lib, nam, "DESCRIPTION")))
-                    ans <- c(ans, nam)
+                ## match .find.packages as to what is a package
+                if(!file.exists(file.path(lib, nam, "DESCRIPTION"))) next
+                info <- try(read.dcf(file.path(lib, nam, "DESCRIPTION"),
+                                     c("Package", "Version"))[1, ],
+                            silent = TRUE)
+                if(inherits(info, "try-error") || any(is.na(info))) next
+                if(regexpr("([[:digit:]]+[.-]){1,}[[:digit:]]+",
+                           info["Version"]) == -1) next
+                ans <- c(ans, nam)
             }
         }
         return(unique(ans))
