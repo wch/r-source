@@ -151,7 +151,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 		wc = (wchar_t *) buff;
 		mbstowcs(wc, xi, nc + 1);
 		INTEGER(s)[i] = wcswidth(wc, 2147483647);
-		if(INTEGER(s)[i] < 0) INTEGER(s)[i] = nc
+		if(INTEGER(s)[i] < 1) INTEGER(s)[i] = nc;
 #endif
 #else
 		INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
