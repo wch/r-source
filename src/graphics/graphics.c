@@ -3368,7 +3368,7 @@ void hsv2rgb(double h, double s, double v, double *r, double *g, double *b)
 
 	h = 6 * modf(h, &f);
 	i = floor(h);
-	h = modf(h, &p);
+	f = modf(h, &p);
 	p = v * (1 - s);
 	q = v * (1 - s * f);
 	t = v * (1 - (s * (1 - f)));
