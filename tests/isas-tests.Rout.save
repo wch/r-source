@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.90.0 Under development (unstable) (October 21, 1999)
+Version 0.90.0 Under development (unstable) (October 28, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -105,7 +105,7 @@ Error in as.call(x) : invalid argument list
 > is.complex(as.complex( x ))
 [1] TRUE
 > is.data.frame(as.data.frame( x ))
-Error in as.data.frame.default(x) : can't coerce NULL into a data.frame
+[1] TRUE
 > is.double(as.double( x ))
 [1] TRUE
 > is.expression(as.expression( x ))

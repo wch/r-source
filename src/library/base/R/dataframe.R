@@ -58,10 +58,9 @@ dimnames.data.frame <- function(x) list(attr(x,"row.names"), names(x))
     x
 }
 
-
+## OLD:
 as.data.frame <- function(x, row.names = NULL, optional = FALSE)
     UseMethod("as.data.frame")
-
 as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
 {
     dcmethod <- paste("as.data.frame", data.class(x), sep=".")
@@ -69,6 +68,14 @@ as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
 	(get(dcmethod, mode="function"))(x, row.names, optional)
     else stop(paste("can't coerce",data.class(x), "into a data.frame"))
 }
+## NEW:
+as.data.frame <- function(x, row.names = NULL, optional = FALSE) {
+    if(is.null(x)) return(as.data.frame(list()))
+    if(is.null(class(x))) class(x) <- data.class(x)
+    UseMethod("as.data.frame", x, row.names, optional)
+}
+as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
+    stop(paste("can't coerce",data.class(x), "into a data.frame"))
 
 
 ###  Here are methods ensuring that the arguments to "data.frame"
@@ -119,8 +126,7 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE)
     value
 }
 
-as.data.frame.ts <-
-    function(x, row.names=NULL, optional=FALSE)
+as.data.frame.ts <- function(x, row.names=NULL, optional=FALSE)
 {
     if(is.matrix(x)) as.data.frame.matrix(x, row.names, optional)
     else as.data.frame.vector(x, row.names, optional)
