@@ -57,7 +57,7 @@ All-Ex.Rout: All-Ex.R $(Rbinary) $(Rbase)
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo 'Running all help() EXAMPLES ..'
-	$(R) -v 4 --no-save --no-restore < All-Ex.R > $@
+	$(R) -v 6 --no-save --no-restore < All-Ex.R > $@
 
 clean:
 	rm -f *.R
