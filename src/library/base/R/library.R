@@ -219,17 +219,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                    c("Package", "Depends", "Built"))
             testRversion(descfields)
 
-            ## Check for inconsistent naming
-            if(descfields[1, "Package"] != libraryPkgName(package)) {
-            	warning(paste("Package", sQuote(package), "not found.\n",
-			"Using case-insensitive match",
-            		sQuote(descfields[1, "Package"]), ".\n",
-			"Future versions of R will require exact matches."),
-			call.=FALSE)
-            	package <- descfields[1, "Package"]
-            	pkgname <- paste("package", package, sep = ":")
-            	newpackage <- is.na(match(pkgname, search()))
-	    }
+            ## The check for inconsistent naming is now in .find.package
+
             if(is.character(pos)) {
                 npos <- match(pos, search())
                 if(is.na(npos)) {

@@ -51,6 +51,10 @@ USER-VISIBLE CHANGES
     o	The default barplot() method by default uses a
 	gamma-corrected grey palette (rather than the heat color
 	palette) for coloring its output when given a matrix.
+	
+    o	Package names must now be typed exactly in library() and
+    	require, regardless of whether the underlying file system is
+    	case-sensitive or not.
 
 
 NEW FEATURES
