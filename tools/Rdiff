@@ -14,7 +14,7 @@ fi
 tmpfile=${TMPDIR:-/tmp}/${f1}-d.${$}
 
 egrep -v "${egrepv}" ${f1} > ${tmpfile}
-(egrep -v "${egrepv}" ${f2} | diff -cbw ${tmpfile} - ) && exitstatus=0
+(egrep -v "${egrepv}" ${f2} | diff -bw ${tmpfile} - ) && exitstatus=0
 
 rm -f ${tmpfile}
 exit ${exitstatus}
