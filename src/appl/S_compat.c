@@ -42,6 +42,8 @@ F77_NAME(dqrdca) (double *x, longint *ldx, longint *n, longint *p,
     F77_NAME(dqrdc2) (x, ldx, n, p, tol, rank, qraux, jpvt, work);
 }
 
+/* Changed 99/08/17 by BDR: rhs is rhs(ldx, nrhs) in S */
+
 void
 F77_NAME(dbksl) (double *x, longint *ldx, longint *n,
 		 double *rhs, longint *nrhs, longint *info)
@@ -53,6 +55,6 @@ F77_NAME(dbksl) (double *x, longint *ldx, longint *n,
     while (nn-- > 0) {
 	F77_NAME(dtrsl) (x, ldx, n, rhs, &job, info);
 	if (*info) return;
-	rhs += *n;
+	rhs += *ldx;
     }
 }
