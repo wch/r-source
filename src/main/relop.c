@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--1999  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -54,7 +55,9 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if (!isVector(x) || !isVector(y))
-	error("comparison is possible only for vector types\n");
+	errorcall(call,
+		  "comparison (%d) is possible only for vector types\n",
+		  PRIMVAL(op));
 
     if (LENGTH(x) <= 0 || LENGTH(y) <= 0)
 	return allocVector(LGLSXP,0);

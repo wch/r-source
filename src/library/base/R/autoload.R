@@ -6,7 +6,7 @@ autoload <- function (name, file)
 		     sep = "")
     if (is.na(match(file,.Autoloaded)))
 	assign(".Autoloaded",c(file,.Autoloaded),env=.AutoloadEnv)
-    assign(name, parse(text = newcall), env = .AutoloadEnv)
+    assign(name, eval(parse(text = newcall)), env = .AutoloadEnv)
 }
 autoloader <- function (name, file)
 {

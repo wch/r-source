@@ -24,7 +24,9 @@
       \item Friedrich Leisch
       \item Thomas Lumley
       \item Martin Maechler
+      \item Guido Masarotto
       \item Paul Murrell
+      \item Brian Ripley
       \item Heiner Schwarte
       \item Luke Tierney
     }
@@ -32,7 +34,8 @@
   In addition, a large group of individuals has contributed to \R by
   donating code, bug reports and documentation, notably
 
-  Valerio Aimalea,
+  Valerio Aimale,
+  Thomas Baier,
   Ben Bolker,
   Goran Brostrom,
   Paul Gilbert,
@@ -40,14 +43,17 @@
   Philippe Lambert,
   Patrick Lindsey,
   Jim Lindsey,
-  Guido Masarotto,
+  John Maindonald,
   Steve Oncley and Gordon Maclean,
   Richard Okeefe,
   Hubert Palme,
   Martyn Plummer,
-  Brian Ripley,
+  Jonathan Rougier,
   Bill Simpson,
-  Bill Venables, and
+  Terry Therneau,
+  Bill Venables,
+  Gregory R. Warnes,
+  and
   Andreas Weingessel.
 
   We have probably omitted some important names here because of

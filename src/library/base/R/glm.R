@@ -104,6 +104,12 @@ glm.fit <-
     conv <- FALSE
     nobs <- NROW(y)
     nvars <- NCOL(x)
+    if (nvars == 0) {
+        ## oops, you'd want glm.fit.null, then 
+        cc <- match.call()
+        cc[[1]] <- as.name("glm.fit.null")
+        return(eval(cc, sys.frame(sys.parent())))
+    }
     ## define weights and offset if needed
     if (is.null(weights))
 	weights <- rep(1, nobs)
@@ -138,7 +144,7 @@ glm.fit <-
 			   deparse(xnames)))
 	    else as.vector(if (NCOL(x) == 1) x * start else x %*% start)
 	else family$linkfun(mustart)
-    mu <- linkinv(eta + offset)
+    mu <- linkinv(eta)
     if (!(validmu(mu) && valideta(eta)))
 	stop("Can't find valid starting values: please specify some")
     ## calculate initial deviance and coefficient
@@ -148,7 +154,7 @@ glm.fit <-
 
     ##------------- THE Iteratively Reweighting L.S. iteration -----------
     for (iter in 1:control$maxit) {
-	mu.eta.val <- mu.eta(eta + offset)
+	mu.eta.val <- mu.eta(eta)
 	if (any(ina <- is.na(mu.eta.val)))
 	    mu.eta.val[ina] <- mu.eta(mu)[ina]
 	if (any(is.na(mu.eta.val)))
@@ -162,7 +168,7 @@ glm.fit <-
 			  iter))
 	    break
 	}
-	z <- eta[good] + (y - mu)[good]/mu.eta.val[good]
+	z <- (eta-offset)[good] + (y - mu)[good]/mu.eta.val[good]
 	w <- sqrt((weights * mu.eta.val^2)[good]/variance(mu)[good])
 	ngoodobs <- as.integer(nobs - sum(!good))
 	ncols <- as.integer(1)
@@ -187,7 +193,7 @@ glm.fit <-
 	start[fit$pivot] <- coef
 	eta[good] <-
 	    if (nvars == 1) x[good] * start else as.vector(x[good, ] %*% start)
-	mu <- linkinv(eta + offset)
+	mu <- linkinv(eta <- eta + offset)
 	if (family$family == "binomial") {
 	    if (any(mu == 1) || any(mu == 0))
 		warning("fitted probabilities of 0 or 1 occurred")
@@ -215,7 +221,7 @@ glm.fit <-
 		start <- (start + coefold)/2
 		eta[good] <-
 		    if (nvars == 1) x[good] * start else as.vector(x[good, ] %*% start)
-		mu <- linkinv(eta + offset)
+		mu <- linkinv(eta <- eta + offset)
 		dev <- sum(dev.resids(y, mu, weights))
 	    }
 	    boundary <- TRUE
@@ -234,7 +240,7 @@ glm.fit <-
 		start <- (start + coefold)/2
 		eta[good] <-
 		    if (nvars == 1) x[good] * start else as.vector(x[good, ] %*% start)
-		mu <- linkinv(eta + offset)
+		mu <- linkinv(eta <- eta + offset)
 	    }
 	    boundary <- TRUE
 	    coef <- start

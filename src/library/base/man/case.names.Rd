@@ -9,8 +9,10 @@ variable.names.lm(obj, full = FALSE)
 }
 \alias{case.names}
 \alias{case.names.lm}
+\alias{case.names.default}
 \alias{variable.names}
 \alias{variable.names.lm}
+\alias{variable.names.default}
 \arguments{
  \item{obj}{an \R object, typically a fitted model.}
  \item{full}{logical; if \code{TRUE}, all names (including zero

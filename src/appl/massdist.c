@@ -1,6 +1,6 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1996  Robert Gentleman and Ross Ihaka
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1996	Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,36 +19,36 @@
 
 #include "Mathlib.h"
 
-int massdist(double *x, int *nx, double *xlow, double *xhigh, double *y, int *ny)
+void massdist(double *x, int *nx, double *xlow, double *xhigh, 
+	      double *y, int *ny)
 {
-	double fx, xdelta, xmass, xpos;
-	int i, ix, ixmax, ixmin;
+    double fx, xdelta, xmass, xpos;
+    int i, ix, ixmax, ixmin;
 
-	ixmin = 0;
-	ixmax = *ny - 2;
-	xmass = 1.0 / *nx;
-	xdelta = (*xhigh - *xlow) / (*ny - 1.0);
+    ixmin = 0;
+    ixmax = *ny - 2;
+    xmass = 1.0 / *nx;
+    xdelta = (*xhigh - *xlow) / (*ny - 1.0);
 
-	for(i=0 ; i<*ny ; i++)
-		y[i] = 0;
+    for(i=0 ; i<*ny ; i++)
+	y[i] = 0;
 
-	for(i=0 ; i<*nx ; i++) {
-		xpos = (x[i] - *xlow) / xdelta;
-		ix = floor(xpos);
-		fx = xpos - ix;
-		if(ixmin <= ix && ix <= ixmax) {
-			y[ix] += (1.0 - fx);
-			y[ix + 1] += fx;
-		}
-		else if(ix == -1) {
-			y[0] += fx;
-		}
-		else if(ix == ixmax + 1) {
-			y[ixmax + 1] += (1.0 - fx);
-		}
+    for(i=0 ; i<*nx ; i++) {
+	xpos = (x[i] - *xlow) / xdelta;
+	ix = floor(xpos);
+	fx = xpos - ix;
+	if(ixmin <= ix && ix <= ixmax) {
+	    y[ix] += (1.0 - fx);
+	    y[ix + 1] += fx;
 	}
+	else if(ix == -1) {
+	    y[0] += fx;
+	}
+	else if(ix == ixmax + 1) {
+	    y[ixmax + 1] += (1.0 - fx);
+	}
+    }
 
-	for(i=0 ; i<*ny ; i++)
-		y[i] *= xmass;
-	return 0;
+    for(i=0 ; i<*ny ; i++)
+	y[i] *= xmass;
 }

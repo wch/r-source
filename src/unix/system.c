@@ -116,6 +116,10 @@
 #endif
 #endif
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 /*-- necessary for some (older, i.e., ~ <= 1997) Linuxen:*/
 #ifdef linux
 #ifndef FD_SET
@@ -212,10 +216,12 @@ static void readline_handler(char *line)
 int R_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     if(!isatty(0)) {
-	if(!R_Quiet) fputs(prompt, stdout);
+	if (!R_Slave)
+	    fputs(prompt, stdout);
 	if (fgets(buf, len, stdin) == NULL)
 	    return 0;
-	if(!R_Quiet) fputs(buf,stdout);
+	if (!R_Slave)
+	    fputs(buf, stdout);
 	return 1;
     }
     else {
@@ -394,9 +400,12 @@ static struct tms timeinfo;
 #include <fpu_control.h>
 #endif
 
+#define Max_Nsize 20000000   /* must be < LONG_MAX (= 2^32 - 1 =) 2147483647 = 2.1e9 */
+#define Max_Vsize (2048*Mega)/* must be < LONG_MAX */
+
 int main(int ac, char **av)
 {
-    int value;
+    int value, ierr;
     char *p;
 
     gc_inhibit_torture = 1;
@@ -410,7 +419,7 @@ int main(int ac, char **av)
 	    if (!strcmp(*av, "--version")) {
 		Rprintf("Version %s.%s %s (%s %s, %s)\n",
 			R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
-		Rprintf("Copyright (C) %s R Core Team\n", R_YEAR);
+		Rprintf("Copyright (C) %s R Core Team\n\n", R_YEAR);
 		Rprintf("R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
 		Rprintf("You are welcome to redistribute it under the terms of the\n");
 		Rprintf("GNU General Public License.  For more information about\n");
@@ -470,49 +479,55 @@ int main(int ac, char **av)
 		     !strcmp(*av, "-V")) {
 		REprintf("WARNING: option %s no longer supported\n", *av);
 	    }
-	    else if((*av)[1] == 'v') {
-		REprintf("WARNING: option `-v' is deprecated.  ");
-		REprintf("Use `--vsize' instead.\n");
-		if((*av)[2] == '\0') {
+	    else if((value = (*av)[1] == 'v') || !strcmp(*av, "--vsize")) {
+		if(value)
+		    REprintf("WARNING: option `-v' is deprecated.  "
+			     "Use `--vsize' instead.\n");
+		if(!value || (*av)[2] == '\0') {
 		    ac--; av++; p = *av;
 		}
 		else p = &(*av)[2];
-		value = strtol(p, &p, 10);
-		if(*p) goto badargs;
-		if(value < 1 || value > 1000)
-		    REprintf("WARNING: invalid vector heap size ignored\n");
+		if (p == NULL) {
+		    REprintf("WARNING: no vsize given");
+		    break;
+		}
+		value = Decode2Long(p,&ierr);
+		if(ierr) {
+		    if(ierr < 0) goto badargs; /* if(*p) goto badargs; */
+		    REprintf("--vsize %ld'%c': too large", value,
+			     (ierr == 1)?'M':((ierr == 2)?'K':'k'));
+		}
+		if (value < 1000) {
+		    REprintf("WARNING: vsize ridiculously low, Megabytes assumed\n");
+		    value *= Mega;
+		}
+		if(value > Max_Vsize || value < R_VSize)
+		    REprintf("WARNING: invalid v(ector heap)size '%d' ignored;"
+			     "using default = %gM\n", value, R_VSize / Mega);
 		else
-		    R_VSize = value * 1048576; /* 1 MByte := 2^20 Bytes*/
+		    R_VSize = value;
 	    }
-	    else if (!strcmp(*av, "--vsize")) {
-		ac--; av++; p = *av;
-		value = strtol(p, &p, 10);
-		if(*p) goto badargs;
-		if(value < 1 || value > 1000)
-		    REprintf("WARNING: invalid vector heap size '%d' ignored, using default = %g\n", value, R_VSize / 1048576.0);
-		else
-		    R_VSize = value * 1048576; /* 1 MByte := 2^20 Bytes*/
-	    }
-	    else if((*av)[1] == 'n') {
-		REprintf("WARNING: option `-n' is deprecated.  ");
-		REprintf("Use `--nsize' instead.\n");
-		if((*av)[2] == '\0') {
+	    else if((value = (*av)[1] == 'n') || !strcmp(*av, "--nsize")) {
+		if(value)
+		    REprintf("WARNING: option `-n' is deprecated.  "
+			     "Use `--nsize' instead.\n");
+		if(!value || (*av)[2] == '\0') {
 		    ac--; av++; p = *av;
 		}
 		else p = &(*av)[2];
-		value = strtol(p, &p, 10);
-		if(*p) goto badargs;
-		if(value < R_NSize || value > 1000000)
-		    REprintf("WARNING: invalid language heap size ignored\n");
-		else
-		    R_NSize = value;
-	    }
-	    else if (!strcmp(*av, "--nsize")) {
-		ac--; av++; p = *av;
-		value = strtol(p, &p, 10);
-		if(*p) goto badargs;
-		if(value < R_NSize || value > 1000000)
-		    REprintf("WARNING: invalid language heap size '%d' ignored, using default = %d\n", value, R_NSize);
+		if (p == NULL) {
+		    REprintf("WARNING: no nsize given");
+		    break;
+		}
+		value = Decode2Long(p,&ierr);
+		if(ierr) {
+		    if(ierr < 0) goto badargs;
+		    REprintf("--nsize %ld'%c': too large", value,
+			     (ierr == 1)?'M':((ierr == 2)?'K':'k'));
+		}
+		if(value < R_NSize || value > Max_Nsize)
+		    REprintf("WARNING: invalid language heap (n)size '%d' ignored,"
+			     " using default = %d\n", value, R_NSize);
 		else
 		    R_NSize = value;
 	    }
@@ -534,14 +549,16 @@ int main(int ac, char **av)
     R_Sinkfile = NULL;
 
     if(!R_Interactive && DefaultSaveAction == 0)
-	R_Suicide("you must specify `--save' or `--no-save'");
+	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
 
 #ifdef __FreeBSD__
     fpsetmask(0);
 #endif
 
 #ifdef linux
+#ifdef HAVE___SETFPUCW
     __setfpucw(_FPU_IEEE);
+#endif    
 #endif
 
 #ifdef HAVE_LIBREADLINE
@@ -622,7 +639,9 @@ void R_CleanUp(int ask)
 #endif
 
 #ifdef linux
+#ifdef HAVE___SETFPUCW
     __setfpucw(_FPU_DEFAULT);
+#endif    
 #endif
 
     exit(0);

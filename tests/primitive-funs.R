@@ -27,7 +27,7 @@ Real.primitives <-
 	 "<", "<=", "==", ">", ">=", "!="),
 	 arithF =
 	 c("sign", "abs",
-	   "floor", "ceiling",
+	   "floor", "ceiling", "trunc",
 	   "sqrt",
 	   "exp",	## NOT: "log",
 	   "cos",	  "sin",  "tan",

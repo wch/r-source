@@ -1,3 +1,309 @@
+	**************************************************
+	*						 *
+	*	       0.63 SERIES NEWS			 *
+	*    (This label is really only here to keep	 *
+	*     CVS from getting confused...)		 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 0.63.3
+
+NEW FEATURES
+
+    o	get() and assign() allow position in search list to be a
+	character string. (e.g. get("delete.response","package:base") 
+
+    o	HTML search now works for all packages (after new installation).
+
+    o	R INSTALL now also copies DESCRIPTION file to target dir.
+
+    o	offsets should work with lm as well as with glm now
+
+    o	range() is now in the Summary group, trunc() back in the Math
+	group.
+
+    o	Under Unix, R-specific environment variables can now be kept/set
+	in `~/.Renviron'.
+
+    o	New options `latexcmd' and `dvipscmd' for specifying the locations
+	of LaTeX and dvips; corresponding environment variables renamed to
+	`R_LATEXCMD' and `R_DVIPSCMD'.
+
+    o	--vsize & --nsize now both give size in "single units" 
+	(bytes/cons cells) with possible 
+	suffixes "M" (Mega), "K"ilo (1024) and "k"ilo(1000).
+
+    o	[pdqr]negbin() now also work with non-integer 'size' [by Ben Bolker].
+
+    o	New standard package `lqs' for resistant regression and
+	covariance estimation, contributed by B. D. Ripley.
+
+    o	new functions match.fun() and kronecker() [by Jonathan Rougier]
+
+    o	par(las = 3) is a new option.
+
+    o	new function jitter()  [slightly more useful than S's].
+
+BUG FIXES
+
+    o   system(command, intern=FALSE, ignore.errors=FALSE) 
+	changed 1st & 3rd argument names and is better documented.
+
+    o   "/Font5 /Symbol findfont definefont" confused some printers
+
+    o   Bounding box rotated 90 deg for landscape (shouldn't be)
+
+    o   Legend skipped symbol for pch=0
+
+    o   compilation on non-Intel Linux systems no longer looks for __setfpucw
+
+    o   a %% b -- is now periodic instead of symmetric; more S compatible.
+
+    o	locator(n=512) -- default: MANY points, not just one.
+
+    o	qqnorm() uses ppoints() and returns list with x sorted along y.
+
+    o	plot.formula now allows ylab to be set
+
+    o	plotmath had trouble with paste()'ing expressions
+
+    o	plotting math expressions now also works for objects of mode
+	"call" (in particular on the result of substitute())
+
+    o	locator() on log axes: value antilogged twice
+
+    o	(a real oldie - and trival too) is.recursive now TRUE for
+	expressions 
+
+    o	sanitised delete.response
+
+    o	x[["a",]] could crash R
+
+    o	strwidth() crashed R if no device open
+
+    o	predict inconsistencies with offsets straightened out
+
+    o	tapply goofed when FUN returned named scalar
+
+    o	[.factor now retains contrasts attrib.
+
+    o	hist() had trouble with plotting math
+
+    o	HTML indices get only built when installing a package to RHOME
+
+    o	subscripting with a length zero logical no longer bombs.
+
+    o	as.ordered(NULL) now returns an "ordered" object.
+
+    o	--debugger .. now gives a warning if other command line args are used
+
+    o	pt(t, df, ncp) now also works for bigger ncp's
+    
+    o	apply(a,d, fun) now passes vectors (rank 1 arrays) to fun.
+
+    o	model.frame() with subset and only one column fixed
+
+    o	boxplot(<data.frame>) now works again.
+
+    o	dyn.load(..) failing gives more informative error message.
+
+    o	Ops.factor:  not error, but a warning + NAs
+
+    o	bug.report() keeps report file if can't be e-mailed
+
+    o	Ops.data.frame :  things like  d.fr < a	  now return a matrix
+
+    o	data.frame():  duplicated row.names now give a warning when dropped.
+
+    o	boxplot(.., ylim=..) or (.., axes=..)  gave erronous warning
+
+    o	glm had wrong init code for models with offsets. Also fixed
+	so that linear predictor includes offset, also when predicting. 
+
+    o	predict.glm didn't work with se=T
+
+    o	backsolve(), qr.solve... now return a vector when x (or y) is a vector.
+
+    o	string tags now converted to symbols and strange symbolic
+	tags print as strings, cf. e<-quote(c(F=2, "tail area" = .5)), etc. 
+
+    o	row.names(.) <- val  doesn't allow duplicated values anymore.
+
+    o	library(mva)'s dist() now works with both "euclidean" & "euclidian"
+
+    o	revised curve function to avoid using grep patterns that caused
+	problems under Solaris 2.6
+ 
+    o	coplot() now has 'number' and 'overlap' arguments, and should work
+	in more situations. [by John Maindonald and MM].
+
+    o	save(..ascii=TRUE) now uses "full precision" for numerics.
+
+    o	as.array() preserves names()
+
+    o	outer() works for general array args and preserves (dim)names.
+
+    o	print.factor and print.ordered now return their args invisibly.
+
+
+		CHANGES IN R VERSION 0.63.2
+
+NEW FEATURES
+
+    o	sink() has new `append' argument.
+
+    o	new function rle().
+
+    o	plot(.) and  curve(.) also accept a function as first argument.
+	new `plot.function'.
+
+    o	new function loglin().
+
+    o	pretty() has new arguments and now better "obeys" its `n' arg.
+	Internal GPretty() [implicitly used by	axis(.., at = NULL,..)
+	now uses pretty.
+
+    o	new generic function aggregate() with methods for data frames
+	and time series.
+
+    o	data set `euro' with Euro conversion rates.
+
+BUG FIXES
+
+    o	model.frame(,subset=) no longer loses contrasts
+
+    o	`make install' copied the R shell script a second time without
+	getting RHOME right (thus also breaking R CMD check).  Fixed.
+
+    o	help() after help.start() did not work if topic was not equal
+	to filename (e.g. rnorm is found in Normal.html)
+
+    o	fix the 0.63.1 fix for abbreviate(.);  improved doc.
+
+    o	predict.mlm(.) couldn't have worked with `newdata'.
+
+    o	model.frame/na.omit bug for matrices and Surv objects.
+
+    o	mean( <data.frame> ) now doesn't return sum(.) anymore.
+
+    o	str(.) doesn't give extraneous "..." in rare cases anymore.
+
+    o	Added documentation for group methods ("Math", "Ops","Summary").
+
+    o	R_PAPERSIZE is used for Rd2dvi and at configure time for the
+	`make dvi' parts.
+
+    o	hist(i) now also works for e.g., i = -1, 0, or 1.
+
+    o	range() now works on dataframes (uses c(..., recursive=T))
+
+    o	pretty(.) does not loop infinitely anymore in very extreme cases.
+
+    o	math functions should work better on dataframes now
+
+    o	plot(.., type = 'h', log = 'y')	 now works ...
+
+    o	plot.factor(x, y, ...) of two factors now makes
+	barplot(table(y,x), ...)
+
+    o	use object$prior.weights in add1.glm, drop1.glm (Brian Ripley)
+
+    o	rnorm(1,mean=m,sd=0) returns m, not NaN (Ben Bolker)
+
+    o	runif(n, a,a) now returns  rep(a,n) instead of NaNs.
+
+
+		CHANGES IN R VERSION 0.63.1
+
+NEW FEATURES
+
+    o	new function mosaicplot().
+
+    o	xy.coords(.) has a  "recycle = FALSE" argument,	 used in text().
+
+    o	RNGtype() allows to choose different Random Number Generators.
+		__EXPERIMENTAL__
+
+    o	print.default(.) now also works with a `right = TRUE' argument.
+	{{ print.matrix(.) is bound to become deprecated... }}
+
+    o	new help page `Memory' on the usage of command line options
+	--vsize and --nsize. Error message if R runs out of memory
+	points to help(Memory).
+
+    o	rowsum() and improved na.omit() added from survival4
+
+    o	backsolve(.) has new arguments "upper.tri = TRUE, transpose = FALSE"
+
+    o	hist() has new "right = TRUE" argument;
+	"right = FALSE" gives  [a,b) intervals
+
+    o	help() has "htmlhelp" argument, allowing to suppress htmlhelp after
+	help.start().  This is desired for ESS.
+
+    o	quantile(.) has an "names = TRUE" argument for speed.
+	It is much better documented now.
+
+
+BUG FIXES
+
+    o	build-help --dosnames should now also work for text help,
+	latex and examples.
+
+    o	seq() should work better now (fuzz-factor 1e-7 inserted)
+
+    o	multiple arguments to return caused value to be a pairlist
+
+    o	data.frame choked on long names from deparse()
+
+    o	data.edit now works (dataedit doesn't need pairlist()s anymore)
+
+    o	as.pairlist(NULL) is ok
+
+    o	ts(1:5, start=2, end=4) now work.  Further plot(ts(..), ts(..))
+
+    o	eigen() returns $vectors in any case [S compat].
+
+    o	apply(cbind(1,1:9, 2, quantile) doesn't drop quantile names anymore
+
+    o	array(1, dim=(1:3)[c(F,F,F)]) is now valid == array(1,NULL) == c(1);
+	the same for array(a,d, list())
+
+    o	fix problem with step() and offsets
+
+    o	drop attributes on matrix subsetting
+
+    o	kappa(.) now works [dtrco now in load table (ROUTINES)].
+
+    o	pmin() and pmax() now preserve attributes.
+
+    o	handle null models arising in drop1(), step, etc.
+
+    o	partial matching problem with $ indexing
+
+    o	matplot(.) works with lwd (vectors)
+
+    o	par("cex.axis") now has the desired effect...
+
+    o	which(.) now omits NAs in its argument.
+
+    o	rbind.data.frame caused character-to-factor coercion a bit too often
+
+    o	couple of messups in dotplot
+
+    o	z[[1]] <- ~x probl fixed as suggested by J.Lindsey
+
+    o	do_modelframe could lose contrast attributes
+
+    o	"make check" needed standardisation of locale
+
+    o	unlist(...,recursive=F) got names wrong
+
+    o	abbreviate(.) does not anymore return random garbage in some
+	cases [by Guido M.]
+
+
 		CHANGES IN R VERSION 0.63
 
 NEW FEATURES
@@ -8,7 +314,7 @@ NEW FEATURES
     o	new  .Platform	variable  for better modularizing
 	platform dependence. __This_is_"beta"_and_bound_to_be_changed___
 
-    o	new arguments to colnames(..) and 
+    o	new arguments to colnames(..) and
 	rownames(x, do.NULL = TRUE, prefix = "row").
 			   _
     o	par(bty = "]") for _| box(.) in plots.
@@ -111,12 +417,12 @@ NEW FEATURES
 	and is subject to internal and interface changes.
 
     o	gctorture() for torturing the garbage collector to reveal
-	memory protection bugs. (Call GC on every memory allocation). 
+	memory protection bugs. (Call GC on every memory allocation).
 
-    o	B. Ripley's aov code (and more) has been added. This includes: 
+    o	B. Ripley's aov code (and more) has been added. This includes:
 
 	- aov() now handles models with Error terms, multiple
-	  responses. 
+	  responses.
 
 	- proj(), model.tables(), se.contrast(), replications(),
 	  eff.aovlist() are implemented for aov fits, and where
@@ -129,7 +435,7 @@ NEW FEATURES
 
 	- summary() and deviance() -- mlm methods.
 
-	- kappa()  for estimating condition numbers) 
+	- kappa()  for estimating condition numbers)
 
 	- labels() to find a suitable set of labels from an object
 
@@ -137,12 +443,12 @@ NEW FEATURES
 
 	- anova(), plot(), summary() and deviance() methods for mlm fits
 
-    o	eval() semantics changed when envir= is a list. A 3rd argument is 
+    o	eval() semantics changed when envir= is a list. A 3rd argument is
 	now allowed, specifying the enclosure (i.e. where R looks for
-	variables *not* found in envir=) it defaults to the calling 
+	variables *not* found in envir=) it defaults to the calling
 	environment (was .GlobalEnv). Note that when used inside a function,
-	it is often desirable to set the enclosure to the parent 
-	environment instead. [ eval(e, data, sys.frame(sys.parent())) ] 
+	it is often desirable to set the enclosure to the parent
+	environment instead. [ eval(e, data, sys.frame(sys.parent())) ]
 
 
 BUG FIXES
@@ -177,6 +483,8 @@ BUG FIXES
     o	Many bugs found and fixed in the memory allocation / garbage
 	collection area. In particular, the parser was sometimes
 	UNPROTECT()ing the wrong pointers.
+
+    o	lm(y[g=="1"]~x[g=="1"]) caused memory corruption
 
 
 		CHANGES IN R VERSION 0.62.4

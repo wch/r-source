@@ -12,9 +12,9 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
-SUBDIRS = base eda modreg mva profile stepfun
+PKGS = base eda lqs modreg mva stepfun
 
-PKGS = base eda modreg mva stepfun
+SUBDIRS = profile $(PKGS)
 
 all: Makefile R
 
@@ -26,8 +26,10 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@for pkg in $(PKGS) profile; do \
-	  (cd $${pkg} && $(MAKE)); \
+	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
+	@(cd $(top_builddir)/library; \
+	  cat */TITLE > LibIndex 2> /dev/null)
 
 docs: stamp-docs
 help: stamp-help
@@ -39,6 +41,8 @@ stamp-docs: $(srcdir)/*/man/*.Rd $(top_builddir)/library/LibIndex
 	@rm -f $@ stamp-help stamp-html stamp-latex stamp-examples
 	@echo "Building ALL documentation (help, HTML, LaTeX, R-Examples)"
 	@$(MAKE) DOCS
+	@RHOME=`cd $(top_builddir); pwd`; export RHOME; \
+	$${RHOME}/bin/build-help --htmllists
 	@touch $@ stamp-help stamp-html stamp-latex stamp-examples
 stamp-help: $(srcdir)/*/man/*.Rd $(top_builddir)/library/LibIndex
 	@rm -f $@
@@ -47,6 +51,8 @@ stamp-help: $(srcdir)/*/man/*.Rd $(top_builddir)/library/LibIndex
 stamp-html: $(srcdir)/*/man/*.Rd
 	@rm -f $@
 	@OPTS="--html"  $(MAKE) DOCS
+	@RHOME=`cd $(top_builddir); pwd`; export RHOME; \
+	$${RHOME}/bin/build-help --htmllists
 	@touch $@
 stamp-latex: $(srcdir)/*/man/*.Rd
 	@rm -f $@
@@ -61,10 +67,12 @@ $(top_builddir)/library/LibIndex:
 	@if [ ! -f $@ ]; then touch $@; fi
 
 DOCS:
-	@-for pkg in $(PKGS); do \
+	@for pkg in $(PKGS); do \
 	  RHOME=`cd $(top_builddir); pwd`; export RHOME; \
 	  $${RHOME}/bin/build-help $${OPTS} $(srcdir)/$${pkg}; \
-	done
+	  $${RHOME}/bin/Rd2contents $(srcdir)/$${pkg} > $${RHOME}/library/$${pkg}/CONTENTS; \
+	done; \
+	cat $${RHOME}/library/*/CONTENTS > $${RHOME}/doc/html/search/index.txt
 
 mostlyclean: clean
 clean:

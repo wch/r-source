@@ -38,9 +38,7 @@ double dnbinom(double x, double n, double p)
     if (ISNAN(x) || ISNAN(n) || ISNAN(p))
 	return x + n + p;
 #endif
-    x = floor(x + 0.5);
-    n = floor(n + 0.5);
-    if (n < 1 || p <= 0 || p >= 1) {
+    if (n <= 0 || p <= 0 || p >= 1) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

@@ -552,6 +552,18 @@ badmode:
     errorcall(call, "invalid \"mode\" of argument\n");
     return R_NilValue;/*-Wall */
 }/* do_summary */
+
+SEXP do_range(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans;
+
+    if (DispatchGroup("Summary", call, op, args, env, &ans))
+	return(ans);
+    PROTECT(op = findFun(install("range.default"), env));
+    ans = applyClosure(call, op, args, env, R_NilValue);
+    UNPROTECT(1);
+    return(ans);
+}
 
 
 SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -730,5 +742,5 @@ SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
  bad_mode:
     error("complete.cases: invalid mode of argument\n");
 
-    return R_NilValue;/* NOTREACHED; for -Wall */
+    return R_NilValue;		/* NOTREACHED; for -Wall */
 }

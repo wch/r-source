@@ -1,7 +1,5 @@
 var <- function(x, y=x, na.rm = FALSE, use) {
-    if(missing(use)) {
-	if(na.rm) use <- "complete.obs"
-	else use <- "all.obs"
-    }
+    if(missing(use)) 
+	use <- if(na.rm) "complete.obs" else "all.obs"
     cov(x, y, use=use)
 }

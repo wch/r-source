@@ -31,10 +31,13 @@ apply(x, MARGIN, FUN, \dots)
 \examples{
 ## Compute row and column sums for a matrix:
 x <- cbind(x1 = 3, x2 = c(4:1, 2:5))
+dimnames(x)[[1]] <- letters[1:8] 
 apply(x, 2, mean, trim = .2)
 col.sums <- apply(x, 2, sum)
 row.sums <- apply(x, 1, sum)
 rbind(cbind(x, Rtot = row.sums), Ctot = c(col.sums, sum(col.sums)))
+
+all( apply(x,2, is.vector)) # TRUE [was not in R <= 0.63.2]
 
 ## Sort the columns of a matrix
 apply(x, 2, sort)
@@ -42,6 +45,23 @@ apply(x, 2, sort)
 ma <- matrix(c(1:4, 1, 6:8), nr = 2)
 ma
 apply(ma, 1, table)  #--> a list of length 2
+apply(ma, 1, quantile)# 5 x n matrix with rownames
+
+all(dim(ma) == dim(apply(ma, 1:2, sum)))## apply BUG [R <= 0.63.0]
+
+\testonly{
+ apply(x,  2, summary) # 6 x n matrix
+ apply(x,  1, quantile)# 5 x n matrix
+
+ d.arr <- 2:5
+ arr <- array(1:prod(d.arr), d.arr,
+	  list(NULL,letters[1:d.arr[2]],NULL,paste("V",4+1:d.arr[4],sep="")))
+ all(apply(arr, 1:2, sum) == t(apply(arr, 2:1, sum)))
+
+ marg <- list(1:2, 2:3, c(2,4), c(1,3), 2:4, 1:3, 1:4)
+ for(m in marg) print(apply(arr, print(m), sum))
+ for(m in marg) print(dim(apply(arr, print(m), quantile)) == c(5,d.arr[m]))
+}
 }
 \keyword{iteration}
 \keyword{array}

@@ -1,8 +1,5 @@
 lapply <- function(X, FUN, ...) {
-    if (is.character(FUN))
-	FUN <- get(FUN, mode = "function")
-    if (mode(FUN) != "function")
-	stop(paste("\"", FUN, "\" is not a function", sep = " "))
+    FUN <- match.fun(FUN)
     if (!is.list(X))
 	X <- as.list(X)
     rval <- vector("list", length(X))

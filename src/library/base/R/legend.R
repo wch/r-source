@@ -109,7 +109,7 @@ legend <-
     col <- rep(col,length.out=n.leg)
     if (!missing(pch)) {		  #- draw points -------------------
 	pch <- rep(pch,length.out=n.leg)
-	ok <- is.character(pch) | pch > 0
+	ok <- is.character(pch) | pch >= 0
 	x1 <- (xt + ifelse(merge,0, 0.25) * xchar)[ok]
 	y1 <- yt[ok]
 	if(trace)

@@ -45,9 +45,12 @@ ii)
 
 Mathlib.h
 	-> Arith.h	-> Platform.h
+	-> Random.h
+	-> Error.h (_iff_ Mathlib in R)
 
 S_compat.h
 	-> S.h		-> Platform.h , Error.h , Memory.h
+	-> Fortran.h
 	-> Linpack.h	-> Blas.h ,	Platform.h
 
 S.h

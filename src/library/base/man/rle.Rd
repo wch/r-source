@@ -1,0 +1,27 @@
+\name{rle}
+\alias{rle}
+\title{Run Length Encoding}
+\usage{
+rle(x)
+}
+\description{
+    Compute the lengths and values of runs of equal values in a vector.
+}
+\arguments{
+    \item{x}{a vector.}
+}
+\value{
+    A list with components
+    \item{lengths}{a vector containing the length of each run.}
+    \item{values}{a vector of the same length as \code{lengths} with the
+	corresponding values.}
+}
+\examples{
+x <- rev(rep(6:10, 1:5))
+rle(x)
+## $lengths
+## [1] 5 4 3 2 1
+## $values
+## [1] 10  9  8  7  6
+}
+\keyword{manip}

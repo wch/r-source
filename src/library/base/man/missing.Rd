@@ -11,7 +11,8 @@ giving x and y coordinates of points to be plotted
 or a single vector giving y values to be plotted
 against their indexes.
 }
-\seealso{\code{\link{NA}} for ``missing values'' in data.}
+\seealso{\code{\link{substitute}} for argument expression;
+    \code{\link{NA}} for ``missing values'' in data.}
 \examples{
 myplot <- function(x,y) {
                 if(missing(y)) {

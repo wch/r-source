@@ -1,18 +1,20 @@
-\name{precipitation}
+\name{precip}
 \title{Annual Precipitation in US Cities}
-\usage{data(precipitation)}
-\alias{precipitation}
-\format{A named vector of length 70.
-
+\usage{data(precip)}
+\alias{precip}
+\description{
+    The average amount of precipitation (rainfall) in inches for
+    each of 70 United States (and Puerto Rico) cities.
 }
-\source{Statistical Abstracts of the United States, 1975.
-
+\format{
+    A named vector of length 70.
 }
-\description{The average amount of precipitation (rainfall) in inches for
-each of 70 United States (and Puerto Rico) cities.
-
+\source{
+    Statistical Abstracts of the United States, 1975.
 }
-\references{McNeil, D. (1977).  Interactive Data Analysis.  New York: Wiley.
-
+\references{
+    McNeil, D. (1977).
+    \emph{Interactive Data Analysis}.
+    New York: Wiley.
 }
 \keyword{datasets}

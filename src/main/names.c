@@ -373,6 +373,8 @@ FUNTAB R_FunTab[] =
 
 {"sample",	do_sample,	0,	11,	4,	PP_FUNCALL},
 
+{"RNGkind",	do_RNGkind,	0,	11,	1,	PP_FUNCALL},
+
 /* Data Summaries */
 
 {"sum",		do_summary,	0,	11,	-1,	PP_FUNCALL},
@@ -380,6 +382,7 @@ FUNTAB R_FunTab[] =
 {"min",		do_summary,	2,	11,	-1,	PP_FUNCALL},
 {"max",		do_summary,	3,	11,	-1,	PP_FUNCALL},
 {"prod",	do_summary,	4,	11,	-1,	PP_FUNCALL},
+{"range",	do_range,	0,	11,	-1,	PP_FUNCALL},
 {"cov",		do_cov,		0,	11,	3,	PP_FUNCALL},
 {"cor",		do_cov,		1,	11,	3,	PP_FUNCALL},
 
@@ -481,8 +484,7 @@ FUNTAB R_FunTab[] =
 {"interactive",	do_interactive,	0,	0,	0,	PP_FUNCALL},
 {"readline",	do_readln,	0,	11,	0,	PP_FUNCALL},
 {"menu",	do_menu,	0,	11,	1,	PP_FUNCALL},
-{"print.default",do_printdefault,0,	111,	5,	PP_FUNCALL},
-{"print.atomic",do_printdefault,0,	111,	5,	PP_FUNCALL},
+{"print.default",do_printdefault,0,	111,	6,	PP_FUNCALL},
 {"print.matrix",do_printmatrix, 0,	111,	5,	PP_FUNCALL},
 {"invisible",	do_invisible,	0,	101,	1,	PP_FUNCALL},
 {"gc",		do_gc,		0,	11,	1,	PP_FUNCALL},

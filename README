@@ -5,6 +5,13 @@
 	   (See "RESOURCES" for additional resources)
 	   (See "INSTALL"   for help on installation)
 
+# NOTE: This file is getting badly out of date, but I don't want to 
+# edit it at this point. The most blatant errors are that Brian Ripley 
+# and Guido Masarotto are now members of the Core Team, and that we do
+# actually have drop1, add1 and step nowadays. Also, there is in fact a 
+# substantial body of documentation, detailing almost every single R
+# function available, although we still lack an actual language
+# specification -- pd, March 6, 1999
 
 
 1. INTRODUCTION

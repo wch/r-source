@@ -5,6 +5,8 @@ anova(object, \dots)
 print(anova.object)
 }
 \alias{anova}
+\alias{anova.mlm}
+\alias{print.anova}
 \arguments{
 \item{object}{an object containing the results returned
 by a model fitting function (e.g. \code{lm} or \code{glm}).}

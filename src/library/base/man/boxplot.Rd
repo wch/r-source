@@ -8,15 +8,15 @@ boxplot(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
 }
 \alias{boxplot}
 \arguments{
-  \item{\dots}{the data from which the boxplots are to be produced.  The
+  \item{x, \dots}{the data from which the boxplots are to be produced.  The
     data can be specified as separate vectors, each corresponding to a
     component boxplot, or as a single list containing such vectors.
     Alternatively a symbolic specification of the form \code{x ~ g} can
-    be given, indicating the the observations in the vector \code{x} are
-    to be grouped according to the levels of the factor \code{g}.  In
-    this case the argument \code{data} can be used to provide values for
-    the variables in the specification.
-    \code{NA}s are allowed in the data.}
+    be given, indicating that the observations in the vector \code{x} are
+    to be grouped according to the levels of the \code{\link{factor}}
+    \code{g}.  In this case the argument \code{data} can be used to
+    provide values for the variables in the specification.
+    \code{\link{NA}}s are allowed in the data.}
   \item{range}{this determines how far the plot whiskers extend out from
     the box.  If \code{range} is positive, the whiskers extend to the
     most extreme data point which is no more than \code{range} times the
@@ -46,10 +46,11 @@ boxplot(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
   \item{pars, \dots}{graphical parameters can also be passed as arguments to
     \code{boxplot}.}
 }
+\description{
+    Produce box-and-whisker plot(s) of the given (grouped) values.
+}    
 \value{
-  This function is usually invoked for its side effect which is to
-  produce box-and-whisker plots of the given values.  However, it also
-  returns a list with one component corresponding to each plot.  The
+  List with one component corresponding to each plot.  The
   components are themselves lists with named components as follows:
   \item{stats}{a vector containing the extreme of the lower whisker, the
     lower hinge, the median, the upper hinge and the extreme of the
@@ -72,5 +73,10 @@ boxplot(count ~ spray, data = insects, col = "lightgray")
 
 data(bees)
 boxplot(decrease ~ treatment, data = bees, log = "y", col="bisque")
+
+## boxplot(.) for a matrix:
+mat <- cbind(Uni05= (1:100)/21, Norm= rnorm(100),
+             T5 = rt(100,df=5), Gam2= rgamma(100, shape=2))
+boxplot(data.frame(mat), main= "boxplot(data.frame(mat), main=...)")
 }
 \keyword{hplot}

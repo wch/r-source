@@ -3,7 +3,7 @@
 ##	  ~~~~~~~~~
 
 library <- function (name, help, lib.loc = .lib.loc, character.only = FALSE,
-		     logical.return = FALSE, warn.conflicts = TRUE)
+		     logical.return = FALSE, warn.conflicts = name != "MASS")
 {
     fsep <- .Platform$file.sep
     if (!missing(name)) {
@@ -39,37 +39,37 @@ library <- function (name, help, lib.loc = .lib.loc, character.only = FALSE,
 	    if (file == "")
 		warning(paste("Package `",name,"' contains no R code", sep=""))
 	    else
-		lib.source(file, env)# "source" file into env
+		lib.source(file, env)	# "source" file into env
 	    lib.fixup(env, .GlobalEnv)
 	    if (exists(".First.lib", envir = env, inherits = FALSE)) {
 		firstlib <- get(".First.lib", envir = env, inherits = FALSE)
 		firstlib(which.lib.loc, name)
 	    }
-            if(warn.conflicts) {
-                ##-- Check for conflicts
-                dont.mind <- c("last.dump", "last.warning",
-                               ".Last.value", ".Random.seed")
-                lib.pos <- 2## Currently, package is ALWAYS at "pos=2"
-                ob <- objects(lib.pos)
-                ipos <- seq(along = sp <- search())[
-                            -c(lib.pos, match("Autoloads",sp))]
-                for(i in ipos) {
-                    obj.same <- match(objects(i), ob, nomatch = 0)
-                    fst <- TRUE
-                    if(any(obj.same > 0) && 
-                       length(same<-(ob <- ob[obj.same])[!ob %in% dont.mind])) {
-                        if(fst){fst <- FALSE; cat("\nAttaching Package \"",
-                                                  pkgname,"\":\n\n", sep="")}
-                        cat("\n\tThe following object(s) are masked",
-                            if(i < lib.pos) "by" else "from", sp[i], ":\n\n\t",
-                            same, "\n\n")
-                    }
-                }
-            }
+	    if(warn.conflicts) {
+		##-- Check for conflicts
+		dont.mind <- c("last.dump", "last.warning",
+			       ".Last.value", ".Random.seed")
+		lib.pos <- 2		## Currently, package is ALWAYS at "pos=2"
+		ob <- objects(lib.pos)
+		ipos <- seq(along = sp <- search())[
+			    -c(lib.pos, match("Autoloads",sp))]
+		for(i in ipos) {
+		    obj.same <- match(objects(i), ob, nomatch = 0)
+		    fst <- TRUE
+		    if(any(obj.same > 0) && 
+		       length(same<-(ob <- ob[obj.same])[!ob %in% dont.mind])) {
+			if(fst){fst <- FALSE; cat("\nAttaching Package \"",
+						  pkgname,"\":\n\n", sep="")}
+			cat("\n\tThe following object(s) are masked",
+			    if(i < lib.pos) "by" else "from", sp[i], ":\n\n\t",
+			    same, "\n\n")
+		    }
+		}
+	    }
 	} else {
-            if(options()$verbose)
-                warning(paste("Package",pkgname,"already present in search()"))
-        }
+	    if(options()$verbose)
+		warning(paste("Package",pkgname,"already present in search()"))
+	}
     } else if (!missing(help)) {
 	if (!character.only)
 	    help <- as.character(substitute(help))
@@ -79,8 +79,35 @@ library <- function (name, help, lib.loc = .lib.loc, character.only = FALSE,
 		       help, "'", sep = ""))
 	else
 	    .Platform$ show.file(file)
-    } else {
-	.Platform$ show.libraries(lib.loc, fsep = fsep)
+    } else {				## library():
+	libfil <- tempfile("R.")
+	avail <- NULL
+	file.exists <- function(f) system.test("-r",f)# yes, a hack..
+	for (lib in lib.loc) {
+	    cat("\nPackages in library `",
+		lib, "':\n\n", sep = "", file = libfil, append = TRUE)
+	    if(file.exists(libind <- paste(lib, "LibIndex", sep = fsep))) {
+		.Platform$ append.file(libfil, libind)
+		## This gives warnings and partly garbage,
+		## since contrib's LibIndex isn't really "clean":
+		a <- NULL## scan(libind, what=list("",""), sep="\t",
+		##-		 quiet = TRUE, flush=TRUE)[[1]]
+
+	    } else {
+		a <- .packages(all.available = TRUE, lib.loc=lib)
+		for (i in a) {
+		    title <- system.file("TITLE",i,lib)
+		    if (title != "") 
+			.Platform$ append.file(libfil, title)
+		    else
+			cat(i,"\n", file=libfil, append = TRUE)
+		}
+	    }
+	    avail <- c(avail, a)
+	}
+	.Platform$ show.file(libfil)
+	unlink(libfil)
+	return(invisible(avail))
     }
     if (logical.return)
 	TRUE
@@ -96,9 +123,10 @@ library.dynam <-
     if(missing(chname) || (LEN <- nchar(chname)) == 0)
 	return(.Dyn.libs)
     fsep <- .Platform$file.sep
-    if (substr(chname, LEN - 2, LEN) == file.ext) {
-	chname <- substr(chname, 1, LEN - 3)
-    }
+    nc.ext <- nchar(file.ext)
+    if (substr(chname, LEN - nc.ext+1, LEN) == file.ext)
+	chname <- substr(chname, 1, LEN - nc.ext)
+
     if (is.na(match(chname, .Dyn.libs))) {
 	file <- system.file(paste("libs", fsep, chname, file.ext, sep = ""),
 			    package, lib.loc)
@@ -143,8 +171,18 @@ provide <- function(name) {
     }
 }
 
-.packages <- function() {
+.packages <- function(all.available = FALSE, lib.loc = .lib.loc) {
+    if(all.available) {
+	fsep <- .Platform$ file.sep
+	a <- strsplit(system.file("*","",lib.loc), fsep)
+	ans <- character(0)
+	for (i in a) {
+	    name <- i[length(i)]
+	    pkg <- system.file(paste("R",name, sep=fsep), name, lib.loc) 
+	    if (pkg != "") ans <- c(ans,name)
+	}
+	return(ans)
+    } ## else
     s <- search()
     return(invisible(substring(s[substr(s, 1, 8) == "package:"], 9)))
 }
-

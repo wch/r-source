@@ -6,6 +6,7 @@ resid(x, \dots)
 }
 \alias{residuals}
 \alias{resid}
+\alias{residuals.default}
 \arguments{
   \item{x}{an object for which the extraction of model residuals is
     meaningful.}

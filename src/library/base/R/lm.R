@@ -1,6 +1,7 @@
 lm <- function (formula, data = list(), subset, weights, na.action,
 		method = "qr", model = TRUE, x = FALSE, y = FALSE,
-		qr = TRUE, singular.ok = TRUE, contrasts = NULL, ...)
+		qr = TRUE, singular.ok = TRUE, contrasts = NULL, 
+		offset = NULL, ...)
 {
     ret.x <- x
     ret.y <- y
@@ -26,16 +27,19 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     if (length(list(...)))
 	warning(paste("Extra arguments", deparse(substitute(...)),
 		      "are just disregarded."))
-    if (!is.null(model.offset(mf)))
-	stop("offset() not available in lm(), use glm()")
     if (!singular.ok)
 	warning("only `singular.ok = TRUE' is currently implemented.")
     y <- model.response(mf, "numeric")
     w <- model.weights(mf)
+    offset <- model.offset(mf)
+    if(!is.null(offset) && length(offset) != NROW(y))
+	stop(paste("Number of offsets is", length(offset),
+		   ", should equal", NROW(y), "(number of observations)"))
+
     if (is.empty.model(mt)) {
 	x <- NULL
 	z <- list(coefficients = numeric(0), residuals = y,
-		  fitted.values = 0 * y, weights = w, rank = 0,
+		  fitted.values = 0 * y + offset, weights = w, rank = 0,
 		  df.residual = length(y))
 	class(z) <-
 	    if (is.matrix(y))
@@ -43,9 +47,11 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 	    else c("lm.null", "lm")
     } else {
 	x <- model.matrix(mt, mf, contrasts)
-	z <- if(is.null(w)) lm.fit(x, y) else lm.wfit(x, y, w)
+	z <- if(is.null(w)) lm.fit(x, y, offset=offset) 
+	else lm.wfit(x, y, w, offset=offset) 
 	class(z) <- c(if(is.matrix(y)) "mlm", "lm")
     }
+    z$offset <- offset
     z$contrasts <- attr(x, "contrasts")
     z$xlevels <- xlev
     z$call <- match.call()
@@ -59,13 +65,21 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     z
 }
 
-lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
+lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
 {
-    if(is.null(n <- nrow(x))) stop("'x' must be a matrix")
+    if (is.null(n <- nrow(x))) stop("'x' must be a matrix")
+    if (is.null(offset)) offset <- rep(0, NROW(y))
     p <- ncol(x)
+    if (p == 0) {
+        ## oops, null model
+        cc <- match.call()
+        cc[[1]] <- as.name("lm.fit.null")
+        return(eval(cc, sys.frame(sys.parent())))
+    }
     ny <- NCOL(y)
     ## treat one-col matrix as vector
     if ( is.matrix(y) && ny == 1 ) y <- drop(y)
+    y <- y - offset
     if (NROW(y) != n)
 	stop("incompatible dimensions")
     if(method != "qr")
@@ -101,15 +115,16 @@ lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
     }
     z$coefficients <- coef
     c(z[c("coefficients", "residuals", "effects", "rank")],
-      list(fitted.values= y - z$residuals, assign= attr(x, "assign"),
+      list(fitted.values= y + offset - z$residuals, assign= attr(x, "assign"),
 	   qr = z[c("qr", "qraux", "pivot", "tol", "rank")],
 	   df.residual = n - z$rank))
 }
 
-lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
+lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
 {
     if(is.null(n <- nrow(x))) stop("'x' must be a matrix")
     ny <- NCOL(y)
+    if (is.null(offset)) offset <- rep(0, NROW(y))
     ## treat one-col matrix as vector
     if ( is.matrix(y) && ny == 1 ) y <- drop(y)
     if (NROW(y) != n | length(w) != n)
@@ -122,6 +137,7 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
     if(length(list(...)))
 	warning(paste("Extra arguments", deparse(substitute(...)),
 		      "are just disregarded."))
+    y <- y - offset
     zero.weights <- any(w == 0)
     if (zero.weights) {
 	save.r <- y
@@ -137,6 +153,12 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
 	y  <- if (ny > 1) y[ ok, , drop = FALSE] else y[ok]
     }
     p <- ncol(x)
+    if (p == 0) {
+        ## oops, null model
+        cc <- match.call()
+        cc[[1]] <- as.name("lm.wfit.null")
+        return(eval(cc, sys.frame(sys.parent())))
+    }
     storage.mode(y) <- "double"
     wts <- sqrt(w) 
     z <- .Fortran("dqrls",
@@ -165,7 +187,7 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
     }
     z$coefficients <- coef
     z$residuals <- z$residuals/wts
-    z$fitted.values <- (y - z$residuals)
+    z$fitted.values <- (y - z$residuals) + offset
     z$weights <- w
     if (zero.weights) {
 	coef[is.na(coef)] <- 0
@@ -444,16 +466,26 @@ predict.lm <- function(object, newdata,
 		       se.fit = FALSE, scale = NULL, df = Inf,
 		       interval=c("none","confidence","prediction"), level=.95)
 {
-    if(missing(newdata)) X <- model.matrix(object)
-    else
-	X <- model.matrix(delete.response(terms(object)), newdata,
+    if(missing(newdata)) {
+        X <- model.matrix(object)
+        offset <- object$offset
+    }
+    else {
+        tt <- terms(object)
+	X <- model.matrix(delete.response(tt), newdata,
 			  contrasts = object$contrasts, xlev = object$xlevels)
+	offset <- if (!is.null(off.num<-attr(tt,"offset"))) 
+	    eval(attr(tt,"variables")[[off.num+1]], newdata)
+	else if (!is.null(object$offset)) 
+	    eval(object$call$offset, newdata)
+    }
     n <- NROW(object$qr$qr)
     p <- object$rank
     p1 <- 1:p
     piv <- object$qr$pivot[p1]
     est <- object$coefficients[piv]
     predictor <- drop(X[, piv, drop = FALSE] %*% est)
+    if ( !is.null(offset) ) predictor <- predictor + offset
     interval <- match.arg(interval)
     if(se.fit || interval != "none") {
 	if (is.null(scale)) {
@@ -545,13 +577,14 @@ model.matrix.lm <- function(object, ...)
     }
 }
 
-predict.mlm <- function(fit, newdata, se.fit = FALSE)
+##---> SEE ./mlm.R  for more methods, etc. !! 
+predict.mlm <- function(object, newdata, se.fit = FALSE)
 {
-    if(missing(newdata)) return(fit$fitted)
+    if(missing(newdata)) return(object$fitted)
     if(se.fit)
 	stop("The 'se.fit' argument is not yet implemented for mlm objects")
-    x <- model.matrix(fit, newdata) # will use model.matrix.lm
+    x <- model.matrix(object, newdata) # will use model.matrix.lm
     piv <- object$qr$pivot[1:object$rank]
     pred <- X[, piv, drop = FALSE] %*% object$coefficients[piv,]
-    if(inherits(fit, "mlm")) pred else pred[, 1]
+    if(inherits(object, "mlm")) pred else pred[, 1]
 }

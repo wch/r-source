@@ -2,7 +2,8 @@
 \title{Documentation}
 \usage{
 help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
-     lib.loc = .lib.loc)
+     lib.loc = .lib.loc, verbose = .Options$verbose,
+      htmlhelp = .Options$htmlhelp)
 ?topic
 }
 \alias{help}
@@ -18,6 +19,10 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
   are used.}
  \item{lib.loc}{A character vector of directory names of \R libraries.
   Defaults to all libraries currently known.}
+ \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
+ \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (is the
+     default after \code{\link{help.start}} has been called), the help
+     will not be shown on the console, but via the html browser.}
 }
 \description{
   These functions provide access to documentation.
@@ -32,8 +37,9 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
   \code{latex} (note that LaTeX 2e is needed) and \code{dvips}.
   Depending on your \code{dvips} configuration, hardcopy will be sent to
   the printer or saved in a file.  If the programs are in non-standard
-  locations and hence were not found at compile time, you need to set
-  the environment variables \code{LATEX} and \code{DVIPS} appropriately.
+  locations and hence were not found at compile time, you can either set
+  the options \code{latexcmd} and \code{dvipscmd}, or the environment
+  variables \code{R_LATEXCMD} and \code{R_DVIPSCMD} appropriately.
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path.
 }

@@ -23,12 +23,14 @@ boxplot <- function(x, ..., range=1.5, width=NULL, varwidth=FALSE,
 	}
     if(0 == (n <- length(groups)))
 	stop("invalid first argument")
+    if(length(class(groups)))
+	groups <- unclass(groups)
     if(!missing(names.x))
 	attr(groups, "names") <- names.x
     else if(is.null(attr(groups, "names")))
 	attr(groups, "names") <- 1:n
     for(i in 1:n)
-	groups[i] <- list(boxplot.stats(groups[[i]], range))
+	groups[i] <- list(boxplot.stats(groups[[i]], range)) # do.conf=notch)
     if(plot) {
 	bxp(groups, width, varwidth=varwidth, notch=notch,
 	    border=border, col=col, log=log, pars=pars)
@@ -37,7 +39,7 @@ boxplot <- function(x, ..., range=1.5, width=NULL, varwidth=FALSE,
     else groups
 }
 
-boxplot.stats <- function(x, coef = 1.5)
+boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 {
     nna <- !is.na(x)
     n <- length(nna)# including +/- Inf
@@ -45,8 +47,8 @@ boxplot.stats <- function(x, coef = 1.5)
     iqr <- diff(stats[c(2, 4)])
     out <- x < (stats[2]-coef*iqr) | x > (stats[4]+coef*iqr)
     if(coef > 0) stats[c(1, 5)] <- range(x[!out], na.rm=TRUE)
-    conf <- stats[3]+c(-1.58, 1.58)*diff(stats[c(2, 4)])/sqrt(n)
-    list(stats=stats, n=n, conf=conf, out=x[out&nna])
+    conf <- if(do.conf)stats[3]+c(-1.58, 1.58)*diff(stats[c(2, 4)])/sqrt(n)
+    list(stats=stats, n=n, conf=conf, out=if(do.out)x[out&nna]else numeric(0))
 }
 
 bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
@@ -97,7 +99,9 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     nmax <- 0
     for(i in 1:n) {
 	nmax <- max(nmax,z[[i]]$n)
-	limits <- range(limits, z[[i]]$stats, z[[i]]$out, finite=TRUE)
+	limits <- range(limits,
+                        z[[i]]$stats[is.finite(z[[i]]$stats)],
+                        z[[i]]$out[is.finite(z[[i]]$out)])
     }
     width <- if (!is.null(width)) {
 	if (length(width) != n | any(is.na(width)) | any(width <= 0))
@@ -108,7 +112,8 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     else if (n == 1) 0.4
     else rep(0.8, n)
 
-    ylim <- if(is.null(pars$ylim)) limits else pars$ylim
+    if(is.null(pars$ylim)) ylim <- limits
+    else { ylim <- pars$ylim; pars$ylim <- NULL }
     if(missing(border) || length(border)==0)
 	border <- par("fg")
 
@@ -124,7 +129,9 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	     border=border[(i-1)%%length(border)+1],
 	     col=if(is.null(col)) col else col[(i-1)%%length(col)+1])
 
-    if(is.null(pars$axes) || pars$axes) {
+    axes <- is.null(pars$axes)
+    if(!axes) { axes <- pars$axes; pars$axes <- NULL }
+    if(axes) {
 	if(n > 1) axis(1, at=1:n, labels=names(z))
 	axis(2)
     }

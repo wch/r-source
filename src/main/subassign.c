@@ -200,6 +200,7 @@ static void SubassignTypeFix(SEXP *x, SEXP *y,
 	*x = coerceVector(*x, STRSXP);
 	break;
 
+    case 1906:  /* vector     <- language   */
     case 1910:  /* vector     <- logical    */
     case 1913:  /* vector     <- integer    */
     case 1914:  /* vector     <- real       */
@@ -543,7 +544,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
 static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 {
-    int i, j, ii, jj, ij, iy, k, which;
+    int i, j, ii, jj, ij, iy, k, n, which;
     double ry;
     int nr, ny;
     int nrs, ncs;
@@ -563,13 +564,17 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     nrs = LENGTH(sr);
     ncs = LENGTH(sc);
 
-    /* <TSL> 21Oct97*/
-    if (length(y) == 0)
-	error("Replacement length is zero\n");
-    /* </TSL>  */
+    n = nrs * ncs;
 
-    if ((length(sr) * length(sc)) % length(y))
-	error("no of items to replace is not a multiple of replacement length\n");
+    /* <TSL> 21Oct97
+       if (length(y) == 0)
+       error("Replacement length is zero\n");
+       </TSL>  */
+
+    if (n > 0 && ny == 0)
+	errorcall(call, "nothing to replace with\n");
+    if (n > 0 && n % ny)
+	errorcall(call, "number of items to replace is not a multiple of replacement length\n");
 
     which = 100 * TYPEOF(x) + TYPEOF(y);
 
@@ -796,8 +801,10 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	tmp = CDR(tmp);
     }
 
-    if (n % length(y))
-	error("no of elements to replace is not a multiple of replacement length\n");
+    if (n > 0 && ny == 0)
+	errorcall(call, "nothing to replace with\n");
+    if (n > 0 && n % ny)
+	errorcall(call, "number of items to replace is not a multiple of replacement length\n");
 
     offset[0] = 1;
     for (i = 1; i < k; i++)
@@ -809,6 +816,11 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* a form which can accept elements from the RHS. */
 
     SubassignTypeFix(&x, &y, which, 0, 1);
+
+    if (ny == 0) {
+	UNPROTECT(1);
+	return(x);
+    }
 
     PROTECT(x);
 
@@ -957,10 +969,9 @@ static SEXP SimpleListAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     nx = length(x);
 
     if (n > 0 && ny == 0)
-	error("nothing to replace with\n");
-
+	errorcall(call, "nothing to replace with\n");
     if (n > 0 && n % ny)
-	error("no of items to replace is not a multiple of replacement length\n");
+	errorcall(call, "no of items to replace is not a multiple of replacement length\n");
 
     if (stretch) {
 	yi = allocList(stretch - nx);
@@ -1187,12 +1198,20 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
     SubAssignArgs(args, &x, &subs, &y);
     nsubs = length(subs);
 
+    oldtype = 0;
     if (TYPEOF(x) == LISTSXP || TYPEOF(x) == LANGSXP) {
 	oldtype = TYPEOF(x);
 	PROTECT(x = PairToVectorList(x));
     }
+    else if (length(x) == 0) {
+	if (length(y) == 0) {
+	    UNPROTECT(1);
+	    return(x);
+	}
+	else
+	    PROTECT(x = coerceVector(x, TYPEOF(y)));
+    }
     else {
-	oldtype = 0;
 	PROTECT(x);
     }
 
@@ -1293,9 +1312,15 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(CDR(args) = EvalSubassignArgs(CDR(args), rho));
     SubAssignArgs(args, &x, &subs, &y);
 
-    if (isNull(x) && isNull(y)) {
-	UNPROTECT(1);
-	return R_NilValue;
+    if (length(x) == 0) {
+	if (length(y) > 1)
+	    x = coerceVector(x, VECSXP);
+	else if (length(y) == 1)
+	    x = coerceVector(x, TYPEOF(y));
+	else {
+	    UNPROTECT(1);
+	    return(x);
+	}
     }
     if (NAMED(x) == 2) {
 	CAR(args) = x = duplicate(x);
@@ -1517,7 +1542,7 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
     if (NAMED(val)) val = duplicate(val);
     PROTECT(val);
 
-    if (isList(x) || isLanguage(x)) {
+    if ((isList(x) || isLanguage(x)) && !isNull(x)) {
 	nlist = CADR(args);
 	if (isString(nlist))
 	    nlist = install(CHAR(STRING(nlist)[0]));
@@ -1553,9 +1578,15 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 	    TAG(x) = nlist;
 	}
     }
-    else if (isNewList(x) || isExpression(x)) {
+    else {
 	int i, imatch, nx;
-	SEXP names = getAttrib(x, R_NamesSymbol);
+	SEXP names;
+
+	if (!(isNewList(x) || isExpression(x))) {
+	    warning("Coercing LHS to a list\n");
+	    x = coerceVector(x, VECSXP);
+	}
+	names = getAttrib(x, R_NamesSymbol);
 	nx = length(x);
 	nlist = CADR(args);
 	if (isString(nlist))
@@ -1634,7 +1665,6 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    else error("$ used on non-list\n");
     UNPROTECT(2);
     NAMED(x) = 0;
     return x;

@@ -5,7 +5,6 @@ menu <- function(choices, graphics = FALSE, title = "")
     for (i in seq(length=nc))
 	cat(i, ":", choices[i]," \n", sep = "")
     repeat {
-	cat("Selection: ")
 	ind <- .Internal(menu(as.character(choices)))
 	if(ind <= nc)
 	    return(ind)

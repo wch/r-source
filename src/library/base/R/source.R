@@ -1,15 +1,15 @@
 source <-
     function(file, local=FALSE, echo = verbose, print.eval=echo,
-             verbose= .Options$verbose, prompt.echo = .Options$prompt,
-             max.deparse.length=150)
+	     verbose= .Options$verbose, prompt.echo = .Options$prompt,
+	     max.deparse.length=150)
 {
     envir <- if (local) sys.frame(sys.parent()) else .GlobalEnv
     if(!missing(echo)) {
-        if(!is.logical(echo)) stop("echo must be logical")
-        if(!echo && verbose) {
-            warning("verbose is TRUE, echo not; ... coercing 'echo <- TRUE'")
-            echo <- TRUE
-        }
+	if(!is.logical(echo)) stop("echo must be logical")
+	if(!echo && verbose) {
+	    warning("verbose is TRUE, echo not; ... coercing 'echo <- TRUE'")
+	    echo <- TRUE
+	}
     }
     if(verbose) { cat("'envir' chosen:"); print(envir) }
     Ne <- length(exprs <- parse(n = -1, file = file))
@@ -18,10 +18,10 @@ source <-
     if (Ne == 0) return(invisible())
     ass1 <- expression(y <- x)[[1]][[1]] #-- ass1 :  the  '<-' symbol/name
     if(echo) {
-        ## Reg.exps for string delimiter/ NO-string-del / odd-number-of-str.del
-        ## needed, when truncating below
-        sd <- "\""; nos <- "[^\"]*"
-        oddsd <- paste("^",nos,sd,"(",nos,sd,nos,sd,")*",nos,"$", sep="")
+	## Reg.exps for string delimiter/ NO-string-del / odd-number-of-str.del
+	## needed, when truncating below
+	sd <- "\""; nos <- "[^\"]*"
+	oddsd <- paste("^",nos,sd,"(",nos,sd,nos,sd,")*",nos,"$", sep="")
     }
     for (i in 1:Ne) {
 	if(verbose)
@@ -32,12 +32,12 @@ source <-
 			  12, 1e6)# drop "expression("
 	    nd <- nchar(dep) -1 # -1: drop ")"
 	    do.trunc <- nd > max.deparse.length
-            dep <- substr(dep, 1, if(do.trunc)max.deparse.length else nd)
-            cat("\n", prompt.echo, dep,
-                if(do.trunc)
-                paste(if(length(grep(sd,dep)) && length(grep(oddsd,dep)))
-                      " ...\" ..." else " ....", "[TRUNCATED] "),
-                "\n", sep="")
+	    dep <- substr(dep, 1, if(do.trunc)max.deparse.length else nd)
+	    cat("\n", prompt.echo, dep,
+		if(do.trunc)
+		paste(if(length(grep(sd,dep)) && length(grep(oddsd,dep)))
+		      " ...\" ..." else " ....", "[TRUNCATED] "),
+		"\n", sep="")
 	}
 	yy <- eval(ei, envir)
 	i.symbol <- mode(ei[[1]]) == "name"
@@ -70,14 +70,15 @@ sys.source <- function (file)
 
 demo <- function(topic, device = x11, directory.sep = "/")
 {
-    Topics <-cbind(graphics = c("graphics","graphics.R",	"G"),
-		   image	 = c("graphics","image.R",	"G"),
-		   lm.glm	 = c("models",	"lm+glm.R",	"G"),
-		   glm.vr	 = c("models",	"glm-v+r.R",	""),
-		   nlm	 = c("nlm",	"valley.R",	""),
-		   recursion= c("language","recursion.R",	"G"),
-		   scoping	 = c("language","scoping.R",	""),
-		   is.things= c("language","is-things.R",	"")
+    Topics <-cbind(graphics	= c("graphics", "graphics.R",	"G"),
+		   image	= c("graphics", "image.R",	"G"),
+		   lm.glm	= c("models",	"lm+glm.R",	"G"),
+		   glm.vr	= c("models",	"glm-v+r.R",	""),
+		   nlm		= c("nlm",	"valley.R",	""),
+		   recursion	= c("language", "recursion.R",	"G"),
+		   scoping	= c("language", "scoping.R",	""),
+		   is.things	= c("language", "is-things.R",	""),
+		   dyn.load	= c("dynload",	"zero.R",	"")		
 		   )
     dimnames(Topics)[[1]] <- c("dir", "file", "flag")
     topic.names <- dimnames(Topics)[[2]]
@@ -104,27 +105,35 @@ demo <- function(topic, device = x11, directory.sep = "/")
 		     "demos",
 		     Topics["dir",  i.top],
 		     Topics["file", i.top], sep= directory.sep),
-	       echo = TRUE, max.deparse.length=10000)
+	       echo = TRUE, max.deparse.length=250)
     }
 }
 
 example <- function(topic, package= .packages(), lib.loc = .lib.loc,
-                    echo = TRUE, verbose = .Options$verbose,
-                    prompt.echo = paste(abbreviate(topic, 6),"> ", sep=""),
-                    directory.sep = "/")
+		    echo = TRUE, verbose = .Options$verbose,
+		    prompt.echo = paste(abbreviate(topic, 6),"> ", sep=""),
+		    directory.sep = "/")
 {
     topic <- substitute(topic)
-    if (!is.character(topic)) topic <- deparse(topic)[1]
-
-    for (lib in lib.loc)
-        for (pkg in package) {
-            file <- system.file(paste("R-ex",directory.sep,topic,".R", sep=""),
-                                pkg = pkg, lib = lib)
+    if(!is.character(topic)) topic <- deparse(topic)[1]
+    file <- ""
+    for(lib in lib.loc)
+        for(pkg in package) {
+            AnIndexF <- system.file(paste("help","AnIndex",sep=directory.sep),
+                                    pkg, lib)
+            if(AnIndexF != "") {
+                AnIndex <- scan(AnIndexF,what=c("c","c"),quiet=TRUE)
+                i <- match(topic,AnIndex[seq(1,length(AnIndex),2)],-1)
+                if(i != -1)	 
+                    file <- system.file(paste("R-ex",directory.sep,AnIndex[2*i],
+                                              ".R", sep=""),
+                                        pkg = pkg, lib = lib)
+            } 
             if(file != "") break
         }
     if(file == "") stop(paste("Couldn't find '", topic, "' example", sep=""))
     if(pkg != "base") library(pkg, lib = lib, character.only = TRUE)
     source(file, echo = echo, prompt.echo = prompt.echo,
-           verbose = verbose, max.deparse.length=10000)
+	   verbose = verbose, max.deparse.length=250)
 }
 

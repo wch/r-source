@@ -1,7 +1,37 @@
+/*
+ *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 1998 R Core Team
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+
+ * Mathlib.h  should contain ALL headers from R's C code in `src/nmath'
+   ---------  such that ``the Math library'' can be used by simply
+
+   ``#include "Mathlib.h" ''
+
+   and nothing else.
+*/
 #ifndef MATHLIB_H
 #define MATHLIB_H
 
+/*-- Mathlib as part of R --  undefine this for standalone : */
+#define MATHLIB_IN_R
+
 #include "Arith.h"
+#include "Random.h"
 
 #ifdef FORTRAN_H
 #error __MUST__include "Mathlib.h"  _before_  "Fortran.h"
@@ -39,43 +69,64 @@
 
 #ifndef M_SQRT_PI
 /* sqrt(pi),  1/sqrt(2pi),  sqrt(2/pi) : */
-#define M_SQRT_PI	1.772453850905516027298167483341
-#define M_1_SQRT_2PI	0.398942280401432677939946059934
-#define M_SQRT_2dPI	0.79788456080286535587989211986876
+# define M_SQRT_PI	1.772453850905516027298167483341
+# define M_1_SQRT_2PI	0.398942280401432677939946059934
+# define M_SQRT_2dPI	0.79788456080286535587989211986876
 #endif
 
 
 #ifndef M_LN_SQRT_PI
 /* log(sqrt(pi)) = log(pi)/2 : */
-#define M_LN_SQRT_PI	0.5723649429247000870717136756765293558
+# define M_LN_SQRT_PI	0.5723649429247000870717136756765293558
 /* log(sqrt(2*pi)) = log(2*pi)/2 : */
-#define M_LN_SQRT_2PI	0.91893853320467274178032973640562
+# define M_LN_SQRT_2PI	0.91893853320467274178032973640562
 /* log(sqrt(pi/2)) = log(pi/2)/2 : */
-#define M_LN_SQRT_PId2	0.225791352644727432363097614947441
+# define M_LN_SQRT_PId2	0.225791352644727432363097614947441
 #endif
 
 
+#ifdef MATHLIB_IN_R/* Mathlib in R */
 
-#define MATHLIB_ERROR(x)   { printf("%s\n",x); exit(1); }
-#define MATHLIB_WARNING(x) { printf("%s\n",x); }
+#include "Error.h"
+# define MATHLIB_ERROR(fmt,x)		error(fmt,x);
+# define MATHLIB_WARNING(fmt,x)		warning(fmt,x)
+# define MATHLIB_WARNING2(fmt,x,x2)	warning(fmt,x,x2)
+# define MATHLIB_WARNING3(fmt,x,x2,x3)	warning(fmt,x,x2,x3)
+# define MATHLIB_WARNING4(fmt,x,x2,x3,x4) warning(fmt,x,x2,x3,x4)
+
+#else/* Mathlib standalone */
+
+#include <stdio.h>
+# define MATHLIB_ERROR(fmt,x)	{ printf(fmt,x); exit(1) }
+# define MATHLIB_WARNING(fmt,x)		printf(fmt,x)
+# define MATHLIB_WARNING2(fmt,x,x2)	printf(fmt,x,x2)
+# define MATHLIB_WARNING3(fmt,x,x2,x3)	printf(fmt,x,x2,x3)
+# define MATHLIB_WARNING4(fmt,x,x2,x3,x4) printf(fmt,x,x2,x3,x4)
+#endif
 
 #define ME_NONE		0
+/*	no error */
 #define ME_DOMAIN	1
+/*	argument out of domain */
 #define ME_RANGE	2
-#define ME_NOCONV	3
-#define ME_PRECISION	4
-#define ME_UNDERFLOW	5
+/*	value out of range */
+#define ME_NOCONV	4
+/*	process did not converge */
+#define ME_PRECISION	8
+/*	does not have "full" precision */
+#define ME_UNDERFLOW	16
+/*	and underflow occured (important for IEEE)*/
 
-#undef ML_PRECISION_WARNINGS
 
 #ifdef IEEE_754
-#ifdef HAVE_IEEE754_H
-#include <ieee754.h> /* newer Linuxen */
-#else
-#ifdef HAVE_IEEEFP_H
-#include <ieeefp.h> /* others [Solaris 2.5.x], .. */
-#endif
-#endif
+
+# ifdef HAVE_IEEE754_H
+#  include <ieee754.h> /* newer Linuxen */
+# else
+#  ifdef HAVE_IEEEFP_H
+#   include <ieeefp.h> /* others [Solaris 2.5.x], .. */
+#  endif
+# endif
 
 extern double m_zero;
 extern double m_one;
@@ -86,7 +137,8 @@ extern double m_tiny;
 #define ML_NAN		(m_zero / m_zero)
 #define ML_UNDERFLOW	(m_tiny * m_tiny)
 #define ML_VALID(x)	(!isnan(x))
-#else
+
+#else/*--- NO IEEE: No +/-Inf, NAN,... ---*/
 #define ML_ERROR(x)	ml_error(x)
 #define ML_POSINF	DBL_MAX
 #define ML_NEGINF	(-DBL_MAX)
@@ -113,16 +165,13 @@ extern double m_tiny;
 	/* Name Hiding to Avoid Clashes with Fortran */
 
 #ifdef HIDE_NAMES
-#define d1mach	c_d1mach
-#define i1mach	c_i1mach
+# define d1mach	c_d1mach
+# define i1mach	c_i1mach
 #endif
 
 #define	rround	fround
 #define	prec	fprec
 #define	trunc	ftrunc
-/* NO!  fsign(.) has 2 arguments;  sign(.) has 1..
- #define	sign	fsign
-*/
 
 	/* Machine Characteristics */
 
@@ -135,13 +184,13 @@ int	i1mach_(int*);
 
 int	imax2(int, int);
 int	imin2(int, int);
-double	sign(double);
 double	fmax2(double, double);
 double	fmin2(double, double);
 double	fmod(double, double);
 double	fprec(double, double);
 double	fround(double, double);
 double	ftrunc(double);
+double	sign(double);
 double	fsign(double, double);
 double	fsquare(double);
 double	fcube(double);
@@ -178,14 +227,14 @@ double	lfastchoose(double, double);
 
 	/* Bessel Functions of All Kinds */
 
-double  bessel_i(double, double, double);
-double  bessel_j(double, double);
-double  bessel_k(double, double, double);
-double  bessel_y(double, double);
-void    I_bessel(double*, double*, long*, long*, double*, long*);
-void    J_bessel(double*, double*, long*,        double*, long*);
-void 	K_bessel(double*, double*, long*, long*, double*, long*);
-void	Y_bessel(double*, double*, long*,        double*, long*);
+double	bessel_i(double, double, double);
+double	bessel_j(double, double);
+double	bessel_k(double, double, double);
+double	bessel_y(double, double);
+void	I_bessel(double*, double*, long*, long*, double*, long*);
+void	J_bessel(double*, double*, long*,	 double*, long*);
+void	K_bessel(double*, double*, long*, long*, double*, long*);
+void	Y_bessel(double*, double*, long*,	 double*, long*);
 
 	/* Beta and Related Functions */
 

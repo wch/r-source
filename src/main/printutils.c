@@ -52,20 +52,52 @@
 #include "Mathlib.h"
 #include "Print.h"
 
-#define BUFSIZE 512
+#define BUFSIZE 8192
+/* FIXME: we shouldn't use a fixed BUFSIZE at all
+   -----  Rather, e.g. use moderate BUFSIZE (e.g. 256),
+   	  then  ALLOCATE  if we need more.
+ or replace the whole idea of		  sprintf(Encodebuf,..) ?
+ */
 static char Encodebuf[BUFSIZE];
+
+
+long Decode2Long(char *p, int *ierr)
+{
+    long v = strtol(p, &p, 10);
+    *ierr = 0;
+    if(p[0] == '\0') return v;
+    /* else look for letter-code ending : */
+    if(R_Verbose)
+        REprintf("Decode2Long(): v=%ld\n", v);
+    if(p[0] == 'M') {
+	if((Mega * (double)v) > LONG_MAX) { *ierr = 1; return(v); }
+	return (Mega*v);
+    }
+    else if(p[0] == 'K') {
+	if((1024 * (double)v) > LONG_MAX) { *ierr = 2; return(v); }
+	return (1024*v);
+    }
+    else if(p[0] == 'k') {
+	if((1000 * (double)v) > LONG_MAX) { *ierr = 3; return(v); }
+	return (1000*v);
+    }
+    else {
+	*ierr = -1;
+	return(v);
+    }
+}
 
 char *EncodeLogical(int x, int w)
 {
-	if (x == NA_LOGICAL) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
-	else if (x) sprintf(Encodebuf, "%*s", w, "TRUE");
+	if(x == NA_LOGICAL) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
+	else if(x) sprintf(Encodebuf, "%*s", w, "TRUE");
 	else sprintf(Encodebuf, "%*s", w, "FALSE");
 	return Encodebuf;
 }
 
 char *EncodeInteger(int x, int w)
 {
-	if (x == NA_INTEGER) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
+	if(x == NA_INTEGER) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
 	else sprintf(Encodebuf, "%*d", w, x);
 	return Encodebuf;
 }

@@ -5,6 +5,7 @@ print.family <- function(x, ...)
     cat("\nFamily:", x$family, "\n")
     cat("Link function:", x$link, "\n\n")
 }
+## FIXME:  power(lam) for 0 < lam != 1 shouldn't give identity!
 power <- function(lambda = 1)
 {
     if(lambda <= 0)
@@ -14,13 +15,15 @@ power <- function(lambda = 1)
 
 ## Written by Simon Davies Dec 1995
 ## Modified by Thomas Lumley 26 Apr 97
-## added valideta(eta) function returning TRUE if all of eta
-## is in the domain of linkinv
+## added valideta(eta) function..
 make.link <- function (link)
 {
-    ## This function is used with  glm().
-    ## Given a link, it returns a link function, an inverse link
-    ## function and the derivative dmu/deta.
+    if(!is.character(link) && !is.na(lambda <- as.numeric(link))) {
+        linkfun <- function(mu) mu^lambda
+        linkinv <- function(eta) eta^(1/lambda)
+        mu.eta <- function(eta) (1/lambda) * eta^(1/lambda - 1)
+        valideta <- function(eta) all(eta>0)
+    } else
     switch (link,
 	    "logit" = {
 		linkfun <- function(mu) log(mu/(1 - mu))
@@ -71,16 +74,7 @@ make.link <- function (link)
 		valideta <- function(eta) all(eta!=0)
 	    },
 	    ## else :
-	{
-	    if (!is.na(as.numeric(link))) {
-		lambda <- as.numeric(link)
-		linkfun <- function(mu) mu^lambda
-		linkinv <- function(eta) eta^(1/lambda)
-		mu.eta <- function(eta) (1/lambda) * eta^(1/lambda - 1)
-		valideta <- function(eta) all(eta>0)
-	    } else
 	    stop(paste(link, "link not recognised"))
-	}
 	    )# end switch(.)
     list(linkfun = linkfun, linkinv = linkinv,
 	 mu.eta = mu.eta, valideta = valideta)

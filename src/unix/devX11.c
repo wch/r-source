@@ -1021,7 +1021,7 @@ static void X11_Circle(double x, double y, int coords,
 static void X11_Line(double x1, double y1, double x2, double y2,
 		     int coords, DevDesc *dd)
 {
-    double xx1, yy1, xx2, yy2;
+    int xx1, yy1, xx2, yy2;
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
     /* In-place conversion ok */

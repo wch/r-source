@@ -4,12 +4,14 @@
 lm(formula, data, subset, weights, na.action=na.omit,
    method="qr", model=TRUE, singular.ok = TRUE)
 
-lm.fit(x, y, method = "qr", tol = 1e-7, \dots)
-lm.wfit(x, y, w, method = "qr", tol = 1e-7, \dots)
+lm.fit[.null] (x, y,    method = "qr", tol = 1e-7, \dots)
+lm.wfit[.null](x, y, w, method = "qr", tol = 1e-7, \dots)
 }
 \alias{lm}
 \alias{lm.fit}
 \alias{lm.wfit}
+\alias{lm.fit.null}
+\alias{lm.wfit.null}
 \arguments{
 \item{formula}{a symbolic description of the model to be fit.
 The details of model specification are given below.}

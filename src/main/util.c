@@ -652,7 +652,6 @@ int StringTrue(char *name)
     return (0);
 }
 
-
 int StringFalse(char *name)
 {
     int i;
@@ -660,6 +659,26 @@ int StringFalse(char *name)
 	if (!strcmp(name, falsenames[i]))
 	    return (1);
     return (0);
+}
+
+SEXP EnsureString(SEXP s)
+{
+    switch(TYPEOF(s)) {
+    case SYMSXP:
+	s = PRINTNAME(s);
+	break;
+    case STRSXP:
+	s = STRING(s)[0];
+	break;
+    case CHARSXP:
+	break;
+    case NILSXP:
+	s = R_BlankString;
+	break;
+    default:
+	error("invalid tag in name extraction\n");
+    }
+    return s;
 }
 
 

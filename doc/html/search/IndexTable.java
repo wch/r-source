@@ -5,13 +5,27 @@
   JAVA Source file for the class IndexTable
   
   COPYRIGHT (C), 1998, Thomas Baier
-  ALL RIGHTS RESERVED.
+
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+  
   
   $Source: /scratch/CVS-ARCHIVE/R/doc/html/search/IndexTable.java,v $
   
-  $Revision: 1.1 $
+  $Revision: 1.1.4.1 $
 
-  $Date: 1998/05/15 10:38:10 $
+  $Date: 1999/03/02 15:19:56 $
   
   $Author: leisch $
 
@@ -37,6 +51,7 @@ import java.util.Enumeration;
   NOTES:    
 
   HISTORY:  98-04-26: created
+            98-05-15: new static members for search-mode
 ------------------------------------------------------------------------------*/
 public class IndexTable extends Vector
 {
@@ -55,8 +70,9 @@ public class IndexTable extends Vector
     RETURNS:   Vector: a vector of found entries or null if no matches found
   
     HISTORY:   98-04-26: created
+               98-05-15: new parameter for search mode
   ----------------------------------------------------------------------------*/
-  public Vector search (String key)
+  public Vector search (String key,int mode)
   {
     Vector returnValue = new Vector ();
     Enumeration cursor = elements ();
@@ -64,7 +80,7 @@ public class IndexTable extends Vector
     while (cursor.hasMoreElements ()) {
       IndexEntry entry = (IndexEntry) cursor.nextElement ();
       
-      if (entry.matches (key)) {
+      if (entry.matches (key,mode)) {
 	returnValue.addElement (entry);
       }
     }
@@ -91,6 +107,7 @@ public class IndexTable extends Vector
   /*============================================================================
                                 Static Data
   ============================================================================*/
+  public static final int cSearchDescription = 0x00000001;
 }
 
 
@@ -99,8 +116,11 @@ public class IndexTable extends Vector
   HISTORY:
   
   $Log: IndexTable.java,v $
-  Revision 1.1  1998/05/15 10:38:10  leisch
-  New: Search Engine
+  Revision 1.1.4.1  1999/03/02 15:19:56  leisch
+  search used only kewords, no titles
+
+  Revision 1.2  1998/05/15 22:09:15  baier
+  support searching in description
 
   Revision 1.1  1998/04/26 21:46:51  baier
   Initial revision

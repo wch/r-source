@@ -18,7 +18,8 @@ match.call(definition = NULL, call = sys.call(sys.parent()),
   the current function, with all arguments named.
 }
 \seealso{
-  \code{\link{call}}
+  \code{\link{call}}, \code{\link{pmatch}}, \code{\link{match.arg}},
+  \code{\link{match.fun}}.
 }
 \examples{
 match.call(get, call("get", "abc", i = FALSE, p = 3))

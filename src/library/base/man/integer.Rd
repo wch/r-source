@@ -2,6 +2,7 @@
 \title{Integer Vectors}
 \alias{integer}
 \alias{as.integer}
+\alias{as.integer.default}
 \alias{is.integer}
 \usage{
 integer(length = 0)

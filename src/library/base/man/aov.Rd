@@ -1,4 +1,3 @@
-% file aov.Rd
 % copyright (C) 1998 B. D. Ripley
 %
 \name{aov}
@@ -7,6 +6,12 @@
 aov(formula, data=sys.parent(), projections=FALSE, contrasts=NULL, ...)
 }
 \alias{aov}
+\alias{print.aov}
+\alias{print.aovlist}
+\alias{summary.aov}
+\alias{summary.aovlist}
+\alias{print.summary.aov}
+\alias{print.summary.aovlist}
 \arguments{
  \item{formula}{A formula specifying the model.}
  \item{data}{A data frame in which the variables specified in the
@@ -38,32 +43,33 @@ aov(formula, data=sys.parent(), projections=FALSE, contrasts=NULL, ...)
 }
 \value{
   An object of class \code{c("aov", "lm")} or for multiple responses
-  of class \code{c("maov", "aov", "mlm", "lm")}.
+  of class \code{c("maov", "aov", "mlm", "lm")}.  There are
+  \code{\link{print}} and \code{\link{summary}} methods available for these.
 }
 \author{B.D. Ripley}
 \seealso{\code{\link{lm}},\code{\link{alias}},\code{\link{proj}},
-  \code{\link{model.tables}}}
-
+  \code{\link{model.tables}}
+}
 \examples{
 ## From Venables and Ripley (1997) p.210.
 N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
 P <- c(1,1,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,0,1,0,1,1,0)
 K <- c(1,0,0,1,0,1,1,0,0,1,0,1,0,1,1,0,0,0,1,1,1,0,1,0)
-yield <- c(49.5,62.8,46.8,57.0,59.8,58.5,55.5,56.0,62.8,55.8,69.5,
-55.0, 62.0,48.8,45.5,44.2,52.0,51.5,49.8,48.8,57.2,59.0,53.2,56.0)
-
+yield <- c(49.5,62.8,46.8,57.0,59.8,58.5,55.5,56.0,62.8,55.8,69.5,55.0,
+           62.0,48.8,45.5,44.2,52.0,51.5,49.8,48.8,57.2,59.0,53.2,56.0)
 npk <- data.frame(block=gl(6,4), N=factor(N), P=factor(P),
                   K=factor(K), yield=yield)
-npk.aov <- aov(yield ~ block + N*P*K, npk)
-npk.aov
+
+( npk.aov <- aov(yield ~ block + N*P*K, npk) )
 summary(npk.aov)
 coefficients(npk.aov)
 
 ## as a test, not particularly sensible statistically
-options(contrasts=c("contr.helmert", "contr.treatment"))
+op <- options(contrasts=c("contr.helmert", "contr.treatment"))
 npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
 npk.aovE
 summary(npk.aovE)
+options(op)# reset to previous
 }
 \keyword{models}
 \keyword{regression}

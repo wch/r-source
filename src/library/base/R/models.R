@@ -43,11 +43,19 @@ terms <- function(x, ...) UseMethod("terms")
 terms.default <- function(x) x$terms
 terms.terms <- function(x, ...) x
 print.terms <- function(x) print.default(unclass(x))
+#delete.response <- function (termobj)
+#{
+#    intercept <- if (attr(termobj, "intercept")) "1" else "0"
+#    terms(reformulate(c(attr(termobj, "term.labels"), intercept), NULL),
+#	  specials = names(attr(termobj, "specials")))
+#}
+
 delete.response <- function (termobj)
 {
-    intercept <- if (attr(termobj, "intercept")) "1" else "0"
-    terms(reformulate(c(attr(termobj, "term.labels"), intercept), NULL),
-	  specials = names(attr(termobj, "specials")))
+    f<-formula(termobj)
+    if (length(f) == 3) 
+        f[[2]]<-NULL
+    terms(f)
 }
 
 reformulate <- function (termlabels, response=NULL)
@@ -114,9 +122,11 @@ coef.default <- function(x, ...) x$coefficients
 coefficients <- .Alias(coef)
 
 residuals <- function(x, ...) UseMethod("residuals")
+residuals.default <- function(x) x$residuals
 resid <- .Alias(residuals)
 
 deviance <- function(x, ...) UseMethod("deviance")
+deviance.default <- function(x) x$deviance
 
 fitted <- function(x, ...) UseMethod("fitted")
 fitted.default <- function(x) x$fitted
@@ -148,13 +158,34 @@ na.fail <- function(frame)
     if(all(ok)) frame else stop("missing values in data frame");
 }
 
-na.omit <- function(frame)
-{
-    ok <- complete.cases(frame)
-    if (all(ok))
-	frame
-    else frame[ok, ]
-}
+na.omit <- function(frame)  {
+    n <- length(frame)
+    omit <- FALSE
+    vars <- seq(length = n)
+    for(j in vars) {
+	x <- frame[[j]]
+	if(!is.atomic(x)) next
+    # variables are assumed to be either some sort of matrix, numeric or cat'y
+	x <- is.na(x)
+	d <- dim(x)
+	if(is.null(d) || length(d) != 2)
+		omit <- omit | x
+	else {
+	    for(ii in 1:d[2])
+		    omit <- omit | x[, ii]
+	    }
+	}
+    xx <- frame[!omit,  , drop = F]
+    if (any(omit)) {
+	temp <- seq(omit)[omit]
+	names(temp) <- row.names(frame)[omit]
+	attr(temp, 'class') <- 'omit'
+	attr(xx, "na.action") <- temp
+	}
+    xx
+    }
+
+
 
 ##-- used nowhere (0.62)
 ##- model.data.frame <- function(...) {
@@ -183,7 +214,7 @@ model.frame.default <-
 	formula <- as.formula(data)
     }
     if(missing(na.action)) {
-	if(!is.null(naa <- attr(data, "na.action")))
+	if(!is.null(naa <- attr(data, "na.action")) & mode(naa)!="numeric")
 	    na.action <- naa
 	else if(!is.null(naa <- options("na.action")[[1]]))
 	    na.action <- naa

@@ -2,6 +2,7 @@
 \title{Logical Vectors}
 \alias{logical}
 \alias{as.logical}
+\alias{as.logical.default}
 \alias{is.logical}
 \alias{TRUE}
 \alias{FALSE}

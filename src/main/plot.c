@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -443,7 +443,7 @@ static void GetAxisLimits(double left, double right, double *low, double *high)
 /*	Called from do_axis()	such as
  *	GetAxisLimits(dd->gp.usr[0], dd->gp.usr[1], &low, &high)
  *
- *	Computes  *low < *high
+ *	Computes  *low < left, right < *high  (even if left=right)
  */
     double eps;
     if(left > right) {/* swap */
@@ -701,7 +701,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* retrieve relevant "par" values */
 
     switch(side) {
-    case 1:
+    case 1: 
     case 3:
 	axp[0] = dd->dp.xaxp[0];
 	axp[1] = dd->dp.xaxp[1];
@@ -754,7 +754,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->gp.xpd = 1;
     dd->gp.adj = 0.5;
     dd->gp.font = dd->gp.fontaxis;
-    dd->gp.cex = dd->gp.cex * dd->gp.cexbase;
+    dd->gp.cex = dd->gp.cexbase * dd->gp.cexaxis;
     col = dd->gp.col;
     fg = dd->gp.fg;
 
@@ -779,7 +779,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Draw the axis */
     GMode(dd, 1);
     switch (side) {
-    case 1:
+    case 1: /*--- x-axis -- horizontal --- */
     case 3:
 	GetAxisLimits(dd->gp.usr[0], dd->gp.usr[1], &low, &high);
 	if (side == 3) {
@@ -849,8 +849,9 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		else {
 		    labw = GStrWidth(CHAR(STRING(lab)[i]), NFC, dd);
 		    tnew = tempx - 0.5 * labw;
-		    /* Check that there is room for labels */
-		    if (dd->gp.las == 2 || tnew - tlast >= gap) {
+		    /* Check room for  perpendicular labels: */
+		    if (dd->gp.las == 2 || dd->gp.las == 3 || 
+			tnew - tlast >= gap) {
 			GMtext(CHAR(STRING(lab)[i]), side,
 			       dd->gp.mgp[1], 0, x,
 			       dd->gp.las, dd);
@@ -860,7 +861,8 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 	break;
-    case 2:
+
+    case 2: /*--- y-axis -- vertical --- */
     case 4:
 	GetAxisLimits(dd->gp.usr[2], dd->gp.usr[3], &low, &high);
 	if (side == 4) {
@@ -927,11 +929,12 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 			       dd->gp.mgp[1], 0, y, dd->gp.las, dd);
 		}
 		else {
-		    labw = GStrWidth(CHAR(STRING(lab)[i]),
-				     INCHES, dd);
+		    labw = GStrWidth(CHAR(STRING(lab)[i]), INCHES, dd);
 		    labw = GConvertYUnits(labw, INCHES, NFC, dd);
 		    tnew = tempy - 0.5 * labw;
-		    if (dd->gp.las > 0 || tnew - tlast >= gap) {
+		    /* Check room for  perpendicular labels: */
+		    if (dd->gp.las == 1 || dd->gp.las == 2 || 
+			tnew - tlast >= gap) {
 			GMtext(CHAR(STRING(lab)[i]), side,
 			       dd->gp.mgp[1], 0, y,
 			       dd->gp.las, dd);
@@ -969,6 +972,9 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     GCheckState(dd);
     if(length(args) < 6)
 	errorcall(call, "too few arguments\n");
+
+    sx = R_NilValue;            /* -Wall */
+    sy = R_NilValue;            /* -Wall */
 
     /* Required Arguments */
     sxy = CAR(args);
@@ -1123,15 +1129,17 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     else if (type == 'h') { /* h[istogram] (bar plot) */
 	dd->gp.col = INTEGER(col)[0];
+	if (dd->gp.ylog)
+	    yold = dd->gp.usr[2];/* DBL_MIN fails.. why ???? */
+	else
+	    yold = 0.0;
+	yold = GConvertY(yold, USER, DEVICE, dd);
 	for (i = 0; i < n; i++) {
 	    xx = x[i];
 	    yy = y[i];
-	    xold = xx;
-	    yold = 0.0;
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
-	    GConvert(&xold, &yold, USER, DEVICE, dd);
 	    if (FINITE(xx) && FINITE(yy)) {
-		GLine(xold, yold, xx, yy, DEVICE, dd);
+		GLine(xx, yold, xx, yy, DEVICE, dd);
 	    }
 	}
     }
@@ -1523,6 +1531,9 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(length(args) < 3) errorcall(call, "too few arguments\n");
 
+    sx = R_NilValue;            /* -Wall */
+    sy = R_NilValue;            /* -Wall */
+
     sxy = CAR(args);
     if (isNewList(sxy) && length(sxy) >= 2) {
 	    internalTypeCheck(call, sx = VECTOR(sxy)[0], REALSXP);
@@ -1596,8 +1607,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else
 		dd->gp.col = dd->dp.col;
 	    if(ncex && FINITE(REAL(cex)[i%ncex]))
-		dd->gp.cex = dd->gp.cexbase *
-		    REAL(cex)[i % ncex];
+		dd->gp.cex = dd->gp.cexbase * REAL(cex)[i % ncex];
 	    else
 		dd->gp.cex = dd->gp.cexbase;
 	    if (nfont && INTEGER(font)[i % nfont] != NA_INTEGER)
@@ -1680,35 +1690,31 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     /* If there was no "adj=" , choose a default based on "las". */
 
     if (!FINITE(adj)) {
-      switch(dd->gp.las) {
-      case 0:
-	adj = 0.5;
-	break;
-      case 1:
-	switch(side) {
-	case 1:
-	case 3:
-	  adj = 0.5;
-	  break;
-	case 2:
-	  adj = 1.0;
-	  break;
-	case 4:
-	  adj = 0.0;
-	  break;
+	switch(dd->gp.las) {
+	case 0:/* parallel to axis */
+	    adj = 0.5; break;
+	case 1:/* horizontal */
+	    switch(side) {
+	    case 1:
+	    case 3: adj = 0.5; break;
+	    case 2: adj = 1.0; break;
+	    case 4: adj = 0.0; break;
+	    }
+	case 2:/* perpendicular to axis */
+	    switch(side) {
+	    case 1:
+	    case 2: adj = 1.0; break;
+	    case 3:
+	    case 4: adj = 0.0; break;
+	    }
+	case 3:/* vertical */
+	    switch(side) {
+	    case 1: adj = 1.0; break;
+	    case 3: adj = 0.0; break;
+	    case 2:
+	    case 4: adj = 0.5; break;
+	    }
 	}
-      case 2:
-	switch(side) {
-	case 1:
-	case 2:
-	  adj = 1.0;
-	  break;
-	case 3:
-	case 4:
-	  adj = 0.0;
-	  break;
-	}
-      }
     }
     dd->gp.adj = adj;
 
@@ -2057,8 +2063,6 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
     while(i < n) {
 	if(!GLocator(&(REAL(x)[i]), &(REAL(y)[i]), USER, dd))
 	    break;
-	if (dd->gp.xlog) REAL(x)[i] = pow(10., REAL(x)[i]);
-	if (dd->gp.ylog) REAL(y)[i] = pow(10., REAL(y)[i]);
 	i += 1;
     }
     GMode(dd, 0);
@@ -2343,6 +2347,8 @@ SEXP do_strwidth(SEXP call, SEXP op, SEXP args, SEXP env)
     DevDesc *dd = CurrentDevice();
 
     checkArity(op, args);
+    GCheckState(dd);
+
     str = CAR(args);
     if((TYPEOF(str) != STRSXP) && (TYPEOF(str) != EXPRSXP))
 	errorcall(call, "character or expression first argument expected\n");

@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -104,7 +105,7 @@ static void AsciiOutReal(FILE *fp, double x)
 	else
 	    fprintf(fp, "Inf");
     }
-    else fprintf(fp, "%g", x);
+    else fprintf(fp, "%.16g", x);/* 16: full precision; 17 gives 999, 000 &c */
 }
 
 static double AsciiInReal(FILE *fp)
@@ -997,9 +998,10 @@ static SEXP DataLoad(FILE *fp)
     /* return the "top-level" object */
     /* this is usually a list */
 
+    i = InInteger(fp);
     InTerm(fp);
 
-    return OffsetToNode(InInteger(fp));
+    return OffsetToNode(i);
 }
 
 void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
@@ -1060,7 +1062,7 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(CADDR(args)) != LGLSXP)
 	errorcall(call, "third argument must be a logical vector\n");
 
-    fp = R_fopen(CHAR(STRING(CADR(args))[0]), "wb");
+    fp = R_fopen(R_ExpandFileName(CHAR(STRING(CADR(args))[0])), "wb");
     if (!fp)
 	errorcall(call, "unable to open file\n");
 
@@ -1071,6 +1073,8 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
     for (j = 0; j < len; j++, t = CDR(t)) {
 	TAG(t) = install(CHAR(STRING(CAR(args))[j]));
 	CAR(t) = findVar(TAG(t), R_GlobalContext->sysparent);
+	if (CAR(t) == R_UnboundValue)
+            error("Object \"%s\" not found\n", CHAR(PRINTNAME(TAG(t))));
     }
 
     R_SaveToFile(s, fp, INTEGER(CADDR(args))[0]);
@@ -1148,7 +1152,7 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Process the saved file to obtain a list of saved objects. */
 
-    fp = R_fopen(CHAR(STRING(CAR(args))[0]), "rb");
+    fp = R_fopen(R_ExpandFileName(CHAR(STRING(CAR(args))[0])), "rb");
     if (!fp)
 	errorcall(call, "unable to open file\n");
     ans = R_LoadFromFile(fp);
@@ -1807,10 +1811,12 @@ SEXP
 do_hdf5save (SEXP call, SEXP op, SEXP args, SEXP env)
 {
     errorcall(call, "HDF5 support unavailable\n");
+    return(R_NilValue);		/* -Wall */
 }
 SEXP
 do_hdf5load (SEXP call, SEXP op, SEXP args, SEXP env)
 {
     errorcall(call, "HDF5 support unavailable\n");
+    return(R_NilValue);		/* -Wall */    
 }
 #endif

@@ -25,12 +25,14 @@ is.matrix(x)
   function is generic with a default and a \code{\link{data.frame}} method.
 
   \code{is.matrix} returns \code{TRUE} if \code{x} is a matrix (i.e., it
-  has a \code{\link{dim}} attribute of length 2) and \code{FALSE} otherwise.
+  \emph{not} a \code{\link{data.frame}} and has a \code{\link{dim}}
+  attribute of length 2) and \code{FALSE} otherwise.
 }
 \seealso{\code{\link{data.matrix}}.}
 \examples{
 is.matrix(as.matrix(1:10))
 data(warpbreaks)
+!is.matrix(warpbreaks)# data.frame, NOT matrix!
 str(warpbreaks)
 str(as.matrix(warpbreaks))#using as.matrix.data.frame(.) method
 }

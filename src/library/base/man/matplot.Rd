@@ -1,11 +1,11 @@
 \name{matplot}
 \title{Plot Columns of Matrices}
 \usage{
-matplot(x, y, type = "p", lty = 1:5, pch = NULL, col = 1:6,
+matplot(x, y, type = "p", lty = 1:5, lwd = 1, pch = NULL, col = 1:6,
         xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
         ..., add = FALSE)
-matpoints(x, y, lty = 1:5, pch = NULL, col = 1:6)
-matlines(x, y, lty = 1:5, pch = NULL, col = 1:6)
+matpoints(x, y, lty = 1:5, lwd = 1, pch = NULL, col = 1:6)
+matlines(x, y, lty = 1:5, lwd = 1, pch = NULL, col = 1:6)
 }
 \alias{matplot}
 \alias{matpoints}
@@ -22,7 +22,7 @@ matlines(x, y, lty = 1:5, pch = NULL, col = 1:6)
     defines the first plot, the second character the second, etc.
     Characters in \code{type} are cycled through; e.g., \code{"pl"}
     alternately plots points and lines.}
-  \item{lty}{vector of line types.
+  \item{lty,lwd}{vector of line types and widths.
     The first element is for the first column, the second element for
     the second column, etc., even if lines are not plotted for all
     columns. Line types will be used cyclically until all plots are

@@ -5,7 +5,6 @@ anova(object, \dots)
 anovalist(object, \dots, test = NULL)
 summary(object, correlation = FALSE)
 coefficients(x) ; coef(x)
-deviance(x)
 df.residual(x)
 family(x)
 formula(x)
@@ -20,11 +19,12 @@ print.summary(summary.lm.obj, digits = max(3, .Options$digits - 3),
 }
 \alias{anova.lm}
 \alias{anova.lm.null}
+\alias{anova.mlm}
 \alias{anovalist.lm}
 \alias{summary.lm}
 \alias{summary.lm.null}
+\alias{summary.mlm}
 \alias{coefficients.lm}
-\alias{deviance.lm}
 \alias{df.residual.lm}
 \alias{family.lm}
 \alias{formula.lm}
@@ -33,6 +33,7 @@ print.summary(summary.lm.obj, digits = max(3, .Options$digits - 3),
 \alias{weights}
 \alias{weights.lm}
 \alias{plot.lm}
+\alias{plot.mlm}
 \alias{print.lm}
 \alias{print.lm.null}
 \alias{print.summary.lm}
@@ -92,7 +93,8 @@ various useful features of the value returned by \code{lm}.
 The model fitting function \code{\link{lm}}.
 
 \code{\link{anova}} for the ANOVA table,
-\code{\link{coefficients}}, \code{\link{effects}}, \code{\link{fitted.values}},
+\code{\link{coefficients}}, \code{\link{deviance}},
+\code{\link{effects}}, \code{\link{fitted.values}},
 \code{\link{glm}} for \bold{generalized} linear models,
 \code{\link{lm.influence}} for regression diagnostics,
 \code{\link{residuals}}, \code{\link{summary}}.

@@ -13,9 +13,10 @@ rug(x, ticksize=0.03, side=1, lwd=0.5)
  \item{lwd}{The line width of the ticks.}
 }
 \description{
-Adds a representation of the data to the plot.
+    Adds a \emph{rug} representation (1-d plot) of the data to the plot.
 }
 \author{B.D. Ripley}
+\seealso{\code{\link{jitter}} which you may want for ties in \code{x}.}
 \examples{
 data(faithful)
 attach(faithful)

@@ -2,6 +2,7 @@
 \title{Character Vectors}
 \alias{character}
 \alias{as.character}
+\alias{as.character.default}
 \alias{is.character}
 \usage{
 character(length = 0)

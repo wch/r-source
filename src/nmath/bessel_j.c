@@ -24,7 +24,6 @@
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
 #include "Mathlib.h"
-#include "Error.h"
 
 double bessel_j(double x, double alpha)
 {
@@ -44,11 +43,11 @@ double bessel_j(double x, double alpha)
     J_bessel(&x, &alpha, &nb, bj, &ncalc);
     if(ncalc != nb) {/* error input */
       if(ncalc < 0)
-	warning("bessel_j(%g): ncalc (=%d) != nb (=%d); alpha=%g.%s\n",
-		x, ncalc, nb, alpha," Arg. out of range?");
+	MATHLIB_WARNING4("bessel_j(%g): ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n",
+			 x, ncalc, nb, alpha);
       else
-	warning("bessel_j(%g,nu=%g): precision lost in result\n",
-		x, alpha+nb-1);
+	MATHLIB_WARNING2("bessel_j(%g,nu=%g): precision lost in result\n",
+			 x, alpha+nb-1);
     }
     x = bj[nb-1];
     free(bj);

@@ -4,6 +4,7 @@
 a\%*\%b
 }
 \alias{\%*\%}
+\alias{matmult}
 \description{
   Multiplies two matrices, if they are conformable.
   If one argument is a vector, it will be coerced to a either a row or column

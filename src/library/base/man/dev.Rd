@@ -58,6 +58,9 @@ the list of devices.
 \seealso{
 \code{\link{Devices}}, such as \code{\link{postscript}}, etc;
 \code{\link{graphic.off}()} for closing all devices.
+
+\code{\link{layout}} and its links for setting up plotting regions on
+the current device.
 }
 \examples{
 \dontrun{

@@ -631,9 +631,10 @@ static SEXP xxexprlist(SEXP a1, SEXP a2)
 static SEXP TagArg(SEXP arg, SEXP tag)
 {
     switch (TYPEOF(tag)) {
+    case STRSXP:
+    	tag = install(CHAR(STRING(tag)[0]));
     case NILSXP:
     case SYMSXP:
-    case STRSXP:
 	return lang2(arg, tag);
     default:
 	error("incorrect tag type\n"); return R_NilValue/* -Wall */;

@@ -1,7 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1995  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997  The R Core Team
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997-1999 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,8 +50,8 @@
  *  2. The dlopen interface is not available.
  *
  *  In this case we use the table "CFunTabEntry" to locate functions
- *  in the executable.  We do this by straight linear search through
- *  the table.  Note that the content of the table is created at
+ *  in the executable.	We do this by straight linear search through
+ *  the table.	Note that the content of the table is created at
  *  system build time from the list in ../appl/ROUTINES.
  */
 
@@ -67,8 +67,8 @@
 
 typedef int (*DL_FUNC)();
 typedef struct {
-        char *name;
-        DL_FUNC func;
+    char *name;
+    DL_FUNC func;
 } CFunTabEntry;
 
 #include "FFDecl.h"
@@ -80,11 +80,11 @@ typedef struct {
 static CFunTabEntry CFunTab[] =
 {
 #include "FFTab.h"
-        {NULL, NULL}
+    {NULL, NULL}
 };
 
 /* The following code loads in a compatibility module written by Luke
-   Tierney to support S version 4 on Hewlett-Packard machines.  The
+   Tierney to support S version 4 on Hewlett-Packard machines.	The
    relevant defines are set up by autoconf. */
 
 #ifdef HAVE_DLFCN_H
@@ -108,7 +108,7 @@ static void *dlhandle;
 void InitFunctionHashing()
 {
 #ifdef DL_SEARCH_PROG
-	dlhandle = dlopen(0, RTLD_LAZY);
+    dlhandle = dlopen(0, RTLD_LAZY);
 #endif
 }
 
@@ -118,8 +118,8 @@ void InitFunctionHashing()
 static int CountDLL = 0;
 
 static struct {
-	char	*path;
-	void	*handle;
+    char	*path;
+    void	*handle;
 }
 LoadedDLL[MAX_NUM_DLLS];
 
@@ -129,24 +129,28 @@ LoadedDLL[MAX_NUM_DLLS];
 
 static int DeleteDLL(char *path)
 {
-	int i, loc;
-	for(i=0 ; i<CountDLL ; i++) {
-		if(!strcmp(path, LoadedDLL[i].path)) {
-			loc = i;
-			goto found;
-		}
+    int i, loc;
+    for(i=0 ; i<CountDLL ; i++) {
+	if(!strcmp(path, LoadedDLL[i].path)) {
+	    loc = i;
+	    goto found;
 	}
-	return 0;
+    }
+    return 0;
 found:
-	free(LoadedDLL[i].path);
-	dlclose(LoadedDLL[i].handle);
-	for(i=loc+1 ; i<CountDLL ; i++) {
-		LoadedDLL[i-1].path = LoadedDLL[i].path;
-		LoadedDLL[i-1].handle = LoadedDLL[i].handle;
-	}
-	CountDLL--;
-	return 1;
+    free(LoadedDLL[i].path);
+    dlclose(LoadedDLL[i].handle);
+    for(i=loc+1 ; i<CountDLL ; i++) {
+	LoadedDLL[i-1].path = LoadedDLL[i].path;
+	LoadedDLL[i-1].handle = LoadedDLL[i].handle;
+    }
+    CountDLL--;
+    return 1;
 }
+
+#define DLLerrBUFSIZE 1000
+static char DLLerror[DLLerrBUFSIZE] = "";
+/* the error message; length taken from ERRBUFSIZE in ./hpdlfcn.c  */
 
 	/* Inserts the specified DLL at the start of the DLL list */
 	/* All the other entries are "moved down" by one. */
@@ -156,30 +160,34 @@ found:
 
 static int AddDLL(char *path)
 {
-	void *handle;
-	char *dpath;
-	int i;
-	if(CountDLL == MAX_NUM_DLLS)
-		return 0;
-	handle = dlopen(path, RTLD_LAZY);
-	if(handle == NULL)
-		return 0;
-	dpath = malloc(strlen(path)+1);
-	if(dpath == NULL) {
-		dlclose(handle);
-		return 0;
-	}
-	strcpy(dpath, path);
-	for(i=CountDLL ; i>0 ; i--) {
-		LoadedDLL[i].path = LoadedDLL[i-1].path;
-		LoadedDLL[i].handle = LoadedDLL[i-1].handle;
-	}
-	LoadedDLL[0].path = dpath;
-	LoadedDLL[0].handle = handle;
-	CountDLL++;
-	return 1;
+    void *handle;
+    char *dpath;
+    int i;
+    if(CountDLL == MAX_NUM_DLLS) {
+	strcpy(DLLerror, "Maximal number of DLLs reached...");
+	return 0;
+    }
+    handle = dlopen(path, RTLD_LAZY);
+    if(handle == NULL) {
+	strcpy(DLLerror, dlerror());
+	return 0;
+    }
+    dpath = malloc(strlen(path)+1);
+    if(dpath == NULL) {
+	strcpy(DLLerror,"Couldn't allocate space for 'path'");
+	dlclose(handle);
+	return 0;
+    }
+    strcpy(dpath, path);
+    for(i=CountDLL ; i>0 ; i--) {
+	LoadedDLL[i].path = LoadedDLL[i-1].path;
+	LoadedDLL[i].handle = LoadedDLL[i-1].handle;
+    }
+    LoadedDLL[0].path = dpath;
+    LoadedDLL[0].handle = handle;
+    CountDLL++;
+    return 1;
 }
-
 
 	/* R_FindSymbol checks whether one of the libraries */
 	/* that have been loaded contains the symbol name and */
@@ -188,40 +196,42 @@ static int AddDLL(char *path)
 
 DL_FUNC R_FindSymbol(char const *name)
 {
-	char buf[MAXIDSIZE+1];
-	DL_FUNC fcnptr;
-	int i;
-
+    char buf[MAXIDSIZE+1];
+    DL_FUNC fcnptr;
+    int i;
+    
 #ifdef HAVE_NO_SYMBOL_UNDERSCORE
-	sprintf(buf, "%s", name);
+    sprintf(buf, "%s", name);
 #else
-	sprintf(buf, "_%s", name);
+    sprintf(buf, "_%s", name);
 #endif
 
 	/* The following is not legal ANSI C. */
 	/* It is only meant to be used in systems supporting */
 	/* the dlopen() interface, in which systems data and  */
 	/* function pointers _are_ the same size and _can_   */
-	/* be cast without loss of information.              */
+	/* be cast without loss of information.		     */
 
-	for (i=0 ; i<CountDLL ; i++) {
-		fcnptr = (DL_FUNC)dlsym(LoadedDLL[i].handle, buf);
-		if (fcnptr != (DL_FUNC)0) return fcnptr;
-	}
+    for (i=0 ; i<CountDLL ; i++) {
+	fcnptr = (DL_FUNC)dlsym(LoadedDLL[i].handle, buf);
+	if (fcnptr != (DL_FUNC)0) return fcnptr;
+    }
 #ifdef DL_SEARCH_PROG
-	fcnptr = (DL_FUNC)dlsym(dlhandle, buf);
+    fcnptr = (DL_FUNC)dlsym(dlhandle, buf);
 #else
-	for(i=0 ; CFunTab[i].name ; i++)
-		if(!strcmp(name, CFunTab[i].name))
-			return CFunTab[i].func;
+    for(i=0 ; CFunTab[i].name ; i++)
+	if(!strcmp(name, CFunTab[i].name))
+	    return CFunTab[i].func;
 #endif
-	return (DL_FUNC)0;
+    return (DL_FUNC)0;
 }
 
 
 static void GetFullDLLPath(SEXP call, char *buf, char *path)
 {
-    if(path[0] != '/') {
+    if(path[0] == '~')
+	strcpy(buf, R_ExpandFileName(path));
+    else if(path[0] != '/') {
 #ifdef HAVE_UNISTD_H
 	if(!getcwd(buf, MAXPATHLEN))
 #endif
@@ -237,27 +247,28 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
 
 SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	char buf[2*MAXPATHLEN];
-	checkArity(op,args);
-	if (!isString(CAR(args)) || length(CAR(args)) < 1)
-		errorcall(call, "character argument expected\n");
-	GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
-	DeleteDLL(buf);
-	if(!AddDLL(buf))
-		errorcall(call, "unable to load shared library \"%s\"\n", buf);
-	return R_NilValue;
+    char buf[2*MAXPATHLEN];
+    checkArity(op,args);
+    if (!isString(CAR(args)) || length(CAR(args)) < 1)
+	errorcall(call, "character argument expected\n");
+    GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
+    DeleteDLL(buf);
+    if(!AddDLL(buf))
+	errorcall(call, "unable to load shared library \"%s\":\n  %s\n",
+		  buf, DLLerror);
+    return R_NilValue;
 }
 
 SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	char buf[2*MAXPATHLEN];
-	checkArity(op,args);
-	if (!isString(CAR(args)) || length(CAR(args)) < 1)
-		errorcall(call, "character argument expected\n");
-	GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
-	if(!DeleteDLL(buf))
-		errorcall(call, "shared library \"%s\" was not loaded\n", buf);
-	return R_NilValue;
+    char buf[2*MAXPATHLEN];
+    checkArity(op,args);
+    if (!isString(CAR(args)) || length(CAR(args)) < 1)
+	errorcall(call, "character argument expected\n");
+    GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
+    if(!DeleteDLL(buf))
+	errorcall(call, "shared library \"%s\" was not loaded\n", buf);
+    return R_NilValue;
 }
 
 #else
@@ -265,28 +276,28 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 void InitFunctionHashing()
 {
 #ifdef OLD
-        NaokSymbol = install("NAOK");
-        DupSymbol = install("DUP");
+    NaokSymbol = install("NAOK");
+    DupSymbol = install("DUP");
 #endif
 }
 
 DL_FUNC R_FindSymbol(char const *name)
 {
-	int i;
-	for(i=0 ; CFunTab[i].name ; i++)
-		if(!strcmp(name, CFunTab[i].name))
-			return CFunTab[i].func;
-	return (DL_FUNC)0;
+    int i;
+    for(i=0 ; CFunTab[i].name ; i++)
+	if(!strcmp(name, CFunTab[i].name))
+	    return CFunTab[i].func;
+    return (DL_FUNC)0;
 }
 
 SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	error("no dyn.load support in this R version\n");
+    error("no dyn.load support in this R version\n");
 }
 
 SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	error("no dyn.load support in this R version\n");
+    error("no dyn.load support in this R version\n");
 }
 
 #endif

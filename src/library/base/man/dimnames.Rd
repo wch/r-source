@@ -14,11 +14,12 @@ dimnames(x) <- nlist
 \details{
   The functions \code{dimnames} and \code{dimnames<-} are generic.
 
-  For an array (and hence in particular, for a matrix), they retrieve or
-  set the \code{dimnames} attribute of the object.
+  For an \code{\link{array}} (and hence in particular, for a
+  \code{\link{matrix}}), they retrieve or
+  set the \code{dimnames} attribute (see \link{attributes}) of the object.
 
   Both have methods for data frames.  The dimnames of a data frame are
-  its \code{row.names} attribute and its \code{names}.
+  its \code{row.names} attribute and its \code{\link{names}}.
 }
 \seealso{
   \code{\link{rownames}}, \code{\link{colnames}};

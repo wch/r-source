@@ -11,6 +11,8 @@ model.tables.aovlist(x, type = "effects", se = FALSE, ...)
 \alias{model.tables}
 \alias{model.tables.aov}
 \alias{model.tables.aovlist}
+
+\alias{print.tables.aov}
 \arguments{
  \item{x}{a model object, usually produced by \code{aov}}
  \item{type}{type of table: currently only \code{"effects"} and
@@ -30,7 +32,7 @@ model.tables.aovlist(x, type = "effects", se = FALSE, ...)
  combinations of levels of the factors in a term.
 }
 \value{
-  A list to be printed by \code{print.tables.aov}. It may contain components
+  An object of class \code{"tables.aov"}, as list which may contain components
   \item{tables}{A list of tables for each requested term.}
   \item{n}{The replication information for each term.}
   \item{se}{Standard error information.}

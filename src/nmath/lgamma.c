@@ -39,7 +39,6 @@
  */
 
 #include "Mathlib.h"
-#include "Error.h"
 
 int signgam;
 
@@ -85,7 +84,7 @@ double lgammafn(double x)
 
 	if (sinpiy == 0) { /* Negative integer argument ===
 			      Now UNNECESSARY: caught above */
-	    warning(" **this  should NEVER happen! *** [lgamma.c: Neg.int]\n");
+	    MATHLIB_WARNING(" ** should NEVER happen! *** [lgamma.c: Neg.int, y=%g]\n",y);
 	    ML_ERROR(ME_DOMAIN);
 	    return ML_NAN;
 	}

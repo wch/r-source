@@ -18,32 +18,38 @@ SUBDIRS = Examples
 ## FIXME
 
 RHOME= ..
-R    = $(RHOME)/bin/R --vanilla
+R    = LC_ALL=C $(RHOME)/bin/R --vanilla
 
 Ex = ./Examples
 
 TESTsrc = simple-true.R simple-tests.R d-p-q-r-tests.R \
-	 print-tests.R is-things.R primitive-funs.R
+	 print-tests.R is-things.R primitive-funs.R eval-etc.R
 
 TESTout = $(TESTsrc:.R=.Rout)
 
-%.Rout: %.R $(top_builddir)/stamp-R
+%.Rout: %.R stamp-R
+	@rm -f $@.fail
 	@(SRCDIR=$(srcdir); export SRCDIR; \
 	  echo "$(R) < $< > $@"; \
 	  $(R) < $< > $@)
-	$(srcdir)/Rdiff $@ $(srcdir)/$@.save
+	@echo -n "Comparing \`$@' to \`$(srcdir)/$@.save' ..."
+	@$(srcdir)/Rdiff $@ $(srcdir)/$@.save || \
+	  (mv $@ $@.fail && exit 1)
+	@echo " OK"
 
 test-All: test-Examples $(TESTout)
 
 test-Examples:
-	-(cd $(Ex); $(MAKE) $@)
+	@cd $(Ex) && $(MAKE) $@
 
-$(top_builddir)/stamp-R:
-	-(cd $(top_builddir) && $(MAKE) R)
+stamp-R:: $(top_builddir)/bin/R.binary $(top_builddir)/library/base/R/base
+	@cd $(top_builddir) && $(MAKE) R
+	@touch $@
 
 mostlyclean: clean
 clean:
 	-(cd $(Ex); $(MAKE) $@)
+	rm -f stamp-R
 distclean: clean
 	@rm -f $(TESTout)
 	-(cd $(Ex); $(MAKE) $@)

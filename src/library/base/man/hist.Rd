@@ -3,7 +3,8 @@
 \usage{
 hist(x, \dots)
 hist.default(x, breaks, freq = NULL, probability = !freq,
-     include.lowest = TRUE, col = NULL, border = par("fg"),
+     include.lowest = TRUE, right = TRUE,
+     col = NULL, border = par("fg"),
      main = paste("Histogram of" , deparse(substitute(x))),
      xlim = range(breaks),  ylim = range(counts, 0),
      xlab = deparse(substitute(x)),  ylab,
@@ -24,7 +25,10 @@ or a vector giving the breakpoints between histogram cells.}
   equidistant.}
 \item{probability}{an \emph{alias} for \code{!freq}, for S compatibility.}
 \item{include.lowest}{logical; if \code{TRUE},
-  an `x[i]' equal to the `breaks' value will be included in the first bar.}
+  an `x[i]' equal to the `breaks' value will be included in the first
+  (or last, for \code{right = FALSE}) bar.}
+\item{right}{logical; if \code{TRUE}, the histograms cells are
+    right-closed (left open) intervals.}
 \item{col}{a colour to be used to fill the bars.
   The default of \code{NULL} yields unfilled bars.}
 \item{border}{the color of the border around the bars.}
@@ -37,12 +41,17 @@ or a vector giving the breakpoints between histogram cells.}
 \item{\dots}{further graphical parameters to \code{title} and \code{axis}.}
 }
 \description{
-The generic function \code{hist} computes and plots a histogram of the
-given data values.
-The histogram cells are intervals of the form
+The generic function \code{hist} computes and plots (if \code{plot=T}) a
+histogram of the given data values.
+}
+\details{
+If \code{right = TRUE} (default), the histogram cells are intervals of the form
 \code{(a,b]}, i.e. they include their right-hand endpoint,
 but not their left one, with the exception of the first cell when
 \code{include.lowest} is \code{TRUE}.
+
+For \code{right = FALSE}, the intervals are of the form \code{[a,b)},
+and \code{include.lowest} really has the meaning of ``\emph{include highest}''.
 }
 \value{
   a list with components

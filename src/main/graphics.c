@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R Core Team
+ *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 #include "Graphics.h"
 #include "Defn.h"
 #include "Mathlib.h" /* eg. fmax2() */
+#include "Applic.h" /* pretty0() */
 
 #include <string.h>
 #include <stdlib.h>
@@ -848,8 +849,91 @@ void GConvert(double *x, double *y, int from, int to, DevDesc *dd)
     }
 }
 
-void NewFrameConfirm();	/* bring this into this file. */
+double GConvertX(double x, int from, int to, DevDesc *dd)
+{
+    double devx;
+    switch (from) {
+    case DEVICE:devx = x;	break;
+    case NDC:	devx = xNDCtoDev(x, dd);	break;
+    case INCHES:devx = xInchtoDev(x, dd);	break;
+    case OMA1:	devx = xOMA1toDev(x, dd);	break;
+    /*case OMA2:	x <--> y */
+    case OMA3:	devx = xOMA3toDev(x, dd);	break;
+    /*case OMA4:	x <--> y */
+    case NIC:	devx = xNICtoDev(x, dd);	break;
+    case NFC:	devx = xNFCtoDev(x, dd);	break;
+    case MAR1:	devx = xMAR1toDev(x, dd);	break;
+    /*case MAR2:	x <--> y */
+    case MAR3:	devx = xMAR3toDev(x, dd);	break;
+    /*case MAR4:	x <--> y */
+    case NPC:	devx = xNPCtoDev(x, dd);	break;
+    case USER:	devx = xUsrtoDev(x, dd);	break;
+    default:	devx = 0;/* for -Wall */ BadUnitsError("GConvertX");
+    }
 
+    switch (to) {
+    case DEVICE:x = devx;	break;
+    case NDC:	x = xDevtoNDC(devx, dd);	break;
+    case INCHES:x = xDevtoInch(devx, dd);	break;
+    case LINES:	x = xDevtoLine(devx, dd);	break;
+    case NIC:	x = xDevtoNIC(devx, dd);	break;
+    case OMA1:	x = xDevtoOMA1(devx, dd);	break;
+    /*case OMA2:	x <--> y */
+    case OMA3:	x = xDevtoOMA3(devx, dd);	break;
+    /*case OMA4:	x <--> y */
+    case NFC:	x = xDevtoNFC(devx, dd);	break;
+    case USER:	x = xDevtoUsr(devx, dd);	break;
+    case MAR1:	x = xDevtoMAR1(devx, dd);	break;
+    /*case MAR2:	x <--> y */
+    case MAR3:	x = xDevtoMAR3(devx, dd);	break;
+    /*case MAR4:	x <--> y */
+    default:	BadUnitsError("GConvertX");
+    }
+    return x;
+}
+
+double GConvertY(double y, int from, int to, DevDesc *dd)
+{
+    double devy;
+    switch (from) {
+    case DEVICE:devy = y;	break;
+    case NDC:	devy = yNDCtoDev(y, dd);	break;
+    case INCHES:devy = yInchtoDev(y, dd);	break;
+    case OMA1:	devy = yOMA1toDev(y, dd);	break;
+    /*case OMA2:	x <--> y */
+    case OMA3:	devy = yOMA3toDev(y, dd);	break;
+    /*case OMA4:	x <--> y */
+    case NIC:	devy = yNICtoDev(y, dd);	break;
+    case NFC:	devy = yNFCtoDev(y, dd);	break;
+    case MAR1:	devy = yMAR1toDev(y, dd);	break;
+    /*case MAR2:	x <--> y */
+    case MAR3:	devy = yMAR3toDev(y, dd);	break;
+    /*case MAR4:	x <--> y */
+    case NPC:	devy = yNPCtoDev(y, dd);	break;
+    case USER:	devy = yUsrtoDev(y, dd);	break;
+    default:	devy = 0;/* for -Wall */ BadUnitsError("GConvertY");
+    }
+
+    switch (to) {
+    case DEVICE:y = devy;	break;
+    case NDC:	y = yDevtoNDC(devy, dd);	break;
+    case INCHES:y = yDevtoInch(devy, dd);	break;
+    case LINES:	y = yDevtoLine(devy, dd);	break;
+    case NIC:	y = yDevtoNIC(devy, dd);	break;
+    case OMA1:	y = yDevtoOMA1(devy, dd);	break;
+    /*case OMA2:	x <--> y */
+    case OMA3:	y = yDevtoOMA3(devy, dd);	break;
+    /*case OMA4:	x <--> y */
+    case NFC:	y = yDevtoNFC(devy, dd);	break;
+    case USER:	y = yDevtoUsr(devy, dd);	break;
+    case MAR1:	y = yDevtoMAR1(devy, dd);	break;
+    /*case MAR2:	x <--> y */
+    case MAR3:	y = yDevtoMAR3(devy, dd);	break;
+    /*case MAR4:	x <--> y */
+    default:	BadUnitsError("GConvertY");
+    }
+    return y;
+}
 
 /* Code for layouts */
 
@@ -1621,8 +1705,7 @@ int validFigureMargins(DevDesc *dd)
 	    (dd->gp.plt[2] < dd->gp.plt[3]));
 }
 
-static
-void invalidError(char* message, DevDesc *dd)
+static void invalidError(char* message, DevDesc *dd)
 {
     dd->dp.currentFigure -= 1;
     if (dd->dp.currentFigure < 1)
@@ -1747,7 +1830,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 		min, max, axis, log);
 	if(!FINITE(min)) min = - .45 * DBL_MAX;
 	if(!FINITE(max)) max = + .45 * DBL_MAX;
-        /* max - min is now finite */
+	/* max - min is now finite */
     }
     if(min == max) {
 	if(min == 0) {
@@ -2725,7 +2808,6 @@ void GLPretty(double *ul, double *uh, int *n)
     }
 }
 
-
 void GPretty(double *lo, double *up, int *ndiv)
 {
 /*	Set scale and ticks for linear scales.
@@ -2733,13 +2815,18 @@ void GPretty(double *lo, double *up, int *ndiv)
  *
  *	Pre:	   x1 = lo < up = x2
  *	Post: x1 <= y1 := lo < up =: y2 <= x2;	ndiv >= 1
- */
+ *
+ * ==>	../appl/pretty.c  is VERY similar
+ *	~~~~~~~~~~~~~~~~ */
 
+#ifdef DEBUG_PLOT
+    double x1,x2;
+#endif
+
+#ifdef OLD
     double dx, cell, unit, base, U;
     int ns, nu, nd0;
     short i_small;
-    double x1,x2;/* for checking only */
-
     if(*ndiv <= 0)
 	error("invalid axis extents [GPretty(.,.,n=%d)\n", *ndiv);
     if(*lo == R_PosInf || *up == R_PosInf ||
@@ -2775,15 +2862,14 @@ void GPretty(double *lo, double *up, int *ndiv)
     ns = floor(*lo/unit);
     nu = ceil (*up/unit);
 #ifdef DEBUG_PLOT
-    REprintf("GPretty(%g,%g,%d): cell= %g, base= %g, unit= %g;\n"
-	     "\t (ns,nu) = (%d,%d)",
+    REprintf("GPretty(%g,%g,%d): cell= %g, base= %g, unit= %g; (ns,nu)=(%d,%d)",
 	     *lo, *up, *ndiv, cell, base, unit, ns,nu);
 #endif
 
     while(ns*unit >= *lo *(1- DBL_EPSILON)) ns--;    ns++;
     while(nu*unit <= *up *(1+ DBL_EPSILON)) nu++;    nu--;
 #ifdef DEBUG_PLOT
-    REprintf("\t -> new (ns,nu) = (%d,%d)\n", ns,nu);
+    REprintf(" -> new = (%d,%d)\n", ns,nu);
 #endif
 
     nd0 = nu - ns;
@@ -2802,13 +2888,45 @@ void GPretty(double *lo, double *up, int *ndiv)
 #ifdef DEBUG_PLOT
     x1 = *lo; x2 = *up;
 #endif
+
+#else/* not OLD -------------------------------------------------------------*/
+
+    double unit, ns, nu;
+    double high_u_fact[2] = { .8, 1.7 };
+
+    if(*ndiv <= 0)
+	error("invalid axis extents [GPretty(.,.,n=%d)\n", *ndiv);
+    if(*lo == R_PosInf || *up == R_PosInf ||
+       *lo == R_NegInf || *up == R_NegInf ||
+       !FINITE(*up - *lo)) {
+	error("Infinite axis extents [GPretty(%g,%g,%d)]\n", *lo, *up, *ndiv);
+	return;/*-Wall*/
+    }
+
+    ns = *lo; nu = *up;
+#ifdef DEBUG_PLOT
+    x1 = ns; x2 = nu;
+#endif
+    unit = pretty0(&ns, &nu, ndiv, /* min_n = */ 1,
+		   /* shrink_sml = */ 0.25,
+		   high_u_fact,
+		   2, /* do eps_correction in any case */
+		   0/* return (ns,nu) in  (lo,up) */);
+    if(nu >= ns + 1) {
+	ns++;
+	if(nu > ns + 1) nu--;
+	*ndiv = nu - ns;
+    }
+#endif/* else not OLD ---------------------------------------------------*/
+
     *lo = ns * unit;
     *up = nu * unit;
+
 #ifdef DEBUG_PLOT
     if(*lo < x1)
-	warning(" .. GPretty(.) cont.: new *lo = %g < %g = x1\n", *lo, x1);
+	warning(" .. GPretty(.): new *lo = %g < %g = x1\n", *lo, x1);
     if(*up > x2)
-	warning(" .. GPretty(.) cont.: new *up = %g > %g = x2\n", *up, x2);
+	warning(" .. GPretty(.): new *up = %g > %g = x2\n", *up, x2);
 #endif
 }
 
@@ -3108,33 +3226,31 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
     double angle, xadj, yadj;
     int coords;
 
-    angle = xadj = yadj = 0;/* to keep -Wall happy */
-    coords = 0;		/* to keep -Wall happy */
+    angle = xadj = yadj = 0.;/* to keep -Wall happy */
+    coords = 0;/* -Wall */
+
+    xadj = dd->gp.adj;/* ALL cases */
     if(outer) {
 	switch(side) {
 	case 1:
 	    /* line = line+1; */
 	    angle = 0;
-	    xadj = dd->gp.adj;
 	    yadj = 0;
 	    coords = OMA1;
 	    break;
 	case 2:
 	    angle = 90;
-	    xadj = dd->gp.adj;
 	    yadj = 0;
 	    coords = OMA2;
 	    break;
 	case 3:
 	    angle = 0;
-	    xadj = dd->gp.adj;
 	    yadj = 0;
 	    coords = OMA3;
 	    break;
 	case 4:
 	    /* line = line+1; */
 	    angle = 90;
-	    xadj = dd->gp.adj;
 	    yadj = 0;
 	    coords = OMA4;
 	    break;
@@ -3144,49 +3260,43 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
     else {
 	switch(side) {
 	case 1:
-	    if(las == 2) {
+	    if(las == 2 || las == 3) {
 		at = at + GConvertXUnits(dd->gp.yLineBias, LINES, USER, dd);
 		line = line - dd->gp.yLineBias;
 		angle = 90;
-		xadj = dd->gp.adj;
 		yadj = 0.5;
 	    }
 	    else {
 		line = line + 1 - dd->gp.yLineBias;
 		angle = 0;
-		xadj = dd->gp.adj;
 		yadj = 0;
 	    }
 	    coords = MAR1;
 	    break;
 	case 2:
 	    if(las == 1 || las == 2) {
-		at = at /* + GConvertYUnits(dd->gp.yLineBias, LINES, USER, dd)*/;
+		at = at/* + GConvertYUnits(dd->gp.yLineBias, LINES, USER, dd)*/;
 		line = line + dd->gp.yLineBias;
 		angle = 0;
-		xadj = 1;
 		yadj = 0.5;
 	    }
 	    else {
 		line = line + dd->gp.yLineBias;
 		angle = 90;
-		xadj = dd->gp.adj;
 		yadj = 0;
 	    }
 	    coords = MAR2;
 	    break;
 	case 3:
-	    if(las == 2) {
+	    if(las == 2 || las == 3) {
 		at = at - GConvertXUnits(dd->gp.yLineBias, LINES, USER, dd);
 		line = line + dd->gp.yLineBias;
 		angle = 90;
-		xadj = dd->gp.adj;
 		yadj = 0.5;
 	    }
 	    else {
 		line = line + dd->gp.yLineBias;
 		angle = 0;
-		xadj = dd->gp.adj;
 		yadj = 0;
 	    }
 	    coords = MAR3;
@@ -3196,13 +3306,11 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 		at = at + GConvertYUnits(dd->gp.yLineBias, LINES, USER, dd);
 		line = line + dd->gp.yLineBias;
 		angle = 0;
-		xadj = 0;
 		yadj = 0.5;
 	    }
 	    else {
 		line = line + 1 - dd->gp.yLineBias;
 		angle = 90;
-		xadj = dd->gp.adj;
 		yadj = 0;
 	    }
 	    coords = MAR4;

@@ -1,14 +1,24 @@
-c      subroutine fdhess
+CCC--- FIXME:  Instead of   subroutines	  forslv  and  baksol
+CCC--- =====   Use ./dtrsl.f  !! [see  dbksl() in ./S_compat.c !]
+CCC		   ~~~~~~~~~
+CCC    subroutines  mvmlt[lsu] and sclmul  should be REPLACED by BLAS ones!
+CCC
+CCC--- choldc(nr,n,a,diagmx,tol,addmax)	 is ``choleski + tolerance''
+CCC    ------ 
+CCC    it should make use of BLAS routines as [linkpack's dpofa!]
+
+      
+c     subroutine fdhess
 c
-c      this subroutine calculates a numerical approximation to the upper
-c      triangular portion of the second derivative matrix (the hessian).
-c      algorithm a5.6.2 from dennis and schnable (1983), numerical methods
-c      for unconstrained optimization and nonlinear equations,
-c      prentice-hall, 321-322.
+c	this subroutine calculates a numerical approximation to the upper
+c	triangular portion of the second derivative matrix (the hessian).
+c	algorithm a5.6.2 from dennis and schnable (1983), numerical methods
+c	for unconstrained optimization and nonlinear equations,
+c	prentice-hall, 321-322.
 c
-c      programmed by richard h. jones, january 11, 1989
+c	programmed by richard h. jones, january 11, 1989
 c
-c      input to subroutine
+c	input to subroutine
 c
 c	   n.....the number of parameters
 c	   x.....vector of parameter values
@@ -19,7 +29,7 @@ c		 call fun(n,x,fval) where fval is the computed value of the
 c		 function
 c	   nfd...first dimension of h in the calling program
 c
-c      output from subroutine
+c	output from subroutine
 c
 c	    h.....an n by n matrix of the approximate hessian
 c
@@ -30,11 +40,12 @@ c	    f.......a double precision array of length n
 c
       subroutine fdhess(n,x,fval,fun,h,nfd,step,f,ndigit,typx)
       implicit none
-      integer n,nfd,ndigit
-      double precision eta,tempi,tempj
-      double precision fval,f(n),fii,fij,h(nfd,nfd)
-      double precision x(n),step(n),typx(n)
+
       external fun
+      integer n,nfd,ndigit
+      double precision x(n),fval, h(nfd,nfd),step(n),f(n),typx(n)
+c
+      double precision eta,tempi,tempj,fii,fij
       integer i,j
       eta=(10.0d0**(-ndigit))**(1.0d0/3.0d0)
       do 10 i=1,n
@@ -819,11 +830,13 @@ c
 c
 cstatic
       subroutine fstocd (n, x, fcn, sx, rnoise, g)
-      implicit double precision (a-h,o-z)
-      dimension x(n)
-      dimension sx(n)
-      dimension g(n)
+      implicit none
+      integer n
       external fcn
+      double precision x(n), sx(n), g(n), rnoise
+c
+      integer i
+      double precision third, stepi,xtempi, fplus, fminus
 c
 c	find i th  stepsize, evaluate two neighbors in direction of i th
 c	unit vector, and evaluate i th	component of gradient.
@@ -1946,7 +1959,7 @@ c	wrk0(n)	     --> workspace
 c	wrk1(n)	     --> workspace
 c	wrk2(n)	     --> workspace
 c	wrk3(n)	     --> workspace
-c       itncnt       current iteration, k  {{was `internal'}}
+c	itncnt	     current iteration, k  {{was `internal'}}
 c
 c
 c	internal variables
@@ -1971,7 +1984,12 @@ cstatic
       dimension wrk0(n),wrk1(n),wrk2(n),wrk3(n)
       logical mxtake,noupdt
       integer itncnt
+
       external fcn,d1fcn,d2fcn
+
+      external result
+c	for iteration tracing [defined in ../main/optimize.c]
+
 c
 c	initialization
 c
@@ -2339,7 +2357,7 @@ c	itrmcd	    <--	 termination code
 c	a(n,n)	     --> workspace for hessian (or estimate)
 c			 and its cholesky decomposition
 c	wrk(n,8)     --> workspace
-c	itncnt       --> iteration count
+c	itncnt	     --> iteration count
 c
       subroutine optif9(nr,n,x,fcn,d1fcn,d2fcn,typsiz,fscale,
      +	   method,iexp,msg,ndigit,itnlim,iagflg,iahflg,ipr,
