@@ -11,7 +11,7 @@
 
 NEW FEATURES
 
-    o   attach now works for R data files 
+    o   attach now works for R data files.
 
     o   R (at least under Unix) can be sent SIGUSR1 to quit and
         save or SIGUSR2 to quit and save without running .Last and
@@ -24,6 +24,8 @@ NEW FEATURES
 
     o	Command line option `-g' can now be used as short version of
 	`--gui'.
+
+    o	nlm() can now take additional arguments in ... to be passed to f.
 
 
 BUG FIXES

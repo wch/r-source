@@ -4,7 +4,7 @@
 nlm(f, p, hessian = FALSE, typsize=rep(1, length(p)), fscale=1,
     print.level = 0, ndigit=12, gradtol = 1e-6,
     stepmax = max(1000 * sqrt(sum((p/typsize)^2)), 1000),
-    steptol = 1e-6, iterlim = 100, check.analyticals = TRUE)
+    steptol = 1e-6, iterlim = 100, check.analyticals = TRUE, \dots)
 }
 \alias{nlm}
 \arguments{
@@ -13,12 +13,14 @@ nlm(f, p, hessian = FALSE, typsize=rep(1, length(p)), fscale=1,
     \code{hessian} attributes, these will be used in the calculation of
     updated parameter values.  Otherwise, numerical derivatives are
     used. \code{\link{deriv}} returns a function with suitable
-    \code{gradient} attribute.}
+    \code{gradient} attribute.  This should be a function a vector of
+    the length of \code{p} followed by any other arguments specified
+    in \code{dots}.}
 \item{p}{starting parameter values for the minimization.}
 \item{hessian}{if \code{TRUE}, the hessian of \code{f}
-at the minimum is returned.}
+  at the minimum is returned.}
 \item{typsize}{an estimate of the size of each parameter
-at the minimum.}
+  at the minimum.}
 \item{fscale}{an estimate of the size of \code{f} at the minimum.}
 \item{print.level}{this argument determines the level of printing
   which is done during the minimization process.  The default
@@ -47,6 +49,7 @@ relative step length.}
     checked against numerical derivatives at the initial parameter
     values. This can help detect incorrectly formulated gradients or
     Hessians.}
+\item{\dots}{additional arguments to \code{f}.}
 }
 \description{
 This function carries out a minimization of the function \code{f}
@@ -102,6 +105,16 @@ f <- function(x) sum((x-1:length(x))^2)
 nlm(f, c(10,10))
 nlm(f, c(10,10), print.level = 2)
 str(nlm(f, c(5), hessian = TRUE))
+
+f <- function(x, a) sum((x-a)^2)
+nlm(f, c(10,10), a=c(3,5))
+f <- function(x, a)
+{
+    res <- sum((x-a)^2)
+    attr(res, "gradient") <- 2*(x-a)
+    res
+}
+nlm(f, c(10,10), a=c(3,5))
 
 ## more examples, including the use of derivatives.
 \dontrun{demo(nlm)}

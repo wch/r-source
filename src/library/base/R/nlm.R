@@ -1,7 +1,7 @@
 nlm <- function(f, p, hessian=FALSE, typsize=rep(1,length(p)),
 		fscale=1, print.level=0, ndigit=12, gradtol=1e-6,
 		stepmax=max(1000 * sqrt(sum((p/typsize)^2)), 1000),
-		steptol=1e-6, iterlim=100, check.analyticals=TRUE)
+		steptol=1e-6, iterlim=100, check.analyticals=TRUE, ...)
 {
 
     print.level <- as.integer(print.level)
@@ -9,8 +9,8 @@ nlm <- function(f, p, hessian=FALSE, typsize=rep(1,length(p)),
 	stop("`print.level' must be in {0,1,2}")
     msg <- c(9,1,17)[1+print.level]
     if(!check.analyticals) msg <- msg + 6
-    .Internal(nlm(f, p, hessian, typsize, fscale, msg, ndigit, gradtol,
-		  stepmax, steptol, iterlim))
+    .Internal(nlm(function(x) f(x, ...), p, hessian, typsize, fscale,
+                  msg, ndigit, gradtol, stepmax, steptol, iterlim))
 }
 
 optimize <- function(f, interval, lower=min(interval), upper=max(interval),
@@ -25,7 +25,7 @@ optimize <- function(f, interval, lower=min(interval), upper=max(interval),
     }
 }
 
-##nice to the English
+##nice to the English (or rather the Scots)
 optimise <- .Alias(optimize)
 
 uniroot <- function(f, interval, lower=min(interval), upper=max(interval),
