@@ -294,4 +294,7 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-none
+* PR# 932 *
+Subject: scoping error in xy.coords
+From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
+Date: Fri, 04 May 2001 11:20:57 -0400
