@@ -28,7 +28,7 @@
 \source{
   Kwan, Breault, Umbenhauer, McMahon and Duggan (1976), ``Kinetics of
   Indomethicin absorption, elimination, and enterohepatic circulation in
-  man'', \emph{Journal of Pharmacokinetics and Biopharmaceutics}, \strong{4},
+  man'', \emph{Journal of Pharmacokinetics and Biopharmaceutics}, \bold{4},
   255--280.
 
   Davidian, M. and Giltinan, D. M. (1995) \emph{Nonlinear Models for
