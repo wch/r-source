@@ -1,5 +1,5 @@
 symbols <-
-function (x, y, circles, squares, rectangles, stars,
+function (x, y = NULL, circles, squares, rectangles, stars,
 	  thermometers, boxplots, inches = TRUE, add = FALSE,
 	  fg = 1, bg = NA, xlab = NULL, ylab = NULL, main = NULL,
 	  xlim=NULL, ylim=NULL, ...)
@@ -37,9 +37,12 @@ function (x, y, circles, squares, rectangles, stars,
     }
     if (count != 1)
 	stop("exactly one symbol type must be specified")
+    xy <- xy.coords(x, y, xlab = deparse(substitute(x)),
+                    ylab = deparse(substitute(y)))
+    x <- xy$x; y <- xy$y
     if (!add) {
-	if(is.null(xlab)) xlab <- deparse(substitute(x))
-	if(is.null(ylab)) ylab <- deparse(substitute(y))
+	if(is.null(xlab)) xlab <- xy$xlab
+	if(is.null(ylab)) ylab <- xy$ylab
 	if(is.null(xlim)) {
 	    ## Expand the range by 20% : wild guess !
 	    ## FIXME: better guess: use size of largest symbol...

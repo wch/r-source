@@ -2,7 +2,7 @@
 \alias{legend}
 \title{Add Legends to Plots}
 \usage{
-legend(x, y, legend, fill, col = "black", lty, lwd, pch,
+legend(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
        angle = NULL, density = NULL,
        bty = "o", bg = par("bg"), pt.bg = NA, cex = 1,
        xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = 0,
@@ -16,8 +16,8 @@ legend(x, y, legend, fill, col = "black", lty, lwd, pch,
 }
 \arguments{
   \item{x, y}{the x and y co-ordinates to be used to position the legend.
-    \code{x} can be a list with \code{x} and \code{y} components.
-    See Details.}
+    They can be specified in any way which is accepted by
+    \code{\link{xy.coords}}: See Details.}
   \item{legend}{a vector of text values or an \code{\link{expression}}
     of length \eqn{\ge 1}{>= 1} to appear in the legend.}
   \item{fill}{if specified, this argument will cause boxes filled
@@ -60,10 +60,18 @@ legend(x, y, legend, fill, col = "black", lty, lwd, pch,
      specification).}
 }
 \details{
-  If \code{x, y} give the coordinates of one point, this is used as the
-  top-left coordinate of the rectangle containing the legend.  If they
-  give the coordinates of two points, these specify opposite corners of the
-  rectangle (either pair of corners, in any order).
+  Arguments \code{x, y, legend} are interpreted in a non-standard way to
+  allow the coordinates to be specified \emph{via} one or two arguments.
+  If \code{legend} is missing and \code{y} is not numeric, it is assumed
+  that the second argument is intended to be \code{legend} and that the
+  first argument specifies the coordinates.
+
+  The coordinates can be specified in any way which is accepted by
+  \code{\link{xy.coords}}.  If this gives the coordinates of one point,
+  it is used as the top-left coordinate of the rectangle containing the
+  legend.  If it gives the coordinates of two points, these specify
+  opposite corners of the rectangle (either pair of corners, in any
+  order).
   
  ``Attribute'' arguments such as \code{col}, \code{pch}, \code{lty},
   etc, are recycled if necessary.  \code{merge} is not.
@@ -187,8 +195,8 @@ par(op)
 
 ## point covering line :
 y <- sin(3*pi*x)
-plot(x,y,type="l",col="blue", main = "points with bg & legend(*, pt.bg)")
-points(x,y,pch=21,bg="white")
-legend(.4,1,"sin(c x)",pch=21,pt.bg="white",lty=1, col = "blue")
+plot(x, y, type="l", col="blue", main = "points with bg & legend(*, pt.bg)")
+points(x, y, pch=21, bg="white")
+legend(.4,1, "sin(c x)", pch=21, pt.bg="white", lty=1, col = "blue")
 }
 \keyword{aplot}

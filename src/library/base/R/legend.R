@@ -1,23 +1,20 @@
 legend <-
-function(x, y, legend, fill, col = "black", lty, lwd, pch,
+function(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
 	 angle = NULL, density = NULL, bty = "o",
 	 bg = par("bg"), pt.bg = NA, cex = 1,
 	 xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = 0,
 	 text.width = NULL, merge = do.lines && has.pch, trace = FALSE,
 	 plot = TRUE, ncol = 1, horiz = FALSE)
 {
-    if(is.list(x)) {
-	if(!missing(y)) {	# the 2nd arg may really be `legend'
-	    if(!missing(legend))
-		stop("`y' and `legend' when `x' is list (need no `y')")
-	    legend <- y
-	}
-	y <- x$y; x <- x$x
-    } else if(missing(y)) stop("missing y")
-    if (!is.numeric(x) || !is.numeric(y))
-	stop("non-numeric coordinates")
-    if ((nx <- length(x)) <= 0 || nx != length(y) || nx > 2)
-	stop("invalid coordinate lengths")
+    ## the 2nd arg may really be `legend'
+    if(missing(legend) && !missing(y) &&
+       (is.character(y) || is.expression(y))) {
+        legend <- y
+        y <- NULL
+    }
+    xy <- xy.coords(x, y); x <- xy$x; y <- xy$y
+    nx <- length(x)
+    if (nx < 1 || nx > 2) stop("invalid coordinate lengths")
 
     xlog <- par("xlog")
     ylog <- par("ylog")

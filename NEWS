@@ -205,6 +205,9 @@ NEW FEATURES
  
     o	grep(x, ..., value = TRUE) preserves names of x.
  
+    o	legend() and symbols() now make use of xy.coords() and accept 
+	a wider range of coordinate specifications.
+ 
 
 DEPRECATED & DEFUNCT
 

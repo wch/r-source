@@ -10,42 +10,42 @@
   parameters.
 }
 \usage{
-symbols(x, y, circles, squares, rectangles, stars,
-        thermometers, boxplots, inches=TRUE, add=FALSE,
-        fg=1, bg=NA, xlab = NULL, ylab = NULL, main = NULL,
+symbols(x, y = NULL, circles, squares, rectangles, stars,
+        thermometers, boxplots, inches = TRUE, add = FALSE,
+        fg = 1, bg = NA, xlab = NULL, ylab = NULL, main = NULL,
         xlim = NULL, ylim = NULL, \dots)
 }
 \arguments{
-  \item{x}{a vector giving the x coordinates of the symbols.}
-  \item{y}{a vector giving the y coordinates of the symbols.}
+  \item{x, y}{the x and y co-ordinates for the symbols. They can be
+    specified in any way which is accepted by \code{\link{xy.coords}}.}
   \item{circles}{a vector giving the radii of the circles.}
   \item{squares}{a vector giving the length of the sides of the squares.}
   \item{rectangles}{a matrix with two columns.  The first column gives
-        widths and the second the heights of rectangle symbols.}
+    widths and the second the heights of rectangle symbols.}
   \item{stars}{a matrix with three or more columns giving the lengths
-       of the rays from the center of the stars.  \code{NA} values
-       are replaced by zeroes.}
+    of the rays from the center of the stars.  \code{NA} values
+    are replaced by zeroes.}
   \item{thermometers}{a matrix with three or four columns.  The first
-        two columns give the width and height of the thermometer symbols.
-        If there are three columns, the third is taken as a proportion.
-        The thermometers are filled from their base to this proportion
-        of their height.  If there are four columns, the third and fourth
-        columns are taken as proportions.  The thermometers are filled
-        between these two proportions of their heights.}
+    two columns give the width and height of the thermometer symbols.
+    If there are three columns, the third is taken as a proportion.
+    The thermometers are filled from their base to this proportion
+    of their height.  If there are four columns, the third and fourth
+    columns are taken as proportions.  The thermometers are filled
+    between these two proportions of their heights.}
   \item{boxplots}{a matrix with five columns.  The first two columns
-        give the width and height of the boxes, the next two columns
-        give the lengths of the lower and upper whiskers and the fifth
-	the proportion (with a warning if not in [0,1]) of the way up
-	the box that the median line is drawn.}
+    give the width and height of the boxes, the next two columns
+    give the lengths of the lower and upper whiskers and the fifth
+    the proportion (with a warning if not in [0,1]) of the way up
+    the box that the median line is drawn.}
   \item{inches}{If \code{inches} is \code{FALSE}, the units are taken
-        to be those of the x axis.  If \code{inches} is \code{TRUE},
-        the symbols are scaled so that the largest symbol is one
-        inch in height.  If a number is given the symbols are scaled to
-	make largest symbol this height in inches.}
+    to be those of the x axis.  If \code{inches} is \code{TRUE},
+    the symbols are scaled so that the largest symbol is one
+    inch in height.  If a number is given the symbols are scaled to
+    make largest symbol this height in inches.}
   \item{add}{if \code{add} is \code{TRUE}, the symbols are added to
-        an existing plot, otherwise a new plot is created.}
+    an existing plot, otherwise a new plot is created.}
   \item{fg}{colors the symbols are to be drawn in (the default is
-        the value of the \code{col} graphics parameter).}
+    the value of the \code{col} graphics parameter).}
   \item{bg}{if specified, the symbols are filled with this color.
     The default is to leave the symbols unfilled. }
   \item{xlab}{the x label of the plot if \code{add} is not true; this
