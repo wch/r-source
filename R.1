@@ -51,61 +51,82 @@ which R is to use (the default is 200000).
 The following options relate to the saving and restoring of a user's
 data sets and functions at startup and termination.
 .TP
-.B \-nosave
+.B \-\-no\-save
 Do not save the data sets at the end of the R session.
 This is only effective when R is used non-interactively.
 .TP
-.B \-save
+.B \-\-save
 Do save data sets.
 .TP
-.B \-norestore
+.B \-\-no\-restore
 Do not restore any previously saved datasets (an \fIimage\fP).
 .TP
-.B \-restore
+.B \-\-restore
 Do restore previously saved datasets (this is the default).
 .LP
 The following options are present to support the use of
 R from other programs.  In particular, the
-.B \-noreadline
+.B \-\-no\-readline
 option exists so that R can be run under
 .IR emacs (1)
 and
 .IR xemacs (1)
 using ESS.
 .TP
-.B \-noreadline
+.B \-\-no\-readline
 Turn off the use of the
 .IR readline (3)
 command line editing.
 .TP
-.B \-quiet
-Make R run as quietly as possible.  This option is intended
-to support programs which use R to compute results for them.
+.B \-\-quiet
+Make R run as quietly as possible.  This option is intended to support
+programs which use R to compute results for them.  It can be abbreviated
+as \fB\-q\fP.
 .LP
-These options are available so that the R developers can
-carry debugging.
+The following option is available so that the R developers can carry
+debugging.
 .TP
-.B \-xxgdb
-run R under the control of the
-.IR xxgdb (1)
-debugger.
+.B \-\-debugger \fIname\fP
+Run R under the control of the debugger named
+.IR "name".
+May be abbreviated to \fB-d\fP.
+.LP
+Startup processing (see also below) is controlled by the following
+options.
 .TP
-.B \-gdb
-run R under the control of the
-.IR gdb (1)
-debugger.
+.B \-\-no\-site\-file
+Do not load the site-wide startup profile.
 .TP
-.B \-ddd
-run R under the control of the
-.IR ddd (1)
-debugger.
+.B \-\-no\-init\-file
+Do not load the user's \fB.Rprofile\fR.
+.LP
+Finally, the following options produce informative output.
+.TP
+.B \-\-help
+Print some useful usage information and exit.
+May be abbreviated to \fB-h\fP.
+.TP
+.B \-\-version
+Print the version number and exit.
+May be abbreviated to \fB-V\fP.
 .SH STARTUP PROCESSING
-When R is invoked it searches for the files
+When R is invoked, it first searches for the site-wide startup profile
+unless
+.B \-\-no\-site\-file
+was given.  The name of this file is taken from the value of the
+.B RPROFILE
+environment variable.  If that variable is unset, the default is
+\fIRHOME/etc/Rprofile\fP.
+
+Unless
+.B \-\-no\-init\-file
+was given, R then searches for the files
 .B .Rprofile
 and
 .B ~/.Rprofile
-(in that order) and executes any statements
-in the first of these files to be found.
+(in that order) and executes any statements in the first of these files
+to be found.
+
 Finally, if a user has defined a function called
 .BR \&.First ,
 it will be invoked.
