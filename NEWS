@@ -166,7 +166,7 @@ NEW FEATURES
 	and returns scores only if the centring used is known.
 
     o	psigamma(x, deriv=0), a new function generalizes, digamma() etc.
-        All these (psigamma, digamma, trigamma,...) now also work for  x < 0.
+	All these (psigamma, digamma, trigamma,...) now also work for  x < 0.
 
     o	read.table() now allows embedded newlines in quoted fields. (PR#4555)
 
@@ -188,9 +188,9 @@ NEW FEATURES
     o	User hooks can be set for onLoad, library, detach and
 	onUnload of packages/namespaces: see ?setHook.
 
-    o   save() default arguments can now be set using option
-        "save.defaults", which is also used by save.image() if option
-        "save.image.defaults" is not present.
+    o	save() default arguments can now be set using option
+	"save.defaults", which is also used by save.image() if option
+	"save.image.defaults" is not present.
 
     o	sink() now has a split= argument to direct output to both the
 	sink and the current output connection.
@@ -263,9 +263,9 @@ NEW FEATURES
 	The diamond frames around edge labels are more nicely scaled
 	horizontally.
 
-    o   Methods defined in the methods package can now include
-        default expressions for arguments.  If these arguments are
-    	missing in the call, the defaults in the selected method will
+    o	Methods defined in the methods package can now include
+	default expressions for arguments.  If these arguments are
+	missing in the call, the defaults in the selected method will
 	override a default in the generic.  See ?setMethod.
 
     o	Changes to package 'grid':
@@ -705,17 +705,17 @@ BUG FIXES
 
     o	The QC files now check that their file operations succeeded.
 
-    o   replicate() worked by making the supplied expression the
-        body of an anonymous function(x), leading to a variable
+    o	replicate() worked by making the supplied expression the
+	body of an anonymous function(x), leading to a variable
 	capture issue. Now, function(...) is used instead.
 
-    o   chisq.test(simulate.p.value = TRUE) was returning slightly
+    o	chisq.test(simulate.p.value = TRUE) was returning slightly
 	incorrect p values, notably p = 0 when the data gave the most
 	extreme value.
 
-    o   terms.formula(simplify = TRUE) was losing offset terms.
+    o	terms.formula(simplify = TRUE) was losing offset terms.
 	Multiple offset terms were not being removed correctly if two
-	of them appeared first or last in the formula.  (PR#6656)
+	of them appeared first or last in the formula.	(PR#6656)
 
     o	Rd conversion to latex did not add a new line before
 	\end{Section} in more cases than were corrected in 1.8.1.
@@ -731,18 +731,19 @@ BUG FIXES
 	warns when applied to non-square matrices.
 
     o	mle() gives a more understandable error message when its 'start'
-        argument is not ok.
+	argument is not ok.
 
     o	All uses of dir.create() check the return value.
 	donwload.packages() checks that destdir exists and is a directory.
 
-    o   Methods dispatch corrects an error that failed to find
-        methods for classes that extend sealed classes (class unions
-        that contain basic classes, e.g.).
+    o	Methods dispatch corrects an error that failed to find
+	methods for classes that extend sealed classes (class unions
+	that contain basic classes, e.g.).
 
-    o   Sweave no longer wraps the output of code chunks with
-        echo=false and results=tex in Schunk environments.
+    o	Sweave no longer wraps the output of code chunks with
+	echo=false and results=tex in Schunk environments.
 
+    o	1:2 * 1e-100  now prints with correct number of spaces.
 
 
 

@@ -1257,3 +1257,11 @@ terms(y ~ offset(x) + offset(log(x)) + z, data=df)
 ## failed to remove second offset from formula in 1.8.1
 terms(y ~ offset(x) + z - z, data=df, simplify = TRUE)
 ## first fix failed for models with no non-offset terms.
+
+## only the first two were wrong up to 1.8.1:
+3:4 * 1e-100
+8:11* 1e-100
+1:2 * 1e-99
+1:2 * 1e+99
+8:11* 1e+99
+3:4 * 1e+100

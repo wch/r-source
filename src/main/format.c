@@ -273,7 +273,7 @@ void formatReal(double *x, int l, int *m, int *n, int *e, int nsmall)
     mF = mxsl + rgt + (rgt != 0);	/* width m for F  format */
 
     /*-- 'see' how "E" Exponential format would be like : */
-    if (mxl > 100 || mnl < -99) *e = 2;/* 3 digit exponent */
+    if (mxl > 100 || mnl <= -99) *e = 2;/* 3 digit exponent */
     else *e = 1;
     *n = mxns - 1;
     *m = neg + (*n > 0) + *n + 4 + *e; /* width m for E	 format */
