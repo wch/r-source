@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-27 2004-06-25
+Version 1.9-28 2004-06-27
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1397,6 +1397,12 @@ distributions of R.)
 *MCMCpack*
      Markov chain Monte Carlo (MCMC) package: functions for posterior
      simulation for a number of statistical models.
+
+*MNP*
+     Fitting Bayesian Multinomial Probit models via Markov chain Monte
+     Carlo.  Along with the standard Multinomial Probit model, it can also
+     fit models with different choice sets for each observation and
+     complete or partial ordering of all the available alternatives.
 
 *MPV*
      Data sets from the book "Introduction to Linear Regression Analysis"
