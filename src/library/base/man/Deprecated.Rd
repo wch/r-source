@@ -3,10 +3,6 @@
 \title{Deprecated Functions}
 \alias{Deprecated}
 \alias{.Deprecated}
-\alias{La.eigen}
-\alias{tetragamma}
-\alias{pentagamma}
-\alias{package.description}
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of
@@ -14,13 +10,6 @@
 }
 \usage{
 .Deprecated(new, package=NULL)
-
-% Deprecated in 1.9.0
-La.eigen(x, symmetric, only.values = FALSE, method = c("dsyevr", "dsyev"))
-tetragamma(x)
-pentagamma(x)
-package.description(pkg, lib.loc = NULL, fields = NULL)
-% </Deprecated 1.9.0>
 }
 \details{
   \code{.Deprecated("<new name>")} is called from deprecated

@@ -48,58 +48,6 @@ stopifnot(abs(X - s$u %*% D %*% Conj(t(s$v))) < Eps)
 stopifnot(abs(D - Conj(t(s$u)) %*% X %*% s$v) < Eps)
 
 
-##    -------  examples from ?eigen using La.eigen ---------
-
-La.eigen(cbind(c(1,-1),c(-1,1)))
-La.eigen(cbind(c(1,-1),c(-1,1)), symmetric = FALSE)
-
-La.eigen(cbind(1,c(1,-1)), only.values = TRUE)
-La.eigen(cbind(-1,2:1)) # complex values
-La.eigen(print(cbind(c(0,1i), c(-1i,0))))# Hermite ==> real eigenvalues
-## 3 x 3:
-La.eigen(cbind( 1,3:1,1:3))
-La.eigen(cbind(-1,c(1:2,0),0:2)) # complex values
-
-La.eigen(cbind(c(1,-1),c(-1,1)), method = "dsyev")
-
-
-set.seed(1234)
-Meps <- .Machine$double.eps
-m <- matrix(round(rnorm(25),3), 5,5)
-sm <- m + t(m) #- symmetric matrix
-em <- La.eigen(sm); V <- em$vect
-print(lam <- em$values) # ordered DEcreasingly
-
-stopifnot(
- abs(sm %*% V - V %*% diag(lam))          < 60*Meps,
- abs(sm       - V %*% diag(lam) %*% t(V)) < 60*Meps)
-
-em <- La.eigen(sm, method = "dsyev"); V <- em$vect
-print(lam <- em$values) # ordered DEcreasingly
-
-stopifnot(
- abs(sm %*% V - V %*% diag(lam))          < 60*Meps,
- abs(sm       - V %*% diag(lam) %*% t(V)) < 60*Meps)
-
-# check only.values = TRUE too
-La.eigen(sm, only.values = TRUE)
-La.eigen(sm, only.values = TRUE, method = "dsyev")
-
-
-## symmetric = FALSE
-
-em <- La.eigen(sm, symmetric = FALSE); V2 <- em$vect
-print(lam2 <- em$values) # ordered decreasingly in ABSolute value !
-print(i <- rev(order(lam2)))
-stopifnot(abs(lam - lam2[i]) < 60 * Meps)
-
-zapsmall(Diag <- t(V2) %*% V2) # orthonormal
-print(norm2V <- apply(V2 * V2, 2, sum))
-stopifnot( abs(1- norm2V / diag(Diag)) < 60*Meps)
-
-stopifnot(abs(sm %*% V2 - V2 %*% diag(lam2))            < 60*Meps,
-          abs(sm        - V2 %*% diag(lam2) %*% t(V2)) < 60*Meps)
-
 
 ##  -------  tests of random real and complex matrices ------
 
@@ -122,17 +70,13 @@ set.seed(123)
 sm <- matrix(rnorm(25), 5, 5)
 sm <- 0.5 * (sm + t(sm))
 eigenok(sm, eigen(sm))
-eigenok(sm, La.eigen(sm))
-eigenok(sm, La.eigen(sm, method="dsyev"))
-eigenok(sm, La.eigen(sm, sym=FALSE))
+eigenok(sm, eigen(sm, sym=FALSE))
 
 sm[] <- as.complex(sm)
 Ceigenok(sm, eigen(sm))
-Ceigenok(sm, La.eigen(sm))
-Ceigenok(sm, La.eigen(sm, sym=FALSE))
+Ceigenok(sm, eigen(sm, sym=FALSE))
 
 sm[] <- sm + rnorm(25) * 1i
 sm <- 0.5 * (sm + Conj(t(sm)))
 Ceigenok(sm, eigen(sm))
-Ceigenok(sm, La.eigen(sm))
-Ceigenok(sm, La.eigen(sm, sym=FALSE))
+Ceigenok(sm, eigen(sm, sym=FALSE))

@@ -76,3 +76,12 @@ lm.wfit.null <- function(...) .Defunct()
 glm.fit.null <- function(...) .Defunct()
 print.atomic <- function(...) .Defunct()
 ## </entry>
+
+## <entry>
+## Deprecated in 1.9.0
+## Defunct in 2.0.0
+La.eigen <- function(...) .Defunct()
+tetragamma <- function(x) .Defunct()
+pentagamma <- function(x) .Defunct()
+package.description <- function(...) .Defunct()
+## </entry>

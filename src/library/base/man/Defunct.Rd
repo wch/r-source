@@ -48,6 +48,10 @@
 \alias{lm.wfit.null}
 \alias{glm.fit.null}
 \alias{print.atomic}
+\alias{La.eigen}
+\alias{tetragamma}
+\alias{pentagamma}
+\alias{package.description}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -117,7 +121,7 @@ plot.mts(x, plot.type = c("multiple", "single"), panel = lines,
          ann = par("ann"),  xlab = "Time", type = "l", main=NULL,
          oma=c(6, 0, 5, 0), \dots)
 % </Removed 1.8.0>
-% Removed in 1.0.0
+% Removed in 1.9.0
 print.coefmat(x, digits=max(3, getOption("digits") - 2),
               signif.stars = getOption("show.signif.stars"),
               dig.tst = max(1, min(5, digits - 1)),
@@ -139,6 +143,12 @@ glm.fit.null(x, y, weights = rep(1, nobs), start = NULL,
              intercept = FALSE)
 print.atomic(x, quote = TRUE, \dots)
 % </Removed 1.9.0>
+% Removed in 2.0.0
+La.eigen(x, symmetric, only.values = FALSE, method = c("dsyevr", "dsyev"))
+tetragamma(x)
+pentagamma(x)
+package.description(pkg, lib.loc = NULL, fields = NULL)
+% </Removed 2.0.0>
 }
 \details{
   \code{.Defunct} is the function to which defunct functions are set.
@@ -224,6 +234,14 @@ print.atomic(x, quote = TRUE, \dots)
 
   \code{print.atomic} differed from \code{print.default} only in its
   argument sequence.  It is not a method for \code{print}.
+
+  \code{La.eigen} has become the default for \code{\link{eigen}}.
+
+  \code{tetragamma} and \code{pentagamma} have been replaced by
+  \code{\link{psigamma}}.
+
+  \code{package.description} has been replaced by
+  \code{\link{packageDescription}}.
 }
 \seealso{\code{\link{Deprecated}}}
 \keyword{documentation}

@@ -31,6 +31,8 @@ C-LEVEL FACILITIES
 
 DEPRECATED & DEFUNCT
 
+    o	La.eigen(), tetragamma(), pentagamma(), package.contents() and
+	package.description() are defunct.
 
 
 
@@ -42,6 +44,7 @@ INSTALLATION CHANGES
 BUG FIXES
 
 	
+
 	
 	**************************************************
 	*						 *

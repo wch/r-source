@@ -1325,8 +1325,9 @@ stopifnot(typeof(res) == "double")
 
 
 ## La.eigen() segfault
-e1 <- La.eigen(m <- matrix(1:9,3))
-stopifnot(e1$values == La.eigen(m, only.values = TRUE)$values)
+#e1 <- La.eigen(m <- matrix(1:9,3))
+#stopifnot(e1$values == La.eigen(m, only.values = TRUE)$values)
+## 2.0.0: La.eigen is defunct
 
 
 ## Patrick Connelly 2001-01-22, prediction with offsets failed
@@ -1430,7 +1431,7 @@ m <- matrix(1:4, 2)
 stopifnot(all.equal(s1$d, s2$d), all.equal(s1$u, s2$u),
 	  all.equal(s1$v, t(s2$vt)))
 (e1 <- eigen(m))
-(e2 <- La.eigen(m))
+# (e2 <- La.eigen(m)) # 2.0.0: La.eigen is defunct
 stopifnot(all.equal(e1$d, e1$d))
 
 
@@ -2264,7 +2265,7 @@ power.t.test(n=10, delta=NULL, power=.9, alternative="two.sided")
 A <- matrix(1)
 stopifnot(is.matrix(eigen(A)$vectors))
 stopifnot(is.matrix(eigen(A, EISPACK = TRUE)$vectors))
-stopifnot(is.matrix(La.eigen(A)$vectors))
+# stopifnot(is.matrix(La.eigen(A)$vectors)) defunct in 2.0.0
 ## gave vector in 1.7.0
 
 
