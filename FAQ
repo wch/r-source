@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.90-1, 1999/11/16
+Version 0.90-2, 1999/11/25
 Kurt Hornik
 
 
@@ -1030,9 +1030,6 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
      and also performs searches using a number of less time-consuming
      techniques.
 
-*lme*
-     Fit and compare Gaussian linear mixed-effects models.
-
 *lmtest*
      A collection of tests on the assumptions of linear regression models
      from the book "The linear regression model under test" by W. Kraemer
@@ -1064,6 +1061,9 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
 *multiv*
      Functions for hierarchical clustering, partitioning, bond energy
      algorithm, Sammon mapping, PCA and correspondence analysis.
+
+*nlme*
+     Fit and compare Gaussian linear and nonlinear mixed-effects models.
 
 *nnet*
      Software for single hidden layer perceptrons ("feed-forward neural
@@ -1122,6 +1122,9 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
      Density, distribution, quantile and hazard functions of a stable
      variate; generalized linear models for the parameters of a stable
      distribution.
+
+*stataread*
+     Read and write Stata v6 `.dta' files.
 
 *survival5*
      Functions for survival analysis, version 5 (requires *splines* and
