@@ -198,6 +198,8 @@ BUG FIXES
 
     o   Unified usage statement to R CMD xxx for all commands
 
+    o   Using duplicated new string indices in [<- caused a crash on
+	some platforms, e.g. x <- 1:2; x[c("3", "3")] <- 3; x.
 
 
 	**************************************************
