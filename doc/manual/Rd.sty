@@ -17,7 +17,7 @@
   {\begin{list}{}{\setlength{\leftmargin}{30pt}}\item}%
   {\end{list}}
 \newcommand{\HTML}{\textsc{html}}
-\newcommand{\R}{\textsc{R}}
+\newcommand{\R}{\textsc{r}}
 
 \def\href#1#2{\special{html:<a href="#1">}{#2}\special{html:</a>}}
 
@@ -85,8 +85,9 @@
 \newenvironment{ExampleCode}{\small\verbatim}{\endverbatim}
 
 \newcommand{\eqn}[2]{$#1$}
-\newcommand{\bold}[1]{\ifmmode\mbox{\boldmath $#1$}\else\textbf{#1}\fi}
+\newcommand{\bold}[1]{\ifmmode\boldsymbol{#1}\else\textbf{#1}\fi}
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\deqn}[2]{\[#1\]}
+\newcommand{\file}[1]{\textsf{#1}}
 \newcommand{\link}[1]{#1}
 \newcommand{\email}[1]{\textless{#1}\textgreater}
