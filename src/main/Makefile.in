@@ -109,7 +109,7 @@ DISTFILES = Makefile.in Makefile.win \
 
 RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libmath.a
 
-ALL_LIBS = $(RLIBS) $(FLIBS) $(R_XTRA_LIBS) $(LIBS)
+ALL_LIBS = $(RLIBS) $(LIBS) $(FLIBS) $(R_XTRA_LIBS)
 
 all: Makefile Makedeps R
 
