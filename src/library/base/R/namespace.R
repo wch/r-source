@@ -1,3 +1,6 @@
+## give the base namespace a table for registered methods
+".__S3MethodsTable__." <- new.env(hash = TRUE, parent = NULL)
+
 getNamespace <- function(name) {
     ns <- .Internal(getRegisteredNamespace(as.name(name)))
     if (! is.null(ns)) ns
@@ -205,13 +208,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         if (partial) return(ns)
 
         # register any S3 methods
-        for (spec in nsInfo$S3methods) {
-            generic <- spec[1]
-            class <- spec[2]
-            if (length(spec) == 3) mname <- spec[3]
-            else mname <- paste(generic, class, sep=".")
-            registerS3method(spec[1], spec[2], mname, env = env)
-        }
+        registerS3methods(nsInfo$S3methods, env)
 
         # load any dynamic libraries
         for (lib in nsInfo$dynlibs)
@@ -262,7 +259,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             else if(length(expMethods) > 0)
                 stop("Methods specified for export, but none defined: ",
                      paste(expMethods, collapse=", "))
-            exports <- unique(c(exports, expClasses, expMethods))
+            exports <- c(exports, expClasses, expMethods)
         }
         namespaceExport(ns, exports)
         sealNamespace(ns)
@@ -574,10 +571,10 @@ namespaceExport <- function(ns, vars) {
             names(old) <- new
             old
         }
-        new <- makeImportExportNames(vars)
-        if (any(duplicated(new)))
-            stop("duplicate export names ",
-             paste(new[duplicated(new)], collapse=", "))
+        new <- makeImportExportNames(unique(vars))
+#         if (any(duplicated(new)))
+#             stop("duplicate export names ",
+#              paste(new[duplicated(new)], collapse=", "))
         undef <- new[! sapply(new, exists, env = ns)]
         if (length(undef) != 0) {
            undef <- do.call("paste", as.list(c(undef, sep=", ")))
@@ -682,6 +679,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
          exportClasses=exportClasses, exportMethods=exportMethods,
          dynlibs=dynlibs, S3methods = S3methods)
 }
+
 registerS3method <- function(genname, class, method, envir = parent.frame()) {
     addNamespaceS3method <- function(ns, generic, class, method) {
         regs <- getNamespaceInfo(ns, "S3methods")
@@ -749,3 +747,52 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
 #     else
 #         eval(substitute(expr), ns)
 # }
+
+.registerS3method <- function(genname, class, method, nm, envir = parent.frame()) {
+    groupGenerics <- c("Ops", "Math", "Summary")
+    if(any(genname == groupGenerics)) defenv <- .BaseNamespaceEnv
+    else {
+        genfun <- get(genname, envir = envir)
+        if (typeof(genfun) == "closure")
+            defenv <- environment(genfun)
+        else defenv <- .BaseNamespaceEnv
+    }
+    table <- get(".__S3MethodsTable__.", envir = defenv, inherits = FALSE)
+    wrap <- function(method, home) {
+        method <- method            # force evaluation
+        home <- home                # force evaluation
+        delay(get(method, env = home), env = environment())
+    }
+    if(!exists(method, env = envir)) {
+        warning(paste("S3 method",
+                      sQuote(method),
+                      "was declared in NAMESPACE but not found"),
+                call. = FALSE)
+    } else  assign(nm, wrap(method, envir), envir = table)
+}
+
+## do it this way to vectorize the paste call.
+registerS3methods <- function(info, env)
+{
+    n <- length(info)
+    regs <- getNamespaceInfo(env, "S3methods")
+    newregs <- list(n)
+
+    generics <- character(n)
+    classes <- character(n)
+    mname <- rep(as.character(NA), n)
+    for(i in 1:n) {
+        spec <- info[[i]]
+        generics[i] <- spec[1]
+        classes[i] <- spec[2]
+        if (length(spec) == 3) mname[i] <- spec[3]
+    }
+    methname <- paste(generics, classes, sep=".")
+    z <- is.na(mname)
+    mname[z] <- methname[z]
+    for(i in 1:n) {
+        .registerS3method(generics[i], classes[i], mname[i], methname[i], env = env)
+        newregs[[i]] <- list(generics[i], classes[i], mname[i])
+    }
+    setNamespaceInfo(env, "S3methods", c(newregs, regs))
+}
