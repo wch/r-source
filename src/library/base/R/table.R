@@ -74,22 +74,24 @@ summary.table <- function(object, ...)
     if(!inherits(object, "table"))
 	stop("object must inherit from class table")
     n.cases <- sum(object)
-    if(0 == (n.vars <- length(dim(object))))
-	stop("object must be an array")
-    m <- vector("list", length = n.vars)
-    for(k in 1:n.vars) {
-	m[[k]] <- margin.table(object, k) / n.cases
-    }
-    expected <- apply(do.call("expand.grid", m), 1, prod) * n.cases
-    statistic <- sum((c(object) - expected)^2 / expected)
-    parameter <- prod(sapply(m, length) - 1)
+    n.vars <- length(dim(object))
     y <- list(n.vars = n.vars,
-	      n.cases = n.cases,
-	      statistic = statistic,
-	      parameter = parameter,
-	      approx.ok = all(expected >= 5),
-	      p.value = pchisq(statistic, parameter, lower.tail = FALSE),
-	      call = attr(object, "call"))
+	      n.cases = n.cases)
+    if(n.vars > 1) {
+        m <- vector("list", length = n.vars)
+        for(k in seq(along = m)) {
+            m[[k]] <- apply(object, k, sum) / n.cases
+        }
+        expected <- apply(do.call("expand.grid", m), 1, prod) * n.cases
+        statistic <- sum((c(object) - expected)^2 / expected)
+        parameter <- prod(sapply(m, length) - 1)
+        y <- c(y, list(statistic = statistic,
+                       parameter = parameter,
+                       approx.ok = all(expected >= 5),
+                       p.value = pchisq(statistic, parameter,
+                       lower.tail = FALSE),
+                       call = attr(object, "call")))
+    }
     class(y) <- "summary.table"
     y
 }
@@ -104,14 +106,19 @@ function(x, digits = max(1, getOption("digits") - 3), ...)
     }
     cat("Number of cases in table:", x$n.cases, "\n")
     cat("Number of factors:", x$n.vars, "\n")
-    cat("Test for independence of all factors:\n")
-    ch <- .Alias(x$statistic)
-    cat("\tChisq = ",	format(round(ch, max(0, digits - log10(ch)))),
-	", df = ",	x$parameter,
-	", p-value = ",	format.pval(x$p.value, digits, eps = 0),
-	"\n", sep = "")
-    if(!x$approx.ok)
-	cat("\tChi-squared approximation may be incorrect\n")
+    if(x$n.vars > 1) {
+        cat("Test for independence of all factors:\n")
+        ch <- .Alias(x$statistic)
+        cat("\tChisq = ",
+            format(round(ch, max(0, digits - log10(ch)))),
+            ", df = ",
+            x$parameter,
+            ", p-value = ",
+            format.pval(x$p.value, digits, eps = 0),
+            "\n", sep = "")
+        if(!x$approx.ok)
+            cat("\tChi-squared approximation may be incorrect\n")
+    }
     invisible(x)
 }
 
@@ -144,10 +151,15 @@ prop.table <- function(x, margin = NULL)
     	x / sum(x)
 }
 
-margin.table <- function (x, margin = NULL)
+margin.table <- function(x, margin = NULL)
 {
-    if(length(margin))
-        apply(x, margin, sum)
-    else
-    	sum(x)
+    y <- if (length(margin)) {
+        z <- apply(x, margin, sum)
+        dim(z)<-dim(x)[margin]
+        dimnames(z)<-dimnames(x)[margin]
+        z
+    }
+    else sum(x)
+    class(y) <- class(x)
+    y
 }
