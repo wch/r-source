@@ -65,10 +65,8 @@ refman.tex: refman.top $(srcdir)/refman.bot
 version.tex: ../../bin/Rterm.exe $(top_srcdir)/VERSION
 	@echo "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
-	  y=`cut -d/ -f1 < $(top_srcdir)/date-stamp`; \
-	  m=`cut -d/ -f2 < $(top_srcdir)/date-stamp`; \
-	  d=`cut -d/ -f3 < $(top_srcdir)/date-stamp`; \
-	  echo "$${v} ($${m} $${d}, $${y})") > $@
+	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
+	  echo "$${v}") > $@
 
 %-pkg.tex: FORCE Rdnewer.pl pkg2tex.pl
 	@if perl Rdnewer.pl \
@@ -102,7 +100,7 @@ R-intro.pdf: R-intro.texi $(texiincludes)
 version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@echo "creating $(subdir)/$@"
 	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
-	  v="$${v} (`sed 's|/| |g' $(top_srcdir)/date-stamp`)"; \
+	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
 	  echo "@set VERSION $${v}" > $@)
 
 
