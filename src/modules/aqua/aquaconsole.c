@@ -624,14 +624,14 @@ OSStatus SetUPConsole(void){
     SetRect(&OutFrame,0,26,WinFrame.right,WinFrame.bottom-110);
     SetRect(&InFrame,0,WinFrame.bottom-100,WinFrame.right,WinFrame.bottom);
                 
-    frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNMonostyledTextMask; 
+    frameOptions = /* kTXNShowWindowMask|*/ kTXNDoNotInstallDragProcsMask|kTXNMonostyledTextMask; 
     frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNReadOnlyMask;
 		
 
     err = TXNNewObject(NULL, ConsoleWindow, &OutFrame, frameOptions, kTXNTextEditStyleFrameType,
                             kTXNTextensionFile, kTXNSystemDefaultEncoding, &RConsoleOutObject,
                             &OutframeID, 0);
-    frameOptions  = kTXNMonostyledTextMask|kTXNShowWindowMask | kTXNWantHScrollBarMask;
+    frameOptions  = kTXNMonostyledTextMask /*|kTXNShowWindowMask*/ | kTXNWantHScrollBarMask;
     frameOptions |= kTXNWantVScrollBarMask | kTXNDrawGrowIconMask;
 		
     err = TXNNewObject(NULL, ConsoleWindow, &InFrame, frameOptions, kTXNTextEditStyleFrameType,
@@ -652,7 +652,7 @@ OSStatus SetUPConsole(void){
 
 
                 
-    frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNMonostyledTextMask; 
+    frameOptions = /*kTXNShowWindowMask|*/ kTXNDoNotInstallDragProcsMask|kTXNMonostyledTextMask; 
     frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNReadOnlyMask;
 		
 
@@ -660,6 +660,8 @@ OSStatus SetUPConsole(void){
      return(err);
 
     WeHaveConsole = true;
+    if (!WeHaveCocoa) 
+		ShowWindow(ConsoleWindow);
     RSetColors();
     RescaleInOut(0.8);
     TXNSetTXNObjectControls(RConsoleOutObject, false, 3, ROutTag, ROutData);
