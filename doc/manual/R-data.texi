@@ -310,7 +310,7 @@ describe not only content but also the structure of the content can
 make a file self-describing, so that one need not provide these details
 to the software reading the data.
 
-The eXtensible Markup Language -- more commonly know simply as
+The eXtensible Markup Language -- more commonly known simply as
 @acronym{XML} -- can be used to provide such structure, not only for
 standard datasets but also more complex data structures.
 @acronym{XML} is becoming extremely popular and is emerging as a
