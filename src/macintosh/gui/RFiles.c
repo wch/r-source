@@ -21,12 +21,12 @@
  *
  *  This file is adapted from the public demos coming with the Waste library
  *  distribution:  WASTE Text Engine © 1993-2000 Marco Piovanelli.
- *   
+ *
  *  This file was originally written by: Wing Kwong (Tiki), WAN 3/2/99
  *  Updated to last version of WasteLib library: Stefano M. Iacus, 2001
  *
  *  Original file was:
- * 
+ *
  *
  *	WASTE Demo Project:
  *	Macintosh Controls with Long Values
@@ -38,10 +38,9 @@
  */
 
 
-#ifndef __WEDEMO__
-#include "wedemo.h"
+#ifndef __WEDEMOAPP__
+#include "RIntf.h"
 #endif
-
 
 
 #ifndef __ERRORS__
@@ -53,6 +52,8 @@
 #endif
 
 
+extern	SInt16		Edit_Window;
+extern 	WindowPtr	Edit_Windows[MAX_NUM_E_WIN + 1];
 #define	kFileNotOpened	-1
 
 typedef struct FlavorLookupTable
@@ -116,11 +117,12 @@ OSStatus ReadTextFile ( const FSSpec * pFileSpec, WEReference we )
 	Size			byteCount ;
 	UInt16			possibleBOM ;
 	OSStatus		err ;
-    int i,k=0,j=0;
-    SInt32   *textPos;
-    int startRange;
-    char *testo;
-    
+    int 			i,k=0,j=0;
+    SInt32   		*textPos;
+    int 			startRange;
+    char 			*testo;
+
+
 	BlockZero ( hFlavors, sizeof ( hFlavors ) ) ;
 
 	/*	open the data fork with read-only permission */
@@ -254,31 +256,31 @@ OSStatus ReadTextFile ( const FSSpec * pFileSpec, WEReference we )
     testo = (char *) malloc(textSize);
     textSizeRed = textSize;
     textPos = (SInt32  *) malloc(textSize);
-    
+
     startRange = FALSE;
-    
+
     for(i=0;i<textSize;i++)
     {
-     if(  ( (*hText)[i]==0x5F ) || ( (*hText)[i]==0x08 ) ) 
-      { 
+     if(  ( (*hText)[i]==0x5F ) || ( (*hText)[i]==0x08 ) )
+      {
        textSizeRed--;
        if( (*hText)[i]==0x08 && !startRange)
-        { 
+        {
          startRange = TRUE;
          textPos[j] = k;
          j++;
         }
       }
-     else 
-      { 
+     else
+      {
         if( (*hText)[i] == 0x0A )    /* strips also cr escape char  */
           testo[k]='\r';
-        else 
+        else
           testo[k]=(*hText)[i];
         k++;
       }
-       
-      if( ((*hText)[i]==':' ) && startRange) 
+
+      if( ((*hText)[i]==':' ) && startRange)
        {
          startRange = FALSE;
          textPos[j] = k;
@@ -295,8 +297,8 @@ OSStatus ReadTextFile ( const FSSpec * pFileSpec, WEReference we )
  Jago Dic 2000 4Stefano M. Iacus)
 */
 	HLock ( hText ) ;
- 
-	err = WEPut ( 0, 0, * hText, textSize, kTextEncodingMultiRun, 0, flavorCount, flavorTypes, hFlavors, we ) ;	
+
+	err = WEPut ( 0, 0, * hText, textSize, kTextEncodingMultiRun, 0, flavorCount, flavorTypes, hFlavors, we ) ;
 
 	HUnlock(hText);
 
@@ -306,11 +308,11 @@ OSStatus ReadTextFile ( const FSSpec * pFileSpec, WEReference we )
   for(i=0;i<j;i=i+2)
    Change_Color_Range(textPos[i],  textPos[i+1], tempTypeColour.red, tempTypeColour.green, tempTypeColour.blue,we);
 
-	
+
 free(textPos);
 
-   
-    
+
+
 
 
 
@@ -383,7 +385,7 @@ cleanup :
 
 	/*	display an alert box if anything went wrong
 	*/
-	if ( err != noErr )
+	if ( (err != noErr)  && (err != -43))  /* we handle 'File not found' error elsewhere  */
 	{
 		ErrorAlert ( err ) ;
 	}
@@ -974,15 +976,15 @@ int ChooseExistFile(char *fileBuf, int buflen){
        }
     }else{
         fileBuf[0] = '\0';
-        return 0;    
-    } 
+        return 0;
+    }
 }
 
 
 int ChooseNewFile(char *fileBuf, int buflen){
    StandardFileReply	fileReply;
    Handle                   fileName;
-   SInt16                   fileLen;   
+   SInt16                   fileLen;
    OSErr                    osError;
    StandardPutFile("\pNew File","\pUntitled",&fileReply);
    if(fileReply.sfGood){
@@ -1017,6 +1019,6 @@ int R_ChooseFile(int isNewFile, char *fileBuf, int buflen){
    if (isNewFile){
       return ChooseNewFile(fileBuf, buflen);
    }else{
-      return ChooseExistFile(fileBuf, buflen); 
+      return ChooseExistFile(fileBuf, buflen);
    }
 }

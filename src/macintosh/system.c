@@ -81,6 +81,8 @@ Rboolean LoadSiteFile = TRUE;
 Rboolean LoadInitFile = TRUE;
 Rboolean DebugInitFile = FALSE;
 
+extern Rboolean R_Interactive;
+
 long start_Time, last_Time;
 SInt16 gAppResFileRefNum;
 char testBuf[ALLOW_INPUT_LENGTH];
@@ -325,39 +327,24 @@ int main(int ac, char **av)
     SIOUXSettings.initializeTB = false;  // I manage the ToolBox
     SIOUXSettings.asktosaveonclose = false;
     SIOUXSettings.autocloseonquit = true;
-    /* Show the status line */
-/*   SIOUXSettings.showstatusline = true;
- */
+
     ac = ccommand(&av);  // This must be the first  command after variables initializations !!!
 	
     /* FIXME HERE: record the time at which the program started. */
     /* This is probably zero on the mac as we have direct */
     /* access to the number of ticks since process start */
 
-    /* ... */
-
-    /* FIXME HERE: Command line options are not available. */
-    /* Application resources must be inspected here */
-    /* and used to modify the compiled-in defaults. */
-    /* Compare with the Unix code. */
-
-    /* ... */
-
     /* Set up the file handling defaults. */
 
     R_Quiet = 0;
-    R_Interactive = 1;		/* On the Mac we must be interactive */
 
     /* ... */
  
-//    start_Time = last_Time = TickCount();
-
-
 /* *** */    
     Mac_initialize_R ( ac, av );
 	
 /* *** */
-
+    if(R_Interactive)
     changeSize(Console_Window, gTextSize);
      
     /* Call the real R main program (in ../main/main.c) */
@@ -387,7 +374,6 @@ int Mac_initialize_R(int ac, char **av)
     if((R_Home = R_HomeDir()) == NULL)
 	R_Suicide("R home directory is not defined");
 
-//    process_global_Renviron();
 
 #ifdef HAVE_TIMES
     R_setStartTime();
@@ -422,15 +408,17 @@ int Mac_initialize_R(int ac, char **av)
    
     if(!Rp->NoRenviron) process_users_Renviron();
  
+ 
     /* On Unix the console is a file; we just use stdio to write on it */
-
     if(fileno(stdin) > 1){
 	R_Consolefile = stdin;	/* We get input from file specified by the user */
-	R_Interactive = false;
+	R_Interactive = FALSE;
     }
-    else
+    else{
+    R_Interactive = TRUE;	/* On the Mac we must be interactive */
 	R_Consolefile = NULL;	/* We get the input from the GUI console*/
-
+    }
+    
     if(fileno(stdout) > 1)
 	R_Outputfile = stdout;	/* We send output to the file specified by the user */
     else
@@ -447,7 +435,7 @@ int Mac_initialize_R(int ac, char **av)
     
     R_HistoryFile = R_DefHistFile;
     sprintf(R_HistoryFile, "%s", mac_getenv("R_HISTFILE"));
- 	 
+
     R_HistorySize = 512;
     if ((p = mac_getenv("R_HISTSIZE"))) {
 	value = Decode2Long(p, &ierr);
@@ -487,7 +475,7 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
 	saveact = SaveAction;
 
     if(fileno(stdin) > 1) 
-	R_Interactive = false;
+	 R_Interactive = false;
     
     if(saveact == SA_SAVEASK) {
 	if(R_Interactive) {
@@ -568,8 +556,8 @@ void R_RestoreGlobalEnv(void)
     int i;
 
     if(RestoreAction == SA_RESTORE) {
-	if(!(fp = R_fopen(":etc:.RData", "rb"))) { /* binary file */
-	    /* warning here perhaps */
+	if(!(fp = R_fopen(".RData", "rb"))){
+	    warning("No workspace to load");
 	    return;
 	}
 #ifdef OLD

@@ -374,14 +374,15 @@ enum {
 enum {
 	kItemNew		= 1,
 	kItemOpen		= 2,
-	kItemEditObject = 4,       
-	kItemLoad       = 5,     
-	kItemClose		= 7,
-	kItemSave		= 8,
-	kItemSaveAs		= 9,
-	kItemPageSetup  = 11,
-	kItemPrint      = 12,
-	kItemQuit		= 14
+	kItemShow		= 3,
+	kItemEditObject = 5,       
+	kItemLoad       = 6,     
+	kItemClose		= 8,
+	kItemSave		= 9,
+	kItemSaveAs		= 10,
+	kItemPageSetup  = 12,
+	kItemPrint      = 13,
+	kItemQuit		= 15
 };
 
 /*	Edit menu items
