@@ -1,0 +1,77 @@
+#
+# ${R_HOME}/afm/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ..
+subdir = afm
+
+include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+INSTFILES = \
+	agd_____.afm agdo____.afm agw_____.afm agwo____.afm bkd_____.afm \
+	bkdi____.afm bkl_____.afm bkli____.afm cob_____.afm cobo____.afm \
+	com_____.afm coo_____.afm hv______.afm hvb_____.afm hvbo____.afm \
+	hvn_____.afm hvnb____.afm hvnbo___.afm hvno____.afm hvo_____.afm \
+	ncb_____.afm ncbi____.afm nci_____.afm ncr_____.afm pob_____.afm \
+	pobi____.afm poi_____.afm por_____.afm tib_____.afm tibi____.afm \
+	tii_____.afm tir_____.afm sy______.afm \
+	a010013l.afm a010015l.afm a010033l.afm a010035l.afm \
+	b018012l.afm b018015l.afm b018032l.afm b018035l.afm \
+	n022003l.afm n022004l.afm n022023l.afm n022024l.afm \
+	n019003l.afm n019004l.afm n019023l.afm n019024l.afm \
+	n019043l.afm n019044l.afm n019063l.afm n019064l.afm \
+	c059013l.afm c059016l.afm c059033l.afm c059036l.afm \
+	p052003l.afm p052004l.afm p052023l.afm p052024l.afm \
+	n021003l.afm n021004l.afm n021023l.afm n021024l.afm \
+	s050000l.afm \
+	CM_regular_10.afm CM_boldx_10.afm CM_italic_10.afm \
+	CM_boldx_italic_10.afm CM_symbol_10.afm cmbxti10.afm cmti10.afm \
+	AdobeStd.enc AdobeSym.enc ISOLatin1.enc ISOLatin2.enc ISOLatin9.enc \
+	MacRoman.enc PDFDoc.enc WinAnsi.enc
+
+DISTFILES = Makefile.in $(INSTFILES) README
+
+all: Makefile R
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+R: Makefile
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	  $(MAKE) rhome=$(top_builddir) install-sources; \
+	fi
+
+install: install-message installdirs install-sources
+installdirs:
+	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)"
+install-message:
+	@echo "installing $(subdir) ..."
+install-sources:
+	@for f in $(INSTFILES); do \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)/$(subdir)"; \
+	done
+install-strip: install
+
+uninstall:
+	@echo "uninstalling $(subdir) ..."
+	@rm -rf "$(rhome)/$(subdir)"
+
+mostlyclean:
+clean:
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	  rm -f $(INSTFILES); \
+	fi
+distclean: clean
+	-@rm -f Makefile
+maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done

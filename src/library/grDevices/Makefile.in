@@ -39,6 +39,12 @@ all: Makefile DESCRIPTION
 	  echo "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null ; \
 	fi
+	@if test -d $(srcdir)/inst/afm; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/afm; \
+	  for f in `ls -d $(srcdir)/inst/afm/*`; do \
+	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/afm; \
+	  done; \
+	fi
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
 	  (f=$${TMPDIR:-/tmp}/R$$$$; \

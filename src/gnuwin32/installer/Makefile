@@ -27,7 +27,7 @@ all: $(RPREFIX).exe miniR.exe
 imagedir:
 	$(RM) -r $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
-	$(CP) -pr $(R_HOME)/bin $(R_HOME)/modules $(R_HOME)/afm $(RPREFIX)
+	$(CP) -pr $(R_HOME)/bin $(R_HOME)/modules $(RPREFIX)
 # copy base and recommended packages
 	$(MKDIR) -p $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library

@@ -39,7 +39,6 @@
 extern int errno;
 #endif
 
-
 #define INVALID_COL 0xff0a0b0c
 
 /* Define this to use hyphen except in -[0-9] */
@@ -454,7 +453,7 @@ static int GetNextItem(FILE *fp, char *dest, int c, EncodingInputState *state)
     return 0;
 }
 
-/* Load encoding array from a file: defaults to the R_HOME/afm directory */
+/* Load encoding array from a file: defaults to the R_HOME/library/grDevices/afm directory */
 
 /*
  * encpath gives the file to read from
@@ -473,7 +472,8 @@ LoadEncoding(char *encpath, char *encname, CNAME *encnames,
     state.p = state.p0 = NULL;
 
     if(strchr(encpath, FILESEP[0])) strcpy(buf, encpath);
-    else snprintf(buf, BUFSIZE,"%s%safm%s%s", R_Home, FILESEP, FILESEP, encpath);
+    else snprintf(buf, BUFSIZE,"%s%slibrary%sgrDevices%safm%s%s", 
+		  R_Home, FILESEP, FILESEP, FILESEP, FILESEP, encpath);
 #ifdef DEBUG_PS
     Rprintf("encoding path is %s\n", buf);
 #endif
@@ -515,7 +515,8 @@ PostScriptLoadFontMetrics(const char * const fontpath,
     FILE *fp;
 
     if(strchr(fontpath, FILESEP[0])) strcpy(buf, fontpath);
-    else snprintf(buf, BUFSIZE, "%s%safm%s%s", R_Home, FILESEP, FILESEP, fontpath);
+    else snprintf(buf, BUFSIZE,"%s%slibrary%sgrDevices%safm%s%s", 
+		  R_Home, FILESEP, FILESEP, FILESEP, FILESEP, fontpath);
 #ifdef DEBUG_PS
     Rprintf("afmpath is %s\n", buf);
     Rprintf("reencode is %d\n", reencode);
