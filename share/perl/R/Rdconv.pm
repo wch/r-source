@@ -612,7 +612,11 @@ sub text2html {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
 		    $opt =~ s/:.*$//o;
-		    $htmlfile = mklink($opt, $topic . $HTML);
+		    if($pkg ne $pkgname) {
+			$htmlfile = mklink($opt, $topic . $HTML);
+		    } else {
+			$htmlfile = $topic . $HTML;
+		    }
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
@@ -623,7 +627,12 @@ sub text2html {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
 		    $htmlfile = $pkg."/html/".$topic.$HTML;
-		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
+		    if ($htmlfile =~ s+^$pkgname/html/++) {
+			# in the same html file
+			$text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
+		    } else {
+			$text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
+		    }
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/a>/s;
 		}
@@ -746,18 +755,27 @@ sub code2html {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
 		    $opt =~ s/:.*$//o;
-		    $htmlfile = mklink($opt, $topic . $HTML);
+		    if($pkg ne $pkgname) {
+			$htmlfile = mklink($opt, $topic . $HTML);
+		    } else {
+			$htmlfile = $topic . $HTML;
+		    }
        		    $text =~ s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
 		}
-	    }
-	    else{
+	    } else {
 		if($opt ne "") {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
 		    $htmlfile = $pkg."/html/".$topic.$HTML;
-		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
+		    if ($htmlfile =~ s+^$pkgname/html/++) {
+			# in the same html file
+			$text =~
+			    s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
+		    } else {
+			$text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
+		    }
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/a>/s;
 		}

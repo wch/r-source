@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2001 R Development Core Team
+# Copyright (C) 1997-2002 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -115,12 +115,24 @@ print "\n";
 
 
 # get %htmlindex and %anindex
+# as from 1.7.0 we can resolve links to base from other libraries
+# by fixing the link in fixup.package.URLs().
 
 %anindex = read_anindex($lib);
-if($opt_html){
+if($opt_html || $opt_chm){
     %htmlindex = read_htmlindex($lib);
-} elsif ($opt_chm) {
-    %htmlindex = read_htmlindex($lib);
+    if ($lib ne $mainlib) {
+	%basehtmlindex = read_htmlpkgindex($mainlib, "base");
+	foreach $topic (keys %htmlindex) {
+	    $basehtmlindex{$topic} = $htmlindex{$topic};
+	}
+	%htmlindex = %basehtmlindex;
+    }
+    # make sure that references are resolved first to this package
+    my %thishtmlindex = read_htmlpkgindex($lib, $pkg);
+    foreach $topic (keys %thishtmlindex) {
+	$htmlindex{$topic} = $thishtmlindex{$topic};
+    }
 }
 
 format STDOUT =

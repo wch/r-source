@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2001 R Development Core Team
+# Copyright (C) 1997-2002 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.4 $ ';
+my $revision = ' $Revision: 1.5 $ ';
 my $version;
 my $name;
 
@@ -121,6 +121,11 @@ if($opt_html){
 	    $basehtmlindex{$topic} = $htmlindex{$topic};
 	}
 	%htmlindex = %basehtmlindex;
+    }
+    # make sure that references are resolved first to this package
+    my %thishtmlindex = read_htmlpkgindex($lib, $pkg);
+    foreach $topic (keys %thishtmlindex) {
+	$htmlindex{$topic} = $thishtmlindex{$topic};
     }
 }
 

@@ -77,7 +77,9 @@ DEPRECATED & DEFUNCT
 UTILITIES
 
     o	Rdconv now creates direct HTML hyperlinks when linking to
-	documentation in the same package.
+	documentation in the same package.  The code now ensures that
+	links which can be resolved within the package as so resolved,
+	even when there are possible resolutions in other packages.
 
 
 BUG FIXES

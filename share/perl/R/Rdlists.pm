@@ -23,7 +23,7 @@ package R::Rdlists;
 
 require  Exporter;
 @ISA     = qw(Exporter);
-@EXPORT  = qw(buildinit read_titles read_htmlindex read_anindex build_htmlpkglist build_index fileolder foldorder);
+@EXPORT  = qw(buildinit read_titles read_htmlindex read_htmlpkgindex read_anindex build_htmlpkglist build_index fileolder foldorder);
 
 use Cwd;
 use File::Basename;
@@ -168,6 +168,24 @@ sub read_htmlindex {
 		}
 	    }
 	}
+    }
+    %htmlindex;
+}
+
+sub read_htmlpkgindex {
+
+    my $lib = $_[0];
+    my $pkg = $_[1];
+
+    my %htmlindex;
+
+    if(-r file_path($lib, $pkg, "help", "AnIndex")){
+	open ranindex, "<".file_path($lib, $pkg, "help", "AnIndex");
+	while(<ranindex>){
+	    /^([^\t]*)\s*\t(.*)/;
+	    $htmlindex{$1} = file_path($pkg, "html", $2.$HTML);
+	}
+	close ranindex;
     }
     %htmlindex;
 }
