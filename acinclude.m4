@@ -820,7 +820,11 @@ if test -z "${TCLTK_CPPFLAGS}"; then
       fi
     fi
     if test "${found_tcl_h}" = no; then
-      AC_CHECK_HEADER(tcl.h, , have_tcltk=no)
+      AC_EGREP_CPP(yes, [
+#include <tcl.h>
+#if (TCL_MAJOR_VERSION >= 8)
+  yes
+#endif], , have_tcltk=no)
     fi
     unset found_tcl_h
   fi
@@ -848,7 +852,11 @@ if test -z "${TCLTK_CPPFLAGS}"; then
       CPPFLAGS="${save_CPPFLAGS}"
     fi
     if test "${found_tk_h}" = no; then
-      AC_CHECK_HEADER(tk.h, , have_tcltk=no)
+      AC_EGREP_CPP(yes, [
+#include <tk.h>
+#if (TK_MAJOR_VERSION >= 8)
+  yes
+#endif], , have_tcltk=no)
     fi
     unset found_tk_h
   fi
