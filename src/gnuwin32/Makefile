@@ -27,7 +27,7 @@ OBJS = $(foreach i, $(SOURCES), $(basename $i).o)
 MAINLIBS = libmain.a libappl.a libmath.a
 EXTRALIBS = ga.a gl.a xdr.a em.a
 
-LIBFILES = $(foreach i, $(ALLPACKAGES), ../../library/$i)
+LIBFILES = $(foreach i, $(ALLPACKAGES), ../../library/$i) ../../library/R.css
 PKGS = $(foreach i, $(PACKAGES), pkg-$i)
 PKGCLEAN = $(foreach i, $(ALLPACKAGES), pkgclean-$i)
 
@@ -309,8 +309,10 @@ bindist: docfiles
 	zip -mr9X $(RPREFIX)h.zip $(RPREFIX)/library/*/help
 	unzip anindex.zip
 	$(RM) anindex.zip
-	zip -rm9X $(RPREFIX)w.zip $(RPREFIX)/doc/html $(RPREFIX)/library/*/html
-	-zip -rm9X $(RPREFIX)ch.zip $(RPREFIX)/library/*/chtml  $(RPREFIX)/bin/Rchtml.dll
+	zip -rm9X $(RPREFIX)w.zip $(RPREFIX)/doc/html \
+	  $(RPREFIX)/library/*/html $(RPREFIX)/library/R.css
+	-zip -rm9X $(RPREFIX)ch.zip $(RPREFIX)/library/*/chtml \
+	  $(RPREFIX)/bin/Rchtml.dll
 	$(RM) $(RPREFIX)/library/*/winhlp/*.GID
 	-zip -rm9X $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
 	zip -rm9X $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/doc/manual
