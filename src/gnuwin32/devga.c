@@ -40,6 +40,7 @@
 #include "windows.h"
 
 extern console RConsole;
+extern window RFrame;
 extern Rboolean AllDevicesKilled;
 
 int graphicsx = -25, graphicsy = 0;
@@ -1302,7 +1303,7 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     else
 	dh = (int) (h / pixelHeight(NULL));
 
-    if (ismdi()) {
+    if (ismdi() && !isiconic(RFrame)) {
 	cw = RgetMDIwidth();
 	ch = RgetMDIheight();
     } else {
