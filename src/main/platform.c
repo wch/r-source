@@ -1149,18 +1149,10 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("bzip2"));
-#if 1 /* we always have this */
-    LOGICAL(ans)[i++] = TRUE;
-#else
-    LOGICAL(ans)[i++] = FALSE;
-#endif
+    LOGICAL(ans)[i++] = TRUE; /* we always have this */
 
     SET_STRING_ELT(ansnames, i, mkChar("PCRE"));
-#if 1 /* we always have this */
-    LOGICAL(ans)[i++] = TRUE;
-#else
-    LOGICAL(ans)[i++] = FALSE;
-#endif
+    LOGICAL(ans)[i++] = TRUE; /* we always have this */
 
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);

@@ -27,8 +27,6 @@
 
 #include "Defn.h"
 
-#if 1 /* we always have PCRE */
-
 #ifdef HAVE_PCRE_PCRE_H
 # include <pcre/pcre.h>
 #else
@@ -339,17 +337,3 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     return ans;
 }
-#else
-SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    error("`perl = TRUE' is not supported on this platform");
-}
-SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    error("`perl = TRUE' is not supported on this platform");
-}
-SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    error("`perl = TRUE' is not supported on this platform");
-}
-#endif

@@ -935,7 +935,6 @@ SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- bzipped file connections --------------------- */
 
-#if 1 /* we always have bzlib */
 #include <bzlib.h>
 
 static Rboolean bzfile_open(Rconnection con)
@@ -1114,13 +1113,6 @@ SEXP do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 
     return ans;
 }
-#else
-SEXP do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    error("bzfile is not available on this system");
-    return R_NilValue;		/* -Wall */
-}
-#endif
 
 
 /* ------------------- clipboard connections --------------------- */
