@@ -3,7 +3,7 @@
 # ${RHOME}/tests/Makefile.win
 
 R_PKGS_BASE = \
-   base ctest eda lqs methods modreg mva nls splines stepfun tcltk tools ts
+   base ctest eda grid lqs methods modreg mva nls splines stepfun tcltk tools ts
 
 srcdir = .
 
