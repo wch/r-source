@@ -57,6 +57,7 @@ function(dir, outDir)
     
     .installPackageRdIndices(dir, outDir)
     .installPackageVignetteIndex(dir, outDir)
+    .installPackageDemoIndex(dir, outDir)
 }
 
 ### * .installPackageRdIndices
@@ -117,6 +118,20 @@ function(dir, outDir)
     if(!.fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
     writeLines(formatDL(vignetteIndex, style = "list"),
                file.path(outVignetteDir, "00Index.dcf"))
+}
+
+### * .installPackageDemoIndex
+
+.installPackageDemoIndex <-
+function(dir, outDir)
+{
+    demoDir <- file.path(dir, "demo")
+    if(!.fileTest("-d", demoDir)) return()
+    demoIndex <- .buildDemoIndex(demoDir)
+    outDemoDir <- file.path(outDir, "demo")
+    if(!.fileTest("-d", outDemoDir)) dir.create(outDemoDir)
+    writeLines(formatDL(demoIndex, style = "list"),
+               file.path(outDemoDir, "00Index.dcf"))
 }
 
 ### Local variables: ***
