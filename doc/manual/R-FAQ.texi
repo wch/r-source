@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-52, 2001-05-09
+@set FAQ-VERSION 1.2-53, 2001-05-11
 @set REL-VERSION 1.2.3
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1928,10 +1928,14 @@ to remove from library @var{lib}.
 
 A package consists of a subdirectory containing the files
 @file{DESCRIPTION} and @file{INDEX}, and the subdirectories @file{R},
-@file{data}, @file{exec}, @file{inst}, @file{man}, @file{src}, and
-@file{tests} (some of which can be missing).  Optionally the package can
-also contain script files @file{configure} and @file{cleanup} which are
-executed before and after installation.
+@file{data},
+@c <FIXME 1.3.0>
+@c @file{demo},
+@c </FIXME>
+@file{exec}, @file{inst}, @file{man}, @file{src}, and @file{tests} (some
+of which can be missing).  Optionally the package can also contain
+script files @file{configure} and @file{cleanup} which are executed
+before and after installation.
 
 @ifclear UseExternalXrefs
 See section ``Creating R packages'' in @cite{Writing R Extensions}, for
@@ -2121,6 +2125,7 @@ dir /opt/R/src/unix
 * What are valid names?::       
 * Are GAMs implemented in R?::  
 * Why is the output not printed when I source() a file?::  
+* Why does outer() behave strangely with my function?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -2583,7 +2588,7 @@ from package @strong{mda}.
 @c   gam(), or gss which will fit a wide range of spline models.
 @c Something about this should be added once it is proven to work.
 
-@node Why is the output not printed when I source() a file?,  , Are GAMs implemented in R?, R Miscellanea
+@node Why is the output not printed when I source() a file?, Why does outer() behave strangely with my function?, Are GAMs implemented in R?, R Miscellanea
 @section Why is the output not printed when I source() a file?
 
 Most R commands do not generate any output. The command
@@ -2626,6 +2631,16 @@ print(summary(glm(y~x+z, family=binomial)))
 @noindent
 instead, or use @code{source(@var{file}, echo=TRUE)}.
 
+@node Why does outer() behave strangely with my function?,  , Why is the output not printed when I source() a file?, R Miscellanea
+@section Why does outer() behave strangely with my function?
+
+As the help for @code{outer()} indicates, it does not work on arbitrary
+functions the way the @code{apply()} family does.  It requires functions
+that are vectorized to work elementwise on arrays.  As you can see by
+looking at the code, @code{outer(x, y, FUN)} creates two large vectors
+containing every possible combination of elements of @code{x} and
+@code{y} and then passes this to @code{FUN} all at once.  Your function
+probably cannot handle two large vectors as parameters.
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
