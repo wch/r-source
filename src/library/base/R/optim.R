@@ -20,8 +20,8 @@ optim <- function(par, fn, gr = NULL,
         warning("bounds can only be used with method L-BFGS-B")
         method <- "L-BFGS-B"
     }
-    lower <- as.double(rep(lower, npar))
-    upper <- as.double(rep(upper, npar))
+    lower <- as.double(rep(lower, , npar))
+    upper <- as.double(rep(upper, , npar))
     if(is.null(gr))
     res <- .Internal(optim(par, function(par) fn(par, ...), gr,
                            method, con, lower, upper))

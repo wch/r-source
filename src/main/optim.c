@@ -49,6 +49,8 @@ typedef struct opt_struct
     double* ndeps;   /* tolerances for numerical derivatives */
     double fnscale;  /* scaling for objective */
     double* parscale;/* scaling for parameters */
+    int usebounds;
+    double* lower, *upper;
 } opt_struct, *OptStruct;
 
 typedef unsigned char Boolean;
@@ -93,7 +95,7 @@ static void fmingr(int n, double *p, double *df, OptStruct OS)
 {
     SEXP s, x;
     int i;
-    double val1, val2, eps;
+    double val1, val2, eps, epsused, tmp;
 
     if (!isNull(OS->R_gcall)) { /* analytical derivatives */
 	PROTECT(x = allocVector(REALSXP, n));
@@ -108,18 +110,44 @@ static void fmingr(int n, double *p, double *df, OptStruct OS)
 	PROTECT(x = allocVector(REALSXP, n));
 	for (i = 0; i < n; i++) REAL(x)[i] = p[i] * (OS->parscale[i]);
 	CADR(OS->R_fcall) = x;
-	for (i = 0; i < n; i++) {
-	    eps = OS->ndeps[i];
-	    REAL(x)[i] = p[i] * (OS->parscale[i]) + eps;
-	    CADR(OS->R_fcall) = x;
-	    s = coerceVector(eval(OS->R_fcall, OS->R_env), REALSXP);
-	    val1 = REAL(s)[0]/(OS->fnscale);
-	    REAL(x)[i] = p[i] * (OS->parscale[i]) - eps;
-	    CADR(OS->R_fcall) = x;
-	    s = coerceVector(eval(OS->R_fcall, OS->R_env), REALSXP);
-	    val2 = REAL(s)[0]/(OS->fnscale);
-	    df[i] = (val1 - val2) * (OS->parscale[i])/(2 * eps);
-	    REAL(x)[i] = p[i] * (OS->parscale[i]);
+	if(OS->usebounds == 0) {
+	    for (i = 0; i < n; i++) {
+		eps = OS->ndeps[i];
+		REAL(x)[i] = (p[i] + eps) * (OS->parscale[i]);
+		CADR(OS->R_fcall) = x;
+		s = coerceVector(eval(OS->R_fcall, OS->R_env), REALSXP);
+		val1 = REAL(s)[0]/(OS->fnscale);
+		REAL(x)[i] = (p[i] - eps) * (OS->parscale[i]);
+		CADR(OS->R_fcall) = x;
+		s = coerceVector(eval(OS->R_fcall, OS->R_env), REALSXP);
+		val2 = REAL(s)[0]/(OS->fnscale);
+		df[i] = (val1 - val2)/(2 * eps);
+		REAL(x)[i] = p[i] * (OS->parscale[i]);
+	    }
+	} else {
+	    for (i = 0; i < n; i++) {
+		epsused = eps = OS->ndeps[i];
+		tmp = p[i]  + eps;
+		if (tmp > OS->upper[i]) {
+		    tmp = OS->upper[i];
+		    epsused = tmp - p[i] ;
+		}
+		REAL(x)[i] = tmp * (OS->parscale[i]);
+		CADR(OS->R_fcall) = x;
+		s = coerceVector(eval(OS->R_fcall, OS->R_env), REALSXP);
+		val1 = REAL(s)[0]/(OS->fnscale);
+		tmp = p[i] - eps;
+		if (tmp < OS->lower[i]) {
+		    tmp = OS->lower[i];
+		    eps = p[i] - tmp;
+		}
+		REAL(x)[i] = tmp * (OS->parscale[i]);
+		CADR(OS->R_fcall) = x;
+		s = coerceVector(eval(OS->R_fcall, OS->R_env), REALSXP);
+		val2 = REAL(s)[0]/(OS->fnscale);
+		df[i] = (val1 - val2)/(epsused + eps);
+		REAL(x)[i] = p[i] * (OS->parscale[i]);
+	    }
 	}
 	UNPROTECT(1); /* x */
     }
@@ -138,6 +166,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     OS = (OptStruct) R_alloc(1, sizeof(opt_struct));
+    OS->usebounds = 0;
     OS->R_env = rho;
     par = CAR(args);
     args = CDR(args); fn = CAR(args);
@@ -149,7 +178,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     tn = CHAR(STRING(method)[0]);
     args = CDR(args); options = CAR(args);
     PROTECT(OS->R_fcall = lang2(fn, R_NilValue));
-    PROTECT(par = coerceVector(par, REALSXP));
+    PROTECT(par = coerceVector(duplicate(par), REALSXP));
     npar = LENGTH(par);
     dpar = vect(npar);
     opar = vect(npar);
@@ -262,6 +291,9 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (!R_FINITE(upper[i])) nbd[i] = 1; else nbd[i] = 2;
 	    }
 	}
+	OS->usebounds = 1;
+	OS->lower = lower;
+	OS->upper = upper;
 	lbfgsb(npar, lmm, dpar, lower, upper, nbd, &val, &ifail, OS,
 	       factr, pgtol, &fncount, &grcount, maxit, msg);
 	for (i = 0; i < npar; i++)  

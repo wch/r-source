@@ -58,6 +58,7 @@ optim(par, fn, gr = NULL,
   Function \code{fn} can return \code{NA} or \code{Inf} if the function
   cannot be evaluated at the supplied value, but the initial value must
   have a computable finite value of \code{fn}.
+  (Except for method \code{"L-BFGS-B"}.)
 
   \code{optim} can be used recursively, and for a single parameter
   as well as many.
@@ -133,15 +134,6 @@ optim(par, fn, gr = NULL,
     matrix giving an estimate of the Hessian at the solution found. Note
     that this is the Hessian of the unconstrained problem even if the
     box constraints are active.}
-}
-\note{
-  Currently (0.99.0)
-  the finite-difference approximation, if used, does not
-  respect the box constraints. Unless your function is well-defined just
-  outside the box region you must supply a derivative function
-  \code{gr}.
-
-  This is likely to be altered in the near future.
 }
 \references{
   Byrd, R. H., Lu, P., Nocedal, J. and Zhu, C.  (1995) A limited
