@@ -1,8 +1,24 @@
+#!/bin/sh
+#
+# ${RHOME}/etc/SHLIB
 
-LD=ld
-SHLIBLDFLAGS="@SHLIBLDFLAGS@"
+OBJS=
 
-LIB=$1
-shift
+if [ $1 = "-o" ]; then
+  LIB=$2; shift 2
+else
+  LIB=${1%.*}.@SHLIBEXT@
+fi
 
-$LD $SHLIBLDFLAGS -o $LIB $*
+for i in $*; do
+  obj=${i%.*}.o
+  make -f ${RHOME}/etc/Makeconf ${obj}
+  OBJS="${OBJS} ${obj}"
+done
+
+@SHLIBLD@ @SHLIBLDFLAGS@ -o ${LIB} ${OBJS}    
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indent: 2 ***
+### End: ***
