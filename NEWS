@@ -444,7 +444,9 @@ BUG FIXES
 	contained a function with a line longer than 1024 chars. (PR#1900)
 
 	The limits on nesting of functions and on total function size
-	when the source is kept are now enforced.
+	when the source is kept are now enforced.  As (incorrectly)
+	the source was always kept, this meant functions longer than
+	128Kb could crash R, even in packages.
 
     o	lqs() and cov.rob() check that the quantile argument does not
 	exceed n-1.

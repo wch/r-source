@@ -29,7 +29,10 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", white = FALSE)
   All versions of \R accept input from a connection with end of line
   marked by LF (as used on Unix), CRLF (as used on DOS/Windows)
   or CR (as used on Mac).  The final line can be incomplete, that
-  is missing the final EOL marker. 
+  is missing the final EOL marker.
+
+  See \code{\link{source}} for the limits on the size of functions
+  that can be parsed (by default).
 }
 \examples{
 cat("x <- c(1,4)\n  x ^ 3 -10 ; outer(1:7,5:9)\n", file="xyz.Rdmped")

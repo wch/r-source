@@ -45,7 +45,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   source of functions is keep so they can be listed exactly as input.
   This imposes a limit of 128K chars on the function size and a nesting
   limit of 265.  Use \code{option(keep.source = FALSE)} when these
-  limits might take effect.
+  limits might take effect: if exceeded they generate an error.
 }
 \seealso{
   \code{\link{demo}} which uses \code{source};
