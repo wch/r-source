@@ -188,15 +188,6 @@ model.matrix <- function (formula, data)
 	t <- terms(formula)
 	if (missing(data)) 
 		data <- eval(attr(t, "variables"), sys.frame(sys.parent()))
-        else {
-                nn <- as.character(attr(t, "variables"))[-1]
-                offset <- attr(t, "offset")
-                if (!is.null(offset)) 
-                        nn[offset] <- "(offset)"
-                if (any(is.na(match(nn, names(data))))) 
-                        stop("invalid model frame in model.matrix")
-                data <- data[, nn, drop = F]
-        }
 	.Internal(model.matrix(t, data))
 }
 
