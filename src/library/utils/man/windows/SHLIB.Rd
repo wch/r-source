@@ -22,8 +22,8 @@
   \code{R CMD SHLIB} uses the mechanism as used by \code{\link{INSTALL}}
   to compile source code in packages. To use \code{SHLIB} you need to
   have installed (from the \R installer) the files for compiling source
-  packages as well as the tools described in the file
-  \file{readme.packages} in the top directory of the \R installation.
+  packages as well as the tools described in the \sQuote{R Installation and 
+  Administration} manual.
 
   Please consult section \sQuote{Creating shared objects} in the manual
   \sQuote{Writing R Extensions} for how to customize it (for example to
@@ -33,6 +33,7 @@
 \seealso{
   \code{\link{dyn.load}}, \code{\link{library.dynam}}.
 
-  The \sQuote{Writing R Extensions} manual.
+  The \sQuote{R Installation and Administration} and \sQuote{Writing R 
+  Extensions} manuals.
 }
 \keyword{utilities}

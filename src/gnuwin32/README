@@ -244,8 +244,9 @@ add the line
 to your .Rprofile or at the end of R_HOME\etc\Rprofile.
 
 To install a package from source code you need the source-package
-distribution installed from @RWVER@.exe (but not the R sources).  This
-contains detailed instructions in file `README.packages'.
+distribution installed from @RWVER@.exe (but not the R sources).  The
+`R Installation and Administration' manual contains detailed
+instructions.
 
 
 Differences from Unix versions of R

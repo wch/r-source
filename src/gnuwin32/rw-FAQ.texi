@@ -661,10 +661,11 @@ Note that the pre-compiled versions on CRAN are unsupported: see
 gives the locations of a few other precompiled packages.
 
 If there is not a pre-compiled version or that is not up-to-date or
-you prefer compiling from source, make sure you installed the
-necessary files from @code{@RWVER@.exe}.  Then read the file
-@file{README.packages}.  You will need to collect and install several
-tools to use this: you can download them via the portal at
+you prefer compiling from source, read the `R Installation and
+Administration' manual section on `Add-on Packages'.  You need to make
+sure you installed the necessary files from @code{@RWVER@.exe}, and
+you will need to collect and install several tools: you can download
+them via the portal at
 @uref{http://www.murdoch-sutherland.com/Rtools/}.  Once you have done so,
 just run @code{R CMD INSTALL pkgname}.  To check the package (including
 running all the examples on its help pages and in its test suite, if
@@ -1100,8 +1101,8 @@ We strongly encourage you to do this @emph{via} building an R package:
 see the @emph{`Writing R Extensions'} manual.  In any event you should
 install the parts of the R system for building R packages (in
 @code{@RWVER@.exe}), and get and install the tools (including Perl) and
-compilers mentioned in the file @file{README.packages} contained
-therein.  Then you can use
+compilers mentioned in the @emph{`R Installation and Administration'} 
+manual.  Then you can use
 @example
 ...\bin\R CMD SHLIB foo.c bar.f
 @end example

@@ -53,11 +53,10 @@ symbol.For(name)
 }
 \details{
   See
-#ifdef windows
-  file \file{README.packages},
-#endif
-  \sQuote{See Also} and the \emph{Writing R Extensions} manual for how to
-  create a suitable shared library.  Note that unlike some versions of
+  \sQuote{See Also} and the \emph{Writing R Extensions} and
+  \emph{R Installation and Administration} manuals for how to
+  create and install 
+  a suitable shared library.  Note that unlike some versions of
   S-PLUS, \code{dyn.load} does not load an object (\code{.o}) file but a
   shared library or DLL.
 

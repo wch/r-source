@@ -43,10 +43,15 @@ R can now be built with Unicode support on Win9x and WinME.  See
 src/gnuwin32/MkRules.
 
 R can now be built with support for multibyte and variable-width
-character sets, e.g. for Japanese. See INSTALL.
+character sets, e.g. for Japanese. See README.rw????.
 
 select.list() now looks up the the current font size and chooses its
 window size based on that.
+
+The instructions for compiling packages from source and for
+compiling R itself have been moved to the R Installation and 
+Administration manual; the PDF copy of that manual has been added
+to the Rgui Help | Manuals menu list.
 
 
 

@@ -71,7 +71,7 @@
 
 #ifdef windows
   For Windows-specific details on producing the external code, see the
-  file \file{readme.packages}.
+  \dQuote{R Installation and Administration} manual.
 #endif
 }
 %%-- This note based on BDR's understanding, edited TSL
