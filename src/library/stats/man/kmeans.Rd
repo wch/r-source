@@ -1,5 +1,6 @@
 \name{kmeans}
 \alias{kmeans}
+\alias{print.kmeans}
 \title{
 K-Means Clustering
 }
@@ -25,6 +26,8 @@ kmeans(x, centers, iter.max = 10)
   centre).
 
   The algorithm of Hartigan and Wong (1979) is used.
+
+  There is a \code{print} method.
 }
 \value{
   An object of class \code{"kmeans"} which is a list with components:
@@ -38,7 +41,7 @@ kmeans(x, centers, iter.max = 10)
   \item{size}{The number of points in each cluster.}
 }
 \references{
-  Hartigan, J.A. and Wong, M.A. (1979).
+  Hartigan, J. A. and Wong, M. A. (1979).
   A K-means clustering algorithm.
   \emph{Applied Statistics} \bold{28}, 100--108.
 }
@@ -46,7 +49,7 @@ kmeans(x, centers, iter.max = 10)
 # a 2-dimensional example
 x <- rbind(matrix(rnorm(100, sd = 0.3), ncol = 2),
            matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2))
-cl <- kmeans(x, 2, 20)
+(cl <- kmeans(x, 2, 20))
 plot(x, col = cl$cluster)
 points(cl$centers, col = 1:2, pch = 8)
 }

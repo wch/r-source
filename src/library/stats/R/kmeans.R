@@ -51,3 +51,18 @@ kmeans <- function(x, centers, iter.max = 10)
     out
 }
 
+## modelled on print methods in the cluster package
+print.kmeans <- function(x, ...)
+{
+    cat("K-means clustering with cluster sizes ",
+        paste(x$size, collapse=", "), "\n", sep="")
+    cat("\nCluster means:\n")
+    print(x$centers, ...)
+    cat("\nClustering vector:\n")
+    print(x$cluster, ...)
+    cat("\nWithin cluster sum of squares by cluster:\n")
+    print(x$withinss, ...)
+    cat("\nAvailable components:\n")
+    print(names(x))
+    invisible(x)
+}
