@@ -15,10 +15,11 @@ isoreg(x, y = NULL)
 \method{as.stepfun}{isoreg}(x, \dots)
 }
 \arguments{
-  \item{x, y}{coordinate vectors of the regression points.
-    Alternatively a single ``plotting'' structure can be
-    specified: see \code{\link{xy.coords}}.}
-  \item{object}{a \code{isoreg} object.}
+  \item{x, y}{in \code{isoreg}, coordinate vectors of the regression
+    points.  Alternatively a single ``plotting'' structure can be
+    specified: see \code{\link{xy.coords}}.
+    In the \code{as.stepfun} method, \code{x} an \code{"isoreg"} object.
+  }
   \item{\dots}{potentially further arguments passed to methods.}
 }
 \details{

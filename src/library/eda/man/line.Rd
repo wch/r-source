@@ -16,10 +16,6 @@ line(x, y)
 }
 \arguments{
   \item{x,y}{the arguments can be any way of specifying x-y pairs.}
-  \item{object}{a \code{tukeyline} object, typically the result of
-    \code{line(*)}.}
-  \item{digits}{number of significant digits to use, see \code{\link{print}}.}
-  \item{type, \dots}{potentially further arguments, required by generic.}
 }
 \value{
   An object of class \code{"tukeyline"}.

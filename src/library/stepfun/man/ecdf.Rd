@@ -1,28 +1,24 @@
 \name{ecdf}
 \alias{ecdf}
-\alias{print.ecdf}
-%\alias{summary.ecdf}
 \alias{plot.ecdf}
+\alias{print.ecdf}
 \title{Empirical Cumulative Distribution Function}
 \usage{
 ecdf(x)
 
 \method{plot}{ecdf}(\dots, verticals = FALSE, col.01line = "gray70")
 \method{print}{ecdf}(x, digits= getOption("digits") - 2, \dots)
-%\method{summary}{ecdf}(object, \dots)
 }
 \arguments{
   \item{x}{numeric vector of ``observations'' in \code{ecdf};  for the
-    methods \code{x} is as \code{object} below.}
+    methods, an object of class \code{"ecdf"}, typically.}
   \item{\dots}{arguments to be passed to \code{\link{plot.stepfun}}, the
     first of which should be an \R object of class \code{"ecdf"}.}
   \item{verticals}{see \code{\link{plot.stepfun}}.}
   \item{col.01line}{numeric or character specifying the color of the
     horizontal lines at y=0 and 1, see \code{\link{colors}}.}
-
-% For the Methods :
-  \item{object}{(or \code{x}:) object of class \code{"ecdf"}, typically.}
-  \item{digits}{number of significant digits to use, see \code{\link{print}}.}
+  \item{digits}{number of significant digits to use, see
+    \code{\link{print}}.}
 }
 \description{
   Compute or plot an empirical cumulative distribution function.
