@@ -55,6 +55,10 @@ extern double norm_rand(void);
 #include <R_ext/RS.h>
 /* for PROBLEM ... Calloc, Realloc, Free, Memcpy, F77_xxxx */
 
+/* S4 uses macros equivalent to */
+#define Salloc(n,t) (t*)S_alloc(n, sizeof(t))
+#define Srealloc(p,n,old,t) (t*)S_realloc(p,n,old,sizeof(t))
+
 /* S's complex is different, and is a define to S_complex now */
 typedef struct {
 	double re;

@@ -36,8 +36,6 @@ void	R_gc(void);
 char*	R_alloc(long, int);
 char*	S_alloc(long, int);
 char*	S_realloc(char*, long, long, int);
-#define Salloc(n,t) (t*)S_alloc(n, sizeof(t))
-#define Srealloc(p,n,old,t) (t*)S_realloc(p,n,old,sizeof(t))
 
 #ifdef  __cplusplus
 }
