@@ -70,6 +70,9 @@ double lgammafn(double x)
     if(ISNAN(x)) return x;
 #endif
 
+    if (x < 0 && fmod(floor(-x), 2.) == 0)
+	signgam = -1;
+
     if (x <= 0 && x == trunc(x)) { /* Negative integer argument */
 	ML_ERROR(ME_RANGE);
 	return ML_POSINF;/* +Inf, since lgamma(x) = log|gamma(x)| */
@@ -116,7 +119,5 @@ double lgammafn(double x)
 	ML_ERROR(ME_PRECISION);
     }
 
-    if (x < 0 && fmod(floor(-x), 2.) == 0)
-	signgam = -1;
     return ans;
 }
