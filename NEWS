@@ -170,6 +170,16 @@ BUG FIXES
     o	mean(c(1,NA,NA,NA)[-1], trim = .1, na.rm = TRUE) doesn't give an
 	error anymore.		
 
+    o	As the supplied afm files are not properly in the ISOLatin1
+	encoding, the font metric for "-" was wrong since 0.63 on a
+	postscript/xfig device, and randomly wrong in 1.2.0.  It will
+	now be correct (but the files remain incorrect: C45 is "minus"
+	not "hyphen").
+
+    o	The data-time functions try harder to guess the DST setting
+	when the OS does not know, as some OSes were printing times
+	in DST if this was marked as unknown.
+
 
 		CHANGES IN R VERSION 1.2.0
 
