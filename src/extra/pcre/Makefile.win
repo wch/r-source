@@ -3,10 +3,10 @@ include ../../gnuwin32/MkRules
 
 CFLAGS = -I. -O2 -DSTATIC
 
-all: config.h pcre.h libpcre.a
+all: config.h pcre.h libRpcre.a
 
 pcre.o: pcre.c
-libpcre.a: get.o maketables.o pcre.o study.o
+libRpcre.a: get.o maketables.o pcre.o study.o
 
 ## this can't be used if cross-building, so ship the file
 ifneq ($(strip $(BUILD)),CROSS)
@@ -26,7 +26,7 @@ pcre.h: pcre.in
 	  -e 's/@PCRE_DATE@/02-Jan-2002/' $< > $@
 
 clean:
-	$(RM) *.o *~ libpcre.a
+	$(RM) *.o *~ libRpcre.a
 
 distclean: clean
 	$(RM) pcre.h config.h dftables.exe
