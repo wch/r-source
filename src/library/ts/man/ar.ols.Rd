@@ -37,10 +37,11 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
   some of the series are non-stationary and/or co-integrated.
   For definiteness, note that the AR coefficients have the sign in
 
-  \deqn{x_t - \mu = a_0 + a_1(x_{t-1} - \mu) + \cdots +  a_p(x_{t-p} - \mu) + e_t}{\code{(x[t] - m) = a[0] + a[1]*(x[t-1] - m) + \dots +  a[p]*(x[t-p] - m) + e[t]}}
+  \deqn{x_t - \mu = a_0 + a_1(x_{t-1} - \mu) + \cdots + a_p(x_{t-p} - \mu) + e_t}{\code{(x[t] - m) = a[0] + a[1]*(x[t-1] - m) + \dots +  a[p]*(x[t-p] - m) + e[t]}}
 
-  where a[0] is zero unless \code{intercept} is true, and m is the
-  sample mean if \code{demean} is true, zero otherwise.
+  where \eqn{a_0}{a[0]} is zero unless \code{intercept} is true, and
+  \eqn{\mu}{m} is the sample mean if \code{demean} is true, zero
+  otherwise.
 
   Order selection is done by AIC if \code{aic} is true. This is
   problematic, as \code{ar.ols} does not perform
@@ -55,44 +56,45 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
   zero. Otherwise the computations may be inaccurate or fail entirely.
 }
 \value{
+  A list of class \code{"ar"} with the following elements:
   \item{order}{The order of the fitted model.  This is chosen by
-      minimizing the AIC if \code{aic=TRUE}, otherwise it is \code{order.max}.}
-  \item{ar}{Estimated autoregression coefficients for the fitted model.}
-  \item{var.pred}{The prediction variance: an estimate of the portion of the
-      variance of the time series that is not explained by the
-      autoregressive model.}
+    minimizing the AIC if \code{aic=TRUE}, otherwise it is
+    \code{order.max}.}
+  \item{ar}{Estimated autoregression coefficients for the fitted
+    model.}
+  \item{var.pred}{The prediction variance: an estimate of the portion of
+    the variance of the time series that is not explained by the
+    autoregressive model.}
   \item{x.mean}{The estimated mean (or zero if \code{demean} is false)
-      of the series used in fitting and for use in prediction.}
+    of the series used in fitting and for use in prediction.}
   \item{x.intercept}{The intercept in the model for
     \code{x - x.mean}, or zero if \code{intercept} is false.}
   \item{aic}{The value of the \code{aic} argument.}
   \item{n.used}{The number of observations in the time series.}
   \item{order.max}{The value of the \code{order.max} argument.}
-  \item{partialacf}{\code{NULL}. For compatibility with \code{ar}.}
+  \item{partialacf}{\code{NULL}.  For compatibility with \code{ar}.}
   \item{resid}{residuals from the fitted model, conditioning on the
-      first \code{order} observations. The first \code{order} residuals
-      are set to \code{NA}. If \code{x} is a time series, so is \code{resid}.}
-  \item{method}{\code{"Unconstrained LS"}.}
+    first \code{order} observations.  The first \code{order} residuals
+    are set to \code{NA}. If \code{x} is a time series, so is
+    \code{resid}.}
+  \item{method}{The string \code{"Unconstrained LS"}.}
   \item{series}{The name(s) of the time series.}
   \item{asy.se.coef}{The asymptotic-theory standard errors of the
-      coefficient estimates.}
+    coefficient estimates.}
 }
 \author{Adrian Trapletti, Brian Ripley.}
-
 \seealso{
-    \code{\link{ar}}
+  \code{\link{ar}}
 }
-
 \references{
-    Luetkepohl, H. (1991): \emph{Introduction to Multiple Time Series
-        Analysis.} Springer Verlag, NY, pp. 368--370.
+  Luetkepohl, H. (1991): \emph{Introduction to Multiple Time Series
+    Analysis.} Springer Verlag, NY, pp. 368--370.
 }
-
 \examples{
 data(lh)
 ar(lh, method="burg")
 ar.ols(lh)
-ar.ols(lh, F, 4) # fit ar(4)
+ar.ols(lh, FALSE, 4) # fit ar(4)
 
 data(BJsales)
 ar.ols(ts.union(BJsales, BJsales.lead))

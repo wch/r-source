@@ -18,8 +18,8 @@ arima0.diag(fit, gof.lag = 10)
   \item{x}{a univariate time series}
 
   \item{order}{A specification of the non-seasonal part of the ARIMA
-    model: the three components are (p, d, q), the AR order, the degree
-    of differencing and the MA order.}
+    model: the three components \eqn{(p, d, q)} are the AR order, the
+    degree of differencing, and the MA order.}
 
   \item{seasonal}{A specification of the seasonal part of the ARIMA
     model, plus the period (which defaults to \code{frequency(x)}).}
