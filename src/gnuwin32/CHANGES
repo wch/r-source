@@ -39,6 +39,10 @@ The Makefiles for packages now allow C++ code (with extension .cc or
 If you use a private library and HTML help, you need to copy R.css
 from rw1011\library to each private library directory.
 
+Function win.version() should give slightly more information (the
+latest service pack number x.y) on Windows 2000.
+
+
 
 rw1010
 ======
