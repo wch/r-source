@@ -520,7 +520,7 @@ ifeq ($(strip $(BUILD)),CROSS)
         done
 else
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
-	  $(RHOME)/bin/rcmd.exe INSTALL --unsafe ../library/$${p} || exit 0; \
+	  $(RHOME)/bin/rcmd.exe INSTALL --unsafe ../library/$${p} || exit 1; \
 	done
 endif
 
