@@ -18,9 +18,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8-FIXME> 
+/* <UTF8-FIXME>
    byte-level access needed checks.
-   I think it is mainly OK provided quotes, comment, sep and dec 
+   I think it is mainly OK provided quotes, comment, sep and dec
    chars are ASCII.
 
    It does use isspace, and there are non-ASCII Unicode space chars.
@@ -421,7 +421,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 		/* eat white space */
 		if (type != STRSXP)
 		    while (c == ' ' || c == '\t')
-			if ((c = scanchar(FALSE, d)) == d->sepchar 
+			if ((c = scanchar(FALSE, d)) == d->sepchar
 			    || c == '\n' || c == '\r' || c == R_EOF) {
 			    filled = c;
 			    goto donefill;
@@ -637,7 +637,7 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 	    bch = c;
 	}
     }
-    if (!d->quiet) REprintf("Read %d items\n", n);
+    if (!d->quiet) REprintf("Read %d item%s\n", n, (n == 1) ? "" : "s");
     if (d->ttyflag) ConsolePrompt[0] = '\0';
 
     if (n == 0) {
@@ -814,7 +814,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 	}
 	n++;
     }
-    if (!d->quiet) REprintf("Read %d records\n", n);
+    if (!d->quiet) REprintf("Read %d record%s\n", n, (n == 1) ? "" : "s");
     if (d->ttyflag) ConsolePrompt[0] = '\0';
 
     for (i = 0; i < nc; i++) {
@@ -859,7 +859,7 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, file, sep, what, stripwhite, dec, quotes, comstr;
     int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline, escapes;
     char *p, *vmax;
-    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE,
 		      FALSE, 0};
     data.NAstrings = R_NilValue;
 
@@ -904,7 +904,7 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (length(sep) == 0) data.sepchar = 0;
 	else {
 	    char *sc = CHAR(STRING_ELT(sep, 0));
-	    if(strlen(sc) > 1) 
+	    if(strlen(sc) > 1)
 		errorcall(call, "invalid sep value: must be one byte");
 	    data.sepchar = (unsigned char) sc[0];
 	}
@@ -916,7 +916,7 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    data.decchar = '.';
 	else {
 	    char *dc = CHAR(STRING_ELT(dec, 0));
-	    if(strlen(dc) != 1) 
+	    if(strlen(dc) != 1)
 		errorcall(call, "invalid decimal separator: must be one byte");
 	    data.decchar = dc[0];
 	}
@@ -999,7 +999,7 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     int nfields, nskip, i, c, inquote, quote = 0;
     int blocksize, nlines, blskip;
     char *p;
-    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE,
 		      FALSE, 0};
     data.NAstrings = R_NilValue;
 
@@ -1153,7 +1153,7 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* This is a horrible hack which is used in read.table to take a
    character variable, if possible to convert it to a logical,
    integer, numeric or complex variable.  If this is not possible,
-   the result is a character string if as.is == TRUE 
+   the result is a character string if as.is == TRUE
    or a factor if as.is == FALSE. */
 
 
@@ -1165,7 +1165,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean islogical = TRUE, isinteger = TRUE, isreal = TRUE,
 	iscomplex = TRUE, done = FALSE;
     char *endp, *tmp = NULL;
-    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE,
 		      FALSE, 0};
     data.NAstrings = R_NilValue;
 
@@ -1393,7 +1393,7 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
     double first;
     char buffer[MAXELTSIZE], *bufp = buffer;
     SEXP ans;
-    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE,
 		      FALSE, 0};
     data.NAstrings = R_NilValue;
 
@@ -1443,7 +1443,7 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     int nlines, i, c, quote=0, nread, nbuf, buf_size = BUF_SIZE, blskip;
     char *p, *buf;
     Rboolean empty, skip;
-    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE,
 		      FALSE, 0};
     data.NAstrings = R_NilValue;
 
@@ -1706,7 +1706,7 @@ SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(inherits(xj, "factor")) {
 		levels[j] = getAttrib(xj, R_LevelsSymbol);
 	    } else levels[j] = R_NilValue;
-	    }  
+	    }
 
 	for(i = 0; i < nr; i++) {
 	    if(!isNull(rnames))
