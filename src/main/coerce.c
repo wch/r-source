@@ -1825,6 +1825,46 @@ SEXP do_quote(SEXP call, SEXP op, SEXP args, SEXP rho)
     return(CAR(args));
 }
 
+typedef struct {
+  char *s;
+  SEXPTYPE sexp;
+  Rboolean canChange;
+} classType;
+
+static classType classTable[] = {
+    { "logical",	LGLSXP,	   TRUE },
+    { "integer",	INTSXP,	   TRUE },
+    { "double",		REALSXP,   TRUE },
+    { "complex",	CPLXSXP,   TRUE },
+    { "character",	STRSXP,	   TRUE },
+    { "expression",	EXPRSXP,   TRUE },
+    { "list",		VECSXP,	   TRUE },
+    {"environment",     ENVSXP,    FALSE },
+    { "char",		CHARSXP,   TRUE },
+    { "externalptr",	EXTPTRSXP,  FALSE },
+    { "weakref",	WEAKREFSXP, FALSE },
+    { "name",		SYMSXP,	   FALSE },
+
+    { (char *)0,	-1, FALSE   }
+};
+
+static int class2type(char *s) {
+  /* return the type if the class string is one of the basic types, else -1.
+     Note that this is NOT str2type:  only certain types are defined to be basic
+     classes; e.g., "language" is a type but many classes correspond to objects of
+     this type.
+  */
+  int i; char *si;
+  for(i=0; ; i++) {
+    si = classTable[i].s;
+    if(!si)
+      return -1;
+    if(!strcmp(s, si))
+      return i;
+  }
+  return -1;
+}
+
 /* set the class to value, and return the modified object.  This is
    NOT a primitive assignment operator , because there is no code in R
    that changes type in place. See the definition of "class<-" in the methods
@@ -1847,23 +1887,16 @@ SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
     error("Invalid replacement object to be a class string");
   }
   else {
-    char *valueString, *classString;
+    char *valueString, *classString; int whichType;
     SEXP cur_class; SEXPTYPE valueType;
     valueString = CHAR(asChar(value));
+    whichType = class2type(valueString);
+    valueType = (whichType == -1) ? -1 : classTable[whichType].sexp;
     PROTECT(cur_class = R_data_class(obj, FALSE)); nProtect++;
     classString = CHAR(asChar(cur_class));
-     /* If equal to cur. class; leave alone.  This is important in
-	preserving several implicit basic classes. However, it will
-	not always switch from one such to another.  Examples include
-	assigning one syntactic class as a way of converting from
-	another.  Not a good idea, of course, but it should probably
-	be intercepted with an error message.*/
-    if(!strcmp(valueString, classString)) {}
-    /* at this point, the better semantics is to look up the class
-       definition in the metadata table; i.e., the equivalent of
-       if(isClass(valueString)) and set the class directly if so.
-       Until the code for isClass is moved to main, we can't.  The
-       effect is to prevent redefining the basic classes below. */
+     /* If equal to cur. class; leave alone, except that assigning 
+	a type as a class deletes an explicit class attribute. */
+    if(!strcmp(valueString, classString) && valueType == -1) {}
     else if(!strcmp("numeric", valueString)) {
       setAttrib(obj, R_ClassSymbol, R_NilValue);
       switch(TYPEOF(obj)) {
@@ -1873,14 +1906,16 @@ SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
       }
     }
     else {
-      if(!strcmp("function", valueString))
-	valueType = CLOSXP;
-      else
-	valueType = str2type(valueString);
       if(valueType != -1) {
-	setAttrib(obj, R_ClassSymbol, R_NilValue);
-	PROTECT(obj = ascommon(call, obj, valueType));
-	nProtect++;
+	if(classTable[whichType].canChange) {
+	  setAttrib(obj, R_ClassSymbol, R_NilValue);
+	  PROTECT(obj = ascommon(call, obj, valueType));
+	  nProtect++;
+	}
+	else if(valueType != TYPEOF(obj))
+	  error("\"%s\" can only be set as the class if the object has this type; found \"%s\"",
+		valueString, type2str(TYPEOF(obj)));
+	/* else, leave alone */
       }
       else if(!strcmp("array", valueString) &&
 	      length(getAttrib(obj, R_DimSymbol)) >0) {}
