@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-31, 2000-11-28
+@set FAQ-VERSION 1.1-32, 2000-11-30
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -1655,6 +1655,8 @@ Multivariate normal and t distributions.
 Read data from netCDF files.
 @item npConfRatio
 Nonparametric confidence intervals for the ratios of medians.
+@item regexp
+Simple regular expression interface.
 @item timeslab
 Time series routines.
 @end table
