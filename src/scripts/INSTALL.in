@@ -113,8 +113,6 @@ for pkg in ${PKGS}; do
 	   -o ${lib}/${pkg}/libs/${pkg}.so *.[cf])
     fi || {
       echo "ERROR: Compilation failed for package \`${pkg}'"
-      echo "Removing \`${lib}/${pkg}'"
-      rm -rf ${lib}/${pkg}
       exit 4
     }
     if ${DEBUG}; then set +x; fi
