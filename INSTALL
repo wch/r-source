@@ -94,7 +94,11 @@ If you have libraries and header files, e.g., for GNU readline, in
 non-system directories, use the variables LIBS (for libraries) and
 CPPFLAGS (for header files), respectively, to specify these locations.
 These default to /usr/local/lib and /usr/local/include to catch the
-most common cases.
+most common cases.  If libraries are still not found, then maybe your
+compiler/linker does not support re-ordering of `-L' and `-l' flags
+(this has been reported to be a problem on HP-UX with native cc).  In
+this case, use a different compiler (or a front end shell script which
+does the re-ordering).
 
 If you find you need to alter configure variables, it is worth noting
 that some settings are cached in the file `config.cache', and it is a
