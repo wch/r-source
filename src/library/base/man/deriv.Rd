@@ -44,12 +44,11 @@ deriv.formula(expr, namevec, function.arg = NULL, tag = ".expr")
   extracting the expression to the right of \code{~}.
 }
 \value{
-  \code{D} returns an expression and therefore can easily be iterated
+  \code{D} returns a call and therefore can easily be iterated
   for higher derivatives.
 
-  \code{deriv} returns a \code{\link{call}} object which becomes an
-  \code{\link{expression}} when evaluated once.  Evaluation of the
-  latter expression returns the function values with a
+  \code{deriv} returns an \code{\link{expression}} object.
+  Its evaluation returns the function values with a
   \code{".gradient"} attribute containing the gradient matrix.
 }
 \note{
@@ -94,6 +93,21 @@ eval(dxy)
 eval(D.sc)
 stopifnot(eval(D.sc) ==
           attr(eval(dxy),"gradient")[,"x"])
+
+## Higher derivatives:
+DD <- function(expr,name, order = 1) {
+   if(order < 1) stop("`order' must be >= 1")
+   if(order == 1) D(expr,name)
+   else DD(D(expr, name), name, order - 1)
+}
+DD(expression(sin(x^2)), "x", 3)
+## showing the limits of the internal "simplify()" :
+\dontrun{
+-sin(x^2) * (2 * x) * 2 + ((cos(x^2) * (2 * x) * (2 * x) + sin(x^2) *
+    2) * (2 * x) + sin(x^2) * (2 * x) * 2)
+}
 }
 \keyword{math}
 \keyword{nonlinear}
+
+
