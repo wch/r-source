@@ -438,7 +438,7 @@
 #define R_CPU "i386"
 
 /* Define as `inline', or `__inline__' or `__inline' if that's what the C
- *    compiler calls it, or to nothing if it is not supported. */
+   compiler calls it, or to nothing if it is not supported. */
 #define R_INLINE inline
 
 /* Define this to be the name of the OS of your system. */
@@ -448,7 +448,7 @@
 #define R_PLATFORM "i386-pc-mingw32"
 
 /* Define this to be printing command on your system. */
-#define R_PRINTCMD  "UNKNOWN"
+#define R_PRINTCMD ""
 
 /* Define this to enable R-level profiling. */
 #define R_PROFILING 1
