@@ -150,7 +150,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, t, tok, x;
     int i, j, len, tlen, ntok;
-    char *pt = NULL, *split = "";
+    char *pt = NULL, *split = "", *bufp;
     regex_t reg;
     regmatch_t regmatch[1];
 
@@ -177,39 +177,40 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	       */
 	    if(regcomp(&reg, split, 0))
 		errorcall(call, "invalid split pattern");
-	    while(regexec(&reg, buff, 1, regmatch, 0) == 0) {
+	    bufp = buff;
+	    while(regexec(&reg, bufp, 1, regmatch, 0) == 0) {
 		/* Empty matches get the next char, so move by one. */
-		buff += MAX(regmatch[0].rm_eo, 1);
+		bufp += MAX(regmatch[0].rm_eo, 1);
 		ntok++;
-		if (*buff == '\0')
+		if (*bufp == '\0')
 		    break;
 	    }
-	    if(*buff == '\0')
+	    if(*bufp == '\0')
 		PROTECT(t = allocVector(STRSXP, ntok));
 	    else
 		PROTECT(t = allocVector(STRSXP, ntok + 1));
 	    /* and fill with the splits */
-	    strcpy(buff, CHAR(STRING(x)[i]));
+	    bufp = buff;
 	    pt = (char *) realloc(pt, (strlen(buff)+1)*sizeof(char));
 	    for(j = 0; j < ntok; j++) {
-		regexec(&reg, buff, 1, regmatch, 0);
+		regexec(&reg, bufp, 1, regmatch, 0);
 		if(regmatch[0].rm_eo > 0) {
 		    /* Match was non-empty. */
 		    if(regmatch[0].rm_so > 0)
-			strncpy(pt, buff, regmatch[0].rm_so);
+			strncpy(pt, bufp, regmatch[0].rm_so);
 		    pt[regmatch[0].rm_so] = '\0';
-		    buff += regmatch[0].rm_eo;
+		    bufp += regmatch[0].rm_eo;
 		}
 		else {
 		    /* Match was empty. */
-		    pt[0] = *buff;
+		    pt[0] = *bufp;
 		    pt[1] = '\0';
 		    buff++;
 		}
 		STRING(t)[j] = mkChar(pt);
 	    }
-	    if(*buff != '\0')
-		STRING(t)[ntok] = mkChar(buff);
+	    if(*bufp != '\0')
+		STRING(t)[ntok] = mkChar(bufp);
 	}
 	else {
 	    char bf[2];

@@ -11,7 +11,8 @@ edit.data.frame<-
     if (getenv("DISPLAY")=="" || .Platform$OS.type == "windows")
         return (edit.default(name,...))
 
-    if (!all(sapply(name, is.vector) | sapply(name, is.factor)))
+    is.vector.unclass <- function(x) is.vector(unclass(x))
+    if (!all(sapply(name, is.vector.unclass) | sapply(name, is.factor)))
         stop("Can only handle vector and factor elements")
 
     factor.mode <- match.arg(factor.mode)
