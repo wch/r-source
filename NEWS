@@ -73,6 +73,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   pmatch() misbehaved on duplicate matches
+    
     o	R CMD Rd2dvi <file.Rd> works again
 
     o	logical binops tried to set time series parameters before dimensions
