@@ -19,6 +19,9 @@ load <- function (file, envir = parent.frame())
         return(character(0))
     }
     if (regexpr("RD[AX]2\n", magic) == -1) {
+        ## a check while we still know the args
+        if(regexpr("RD[ABX][12]\r", magic) == 1)
+            stop("input has been corrupted, with LF replaced by CR")
         ## Not a version 2 magic number, so try the old way.
         if (is.character(file)) {
             close(con)

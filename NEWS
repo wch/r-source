@@ -214,6 +214,10 @@ NEW FEATURES
 	required packages mentioned in the Depends: field of the
 	DESCRIPTION file.
 
+    o	load() now detects and gives a warning (rather than an error)
+	for empty input, and tries to detect (but not correct) files
+	which have had LF replaced by CR.
+
     o	ls.str() and lsf.str() now return an object of class "ls_str" which
 	has a print method.
 
@@ -261,11 +265,7 @@ NEW FEATURES
 	All of these settings are currently only available via par()
 	(i.e., not in-line as arguments to plot(), lines(), ...)
 
-    o	New functions to control mapping from device-independent graphics
-	font family to device-specific family:	postscriptFont() and
-	postscriptFonts() (for postscript() and pdf());	 X11Font() and
-	X11Fonts();  windowsFont() and windowsFonts();	quartzFont() and
-	quartzFonts().
+    o	PCRE (as used by grep etc) has been updated to version 5.0.
 
     o	A 'version' argument has been added to pdf() device.  If this is
 	set to "1.4", the device will support transparent colours.
@@ -277,6 +277,12 @@ NEW FEATURES
 
     o	The png() and jpeg() devices (and the bmp() device under Windows)
 	now allow a nominal resolution to be recorded in the file.
+
+    o	New functions to control mapping from device-independent graphics
+	font family to device-specific family:	postscriptFont() and
+	postscriptFonts() (for postscript() and pdf());	 X11Font() and
+	X11Fonts();  windowsFont() and windowsFonts();	quartzFont() and
+	quartzFonts().
 
     o	power (x^y) has optimised code for y == 2.
 

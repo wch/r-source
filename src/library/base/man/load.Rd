@@ -36,8 +36,9 @@ loadURL(url, envir = parent.frame(), quiet = TRUE, \dots)
 }
 \section{Warning}{
   Saved \R objects are binary files, even those saved with
-  \code{ascii=TRUE}, so ensure that they are transferred without
-  conversion of end of line markers.
+  \code{ascii = TRUE}, so ensure that they are transferred without
+  conversion of end of line markers.  \code{load} tries to detect this
+  case and give an informative error message.
 }
 \seealso{
   \code{\link{save}}, \code{\link{download.file}}.
