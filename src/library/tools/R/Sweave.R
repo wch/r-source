@@ -194,15 +194,21 @@ RweaveLatexRuncode <- function(object, chunk, options)
     else
         chunkout <- object$output
 
-    chunkexps <- c(SweaveGetHooks(options),
-                   parse(text=chunk))
+    chunkexps <- SweaveGetHooks(options)
+    nrhooks <- length(chunkexps)
+    chunkexps <- c(chunkexps, parse(text=chunk))
     openSinput <- FALSE
+
+    if(length(chunkexps)==0)
+        return(object)
     
-    for(ce in chunkexps){
+    for(nce in 1:length(chunkexps))
+    {
+        ce <- chunkexps[[nce]]
         dce <- deparse(ce)
         if(object$debug)
             cat("\nRnw> ", paste(dce, collapse="\n+  "),"\n")
-        if(options$echo){
+        if(options$echo && (nce > nrhooks)){
             if(!openSinput){
                 cat("\\begin{Sinput}",
                     file=chunkout, append=TRUE)
