@@ -1,5 +1,4 @@
 \name{logical}
-\title{Logical Vectors}
 \alias{logical}
 \alias{as.logical}
 \alias{as.logical.default}
@@ -8,6 +7,11 @@
 \alias{FALSE}
 \alias{T}
 \alias{F}
+\title{Logical Vectors}
+\description{
+  Create or test for objects of type \code{"logical"}, and the basic
+  logical ``constants''.
+}
 \usage{
 TRUE
 FALSE
@@ -17,11 +21,12 @@ logical(length = 0)
 as.logical(x)
 is.logical(x)
 }
-\description{
+\details{
   \code{TRUE} and \code{FALSE} are part of the \R language, where
   \code{T} and \code{F} are global variables set to these.
   All four are \code{logical(1)} vectors.
-
+}
+\value{
   \code{logical} creates a logical vector of the specified length.
   Each element of the vector is equal to \code{FALSE}.
 

@@ -1,12 +1,16 @@
 \name{dput}
+\alias{dput}
+\alias{dget}
 \title{Write an Internal Object to a File}
+\description{
+  Writes an ASCII text representation of an \R object to a file, or uses
+  one to recreate the object.
+}
 \usage{
 dput(x, file = "")
 dget(file)
 }
-\alias{dput}
-\alias{dget}
-\value{
+\details{
   \code{dput} opens \code{file} and deparses the object \code{x} into
   that file.  The object name is not written (contrary to \code{dump}).
   If \code{x} is a function the associated environment is stripped.

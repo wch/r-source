@@ -1,38 +1,40 @@
 \name{cbind}
-\title{Combine Columns/Rows into a Matrix}
-\usage{
-cbind(\dots)
-rbind(\dots)
-}
 \alias{cbind}%%--do C-internal method dispatching !!
 \alias{rbind}
 \alias{cbind.data.frame}
 \alias{rbind.data.frame}
-\value{
-The generic functions \code{cbind} and \code{rbind} take a sequence of
-vector and/or matrix arguments and combine them as the \bold{c}olumns or
-\bold{r}ows, respectively, of a matrix.
+\title{Combine Columns/Rows into a Matrix}
+\description{
+  Take a sequence of vector and/or matrix arguments and combine them as
+  the \emph{c}olumns or \emph{r}ows, respectively, of a matrix.
+}
+\usage{
+cbind(\dots)
+rbind(\dots)
+}
+\details{
+  The functions \code{cbind} and \code{rbind} are generic, with methods
+  for data frames.
 
-If there are several matrix arguments,
-they must all have the same number of columns (or rows)
-and this will be the number of columns (or rows) of the result.
-If all the arguments are vectors, the number of columns (rows) in the
-result is equal to the length of the longest vector.
-Values in shorter arguments are recycled
-to achieve this length.
+  If there are several matrix arguments, they must all have the same
+  number of columns (or rows) and this will be the number of columns (or
+  rows) of the result.  If all the arguments are vectors, the number of
+  columns (rows) in the result is equal to the length of the longest
+  vector.  Values in shorter arguments are recycled to achieve this
+  length.
 
-When the arguments consist of a mix of matrices and vectors
-the number of columns (rosw) of the result is determined by the number
-of columns (rows) of the matrix arguments.  Any vectors have their
-values recycled or subsetted to achieve this length.
+  When the arguments consist of a mix of matrices and vectors the number
+  of columns (rosw) of the result is determined by the number of columns
+  (rows) of the matrix arguments.  Any vectors have their values
+  recycled or subsetted to achieve this length.
 }
 \note{
-The method dispatching is \emph{not} done via
-\code{\link{UseMethod}(..)}, but by C-internal dispatching.
-Therefore, there's no need for, e.g., \code{rbind.default}.
+  The method dispatching is \emph{not} done via
+  \code{\link{UseMethod}(..)}, but by C-internal dispatching.
+  Therefore, there's no need for, e.g., \code{rbind.default}.
 }
 \seealso{
-\code{\link{c}} to combine vectors or list.
+  \code{\link{c}} to combine vectors (and lists).
 }
 \examples{
 cbind(1,1:7) # the '1' (= shorter vector) is recycled

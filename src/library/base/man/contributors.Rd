@@ -1,16 +1,20 @@
 \name{contributors}
-\title{R Project Contributors}
 \alias{contributors}
+\title{R Project Contributors}
+\description{
+  The \R Who-is-who.
+}
 \section{The \R Project}{
-  \R is a project which is attempting to provide a modern
-  piece of statistical software for the GNU suite of software.
+  \R is a project which is attempting to provide a modern piece of
+  statistical software for the GNU suite of software.
 }
 \section{Contributors}{
-  The current \R is the result of a collaborative effort
-  authors from all over the world.
-  \R was initially written by Robert Gentleman and Ross Ihaka ---
-  also known as ``\emph{R & R}'' ---
-  of the Statistics Department of the University of Auckland.
+  The current \R is the result of a collaborative effort authors from
+  all over the world.
+
+  \R was initially written by Robert Gentleman and Ross Ihaka---also
+  known as ``\emph{R & R}''---of the Statistics Department of the
+  University of Auckland.
 
   Since mid-1997 there has been a core group with write access to the \R
   source, currently consisting of
@@ -63,10 +67,10 @@
   Andreas Weingessel.
 
   We have probably omitted some important names here because of
-  incomplete record keeping.  If we have overlooked you, please
-  let us know and we'll update the list.
+  incomplete record keeping.  If we have overlooked you, please let us
+  know and we'll update the list.
 
-  A special debt is owed to John Chambers who has graciously
-  contributed advice and encouragement.
+  A special debt is owed to John Chambers who has graciously contributed
+  advice and encouragement.
 }
 \keyword{misc}

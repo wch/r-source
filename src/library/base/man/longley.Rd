@@ -1,13 +1,11 @@
 \name{longley}
 \alias{longley}
 \title{Longley's Regression Data}
+\description{
+  A macroeconomic data set which provides a well-known example for a
+  highly collinear regression.
+}
 \usage{data(longley)}
-\source{
-  J. W. Longley (1967).
-  An appraisal of least-squares programs from the point of view of the
-  user.
-  \emph{Journal of the American Statistical Association} \bold{62},
-  819--841.}
 \format{
   A data frame with 7 economical variables, observed yearly from 1947 to
   1962 (\eqn{n=16}).
@@ -25,6 +23,13 @@
 
   The regression \code{lm(Employed ~ .)} is known to be highly
   collinear.
+}
+\source{
+  J. W. Longley (1967).
+  An appraisal of least-squares programs from the point of view of the
+  user.
+  \emph{Journal of the American Statistical Association} \bold{62},
+  819--841.
 }
 \examples{
 # give the data set in the form it is used in S-plus:
