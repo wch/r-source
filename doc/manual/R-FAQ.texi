@@ -641,9 +641,9 @@ availability of new code.
 A moderated list for announcements on the availability of new or
 enhanced contributed packages.
 @item R-help
-The `main' R mailing list, for announcements about the development of R
-and the availability of new code, including new or enhanced contributed
-packages, questions and answers about problems and solutions using R,
+The `main' R mailing list, for discussion about problems and solutions
+using R, announcements (not covered by `R-announce' and `R-packages')
+about the development of R and the availability of new code,
 enhancements and patches to the source code and documentation of R,
 comparison and compatibility with S and @SPLUS{}, and for the posting of
 nice examples and benchmarks.
@@ -1886,6 +1886,8 @@ Fixed point clusters, clusterwise regression and discriminant plots.
 Maximum likelihood estimation of the parameters of a fractionally
 differenced ARIMA(@math{p,d,q}) model (Haslett and Raftery, Applied
 Statistics, 1989).
+@item ftnonpar
+Features and strings for nonparametric regression.
 @item g.data
 Create and maintain delayed-data packages (DDP's).
 @item gafit
