@@ -6,7 +6,7 @@
 \title{Summarize an Analysis of Variance Model}
 \usage{
 \method{summary}{aov}(object, intercept = FALSE, split,
-         expand.split = TRUE, keep.zero.df = TRUE, \dots)
+        expand.split = TRUE, keep.zero.df = TRUE, \dots)
 
 \method{summary}{aovlist}(object, \dots)
 }

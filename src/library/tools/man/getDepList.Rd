@@ -1,7 +1,7 @@
 \name{getDepList}
 \alias{getDepList}
 \alias{pkgDepends}
-\title{Functions to retrieve dependency information}
+\title{Functions to Retrieve Dependency Information}
 \description{
   Given a dependency matrix, will create a \code{DependsList} object for that
   package which will include the dependencies for that matrix, which

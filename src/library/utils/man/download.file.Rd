@@ -5,7 +5,7 @@
   This function can be used to download a file from the Internet.
 }
 \usage{
-download.file(url, destfile, method, quiet = FALSE, mode="w",
+download.file(url, destfile, method, quiet = FALSE, mode = "w",
               cacheOK = TRUE)
 }
 \arguments{

@@ -10,15 +10,15 @@
 
 lag.plot <- function(x, lags = 1, layout = NULL, set.lags = 1:lags,
                      main = NULL, asp = 1,
-                     font.main = par("font.main"), cex.main = par("cex.main"),  
-                     diag = TRUE, diag.col = "gray", type = "p", oma = NULL, 
-                     ask = NULL, do.lines = n <= 150, labels = do.lines, ...)
+                     font.main = par("font.main"), cex.main = par("cex.main"),
+                     diag = TRUE, diag.col = "gray", type = "p", oma = NULL,
+                     ask = NULL, do.lines = (n <= 150), labels = do.lines, ...)
 {
     xnam <- deparse(substitute(x))
     is.mat <- !is.null(ncol(x))
     nser <- ncol(x <- as.ts(as.matrix(x)))
     n <- nrow(x)
-    
+
     if(is.null(oma)) {
         oma <- rep(2, 4)
         if (!is.null(main)) oma[3] <- oma[3] + 3*cex.main
@@ -76,7 +76,7 @@ lag.plot <- function(x, lags = 1, layout = NULL, set.lags = 1:lags,
             if (do.4) axis(4, xpd=NA)
             if (jj %% 2 == 0 && ii == nR)
                 axis(1, xpd=NA)
-            
+
             if(newX) {
                 newX <- FALSE
                 if(!do.4) axis(4, xpd = NA, mgp = c(0,.6,0))

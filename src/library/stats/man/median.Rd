@@ -1,7 +1,7 @@
 \name{median}
 \title{Median Value}
 \usage{
-median(x, na.rm=FALSE)
+median(x, na.rm = FALSE)
 }
 \alias{median}
 \arguments{

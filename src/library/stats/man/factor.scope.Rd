@@ -2,7 +2,9 @@
 \title{Compute Allowed Changes in Adding to or Dropping from a Formula}
 \usage{
 add.scope(terms1, terms2)
+
 drop.scope(terms1, terms2)
+
 factor.scope(factor, scope)
 }
 \alias{add.scope}

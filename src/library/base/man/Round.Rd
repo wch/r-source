@@ -6,7 +6,7 @@ floor(x)
 round(x, digits = 0)
 signif(x, digits = 6)
 trunc(x)
-zapsmall(x, digits= getOption("digits"))
+zapsmall(x, digits = getOption("digits"))
 }
 \alias{ceiling}
 \alias{floor}

@@ -10,7 +10,9 @@
 }
 \usage{
 \method{as.character}{octmode}(x, \dots)
+
 \method{format}{octmode}(x, \dots)
+
 \method{print}{octmode}(x, \dots)
 }
 \arguments{

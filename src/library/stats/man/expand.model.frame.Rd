@@ -8,7 +8,8 @@
   to be recovered for a model using \code{sin(x)} as a predictor.
 }
 \usage{
-expand.model.frame(model, extras, envir=environment(formula(model)),
+expand.model.frame(model, extras,
+                   envir = environment(formula(model)),
                    na.expand = FALSE)
 }
 \arguments{

@@ -17,7 +17,7 @@
 }
 \usage{
 x[i]
-x[i, j, \dots , drop=TRUE]
+x[i, j, \dots , drop = TRUE]
 x[[i]]
 x[[i, j, \dots]]
 x$name

@@ -28,7 +28,7 @@ drop1(object, scope, \dots)
       k = 2, trace = FALSE, \dots)
 
 \method{drop1}{lm}(object, scope, scale = 0, all.cols = TRUE,
-      test=c("none", "Chisq", "F"),k = 2, \dots)
+      test = c("none", "Chisq", "F"),k = 2, \dots)
 
 \method{drop1}{glm}(object, scope, scale = 0, test = c("none", "Chisq", "F"),
       k = 2, \dots)

@@ -1,7 +1,7 @@
 \name{weighted.mean}
 \title{Weighted Arithmetic Mean}
 \usage{
-weighted.mean(x, w, na.rm=FALSE)
+weighted.mean(x, w, na.rm = FALSE)
 }
 \alias{weighted.mean}
 \arguments{

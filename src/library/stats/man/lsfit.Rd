@@ -1,7 +1,7 @@
 \name{lsfit}
 \title{Find the Least Squares Fit}
 \usage{
-lsfit(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
+lsfit(x, y, wt = NULL, intercept = TRUE, tolerance = 1e-07, yname = NULL)
 }
 \alias{lsfit}
 \arguments{

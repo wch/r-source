@@ -2,7 +2,7 @@
 \alias{url.show}
 \title{Display a text URL}
 \description{
-  Extension of \code{\link{file.show}} to display text files on a remote 
+  Extension of \code{\link{file.show}} to display text files from a remote 
   server.
 }
 \usage{
@@ -18,7 +18,7 @@ url.show(url, title = url, file = tempfile(),
   \item{\dots}{Arguments to pass to \code{\link{file.show}}.}
 }
 \seealso{
-  \code{\link{url}}, \code{\link{file.show}},\code{\link{download.file}}
+  \code{\link{url}}, \code{\link{file.show}}, \code{\link{download.file}}
 }
 \examples{
 \dontrun{url.show("http://lib.stat.cmu.edu/datasets/csb/ch3a.txt")}

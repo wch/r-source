@@ -8,7 +8,9 @@
 }
 \usage{
 contour(x, \dots)
-\method{contour}{default}(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
+
+\method{contour}{default}(x = seq(0, 1, len = nrow(z)),
+        y = seq(0, 1, len = ncol(z)),
         z,
         nlevels = 10, levels = pretty(zlim, nlevels), labels = NULL,
         xlim = range(x, finite = TRUE),
@@ -20,7 +22,8 @@ contour(x, \dots)
         col = par("fg"), lty = par("lty"), lwd = par("lwd"),
 	add = FALSE, \dots)
 
-contourLines(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
+contourLines(x = seq(0, 1, len = nrow(z)),
+             y = seq(0, 1, len = ncol(z)),
 	     z, nlevels = 10,
              levels = pretty(range(z, na.rm=TRUE), nlevels))
 }

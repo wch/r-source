@@ -19,7 +19,9 @@ library(package, help, pos = 2, lib.loc = NULL,
         character.only = FALSE, logical.return = FALSE,
         warn.conflicts = TRUE,
         keep.source = getOption("keep.source.pkgs"),
-        verbose = getOption("verbose"), version)
+        verbose = getOption("verbose"),
+        version)
+
 require(package, quietly = FALSE, warn.conflicts = TRUE,
         keep.source = getOption("keep.source.pkgs"),
         character.only = FALSE, version, save = TRUE)

@@ -40,7 +40,7 @@ as.dendrogram(object, \dots)
 
 \method{rev}{dendrogram}(x)
 
-  \method{str}{dendrogram}(object, max.level = 0, digits.d = 3,
+\method{str}{dendrogram}(object, max.level = 0, digits.d = 3,
     give.attr = FALSE, wid = getOption("width"),
     nest.lev = 0, indent.str = "", stem = "--", \dots)
 

@@ -3,7 +3,7 @@
 \usage{
 effects(object, \dots)
 
-\method{effects}{lm}(object, set.sign=FALSE, \dots)
+\method{effects}{lm}(object, set.sign = FALSE, \dots)
 }
 \alias{effects}
 \alias{effects.lm}

@@ -8,8 +8,8 @@
   Round or truncate date-time objects.
 }
 \usage{
-\method{round}{POSIXt}(x, units=c("secs", "mins", "hours", "days"))
-\method{trunc}{POSIXt}(x, units=c("secs", "mins", "hours", "days"))
+\method{round}{POSIXt}(x, units = c("secs", "mins", "hours", "days"))
+\method{trunc}{POSIXt}(x, units = c("secs", "mins", "hours", "days"))
 
 \method{round}{Date}(x, \dots)
 \method{trunc}{Date}(x)

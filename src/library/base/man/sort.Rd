@@ -9,6 +9,7 @@
 \usage{
 sort(x, partial = NULL, na.last = NA, decreasing = FALSE,
      method = c("shell", "quick"), index.return = FALSE)
+
 is.unsorted(x, na.rm = FALSE)
 }
 \arguments{

@@ -7,7 +7,7 @@
   How to cite R and R packages in publications.
 }
 \usage{
-citation(package="base", lib.loc = NULL)
+citation(package = "base", lib.loc = NULL)
 bibtex(object, ...)
 }
 \arguments{

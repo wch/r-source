@@ -18,7 +18,7 @@ ave(x, \dots, FUN = mean)
   A numeric vector, say \code{y} of length \code{length(x)}.
   If \code{\dots} is \code{g1,g2}, e.g.,
   \code{y[i]} is equal to \code{FUN(x[j]}, for all \code{j} with
-  \code{g1[j]==g1[i]} and \code{g2[j]==g2[i])}.
+  \code{g1[j] == g1[i]} and \code{g2[j] == g2[i])}.
 }
 \seealso{\code{\link{mean}}, \code{\link{median}}.}
 \examples{

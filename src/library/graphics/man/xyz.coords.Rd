@@ -6,8 +6,8 @@
   for three dimensional (3D) plots.
 }
 \usage{
-xyz.coords(x, y, z, xlab=NULL, ylab=NULL, zlab=NULL, log=NULL,
-    recycle=FALSE)
+xyz.coords(x, y, z, xlab = NULL, ylab = NULL, zlab = NULL,
+           log = NULL, recycle = FALSE)
 }
 \arguments{
   \item{x, y, z}{the x, y and z coordinates of a set of points.

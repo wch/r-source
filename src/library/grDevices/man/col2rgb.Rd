@@ -5,7 +5,7 @@
   \dQuote{Any \R color} to RGB (red/green/blue) conversion.
 }
 \usage{
-col2rgb(col, alpha=FALSE)
+col2rgb(col, alpha = FALSE)
 }
 \arguments{
   \item{col}{vector of any of the three kind of \R colors, i.e., either

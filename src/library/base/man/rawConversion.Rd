@@ -11,13 +11,13 @@
 }
 \usage{
 charToRaw(x)
-rawToChar(x, multiple=FALSE)
+rawToChar(x, multiple = FALSE)
 
 rawShift(x, n)
 
 rawToBits(x)
 intToBits(x)
-packBits(x, type=c("raw", "integer"))
+packBits(x, type = c("raw", "integer"))
 }
 \arguments{
   \item{x}{object to be converted or shifted.}

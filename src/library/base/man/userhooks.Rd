@@ -12,7 +12,8 @@
 getHook(hookName)
 setHook(hookName, value, action = c("append", "prepend", "replace"))
 
-packageEvent(pkgname, event=c("onLoad", "attach", "detach", "onUnload"))
+packageEvent(pkgname,
+             event = c("onLoad", "attach", "detach", "onUnload"))
 }
 \arguments{
   \item{hookName}{character string: the hook name}

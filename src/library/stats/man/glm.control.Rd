@@ -6,11 +6,12 @@
   Typically only used when calling \code{\link{glm}} or \code{\link{glm.fit}}.
 }
 \usage{
-glm.control(epsilon=1e-8, maxit=25, trace=FALSE)
+glm.control(epsilon = 1e-8, maxit = 25, trace = FALSE)
 }
 \arguments{
-  \item{epsilon}{positive convergence tolerance \eqn{epsilon};
-    the iterations converge when \eqn{|dev - devold|/(|dev| + 0.1) < epsilon}.}
+  \item{epsilon}{positive convergence tolerance \eqn{\epsilon};
+    the iterations converge when
+    \eqn{|dev - dev_{old}|/(|dev| + 0.1) < \epsilon}{|dev - devold|/(|dev| + 0.1) < \epsilon}.}
   \item{maxit}{integer giving the maximal number of IWLS iterations.}
   \item{trace}{logical indicating if output should be produced for each
     iteration.}

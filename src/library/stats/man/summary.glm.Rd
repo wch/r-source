@@ -6,7 +6,7 @@
 \title{Summarizing Generalized Linear Model Fits}
 \usage{
 \method{summary}{glm}(object, dispersion = NULL, correlation = FALSE,
-       symbolic.cor = FALSE, \dots)
+        symbolic.cor = FALSE, \dots)
 
 \method{print}{summary.glm}(x, digits = max(3, getOption("digits") - 3),
       symbolic.cor = x$symbolic.cor,

@@ -6,7 +6,7 @@
   matrix.
 }
 \usage{
-col(x, as.factor=FALSE)
+col(x, as.factor = FALSE)
 }
 \arguments{
   \item{x}{a matrix.}

@@ -10,6 +10,7 @@
 }
 \usage{
 order.dendrogram(x)
+
 \method{labels}{dendrogram}(object, \dots)
 }
 \arguments{

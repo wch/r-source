@@ -1,7 +1,7 @@
 \name{boxplot.stats}
 \title{Box Plot Statistics}
 \usage{
-boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
+boxplot.stats(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
 }
 \alias{boxplot.stats}
 \arguments{

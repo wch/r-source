@@ -20,7 +20,7 @@
 }
 
 \usage{
-  addmargins( A, margin = 1:length(dim(A)), FUN = sum, quiet=FALSE )
+  addmargins(A, margin = 1:length(dim(A)), FUN = sum, quiet = FALSE)
 }
 
 \arguments{

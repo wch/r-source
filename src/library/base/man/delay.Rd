@@ -1,20 +1,20 @@
 \name{delay}
-\title{Delay Evaluation}
-\usage{
-delay(x, env=.GlobalEnv)
-}
 \alias{delay}
 \concept{promise}
 \concept{promises}
-\arguments{
-  \item{x}{an expression.}
-  \item{env}{an evaluation environment}
-}
+\title{Delay Evaluation}
 \description{
   \code{delay} creates a \emph{promise} to evaluate the given
   expression in the specified environment if its value is requested.
   This provides direct access to \emph{lazy evaluation} mechanism
   used by \R for the evaluation of (interpreted) functions.
+}
+\usage{
+delay(x, env = .GlobalEnv)
+}
+\arguments{
+  \item{x}{an expression.}
+  \item{env}{an evaluation environment}
 }
 \value{
   A \emph{promise} to evaluate the expression.  The value which is

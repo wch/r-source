@@ -78,23 +78,22 @@ taskCallbackManager(handlers = list(), registered = FALSE,
   \url{http://developer.r-project.org/TaskHandlers.pdf}  
 }
 \examples{
-   # create the manager
-  h <- taskCallbackManager()
+# create the manager
+h <- taskCallbackManager()
 
-   # add a callback
-  h$add(function(expr, value, ok, visible) {
-                         cat("In handler\n")
-                         return(TRUE)
-                       }, name = "simpleHandler")
+# add a callback
+h$add(function(expr, value, ok, visible) {
+		       cat("In handler\n")
+		       return(TRUE)
+		     }, name = "simpleHandler")
 
-   # look at the internal callbacks.
-  getTaskCallbackNames()
+# look at the internal callbacks.
+getTaskCallbackNames()
 
-   # look at the R-level callbacks
-  names(h$callback())
- 
-   #
-  getTaskCallbackNames()
-  removeTaskCallback("R-taskCallbackManager")
+# look at the R-level callbacks
+names(h$callback())
+
+getTaskCallbackNames()
+removeTaskCallback("R-taskCallbackManager")
 }
 \keyword{environment}

@@ -9,7 +9,8 @@
 \usage{
 t.test(x, \dots)
 
-\method{t.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"),
+\method{t.test}{default}(x, y = NULL,
+       alternative = c("two.sided", "less", "greater"),
        mu = 0, paired = FALSE, var.equal = FALSE,
        conf.level = 0.95, \dots)
 

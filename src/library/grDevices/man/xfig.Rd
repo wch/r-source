@@ -65,7 +65,7 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
 }
 \seealso{
   \code{\link{Devices}},
-  \code{postscript},
+  \code{\link{postscript}},
   \code{\link{ps.options}}.
 }
 \keyword{device}

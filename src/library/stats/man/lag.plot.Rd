@@ -10,8 +10,8 @@
 lag.plot(x, lags = 1, layout = NULL, set.lags = 1:lags,
          main = NULL, asp = 1,
          font.main=par("font.main"), cex.main=par("cex.main"),
-         diag = TRUE, diag.col="gray", type="p", oma = NULL,
-         ask = NULL, do.lines = n <= 150, labels = do.lines, \dots)
+         diag = TRUE, diag.col = "gray", type = "p", oma = NULL,
+         ask = NULL, do.lines = (n <= 150), labels = do.lines, \dots)
 }
 \arguments{
   \item{x}{time-series (univariate or multivariate)}

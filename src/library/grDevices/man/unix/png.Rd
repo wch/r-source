@@ -9,7 +9,7 @@
 jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480,
      pointsize = 12, quality = 75, bg = "white", res = NA, \dots)
 
-png(filename ="Rplot\%03d.png", width = 480, height = 480,
+png(filename = "Rplot\%03d.png", width = 480, height = 480,
     pointsize = 12, bg = "white",  res = NA,\dots)
 }
 \synopsis{

@@ -10,7 +10,7 @@
 %\alias{extractAIC.negbin}
 %\alias{extractAIC.survreg}
 \usage{
-extractAIC(fit, scale,     k = 2, \dots)  
+extractAIC(fit, scale, k = 2, \dots)  
 }
 \arguments{
   \item{fit}{fitted model, usually the result of a fitter like

@@ -4,7 +4,9 @@
 \title{Singular Value Decomposition of a Matrix}
 \usage{
 svd(x, nu = min(n, p), nv = min(n, p), LINPACK = FALSE)
-La.svd(x, nu = min(n, p), nv = min(n, p), method = c("dgesdd", "dgesvd"))
+
+La.svd(x, nu = min(n, p), nv = min(n, p),
+       method = c("dgesdd", "dgesvd"))
 }
 \arguments{
   \item{x}{a matrix whose SVD decomposition is to be computed.}

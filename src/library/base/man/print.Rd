@@ -4,10 +4,10 @@
 print(x, \dots)
 
 \method{print}{factor}(x, quote = FALSE, max.levels = NULL,
-     width = getOption("width"), \dots)
+      width = getOption("width"), \dots)
 
 \method{print}{table}(x, digits = getOption("digits"), quote = FALSE,
-          na.print = "", zero.print = "0", justify = "none", \dots)
+      na.print = "", zero.print = "0", justify = "none", \dots)
 }
 \alias{print}
 \alias{print.factor}

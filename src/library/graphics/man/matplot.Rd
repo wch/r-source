@@ -4,8 +4,9 @@
 \alias{matlines}
 \title{Plot Columns of Matrices}
 \usage{
-matplot(x, y, type = "p", lty = 1:5, lwd = 1, pch = NULL, col = 1:6,
-        cex = NULL, xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
+matplot(x, y, type = "p", lty = 1:5, lwd = 1, pch = NULL,
+        col = 1:6, cex = NULL,
+        xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
         \dots, add = FALSE, verbose = getOption("verbose"))
 
 matpoints(x, y, type = "p", lty = 1:5, lwd = 1, pch = NULL,

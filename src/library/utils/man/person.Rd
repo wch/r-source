@@ -16,7 +16,7 @@
   like name and email address.
 }
 \usage{
-person(first="", last="", middle="", email="")
+person(first = "", last = "", middle = "", email = "")
 personList(...)
 as.person(x)
 as.personList(x)
@@ -37,7 +37,7 @@ as.personList(x)
 \keyword{misc}
 \examples{
 ## create a person object directly
-p1 <- person("Karl", "Pearson", email="pearson@stats.heaven")
+p1 <- person("Karl", "Pearson", email = "pearson@stats.heaven")
 p1
 
 ## convert a string

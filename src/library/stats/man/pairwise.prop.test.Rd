@@ -6,13 +6,14 @@
   correction for multiple testing 
 }
 \usage{
-pairwise.prop.test(x, n, p.adjust.method=p.adjust.methods, ...)
+pairwise.prop.test(x, n, p.adjust.method = p.adjust.methods, ...)
 }
 \arguments{
  \item{x}{ Vector of counts of successes or a matrix with 2 columns
-          giving the counts of successes and failures, respectively. }
+   giving the counts of successes and failures, respectively. }
  \item{n}{ Vector of counts of trials; ignored if \code{x} is a matrix.}
- \item{p.adjust.method}{Method for adjusting p values (see \code{\link{p.adjust}}) }
+ \item{p.adjust.method}{Method for adjusting p values
+   (see \code{\link{p.adjust}}) }
  \item{\dots}{ Additional arguments to pass to \code{prop.test} }
 }
 \value{

@@ -10,7 +10,8 @@
 \usage{
 var.test(x, \dots)
 
-\method{var.test}{default}(x, y, ratio = 1, alternative = c("two.sided", "less", "greater"),
+\method{var.test}{default}(x, y, ratio = 1,
+         alternative = c("two.sided", "less", "greater"),
          conf.level = 0.95, \dots)
 
 \method{var.test}{formula}(formula, data, subset, na.action, \dots)

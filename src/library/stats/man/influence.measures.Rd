@@ -25,38 +25,38 @@
 influence.measures(model)
 
 rstandard(model, \dots)
-\method{rstandard}{lm}(model, infl = lm.influence(model, do.coef=FALSE),
+\method{rstandard}{lm}(model, infl = lm.influence(model, do.coef = FALSE),
           sd = sqrt(deviance(model)/df.residual(model)), \dots)
-\method{rstandard}{glm}(model, infl = lm.influence(model, do.coef=FALSE), \dots)
+\method{rstandard}{glm}(model, infl = lm.influence(model, do.coef = FALSE), \dots)
 
 rstudent(model, \dots)
-\method{rstudent}{lm}(model, infl = lm.influence(model, do.coef=FALSE),
+\method{rstudent}{lm}(model, infl = lm.influence(model, do.coef = FALSE),
 	 res = infl$wt.res, \dots)
-\method{rstudent}{glm}(model, infl = influence(model, do.coef=FALSE), \dots)
+\method{rstudent}{glm}(model, infl = influence(model, do.coef = FALSE), \dots)
 
 dffits(model, infl = , res = )
 
 dfbeta(model, \dots)
-\method{dfbeta}{lm}(model, infl = lm.influence(model, do.coef=TRUE), \dots)
+\method{dfbeta}{lm}(model, infl = lm.influence(model, do.coef = TRUE), \dots)
 
 dfbetas(model, \dots)
-\method{dfbetas}{lm}(model, infl = lm.influence(model, do.coef=TRUE), \dots)
+\method{dfbetas}{lm}(model, infl = lm.influence(model, do.coef = TRUE), \dots)
 
-covratio(model, infl = lm.influence(model, do.coef=FALSE),
+covratio(model, infl = lm.influence(model, do.coef = FALSE),
          res = weighted.residuals(model))
 
 cooks.distance(model, \dots)
-\method{cooks.distance}{lm}(model, infl = lm.influence(model, do.coef=FALSE),
+\method{cooks.distance}{lm}(model, infl = lm.influence(model, do.coef = FALSE),
                res = weighted.residuals(model),
                sd = sqrt(deviance(model)/df.residual(model)),
                hat = infl$hat, \dots)
-\method{cooks.distance}{glm}(model, infl = influence(model, do.coef=FALSE),
+\method{cooks.distance}{glm}(model, infl = influence(model, do.coef = FALSE),
                res = infl$pear.res,
                dispersion = summary(model)$dispersion,
                hat = infl$hat, \dots)
 
 hatvalues(model, \dots)
-\method{hatvalues}{lm}(model, infl = lm.influence(model, do.coef=FALSE), \dots)
+\method{hatvalues}{lm}(model, infl = lm.influence(model, do.coef = FALSE), \dots)
 
 hat(x, intercept = TRUE)
 }

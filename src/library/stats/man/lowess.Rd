@@ -1,7 +1,8 @@
 \name{lowess}
 \title{Scatter Plot Smoothing}
 \usage{
-lowess(x, y = NULL, f = 2/3, iter=3, delta = 0.01 * diff(range(xy$x[o])))
+lowess(x, y = NULL, f = 2/3, iter = 3,
+       delta = 0.01 * diff(range(xy$x[o])))
 }
 \alias{lowess}
 \arguments{

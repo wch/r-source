@@ -32,7 +32,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
   At present \code{source}ing may not produce an identical copy of
   \code{dump}ed objects. A warning is issued if it is likely that
   problems will arise, for example when dumping exotic objects such
-  as \link[environment]{environments} and external pointers.
+  as \link{environment}s and external pointers.
 
   \code{dump} will also warn if fewer characters were written to a file
   than expected, which may indicate a full or corrupt file system.

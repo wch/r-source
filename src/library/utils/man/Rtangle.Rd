@@ -7,8 +7,8 @@
 }
 \usage{
 Rtangle()
-RtangleSetup(file, syntax, output=NULL, annotate=TRUE, split=FALSE,
-             prefix=TRUE, quiet=FALSE)
+RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
+             split = FALSE, prefix = TRUE, quiet = FALSE)
 }
 \arguments{
   \item{file}{Name of Sweave source file.}
@@ -22,7 +22,7 @@ RtangleSetup(file, syntax, output=NULL, annotate=TRUE, split=FALSE,
     \code{FALSE}, only the code chunks without any decorating comments
     are extracted.}
   \item{split}{Split output in single files per code chunk?}
-  \item{prefix}{If \code{split=TRUE}, prefix the chunk labels by the
+  \item{prefix}{If \code{split = TRUE}, prefix the chunk labels by the
     basename of the input file to get output file names?}
   \item{quiet}{If \code{TRUE} all progress messages are suppressed.}
 }

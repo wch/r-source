@@ -8,9 +8,11 @@
 }
 \usage{
 RweaveLatex()
-RweaveLatexSetup(file, syntax, output=NULL, quiet=FALSE, debug=FALSE,
-                 echo=TRUE, eval = TRUE, split=FALSE, stylepath=TRUE,
-                 pdf=TRUE, eps=TRUE)
+
+RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
+                 debug = FALSE, echo = TRUE, eval  =  TRUE,
+                 split = FALSE, stylepath = TRUE,
+                 pdf = TRUE, eps = TRUE)
 }
 \arguments{
   \item{file}{Name of Sweave source file.}
@@ -72,7 +74,7 @@ RweaveLatexSetup(file, syntax, output=NULL, quiet=FALSE, debug=FALSE,
       \file{.Snw} source file.}
     \item{include:}{logical (\code{TRUE}), indicating whether input
       statements for text output and includegraphics statements
-      for figures should be auto-generated. Use \code{include=FALSE} if
+      for figures should be auto-generated. Use \code{include = FALSE} if
       the output should appear in a different place than the code chunk
       (by placing the input line manually).}
     \item{fig:}{logical (\code{FALSE}), indicating whether the code
@@ -80,9 +82,9 @@ RweaveLatexSetup(file, syntax, output=NULL, quiet=FALSE, debug=FALSE,
       graphical output. Note that only one figure per code chunk can be
       processed this way.}
     \item{eps:}{logical (\code{TRUE}), indicating whether EPS figures shall be
-      generated. Ignored if \code{fig=FALSE}.} 
+      generated. Ignored if \code{fig = FALSE}.} 
     \item{pdf:}{logical (\code{TRUE}), indicating whether PDF figures shall be
-      generated. Ignored if \code{fig=FALSE}.}
+      generated. Ignored if \code{fig = FALSE}.}
     \item{width:}{numeric (6), width of figures in inch.}
     \item{height:}{numeric (6), height of figures in inch.}
   }

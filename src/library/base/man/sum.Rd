@@ -1,7 +1,7 @@
 \name{sum}
 \title{Sum of Vector Elements}
 \usage{
-sum(\dots, na.rm=FALSE)
+sum(\dots, na.rm = FALSE)
 }
 \alias{sum}
 \description{

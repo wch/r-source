@@ -2,11 +2,11 @@
 \title{One Dimensional Optimization}
 \usage{
 optimize(f = , interval = , lower = min(interval),
-        upper = max(interval), maximum = FALSE,
-        tol = .Machine$double.eps^0.25, \dots)
+         upper = max(interval), maximum = FALSE,
+         tol = .Machine$double.eps^0.25, \dots)
 optimise(f = , interval = , lower = min(interval),
-        upper = max(interval), maximum = FALSE,
-        tol = .Machine$double.eps^0.25, \dots)
+         upper = max(interval), maximum = FALSE,
+         tol = .Machine$double.eps^0.25, \dots)
 }
 \alias{optimize}
 \alias{optimise}

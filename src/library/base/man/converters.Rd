@@ -75,18 +75,17 @@ In the case that no such element was found, an error occurs.
 \seealso{\code{\link{.C}}}
 
 \examples{
- getNumCConverters()
- getCConverterDescriptions()
- getCConverterStatus()
+getNumCConverters()
+getCConverterDescriptions()
+getCConverterStatus()
 \dontrun{
-  old <- setCConverterStatus(1,FALSE)
+old <- setCConverterStatus(1, FALSE)
 
-  setCConverterStatus(1,old)
+setCConverterStatus(1, old)
 }
 \dontrun{
-  removeCConverter(1)
-  removeCConverter(getCConverterDescriptions()[1])
-}
-}
+removeCConverter(1)
+removeCConverter(getCConverterDescriptions()[1])
+}}
 \keyword{interface}
 \keyword{programming}

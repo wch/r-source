@@ -6,7 +6,7 @@
 \method{family}{glm}(object, \dots)
 
 \method{residuals}{glm}(object, type = c("deviance", "pearson", "working",
-                      "response", "partial"), \dots)
+                           "response", "partial"), \dots)
 }
 \arguments{
   \item{object}{an object of class \code{glm}, typically the result of

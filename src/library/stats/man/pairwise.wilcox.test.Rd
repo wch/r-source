@@ -6,7 +6,7 @@
   for multiple testing.
 }
 \usage{
-pairwise.wilcox.test(x, g, p.adjust.method=p.adjust.methods, \dots)
+pairwise.wilcox.test(x, g, p.adjust.method = p.adjust.methods, \dots)
 }
 \arguments{
   \item{x}{ Response vector }

@@ -15,11 +15,15 @@
 \usage{
 environment(fun = NULL)
 environment(fun) <- value
+
 is.environment(obj)
+
 .GlobalEnv
 globalenv()
 .BaseNamespaceEnv
-new.env(hash=FALSE, parent=parent.frame())
+
+new.env(hash = FALSE, parent = parent.frame())
+
 parent.env(env)
 parent.env(env) <- value
 }

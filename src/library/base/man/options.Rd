@@ -9,7 +9,9 @@
 }
 \usage{
 options(\dots)
+
 getOption(x)
+
 .Options
 }
 %%-- NOTE : Keep the list up-to-date,
@@ -29,8 +31,9 @@ getOption(x)
   use \code{getOption("width")}, e.g., rather than
   \code{options("width")} which is a \emph{list} of length one.
 
-  \code{.Options} also always contains the \code{options()} list, for
-  S compatibility.  You must use it \dQuote{read only} however.
+  \code{.Options} also always contains the \code{options()} list (as a
+  pairlist) , for S compatibility.  You must use it \dQuote{read only}
+  however.
 }
 \value{
   For \code{options}, a list (in any case) with the previous values of

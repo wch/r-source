@@ -5,6 +5,7 @@
 \usage{
 sink(file = NULL, append = FALSE, type = c("output", "message"),
      split = FALSE)
+
 sink.number(type = c("output", "message"))
 }
 \arguments{

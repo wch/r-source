@@ -1,7 +1,7 @@
 \name{rgb}
 \title{RGB Color Specification}
 \usage{
-rgb(red, green, blue, alpha=NULL, names=NULL, maxColorValue = 1)
+rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 }
 \alias{rgb}
 \description{

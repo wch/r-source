@@ -8,7 +8,7 @@
   results.
 }
 \usage{
-runmed(x, k, endrule = c("median","keep","constant"),
+runmed(x, k, endrule = c("median", "keep", "constant"),
        algorithm = NULL, print.level = 0)
 }
 \arguments{

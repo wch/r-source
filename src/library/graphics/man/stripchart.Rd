@@ -7,10 +7,11 @@
   \code{\link{boxplot}}s when sample sizes are small.
 }
 \usage{
-stripchart(x, method="overplot", jitter=0.1, offset=1/3,
-           vertical=FALSE, group.names, add = FALSE, at = NULL,
-           xlim=NULL, ylim=NULL, main="", ylab="", xlab="",
-           log="", pch=0, col=par("fg"), cex=par("cex"))
+stripchart(x, method = "overplot", jitter = 0.1, offset = 1/3,
+           vertical = FALSE, group.names, add = FALSE,
+           at = NULL, xlim = NULL, ylim = NULL,
+           main = "", ylab = "", xlab = "",
+           log = "", pch = 0, col = par("fg"), cex = par("cex"))
 }
 \arguments{
   \item{x}{the data from which the plots are to be produced.  The data

@@ -4,7 +4,7 @@
 family(object, \dots)
 
 binomial(link = "logit")
-gaussian(link ="identity")
+gaussian(link = "identity")
 Gamma(link = "inverse")
 inverse.gaussian(link = "1/mu^2")
 poisson(link = "log")

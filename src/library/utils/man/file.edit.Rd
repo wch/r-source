@@ -3,7 +3,7 @@
 \title{Edit One or More Files}
 \description{Edit one or more files in a text editor.}
 \usage{
-file.edit(\dots, title=file, editor=getOption("editor"))
+file.edit(\dots, title = file, editor = getOption("editor"))
 }
 \arguments{
   \item{\dots}{one or more character vectors containing the names of the

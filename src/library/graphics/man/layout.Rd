@@ -12,8 +12,8 @@
 \usage{
 layout(mat,
        widths = rep(1, dim(mat)[2]),
-       heights= rep(1, dim(mat)[1]),
-       respect= FALSE)
+       heights = rep(1, dim(mat)[1]),
+       respect = FALSE)
 
 layout.show(n = 1)
 lcm(x)

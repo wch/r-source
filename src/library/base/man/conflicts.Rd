@@ -1,7 +1,7 @@
 \name{conflicts}
 \title{Search for Masked Objects on the Search Path}
 \usage{
-conflicts(where=search(), detail=FALSE)
+conflicts(where = search(), detail = FALSE)
 }
 \alias{conflicts}
 \arguments{

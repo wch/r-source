@@ -7,8 +7,8 @@
   invoked directly.
 }
 \usage{
-bxp(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
-    notch.frac = 0.5, log = "", border=par("fg"), col = par("bg"),
+bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, outline = TRUE,
+    notch.frac = 0.5, log = "", border = par("fg"), col = par("bg"),
     pars = NULL, frame.plot = axes, horizontal = FALSE,
     add = FALSE, at = NULL, show.names = NULL, \dots)
 }

@@ -2,7 +2,7 @@
 \alias{spec.taper}
 \title{Taper a Time Series by a Cosine Bell}
 \usage{
-spec.taper(x, p=0.1)
+spec.taper(x, p = 0.1)
 }
 \arguments{
  \item{x}{A univariate or multivariate time series}

@@ -11,7 +11,7 @@
   Display aspects of connections.
 }
 \usage{
-showConnections(all=FALSE)
+showConnections(all = FALSE)
 getConnection(what)
 closeAllConnections()
 

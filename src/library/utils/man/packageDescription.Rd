@@ -6,7 +6,7 @@
   Parses and returns the \file{DESCRIPTION} file of a package.
 }
 \usage{
-packageDescription(pkg, lib.loc = NULL, fields = NULL, drop=TRUE)
+packageDescription(pkg, lib.loc = NULL, fields = NULL, drop = TRUE)
 }
 \arguments{
   \item{pkg}{a character string with the package name.}

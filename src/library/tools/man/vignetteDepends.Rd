@@ -1,6 +1,7 @@
 \name{vignetteDepends}
 \alias{vignetteDepends}
-\title{A function to retrieve dependency information for a vignette}
+\title{
+  Retrieve Dependency Information for a Vignette}
 \description{
   Given a vignette name, will create a DependsList object that reports
   information about the packages the vignette depends on.
@@ -10,7 +11,7 @@ vignetteDepends(vignette, recursive = TRUE, reduce = TRUE,
                 local = TRUE, lib.loc = NULL)
 }
 \arguments{
-  \item{vignette}{The name of the vignette}
+  \item{vignette}{The path to the vignette source}
   \item{recursive}{Whether or not to include indirect dependencies}
   \item{reduce}{Whether or not to collapse all sets of dependencies to a
     minimal value}
@@ -38,7 +39,7 @@ vignetteDepends(vignette, recursive = TRUE, reduce = TRUE,
 \author{ Jeff Gentry }
 \seealso{\code{\link{pkgDepends}}}
 \examples{
-   ## We aren't guaranteed any vignettes in the base set of
-   ## packages (yet) that I know of.
+gridEx <- system.file("doc", "grid.Snw", package = "grid")
+vignetteDepends(gridEx)
 }
 \keyword{utilities}

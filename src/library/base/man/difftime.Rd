@@ -16,8 +16,10 @@
 }
 \usage{
 time1 - time2
+
 difftime(time1, time2, tz = "",
          units = c("auto", "secs", "mins", "hours", "days", "weeks"))
+
 as.difftime(tim, format = "\%X")
 
 \method{round}{difftime}(x, digits = 0)

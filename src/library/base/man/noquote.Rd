@@ -10,7 +10,9 @@
 }
 \usage{
 noquote(obj)
+
 \method{print}{noquote}(x, \dots)
+
 \method{c}{noquote}(\dots, recursive = FALSE)
 }
 \arguments{

@@ -6,7 +6,7 @@
   value.
 }
 \usage{
-hsv(h=1, s=1, v=1, gamma=1)
+hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
 }
 \arguments{
   \item{h,s,v}{numeric vectors of values in the range \code{[0,1]} for
@@ -14,6 +14,7 @@ hsv(h=1, s=1, v=1, gamma=1)
     to form a vector of colors.  Values in shorter arguments are
     recycled.}
   \item{gamma}{a \dQuote{gamma correction} exponent, \eqn{\gamma}}
+  \item{alpha}{alpha value in the range \code{[0,1]}.}
 }
 \value{
   This function creates a vector of \dQuote{colors} corresponding to the

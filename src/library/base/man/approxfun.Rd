@@ -8,10 +8,10 @@
 }
 \usage{
 approx   (x, y = NULL, xout, method="linear", n=50,
-          yleft, yright, rule = 1, f=0, ties = mean)
+          yleft, yright, rule = 1, f = 0, ties = mean)
 
 approxfun(x, y = NULL,       method="linear",
-          yleft, yright, rule = 1, f=0, ties = mean)
+          yleft, yright, rule = 1, f = 0, ties = mean)
 }
 \arguments{
   \item{x, y}{vectors giving the coordinates of the points to be

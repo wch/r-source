@@ -5,6 +5,7 @@
 \usage{
 bitmap(file, type = "png256", height = 6, width = 6, res = 72,
        pointsize, \dots)
+
 dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
            pointsize, \dots)
 }

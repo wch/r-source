@@ -2,7 +2,7 @@
 \alias{chull}
 \title{Compute Convex Hull of a Set of Points}
 \usage{
-chull(x, y=NULL)
+chull(x, y = NULL)
 }
 \arguments{
   \item{x, y}{coordinate vectors of points. This can be specified as two
@@ -40,8 +40,8 @@ chull(x, y=NULL)
 
 \examples{
 require(graphics)
-X <- matrix(rnorm(2000), ncol=2)
-plot(X, cex=0.5)
+X <- matrix(rnorm(2000), ncol = 2)
+plot(X, cex = 0.5)
 hpts <- chull(X)
 hpts <- c(hpts, hpts[1])
 lines(X[hpts, ])

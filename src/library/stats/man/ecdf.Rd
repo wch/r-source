@@ -19,7 +19,7 @@ ecdf(x)
   \item{ylab}{label for the y-axis.}
   \item{verticals}{see \code{\link{plot.stepfun}}.}
   \item{col.01line}{numeric or character specifying the color of the
-    horizontal lines at y=0 and 1, see \code{\link{colors}}.}
+    horizontal lines at y = 0 and 1, see \code{\link{colors}}.}
   \item{digits}{number of significant digits to use, see
     \code{\link{print}}.}
 }

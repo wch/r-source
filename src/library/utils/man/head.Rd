@@ -18,14 +18,14 @@
 }
 \usage{
 head(x, \dots)
-\method{head}{default}(x, n=6, \dots)
-\method{head}{data.frame}(x, n=6, \dots)
-\method{head}{matrix}(x, n=6, \dots)
+\method{head}{default}(x, n = 6, \dots)
+\method{head}{data.frame}(x, n = 6, \dots)
+\method{head}{matrix}(x, n = 6, \dots)
 
 tail(x, \dots)
-\method{tail}{default}(x, n=6, \dots)
-\method{tail}{data.frame}(x, n=6, \dots)
-\method{tail}{matrix}(x, n=6, addrownums=TRUE, \dots)
+\method{tail}{default}(x, n = 6, \dots)
+\method{tail}{data.frame}(x, n = 6, \dots)
+\method{tail}{matrix}(x, n = 6, addrownums = TRUE, \dots)
 }
 \arguments{
   \item{x}{an object}
@@ -49,11 +49,11 @@ tail(x, \dots)
   An object (usually) like \code{x} but generally smaller.
 }
 \author{
-  Patrick Burns, improved and corrected by R-core
+  Patrick Burns, improved and corrected by R-Core
 }
 
 \examples{
-head(freeny.x, n=10)
+head(freeny.x, n = 10)
 head(freeny.y)
 
 tail(freeny.x)

@@ -14,6 +14,7 @@
 double(length = 0)
 as.double(x, \dots)
 is.double(x)
+
 single(length = 0)
 as.single(x, \dots)
 }

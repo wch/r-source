@@ -13,7 +13,7 @@
 dyn.load(x, local = TRUE, now = TRUE)
 dyn.unload(x)
 
-is.loaded(symbol, PACKAGE="")
+is.loaded(symbol, PACKAGE = "")
 symbol.C(name)
 symbol.For(name)
 }

@@ -1,7 +1,7 @@
 \name{box}
 \title{Draw a Box around a Plot}
 \usage{
-box(which="plot", lty="solid", \dots)
+box(which = "plot", lty = "solid", \dots)
 }
 \alias{box}
 \arguments{
