@@ -1,4 +1,5 @@
-.Platform <- list(OS.type = "Macintosh", file.sep = ":", dynlib.ext = ".dll")
+## .Platform <- list(OS.type = "mac", file.sep = ":", dynlib.ext = ".dll")
+.Platform <- Platform()# via Rconfig.h
 
 getenv <- function(names) .Internal(getenv(names))
 
