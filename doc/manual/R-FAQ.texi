@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-21
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-22
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2982,10 +2982,12 @@ Functions for optimal design of two-stage-studies using the Mean Score
 method.
 @item udunits
 Interface to Unidata's routines to convert units.
-@item urn
-Functions for sampling without replacement (simulated urns).
 @item urca
 Unit root and cointegration tests for time series data.
+@item urn
+Functions for sampling without replacement (simulated urns).
+@item uroot
+Unit root tests and graphics for seasonal time series.
 @item vabayelMix
 Variational Bayesian mixture model.
 @item vardiag
