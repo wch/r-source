@@ -1,5 +1,4 @@
-"factor" <-
-  function (x, levels = sort(unique(x), na.last = TRUE),
+"factor" <- function (x, levels = sort(unique(x), na.last = TRUE),
 	labels=levels, exclude = NA, ordered = FALSE)
 {
   if (length(x) == 0)
@@ -14,30 +13,33 @@
     paste(labels, seq(along = levels), sep = "")
   else
     stop("invalid labels argument in \"factor\"")
-  if (ordered) 
-    attr(f, "class") <- c("ordered", "factor")
-  else
-    attr(f, "class") <- "factor"
+  attr(f, "class") <- c(if(ordered)"ordered", "factor")
   f
 }
 
 
 "is.factor" <- function(x) inherits(x, "factor")
 
-"levels" <- function(x) attr(x, "levels")
+levels <- function(x) attr(x, "levels")
+nlevels <- function(x) length(levels(x))
 
-"levels<-" <-
-  function(x, value) {
-      value <- as.character(value)
-      attr(x, "levels") <- value
-      x
-    }
+"levels<-" <- function(x, value)
+{
+  value <- as.character(value)
+  attr(x, "levels") <- value
+  x
+}
 
 codes <- function(x, ...) UseMethod("codes")
 
 codes.factor <- function(x)
 {
   attributes(x) <- NULL
+  x
+}
+"codes<-" <- function(x, value)
+{
+
   x
 }
 
@@ -79,7 +81,7 @@ codes.factor <- function(x)
     e2 <- l2[e2]
   }
   if (all(nchar(.Method)) && (length(l1) != length(l2) ||
-                              !all(sort(l2) == sort(l1))))
+			      !all(sort(l2) == sort(l1))))
     stop("Level sets of factors are different")
   value <- NextMethod(.Generic)
   value[nas] <- NA
@@ -114,9 +116,8 @@ codes.factor <- function(x)
 
 ## ordered factors ...
 
-"ordered" <-
-  function (x, levels = sort(unique(x), na.last = TRUE),
-	    labels=levels, exclude = NA, ordered = TRUE) 
+ordered <- function (x, levels = sort(unique(x), na.last = TRUE),
+	labels=levels, exclude = NA, ordered = TRUE)
 {
   if (is.ordered(x)) return(x)
   if (is.factor(x)) {
@@ -136,10 +137,7 @@ codes.factor <- function(x)
     paste(labels, seq(along = levels), sep = "")
   else
     stop("invalid labels argument in \"ordered\"")
-  if (ordered) 
-    attr(f, "class") <- c("ordered", "factor")
-  else
-    attr(f, "class") <- "factor"
+  attr(f, "class") <- c(if(ordered)"ordered", "factor")
   f
 }
 
@@ -168,7 +166,7 @@ codes.factor <- function(x)
     e2 <- l2[e2]
   }
   if (all(nchar(.Method)) && (length(l1) != length(l2) ||
-                              !all(sort(l2) == sort(l1))))
+			      !all(sort(l2) == sort(l1))))
     stop("Level sets of factors are different")
   value <- get(.Generic, mode="function")(e1,e2)
   value[nas] <- NA
