@@ -83,7 +83,7 @@ hist.default <-
 		 x,
 		 as.integer(n),
 		 fuzzybreaks,
-		 as.intger(nB),
+		 as.integer(nB),
 		 counts = integer(nB - 1),
 		 right = as.logical(right),
 		 include= as.logical(include.lowest), naok = FALSE,
