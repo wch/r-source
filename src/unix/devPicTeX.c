@@ -770,4 +770,3 @@ int PicTeXDeviceDriver(DevDesc *dd, char *filename, char *bg, char *fg,
 
 	return 1;
 }
-
