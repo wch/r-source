@@ -68,6 +68,12 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o	One can register R functions and C routines to be called at the
+        end of the successful evaluation of each top-level expression,
+        for example to perform auto-saves, update dipslays, etc. See
+        addTaskCallback() and taskCallbackManager(). See 
+	http://developer.r-project.org/TaskHandlers.pdf
+
     o	length() is now generic.
 
     o	new.env() is now internal and allows you to set hashing. Also,

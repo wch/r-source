@@ -50,6 +50,7 @@
  * in separate platform dependent modules.
  */
 
+void Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded, Rboolean visible);
 
 static int ParseBrowser(SEXP, SEXP);
 
@@ -121,6 +122,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 {
     int c, status, browsevalue;
     unsigned char *bufp, buf[1024];
+    SEXP value;
 
     R_IoBufferWriteReset(&R_ConsoleIob);
     prompt_type = 1;
@@ -181,13 +183,15 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 	    R_EvalDepth = 0;
 	    PROTECT(R_CurrentExpr);
 	    R_Busy(1);
-	    R_CurrentExpr = eval(R_CurrentExpr, rho);
-	    SET_SYMVALUE(R_LastvalueSymbol, R_CurrentExpr);
-	    UNPROTECT(1);
+	    value = eval(R_CurrentExpr, rho);
+	    SET_SYMVALUE(R_LastvalueSymbol, value);
 	    if (R_Visible)
-		PrintValueEnv(R_CurrentExpr, rho);
+		PrintValueEnv(value, rho);
 	    if (R_CollectWarnings)
 		PrintWarnings();
+	    Rf_callToplevelHandlers(R_CurrentExpr, value, TRUE, R_Visible);
+	    R_CurrentExpr = value; /* Necessary? Doubt it. */
+	    UNPROTECT(1);
 	    R_IoBufferWriteReset(&R_ConsoleIob);
 	    prompt_type = 1;
 	    break;
@@ -708,6 +712,320 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_CleanUp(ask, status, runLast);
     exit(0);
     /*NOTREACHED*/
+}
+
+
+#include "RCallbacks.h"
+
+static R_ToplevelCallbackEl *Rf_ToplevelTaskHandlers = NULL;
+
+/**
+  This is the C-level entry point for registering a handler
+  that is to be called when each top-level task completes.
+
+  Perhaps we need names to make removing them handlers easier
+  since they could be more identified by an invariant (rather than
+  position).
+ */
+R_ToplevelCallbackEl *
+Rf_addTaskCallback(R_ToplevelCallback cb, void *data, void (*finalizer)(void *), const char *name, int *pos)
+{
+    int which;
+    R_ToplevelCallbackEl *el;
+    el = (R_ToplevelCallbackEl *) malloc(sizeof(R_ToplevelCallbackEl));
+    if(!el) 
+	error("cannot allocate space for toplevel callback element.");
+
+    el->data = data;
+    el->cb = cb;
+    el->next = NULL;
+    el->finalizer = finalizer;
+
+    if(Rf_ToplevelTaskHandlers == NULL) {
+	Rf_ToplevelTaskHandlers = el;
+	which = 0;
+    } else {
+	R_ToplevelCallbackEl *tmp;
+        tmp = Rf_ToplevelTaskHandlers;
+	which = 1;
+	while(tmp->next) {
+	    which++;
+	    tmp = tmp->next;
+	}
+        tmp->next = el;
+    }
+
+    if(!name) {
+        char buf[5];
+	sprintf(buf, "%d", which+1);
+        el->name = strdup(buf);
+    } else
+	el->name = strdup(name);
+
+    if(pos)
+	*pos = which;
+
+    return(el);
+}
+
+Rboolean
+Rf_removeTaskCallbackByName(const char *name)
+{
+    R_ToplevelCallbackEl *el = Rf_ToplevelTaskHandlers, *prev = NULL;
+    Rboolean status = TRUE;
+
+    if(!Rf_ToplevelTaskHandlers) {
+	return(FALSE); /* error("there are no task callbacks registered"); */
+    }
+
+    while(el) {
+        if(strcmp(el->name, name) == 0) {
+	    if(prev == NULL) {
+		Rf_ToplevelTaskHandlers = el->next;
+	    } else {
+		prev->next = el->next;
+	    }
+	    break;
+	}
+	prev = el;
+	el = el->next;
+    }
+    if(el) {
+	if(el->finalizer)
+	    el->finalizer(el->data);
+	free(el->name);
+	free(el);
+    } else {
+	status = FALSE;
+    }
+    return(status);
+}
+
+/**
+  Remove the top-level task handler/callback identified by 
+  its position in the list of callbacks.
+ */
+Rboolean
+Rf_removeTaskCallbackByIndex(int id)
+{
+    R_ToplevelCallbackEl *el = Rf_ToplevelTaskHandlers, *tmp = NULL;
+    Rboolean status = TRUE;
+
+    if(id < 0)
+	error("negative index passed to R_removeTaskCallbackByIndex");
+
+    if(Rf_ToplevelTaskHandlers) {
+	if(id == 0) {
+	    tmp = Rf_ToplevelTaskHandlers;
+	    Rf_ToplevelTaskHandlers = Rf_ToplevelTaskHandlers->next;
+	} else {
+	    int i = 0;
+	    while(el && i < (id-1)) {
+		el = el->next;
+		i++;
+	    }
+
+	    if(i == (id -1) && el) {
+		tmp = el->next;
+		el->next = (tmp ? tmp->next : NULL);
+	    }
+	}
+    }
+    if(tmp) {
+	if(tmp->finalizer)
+	    tmp->finalizer(tmp->data);
+	free(tmp->name);
+	free(tmp);
+    } else {
+	status = FALSE;
+    }
+
+    return(status);
+}
+
+
+/**
+  R-level entry point to remove an entry from the 
+  list of top-level callbacks. `which' should be an 
+  integer and give us the 0-based index of the element
+  to be removed from the list.
+
+  @see Rf_RemoveToplevelCallbackByIndex(int)
+ */
+SEXP
+R_removeTaskCallback(SEXP which)
+{
+   int id;
+   Rboolean val;
+   SEXP status;
+ 
+   if(TYPEOF(which) == STRSXP) {
+       val = Rf_removeTaskCallbackByName(CHAR(STRING_ELT(which, 0)));
+   } else {
+       id = asInteger(which) - 1;
+       val = Rf_removeTaskCallbackByIndex(id);
+   }
+   status = allocVector(LGLSXP, 1);
+   LOGICAL(status)[0] = val;
+
+   return(status);
+}
+
+SEXP
+R_getTaskCallbackNames()
+{
+    SEXP ans;
+    R_ToplevelCallbackEl *el;
+    int n = 0;
+
+    el = Rf_ToplevelTaskHandlers;
+    while(el) {
+	n++;
+	el = el->next;
+    }
+    PROTECT(ans = allocVector(STRSXP, n));
+    n = 0;
+    el = Rf_ToplevelTaskHandlers;
+    while(el) {
+	SET_STRING_ELT(ans, n, allocString(strlen(el->name)));
+	strcpy(CHAR(STRING_ELT(ans, n)), el->name);
+	n++;
+	el = el->next;
+    }
+    UNPROTECT(1);
+    return(ans);
+}
+
+/**
+  Invokes each of the different handlers giving the 
+  top-level expression that was just evaluated, 
+  the resulting value from the evaluation, and
+  whether the task succeeded. The last may be useful
+  if a handler is also called as part of the error handling.
+  We also have information about whether the result was printed or not.
+  We currently do not pass this to the handler.
+ */
+
+static Rboolean Rf_RunningToplevelHandlers = FALSE;
+
+void
+Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded, Rboolean visible)
+{
+    R_ToplevelCallbackEl *h, *prev = NULL;
+    Rboolean again;
+
+    if(Rf_RunningToplevelHandlers == TRUE)
+	return;
+
+    h = Rf_ToplevelTaskHandlers;
+    Rf_RunningToplevelHandlers = TRUE;
+    while(h) {
+	again = (h->cb)(expr, value, succeeded, visible, h->data);
+	if(R_CollectWarnings) {
+	    REprintf("warning messages from top-level task callback `%s'\n", h->name);
+	    PrintWarnings();
+	}
+        if(again) {
+	    prev = h;
+	    h = h->next;
+	} else {
+	    R_ToplevelCallbackEl *tmp;
+	    tmp = h;
+	    if(prev)
+		prev->next = h->next;
+	    h = h->next;
+	    if(tmp == Rf_ToplevelTaskHandlers)
+		Rf_ToplevelTaskHandlers = h;
+            if(tmp->finalizer)
+		tmp->finalizer(tmp->data);
+            free(tmp);
+	}
+    }
+
+    Rf_RunningToplevelHandlers = FALSE;
+}
+
+
+Rboolean
+R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
+                          Rboolean visible, void *userData)
+{
+    SEXP f = (SEXP) userData;
+    SEXP e, tmp, val, cur;
+    int errorOccurred;
+    Rboolean again;
+    Rboolean useData;
+    useData = LOGICAL(VECTOR_ELT(f, 2))[0];
+
+    PROTECT(e = allocVector(LANGSXP, 5 + useData));
+    SETCAR(e, VECTOR_ELT(f, 0));
+    cur = CDR(e);
+    SETCAR(cur, tmp = allocVector(LANGSXP, 2));
+        SETCAR(tmp, install("quote"));
+        SETCAR(CDR(tmp), expr);
+    cur = CDR(cur);
+    SETCAR(cur, value);
+    cur = CDR(cur);
+    SETCAR(cur, tmp = allocVector(LGLSXP, 1));
+    LOGICAL(tmp)[0] = succeeded;
+    cur = CDR(cur);
+    SETCAR(cur, tmp = allocVector(LGLSXP, 1));
+    LOGICAL(tmp)[0] = visible;
+    if(useData) {
+	cur = CDR(cur);
+	SETCAR(cur, VECTOR_ELT(f, 1));
+    }
+
+    val = R_tryEval(e, NULL, &errorOccurred);
+    if(!errorOccurred) {
+	PROTECT(val);
+	if(TYPEOF(val) != LGLSXP) {
+              /* It would be nice to identify the function. */
+	    warning("top-level task callback did not return a logical value"); 
+	}
+	again = asLogical(val);
+	UNPROTECT(1);
+    } else {
+        /* warning("error occurred in top-level task callback\n"); */
+	again = FALSE;
+    }
+    return(again);
+}
+
+SEXP
+R_addTaskCallback(SEXP f, SEXP data, SEXP useData, SEXP name)
+{
+    SEXP internalData;
+    SEXP index;
+    R_ToplevelCallbackEl *el;
+    char *tmpName = NULL;
+
+    internalData = allocVector(VECSXP, 3);
+    R_PreserveObject(internalData);
+       SET_VECTOR_ELT(internalData, 0, f);
+       SET_VECTOR_ELT(internalData, 1, data);
+       SET_VECTOR_ELT(internalData, 2, useData);
+
+    if(length(name))
+	tmpName = CHAR(STRING_ELT(name, 0));
+
+    PROTECT(index = allocVector(INTSXP, 1));
+    el = Rf_addTaskCallback(R_taskCallbackRoutine,  internalData, 
+                             (void (*)(void*)) R_ReleaseObject, tmpName, INTEGER(index));
+
+    if(length(name) == 0) {
+	PROTECT(name = allocVector(STRSXP, 1));
+        SET_STRING_ELT(name, 0, allocString(strlen(el->name)));
+	strcpy(CHAR(STRING_ELT(name, 0)), el->name);
+
+        setAttrib(index, R_NamesSymbol, name);
+	UNPROTECT(1);
+    } else {
+        setAttrib(index, R_NamesSymbol, name);
+    }
+
+    UNPROTECT(1);
+    return(index);
 }
 
 #undef __MAIN__
