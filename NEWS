@@ -10,6 +10,9 @@
 
 NEW FEATURES
 
+    o   update.packages & friends have new argument contriburl for
+        incomplete CRAN mirrors 
+
     o	RLIBS is no longer accepted as well as R_LIBS (which has been
 	the documented form since 0.65.0).
 
