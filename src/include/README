@@ -1,0 +1,59 @@
+These are the  Header  files for the ``R machine''
+
+There are 2 kinds:
+
+     i) Those only used for R internally, e.g.,  Defn.h  declarations
+
+    ii) Those declaring things generally useful in the ``R API'',
+	i.e., declaring code that can be used in
+	R packages or user code which will be  dyn.load()ed into R.
+
+	The declarations from "ii)" will be moved to  $(RHOME)/include/
+	and be available with, e.g., ``R COMPILE''.
+	These are listed as "SRC_HEADERS" in ./Makefile.
+			     ~~~~~~~~~~~
+
+
+
+-------------------------------------------------------------------
+         NESTING Hierarchy
+-------------------------------------------------------------------
+
+Graphics.h
+	-> Defn.h	-> .......
+
+IOStuff.h
+	-> Defn.h	-> .......
+
+Defn.h
+	-> Arith.h	-> Platform.h
+	-> Platform.h
+	-> Complex.h
+	-> Errormsg.h	-> Error.h
+
+    -------------
+
+Mathlib.h
+	-> Arith.h	-> Platform.h
+
+S_compat.h
+	-> S.h		-> Platform.h
+	-> Linpack.h	-> Blas.h ,	Platform.h
+
+S.h
+	-> Platform.h
+
+Fortran.h
+	-> Platform.h
+	-> Complex.h
+
+Linpack.h
+	-> Platform.h
+	-> Blas.h
+
+Arith.h
+	-> Platform.h
+
+Errormsg.h
+	-> Error.h
+
