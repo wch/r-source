@@ -34,15 +34,15 @@
     \code{x \%*\% y}   \tab x times y \cr
     \code{x[i]}   \tab x subscript i \cr
     \code{x^2}    \tab x superscript 2 \cr
-    \code{paste(x, y, z}) \tab juxtapose x, y, and z \cr
-    \code{sqrt(x})   \tab square root of x \cr
+    \code{paste(x, y, z)} \tab juxtapose x, y, and z \cr
+    \code{sqrt(x)}   \tab square root of x \cr
     \code{sqrt(x, y)}   \tab yth root of x \cr
     \code{x == y}   \tab x equals y \cr
     \code{x != y}   \tab x is not equal to y \cr
     \code{x < y}   \tab x is less than y \cr
     \code{x <= y}   \tab x is less than or equal to y \cr
     \code{x > y}   \tab x is greater than y \cr
-    \code{x >= }y   \tab x is greater than or equal to y \cr
+    \code{x >= y}   \tab x is greater than or equal to y \cr
     \code{x \%~~\% y}   \tab x is approximately equal to y \cr
     \code{x \%=~\% y}   \tab x and y are congruent \cr
     \code{x \%==\% y}   \tab x is defined as y \cr
@@ -51,23 +51,23 @@
     \code{bold(x)}   \tab draw x in bold font \cr
     \code{italic(x)}   \tab draw x in italic font \cr
     \code{bolditalic(x)} \tab draw x in bolditalic font \cr
-    \code{list(x, y, z}) \tab comma-separated list \cr
+    \code{list(x, y, z)} \tab comma-separated list \cr
     \code{...}    \tab ellipsis (height varies) \cr
     \code{cdots}   \tab ellipsis (vertically centred) \cr
     \code{ldots}   \tab ellipsis (at baseline) \cr
     \code{x \%subset\% y} \tab x is a proper subset of y \cr
     \code{x \%subseteq\% y} \tab x is a subset of y \cr
-    \code{x \%notsubset\%} \tab x is not a subset of y \cr
+    \code{x \%notsubset\% y} \tab x is not a subset of y \cr
     \code{x \%supset\% y} \tab x is a proper superset of y \cr
     \code{x \%supseteq\% y} \tab x is a superset of y \cr
     \code{x \%in\% y}   \tab x is an element of y \cr
     \code{x \%notin\% y} \tab x is not an element of y \cr
     \code{hat(x)}   \tab x with a circumflex \cr
-    \code{tilde(x})   \tab x with a tilde \cr
+    \code{tilde(x)}   \tab x with a tilde \cr
     \code{ring(x)}   \tab x with a ring \cr
-    \code{bar(xy})   \tab xy with bar \cr
-    \code{widehat(xy})   \tab xy with a wide circumflex \cr
-    \code{widetilde(xy}) \tab xy with a wide tilde \cr
+    \code{bar(xy)}   \tab xy with bar \cr
+    \code{widehat(xy)}   \tab xy with a wide circumflex \cr
+    \code{widetilde(xy)} \tab xy with a wide tilde \cr
     \code{x \%<->\% y}   \tab x double-arrow y \cr
     \code{x \%->\% y}   \tab x right-arrow y \cr
     \code{x \%<-\% y}   \tab x left-arrow y \cr
@@ -85,9 +85,9 @@
     \code{60*minute}   \tab 60 minutes of angle \cr
     \code{30*second}   \tab 30 seconds of angle \cr
     \code{displaystyle(x)} \tab draw x in normal size (extra spacing) \cr
-    \code{textstyle(x})  \tab draw x in normal size \cr
+    \code{textstyle(x)}  \tab draw x in normal size \cr
     \code{scriptstyle(x)} \tab draw x in small size \cr
-    \code{scriptscriptstyle(x}) \tab draw x in very small size \cr
+    \code{scriptscriptstyle(x)} \tab draw x in very small size \cr
     \code{x ~~ y}        \tab put extra space between x and y \cr
     \code{x + phantom(0) + y} \tab leave gap for "0", but don't draw it \cr
     \code{x + over(1, phantom(0))} \tab leave vertical gap for "0" (don't draw) \cr
@@ -96,11 +96,11 @@
     \code{atop(x, y)}   \tab x over y (no horizontal bar) \cr
     \code{sum(x[i], i==1, n)} \tab sum x[i] for i equals 1 to n \cr
     \code{prod(plain(P)(X==x), x)} \tab product of P(X=x) for all values of x \cr
-    \code{integral(f(x)*dx, a, b}) \tab definite integral of f(x) wrt x \cr
+    \code{integral(f(x)*dx, a, b)} \tab definite integral of f(x) wrt x \cr
     \code{union(A[i], i==1, n)} \tab union of A[i] for i equals 1 to n \cr
     \code{intersect(A[i], i==1, n)} \tab intersection of A[i] \cr
     \code{lim(f(x), x \%->\% 0)} \tab limit of f(x) as x tends to 0 \cr
-    \code{min(g(x), x > 0}) \tab minimum of g(x) for x greater than 0 \cr
+    \code{min(g(x), x > 0)} \tab minimum of g(x) for x greater than 0 \cr
     \code{inf(S)}        \tab infimum of S \cr
     \code{sup(S)}   \tab supremum of S \cr
     \code{x^y + z}   \tab normal operator precedence \cr
