@@ -36,14 +36,15 @@ medpolish <- function (x, eps=0.01, maxiter=10, trace.iter = TRUE)
     ans
 }
 
-print.medpolish <- function(x) {
+print.medpolish <- function(x, digits=.Options$digits, ...)
+{
     cat("\nMedian Polish Results (Dataset: \"", x$name, "\")\n", sep="")
     cat("\nOverall:", x$overall, "\n\nRow Effects:\n")
-    print(x$row)
+    print(x$row, digits=digits, ...)
     cat("\nColumn Effects:\n")
-    print(x$col)
+    print(x$col, digits=digits, ...)
     cat("\nResiduals:\n")
-    print(x$residuals)
+    print(x$residuals, digits=max(2, digits-2), ...)
     cat("\n")
     invisible(x)
 }
