@@ -58,6 +58,8 @@ BUG FIXES
     o   Added check for user interrupt in Rvprintf to allow printing to be
 	interrupted.
 
+    o   Fixed bug that would cause segfault on protect stack overflow.
+
 
 
 		CHANGES IN R VERSION 1.8.0
