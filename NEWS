@@ -63,6 +63,8 @@ NEW FEATURES
 
     o	Invalid lines in .Renviron now give warnings when R is started.
 
+    o	Argument `na.last' implemented for rank().
+
 
 BUG FIXES
 
@@ -213,6 +215,8 @@ BUG FIXES
     o	strsplit() is corrected for an empty split pattern.
 
     o	kronecker() now does a better job when creating dimnames.
+
+    o	Better handling of input dimnames in fourfoldplot().
 
 
 
