@@ -1032,6 +1032,8 @@ void RescaleInOut(double prop)
   EndUpdate(ConsoleWindow); 				 	           
 }
 
+FMFontFamilyInstance    instance;                  //1
+FMFontSize              fontSize;       
 
 static pascal OSStatus
 RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
@@ -1049,7 +1051,7 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
               HIPoint where;
             WindowDefPartCode part;
             EventRef hitTest;
-    
+    Str255	fontname; 
         eventClass = GetEventClass(inEvent);
         GetEventParameter(inEvent, kEventParamDirectObject, typeWindowRef, NULL, sizeof(EventWindow),
                                 NULL, &EventWindow);
@@ -1062,6 +1064,10 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
              {
                     case kEventFontPanelClosed:                //7
                         fprintf(stderr,"\n font win closed");
+                        GetFontName(instance.fontFamily,fontname);
+                        CopyPascalStringToC(fontname,CurrentPrefs.ConsoleFontName);
+                        CurrentPrefs.ConsoleFontSize = fontSize;
+                        SetUpPrefsWindow(&CurrentPrefs);
                     break;
          
                     case kEventFontSelection:               //8
@@ -2369,13 +2375,12 @@ OSStatus MySetFontSelection (WindowRef thisWindow)
     return status;
 }
 
+
 OSStatus MyGetFontSelection (EventRef event)
 
 {
     OSStatus status = noErr;
-    FMFontFamilyInstance    instance;                  //1
-    FMFontSize              fontSize;       
-
+ 
     instance.fontFamily = kInvalidFontFamily;
     instance.fontStyle = normal;
     fontSize = 0;
