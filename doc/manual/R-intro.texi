@@ -1288,6 +1288,8 @@ orientation}, but only briefly.
 A @emph{factor} is a vector object used to specify a discrete
 classification (grouping) of the components of other vectors of the same length.
 @R{} provides both @emph{ordered} and @emph{unordered} factors.
+While the ``real'' application of factors is with model formulae
+(@pxref{Contrasts}), we here look at
 
 @section A specific example
 
