@@ -134,6 +134,8 @@ INSTALLATION CHANGES
 	It should be set to the full path unless the browser appears
 	at different locations on different client machines.
 
+    o	Perl requirements are down again to 5.004 or newer.
+
 
 DEPRECATED & DEFUNCT
 
