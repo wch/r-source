@@ -36,13 +36,23 @@ crgb <- col2rgb(cc <- colors())
 colnames(crgb) <- cc
 t(crgb)## The whole table
 
-## Internal ("unsigned int") codes:  FIXME{MM}: There's something wrong
-ccodes <- c(256^(2:0) \%*\% crgb)
+ccodes <- c(256^(2:0) \%*\% crgb)## = internal codes
 ## How many names are `aliases' of each other:
-(ttc <- table(tc <- table(ccodes)))
-length(uc <- unique(ccodes)) # 502
-mult <- uc[tc >= 2]
+table(tcc <- table(ccodes))
+length(uc <- unique(sort(ccodes))) # 502
+## All the multiply named colors:
+mult <- uc[tcc >= 2]
 cl <- lapply(mult, function(m) cc[ccodes == m])
+names(cl) <- apply(col2rgb(sapply(cl, function(x)x[1])),
+                   2, function(n)paste(n, collapse=","))
+str(cl)
+\dontrun{
+ if(require(xgobi)) { ## Look at the color cube dynamically :
+   tc <- t(crgb[, !duplicated(ccodes)])
+   table(is.gray <- tc[,1] == tc[,2] & tc[,2] == tc[,3])# (397, 105)
+   xgobi(tc, color = c("gold", "gray")[1 + is.gray])
+ }
+}
 }
 \keyword{color}
 \keyword{dplot}
