@@ -12,7 +12,7 @@ sink.number(type = c("output", "message"))
   \item{append}{logical. If \code{TRUE}, output will be appended to
     \code{file}; otherwise, it will overwrite the contents of
     \code{file}.}
-  \item{type}{character. Either the output stream of the messages stream.}
+  \item{type}{character. Either the output stream or the messages stream.}
 }
 \description{
   \code{sink} diverts \R output to a connection.
@@ -36,7 +36,7 @@ sink.number(type = c("output", "message"))
   diversions for normal output, so output reverts to the previous
   diversion (if there was one).  The stack is of up to 21 connections
   (20 diversions).
-  
+
   If \code{file} is a connection if will be opened if necessary.
 
   Sink-ing the messages stream should be done only with great care.
@@ -45,10 +45,10 @@ sink.number(type = c("output", "message"))
 }
 \value{
   For \code{sink}.
-  
+
   For \code{sink.number()} the number (0, 1, 2, \dots) of diversions of
   output in place.
-  
+
   For \code{sink.number("message")} the connection number used for
   messages, 2 if no diversion has been used.
 }
