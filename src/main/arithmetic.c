@@ -942,7 +942,7 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     case 22: return math2(op, CAR(args), CADR(args), psignrank);
     case 23: return math2(op, CAR(args), CADR(args), qsignrank);
 
-    case 24: return math2(op, CAR(args), CADR(args), bessel_i);
+    case 24: return math2(op, CAR(args), CADR(args), bessel_j);
     case 25: return math2(op, CAR(args), CADR(args), bessel_y);
 
     default:
@@ -1203,7 +1203,7 @@ SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
     case 42:  return math3(op, CAR(args), CADR(args), CADDR(args), qwilcox);
 
     case 43:  return math3(op, CAR(args), CADR(args), CADDR(args), bessel_i);
-    case 44:  return math3(op, CAR(args), CADR(args), CADDR(args), bessel_y);
+    case 44:  return math3(op, CAR(args), CADR(args), CADDR(args), bessel_k);
 
 
     default:
