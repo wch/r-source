@@ -4697,6 +4697,7 @@ $7 = 5
 * Utility functions::           
 * Allowing interrupts::         
 * Platform and version information::  
+* Inlining C functions::        
 * Standalone Mathlib::          
 @end menu
 
@@ -4809,6 +4810,9 @@ it, by noting the current position with a call to @code{vmaxget} and
 clearing memory allocated subsequently by a call to @code{vmaxset}.
 This is only recommended for experts.
 
+Note that this memory will be freed on error or user interrupt
+(if allowed: @pxref{Allowing interrupts}).
+
 @node User-controlled,  , Transient, Memory allocation
 @subsection User-controlled memory
 @findex Calloc
@@ -4832,10 +4836,19 @@ void Free(@var{any} *@var{p})
 
 @noindent
 providing analogues of @code{calloc}, @code{realloc} and @code{free}.
-If there is an error it is handled by @R{}, so if these routines return
-the memory has been successfully allocated or freed.  @code{Free} will
-set the pointer @var{p} to @code{NULL}.  (Some but not all versions of
-@Sl{} do so.)
+If there is an error during allocation it is handled by @R{}, so if
+these routines return the memory has been successfully allocated or
+freed.  @code{Free} will set the pointer @var{p} to @code{NULL}.  (Some
+but not all versions of @Sl{} do so.)
+
+Users should arrange to @code{Free} this memory when no longer needed,
+including on error or user interrupt.  This can often be done most
+conveniently from an @code{on.exit} action in the calling @R{} function
+-- see @code{pwilcox} for an example.
+
+Do not assume that memory allocated by @code{Calloc}/@code{Realloc}
+comes from the same pool as used by @code{malloc}: in particular do not
+use @code{free} or @code{strdup} with it.
 
 @node Error handling, Random numbers, Memory allocation, The R API
 @section Error handling
@@ -4965,12 +4978,8 @@ enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
 @findex R_NegInf
 @findex NA_REAL
 
-It used to be possible to compile @R{} on a platform without
-@acronym{IEC} 60559 (more commonly known as @acronym{IEEE}
-754)-compatible arithmetic, so users could not assume that it is
-available.  Rather a set of functions is provided to test for @code{NA},
-@code{Inf}, @code{-Inf} and @code{NaN}.  These functions are accessed
-via macros:
+A set of functions is provided to test for @code{NA}, @code{Inf},
+@code{-Inf} and @code{NaN}.  These functions are accessed via macros:
 
 @smallexample
 @group
@@ -4981,9 +4990,15 @@ R_FINITE(@var{x})    @r{False for @code{Inf}, @code{-Inf}, @code{NA}, @code{NaN}
 @end smallexample
 
 @noindent
-and function @code{R_IsNaN} is true for @code{NaN} but not @code{NA}.
-Do use these rather than @code{isnan} or @code{finite}; the latter in
-particular is often mendacious.
+and via function function @code{R_IsNaN} which is true for @code{NaN}
+but not @code{NA}.
+
+Do use @code{R_FINITE} rather than @code{isfinite} or @code{finite}; the
+latter is often mendacious and @code{isfinite} is only available on a
+few platforms.
+
+Currently @code{ISNAN} is a macro calling @code{isnan}, although this
+was not necessariyl true before @R{} 2.0.0.
 
 You can check for @code{Inf} or @code{-Inf} by testing equality to
 @code{R_PosInf} or @code{R_NegInf}, and set (but not test) an @code{NA}
@@ -5010,7 +5025,7 @@ complete lines (including the @code{"\n"}) before returning to @R{}.
 
 The function @code{REprintf} is similar but writes on the error stream
 (@code{stderr}) which may or may not be different from the standard
-output stream.  Functions @code{Rvprintf} and @code{REvprintf} are the
+output stream.  Functions @code{Rvprintf} and @code{REvprintf} are
 analogues using the @code{vprintf} interface.
 
 @menu
@@ -5105,7 +5120,7 @@ Note that this is not guaranteed to be portable, for the return
 conventions might not be compatible between the C and FORTRAN compilers
 used.  (Passing values via arguments is safer.)
 
-The standard packages, for example @pkg{modreg}, are a rich source of
+The standard packages, for example @pkg{stats}, are a rich source of
 further examples.
 
 
@@ -5231,10 +5246,10 @@ distributions.
 @end quotation
 
 @noindent
-Entries marked only have @samp{p} and @samp{q} functions available.
-After a call to @code{dwilcox}, @code{pwilcox} or @code{qwilcox} the
-function @code{wilcox_free()} should be called, and similarly for the
-signed rank functions.
+Entries marked with an asterisk only have @samp{p} and @samp{q}
+functions available.  After a call to @code{dwilcox}, @code{pwilcox} or
+@code{qwilcox} the function @code{wilcox_free()} should be called, and
+similarly for the signed rank functions.
 
 The argument names are not all quite the same as the @R{} ones.
 @c ^^^ FIXME ?? (argument names in the C code wouldn't change the API ..) ^^
@@ -5318,18 +5333,19 @@ still works when both @var{a} and @var{b} are between @code{1e200} and
 Computes @code{log(1 + @var{x})} (@emph{log 1 @b{p}lus x}), accurately
 even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 
-This may be provided by your platform, in which case it is not
-included in @file{Rmath.h}, but is (probably) in @file{math.h}.  For
-backwards compatibility with @R{} versions prior to 1.5.0, the entry
-point @code{Rf_log1p} is still provided.
+This may be provided by your platform, in which case it is not included
+in @file{Rmath.h}, but is (probably) in @file{math.h} which
+@file{Rmath.h} includes.  For backwards compatibility with @R{} versions
+prior to 1.5.0, the entry point @code{Rf_log1p} is still provided.
 @end deftypefun
 
 @deftypefun double expm1 (@var{x})
 Computes @code{exp(@var{x}) - 1} (@emph{exp x @b{m}inus 1}), accurately
 even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 
-This may be provided by your platform, in which case it is not
-included in @file{Rmath.h}, but is (probably) in @file{math.h}.
+This may be provided by your platform, in which case it is not included
+in @file{Rmath.h}, but is (probably) in @file{math.h} which
+@file{Rmath.h} includes.
 @end deftypefun
 
 @deftypefun int imax2 (int @var{x}, int @var{y})
@@ -5732,8 +5748,12 @@ subroutine rchkusr()
 These check if the user has requested an interrupt, and if so branch to
 @R{}'s error handling functions.
 
+Note that it is possible that the code behind one of the entry points
+defined here if called from your C or Fortran code could be interruptible
+or generate an error and so not return to your code.
 
-@node Platform and version information, Standalone Mathlib, Allowing interrupts, The R API
+
+@node Platform and version information, Inlining C functions, Allowing interrupts, The R API
 @section Platform and version information
 @cindex Version information from C
 @findex R_Version
@@ -5748,17 +5768,16 @@ The macro @code{WORDS_BIGENDIAN} is defined on big-endian systems
 (such as @code{i686} under Linux or Windows). It can be useful when
 manipulating binary files.
 
-Header file @file{Rversion.h} (@strong{not} included by @file{R.h} as from
-@R{} 1.6.0) defines a macro @code{R_VERSION} giving the version number
-encoded as an integer, plus a macro @code{R_Version} to do the encoding.
-This can be used to test if the version of @R{} is late enough, or to
-include back-compatibility features.  For protection against earlier
-versions of @R{} which did not have this macro, use a construction such
-as
+Header file @file{Rversion.h} (@strong{not} included by @file{R.h})
+defines a macro @code{R_VERSION} giving the version number encoded as an
+integer, plus a macro @code{R_Version} to do the encoding.  This can be
+used to test if the version of @R{} is late enough, or to include
+back-compatibility features.  For protection against earlier versions of
+@R{} which did not have this macro, use a construction such as
 
 @smallexample
 @group
-#if defined(R_VERSION) && R_VERSION >= R_Version(0, 99, 0)
+#if defined(R_VERSION) && R_VERSION >= R_Version(1, 9, 0)
   ...
 #endif
 @end group
@@ -5767,9 +5786,35 @@ as
 More detailed information is available in the macros @code{R_MAJOR},
 @code{R_MINOR}, @code{R_YEAR}, @code{R_MONTH} and @code{R_DAY}: see the
 header file @file{Rversion.h} for their format.  Note that the minor
-version includes the patchlevel (as in @samp{99.0}).
+version includes the patchlevel (as in @samp{9.0}).
 
-@node Standalone Mathlib,  , Platform and version information, The R API
+@node Inlining C functions, Standalone Mathlib, Platform and version information, The R API
+@section Inlining C functions
+@findex R_INLINE
+
+The C99 keyword @code{inline} is recognized by some compilers used to
+build R whereas others need @code{__inline__} or do not support
+inlining.  Portable code can be written using the macro @code{R_INLINE}
+(defined in file @code{Rconfig.h} included by @code{R.h}), as for
+example from package @pkg{cluster}
+
+@smallexample
+#include <R.h>
+
+static R_INLINE int ind_2(int l, int j)
+@{
+...
+@}
+@end smallexample
+
+Be aware that using inlining with functions in more than one compilation
+unit is almost impossible to do portably: see
+@uref{http://www.greenend.org.uk/rjk/2003/03/inline.html}.  All the @R{}
+configure code has checked is that  @code{R_INLINE} can be used in a
+single C file with the compiler used to build @R{}.  We recommend that
+packages making extensive use of inlining include their own configure code.
+
+@node Standalone Mathlib,  , Inlining C functions, The R API
 @section Using these functions in your own C code
 
 It is possible to build @code{Mathlib}, the @R{} set of mathematical
