@@ -51,7 +51,7 @@ All of these need to be installed and in your path, and the
 appropriate environment variables set.
 
 You also need: the R source (R-@RVER@.tgz), and to build the
-installer, unzip5.40.zip from any Info-Zip mirror.  Do remember to set
+installer, unzip540.zip from any Info-Zip mirror.  Do remember to set
 MAKE_MODE to UNIX (set MAKE_MODE=UNIX at the Windows command-line).
 
 
@@ -128,7 +128,7 @@ a cross-built version of binutils 2.9.4.
 You will need Perl, zip and unzip installed.
 
 You also need: the R source (R-@RVER@.tgz), and to build the installer,
-unzip5.40.zip from any Info-ZIP mirror.
+unzip540.zip from any Info-ZIP mirror.
 
 Then: untar R-@RVER@.tgz somewhere
 
