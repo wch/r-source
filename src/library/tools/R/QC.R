@@ -992,14 +992,6 @@ function(package, dir, lib.loc = NULL)
             S3reg <- sapply(getNamespaceInfo(package, "S3methods"),
                              function(x) x[[3]])
             S3reg <- S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE)]
-            if(length(S3reg) > 0) {
-                S3Table <- get(".__S3MethodsTable__.", envir = NULL)
-                ## <FIXME>
-                ## methods are not in that table if their generic is in the
-                ## package.  Let's ignore those for now.
-                S3reg <- S3reg[S3reg %in% ls(S3Table, all.names = TRUE)]
-                ## </FIXME>
-            }
         }
     }
     else {
@@ -1048,11 +1040,16 @@ function(package, dir, lib.loc = NULL)
         ## arguments the generic has, with positional arguments of g in
         ## the same positions for m.
         ## Exception: '...' in the method swallows anything
-        gArgs <- names(formals(get(g, envir = env)))
+        genfun <- get(g, envir = env)
+        gArgs <- names(formals(genfun))
         if(g == "plot") gArgs <- gArgs[-2]
         ogArgs <- gArgs
-        gm <- if(m %in% S3reg) get(m, envir = S3Table)
-              else get(m, envir = codeEnv)
+        gm <- if(m %in% S3reg) {
+            ## see registerS3method in namespaces.R
+            defenv <- if (typeof(genfun) == "closure") environment(genfun)
+            else .BaseNamespaceEnv
+            get(m, envir = get(".__S3MethodsTable__.", envir = defenv))
+        } else get(m, envir = codeEnv)
         mArgs <- omArgs <- names(formals(gm))
         ## If m is a formula method, its first argument *may* be called
         ## formula.  (Note that any argument name mismatch throws an
