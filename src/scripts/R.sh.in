@@ -18,6 +18,7 @@ export R_PAPERSIZE
 # Choose one of the following:
 # R_PRINTCMD="lpr"
 # R_PRINTCMD="lp"
+# R_PRINTCMD=""
 : ${R_PRINTCMD=@R_PRINTCMD@}
 export R_PRINTCMD
 
