@@ -4,19 +4,19 @@
 	 dynlib.ext = ".so",
 	 show.file = function(file) system(paste(options("pager")[[1]], file)),
 	 append.file = function(f1,f2) {# append to 'f1' the file 'f2':
-             system(paste("cat", f2, ">>", f1), trash.errors= TRUE)
-         },
+	     system(paste("cat", f2, ">>", f1), trash.errors= TRUE)
+	 },
 	 show.data = function(package,lib.loc,fsep) {
 	 ## give `index' of all possible data sets
-             for (lib in lib.loc)
-             for (pkg in package) {
+	     for (lib in lib.loc)
+	     for (pkg in package) {
 	      INDEX <- system.file(paste("data", "index.doc", sep = fsep),
 			      pkg, lib)
 	      if (INDEX != "") {
 	       cat(paste("\n\nData sets in package `", pkg, "':\n\n",
-                         sep = fsep))
-               .Platform$ show.file(INDEX)
-              }}},	 
+			 sep = fsep))
+	       .Platform$ show.file(INDEX)
+	      }}},	 
 	 )
 
 bug.report <- function(send=TRUE, method=.Options$mailer)
@@ -73,8 +73,6 @@ bug.report <- function(send=TRUE, method=.Options$mailer)
     }
 }
 
-date <- function() { system("date", intern = TRUE) }
-
 getenv <- function(x) {
     if (missing(x)) {
 	x <- strsplit(.Internal(getenv(character())), "=")
@@ -91,7 +89,7 @@ getenv <- function(x) {
 
 help <- function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
 		 lib.loc = .lib.loc, verbose = .Options$verbose,
-                 htmlhelp = .Options$htmlhelp) {
+		 htmlhelp = .Options$htmlhelp) {
     if (!missing(package))
 	if (is.name(y <- substitute(package)))# && !is.character(package))
 	    package <- as.character(y)
@@ -200,12 +198,23 @@ system.file <- function(file = "", pkg = .packages(), lib = .lib.loc) {
     system(paste("${RHOME}/bin/filename", FILES), intern = TRUE)
 }
 
+##--- All the following should really be done in C [platform !] :
+##---> For the first 3, look at Guido's win32 code!
+
+date <- function() { system("date", intern = TRUE) }
+
 tempfile <- function(pattern = "file") {
     system(paste("for p in", paste(pattern, collapse = " "), ";",
 		 "do echo /tmp/$p$$; done"),
 	   intern = TRUE)
 }
 
-unlink <- function(x) {
-    system(paste("rm -rf ", paste(x, collapse = " ")))
-}
+unlink <- function(x) { system(paste("rm -rf ", paste(x, collapse = " "))) }
+
+## Unfortunately, the following fails for "-e" on Solaris [/bin/sh-builtin test]
+system.test <- function(...) { system(paste("test", ...)) == 0 }
+## Martin would like these;  Kurt thinks they're unnecessary:
+## file.exists <-function(file){ sapply(file, function(f)system.test("-e", f))} 
+## dir.exists  <-function(dir) { sapply(dir,  function(d)system.test("-d", d))} 
+## Yet another misuse of  is.xxx naming [S-plus compatibility]:
+## is.dir <- .Alias(dir.exists)
