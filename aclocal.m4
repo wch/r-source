@@ -67,6 +67,38 @@ AC_DEFUN(R_PROG_PERL,
     AC_SUBST(NO_PERL5)
   ])
 dnl
+dnl R_PROG_CC_M
+dnl
+dnl Test whether the C compiler accepts -M for generating dependencies
+dnl
+AC_DEFUN(R_PROG_CC_M,
+  [ depend_rules_frag=Makefrag.dep
+    AC_CACHE_CHECK(
+      [whether ${CC} accepts -M for generating dependencies],
+      r_cv_prog_cc_m,
+      [ echo "#include <math.h>" > conftest.${ac_ext}
+	if test -n "`${CC} -M conftest.${ac_ext} 2>/dev/null \
+		    | grep conftest`"; then
+	  r_cv_prog_cc_m=yes
+	else
+	  r_cv_prog_cc_m=no
+	fi
+      ])
+    if test "${r_cv_prog_cc_m}" = yes; then
+      cat << \EOF > ${depend_rules_frag}
+.c.d:
+	@echo "making $[@] from $<"
+	@$(CC) -M $(ALL_CPPFLAGS) $< -o $[@]
+EOF
+    else
+      cat << \EOF > ${depend_rules_frag}
+.c.d:
+	@touch $[@]
+EOF
+    fi
+    AC_SUBST_FILE(depend_rules_frag)
+  ])
+dnl
 dnl R_PROG_CC_FLAG
 dnl
 dnl Test whether the C compiler handles a command line option
@@ -336,6 +368,24 @@ octave_cv_flibs="$flibs_result"])
 FLIBS="$octave_cv_flibs"
 AC_MSG_RESULT([$FLIBS])])
 dnl
+dnl R_LIB_HDF5
+dnl
+AC_DEFUN(R_LIB_HDF5,
+  [ AC_CHECK_LIB(hdf5, main,
+      [ AC_CACHE_CHECK([for HDF5 version >= 1.2],
+	  r_cv_lib_hdf5,
+	  AC_TRY_LINK(
+	    [#include <hdf5.h>],
+	    [ H5T_pers_t convtype = H5T_PERS_SOFT;
+	      H5Tclose ((hid_t) 0);],
+	    r_cv_lib_hdf5=yes,
+	    r_cv_lib_hdf5=no))
+	if test "${r_cv_lib_hdf5}" = yes; then
+	  AC_DEFINE(HAVE_HDF5)
+	fi
+      ])
+  ])
+dnl
 dnl R_FUNC___SETFPUCW
 dnl
 AC_DEFUN(R_FUNC___SETFPUCW,
@@ -463,6 +513,32 @@ AC_DEFUN(R_C_OPTIEEE,
       R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -OPT:IEEE_NaN_inf=ON"
       R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -OPT:IEEE_NaN_inf=ON"
     fi
+  ])
+dnl
+dnl R_GNOME
+dnl
+AC_DEFUN(R_GNOME,
+  [ if ${use_gnome}; then
+      GNOME_INIT_HOOK([], cont)
+      if test "${GNOMEUI_LIBS}"; then
+	AM_PATH_LIBGLADE(
+	  [ use_gnome="yes"
+	    RGNOMEDIR="gnome"
+	    RGNOMEBIN="\$(top_builddir)/bin/R.gnome"
+	    GNOME_IF_FILES="gnome-interface.glade"],
+	  [ AC_MSG_WARN(
+	      [GNOME support requires libglade version >= 0.3])])
+      fi
+    fi
+    if test "${use_gnome}" != yes; then
+      use_gnome="no"
+      RGNOMEDIR=
+      RGNOMEBIN=
+      GNOME_IF_FILES=
+    fi
+    AC_SUBST(RGNOMEDIR)
+    AC_SUBST(RGNOMEBIN)
+    AC_SUBST(GNOME_IF_FILES)
   ])
 dnl
 dnl GNOME_INIT_HOOK (script-if-gnome-enabled, failflag)
