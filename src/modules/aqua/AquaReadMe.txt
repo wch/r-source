@@ -63,6 +63,16 @@ Otherwise see
 for details.
 
 
+Creating packages:
+The tar command in OS X is missing some features that are used by R CMD 
+build.  At the moment the recommended work-around is to install GNU tar 
+(eg, as part of fink) and set the TAR environment variable to point to 
+GNU tar.
+Eg
+  setenv TAR /sw/bin/tar
+
+
+
 About the RAqua GUI:
 
 The GUI has separate input and output windows.  What you type goes into
