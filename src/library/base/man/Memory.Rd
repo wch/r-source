@@ -7,18 +7,18 @@
 }
 \usage{
 #ifdef unix
-R --min-vsize=v --max-vsize=v --min-nsize=n --max-nsize=n
+R --min-vsize=vl --max-vsize=vu --min-nsize=nl --max-nsize=nu
 #endif
 #ifdef windows
-Rgui --min-vsize=v --max-vsize=v --min-nsize=n --max-nsize=n
-Rterm --min-vsize=v --max-vsize=v --min-nsize=n --max-nsize=n
+Rgui --min-vsize=vl --max-vsize=vu --min-nsize=nl --max-nsize=nu
+Rterm --min-vsize=vl --max-vsize=vu --min-nsize=nl --max-nsize=nu
 #endif
 
 mem.limits(nsize = NA, vsize = NA)
 }
 \arguments{
-  \item{v, vsize}{Heap memory in bytes.}
-  \item{n, nsize}{Number of cons cells.}
+  \item{vl, vu, vsize}{Heap memory in bytes.}
+  \item{nl, nu, nsize}{Number of cons cells.}
 }
 \details{
   \R has a variable-sized workspace (from version 1.2.0). There is now
