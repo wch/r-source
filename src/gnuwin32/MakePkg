@@ -278,7 +278,7 @@ endif
 
 indices:
 	@$(ECHO) "  installing indices"
-	@$(ECHO) "tools:::.install_package_indices('.', '"$(DPKG)"')" | \
+	@$(ECHO) "invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); tools:::.install_package_indices('.', '"$(DPKG)"')" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
 # need not have HTML installed when building packages
 	@$(MKDIR) -p $(RHOME)/doc/html/search
@@ -314,7 +314,7 @@ lazydata:
 	@if test -d $(DPKG)/data; then \
 	  if ! test -f $(DPKG)/data/Rdata.rdb ; then \
 	    $(ECHO)  "  preparing package $(PKG) for lazy data loading" ; \
-	    $(ECHO) "tools:::data2LazyLoadDB(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
+	    $(ECHO) "invisible(.libPaths(c(.Library,\"$(RLIB)\", .libPaths()))); tools:::data2LazyLoadDB(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
 	      R_CROSS_BUILD=$(R_X_BUILD) R_DEFAULT_PACKAGES=NULL \
 	      LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null  || exit 1; \
 	  fi ; \

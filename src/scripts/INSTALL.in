@@ -527,7 +527,10 @@ do_install_source () {
     fi
     if ${thislazy}; then
       message " moving datasets to lazyload DB"
-      echo "tools:::data2LazyLoadDB(\"${pkg_name}\", \"${lib}\")" | \
+      ## it is possible that data in a package will make use of the
+      ## code in the package, so ensure the package we have just
+      ## installed is on the library path.
+      echo "invisible(.libPaths(c(\"${lib}\", .libPaths()))); tools:::data2LazyLoadDB(\"${R_PACKAGE_NAME}\", \"${lib}\")" | \
         R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla > /dev/null
     if test ${?} -ne 0; then
       error "lazydata failed for package '${pkg_name}'"
@@ -719,7 +722,7 @@ do_install_source () {
     echo "No man pages found in package '${pkg_name}'"
   fi
 
-  echo "tools:::.install_package_indices(\".\", \"${R_PACKAGE_DIR}\")" | \
+  echo "invisible(.libPaths(c(\"${lib}\", .libPaths()))); tools:::.install_package_indices(\".\", \"${R_PACKAGE_DIR}\")" | \
     R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package indices failed"
