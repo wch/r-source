@@ -22,7 +22,7 @@ Collect the tools
 You will need suitable versions of at least make, sh, cat, cp, cut,
 diff, echo, egrep, expr, grep, ls, mkdir, mv, rm, sed, touch; we use
 those from the cygwin distribution
-(http://www.cygwin.com/mirrors.html) or (gzip, makeinfo, texindex)
+(http://www.cygwin.com/mirrors.html) or (gzip, makeinfo, texindex, tidy)
 compiled from the sources.  We have packaged a set at
 http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
 
@@ -259,7 +259,8 @@ There is currently a complete set of tools at
 
 (Just unpack this somewhere and put its bin directory in your path.)
 
-You will need Perl, zip and unzip installed.
+You will need Perl, zip and unzip installed, as well as makeinfo >=
+4.2 (part of GNU texinfo) and tidy (via http://tidy.sourceforge.net).
 
 You also need the R source (R-1.x.y.tgz).
 
