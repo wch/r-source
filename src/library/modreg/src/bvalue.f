@@ -157,7 +157,6 @@ c
       end
 
       subroutine interv ( xt, lxt, x, left, mflag )
-      implicit none
 
 c computes  left = max( i ; 1 <= i <= lxt  .and.  xt(i) <= x )  .
 c
