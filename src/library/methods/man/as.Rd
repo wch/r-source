@@ -218,11 +218,13 @@ setClass("track",
             representation(x="numeric", y="numeric"))
 setClass("trackCurve",
             representation("track", smooth = "numeric"))
-
-ydata <- rnorm(10); ysmooth <- 1:10
-
-setAs("track", "numeric", function(x)x@y)
 }
+
+setAs("track", "numeric", function(from)from@y)
+
+t1 <- new("track", x=1:20, y=(1:20)^2)
+
+as(t1, "numeric")
 
 ## The next example shows:
 ##  1. A virtual class to define setAs for
@@ -239,18 +241,18 @@ setIs("ca", "id")
 setIs("cb", "id")
 
 
-setAs("id", "numeric", function(x) x@id)
+setAs("id", "numeric", function(from) from@id)
 
 CA <- new("ca", a ="A", id = 1)
 
 CB <- new("cb", b = "B", id = 2)
 
-setAs("cb", "ca", function(object)new("ca", a=object@b, id = object@id))
+setAs("cb", "ca", function(from)new("ca", a=from@b, id = from@id))
 
 as(CB, "numeric")
 
 \testonly{
-## should generate an error (not a function of one argument)
+## should generate an error (should have been a function of one argument)
 try(setAs("track", "numeric", function(x, ...)x@y))
 
 }

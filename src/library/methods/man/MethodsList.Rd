@@ -21,7 +21,7 @@ makeMethodsList(object, level=1)
 
 SignatureMethod(names, signature, definition)
 
-insertMethod(mlist, signature, args, def)
+insertMethod(mlist, signature, args, def, whichMethods, fromClass, envir)
 
 matchArg(object, thisClass, mlist, ev)
 
@@ -41,13 +41,18 @@ finalDefaultMethod(mlist, fname = "")
 mergeMethods(m1, m2)
 
 }
-\description{
 
+\description{
+  
 These functions create and manipulate \code{MethodsList} objects, the
 objects used in R to store methods for dispatch.
 You should not call any of these functions from code that you want to
 port to S-Plus.  Instead, use the functions described in the
-documentation.
+references.
+
+  }
+
+\section{Details}{
 
 \describe{
   
@@ -83,7 +88,9 @@ the signatures.
   }
 \item{\code{insertMethod}:}{ 
   insert the definition \code{def} into the MethodsList object, \code{mlist}, corresponding to
-the signature
+the signature. By default, insert it in the slot \code{which="methods"},
+but \code{\link{cacheMethod}} inserts it into the
+\code{which="allMethods"}} slot (used for dispatch but not saved).
 
   
   }

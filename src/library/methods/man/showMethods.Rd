@@ -53,11 +53,31 @@ for further details and examples.
 \seealso{\code{\link{setMethod}}, and \code{\link{GenericFunctions}}
   for other tools involving methods; \code{\link{show}} for }
 \examples{
-\testonly{example(setMethod)}
+\testonly{
+setClass("track",
+            representation(x="numeric", y="numeric"))
+## First, with only one object as argument:
+setMethod("plot", signature(x="track", y="missing"),
+  function(x,  y, ...) plot(slot(x, "x"), slot(x, "y"), ...)
+)
+## Second, plot the data from the track on the y-axis against anything
+## as the x data.
+setMethod("plot", signature(y = "track"),
+ function(x, y, ...) plot(x, slot(y, "y"), ...)
+)
+setMethod("plot", "track",
+ function(x, y, ...) plot(slot(x, "y"), y,  ...)
+)
+}
 ## assuming the methods for plot
 ## are set up as in the documentation for setMethod,
-## print (with definitions) the methods that involve
+## print (without definitions) the methods that involve
 ## class "track"
 showMethods("plot", classes = "track")
-
+\dontrun{
+Function "plot":
+x = ANY, y = track
+x = track, y = missing
+x = track, y = ANY}
+}
 \keyword{methods}

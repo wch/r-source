@@ -18,7 +18,10 @@
 \alias{mlistMetaName}
 \alias{assignToMethodMetaData}
 \alias{getFromMethodMetaData}
+\alias{removeMethodsObject}
+\alias{findUnique}
 \alias{removeFromMethodMetaData}
+\alias{MethodAddCoerce}
 \alias{is.primitive}
 \alias{.saveImage}
 \alias{cacheMetaData}
@@ -47,7 +50,7 @@ setAllMethodsSlot(mlist)
 
 doPrimitiveMethod(name, def, call=sys.call(-1), ev=sys.frame(-2))
 
-conformMethodArgs(signature, mnames, fnames)
+conformMethod(signature, mnames, fnames)
 
 getGeneric(f, mustFind=FALSE)
 
@@ -65,6 +68,12 @@ assignToMethodMetaData(name, value)
 
 removeFromMethodMetaData(name)
 
+removeMethodsObject(f, where)
+
+findUnique(what, doFind, message)
+
+MethodAddCoerce(method, argName, thisClass, methodClass)
+
 is.primitive(fdef)
 
 copyEnvironment(object, exceptions)
@@ -77,7 +86,7 @@ setPrimitiveMethods(f, fdef, code, generic, mlist)
 
 printNoClass(x, digits, quote, na.print, print.gap, right, ...)
 
-print.default(x, ..., printTo = stdout())
+print.default(x, ...)
 
 }
 \description{
@@ -201,13 +210,34 @@ returns \code{NULL} or throws an error.
       Functions to manage the session metadata for methods.  Don't
       call these directly.}
     
+    \item{\code{MethodAddCoerce}}{
+      Possibly modify one or more methods to explicitly coerce this
+      argument to \code{methodClass}, the class for which the method is
+      explicitly defined.  Only modifies the method if an explicit
+      coerce is required to coerce from \code{thisClass} to \code{methodClass}.
+    }
+    
     \item{\code{is.primitive}}{
       Is this object a primitive function (either a builtin or special)?
     }
- \item{\code{copyEnvironment}:}{
-  Returns a new environment in which all the objects found in the object's
-  original environment have been assigned.  The environment may be NULL, in
-  which case \code{NULL} is returned.
+\item{\code{getFromMethodMetaData, assignToMethodMetaData,
+      removeFromMethodMetaData}}{
+      Functions to manage the session metadata for methods.  Don't
+      call these directly.}
+    
+    \item{\code{is.primitive}}{
+      Is this object a primitive function (either a builtin or special)?
+    }
+ \item{\code{removeMethodsObject}:}{
+  remove the metadata object containing methods for \code{f}.
+  }
+ \item{\code{findUnique}:}{
+  Find the first position on the search list containing object
+  \code{what}; if more than one is found, a warning message is
+  generated, using \code{message} to identify what was being searched
+  for.
+  If \code{doFind} is supplied, it's the version of \code{find} used to
+  do the search (e.g., \code{findFunction}.
   }
   
     \item{\code{cacheMetaData, cacheGenericsMetaData, setPrimitiveMethods}:}{

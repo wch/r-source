@@ -1,11 +1,14 @@
 \name{setMethod}
 \alias{setMethod}
+\alias{removeMethod}
 \title{ Create and Save a Method }
 \description{
   Create and save a formal method for a given function and list of classes.
 }
 \usage{
 setMethod(f, signature=character(), definition, where=1, valueClass)
+
+removeMethod(f, signature, where)
 }
 \arguments{
   \item{f}{ The character-string name of the generic function. }
@@ -18,10 +21,21 @@ setMethod(f, signature=character(), definition, where=1, valueClass)
       called when the arguments in a call to \code{f} match the
       classes in \code{signature}, directly or through inheritance. }
   \item{where}{ The database in which to store the definition of the
-      method; by default, the current global environment. }
+    method; by default, the current global environment.
+
+  For \code{removeMethod}, the default is the location of the (first)
+  instance of the method for this signature.}
   \item{valueClass}{ If supplied, this argument asserts that the
       method will return a value of this class.  (At present this
       argument is stored but not explicitly used.) }
+}
+\value{
+
+These functions exist for their side-effect, in setting or removing a
+method in the object defining methods for the specified generic.
+
+The value returned by \code{removeMethod} is \code{TRUE} if a method
+was found to be removed.
 }
 \details{
   R methods for a particular generic function are stored in an object
@@ -76,8 +90,8 @@ for further details and examples.
 \testonly{  library(modreg)
   setClass("track",
     representation(x="numeric", y = "numeric"))
-  setSClass("trackCurve", extends = "track",
-    properties = list(smooth = "numeric"))
+  setClass("trackCurve", representation("track",
+    smooth = "numeric"))
 }
 
 ## methods for plotting track objects (see the example for \link{setClass})
@@ -155,11 +169,31 @@ t1  - 100.
 ## check it hasn't screwed up S3 methods
 ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1)
 
+## verify we can remove methods and generic
+
+stopifnot(removeMethods("-"))
+stopifnot(removeMethods("length"))
+stopifnot(removeMethods("plot"))
+
+## methods for plotData
+plotData <- function(x, y, ...) plot(x, y, ...)
+
+setGeneric("plotData")
+
+setMethod("plotData", signature(x="track", y="missing"),
+  function(x,  y, ...) plot(slot(x, "x"), slot(x, "y"), ...)
+)
+## and now remove the whole generic
+stopifnot(removeGeneric("plotData"))
+stopifnot(!exists("plotData", 1))
+
 }
 }
 
-\seealso{ \link{Methods}, \code{\link{MethodsList}} }
+\seealso{ \link{Methods}, \code{\link{MethodsList}} for details of the
+  implementation}
 
 \keyword{programming}
+\keyword{classes}
 \keyword{classes}
 \keyword{methods}

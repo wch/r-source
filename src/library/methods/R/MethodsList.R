@@ -82,7 +82,8 @@ SignatureMethod <-
 insertMethod <-
   ## insert the definition `def' into the MethodsList object, `mlist', corresponding to
   ## the signature, and return the modified MethodsList.
-  function(mlist, signature, args, def)
+  function(mlist, signature, args, def, whichMethods = "methods", fromClass = Class,
+           envir = NULL)
 {
     if(identical(args[1], "...")) {
         if(!identical(signature[1], "ANY"))
@@ -90,16 +91,26 @@ insertMethod <-
         args <- args[-1]
         signature <- signature[-1]
     }
-    if(length(signature) == 0)
-        signature <- "ANY"
+    if(length(signature) == 0) {
+        if(is.null(envir)) ## the "methods" case
+            signature <- "ANY"
+        else {
+            args <- as.character(mlist@argument)
+            fromClass <- "ANY"
+            if(exists(args, envir = envir))
+                signature <- data.class(get(args, envir = envir))
+            else
+                signature <- "missing"
+        }
+    }
     Class <- el(signature, 1)
     if(is.null(mlist))
         mlist <- new("MethodsList", argument = as.name(args[1]))
     else if(is.function(mlist))
         mlist <- new("MethodsList", argument = as.name(args[1]), methods = list(ANY = mlist))
-    current <- elNamed(mlist@methods, Class)
+    current <- elNamed(slot(mlist, whichMethods), Class)
     if(length(signature) == 1 && !is(current, "MethodsList")) {
-        methods <- mlist@methods
+        methods <- slot(mlist, whichMethods)
         which <- match(Class, names(methods))
         if(is.na(which)) {
             if(!is.null(def))
@@ -113,16 +124,42 @@ insertMethod <-
             else
                 el(methods, which) <- def
         }
-        mlist@methods <- methods
+        slot(mlist, whichMethods) <- methods
+        if(identical(whichMethods, "allMethods")) {
+            which <- match(Class, names(methods))
+            if(!is.na(which))  ## except for the delete case (not legal for allMethods)
+                mlist@fromClass[[which]] <- fromClass
+        }
         mlist
     }
-    else {
-        ## recursively merge
-        elNamed(mlist@methods, Class) <-
-            Recall(current, signature[-1], args[-1], def)
-        mlist
+    ## else, recursively merge
+    else if(identical(whichMethods, "allMethods")) {
+        if(!is.null(elNamed(mlist@allMethods, Class)))
+            fromClass <- Class
+        if(is(def, "MethodsList")) {
+            newArg <- as.character(def@argument)
+            newDefs <- def@allMethods
+            newSigs <- as.list(names(newDefs))
+        }
+        else {
+            newArg <- character()
+            newSigs <- list(character())
+            newDefs <- list(def)
+        }
+        for(j in seq(along=newDefs))
+            current <- 
+                Recall(current, newSigs[[j]], newArg, newDefs[[j]], whichMethods, envir = envir)
+        elNamed(slot(mlist, whichMethods), Class) <- current
+        which <- match(Class, names(slot(mlist, whichMethods)))
+        if(!is.na(which))  ## except for the delete case (not legal for allMethods)
+            mlist@fromClass[[which]] <- fromClass
     }
+    else 
+        elNamed(slot(mlist, whichMethods), Class) <-
+            Recall(current, signature[-1], args[-1], def, whichMethods, envir = envir)
+    mlist
 }
+
 
 MethodsListSelect <-
   ## select the element of a MethodsList object corresponding to the
@@ -170,6 +207,7 @@ MethodsListSelect <-
     thisClass <- get(as.character(argName), envir = env)
     arg <- new(thisClass)
   }
+  fromClass <- thisClass ## will mark the class actually providing the method
   allMethods <- mlist@allMethods
   which <- match(thisClass, names(allMethods))
   inherited <- is.na(which)
@@ -224,13 +262,9 @@ MethodsListSelect <-
     if(is.null(method) || is(method, "EmptyMethodsList"))
       value <- emptyMethodsList(mlist, thisClass) ## nothing found
     else {
-      ##oldMethods <- elNamed(mlist@allMethods, thisClass)
-      allMethods <- mlist@allMethods
-      elNamed(allMethods, thisClass) <- method ##newMethods
-      which <- match(thisClass, names(allMethods))
-      mlist@allMethods <- allMethods
-      mlist@fromClass[[which]] <- fromClass
-      value <- mlist
+        method <- MethodAddCoerce(method, argName, thisClass, fromClass)
+        value <- insertMethod(mlist, thisClass, as.character(argName),
+                              method, "allMethods", fromClass, envir = env)
     }
   }
   if(!is.null(f)) {
@@ -262,6 +296,7 @@ insertMethodInEmptyList <-
     else
       sublist[[1]] <- Recall(submethods, def)
     value@allMethods <- sublist
+    value@fromClass <- "ANY"
     value
   }
 
@@ -416,6 +451,7 @@ function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgName
     methods <- methods[keep]
     signatures <- signatures[keep]
     args <- args[keep]
+    from <- from[keep]
   }
   if(length(methods) == 0)
     cat(file=con, "<Empty Methods List>\n")

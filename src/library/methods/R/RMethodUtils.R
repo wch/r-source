@@ -10,6 +10,7 @@ makeGeneric <-
     if(is.null(fdef))
       fdef <- getFunction(f, mustFind = TRUE)
   }
+  fdef <- makeStandardGeneric(f, fdef)
   generic <- isGeneric(f, fdef = fdef)
   if(is.na(useAsDefault))
     useAsDefault <- !generic
@@ -23,7 +24,6 @@ makeGeneric <-
   else {
     ## a non-generic function becomes the default
     fdefault <- getFunction(f, generic = FALSE, mustFind = FALSE)
-    fdef <- makeStandardGeneric(f, fdef)
   }
   anames <- formalArgs(fdef)
   if(length(anames) == 0 || (length(anames) == 1 && el(anames, 1) == "..."))
@@ -135,7 +135,6 @@ getAllMethods <-
   ## this is the slot where inherited methods are stored.
   function(f, libs = search()) {
     fdef <- getGeneric(f, TRUE)
-    ev <- copyEnvironment(fdef)
     groups <- getGroup(fdef, TRUE)
     ## when this function is called from methodsListDispatch (via C code),
     ## a barrier version of the function is put into the metadata to prevent
@@ -149,10 +148,13 @@ getAllMethods <-
         if(!is.null(mw))
           methods <- mergeMethods(methods, mw)
       }
-    if(is.null(methods))
-      stop(paste("no methods defined for \"", f, "\"", sep=""))
-    methods <- setAllMethodsSlot(methods)
-    assign(".Methods", methods, ev)
+    ev <- copyEnvironment(fdef)
+    if(is.null(methods)) ## after removeMethods, e.g.
+        methods <- get(".Methods", ev)
+    if(!is.null(methods)) {
+        methods <- setAllMethodsSlot(methods)
+        assign(".Methods", methods, ev)
+    }
     environment(fdef) <- ev
     assignToMethodMetaData(f, fdef)
     ## in the current version of this function,
@@ -161,6 +163,8 @@ getAllMethods <-
     fun <- getFunction(f)
     if(is.primitive(fun))
       setPrimitiveMethods(f, fun, "set", fdef)
+    ## cancel the error cleanup
+    on.exit()
     fdef
   }
 
@@ -422,3 +426,49 @@ setGroupMembers <-
 getGroupMembers <-
   function(f, fdef = getGeneric(f))
   get(".GroupMembers", envir = environment(fdef))
+
+findUnique <- function(what, doFind = find, message)
+{
+    where <- doFind(what)
+    if(length(where) > 1) {
+        if(missing(message)) {
+            if(identical(doFind, findFunction))
+                message <- paste("function", what)
+            else
+                message <- what
+        }
+        warning(message, " found on: ", 
+                paste(search()[where], collapse = ", "),
+                    "; using the first one.")
+            where <- where[1]
+    }
+    where
+}
+    
+MethodAddCoerce <- function(method, argName, thisClass, methodClass)
+{
+    if(identical(thisClass, methodClass))
+        return(method)
+    ext <- extendsCoerce(thisClass, methodClass, formFunction = FALSE)
+    ## findExtends in this version only returns a function if there
+    ## is an explicit coerce somewhere along the line.
+    if(!is.function(ext))
+        return(method)
+    methodInsert <- function(method, addExpr) {
+        if(is.function(method)) {
+            newBody <- substitute({firstExpr; secondExpr},
+                                  list(firstExpr = addExpr, secondExpr = body(method)))
+            body(method, envir = environment(method)) <- newBody
+        }
+        else if(is(method, "MethodsList")) {
+            methods <- method@allMethods
+            for(i in seq(along=methods))
+                methods[[i]] <- Recall(methods[[i]], addExpr)
+            method@allMethods <- methods
+        }
+        method
+    }
+    addExpr <- substitute(XXX <- as(XXX, CLASS),
+                          list(XXX = argName, CLASS = methodClass))
+    methodInsert(method, addExpr)
+}

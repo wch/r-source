@@ -10,6 +10,7 @@
 \alias{formalArgs}
 \alias{Quote}
 \alias{message}
+\alias{showDefault}
 \title{Utility Functions for Methods and S-Plus Compatibility}
 \usage{
 functionBody(fun=sys.function(sys.parent()))
@@ -27,6 +28,9 @@ formalArgs(def)
 Quote()
 
 message(...)
+
+showDefault(object, printTo = stdout(), oldMethods = TRUE)
+
 }
 \description{
 These are utilities, currently in the methods package, that either
@@ -65,7 +69,11 @@ definition for \code{name} exists.
 functions.
   }
   \item{\code{message}:}{ 
-  output all the arguments, pasted together with no intervening spaces.
+  Output all the arguments, pasted together with no intervening spaces.
+}
+  \item{\code{showDefault}:}{ 
+  Utility, used to enable \code{show} methods to be called by the
+  automatic printing (via \code{print.default}).
 }
 }
 }

@@ -12,6 +12,8 @@ function(object, class2)
     ext <- findExtends(cl, class2)
     if(is.logical(ext))
         return(ext)
+    if(is.character(ext)) # by case
+        return(is(object, ext))
     if(!is.list(ext))
         stop(paste("Invalid extends structure found for \"", class2,
                    "\" in examining class \"", cl, "\"", sep=""))
@@ -42,6 +44,8 @@ extends <-
     value <- findExtends(class1, class2)
     if(is.logical(value))
         value
+    else if(is.character(value))
+        extends(value, class2)
     else if(is.list(value) && is.function(value$test))
         maybe
     else

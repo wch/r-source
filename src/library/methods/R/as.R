@@ -11,35 +11,26 @@ as <-
     thisClass <- data.class(object) ## always one string
     if(thisClass == Class)
         return(object)
-    if(is(object, Class)) {
-        ## look for coerce method or indirection
-        coe <- extendsCoerce(thisClass, Class)
-        coe(object)
-    }
-    else if(coerceFlag) {
+    if(coerceFlag  || !is(object, Class)) {
+        ## TO DO:  this call to selectMethod probably deserves implementing in C
+        ## to save on the environment generation each time.
       sig <-  new.env(); assign("from", thisClass, envir = sig)
       assign("to", Class, envir = sig)
       asMethod <- selectMethod("coerce", sig, TRUE, c(from = TRUE, to = FALSE))
-      if(is.null(asMethod)) {
-        for(byClass in names(getExtends(getClass(thisClass)))) {
-          assign("from", byClass, envir = sig)
-          asMethod <- selectMethod("coerce", sig, TRUE, c(from=TRUE, to = FALSE))
-          if(!is.null(asMethod)) {
-            asMethod <- substitute(function(from, to) {
-              method2 <- eval(METHOD2, .GlobalEnv)
-              method2(as(from, BYCLASS))
-            }, list(METHOD2 = asMethod, BYCLASS = byClass))
-            asMethod <- eval(asMethod, .GlobalEnv)
+      if(!is.null(asMethod))
+          return(asMethod(object))
+    }
+    if(is(object, Class)) {
+        ## look for coerce method or indirection
+        asMethod <- extendsCoerce(thisClass, Class)
+        if(is.function(asMethod)) {
             cacheMethod("coerce", c(from = thisClass, to = Class), asMethod)
-            break
-          }
+            asMethod(object)
         }
-        if(is.null(asMethod))
+    }
+    else if(coerceFlag)
           stop(paste("No method or default for coercing \"", thisClass,
                      "\" to \"", Class, "\"", sep=""))
-      }
-      asMethod(object)
-    }
     else
         NULL
 }
@@ -55,23 +46,21 @@ as <-
     thisClass <- data.class(object)
     if(coerceFlag && !identical(data.class(value), Class))
       value <- as(value, Class)
-    if(is(object, Class)) {
-      f <- extendsReplace(thisClass, Class)
-      object <- f(object, value)
-    }
-    else if(coerceFlag) {
+    if(coerceFlag || !is(object, Class)) {
       sig <-  new.env(); assign("from", thisClass, envir = sig)
       assign("to", Class, envir = sig)
       asMethod <- selectMethod("coerce<-", sig, TRUE, c(from = TRUE, to = FALSE))
-      if(is.null(asMethod))
+      ## TO DO:  figure out how inheritance works in this function
+      if(!is.null(asMethod))
+        return(asMethod(object, Class, value))
+    }
+    if(is(object, Class))
+      asMethod <- extendsReplace(thisClass, Class)
+    if(is.null(asMethod))
         stop(paste("No method or default for as() replacement of \"", thisClass,
                    "\" with Class=\"", Class, "\"", sep=""))
-      else
-        object <- asMethod(object, Class, value)
-    }
-    else
-      stop("Must have coerceFlag=TRUE in this case, since is(object, Class) is FALSE")
-    object
+    cacheMethod("coerce<-", c(from = thisClass, to = Class), asMethod)
+    asMethod(object, Class, value)
 }
 
 

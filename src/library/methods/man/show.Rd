@@ -62,13 +62,20 @@ optional use of old-style print methods, but normally will not be called directl
 }
 \examples{
 ## following the example shown in the setMethod documentation ...
-\testonly{example(setMethod)
-}
+setClass("track",
+         representation(x="numeric", y="numeric"))
+setClass("trackCurve", 
+         representation("track", smooth = "numeric"))
+
+t1 <- new("track", x=1:20, y=(1:20)^2)
+
+tc1 <- new("trackCurve", t1)
+
 setMethod("show", "track",
   function(object)print(rbind(x = object@x, y=object@y))
 )
-## The method will now be used for automatic printing
-## of t1, an object of class "track"
+## The method will now be used for automatic printing of t1
+
 t1
 
 \dontrun{  [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]

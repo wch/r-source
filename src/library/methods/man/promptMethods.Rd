@@ -7,18 +7,22 @@
   function, with
 }
 \usage{
-promptMethods(f, filename, inherited=FALSE, type = "methods")
+promptMethods(f, filename, addTo = FALSE, inherited=FALSE, type = "methods")
 }
 \arguments{
   \item{f}{ The name of the generic function whose methods are to be documented.  }
-  \item{filename}{ Should a file be written with the documentation shell?
+  \item{filename}{ Optional file on which to write the documentation shell.
     If \code{FALSE}, the text is returned, presumably to be used in the
     documentation of the generic function itself (see
-    \code{\link{prompt}}). May also be the name of a file on which to
-    write the documentation. By default, this is the same as the coded
-    topic name for these methods (currently \code{"methods_NAME.Rd"},
-    where \code{NAMAE} is the function name, argument \code{f}).
+    \code{\link{prompt}}).  By default, this is the same as the coded
+    topic name for these methods (currently \code{"NAME-methods.Rd"},
+    where \code{NAME} is the function name, argument \code{f}).
   }
+  \item{addTo}{
+    Optionally, text to add to the shell.  This would typically be part
+    of the contents of the documentation file for the generic function,
+    if you want the generic and the methods documented together.
+    }
   \item{inherited}{ Should inherited methods be included?  Default
     \code{FALSE}. }
   \item{type}{The documentation type to be declared in the output file.}

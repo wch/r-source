@@ -660,7 +660,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 			int evalArgs)
 {
     char *arg_name, *class;
-    SEXP arg_slot, arg_sym, argLoc, arg, method, value = R_NilValue;
+    SEXP arg_slot, arg_sym, arg, method, value = R_NilValue;
     int nprotect = 0;
     PROTECT(arg_slot = R_do_slot(mlist, s_argument)); nprotect++;
     if(arg_slot == R_NilValue) {

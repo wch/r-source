@@ -49,6 +49,7 @@
 \alias{requireMethods}
 \alias{checkSlotAssignment}
 \alias{defaultPrototype}
+\alias{isClassDef}
 %% not explicitly documented here
 \alias{.BasicClasses}
 \alias{.BasicVectorClasses}
@@ -64,7 +65,7 @@ makePrototypeFromClassDef(properties, prototype, extends)
 
 newEmptyObject()
 
-completeClassDefinition(Class)
+completeClassDefinition(Class, ClassDef)
 
 getFromClassDef(ClassDef, what)
 
@@ -121,8 +122,8 @@ tryNew(Class)
 
 empty.dump()
 
-showClass(Class, complete=TRUE, propertiesAreCalled="Properties",
-          printTo=stdout())
+showClass(Class, complete=TRUE, printTo=stdout(),
+         propertiesAreCalled="Properties")
 
 showExtends(ext, printTo = stdout())
 
@@ -136,13 +137,13 @@ assignToClassMetaData(name, value)
 
 removeFromClassMetaData(name)
 
-extendsCoerce(fromClass, Class)
+extendsCoerce(fromClass, Class, formFunction)
 
 extendsReplace(fromClass, Class)
 
 findExtends(class1, class2)
 
-completeExtends(ClassDef)
+completeExtends(ClassDef, soFar)
 
 classMetaName(name)
 
@@ -155,6 +156,8 @@ requireMethods(functions, signature, message)
 checkSlotAssignment(obj, name, value)
 
 defaultPrototype()
+
+isClassDef(object)
 
 }
 \description{
@@ -214,7 +217,9 @@ The completed definition is stored in the session's class metadata,
 to be retrieved the next time that getClass is called on this class,
 and is returned as the value of the call.
 
-  
+If \code{ClassDef} is omitted, the initial definition is obtained from
+the first package having a meta-object for this class.
+
   }
 \item{\code{getFromClassDef}:}{ 
   Extracts one of the intrinsically defined class definition properties
@@ -420,9 +425,14 @@ extensions recorded in the opposite direction, via a subclass list
   respectivelyl, based on the \code{is} relation
 between two classes.  
   
-  May be explicitly stored in the metadata or
-inferred.  If the latter, the inferred result is stored in the session
-metadata for fromClass, to save recomputation later.
+  A method may be explicitly stored in the metadata or
+inferred.  If the latter, a function will always be constructed if
+explicit test and/or coerce methods (in a call to setIs) were
+encountered, or if \code{formFunction=TRUE}.  If
+\code{formFunction=FALSE}, the purpose of the call is to determine if
+the relation is explicit or intrinsic (according to whether a function
+object is returned).
+
 
   
   }
@@ -452,7 +462,11 @@ consistent elaboration of inherited methods during dispatch, because the
 method dispatcher stores the inherited method under the immediate class name.
 Under rather obscure situations of multiple inheritance, the result could be
 ambiguous (depending on the order in which signatures are seen by the dispatcher
-for a particular generic function), unless searching is done depth first.
+for a particular generic function), unless searching is done depth
+first.
+
+Used recursively, with \code{soFar} defining what has been included in
+previous calls at this level.
 
   }
 \item{\code{classMetaName}:}{ 
@@ -507,6 +521,7 @@ results.
   These functions perform part of the initialization of classes and
   methods, and are called (only!) from \code{.First.lib}.
   }
+\item{\code{isClassDef}:}{ Is \code{object} a representation of a class?}
 }
 }
 \keyword{internal}

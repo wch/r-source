@@ -108,21 +108,22 @@ removeGeneric <-
   ##
   ## If `where' supplied,  remove the version on this element of the search list;
   ## otherwise, removes the first version encountered.
-    function(f, where = -1)
+    function(f, where = findUnique(f, doFind=findFunction))
 {
-  removeFromMethodMetaData(f)
-    if(identical(where, -1)) {
-        where <- findFunction(f)
-    }
-    for(db in where) {
-      if(existsFunction(f, where = db) &&
-         isGeneric(f, fdef=get(f, db))) {
+    found <- FALSE
+    if(length(where) > 0 && existsFunction(f, where = where) &&
+       isGeneric(f, where)) {
+        found <- TRUE
         rm(list = f, pos = where)
-        return(TRUE)
-      }
+        removeMethodsObject(f, where)
     }
-  warning(paste("Generic function \"", f, "\" not found for removal", sep=""))
-  return(FALSE)
+    if(!found) {
+        if(removeMethodsObject(f, where))
+            warning("Removed methods for \"",f,"\"; no generic function object found")
+        else
+            warning(paste("Generic function \"", f, "\" not found for removal", sep=""))
+    }
+    return(found)
 }
 
 
@@ -179,7 +180,7 @@ cacheMethod <-
     }
     ev <- environment(fdef)
     methods <- get(".Methods", envir = ev)
-    methods <- insertMethod(methods, sig, args, def)
+    methods <- insertMethod(methods, sig, args, def, "allMethods")
     assign(".Methods", methods, envir = ev)
     methods
   }
@@ -230,11 +231,41 @@ setMethod <-
              if(!identical(definition, deflt))
                 stop("Primitive functions cannot be methods; they must be enclosed in a regular function")
            },
+           "NULL" = {}, # Will remove the method, if any, currently in this signature
            stop("Invalid method definition: not a function"))
     allMethods <- insertMethod(allMethods, signature, fnames, definition)
     ## assign the methods (also updates the session info)
     assignMethodsMetaData(f, allMethods, where = where)
     f
+}
+
+removeMethod <- function(f, signature = character(), where) {
+    if(missing(where)) {
+        where <- findMethod(f, signature)
+        if(length(where) == 0) {
+            warning("No method found for function ",f, " and signature ",
+                    paste(signature, collapse =", "))
+            return(FALSE)
+        }
+        else if(length(where) > 1) {
+            warning("Method found in multiple packages: ", paste(where, collapse = ", "),
+                    " (The first one will be removed)")
+            where <- where[[1]]
+        }
+    }
+    setMethod(f, signature, NULL)
+    TRUE
+}
+
+findMethod <- function(f, signature, where = search()) {
+    found <- logical(along=where)
+    metaName <- mlistMetaName(f)
+    for(i in seq(along = where)) {
+        found[i] <- exists(metaName, where[[i]]) &&
+            is(getMethod(f, signature, where = where[[i]], optional = TRUE),
+               "function")
+    }
+    where[found]
 }
 
 getMethod <-
@@ -293,16 +324,13 @@ selectMethod <-
   ## mlist = Optional MethodsList object to use in the search.  Usually omitted, but
   ##         required for a recursive call from within selectMethod.
     function(f, env = new.env(), optional = FALSE,
-             useInherited, mlist)
+             useInherited, mlist = getMethods(f))
 {
-    if(missing(mlist)) {
-        mlist <- getMethods(f)
-        if(is.null(mlist)) {
-            if(optional)
-                return(mlist)
-            else
-                stop(paste("\"", f, "\" has no methods defined", sep=""))
-        }                               # else, go on with selection
+    if(is.null(mlist)) {
+        if(optional)
+            return(mlist)
+        else
+            stop(paste("\"", f, "\" has no methods defined", sep=""))
     }
     selection <- .Call("R_selectMethod", f, env, mlist, PACKAGE = "methods")
     if(is.null(selection)) {
@@ -315,7 +343,8 @@ selectMethod <-
       else
         fEnv <- NULL
       mlist <- MethodsListSelect(f, env, mlist, fEnv, evalArgs = FALSE, useInherited = useInherited)
-      selection <- .Call("R_selectMethod", f, env, mlist, PACKAGE = "methods")
+      if(is(mlist, "MethodsList"))
+          selection <- .Call("R_selectMethod", f, env, mlist, PACKAGE = "methods")
     }
     if(is(selection, "function"))
         selection
@@ -388,24 +417,24 @@ signature <-
 }
 
 "showMethods" <-
-  ## Show all the methods for the specified function.
-  ##
-  ## If `where' is supplied, the definition from that database will be used; otherwise,
-  ## the current definition is used (which will include inherited methods that have arisen so
-  ## far in the session).
-  ##
-  ##
-  ## The output style is different from S-Plus in that it does not show the database
-  ## from which the definition comes, but can optionally include the method definitions,
-  ## if `includeDefs == TRUE'.
-function(f = character(), where = -1, classes = NULL, includeDefs = FALSE,
-           inherited = TRUE, printTo = stdout())
+    ## Show all the methods for the specified function.
+    ##
+    ## If `where' is supplied, the definition from that database will be used; otherwise,
+    ## the current definition is used (which will include inherited methods that have arisen so
+    ## far in the session).
+    ##
+    ##
+    ## The output style is different from S-Plus in that it does not show the database
+    ## from which the definition comes, but can optionally include the method definitions,
+    ## if `includeDefs == TRUE'.
+    function(f = character(), where = -1, classes = NULL, includeDefs = FALSE,
+             inherited = TRUE, printTo = stdout())
 {
-      if(identical(printTo, FALSE)) {
-          tmp <- tempfile()
-          con <- file(tmp, "w")
-      }
-      else con <- printTo
+    if(identical(printTo, FALSE)) {
+        tmp <- tempfile()
+        con <- file(tmp, "w")
+    }
+    else con <- printTo
     if(length(f)==0) {
         if(missing(where)) {
             f <- getGenerics()
@@ -416,8 +445,7 @@ function(f = character(), where = -1, classes = NULL, includeDefs = FALSE,
     }
     if(length(f) == 0)
         cat(file = con, "No applicable functions")
-
-    if(length(f) > 1) {
+    else if(length(f) > 1) {
         value <- character()
         for(ff in f) {
             if(missing(where))
@@ -433,12 +461,21 @@ function(f = character(), where = -1, classes = NULL, includeDefs = FALSE,
         else
             return()
     }
-    cat(file= con, "\nFunction \"", f, "\":\n", sep="")
-    if(missing(where))
-        mlist <- getMethods(f)
-    else
-        mlist <- getMethods(f, where)
-    showMlist(mlist, includeDefs, inherited, classes, printTo = printTo)
+    else {
+        cat(file= con, "\nFunction \"", f, "\":\n", sep="")
+        if(!isGeneric(f))
+            cat(file = con, "<not a generic function>\n")
+        else {
+            if(missing(where))
+                mlist <- getMethods(f)
+            else
+                mlist <-  getMethods(f, where)
+            if(is.null(mlist))
+                cat(file = con, "<no applicable methods>\n")
+            else
+                showMlist(mlist, includeDefs, inherited, classes, printTo = con)
+        }
+    }
     if(identical(printTo, FALSE)) {
         close(con)
         value <- readLines(tmp)
@@ -446,6 +483,19 @@ function(f = character(), where = -1, classes = NULL, includeDefs = FALSE,
         value
     }
 }
+
+removeMethodsObject <-
+    function(f, where = findUnique(mlistMetaName(f), ,paste("methods object for function",f)))
+{
+  removeFromMethodMetaData(f)
+  what <- mlistMetaName(f)
+  if(length(where) == 0 ||!exists(what, where))
+      return(FALSE)
+  for(db in where)
+      rm(list = what, pos = db)
+  return(TRUE)
+}
+    
 
 removeMethods <-
   ## removes all the methods defined for this generic function.  Returns `TRUE' if
@@ -455,30 +505,38 @@ removeMethods <-
   ## a simple function with this definition; otherwise, it will be removed.  The
   ## assignment or removal can be controlled by optional argument `where', which
   ## defaults to the first element of the search list having a function called `f'.
-  function(f, where)
+  function(f, where = find(mlistMetaName(f)))
 {
-  what <- mlistMetaName(f)
-  if(missing(where)) {
-    where <- find(what)
-    if(length(where) == 0)
-      return(FALSE)
-    where <- el(where, 1)
-  }
-  else if(!exists(what, where))
-    return(FALSE)
-  default <- getMethod(f, optional=TRUE)
-  rm(list = what, pos = where)
-  if(isGeneric(f, where)) {
-    if(is.function(default)) {
-        cat("Restoring default function definition of", f, "\n")
-        assign(f, default, where)
+    ## NOTE:  The following is more delicate than one would like, all because of
+    ## methods for primitive functions.  For those, no actual generic function exists,
+    ## but isGeneric(f) is TRUE if there are methods.  We have to get the default from
+    ## the methods object BEFORE calling removeMethodsObject, in case there are no more
+    ## methods left afterwards. AND we can't necessarily use the same default "where"
+    ## location for methods object and generic, for the case of primitive functions.
+    ## And missing(where) only works in R BEFORE the default is calculated.  Hence
+    ## the peculiar order of computations and the explicit use of missing(where).
+    if(isGeneric(f))
+        default <- getMethod(f, optional=TRUE)
+    else if(missing(where))
+        return(FALSE)
+    value <- removeMethodsObject(f, where)
+    ## call below is done to clear primitive methods if there
+    ## are none for this generic on other databases
+    cacheGenericsMetaData(f, FALSE)
+    for(db in where) {
+        if(isGeneric(f, db)) {
+            if(is.function(default)) {
+                cat("Restoring default function definition of", f, "\n")
+                assign(f, default, db)
+            }
+            else {
+                cat("No default method for ", f, "; removing generic function\n")
+                rm(list=f, pos=db)
+            }
+            break
+        }
     }
-    else {
-        cat("No default method for ", f, "; removing generic function\n")
-        rm(list=f, pos=where)
-    }
-  }
-  return(TRUE)
+    value
 }
 
 resetGeneric <-
@@ -494,6 +552,7 @@ resetGeneric <-
     else {
         ## removes the definition from the session metadata
         ## and resets cached info for a primitive
+        removeFromMethodMetaData(f)
         cacheGenericsMetaData(f, TRUE, NULL)
         TRUE
     }
@@ -529,3 +588,27 @@ isGroup <-
       fdef <- getGeneric(f)
     exists(".GroupMembers", envir =environment(fdef), inherits = FALSE)
   }
+
+callGeneric <- function(...)
+{
+    fdef <- sys.function(sys.parent())
+    env <- environment(fdef)
+    if(!exists(".Generic", env, inherits = FALSE))
+        stop("callGeneric must be called from a generic function or method")
+    f <- get(".Generic", env, inherits = FALSE)
+    fname <- as.name(f)
+    if(nargs() == 0) {
+        call <- sys.call(sys.parent())
+        call <- match.call(fdef, call)
+        anames <- names(call)
+        matched <- !is.na(match(anames, names(formals(fdef))))
+        for(i in seq(along = anames))
+            if(matched[[i]])
+                call[[i]] <- as.name(anames[[i]])
+    }
+    else {
+        call <- substitute(fname(...))
+    }
+    eval(call, sys.frame(sys.parent()))
+}
+

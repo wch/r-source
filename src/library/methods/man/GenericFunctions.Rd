@@ -13,6 +13,7 @@
 \alias{removeMethods}
 \alias{signature}
 \alias{setReplaceMethod}
+\alias{callGeneric}
 \title{Tools for Managing Generic Functions}
 \synopsis{
 isGeneric(f, where, fdef, getName = FALSE)
@@ -27,6 +28,7 @@ removeMethods(f, where)
 setReplaceMethod(f, \dots)
 getGenerics(where)
 allGenerics(where)
+callGeneric(\dots)
 }
 \usage{
 isGeneric(f, where, fdef, getName = FALSE)
@@ -52,7 +54,10 @@ removeMethods(f, where)
 setReplaceMethod(f, \dots)
 
 getGenerics(where)
+
 allGenerics(where)
+
+callGeneric(\dots)
 
 }
 
@@ -132,6 +137,13 @@ sig = the signature of classes to match to the arguments of f.
   generic function.
  
   }
+  \item{\code{callGeneric}:}{ 
+  In the body of a method, this function will make a call to the current
+  generic function.  If no arguments are passed to \code{callGeneric},
+  the arguments to the current call are passed down; otherwise, the arguments
+  are interpreted as in a call to the generic function.
+ 
+  }
 }
 }
 
@@ -152,7 +164,6 @@ sig = the signature of classes to match to the arguments of f.
 
   \item{def}{ The function object defining the method; if omitted, the
     current method definition corresponding to the signature. }
-  }
 
   \item{\dots}{Named or unnamed arguments to form a signature.}
 

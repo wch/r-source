@@ -197,7 +197,7 @@ try(setIs("trackMultiCurve", "trackCurve",
 setIs("trackMultiCurve", "trackCurve",
   test = function(obj) {ncol(slot(obj, "y")) == 1},
   coerce = function(obj) { new("trackCurve", x = slot(obj, "x"),
-        y = as.numeric(slot(obj,"y")), curve = as.numeric(slot(obj, "curve")))})
+        y = as.numeric(slot(obj,"y")), smooth = as.numeric(slot(obj, "smooth")))})
 \testonly{
 tMC <- new("trackMultiCurve")
 is.matrix(slot(tMC, "y"))

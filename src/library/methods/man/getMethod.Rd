@@ -1,5 +1,6 @@
 \name{getMethod}
 \alias{getMethod}
+\alias{findMethod}
 \alias{getMethods}
 \alias{selectMethod}
 \alias{MethodsListSelect}
@@ -12,10 +13,17 @@
   arguments to the function have been assigned (they differ in the
   treatment of inheritance).  Neither is intended to be called directly,
   except perhaps in debugging. The function
-  \code{getMethods} returns \emph{all} the methods for the generic function.
+  \code{getMethods} returns \emph{all} the methods for the generic
+  function.
+
+  The function \code{findMethod} returns the package(s) in the search
+  list (or in the packages specified by the \code{where} argument) that
+  contain a method for this function and signature.
 }
 \usage{
-getMethod(f, signature=character(), where=-1, optional=FALSE)
+getMethod(f, signature=character(), where, optional=FALSE)
+
+findMethod(f, signature, where)
 
 getMethods(f, where=-1)
 
@@ -36,7 +44,7 @@ likely to have such a function definition for direct use.)}
       arguments of \code{f} in order.
  }
   \item{where}{ Where to look for the method.  By default, looks in
-      all the currently defined methods. }
+      all the currently attached databases (i.e., the complete search list). }
   \item{optional}{ If the selection does not produce a unique result,
       an error is generated, unless this argument is \code{TRUE}.  In
       that case, the value returned is either a \code{MethodsList}

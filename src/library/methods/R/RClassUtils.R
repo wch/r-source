@@ -706,24 +706,53 @@ mode(removeFromClassMetaData) <- "function"
 extendsCoerce <-
   ## the function to perform coercion based on the is relation
   ## between two classes.  May be explicitly stored in the metadata or
-  ## inferred.  If the latter, the inferred result is stored in the session
-  ## metadata for fromClass, to save recomputation later.
-  function(fromClass, Class)
+  ## inferred.  If the latter, a function is constructed to do the coerce.
+    ## The function is returned (to `as', which will cache it as a coerce method).
+    ##
+    ## When called (from method selection) with formFunction=FALSE, the point is
+    ## to determine whether there are tests and/or coerce functions that need to be
+    ## applied in forming the method to be cached.
+  function(fromClass, Class, formFunction = TRUE)
 {
     ext <- findExtends(fromClass, Class)
     f <- NULL
-    if(is.list(ext)) {
+    if(is.list(ext) && is.null(ext$by)) {
+        ## an explicit function exists (maybe constructed on a
+        ## previous call):  return it now.
         coe <- ext$coerce
-        if(is.function(coe))
-            return(coe)
-        by <- list$by
-        if(length(by) > 0)
-            f <- substitute(function(object)
-                            as(as(object, BY), CLASS),
-                            list(BY = by, CLASS=Class))
-        ## else, drop through
+        if(is.function(coe)) {
+            f <- function(from) NULL
+            oldArg <- formalArgs(coe)[1]
+            sublist <- list(quote(from), as.name(oldArg))
+            names(sublist) <- c(oldArg, "from")
+            body(f) <- substituteDirect(body(coe), sublist)
+        }
+        test <- ext$test
+        if(is.function(test)) {
+            ## incorporate a test
+            if(is.null(f))
+               f <- function(from, to)f
+            body(f) <- substitute({if(!is(from, CLASS))
+                                  stop(paste('Conditional inheritance from', CLASS, 'not valid'));
+                              DEF}, list(DEF = body(f), CLASS = Class))
+        }
+    }
+    else if(is.character(ext) || !is.null(ext$by)) {
+        ## TO DO:  this does not incorporate the case of a conditional extension
+        by <- (if(is.character(ext)) ext else ext$by)
+        if(formFunction) {
+            f <- eval(substitute(function(from)
+                            as(as(from, BY), CLASS),
+                            list(BY = by, CLASS=Class)))
+        }
+        else
+            ## call recursively, to determine if the relation
+            ## is eventually explicit (f will be a function) or not
+            f <- Recall(by, Class, formFunction)
     }
     if(is.null(f)) {
+        if(!formFunction)
+            return(TRUE)
         ## Because `is' was TRUE, must be a direct extension.
         ## Copy slots if the slots are a subset.  Else, just set the
         ## class.  For VIRTUAL targets, never change the object.
@@ -742,50 +771,47 @@ extendsCoerce <-
                           || (length(fromSlots) == length(toSlots) &&
                               !any(is.na(match(fromSlots, toSlots)))))
             if(sameSlots)
-                f <- substitute(function(object){class(object) <- CLASS; object},
+                f <- substitute(function(from){class(from) <- CLASS; from},
                                 list(CLASS = Class))
             else
-                f <- substitute(function(object) {
+                f <- substitute(function(from) {
                     value <- new(CLASS)
                     for(what in TOSLOTS)
-                        slot(value, what) <- slot(object, what)
+                        slot(value, what) <- slot(from, what)
                     value }, list(CLASS=Class, TOSLOTS = toSlots))
             ## bug in R: substitute of a function gives a call
-            f <- eval(f, .GlobalEnv)
+            f <- eval(f)
         }
-        ## we dropped through because there was no coerce function in the
-        ## extends object.  Make one and save it back in the session metadata
-        ## so no further calls will require constructing the function
-        if(!is.list(ext))
-            ext <- list()
-        ext$coerce <- f
-        ClassDef <- getClass(fromClass)
-        allExt <- as.list(getExtends(ClassDef))
-        allExt[Class] <- ext
-        setExtends(ClassDef, allExt)
     }
+    if(is.function(f))
+        environment(f) <- .GlobalEnv
     f
 }
 
 extendsReplace <-
   ## the function to perform as() replacement based on the is relation
   ## between two classes.  May be explicitly stored in the metadata or
-  ## inferred.  If the latter, the inferred result is stored in the session
-  ## metadata for fromClass, to save recomputation later.
+  ## inferred.  The result is converted into a function suitable as a method
+    ## for "coerce<-"
   function(fromClass, Class)
 {
     ext <- findExtends(fromClass, Class)
     f <- NULL
     if(is.list(ext)) {
         repl <- ext$replace
-        if(is.function(repl))
-            return(repl)
-        by <- list$by
+        if(is.function(repl)) {
+            f <- function(from, value) NULL
+            body(f, envir = .GlobalEnv) <- substituteDirect(body(repl),
+                                        list(object = quote(from), from = quote(.from)))
+        }
+    }
+    else if(is.character(ext)) {
+        by <- ext
         if(length(by) > 0) {
-          f <- substitute(function(object, value)
-                          as(as(object, BY), CLASS) <- value,
-                          list(BY = by, CLASS=Class))
-          f <- eval(f, .GlobalEnv)
+          f <- eval(substitute(function(from, value)
+                          as(as(from, BY), CLASS) <- value,
+                          list(BY = by, CLASS=Class)))
+          environment(f) <- .GlobalEnv
         }
         ## else, drop through
     }
@@ -809,22 +835,13 @@ extendsReplace <-
                 f <- substitute(function(object, value){as(value, CLASS)},
                                 list(CLASS = Class))
             else
-                f <- substitute(function(object, value) {
+                f <- substitute(function(from, to, value) {
                      for(what in TOSLOTS)
-                        slot(object, what) <- slot(value, what)
-                    object }, list(CLASS=Class, TOSLOTS = toSlots))
-            f <- eval(f, .GlobalEnv)
+                        slot(from, what) <- slot(value, what)
+                    from}, list(CLASS=Class, TOSLOTS = toSlots))
+            f <- eval(f)
+            environment(f) <- .GlobalEnv
         }
-        ## we dropped through because there was no replace function in the
-        ## extends object.  Make one and save it back in the session metadata
-        ## so no further calls will require constructing the function
-        if(!is.list(ext))
-            ext <- list()
-        ext$replace <- f  ## might be NULL
-        ClassDef <- getClass(fromClass)
-        allExt <- as.list(getExtends(ClassDef))
-        allExt[Class] <- ext
-        setExtends(ClassDef, allExt)
     }
     f
 }
@@ -854,10 +871,7 @@ findExtends <-
             FALSE
     }
     else {
-        value <- el(ext, i)
-        if(is.list(value))
-            value
-        else TRUE
+         el(ext, i)
     }
 }
 

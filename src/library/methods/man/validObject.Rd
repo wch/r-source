@@ -94,3 +94,5 @@ setValidity(ClassDef, method)
   try(validObject(t1))
 }
 
+\keyword{programming}
+\keyword{classes}
