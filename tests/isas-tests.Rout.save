@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-08-27)
+Version 1.4.0 Under development (unstable) (2001-09-10)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1194,7 +1194,7 @@ Error in is.single(as.single(x)) : type "single" unimplemented in R
 > is.symbol(as.symbol( x ))
 [1] TRUE
 > is.table(as.table( x ))
-Error in as.table.default(x) : cannot coerce into a table
+[1] TRUE
 > is.ts(as.ts( x ))
 [1] TRUE
 > is.vector(as.vector( x ))
@@ -1271,7 +1271,7 @@ Error in is.single(x) : type "single" unimplemented in R
 [1] TRUE
 > if(is.table(x)) { cat('IS: ');all.equal(x, as.table( x ), tol=0)
 + } else   !isall.equal(x, as.table( x ))
-Error in as.table.default(x) : cannot coerce into a table
+[1] TRUE
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 [1] TRUE
@@ -1490,9 +1490,9 @@ Error in as.qr(x) : you cannot be serious
 > f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
 [1] TRUE
 > f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
-Error in as.table.default(x) : cannot coerce into a table
+[1] TRUE
 > f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
-Error in as.table.default(x) : cannot coerce into a table
+[1] TRUE
 > f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
 Error in as.table.ftable(x) : x must be an `ftable'
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
@@ -1551,7 +1551,7 @@ Error in is.single(as.single(x)) : type "single" unimplemented in R
 > is.symbol(as.symbol( x ))
 [1] TRUE
 > is.table(as.table( x ))
-Error in as.table.default(x) : cannot coerce into a table
+[1] TRUE
 > is.ts(as.ts( x ))
 [1] TRUE
 > is.vector(as.vector( x ))
@@ -1628,7 +1628,7 @@ Error in is.single(x) : type "single" unimplemented in R
 [1] TRUE
 > if(is.table(x)) { cat('IS: ');all.equal(x, as.table( x ), tol=0)
 + } else   !isall.equal(x, as.table( x ))
-Error in as.table.default(x) : cannot coerce into a table
+[1] TRUE
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 [1] TRUE
@@ -1847,9 +1847,9 @@ Error in as.qr(x) : you cannot be serious
 > f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
 [1] TRUE
 > f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
-Error in as.table.default(x) : cannot coerce into a table
+[1] TRUE
 > f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
-Error in as.table.default(x) : cannot coerce into a table
+[1] TRUE
 > f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
 Error in as.table.ftable(x) : x must be an `ftable'
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
@@ -2903,6 +2903,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.16 0.01 1.17 0 0 
+Time elapsed:  1.98 0.04 2.02 0 0 
 > 
 > 

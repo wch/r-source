@@ -135,7 +135,17 @@ as.table.default <- function(x, ...)
 {
     if(is.table(x))
         return(x)
-    else if(is.array(x)) {
+    else if(is.array(x) || is.numeric(x)) {
+        x <- as.array(x)
+        if(any(dim(x) == 0))
+            stop("cannot coerce into a table")
+        ## Try providing dimnames where missing.
+        dnx <- dimnames(x)
+        if(is.null(dnx))
+            dnx <- vector("list", length(dim(x)))
+        for(i in which(sapply(dnx, is.null)))
+            dnx[[i]] <- LETTERS[seq(length = dim(x)[i])]
+        dimnames(x) <- dnx
         class(x) <- c("table", class(x))
         return(x)
     }
