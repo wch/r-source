@@ -85,6 +85,10 @@ From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
 Date: Tue, 4 Dec 2001 11:29:58 -0500 (EST)
 --This isn't really a bug: the line in question is a plain-text equation, not a
 --piece of R code.
+* PR# 1213 *
+Subject: Doc suggestion for detach (and library)
+From: Duncan Murdoch <murdoch@stats.uwo.ca>
+Date: Thu, 13 Dec 2001 10:26:28 -0500
 
 Directory:  Graphics
 
@@ -263,6 +267,10 @@ Date: Sun, 7 Oct 2001 18:24:34 +0200 (CEST)
 --Traced down to an effect of read.dta in foreign interacting with do_paste. Fixed
 --in foreign, but do_paste may need to use strlen() rather than LENGTH().
 --
+* PR# 1211 *
+Subject: crash bug in get("function.name")()
+From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
+Date: Tue, 11 Dec 2001 17:34:07 -0500 (EST)
 
 Directory:  Macintosh
 
@@ -302,29 +310,10 @@ From: lcottret@yahoo.fr
 Date: Wed, 11 Jul 2001 15:34:23 +0200 (MET DST)
 --problem with symbol names only on Mandrake 8.0, not 7.2
 --needs reply to follow-up
-* PR# 1026 *
-Subject: make check failure on SGI-IRIX6.5
-From: laurent@cbs.dtu.dk
-Date: Mon, 16 Jul 2001 15:06:17 +0200 (MET DST)
---bus error is almost certainly the same as PR#1002, solved for 1.4.0
-* PR# 1057 *
-Subject: crt1.o skipped at configure time ?
-From: laurent@cbs.dtu.dk
-Date: Thu, 16 Aug 2001 08:52:34 +0200 (MET DST)
-* PR# 1084 *
-Subject: Install problems R 1.3.1 on HP-UX
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Sun, 2 Sep 2001 15:07:41 +0200 (CEST)
---pre1.4.0 has compiled on HP-UX
 * PR# 1097 *
 Subject: R 1.3.1 fails 'make check' on arm in the Bessel example
 From: Dirk Eddelbuettel <edd@debian.org>
 Date: Thu, 20 Sep 2001 23:54:19 -0500
-* PR# 1106 *
-Subject: What is an error bu21?
-From: Patrick Lindsey <patrick.lindsey@luc.ac.be>
-Date: Mon, 1 Oct 2001 15:43:36 +0200 (MET DST)
---Looks like an SGI make bug
 * PR# 1140 *
 Subject: Possible bug, Rprof() and scan(pipe())
 From: Don MacQueen <macq@llnl.gov>
@@ -359,11 +348,15 @@ Directory:  incoming
 Subject: a patch to tapply
 From: Vadim Ogranovich <vograno@arbitrade.com>
 Date: Thu, 29 Nov 2001 14:48:35 -0600
-* PR# 1210 *
-Subject: multi.line=FALSE does not work in scan()
-From: Vadim Ogranovich <vograno@arbitrade.com>
-Date: Mon, 10 Dec 2001 20:34:34 -0600
-* PR# 1211 *
-Subject: crash bug in get("function.name")()
+* PR# 1212 *
+Subject: sample
+From: possolo@crd.ge.com
+Date: Thu, 13 Dec 2001 15:41:06 +0100 (MET)
+* PR# 1214 *
+Subject: syntax questtion, maybe a bug
 From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
-Date: Tue, 11 Dec 2001 17:34:07 -0500 (EST)
+Date: Thu, 13 Dec 2001 13:46:54 -0500 (EST)
+* PR# 1215 *
+Subject: Error when library() called with no arguments
+From: rpeng@stat.ucla.edu
+Date: Thu, 13 Dec 2001 20:51:21 +0100 (MET)
