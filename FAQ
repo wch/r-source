@@ -1334,6 +1334,10 @@ distributions of R.)
      Currently, implements methods for cell cycle analysis and for inferring
      large sparse graphical Gaussian models.
 
+*Geneland*
+     MCMC inference from individual genetic data based on a spatial
+     statistical model.
+
 *HI*
      Simulation from distributions supported by nested hyperplanes.
 
