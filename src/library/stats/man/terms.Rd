@@ -8,6 +8,7 @@ terms(x, \dots)
 \alias{terms.aovlist}
 \alias{terms.default}
 \alias{print.terms}
+\alias{labels.terms}
 \description{
   The function \code{terms} is a generic function
   which can be used to extract \emph{terms} objects
@@ -22,6 +23,10 @@ terms(x, \dots)
   \code{"formula"} (see \code{\link{terms.formula}}):
   the default method just extracts the \code{terms} component of the
   object (if any).
+
+  There are \code{\link{print}} and \code{\link{labels}} methods for
+  class \code{"terms"}: the latter prints the term labels (see
+  \code{\link{terms.object}}).
 }
 \value{
   An object of class \code{c("terms", "formula")} which contains the

@@ -771,3 +771,11 @@ predict.mlm <-
     if ( !is.null(offset) ) pred <- pred + offset
     if(inherits(object, "mlm")) pred else pred[, 1]
 }
+
+## from base/R/labels.R
+labels.lm <- function(object, ...)
+{
+    tl <- attr(object$terms, "term.labels")
+    asgn <- object$assign[object$qr$pivot[1:object$rank]]
+    tl[unique(asgn)]
+}

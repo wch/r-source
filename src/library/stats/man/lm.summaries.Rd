@@ -2,6 +2,7 @@
 \alias{family.lm}
 \alias{formula.lm}
 \alias{residuals.lm}
+\alias{labels.lm}
 \alias{weights}
 \alias{weights.default}
 \title{Accessing Linear Model Fits}
@@ -14,6 +15,8 @@
           type = c("working", "response", "deviance", "pearson",
                    "partial"),
           \dots)
+
+\method{labels}{lm}(object, \dots)
 
 weights(object, \dots)
 }
@@ -38,6 +41,9 @@ weights(object, \dots)
   model.  In all these, zero weight cases are never omitted (as opposed
   to the standardized \code{\link{rstudent}} residuals).
 
+  The \code{"lm"} method for generic \code{\link{labels}} returns the
+  term labels for estimable terms, that is the names of the terms with
+  an least one estimable coefficient.
 }
 \seealso{
   The model fitting function \code{\link{lm}}, \code{\link{anova.lm}}.

@@ -75,6 +75,9 @@ terms.default <- function(x, ...) {
 terms.terms <- function(x, ...) x
 print.terms <- function(x, ...) print.default(unclass(x))
 
+## moved from base/R/labels.R
+labels.terms <- function(object, ...) attr(object, "term.labels")
+
 ### do this `by hand' as previous approach was vulnerable to re-ordering.
 delete.response <- function (termobj)
 {

@@ -14,11 +14,3 @@ labels.default <- function(object, ...)
     nt
 }
 
-labels.terms <- function(object, ...) attr(object, "term.labels")
-
-labels.lm <- function(object, ...)
-{
-    tl <- attr(object$terms, "term.labels")
-    asgn <- object$assign[object$qr$pivot[1:object$rank]]
-    tl[unique(asgn)]
-}

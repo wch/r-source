@@ -5,8 +5,6 @@ labels(object, \dots)
 }
 \alias{labels}
 \alias{labels.default}
-\alias{labels.terms}
-\alias{labels.lm}
 \arguments{
   \item{object}{Any \R object: the function is generic.}
   \item{\dots}{further arguments passed to or from other methods.}
@@ -17,10 +15,8 @@ labels(object, \dots)
 }
 \value{
   A character vector or list of such vectors. For a vector the results
-  is the names or \code{seq(along=x)}, for a data frame or array it is
-  the dimnames (with \code{NULL} expanded to \code{seq(len=d[i])}), for
-  a \code{terms} object it is the term labels and for an \code{lm}
-  object it is the term labels for estimable terms.
+  is the names or \code{seq(along=x)} and  for a data frame or array it is
+  the dimnames (with \code{NULL} expanded to \code{seq(len=d[i])}.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
