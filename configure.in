@@ -680,8 +680,9 @@ AC_SUBST(F2CFLAGS)
 AC_OUTPUT(Makeconf Makefile
   afm/Makefile
   demos/Makefile
-  doc/Makefile doc/keyword-test doc/manual/Makefile
-  doc/manual/ABOUT.tex doc/manual/Man.tex doc/manual/lib2tex
+  doc/Makefile doc/keyword-test
+  doc/manual/Makefile doc/manual/lib2tex
+  doc/manual/Reference.tex doc/manual/Manual.tex
   etc/Makefile etc/Makeconf
   src/Makefile src/appl/Makefile src/include/Makefile
   src/library/Makefile src/main/Makefile src/nmath/Makefile

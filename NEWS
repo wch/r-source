@@ -11,6 +11,9 @@
 
 NEW FEATURES
 
+    o   The LaTeX documentation is now split into 2 parts: the (currently
+        almost non-existent) manual and a reference index.
+
     o	Gnome support added
 
     o   The X11 graphics driver no longer produces "color allocation"
