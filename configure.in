@@ -580,14 +580,18 @@ case "${host}" in
     cpicflags=
     cxxpicflags=
     fpicflags=
-    mainld=ld
-    mainldflags="-bdynamic -bE:${EXPORTFILE} -bM:SRE"
     if test "${GCC}" = yes; then
-      mainldflags="${mainldflags} `${CC} -print-libgcc-file-name`"
+      wl="-Xlinker "
+    else
+      wl=
     fi
-    shlibld=ld
-    shlibldflags="-bM:SRE -H512 -T512 -bnoentry -bexpall \
-      -bI:\$(R_HOME)/etc/R.exp"
+    mainldflags="${wl}-bdynamic ${wl}-bE:${EXPORTFILE} ${wl}-bM:SRE"
+    # FIXME: is this really necessary?
+    #     if test "${GCC}" = yes; then
+    #       mainldflags="${mainldflags} `${CC} -print-libgcc-file-name`"
+    #     fi
+    shlibldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry \
+      ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
     ;;
   alpha*osf*)
     cpicflags=
@@ -612,8 +616,11 @@ case "${host}" in
         fpicflags="+z" ;;
     esac
     mainldflags="-Wl,-E"
-    shlibld=ld
-    shlibldflags="-b"
+    if test "${GCC}" = yes; then
+      shlibldflags="-shared -fPIC"
+    else
+      shlibldflags="-b"
+    fi
     SHLIBEXT=sl
     ;;
   *linux*aout)
