@@ -172,23 +172,27 @@ none
 
 Directory:  incoming
 
-* PR# 523 *
-Subject: Maths in R documentation
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Mon, 17 Apr 2000 18:18:55 +0200 (CEST)
-* PR# 520 *
-Subject: Rd2Sd conversion: files
-From: Sergei Zuyev <sergei@stams.strath.ac.uk>
-Date: Fri, 14 Apr 2000 13:26:19 +0100
+* PR# 524 *
+Subject: strheight() crashes without opened device
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Tue, 18 Apr 2000 19:42:00 +0200
 * PR# 519 *
 Subject: bundle build and Rd2Sd converion fail
 From: Sergei Zuyev <sergei@stams.strath.ac.uk>
 Date: Fri, 14 Apr 2000 13:13:48 +0100
-* PR# 522 *
-Subject: na.omit fails for matrices
-From: Sergei Zuyev <sergei@stams.strath.ac.uk>
-Date: Mon, 17 Apr 2000 11:52:28 +0100
 * PR# 521 *
 Subject: akima core dumps on loading
 From: santini@dsi.unimi.it
 Date: Mon, 17 Apr 2000 11:30:41 +0200 (MET DST)
+* PR# 520 *
+Subject: Rd2Sd conversion: files
+From: Sergei Zuyev <sergei@stams.strath.ac.uk>
+Date: Fri, 14 Apr 2000 13:26:19 +0100
+* PR# 523 *
+Subject: Maths in R documentation
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Mon, 17 Apr 2000 18:18:55 +0200 (CEST)
+* PR# 522 *
+Subject: na.omit fails for matrices
+From: Sergei Zuyev <sergei@stams.strath.ac.uk>
+Date: Mon, 17 Apr 2000 11:52:28 +0100
