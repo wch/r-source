@@ -20,8 +20,7 @@
 #ifndef ERRORMSG_H
 #define ERRORMSG_H
 
-extern void error(const char *, ...);
-extern void warning(const char *, ...);
+#include "Error.h"
 
 	/* Packaged Error Messages */
 	/* Argument list length and type errors */
