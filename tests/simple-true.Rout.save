@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-09-11)
+Version 1.2.0 Under development (unstable) (2000-09-22)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -140,5 +140,12 @@ Type	"q()" to quit R.
 > f2 <- y2 ~ x2
 > f2[2] <- f1[2]
 > deparse(f2) == "y1 ~ x2"
+[1] TRUE
+> 
+> m <- cbind(a=1:2,b=c(R=10,S=11))
+> all(sapply(dimnames(m), length) == c(2,2))
+[1] TRUE
+> ## [[ for matrix:
+> m[[1,2]] == m[[3]] && m[[3]] == m[3] && m[3] == m[1,2]
 [1] TRUE
 > 

@@ -92,3 +92,8 @@ f1 <- y1 ~ x1
 f2 <- y2 ~ x2
 f2[2] <- f1[2]
 deparse(f2) == "y1 ~ x2"
+
+m <- cbind(a=1:2,b=c(R=10,S=11))
+all(sapply(dimnames(m), length) == c(2,2))
+## [[ for matrix:
+m[[1,2]] == m[[3]] && m[[3]] == m[3] && m[3] == m[1,2]
