@@ -656,7 +656,7 @@ static void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
        to run a final insertion sort to re-order runs of ties when
        comparison is cheap.
     */
-    for (t = 0; incs[t] > hi-lo; t++);
+    for (t = 0; incs[t] > hi-lo+1; t++);
     switch (TYPEOF(key)) {
     case LGLSXP:
     case INTSXP:
