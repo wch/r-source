@@ -26,11 +26,10 @@
 /* MEMCMP: a general, quicker (in principle) test for non-recursive
    vectors than comparing elements in a loop.
    Depends on the existence of memcmp (which is checked and set in
-   config.h by autoconf.  (Aug 2002: it is not, currently.)
+   config.h by autoconf).
 
    One detail is that using memcmp on double's implies that different
-   NaN bit patterns (if they occur) are different.  The non-memcmp
-   version for this case, below, treats all NaN's the same.
+   NaN bit patterns (if they occur) are different. So we don't use it.
 */
 #define MEMCMP(x, y, n) ((length(x) == length(y)) && (memcmp((void *)DATAPTR(x),\
         (void *)DATAPTR(y), length(x)*n)==0) ? TRUE : FALSE)
@@ -109,9 +108,6 @@ static Rboolean compute_identical(SEXP x, SEXP y)
 	}
 #endif
     case REALSXP:
-#ifdef HAVE_MEMCMP
-	return(MEMCMP(x, y, sizeof(double)));
-#else
 	{
 	    double *xp = REAL(x), *yp = REAL(y);
 	    long i, n = length(x);
@@ -120,11 +116,7 @@ static Rboolean compute_identical(SEXP x, SEXP y)
 		if(neWithNaN(xp[i], yp[i])) return FALSE;
 	    return TRUE;
 	}
-#endif
     case CPLXSXP:
-#ifdef HAVE_MEMCMP
-	return(MEMCMP(x, y, sizeof(Rcomplex)));
-#else
 	{
 	    Rcomplex *xp = COMPLEX(x), *yp = COMPLEX(y);
 	    long i, n = length(x);
@@ -135,7 +127,6 @@ static Rboolean compute_identical(SEXP x, SEXP y)
 		    return FALSE;
 	    return TRUE;
 	}
-#endif
     case STRSXP:
     {
 	long i, n = length(x);
