@@ -165,6 +165,7 @@ qr.fitted <- function(qr, y, k=qr$rank)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
     if(is.complex(qr$qr)) stop("implemented for complex qr")
+    a <- attr(qr, "useLAPACK")
     if(!is.null(a) && is.logical(a) && a)
         stop("not supported for LAPACK QR")
     n <- nrow(qr$qr)
