@@ -8,39 +8,40 @@
 }
 \usage{
 prompt(object, filename = NULL, name = NULL, \dots)
-
 \method{prompt}{default}(object, filename = NULL, name = NULL,
        force.function = FALSE, \dots)
-%
-%\method{prompt}{data.frame}(object, filename = NULL, name = NULL, \dots)
+\method{prompt}{data.frame}(object, filename = NULL, name = NULL, \dots)
 }
 \arguments{
-  \item{object}{an \R object, typically a function.}
-  \item{name}{a character string specifying the name of the object.}
+  \item{object}{an \R object, typically a function for the default
+    method.}
   \item{filename}{usually, a connection or a character string giving the
     name of the file to which the documentation shell should be written.
     The default corresponds to a file whose name is \code{name} followed
     by \code{".Rd"}.  Can also be \code{NA} (see below).}
+  \item{name}{a character string specifying the name of the object.}
   \item{force.function}{a logical.  If \code{TRUE}, treat \code{object}
     as function in any case.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \value{
-  Unless \code{filename} is \code{NA}, it is returned invisibly;
-  otherwise, a list-style representation of the documentation shell.
+  If \code{filename} is \code{NA}, a list-style representation of the
+  documentation shell.  Otherwise, the name of the file written to is
+  returned invisibly.
 }
 \details{
   Unless \code{filename} is \code{NA}, a documentation shell for
-  \code{object} is written to \code{filename}, and a message about this
-  is given.  For function objects, this shell contains the proper
-  function and argument names.  R documentation files thus created still
-  need to be edited and moved into the \file{man} subdirectory of the
-  package containing the object to be documented.
+  \code{object} is written to the file specified by \code{filename}, and
+  a message about this is given.  For function objects, this shell
+  contains the proper function and argument names.  R documentation
+  files thus created still need to be edited and moved into the
+  \file{man} subdirectory of the package containing the object to be
+  documented.
 
   If \code{filename} is \code{NA}, a list-style representation of the
-  documentation shell is returned.  Writing the shell to a file really
-  amounts to \code{cat(unlist(x), file = filename, sep = "\n")}, where
-  \code{x} is the list-style representation.
+  documentation shell is created and returned.  Writing the shell to a
+  file amounts to \code{cat(unlist(x), file = filename, sep = "\\n")},
+  where \code{x} is the list-style representation.
 
   When \code{prompt} is used in \code{\link{for}} loops or scripts, the
   explicit \code{name} specification will be useful.

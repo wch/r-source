@@ -9,11 +9,11 @@ promptData(object, filename = NULL, name = NULL)
 }
 \arguments{
   \item{object}{an \R object to be documented as a data set.}
-  \item{name}{a character string specifying the name of the object.}
   \item{filename}{usually, a connection or a character string giving the
     name of the file to which the documentation shell should be written.
     The default corresponds to a file whose name is \code{name} followed
     by \code{".Rd"}.  Can also be \code{NA} (see below).}
+  \item{name}{a character string specifying the name of the object.}
 }
 \value{
   If \code{filename} is \code{NA}, a list-style representation of the
@@ -21,14 +21,15 @@ promptData(object, filename = NULL, name = NULL)
   returned invisibly.
 }
 \details{
+  Unless \code{filename} is \code{NA}, a documentation shell for
+  \code{object} is written to the file specified by \code{filename}, and
+  a message about this is given.
+
   If \code{filename} is \code{NA}, a list-style representation of the
-  documentation shell is created and returned.  Otherwise, the shell is
-  written to \code{filename}, and a message about this is given.
-
-  Writing the shell to a file really amounts to
-  \code{cat(unlist(x), file = filename, sep = "\n")},
+  documentation shell is created and returned.  Writing the shell to a
+  file amounts to \code{cat(unlist(x), file = filename, sep = "\\n")},
   where \code{x} is the list-style representation.
-
+  
   Currently, only data frames are handled explicitly by the code.
 }
 \section{Warning}{
@@ -38,7 +39,7 @@ promptData(object, filename = NULL, name = NULL)
   of where to look for it instead of using \code{object}/\code{name} as
   we currently do.  This would be different from \code{\link{prompt}},
   but consistent with other prompt-style functions in package
-  \code{methods}, and also allow prompting for data set documentation
+  \pkg{methods}, and also allow prompting for data set documentation
   without explicitly having to load the data set.
 }
 \seealso{\code{\link{prompt}}}
