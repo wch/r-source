@@ -560,6 +560,9 @@ crandir:
 	  -e s/@RVER@/$(RVER)/g \
 	  -e 's/@DATE@/$(DATE)/g' cran/rpatched.in > cran/rpatched.html	  
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g cran/release.in > cran/release.htm
+	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
+	  -e s/@RVER@/$(RVER)/g \
+	  -e 's/@DATE@/$(DATE)/g' cran/mini.in > cran/mini/index.html
 
 distribution:
 	$(MAKE) all
