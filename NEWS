@@ -65,9 +65,6 @@ NEW FEATURES
     o	subset() now has a method for matrices, similar to that for
 	data frames.
 
-    o	R CMD check will now work on a source tarball and prints out
-	information about the version of R and the package.
-
     o	New function recordGraphics() to encapsulate calculations
 	and graphics output together on graphics engine display list.
 	To be used with care.
@@ -175,8 +172,11 @@ UTILITIES
 
     o	R CMD check has a new option '--use-valgrind'.
 
-	R CMD check now checks that Fortran and C++ files have LF
+    o	R CMD check now checks that Fortran and C++ files have LF
 	line endings, as well as C files.
+
+    o	R CMD check will now work on a source tarball and prints out
+	information about the version of R and the package.
 
     o	tools:::.install_package_code_files() (used to collate R files
 	when installing packages) ensures files are separated by a
@@ -207,8 +207,9 @@ UTILITIES
 
     o	R CMD build now reports empty directories in the source tree.
 
-    o	New function write_PACKAGES in package 'tools' to help with
-	preparing local package repositories.  (Contributed by Uwe Ligges.)
+    o	New function write_PACKAGES() in package 'tools' to help with
+	preparing local package repositories.  (Based on contribution
+	by Uwe Ligges.)
 
 
 DOCUMENTATION
@@ -293,7 +294,7 @@ PACKAGE INSTALLATION CHANGES
 	found.	The argument 'CRAN' is still accepted, but deprecated.
 
 	install.packages() on Unix can now install from local .tar.gz
-	files via repos = NULL.
+	files via repos = NULL (as it long has done on Windows).
 
 	install.packages() no longer asks if downloaded packages
 	should be deleted: they will be deleted at the end of the
