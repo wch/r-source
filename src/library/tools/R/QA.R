@@ -976,8 +976,9 @@ function(package, dir, lib.loc = NULL)
         ## arguments the generic has, with positional arguments of g in
         ## the same positions for m.
         ## Exception: '...' in the method swallows anything
-        gArgs <- ogArgs <- names(formals(get(g, envir = env)))
+        gArgs <- names(formals(get(g, envir = env)))
         if(g == "plot") gArgs <- gArgs[-2]
+        ogArgs <- gArgs
         mArgs <- omArgs <- names(formals(get(m, envir = codeEnv)))
         ## If m is a formula method, its first argument *may* be called
         ## formula.  (Note that any argument name mismatch throws an
