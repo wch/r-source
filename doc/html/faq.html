@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 0.65-8, 1999/10/11</h2>
+<h2>Version 0.65-9, 1999/10/15</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -496,6 +496,9 @@ Bates) as well as Red Hat 5.1 packages for the alpha and sparc platforms
 packages for the i386 and alpha platforms (maintained by Martyn Plummer
 and Naoki Takebayashi, respectively), S.u.S.E. 5.3/6.0/6.2 i386 packages
 by Albrecht Gebhardt, and RPMs for the ppc platform by Alex Buerkle.
+
+<p>The <code>bin/osf</code> directory contains RPMs for alpha systems running
+Digital Unix 4.0 by Albrecht Gebhardt.
 
 <p>No other binary distributions have thus far been made publically
 available.
@@ -1086,10 +1089,13 @@ in S.  Use factors instead.
 <li>The random number generators are different, and the seeds have different
 length.
 
+<li>R passes integer objects to C as <code>int *</code> rather than <code>long *</code>
+as in S.
+
 <li>R has no single precision storage mode, and so can only pass real
-numeric arguments to C/FORTRAN subroutines as double * or DOUBLE
-PRECISION, respectively.  (As of version 0.90 there will also be a single
-precision interface.)
+numeric arguments to C/FORTRAN subroutines as <code>double *</code> or
+<code>DOUBLE PRECISION</code>, respectively.  (As of version 0.90 there will
+also be a single precision interface.)
 
 <li>By default, <code>ls()</code> returns the names of the objects in the current
 (under R) and global (under S) environment, respectively.  For example,
