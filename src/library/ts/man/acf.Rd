@@ -1,5 +1,6 @@
 \name{acf}
 \alias{acf}
+\alias{ccf}
 \alias{pacf}
 \alias{pacf.ts}
 \alias{pacf.mts}
@@ -10,10 +11,13 @@ acf(x, lag.max = NULL, plot = TRUE,
     type = c("correlation", "covariance", "partial"),
     na.action, ...)
 pacf(x, lag.max = NULL, plot = TRUE, na.action, ...)
-plot.acf(acf.obj, ci, ...)
+plot.acf(acf.obj, ci=0.95, ...)
+ccf(x, y, lag.max = NULL, plot = TRUE,
+    type = c("correlation", "covariance", na.action, ...)
 }
 \arguments{
- \item{x}{a time series object, univariate or multivariate.}
+ \item{x,y}{a time series object, univariate or multivariate, or a numeric
+   vector or matrix.}
 
  \item{lag.max}{maximum lag at which to calculate the acf. Default is
      10*log10(N) where N is the number of observations.}
@@ -36,6 +40,9 @@ plot.acf(acf.obj, ci, ...)
     The function \code{acf} computes estimates of the autocovariance /
     autocorrelation function. Function \code{pacf} is the functions used
     for the partial autocorrelations.
+
+    Function \code{ccf} computes and (by default) plots the
+    cross-correlation or cross-correlation of two univariate series.
 
     The generic function \code{plot} has a method for acf objects.
 }

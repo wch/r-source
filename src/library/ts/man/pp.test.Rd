@@ -1,12 +1,12 @@
 \name{PP.test}
+\alias{PP.test}
 \title{Phillips-Perron Unit Root Test}
 \usage{
 PP.test (x, lshort = TRUE)
 }
-\alias{pp.test}
 \arguments{
   \item{x}{a numeric vector or univariate time series.}
-  \item{shortl}{a logical indicating whether the short or long version
+  \item{lshort}{a logical indicating whether the short or long version
     of the truncation lag parameter is used.}
 }
 \description{

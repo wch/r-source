@@ -122,8 +122,8 @@ plot.acf <-
             partial = "Partial ACF")
     if (is.null(snames <- x$snames)) {
         snames <- if (nser == 1)
-            paste("Series", x$series)
-        else paste("Series", 1:nser)
+            paste("Series ", x$series)
+        else paste("Series ", 1:nser)
     }
     with.ci <- (ci > 0) && (x$type != "covariance")
     for (i in 1:nser) for (j in 1:nser) {
@@ -146,4 +146,25 @@ plot.acf <-
             title(snames[i])
         else title(paste(snames[i], "&", snames[j]))
     }
+}
+
+ccf <- function(x, y, lag.max = NULL, plot = TRUE,
+                type = c("correlation", "covariance"),
+                na.action = na.fail, ...)
+{
+    type <- match.arg(type)
+    if(is.matrix(x) || is.matrix(y))
+        stop("univariate time series only")
+    X <- na.action(ts.union(x, y))
+    colnames(X) <- c(deparse(substitute(x)), deparse(substitute(y)))
+    acf.out <- acf(X, lag.max = lag.max, plot = F, type = type)
+    lag <- c(rev(acf.out$lag[-1,2,1]), 0, acf.out$lag[,1,2])
+    y <- c(rev(acf.out$acf[-1,2,1]), 0, acf.out$acf[,1,2])
+    acf.out$acf <- array(y, dim=c(length(y),1,1))
+    acf.out$lag <- array(lag, dim=c(length(y),1,1))
+    acf.out$snames <- paste(acf.out$snames, collapse = " & ")
+    if (plot) {
+        plot.acf(acf.out, ...)
+        return(invisible(acf.out))
+    } else return(acf.out)
 }

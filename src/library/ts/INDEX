@@ -30,10 +30,12 @@ acf		Autocovariance and autocorrelation function
 ar              Wrapper for autoregression estimation functions
 ar.yw           Estimate autoregression model by solving Yule-Walker equations
 Box.test	Box-Pierce and Ljung-Box tests of independence
+ccf		Cross-covariance and cross-correlations for two series
 cpgram		Plot cumulative periodogram of univariate time series
 cycle		Create time series giving the positions in a cycle 
 		   of a time series
 deltat		Return time interval between observations
+diffinv		Discrete integration, the inverse of diff()
 embed           Embedding a time series
 filter		Linear filtering on a time series
 kernel          Smoothing kernel objects (and Daniell, Fejer and 
@@ -52,6 +54,7 @@ spec.pgram      Estimate spectral density from periodogram
 spec.taper      Taper by cosine bell
 spectrum        Wrapper for spectral density estimation functions
 stl		Seasonal decomposition using loess
+toeplitz	Generate Toeplitz matrix
 ts.intersect	Bind time series as multivariate ts over the common time base
 ts.union	Bind time series as multivariate ts over their total time base
 

@@ -35,3 +35,11 @@ void R_pp_sum (double* u, int* n, int* l, double* sum)
   tmp1 *= 2.0;
   (*sum) += tmp1;
 }
+
+void R_intgrt_vec (double* x, double* y, int* lag, int* n)
+{
+  int i;
+
+  for (i=*lag; i<*lag+*n; i++)
+    y[i] = x[i-*lag]+y[i-*lag];
+}

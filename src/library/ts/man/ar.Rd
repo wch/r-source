@@ -56,8 +56,24 @@ fitting the AR model.
      series, so is \code{resid}.}
   \item{method}{The value of the \code{method} argument.}
   \item{series}{The name(s) of the time series.}
+  \item{asy.var.coef}{The asymptotic-theory variance matrix of the
+      coefficient estimates.}
 }
 \author{Martyn Plummer, univariate case of \code{ar.yw} by B.D. Ripley.}
+
+\references{
+    Brockwell, P. J. and Davis, R. A. (1991) \emph{Time
+	Series and Forecasting Methods.}  Second edition. Springer, New
+    York. Section 11.4.
+
+    Brockwell, P. J. and Davis, R. A. (1996) \emph{Introduction to Time
+	Series and Forecasting.} Springer, New York. Sections 5.1 and 7.6.
+    
+    Whittle, P. (1963) On the fitting of multivariate autoregressions
+    and the approximate canonical factorization of a spectral density
+    matrix. \emph{Biometrika} \bold{40}, 129-134.
+    
+}
 
 \note{\code{ar.burg} is not yet implemented.}
 

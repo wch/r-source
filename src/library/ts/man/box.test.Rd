@@ -1,4 +1,4 @@
-\name{box.test}
+\name{Box.test}
 \alias{Box.test}
 \title{Box-Pierce and Ljung-Box Tests}
 \usage{
@@ -29,8 +29,16 @@ Box.test (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"))
   \item{data.name}{a character string giving the name of the data.}
 }
 \references{
-  A. C. Harvey (1993) \emph{Time Series Models},
-  2nd Edition, Harvester Wheatsheaf, NY, pp. 44, 45.
+    Box, G. E. P. and Pierce, D. A. (1970) Distribution of residual
+    correlations in autoregressive-integrated moving average time series
+    models. \emph{Journal of the American Statistical Association}
+    \bold{65}, 1509-1526.
+
+    Ljung, G. M. and Box, G. E. P. (1978) On a measure of lack of fit in
+    time series models. \emph{Biometrika} \bold{65}, 553-564.
+  
+    Harvey, A. C. (1993) \emph{Time Series Models},
+    2nd Edition, Harvester Wheatsheaf, NY, pp. 44, 45.
 }
 \author{A. Trapletti}
 \examples{

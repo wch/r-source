@@ -130,7 +130,11 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail)
             attr(resid, "class") <- "ts"
         }
     }
-    return(order, ar, var.pred, aic = xaic, n.used, order.max,
-           partialacf, resid, method = "Yule-Walker",
-           series, frequency=xfreq)
+    res <- list(order=order, ar=ar, var.pred=var.pred, aic = xaic,
+                n.used=n.used, order.max=order.max,
+                partialacf=partialacf, resid=resid, method = "Yule-Walker",
+                series=series, frequency=xfreq)
+    if(nser == 1)
+        res$asy.var.coef <- solve(toeplitz(drop(xacf)[1:order]))*var.pred/n.used
+    res
 }

@@ -3,11 +3,11 @@ Box.test <- function (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"))
     if (is.matrix(x))
         stop ("x is not a vector or univariate time series")
     type <- match.arg(type)
-    cor <- acf (x, lag = lag, plot = FALSE)
+    cor <- acf (x, lag.max = lag, plot = FALSE)
     n <- length(x)
     DNAME <- deparse(substitute(x))
     PARAMETER <- lag
-    obs <- cor$y[2:(lag+1)]
+    obs <- cor$acf[2:(lag+1)]
     if (type=="Box-Pierce")
     {
         METHOD <- "Box-Pierce test"
@@ -41,6 +41,8 @@ PP.test <- function (x, lshort = TRUE)
     n <- length (yt)
     tt <- (1:n)-n/2
     res <- lm (yt~1+tt+yt1)
+    if (res$rank < 3)
+        stop ("Singularities in regression")
     res.sum <- summary (res)
     tstat <- (res.sum$coefficients[3,1]-1)/res.sum$coefficients[3,2]
     u <- residuals (res)
