@@ -49,7 +49,7 @@ Programming, Input/Ouput, and Miscellaneous
 Statistics
 
        distribution 	&	Probability Distributions and Random Numbers
-       univar		&	simple univariate statistics  [! S]
+       univar		&	simple univariate statistics  [!= S]
        htest		&	Statistical Inference
        models		&	Statistical Models
 	   & regression	&	Regression
