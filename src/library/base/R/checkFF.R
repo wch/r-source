@@ -1,6 +1,7 @@
 checkFF <-
 function(file, package, lib.loc = .lib.loc,
          verbose = getOption("verbose")) {
+    fQuote <- function(s) paste("`", s, "'", sep = "")
     if(missing(file)) {
         if(missing(package))
             stop("you must specify `file' or `package'")
@@ -8,10 +9,11 @@ function(file, package, lib.loc = .lib.loc,
     }
     if(!file.exists(file))
         stop(paste("file", fQuote(file), "does not exist"))
+    FFfuns <- c(".C", ".Fortran", ".Call", ".External",
+                ".Call.graphics", ".External.graphics")
     checkFFPackageArg <- function(e) {
         if(is.call(e) || is.expression(e)) {
-            if((e[[1]] == as.name(".C")) ||
-               (e[[1]] == as.name(".Fortran"))) {
+            if(as.character(e[[1]]) %in% FFfuns) {
                 parg <- e[["PACKAGE"]]
                 if(is.null(parg)) parg <- "MISSING"
                 if((parg == "MISSING") || verbose)

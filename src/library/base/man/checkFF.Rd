@@ -7,9 +7,9 @@ checkFF(file, package, lib.loc = .lib.loc,
 }
 \description{
   Performs checks on calls to compiled code from R code.  Currently only
-  checks whether \code{.C} and \code{.Fortran} calls specify argument
-  \code{PACKAGE}, which is highly recommended to avoid name clashes in
-  foreign function calls.
+  whether the interface functions such as \code{.C} and \code{.Fortran}
+  are called with argument \code{PACKAGE} specified, which is highly
+  recommended to avoid name clashes in foreign function calls.
 }
 \arguments{
   \item{file}{the name of a file containing R code to be checked.}
@@ -23,7 +23,8 @@ checkFF(file, package, lib.loc = .lib.loc,
 }
 \seealso{
   \code{\link{.C}},
-  \code{\link{.Fortran}}.
+  \code{\link{.Fortran}};
+  \code{\link{Foreign}}.
 }
 \examples{
 checkFF(package = "ts", verbose = TRUE)
