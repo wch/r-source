@@ -4,16 +4,16 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-54 @value{FAQ-YEAR}-09-28
-@set REL-VERSION 1.9.1
+@set FAQ-VERSION 2.0-0 @value{FAQ-YEAR}-09-30
+@set REL-VERSION 2.0.0
 @set REL-YEAR 2004
-@c <FIXME>
-@c 2.0.0
-@set FAQ-ISBN 3-900051-01-1
-@set R-ISBN 3-900051-00-3
-@c set FAQ-ISBN 3-900051-08-9
-@c set R-ISBN 3-900051-07-0
-@c </FIXME>
+@c <COMMENT>
+@c ISBNs for R 1.x.
+@c @set FAQ-ISBN 3-900051-01-1
+@c @set R-ISBN 3-900051-00-3
+@c </COMMENT>
+@set FAQ-ISBN 3-900051-08-9
+@set R-ISBN 3-900051-07-0
 @documentlanguage en
 @documentencoding ISO-8859-1
 @c %**end of header
@@ -1576,7 +1576,7 @@ The R distribution comes with the following packages:
 
 @table @strong
 @c <FIXME>
-@c 2.0.0
+@c 2.1.0
 @item base
 Base R functions (and datasets before R 2.0.0).
 @item datasets
@@ -1810,11 +1810,11 @@ Creating random fields using various methods.
 @item Rcmdr
 A platform-independent basic-statistics GUI (graphical user interface)
 for R, based on the @strong{tcltk} package.
-@c <NOTE>
+@c <COMMENT>
 @c Moved to the Archive on 2004-08-11.
 @c @item RmSQL
 @c An interface between R and the mSQL database system.
-@c </NOTE>
+@c </COMMENT>
 @item Rmpi
 An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It also
 provides an interactive R slave environment in which distributed
@@ -1930,10 +1930,13 @@ Boolean logit and probit: a procedure for testing Boolean hypotheses.
 Functions and datasets for bootstrapping from the book ``Bootstrap
 Methods and Their Applications'' by A. C. Davison and D. V. Hinkley,
 1997, Cambridge University Press.  @emph{Recommended}.
-@item bootstrap
-Software (bootstrap, cross-validation, jackknife), data and errata for
-the book ``An Introduction to the Bootstrap'' by B. Efron and
-R. Tibshirani, 1993, Chapman and Hall.
+@c <COMMENT>
+@c Moved to the Archive on 2004-09-30.
+@c @item bootstrap
+@c Software (bootstrap, cross-validation, jackknife), data and errata for
+@c the book ``An Introduction to the Bootstrap'' by B. Efron and
+@c R. Tibshirani, 1993, Chapman and Hall.
+@c </COMMENT>
 @item bqtl
 QTL mapping toolkit for inbred crosses and recombinant inbred lines.
 Includes maximum likelihood and Bayesian tools.
@@ -2447,9 +2450,12 @@ classification.
 @item multinomRob
 Overdispersed multinomial regression using robust (LQD and tanh)
 estimation.
-@item multiv
-Functions for hierarchical clustering, partitioning, bond energy
-algorithm, Sammon mapping, PCA and correspondence analysis.
+@c <COMMENT>
+@c Moved to the Archive on 2004-09-30.
+@c @item multiv
+@c Functions for hierarchical clustering, partitioning, bond energy
+@c algorithm, Sammon mapping, PCA and correspondence analysis.
+@c </COMMENT>
 @item mvbutils
 Utilities by Mark V. Bravington for project organization, editing and
 backup, sourcing, documentation (formal and informal), package
@@ -2854,6 +2860,8 @@ Package for time series analysis with emphasis on non-linear modelling.
 @item tuneR
 Collection of tools to analyze music, handle wave files, transcription,
 etc.
+@item tweedie
+Maximum likelihood computations for Tweedie exponential family models.
 @item twostage
 Functions for optimal design of two-stage-studies using the Mean Score
 method.
@@ -2863,6 +2871,8 @@ Interface to Unidata's routines to convert units.
 Functions for sampling without replacement (simulated urns).
 @item urca
 Unit root and cointegration tests for time series data.
+@item vabayelMix
+Variational Bayesian mixture model.
 @item vardiag
 Interactive variogram diagnostics.
 @item vcd
@@ -2871,6 +2881,8 @@ Data'' by Michael Friendly.
 @item vegan
 Various help functions for vegetation scientists and community
 ecologists.
+@item verification
+Utilities for verification of discrete and probabilistic forecasts.
 @item verify
 Construction of test suites using verify objects.
 @item vioplot
@@ -4374,14 +4386,14 @@ help.start()
 needs to be
 
 @example
-graphics::ps.options(horizontal = FALSE)
+grDevices::ps.options(horizontal = FALSE)
 utils::help.start()
 @end example
 
 @c <FIXME>
-@c 2.0.0
+@c 2.1.0
 @noindent
-(@code{grDevices::ps.options(horizontal = FALSE)} in R 2.0.0).
+(@code{graphics::ps.options(horizontal = FALSE)} in R 1.9.x).
 @c </FIXME>
 
 @node Where have all the methods gone?, How can I create rotated axis labels?, Why did my .Rprofile stop working when I updated R?, R Miscellanea

@@ -31,8 +31,8 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.9-54 2004-09-28</h2>
-<h2>ISBN 3-900051-01-1</h2>
+<h2>Version 2.0-0 2004-09-30</h2>
+<h2>ISBN 3-900051-08-9</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -139,7 +139,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
 
 <p>In publications, please refer to this <acronym>FAQ</acronym> as Hornik
 (2004), &ldquo;The R <acronym>FAQ</acronym>&rdquo;, and give the above,
-<em>official</em> <acronym>URL</acronym> and the ISBN 3-900051-01-1.
+<em>official</em> <acronym>URL</acronym> and the ISBN 3-900051-08-9.
 
 <div class="node">
 <p><hr>
@@ -293,7 +293,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
 
 <h3 class="section">2.3 What is the current version of R?</h3>
 
-<p>The current released version is 1.9.1.  Based on this
+<p>The current released version is 2.0.0.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, a patched version of the current release (`r-patched')
 and one working towards the next minor or eventually major (`r-devel')
@@ -706,7 +706,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Basics">R Basics</a>
        organization = {R Foundation for Statistical Computing},
        address      = {Vienna, Austria},
        year         = 2004,
-       note         = {3-900051-00-3},
+       note         = {3-900051-07-0},
        url          = {http://www.R-project.org}
      }
 </pre>
@@ -1620,7 +1620,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Which-add_002don-packages-exist-for-R_
 
      <dl>
 <!-- <FIXME> -->
-<!-- 2.0.0 -->
+<!-- 2.1.0 -->
 <dt><strong>base</strong><dd>Base R functions (and datasets before R 2.0.0). 
 <br><dt><strong>datasets</strong><dd>Base R datasets (added in R 2.0.0). 
 <br><dt><strong>grDevices</strong><dd>Graphics devices for base and grid graphics (added in R 2.0.0). 
@@ -1791,11 +1791,11 @@ balloon-borne instrument).
 <br><dt><strong>RandomFields</strong><dd>Creating random fields using various methods. 
 <br><dt><strong>Rcmdr</strong><dd>A platform-independent basic-statistics GUI (graphical user interface)
 for R, based on the <strong>tcltk</strong> package. 
-<!-- <NOTE> -->
+<!-- <COMMENT> -->
 <!-- Moved to the Archive on 2004-08-11. -->
 <!-- @item RmSQL -->
 <!-- An interface between R and the mSQL database system. -->
-<!-- </NOTE> -->
+<!-- </COMMENT> -->
 <br><dt><strong>Rmpi</strong><dd>An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It also
 provides an interactive R slave environment in which distributed
 statistical computing can be carried out. 
@@ -1872,9 +1872,13 @@ and Bmapqtl samples.
 <br><dt><strong>boot</strong><dd>Functions and datasets for bootstrapping from the book &ldquo;Bootstrap
 Methods and Their Applications&rdquo; by A. C. Davison and D. V. Hinkley,
 1997, Cambridge University Press.  <em>Recommended</em>. 
-<br><dt><strong>bootstrap</strong><dd>Software (bootstrap, cross-validation, jackknife), data and errata for
-the book &ldquo;An Introduction to the Bootstrap&rdquo; by B. Efron and
-R. Tibshirani, 1993, Chapman and Hall. 
+<!-- <COMMENT> -->
+<!-- Moved to the Archive on 2004-09-30. -->
+<!-- @item bootstrap -->
+<!-- Software (bootstrap, cross-validation, jackknife), data and errata for -->
+<!-- the book ``An Introduction to the Bootstrap'' by B. Efron and -->
+<!-- R. Tibshirani, 1993, Chapman and Hall. -->
+<!-- </COMMENT> -->
 <br><dt><strong>bqtl</strong><dd>QTL mapping toolkit for inbred crosses and recombinant inbred lines. 
 Includes maximum likelihood and Bayesian tools. 
 <br><dt><strong>brlr</strong><dd>Bias-reduced logistic regression: fits logistic regression models by
@@ -2219,8 +2223,12 @@ misclassification rates.
 classification. 
 <br><dt><strong>multinomRob</strong><dd>Overdispersed multinomial regression using robust (LQD and tanh)
 estimation. 
-<br><dt><strong>multiv</strong><dd>Functions for hierarchical clustering, partitioning, bond energy
-algorithm, Sammon mapping, PCA and correspondence analysis. 
+<!-- <COMMENT> -->
+<!-- Moved to the Archive on 2004-09-30. -->
+<!-- @item multiv -->
+<!-- Functions for hierarchical clustering, partitioning, bond energy -->
+<!-- algorithm, Sammon mapping, PCA and correspondence analysis. -->
+<!-- </COMMENT> -->
 <br><dt><strong>mvbutils</strong><dd>Utilities by Mark V. Bravington for project organization, editing and
 backup, sourcing, documentation (formal and informal), package
 preparation, macro functions, and more. 
@@ -2502,16 +2510,19 @@ assessment from tree-rings.
 <br><dt><strong>tseries</strong><dd>Package for time series analysis with emphasis on non-linear modelling. 
 <br><dt><strong>tuneR</strong><dd>Collection of tools to analyze music, handle wave files, transcription,
 etc. 
+<br><dt><strong>tweedie</strong><dd>Maximum likelihood computations for Tweedie exponential family models. 
 <br><dt><strong>twostage</strong><dd>Functions for optimal design of two-stage-studies using the Mean Score
 method. 
 <br><dt><strong>udunits</strong><dd>Interface to Unidata's routines to convert units. 
 <br><dt><strong>urn</strong><dd>Functions for sampling without replacement (simulated urns). 
 <br><dt><strong>urca</strong><dd>Unit root and cointegration tests for time series data. 
+<br><dt><strong>vabayelMix</strong><dd>Variational Bayesian mixture model. 
 <br><dt><strong>vardiag</strong><dd>Interactive variogram diagnostics. 
 <br><dt><strong>vcd</strong><dd>Functions and data sets based on the book &ldquo;Visualizing Categorical
 Data&rdquo; by Michael Friendly. 
 <br><dt><strong>vegan</strong><dd>Various help functions for vegetation scientists and community
 ecologists. 
+<br><dt><strong>verification</strong><dd>Utilities for verification of discrete and probabilistic forecasts. 
 <br><dt><strong>verify</strong><dd>Construction of test suites using verify objects. 
 <br><dt><strong>vioplot</strong><dd>Violin plots, which are a combination of a box plot and a kernel density
 plot. 
@@ -4001,12 +4012,12 @@ since the code will be run <em>before</em> the packages are loaded.  E.g.,
 </pre>
    <p class="noindent">needs to be
 
-<pre class="example">     graphics::ps.options(horizontal = FALSE)
+<pre class="example">     grDevices::ps.options(horizontal = FALSE)
      utils::help.start()
 </pre>
    <!-- <FIXME> -->
-<!-- 2.0.0 -->
-<p class="noindent">(<code>grDevices::ps.options(horizontal = FALSE)</code> in R 2.0.0). 
+<!-- 2.1.0 -->
+<p class="noindent">(<code>graphics::ps.options(horizontal = FALSE)</code> in R 1.9.x). 
 <!-- </FIXME> -->
 
 <div class="node">

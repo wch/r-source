@@ -1,7 +1,7 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-54 2004-09-28
-ISBN 3-900051-01-1
+Version 2.0-0 2004-09-30
+ISBN 3-900051-08-9
 Kurt Hornik
 
 
@@ -148,7 +148,7 @@ site (*note What is CRAN?::).
 ========================
 
 In publications, please refer to this FAQ as Hornik (2004), "The R FAQ",
-and give the above, _official_ URL and the ISBN 3-900051-01-1.
+and give the above, _official_ URL and the ISBN 3-900051-08-9.
 
 1.4 Notation
 ============
@@ -235,7 +235,7 @@ rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-The current released version is 1.9.1.  Based on this
+The current released version is 2.0.0.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, a patched version of the current release (`r-patched') and
 one working towards the next minor or eventually major (`r-devel') releases
@@ -514,7 +514,7 @@ To cite R in publications, use
        organization = {R Foundation for Statistical Computing},
        address      = {Vienna, Austria},
        year         = 2004,
-       note         = {3-900051-00-3},
+       note         = {3-900051-07-0},
        url          = {http://www.R-project.org}
      }
 
@@ -1638,11 +1638,6 @@ distributions of R.)
      Methods and Their Applications" by A. C. Davison and D. V. Hinkley,
      1997, Cambridge University Press.  _Recommended_.
 
-*bootstrap*
-     Software (bootstrap, cross-validation, jackknife), data and errata for
-     the book "An Introduction to the Bootstrap" by B. Efron and R.
-     Tibshirani, 1993, Chapman and Hall.
-
 *bqtl*
      QTL mapping toolkit for inbred crosses and recombinant inbred lines.
      Includes maximum likelihood and Bayesian tools.
@@ -2320,10 +2315,6 @@ distributions of R.)
      Overdispersed multinomial regression using robust (LQD and tanh)
      estimation.
 
-*multiv*
-     Functions for hierarchical clustering, partitioning, bond energy
-     algorithm, Sammon mapping, PCA and correspondence analysis.
-
 *mvbutils*
      Utilities by Mark V. Bravington for project organization, editing and
      backup, sourcing, documentation (formal and informal), package
@@ -2798,6 +2789,9 @@ distributions of R.)
      Collection of tools to analyze music, handle wave files, transcription,
      etc.
 
+*tweedie*
+     Maximum likelihood computations for Tweedie exponential family models.
+
 *twostage*
      Functions for optimal design of two-stage-studies using the Mean Score
      method.
@@ -2811,6 +2805,9 @@ distributions of R.)
 *urca*
      Unit root and cointegration tests for time series data.
 
+*vabayelMix*
+     Variational Bayesian mixture model.
+
 *vardiag*
      Interactive variogram diagnostics.
 
@@ -2821,6 +2818,9 @@ distributions of R.)
 *vegan*
      Various help functions for vegetation scientists and community
      ecologists.
+
+*verification*
+     Utilities for verification of discrete and probabilistic forecasts.
 
 *verify*
      Construction of test suites using verify objects.
@@ -4114,10 +4114,10 @@ will be run _before_ the packages are loaded.  E.g.,
 
 needs to be
 
-     graphics::ps.options(horizontal = FALSE)
+     grDevices::ps.options(horizontal = FALSE)
      utils::help.start()
 
-(`grDevices::ps.options(horizontal = FALSE)' in R 2.0.0).
+(`graphics::ps.options(horizontal = FALSE)' in R 1.9.x).
 
 7.26 Where have all the methods gone?
 =====================================
