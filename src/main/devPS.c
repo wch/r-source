@@ -2722,7 +2722,7 @@ innerPDFDeviceDriver(NewDevDesc* dd, char *file, char *family, char *encoding,
     dd->canChangeFont = 1;
     dd->canRotateText = 1;
     dd->canResizeText = 1;
-    dd->canClip = 0;
+    dd->canClip = 1;
     dd->canHAdj = 0;
     dd->canChangeGamma = FALSE;
 
@@ -2992,14 +2992,16 @@ static Rboolean PDF_Open(NewDevDesc *dd, PDFDesc *pd)
     return TRUE;
 }
 
-
 static void PDF_Clip(double x0, double x1, double y0, double y1, NewDevDesc *dd)
 {
-/*    PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+    PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
-    fprintf(pd->pdffp, "Q q %.2f %.2f %.2f %.2f re W\n",
-	    x0, y0, x1 - x0, y1 - y0);
-    PDF_Invalidate(dd); */
+    if(pd->inText) textoff(pd);
+    if(x0 != 0.0 || y0 != 0.0 || x1 != 72*pd->width || y1 != 72*pd->height)
+	fprintf(pd->pdffp, "Q q %.2f %.2f %.2f %.2f re W s\n",
+		x0, y0, x1 - x0, y1 - y0);
+    else fprintf(pd->pdffp, "Q q\n");
+    PDF_Invalidate(dd);
 }
 
 static void PDF_Size(double *left, double *right,

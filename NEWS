@@ -128,6 +128,8 @@ NEW FEATURES
     o   scan() now throws an error with incorrect logical input (which
 	was previously taken as FALSE).
 
+    o   pdf() now uses PDF not R code for clipping, which ensures that
+	partially visible text strings are (partially) shown.
 
 
 DEPRECATED & DEFUNCT
