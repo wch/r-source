@@ -1,6 +1,8 @@
 \documentclass[a4paper]{book}
 \usepackage{Rd}
+\usepackage{makeidx}
 
+\makeindex
 \sloppy{}
 
 \begin{document}\pagenumbering{roman}
@@ -12,6 +14,9 @@ This is material from a preliminary draft of the \R\ manual and is
 
 { \ } %- for the clearpage .. if there's nothing else on the page ..
 \clearpage %-- mainly for ``2 pages on 1'' printing
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
 \pagenumbering{arabic}
 
 \appendix
@@ -34,4 +39,6 @@ This is material from a preliminary draft of the \R\ manual and is
 \input{pkg-eda}
 \input{pkg-mva}
 
+\addcontentsline{toc}{chapter}{Index}
+\printindex
 \end{document}

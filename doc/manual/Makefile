@@ -1,33 +1,48 @@
-##-- Makefile in   manual/latex  ; fixed to be okay for 0.2
-##-- 		   ~~~~~~~~~~~~    Now, a second "make" doesn't have to redo...
-DVIdir = ../../dvi
+## The following must be an ABSOLUTE path
+## or RELATIVE to 'Ex_Tests' (RHOME/test/Examples/ :
+rRHOME= ../..
+#
+RETC = $(rRHOME)/etc
+RLIB = $(rRHOME)/library
+RsrcLIB = $(rRHOME)/src/library
+BUILDlatex = $(RETC)/Rdconv --type latex
 
-Man.dvi: doc.tex Man.tex
-	@echo making latex documentation.
-	-@rm -f Man.dvi
-	latex Man
-	mkdir -p ${DVIdir}
-	cp -p Man.tex doc.tex  ${DVIdir}
-	mv Man.dvi ${DVIdir}
-	ln -s  ${DVIdir}/Man.dvi .
-	@echo 'latex documents placed in  ${DVIdir}'
+Packages = pkg-base.tex pkg-eda.tex pkg-mva.tex
 
-sources: doc.tex
-doc.tex: doc2latex
-	@echo building latex source files
-	mkdir -p src; cd src; rm -r -f *
-	cd src; ln -s ../../man/* .
-	cd src ; ../doc2latex `ls | sort -f| sed '/CVS/d; /~/d' ` > ../doc.tex
+all: Man.dvi
 
-print:	Man.dvi
-	dvips -f Man.dvi | lpr
+$(RLIB)/base/latex/%.tex: $(RsrcLIB)/base/man/%.Rd
+	$(BUILDlatex) $< > $@
 
-print2:	Man.dvi
-	dvips -f Man.dvi | mpage -P -2  > Man.ps
-	lpr -s Man.ps
+pkg-base.tex: $(RLIB)/base/latex/*.tex
+	@echo 'Collecting things for  $@ ..'
+	@sed 's/__PKG__/base/g' Pkg-start.tex | cat - $^ Pkg-end.tex > $@
+pkg-eda.tex: $(RLIB)/eda/latex/*.tex
+	@echo 'Collecting things for  $@ ..'
+	@sed 's/__PKG__/eda/g' Pkg-start.tex | cat - $^ Pkg-end.tex > $@
+pkg-mva.tex: $(RLIB)/mva/latex/*.tex
+	@echo 'Collecting things for  $@ ..'
+	@sed 's/__PKG__/mva/g' Pkg-start.tex | cat - $^ Pkg-end.tex > $@
+
+Man.dvi: Man.tex Rd.sty $(Packages)
+	@echo 'making latex documentation...'
+	-latex '\nonstopmode\input{Man.tex}'
+	-makeindex Man
+	-latex '\nonstopmode\input{Man.tex}'
+##-- need \nonstopmode, since we still have some 'alias' problems in Index
+
+Man.ps:	Man.dvi
+	dvips -f $< -o $@
+
+print2:	Man.ps
+	mpage -P -2 $< > Man.ps-2
+	lpr -s Man.ps-2
 
 clean:
-	@echo cleaning in manual/latex
-	@-rm -f *.aux *.dvi *.log doc.tex *.ps
-	@-cd src; rm -r -f *
+	@echo cleaning in doc/manual
+	@-rm -f *.aux *.toc *.dvi *.log *.ps *.ps-2
+
+realclean: clean
+	@echo "'realclean'ing in manual/latex"
+	@-rm -f -r auto pkg-*.tex
 

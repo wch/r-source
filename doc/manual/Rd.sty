@@ -30,7 +30,9 @@
 
 \newcommand{\Header}[2]{%
   \vneed{1ex}
-  \markright{#1}
+  \markboth{#1}{#1}
+  \addcontentsline{toc}{subsection}{#1}
+  \index{#1|textbf}
   \noindent
   \nopagebreak
   \begin{center}
@@ -41,7 +43,19 @@
       \makebox[1in][r]{\texttt{#1}} \\ \hline
     \end{tabular}
   \end{center}}
-
+%
+%
+\newcommand{\Link}[1]{\index{#1|textit}}
+%
+% \alias{<alias>}{<header>}
+\newcommand{\alias}[2]{\index{#1@#1\textit{(#2)}}}
+% \keyword{<topic>}{<header>}
+\newcommand{\keyword}[2]{\index{$*$Topic{\large\ \textbf{#1}}!#2@\textsf{#2}}}
+%
+\newcommand{\Itemize}[1]{\begin{itemize}{#1}\end{itemize}}
+\newcommand{\Enumerate}[1]{\begin{enumerate}{#1}\end{enumerate}}
+\newcommand{\describe}[1]{\begin{description}{#1}\end{description}}
+%
 \newlength{\ldescriptionwidth}
 \newcommand{\ldescriptionlabel}[1]{%
   \settowidth{\ldescriptionwidth}{{#1}}%
@@ -89,11 +103,14 @@
 \newenvironment{ExampleCode}{\small\verbatim}{\endverbatim}
 
 \newcommand{\bsl}{\ifmmode\backslash\else\textbackslash\fi}
+\newcommand{\SIs}{\relax\ifmmode\leftarrow\else$\leftarrow$\fi}
+\newcommand{\SIIs}{\relax\ifmmode<\leftarrow\else$<\leftarrow$\fi}
+\newcommand{\Sbecomes}{\relax\ifmmode\rightarrow\else$\rightarrow$\fi}
+\newcommand{\deqn}[2]{\[#1\]}
 \newcommand{\eqn}[2]{$#1$}
-\newcommand{\url}[1]{\textsf{#1}}
 \newcommand{\bold}[1]{\ifmmode\boldsymbol{#1}\else\textbf{#1}\fi}
 \newcommand{\code}[1]{\texttt{#1}}
-\newcommand{\deqn}[2]{\[#1\]}
 \newcommand{\file}[1]{`\textsf{#1}'}
-\newcommand{\link}[1]{#1}
+\newcommand{\url}[1]{\textsf{#1}}
+\newcommand{\link}[1]{#1\index{#1}}
 \newcommand{\email}[1]{$<${#1}$>$}
