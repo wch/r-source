@@ -650,7 +650,7 @@ int cmdlineoptions(int ac, char **av)
     /* set defaults for R_max_memory. This is set here so that
        embedded applications get no limit */
     GlobalMemoryStatus(&ms);
-    R_max_memory = min(256 * Mega, ms.dwTotalPhys);
+    R_max_memory = min(1024 * Mega, ms.dwTotalPhys);
     /* need enough to start R: fails on a 8Mb system */
     R_max_memory = max(16 * Mega, R_max_memory);
     

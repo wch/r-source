@@ -10,6 +10,9 @@ rw1060
 The miniR distribution has grown to eight floppies, and the zip files
 are no longer distributed on CRAN.
 
+The default memory limit has been raised to the minimum of 1Gb and the
+amount of physical RAM.  (See the changes for rw1040 below.)
+
 Support for bzip-ed connections has been added to the standard distribution.
 
 update.packages() and install.packages() will not try to install a package

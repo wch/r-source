@@ -980,7 +980,7 @@ static unsigned int gAddressBase = 0;
 static unsigned int gReservedSize = 0;
 static unsigned int totalAllocated = 0;
 extern unsigned int R_max_memory;
-unsigned int R_reserved_size = (256*1024*1024);
+unsigned int R_reserved_size = RESERVED_SIZE;
 
 static
 int getpagesize(void)
