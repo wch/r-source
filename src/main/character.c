@@ -687,8 +687,9 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (s[offset] == '\0' || !global)
 		    break;
 	    }
-	    for (j = offset ; s[j] ; j++)
-		*u++ = s[j];
+	    if (offset < ns)
+		for (j = offset ; s[j] ; j++)
+		    *u++ = s[j];
 	    *u = '\0';
 	}
     }
