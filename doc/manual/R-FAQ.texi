@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-2, 2001-06-20
+@set FAQ-VERSION 1.3-3, 2001-06-22
 @set REL-VERSION 1.3.0
 @set DEV-VERSION 1.4.0
 @c %**end of header
@@ -1573,6 +1573,9 @@ Local polynomial (ridge) regression.
 @item maptree
 Functions with example data for graphing and mapping models from
 hierarchical clustering and classification and regression trees.
+@item maxstat
+Maximally selected rank and Gauss statistics with several p-value
+approximations.
 @item mclust
 Model-based cluster analysis.
 @item mda
@@ -1753,9 +1756,6 @@ A suite of functions to compute power and sample size for tests of the
 general linear hypothesis.
 @item lattice
 Lattice graphics, an implementation of Trellis Graphics functions.
-@item maxstat
-Maximally selected rank and Gauss statistics with several p-value
-approximations.
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
