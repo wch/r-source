@@ -41,7 +41,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.105 $ ';
+my $revision = ' $Revision: 1.106 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -170,10 +170,10 @@ foreach my $pkg (@ARGV) {
     my $description;
     my $is_base_pkg = 0;
     ## Package sources from the R distribution are special.  They have a
-    ## `DESCRIPTION.in' file (instead of `DESCRIPTION'), with Version
-    ## field containing `@VERSION@' for substitution by configure.  We
-    ## test for such packages by looking for `DESCRIPTION.in' with
-    ## Priority `base', and skip the installation test for such
+    ## 'DESCRIPTION.in' file (instead of 'DESCRIPTION'), with Version
+    ## field containing '@VERSION@' for substitution by configure.  We
+    ## test for such packages by looking for 'DESCRIPTION.in' with
+    ## Priority 'base', and skip the installation test for such
     ## packages.
     if(-r &file_path($pkgdir, "DESCRIPTION.in")) {
 	$description =
@@ -284,15 +284,15 @@ sub check_pkg {
 
     ## Check for sufficient file permissions (Unix only).
 
-    ## This is a bit controversial, and hence has an option `--no-perms'
+    ## This is a bit controversial, and hence has an option '--no-perms'
     ## to turn this off.  In fact, the code below does a bit too much.
     ## What would really be needed is the following:
     ## * All dirs or files must be at least 555 or 444, respectively.
     ## * Everything that gets installed must be writeable.  This
     ##   includes DESCRIPTION COPYING INDEX TITLE data/* demo/* exec/*
     ##   and inst/*.
-    ## * All directories used for building `objects' must be at least
-    ##   755.  This includes `.' and src.
+    ## * All directories used for building 'objects' must be at least
+    ##   755.  This includes '.' and src.
     ## Given time, the above could be implemented.
 
     if($opt_perms && ($R::Vars::OSTYPE eq "unix")) {
@@ -424,7 +424,14 @@ sub check_pkg {
 	$log->print("DESCRIPTION Package field differs from dir name.\n");
 	exit(1);
     }
+    if($description->{"Package"} !~ /^[[:alpha:]][[:alnum:].]*$/) {
+	$log->error();
+	$log->print("Malformed package name.\n");
+	$log->print(wrap("", "", @msg_DESCRIPTION));
+	exit(1);
+    }
     $log->result("OK");
+	    
 
     $log->checking("DESCRIPTION Version field");
     if(! $description->{"Version"}) {
@@ -433,11 +440,12 @@ sub check_pkg {
 	$log->print(wrap("", "", @msg_DESCRIPTION));
 	exit(1);
     }
-    if(($description->{"Version"} =~ /[^\d\.\-]/) && !$is_base_pkg) {
-	## Package sources from the R distribution have `@VERSION@' in
-	## their `DESCRIPTION.in' files ...
+    if(($description->{"Version"} !~ /^\d+([.-]\d+)+$/)
+       && !$is_base_pkg) {
+	## Package sources from the R distribution have '@VERSION@' in
+	## their 'DESCRIPTION.in' files ...
 	$log->error();
-	$log->print("Version may only contain digits, '.' and '-'.\n");
+	$log->print("Malformed package version.\n");
 	$log->print(wrap("", "", @msg_DESCRIPTION));
 	exit(1);
     }
@@ -478,9 +486,9 @@ sub check_pkg {
 	foreach my $dep (@dependencies) {
 	    $dep =~ /^\s*([\w\.]+)(\s*\(([^) ]+)\s+([^) ]+)\))?\s*$/;
 	    ## The entry is malformed if there is no match, or there is
-	    ## a match but the dep_op is different from `<=' or `>', or
-	    ## the dep_version does not only consist of digits, `.' or
-	    ## `-'.
+	    ## a match but the dep_op is different from '<=' or '>', or
+	    ## the dep_version does not only consist of digits, '.' or
+	    ## '-'.
 	    if(!($1) || ($2 && (!(($3 eq "<=") || ($3 eq ">="))
 				|| ($4 =~ /[^\d\.\-]/)))) {
 		$any++;
@@ -660,7 +668,7 @@ sub check_pkg {
     }
 
     ## Check whether assignment functions have their final argument
-    ## named `value'.
+    ## named 'value'.
 
     if(-d "R") {
 	$log->checking("for assignment functions with final arg not " .
