@@ -79,6 +79,9 @@ BUG FIXES
     o	pdfcolor.tex is now included in doc/manual, as pdftex seems no
 	longer to include it.
 
+    o	Fixed protect bug in save() code that might have been responsible
+	for occarionally saving corrupted workspaces.
+
 
 
 		CHANGES IN R VERSION 1.3.0

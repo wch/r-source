@@ -797,12 +797,16 @@ static void NewMakeLists (SEXP obj, SEXP *sym_list, SEXP *env_list)
     case SYMSXP:
 	if (NewLookup(obj, *sym_list))
 	    return;
+	PROTECT(*env_list);
 	*sym_list = CONS(obj, *sym_list);
+	UNPROTECT(1);
 	break;
     case ENVSXP:
 	if (NewLookup(obj, *env_list))
 	    return;
+	PROTECT(*sym_list);
 	*env_list = CONS(obj, *env_list);
+	UNPROTECT(1);
 	/* FALLTHROUGH */
     case LISTSXP:
     case LANGSXP:
