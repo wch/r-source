@@ -977,7 +977,7 @@ FBEGIN
 	p->input = 1;
 	cur_char = consolegetc(c);
 	p->input = 0;
-	chtype = isprint(cur_char) || ((unsigned char)cur_char > 0x7f);
+	chtype = ((unsigned char)cur_char > 0x1f);
 	if(NUMLINES != ns0) { /* we scrolled, e.g. cleared screen */
             cur_line = LINE(NUMLINES - 1) + prompt_len;
 	    ns0 = NUMLINES;
