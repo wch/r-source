@@ -139,7 +139,7 @@ BUG FIXES
 
     o	format.AsIs() was not handling matrices.
 
-    o   sd() was not passing na.rm to var() for matrices and data frames.
+    o	sd() was not passing na.rm to var() for matrices and data frames.
 
     o	dist() {mva} silently treated +/-Inf as NA.
 
@@ -149,10 +149,22 @@ BUG FIXES
 	input and ignored elements after the first.  This affected
 	undoc {tools}.
 
-    o   If A had dimnames, eigen(A) had inappropriate dimnames. (PR#2116)
+    o	If A had dimnames, eigen(A) had inappropriate dimnames. (PR#2116)
+
+    o	as.POSIXct.dates had a sign error for the origin (PR#2222)
+
+    o	The claim that pie charts should be avoiden (in pie.Rd) is now
+	supported by a quote from Cleveland (1985).
+
+    o	The vsnprintf() functions supplied for systems that don't
+	supply their own had a bug in the output of fractional parts,
+	corrupting data if using save() with ascii=TRUE. (PR#2144)
+
+    o	pretty() values close to 0 in some cases which are now 0 (PR#1032
+	and D.Brahm's mails).
 
 
-INTERNALS
+BUILD ISSUES
 
     o   Toplevel Makefile was missing dependency of "docs" on "R" (causing
         parallel makes to go wrong)
