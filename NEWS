@@ -104,7 +104,8 @@ NEW FEATURES
 
     o	unclass() is no longer allowed for environments and external
 	pointers (since these cannot be copied and so unclass() was
-	destructive of its argument).
+	destructive of its argument).  You can still change the
+	"class" attribute.
 
     o	choose(n,k) and lchoose(.) now also work for arbitrary (real) n in
 	accordance with the general binomial theorem.  choose(*,k) is more
@@ -112,7 +113,12 @@ NEW FEATURES
 
     o	as.dist() and cophenetic() are now generic.
 
-    o   convertColors() maps between color spaces. colorRamp uses it.
+    o	as.ts() is now generic.
+
+    o   New function convertColors() maps between color spaces. 
+	colorRamp() uses it.
+
+    o	as.ts() is now generic.
 
 
 UTILITIES

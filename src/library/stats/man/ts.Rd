@@ -2,6 +2,7 @@
 \title{Time-Series Objects}
 \alias{ts}
 \alias{as.ts}
+\alias{as.ts.default}
 \alias{is.ts}
 \alias{Ops.ts}
 \alias{cbind.ts}
@@ -71,10 +72,11 @@ is.ts(x)
   (e.g.) \code{print} methods to imply a quarterly and monthly series
   respectively.
 
-  \code{as.ts} will use the \code{\link{tsp}} attribute of the object if
-  it has one to set the start and end times and frequency.
+  \code{as.ts} is generic.  Its default method will use the
+  \code{\link{tsp}} attribute of the object if it has one to set the
+  start and end times and frequency.
 
-  \code{is.ts} tests if an object is a time series. It is generic: you
+  \code{is.ts} tests if an object is a time series.  It is generic: you
   can write methods to handle specific classes of objects,
   see \link{InternalMethods}.
 }
