@@ -804,7 +804,7 @@ case "${host_os}" in
       darwin[[1234]].*)
 	shlib_ldflags="-bundle -flat_namespace -undefined suppress" ;;
       *)
-        shlib_ldflags="-bundle -bundle_loader \$(Rexeclibdir)/R.bin -undefined error" ;;
+        shlib_ldflags="-bundle -bundle_loader \$(Rexecbindir)/R.bin -undefined error" ;;
     esac
     shlib_cxxldflags="${shlib_ldflags}"
     ;;
