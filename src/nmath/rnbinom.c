@@ -31,7 +31,7 @@
  *
  *  REFERENCE
  *
- *    Devroye, L. (1980).
+ *    Devroye, L. (1986).
  *    Non-Uniform Random Variate Generation.
  *    New York:Springer-Verlag. Page 480.
  *
