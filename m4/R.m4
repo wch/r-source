@@ -2682,6 +2682,21 @@ AC_DEFUN([R_LARGE_FILES],
 esac
 ])# R_LARGE_FILES
 
+
+## R_ICONV
+## -------------
+## Look for iconv, possibly in libiconv.
+AC_DEFUN([R_ICONV],
+[AC_CHECK_HEADERS(iconv.h)
+if test "${ac_cv_header_iconv_h}" = yes; then
+  ## libiconv, e.g. in MacOS X, has iconv as a macro and needs -liconv.
+  AC_CHECK_DECLS([iconv, iconvlist], , , [#include <iconv.h>])
+  AC_CHECK_LIB(iconv, libiconv)
+  AC_CHECK_FUNCS(
+fi
+])# R_ICONV
+
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***

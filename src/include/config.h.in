@@ -69,6 +69,14 @@
    */
 #undef HAVE_DECL_ATANH
 
+/* Define to 1 if you have the declaration of `iconv', and to 0 if you don't.
+   */
+#undef HAVE_DECL_ICONV
+
+/* Define to 1 if you have the declaration of `iconvlist', and to 0 if you
+   don't. */
+#undef HAVE_DECL_ICONVLIST
+
 /* Define to 1 if you have the declaration of `isfinite', and to 0 if you
    don't. */
 #undef HAVE_DECL_ISFINITE
@@ -172,12 +180,6 @@
 /* Define to 1 if you have the `hypot' function. */
 #undef HAVE_HYPOT
 
-/* Define to 1 if you have the `iconv' function. */
-#undef HAVE_ICONV
-
-/* Define to 1 if you have the `iconvlist' function. */
-#undef HAVE_ICONVLIST
-
 /* Define to 1 if you have the <iconv.h> header file. */
 #undef HAVE_ICONV_H
 
@@ -216,6 +218,9 @@
 
 /* Define to 1 if you have the `dl' library (-ldl). */
 #undef HAVE_LIBDL
+
+/* Define to 1 if you have the `iconv' library (-liconv). */
+#undef HAVE_LIBICONV
 
 /* Define to 1 if you have the `m' library (-lm). */
 #undef HAVE_LIBM

@@ -290,7 +290,7 @@ SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
 /* Unfortunately glibc and Solaris diff in the const in the iopen decl.
    libiconv agrees with Solaris here.
  */
-#ifdef HAVE_ICONV
+#ifdef HAVE_ICONV_H
 #define const
 #include <iconv.h>
 #undef const
@@ -331,18 +331,18 @@ static void iconv_Init(void)
 #endif
 
 
-#ifdef HAVE_ICONVLIST
+#ifdef HAVE_DECL_ICONVLIST
 static unsigned int cnt;
 
 static int 
-count_one (unsigned int namescount, const char * const *names, void *data)
+count_one (unsigned int namescount, char * *names, void *data)
 {
     cnt += namescount;
     return 0;
 }
 
 static int 
-write_one (unsigned int namescount, const char * const *names, void *data)
+write_one (unsigned int namescount, char * *names, void *data)
 {
   unsigned int i;
   SEXP ans = (SEXP) data;
@@ -358,7 +358,7 @@ write_one (unsigned int namescount, const char * const *names, void *data)
 /* iconv(x, from, to) */
 SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-#ifdef HAVE_ICONV
+#ifdef HAVE_DECL_ICONV
     SEXP ans, x = CAR(args);
     iconv_t obj;
     int i;
@@ -371,7 +371,7 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     iconv_Init();
 #endif
     if(isNull(x)) {  /* list locales */
-#ifdef HAVE_ICONVLIST
+#ifdef HAVE_DECL_ICONVLIST
 	cnt = 0;
 	iconvlist(count_one, NULL);
 	PROTECT(ans = allocVector(STRSXP, cnt));

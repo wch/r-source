@@ -548,10 +548,10 @@ AC_HEADER_SYS_WAIT
 ## Some of these are also checked for when Autoconf computes the default
 ## includes.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
-  fpu_control.h grp.h iconv.h ieee754.h ieeefp.h limits.h locale.h \
+  fpu_control.h grp.h ieee754.h ieeefp.h limits.h locale.h \
   netdb.h netinet/in.h pwd.h strings.h \
   sys/param.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
-  sys/times.h sys/utsname.h unistd.h wchar.h wctype.h)
+  sys/times.h sys/utsname.h unistd.h)
 ## </NOTE>
 ## <NOTE>
 ## These are ANSI C headers but some C code (written to work also
@@ -1217,17 +1217,21 @@ fi
 
 AC_CHECK_TYPES([off_t])
 AC_FUNC_ALLOCA
-AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate getcwd \
-  getgrgid getpwuid getuid hypot iconv iconvlist isascii log1p \
-  matherr mbrtowc mbstowcs mkfifo popen putenv rint \
-  setenv strcoll stat strptime symlink system times unsetenv \
-  wcrtomb wcscoll wcstombs wcswidth wctrans wcwidth)
+AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate \
+  getcwd getgrgid getpwuid getuid hypot isascii log1p \
+  matherr mkfifo popen putenv rint \
+  setenv strcoll stat strptime symlink system times unsetenv)
 ## isfinite and isnan are in math.h but might be macros
 AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames
 ## might report corresponding HAVE_FOO conditionals.
 ## </NOTE>
+
+## Wide character support -- need to include headers in case of macros?
+AC_CHECK_HEADERS(wchar.h wctype.h)
+AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcstombs wcswidth \
+	       wctrans wcwidth)
 
 if test $ac_cv_type_off_t=yes -a $ac_cv_func_fseeko=yes -a $ac_cv_func_ftello=yes; then
    AC_DEFINE(HAVE_OFF_T, 1,
@@ -1305,6 +1309,9 @@ AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
 ### * Checks for system services.
 
 AC_SUBST(R_MODULES)
+
+## iconv headers and function.
+R_ICONV
 
 ## X11.
 R_X11
