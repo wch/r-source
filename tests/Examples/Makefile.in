@@ -40,12 +40,12 @@ Makedeps: Makefile
 	    echo $${dep}; \
 	  done) >> Makefile
 	@touch $@
-test-Examples: test-Base-Examples
-test-Base-Examples: Makefile
+test-Examples: test-Examples-Base
+test-Examples-Base: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(EX_OUT)
 
-test-Recommended-Examples: test-Base-Examples
+test-Examples-Recommended: test-Examples-Base
 	@$(MAKE) $(RECOMMENDED_EX_OUT)
 
 
@@ -80,7 +80,7 @@ $(EX_IN): FORCE
 	fi)
 $(RECOMMENDED_EX_IN): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
-	if [ $(top_builddir)/library/$${pkg} -nt "$@" ]; then \
+	if test $(top_builddir)/library/$${pkg} -nt "$@" ; then \
 	  if test -f $@ ; then \
 	    if test -n "`tail -6 $@ | grep '^Time elapsed'`" ; then \
 	      if test -f $@.bak ; then mv $@.bak $@.bakk ; fi; \

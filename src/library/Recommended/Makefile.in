@@ -17,26 +17,28 @@ R = R_LIBS= $(top_builddir)/bin/R
 ## foo.ts is the timestamp for package foo
 ## foo_tgz is a symlink to foo_x.y-z.tar.gz in the source dir
 
-##  For developers: A shell script, tools/rsync-recommended, updates
-##  packages from the CRAN master directory. 
+## For developers: A shell script, tools/rsync-recommended, updates
+## packages from the CRAN master directory. 
 
-.SUFFIXES: _tgz .ts
 OBJECTS=$(R_PKGS_RECOMMENDED:=.ts)
 
 CLEANFILES = $(OBJECTS)
 DISTCLEANFILES = Makefile
 
-all: Makefile R @USE_RECOMMENDED_PACKAGES_TRUE@ $(OBJECTS)
+.SUFFIXES:
+.SUFFIXES: _tgz .ts
 
 _tgz.ts:
 	$(R) CMD INSTALL $<
 	@touch $@
 
-## survival needs to be installed before boot
-boot.ts: survival.ts boot_tgz
+all: Makefile R @USE_RECOMMENDED_PACKAGES_TRUE@ $(OBJECTS)
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+## survival needs to be installed before boot
+boot.ts: survival.ts boot_tgz
 
 R docs:
 

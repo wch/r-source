@@ -95,7 +95,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-gct) \
 .SUFFIXES: .R .Rin .Rout .Rout-gct
 
 all check: Makefile test-all-basics
-fullcheck: check test-Recommended-Examples
+fullcheck: check test-Examples-Recommended
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
@@ -123,7 +123,7 @@ FORCE:
 	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
 	@echo "$(ECHO_T) OK"
-	@if [ -f $(srcdir)/$@.save ] ; then \
+	@if test -f $(srcdir)/$@.save ; then \
 	  mv $@ $@.fail; \
 	  echo $(ECHO_N) \
 	    "comparing '$@' to '$(srcdir)/$@.save' ...$(ECHO_C)"; \
@@ -149,7 +149,7 @@ test-all-basics: Makefile
 	done
 test-Examples:
 	@(cd Examples && $(MAKE) $@)
-test-Recommended-Examples:
+test-Examples-Recommended:
 	@(cd Examples && $(MAKE) $@)
 test-Specific-strict: $(test-out-strict)
 test-Specific-sloppy: $(test-out-sloppy)
