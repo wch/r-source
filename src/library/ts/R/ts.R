@@ -265,7 +265,7 @@ function (x, ...)
     invisible()
 }
 
-window.ts <- function(x, start, end)
+window.ts <- function(x, start = NULL, end = NULL)
 {
     x <- as.ts(x)
     xtsp <- tsp(x)
@@ -273,8 +273,7 @@ window.ts <- function(x, start, end)
     xtime <- time(x)
     ts.eps <- .Options$ts.eps
 
-    start <- if(missing(start))
-	xtsp[1]
+    start <- if(is.null(start)) xtsp[1]
     else switch(length(start),
 		start,
 		start[1] + (start[2] - 1)/freq,
@@ -284,8 +283,7 @@ window.ts <- function(x, start, end)
 	warning("start value not changed")
     }
 
-    end <- if(missing(end))
-	xtsp[2]
+    end <- if(is.null(end)) xtsp[2]
     else switch(length(end),
 		end,
 		end[1] + (end[2] - 1)/freq,
