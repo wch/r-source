@@ -161,7 +161,14 @@ AC_PROG_INSTALL
 ## AC_CONFIG_AUX_DIR().
 case "${INSTALL}" in
   [[!/]]*install-sh*)
-    INSTALL="\$\(top_srcdir\)/tools/install-sh -c" ;;
+    INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
+    ;;
+  *installbsd*)
+    case "${host}" in
+      *aix*)
+	INSTALL="\$\(top_srcdir\)/tools/install-sh -c" ;;
+    esac
+    ;;
 esac
 
 AC_PROG_LN_S
@@ -193,16 +200,18 @@ AC_SUBST(TAR)
 ## C compiler.
 
 AC_PROG_CC
+AC_SUBST(CFLAGS)
+AC_SUBST(CPPFLAGS)
 
-dnl FIXME: why is this needed here?
-dnl case ${host} in
-dnl   *hpux*)
-dnl     LIBS="-L/lib/pa1.1 ${LIBS}"
-dnl     case ${CC} in
-dnl       c89)
-dnl         CFLAGS="-D_HPUX_SOURCE ${CFLAGS}" ;;
-dnl     esac
-dnl esac
+dnl Yes, we already need this at configure time ...
+case "${host}" in
+  *hpux*)
+    LIBS="-L/lib/pa1.1 ${LIBS}"
+    case ${CC} in
+      c89)
+        CPPFLAGS="-D_HPUX_SOURCE ${CPPFLAGS}" ;;
+    esac
+esac
 
 AC_MSG_CHECKING([whether ${CC} accepts -M for generating dependencies])
 depend_rules_frag=Makefrag.dep
@@ -400,6 +409,7 @@ AC_SUBST(RGNOMEBIN)
 
 ### Library functions.
 
+AC_FUNC_ALLOCA
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isfinite isnan \
@@ -411,9 +421,11 @@ R_FUNC___SETFPUCW
 ### Header files
 
 AC_HEADER_STDC
+AC_HEADER_TIME
+AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(dl.h dlfcn.h elf.h ieee754.h ieeefp.h hdf5.h limits.h \
-  locale.h readline/history.h rpc/xdr.h sys/param.h sys/times.h time.h \
-  unistd.h)
+  locale.h readline/history.h rpc/xdr.h sys/param.h sys/time.h \
+  sys/times.h unistd.h)
 case ${host} in
   *sunos4*)
     AC_DEFINE(SunOS4) ;;
@@ -424,7 +436,6 @@ esac
 AC_TYPE_SIGNAL
 AC_TYPE_PID_T
 AC_TYPE_SIZE_T
-AC_CHECK_TYPE(ssize_t, int)
 
 ### Compiler characteristics.
 
@@ -443,7 +454,7 @@ fi
 case "${host}" in
   *aix4.[[2-9]]*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
-    R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D_XOPEN_SOURCE_EXTENDED"
+    R_XTRA_CPPFLAGS="${R_XTRA_CPPFLAGS} -D_XOPEN_SOURCE_EXTENDED=2"
     R_PROG_CC_FLAG(-mno-fp-in-toc,
       R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mno-fp-in-toc")
     ;;
@@ -459,6 +470,10 @@ case "${host}" in
     ;;
   *hpux*)
     AC_DEFINE(USE_BUILTIN_RINT)
+    case ${CC} in
+      c89)
+        R_XTRA_CPPFLAGS="${R_XTRA_CPPFLAGS} -D_HPUX_SOURCE" ;;
+    esac
     AC_CHECK_LIB(dld, shl_load, R_XTRA_LIBS="${R_XTRA_LIBS} -ldld")
     ;;
   *irix*)
@@ -466,7 +481,6 @@ case "${host}" in
     ;;
 esac
 
-AC_SUBST(CFLAGS)
 AC_SUBST(FFLAGS)
 AC_SUBST(F2CFLAGS)
 AC_SUBST(R_XTRA_CFLAGS)
