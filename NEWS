@@ -271,6 +271,9 @@ BUG FIXES
     o	window() failed if both start and end were outside the time
 	range of the original series (possible if extend = TRUE).
 
+    o	coplot(..) doesn't give an extraneous warning anymore when called
+	on a fresh device.
+
 
 
 		CHANGES IN R VERSION 1.9.1
