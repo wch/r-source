@@ -19,10 +19,10 @@ pairwise.prop.test(x, n, p.adjust.method=p.adjust.methods, ...)
 \value{
   Object of class \code{"pairwise.htest"}
 }
-\seealso{ \code{\link{prop.test}}, \code{\link{p.adjust}}}
+\seealso{ \code{\link{prop.test}}, \code{\link[base]{p.adjust}}}
 \examples{
 smokers  <- c( 83, 90, 129, 70 )
 patients <- c( 86, 93, 136, 82 )
 pairwise.prop.test(smokers, patients)
 }
-\keyword{ htest }%-- one or more ...
+\keyword{htest}

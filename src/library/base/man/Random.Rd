@@ -22,7 +22,7 @@ set.seed(seed, kind = NULL)
   \code{set.seed} is the recommended way to specify seeds.
 }
 \arguments{
-  \item{kind}{character or \code{NULL}.	 If \code{kind} is a character
+  \item{kind}{character or \code{NULL}.  If \code{kind} is a character
     string, set \R's RNG to the kind desired. If it is \code{NULL},
     return the currently used RNG.}
   \item{normal.kind}{character string or \code{NULL}.  If it is a character
@@ -52,7 +52,7 @@ set.seed(seed, kind = NULL)
     A \emph{multiply-with-carry} RNG is used, as recommended by George
     Marsaglia in his post to the mailing list \file{sci.stat.math}.
     It has a period of more than \eqn{2^{60}}{2^60} and has passed
-    all tests (according to Marsaglia).	 The seed is two integers (all
+    all tests (according to Marsaglia).  The seed is two integers (all
     values allowed).}
 
     \item{\code{"Super-Duper"}:}{
@@ -77,7 +77,7 @@ set.seed(seed, kind = NULL)
     that set.}
 
     \item{\code{"Knuth-TAOCP":}}{
-    From Knuth (1997).	A GFSR using lagged Fibonacci sequences with
+    From Knuth (1997).  A GFSR using lagged Fibonacci sequences with
     subtraction. That is, the recurrence used is
     \deqn{X_j = (X_{j-100} - X_{j-37}) \bmod 2^{30}%
         }{X[j] = (X[j-100] - X[j-37]) mod 2^30}
@@ -159,12 +159,12 @@ set.seed(seed, kind = NULL)
 %	this is ./Uniform.Rd
 \examples{
 runif(1); .Random.seed; runif(1); .Random.seed
-## If there is no seed,	 a ``random'' new one is created:
+## If there is no seed,  a ``random'' new one is created:
 rm(.Random.seed); runif(1); .Random.seed
 
 RNGkind("Wich")# (partial string matching on 'kind')
 p.WH <- c(30269, 30307, 30323)
-a.WH <- c(  171,   172,	  170)
+a.WH <- c(  171,   172,   170)
 next.WHseed <- function(i.seed = .Random.seed[-1]) (a.WH * i.seed) \%\% p.WH
 my.runif1 <- function(i.seed = .Random.seed)
   { ns <- next.WHseed(i.seed[-1]); sum(ns / p.WH) \%\% 1 }

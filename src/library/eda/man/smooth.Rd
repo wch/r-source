@@ -25,8 +25,9 @@ smooth(x)
   \emph{Exploratory Data Analysis},
   Reading Massachusetts: Addison-Wesley.
 }
-\seealso{\code{\link{lowess}}; \code{\link{loess}}, \code{\link{supsmu}} and
-  \code{\link{smooth.spline}} in package \file{modreg}.}
+\seealso{\code{\link{lowess}}; \code{\link[modreg]{loess}},
+  \code{\link[modreg]{supsmu}} and
+  \code{\link[modreg]{smooth.spline}} in package \file{modreg}.}
 \examples{
 library(eda)
 data(presidents)

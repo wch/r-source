@@ -22,7 +22,8 @@ as.hclust.twins(x)
   An object of class \code{"hclust"}.
 }
 \seealso{
-  \code{\link{hclust}},\code{\link{diana}}, \code{\link{agnes}}
+  \code{\link{hclust}}, \code{\link[cluster]{diana}},
+  \code{\link[cluster]{agnes}}
 }
 \examples{
 \dontrun{

@@ -5,10 +5,10 @@ cmdscale(d, k = 2, eig = FALSE)
 }
 \alias{cmdscale}
 \arguments{
-\item{d}{a distance structure such as that returned by \code{dist}
-or a full symmetric matrix containing the dissimilarities.}
-\item{k}{the dimension of the space which the data are to be represented in.}
-\item{eig}{indicates whether eigenvalues should be returned.}
+  \item{d}{a distance structure such as that returned by \code{dist}
+    or a full symmetric matrix containing the dissimilarities.}
+  \item{k}{the dimension of the space which the data are to be represented in.}
+  \item{eig}{indicates whether eigenvalues should be returned.}
 }
 \description{
   Classical muiltidimensional scaling of a data matrix.
@@ -39,9 +39,9 @@ or a full symmetric matrix containing the dissimilarities.}
   ``fiddle'' factor suggested by Torgerson.  \R does not provide this option.
 }
 \seealso{
-\code{\link{dist}}. Also
-\code{\link{isoMDS}} and
-\code{\link{sammon}} in package \file{MASS}.
+  \code{\link{dist}}. Also
+  \code{\link[MASS]{isoMDS}} and \code{\link[MASS]{sammon}}
+  in package \file{MASS}.
 }
 \examples{
 data(eurodist)

@@ -15,25 +15,25 @@ shapiro.test(x)
   A list with class \code{"htest"} containing the following components:
   \item{statistic}{the value of the Shapiro-Wilk statistic.}
   \item{p.value}{the p-value for the test.}
-  \item{method}{the string \code{"Shapiro-Wilk normality test".}}
+  \item{method}{the string \code{"Shapiro-Wilk normality test"}.}
   \item{data.name}{a character string giving the name(s) of the data.}
 }
 \references{
-  Patrick Royston (1982),
+  Patrick Royston (1982)
   An Extension of Shapiro and Wilk's \eqn{W} Test for Normality to Large
   Samples.
   \emph{Applied Statistics}, \bold{31}, 115--124.
 
-  Patrick Royston (1982),
+  Patrick Royston (1982)
   Algorithm AS 181: The \eqn{W} Test for Normality.
   \emph{Applied Statistics}, \bold{31}, 176--180.
 
-  Patrick Royston (1995),
+  Patrick Royston (1995)
   A Remark on Algorithm AS 181: The \eqn{W} Test for Normality.
   \emph{Applied Statistics}, \bold{44}, 547--551.
 }
 \seealso{
-  \code{\link{qqnorm}} for producing a normal quantile-quantile plot.
+  \code{\link[lm]{qqnorm}} for producing a normal quantile-quantile plot.
 }
 \examples{
 % FIXME: could use something more interesting here

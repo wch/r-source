@@ -19,7 +19,7 @@ pairwise.t.test(x, g, p.adjust.method=p.adjust.methods, pool.sd=TRUE, ...)
 \value{
   Object of class \code{"pairwise.htest"}
 }
-\seealso{ \code{\link{t.test}}, \code{\link{p.adjust}}}
+\seealso{ \code{\link{t.test}}, \code{\link[base]{p.adjust}}}
 
 \examples{
 data(airquality)
@@ -30,4 +30,4 @@ pairwise.t.test(Ozone, Month, p.adj = "bonf")
 pairwise.t.test(Ozone, Month, pool.sd = FALSE)
 detach()
 }
-\keyword{ htest }%-- one or more ...
+\keyword{htest}

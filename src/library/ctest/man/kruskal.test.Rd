@@ -48,7 +48,8 @@ kruskal.test(x, g)
 \seealso{
   The Wilcoxon rank sum test (\code{\link{wilcox.test}}) as the special
   case for two samples;
-  \code{\link{lm}} together with \code{\link{anova}} for performing
+  \code{\link[base]{lm}} together with \code{\link[base]{anova}} for
+  performing
   one-way location analysis under normality assumptions; with Student's
   t test (\code{\link{t.test}}) as the special case for two samples.
 }
