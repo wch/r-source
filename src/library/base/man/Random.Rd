@@ -75,7 +75,6 @@ Currently available RNG kinds
     % NOT YET:
     % \item "Mersenne-Twister": \code{.Random.seed[1] == 4}
   }
-
  --- --- to be expanded --- ---
     
  ((Planned additions are

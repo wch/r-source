@@ -17,6 +17,4 @@ The input value.
 
 \seealso{\code{\link{model.offset}}, \code{\link{model.frame}}, \code{\link{glm}}}
 
-\examples{
-}
 \keyword{models}
