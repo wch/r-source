@@ -1,6 +1,7 @@
+
 xy.coords <- function(x, y, xlab=NULL, ylab=NULL) {
     if(is.null(y)) {
-	ylab<- xlab
+	ylab <- xlab
 	if(is.language(x)) {
 	    if(length(x) == 3 && deparse(x[[1]]) == '~') {
 		ylab <- deparse(x[[2]])
@@ -63,12 +64,13 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL) {
 plot <- function(x, ...)
     UseMethod("plot")
 
-plot.default <-
-    function (x, y=NULL, type="p", main=NULL, col=par("fg"), bg=NA,
-	      pch=par("pch"), xlim=NULL, ylim=NULL, log="", axes=TRUE,
-	      frame.plot=axes, panel.first=NULL, panel.last=NULL,
-	      ann=par("ann"), xlab=NULL, ylab=NULL, cex=par("cex"),
-	      lty=par("lty"), lwd=par("lwd"), asp=NA, ...)
+plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
+			 log="", main=NULL,  sub=NULL, xlab=NULL, ylab=NULL,
+			 ann=par("ann"), axes=TRUE, frame.plot=axes,
+			 panel.first=NULL, panel.last=NULL,
+			 col=par("fg"), bg=NA, pch=par("pch"),
+			 cex=par("cex"), lty=par("lty"), lwd=par("lwd"),
+			 asp=NA, ...)
 {
     xlabel <- if (!missing(x)) deparse(substitute(x))	else NULL
     ylabel <- if (!missing(y)) deparse(substitute(y))	else NULL
@@ -89,7 +91,7 @@ plot.default <-
     if (frame.plot)
 	box(...)
     if (ann)
-	title(main=main, xlab=xlab, ylab=ylab, ...)
+	title(main=main, sub=sub, xlab=xlab, ylab=ylab, ...)
     invisible()
 }
 

@@ -1,12 +1,13 @@
 \name{plot.default}
 \title{The Default Scatterplot Function}
 \usage{
-plot.default(x, y=NULL, type = "p", col = par("fg"), bg = NA,
-             pch = par("pch"), xlim = NULL, ylim = NULL, log = "",
-             axes = TRUE, frame.plot = axes, panel.first = NULL,
-             panel.last = NULL, ann = par("ann"), main = NULL,
-             xlab = NULL, ylab = NULL, cex = par("cex"),
-             lty = par("lty"), lwd = par("lwd"), \dots)
+plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
+             log = "", main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
+             ann = par("ann"), axes = TRUE, frame.plot = axes,
+             panel.first = NULL, panel.last = NULL,
+             col = par("fg"), bg = NA, pch = par("pch"),
+             cex = par("cex"), lty = par("lty"), lwd = par("lwd"),
+             asp = NA, \dots)
 }
 \alias{plot.default}
 \arguments{
@@ -19,41 +20,46 @@ plot.default(x, y=NULL, type = "p", col = par("fg"), bg = NA,
     for overplotted points and lines, \code{"b"} or \code{c} for points
     joined by lines, \code{"s"} and \code{"S"} for step functions and
     \code{"h"} for \emph{high density} vertical lines.}
+  \item{xlim}{the x limits (min,max) of the plot.}
+  \item{ylim}{the y limits of the plot.}
+  \item{log}{a character string which contains \code{"x"} if the x axis
+    is to be logarithmic, \code{"y"} if the y axis is to be logarithmic
+    and \code{"xy"} or \code{"yx"} if both axes are to be logarithmic.}
+
+  \item{main}{a main title for the plot.}
+  \item{sub}{a sub title for the plot.}
+  \item{xlab}{a label for the x axis.}
+  \item{ylab}{a label for the y axis.}
+
+  \item{ann}{an logical value indicating whether the default annotation
+    (title and x and y axis labels) should appear on the plot.}
+  \item{axes}{a logical value indicating whether axes should be drawn on
+    the plot.}
+  \item{frame.plot}{a logical indicating whether a box should be drawn
+    around the plot.}
+
+  \item{panel.first}{an expression to be evaluated after the plot axes
+    are set up but before any plotting takes place.  This can be useful
+    for drawing background grids or scatterplot smooths.}
+  \item{panel.last}{an expression to be evaluated after plotting has
+    taken place.}
+
   \item{col}{The colors for lines and points.  Multiple colors can be
     specified so that each point can be given its own color.  If there
     are fewer colors than points they are recycled in the standard
     fashion.}
   \item{bg}{background color of ???}
   \item{pch}{a vector of plotting characters or symbols.}
-  \item{xlim}{the x limits (min,max) of the plot.}
-  \item{ylim}{the y limits of the plot.}
-  \item{log}{a character string which contains \code{"x"} if the x axis
-    is to be logarithmic, \code{"y"} if the y axis is to be logarithmic
-    and \code{"xy"} or \code{"yx"} if both axes are to be logarithmic.}
-  \item{axes}{a logical value indicating whether axes should be drawn on
-    the plot.}
-  \item{frame.plot}{a logical indicating whether a box should be drawn
-    around the plot.}
-  \item{panel.first}{an expression to be evaluated after the plot axes
-    are set up but before any plotting takes place.  This can be useful
-    for drawing background grids or scatterplot smooths.}
-  \item{panel.last}{an expression to be evaluated after plotting has
-    taken place.}
-  \item{ann}{an logical value indicating whether the default annotation
-    (title and x and y axis labels) should appear on the plot/}
-  \item{main}{a main title for the plot.}
-  \item{xlab}{a label for the x axis.}
-  \item{ylab}{a label for the y axis.}
   \item{cex}{a numerical value giving the amount by which plotting text
     and symbols should be scaled relative to the default}
   \item{lty}{the line type, see \code{\link{par}.}
   \item{lwd}{the line width \bold{not yet supported for postscript}.}
+  \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
   \item{\dots}{graphical parameters as in \code{\link{par}(\dots)} may
-    also be passed as arguments.  Additionally, \code{asp}, the
-    \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
+    also be passed as arguments.}
 }
-\value{
-  This function is invoked for its side effect of drawing a scatter plot
+\description{
+  Draw a scatter plot with ``decorations'' such as axes and titles
   in the active graphics window.
 }
 \references{
@@ -73,7 +79,6 @@ plot(Speed, Distance, panel.first = grid(8,8),
 plot(Speed, Distance,
      panel.first = lines(lowess(Speed, Distance), lty = "dashed"),
      pch = 0, cex = 1.2, col = "blue")
-}
 
 ##--- Log-Log Plot  with  custom axes
 lx <- seq(1,5, length=41)
@@ -89,4 +94,5 @@ axis(1, at = my.at <- 10^(1:5), labels = formatC(my.at, format="fg"))
 at.y <- 10^(-5:-1)
 axis(2, at = at.y, labels = formatC(at.y, format="fg"), col.axis="red")
 par(op)
+}
 \keyword{hplot}
