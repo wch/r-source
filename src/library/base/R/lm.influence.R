@@ -36,7 +36,7 @@ lm.influence <- function (model, do.coef = TRUE)
     e <- na.omit(if(inherits(model, "glm"))
 		 residuals(model, type="deviance")[model$prior.weights != 0]
 		 else weighted.residuals(model))
-    if(length(e) != n)
+    if(NROW(e) != n)
 	stop("non-NA residual length does not match cases used in fitting")
     do.coef <- as.logical(do.coef)
     res <- .Fortran("lminfl",
@@ -173,7 +173,7 @@ function(model, infl = influence(model, do.coef=FALSE),
     (res/(1-hat))^2 * hat/(dispersion* p)
 }
 
-## FIXME: The following needs partial adapation for glm
+## FIXME: The following probably needs partial adapation for glm
 ## -----  (whenever there's an extra glm method above!)
 
 influence.measures <- function(model)

@@ -2057,7 +2057,8 @@ stopifnot(inherits(x, "integer"))
 
 
 ## rank() is numeric also for NA char vectors
-stopifnot(is.numeric(rank(c("ch",NA))))
+stopifnot(is.numeric(rk <- rank(c("ch","c", NA))),
+          all(rk == c(2,1,3)))
 ## did not from R 1.2 -- 1.6
 
 
@@ -2065,6 +2066,13 @@ stopifnot(is.numeric(rank(c("ch",NA))))
 i <- c(1:2,NA);	 fi <- factor(i, exclude = NULL)
 stopifnot(identical(as.character(i), dimnames(table(fi))[[1]]))
 ## not in 2003-Mar-10 unstable
+
+## [lm.]influence() for multivariate lm :
+n <- 32
+Y <- matrix(rnorm(3 * n), n, 3)
+X <- matrix(rnorm(5 * n), n, 5)
+infm <- lm.influence(mod <- lm(Y ~ X))
+## failed upto 2003-03-29 (pre 1.7.0)
 
 
 ## keep at end, as package `methods' has had persistent side effects
