@@ -1319,18 +1319,23 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     PROTECT(CDR(args) = EvalSubassignArgs(CDR(args), rho));
     SubAssignArgs(args, &x, &subs, &y);
-#ifdef JUNKING_FOR_DOUG
-    if (length(x) == 0) {
-	if (length(y) > 1)
-	    x = coerceVector(x, VECSXP);
-	else if (length(y) == 1)
-	    x = coerceVector(x, TYPEOF(y));
-	else {
-	    UNPROTECT(1);
-	    return(x);
-	}
+
+    /* Handle NULL left-hand sides.  If the right-hand side */
+    /* is NULL, just return the left-hand size otherwise, */
+    /* convert to a zero length list (VECSXP). */
+
+    if (isNull(x)) {
+        if (isNull(y)) {
+            UNPROTECT(1);
+	    return x;
+        }
+        UNPROTECT(1);
+        PROTECT(x = allocVector(1, VECSXP));
     }
-#endif
+
+    /* Ensure that the LHS is a local variable. */
+    /* If it is not, then make a local copy. */
+
     if (NAMED(x) == 2) {
 	CAR(args) = x = duplicate(x);
     }
