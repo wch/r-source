@@ -2596,8 +2596,9 @@ SEXP do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
     case REALSXP: case INTSXP:
 	return do_pos2env(call, op, args, rho);
     default:
-    	PrintValue(R_GetTraceback(0));
-	errorcall(R_GetTraceback(0), _("invalid object for as.environment"));
+    	Rprintf("Bad as.environment value:");
+    	PrintValue(arg);
+	errorcall(call, _("invalid object for as.environment"));
 	return R_NilValue;	/* -Wall */
     }
 }

@@ -280,7 +280,7 @@ setMethod <-
     hasMethods <- !is.null(fdef)
     deflt <- getFunction(f, generic = FALSE, mustFind = FALSE, where = where)
     ## where to insert the methods in generic
-    if(is.null(gwhere)) {
+    if(identical(gwhere, baseenv())) {
         allWhere <- findFunction(f, where = where)
         generics <-logical(length(allWhere))
         if(length(allWhere)>0) { # put methods into existing generic
