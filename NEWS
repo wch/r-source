@@ -24,7 +24,7 @@ BUG FIXES
 
     o	predict.glm didn't work with se=T
 
-    o   backsolve() now returns a vector when x is a vector.
+    o   backsolve(), qr.solve... now return a vector when x (or y) is a vector.
 
     o	string tags now converted to symbols and strange symbolic
 	tags print as strings, cf. e<-quote(c(F=2, "tail area" = .5)), etc. 

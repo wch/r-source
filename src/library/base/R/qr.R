@@ -16,7 +16,7 @@ qr <- function(x, tol= 1e-07)
 	     rank=integer(1),
 	     qraux = double(p),
 	     pivot = as.integer(1:p),
-	     double(2*p))[c(1,6,7,8)]
+	     double(2*p))[c(1,6,7,8)]# c("qr", "rank", "qraux", "pivot")
 }
 
 qr.coef <- function(qr, y)
@@ -26,7 +26,8 @@ qr.coef <- function(qr, y)
     n <- nrow(qr$qr)
     p <- ncol(qr$qr)
     k <- as.integer(qr$rank)
-    y <- as.matrix(y)
+    im <- is.matrix(y)
+    if (!im) y <- as.matrix(y)
     ny <- as.integer(ncol(y))
     storage.mode(y) <- "double"
     if( nrow(y) != n )
@@ -46,9 +47,8 @@ qr.coef <- function(qr, y)
 	coef[qr$pivot[1:k],] <- z$coef
     }
     else coef <- z$coef
-    if(ncol(y) == 1)
-	dim(coef) <- NULL
-    return(coef)
+
+    if(im) coef else c(coef)
 }
 
 qr.qy <- function(qr, y)
@@ -57,18 +57,18 @@ qr.qy <- function(qr, y)
     n <- as.integer(nrow(qr$qr))
     p <- as.integer(ncol(qr$qr))
     k <- as.integer(qr$rank)
-    y <- as.matrix(y)
-    ny <- as.integer(ncol(y))
+    ny <- as.integer(NCOL(y))
     storage.mode(y) <- "double"
-    if( nrow(y) != n )
+    if(NROW(y) != n)
 	stop("qr and y must have the same number of rows")
+    qy <- if(is.matrix(y)) matrix(double(n*ny), n, ny) else double(n)
     .Fortran("dqrqy",
 	     as.double(qr$qr),
 	     n, k,
 	     as.double(qr$qraux),
 	     y,
 	     ny,
-	     qy=mat.or.vec(n,ny))$qy
+	     qy=qy)$qy
 }
 
 qr.qty <- function(qr, y)
@@ -77,18 +77,18 @@ qr.qty <- function(qr, y)
     n <- as.integer(nrow(qr$qr))
     p <- as.integer(ncol(qr$qr))
     k <- as.integer(qr$rank)
-    y <- as.matrix(y)
-    ny <- as.integer(ncol(y))
+    ny <- as.integer(NCOL(y))
     storage.mode(y) <- "double"
-    if( nrow(y) != n )
+    if(NROW(y) != n)
 	stop("qr and y must have the same number of rows")
+    qty <- if(is.matrix(y)) matrix(double(n*ny), n, ny) else double(n)
     .Fortran("dqrqty",
 	     as.double(qr$qr),
 	     n, k,
 	     as.double(qr$qraux),
 	     y,
 	     ny,
-	     qty=mat.or.vec(n,ny))$qty
+	     qty=qty)$qty
 }
 
 qr.resid <- function(qr, y)
@@ -129,10 +129,10 @@ qr.fitted <- function(qr, y, k=qr$rank)
 	     as.double(qr$qraux),
 	     y,
 	     ny,
-	     xb=mat.or.vec(n,ny))$xb
+	     xb=mat.or.vec(n,ny), DUP=FALSE)$xb
 }
 
-## qr.solve is defined in 'solve'
+## qr.solve is defined in  ./solve.R
 
 ##---- The next three are from Doug Bates ('st849'):
 qr.Q <- function (qr, complete = FALSE,
