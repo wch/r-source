@@ -51,6 +51,9 @@ BUG FIXES
 	cor(), cov() and var() no longer accidentally work with list()
 	arguments as if they were unlist()ed.
 
+    o	as.matrix(data.frame(d= as.POSIXct("2004-07-20"))) doesn't give a
+        wrong warning anymore.
+
 
 		CHANGES IN R VERSION 1.9.1
 

@@ -1041,7 +1041,7 @@ as.matrix.data.frame <- function (x)
         if(!is.logical(xj)) all.logical <- FALSE
 	if(length(levels(xj)) > 0 || !(is.numeric(xj) || is.complex(xj))
 	   || (!is.null(cl <- attr(xj, "class")) && # numeric classed objects to format:
-	       any(cl == c("Date", "POSIXct", "POSIXlt"))))
+	       any(cl %in% c("Date", "POSIXct", "POSIXlt"))))
 	    non.numeric <- TRUE
 	if(!is.atomic(xj))
 	    non.atomic <- TRUE

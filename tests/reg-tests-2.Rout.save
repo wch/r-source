@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.1 Patched (2004-07-14), ISBN 3-900051-00-3
+Version 1.9.1 Patched (2004-07-20), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4028,4 +4028,9 @@ Error in try(x[-c(1, NA)]) : only 0's may mix with negative subscripts
         Min.      1st Qu.       Median         Mean      3rd Qu.         Max. 
 "2002-12-26" "2002-12-27" "2002-12-28" "2002-12-28" "2002-12-29" "2002-12-31" 
 > ## printed all "2002.-12-29" in 1.9.1 {because digits was too small}
+> 
+> as.matrix(data.frame(d = as.POSIXct("2004-07-20")))
+  d           
+1 "2004-07-20"
+> ## gave a warning in 1.9.1
 > 
