@@ -37,6 +37,7 @@ Makedeps: Makefile
 	    if test -f $(top_builddir)/$${tmp}.$(SHLIBEXT); then \
 	      dep="$${dep} \$$(top_builddir)/$${tmp}.\$$(SHLIBEXT)"; \
 	    fi; \
+	    dep="$${dep} \$$(FORCE)"; \
 	    echo $${dep}; \
 	  done) >> Makefile
 	@touch $@

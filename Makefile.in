@@ -162,3 +162,10 @@ TAGS:
 check test:: test-All
 test-All test-Examples test-Specific::
 	@(cd tests && $(MAKE) $@)
+check-force: test-All-force
+test-All-force:
+	@(cd tests && $(MAKE) test-All FORCE=FORCE)
+test-Examples-force:
+	@(cd tests && $(MAKE) test-Examples FORCE=FORCE)
+test-Specific-force:
+	@(cd tests && $(MAKE) test-Specific FORCE=FORCE)
