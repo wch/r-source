@@ -59,9 +59,9 @@ void LeftMatrixColumnLabel(SEXP, int, int);
 void MatrixRowLabel(SEXP, int, int);
 void VectorIndex(int, int);
 
-void CustomPrintValue(SEXP s);
+void CustomPrintValue(SEXP s ,SEXP env);
 void PrintValue(SEXP);
-void PrintValueRec(SEXP);
+void PrintValueRec(SEXP,SEXP);
 
 /*  REprintf(char*, ...); ... --> all in Defn.h */
 

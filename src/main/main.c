@@ -504,7 +504,7 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 		while (cptr->callflag != CTXT_RETURN && cptr->callflag )
 			cptr = cptr->nextcontext;
 		Rprintf("Called from: ");
-		PrintValueRec(cptr->call);
+		PrintValueRec(cptr->call,rho);
 	}
 
 	R_ReturnedValue = R_NilValue;

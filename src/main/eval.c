@@ -250,7 +250,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	DEBUG(newrho) = DEBUG(op);
 	if( DEBUG(op) ) {
 		Rprintf("debugging in: ");
-		PrintValueRec(call);
+		PrintValueRec(call,rho);
 	}
 
 	if (setjmp(cntxt.cjmpbuf)) {
@@ -262,7 +262,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	endcontext(&cntxt);
 	if( DEBUG(op) ) {
 		Rprintf("exiting from: ");
-		PrintValueRec(call);
+		PrintValueRec(call,rho);
 	}
 	UNPROTECT(1);
 
