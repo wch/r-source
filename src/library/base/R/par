@@ -37,13 +37,3 @@ function (...)
 	else .Internal(par(args))
 	if(!is.null(names(args))) invisible(value) else value
 }
-
-par2 <-
-function (...)
-{
-	args <- list(...)
-	if (length(args) == 1 && is.list(args[[1]]))
-		args <- args[[1]]
-	.Internal(par2(args))
-}
-
