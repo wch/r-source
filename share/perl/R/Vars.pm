@@ -17,7 +17,7 @@ package R::Vars;
 
   ## stop if no valid command for R itself or the 'R CMD' mechanism is
   ## available
-  R::Vars::error("CMD", "EXE");
+  R::Vars::error("R_CMD", "EXE");
 
 
 =head1 DESCRIPTION
@@ -29,9 +29,9 @@ package R::Vars;
     OSTYPE     "mac", "unix" or "windows"
     TMPDIR     name of directory for temporary files [TMPDIR]
 
-    RHOME      path to R installation top directory [R_HOME]
-    EXE        name of the R executable including path
-    CMD        string for 'R CMD' including path
+    R_HOME     path to R installation top directory [R_HOME]
+    R_EXE      name of the R executable including path
+    R_CMD      string for 'R CMD' including path
 
     MAKE       command string for 'make' [MAKE]
     LATEX      command string for 'latex' [LATEX]
@@ -46,7 +46,7 @@ use Carp;
 if($^O =~ /^(MS)?Win32$/i){
     $OSTYPE = "windows";
 }
-elsif($^O =~ /^(MacOS|darwin)$/i){
+elsif($^O =~ /^MacOS$/i){
     $OSTYPE = "mac";
 }
 else{
@@ -55,28 +55,32 @@ else{
 
 getenv("LATEX", "LATEX", "latex");
 getenv("MAKE", "MAKE", "make");
-getenv("RHOME", "R_HOME");
+getenv("R_HOME", "R_HOME");
 
 if($OSTYPE eq "windows"){
-    if($RHOME){
-	$EXE = "${RHOME}/bin/Rterm.exe";
-	$CMD = "${RHOME}/bin/Rcmd.exe";
+    if($R_HOME){
+	$R_EXE = "${R_HOME}/bin/Rterm.exe";
+	$R_CMD = "${R_HOME}/bin/Rcmd.exe";
     }
     else{
-	$EXE = "Rterm.exe";
-	$CMD = "Rcmd.exe";
+	$R_EXE = "Rterm.exe";
+	$R_CMD = "Rcmd.exe";
     }
     $TMPDIR = getenv("TMPDIR", "/TEMP");
     $TMPDIR = "" unless (-d $TMPDIR);
 }
+elsif($OSTYPE eq "mac"){
+    require Mac::Files;
+    $TMPDIR = FindFolder(kOnSystemDisk, kTemporaryFolderType);
+}
 else{
-    if($RHOME){
-	$EXE = "${RHOME}/bin/R";
+    if($R_HOME){
+	$R_EXE = "${R_HOME}/bin/R";
     }
     else{
-	$EXE = "R";
+	$R_EXE = "R";
     }
-    $CMD = "$EXE CMD";
+    $R_CMD = "$R_EXE CMD";
     $TMPDIR = getenv("TMPDIR", "/tmp");
     $TMPDIR = "" unless (-d $TMPDIR);
 }

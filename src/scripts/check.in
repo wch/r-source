@@ -40,7 +40,7 @@ use Text::DelimMatch;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.85 $ ';
+my $revision = ' $Revision: 1.86 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -59,7 +59,7 @@ my $opt_install = 1;
 
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
-R::Vars::error("RHOME", "CMD", "EXE");
+R::Vars::error("R_HOME", "R_CMD", "R_EXE");
 
 my @knownoptions = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		    "no-clean", "no-examples", "no-tests", "no-latex",
@@ -121,7 +121,7 @@ if($opt_latex) {
 
 ## get the valid keywords for later ...
 my %standard_keywords = ();
-open(KEYWORDS, "< ${R::Vars::RHOME}/doc/KEYWORDS.db")
+open(KEYWORDS, "< ${R::Vars::R_HOME}/doc/KEYWORDS.db")
   or die "Error: cannot open \`KEYWORDS.db'";
 while(<KEYWORDS>) {
     if(/^.*\|([^:]*):.*/) {
@@ -183,7 +183,7 @@ foreach my $pkg (@ARGV) {
     if(!$is_base_pkg) {
 	if($opt_install) {
 	    print("\n");
-	    if(system("${R::Vars::CMD} INSTALL -l $library $pkgdir")) {
+	    if(system("${R::Vars::R_CMD} INSTALL -l $library $pkgdir")) {
 		$log->error("installation failed");
 		exit(1);
 	    }
@@ -826,12 +826,12 @@ sub check_pkg {
         }
         if($R::Vars::OSTYPE eq "windows") {
             ## avoid Rcmd as line may be too long after expansion.
-            $cmd = "perl ${R::Vars::RHOME}/bin/massage-Examples ".
+            $cmd = "perl ${R::Vars::R_HOME}/bin/massage-Examples ".
   		     "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
   		     "> ${pkgname}-Ex.R";
         } else {
-	    $cmd = "${R::Vars::CMD} perl " .
-                     "${R::Vars::RHOME}/share/perl/massage-Examples.pl ".
+	    $cmd = "${R::Vars::R_CMD} perl " .
+                     "${R::Vars::R_HOME}/share/perl/massage-Examples.pl ".
 	             "${pkgname} ${library}/${pkgname}/R-ex ".
 		     "> ${pkgname}-Ex.R";
         }
@@ -849,10 +849,10 @@ sub check_pkg {
 
 	if($opt_use_gct) {
             $cmd = "(echo 'gctorture(TRUE)'; cat ${pkgname}-Ex.R) " .
-		      "| ${R::Vars::EXE} ${R_opts} > ${pkgname}-Ex.Rout";
+		      "| ${R::Vars::R_EXE} ${R_opts} > ${pkgname}-Ex.Rout";
 	}
 	else {
-            $cmd = "${R::Vars::EXE} ${R_opts} " .
+            $cmd = "${R::Vars::R_EXE} ${R_opts} " .
 		      "< ${pkgname}-Ex.R > ${pkgname}-Ex.Rout";
 	}
 	if(R_system($cmd)) {
@@ -878,9 +878,9 @@ sub check_pkg {
         while(<$testsrcdir/*>) {
             copy($_, basename($_));
         }
-        my $makefiles = "-f ${R::Vars::RHOME}/share/make/tests.mk";
+        my $makefiles = "-f ${R::Vars::R_HOME}/share/make/tests.mk";
         if($WINDOWS) {
-            $makefiles = "-f ${R::Vars::RHOME}/share/make/wintests.mk";}
+            $makefiles = "-f ${R::Vars::R_HOME}/share/make/wintests.mk";}
         my $makevars = "";
         if($WINDOWS && (-r "$testsrcdir/Makefile.win")) {
             $makefiles .= " -f $testsrcdir/Makefile.win";
@@ -956,7 +956,7 @@ sub check_pkg {
     if($opt_latex) {
 	if(-d "$library/$pkgname/latex") {
 	    $ENV{'TEXINPUTS'} = 
-	      env_path("$R::Vars::RHOME/share/texmf", $ENV{'TEXINPUTS'});
+	      env_path("$R::Vars::R_HOME/share/texmf", $ENV{'TEXINPUTS'});
 	    $log->creating("${pkgname}-manual.tex");
 	    open MANUAL, "> ${pkgname}-manual.tex";
 	    print MANUAL "\\documentclass\{article\}\n" .
@@ -993,7 +993,7 @@ sub check_pkg {
 		$Rd2dvi_opts .= ">/dev/null 2>&1"
                     if($R::Vars::OSTYPE eq "unix");
 		## </FIXME>
-		if(R_system("${R::Vars::CMD} Rd2dvi ${Rd2dvi_opts} $pkgdir")) {
+		if(R_system("${R::Vars::R_CMD} Rd2dvi ${Rd2dvi_opts} $pkgdir")) {
 		    $log->error("installation failed");
 		    exit(1);
 		}

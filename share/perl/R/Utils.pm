@@ -137,11 +137,11 @@ sub R_runR
     my $Rin = R_tempfile("Rin");
     my $Rout = R_tempfile("Rout");
 
-    R::Vars::error("EXE");
+    R::Vars::error("R_EXE");
     open RIN, "> $Rin" or die "Error: cannot write to \`$Rin'\n";
     print RIN "$cmd\n";
     close RIN;
-    R_system("${R::Vars::EXE} ${Ropts} < ${Rin} > ${Rout}");
+    R_system("${R::Vars::R_EXE} ${Ropts} < ${Rin} > ${Rout}");
     my @out;
     open ROUT, "< $Rout";
     while(<ROUT>) {chomp; push(@out, $_);}
