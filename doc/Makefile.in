@@ -17,11 +17,11 @@ SUBDIRS = html manual
 all docs: Makefile keyword-test R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	cd $(top_builddir) && \
+	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 keyword-test: $(srcdir)/keyword-test.in $(top_builddir)/config.status
-	cd $(top_builddir) && \
+	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
@@ -68,10 +68,13 @@ install-man:
 install-strip: install
 uninstall:
 	@echo "Uninstalling doc ..."
-	@(cd $(rhome)/doc; \
-	  rm -rf html manual KEYWORDS keyword-test)
-	@rmdir $(rhome)/doc 2> /dev/null \
-	  || echo "  subdir doc not removed"
+	@if test -d $(rhome)/doc -a \
+	  "`cd $(rhome); pwd`" != "`cd $(top_builddir); pwd`"; then \
+	  (cd $(rhome)/doc && \
+	    rm -rf html manual KEYWORDS keyword-test); \
+	  rmdir $(rhome)/doc 2> /dev/null \
+	    || echo "  subdir doc not removed"; \
+	fi
 	@echo "Uninstalling man pages ..."
 	@(cd $(mandir)/man1; \
 	  rm -f R.1 Rdconv.1 Rd2txt.1 Rdindex.1 Sd2Rd.1)

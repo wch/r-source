@@ -89,9 +89,12 @@ uninstall:
 	@(cd $(rhome)/library; \
 	  for p in base eda lqs modreg mva stepfun ts; do rm -rf $${p}; done)
 	@echo "  Rebuilding help index ..."
-	@(cd $(rhome)/library; cat */TITLE > LibIndex 2> /dev/null)
+	@(cd $(rhome)/library; \
+	  cat */TITLE > LibIndex 2> /dev/null || echo "" > LibIndex)
 	@echo "  Rebuilding HTML index ..."
-	@$(rhome)/bin/build-help --rhome $(rhome) --htmllists
+	@if test -x $(rhome)/bin/build-help; then \
+	  $(rhome)/bin/build-help --rhome $(rhome) --htmllists; \
+	fi
 	@echo "Uninstalling headers ..."
 	@rm -rf $(rhome)/include
 	@echo "Uninstalling executables ..."
