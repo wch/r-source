@@ -12,6 +12,11 @@ NEW FEATURES
     o	new global variable R.version.string (for plots & reports).
 	Deprecated version & Version for new  R.version & R.Version. 
 
+    o	R CMD Rd2dvi  has builtin "Usage" help and works for multiple files.
+    	Useful for automatic reference manual of a package.
+	(doc/manual/lib2tex is more efficient for installed packages, however).
+
+
 BUG FIXES
 
     o	R CMD Rd2dvi <file.Rd> works again

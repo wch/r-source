@@ -1,10 +1,34 @@
 #!/bin/sh
-#  Rd2dvi -- 'check' man pages (help files) by  'LaTeX'..
+#  Rd2dvi -- check man pages (*.Rd help files) by LaTeX..
 #
-# Example (in $RHOME):
-#    bin/Rd2dvi src/library/base/man/Normal.Rd
-#    bin/Rd2dvi `grep -l 'KEYWORD(distr' src/library/base/man/*.Rd |sort|uniq`
-#
+if [ $# -eq 0  -o  x$1 = x-h  -o  x$1 = x--help ]
+then
+    cat <<_EOF_
+
+Rd2dvi : Convert R man pages (Rd files) to latex and dvi
+
+USAGE:  R CMD Rd2dvi  <dir or files>
+
+	- When a directory is given as argument, it should be a source
+	  'package' directory, or its 'man' subdirectory, and all its files are
+	  taken.  This is convenient for nice documentation checking
+	  of a package.
+	- When files are given, they must be Rd files.
+
+    All the files are converted to LaTeX and concatenated; 
+    they are LaTeXed and indexed; 
+    Finally, 'xdvi' is started on the result if available.
+
+EXAMPLES :
+    # All from R's RHOME (source!) directory
+    cd \`R RHOME\`
+    R CMD Rd2dvi src/library/base/man/Normal.Rd
+    R CMD Rd2dvi src/library/modreg
+    R CMD Rd2dvi \`grep -l '\\keyword{distr' src/library/base/man/*.Rd |sort|uniq\`
+
+_EOF_
+    exit 1
+fi
 Pwd=`dirname $0`
 RHOME=${Pwd}/..
 MANTEXDIR=${RHOME}/doc/manual
@@ -18,14 +42,32 @@ then
     echo " -------- "
     mv Rd2.tex Rd2.tex.Older
 fi
-$D2L $@ > Rd2.tex
-echo "MANTEXDIR= '$MANTEXDIR'"
-if [ ! -f Rd2dvi.tex ]
+touch Rd2.tex
+if [ $# -eq 1  -a  -d $1 ]
 then
- ##ln -s ${MANTEXDIR}/Rd2dvi.tex . 
- R_P=`echo 'getenv("R_PAPERSIZE")'| R --vanilla --quiet|grep -v getenv|grep '"'|sed 's/ *//g;s/"//g'`
- sed "s/a4paper/${R_P}paper/" ${MANTEXDIR}/Rd2dvi.tex > Rd2dvi.tex
+    dir=$1
+    test -d $dir/man && dir=$dir/man
+    echo "Rd2dvi : \`Rdconv -t latex' $dir/ files..."
+    files="${dir}/*.Rd"
+    subj="of all in $dir"
+    # DBG: echo "files = $files"
+    toc_sed='; s/\\input{Rd/\\Rdcontents{\\R\\ objects documented:} &/'
+else
+    files="$@"
+    subj="of $1"
+    toc_sed=''
+    if [ $# -gt 1 ]; then subj="$subj ...etc "; fi
+    echo "Rd2dvi : Collecting files and \`Rdconv -t latex' them ..."
 fi
+for f in $files
+do 
+    echo $f
+    $D2L $f >> Rd2.tex
+done
+echo "MANTEXDIR='$MANTEXDIR'"
+R_P=`echo 'getenv("R_PAPERSIZE")'| R --vanilla --quiet|grep -v getenv|grep '"'|sed 's/ *//g;s/"//g'`
+sed "s/a4paper/${R_P}paper/; s| documentation |& ${subj} |; ${toc_sed}" \
+  ${MANTEXDIR}/Rd2dvi.tex > Rd2dvi.tex
 if [ ! -f Rd.sty ]; then
  sed 's/markright{#1}/markboth{#1}{#1}/' ${MANTEXDIR}/Rd.sty > Rd2.sty
 fi

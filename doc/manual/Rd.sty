@@ -29,6 +29,10 @@
 \newcommand{\vneed}[1]{%
   \penalty-1000\vskip#1 plus 10pt minus #1\penalty-1000\vspace{-#1}}
 
+\newcommand{\Rdcontents}[1]{% modified \tableofcontents -- not \chapter
+\section*{{#1}\@mkboth{\MakeUppercase#1}{\MakeUppercase#1}}
+  \@starttoc{toc}}
+
 \newcommand{\Header}[2]{%
   \vneed{1ex}
   \markboth{#1}{#1}
