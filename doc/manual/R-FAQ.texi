@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-1, 2001-06-19
+@set FAQ-VERSION 1.3-2, 2001-06-20
 @set REL-VERSION 1.3.0
 @set DEV-VERSION 1.4.0
 @c %**end of header
@@ -694,14 +694,10 @@ load.
 
 From @acronym{CRAN}, you can obtain the latest official release of R,
 daily snapshots of R (copies of the current CVS trees), as gzipped and
-bzipped tar files or as two gzipped tar files (ready for 1.4M floppies),
-@c <FIXME>
-@c Sources no longer fit on 2 floppies.
-@c </FIXME>
-a wealth of additional contributed code, as well as prebuilt binaries
-for various operating systems (Linux, Digital Unix, and MS Windows).
-@acronym{CRAN} also provides access to documentation on R, existing
-mailing lists and the R Bug Tracking system.
+bzipped tar files, a wealth of additional contributed code, as well as
+prebuilt binaries for various operating systems (Linux, Digital Unix,
+and MS Windows).  @acronym{CRAN} also provides access to documentation
+on R, existing mailing lists and the R Bug Tracking system.
 
 To ``submit'' to @acronym{CRAN}, simply upload to
 @uref{ftp://cran.r-project.org/incoming/} and send an email to

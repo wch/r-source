@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-1, 2001-06-19
+Version 1.3-2, 2001-06-20
 Kurt Hornik
 
 
@@ -566,11 +566,10 @@ Please use the CRAN site closest to you to reduce network load.
 
    From CRAN, you can obtain the latest official release of R, daily
 snapshots of R (copies of the current CVS trees), as gzipped and bzipped
-tar files or as two gzipped tar files (ready for 1.4M floppies), a wealth
-of additional contributed code, as well as prebuilt binaries for various
-operating systems (Linux, Digital Unix, and MS Windows).  CRAN also
-provides access to documentation on R, existing mailing lists and the R Bug
-Tracking system.
+tar files, a wealth of additional contributed code, as well as prebuilt
+binaries for various operating systems (Linux, Digital Unix, and MS
+Windows).  CRAN also provides access to documentation on R, existing
+mailing lists and the R Bug Tracking system.
 
    To "submit" to CRAN, simply upload to
 `ftp://cran.r-project.org/incoming/' and send an email to
