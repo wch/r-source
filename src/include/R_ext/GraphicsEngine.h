@@ -19,6 +19,25 @@
 
 /* Used by third-party graphics devices */
 
+/*
+ * The current graphics engine (including graphics device) API version
+ * MUST be integer
+ * 
+ * This number should be bumped whenever there are changes to 
+ * GraphicsEngine.h or GraphicsDevice.h so that add-on packages
+ * that compile against these headers (graphics systems such as
+ * graphics and grid;  graphics devices such as gtkDevice, RSvgDevice)
+ * can detect any version mismatch.
+ *
+ * Version 1:  Introduction of the version number.
+ */
+
+#define R_GE_version 1
+
+int R_GE_getVersion();
+
+void R_GE_checkVersionOrDie(int version);
+
 /* The graphics engine will only accept locations and dimensions 
  * in native device coordinates, but it provides the following functions
  * for converting between a couple of simple alternative coordinate 

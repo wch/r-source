@@ -38,6 +38,17 @@
 # include <wchar.h>
 #endif
 
+int R_GE_getVersion()
+{
+  return R_GE_version;
+}
+
+void R_GE_checkVersionOrDie(int version)
+{
+  if (version != R_GE_version)
+    error("Graphics API version mismatch");
+}
+
 /* A note on memory management ...
  * Here (with GEDevDesc's) I have continued the deplorable tradition of
  * malloc'ing device structures and maintaining global variables to
