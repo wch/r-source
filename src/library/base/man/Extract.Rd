@@ -47,7 +47,9 @@ x$name
   The most important distinction between \code{[}, \code{[[} and
   \code{$} is that the \code{[} can select more than one element whereas
   the other two select a single element.  \code{$} does not allow
-  computed indices, whereas \code{[[} does.
+  computed indices, whereas \code{[[} does.  \code{x$name} is equivalent
+  to \code{x[["name"]]} if \code{x} is recursive
+  (see \code{\link{is.recursive}}) and \code{NULL} otherwise.
   
   The \code{[[} operator requires all relevant subscripts to be supplied.
   With the \code{[} operator an empty index (a comma separated blank)

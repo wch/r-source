@@ -1538,7 +1538,7 @@ x$"a"
 @cindex index
 
 For vectors and matrices the @code{[[} forms are rarely used, although
-it has some slight semantic differences from the @code{[} form, in that
+they have some slight semantic differences from the @code{[} form, in that
 it drops any @code{names} or @code{dimnames} attribute.  When indexing
 multi-dimensional structures with a single index, @code{x[[i]]} or
 @code{x[i]} will return the @code{i}th sequential element of @code{x}.
@@ -1553,10 +1553,11 @@ each element of the vector is applied in turn to the the list, the
 selected component, the selected component of that component, and so on.
 The result is still a single element.
 
-The form using @code{$} applies to list object.  It allows only a
+The form using @code{$} applies to recursive objects.  It allows only a
 literal character string or a symbol as the index.  That is, the index
-is not computable.  For cases where you need to evaluate an expression
-to find the index, use @code{x[[expr]]}.
+is not computable: for cases where you need to evaluate an expression
+to find the index, use @code{x[[expr]]}.  When @code{$} is applied to a
+non-list object the result is always @code{NULL}.
 
 @menu
 * Indexing by vectors::         
@@ -1620,7 +1621,7 @@ retained.
 
 @end itemize
 
-Indexing with a missing (i.e.@: @code{NA}) value give  an @code{NA}
+Indexing with a missing (i.e.@: @code{NA}) value give an @code{NA}
 result.  This rule applies also to the case of logical indexing,
 i.e.@: the elements of @code{x} that have an @code{NA} selector in
 @code{i} get included in the result, but their value will be @code{NA}.
@@ -1718,12 +1719,13 @@ are the indices.  In the case of @code{$}, the index argument is of mode
 @code{"symbol"} even when using the @code{x$"abc"} form.
 
 The most important example of a class method for @code{[} is that used
-for data frames.  It is not be described in detail here, but in broad
-terms, if two indices are supplied (even if one is empty) it creates
-matrix-like indexing for a structure that is basically a list of vectors
-of the same length.  If a single index is supplied, it is interpreted as
-indexing the list of columns---in that case the @code{drop} argument is
-ignored, with a warning.
+for data frames.  It is not be described in detail here (see the help
+page for @code{[.data.frame}, but in broad terms, if two indices are
+supplied (even if one is empty) it creates matrix-like indexing for a
+structure that is basically a list of vectors of the same length.  If a
+single index is supplied, it is interpreted as indexing the list of
+columns---in that case the @code{drop} argument is ignored, with a
+warning.
 
 @node Subset assignment,  , Indexing other structures, Indexing
 @subsection Subset assignment
