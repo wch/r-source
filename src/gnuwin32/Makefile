@@ -138,7 +138,7 @@ endif
 	    echo "makeLazyLoading(\"tools\", lib.loc=\"$(RLIB)\")") | \
 	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null ; \
 	fi
-	for pkg in $(LAZY_PKGS); do \
+	@for pkg in $(LAZY_PKGS); do \
 	  $(MAKE) --no-print-directory PKG=$${pkg} RHOME=$(RHOME) \
 	  BUILD=$(BUILD) RLIB=$(RLIB) R_START_PACKAGES=NULL\
 	  -C ../library/$${pkg} -f $(RHOME)/src/gnuwin32/MakePkg lazyload; \
