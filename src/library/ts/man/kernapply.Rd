@@ -22,6 +22,7 @@ kernapply(k1, k2)
 \value{
     A smoothed version of the input sequence.
 }
+\author{A. Trapletti}
 \seealso{
     \code{\link{kernel}}, \code{\link{convolve}}, \code{\link{filter}},
     \code{\link{spectrum}}

@@ -21,7 +21,8 @@ cpgram <- function(ts, taper=0.1,
     xm <- frequency(ts)/2
     mp <- length(x)-1
     crit <- 1.358/(sqrt(mp)+0.12+0.11/sqrt(mp))
-    oldpty <- par()$pty
+    oldpty <- par("pty")
+    on.exit(par(oldpty))
     par(pty="s")
     plot(x, cumsum(y)/sum(y), type="s", xlim=c(0, xm),
          ylim=c(0, 1), xaxs="i", yaxs="i", xlab="frequency",
@@ -29,6 +30,5 @@ cpgram <- function(ts, taper=0.1,
     lines(c(0, xm*(1-crit)), c(crit, 1), col = ci.col, lty = 2)
     lines(c(xm*crit, xm), c(0, 1-crit), col = ci.col, lty = 2)
     title(main = main)
-    par(pty=oldpty)
     invisible()
 }

@@ -8,7 +8,7 @@ acf <-
         m <- match.call()
         m[[1]] <- as.name("pacf")
         m$type <- NULL
-        return(eval(m, sys.frame(sys.parent())))
+        return(eval(m, parent.frame()))
     }
     series <- deparse(substitute(x))
     x <- na.action(as.ts(x))
@@ -53,9 +53,15 @@ acf <-
 
 pacf <- function(x, lag.max, plot, na.action, ...) UseMethod("pacf")
 
-pacf.ts <- function(x, lag.max = NULL, plot = TRUE, na.action = na.fail, ...)
+pacf.default <- function(x, lag.max = NULL, plot = TRUE,
+                         na.action = na.fail, ...)
 {
     series <- deparse(substitute(x))
+    if(is.matrix(x)) {
+        m <- match.call()
+        m[[1]] <- as.name("pacf.mts")
+        return(eval(m, parent.frame()))
+    }
     x <- na.action(as.ts(x))
     x.freq <- frequency(x)
     if(any(is.na(x))) stop("NAs in x")

@@ -52,7 +52,7 @@ plot.acf(acf.obj, ci=0.95, ci.col="blue", ci.type=c("white", "ma"), ...)
     Function \code{ccf} computes the cross-correlation or
     cross-covariance of two univariate series.
 
-    The generic function \code{plot} has a method for acf objects.
+    The generic function \code{plot} has a method for \code{acf} objects.
 }
 \details{
     For \code{type} = \code{"correlation"} and \code{"covariance"}, the

@@ -3,16 +3,18 @@
 \alias{ar.burg}
 \alias{ar.yw}
 \alias{ar.ols}
+\alias{ar.mle}
 \alias{print.ar}
 \alias{predict.ar}
 \title{Fit Autoregressive Models to Time Series}
 \usage{
-ar(x, aic = TRUE, order.max = NULL, method=c("yule-walker", "burg", "ols"),
-   na.action, series)
+ar(x, aic = TRUE, order.max = NULL,
+   method=c("yule-walker", "burg", "ols", "mle"), na.action, series)
 ar.burg(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series,
         var.method = 1)
 ar.yw(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series)
 ar.ols(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series)
+ar.mle(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series)
 predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
 }
 \arguments{
@@ -25,10 +27,11 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
 
     \item{order.max}{Maximum order (or order) of model to fit. Defaults
 	to \eqn{10\log_{10}(N)}{10*log10(N)} where \eqn{N} is the number
-	of observations.}
+	of observations except for \code{method="mle"} where it is the
+	minimum of this quantity and 12.}
 
     \item{method}{Character string giving the method used to fit the
-	model.  Must be one of \code{"yule-walker"} or \code{"burg"}
+	model.  Must be one of the strings in the default argument
 	(the first few characters are sufficient).  Defaults to
 	\code{"yule-walker"}.}
 
@@ -57,10 +60,11 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
 }
 \details{
     \code{ar} is just a wrapper for the functions \code{ar.yw},
-    \code{ar.burg} and \code{ar.ols}.
+    \code{ar.burg}, \code{ar.ols} and \code{ar.mle}.
 
     Order selection is done by AIC if \code{aic} is true. This is
-    problematic, as the methods here do not perform true maximum likelihood
+    problematic, as of the methods here only \code{ar.mle} performs
+    true maximum likelihood
     estimation. The AIC is computed as if the variance
     estimate were the MLE, omitting the determinant term from the
     likelihood. Note that this is not the same as the Gaussian likelihood
@@ -82,13 +86,13 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
     (\code{ar.ols}) estimating an additive constant.
 
     \code{ar.ols} fits the general AR model (containing an intercept
-    if \code{demean == TRUE} to a possibly non-stationary and/or
+    if \code{demean = TRUE}) to a possibly non-stationary and/or
     multivariate system of series \code{x}. The resulting
     unconstrained least squares estimates are consistent, even if
     some of the series are non-stationary and/or co-integrated.
 }
 \value{
-    For \code{ar} and its methods list of class \code{"ar"} with
+    For \code{ar} and its methods a list of class \code{"ar"} with
     the following elements:
   \item{order}{The order of the fitted model.  This is chosen by
       minimizing the AIC if \code{aic=TRUE}, otherwise it is \code{order.max}.}
@@ -108,9 +112,8 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
       are set to \code{NA}. If \code{x} is a time series, so is \code{resid}.}
   \item{method}{The value of the \code{method} argument.}
   \item{series}{The name(s) of the time series.}
-  \item{asy.var.coef}{(\code{ar.yw} only.) The asymptotic-theory
-      variance matrix of the coefficient estimates (only for
-      univariate time series).}
+  \item{asy.var.coef}{(univariate, not \code{ar.ols}) The asymptotic-theory
+      variance matrix of the coefficient estimates.}
   \item{asy.se.coef}{(\code{ar.ols} only.) The asymptotic-theory
       standard errors of the coefficient estimates.}
 
@@ -119,12 +122,15 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
   predictions, and \code{se}, the estimated standard errors. Both
   components are time series.
 }
-\author{Martyn Plummer, univariate case of \code{ar.yw} and C code for
-    \code{ar.burg} by B.D. Ripley,
+\author{Martyn Plummer, univariate case of \code{ar.yw}, \code{ar.mle}
+    and C code for \code{ar.burg} by B.D. Ripley,
     \code{ar.ols} by Adrian Trapletti.}
 
 \note{
-    Only the univariate case of \code{ar.burg} is implemented.
+    Only the univariate cases of \code{ar.burg} and \code{ar.mle} are
+    implemented.
+
+    Fitting by \code{method="mle"} to long series can be very slow.
 }
 
 \references{
@@ -163,6 +169,7 @@ sunspot.ar <- ar(sunspot.year)
 sunspot.ar
 ar(x = sunspot.year, method = "burg")
 ar(x = sunspot.year, method = "ols")
+ar(x = sunspot.year, method = "mle")
 predict(sunspot.ar, n.ahead=25)
 
 data(BJsales)

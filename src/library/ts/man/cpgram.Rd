@@ -14,20 +14,15 @@ cpgram(ts, taper=0.1, main=
          paste("Series: ", deparse(substitute(ts))))
 }
 \arguments{
-\item{ts}{
-time series
+    \item{ts}{a univariate time series}
+    \item{taper}{proportion tapered in forming the periodogram}
+    \item{main}{main title}
 }
-\item{taper}{
-proportion tapered in forming the periodogram
-}
-\item{main}{
-main title
-}}
 \value{
-old parameter settings
+    None.
 }
 \section{Side Effects}{
-plots the cumulative periodogram in a square plot.
+    Plots the cumulative periodogram in a square plot.
 }
 \author{B.D. Ripley}
 \note{

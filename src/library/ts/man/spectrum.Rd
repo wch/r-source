@@ -37,6 +37,9 @@ plot.spec(spec.obj, add=FALSE, ci=0.95,
     \item{ci.col, ci.lty}{Colour for plotting confidence bar, colour and
 	line type for confidence intervals for coherency and phase.}
 
+    \item{plot.type}{For multivariate time series, the type of plot
+	required. Only the first character is needed.}
+
     \item{\dots}{Further graphical parameters.}
 }
 \description{
@@ -59,7 +62,8 @@ plot.spec(spec.obj, add=FALSE, ci=0.95,
 	corresponding to \code{freq}.}
 
     \item{coh}{\code{NULL} for univariate series. For multivariate time
-	series, a matrix containing the squared coherency between different
+	series, a matrix containing the \emph{squared} coherency
+	between different
 	series. Column \eqn{ i + (j - 1) * (j - 2)/2} of \code{coh}
 	contains the squared coherency between columns \eqn{i} and \eqn{j}
 	of \code{x}, where \eqn{i > j}.}
@@ -80,7 +84,7 @@ plot.spec(spec.obj, add=FALSE, ci=0.95,
     The spectrum here is defined with scaling \code{1/frequency(x)},
     following S-PLUS. This makes the spectral density a density over the
     range \code{(-frequency(x)/2, +frequency(x)/2]}, whereas a more
-    common scaling is \eqn{2*\pi} and range (-0.5, 0.5]
+    common scaling is \eqn{2\pi} and range  \eqn{(-0.5, 0.5]}
     (e.g. Bloomfield) or 1 and range \eqn{(-\pi, \pi]}.
 
     If available, a confidence interval will be plotted by

@@ -18,6 +18,10 @@ cbind.ts(..., dframe=FALSE, union=TRUE)
     Bind time series which have a common frequency. \code{ts.union} pads with
     NAs to the total time coverage, \code{ts.intersect} restricts to the
     time covered by all the series.
+
+    As a special case, \code{\dots} can contain vectors or matrices of
+    the same length as the combined time series of the time series
+    present, as well as those of a single row.
 }
 \value{
     A time series object if \code{dframe} is \code{FALSE}, otherwise

@@ -1,6 +1,6 @@
-"diff" <- function(x, ...) UseMethod("diff")
+diff <- function(x, ...) UseMethod("diff")
 
-"diff.default" <- function (x, lag = 1, differences = 1)
+diff.default <- function(x, lag = 1, differences = 1, ...)
 {
     ismat <- is.matrix(x)
     if (ismat)
@@ -11,17 +11,17 @@
     if (lag * differences >= xlen)
 	return(x[0])
     r <- x
+    class(r) <- NULL # don't want class-specific subset methods
     s <- 1:lag
     if (is.matrix(r)) {
-	for (i in 1:differences) {
-	    rlen <- dim(r)[1]
-	    r <- r[-s, , drop = FALSE] - r[-(rlen + 1 - s), , drop = FALSE]
-	}
+	for (i in 1:differences)
+	    r <- r[-s, , drop = FALSE] - r[-(nrow(r) + 1 - s), , drop = FALSE]
     }
-    else for (i in 1:differences) {
+    else for (i in 1:differences)
 	r <- r[-s] - r[-(length(r) + 1 - s)]
-    }
     xtsp <- attr(x, "tsp")
-    if (is.null(xtsp)) r
-    else ts(r, end = xtsp[2], freq = xtsp[3])
+    if (!is.null(xtsp))
+        tsp(r) <- c(xtsp[1] + lag*differences*xtsp[3], xtsp[2], xtsp[3])
+    class(r) <- class(x)
+    r
 }

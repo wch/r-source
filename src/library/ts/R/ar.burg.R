@@ -7,8 +7,9 @@ ar.burg <-
     if (!is.null(dim(x)))
         stop("Burg's algorithm only implemented for univariate series")
     if (ists <- is.ts(x)) xtsp <- tsp(x)
-    x <- as.vector(na.action(as.ts(x)))
+    x <- na.action(as.ts(x))
     xfreq <- frequency(x)
+    x <- as.vector(x)
     if (demean) {
         x.mean <- mean(x)
         x <- x - x.mean
@@ -42,15 +43,13 @@ ar.burg <-
         attr(resid, "tsp") <- xtsp
         attr(resid, "class") <- "ts"
     }
-    if (ists) {
-        attr(resid, "tsp") <- xtsp
-        attr(resid, "class") <- "ts"
-    }
     res <- list(order = order, ar = ar, var.pred = var.pred, x.mean = x.mean,
                 aic = xaic, n.used = n.used, order.max = order.max,
                 partialacf = partialacf,
                 resid = resid, method = "Burg", series = series,
                 frequency = xfreq, call = match.call())
+    xacf <- acf(x, type = "covariance", lag.max = order, plot=FALSE)$acf
+    res$asy.var.coef <- solve(toeplitz(drop(xacf)))*var.pred/n.used
     class(res) <- "ar"
     return(res)
 }

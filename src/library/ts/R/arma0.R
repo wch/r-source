@@ -1,11 +1,12 @@
 arima0 <- function(x, order=c(0,0,0),
                    seasonal=list(order=c(0,0,0), period=NA), xreg=NULL,
-                   include.mean=(nd==0), na.action=na.fail, delta=0.01)
+                   include.mean=TRUE, na.action=na.fail, delta=0.01)
 {
     series <- deparse(substitute(x))
     if(is.matrix(ts))
         stop("only implemented for univariate time series")
     x <- na.action(as.ts(x))
+    n <- length(x)
     if(is.null(seasonal$period) || is.na(seasonal$period)
        || seasonal$period == 0) seasonal$period <- frequency(x)
     arma <- c(order[-2], seasonal$order[-2], seasonal$period,
@@ -19,14 +20,18 @@ arima0 <- function(x, order=c(0,0,0),
     if(is.null(xreg)) {
         ncxreg <- 0
     } else {
-        if(NROW(xreg) != n.used) stop("lengths of x and xreg do not match")
-        xreg <- as.matrix(xreg)
-        ncxreg <- ncol(xreg)
+        if(NROW(xreg) != n) stop("lengths of x and xreg do not match")
+        ncxreg <- NCOL(xreg)
     }
     class(xreg) <- NULL
-    if(include.mean) {
-        xreg <- cbind(intercept=rep(1, n.used), xreg)
+    if(include.mean && (nd==0)) {
+        xreg <- cbind(intercept=rep(1, n), xreg)
         ncxreg <- ncxreg+1
+    }
+    if(ncxreg) {
+        if(d <- order[2]) xreg <- diff(xreg, 1, d)
+        if(d <- seasonal$order[2]) xreg <- diff(xreg, seasonal$period, d)
+        xreg <- as.matrix(xreg)
     }
     .C("setup_starma",
        as.integer(arma), as.double(x), as.integer(n.used),
@@ -93,72 +98,50 @@ print.arima0 <- function(x, digits = max(3, .Options$digits - 3),
 
 predict.arima0 <- function(object, n.ahead=1, newxreg=NULL, se.fit=TRUE)
 {
-    orig <- data <- eval(parse(text=object$series))
+    data <- eval(parse(text=object$series))
     xr <- object$call$xreg
     xreg <- if(!is.null(xr)) eval(parse(text=xr)) else NULL
+    ncxreg <- NROW(xreg)
+    if(NROW(newxreg) != ncxreg)
+        stop("xreg and newxreg have different numbers of columns")
+    class(xreg) <- NULL
     xtsp <- tsp(data)
     n <- length(data)
     arma <- object$arma
-    if(d <- arma[6])
-        for(i in 1:d) data <- diff(data, 1)
-    if(d <- arma[7])
-        for(i in 1:d) data <- diff(data, arma[5])
-    n.used <- length(data)
     coefs <- object$coef
     narma <- sum(arma[1:4])
-    if(is.null(newxreg)) {
-        ncxreg <- 0
-    } else {
-        xreg <- as.matrix(newxreg)
-        ncxreg <- ncol(newxreg)
-    }
     if(length(coefs) > narma) {
         if(names(coefs)[narma+1] == "intercept") {
-            xreg <- cbind(intercept=rep(1, n.used), xreg)
+            xreg <- cbind(intercept=rep(1, n), xreg)
             newxreg <- cbind(intercept=rep(1, n.ahead), newxreg)
             ncxreg <- ncxreg+1
         }
         data <- data - xreg %*% coefs[-(1:narma)]
+        xm <- newxreg %*% coefs[-(1:narma)]
+    } else xm <- 0
+    ## check invertibility of MA part(s)
+    if(arma[2] > 0) {
+        ma <- coefs[arma[1]+1:arma[2]]
+        if(any(Mod(polyroot(c(1, ma)))) < 1)
+            warning("ma part of model is not invertible")
+    }
+    if(arma[4] > 0) {
+        ma <- coefs[sum(arma[1:3])+1:arma[4]]
+        if(any(Mod(polyroot(c(1, ma)))) < 1)
+            warning("seasonal ma part of model is not invertible")
     }
     .C("setup_starma",
        as.integer(arma), as.double(data),
-       as.integer(n.used),
-       as.double(rep(0, n.used)), as.integer(0), as.double(-1))
+       as.integer(n),
+       as.double(rep(0, n)), as.integer(0), as.double(-1))
     arma0f(coefs)
-    z <- .C("arma0_fore", as.integer(n.ahead), x=double(n.ahead),
-            var=double(n.ahead))
+    z <- .C("arma0_kfore", as.integer(arma[6]), as.integer(arma[7]),
+            as.integer(n.ahead), x=double(n.ahead), var=double(n.ahead))
     .C("free_starma")
-    x <- z$x
-    if(length(coefs) > narma) {
-        x <- x + newxreg[1:n.ahead,, drop=FALSE] %*% coefs[-(1:narma)]
-    }
-    if(nd <- arma[6]+arma[7]) { ## undifference
-        X <- matrix(0, n + n.ahead, nd + 1)
-        X[1:n, 1] <- orig
-        X[n+(1:n.ahead), nd+1] <- x
-        xx <- matrix(.C("arima0_fore",
-                as.integer(n.ahead),
-                as.integer(n),
-                X = as.double(X),
-                as.integer(c(rep(1, arma[6]), rep(arma[5], arma[7]))),
-                as.integer(nd))$X, , nd+1)
-        x <- xx[n+(1:n.ahead), 1]
-    }
-    pred <- ts(x, start = xtsp[2] + deltat(data), frequency=xtsp[3])
-    if(se.fit && !nd) {
-        se <- ts(sqrt(z$var * object$sigma2),
+    pred <- ts(z$x + xm, start = xtsp[2] + deltat(data), frequency=xtsp[3])
+    if(se.fit) {
+        se <- ts(sqrt(z$var),
                  start = xtsp[2] + deltat(data), frequency=xtsp[3])
-        return(pred, se)
-    } else if(se.fit && nd) {
-        npsi <- n.ahead - 1
-        psi <- .C("arimatoma",
-                  as.integer(arma),
-                  as.double(coefs),
-                  psi=double(n.ahead),
-                  as.integer(npsi))$psi[1:npsi]
-        vars <- cumsum(c(1, psi^2))
-        se <- sqrt(object$sigma2 * vars)
-        se <- ts(se, start = xtsp[2] + deltat(data), frequency=xtsp[3])
         return(pred, se)
     } else return(pred)
 }

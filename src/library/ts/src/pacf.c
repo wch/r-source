@@ -72,6 +72,14 @@ void F77_NAME(kalfor)(int *m, int* ip, int* ir, int* np, double* phi,
 		      double *a, double *p, double *v, double *work,
 		      double *x, double *var);
 
+void F77_NAME(forkal)(int *ip, int *iq, int *ir, int *np, int *ird, 
+		      int *irz, int *id, int *il, int *n, int *nrbar, 
+		      double *phi, double *theta, double *delta, 
+		      double *w, double *y, double *amse, double *a, 
+		      double *p, double *v, double *resid, double *e, 
+		      double *xnext, double *xrow, double *rbar, 
+		      double *thetab, double *store, int *ifault);
+
 
 void setup_starma(int *na, double *x, int *pn, double *xreg, int *pm,
 		  double *dt)
@@ -187,6 +195,50 @@ void arma0_fore(int *n_ahead, double *x, double *var)
     F77_CALL(kalfor)(n_ahead, &ip, &ir, &np, phi, a, p, v, work, x, var);
     Free(work);
 }
+
+void arma0_kfore(int *pd, int *psd, int *n_ahead, double *x, double *var)
+{
+    int d, ird, irz, il=*n_ahead, ifault=0, i, j;
+    double *del, *del2, *a1, *p1, *e1, *store;
+    
+    d = *pd + ns**psd;
+    ird = ir + d;
+    irz = ird*(ird+1)/2;
+    
+    del = Calloc(d+1, double);
+    del2 = Calloc(d+1, double);
+    del[0] = 1;
+    for(i = 1; i <= d; i++) del[i] = 0;
+    for (j = 0; j < *pd; j ++) {
+	for(i = 0; i <= d; i++) del2[i] = del[i];
+	for(i = 0; i <= d-1; i++) del[i+1] -= del2[i];
+    }
+    for (j = 0; j < *psd; j ++) {
+	for(i = 0; i <= d; i++) del2[i] = del[i];
+	for(i = 0; i <= d-ns; i++) del[i+ns] -= del2[i];
+    }
+    for(i = 1; i <= d; i++) del[i] *= -1;
+    /*for(i = 1; i <= d; i++) printf(" %f", del[i]); printf("\n");*/
+
+    
+    a1 = Calloc(ird, double);
+    p1 = Calloc(irz, double);
+    resid = Calloc(n, double);
+    e1 = Calloc(ir, double);
+    store = Calloc(ird, double);
+
+    F77_CALL(forkal)(&ip, &iq, &ir, &np, &ird, 
+		     &irz, &d, &il, &n, &nrbar, 
+		     phi, theta, del+1, 
+		     w, x, var, a1, 
+		     p1, v, resid, e1, 
+		     xnext, xrow, rbar, 
+		     thetab, store, &ifault);
+    Free(del); Free(del2); 
+    Free(a1); Free(p1); Free(e1);
+    Free(store);
+}
+
 void arima0_fore(int *n_ahead, int *pn, double *x, int *seas, int *nsea)
 {
     int i, k, sd, n = *pn, na = *n_ahead, N = n+na, ns = *nsea, nc = 0;

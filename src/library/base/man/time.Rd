@@ -1,60 +1,53 @@
 \name{time}
-\title{Sampling Times of Time-Series}
+\title{Sampling Times of Time Series}
 \usage{
-time(x, offset=0)
-start(x)
-end(x)
-frequency(x)
-tsp(x)
-tsp(x) <- value
+time(x, offset=0, ...)
+cycle(x, ...)
+frequency(x, ...)
+deltat(x, ...)
 }
 \alias{time}
-\alias{start}
-\alias{end}
+\alias{cycle}
 \alias{frequency}
-\alias{tsp}
-\alias{tsp<-}
+\alias{deltat}
 \alias{time.default}
-\alias{start.default}
-\alias{end.default}
+\alias{cycle.default}
 \alias{frequency.default}
-\alias{time.ts}
-\alias{start.ts}
-\alias{end.ts}
-\alias{frequency.ts}
+\alias{deltat.default}
 \arguments{
-\item{x}{a time-series.}
+    \item{x}{a univariate or multivariate time-series, or a vector or matrix.}
+    \item{offset}{can be used to indicate when sampling took place
+	in the time unit. \code{0} (the default) indicates the start
+	of the unit, \code{0.5} the middle and \code{1} the end of
+	the interval.}
+    \item{\dots}{extra arguments for future methods.}
 }
 \description{
-  \code{time}, \code{start}, \code{end} and \code{frequency} are generic
-  functions with a \code{default} and a \code{ts} method (see
-  \code{\link{methods}}).
-  \code{tsp(x)} returns \code{c(start(x),end(x),frequency(x))}.
+  \code{time} creates the vector of times at which a time series was sampled.
+
+  \code{cycle} gives the positions in the cycle of each observation.
+
+  \code{frequency} returns the number of samples per unit time and
+  \code{deltat} the time interval between observations (see
+  \code{\link{ts}}).
 }
 \details{
-  \code{time} creates the vector of times at which a time series was sampled.
-  \code{offset} can be used to indicate when sampling took place
-  in the time unit.
-  \code{0} indicates the start of the unit, \code{0.5} the middle and
-  \code{1} the end of the interval.
-
-  \code{start} and \code{end} extract
-  the times the first and last observations were taken
-  and \code{frequency} returns the number of samples per unit time.
-
-  \code{tsp(x)} returns the vector \code{c(start(x),end(x),frequency(x))}.
-  It is included for compatibility with the S language.
-  In the assignment form, \code{value} must be a numeric of length 3 or
-  \code{NULL} which removes the \code{"tsp"} attribute \emph{and} the
-  \code{"ts"} class of \code{x}.
+    These are all generic functions, which will use the
+    \code{\link{tsp}} attribute of \code{x} if it exists. \code{time}
+    and \code{cycle} have methods for class \code{\link{ts}} that coerce
+    the result to that class.
 }
 \seealso{
-  \code{\link{ts}}, \code{\link{window}}
-  and \code{\link{system.time}} for CPU usage.
+    \code{\link{ts}}, \code{\link{start}}, \code{\link{tsp}},
+    \code{\link{window}}.
+
+    \code{\link{date}} for clock time, \code{\link{system.time}}
+    for CPU usage.
 }
 \examples{
 data(presidents)
-# a simple series plot
+cycle(presidents)
+# a simple series plot: c() makes the x and y arguments into vectors
 plot(c(time(presidents)), c(presidents), type="l")
 }
 \keyword{ts}

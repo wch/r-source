@@ -1,7 +1,7 @@
 ## based on, especially multivariate case, code by Martyn Plummer
 ar <-
     function (x, aic = TRUE, order.max = NULL,
-              method=c("yule-walker","burg", "ols"),
+              method=c("yule-walker","burg", "ols", "mle"),
               na.action = na.fail, series = deparse(substitute(x)), ...)
 {
     res <- switch(match.arg(method),
@@ -10,8 +10,10 @@ ar <-
 	"burg" = ar.burg(x, aic=aic, order.max=order.max,
                               na.action = na.action, series=series, ...),
 	"ols" = ar.ols(x, aic=aic, order.max=order.max,
+                              na.action = na.action, series=series, ...),
+ 	"mle" = ar.mle(x, aic=aic, order.max=order.max,
                               na.action = na.action, series=series, ...)
-    )
+   )
     res$call <- match.call()
     res
 }

@@ -12,7 +12,6 @@ spec.taper <- function (x, p = 0.1)
 {
     if (any(p < 0) || any(p > 0.5))
         stop("p must be between 0 and 0.5")
-    x <- as.ts(x)
     a <- attributes(x)
     x <- as.matrix(x)
     nc <- ncol(x)

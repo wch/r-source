@@ -50,10 +50,3 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
     y
 }
 
-arima.sim <- function(n, ar = NULL, ma = NULL, sigma = 1.0)
-{
-    x <- ts(rnorm(n+100, 0, sigma^2), start = -99)
-    if(length(ma)) x <- filter(x, ma, sides=1)
-    if(length(ar)) x <- filter(x, ar, method="recursive")
-    x[-(1:100)]
-}

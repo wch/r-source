@@ -1,7 +1,8 @@
 ## code by Adrian Trapletti
 ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
-                    demean = TRUE, series = deparse(substitute(x)), ...)
+                    demean = TRUE, series = NULL, ...)
 {
+    if(is.null(series)) series <- deparse(substitute(x))
     if(ists <- is.ts(x)) xtsp <- tsp(x)
     x <- na.action(as.ts(x))
     xfreq <- frequency(x)
@@ -100,12 +101,12 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         attr(E, "tsp") <- xtsp
         attr(E, "class") <- "ts"
     }
-    res<- list(order = m, ar = ar, var.pred = var.pred,
-               x.mean = x.mean, aic = aic,
-               n.used = n.used, order.max = order.max,
-               partialacf=NULL, resid=E, method = "Unconstrained LS",
-               series = series, frequency = xfreq, call = match.call(),
-               asy.se.coef = list(x.mean = sem, ar=drop(ses)))
+    res <- list(order = m, ar = ar, var.pred = var.pred,
+                x.mean = x.mean, aic = aic,
+                n.used = n.used, order.max = order.max,
+                partialacf=NULL, resid=E, method = "Unconstrained LS",
+                series = series, frequency = xfreq, call = match.call(),
+                asy.se.coef = list(x.mean = sem, ar=drop(ses)))
     class(res) <- "ar"
     res
 }

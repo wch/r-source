@@ -18,15 +18,15 @@ predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
      of differencing and the MA order.}
 
  \item{seasonal}{A specification of the seasonal part of the ARIMA
-     model, plus the period (which defaults to \code{frequency(x)}.}
+     model, plus the period (which defaults to \code{frequency(x)}).}
 
  \item{xreg}{Optionally, a vector or matrix of external regressors,
-     which must have the same number of rows as \code{x}
-     \emph{after differencing}.}
+     which must have the same number of rows as \code{x}.}
 
- \item{include.mean}{Should the ARMA model (after differencing) include
+ \item{include.mean}{Should the ARIMA model include
      a mean term? The default is \code{TRUE} for undifferenced series,
-     \code{FALSE} for differenced ones.}
+     \code{FALSE} for differenced ones (where a mean would not affect
+     the fit nor predictions).}
 
  \item{na.action}{Function to be applied to remove missing values.}
 
@@ -55,18 +55,20 @@ predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
     enough to its asymptotic bound. The argument \code{delta} sets the
     tolerance: at its default value the approximation is normally
     negligible and the speed-up considerable. Exact computations can be
-    ensured by setting \code{delta} to  negative value.
+    ensured by setting \code{delta} to a negative value.
 
     The variance matrix of the estimates is found from the Hessian of
     the log-likelihood, and so may only be a rough guide, especially for
-    fits close to the boundary for invertibility.
-
-    The regression on \code{xreg} is done after differencing has been
-    performed.
+    fits close to the boundary of invertibility.
 
     Optimization is (currently) done by \code{\link{nlm}}. It will work
     best if the columns in \code{xreg} are roughly scaled to zero mean
     and unit variance.
+
+    Finite-history prediction is used. This is only statistically
+    efficient if the MA part of the fit is invertible, so
+    \code{predict.arima0} will give a warning for non-invertible MA
+    models.
 }
 \value{
   For \code{arima0}, a list of class \code{"arima0"} with components:
@@ -82,9 +84,10 @@ predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
 
   \item{arma}{A compact form of the specification, as a vector giving
       the number of AR, MA, seasonal AR and seasonal MA coefficients,
-      plus the period.}
+      plus the period and the number of non-seasonal and seasonal
+      differences.}
 
-  \item{aic}{the AIC value corresponding to that log-likelihood.}
+  \item{aic}{the AIC value corresponding to the log-likelihood.}
 
   \item{resid}{the residuals.}
 
@@ -109,28 +112,30 @@ predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
     \emph{Applied Statistics} \bold{29}, 311-322.
 
     Harvey, A. C. (1993) \emph{Time Series Models},
-    2nd Edition, Harvester Wheatsheaf, NY, section 4.4.
+    2nd Edition, Harvester Wheatsheaf, section 4.4.
+
+    Harvey, A. C. and McKenzie, C. R. (1982) Algorithm AS182.
+    An algorithm for finite sample prediction from ARIMA processes.
+    \emph{Applied Statistics} \bold{31}, 180-187.
 }
 
 \author{B.D. Ripley}
 \note{
     This is a preliminary version, and will be replaced in due course.
 
-    The standard errors of prediction exclude the uncertainly in the
+    The standard errors of prediction exclude the uncertainty in the
     estimation of the ARMA model and the regression coefficients.
 
     The results are likely to be different from S-PLUS's
     \code{arima.mle}, which computes a conditional likelihood and does
-    not include a mean in the model. Further, \code{arima.mle} reverses
-    the signs of the MA coefficients.
+    not include a mean in the model. Further, the convention used by
+    \code{arima.mle} reverses the signs of the MA coefficients.
 }
-
 
 \seealso{\code{\link{ar}}}
 
 \examples{
 data(lh)
-
 arima0(lh, order=c(1,0,0))
 arima0(lh, order=c(3,0,0))
 arima0(lh, order=c(1,0,1))
