@@ -27,48 +27,51 @@
 
 #include "Mathlib.h"
 
-/* static double expmax = 0.0; */
-
-#define repeat for(;;)
-
 #define expmax	(DBL_MAX_EXP * M_LN2)/* = log(DBL_MAX) */
 
 double rbeta(double aa, double bb)
 {
+    double a, b, alpha;
+    double r, s, t, u1, u2, v, w, y, z;
+
+    int qsame;
     /* FIXME:  Keep Globals (properly) for threading */
-
-    /*--- MM: I have a first fix, quite nice, but w/ a bug (20/1/2000) ----*/
-
     /* Uses these GLOBALS to save time when many rv's are generated : */
-    static double a, b, delta, r, s, t, u1, u2, v, w, y, z;
-    static double alpha, beta, gamma, k1, k2;
+    static double beta, gamma, delta, k1, k2;
     static double olda = -1.0;
     static double oldb = -1.0;
-    int qsame;
 
     if (aa <= 0. || bb <= 0.)
 	ML_ERR_return_NAN;
+
+    /* Test if we need new "initializing" */
+    qsame = (olda == aa) && (oldb == bb);
+    if (!qsame) { olda = aa; oldb = bb; }
 
     a = fmin2(aa, bb);
     b = fmax2(aa, bb); /* a <= b */
     alpha = a + b;
 
-    qsame = (olda == aa) && (oldb == bb);
-    if (!qsame) {
-      olda = aa;
-      oldb = bb;
-    }
+#define v_w_from__u1_bet(AA)			\
+	    v = beta * log(u1 / (1.0 - u1));	\
+	    if (v <= expmax)			\
+		w = AA * exp(v);		\
+	    else				\
+		w = DBL_MAX
 
-    if (a <= 1.0) {	/* Algorithm BC */
+
+    if (a <= 1.0) {	/* --- Algorithm BC --- */
+
+	/* changed notation, now also a <= b (was reversed) */
 
 	if (!qsame) { /* initialize */
 	    beta = 1.0 / a;
 	    delta = 1.0 + b - a;
-	    k1 = delta * (0.0138889 + 0.0416667 * a) /
-		(b * beta - 0.777778);
+	    k1 = delta * (0.0138889 + 0.0416667 * a) / (b * beta - 0.777778);
 	    k2 = 0.25 + (0.5 + 0.25 / delta) * a;
 	}
-	repeat {
+	/* FIXME: "do { } while()", but not trivially because of "continue"s:*/
+	for(;;) {
 	    u1 = unif_rand();
 	    u2 = unif_rand();
 	    if (u1 < 0.5) {
@@ -78,26 +81,19 @@ double rbeta(double aa, double bb)
 		    continue;
 	    } else {
 		z = u1 * u1 * u2;
-		if (z <= 0.25)
+		if (z <= 0.25) {
+		    v_w_from__u1_bet(b);
 		    break;
+		}
 		if (z >= k2)
 		    continue;
 	    }
-	    v = beta * log(u1 / (1.0 - u1));
-	    if (v <= expmax)
-		w = b * exp(v);
-	    else
-		w = DBL_MAX;
-	    if (alpha * (log(alpha / (a + w)) + v) - 1.3862944 >= log(z))
-		goto deliver;
-	}
-	v = beta * log(u1 / (1.0 - u1));
-	if (v <= expmax)
-	    w = b * exp(v);
-	else
-	    w = DBL_MAX;
 
-    deliver:
+	    v_w_from__u1_bet(b);
+
+	    if (alpha * (log(alpha / (a + w)) + v) - 1.3862944 >= log(z))
+		break;
+	}
 	return (aa == a) ? a / (a + w) : w / (a + w);
 
     }
@@ -110,11 +106,9 @@ double rbeta(double aa, double bb)
 	do {
 	    u1 = unif_rand();
 	    u2 = unif_rand();
-	    v = beta * log(u1 / (1.0 - u1));
-	    if (v <= expmax)
-		w = a * exp(v);
-	    else
-		w = DBL_MAX;
+
+	    v_w_from__u1_bet(a);
+
 	    z = u1 * u1 * u2;
 	    r = gamma * v - 1.3862944;
 	    s = a + r - w;
