@@ -592,7 +592,7 @@ sub transform_S4method {
     ## Note that this markup should really only be used inside \usage.
     my ($text) = @_;
     my $S4method_RE =
-      "([ \t]*)\\\\S4method\{([\\w.]+)\}\{(\\w.,]+)\}";
+      "([ \t]*)\\\\S4method\{([\\w.]+)\}\{([\\w.,]+)\}";
     local($Text::Wrap::columns) = 60;
     while($text =~ /$S4method_RE/) {
 	my $pretty = wrap("$1\#\# ", "$1\#\#   ",
