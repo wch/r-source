@@ -29,6 +29,14 @@
 \value{
   An object of class \code{c("summary.aov", "listof")} or
   \code{"summary.aovlist"} respectively.
+
+  For a fits with a single stratum the result will be a list of
+  ANOVA tables, one for each response (even if there is only one response):
+  the tables are of class \code{"anova"} inheriting from class
+  \code{"data.frame"}.
+
+  For multistratum fits the return value is a list of summaries, one for
+  each stratum.
 }
 \note{
   The use of \code{expand.split = TRUE} is little tested: it is always
@@ -63,7 +71,8 @@ CC.aov <- aov(y ~ N * P, data = CC , weights = rep(12, 9))
 summary(CC.aov)
 
 # Split both main effects into linear and quadratic parts.
-summary(CC.aov, split = list(N = list(L = 1, Q = 2), P = list(L = 1, Q = 2)))
+summary(CC.aov, split = list(N = list(L = 1, Q = 2),
+                             P = list(L = 1, Q = 2)))
 
 # Split only the interaction
 summary(CC.aov, split = list("N:P" = list(L.L = 1, Q = 2:4)))
