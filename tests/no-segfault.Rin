@@ -39,7 +39,8 @@ dev.int <- c("X11", "x11", "pdf", "postscript",
 misc.2 <- c("help.start", "browseEnv",
             "gctorture", "q", "quit", "restart", "try",
             "read.fwf", "source",## << MM thinks "FIXME"
-            "data.entry", "dataentry", "de", apropos("^de\."))
+            "data.entry", "dataentry", "de", apropos("^de\."),
+            "chooseCRANmirror", "setRepositories")
 if(.Platform$OS.type == "windows") {
     dev.int <- c(dev.int, "bmp", "windows", "win.graph", "win.print",
                 "win.metafile")
