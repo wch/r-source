@@ -39,8 +39,10 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL)
   these values should be identical to those that
   \code{\link{axis}(side)} would use or has used.
 }
-\seealso{\code{\link{axis}},\code{\link{par}}.}
-
+\seealso{\code{\link{axis}}, \code{\link{par}}.  \code{\link{pretty}}
+  uses the same algorithm but is independent of the graphics
+  environment and has more options.
+}
 \examples{
  plot(1:7, 10*21:27)
  axTicks(1)
