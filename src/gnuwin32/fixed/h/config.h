@@ -133,7 +133,7 @@
 #define R_PRINTCMD  "UNKNOWN"
 
 /* Define this to enable R-level profiling. */
-#undef R_PROFILING
+#define R_PROFILING 1
 
 /* Define this to be the name of the vendor of your system. */
 #define R_VENDOR "pc"

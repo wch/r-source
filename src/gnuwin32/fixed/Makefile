@@ -63,10 +63,13 @@ fixh: h/config.h ../FFDecl.h ../FFTab.h \
 ../../../bin/Rdiff.sh: ../../scripts/Rdiff
 	$(SED) -e 1d $< > $@
 
+../../../bin/Rprof: ../../scripts/Rprof.in
+	$(SED) -e 1d -e "s/R CMD/Rcmd/" $< > $@
+
 fixbin: ../../../bin/massage-Examples.sh ../../../bin/build \
 	   ../../../bin/check ../../../bin/Rdconv ../../../bin/Rdindex \
 	   ../../../bin/Sd2Rd ../../../bin/extract-usage \
-	   ../../../bin/Rdiff.sh cp2bin
+	   ../../../bin/Rdiff.sh ../../../bin/Rprof cp2bin
 	$(ECHO) done > fixbin
 
 cp2bin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))

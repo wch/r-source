@@ -40,13 +40,9 @@ void isintrpt(){}
 
 #endif
 
-#ifdef Win32
-extern void R_ProcessEvents();
-#endif
-
 #ifdef R_PROFILING
 
-/* BDR 2000/7/15
+/* BDR 2000-07-15
    Profiling is now controlled by the R function Rprof(), and should
    have negligible cost when not enabled.
 */
@@ -86,11 +82,17 @@ extern void R_ProcessEvents();
 
    L. T.  */
 
+#ifdef Win32
+#include <windows.h>  /* for CreateEvent, SetEvent */
+#include <process.h> /* for _beginthread, _endthread */
+#else
 #include <sys/time.h>
 #include <signal.h>
+#endif
 
 FILE *R_ProfileOutfile = NULL;
 static int R_Profiling = 0;
+
 
 static void doprof(int sig)
 {
@@ -108,7 +110,9 @@ static void doprof(int sig)
     }
     if (newline)
 	fprintf(R_ProfileOutfile, "\n");
+#ifndef Win32
     signal(SIGPROF, doprof);
+#endif
 }
 
 static void doprof_null(int sig)
@@ -116,8 +120,25 @@ static void doprof_null(int sig)
     signal(SIGPROF, doprof_null);
 }
 
+#ifdef Win32
+HANDLE ProfileEvent;
+
+/* Profiling thread main function */
+static void __cdecl ProfileThread(void *pwait)
+{
+    int wait = *((int *)pwait);
+
+    while(WaitForSingleObject(ProfileEvent, wait) != WAIT_OBJECT_0) {
+	doprof(0); /* arg unused */
+    }
+}
+#endif
+
 static void R_EndProfiling()
 {
+#ifdef Win32
+    SetEvent(ProfileEvent);
+#else
     struct itimerval itv;
 
     itv.it_interval.tv_sec = 0;
@@ -126,6 +147,7 @@ static void R_EndProfiling()
     itv.it_value.tv_usec = 0;
     setitimer(ITIMER_PROF, &itv, NULL);
     signal(SIGPROF, doprof_null);
+#endif
     fclose(R_ProfileOutfile);
     R_ProfileOutfile = NULL;
     R_Profiling = 0;
@@ -133,7 +155,11 @@ static void R_EndProfiling()
 
 static void R_InitProfiling(char * filename, int append, double dinterval)
 {	
+#ifndef Win32
     struct itimerval itv;
+#else
+    int wait;
+#endif
     int interval = 1e6 * dinterval+0.5;
 
     if(R_ProfileOutfile != NULL) R_EndProfiling();
@@ -141,6 +167,13 @@ static void R_InitProfiling(char * filename, int append, double dinterval)
     if (R_ProfileOutfile == NULL)
 	R_Suicide("can't open profile file");
     fprintf(R_ProfileOutfile, "sample.interval=%d\n", interval);
+
+#ifdef Win32
+    wait = interval/1000;
+    if(!(ProfileEvent = CreateEvent(NULL, FALSE, FALSE, NULL)) || 
+       (_beginthread(ProfileThread, 1000, &wait) == -1))
+	R_Suicide("unable to create profiling thread");
+#else
     signal(SIGPROF, doprof);
 
     itv.it_interval.tv_sec = 0;
@@ -149,6 +182,7 @@ static void R_InitProfiling(char * filename, int append, double dinterval)
     itv.it_value.tv_usec = interval;
     if (setitimer(ITIMER_PROF, &itv, NULL) == -1)
 	R_Suicide("setting profile timer failed");
+#endif
     R_Profiling = 1;
 }
 

@@ -5,8 +5,8 @@ HELP = YES
 WINHELP = CHM# NO, CHM, BOTH
 
 LEA_MALLOC=YES
-USE_LIBXML=YES
-#USE_WININET=YES
+#USE_LIBXML=YES
+USE_WININET=YES
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -49,7 +49,8 @@ endif
 
 ifdef USE_WININET
 R-DLLLIBS+=-lwininet
-OPTFLAGS+=-DUSE_WININET
+#OPTFLAGS+=-DUSE_WININET
+OPTFLAGS+=-DUSE_WININET -DUSE_WININET_ASYNC
 endif
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
@@ -297,7 +298,7 @@ bindist: docfiles
 	$(RM) $(RPREFIX)/*/Makefile.in
 	(cd $(RPREFIX)/bin; $(RM) Rcmd.exe INSTALL REMOVE SHLIB build check \
 	   massage-Examples.sh Rd2dvi.sh Rd2txt Rdconv Rdiff.sh Rdindex \
-           extract-usage Sd2Rd)
+           extract-usage Sd2Rd Rprof)
 	$(MKDIR) $(RPREFIX)/etc
 	$(CP) -p ../../etc/Rprofile $(RPREFIX)/etc/Rprofile
 	$(CP) -p ../../etc/Rconsole $(RPREFIX)/etc/Rconsole
@@ -379,7 +380,7 @@ packagedist:
 	  ../../bin/build ../../bin/check ../../bin/massage-Examples.sh \
 	  ../../bin/Rd2dvi.sh ../../bin/Rd2txt ../../bin/Rdconv \
 	  ../../bin/Rdindex ../../bin/Rdiff.sh ../../bin/extract-usage \
-	  ../../bin/Sd2Rd ../../bin/Rcmd.exe \
+	  ../../bin/Sd2Rd ../../bin/Rprof ../../bin/Rcmd.exe \
           $(RPREFIX)/bin
 	$(CP) ../../etc/Makeconf-tests $(RPREFIX)/etc
 	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
