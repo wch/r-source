@@ -33,6 +33,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
         Z[i2, i2] <- .C("dblcen", x = 2*d, as.integer(n), PACKAGE="stats")$x
         e <- eigen(Z, symmetric = FALSE, only.values = TRUE)$values
         add.c <- max(Re(e))
+        ## and construct a new x[,] matrix:
 	x <- matrix(double(n*n), n, n)
         non.diag <- row(d) != col(d)
         x[non.diag] <- (d[non.diag] + add.c)^2
