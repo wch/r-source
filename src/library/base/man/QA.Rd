@@ -16,7 +16,8 @@ checkTnF(file, package, lib.loc = .lib.loc)
   \item{file}{the name of a file containing R code to be checked.}
   \item{package}{a character string naming an installed package.  If
     given and \code{file} is not given, the installed R code of the
-    package is checked.}
+    package is checked.  Currently, there is no support for R code
+    installed as an image file.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search for \code{package}.}
 }
