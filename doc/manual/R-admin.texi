@@ -1775,7 +1775,7 @@ of the ``Additional capabilities''.  Then if @R{} is started in a UTF-8
 locale it assumes that the terminal will supply and display
 UTF-8-encoded characters@footnote{You may have to set this with
 @code{luit}, but it should be the default in a window manager session
-started in UTF-8.}.  If run in a single-byte locale @R{} behaves almost
+started in UTF-8.}.  If run in a single-byte locale, @R{} behaves almost
 exactly as if it was configured with @option{--disable-mbcs}.
 
 A version of @R{} with MBCS support can also be run in other multi-byte
@@ -1788,6 +1788,13 @@ locales.
 Translation of messages is supported via GNU @code{gettext} unless
 disabled by the configure option @option{--disable-nls} or the
 underlying OS has insufficiently standard C functions to support it.
+The @code{configure} report will show @code{NLS} as one of the 
+`Additional capabilities' if support has been compiled in, and running
+in an English locale (but not the @code{C} locale) will include
+@example
+  Natural language support but running in an English locale
+@end example
+in the greeting on starting R.
 
 
 @node Configuration variables, Using make, Internationalization support, Configuration on Unix
