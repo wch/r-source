@@ -1832,6 +1832,7 @@ function(package, dir, lib.loc = NULL)
                       == TRUE]
 
     methodsStopList <- .makeS3MethodsStopList(basename(dir))
+    S3groupGenerics <- .getS3groupGenerics()
 
     checkArgs <- function(g, m, env) {
         ## Do the arguments of method m (in codeEnv) 'extend' those of
@@ -1845,8 +1846,10 @@ function(package, dir, lib.loc = NULL)
         ogArgs <- gArgs
         gm <- if(m %in% S3reg) {
             ## See registerS3method() in namespace.R.
-            defenv <- if (typeof(genfun) == "closure") environment(genfun)
-            else .BaseNamespaceEnv
+            defenv <-
+                if (g %in% S3groupGenerics) .BaseNamespaceEnv
+                else if (typeof(genfun) == "closure") environment(genfun)
+                else .BaseNamespaceEnv
             S3Table <- get(".__S3MethodsTable__.", envir = defenv)
             if(!exists(m, envir = S3Table)) {
                 warning(paste("declared S3 method", sQuote(m),
@@ -1894,6 +1897,9 @@ function(package, dir, lib.loc = NULL)
            envir = S3groupGenericsEnv)
     assign("Summary",
            function(x, ...) UseMethod("Summary"),
+           envir = S3groupGenericsEnv)
+    assign("Complex",
+           function(x, ...) UseMethod("Complex"),
            envir = S3groupGenericsEnv)
 
     ## Now determine the 'bad' methods in the function objects of the
