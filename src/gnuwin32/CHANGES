@@ -20,6 +20,10 @@ environment variable is not set properly, R would not start (PR#6802).
 
 Under ESS, Rterm would freeze when quitting (PR#6812).
 
+The file.show code failed to close its FindFirst handle and so the
+directory on which it was used (often the R temporary directory) could
+not be deleted from within R.
+
 
 
 rw1090
