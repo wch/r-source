@@ -47,8 +47,10 @@ plot.default(x, y=NULL, type = "p", col = par("fg"), bg = NA,
   \item{cex}{a numerical value giving the amount by which plotting text
     and symbols should be scaled relative to the default}
   \item{lty}{the line type}
-  \item{lwd}{the line width (is this used at all ???)}
-  \item{\dots}{graphical parameters may also be passed as arguments.}
+  \item{lwd}{the line width \bold{not supported yet}}
+  \item{\dots}{graphical parameters as in \code{\link{par}(\dots)} may
+    also be passed as arguments.  Additionally, \code{asp}, the
+    \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
 }
 \value{
   This function is invoked for its side effect of drawing a scatter plot
@@ -60,7 +62,7 @@ plot.default(x, y=NULL, type = "p", col = par("fg"), bg = NA,
   Monterey, CA: Wadsworth.
 }
 \seealso{
-  \code{\link{plot}}, \code{\link{xy.coords}}.
+  \code{\link{plot}}, \code{\link{plot.window}}, \code{\link{xy.coords}}.
 }
 \examples{
 data(cars)
