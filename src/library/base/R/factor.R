@@ -1,5 +1,6 @@
-"factor" <- function (x, levels = sort(unique(x), na.last = TRUE),
-	labels=as.character(levels), exclude = NA, ordered = FALSE)
+"factor" <-
+  function (x, levels = sort(unique(x), na.last = TRUE),
+	labels=levels, exclude = NA, ordered = FALSE)
 {
   if (length(x) == 0)
     return(character(0))
@@ -7,10 +8,16 @@
   levels <- levels[is.na(match(levels, exclude))]
   f <- match(x, levels)
   names(f) <- names(x)
-  attr(f, "levels") <- if (length(labels) == length(levels)) labels
-    else if(length(labels) == 1) paste(labels, seq(along = levels), sep = "")
-  else stop("invalid labels argument in \"factor\"")
-  attr(f, "class") <- c(if(ordered)"ordered", "factor")
+  attr(f, "levels") <- if (length(labels) == length(levels))
+    as.character(labels)
+  else if(length(labels) == 1)
+    paste(labels, seq(along = levels), sep = "")
+  else
+    stop("invalid labels argument in \"factor\"")
+  if (ordered) 
+    attr(f, "class") <- c("ordered", "factor")
+  else
+    attr(f, "class") <- "factor"
   f
 }
 
@@ -109,7 +116,7 @@ codes.factor <- function(x)
 
 "ordered" <-
   function (x, levels = sort(unique(x), na.last = TRUE),
-	    labels=as.character(levels), exclude = NA)
+	    labels=levels, exclude = NA, ordered = TRUE) 
 {
   if (is.ordered(x)) return(x)
   if (is.factor(x)) {
@@ -123,10 +130,16 @@ codes.factor <- function(x)
 
   f <- match(x, levels)
   names(f) <- names(x)
-  attr(f, "levels") <- if (length(labels) == length(levels)) labels
-    else if(length(labels) == 1) paste(labels, seq(along = levels), sep = "")
-  else stop("invalid labels argument in \"ordered\"")
-  attr(f, "class") <- c("ordered", "factor")
+  attr(f, "levels") <- if (length(labels) == length(levels))
+    as.character(labels)
+  else if(length(labels) == 1)
+    paste(labels, seq(along = levels), sep = "")
+  else
+    stop("invalid labels argument in \"ordered\"")
+  if (ordered) 
+    attr(f, "class") <- c("ordered", "factor")
+  else
+    attr(f, "class") <- "factor"
   f
 }
 
