@@ -167,6 +167,9 @@ NEW FEATURES
 
     o	New functions which.min() & which.max().
 
+    o	Functions recordPlot() and replayPlot() save a plot to an R
+	variable and replay it.
+
 
 BUG FIXES
 
@@ -238,6 +241,11 @@ BUG FIXES
 	killed R.
 
     o	Multiple `destroy' events or X11 errors killed R (PR#400).
+
+    o	Warnings from .Last or closing devices are printed where
+	sensible (e.g. not on GNOME or Windows console).
+
+    o	lqs(, method="S") rounded k0 on passing to C.
 
 
 		CHANGES IN R VERSION 1.0.1

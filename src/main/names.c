@@ -672,6 +672,10 @@ FUNTAB R_FunTab[] =
 {"dotplot",	do_dotplot,	0,	111,	1,	PP_FUNCALL},
 {"persp",	do_persp,	0,	111,	4,	PP_FUNCALL},
 {"filledcontour",do_filledcontour,0,    111,    5,      PP_FUNCALL},
+{"getDL",	do_getDL,	0,	111,	0,	PP_FUNCALL},
+{"playDL",	do_playDL,	0,	111,	1,	PP_FUNCALL},
+{"getGPar",	do_getGPar,	0,	111,	0,	PP_FUNCALL},
+{"setGPar",	do_setGPar,	0,	111,	1,	PP_FUNCALL},
 
 /* Objects */
 
