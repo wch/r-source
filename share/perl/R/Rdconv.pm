@@ -2234,7 +2234,6 @@ sub latex_code_cmd {
 
     my $code = $_[0];
 
-    warn("\nERROR: found `\@' in \\code{...\}\n") if $code =~ /@/;
     $code = latex_code_trans ($code);
     $code = "\\code\{" . $code . "\}";
     $code;
