@@ -731,7 +731,7 @@ SEXP type2symbol(SEXPTYPE t)
        character string and to the symbol would be better */
     for (i = 0; TypeTable[i].str; i++) {
 	if (TypeTable[i].type == t)
-	    return install(TypeTable[i].str);
+	    return install((char *)&TypeTable[i].str);
     }
     UNIMPLEMENTED("type2str");
     return R_NilValue; /* for -Wall */
