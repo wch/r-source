@@ -10,21 +10,18 @@
   row-heights specified in the respective arguments.
 }
 \usage{
-layout(mat,
-       widths = rep(1, dim(mat)[2]),
-       heights = rep(1, dim(mat)[1]),
-       respect = FALSE)
+layout(mat, widths = rep(1, ncol(mat)),
+       heights = rep(1, nrow(mat)), respect = FALSE)
 
 layout.show(n = 1)
 lcm(x)
 }
 \arguments{
   \item{mat}{a matrix object specifying the location of the next
-    \eqn{N} figures
-    on the output device.  Each value in the matrix must be \code{0} or a
-    positive integer.     If \eqn{N} is the largest positive integer in
-    the matrix, then the integers \eqn{\{1,\dots,N-1\}} must also appear
-    at least once in the matrix.}
+    \eqn{N} figures on the output device.  Each value in the matrix must
+    be \code{0} or a positive integer.  If \eqn{N} is the largest
+    positive integer in the matrix, then the integers
+    \eqn{\{1,\dots,N-1\}} must also appear at least once in the matrix.}
   \item{widths}{a vector of values for the widths of columns on the
     device.  Relative widths are specified with numeric values.    Absolute
     widths (in centimetres) are specified with the \code{lcm()} function (see
@@ -45,6 +42,9 @@ lcm(x)
     The \code{respect} argument controls whether a unit column-width is
     the same physical measurement on the device as a unit row-height.
 
+    There is a limit, currently 15, for the numbers of rows and columns
+    in the layout.
+    
     \code{layout.show(n)} plots (part of) the current layout, namely the
     outlines of the next \code{n} figures.
 
