@@ -150,22 +150,14 @@ as.table.ftable <- function(x)
     x
 }
 
-write.ftable <- function(x, file = "", quote = TRUE)
+write.ftable <- function(x, file = "", quote = TRUE,
+                         digits = getOption("digits"))
 {
     if(!inherits(x, "ftable"))
         stop("x must be an `ftable'")
     ox <- x
-    charQuote <- function(s) {
-        ## If `quote' is TRUE, we want to quote all character strings in
-        ## the output.  However, simply quoting using `"' does not work
-        ## because the left-adjusted formatting below calls format()
-        ## which escapes `"' to `\"'.  Hence, we quote using `@', and
-        ## use gsub() after formatting ...
-        if(quote)
-            paste("@", s, "@", sep = "")
-        else
-            s
-    }
+    charQuote <- function(s)
+        if(quote) paste("\"", s, "\"", sep = "") else s
     makeLabels <- function(lst) {
         lens <- sapply(lst, length)
         cplensU <- c(1, cumprod(lens))
@@ -186,21 +178,17 @@ write.ftable <- function(x, file = "", quote = TRUE)
                         makeLabels(xrv)),
                   c(charQuote(names(xcv)),
                     rep("", times = nrow(x) + 1)))
-    DATA <- rbind(t(makeLabels(xcv)), rep("", times = ncol(x)), x)
-    x <- cbind(apply(LABS, 2, formatC, flag = "-"),
-               apply(DATA, 2, formatC))
-    if(quote) {
-        ## Now change the leading and sort-of-trailing `@' obtained from
-        ## quoting to `"'
-        x[] <- gsub("^@", "\"", x)
-        x[] <- gsub("@( *)$", "\"\\1", x)
-    }
+    DATA <- rbind(t(makeLabels(xcv)),
+                  rep("", times = ncol(x)),
+                  format(unclass(x), digits = digits))
+    x <- cbind(apply(LABS, 2, format, justify = "left"),
+               apply(DATA, 2, format, justify = "right"))
     cat(t(x), file = file, sep = c(rep(" ", ncol(x) - 1), "\n"))
     invisible(ox)
 }
 
-print.ftable <- function(x)
-    write.ftable(x, quote = FALSE)
+print.ftable <- function(x, digits = getOption("digits"), ...)
+    write.ftable(x, quote = FALSE, digits = digits)
 
 read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
                         col.vars, skip = 0)
