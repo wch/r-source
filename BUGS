@@ -225,10 +225,10 @@ none
 
 Directory:  incoming
 
-* PR# 833 *
-Subject: link in FAQ incorrect
-From: Gijsbert Stoet <stoet@pcg.wustl.edu>
-Date: Tue, 30 Jan 2001 16:18:43 -0600
+* PR# 837 *
+Subject: screen doesn't handle redrawing properly
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 01 Feb 2001 14:20:52 -0500
 * PR# 830 *
 Subject: Disappearing x axis in plot.factor
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -245,3 +245,19 @@ Date: Tue, 30 Jan 2001 15:52:49 +0100 (MET)
 Subject: screen can't go back to (split) screen with log="y" plot
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 30 Jan 2001 00:39:41 -0500
+* PR# 834 *
+Subject:  inconsistent behaviour between class() and inherits() 
+From: adrian@olsen.ch
+Date: Thu, 01 Feb 2001 10:07:13 +0100
+* PR# 833 *
+Subject: link in FAQ incorrect
+From: Gijsbert Stoet <stoet@pcg.wustl.edu>
+Date: Tue, 30 Jan 2001 16:18:43 -0600
+* PR# 836 *
+Subject: configure bug in R-1.2.1 and earlier
+From: Lars Hecking <lhecking@nmrc.ie>
+Date: Thu, 1 Feb 2001 18:41:09 +0000
+* PR# 835 *
+Subject: factors in data.frames
+From: Jim Lindsey <james.lindsey@luc.ac.be>
+Date: Thu, 1 Feb 2001 10:55:59 +0100 (MET)
