@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-17, 2003-11-15
+Version 1.8-18, 2003-11-23
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -246,7 +246,7 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-The current released version is 1.8.0.  Based on this
+The current released version is 1.8.1.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, working towards the next patch (`r-patched') and minor or
 eventually major (`r-devel') releases of R, respectively.  Version
@@ -1899,6 +1899,10 @@ distributions of R.)
 
 *lpridge*
      Local polynomial (ridge) regression.
+
+*magic*
+     A variety of methods for creating magic squares of any order greater
+     than 2, and various magic hypercubes.
 
 *mapdata*
      Supplement to package *maps*, providing the larger and/or

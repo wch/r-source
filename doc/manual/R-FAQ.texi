@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-17, @value{FAQ-YEAR}-11-15
-@set REL-VERSION 1.8.0
+@set FAQ-VERSION 1.8-18, @value{FAQ-YEAR}-11-23
+@set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -440,7 +440,7 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-11-08:
+@c Linux binaries as of 2003-11-23:
 @c
 @c debian    woody i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
 @c           sarge i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
@@ -451,9 +451,9 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c           9     i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
 @c suse      7.3   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           8.0   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           8.1   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           8.2   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           9.0   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.1   i386  1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.2   i386  1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           9.0   i386  1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c vinelinux 2.6   i386  1.8.0  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains Debian
@@ -2063,6 +2063,9 @@ Functions that solve general linear/integer problems, assignment
 problems, and transportation problems via interfacing Lp_solve.
 @item lpridge
 Local polynomial (ridge) regression.
+@item magic
+A variety of methods for creating magic squares of any order greater
+than 2, and various magic hypercubes.
 @item mapdata
 Supplement to package @strong{maps}, providing the larger and/or
 higher-resolution databases.
