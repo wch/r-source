@@ -288,7 +288,7 @@ For each package you want to install, unpack it to a directory, say
 mypkg, in RHOME\src\library, and run
 
 	cd RHOME\src\gnuwin32
-	make pkgnoC-mypkg
+	make pkg-mypkg
 
 
 If you have a Unix/Linux box, it will suffice to zip up the Unix
