@@ -55,7 +55,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
     papersize is taken from the option \code{"papersize"}
     if that is set and to \code{"a4"} if it is unset or empty.}
   \item{horizontal}{the orientation of the printed image, a
-    logical. Defaults to true, that is landscape orientation.}
+    logical. Defaults to true, that is landscape orientation on paper
+    sizes with width less than height.}
   \item{width, height}{the width and height of the graphics region in
     inches.  The default is to use the entire page less a 0.25 inch
     border on each side.}
