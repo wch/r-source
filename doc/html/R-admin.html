@@ -6,12 +6,7 @@
 <link href="http://texinfo.org/" rel=generator-home>
 </head><body>
 
-<p><hr>
-Node:<a name="Top">Top</a>,
-Next:<a rel=next href="#Obtaining%20R">Obtaining R</a>,
-Previous:<a rel=previous href="#(dir)">(dir)</a>,
-Up:<a rel=up href="#(dir)">(dir)</a>
-<br>
+<a name="Top"></a>
 
 <h1>R Installation and Administration</h1>
 
@@ -19,45 +14,21 @@ Up:<a rel=up href="#(dir)">(dir)</a>
 
 <p>The current version of this document is 1.3.0 (2001-05-16).
 
-<ul>
-<li><a href="#Obtaining%20R">Obtaining R</a>: 
-<li><a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>: 
-<li><a href="#Installing%20R%20under%20Windows">Installing R under Windows</a>: 
-<li><a href="#Installing%20R%20on%20Classic%20MacOS">Installing R on Classic MacOS</a>: 
-<li><a href="#Add-on%20Packages">Add-on Packages</a>: 
-<li><a href="#Essential%20and%20Useful%20Other%20Programs">Essential and Useful Other Programs</a>: 
-<li><a href="#Configuration%20on%20Unix">Configuration on Unix</a>: 
-<li><a href="#New%20Platforms">New Platforms</a>: 
-<li><a href="#Function%20and%20variable%20index">Function and variable index</a>: 
-<li><a href="#Concept%20index">Concept index</a>: 
 </ul>
 
-<p><hr>
-Node:<a name="Obtaining%20R">Obtaining R</a>,
-Next:<a rel=next href="#Installing%20R%20under%20Unix">Installing R under Unix</a>,
-Previous:<a rel=previous href="#Top">Top</a>,
-Up:<a rel=up href="#Top">Top</a>
-<br>
+<a name="Obtaining%20R"></a>
 
-<h1>Obtaining R</h1>
+<h1>1 Obtaining R</h1>
 
 <p>Sources, binaries and documentation for R can be obtained via
 <small>CRAN</small>, the "Comprehensive R Archive Network". See
 the file <code>RESOURCES</code> for information on <small>CRAN</small>.
 
-<ul>
-<li><a href="#Getting%20and%20Unpacking%20the%20Sources">Getting and Unpacking the Sources</a>: 
-<li><a href="#Using%20rsync">Using rsync</a>: 
 </ul>
 
-<p><hr>
-Node:<a name="Getting%20and%20Unpacking%20the%20Sources">Getting and Unpacking the Sources</a>,
-Next:<a rel=next href="#Using%20rsync">Using rsync</a>,
-Previous:<a rel=previous href="#Obtaining%20R">Obtaining R</a>,
-Up:<a rel=up href="#Obtaining%20R">Obtaining R</a>
-<br>
+<a name="Getting%20and%20Unpacking%20the%20Sources"></a>
 
-<h2>Getting and Unpacking the Sources</h2>
+<h2>1.1 Getting and Unpacking the Sources</h2>
 
 <p>The simplest way is to download the most recent <code>R-x.y.z.tgz</code> package,
 and unpack it with
@@ -92,13 +63,9 @@ to the top directory of it and
 <p>Beware that this does not necessarily work if the older sources have
 been modified (e.g., by building in their directories).
 
-<p><hr>
-Node:<a name="Using%20rsync">Using rsync</a>,
-Previous:<a rel=previous href="#Getting%20and%20Unpacking%20the%20Sources">Getting and Unpacking the Sources</a>,
-Up:<a rel=up href="#Obtaining%20R">Obtaining R</a>
-<br>
+<a name="Using%20rsync"></a>
 
-<h2>Using rsync</h2>
+<h2>1.2 Using rsync</h2>
 
 <p>Sources are also available via anonymous rsync.  Use
 
@@ -116,14 +83,9 @@ The <code>-C</code> option in the <code>rsync</code> command is to cause it to s
 CVS directories.  Further information on <code>rsync</code> is available at
 <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
 
-<p><hr>
-Node:<a name="Installing%20R%20under%20Unix">Installing R under Unix</a>,
-Next:<a rel=next href="#Installing%20R%20under%20Windows">Installing R under Windows</a>,
-Previous:<a rel=previous href="#Obtaining%20R">Obtaining R</a>,
-Up:<a rel=up href="#Top">Top</a>
-<br>
+<a name="Installing%20R%20under%20Unix"></a>
 
-<h1>Installing R under Unix</h1>
+<h1>2 Installing R under Unix</h1>
 
 <p>R will configure and build from source under a number of common
 Unix-like platforms, including <code>i386-freebsd</code>, <code>i386-linux</code>,
@@ -137,20 +99,11 @@ See the FAQ for current details.  These are installed in
 platform-specific ways.  So for the rest of this chapter we consider
 only building from the sources.
 
-<ul>
-<li><a href="#Simple%20Compilation">Simple Compilation</a>: 
-<li><a href="#Making%20the%20Manuals">Making the Manuals</a>: 
-<li><a href="#Installation">Installation</a>: 
 </ul>
 
-<p><hr>
-Node:<a name="Simple%20Compilation">Simple Compilation</a>,
-Next:<a rel=next href="#Making%20the%20Manuals">Making the Manuals</a>,
-Previous:<a rel=previous href="#Installing%20R%20under%20Unix">Installing R under Unix</a>,
-Up:<a rel=up href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
-<br>
+<a name="Simple%20Compilation"></a>
 
-<h2>Simple Compilation</h2>
+<h2>2.1 Simple Compilation</h2>
 
 <p>First review the essential and useful tools and libraries in
 <a href="#Essential%20and%20Useful%20Other%20Programs">Essential and Useful Other Programs</a>, and install those
@@ -210,14 +163,9 @@ and the R FAQ (files <code>FAQ</code> or <code>doc/html/faq.html</code> or the
 latest version at
 <a href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html">http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html</a>).
 
-<p><hr>
-Node:<a name="Making%20the%20Manuals">Making the Manuals</a>,
-Next:<a rel=next href="#Installation">Installation</a>,
-Previous:<a rel=previous href="#Simple%20Compilation">Simple Compilation</a>,
-Up:<a rel=up href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
-<br>
+<a name="Making%20the%20Manuals"></a>
 
-<h2>Making the Manuals</h2>
+<h2>2.2 Making the Manuals</h2>
 
 <p>There is a set of manuals that can be built from the sources,
 
@@ -235,7 +183,7 @@ Up:<a rel=up href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
 <dd>"R Data Import/Export".
 
 <br><dt><code>R-admin</code>
-<dd>"R Installation and Administration".
+<dd>"R Installation and Administration", this manual.
 
 <br><dt><code>R-exts</code>
 <dd>"Writing R Extensions".
@@ -265,13 +213,9 @@ using Acrobat Reader or (recent versions of) ghostscript: they have
 hyperlinks that can be followed in Acrobat Reader.  The info files are
 suitable for reading online with Emacs or the standalone GNU Info.
 
-<p><hr>
-Node:<a name="Installation">Installation</a>,
-Previous:<a rel=previous href="#Making%20the%20Manuals">Making the Manuals</a>,
-Up:<a rel=up href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
-<br>
+<a name="Installation"></a>
 
-<h2>Installation</h2>
+<h2>2.3 Installation</h2>
 
 <p>After
 <pre>	./configure
@@ -318,14 +262,9 @@ install into another directory by using
 set <code>umask</code> appropriately (perhaps to <code>022</code>) before unpacking the
 sources and throughout the build process.
 
-<p><hr>
-Node:<a name="Installing%20R%20under%20Windows">Installing R under Windows</a>,
-Next:<a rel=next href="#Installing%20R%20on%20Classic%20MacOS">Installing R on Classic MacOS</a>,
-Previous:<a rel=previous href="#Installing%20R%20under%20Unix">Installing R under Unix</a>,
-Up:<a rel=up href="#Top">Top</a>
-<br>
+<a name="Installing%20R%20under%20Windows"></a>
 
-<h1>Installing R under Windows</h1>
+<h1>3 Installing R under Windows</h1>
 
 <p>The <code>bin/windows</code> directory of a <small>CRAN</small> site contains
 binaries for a base distribution and a large number of add-on packages
@@ -346,17 +285,11 @@ R this way you can uninstall it from the Control Panel or Start Menu
 <p>For more details see the
 <a href="http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html">R Windows <small>FAQ</small></a>.
 
-<ul>
-<li><a href="#Building%20from%20Source">Building from Source</a>: 
 </ul>
 
-<p><hr>
-Node:<a name="Building%20from%20Source">Building from Source</a>,
-Previous:<a rel=previous href="#Installing%20R%20under%20Windows">Installing R under Windows</a>,
-Up:<a rel=up href="#Installing%20R%20under%20Windows">Installing R under Windows</a>
-<br>
+<a name="Building%20from%20Source"></a>
 
-<h2>Building from Source</h2>
+<h2>3.1 Building from Source</h2>
 
 <p>If you want to build this port from the sources, see the file
 <code>src/gnuwin32/INSTALL</code> in the source distribution. You will need to
@@ -377,14 +310,9 @@ make
 <p>For further details, including how to make the documentation and how to
 cross-compile, see <code>src/gnuwin32/INSTALL</code>.
 
-<p><hr>
-Node:<a name="Installing%20R%20on%20Classic%20MacOS">Installing R on Classic MacOS</a>,
-Next:<a rel=next href="#Add-on%20Packages">Add-on Packages</a>,
-Previous:<a rel=previous href="#Installing%20R%20under%20Windows">Installing R under Windows</a>,
-Up:<a rel=up href="#Top">Top</a>
-<br>
+<a name="Installing%20R%20on%20Classic%20MacOS"></a>
 
-<h1>Installing R on Classic MacOS</h1>
+<h1>4 Installing R on Classic MacOS</h1>
 
 <p>The <code>bin/macos</code> directory of a <small>CRAN</small> site contains
 <code>bin-hex</code>ed (<code>hqx</code>) and <code>stuffit</code> (<code>sit</code>)
@@ -397,19 +325,10 @@ Classic Environment.
 <p>There is also a port to MacOS X which is considered to be a Unix variant
 in this document.
 
-<p><hr>
-Node:<a name="Add-on%20Packages">Add-on Packages</a>,
-Next:<a rel=next href="#Essential%20and%20Useful%20Other%20Programs">Essential and Useful Other Programs</a>,
-Previous:<a rel=previous href="#Installing%20R%20on%20Classic%20MacOS">Installing R on Classic MacOS</a>,
-Up:<a rel=up href="#Top">Top</a>
-<br>
+<a name="Add-on%20Packages"></a>
 
-<h1>Add-on Packages</h1>
+<h1>5 Add-on Packages</h1>
 
-<ul>
-<li><a href="#Installing%20packages">Installing packages</a>: 
-<li><a href="#Updating%20packages">Updating packages</a>: 
-<li><a href="#Removing%20packages">Removing packages</a>: 
 </ul>
 
 <p>This chapter applies to Unix-like and Windows versions of R, but not
@@ -421,14 +340,9 @@ library is a directory containing installed packages; the main library
 is <code>R_HOME/library</code>, but others can be used, for example by setting
 the environment variable <code>R_LIBS</code> or the R object <code>.lib.loc</code>.
 
-<p><hr>
-Node:<a name="Installing%20packages">Installing packages</a>,
-Next:<a rel=next href="#Updating%20packages">Updating packages</a>,
-Previous:<a rel=previous href="#Add-on%20Packages">Add-on Packages</a>,
-Up:<a rel=up href="#Add-on%20Packages">Add-on Packages</a>
-<br>
+<a name="Installing%20packages"></a>
 
-<h2>Installing packages</h2>
+<h2>5.1 Installing packages</h2>
 
 <p>Note that you need to specify implicitly or explicitly the library to
 which the package is to be installed.  This is only an issue if you have
@@ -468,14 +382,9 @@ versions of packages and downloads the latest version (if any).
 <p>On Windows <code>install.packages</code> can also install a binary package
 from a local <code>zip</code> file by setting argument <code>CRAN</code> to <code>NULL</code>.
 
-<p><hr>
-Node:<a name="Updating%20packages">Updating packages</a>,
-Next:<a rel=next href="#Removing%20packages">Removing packages</a>,
-Previous:<a rel=previous href="#Installing%20packages">Installing packages</a>,
-Up:<a rel=up href="#Add-on%20Packages">Add-on Packages</a>
-<br>
+<a name="Updating%20packages"></a>
 
-<h2>Updating packages</h2>
+<h2>5.2 Updating packages</h2>
 
 <p>The command <code>update.packages()</code> is the simplest way to ensure that
 all the packages on your system are up to date. Set the <code>CRAN</code>
@@ -484,13 +393,9 @@ downloads the list of available packages and their current versions,
 compares it with those installed and offers to fetch and install any
 that have later versions on <small>CRAN</small>.
 
-<p><hr>
-Node:<a name="Removing%20packages">Removing packages</a>,
-Previous:<a rel=previous href="#Updating%20packages">Updating packages</a>,
-Up:<a rel=up href="#Add-on%20Packages">Add-on Packages</a>
-<br>
+<a name="Removing%20packages"></a>
 
-<h2>Removing packages</h2>
+<h2>5.3 Removing packages</h2>
 
 <p>Packages can be removed in a number of ways.  From a command prompt they
 can be removed by
@@ -511,32 +416,19 @@ can be removed by
 <p>Finally, in most installations one can just remove the package directory
 from the library.
 
-<p><hr>
-Node:<a name="Essential%20and%20Useful%20Other%20Programs">Essential and Useful Other Programs</a>,
-Next:<a rel=next href="#Configuration%20on%20Unix">Configuration on Unix</a>,
-Previous:<a rel=previous href="#Add-on%20Packages">Add-on Packages</a>,
-Up:<a rel=up href="#Top">Top</a>
-<br>
+<a name="Essential%20and%20Useful%20Other%20Programs"></a>
 
-<h1>Essential and Useful Other Programs</h1>
+<h1>Appendix A Essential and Useful Other Programs</h1>
 
 <p>This appendix gives details of programs you will need to build R on
 Unix-like platforms, or which will be used by R if found by
 <code>./configure</code>.
 
-<ul>
-<li><a href="#Essential%20Programs">Essential Programs</a>: 
-<li><a href="#Useful%20Libraries%20and%20Programs">Useful Libraries and Programs</a>: 
 </ul>
 
-<p><hr>
-Node:<a name="Essential%20Programs">Essential Programs</a>,
-Next:<a rel=next href="#Useful%20Libraries%20and%20Programs">Useful Libraries and Programs</a>,
-Previous:<a rel=previous href="#Essential%20and%20Useful%20Other%20Programs">Essential and Useful Other Programs</a>,
-Up:<a rel=up href="#Essential%20and%20Useful%20Other%20Programs">Essential and Useful Other Programs</a>
-<br>
+<a name="Essential%20Programs"></a>
 
-<h2>Essential Programs</h2>
+<h2>A.1 Essential Programs</h2>
 
 <p>You need a means of compiling C and <small>FORTRAN</small> (see <a href="#Using%20Fortran">Using Fortran</a>). 
 Some add-on packages also need a C++ compiler.
@@ -552,17 +444,11 @@ distributions have 3.12).
 <p>The typeset documentation needs <code>tex</code> and <code>latex</code>, or
 <code>pdftex</code> and <code>pdflatex</code>.
 
-<ul>
-<li><a href="#Building%20on%20MacOS%20X">Building on MacOS X</a>: 
 </ul>
 
-<p><hr>
-Node:<a name="Building%20on%20MacOS%20X">Building on MacOS X</a>,
-Previous:<a rel=previous href="#Essential%20Programs">Essential Programs</a>,
-Up:<a rel=up href="#Essential%20Programs">Essential Programs</a>
-<br>
+<a name="Building%20on%20MacOS%20X"></a>
 
-<h3>Building on MacOS X</h3>
+<h3>A.1.1 Building on MacOS X</h3>
 
 <p>You can build R as a Unix application on MacOS X.  You will need the
 DevTools, <code>f2c</code> (<a href="ftp://netlib.bell-labs.com/netlib/f2c.tar">ftp://netlib.bell-labs.com/netlib/f2c.tar</a><a rel=footnote href="#fn-2"><sup>2</sup></a>) and the <code>dlcompat</code> libraries<a rel=footnote href="#fn-3"><sup>3</sup></a>.
@@ -570,13 +456,9 @@ DevTools, <code>f2c</code> (<a href="ftp://netlib.bell-labs.com/netlib/f2c.tar">
 <p>You will also need to install a X sub-system or configure with
 <code>--without-x</code>.
 
-<p><hr>
-Node:<a name="Useful%20Libraries%20and%20Programs">Useful Libraries and Programs</a>,
-Previous:<a rel=previous href="#Essential%20Programs">Essential Programs</a>,
-Up:<a rel=up href="#Essential%20and%20Useful%20Other%20Programs">Essential and Useful Other Programs</a>
-<br>
+<a name="Useful%20Libraries%20and%20Programs"></a>
 
-<h2>Useful Libraries and Programs</h2>
+<h2>A.2 Useful Libraries and Programs</h2>
 
 <p>The command-line editing depends on the <code>readline</code> library
 available from any GNU mirror: you will need a fairly recent version.
@@ -588,22 +470,14 @@ and <code>libz</code> respectively.
 <p>The <code>bitmap</code> and <code>dev2bitmap</code> devices make use of ghostscript
 (<a href="http://www.cs.wisc.edu/~ghost">http://www.cs.wisc.edu/~ghost</a>).
 
-<ul>
-<li><a href="#Tcl%2fTk">Tcl/Tk</a>: 
-<li><a href="#Linear%20Algebra">Linear Algebra</a>: 
 </ul>
 
-<p><hr>
-Node:<a name="Tcl%2fTk">Tcl/Tk</a>,
-Next:<a rel=next href="#Linear%20Algebra">Linear Algebra</a>,
-Previous:<a rel=previous href="#Useful%20Libraries%20and%20Programs">Useful Libraries and Programs</a>,
-Up:<a rel=up href="#Useful%20Libraries%20and%20Programs">Useful Libraries and Programs</a>
-<br>
+<a name="Tcl%2fTk"></a>
 
-<h3>Tcl/Tk</h3>
+<h3>A.2.1 Tcl/Tk</h3>
 
 <p>The <strong>tcltk</strong> package needs Tcl/Tk installed: the sources are
-available at <a href="dev.scriptics.com">dev.scriptics.com</a>. To specify the locations of the
+available at <a href="http://dev.scriptics.com">http://dev.scriptics.com</a>. To specify the locations of the
 Tcl/Tk files you may need the configuration options
 <dl>
 <dt><code>--with-tcltk</code>
@@ -614,13 +488,9 @@ Tcl/Tk files you may need the configuration options
 <dd>specify location of <code>tkConfig.sh</code>
 </dl>
 
-<p><hr>
-Node:<a name="Linear%20Algebra">Linear Algebra</a>,
-Previous:<a rel=previous href="#Tcl%2fTk">Tcl/Tk</a>,
-Up:<a rel=up href="#Useful%20Libraries%20and%20Programs">Useful Libraries and Programs</a>
-<br>
+<a name="Linear%20Algebra"></a>
 
-<h3>Linear Algebra</h3>
+<h3>A.2.2 Linear Algebra</h3>
 
 <p>The linear algebra routines in R can make use of enhanced BLAS (Basic
 Linear Algebra Subprograms) routines.  Some are compiler-system-specific
@@ -638,32 +508,15 @@ well as for R itself.  This means that it is better to use a
 shared BLAS library, as most of a static library will be compiled into
 the R executable and each BLAS-using package.
 
-<p><hr>
-Node:<a name="Configuration%20on%20Unix">Configuration on Unix</a>,
-Next:<a rel=next href="#New%20Platforms">New Platforms</a>,
-Previous:<a rel=previous href="#Essential%20and%20Useful%20Other%20Programs">Essential and Useful Other Programs</a>,
-Up:<a rel=up href="#Top">Top</a>
-<br>
+<a name="Configuration%20on%20Unix"></a>
 
-<h1>Configuration on Unix</h1>
+<h1>Appendix B Configuration on Unix</h1>
 
-<ul>
-<li><a href="#Configuration%20options">Configuration options</a>: 
-<li><a href="#Configuration%20variables">Configuration variables</a>: 
-<li><a href="#Using%20make">Using make</a>: 
-<li><a href="#Using%20Fortran">Using Fortran</a>: 
-<li><a href="#Compile%20and%20Load%20Flags">Compile and Load Flags</a>: 
-<li><a href="#Building%20the%20GNOME%20Interface">Building the GNOME Interface</a>: 
 </ul>
 
-<p><hr>
-Node:<a name="Configuration%20options">Configuration options</a>,
-Next:<a rel=next href="#Configuration%20variables">Configuration variables</a>,
-Previous:<a rel=previous href="#Configuration%20on%20Unix">Configuration on Unix</a>,
-Up:<a rel=up href="#Configuration%20on%20Unix">Configuration on Unix</a>
-<br>
+<a name="Configuration%20options"></a>
 
-<h2>Configuration options</h2>
+<h2>B.1 Configuration options</h2>
 
 <p><code>configure</code> has many options: running
 <pre>        ./configure --help
@@ -687,14 +540,9 @@ profiled copy of R.
 and to take considerably longer, so you probably only want this if you
 will be using an application which embeds R.
 
-<p><hr>
-Node:<a name="Configuration%20variables">Configuration variables</a>,
-Next:<a rel=next href="#Using%20make">Using make</a>,
-Previous:<a rel=previous href="#Configuration%20options">Configuration options</a>,
-Up:<a rel=up href="#Configuration%20on%20Unix">Configuration on Unix</a>
-<br>
+<a name="Configuration%20variables"></a>
 
-<h2>Configuration variables</h2>
+<h2>B.2 Configuration variables</h2>
 
 <p>If you need or want to set certain configure variables to something
 other than their default, you can do that by either editing the file
@@ -722,14 +570,9 @@ compiler (or a front end shell script which does the re-ordering).
 that some settings are cached in the file <code>config.cache</code>, and it is
 a good idea to remove that file before re-configuring.
 
-<p><hr>
-Node:<a name="Using%20make">Using make</a>,
-Next:<a rel=next href="#Using%20Fortran">Using Fortran</a>,
-Previous:<a rel=previous href="#Configuration%20variables">Configuration variables</a>,
-Up:<a rel=up href="#Configuration%20on%20Unix">Configuration on Unix</a>
-<br>
+<a name="Using%20make"></a>
 
-<h2>Using make</h2>
+<h2>B.3 Using make</h2>
 
 <p>To compile R, you will most likely find it easiest to use GNU
 <code>make</code>.  On Solaris 2.6/7/8 in particular, you need a version of
@@ -747,14 +590,9 @@ variable <code>MAKE</code> at configure time, for example
 	env MAKE=gmake ./configure  (csh)
 </pre>
 
-<p><hr>
-Node:<a name="Using%20Fortran">Using Fortran</a>,
-Next:<a rel=next href="#Compile%20and%20Load%20Flags">Compile and Load Flags</a>,
-Previous:<a rel=previous href="#Using%20make">Using make</a>,
-Up:<a rel=up href="#Configuration%20on%20Unix">Configuration on Unix</a>
-<br>
+<a name="Using%20Fortran"></a>
 
-<h2>Using Fortran</h2>
+<h2>B.4 Using Fortran</h2>
 
 <p>To compile R, you need a <small>FORTRAN</small> compiler or <code>f2c</code>, the
 <small>FORTRAN</small>-to-C converter (<a href="http://www.netlib.org/f2c">http://www.netlib.org/f2c</a>).  The
@@ -779,14 +617,9 @@ that <small>FORTRAN</small> <code>integer</code> is equivalent to a C <code>int<
 <small>FORTRAN</small> <code>double precision</code> is equivalent to a C <code>double</code>
 pointer.  This is checked during the configuration process.
 
-<p><hr>
-Node:<a name="Compile%20and%20Load%20Flags">Compile and Load Flags</a>,
-Next:<a rel=next href="#Building%20the%20GNOME%20Interface">Building the GNOME Interface</a>,
-Previous:<a rel=previous href="#Using%20Fortran">Using Fortran</a>,
-Up:<a rel=up href="#Configuration%20on%20Unix">Configuration on Unix</a>
-<br>
+<a name="Compile%20and%20Load%20Flags"></a>
 
-<h2>Compile and Load Flags</h2>
+<h2>B.5 Compile and Load Flags</h2>
 
 <p>A wide range of flags can be set in the file <code>config.site</code> or via
 environment variables.  We have already mentioned
@@ -826,13 +659,9 @@ use <code>MAIN_CFLAGS=-pg</code>, <code>MAIN_FFLAGS=-pg</code>,
 <code>MAIN_LDFLAGS=-pg</code> on platforms where <code>-pg</code> cannot be used
 with position-independent code.
 
-<p><hr>
-Node:<a name="Building%20the%20GNOME%20Interface">Building the GNOME Interface</a>,
-Previous:<a rel=previous href="#Compile%20and%20Load%20Flags">Compile and Load Flags</a>,
-Up:<a rel=up href="#Configuration%20on%20Unix">Configuration on Unix</a>
-<br>
+<a name="Building%20the%20GNOME%20Interface"></a>
 
-<h2>Building the GNOME Interface</h2>
+<h2>B.6 Building the GNOME Interface</h2>
 
 <p>This interface is experimental, incomplete and not currently being
 developed. It provides a console and a graphics device <code>(gtk()</code>;
@@ -866,11 +695,11 @@ their dependencies installed:
 <p>You will need also <code>libglade</code> 0.5 or later for correct behaviour. 
 For more information on <code>libglade</code> and to download the source, see
 <a href="http://www.daa.com.au/~james/gnome/">http://www.daa.com.au/~james/gnome/</a>.  The sources are also
-available from the GNOME ftp site (<a href="ftp.gnome.org">ftp.gnome.org</a> and mirrors). 
+available from the GNOME ftp site (<a href="ftp://ftp.gnome.org">ftp://ftp.gnome.org</a> and mirrors). 
 RPMs are in RedHat 6.1 and later.
 
 <p>Library <code>libglade</code> needs <code>libxml</code> 1.4 or later, the source for
-which is available from the GNOME ftp site (<a href="ftp.gnome.org">ftp.gnome.org</a> and
+which is available from the GNOME ftp site (<a href="ftp://ftp.gnome.org">ftp://ftp.gnome.org</a> and
 mirrors).
 
 <p>The locations of some of these libraries can be set as configuration
@@ -886,14 +715,9 @@ options, by
 <dd>specify location of <code>libglade-config</code>
 </dl>
 
-<p><hr>
-Node:<a name="New%20Platforms">New Platforms</a>,
-Next:<a rel=next href="#Function%20and%20variable%20index">Function and variable index</a>,
-Previous:<a rel=previous href="#Configuration%20on%20Unix">Configuration on Unix</a>,
-Up:<a rel=up href="#Top">Top</a>
-<br>
+<a name="New%20Platforms"></a>
 
-<h1>New Platforms</h1>
+<h1>Appendix C New Platforms</h1>
 
 <p>There are a number of sources of problems when installing R on a new
 hardware/OS platform:
@@ -928,12 +752,7 @@ platform.
 feel free to get in touch to ask questions.  We've had a fair amount
 of practice at porting R to new platforms <small>...</small>.
 
-<p><hr>
-Node:<a name="Function%20and%20variable%20index">Function and variable index</a>,
-Next:<a rel=next href="#Concept%20index">Concept index</a>,
-Previous:<a rel=previous href="#New%20Platforms">New Platforms</a>,
-Up:<a rel=up href="#Top">Top</a>
-<br>
+<a name="Function%20and%20variable%20index"></a>
 
 <h1>Function and variable index</h1>
 
@@ -946,11 +765,7 @@ Up:<a rel=up href="#Top">Top</a>
 <li><code>rsync</code>: <a href="#Using%20rsync">Using rsync</a>
 <li><code>update.packages</code>: <a href="#Updating%20packages">Updating packages</a>
 </ul>
-<p><hr>
-Node:<a name="Concept%20index">Concept index</a>,
-Previous:<a rel=previous href="#Function%20and%20variable%20index">Function and variable index</a>,
-Up:<a rel=up href="#Top">Top</a>
-<br>
+<a name="Concept%20index"></a>
 
 <h1>Concept index</h1>
 
