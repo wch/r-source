@@ -338,10 +338,17 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 		     int addtohistory)
 {
     if(!R_Interactive) {
+	int ll;
 	if (!R_Slave)
 	    fputs(prompt, stdout);
 	if (fgets((char *)buf, len, stdin) == NULL)
 	    return 0;
+	ll = strlen((char *)buf);
+	/* remove CR in CRLF ending */
+	if (buf[ll - 1] == '\n' && buf[ll - 2] == '\r') {
+	    buf[ll - 2] = '\n';
+	    buf[ll - 1] = '\0';    
+	}
 	if (!R_Slave)
 	    fputs((char *)buf, stdout);
 	return 1;
@@ -369,26 +376,26 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	for (;;) {
 	    InputHandler *what = waitForActivity();
 	    if(what != NULL) {
-              if(what->fileDescriptor == fileno(stdin)) {
+		if(what->fileDescriptor == fileno(stdin)) {
   	        /* We could make this a regular handler, but we need to pass additional arguments. */
 #ifdef HAVE_LIBREADLINE
-		if (UsingReadline) {
-		    rl_callback_read_char();
-		    if (readline_eof)
-			return 0;
-		    if (readline_gotaline)
-			return 1;
-		}
-		else
-#endif
-		{
-		    if(fgets((char *)buf, len, stdin) == NULL)
-			return 0;
+		    if (UsingReadline) {
+			rl_callback_read_char();
+			if (readline_eof)
+			    return 0;
+			if (readline_gotaline)
+			    return 1;
+		    }
 		    else
-			return 1;
-		}
-	      } else
-                 what->handler((void*) NULL);
+#endif
+		    {
+			if(fgets((char *)buf, len, stdin) == NULL)
+			    return 0;
+			else
+			    return 1;
+		    }
+		} else
+		    what->handler((void*) NULL);
 	    }
 	}
     }

@@ -24,6 +24,8 @@ NEW FEATURES
 	line endings.  This means that readLines() can be used on DOS
 	files and source() on Mac files, for example.
 
+	Also, CRLF-terminated files can be used as stdin on Unix.
+
     o	DESCRIPTION file has a new recommended `Maintainer:' field.
 
     o	New functions factanal(), varimax(), promax() and examples in
