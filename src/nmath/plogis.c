@@ -34,10 +34,7 @@ double plogis(double x, double location, double scale,
 	if (x > 0) return R_DT_1;
 	/* x < 0 */return R_DT_0;
     }
-    if (log_p)
-	return -(lower_tail ? 0 : x) +
-	    logrelerr(exp(-x)); /* logr..() = log(1 + e^{-x}) */
-    /* else */
-    return 1 / (1 + (lower_tail ? exp(-x) : exp(x)));
+    x = exp(lower_tail ? -x : x);
+    return (log_p ? -logrelerr(x) : 1 / (1 + x));
 }
 
