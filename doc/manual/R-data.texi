@@ -1475,6 +1475,7 @@ There is a function @code{writeLines} to write complete text lines
 to a connection.
 
 Some simple examples are
+
 @smallexample
 zz <- file("ex.data", "w")  # open an output file connection
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", 
@@ -1482,21 +1483,21 @@ cat("TITLE extra line", "2 3 5 7", "", "11 13 17",
 cat("One more line\n", file = zz)
 close(zz)
 
-# convert decimal point to comma in output, using a pipe (Unix)
+## convert decimal point to comma in output, using a pipe (Unix)
 zz <- pipe(paste("sed s/\\./,/ >", "outfile"), "w")
 cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)
 close(zz)
-# now look at the output file:
-file.show(outfile), delete.file=TRUE
+## now look at the output file:
+file.show(outfile, delete.file = TRUE)
 
-# capture R output: use examples from help(lm)
+## capture R output: use examples from help(lm)
 zz <- textConnection("ex.lm.out", "w")
 sink(zz)
-example(lm, prompt.echo="> ")
+example(lm, prompt.echo = "> ")
 sink()
 close(zz)
-# now `ex.lm.out' contains the output for futher processing.
-# Look at it by, e.g.,
+## now `ex.lm.out' contains the output for futher processing.
+## Look at it by, e.g.,
 cat(ex.lm.out, sep = "\n")
 @end smallexample
 
@@ -1519,12 +1520,13 @@ read the data twice it is inefficient on a non-seekable connection.
 that via a text connection.)
 
 Some simple examples are
+
 @smallexample
-# read in file created in last examples
+## read in file created in last examples
 readLines("ex.data")
 unlink("ex.data")
 
-# read listing of current directory (Unix)
+## read listing of current directory (Unix)
 readLines(pipe("ls -1"))
 @end smallexample
 
@@ -1552,7 +1554,8 @@ pending lines pushed back can be found via a call to
 @findex pushBackLength
 
 A simple example will show the idea.
-@example
+
+@smallexample
 > zz <- textConnection(LETTERS)
 > readLines(zz, 2)
 [1] "A" "B"
@@ -1564,7 +1567,7 @@ Read 4 items
 Read 4 items
 [1] "aa" "bb" "G"  "H" 
 > close(zz)
-@end example
+@end smallexample
 
 Pushback is only available for connections opened for input in text mode.
 
@@ -1657,33 +1660,32 @@ written in Visual Basic) that is the client and @R{} is the server.
 @acronym{CORBA} (Common Object Request Broker Architecture) is similar
 to @acronym{DCOM}, allowing applications to call methods, or operations,
 in server objects running in other applications, potentially programmed
-in different languages and running on different machines. There is a
+in different languages and running on different machines.  There is a
 @pkg{CORBA} package available from the
 @uref{http://www.omegahat.org/RSCORBA, Omegahat Project}, currently for
 Unix but a Windows version looks to be possible.
 
 This package allows @R{} commands to be used to locate available
 @acronym{CORBA} servers, query the methods they provide, and dynamically
-invoke methods on these objects. @R{} values given as arguments in these
-calls are exported in the call and made available to that operation
-invocation.  Primitive data types (vectors and lists) are exported by
-default, while more complex objects are exported by reference.  Examples
-of using this include communicating with the
+invoke methods on these objects.  @R{} values given as arguments in
+these calls are exported in the call and made available to that
+operation invocation.  Primitive data types (vectors and lists) are
+exported by default, while more complex objects are exported by
+reference.  Examples of using this include communicating with the
 @uref{http://www.gnumeric.org, Gnumeric} spreadsheet, and also
 interacting with the data visualization system
 @uref{http://www.ggobi.org, ggobi}.
 
 One can also create @acronym{CORBA} servers within @R{}, allowing other
-applications to call these methods. For example, one might offer
-access to a particular dataset or to some of @R{}'s modelling
-software.  This is done dynamically by combining @R{} data objects and
-functions. This allows one to explicitly export data and functionality
-from @R{}.
+applications to call these methods.  For example, one might offer access
+to a particular dataset or to some of @R{}'s modelling software.  This
+is done dynamically by combining @R{} data objects and functions.  This
+allows one to explicitly export data and functionality from @R{}.
 
 One can also use the @pkg{CORBA} package to achieve distributed,
 parallel computing in @R{}.  One @R{} session acts as a manager and
 dispatches tasks to different servers running in other @R{} worker
-sessions. This uses the ability to invoke asynchronous or background
+sessions.  This uses the ability to invoke asynchronous or background
 CORBA calls in @R{}.  More information is available from the
 @uref{http://www.omegahat.org/RSCORBA, Omegahat Project}.
 
