@@ -174,7 +174,7 @@ R commands can be interrupted by Esc.
 
 Rterm allows batch mode operation and can also be run in
 inferior-R-mode under NTEmacs.
- 
+
 There is a history mechanism for graphics plots.
 
 Graphics can be copied to the clipboard.

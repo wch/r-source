@@ -258,7 +258,7 @@ struct structConsoleData {
 
     int   cur_pos, max_pos, prompt_len;	/* editing */
     xbuf  history;
-    
+
     char  chbrk, modbrk;	/* hook for user's break */
     void  (*fbrk) ();
 
@@ -633,7 +633,7 @@ FBEGIN
     int i;
     if (p->sel) {
 	p->sel = 0;
-	p->needredraw = 1; 
+	p->needredraw = 1;
 	REDRAW;
     }
     storekey(c, BEGINLINE);
@@ -655,7 +655,7 @@ FBEGIN
     char *pc, *new = NULL;
     if (p->sel) {
 	p->sel = 0;
-	p->needredraw = 1; 
+	p->needredraw = 1;
 	REDRAW;
      }
     if (p->kind == PAGER) FVOIDRETURN;
@@ -667,7 +667,7 @@ FBEGIN
            new = winrealloc((void *)p->clp, strlen(p->clp) + strlen(pc) + 1);
         }
         else {
-           new = winmalloc(strlen(pc) + 1) ;   
+           new = winmalloc(strlen(pc) + 1) ;
            if (new) new[0] = '\0';
            p->already = p->numkeys;
            p->pclp = 0;
@@ -678,7 +678,7 @@ FBEGIN
         }
         else {
            askok("Not enough memory");
-        }   
+        }
         GlobalUnlock(hglb);
     }
     CloseClipboard();
@@ -924,7 +924,7 @@ FBEGIN
     }
     if (p->sel) {
 	p->sel = 0;
-	p->needredraw = 1; 
+	p->needredraw = 1;
 	REDRAW;
     }
 FVOIDEND
@@ -975,9 +975,9 @@ static char consolegetc(control c)
     }
     if (p->sel) {
 	p->sel = 0;
-	p->needredraw = 1; 
+	p->needredraw = 1;
 	REDRAW;
-    }    
+    }
     if (!p->already && p->clp)
     {
 	ch = p->clp[p->pclp++];
@@ -1209,7 +1209,7 @@ int setWidthOnResize = 0;
 int consolecols(console c)
 {
     ConsoleData p = getdata(c);
-    
+
     return p->cols;
 }
 
@@ -1291,7 +1291,7 @@ setconsoleoptions(char *fnname,int fnsty, int fnpoints,
        consolefn = FixedFont;
     }
     if (!ghasfixedwidth(consolefn)) {
-       sprintf(msg, 
+       sprintf(msg,
 	       "Font %s-%d-%d has variable width.\nUsing system fixed font.",
                fontname, fontsty, pointsize);
        askok(msg);
@@ -1517,7 +1517,7 @@ static void pagerpaste(control m)
     if (consolecanpaste(RConsole)) {
 	consolepaste(RConsole);
 	show(RConsole);
-    } 
+    }
 }
 
 static void pagerselectall(control m)
@@ -1565,7 +1565,7 @@ static int pageraddfile(char *wtitle, char *filename, int deleteonexit)
     xbuf nxbuf = file2xbuf(filename, deleteonexit);
 
     if (!nxbuf) {
-	askok("File not found or memory insufficient");
+	askok("Pager: file not found or memory insufficient");
 	return 0;
     }
     if (pagerActualKept == PAGERMAXKEPT) {
@@ -1650,7 +1650,7 @@ static pager pagercreate()
     if (!c) {
          freeConsoleData(p);
          return NULL;
-    }         
+    }
     setdata(c, p);
     if(h == 0) HEIGHT = getheight(c);
     if(w == 0) WIDTH  = getwidth(c);
@@ -1686,10 +1686,10 @@ static pager pagercreate()
     addto(c);
     MCHECK(m = gpopup(pagermenuact, PagerPopup));
     setdata(m, c);
-    setdata(p->mpopcopy = PagerPopup[0].m, c); 
-    setdata(p->mpoppaste = PagerPopup[1].m, c); 
-    setdata(PagerPopup[2].m, c); 
-    setdata(PagerPopup[4].m, c); 
+    setdata(p->mpopcopy = PagerPopup[0].m, c);
+    setdata(p->mpoppaste = PagerPopup[1].m, c);
+    setdata(PagerPopup[2].m, c);
+    setdata(PagerPopup[4].m, c);
     MCHECK(m = newmenubar(pagermenuact));
     setdata(m, c);
     MCHECK(newmenu("File"));
