@@ -229,7 +229,7 @@ enum {
 
 #define SA_DEFAULT   1
 #define SA_NOSAVE    2
-#define SA_SAVE      3
+#define SA_SAVE	     3
 #define SA_SAVEASK   4
 #define SA_SUICIDE   5
 
@@ -265,7 +265,7 @@ extern VECREC*	R_VHeap;	    /* Base of the vector heap */
 extern VECREC*	R_VTop;		    /* Current top of the vector heap */
 extern VECREC*	R_VMax;		    /* bottom of R_alloc'ed heap */
 extern long	R_Collected;	    /* Number of free cons cells (after gc) */
-extern SEXP	R_PreciousList;     /* List of Persistent Objects */
+extern SEXP	R_PreciousList;	    /* List of Persistent Objects */
 
 /* The Pointer Protection Stack */
 extern int	R_PPStackSize	INI_as(R_PPSSIZE); /* The stack size (elements) */
@@ -287,7 +287,7 @@ extern int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
 
 /* File Input/Output */
 extern int	R_Interactive	INI_as(1);	/* Non-zero during interactive use */
-extern int	R_Error_Continue INI_as(0);	/* For non-interactive.. */
+extern int	R_Error_Halt	INI_as(1);	/* For non-interactive.. */
 extern int	R_Quiet		INI_as(0);	/* Be as quiet as possible */
 extern int	R_Slave		INI_as(0);	/* Run as a slave process */
 extern int	R_Verbose	INI_as(0);	/* Be verbose */
@@ -321,7 +321,7 @@ extern SEXP	R_Warnings;	    /* the warnings and their calls */
 
 
 
-extern char ** CommandLineArgs    INI_as(NULL); /* permanent copy of the command line arguments passed to the application. */
+extern char ** CommandLineArgs	  INI_as(NULL); /* permanent copy of the command line arguments passed to the application. */
 extern int     NumCommandLineArgs INI_as(0); /* the number of command line arguments. */
 
 #ifdef __MAIN__
@@ -403,7 +403,6 @@ void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 int isValidName(char *);
 void jump_to_toplevel(void);
 SEXP levelsgets(SEXP, SEXP);
-unsigned int LTYpar(SEXP, int);
 void mainloop(void);
 void markPhase(void);
 void markSExp(SEXP);
