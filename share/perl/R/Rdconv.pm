@@ -2263,16 +2263,10 @@ sub code2examp {
 
     $text = undefine_command($text, "link");
 
-    $text = undefine_command($text, "testonly");
-    $text = undefine_command($text, "dontshow");
-    ## Ideas for alternatives :
-    ## 1) if the comments were shown in example() at all :
-    ## $text = replace_command($text, "testonly",
-    ##			    "## BEGIN{testonly}\n", "\n## END{testonly}}");
-    ## 2)
-    ## $text = replace_command($test, "testonly",
-    ##	      "if(is.null(F) || <call from example(*, testonly = TRUE)>)) {\\n",
-    ##				"\\n}");
+    $text = replace_prepend_command($text, "dontshow", "## Don't show: ", 
+				    "## End Don't show", "");
+    $text = replace_prepend_command($text, "testonly", "## Don't show: ", 
+				    "## End Don't show", "");
 
     $text = replace_prepend_command($text, "dontrun","## Don't run: ", 
 				    "## End Don't run",
