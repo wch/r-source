@@ -489,10 +489,13 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
 sub text2html {
 
     my $text = $_[0];
+    my $angles = $_[1]; # should < and > be converted?
 
     $text =~ s/&([^#])/&amp;\1/go; # might have explicit &# in source
-    $text =~ s/>/&gt;/go;
-    $text =~ s/</&lt;/go;
+    if($angles) {
+	$text =~ s/>/&gt;/go;
+	$text =~ s/</&lt;/go;
+    }
     $text =~ s/\\le/&lt;=/go;
     $text =~ s/\\ge/&gt;=/go;
     $text =~ s/\\%/%/go;
@@ -600,8 +603,8 @@ sub text2html {
     while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
     {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
-	$descitem = "<DT>" . text2html($arg) . "</DT>";
-	$descitem .= "<DD>" . text2html($desc) . "</DD>";
+	$descitem = "<DT>" . text2html($arg, 0) . "</DT>";
+	$descitem .= "<DD>" . text2html($desc, 0) . "</DD>";
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
     }
     $text =~ s/\\([^\\])/$1/go;#-drop single "\" (as in ``\R'')
@@ -670,7 +673,7 @@ sub html_print_block {
 
     if(defined $blocks{$block}){
 	print htmlout html_title3($title);
-	print htmlout "<p>\n", text2html($blocks{$block}), "\n";
+	print htmlout "<p>\n", text2html($blocks{$block}, 1), "\n";
     }
 }
 
@@ -702,7 +705,7 @@ sub html_print_argblock {
 	    $text =~ /^(.*)(\\item.*)*/s;
 	    my ($begin, $rest) = split(/\\item/, $text, 2);
 	    if($begin){
-		print htmlout text2html($begin);
+		print htmlout text2html($begin, 1);
 		$text =~ s/^$begin//s;
 	    }
 	    print htmlout "<TABLE>\n";
@@ -712,16 +715,16 @@ sub html_print_argblock {
 		my ($id, $arg, $desc)  =
 		    get_arguments("item", $text, 2);
 		print htmlout "<TR VALIGN=\"TOP\"><TD><CODE>";
-		print htmlout text2html($arg);
+		print htmlout text2html($arg, 1);
 		print htmlout "</CODE></TD>\n<TD>\n";
-		print htmlout text2html($desc), "</TD></TR>\n";
+		print htmlout text2html($desc, 1), "</TD></TR>\n";
 		$text =~ s/.*$id//s;
 	    }
 	    print htmlout "</TABLE>\n";
-	    print htmlout "<P>\n", text2html($text), "</P>\n";
+	    print htmlout "<P>\n", text2html($text, 1), "</P>\n";
 	}
 	else{
-	    print htmlout "<P>\n", text2html($text), "</P>\n";
+	    print htmlout "<P>\n", text2html($text, 1), "</P>\n";
 	}
     }
 }
@@ -733,7 +736,7 @@ sub html_print_sections {
 
     for($section=0; $section<$max_section; $section++){
 	print htmlout html_title3($section_title[$section]);
-	print htmlout "<P>\n", text2html($section_body[$section]), "</P>\n";
+	print htmlout "<P>\n", text2html($section_body[$section], 1), "</P>\n";
     }
 }
 
