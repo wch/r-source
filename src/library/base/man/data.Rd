@@ -13,8 +13,8 @@ data(\dots, list = character(0), package = .packages(),
 \arguments{
   \item{\dots}{a sequence of names or literal character strings.}
   \item{list}{a character vector.}
-  \item{package}{a name or character vector giving the packages to look
-    into for data sets.  By default, all packages in the search path are
+  \item{package}{a character vector giving the packages to look
+    in for data sets.  By default, all packages in the search path are
     used, then the \file{data} subdirectory (if present) of the current
     working directory.}
   \item{lib.loc}{a character vector of directory names of \R libraries,

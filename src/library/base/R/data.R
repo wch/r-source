@@ -4,11 +4,8 @@ function(..., list = character(0),
          verbose = getOption("verbose"), envir = .GlobalEnv)
 {
     fileExt <- function(x) sub(".*\\.", "", x)
-    
+
     names <- c(as.character(substitute(list(...))[-1]), list)
-    if(!missing(package))
-        if(is.name(y <- substitute(package)))
-            package <- as.character(y)
 
     ## Find the directories of the given packages and maybe the working
     ## directory.
