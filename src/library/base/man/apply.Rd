@@ -54,7 +54,6 @@ apply(ma, 1, quantile)# 5 x n matrix with rownames
 
 all(dim(ma) == dim(apply(ma, 1:2, sum)))## apply BUG [R <= 0.63.0]
 
-
 \testonly{
  apply(x,  2, summary) # 6 x n matrix
  apply(x,  1, quantile)# 5 x n matrix
@@ -63,6 +62,10 @@ all(dim(ma) == dim(apply(ma, 1:2, sum)))## apply BUG [R <= 0.63.0]
  arr <- array(1:prod(d.arr), d.arr,
 	  list(NULL,letters[1:d.arr[2]],NULL,paste("V",4+1:d.arr[4],sep="")))
  all(apply(arr, 1:2, sum) == t(apply(arr, 2:1, sum)))
+ aa <- array(1:20,c(2,2,5))
+ all(aa == apply(aa,2:3,function(x) x))
+ all.equal(apply(apply(aa,2:3, sum),2,sum),
+           10+16*0:4, tol=4*.Machine$double.eps)
 
  marg <- list(1:2, 2:3, c(2,4), c(1,3), 2:4, 1:3, 1:4)
  for(m in marg) print(apply(arr, print(m), sum))

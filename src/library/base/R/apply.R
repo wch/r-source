@@ -31,7 +31,7 @@ apply <- function(X, MARGIN, FUN, ...)
     if((i.vec <- length(d.call) < 2)) # vector
 	for(i in 1:d2){
 	    xi <- newX[,i]
-	    if (length(dn.call) >= 1)
+	    if (length(dn.call))
 		names(xi) <- dn.call[[1]]
 	    ans[[i]] <- FUN(xi, ...)
 	}
@@ -51,14 +51,15 @@ apply <- function(X, MARGIN, FUN, ...)
 	ans.list <- any(unlist(lapply(ans, length)) != l.ans)
     len.a <- if(ans.list) d2 else length(ans <- unlist(ans, recursive = FALSE))
     if(length(MARGIN) == 1 && len.a == d2) {
-	names(ans) <- if(length(dn.ans[[1]]) > 0) dn.ans[[1]] # else NULL
+	names(ans) <- if(length(dn.ans[[1]])) dn.ans[[1]] # else NULL
 	return(ans)
     }
     if(len.a == d2)
 	return(array(ans, d.ans, dn.ans))
     if(len.a > 0 && len.a %% d2 == 0)
 	return(array(ans, c(len.a %/% d2, d.ans),
-		     dimnames = if(is.null(dn.ans)) list(ans.names,NULL)
-		     else c(list(ans.names), dn.ans)))
+		     dimnames = if(length(dn)) {
+                         if(is.null(dn.ans)) list(ans.names,NULL)
+                         else c(list(ans.names), dn.ans)}))
     return(ans)
 }
