@@ -23,7 +23,6 @@
 # Send any bug reports to Friedrich.Leisch@ci.tuwien.ac.at
 
 use Getopt::Long;
-use NDBM_File;
 use File::Basename;
 use Cwd;
 
