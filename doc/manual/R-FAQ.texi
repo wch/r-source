@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-10, 2002-10-28
-@set REL-VERSION 1.6.0
+@set FAQ-VERSION 1.6-11, 2002-10-30
+@set REL-VERSION 1.6.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -424,7 +424,7 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2002-10-11:
+@c Linux binaries as of 2002-10-28:
 @c
 @c debian   woody i386  1.6.0  Dirk Eddelbuettel <edd@debian.org>
 @c          sarge i386  1.6.0  Dirk Eddelbuettel <edd@debian.org>
@@ -433,17 +433,18 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @c redhat   6.x   i386  1.5.1  Stephen Eglen <stephen@gnu.org>
 @c          7.x   alpha 1.6.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c                i386  1.6.0  Martyn Plummer <plummer@iarc.fr>
+@c          8.0   i386  1.6.0  Martyn Plummer <plummer@iarc.fr>
 @c suse     7.3   i386  1.6.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c          8.0   i386  1.6.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c          8.1   i386  1.6.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
 stable/testing packages for the i386 platform (now part of the Debian
-distribution and maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x
-i386 and 7.x alpha packages (maintained by Stephen Eglen, Martyn Plummer
-and Naoki Takebayashi, respectively), SuSE 7.3/8.0/8.1 i386 packages by
-Detlef Steuer, and Mandrake 8.1/8.2/9.0 i386 packages by Michele
-Alzetta.
+distribution and maintained by Dirk Eddelbuettel), Red Hat 6.x i386,
+7.x/8.0 i386 and 7.x alpha packages (maintained by Stephen Eglen, Martyn
+Plummer and Naoki Takebayashi, respectively), SuSE 7.3/8.0/8.1 i386
+packages by Detlef Steuer, and Mandrake 8.1/8.2/9.0 i386 packages by
+Michele Alzetta.
 
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -1476,6 +1477,8 @@ Functions for I/O, visualisation and analysis of functional Magnetic
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
+@item CGIwithR
+Facilities for the use of R to write CGI scripts.
 @item CircStats
 Circular Statistics, from ``Topics in Circular Statistics'' by S. Rao
 Jammalamadaka and A. SenGupta, 2001, World Scientific.
@@ -1529,6 +1532,8 @@ Functions for exporting R objects & graphics in an @HTML{} document.
 Functions to import Arc/Info V7.x coverages and data.
 @item RMySQL
 An interface between R and the MySQL database system.
+@item RODBC
+An @acronym{ODBC} database interface.
 @item ROracle
 Oracle Database Interface driver for R.  Uses the ProC/C++ embedded SQL.
 @item RQuantLib
@@ -2082,11 +2087,6 @@ functions to match the interface metadata structures.
 Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
 analyses using GLS.
-@c </NOTE>
-@c <NOTE>
-@c Moved to Devel for 1.5 as it fails R CMD check.
-@item RODBC
-An @acronym{ODBC} database interface.
 @c </NOTE>
 @c <NOTE>
 @c Moved to Devel for 1.6 as it fails R CMD check.
