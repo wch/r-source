@@ -37,4 +37,9 @@ on the log scale}
 \seealso{
   \code{\link{dnorm}} for the normal distribution.
 }
+\examples{
+dlnorm(1) == dnorm(0)
+x <- rlnorm(1000)	# not yet always :
+all(abs(x  -  qlnorm(plnorm(x))) < 1e4 * .Machine$double.eps * x)
+}
 \keyword{distribution}
