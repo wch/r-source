@@ -65,7 +65,7 @@ dir.create <- function(path)
 
 memory.size <- function(max = FALSE) .Internal(memory.size(max))
 
-memory.limit <- function() .Internal(memory.size(NA))
+memory.limit <- function(size = NA) .Internal(memory.size(size))
 
 DLL.version <- function(path) .Internal(DLL.version(path))
 

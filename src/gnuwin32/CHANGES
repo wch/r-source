@@ -10,12 +10,12 @@ rw1040
 libR.a is no longer used (except when cross-building) as the
 recommended compiler can import directly from R.dll.
 
-globalvar.h is no longer used: the header files all declare imported
-variables now.
+globalvar.h is no longer used: the header files now declare imported
+variables.
 
 The background colour of a windows() window (outside the device
 region) is now in the `Application Background' colour of the current
-Windows colour scheme.  (It used to be LightGray.)
+Windows colour scheme.  (It used to be LightGrey.)
 
 Gamma correction is now applied to the background colour of a graphics
 window.  (It has long been applied to the foreground colours.)  Users
@@ -23,9 +23,12 @@ of LCD screens may want to set something like par(gamma=2) after
 launching a graphics window.
 
 The canvas colour of a windows() window can now be specified.  This is
-not gamma-corrected.
+not gamma-corrected, and defaults to "white".
 
 savePlot() now supports saving to PDF.
+
+memory.limit() can now increase the memory limit of the current session.
+This will not work if the limit is currently reached!
 
 There is support for transparency in the devga device (which
 encompasses screen windows, metafiles, printers and the bmp, jpeg and
