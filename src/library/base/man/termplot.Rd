@@ -1,6 +1,5 @@
 \name{termplot}
 \alias{termplot}
-\alias{plot.gam}
 \title{Plot regression terms}
 \description{
   Plots regression terms against their predictors, optionally with
