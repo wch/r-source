@@ -18,8 +18,8 @@ bug.report <- function(send=TRUE, method=.Options$mailer)
 
     if(method == "mailx"){
         file <- tempfile()
-        cat("Subject ")
-        subject <- scan(what=character(1), nmax=1, quiet=TRUE)
+        cat("Subject: ")
+        subject <- readline()
         body <- gsub("\\\\n", "\n", body)
         cat(body, file=file)
 
