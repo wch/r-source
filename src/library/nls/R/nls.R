@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.22 2003/03/04 11:44:43 ripley Exp $
+### $Id: nls.R,v 1.23 2003/05/05 11:20:17 ripley Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -530,7 +530,7 @@ print.summary.nls <-
     df <- x$df
     rdf <- df[2]
     cat("\nParameters:\n")
-    print.coefmat(x$parameters, digits = digits, signif.stars = signif.stars,
+    printCoefmat(x$parameters, digits = digits, signif.stars = signif.stars,
                   ...)
     cat("\nResidual standard error:", format(signif(x$sigma,
                                                     digits)), "on", rdf, "degrees of freedom\n")

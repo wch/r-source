@@ -336,7 +336,7 @@ print.summary.lm <-
         coefs[!aliased, ] <- x$coefficients
     }
 
-    print.coefmat(coefs, digits=digits, signif.stars=signif.stars, na.print="NA", ...)
+    printCoefmat(coefs, digits=digits, signif.stars=signif.stars, na.print="NA", ...)
     ##
     cat("\nResidual standard error:",
 	format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom\n")

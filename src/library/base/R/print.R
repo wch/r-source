@@ -67,7 +67,7 @@ print.listof <- function(x, ...)
 print.simple.list <- function(x, ...)
     print(noquote(cbind("_"=unlist(x))), ...)
 
-print.coefmat <-
+printCoefmat <-
     function(x, digits = max(3, getOption("digits") - 2),
 	     signif.stars = getOption("show.signif.stars"),
 	     dig.tst = max(1, min(5, digits - 1)),
@@ -75,7 +75,7 @@ print.coefmat <-
 	     P.values = NULL,
 	     has.Pvalue = nc >= 4 && substr(colnames(x)[nc],1,3) == "Pr(",
              eps.Pvalue = .Machine$double.eps,
-	     na.print = "", ...)
+	     na.print = "NA", ...)
 {
     ## For printing ``coefficient matrices'' as they are in summary.xxx(.) where
     ## xxx in {lm, glm, aov, ..}. (Note: summary.aov(.) gives a class "anova").
@@ -172,11 +172,11 @@ print.anova <- function(x, digits = max(getOption("digits") - 2, 3),
     if(length(i <- which(substr(cn,ncn-1,ncn) == "Df")))
 	zap.i <- zap.i[!(zap.i %in% i)]
 
-    print.coefmat(x, digits = digits, signif.stars = signif.stars,
-                  has.Pvalue = has.P, P.values = has.P,
-                  cs.ind = NULL, zap.ind = zap.i, tst.ind= tst.i,
-                  na.print = "", # not yet in print.matrix:  print.gap = 2,
-                  ...)
+    printCoefmat(x, digits = digits, signif.stars = signif.stars,
+                 has.Pvalue = has.P, P.values = has.P,
+                 cs.ind = NULL, zap.ind = zap.i, tst.ind= tst.i,
+                 na.print = "", # not yet in print.matrix:  print.gap = 2,
+                 ...)
     invisible(x)
 }
 

@@ -38,6 +38,10 @@ DEPRECATED & DEFUNCT
     o	The classic MacOS port is no longer supported, and its files
 	have been removed from the sources.
 
+    o	print.coefmat() is deprecated in favour of printCoefmat()
+	(which is identical apart from the default for na.print which
+	is changed from "" to "NA").
+
 
 
 BUG FIXES

@@ -610,7 +610,7 @@ print.summary.glm <-
         coefs <- matrix(NA, length(aliased), 4, dimnames=list(cn, colnames(coefs)))
         coefs[!aliased, ] <- x$coefficients
     }
-    print.coefmat(coefs, digits=digits, signif.stars=signif.stars, na.print="NA", ...)
+    printCoefmat(coefs, digits=digits, signif.stars=signif.stars, na.print="NA", ...)
     ##
     cat("\n(Dispersion parameter for ", x$family$family,
 	" family taken to be ", format(x$dispersion), ")\n\n",
