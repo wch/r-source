@@ -5,30 +5,37 @@ R_HOME=R_HOME_DIR
 export R_HOME
 
 R_BINARY="R.binary"
-# Default Printer Paper Size
-# Choose one of the following
+
+# Default printer paper size
+# Choose one of the following:
 # R_PAPERSIZE="a4"
 # R_PAPERSIZE="letter"
 # R_PAPERSIZE="none"
 R_PAPERSIZE=${R_PAPERSIZE:-@R_PAPERSIZE@}
 export R_PAPERSIZE
-# Default Print Command
-# Choose one of the following
+
+# Default print command
+# Choose one of the following:
 # R_PRINTCMD="lpr"
 # R_PRINTCMD="lp"
 R_PRINTCMD=${R_PRINTCMD:-@R_PRINTCMD@}
 export R_PRINTCMD
-# Default LaTeX and dvips Commands
+
+# Default LaTeX and dvips commands
 R_LATEXCMD=${R_LATEXCMD:-${LATEX:-@LATEX@}}
 R_DVIPSCMD=${R_DVIPSCMD:-${DVIPS:-@DVIPS@}}
 export R_LATEXCMD R_DVIPSCMD
-# Default zip/unzip Commands
+
+# Default zip/unzip commands
 R_UNZIPCMD=${R_UNZIPCMD:-@R_UNZIPCMD@}
 R_ZIPCMD=${R_ZIPCMD:-@R_ZIPCMD@}
 export R_UNZIPCMD R_ZIPCMD
 
+# Default environment file
+R_ENVIRON=${R_ENVIRON:-"${HOME}/.Renviron"}
 USE_R_ENVIRON=true
 
+# Argument loop
 while test -n "${1}"; do
   case ${1} in
     RHOME)
@@ -40,13 +47,13 @@ while test -n "${1}"; do
     -g|--gnome)
       R_BINARY="R.gnome" ;;
     -d|--debugger)
-      deb="${2}"; shift 2; args="${@}"
+      dbg="${2}"; shift 2; args="${@}"
       if test -n "${args}"; then 
 	echo "*** Further command line arguments (\`$args') disregarded"
-	echo "*** (maybe use \`run ${args}'  from *inside* ${deb}"
+	echo "*** (maybe use \`run ${args}'  from *inside* ${dbg}"
 	echo ""
       fi
-      exec ${deb} ${R_HOME}/bin/${R_BINARY} ;;
+      exec ${dbg} ${R_HOME}/bin/${R_BINARY} ;;
     --no-environ)
       USE_R_ENVIRON=false ;;
     --vanilla)
@@ -104,7 +111,7 @@ done
 
 # Startup
 if ${USE_R_ENVIRON}; then
-  [ -r ${HOME}/.Renviron ] && . ${HOME}/.Renviron
+  [ -r ${R_ENVIRON} ] && . ${R_ENVIRON}
 fi
 exec ${R_HOME}/bin/${R_BINARY} @R_BATCHSAVE@ ${ARGS}
 
