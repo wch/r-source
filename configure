@@ -1116,7 +1116,7 @@ Optional Packages:
   --with-blas             use BLAS library, or specify it [yes]
   --with-readline         use readline library (if available) [yes]
   --with-gnome            use GNOME, or specify its prefix [no]
-  --with-aqua             use Aqua (if available) [no]
+  --with-aqua             use Aqua (if available) (experimental) [no]
   --with-tcltk            use Tcl/Tk, or specify its library dir [yes]
   --with-tcl-config=TCL_CONFIG
                           specify location of tclConfig.sh []
@@ -21025,6 +21025,13 @@ if test "${want_aqua}" = yes; then
       use_aqua=yes
       ;;
   esac
+fi
+if test "${use_aqua}" = yes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_AQUA 1
+_ACEOF
+
 fi
 
 if test "${use_aqua}" = yes; then

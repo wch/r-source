@@ -1189,7 +1189,7 @@ if test "${use_gnome}" != yes; then
   GNOME_IF_FILES=
 else
   AC_DEFINE(HAVE_GNOME, 1,
-            [Define if the GNOME headers and libraries are available,
+            [Define if you have the GNOME headers and libraries,
              and want the GNOME GUI to be built.])
 fi
 AC_SUBST(HAVE_GNOME)
@@ -1204,6 +1204,11 @@ if test "${want_aqua}" = yes; then
       use_aqua=yes
       ;;
   esac
+fi
+if test "${use_aqua}" = yes; then
+  AC_DEFINE(HAVE_AQUA, 1,
+            [Define if you have the Aqua headers and libraries,
+             and want the Aqua GUI to be built.])
 fi
 ])# R_AQUA
 
