@@ -64,14 +64,21 @@ none
 
 Directory:  Graphics
 
-* PR# 817 *
-Subject: colors not cycled in type=h plot
-From: fisk@bowdoin.edu
-Date: Fri, 19 Jan 2001 14:54:39 +0100 (MET)
-* PR# 660 *
-Subject: identify.default ignores any setting of cex.
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
+* PR# 816 *
+Subject: dotplot: character size of labels
+From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
+Date: Thu, 18 Jan 2001 14:54:32 +0100
+--Suggested fix will work (and spaces for labels will be fine), but there is a
+--deeper problem:  mtext() ignores par(cex=.5) in general.  
+--To see the problem try:  par(cex=.5); mtext("hi")
+--I think the right fix is to change the argument list for mtext so that
+--cex=par(cex) by default rather than cex=NA by default (plus corresponding
+--internal changes to  do_mtext in plot.c).
+--This needs to be done very carefully because (i) the change suggested above may
+--have side-effects in many other pieces of interpreted code (ii) do_mtext ignores
+--
+--dd->gp.cexbase unlike, for example, do_plot_xy and anything to do with cexbase
+--needs extreme care.
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -79,18 +86,14 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
-* PR# 750 *
-Subject: abline() does not obey "xpd" (clipping rules)
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 27 Nov 2000 18:27:11 +0100
 * PR# 726 *
 Subject: par(las=.)  gives wrong "adj" for mtext()
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Tue, 7 Nov 2000 13:03:58 +0100
-* PR# 816 *
-Subject: dotplot: character size of labels
-From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
-Date: Thu, 18 Jan 2001 14:54:32 +0100
+* PR# 660 *
+Subject: identify.default ignores any setting of cex.
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
 * PR# 791 *
 Subject:  par(lab= *) / axis(*) bug 
 From: maechler@stat.math.ethz.ch
@@ -99,6 +102,10 @@ Date: Fri, 22 Dec 2000 10:59:26 +0100
 Subject: strwidth does not take font into account
 From: Martyn Plummer <plummer@iarc.fr>
 Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
+* PR# 750 *
+Subject: abline() does not obey "xpd" (clipping rules)
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 27 Nov 2000 18:27:11 +0100
 
 Directory:  In-Out
 
@@ -190,6 +197,14 @@ none
 
 Directory:  incoming
 
+* PR# 822 *
+Subject: Re: Sys.time dumps core at start-up
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Tue, 23 Jan 2001 19:56:32 +0100 (CET)
+* PR# 821 *
+Subject: Sys.time dumps core at start-up
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Tue, 23 Jan 2001 19:44:28 +0100 (CET)
 * PR# 820 *
 Subject: interaction.plot
 From: "Mark M. Span" <span@psy.uva.nl>
