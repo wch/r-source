@@ -28,9 +28,6 @@ require  Exporter;
 use Cwd;
 use File::Basename;
 
-#require "$R_HOME/share/perl/html-layout.pl";
-
-
 if($main::opt_dosnames){
     $HTML="htm";
 }

@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 SOURCES = Makeconf.in Makeconf-tests.in Renviron.in
 OBJECTS = $(SOURCES:.in=)
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Rdconvlib.pl buildlib.pl html-layout.pl \
+DISTFILES = \
 	Makefile.in $(SOURCES) \
 	colors.big colors.small test-things.Rd \
 	gnome-interface.glade
@@ -40,9 +40,6 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  done) >> $@
 
 R: $(OBJECTS)
-	@if [ "$(srcdir)" != "." ]; then \
-	  $(MAKE) rhome=$(top_builddir) install-perl; \
-	fi
 ## FIXME:
 ## We currently look for gnome-interface.glade in R_HOME/gnome, but we 
 ## should have it in R_HOME/etc (and the shlibs in Rexeclibdir).
@@ -51,17 +48,13 @@ R: $(OBJECTS)
 
 $(OBJECTS): $(top_builddir)/config.status
 
-install: installdirs install-perl install-gnome
+install: installdirs install-gnome
 	@echo "installing etc ..."
 	@for f in $(OBJECTS) $(EXPORTFILE); do \
 	  $(INSTALL_DATA) $${f} $(rhome)/etc; \
 	done
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/etc
-install-perl:
-	@for f in $(srcdir)/*.pl; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/etc; \
-	done
 install-gnome:
 	@if test -n "$(GNOME_IF_FILES)"; then \
 	  $(MKINSTALLDIRS) $(rhome)/gnome ;\
