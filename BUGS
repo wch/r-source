@@ -244,10 +244,7 @@ Date: Wed, 22 Aug 2001 21:56:33 -0500
 
 Directory:  Macintosh
 
-* PR# 1103 *
-Subject: Slow output/no break key
-From: richmond@saintmarys.edu
-Date: Fri, 28 Sep 2001 03:24:05 +0200 (MET DST)
+none
 
 Directory:  Misc
 
@@ -331,3 +328,11 @@ Date: Sun, 7 Oct 2001 12:25:47 +0200
 Subject: bug in write.table?
 From: Ott Toomet <siim@obs.ee>
 Date: Sun, 7 Oct 2001 18:24:34 +0200 (CEST)
+* PR# 1121 *
+Subject: Problems merging with POSIXct objects and all = TRUE
+From: "David Kane  <David Kane" <a296180@mica.fmr.com>
+Date: Tue, 9 Oct 2001 08:52:52 -0400
+* PR# 1122 *
+Subject: dimnames(X)[[2]] <- foo fails
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Tue, 9 Oct 2001 16:09:23 +0100 (BST)
