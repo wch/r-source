@@ -23,8 +23,6 @@ DISTFILES = \
 	Makefile.in PSPAPER $(SOURCES) $(HEADERS) \
 	hpdlfcn.c system.txt
 
-SUBDIRS = X11 gnome
-
 noinst_LIBRARIES = libunix.a
 libunix_a_SOURCES = $(SOURCES)
 libunix_a_OBJECTS = $(OBJECTS)
@@ -59,13 +57,6 @@ R: Makefile
 	@$(MAKE) $(noinst_LIBRARIES)
 @WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
 
-DLLs:
-	@for g in $(R_GUIS) ""; do \
-	  if test -n "$${g}"; then \
-	    (cd $${g} && $(MAKE) R) || exit 1; \
-	  fi; \
-	done
-
 ../include/Rversion.h:
 	(cd ../include; $(MAKE) $(@F))
 FFDecl.h FFTab.h: $(top_srcdir)/src/appl/ROUTINES \
@@ -83,22 +74,9 @@ libunix.la: stamp-lo
 
 mostlyclean: clean
 clean:
-	@for g in $(R_GUIS) ""; do \
-	  if test -n "$${g}"; then \
-	    (cd $${g} && $(MAKE) $@); \
-	  fi; \
-	done
 	@-rm -rf .libs _libs
 	@-rm -f Makedeps FFDecl.h FFTab.h *.d *.o *.a *.lo *.la stamp-lo
 distclean: clean
-	@for g in $(R_GUIS) ""; do \
-	  if test -n "$${g}"; then \
-	    (cd $${g} && $(MAKE) $@); \
-	  fi; \
-	done
-	@for d in $(SUBDIRS); do \
-	  rm -f $${d}/Makefile; \
-	done
 	@-rm -f Makefile
 maintainer-clean: distclean
 
@@ -107,14 +85,6 @@ distdir: $(DISTFILES)
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
-	done
-	@for d in $(SUBDIRS); do \
-	  test -d $(distdir)/$${d} \
-	    || mkdir $(distdir)/$${d} \
-	    || exit 1; \
-	  chmod 755 $(distdir)/$${d}; \
-	  (cd $${d} && $(MAKE) distdir) \
-	    || exit 1; \
 	done
 
 ## Automagically generated dependencies:

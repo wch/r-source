@@ -1005,6 +1005,9 @@ AC_OUTPUT(Makeconf
   src/library/ts/Makefile
   src/library/ts/src/Makefile
   src/main/Makefile
+  src/modules/Makefile
+  src/modules/X11/Makefile
+  src/modules/gnome/Makefile    
   src/nmath/Makefile
   src/nmath/standalone/Makefile
   src/scripts/Makefile
@@ -1023,8 +1026,6 @@ AC_OUTPUT(Makeconf
   src/scripts/check
   src/scripts/extract-usage
   src/unix/Makefile
-  src/unix/X11/Makefile
-  src/unix/gnome/Makefile
   tests/Makefile
   tests/Examples/Makefile
   tools/Makefile

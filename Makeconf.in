@@ -106,3 +106,4 @@ Rexeclibdir = $(rhome)/bin
 ## Alternatively, we could try to set pkglibdir = $(rhome)/lib when
 ## switching to automake.
 ## </FIXME>
+Rexecmodulesdir = $(rhome)/modules
