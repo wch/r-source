@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-15
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-21
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2557,6 +2557,8 @@ Multiple Fractional Polynomials.
 Routines for GAMs and other genralized ridge regression problems with
 multiple smoothing parameter selection by GCV or UBRE.
 @emph{Recommended}.
+@item micEcon
+Tools for microeconomic analysis and microeconomic modelling.
 @item mimR
 An R interface to MIM for graphical modeling in R.
 @item minpack.lm
@@ -4916,10 +4918,10 @@ Invoking R with the @option{--vanilla} option may help in isolating a
 bug.  This ensures that the site profile and saved data files are not
 read.
 
-Before you submit a bug report, you should check whether the bug has
-been reported and/or fixed before.  First, try the ``Search Existing
-Reports'' facility in the Bug Tracking page at
-@url{http://bugs.R-project.org}.  Second, consult
+Before you actually submit a bug report, you should check whether the
+bug has already been reported and/or fixed.  First, try the ``Search
+Existing Reports'' facility in the Bug Tracking page at
+@url{http://bugs.R-project.org/}.  Second, consult
 @url{https://svn.R-project.org/R/trunk/NEWS}, which records changes that
 will appear in the @emph{next} release of R, including some bug fixes
 that do not appear in Bug Tracking.  If a bug has already been reported
