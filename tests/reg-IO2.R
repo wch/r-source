@@ -41,4 +41,23 @@ try(read.table("foo6", header=TRUE, fill=TRUE))
 read.table("foo6", header=FALSE, fill=TRUE)
 unlink("foo6")
 
+# test of type conversion in 1.4.0 and later.
+cat("A B C D E F\n",
+    "1 1 1.1 1.1+0i NA F abc\n",
+    "2 NA NA NA NA NA NA\n",
+    "3 1 2 3 NA TRUE def\n",
+    sep = "", file = "foo7")
+(res <- read.table("foo7"))
+sapply(res, typeof)
+sapply(res, class)
+(res2 <- read.table("foo7",
+                    colClasses = c("character", rep("numeric", 2),
+                    "complex", "integer", "logical", "character")))
+sapply(res2, typeof)
+sapply(res2, class)
+unlink("foo7")
+
+# should be logical
+type.convert(character(0))
+
 ## end of tests

@@ -78,7 +78,7 @@ static int ConsoleGetchar()
 static double Strtod (const char *nptr, char **endptr) 
 {
     if (decchar == '.')
-	return strtod(nptr, endptr);
+	return R_strtod(nptr, endptr);
     else { 
 	/* jump through some hoops... This is a kludge! 
 	   Should most likely use regexps instead */
@@ -94,13 +94,14 @@ static double Strtod (const char *nptr, char **endptr)
 		convbuf[i] = '.';
 	    else if (convbuf[i] == '.')
 		convbuf[i] = decchar;
-	x = strtod(convbuf, &end);
+	x = R_strtod(convbuf, &end);
 	*endptr = (char *) nptr + (end - convbuf);
 	return x;
     } 
 }	
 
-static Rcomplex strtoc(const char *nptr, char **endptr) {
+static Rcomplex strtoc(const char *nptr, char **endptr)
+{
     Rcomplex z;
     double x, y;
     char *s, *endp;
@@ -859,18 +860,22 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     return bns;
 }
 
-/* frame.convert(char, na.strings, as.is) */
+/* type.convert(char, na.strings, as.is, dec) */
 
-/* This is a horrible hack which is used in read.table to take a */
-/* character variable, if possible to convert it to a numeric */
-/* variable.  If this is not possible, the result is a character */
-/* string if as.is == TRUE or a factor if as.is == FALSE. */
+/* This is a horrible hack which is used in read.table to take a
+   character variable, if possible to convert it to a logical,
+   integer, numeric or complex variable.  If this is not possible, 
+   the result is a character
+   string if as.is == TRUE or a factor if as.is == FALSE. */
 
 
 SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP cvec, a, rval, dup, levs, dims, names, dec;
+    SEXP cvec, a, dup, levs, dims, names, dec;
+    SEXP rval = R_NilValue; /* -Wall */
     int i, j, len, numeric, asIs;
+    Rboolean islogical = TRUE, isinteger = TRUE, isreal = TRUE, 
+	iscomplex = TRUE, done = FALSE;
     char *endp, *tmp;
 
     checkArity(op,args);
@@ -907,25 +912,99 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     else
 	PROTECT(names = getAttrib(cvec, R_NamesSymbol));
 
-    PROTECT(rval = allocVector(REALSXP, length(cvec)));
+    /* Use the first non-NA to screen */
     for (i = 0; i < len; i++) {
 	tmp = CHAR(STRING_ELT(cvec, i));
-	if (strlen(tmp) == 0 || isNAstring(tmp, 1) || isBlankString(tmp))
-	    REAL(rval)[i] = NA_REAL;
-	else {
-	    REAL(rval)[i] = Strtod(tmp, &endp);
-	    if (!isBlankString(endp)) {
-		numeric = 0;
-		break;
+	if (!(strlen(tmp) == 0 || isNAstring(tmp, 1) || isBlankString(tmp)))
+	    break;
+    }
+    if (i < len) {  /* not all entries are NA */
+	if (strcmp(tmp, "F") != 0 && strcmp(tmp, "FALSE") != 0
+	    && strcmp(tmp, "T") != 0 && strcmp(tmp, "TRUE") != 0)
+	    islogical = FALSE;
+
+	strtol(tmp, &endp, 10); if (*endp != '\0') isinteger = FALSE;
+	Strtod(tmp, &endp); if (!isBlankString(endp)) isreal = FALSE;
+	strtoc(tmp, &endp); if (!isBlankString(endp)) iscomplex = FALSE;
+    }
+    
+    if (islogical) {
+	PROTECT(rval = allocVector(LGLSXP, len));
+	for (i = 0; i < len; i++) {
+	    tmp = CHAR(STRING_ELT(cvec, i));
+	    if (strlen(tmp) == 0 || isNAstring(tmp, 1) || isBlankString(tmp))
+		LOGICAL(rval)[i] = NA_LOGICAL;
+	    else {
+		if (strcmp(tmp, "F") == 0 || strcmp(tmp, "FALSE") == 0)
+		    LOGICAL(rval)[i] = 0;
+		else if(strcmp(tmp, "T") == 0 || strcmp(tmp, "TRUE") == 0)
+		    LOGICAL(rval)[i] = 1;
+		else {
+		    islogical = FALSE;
+		    break;
+		}
 	    }
 	}
+	if (islogical) done = TRUE; else UNPROTECT(1);
     }
-    if (!numeric) {
+
+    if (!done && isinteger) {
+	PROTECT(rval = allocVector(INTSXP, len));
+	for (i = 0; i < len; i++) {
+	    tmp = CHAR(STRING_ELT(cvec, i));
+	    if (strlen(tmp) == 0 || isNAstring(tmp, 1) || isBlankString(tmp))
+		INTEGER(rval)[i] = NA_INTEGER;
+	    else {
+		INTEGER(rval)[i] = strtol(tmp, &endp, 10);
+		if (*endp != '\0') {
+		    isinteger = FALSE;
+		    break;
+		}
+	    }
+	}
+	if(isinteger) done = TRUE; else UNPROTECT(1);
+    }
+
+    if (!done && isreal) {
+	PROTECT(rval = allocVector(REALSXP, len));
+	for (i = 0; i < len; i++) {
+	    tmp = CHAR(STRING_ELT(cvec, i));
+	    if (strlen(tmp) == 0 || isNAstring(tmp, 1) || isBlankString(tmp))
+		REAL(rval)[i] = NA_REAL;
+	    else {
+		REAL(rval)[i] = Strtod(tmp, &endp);
+		if (!isBlankString(endp)) {
+		    isreal = FALSE;
+		    break;
+		}
+	    }
+	}
+	if(isreal) done = TRUE; else UNPROTECT(1);
+    }
+    
+    if (!done && iscomplex) {
+	PROTECT(rval = allocVector(CPLXSXP, len));
+	for (i = 0; i < len; i++) {
+	    tmp = CHAR(STRING_ELT(cvec, i));
+	    if (strlen(tmp) == 0 || isNAstring(tmp, 1) || isBlankString(tmp))
+		COMPLEX(rval)[i].r = COMPLEX(rval)[i].i = NA_REAL;
+	    else {
+		COMPLEX(rval)[i] = strtoc(tmp, &endp);
+		if (!isBlankString(endp)) {
+		    iscomplex = FALSE;
+		    break;
+		}
+	    }
+	}
+	if(iscomplex) done = TRUE; else UNPROTECT(1);
+    }
+    
+    if (!done) {
 	if (asIs) {
 	    rval = cvec;
 	}
 	else {
-	    PROTECT(rval = allocVector(INTSXP,length(cvec)));
+	    PROTECT(rval = allocVector(INTSXP, len));
 	    PROTECT(dup = duplicated(cvec));
 	    j = 0;
 	    for (i = 0; i < len; i++)
@@ -949,9 +1028,10 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(a = allocVector(STRSXP, 1));
 	    SET_STRING_ELT(a, 0, mkChar("factor"));
 	    setAttrib(rval, R_ClassSymbol, a);
-	    UNPROTECT(5);
+	    UNPROTECT(4);
 	}
     }
+
     setAttrib(rval, R_DimSymbol, dims);
     if (isArray(cvec))
 	setAttrib(rval, R_DimNamesSymbol, names);

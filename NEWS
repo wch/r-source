@@ -127,11 +127,17 @@ NEW FEATURES
 	labels can be scaled separately.
 
     o   Three new primitive functions have been added to base:
-        dataClass, objWithClass, and as.environment.  The first two
+        dataClass(), objWithClass(), and as.environment().  The first two
         are support routines for class and class<- in package
         methods.  The third replaces pos.to.env in the functions get,
         exists, and friends.
 
+    o   read.table() has new arguments nrows and colClasses.  If the
+	latter is "unknown" (the default),  conversion is attempted to
+	logical, integer, numeric or complex, not just to numeric.
+
+    o   An enhanced function type.convert() is now a documented
+	function, rather than just internal to read.table().
 
 
 
@@ -141,7 +147,7 @@ BUG FIXES
 	expressions between explicit calls to `return' and falling off
 	the end returns.
 
-    o	The code in model.matrix.default() handling constrasts was
+    o	The code in model.matrix.default() handling contrasts was
 	assuming a response was present, and so failing to record
 	the contrasts for the first variable if it were a factor.
 

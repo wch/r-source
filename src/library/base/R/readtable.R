@@ -10,17 +10,18 @@ count.fields <- function(file, sep = "", quote = "\"'", skip = 0,
     .Internal(count.fields(file, sep, quote, skip, blank.lines.skip))
 }
 
+
+type.convert <- function(x, na.strings = "NA", as.is = FALSE, dec = ".")
+    .Internal(type.convert(x, na.strings, as.is, dec))
+
 read.table <-
     function (file, header = FALSE, sep = "", quote = "\"'", dec = ".",
               row.names, col.names, as.is = FALSE,
-	      na.strings = "NA", skip = 0,
+	      na.strings = "NA", colClasses = "unknown",
+              nrows = -1, skip = 0,
               check.names = TRUE, fill = !blank.lines.skip,
               strip.white = FALSE, blank.lines.skip = TRUE)
 {
-    type.convert <- function(x, na.strings = "NA",
-                             as.is = FALSE, dec = ".")
-	.Internal(type.convert(x, na.strings, as.is, dec))
-
     if(is.character(file)) {
         file <- file(file, "r")
         on.exit(close(file))
@@ -88,12 +89,21 @@ read.table <-
     if(check.names) col.names <- make.names(col.names)
     if (rlabp) col.names <- c("row.names", col.names)
 
+    if(length(colClasses) < cols) colClasses <- rep(colClasses, len=cols)
+
     ##	set up for the scan of the file.
-    ##	we read all values as character strings and convert later.
+    ##	we read unknown values as character strings and convert later.
 
     what <- rep(list(""), cols)
     names(what) <- col.names
-    data <- scan(file = file, what = what, sep = sep, quote = quote, skip = 0,
+
+    colClasses[colClasses %in% c("real", "double")] <- "numeric"
+    known <- colClasses %in%
+                c("logical", "integer", "numeric", "complex", "character")
+    what[known] <- sapply(colClasses[known], do.call, list(0))
+
+    data <- scan(file = file, what = what, sep = sep, quote = quote,
+                 dec = dec, nmax = nrows, skip = 0,
 		 na.strings = na.strings, quiet = TRUE, fill = fill,
                  strip.white = strip.white,
                  blank.lines.skip = blank.lines.skip, multi.line = FALSE)
@@ -102,7 +112,7 @@ read.table <-
 
     ##	now we have the data;
     ##	convert to numeric or factor variables
-    ##	(depending on the specifies value of "as.is").
+    ##	(depending on the specified value of "as.is").
     ##	we do this here so that columns match up
 
     if(cols != length(data)) { # this should never happen
@@ -121,8 +131,13 @@ read.table <-
     } else if (length(as.is) != cols)
 	stop(paste("as.is has the wrong length",
 		   length(as.is),"!= cols =", cols))
-    for (i in 1:cols)
-        data[[i]] <- type.convert(data[[i]], as.is = as.is[i], dec = dec)
+    for (i in 1:cols) {
+        if(known[i] || as.is[i]) next
+        data[[i]] <- if (colClasses[i] != "unknown")
+            as(data[[i]], colClasses[i])
+        else
+            type.convert(data[[i]], as.is = as.is[i], dec = dec)
+    }
 
     ##	now determine row names
 
