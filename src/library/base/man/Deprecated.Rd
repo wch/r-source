@@ -10,6 +10,7 @@ scan.url(url, file = tempfile(), method, \dots)
 source.url(url, file = tempfile(), method, \dots)
 httpclient(url, port=80, error.is.fatal=TRUE, check.MIME.type=TRUE,
            file=tempfile(), drop.ctrl.z=TRUE)
+parse.dcf(text = NULL, file = "", fields = NULL, versionfix = FALSE)
 
 .Deprecated(new)
 }
@@ -22,6 +23,7 @@ httpclient(url, port=80, error.is.fatal=TRUE, check.MIME.type=TRUE,
 \alias{httpclient}
 \alias{dotplot}
 \alias{stripplot}
+\alias{parse.dcf}
 \description{
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as of the next release.
@@ -38,6 +40,9 @@ httpclient(url, port=80, error.is.fatal=TRUE, check.MIME.type=TRUE,
   of \code{\link{download.file}}.
   \code{dotplot} and \code{stripplot} are deprecated names for
   \code{\link{dotchart}} and \code{\link{stripchart}}, respectively.
+
+    \code{parse.dcf} has been replaced by \code{read.dcf}, which is much
+  faster, but has a slightly different interface.
 }
 \seealso{\code{\link{Defunct}}}
 %\examples{

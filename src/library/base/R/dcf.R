@@ -1,5 +1,3 @@
-parse.dcf <- .Deprecated
-
 read.dcf <- function(file, fields=NULL){
     if (is.character(file)){
         file <- file(file, "r")
