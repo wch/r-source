@@ -85,16 +85,35 @@ pushedvp <- function(vp) {
 }
 
 vpFromPushedvp <- function(pvp) {
-  pvp[c("x", "y", "width", "height",
-        "justification", "gp", "clip",
-        "xscale", "yscale", "angle",
-        "layout", "layout.pos.row", "layout.pos.col",
-        "valid.just", "valid.pos.row", "valid.pos.col",
-        "name")]
+  vp <- pvp[c("x", "y", "width", "height",
+              "justification", "gp", "clip",
+              "xscale", "yscale", "angle",
+              "layout", "layout.pos.row", "layout.pos.col",
+              "valid.just", "valid.pos.row", "valid.pos.col",
+              "name")]
+  class(vp) <- "viewport"
+  vp
+}
+
+as.character.viewport <- function(x, ...) {
+  paste("viewport[", x$name, "]", sep="")
+}
+
+as.character.vpList <- function(x, ...) {
+  paste("(", paste(sapply(x, as.character, simplify=TRUE), collapse=", "),
+        ")", sep="")
+}
+
+as.character.vpStack <- function(x, ...) {
+  paste(sapply(x, as.character, simplify=TRUE), collapse="->")
+}
+
+as.character.vpTree <- function(x, ...) {
+  paste(x$parent, x$children, sep="->")
 }
 
 print.viewport <- function(x, ...) {
-  cat(paste("viewport[", x$name, "]\n", sep=""))
+  cat(as.character(x), "\n")
 }
 
 width.details.viewport <- function(x) {
@@ -103,6 +122,31 @@ width.details.viewport <- function(x) {
 
 height.details.viewport <- function(x) {
   absolute.size(x$height)
+}
+
+# How many "levels" in viewport object
+depth <- function(vp) {
+  UseMethod("depth")
+}
+
+depth.viewport <- function(vp) {
+  1
+}
+
+depth.vpList <- function(vp) {
+  # When pushed, the last element of the vpList is pushed last
+  # so we are left whereever that leaves us
+  depth(vp[[length(vp)]])
+}
+
+depth.vpStack <- function(vp) {
+  length(vp)
+}
+
+depth.vpTree <- function(vp) {
+  # When pushed, the last element of the vpTree$children is
+  # pushed last so we are left wherever that leaves us
+  depth(vp$parent) + depth(vp$children[[length(vp$children)]])
 }
 
 ####################
@@ -155,6 +199,47 @@ viewport <- function(x = unit(0.5, "npc"),
 
 is.viewport <- function(vp) {
   inherits(vp, "viewport")
+}
+
+#############
+# Some classes derived from viewport
+#############
+
+vpListFromList <- function(vps) {
+  if (all(sapply(vps, is.viewport, simplify=TRUE))) {
+    class(vps) <- c("vpList", "viewport")
+    vps
+  } else {
+    stop("Only viewports allowed in vpList")
+  }
+}
+
+# Viewports will be pushed in parallel
+vpList <- function(...) {
+  vps <- list(...)
+  vpListFromList(vps)
+}
+
+# Viewports will be pushed in series
+vpStack <- function(...) {
+  vps <- list(...)
+  if (all(sapply(vps, is.viewport, simplify=TRUE))) {
+    class(vps) <- c("vpStack", "viewport")
+    vps
+  } else {
+    stop("Only viewports allowed in vpStack")
+  }
+}
+
+# Viewports will be pushed as a tree
+vpTree <- function(parent, children) {
+  if (is.viewport(parent) && inherits(children, "vpList")) {
+    tree <- list(parent=parent, children=children)
+    class(tree) <- c("vpTree", "viewport")
+    tree
+  } else {
+    stop("Parent must be viewport and children must be vpList in vpTree")
+  }
 }
 
 #############

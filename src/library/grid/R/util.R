@@ -1,7 +1,7 @@
 
 # Define a convenience function that is easy to call from C code
 grid.top.level.vp <- function() {
-  pushedvp(viewport(clip=TRUE))
+  pushedvp(viewport(clip=TRUE, name="ROOT"))
 }
 
 # An accessor for getting at the grid global state structure

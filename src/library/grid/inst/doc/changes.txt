@@ -10,6 +10,12 @@ Changes from grid_1.8.0 to grid_1.9.0:
 3.  Added id and id.lengths arguments to grid.polygon() to allow
     multiple polygons within single grid.polygon() call.
 
+4.  Added vpList(), vpStack(), vpTree(), and current.vpTree()
+    to allow creation of viewport "bundles" that may be pushed
+    at once (lists are pushed in parallel, stacks in series).
+
+    current.vpTree() returns the current viewport tree.
+
 
 Changes from grid_0.7-4 to grid_1.8.0:
 ------------------------------------

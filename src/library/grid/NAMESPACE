@@ -1,6 +1,7 @@
 ## useDynLib("grid") # done in .onLoad
 
-export("absolute.size", "convertNative", "current.viewport",
+export("absolute.size", "convertNative", 
+       "current.viewport", "current.vpTree", 
        "dataViewport", "downViewport", "get.gpar",
        "gpar", "grid.arrows", "grid.circle",
        "grid.collection", "grid.convert", "grid.convertHeight",
@@ -18,7 +19,8 @@ export("absolute.size", "convertNative", "current.viewport",
        "seekViewport", "unit",
        "unit.c", "unit.length", "unit.pmax", "unit.pmin", "unit.rep",
        "upViewport",
-       "viewport", "width.details")
+       "viewport", "vpList", "vpStack", "vpTree",
+       "width.details")
 
 ## Documented as internal but in Paul's first attempt at a sensible
 ## export list:
@@ -46,6 +48,10 @@ S3method("Summary", "unit")
 S3method("as.character", "unit")
 S3method("as.character", "unit.arithmetic")
 S3method("as.character", "unit.list")
+S3method("as.character", "viewport")
+S3method("as.character", "vpList")
+S3method("as.character", "vpStack")
+S3method("as.character", "vpTree")
 S3method("print", "grob")
 S3method("print", "unit")
 S3method("print", "viewport")
@@ -89,3 +95,16 @@ S3method("width.details", "text")
 S3method("width.details", "viewport")
 S3method("width.post.details", "default")
 S3method("width.pre.details", "default")
+
+## <FIXME>?
+## Should I have to do this when the generic is NOT exported?
+S3method("depth", "viewport")
+S3method("depth", "vpList")
+S3method("depth", "vpStack")
+S3method("depth", "vpTree")
+S3method("push.vp", "default")
+S3method("push.vp", "viewport")
+S3method("push.vp", "vpList")
+S3method("push.vp", "vpStack")
+S3method("push.vp", "vpTree")
+## </FIXME>

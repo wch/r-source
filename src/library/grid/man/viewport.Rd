@@ -1,10 +1,13 @@
-\name{viewport}
+\name{Grid Viewports}
 \alias{viewport}
+\alias{vpList}
+\alias{vpStack}
+\alias{vpTree}
 \title{Create a Grid Viewport}
 \description{
-  This function creates a viewport, which describes a rectangular region
-  on a graphics device and defines a number of coordinate systems within
-  that region.
+  These functions create viewports, which describe a rectangular regions
+  on a graphics device and define a number of coordinate systems within
+  those regions.
 }
 \usage{
 viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
@@ -15,6 +18,9 @@ viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
          angle = 0,
          layout = NULL, layout.pos.row = NULL, layout.pos.col = NULL,
          name=NULL)
+vpList(...)
+vpStack(...)
+vpTree(parent, children)
 }
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-location.}
@@ -51,7 +57,11 @@ viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
     columns occupied by this viewport in its
     parent's layout.}
   \item{name}{A character value to uniquely identify the viewport
-    once it has been pushed onto the viewport tree.}
+    once it has been pushed onto the viewport tree.  Grid uses the
+    reserved name \code{"ROOT"} for the top-level viewport.}
+  \item{...}{Any number of grid viewport objects.}
+  \item{parent}{A grid viewport object.}
+  \item{children}{A vpList object.}
 }
 \details{
   The location and size of a viewport are relative to the coordinate
@@ -84,7 +94,12 @@ viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
 
     If a viewport is rotated (because of its own \code{angle} setting
     or because it is within another viewport which is rotated) then
-    the \code{clip} flag is ignored.  
+    the \code{clip} flag is ignored.
+
+    The viewports in a \code{vpList} are pushed in parallel.  The
+    viewports in a \code{vpStack} are pushed in series.  When a
+    \code{vpTree} is pushed, the parent is pushed first, then the
+    children are pushed in parallel.
 }
 \value{
   An R object of class \code{viewport}.
@@ -124,5 +139,25 @@ clip.demo(1, 2, TRUE, FALSE)
 clip.demo(2, 1, FALSE, TRUE)
 clip.demo(2, 2, TRUE, TRUE)
 popViewport()
+# Demonstrate vpList, vpStack, and vpTree
+grid.newpage()
+tree <- vpTree(viewport(w=0.8, h=0.8, name="A"),
+               vpList(vpStack(viewport(x=0.1, y=0.1, w=0.5, h=0.5,
+                                       just=c("left", "bottom"), name="B"),
+                              viewport(x=0.1, y=0.1, w=0.5, h=0.5, 
+                                       just=c("left", "bottom"), name="C"),
+                              viewport(x=0.1, y=0.1, w=0.5, h=0.5, 
+                                       just=c("left", "bottom"), name="D")),
+                      viewport(x=0.5, w=0.4, h=0.9,
+                               just="left", name="E")))
+pushViewport(tree)
+for (i in LETTERS[1:5]) {
+  seekViewport(i)
+  grid.rect()
+  grid.text(current.vpTree(FALSE),
+            x=unit(1, "mm"), y=unit(1, "npc") - unit(1, "mm"),
+            just=c("left", "top"),
+            gp=gpar(fontsize=8))
+}
 }
 \keyword{dplot}

@@ -2,10 +2,15 @@
 # FIXME:  all grid functions should check that .grid.started is TRUE
 .grid.loaded <- FALSE
 
-push.vp <- function(vps, index, len, recording) {
-  vp <- vps[[index]]
-  if (is.null(vp))
-    stop("Illegal to push NULL viewport")
+push.vp <- function(vp, recording) {
+  UseMethod("push.vp")
+}
+
+push.vp.default <- function(vp, recording) {
+  stop("Only valid to push viewports")
+}
+
+push.vp.viewport <- function(vp, recording) {
   # Record on the display list
   if (recording)
     record(vp)
@@ -18,9 +23,38 @@ push.vp <- function(vps, index, len, recording) {
   # Pass in the pushedvp structure which will be used to store
   # things like the viewport transformation, parent-child links, ...
   grid.Call.graphics("L_setviewport", pvp, TRUE)
-  # Push further viewports if required
-  if (index < len)
-    push.vp(vps, index+1, len, recording)
+}
+
+# For all but the last viewport, push the
+# viewport then pop it
+# For the last viewport, just push
+push.vp.vpList <- function(vp, recording) {
+  push.vp.parallel <- function(vp, recording) {
+    push.vp(vp, recording)
+    upViewport(depth(vp), recording)
+  }
+  if (length(vp) == 1)
+    push.vp(vp[[1]], recording)
+  else {
+    lapply(vp[1:(length(vp) - 1)], push.vp.parallel, recording)
+    push.vp(vp[[length(vp)]], recording)
+  }
+}
+
+# Push viewports in series
+push.vp.vpStack <- function(vp, recording) {
+  lapply(vp, push.vp, recording)
+}
+
+# Push parent
+# Children are a vpList
+push.vp.vpTree <- function(vp, recording) {
+  # Special case if user has saved the entire vpTree
+  # parent will be the ROOT viewport, which we don't want to
+  # push (grid ensures it is ALWAYS there)
+  if (!(vp$paren$name %in% "ROOT"))
+    push.vp(vp$parent, recording)
+  push.vp(vp$children, recording)
 }
 
 push.viewport <- function(..., recording=TRUE) {
@@ -33,9 +67,9 @@ pushViewport <- function(..., recording=TRUE) {
     stop("Must specify at least one viewport")
   else {
     vps <- list(...)
-    nvp <- length(vps)
-    push.vp(vps, 1, nvp, recording)
+    lapply(vps, push.vp, recording)
   }
+  current.viewport()
 }
 
 # Helper functions called from C
@@ -109,12 +143,14 @@ popViewport <- function(n=1, recording=TRUE) {
     stop("Must pop at least one viewport")
   if (n == 0)
     n <- vpDepth()
-  for (i in 1:n)
-    pop.vp(i==n, recording)
-  # Record on the display list
-  if (recording) {
-    class(n) <- "pop"
-    record(n)
+  if (n > 0) {
+    for (i in 1:n)
+      pop.vp(i==n, recording)
+    # Record on the display list
+    if (recording) {
+      class(n) <- "pop"
+      record(n)
+    }
   }
 }
 
@@ -138,32 +174,66 @@ upViewport <- function(n=1, recording=TRUE) {
     stop("Must navigate up at least one viewport")
   if (n == 0) 
     n <- vpDepth()
-  for (i in 1:n)
-    up.vp(i==n, recording)
-  # Record on the display list
-  if (recording) {
-    class(n) <- "up"
-    record(n)
+  if (n > 0) {
+    for (i in 1:n)
+      up.vp(i==n, recording)
+    # Record on the display list
+    if (recording) {
+      class(n) <- "up"
+      record(n)
+    }
   }
 }
                         
 # Function to obtain the current viewport
-# Grid plotting functions all take a viewport argument which
-# currents to NULL (NULL indicates that the current viewport
-# should be used).  The function may want to copy the viewport
-# it is drawing into (see e.g., lxaxis and grid.yaxis) and this
-# function provides a consistent interface for deciding whether
-# a temporary viewport has been specified or whether the
-# current viewport is being used.
-# Can also be called without specifying vp, just to get current
-# current viewport (see e.g., lgrid)
 current.viewport <- function(vp=NULL) {
   if (is.null(vp)) 
     # The system stores a pushedvp;  the user should only
     # ever see normal viewports, so convert.
     vpFromPushedvp(grid.Call("L_currentViewport"))
-  else
+  else {
+    warning("The vp argument is deprecated")
     vp
+  }
+}
+
+vpListFromNode <- function(node) {
+  childnames <- ls(env=node$children)
+  n <- length(childnames)
+  children <- vector("list", n)
+  index <- 1
+  for (i in childnames) {
+    children[[index]] <- vpTreeFromNode(get(i, env=node$children))
+    index <- index + 1
+  }
+  vpListFromList(children)
+}
+
+vpTreeFromNode <- function(node) {
+  # If no children then just return viewport
+  if (length(ls(env=node$children)) == 0)
+    vpFromPushedvp(node)
+  # Otherwise return vpTree
+  else
+    vpTree(vpFromPushedvp(node),
+           vpListFromNode(node))
+}
+       
+# Obtain the current viewport tree
+# Either from the current location in the tree down
+# or ALL of the tree
+current.vpTree <- function(all=TRUE) {
+  cpvp <- grid.Call("L_currentViewport")
+  if (all && vpDepth() > 0) {
+    savedname <- cpvp$name
+    upViewport(0)
+    cpvp <- grid.Call("L_currentViewport")
+  }
+  tree <- vpTreeFromNode(cpvp)
+  if (all) {
+    downViewport(savedname)
+  }
+  tree
 }
 
 current.transform <- function() {
