@@ -27,11 +27,11 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-.PHONY: R
-R:
-	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+R: FORCE
+	@if test "$(BUILDDIR_IS_SRCDIR)" = "no" ; then \
 	  $(MAKE) rhome=$(top_builddir) install-sources; \
 	fi
+FORCE:
 
 docs:
 
