@@ -2,7 +2,10 @@
 
 NEW FEATURES
 
-    o   The graphics function "tck" now produces effects just like
+    o   family	gaussian(.) and inverse.gaussian(.) both accept several
+	link arguments [J.Lindsey].
+
+    o   The graphics function "tck" now produces effects just
 	like those in S (e.g. par(tck=1) now produces grid lines).
 	Since using "tck" produces nasty results in some circumstances
 	there is also an alternative parameter "tcl" which defines
@@ -34,7 +37,7 @@ NEW FEATURES
 	profiles (`.Rprofile' and `~/.Rprofile') are sought.
 
     o   New functions subset() and transform() intended primarily to
-	make life with dataframes easier. 
+	make life with dataframes easier.
 
     o   The graphics system has been through a major overhaul.
 	It is now possible to have multiple active device drivers
@@ -62,7 +65,7 @@ NEW FEATURES
 	wildcards.
 
     o   data() now supports the new .tab file format, for data to be
-	read by `read.table(file, header=TRUE)'. 
+	read by `read.table(file, header=TRUE)'.
 
     o	Rdconv: new tabular environment, new sections `\format' and
         `\source', new output format `-type Sd' for S documentation
@@ -97,17 +100,26 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   Bug fix in mva dist.c for method binary (gave "invalid
-        distance").
+    o   "R --no-readline" now again gives proper prompts.
+
+    o   demos/zero.R  dyn.load(.) now should be working more easily.
+
+    o   mode(.) now returns "(" for a "parentheses 'call'".
+
+    o   Bug fix in mva dist.c for method binary (gave "invalid distance").
 
     o	R INSTALL should work (again) now when `pkg' is a relative file
 	name.
 
-    o	.not.yet.implemented() now takes an arbitrary number of args.	
+    o	.not.yet.implemented() now takes an arbitrary number of args.
 
     o   Plotting of dendrograms is working again.
 
     o   data.frame(.) now uses "1:n" as default row.names.
+
+    o   image(.) and contour(.) now also work called as, e.g., ``image(z)''.
+
+    o   the first argument of axis(.) is now called `side' as in S.
 
     o   format(NULL) now works.
 
@@ -172,7 +184,7 @@ BUG FIXES
     o	3 problems with glm, 2 in glm.fit and a one in print.glm fixed
 	[Jim Lindsey]
 
-    o	binomial (family) now works when 'n=0'. [J.Lindsey]
+    o	binomial (family) now works when 'n=0' [J.Lindsey].
 
     o	split() now also works in split(1:10,1:2)
 
