@@ -7,11 +7,11 @@
   scales the columns of a numeric matrix.
 }
 \usage{
-scale(x, ..., center = TRUE, scale = TRUE)
+scale(x, center = TRUE, scale = TRUE)
 }
 \synopsis{
-scale.default(x, ..., center = TRUE, scale = TRUE)
-scale(x, ..., scale = TRUE)
+scale.default(x, center = TRUE, scale = TRUE)
+scale(x, center = TRUE, scale = TRUE)
 }
 \arguments{
   \item{x}{a numeric matrix(like object).}
@@ -19,7 +19,6 @@ scale(x, ..., scale = TRUE)
     equal to the number of columns of \code{x}.}
   \item{scale}{either a logical value or a numeric vector of length
     equal to the number of columns of \code{x}.}
-  \item{\dots}{further arguments passed to or from other methods.}
 }
 \value{
   For \code{scale.default}, the centered, scaled matrix.
