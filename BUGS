@@ -297,6 +297,10 @@ Subject: return() undocumented
 From: Scot@Wilcoxon.Org
 Date: Sat, 10 Jan 2004 16:12:16 +0100 (CET)
 ..He meant in R-lang
+* PR# 6793 *
+Subject: rsync command in FAQ
+From: terra@gnome.org
+Date: Mon, 19 Apr 2004 18:29:57 +0200 (CEST)
 
 Directory:  Graphics
 
@@ -599,10 +603,7 @@ Date: Fri, 27 Feb 2004 11:27:18 +0000
 
 Directory:  Macintosh
 
-* PR# 6749 *
-Subject: Macintosh -- changing working directory forces computer to restart
-From: paolillo@indiana.edu
-Date: Thu,  8 Apr 2004 21:24:56 +0200 (CEST)
+none
 
 Directory:  Misc
 
@@ -651,6 +652,12 @@ Date: Wed, 01 Oct 2003 07:45:41 +1200
 ..probably need to be enclosed in quote().
 ..
 ..S does exactly the same though
+* PR# 6799 *
+Subject: Re: [R] Unexpected behaviour of identical
+From: Peter Dalgaard <p.dalgaard@biostat.ku.dk>
+Date: 20 Apr 2004 13:38:49 +0200
+..This case is fixed for 1.9.1.
+..Whether identical should be so fussy is under consideration.
 
 Directory:  Models
 
@@ -852,24 +859,11 @@ Subject: Re: [Rd] barplot() does not draw bars correctly in R 1.9.0
 From: Achim Zeileis <Achim.Zeileis@wu-wien.ac.at>
 Date: Fri, 16 Apr 2004 16:53:03 +0200
 ..part of 6776
-* PR# 6791 *
-Subject: Cyafmxr trouble f.r.ee
-From: "alejandro corsoro" <adildser@oldbuthealthy.com>
-Date: Sun, 18 Apr 2004 23:39:34 -0200
-* PR# 6792 *
-Subject: pgeom accuracy
-From: terra@gnome.org
-Date: Mon, 19 Apr 2004 17:11:47 +0200 (CEST)
-* PR# 6793 *
-Subject: rsync command in FAQ
-From: terra@gnome.org
-Date: Mon, 19 Apr 2004 18:29:57 +0200 (CEST)
-* PR# 6794 *
-Subject: Ae Pain Medicati0ns Lortab H'y_d_roc_0_d_0`n_e Norco V~i_c_o`din 
-From: "tyson lewitt" <adrienihor@yahoo.es>
-Date: Mon, 19 Apr 2004 20:35:13 +0700
-* PR# 6795 *
-Subject: URGENT TRANSACTION !!
-From: dpauline5 <dpauline5@telstra.com>
-From: Mrs. Pauline Ankoh Davies,
-Date: Mon, 19 Apr 2004 12:46:15 -0700
+* PR# 6797 *
+Subject: R.spec
+From: joachim.geiger@ipp.mpg.de
+Date: Tue, 20 Apr 2004 11:51:40 +0200 (CEST)
+* PR# 6804 *
+Subject: Re: [R] Error message during debug
+From: Duncan Murdoch <dmurdoch@pair.com>
+Date: Tue, 20 Apr 2004 14:15:05 -0400
