@@ -66,6 +66,24 @@ l1 <- c(TRUE,FALSE,TRUE)
 (! as.logical(as.data.frame(FALSE)[,1]))
 all(l1 == as.logical(as.data.frame(l1)[,1]))
 
+## empty data.frames :
+x <- data.frame(a=1:3)
+x30 <- x[, -1]; all(dim(x30) == c(3,0))
+x01 <- x[-(1:3), , drop = FALSE]
+all(dim(x01) == 0:1)
+all(dim(x) == dim(rbind(x, x01)))
+## bugs up to 1.2.3 :
+all(dim(x30) == dim(m30 <- as.matrix(x30)))
+all(dim(x01) == dim(m01 <- as.matrix(x01)))
+all(dim(x30) == dim(as.data.frame(m30)))
+all(dim(x01) == dim(as.data.frame(m01)))
+all(dim(x01) == dim(   data.frame(m01)))
+## *still* bug in data.frame() -- need to fix unlist(.) ??!
+if(FALSE){
+all(dim(x30) == dim(   data.frame(m30)))
+all(dim(x) == dim(cbind(x, x30)))
+}
+
 ### Subsetting
 
 ## bug PR#425

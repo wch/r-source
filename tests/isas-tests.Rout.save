@@ -251,7 +251,7 @@ Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
 Error in unique(x) : unique() applies only to vectors
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
-Error in vector("list", ncols) : negative length vectors are not allowed
+Error in ceiling(length.out) : Non-numeric argument to mathematical function
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
 Error in 1:nrows : NA/NaN argument
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
@@ -612,7 +612,7 @@ Error in as.data.frame.default(x) : can't coerce NULL into a data.frame
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
 Error in sort(x) : only atomic vectors can be sorted
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
-Error in vector("list", ncols) : negative length vectors are not allowed
+Error in ceiling(length.out) : Non-numeric argument to mathematical function
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
 Error in 1:nrows : NA/NaN argument
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
@@ -698,7 +698,7 @@ Error in as.function.default(l, envir) : argument must have length at least 1
 Error in array(x, c(length(x), 1), if (!is.null(names(x))) list(names(x),  : 
 	attempt to set an attribute on NULL
 > f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
-Error in inherits(x, "factor") : subscript out of bounds
+[1] TRUE
 > f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
 Error in 1:p : NA/NaN argument
 > f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
@@ -968,7 +968,7 @@ Error in as.data.frame.default(x) : can't coerce list into a data.frame
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
 Error in sort(x) : only atomic vectors can be sorted
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
-Error in vector("list", ncols) : negative length vectors are not allowed
+Error in ceiling(length.out) : Non-numeric argument to mathematical function
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
 Error in 1:nrows : NA/NaN argument
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
@@ -1050,7 +1050,7 @@ Error in as.logical.default(x) : (list) object cannot be coerced to vector type 
 > f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
 [1] TRUE
 > f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
-Error in inherits(x, "factor") : subscript out of bounds
+[1] TRUE
 > f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
 Error in 1:p : NA/NaN argument
 > f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
@@ -1316,7 +1316,7 @@ Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
 Error in unique(x) : unique() applies only to vectors
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
-Error in vector("list", ncols) : negative length vectors are not allowed
+Error in ceiling(length.out) : Non-numeric argument to mathematical function
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
 Error in 1:nrows : NA/NaN argument
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
@@ -1658,7 +1658,7 @@ Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
 Error in unique(x) : unique() applies only to vectors
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
-Error in vector("list", ncols) : negative length vectors are not allowed
+Error in ceiling(length.out) : Non-numeric argument to mathematical function
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
 Error in 1:nrows : NA/NaN argument
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
@@ -2000,7 +2000,7 @@ Error in as.data.frame.default(x) : can't coerce character into a data.frame
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
 Error in unique(x) : unique() applies only to vectors
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
-Error in vector("list", ncols) : negative length vectors are not allowed
+Error in ceiling(length.out) : Non-numeric argument to mathematical function
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
 Error in 1:nrows : NA/NaN argument
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
@@ -2342,7 +2342,7 @@ Error in as.data.frame.default(x) : can't coerce list into a data.frame
 > f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
 Error in unique(x) : unique() applies only to vectors
 > f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
-Error in vector("list", ncols) : negative length vectors are not allowed
+Error in ceiling(length.out) : Non-numeric argument to mathematical function
 > f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
 Error in 1:nrows : NA/NaN argument
 > f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
@@ -2781,6 +2781,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.92 0.1 1.27 0 0 
+Time elapsed:  0.9 0.11 1.06 0 0 
 > 
 > 
