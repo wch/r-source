@@ -22,6 +22,6 @@ mahalanobis(x, center, cov, inverted=FALSE)
 \seealso{\code{\link{cov}}}
 \examples{
 x <- matrix(rnorm(30),ncol=3)
-mahalanobis(x)
+mahalanobis(x,0,diag(3))
 }
 \keyword{multivariate}
