@@ -252,6 +252,9 @@ BUG FIXES
 
     o	text()'s default method could segfault if passed 0-length coordinates.
 
+    o	R CMD INSTALL (Unix) was sometimes leaving a temporary dir
+	behind.  (PR#7230)
+
 
 
 		CHANGES IN R VERSION 2.0.1

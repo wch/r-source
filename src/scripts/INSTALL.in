@@ -158,6 +158,14 @@ parse_description_field () { # fieldname
   fi
 }
 
+do_cleanup_tmpdir () {
+  ## Solaris will not remove any directory in the current path
+  cd "${startdir}"
+  if test -d "${tmpdir}"; then
+    rm -rf "${tmpdir}"
+  fi
+}
+
 ### 
 ### Setup and command line processing.
 
@@ -193,9 +201,9 @@ while test -n "${1}"; do
   ##DBG echo "   in 'R INSTALL' --arg checking-- \$1 = '${1}'" # Debugging
   case ${1} in
     -h|--help)
-      echo "${usage}"; exit 0 ;;
+      echo "${usage}"; do_cleanup_tmpdir; exit 0 ;;
     -v|--version)
-      echo "${version}"; exit 0 ;;
+      echo "${version}"; do_cleanup_tmpdir; exit 0 ;;
     -c|--clean)
       clean=true ;;
     -s|--save)
@@ -268,6 +276,7 @@ while test -n "${1}"; do
 	  get_packages "${tmpdir}/${pkgname}"
 	else
 	  error "cannot extract package from '${1}'"
+	  do_cleanup_tmpdir;
 	  exit 1
 	fi
       elif test -f "${1}/DESCRIPTION"; then
@@ -288,6 +297,7 @@ fi
 
 if test -z "${pkgs}"; then
   error "no packages specified"
+  do_cleanup_tmpdir;
   exit 1
 fi
 
@@ -296,6 +306,7 @@ if (test -d "${lib}" && test -w "${lib}") || \
   lib=`cd "${lib}" && ${GETWD}`
 else
   error "cannot write to or create directory '${lib}'"
+  do_cleanup_tmpdir;
   exit 2
 fi
 if ${lock} ; then
@@ -304,12 +315,14 @@ if ${lock} ; then
   if test -d "${lockdir}" || test -f "${lockdir}"; then
     error "failed to lock directory '${lib}' for modifying"
     echo "Try removing '${lockdir}'" >&2
+    do_cleanup_tmpdir;
     exit 3
   else
     ${MKDIR_P} "${lockdir}"
     if test ${?} -ne 0; then
       ## This should not really happen ...
       error "failed to lock directory '${lib}' for modifying"
+      do_cleanup_tmpdir;
       exit 3
     fi
   fi
@@ -403,7 +416,7 @@ do_install_source () {
 
   if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
     ## Back up previous version.
-    if ${lock} ; then 
+    if ${lock} ; then
       mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
     else
       ## this is only used for recommended packages installed from .tgz
@@ -652,7 +665,7 @@ do_install_source () {
   fi
   ## this test is designed to fail if a loader is used.
   ## beware: the wc format is not portable -- some systems give
-  ## size in a left-space-padded first field, and some do not pad. 
+  ## size in a left-space-padded first field, and some do not pad.
   if test "x$thislazy" = "xauto" ; then
     Rcodesize=`cat ${R_PACKAGE_DIR}/R/${pkg_name} | wc -c`
     if test ${Rcodesize} -gt 25000 ; then
@@ -843,7 +856,7 @@ do_install () {
   if grep "^Built:" DESCRIPTION >/dev/null ; then
     ## If DESCRIPTION has a @samp{Built:} entry this is a binary
     ## package.  This is the right test, but not available for packages
-    ## installed prior to 1.4.0 -- but 2.0.0 requires packages to be 
+    ## installed prior to 1.4.0 -- but 2.0.0 requires packages to be
     ## reinstalled.
     is_source_package=false
   else
@@ -894,14 +907,10 @@ do_exit_on_error () {
 }
 
 do_cleanup () {
-  ## Solaris will not remove any directory in the current path
-  cd "${startdir}"
-  if test -d "${tmpdir}"; then
-    rm -rf "${tmpdir}"
-  fi
+  do_cleanup_tmpdir
 
   if test "${is_first_package}" = no; then
-    ## Only need to do this in case we successfully installed  at least
+    ## Only need to do this in case we successfully installed at least
     ## *one* package ... well not so sure for bundles.
     cp "${R_HOME}/doc/html/R.css" "${lib}"
     chmod 644 "${lib}/R.css"
