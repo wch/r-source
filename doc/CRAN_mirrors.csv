@@ -1,23 +1,34 @@
-country, host, URL
-Australia,PlanetMirror,http://cran.au.r-project.org/
-Austria,Technische UniversitÅ‰t Wien,http://cran.at.r-project.org/
-Brasil,,http://cran.br.r-project.org/
-Canada,,http://probability.ca/cran/
-Denmark,,http://cran.dk.r-project.org/
-France,,http://cran.fr.r-project.org/
-Germany,,http://cran.r-mirror.de/
-Hungary,,http://cran.hu.r-project.org/
-Italy,,http://microarrays.unife.it/CRAN/
-Japan,,ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN
-Poland,,http://r.meteo.uni.wroc.pl/
-Portugal,,http://cran.pt.r-project.org/
-Slovenia,,http://www.fastmirrors.org/cran/
-South Africa,,http://cran.za.r-project.org/
-Spain,,http://cran.es.r-project.org/
-Switzerland,,http://cran.ch.r-project.org/
-Taiwan,,http://cran.csie.ntu.edu.tw/
-UK,University of Bristol,http://cran.uk.r-project.org/
-USA(PA),Pair Networks,http://cran.us.r-project.org/
-USA(CA),,http://cran.stat.ucla.edu/
-USA(MA),,http://www.bioconductor.org/CRAN/
-USA(TX),,http://www.binarycode.org/cran
+Name,Country,City,URL,Host,Maintainer
+Australia,Australia,Brisbane,http://cran.au.r-project.org/,"PlanetMirror, Brisbane",hostmaster@iseek.com.au
+Austria,Austria,Wien,http://cran.at.r-project.org/,"Technische Universitaet Wien",CRAN@R-project.org
+"Brasil (PR)",Brasil,Curitiba,http://cran.br.r-project.org/,"Universidade Federal do Parana¬°","Paulo J. Ribeiro Jr <paulojus@est.ufpr.br>"
+"Brasil (MG)",Brasil,Vicosa,http://www.termix.ufv.br/CRAN/,"Federal University of Vicosa",
+"Brasil (SP)",Brasil,Piracicaba,http://lmq.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba",jlpolize@carpa.ciagri.usp.br
+"Canada (BC)",Canada,Toronto,http://cran.stat.sfu.ca/,"University of Toronto","Jeffrey S. Rosenthal <jeff at math.toronto.edu>"
+"Canada (ON)",Canada,Burnaby,http://probability.ca/cran/,"Simon Fraser University, Burnaby","Brad McNeney <mcneney@sfu.ca>"
+Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,SunSITE,mirror@sunsite.dk
+"France (Toulouse)",France,Toulouse,http://cran.fr.r-project.org/,"CICT, Toulouse","David Allouche <allouche@tlse.toulouse.inra.fr>"
+"France (Lyon)",France,Lyon,http://cran.univ-lyon1.fr/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <jthioulouse@biomserv.univ-lyon1.fr>"
+"France (Paris)",France,Paris,http://mirror.internet.tp/cran/,"Boese Internet, Paris","Pelle Boese <pelle@boese.biz>"
+"Germany (Berlin)",Germany,Berlin,http://cran.r-mirror.de/,"Stefan Drees, Berlin","Stefan Drees <sdrees@ieee.org>"
+"Germany (Mainz)",Germany,Mainz,http://umfragen.sowi.uni-mainz.de/CRAN/,"University of Mainz",
+Hungary,Hungary,Budapest,http://cran.hu.r-project.org/,"Semmelweis University","Laszlo L Tornoci <torlasz@xenia.sote.hu>"
+Italy,Italy,Ferrara,http://microarrays.unife.it/CRAN/,"Universita di Ferrara","Stefano Volinia <s.volinia@unife.it>"
+"Japan (Aizu)",Japan,Aizu,ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN,"University of Aizu",
+"Japan (Tsukaba)",Japan,Tsukaba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",
+Poland,Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Pawel Netzel <netzel@meteo.uni.wroc.pl>"
+Portugal,Portugal,Porto,http://cran.pt.r-project.org/,"Universidade do Porto",neacm@fe.up.pt
+"Slovenia (Besnica)",Slovenia,Besnica,http://www.fastmirrors.org/cran/,"Fastmirrors.org, Besnica","Tomy Kurtis <webadmin@fastmirrors.org>"
+"Slovenia (Ljubljana)",Slovenia,Ljubljana,http://www.wsection.com/cran/,"Wsection.com, Ljubljana",info@wsection.com
+"South Africa","South Africa",Grahamstown,http://cran.za.r-project.org/,"Rhodes University","Jeremy Baxter <J.Baxter at ru.ac.za>"
+Spain,Spain,Madrid,http://cran.es.r-project.org/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias@rediris.es>"
+"Switzerland (Zuerich)",Switzerland,Zuerich,http://cran.ch.r-project.org/,"ETH Zuerich",Martin.Maechler@R-project.org
+"Switzerland (Bern)",Switzerland,Bern,http://www.imsv.unibe.ch/cran/,"Universitaet Bern","Thomas Schweizer <Thomas.Schweizer@stat.unibe.ch>"
+Taiwan,Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan@infor.org>"
+"UK (Bristol)",UK,Bristol,http://cran.uk.r-project.org/,"University of Bristol","Guy Nason <G.P.Nason@bristol.ac.uk>"
+"UK (London)",UK,London,http://www.sourcekeg.co.uk/cran/,"Sourcekeg, London",mirrors@sourcekeg.co.uk
+"USA (CA)",USA,"Los Angeles",http://cran.stat.ucla.edu/,"University of California, Los Angeles, CA",
+"USA (MA)",USA,Boston,http://www.bioconductor.org/CRAN/,"Dana Farber Cancer Institute, Boston, MA","Jeff Gentry <jgentry@jimmy.harvard.edu>"
+"USA (NC)",USA,"Chapel Hill",http://www.ibiblio.org/pub/languages/R/CRAN/,"University of North Carolina, Chapel Hill, NC","""Nancy C. Wilson"" <nancy@metalab.unc.edu>"
+"USA (PA 1)",USA,Pittsburgh,http://cran.us.r-project.org/,"Pair Networks, Pittsburgh, PA",sigma@pair.com
+"USA (PA 2)",USA,Pittsburgh,http://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA",
