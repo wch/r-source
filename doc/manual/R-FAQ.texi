@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-16, 2001-01-10
-@set REL-VERSION 1.2.0
+@set FAQ-VERSION 1.2-17, 2001-01-12
+@set REL-VERSION 1.2.1
 @set DEV-VERSION 1.3.0
 @c %**end of header
 

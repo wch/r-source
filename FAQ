@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-16, 2001-01-10
+Version 1.2-17, 2001-01-12
 Kurt Hornik
 
 
@@ -220,7 +220,7 @@ hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current stable Unix/Windows version is 1.2.0, the unstable one is
+   The current stable Unix/Windows version is 1.2.1, the unstable one is
 1.3.0.  Typically, new features are introduced in the development versions;
 updates of stable versions are for bug fixes mostly.  The version for the
 Mac is pre-alpha.
