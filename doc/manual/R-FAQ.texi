@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-24, @value{FAQ-YEAR}-12-04
+@set FAQ-VERSION 1.8-26, @value{FAQ-YEAR}-12-10
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2044,6 +2044,8 @@ Osborne et al.@: (1998)
 @item lattice
 Lattice graphics, an implementation of Trellis Graphics functions.
 @emph{Recommended}.
+@item lazy
+Lazy learning for local regression.
 @item ldDesign
 Design of experiments for detection of linkage disequilibrium,
 @item leaps
@@ -2225,6 +2227,9 @@ Periodic Autoregression Analysis.
 Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
 types of tissue.
+@item pheno
+Some easy-to-use functions for time series analyses of (plant-)
+phenological data sets.
 @item phyloarray
 Software to process data from phylogenetic or identification
 microarrays.
