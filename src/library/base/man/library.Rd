@@ -97,8 +97,8 @@ provide(name)
 
   \code{.packages()} returns the ``base names'' of the currently attached
   packages \emph{invisibly} whereas \code{.packages(all.available =TRUE)}
-  gives \emph{all} packages available in the library location path
-  \code{lib.loc}.
+  gives (visibly) \emph{all} packages available in the library
+  location path \code{lib.loc}.
 
   \code{.Autoloaded} contains the ``base names'' of the packages for
   which autoloading has been promised.
