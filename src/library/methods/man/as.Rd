@@ -4,6 +4,24 @@
 \alias{coerce}
 \alias{coerce<-}
 \alias{setAs}
+\alias{coerce-methods}
+\alias{coerce,ANY,array-method}
+\alias{coerce,ANY,call-method}
+\alias{coerce,ANY,character-method}
+\alias{coerce,ANY,complex-method}
+\alias{coerce,ANY,environment-method}
+\alias{coerce,ANY,expression-method}
+\alias{coerce,ANY,function-method}
+\alias{coerce,ANY,integer-method}
+\alias{coerce,ANY,list-method}
+\alias{coerce,ANY,logical-method}
+\alias{coerce,ANY,matrix-method}
+\alias{coerce,ANY,name-method}
+\alias{coerce,ANY,numeric-method}
+\alias{coerce,ANY,single-method}
+\alias{coerce,ANY,ts-method}
+\alias{coerce,ANY,vector-method}
+\alias{coerce,ANY,NULL-method}
 \title{Force an Object to Belong to a Class}
 \description{
   These functions manage the relations that allow coercing an object to
@@ -217,6 +235,13 @@ setAs(from, to, def, replace, where = 1)
   specified through either \code{setIs} or \code{setAs}; the effect is
   essentially the same.
   }
+
+\section{Basic Coercion Methods}{
+Methods are pre-defined for coercing any object to one of the basic
+datatypes.  For example, \code{as(x, "numeric")} uses the existing
+\code{as.numeric} function.  These built-in methods can be listed by
+\code{showMethods("coerce")}.
+}
 
 \references{
   The R package \pkg{methods} implements, with a few exceptions, the

@@ -8,7 +8,7 @@
     if(!is(method, "MethodDefinition"))
         stop("NextMethod not defined because the the current method is not a MethodDefinition object")
     ## remove all cached methods
-    mlist@allMethods <- list()
+    mlist@allMethods <- mlist@methods
     ## delete the excluded method(s)
     for(signature in excluded) {
         if(!is(signature, "signature"))

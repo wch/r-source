@@ -1,5 +1,6 @@
 \name{MethodsList-class}
 \alias{MethodsList-class}
+\alias{body<-,MethodDefinition-method}
 \docType{class}
 \title{Class MethodsList, Representation of Methods for a Generic Function }
 \description{ Objects from this class are generated and revised by the

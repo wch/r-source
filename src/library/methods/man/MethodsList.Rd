@@ -13,6 +13,10 @@
 \alias{finalDefaultMethod}
 \alias{mergeMethods}
 \alias{loadMethod}
+\alias{loadMethod-methods}
+\alias{loadMethod,ANY-method}
+\alias{loadMethod,MethodDefinition-method}
+\alias{loadMethod,MethodWithNext-method}
 \title{MethodsList Objects}
 \description{
   These functions create and manipulate \code{MethodsList} objects, the
@@ -138,7 +142,10 @@ loadMethod(method, fname, envir)
       the point is to assign or modify information in the frame
       environment to be used evaluation.  For example, the standard
       class \code{MethodDefinition} has a method that stores the target
-      and defined signatures in the environment.
+      and defined signatures in the environment.  Class
+      \code{MethodWithNext} has a method taking account of the
+      mechanism for storing the method to be used in a call to
+      \code{\link{callNextMethod}}.
 
       Any methods defined for \code{loadMethod} must return the function
       definition to be used for this call; typically, this is just the

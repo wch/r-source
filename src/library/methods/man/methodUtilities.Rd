@@ -51,7 +51,7 @@ initMethodDispatch()
   
     \item{\code{elNamed}:}{ 
       get the element of the vector corresponding to name.  Unlike the
-      \code{[}, \code{[[}, and \code{$} operators, this function
+      \code{[}, \code{[[}, and \code{$} operators, this function %$
       requires \code{name} to match the element name exactly (no partial
       matching).
     }
@@ -77,6 +77,12 @@ initMethodDispatch()
     \item{\code{showDefault}:}{ 
       Utility, used to enable \code{show} methods to be called by the
       automatic printing (via \code{print.default}).
+ 
+  { Argument \code{oldMethods} controls whether old-style print
+    methods are used for this
+    object.  It is  \code{TRUE} by default if called directly, but \code{FALSE}
+    when called from the \pkg{methods} package for automatic printing (to
+    avoid potential recursion).
     }
     \item{\code{initMethodDispatch}:}{
         Turn on the internal method dispatch code.  Called on

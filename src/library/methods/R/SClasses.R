@@ -2,7 +2,7 @@ setClass <-
     ## Define Class to be an S-style class.
     function(Class, representation = list(), prototype = NULL,
              contains = character(), validity = NULL, access = list(),
-             where = .topLevelEnv(), version = .newExternalptr(), sealed = FALSE, package = getPackageName(where))
+             where = topenv(), version = .newExternalptr(), sealed = FALSE, package = getPackageName(where))
 {
     if(isClass(Class) && getClassDef(Class)@sealed)
         stop(paste("\"", Class, "\" has a sealed class definition and cannot be redefined", sep=""))
@@ -150,7 +150,7 @@ makeClassRepresentation <-
 
 getClassDef <-
   ## Get the definition of the class supplied as a string.
-  function(Class, where = .topLevelEnv(), package = "")
+  function(Class, where = topenv(), package = "")
 {
     cname <- classMetaName(Class)
     if(nchar(package)>0)
@@ -164,7 +164,7 @@ getClassDef <-
 getClass <-
   ## Get the complete definition of the class supplied as a string,
   ## including all slots, etc. in classes that this class extends.
-  function(Class, .Force = FALSE, where = .topLevelEnv())
+  function(Class, .Force = FALSE, where = topenv())
 {
     value <- getClassDef(Class, where)
     if(is.null(value)) {
@@ -241,7 +241,7 @@ slotNames <-
 
 removeClass <-  function(Class, where) {
     if(missing(where)) {
-        where <- findClass(Class, .topLevelEnv())
+        where <- findClass(Class, topenv())
         if(length(where) == 0) {
             warning("\"", Class, "\" is not a class (no action taken)")
             return(FALSE)
@@ -258,7 +258,7 @@ removeClass <-  function(Class, where) {
 
 isClass <-
   ## Is this a formally defined class?
-  function(Class, formal=TRUE, where = .topLevelEnv())
+  function(Class, formal=TRUE, where = topenv())
 {
     ## argument formal is for Splus compatibility & is ignored.  (All classes that
     ## are defined must have a class definition object.)
@@ -360,7 +360,7 @@ validObject <- function(object, test = FALSE) {
 }
 
 setValidity <-
-  function(Class, method, where = .topLevelEnv()) {
+  function(Class, method, where = topenv()) {
     if(isClassDef(Class)) {
         ClassDef <- Class
         Class <- ClassDef@className
@@ -503,7 +503,7 @@ findClass <- function(Class, where, unique = "") {
         if(nchar(pkg))
             where <- .requirePackage(pkg)
         else
-            where <- .topLevelEnv()
+            where <- .envSearch()
     }
     else
         where <- as.environment(where)

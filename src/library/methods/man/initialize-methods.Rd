@@ -52,6 +52,9 @@ correspond to the arguments to \code{\link[base]{trace}}.
     initialize the environment. }
 
 \item{.Object = "signature"}{ This is a method for internal use only.
+ It takes an optional \code{functionDef} argument to provide a generic
+ function with a \code{signature} slot to define the argument names.
+ See \link{Methods} for details.
  }
 
 

@@ -5,7 +5,8 @@
 ## Makes a generic function object corresponding to the given function name.
 ## and definition.
   function(f, fdef,
-           fdefault = getFunction(f, generic = FALSE, mustFind = FALSE),
+           fdefault =
+             .derivedDefaultMethod(getFunction)(f, generic = FALSE, mustFind = FALSE),
            group = list(), valueClass = character(), package, signature = NULL,
            genericFunction = NULL) {
       checkTrace <- function(fun, what, f) {
@@ -23,13 +24,12 @@
       parent.env(ev) <- environment(fdef)
       environment(fdef) <- ev
       assign(".Generic", f, envir = ev)
-      assign(".Methods", NULL, envir = ev)
       fdef <- checkTrace(fdef)
       if(length(valueClass)>0)
           fdef <- .ValidateValueClass(fdef, f, valueClass)
       group <- .asGroupArgument(group)
       if(is.null(genericFunction))
-          value <- new("genericFunction")
+          value <- new("genericMethods")
       else if(is(genericFunction, "genericFunction"))
           value <- genericFunction
       else
@@ -67,6 +67,9 @@
           methods <- MethodsList(name, asMethodDefinition(fdefault))
       }
       value@default <- methods
+      assign(".Methods", methods, envir = ev)
+      if(is(value, "genericMethods"))
+          value@.Methods <- methods
       value@skeleton <- generic.skeleton(f, fdef, fdefault)
       value
   }
@@ -82,14 +85,13 @@ makeGeneric <-
       parent.env(ev) <- environment(fdef)
       environment(fdef) <- ev
       assign(".Generic", f, envir = ev)
-      assign(".Methods", NULL, envir = ev)
       if(length(valueClass)>0)
           fdef <- .ValidateValueClass(fdef, f, valueClass)
       group <- .asGroupArgument(group)
 ###--------
       value <- fdef
       if(is.null(genericFunction))
-          class(value) <- "genericFunction"
+          class(value) <- "genericMethods"
       else
           class(value) <- class(genericFunction)
       slot(value, "generic", FALSE) <- f
@@ -117,7 +119,10 @@ makeGeneric <-
       else
           methods <- MethodsList(name, asMethodDefinition(fdefault))
 ###--------
+      assign(".Methods", methods, envir = ev)
       slot(value, "default", FALSE) <- methods
+      if(is(value, "genericMethods"))
+          slot(value, ".Methods", FALSE) <- methods
       slot(value, "skeleton", FALSE) <- generic.skeleton(f, fdef, fdefault)
 ###--------
       value
@@ -205,54 +210,64 @@ getAllMethods <-
   ##
   ## The slot "allMethods" of the merged methods list is set to a copy of the methods slot;
   ## this is the slot where inherited methods are stored.
-  function(f, fdef = getGeneric(f, TRUE)) {
-      if(is(fdef, "genericFunction"))
+  function(f, fdef, where = topenv()) {
+      search <- missing(fdef)
+      basicDef <- elNamed(.BasicFunsList, f)
+      ## for basic functions (primitives), a generic is not on the search list
+      if(is.null(basicDef)) {
+          gwhere <- findFunction(f, where = where)
+          if(length(gwhere) == 0)
+              stop("\"",f, "\" is not a function visible from \"",
+                   getPackageName(where), "\"")
+          ## TODO: deal with multiple versions
+          gwhere <- gwhere[[1]]
+          if(search)
+              fdef <- get(f, gwhere)
+      }
+      else {
+          if(search)
+              fdef <- basicDef
+          gwhere <- "package:base" #  Arbitary: .genericAssign uses .BasicFunsList
+      }
+      if(is(fdef, "genericFunction")) {
           deflt <- finalDefaultMethod(fdef@default)
+      }
       else if(is.primitive(fdef)) {
           deflt <- fdef
-          fdef <- getGeneric(f, TRUE)
+          fdef <- getGeneric(f, TRUE, where)
+      }
+      else if(is.function(fdef) && search) {
+          warning("\"",f,"\" from \"",
+                  packageName(gwhere), "\" is a nongeneric function; no methods available")
+          return(NULL)
       }
       else
-          stop("Invalid \"fdef\" argument supplied to getAllMethods; expected either a genericFunction object or a primitive function, got an object of class \"",
+          stop("Invalid \"fdef\" for \"", f,
+               "\" in getAllMethods; expected either a genericFunction object or a primitive function, got an object of class \"",
                class(fdef), "\"")
       primCase <- is.primitive(deflt)
+      ## NOTE: getGroup & getGeneric have to be called with the default
+      ## topenv() here.  This may not work for installs w/o saved image TODO: check
       groups <- getGroup(fdef, TRUE)
-    ## when this function is called from methodsListDispatch (via C code),
-    ## a skeleton version is assigned to prevent recursive loops:  remove this
-    ## in case of errros in getAllMethods
-    on.exit({message("An error occurred in collecting methods for function \"",
-                     f,"\", perhaps from a C-level dispatch"); resetGeneric(f, fdef)})
-    ## initialize with a check for basic functions (primitives)
-      ## For all others, the initial value of methods will be NULL
-    methods <- elNamed(.BasicFunsList, f)
-      if(!is.null(methods))  # it better be a genericFunction object
-          methods <- methods@default
-    funs <- c(fdef, groups)
-    for(fun in rev(funs)) {
-        fun <- getGeneric(fun)
-        if(is.null(fun))
-            next # but really an error?
-        genericLabel <- if(primCase && !identical(fun, fdef)) f else character()
-        libs = .findAll(mlistMetaName(fun@generic), .genericEnv(fun))
-        for(where in rev(libs)) {
-            mw <- getMethodsMetaData(fun, where)
-            methods <- mergeMethods(methods, mw, genericLabel)
-        }
-    }
-    ev <- environment(fdef)
-    if(is.null(methods)) ## after removeMethods, e.g.
-        methods <- fdef@default
-    if(!is(methods, "EmptyMethodsList")) {
-        methods <- setAllMethodsSlot(methods)
-        assign(".Methods", methods, ev)
-    }
-    ## primitives are pre-cached in the method metadata (because
-    ## they are not visible as generic functions from the C code).
-    if(primCase)
-      setPrimitiveMethods(f, deflt, "set", fdef, methods)
-    ## cancel the error cleanup
-    on.exit()
-    methods
+      methods <- fdef@default
+      funs <- c(fdef, groups)
+      changed <- FALSE
+      for(fun in rev(funs)) {
+          fun <- getGeneric(fun)
+          if(is.null(fun))
+              next # but really an error?
+          genericLabel <- if(primCase && !identical(fun, fdef)) f else character()
+          libs = .findAll(mlistMetaName(fun@generic), .genericEnv(fun))
+          for(mwhere in rev(libs)) {
+              mw <- getMethodsMetaData(fun, mwhere)
+              methods <- mergeMethods(methods, mw, genericLabel)
+              changed <- TRUE
+          }
+      }
+      ev <- environment(fdef)
+      if(changed || !identical(getMethods(fdef), methods))
+          .genericAssign(f, fdef, methods, gwhere, deflt)
+      methods
   }
 
 
@@ -274,30 +289,6 @@ mergeMethods <-
     }
     m1
   }
-
-setAllMethodsSlot <- function(mlist) {
-  ## initialize the "allMethods" slot to the "methods" slot, and
-  ## do the same recursively to any contained MethodsList objects
-  ##
-  ## The current contents of the allMethods slot are ignored, so calling
-  ## setAllMethodsSlot either initializes or re-intializes the object, removing
-  ## any inherited methods stored in allMethods.
-  if(is.null(mlist)) return(mlist)
-  methods <- mlist@methods
-  mnames <- allNames(methods)
-  modified <- FALSE
-  for(i in seq(along=methods)) {
-    method <-methods[[i]]
-    if(is(method, "MethodsList")) {
-      methods[[i]] <- Recall(method)
-      modified <- TRUE
-    }
-  }
-  mlist@allMethods <- methods
-  if(modified)
-    mlist@methods <- methods
-  mlist
-}
 
 doPrimitiveMethod <-
   ## do a primitive call to builtin function `name' the definition and call
@@ -417,7 +408,7 @@ getGeneric <-
   ##
   ## If there is no definition, throws an error or returns
   ## NULL according to the value of mustFind.
-  function(f, mustFind = FALSE, where = .topLevelEnv()) {
+  function(f, mustFind = FALSE, where = topenv()) {
     if(is.function(f) && is(f, "genericFunction"))
         return(f)
     value <- .Call("R_getGeneric", f, FALSE, as.environment(where), PACKAGE = "methods")
@@ -429,6 +420,7 @@ getGeneric <-
           if(is.function(value) && !is(value, "genericFunction")) {
               ## initialize the generic function in the list on base
               value <- makeGeneric(f, makeStandardGeneric(f, value), value, package = "base")
+              ## save the modified version:  note the <<-
               elNamed(.BasicFunsList, f) <<- value
               mlist <- elNamed(.BasicFunsMethods, f)
               if(!is.null(mlist)) {
@@ -451,10 +443,10 @@ getGeneric <-
 getGroup <-
   ## return the groups to which this generic belongs.  If `recursive=TRUE', also all the
   ## group(s) of these groups.
-  function(fdef, recursive = FALSE)
+  function(fdef, recursive = FALSE, where = topenv())
 {
     if(is.character(fdef))
-        fdef <- getGeneric(fdef)
+        fdef <- getGeneric(fdef, where = where)
     if(is(fdef, "genericFunction"))
         group <- fdef@group
     else
@@ -462,9 +454,9 @@ getGroup <-
     if(recursive && length(group) > 0) {
         allGroups <- group
         for(gp in group) {
-            fgp <- getGeneric(gp)
+            fgp <- getGeneric(gp, where = where)
             if(is(fgp, "groupGenericFunction"))
-                allGroups <- c(allGroups, Recall(fgp, TRUE))
+                allGroups <- c(allGroups, Recall(fgp, TRUE, where))
         }
         if(length(allGroups)>1) {
             ids <- sapply(allGroups, mlistMetaName)
@@ -479,14 +471,15 @@ getGroup <-
 getMethodsMetaData <-
   ## get the methods meta-data for function f on database where
   function(f, where = -1) {
-    mname <- mlistMetaName(f)
     if(identical(where, -1)) {
+        mname <- mlistMetaName(f)
         if(exists(mname))
             get(mname)
         else
             NULL
     }
     else {
+        mname <- mlistMetaName(f, where)
         if(exists(mname, where = where, inherits = FALSE))
             get(mname, where)
         else
@@ -494,21 +487,27 @@ getMethodsMetaData <-
     }
   }
 
+
 assignMethodsMetaData <-
   ## assign value to be the methods metadata for generic f on database where.
-  ## Also resets the generic to force recomputation of session information.
-  function(f, value, fdef, where, deflt = finalDefaultMethod(fdef@default)) {
+  function(f, value, fdef, where, deflt = finalDefaultMethod(value)) {
     assign(mlistMetaName(fdef), value, where)
-    resetGeneric(f, fdef)
     if(is.primitive(deflt))
         setPrimitiveMethods(f, deflt, "reset", fdef, NULL)
     if(is(fdef, "groupGenericFunction")) # reset or turn on members of group
-        cacheGenericsMetaData(fdef@generic, package = fdef@package)
+        cacheGenericsMetaData(f, fdef, package = fdef@package)
   }
 
 mlistMetaName <-
   ## name mangling to simulate metadata for a methods definition.
   function(name = "", package = "") {
+      if(!is.character(package)) { # find the generic starting from envir. or search list
+          fdef <- getGeneric(name, where = package)
+          if(is.null(fdef))
+              package <- ""
+          else
+              package <- fdef@package
+      }
       if(is(name, "genericFunction"))
           methodsPackageMetaName("M", paste(name@generic, name@package, sep=":"))
       else if(missing(name))
@@ -530,8 +529,10 @@ mlistMetaName <-
   }
 
 getGenerics <-
-  function(where = .envSearch(), searchForm = FALSE) {
-    if(is.environment(where)) where <- list(where)
+  function(where = -1, searchForm = FALSE) {
+      if(identical(where, -1))
+          where <- .envSearch()
+      else if(is.environment(where)) where <- list(where)
     these <- character()
     for(i in where) {
       these <- c(these, objects(i, all=TRUE))
@@ -548,83 +549,72 @@ is.primitive <-
            FALSE)
     
 
-cacheMetaData <-
-  function(where, attach = TRUE) {
+cacheMetaData <- function(where, attach = TRUE, searchWhere = topenv()) {
     ## a collection of actions performed on attach or detach
     ## to update class and method information.
     generics <- getGenerics(where)
-    if(length(generics)>0)
-      cacheGenericsMetaData(generics, attach, where)
-  }
-
-cacheGenericsMetaData <- function(generics, attach = TRUE, where, package) {
-    if(missing(package)) {
-        if(is(generics, "ObjectsWithPackage"))
-            package <- generics@package
-        else
-            package <- character(length(generics))
-    }
-    for(i in seq(along=generics)) {
-        f <- generics[[i]]
-        ## FIXME:  should use package information in getGeneric call: pkg <- package[[i]]
-        ## Some tests: don't cache generic if no methods defined
-        fdef <- getGeneric(f)
-        if(!is(fdef, "genericFunction"))
-            next
-        if(attach) {
-            if(is.null(elNamed(.BasicFunsList, f))) {
-                if( !isGeneric(fdef@generic))
-                    next
-                methods <- getMethods(f)
-                if(!is.null(methods))
-                    methods <- methods@methods
-                if(length(methods)==0) {
-                    resetGeneric(f, fdef)
-                    next
-                }
-            }
-            else
-                ## this is a primitive generic.  In current (1.7.1) code, we need to force
-                ## the collection of methods during the library() call.
-                getAllMethods(f, fdef)
+    for(f in generics) {
+        fdef <- getGeneric(f, FALSE, searchWhere)
+        ## silently ignores all generics not visible from searchWhere
+        ## (certainly reasonable for attach=FALSE, maybe for namespaces ?)
+        if(is(fdef, "genericFunction")) {
+            getAllMethods(f, fdef, searchWhere)
+            cacheGenericsMetaData(f, fdef, attach, where)
         }
-        ## find the function.  It may be a generic, but will be a primitive
-        ## if the internal C code is being used to dispatch methods for primitives.
-        ## It may also be NULL, if no function is found (when detaching the only
-        ## package defining this function, for example).
-        deflt <- finalDefaultMethod(fdef@default)
-        if(is.primitive(deflt)) {
-            if(attach) code <- "reset"
-            else {
-                code <- "clear"
-                if(!missing(where)) {
-                    dbs <- find(mlistMetaName(f))
-                    if(is.numeric(where))
-                        where <- search()[where]
-                    ## are there other methods for f still left?
-                    if(is.environment(where)){
-                        if(length(dbs)>1)
-                            code <- "reset"
-                    }
-                    else if(any(is.na(match(dbs, where))))
-                        code <- "reset"
-                }
-            }
-            switch(code,
-                   reset = setPrimitiveMethods(f, deflt, code, fdef, NULL),
-                   clear = setPrimitiveMethods(f, deflt, code, NULL, NULL))
+    }
+}
+
+cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(),
+                                  package, methods = getMethods(f, where)) {
+    if(!is(fdef, "genericFunction")) {
+        warning("No methods found for \"", f, "\"; cacheGenericsMetaData will have no effect")
+        return(FALSE)
+    }
+    if(missing(package))
+        package <- fdef@package
+    deflt <- finalDefaultMethod(methods)
+    if(is.primitive(deflt)) {
+        if(attach) {
+            if(missing(methods))
+                code <- "reset"
+            else
+                code <- "set"
         }
         else {
-            resetGeneric(f, fdef)
-            if(isGroup(f, fdef = fdef)) {
-                members <- fdef@groupMembers
-                ## do the computations for the members as well; important if the
-                ## members are primitive functions.
-                if(length(members)>0)
-                    Recall(members, attach, where)
+            code <- "clear"
+            if(!missing(where)) {
+                dbs <- find(mlistMetaName(f))
+                if(is.numeric(where))
+                    where <- search()[where]
+                ## are there other methods for f still left?
+                if(is.environment(where)){
+                    if(length(dbs)>1)
+                        code <- "reset"
+                }
+                else if(any(is.na(match(dbs, where))))
+                    code <- "reset"
+            }
+        }
+        switch(code,
+               reset = setPrimitiveMethods(f, deflt, code, fdef, NULL),
+               set = setPrimitiveMethods(f, deflt, code, fdef, methods),
+               clear = setPrimitiveMethods(f, deflt, code, NULL, NULL))
+    }
+    else if(isGroup(f, fdef = fdef)) {
+        members <- fdef@groupMembers
+        ## do the computations for the members as well; important if the
+        ## members are primitive functions.
+        for(ff in members) {
+            ffdef <- getGeneric(ff, where = where)
+            if(is(ffdef, "genericFunction")) {
+                ## reform the methods list for the group member, to include
+                ## any group-inherited methods
+                mm <- getAllMethods(ff, ffdef, where = where)
+                Recall(ff, ffdef, attach, where, methods = mm)
             }
         }
     }
+    TRUE
 }
 
 setPrimitiveMethods <-
@@ -633,9 +623,9 @@ setPrimitiveMethods <-
 
 
 
-findUnique <- function(what, doFind = .findAll, message)
+findUnique <- function(what, message, where = topenv())
 {
-    where <- doFind(what)
+    where <- .findAll(what, where = where)
     if(length(where) > 1) {
         if(missing(message)) {
             if(identical(doFind, findFunction))
@@ -730,12 +720,16 @@ balanceMethodsList <- function(mlist, args, check = TRUE) {
 }
     
     
-sigToEnv <- function(signature) {
+sigToEnv <- function(signature, genericSig) {
     value <- new.env()
     classes <- as.character(signature)
     args <- names(signature)
     for(i in seq(along=args))
         assign(args[[i]], classes[[i]], envir = value)
+    ## missing args in signature have class "ANY"
+    if(length(args) < length(genericSig))
+        for(other in genericSig[is.na(match(genericSig, args))])
+            assign(other, "ANY", envir = value)
     value
 }
 
@@ -771,17 +765,17 @@ sigToEnv <- function(signature) {
     if(is.null(allMethods)) {
         argName <- genericFun@signature[[1]]
         allMethods <- new("MethodsList", argument = as.name(argName))
-        other <- getMethodsMetaData(f)
-        if(is.null(other))
-            ## this utility is called AFTER ensuring the existence of a generic for f
-            ## Therefore, the case below can only happen for a primitive for which
-            ## no methods currently are attached.  Make the primitive the default
-            deflt <- getFunction(f, generic = FALSE, mustFind = FALSE)
-        else
-            ## inherit the default method, if any
-            deflt <- finalDefaultMethod(other)
-        if(!is.null(deflt))
-            allMethods <- insertMethod(allMethods, "ANY", argName, deflt)
+#         other <- getMethodsMetaData(f)
+#         if(is.null(other))
+#             ## this utility is called AFTER ensuring the existence of a generic for f
+#             ## Therefore, the case below can only happen for a primitive for which
+#             ## no methods currently are attached.  Make the primitive the default
+#             deflt <- getFunction(f, generic = FALSE, mustFind = FALSE)
+#         else
+#             ## inherit the default method, if any
+#             deflt <- finalDefaultMethod(other)
+#         if(!is.null(deflt))
+#             allMethods <- insertMethod(allMethods, "ANY", argName, deflt)
         }
     allMethods
 }
@@ -957,28 +951,22 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     as.function(vlist, envir = environment(def))
 }
 
-## the top-level environment, set in sys.source()
-.topLevelEnv <- function() {
-    env <- options()$topLevelEnvironment
-    if(is.null(env))
-        .GlobalEnv
-    else if(is.environment(env))
-        env
-    else
-        as.environment(env)
-}
-
-.envSearch <- function() {
-    env <- options()$topLevelEnvironment
-    if(is.null(env))
+## The search list, or a namespace's static search list, or an environment
+.envSearch <- function(env = topenv()) {
+    if(identical(env, .GlobalEnv))
         seq(along = search())
-    else {
-        ## loading via sys.source()
-        if(isNamespace(env)) # loading with namespace
-            list(env)
-        else # ordinary loading with search list
-            c(list(env), as.list(seq(along = search())))
+    else if(isNamespace(env)) { # the static environments for this namespace
+        value <- list(env)
+        while(!isBaseNamespace(env)) {
+            if(is.null(env))
+                stop("Botched namespace: Failed to find base namespace in its parents")
+            value <- c(value, list(env))
+            env <- parent.env(env)
+        }
+        value
     }
+    else
+        list(env)
 }
 
 .genericName <- function(f) {
@@ -1011,7 +999,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     ## go back nmax at most (e.g., a function in the methods package that knows it's never
     ## called more than nmax levels in could supply this argument
     if(nmax < 1) stop("Got a negative maximum number of frames to look at")
-    ev <- .topLevelEnv() # .GlobalEnv or the environment in which methods is being built.
+    ev <- topenv() # .GlobalEnv or the environment in which methods is being built.
     for(back in seq(start = -n, length = nmax)) {
         fun <- sys.function(back)
         if(is(fun, "function")) {
@@ -1041,4 +1029,38 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
         value <- c(value, list(ev))
     }
     value
+}
+
+.genericAssign <- function(f, fdef, methods, where, deflt) {
+    primCase <- is.primitive(deflt)
+    ev <- environment(fdef)
+    assign(".Methods", methods, ev)
+    if(is(fdef, "genericMethods")) {
+        ## only in this case does the generic function need re-assigning
+        fdef@.Methods <- methods
+        if(primCase) {
+            if(!is.null(elNamed(.BasicFunsList, f)))
+                ## save the modified version:  note the <<-
+                elNamed(.BasicFunsList, f) <<- fdef
+            ## primitives are pre-cached in the method metadata (because
+            ## they are not visible as generic functions from the C code).
+            setPrimitiveMethods(f, deflt, "set", fdef, methods)
+        }
+        else {
+            if(!is(try(get(f, where, inherits = FALSE)), "genericFunction"))
+                warning("Possible internal error: assigning a generic version of \"",
+                        f, "\" in \"", getPackageName(where), "\" where there was none before")
+            assign(f, fdef, where)
+        }
+    }
+}
+
+.derivedDefaultMethod <- function(fdef) {
+    if(is.function(fdef)) {
+        value <- new("derivedDefaultMethod")
+        value@.Data <- fdef
+        value
+    }
+    else
+        fdef
 }

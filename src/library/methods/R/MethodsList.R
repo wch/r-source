@@ -143,13 +143,9 @@ insertMethod <-
         elNamed(methods, Class) <-
             Recall(current, signature[-1], args[-1], def, cacheOnly)
     }
-    if(cacheOnly)
-        mlist@allMethods <- methods
-    else {
-        mlist@methods <- methods
-        ## and clear the cache, inheritance may have changed
-        mlist@allMethods <- list()
-    }
+    mlist@allMethods <- methods
+    if(!cacheOnly)
+        mlist@methods <-  methods
     mlist
 }
 
@@ -183,12 +179,6 @@ MethodsListSelect <-
     resetNeeded <- .setIfBase(f, fdef, mlist) # quickly protect against recursion -- see Methods.R
     if(resetNeeded) {
         on.exit(.setMethodsForDispatch(f, fdef, mlist))
-    }
-    if(is.null(mlist)) {
-        ## collect all the methods metadata visible on 1st call to generic
-        ## Cannot happen except for genericFunction objects, for which
-        ## getAllMethods will assign mlist in the environment of fdef
-        mlist <- getAllMethods(f, fdef)
     }
     if(!is(mlist, "MethodsList")) {
         if(is.function(mlist)) # call to f, inside MethodsListSelect
@@ -225,7 +215,7 @@ MethodsListSelect <-
         }
     }
     else
-        thisClass <- get(as.character(argName), envir = env)
+        thisClass <- get(as.character(argName), envir = env, inherits = FALSE)
     if(identical(useInherited, TRUE) || identical(useInherited, FALSE))
         thisInherit <- nextUseInherited <- useInherited
     else {
@@ -433,8 +423,7 @@ matchSignature <-
     if(length(signature) == 0)
         return(character())
     sigClasses <- as.character(signature)
-    ## TODO:  `where' should be the namespace of the package containing `fun', if that exists
-    where <- .topLevelEnv()
+    where <- topenv()
     unknown <- !sapply(sigClasses, function(x, where)isClass(x, where), where = where)
     signature <- as.list(signature)
     if(length(sigClasses) != length(signature))

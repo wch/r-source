@@ -26,6 +26,9 @@
              representation("function", "PossibleMethod",
                             target = "signature", defined = "signature"),
              where = envir); clList <- c(clList, "MethodDefinition")
+    ## class for default methods made from ordinary functions
+    setClass("derivedDefaultMethod", "MethodDefinition")
+    ## class for methods with precomputed information for callNextMethod
     setClass("MethodWithNext",
              representation("MethodDefinition", nextMethod = "PossibleMethod", excluded = "list"), where = envir); clList <- c(clList, "MethodWithNext")
     setClass("SealedMethodDefinition", contains = "MethodDefinition"); clList <- c(clList, "SealedMethodDefinition")
@@ -34,6 +37,8 @@
                             group = "list", valueClass = "character",
                             signature = "character", default = "MethodsList",
                             skeleton = "call"), where = envir); clList <- c(clList, "genericFunction")
+    ## the generic with methods included
+    setClass("genericMethods", representation(.Methods = "MethodsList"), contains = "genericFunction")
     setClass("nonstandardGeneric", # virtual class to mark special generic/group generic
              where = envir); clList <- c(clList, "nonstandardGeneric")
     setClass("nonstandardGenericFunction",

@@ -13,20 +13,18 @@ getMethodsForDispatch(f, fdef)
 
 cacheMethod(f, sig, def, args, fdef)
 
-resetGeneric(f, fdef)
+resetGeneric(f, fdef, mlist, where, deflt)
 }
 \section{Summary of Functions}{
   \describe{
     \item{\code{resetGeneric}:}{ 
-      reset the currently defined methods for this generic by removing
-      the corresponding definition from the methods metadata (to be
-      remerged when the function is next called).  Returns \code{TRUE}
+      reset the currently defined methods for this generic to the
+      currently visible methods, looking from environment \code{where}.  Returns \code{TRUE}
       or \code{FALSE} according to whether information for the function
       was found in the metadata.
 
-      You \emph{must} call this function when you change relevant
-      inheritance information during a session, to guarantee that the
-      new information is used if this generic has already been called.
+      Normally not called directly, since changes to methods,
+    attaching and detaching packages all generate a call automatically.
     }
     \item{\code{cacheMethod}:}{
       Store the definition for this function and signature in the method

@@ -24,7 +24,6 @@ getFunction <-  function(name, generic = TRUE, mustFind = TRUE,
            where = -1)
       ## find the object as a function.
 {
-    isGenericFunction <- function(obj) exists(".Generic", envir = environment(obj), inherits=FALSE)
     found <- FALSE
     if(identical(where, -1))
       where <- .envSearch()
@@ -34,7 +33,7 @@ getFunction <-  function(name, generic = TRUE, mustFind = TRUE,
     for(i in where)
         if(exists(name, i, inherits = FALSE)) {
             f <- get(name, i)
-            if(is.function(f) && (generic || !isGenericFunction(f))) {
+            if(is.function(f) && (generic || !is(f, "genericFunction"))) {
                 found <- TRUE
                 break
             }
@@ -116,9 +115,9 @@ findFunction <-
   ## return a list of all the places where a function
   ## definition for `name' exists.  If `generic' is FALSE, ignore generic
   ## functions.
-  function(f, generic = TRUE, where = .topLevelEnv())
+  function(f, generic = TRUE, where = topenv())
 {
-    allWhere <- .findAll(f, where)
+    allWhere <- .findAll(f, .envSearch(where))
     ok <- rep(FALSE, length(allWhere))
     for(i in seq(along = ok)) {
         wherei <- allWhere[[i]]

@@ -73,14 +73,14 @@ prototype(...)
 ## which should be a "numeric" object, and extending class "track"
 representation("track", smooth ="numeric")
 \testonly{
-prev <- getClassDef("class3", .topLevelEnv())
+prev <- getClassDef("class3")
 setClass("class1", representation(a="numeric", b = "character"))
 setClass("class2", representation(a2 = "numeric", b = "numeric"))
 try(setClass("class3", representation("class1", "class2")))
 {if(is.null(prev))
   stopifnot(!isClass("class3"))
 else
-  stopifnot(identical(getClassDef("class3", .topLevelEnv()), prev))}
+  stopifnot(identical(getClassDef("class3"), prev))}
 }
 
 setClass("Character",representation("character"))

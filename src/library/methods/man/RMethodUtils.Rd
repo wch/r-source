@@ -6,6 +6,9 @@
 \alias{nonstandardGroupGenericFunction-class}
 \alias{OptionalFunction-class}
 \alias{PossibleMethod-class}
+\alias{derivedDefaultMethod-class}
+\alias{genericMethods-class}
+\alias{genericMethodsWithTrace-class}
 %%
 \alias{substituteFunctionArgs}
 \alias{makeGeneric}
@@ -13,7 +16,6 @@
 \alias{generic.skeleton}
 \alias{defaultDumpName}
 \alias{getAllMethods}
-\alias{setAllMethodsSlot}
 \alias{doPrimitiveMethod}
 \alias{conformMethod}
 \alias{getGeneric}
@@ -35,8 +37,10 @@
 \alias{sigToEnv}
 \alias{rematchDefinition}
 \alias{unRematchDefinition}
+\alias{addNextMethod,MethodDefinition-method}
+\alias{addNextMethod,MethodWithNext-method}
 \alias{addNextMethod}
-\alias{.valueClassTest}
+alias{.valueClassTest}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
 \alias{.EmptyPrimitiveSkeletons}
@@ -56,31 +60,29 @@ generic.skeleton(name, fdef, fdefault)
 
 defaultDumpName(generic, signature)
 
-getAllMethods(f, fdef)
-
-setAllMethodsSlot(mlist)
+getAllMethods(f, fdef, where)
 
 doPrimitiveMethod(name, def, call=sys.call(-1), ev=sys.frame(-2))
 
 conformMethod(signature, mnames, fnames, f)
 
-getGeneric(f, mustFind=FALSE, where = .topLevelEnv())
+getGeneric(f, mustFind=FALSE, where)
 
-getGroup(fdef, recursive=FALSE)
+getGroup(fdef, recursive, where)
 
 matchSignature(signature, fun)
 
 removeMethodsObject(f, where)
 
-findUnique(what, doFind, message)
+findUnique(what, message, where)
 
 MethodAddCoerce(method, argName, thisClass, methodClass)
 
 is.primitive(fdef)
 
-cacheMetaData(where, attach = TRUE)
+cacheMetaData(where, attach = TRUE, searchWhere)
 
-cacheGenericsMetaData(generics, attach = TRUE, where, package)
+cacheGenericsMetaData(f, fdef, attach = TRUE, where, package, methods)
 
 setPrimitiveMethods(f, fdef, code, generic, mlist)
 
@@ -88,7 +90,7 @@ missingArg(symbol, envir = parent.frame(), eval)
 
 balanceMethodsList(mlist, args, check = TRUE)
 
-sigToEnv(signature)
+sigToEnv(signature, genericSig)
 
 rematchDefinition(definition, generic, mnames, fnames, signature)
 unRematchDefinition(definition)
@@ -139,8 +141,10 @@ addNextMethod(method, f, mlist, optional, envir)
     
     \item{\code{getAllMethods}:}{ 
       a generic function (with methods) representing the merge of all
-      the versions of \code{f} on the specified packages (anything on
-      the current search path by default).
+      the methods defined for this generic starting from environment
+      \code{where}, including all parent environments.  By default,
+      uses the global environment (and therefore all packages on the
+      search list).
 
       If the generic \code{f} has a group generic, methods for this
       group generic (and further generations of group generics, if any)
@@ -193,7 +197,8 @@ addNextMethod(method, f, mlist, optional, envir)
     }
 
     \item{\code{getGroup}:}{ 
-      return the groups to which this generic belongs.  
+      return the groups to which this generic belongs, searching from
+      environment \code{where} (the global environment normally by default).
 
       If \code{recursive=TRUE}, also all the group(s) of these groups.
     }
@@ -239,13 +244,11 @@ addNextMethod(method, f, mlist, optional, envir)
     }
     
     \item{\code{findUnique}:}{
-      Find the first position on the search list containing object
-      \code{what}; if more than one is found, a warning message is
+      Return the list of environments (or equivalent) having an object named
+      \code{what}, using environment \code{where} and its parent
+      environments.  If more than one is found, a warning message is
       generated, using \code{message} to identify what was being
-      searched for.
-
-      If \code{doFind} is supplied, it's the version of \code{find} used
-      to do the search (e.g., \code{findFunction}).
+      searched for, unless \code{message} is the empty string.
     }
   
     \item{\code{cacheMetaData},
@@ -256,11 +259,6 @@ addNextMethod(method, f, mlist, optional, envir)
       called automatically whenever needed (for example, when a method
       or class definition changes, or when a package is attached or
       detached).
-
-      The \code{environment} must be one of the environments on the
-      current search list; note in particular that even on detaching
-      (\code{attach=FALSE}), the environment will normally still be on
-      the search list.
 
       The \code{setPrimitiveMethods} function resets the caching
       information for a particular primitive function.  Don't call it

@@ -17,7 +17,6 @@ setClass(Class, representation, prototype, contains=character(),
 removeClass(Class, where)
 
 isClass(Class, formal=TRUE, where)
-isClassDef(object)
 
 getClasses(where, inherits = missing(where))
 
@@ -71,7 +70,6 @@ sealClass(Class, where)
   will be used.
     }
   \item{formal}{ Should a formal definition be required? }
-  \item{object}{ any R object. }
 
 
   \item{classDef}{ For \code{removeClass}, the optional class
@@ -114,12 +112,6 @@ sealClass(Class, where)
       environment and search through the search list.
     }
 
-    \item{\code{isClassDef}:}{ 
-      Is this object a class definition (it will be, for example, if it
-      is the value of a call to \code{\link{getClass}}, the complete
-      definition of a class with its extensions, or to
-      \code{\link{getClassDef}}, the local definition of the class).
-    }
 
     \item{\code{getClasses}:}{
       The names of all the classes formally defined on \code{where}.  If

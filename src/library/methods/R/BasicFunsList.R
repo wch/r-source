@@ -360,7 +360,8 @@ list("!" = function(e1)
         body(fdef, envir = NULL) <-
             substitute(standardGeneric(FNAME), list(FNAME=f))
     }
-    elNamed(funslist, f) <- makeGeneric(f, fdef, group = group, package = "base")
+    deflt <- .derivedDefaultMethod(deflt)
+    elNamed(funslist, f) <- makeGeneric(f, fdef, deflt, group = group, package = "base")
     funslist
 }
 

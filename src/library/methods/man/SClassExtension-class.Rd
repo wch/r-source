@@ -13,7 +13,8 @@
 }
 \section{Slots}{
   \describe{
-    \item{\code{superClass}:}{The name of the class being extended. }
+    \item{\code{subClass,superClass}:}{The classes being extended:
+    corresponding to the \code{from}, and \code{to} arguments to \code{\link{setIs}}. }
     \item{\code{package}:}{The package to which that class belongs. }
     \item{\code{coerce}:}{A function to carry out the as() computation
     implied by the relation.  Note that these functions should

@@ -1,39 +1,31 @@
 \name{show}
 \alias{show}
+\alias{show-methods}
+\alias{show,ANY-method}
+\alias{show,traceable-method}
+\alias{show,ObjectsWithPackage-method}
+\alias{show,MethodDefinition-method}
+\alias{show,MethodWithNext-method}
+\alias{show,genericFunction-method}
+\alias{show,classRepresentation-method}
 \title{Show an Object}
 \description{
-  Display the object, by printing, plotting or whatever suits its class.
+  Display the object, by printing, plotting or whatever suits its
+  class.  This function exists to be specialized by methods.  The
+  default method calls \code{\link{showDefault}}.
 
-  The function \code{show} exists to be specialized by methods; the
-  default method calls \code{showDefault}.
-
-  With package \pkg{methods} attached, methods for \code{show} will
+  Formal methods for \code{show} will
   usually be invoked for automatic printing (see the details).
-
-  The function \code{showDefault} allows redirection of output and
-  optional use of old-style print methods, but normally will not be
-  called directly.
 }
 \usage{
 show(object)
-
-showDefault(object, oldMethods = TRUE)
 }
 \arguments{
   \item{object}{Any R object}
-  
-  \item{oldMethods}{Should old-style print methods be used for this
-    object?  \code{TRUE} by default if called directly, but \code{FALSE}
-    when called from the \pkg{methods} package for automatic printing (to
-    avoid potential recursion; see the details below).
-  }
+   }
 }
 \value{
   \code{show} returns an invisible \code{NULL}.
-
-  For \code{showDefault}, if \code{printTo} is \code{FALSE}, the value
-  is a character vector containing the lines that would otherwise have
-  been printed.
 }
 \details{
   The \pkg{methods} package overrides the base definition of

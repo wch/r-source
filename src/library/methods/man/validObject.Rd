@@ -17,7 +17,6 @@
 \usage{
 validObject(object, test)
 
-getValidity(ClassDef)
 setValidity(Class, method, where = 1 )
 }
 \arguments{
@@ -29,8 +28,6 @@ setValidity(Class, method, where = 1 )
     an error.}
   \item{Class}{The name or class definition of the class whose validity method is to be
     set.}
-  \item{ClassDef}{The class definition of the class whose validity method is to be
-    retrieved.}
   \item{method}{A validity method;  that is, either \code{NULL} or a
     function of one argument (the \code{object}).  Like
     \code{validObject}, the function should return \code{TRUE} if the

@@ -49,7 +49,7 @@ as <-
 }
 
 .quickCoerceGetsSelect <- function(from, to) {
-    methods <- getMethodsForDispatch("coerce<-")
+    methods <- getMethods("coerce<-")
     allMethods <- methods@allMethods
     method <- allMethods[[from]]
     if(is.null(method))
@@ -59,7 +59,7 @@ as <-
 }
 
 .quickCoerceSelect <- function(from, to) {
-    methods <- getMethodsForDispatch("coerce")
+    methods <- getMethods("coerce")
     allMethods <- methods@allMethods
     method <- allMethods[[from]]
     if(is.null(method))
@@ -133,7 +133,7 @@ as <-
 
 
 setAs <- 
-  function(from, to, def, replace = NULL, where = .topLevelEnv())
+  function(from, to, def, replace = NULL, where = topenv())
   {
     ## where there is an "is" relation, modify it
     if(extends(from, to, TRUE)) {

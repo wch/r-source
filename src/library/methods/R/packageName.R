@@ -1,10 +1,10 @@
 ## utilities to manage package names
 
-getPackageName <- function(where = .topLevelEnv()) {
+getPackageName <- function(where = topenv()) {
     pkg <- ""
     if(exists(".packageName", where, inherits = FALSE))
         pkg <- get(".packageName", where)
-    else  if(identical(where, 1) || identical(as.environment(where), .topLevelEnv()))
+    else  if(identical(where, 1) || identical(as.environment(where), topenv()))
         pkg <- Sys.getenv("R_PACKAGE_NAME")
     if(nchar(pkg) == 0) {
         env <- as.environment(where)

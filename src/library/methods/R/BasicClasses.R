@@ -107,6 +107,10 @@
     ## package.
     for(cl in .OldClassesList)
         setOldClass(cl, envir)
+    ## some S3 classes have inheritance on an instance basis, that breaks the S4 contains
+    ## model.  To emulate their (unfortunate) behavior requires a setIs with a test.
+    for(cl in .OldIsList)
+        .setOldIs(cl, envir)
     assign(".SealedClasses", c(clList,unique(unlist(.OldClassesList))),  envir)
     ## restore the true definition of the hidden functions
     assign("reconcilePropertiesAndPrototype", real.reconcileP, envir)
@@ -171,7 +175,9 @@
     list(
          c("anova", "data.frame"),
          c("mlm", "lm"),
-         c("POSIXt", "POSIXct"),
+         c("aov", "lm"), # see also .OldIsList
+         c("maov", "mlm", "lm"),
+         "POSIXt", "POSIXct", "POSIXlt", # see .OldIsList
          "dump.frames",
          c("ordered", "factor"),
          c("glm.null", "glm", "lm"),
@@ -195,3 +201,11 @@
          "logLik",
          "rle"
 )
+
+# These relations sometimes hold, sometimes not:  have to look in the S3
+# class attribute to test.
+.OldIsList <- list(
+                   c("POSIXt", "POSIXct"),
+                   c("POSIXt", "POSIXlt"),
+                   c("aov","mlm")
+                   )

@@ -54,16 +54,19 @@
     else {
         if(!identical(saved, TRUE))
             stop("Looks like the methods library was not installed correctly; check the make results!\n")
+        ## assign the environment of a function from the methods package--
+        ## the namespace of the methods package, if it has one, or the global environment
+        assign(".methodsNamespace", environment(get("setGeneric", where)), where)
+        ## cache metadata for all environments in search path.  The assumption is that
+        ## this has not been done, since cacheMetaData is in this package.  library, attach,
+        ## and detach functions look for cacheMetaData and call it if it's found.
+        for(i in rev(seq(along = search()))) {
+            ev <- as.environment(i)
+            if(!exists(".noGenerics", where = ev, inherits = FALSE) &&
+               !identical(getPackageName(ev), "methods"))
+                cacheMetaData(ev, TRUE)
+        }
     }
-    ## assign the environment of a function from the methods package--
-    ## the namespace of the methods package, if it has one, or the global environment
-    assign(".methodsNamespace", environment(get("setGeneric", where)), where)
-    ## cache metadata for all environments in search path.  The assumption is that
-    ## this has not been done, since cacheMetaData is in this package.  library, attach,
-    ## and detach functions look for cacheMetaData and call it if it's found.
-    for(i in rev(seq(along = search())))
-      if(!exists(".noGenerics", where = i, inherits = FALSE))
-        cacheMetaData(i, TRUE)
 }
 
 ### The following code is only executed when dumping

@@ -127,7 +127,7 @@
              where = envir); clList <- "traceable"
     ## create the traceable classes
     for(cl in c("function", "MethodDefinition", "MethodWithNext", "genericFunction",
-                "groupGenericFunction")) {
+                "genericMethods", "groupGenericFunction")) {
         setClass(.traceClassName(cl),
                  representation(cl, "traceable"), where = envir)
         clList <- c(clList, .traceClassName(cl))

@@ -1334,12 +1334,12 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 ## bootstrap version:  all classes and methods must be in the version of the methods
 ## package being built in the toplevel environment: MUST avoid require("methods") !
 .requirePackage <- function(package)
-    .topLevelEnv()
+    topenv()
 
 ## real version of .requirePackage
 ..requirePackage <- function(package) {
-    if(identical(as.environment(package), .topLevelEnv()))
-        return(.topLevelEnv()) # i.e., .GlobalEnv usually
+    if(identical(as.environment(package), topenv()))
+        return(topenv()) # .GlobalEnv, the package's environment set by sys.source, or a namespace
     require(package, character.only = TRUE)
     searchPackageName <- paste("package:", package)
     match(searchPackageName, search())

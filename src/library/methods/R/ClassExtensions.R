@@ -64,7 +64,7 @@ makeExtends <- function(Class, to,
                         coerce = NULL, test = NULL, replace = NULL,
                         by = character(), package,
                         slots = getSlots(classDef1),
-                        classDef1 = getClass(Class, TRUE), classDef2 = getClass(to, TRUE)) {
+                        classDef1 = getClass(Class), classDef2 = getClass(to)) {
     ## test for datapart class:  must be the data part class, except
     ## that extensions within the basic classes are allowed (numeric, integer)
     dataEquiv <- function(cl1, cl2) {
@@ -175,23 +175,24 @@ makeExtends <- function(Class, to,
     
 }
 
-.findAll <- function(what, where = .topLevelEnv()) {
+.findAll <- function(what, where = .envSearch()) {
+    ## search in envir. & parents thereof
     ## must avoid R's find() function because it uses
     ## regular expressions
-    ok <- logical()
     value <- list()
-    repeat {
-        if(exists(what, where, inherits = FALSE))
-            value <- c(value, list(where))
-        if(isNamespace(where))
-            break ##? parent environment is .GlobalEnv
-        where <- parent.env(where)
-        if(is.null(where)) {
-            if(exists(what, "package:base", inherits = FALSE))
-                value <- c(value, "package:base")
-            break
+    if(is.environment(where))
+        while(!is.null(where)) {
+            if(exists(what, where, inherits = FALSE))
+                value <- c(value, list(where))
+            if(isNamespace(where))
+                break
+            where <- parent.env(where)
         }
-    }
+    else
+        for(i in where) {
+            if(exists(what, i, inherits = FALSE))
+                value <- c(value, list(i))
+        }
     value
 }
     

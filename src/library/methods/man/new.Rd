@@ -39,9 +39,13 @@ initialize(.Object, ...)
   regardless of the order in which the arguments appear.
 
   The \code{initialize} methods do not have to have \code{\dots} as
-  there second argument (see the examples), and generally it is better
+  their second argument (see the examples), and generally it is better
   design \emph{not} to have \code{\dots} as a formal argument, if only a
   fixed set of arguments make sense.
+
+  For examples of \code{initialize} methods, see
+  \code{\link{initialize-methods}} for existing methods for
+  classes \code{"traceable"} and \code{"environment"}, among others.
 
   Note that the basic vector classes, \code{"numeric"}, etc. are
   implicitly defined, so one can use \code{new} for these classes.
