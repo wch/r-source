@@ -8,7 +8,7 @@ export(as.dendrogram, as.dist, as.hclust, biplot, cancor, cmdscale,
 
 # methods which are documented but not exported
 # export(as.hclust.default, as.matrix.dist,
-#        biplot.default, biplot.princomp, cut.dendrogram,
+#        biplot.princomp, cut.dendrogram,
 #        identify.hclust, plot.dendrogram, plot.hclust,
 #        print.dist, print.factanal,
 #        print.loadings, print.summary.princomp, str.dendrogram,
@@ -16,6 +16,8 @@ export(as.dendrogram, as.dist, as.hclust, biplot, cancor, cmdscale,
 
 # cluster needs
 export(as.hclust.twins, plot.hclust)
+# MASS calls
+export(biplot.default)
 # using match.call needs
 export(princomp.default, princomp.formula)
 
