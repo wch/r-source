@@ -40,11 +40,12 @@ lsf.str(...)
 }
 \description{
   This is a ``diagnostic'' function, and an alternative to
-  \code{\link{summary}}.  Ideally, only one line for each ``basic''
-  structure is displayed.  It is especially well suited to compactly
-  display the (abbreviated) contents of (possibly nested) lists.
-  The idea is to give reasonable output for \bold{any} \R object.
-  It calls \code{\link{args}} for (non-primitive) function objects.
+  \code{\link{summary}} (and to some extent, \code{\link{dput}}).  Ideally,
+  only one line for each ``basic'' structure is displayed.  It is especially
+  well suited to compactly display the (abbreviated) contents of
+  (possibly nested) lists.  The idea is to give reasonable output for
+  \bold{any} \R object.  It calls \code{\link{args}} for (non-primitive)
+  function objects.
 
   \code{\link{ls.str}} and \code{\link{lsf.str}} are useful ``versions''
   of \code{\link{ls}}, calling \code{str} on each object.  They are not
@@ -55,9 +56,7 @@ lsf.str(...)
   Nothing, for efficiency reasons.
   The obvious side effect is output to the terminal.
 }
-\author{
-  Martin Maechler \email{maechler@stat.math.ethz.ch} since 1990.
-  Currently at Seminar für Statistik, ETH Zürich, Switzerland.
+\author{Martin Maechler \email{maechler@stat.math.ethz.ch} since 1990.
 }
 \seealso{
   \code{\link{summary}}, \code{\link{args}}.
@@ -78,6 +77,12 @@ if(need.dev) postscript(); str(par()); if(need.dev) graphics.off()
 
 lsf.str()#- how do the functions look like which I am using?
 ls.str(mode = "list")#- what are the structured objects I have defined?
+\testonly{
+ ##-- Some "crazy" objects
+ str(array(1:5, dim=20))
+ str(factor(character(0)))
+ str(as.data.frame(NULL))
+}
 }
 \keyword{print}
 \keyword{documentation}

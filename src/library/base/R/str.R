@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.11 1999/10/27 09:20:32 maechler Exp $
+    ## $Id: str.R,v 1.12 1999/11/01 16:53:32 maechler Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -15,7 +15,7 @@ str.data.frame <- function(object, ...)
     cl <- class(object); cl <- cl[cl != "data.frame"]  #- not THIS class
     if(0 < length(cl)) cat("Classes", cl, " and ")
 
-    cat("`data.frame':  ", nrow(object), " obs. of  ",
+    cat("`data.frame':	", nrow(object), " obs. of  ",
 	(p <- length(object)), " variable", if(p>1)"s",":\n",sep="")
 
     ## calling next method, usually  str.default:
@@ -41,7 +41,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## ------------------------------------------------------------------------
-    ## $Id: str.R,v 1.11 1999/10/27 09:20:32 maechler Exp $
+    ## $Id: str.R,v 1.12 1999/11/01 16:53:32 maechler Exp $
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
@@ -158,18 +158,27 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 			  " to ", format(tsp.a[2]), ":", sep = "")
 	    std.attr <- c("tsp","class") #- "names"
 	} else if (is.factor(object)) {
-	    object <- unclass(object)
 	    nl <- length(lev.att <- levels(object))
-            lenl <- cumsum(3 + nchar(lev.att))# level space
-            ml <- if(nl <= 1 || lenl[nl] <= 13)
-                nl else which(lenl > 13)[1]
-            if((d <- lenl[ml] - if(ml>1)18 else 14) >= 3)# truncate last
-                lev.att[ml] <-
-                    paste(substring(lev.att[ml],1, nchar(lev.att[ml])-d),"..",
-                          sep="")
-	    str1 <- paste(" Factor w/ ", nl, " level",if(nl>1) "s",' "',
-			  paste(lev.att[1:ml], collapse ='","'),'"',
-                          if(ml < nl)",..", ":", sep="")
+	    if(!is.character(lev.att)) {# should not happen..
+		warning("`object' doesn't have legal levels()!")
+		nl <- 0
+	    }
+	    object <- unclass(object)
+	    if(nl) {
+		lenl <- cumsum(3 + nchar(lev.att))# level space
+		ml <- if(nl <= 1 || lenl[nl] <= 13)
+		    nl else which(lenl > 13)[1]
+		if((d <- lenl[ml] - if(ml>1)18 else 14) >= 3)# truncate last
+		    lev.att[ml] <-
+			paste(substring(lev.att[ml],1, nchar(lev.att[ml])-d),
+			      "..", sep="")
+	    }
+	    else # nl == 0
+		ml <- length(lev.att <- "")
+
+	    str1 <- paste(" Factor w/ ", nl, " level",if(nl!=1) "s",
+			  if(nl)' "', paste(lev.att[1:ml], collapse ='","'),
+			  if(nl)'"', if(ml < nl)",..", ":", sep="")
 	    std.attr <- c("levels","class")
 	} else if(has.class) {
 	    ## str1 <- paste("Class '",cl,"' of length ", le, " :", sep="")
