@@ -1,21 +1,15 @@
 ### approx() and approxfun() are *very similar* -- keep in sync!
 
 approx <- function(x, y = NULL, xout, method = "linear", n = 50,
-                   yleft, yright, rule = 1, f = 0, ties = mean)
+		   yleft, yright, rule = 1, f = 0, ties = mean)
 {
-    x <- xy.coords(x, y)
+    x <- xy.coords(x, y) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
-    if (!is.numeric(x) || !is.numeric(y))
-	stop("x and y must be numeric")
     nx <- length(x)
-    if (nx != length(y))
-	stop("x and y must have equal lengths")
     method <- pmatch(method, c("linear", "constant"))
     if (is.na(method))
 	stop("invalid interpolation method")
-    if (nx < 2 && method == "linear")
-	stop("approx requires at least two values to interpolate")
     if(any(na <- is.na(x) | is.na(y))) {
 	ok <- !na
 	x <- x[ok]
@@ -35,8 +29,11 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
 	    y <- y[o]
 	}
     }
-    if (nx < 2 && method == "linear")
-	stop("need at least two unique non-missing values to interpolate")
+    if (nx <= 1) {
+	if(method == 1)# linear
+	    stop("need at least two non-NA values to interpolate")
+	if(nx == 0) stop("zero non-NA points")
+    }
     if (missing(yleft))
 	yleft <- if (rule == 1) NA else y[1]
     if (missing(yright))
@@ -47,28 +44,22 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
 	xout <- seq(x[1], x[nx], length = n)
     }
     y <- .C("R_approx", as.double(x), as.double(y), as.integer(nx),
-            xout = as.double(xout), as.integer(length(xout)),
-            as.integer(method), as.double(yleft), as.double(yright),
-            as.double(f), NAOK = TRUE, PACKAGE = "base")$xout
+	    xout = as.double(xout), as.integer(length(xout)),
+	    as.integer(method), as.double(yleft), as.double(yright),
+	    as.double(f), NAOK = TRUE, PACKAGE = "base")$xout
     list(x = xout, y = y)
 }
 
 approxfun <- function(x, y = NULL, method = "linear",
-                      yleft, yright, rule = 1, f = 0, ties = mean)
+		   yleft, yright, rule = 1, f = 0, ties = mean)
 {
     x <- xy.coords(x, y)
     y <- x$y
     x <- x$x
-    if (!is.numeric(x) || !is.numeric(y))
-	stop("x and y must be numeric")
     n <- length(x)
-    if (n != length(y))
-	stop("x and y must have equal lengths")
     method <- pmatch(method, c("linear", "constant"))
     if (is.na(method))
 	stop("invalid interpolation method")
-    if (n < 2 && method == "linear")
-	stop("approx requires at least two values to interpolate")
     if(any(o <- is.na(x) | is.na(y))) {
 	o <- !o
 	x <- x[o]
@@ -89,16 +80,20 @@ approxfun <- function(x, y = NULL, method = "linear",
 	    y <- y[o]
 	}
     }
-    if (n < 2 && method == "linear")
-	stop("need at least two unique non-missing values to interpolate")
+    if (n <= 1) {
+	if(method == 1)# linear
+	    stop("need at least two non-NA values to interpolate")
+	if(n == 0) stop("zero non-NA points")
+    }
     if (missing(yleft))
 	yleft <- if(rule == 1) NA else y[1]
     if (missing(yright))
 	yright <- if(rule == 1) NA else y[length(y)]
-    rm(o, rule)
+    force(f)
+    rm(o, rule, ties)
     function(v) .C("R_approx", as.double(x), as.double(y), as.integer(n),
-                   xout = as.double(v), as.integer(length(v)),
-                   as.integer(method), as.double(yleft), as.double(yright),
+		   xout = as.double(v), as.integer(length(v)),
+		   as.integer(method), as.double(yleft), as.double(yright),
 		   as.double(f), NAOK = TRUE, PACKAGE = "base")$xout
 }
 
@@ -110,12 +105,12 @@ findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
     ## Author: Martin Maechler, Date:  4 Jan 2002, 10:16
 
     if(any(is.na(vec)))
-        stop(sQuote("vec")," contains NAs")
+	stop(sQuote("vec")," contains NAs")
     if(is.unsorted(vec))
-        stop(sQuote("vec")," must be sorted non-decreasingly")
+	stop(sQuote("vec")," must be sorted non-decreasingly")
     ## deal with NA's in x:
     if(has.na <- any(ix <- is.na(x)))
-        x <- x[!ix]
+	x <- x[!ix]
     nx <- length(x)
     index <- integer(nx)
     .C("find_interv_vec",
@@ -126,9 +121,9 @@ findInterval <- function(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
        index, DUP = FALSE, NAOK = TRUE, # NAOK: 'Inf' only
        PACKAGE = "base")
     if(has.na) {
-        ii <- as.integer(ix)
-        ii[ix] <- NA
-        ii[!ix] <- index
-        ii
+	ii <- as.integer(ix)
+	ii[ix] <- NA
+	ii[!ix] <- index
+	ii
     } else index
 }

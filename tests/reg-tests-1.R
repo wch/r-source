@@ -3035,7 +3035,7 @@ stopifnot(inherits(try(e == e), "try-error"))
 
 
 ## "nowhere" interpolation (PR#6809)
-approx(list(x=rep(NaN, 9), y=1:9), xout=NaN)
+try(approx(list(x=rep(NaN, 9), y=1:9), xout=NaN))
 ## gave a seg.fault in 1.9.0
 
 
@@ -3122,8 +3122,5 @@ if(require(survival)) { # required package
   str(a[rep(1:4,3)], vec.len = 7)
   detach("package:survival")
 }
-
-### end of tests added in 1.9.1 patched ###
-
 
 ### end of tests added in 1.9.1 patched ###
