@@ -6,7 +6,7 @@
   This can only be done on machines that run MacOS X.
 }
 \usage{
-quartz(display = "", width = 6, height = 6, pointsize = 12,
+quartz(display = "", width = 5, height = 5, pointsize = 12,
        family = "Helvetica", antialias = TRUE, autorefresh = TRUE)
 }
 \arguments{
@@ -16,7 +16,7 @@ quartz(display = "", width = 6, height = 6, pointsize = 12,
   \item{width}{the width of the plotting window in inches.}
   \item{height}{the height of the plotting window in inches.}
   \item{pointsize}{the default pointsize to be used.}
-  \item{family}{this is the family  name of the Postscript font
+  \item{family}{this is the family name of the Postscript font
     that will be used by the device.}
   \item{antialias}{whether to use antialiasing. It is never the case to set
      it \code{FALSE}}

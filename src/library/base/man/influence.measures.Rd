@@ -1,5 +1,5 @@
-\title{Regression Deletion Diagnostics}
 \name{influence.measures}
+\title{Regression Deletion Diagnostics}
 \alias{influence.measures}
 \alias{print.infl}
 \alias{summary.infl}
@@ -32,9 +32,9 @@ rstandard(model, \dots)
 rstudent(model, \dots)
 \method{rstudent}{lm}(model, infl = lm.influence(model, do.coef=FALSE),
 	 res = infl$wt.res, \dots)
-\method{rstudent}{glm}(model, infl = lm.influence(model, do.coef=FALSE), \dots)
+\method{rstudent}{glm}(model, infl = influence(model, do.coef=FALSE), \dots)
 
-dffits(model, infl = \dots, res = \dots)
+dffits(model, infl = , res = )
 
 dfbeta(model, \dots)
 \method{dfbeta}{lm}(model, infl = lm.influence(model, do.coef=TRUE), \dots)
@@ -42,7 +42,8 @@ dfbeta(model, \dots)
 dfbetas(model, \dots)
 \method{dfbetas}{lm}(model, infl = lm.influence(model, do.coef=TRUE), \dots)
 
-covratio(model, infl = lm.influence(model, do.coef=FALSE), res = \dots)
+covratio(model, infl = lm.influence(model, do.coef=FALSE),
+         res = weighted.residuals(model))
 
 cooks.distance(model, \dots)
 \method{cooks.distance}{lm}(model, infl = lm.influence(model, do.coef=FALSE),

@@ -1,7 +1,7 @@
 \name{lowess}
 \title{Scatter Plot Smoothing}
 \usage{
-lowess(x, y, f=2/3, iter=3, delta=.01*diff(range(x)))
+lowess(x, y = NULL, f = 2/3, iter=3, delta = 0.01 * diff(range(xy$x[o])))
 }
 \alias{lowess}
 \arguments{
@@ -14,7 +14,8 @@ lowess(x, y, f=2/3, iter=3, delta=.01*diff(range(x)))
     performed.
     Using smaller values of \code{iter} will make \code{lowess} run faster.}
   \item{delta}{values of \code{x} which lie within \code{delta}
-    of each other replaced by a single value in the output from \code{lowess}.}
+    of each other are replaced by a single value in the output from
+    \code{lowess}.  Defaults to 1/100th of the range of \code{x}.}
 }
 \description{
   This function performs the computations for the
