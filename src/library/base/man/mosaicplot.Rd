@@ -3,6 +3,7 @@
 \alias{mosaicplot.default}
 \alias{mosaicplot.formula}
 \title{Mosaic Plots}
+\description{Plots a mosaic on the current graphics device.}
 \usage{
 mosaicplot(x, \dots)
 mosaicplot.default(X, main = NULL, xlab = NULL, ylab = NULL,
@@ -34,7 +35,7 @@ mosaicplot.formula(formula, data = NULL, subset, na.action, \dots)
   \item{color}{(\code{TRUE} or vector of integer colors) for color
     shading or (\code{FALSE}, the default) for empty boxes with no
     shading.}
-  \item{formula}{a formula, such as \code{y ~ x}.
+  \item{formula}{a formula, such as \code{y ~ x}.}
   \item{data}{a data.frame (or list) from which the variables in
     \code{formula} should be taken.}
   \item{subset}{an optional vector specifying a subset of observations
@@ -43,7 +44,6 @@ mosaicplot.formula(formula, data = NULL, subset, na.action, \dots)
     the data contain \code{NA}s.}
   \item{\dots}{further arguments to the default mosaicplot method.}
 }
-\description{Plots a mosaic on the current graphics device.}
 \details{
   This is a generic function.  It currently has a default method
   (\code{\link{mosaicplot.default}}) and a formula interface
