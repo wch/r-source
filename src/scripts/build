@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/build
 
-revision='$Revision: 1.15 $'
+revision='$Revision: 1.16 $'
 version=`set - ${revision}; echo ${2}`
 version="R package builder ${version}
 
@@ -56,6 +56,9 @@ while test -n "${1}"; do
   shift
 done
 
+start_dir=`pwd`
+stars="*"
+
 ## Determine whether echo can suppress newlines.
 if echo "testing\c" | grep c >/dev/null; then
   if echo -n "testing" | sed s/-n/xn/ | grep xn >/dev/null; then
@@ -70,16 +73,23 @@ fi
 ## A few useful output functions
 checking () {
   if ${debug}; then
-    echo "* checking $@ ..."
+    echo "${stars} checking $@ ..."
   else
-    echo ${ECHO_N} "* checking $@ ...${ECHO_C}"
+    echo ${ECHO_N} "${stars} checking $@ ...${ECHO_C}"
   fi
 }
-creating () { echo ${ECHO_N} "* creating $@ ...${ECHO_C}"; }
-message () { echo "* $@"; }
+creating () { echo ${ECHO_N} "${stars} creating $@ ...${ECHO_C}"; }
+message () { echo "${stars} $@"; }
 result () { echo "${ECHO_T} $@"; }
 
-## For updating `INDEX' and `data/00Index;
+## Get one field including all continuation lines from a DCF file
+get_dcf_field () {
+  sed -n "/^${1}:/,/^[^ ]/{p;}" ${2} | \
+    sed -n "/^${1}:/{s/^${1}:"'[ \t]*//;p;}
+            /^[ \t]/{s/^[ \t]*//;p;}'
+}
+
+## For updating `INDEX' and `data/00Index'
 updateIndex () {
   oldindex=${1}
   newindex=${TMPDIR:-/tmp}/Rbuild${$}
@@ -130,12 +140,8 @@ updateTitle () {
   rm -f ${newtitle}
 }
 
-start_dir=`pwd`
-
-## The work horse
-buildpkg () {
-  echo "Building package \`${1}' ..."
-
+## Initial checks
+checkdir () {
   cd ${start_dir}
 
   checking "package dir"
@@ -146,50 +152,82 @@ buildpkg () {
     exit 1
   fi
   result "OK"
-
+  
   ## Check whether `DESCRIPTION' exists and contains required fields
   checking "for \`DESCRIPTION'"
   if test -r ${dir}/DESCRIPTION; then
-    cd ${dir}
+    :
   else
     result "ERROR: file \`DESCRIPTION' not found"
     exit 1
   fi
   result "OK"
   checking "\`DESCRIPTION' license entry"
-  foo=`grep "^License" DESCRIPTION`
-  foo=`set - ${foo}; echo ${2}`
-  if test -z "${foo}"; then
+  license=`get_dcf_field License ${dir}/DESCRIPTION`
+  if test -z "${license}"; then
     result "ERROR: no license entry in \`DESCRIPTION'"
     exit 1
   fi
   result "OK"
-  checking "\`DESCRIPTION' package entry"
-  foo=`grep "^Package" DESCRIPTION`
-  package=`set - ${foo}; echo ${2}`
-  if test -z "${package}"; then
-    result "ERROR: no package entry in \`DESCRIPTION'"
-    exit 1
-  fi
-  if test "${package}" != `basename ${dir}`; then
-    result "ERROR: package field in \`DESCRIPTION' differs from dir name"
-    exit 1
-  fi
-  result "OK"
   checking "\`DESCRIPTION' version entry"
-  foo=`grep "^Version" DESCRIPTION`
+  foo=`grep "^Version" ${dir}/DESCRIPTION`
   version=`set - ${foo}; echo ${2}`
   if test -z "${version}"; then
     result "ERROR: no version entry in \`DESCRIPTION'"
     exit 1
   fi
   result "OK"
+}
+
+## The work horse
+checkpkg () {
+  cd ${start_dir}
+  
+  if ${is_bundle}; then
+    ## If this package is part of a bundle, we need to make sure the
+    ## directory exists and contains a `DESCRIPTION.in' file.
+    ## Note that this code repeats the first two tests in checkdir(). 
+    checking "package dir"
+    if test -d ${1}; then
+      dir=`cd ${1}; pwd`
+    else
+      result "ERROR: package dir \`${1}' does not exist"
+      exit 1
+    fi
+    result "OK"
+    description=DESCRIPTION.in
+    checking "for \`${description}'"
+    if test -r ${dir}/${description}; then
+      :
+    else
+      result "ERROR: file \`${description}' not found"
+      exit 1
+    fi
+    result "OK"
+  else
+    dir=`cd ${1}; pwd`
+    description=DESCRIPTION
+  fi
+
+  cd ${dir}
+
+  checking "\`${description}' package entry"
+  package=`get_dcf_field Package ${description}`
+  if test -z "${package}"; then
+    result "ERROR: no package entry in \`${description}'"
+    exit 1
+  fi
+  if test "${package}" != `basename ${dir}`; then
+    result "ERROR: package field in \`${description}' differs from dir name"
+    exit 1
+  fi
+  result "OK"
 
   ## Check for title entry and/or `TITLE'
-  checking "\`DESCRIPTION' title entry"
-  title=`grep -s "^Title:" DESCRIPTION | sed "s/^Title:[ \t]*//"`
+  checking "\`${description}' title entry"
+  title=`get_dcf_field Title ${description}`
   if test -z "${title}"; then
-    result "WARNING: no title entry in \`DESCRIPTION'"
+    result "WARNING: no title entry in \`${description}'"
   else
     result "OK"
   fi
@@ -203,7 +241,7 @@ buildpkg () {
   else
     result "NO"
     if test -n "${title}"; then
-      creating "\`TITLE' from \`DESCRIPTION' title entry"
+      creating "\`TITLE' from \`${description}' title entry"
       ${R_HOME}/bin/maketitle > TITLE
       if test ${?} -ne 0; then
 	result "ERROR"
@@ -212,7 +250,7 @@ buildpkg () {
 	result "OK"
       fi
     else
-      result "ERROR: no \`TITLE' and no \`DESCRIPTION' title entry"
+      result "ERROR: no \`TITLE' and no \`${description}' title entry"
       exit 1
     fi
   fi
@@ -317,7 +355,7 @@ buildpkg () {
   if test -d R -a -d man; then
     checking "for undocumented objects"
     out=`echo "undoc(dir = \"${dir}\")" \
-      | ${R_HOME}/bin/R.X11 ${R_opts}`
+      | ${R_HOME}/bin/R.bin ${R_opts}`
     err=`echo "${out}" | grep "^Error"`
     out=`echo "${out}" | grep "^ *\\["`
     if test -z "${err}"; then
@@ -346,6 +384,15 @@ buildpkg () {
   fi
 
   ## Other cleanups
+  if test -x cleanup; then
+    message "running \`cleanup'"
+    ./cleanup
+  fi
+}
+
+buildpkg () {
+  cd ${start_dir}/${1}
+  ## Final cleanups
   for f in .Rdata .Rhistory; do
     junk=`find . -name ${f}`
     if test -n "${junk}"; then
@@ -353,30 +400,40 @@ buildpkg () {
       rm -f ${junk}
     fi
   done
-  if test -x cleanup; then
-    message "running \`cleanup'"
-    ./cleanup
-  fi
-
-  ## And finally build the package
+  ## And finally build the package (bundle)
   cd ..
   exclude_file=${TMPDIR:-/tmp}/Rbuild${$}
   rm -f ${exclude_file} 2>/dev/null \
     || (echo "cannot create file with exclude patterns" && exit 2)
-  for pattern in "GNUMakefile" "check"; do
-    echo "${package}/${pattern}" >> ${exclude_file}
-  done
-  find ${package} -name CVS >> ${exclude_file}
-  find ${package} -name \*~ >> ${exclude_file}
-  message "building \`${start_dir}/${package}_${version}.tar.gz'"
-  tar chfX - ${exclude_file} ${package} | \
-    gzip -c9 > ${start_dir}/${package}_${version}.tar.gz 
+  find ${1} -type d -name check >> ${exclude_file}
+  find ${1} -name GNUMakefile >> ${exclude_file}
+  find ${1} -name CVS >> ${exclude_file}
+  find ${1} -name \*~ >> ${exclude_file}
+  message "building \`${start_dir}/${1}_${version}.tar.gz'"
+  tar chfX - ${exclude_file} ${1} | \
+    gzip -c9 > ${start_dir}/${1}_${version}.tar.gz
   rm -f ${exclude_file}
 }
 
 ## The main loop
 if ${debug}; then set -x; fi
 for p in ${pkgs}; do
+  echo "Building package \`${p}'"
+  checkdir ${p}
+  if grep "^Contains" ${p}/DESCRIPTION >/dev/null; then
+    echo "Looks like \`${p}' is a package bundle"
+    is_bundle=true
+    bundlepkgs=`get_dcf_field Contains ${p}/DESCRIPTION`
+    for pp in ${bundlepkgs}; do
+      message "checking package \`${pp}' in bundle \`${p}'"
+      stars="**"
+      checkpkg ${p}/${pp}
+      stars="*"
+    done
+  else
+    is_bundle=false
+    checkpkg ${p}
+  fi
   buildpkg ${p}
   echo
 done
