@@ -29,8 +29,8 @@ SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
 
 
 /*
- *	printname  c-entry  offset  eval  arity  pp-info  mark
- * 
+ *	printname  c-entry  offset  eval  arity	 pp-info  mark
+ *
  *	Note:	We now consider eval to be made up of two digits XY.
  *		X = 1 says that this is an internal function which must
  *		be accessed with a .Internal call, any other value is
@@ -41,7 +41,7 @@ SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
  *		we should switch R_Visible off (the least common situation).
  *		Y=1 says that this is an internal function (as above) and
  *		Z=1 says evaluate arguments before calling and Z=0 says
- *              don't evaluate.
+ *		don't evaluate.
  *
  * E.g:		SEXP do_cat(SEXP, SEXP, SEXP, SEXP);
  *
@@ -424,8 +424,8 @@ FUNTAB R_FunTab[] =
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL,	0},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL,	0},
-{"save",        do_save,        0,      111,     3,      PP_FUNCALL,     0},
-{"load",        do_load,        0,      111,     1,      PP_FUNCALL,     0},
+{"save",	do_save,	0,	111,	 3,	 PP_FUNCALL,	 0},
+{"load",	do_load,	0,	111,	 1,	 PP_FUNCALL,	 0},
 {"deparse",	do_deparse,	0,	1,	2,	PP_FUNCALL,	0},
 {"dput",	do_dput,	0,	111,	2,	PP_FUNCALL,	0},
 {"dump",	do_dump,	0,	111,	2,	PP_FUNCALL,	0},
@@ -456,7 +456,7 @@ FUNTAB R_FunTab[] =
 {"sys.parent",	do_sys,		1,	10,	-1,	PP_FUNCALL,	0},
 {"sys.call",	do_sys,		2,	10,	-1,	PP_FUNCALL,	0},
 {"sys.frame",	do_sys,		3,	10,	-1,	PP_FUNCALL,	0},
-{"sys.nframe",	do_sys,		4,	10,	-1,	PP_FUNCALL,     0},
+{"sys.nframe",	do_sys,		4,	10,	-1,	PP_FUNCALL,	0},
 {"sys.calls",	do_sys,		5,	10,	-1,	PP_FUNCALL,	0},
 {"sys.frames",	do_sys,		6,	10,	-1,	PP_FUNCALL,	0},
 {"sys.on.exit",	do_sys,		7,	10,	-1,	PP_FUNCALL,	0},
@@ -482,7 +482,7 @@ FUNTAB R_FunTab[] =
 {"environment",	do_envir,	0,	11,	1,	PP_FUNCALL,	0},
 {"environment<-",do_envirgets,	0,	1,	2,	PP_FUNCALL,	0},
 {"options",	do_options,	0,	11,	1,	PP_FUNCALL,	0},
-{"check.bounds",do_checkbounds,	0,	1,	1,	PP_FUNCALL,     0},
+{"check.bounds",do_checkbounds,	0,	1,	1,	PP_FUNCALL,	0},
 {"sink",	do_sink,	0,	101,	1,	PP_FUNCALL,	0},
 {"lib.fixup",	do_libfixup,	0,	101,	2,	PP_FUNCALL,	0},
 {"pos.to.env",	do_pos2env,	0,	1,	1,	PP_FUNCALL,	0},
@@ -708,7 +708,7 @@ SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (TYPEOF(INTERNAL(fun)) == BUILTINSXP)
 		args = evalList(args, env);
 	PROTECT(args);
-	R_Visible = 1 - PRIMPRINT(INTERNAL(fun)); 
+	R_Visible = 1 - PRIMPRINT(INTERNAL(fun));
 	args = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);
 	UNPROTECT(1);
 	if(save != R_PPStackTop) {

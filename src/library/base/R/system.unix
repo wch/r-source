@@ -1,46 +1,46 @@
 data <- function(..., list = character(0), package = .packages(),
 		 lib.loc = .lib.loc) {
-  names <- c(as.character(substitute(list(...))[-1]), list)
-  if (!missing(package))
-    if (is.name(y <- substitute(package)))
-      package <- as.character(y)
-  if (length(names) == 0) {
-    file <- tempfile("R.")
-    on.exit(unlink(file))
-    first <- TRUE
-    for (lib in lib.loc)
-      for (pkg in package) {
-	INDEX <- system.file(paste("data", "index.doc", sep = "/"),
-			     pkg, lib)
-	if (INDEX != "") {
-	  cat(paste(ifelse(first, "", "\n"),
-		    "Data sets in package `", pkg, "':\n\n", sep = ""),
-	      file = file, append = TRUE)
-	  system(paste("cat", INDEX, ">>", file, "2>/dev/null"))
-	  first <- FALSE
+ names <- c(as.character(substitute(list(...))[-1]), list)
+ if (!missing(package))
+	if (is.name(y <- substitute(package)))
+		package <- as.character(y)
+ if (length(names) == 0) {
+	file <- tempfile("R.")
+	on.exit(unlink(file))
+	first <- TRUE
+	for (lib in lib.loc)
+	  for (pkg in package) {
+		INDEX <- system.file(paste("data", "index.doc", sep = "/"),
+				     pkg, lib)
+		if (INDEX != "") {
+		  cat(paste(ifelse(first, "", "\n"),
+			    "Data sets in package `", pkg, "':\n\n", sep = ""),
+		      file = file, append = TRUE)
+		  system(paste("cat", INDEX, ">>", file, "2>/dev/null"))
+		  first <- FALSE
+		}
 	}
-      }
-    if (first)
-      stop("No data sets found")
-    else
-      system(paste("$RHOME/cmd/pager", file))
+	if (first)
+		stop("No data sets found")
+	else
+		system(paste("$RHOME/cmd/pager", file))
+ }
+ else
+  for (name in names) {
+	file <- system.file(paste("data", name, sep = "/"), package, lib.loc)
+	if (file == "")
+		stop(paste("No data set called `", name, "'", sep = ""))
+	else
+		source(file)
   }
-  else
-    for (name in names) {
-      file <- system.file(paste("data", name, sep = "/"), package, lib.loc)
-      if (file == "")
-	stop(paste("No data set called `", name, "'", sep = ""))
-      else
-	source(file)
-    }
-  invisible(names)
+ invisible(names)
 }
 
 getenv <- function(x) {
-  y <- structure(character(length(x)), names = x)
-  for (i in x)
-    y[i] <- system(paste("echo $", i, sep = ""), intern = TRUE)
-  y 
+	y <- structure(character(length(x)), names = x)
+	for (i in x)
+		y[i] <- system(paste("echo $", i, sep = ""), intern = TRUE)
+	y
 }
 
 help <- function(topic, package = .packages(), lib.loc = .lib.loc) {
@@ -53,15 +53,15 @@ help <- function(topic, package = .packages(), lib.loc = .lib.loc) {
       topic <- as.character(topic)
     else if (!is.character(topic))
       stop("Unimplemented help feature")
-    if (!is.na(match(topic, c("+", "-", "*", "/", "^", "%%")))) 
+    if (!is.na(match(topic, c("+", "-", "*", "/", "^", "%%"))))
       topic <- "Arithmetic"
-    else if (!is.na(match(topic, c("<", ">", "<=", ">=", "==", "!=")))) 
+    else if (!is.na(match(topic, c("<", ">", "<=", ">=", "==", "!="))))
       topic <- "Comparison"
     else if (!is.na(match(topic, c("[", "[[", "$"))))
       topic <- "Extract"
-    else if (!is.na(match(topic, c("&", "&&", "|", "||", "!")))) 
+    else if (!is.na(match(topic, c("&", "&&", "|", "||", "!"))))
       topic <- "Logic"
-    INDICES <- paste(t(outer(lib.loc, package, paste, sep = "/")), 
+    INDICES <- paste(t(outer(lib.loc, package, paste, sep = "/")),
 		     "help", "AnIndex", sep = "/", collapse = " ")
     file <- system(paste("${RHOME}/cmd/help", topic, INDICES),
 		   intern = TRUE)
@@ -131,7 +131,7 @@ library <- function(name, help, lib.loc = .lib.loc,
   }
   if (logical.return) TRUE else invisible(.packages())
 }
-    
+
 library.dynam <- function(name, package = .packages(), lib.loc = .lib.loc) {
   if (!exists(".Dyn.libs"))
     assign(".Dyn.libs", character(0), envir = .GlobalEnv)
@@ -151,41 +151,41 @@ library.dynam <- function(name, package = .packages(), lib.loc = .lib.loc) {
   invisible(.Dyn.libs)
 }
 
-system <- function(call, intern = FALSE) 
-  .Internal(system(call, intern))
+system <- function(call, intern = FALSE) .Internal(system(call, intern))
 
 system.date <- function() { system("date", intern = TRUE) }
 
 system.file <- function(file, pkg = .packages(), lib = .lib.loc) {
-  FILES <- paste(t(outer(lib, pkg, paste, sep = "/")),
-		 file, sep = "/", collapse = " ")
-  system(paste("${RHOME}/cmd/filename", FILES), intern = TRUE)
+	FILES <- paste(t(outer(lib, pkg, paste, sep = "/")),
+		       file, sep = "/", collapse = " ")
+	system(paste("${RHOME}/cmd/filename", FILES), intern = TRUE)
 }
 
 system.time <- function(expr) {
-  ## Purpose: Return CPU (and other) times that 'expr' used ..
-  ## Modelled after S "unix.time"; to be used with R 0.4 & later
-  ## -------------------------------------------------------------------------
-  ## Arguments: expr: `any' valid R expression
-  ## -------------------------------------------------------------------------
-  loc.frame <- sys.parent(1)
-  on.exit(cat("Timing stopped at:", proc.time() - time, "\n"))
-  expr <- substitute(expr)
-  time <- proc.time()
-  eval(expr, envir = loc.frame) #<-- 'R'
-  new.time <- proc.time()
-  on.exit()
-  if(length(new.time) == 3)    new.time <- c(new.time, 0, 0)
-  if(length(time) == 3)        time     <- c(time, 0, 0)
-  new.time - time
+	## Purpose: Return CPU (and other) times that `expr' used ..
+	## Modelled after S "unix.time"
+	## -----------------------------------------------------------------
+	## Arguments: expr: `any' valid R expression
+	## -----------------------------------------------------------------
+	loc.frame <- sys.parent(1)
+	on.exit(cat("Timing stopped at:", proc.time() - time, "\n"))
+	expr <- substitute(expr)
+	time <- proc.time()
+	eval(expr, envir = loc.frame)
+	new.time <- proc.time()
+	on.exit()
+	if(length(new.time) == 3)	new.time <- c(new.time, 0, 0)
+	if(length(time) == 3)		time	 <- c(	  time, 0, 0)
+	new.time - time
 }
 
 tempfile <- function(pattern = "file") {
-  system(paste("for p in", paste(pattern, collapse = " "), ";",
-               "do echo /tmp/$p$$; done"),
-         intern = TRUE)
+	system(paste("for p in", paste(pattern, collapse = " "), ";",
+		     "do echo /tmp/$p$$; done"),
+	       intern = TRUE)
 }
 
 unlink <- function(x) {
-  system(paste("rm -rf ", paste(x, collapse = " ")))
+	system(paste("rm -rf ", paste(x, collapse = " ")))
 }
+
