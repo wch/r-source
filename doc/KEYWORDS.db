@@ -30,11 +30,13 @@ Mathematics|symbolmath: `Symbolic Math', as polynomials, fractions
 Programming: Programming, Input/Ouput, and Miscellaneous
 Programming|programming: Programming
 Programming|programming|interface: Interfaces to Other Languages
+Programming|IO:  Input/output
+Programming|IO|file: Input/Output Files
+Programming|IO|connection: Input/Output Connections
+Programming|IO|database: Interfaces to databases.
 Programming|iteration: Looping and Iteration
 Programming|methods: Methods and Generic Functions
 Programming|print: Printing
-Programming|file: Input/Output Files
-Programming|connection: Input/Output Connections
 Programming|error: Error Handling
 Programming|environment: Session Environment
 Programming|internal: Internal Objects (not part of API)
@@ -54,14 +56,12 @@ Statistics|design: Designed Experiments
 Statistics|multivariate: Multivariate Techniques
 Statistics|ts: Time Series
 Statistics|survival: Survival Analysis
-# actually, `survival4' rather than `survival', but do we want `survival5'
-# later?
 Statistics|nonparametric: Nonparametric Statistics # w/o `smooth'
 Statistics|smooth: Curve (and Surface) Smoothing
+Statistics|smooth|loess: Loess Objects
 Statistics|cluster: Clustering
-Statistics|loess: Loess Objects
 Statistics|tree: Regression and Classification Trees
-MASS: Keywords added in MASS2 (1997)
+MASS: MASS (the book) uses
 MASS|classif: Classification # package `class'
 MASS|neural: Neural Networks # package `nnet'
 MASS|spatial: Spatial Statistics # package `spatial'
