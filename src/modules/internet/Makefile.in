@@ -33,6 +33,8 @@ internet_la_OBJECTS = $(OBJECTS)
 @USE_LIBTOOL_TRUE@internet_la_LDFLAGS = -avoid-version -rpath $(Rexecmodulesdir) -module
 internet_la_LIBADD = $(LIBR)
 
+@USE_WINDOWS_TRUE@ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS) -I$(top_srcdir)/src/gnuwin32
+
 all: Makefile Makedeps R
 
 Makefile: $(srcdir)/Makefile.in \
@@ -49,7 +51,7 @@ R: Makefile
 	@$(MAKE) $(Rexecmodulesdir_LTLIBRARIES)
 
 $(internet_la): $(internet_la_OBJECTS) $(internet_la_DEPENDENCIES)
-	$(SHLIB_LINK) -o $@ $(internet_la_LDFLAGS) $(internet_la_OBJECTS) $(internet_la_LIBADD)
+	$(SHLIB_LINK) -o $@ $(internet_la_LDFLAGS) $(internet_la_OBJECTS) $(internet_la_LIBADD) $(WINLIBS)@USE_WINDOWS_TRUE@ -lwsock32
 ## <FIXME>
 ## Not sure if we want to do this ...
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install

@@ -137,7 +137,14 @@ R: Makefile
 	@$(MAKE) Makedeps
 @WANT_R_SHLIB_TRUE@	@$(MAKE) install-lib-local
 @USE_WINDOWS_FALSE@	@$(MAKE) install-bin-local
+@USE_WINDOWS_TRUE@	@$(MAKE) RWin
 
+RWin: libmain.a
+
+libmain.a: $(OBJECTS) acosh.o asinh.o atanh.o
+	rm -f $@
+	$(AR) cr $@ $^
+	$(RANLIB) $@
 
 ../include/config.h ../include/Rversion.h:
 	(cd $(@D); $(MAKE) $(@F))

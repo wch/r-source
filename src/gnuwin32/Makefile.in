@@ -10,18 +10,19 @@ subdir = src/gnuwin32
 
 include $(top_builddir)/Makeconf
 
+DEFS+=-DLEA_MALLOC -DWin32
 
 SOURCES = \
   console.c dataentry.c devga.c dodevga.c dynload.c edit.c editor.c extra.c \
-  opt.c pager.c preferences.c psignal.c rhome.c rui.c run.c shext.c \
+  malloc.c opt.c pager.c preferences.c psignal.c rhome.c rui.c run.c shext.c \
   sys-win32.c system.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o) e_pow.o
 HEADERS = console.h consolestructs.h devga.h editor.h opt.h rui.h run.h shext.h
 
 MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
-EXTRALIBS = graphapp/ga.a getline/gl.a ../extra/xdr/xdr.a \
-   ../extra/zlib/libz.a ../extra/pcre/libRpcre.a ../extra/bzip2/libbz2.a
+EXTRALIBS = graphapp/ga.a getline/gl.a ../extra/xdr/libxdr.a \
+   ../extra/zlib/libz.a ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a
 
 all: Makefile R
 
@@ -38,11 +39,47 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	(cd graphapp; $(MAKE))
-	$(MAKE) --no-print-directory R.a
-	(cd front-ends; $(MAKE))
+	(cd getline; $(MAKE))
+	@$(MAKE) libRblas.a R.dll ../../bin/R.dll libR.a ../../bin/Rblas.dll
+#	(cd front-ends; $(MAKE))
 
 R.a: $(OBJECTS)
+	rm -f $@
+	$(AR) cr $@ $^
+	$(RANLIB) $@
+R-DLLFLAGS = -mwindows -s
+R-DLLLIBS =-L. -lg2c -lRblas -lcomctl32 -lversion
 R.dll: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
+
+../../bin/R.dll: R.dll
+	cp R.dll ../../bin/
+
+libR.a:  R.exp
+	dlltool -k --dllname R.dll --def R.exp --output-lib libR.a
+
+R.exp: R.exp1
+	@(diff R.exp R.exp1 > /dev/null 2>&1) || cp R.exp1 R.exp
+
+R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
+	@echo EXPORTS > $@
+	@nm R.a $(MAINLIBS) $(EXTRALIBS) > RDefs
+	@sed -n '/^........ [T] _/s/^........ [T] _/ /p' RDefs >> $@
+	@cat $(srcdir)/exported-vars >> $@
+	@rm RDefs
+
+libRblas.a:  Rblas.def
+	dlltool -k --dllname Rblas.dll \
+	  --def $(srcdir)/Rblas.def --output-lib libRblas.a
+
+blas.o: $(top_srcdir)/src/appl/blas.f
+	$(F77) $(FFLAGS) -c $< -o $@
+zgemm.o: $(top_srcdir)/src/appl/zgemm.f
+	$(F77) $(FFLAGS) -c $< -o $@
+cmplxblas.o: $(top_srcdir)/src/modules/lapack/cmplxblas.f
+	$(F77) $(FFLAGS) -c $< -o $@
+../../bin/Rblas.dll: blas.o cmplxblas.o zgemm.o dllversion.o
+	gcc -shared -s -o $@ $(srcdir)/Rblas.def $^ -L. -lR
+
 
 mostlyclean: clean
 clean:
@@ -55,7 +92,16 @@ maintainer-clean: distclean
 	gcc -c -o $@ $<
 
 %.o: %.rc
-	rescomp -i $< -o $@
+	windres -I../include -i $< -o $@
 
+%.dll:
+#	@echo ------- Building $@ from $^ --------
+	@echo LIBRARY $* > $*.def
+	@echo EXPORTS >> $*.def
+	@nm $^ > Defs
+	@sed -n '/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p' Defs >> $*.def
+	@$(RM) Defs
+	gcc --shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
+	@rm -f $*.def
 
 ## Automagically generated dependencies:

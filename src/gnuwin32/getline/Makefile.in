@@ -1,29 +1,20 @@
 #
-# ${R_HOME}/src/gnuwin32/graphapp/Makefile
+# ${R_HOME}/src/gnuwin32/getline/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
 top_builddir = ../../..
-subdir = src/gnuwin32/graphapp
+subdir = src/gnuwin32/getline
 
 include $(top_builddir)/Makeconf
 
-DEFS= -DINDLL -DR_DLL_BUILD
-
-SOURCES = \
-  arith.c array.c bitmaps.c buttons.c clipboard.c context.c controls.c \
-  cursors.c dialogs.c drawing.c drawtext.c events.c fonts.c gbuttons.c \
-  gdraw.c gif.c gimage.c gmenus.c image.c init.c menus.c \
-  metafile.c objects.c printer.c rgb.c status.c stdimg.c strings.c \
-  tooltips.c windows.c xredef.c
+SOURCES = getline.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = ga.h graphapp.h internal.h stdimg.h str.h
 
-ALL_CPPFLAGS = -I$(srcdir) -I$(srcdir)/.. $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
-
+DEFS=-DWin32
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in \
@@ -38,9 +29,9 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	$(MAKE) --no-print-directory ga.a
+	$(MAKE) --no-print-directory gl.a
 
-ga.a: $(OBJECTS)
+gl.a: $(OBJECTS)
 	rm -f $@
 	$(AR) cr $@ $^
 	$(RANLIB) $@

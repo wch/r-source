@@ -1416,6 +1416,7 @@ AC_CONFIG_FILES(
   src/extra/zlib/Makefile
   src/gnuwin32/Makefile
   src/gnuwin32/front-ends/Makefile
+  src/gnuwin32/getline/Makefile
   src/gnuwin32/graphapp/Makefile
   src/include/Makefile
   src/include/Rmath.h0

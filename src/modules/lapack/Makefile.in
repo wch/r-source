@@ -71,7 +71,7 @@ R: Makefile
 	@$(MAKE) $(Rexecmodulesdir_LTLIBRARIES)
 
 $(lapack_la): $(lapack_la_OBJECTS) $(lapack_la_DEPENDENCIES)
-	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) @LAPACK_LIBS@ @BLAS_LIBS@ $(FLIBS) $(LIBS)
+	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) @LAPACK_LIBS@ @BLAS_LIBS@ $(FLIBS) $(LIBS) $(WINLIBS)
 ## <FIXME>
 ## Not sure if we want to do this ...
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
@@ -85,7 +85,10 @@ $(lapack_la): $(lapack_la_OBJECTS) $(lapack_la_DEPENDENCIES)
 ## AIX support is untested
 ## </FIXME>
 $(Rlapack_la): $(Rlapack_la_OBJECTS) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/Rlapack.exp
-	$(DYLIB_LINK) @RLAPACK_LDFLAGS@ -o $@ $(Rlapack_la_OBJECTS) @BLAS_LIBS@ $(FLIBS)
+	$(DYLIB_LINK) @RLAPACK_LDFLAGS@ -o $@ $(Rlapack_la_OBJECTS) @BLAS_LIBS@ $(FLIBS) $(WINLIBS)
+## <FIXME>
+## needs an import library
+## </FIXME>
 
 $(top_builddir)/etc/Rlapack.exp: $(Rlapack_la_OBJECTS)
 	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(Rlapack_la_OBJECTS)

@@ -48,7 +48,7 @@ R: Makefile stamp-R $(TIMESTAMPS) @USE_WINDOWS_TRUE@ RWin
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 RWin:
-	@cp $(top_srcdir)/src/gnuwin32/fixed/h/psignal.h .
+	@cp -p $(top_srcdir)/src/gnuwin32/fixed/h/psignal.h .
 
 stamp-R:
 	@$(MKINSTALLDIRS) $(top_builddir)/include

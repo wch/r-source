@@ -8,20 +8,67 @@ top_srcdir = @top_srcdir@
 top_builddir = ../../..
 subdir = src/gnuwin32/front-ends
 
+SOURCES = R.c rcmd.c rcmdfn.c rgui.c RSetReg.c rterm.c
+DEPENDS = $(SOURCES:.c=.o)
+
+OPTFLAGS=-O2 -Wall -pedantic
+CFLAGS=$(OPTFLAGS) -I$(top_srcdir)/src/include  -I../../include -I../../../include -DWin32
+
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
-  ../include/Rversion.h \
+  ../../include/Rversion.h \
   $(SOURCES)
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
+.PHONY: R
 
-R: Makefile
-	@$(MAKE) Makedeps
+R: Makefile ../../../bin/Rgui.exe ../../../bin/Rterm.exe \
+     ../../../bin/Rcmd.exe  ../../../bin/RSetReg.exe  \
+     ../../../bin/R.exe
+
+../../../bin/Rgui.exe: Rgui.exe
+	mkdir -p ../../../bin
+	cp $^ $@
+
+../../../bin/Rterm.exe: Rterm.exe
+	mkdir -p ../../../bin
+	cp $^ $@	
+
+../../../bin/Rcmd.exe: Rcmd.exe
+	mkdir -p ../../../bin
+	cp $^ $@
+
+../../../bin/RSetReg.exe: RSetReg.exe
+	mkdir -p ../../../bin
+	cp $^ $@
+
+../../../bin/R.exe: R.exe
+	mkdir -p ../../../bin
+	cp $^ $@
+
+graphappmain.o: $(srcdir)/../graphapp/graphappmain.c
+	$(CC) -c -o $@ -I$(srcdir)/../graphapp $(CFLAGS) $^
+
+Rgui.exe: graphappmain.o  rgui.o rgico.o
+	$(CC) -s -mwindows -o $@ $^ -L.. -lR
+
+Rterm.exe: graphappmain.o rterm.o rtico.o
+	$(CC) -s -o $@ $^ -luser32 -L.. -lR
+
+Rcmd.exe: rcmd.o ../rhome.o rcico.o rcmdfn.o
+	$(CC) -s -o $@ $^
+
+R.exe: R.o ../rhome.o rcico.o rcmdfn.o
+	$(CC) -s -o $@ $^
+
+RSetReg.exe: RSetReg.o ../rhome.o rcico.o
+	$(CC) -s -o $@ $^
+
 
 mostlyclean: clean
 clean:
@@ -29,5 +76,8 @@ clean:
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
+
+%.o: %.rc
+	windres -I../../include -I$(srcdir) -i $< -o $@
 
 ## Automagically generated dependencies:

@@ -1,5 +1,5 @@
 #include <windows.h>
-#include "../include/Rversion.h"
+#include "Rversion.h"
 
 VS_VERSION_INFO VERSIONINFO
 FILEVERSION R_FILEVERSION
