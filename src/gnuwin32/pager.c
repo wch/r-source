@@ -380,9 +380,9 @@ static pager pagercreate()
     MCHECK(m = newmenuitem("Close", 0, pagerclose));
     setdata(m, c);
     MCHECK(newmenu("Edit"));
-    MCHECK(p->mcopy = newmenuitem("Copy          \tCTRL+C", 0, pagercopy));
+    MCHECK(p->mcopy = newmenuitem("Copy", 'C', pagercopy));
     setdata(p->mcopy, c);
-    MCHECK(p->mpaste = newmenuitem("Paste to console\tCTRL+V", 0, pagerpaste));
+    MCHECK(p->mpaste = newmenuitem("Paste to console", 'V', pagerpaste));
     setdata(p->mpaste, c);
     MCHECK(m = newmenuitem("Select all", 0, pagerselectall));
     setdata(m, c);

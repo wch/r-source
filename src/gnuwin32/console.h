@@ -44,6 +44,7 @@ int  consolegetlazy(console c);
 void consoleflush(console c);
 void consoleprint(console c);
 void drawconsole(control c, rect r);
+void consoleclear(control c);
 
 extern int setWidthOnResize;
 int consolecols(console c);

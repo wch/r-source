@@ -220,6 +220,12 @@ static void menucopypaste(control m)
     show(RConsole);
 }
 
+static void menuclear(control m)
+{
+    consoleclear(RConsole);
+}
+
+
 static void menuconfig(control m)
 {
     Rgui_configure();
@@ -558,6 +564,8 @@ static MenuItem ConsolePopup[] = {
     {"Paste", menupaste, 0},
     {"Copy and paste", menucopypaste, 0},
     {"-", 0, 0},
+    {"Clear window", menuclear, 0},
+    {"-", 0, 0},
     {"Select all", menuselectall, 0},
     {"-", 0, 0},
     {"Buffered output", menulazy, 0},
@@ -676,18 +684,18 @@ int setupui()
     MCHECK(newmenuitem("Exit", 0, menuexit));
 
     MCHECK(newmenu("Edit"));
-    MCHECK(mcopy = newmenuitem("Copy          \tCTRL+C", 0, menucopy));
-    MCHECK(mpaste = newmenuitem("Paste         \tCTRL+V", 0, menupaste));
-    MCHECK(mcopypaste = newmenuitem("Copy And Paste  \tCTRL+X", 
-				    0, menucopypaste));
+    MCHECK(mcopy = newmenuitem("Copy", 'C', menucopy));
+    MCHECK(mpaste = newmenuitem("Paste", 'V', menupaste));
+    MCHECK(mcopypaste = newmenuitem("Copy and Paste", 'X', menucopypaste));
     MCHECK(newmenuitem("Select all", 0, menuselectall));
+    MCHECK(newmenuitem("Clear console", 'L', menuclear));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mconfig = newmenuitem("GUI preferences", 0, menuconfig));
 
     MCHECK(newmenu("Misc"));
     MCHECK(newmenuitem("Stop current computation           \tESC", 0, menukill));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mlazy = newmenuitem("Buffered output\tCTRL+W", 0, menulazy));
+    MCHECK(mlazy = newmenuitem("Buffered output", 'W', menulazy));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mls = newmenuitem("List objects", 0, menuls));
     MCHECK(mrm = newmenuitem("Remove all objects", 0, menurm));
