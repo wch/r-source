@@ -9,6 +9,10 @@ WINHELP = CHM# NO, CHM, BOTH
 
 LEA_MALLOC=YES
 
+# Set to YES and specify the path if you want to use the ATLAS BLAS.
+USE_ATLAS=NO
+ATLAS=/R/ATLAS/lib/WinNT_PII
+
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
 
@@ -29,7 +33,10 @@ else
 endif
 
 R-DLLFLAGS = -mwindows
-R-DLLLIBS = -L. $(FLIBS) -lcomctl32 -lversion
+R-DLLLIBS =-L. $(FLIBS) -lcomctl32 -lversion
+ifeq ($(strip $(USE_ATLAS)),YES)
+R-DLLLIBS +=-L$(ATLAS) -lcblas -lf77blas -latlas
+endif
 SOURCES = $(filter-out malloc.c,$(wildcard *.c *.f))
 OBJS = $(SOURCES:.c=.o)
 MAINLIBS = libmain.a libappl.a libmath.a
@@ -65,7 +72,7 @@ rinstaller:
 	$(MAKE) -C installer RPREFIX=$(RPREFIX)
 
 rlibs:
-	$(MAKE) -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
+	$(MAKE) -C ../appl  OPTFLAGS='$(OPTFLAGS)' USE_ATLAS=$(USE_ATLAS) -f Makefile.win
 	$(MAKE) -C ../main  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) -C ./graphapp
@@ -74,7 +81,8 @@ rlibs:
 	$(MAKE) -C ./math
 
 rmodules: libRm.a
-	$(MAKE) -C ../modules OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
+	$(MAKE) -C ../modules OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' \
+	  USE_ATLAS=$(USE_ATLAS) -f Makefile.win
 
 COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
