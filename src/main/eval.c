@@ -1000,7 +1000,9 @@ void CheckFormals(SEXP ls)
 
 SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP expr, env, encl, tmp;
+    SEXP encl;    
+    volatile SEXP expr, env, tmp;
+    
     int nback;
     RCNTXT cntxt;
 
