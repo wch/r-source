@@ -6,13 +6,7 @@
 
 #include <R.h>
 
-
 #include "ctest.h"
-
-static void
-errmsg(char *s) {
-    PROBLEM "%s", s RECOVER(NULL_ENTRY);
-}
 
 void
 pkstwo(Sint *n, double *x, double *tol) {
@@ -45,9 +39,9 @@ psmirnov2x(double *x, Sint *m, Sint *n) {
     }
     md = (double) (*m);
     nd = (double) (*n);
-    u = Calloc(*n + 1, double);
+    u = (double *) R_alloc(*n + 1, sizeof(double));
     if(!u)
-	errmsg("allocation error in psmirnov2x().");
+	error("allocation error in psmirnov2x().");
     for(j = 0; j <= *n; j++) {
 	u[j] = ((j / nd) > *x) ? 0 : 1;
     }
