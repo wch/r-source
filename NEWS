@@ -378,6 +378,8 @@ BUG FIXES
     o   cor() could corrupt memory when the standard deviation was 
         zero. (PR#7037)
 
+    o   inverse.gaussian() always printed 1/mu^2 as the link function.
+
 
 
 	**************************************************

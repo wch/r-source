@@ -429,7 +429,7 @@ inverse.gaussian <- function(link = "1/mu^2")
     validmu <- function(mu) TRUE
 
     structure(list(family = "inverse.gaussian",
-		   link = "1/mu^2",
+		   link = linktemp,
 		   linkfun = stats$linkfun,
 		   linkinv = stats$linkinv,
 		   variance = variance,
