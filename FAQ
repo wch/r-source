@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-01-06
+Version 2.0.2005-01-09
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1457,6 +1457,10 @@ distributions of R.)
 *RColorBrewer*
      ColorBrewer palettes for drawing nice maps shaded according to a
      variable.
+
+*RII*
+     Estimation of the relative index of inequality for interval-censored
+     data using natural cubic splines.
 
 *RMySQL*
      An interface between R and the MySQL database system.
@@ -2922,6 +2926,9 @@ distributions of R.)
 
 *urn*
      Functions for sampling without replacement (simulated urns).
+
+*uroot*
+     Unit root tests and graphics for seasonal time series.
 
 *vabayelMix*
      Variational Bayesian mixture model.
