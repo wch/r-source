@@ -322,6 +322,18 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
+* PR# 950 *
+Subject:  lattice: dev.print(postscript) gives probl. false background Info 
+From: Peter Malewski <p.malewski@tu-bs.de>
+Date: Sat, 26 May 2001 23:20:29 +0200
+* PR# 949 *
+Subject:  lattice: postscript() false margins  
+From: Peter Malewski <p.malewski@tu-bs.de>
+Date: Sat, 26 May 2001 22:45:24 +0200
+* PR# 948 *
+Subject:  xyplot,grid.text segfault 
+From: Peter Malewski <p.malewski@tu-bs.de>
+Date: Sat, 26 May 2001 13:24:11 +0200
 * PR# 947 *
 Subject: Problem with hist(x, prob=T)
 From: rpeng@stat.ucla.edu
