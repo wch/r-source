@@ -510,6 +510,10 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	    rval=1;
 	    DEBUG(rho)=0;
 	}
+	if (!strcmp(CHAR(PRINTNAME(CExpr)),"Q")) {
+	    R_BrowseLevel = 0;
+            LONGJMP(R_Toplevel.cjmpbuf, CTXT_TOPLEVEL);
+	}
     }
     return rval;
 }
