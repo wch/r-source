@@ -109,7 +109,7 @@ $(EX_IN_BASE): FORCE
 	  f=$${TMPDIR-/tmp}/R$$$$; \
 	  $(PERL) $(top_srcdir)/share/perl/massage-Examples.pl $${pkg} \
 	    $(top_builddir)/library/$${pkg}/R-ex > $${f}; \
-	  $(top_srcdir)/tools/move-if-change $${f} $@; \
+	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} $@; \
 	  touch $@; \
 	fi)
 
@@ -133,7 +133,7 @@ $(EX_IN_RECOMMENDED): FORCE
 	  f=$${TMPDIR-/tmp}/R$$$$; \
 	  $(PERL) $(top_srcdir)/share/perl/massage-Examples.pl $${pkg} \
 	    $(top_builddir)/library/$${pkg}/R-ex > $${f}; \
-	  $(top_srcdir)/tools/move-if-change $${f} $@; \
+	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} $@; \
 	  touch $@; \
 	fi)
 FORCE:

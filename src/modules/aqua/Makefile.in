@@ -60,7 +60,7 @@ AquaInstall: $(srcdir)/AquaInstall.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(aqua_la) $(Rexecmodulesdir)/R_aqua$(SHLIB_EXT)
+@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(aqua_la) $(Rexecmodulesdir)/R_aqua$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(aqua_la) $(Rexecmodulesdir)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecmodulesdir)

@@ -83,16 +83,16 @@ $(Rlapack_la): $(Rlapack_la_OBJECTS) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/
 	$(DYLIB_LINK) @RLAPACK_LDFLAGS@ -o $@ $(Rlapack_la_OBJECTS) @BLAS_LIBS@ $(FLIBS)
 
 $(top_builddir)/etc/Rlapack.exp: $(Rlapack_la_OBJECTS)
-	@$(top_srcdir)/tools/ldAIX4 -o $@ $(Rlapack_la_OBJECTS)
+	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(Rlapack_la_OBJECTS)
 
 Rlapack_install: $(Rlapack_la) 
-	@$(top_srcdir)/tools/copy-if-change $(Rlapack_la) \
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) \
 	  $(R_HOME)/bin/$(Rlapack_la)
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(lapack_la) $(Rexecmodulesdir)/lapack$(SHLIB_EXT)
+@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) $(Rexecmodulesdir)/lapack$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(lapack_la) $(Rexecmodulesdir)
-@USE_EXTERNAL_LAPACK_FALSE@	@$(top_srcdir)/tools/copy-if-change $(Rlapack_la) $(Rexeclibdir)/libRlapack$(DYLIB_EXT)
+@USE_EXTERNAL_LAPACK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) $(Rexeclibdir)/libRlapack$(DYLIB_EXT)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecmodulesdir)
 install-strip:

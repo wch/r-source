@@ -55,7 +55,7 @@ $(vfonts_la): $(vfonts_la_OBJECTS) $(vfonts_la_DEPENDENCIES)
 ## </FIXME>
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(vfonts_la) $(Rexecmodulesdir)/vfonts$(SHLIB_EXT)
+@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(vfonts_la) $(Rexecmodulesdir)/vfonts$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(vfonts_la) $(Rexecmodulesdir)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecmodulesdir)

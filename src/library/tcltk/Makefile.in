@@ -24,7 +24,7 @@ all: Makefile DESCRIPTION
 	  else \
 	    cp $(srcdir)/R/unix/zzz.Rstub $${f}; \
 	  fi; \
-	  $(top_srcdir)/tools/move-if-change $${f} \
+	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg))
 	@if test @use_tcltk@ = yes; then \
 	  $(INSTALL_DATA) $(srcdir)/NAMESPACE \
@@ -70,7 +70,7 @@ all: Makefile DESCRIPTION
 	    for rdfile in $(srcdir)/man/*.Rd; do \
 	      cat $${rdfile}; echo '\eof'; \
 	    done >> $${f}; \
-	    $(top_srcdir)/tools/move-if-change $${f} \
+	    $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
 	      $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
 	fi
 	@if test -d src -a @use_tcltk@ = yes; then \

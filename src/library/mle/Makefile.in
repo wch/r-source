@@ -21,7 +21,7 @@ all: Makefile DESCRIPTION
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  echo ".packageName <- \"$(pkg)\"" >  $${f}; \
 	  cat `ls $(srcdir)/R/*.R` >> $${f}; \
-	  $(top_srcdir)/tools/move-if-change $${f} all.R)
+	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
 	@for f in COPYRIGHTS INDEX SOURCES NAMESPACE; do \
 	  if test -f $(srcdir)/$${f}; then \
 	    $(INSTALL_DATA) $(srcdir)/$${f} \
@@ -50,7 +50,7 @@ all: Makefile DESCRIPTION
 	    for rdfile in $(srcdir)/man/*.Rd; do \
 	      cat $${rdfile}; echo '\eof'; \
 	    done >> $${f}; \
-	    $(top_srcdir)/tools/move-if-change $${f} \
+	    $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
 	      $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
 	fi
 	@if test -d src; then \
