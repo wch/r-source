@@ -88,6 +88,7 @@
 
 
 #ifdef Macintosh
+extern char *strdup(); 
 #define R_DIR_SEPARATOR ':'
 #define HAVE_NO_SYMBOL_UNDERSCORE 
 /* No "_" before function names under MacOS */
@@ -575,7 +576,7 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 	}
 	if(doit > 1) return (DL_FUNC) NULL;  /* Only look in the first-matching DLL */
     }
-    if(all || !strcmp(pkg, "base")) {
+    if(all || !strcmp(pkg, "base")) { 
 	return(R_osDynSymbol->getBaseSymbol(name));
     }
     return (DL_FUNC) NULL;
