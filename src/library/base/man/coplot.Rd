@@ -2,7 +2,8 @@
 \title{Conditioning Plots}
 \usage{
 coplot(formula, data, given.values, panel = points, rows, columns,
-       show.given = TRUE, col = par("fg"), pch = par("pch"), ...)
+       show.given = TRUE, col = par("fg"), pch = par("pch"),
+       number = 6, overlap = 0.5, \dots)
 co.intervals(x, number = 6, overlap = 0.5)
 }
 \alias{coplot}
@@ -21,16 +22,19 @@ co.intervals(x, number = 6, overlap = 0.5)
     formula.  By default the environment where \code{coplot} was called
     from is used.}
   \item{given.values}{a value or list of two values which determine how
-    the conditioning on \code{a} and \code{b} is to take place.  Usually
-    this is a matrix with two columns each row of which gives an
+    the conditioning on \code{a} and \code{b} is to take place.
+
+    When there is no \code{b} (i.e., conditioning only on \code{a}),
+    usually this is a matrix with two columns each row of which gives an
     interval, to be conditioned on, but is can also be a single vector
     of numbers or a set of factor levels (if the variable being
-    conditioned on is a factor).
-
-    The result of \code{co.intervals(..)} can be used directly as
-    \code{given.values} argument.}
-  \item{panel}{a function which gives the action to be carried out in
-    each panel of the display.  The default is \code{points}.}
+    conditioned on is a factor). In this case (no \code{b}),
+    the result of \code{co.intervals(..)} can be used directly as
+    \code{given.values} argument.
+  }
+  \item{panel}{a \code{\link{function}(x,y, col, pch, \dots)}
+      which gives the action to be carried out in
+      each panel of the display.  The default is \code{points}.}
   \item{rows}{the panels of the plot are laid out in a \code{rows} by
     \code{columns} array.  \code{rows} gives the number of rows in the
     array.}
@@ -41,14 +45,24 @@ co.intervals(x, number = 6, overlap = 0.5)
     short, the values are recycled.}
   \item{pch}{a vector of plotting symbols or characters.  If too short,
     the values are recycyled.}
-  \item{...}{additional arguments to the panel function.}
-  \item{number}{the number conditioning intervals.}
-  \item{overlap}{the fraction of overlap of the conditioning variables.}
+
+  \item{number}{integer; the number of conditioning intervals,
+    possibly of length 2 for x and y direction.}
+  \item{overlap}{numeric < 1; the fraction of overlap of the
+      conditioning variables, possibly of length 2 for x and y
+      direction.  When overlap < 0, there will be \emph{gaps} between
+      the data slices.} 
+  \item{\dots}{additional arguments to the panel function.}
 }
 \description{
   This function produces two variants of the conditioning plots
   discussed in the reference below.
 }
+\value{
+    \code{co.intervals(., number, .)} returns a (\code{number} \eqn{\times}{x}
+  	2) \code{\link{matrix}}, say \code{ci},  where \code{ci[k,]} is
+	the \code{\link{range}} of \code{x} values for the \code{k}-th interval.
+}    
 \references{
   Cleveland, W. S. (1993).
   \emph{Visualizing Data}.
@@ -63,7 +77,14 @@ co.intervals(x, number = 6, overlap = 0.5)
 ## Tonga Trench Earthquakes
 data(quakes)
 coplot(long ~ lat | depth, data = quakes)
+given.depth <- co.intervals(quakes$depth, number=4, overlap=.1)
+coplot(long ~ lat | depth, data = quakes, given.values=given.depth)
+
+## Conditioning on 2 variables:
 coplot(long ~ lat | depth * mag, data = quakes)
+coplot(long ~ lat | depth * mag, data = quakes, number=c(4,7))
+coplot(long ~ lat | depth * mag, data = quakes, number=c(3,7),
+       overlap=c(-.5,.1)) # negative overlap DROPS values
 }
 \keyword{hplot}
 \keyword{aplot}

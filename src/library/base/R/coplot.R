@@ -16,7 +16,8 @@ panel.smooth <- function(x, y, col = par("col"), pch = par("pch"),
 }
 
 coplot <- function (formula, data, given.values, panel=points, rows, columns,
-		    show.given = TRUE, col = par("fg"), pch=par("pch"), ...)
+		    show.given = TRUE, col = par("fg"), pch=par("pch"),
+                    number = 6, overlap = 0.5, ...)
 {
     deparen <- function(expr) {
 	while (is.language(expr) && !is.name(expr) && deparse(expr[[1]]) == "(")
@@ -69,21 +70,33 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
 
     ## generate the given value intervals
 
+    number <- as.integer(number)
+    if(length(number)==0 || any(number < 1)) stop("number must be integer >= 1")
+
+    ##if(any(overlap < 0) || any(overlap >= 1)) stop("overlap must be in [0,1)")
+    if(any(overlap >= 1)) stop("overlap must be < 1 (and typically >= 0).")
+
     bad.givens <- function() stop("invalid given.values")
     if(missing(given.values)) {
-	if(is.factor(a)) {
-	    a.intervals <- cbind(1:nlevels(a), 1:nlevels(a))
-	    a <- as.numeric(a)
-	}
-	else a.intervals <- co.intervals(a)
-	b.intervals <- NULL
-	if (have.b)  {
-	    if(is.factor(b)) {
-		b.intervals <- cbind(1:nlevels(b), 1:nlevels(b))
-		b <- as.numeric(b)
-	    }
-	    else b.intervals <- co.intervals(b)
-	}
+	a.intervals <-
+            if(is.factor(a)) {
+                i <- 1:nlevels(a)
+                a <- as.numeric(a)
+                cbind(i,i)
+            } else co.intervals(a,number=number[1],overlap=overlap[1])
+	b.intervals <-
+            if (have.b) {
+                if(is.factor(b)) {
+                    i <- 1:nlevels(b)
+                    b <- as.numeric(b)
+                    cbind(i,i)
+                }
+                else {
+                    if(length(number)==1) number  <- rep(number,2)
+                    if(length(overlap)==1)overlap <- rep(overlap,2)
+                    co.intervals(b,number=number[2],overlap=overlap[2])
+                }
+            }
     } else {
 	if(!is.list(given.values))
 	    given.values <- list(given.values)
@@ -91,38 +104,41 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
 	    bad.givens()
 	a.intervals <- given.values[[1]]
 	if(is.factor(a)) {
-	    if(is.character(a.intervals))
-		a.levels <- match(a.levels, levels(a))
-	    else a.levels <- cbind(a.levels, a.levels)
+	    a.intervals <-
+                if(is.character(a.intervals))
+                    match(a.intervals, levels(a))
+                else cbind(a.intervals, a.intervals)
 	    a <- as.numeric(a)
-	} else if(is.numeric(a)) {
-	    if(!is.numeric(a)) bad.givens()
+	}
+        else if(is.numeric(a)) {
+	    if(!is.numeric(a.intervals)) bad.givens()
 	    if(!is.matrix(a.intervals) || ncol(a.intervals) != 2)
 		a.intervals <- cbind(a.intervals, a.intervals)
 	}
 	if(have.b) {
 	    b.intervals <- given.values[[2]]
 	    if(is.factor(b)) {
-		if(is.character(b.intervals))
-		    b.levels <- match(b.levels, levels(b))
-		else b.levels <- cbind(b.levels, b.levels)
+		b.intervals <-
+                    if(is.character(b.intervals))
+                        match(b.intervals, levels(b))
+                    else cbind(b.intervals, b.intervals)
 		b <- as.numeric(b)
-	    } else if(is.numeric(b)) {
-		if(!is.numeric(b)) bad.givens()
+	    }
+            else if(is.numeric(b)) {
+		if(!is.numeric(b.intervals)) bad.givens()
 		if(!is.matrix(b.intervals) || ncol(b.intervals) != 2)
 		    b.intervals <- cbind(b.intervals, b.intervals)
 	    }
 	}
     }
-    if(any(is.na(a.intervals))) bad.givens()
-    if(have.b)
-	if(any(is.na(b.intervals))) bad.givens()
+    if(any(is.na(a.intervals)) || (have.b && any(is.na(b.intervals))))
+        bad.givens()
 
     ## compute the page layout
 
     if (have.b) {
-	rows <- nrow(b.intervals)
-	columns <- nrow(b.intervals)
+	rows    <- nrow(b.intervals)
+	columns <- nrow(a.intervals)
 	nplots <- rows * columns
 	total.rows <- rows + if (show.given) 1 else 0
 	total.columns <- columns + if (show.given) 1 else 0
