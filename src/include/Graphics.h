@@ -25,6 +25,10 @@
 
 #include <R_ext/Boolean.h>
 
+#ifdef macintosh
+#include <Rinternals.h> 
+#endif macintosh
+
 #define R_MaxDevices 64
 
 #define	DEG2RAD 0.01745329251994329576

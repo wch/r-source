@@ -72,10 +72,10 @@
 # define FILESEP     "/"
 #endif /* Unix */
 
-#ifdef Macintosh
+#ifdef macintosh
 # define OSTYPE      "mac"
 # define FILESEP     ":"
-#endif /* Macintosh */
+#endif /* macintosh */
 
 #ifdef Win32
 # define OSTYPE      "windows"
@@ -110,7 +110,11 @@
 #define	R_VSIZE		6291456L
 #endif
 
+#ifdef macintosh
+#include <fp.h> 
+#else
 #include <math.h>
+#endif
 
 /* all these are in Rinternals.h
 #include <errno.h>

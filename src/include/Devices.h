@@ -28,7 +28,9 @@
 #define deviceNumber		Rf_deviceNumber
 #define DevNull			Rf_DevNull
 #define inhibitDisplayList	Rf_inhibitDisplayList
+#ifndef macintosh
 #define InitGraphics		Rf_InitGraphics
+#endif
 #define GetDevice		Rf_GetDevice
 #define KillAllDevices		Rf_KillAllDevices
 #define KillDevice		Rf_KillDevice
@@ -64,6 +66,9 @@ XFigDeviceDriver(DevDesc*, char*, char*, char*,
 Rboolean MacDeviceDriver(char**, int, double*, int);
 #endif
 
+#ifdef macintosh
+Rboolean MacDeviceDriver(char**, int, double*, int);
+#endif
 
 /*-------------------------------------------------------------------
  *
