@@ -2125,3 +2125,14 @@ Boolean CanLoadFrameWork(void)
 
 /* end of code from Apple's CarbonLib SDK 1.6 */
 
+#ifdef __MRC__
+/* Reference date on Mac is 1904-1-1 on Posix is 1970-1-1 */
+
+time_t POSIXMakeTime(struct tm *tm);
+
+time_t POSIXMakeTime(struct tm *tm)
+{
+  return mktime(tm) - 2082844800u;
+}
+#endif
+
