@@ -10,6 +10,9 @@ our installation procedures.
 	i386-unknown-freebsd2.2.5	gcc / f77
 	mips-sgi-irix6.2		cc  / f77
 	sparc-sun-solaris2.5.1		gcc / g77
+		"			gcc / f77
+		"			cc  / f77
+
 
 	OLD (pre 0.62 systems)
 
