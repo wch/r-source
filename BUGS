@@ -91,6 +91,7 @@ Date: Fri, 28 Jun 2002 10:28:17 +1000
 Subject: problem with qq( )
 From: Jarno.Tuimala@Helsinki.Fi
 Date: Tue, 2 Jul 2002 10:37:10 +0200 (MET DST)
+--A report on lattice
 * PR# 1741 *
 Subject: groupedData constructor from a function
 From: dieter.menne@menne-biomed.de
@@ -104,6 +105,7 @@ Date: Fri, 5 Jul 2002 08:32:32 +0200 (MET DST)
 Subject: svm seg faults
 From: stefan.boehringer+science@uni-bochum.de
 Date: Tue, 13 Aug 2002 14:12:17 +0200 (MET DST)
+--Seem to be due to gcc `2.96' from RH7.3
 
 Directory:  Analyses
 
@@ -264,6 +266,11 @@ Date: Mon, 5 Aug 2002 22:35:02 +0200 (MET DST)
 Subject: interaction.plot() legend too narrow when mfcol > 2
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Tue, 13 Aug 2002 09:36:15 +0200
+* PR# 1933 *
+Subject: dev2eps() prints ticks with wrong length!
+From: Timur Elzhov <Timur.Elzhov@jinr.ru>
+Date: Fri, 23 Aug 2002 17:22:15 +0400
+--dev.copy problem
 
 Directory:  In-Out
 
@@ -533,10 +540,6 @@ Date: Mon, 15 Apr 2002 10:13:36 +0000
 Subject: hitting ^C breaks readline history
 From: Cyril Humbert <humbertc@univ-mlv.fr>
 Date: Tue, 28 May 2002 12:07:07 +0200 (MET DST)
-* PR# 1932 *
-Subject: R 1.5.1 not working with Windows NT on Virtual PC 4
-From: alex_dacosta@yahoo.fr
-Date: Fri, 23 Aug 2002 09:09:52 +0200 (MET DST)
 
 Directory:  TooMuchAtOnce
 
@@ -577,27 +580,27 @@ Date: Tue, 16 Jul 2002 16:59:22 -0400
 Subject: Re: R-1.5.1 (X11/Darwin), Mac OS 10.1.5
 From: Lincoln Davis <ld-temp-qt3i@pobox.com>
 Date: Wed, 21 Aug 2002 19:58:01 -0700
-* PR# 1933 *
-Subject: dev2eps() prints ticks with wrong length!
-From: Timur Elzhov <Timur.Elzhov@jinr.ru>
-Date: Fri, 23 Aug 2002 17:22:15 +0400
-* PR# 1934 *
-Subject: try-error in batch and interactive mode 
-From: Jun Yan <jyan@stat.wisc.edu>
-Date: Fri, 23 Aug 2002 11:39:19 -0500 (CDT)
-* PR# 1935 *
-Subject: (±¤°?)?¶????º?¾? ?©??1??-???????? ??????´??ý-
-From: bujakorea <bujakrea@lycos.com>
-Date: Sat, 24 Aug 2002 05:45:06 +0900
-* PR# 1936 *
-Subject: ¥®¨à¾Ç²ß»y¨¥ªº³Ì¨Î¤u¨ã¡I¡I
-From: 5_21g5e1v210c@detemobil.de
-Date: 23 Jul 2002 01:57:19 +0800
 * PR# 1937 *
 Subject:  Inconsistent use of Perl? 
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
 Date: Sat, 24 Aug 2002 18:41:09 +0800
-* PR# 1938 *
-Subject: {???????¤º?} 100% ??±??©??µ??? º??? ??????!! ???ü?? º??©??´?´?!! °­??!!   
-From: ¾?º?????m<erokoreaaam@hotmail.com>
-Date: Sun, 25 Aug 2002 01:58:28 -0600
+* PR# 1939 *
+Subject: title(list) shows strange chars
+From: otoomet@econ.dk
+Date: Sun, 25 Aug 2002 10:33:54 +0200 (MET DST)
+* PR# 1941 *
+Subject: Let's be friends
+From: ktmitch <ktmitch@aug.com>
+Date: Sun, 25 Aug 2002 05:25:38 -0500
+* PR# 1942 *
+Subject:  library(file) segfaults on solaris 
+From: <stvjc@channing.harvard.edu>
+Date: Sun, 25 Aug 2002 08:49:57 -0400 (EDT)
+* PR# 1943 *
+Subject: REQUEST FOR MUTUALLY BENEFITTING ENDEAVOUR
+From: <phillipadams@arabia.com>
+Date: Sun, 25 Aug 2002 07:54:26 -0700
+* PR# 1944 *
+Subject: (±¤°?) ??µðº?¾? ´º?º????....   
+From: ??µðº?¾???¶?<master@pe2pe.co.kr>
+Date: Mon, 26 Aug 2002 03:18:06 -0600
