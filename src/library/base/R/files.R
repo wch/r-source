@@ -27,8 +27,9 @@ file.remove <- function(...)
 file.rename <- function(from, to)
 .Internal(file.rename(from, to))
 
-list.files <- function(path=".", pattern=NULL,all.files=FALSE,full.names=FALSE)
-.Internal(list.files(path, pattern, all.files, full.names))
+list.files <- function(path=".", pattern=NULL, all.files=FALSE,
+                       full.names=FALSE, recursive=FALSE)
+.Internal(list.files(path, pattern, all.files, full.names, recursive))
 
 dir <- list.files
 

@@ -252,6 +252,9 @@ NEW FEATURES
     o	New function md5sum() in package tools to calculate MD5
 	checksums on files (e.g. on parts of the R installation).
 
+    o   list.files()/dir() have a new argument `recursive'.
+
+
 INSTALLATION CHANGES
 
     o	TITLE files in packages are no longer used, the Title field
