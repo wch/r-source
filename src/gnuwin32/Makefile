@@ -486,7 +486,7 @@ install:
 ## ============= End of maintainer targets ========================
 
 # Dependencies
-CSOURCES=$(wildcard *.c)
+CSOURCES=$(filter-out malloc.c blas00.c,$(wildcard *.c))
 DEPS=$(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)

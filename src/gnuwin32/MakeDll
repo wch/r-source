@@ -1,5 +1,5 @@
 #-*- Makefile -*-
-all:  libR $(DLLNAME).dll
+all:  libR makeMakedeps $(DLLNAME).dll
 
 # set this in Makevars.win to supply your own resource file
 RCNAME=${DLLNAME}_res
@@ -8,6 +8,7 @@ RCOBJ=$(RCNAME).o
 
 # Don't use SOURCES as this get passed on for libR.
 CFSOURCES=$(wildcard -f *.c *.f)
+CSOURCES=$(wildcard -f *.c)
 CXXSOURCES=$(wildcard -f *.cc *.cpp *.C)
 OBJSA=$(foreach i,$(CFSOURCES) $(CXXSOURCES),$(basename $i).o)
 
@@ -62,3 +63,12 @@ $(DLLNAME).a: $(OBJS)
 	$(RANLIB) $@
 
 $(DLLNAME).dll : $(DLLNAME).a $(RCOBJ)
+
+# Dependencies
+DEPS=$(CSOURCES:.c=.d)
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
+
+-include Makedeps
