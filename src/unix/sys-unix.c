@@ -142,7 +142,7 @@ void setStartTime()
 SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    clock_t elapsed;
+    double elapsed;
     elapsed = (times(&timeinfo) - StartTime) / (double)CLK_TCK;
     ans = allocVector(REALSXP, 5);
     REAL(ans)[0] = timeinfo.tms_utime / (double)CLK_TCK;
