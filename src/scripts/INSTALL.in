@@ -596,8 +596,10 @@ do_install_source () {
     thislazy=false
   fi
   ## this test is designed to fail if a loader is used.
+  ## beware: the wc format is not portable -- some systems give
+  ## size in a left-space-padded first field, and some do not pad. 
   if test "x$thislazy" = "xauto" ; then
-    Rcodesize=`wc -c ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME} | cut -b -8`
+    Rcodesize=`cat ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME} | wc -c`
     if test ${Rcodesize} -gt 50000 ; then
       thislazy=true
     else
