@@ -29,7 +29,19 @@
 
 use File::Basename;
 
-$PKG = shift @ARGV;
+my $PKG = shift @ARGV;
+my @Rfiles;
+if(-d $ARGV[0]) {
+    my $dir = $ARGV[0];
+    opendir(DIR, $dir) or die "cannot opendir $dir: $!";
+    my @files = sort grep { /\.R$/ } readdir(DIR);
+    closedir(DIR);
+    foreach my $file (@files) {
+	push(@Rfiles, "$dir/$file");
+    }
+} else {
+    @Rfiles = @ARGV;
+}
 
 ## 1) ---- Header ----
 print <<_EOF_;
@@ -58,14 +70,14 @@ assign("par.postscript", par(no.readonly = TRUE), env = .CheckExEnv)
 options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
 _EOF_
 
-if ($PKG eq "tcltk") {
+if($PKG eq "tcltk") {
     print "require('tcltk') || q()\n";
-} else {
-    if($PKG ne "base") { print "library('$PKG')\n";}
+} elsif($PKG ne "base") {
+    print "library('$PKG')\n";
 }
 
 ## 2) ---- edit a few of these files:
-foreach $file  (@ARGV) {
+foreach my $file (@Rfiles) {
     my $bf = basename $file, (".R");
     my $have_examples=0, $have_par=0, $have_contrasts=0, $nm;
 
