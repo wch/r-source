@@ -111,7 +111,7 @@ void setCURCOL(ConsoleData p)
     char *P = LINE(NUMLINES - 1) + prompt_len;
     int w0 = 0;
     wchar_t wc;
-    while (P < LINE(NUMLINES - 1) + prompt_len + cur_byte) {
+    while (*P && P < LINE(NUMLINES - 1) + prompt_len + cur_byte) {
 	P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
 	w0 += wcwidth(wc);
     }
