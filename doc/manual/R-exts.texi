@@ -142,8 +142,8 @@ Date: 2000/01/04
 Title: My first collection of functions
 Author: Friedrich Leisch <F.Leisch@@ci.tuwien.ac.at>.
 Depends: R (>= 0.99), nlme
-Description: A short (one paragraph) description of what the package
-        does and why it may be useful.
+Description: A short (one paragraph) description of what 
+        the package does and why it may be useful.
 License: GPL version 2 or newer
 URL: http://www.r-project.org, http://www.another.url
 @end smallexample
@@ -2718,6 +2718,11 @@ An alternative is to include the header file @file{S.h}, which may be
 useful when porting code from @Sl{}. This includes rather less than
 @file{R.h}, and has some compatibility definitions (for example the
 @code{S_complex} type from @Sl{}).
+
+NOTE: Because @R{} re-maps many of its external names to avoid clashes
+with user code, it is @emph{essential} to include the appropriate header
+files when using these entry points.
+
 
 @node Memory allocation, Error handling, The R API, The R API
 @section Memory allocation
