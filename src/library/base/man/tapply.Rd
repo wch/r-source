@@ -63,6 +63,10 @@ tapply(1:n, fac, sum, simplify = FALSE)
 tapply(1:n, fac, range)
 tapply(1:n, fac, quantile)
 
+## example of ... argument: find quarterly means
+data(presidents)
+tapply(presidents, cycle(presidents), mean, na.rm = TRUE)
+
 ind <- list(c(1, 2, 2), c("A", "A", "B"))
 table(ind)
 tapply(1:3, ind) #-> the split vector
