@@ -67,12 +67,13 @@ getOption(x)
     (\code{\link{NA}}'s) for certain situations.}
 
   \item{papersize}{the default paper format used by \code{\link{postscript}};
-    set by environment variable \code{R_PAPERSIZE} and defaulting to
-    \code{"a4"} if that is unset or invalid.}
+    set by environment variable \code{R_PAPERSIZE} when \R is started
+    and defaulting to \code{"a4"} if that is unset or invalid.}
 
   \item{printcmd}{the command used by \code{\link{postscript}} for
-    printing; set by environment variable \code{R_PRINTCMD}. This should
-    be a command that expects input to be piped to \file{stdin}.}
+    printing; set by environment variable \code{R_PRINTCMD} when \R is
+    started. This should be a command that expects either input to be piped
+    to \file{stdin} or to be given a single filename argument.}
 #ifdef unix
   \item{latexcmd, dvipscmd}{character strings giving commands to be used
     in off-line printing of help pages.}
