@@ -70,6 +70,7 @@ The current version of this document is @value{VERSION}.
 * Add-on packages::             
 * Essential and useful other programs::  
 * Configuration on Unix::       
+* Building the GNOME interface::  
 * Enabling search in HTML help::  
 * New platforms::               
 * Function and variable index::  
@@ -240,7 +241,7 @@ building from the sources.
 
 First review the essential and useful tools and libraries in
 @ref{Essential and useful other programs}, and install those you want or
-need.  Ensure that the environment variable @samp{TMPDIR} is either
+need.  Ensure that the environment variable @env{TMPDIR} is either
 unset (and @file{/tmp} exists and can be written in) or points to a
 valid temporary directory.
 
@@ -976,7 +977,7 @@ So if @R{} is re-built after ATLAS is installed, then packages such as
 @pkg{quantreg} will need to be re-installed.
 
 
-@node Configuration on Unix, Enabling search in HTML help, Essential and useful other programs, Top
+@node Configuration on Unix, Building the GNOME interface, Essential and useful other programs, Top
 @appendix Configuration on Unix
 
 @menu
@@ -985,7 +986,6 @@ So if @R{} is re-built after ATLAS is installed, then packages such as
 * Using make::                  
 * Using FORTRAN::               
 * Compile and load flags::      
-* Building the GNOME interface::  
 * Platform notes::              
 @end menu
 
@@ -1189,7 +1189,7 @@ If you use @command{f2c} you may need to ensure that the FORTRAN type
 @file{f2c.h} contains @samp{typedef long int integer;}, which will work
 on a 32-bit platform but not on a 64-bit platform.
 
-@node Compile and load flags, Building the GNOME interface, Using FORTRAN, Configuration on Unix
+@node Compile and load flags, Platform notes, Using FORTRAN, Configuration on Unix
 @section Compile and load flags
 
 A wide range of flags can be set in the file @file{config.site} or as
@@ -1243,72 +1243,9 @@ possible issue is the alignment of doubles, another is the way
 structures are passed.
 
 
-@node Building the GNOME interface, Platform notes, Compile and load flags, Configuration on Unix
-@section Building the @acronym{GNOME} interface
-
-This interface is experimental and incomplete.  The console offers a
-basic command line editing and history mechanism, along with tool and
-button bars that give a point-and-click interface to some @R{} commands.
-Many of the features of the console are currently stubs.
-
-Two graphics devices have been available but are currently
-unbundled. The @code{gtk()} graphics device is a port of the
-@code{x11()} device to @acronym{GDK} (the GIMP Drawing Kit), and is
-available from CRAN as package @pkg{gtkDevice}.  The @code{gnome()}
-device uses the @acronym{GNOME} canvas, and is not currently available.
-
-Due to its experimental nature, the @acronym{GNOME} interface for @R{}
-will not be built automatically.  You must specify it by running
-configure with the @option{--with-gnome} option, which requires
-@option{--enable-R-shlib}.  For example, you might run
-
-@smallexample
-./configure --with-gnome --enable-R-shlib
-@end smallexample
-
-@noindent
-but please check you have all the requirements first.  You need at least
-the following libraries (or later) installed
-
-@smallexample
-audiofile-0.2.1
-esound-0.2.23
-glib-1.2.10
-gtk+-1.2.10
-imlib-1.9.10
-ORBit-0.5.12
-gnome-libs-1.4.1.2
-libxml-1.8.16
-libglade-0.17
-@end smallexample
-
-@noindent
-It is preferable to have a complete installation of the @acronym{GNOME}
-desktop environment.  If you use Linux, then this should be provided
-with your distribution.
-
-Remember that some package management systems (such as @acronym{RPM} and
-deb) make a distinction between the user version of a package and the
-developer version.  The latter usually has the same name but with the
-extension @samp{-devel}.  If you use a pre-packaged version of
-@acronym{GNOME} then you must have the developer versions of the above
-packages in order to compile the R-GNOME interface.
-
-The full list of @acronym{GNOME} options to configure is
-
-@table @option
-@item --with-gnome
-use @acronym{GNOME}, or specify its prefix [no]
-@item --with-gnome-includes=@var{DIR}
-specify location of @acronym{GNOME} headers
-@item --with-gnome-libs=@var{DIR}
-specify location of @acronym{GNOME} libs
-@item --with-libglade-config=@var{LIBGLADE_CONFIG}
-specify location of @command{libglade-config}
-@end table
 
 
-@node Platform notes,  , Building the GNOME interface, Configuration on Unix
+@node Platform notes,  , Compile and load flags, Configuration on Unix
 @section Platform notes
 
 This section provides some notes on building @R{} on different Unix-like
@@ -1748,8 +1685,83 @@ tries to detect this.
 
 We understand that @option{--enable-R-shlib} does not work under AIX.
 
+@node Building the GNOME interface, Enabling search in HTML help, Configuration on Unix, Top
+@chapter Building the @acronym{GNOME} interface
 
-@node Enabling search in HTML help, New platforms, Configuration on Unix, Top
+This interface is experimental and incomplete.  The console offers a
+basic command line editing and history mechanism, along with tool and
+button bars that give a point-and-click interface to some @R{} commands.
+Many of the features of the console are currently stubs.
+
+Two graphics devices have been available but are currently
+unbundled. The @code{gtk()} graphics device is a port of the
+@code{x11()} device to @acronym{GDK} (the GIMP Drawing Kit), and is
+available from CRAN as package @pkg{gtkDevice}.  The @code{gnome()}
+device uses the @acronym{GNOME} canvas, and is not currently available.
+
+Due to its experimental nature, the @acronym{GNOME} interface for @R{}
+will not be built automatically.  You need to have built @R{} first with
+the @option{--enable-R-shlib} option, and installed @R{} to where you
+are going to use it from.
+
+Please check you have all the requirements.  You need at least the
+following libraries (or later) installed
+
+@smallexample
+audiofile-0.2.1
+esound-0.2.23
+glib-1.2.10
+gtk+-1.2.10
+imlib-1.9.10
+ORBit-0.5.12
+gnome-libs-1.4.1.2
+libxml-1.8.16
+libglade-0.17
+@end smallexample
+
+@noindent
+It is preferable to have a complete installation of the @acronym{GNOME}
+desktop environment.  If you use Linux, then this should be provided
+with your distribution.
+
+Remember that some package management systems (such as @acronym{RPM} and
+deb) make a distinction between the user version of a package and the
+developer version.  The latter usually has the same name but with the
+extension @samp{-devel}.  If you use a pre-packaged version of
+@acronym{GNOME} then you must have the developer versions of the above
+packages in order to compile the R-GNOME interface.
+
+The interface is a separate front-end program that is configured and
+built independently of the rest of @R{}.  If the version of @R{} you
+want to install into is not launched by @command{R}, set @env{R_HOME} to
+the @R{} home directory (the one containing @file{bin/R}).
+Create a build directory, and from there run
+
+@example
+$(R_TOP_SRC_DIR)/src/modules/gnome/configure
+make
+make install
+@end example
+
+@noindent
+This installs the two files @file{R_HOME/bin/exec/Rgnome} and
+@file{R_HOME/share/glade/gnome-interface.glade}.
+
+[To be updated:]
+The full list of options to this @command{configure} is
+
+@table @option
+@item --with-gnome
+specify the prefix for the @acronym{GNOME} dirs
+@item --with-gnome-includes=@var{DIR}
+specify location of @acronym{GNOME} headers
+@item --with-gnome-libs=@var{DIR}
+specify location of @acronym{GNOME} libs
+@item --with-libglade-config=@var{LIBGLADE_CONFIG}
+specify location of @command{libglade-config}
+@end table
+
+@node Enabling search in HTML help, New platforms, Building the GNOME interface, Top
 @chapter Enabling search in HTML help
 
 There is a search engine available from the front page of the
