@@ -875,9 +875,9 @@ do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
     char *buf;
 
     checkArity(op, args);
-#ifdef HAVE_UNISTD_H
+#ifdef R_GETCWD
     buf = (char *)malloc(size);
-    while (!getcwd(buf, size)) {
+    while (!R_GETCWD(buf, size)) {
 	size *= 2;
 	free(buf);
 	buf = (char *)malloc(size);
