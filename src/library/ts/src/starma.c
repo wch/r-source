@@ -204,10 +204,10 @@ void karma(Starma G, double *sumlog, double *ssq, int iupd, int *nit)
 {
     int p = G->p, q = G->q, r = G->r, n = G->n;
     double *phi = G->phi, *theta = G->theta, *a = G->a, *P = G->P,
-	*V = G->V, *w = G->w, *resid = G->resid;
+	*V = G->V, *w = G->w, *resid = G->resid, *work = G->xnext;
 
     int i, j, l, ii, ind, indn, indw;
-    double a1, dt, et, ft, g, ut, phij, phijdt, work[100];
+    double a1, dt, et, ft, g, ut, phij, phijdt;
 
 /*  Invoking this subroutine updates a, P, sumlog and ssq by inclusion
     of data values w(1) to w(n). the corresponding values of resid are
