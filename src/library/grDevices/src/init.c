@@ -31,17 +31,17 @@ static R_CallMethodDef CallEntries[] = {
     {NULL, NULL, 0}
 };
 
-#define EXTDEF(name)  {#name, (DL_FUNC) &name, -1}
+#define EXTDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static R_ExternalMethodDef ExtEntries[] = {
-    EXTDEF(PicTeX),
-    EXTDEF(PostScript),
-    EXTDEF(XFig),
-    EXTDEF(PDF),
-    EXTDEF(Quartz),
+    EXTDEF(PicTeX, 6),
+    EXTDEF(PostScript, 16),
+    EXTDEF(XFig, 11),
+    EXTDEF(PDF, 13),
+    EXTDEF(Quartz, -1),
 #ifdef WIN32
-    EXTDEF(devga),
-    EXTDEF(savePlot),
+    EXTDEF(devga, 15),
+    EXTDEF(savePlot, 3),
 #endif
     {NULL, NULL, 0}
 };
