@@ -4,7 +4,7 @@ Rdpp <-
 function(lines)
 {
     ## Preprocess lines with Rd markup according to .Platform$OS.type.
-    
+
     if(!is.character(lines))
         stop(paste("argument", sQuote(lines),
                    "must be a character vector"))
@@ -20,7 +20,7 @@ function(lines)
     ## </NOTE>
     nOfPpLines <- length(ppLineIndices)
     if(nOfPpLines == 0) return(lines)
-    
+
     OS <- .Platform$OS.type
     ppLines <- lines[ppLineIndices]
 
@@ -103,8 +103,8 @@ function(file)
     aliases <- .getRdMetaDataFromRdLines(lines, "alias")
     concepts <- .getRdMetaDataFromRdLines(lines, "concept")
     keywords <- .getRdMetaDataFromRdLines(lines, "keyword")
-    
-    ## Could be none or more than one ... argh.    
+
+    ## Could be none or more than one ... argh.
     RdType <- c(.getRdMetaDataFromRdLines(lines, "docType"), "")[1]
 
     txt <- paste(lines, collapse = "\n")
@@ -350,7 +350,7 @@ function(package, dir, lib.loc = NULL)
     ## Build an Rd 'data base' from an installed package or the unpacked
     ## package sources as a list containing the 'raw' R documentation
     ## objects obtained via readLines().
-    
+
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
@@ -387,7 +387,7 @@ function(package, dir, lib.loc = NULL)
                        "does not contain Rd sources"))
         docsFiles <- listFilesWithType(docsDir, "docs")
         db <- lapply(docsFiles, readLines)
-        
+
     }
 
     db
@@ -395,7 +395,7 @@ function(package, dir, lib.loc = NULL)
 }
 
 ### * getRdSection
-    
+
 getRdSection <-
 function(txt, type, predefined = TRUE)
 {
@@ -411,7 +411,7 @@ function(txt, type, predefined = TRUE)
     ## e.g. strsplit(), i.e., a list of character vectors.  Worth the
     ## effort?
     ## </FIXME>
-    
+
     out <- character()
     if(length(txt) != 1)
         stop("'txt' must be a character string")
@@ -438,7 +438,7 @@ function(txt, type, predefined = TRUE)
                 txt <- substring(txt, pos + attr(pos, "match.length"))
                 next
             }
-            
+
         }
         out <- c(out,
                  substring(txt,
@@ -457,7 +457,7 @@ function(txt)
     ## Extract names of Rd \item{}{} markup in the character string
     ## 'txt'.
     out <- character()
-    if(length(txt) != 1) 
+    if(length(txt) != 1)
         stop("'txt' must be a character string")
     pattern <- "(^|\n)[[:space:]]*\\\\item{"
     while((pos <- regexpr(pattern, txt)) != -1) {
@@ -475,7 +475,7 @@ function(txt)
             stop(paste("no \\item description for item",
                        sQuote(out[length(out)])))
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
-        if((pos <- tools::delimMatch(txt)) == -1)        
+        if((pos <- tools::delimMatch(txt)) == -1)
             stop("unmatched \\item description")
         txt <- substring(txt, pos + attr(pos, "match.length"))
     }
@@ -549,8 +549,8 @@ function(txt)
 
     ## Now try removing \dontrun{}.
     ## Simple version of R::Rdconv::undefine_command().
-    out <- character()    
-    pattern <- "\\\\dontrun{"
+    out <- character()
+    pattern <- "\\\\dontrun\\{"
     while((pos <- regexpr(pattern, txt)) != -1) {
         out <- c(out, substring(txt, 1, pos - 1))
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
@@ -559,15 +559,15 @@ function(txt)
         txt <- substring(txt, pos + attr(pos, "match.length"))
     }
     txt <- paste(c(out, txt), collapse = "")
-    ## Now try removing \testonly{}.
+    ## Now try removing \dontshow{} and \testonly{}.
     ## Simple version of R::Rdconv::replace_command().
     out <- character()
-    pattern <- "\\\\testonly{"
+    pattern <- "\\\\(testonly|dontshow)\\{"
     while((pos <- regexpr(pattern, txt)) != -1) {
         out <- c(out, substring(txt, 1, pos - 1))
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
         if((pos <- tools::delimMatch(txt)) == -1)
-            stop("unclosed \\testonly")
+            stop("unclosed \\dontshow or \\testonly")
         out <- c(out,
                  substring(txt, 2, pos + attr(pos, "match.length") - 2))
         txt <- substring(txt, pos + attr(pos, "match.length"))

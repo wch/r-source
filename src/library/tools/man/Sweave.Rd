@@ -91,6 +91,6 @@ Stangle(testfile)
 ## which can be simply sourced
 source("Sweave-test-1.R")
 
-\testonly{if(!interactive()) unlink("Sweave-test-1*")}
+\dontshow{if(!interactive()) unlink("Sweave-test-1*")}
 }
 \keyword{utilities}

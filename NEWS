@@ -387,6 +387,8 @@ DOCUMENTATION CHANGES
     o	\dontrun sections are no marked within comments in the
 	user-readable versions of the converted help pages.
 
+    o	\dontshow is now the preferred name for \testonly.
+
 
 INSTALLATION CHANGES
 

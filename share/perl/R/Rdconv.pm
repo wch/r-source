@@ -949,6 +949,7 @@ sub code2html {
     $text = replace_addnl_command($text, "dontrun", 
 				  "## Don't run: ", "## End Don't run");
     $text = drop_full_command($text, "testonly");
+    $text = drop_full_command($text, "dontshow");
     $text =~ s/\\\\/\\/go;
 
     $text = unmark_brackets($text);
@@ -1442,6 +1443,7 @@ sub code2txt {
     $text = replace_addnl_command($text, "dontrun", 
 				  "## Don't run: ", "## End Don't run");
     $text = drop_full_command($text, "testonly");
+    $text = drop_full_command($text, "dontshow");
 
     $text = unmark_brackets($text);
 
@@ -2133,6 +2135,7 @@ sub code2nroff {
     $text = replace_addnl_command($text, "dontrun", 
 				  "## Don't run: ", "## End Don't run");
     $text = drop_full_command($text, "testonly");
+    $text = drop_full_command($text, "dontshow");
 
     $text = unmark_brackets($text);
 
@@ -2261,6 +2264,7 @@ sub code2examp {
     $text = undefine_command($text, "link");
 
     $text = undefine_command($text, "testonly");
+    $text = undefine_command($text, "dontshow");
     ## Ideas for alternatives :
     ## 1) if the comments were shown in example() at all :
     ## $text = replace_command($text, "testonly",
@@ -2437,6 +2441,7 @@ sub code2latex {
     $text = replace_addnl_command($text, "dontrun", 
 				  "## Don't run: ", "## End Don't run");
     $text = drop_full_command($text, "testonly");
+    $text = drop_full_command($text, "dontshow");
 
     $text = unmark_brackets($text);
 
@@ -2886,6 +2891,7 @@ sub code2Ssgm {
     $text = replace_addnl_command($text, "dontrun", 
 				  "## Don't run: ", "## End Don't run");
     $text = drop_full_command($text, "testonly");
+    $text = drop_full_command($text, "dontshow");
     $text =~ s/\\\\/\\/go;
 
     $text = unmark_brackets($text);

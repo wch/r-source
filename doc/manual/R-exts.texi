@@ -1440,9 +1440,11 @@ help page and run by @code{R CMD check}.  You can use
 @code{\dontrun@{@}}
 @findex \dontrun
 for commands that should only be shown, but not run, and
-@code{\testonly@{@}}
-@findex \testonly
-for extra commands for testing that should not be shown to users.
+@code{\dontshow@{@}}
+@findex \dontshow
+for extra commands for testing that should not be shown to users, but
+will be run by @code{example()}.  (Previously this was called
+@code{\testonly}, and that is still accepted.)
 
 For example,
 
@@ -1450,14 +1452,15 @@ For example,
 @group
 x <- runif(10)       # @r{Shown and run.}
 \dontrun@{plot(x)@}    # @r{Only shown.}
-\testonly@{log(x)@}    # @r{Only run.}
+\dontshow@{log(x)@}    # @r{Only run.}
 @end group
 @end smallexample
 
 Thus, example code not included in @code{\dontrun} must be executable!
 In addition, it should not use any system-specific features or require
 special facilities (such as Internet access or write permission to
-specific directories).
+specific directories).  As from @R{} 1.8.0, code included in
+@code{\dontrun} is indicated by comments in the processed help files.
 
 Data needed for making the examples executable can be obtained by random
 number generation (for example, @code{x <- rnorm(100)}), or by using
