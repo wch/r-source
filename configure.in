@@ -946,7 +946,7 @@ AC_SUBST(LIBPATHS)
 ## This should not be necessary when using libtool for linking.
 ## In any case, is this really good enough?
 
-for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${BLAS_LIBS}; do
+for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${FLIBS} ${BLAS_LIBS}; do
   case ${arg} in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
