@@ -103,6 +103,41 @@ struct _GEDevDesc {
     GESystemDesc *gesd[MAX_GRAPHICS_SYSTEMS];
 };
 
+/* 
+ * A structure containing graphical parameters 
+ *
+ * This is how graphical parameters are passed from graphics systems
+ * to the graphics engine AND from the graphics engine to graphics
+ * devices.
+ *
+ * Devices are not *required* to honour graphical parameters
+ * (e.g., alpha transparency is going to be tough for some)
+ */
+typedef struct {
+    /*
+     * Colours
+     *
+     * NOTE:  Alpha transparency included in col & fill
+     */
+    int col;             /* pen colour (lines, text, borders, ...) */
+    int fill;            /* fill colour (for polygons, circles, rects, ...) */
+    double gamma;        /* Gamma correction */
+    /* 
+     * Line characteristics
+     */
+    double lwd;          /* Line width (roughly number of pixels) */
+    int lty;             /* Line type (solid, dashed, dotted, ...) */
+                         /* FIXME: need to add line end/joins */
+    /*
+     * Text characteristics
+     */
+    double cex;          /* Character expansion (font size = fontsize*cex) */
+    double ps;           /* Font size in points */
+    double lineheight;   /* Line height (multiply by font size) */
+    int fontface;        /* Font face (plain, italic, bold, ...) */
+    char fontfamily[50]; /* Font family */
+} R_GE_gcontext;
+
 GEDevDesc* GEcreateDevDesc(NewDevDesc* dev);
 void GEdestroyDevDesc(GEDevDesc* dd);
 void* GEsystemState(GEDevDesc *dd, int index);
@@ -164,57 +199,42 @@ double toDeviceHeight(double value, GEUnit from, GEDevDesc *dd);
 #define LTY_TWODASH	2 + (2<<4) + (6<<8) + (2<<12)
 
 void GESetClip(double x1, double y1, double x2, double y2, GEDevDesc *dd);
-void GENewPage(int fill, double gamma, GEDevDesc *dd);
+void GENewPage(R_GE_gcontext *gc, GEDevDesc *dd);
 void GELine(double x1, double y1, double x2, double y2, 
-	    int col, double gamma, int lty, double lwd,
-	    GEDevDesc *dd);
+	    R_GE_gcontext *gc, GEDevDesc *dd);
 void GEPolyline(int n, double *x, double *y, 
-		int col, double gamma, int lty, double lwd,
-		GEDevDesc *dd);
+		R_GE_gcontext *gc, GEDevDesc *dd);
 void GEPolygon(int n, double *x, double *y, 
-	       int col, int fill, double gamma, int lty, double lwd,
-	       GEDevDesc *dd);
+	       R_GE_gcontext *gc, GEDevDesc *dd);
 void GECircle(double x, double y, double radius,
-	     int col, int fill, double gamma, int lty, double lwd,
-	     GEDevDesc *dd);
+	      R_GE_gcontext *gc, GEDevDesc *dd);
 void GERect(double x0, double y0, double x1, double y1,
-	    int col, int fill, double gamma, int lty, double lwd,
-	    GEDevDesc *dd);
+	    R_GE_gcontext *gc, GEDevDesc *dd);
 void GEText(double x, double y, char *str,
 	    double xc, double yc, double rot,
-	    int col, double gamma, 
-	    char *fontfamily, int fontface, double lineheight,
-	    double cex, double ps,
-	    GEDevDesc *dd);
+	    R_GE_gcontext *gc, GEDevDesc *dd);
 void GEMode(int mode, GEDevDesc* dd);
 void GESymbol(double x, double y, int pch, double size,
-	      int col, int fill, double gamma, double lty, double lwd,
-	      int font, double cex, double ps,
-	      GEDevDesc *dd);
+	      R_GE_gcontext *gc, GEDevDesc *dd);
 void GEPretty(double *lo, double *up, int *ndiv);
-void GEMetricInfo(int c, int font, double cex, double ps,
+void GEMetricInfo(int c, R_GE_gcontext *gc, 
 		  double *ascent, double *descent, double *width,
 		  GEDevDesc *dd);
 double GEStrWidth(char *str, 
-		  char *fontfamily, int fontface, double lineheight,
-		  double cex, double ps, GEDevDesc *dd);
+		  R_GE_gcontext *gc, GEDevDesc *dd);
 double GEStrHeight(char *str, 
-		   char *fontfamily, int fontface, double lineheight,
-		   double cex, double ps, GEDevDesc *dd);
+		  R_GE_gcontext *gc, GEDevDesc *dd);
 
 /* 
  * From plotmath.c 
  */
 double GEExpressionWidth(SEXP expr, 
-			 int font, double cex, double ps,
-			 GEDevDesc *dd);
+			 R_GE_gcontext *gc, GEDevDesc *dd);
 double GEExpressionHeight(SEXP expr, 
-			  int font, double cex, double ps,
-			  GEDevDesc *dd);
+			  R_GE_gcontext *gc, GEDevDesc *dd);
 void GEMathText(double x, double y, SEXP expr,
 		double xc, double yc, double rot, 
-		int col, double gamma, int font, double cex, double ps,
-		GEDevDesc *dd);
+		R_GE_gcontext *gc, GEDevDesc *dd);
 /* 
  * (End from plotmath.c)
  */
@@ -233,40 +253,29 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
  * From vfonts.c
  */
 typedef void (*R_GE_VTextRoutine)(double x, double y, char *s, 
-				 int typeface, int fontindex,
-				 double x_justify, double y_justify, 
-				 double rotation,
-				 int col, double gamma, double lineheight,
-				 double cex, double ps,
-				 GEDevDesc *dd);
+				  double x_justify, double y_justify, 
+				  double rotation,
+				  R_GE_gcontext *gc, GEDevDesc *dd);
 
 typedef double (*R_GE_VStrWidthRoutine)(const unsigned char *s, 
-					int typeface, int fontindex,
-					double lineheight, double cex, 
-					double ps, GEDevDesc *dd);
+					R_GE_gcontext *gc, GEDevDesc *dd);
 
 typedef double (*R_GE_VStrHeightRoutine)(const unsigned char *s, 
-					 int typeface, int fontindex,
-					 double lineheight, double cex, 
-					 double ps, GEDevDesc *dd);
+					 R_GE_gcontext *gc, GEDevDesc *dd);
 
 void R_GE_setVFontRoutines(R_GE_VStrWidthRoutine vwidth, 
 			   R_GE_VStrHeightRoutine vheight, 
 			   R_GE_VTextRoutine vtext);
 
-double R_GE_VStrWidth(const unsigned char *s, int typeface, int fontindex,
-		      double lineheight, double cex, double ps, GEDevDesc *dd);
+double R_GE_VStrWidth(const unsigned char *s, 
+		      R_GE_gcontext *gc, GEDevDesc *dd);
 
-double R_GE_VStrHeight(const unsigned char *s, int typeface, int fontindex,
-		       double lineheight, double cex, double ps, 
-		       GEDevDesc *dd);
+double R_GE_VStrHeight(const unsigned char *s, 
+		       R_GE_gcontext *gc, GEDevDesc *dd);
 
 void R_GE_VText(double x, double y, char *s, 
-		int typeface, int fontindex,
 		double x_justify, double y_justify, double rotation,
-		int col, double gamma, double lineheight,
-		double cex, double ps,
-		GEDevDesc *dd);
+		R_GE_gcontext *gc, GEDevDesc *dd);
 /* 
  * (End from vfonts.c)
  */

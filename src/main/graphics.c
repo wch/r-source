@@ -1775,6 +1775,8 @@ DevDesc *GNewPlot(Rboolean recording)
      * and reset Rf_gpptr(dd)->new to FALSE
      */
     if (!Rf_gpptr(dd)->new) {
+	R_GE_gcontext gc;
+	gcontextFromGP(&gc, dd);
 	Rf_dpptr(dd)->currentFigure += 1;
 	Rf_gpptr(dd)->currentFigure = Rf_dpptr(dd)->currentFigure;
 	if (Rf_gpptr(dd)->currentFigure > Rf_gpptr(dd)->lastFigure) {
@@ -1788,7 +1790,7 @@ DevDesc *GNewPlot(Rboolean recording)
 		}
 		GEinitDisplayList((GEDevDesc*) dd);
 	    }
-	    GENewPage(Rf_dpptr(dd)->bg, Rf_dpptr(dd)->gamma, (GEDevDesc*) dd);
+	    GENewPage(&gc, (GEDevDesc*) dd);
 	    Rf_dpptr(dd)->currentFigure = Rf_gpptr(dd)->currentFigure = 1;
 	}
 
@@ -2416,11 +2418,38 @@ void GForceClip(DevDesc *dd)
     GESetClip(x1, y1, x2, y2, (GEDevDesc*) dd);
 }
 
+/* 
+ * Function to generate an R_GE_gcontext from Rf_gpptr info
+ * 
+ * In some cases, the settings made here will need to be overridden
+ * (eps. the fill setting)
+ */
+void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd) 
+{
+    gc->col = Rf_gpptr(dd)->col;
+    gc->fill = Rf_gpptr(dd)->bg;  /* This may need manual adjusting */
+    gc->gamma = Rf_gpptr(dd)->gamma;
+    gc->lwd = Rf_gpptr(dd)->lwd;
+    gc->lty = Rf_gpptr(dd)->lty;
+    gc->cex = Rf_gpptr(dd)->cex;
+    gc->ps = (double) Rf_gpptr(dd)->ps;
+    /*
+     * FIXME:  Need to add a lineheight par so user can control this
+     */
+    gc->lineheight = 1;
+    gc->fontface = Rf_gpptr(dd)->font;
+    /*
+     * FIXME:  Need to add a fontfamily par so user can control this
+     */
+    gc->fontfamily[0] = '\0';
+}
+
 /* Draw a line. */
 /* If the device canClip, R clips line to device extent and
    device does all other clipping. */
 void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
 {
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
     if (Rf_gpptr(dd)->lty == LTY_BLANK) return;
     /* 
      * Work in device coordinates because that is what the
@@ -2432,10 +2461,7 @@ void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
      * Ensure that the base clipping region is set on the device
      */
     GClip(dd);
-    GELine(x1, y1, x2, y2, 
-	   Rf_gpptr(dd)->col, 
-	   Rf_gpptr(dd)->gamma, Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd, 
-	   (GEDevDesc*) dd);
+    GELine(x1, y1, x2, y2, &gc, (GEDevDesc*) dd);
 }
 
 /* Read the current "pen" position. */
@@ -2455,9 +2481,9 @@ Rboolean GLocator(double *x, double *y, int coords, DevDesc *dd)
 void GMetricInfo(int c, double *ascent, double *descent, double *width,
 		 GUnit units, DevDesc *dd)
 {
-    ((GEDevDesc*) dd)->dev->metricInfo(c & 0xFF, Rf_gpptr(dd)->font,
-				       Rf_gpptr(dd)->cex,
-				       (double) Rf_gpptr(dd)->ps,
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+    ((GEDevDesc*) dd)->dev->metricInfo(c & 0xFF, 
+				       gc.fontface, gc.cex, gc.ps, 
 				       ascent, descent, width,
 				       ((GEDevDesc*) dd)->dev);
     if (units != DEVICE) {
@@ -2706,6 +2732,7 @@ void GPolygon(int n, double *x, double *y, int coords,
     double *xx;
     double *yy;
     char *vmaxsave = vmaxget();
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
 
     if (Rf_gpptr(dd)->lty == LTY_BLANK)
 	fg = NA_INTEGER; /* transparent for the border */
@@ -2727,9 +2754,9 @@ void GPolygon(int n, double *x, double *y, int coords,
      * Ensure that the base clipping region is set on the device
      */
     GClip(dd);
-    GEPolygon(n, xx, yy, fg, bg, 
-	      Rf_gpptr(dd)->gamma, Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd, 
-	      (GEDevDesc*) dd);
+    gc.col = fg;
+    gc.fill = bg;
+    GEPolygon(n, xx, yy, &gc, (GEDevDesc*) dd);
     vmaxset(vmaxsave);
 }
 
@@ -2744,6 +2771,7 @@ void GPolyline(int n, double *x, double *y, int coords, DevDesc *dd)
     double *xx;
     double *yy;
     char *vmaxsave = vmaxget();
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
 
     /* 
      * Work in device coordinates because that is what the
@@ -2762,9 +2790,7 @@ void GPolyline(int n, double *x, double *y, int coords, DevDesc *dd)
      * Ensure that the base clipping region is set on the device
      */
     GClip(dd);
-    GEPolyline(n, xx, yy, Rf_gpptr(dd)->col,
-	       Rf_gpptr(dd)->gamma, Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd, 
-	       (GEDevDesc*) dd);
+    GEPolyline(n, xx, yy, &gc, (GEDevDesc*) dd);
     vmaxset(vmaxsave);
 }
 
@@ -2780,6 +2806,8 @@ void GCircle(double x, double y, int coords,
 	     double radius, int bg, int fg, DevDesc *dd)
 {
     double ir;
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+
     ir = radius/Rf_gpptr(dd)->ipr[0];
     ir = (ir > 0) ? ir : 1;
 
@@ -2795,9 +2823,9 @@ void GCircle(double x, double y, int coords,
      * Ensure that the base clipping region is set on the device
      */
     GClip(dd);
-    GECircle(x, y, ir, fg, bg, 
-	     Rf_gpptr(dd)->gamma, Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd,
-	     (GEDevDesc*) dd);
+    gc.col = fg;
+    gc.fill = bg;
+    GECircle(x, y, ir, &gc, (GEDevDesc*) dd);
 }
 
 /* Draw a rectangle	*/
@@ -2806,6 +2834,8 @@ void GCircle(double x, double y, int coords,
 void GRect(double x0, double y0, double x1, double y1, int coords,
 	   int bg, int fg, DevDesc *dd)
 {
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+
     if (Rf_gpptr(dd)->lty == LTY_BLANK)
 	fg = NA_INTEGER; /* transparent for the border */
 
@@ -2819,22 +2849,17 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
      * Ensure that the base clipping region is set on the device
      */
     GClip(dd);
-    GERect(x0, y0, x1, y1, fg, bg, 
-	     Rf_gpptr(dd)->gamma, Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd,
-	     (GEDevDesc*) dd);
+    gc.col = fg;
+    gc.fill = bg;
+    GERect(x0, y0, x1, y1, &gc, (GEDevDesc*) dd);
 }
 
 /* Compute string width. */
 double GStrWidth(char *str, GUnit units, DevDesc *dd)
 {
     double w;
-    /*
-     * FIXME:  If/When GStrWidth gets passed fontfamily and lineheight
-     * use these instead of "" and 1 below
-     */
-    w = GEStrWidth(str, "", Rf_gpptr(dd)->font, 1, Rf_gpptr(dd)->cex,
-		   (double) Rf_gpptr(dd)->ps,
-		   (GEDevDesc*) dd);
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+    w = GEStrWidth(str, &gc, (GEDevDesc*) dd);
     if (units != DEVICE)
 	w = GConvertXUnits(w, DEVICE, units, dd);
     return w;
@@ -2846,13 +2871,8 @@ double GStrWidth(char *str, GUnit units, DevDesc *dd)
 double GStrHeight(char *str, GUnit units, DevDesc *dd)
 {
     double h;
-    /*
-     * FIXME:  If/When GStrHeight gets passed fontfamily and lineheight
-     * use these instead of "" and 1 below
-     */
-    h = GEStrHeight(str, "", Rf_gpptr(dd)->font, 1, Rf_gpptr(dd)->cex,
-		   (double) Rf_gpptr(dd)->ps,
-		   (GEDevDesc*) dd);
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+    h = GEStrHeight(str, &gc, (GEDevDesc*) dd);
     if (units != DEVICE)
 	h = GConvertYUnits(h, DEVICE, units, dd);
     return h;
@@ -2864,6 +2884,7 @@ double GStrHeight(char *str, GUnit units, DevDesc *dd)
 void GText(double x, double y, int coords, char *str,
 	   double xc, double yc, double rot, DevDesc *dd)
 {
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
     /* 
      * Work in device coordinates because that is what the
      * graphics engine needs.
@@ -2873,15 +2894,7 @@ void GText(double x, double y, int coords, char *str,
      * Ensure that the base clipping region is set on the device
      */
     GClip(dd);
-    GEText(x, y, str, xc, yc, rot, 
-	   Rf_gpptr(dd)->col, Rf_gpptr(dd)->gamma, 
-	   /*
-	    * FIXME:  If/When GStrWidth gets passed fontfamily and lineheight
-	    * use these instead of "" and 1 below
-	    */
-	   "", Rf_gpptr(dd)->font, 1,
-	   Rf_gpptr(dd)->cex, (double) Rf_gpptr(dd)->ps,
-	   (GEDevDesc*) dd);
+    GEText(x, y, str, xc, yc, rot, &gc, (GEDevDesc*) dd);
 }
 
 /*-------------------------------------------------------------------
@@ -3072,6 +3085,7 @@ void GPretty(double *lo, double *up, int *ndiv)
 void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 {
     double size = GConvertYUnits(GSTR_0, INCHES, DEVICE, dd);
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
     /* 
      * Work in device coordinates because that is what the
      * graphics engine needs.
@@ -3081,11 +3095,12 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
      * Ensure that the base clipping region is set on the device
      */
     GClip(dd);    
-    GESymbol(x, y, pch, size, 
-	     Rf_gpptr(dd)->col, Rf_gpptr(dd)->bg, Rf_gpptr(dd)->gamma,
-	     LTY_SOLID, Rf_gpptr(dd)->lwd, Rf_gpptr(dd)->font,
-	     Rf_gpptr(dd)->cex, Rf_gpptr(dd)->ps,
-	     ((GEDevDesc*) dd));
+    /*
+     * Force line type LTY_SOLID
+     * i.e., current par(lty) is ignored when drawing symbols
+     */
+    gc.lty = LTY_SOLID;
+    GESymbol(x, y, pch, size, &gc, ((GEDevDesc*) dd));
 }
 
 

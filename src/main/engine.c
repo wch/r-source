@@ -623,11 +623,10 @@ clipLine(double *x1, double *y1, double *x2, double *y2,
 /* If the device canClip, R clips line to device extent and
    device does all other clipping. */
 void GELine(double x1, double y1, double x2, double y2,
-	    int col, double gamma, int lty, double lwd,
-	    GEDevDesc *dd)
+	    R_GE_gcontext *gc, GEDevDesc *dd)
 {
     Rboolean clip_ok;
-    if (lty == LTY_BLANK) return;
+    if (gc->lty == LTY_BLANK) return;
     if (dd->dev->canClip) {
 	clip_ok = clipLine(&x1, &y1, &x2, &y2, 1, dd);
     }
@@ -635,7 +634,7 @@ void GELine(double x1, double y1, double x2, double y2,
 	clip_ok = clipLine(&x1, &y1, &x2, &y2, 0, dd);
     }
     if (clip_ok)
-	dd->dev->line(x1, y1, x2, y2, col, gamma, lty, lwd, dd->dev);
+	dd->dev->line(x1, y1, x2, y2, gc->col, gc->gamma, gc->lty, gc->lwd, dd->dev);
 }
 
 /****************************************************************
@@ -644,8 +643,7 @@ void GELine(double x1, double y1, double x2, double y2,
  */
 
 static void CScliplines(int n, double *x, double *y,
-			int col, double gamma, int lty, double lwd,
-			int toDevice, GEDevDesc *dd)
+			R_GE_gcontext *gc, int toDevice, GEDevDesc *dd)
 {
     int ind1, ind2;
     /*int firstPoint = 1;*/
@@ -679,7 +677,7 @@ static void CScliplines(int n, double *x, double *y,
 		yy[0] = y1;
 		xx[1] = x2;
 		yy[1] = y2;
-		dd->dev->polyline(2, xx, yy, col, gamma, lty, lwd, dd->dev);
+		dd->dev->polyline(2, xx, yy, gc->col, gc->gamma, gc->lty, gc->lwd, dd->dev);
 	    }
 	    else if (ind1) {
 		xx[0] = x1;
@@ -688,24 +686,24 @@ static void CScliplines(int n, double *x, double *y,
 		yy[1] = y2;
 		count = 2;
 		if (i == n - 1)
-		    dd->dev->polyline(count, xx, yy, col, gamma, 
-				      lty, lwd, dd->dev);
+		    dd->dev->polyline(count, xx, yy, gc->col, gc->gamma, 
+				      gc->lty, gc->lwd, dd->dev);
 	    }
 	    else if (ind2) {
 		xx[count] = x2;
 		yy[count] = y2;
 		count++;
 		if (count > 1)
-		    dd->dev->polyline(count, xx, yy, col, gamma, 
-				      lty, lwd, dd->dev);
+		    dd->dev->polyline(count, xx, yy, gc->col, gc->gamma, 
+				      gc->lty, gc->lwd, dd->dev);
 	    }
 	    else {
 		xx[count] = x2;
 		yy[count] = y2;
 		count++;
 		if (i == n - 1 && count > 1)
-		    dd->dev->polyline(count, xx, yy, col, gamma, 
-				      lty, lwd, dd->dev);
+		    dd->dev->polyline(count, xx, yy, gc->col, gc->gamma, 
+				      gc->lty, gc->lwd, dd->dev);
 	    }
 	}
 	x1 = x[i];
@@ -723,27 +721,26 @@ static void CScliplines(int n, double *x, double *y,
    If clipToDevice = 0, clip according to dd->dev->gp.xpd
    If clipToDevice = 1, clip to the device extent */
 static void clipPolyline(int n, double *x, double *y,
-			 int col, double gamma, int lty, double lwd,
+			 R_GE_gcontext *gc,
 			 int clipToDevice, GEDevDesc *dd)
 {
-    CScliplines(n, x, y, col, gamma, lty, lwd, clipToDevice, dd);
+    CScliplines(n, x, y, gc, clipToDevice, dd);
 }
 
 /* Draw a series of line segments. */
 /* If the device canClip, R clips to the device extent and the device
    does all other clipping */
 void GEPolyline(int n, double *x, double *y,
-		int col, double gamma, int lty, double lwd,
+		R_GE_gcontext *gc,
 		GEDevDesc *dd)
 {
-    if (lty == LTY_BLANK) return;
+    if (gc->lty == LTY_BLANK) return;
     if (dd->dev->canClip) {
-	clipPolyline(n, x, y, col, gamma, 
-		     lty, lwd, 1, dd);  /* clips to device extent
+	clipPolyline(n, x, y, gc, 1, dd);  /* clips to device extent
 						  then draws */
     }
     else
-	clipPolyline(n, x, y, col, gamma, lty, lwd, 0, dd);
+	clipPolyline(n, x, y, gc, 0, dd);
 }
 
 /****************************************************************
@@ -923,13 +920,13 @@ int clipPoly(double *x, double *y, int n, int store, int toDevice,
 }
 
 static void clipPolygon(int n, double *x, double *y,
-			int col, int fill, double gamma, int lty, double lwd,
+			R_GE_gcontext *gc,
                         int toDevice, GEDevDesc *dd)
 {
     double *xc = NULL, *yc = NULL;
     /* if bg not specified then draw as polyline rather than polygon
      * to avoid drawing line along border of clipping region */
-    if (fill == NA_INTEGER) {
+    if (gc->fill == NA_INTEGER) {
 	int i;
 	xc = (double*) R_alloc(n + 1, sizeof(double));
 	yc = (double*) R_alloc(n + 1, sizeof(double));
@@ -939,7 +936,7 @@ static void clipPolygon(int n, double *x, double *y,
 	}
 	xc[n] = x[0];
 	yc[n] = y[0];
-	GEPolyline(n+1, xc, yc, col, gamma, lty, lwd, dd);
+	GEPolyline(n+1, xc, yc, gc, dd);
     }
     else {
 	int npts;
@@ -949,8 +946,8 @@ static void clipPolygon(int n, double *x, double *y,
 	    xc = (double*) R_alloc(npts, sizeof(double));
 	    yc = (double*) R_alloc(npts, sizeof(double));
 	    npts = clipPoly(x, y, n, 1, toDevice, xc, yc, dd);
-	    dd->dev->polygon(npts, xc, yc, col, fill, gamma, 
-			     lty, lwd, dd->dev);
+	    dd->dev->polygon(npts, xc, yc, gc->col, gc->fill, gc->gamma, 
+			     gc->lty, gc->lwd, dd->dev);
 	}
     }
 }
@@ -960,7 +957,7 @@ static void clipPolygon(int n, double *x, double *y,
  ****************************************************************
  */
 void GEPolygon(int n, double *x, double *y,
-	       int col, int fill, double gamma, int lty, double lwd,
+	       R_GE_gcontext *gc,
 	       GEDevDesc *dd)
 {
     /* 
@@ -968,9 +965,9 @@ void GEPolygon(int n, double *x, double *y,
      * after any R_alloc's done by functions I call.
      */
     char *vmaxsave = vmaxget();
-    if (lty == LTY_BLANK)
+    if (gc->lty == LTY_BLANK)
 	/* "transparent" border */
-	col = NA_INTEGER;
+	gc->col = NA_INTEGER;
     if (dd->dev->canClip) {
 	/* 
 	 * If the device can clip, then we just clip to the device
@@ -978,14 +975,14 @@ void GEPolygon(int n, double *x, double *y,
 	 * We do this to avoid problems where writing WAY off the
 	 * device can cause problems for, e.g., ghostview
 	 */
-	clipPolygon(n, x, y, col, fill, gamma, lty, lwd, 1, dd);
+	clipPolygon(n, x, y, gc, 1, dd);
     }
     else
 	/*
 	 * If the device can't clip, we have to do all the clipping
 	 * ourselves.
 	 */
-	clipPolygon(n, x, y, col, fill, gamma, lty, lwd, 0, dd);
+	clipPolygon(n, x, y, gc, 0, dd);
     vmaxset(vmaxsave);
 }
 
@@ -1065,8 +1062,8 @@ static int clipCircleCode(double x, double y, double r,
  ****************************************************************
  */
 void GECircle(double x, double y, double radius,
-	     int col, int fill, double gamma, int lty, double lwd,
-	     GEDevDesc *dd)
+	      R_GE_gcontext *gc,
+	      GEDevDesc *dd)
 {
     char *vmax;
     double *xc, *yc;
@@ -1093,7 +1090,7 @@ void GECircle(double x, double y, double radius,
 	 * boundary so the circle is entirely within the device; the
 	 * device will perform the clipping to the current clipping rect.
 	 */
-	dd->dev->circle(x, y, radius, col, fill, gamma, lty, lwd, dd->dev);
+	dd->dev->circle(x, y, radius, gc->col, gc->fill, gc->gamma, gc->lty, gc->lwd, dd->dev);
 	break;
     case -1: /* Total clipping; draw nothing */
 	/* 
@@ -1117,15 +1114,15 @@ void GECircle(double x, double y, double radius,
 	 * device and just draw a circle.
 	 */
 	if (dd->dev->canClip) {
-	    dd->dev->circle(x, y, radius, col, fill, gamma, lty, lwd, dd->dev);
+	    dd->dev->circle(x, y, radius, gc->col, gc->fill, gc->gamma, gc->lty, gc->lwd, dd->dev);
 	}
 	else {
 	    vmax = vmaxget();
 	    xc = (double*)R_alloc(result+1, sizeof(double));
 	    yc = (double*)R_alloc(result+1, sizeof(double));
 	    convertCircle(x, y, radius, result, xc, yc);
-	    if (fill == NA_INTEGER) {
-		GEPolyline(result+1, xc, yc, col, gamma, lty, lwd, dd);
+	    if (gc->fill == NA_INTEGER) {
+		GEPolyline(result+1, xc, yc, gc, dd);
 	    }
 	    else {
 		int npts;
@@ -1138,8 +1135,7 @@ void GECircle(double x, double y, double radius,
 		    ycc = (double*)R_alloc(npts, sizeof(double));
 		    npts = clipPoly(xc, yc, result, 1, !dd->dev->canClip,
 					xcc, ycc, dd);
-		    dd->dev->polygon(npts, xcc, ycc, col, fill, gamma, 
-				     lty, lwd, dd->dev);
+		    dd->dev->polygon(npts, xcc, ycc, gc, dd->dev);
 		}
 	    }
 	    vmaxset(vmax);
@@ -1185,7 +1181,7 @@ static int clipRectCode(double x0, double y0, double x1, double y1,
 /* Filled with color fill and outlined with color col  */
 /* These may both be NA_INTEGER	 */
 void GERect(double x0, double y0, double x1, double y1,
-	    int col, int fill, double gamma, int lty, double lwd,
+	    R_GE_gcontext *gc,
 	    GEDevDesc *dd)
 {
     char *vmax;
@@ -1200,12 +1196,12 @@ void GERect(double x0, double y0, double x1, double y1,
     case 0:  /* rectangle totally clipped; draw nothing */
 	break;
     case 1:  /* rectangle totally inside;  draw all */
-	dd->dev->rect(x0, y0, x1, y1, col, fill, gamma, 
-		      lty, lwd, dd->dev);
+	dd->dev->rect(x0, y0, x1, y1, gc->col, gc->fill, gc->gamma, 
+		      gc->lty, gc->lwd, dd->dev);
 	break;
     case 2:  /* rectangle intersects clip region;  use polygon clipping */
 	if (dd->dev->canClip)
-	    dd->dev->rect(x0, y0, x1, y1, col, fill, gamma, lty, lwd, dd->dev);
+	    dd->dev->rect(x0, y0, x1, y1, gc->col, gc->fill, gc->gamma, gc->lty, gc->lwd, dd->dev);
 	else {
 	    vmax = vmaxget();
 	    xc = (double*)R_alloc(5, sizeof(double));
@@ -1215,8 +1211,8 @@ void GERect(double x0, double y0, double x1, double y1,
 	    xc[2] = x1; yc[2] = y1;
 	    xc[3] = x1; yc[3] = y0;
 	    xc[4] = x0; yc[4] = y0;
-	    if (fill == NA_INTEGER) {
-		GEPolyline(5, xc, yc, col, gamma, lty, lwd, dd);
+	    if (gc->fill == NA_INTEGER) {
+		GEPolyline(5, xc, yc, gc, dd);
 	    }
 	    else { /* filled rectangle */
 		int npts;
@@ -1227,8 +1223,7 @@ void GERect(double x0, double y0, double x1, double y1,
 		    xcc = (double*)R_alloc(npts, sizeof(double));
 		    ycc = (double*)R_alloc(npts, sizeof(double));
 		    npts = clipPoly(xc, yc, 4, 1, !dd->dev->canClip, xcc, ycc, dd);
-		    dd->dev->polygon(npts, xcc, ycc, col, fill, gamma, 
-				     lty, lwd, dd->dev);
+		    dd->dev->polygon(npts, xcc, ycc, gc, dd->dev);
 		}
 	    }
 	    vmaxset(vmax);
@@ -1254,20 +1249,14 @@ void GERect(double x0, double y0, double x1, double y1,
    2 means intersects clip region */
 static int clipTextCode(double x, double y, char *str,
 			double rot, double hadj,
-			char *fontfamily, int fontface, double lineheight,
-			double cex, double ps,
+			R_GE_gcontext *gc,
 			int toDevice, GEDevDesc *dd)
 {
     double x0, x1, x2, x3, y0, y1, y2, y3, left, right, bottom, top;
     double angle = DEG2RAD * rot;
     double theta1 = M_PI/2 - angle;
-    double width = GEStrWidth(str, 
-			      fontfamily, fontface, lineheight,
-			      cex, ps, dd);
-    double height = GEStrHeight(str, 
-				fontfamily, fontface, 
-				lineheight,
-				cex, ps, dd);
+    double width = GEStrWidth(str, gc, dd);
+    double height = GEStrHeight(str, gc, dd);
 #ifdef HAVE_HYPOT
     double length = hypot(width, height);
 #else
@@ -1292,13 +1281,10 @@ static int clipTextCode(double x, double y, char *str,
 }
 
 static void clipText(double x, double y, char *str, double rot, double hadj,
-		     int col, double gamma, 
-		     char *fontfamily, int fontface, double lineheight,
-		     double cex, double ps,
+		     R_GE_gcontext *gc,
 		     int toDevice, GEDevDesc *dd)
 {
-    int result = clipTextCode(x, y, str, rot, hadj, 
-			      fontfamily, fontface, lineheight, cex, ps,
+    int result = clipTextCode(x, y, str, rot, hadj, gc,
 			      toDevice, dd);
     switch (result) {
     case 0:  /* text totally clipped; draw nothing */
@@ -1310,8 +1296,8 @@ static void clipText(double x, double y, char *str, double rot, double hadj,
 	 * if it wants to.
 	 * NOTE: fontface corresponds to old "font"
 	 */
-	dd->dev->text(x, y, str, rot, hadj, col, gamma, 
-		      fontface, cex, ps, dd->dev);
+	dd->dev->text(x, y, str, rot, hadj, gc->col, gc->gamma, 
+		      gc->fontface, gc->cex, gc->ps, dd->dev);
 	break;
     case 2:  /* text intersects clip region
 		act according to value of clipToDevice */
@@ -1322,8 +1308,8 @@ static void clipText(double x, double y, char *str, double rot, double hadj,
 	     * if it wants to.
 	     * NOTE: fontface corresponds to old "font"
 	     */
-	    dd->dev->text(x, y, str, rot, hadj, col, gamma, 
-			  fontface, cex, ps, dd->dev);
+	    dd->dev->text(x, y, str, rot, hadj, gc->col, gc->gamma, 
+			  gc->fontface, gc->cex, gc->ps, dd->dev);
 	else /* don't draw anything; this could be made less crude :) */
 	    ;
     }
@@ -1403,26 +1389,24 @@ static int VFontFamilyCode(char *fontfamily)
 /* then pass NA_REAL for xc and yc */
 void GEText(double x, double y, char *str,
 	    double xc, double yc, double rot,
-	    int col, double gamma, 
-	    char *fontfamily, int fontface, double lineheight,
-	    double cex, double ps,
+	    R_GE_gcontext *gc,
 	    GEDevDesc *dd)
 {
     /* 
      * If the fontfamily is a Hershey font family, call R_GE_VText
      */
-    int vfontcode = VFontFamilyCode(fontfamily);
+    int vfontcode = VFontFamilyCode(gc->fontfamily);
     if (vfontcode >= 0) {
+	gc->fontfamily[0] = vfontcode;
 	/* 
 	 * R's "font" par has historically made 2=bold and 3=italic
 	 * These must be switched to correspond to Hershey fontfaces
 	 */
-	if (fontface == 2)
-	    fontface = 3;
-	else if (fontface == 3)
-	    fontface = 2;
-	R_GE_VText(x, y, str, vfontcode, fontface,
-		   xc, yc, rot, col, gamma, lineheight, cex, ps, dd);
+	if (gc->fontface == 2)
+	    gc->fontface = 3;
+	else if (gc->fontface == 3)
+	    gc->fontface = 2;
+	R_GE_VText(x, y, str, xc, yc, rot, gc, dd);
 
     } else {
     char *sbuf = NULL;
@@ -1464,8 +1448,9 @@ void GEText(double x, double y, char *str,
 		     * performed using a device call that responds with
 		     * the current font pointsize in device coordinates.
 		     */
-		    yoff = fromDeviceHeight(yoff * cex * dd->dev->cra[1] *
-					    ps/dd->dev->startps,
+		    yoff = fromDeviceHeight(yoff * gc->lineheight * 
+					    gc->cex * dd->dev->cra[1] *
+					    gc->ps/dd->dev->startps,
 					    GE_INCHES, dd);
 		    xoff = - yoff*sin_rot;
 		    yoff = yoff*cos_rot;
@@ -1478,11 +1463,7 @@ void GEText(double x, double y, char *str,
 		/* now determine bottom-left for THIS line */
 		if(xc != 0.0 || yc != 0) {
 		    double width, height;
-		    width = fromDeviceWidth(GEStrWidth(sbuf, 
-						       fontfamily,
-						       fontface,
-						       lineheight,
-						       cex, ps, dd),
+		    width = fromDeviceWidth(GEStrWidth(sbuf, gc, dd),
 					    GE_INCHES, dd);
 		    if (!R_FINITE(xc))
 			xc = 0.5;
@@ -1492,17 +1473,10 @@ void GEText(double x, double y, char *str,
 			/* there is only one line, use GMetricInfo & yc=0.5 */
 			/* Otherwise use GEStrHeight and fiddle yc */
 			double h, d, w;
-			/* 
-			 * FIXME:  Need to pass fontfamily to 
-			 * GEMetricInfo too
-			 */
-			GEMetricInfo(0, fontface, cex, ps, &h, &d, &w, dd);
+			GEMetricInfo(0, gc, &h, &d, &w, dd);
 			if (n>1 || (h==0 && d==0 && w==0)) {
-			    height = fromDeviceHeight(GEStrHeight(sbuf, 
-								  fontfamily,
-								  fontface,
-								  lineheight,
-								  cex, ps, dd),
+			    height = fromDeviceHeight(GEStrHeight(sbuf, gc, 
+								  dd),
 						      GE_INCHES, dd);
 			    yc = dd->dev->yCharOffset;
 			} else {
@@ -1511,12 +1485,8 @@ void GEText(double x, double y, char *str,
 			    char *ss;
 			    int charNum = 0;
 			    for (ss=sbuf; *ss; ss++) {
-				/* 
-				 * FIXME:  Need to pass fontfamily to 
-				 * GEMetricInfo too
-				 */
-				GEMetricInfo((unsigned char) *ss,
-					     fontface, cex, ps, &h, &d, &w, dd);
+				GEMetricInfo((unsigned char) *ss, gc,
+					     &h, &d, &w, dd);
 				h = fromDeviceHeight(h, GE_INCHES, dd);
 				d = fromDeviceHeight(d, GE_INCHES, dd);
 				/* Set maxHeight and maxDepth from height
@@ -1537,11 +1507,8 @@ void GEText(double x, double y, char *str,
 			    yc = 0.5;
 			}
 		    } else {
-			height = fromDeviceHeight(GEStrHeight(sbuf, 
-							      fontfamily,
-							      fontface,
-							      lineheight,
-							      cex, ps, dd),
+			height = fromDeviceHeight(GEStrHeight(sbuf, gc,
+							      dd),
 						  GE_INCHES, dd);
 		    }
 		    if (dd->dev->canHAdj == 2) hadj = xc;
@@ -1563,13 +1530,9 @@ void GEText(double x, double y, char *str,
 		xleft = toDeviceX(xleft, GE_INCHES, dd);
 		ybottom = toDeviceY(ybottom, GE_INCHES, dd);
 		if(dd->dev->canClip) {
-		    clipText(xleft, ybottom, sbuf, rot, hadj,
-			     col, gamma, fontfamily, fontface, lineheight,
-			     cex, ps, 1, dd);
+		    clipText(xleft, ybottom, sbuf, rot, hadj, gc, 1, dd);
 		} else
-		    clipText(xleft, ybottom, sbuf, rot, hadj,
-			     col, gamma, fontfamily, fontface, lineheight,
-			     cex, ps, 0, dd);
+		    clipText(xleft, ybottom, sbuf, rot, hadj, gc, 0, dd);
 		sb = sbuf;
 		i += 1;
 	    }
@@ -1616,13 +1579,8 @@ void GEMode(int mode, GEDevDesc *dd)
  * angles -- in those cases, a conversion to and from GE_INCHES is done
  * to preserve angles.
  */
-/* 
- * FIXME:  Need to pass fontfamily and lineheight to 
- * GESymbol too
- */
 void GESymbol(double x, double y, int pch, double size,
-	      int col, int fill, double gamma, double lty, double lwd,
-	      int font, double cex, double ps,
+	      R_GE_gcontext *gc,
 	      GEDevDesc *dd)
 {
     double r, xc, yc;
@@ -1638,18 +1596,13 @@ void GESymbol(double x, double y, int pch, double size,
 	     * colour (we are not drawing the border AND we are
 	     * not using the current fill colour)
 	     */
-	    GERect(x-.5, y-.5, x+.5, y+.5, NA_INTEGER, col, gamma, 
-		   lty, lwd, dd);
+	    gc->fill = gc->col;
+	    gc->col = NA_INTEGER;
+	    GERect(x-.5, y-.5, x+.5, y+.5, gc, dd);
 	} else {
 	    str[0] = pch;
 	    str[1] = '\0';
-	    GEText(x, y, str, NA_REAL, NA_REAL, 0., col, gamma, 
-		   /* 
-		    * FIXME:  When fontfamily and lineheight are 
-		    * passed to GESymbol, use them here instead
-		    * of "" and 1
-		    */
-		   "", font, 1, cex, ps, dd);
+	    GEText(x, y, str, NA_REAL, NA_REAL, 0., gc, dd);
 	}
     }
     else {
@@ -1660,13 +1613,14 @@ void GESymbol(double x, double y, int pch, double size,
 	case 0: /* S square */
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
-	    GERect(x-xc, y-yc, x+xc, y+yc, 
-		   col, NA_INTEGER, gamma, lty, lwd, dd);
+	    gc->fill = NA_INTEGER;
+	    GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
 	    break;
 
 	case 1: /* S octahedron ( circle) */
 	    xc = RADIUS * size;
-	    GECircle(x, y, xc, col, NA_INTEGER, gamma, lty, lwd, dd);
+	    gc->fill = NA_INTEGER;
+	    GECircle(x, y, xc, gc, dd);
 	    break;
 
 	case 2:	/* S triangle - point up */
@@ -1677,21 +1631,22 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[0] = x; yy[0] = y+r;
 	    xx[1] = x+xc; yy[1] = y-yc;
 	    xx[2] = x-xc; yy[2] = y-yc;
-	    GEPolygon(3, xx, yy, col, NA_INTEGER, gamma, lty, lwd, dd);
+	    gc->fill = NA_INTEGER;
+	    GEPolygon(3, xx, yy, gc, dd);
 	    break;
 
 	case 3: /* S plus */
 	    xc = toDeviceWidth(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
-	    GELine(x-xc, y, x+xc, y, col, gamma, lty, lwd, dd);
-	    GELine(x, y-yc, x, y+yc, col, gamma, lty, lwd, dd);
+	    GELine(x-xc, y, x+xc, y, gc, dd);
+	    GELine(x, y-yc, x, y+yc, gc, dd);
 	    break;
 
 	case 4: /* S times */
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
-	    GELine(x-xc, y-yc, x+xc, y+yc, col, gamma, lty, lwd, dd);
-	    GELine(x-xc, y+yc, x+xc, y-yc, col, gamma, lty, lwd, dd);
+	    GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
+	    GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
 	    break;
 
 	case 5: /* S diamond */
@@ -1701,7 +1656,8 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[1] = x; yy[1] = y+yc;
 	    xx[2] = x+xc; yy[2] = y;
 	    xx[3] = x; yy[3] = y-yc;
-	    GEPolygon(4, xx, yy, col, NA_INTEGER, gamma, lty, lwd, dd);
+	    gc->fill = NA_INTEGER;
+	    GEPolygon(4, xx, yy, gc, dd);
 	    break;
 
 	case 6: /* S triangle - point down */
@@ -1712,47 +1668,50 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[0] = x; yy[0] = y-r;
 	    xx[1] = x+xc; yy[1] = y+yc;
 	    xx[2] = x-xc; yy[2] = y+yc;
-	    GEPolygon(3, xx, yy, col, NA_INTEGER, gamma, lty, lwd, dd);
+	    gc->fill = NA_INTEGER;
+	    GEPolygon(3, xx, yy, gc, dd);
 	    break;
 
 	case 7:	/* S square and times superimposed */
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
-	    GERect(x-xc, y-yc, x+xc, y+yc,
-		   col, NA_INTEGER, gamma, lty, lwd, dd);
-	    GELine(x-xc, y-yc, x+xc, y+yc, col, gamma, lty, lwd, dd);
-	    GELine(x-xc, y+yc, x+xc, y-yc, col, gamma, lty, lwd, dd);
+	    gc->fill = NA_INTEGER;
+	    GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
+	    GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
+	    GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
 	    break;
 
 	case 8: /* S plus and times superimposed */
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
-	    GELine(x-xc, y-yc, x+xc, y+yc, col, gamma, lty, lwd, dd);
-	    GELine(x-xc, y+yc, x+xc, y-yc, col, gamma, lty, lwd, dd);
+	    GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
+	    GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
 	    xc = toDeviceWidth(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(M_SQRT2*RADIUS*GSTR_0, GE_INCHES, dd);
-	    GELine(x-xc, y, x+xc, y, col, gamma, lty, lwd, dd);
-	    GELine(x, y-yc, x, y+yc, col, gamma, lty, lwd, dd);
+	    GELine(x-xc, y, x+xc, y, gc, dd);
+	    GELine(x, y-yc, x, y+yc, gc, dd);
 	    break;
 
 	case 9: /* S diamond and plus superimposed */
 	    xc = toDeviceWidth(M_SQRT2 * RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(M_SQRT2 * RADIUS * GSTR_0, GE_INCHES, dd);
-	    GELine(x-xc, y, x+xc, y, col, gamma, lty, lwd, dd);
-	    GELine(x, y-yc, x, y+yc, col, gamma, lty, lwd, dd);
+	    GELine(x-xc, y, x+xc, y, gc, dd);
+	    GELine(x, y-yc, x, y+yc, gc, dd);
 	    xx[0] = x-xc; yy[0] = y;
 	    xx[1] = x; yy[1] = y+yc;
 	    xx[2] = x+xc; yy[2] = y;
 	    xx[3] = x; yy[3] = y-yc;
-	    GEPolygon(4, xx, yy, col, NA_INTEGER, gamma, lty, lwd, dd);
+	    gc->fill = NA_INTEGER;
+	    GEPolygon(4, xx, yy, gc, dd);
 	    break;
 
 	case 10: /* S hexagon (circle) and plus superimposed */
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
-	    GECircle(x, y, xc, col, NA_INTEGER, gamma, lty, lwd, dd);
-	    GELine(x-xc, y, x+xc, y, col, gamma, lty, lwd, dd);
-	    GELine(x, y-yc, x, y+yc, col, gamma, lty, lwd, dd);
+	    gc->fill = NA_INTEGER;
+	    GECircle(x, y, xc, gc, dd);
+	    GELine(x-xc, y, x+xc, y, gc, dd);
+	    GELine(x, y-yc, x, y+yc, gc, dd);
 	    break;
 
 	case 11: /* S superimposed triangles */
@@ -1764,29 +1723,31 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[0] = x; yy[0] = y-r;
 	    xx[1] = x+xc; yy[1] = y+yc;
 	    xx[2] = x-xc; yy[2] = y+yc;
-	    GEPolygon(3, xx, yy, col, NA_INTEGER, gamma, lty, lwd, dd);
+	    gc->fill = NA_INTEGER;
+	    GEPolygon(3, xx, yy, gc, dd);
 	    xx[0] = x; yy[0] = y+r;
 	    xx[1] = x+xc; yy[1] = y-yc;
 	    xx[2] = x-xc; yy[2] = y-yc;
-	    GEPolygon(3, xx, yy, col, NA_INTEGER, gamma, lty, lwd, dd);
+	    GEPolygon(3, xx, yy, gc, dd);
 	    break;
 
 	case 12: /* S square and plus superimposed */
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
-	    GELine(x-xc, y, x+xc, y, col, gamma, lty, lwd, dd);
-	    GELine(x, y-yc, x, y+yc, col, gamma, lty, lwd, dd);
-	    GERect(x-xc, y-yc, x+xc, y+yc,
-		   col, NA_INTEGER, gamma, lty, lwd, dd);
+	    GELine(x-xc, y, x+xc, y, gc, dd);
+	    GELine(x, y-yc, x, y+yc, gc, dd);
+	    gc->fill = NA_INTEGER;
+	    GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
 	    break;
 
 	case 13: /* S octagon (circle) and times superimposed */
 	    xc = RADIUS * size;
-	    GECircle(x, y, xc, col, NA_INTEGER, gamma, lty, lwd, dd);
+	    gc->fill = NA_INTEGER;
+	    GECircle(x, y, xc, gc, dd);
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
-	    GELine(x-xc, y-yc, x+xc, y+yc, col, gamma, lty, lwd, dd);
-	    GELine(x-xc, y+yc, x+xc, y-yc, col, gamma, lty, lwd, dd);
+	    GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
+	    GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
 	    break;
 
 	case 14: /* S square and point-up triangle superimposed */
@@ -1794,9 +1755,9 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[0] = x; yy[0] = y+xc;
 	    xx[1] = x+xc; yy[1] = y-xc;
 	    xx[2] = x-xc; yy[2] = y-xc;
-	    GEPolygon(3, xx, yy, col, NA_INTEGER, gamma, lty, lwd, dd);
-	    GERect(x-xc, y-xc, x+xc, y+xc, col, 
-		   NA_INTEGER, gamma, lty, lwd, dd);
+	    gc->fill = NA_INTEGER;
+	    GEPolygon(3, xx, yy, gc, dd);
+	    GERect(x-xc, y-xc, x+xc, y+xc, gc, dd);
 	    break;
 
 	case 15: /* S filled square */
@@ -1806,12 +1767,15 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[1] = x+xc; yy[1] = y-yc;
 	    xx[2] = x+xc; yy[2] = y+yc;
 	    xx[3] = x-xc; yy[3] = y+yc;
-	    GEPolygon(4, xx, yy, NA_INTEGER, col, gamma, lty, lwd, dd);
+	    gc->fill = gc->col;
+	    gc->col = NA_INTEGER;
+	    GEPolygon(4, xx, yy, gc, dd);
 	    break;
 
 	case 16: /* S filled octagon (circle) */
 	    xc = RADIUS * size;
-	    GECircle(x, y, xc, col, col, gamma, lty, lwd, dd);
+	    gc->fill = gc->col;
+	    GECircle(x, y, xc, gc, dd);
 	    break;
 
 	case 17: /* S filled point-up triangle */
@@ -1822,7 +1786,9 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[0] = x; yy[0] = y+r;
 	    xx[1] = x+xc; yy[1] = y-yc;
 	    xx[2] = x-xc; yy[2] = y-yc;
-	    GEPolygon(3, xx, yy, NA_INTEGER, col, gamma, lty, lwd, dd);
+	    gc->fill = gc->col;
+	    gc->col = NA_INTEGER;
+	    GEPolygon(3, xx, yy, gc, dd);
 	    break;
 
 	case 18: /* S filled diamond */
@@ -1832,30 +1798,34 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[1] = x; yy[1] = y+yc;
 	    xx[2] = x+xc; yy[2] = y;
 	    xx[3] = x; yy[3] = y-yc;
-	    GEPolygon(4, xx, yy, NA_INTEGER, col, gamma, lty, lwd, dd);
+	    gc->fill = gc->col;
+	    gc->col = NA_INTEGER;
+	    GEPolygon(4, xx, yy, gc, dd);
 	    break;
 
 	case 19: /* R filled circle */
 	    xc = RADIUS * size;
-	    GECircle(x, y, xc, col, col, gamma, lty, lwd, dd);
+	    gc->fill = gc->col;
+	    GECircle(x, y, xc, gc, dd);
 	    break;
 
 
 	case 20: /* R `Dot' (small circle) */
 	    xc = SMALL * size;
-	    GECircle(x, y, xc, col, col, gamma, lty, lwd, dd);
+	    gc->fill = gc->col;
+	    GECircle(x, y, xc, gc, dd);
 	    break;
 
 
 	case 21: /* circles */
 	    xc = RADIUS * size;
-	    GECircle(x, y, xc, col, fill, gamma, lty, lwd, dd);
+	    GECircle(x, y, xc, gc, dd);
 	    break;
 
 	case  22: /* squares */
 	    xc = toDeviceWidth(RADIUS * SQRC * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * SQRC * GSTR_0, GE_INCHES, dd);
-	    GERect(x-xc, y-yc, x+xc, y+yc, col, fill, gamma, lty, lwd, dd);
+	    GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
 	    break;
 
 	case 23: /* diamonds */
@@ -1865,7 +1835,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[1] = x+xc; yy[1] = y;
 	    xx[2] = x	  ; yy[2] = y+yc;
 	    xx[3] = x-xc; yy[3] = y;
-	    GEPolygon(4, xx, yy, col, fill, gamma, lty, lwd, dd);
+	    GEPolygon(4, xx, yy, gc, dd);
 	    break;
 
 	case 24: /* triangle (point up) */
@@ -1876,7 +1846,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[0] = x; yy[0] = y+r;
 	    xx[1] = x+xc; yy[1] = y-yc;
 	    xx[2] = x-xc; yy[2] = y-yc;
-	    GEPolygon(3, xx, yy, col, fill, gamma, lty, lwd, dd);
+	    GEPolygon(3, xx, yy, gc, dd);
 	    break;
 
 	case 25: /* triangle (point down) */
@@ -1887,7 +1857,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[0] = x; yy[0] = y-r;
 	    xx[1] = x+xc; yy[1] = y+yc;
 	    xx[2] = x-xc; yy[2] = y+yc;
-	    GEPolygon(3, xx, yy, col, fill, gamma, lty, lwd, dd);
+	    GEPolygon(3, xx, yy, gc, dd);
 	    break;
 	}
     }
@@ -1963,15 +1933,12 @@ void GEPretty(double *lo, double *up, int *ndiv)
  * GEMetricInfo
  ****************************************************************
  */
-/* 
- * FIXME:  Need to pass fontfamily to 
- * GEMetricInfo too
- */
-void GEMetricInfo(int c, int font, double cex, double ps,
+void GEMetricInfo(int c, 
+		  R_GE_gcontext *gc,
 		  double *ascent, double *descent, double *width,
 		  GEDevDesc *dd)
 {
-    dd->dev->metricInfo(c & 0xFF, font, cex, ps, ascent, descent, width,
+    dd->dev->metricInfo(c & 0xFF, gc->fontface, gc->cex, gc->ps, ascent, descent, width,
 			dd->dev);
 }
 
@@ -1980,25 +1947,24 @@ void GEMetricInfo(int c, int font, double cex, double ps,
  ****************************************************************
  */
 double GEStrWidth(char *str, 
-		  char *fontfamily, int fontface, double lineheight,
-		  double cex, double ps, GEDevDesc *dd)
+		  R_GE_gcontext *gc,
+		  GEDevDesc *dd)
 {
     /* 
      * If the fontfamily is a Hershey font family, call R_GE_VStrWidth
      */
-    int vfontcode = VFontFamilyCode(fontfamily);
+    int vfontcode = VFontFamilyCode(gc->fontfamily);
     if (vfontcode >= 0) {
+	gc->fontfamily[0] = vfontcode;
 	/* 
 	 * R's "font" par has historically made 2=bold and 3=italic
 	 * These must be switched to correspond to Hershey fontfaces
 	 */
-	if (fontface == 2)
-	    fontface = 3;
-	else if (fontface == 3)
-	    fontface = 2;
-	return R_GE_VStrWidth((unsigned char *) str, 
-			      vfontcode, fontface, lineheight,
-			      cex, ps, dd);
+	if (gc->fontface == 2)
+	    gc->fontface = 3;
+	else if (gc->fontface == 3)
+	    gc->fontface = 2;
+	return R_GE_VStrWidth((unsigned char *) str, gc, dd);
     } else {
 	double w;
 	char *sbuf = NULL;
@@ -2017,8 +1983,8 @@ double GEStrWidth(char *str,
 		     * if it wants to.
 		     * NOTE: fontface corresponds to old "font"
 		     */
-		    wdash = dd->dev->strWidth(sbuf, fontface, 
-					      cex, ps, dd->dev);
+		    wdash = dd->dev->strWidth(sbuf, gc->fontface, 
+					      gc->cex, gc->ps, dd->dev);
 		    if (wdash > w) w = wdash;
 		    sb = sbuf;
 		}
@@ -2035,25 +2001,24 @@ double GEStrWidth(char *str,
  ****************************************************************
  */
 double GEStrHeight(char *str, 
-		   char *fontfamily, int fontface, double lineheight,
-		   double cex, double ps, GEDevDesc *dd)
+		   R_GE_gcontext *gc,
+		   GEDevDesc *dd)
 {
     /* 
      * If the fontfamily is a Hershey font family, call R_GE_VStrHeight
      */
-    int vfontcode = VFontFamilyCode(fontfamily);
+    int vfontcode = VFontFamilyCode(gc->fontfamily);
     if (vfontcode >= 0) {
+	gc->fontfamily[0] = vfontcode;
 	/* 
 	 * R's "font" par has historically made 2=bold and 3=italic
 	 * These must be switched to correspond to Hershey fontfaces
 	 */
-	if (fontface == 2)
-	    fontface = 3;
-	else if (fontface == 3)
-	    fontface = 2;
-	return R_GE_VStrHeight((unsigned char *) str, 
-			       vfontcode, fontface, lineheight,
-			       cex, ps, dd);
+	if (gc->fontface == 2)
+	    gc->fontface = 3;
+	else if (gc->fontface == 3)
+	    gc->fontface = 2;
+	return R_GE_VStrHeight((unsigned char *) str, gc, dd);
     } else {
 	double h;
 	char *s;
@@ -2071,19 +2036,13 @@ double GEStrHeight(char *str,
 	 * performed using a device call that responds with
 	 * the current font pointsize in device coordinates.
 	 */
-	/* 
-	 * FIXME:  make use of lineheight passed in !
-	 * May need to wait until cra has been dealt to.
-	 */
-	h = n * cex * dd->dev->cra[1] * ps/dd->dev->startps;
+	h = n * gc->lineheight * gc->cex * dd->dev->cra[1] * 
+	    gc->ps/dd->dev->startps;
 	/* Add in the ascent of the font, if available */
-	/* 
-	 * FIXME:  Need to pass fontfamily to 
-	 * GEMetricInfo too
-	 */
-	GEMetricInfo('M', fontface, cex, ps, &asc, &dsc, &wid, dd);
+	GEMetricInfo('M', gc, &asc, &dsc, &wid, dd);
 	if ((asc == 0.0) && (dsc == 0.0) && (wid == 0.0))
-	    asc = cex * dd->dev->cra[1] * ps/dd->dev->startps;
+	    asc = gc->lineheight * gc->cex * dd->dev->cra[1] * 
+		gc->ps/dd->dev->startps;
 	h += asc;
 	return h;
     }
@@ -2094,9 +2053,9 @@ double GEStrHeight(char *str,
  ****************************************************************
  */
 
-void GENewPage(int fill, double gamma, GEDevDesc *dd)
+void GENewPage(R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    dd->dev->newPage(fill, gamma, dd->dev);
+    dd->dev->newPage(gc->fill, gc->gamma, dd->dev);
 }
 
 /****************************************************************

@@ -239,7 +239,7 @@ SEXP doSetViewport(SEXP vp,
 	    LViewportContext vpc;
 	    double vpWidthCM = REAL(viewportWidthCM(vp))[0];
 	    double vpHeightCM = REAL(viewportHeightCM(vp))[0];
-	    LGContext gc;
+	    R_GE_gcontext gc;
 	    LTransform transform;
 	    for (i=0; i<3; i++)
 		for (j=0; j<3; j++)
@@ -851,15 +851,13 @@ SEXP L_newpagerecording(SEXP ask)
 SEXP L_newpage()
 {
     GEDevDesc *dd = getDevice();
+    R_GE_gcontext gc;
     if (!LOGICAL(gridStateElement(dd, GSS_GRIDDEVICE))[0]) 
 	dirtyGridDevice(dd);
     else {
 	SEXP currentgp = gridStateElement(dd, GSS_GPAR);
-	SEXP fill = gpFillSXP(currentgp);
-	if (isNull(fill))
-	    GENewPage(NA_INTEGER, gpGamma(currentgp, 0), dd);
-	else
-	    GENewPage(RGBpar(fill, 0), gpGamma(currentgp, 0), dd);
+	gcontextFromgpar(currentgp, 0, &gc);
+	GENewPage(&gc, dd);
     }
     return R_NilValue;
 }
@@ -945,7 +943,7 @@ SEXP L_convert(SEXP x, SEXP whatfrom,
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     LViewportContext vpc;
-    LGContext gc;
+    R_GE_gcontext gc;
     LTransform transform;
     SEXP currentvp, currentgp;
     /* 
@@ -1142,7 +1140,7 @@ SEXP L_moveTo(SEXP x, SEXP y)
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     LViewportContext vpc;
-    LGContext gc;
+    R_GE_gcontext gc;
     LTransform transform;
     SEXP devloc, prevloc;
     SEXP currentvp, currentgp;
@@ -1178,7 +1176,7 @@ SEXP L_lineTo(SEXP x, SEXP y)
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     LViewportContext vpc;
-    LGContext gc;
+    R_GE_gcontext gc;
     LTransform transform;
     SEXP devloc, prevloc;
     SEXP currentvp, currentgp;
@@ -1211,10 +1209,7 @@ SEXP L_lineTo(SEXP x, SEXP y)
     GEMode(1, dd);
     GELine(toDeviceX(REAL(prevloc)[0], GE_INCHES, dd), 
 	   toDeviceY(REAL(prevloc)[1], GE_INCHES, dd), 
-	   xx, yy, 
-	   gpCol(currentgp, 0), gpGamma(currentgp, 0),
-	   gpLineType(currentgp, 0), gpLineWidth(currentgp, 0), 
-	   dd);
+	   xx, yy, &gc, dd);
     GEMode(0, dd);
     UNPROTECT(2);
     return R_NilValue;
@@ -1230,7 +1225,7 @@ SEXP L_lines(SEXP x, SEXP y)
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     LViewportContext vpc;
-    LGContext gc;
+    R_GE_gcontext gc;
     LTransform transform;
     SEXP currentvp, currentgp;
     /* Get the current device 
@@ -1264,10 +1259,7 @@ SEXP L_lines(SEXP x, SEXP y)
     /* FIXME:  Need to check for NaN's and NA's
      */
     GEMode(1, dd);
-    GEPolyline(nx, xx, yy, 
-	       gpCol(currentgp, 0), gpGamma(currentgp, 0),
-	       gpLineType(currentgp, 0), gpLineWidth(currentgp, 0), 
-	       dd);
+    GEPolyline(nx, xx, yy, &gc, dd);
     GEMode(0, dd);
     return R_NilValue;
 }
@@ -1278,7 +1270,7 @@ SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1)
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     LViewportContext vpc;
-    LGContext gc;
+    R_GE_gcontext gc;
     LTransform transform;
     SEXP currentvp, currentgp;
     /* Get the current device 
@@ -1319,31 +1311,21 @@ SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1)
 	yy0 = toDeviceY(yy0, GE_INCHES, dd);
 	xx1 = toDeviceX(xx1, GE_INCHES, dd);
 	yy1 = toDeviceY(yy1, GE_INCHES, dd);
-	GELine(xx0, yy0, xx1, yy1, 
-	       gpCol(currentgp, i), gpGamma(currentgp, i),
-	       gpLineType(currentgp, i), gpLineWidth(currentgp, i),
-	       dd);
+	GELine(xx0, yy0, xx1, yy1, &gc, dd);
     }
     GEMode(0, dd);
     return R_NilValue;
 }
 
 static void drawArrow(double *x, double *y, int type, 
-		      SEXP currentgp, int i, GEDevDesc *dd) 
+		      R_GE_gcontext *gc, int i, GEDevDesc *dd) 
 {
     switch (type) {
     case 1:
-	GEPolyline(3, x, y,
-		   gpCol(currentgp, i), gpGamma(currentgp, i),
-		   gpLineType(currentgp, i), gpLineWidth(currentgp, i),
-		   dd);
+	GEPolyline(3, x, y, gc, dd);
 	break;
     case 2:
-	GEPolygon(3, x, y,
-		  gpCol(currentgp, i), gpFill(currentgp, i), 
-		  gpGamma(currentgp, i),
-		  gpLineType(currentgp, i), gpLineWidth(currentgp, i),
-		  dd);
+	GEPolygon(3, x, y, gc, dd);
 	break;
     }
 }
@@ -1404,7 +1386,7 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
     double rotationAngle;
     Rboolean first, last;
     LViewportContext vpc;
-    LGContext gc;
+    R_GE_gcontext gc;
     LTransform transform;
     SEXP currentvp, currentgp;
     SEXP devloc = R_NilValue; /* -Wall */
@@ -1485,7 +1467,7 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
 				 GE_INCHES, dd);
 	    verty[2] = toDeviceY(yy1 + l * sin(rot-a),
 				 GE_INCHES, dd);
-	    drawArrow(vertx, verty, t, currentgp, i, dd);
+	    drawArrow(vertx, verty, t, &gc, i, dd);
 	}
 	if (last) {
 	    if (isNull(x1)) {
@@ -1513,7 +1495,7 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
 				 GE_INCHES, dd);
 	    verty[2] = toDeviceY(yyn + l * sin(rot-a),
 				 GE_INCHES, dd);
-	    drawArrow(vertx, verty, t, currentgp, i, dd);
+	    drawArrow(vertx, verty, t, &gc, i, dd);
 	}
 	if (isNull(x1))
 	    UNPROTECT(1);
@@ -1529,7 +1511,7 @@ SEXP L_polygon(SEXP x, SEXP y, SEXP index)
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     LViewportContext vpc;
-    LGContext gc;
+    R_GE_gcontext gc;
     LTransform transform;
     SEXP currentvp, currentgp;
     /* Get the current device 
@@ -1573,11 +1555,7 @@ SEXP L_polygon(SEXP x, SEXP y, SEXP index)
 	}
 	/* FIXME:  Need to check for NaN's and NA's
 	 */
-	GEPolygon(nx, xx, yy, 
-		  gpCol(currentgp, i), gpFill(currentgp, i), 
-		  gpGamma(currentgp, i),
-		  gpLineType(currentgp, i), gpLineWidth(currentgp, i),
-		  dd);
+	GEPolygon(nx, xx, yy, &gc, dd);
 	vmaxset(vmax);
     }
     GEMode(0, dd);
@@ -1591,7 +1569,7 @@ SEXP L_circle(SEXP x, SEXP y, SEXP r)
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     LViewportContext vpc;
-    LGContext gc;
+    R_GE_gcontext gc;
     LTransform transform;
     SEXP currentvp, currentgp;
     /* Get the current device 
@@ -1631,10 +1609,7 @@ SEXP L_circle(SEXP x, SEXP y, SEXP r)
 	 */
 	xx = toDeviceX(xx, GE_INCHES, dd);
 	yy = toDeviceY(yy, GE_INCHES, dd);
-	GECircle(xx, yy, rr, 
-		gpCol(currentgp, i), gpFill(currentgp, i), gpGamma(currentgp, i),
-		gpLineType(currentgp, i), gpLineWidth(currentgp, i),
-		dd);
+	GECircle(xx, yy, rr, &gc, dd);
     }
     GEMode(0, dd);
     return R_NilValue;
@@ -1650,7 +1625,7 @@ SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just)
     double rotationAngle;
     int i, nx;
     LViewportContext vpc;
-    LGContext gc;
+    R_GE_gcontext gc;
     LTransform transform;
     SEXP currentvp, currentgp;
     /* Get the current device 
@@ -1694,10 +1669,7 @@ SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just)
 	    yy = toDeviceY(yy, GE_INCHES, dd);
 	    ww = toDeviceWidth(ww, GE_INCHES, dd);
 	    hh = toDeviceHeight(hh, GE_INCHES, dd);
-	    GERect(xx, yy, xx + ww, yy + hh, 
-		   gpCol(currentgp, i), gpFill(currentgp, i), gpGamma(currentgp, i),
-		   gpLineType(currentgp, i), gpLineWidth(currentgp, i),
-		   dd);
+	    GERect(xx, yy, xx + ww, yy + hh, &gc, dd);
 	} else {
 	    /* We have to do a little bit of work to figure out where the 
 	     * corners of the rectangle are.
@@ -1706,6 +1678,7 @@ SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just)
 	    double dw, dh;
 	    SEXP temp = unit(0, L_INCHES);
 	    SEXP www, hhh;
+	    int tmpcol;
 	    /* Find bottom-left location */
 	    justification(ww, hh, INTEGER(just)[0], INTEGER(just)[1], 
 			  &xadj, &yadj);
@@ -1760,14 +1733,12 @@ SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just)
 	    /* Do separate fill and border to avoid border being 
 	     * drawn on clipping boundary when there is a fill
 	     */
-	    GEPolygon(5, xxx, yyy, 
-		      NA_INTEGER, gpFill(currentgp, i), gpGamma(currentgp, i),
-		      gpLineType(currentgp, i), gpLineWidth(currentgp, i),
-		      dd);
-	    GEPolygon(5, xxx, yyy, 
-		      gpCol(currentgp, i), NA_INTEGER, gpGamma(currentgp, i),
-		      gpLineType(currentgp, i), gpLineWidth(currentgp, i),
-		      dd);
+	    tmpcol = gc.col;
+	    gc.col = NA_INTEGER;
+	    GEPolygon(5, xxx, yyy, &gc, dd);
+	    gc.col = tmpcol;
+	    gc.fill = NA_INTEGER;
+	    GEPolygon(5, xxx, yyy, &gc, dd);
 	}
     }
     GEMode(0, dd);
@@ -1783,7 +1754,7 @@ SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP just,
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     LViewportContext vpc;
-    LGContext gc;
+    R_GE_gcontext gc;
     LTransform transform;
     SEXP txt;
     /* 
@@ -1836,15 +1807,11 @@ SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP just,
 	GEMode(1, dd);
 	for (i=0; i<nx; i++) {
 	    int doDrawing = 1;
+	    gcontextFromgpar(currentgp, i, &gc);
 	    if (overlapChecking) {
 		int j = 0;
 		LRect trect;
-		textRect(xx[i], yy[i], txt, i, 
-			 gpFontFamily(currentgp, i),
-			 gpFont(currentgp, i),
-			 gpLineHeight(currentgp, i),
-			 gpCex(currentgp, i),
-			 gpFontSize(currentgp, i),
+		textRect(xx[i], yy[i], txt, i, &gc,
 			 hjust, vjust, 
 			 numeric(rot, i % LENGTH(rot)) + rotationAngle, 
 			 dd, &trect);
@@ -1863,25 +1830,19 @@ SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP just,
 		 */
 		xx[i] = toDeviceX(xx[i], GE_INCHES, dd);
 		yy[i] = toDeviceY(yy[i], GE_INCHES, dd);
+		gcontextFromgpar(currentgp, i, &gc);
 		if (isExpression(txt))
 		    GEMathText(xx[i], yy[i],
 			       VECTOR_ELT(txt, i % LENGTH(txt)),
 			       hjust, vjust, 
 			       numeric(rot, i % LENGTH(rot)) + rotationAngle, 
-			       gpCol(currentgp, i), gpGamma(currentgp, i), 
-			       gpFont(currentgp, i),
-			       gpCex(currentgp, i), gpFontSize(currentgp, i),
-			       dd);
+			       &gc, dd);
 		else
 		    GEText(xx[i], yy[i], 
 			   CHAR(STRING_ELT(txt, i % LENGTH(txt))), 
 			   hjust, vjust, 
 			   numeric(rot, i % LENGTH(rot)) + rotationAngle, 
-			   gpCol(currentgp, i), gpGamma(currentgp, i), 
-			   gpFontFamily(currentgp, i), gpFont(currentgp, i),
-			   gpLineHeight(currentgp, i),
-			   gpCex(currentgp, i), gpFontSize(currentgp, i),
-			   dd);
+			   &gc, dd);
 	    }
 	}
 	GEMode(0, dd);
@@ -1899,7 +1860,7 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
     double rotationAngle;
     double symbolSize;
     LViewportContext vpc;
-    LGContext gc;
+    R_GE_gcontext gc;
     LTransform transform;
     SEXP currentvp, currentgp;
     /* Get the current device 
@@ -1945,13 +1906,7 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 		ipch = CHAR(STRING_ELT(pch, i % npch))[0];
 	    else
 		ipch = INTEGER(pch)[i % npch];
-	    GESymbol(xx[i], yy[i], ipch, symbolSize,
-		     gpCol(currentgp, i), gpFill(currentgp, i), 
-		     gpGamma(currentgp, i),
-		     gpLineType(currentgp, i), gpLineWidth(currentgp, i),
-		     gpFont(currentgp, i), gpCex(currentgp, i), 
-		     gpFontSize(currentgp, i),
-		     dd);
+	    GESymbol(xx[i], yy[i], ipch, symbolSize, &gc, dd);
 	}
     GEMode(0, dd);
     return R_NilValue;

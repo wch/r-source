@@ -402,6 +402,11 @@ double R_Log10(double);
 #include <R_ext/GraphicsEngine.h>
 #include <R_ext/GraphicsBase.h>
 
+/* 
+ * Function to generate an R_GE_gcontext from Rf_gpptr info
+ */
+void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd);
+
 /* FIXME: Make this a macro to avoid function call overhead?
  */
 GPar* Rf_gpptr(DevDesc *dd);
