@@ -885,6 +885,14 @@ d <- data.frame(1:10)
 d > list(5)
 ## failed in 1.5.1
 
+## order(na.last = NA) (PR#1913 / 1906)
+x <- 1
+order(x, na.last=NA)
+order(x, x, x, na.last=NA)
+## failed in 1.5.1, since sapply simplified to a scalar.
+order(c(1,2,3,NA), na.last=NA, decreasing=TRUE)
+## ignored `decreasing' in 1.5.1
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

@@ -360,7 +360,7 @@ BUG FIXES
     o	lqs() and cov.rob() check that the quantile argument does not
 	exceeed n-1.
 
-    o	order(x, na.last=NA) failed if x was of length 1. (PR#1913)
+    o	order(na.last=NA) failed if all args were of length 1. (PR#1913)
 
 
 		CHANGES IN R VERSION 1.5.1
