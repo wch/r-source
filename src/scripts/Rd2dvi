@@ -27,7 +27,7 @@ equals the basename of argument 'files' if this specifies a package
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print version info and exit
+  -v, --version		print Rd2dvi version info and exit
       --batch		no interaction
       --debug		turn on shell debugging (set -x)
       --no-clean	do not remove created temporary files

@@ -1604,7 +1604,7 @@ successfully.
 
 Options:
   -h, --help            print short help message and exit
-  -v, --version         print version info and exit
+  -v, --version         print 'check' version info and exit
   -l, --library=LIB     library directory used for test installation
                         of packages (default is outdir)
   -o, --outdir=DIR      directory used for logfiles, R output, etc.

@@ -38,7 +38,7 @@ Convert S documentation in FILE to R documentation format.
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print version info and exit
+  -v, --version		print Sd2Rd version info and exit
   -n			render examples non-executable by wrapping them
 			into a \\dontrun{} environment
   -x			(S3 docs) interpret all single-quoted names 

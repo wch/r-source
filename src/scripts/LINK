@@ -19,7 +19,7 @@ must contain '-lR' but need not specify its library path.
 
 Options:
   -h, --help            print short help message and exit
-  -v, --version         print version info and exit
+  -v, --version         print LINK version info and exit
 
 Currently only is useful when creating executables, and only works if
 the C compiler is used for linking.  If FORTRAN code is to be linked, it

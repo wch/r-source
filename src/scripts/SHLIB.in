@@ -21,7 +21,7 @@ first file.
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print version info and exit
+  -v, --version		print SHLIB version info and exit
   -o, --output=LIB	use LIB as (full) name for the built library
 
 Report bugs to <r-bugs@r-project.org>."

@@ -20,7 +20,7 @@ default R library tree (${R_HOME}/library) otherwise.
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print version info and exit
+  -v, --version		print REMOVE version info and exit
   -l, --library=LIB	remove packages from library tree LIB
 
 Report bugs to <r-bugs@r-project.org>."

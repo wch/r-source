@@ -539,7 +539,7 @@ pkgdirs.
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print version info and exit
+  -v, --version		print 'build' version info and exit
 
   --force               force overwriting of INDEX file
   --no-vignettes        do not rebuild package vignettes

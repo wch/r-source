@@ -24,7 +24,7 @@ default R library tree (${R_HOME}/library) otherwise.
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print version info and exit
+  -v, --version		print INSTALL version info and exit
       --configure-args=ARGS
                         set arguments for the package's configure script
 			(if any)

@@ -93,7 +93,7 @@ HTML or LaTeX.
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print version info and exit
+  -v, --version		print Rdconv version info and exit
   -d, --debug		turn on debugging (increase verbosity)
   -t, --type=TYPE	convert to format TYPE
   -o, --output=OUT	use 'OUT' as the output file
