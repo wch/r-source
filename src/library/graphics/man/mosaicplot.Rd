@@ -15,7 +15,7 @@ mosaicplot(x, \dots)
                    type = c("pearson", "deviance", "FT"), \dots)
 
 \method{mosaicplot}{formula}(formula, data = NULL, \dots,
-          main = deparse(substitute(data)), subset)
+          main = deparse(substitute(data)), subset, na.action = na.omit)
 }
 \arguments{
   \item{x}{a contingency table in array form, with optional category
@@ -64,11 +64,17 @@ mosaicplot(x, \dots)
   \item{\dots}{further arguments to be passed to or from methods.}
   \item{subset}{an optional vector specifying a subset of observations
     in the data frame to be used for plotting.}
+  \item{na.action}{a function which indicates what should happen
+    when the data contains variables to be cross-tabulated, and these
+    variables contain \code{NA}s.  The default is to omit cases which
+    have an \code{NA} in any variable.  Since the tabulation will omit
+    all cases containing missing values, this will only be useful if the
+    \code{na.action} function replaces missing values.}
 }
 \details{
   This is a generic function.  It currently has a default method
-  (\code{\link{mosaicplot.default}}) and a formula interface
-  (\code{\link{mosaicplot.formula}}).
+  (\code{mosaicplot.default}) and a formula interface
+  (\code{mosaicplot.formula}).
 
   Extended mosaic displays show the standardized residuals of a
   loglinear model of the counts from by the color and outline of the
@@ -96,8 +102,8 @@ mosaicplot(x, \dots)
   See Emerson (1998) for more information and a case study with
   television viewer data from Nielsen Media Research.
 
-  Missing values are not supported unless \code{data} contains variables
-  to be cross-tabulated, when rows containing missing values are omitted.
+  Missing values are not supported except via an \code{na.action}
+  function when \code{data} contains variables to be cross-tabulated.
 }
 \author{
   S-PLUS original by John Emerson \email{emerson@stat.yale.edu}.

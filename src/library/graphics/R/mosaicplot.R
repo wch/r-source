@@ -337,7 +337,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
 
 mosaicplot.formula <-
 function(formula, data = NULL, ...,
-         main = deparse(substitute(data)), subset)
+         main = deparse(substitute(data)), subset, na.action = na.omit)
 {
     main # force evaluation here
     m <- match.call(expand.dots = FALSE)
@@ -356,7 +356,7 @@ function(formula, data = NULL, ...,
         if(is.matrix(edata))
             m$data <- as.data.frame(data)
         m$main <- m$... <- NULL
-        m$na.action <- na.omit # tabulation would omit them
+        m$na.action <- na.action
         m[[1]] <- as.name("model.frame")
         mf <- eval(m, parent.frame())
         mosaicplot(table(mf), main = main, ...)
