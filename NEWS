@@ -80,6 +80,9 @@ BUG FIXES
     o   Subsetting a one-dimensional array dropped dimensions even when
 	they were not of length one.  (Related to PR#4110)
 
+    o	The plot() method for `ecdf' objects, plot.ecdf(), now allows to
+	set a `ylab' argument (different from the default).
+
 
 
 		CHANGES IN R VERSION 1.8.0
