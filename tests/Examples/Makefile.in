@@ -40,7 +40,8 @@ all: test-Examples
 
 test-Examples: All-Ex.Rout
 
-All-Ex.Rout: All-Ex.R $(Rbinary) $(Rbase)
+#All-Ex.Rout: All-Ex.R $(Rbinary) $(Rbase)
+All-Ex.Rout: All-Ex.R R-exe
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Running all help() examples ..."
@@ -56,6 +57,9 @@ All-Ex.R: $(EXAMPLES)
 	@RHOME=`cd $(top_builddir); pwd`; export RHOME; \
 	   $${RHOME}/bin/Rdconv -t example $< > $@
 	@-echo $@
+
+R-exe:
+	-(cd $(top_builddir); $(MAKE) R)
 
 ##-- The `show-*' are just for testing purposes:
 show-R:
