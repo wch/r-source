@@ -67,12 +67,10 @@ Date: Mon, 26 Feb 2001 11:10:01 -0500
 
 Directory:  Graphics
 
-* PR# 857 *
-Subject: Plotting points on a filled.contour plot
-From: marchini@stats.ox.ac.uk
-Date: Tue, 27 Feb 2001 10:00:30 +0100 (MET)
---This needs at least to be documented, and preferably par("usr")
---set to the coordinate system of the plotting region after use.
+* PR# 865 *
+Subject:  axis(...,las=1) breaks postscript code in certain cases 
+From: maechler@stat.math.ethz.ch
+Date: Wed, 7 Mar 2001 18:08:58 +0100
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -131,6 +129,12 @@ Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
 --
 --The easy and unimportant part of this, the labels, is fixed in 1.2.2. Getting
 --the data right is a project for 1.3
+* PR# 857 *
+Subject: Plotting points on a filled.contour plot
+From: marchini@stats.ox.ac.uk
+Date: Tue, 27 Feb 2001 10:00:30 +0100 (MET)
+--This needs at least to be documented, and preferably par("usr")
+--set to the coordinate system of the plotting region after use.
 * PR# 837 *
 Subject: screen doesn't handle redrawing properly
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -185,7 +189,10 @@ none
 
 Directory:  Models
 
-none
+* PR# 862 *
+Subject: Wrong sign for Pearson residuals
+From: faraway@umich.edu
+Date: Mon, 5 Mar 2001 18:04:34 +0100 (MET)
 
 Directory:  Startup
 
@@ -198,6 +205,10 @@ Date: Tue, 14 Mar 2000 10:32:43 +0100 (MET)
 
 Directory:  System-specific
 
+* PR# 863 *
+Subject: src/main/arithmetic.c on OpenBSD
+From: ian@darwinsys.com (Ian Darwin)
+Date: Tue,  6 Mar 2001 19:49:53 -0500 (EST)
 * PR# 851 *
 Subject: Comments on R-1.2.1 builds
 From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
@@ -232,27 +243,27 @@ none
 
 Directory:  incoming
 
-* PR# 867 *
-Subject: unable to open the base package
-From: Bruno Mendes <mendes@cse.ucsc.edu>
-Date: Wed, 7 Mar 2001 12:38:02 -0800 (PST)
+* PR# 873 *
+Subject: long formulas in terms()
+From: jerome@stat.ubc.ca
+Date: Thu, 8 Mar 2001 22:30:05 +0100 (MET)
 * PR# 861 *
 Subject: histogram of frequencies
 From: bernd.winkler@genedata.com
 Date: Mon, 5 Mar 2001 15:01:49 +0100 (MET)
-* PR# 863 *
-Subject: src/main/arithmetic.c on OpenBSD
-From: ian@darwinsys.com (Ian Darwin)
-Date: Tue,  6 Mar 2001 19:49:53 -0500 (EST)
-* PR# 862 *
-Subject: Wrong sign for Pearson residuals
-From: faraway@umich.edu
-Date: Mon, 5 Mar 2001 18:04:34 +0100 (MET)
+* PR# 869 *
+Subject:  inconsistent results when calling functions with other func
+From: "White, Paul" <Paul.White@dsto.defence.gov.au>
+Date: Thu, 8 Mar 2001 18:26:35 +1100 
 * PR# 866 *
 Subject: mkString
 From: Timothy.Keitt@StonyBrook.Edu
 Date: Wed, 7 Mar 2001 19:23:01 +0100 (MET)
-* PR# 865 *
-Subject:  axis(...,las=1) breaks postscript code in certain cases 
-From: maechler@stat.math.ethz.ch
-Date: Wed, 7 Mar 2001 18:08:58 +0100
+* PR# 872 *
+Subject: surprising behavior of match.arg()
+From: Setzer.Woodrow@epamail.epa.gov
+Date: Thu, 08 Mar 2001 13:23:43 -0500
+* PR# 870 *
+Subject: as.numeric - Possible error
+From: harald.fekjar@basalmed.uio.no
+Date: Thu, 8 Mar 2001 16:20:20 +0100 (MET)
