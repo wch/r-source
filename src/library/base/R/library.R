@@ -136,21 +136,26 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
 	    help <- as.character(substitute(help))
         pkgName <- help[1]              # only give help on one package
         pkgPath <- .find.package(pkgName, lib.loc, verbose = verbose)
-        entries <- c("TITLE", "DESCRIPTION", "INDEX")
-        docFiles <- file.path(pkgPath, entries)
-        pkgInfo <- vector(length = 3, mode = "list")
-        names(pkgInfo) <- entries
+        docFiles <- file.path(pkgPath,
+                              c("TITLE", "DESCRIPTION", "INDEX",
+                                file.path("doc", "00Index.dcf")))
+        pkgInfo <- vector(length = 4, mode = "list")
         readDocFile <- function(f) {
-            if(basename(f) == "DESCRIPTION") {
+            if(basename(f) %in% c("DESCRIPTION", "00Index.dcf")) {
                 ## This should be in valid DCF format ...
-                txt <- try(read.dcf(f)[1, ])
+                txt <- try(read.dcf(f))
                 if(inherits(txt, "try-error")) {
-                    warning("DESCRIPTION file not in valid DCF format")
+                    warning(paste("file",
+                                  sQuote(f),
+                                  "is not in valid DCF format"))
                     return(NULL)
                 }
                 ## Return a list so that the print method knows to
-                ## format as a description list.
-                txt <- list(names(txt), txt)
+                ## format as a description list (if non-empty).
+                txt <- if(all(dim(txt) >= 1))
+                    list(colnames(txt), as.character(txt[1, ]))
+                else
+                    NULL
             }
             else
                 txt <- readLines(f)
@@ -158,7 +163,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
         }
         for(i in which(file.exists(docFiles)))
             pkgInfo[[i]] <- readDocFile(docFiles[i])
-        y <- list(name = pkgName, info = pkgInfo)
+        y <- list(name = pkgName, path = pkgPath, info = pkgInfo)
         class(y) <- "packageInfo"
         return(y)
     }
@@ -282,17 +287,20 @@ function(package = .packages(), quiet = FALSE)
     searchpaths <-
         lapply(1:length(s), function(i) attr(as.environment(i), "path"))
     searchpaths[[length(s)]] <- system.file()
-    pkgs <- paste("package", package, sep=":")
+    pkgs <- paste("package", package, sep = ":")
     pos <- match(pkgs, s)
     if(any(m <- is.na(pos))) {
         if(!quiet) {
-            miss <- paste(package[m], collapse=", ")
-            if(all(m)) stop(paste("none of the packages are not loaded"))
-            else warning(paste("package(s)", miss, "are not loaded"))
+            if(all(m))
+                stop(paste("none of the packages are not loaded"))
+            else
+                warning(paste("package(s)",
+                              paste(package[m], collapse=", "),
+                              "are not loaded"))
         }
         pos <- pos[!m]
     }
-    unlist(searchpaths[pos], use.names=FALSE)
+    unlist(searchpaths[pos], use.names = FALSE)
 }
 
 .find.package <-
@@ -363,8 +371,16 @@ function(x, ...)
     sQuote <- function(s) paste("`", s, "'", sep = "")
     outFile <- tempfile("RpackageInfo")
     outConn <- file(outFile, open = "w")
-    headers <- c("", "Description:\n\n", "Index:\n\n")
-    footers <- c("\n", "\n", "")
+    vignetteMsg <-
+        paste("Further information is available in the following ",
+              "vignettes in directory ",
+              sQuote(file.path(x$path, "doc")),
+              ":",
+              sep = "")
+    headers <- c("", "Description:\n\n", "Index:\n\n",
+                 paste(paste(strwrap(vignetteMsg), collapse = "\n"),
+                       "\n\n", sep = ""))
+    footers <- c("\n", "\n", "\n", "")
     formatDocEntry <- function(entry) {
         if(is.list(entry))
             formatDL(entry, style = "list")
@@ -380,4 +396,5 @@ function(x, ...)
     file.show(outFile, delete.file = TRUE,
               title = paste("Documentation for package",
               sQuote(x$name)))
+    invisible(x)
 }
