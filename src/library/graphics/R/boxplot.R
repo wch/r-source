@@ -192,8 +192,8 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
     }
     xlog <- (par("ylog") && horizontal) || (par("xlog") && !horizontal)
 
-    pcycle <- function(p, def1, def2=NULL)
-	rep(if(!is.null(p)) p else if(!is.null(def1)) def1 else def2,
+    pcycle <- function(p, def1, def2=NULL)# or rather NA {to be rep()ed}?
+	rep(if(length(p)) p else if(length(def1)) def1 else def2,
             length.out = n)
     boxlty    <- pcycle(pars$boxlty,	pars$lty, par("lty"))
     boxlwd    <- pcycle(pars$boxlwd,	pars$lwd, par("lwd"))
