@@ -2016,6 +2016,8 @@ Routine for the multivariate nonparametric Cramer test.
 Functions for the construction and randomization of balanced carryover
 balanced designs, to check given designs for balance, and for simulation
 studies on the validity of two randomization procedures.
+@item cyclones
+Cyclone identification.
 @item date
 Functions for dealing with dates.  The most useful of them accepts a
 vector of input dates in any of the forms @samp{8/30/53},
@@ -2290,6 +2292,9 @@ Imputation for microarray data (currently KNN only).
 @item ineq
 Inequality, concentration and poverty measures, and Lorenz curves
 (empirical and theoretic).
+@item intcox
+Implementation of the Iterated Convex Minorant Algorithm for the Cox
+proportional hazard model for interval censored event data.
 @c  @item integrate
 @c  Adaptive quadrature in up to 20 dimensions.
 @item ipred
