@@ -125,8 +125,31 @@ setSelectMask(InputHandler *handlers, fd_set *readMask)
 #define SOCKET int
 #endif
 
-#define xmlStrncasecmp(a, b, n) strncasecmp((char *)a, (char *)b, n)
+#ifdef HAVE_STRNCASECMP
+/* where strncasecmp is defined seems system-specific */
+# ifdef HAVE_STRINGS_H
+#  include <strings.h>
+# endif
+# define xmlStrncasecmp(a, b, n) strncasecmp((char *)a, (char *)b, n)
+#else
+# define xmlStrncasecmp(a, b, n) mystrncasecmp((char *)a, (char *)b, n)
+static int mystrncasecmp(const char *s1, const char *s2, size_t n)
+{
+    char c1, c2;
+    int i;
 
+    for (i = 0; i < n; i++) {
+	c1 = s1[i]; c2 = s2[i];
+	if ((c1 >= 'a') && (c1 <= 'z')) c1 -= 0x20;
+	if ((c2 >= 'a') && (c2 <= 'z')) c2 -= 0x20;
+	if (c1 == '\0') return ((c2 == '\0') ? 0 : -1);
+	if (c2 == '\0') return 1;
+	if (c1 < c2) return -1;
+	if (c1 > c2) return 1;
+    }
+    return 0;
+}
+#endif
 
 #define XML_NANO_HTTP_MAX_REDIR	10
 
