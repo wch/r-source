@@ -212,7 +212,7 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho){
 
 static void PrintGenericVector(SEXP s, SEXP env)
 {
-    int i, taglen, ns;
+    int i, taglen, ns, w, d, e, wr, dr, er, wi, di, ei;
     SEXP dims, t, names, newcall, tmp;
     char *pbuf, *ptag, *rn, *cn, save[TAGBUFLEN + 5];
 
@@ -226,16 +226,48 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		pbuf = Rsprintf("NULL");
 		break;
 	    case LGLSXP:
-		pbuf = Rsprintf("Logical,%d", LENGTH(tmp));
+		if (LENGTH(tmp) == 1) {
+		    formatLogical(LOGICAL(tmp), 1, &w);
+		    pbuf = Rsprintf("%s", EncodeLogical(LOGICAL(tmp)[0], w));
+		} else
+		    pbuf = Rsprintf("Logical,%d", LENGTH(tmp));
 		break;
 	    case INTSXP:
+		/* factors are stored as integers */
+		if (inherits(tmp, "factor")) {
+		    pbuf = Rsprintf("factor,%d", LENGTH(tmp));
+		} else {
+		    if (LENGTH(tmp) == 1) {
+			formatInteger(INTEGER(tmp), 1, &w);
+			pbuf = Rsprintf("%s", EncodeInteger(INTEGER(tmp)[0], 
+							    w));
+		    } else
+			pbuf = Rsprintf("Integer,%d", LENGTH(tmp));
+		}
+		break;
 	    case REALSXP:
-		pbuf = Rsprintf("Numeric,%d", LENGTH(tmp));
+		if (LENGTH(tmp) == 1) {
+		    formatReal(REAL(tmp), 1, &w, &d, &e, 0);
+		    pbuf = Rsprintf("%s", EncodeReal(REAL(tmp)[0], w, d, e));
+		} else
+		    pbuf = Rsprintf("Numeric,%d", LENGTH(tmp));
 		break;
 	    case CPLXSXP:
+		if (LENGTH(tmp) == 1) {
+		    Rcomplex *x = COMPLEX(tmp);
+		    formatComplex(x, 1, &wr, &dr, &er, &wi, &di, &ei, 0);
+		    if (ISNA(x[0].r) || ISNA(x[0].i))
+			pbuf = Rsprintf("%s", EncodeReal(NA_REAL, w, 0, 0));
+		    else
+			pbuf = Rsprintf("%s", EncodeComplex(x[0],
+			wr, dr, er, wi, di, ei));
+		} else
 		pbuf = Rsprintf("Complex,%d", LENGTH(tmp));
 		break;
 	    case STRSXP:
+		if (LENGTH(tmp) == 1) {
+		    pbuf = Rsprintf("\"%s\"", CHAR(STRING_ELT(tmp, 0)));
+		} else
 		pbuf = Rsprintf("Character,%d", LENGTH(tmp));
 		break;
 	    case LISTSXP:
@@ -255,7 +287,8 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	if (LENGTH(dims) == 2) {
 	    SEXP rl, cl;
 	    GetMatrixDimnames(s, &rl, &cl, &rn, &cn);
-	    printMatrix(t, 0, dims, R_print.quote, R_print.right, rl, cl,
+	    /* as from 1.5.0: don't quote here as didn't in array case */
+	    printMatrix(t, 0, dims, 0, R_print.right, rl, cl,
 			rn, cn);
 	}
 	else {

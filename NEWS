@@ -117,6 +117,7 @@ NEW FEATURES
 	-  New function acf2AR to compute the AR process with a given
            autocorrelation function.
 
+   o    Much improved printing of matrices and arrays of type "list".
 
 
 DEPRECATED & DEFUNCT

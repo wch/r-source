@@ -323,3 +323,20 @@ HairEye <- cbind(expand.grid(Hair=lab$Hair, Eye=lab$Eye, Sex=lab$Sex),
 HairEye.fit <- glm(Fr ~ . ^2, poisson, HairEye)
 drop1(HairEye.fit)
 ## broken around 1.2.1 it seems.
+
+
+## PR#1329  (subscripting matrix lists)
+m <- list(a1=1:3, a2=4:6, a3=pi, a4=c("a","b","c"))
+dim(m) <- c(2,2)
+m
+m[,2]
+m[2,2]
+## 1.4.1 returned null components: the case was missing from a switch.
+
+
+## printing of matrix lists
+m <- list(as.integer(1), pi, 3+5i, "testit", TRUE, factor("foo"))
+dim(m) <- c(1, 6)
+m
+## prior to 1.5.0 had quotes for 2D case (but not kD, k > 2),
+## gave "numeric,1" etc, (even "numeric,1" for integers and factors)
