@@ -145,7 +145,7 @@ function(..., list = character(0),
         if (length(files) > 1) {
             ## more than one candidate
             ## use the order given in data.Rd within path
-            good <- c("RData", "rdata", "rda", "R", "r",
+            good <- c("R", "r", "RData", "rdata", "rda",
                       "tab", "txt", "TXT", "csv", "CSV")
             exts <- sub(".*\\.", "", files)
             o <- match(exts, good, nomatch = 100)
