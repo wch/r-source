@@ -214,7 +214,7 @@ f.bar <- function(x) { on.exit(e <<- g()); return(NULL) }
 f(structure(1,class = "foo"))
 ls(env = e)# only "x", i.e. *not* the GlobalEnv
 f(structure(1,class = "bar"))
-e # == .GlobalEnv (in R 1.3.[01]  but not (yet?!) in 1.4.0).
+stopifnot("x" == ls(env = e))# as above; wrongly was .GlobalEnv in R 1.3.x
 
 
 ## some tests that R supports logical variables in formulae

@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-10-11)
+Version 1.4.0 Under development (unstable) (2001-10-16)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -501,8 +501,7 @@ NULL
 [1] "x"
 > f(structure(1,class = "bar"))
 NULL
-> e # == .GlobalEnv (in R 1.3.[01]  but not (yet?!) in 1.4.0).
-<environment: 0x8d8b64c>
+> stopifnot("x" == ls(env = e))# as above; wrongly was .GlobalEnv in R 1.3.x
 > 
 > 
 > ## some tests that R supports logical variables in formulae
