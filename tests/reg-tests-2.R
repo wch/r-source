@@ -503,3 +503,12 @@ trt <- factor(rep(1:4,c(5,6,5,5)))
 Y <- r/n
 z <- aov(Y ~ trt, weights=n)
 ## 1.5.1 gave unweighted RSS
+
+
+## rbind (PR#2266)
+test <- as.data.frame(matrix(1:25, 5, 5))
+test1 <- matrix(-(1:10), 2, 5)
+rbind(test, test1)
+rbind(test1, test)
+## 1.6.1 treated matrix as a vector.
+

@@ -741,6 +741,8 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	## check the arguments, develop row and column labels
 	xi <- allargs[[i]]
 	nmi <- nms[i]
+        ## coerce matrix to data frame
+        if(is.matrix(xi)) allargs[[i]] <- xi <- as.data.frame(xi)
 	if(inherits(xi, "data.frame")) {
 	    if(is.null(cl))
 		cl <- class(xi)
@@ -772,8 +774,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 		if(length(lij <- levels(xi[[j]])) > 0) {
 		    if(is.null(pi) || is.na(jj <- pi[[j]]))
 			jj <- j
-		    all.levs[[jj]] <- unique(c(all.levs[[jj]],
-					       lij))
+		    all.levs[[jj]] <- unique(c(all.levs[[jj]], lij))
 		}
 	}
 	else if(is.list(xi)) {
