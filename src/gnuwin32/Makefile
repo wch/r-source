@@ -40,7 +40,7 @@ FFLAGS=$(OPTFLAGS)
 ../unix/sock-CFLAGS=-DWin32
 ../unix/Rsock-CFLAGS=-DWin32
 
-rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a 
+rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a \
 	../include/globalvar.h front-ends COPYRIGHTS
 
 rpackage: $(PKGS)
