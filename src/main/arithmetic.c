@@ -195,10 +195,12 @@ double R_pow(double x, double y) /* = x ^ y */
 	/* y < 0 */return(R_PosInf);
     }
     if (R_FINITE(x) && R_FINITE(y)){
-      if (y==2.0)  /* common special case */
-	return(x*x);
+      if (y == 2.0)  /* common special case */
+	return x*x;
+      else if (y == 0.5)  /* another common special case */
+	return sqrt(x);
       else
-	return(pow(x,y));
+	return pow(x,y);
     }
     if (ISNAN(x) || ISNAN(y))
 	return(x + y);
