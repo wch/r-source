@@ -32,8 +32,8 @@ all: Makefile Makedeps R
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
   ../include/Rversion.h \
-  ../include/FFDecl.h \
-  ../include/FFTab.h \
+  FFDecl.h \
+  FFTab.h \
   $(SOURCES)
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
@@ -56,8 +56,9 @@ DLLs:
 
 ../include/Rversion.h:
 	(cd ../include; $(MAKE) $(@F))
-../include/FFDecl.h ../include/FFTab.h: $(top_srcdir)/src/appl/ROUTINES
-	(cd ../include; $(top_srcdir)/tools/GETSYMBOLS)
+FFDecl.h FFTab.h: $(top_srcdir)/src/appl/ROUTINES \
+  $(top_srcdir)/tools/GETSYMBOLS
+	@$(top_srcdir)/tools/GETSYMBOLS
 
 $(LIB): $(OBJECTS)
 	$(AR) cr $(LIB) $(OBJECTS)
@@ -71,7 +72,7 @@ clean:
 	    (cd $${g} && $(MAKE) $@); \
 	  fi; \
 	done
-	@-rm -f Makedeps *.d *.o *.a
+	@-rm -f Makedeps *.d *.o *.a FFDecl.h FFTab.h
 distclean: clean
 	@for g in $(R_GUIS) ""; do \
 	  if test -n "$${g}"; then \

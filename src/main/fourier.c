@@ -23,12 +23,16 @@
 #endif
 
 #include "Defn.h"
-#include "FFDecl.h"
 
-/* These are the  R interface routines to the
- * plain FFT code  in ../appl/fft.c
- * NOTE: That one     ~~~~~~~~~~~~~  (and hence the code here) uses
- * ----	 several GLOBAL (static) variables!
+extern void * fft_factor();
+extern int  * fft_work();
+/*
+  These are the R interface routines to the plain FFT code in
+  ../appl/fft.c.
+  NOTE: That one (and hence the code here) uses several GLOBAL (static)
+  variables, which is considered a bug by some ... when this is fixed or
+  decided to be a feature, replace the above by
+    #include "R_ext/Applic.h"
  */
 
 /* Fourier Transform for Univariate Spatial and Time Series */

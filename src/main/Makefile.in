@@ -119,7 +119,6 @@ Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
   ../include/config.h \
   ../include/Rversion.h \
-  ../include/FFDecl.h \
   $(SOURCES_C)
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
@@ -138,8 +137,6 @@ R: Makefile
 	(cd ../include; $(MAKE) $(@F))
 ../include/Rversion.h:
 	(cd ../include; $(MAKE) $(@F))
-../include/FFDecl.h: $(top_srcdir)/src/appl/ROUTINES
-	(cd ../include; $(top_srcdir)/tools/GETSYMBOLS)
 
 $(top_builddir)/bin/R.bin: $(OBJECTS) $(RLIBS) @EXPORTFILE@
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
