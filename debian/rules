@@ -34,6 +34,8 @@ build-stamp:
 					--with-tcltk			 \
 					--mandir=$(debtmp)/usr/share/man \
 					--with-gnome			 \
+                                        --enable-R-profiling             \
+                                        --enable-R-shlib                 \
 					--host $(arch)
 	make 
 	make help
