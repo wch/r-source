@@ -12,7 +12,7 @@ R_HOME = $(top_builddir)
 include $(top_builddir)/Makeconf
 
 SOURCES_C = Lapack.c
-SOURCES_F = rgeev.f  \
+SOURCES_F = rgeev.f rsyev.f \
    @USE_EXTERNAL_LAPACK_FALSE@ double.f \
    @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplx.f
 
@@ -28,7 +28,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	README Makefile.in Makefile.win \
 	dllversion.rc $(HEADERS) $(SOURCES_C) \
-	cmplx.f cmplxblas.f double.f rgeev.f
+	cmplx.f cmplxblas.f double.f rgeev.f rsyev.f
 
 ## <FIXME>
 ## Change to 'lapack.la' when using libtool for shlibs.

@@ -5,7 +5,7 @@ MODULE=lapack
 all: makeMakedeps ../../../modules/$(MODULE).dll
 
 CSOURCES = Lapack.c
-FSOURCES = double.f cmplx.f rgeev.f
+FSOURCES = double.f cmplx.f rgeev.f rsyev.f
 
 CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
 FFLAGS=$(FOPTFLAGS)
