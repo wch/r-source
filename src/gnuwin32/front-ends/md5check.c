@@ -42,8 +42,9 @@ void read_unist_file(char* fname)
     }
     fseek(fp, 320, SEEK_SET);
     fread(&Version, 4, 1, fp);
-    if(Version > 15)
-	fprintf(stderr, "Version %d of the uninst format is new and may not be supported", Version);
+    /* 4.2.x is 15, 5.0.6 is 33 */
+    if(Version > 33)
+	fprintf(stderr, "Version %d of the uninst format is new and may not be supported\n", Version);
     fread(&NumRecs, 4, 1, fp);
     fread(&EndOffset, 4, 1, fp);
     buf = malloc(EndOffset); p = buf;
