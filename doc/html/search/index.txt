@@ -1578,10 +1578,10 @@ Keywords: outer %o% array
 Description: Outer Product of Arrays
 URL: ../../../library/base/html/outer.html
 
-Entry: edit
+Entry: page
 Keywords: page utilities
 Description: Invoke a Pager on an R Object
-URL: ../../../library/base/html/edit.html
+URL: ../../../library/base/html/page.html
 
 Entry: pairs
 Keywords: pairs pairs.default hplot
