@@ -309,6 +309,19 @@ loadNamespace <- function (package, lib.loc = NULL,
                 needMethods <- (exports %in% allMethods) & !(exports %in% expMethods)
                 if(any(needMethods))
                     expMethods <- c(expMethods, exports[needMethods])
+                ## Primitives must have their methods exported as long
+                ## as a global table is used in the C code to dispatch them:
+                ## The following keeps the exported files consistent with
+                ## the internal table.
+                pm <- allMethods[!(allMethods %in% expMethods)]
+                if(length(pm)>0) {
+                    prim <- logical(length(pm))
+                    for(i in seq(along=prim)) {
+                        f <- methods::getFunction(pm[[i]], FALSE, FALSE, ns)
+                        prim[[i]] <- is.primitive(f)
+                    }
+                    expMethods <- c(expMethods, pm[prim])
+                }
                 for(i in seq(along=expMethods)) {
                     mi <- expMethods[[i]]
                     if(!(mi %in% exports) &&
