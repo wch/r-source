@@ -517,10 +517,10 @@ int main(int ac, char **av)
 		R_Quiet = 1;
 	    }
 	    else if (!strcmp(*av, "--vanilla")) {
-		DefaultSaveAction = 2;/* --no-save */
-		DefaultRestoreAction = 0;/* --no-restore */
-		LoadSiteFile = 0;/* --no-site-file */
-		LoadInitFile = 0;/* --no-init-file */
+		DefaultSaveAction = 2; /* --no-save */
+		DefaultRestoreAction = 0; /* --no-restore */
+		LoadSiteFile = 0; /* --no-site-file */
+		LoadInitFile = 0; /* --no-init-file */
 	    }
 	    else if (!strcmp(*av, "--verbose")) {
 		R_Verbose = 1;
@@ -634,10 +634,22 @@ int main(int ac, char **av)
 #endif    
 #endif
 
+    if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
+	R_HistoryFile = ".Rhistory";
+    R_HistorySize = 512;
+    if ((p = getenv("R_HISTSIZE"))) {
+	value = Decode2Long(p, &ierr);
+	if (ierr != 0 || value < 0)
+	    REprintf("WARNING: invalid R_HISTSIZE ignored;");
+	else
+	    R_HistorySize = value;
+    }
+
 #ifdef HAVE_LIBREADLINE
 #ifdef HAVE_READLINE_HISTORY_H
-    if(isatty(0) && UsingReadline)
-	read_history(".Rhistory");
+    if(isatty(0) && UsingReadline) {
+	read_history(R_HistoryFile);
+    }
 #endif
 #endif
     mainloop();
@@ -690,7 +702,8 @@ void R_CleanUp(int ask)
 #ifdef HAVE_LIBREADLINE
 #ifdef HAVE_READLINE_HISTORY_H
 	    if(isatty(0) && UsingReadline)
-		write_history(".Rhistory");
+		stifle_history(R_HistorySize);
+		write_history(R_HistoryFile);
 #endif
 #endif
 	    break;
