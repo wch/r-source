@@ -43,7 +43,7 @@ R:
 	@echo "installing parsed NAMESPACE files"
 	@rm -f $(top_builddir)/library/tools/Meta/nsInfo.rds
 	@for pkg in $(R_PKGS_BASE) ; do \
-	  if test -f $(srcdir)/$${pkg}/NAMESPACE; then \
+	  if test -f "$(srcdir)/$${pkg}/NAMESPACE"; then \
           echo ".installPackageNamespaceInfo(\"$(top_builddir)/library/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" \
 	    | R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null ; \
           fi ; \
@@ -53,36 +53,20 @@ R:
 
 docs:
 	@echo "building all R object docs (text, HTML, LaTeX, examples)"
-	@$(MAKE) DOCS
+	@$(MAKE) Rdfiles
+	@$(R_CMD_BUILD_HELP) --htmllists
+	@$(MAKE) vignettes
 	@$(MAKE) indices
 	@touch stamp-docs
-help:
-	@$(MAKE) DOCS R_CMD_BUILD_HELP_OPTS="--txt"
-html:
-	@$(MAKE) DOCS R_CMD_BUILD_HELP_OPTS="--html"
-	@$(MAKE) indices
-latex:
-	@$(MAKE) DOCS R_CMD_BUILD_HELP_OPTS="--latex"
-examples:
-	@$(MAKE) DOCS R_CMD_BUILD_HELP_OPTS="--example"
 
-indices:
-	@$(R_CMD_BUILD_HELP) --htmllists
-
-DOCS:
+Rdfiles:
 	@if @NO_PERL5@; then \
 	  echo "you need Perl version 5 to build the R object docs"; \
 	  exit 1; \
 	fi
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(R_CMD_BUILD_HELP) $(R_CMD_BUILD_HELP_OPTS) $(srcdir)/$${pkg}; \
-	  ( echo ".installPackageIndices(\"$(srcdir)/$${pkg}\","; \
-	    echo " \"$(top_builddir)/library/$${pkg}\")") | \
-	      R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null; \
-	done; \
-	cat $(top_builddir)/library/*/CONTENTS \
-	  > $(top_builddir)/doc/html/search/index.txt
-
+	done
 vignettes:
 	@if test "$(PDFLATEX)" = false; then \
           echo "WARNING: cannot build/update package vignettes."; \
@@ -97,6 +81,24 @@ vignettes:
 	    fi; \
 	  done; \
 	fi
+indices:
+	@for pkg in $(R_PKGS_BASE); do \
+	  ( echo ".installPackageIndices(\"$(srcdir)/$${pkg}\","; \
+	    echo " \"$(top_builddir)/library/$${pkg}\")") | \
+	      R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null; \
+	done
+	@cat $(top_builddir)/library/*/CONTENTS \
+	  > $(top_builddir)/doc/html/search/index.txt
+
+help:
+	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--txt"
+html:
+	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--html"
+	@$(R_CMD_BUILD_HELP) --htmllists
+latex:
+	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--latex"
+examples:
+	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--example"
 
 install: installdirs
 	@echo "installing packages ..."
