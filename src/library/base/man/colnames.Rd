@@ -23,7 +23,7 @@ colnames(x) <- value
   \item{value}{a valid value for that component of
     \code{\link{dimnames}(x)}.  For a matrix or array this is either
     \code{NULL} or a character vector of length the appropriate
-    dimension.
+    dimension.}
 }
 \details{
   If \code{do.NULL} is \code{FALSE}, a character vector (of length
