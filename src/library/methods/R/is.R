@@ -81,6 +81,7 @@ setIs <-
            classDef = getClass(class1, TRUE, where = where), extensionObject = NULL, doComplete = TRUE)
 {
     ## class2 should exist
+    where <- as.environment(where)
     classDef2 <- getClassDef(class2, where)
     ## check some requirements:
     ## One of the classes must be on the target environment (so that the relation can
