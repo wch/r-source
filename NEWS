@@ -132,6 +132,10 @@ NEW FEATURES
     o   arima() allows models with no free parameters to be fitted (to
 	find log-likelihood and AIC values, thanks to Rob Hyndman).
 
+    o   The parsed contents of a NAMESPACE file are now stored at
+        installation and if available used to speed loading the
+        package, so packages with namespaces should be reinstalled.
+
 
 UTILITIES
 

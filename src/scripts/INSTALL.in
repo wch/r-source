@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.143 $'
+revision='$Revision: 1.144 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -602,6 +602,16 @@ do_install_source () {
   if test ${?} -ne 0; then
     error "installing package indices failed"
     do_exit_on_error
+  fi
+
+  ## Install a dump of the parsed NAMESPACE file
+  if test -f NAMESPACE; then
+      echo ".installPackageNamespaceInfo(\".\", \"${R_PACKAGE_DIR}\")" | \
+        R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
+    if test ${?} -ne 0; then
+      error "installing namespace metadata failed"
+      do_exit_on_error
+    fi
   fi
 
   ## <FIXME>
