@@ -18,13 +18,13 @@ SED2='s/C_FUNCTION(\(.*\))/void * \1();/'
 SED3='s/F77_SUBROUTINE(\(.*\))/	{ "\1_",	\1_},/'
 SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
 
-../../include/FFDecl.h: ../../appl/ROUTINES
-	$(SED) -e $(SED0) -e $(SED01) -e $(SED1) -e $(SED2) ../../appl/ROUTINES > ../../include/FFDecl.h
-../../include/FFTab.h: ../../appl/ROUTINES
-	$(SED) -e $(SED0) -e $(SED01) -e $(SED3) -e $(SED4) ../../appl/ROUTINES > ../../include/FFTab.h
+../FFDecl.h: ../../appl/ROUTINES
+	$(SED) -e $(SED0) -e $(SED01) -e $(SED1) -e $(SED2) $< > $@
+../FFTab.h: ../../appl/ROUTINES
+	$(SED) -e $(SED0) -e $(SED01) -e $(SED3) -e $(SED4) $< > $@
 
 
-fixh: h/config.h ../../include/FFDecl.h ../../include/FFTab.h \
+fixh: h/config.h ../FFDecl.h ../FFTab.h \
   ../../include/Rconfig.h ../../include/Rversion.h
 	$(CP) -p ./h/config.h ./h/psignal.h ../../include
 	$(ECHO) done > fixh
