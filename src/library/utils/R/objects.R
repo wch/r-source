@@ -227,6 +227,24 @@ assignInNamespace <-
     } else {
         assign(x, value, envir = ns, inherits = FALSE)
     }
+    if(!isBaseNamespace(ns)) {
+        ## now look for possible copy as a registered S3 method
+        S3 <- getNamespaceInfo(ns, "S3methods")
+        if(!length(S3)) return(invisible(NULL))
+        S3names <- S3[, 3]
+        if(x %in% S3names) {
+            i <- match(x, S3names)
+            genfun <- get(S3[i, 1], mode = "function", envir = parent.frame())
+            if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
+                genfun <- methods::slot(genfun, "default")@methods$ANY
+            defenv <- if (typeof(genfun) == "closure") environment(genfun)
+            else .BaseNamespaceEnv
+            S3Table <- get(".__S3MethodsTable__.", envir = defenv)
+            remappedName <- paste(S3[i, 1], S3[i, 2], sep = ".")
+            if(exists(remappedName, envir = S3Table, inherits = FALSE))
+                assign(remappedName, value, S3Table)
+        }
+    }
     invisible(NULL)
 }
 
@@ -244,33 +262,7 @@ fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
         ns <- asNamespace(substring(nm, 9))
     } else ns <- asNamespace(ns)
     x <- edit(get(subx, envir = ns, inherits = FALSE), ...)
-    if(bindingIsLocked(subx, ns)) {
-        unlockBinding(subx, ns)
-        assign(subx, x, env = ns)
-        w <- options("warn")
-        on.exit(options(w))
-        options(warn = -1)
-        lockBinding(subx, ns)
-    } else
-        assign(subx, x, env = ns)
-    if(!isBaseNamespace(ns)) {
-        ## now look for possible copy as a method
-        S3 <- getNamespaceInfo(ns, "S3methods")
-        if(!length(S3)) return(invisible(NULL))
-        S3names <- S3[, 3]
-        if(subx %in% S3names) {
-            i <- match(subx, S3names)
-            genfun <- get(S3[i, 1], mode = "function", envir = parent.frame())
-            if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
-                genfun <- methods::finalDefaultMethod(methods::getMethods(S3[i, 1]))@.Data
-            defenv <- if (typeof(genfun) == "closure") environment(genfun)
-            else .BaseNamespaceEnv
-            S3Table <- get(".__S3MethodsTable__.", envir = defenv)
-            if(exists(subx, envir = S3Table, inherits = FALSE))
-                assign(subx, x, S3Table)
-        }
-    }
-    invisible(NULL)
+    assignInNamespace(subx, x, ns)
 }
 
 getAnywhere <- function(x)
