@@ -7,9 +7,12 @@
 #include "X11/devX11.h"
 #include "Startup.h" /* for SA_TYPE */
 
-extern Rboolean (*ptr_X11DeviceDriver)(DevDesc*, char*, 
+typedef Rboolean (*X11DeviceDriverRoutine)(DevDesc*, char*, 
 				       double, double, double, double,
 				       X_COLORTYPE, int);
+
+X11DeviceDriverRoutine ptr_X11DeviceDriver;
+
 extern Rboolean (*ptr_R_GetX11Image)(int, void *, int *, int *);
 extern Rboolean (*ptr_GnomeDeviceDriver)(DevDesc*, char*, double, double, double);
 
@@ -31,6 +34,8 @@ extern int  (*ptr_R_ChooseFile)(int, char *, int);
 extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 
+
+extern DevDesc* Rf_addX11Device(char *display, double height, double width, double ps, double gamma, int colormodel, int maxcubesize, char *devname, X11DeviceDriverRoutine deviceDriverRoutine);
 
 #ifdef __SYSTEM__
 #undef extern

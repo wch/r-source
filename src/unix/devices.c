@@ -30,6 +30,7 @@
 /* Return a non-relocatable copy of a string */
 
 static SEXP gcall;
+
 static char *SaveString(SEXP sxp, int offset)
 {
     char *s;
@@ -54,7 +55,6 @@ static char *SaveString(SEXP sxp, int offset)
 
 SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    DevDesc *dd;
     char *display, *vmax, *cname, *devname;
     double height, width, ps, gamma;
     int colormodel, maxcubesize;
@@ -99,6 +99,16 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (!strncmp(display, "jpeg::", 6)) devname = "JPEG";
     else if (!strcmp(display, "XImage")) devname = "XImage";
 
+    Rf_addX11Device(display, width, height, ps, gamma, colormodel, maxcubesize, devname, ptr_X11DeviceDriver);
+    vmaxset(vmax);
+    return R_NilValue;
+}
+
+
+DevDesc*
+Rf_addX11Device(char *display, double width, double height, double ps, double gamma, int colormodel, int maxcubesize, char *devname, X11DeviceDriverRoutine deviceDriverRoutine)
+{
+  DevDesc *dd = NULL;
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	/* Allocate and initialize the device driver data */
@@ -107,18 +117,20 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Do this for early redraw attempts */
 	dd->displayList = R_NilValue;
 	GInit(&dd->dp);
-	if (!ptr_X11DeviceDriver(dd, display, width, height, ps, gamma,
+	if (!deviceDriverRoutine || !(deviceDriverRoutine)(dd, display, width, height, ps, gamma,
 				 colormodel, maxcubesize)) {
 	    free(dd);
-	    errorcall(call, "unable to start device %s", devname);
-	}
+	    errorcall(gcall, "unable to start device %s", devname);
+       	}
 	gsetVar(install(".Device"), mkString(devname), R_NilValue);
 	addDevice(dd);
 	initDisplayList(dd);
     } END_SUSPEND_INTERRUPTS;
-    vmaxset(vmax);
-    return R_NilValue;
+
+   return(dd);
 }
+
+
 
 SEXP do_GTK(SEXP call, SEXP op, SEXP args, SEXP env)
 {
