@@ -108,7 +108,7 @@ char *EncodeReal(double x, int w, int d, int e)
     char fmt[20];
     /* IEEE allows signed zeros (yuck!) */
     if (x == 0.0) x = 0.0;
-    if (!FINITE(x)) {
+    if (!R_FINITE(x)) {
 #ifdef IEEE_754
 	if(ISNA(x)) sprintf(Encodebuf, "%*s", w, CHAR(R_print.na_string));
 	else if(ISNAN(x)) sprintf(Encodebuf, "%*s", w, "NaN");

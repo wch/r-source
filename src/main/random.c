@@ -160,9 +160,9 @@ static void random1(double (*f) (), double *a, int na, double *x, int n)
     errno = 0;
     for (i = 0; i < n; i++) {
 	ai = a[i % na];
-	if (FINITE(ai)) {
+	if (R_FINITE(ai)) {
 	    x[i] = MATH_CHECK(f(ai));
-	    if (!FINITE(x[i])) naflag = 1;
+	    if (!R_FINITE(x[i])) naflag = 1;
 	}
 	else x[i] = NA_REAL;
     }
@@ -232,9 +232,9 @@ static void random2(double (*f) (), double *a, int na, double *b, int nb,
     for (i = 0; i < n; i++) {
 	ai = a[i % na];
 	bi = b[i % nb];
-	if (FINITE(ai) && FINITE(bi)) {
+	if (R_FINITE(ai) && R_FINITE(bi)) {
 	    x[i] = MATH_CHECK(f(ai, bi));
-	    if (!FINITE(x[i])) naflag = 1;
+	    if (!R_FINITE(x[i])) naflag = 1;
 	}
 	else x[i] = NA_REAL;
     }
@@ -315,9 +315,9 @@ static void random3(double (*f) (), double *a, int na, double *b, int nb,
 	ai = a[i % na];
 	bi = b[i % nb];
 	ci = c[i % nc];
-	if (FINITE(ai) && FINITE(bi) && FINITE(ci)) {
+	if (R_FINITE(ai) && R_FINITE(bi) && R_FINITE(ci)) {
 	    x[i] = MATH_CHECK(f(ai, bi, ci));
-	    if (!FINITE(x[i])) naflag = 1;
+	    if (!R_FINITE(x[i])) naflag = 1;
 	}
 	else x[i] = NA_REAL;
     }
@@ -493,7 +493,7 @@ static void FixupProb(SEXP call, double *p, int n, int k, int replace)
     npos = 0;
     sum = 0.;
     for (i = 0; i < n; i++) {
-	if (!FINITE(p[i]))
+	if (!R_FINITE(p[i]))
 	    errorcall(call, "NA in probability vector\n");
 	if (p[i] < 0)
 	    errorcall(call, "non-positive probability\n");

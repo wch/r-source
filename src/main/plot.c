@@ -156,7 +156,7 @@ SEXP FixupPch(SEXP pch, DevDesc *dd)
     else if(isReal(pch)) {
 	ans = allocVector(INTSXP, n=n);
 	for(i=0 ; i<n ; i++)
-	    INTEGER(ans)[i] = FINITE(REAL(pch)[i]) ?
+	    INTEGER(ans)[i] = R_FINITE(REAL(pch)[i]) ?
 		REAL(pch)[i] : NA_INTEGER;
     }
     else if(isString(pch)) {
@@ -254,7 +254,7 @@ SEXP FixupCex(SEXP cex)
 	ans = allocVector(REALSXP, n=length(cex));
 	for(i=0 ; i<n; i++) {
 	    c = REAL(cex)[i];
-	    if(FINITE(c) && c > 0)
+	    if(R_FINITE(c) && c > 0)
 		REAL(ans)[i] = c;
 	    else
 		REAL(ans)[i] = NA_REAL;
@@ -391,7 +391,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	xmax = INTEGER(xlim)[1];
     }
     else {
-	if(!FINITE(REAL(xlim)[0]) || !FINITE(REAL(xlim)[1]))
+	if(!R_FINITE(REAL(xlim)[0]) || !R_FINITE(REAL(xlim)[1]))
 	    errorcall(call, "need finite xlim values\n");
 	xmin = REAL(xlim)[0];
 	xmax = REAL(xlim)[1];
@@ -403,7 +403,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	ymax = INTEGER(ylim)[1];
     }
     else {
-	if(!FINITE(REAL(ylim)[0]) || !FINITE(REAL(ylim)[1]))
+	if(!R_FINITE(REAL(ylim)[0]) || !R_FINITE(REAL(ylim)[1]))
 	    errorcall(call, "need finite ylim values\n");
 	ymin = REAL(ylim)[0];
 	ymax = REAL(ylim)[1];
@@ -412,7 +412,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
        (dd->dp.ylog && (ymin < 0 || ymax < 0)))
 	    errorcall(call, "Logarithmic axis must have positive limits\n");
 
-    if (FINITE(asp) && asp > 0) {
+    if (R_FINITE(asp) && asp > 0) {
 	double pin1, pin2, scale, xdelta, ydelta, xscale, yscale, xadd, yadd;
 	pin1 = GConvertXUnits(1.0, NPC, INCHES, dd);
 	pin2 = GConvertYUnits(1.0, NPC, INCHES, dd);
@@ -706,7 +706,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Retrieve relevant "par" values. */
 
     switch(side) {
-    case 1: 
+    case 1:
     case 3:
 	axp[0] = dd->dp.xaxp[0];
 	axp[1] = dd->dp.xaxp[1];
@@ -797,7 +797,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	dd->gp.col = fg;
 	GLine(REAL(at)[0], y, REAL(at)[n - 1], y, USER, dd);
-	if (FINITE(dd->gp.tck)) {
+	if (R_FINITE(dd->gp.tck)) {
 	    /* The S way of doing ticks */
 	    double y0, y1;
 	    if (dd->gp.tck > 0.5) {
@@ -866,7 +866,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		    tnew = tempx - 0.5 * labw;
 		    /* Check that there is space */
 		    /* for  perpendicular labels. */
-		    if (dd->gp.las == 2 || dd->gp.las == 3 || 
+		    if (dd->gp.las == 2 || dd->gp.las == 3 ||
 			tnew - tlast >= gap) {
 			GMtext(CHAR(STRING(lab)[i]), side,
 			       dd->gp.mgp[1], 0, x,
@@ -887,7 +887,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	dd->gp.col = fg;
 	GLine(x, REAL(at)[0], x, REAL(at)[n - 1], USER, dd);
-	if (FINITE(dd->gp.tck)) {
+	if (R_FINITE(dd->gp.tck)) {
 	    /* The S way of doing ticks */
 	    double x0, x1;
 	    if (dd->gp.tck > 0.5) {
@@ -954,7 +954,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		    labw = GConvertYUnits(labw, INCHES, NFC, dd);
 		    tnew = tempy - 0.5 * labw;
 		    /* Check room for  perpendicular labels: */
-		    if (dd->gp.las == 1 || dd->gp.las == 2 || 
+		    if (dd->gp.las == 1 || dd->gp.las == 2 ||
 			tnew - tlast >= gap) {
 			GMtext(CHAR(STRING(lab)[i]), side,
 			       dd->gp.mgp[1], 0, y,
@@ -1047,7 +1047,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     if(nlty && INTEGER(lty)[0] != NA_INTEGER)
 	dd->gp.lty = INTEGER(lty)[0];
 
-    if(ncex && FINITE(REAL(cex)[0]))
+    if(ncex && R_FINITE(REAL(cex)[0]))
 	dd->gp.cex = dd->gp.cexbase * REAL(cex)[0];
     else
 	dd->gp.cex = dd->gp.cexbase;
@@ -1067,16 +1067,16 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yy = y[i];
 	    /* do the conversion now to check for non-finite */
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
-	    if ((FINITE(xx) && FINITE(yy)) &&
-		!(FINITE(xold) && FINITE(yold)))
+	    if ((R_FINITE(xx) && R_FINITE(yy)) &&
+		!(R_FINITE(xold) && R_FINITE(yold)))
 		start = i;
-	    else if ((FINITE(xold) && FINITE(yold)) &&
-		     !(FINITE(xx) && FINITE(yy))) {
+	    else if ((R_FINITE(xold) && R_FINITE(yold)) &&
+		     !(R_FINITE(xx) && R_FINITE(yy))) {
 		if (i-start > 1)
 		    GPolyline(i-start, x+start, y+start,
 			      USER, dd);
 	    }
-	    else if ((FINITE(xold) && FINITE(yold)) &&
+	    else if ((R_FINITE(xold) && R_FINITE(yold)) &&
 		     (i == n-1))
 		GPolyline(n-start, x+start, y+start, USER, dd);
 	    xold = xx;
@@ -1094,8 +1094,8 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    xx = x[i];
 	    yy = y[i];
 	    GConvert(&xx, &yy, USER, INCHES, dd);
-	    if (FINITE(xold) && FINITE(yold) &&
-		FINITE(xx) && FINITE(yy)) {
+	    if (R_FINITE(xold) && R_FINITE(yold) &&
+		R_FINITE(xx) && R_FINITE(yy)) {
 		if((f = d/hypot(xx-xold, yy-yold)) < 0.5) {
 		    GLine(xold + f * (xx - xold),
 			  yold + f * (yy - yold),
@@ -1118,8 +1118,8 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    xx = x[i];
 	    yy = y[i];
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
-	    if (FINITE(xold) && FINITE(yold) &&
-		FINITE(xx) && FINITE(yy)) {
+	    if (R_FINITE(xold) && R_FINITE(yold) &&
+		R_FINITE(xx) && R_FINITE(yy)) {
 		xtemp[0] = xold; ytemp[0] = yold;
 		xtemp[1] = xx;	ytemp[1] = yold;
 		xtemp[2] = xx;	ytemp[2] = yy;
@@ -1139,8 +1139,8 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    xx = x[i];
 	    yy = y[i];
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
-	    if (FINITE(xold) && FINITE(yold) &&
-		FINITE(xx) && FINITE(yy)) {
+	    if (R_FINITE(xold) && R_FINITE(yold) &&
+		R_FINITE(xx) && R_FINITE(yy)) {
 		xtemp[0] = xold; ytemp[0] = yold;
 		xtemp[1] = xold; ytemp[1] = yy;
 		xtemp[2] = xx; ytemp[2] = yy;
@@ -1161,7 +1161,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    xx = x[i];
 	    yy = y[i];
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
-	    if (FINITE(xx) && FINITE(yy)) {
+	    if (R_FINITE(xx) && R_FINITE(yy)) {
 		GLine(xx, yold, xx, yy, DEVICE, dd);
 	    }
 	}
@@ -1171,7 +1171,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    xx = x[i];
 	    yy = y[i];
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
-	    if (FINITE(xx) && FINITE(yy)) {
+	    if (R_FINITE(xx) && R_FINITE(yy)) {
 		dd->gp.col = INTEGER(col)[i % ncol];
 		dd->gp.bg = INTEGER(bg)[i % nbg];
 		GSymbol(xx, yy, DEVICE,
@@ -1266,7 +1266,7 @@ SEXP do_segments(SEXP call, SEXP op, SEXP args, SEXP env)
 	yy[1] = y1[i%ny1];
 	GConvert(xx, yy, USER, DEVICE, dd);
 	GConvert(xx+1, yy+1, USER, DEVICE, dd);
-	if (FINITE(xx[0]) && FINITE(yy[0]) && FINITE(xx[1]) && FINITE(yy[1])) {
+	if (R_FINITE(xx[0]) && R_FINITE(yy[0]) && R_FINITE(xx[1]) && R_FINITE(yy[1])) {
 	    dd->gp.col = INTEGER(col)[i % ncol];
 	    if (dd->gp.col == NA_INTEGER)
 		dd->gp.col = dd->dp.col;
@@ -1341,7 +1341,7 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
 	y1 = yt[i%nyt];
 	GConvert(&x0, &y0, USER, DEVICE, dd);
 	GConvert(&x1, &y1, USER, DEVICE, dd);
-	if (FINITE(x0) && FINITE(y0) && FINITE(x1) && FINITE(y1))
+	if (R_FINITE(x0) && R_FINITE(y0) && R_FINITE(x1) && R_FINITE(y1))
 	    GRect(x0, y0, x1, y1, DEVICE, INTEGER(col)[i % ncol],
 		  INTEGER(border)[i % nborder], dd);
     }
@@ -1380,11 +1380,11 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
     sy1 = CAR(args); ny1 = length(sy1); args = CDR(args);
 
     hlength = asReal(GetPar("length", args));
-    if (!FINITE(hlength) || hlength <= 0)
+    if (!R_FINITE(hlength) || hlength <= 0)
 	errorcall(call, "invalid head length\n");
 
     angle = asReal(GetPar("angle", args));
-    if (!FINITE(angle))
+    if (!R_FINITE(angle))
 	errorcall(call, "invalid head angle\n");
 
     code = asInteger(GetPar("code", args));
@@ -1403,7 +1403,7 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "'lwd' must be numeric of length >=1");
 
     xpd = asInteger(GetPar("xpd", args));
-    
+
     GSavePars(dd);
 
     if (xpd == NA_INTEGER)
@@ -1424,7 +1424,7 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 	yy1 = y1[i%ny1];
 	GConvert(&xx0, &yy0, USER, DEVICE, dd);
 	GConvert(&xx1, &yy1, USER, DEVICE, dd);
-	if (FINITE(xx0) && FINITE(yy0) && FINITE(xx1) && FINITE(yy1)) {
+	if (R_FINITE(xx0) && R_FINITE(yy0) && R_FINITE(xx1) && R_FINITE(yy1)) {
 	  dd->gp.col = INTEGER(col)[i % ncol];
 	    if (dd->gp.col == NA_INTEGER)
 		dd->gp.col = dd->dp.col;
@@ -1486,11 +1486,11 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(lty = FixupLty(GetPar("lty", args), dd));
     nlty = length(lty);
 
-    /* 
+    /*
      * Have to use GetPar("xpd"...) here rather than ProcessInLinePars
      * because ProcessInLinePars will choke on "border" (until GetPar
      * is fixed - see GetPar)
-     * GetPar returning R_NilValue means xpd wasn't specified (so just 
+     * GetPar returning R_NilValue means xpd wasn't specified (so just
      * use current setting of par(xpd))
      * Need separate check for this because otherwise unspecified xpd
      * is the same as xpd=NA (because asInteger(R_NilValue)==NA_INTEGER)
@@ -1523,18 +1523,18 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 	xx = x[i];
 	yy = y[i];
 	GConvert(&xx, &yy, USER, DEVICE, dd);
-	if ((FINITE(xx) && FINITE(yy)) &&
-	    !(FINITE(xold) && FINITE(yold)))
+	if ((R_FINITE(xx) && R_FINITE(yy)) &&
+	    !(R_FINITE(xold) && R_FINITE(yold)))
 	    start = i; /* first point of current segment */
-	else if ((FINITE(xold) && FINITE(yold)) &&
-		 !(FINITE(xx) && FINITE(yy))) {
+	else if ((R_FINITE(xold) && R_FINITE(yold)) &&
+		 !(R_FINITE(xx) && R_FINITE(yy))) {
 	    if (i-start > 1) {
 		GPolygon(i-start, x+start, y+start, USER,
 			 INTEGER(col)[num%ncol], INTEGER(border)[0], dd);
 		num++;
 	    }
 	}
-	else if ((FINITE(xold) && FINITE(yold)) && (i == nx-1)) { /* last */
+	else if ((R_FINITE(xold) && R_FINITE(yold)) && (i == nx-1)) { /* last */
 	    GPolygon(nx-start, x+start, y+start, USER,
 		     INTEGER(col)[num%ncol], INTEGER(border)[0], dd);
 	    num++;
@@ -1646,12 +1646,12 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 	xx = x[i % n];
 	yy = y[i % n];
 	GConvert(&xx, &yy, USER, INCHES, dd);
-	if (FINITE(xx) && FINITE(yy)) {
+	if (R_FINITE(xx) && R_FINITE(yy)) {
 	    if (ncol && INTEGER(col)[i % ncol] != NA_INTEGER)
 		dd->gp.col = INTEGER(col)[i % ncol];
 	    else
 		dd->gp.col = dd->dp.col;
-	    if(ncex && FINITE(REAL(cex)[i%ncex]))
+	    if(ncex && R_FINITE(REAL(cex)[i%ncex]))
 		dd->gp.cex = dd->gp.cexbase * REAL(cex)[i % ncex];
 	    else
 		dd->gp.cex = dd->gp.cexbase;
@@ -1706,7 +1706,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static double ComputeAdjValue(double adj, int side, int las)
 {
-    if (!FINITE(adj)) {
+    if (!R_FINITE(adj)) {
 	switch(las) {
 	case 0:/* parallel to axis */
 	    adj = 0.5; break;
@@ -1739,7 +1739,7 @@ static double ComputeAdjValue(double adj, int side, int las)
 static double ComputeAtValue(double at, double adj, int side, int outer,
 			     DevDesc *dd)
 {
-    if(!FINITE(at)) {
+    if(!R_FINITE(at)) {
 	switch(side % 2) {
 	case 0:
 	    at  = outer ? adj : yNPCtoUsr(adj, dd);
@@ -1754,7 +1754,7 @@ static double ComputeAtValue(double at, double adj, int side, int outer,
 
 /* mtext(text,
          side = 3,
-         line = 0, 
+         line = 0,
 	 outer = TRUE,
          at = NA,
          adj = NA,
@@ -1807,7 +1807,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     if (nouter <= 0) errorcall(call, "zero length \"outer\" specified\n");
     if (n < nouter) n = nouter;
     args = CDR(args);
-    
+
     /* Arg5 : at= */
     PROTECT(at = coerceVector(CAR(args), REALSXP));
     nat = length(at);
@@ -1845,7 +1845,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* If we only scribble in the outer margins, */
     /* we don't want to mark the plot as dirty. */
-    
+
     dirtyplot = 0;
     gpnewsave = dd->gp.new;
     dpnewsave = dd->dp.new;
@@ -1874,7 +1874,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	int fontval = INTEGER(font)[i%nfont];
 
 	if (outerval == NA_INTEGER) outerval = 0;
-	if (FINITE(cexval)) dd->gp.cex = dd->gp.cexbase * cexval;
+	if (R_FINITE(cexval)) dd->gp.cex = dd->gp.cexbase * cexval;
 	else cexval = cexsave;
 	dd->gp.font = (fontval == NA_INTEGER) ? fontsave : fontval;
 	dd->gp.adj = ComputeAdjValue(adjval, sideval, dd->gp.las);
@@ -2062,7 +2062,7 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 	    aa = asReal(a);
 	    bb = asReal(b);
 	}
-	if (!FINITE(aa) || !FINITE(bb))
+	if (!R_FINITE(aa) || !R_FINITE(bb))
 	    errorcall(call, "\"a\" and \"b\" must be finite\n");
 	dd->gp.col = INTEGER(col)[0];
 	if (nlty && INTEGER(lty)[0] != NA_INTEGER)
@@ -2101,7 +2101,7 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else
 		dd->gp.lty = dd->dp.lty;
 	    aa = REAL(h)[i];
-	    if (FINITE(aa)) {
+	    if (R_FINITE(aa)) {
 		x[0] = dd->gp.usr[0];
 		x[1] = dd->gp.usr[1];
 		y[0] = aa;
@@ -2121,7 +2121,7 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else
 		dd->gp.lty = dd->dp.lty;
 	    aa = REAL(v)[i];
-	    if (FINITE(aa)) {
+	    if (R_FINITE(aa)) {
 		y[0] = dd->gp.usr[2];
 		y[1] = dd->gp.usr[3];
 		x[0] = aa;
@@ -2269,7 +2269,7 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    xi = REAL(x)[i];
 	    yi = REAL(y)[i];
 	    GConvert(&xi, &yi, USER, INCHES, dd);
-	    if(!FINITE(xi) || !FINITE(yi)) continue;
+	    if(!R_FINITE(xi) || !R_FINITE(yi)) continue;
 	    d = hypot(xp-xi, yp-yi);
 	    if(d < dmin) {
 		imin = i;
@@ -2375,7 +2375,7 @@ SEXP do_dotplot(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 	xi = REAL(x)[i];
-	if (FINITE(xi)) {
+	if (R_FINITE(xi)) {
 	    if (xi < xmin) xmin = xi;
 	    if (xi > xmax) xmax = xi;
 	}
@@ -2457,7 +2457,7 @@ SEXP do_strheight(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(isNull(CAR(args)))
 	cex = dd->gp.cex;
-    else if(!FINITE(cex = asReal(CAR(args))) || cex <= 0.0)
+    else if(!R_FINITE(cex = asReal(CAR(args))) || cex <= 0.0)
 	errorcall(call, "invalid cex value\n");
 
     n = LENGTH(str);
@@ -2499,7 +2499,7 @@ SEXP do_strwidth(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(isNull(CAR(args)))
 	cex = dd->gp.cex;
-    else if(!FINITE(cex = asReal(CAR(args))) || cex <= 0.0)
+    else if(!R_FINITE(cex = asReal(CAR(args))) || cex <= 0.0)
 	errorcall(call, "invalid cex value\n");
 
     n = LENGTH(str);
@@ -2596,7 +2596,7 @@ SEXP do_dend(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     dnd_hang = asReal(CAR(args));
-    if(!FINITE(dnd_hang))
+    if(!R_FINITE(dnd_hang))
 	goto badargs;
     dnd_hang = dnd_hang * (dnd_hght[dnd_n-1] - dnd_hght[0]);
     args = CDR(args);
@@ -2668,7 +2668,7 @@ SEXP do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     dnd_hang = asReal(CAR(args));
-    if(!FINITE(dnd_hang))
+    if(!R_FINITE(dnd_hang))
 	goto badargs;
     args = CDR(args);
 

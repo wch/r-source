@@ -97,7 +97,7 @@ static char HexDigits[] = "0123456789ABCDEF";
 
 double Log10(double x)
 {
-    return (FINITE(x) && x > 0.0) ? log10(x) : NA_REAL;
+    return (R_FINITE(x) && x > 0.0) ? log10(x) : NA_REAL;
 }
 
 
@@ -1771,15 +1771,15 @@ DevDesc *GNewPlot(int recording, int ask)
 	    {
 		PROTECT(savedDisplayList=dd->displayList);
 		copyGPar(&(dd->dpSaved), &(savedGPar));
-#endif	       
+#endif
 		initDisplayList(dd);
-#ifdef PLOTHISTORY	       
+#ifdef PLOTHISTORY
 	    }
-#endif	   
+#endif
 	    dd->dp.newPage(dd);
-#ifdef PLOTHISTORY	   
+#ifdef PLOTHISTORY
 	    if (recording) UNPROTECT(1);
-#endif	   
+#endif
 	    dd->dp.currentFigure = dd->gp.currentFigure = 1;
 	}
 
@@ -1849,11 +1849,11 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	max = log10(max);
     }
 
-    if(!FINITE(min) || !FINITE(max)) {
+    if(!R_FINITE(min) || !R_FINITE(max)) {
 	warning("Nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]",
 		min, max, axis, log);
-	if(!FINITE(min)) min = - .45 * DBL_MAX;
-	if(!FINITE(max)) max = + .45 * DBL_MAX;
+	if(!R_FINITE(min)) min = - .45 * DBL_MAX;
+	if(!R_FINITE(max)) max = + .45 * DBL_MAX;
 	/* max - min is now finite */
     }
     if(min == max) {
@@ -2327,12 +2327,12 @@ void GCircle(double x, double y, int coords,
 static void setClipRect(double *x1, double *y1, double *x2, double *y2,
                         int coords, DevDesc *dd)
 {
-    /* 
+    /*
      * xpd = 0 means clip to current plot region
      * xpd = 1 means clip to current figure region
      * xpd = 2 means clip to device region
      */
-    *x1 = 0.0; 
+    *x1 = 0.0;
     *y1 = 0.0;
     *x2 = 1.0;
     *y2 = 1.0;
@@ -2684,7 +2684,7 @@ void clipPoint (Edge b, double x, double y,
 		GClipRect *clip, GClipState *cs)
 {
     double ix, iy;
-  
+
     if (!cs[b].first) {
 	/* No previous point exists for this edge. */
 	/* Save this point. */
@@ -2735,7 +2735,7 @@ void closeClip (double *xout, double *yout, int *cnt, int store,
 {
     double ix, iy;
     Edge b;
-  
+
     for (b = Left; b <= Top; b++) {
 	if (cross (b, cs[b].sx, cs[b].sy, cs[b].fx, cs[b].fy, clip)) {
 	    intersect (b, cs[b].sx, cs[b].sy,
@@ -2774,13 +2774,13 @@ int GClipPolygon(double *x, double *y, int n, int coords, int store,
 	clip.ymax = clip.ymin;
 	clip.ymin = swap;
     }
-    for (i = 0; i < n; i++) 
+    for (i = 0; i < n; i++)
 	clipPoint (Left, x[i], y[i], xout, yout, &cnt, store, &clip, cs);
     closeClip (xout, yout, &cnt, store, &clip, cs);
     return (cnt);
 }
 
-/* if bg not specified then draw as polyline rather than polygon 
+/* if bg not specified then draw as polyline rather than polygon
  * to avoid drawing line along border of clipping region
  */
 static void clipPolygon(int n, double *x, double *y, int coords,
@@ -2824,7 +2824,7 @@ void GPolygon(int n, double *x, double *y, int coords,
 	GClip(dd);
 	dd->dp.polygon(n, x, y, coords, bg, fg, dd);
     }
-    else 
+    else
 	clipPolygon(n, x, y, coords, bg, fg, dd);
 }
 
@@ -2864,7 +2864,7 @@ static void clipCircle(double x, double y, int coords,
     /* if circle is all within clipping rect draw all of it */
     if (x-r > xmin && x+r < xmax && y-r > ymin && y+r < ymax) {
 	dd->dp.circle(x, y, DEVICE, r, bg, fg, dd);
-    } 
+    }
     /* if circle is all outside clipping rect, draw nothing */
     else {
 	double distance = r*r;
@@ -2890,7 +2890,7 @@ static void clipCircle(double x, double y, int coords,
 	    xc = (double*)R_alloc(numvert+1, sizeof(double));
 	    yc = (double*)R_alloc(numvert+1, sizeof(double));
 	    for (i=0; i<numvert; i++) {
-		xc[i] = x + r*sin(theta*i); 
+		xc[i] = x + r*sin(theta*i);
 		yc[i] = y + r*cos(theta*i);
 	    }
 	    xc[numvert] = x;
@@ -2906,7 +2906,7 @@ static void clipCircle(double x, double y, int coords,
 		if (npts > 1) {
 		    xcc = (double*)R_alloc(npts, sizeof(double));
 		    ycc = (double*)R_alloc(npts, sizeof(double));
-		    npts = GClipPolygon(xc, yc, numvert, coords, 1, 
+		    npts = GClipPolygon(xc, yc, numvert, coords, 1,
                                         xcc, ycc, dd);
 		    dd->dp.polygon(npts, xcc, ycc, DEVICE, bg, fg, dd);
 		}
@@ -2929,7 +2929,7 @@ void GCircle(double x, double y, int coords,
 	GClip(dd);
 	dd->dp.circle(x, y, coords, ir, col, border, dd);
     }
-    else 
+    else
 	clipCircle(x, y, coords, ir, col, border, dd);
 }
 
@@ -2950,7 +2950,7 @@ static void clipRect(double x0, double y0, double x1, double y1, int coords,
     xc[1] = x0; yc[1] = y1;
     xc[2] = x1; yc[2] = y1;
     xc[3] = x1; yc[3] = y0;
-    xc[4] = x0; yc[4] = y0;    
+    xc[4] = x0; yc[4] = y0;
     if (bg == NA_INTEGER) {
 	dd->gp.col = fg;
 	GPolyline(5, xc, yc, coords, dd);
@@ -2976,7 +2976,7 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
 	GClip(dd);
 	dd->dp.rect(x0, y0, x1, y1, coords, bg, fg, dd);
     }
-    else 
+    else
 	clipRect(x0, y0, x1, y1, coords, bg, fg, dd);
 }
 
@@ -3070,12 +3070,12 @@ void GText(double x, double y, int coords, char *str,
 	/* Fixup for string centering. */
 	/* Higher functions send in NA_REAL */
 	/* when true text centering is desired */
-	if (!FINITE(yc)) {
+	if (!R_FINITE(yc)) {
 	    yadj = (dd->gp.yCharOffset - 0.5);
 	    yc = 0.5;
 	}
 	else yadj = 0;
-	if (!FINITE(xc)) xc = 0.5;
+	if (!R_FINITE(xc)) xc = 0.5;
 	/* We work in NDC coordinates */
 	GConvert(&x, &y, coords, NDC, dd);
 	/* Count the lines of text */
@@ -3305,7 +3305,7 @@ void GPretty(double *lo, double *up, int *ndiv)
 	error("invalid axis extents [GPretty(.,.,n=%d)\n", *ndiv);
     if(*lo == R_PosInf || *up == R_PosInf ||
        *lo == R_NegInf || *up == R_NegInf ||
-       !FINITE(dx = *up - *lo)) {
+       !R_FINITE(dx = *up - *lo)) {
 	error("Infinite axis extents [GPretty(%g,%g,%d)]\n", *lo, *up, *ndiv);
 	return;/*-Wall*/
     }
@@ -3372,7 +3372,7 @@ void GPretty(double *lo, double *up, int *ndiv)
 	error("invalid axis extents [GPretty(.,.,n=%d)\n", *ndiv);
     if(*lo == R_PosInf || *up == R_PosInf ||
        *lo == R_NegInf || *up == R_NegInf ||
-       !FINITE(*up - *lo)) {
+       !R_FINITE(*up - *lo)) {
 	error("Infinite axis extents [GPretty(%g,%g,%d)]\n", *lo, *up, *ndiv);
 	return;/*-Wall*/
     }
@@ -4699,7 +4699,7 @@ unsigned int RGBpar(SEXP x, int i, DevDesc *dd)
 	else return R_ColorTable[abs(index) % R_ColorTableSize];
     }
     else if(isReal(x)) {
-	if(!FINITE(REAL(x)[i])) return NA_INTEGER;
+	if(!R_FINITE(REAL(x)[i])) return NA_INTEGER;
 	index = REAL(x)[i] - 1;
 	if(index < 0) return dd->dp.bg;
 	else return R_ColorTable[abs(index) % R_ColorTableSize];
@@ -4781,7 +4781,7 @@ unsigned int LTYpar(SEXP value, int index)
     }
     else if(isReal(value)) {
 	code = REAL(value)[index];
-	if(!FINITE(code) || code <= 0)
+	if(!R_FINITE(code) || code <= 0)
 	    return NA_INTEGER;
 	code = (code-1) % nlinetype;
 	return linetype[code].pattern;

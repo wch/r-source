@@ -93,10 +93,10 @@ int asLogical(SEXP x)
 	    return (INTEGER(x)[0] == NA_INTEGER) ?
 		NA_LOGICAL : (INTEGER(x)[0]) != 0;
 	case REALSXP:
-	    return FINITE(REAL(x)[0]) ?
+	    return R_FINITE(REAL(x)[0]) ?
 		(REAL(x)[0] != 0.0) : NA_LOGICAL;
 	case CPLXSXP:
-	    return FINITE(COMPLEX(x)[0].r) ?
+	    return R_FINITE(COMPLEX(x)[0].r) ?
 		(COMPLEX(x)[0].r != 0.0) : NA_LOGICAL;
 	default:
 	    return NA_LOGICAL;
@@ -115,10 +115,10 @@ int asInteger(SEXP x)
 	case INTSXP:
 	    return (INTEGER(x)[0]);
 	case REALSXP:
-	    return FINITE(REAL(x)[0]) ?
+	    return R_FINITE(REAL(x)[0]) ?
 		((int)(REAL(x)[0])) : NA_INTEGER;
 	case CPLXSXP:
-	    return FINITE(COMPLEX(x)[0].r) ?
+	    return R_FINITE(COMPLEX(x)[0].r) ?
 		((int)(COMPLEX(x)[0].r)) : NA_INTEGER;
 	}
     }
@@ -891,7 +891,7 @@ do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
     const char *path;
 
     checkArity(op, args);
-    
+
     s = CAR(args);
     if (!isString(s))
 	errorcall(call, "character argument expected\n");

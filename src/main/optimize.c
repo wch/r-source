@@ -51,7 +51,7 @@ static double F77_SYMBOL(fcn1)(double *x)
 	break;
     case REALSXP:
 	if (length(s) != 1) goto badvalue;
-	if (!FINITE(REAL(s)[0])) {
+	if (!R_FINITE(REAL(s)[0])) {
 	    warning("NA/Inf replaced by maximum positive value");
 	    return DBL_MAX;
 	}
@@ -84,14 +84,14 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* xmin */
 
     xmin = asReal(CAR(args));
-    if (!FINITE(xmin))
+    if (!R_FINITE(xmin))
 	errorcall(call, "invalid xmin value\n");
     args = CDR(args);
 
     /* xmax */
 
     xmax = asReal(CAR(args));
-    if (!FINITE(xmax))
+    if (!R_FINITE(xmax))
 	errorcall(call, "invalid xmax value\n");
     if (xmin >= xmax)
 	errorcall(call, "xmin not less than xmax\n");
@@ -100,7 +100,7 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* tol */
 
     tol = asReal(CAR(args));
-    if (!FINITE(tol) || tol <= 0.0)
+    if (!R_FINITE(tol) || tol <= 0.0)
 	errorcall(call, "invalid tol value\n");
 
     R_env1 = rho;
@@ -136,7 +136,7 @@ double fcn2(double x, struct callinfo *info)
 	break;
     case REALSXP:
 	if (length(s) != 1) goto badvalue;
-	if (!FINITE(REAL(s)[0])) {
+	if (!R_FINITE(REAL(s)[0])) {
 	    warning("NA/Inf replaced by maximum positive value");
 	    return DBL_MAX;
 	}
@@ -172,14 +172,14 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* xmin */
 
     xmin = asReal(CAR(args));
-    if (!FINITE(xmin))
+    if (!R_FINITE(xmin))
 	errorcall(call, "invalid xmin value\n");
     args = CDR(args);
 
     /* xmax */
 
     xmax = asReal(CAR(args));
-    if (!FINITE(xmax))
+    if (!R_FINITE(xmax))
 	errorcall(call, "invalid xmax value\n");
     if (xmin >= xmax)
 	errorcall(call, "xmin not less than xmax\n");
@@ -188,7 +188,7 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* tol */
 
     tol = asReal(CAR(args));
-    if (!FINITE(tol) || tol <= 0.0)
+    if (!R_FINITE(tol) || tol <= 0.0)
 	errorcall(call, "invalid tol value\n");
     args = CDR(args);
 
@@ -202,7 +202,7 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
     CADR(info.R_fcall2) = allocVector(REALSXP, 1);
     PROTECT(res = allocVector(REALSXP, 3));
     REAL(res)[0] =
-	zeroin(xmin, xmax,   (double (*)(double, void*)) fcn2, 
+	zeroin(xmin, xmax,   (double (*)(double, void*)) fcn2,
 	       (void *) &info, &tol, &iter);
     REAL(res)[1] = (double)iter;
     REAL(res)[2] = tol;
@@ -216,7 +216,7 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* These are unevaluated calls to R functions supplied by the user.
  * When the optimizer needs a value, the functions below insert
- * the function argument and then evaluate the call. 
+ * the function argument and then evaluate the call.
  */
 static SEXP R_fcall;	/* function */
 static SEXP R_env;	/* where to evaluate the calls */
@@ -252,7 +252,7 @@ static int F77_SYMBOL(fcn)(int *n, double *x, double *f)
 	break;
     case REALSXP:
 	if (length(s) != 1) goto badvalue;
-	if (!FINITE(REAL(s)[0])) {
+	if (!R_FINITE(REAL(s)[0])) {
 	    warning("NA/Inf replaced by maximum positive value");
 	    *f = DBL_MAX;
 	}
@@ -312,7 +312,7 @@ static double *fixparam(SEXP p, int *n, SEXP call)
 	break;
     case REALSXP:
 	for (i = 0; i < *n; i++) {
-	    if (!FINITE(REAL(p)[i]))
+	    if (!R_FINITE(REAL(p)[i]))
 		errorcall(call, "missing value in parameter\n");
 	    x[i] = REAL(p)[i];
 	}
@@ -437,7 +437,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* expected function size */
 
     fscale = asReal(CAR(args));
-    if (R_IsNA(fscale)) invalid_na(call);
+    if (ISNA(fscale)) invalid_na(call);
     args = CDR(args);
 
     omsg = msg = asInteger(CAR(args));
@@ -449,15 +449,15 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args);
 
     gradtl = asReal(CAR(args));
-    if (R_IsNA(gradtl)) invalid_na(call);
+    if (ISNA(gradtl)) invalid_na(call);
     args = CDR(args);
 
     stepmx = asReal(CAR(args));
-    if (R_IsNA(stepmx)) invalid_na(call);
+    if (ISNA(stepmx)) invalid_na(call);
     args = CDR(args);
 
     steptol = asReal(CAR(args));
-    if (R_IsNA(steptol)) invalid_na(call);
+    if (ISNA(steptol)) invalid_na(call);
     args = CDR(args);
 
     itnlim = asInteger(CAR(args));

@@ -1369,7 +1369,7 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* Convenience for using LIST_VEC_NAN macro later */
 #ifndef IEEE_754
-# define R_isNaN(x) (0)
+# define R_IsNaN(x) (0)
 #endif
 SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1502,11 +1502,11 @@ SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case REALSXP:
 	for (i = 0; i < n; i++)
-	    LOGICAL(ans)[i] = FINITE(REAL(x)[i]);
+	    LOGICAL(ans)[i] = R_FINITE(REAL(x)[i]);
 	break;
     case CPLXSXP:
 	for (i = 0; i < n; i++)
-	    LOGICAL(ans)[i] = (FINITE(COMPLEX(x)[i].r) && FINITE(COMPLEX(x)[i].i));
+	    LOGICAL(ans)[i] = (R_FINITE(COMPLEX(x)[i].r) && R_FINITE(COMPLEX(x)[i].i));
 	break;
     default:
 	for (i = 0; i < n; i++)
@@ -1549,7 +1549,7 @@ SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     case REALSXP:
 	for (i = 0; i < n; i++) {
 	    xr = REAL(x)[i];
-	    if (xr != xr /*NaN*/|| FINITE(xr))
+	    if (xr != xr /*NaN*/|| R_FINITE(xr))
 		LOGICAL(ans)[i] = 0;
 	    else
 		LOGICAL(ans)[i] = 1;
@@ -1559,7 +1559,7 @@ SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0; i < n; i++) {
 	    xr = COMPLEX(x)[i].r;
 	    xi = COMPLEX(x)[i].i;
-	    if ((xr != xr || FINITE(xr)) && (xi != xi || FINITE(xi)))
+	    if ((xr != xr || R_FINITE(xr)) && (xi != xi || R_FINITE(xi)))
 		LOGICAL(ans)[i] = 0;
 	    else
 		LOGICAL(ans)[i] = 1;

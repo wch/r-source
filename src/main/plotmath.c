@@ -2883,11 +2883,11 @@ void GMathText(double x, double y, int coords, SEXP expr,
     ReferenceX = x;
     ReferenceY = y;
     GConvert(&ReferenceX, &ReferenceY, coords, INCHES, dd);
-    if (FINITE(xc))
+    if (R_FINITE(xc))
 	CurrentX = ReferenceX - xc * bboxWidth(bbox);
     else
 	CurrentX = ReferenceX;
-    if (FINITE(yc))
+    if (R_FINITE(yc))
 	CurrentY = ReferenceY + bboxDepth(bbox)
 	    - yc * (bboxHeight(bbox) + bboxDepth(bbox));
     else

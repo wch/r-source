@@ -225,7 +225,7 @@ double R_pow(double x, double y) /* = x ^ y */
 {
     if(x == 1. || y == 0.)
 	return(1.);
-    if (FINITE(x) && FINITE(y))
+    if (R_FINITE(x) && R_FINITE(y))
 	return(pow(x,y));
     if (ISNAN(x) || ISNAN(y)) {
 #ifdef IEEE_754
@@ -234,15 +234,15 @@ double R_pow(double x, double y) /* = x ^ y */
 	return(NA_REAL);
 #endif
     }
-    if(!FINITE(x)) {
+    if(!R_FINITE(x)) {
 	if(x > 0) /* Inf ^ y */
 	    return((y < 0.)? 0. : R_PosInf);
 	else { /* (-Inf) ^ y */
-	    if(FINITE(y) && y == floor(y)) /* (-Inf) ^ n */
+	    if(R_FINITE(y) && y == floor(y)) /* (-Inf) ^ n */
 		return((y < 0.) ? 0. : (myfmod(y,2.) ? x  : -x));
 	}
     }
-    if(!FINITE(y)) {
+    if(!R_FINITE(y)) {
 	if(x >= 0) {
 	    if(y > 0) /* y == +Inf */
 		return((x >= 1)? R_PosInf : 0.);

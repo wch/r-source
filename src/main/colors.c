@@ -30,7 +30,7 @@ unsigned int char2col(char *s)
 
 unsigned int ScaleColor(double x)
 {
-    if (!FINITE(x) || x < 0.0 || x > 1.0)
+    if (!R_FINITE(x) || x < 0.0 || x > 1.0)
 	error("color intensity %g, not in [0,1]\n",x);
     return (unsigned int)(255*x);
 }
