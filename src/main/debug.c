@@ -72,3 +72,27 @@ SEXP do_trace(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     return R_NilValue;
 }
+
+
+/* maintain global trace state */
+
+static Rboolean tracing_state = TRUE;
+#define GET_TRACE_STATE tracing_state
+#define SET_TRACE_STATE(value) tracing_state = value
+
+SEXP R_traceOnOff(SEXP onOff) {
+    SEXP value;
+    Rboolean prev = GET_TRACE_STATE;
+    if(length(onOff) > 0) {
+        Rboolean new = asLogical(onOff);
+        if(new == TRUE || new == FALSE)
+            SET_TRACE_STATE(new);
+        else
+            error("Value for tracingState must be TRUE or FALSE");
+    }
+    value = allocVector(LGLSXP, 1);
+    LOGICAL(value)[0] = prev;
+    return value;
+}
+
+Rboolean R_current_trace_state() { return GET_TRACE_STATE; }

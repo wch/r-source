@@ -52,8 +52,9 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
 	if(is.na(match(pkgname, search()))) {
             ## check for the methods package before attaching this package.
             ## Only if it is _already_ here do we do cacheMetaData
-            ## (otherwise, the methods package does it instead, perhaps
-            ## from a requires() in this package's .First.lib).
+            ## The methods package caches all other libs when it is attached.
+            ## Note for detail: this does _not_ test whether dispatch is currently
+            ## on, but rather whether the package is attached (cf .isMethodsDispachOn)
             hasMethods <- !is.na(match("package:methods", search()))
             pkgpath <- .find.package(package, lib.loc, quiet = TRUE,
                                      verbose = verbose)

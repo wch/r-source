@@ -61,6 +61,11 @@ limitedLabels <- function(value, maxwidth = options()$width)
 recover <-
   function()
 {
+    if(.isMethodsDispatchOn()) {
+        ## turn off tracing
+        tState <- tracingState(FALSE)
+        on.exit(tracingState(tState))
+    }
     ## find an interesting environment to dump from
     calls <- sys.calls()
     from <- 0
@@ -98,19 +103,23 @@ recover <-
 
 
 trace <- function(what, tracer, exit, at, print, signature) {
-    needsAttach <- is.na(match("package:methods", search()))
+    needsAttach <- !.isMethodsDispatchOn()
     if(needsAttach) {
-        cat("Tracing functions requires the methods package\n  (in rare cases this may change other results: see ?trace)\n")
+        cat("Tracing functions requires the methods package\n: see ?trace)\n")
         require(methods)
         on.exit(detach("package:methods")) ## in case of error
     }
+    else
+        on.exit(tracingState(tState))
+    tState <- tracingState(FALSE)
     ## now call the version in the methods package, to ensure we get
     ## the correct name space (e.g., correct version of class())
     call <- sys.call()
     call[[1]] <- quote(.TraceWithMethods)
     value <- eval.parent(call)
-    if(needsAttach)
-        on.exit() ## no error
+    on.exit() ## no error
+    tracingState(tState)
+    value
 }
 
 
@@ -118,6 +127,11 @@ trace <- function(what, tracer, exit, at, print, signature) {
 ## details correct, the current version of untrace does no computations ITSELF that
 ## depend on the methods namespace.  But this assertion needs thorough testing.
 untrace <- function(what, signature = NULL) {
+    MethodsDispatchOn <- .isMethodsDispatchOn()
+    if(MethodsDispatchOn) {
+        tState <- tracingState(FALSE)
+        on.exit(tracingState(tState))
+    }
     if(is.function(what)) {
         fname <- substitute(what)
         if(is.name(fname))
@@ -133,7 +147,7 @@ untrace <- function(what, signature = NULL) {
             return(what)
         }
     }
-    if(is.na(match("package:methods", search())))
+    if(!MethodsDispatchOn)
         return(.primUntrace(what)) ## can't have called trace exc. in primitive form
     if(is.null(signature)) {
         where <- findFunction(what)
@@ -165,3 +179,8 @@ untrace <- function(what, signature = NULL) {
 }
         
 
+.isMethodsDispatchOn <- function(onOff = NULL)
+    .Call("R_isMethodsDispatchOn", onOff, PACKAGE = "base")
+
+tracingState <- function( on = NULL)
+    .Call("R_traceOnOff", on, PACKAGE = "base")

@@ -11,6 +11,7 @@
 \alias{Quote}
 \alias{message}
 \alias{showDefault}
+\alias{initMethodDispatch}
 \title{Utility Functions for Methods and S-Plus Compatibility}
 \description{
   These are utilities, currently in the methods package, that either
@@ -35,6 +36,8 @@ Quote()
 message(...)
 
 showDefault(object, oldMethods = TRUE)
+
+initMethodDispatch()
 }
 \section{Summary of Functions}{
   \describe{
@@ -75,6 +78,13 @@ showDefault(object, oldMethods = TRUE)
       Utility, used to enable \code{show} methods to be called by the
       automatic printing (via \code{print.default}).
     }
+  \item{\code{initMethodDispatch}:{
+        Turn on the internal method dispatch code.  Called on
+        attaching the package.  Also, if dispatch has been turned off
+        (by calling \code{.isMethodsDispatchOn(FALSE)}---a very gutsy
+        thing to do), calling this function should turn dispatch back
+        on again.
+        }
   }
 }
 \keyword{internal}

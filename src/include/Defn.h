@@ -679,6 +679,7 @@ void InitConnections(void);
 void InitEd(void);
 void InitFunctionHashing(void);
 void InitGlobalEnv(void);
+Rboolean R_current_trace_state();
 Rboolean R_has_methods(SEXP);
 void R_InitialData(void);
 SEXP R_possible_dispatch(SEXP, SEXP, SEXP, SEXP);

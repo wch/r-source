@@ -24,7 +24,7 @@
     table <- new.env(hash=TRUE)
     assign("__MethodMetaData", table, envir = where)
     .Call("R_initialize_methods_metadata", table, PACKAGE = "methods")
-    .C("R_initMethodDispatch", PACKAGE = "methods")# C-level initialization
+    initMethodDispatch()
     saved <- (if(exists(".saveImage", envir = where, inherits = FALSE))
               get(".saveImage", envir = where)
               else

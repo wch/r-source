@@ -393,7 +393,7 @@ SEXP eval(SEXP e, SEXP rho)
 	    PROTECT(op = findFun(CAR(e), rho));
 	else
 	    PROTECT(op = eval(CAR(e), rho));
-	if(TRACE(op)) {
+	if(TRACE(op) && R_current_trace_state()) {
 	    Rprintf("trace: ");
 	    PrintValue(e);
 	}

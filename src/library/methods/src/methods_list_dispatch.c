@@ -85,9 +85,9 @@ static void init_loadMethod() {
 
 void R_initMethodDispatch()
 {
+    R_set_standardGeneric_ptr(R_standardGeneric);
     if(initialized)
 	return;
-    R_set_standardGeneric_ptr(R_standardGeneric);
     R_set_quick_method_check(R_quick_method_check);
     s_dot_Methods = Rf_install(".Methods");
     s_skeleton = Rf_install("skeleton");

@@ -1,6 +1,7 @@
 \name{trace}
 \alias{trace}
 \alias{untrace}
+\alias{tracingState}
 %% internal
 \alias{.primTrace}
 \alias{.primUntrace}
@@ -11,11 +12,14 @@
   call to \code{\link{browser}} or \code{\link{recover}}) at chosen
   places in any function.  A call to \code{untrace} cancels the tracing.
   Specified methods can be traced the same way, without tracing all
-  calls to the function.  Trace code can be any \R expression.
+  calls to the function.  Trace code can be any \R expression. Tracing
+  can be temporarily turned on or off globally by calling \code{tracingState}.
 }
 \usage{
 trace(what, tracer, exit, at, print = TRUE, signature = NULL)
 untrace(what, signature = NULL)
+
+tracingState(on)
 }
 \arguments{ 
   \item{what}{ The name (quoted or not) of a function to be traced or
@@ -39,6 +43,14 @@ untrace(what, signature = NULL)
   \item{signature}{ If this argument is supplied, it should be a
     signature for a method for function \code{what}.  In this case, the
     method, and \emph{not} the function itself, is traced. }
+
+ \item{on}{A call to \code{tracingState} returns \code{TRUE} if
+     tracing is globally turned on, \code{FALSE} otherwise.  An
+     argument of one or the other of those values sets the state.  If
+     the tracing state is \code{FALSE}, none of the trace actions will
+     actually occur (used, for example, by debugging functions to shut
+     off tracing during debugging).
+     }
 }
 \details{
   The \code{trace} function operates by constructing a revised version
@@ -144,6 +156,8 @@ untrace(what, signature = NULL)
 }
 \examples{
 
+\testonly{ hasMethods <- .isMethodsDispatchOn()}
+
 f <- function(x, y) {
     y <- pmax(y, .001)
     x ^ y
@@ -168,6 +182,60 @@ trace("as.matrix", recover)
 ## turn off the tracing
 
 untrace(c("f", "as.matrix"))
+
+\testonly{
+
+
+f <- function(x, y) { c(x,y)}
+
+xy <- 0
+
+trace(f, quote(x <- c(1, x)), exit = quote(xy <<- x), print = FALSE)
+
+fxy <- f(2,3)
+
+stopifnot(identical(fxy, c(1,2,3)))
+stopifnot(identical(xy, c(1,2)))
+
+untrace(f)
+
+## a generic and its methods
+
+setGeneric("f")
+
+setMethod("f", c("character", "character"), function(x,  y) paste(x,y))
+
+## trace the generic
+trace("f", quote(x <- c("A", x)), exit = quote(xy <<- c(x, "Z")), print = FALSE)
+
+## should work for any method
+
+stopifnot(identical(f(4,5), c("A",4,5)))
+stopifnot(identical(xy, c("A", 4, "Z")))
+
+stopifnot(identical(f("B", "C"), paste(c("A","B"), "C")))
+stopifnot(identical(xy, c("A", "B", "Z")))
+
+## trace a method
+
+trace("f", sig = c("character", "character"), quote(x <- c(x, "D")),
+      exit = quote(xy <<- xyy <<- c(x, "W")), print = FALSE)
+
+stopifnot(identical(f("B", "C"), paste(c("A","B","D"), "C")))
+stopifnot(identical(xy, c("A", "B", "D", "W")))
+stopifnot(identical(xy, xyy))
+
+## but the default method is unchanged
+
+stopifnot(identical(f(4,5), c("A",4,5)))
+stopifnot(identical(xy, c("A", 4, "Z")))
+
+removeGeneric("f")
+
+if(!hasMethods)
+   detach("package:methods")
+
+}
 
 }
 \keyword{programming}

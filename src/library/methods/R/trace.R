@@ -85,25 +85,28 @@
             stop("can't use \"at\" argument unless the function body has the form { ... }")
         for(i in at) {
             if(print)
-                expri <- substitute({.doTracePrint(MSG); TRACE; EXPR},
+                expri <- substitute({if(tracingState()){.doTracePrint(MSG); TRACE}; EXPR},
                             list(TRACE = tracer, MSG = paste("step",i), EXPR = fBody[[i]]))
             else
-                expri <- substitute({TRACE; EXPR},
+                expri <- substitute({if(tracingState())TRACE; EXPR},
                             list(TRACE=tracer, EXPR = fBody[[i]]))
             fBody[[i]] <- expri
         }
     }
     else if(!is.null(tracer)){
             if(print)
-                fBody <- substitute({.doTracePrint(MSG); TRACE; EXPR},
+                fBody <- substitute({if(tracingState()){.doTracePrint(MSG); TRACE}; EXPR},
                             list(TRACE = tracer, MSG = paste("on entry"), EXPR = fBody))
             else
-                fBody <- substitute({TRACE; EXPR},
+                fBody <- substitute({if(tracingState())TRACE; EXPR},
                             list(TRACE=tracer, EXPR = fBody))
     }
     if(!is.null(exit)) {
         if(print)
-            exit <- substitute({.doTracePrint(MSG); EXPR},
+            exit <- substitute(if(tracingState()){.doTracePrint(MSG); EXPR},
+                            list(EXPR = exit, MSG = paste("on exit")))
+        else
+            exit <- substitute(if(tracingState())EXPR,
                             list(EXPR = exit, MSG = paste("on exit")))
         fBody <- substitute({on.exit(TRACE); BODY},
                             list(TRACE=exit, BODY=fBody))
@@ -129,6 +132,9 @@
                  representation(cl, "traceable"), sealed = TRUE, where = envir)
     setMethod("initialize", "traceable",
               function(.Object, def, tracer, exit, at, print) {
+                  oldClass <- class(def)
+                  if(isClass(oldClass) && length(getClass(oldClass)@slots) > 0)
+                      as(.Object, oldClass) <- def # to get other slots in def
                   .Object@original <- def
                   if(!is.null(elNamed(getSlots(class(def)), ".Data")))
                       def <- def@.Data

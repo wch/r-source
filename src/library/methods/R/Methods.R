@@ -686,3 +686,5 @@ callGeneric <- function(...)
     eval(call, sys.frame(sys.parent()))
 }
 
+initMethodDispatch <- function()
+    .C("R_initMethodDispatch", PACKAGE = "methods")# C-level initialization

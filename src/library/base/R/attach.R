@@ -10,7 +10,7 @@ attach <- function(what, pos=2, name=deparse(substitute(what)))
     else
         value <- .Internal(attach(what, pos, name))
     if((length(objects(envir = value, all=TRUE)) > 0)
-       && !is.na(match("package:methods", search())))
+       && .isMethodsDispatchOn())
       cacheMetaData(value, TRUE)
     invisible(value)
 }
@@ -34,8 +34,12 @@ detach <- function(name, pos=2)
             if(!is.null(libpath)) try(.Last.lib(libpath))
         }
     }
-    if(!is.na(match("package:methods", search())) && pos != match("package:methods", search()))
-      cacheMetaData(env, FALSE)
+    if(.isMethodsDispatchOn()) {
+        if(pos != match("package:methods", search()))
+            cacheMetaData(env, FALSE)
+        else
+            .isMethodsDispatchOn(FALSE)
+    }
     .Internal(detach(pos))
 }
 
