@@ -158,11 +158,6 @@ Date: Mon, 18 Jun 2001 13:57:10 -0500
 Subject: R-intro suggestions part II
 From: "Paul E. Johnson" <pauljohn@ukans.edu>
 Date: Tue, 03 Jul 2001 15:50:06 -0500
-* PR# 1136 *
-Subject: cex/col/etc. in title(): documentation?
-From: Ben Bolker <ben@zoo.ufl.edu>
-Date: Mon, 22 Oct 2001 11:55:14 -0400 (EDT)
-..MM:actually the documentation still could elaborate a bit..
 * PR# 1772 *
 Subject: bug(?) in R FAQ - Should I run R from within Emacs?
 From: Tim.Harrold@csiro.au
@@ -560,10 +555,6 @@ Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
 Subject: Mean and var inconsistency
 From: Kevin.Wright@pioneer.com
 Date: Wed, 2 Oct 2002 16:19:27 +0200 (MET DST)
-* PR# 2436 *
-Subject: NASDAQ ALERT - NATK Revenues UP 1594% - Signs $55 Million Deal............................................................ etj
-From: Nasdaq Newsdesk 717 <Nasdaq_Newsdesk_69@idt.net>
-Date: Thu, 9 Jan 2003 13:53:21 -0600
 * PR# 2437 *
 Subject: RNG.c: unif_rand, MARSAGLIA_MULTICARRY
 From: simardr@IRO.UMontreal.CA
@@ -572,3 +563,15 @@ Date: Thu, 9 Jan 2003 23:32:02 +0100 (MET)
 Subject: typo in documentation for lda in MASS
 From: htang@hpl.hp.com
 Date: Fri, 10 Jan 2003 00:07:19 +0100 (MET)
+* PR# 2440 *
+Subject: URGENT MATTER
+From: "ABACHA MOHHAMED" <muhab01@fastermail.com>
+Date: Fri, 10 Jan 2003 12:58:13 +0100
+* PR# 2441 *
+Subject: =?ISO-8859-1?B?sdCxeqZwpvOmqKywuvS49KR1tXuudg==?=
+From: ccbng1n3vb1y@snb.ch
+Date: 07 Jan 2003 22:51:34 +0800
+* PR# 2442 *
+Subject: Re: Movies
+From: <big@boss.com>
+Date: Fri, 10 Jan 2003 15:50:23 --0500
