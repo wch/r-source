@@ -707,6 +707,8 @@ void GetMatrixDimnames(SEXP x, SEXP *rl, SEXP *cl, char **rn, char **cn)
     if (isNull(dimnames)) {
 	*rl = R_NilValue;
 	*cl = R_NilValue;
+	*rn = NULL;
+	*cn = NULL;
     }
     else {
 	*rl = VECTOR(dimnames)[0];

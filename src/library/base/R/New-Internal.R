@@ -50,6 +50,8 @@ rbind <- function(..., deparse.level=1) {
 dataentry <- function(data, modes).Internal(dataentry(data, modes))
 deparse <-
     function(expr, width.cutoff = 60).Internal(deparse(expr, width.cutoff))
+deparse.list <-
+    function(...)sapply(as.list(substitute(list(...)))[-1], deparse)
 
 do.call <- function(what,args).Internal(do.call(what,args))
 drop <- function(x).Internal(drop(x))
