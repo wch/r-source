@@ -1,7 +1,34 @@
+/*
+ *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 1998 R Core Team
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+
+ * Mathlib.h  should contain ALL headers from R's  src/nmath/*.c  code
+   ---------  such that ``the Math library'' can be used by simply
+
+   ``#include "Mathlib.h" ''
+
+   and nothing else
+*/
 #ifndef MATHLIB_H
 #define MATHLIB_H
 
-#define MATHLIB_IN_R/*-- Mathlib as part of R --*/
+/*-- Mathlib as part of R --  undefine this for standalone : */
+#define MATHLIB_IN_R
 
 #include "Arith.h"
 #include "Random.h"
