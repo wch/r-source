@@ -331,7 +331,7 @@ SEXP eval(SEXP e, SEXP rho)
 		errorcall(R_GlobalContext->call,
 			  "recursive default argument reference");
 	    SET_PRSEEN(e, 1);
-	    val = eval(PREXPR(e), PRENV(e));
+	    val = eval(PRCODE(e), PRENV(e));
 	    SET_PRSEEN(e, 0);
 	    SET_PRVALUE(e, val);
 	    /* allow GC to reclaim; useful for fancy games with delay() */
