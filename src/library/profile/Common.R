@@ -48,7 +48,7 @@ local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
 {
     last <- rev(getOption("defaultPackages"))[1]
     for(pkg in getOption("defaultPackages")) {
-        res <- require(pkg, quietly = TRUE, warn.conflicts = (pkg != last),
+        res <- require(pkg, quietly = TRUE, warn.conflicts = FALSE,
                        character.only = TRUE, save = FALSE)
         if(!res)
             warning("package ", pkg,
