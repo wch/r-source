@@ -32,6 +32,7 @@ options(timeout = 60)
 options(internet.info = 2)
 options(encoding = native.enc)
 options(show.error.messages = TRUE)
+options(defaultPackages = c("methods", "ctest"))
 
 .First <- function() {
     for(pkg in options()$defaultPackages)
