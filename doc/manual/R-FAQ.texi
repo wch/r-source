@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-32, @value{FAQ-YEAR}-01-16
+@set FAQ-VERSION 1.8-33, @value{FAQ-YEAR}-01-21
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1561,6 +1561,8 @@ Functions for I/O, visualisation and analysis of functional Magnetic
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
+@item BradleyTerry
+Specify and fit the Bradley-Terry model and structured versions.
 @item CDNmoney
 Components of Canadian monetary aggregates.
 @item CGIwithR
@@ -1609,6 +1611,10 @@ a range of R functions to match the interface metadata structures.
 @item GenKern
 Functions for generating and manipulating generalised binned kernel
 density estimates.
+@item GeneTS
+A package for analysing multiple gene expression time series data.
+Currently, implements methods for cell cycle analysis and for inferring
+large sparse graphical Gaussian models.
 @item HI
 Simulation from distributions supported by nested hyperplanes.
 @item Hmisc
@@ -1848,6 +1854,10 @@ data.
 @item deal
 Bayesian networks with continuous and/or discrete variables can be
 learned and compared from data.
+@item debug
+Debugger for R functions, with code display, graceful error recovery,
+line-numbered conditional breakpoints, access to exit code, flow
+control, and full keyboard input.
 @item deldir
 Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
 tesselation (with respect to the entire plane) of a planar point set.
@@ -2168,6 +2178,10 @@ classification.
 @item multiv
 Functions for hierarchical clustering, partitioning, bond energy
 algorithm, Sammon mapping, PCA and correspondence analysis.
+@item mvbutils
+Utilities by Mark V. Bravington for project organization, editing and
+backup, sourcing, documentation (formal and informal), package
+preparation, macro functions, and more.
 @item mvnmle
 ML estimation for multivariate normal data with missing values.
 @item mvnormtest

@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-32, 2004-01-16
+Version 1.8-33, 2004-01-21
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1243,6 +1243,9 @@ distributions of R.)
 *Bhat*
      Functions for general likelihood exploration (MLE, MCMC, CIs).
 
+*BradleyTerry*
+     Specify and fit the Bradley-Terry model and structured versions.
+
 *CDNmoney*
      Components of Canadian monetary aggregates.
 
@@ -1304,6 +1307,11 @@ distributions of R.)
 *GenKern*
      Functions for generating and manipulating generalised binned kernel
      density estimates.
+
+*GeneTS*
+     A package for analysing multiple gene expression time series data.
+     Currently, implements methods for cell cycle analysis and for inferring
+     large sparse graphical Gaussian models.
 
 *HI*
      Simulation from distributions supported by nested hyperplanes.
@@ -1615,6 +1623,11 @@ distributions of R.)
 *deal*
      Bayesian networks with continuous and/or discrete variables can be
      learned and compared from data.
+
+*debug*
+     Debugger for R functions, with code display, graceful error recovery,
+     line-numbered conditional breakpoints, access to exit code, flow
+     control, and full keyboard input.
 
 *deldir*
      Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
@@ -2038,6 +2051,11 @@ distributions of R.)
 *multiv*
      Functions for hierarchical clustering, partitioning, bond energy
      algorithm, Sammon mapping, PCA and correspondence analysis.
+
+*mvbutils*
+     Utilities by Mark V. Bravington for project organization, editing and
+     backup, sourcing, documentation (formal and informal), package
+     preparation, macro functions, and more.
 
 *mvnmle*
      ML estimation for multivariate normal data with missing values.
