@@ -1,9 +1,10 @@
 ### Internal functions.
 
 sQuote <- function(s) paste("`", s, "'", sep = "")
-listFilesWithExts <- function(dir, exts, path = TRUE) {
-    ## Return the paths or names of the files in `dir' with
-    ## extension in `exts'.
+
+.listFilesWithExts <- function(dir, exts, path = TRUE) {
+    ## Return the paths or names of the files in @code{dir} with
+    ## extension in @code{exts}.
     files <- list.files(dir)
     files <- files[sub(".*\\.", "", files) %in% exts]
     if(path)
@@ -14,105 +15,145 @@ listFilesWithExts <- function(dir, exts, path = TRUE) {
     files
 }
 
+.loadPackageQuietly <- function(package, lib.loc) {
+    ## Load (reload if already loaded) @code{package} from
+    ## @code{lib.loc}, capturing all output and messages.  All QA
+    ## functions use this for loading packages because R CMD check
+    ## interprets all output as indicating a problem.
+    outConn <- textConnection("out", "w")
+    sink(outConn, type = "output")
+    sink(outConn, type = "message")
+    yy <- try({
+        pos <- match(paste("package", package, sep = ":"), search())
+        if(!is.na(pos))
+            detach(pos = pos)
+        library(package, lib.loc = lib.loc, character.only = TRUE)
+    })
+    if(inherits(yy, "try-error"))
+        stop(yy)
+    sink(type = "message")
+    sink(type = "output")
+    close(outConn)
+}
+
+.makeS3MethodsStopList <- function(package) {
+    ## Return a character vector with the names of the functions in
+    ## @code{package} which 'look' like S3 methods, but are not.
+    switch(package,
+           base = c("boxplot.stats",
+           "close.screen", "close.socket",
+           "format.char", "format.info", "format.pval",
+           "plot.new", "plot.window", "plot.xy",
+           "split.screen",
+           "update.packages"),
+           quadprog = c("solve.QP", "solve.QP.compact"),
+           sm = "print.graph",
+           ts = "lag.plot",
+           character(0))
+}
+
+.sourceAssignments <- function(file, envir) {
+    ## Read and parse expressions from @code{file}, and then
+    ## successively evaluate the top-level assignments in @code{envir}.
+    ## Apart from only dealing with assignments, basically does the same
+    ## as @code{sys.source(file, envir, keep.source = FALSE)}.
+    oop <- options(keep.source = FALSE)
+    on.exit(options(oop))
+    assignmentSymbol <- as.name("<-")
+    exprs <- parse(n = -1, file = file)
+    if(length(exprs) == 0)
+        return(invisible())
+    for(e in exprs) {
+        if(e[[1]] == assignmentSymbol)
+            yy <- eval(e, envir)
+    }
+    invisible()
+}
+    
 ### The real stuff.
 
 undoc <-
 function(package, dir, lib.loc = NULL)
 {
-    useSaveImage <- FALSE
     if(!missing(package)) {
         if(length(package) != 1)
             stop("argument `package' must be of length 1")
-        packageDir <- .find.package(package, lib.loc)
+        dir <- .find.package(package, lib.loc)
+        ## Using package installed in `dir' ...
+        if(!file.exists(helpIndex <- file.path(dir, "help", "AnIndex")))
+            stop(paste("directory", sQuote(dir),
+                       "contains no help index"))
         isBase <- package == "base"
-        objsdocs <- sort(scan(file = file.path(packageDir, "help",
-                              "AnIndex"),
-                              what = list("", ""),
-                              quiet = TRUE, sep="\t")[[1]])
-        codeFile <- file.path(packageDir, "R", "all.rda")
-        if(file.exists(codeFile))
-            useSaveImage <- TRUE
-        else
-            codeFile <- file.path(packageDir, "R", package)
-        dataDir <- file.path(packageDir, "data")
+
+        ## Find all documented topics from the help index.
+        allDocTopics <- sort(scan(file = helpIndex, 
+                                  what = list("", ""),
+                                  quiet = TRUE, sep="\t")[[1]])
+
+        ## Load package into codeEnv.
+        if(!isBase)
+            .loadPackageQuietly(package, lib.loc)
+        codeEnv <-
+            as.environment(match(paste("package", package, sep = ":"),
+                                 search()))
+
+        dataDir <- file.path(dir, "data")
     }
     else {
         if(missing(dir))
             stop("you must specify `package' or `dir'")
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
-        isBase <- basename(dir) == "base"
+        else
+            ## maybe perform tilde expansion on `dir'
+            dir <- file.path(dirname(dir), basename(dir))
         if(!file.exists(docsDir <- file.path(dir, "man")))
-            stop("no directory with Rd sources found")
+            stop(paste("directory", sQuote(dir),
+                       "does not contain Rd sources"))
+        isBase <- basename(dir) == "base"
+
+        ## Find all documented topics from the Rd sources.
         docsExts <- c("Rd", "rd")
-        files <- listFilesWithExts(docsDir, docsExts)
+        files <- .listFilesWithExts(docsDir, docsExts)
         if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
-            files <- c(files, listFilesWithExts(docsOSDir, docsExts))
+            files <- c(files, .listFilesWithExts(docsOSDir, docsExts))
         aliases <- character(0)
         for(f in files) {
             aliases <- c(aliases,
                          grep("^\\\\alias", readLines(f), value = TRUE))
         }
-        objsdocs <- gsub("\\\\alias{(.*)}.*", "\\1", aliases)
-        objsdocs <- gsub("\\\\%", "%", objsdocs)
-        objsdocs <- gsub(" ", "", objsdocs)
-        objsdocs <- sort(unique(objsdocs))
+        allDocTopics <- gsub("\\\\alias{(.*)}.*", "\\1", aliases)
+        allDocTopics <- gsub("\\\\%", "%", allDocTopics)
+        allDocTopics <- gsub(" ", "", allDocTopics)
+        allDocTopics <- sort(unique(allDocTopics))
 
+        codeEnv <- new.env()        
         if(file.exists(codeDir <- file.path(dir, "R"))) {
+            ## Collect code in codeFile.            
             codeFile <- tempfile("Rcode")
             on.exit(unlink(codeFile))
             codeExts <- c("R", "r", "S", "s", "q")
-            files <- listFilesWithExts(codeDir, codeExts)
+            files <- .listFilesWithExts(codeDir, codeExts)
             if(file.exists(codeOSDir <- file.path(codeDir, .Platform$OS)))
-                files <- c(files, listFilesWithExts(codeOSDir, codeExts))
+                files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
             file.create(codeFile)
             file.append(codeFile, files)
-        }
-        else
-            codeFile <- ""
-
-        dataDir <- file.path(dir, "data")
-    }
-
-    lib.source <- function(file, envir) {
-        oop <- options(keep.source = FALSE)
-        on.exit(options(oop))
-        assignmentSymbol <- as.name("<-")
-        exprs <- parse(n = -1, file = file)
-        if(length(exprs) == 0)
-            return(invisible())
-        for(e in exprs) {
-            if(e[[1]] == assignmentSymbol)
-                yy <- eval(e, envir)
-        }
-        invisible()
-    }
-    
-    if(isBase)
-        allObjs <- ls("package:base", all.names = TRUE)
-    else if(file.exists(codeFile)) {
-        codeEnv <- new.env()
-        if(useSaveImage) {
-            yy <- try(load(codeFile, envir = codeEnv))
-            if(inherits(yy, "try-error")) {
-                stop("cannot load package image")
-            }
-        }
-        else {
-            yy <- try(lib.source(codeFile, envir = codeEnv))
+            ## Read code from codeFile into codeEnv            
+            yy <- try(.sourceAssignments(codeFile, env = codeEnv))
             if(inherits(yy, "try-error")) {
                 stop("cannot source package code")
             }
         }
-        allObjs <- ls(envir = codeEnv, all.names = TRUE)
+
+        dataDir <- file.path(dir, "data")
     }
-    else
-        allObjs <- NULL
+
+    allObjs <- ls(envir = codeEnv, all.names = TRUE)
 
     if(file.exists(dataDir)) {
         dataExts <- c("R", "r", "RData", "rdata", "rda", "TXT", "txt",
                       "tab", "CSV", "csv")
-        files <- listFilesWithExts(dataDir, dataExts)
+        files <- .listFilesWithExts(dataDir, dataExts)
         files <- files[!duplicated(sub("\\.[A-Za-z]*$", "", files))]
         dataEnv <- new.env()
         dataObjs <- NULL
@@ -145,10 +186,11 @@ function(package, dir, lib.loc = NULL)
     }
 
     ## Undocumented objects?
-    if(is.null(allObjs))
+    if(length(allObjs) == 0)
         warning("Neither code nor data objects found")
     else
-        allObjs[! allObjs %in% c(objsdocs, ".First.lib", ".Last.lib")]
+        allObjs[! allObjs %in% c(allDocTopics,
+                                 ".First.lib", ".Last.lib")]
 }
 
 codoc <-
@@ -177,26 +219,9 @@ function(package, dir, lib.loc = NULL,
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
 
-        ## Load package into codeEnv
-        if(!isBase) {
-            ## Need to capture all output and messages.
-            outConn <- textConnection("out", "w")
-            sink(outConn, type = "output")
-            sink(outConn, type = "message")
-            yy <- try({
-                pos <- match(paste("package", package, sep = ":"),
-                             search())
-                if(!is.na(pos))
-                    detach(pos = pos)
-                library(package, lib.loc = lib.loc,
-                        character.only = TRUE)
-            })
-            if(inherits(yy, "try-error"))
-                stop(yy)
-            sink(type = "message")
-            sink(type = "output")
-            close(outConn)
-        }
+        ## Load package into codeEnv.
+        if(!isBase)
+            .loadPackageQuietly(package, lib.loc)
         codeEnv <-
             as.environment(match(paste("package", package, sep = ":"),
                                  search()))
@@ -222,30 +247,17 @@ function(package, dir, lib.loc = NULL,
         codeFile <- tempfile("Rcode")
         unlinkOnExitFiles <- c(unlinkOnExitFiles, codeFile)
         codeExts <- c("R", "r", "S", "s", "q")
-        files <- listFilesWithExts(codeDir, codeExts)
+        files <- .listFilesWithExts(codeDir, codeExts)
         if(file.exists(codeOSDir <- file.path(codeDir, .Platform$OS)))
-            files <- c(files, listFilesWithExts(codeOSDir, codeExts))
+            files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
         file.create(codeFile)
         file.append(codeFile, files)
         
-        ## Read code from codeFile into codeEnv
-        lib.source <- function(file, envir) {
-            oop <- options(keep.source = FALSE)
-            on.exit(options(oop))
-            assignmentSymbol <- as.name("<-")
-            exprs <- parse(n = -1, file = file)
-            if(length(exprs) == 0)
-                return(invisible())
-            for(e in exprs) {
-                if(e[[1]] == assignmentSymbol)
-                    yy <- eval(e, envir)
-            }
-            invisible()
-        }
+        ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()
         if(verbose)
             cat("Reading code from", sQuote(codeFile), "\n")        
-        yy <- try(lib.source(codeFile, env = codeEnv))
+        yy <- try(.sourceAssignments(codeFile, env = codeEnv))
         if(inherits(yy, "try-error")) {
             stop("cannot source package code")
         }
@@ -307,9 +319,9 @@ function(package, dir, lib.loc = NULL,
     docsFile <- tempfile("Rdocs")
     unlinkOnExitFiles <- c(unlinkOnExitFiles, docsFile)
     docsExts <- c("Rd", "rd")
-    files <- listFilesWithExts(docsDir, docsExts)
+    files <- .listFilesWithExts(docsDir, docsExts)
     if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
-        files <- c(files, listFilesWithExts(docsOSDir, docsExts))
+        files <- c(files, .listFilesWithExts(docsOSDir, docsExts))
     docsList <- tempfile("Rdocs")
     unlinkOnExitFiles <- c(unlinkOnExitFiles, docsList)
     writeLines(files, docsList)
@@ -424,26 +436,9 @@ function(package, dir, lib.loc = NULL)
                        "does not contain R code"))
         isBase <- basename(dir) == "base"
 
-        ## Load package into codeEnv
-        if(!isBase) {
-            ## Need to capture all output and messages.
-            outConn <- textConnection("out", "w")
-            sink(outConn, type = "output")
-            sink(outConn, type = "message")
-            yy <- try({
-                pos <- match(paste("package", package, sep = ":"),
-                             search())
-                if(!is.na(pos))
-                    detach(pos = pos)
-                library(package, lib.loc = lib.loc,
-                        character.only = TRUE)
-            })
-            if(inherits(yy, "try-error"))
-                stop(yy)
-            sink(type = "message")
-            sink(type = "output")
-            close(outConn)
-        }
+        ## Load package into codeEnv.
+        if(!isBase)
+            .loadPackageQuietly(package, lib.loc)
         codeEnv <-
             as.environment(match(paste("package", package, sep = ":"),
                                  search()))
@@ -466,28 +461,15 @@ function(package, dir, lib.loc = NULL)
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
         codeExts <- c("R", "r", "S", "s", "q")
-        files <- listFilesWithExts(codeDir, codeExts)
+        files <- .listFilesWithExts(codeDir, codeExts)
         if(file.exists(codeOSDir <- file.path(codeDir, .Platform$OS)))
-            files <- c(files, listFilesWithExts(codeOSDir, codeExts))
+            files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
         file.create(codeFile)
         file.append(codeFile, files)
 
         ## Read code from codeFile into codeEnv.
-        lib.source <- function(file, envir) {
-            oop <- options(keep.source = FALSE)
-            on.exit(options(oop))
-            assignmentSymbol <- as.name("<-")
-            exprs <- parse(n = -1, file = file)
-            if(length(exprs) == 0)
-                return(invisible())
-            for(e in exprs) {
-                if(e[[1]] == assignmentSymbol)
-                    yy <- eval(e, envir)
-            }
-            invisible()
-        }
         codeEnv <- new.env()
-        yy <- try(lib.source(codeFile, env = codeEnv))
+        yy <- try(.sourceAssignments(codeFile, env = codeEnv))
         if(inherits(yy, "try-error")) {
             stop("cannot source package code")
         }
@@ -537,9 +519,9 @@ function(package, dir, lib.loc = NULL)
     docsFile <- tempfile("Rdocs")
     on.exit(unlink(docsFile))
     docsExts <- c("Rd", "rd")
-    files <- listFilesWithExts(docsDir, docsExts)
+    files <- .listFilesWithExts(docsDir, docsExts)
     if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
-        files <- c(files, listFilesWithExts(docsOSDir, docsExts))
+        files <- c(files, .listFilesWithExts(docsOSDir, docsExts))
     docsList <- tempfile("Rdocs")
     on.exit(unlink(docsList), add = TRUE)
     writeLines(files, docsList)
@@ -624,26 +606,9 @@ function(package, dir, lib.loc = NULL)
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
 
-        ## Load package into codeEnv
-        if(!isBase) {
-            ## Need to capture all output and messages.
-            outConn <- textConnection("out", "w")
-            sink(outConn, type = "output")
-            sink(outConn, type = "message")
-            yy <- try({
-                pos <- match(paste("package", package, sep = ":"),
-                             search())
-                if(!is.na(pos))
-                    detach(pos = pos)
-                library(package, lib.loc = lib.loc,
-                        character.only = TRUE)
-            })
-            if(inherits(yy, "try-error"))
-                stop(yy)
-            sink(type = "message")
-            sink(type = "output")
-            close(outConn)
-        }
+        ## Load package into codeEnv.
+        if(!isBase)
+            .loadPackageQuietly(package, lib.loc)
         codeEnv <-
             as.environment(match(paste("package", package, sep = ":"),
                                  search()))
@@ -669,28 +634,15 @@ function(package, dir, lib.loc = NULL)
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
         codeExts <- c("R", "r", "S", "s", "q")
-        files <- listFilesWithExts(codeDir, codeExts)
+        files <- .listFilesWithExts(codeDir, codeExts)
         if(file.exists(codeOSDir <- file.path(codeDir, .Platform$OS)))
-            files <- c(files, listFilesWithExts(codeOSDir, codeExts))
+            files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
         file.create(codeFile)
         file.append(codeFile, files)
 
         ## Read code from codeFile into codeEnv.
-        lib.source <- function(file, envir) {
-            oop <- options(keep.source = FALSE)
-            on.exit(options(oop))
-            assignmentSymbol <- as.name("<-")
-            exprs <- parse(n = -1, file = file)
-            if(length(exprs) == 0)
-            return(invisible())
-            for(e in exprs) {
-                if(e[[1]] == assignmentSymbol)
-                    yy <- eval(e, envir)
-            }
-            invisible()
-        }
         codeEnv <- new.env()
-        yy <- try(lib.source(codeFile, env = codeEnv))
+        yy <- try(.sourceAssignments(codeFile, env = codeEnv))
         if(inherits(yy, "try-error")) {
             stop("cannot source package code")
         }
@@ -724,26 +676,12 @@ function(package, dir, lib.loc = NULL)
     ## Find all methods in the given package for the generic functions
     ## determined above.  Store as a list indexed by the names of the
     ## generic functions.
-    methodStopList <-
-        ## Explicitly deal with functions which `look' like S3 methods,
-        ## but are not.  Should be a package internal variable, as it is
-        ## used in both checkDocArgs() and checkMethods().
-        switch(basename(dir),
-               base = c("boxplot.stats",
-               "close.screen", "close.socket",
-               "format.char", "format.info", "format.pval",
-               "plot.new", "plot.window", "plot.xy",
-               "split.screen",
-               "update.packages"),
-               quadprog = c("solve.QP", "solve.QP.compact"),
-               ts = "lag.plot",
-               sm = "print.graph",
-               character(0))
+    methodsStopList <- .makeS3MethodsStopList(basename(dir))
     methodsInPackage <- sapply(allGenerics, function(g) {
         name <- paste("^", g, ".", sep = "")
         methods <- grep(gsub("([.[])", "\\\\\\1", name),
                         funs, value = TRUE)
-        methods <- methods[! methods %in% methodStopList]
+        methods <- methods[! methods %in% methodsStopList]
         methods
     })
     allMethodsInPackage <- unlist(methodsInPackage)
@@ -752,9 +690,9 @@ function(package, dir, lib.loc = NULL)
     docsFile <- tempfile("Rdocs")
     on.exit(unlink(docsFile), add = TRUE)
     docsExts <- c("Rd", "rd")
-    files <- listFilesWithExts(docsDir, docsExts)
+    files <- .listFilesWithExts(docsDir, docsExts)
     if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
-        files <- c(files, listFilesWithExts(docsOSDir, docsExts))
+        files <- c(files, .listFilesWithExts(docsOSDir, docsExts))
     docsList <- tempfile("Rdocs")
     on.exit(unlink(docsList), add = TRUE)
     writeLines(files, docsList)
@@ -878,10 +816,10 @@ function(package, dir, file, lib.loc = NULL,
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         codeExts <- c("R", "r", "S", "s", "q")
-        codeFiles <- listFilesWithExts(codeDir, codeExts)
+        codeFiles <- .listFilesWithExts(codeDir, codeExts)
         if(file.exists(codeOSDir <- file.path(codeDir, .Platform$OS)))
             codeFiles <- c(codeFiles,
-                           listFilesWithExts(codeOSDir, codeExts))
+                           .listFilesWithExts(codeOSDir, codeExts))
         file <- tempfile()
         on.exit(unlink(file))
         file.create(file)
@@ -925,26 +863,9 @@ function(package, dir, lib.loc = NULL)
                        "does not contain R code"))
         isBase <- basename(dir) == "base"
 
-        ## Load package into codeEnv
-        if(!isBase) {
-            ## Need to capture all output and messages.
-            outConn <- textConnection("out", "w")
-            sink(outConn, type = "output")
-            sink(outConn, type = "message")
-            yy <- try({
-                pos <- match(paste("package", package, sep = ":"),
-                             search())
-                if(!is.na(pos))
-                    detach(pos = pos)
-                library(package, lib.loc = lib.loc,
-                        character.only = TRUE)
-            })
-            if(inherits(yy, "try-error"))
-                stop(yy)
-            sink(type = "message")
-            sink(type = "output")
-            close(outConn)
-        }
+        ## Load package into codeEnv.
+        if(!isBase)
+            .loadPackageQuietly(package, lib.loc)
         codeEnv <-
             as.environment(match(paste("package", package, sep = ":"),
                                  search()))
@@ -967,28 +888,15 @@ function(package, dir, lib.loc = NULL)
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
         codeExts <- c("R", "r", "S", "s", "q")
-        files <- listFilesWithExts(codeDir, codeExts)
+        files <- .listFilesWithExts(codeDir, codeExts)
         if(file.exists(codeOSDir <- file.path(codeDir, .Platform$OS)))
-            files <- c(files, listFilesWithExts(codeOSDir, codeExts))
+            files <- c(files, .listFilesWithExts(codeOSDir, codeExts))
         file.create(codeFile)
         file.append(codeFile, files)
         
         ## Read code from codeFile into codeEnv.
-        lib.source <- function(file, envir) {
-            oop <- options(keep.source = FALSE)
-            on.exit(options(oop))
-            assignmentSymbol <- as.name("<-")
-            exprs <- parse(n = -1, file = file)
-            if(length(exprs) == 0)
-                return(invisible())
-            for(e in exprs) {
-                if(e[[1]] == assignmentSymbol)
-                    yy <- eval(e, envir)
-            }
-            invisible()
-        }
         codeEnv <- new.env()
-        yy <- try(lib.source(codeFile, env = codeEnv))
+        yy <- try(.sourceAssignments(codeFile, env = codeEnv))
         if(inherits(yy, "try-error")) {
             stop("cannot source package code")
         }
@@ -1008,21 +916,7 @@ function(package, dir, lib.loc = NULL)
          || (fname %in% c("as.data.frame", "plot")))
     }
 
-    methodStopList <-
-        ## Explicitly deal with functions which `look' like S3 methods,
-        ## but are not.  Should be a package internal variable, as it is
-        ## used in both checkDocArgs() and checkMethods().
-        switch(basename(dir),
-               base = c("boxplot.stats",
-               "close.screen", "close.socket",
-               "format.char", "format.info", "format.pval",
-               "plot.new", "plot.window", "plot.xy",
-               "split.screen",
-               "update.packages"),
-               quadprog = c("solve.QP", "solve.QP.compact"),
-               sm = "print.graph",
-               ts = "lag.plot",
-               character(0))
+    methodsStopList <- .makeS3MethodsStopList(basename(dir))
 
     checkArgs <- function(g, m, env) {
         ## Do the arguments of method m (in codeEnv) `extend' those of
@@ -1078,7 +972,7 @@ function(package, dir, lib.loc = NULL)
             name <- paste("^", g, ".", sep = "")
             methods <- grep(gsub("([.[])", "\\\\\\1", name),
                             funs, value = TRUE)
-            methods <- methods[! methods %in% methodStopList]
+            methods <- methods[! methods %in% methodsStopList]
             for(m in methods)
                 badMethods <- c(badMethods, checkArgs(g, m, env))
         }
@@ -1135,10 +1029,10 @@ function(package, dir, file, lib.loc = NULL)
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         codeExts <- c("R", "r", "S", "s", "q")
-        codeFiles <- listFilesWithExts(codeDir, codeExts)
+        codeFiles <- .listFilesWithExts(codeDir, codeExts)
         if(file.exists(codeOSDir <- file.path(codeDir, .Platform$OS)))
             codeFiles <- c(codeFiles,
-                           listFilesWithExts(codeOSDir, codeExts))
+                           .listFilesWithExts(codeOSDir, codeExts))
         file <- tempfile()
         on.exit(unlink(file))
         file.create(file)
@@ -1151,5 +1045,6 @@ function(package, dir, file, lib.loc = NULL)
     if(!file.exists(file))
         stop(paste("file", sQuote(file), "does not exist"))
     exprs <- parse(file = file, n = -1)
-    for(i in seq(along = exprs)) checkTnFandPrint(exprs[[i]], NULL)
+    for(i in seq(along = exprs))
+        checkTnFandPrint(exprs[[i]], NULL)
 }
