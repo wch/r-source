@@ -85,7 +85,7 @@ while test -n "${1}"; do
     RHOME)
       echo ${R_HOME}; exit 0 ;;
     CMD)
-      shift; PATH="${PATH}:${R_HOME}/bin" exec "${@}" ;;
+      shift; PATH="${R_HOME}/bin:${PATH}" exec "${@}" ;;
     BATCH|COMPILE|INSTALL|REMOVE|SHLIB)
       CMD="$1"; shift; exec sh "${R_HOME}/bin/${CMD}" "${@}" ;;
     -g|--gnome)
