@@ -56,6 +56,10 @@ USER-VISIBLE CHANGES
 	as well as the recommended packages `KernSmooth', `MASS',
 	`boot', `class', `nnet', `rpart' and `spatial'.
 
+    o   libraries can now be loaded with version numbers. This allows
+	for multiple versions of files to be installed (and potentially 
+	loaded). Some serious testing will be going on, but it should 
+        have no effect unless specifically asked for.
 
 NEW FEATURES
 

@@ -16,7 +16,8 @@
 update.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
                 contriburl = contrib.url(CRAN),
                 method, instlib = NULL,
-                ask=TRUE, available=NULL, destdir=NULL)
+                ask=TRUE, available=NULL, destdir=NULL,
+		installWithVers=TRUE)
 
 installed.packages(lib.loc = NULL, priority = NULL)
 CRAN.packages(CRAN = getOption("CRAN"), method = "auto",
@@ -30,7 +31,8 @@ download.packages(pkgs, destdir, available = NULL,
                   contriburl = contrib.url(CRAN), method = "auto")
 install.packages(pkgs, lib, CRAN = getOption("CRAN"),
                  contriburl = contrib.url(CRAN),
-                 method, available = NULL, destdir = NULL)
+                 method, available = NULL, destdir = NULL,
+		 installWithVers=TRUE)
 }
 \arguments{
   \item{lib.loc}{character vector describing the location of R
@@ -55,6 +57,8 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
     install the packages.}
   \item{ask}{logical indicating to ask before packages are actually downloaded
     and installed.}
+  \item{installWithVers}{If TRUE, will invoke the install the package such
+    that it can be referenced by package version}
 }
 \details{
   \code{installed.packages} scans the \file{DESCRIPTION} files of each

@@ -28,9 +28,10 @@
 library(package, help, lib.loc = NULL, character.only = FALSE,
         logical.return = FALSE, warn.conflicts = TRUE,
         keep.source = getOption("keep.source.pkgs"),
-        verbose = getOption("verbose"))
+        verbose = getOption("verbose"), version)
 require(package, quietly = FALSE, warn.conflicts = TRUE,
-        keep.source = getOption("keep.source.pkgs"), character.only=FALSE)
+        keep.source = getOption("keep.source.pkgs"),
+        character.only=FALSE, version)
 
 .First.lib(libname, pkgname)
 .Last.lib(libpath)
@@ -52,6 +53,9 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
     of \code{NULL} corresponds to all libraries currently known.}
   \item{character.only}{a logical indicating whether \code{package} or
     \code{help} can be assumed to be character strings.}
+  \item{version}{A character string denoting a version number of the 
+     package to be loaded.  If no version is given, a suitable default
+     is chosen.}
   \item{logical.return}{logical.  If it is \code{TRUE},  \code{FALSE} or
       \code{TRUE} is returned to indicate success.}
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are

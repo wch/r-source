@@ -24,7 +24,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.11 $ ';
+my $revision = ' $Revision: 1.12 $ ';
 my $version;
 my $name;
 
@@ -84,7 +84,17 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example){
 }
 
 ($pkg, $lib, @mandir) = buildinit();
-$dest = file_path($lib, $pkg);
+
+
+## !!! Attempting to create the ability to have packages stored in a 
+## !!! location other than lib/pkg.  There are obviously better ways
+## !!! of doing this, but trying to do it in a manner which will not
+## !!! interfere with other things calling this besides INSTALL. JG
+$dest = $ARGV[2];
+if (!$dest) {
+    $dest = file_path($lib, $pkg);
+}
+
 print STDERR "Destination dest = '$dest'\n" if $opt_debug;
 
 build_index($lib, $dest, "");

@@ -15,14 +15,20 @@ attach <- function(what, pos=2, name=deparse(substitute(what)))
     invisible(value)
 }
 
-detach <- function(name, pos=2)
+detach <- function(name, pos=2, version)
 {
     if(!missing(name)) {
         name <- substitute(name)# when a name..
 	pos <-
-	    if(is.numeric(name)) name
-	    else match(if(!is.character(name)) deparse(name) else name,
-		       search())
+	    if(is.numeric(name))
+                name
+	    else {
+                if (!is.character(name))
+                    name <- deparse(name)
+                if (!missing(version))
+                    name <- manglePackageName(name, version)
+                match(name, search())
+            }
 	if(is.na(pos))
 	    stop("invalid name")
     }

@@ -46,10 +46,10 @@ survival-ZIPDATA = zip
 
 bundle-%:
 	@$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
-
+## Changed PKGDIR
 pkg-%:
 	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" \
-	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
+	  -C $(PKGDIR) PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \
 	  $(MAKE) --no-print-directory $($*-ZIPDATA)data-$* ; \

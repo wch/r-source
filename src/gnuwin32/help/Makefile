@@ -17,23 +17,23 @@ indices:
 pkg-% help-%:
 	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	  ../../../share/perl/build-help-windows.pl ${DOS} \
-	  -txt -html -example -latex $(PKGDIR)/$* $(RLIB)
+	  -txt -html -example -latex $(PKGDIR) $(RLIB)
 
 chm-%:
 	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	  ../../../share/perl/build-help-windows.pl ${DOS} \
-	  -chm $(PKGDIR)/$* $(RLIB)
+	  -chm $(PKGDIR) $(RLIB)
 # hhc always gives an error code
-	@$(MAKE)  --no-print-directory -C $(PKGDIR)/$*/chm \
+	@$(MAKE)  --no-print-directory -C $(PKGDIR)/chm \
 	  -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm
 	@$(MKDIR) -p $(RLIB)/$*/chtml
-	@$(CP) $(PKGDIR)/$*/chm/$*.chm $(RLIB)/$*/chtml
+	@$(CP) $(PKGDIR)/chm/$*.chm $(RLIB)/$*/chtml
 
 winhlp-%: chm-%
-	$(MAKE) --no-print-directory -C $(PKGDIR)/$*/chm \
+	$(MAKE) --no-print-directory -C $(PKGDIR)/chm \
 	  -f $(RHOME)/src/gnuwin32/help/Makefile $*.hlp
 	$(MKDIR) -p $(RLIB)/$*/winhlp
-	$(CP) $(PKGDIR)/$*/chm/$*.cnt $(PKGDIR)/$*/chm/$*.hlp $(RLIB)/$*/winhlp
+	$(CP) $(PKGDIR)/chm/$*.cnt $(PKGDIR)/chm/$*.hlp $(RLIB)/$*/winhlp
 
 ziphelp-%:
 	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
@@ -45,14 +45,14 @@ ziponlyhelp-%:
 
 
 winhelp-%:
-	$(MAKE) --no-print-directory -C $(PKGDIR)/$* \
+	$(MAKE) --no-print-directory -C $(PKGDIR) \
 	  -f $(RHOME)/src/gnuwin32/help/Makefile PKG=$* win
 
 latex-%:
 	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
 	-f $(RHOME)/src/gnuwin32/help/Makefile PKG=$* unzipit
 	PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	  ../../../share/perl/build-help-windows.pl ${DOS} -latex $(PKGDIR)/$*
+	  ../../../share/perl/build-help-windows.pl ${DOS} -latex $(PKGDIR)
 
 clean:
 	$(RM) -fr *~ *.o *.obj *.dll *.def *.a

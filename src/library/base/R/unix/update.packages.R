@@ -1,6 +1,7 @@
 install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                              contriburl=contrib.url(CRAN),
-                             method, available=NULL, destdir=NULL)
+                             method, available=NULL, destdir=NULL,
+			     installWithVers=TRUE)
 {
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
@@ -31,8 +32,11 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                 okp <- p == foundpkgs[, 1]
                 if(length(okp) > 0){
                     cmd <- paste(file.path(R.home(),"bin","R"),
-                                 "CMD INSTALL -l", lib,
-                                 foundpkgs[okp, 2])
+				 "CMD INSTALL")
+		    if (installWithVers)
+			cmd <- paste(cmd,"--with-package-versions")
+
+		    cmd <- paste(cmd,"-l",lib,foundpkgs[okp, 2])
                     status <- system(cmd)
                     if(status>0){
                         warning(paste("Installation of package",

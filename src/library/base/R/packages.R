@@ -17,7 +17,8 @@ CRAN.packages <- function(CRAN=getOption("CRAN"), method,
 update.packages <- function(lib.loc=NULL, CRAN=getOption("CRAN"),
                             contriburl=contrib.url(CRAN),
                             method, instlib=NULL, ask=TRUE,
-                            available=NULL, destdir=NULL)
+                            available=NULL, destdir=NULL,
+			    installWithVers=TRUE)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
@@ -54,7 +55,8 @@ update.packages <- function(lib.loc=NULL, CRAN=getOption("CRAN"),
         install.packages(update[,"Package"], instlib,
                          contriburl=contriburl,
                          method=method,
-                         available=available, destdir=destdir)
+                         available=available, destdir=destdir,
+                         installWithVers=installWithVers)
     }
 }
 
@@ -255,7 +257,7 @@ package.dependencies <- function(x, check = FALSE)
     }
 }
 
-remove.packages <- function(pkgs, lib) {
+remove.packages <- function(pkgs, lib, version) {
 
     updateIndices <- function(lib) {
         ## This should eventually be made public, as it could also be
@@ -275,8 +277,12 @@ remove.packages <- function(pkgs, lib) {
         warning(paste("argument `lib' is missing: using", lib))
     }
 
+    if (!missing(version))
+        pkgs <- manglePackageName(pkgs, version)
+
     paths <- .find.package(pkgs, lib)
     unlink(paths, TRUE)
     for(lib in unique(dirname(paths)))
         updateIndices(lib)
 }
+

@@ -2,7 +2,7 @@ library <-
     function(package, help, lib.loc = NULL, character.only = FALSE,
              logical.return = FALSE, warn.conflicts = TRUE,
              keep.source = getOption("keep.source.pkgs"),
-             verbose = getOption("verbose"))
+             verbose = getOption("verbose"), version)
 {
     testRversion <- function(descfile)
     {
@@ -92,10 +92,64 @@ library <-
         }
     }
 
+   libraryPkgName <- function(pkgName,sep="_") {
+	splitName <- unlist(strsplit(pkgName,sep))
+	splitName[1]
+    }
+
+    libraryPkgVersion <- function(pkgName, sep="_") {
+        splitName <- unlist(strsplit(pkgName,sep))
+	if (length(splitName) > 1)
+		return(splitName[2])
+	else
+		return(NULL)
+    }
+
+    libraryMaxVersPos <- function(vers) {
+	## Takes in a character vector of version numbers
+        ## returns the position of the maximum version utilizing
+        ## compareVersion.  Can't do as.numeric due to the "-" in versions.
+	max <- vers[1]
+
+        for (ver in vers) {
+	    if (compareVersion(max,ver) < 0)
+		max <- ver
+        }
+	out <- match(max, vers)
+	out
+    }
+
     sQuote <- function(s) paste("'", s, "'", sep = "")
+
+    if (is.null(lib.loc)) {
+        lib.loc <- .libPaths()
+    }
+
     if(!missing(package)) {
 	if(!character.only)
 	    package <- as.character(substitute(package))
+
+	if (!missing(version)) {
+	     package <- manglePackageName(package, version)
+        }
+	else {
+	   ## Need to find the proper package to install
+	   pkgDirs <- dir(lib.loc,pattern=paste("^",package,sep=""))
+           ## See if any directories in lib.loc match the pattern of 'package',
+           ## if none do, just continue as it will get caught below.  Otherwise,
+           ## if there is actually a 'package', use that, and if not, then use
+           ## the highest versioned dir.
+	   if (length(pkgDirs) > 0) {
+	       if (!(package %in% pkgDirs)) {
+		   ## Need to find the highest version avail
+		   vers <- unlist(lapply(pkgDirs,libraryPkgVersion))
+		   pos <- libraryMaxVersPos(vers)
+		   if (length(pos) > 0)
+			   package <- pkgDirs[pos]
+               }
+           }
+        }
+
         if(length(package) != 1)
             stop("argument `package' must be of length 1")
 	pkgname <- paste("package", package, sep = ":")
@@ -113,7 +167,11 @@ library <-
             pkgpath <- .find.package(package, lib.loc, quiet = TRUE,
                                      verbose = verbose)
             if(length(pkgpath) == 0) {
-                txt <- paste("There is no package called", sQuote(package))
+               txt <- paste("There is no package called",
+			     sQuote(libraryPkgName(package)))
+		vers <- libraryPkgVersion(package)
+		if (!is.null(vers))
+		   txt <- paste(txt,", version ",vers,sep="")
                 if(logical.return) {
                     warning(txt)
 		    return(FALSE)
@@ -149,7 +207,7 @@ library <-
                         return(invisible(.packages()))
                 }
             }
-            codeFile <- file.path(which.lib.loc, package, "R", package)
+            codeFile <- file.path(which.lib.loc, package, "R", libraryPkgName(package))
 	    ## create environment (not attached yet)
 	    loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
 	    ## source file into loadenv
@@ -341,14 +399,22 @@ library.dynam <-
 
 require <-
     function(package, quietly = FALSE, warn.conflicts = TRUE,
-             keep.source = getOption("keep.source.pkgs"), character.only=FALSE)
+             keep.source = getOption("keep.source.pkgs"), character.only=FALSE,
+	     version)
 {
-    if( !character.only )
+   if( !character.only )
         package <- as.character(substitute(package)) # allowing "require(eda)"
-    if (is.na(match(paste("package", package, sep = ":"), search()))) {
+    if (missing(version))
+        pkgName <- package
+    else
+        pkgName <- manglePackageName(package, version)
+
+
+    if (is.na(match(paste("package", pkgName, sep = ":"), search()))) {
 	if (!quietly) cat("Loading required package:", package, "\n")
 	library(package, char = TRUE, logical = TRUE,
-		warn.conflicts = warn.conflicts, keep.source = keep.source)
+		warn.conflicts = warn.conflicts, keep.source = keep.source,
+                version=version)
     } else TRUE
 }
 
@@ -477,4 +543,8 @@ print.packageInfo <- function(x, ...)
               title = paste("Documentation for package",
               sQuote(x$name)))
     invisible(x)
+}
+
+manglePackageName <- function(pkgName, pkgVersion) {
+    return(paste(pkgName,"_",pkgVersion,sep=""))
 }
