@@ -76,6 +76,9 @@ static double fminfn(int n, double *p, void *ex)
     SETCADR(OS->R_fcall, x);
     PROTECT_WITH_INDEX(s = eval(OS->R_fcall, OS->R_env), &ipx);
     REPROTECT(s = coerceVector(s, REALSXP), ipx);
+    if (LENGTH(s) != 1)  
+	error("objective function in optim evaluates to length %d not 1", 
+	      LENGTH(s)); 
     val = REAL(s)[0]/(OS->fnscale);
     UNPROTECT(2);
     return val;

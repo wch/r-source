@@ -488,6 +488,9 @@ BUG FIXES
     o	'methods' initialization was calling a function intended for
 	.Call() with .C().
 
+    o   optim() needed a check that the objective function returns a
+        value of length 1 (spotted by Ben Bolker).
+
 
 
 
