@@ -1,9 +1,0 @@
-#!/bin/sh
-
-HTMLDIR=../../html
-
-for i in `ls src | sed /CVS/d`
-do
-	doc2html src/$i > $HTMLDIR/funs/$i.html
-	echo $i
-done

@@ -1,8 +1,0 @@
-TITLE(coded.res.table @@ Coded Residual Table)
-USAGE(coded.res.table(medpol.list))
-DESCRIPTION(
-LANG(coded.res.table) displays a coded residual table from
-a median polish fit.
-LANG(medpol.list) is a list produced by LANG(medpolish).
-The displayed table is also returned by the function.
-)

@@ -1,7 +1,0 @@
-TITLE(stddev @@ Sample Standard Deviation)
-USAGE(
-stddev(x)
-)
-DESCRIPTION(
-LANG(stddev) calculates the standard deviation of the data in LANG(x).
-)
