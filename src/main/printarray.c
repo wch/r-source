@@ -327,7 +327,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 		else
 		    Rprintf("%s", EncodeComplex(x[i + j * r],
 						wr[j] + R_print.gap, dr[j], er[j],
-						wi[j], dr[j], er[j]));
+						wi[j], di[j], ei[j]));
 	    }
 	}
 	Rprintf("\n");
