@@ -4,7 +4,7 @@ Testing R build under Windows
 - Build R, the bitmap library, the distribution, the installer.
 
     make
-    (cd bitmap; make)
+    make bitmapdll
     make tcl
 
     make check
@@ -78,7 +78,7 @@ Testing R build under Windows
 
 - cd front-ends then
 
-    make -f make.rest
+    make -f make.rtest
     set R_HOME appropriately
     Rtest.exe
     >  try some simple R commands
