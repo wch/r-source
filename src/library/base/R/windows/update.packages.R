@@ -19,29 +19,39 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
         setwd(tmpDir)
         tools::checkMD5sums(pkgname)
 
-        ## Get the real package name, and if wanted, the real version
-        ## num, and use this to install the package
-        desc <- read.dcf(file.path(pkgname, "DESCRIPTION"),
-                         c("Package", "Version"))
-        if (installWithVers) {
-            instPath <- file.path(lib, paste(desc[1,1], desc[1,2], sep="_"))
+        ## Check to see if this is a bundle or a single package
+        if (file.exists("DESCRIPTION")) {
+            ## Bundle
+            conts <- read.dcf("DESCRIPTION",fields="Contains")[1,]
+            if (is.na(conts))
+                stop("Malformed bundle DESCRIPTION file, no Contains field")
+            else
+                pkgs <- strsplit(conts," ")[[1]]
         }
-        else instPath <- file.path(lib, desc[1,1])
+        else
+            pkgs <- pkgname
 
-        ## If the package is already installed w/ this
-        ## instName, remove it.  If it isn't there, the unlink call will
-        ## still return success.
-        ret <- unlink(instPath, recursive=TRUE)
-        if (ret == 0) {
-            ## Move the new package to the install lib and
-            ## remove our temp dir
-            file.rename(file.path(tmpDir, pkgname), instPath)
-        } else {
-            ## Would prefer to make sure it is a "clean" install, but
-            ## if the directory could not be removed for some reason,
-            ## default to old behaviour where it would just copy all
-            ## files on top of previous install.
-            zip.unpack(pkg, lib)
+        for (curPkg in pkgs) {
+            desc <- read.dcf(file.path(curPkg, "DESCRIPTION"),
+                             c("Package", "Version"))
+            if (installWithVers) {
+                instPath <- file.path(lib, paste(desc[1,1], desc[1,2], sep="_"))
+            }
+            else instPath <- file.path(lib, desc[1,1])
+
+            ## If the package is already installed w/ this
+            ## instName, remove it.  If it isn't there, the unlink call will
+            ## still return success.
+            ret <- unlink(instPath, recursive=TRUE)
+            if (ret == 0) {
+                ## Move the new package to the install lib and
+                ## remove our temp dir
+                file.rename(file.path(tmpDir, curPkg), instPath)
+            } else {
+                ## !! Can't revert to old 'zip.unpack' as it would
+                ## !! potentially leave cruft from a bundle in there
+                stop("Can not remove prior installation of package")
+            }
         }
         setwd(cDir)
         unlink(tmpDir, recursive=TRUE)

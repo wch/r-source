@@ -10,6 +10,10 @@ rw1071
 The system() function printed a spurious warning when the input argument
 was used.
 
+The File|Change Dir...|Browse dialog could cause R to crash.
+
+Fixed bug in versioned install of binary package bundles.
+
 rw1070
 ======
 
