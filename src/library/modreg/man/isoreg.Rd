@@ -3,7 +3,6 @@
 \alias{isoreg}
 %\alias{fitted.isoreg}
 %\alias{residuals.isoreg}
-%\alias{as.stepfun.isoreg}
 \description{
   Compute the isotonic (monotonely increasing nonparametric) least
   squares regression which is piecewise constant.
@@ -24,7 +23,7 @@ isoreg(x, y = NULL)
   linear and the result is \eqn{m'(x)}, a step function with level
   changes at locations where the convex \eqn{m(x)} touches the
   cumulative data polygon and changes slope.\cr
-  \code{\link{as.stepfun}()} in \pkg{stepfun}
+  \code{\link[stepfun]{as.stepfun}()} in \pkg{stepfun}
   returns a \code{\link[stepfun]{stepfun}} object
   which can be more parsimonious.
 }
@@ -52,7 +51,7 @@ isoreg(x, y = NULL)
   Barlow, R. E., Bartholomew, D. J., Bremner, J. M., and Brunk, H. D. (1972)
   \emph{Statistical inference under order restrictions}; Wiley, London.
 
-  Robertson, T., Wright,F.T. and Dykstra, R.L. (1988)
+  Robertson, T., Wright,F. T. and Dykstra, R. L. (1988)
   \emph{Order Restricted Statistical Inference}; Wiley, New York.
 }
 %%\author{Original C code by Brian Ripley; all else: Martin Maechler}
