@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-15 @value{FAQ-YEAR}-05-18
+@set FAQ-VERSION 1.9-16 @value{FAQ-YEAR}-05-19
 @set REL-VERSION 1.9.0
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -1832,6 +1832,8 @@ A set of routines that calculate power and related quantities utilizing
 asymptotic likelihood ratio methods.
 @item aws
 Functions to perform adaptive weights smoothing.
+@item bayesmix
+Bayesian mixture models of univariate Gaussian distributions using JAGS.
 @item betareg
 Beta regression for modeling rates and proportions.
 @item bim
