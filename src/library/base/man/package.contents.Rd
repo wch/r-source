@@ -7,13 +7,14 @@
   a package.
 }
 \usage{
-package.contents(pkg, lib = .lib.loc)
-package.description(pkg, lib = .lib.loc, fields = NULL)
+package.contents(pkg, lib.loc = NULL)
+package.description(pkg, lib.loc = NULL, fields = NULL)
 }
 \arguments{
   \item{pkg}{a character string with the package name.}
-  \item{lib}{a character vector with path names of \R package
-    libraries.}
+  \item{lib.loc}{a character vector describing the location of \R
+    library trees to search through, or \code{NULL}.  The default value
+    of \code{NULL} corresponds to all libraries currently known.}
   \item{fields}{a character vector giving the tags of fields to return
     (if other fields occur in the file they are ignored).}
 }

@@ -1,8 +1,11 @@
 options(repositories=c("http://cran.r-project.org/src/contrib"))
 
-packageStatus <- function(lib.loc = .lib.loc,
+packageStatus <- function(lib.loc = NULL,
                            repositories = getOption("repositories"))
 {
+    if(is.null(lib.loc))
+        lib.loc <- .libPaths()
+
     FIELDS <- c("Package", "Version","Priority", "Bundle", "Depends",
                 "Built", "Status")
     FIELDS1 <- c(FIELDS, "LibPath")

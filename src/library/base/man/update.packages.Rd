@@ -13,15 +13,15 @@
   CRAN and update outdated packages on the fly.}
 }
 \usage{
-update.packages(lib.loc = .lib.loc, CRAN = getOption("CRAN"),
+update.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
                 contriburl = contrib.url(CRAN),
                 method, instlib = NULL,
                 ask=TRUE, available=NULL, destdir=NULL)
 
-installed.packages(lib.loc = .lib.loc)
+installed.packages(lib.loc = NULL)
 CRAN.packages(CRAN = getOption("CRAN"), method = "auto",
               contriburl = contrib.url(CRAN))
-old.packages(lib.loc = .lib.loc, CRAN = getOption("CRAN"),
+old.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
              contriburl = contrib.url(CRAN),
              method, available = NULL)
 
@@ -90,7 +90,7 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   \code{install.packages} can be used to install new packages, it
   takes a vector of package names and a destination library, downloads
   the packages from CRAN and installs them. If the library
-  is omitted it defaults to the first directory in \code{.lib.loc}, with
+  is omitted it defaults to the first directory in \code{.libPaths()}, with
   a warning.
 %  The first argument can be an unquoted name, as in
 %  \code{install.packages(nlme)}.

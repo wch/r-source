@@ -18,9 +18,6 @@
 \method{plot}{dendrogram}(x, type=c("rectangle", "triangle"),
                 center=FALSE, xlab="", ylab="", ...)
 \method{cut}{dendrogram}(x, h, ...)
-
-plotNode(x1, x2, subtree, type, center)
-plotNodeLimit(x1, x2, subtree, center)
 }
 \arguments{
   \item{x}{Object of class \code{"dendrogram"}.}

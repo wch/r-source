@@ -14,14 +14,17 @@ CRAN.packages <- function(CRAN=getOption("CRAN"), method,
                        "Priority", "Bundle", "Depends"))
 }
 
-update.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
+update.packages <- function(lib.loc=NULL, CRAN=getOption("CRAN"),
                             contriburl=contrib.url(CRAN),
                             method, instlib=NULL, ask=TRUE,
                             available=NULL, destdir=NULL)
 {
+    if(is.null(lib.loc))
+        lib.loc <- .libPaths()
+   
     if(is.null(available))
         available <- CRAN.packages(contriburl=contriburl, method=method)
-
+    
     old <- old.packages(lib.loc=lib.loc,
                         contriburl=contriburl,
                         method=method,
@@ -55,10 +58,13 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
     }
 }
 
-old.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
+old.packages <- function(lib.loc=NULL, CRAN=getOption("CRAN"),
                          contriburl=contrib.url(CRAN),
                          method, available=NULL)
 {
+    if(is.null(lib.loc))
+        lib.loc <- .libPaths()
+    
     instp <- installed.packages(lib.loc=lib.loc)
     if(is.null(available))
         available <- CRAN.packages(contriburl=contriburl, method=method)
@@ -122,9 +128,12 @@ old.packages <- function(lib.loc=.lib.loc, CRAN=getOption("CRAN"),
     update
 }
 
-package.contents <- function(pkg, lib=.lib.loc){
-
-    file <- system.file("CONTENTS", package = pkg, lib.loc = lib)
+package.contents <- function(pkg, lib.loc=NULL)
+{
+    if(is.null(lib.loc))
+        lib.loc <- .libPaths()
+    
+    file <- system.file("CONTENTS", package = pkg, lib.loc = lib.loc)
     if(file == "") {
         warning(paste("Cannot find CONTENTS file of package", pkg))
         return(NA)
@@ -134,9 +143,12 @@ package.contents <- function(pkg, lib=.lib.loc){
 }
 
 
-package.description <- function(pkg, lib=.lib.loc, fields=NULL)
+package.description <- function(pkg, lib.loc=NULL, fields=NULL)
 {
-    file <- system.file("DESCRIPTION", package = pkg, lib.loc = lib)
+    if(is.null(lib.loc))
+        lib.loc <- .libPaths()
+
+    file <- system.file("DESCRIPTION", package = pkg, lib.loc = lib.loc)
     if(file != "") {
         retval <- read.dcf(file=file, fields=fields)[1,]
     }
@@ -156,8 +168,11 @@ package.description <- function(pkg, lib=.lib.loc, fields=NULL)
 }
 
 
-installed.packages <- function(lib.loc = .lib.loc)
+installed.packages <- function(lib.loc = NULL)
 {
+    if(is.null(lib.loc))
+        lib.loc <- .libPaths()
+
     retval <- NULL
     for(lib in lib.loc)
     {
