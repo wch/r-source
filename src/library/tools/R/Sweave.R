@@ -16,22 +16,26 @@ Sweave <- function(file, driver=RweaveLatex(), ...)
     for(line in text){
         if(any(grep("^@", line))){
             if(mode=="doc"){
-                drobj <- driver$writedoc(drobj, chunk)
+                if(!is.null(chunk))
+                    drobj <- driver$writedoc(drobj, chunk)
                 mode <- "doc"
             }
             else{
-                drobj <- driver$runcode(drobj, chunk, chunkopts)
+                if(!is.null(chunk))
+                    drobj <- driver$runcode(drobj, chunk, chunkopts)
                 mode <- "doc"
             }
             chunk <- NULL
         }
         else if(any(grep("^<<.*>>=", line))){
             if(mode=="doc"){
-                drobj <- driver$writedoc(drobj, chunk)
+                if(!is.null(chunk))
+                    drobj <- driver$writedoc(drobj, chunk)
                 mode <- "code"
             }
             else{
-                drobj <- driver$runcode(drobj, chunk, chunkopts)
+                if(!is.null(chunk))
+                    drobj <- driver$runcode(drobj, chunk, chunkopts)
                 mode <- "code"
             }
             chunkopts <- sub("^<<(.*)>>=.*", "\\1", line)
