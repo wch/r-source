@@ -112,11 +112,14 @@ SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
     gc();
     gc_reporting = ogc;
     /*- now return the [free , total ] for cells and heap */
-    PROTECT(value = allocVector(INTSXP, 4));
+    PROTECT(value = allocVector(INTSXP, 6));
     INTEGER(value)[0] = R_Collected;
     INTEGER(value)[1] = (int)(R_VSize - (R_VTop - R_VHeap));
     INTEGER(value)[2] = R_NSize;
     INTEGER(value)[3] = R_VSize;
+    /* next two are in 0.1Mb, rounded up */
+    INTEGER(value)[4] = 10.0 * R_NSize/1048576.0 * sizeof(SEXPREC) + 0.999;
+    INTEGER(value)[5] = 10.0 * R_VSize/131072.0 + 0.999;
     UNPROTECT(1);
     return value;
 }
@@ -403,7 +406,8 @@ void gc(void)
 #ifdef HAVE_SIGLONGJMP
     sigset_t mask, omask;
 #endif
-    int vcells, vfrac;
+    int vcells;
+    double vfrac;
 
     gc_count++;
     if (gc_reporting)
@@ -424,8 +428,8 @@ void gc(void)
 	REprintf("\n%ld cons cells free (%ld%%)\n",
 		 R_Collected, (100 * R_Collected / R_NSize));
 	vcells = R_VSize - (R_VTop - R_VHeap);
-	vfrac = 100 * vcells / R_VSize;
-	REprintf("%ld Kbytes of heap free (%ld%%)\n",
+	vfrac = (100.0 * vcells) / R_VSize;
+	REprintf("%ld Kbytes of heap free (%.0f%%)\n",
 		 vcells * sizeof(VECREC) / 1024, vfrac);
     }
 }

@@ -22,9 +22,11 @@ This takes place automagically without user intervention, and the
 primary purpose of calling \code{gc} is for the report on memory usage.
 }
 \value{
-\code{gc} returns a 2*2 matrix with rows \code{"Ncells"} (\emph{cons
-    cells}, 16 bytes each) and \code{"Vcells"} (\emph{vector cells}, 8
-bytes each), and columns \code{"free"} and \code{"total"}.
+\code{gc} returns a 2*3 matrix with rows \code{"Ncells"} (\emph{cons
+    cells}, usually 20 bytes each on 32-bit systems, 36 bytes each on
+64-bit systems) and \code{"Vcells"} (\emph{vector cells}, 8 bytes each),
+and columns \code{"free"}, \code{"total"} and \code{"(Mb)"} (rounded up
+to the next 0.1Mb).
 
 \code{gcinfo} returns the previous value of the flag.
 }
