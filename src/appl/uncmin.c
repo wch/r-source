@@ -28,7 +28,6 @@
 #else
 #include <fp.h>
 #endif /* mac */
-#include <R.h>
 #include <R_ext/Applic.h>
 #include <R_ext/PrtUtil.h> /* printRealVector */
 #include <R_ext/Linpack.h> /* ddot, dnrm2, dtrsl, dscal */

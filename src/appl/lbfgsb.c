@@ -27,10 +27,12 @@
 #else
 #include <fp.h>
 #endif /* mac */
+#include <float.h> /* for DBL_EPSILON */
 #include <string.h>
-#include <R.h> /* for F77_CALL */
+#include <R_ext/RS.h> /* for F77_CALL */
 #include <R_ext/Linpack.h>
 #include <R_ext/Applic.h>
+#include <R_ext/PrtUtil.h> /* Rprintf */
 
 static void timer(double * ttime)
 {

@@ -17,7 +17,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <R.h>
 #include <Rinternals.h>
 #include <R_ext/Boolean.h>
 #include <math.h>
