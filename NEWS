@@ -19,6 +19,10 @@ BUG FIXES
      o	Printing of kernels in package ts was unreliable: the internal
 	representation was correct.
 
+     o	rt() could give different results on different platforms as
+	the order of evaluation of calls to random numbers was not
+	fully defined.  This affected the Mac port.
+
 
 
 		CHANGES IN R VERSION 1.2.2
