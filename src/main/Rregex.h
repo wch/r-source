@@ -549,14 +549,6 @@ extern int re_exec _RE_ARGS ((const char *));
 #  endif
 # endif
 #endif
-/* gcc 3.1 and up support the [restrict] syntax.  */
-#ifndef __restrict_arr
-# if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
-#  define __restrict_arr __restrict
-# else
-#  define __restrict_arr
-# endif
-#endif
 
 /* POSIX compatibility.  */
 /* remap entry points */
@@ -566,12 +558,12 @@ extern int re_exec _RE_ARGS ((const char *));
 # define regerror(errcode, preg, errbuf, errbuf_size) \
 	Rf_regerror(errcode, preg, errbuf, errbuf_size)
 
-#ifdef Win32
+/*#ifdef Win32
 extern int regcomp(regex_t *__preg, const char *__pattern, int __cflags);
 extern int regexec(const regex_t *__preg, const char *__string, 
 		   size_t __nmatch, regmatch_t __pmatch[],
 		   int __eflags);
-#else
+		   #else*/
 extern int regcomp(regex_t *__restrict __preg,
 		   const char *__restrict __pattern,
 		   int __cflags);
@@ -579,8 +571,8 @@ extern int regcomp(regex_t *__restrict __preg,
 
 extern int regexec(const regex_t *__restrict __preg,
 		   const char *__restrict __string, size_t __nmatch,
-		   regmatch_t __pmatch[__restrict_arr], int __eflags);
-#endif
+		   regmatch_t __pmatch[], int __eflags);
+/*#endif*/
 
 extern size_t regerror(int __errcode, const regex_t *__preg,
 			char *__errbuf, size_t __errbuf_size);
