@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-46, 2001-04-24
+Version 1.2-47, 2001-04-29
 Kurt Hornik
 
 
@@ -1096,6 +1096,9 @@ works, was published in the Journal of Statistical Software
 
 *GLMMGibbs*
      Generalised Linear Mixed Models by Gibbs sampling.
+
+*GeneSOM*
+     Clustering genes using Self-Organizing Maps (SOMs).
 
 *GenKern*
      Functions for generating and manipulating generalised binned kernel
