@@ -11,6 +11,16 @@
 
 #include "zutil.h"
 
+/* R ADDITION */
+#if defined(HAVE_OFF_T) && defined(__USE_LARGEFILE)
+#define f_seek fseeko
+#define f_tell ftello
+#else
+#define f_seek fseek
+#define f_tell ftell
+#endif
+
+
 #ifdef NO_DEFLATE       /* for compatiblity with old definition */
 #  define NO_GZCOMPRESS
 #endif
@@ -196,7 +206,7 @@ local gzFile gz_open (path, mode, fd)
          */
     } else {
         check_header(s); /* skip the .gz header */
-        s->start = ftell(s->file) - s->stream.avail_in;
+        s->start = f_tell(s->file) - s->stream.avail_in;
     }
 
     return (gzFile)s;
@@ -812,7 +822,7 @@ z_off_t ZEXPORT gzseek (file, offset, whence)
         s->back = EOF;
         s->stream.avail_in = 0;
         s->stream.next_in = s->inbuf;
-        if (fseek(s->file, offset, SEEK_SET) < 0) return -1L;
+        if (f_seek(s->file, offset, SEEK_SET) < 0) return -1L;
 
         s->in = s->out = offset;
         return offset;
@@ -866,7 +876,7 @@ int ZEXPORT gzrewind (file)
     if (!s->transparent) (void)inflateReset(&s->stream);
     s->in = 0;
     s->out = 0;
-    return fseek(s->file, s->start, SEEK_SET);
+    return f_seek(s->file, s->start, SEEK_SET);
 }
 
 /* ===========================================================================
