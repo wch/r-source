@@ -2,6 +2,10 @@
 
 NEW FEATURES
 
+    o   preserve factor levels and contrast settings in model objects
+
+    o   factor[...,drop=T] reduces level set 
+
     o   added dblepr, intpr
 
     o   do_modelmatrix(model.c): Set rownames from data argument.
@@ -13,7 +17,27 @@ NEW FEATURES
     o   Added `offline' argument to help() for producing hardcopy via
 	latex and dvips.
 
+    o   glm.fit.null now calculates AIC and print.glm.null prints it
+
+    o   effects.lm implemented
+
+    o   new class "mlm" for multivariate "lm", predict.mlm to go with it
+
 BUG FIXES
+
+    o   glm.fit.null: ensure df.residual == df.null for a null model
+
+    o   summary.glm: correlations in saturated cases
+
+    o   stat.anova: use match.arg and labeled switch statement
+
+    o   Major cleanup of glm iteration code
+
+    o   Correct reordering of glm coefficients if pivoting
+
+    o   Rownames on contrast matrices
+
+    o   factor() and [.factor preserves class "ordered" 
 
     o   Code rearrangement in predict.lm (avoid unnecessary computation)
         + let rownames through on predictions

@@ -6,7 +6,7 @@
 glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	subset=NULL, na.action=na.fail, start=NULL, offset=NULL,
 	control=glm.control(epsilon=0.0001, maxit=10, trace=FALSE),
-	model=TRUE, method="glm.fit", x=FALSE, y=TRUE)
+	model=TRUE, method="glm.fit", x=FALSE, y=TRUE, contrasts = NULL)
 {
 	call <- match.call()
 
@@ -20,7 +20,8 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	if(missing(data)) data <- sys.frame(sys.parent())
 	mf <- match.call()
 	mf$family <- mf$start <- mf$control <- mf$maxit <- NULL
-	mf$model <- mf$method <- mf$x <- mf$y <- NULL
+	mf$model <- mf$method <- mf$x <- mf$y <- mf$contrasts <- NULL
+#        mf$drop.unused.levels <- T
 	mf[[1]] <- as.name("model.frame")
 	mf <- eval(mf, sys.frame(sys.parent()))
 	switch(method,
@@ -29,9 +30,15 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	       "glm.fit.null"= 1,
 	       ## else
 	       stop(paste("invalid 'method':", method)))
+        xvars <- as.character(attr(mt, "variables"))[-1]
+        if(yvar <- attr(mt, "response") > 0) xvars <- xvars[-yvar]
+        if(length(xvars) > 0) {
+          xlev <- lapply(mf[xvars], levels)
+          xlev <- xlev[!sapply(xlev, is.null)]
+        } else xlev <- NULL
 
 	## null model support
-	X <- if (is.empty.model(mt)) NULL else model.matrix(mt, mf)
+	X <- if (is.empty.model(mt)) NULL else model.matrix(mt, mf, contrasts)
 	Y <- model.response(mf, "numeric")
 	weights <- model.weights(mf)
 	if(is.null(offset)) offset <- model.offset(mf)
@@ -46,17 +53,25 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	## fit model via iterative reweighted least squares
 	fit <- (if (is.empty.model(mt)) glm.fit.null else glm.fit)(
 			x=X, y=Y, weights=weights, start=start,
-			offset=offset, family=family, control=control)
+			offset=offset, family=family, control=control,
+                        intercept=attr(mt, "intercept") > 0)
 
+        if(any(offset) && attr(mt, "intercept") > 0) {
+          fit$null.deviance <-
+            if(is.empty.model(mt)) fit$deviance
+            else glm.fit(x=X[,"(Intercept)",drop=F], y=Y, weights=weights,
+                         start=start, offset=offset, family=family,
+                         control=control, intercept=T)$deviance
+        }
 	if(model) fit$model <- mf
+        if(x) fit$x <- X
 	if(!y) fit$y <- NULL
-	fit$contrasts <- if(0 < length(clv <- unlist(lapply(mf, class))))
-	  options("contrasts")[[1]] else FALSE
-	structure(c(fit,
-		    list(call=call, formula=formula,
-			 terms=mt, data=data, x= if(x) X,# x=x,
-			 offset=offset, control=control, method=method)),
-		  class= c(if(is.empty.model(mt)) "glm.null", "glm", "lm"))
+	fit <- c(fit, list(call=call, formula=formula,
+                           terms=mt, data=data,
+                           offset=offset, control=control, method=method,
+                           contrasts = attr(X, "contrasts"), xlevels = xlev))
+        class(fit) <- c(if(is.empty.model(mt)) "glm.null", "glm", "lm")
+        fit
 }
 
 
@@ -79,6 +94,7 @@ function (x, y, weights = rep(1, nobs), start = NULL,
         etastart = NULL, mustart = NULL, offset = rep(0, nobs),
 	family = gaussian(), control = glm.control(), intercept = TRUE)
 {
+        x <- as.matrix(x)
         xnames <- dimnames(x)[[2]]
         ynames <- names(y)
         conv <- FALSE
@@ -103,35 +119,24 @@ function (x, y, weights = rep(1, nobs), start = NULL,
         validmu<-family$validmu
         if (is.null(validmu))
           validmu<-function(mu) TRUE
+        if(is.null(mustart))
+          # next line calculates mustart and may change y and weights
         eval(family$initialize, sys.frame(sys.nframe()))
         if (NCOL(y) > 1)
           stop("y must be univariate unless binomial")
         eta <-
-          if(!is.null(etastart)) etastart
-          else {
-              if (is.null(start)) {
-                  ## calculate initial estimate of eta and mu:
-                  start <- c(0.5, rep(0, nvars - 1))
-                  linkfun <- family$linkfun
-                  if (validmu(mustart)) {
-                      etastart <- linkfun(mustart)
-                      if (valideta(etastart)) {
-                          z <- etastart + (y - mustart)/mu.eta(etastart) - offset
-                          w <- sqrt((weights * mu.eta(etastart)^2)/variance(mustart))
-                          fit <- qr(x * w)
-                          start <- qr.coef(fit, w * z)
-                          start[is.na(start)] <- 0
-                      }
-                  }
-              } else if (length(start) != nvars)
-                stop(paste("Length of start should equal", nvars,
-                           "and correspond to initial coefs for",
-                           deparse(xnames)))
-              as.vector(if (NCOL(x) == 1) x * start else x %*% start)
-          }
+          if(!is.null(etastart) && valideta(etastart))
+            etastart
+          else if(!is.null(start)) 
+            if (length(start) != nvars)
+              stop(paste("Length of start should equal", nvars,
+                         "and correspond to initial coefs for",
+                         deparse(xnames)))
+            else as.vector(if (NCOL(x) == 1) x * start else x %*% start)
+          else family$linkfun(mustart)
         mu <- linkinv(eta + offset)
         if (!(validmu(mu) && valideta(eta)))
-          stop("Can't find valid starting values: please specify with start=")
+          stop("Can't find valid starting values: please specify some")
         ## calculate initial deviance and coefficient
         devold <- sum(dev.resids(y, mu, weights))
         coefold <- start
@@ -155,7 +160,6 @@ function (x, y, weights = rep(1, nobs), start = NULL,
                 }
                 z <- eta[good] + (y - mu)[good]/mu.eta.val[good]
                 w <- sqrt((weights * mu.eta.val^2)[good]/variance(mu)[good])
-                x <- as.matrix(x)
                 ngoodobs <- as.integer(nobs - sum(!good))
                 ncols <- as.integer(1)
                 ## call linpack code
@@ -163,9 +167,9 @@ function (x, y, weights = rep(1, nobs), start = NULL,
                                 qr = x[good, ] * w, n = as.integer(ngoodobs),
                                 p = nvars, y = w * z, ny = ncols,
                                 tol = min(1e-7, control$epsilon/1000),
-                                coefficients = mat.or.vec(nvars, 1),
-                                residuals = mat.or.vec(ngoodobs, 1),
-                                effects = mat.or.vec(ngoodobs, 1),
+                                coefficients = numeric(nvars),
+                                residuals = numeric(ngoodobs),
+                                effects = numeric(ngoodobs),
                                 rank = integer(1),
                                 pivot = 1:nvars, qraux = double(nvars),
                                 work = double(2 * nvars)
@@ -252,12 +256,10 @@ function (x, y, weights = rep(1, nobs), start = NULL,
         ## than 0 for non-estimable parameters
         if (fit$rank != nvars) {
             coef[seq(fit$rank+1, nvars)] <- NA
-            coef[fit$pivot] <- coef
-            xxnames <- xnames[fit$pivot]
             dimnames(fit$qr) <- list(NULL, xnames)
         }
-        else
-            xxnames <- xnames
+        coef[fit$pivot] <- coef
+        xxnames <- xnames[fit$pivot]
         residuals <- rep(NA, nobs)
         residuals[good] <- z - eta[good]
         fit$qr <- as.matrix(fit$qr)
@@ -278,6 +280,8 @@ function (x, y, weights = rep(1, nobs), start = NULL,
         names(w) <- ynames
         names(weights) <- ynames
         names(y) <- ynames
+        names(fit$effects) <-
+          c(xxnames[seq(fit$rank)], rep("", nobs - fit$rank))
         ## calculate null deviance
         wtdmu <-
           if (intercept) sum(weights * y)/sum(weights) else linkinv(offset)
@@ -343,18 +347,9 @@ anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
 	## extract variables from model
 
 	varlist <- attr(object$terms, "variables")
-	if(!is.null(object$x) && !(is.logical(object$x) || object$x==FALSE))
-		x <- object$x
-	else {
-		if(is.null(object$model)) {
-			if(is.null(object$data))
-				object$data <- sys.frame(sys.parent())
-			object$model <- na.action(
-				model.frame(eval(varlist, object$data),
-					as.character(varlist[-1]), NULL))
-		}
-		x <- model.matrix(object$terms, object$model)
-	}
+        # must avoid partial matching here.
+        if (n <- match("x", names(object), 0)) x <- object[[n]]
+	else x <- model.matrix(object)
 	varseq <- attr(x, "assign")
 	nvars <- max(varseq)
 	resdev <- resdf <- NULL
@@ -459,33 +454,29 @@ anova.glmlist <- function(object, test=NULL, na.action=na.omit)
 }
 
 
-stat.anova <- function(table, test, scale, df.scale, n)
+stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
 {
- testnum <- pmatch(test, c("Chisq", "F", "Cp"))
- if(is.na(testnum))
-	stop(paste("Test \"", test, "\" not recognised", sep=""))
- cnames <- colnames(table)
- rnames <- rownames(table)
- switch(testnum,
-	{ ## "Chisq"
-	  chisq <- 1-pchisq(abs(table[, "Deviance"]), abs(table[, "Df"]))
-	  structure(cbind(table, chisq),
-		    dimnames= list(rnames, c(cnames, "P(>|Chi|)")))
-	}, { ## "F"
-	  Fvalue <- abs((table[, "Deviance"]/table[, "Df"])/scale)
-	  pvalue <- 1-pf(Fvalue, abs(table[, "Df"]), abs(df.scale))
-	  structure(cbind(table, Fvalue, pvalue),
-		    dimnames= list(rnames, c(cnames, "F", "Pr(>F)")))
-	}, { ## "Cp"
-	  Cp <- table[,"Resid. Dev"] + 2*scale*(n - table[,"Resid. Df"])
-	  structure(cbind(table, Cp),
-		    dimnames= list(rnames, c(cnames, "Cp")))
+ test <- match.arg(test)
+ dev.col<-match("Deviance",colnames(table))
+ if ( is.na(dev.col) ) dev.col<-match("Sum of Sq")
+ switch(test,
+	"Chisq" = {
+	  cbind(table,"P(>|Chi|)"= 1-pchisq(abs(table[, dev.col]), abs(table[, "Df"])))
+	},
+        "F" = {
+	  Fvalue <- abs((table[, dev.col]/table[, "Df"])/scale)
+	  cbind(table, F = Fvalue,
+	  "Pr(>F)" = 1-pf(Fvalue, abs(table[, "Df"]), abs(df.scale)))
+	},
+        "Cp" = {
+	  cbind(table, Cp = table[,"Resid. Dev"] + 2*scale*(n - table[,"Resid. Df"]))
 	})
 }
 
 summary.glm <- function(object, dispersion = NULL,
 	correlation = FALSE, na.action=na.omit)
 {
+        Qr <- .Alias(object$qr)
 	est.disp<-FALSE
 	df.r <- object$df.residual
 	if(is.null(dispersion))	# calculate dispersion if needed
@@ -500,32 +491,20 @@ summary.glm <- function(object, dispersion = NULL,
 			sum(object$weights*object$residuals^2)/ df.r
 		} else Inf
 
-	## extract x to get column names
-
-	if(is.null(object$x)) {
-		if(is.null(object$model)) {
-			varlist <- attr(object$terms, "variables")
-			if(is.null(object$data))
-				object$data <- sys.frame(sys.parent())
-			object$model <- na.action(model.frame(eval(varlist,
-				object$data), as.character(varlist[-1]), NULL))
-		}
-		object$x <- model.matrix(object$terms, object$model)
-	}
-
 	## calculate scaled and unscaled covariance matrix
 
 	p <- object$rank
 	p1 <- 1:p
-	coef.p <- object$coefficients[p1]
-	covmat.unscaled <- chol2inv(object$qr$qr[p1,p1,drop=FALSE])
+
+	## WATCHIT! doesn't this rely on pivoting not permuting 1:p?
+	coef.p <- object$coefficients[Qr$pivot[p1]]
+        covmat.unscaled <- chol2inv(Qr$qr[p1,p1,drop=FALSE])
 	dimnames(covmat.unscaled) <- list(names(coef.p),names(coef.p))
 	covmat <- dispersion*covmat.unscaled
 	var.cf <- diag(covmat)
 
 	## calculate coef table
 
-##	nas <- is.na(object$coefficients)
 	s.err <- sqrt(var.cf)
 	tvalue <- coef.p/s.err
 
@@ -556,13 +535,11 @@ summary.glm <- function(object, dispersion = NULL,
 		      df=c(object$rank, df.r),
 		      cov.unscaled=covmat.unscaled,
 		      cov.scaled=covmat))
-##		      nas=nas))
 
 	if(correlation) {
-		if(df.r == 0) warning("df.resid=0; no correlations available")
-		else
+	        dd <- sqrt(diag(covmat.unscaled))
 		ans$correlation <-
-			as.matrix(covmat/sqrt(crossprod(rbind(var.cf))))
+			covmat.unscaled/outer(dd,dd)
 	}
 	class(ans) <- "summary.glm"
 	return(ans)
@@ -659,9 +636,7 @@ deviance.glm <- function(x) x$deviance
 effects.glm <- function(x) x$effects
 fitted.glm<- function(x) x$fitted.values
 
-family.glm <- function(x) {
-  get(as.character(x$family$family), mode="function")()
-}
+family.glm <- function(x) x$family
 
 residuals.glm <- function(x, type="deviance")
 {
@@ -708,3 +683,15 @@ residuals.glm <- function(x, type="deviance")
 ####	eval(call, sys.frame(-i))
 ##	eval(call, sys.frame(sys.parent()))
 ##}
+
+model.frame.glm <- 
+function (formula, data, na.action, ...) 
+{
+  if (is.null(formula$model)) {
+    fcall <- formula$call
+    fcall$method <- "model.frame"
+    fcall[[1]] <- as.name("glm")
+    eval(fcall, sys.frame(sys.parent()))
+  }
+  else formula$model
+}
