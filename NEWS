@@ -42,7 +42,8 @@ UTILITIES
 
 C-LEVEL FACILITIES
 
-
+    o   The header Rmath.h contains a definition for R_VERSION_STRING 
+        which can be used to track different versions of R and libRmath.
 
 
 DEPRECATED & DEFUNCT

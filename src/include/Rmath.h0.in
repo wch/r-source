@@ -31,6 +31,8 @@
 /*-- Mathlib as part of R --  define this for standalone : */
 /* #undef MATHLIB_STANDALONE */
 
+#define R_VERSION_STRING "@PACKAGE_VERSION@"
+
 #ifndef HAVE_LOG1P
 @RMATH_HAVE_LOG1P@
 #endif

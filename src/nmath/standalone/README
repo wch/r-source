@@ -28,6 +28,10 @@ libRmath.so to the LD_LIBRARY_PATH.
 Under Windows you can also link statically against Rmath.a.
 
 
+Rmath.h contains R_VERSION_STRING, which is a character string containing
+the current R version, for example "1.9.0".
+
+
 A little care is needed to use the random-number routines. You will
 need to supply the uniform random number generator 
 
