@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-23, 2002-03-11
+@set FAQ-VERSION 1.4-24, 2002-03-18
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -1683,6 +1683,9 @@ methods.
 Functions for inference in generalised linear spatial models.
 @item gld
 Basic functions for the generalised (Tukey) lambda distribution.
+@item gllm
+Routines for log-linear models of incomplete contingency tables,
+including some latent class models via EM and Fisher scoring approaches.
 @item gregmisc
 Miscellaneous functions written/maintained by Gregory R. Warnes.
 @item grid

@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.4-23, 2002-03-11
+Version 1.4-24, 2002-03-18
 Kurt Hornik
 
 
@@ -1462,6 +1462,11 @@ works, was published in the Journal of Statistical Software
 
 *gld*
      Basic functions for the generalised (Tukey) lambda distribution.
+
+*gllm*
+     Routines for log-linear models of incomplete contingency tables,
+     including some latent class models via EM and Fisher scoring
+     approaches.
 
 *gregmisc*
      Miscellaneous functions written/maintained by Gregory R. Warnes.
