@@ -767,9 +767,11 @@ Sparc@footnote{Using the SunPro aka Forte aka Sun ONE @command{cc} and
 X) but ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned''
 BLAS that runs on a wide range of Unix-alike platforms.  If no more
 specific library is found, a @code{libblas} library in the library path
-will be used.  You can specify a specific BLAS library by the
-configuration option @option{--with-blas} and not to use an external
-BLAS library by @option{--without-blas}.
+will be used.  You can specify a particular BLAS library @emph{via} a
+value for the configuration option @option{--with-blas} and not to use
+an external BLAS library by @option{--without-blas}.  (Alternatively,
+the environment variable @env{BLAS_LIBS} can be set, for example in
+@file{config.site}.)
 
 For systems with multiple processors it is possible to use a
 multi-threaded version of ATLAS.  (Prior to @R{} 1.8.0 this was not
@@ -812,6 +814,7 @@ with ATLAS that is not by default built with position-independent code.
 You will need double-precision and double-complex versions of the BLAS,
 but not single-precision nor complex routines.
 
+
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
 cope with BLAS libraries which contain a copy of LAPACK (such as
@@ -828,8 +831,11 @@ the ATLAS-optimized subset of LAPACK.  To do so specify something like
 --with-lapack="-L/path/to/libs -llapack -lcblas"
 @end smallexample
 @noindent
-since the ATLAS subset of LAPACK depends on @code{libcblas}.
-
+since the ATLAS subset of LAPACK depends on @code{libcblas}.  A value
+for @option{--with-lapack} can be set @emph{via} the environment variable
+@env{LAPACK_LIBS}, but this will only be used if @option{--with-lapack}
+is specified (as the default value is @code{no}) and the BLAS library
+does not contain LAPACK.
 
 If you do use @option{--with-lapack}, be aware of potential problems
 with bugs in the LAPACK 3.0 sources (or in the posted corrections to those

@@ -368,6 +368,10 @@ AC_ARG_VAR([TCLTK_CPPFLAGS],
 AC_ARG_VAR([MAKE], [Make command])
 AC_ARG_VAR([F2C], [Fortran-to-C converter command])
 AC_ARG_VAR([R_BROWSER], [default browser])
+AC_ARG_VAR([BLAS_LIBS],
+           [flags needed for linking against external BLAS libraries])
+AC_ARG_VAR([LAPACK_LIBS],
+           [flags needed for linking against external LAPACK libraries])
 
 ### ** Check whether we build in srcdir.
 
