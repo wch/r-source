@@ -238,7 +238,7 @@ int Rf_initialize_R(int ac, char **av)
     } else { 
 #endif
     R_Outputfile = stdout;
-    R_Consolefile = stdout;
+    R_Consolefile = stderr;
 #ifdef HAVE_AQUA
     }
 #endif 

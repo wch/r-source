@@ -43,6 +43,9 @@ USER-VISIBLE CHANGES
     o	plot.dendrogram (`mva' package) now draws leaf labels if present
 	by default.
 
+    o	Errors and warnings are sent to stderr not stdout on
+	command-line versions of R (Unix and Windows).  
+
 
 NEW FEATURES
 
@@ -233,7 +236,7 @@ NEW FEATURES
 	print. (PR#2506)
 
     o	New functions rmultinom() and dmultinom(), the first one with
-	C API.
+	a C API.
 
     o	New argument `silent' to try().
 
@@ -285,8 +288,8 @@ NEW FEATURES
     o	QR objects now have class "qr", and solve.qr() is now just the
 	method for solve() for the class.
 
-    o	New function topenv to determine the nearest top level environment
-	(usually .GlobalEnv or a name space environment).
+    o   New function topenv() to determine the nearest top level
+	environment (usually .GlobalEnv or a name space environment).
 
     o	lm.influence() has a new `do.coef' argument allowing *not* to
 	compute casewise changed coefficients.	This makes plot.lm() much
@@ -295,10 +298,10 @@ NEW FEATURES
     o	stepfun() has a new `right' argument for right-continuous step
 	function construction.
 
-    o	new isoreg() function and class for isotonic regression
+    o	New isoreg() function and class for isotonic regression
 	(`modreg' package).
 
-    o	new runmed() for fast runnning medians (`modreg' package).
+    o	New function runmed() for fast runnning medians (`modreg' package).
 
 
 
@@ -444,7 +447,7 @@ BUG FIXES
 
     o	Printing numbers near the minimum could get the number of
 	significant figures wrong due to underflow: for example 4e-308
-	might print as 4.00000e-307.  (Seen on some Windows builds,
+	might print as 4.00000e-308.  (Seen on some Windows builds,
 	and also on numbers around 1e-317 on Linux.)
 
     o	wilcox.test() could give integer overflow warnings on very long
@@ -519,7 +522,7 @@ BUG FIXES
 
     o	When the POSIXt data functions were required to guess DST,
 	they sometimes guessed correctly that DST was in force but
-	converted a POSIXlt time as if standard time was in given.
+	converted a POSIXlt time as if standard time was given.
 
     o	c/rbind were not handling zero col/row matrices correctly.
 	(PR#2541 was one symptom.)

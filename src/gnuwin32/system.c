@@ -684,7 +684,7 @@ int cmdlineoptions(int ac, char **av)
 	    Rp->R_Interactive = FALSE;
 	    Rp->ReadConsole = FileReadConsole;
 	}
-	R_Consolefile = stdout; /* used for errors */
+	R_Consolefile = stderr; /* used for errors */
 	R_Outputfile = stdout;  /* used for sink-able output */
         Rp->WriteConsole = TermWriteConsole;
 	Rp->message = char_message;
