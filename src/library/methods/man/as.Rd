@@ -3,6 +3,7 @@
 \alias{as<-}
 \alias{coerce}
 \alias{asFunctions}
+\alias{setAs}
 \title{Force an Object to Belong to a Class}
 \usage{
 as(object, Class, coerceFlag=TRUE)
@@ -15,7 +16,7 @@ setAs(from, to, def, where = 1)
 \description{
 
 \describe{
-  \item{\code{as}:} {
+  \item{\code{as}:}{
   Returns the version of this object coerced to be the given \code{Class}.  
   
   
@@ -36,7 +37,7 @@ Beyond these two sources of  methods, further methods are defined by
 calls to the \code{setAs} function.
 }
 
-  \item{\code{coerce}:} {
+  \item{\code{coerce}:}{
   Coerce \code{x} to be of the same class as \code{y}.  
 
   Not a function you should usually
@@ -49,6 +50,7 @@ methods for \code{coerce} for the \code{as} function to use.
   implement \code{as(x, to)} when \code{x} has class \code{from}.
   Need we add that the function should return a suitable object with
   class \code{to}.
+}
 }
 }
 \references{

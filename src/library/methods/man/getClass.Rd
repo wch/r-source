@@ -1,8 +1,7 @@
 \name{getClass}
 \alias{getClass}
 \alias{getClassDef}
-%- Also NEED an `\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+\title{Get Class Definition }
 \description{
   Get the definition of a class.
 }
