@@ -104,8 +104,9 @@ ifeq ($(strip $(STAMP)),YES)
 endif
 
 $(DATA): $(DSOURCES)
-	$(MKDIR) -p $(DATA)
-	$(CP) $^  $@
+	@echo "  installing data files"
+	@$(MKDIR) -p $(DATA)
+	@$(CP) $^  $@
 
 
 $(DYNLIB): $(SSPKG)/$(DLLNAME).dll
@@ -113,11 +114,12 @@ $(DYNLIB): $(SSPKG)/$(DLLNAME).dll
 	$(CP) $^ $@
 
 $(SSPKG)/$(DLLNAME).dll: FORCE
+	@echo "  making DLL"
 ifeq ($(strip $(SRCMAKE)),)
-	$(MAKE) -C $(SSPKG) RHOME=$(RHOME) \
+	@$(MAKE) -C $(SSPKG) RHOME=$(RHOME) \
 	  -f $(RHOME)/src/gnuwin32/MakeDll DLLNAME=$(DLLNAME)
 else
-	$(MAKE) -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win
+	@$(MAKE) -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win
 endif
 
 FORCE:
