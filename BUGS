@@ -101,20 +101,7 @@ Date: Tue, 13 Aug 2002 14:12:17 +0200 (MET DST)
 Subject: Rwave installation problem
 From: ld-temp-qt3i@pobox.com
 Date: Mon, 2 Sep 2002 09:27:36 +0200 (MET DST)
-* PR# 1977 *
-Subject: Bugs in $RHOME/src/library/SJava/src/makefile.win
-From: grimm.hinz@rcc.ch
-Date: Tue, 3 Sep 2002 13:13:17 +0200 (MET DST)
-* PR# 1978 *
-Subject: SJava 0.65, Sample Java files are missing
-From: grimm.heinz@rcc.ch
-Date: Tue, 3 Sep 2002 13:24:30 +0200 (MET DST)
-* PR# 2003 *
-Subject: rhome.c: getRHOME() fails, if R is called from SJava
-From: grimm.heinz@rcc.ch
-Date: Wed, 11 Sep 2002 15:17:53 +0200 (MET DST)
-..This is a bug in SJava.  RHOME is not supposed to be used,
-..but R_HOME is supposed to be set.
+..Instead, this should use ISO C headers, namely <stdlib.h>
 * PR# 2173 *
 Subject: xlim in plot.survfit() [with a discussion on "..."]
 From: jerome@hivnet.ubc.ca
@@ -679,3 +666,7 @@ Date: Wed, 20 Nov 2002 06:57:19 +0900 (JST)
 Subject: I NEED YOU TO ASSIST ME.
 From: "MADAM MARIAM MOBUTU SESE-SEKO" <sem@loadmail.com>
 Date: Tue, 19 Nov 2002 23:16:18
+* PR# 2316 *
+Subject: Platform() used in tkfilefind.X although now deprecated
+From: "Stephen Eglen	(CNS)" <stephen@cogsci.ed.ac.uk>
+Date: Wed, 20 Nov 2002 22:12:58 +0000
