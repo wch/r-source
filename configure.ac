@@ -1273,17 +1273,6 @@ AC_CONFIG_FILES(
   tools/Makefile
 ])
 
-AC_CONFIG_COMMANDS_PRE(
-## <NOTE>
-## Autoconf 2.53 makes using 'LIBOBJS' an error.
-## Hence, we need to work around this as recommended in the Autoconf
-## docs, section 'AC_LIBOBJ vs. LIBOBJS'.
-[LTLIBOBJS=`echo "${LIB@&t@OBJS}" | sed 's/\.o/\.lo/g'`
-AC_SUBST(LTLIBOBJS)
-## </NOTE>
-LTALLOCA=`echo "${ALLOCA}" | sed 's/\.o/.lo/g'`
-AC_SUBST(LTALLOCA)])
-
 AC_CONFIG_COMMANDS([stamp-h],
 [test -f src/include/stamp-h || echo timestamp > src/include/stamp-h])
 
