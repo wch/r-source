@@ -29,8 +29,10 @@ imagedir:
 	$(RM) -r $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
 	$(CP) -pr $(R_HOME)/bin $(R_HOME)/modules $(RPREFIX)
+ifneq ($(strip $(BUILD)),CROSS)
 	mv $(RPREFIX)/bin/R.dll $(RPREFIX)/bin/Rmbcs.dll 
-	mv $(RPREFIX)/bin/Rnombcs.dll $(RPREFIX)/bin/R.dll 
+	mv $(RPREFIX)/bin/Rnombcs.dll $(RPREFIX)/bin/R.dll
+endif
 # copy base and recommended packages
 	$(MKDIR) -p $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
