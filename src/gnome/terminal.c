@@ -119,10 +119,12 @@ void R_gtk_terminal_new()
   /* Show the window */
   gtk_widget_show_all(R_gtk_main_window);
 
+#if 0
   /* initialise list */
   R_gtk_editfiles = NULL;
 
   R_gtk_gui_quit = FALSE;
+#endif
 
   /* Initialise the find code */
   R_gtk_terminal_find_init();
