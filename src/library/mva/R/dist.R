@@ -8,12 +8,13 @@ dist <- function(x, method="euclidian", diag=FALSE, upper=FALSE)
 	stop("ambiguous distance method")
 
     N <- nrow(x <- as.matrix(x))
-    d <- .C("dist",
-	    as.double(x),
-	    N,
-	    ncol(x),
-	    double(N*(N - 1)/2),
-	    as.integer(method))[[4]]
+    d <- .C("distance",
+	    x = as.double(x),
+	    nr= N,
+	    nc= ncol(x),
+	    d = double(N*(N - 1)/2),
+            diag  = as.integer(1),
+	    method= as.integer(method)) $ d
     attr(d, "Size") <- N
     attr(d, "Labels") <- dimnames(x)[[1]]
     attr(d, "Diag") <- diag
