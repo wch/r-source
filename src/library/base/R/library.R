@@ -134,26 +134,30 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             have.stats <- "package:stats" %in% search()
             if(!have.stats) require("stats")
             warning("package ", sQuote(package), " has been merged into ",
-                sQuote("stats"), call. = FALSE)
+                    sQuote("stats"), call. = FALSE)
             return(if (logical.return) TRUE else invisible(.packages()))
         }
         if(package  == "mle") {
             have.stats4 <- "package:stats4" %in% search()
             if(!have.stats4) require("stats4")
             warning("package ", sQuote(package), " has been merged into ",
-                sQuote("stats4"), call. = FALSE)
+                    sQuote("stats4"), call. = FALSE)
             return(if (logical.return) TRUE else invisible(.packages()))
         }
         if(package == "lqs") {
-            cat("Package 'lqs' has been moved back to package 'MASS'\n")
+            cat("Package", sQuote("lqs"),
+                "has been moved back to package", sQuote("MASS"), "\n")
             have.VR <- "package:MASS" %in% search()
             if(!have.VR) {
                 if(require(MASS, quietly=TRUE))
-                    cat("Package 'MASS' has now been loaded\n")
+                    cat("Package", sQuote("MASS"),
+                        "has now been loaded\n")
                 else {
                     if(logical.return) return(FALSE)
                     else
-                        stop("Package 'MASS' seems to be missing from this R installation\n")
+                        stop(paste("Package", sQuote("MASS"),
+                                   "seems to be missing",
+                                   "from this R installation"))
                 }
             }
             return(if (logical.return) TRUE else invisible(.packages()))
