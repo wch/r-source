@@ -35,7 +35,7 @@ PKGCLEAN = $(foreach i, $(ALLPACKAGES), pkgclean-$i)
 
 all: rbuild rdemo rpackage
 
-# separate as Tcl/Rk headers are needed.
+# separate as Tcl/Tk headers are needed.
 tcl: pkg-tcltk
 
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H
@@ -50,7 +50,7 @@ rinstaller:
 	$(MAKE) -C installer PREFIX=$(RPREFIX)
 
 rdemo:  libR.a
-	make -C ../../demos/dynload -f $(RHOME)/src/gnuwin32/MkDyndemo
+	$(MAKE) -C ../../demos/dynload -f $(RHOME)/src/gnuwin32/MkDyndemo
 
 rlibs:
 	$(MAKE) -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
@@ -79,7 +79,7 @@ dllversion.o: ../include/Rversion.h
 
 R.dll: R.a $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
-Rdll: ../../bin/R.dll
+Rdll: makeMakedeps ../../bin/R.dll
 
 ../../bin/R.dll: fixfiles rlibs R.dll
 	$(MKDIR) -p ../../bin
