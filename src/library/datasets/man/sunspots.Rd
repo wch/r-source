@@ -17,8 +17,9 @@
     Student and Research Worker}.
   New York: Springer-Verlag.
 }
-\seealso{\code{\link{sunspot.month}} (package \pkg{stats}) has a
-  longer (and a bit different) series.} 
+\seealso{
+  \code{\link{sunspot.month}} has a longer (and a bit different) series.
+} 
 \examples{
 plot(sunspots, main = "sunspots data", xlab = "Year",
      ylab = "Monthly sunspot numbers")

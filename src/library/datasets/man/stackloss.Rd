@@ -8,7 +8,12 @@
   Operational data of a plant for the oxidation of ammonia to nitric
   acid.
 }
-\usage{stackloss}
+\usage{
+stackloss
+
+stack.x
+stack.loss
+}
 \format{
   \code{stackloss} is a data frame with 21 observations on 4 variables.
 

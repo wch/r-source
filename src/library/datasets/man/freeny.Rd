@@ -7,7 +7,11 @@
 \description{
   Freeny's data on quarterly revenue and explanatory variables.
 }
-\usage{freeny}
+\usage{
+freeny
+freeny.x
+freeny.y
+}
 \format{
   There are three \sQuote{freeny} data sets.
 

@@ -10,6 +10,7 @@
 }
 \usage{
 BJsales
+BJsales.lead
 }
 \source{
   The data are given in Box & Jenkins (1976).

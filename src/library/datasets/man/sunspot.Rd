@@ -1,6 +1,6 @@
 \name{sunspot}
 \docType{data}
-\alias{sunspot}
+%\alias{sunspot}
 \alias{sunspot.month}
 \alias{sunspot.year}
 \title{
@@ -21,7 +21,7 @@ sunspot.year
 }
 \seealso{
   \code{sunspot.month} is a longer version of \code{\link{sunspots}}
-  that runs until 1988.
+  that runs until 1988 rather than 1983.
 }
 \source{
   Monthly data: Sunspot Index Data Center,
@@ -36,6 +36,12 @@ sunspot.year
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+}
+\section{Warning}{
+  For back-compatibilty these datasets can be copied to the user's
+  workspace (or elsewhere) by \code{data(sunspot)}.  However, as package
+  \pkg{lattice} has a dataset \code{sunspot} which can be retrieved by
+  the same command, that usage is deprecated.
 }
 \examples{
 require(stats)
