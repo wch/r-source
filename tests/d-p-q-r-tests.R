@@ -134,7 +134,7 @@ is.sym
 
 ###-------- Continuous Distributions ----------
 
-##---  Gamma (incl. chi^2) Density :
+##---  Gamma (incl. central chi^2) Density :
 x <- round(rgamma(100, shape = 2),2)
 for(sh in round(rlnorm(30),2)) {
     Ga <- gamma(sh)
@@ -154,6 +154,10 @@ for(sh in round(rlnorm(30),2)) {
 pgamma(1,Inf,scale=Inf) == 0
 all(is.nan(c(pgamma(Inf,1,scale=Inf), pgamma(Inf,Inf,scale=1), pgamma(Inf,Inf,scale=Inf))))
 pgamma(Inf,1,scale=xMax) == 1 && pgamma(xMax,1,scale=Inf) == 0
+##-- non central Chi^2 :
+xB <- c(2000,1e6,1e50,Inf)
+for(df in c(0.1, 1, 10))
+    for(ncp in c(0, 1, 10, 100)) stopifnot(pchisq(xB, df=df, ncp=ncp) == 1)
 
 ##--- Beta (need more):
 

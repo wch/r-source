@@ -13,8 +13,12 @@ BUG FIXES
     o	print.table() has used too much white space in some cases
 	in 1.7.0.
 
-    o   selectMethod() failed if f was a non-generic and optional=TRUE, and
-        gave a confusing error message if optional=FALSE.
+    o	selectMethod() failed if f was a non-generic and optional=TRUE, and
+	gave a confusing error message if optional=FALSE.
+
+    o	pchisq(*, ncp) and qchisq(*, ncp) work in more cases for large ncp
+	or quantile and give warning or error messages otherwise.
+
 
 
 		CHANGES IN R VERSION 1.7.0

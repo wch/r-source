@@ -1,6 +1,6 @@
 
-R : Copyright 2002, The R Development Core Team
-Version 1.5.0 Patched (2002-05-17)
+R : Copyright 2003, The R Development Core Team
+Version 1.7.0 Patched (2003-04-19)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -221,7 +221,7 @@ n= 48 : ......................
 > 
 > ###-------- Continuous Distributions ----------
 > 
-> ##---  Gamma (incl. chi^2) Density :
+> ##---  Gamma (incl. central chi^2) Density :
 > x <- round(rgamma(100, shape = 2),2)
 > for(sh in round(rlnorm(30),2)) {
 +     Ga <- gamma(sh)
@@ -248,6 +248,10 @@ Warning messages:
 3: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
 > pgamma(Inf,1,scale=xMax) == 1 && pgamma(xMax,1,scale=Inf) == 0
 [1] TRUE
+> ##-- non central Chi^2 :
+> xB <- c(2000,1e6,1e50,Inf)
+> for(df in c(0.1, 1, 10))
++     for(ncp in c(0, 1, 10, 100)) stopifnot(pchisq(xB, df=df, ncp=ncp) == 1)
 > 
 > ##--- Beta (need more):
 > 
@@ -796,5 +800,5 @@ Warning messages:
 [1] TRUE
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  7.42 0.18 7.62 0 0 
+Time elapsed:  7.61 0.09 7.7 0 0 
 > 

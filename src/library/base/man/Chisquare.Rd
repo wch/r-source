@@ -23,7 +23,9 @@ rchisq(n, df, ncp=0)
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
   \item{df}{degrees of freedom (non-negative, but can be non-integer).}
-  \item{ncp}{non-centrality parameter (non-negative).}
+  \item{ncp}{non-centrality parameter (non-negative).  Note that
+    \code{ncp} values larger than about 1417 are not allowed currently
+    for \code{pchisq} and \code{qchisq}.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
@@ -51,13 +53,14 @@ rchisq(n, df, ncp=0)
   for \eqn{x \ge 0}.  For integer \eqn{n}, this is the distribution of
   the sum of squares of \eqn{n} normals each with variance one,
   \eqn{\lambda} being the sum of squares of the normal means.
-  Note that the the degrees of freedom \code{df}\eqn{= n}, can be
+  Note that the degrees of freedom \code{df}\eqn{= n}, can be
   non-integer, and for non-centrality \eqn{\lambda > 0}, even \eqn{n = 0};
-  see the reference, chapter 29. 
-  
- Warning: The code for \code{pchisq} and
-  \code{qchisq} is unreliable for
-values of \code{ncp} above approximately 290.
+  see the reference, chapter 29.
+
+% This was before the `stop-gap fix' in 1.7.1:
+%  Warning: The code for \code{pchisq} and
+%  \code{qchisq} is unreliable for
+%  values of \code{ncp} above approximately 290.
 }
 \seealso{
   \code{\link{dgamma}} for the Gamma distribution which generalizes the
