@@ -123,6 +123,7 @@ naresid.exclude <- function(omit, x, ...)
 {
     if (length(omit) == 0 || !is.numeric(omit))
 	stop("Invalid argument for 'omit'")
+    if(length(x) == 0) return(x)
 
     if (is.matrix(x)) {
 	n <- nrow(x)
@@ -154,5 +155,5 @@ naprint.exclude <- naprint.omit <- function(x, ...)
     paste(length(x), "observations deleted due to missing")
 
 napredict <- function(omit, x, ...) UseMethod("napredict")
-napredict.default <- function(omit, x, ...) object
+napredict.default <- function(omit, x, ...) x
 napredict.exclude <- function(omit, x, ...) naresid.exclude(omit, x)

@@ -18,6 +18,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     else if (method != "qr")
 	warning(paste("method =", method,
 		      "is not supported. Using \"qr\"."))
+    na.act <- attr(mf, "na.action")
     xvars <- as.character(attr(mt, "variables"))[-1]
     if((yvar <- attr(mt, "response")) > 0) xvars <- xvars[-yvar]
     xlev <-
@@ -50,6 +51,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 	else lm.wfit(x, y, w, offset=offset, ...)
 	class(z) <- c(if(is.matrix(y)) "mlm", "lm")
     }
+    if(!is.null(na.act)) z$na.action <- na.act
     z$offset <- offset
     z$contrasts <- attr(x, "contrasts")
     z$xlevels <- xlev
@@ -247,9 +249,10 @@ summary.lm <- function (object, correlation = FALSE, ...)
     if(rdf != z$df.residual)
         warning("inconsistent residual degrees of freedom. -- please report!")
     p1 <- 1:p
-    r <- resid(z)
-    f <- fitted(z)
-    w <- weights(z)
+    ## do not want missing values substuted here
+    r <- z$resid
+    f <- z$fitted
+    w <- z$weights
     if (is.null(w)) {
         mss <- if (attr(z$terms, "intercept"))
             sum((f - mean(f))^2) else sum(f^2)
@@ -294,7 +297,8 @@ summary.lm <- function (object, correlation = FALSE, ...)
 }
 
 print.summary.lm <-
-    function (x, digits = max(3, getOption("digits") - 3), symbolic.cor = p > 4,
+    function (x, digits = max(3, getOption("digits") - 3),
+              symbolic.cor = p > 4,
 	      signif.stars= getOption("show.signif.stars"),	...)
 {
     cat("\nCall:\n")#S: ' ' instead of '\n'
@@ -427,8 +431,8 @@ anova.lm <- function(object, ...)
 {
     if(length(list(object, ...)) > 1)
 	return(anova.lmlist(object, ...))
-    w <- weights(object)
-    ssr <- sum(if(is.null(w)) resid(object)^2 else w*resid(object)^2)
+    w <- object$weights
+    ssr <- sum(if(is.null(w)) object$resid^2 else w*object$resid^2)
     p1 <- 1:object$rank
     comp <- object$effects[p1]
     asgn <- object$assign[object$qr$pivot][p1]
@@ -606,9 +610,9 @@ predict.lm <-
     type <- match.arg(type)
     if(se.fit || interval != "none") {
 	if (is.null(scale)) {
-	    r <- resid(object)
-	    f <- fitted(object)
-	    w <- weights(object)
+	    r <- object$resid
+	    f <- object$fitted
+	    w <- object$weights
 	    rss <- sum(if(is.null(w)) r^2 else r^2 * w)
 	    df <- n - p
 	    res.var <- rss/df
@@ -691,13 +695,13 @@ predict.lm <-
         }
     }
     if(missing(newdata) && !is.null(na.act <- object$na.action)) {
-        predictor <- na.predict(na.act, predictor)
-        if(se.fit) se.fit <- na.predict(na.act, sqrt(ip))
+        predictor <- napredict(na.act, predictor)
+        if(se.fit) se.fit <- napredict(na.act, sqrt(ip))
     }
     if(type == "terms" && interval != "none") {
         if(missing(newdata) && !is.null(na.act)) {
-            lwr <- na.predict(na.act, lwr)
-            upr <- na.predict(na.act, upr)
+            lwr <- napredict(na.act, lwr)
+            upr <- napredict(na.act, upr)
         }
 	list(fit = predictor, se.fit = sqrt(ip), lwr=lwr,upr=upr,
 	     df = df, residual.scale = sqrt(res.var))
