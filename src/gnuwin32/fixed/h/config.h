@@ -7,7 +7,7 @@
 
 /* AIX at least. */
 #ifndef _ALL_SOURCE
-#undef _ALL_SOURCE
+# undef _ALL_SOURCE
 #endif
 
 /* alloca */
@@ -20,6 +20,9 @@
 
 /* Define if you have the ANSI C header files.  */
 #define STDC_HEADERS 1
+
+/* Define if you have the GNU C library version >= 2 */
+#undef HAVE_GLIBC2
 
 /* (Long) Integers */
 #define SIZEOF_LONG 4
@@ -79,15 +82,12 @@ extern int _finite(double);
 #define HAVE_RPC_RPC_H 1
 #define HAVE_RPC_XDR_H 1
 
-/* HDF5 Library Available */
-#undef HAVE_HDF5
-
 /* General String Comparison */
 #define HAVE_STRCOLL 1
 /* String duplication */
 #define HAVE_STRDUP 1
 
-/* Inverse Hyperbolics */
+/* Math stuff */
 #define HAVE_ASINH 1
 #define HAVE_ACOSH 1
 #define HAVE_ATANH 1
@@ -121,14 +121,6 @@ double atanh(double);
 /* Fortran and C Links */
 #define HAVE_F77_UNDERSCORE 1
 
-#ifdef HAVE_F77_UNDERSCORE
-#define F77_SYMBOL(x)	x ## _
-#define F77_QSYMBOL(x)	#x ## "_"
-#else
-#define F77_SYMBOL(x)	x
-#define F77_QSYMBOL(x)	#x
-#endif
-
 /* GNU Readline Library */
 #undef HAVE_LIBREADLINE
 #undef HAVE_READLINE_HISTORY_H
@@ -150,6 +142,10 @@ double atanh(double);
 #define HAVE_PUTENV 1
 #undef HAVE_STRPTIME
 
+/* Define this to use the system regex rather than GNU regex included in
+   R.
+   Intended only for use with special systems such as Condor. */
+/* #undef USE_SYSTEM_REGEX */
 
 /* Dirent stuff */
 #define HAVE_DIRENT_H 1
@@ -174,25 +170,9 @@ double atanh(double);
 
 /* Some platforms other than ELF drop the leading _ */
 #undef HAVE_NO_SYMBOL_UNDERSCORE
-#ifndef HAVE_NO_SYMBOL_UNDERSCORE
-#ifdef HAVE_ELF_H
-#define HAVE_NO_SYMBOL_UNDERSCORE
-#endif
-#endif
 
 /* SunOS 4 is famous for broken header files */
 #undef SunOS4
-#ifdef SunOS4
-# ifndef NULL
-#  define	NULL		0
-# endif
-# ifndef RAND_MAX
-#  define	RAND_MAX	32767
-# endif
-#endif /* SunOS4 */
-
-/* Printing Command */
-#define R_PRINTCMD	""
 
 /* Getting the working directory */
 #undef HAVE_GETCWD
@@ -210,30 +190,14 @@ double atanh(double);
 /* Write barrier testing */
 #undef TESTING_WRITE_BARRIER
 
-/* for platform.c to put in .Platform */
-#ifdef Unix
-#define OSTYPE      "unix"
-#define FILESEP     "/"
-#define SHLIB_EXT    ""
-#define DYNLOADEXT  "." ## SHLIB_EXT
-#endif
-
-#ifdef Macintosh
-#define OSTYPE      "mac"
-#define FILESEP     ":"
-#define DYNLOADEXT  ".dll"
-#endif
-
-#ifdef Win32
-#define OSTYPE      "windows"
-#define FILESEP     "/"
-#define DYNLOADEXT  ".dll"
-#endif
-
+/* Platform Information */
 #define R_PLATFORM	"Windows"
 #define R_CPU		"x86"
 #define R_VENDOR	"IBM"
 #define R_OS		"Win32"
+
+/* Printing Command */
+#define R_PRINTCMD	"UNKNOWN"
 
 /* Windows-specific */
 #ifndef M_PI
