@@ -23,7 +23,9 @@ in the value of \code{nomatch} being returned, and if it
 is true, the index of the first matching value will be returned.
 }
 \seealso{
-\code{\link{match}}, \code{\link{charmatch}}.
+\code{\link{match}}, \code{\link{charmatch}} and
+\code{\link{match.arg}}, \code{\link{match.fun}},
+\code{\link{match.call}}, for function argument matching etc.
 }
 \examples{
 pmatch("", "")                             # returns NA

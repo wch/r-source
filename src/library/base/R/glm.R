@@ -35,7 +35,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	   ## else
 	   stop(paste("invalid `method':", method)))
     xvars <- as.character(attr(mt, "variables"))[-1]
-    if(yvar <- attr(mt, "response") > 0) xvars <- xvars[-yvar]
+    if((yvar <- attr(mt, "response")) > 0) xvars <- xvars[-yvar]
     xlev <- if(length(xvars) > 0) {
 	xlev <- lapply(mf[xvars], levels)
 	xlev[!sapply(xlev, is.null)]
@@ -271,7 +271,7 @@ glm.fit <-
     coef[fit$pivot] <- coef
     xxnames <- xnames[fit$pivot]
     residuals <- rep(NA, nobs)
-    residuals[good] <- z - (eta+offset)[good] # z does not have offset in.
+    residuals[good] <- z - (eta-offset)[good] # z does not have offset in.
     fit$qr <- as.matrix(fit$qr)
     nr <- min(sum(good), nvars)
     if (nr < nvars) {
@@ -487,7 +487,7 @@ stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
 }
 
 summary.glm <- function(object, dispersion = NULL,
-			correlation = FALSE, na.action=na.omit)
+			correlation = FALSE, na.action=na.omit, ...)
 {
     Qr <- .Alias(object$qr)
     est.disp <- FALSE
@@ -604,28 +604,28 @@ print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
 
 ## GLM Methods for Generic Functions :
 
-coef.glm <- function(x) x$coefficients
-deviance.glm <- function(x) x$deviance
-effects.glm <- function(x) x$effects
-fitted.glm <- function(x) x$fitted.values
+coef.glm <- function(object, ...) object$coefficients
+deviance.glm <- function(object, ...) object$deviance
+effects.glm <- function(object, ...) object$effects
+fitted.glm <- function(object, ...) object$fitted.values
 
-family.glm <- function(x) x$family
+family.glm <- function(object, ...) object$family
 
-residuals.glm <- function(x, type="deviance")
+residuals.glm <- function(object, type="deviance", ...)
 {
     ntyp <- match(type, c("deviance", "pearson", "working", "response"))
     if(is.na(ntyp))
 	stop(paste("invalid `type':", type))
-    y  <- x$y
-    mu <- x$fitted.values
-    wts <- x$prior.weights
+    y  <- object$y
+    mu <- object$fitted.values
+    wts <- object$prior.weights
     switch(ntyp,
-	   deviance = if(x$df.res > 0) {
-	       d.res <- sqrt((x$family$dev.resids)(y, mu, wts))
+	   deviance = if(object$df.res > 0) {
+	       d.res <- sqrt((object$family$dev.resids)(y, mu, wts))
 	       ifelse(y > mu, d.res, -d.res)
 	   } else rep(0, length(mu)),
-	   pearson	 = x$residuals * sqrt(x$weights),
-	   working	 = x$residuals,
+	   pearson	 = object$residuals * sqrt(object$weights),
+	   working	 = object$residuals,
 	   response = y - mu
 	   )
 }

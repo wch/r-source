@@ -32,13 +32,13 @@ pairs.default <- function(x, labels, panel=points, main = NULL,
 	    panel(x[, j], x[, i], ...)
 	}
 	if (j == 1 & 2 * floor(i/2) == i)
-	    axis(2)
+	    axis(2, xpd=NA)
 	if (i == 1 & 2 * floor(j/2) == j)
-	    axis(3)
+	    axis(3, xpd=NA)
 	if (j == nc & 2 * floor(i/2) != i)
-	    axis(4)
+	    axis(4, xpd=NA)
 	if (i == nc & 2 * floor(j/2) != j)
-	    axis(1)
+	    axis(1, xpd=NA)
     }
     if (!is.null(main))
         mtext(main, 3, 3, TRUE, 0.5, cex = cex.main, font = font.main)

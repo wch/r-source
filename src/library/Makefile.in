@@ -51,6 +51,7 @@ $(top_builddir)/library/LibIndex:
 	@if [ ! -f $@ ]; then touch $@; fi
 
 DOCS:
+#	@cd base/man && ${MAKE}
 	@for pkg in $(PKGS); do \
 	  RHOME=`cd $(top_builddir); pwd`; export RHOME; \
 	  $${RHOME}/bin/build-help $${OPTS} $(srcdir)/$${pkg}; \

@@ -22,7 +22,9 @@ rhyper(nn, m, n, k)
 }
 \value{
   These functions provide information about the hypergeometric
-  distribution with parameters \code{m}, \code{n} and \code{k}.
+  distribution with parameters \code{m}, \code{n} and \code{k}
+  (named \eqn{Np}, \eqn{N-Np}, and \eqn{n}, respectively in
+   the reference below).
   \code{dhyper} gives the density, \code{phyper} gives the distribution
   function \code{qhyper} gives the quantile function and \code{rhyper}
   generates random deviates.
@@ -33,6 +35,13 @@ rhyper(nn, m, n, k)
     p(x) = \left. {m \choose x}{n \choose k-x} \right/ {m+n \choose k}%
   }{p(x) =	choose(m, x) choose(n, k-x) / choose(m+n, k)}
   for \eqn{x = 0, \ldots, k}{x = 0, ..., k}.
+}
+\details{
+For large values of \code{k},
+}
+\references{
+Johnson, N.L., Kotz, S. and Kemp, A.W. (1992).
+\emph{Univariate Discrete Distributions}, 2nd Ed., Wiley.
 }
 \examples{
 m <- 10; n <- 7; k <- 8

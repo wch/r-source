@@ -1,6 +1,6 @@
 /*
   Mathlib : A C Library of Special Functions
-  Copyright (C) 1999 R Core Team
+  Copyright (C) 1999 R Development Core Team
  
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -133,19 +133,20 @@ dwilcox(double x, double m, double n)
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(m) || ISNAN(n))
-	return x + m + n;
+	return(x + m + n);
 #endif
     m = floor(m + 0.5);
     n = floor(n + 0.5);
     if (m <= 0 || n <= 0) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 
+    if (fabs(x - floor(x + 0.5)) > 1e-7)
+	return(0);
     x = floor(x + 0.5);
-
     if ((x < 0) || (x > m * n))
-	return 0;
+	return(0);
 
     w_init_maybe(m, n);
     d = cwilcox(x, m, n) / choose(m + n, n);
@@ -162,38 +163,38 @@ pwilcox(double x, double m, double n)
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(m) || ISNAN(n))
-	return x + m + n;
+	return(x + m + n);
     if (!FINITE(m) || !FINITE(n)) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 #endif
     m = floor(m + 0.5);
     n = floor(n + 0.5);
     if (m <= 0 || n <= 0) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 
-    x = floor(x + 0.5);
+    x = floor(x + 1e-7);
 
     if (x < 0.0)
-	return 0;
+	return(0);
     if (x >= m * n)
-	return 1;
+	return(1);
 
     w_init_maybe(m, n);
     c = choose(m + n, n);
+    p = 0;
     if (x <= (m * n / 2)) {
-	p = 0;
 	for (i = 0; i <= x; i++)
 	    p += cwilcox(i, m, n) / c;
     }
     else {
 	x = m * n - x;
-	p = 1;
-	for (i = 0; i <= x; i++)
-	    p -= cwilcox(i, m, n) / c;
+	for (i = 0; i < x; i++)
+	    p += cwilcox(i, m, n) / c;
+	p = 1 - p;
     }
     w_free_maybe(m, n);
     
@@ -207,29 +208,29 @@ qwilcox(double x, double m, double n)
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(m) || ISNAN(n))
-	return x + m + n;
+	return(x + m + n);
     if(!FINITE(x) || !FINITE(m) || !FINITE(n)) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 #endif
     m = floor(m + 0.5);
     n = floor(n + 0.5);
     if (x < 0 || x > 1 || m <= 0 || n <= 0) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 
     if (x == 0)
-	return(0.0);
+	return(0);
     if (x == 1)
 	return(m * n);
 
     w_init_maybe(m, n);
     c = choose(m + n, n);
+    p = 0;
     q = 0;
     if (x <= 0.5) {
-	p = 0;
 	for (;;) {
 	    p += cwilcox(q, m, n) / c;
 	    if (p >= x)
@@ -238,10 +239,10 @@ qwilcox(double x, double m, double n)
 	}
     }
     else {
-	p = 1;
+	x = 1 - x;
 	for (;;) {
-	    p -= cwilcox(q, m, n) / c;
-	    if (p < x) {
+	    p += cwilcox(q, m, n) / c;
+	    if (p > x) {
 		q = m * n - q;
 		break;
 	    }
@@ -269,7 +270,7 @@ rwilcox(double m, double n)
     n = floor(n + 0.5);
     if ((m < 0) || (n < 0)) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 
     if ((m == 0) || (n == 0))

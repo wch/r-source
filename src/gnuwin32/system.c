@@ -509,22 +509,32 @@ static char RHome[MAX_PATH + 6];
 static char UserRHome[MAX_PATH + 6];
 char *getRHOME();
 void  closeAllHlpFiles();
+void UnLoad_Unzip_Dll();
 
 
 /* Process ~/.Renviron, if it exists */
 #include "opt.h"
+
+/* like putenv, but allocate storage */
+static void Putenv(char *str)
+{
+    char *buf;
+    buf = (char *) malloc((strlen(str) + 1) * sizeof(char));
+    strcpy(buf, str);
+    putenv(buf);
+}
 
 static void processRenviron()
 {
     char *opt[2], optf[MAX_PATH], buf[80];
     int   ok;
 
-    sprintf(optf, "%s/Renviron", getenv("R_HOME"));
+    sprintf(optf, "%s/.Renviron", getenv("R_HOME"));
     if (!optopenfile(optf))
 	return;
     while ((ok = optread(opt, '='))) {
 	sprintf(buf, "%s=%s", opt[0], opt[1]);
-	putenv(buf);
+	Putenv(buf);
     }
     optclosefile();
 }
@@ -812,16 +822,17 @@ void R_CleanUp(int ask)
     AllDevicesKilled = 1;
     if (!CharacterMode)
 	savehistory(RConsole, ".Rhistory");
+    UnLoad_Unzip_Dll();
     exitapp();
 }
 
 void R_Busy(int which)
 {
 /* currently cursor is never set off busy */
-    /*if(!CharacterMode) {
-	if(which == 1) setcursor(WatchCursor);
-	if(which == 0) setcursor(ArrowCursor);
-	}*/
+    if(!CharacterMode) {
+	if (which == 1) gsetcursor(RConsole, WatchCursor);
+	if (which == 0) gsetcursor(RConsole, ArrowCursor);
+    }
 }
 
 	/* Saving and Restoring the Global Environment */
@@ -1099,6 +1110,22 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 	for (i = 0; i < nfile; i++) {
 	    if (!strcmp(pager, "internal")) {
 		newpager(wtitle, file[i], headers[i], del);
+            } if (!strcmp(pager, "console")) {
+                DWORD len = 1;
+                HANDLE f = CreateFile(file[i], GENERIC_READ, FILE_SHARE_WRITE,
+		   NULL, OPEN_EXISTING, 0, NULL);
+                if (f != INVALID_HANDLE_VALUE) {
+                  while (ReadFile(f,buf,1023,&len,NULL) && len) {
+                    buf[len] = '\0';
+                    R_WriteConsole(buf,strlen(buf));
+                  }
+                  CloseHandle(f);
+                  if (del) DeleteFile(file[i]);
+                }
+                else {
+                  sprintf(buf,"Impossible to open file '%s'. Does it exist?\n",file[i]);
+                  warning(buf);
+                }
 	    } else {
 		sprintf(buf, "%s  %s", pager, file[i]);
 		runcmd(buf, 0, 1, "");

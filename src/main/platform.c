@@ -177,7 +177,7 @@ static int R_AppendFile(char *file1, char *file2)
     status = 1;
  append_error:
     if (status == 0)
-	warning("write error during file append!");
+	warning("write error during file append!\n");
     fclose(fp1);
     fclose(fp2);
     return status;
@@ -306,7 +306,7 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (pattern && regcomp(&reg, CHAR(STRING(p)[0]), REG_EXTENDED))
         errorcall(call, "invalid pattern regular expression\n");
 #else
-	warning("pattern specification is not available in \"list.files\"");
+	warning("pattern specification is not available in \"list.files\"\n");
 #endif
     count = 0;
     for (i = 0; i < ndir ; i++) {
@@ -407,9 +407,9 @@ static int filbuf(char *buf, FILE *fp)
 
 SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP topic, path, indexname, sep;
-    char linebuf[256], topicbuf[256], *p;
-    int i, npath, ltopicbuf, html;
+    SEXP topic, path, indexname, sep, type;
+    char linebuf[256], topicbuf[256], *p, ctype[256];
+    int i, npath, ltopicbuf;
     FILE *fp;
 
     checkArity(op, args);
@@ -425,7 +425,10 @@ SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
     sep = CAR(args); args = CDR(args);
     if(!isString(sep) || length(sep) < 1 || isNull(sep))
 	error("invalid \"sep\" argument\n");
-    html = asLogical(CAR(args));
+    type = CAR(args);
+    if(!isString(type) || length(type) < 1 || isNull(type))
+	error("invalid \"type\" argument\n");
+    strcpy(ctype, CHAR(STRING(type)[0]));
     sprintf(topicbuf, "%s\t", CHAR(STRING(topic)[0]));
     ltopicbuf = strlen(topicbuf);
     npath = length(path);
@@ -441,17 +444,29 @@ SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    p = &linebuf[ltopicbuf - 1];
 		    while(isspace((int)*p)) p++;
 		    fclose(fp);
-		    if (html)
+		    if (!strcmp(ctype, "html"))
 			sprintf(topicbuf, "%s%s%s%s%s%s",
 				CHAR(STRING(path)[i]),
 				CHAR(STRING(sep)[0]), 
 				"html", CHAR(STRING(sep)[0]),
 				p, ".html");
+		    else if (!strcmp(ctype, "R-ex"))
+			sprintf(topicbuf, "%s%s%s%s%s%s",
+				CHAR(STRING(path)[i]),
+				CHAR(STRING(sep)[0]), 
+				"R-ex", CHAR(STRING(sep)[0]),
+				p, ".R");
+		    else if (!strcmp(ctype, "latex"))
+			sprintf(topicbuf, "%s%s%s%s%s%s",
+				CHAR(STRING(path)[i]),
+				CHAR(STRING(sep)[0]), 
+				"latex", CHAR(STRING(sep)[0]),
+				p, ".tex");
 		    else
 			sprintf(topicbuf, "%s%s%s%s%s",
 				CHAR(STRING(path)[i]),
 				CHAR(STRING(sep)[0]), 
-				"help", CHAR(STRING(sep)[0]), p);
+				ctype, CHAR(STRING(sep)[0]), p);
 		    return mkString(topicbuf);
 		}
 	    }

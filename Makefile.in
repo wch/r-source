@@ -21,12 +21,11 @@ GZIP = --best
 
 all: Makefile R docs
 
-Makefile:
-	$(srcdir)/Makefile.in $(top_builddir)/config.status
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
-R: 
+R:
 	@for d in afm demos doc etc src; do \
 	  (cd $${d} && $(MAKE) R) || exit 1; \
 	done
@@ -54,7 +53,8 @@ install: all installdirs
 	@cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(rhome)/bin/R
 	@cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R
-	@for f in `ls bin/* | grep -v '^bin/\(R\|R.binary\)\**$$'`; do \
+	@for f in `ls bin/* | grep -v '^bin/R\**$$' \
+                            | grep -v '^bin/R.binary\**$$'`; do \
 	  $(INSTALL) $${f} $(rhome)/bin; \
 	done
 	@for f in Rd2txt Rdconv Rdindex Sd2Rd; do \
@@ -137,7 +137,7 @@ distdir: $(DISTFILES)
 	  (cd $${d} && $(MAKE) distdir) \
 	    || exit 1; \
         done
-	@for d in aux debian; do \
+	@for d in tools debian; do \
 	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
 	    | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
@@ -150,5 +150,5 @@ info:
 TAGS:
 
 check test:: test-All
-test-All test-Examples::
-	-@(cd tests && $(MAKE) $@)
+test-All test-Examples strict-tests::
+	@(cd tests && $(MAKE) $@)

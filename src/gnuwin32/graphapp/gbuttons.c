@@ -43,9 +43,14 @@ gchangescrollbar(scrollbar obj, int which, int where, int max, int pagesize,
 
 void gsetcursor(drawing d, cursor c)
 {
+    POINT pt;
+
     decrease_refcount(d->drawstate->crsr);
     d->drawstate->crsr = c;
     increase_refcount(c);
+    /* ensure new cursor is shown */
+    GetCursorPos(&pt);
+    SetCursorPos(pt.x, pt.y);
 }
 
 control newtoolbar(int height)
@@ -54,11 +59,37 @@ control newtoolbar(int height)
     if (!ismdi() || !c || (c==MDIFrame)) return NULL;
     addto(MDIFrame);
     c->toolbar = newwindow("TOOLBAR", rect(0, 0, 100, height),
-			   ChildWindow | Border | TrackMouse);
+			   ChildWindow | Border);
     if (c->toolbar) {
+        DWORD wcol = GetSysColor(COLOR_MENU);
 	hide(c->toolbar);
-	setbackground(c->toolbar, GetSysColor(COLOR_MENU));
+	setbackground(c->toolbar, 
+                      rgb( (wcol >> 0) &  0x000000FFL,
+                           (wcol >> 8) &  0x000000FFL,
+                           (wcol >> 16) &  0x000000FFL));
     }
     addto(c);
     return (control) c->toolbar;
+}
+
+/* Fix background color for image on the toolbar.
+   Designed to work with image in stdimc.c:
+   (a) background is pixel (0,0);
+   (b) image depth is 8 bits;
+   (c) image is changed not copied.
+*/
+button newtoolbutton(image img, rect r, actionfn fn) {
+   DWORD wcol = GetSysColor(COLOR_MENU);
+   rgb    col = rgb( (wcol >> 0) &  0x000000FFL,
+                     (wcol >> 8) &  0x000000FFL,
+                     (wcol >> 16) &  0x000000FFL);
+   img->cmap[img->pixels[0]] = col;
+   return newimagebutton(img, r, fn);
+}
+    
+
+void scrolltext(textbox c, int lines)
+{
+    int linecount = sendmessage(c->handle, EM_GETLINECOUNT, 0, 0);
+    sendmessage(c->handle, EM_LINESCROLL, 0, linecount - lines);
 }

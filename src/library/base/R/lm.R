@@ -18,7 +18,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 	warning(paste("method =", method,
 		      "is not supported. Using \"qr\"."))
     xvars <- as.character(attr(mt, "variables"))[-1]
-    if(yvar <- attr(mt, "response") > 0) xvars <- xvars[-yvar]
+    if((yvar <- attr(mt, "response")) > 0) xvars <- xvars[-yvar]
     xlev <-
 	if(length(xvars) > 0) {
 	    xlev <- lapply(mf[xvars], levels)
@@ -226,7 +226,7 @@ print.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
     invisible(x)
 }
 
-summary.lm <- function (object, correlation = FALSE)
+summary.lm <- function (object, correlation = FALSE, ...)
 {
     z <- .Alias(object)
     Qr <- .Alias(object$qr)
@@ -349,14 +349,14 @@ print.summary.lm <-
 ## update.lm <- function(lm.obj, formula, data, weights, subset, na.action)
 ## .....
 
-residuals.lm <- function(x) x$residuals
-fitted.lm <- function(x) x$fitted.values
-coef.lm <- function(x) x$coefficients
-weights.lm <- function(x) x$weights
-df.residual.lm <- function(x) x$df.residual
-deviance.lm <- function(x) sum((x$residuals)^2)
-formula.lm <- function(x) formula(x$terms)
-family.lm <- function(x) { gaussian() }
+residuals.lm <- function(object, ...) object$residuals
+fitted.lm <- function(object, ...) object$fitted.values
+coef.lm <- function(object, ...) object$coefficients
+weights.lm <- function(object, ...) object$weights
+df.residual.lm <- function(object, ...) object$df.residual
+deviance.lm <- function(object, ...) sum((object$residuals)^2)
+formula.lm <- function(object, ...) formula(object$terms)
+family.lm <- function(object, ...) { gaussian() }
 
 model.frame.lm <-
     function(formula, data, na.action, ...) {
@@ -463,7 +463,8 @@ anovalist.lm <- function (object, ..., test = NULL)
 
 predict.lm <- function(object, newdata,
 		       se.fit = FALSE, scale = NULL, df = Inf,
-		       interval=c("none","confidence","prediction"), level=.95)
+		       interval=c("none","confidence","prediction"),
+                       level=.95, ...)
 {
     if(missing(newdata)) {
         X <- model.matrix(object)
@@ -577,7 +578,7 @@ model.matrix.lm <- function(object, ...)
 }
 
 ##---> SEE ./mlm.R  for more methods, etc. !!
-predict.mlm <- function(object, newdata, se.fit = FALSE)
+predict.mlm <- function(object, newdata, se.fit = FALSE, ...)
 {
     if(missing(newdata)) return(object$fitted)
     if(se.fit)

@@ -1,11 +1,14 @@
 \name{contour}
 \title{Display Contours}
 \usage{
-contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
-        nlevels = 10, levels = pretty(range(z, finite = TRUE), nlevels),
+contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
+        z,
+        nlevels = 10, levels = pretty(zlim, nlevels),
+        xlim = range(x, finite = TRUE),
+        ylim = range(y, finite = TRUE),
+        zlim = range(z, finite = TRUE),
         labcex = 0,
-        xlim = range(x, finite = TRUE), ylim = range(y, finite = TRUE),
-        col = par("fg"), lty = par("lty"), add = FALSE, ...)
+        col = par("fg"), lty = par("lty"), add = FALSE, \dots)
 }
 \alias{contour}
 \arguments{
@@ -23,7 +26,7 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
   \item{levels}{numeric vector of levels at which to draw contour
     lines.}
   \item{labcex}{\code{cex} for contour labelling. (not yet used)}
-  \item{xlim, ylim}{x- and y-limits}
+  \item{xlim, ylim, zlim}{x-, y- and z-limits for the plot}
   \item{col}{color for the lines drawn}
   \item{lty}{line type for the lines drawn}
   \item{add}{logical. If \code{TRUE}, add to a current plot.}
@@ -36,6 +39,7 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
   The source code is in \file{\$RHOME/src/main/plot.c}.
 }
 \seealso{
+  \code{\link{filled.contour}} for ``color-filled'' contours,
   \code{\link{image}} and the graphics demo which can be invoked as
   \code{demo(graphics)}.
 }

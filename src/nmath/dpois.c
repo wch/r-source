@@ -34,7 +34,10 @@ double dpois(double x, double lambda)
     if(ISNAN(x) || ISNAN(lambda))
 	return x + lambda;
 #endif
-    x = floor(x + 0.5);
+    if(fabs(x - floor(x + 0.5)) > 1e-7) {
+	warning("non-integer x = %f\n", x);
+	return 0;
+    }
     if(lambda <= 0.0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;

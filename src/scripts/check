@@ -1,11 +1,16 @@
 #!/bin/sh
 
 # ${RHOME}/bin/check for checking installed add-on packages
+
 USAGE_MSG="Usage: R CMD check [options] [-l lib] pkg_1 ... pkg_n"
-VERSION="0.1-0"
+VERSION="0.2-0"
+
 OPTS=
 PKGS=
+CLEAN=false
 DEBUG=false
+REBUILD=true
+START_DIR=`pwd`
 lib=${RHOME}/library
 
 while test -n "${1}"; do
@@ -14,15 +19,22 @@ while test -n "${1}"; do
       echo "${USAGE_MSG}"; exit 0 ;;
     -V|--version)
       echo "${VERSION}"; exit 0 ;;
+    -c|--clean)
+      CLEAN=true ;;
     --debug)
       DEBUG=true; OPTS="${OPTS} --debug" ;;
+    --no-rebuild)
+      REBUILD=false ;;
     -l)
-      lib=${2}; shift ;;
+      lib=${2}; shift;
+      RLIBS="${lib}:${RLIBS}";
+      ;;
     *)
       PKGS="${PKGS} ${1}" ;;
   esac
   shift
 done
+
 if ${DEBUG}; then set -x; fi
 
 if test -z "${PKGS}"; then
@@ -30,47 +42,54 @@ if test -z "${PKGS}"; then
   exit 1
 fi
 
-if test -d ${lib} -a -w ${lib}; then
+if test -d ${lib}; then
   lib=`cd ${lib}; pwd`
 else
-  echo "ERROR: cannot write to or create directory \`${lib}'"
+  echo "ERROR: library directory \`${lib}' does not exist"
   exit 2
 fi
 
 for pkg in ${PKGS}; do
-  if test -d $pkg; then
-    cd ${pkg}
-  else
-    echo "WARNING: No subdirectory ${pkg} in "`pwd`' ... skipping'
-    break
+  cd ${START_DIR}
+  USE_MAN=false
+
+  if ${REBUILD}; then
+    if test -d ${pkg}/man -a -w ${lib}/`basename ${pkg}`; then
+      USE_MAN=true
+      cd ${pkg}
+      pkg=`basename ${pkg}`
+      rm -rf ${lib}/${pkg}/R-ex
+    fi
   fi
-  pkg=`basename ${pkg}`
+
   echo "Checking package \`${pkg}' ..."
 
-  if test -d ${lib}/${pkg}; then
-    rm -rf ${lib}/${pkg}/R-ex
-  else
-    echo "WARNING: package \`${pkg} not installed ... skipping"
+  if test \! -d ${lib}/${pkg}; then
+    echo "WARNING: package \`${pkg}' not installed ... skipping"
     break
   fi
 
-  if test -d man; then
+  if ${USE_MAN}; then
     ${RHOME}/bin/build-help ${OPTS} --example ../${pkg} ${lib}
+    CHECK_DIR=check
   else
-    echo "WARNING: package \`${pkg} contains no examples ... skipping"
+    CHECK_DIR=check-${pkg}
   fi
 
-  test -d check || mkdir check
-  cd check
+  test -d ${CHECK_DIR} || mkdir ${CHECK_DIR}
+  cd ${CHECK_DIR}
+    
   echo " Massaging examples into \`${pkg}-Ex.R' ..."
   ${RHOME}/bin/massage-Examples ${pkg} ${lib}/${pkg}/R-ex/*.R \
     > ${pkg}-Ex.R
   echo " Running examples in package \`${pkg}' ..."
-  ${RHOME}/bin/R --vanilla --vsize 6M < ${pkg}-Ex.R > ${pkg}-Ex.Rout
+  RLIBS=${RLIBS} ${RHOME}/bin/R --vanilla < ${pkg}-Ex.R \
+    > ${pkg}-Ex.Rout
   if test ${?} -eq 0; then
     echo " OK"
   else
-    echo " ERROR"
+    echo " ERROR" && exit 1
   fi
+  if ${CLEAN}; then cd .. && rm -rf ${CHECK_DIR}; fi
 
 done

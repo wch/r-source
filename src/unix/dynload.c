@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-1999 The R Core Team
+ *  Copyright (C) 1997-1999 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -100,9 +100,6 @@ static CFunTabEntry CFunTab[] =
 #ifndef RTLD_LAZY
 #define RTLD_LAZY 1
 #endif
-#ifndef RTLD_NOW
-#define RTLD_NOW  2
-#endif
 
 #ifdef DL_SEARCH_PROG
 static void *dlhandle;
@@ -111,7 +108,7 @@ static void *dlhandle;
 void InitFunctionHashing()
 {
 #ifdef DL_SEARCH_PROG
-    dlhandle = dlopen(0, RTLD_NOW);
+    dlhandle = dlopen(0, RTLD_LAZY);
 #endif
 }
 
@@ -170,7 +167,7 @@ static int AddDLL(char *path)
 	strcpy(DLLerror, "Maximal number of DLLs reached...");
 	return 0;
     }
-    handle = dlopen(path, RTLD_NOW);
+    handle = dlopen(path, RTLD_LAZY);
     if(handle == NULL) {
 	strcpy(DLLerror, dlerror());
 	return 0;

@@ -706,6 +706,7 @@ SEXP do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     colsave = dd->gp.col;
     xpdsave = dd->gp.xpd;
+    /* override par("xpd") and force clipping to plot region */
     dd->gp.xpd = 0;
 
     GMode(1, dd);
@@ -810,6 +811,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 
     colsave = dd->gp.col;
     xpdsave = dd->gp.xpd;
+    /* override par("xpd") and force clipping to plot region */
     dd->gp.xpd = 0;
 
     GMode(1, dd);

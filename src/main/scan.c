@@ -415,10 +415,10 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 
  done:
     if (badline)
-	warning("line %d did not have %d elements", badline, nc);
+	warning("line %d did not have %d elements\n", badline, nc);
 
     if (colsread != 0) {
-	warning("number of items read is not a multiple of the number of columns");
+	warning("number of items read is not a multiple of the number of columns\n");
 	buffer[0] = '\0';   /* this is an NA */
 	for (ii = colsread; ii < nc; ii++) {
 	    extractItem(buffer, VECTOR(ans)[ii], n);
@@ -624,9 +624,9 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    continue;
 	}
 	else if (sepchar) {
-	    if (c == sepchar)
+	    if (nfields == 0)
 		nfields++;
-	    else if (nfields == 0)
+	    if (c == sepchar)
 		nfields++;
 	}
 	else if (!isspace(c)) {

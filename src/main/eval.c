@@ -281,21 +281,8 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     if( DEBUG(op) ) {
 	Rprintf("debugging in: ");
 	PrintValueRec(call,rho);
-	/* now find out if the body is function with only one statement */
-	if (isSymbol(CAR(body)))
-	    tmp = findFun(CAR(body), rho);
-	else
-	    tmp = eval(CAR(body), rho);
-	if((TYPEOF(tmp) == BUILTINSXP || TYPEOF(tmp) == SPECIALSXP) 
-	    && !strcmp( PRIMNAME(tmp), "for" ) && !strcmp( PRIMNAME(tmp), 
-	    "{" ) && !strcmp( PRIMNAME(tmp),"repeat" ) && 
-	    !strcmp( PRIMNAME(tmp), "while" )) 
-	    goto regdb;
-	Rprintf("debug: ");
-	PrintValue(body);
-	do_browser(call,op,arglist,newrho);
     }
-regdb:
+
     /* Set a longjmp target which will catch any */
     /* explicit returns from the function body. */
 
@@ -693,7 +680,7 @@ static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal, SEXP tmploc)
 	UNPROTECT(4);
 	return CONS(nval, val);
     }
-    else error("invalid (Non-language) left side of assignment\n");
+    else error("Target of assignment expands to non-language object\n");
     return R_NilValue;	/*NOTREACHED*/
 }
 
@@ -1026,12 +1013,13 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(isLanguage(expr) || isExpression(expr) || isSymbol(expr)) {
 	PROTECT(expr);
 	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args);
-        if (!SETJMP(cntxt.cjmpbuf))
+	if (!SETJMP(cntxt.cjmpbuf))
 	    expr = eval(expr, env);
 	endcontext(&cntxt);
 	UNPROTECT(1);
     }
     if (PRIMVAL(op)) {
+	PROTECT(expr);
         PROTECT(env = allocVector(VECSXP, 2));
         PROTECT(encl = allocVector(STRSXP, 2));
 	STRING(encl)[0] = mkChar("value");
@@ -1040,7 +1028,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
         VECTOR(env)[1] = ScalarLogical(R_Visible);
         setAttrib(env, R_NamesSymbol, encl);
         expr = env;
-        UNPROTECT(2);
+        UNPROTECT(3);
     }
     UNPROTECT(1);
     return expr;
@@ -1068,11 +1056,10 @@ SEXP do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (cptr == NULL)
 	error("Recall called from outside a closure\n");
-    if( TYPEOF(CAR(cptr->call)) == SYMSXP)
-        PROTECT(s = findFun(CAR(cptr->call), cptr->sysparent));
-    else
-        PROTECT(s = eval(CAR(cptr->call), cptr->sysparent));
-    ans = applyClosure(cptr->call, s, args, cptr->sysparent, R_NilValue);
+    t = CAR(cptr->call);
+    s = findFun(t, cptr->sysparent);
+    PROTECT(t = LCONS(t,args));
+    ans = applyClosure(t, s, args, rho, R_NilValue);
     UNPROTECT(1);
     return ans;
 }
@@ -1146,12 +1133,14 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     SEXP class, s, t, m, meth, sxp, gr, newrho;
     char buf[512], generic[128], *pt;
     /* check whether we are processing the default method */
-    sprintf(buf, "%s", CHAR(PRINTNAME(CAR(call))));
-    pt = strtok(buf, ".");
-    pt = strtok(NULL, ".");
+    if ( isSymbol(CAR(call)) ) {
+	sprintf(buf, "%s", CHAR(PRINTNAME(CAR(call))) );
+	pt = strtok(buf, ".");
+	pt = strtok(NULL, ".");
 
-    if( pt != NULL && !strcmp(pt, "default") )
-	return 0;
+	if( pt != NULL && !strcmp(pt, "default") )
+	    return 0;
+    }
 
     if( !strcmp(group, "Ops") )
 	nargs = length(args);
@@ -1168,7 +1157,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     if( nargs == 2 )
 	class = dominates(class, CADR(args));
 
-    sprintf(generic, "%s", CHAR(PRINTNAME(CAR(call))));
+    sprintf(generic, "%s", PRIMNAME(op) );
 
     j = length(class);
     sxp = R_NilValue;

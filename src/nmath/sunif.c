@@ -145,23 +145,34 @@ void FixupSeeds(RNGtype kind)
 /* Depending on RNG, set 0 values to non-0, etc. */
 
     int j; 
+#ifdef OLD
     RNGtype tkind;
+#endif
 
     /* Set 0 to 1 : */
     if(!RNG_Table[kind].i1_seed) RNG_Table[kind].i1_seed++;
-    for(j=0; j <= RNG_Table[kind].n_seed - 2; j++)
+    for(j = 0; j <= RNG_Table[kind].n_seed - 2; j++)
 	if(!RNG_Table[kind].i_seed[j]) RNG_Table[kind].i_seed[j]++;
 
     switch(kind) {
     case WICHMANN_HILL:
+	I1 = I1 % 30269; I2 = I2 % 30307; I3 = I3 % 30323;
+	
+	/* map values equal to 0 mod modulus to 1. */
+	if(I1 == 0) I1 = 1;
+	if(I2 == 0) I2 = 1;
+	if(I3 == 0) I3 = 1;
+#ifdef OLD
 	if(RNG_Table[kind].i1_seed >= 30269 ||
 	   RNG_Table[kind].i2_seed >= 30307 ||
-	   RNG_Table[kind].i3_seed >= 30323 ) {/*.Random.seed was screwed up */
+	   RNG_Table[kind].i3_seed >= 30323 ) {
+            /*.Random.seed was screwed up */
 	    /* do 1 iteration */
 	    tkind = RNG_kind; RNG_kind = WICHMANN_HILL;
 	    sunif();
 	    RNG_kind = tkind;
 	}
+#endif
 	return;
     case MARSAGLIA_MULTICARRY: 
 	return;

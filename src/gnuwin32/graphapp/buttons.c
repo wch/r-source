@@ -59,7 +59,7 @@ static void ensure_window(void)
  */
 static void set_new_winproc(object obj)
 {
-  #if 0
+  #if TRUE
 	HWND hwnd;
 	hwnd = obj->handle;
 	obj->winproc = (WNDPROC) GetWindowLong(hwnd, GWL_WNDPROC);
@@ -138,7 +138,7 @@ static object newchildwin(char *kind, char *text,
 	obj->flags = ChildWindow;
 	obj->text = new_string(text);
 	set_new_winproc(obj); /* set custom winproc */
-
+	settextfont(obj, SystemFont);
 	return obj;
 }
 
@@ -909,6 +909,7 @@ field newpassword(char *text, rect r)
 			| ES_PASSWORD, r, NULL);
 	if (obj) {
 		obj->kind = FieldObject;
+		settextfont(obj, SystemFont);
 		settext(obj, text);
 	}
 	return obj;
@@ -1057,7 +1058,7 @@ listbox newmultilist(char *list[], rect r, scrollfn fn)
 
 	obj = newchildwin("listbox", NULL,
 				LBS_NOTIFY |
-				LBS_MULTIPLESEL |
+				LBS_MULTIPLESEL | LBS_EXTENDEDSEL |
 				WS_BORDER |
 				WS_VSCROLL | WS_HSCROLL,
 				r, NULL);
@@ -1276,8 +1277,9 @@ void handle_control(HWND hwnd, UINT message)
 		if (message != LBN_SELCHANGE)
 			return;
 		index = sendmessage(hwnd, LB_GETCARETINDEX, 0, 0L);
+		/* We do want to see de-selection events too 
 		if (! sendmessage(hwnd, LB_GETSEL, index, 0L))
-			return;
+		  return;*/
 		obj->value = index;
 		break;
 

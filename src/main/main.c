@@ -139,11 +139,6 @@ int	R_Unnamed = 1;		    /* Use default name? */
 int	R_DirtyImage = 0;	    /* Current image dirty */
 int	R_Init = 0;		    /* Do we have an image loaded */
 
-/* Error/Warning Globals */
-/* perhaps these can be stuck into a context?? */
-
-int    R_CollectWarnings = 0;       /* Collect warnings into one spot */
-SEXP   R_Warnings;                  /* The warnings */
 
 static int ParseBrowser(SEXP, SEXP);
 
@@ -178,8 +173,7 @@ static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 	    UNPROTECT(1);
 	    if (R_Visible)
 		PrintValueEnv(R_CurrentExpr, rho);
-	    if( R_CollectWarnings )
-		PrintWarnings();
+	    R_Busy(0);
 	    break;
 	case PARSE_ERROR:
 	    error("syntax error\n");
@@ -229,6 +223,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
     bufp = buf;
     for(;;) {
 	if(!*bufp) {
+	    R_Busy(0);
 	    if (R_ReadConsole(R_PromptString(browselevel, prompt_type),
 			     buf, 1024, 1) == 0) return;
 	    bufp = buf;
@@ -253,7 +248,6 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 	}
 	if (browselevel)
 	    Reset_C_alloc();
-
 	R_PPStackTop = savestack;
 	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 0, &status);
 
@@ -282,8 +276,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 	    UNPROTECT(1);
 	    if (R_Visible)
 		PrintValueEnv(R_CurrentExpr, rho);
-	    if (R_CollectWarnings)
-		PrintWarnings();
+	    R_Busy(0);
 	    R_IoBufferWriteReset(&R_ConsoleIob);
 	    prompt_type = 1;
 	    break;
@@ -388,8 +381,6 @@ void mainloop(void)
     R_Toplevel.conexit = R_NilValue;
     R_Toplevel.cend = NULL;
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-
-    R_Warnings = R_NilValue;
 
     /* On initial entry we open the base language */
     /* package and begin by running the repl on it. */
@@ -509,10 +500,6 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	    rval=1;
 	    DEBUG(rho)=0;
 	}
-	if (!strcmp(CHAR(PRINTNAME(CExpr)),"Q")) {
-	    R_BrowseLevel = 0;
-            LONGJMP(R_Toplevel.cjmpbuf, CTXT_TOPLEVEL);
-	}
     }
     return rval;
 }
@@ -560,8 +547,8 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 		     R_NilValue, R_NilValue);
 	SETJMP(thiscontext.cjmpbuf);
 	R_GlobalContext = R_ToplevelContext = &thiscontext;
+	signal(SIGINT, onintr);
 	R_BrowseLevel = savebrowselevel;
-        signal(SIGINT, onintr);
 	R_ReplConsole(rho, savestack, R_BrowseLevel);
 	endcontext(&thiscontext);
     }

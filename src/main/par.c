@@ -569,7 +569,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
 	dd->dp.pin[0] = dd->gp.pin[0] = REAL(value)[0];
-	dd->dp.pin[1] = dd->gp.pin[1] = REAL(value)[0];
+	dd->dp.pin[1] = dd->gp.pin[1] = REAL(value)[1];
 	dd->dp.pUnits = dd->gp.pUnits = INCHES;
 	dd->dp.defaultPlot = dd->gp.defaultPlot = 0;
 	GReset(dd);
@@ -733,9 +733,12 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	dd->dp.xlog = dd->gp.xlog = (ix != 0);
     }
     else if (streql(what, "xpd")) {
-	lengthCheck(what, value, 1);	ix = asInteger(value);
-	naIntCheck(ix, what);
-	dd->dp.xpd = dd->gp.xpd = (ix != 0);
+	lengthCheck(what, value, 1);	
+	ix = asInteger(value);
+	if (ix==NA_INTEGER)
+	    dd->dp.xpd = dd->gp.xpd = 2;
+	else 
+	    dd->dp.xpd = dd->gp.xpd = (ix != 0);
     }
     else if (streql(what, "yaxp")) {
 	value = coerceVector(value, REALSXP);
@@ -769,7 +772,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	    par_error(what);
 	dd->dp.ylog = dd->gp.ylog = (ix != 0);
     }
-    else warningcall(gcall, "parameter \"%s\" can't be set", what);
+    else warningcall(gcall, "parameter \"%s\" can't be set\n", what);
     return 0;/* never used; to keep -Wall happy */
 }
 
@@ -1038,9 +1041,12 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	else par_error(what);
     }
     else if (streql(what, "xpd")) {
-	lengthCheck(what, value, 1);	ix = asInteger(value);
-	naIntCheck(ix, what);
-	dd->gp.xpd = (ix != 0);
+	lengthCheck(what, value, 1);	
+	ix = asInteger(value);
+	if (ix==NA_INTEGER)
+	    dd->gp.xpd = 2;
+	else 
+	    dd->gp.xpd = (ix != 0);
     }
     else if (streql(what, "yaxp")) {
 	value = coerceVector(value, REALSXP);
@@ -1068,7 +1074,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	    dd->gp.yaxt = ix;
 	else par_error(what);
     }
-    else warning("parameter \"%s\" couldn't be set in high-level plot() function", what);
+    else warning("parameter \"%s\" couldn't be set in high-level plot() function\n", what);
 }
 
 
@@ -1416,7 +1422,10 @@ static SEXP Query(char *what, DevDesc *dd)
     }
     else if (streql(what, "xpd")) {
 	value = allocVector(LGLSXP, 1);
-	INTEGER(value)[0] = dd->dp.xpd;
+	if (dd->dp.xpd == 2)
+	    INTEGER(value)[0] = NA_INTEGER;
+	else
+	    INTEGER(value)[0] = dd->dp.xpd;
     }
     else if (streql(what, "yaxp")) {
 	value = allocVector(REALSXP, 3);

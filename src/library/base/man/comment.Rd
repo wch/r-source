@@ -1,5 +1,5 @@
 \name{comment}
-\title{ ~~function to do ... ~~}
+\title{Query or Set a `Comment' Attribute}
 \usage{
 comment(x)
 comment(x) <- value

@@ -45,7 +45,7 @@ lqs.default <-
 {
     lqs.control <- function(psamp = NA, nsamp = "best", adjust = TRUE)
 	list(psamp = psamp, nsamp = nsamp, adjust = adjust)
-    
+
     n <- length(y)
     nmx <- deparse(substitute(x))
     if(is.null(dim(x))) {
@@ -88,7 +88,7 @@ lqs.default <-
     adj <- control$adjust & intercept
     nsamp <- eval(control$nsamp)
     nexact <- choose(n, ps)
-    if(is.character(nsamp) && nsamp == "best") 
+    if(is.character(nsamp) && nsamp == "best")
 	nsamp <- if(nexact < 5000) "exact" else "sample"
     if(is.numeric(nsamp) && nsamp > nexact) {
 	warning(paste("only", nexact, "sets, so all sets will be tried"))
@@ -153,7 +153,7 @@ lqs.default <-
     z
 }
 
-print.lqs <- function (x, digits = max(3, .Options$digits - 3), ...) 
+print.lqs <- function (x, digits = max(3, .Options$digits - 3), ...)
 {
     if(!is.null(cl <- x$call)) {
 	cat("Call:\n")
@@ -167,15 +167,13 @@ print.lqs <- function (x, digits = max(3, .Options$digits - 3), ...)
     invisible(x)
 }
 
-predict.lqs <- function (object, newdata) 
+predict.lqs <- function (object, newdata, ...)
 {
     if (missing(newdata)) return(object$fitted.values)
-    X <- model.matrix(delete.response(terms(object)), newdata, 
+    X <- model.matrix(delete.response(terms(object)), newdata,
 		      contrasts = object$contrasts, xlev = object$xlevels)
     drop(X %*% object$coefficients)
 }
-
-residuals.lqs <- function(x) x$residuals
 
 
 cov.rob <- function(x, cor = FALSE, quantile.used = floor((n+p+1)/2),
@@ -228,7 +226,7 @@ cov.rob <- function(x, cor = FALSE, quantile.used = floor((n+p+1)/2),
 	means <- apply(x[best, , drop = FALSE], 2, mean)
 	rcov <- var(x[best, , drop = FALSE]) * (1 + 15/(n - p))^2
 	dist <- mahalanobis(x, means, rcov)
-	cut <- qchisq(0.975, p) * quantile(dist, ps/n)/qchisq(qn/n, p)
+	cut <- qchisq(0.975, p) * quantile(dist, qn/n)/qchisq(qn/n, p)
 	cov <- divisor * var(x[dist < cut, , drop = FALSE]) *
 	    rep(divisor, rep(p, p))
 	attr(cov, "names") <- NULL

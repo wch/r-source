@@ -80,9 +80,13 @@ help <-
                 ## experimental code
                 zfile <- zip.file.extract(file, "Rhelp.zip")
                 ## end of experimental code
-                file.show(zfile,
-                          header = paste("Help for `", topic, "'", sep=""),
-                          delete.file = (zfile!=file))
+                if(file.exists(zfile))
+                    file.show(zfile,
+                              header = paste("Help for `", topic, "'", sep=""),
+                              delete.file = (zfile!=file))
+                else
+                    stop(paste("The help file for `", topic, "' is missing",
+                               sep = ""))
                 return(invisible())
             }
             else {

@@ -5,8 +5,15 @@ OBJSA=$(foreach i,$(SOURCES),$(basename $i).o)
 
 include ../../../gnuwin32/MkRules
 
-DLLFLAGS=-s 
-CFLAGS=-I../../../include -include ../../../include/globalvar.h -O2
+ifdef DEBUG
+  DLLFLAGS=
+  DEBUGFLAG=-g
+else
+  DLLFLAGS=-s
+  DEBUGFLAG=
+endif
+
+CFLAGS=-I../../../include -include ../../../include/globalvar.h $(DEBUGFLAG) -O2
 FFLAGS=-O2
 DLLLIBS=-L../../../gnuwin32  $(FLIBS) -lR 
 

@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998 ff  Robert Gentleman, Ross Ihaka and the R core team
+ *  Copyright (C) 1998, 1999   Robert Gentleman, Ross Ihaka 
+ *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -81,7 +82,18 @@ int F77_SYMBOL(rs)(int *nm, int *n, double *a, double *w,
 		   int *matz, double *z, double *fv1, double *fv2, int *ierr);
 
 /* fft.c */
-/* ...............*/
+/* NOTE:  The following functions use GLOBAL (static) variables !! 
+ * ----   some of R-core think that this should be changed, 
+ *        which will INEVITABLY extend the argument lists ...!
+ *-- i.e. don't export these yet!
+ */
+#ifdef NOT_YET
+void fft_factor(int n, int *pmaxf, int *pmaxp);
+
+int fft_work(double *a, double *b, int nseg, int n, int nspn, int isn,
+	     double *work, int *iwork);
+/* returns 1 for success,  0 otherwise */
+#endif
 
 /* fortran.c   is covered by ./Fortran.h */
 
@@ -219,6 +231,6 @@ int F77_SYMBOL(optif9)(int *nr, int *n, double *x,
 		       double *xpls, double *fpls, double *gpls,
 		       int *itrmcd, double *a, double *wrk, int *itncnt);
  
-double zeroin(double ax, double bx, double (*f)(double, void *), void *info,
-	      double *tol, int *maxit);
+double F77_SYMBOL(zeroin)(double *ax, double *bx, 
+			  D_fp f, double *tol, int *maxiter);
 #endif

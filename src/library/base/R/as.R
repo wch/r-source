@@ -28,8 +28,10 @@ as.list.default <- function (x)
     if (is.function(x))
 	return(c(formals(x), body(x)))
     if (is.expression(x)) {
-	l <- vector("list")
-	for (sub in x) l <- c(l, sub[[1]])
+	n <- length(x)
+	l <- vector("list", n)
+	i <- 0
+	for (sub in x) l[[i <- i + 1]] <- sub
 	return(l)
     }
     .Internal(as.vector(x, "list"))

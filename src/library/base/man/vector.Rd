@@ -19,8 +19,11 @@ is.vector(x, mode = "any")
   is most convenient).  The attributes of \code{x} are removed.
 
   \code{is.vector} returns \code{TRUE} if \code{x} is a vector (of mode
-  logical, factor, integer, real or character) and \code{FALSE}
+  logical, integer, real or character) and \code{FALSE}
   otherwise.
+
+  Note that factors are \emph{not} vectors;  \code{is.vector} returns
+  \code{FALSE} and \code{as.vector} converts to character mode.
 }
 \seealso{
 \code{\link{c}}, \code{\link{is.numeric}}, \code{\link{is.list}}, etc.

@@ -156,7 +156,7 @@ c     given its relevant b-spline coeffs in aj(1),...,aj(k-jderiv).
 c
    99 return
       end
-
+
       subroutine interv ( xt, lxt, x, left, mflag )
       implicit none
 

@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1999 R Core Team
+ *  Copyright (C) 1999 R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@
  *
  *    #include "Mathlib.h"
  *    double dsignrank(double x, double n)
- *    double dsignrank(double x, double n)
- *    double dsignrank(double x, double n)
+ *    double psignrank(double x, double n)
+ *    double qsignrank(double x, double n)
  *    double rsignrank(double n) 
  *
  *  DESCRIPTION
@@ -106,18 +106,19 @@ dsignrank(double x, double n)
 
 #ifdef IEEE_754
     /* NaNs propagated correctly */
-    if (ISNAN(x) || ISNAN(n)) return x + n;
+    if (ISNAN(x) || ISNAN(n)) return(x + n);
 #endif
     n = floor(n + 0.5);
     if (n <= 0) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 
+    if (fabs(x - floor(x + 0.5)) > 1e-7)
+	return(0);
     x = floor(x + 0.5);
-
     if ((x < 0) || (x > (n * (n + 1) / 2)))
-	return 0;
+	return(0);
 
     w_init_maybe(n);
     d = exp(log(csignrank(x, n)) - n * log(2));
@@ -134,35 +135,36 @@ psignrank(double x, double n)
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n))
-    return x + n;
+    return(x + n);
     if (!FINITE(n)) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 #endif
     n = floor(n + 0.5);
     if (n <= 0) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
     
-    x = floor(x + 0.5);
+    x = floor(x + 1e-7);
     if (x < 0.0)
-	return 0;
+	return(0);
     if (x >= n * (n + 1) / 2)
-	return 1;
+	return(1);
 
     w_init_maybe(n);
-    f = exp(- log(n) * 2);
+    f = exp(- n * log(2));
+    p = 0;
     if (x <= (n * (n + 1) / 4)) {
-	p = 0;
 	for (i = 0; i <= x; i++)
 	    p += csignrank(i, n) * f;
     }
     else {
-	p = 1;
-	for (i = 0; i <= x; i++)
-	    p -= csignrank(i, n) * f;
+	x = n * (n + 1) / 2 - x;
+	for (i = 0; i < x; i++)
+	    p += csignrank(i, n) * f;
+	p = 1 - p;
     }
     w_free_maybe(n);
     
@@ -176,28 +178,28 @@ qsignrank(double x, double n)
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n))
-	return x + n;
+	return(x + n);
     if (!FINITE(x) || !FINITE(n)) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 #endif
     n = floor(n + 0.5);
     if (x < 0 || x > 1 || n <= 0) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 
     if (x == 0)
-	return(0.0);
+	return(0);
     if (x == 1)
 	return(n * (n + 1) / 2);
 
     w_init_maybe(n);
-    f = exp(- log(n) * 2);
+    f = exp(- n * log(2));
+    p = 0;
     q = 0;
     if (x <= 0.5) {
-	p = 0;
 	for (;;) {
 	    p += csignrank(q, n) * f;
 	    if (p >= x)
@@ -206,10 +208,10 @@ qsignrank(double x, double n)
 	}
     }
     else {
-	p = 1;
+	x = 1 - x;
 	for (;;) {
-	    p -= csignrank(q, n) * f;
-	    if (p < x) {
+	    p += csignrank(q, n) * f;
+	    if (p > x) {
 		q = n * (n + 1) / 2 - q;
 		break;
 	    }
@@ -234,7 +236,7 @@ rsignrank(double n)
     n = floor(n + 0.5);
     if (n < 0) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 
     if (n == 0)

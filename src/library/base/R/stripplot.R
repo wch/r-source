@@ -52,7 +52,7 @@ stripplot <- function(x, method="overplot", jitter=0.1, offset=1/3,
 
     csize <- cex*
 	if(vertical) xinch(par("cin")[1]) else yinch(par("cin")[2])
-    f <- function(x) seq(length(x))
+    f <- function(x) seq(length=length(x))
     for(i in 1:n) {
 	x <- groups[[i]]
 	y <- rep(i,length(x))
@@ -61,8 +61,8 @@ stripplot <- function(x, method="overplot", jitter=0.1, offset=1/3,
 	else if(method == 3) {
 	    xg <- split(x, factor(x))
 	    xo <- lapply(xg, f)
-	    x <- unlist(xg)
-	    y <- y + (unlist(xo) - 1) * offset * csize
+	    x <- unlist(xg, use.names=FALSE)
+	    y <- y + (unlist(xo, use.names=FALSE) - 1) * offset * csize
 	}
 	if(vertical) points(y, x, col=col[(i - 1)%%length(col) + 1],
 			    pch=pch[(i - 1)%%length(pch) + 1], cex=cex)

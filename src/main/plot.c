@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -557,10 +558,10 @@ static SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 	/* Debugging: When does the following happen... ? */
 	if(umin > umax)
 	    warning("CreateAtVector \"log\"(from axis()): "
-		    "usr[0] = %g > %g = usr[1] !", umin, umax);
+		    "usr[0] = %g > %g = usr[1] !\n", umin, umax);
 	dn = axp[0];
 	if(dn < 1e-300)
-	    warning("CreateAtVector \"log\"(from axis()): axp[0] = %g !", dn);
+	    warning("CreateAtVector \"log\"(from axis()): axp[0] = %g !\n", dn);
 
 	/* You get the 3 cases below by
 	 *  for(y in 1e-5*c(1,2,8))  plot(y, log = "y")
@@ -753,7 +754,11 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     GSavePars(dd);
     ProcessInlinePars(args, dd);
 
-    dd->gp.xpd = 1;
+    /* override par("xpd") and force clipping to figure region */
+    /* NOTE: don't override to _reduce_ clipping region */
+    if (dd->gp.xpd < 1)
+	dd->gp.xpd = 1;
+
     dd->gp.adj = 0.5;
     dd->gp.font = dd->gp.fontaxis;
     dd->gp.cex = dd->gp.cexbase * dd->gp.cexaxis;
@@ -1036,7 +1041,9 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.cex = dd->gp.cexbase;
 
     GMode(1, dd);
-    GClip(dd);
+    /* removed by paul 26/5/99 because all clipping now happens in graphics.c
+     * GClip(dd);
+     */
 
     if (type == 'l' || type == 'o') {
 	/* lines and overplotted lines and points */
@@ -1296,13 +1303,14 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(lty = FixupLty(GetPar("lty", args), dd));
     nlty = length(lty);
 
-    xpd = asLogical(GetPar("xpd", args));
-    if (xpd == NA_LOGICAL)
-	xpd = dd->gp.xpd;
+    xpd = asInteger(GetPar("xpd", args));
 
     GSavePars(dd);
 
-    dd->gp.xpd = xpd;
+    if (xpd == NA_INTEGER)
+	dd->gp.xpd = 2;
+    else
+	dd->gp.xpd = xpd;
 
     xl = REAL(sxl);
     xr = REAL(sxr);
@@ -1382,13 +1390,14 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
     if(nlwd == 0)
 	errorcall(call, "'lwd' must be numeric of length >=1");
 
-    xpd = asLogical(GetPar("xpd", args));
-    if (xpd == NA_LOGICAL)
-	xpd = dd->gp.xpd;
-
+    xpd = asInteger(GetPar("xpd", args));
+    
     GSavePars(dd);
 
-    dd->gp.xpd = xpd;
+    if (xpd == NA_INTEGER)
+	dd->gp.xpd = 2;
+    else
+	dd->gp.xpd = xpd;
 
     x0 = REAL(sx0);
     y0 = REAL(sy0);
@@ -1431,7 +1440,7 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* polygon(x, y, col, border) */
-    SEXP sx, sy, col, border, lty;
+    SEXP sx, sy, col, border, lty, sxpd;
     int nx=1, ny=1, ncol, nborder, nlty, xpd, i, start=0;
     int num = 0;
     double *x, *y, xx, yy, xold, yold;
@@ -1465,15 +1474,29 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(lty = FixupLty(GetPar("lty", args), dd));
     nlty = length(lty);
 
-    xpd = asLogical(GetPar("xpd", args));
-    if (xpd == NA_LOGICAL)
+    /* 
+     * Have to use GetPar("xpd"...) here rather than ProcessInLinePars
+     * because ProcessInLinePars will choke on "border" (until GetPar
+     * is fixed - see GetPar)
+     * GetPar returning R_NilValue means xpd wasn't specified (so just 
+     * use current setting of par(xpd))
+     * Need separate check for this because otherwise unspecified xpd
+     * is the same as xpd=NA (because asInteger(R_NilValue)==NA_INTEGER)
+     */
+    sxpd = GetPar("xpd", args);
+    if (sxpd != R_NilValue)
+	xpd = asInteger(sxpd);
+    else
 	xpd = dd->gp.xpd;
 
     GSavePars(dd);
 
-    GMode(1, dd);
+    if (xpd == NA_INTEGER)
+	dd->gp.xpd = 2;
+    else
+	dd->gp.xpd = xpd;
 
-    dd->gp.xpd = xpd;
+    GMode(1, dd);
 
     if (INTEGER(lty)[0] == NA_INTEGER)
 	dd->gp.lty = dd->dp.lty;
@@ -1494,52 +1517,14 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 	else if ((FINITE(xold) && FINITE(yold)) &&
 		 !(FINITE(xx) && FINITE(yy))) {
 	    if (i-start > 1) {
-		if (dd->gp.xpd) {
-		    GPolygon(i-start, x+start, y+start, USER,
-			     INTEGER(col)[num%ncol], INTEGER(border)[0], dd);
-		}
-		else {
-		    char *vmax;
-		    double *xc, *yc;
-		    int npts = GClipPolygon(x + start, y + start, i - start,
-					USER, 0, xc, yc, dd);
-		    if (npts > 1) {
-			vmax = vmaxget();
-			xc = (double*)R_alloc(npts, sizeof(double));
-			yc = (double*)R_alloc(npts, sizeof(double));
-			npts  = GClipPolygon(x + start, y + start, i - start,
-					     USER, 1, xc, yc, dd);
-			GPolygon(npts, xc, yc, USER,
-				 INTEGER(col)[num%ncol],
-				 INTEGER(border)[0], dd);
-			vmaxset(vmax);
-		    }
-		}
+		GPolygon(i-start, x+start, y+start, USER,
+			 INTEGER(col)[num%ncol], INTEGER(border)[0], dd);
 		num++;
 	    }
 	}
 	else if ((FINITE(xold) && FINITE(yold)) && (i == nx-1)) { /* last */
-	    if (dd->gp.xpd) {
-	       GPolygon(nx-start, x+start, y+start, USER,
-			INTEGER(col)[num%ncol], INTEGER(border)[0], dd);
-	    }
-	    else {
-		char *vmax;
-		double *xc, *yc;
-		int npts = GClipPolygon(x + start, y + start, nx - start,
-					USER, 0, xc, yc, dd);
-		if (npts > 1) {
-		    vmax = vmaxget();
-		    xc = (double*)R_alloc(npts, sizeof(double));
-		    yc = (double*)R_alloc(npts, sizeof(double));
-		    npts  = GClipPolygon(x + start, y + start, nx - start,
-					 USER, 1, xc, yc, dd);
-		    GPolygon(npts, xc, yc, USER,
-			     INTEGER(col)[num%ncol],
-			     INTEGER(border)[0], dd);
-		    vmaxset(vmax);
-		}
-	    }
+	    GPolygon(nx-start, x+start, y+start, USER,
+		     INTEGER(col)[num%ncol], INTEGER(border)[0], dd);
 	    num++;
 	}
 	xold = xx;
@@ -1561,7 +1546,7 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sx, sy, sxy, txt, adj, cex, col, font;
-    int i, n, ncex, ncol, nfont, ntxt, xpd;
+    int i, n, ncex, ncol, nfont, ntxt;
     double adjx=0, adjy=0;
     double *x, *y;
     double xx, yy;
@@ -1592,7 +1577,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     txt = CAR(args);
-    if (LENGTH(txt) <= 0)
+    if (isNull(txt) || LENGTH(txt) <= 0)
 	errorcall(call, "zero length \"text\" specified\n");
     args = CDR(args);
 
@@ -1623,11 +1608,6 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(font = FixupFont(GetPar("font", args)));
     nfont = LENGTH(font);
 
-
-    xpd = asLogical(GetPar("xpd", args));
-    if (xpd == NA_LOGICAL)
-	xpd = dd->gp.xpd;/* was 0 */
-
     x = REAL(sx);
     y = REAL(sy);
     n = LENGTH(sx);
@@ -1635,7 +1615,6 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GSavePars(dd);
     ProcessInlinePars(args, dd);
-    dd->gp.xpd = xpd;
 
     GMode(1, dd);
     for (i = 0; i < n; i++) {
@@ -1788,10 +1767,15 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     if(INTEGER(font)[0] != NA_INTEGER) dd->gp.font = INTEGER(font)[0];
 #endif
 
-    dd->gp.xpd = 1;
+    /* override par("xpd") and force clipping to figure region */
+    /* NOTE: don't override to _reduce_ clipping region */
+    if (dd->gp.xpd < 1)
+	dd->gp.xpd = 1;
     if (outer) {
 	gpnewsave = dd->gp.new;
 	dpnewsave = dd->dp.new;
+	/* override par("xpd") and force clipping to device region */
+	dd->gp.xpd = 2;
     }
     GMode(1, dd);
     if(isExpression(text))
@@ -1850,8 +1834,10 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
     GSavePars(dd);
     ProcessInlinePars(args, dd);
 
-    /* Always work in expanded mode */
-    dd->gp.xpd = 1;
+    /* override par("xpd") and force clipping to figure region */
+    /* NOTE: don't override to _reduce_ clipping region */
+    if (dd->gp.xpd < 1)
+	dd->gp.xpd = 1;
 
     adj = dd->gp.adj;
 
@@ -2075,7 +2061,8 @@ SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
 	else
 	    dd->gp.col = dd->gp.fg;
     }
-    dd->gp.xpd = 1;
+    /* override par("xpd") and force clipping to device region */
+    dd->gp.xpd = 2;
     GMode(1, dd);
     GBox(which, dd);
     GMode(0, dd);
@@ -2322,7 +2309,11 @@ SEXP do_dotplot(SEXP call, SEXP op, SEXP args, SEXP env)
     adj = dd->gp.adj;
     xpd = dd->gp.xpd;
     dd->gp.adj = 0;
-    dd->gp.xpd = 1;
+    /* override par("xpd") and force clipping to figure region */
+    /* NOTE: don't override to _reduce_ clipping region */
+    if (dd->gp.xpd < 1)
+	xpd = 1;
+
     for(i = 0 ; i < n ; i++) {
 	if (strlen(CHAR(STRING(labs)[i])) > 0) {
 	    if (LOGICAL(offset)[i])
@@ -2517,7 +2508,11 @@ SEXP do_dend(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->gp.cex = dd->gp.cexbase * dd->gp.cex;
     dnd_offset = GConvertYUnits(GStrWidth("m", INCHES, dd), INCHES, USER, dd);
 
-    dd->gp.xpd = 1;
+    /* override par("xpd") and force clipping to figure region */
+    /* NOTE: don't override to _reduce_ clipping region */
+    if (dd->gp.xpd < 1)
+	dd->gp.xpd = 1;
+
     GMode(1, dd);
     drawdend(dnd_n, &x, &y, dd);
     GMode(0, dd);

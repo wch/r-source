@@ -69,7 +69,7 @@ print.summary.glm.null <- function (x, digits = max(3, .Options$digits - 3),
     invisible(x)
 }
 summary.glm.null <- function (object, dispersion = NULL, correlation = TRUE,
-                              na.action = na.omit)
+                              na.action = na.omit, ...)
 {
     ## calculate dispersion if needed
     ## extract x to get column names

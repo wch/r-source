@@ -291,21 +291,21 @@ static void PicTeX_MetricInfo(int c, double *accent, double *descent,
 
 static int PicTeX_Open(DevDesc *dd, picTeXDesc *ptd)
 {
-	ptd->fontsize = 0;
-	ptd->fontface = 0;
-	ptd->debug = 0;
-	if(!(ptd->texfp = R_fopen(ptd->filename, "w")))
-	      return 0;
-	fprintf(ptd->texfp, "\\hbox{\\beginpicture\n");
-	fprintf(ptd->texfp, "\\setcoordinatesystem units <1pt,1pt>\n");
-	fprintf(ptd->texfp,
-		"\\setplotarea x from 0 to %.2f, y from 0 to %.2f\n",
-		ptd->width * 72.27, ptd->height * 72.27);
-	fprintf(ptd->texfp,"\\setlinear\n");
-	fprintf(ptd->texfp, "\\font\\picfont cmss10\\picfont\n");
-	SetFont(1, 10, ptd);
-	ptd->pageno += 1;
-	return 1;
+    ptd->fontsize = 0;
+    ptd->fontface = 0;
+    ptd->debug = 0;
+    if (!(ptd->texfp = R_fopen(R_ExpandFileName(ptd->filename), "w")))
+	return 0;
+    fprintf(ptd->texfp, "\\hbox{\\beginpicture\n");
+    fprintf(ptd->texfp, "\\setcoordinatesystem units <1pt,1pt>\n");
+    fprintf(ptd->texfp,
+	    "\\setplotarea x from 0 to %.2f, y from 0 to %.2f\n",
+	    ptd->width * 72.27, ptd->height * 72.27);
+    fprintf(ptd->texfp,"\\setlinear\n");
+    fprintf(ptd->texfp, "\\font\\picfont cmss10\\picfont\n");
+    SetFont(1, 10, ptd);
+    ptd->pageno += 1;
+    return 1;
 }
 
 
@@ -555,7 +555,7 @@ static void PicTeX_Rect(double x0, double y0, double x1, double y1,
 	x[1] = x0; y[1] = y1;
 	x[2] = x1; y[2] = y1;
 	x[3] = x1; y[3] = y0;
-	PicTeX_Polygon(4, x, y, bg, fg, coords, dd);
+	PicTeX_Polygon(4, x, y, coords, bg, fg, dd);
 }
 
 static void PicTeX_Circle(double x, double y, int coords, double r,

@@ -73,6 +73,9 @@ $(LIB):	$(OBJS)
 	$(AR) cr $(LIB) $(OBJS)
 	$(RANLIB) $(LIB)
 
+$(OBJS): $(top_srcdir)/src/include/Applic.h
+approx.o binning.o cpoly.o distance.o splines.o tabulate.o: $(top_srcdir)/src/include/Arith.h
+
 mostlyclean: clean
 clean:
 	@-rm -f *.o *.a

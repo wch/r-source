@@ -24,9 +24,8 @@ rchisq(n, df)
 
   The chi-square distribution with \code{df}\eqn{= n} degrees of freedom
   has density
-  \deqn{f(x) =
-    \frac{1}{{2}^{n/2} \Gamma (n/2)}
-    {x}^{n/2-1} {e}^{-x/2}}{f(x) = 1 / (2^(n/2) Gamma(n/2))  x^(n/2-1) e^(-x/2)}
+  \deqn{f_n(x) = \frac{1}{{2}^{n/2} \Gamma (n/2)} {x}^{n/2-1} {e}^{-x/2}}{%
+        f_n(x) = 1 / (2^(n/2) Gamma(n/2))  x^(n/2-1) e^(-x/2)}
   for \eqn{x > 0}.
 
   \code{dchisq} gives the density \eqn{f_n},
@@ -37,9 +36,8 @@ rchisq(n, df)
   freedom and non-centrality parameter \code{ncp} \eqn{= \lambda} has density
   \deqn{
     f(x) = e^{-\lambda / 2}
-      \sum_{r=0}^\infty \frac{\lambda^r}{2^r r!}\, F_{n + 2r}(x)}{
-    f(x) = exp(-lambda/2)
-    SUM_{r=0}^infty (lambda^r / 2^r r!)pchisq(x, df + 2r)
+      \sum_{r=0}^\infty \frac{(\lambda/2)^r}{r!}\, f_{n + 2r}(x)}{%
+    f(x) = exp(-lambda/2) SUM_{r=0}^infty ((lambda/2)^r / r!) dchisq(x, df + 2r)
   }
   for \eqn{x \ge 0}.
 }

@@ -23,7 +23,7 @@ else
 endif
 
 # data
-DSOURCES=$(wildcard $(SPKG)/data/*)
+DSOURCES=$(filter-out $(SPKG)/data/CVS,$(wildcard $(SPKG)/data/*))
 ifeq ($(strip $(DSOURCES)),)
   DATA= 
 else
@@ -81,7 +81,7 @@ endif
 
 $(DATA): $(DSOURCES)
 	$(MKDIR) -p $(DATA)
-	$(CP) $^ $@
+	$(CP) $^  $@
 
 
 $(DYNLIB): $(SSPKG)/$(DLLNAME).dll

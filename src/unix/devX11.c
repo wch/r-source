@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R core team
+ *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -109,7 +110,7 @@ static int screen;				/* Screen */
 static Window rootwin;				/* Root Window */
 static Visual *visual;				/* Visual */
 static int depth;				/* Pixmap depth */
-static int class;                               /* Visual class */
+static int Vclass;                              /* Visual class */
 static int model;                               /* User color model */
 static int maxcubesize;                         /* Max colorcube size */
 static XSetWindowAttributes attributes;		/* Window attributes */
@@ -479,7 +480,7 @@ unsigned int GetX11Pixel(int r, int g, int b)
 static void FreeX11Colors()
 {
     int i;
-    if (model == PSEUDOCOLOR2 && class == PseudoColor) {
+    if (model == PSEUDOCOLOR2) {
 	for (i = 0; i < PaletteSize; i++)
 	    XFreeColors(display, colormap, &(XPalette[i].pixel), 1, 0);
 	PaletteSize = 0;
@@ -493,7 +494,7 @@ static int SetupX11Color()
 	model = MONOCHROME;
 	SetupMonochrome();
     }
-    else if (class ==  StaticGray || class == GrayScale) {
+    else if (Vclass ==  StaticGray || Vclass == GrayScale) {
 	if (model == MONOCHROME)
 	    SetupMonochrome();
 	else {
@@ -501,13 +502,13 @@ static int SetupX11Color()
 	    SetupGrayScale();
 	}
     }
-    else if (class == StaticColor) {
+    else if (Vclass == StaticColor) {
 	/* FIXME : Currently revert to mono. */
 	/* Should do the real thing. */
 	model = MONOCHROME;
 	SetupMonochrome();
     }
-    else if (class ==  PseudoColor) {
+    else if (Vclass ==  PseudoColor) {
 	if (model == MONOCHROME)
 	    SetupMonochrome();
 	else if (model == GRAYSCALE)
@@ -518,7 +519,7 @@ static int SetupX11Color()
 	    SetupPseudoColor(model);
 	}
     }
-    else if (class == TrueColor) {
+    else if (Vclass == TrueColor) {
 	if (model == MONOCHROME)
 	    SetupMonochrome();
 	else if (model == GRAYSCALE)
@@ -528,7 +529,7 @@ static int SetupX11Color()
 	else
 	    SetupTrueColor();
     }
-    else if (class == DirectColor) {
+    else if (Vclass == DirectColor) {
 	/* FIXME : Currently revert to mono. */
 	/* Should do the real thing. */
 	model = MONOCHROME;
@@ -538,8 +539,6 @@ static int SetupX11Color()
 	printf("Unknown Visual\n");
 	return 0;
     }
-    whitepixel = GetX11Pixel(255, 255, 255);
-    blackpixel = GetX11Pixel(0, 0, 0);
     return 1;
 }
 
@@ -904,13 +903,15 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
 	depth = DefaultDepth(display, screen);
 	visual = DefaultVisual(display, screen);
 	colormap = DefaultColormap(display, screen);
-	class = visual->class;
+	Vclass = visual->class;
 	model = colormodel;
         maxcubesize = maxcube;
 	SetupX11Color();
 	devPtrContext = XUniqueContext();
 	displayOpen = 1;
     }
+    whitepixel = GetX11Pixel(255, 255, 255);
+    blackpixel = GetX11Pixel(0, 0, 0);
 
     if (!SetBaseFont(xd)) {
 	Rprintf("can't find X11 font\n");
@@ -1117,7 +1118,7 @@ static void X11_NewPage(DevDesc *dd)
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
     FreeX11Colors();
-    if(xd->bg != dd->dp.bg) {
+    if((model == PSEUDOCOLOR2) || (xd->bg != dd->dp.bg)) {
 	xd->bg = dd->dp.bg;
 	whitepixel = GetX11Pixel(R_RED(xd->bg),R_GREEN(xd->bg),R_BLUE(xd->bg));
 	XSetWindowBackground(display, xd->window, whitepixel);

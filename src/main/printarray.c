@@ -200,7 +200,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
     PROTECT(sdi = allocVector(INTSXP, c));
     PROTECT(sei = allocVector(INTSXP, c));
     PROTECT(swi = allocVector(INTSXP, c));
-    PROTECT(sw = allocVector(INTSXP, c));
+    PROTECT(sw  = allocVector(INTSXP, c));
     UNPROTECT(7);
     x = COMPLEX(sx) + offset;
     dr = INTEGER(sdr);
@@ -214,7 +214,8 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
     /* Determine the column widths */
 
     for (j = 0; j < c; j++) {
-	formatComplex(&x[j * r], r, &wr[j], &dr[j], &er[j],
+	formatComplex(&x[j * r], r, 
+		      &wr[j], &dr[j], &er[j],
 		      &wi[j], &di[j], &ei[j]);
 	if (!isNull(cl))
 	    clabw = strlen(CHAR(STRING(cl)[j]));
@@ -246,7 +247,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 		else
 		    Rprintf("%s", EncodeComplex(x[i + j * r],
 						wr[j] + PRINT_GAP, dr[j], er[j],
-						wi[j], dr[j], er[j]));
+						wi[j], di[j], ei[j]));
 	    }
 	}
 	Rprintf("\n");

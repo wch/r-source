@@ -1,40 +1,219 @@
 	**************************************************
 	*						 *
-	*	       0.65 SERIES NEWS			 *
-	*						 *
-	**************************************************
-
-NEW FEATURES
-
-    o   Convenience functions parent.frame() and eval.parent()
-
-    o   Function new.env() to create empty environment and local() to
-        allow local evaluation of expressions, with various useful 
-	idiomatic uses.
-
-    o   uniroot() can now be used recursively
-
-BUG FIXES
-
-    o	A bug which meant that it was not possible to add elements
-	to zero length lists in the obvious way has been fixed.
-		x <- list(); x[[1]] <- 10
-		x <- list(); x[["a"]] <- 11
-	both now work.
-
-
-	**************************************************
-	*						 *
 	*	       0.64 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 0.64.2
+
+NEW FEATURES
+
+    o	new target for R installation testing :	 make strict-tests.
+
+    o	symnum(x) now nicely codes logical x.
+
+    o	convolve() has a new type = c("circular", "open", "filter")
+	argument allowing more than the only circular convolution.
+
+    o	par(xpd) now has three settings:  FALSE (clip to plot region),
+	TRUE (clip to figure region), or NA (clip to device region).
+
+    o	zapsmall(x) works for complex x.
+
+    o	new global variable R.version.string (for plots & reports).
+	Deprecated version & Version for new  R.version & R.Version.
+
+    o	R CMD Rd2dvi  has builtin "Usage" help and works for multiple files.
+	Useful for automatic reference manual of a package.
+	(doc/manual/lib2tex is more efficient for installed packages, however).
+
+
+BUG FIXES
+
+    o	power() is now fully implemented and documented.
+
+    o   A couple of problems with group generic operations.
+
+    o   A bug which meant that it was not possible to add elements
+        to zero length lists in the obvious way has been fixed.
+                x <- list(); x[[1]] <- 10
+                x <- list(); x[["a"]] <- 11
+        both now work.
+
+    o	save.image() ignored dot-names. (esp. .First())
+
+    o   lab= argument to plot() misinterpreted by axis() via ... passing
+
+    o	NULL labels in text() caused segfault
+
+    o   matrix(f,...) with f a factor now coerces to character
+
+    o   documentation errors for substitute and is.vector, minor fixups for
+        trig and nlm 
+
+    o	Background colours are set properly on X11 devices with 
+	colortype="pseudo": sometimes they were not allocated separately.
+
+    o	C() works (again?) for a single argument.
+
+    o	is.na() didn't work properly for "list" arguments.
+
+    o	symnum() sometimes failed with arrays of rank >= 3.
+
+    o	in some cases one could get nonblack color instead of
+	black on 2nd x11() window.
+
+    o	influence.measures(.) $ is.influential was wrong on the 
+	cooks.distance.
+
+    o	printing of complex NaN/Inf was wrong as well.
+
+    o	printing of complex named vectors had a wrong initial space.
+
+    o	allow trailing space in character->numeric coercion
+
+    o	library() gave wrong "masked" warnings in some cases.
+
+    o	par(xpd) semantics were not compatible with S.
+
+    o	rect() output was not clipped in PostScript.
+
+    o	par(pin=c(width, height)) was behaving as par(pin=c(width, width)).
+
+    o	Non-blank separated data files didn't have their 1st field
+	handled properly.
+
+    o	"aux" directory moved to "tools" to avoid difficulties on
+	Windows.
+
+    o	structure() clobbered factors with missing levels.
+
+    o	pmatch() misbehaved on duplicate matches.
+
+    o	R CMD Rd2dvi <file.Rd> works again.
+
+    o	logical binops tried to set time series parameters before dimensions.
+
+    o	upped the BUFSIZE in model.c (NOT proper long-term solution).
+
+    o	dput(), dump() and deparse()  now always use DBL_DIG (=15) digits
+	for numeric formatting.
+
+    o	chull() now works for vertical borders, such as in chull(c(1,1,2),3:1).
+
+
+		CHANGES IN R VERSION 0.64.1
+
+NEW FEATURES
+
+    o	barplot() and boxplot() are now generic
+
+    o	relevel function to reorder levels in factors.
+
+    o	contr.treatment now has a base= argument for selecting the
+	baseline group.
+
+    o	New command line option `--no-environ' (under Unix) to prevent
+	sourcing the `~/.Renviron' file.  Implied by `--vanilla'.
+
+    o	Packages can now have a configure script.  If a file `configure'
+	is found it is executed before anything else is done by R
+	INSTALL.
+
+    o	If HTML help files are asked for but not available, text help
+	is used.
+
+    o	HTML help file conversion reports unsatisified \link{..}s.
+
+    o	`vsize' and `nsize' can be set by the environment variables
+	R_VSIZE and R_NSIZE respectively, perhaps most conveniently from
+	`~/.Renviron' under Unix or Windows.  Command-line settings will
+	take precedence.
+
+	The defaults have been increased to 6M and 250k.
+
+    o	zip files can be used for storing help and example files. See
+	the help files for "help" and "example" for details.
+
+    o	New submission method "none" (for not sending email) in
+	bug.report().
+
+    o	`R CMD check' can now also be used for installed packages without
+	the corresponding sources.
+
+    o	The sources for the Windows port are included in src/gnuwin32.
+	See src/gnuwin32/readme.
+
+BUG FIXES
+
+    o	deparser left off empty parentheses on e.g. (function(x) x)()
+
+    o	cat() now works on "name" objects
+
+    o	forgot to set jump buffer in return context in one case
+
+    o	parser dropped off tagged missing args on function calls ( f(a=) )
+
+    o	relops tried to set time series parameters before dimensions
+
+    o	arithmetic tried to set time series parameters before dimensions
+
+    o	mvfft fixes (from Martyn Plummer) - not working with vectors and
+	segfault problem.
+
+    o	Rephrased error message on invalid assignment target.
+
+    o	ifelse() now evaluates yes/no only if needed
+
+    o	PROTECT'ed some memory in NewExtractNames that was getting overwritten
+	during garbage collection.
+
+    o	Crossing factors (`:') works again.
+
+    o	terms.formula used to choke on terms more than 60 characters long
+
+    o	is.nan() should now work correctly on new/old-style lists.
+
+    o	x[[i]] did not work correctly for negative subscripts i.
+
+    o	as.list() didn't work for expressions
+
+    o	x[[i]] <- quote(a) (x generic vector) didn't work
+
+    o	for method functions: many argument name changes, add ... where
+	needed, for consistency with the generic function.
+
+    o	example() will allow (again) aliased topic names.
+
+    o	HTML help file conversions will find hyperlinks in the main
+	library as well as the current library. Links containing `<'
+	or `>' now work properly.
+
+    o	Rdconv conversion of \section{}{}s to Sd corrected.
+
+    o	ppois rounded non-integer `q', should truncate.
+
+    o	pnbinom was wrong for non-integer `q'.
+
+    o	dbinom, dgeom, dnbinom, dpois give 0 with a warning for
+	non-integer arguments.
+
+    o	load / save / data allow unlimited string sizes.
+
+    o	strsplit() allows unlimited string size.
+
+    o	eigen() now should work (again) in all cases.
+
+    o	is.nan() fixed to work (again) in architectures with
+	"unspecified" internal isnan().
 
 
 		CHANGES IN R VERSION 0.64.0
 
 NEW FEATURES
 
-    o   Files BUGS and FAQ are now included with distribution and
+    o	Files BUGS and FAQ are now included with distribution and
 	various "front matter" files have been cleaned up.
 
     o	readline has now an argument  prompt = ""
@@ -71,7 +250,7 @@ NEW FEATURES
     o	[EXPERIMENTAL] Gnome support added. Use ./configure --with-gnome
 	to try it, but don't expect too much yet.
 
-    o   HDF5 support improved. Still not perfect, though.
+    o	HDF5 support improved. Still not perfect, though.
 
     o	The X11 graphics driver can now use a variety of strategies
 	for handing color.  This means that it is now possible to
@@ -85,13 +264,13 @@ NEW FEATURES
 	you get exactly the color you request.	(Note that
 	Directcolor and staticcolor displays are not supported yet).
 
-    o	The "persp" function now allows shading of the rendered
-	surface using a simple lighting model.
+    o	The persp() function now allows shading of the rendered	surface
+	using a simple lighting model.
 
     o	Many functions providing an interface to the operating system
 	have been made "platform independent".	See the manual entries
 	for "file", "list.files" and "file.show" for details of the new
-	interface. The system.file() interface has been changed.
+	interface.  The system.file() interface has been changed.
 
     o	There is a new function "eval.with.vis" which behaves exactly
 	like "eval", but which returns both the result of the evaluation
@@ -101,12 +280,12 @@ NEW FEATURES
 	the "example" and "demo" functions no longer print invisible
 	values when the example script is run.
 
-    o   Index files in data directories in packages should be `00Index'
+    o	Index files in data directories in packages should be `00Index'
 	not `index.doc'.
 
-    o   Function interaction() to compute factor interactions.
+    o	Function interaction() to compute factor interactions.
 
-    o   load() can load to specific environments.
+    o	load() can load to specific environments.
 
     o	Sockets interface: make/read/write/close.socket()
 
@@ -114,31 +293,32 @@ NEW FEATURES
 
     o	pairs.formula() allows formula notations for scatter plot matrix.
 
-    o   new dataset co2.
+    o	new dataset co2.
 
-    o   documentation for datasets mtcars, plants, pressure, randu and sleep.
+    o	documentation for datasets mtcars, plants, pressure, randu and
+	sleep.
 
-    o   the sunspots dataset is now monthly rather than annual.
+    o	the sunspots dataset is now monthly rather than annual.
 
 BUG FIXES
 
-    o   strsplit(), scan() and friends use a much larger char buffer
+    o	strsplit(), scan() and friends use a much larger char buffer
 	 (still fixed size; this will change again)
 
-    o   ts() allows a data-frame argument `data'.
+    o	ts() allows a data-frame argument `data'.
 
-    o   anova.lm handles singular models better, and deparses responses.
+    o	anova.lm handles singular models better, and deparses responses.
 
-    o   dump() now uses digits=12 rather than the current setting.
+    o	dump() now uses digits=12 rather than the current setting.
 
-    o   tabulate ignores entries beyond nbins rather than core dumps.
+    o	tabulate ignores entries beyond nbins rather than core dumps.
 
     o	?.C documents what C/Fortran types R objects correspond to
 	in foreign function calls, which is not what everyone thought.
 
     o	changed long to int in several .C calls to follow the above rules.
 
-    o	rbind(x1,x2) now does not lose dimnames when xi are 
+    o	rbind(x1,x2) now does not lose dimnames when xi are
 	character or complex.
 
     o	readline() accidentally inherited menu()'s prompt.
@@ -176,8 +356,8 @@ BUG FIXES
     o	curve() [and plot.function()] now use proper `x' values with log="x";
 	`type = "."' now works with curve() and plot.function()
 
-    o   zapped old windows files since they didn't build any more. 
-	The sources for the later gnuwin32 version are expected to 
+    o	zapped old windows files since they didn't build any more.
+	The sources for the later gnuwin32 version are expected to
 	appear here for 0.64.1. The #ifdef Win32's here are for that
 	version.
 
@@ -194,7 +374,7 @@ BUG FIXES
 NEW FEATURES
 
     o	get() and assign() allow position in search list to be a
-	character string. (e.g. get("delete.response","package:base") 
+	character string. (e.g. get("delete.response","package:base")
 
     o	HTML search now works for all packages (after new installation).
 
@@ -212,8 +392,8 @@ NEW FEATURES
 	of LaTeX and dvips; corresponding environment variables renamed to
 	`R_LATEXCMD' and `R_DVIPSCMD'.
 
-    o	--vsize & --nsize now both give size in "single units" 
-	(bytes/cons cells) with possible 
+    o	--vsize & --nsize now both give size in "single units"
+	(bytes/cons cells) with possible
 	suffixes "M" (Mega), "K"ilo (1024) and "k"ilo(1000).
 
     o	[pdqr]negbin() now also work with non-integer 'size' [by Ben Bolker].
@@ -229,7 +409,7 @@ NEW FEATURES
 
 BUG FIXES
 
-    o	system(command, intern=FALSE, ignore.errors=FALSE) 
+    o	system(command, intern=FALSE, ignore.errors=FALSE)
 	changed 1st & 3rd argument names and is better documented.
 
     o	"/Font5 /Symbol findfont definefont" confused some printers
@@ -256,7 +436,7 @@ BUG FIXES
     o	locator() on log axes: value antilogged twice
 
     o	(a real oldie - and trival too) is.recursive now TRUE for
-	expressions 
+	expressions
 
     o	sanitised delete.response
 
@@ -281,7 +461,7 @@ BUG FIXES
     o	--debugger .. now gives a warning if other command line args are used
 
     o	pt(t, df, ncp) now also works for bigger ncp's
-    
+
     o	apply(a,d, fun) now passes vectors (rank 1 arrays) to fun.
 
     o	model.frame() with subset and only one column fixed
@@ -301,14 +481,14 @@ BUG FIXES
     o	boxplot(.., ylim=..) or (.., axes=..)  gave erronous warning
 
     o	glm had wrong init code for models with offsets. Also fixed
-	so that linear predictor includes offset, also when predicting. 
+	so that linear predictor includes offset, also when predicting.
 
     o	predict.glm didn't work with se=T
 
     o	backsolve(), qr.solve... now return a vector when x (or y) is a vector.
 
     o	string tags now converted to symbols and strange symbolic
-	tags print as strings, cf. e<-quote(c(F=2, "tail area" = .5)), etc. 
+	tags print as strings, cf. e<-quote(c(F=2, "tail area" = .5)), etc.
 
     o	row.names(.) <- val  doesn't allow duplicated values anymore.
 
@@ -316,7 +496,7 @@ BUG FIXES
 
     o	revised curve function to avoid using grep patterns that caused
 	problems under Solaris 2.6
- 
+
     o	coplot() now has 'number' and 'overlap' arguments, and should work
 	in more situations. [by John Maindonald and MM].
 

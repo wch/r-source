@@ -610,7 +610,7 @@ SEXP complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	errorcall(call, "unimplemented complex function\n");
     }
-    if (naflag) warning("NAs produced in function \"%s\"", PRIMNAME(op));
+    if (naflag) warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
     return y;
 }
 
@@ -659,7 +659,7 @@ static SEXP cmath2(SEXP op, SEXP sa, SEXP sb, void (*f)())
 	    }
 	}
     }
-    if (naflag) warning("NAs produced in function \"%s\"", PRIMNAME(op));
+    if (naflag) warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
     if(n == na) {
 	ATTRIB(sy) = duplicate(ATTRIB(sa));
 	OBJECT(sy) = OBJECT(sa);

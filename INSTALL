@@ -64,6 +64,15 @@ where your man reader finds it, such as `/usr/local/man/man1'. If you
 want to install the complete R tree to, e.g., /usr/local/lib/R, see
 section INSTALLATION below.
 
+You do not necessarily have to build R in the top-level source
+directory (say, TOP_SRCDIR).  To build in BUILDDIR, cd there and run 
+
+	TOP_SRCDIR/configure
+	make
+
+and so on, as described further below.  This has the advantage of always
+keeping your source tree `clean'.  (You may need GNU make to allow this.)
+
 If you need or want to set certain configure variables to something
 other than their default, you can do that by either editing the file
 `config.site' or on the command line as
@@ -119,22 +128,16 @@ Then the R executable will be installed in /where/you/want/R/to/go/bin,
 and so on.  The prefix of the installation directories can also be seen
 in the status message that is displayed at the end of configure.
 
-You do not necessarily have to build R in the top-level source
-directory (say, TOP_SRCDIR).  To build in BUILDDIR, cd there and run 
-
-	TOP_SRCDIR/configure
-	make
-
-and so on, as described further above.  This has the advantage of always
-keeping your source tree `clean'.
-
 
 USING MAKE
 
 To compile R, you currently most likely need GNU make.  (To be more
 precise, you need a version of make which accepts shell wildcards in
 dependencies.)  On Solaris 2.6 in particular, you need a version of
-GNU make different from 3.77 (the current one); 3.76.1 works fine.
+GNU make different from 3.77 (the current one); 3.76.1 works fine, as
+does the Sun make.  To build in a separate directory you need a make
+than uses the VPATH variable: GNU make does but e.g. Sun make does
+not.
 
 
 USING FORTRAN

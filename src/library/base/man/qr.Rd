@@ -30,8 +30,11 @@ as.qr(x)
   \item{a}{A matrix or QR decomposition.}
 }
 \description{
-  \code{qr} provides an interface to the techniques used in the LINPACK
-  routine DQRDC.  The QR decomposition plays an important role in many
+  \code{qr} computes the QR decomposition of a matrix.  It provides an
+  interface to the techniques used in the LINPACK routine DQRDC.  
+}
+\details{
+  The QR decomposition plays an important role in many
   statistical techniques.  In particular it can be used to solve the
   equation \eqn{\bold{Ax} = \bold{b}} for given matrix \eqn{\bold{A}},
   and vector \eqn{\bold{b}}.  It is useful for computing regression
@@ -65,6 +68,10 @@ as.qr(x)
   \item{pivot}{information on the pivoting strategy used during
     the decomposition.}
 }
+\note{To compute the determinant of a matrix (do you \emph{really} need it?),
+    the QR decomposition is much more efficient than using Eigen values
+    (\code{\link{eigen}}).  See \code{det2} in the examples below.
+}
 \references{
   Dongarra, J. J., J. R. Bunch, C. B. Moler and G. W. Stewart (1978).
   \emph{LINPACK Users Guide}.
@@ -76,6 +83,10 @@ as.qr(x)
   \code{\link{solve.qr}},  \code{\link{lsfit}},
   \code{\link{eigen}}, \code{\link{svd}}.}
 \examples{
+## The determinant of a matrix  -- if you really must have it
+det2 <- function(x) prod(diag(qr(x)$qr))*(-1)^(ncol(x)-1)
+det2(print(cbind(1,1:3,c(2,0,1))))
+
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 h9 <- hilbert(9); h9
 qr(h9)$rank           #--> only 7

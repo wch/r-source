@@ -2,15 +2,14 @@ filled.contour <-
 function (x = seq(0, 1, len = nrow(z)),
           y = seq(0, 1, len = ncol(z)),
           z,
-          xlim = range(x[is.finite(x)]), 
-          ylim = range(y[is.finite(y)]),
-          zlim = range(z[is.finite(z)]),
-          levels = pretty(zlim, nlevels),
-          nlevels = 20,
+          xlim = range(x, finite=TRUE),
+          ylim = range(y, finite=TRUE),
+          zlim = range(z, finite=TRUE),
+          levels = pretty(zlim, nlevels), nlevels = 20, 
           color.palette = cm.colors,
           col = color.palette(length(levels) - 1),
           plot.title, plot.axes, key.title, key.axes,
-          xaxs="i", yaxs="i", las = 1, axes = TRUE, ...) 
+          asp = NA, xaxs="i", yaxs="i", las = 1, axes = TRUE, ...) 
 {
     if (missing(z)) {
         if (!missing(x)) {
@@ -33,20 +32,20 @@ function (x = seq(0, 1, len = nrow(z)),
     if (any(diff(x) <= 0) || any(diff(y) <= 0)) 
         stop("increasing x and y values expected")
 
-    mfrow.orig <- par("mfrow")
-    las.orig <- par("las")
-    mar.orig <- par("mar")
+    mar.orig <- (par.orig <- par(c("mar","las","mfrow")))$mar
+    on.exit(par(par.orig))
+
     layout(matrix(c(2, 1), nc=2), widths=c(1, lcm(3)))
     par(las = las)
 
+    ## Plot the `plot key' (scale):
     mar <- mar.orig
     mar[4] <- mar[2]
     mar[2] <- 1
     par(mar = mar)
     plot.new()
     plot.window(xlim=c(0,1), ylim=range(levels), xaxs="i", yaxs="i")
-    rect(0, levels[-length(levels)], 1, levels[-1],
-         col = color.palette(length(levels) - 1))
+    rect(0, levels[-length(levels)], 1, levels[-1], col = col)
     if (missing(key.axes)) {
         if (axes)
             axis(4)
@@ -56,12 +55,12 @@ function (x = seq(0, 1, len = nrow(z)),
     if (!missing(key.title))
 	key.title
 
+    ## Plot contour-image::
     mar <- mar.orig
     mar[4] <- 1
     par(mar=mar)
-
     plot.new()
-    plot.window(xlim, ylim, "", xaxs=xaxs, yaxs=yaxs)
+    plot.window(xlim, ylim, "", xaxs=xaxs, yaxs=yaxs, asp=asp)
 
     if (!is.matrix(z) || nrow(z) <= 1 || ncol(z) <= 1) 
         stop("no proper `z' matrix specified")
@@ -74,7 +73,7 @@ function (x = seq(0, 1, len = nrow(z)),
                             col = col))
     if (missing(plot.axes)) {
         if (axes) {
-            title(main="", xlab="", ylab = "")
+            title(main="", xlab="", ylab="")
             axis(1)
             axis(2)
         }
@@ -85,7 +84,5 @@ function (x = seq(0, 1, len = nrow(z)),
         title(...)
     else
 	plot.title
-
-    par(mar = mar.orig, mfrow = mfrow.orig, las = las.orig)
     invisible()
 }

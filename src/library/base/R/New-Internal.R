@@ -26,7 +26,8 @@ lchoose <- function(n,k).Internal(lchoose(n,k))
 D <- function(expr, namevec).Internal(D(expr, namevec))
 
 Machine <- function().Internal(Machine())
-Version <- function().Internal(Version())
+R.Version <- function().Internal(Version())
+Version <- function() { .Deprecated("R.Version"); R.Version() }
 machine <- function().Internal(machine())
 colors <- function().Internal(colors())
 colours <- .Alias(colors)
@@ -57,7 +58,7 @@ duplicated <- function(x, incomparables = FALSE) {
 	stop("duplicated(.. incomparables != FALSE) not yet available in R.")
     .Internal(duplicated(x))
 }
-format.info <- function(x).Internal(format.info(x)) ### NO DOC
+format.info <- function(x).Internal(format.info(x))
 gc <- function(verbose = .Options$verbose)
     matrix(.Internal(gc(verbose)),2,2,
            dimnames = list(c("Ncells","Vcells"),c("free","total")))

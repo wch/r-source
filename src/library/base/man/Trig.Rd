@@ -19,7 +19,10 @@ atan2(y, x)
 \description{
 These functions give the obvious trigonometric functions.  They
 respectively compute the cosine, sine, tangent, arc-cosine, arc-sine,
-arc-tangent and arc-tangent of two arguments.
+arc-tangent, and the two-argument arc-tangent. 
+}
+\note{
+    All angles are in radians.
 }
 \seealso{
 \code{\link{Log}}, \code{\link{Math}}.

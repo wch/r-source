@@ -224,17 +224,11 @@ int Rstrlen(char *s)
 
 char *EncodeString(char *s, int w, int quote, int right)
 {
-    int b, i ;
+    int b, i;
     char *p, *q;
     q = Encodebuf;
-    i = Rstrlen(s);
-    if( i >  BUFSIZE ) {
-	warning("String is too long to be printed");
-        Encodebuf[0]='\0';
-	return Encodebuf;
-    }
     if(right) { /*Right justifying */
-	b = w - i - (quote ? 2 : 0);
+	b = w - Rstrlen(s) - (quote ? 2 : 0);
 	for(i=0 ; i<b ; i++) *q++ = ' ';
     }
     if(quote) *q++ = quote;

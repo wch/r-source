@@ -21,10 +21,19 @@ following platforms.
 
 	hppa	HPUX 10.20
 
+0.64.1	i386	Linux Slackware 3.4
+		Linux Redhat 5.2, 6.0
+
+	sparc	Sun Solaris 2.6
+
+	aix	AIX 4.2
+
+	sgi	IRIX 6.4.
+
 See below for more details and contact information.
 
 If you have success on any others, please notify us by filling in the
-template and the end of this file.  Make sure to mention any changes you
+template at the end of this file.  Make sure to mention any changes you
 had to make so we can update this file and our installation procedures.
 
 NOTE: a `successful' build is one that passes `make check'!
@@ -176,30 +185,30 @@ MAKE		GNU make
 
 NAME            Brian Ripley
 EMAIL           ripley@stats.ox.ac.uk
-VERSION         0.64
+VERSION         0.64.1
 PLATFORM        sun-sparc-solaris2.6
-SYSTEM          
+SYSTEM          Sun Ultra 1/170
 CC		gcc 2.8.1
 FC		f77 SC4.2
-MAKE		Sun make
+MAKE		Sun make (not making in separate directory)
 
 NAME            Brian Ripley
 EMAIL           ripley@stats.ox.ac.uk
-VERSION         0.64
+VERSION         0.64.1
 PLATFORM        sun-sparc-solaris2.6
-SYSTEM          
+SYSTEM          Sun Ultra 1/170
 CC		cc SC4.2
 FC		f77 SC4.2
 MAKE		Sun make
 
 NAME            Brian Ripley
 EMAIL           ripley@stats.ox.ac.uk
-VERSION         0.64
+VERSION         0.64.1
 PLATFORM        sun-sparc-solaris2.6
-SYSTEM          
-CC		egcs 1.1 gcc
-FC		egcs 1.1 g77
-MAKE		GNU make
+SYSTEM          Sun Ultra 1/170
+CC		egcs 1.1.2 gcc
+FC		egcs 1.1.2 g77
+MAKE		GNU make 3.77 (patched)
 
 NAME		Osman Buyukisik
 EMAIL		osman@cinternet.net
@@ -209,6 +218,43 @@ SYSTEM          hpux10.20
 CC		egcs
 FC		f2c
 MAKE		GNU make
+
+NAME		Bill Simpson
+EMAIL		wsi@gcal.ac.uk
+VERSION		0.64.1
+PLATFORM	i686-unknown-linux
+SYSTEM		Slackware 3.4
+CC		gcc 2.7.2.3
+FC		g77 GNU Fortran 0.5.21
+MAKE		GNU make 3.76.1
+
+NAME		Brian Ripley
+EMAIL		ripley@stats.ox.ac.uk
+VERSION         0.64.1
+PLATFORM        i686-unknown-linux
+SYSTEM          RedHat 6.0
+CC		egcs-1.1.2 (as shipped)
+FC		egcs 1.1.2 (egcs-g77 rpm)
+MAKE		GNU make (as shipped)
+
+NAME		Thomas Vogels
+EMAIL		tov@ece.cmu.edu
+VERSION         0.64.1
+PLATFORM        rs6000
+SYSTEM          AIX 4.2
+CC		cc
+FC		f77
+MAKE		GNU make
+NOTES		some patches were needed
+
+NAME       	Duncan Temple Lang
+EMAIL      	duncan@research.bell-labs.com
+VERSION    	0.64.1
+PLATFORM   	SGI
+SYSTEM     	IRIX6.4
+CC         	gcc 2.8.0
+FC         	f2c
+MAKE       	GNU make 3.75
 
 NAME		
 EMAIL		

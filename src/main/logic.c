@@ -104,17 +104,11 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 	}
     }
     if(mismatch)
-	warningcall(call, "longer object length\n\tis not a multiple of shorter object length");
+	warningcall(call, "longer object length\n\tis not a multiple of shorter object length\n");
 
     x = CAR(args) = coerceVector(x, LGLSXP);
     y = CADR(args) = coerceVector(y, LGLSXP);
     PROTECT(x = binaryLogic(PRIMVAL(op), x, y));
-
-    if (xts || yts) {
-	setAttrib(x, R_TspSymbol, tsp);
-	setAttrib(x, R_ClassSymbol, class);
-	UNPROTECT(2);
-    }
 
     if (dims != R_NilValue) {
 	setAttrib(x, R_DimSymbol, dims);
@@ -128,6 +122,12 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 	    setAttrib(x, R_NamesSymbol, xnames);
 	else if(length(x) == length(ynames))
 	    setAttrib(x, R_NamesSymbol, ynames);
+    }
+
+    if (xts || yts) {
+	setAttrib(x, R_TspSymbol, tsp);
+	setAttrib(x, R_ClassSymbol, class);
+	UNPROTECT(2);
     }
     UNPROTECT(4);
     return x;

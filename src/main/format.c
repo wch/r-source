@@ -17,13 +17,21 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  *
- *  Object Formatting
+ * Object Formatting
  *
  *  See ./paste.c for do_paste() , do_format() and  do_formatinfo()
  *  See ./printutils.c for general remarks on Printing and the Encode.. utils.
  *  See ./print.c  for do_printdefault, do_printmatrix, etc.
  *
- *  These  formatFOO() functions determine the proper width, digits, etc.
+ * Exports
+ *	formatString
+ *	formatLogical
+ *	formatFactor
+ *	formatInteger
+ *	formatReal
+ *	formatComplex
+ *
+ * These  formatFOO() functions determine the proper width, digits, etc.
  */
 
 #include "Defn.h"
@@ -135,9 +143,9 @@ void formatInteger(int *x, int n, int *fieldwidth)
  *    nsig		digits altogether
  *    kpower+1		digits to the left of "."
  *    kpower+1+sgn	including sign
- */
-
-/*old #define MAXDIG print_digits */
+ *
+ * Using GLOBAL  print_digits  -- had  #define MAXDIG print_digits
+*/
 
 static double tbl[] =
 {
@@ -258,9 +266,9 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
     /*-- These	'mxsl' & 'rt'  are	used in	 F Format
      *	 AND in the	 ____ if(.) "F" else "E" ___   below: */
     if (mxl < 0) mxsl = 1 + neg;
-    /* old?? if (mxl != mnl && mxl + rt > MAXDIG) rt = MAXDIG - mxl; */
+    /*old: if (mxl != mnl && mxl + rt > print_digits) rt = print_digits - mxl;*/
     if (rt < 0)		rt = 0;
-    /* NO! else if (rt > MAXDIG)	rt = MAXDIG; */
+    /* NO! else if (rt > print_digits)	rt = print_digits; */
     mF = mxsl + rt + (rt != 0);	   /* width m for F  format */
 
     /*-- 'see' how	"E" Exponential format would be like : */
@@ -287,6 +295,7 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
 void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
 				      int *mi, int *ni, int *ei)
 {
+/* format.info() or  x[1..l] for both Re & Im */
     int left, right, sleft;
     int rt, mnl, mxl, mxsl, mxns, mF;
     int i_rt, i_mnl, i_mxl, i_mxsl, i_mxns;
@@ -294,7 +303,7 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
     int i, kpower, nsig;
     int naflag;
 #ifdef IEEE_754
-    int rnanflag, rposinf, rneginf, inanflag, iposinf, ineginf;
+    int rnanflag, rposinf, rneginf, inanflag, iposinf;
 #endif
 
     eps = pow(10.0, -(double)print_digits);
@@ -306,7 +315,6 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
     rneginf = 0;
     inanflag = 0;
     iposinf = 0;
-    ineginf = 0;
 #endif
     neg = 0;
 
@@ -428,9 +436,8 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
 	*ni = 0;
     }
 #ifdef IEEE_754
-    if (inanflag && *mr < 3) *mi = 3;
-    if (iposinf && *mr < 3) *mi = 3;
-    if (ineginf && *mr < 4) *mi = 4;
+    if (inanflag && *mi < 3) *mi = 3;
+    if (iposinf  && *mi < 3) *mi = 3;
 #endif
     if(*mr < 0) *mr = 0;
     if(*mi < 0) *mi = 0;

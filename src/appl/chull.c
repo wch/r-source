@@ -1,11 +1,11 @@
 /*
  *	chull finds the convex hull of a set of points in the plane.
  *
- *      It is based on a C translation (by f2c) of
- *      ACM TOMS algorithm 523 by W. F. Eddy, vol 3 (1977), 398-403, 411-2.
+ *	It is based on a C translation (by f2c) of
+ *	ACM TOMS algorithm 523 by W. F. Eddy, vol 3 (1977), 398-403, 411-2.
  *
- *      converted to double precision, output order altered
- *      by B.D. Ripley, March 1999
+ *	converted to double precision, output order altered
+ *	by B.D. Ripley, March 1999
  *
  */
 
@@ -15,104 +15,101 @@ typedef int logical;
 #define FALSE_ (0)
 
 
-static void split(int n, double *x, int m, int *in, int ii, 
-		  int jj, int s, int *iabv, int *na, int *maxa,
+static void split(int n, double *x,
+		  int m, int *in,
+		  int ii, int jj,
+		  int s,
+		  int *iabv, int *na, int *maxa,
 		  int *ibel, int *nb, int *maxb)
 {
-    /* System generated locals */
-    int x_dim1, x_offset;
+/* split() takes the m points of array x whose
+ subscripts are in array in and partitions them by the
+ line joining the two points in array x whose subscripts are ii and jj.
+ The subscripts of the points above the line are put into array
+ iabv, and the subscripts of the points below are put into array ibel.
 
-    /* Local variables */
-    double a, b, dir, down, d1, up, xt, z;
+ na and nb are, respectively, the number of points
+ above the line and the number below.
+ maxa and maxb are the subscripts for array
+ x of the point furthest above the line and the point
+ furthest below, respectively. if either subset is null
+ the corresponding subscript (maxa or maxb) is set to zero.
+
+ formal parameters
+ INPUT
+	n    integer		total number of data points
+	x    real array (2,n)	(x,y) co-ordinates of the data
+	m    integer		number of points in input subset
+	in   integer array (m)	subscripts for array x of the
+				points in the input subset
+	ii   integer		subscript for array x of one point
+				on the partitioning line
+	jj   integer		subscript for array x of another
+				point on the partitioning line
+	s    integer		switch to determine output.
+				refer to comments below
+ OUTPUT
+	iabv integer array (m)	subscripts for array x of the
+				points above the partitioning line
+	na   integer		number of elements in iabv
+	maxa integer		subscript for array x of point
+				furthest above the line.
+				set to zero if na is zero
+	ibel integer array (m)	subscripts for array x of the
+				points below the partitioning line
+	nb   integer		number of elements in ibel
+	maxb integer		subscript for array x of point
+				furthest below the line.
+				set to zero if nb is zero
+
+ if s = 2 dont save ibel,nb,maxb.
+ if s =-2 dont save iabv,na,maxa.
+ otherwise save everything
+ if s is positive the array being partitioned is above
+ the initial partitioning line.
+ if it is negative, then the set of points is below.
+*/
+
+    /* Local variables (=0 : -Wall) */
+    double a=0, b=0, down, d1, up, xt, z;
     int i, is;
-    logical t;
+    logical vert, neg_dir=0;
 
-/* THIS SUBROUTINE TAKES THE M POINTS OF ARRAY X WHOSE */
-/* SUBSCRIPTS ARE IN ARRAY IN AND PARTITIONS THEM BY THE */
-/* LINE JOINING THE TWO POINTS IN ARRAY X WHOSE SUBSCRIPTS */
-/* ARE II AND JJ. THE SUBSCRIPTS OF THE POINTS ABOVE THE */
-/* LINE ARE PUT INTO ARRAY IABV, AND THE SUBSCRIPTS OF THE */
-/* POINTS BELOW ARE PUT INTO ARRAY IBEL. NA AND NB ARE, */
-/* RESPECTIVELY, THE NUMBER OF POINTS ABOVE THE LINE AND THE */
-/* NUMBER BELOW. MAXA AND MAXB ARE THE SUBSCRIPTS FOR ARRAY */
-/* X OF THE POINT FURTHEST ABOVE THE LINE AND THE POINT */
-/* FURTHEST BELOW, RESPECTIVELY. IF EITHER SUBSET IS NULL */
-/* THE CORRESPONDING SUBSCRIPT (MAXA OR MAXB) IS SET TO ZERO */
-/* FORMAL PARAMETERS */
-/* INPUT */
-/* N    INTEGER           TOTAL NUMBER OF DATA POINTS */
-/* X    REAL ARRAY (2,N)  (X,Y) CO-ORDINATES OF THE DATA */
-/* M    INTEGER           NUMBER OF POINTS IN INPUT SUBSET */
-/* IN   INTEGER ARRAY (M) SUBSCRIPTS FOR ARRAY X OF THE */
-/*                        POINTS IN THE INPUT SUBSET */
-/* II   INTEGER           SUBSCRIPT FOR ARRAY X OF ONE POINT */
-/*                        ON THE PARTITIONING LINE */
-/* JJ   INTEGER           SUBSCRIPT FOR ARRAY X OF ANOTHER */
-/*                        POINT ON THE PARTITIONING LINE */
-/* S    INTEGER           SWITCH TO DETERMINE OUTPUT. REFER */
-/*                        TO COMMENTS BELOW */
-/* OUTPUT */
-/* IABV INTEGER ARRAY (M) SUBSCRIPTS FOR ARRAY X OF THE */
-/*                        POINTS ABOVE THE PARTITIONING LINE */
-/* NA   INTEGER           NUMBER OF ELEMENTS IN IABV */
-/* MAXA INTEGER           SUBSCRIPT FOR ARRAY X OF POINT */
-/*                        FURTHEST ABOVE THE LINE. SET TO */
-/*                        ZERO IF NA IS ZERO */
-/* IBEL INTEGER ARRAY (M) SUBSCRIPTS FOR ARRAY X OF THE */
-/*                        POINTS BELOW THE PARTITIONING LINE */
-/* NB   INTEGER           NUMBER OF ELEMENTS IN IBEL */
-/* MAXB INTEGER           SUBSCRIPT FOR ARRAY X OF POINT */
-/*                        FURTHEST BELOW THE LINE. SET TO */
-/*                        ZERO IF NB IS ZERO */
-/* IF S = 2 DONT SAVE IBEL,NB,MAXB. */
-/* IF S =-2 DONT SAVE IABV,NA,MAXA. */
-/* OTHERWISE SAVE EVERYTHING */
-/* IF S IS POSITIVE THE ARRAY BEING PARTITIONED IS ABOVE */
-/* THE INITIAL PARTITIONING LINE. IF IT IS NEGATIVE, THEN */
-/* THE SET OF POINTS IS BELOW. */
     /* Parameter adjustments */
-    x_dim1 = n;
-    x_offset = 1;
-    x -= x_offset;
-    --ibel;
-    --iabv;
-    --in;
+    --x;
 
-    /* Function Body */
-    t = FALSE_;
-/* CHECK TO SEE IF THE LINE IS VERTICAL */
-    if (x[jj] == x[ii]) {
-	xt = x[ii];
-	d1 = x[jj + x_dim1] - x[ii + x_dim1];
-	dir = 1.;
-	if ((s > 0 && d1 < 0.) || (s < 0 && d1 > 0.)) dir = -1.;
-	t = TRUE_;
+    xt = x[ii];
+    /* Check to see if the line is vertical */
+    vert = (x[jj] == xt);
+    d1 = x[jj + n] - x[ii + n];
+    if (vert) {
+	neg_dir = ((s > 0 && d1 < 0.) || (s < 0 && d1 > 0.));
     } else {
-	a = (x[jj + x_dim1] - x[ii + x_dim1]) / (x[jj] - x[ii]);
-	b = x[ii + x_dim1] - a * x[ii];
+	a = d1 / (x[jj] - xt);
+	b = x[ii + n] - a * xt;
     }
-    up = 0.; *na = 0; *maxa = 0; down = 0.; *nb = 0; *maxb = 0;
-    for (i = 1; i <= m; ++i) {
+    up	 = 0.; *na = 0; *maxa = 0;
+    down = 0.; *nb = 0; *maxb = 0;
+    for (i = 0; i < m; ++i) {
 	is = in[i];
-	if (t) {
-	    z = dir * (x[is] - xt);
+	if (vert) {
+	    if(neg_dir) z = xt - x[is];
+	    else	z = x[is] - xt;
 	} else {
-	    z = x[is + x_dim1] - a * x[is] - b;
+	    z = x[is + n] - a * x[is] - b;
 	}
-	if (z > 0.) {
-/* THE POINT IS ABOVE THE LINE */
+	if (z > 0.) {			/* the point is ABOVE the line */
 	    if (s == -2) continue;
-	    ++(*na);
 	    iabv[*na] = is;
-	    if (z >= up) {  
+	    ++(*na);
+	    if (z >= up) {
 		up = z;
 		*maxa = *na;
 	    }
-        }
-	else if (s != 2 && z < 0.) {
-/* THE POINT IS BELOW THE LINE */
-	    ++(*nb);
+	}
+	else if (s != 2 && z < 0.) {	/* the point is BELOW the line */
 	    ibel[*nb] = is;
+	    ++(*nb);
 	    if (z <= down) {
 		down = z;
 		*maxb = *nb;
@@ -121,62 +118,64 @@ static void split(int n, double *x, int m, int *in, int ii,
     }
 }
 
-void chull(int *n, double *x, int *m, int *in, int *ia, int *ib, 
+void chull(int *n, double *x, int *m, int *in,
+	   int *ia, int *ib,
 	   int *ih, int *nh, int *il)
 {
-    /* Local variables */
+/* this subroutine determines which of the m points of array
+ x whose subscripts are in array in are vertices of the
+ minimum area convex polygon containing the m points. the
+ subscripts of the vertices are placed in array ih in the
+ order they are found. nh is the number of elements in
+ array ih and array il. array il is a linked list giving
+ the order of the elements of array ih in a counter
+ clockwise direction. this algorithm corresponds to a
+ preorder traversal of a certain binary tree. each vertex
+ of the binary tree represents a subset of the m points.
+ at each step the subset of points corresponding to the
+ current vertex of the tree is partitioned by a line
+ joining two vertices of the convex polygon. the left son
+ vertex in the binary tree represents the subset of points
+ above the partitioning line and the right son vertex, the
+ subset below the line. the leaves of the tree represent
+ either null subsets or subsets inside a triangle whose
+ vertices coincide with vertices of the convex polygon.
+
+ formal parameters
+ INPUT
+	n  integer		total number of data points (= nrow(x))
+	x  real array (2,n)	(x,y) co-ordinates of the data
+	m  integer		number of points in the input subset
+	in integer array (m)	subscripts for array x of the points
+				in the input subset
+ work area
+	ia integer array (m)	subscripts for array x of left son subsets.
+				see comments after dimension statements
+	ib integer array (m)	subscripts for array x of right son subsets
+
+ OUTPUT
+	ih integer array (m)	subscripts for array x of the
+				vertices of the convex hull
+	nh integer		number of elements in arrays ih and il.
+				== number of vertices of the convex polygon
+ il is used internally here.
+	il integer array (m)	a linked list giving in order in a
+				counter-clockwise direction the
+				elements of array ih
+ the upper end of array ia is used to store temporarily
+ the sizes of the subsets which correspond to right son
+ vertices, while traversing down the left sons when on the
+ left half of the tree, and to store the sizes of the left
+ sons while traversing the right sons(down the right half)
+ */
+#define y(k) x[k + x_dim1]
+
     logical mine, maxe;
-    int i, j, ilinh, ma, mb, kn, mm, kx, mx, mp1, mbb, nia, nib, 
+    int i, j, ilinh, ma, mb, kn, mm, kx, mx, mp1, mbb, nia, nib,
 	inh, min, mxa, mxb, mxbb;
     int x_dim1, x_offset;
     double d1;
 
-/* THIS SUBROUTINE DETERMINES WHICH OF THE M POINTS OF ARRAY */
-/* X WHOSE SUBSCRIPTS ARE IN ARRAY IN ARE VERTICES OF THE */
-/* MINIMUM AREA CONVEX POLYGON CONTAINING THE M POINTS. THE */
-/* SUBSCRIPTS OF THE VERTICES ARE PLACED IN ARRAY IH IN THE */
-/* ORDER THEY ARE FOUND. NH IS THE NUMBER OF ELEMENTS IN */
-/* ARRAY IH AND ARRAY IL. ARRAY IL IS A LINKED LIST GIVING */
-/* THE ORDER OF THE ELEMENTS OF ARRAY IH IN A COUNTER */
-/* CLOCKWISE DIRECTION. THIS ALGORITHM CORRESPONDS TO A */
-/* PREORDER TRAVERSAL OF A CERTAIN BINARY TREE. EACH VERTEX */
-/* OF THE BINARY TREE REPRESENTS A SUBSET OF THE M POINTS. */
-/* AT EACH STEP THE SUBSET OF POINTS CORRESPONDING TO THE */
-/* CURRENT VERTEX OF THE TREE IS PARTITIONED BY A LINE */
-/* JOINING TWO VERTICES OF THE CONVEX POLYGON. THE LEFT SON */
-/* VERTEX IN THE BINARY TREE REPRESENTS THE SUBSET OF POINTS */
-/* ABOVE THE PARTITIONING LINE AND THE RIGHT SON VERTEX, THE */
-/* SUBSET BELOW THE LINE. THE LEAVES OF THE TREE REPRESENT */
-/* EITHER NULL SUBSETS OR SUBSETS INSIDE A TRIANGLE WHOSE */
-/* VERTICES COINCIDE WITH VERTICES OF THE CONVEX POLYGON. */
-/* FORMAL PARAMETERS */
-/* INPUT */
-/* N  INTEGER           TOTAL NUMBER OF DATA POINTS */
-/* X  REAL ARRAY (2,N)  (X,Y) CO-ORDINATES OF THE DATA */
-/* M  INTEGER           NUMBER OF POINTS IN THE INPUT SUBSET */
-/* IN INTEGER ARRAY (M) SUBSCRIPTS FOR ARRAY X OF THE POINTS */
-/*                      IN THE INPUT SUBSET */
-/* WORK AREA */
-/* IA INTEGER ARRAY (M) SUBSCRIPTS FOR ARRAY X OF LEFT SON */
-/*                      SUBSETS. SEE COMMENTS AFTER DIMENSION */
-/*                      STATEMENTS */
-/* IB INTEGER ARRAY (M) SUBSCRIPTS FOR ARRAY X OF RIGHT SON */
-/*                      SUBSETS */
-/* OUTPUT */
-/* IH INTEGER ARRAY (M) SUBSCRIPTS FOR ARRAY X OF THE */
-/*                      VERTICES OF THE CONVEX HULL */
-/* NH INTEGER           NUMBER OF ELEMENTS IN ARRAY IH AND */
-/*                      ARRAY IL. SAME AS NUMBER OF VERTICES */
-/*                      OF THE CONVEX POLYGON */
-/* il is used internally here. */
-/* IL INTEGER ARRAY (M) A LINKED LIST GIVING IN ORDER IN A */
-/*                      COUNTER-CLOCKWISE DIRECTION THE */
-/*                      ELEMENTS OF ARRAY IH */
-/* THE UPPER END OF ARRAY IA IS USED TO STORE TEMPORARILY */
-/* THE SIZES OF THE SUBSETS WHICH CORRESPOND TO RIGHT SON */
-/* VERTICES, WHILE TRAVERSING DOWN THE LEFT SONS WHEN ON THE */
-/* LEFT HALF OF THE TREE, AND TO STORE THE SIZES OF THE LEFT */
-/* SONS WHILE TRAVERSING THE RIGHT SONS(DOWN THE RIGHT HALF) */
     /* Parameter adjustments */
     x_dim1 = *n;
     x_offset = 1;
@@ -187,16 +186,15 @@ void chull(int *n, double *x, int *m, int *in, int *ia, int *ib,
     --ia;
     --in;
 
-    /* Function Body */
     if (*m == 1) {
-	goto L22;
+	goto L_1pt;
     }
     il[1] = 2;
     il[2] = 1;
     kn = in[1];
     kx = in[2];
     if (*m == 2) {
-	goto L21;
+	goto L_2pts;
     }
     mp1 = *m + 1;
     min = 1;
@@ -204,7 +202,7 @@ void chull(int *n, double *x, int *m, int *in, int *ia, int *ib,
     kx = in[1];
     maxe = FALSE_;
     mine = FALSE_;
-/* FIND TWO VERTICES OF THE CONVEX HULL FOR THE INITIAL PARTITION */
+    /* find two vertices of the convex hull for the initial partition */
     for (i = 2; i <= *m; ++i) {
 	j = in[i];
 	if ((d1 = x[j] - x[kx]) < 0.) {
@@ -223,16 +221,37 @@ void chull(int *n, double *x, int *m, int *in, int *ia, int *ib,
 	    mine = TRUE_;
 	}
     }
-/* IF THE MAX AND MIN ARE EQUAL, ALL M POINTS LIE ON A */
-/* VERTICAL LINE */
-    if (kx == kn) {
-	goto L18;
+
+    if (kx == kn) { /* if the max and min are equal,
+		     * all m points lie on a vertical line */
+	goto L_vertical;
     }
-/* IF MAXE (OR MINE) HAS THE VALUE TRUE THERE ARE SEVERAL */
-/* MAXIMA (OR MINIMA) WITH EQUAL FIRST COORDINATES */
-    if (maxe || mine) {
-	goto L23;
+
+    if (maxe || mine) {/* if maxe (or mine) is TRUE, there are several
+			  maxima (or minima) with equal first coordinates */
+
+	if (maxe) {/* have several points with the (same) largest x[] */
+	    for (i = 1; i <= *m; ++i) {
+		j = in[i];
+		if (x[j] != x[kx]) continue;
+		if (y(j) <= y(kx)) continue;
+		mx = i;
+		kx = j;
+	    }
+	}
+
+	if (mine) {/* have several points with the (same) smallest x[] */
+	    for (i = 1; i <= *m; ++i) {
+		j = in[i];
+		if (x[j] != x[kn]) continue;
+		if (y(j) >= y(kn)) continue;
+		min = i;
+		kn = j;
+	    }
+	}
+
     }
+
 /* L7:*/
     ih[1] = kx;
     ih[2] = kn;
@@ -248,91 +267,149 @@ void chull(int *n, double *x, int *m, int *in, int *ia, int *ib,
     }
     in[min] = in[*m - 1];
     in[*m - 1] = kn;
-/* BEGIN BY PARTITIONING THE ROOT OF THE TREE */
-    split(*n, &x[x_offset], mm, &in[1], ih[1], ih[2], 0, &ia[1], &mb,
-	  &mxa, &ib[1], &ia[ma], &mxbb);
-/* FIRST TRAVERSE THE LEFT HALF OF THE TREE */
-/* START WITH THE LEFT SON */
+/* begin by partitioning the root of the tree */
+    split(*n, &x[x_offset], mm, &in[1],
+	  ih[1], ih[2],
+	  0,
+	  &ia[1], &mb, &mxa,
+	  &ib[1], &ia[ma], &mxbb);
+
+/*	first traverse the LEFT HALF of the tree */
+
+/* start with the left son */
  L8:
     nib += ia[ma];
     --ma;
- L9:
-    if (mxa == 0) goto L11;
-    il[*nh] = il[inh];
-    il[inh] = *nh;
-    ih[*nh] = ia[mxa];
-    ia[mxa] = ia[mb];
-    --mb;
-    ++(*nh);
-    if (mb == 0) goto L10;
-    ilinh = il[inh];
-    split(*n, &x[x_offset], mb, &ia[1], ih[inh], ih[ilinh], 1, &ia[1], 
-	  &mbb, &mxa, &ib[nib], &ia[ma], &mxb);
-    mb = mbb;
-    goto L8;
-/* THEN THE RIGHT SON */
- L10:
-    inh = il[inh];
- L11:
-    inh = il[inh];
-    ++ma;
-    nib -= ia[ma];
-    if (ma >= *m) goto L12;
-    if (ia[ma] == 0) goto L11;
-    ilinh = il[inh];
-/* ON THE LEFT SIDE OF THE TREE, THE RIGHT SON OF A RIGHT SON */
-/* MUST REPRESENT A SUBSET OF POINTS WHICH IS INSIDE A */
-/* TRIANGLE WITH VERTICES WHICH ARE ALSO VERTICES OF THE */
-/* CONVEX POLYGON AND HENCE THE SUBSET MAY BE NEGLECTED. */
-    split(*n, &x[x_offset], ia[ma], &ib[nib], ih[inh], ih[ilinh], 2, 
-	  &ia[1], &mb, &mxa, &ib[nib], &mbb, &mxb);
-    ia[ma] = mbb;
-    goto L9;
-/* NOW TRAVERSE THE RIGHT HALF OF THE TREE */
+    do {
+	if (mxa != 0) {
+	    il[*nh] = il[inh];
+	    il[inh] = *nh;
+	    ih[*nh] = ia[mxa];
+	    ia[mxa] = ia[mb];
+	    --mb;
+	    ++(*nh);
+	    if (mb != 0) {
+		ilinh = il[inh];
+		split(*n, &x[x_offset], mb, &ia[1],
+		      ih[inh], ih[ilinh],
+		      1,
+		      &ia[1], &mbb, &mxa,
+		      &ib[nib], &ia[ma], &mxb);
+		mb = mbb;
+		goto L8;
+	    }
+/* then the right son */
+	    inh = il[inh];
+	}
+
+	do {
+	    inh = il[inh];
+	    ++ma;
+	    nib -= ia[ma];
+	    if (ma >= *m) goto L12;
+	} while(ia[ma] == 0);
+	ilinh = il[inh];
+/* on the left side of the tree, the right son of a right son */
+/* must represent a subset of points which is inside a */
+/* triangle with vertices which are also vertices of the */
+/* convex polygon and hence the subset may be neglected. */
+	split(*n, &x[x_offset], ia[ma], &ib[nib],
+	      ih[inh], ih[ilinh],
+	      2,
+	      &ia[1], &mb, &mxa,
+	      &ib[nib], &mbb, &mxb);
+	ia[ma] = mbb;
+    } while(TRUE_);
+
+/*	 now traverse the RIGHT HALF of the tree */
  L12:
     mxb = mxbb;
     ma = *m;
     mb = ia[ma];
     nia = 1;
     ia[ma] = 0;
-/* START WITH THE RIGHT SON */
+/* start with the right son */
  L13:
     nia += ia[ma];
     --ma;
- L14:
-    if (mxb == 0) goto L16;
-    il[*nh] = il[inh];
-    il[inh] = *nh;
-    ih[*nh] = ib[mxb];
-    ib[mxb] = ib[mb];
-    --mb;
-    ++(*nh);
-    if (mb == 0) goto L15;
-    ilinh = il[inh];
-    split(*n, &x[x_offset], mb, &ib[nib], ih[inh], ih[ilinh], -1, 
-	  &ia[nia], &ia[ma], &mxa, &ib[nib], &mbb, &mxb);
-    mb = mbb;
-    goto L13;
-/* THEN THE LEFT SON */
- L15:
-    inh = il[inh];
- L16:
-    inh = il[inh];
-    ++ma;
-    nia -= ia[ma];
-    if (ma == mp1) goto L17;
-    if (ia[ma] == 0) goto L16;
-    ilinh = il[inh];
-/* ON THE RIGHT SIDE OF THE TREE, THE LEFT SON OF A LEFT SON */
-/* MUST REPRESENT A SUBSET OF POINTS WHICH IS INSIDE A */
-/* TRIANGLE WITH VERTICES WHICH ARE ALSO VERTICES OF THE */
-/* CONVEX POLYGON AND HENCE THE SUBSET MAY BE NEGLECTED. */
-    split(*n, &x[x_offset], ia[ma], &ia[nia], ih[inh], ih[ilinh], -2, 
-	  &ia[nia], &mbb, &mxa, &ib[nib], &mb, &mxb);
-    goto L14;
- L17:
+
+    do {
+	if (mxb != 0) {
+	    il[*nh] = il[inh];
+	    il[inh] = *nh;
+	    ih[*nh] = ib[mxb];
+	    ib[mxb] = ib[mb];
+	    --mb;
+	    ++(*nh);
+	    if (mb != 0) {
+		ilinh = il[inh];
+		split(*n, &x[x_offset], mb, &ib[nib],
+		      ih[inh], ih[ilinh],
+		      -1,
+		      &ia[nia], &ia[ma], &mxa,
+		      &ib[nib], &mbb, &mxb);
+		mb = mbb;
+		goto L13;
+	    }
+
+/* then the left son */
+	    inh = il[inh];
+	}
+
+	do {
+	    inh = il[inh];
+	    ++ma;
+	    nia -= ia[ma];
+	    if (ma == mp1) goto Finis;
+	} while(ia[ma] == 0);
+	ilinh = il[inh];
+/* on the right side of the tree, the left son of a left son */
+/* must represent a subset of points which is inside a */
+/* triangle with vertices which are also vertices of the */
+/* convex polygon and hence the subset may be neglected. */
+	split(*n, &x[x_offset], ia[ma], &ia[nia],
+	      ih[inh], ih[ilinh],
+	      -2,
+	      &ia[nia], &mbb, &mxa,
+	      &ib[nib], &mb, &mxb);
+    } while(TRUE_);
+
+/* -------------------------------------------------------------- */
+
+ L_vertical:/* all the points lie on a vertical line */
+
+    kx = in[1];
+    kn = in[1];
+    for (i = 1; i <= *m; ++i) {
+	j = in[i];
+	if (y(j) > y(kx)) {
+	    mx = i;
+	    kx = j;
+	}
+	if (y(j) < y(kn)) {
+	    min = i;
+	    kn = j;
+	}
+    }
+    if (kx == kn) goto L_1pt;
+
+ L_2pts:/* only two points */
+    ih[1] = kx;
+    ih[2] = kn;
+    if (x[kn] == x[kx] && y(kn) == y(kx))
+	*nh = 2;
+    else
+	*nh = 3;
+    goto Finis;
+
+ L_1pt:/* only one point */
+    *nh = 2;
+    ih[1] = in[1];
+    il[1] = 1;
+
+ Finis:
     --(*nh);
-/* put the results in order, as given by IH */
+    /* put the results in order, as given by IH */
     for (i = 1; i <= *nh; ++i) {
 	ia[i] = ih[i];
     }
@@ -342,69 +419,7 @@ void chull(int *n, double *x, int *m, int *in, int *ia, int *ib,
 	j = il[j];
     }
     return;
-/* ALL THE SPECIAL CASES ARE HANDLED DOWN HERE */
-/* IF ALL THE POINTS LIE ON A VERTICAL LINE */
- L18:
-    kx = in[1];
-    kn = in[1];
-    for (i = 1; i <= *m; ++i) {
-	j = in[i];
-	if (x[j + x_dim1] <= x[kx + x_dim1]) {
-	    goto L19;
-	}
-	mx = i;
-	kx = j;
-    L19:
-	if (x[j + x_dim1] >= x[kn + x_dim1]) {
-	    goto L20;
-	}
-	min = i;
-	kn = j;
-    L20:
-	;
-    }
-    if (kx == kn) {
-	goto L22;
-    }
-/* IF THERE ARE ONLY TWO POINTS */
- L21:
-    ih[1] = kx;
-    ih[2] = kn;
-    *nh = 3;
-    if (x[kn] == x[kx] && x[kn + x_dim1] == x[kx + x_dim1]) {
-	*nh = 2;
-    }
-    goto L17;
-/* IF THERE IS ONLY ONE POINT */
- L22:
-    *nh = 2;
-    ih[1] = in[1];
-    il[1] = 1;
-    goto L17;
-/* MULTIPLE EXTREMES ARE HANDLED HERE */
-/* IF THERE ARE SEVERAL POINTS WITH THE (SAME) LARGEST */
-/* FIRST COORDINATE */
- L23:
-    if (maxe) {
-	for (i = 1; i <= *m; ++i) {
-	    j = in[i];
-	    if (x[j] != x[kx]) continue;
-	    if (x[j + x_dim1] <= x[kx + x_dim1]) continue;
-	    mx = i;
-	    kx = j;
-	}
-    }
-    
-/* IF THERE ARE SEVERAL POINTS WITH THE (SAME) SMALLEST */
-/* FIRST COORDINATE */
-    if (mine) {
-	for (i = 1; i <= *m; ++i) {
-	    j = in[i];
-	    if (x[j] != x[kn]) continue;
-	    if (x[j + x_dim1] >= x[kn + x_dim1]) continue;
-	    min = i;
-	    kn = j;
-	}
-    }
+
+#undef y
 } /* chull */
 

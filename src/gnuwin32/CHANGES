@@ -1,3 +1,40 @@
+rw0642
+======
+
+There are few Windows-specific enhancements: rw0642 (and R-0.64.2) is
+a bug-fixing release.
+
+If options(pager="console") then files are listed in the console
+window, as happened prior to rw0640.
+
+On request, we have enabled `pagerstyle = singlewindow' in MDI mode,
+although we do not recommend this combination.
+
+The file HOME\.Renviron is read (it was HOME\Renviron, and the
+documentation used both names). Only the last line was successfully
+processed in rw0641, but all lines are in this version.
+
+unlink() on non-existent files no longer causes a crash.
+
+The new function win.version() will report details of the run-time
+Windows version, principally for use in bug.report().
+
+bug.report() has a new argument wait: wait=FALSE gives a non-modal editor
+screen.
+
+Generally TAB will move between fields in dialog boxes, and return and
+escape will work (selecting OK and Cancel) in the Change Directory
+dialog box.
+
+The installer will allow several packages to be selected, and will
+install them in sequence. It should give more informative messages on
+some error conditions. Usually return will select Next or Finish,
+escape will select Cancel and B Back.
+
+There is a new target `make check' for running the standard tests and 
+checking the standard packages (as on Unix).
+
+
 rw0641
 ======
 
@@ -6,36 +43,53 @@ There is a choice of interface for Rgui:
 o  SDI, single document interface. This is like the previous version,
    with separate windows for the console, graphics and pager(s).
 
-o  MDI, multiple document interface.  There the console, graphics and
+o  MDI, multiple document interface.  Here the console, graphics and
    pagers are subwindows of one main `frame' window.
 
 You can set your preference (and details of the MDI) in the Rconsole
-file: this can also be overriden on the command line by --mdi or
---sdi.
+file: this can also be overriden on the command line by --mdi or --sdi.
 
-If you use multiple files in the SDI pager, the (row) positions are
-remembered and re-used.
+If you use multiple files in a single SDI pager, the (row) positions
+are remembered and re-used when you switch views in the pager.
 
-For MDI pagers, the size is chosen by the system, and only multiple pagers
-are supported.
+For MDI pagers, the pager size is chosen by the system, and only
+multiple pagers are supported.
 
 When pagers are re-sized the strategy is now to keep the middle line
 in the middle.
 
 The option `setwidthonresize' in Rconsole automatically generates an
-internal call to options("width") if you resize the console width.
-This is the default, but we suggest you do not resize whilst R is
-outputting.
+internal call to options("width") if you resize the console and change
+its width.  This is the default, but we suggest you do not resize
+while R is outputting.
+
+The console, pagers and graphics devices now have right-click popup
+menus, and you can paste from a pager to the console directly.
+
+There is a new console menu item to show a file in a pager. This is
+intended to allow lines to be selected in an script file displayed in 
+a pager and submitted to the R engine.
+
+`Busy' cursors are used where appropriate: a cross-hair cursor is
+used on a graphics device to indicate that locator() (or identify())
+is in use.
 
 The file HOME\.Renviron is now read. This can contain environment
 variables in NAME=value form, one per line. This is useful for setting
-R_VSIZE, R_NSIZE, RLIBS and R_PAPERSIZE, amongst others.
+R_VSIZE, R_NSIZE, RLIBS and R_PAPERSIZE, for example.
 
 You can now paste in more to the console: the limit (which was 2048
-chars) is now that of the clipboard.
+chars) is now that of the clipboard. Pasting can take place whilst
+the console is busy.
 
-The command make pkgcheck-pkgname will do the equivalent of `R CMD
+The command `make pkgcheck-pkgname' will do the equivalent of `R CMD
 check', that is run all the examples in the help pages for that package.
+
+unlink can now handle wildcards and a vector argument of length more than
+one.
+
+The inverse hyperbolic tangent functions asinh acosh atanh are now
+available in this version.
 
 
 rw0640
@@ -123,7 +177,7 @@ R commands can be interrupted by Esc.
 
 Rterm allows batch mode operation and can also be run in
 inferior-R-mode under NTEmacs.
- 
+
 There is a history mechanism for graphics plots.
 
 Graphics can be copied to the clipboard.
@@ -141,7 +195,7 @@ rw0630
 
 - Fixed a couple of minor bugs in the graphics device. 
 
-- More control keys (some Emacs like (crtl+a, crtl+e, crtl+k), and, on
+- More control keys (some Emacs like (crtl+a, crtl+e, crtl+k), and, by
 popular demand, crtl+c and crtl-v for copy and paste); take a look at
 the help/console menuitem.
 
@@ -174,7 +228,7 @@ Bugs fixed (I hope):
 
 - round(..) now works as documented.
 
-- Some small modification to the graphic device (position of text and
+- Some small modifications to the graphic device (position of text and
 clipping of lines was sometimes not exact). In addition, I changed the
 font to helvetica (for better consistency with the X11 device).
 
@@ -201,7 +255,7 @@ in the menu which let to save the contents of the active device as a
 gif file; (ii) arbitrary line patterns in any width are supported.
 
 (c) Now, edit makes use of an external editor (the default one is
-notepad),i.e., it works as under Unix.
+notepad), i.e., it works as under Unix.
 
 (d) date() now works. In addition, proc.time(), and so
 system.time(..), works (but don't expect too much, you will get only
@@ -277,17 +331,17 @@ c) paste it in some word processor or editor which can print.
 
 To obtain a good copy of your graphs you can:
 a) save it as postscript and then print on a ps printer (or play with
-it using gostscript);
+it using ghostscript);
 b) save it as a gif and then print it using one of the many programs
 which support this format (image manipulation programs, word processors,
 internet browsers,...).
 
-If you give the focus to a graphic windows, you can also copy it to
+If you give the focus to a graphic window, you can also copy it to
 the clipboard using the alt+print keys. But this is the standard
 Windows command and you will get also the window's decoration.  So
 this is useful only to get a "draft" copy of the graph.  [however, I
 find quite effective to open a word processor in which to paste
-command, console output and graphs. Indeed this is the way, I ask my
+command, console output and graphs. Indeed this is the way I ask my
 students to work (of course, they must also write comments!)].
 
 [...]

@@ -22,7 +22,7 @@ R    = LC_ALL=C $(RHOME)/bin/R --vanilla
 
 Ex = ./Examples
 
-TESTsrc = simple-true.R simple-tests.R d-p-q-r-tests.R \
+TESTsrc = simple-true.R arith-true.R arith.R d-p-q-r-tests.R \
 	 print-tests.R is-things.R primitive-funs.R eval-etc.R
 
 TESTout = $(TESTsrc:.R=.Rout)
@@ -37,7 +37,9 @@ TESTout = $(TESTsrc:.R=.Rout)
 	  (mv $@ $@.fail && exit 1)
 	@echo " OK"
 
-test-All: test-Examples $(TESTout)
+test-All: test-Examples strict-tests
+
+strict-tests: $(TESTout)
 
 test-Examples:
 	@cd $(Ex) && $(MAKE) $@
