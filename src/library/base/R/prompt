@@ -78,7 +78,7 @@ function(object, filename = paste0(name, ".Rd"), force.function = FALSE)
 		  "}")
       }
  cat(file, file = filename, sep = "\n")
- RHOME <- system("printenv RHOME", intern = TRUE)
+ RHOME <- getenv("RHOME")
  if(substr(RHOME,1,8) == "/tmp_mnt") RHOME <- substr(RHOME,9,1000)
  cat("created file named ", filename, " in the current directory.\n",
      " Edit the file and move it to the appropriate directory,\n",
