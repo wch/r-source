@@ -25,7 +25,7 @@ use R::Rdtools;
 use R::Utils;
 use R::Vars;
 
-my $revision = ' $Revision: 1.15 $ ';
+my $revision = ' $Revision: 1.16 $ ';
 my $version;
 my $name;
 
@@ -123,7 +123,7 @@ while (<INFILE>) {
 	foreach my $key (keys(%functions)) {
 	    $functions{$key} =~ s/ *\\.?dots/ .../g;
 	    if ($key !~ /^</) {
-		$out->print("\"$key\" <- ",
+		$out->print("\"${key}\" <- ",
 			    "function$functions{$key} NULL\n");
 	    }
 	}
@@ -132,7 +132,7 @@ while (<INFILE>) {
 	    my %S4methods = @{$usages{"S4methods"}};
 	    foreach my $key (keys(%S4methods)) {
 		$S4methods{$key} =~ s/ *\\.?dots/ .../g;
-		$out->print("\"\\$key\" <- ",
+		$out->print("\"\\${key}\" <- ",
 			    "function$S4methods{$key} NULL\n");
 	    }
 	}
@@ -146,7 +146,7 @@ while (<INFILE>) {
 	    $text =~ s/\"/\\\"/g;
 	    $text =~ s/\n/\\\n/g;
 	    $text =~ s/\r//g;
-	    $out->print("\"$text\"\n");
+	    $out->print("\"${text}\"\n");
 	}
 
 	$out->print("\n");
