@@ -223,10 +223,10 @@ none
 
 Directory:  incoming
 
-* PR# 692 *
-Subject: documentation bug in grep
-From: pperkins@ucsd.edu
-Date: Wed, 11 Oct 2000 19:25:03 +0200 (MET DST)
+* PR# 693 *
+Subject:  Bug report
+From: "Amaratunga, Rohith" <Rohith.Amaratunga@dsto.defence.gov.au>
+Date: Thu, 12 Oct 2000 14:08:31 +1100
 * PR# 652 *
 Subject: R INSTALL *.tgz fails (minor docs/feature bug)
 From: RPO <bobbyo@speakeasy.org>
@@ -355,6 +355,10 @@ Date: Mon, 2 Oct 2000 19:58:55 +0200 (MET DST)
 Subject: This mail was found after problem with mailserver Oct 3rd - postmaster@hh.umu.se
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 03 Oct 2000 11:57:32 +0200
+* PR# 686 *
+Subject: inquiry
+From: <bench1@onenetnow.com>
+Date: Mon, 9 Oct 2000 00:23:53
 * PR# 685 *
 Subject: documentation bug in readline()
 From: Peter Perkins <pperkins@ucsd.edu>
@@ -363,27 +367,27 @@ Date: Fri, 06 Oct 2000 19:09:31 -0700
 Subject: gamma and lgamma functions
 From: Jim Lindsey <james.lindsey@luc.ac.be>
 Date: Wed, 4 Oct 2000 13:59:21 +0200 (MET DST)
-* PR# 687 *
-Subject:  cmdscale documentation 
-From: J.C.Rougier@durham.ac.uk
-Date: Mon, 9 Oct 2000 10:23:20 +0100 (BST)
-* PR# 686 *
-Subject: inquiry
-From: <bench1@onenetnow.com>
-Date: Mon, 9 Oct 2000 00:23:53
-* PR# 689 *
-Subject: Documentation problem for ecdf
-From: Kurt.Hornik@ci.tuwien.ac.at
-Date: Tue, 10 Oct 2000 18:32:46 +0200 (MET DST)
 * PR# 688 *
 Subject:  Unreliable example in ?layout 
 From: J.C.Rougier@durham.ac.uk
 Date: Tue, 10 Oct 2000 08:48:10 +0100 (BST)
-* PR# 691 *
-Subject: invalid regular expression after many grep's
-From: jutans@utans.u-net.com
-Date: Wed, 11 Oct 2000 17:10:29 +0200 (MET DST)
+* PR# 687 *
+Subject:  cmdscale documentation 
+From: J.C.Rougier@durham.ac.uk
+Date: Mon, 9 Oct 2000 10:23:20 +0100 (BST)
 * PR# 690 *
 Subject: Bug?
 From: "Armando Mateus Ferreira" <td2mafea@uco.es>
 Date: Wed, 11 Oct 2000 11:21:19 +0200
+* PR# 689 *
+Subject: Documentation problem for ecdf
+From: Kurt.Hornik@ci.tuwien.ac.at
+Date: Tue, 10 Oct 2000 18:32:46 +0200 (MET DST)
+* PR# 692 *
+Subject: documentation bug in grep
+From: pperkins@ucsd.edu
+Date: Wed, 11 Oct 2000 19:25:03 +0200 (MET DST)
+* PR# 691 *
+Subject: invalid regular expression after many grep's
+From: jutans@utans.u-net.com
+Date: Wed, 11 Oct 2000 17:10:29 +0200 (MET DST)
