@@ -69,7 +69,7 @@ Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 
 mostlyclean:
 clean:
-	@rm -f Rconfig.h Rversion.h
+	@rm -f Rconfig.h Rversion.h FFDecl.h FFTab.h
 distclean: clean
 	@rm -f Makefile config.h stamp-h
 maintainer-clean: distclean
