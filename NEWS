@@ -50,6 +50,9 @@ BUG FIXES
     o   merge.data.frame could give incorrect names when one of the
 	arguments had only one column.  (PR#4299)
 
+    o   Subsetting a one-dimensional array dropped dimensions even when
+	they were not of length one.  (Related to PR#4110)
+
 
 
 		CHANGES IN R VERSION 1.8.0
