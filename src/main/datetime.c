@@ -198,7 +198,7 @@ static double mktime00 (struct tm *tm)
 static double guess_offset (struct tm *tm)
 {
     double offset, offset1, offset2;
-    int oldmonth, oldyear, olddst;
+    int oldmonth, oldyear, olddst, oldwday, oldyday;
 
     /*
        adjust as best we can for timezones: if isdst is unknown,
@@ -207,6 +207,8 @@ static double guess_offset (struct tm *tm)
     oldmonth = tm->tm_mon;
     oldyear = tm->tm_year;
     olddst = tm->tm_isdst;
+    oldwday = tm->tm_wday;
+    oldyday = tm->tm_yday;
     tm->tm_mon = 0;
     tm->tm_year = 100;
     tm->tm_isdst = -1;
@@ -230,6 +232,8 @@ static double guess_offset (struct tm *tm)
     }
     tm->tm_year = oldyear;
     tm->tm_isdst = olddst;
+    tm->tm_wday = oldwday;
+    tm->tm_yday = oldyday;
     return offset;
 }
 
@@ -274,7 +278,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
     }
 
     day = (long) floor(d/86400.0);
-    left = (int) (d - day * 86400.0 +0.5);
+    left = (int) (d - day * 86400.0 + 0.5);
 
     /* hour, min, and sec */
     res->tm_hour = left / 3600;
