@@ -17,6 +17,8 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            onefile = TRUE, family, \dots)
 ps.options(\dots, reset = FALSE, override.check = FALSE)
 }
+%% The definitive doc is the source :-)
+%% 	../../../main/devices.c  &   ../../../unix/devPS.c
 \usage{
 postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            onefile = TRUE,
@@ -24,24 +26,12 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            width, height, horizontal, pointsize,
            pagecentre, print.it, command)
 
-%  paper, horizontal, width, height, family, pointsize, bg, fg)
+% paper, horizontal, width, height, family, pointsize, bg, fg)
 ps.options(paper, horizontal, width, height, family, encoding,
            pointsize, bg, fg,
            onefile = TRUE, print.it = FALSE, append = FALSE,
            reset = FALSE, override.check = FALSE)
 .PostScript.Options
-}
-%% The definitive doc is the source :-)
-%% 	../../../main/devices.c  &   ../../../unix/devPS.c
-\description{
-  \code{postscript} starts the graphics device driver for producing
-  PostScript graphics.
-
-  The auxiliary function \code{ps.options} can be used to set and view
-  (if called without arguments)
-  default values for the arguments to \code{postscript}.  It needs to be
-  called before calling \code{postscript}, and the default values it
-  sets can be overridden by supplying arguments to \code{postscript}.
 }
 \arguments{
   \item{file}{a character string giving the name of the file.  If it is
@@ -55,7 +45,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
     For use with \code{onefile=FALSE} give a \code{printf} format such
     as \code{"Rplot\%d.ps"} (the default in that case).
   }
-  \item{\dots}{further options for \code{postscript()} :}
+  \item{\dots}{further options for \code{postscript()}.}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"a4"}, \code{"letter"}, \code{"legal"} and
     \code{"executive"} (and these can be capitalized).
@@ -66,15 +56,15 @@ ps.options(paper, horizontal, width, height, family, encoding,
     if that is set and to \code{"a4"} if it is unset or empty.}
   \item{horizontal}{the orientation of the printed image, a
     logical. Defaults to true, that is landscape orientation.}
-  \item{width, height}{the width and height of the graphics region in inches.
-    The default is to use the entire page less a 0.25 inch border on
-    each side.}
-  \item{family}{the font family to be used. EITHER a single character string
-    which must be one of \code{"AvantGarde"},
+  \item{width, height}{the width and height of the graphics region in
+    inches.  The default is to use the entire page less a 0.25 inch
+    border on each side.}
+  \item{family}{the font family to be used.  EITHER a single character
+    string which must be one of \code{"AvantGarde"},
     \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
     \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
     \code{"Palatino"} or \code{"Times"}, OR a character vector of length
-    four. }
+    four.}
   \item{encoding}{the name of an encoding file. Defaults to
 #ifdef unix
 "ISOLatin1.enc"
@@ -134,9 +124,10 @@ ps.options(paper, horizontal, width, height, family, encoding,
 #endif
 
   The postscript produced by \R is EPS (\emph{Encapsulated PostScript})
-  compatible, and can be included into other documents, e.g. into LaTeX,
-  using \code{\includegraphics{<filename>}}.  For use in this way you will
-  probably want to set \code{horizontal=FALSE, onefile=FALSE, paper="special"}.
+  compatible, and can be included into other documents, e.g., into
+  LaTeX, using \code{\includegraphics{<filename>}}.  For use in this way
+  you will probably want to set \code{horizontal=FALSE, onefile=FALSE,
+    paper="special"}.
 
   Most of the PostScript prologue used is taken from the \R character
   vector \code{.ps.prolog}.  This is marked in the output, and can be
@@ -160,8 +151,12 @@ ps.options(paper, horizontal, width, height, family, encoding,
   use DSC comments to instruct the print spooler to do so.
 
   As ISOLatin1 encoding is used, \code{-} is set as a minus and not
-  as a hyphen.  Supply a hyphen (character 173) if that is what you need.
+  as a hyphen.  Supply a hyphen (character 173) if that is what you
+  need.
 
+  \code{ps.options} needs to be called before calling \code{postscript},
+  and the default values it sets can be overridden by supplying
+  arguments to \code{postscript}.
 }
 \section{Encodings}{
   Encodings describe which glyphs are used to display the character codes
