@@ -120,7 +120,7 @@ a.factor[i, drop = FALSE]
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{[.factor]} for subsetting of factors.
+  \code{\link{[.factor}} for subsetting of factors.
   
   \code{\link{gl}} for construction of ``balanced'' factors and
   \code{\link{C}} for factors with specified contrasts.
