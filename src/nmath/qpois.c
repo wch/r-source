@@ -43,12 +43,15 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
     if(!R_FINITE(lambda))
 	ML_ERR_return_NAN;
     R_Q_P01_check(p);
-    if(lambda <= 0) ML_ERR_return_NAN;
+    if(lambda < 0) ML_ERR_return_NAN;
 
     if (p == R_DT_0) return 0;
 #ifdef IEEE_754
     if (p == R_DT_1) return ML_POSINF;
 #endif
+
+    if(lambda == 0) return 0;
+
     mu = lambda;
     sigma = sqrt(lambda);
     gamma = sigma;

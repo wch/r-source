@@ -267,6 +267,7 @@ BUG FIXES
 	For consistency, the default for replications() has been 
 	changed.
 
+    o   Fix cases with lambda==0 in Poisson distribution
 
 	**************************************************
 	*						 *
