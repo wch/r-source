@@ -9,10 +9,10 @@
 \alias{as.single.default}
 \usage{
 double(length = 0)
-as.double(x)
+as.double(x, \dots)
 is.double(x)
 single(length = 0)
-as.single(x)
+as.single(x, \dots)
 }
 \description{
     Create, coerce to or test for a double-precision vector.

@@ -9,6 +9,11 @@
 \usage{
 merge(x, y, by, by.x, by.y, sort = TRUE)
 }
+\synopsis{
+merge(x, y, by, \dots)
+merge.date.frame(x, y, by = intersect(names(x), names(y)), by.x = by,
+                 by.y = by, sort = TRUE) 
+}
 \arguments{
  \item{x, y}{data frames, or objects to be coerced to one}
  \item{by, by.x, by.y}{specifcations of the common columns. See Details.}

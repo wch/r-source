@@ -1,7 +1,7 @@
 \name{codes}
 \title{Factor Codes}
 \usage{
-codes(x)
+codes(x, \dots)
 codes(x) <- value
 }
 \alias{codes}

@@ -121,7 +121,7 @@ end.default <- function(x, ...)
 frequency.default <- function(x, ...)
     if(!is.null(xtsp <- attr(x, "tsp"))) xtsp[3] else 1
 
-deltat.default <- function(x)
+deltat.default <- function(x, ...)
     if(!is.null(xtsp <- attr(x, "tsp"))) 1/xtsp[3] else 1
 
 time.default <- function (x, offset = 0, ...)
@@ -135,7 +135,7 @@ time.default <- function (x, offset = 0, ...)
 
 time.ts <- function (x, ...) as.ts(time.default(x, ...))
 
-cycle.default <- function(x)
+cycle.default <- function(x, ...)
 {
     p <- tsp(hasTsp(x))
     m <- floor((p[1] %% 1) * p[3])

@@ -6,7 +6,7 @@
 \usage{
 kappa(z, \dots)
 kappa.lm     (z, \dots)
-kappa.default(z, exact = FALSE)
+kappa.default(z, exact = FALSE, \dots)
 kappa.qr     (z, \dots) 
 kappa.tri    (z, exact = FALSE, \dots)
 }

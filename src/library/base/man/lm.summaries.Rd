@@ -2,14 +2,14 @@
 \title{Accessing Linear Model Fits}
 \usage{
 summary(object, correlation = FALSE)
-coefficients(object) ; coef(object)
-df.residual(object)
-family(object)
-formula(object)
-fitted.values(object)
+coefficients(object, \dots) ; coef(object, \dots)
+df.residual(object, \dots)
+family(object, \dots)
+formula(x, \dots)
+fitted.values(object, \dots)
 residuals(object,
           type=c("working","response", "deviance","pearson", "partial"), \dots)
-weights(object)
+weights(object, \dots)
 
 print(summary.lm.obj, digits = max(3, getOption("digits") - 3),
       symbolic.cor = p > 4,

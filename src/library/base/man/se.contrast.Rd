@@ -5,9 +5,10 @@
 \title{Standard Errors for Contrasts in Model Terms}
 \usage{
 se.contrast(object, \dots)
-se.contrast.aov(x, contrast.obj,
-  coef = contr.helmert(ncol(contrast))[, 1], data = NULL) 
-se.contrast.aovlist(\dots)
+se.contrast.aov(object, contrast.obj,
+  coef = contr.helmert(ncol(contrast))[, 1], data = NULL, \dots) 
+se.contrast.aovlist(object, contrast.obj,
+  coef = contr.helmert(ncol(contrast))[, 1], data = NULL, \dots)
 }
 \alias{se.contrast}
 \alias{se.contrast.aov}

@@ -1,8 +1,8 @@
 \name{fitted.values}
 \title{Extract Model Fitted Values}
 \usage{
-fitted(x, \dots)
-fitted.values(x, \dots)
+fitted(object, \dots)
+fitted.values(object, \dots)
 }
 \alias{fitted.values}
 \alias{fitted}
@@ -11,7 +11,7 @@ fitted.values(x, \dots)
 \alias{fitted.lm}
 \alias{fitted.glm}
 \arguments{
-  \item{x}{an object for which the extraction of model fitted values is
+  \item{object}{an object for which the extraction of model fitted values is
     meaningful.}
   \item{\dots}{other arguments.}
 }

@@ -9,7 +9,7 @@
 }
 \usage{
 integer(length = 0)
-as.integer(x)
+as.integer(x, \dots)
 is.integer(x)
 }
 \value{

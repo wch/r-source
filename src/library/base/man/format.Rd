@@ -3,8 +3,8 @@
 \usage{
 format(x, \dots)
 format.default(x, trim = FALSE, digits = getOption("digits"))
-format.pval(x, digits = max(1, getOption("digits") - 2),
-            eps = .Machine$double.eps)
+format.pval(pv, digits = max(1, getOption("digits") - 2),
+            eps = .Machine$double.eps, na.form = "NA")
 }
 \alias{format}
 \alias{format.default}
@@ -21,6 +21,8 @@ format.pval(x, digits = max(1, getOption("digits") - 2),
     \code{\link{numeric} x}. This is a suggestion: enough decimal
     places will be used so that the smallest (in magnitude) number has
     this many significant digits.}
+  \item{pv}{a numeric vector.}
+  \item{na.form}{character representation of \code{NA}s.}
 }
 \details{
   These functions convert their first argument to a vector (or array) of

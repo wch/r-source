@@ -9,7 +9,7 @@
 }
 \usage{
 character(length = 0)
-as.character(x)
+as.character(x, \dots)
 is.character(x)
 }
 \value{

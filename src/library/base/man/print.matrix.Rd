@@ -2,7 +2,7 @@
 \title{Print Matrices}
 \usage{
 print.matrix(x, rowlab=character(0), collab=character(0),
-             quote=TRUE, right=FALSE)
+             quote=TRUE, right=FALSE, na.print = NULL, \dots)
 }
 \alias{print.matrix}
 \alias{prmatrix}
@@ -17,6 +17,9 @@ print.matrix(x, rowlab=character(0), collab=character(0),
  \item{right}{ if \code{TRUE} and \code{x} is of
    \code{\link{mode}} \code{\link{character}}, the output columns are
    \emph{right}-justified.}
+ \item{na.print}{how \code{NA}s are printed. If this is non-null, its
+   value is used to represent \code{NA}.}
+ \item{\dots}{arguments for other methods.}
 }
 \description{
   Pseudo-method for the \code{\link{print}} generic.  Especially useful

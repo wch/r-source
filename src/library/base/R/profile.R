@@ -1,3 +1,1 @@
-profile <-
-  function(fitted, which, maxpts, ...)
-  UseMethod("profile")
+profile <- function(fitted, ...) UseMethod("profile")

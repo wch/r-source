@@ -420,7 +420,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
 }
 
 
-anova.glmlist <- function(objects, dispersion=NULL, test=NULL, ...)
+anova.glmlist <- function(objects, dispersion=NULL, test=NULL)
 {
 
     ## find responses for all models and remove
@@ -444,7 +444,7 @@ anova.glmlist <- function(objects, dispersion=NULL, test=NULL, ...)
 
     nmodels <- length(objects)
     if(nmodels==1)
-	return(anova.glm(objects[[1]], test=test, ...))
+	return(anova.glm(objects[[1]], dispersion=dispersion, test=test))
 
     ## extract statistics
 

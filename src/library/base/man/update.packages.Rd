@@ -27,11 +27,11 @@ old.packages(lib.loc = .lib.loc, CRAN = getOption("CRAN"),
              method = "auto", available = NULL)
 
 download.packages(pkgs, destdir, available = NULL,
-                  CRAN = options("CRAN"), method = "auto",
-                  contriburl = contrib.url(CRAN))
+                  CRAN = options("CRAN"), 
+                  contriburl = contrib.url(CRAN), method = "auto")
 install.packages(pkgs, lib, CRAN = options("CRAN"),
                  contriburl = contrib.url(CRAN),
-                 method = "auto", available = NULL, destdir=NULL)
+                 method = "auto", available = NULL, destdir = NULL)
 newerVersion(a, b)
 }
 \arguments{ 

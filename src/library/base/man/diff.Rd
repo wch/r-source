@@ -7,7 +7,7 @@
 }
 \usage{
 diff(x, \dots)
-diff.default(x, lag=1, differences=1)
+diff.default(x, lag=1, differences=1, \dots)
 }
 \arguments{
   \item{x}{a numeric vector or matrix containing the values to be

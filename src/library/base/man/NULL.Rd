@@ -2,7 +2,7 @@
 \title{The Null Object}
 \usage{
 NULL
-as.null(x)
+as.null(x, \dots)
 is.null(x)
 }
 \alias{NULL}

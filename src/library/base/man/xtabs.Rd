@@ -13,12 +13,12 @@ xtabs(formula = ~., data = sys.frame(sys.parent()), subset, na.action,
       exclude = c(NA, NaN), drop.unused.levels = FALSE)
 print.xtabs(x, \dots)
 print.summary.xtabs(x, digits = getOption("digits") - 3)
-summary.xtabs(x)
+summary.xtabs(object, \dots)
 }
 \usage{
 xtabs(formula = ~., data, subset, na.action, exclude = c(NA, NaN),
       drop.unused.levels = FALSE)
-summary.xtabs(x, \dots)
+summary.xtabs(object, \dots)
 }
 \arguments{
   \item{formula}{a formula object with the cross-classifying variables,

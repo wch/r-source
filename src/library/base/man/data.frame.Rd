@@ -4,13 +4,13 @@
 data.frame(\dots, row.names = NULL, check.rows = FALSE,
         check.names = TRUE)
 
-as.data.frame(x)
+as.data.frame(x, row.names = NULL, optional)
 is.data.frame(x)
 
-row.names(data.frame.obj)
-row.names(data.frame.obj) <- names
-print(data.frame.obj, \dots, digits = NULL, quote = FALSE, right = TRUE)
-plot (data.frame.obj, \dots)
+row.names(x)
+row.names(x) <- names
+print(x, \dots, digits = NULL, quote = FALSE, right = TRUE)
+plot (x, \dots)
 }
 \alias{data.frame}
 \alias{as.data.frame}
@@ -51,6 +51,7 @@ plot (data.frame.obj, \dots)
     \code{\link{make.names}}) so that they are.}
   \item{data.frame.obj}{objects of class \code{data.frame}.}
   \item{\dots}{optional arguments to \code{print} or \code{plot} methods.}
+  \item{optional}{logical. If true, setting row names is optional.}
 }
 \description{
   These functions create or manipulate data frames, tightly coupled collections

@@ -4,8 +4,8 @@
 list(\dots)
 pairlist(\dots)
 
-as.list(x)
-as.list.default(x)
+as.list(x, \dots)
+as.list.default(x, \dots)
 as.pairlist(x)
 
 is.list(x)

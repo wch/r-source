@@ -1,19 +1,19 @@
 \name{residuals}
 \title{Extract Model Residuals}
 \usage{
-residuals(x, \dots)
-resid(x, \dots)
+residuals(object, \dots)
+resid(object, \dots)
 }
 \alias{residuals}
 \alias{resid}
 \alias{residuals.default}
 \arguments{
-  \item{x}{an object for which the extraction of model residuals is
+  \item{object}{an object for which the extraction of model residuals is
     meaningful.}
   \item{\dots}{other arguments.}
 }
 \value{
-  Residuals extracted from the object \code{x}.
+  Residuals extracted from the object \code{object}.
 }
 \description{
   \code{residuals} is a generic function which extracts model residuals

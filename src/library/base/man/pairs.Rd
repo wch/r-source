@@ -11,6 +11,18 @@ pairs.default(x, labels = colnames(x), panel = points, \dots,
               cex.labels = NULL, font.labels = 1,
               row1attop = TRUE)
 }
+\synopsis{
+pairs(x, \dots)
+pairs.default(x, labels = colnames(x), panel = points,
+              main = NULL, oma = NULL, font.main = par("font.main"),
+              cex.main = par("cex.main"), \dots,
+              lower.panel = panel, upper.panel = panel,
+              diag.panel = NULL, text.panel = textPanel,
+              label.pos = 0.5 + has.diag/3,
+              cex.labels = NULL, font.labels = 1,
+              row1attop = TRUE)
+}
+}
 \arguments{
   \item{x}{the coordinates of points given as columns of a matrix.}
   \item{labels}{the names of the variables.}

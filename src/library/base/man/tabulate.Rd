@@ -1,7 +1,7 @@
 \name{tabulate}
 \title{Tabulation for Vectors}
 \usage{
-tabulate(bin, nbin=max(1,bin))
+tabulate(bin, nbins = max(1, bin))
 }
 \alias{tabulate}
 \arguments{
@@ -14,11 +14,11 @@ the number of times each integer occurs in it.  \code{tabulate} is
 used as the basis of the \code{table} function.
 }
 \details{
-    If \code{bin} is a factor, its internal integer representation
-    is tabulated.
-    If the elements of \code{bin} are not integers, they are rounded
-    to the nearest integer.  Elements outside the range \code{1,\dots,
-      nbin} are (silently) ignored in the tabulation.
+  If \code{bin} is a factor, its internal integer representation
+  is tabulated.
+  If the elements of \code{bin} are not integers, they are rounded
+  to the nearest integer.  Elements outside the range \code{1,\dots,
+    nbin} are (silently) ignored in the tabulation.
 }
 \seealso{
 \code{\link{factor}}, \code{\link{table}}.

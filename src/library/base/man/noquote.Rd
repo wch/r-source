@@ -2,7 +2,7 @@
 \title{Class for ``no quote'' Printing of Strings}
 \usage{
 noquote(obj)
-print.noquote(obj, \dots)
+print.noquote(x, \dots)
 obj[j]
 }
 \alias{noquote}
@@ -10,7 +10,7 @@ obj[j]
 \alias{print.noquote}
 \alias{as.matrix.noquote}
 \arguments{
- \item{obj}{any \R object; typically a vector of \code{\link{character}}
+ \item{obj, x}{any \R object; typically a vector of \code{\link{character}}
    strings.}
  \item{\dots}{further options for \code{\link{print}}.}
 }

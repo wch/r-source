@@ -1,5 +1,5 @@
 #### copyright (C) 1998 B. D. Ripley
-add1 <- function(object, ...) UseMethod("add1")
+add1 <- function(object, scope, ...) UseMethod("add1")
 
 add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 			 k = 2, trace = FALSE, ...)
@@ -235,7 +235,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 add1.mlm <- function(...)
     stop("no add1 method implemented for mlm models")
 
-drop1 <- function(object, ...) UseMethod("drop1")
+drop1 <- function(object, scope, ...) UseMethod("drop1")
 
 drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 			  k = 2, trace = FALSE, ...)

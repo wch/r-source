@@ -1,12 +1,12 @@
-which <- function(logic, arr.ind = FALSE)
+which <- function(x, arr.ind = FALSE)
 {
-    if(!is.logical(logic))
+    if(!is.logical(x))
 	stop("argument to \"which\" is not logical")
-    wh <- seq(along=logic)[ll <- logic & !is.na(logic)]
+    wh <- seq(along=x)[ll <- x & !is.na(x)]
     if ((m <- length(wh)) > 0) {
-	dl <- dim(logic)
+	dl <- dim(x)
 	if (is.null(dl) || !arr.ind) {
-	    names(wh) <- names(logic)[ll]
+	    names(wh) <- names(x)[ll]
 	}
 	else { ##-- return a matrix  length(wh) x rank
 	    rank <- length(dl)
@@ -14,7 +14,7 @@ which <- function(logic, arr.ind = FALSE)
 	    wh <- 1 + wh1 %% dl[1]
 	    wh <- matrix(wh, nrow = m, ncol = rank,
 			 dimnames =
-			 list(dimnames(logic)[[1]][wh],
+			 list(dimnames(x)[[1]][wh],
 			      if(rank == 2) c("row", "col")# for matrices
 			      else paste("dim", 1:rank, sep="")))
 	    if(rank >= 2) {

@@ -7,7 +7,7 @@ eval <-
                        parent.frame())
     .Internal(eval(expr, envir,enclos))
 
-quote <- function(x) substitute(x)
+quote <- function(expr) substitute(expr)
 
 
 eval.parent <- function(expr, n = 1){
@@ -16,15 +16,15 @@ eval.parent <- function(expr, n = 1){
 }
 
 evalq <-
-    function (expr, envir, enclos) 
-    eval.parent(substitute(eval(quote(expr), envir, enclos))) 
+    function (expr, envir, enclos)
+    eval.parent(substitute(eval(quote(expr), envir, enclos)))
 
 new.env <- function ()
   eval.parent(quote((function() environment())()))
 
-local <- 
-    function (expr, envir = new.env()) 
-    eval.parent(substitute(eval(quote(expr), envir))) 
+local <-
+    function (expr, envir = new.env())
+    eval.parent(substitute(eval(quote(expr), envir)))
 
 Recall <- function(...) .Internal(Recall(...))
 

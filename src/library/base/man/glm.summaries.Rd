@@ -3,7 +3,7 @@
 \usage{
 summary(object, dispersion = NULL, correlation = FALSE, \dots)
 coefficients(x) ; coef(x)
-df.residual(x)
+df.residual(x, \dots)
 family(x)
 fitted.values(x) ; fitted(x)
 residuals(x, type = c("deviance", "pearson", "working",

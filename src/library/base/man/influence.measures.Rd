@@ -15,7 +15,7 @@ dfbetas  (lm.obj, infl = \dots)
 covratio (lm.obj, infl = \dots, res = \dots)
 cooks.distance(lm.obj, infl = \dots, res = \dots, sd = \dots)
 
-hat(xmat)
+hat(x, intercept)
 }
 \alias{influence.measures}
 \alias{print.infl}
@@ -35,7 +35,8 @@ hat(xmat)
   \item{res}{(possibly weighted) residuals, with proper default.}
   \item{sd}{standard deviation to use, see default.}
 
-  \item{xmat}{the `X' or design matrix.}
+  \item{x}{the `X' or design matrix.}
+  \item{intercept}{should an intercept column be pre-prended to \code{x}?}
 }
 \description{
   This suite of functions can be used to compute some of the regression

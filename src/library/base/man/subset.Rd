@@ -8,8 +8,8 @@
 }
 \usage{
 subset(x, \dots)
-subset.default(x, subset)
-subset.data.frame(x, subset, select)
+subset.default(x, subset, \dots)
+subset.data.frame(x, subset, select, \dots)
 }
 \arguments{
   \item{x}{object to be subsetted}

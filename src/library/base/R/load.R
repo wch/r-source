@@ -8,6 +8,6 @@ save <- function(..., list = character(0), file = "", ascii = FALSE)
     invisible(.Internal(save(list, file, ascii, FALSE)))
 }
 
-save.image <- function (file = ".RData", oldstyle = FALSE)
+save.image <- function (file = ".RData")
     eval(substitute(save(list = ls(all.names = TRUE), file = file)),
          .GlobalEnv)

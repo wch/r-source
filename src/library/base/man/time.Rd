@@ -6,6 +6,18 @@ cycle(x, \dots)
 frequency(x, \dots)
 deltat(x, \dots)
 }
+\synopsis{
+time(x \dots)
+time.default(x, offset=0, \dots)
+time.ts(x, \dots)
+cycle(x, \dots)
+cycle.ts(x, \dots)
+cycle.default(x, \dots)
+frequency(x, \dots)
+frequency.default(x, \dots)
+deltat(x, \dots)
+deltat.default(x, \dots)
+}
 \alias{time}
 \alias{cycle}
 \alias{frequency}

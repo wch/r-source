@@ -10,15 +10,15 @@
   Fortran subroutine is available.
 }
 \usage{
-dyn.load(libname, local = TRUE, now = TRUE)
-dyn.unload(libname)
+dyn.load(x, local = TRUE, now = TRUE)
+dyn.unload(x)
 
 is.loaded(symbol)
 symbol.C(name)
 symbol.For(name)
 }
 \arguments{
-  \item{libname}{a character string giving the pathname to a DLL.}
+  \item{x}{a character string giving the pathname to a DLL.}
   \item{local}{a logical value controlling whether the symbols in the
     DLL are stored in their own local table and not shared across DLLs,
     or added to the global symbol table.  Whether this has any effect is

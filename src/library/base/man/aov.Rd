@@ -1,7 +1,8 @@
 \name{aov}
 \title{Fit an Analysis of Variance Model}
 \usage{
-aov(formula, data = NULL, projections = FALSE, contrasts = NULL, \dots)
+aov(formula, data = NULL, projections = FALSE, qr = TRUE,
+    contrasts = NULL, \dots)
 se.aov(object, n, type = "means") 
 }
 \alias{aov}
@@ -17,6 +18,7 @@ se.aov(object, n, type = "means")
     formula will be found. If missing, the variables are searched for in
     the standard way.}
   \item{projections}{Logical flag: should the projections be returned?}
+  \item{qr}{Logical flag: should the QR decomposition be returned?}
   \item{contrasts}{A list of contrasts to be used for some of the factors
     in the formula. These are not used for any \code{Error} term, and
     supplying contrasts for factors only in the \code{Error} term will give

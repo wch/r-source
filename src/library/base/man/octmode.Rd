@@ -10,7 +10,7 @@
 \usage{
 as.character.octmode(x)
 format.octmode(x)
-print.octmode(x)
+print.octmode(x, \dots)
 }
 \arguments{
   \item{x}{An object inheriting from class \code{"octmode"}.}

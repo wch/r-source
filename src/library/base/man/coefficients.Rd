@@ -1,8 +1,8 @@
 \name{coefficients}
 \title{Extract Model Coefficients}
 \usage{
-coef(x, \dots)
-coefficients(x, \dots)
+coef(object, \dots)
+coefficients(object, \dots)
 }
 \alias{coef}
 \alias{coefficients}
@@ -12,12 +12,12 @@ coefficients(x, \dots)
 \alias{coef.aov}
 \alias{coef.listof}
 \arguments{
-  \item{x}{an object for which the extraction of model coefficients is
+  \item{object}{an object for which the extraction of model coefficients is
     meaningful.}
   \item{\dots}{other arguments.}
 }
 \value{
-  Coefficients extracted from the model object \code{x}.
+  Coefficients extracted from the model object \code{object}.
 }
 \description{
   \code{coef} is a generic function which extracts model coefficients
@@ -26,8 +26,8 @@ coefficients(x, \dots)
 }
 \details{
   All object classes which are returned by model fitting functions
-  should provide a \code{coef} method.  (Note that the method is \code{coef} and
-  not \code{coefficients}.)
+  should provide a \code{coef} method.  (Note that the method is
+  \code{coef} and not \code{coefficients}.)
 }
 \seealso{
   \code{\link{fitted.values}} and \code{\link{residuals}} for related methods;

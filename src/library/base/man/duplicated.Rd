@@ -1,11 +1,13 @@
 \name{duplicated}
 \title{Determine Duplicate Elements}
 \usage{
-duplicated(x)
+duplicated(x, incomparables = FALSE)
 }
 \alias{duplicated}
 \arguments{
   \item{x}{an atomic vector}
+  \item{incomparables}For S compatibility. Other values are not yet
+  implemented in \R.}
 }
 \description{
   Determines which elements of a vector are duplicates

@@ -45,7 +45,7 @@ uniroot <- function(f, interval, lower=min(interval), upper=max(interval),
          iter=iter, estim.prec= val[3])
 }
 
-deriv <- function(x, ...) UseMethod("deriv")
+deriv <- function(expr, ...) UseMethod("deriv")
 
 deriv.formula <- function(expr, namevec, function.arg=NULL, tag=".expr") {
     if((le <- length(expr)) > 1)

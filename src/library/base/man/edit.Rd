@@ -8,6 +8,15 @@ pico(name = NULL, file = "")
 xemacs(name = NULL, file = "")
 xedit(name = NULL, file = "")
 }
+\synopsis{
+edit(name, \dots) 
+edit.default(name = NULL, file = "", editor = getOption("editor"))
+vi(name = NULL, file = "")
+emacs(name = NULL, file = "")
+pico(name = NULL, file = "")
+xemacs(name = NULL, file = "")
+xedit(name = NULL, file = "")
+}
 \alias{edit}
 \alias{edit.default}
 \alias{vi}

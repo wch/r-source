@@ -2,14 +2,14 @@
 \title{Update and Re-fit a Model Call}
 \usage{
 update(object, \dots)
-update.default(object, formula, \dots, evaluate = TRUE)
+update.default(object, formula., \dots, evaluate = TRUE)
 }
 \alias{update}
 \alias{update.default}
 \arguments{
  \item{object}{An existing fit from a model function such as \code{lm},
    \code{glm} and many others.}
- \item{formula}{Changes to the formula -- see \code{update.formula} for
+ \item{formula.}{Changes to the formula -- see \code{update.formula} for
    details.}
  \item{\dots}{Additional arguments to the call, or arguments with
    changed values. Use \code{name=NULL} to remove the argument \code{name}.}

@@ -65,7 +65,7 @@ codes.factor <- function(x)
 
 codes.ordered <- .Alias(as.integer)
 
-"codes<-" <- function(x, value)
+"codes<-" <- function(x, value, ...)
 {
     if ( length(value) == 1 )
 	value <- rep(value, length(x))
@@ -160,7 +160,7 @@ ordered <- function(x, ...) factor(x, ..., ordered=TRUE)
 is.ordered <- function(x) inherits(x, "ordered")
 as.ordered <- function(x) if(is.ordered(x)) x else ordered(x)
 
-print.ordered <- function (x, quote=FALSE)
+print.ordered <- function (x, quote=FALSE, ...)
 {
     if(length(x) <= 0)
 	cat("ordered(0)\n")

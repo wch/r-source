@@ -4,6 +4,10 @@
 order(\dots)
 sort.list(x, partial)
 }
+\synopsis{
+order(\dots, na.last = TRUE)
+sort.list(x, partial, na.last = TRUE)
+}
 \alias{order}
 \alias{sort.list}
 \arguments{
@@ -26,7 +30,8 @@ are used to break the tie (see the first example).
 
 \code{\link{NA}} values are treated as greater than any other values
 so that permutations returned by \code{order} move \code{NA}
-values to the top end of the array.
+values to the top end of the array.  Other options provided by S are not
+(yet) implemented in \R.
 
 \code{partial} is supplied for compatibility with S, but the sorting
 is always complete.

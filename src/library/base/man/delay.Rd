@@ -1,11 +1,11 @@
 \name{delay}
 \title{Delay Evaluation}
 \usage{
-delay(expr, env=.GlobalEnv)
+delay(x, env=.GlobalEnv)
 }
 \alias{delay}
 \arguments{
-\item{expr}{an expression.}
+\item{x}{an expression.}
 \item{env}{an evaluation environment}
 }
 \description{

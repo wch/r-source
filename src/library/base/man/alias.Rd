@@ -6,7 +6,8 @@
 \usage{
 alias(object, \dots)
 alias.formula(object, data, \dots)
-alias.lm(object, complete = TRUE, partial = FALSE, partial.pattern = FALSE)
+alias.lm(object, complete = TRUE, partial = FALSE,
+         partial.pattern = FALSE, \dots)
 }
 \alias{alias}
 \alias{alias.formula}

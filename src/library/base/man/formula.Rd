@@ -2,13 +2,9 @@
 \title{Model Formulae}
 \usage{
 y ~ model
-formula(object)
-formula.default(anything)
-formula.formula(formula.obj)
-formula.terms(terms.obj)
-formula.data.frame(df)
+formula(x, \dots)
 as.formula(object)
-I(name)
+I(x)
 }
 \alias{~}
 \alias{I}

@@ -1,11 +1,17 @@
 \name{window}
 \title{Time Windows}
 \usage{
-window(x, ...)
+window(x, \dots)
 window.default(x, start = NULL, end = NULL,
-               frequency = NULL, deltat = NULL, extend = FALSE)
+               frequency = NULL, deltat = NULL, extend = FALSE, \dots)
 window.ts(x, start = NULL, end = NULL,
-          frequency = NULL, deltat = NULL, extend = FALSE)
+          frequency = NULL, deltat = NULL, extend = FALSE, \dots)
+}
+\synopsis{
+window(x, \dots)
+window.default(x, start = NULL, end = NULL,
+               frequency = NULL, deltat = NULL, extend = FALSE, \dots)
+window.ts(x, \dots)
 }
 \alias{window}
 \alias{window.default}

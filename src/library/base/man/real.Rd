@@ -5,7 +5,7 @@
 \alias{is.real}
 \usage{
 real(length = 0)
-as.real(x)
+as.real(x, \dots)
 is.real(x)
 }
 \description{

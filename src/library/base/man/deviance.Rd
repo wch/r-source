@@ -9,14 +9,14 @@
   Returns the deviance of a fitted model object.
 }
 \usage{
-deviance(x, \dots)
-deviance.lm (x, \dots)
-deviance.glm(x, \dots)
-deviance.mlm(x, \dots)
-deviance.default(x, \dots)
+deviance(object, \dots)
+deviance.lm (object, \dots)
+deviance.glm(object, \dots)
+deviance.mlm(object, \dots)
+deviance.default(object, \dots)
 }
 \arguments{
-  \item{x}{an object for which the deviance is desired.}
+  \item{object}{an object for which the deviance is desired.}
   \item{\dots}{additional optional argument.}
 }
 \details{
@@ -27,7 +27,7 @@ deviance.default(x, \dots)
   There is no default method for this function.
 }
 \value{
-  The value of the deviance extracted from the object \code{x}.
+  The value of the deviance extracted from the object \code{object}.
 }
 \seealso{
   \code{\link{df.residual}},

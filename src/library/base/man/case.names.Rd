@@ -1,11 +1,11 @@
 \name{case/variable.names}
 \title{Case and Variable Names of Fitted Models}
 \usage{
-case.names(obj, \dots)
-case.names.lm(obj, full = FALSE)
+case.names(object, \dots)
+case.names.lm(object, full = FALSE)
 
-variable.names(obj, \dots)
-variable.names.lm(obj, full = FALSE)
+variable.names(object, \dots)
+variable.names.lm(object, full = FALSE)
 }
 \alias{case.names}
 \alias{case.names.lm}
@@ -14,7 +14,7 @@ variable.names.lm(obj, full = FALSE)
 \alias{variable.names.lm}
 \alias{variable.names.default}
 \arguments{
- \item{obj}{an \R object, typically a fitted model.}
+ \item{object}{an \R object, typically a fitted model.}
  \item{full}{logical; if \code{TRUE}, all names (including zero
    weights,..) are returned.}
 }

@@ -4,7 +4,7 @@
 split.screen(figs, screen = <<see below>>, erase = TRUE)
 screen(n = <<see below>>, new = TRUE)
 erase.screen(n = <<see below>>)
-close.screen(n = <<see below>>, all = TRUE)
+close.screen(n = <<see below>>, all.screens = TRUE)
 }
 \alias{screen}
 \alias{split.screen}
@@ -20,8 +20,8 @@ close.screen(n = <<see below>>, all = TRUE)
     (\code{close.screen}).}
   \item{new}{A logical value indicating whether the screen should be
     erased as part of the preparation for drawing in the screen.}
-  \item{all}{A logical value indicating whether all of the screens should
-    be closed.}
+  \item{all.screens}{A logical value indicating whether all of the
+    screens should be closed.}
 }
 \description{
   \code{split.screen} defines a number of regions within the current

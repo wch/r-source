@@ -3,14 +3,14 @@
 \usage{
 complex(length.out = 0, real = numeric(), imaginary = numeric(),
         modulus = 1, argument = 0)
-as.complex(z)
-is.complex(z)
+as.complex(x, \dots)
+is.complex(x)
 
-Re(z)
-Im(z)
-Mod(z)
-Arg(z)
-Conj(z)
+Re(x)
+Im(x)
+Mod(x)
+Arg(x)
+Conj(x)
 }
 \alias{complex}
 \alias{as.complex}
@@ -23,11 +23,22 @@ Conj(z)
 \alias{Conj}
 \description{
   These are basic functions which support complex arithmetic in R.
-  Complex vectors can be created with \code{complex}.  The vector can be
-  specified either by giving its length, its real and imaginary parts, or
-  modulus and argument.
+}
+\arguments{
+  \item{length.out}{numeric. Desired length of the output vector, inputs
+  being recycled as needed.}
+  \item{real}{numeric vector.}
+  \item{imaginary}{numeric vector.}
+  \item{modulus}{numeric vector.}
+  \item{argumetn}{numeric vector.}
+ \item{x}{an object, probably of mode \code{complex}.}
 }
 \details{
+  Complex vectors can be created with \code{complex}.  The vector can be
+  specified either by giving its length, its real and imaginary parts, or
+  modulus and argument. (Giving just the length generates a vector of
+  complex zeroes.)
+
   Note that \code{is.complex} and \code{is.numeric} are never both \code{TRUE}.
 
   The functions \code{Re}, \code{Im}, \code{Mod}, \code{Arg} and

@@ -33,7 +33,7 @@ coplot <-
              xlab = c(x.name, paste("Given :", a.name)),
              ylab = c(y.name, paste("Given :", b.name)),
              subscripts = FALSE,
-             xlim, ylim, number = 6, overlap = 0.5, ...)
+             number = 6, overlap = 0.5, xlim, ylim, ...)
 {
     deparen <- function(expr) {
 	while (is.language(expr) && !is.name(expr) && deparse(expr[[1]])== "(")

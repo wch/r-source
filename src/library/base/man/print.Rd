@@ -3,8 +3,8 @@
 \usage{
 print(x, \dots)
 
-print.factor(x, quote = FALSE)
-print.ordered(x, quote = FALSE)
+print.factor(x, quote = FALSE, \dots)
+print.ordered(x, quote = FALSE, \dots)
 }
 \alias{print}
 \alias{print.factor}

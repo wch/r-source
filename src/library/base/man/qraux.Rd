@@ -1,15 +1,15 @@
 \name{QR.Auxiliaries}
 \title{Reconstruct the Q, R, or X Matrices from a QR Object}
 \usage{
-qr.X(qrstr, complete = FALSE, ncol =)
-qr.Q(qrstr, complete = FALSE, Dvec = 1)
-qr.R(qrstr, complete = FALSE)
+qr.X(qr, complete = FALSE, ncol =)
+qr.Q(qr, complete = FALSE, Dvec = 1)
+qr.R(qr, complete = FALSE)
 }
 \alias{qr.X}
 \alias{qr.Q}
 \alias{qr.R}
 \arguments{
-  \item{qrstr}{object representing a QR decomposition.  This will
+  \item{qr}{object representing a QR decomposition.  This will
     typically have come from a previous call to \code{\link{qr}} or
     \code{\link{lsfit}}.}
   \item{complete}{logical expression of length 1.  Indicates whether an
@@ -17,7 +17,7 @@ qr.R(qrstr, complete = FALSE)
     \eqn{\bold{X}} matrices is to be made, or whether the \eqn{\bold{R}}
     matrix is to be completed  by binding zero-value rows beneath the
     square upper triangle.}
-  \item{ncol}{integer in the range \code{1:nrow(qrstr$qr)}.  The number
+  \item{ncol}{integer in the range \code{1:nrow(qr$qr)}.  The number
     of columns to be in the reconstructed \eqn{\bold{X}}.  The default
     when \code{complete} is \code{FALSE} is the original \eqn{\bold{X}}
     from which the qr object was constructed.  The default when
@@ -40,7 +40,7 @@ qr.R(qrstr, complete = FALSE)
   (unitary) completion of \code{X} are returned.
 
   \code{qr.Q} returns \bold{Q}, the order-nrow(X) orthogonal (unitary)
-  transformation represented by qrstr.  If \code{complete} is
+  transformation represented by \code{qr}.  If \code{complete} is
   \code{TRUE}, \bold{Q} has \code{nrow(X)} columns.  If \code{complete}
   is \code{FALSE}, \bold{Q} has \code{ncol(X)} columns.  When
   \code{Dvec} is specified, each column of \bold{Q} is multiplied by the

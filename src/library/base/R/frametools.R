@@ -1,45 +1,45 @@
 subset.data.frame <-
-    function (dfr, subset, select)
+    function (x, subset, select, ...)
 {
     if(missing(subset))
 	r <- TRUE
     else {
 	e <- substitute(subset)
-	r <- eval(e, dfr, sys.frame(sys.parent()))
+	r <- eval(e, x, sys.frame(sys.parent()))
 	r <- r & !is.na(r)
     }
     if(missing(select))
 	vars <- TRUE
     else {
-	nl <- as.list(1:ncol(dfr))
-	names(nl) <- names(dfr)
+	nl <- as.list(1:ncol(x))
+	names(nl) <- names(x)
 	vars <- eval(substitute(select),nl, sys.frame(sys.parent()))
     }
-    dfr[r,vars,drop=FALSE]
+    x[r,vars,drop=FALSE]
 }
 
 subset<-
-    function(x,...)
+    function(x, ...)
     UseMethod("subset")
 
 subset.default <-
-    function(x,subset)
+    function(x, subset, ...)
     x[subset & !is.na(subset)]
 
 transform.data.frame <-
-    function (dfr, ...)
+    function (x, ...)
 {
-    e <- eval(substitute(list(...)), dfr, sys.frame(sys.parent()))
+    e <- eval(substitute(list(...)), x, sys.frame(sys.parent()))
     tags <- names(e)
-    inx <- match(tags, names(dfr))
+    inx <- match(tags, names(x))
     matched <- !is.na(inx)
     if (any(matched)) {
-	dfr[inx[matched]] <- e[matched]
-	dfr <- data.frame(dfr)
+	x[inx[matched]] <- e[matched]
+	x <- data.frame(x)
     }
     if (!all(matched))
-	data.frame(dfr, e[!matched])
-    else dfr
+	data.frame(x, e[!matched])
+    else x
 }
 
 transform <-
@@ -54,7 +54,7 @@ transform.default <-
     transform.data.frame(data.frame(x),...)
 
 stack.data.frame <-
-    function(x, select)
+    function(x, select, ...)
 {
     if (!missing(select)) {
 	nl <- as.list(1:ncol(x))
@@ -81,7 +81,7 @@ stack.default <-
 }
 
 unstack.data.frame <-
-    function(x, form = formula(x))
+    function(x, form = formula(x), ...)
 {
     form <- as.formula(form)
     if (length(form) < 3)
@@ -97,7 +97,7 @@ unstack <-
     UseMethod("unstack")
 
 unstack.default <-
-    function(x, form)
+    function(x, form, ...)
 {
     x <- as.list(x)
     form <- as.formula(form)

@@ -1,7 +1,7 @@
 \name{kronecker}
 \title{Kronecker Product of Arrays}
 \usage{
-kronecker(X, Y, FUN = "*", \dots)
+kronecker(X, Y, FUN = "*", make.dimnames = FALSE, \dots)
 X \%x\% Y
 }
 \alias{kronecker}
@@ -11,13 +11,13 @@ X \%x\% Y
   \item{X}{vector or array.}
   \item{Y}{vector or array.}
   \item{FUN}{a function, possibly specified as character (string).}
+  \item{make.dimnames}{logical. Should dimnames be created for the
+    returned array?}
   \item{\dots}{optional arguments to be passed to \code{FUN}.}
 }
 
 \description{
-  Computes the generalised kronecker product of two arrays,
-  \code{X} and \code{Y}.  \code{kronecker(X, Y)} returns an array
-  \code{A} with dimensions \code{dim(X) * dim(Y)}.
+  Computes the generalised kronecker product of two arrays.
 }
 \details{
   If \code{X} and \code{Y} do not have the same number of dimensions,
@@ -27,6 +27,9 @@ X \%x\% Y
 
   \code{\%x\%} is an \code{\link{.Alias}} for \code{kronecker} (where
   \code{FUN} is hardwired to \code{"*"}).
+}
+\value{
+  An array with dimensions \code{dim(X) * dim(Y)}.
 }
 \references{
   Searle, Shayle R. (1982)

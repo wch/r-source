@@ -1,7 +1,8 @@
 \name{mean}
 \title{Arithmetic Mean}
 \usage{
-mean(x, trim=0, na.rm=FALSE)
+mean(x, \dots)
+mean.default(x, trim = 0, na.rm = FALSE)
 }
 \alias{mean}
 \alias{mean.default}

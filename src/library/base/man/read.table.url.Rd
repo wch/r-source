@@ -5,11 +5,11 @@
 \alias{url.show}
 \title{Read Data and Code from a URL}
 \usage{
-read.table.url(url, method="auto",\dots)
-scan.url(url, method="auto", \dots)
-source.url(url, method="auto", \dots)
+read.table.url(url, method = "auto",\dots)
+scan.url(url, file = tempfile(), method = "auto", \dots)
+source.url(url, file = tempfile(), method = "auto", \dots)
 url.show(url, title = url, file = tempfile(),
-         delete.file = TRUE, \dots)
+         delete.file = TRUE, method = "auto", \dots)
 }
 \arguments{
   \item{url}{The URL to read from}

@@ -1,8 +1,9 @@
 \name{model.frame}
 \title{Extracting the ``Environment'' of a Model Formula}
 \usage{
-model.frame(formula, data, na.action, \dots)
-model.frame.default(formula, data = sys.frame(sys.parent()), na.action,
+model.frame(formula, \dots)
+model.frame.default(formula, data = sys.frame(sys.parent()),
+                    subset = NULL, na.action,
                     drop.unused.levels = FALSE, xlev = NULL, \dots)
 
 Methods for
@@ -19,7 +20,9 @@ Methods for
   \item{data}{\code{data.frame}, list, \code{environment} or object
     coercible to \code{data.frame} containing the variables in
     \code{formula}.}
-  
+
+  \item{subset}{a specification of the rows to be used. Defaults to all rows.}
+
   \item{na.action}{how \code{NA}s are treated. The default is first,
     any \code{na.action} attribute of \code{data}, second
     a \code{na.action} setting of \code{\link{options}}, and third

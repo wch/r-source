@@ -4,6 +4,12 @@
 D(expr, namevec)
 deriv(expr, namevec, function.arg = NULL, tag = ".expr")
 }
+\synopsis{
+D(expr, namevec)
+deriv(expr, ...) 
+deriv.default(expr, namevec, function.arg = NULL, tag = ".expr")
+deriv.formula(expr, namevec, function.arg = NULL, tag = ".expr")
+}
 \alias{D}
 \alias{deriv}
 \alias{deriv.default}

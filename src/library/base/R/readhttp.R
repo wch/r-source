@@ -61,9 +61,9 @@
     return(data)
 }
 "scan.url" <-
-    function (url, file=tempfile(),method="auto", ...)
+    function (url, file=tempfile(), method="auto", ...)
 {
-    if (download.file(url,dest=file,method=method)!=0){
+    if (download.file(url, dest=file, method=method)!=0){
         unlink(file)
         stop("transfer failed")
     }
@@ -72,9 +72,9 @@
     return(data)
 }
 "source.url" <-
-    function (url,file=tempfile(),...)
+    function (url, file=tempfile(), method="auto", ...)
 {
-    if (download.file(url,dest=file)!=0){
+    if (download.file(url, dest=file, method=method)!=0){
         unlink(file)
         stop("transfer failure")
     }
@@ -87,8 +87,8 @@
     unlink(file)
 }
 "url.show" <-
-    function (url,  title = url,
-              delete.file = TRUE, file = tempfile(), method="auto",...)
+    function (url,  title = url, file = tempfile(),
+              delete.file = TRUE, method="auto",...)
 {
     if (download.file(url, dest = file,method=method)!=0)
         stop("transfer failure")

@@ -2,8 +2,9 @@
 \title{Histograms}
 \usage{
 hist(x, \dots)
-hist.default(x, breaks, freq= NULL, probability = !freq,
-     right=TRUE, col = NULL, border = par("fg"),
+hist.default(x, breaks, freq = NULL, probability = !freq,
+     include.lowest = TRUE,
+     right = TRUE, col = NULL, border = par("fg"),
      main = paste("Histogram of" , xname),
      xlim = range(breaks), ylim = NULL,
      xlab = xname, ylab,

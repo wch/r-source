@@ -7,9 +7,19 @@
   Creates or tests for arrays.
 }
 \usage{
-array(x, dim = length(x), dimnames = NULL)
+array(data, dim = length(x), dimnames = NULL)
 as.array(x)
 is.array(x)
+}
+\arguments{
+  \item{data}{a vector giving data to fill the array.}
+  \item{dim}{the dim attribute for the array to be reated, that is a
+    vector of length one or more giving the maximal idices in each dimension.}
+  \item{dimnames}{the names for the dimensions. This is a list with one
+    compoent for each dimension, either NULL or a character vector of
+    the length given by \code{dim} for that dimension.  The list can be
+    names, and the names will be used as names for the dimensions.}
+  \item{x}{an \R object.}
 }
 \value{
   \code{array} returns an array with the extents specified in \code{dim}
@@ -29,8 +39,8 @@ is.array(x)
   or not.
 }
 \seealso{
-  \code{\link{aperm}},
-  \code{\link{matrix}}.
+  \code{\link{aperm}}, \code{\link{matrix}},
+  \code{\link{dim}}, \code{\link{dimnames}}.
 }
 \examples{
 dim(as.array(letters))

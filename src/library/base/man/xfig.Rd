@@ -10,7 +10,7 @@
   \code{xfig} and \code{postscript}.
 }
 \usage{
-xfig(file = "Rplots.fig", \dots)
+xfig(file = "Rplots.fig", onefile = FALSE, \dots)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.  If it is
@@ -18,6 +18,9 @@ xfig(file = "Rplots.fig", \dots)
     \code{command}.  For use with \code{onefile=FALSE} give a
     \code{printf} format such as \code{"Rplot\%d.fig"} (the default in
     that case).}
+  \item{onefile}{logical: if true (the default) allow multiple figures
+    in one file. If false, assume only one page per file and generate a
+    file number containing the page number.}
   \item{\dots}{further options for \code{xfig()}.}
   \item{paper}{the size of paper in the printer.  The choices are
     \code{"A4"}, \code{"Letter"} and \code{"Legal"} (and these can be
@@ -37,9 +40,6 @@ xfig(file = "Rplots.fig", \dots)
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.}
   \item{fg}{the default foreground color to be used.}
-  \item{onefile}{logical: if true (the default) allow multiple figures
-    in one file. If false, assume only one page per file and generate a
-    file number containing the page number.}
   \item{pagecentre}{logical: should the device region be centred on the
     page: defaults to \code{TRUE}.}
 }

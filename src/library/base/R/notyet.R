@@ -3,6 +3,6 @@
 	       "is not implemented yet", sep = ""))
 }
 
-.NotYetUsed <- function(x) {
-    warning(paste("argument `", x, "' is not used (yet)", sep = ""))
+.NotYetUsed <- function(arg) {
+    warning(paste("argument `", arg, "' is not used (yet)", sep = ""))
 }

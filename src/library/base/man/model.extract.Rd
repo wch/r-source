@@ -2,8 +2,8 @@
 \title{Extract Components from a Model Frame}
 \usage{
 model.extract(frame, component)
-model.offset(frame)
-model.response(frame)
+model.offset(x)
+model.response(data, type = "any")
 model.weights(x)
 }
 \alias{model.extract}
@@ -11,9 +11,12 @@ model.weights(x)
 \alias{model.response}
 \alias{model.weights}
 \arguments{
- \item{frame, x}{A model frame}
+ \item{frame, x}{A model frame.}
  \item{component}{The name of a components to extract, such as
-   \code{"weights"}, \code{"subset"}}
+   \code{"weights"}, \code{"subset"}.}
+ \item{type}{One of \code{"any"}, \code{"numeric"}, \code{"double"}.
+   Using the either of latter two coerces the result to have
+   storage mode \code{"double"}.}
 }
 \description{Returns the response, offset, subset, weights or other
   special components of a model frame passed as optional arguments to

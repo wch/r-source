@@ -8,7 +8,7 @@
 aggregate(x, \dots)
 aggregate.default(x, \dots)
 aggregate.data.frame(x, by, FUN, \dots)
-aggregate.ts(x, nfrequency = 1, FUN = sum, ndeltat = 1)
+aggregate.ts(x, nfrequency = 1, FUN = sum, ndeltat = 1, ts.eps)
 }
 \description{
   Splits the data into subsets, computes summary statistics for each,
@@ -26,6 +26,8 @@ aggregate.ts(x, nfrequency = 1, FUN = sum, ndeltat = 1)
   \item{ndeltat}{new fraction of the sampling period between
     successive observations; must be a divisor of the sampling
     interval of \code{x}.}
+  \item{ts.eps}{tolerance used to decide if \code{nfrequency} is a
+    sub-multiple of the original frequency.}
   \item{\dots}{further arguments passed to the method used.}
 }
 \details{

@@ -6,7 +6,7 @@
   \file{DESCRIPTION} or \file{CONTENTS} of a package.
 }
 \usage{
-parse.dcf(desc = NULL, file = "", fields = NULL, versionfix = FALSE)
+parse.dcf(text = NULL, file = "", fields = NULL, versionfix = FALSE)
 }
 \arguments{
  \item{text}{A character vector containing one line of the file in each

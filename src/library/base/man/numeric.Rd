@@ -5,7 +5,7 @@
 \alias{is.numeric}
 \usage{
 numeric(length = 0)
-as.numeric(x)
+as.numeric(x, \dots)
 is.numeric(x)
 }
 \description{

@@ -18,7 +18,7 @@ FALSE
 T; F
 
 logical(length = 0)
-as.logical(x)
+as.logical(x, \dots)
 is.logical(x)
 }
 \details{

@@ -6,10 +6,10 @@
   function to margins of an array.
 }
 \usage{
-apply(x, MARGIN, FUN, \dots)
+apply(X, MARGIN, FUN, \dots)
 }
 \arguments{
-  \item{x}{the array to be used.}
+  \item{X}{the array to be used.}
   \item{MARGIN}{a vector giving the subscripts which the function will
     be applied over.
     \code{1} indicates rows, \code{2} indicates columns,
@@ -21,13 +21,13 @@ apply(x, MARGIN, FUN, \dots)
 }
 \value{
   If each call to \code{FUN} returns a vector of length \code{n}, then
-  \code{apply} returns an array of dimension \code{c(n,dim(x)[MARGIN])}
+  \code{apply} returns an array of dimension \code{c(n, dim(X)[MARGIN])}
   if \code{n > 1}.  If \code{n} equals \code{1}, \code{apply} returns a
   vector if \code{MARGIN} has length 1 and an array of dimension
-  \code{dim(x)[MARGIN]} otherwise.
+  \code{dim(X)[MARGIN]} otherwise.
 
   If the calls to \code{FUN} return vectors of different lengths,
-  \code{apply} returns a list of length \code{dim(x)[MARGIN]}.
+  \code{apply} returns a list of length \code{dim(X)[MARGIN]}.
 }
 \seealso{
   \code{\link{lapply}}, \code{\link{tapply}}, and convenience functions

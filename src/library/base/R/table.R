@@ -1,37 +1,37 @@
 table <- function (..., exclude = c(NA, NaN),
-   dnn = list.names(...), deparse.level = 1) 
+   dnn = list.names(...), deparse.level = 1)
 {
     list.names <- function(...) {
         l <- as.list(substitute(list(...)))[-1]
         nm <- names(l)
-        fixup <- if (is.null(nm)) 
+        fixup <- if (is.null(nm))
             seq(along = l)
         else nm == ""
-        dep <- sapply(l[fixup], function(x) 
+        dep <- sapply(l[fixup], function(x)
 	    switch (deparse.level + 1,
-		"", 
-		if (is.symbol(x)) as.character(x) else "", 
+		"",
+		if (is.symbol(x)) as.character(x) else "",
 		deparse(x)[1]
 	    )
         )
-        if (is.null(nm)) 
+        if (is.null(nm))
             dep
         else {
             nm[fixup] <- dep
             nm
         }
     }
-    
+
     args <- list(...)
     if (length(args) == 0)
 	stop("nothing to tabulate")
     if (length(args) == 1 && is.list(args[[1]])) {
 	args <- args[[1]]
 	if (length(dnn) != length(args))
-	    dnn <- if (!is.null(argn <- names(args))) 
-	         argn 
-	    else 
-                 paste(dnn[1],1:length(args),sep='.') 
+	    dnn <- if (!is.null(argn <- names(args)))
+	         argn
+	    else
+                 paste(dnn[1],1:length(args),sep='.')
     }
     bin <- 0
     lens <- NULL
@@ -68,7 +68,7 @@ print.table <- function(x, digits = getOption("digits"), quote = FALSE,
                   na.print = na.print, ...)
 }
 
-as.data.frame.table <- function(x, row.names = NULL, optional = FALSE)
+as.data.frame.table <- function(x, row.names = NULL, optional = FALSE, ...)
 {
     x <- as.table(x)
     data.frame(do.call("expand.grid", dimnames(x)), Freq = c(x),
@@ -89,7 +89,7 @@ as.table.default <- function(x)
         stop("cannot coerce into a table")
 }
 
-prop.table<-function (x, margin) 
+prop.table<-function (x, margin)
     sweep(x, margin, margin.table(x, margin), "/")
-margin.table<-function (x, margin) 
+margin.table<-function (x, margin)
     apply(x, margin, sum)

@@ -51,19 +51,19 @@ print.xtabs <- function(x, ...)
     invisible(ox)
 }
 
-summary.xtabs <- function(x)
+summary.xtabs <- function(object, ...)
 {
-    if(!inherits(x, "xtabs"))
-	stop("x must inherit from class xtabs")
-    n.cases <- sum(x)
-    if(0 == (n.vars <- length(dim(x))))
-	stop("x must be an array")
+    if(!inherits(object, "xtabs"))
+	stop("object must inherit from class xtabs")
+    n.cases <- sum(object)
+    if(0 == (n.vars <- length(dim(object))))
+	stop("object must be an array")
     m <- vector("list", length = n.vars)
     for(k in 1:n.vars) {
-	m[[k]] <- margin.table(x, k) / n.cases
+	m[[k]] <- margin.table(object, k) / n.cases
     }
     expected <- apply(do.call("expand.grid", m), 1, prod) * n.cases
-    statistic <- sum((c(x) - expected)^2 / expected)
+    statistic <- sum((c(object) - expected)^2 / expected)
     parameter <- prod(sapply(m, length) - 1)
     y <- list(n.vars = n.vars,
 	      n.cases = n.cases,
@@ -71,7 +71,7 @@ summary.xtabs <- function(x)
 	      parameter = parameter,
 	      approx.ok = all(expected >= 5),
 	      p.value = pchisq(statistic, parameter, lower.tail = FALSE),
-	      call = attr(x, "call"))
+	      call = attr(object, "call"))
     class(y) <- "summary.xtabs"
     y
 }

@@ -390,16 +390,16 @@ model.frame.lm <-
 	else formula$model
     }
 
-variable.names.lm <- function(obj, full=FALSE)
+variable.names.lm <- function(object, full=FALSE)
 {
-    if(full)	dimnames(obj$qr$qr)[[2]]
-    else	dimnames(obj$qr$qr)[[2]][1:obj$rank]
+    if(full)	dimnames(object$qr$qr)[[2]]
+    else	dimnames(object$qr$qr)[[2]][1:object$rank]
 }
 
-case.names.lm <- function(obj, full=FALSE)
+case.names.lm <- function(object, full=FALSE)
 {
-    w <- weights(obj)
-    dn <- .Alias(names(obj$residuals))
+    w <- weights(object)
+    dn <- .Alias(names(object$residuals))
     if(full || is.null(w)) dn else dn[w!=0]
 }
 

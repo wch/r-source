@@ -6,7 +6,7 @@
 .Defunct()
 
 %--- oldfun(.)
-category(x, levels, labels, ordered, exclude)
+category(\dots)
 dnchisq(.)
 pnchisq(.)
 qnchisq(.)

@@ -11,7 +11,7 @@
 expression(\dots)
 
 is.expression(x)
-as.expression(x)
+as.expression(x, \dots)
 }
 \arguments{
   \item{\dots}{valid \R expressions.}

@@ -2,7 +2,7 @@
 \title{Default Printing}
 \usage{
 print.default(x, digits = NULL, quote = TRUE, na.print = "NA",
-              print.gap = 1, \dots)
+              print.gap = 1, right = FALSE, \dots)
 print.atomic(x, quote = TRUE, \dots)
 }
 \alias{print.default}
@@ -18,6 +18,8 @@ print.atomic(x, quote = TRUE, \dots)
   \code{\link{NA}} values in printed output.}
 \item{print.gap}{an integer, giving the spacing between adjacent columns
   in printed matrices and arrays.}
+\item{right}{logical, indicating whether or not strings should be
+  right-aligned. The default is left-alignment.}
 \item{\dots}{(further arguments, currently disregarded)}
 }
 \description{

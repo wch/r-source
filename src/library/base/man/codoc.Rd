@@ -2,7 +2,7 @@
 \alias{codoc}
 \title{Check Code/Documentation Consistency}
 \usage{
-codoc(dir, use.positions = TRUE, use.values = FALSE,
+codoc(dir, use.values = FALSE, use.positions = TRUE,
       ignore.generic.functions = FALSE,
       keep.tempfiles = FALSE)
 }
