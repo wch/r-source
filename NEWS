@@ -211,6 +211,9 @@ NEW FEATURES
 	connection its private `ungetc' and so is safer to use to
 	read partial lines.
 
+    o   New function hcl for creating colors for a given hue,
+        chroma and luminance (i.e. perceptual hsv).
+
 
 INTERNATIONALIZATION
 
