@@ -146,8 +146,8 @@ copies of the package.
 
 The @samp{Title} field should give a short description of the package
 and not have any continuation lines.  This information has been
-contained in a separate @file{TITLE} file in older versions of @R{}, please
-use the title field in the @file{DESCRIPTION} file from now on.
+contained in a separate @file{TITLE} file in older versions of @R{},
+please use the title field in the @file{DESCRIPTION} file from now on.
 
 The optional @samp{URL} field may give a list of URL's separated by
 commas or whitespace, for example the homepage of the author or a page
@@ -155,18 +155,18 @@ where additional material describing the software can be found.  These
 URLs are converted to active hyperlinks on CRAN.
 
 The optional @samp{Depends} field gives a comma-separated list of
-package names which this package depends on. The package name may be
+package names which this package depends on.  The package name may be
 optionally followed by comparison operator (currently only @samp{>=} and
-@samp{<=} are supported) and a version number in parentheses. You can
+@samp{<=} are supported) and a version number in parentheses.  You can
 also use the special package name @samp{R} if your package depends on a
-certain version of R. E.g, if the package works only with R version 0.90
-or newer, include @samp{R (>= 0.90)} in the @samp{Depends} field. Future
-versions of R will use this field to autoload required packages, hence
-please do not misuse the @samp{Depends} field for comments on other
-software that might be needed or not using proper syntax. Other
+certain version of R.  E.g, if the package works only with R version
+0.90 or newer, include @samp{R (>= 0.90)} in the @samp{Depends} field.
+Future versions of R will use this field to autoload required packages,
+hence please do not misuse the @samp{Depends} field for comments on
+other software that might be needed or not using proper syntax.  Other
 dependencies should be listed in the @samp{Description} field or a
-separate @samp{README} file.  The @samp{R INSTALL} facility already checks
-if the running version of R is good enough for a package.
+separate @samp{README} file.  The @samp{R INSTALL} facility already
+checks if the running version of R is good enough for a package.
 
 @node Other files, Package subdirectories, The DESCRIPTION file, Package structure
 @subsection Other files
@@ -182,7 +182,6 @@ on your system.
 @node Package subdirectories, Package bundles, Other files, Package structure
 @subsection Package subdirectories
 @cindex Package subdirectories
-
 
 The @file{R} subdirectory contains @R{} code files.  The code files to
 be installed must start with a (lower or upper case) letter and have one
@@ -288,30 +287,32 @@ Description: Functions for kriging and point pattern analysis.
 If your package needs some system-dependent configuration before
 installation you can include a script @file{configure} in your package
 which (if present) is executed by @code{R CMD INSTALL} before any other
-action is performed.  This can be a script created by the @code{autoconf}
-mechanism, but may also be a script written by yourself.  Use this to
-detect if any nonstandard libraries are present such that corresponding
-code in the package can be disabled at install time rather than giving
-error messages when the package is compiled or used.  To summarize, the
-full power of @code{autoconf} is available for your extension package
-(including variable substitution, searching for libraries, etc.).
+action is performed.  This can be a script created by the
+@code{autoconf} mechanism, but may also be a script written by yourself.
+Use this to detect if any nonstandard libraries are present such that
+corresponding code in the package can be disabled at install time rather
+than giving error messages when the package is compiled or used.  To
+summarize, the full power of @code{autoconf} is available for your
+extension package (including variable substitution, searching for
+libraries, etc.).
 
 The script @file{cleanup} is executed as last thing by @code{R CMD
 INSTALL} if present and can be used to clean up the package source tree,
 especially remove files created by @file{configure}.
 
 As an example consider we want to use functionality provided by a (C or
-Fortran) library @code{foo}.  Using @code{autoconf}, we can write a configure
-script which checks for the library, sets variable @code{HAVEFOO} to
-@code{TRUE} if it was found and with @code{FALSE} otherwise, and then
-substitutes this value into output files (by replacing instances of
-@samp{@@HAVEFOO@@} in input files with the value of @code{HAVEFOO}).
-for example, if a function named @code{bar} is to be made available by linking
-against library @code{foo} (i.e., using @option{-lfoo}), one could use
+Fortran) library @code{foo}.  Using @code{autoconf}, we can write a
+configure script which checks for the library, sets variable
+@code{HAVE_FOO} to @code{TRUE} if it was found and with @code{FALSE}
+otherwise, and then substitutes this value into output files (by
+replacing instances of @samp{@@HAVE_FOO@@} in input files with the value
+of @code{HAVE_FOO}).  for example, if a function named @code{bar} is to
+be made available by linking against library @code{foo} (i.e., using
+@option{-lfoo}), one could use
 
 @smallexample
-AC_CHECK_LIB(foo, @var{fun}, HAVEFOO=TRUE, HAVEFOO=FALSE)
-AC_SUBST(HAVEFOO)
+AC_CHECK_LIB(foo, @var{fun}, HAVE_FOO=TRUE, HAVE_FOO=FALSE)
+AC_SUBST(HAVE_FOO)
 ...
 AC_OUTPUT(foo.R)
 @end smallexample
@@ -320,7 +321,7 @@ The definition of the respective R function in @file{foo.R.in} could be
 
 @smallexample
 foo <- function(x) @{
-    if(!@@HAVEFOO@@) stop("Sorry, library `foo' is not available")
+    if(!@@HAVE_FOO@@) stop("Sorry, library `foo' is not available")
     ...
 @end smallexample
 
@@ -337,6 +338,9 @@ foo <- function(x) @{
 @noindent
 if library @code{foo} was not found (with the desired functionality).
 In this case, the above @R{} code effectively disables the function.
+
+One could also use different file fragments for available and missing
+functionality, respectively.
 
 You may wish to bear in mind that the @file{configure} script may well
 not work on Windows systems (this seems normally to be the case for
@@ -372,19 +376,19 @@ specified by setting the environment variables @code{R_NSIZE} and
 @findex R CMD build
 @cindex Package builder
 Using @code{R CMD build}, the @R{} package builder, one can build R
-packages from their sources (for example, for subsequent release).  Prior to
-actually building the package in the common gzipped tar file format, a
-variety of diagnostic checks and cleanups are performed.  In particular,
-it is tested whether the @file{DESCRIPTION} file contains the required
-entries, whether object and data indices exist and can be assumed to be
-up-to-date, whether the documentation sources contain the required name,
-alias, title, description, and keyword information, and whether there
-are any undocumented user level objects.  Run-time checks whether the
-package works correctly should be performed using @code{R CMD check}
-prior to invoking the build procedure.
+packages from their sources (for example, for subsequent release).
+Prior to actually building the package in the common gzipped tar file
+format, a variety of diagnostic checks and cleanups are performed.  In
+particular, it is tested whether the @file{DESCRIPTION} file contains
+the required entries, whether object and data indices exist and can be
+assumed to be up-to-date, whether the documentation sources contain the
+required name, alias, title, description, and keyword information, and
+whether there are any undocumented user level objects.  Run-time checks
+whether the package works correctly should be performed using @code{R
+CMD check} prior to invoking the build procedure.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
-of the @R{} package builder. There is no Windows equivalent.
+of the @R{} package builder.  There is no Windows equivalent.
 
 @node Writing R documentation, System and foreign language interfaces, Creating R packages, Top
 @chapter Writing R documentation
@@ -414,8 +418,8 @@ scripts for packages.
 
 The @R{} distribution contains more than 600 such files which can be
 found in the @file{src/library/@var{pkg}/man} directories of the @R{}
-source tree, where @var{pkg} stands for package @pkg{base} where all
-the standard objects are, and for the standard packages such as @pkg{eda}
+source tree, where @var{pkg} stands for package @pkg{base} where all the
+standard objects are, and for the standard packages such as @pkg{eda}
 and @pkg{mva} which are included in the @R{} distribution.
 
 As an example, let us look at the file
@@ -463,9 +467,10 @@ rle(as.character(z))
 An Rd file consists of three parts.  The header gives basic information
 about the name of the file, the topics documented, a title, a short
 textual description and @R{} usage information for the objects
-documented.  The body gives further information (for example, on the function's
-arguments and return value, as in the above example).  Finally, there is
-a footer with keyword information.  The header and footer are mandatory.
+documented.  The body gives further information (for example, on the
+function's arguments and return value, as in the above example).
+Finally, there is a footer with keyword information.  The header and
+footer are mandatory.
 
 See @uref{http://developer.r-project.org/Rds.html, ``Guidelines for Rd
 files''} for guidelines for writing documentation in Rd format which
@@ -640,8 +645,8 @@ In addition, it should not use any system-specific features or require
 special facilities (such as Internet access or write permission to
 specific directories).
 
-Data needed for making the examples executable can be obtained by
-random number generation (for example, @code{x <- rnorm(100)}), or by using
+Data needed for making the examples executable can be obtained by random
+number generation (for example, @code{x <- rnorm(100)}), or by using
 standard data sets loadable via @code{data()} (see @code{data()} for
 info).
 
@@ -726,7 +731,7 @@ initiated via @code{prompt(bar)}.
 @section Sectioning
 
 To begin a new paragraph or leave a blank line in an example, just
-insert an empty line (as in (La)@TeX{}). To break a line, use
+insert an empty line (as in (La)@TeX{}).  To break a line, use
 @code{\cr}.
 
 In addition to the predefined sections (such as @code{\description@{@}},
@@ -794,18 +799,17 @@ escaped (by a backslash) inside @code{\code}.
 The @code{\itemize} and @code{\enumerate} commands take a single
 argument, within which there may be one or more @code{\item} commands.
 The text following each @code{\item} is formatted as one or more
-paragraphs, suitably indented and with the first paragraph marked with
-a bullet point (@code{\itemize}) or a number (@code{\enumerate}).
+paragraphs, suitably indented and with the first paragraph marked with a
+bullet point (@code{\itemize}) or a number (@code{\enumerate}).
 
 @code{\itemize} and @code{\enumerate} commands may be nested.
 
 @findex \describe
 The @code{\describe} command is similar to @code{\itemize} but allows
-initial labels to be specified. The @code{\item}s take two arguments,
+initial labels to be specified.  The @code{\item}s take two arguments,
 the label and the body of the item, in exactly the same way as argument
-and value @code{\item}s.
-@code{\describe} commands are mapped to @code{<DL>} lists in @HTML{} and
-@code{\description} lists in La@TeX{}.
+and value @code{\item}s.  @code{\describe} commands are mapped to
+@code{<DL>} lists in @HTML{} and @code{\description} lists in La@TeX{}.
 
 @findex \tabular
 The @code{\tabular} command takes two arguments.  The first gives for
@@ -840,7 +844,8 @@ The markup @code{\link@{@var{foo}@}} (usually in the combination
 page for object @var{foo}.  One main usage of @code{\link} is in the
 @code{\seealso} section of the help page, @pxref{Rd format}.  (This only
 affects the creation of hyperlinks, for example in the @HTML{} pages
-used by @code{help.start()} and the PDF version of the reference manual.)
+used by @code{help.start()} and the PDF version of the reference
+manual.)
 
 There are optional arguments specified as
 @code{\link[@var{pkg}]@{@var{foo}@}} and
@@ -855,12 +860,12 @@ There are optional arguments specified as
 
 Mathematical formulae should be set beautifully for printed
 documentation yet we still want something useful for text and @HTML{}
-online help.
-To this end, the two commands @code{\eqn@{@var{latex}@}@{@var{ascii}@}}
-and @code{\deqn@{@var{latex}@}@{@var{ascii}@}} are used.  Where
-@code{\eqn} is used for ``inline'' formula (corresponding to
-@TeX{}'s @code{$@dots{}$}, @code{\deqn} gives ``displayed
-equations'' (as in La@TeX{}'s @code{displaymath} environment, or @TeX{}'s
+online help.  To this end, the two commands
+@code{\eqn@{@var{latex}@}@{@var{ascii}@}} and
+@code{\deqn@{@var{latex}@}@{@var{ascii}@}} are used.  Where @code{\eqn}
+is used for ``inline'' formula (corresponding to @TeX{}'s
+@code{$@dots{}$}, @code{\deqn} gives ``displayed equations'' (as in
+La@TeX{}'s @code{displaymath} environment, or @TeX{}'s
 @code{$$@dots{}$$}).
 
 Both commands can also be used as @code{\eqn@{@var{latexascii}@}} (only
@@ -936,9 +941,10 @@ backslash.  (Note that @code{\cr} is used for generating line breaks.)
 The ``comment'' and ``control'' characters @samp{%} and @samp{\}
 @emph{always} need to be escaped.  Inside the verbatim-like commands
 (@code{\code} and @code{\examples}), no other@footnote{This is not quite
-true. Unpaired braces will give problems and should be escaped. See the
-examples section in the file @file{Paren.Rd} for an example.} characters
-are special. Note that @code{\file} is @strong{not} a verbatim-like command.
+true.  Unpaired braces will give problems and should be escaped.  See
+the examples section in the file @file{Paren.Rd} for an example.}
+characters are special.  Note that @code{\file} is @strong{not} a
+verbatim-like command.
 
 In ``regular'' text (no verbatim, no @code{\eqn}, @dots{}), you
 currently must escape most La@TeX{} special characters, i.e., besides
@@ -1022,7 +1028,7 @@ porting a package orginally written for the @Sl{} system to @R{}.
 
 The exact usage and a detailed list of available options for each of the
 above commands can be obtained by running @code{R CMD command --help},
-e.g., @code{R CMD Rdconv --help}. All available commands can be listed
+e.g., @code{R CMD Rdconv --help}.  All available commands can be listed
 using @code{R --help}.
 
 
@@ -1087,7 +1093,8 @@ There can be up to 65 further arguments giving @R{} objects to be passed
 to compiled code.  Normally these are copied before being passed in, and
 copied again to an @R{} list object when the compiled code returns.  If
 the arguments are given names, these are used as names for the
-components in the returned list object (but not passed to the compiled code).
+components in the returned list object (but not passed to the compiled
+code).
 
 The following table gives the mapping between the modes of @R{} vectors
 and the types of arguments to a C function or Fortran subroutine.
@@ -1130,7 +1137,8 @@ generates an error.  If it is true, these values are passed unchecked.
 
 Argument @code{DUP} can be used to suppress copying.  It is dangerous:
 see the on-line help for arguments against its use.  It is not possible
-to pass numeric vectors as @code{float *} or @code{REAL} if @code{DUP=TRUE}.
+to pass numeric vectors as @code{float *} or @code{REAL} if
+@code{DUP=TRUE}.
 
 Finally, argument @code{PACKAGE} confines the search for the symbol name
 to a specific shared library (or use @code{"base"} for code compiled
@@ -1256,7 +1264,7 @@ If an add-on package @var{pkg} contains C or Fortran code in its
 @file{src} subdirectory, @code{R CMD INSTALL} creates a shared library
 (for loading into @R{} in the @code{.First.lib} function of the package)
 either automatically using the above @code{R CMD SHLIB} mechanism, or
-using @code{make} if a @file{src} contains a @file{Makefile}. In both
+using @code{make} if a @file{src} contains a @file{Makefile}.  In both
 cases, if file @file{Makevars} exists it is read first when invoking
 @code{make}.  If a @file{Makefile} is really needed or provided, it
 needs to ensure that the shared library created is linked against all
@@ -1382,8 +1390,9 @@ structures, then that can be done using the @code{.Call} and
 @code{.External} function.  The syntax for the calling function in @R{}
 in each case is similar to that of @code{.C}, but the two functions have
 rather different C interfaces.  Generally the @code{.Call} interface
-(which is modelled on the interface of the same name in @Sl{} version 4) is
-a little simpler to use, but @code{.External} is a little more general.
+(which is modelled on the interface of the same name in @Sl{} version 4)
+is a little simpler to use, but @code{.External} is a little more
+general.
 @findex .Call
 @findex .External
 
@@ -1437,10 +1446,10 @@ look at other alternatives.  First, consider working in interpreted @R{}
 code; if this is fast enough, this is normally the best option.  You
 should also see if using @code{.C} is enough.  If the task to be
 performed in C is simple enough requiring no call to @R{}, @code{.C}
-suffices.  The new interfaces are recent additions to @Sl{} and @R{}, and a
-great deal of useful code has been written using just @code{.C} before
-they were available.  The @code{.Call} and @code{.External} interfaces
-allow much more control, but they also impose much greater
+suffices.  The new interfaces are recent additions to @Sl{} and @R{},
+and a great deal of useful code has been written using just @code{.C}
+before they were available.  The @code{.Call} and @code{.External}
+interfaces allow much more control, but they also impose much greater
 responsibilities so need to be used with care.
 
 There are two approaches that can be taken to handling @R{} objects from
@@ -1452,10 +1461,10 @@ the header file @file{Rinternals.h} in the directory
 installation.
 
 A more recent approach is to use @R{} versions of the macros and
-functions defined for the @Sl{} version 4 interface @code{.Call}, which are
-defined in the header file @file{Rdefines.h}.
-This is a somewhat simpler approach, and is certainly to be preferred if
-the code might be shared with @Sl{} at any stage.
+functions defined for the @Sl{} version 4 interface @code{.Call}, which
+are defined in the header file @file{Rdefines.h}.  This is a somewhat
+simpler approach, and is certainly to be preferred if the code might be
+shared with @Sl{} at any stage.
 
 A substantial amount of @R{} is implemented using the functions and
 macros described here, so the @R{} source code provides a rich source of
@@ -1601,7 +1610,7 @@ The usual @R{} object modes are given in the table.
 @quotation
 @multitable {SEXPTYPE} {numeric with storage mode integer integer}
 
-@item @strong{SEXPTYPE} @tab @strong{@R{} equivalent / explanation}
+@item SEXPTYPE @tab @R{} equivalent
 
 @item @code{REALSXP}  @tab numeric with storage mode @code{double}
 @item @code{INTSXP}   @tab integer
@@ -1859,7 +1868,6 @@ and enables us to say
   double g;
   g = REAL(getListElement(a, "g"))[0];
 @end example
-@noindent
 
 @node Finding and setting variables,  , Handling lists, Handling R objects in C
 @subsection Finding and setting variables
@@ -1964,8 +1972,8 @@ SEXP convolve2(SEXP a, SEXP b)
 @}
 @end example
 
-Note that unlike the macros in @Sl{} version 4, the @R{} versions of these
-macros do check that coercion can be done and raise an error if it
+Note that unlike the macros in @Sl{} version 4, the @R{} versions of
+these macros do check that coercion can be done and raise an error if it
 fails.  They will raise warnings if missing values are introduced by
 coercion.  Although we illustrate doing the coercion in the C code here,
 it often is simpler to do the necessary coercions in the @R{} code.
@@ -2164,10 +2172,9 @@ The constants @code{R_NaN}, @code{R_PosInf}, @code{R_NegInf} and
 @section Evaluating R expressions from C
 @cindex Evaluating R expressions from C
 
-We noted that the @code{call_R} interface could be
-used to evaluate @R{} expressions from C code, but the current
-interfaces are much more convenient to use.  The main function we will
-use is
+We noted that the @code{call_R} interface could be used to evaluate @R{}
+expressions from C code, but the current interfaces are much more
+convenient to use.  The main function we will use is
 
 @example
 SEXP eval(SEXP expr, SEXP rho);
@@ -2709,9 +2716,9 @@ $7 = 5
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
-can be called from C code (and some that can be called from Fortran code).
-Only those documented here are stable enough that they will only be changed
-with considerable notice.
+can be called from C code (and some that can be called from Fortran
+code).  Only those documented here are stable enough that they will only
+be changed with considerable notice.
 
 The recommended procedure to use these is to include the header file
 @file{R.h} in your C code by
@@ -2722,19 +2729,20 @@ The recommended procedure to use these is to include the header file
 
 @noindent
 This will include a number of other header files from the directory
-@file{R_HOME/include/R_ext}, and there are other header files there
-that can be included too, but many of the features they contain should
-be regarded as undocumented and unstable.
+@file{R_HOME/include/R_ext}, and there are other header files there that
+can be included too, but many of the features they contain should be
+regarded as undocumented and unstable.
 
 An alternative is to include the header file @file{S.h}, which may be
 useful when porting code from @Sl{}.  This includes rather less than
 @file{R.h}, and has some compatibility definitions (for example the
 @code{S_complex} type from @Sl{}).
 
-NOTE: Because @R{} re-maps many of its external names to avoid clashes
-with user code, it is @emph{essential} to include the appropriate header
-files when using these entry points.
-
+@quotation
+@strong{NOTE:} Because @R{} re-maps many of its external names to avoid
+clashes with user code, it is @emph{essential} to include the
+appropriate header files when using these entry points.
+@end quotation
 
 @node Memory allocation, Error handling, The R API, The R API
 @section Memory allocation
@@ -2757,17 +2765,16 @@ has full control (and responsibility).
 @findex vmaxget
 @findex vmaxset
 
-
 Here @R{} will reclaim the memory at the end of the call to @code{.C}.
 Use
 
 @example
-char* R_alloc(long n, int size)
+char* R_alloc(long @var{n}, int @var{size})
 @end example
 
 @noindent
-which allocates @code{n} units of @code{size} bytes each. A typical
-usage (from package @pkg{mva}) is
+which allocates @var{n} units of @var{size} bytes each.  A typical usage
+(from package @pkg{mva}) is
 
 @example
 x = (int *) R_alloc(nrows(merge)+2, sizeof(int));
@@ -2777,12 +2784,12 @@ There is a similar call, @code{S_alloc}, for compatibility with @Sl{}
 which differs only in zeroing the memory allocated, and
 
 @example
-S_realloc(char *p, long new, long old, int size)
+S_realloc(char *@var{p}, long @var{new}, long @var{old}, int @var{size})
 @end example
 
 @noindent
-which changes the allocation size from @code{old} to @code{new} units,
-and zeroes the additional units.
+which changes the allocation size from @var{old} to @var{new} units, and
+zeroes the additional units.
 
 This memory is taken from the heap (the region whose size is set by
 @code{--vsize}), and released at the end of the @code{.C}, @code{.Call}
@@ -2805,9 +2812,9 @@ workspace.
 The interface functions are
 
 @example
-@var{type}* Calloc(size_t n, @var{type})
-@var{type}* Realloc(@var{any} *p, size_t n, @var{type})
-void  Free(@var{any} *p)
+@var{type}* Calloc(size_t @var{n}, @var{type})
+@var{type}* Realloc(@var{any} *@var{p}, size_t @var{n}, @var{type})
+void Free(@var{any} *@var{p})
 @end example
 
 @noindent
@@ -2825,8 +2832,8 @@ The basic error handling routines are the equivalents of @code{stop} and
 @code{warning} in @R{} code, and use the same interface.
 
 @example
-void error(const char * format, ...);
-void warning(const char * format, ...);
+void error(const char * @var{format}, ...);
+void warning(const char * @var{format}, ...);
 @end example
 
 @noindent
@@ -2900,9 +2907,8 @@ select the kind of RNG or set the seed except by evaluating calls to the
 
 The C code behind @R{}'s @code{r@var{xxx}} functions can be accessed by
 including the header file @file{R_ext/Mathlib.h}; @xref{Distribution
-functions}. Those calls generate a single variate and should also be
+functions}.  Those calls generate a single variate and should also be
 enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
-
 
 
 @node Missing and IEEE values, Printing, Random numbers, The R API
@@ -2924,9 +2930,9 @@ set of functions is provided to test for @code{NA}, @code{Inf},
 functions are accessed via macros:
 
 @example
-ISNA(x)        @r{True for R's @code{NA} only}
-ISNAN(x)       @r{True for R's @code{NA} and IEEE @code{NaN}}
-R_FINITE(x)    @r{False for @code{Inf}, @code{-Inf}, @code{NA}, @code{NaN}}
+ISNA(@var{x})        @r{True for R's @code{NA} only}
+ISNAN(@var{x})       @r{True for R's @code{NA} and IEEE @code{NaN}}
+R_FINITE(@var{x})    @r{False for @code{Inf}, @code{-Inf}, @code{NA}, @code{NaN}}
 @end example
 
 @noindent
@@ -2963,7 +2969,7 @@ lines (including the @code{"\n"}) before returning to @R{}.
 
 The function @code{REprintf} is similar but writes on the error stream
 (@code{stderr}) which may or may not be different from the standard
-output stream. Functions @code{Rvprintf} and @code{REvprintf} are the
+output stream.  Functions @code{Rvprintf} and @code{REvprintf} are the
 analogues using the @code{vprintf} interface.
 
 @subsection Printing from Fortran
@@ -2975,20 +2981,21 @@ invisible on GUI interfaces.  They are best avoided.
 
 Three subroutines are provided to ease the output of information from
 Fortran code.
+
 @example
-subroutine dblepr(label, nchar, data, ndata)
-subroutine realpr(label, nchar, data, ndata)
-subroutine intpr (label, nchar, data, ndata)
+subroutine dblepr(@var{label}, @var{nchar}, @var{data}, @var{ndata})
+subroutine realpr(@var{label}, @var{nchar}, @var{data}, @var{ndata})
+subroutine intpr (@var{label}, @var{nchar}, @var{data}, @var{ndata})
 @end example
 
 @noindent
-Here @code{label} is a character label of up to 255 characters,
-@code{nchar} is its length (which can be @code{-1} if the whole label is
-to be used), and @code{data} is an array of length at least @code{ndata}
+Here @var{label} is a character label of up to 255 characters,
+@var{nchar} is its length (which can be @code{-1} if the whole label is
+to be used), and @var{data} is an array of length at least @var{ndata}
 of the appropriate type (@code{double precision}, @code{real} and
 @code{integer} respectively).  These routines print the label on one
-line and then print @code{data} as if it were an @R{} vector on
-subsequent line(s).  They work with @code{ndata = 0} and so can be used
+line and then print @var{data} as if it were an @R{} vector on
+subsequent line(s).  They work with zero @var{ndata}, and so can be used
 to print a label alone.
 
 @node Calling C from Fortran, Numerical analysis subroutines, Printing, The R API
@@ -3001,18 +3008,17 @@ underscore.  To help cover up the platform-specific differences there is
 a set of macros that should be used.
 
 @table @code
-@item F77_SUB(name)
+@item F77_SUB(@var{name})
 to define a function in C to be called from Fortran
-@item F77_NAME(name)
+@item F77_NAME(@var{name})
 to declare a Fortran routine in C before use
-@item F77_CALL(name)
+@item F77_CALL(@var{name})
 to call a Fortran routine from C
-@item F77_COMDECL(name)
+@item F77_COMDECL(@var{name})
 to declare a Fortran common block in C
-@item F77_COM(name)
+@item F77_COM(@var{name})
 to access a Fortran common block from C
 @end table
-
 
 
 @node Numerical analysis subroutines, Distribution functions, Calling C from Fortran, The R API
@@ -3036,39 +3042,43 @@ and Bessel functions).  These @emph{are} subject to change.
 @section Distribution functions
 @cindex  Distribution functions from C
 
-The routines used to calculate densities,
-cumulative distribution functions and quantile functions for the
-standard statistical distributions are available as entry points.
+The routines used to calculate densities, cumulative distribution
+functions and quantile functions for the standard statistical
+distributions are available as entry points.
 
 The arguments for the entry points follow the pattern of those for the
 normal distribution:
+
 @example
-double  dnorm(double x, double mu, double sigma, int give_log);
-double  pnorm(double x, double mu, double sigma, int lower_tail,
-              int give_log);
-double  qnorm(double p, double mu, double sigma, int lower_tail,
-              int log_p);
-double  rnorm(double mu, double sigma);
+double dnorm(double @var{x}, double @var{mu}, double @var{sigma}, int @var{give_log});
+double pnorm(double @var{x}, double @var{mu}, double @var{sigma}, int @var{lower_tail},
+             int @var{give_log});
+double qnorm(double @var{p}, double @var{mu}, double @var{sigma}, int @var{lower_tail},
+             int @var{log_p});
+double rnorm(double @var{mu}, double @var{sigma});
 @end example
+
 @noindent
 That is, the first argument gives the position for the density and CDF
 and probability for the quantile function, followed by the
-distribution's parameters.  Argument @code{lower_tail} should be
-@code{1} (or @code{LTRUE}) for normal use, but can be @code{0} (or
-@code{LFALSE}) if the probability of the upper tail is desired or specified.
+distribution's parameters.  Argument @var{lower_tail} should be @code{1}
+(or @code{LTRUE}) for normal use, but can be @code{0} (or @code{LFALSE})
+if the probability of the upper tail is desired or specified.
 
-Note that you directly get the cumulative (or ``integrated'') @emph{hazard}
-function, @eqn{H(t) = - \log(1 - F(t)), H(t) = - log(1 - F(t))},
-by using
+Note that you directly get the cumulative (or ``integrated'')
+@emph{hazard} function, @eqn{H(t) = - \log(1 - F(t)), H(t) = - log(1 -
+F(t))}, by using
+
 @example
 - p@var{dist}(t, ..., /*lower_tail = */ LFALSE, /* give_log = */ LTRUE)
 @end example
+
 @noindent
 or shorter (and more cryptic) @code{- p@var{dist}(t, ..., 0, 1)}.
 @cindex cumulative hazard
 
-Finally, @code{give_log} should be non-zero if the result is required on
-log scale, and @code{log_p} should be non-zero if @code{p} has been
+Finally, @var{give_log} should be non-zero if the result is required on
+log scale, and @var{log_p} should be non-zero if @var{p} has been
 specified on log scale.
 
 The random-variate generation routine @code{rnorm} returns one normal
@@ -3076,16 +3086,16 @@ variate. @xref{Random numbers}, for the protocol in using the
 random-variate routines.
 @cindex Random numbers in C
 
-
 Note that these argument sequences are (apart from the names and that
-@code{rnorm} has no @code{n}) exactly
-the same as the corresponding @R{} functions of the same name, so the
-documentation of the @R{} functions can be used.
+@code{rnorm} has no @var{n}) exactly the same as the corresponding @R{}
+functions of the same name, so the documentation of the @R{} functions
+can be used.
 
 For reference, the following table gives the basic name (to be prefixed
-by @code{d}, @code{p}, @code{q} or @code{r} apart from the exceptions
+by @samp{d}, @samp{p}, @samp{q} or @samp{r} apart from the exceptions
 noted) and distribution-specific arguments for the complete set of
 distributions.
+
 @quotation
 @multitable @columnfractions .28 .22 .30
 @item beta @tab @code{beta} @tab @code{a, b}
@@ -3114,6 +3124,7 @@ distributions.
 @item Wilcoxon signed rank @tab @code{signrank} @tab @code{n}
 @end multitable
 @end quotation
+
 @noindent
 The argument sequences are not all quite the same as the @R{} ones.
 @c ^^^ FIXME ?? (argument names in the C code wouldn't change the API ..) ^^
@@ -3161,78 +3172,63 @@ There are a few other numerical utilities available as entry points.
 @c double	beta(double, double);
 @c double	lbeta(double, double);
 
-
+@ftable @code
 @findex R_pow
 @findex R_pow_di
-@smallexample
-double R_pow(double x, double y);
-double R_pow_di(double x, int i);
-@end smallexample
-@noindent
-@code{R_pow(x,y)} and @code{R_pow_di(x,i)} compute @code{x ^ y} and
-@code{x ^ i}, respectively using @code{R_FINITE} checks and returning
-the proper result (the same as @R{}) for the cases where @code{x},
-@code{y} or @code{i} are 0 or missing or infinite or @code{NaN}.
+@item double R_pow(double @var{x}, double @var{y});
+@itemx double R_pow_di(double @var{x}, int @var{i});
+@code{R_pow(@var{x}, @var{y})} and @code{R_pow_di(@var{x}, @var{i})}
+compute @code{@var{x} ^ @var{y}} and @code{@var{x} ^ @var{i}},
+respectively using @code{R_FINITE} checks and returning the proper
+result (the same as @R{}) for the cases where @var{x}, @var{y} or
+@var{i} are 0 or missing or infinite or @code{NaN}.
 
 @findex pythag
-@smallexample
-double pythag(double a, double b)
-@end smallexample
-@noindent
-@code{pythag(a,b)} computes @code{sqrt(a^2 + b^2)} without overflow or
-destructive underflow: for example it still works when both @code{a} and
-@code{b} are between @code{1e200} and @code{1e300} (in IEEE double
-precision).
+@item double pythag(double @var{a}, double @var{b});
+@code{pythag(@var{a}, @var{b})} computes @code{sqrt(@var{a}^2 +
+@var{b}^2)} without overflow or destructive underflow: for example it
+still works when both @var{a} and @var{b} are between @code{1e200} and
+@code{1e300} (in IEEE double precision).
 
 @findex log1p
-@smallexample
-double log1p(x)
-@end smallexample
-@noindent
-@code{log1p(x)} computes @code{log(1 + x)} (@emph{log 1 @b{p}lus x}),
-accurately even for small x, i.e. @eqn{|x| \ll 1, |x| << 1}.
+@item double log1p(@var{x})
+Computes @code{log(1 + @var{x})} (@emph{log 1 @b{p}lus x}), accurately
+even for small @var{x}, i.e. @eqn{|x| \ll 1, |x| << 1}.
 
 @findex imax2
 @findex imin2
 @findex fmax2
 @findex fmin2
-@smallexample
-int	imax2(int x, int y);
-int	imin2(int x, int y);
-double	fmax2(double x, double y);
-double	fmin2(double x, double y);
-@end smallexample
-@noindent
-return the larger (@code{max}) or smaller (@code{min}) of two integer or
+@item int imax2(int @var{x}, int @var{y});
+@itemx int imin2(int @var{x}, int @var{y});
+@itemx double fmax2(double @var{x}, double @var{y});
+@itemx double fmin2(double @var{x}, double @var{y});
+Return the larger (@code{max}) or smaller (@code{min}) of two integer or
 double numbers, respectively.
 
 @findex sign
+@item double sign(double @var{x});
+Compute the @emph{signum} function, where sign(@var{x}) is 1, 0, or -1,
+when @var{x} is positive, 0, or negative, respectively.
+
 @findex fsign
-@smallexample
-double	sign(double x);
-double	fsign(double x, double y);
-@end smallexample
-@noindent
-compute the @emph{signum} function,
-where sign(x) is  1, 0, or -1, when x is positive, 0, or negative, respectively.
-@*
-@code{fsign(x,y)} performs ``transfer of sign'' and is defined as
-@eqn{|x| \hbox{sign}(y), |x| * sign(x)}.
+@item double fsign(double @var{x}, double @var{y});
+Performs ``transfer of sign'' and is defined as @eqn{|x| \hbox{sign}(y),
+|x| * sign(x)}.
 
 @findex fprec
+@item double fprec(double @var{x}, double @var{digits});
+Returns the value of @var{x} rounded to @var{digits} decimal digits
+(after the decimal point).
+
+This is the function used by @R{}'s @code{round()}.
+
 @findex fround
-@smallexample
-double fprec (double x, double digits);
-double fround(double x, double digits);
-@end smallexample
-@noindent
-@code{fround(x, dig)} returns the value of @code{x} rounded to @code{dig}
-decimal digits (after the decimal point). This is the function used
-by @R{}'s @code{round()}.
-@*
-@code{fprec(x, dig)} returns the value of @code{x} rounded to @code{dig}
-@emph{significant} decimal digits.  This is the function used by @R{}'s
-@code{signif()}.
+@item double fround(double @var{x}, double @var{digits});
+Returns the value of @var{x} rounded to @var{digits} @emph{significant}
+decimal digits.
+
+This is the function used by @R{}'s @code{signif()}.
 
 @c --- FIXME : These are not yet in there
 @c double	ftrunc(double);
@@ -3241,18 +3237,19 @@ by @R{}'s @code{round()}.
 @c double	fsquare(double);
 @c double	fcube(double);
 
+@end ftable
 
 @node Mathematical Constants, Utility functions, Mathematical Utilities, The R API
 @section Mathematical Constants
 @findex M_E
 @findex M_PI
-@c maybe not all into the index ..
+@c maybe not all into the index ...
 
 @R{} has a set of commonly used mathematical constants encompassing
-constants usually found @file{math.h} and contains further ones that are used in
-statistical computations.  All these are defined to (at least) 30 digits
-accuracy in @file{R_ext/Mathlib.h}.  The following definitions use
-@code{ln(x)} for the natural logarithm (@code{ = log(x)} in @R{}).
+constants usually found @file{math.h} and contains further ones that are
+used in statistical computations.  All these are defined to (at least)
+30 digits accuracy in @file{R_ext/Mathlib.h}.  The following definitions
+use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
 
 @quotation
 @multitable {Name can be long}  {Definition (needs space)}  {0.123456789012345678 ...}
@@ -3260,7 +3257,6 @@ accuracy in @file{R_ext/Mathlib.h}.  The following definitions use
 @item @strong{Name} @tab @strong{Definition (@code{ln = log})} @tab @strong{round(@emph{value}, 7)}
 
 @c SVID & X/Open Constants -- names from Solaris math.h :
-
 @item @code{M_E}            @tab = e               @tab 2.7182818
 @item @code{M_LOG2E}        @tab = log2(e)         @tab 1.4426950
 @item @code{M_LOG10E}       @tab = log10(e)        @tab 0.4342945
@@ -3274,9 +3270,7 @@ accuracy in @file{R_ext/Mathlib.h}.  The following definitions use
 @item @code{M_2_SQRTPI}     @tab = 2/sqrt(pi)      @tab 1.1283792
 @item @code{M_SQRT2}        @tab = sqrt(2)         @tab 1.4142136
 @item @code{M_SQRT1_2}      @tab = 1/sqrt(2)       @tab 0.7071068
-
 @c R-specific ones
-
 @item @code{M_SQRT_32}      @tab = sqrt(32)        @tab 5.6568542
 @item @code{M_LOG10_2}      @tab = log10(2)        @tab 0.3010300
 @item @code{M_SQRT_PI}      @tab = sqrt(pi)        @tab 1.7724539
@@ -3293,7 +3287,6 @@ defined in the included header @file{R_ext/Constants.h}, mainly for
 compatibility with @Sl{}.
 
 
-
 @node Utility functions, Version information, Mathematical Constants, The R API
 @section Utility functions
 @cindex Sort functions from C
@@ -3307,36 +3300,30 @@ compatibility with @Sl{}.
 @findex cPsort
 
 @R{} has a fairly comprehensive set of sort routines which are made
-available to users' C code.  These include
+available to users' C code.  These include the following.
 
-@example
-void R_isort(int* x, int n);
-void R_rsort(double* x, int n);
-void R_csort(Rcomplex* x, int n);
-void rsort_with_index(double* x, int* index, int n);
-@end example
-
+@table @code
+@item void R_isort(int* @var{x}, int @var{n});
+@itemx void R_rsort(double* @var{x}, int @var{n});
+@itemx void R_csort(Rcomplex* @var{x}, int @var{n});
+@itemx void rsort_with_index(double* @var{x}, int* @var{index}, int @var{n});
 The first three sort integer, real (double) and complex data
 respectively.  (Complex numbers are sorted by the real part first then
-the imaginary part.)  @code{rsort_with_index} sorts on @code{x}, and
-applies the same permutation to @code{index}.
+the imaginary part.)
 
-@example
-void revsort(double* x, int* index, int n)
-@end example
-@noindent
+@code{rsort_with_index} sorts on @var{x}, and applies the same
+permutation to @var{index}.
+
+@item void revsort(double* @var{x}, int* @var{index}, int @var{n});
 is similar to @code{rsort_with_index} but sorts into decreasing order.
 
-@example
-void iPsort(int* x, int n, int k);
-void rPsort(double* x, int n, int k);
-void cPsort(Rcomplex* x, int n, int k);
-@end example
-
-@noindent
-all provide (very) partial sorting: they permute @code{x} so that
-@code{x[k]} is in the correct place with smaller values to the left,
-larger ones to the right.
+@item void iPsort(int* @var{x}, int @var{n}, int @var{k});
+@itemx void rPsort(double* @var{x}, int @var{n}, int @var{k});
+@itemx void cPsort(Rcomplex* @var{x}, int @var{n}, int @var{k});
+all provide (very) partial sorting: they permute @var{x} so that
+@code{@var{x}[@var{k}]} is in the correct place with smaller values to
+the left, larger ones to the right.
+@end table
 
 @node Version information,  , Utility functions, The R API
 @section Version information
@@ -3350,20 +3337,19 @@ Header file @file{Rversion.h} (included by @file{R.h}) defines a macro
 @code{R_VERSION} giving the version number encoded as an integer, plus a
 macro @code{R_Version} to do the encoding.  This can be used to test if
 the version of @R{} is late enough, or to include back-compatibility
-features. For protection against earlier versions of @R{} which did not
+features.  For protection against earlier versions of @R{} which did not
 have this macro, use a construction such as
 
 @example
-#if defined(R_VERSION) && R_VERSION >= R_Version(0,99,0)
+#if defined(R_VERSION) && R_VERSION >= R_Version(0, 99, 0)
   ...
 #endif
 @end example
 
 More detailed information is available in the macros @code{R_MAJOR},
 @code{R_MINOR}, @code{R_YEAR}, @code{R_MONTH} and @code{R_DAY}: see the
-header file @file{Rversion.h} for their format. Note that the minor
+header file @file{Rversion.h} for their format.  Note that the minor
 version includes the patchlevel (as in @code{99.0}).
-
 
 
 @node R (internal) programming miscellania, Function and variable index, The R API, Top

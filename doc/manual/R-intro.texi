@@ -65,25 +65,25 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 @node Top, Preface, (dir), (dir)
 
 @menu
-* Preface::
-* Introduction and preliminaries::
-* Simple manipulations numbers and vectors::
-* Objects::
-* Factors::
-* Arrays and matrices::
-* Lists and data frames::
-* Reading data from files::
-* Probability distributions::
-* Loops and conditional execution::
-* Writing your own functions::
-* Statistical models in R::
-* Graphics::
-* A sample session::
-* Invoking R::
-* The command line editor::
-* Function and variable index::
-* Concept index::
-* References::
+* Preface::                     
+* Introduction and preliminaries::  
+* Simple manipulations numbers and vectors::  
+* Objects::                     
+* Factors::                     
+* Arrays and matrices::         
+* Lists and data frames::       
+* Reading data from files::     
+* Probability distributions::   
+* Loops and conditional execution::  
+* Writing your own functions::  
+* Statistical models in R::     
+* Graphics::                    
+* A sample session::            
+* Invoking R::                  
+* The command line editor::     
+* Function and variable index::  
+* Concept index::               
+* References::                  
 @end menu
 
 @node Preface, Introduction and preliminaries, Top, Top
@@ -127,16 +127,16 @@ been digested.
 @chapter Introduction and preliminaries
 
 @menu
-* The R environment::
-* Related software and documentation::
-* R and statistics::
-* R and the window system::
-* Using R interactively::
-* Getting help::
-* Case sensitivity::
-* Recall and correction of previous commands::
-* Executing commands from or diverting output to a file::
-* Data permanency and removing objects::
+* The R environment::           
+* Related software and documentation::  
+* R and statistics::            
+* R and the window system::     
+* Using R interactively::       
+* Getting help::                
+* Case sensitivity::            
+* Recall and correction of previous commands::  
+* Executing commands from or diverting output to a file::  
+* Data permanency and removing objects::  
 @end menu
 
 @node The R environment, Related software and documentation, Introduction and preliminaries, Introduction and preliminaries
@@ -500,14 +500,14 @@ been conducted in the same directory.
 @cindex Vectors
 
 @menu
-* Vectors and assignment::
-* Vector arithmetic::
-* Generating regular sequences::
-* Logical vectors::
-* Missing values::
-* Character vectors::
-* Index vectors::
-* Other types of objects::
+* Vectors and assignment::      
+* Vector arithmetic::           
+* Generating regular sequences::  
+* Logical vectors::             
+* Missing values::              
+* Character vectors::           
+* Index vectors::               
+* Other types of objects::      
 @end menu
 
 @node Vectors and assignment, Vector arithmetic, Simple manipulations numbers and vectors, Simple manipulations numbers and vectors
@@ -1041,24 +1041,26 @@ has the same effect as
 @section Other types of objects
 
 Vectors are the most important type of object in @R{}, but there are
-several others which we will meet more formally in later sections
+several others which we will meet more formally in later sections.
 
 @c FIXME: add xrefs
 
 @itemize @bullet
 @item
 @emph{matrices} or more generally @emph{arrays} are multi-dimensional
-generalizations of vectors.  In fact, they @emph{are} vectors that can be
-indexed by two or more indices and will be printed in special ways.
+generalizations of vectors.  In fact, they @emph{are} vectors that can
+be indexed by two or more indices and will be printed in special ways.
+@xref{Arrays and matrices}.
 
 @item
 @emph{factors} provide compact ways to handle categorical data.
+@xref{Factors}.
 
 @item
 @emph{lists} are a general form of vector in which the various elements
-need not be of the same type, and are often themselves vectors or
-lists.  Lists provide a convenient way to return the results of a
-statistical computation.
+need not be of the same type, and are often themselves vectors or lists.
+Lists provide a convenient way to return the results of a statistical
+computation.  @xref{Lists}.
 
 @item
 @emph{data frames} are matrix-like structures, in which the columns can
@@ -1066,11 +1068,12 @@ be of different types.  Think of data frames as `data matrices' with one
 row per observational unit but with (possibly) both numerical and
 categorical variables.  Many experiments are best described by data
 frames: the treatments are categorical but the response is numeric.
+@xref{Data frames}.
 
 @item
 @emph{functions} are themselves objects in @R{} which can be stored in
 the project's workspace.  This provides a simple and convenient way to
-extend @R{}.
+extend @R{}.  @xref{Writing your own functions}.
 
 @end itemize
 
@@ -1080,10 +1083,10 @@ extend @R{}.
 @cindex Attributes
 
 @menu
-* The intrinsic attributes mode and length::
-* Changing the length of an object::
-* Getting and setting attributes::
-* The class of an object::
+* The intrinsic attributes mode and length::  
+* Changing the length of an object::  
+* Getting and setting attributes::  
+* The class of an object::      
 @end menu
 
 @node The intrinsic attributes mode and length, Changing the length of an object, Objects, Objects
@@ -1328,8 +1331,8 @@ used.
 @end example
 
 @menu
-* The function tapply() and ragged arrays::
-* Ordered factors::
+* The function tapply() and ragged arrays::  
+* Ordered factors::             
 @end menu
 
 @node The function tapply() and ragged arrays, Ordered factors, Factors, Factors
@@ -1440,16 +1443,16 @@ linear models are different.
 @chapter Arrays and matrices
 
 @menu
-* Arrays::
-* Array indexing::
-* Index arrays::
-* The array() function::
-* The outer product of two arrays::
-* Generalized transpose of an array::
-* Matrix facilities::
-* Forming partitioned matrices::
-* The concatenation function c() with arrays::
-* Frequency tables from factors::
+* Arrays::                      
+* Array indexing::              
+* Index arrays::                
+* The array() function::        
+* The outer product of two arrays::  
+* Generalized transpose of an array::  
+* Matrix facilities::           
+* Forming partitioned matrices::  
+* The concatenation function c() with arrays::  
+* Frequency tables from factors::  
 @end menu
 
 @node Arrays, Array indexing, Arrays and matrices, Arrays and matrices
@@ -1677,7 +1680,7 @@ concerning mixed array and vector calculations has to be considered a
 little more carefully.
 
 @menu
-* The recycling rule::
+* The recycling rule::          
 @end menu
 
 @node The recycling rule,  , The array() function, The array() function
@@ -1822,10 +1825,10 @@ number of rows and columns in the matrix @code{A} respectively.
 @findex ncol
 
 @menu
-* Multiplication and inversion::
-* Eigenvalues and eigenvectors::
-* Singular value decomposition and determinants::
-* Least squares fitting and the QR decomposition::
+* Multiplication and inversion::  
+* Eigenvalues and eigenvectors::  
+* Singular value decomposition and determinants::  
+* Least squares fitting and the QR decomposition::  
 @end menu
 
 @node  Multiplication and inversion, Eigenvalues and eigenvectors, Matrix facilities, Matrix facilities
@@ -2142,9 +2145,9 @@ Extension to higher way frequency tables is immediate.
 @chapter Lists and data frames
 
 @menu
-* Lists::
-* Constructing and modifying lists::
-* Data frames::
+* Lists::                       
+* Constructing and modifying lists::  
+* Data frames::                 
 @end menu
 
 @node Lists, Constructing and modifying lists, Lists and data frames, Lists and data frames
@@ -2254,7 +2257,7 @@ additional components.  For example
 @end example
 
 @menu
-* Concatenating lists::
+* Concatenating lists::         
 @end menu
 
 @node Concatenating lists,  , Constructing and modifying lists, Constructing and modifying lists
@@ -2306,11 +2309,11 @@ matrix form, and its rows and columns extracted using matrix indexing
 conventions.
 
 @menu
-* Making data frames::
-* attach() and detach()::
-* Working with data frames::
-* Attaching arbitrary lists::
-* Managing the search path::
+* Making data frames::          
+* attach() and detach()::       
+* Working with data frames::    
+* Attaching arbitrary lists::   
+* Managing the search path::    
 @end menu
 
 @node Making data frames, attach() and detach(), Data frames, Data frames
@@ -2518,11 +2521,11 @@ the @code{read.table()} function.  There is also a more primitive input
 function, @code{scan()}, that can be called directly.
 
 @menu
-* The read.table() function::
-* The scan() function::
-* Accessing builtin datasets::
-* Editing data::
-* Importing data::
+* The read.table() function::   
+* The scan() function::         
+* Accessing builtin datasets::  
+* Editing data::                
+* Importing data::              
 @end menu
 
 @node The read.table() function, The scan() function, Reading data from files, Reading data from files
@@ -2762,9 +2765,9 @@ connections to ODBC databases (such as Access on Windows).
 @cindex Probability distributions
 
 @menu
-* R as a set of statistical tables::
-* Examining the distribution of a set of data::
-* One- and two-sample tests::
+* R as a set of statistical tables::  
+* Examining the distribution of a set of data::  
+* One- and two-sample tests::   
 @end menu
 
 @node R as a set of statistical tables, Examining the distribution of a set of data, Probability distributions, Probability distributions
@@ -2893,7 +2896,6 @@ smoothing (it usually does for ``interesting'' densities).  (Automated
 methods of bandwidth choice are implemented in packages @pkg{MASS} and
 @pkg{KernSmooth}.)
 
-@c FIXME: image
 @iftex
 @image{images/hist,9cm}
 @end iftex
@@ -2919,7 +2921,6 @@ Let us fit a normal distribution and overlay the fitted CDF.
 > lines(x, pnorm(x, mean=mean(long), sd=sqrt(var(long))), lty=3)
 @end example
 
-@c FIXME: image
 @iftex
 @image{images/ecdf,9cm}
 @end iftex
@@ -2939,7 +2940,6 @@ which shows a reasonable fit but a shorter right tail that one would
 expect from a normal distribution.  Let us compare this with some
 simulated data from a @math{t} distribution
 
-@c FIXME: image
 @iftex
 @image{images/QQ,7cm}
 @end iftex
@@ -3029,7 +3029,6 @@ boxplot(A, B)
 which indicates that the first group tends to give higher results than
 the second.
 
-@c FIXME: image
 @iftex
 @image{images/ice, 7cm}
 @end iftex
@@ -3155,8 +3154,8 @@ cannot compute correct p-values with ties in: ks.test(A, B)
 @cindex Loops and conditional execution
 
 @menu
-* Grouped expressions::
-* Control statements::
+* Grouped expressions::         
+* Control statements::          
 @end menu
 
 @node Grouped expressions, Control statements, Loops and conditional execution, Loops and conditional execution
@@ -3180,8 +3179,8 @@ parentheses and used a part of an even larger expression, and so on.
 @cindex Control statements
 
 @menu
-* Conditional execution::
-* Repetitive execution::
+* Conditional execution::       
+* Repetitive execution::        
 @end menu
 
 @node Conditional execution, Repetitive execution, Control statements, Control statements
@@ -3328,15 +3327,15 @@ A call to the function then usually takes the form
 anywhere a function call is legitimate.
 
 @menu
-* Simple examples::
-* Defining new binary operators::
-* Named arguments and defaults::
-* The ellipsis argument (...)::
-* Assignment within functions::
-* More advanced examples::
-* Scope::
-* Customizing the environment::
-* Object orientation::
+* Simple examples::             
+* Defining new binary operators::  
+* Named arguments and defaults::  
+* The ellipsis argument (...)::  
+* Assignment within functions::  
+* More advanced examples::      
+* Scope::                       
+* Customizing the environment::  
+* Object orientation::          
 @end menu
 
 @node Simple examples, Defining new binary operators, Writing your own functions, Writing your own functions
@@ -3545,9 +3544,9 @@ in @R{}.  These are discussed further in @ref{Scope}.
 @section More advanced examples
 
 @menu
-* Efficiency factors in block designs::
-* Dropping all names in a printed array::
-* Recursive numerical integration::
+* Efficiency factors in block designs::  
+* Dropping all names in a printed array::  
+* Recursive numerical integration::  
 @end menu
 
 @node Efficiency factors in block designs, Dropping all names in a printed array, More advanced examples, More advanced examples
@@ -3946,14 +3945,14 @@ basic output is minimal, and one needs to ask for the details by calling
 extractor functions.
 
 @menu
-* Formulae for statistical models::
-* Linear models::
-* Generic functions for extracting model information::
-* Analysis of variance and model comparison::
-* Updating fitted models::
-* Generalized linear models::
-* Nonlinear least squares and maximum likelihood models::
-* Some non-standard models::
+* Formulae for statistical models::  
+* Linear models::               
+* Generic functions for extracting model information::  
+* Analysis of variance and model comparison::  
+* Updating fitted models::      
+* Generalized linear models::   
+* Nonlinear least squares and maximum likelihood models::  
+* Some non-standard models::    
 @end menu
 
 @node Formulae for statistical models, Linear models, Statistical models in R, Statistical models in R
@@ -4119,42 +4118,36 @@ inevitable change is that the operator @samp{@code{.}} becomes
 The notation is summarized below (based on Chambers & Hastie, 1992,
 p.29):
 
-@quotation
-@multitable @columnfractions .2 .6
+@table @code
+@item @var{Y} ~ @var{M}
+@var{Y} is modeled as @var{M}.
 
-@item @code{@var{Y} ~ @var{M}}
-@tab @var{Y} is modeled as @var{M}
+@item @var{M_1} + @var{M_2}
+Include @var{M_1} and @var{M_2}.
 
-@item @code{@var{M_1} + @var{M_2}}
-@tab Include @var{M_1} and @var{M_2}
+@item @var{M_1} - @var{M_2}
+Include @var{M_1} leaving out terms of @var{M_2}.
 
-@item @code{@var{M_1} - @var{M_2}}
-@tab Include @var{M_1} leaving out terms of @var{M_2}
-
-@item @code{@var{M_1} : @var{M_2}}
-@tab The tensor product of @var{M_1} and @var{M_2}.  If both terms
+@item @var{M_1} : @var{M_2}
+The tensor product of @var{M_1} and @var{M_2}.  If both terms are
 factors, then the ``subclasses'' factor.
 
-@item @code{@var{M_1} %in% @var{M_2}}
-@tab Similar to @code{@var{M_1}:@var{M_2}}, but with a different
-coding.
+@item @var{M_1} %in% @var{M_2}
+Similar to @code{@var{M_1}:@var{M_2}}, but with a different coding.
 
-@item @code{@var{M_1} * @var{M_2}}
-@tab @code{@var{M_1} + @var{M_2} + @var{M_1}:@var{M_2}}
+@item @var{M_1} * @var{M_2}
+@code{@var{M_1} + @var{M_2} + @var{M_1}:@var{M_2}}.
 
-@item @code{@var{M_1} / @var{M_2}}
-@tab @code{@var{M_1} + @var{M_2} %in% @var{M_1}}
+@item @var{M_1} / @var{M_2}
+@code{@var{M_1} + @var{M_2} %in% @var{M_1}}.
 
-@item @code{@var{M}^@var{n}}
-@tab All terms in @var{M} together with ``interactions'' up to order
-@var{n}
+@item @var{M}^@var{n}
+All terms in @var{M} together with ``interactions'' up to order @var{n}
 
-@item @code{I(@var{M})}
-@tab Insulate @var{M}.  Inside @var{M} all operators have their normal
+@item I(@var{M})
+Insulate @var{M}.  Inside @var{M} all operators have their normal
 arithmetic meaning, and that term appears in the model matrix.
-
-@end multitable
-@end quotation
+@end table
 
 Note that inside the parentheses that usually enclose function arguments
 all operators have their normal arithmetic meaning.  The function
@@ -4167,7 +4160,7 @@ implicit.  This is not the case in other contexts, for example in
 specifying nonlinear models.
 
 @menu
-* Contrasts::
+* Contrasts::                   
 @end menu
 
 @node Contrasts,  , Formulae for statistical models, Formulae for statistical models
@@ -4275,38 +4268,35 @@ anova   drop1      formula   plot    proj     summary
 
 A brief description of the most commonly used ones is given below.
 
-@quotation
-@multitable @columnfractions .3 .6
-
-@item Function @tab Value or Effect
-
+@table @code
 @findex anova
-@item @code{anova(@var{object_1}, @var{object_2})}
-@tab Compare a submodel with an outer model and produce an analysis of
+@item anova(@var{object_1}, @var{object_2})
+Compare a submodel with an outer model and produce an analysis of
 variance table.
 
 @findex coefficients
 @findex coef
-@item @code{coefficients(@var{object})}
-@tab Extract the regression coefficient (matrix).  Short form:
-@code{coef(@var{object})}.
+@item coefficients(@var{object})
+Extract the regression coefficient (matrix).
+
+Short form: @code{coef(@var{object})}.
 
 @findex deviance
-@item @code{deviance(@var{object})}
-@tab Residual sum of squares, weighted if appropriate.
+@item deviance(@var{object})
+Residual sum of squares, weighted if appropriate.
 
 @findex formula
-@item @code{formula(@var{object})}
-@tab Extract the model formula.
+@item formula(@var{object})
+Extract the model formula.
 
 @findex plot
-@item @code{plot(@var{object})}
-@tab Produce four plots, showing residuals, fitted values and some diagnostics.
+@item plot(@var{object})
+Produce four plots, showing residuals, fitted values and some
+diagnostics.
 
 @findex predict
-@item @code{predict(@var{object},} @tab
-@item @w{@ @ @ @code{newdata=@var{data.frame})}}
-@tab The data frame supplied must have variables specified with the same
+@item predict(@var{object}, newdata=@var{data.frame})
+The data frame supplied must have variables specified with the same
 labels as the original.  The value is a vector or matrix of predicted
 values corresponding to the determining variable values in
 @var{data.frame}.
@@ -4320,27 +4310,26 @@ values corresponding to the determining variable values in
 @c  implies different basis functions to the original.
 
 @findex print
-@item @code{print(@var{object})}
-@tab Print a concise version of the object.  Most often used implicitly.
+@item print(@var{object})
+Print a concise version of the object.  Most often used implicitly.
 
 @findex residuals
 @findex resid
-@item @code{residuals(@var{object})}
-@tab Extract the (matrix of) residuals, weighted as appropriate.  Short
-form: @code{resid(@var{object})}.
+@item residuals(@var{object})
+Extract the (matrix of) residuals, weighted as appropriate.
+
+Short form: @code{resid(@var{object})}.
 
 @findex step
-@item @code{step(@var{object})}
-@tab Select a suitable model by adding or dropping terms and preserving
+@item step(@var{object})
+Select a suitable model by adding or dropping terms and preserving
 hierarchies.  The model with the largest value of AIC (Akaike's An
 Information Criterion) discovered in the stepwise search is returned.
 
 @findex summary
-@item @code{summary(@var{object})}
-@tab Print a comprehensive summary of the results of the regression
-analysis.
-@end multitable
-@end quotation
+@item summary(@var{object})
+Print a comprehensive summary of the results of the regression analysis.
+@end table
 
 @node Analysis of variance and model comparison, Updating fitted models, Generic functions for extracting model information, Statistical models in R
 @section Analysis of variance and model comparison
@@ -4382,7 +4371,7 @@ would typically be used to describe an experiment with mean model
 ``within farms, between blocks'' and ``within blocks''.
 
 @menu
-* ANOVA tables::
+* ANOVA tables::                
 @end menu
 
 @node ANOVA tables,  , Analysis of variance and model comparison, Analysis of variance and model comparison
@@ -4556,8 +4545,8 @@ reference works on the subject for full details, such as McCullagh &
 Nelder (1989) or Dobson (1990).
 
 @menu
-* Families::
-* The glm() function::
+* Families::                    
+* The glm() function::          
 @end menu
 
 @node Families, The glm() function, Generalized linear models, Generalized linear models
@@ -4856,8 +4845,8 @@ try, and convergence depends critically upon the quality of the initial
 guesses.
 
 @menu
-* Least squares::
-* Maximum likelihood::
+* Least squares::               
+* Maximum likelihood::          
 @end menu
 
 @node Least squares, Maximum likelihood, Nonlinear least squares and maximum likelihood models, Nonlinear least squares and maximum likelihood models
@@ -4909,7 +4898,7 @@ To obtain the approximate standard errors (SE) of the estimates we do:
 @end example
 
 The 2 in the line above represents the number of parameters.  A 95%
-confidence interval would be the parameter estimate @plusminus{} 1.96
+confidence interval would be the parameter estimate @eqn{\pm, +/-} 1.96
 SE.  We can superimpose the least squares fit on a new plot:
 
 @example
@@ -4992,7 +4981,7 @@ parameters.  To obtain the approximate SEs of the estimates we do:
 > sqrt(diag(solve(out$hessian)))
 @end example
 
-A 95% confidence interval would be the parameter estimate @plusminus{}
+A 95% confidence interval would be the parameter estimate @eqn{\pm, +/-}
 1.96 SE.
 
 @node Some non-standard models,  , Nonlinear least squares and maximum likelihood models, Statistical models in R
@@ -5130,13 +5119,13 @@ In addition, @R{} maintains a list of @emph{graphical parameters} which
 can be manipulated to customize your plots.
 
 @menu
-* High-level plotting commands::
-* Low-level plotting commands::
-* Interacting with graphics::
-* Using graphics parameters::
-* Graphics parameters::
-* Device drivers::
-* Dynamic graphics::
+* High-level plotting commands::  
+* Low-level plotting commands::  
+* Interacting with graphics::   
+* Using graphics parameters::   
+* Graphics parameters::         
+* Device drivers::              
+* Dynamic graphics::            
 @end menu
 
 @node High-level plotting commands, Low-level plotting commands, Graphics, Graphics
@@ -5149,10 +5138,10 @@ otherwise.) High-level plotting commands always start a new plot,
 erasing the current plot if necessary.
 
 @menu
-* The plot() function::
-* Displaying multivariate data::
-* Display graphics::
-* Arguments to high-level plotting functions::
+* The plot() function::         
+* Displaying multivariate data::  
+* Display graphics::            
+* Arguments to high-level plotting functions::  
 @end menu
 
 @node The plot() function, Displaying multivariate data, High-level plotting commands, High-level plotting commands
@@ -5166,34 +5155,34 @@ argument.
 
 @table @code
 
-@item plot(x, y)
-@itemx plot(xy)
-If @code{x} and @code{y} are vectors, @code{plot(x, y)} produces a
-scatterplot of @code{y} against @code{x}.  The same effect can be
-produced by supplying one argument (second form) as either a list
-containing two elements @code{x} and @code{y} or a two-column matrix.
+@item plot(@var{x}, @var{y})
+@itemx plot(@var{xy})
+If @var{x} and @var{y} are vectors, @code{plot(@var{x}, @var{y})}
+produces a scatterplot of @var{y} against @var{x}.  The same effect can
+be produced by supplying one argument (second form) as either a list
+containing two elements @var{x} and @var{y} or a two-column matrix.
 
-@item plot(x)
-If @code{x} is a time series, this produces a time-series plot, if
-@code{x} is a numeric vector, it produce a plot of the values in the
-vector against their index in the vector, and if @code{x} is a complex
+@item plot(@var{x})
+If @var{x} is a time series, this produces a time-series plot, if
+@var{x} is a numeric vector, it produce a plot of the values in the
+vector against their index in the vector, and if @var{x} is a complex
 vector, it produces a plot of imaginary versus real parts of the vector
 elements.
 
-@item plot(f)
-@itemx plot(f, y)
-@code{f} is a factor object, @code{y} is a numeric vector.  The first
-form generates a bar plot of @code{f}; the second form produces boxplots
-of @code{y} for each level of @code{f}.
+@item plot(@var{f})
+@itemx plot(@var{f}, @var{y})
+@var{f} is a factor object, @var{y} is a numeric vector.  The first form
+generates a bar plot of @var{f}; the second form produces boxplots of
+@var{y} for each level of @var{f}.
 
-@item plot(df)
-@itemx plot(~ expr)
-@itemx plot(y ~ expr)
-@code{df} is a data frame, @code{y} is any object, @code{expr} is a list
+@item plot(@var{df})
+@itemx plot(~ @var{expr})
+@itemx plot(@var{y} ~ @var{expr})
+@var{df} is a data frame, @var{y} is any object, @var{expr} is a list
 of object names separated by `@code{+}' (e.g., @code{a + b + c}).  The
 first two forms produce distributional plots of the variables in a data
 frame (first form) or of a number of named objects (second form).  The
-third form plots @code{y} against every object named in @code{expr}.
+third form plots @var{y} against every object named in @var{expr}.
 @end table
 
 @node Displaying multivariate data, Display graphics, The plot() function, High-level plotting commands
@@ -5280,8 +5269,8 @@ quantiles of @code{x} against those of @code{y} to compare their
 respective distributions.
 
 @item hist(x)
-@itemx hist(x, nclass=n)
-@itemx hist(x, breaks=b, @dots{})
+@itemx hist(x, nclass=@var{n})
+@itemx hist(x, breaks=@var{b}, @dots{})
 @findex hist
 Produces a histogram of the numeric vector @code{x}.  A sensible number
 of classes is usually chosen, but a recommendation can be given with the
@@ -5397,17 +5386,17 @@ the axes, and the @code{text()} function supplies special characters, as
 specified by the character vector @code{names} for the points.
 
 @item abline(a, b)
-@itemx abline(h=y)
-@itemx abline(v=x)
+@itemx abline(h=@var{y})
+@itemx abline(v=@var{x})
 @itemx abline(@var{lm.obj})
 @findex abline
 Adds a line of slope @code{b} and intercept @code{a} to the current
-plot.  @code{h=y} may be used to specify @math{y}-coordinates for the
-heights of horizontal lines to go across a plot, and @code{v=x}
-similarly for the @math{x}-coordinates for vertical lines.  Also
-@var{lm.obj} may be list with a @code{coefficients} component of length
-2 (such as the result of model-fitting functions,) which are taken as an
-intercept and slope, in that order.
+plot.  @code{h=@var{y}} may be used to specify @math{y}-coordinates for
+the heights of horizontal lines to go across a plot, and
+@code{v=@var{x}} similarly for the @math{x}-coordinates for vertical
+lines.  Also @var{lm.obj} may be list with a @code{coefficients}
+component of length 2 (such as the result of model-fitting functions,)
+which are taken as an intercept and slope, in that order.
 
 @item polygon(x, y, @dots{})
 @findex polygon
@@ -5418,22 +5407,21 @@ graphics device allows the filling of figures.
 @item legend(x, y, legend, @dots{})
 @findex legend
 Adds a legend to the current plot at the specified position.  Plotting
-characters, line styles, colors etc., are identified with the labels
-in the character vector @code{legend}.  At least one other argument
-@code{v} (a vector the same length as @code{legend}) with the
-corresponding values of the plotting unit must also be given, as
-follows:
+characters, line styles, colors etc., are identified with the labels in
+the character vector @code{legend}.  At least one other argument @var{v}
+(a vector the same length as @code{legend}) with the corresponding
+values of the plotting unit must also be given, as follows:
 
 @table @code
-@item legend( , fill=v)
+@item legend( , fill=@var{v})
 Colors for filled boxes
-@item legend( , col=v)
+@item legend( , col=@var{v})
 Colors in which points or lines will be drawn
-@item legend( , lty=v)
+@item legend( , lty=@var{v})
 Line styles
-@item legend( , lwd=v)
+@item legend( , lwd=@var{v})
 Line widths
-@item legend( , pch=v)
+@item legend( , pch=@var{v})
 Plotting characters (character vector)
 @end table
 
@@ -5550,8 +5538,8 @@ permanently, affecting all graphics functions which access the current
 device; or temporarily, affecting only a single graphics function call.
 
 @menu
-* The par() function::
-* Arguments to graphics functions::
+* The par() function::          
+* Arguments to graphics functions::  
 @end menu
 
 @node The par() function, Arguments to graphics functions, Using graphics parameters, Using graphics parameters
@@ -5632,10 +5620,10 @@ setting the parameter.
 @end table
 
 @menu
-* Graphical elements::
-* Axes and tick marks::
-* Figure margins::
-* Multiple figure environment::
+* Graphical elements::          
+* Axes and tick marks::         
+* Figure margins::              
+* Multiple figure environment::  
 @end menu
 
 @node Graphical elements, Axes and tick marks, Graphics parameters, Graphics parameters
@@ -5775,7 +5763,6 @@ A single plot in @R{} is known as a @code{figure} and comprises a
 @emph{plot region} surrounded by margins (possibly containing axis
 labels, titles, etc.) and (usually) bounded by the axes themselves.
 
-@c FIXME: image
 @iftex
 A typical figure is
 
@@ -5813,7 +5800,6 @@ single page.  Each figure has its own margins, and the array of figures
 is optionally surrounded by an @emph{outer margin}, as shown in the
 following figure.
 
-@c FIXME: image
 @iftex
 @image{images/fig12,6cm}
 @end iftex
@@ -5909,8 +5895,8 @@ of hardcopy devices this ensures that every page is completed and has
 been sent to the printer.
 
 @menu
-* PostScript diagrams for typeset documents::
-* Multiple graphics devices::
+* PostScript diagrams for typeset documents::  
+* Multiple graphics devices::   
 @end menu
 
 @node PostScript diagrams for typeset documents, Multiple graphics devices, Device drivers, Device drivers
@@ -5976,7 +5962,7 @@ further devices available.)
 
 @item dev.list()
 @findex dev.list
-returns the number and name of all active devices.  The device at
+Returns the number and name of all active devices.  The device at
 position 1 on the list is always the @emph{null device} which does not
 accept graphics commands at all.
 
@@ -5984,25 +5970,24 @@ accept graphics commands at all.
 @itemx dev.prev()
 @findex dev.next
 @findex dev.prev
-returns the number and name of the graphics device next to, or previous
+Returns the number and name of the graphics device next to, or previous
 to the current device, respectively.
 
-@item dev.set(which=k)
+@item dev.set(which=@var{k})
 @findex dev.set
-can be used to change the current graphics device to the one at position
-@code{k} of the device list.  Returns the number and label of the
-device.
+Can be used to change the current graphics device to the one at position
+@var{k} of the device list.  Returns the number and label of the device.
 
-@item dev.off(k)
+@item dev.off(@var{k})
 @findex dev.off
-Terminate the graphics device at point @code{k} of the device list.  For
+Terminate the graphics device at point @var{k} of the device list.  For
 some devices, such as @code{postscript} devices, this will either print
 the file immediately or correctly complete the file for later printing,
 depending on how the device was initiated.
 
-@item dev.copy(device, @dots{}, which=k)
-@itemx dev.print(device, @dots{}, which=k)
-Make a copy of the device @code{k}.  Here @code{device} is a device
+@item dev.copy(device, @dots{}, which=@var{k})
+@itemx dev.print(device, @dots{}, which=@var{k})
+Make a copy of the device @var{k}.  Here @code{device} is a device
 function, such as @code{postscript}, with extra arguments, if needed,
 specified by @code{@dots{}}.  @code{dev.print} is similar, but the
 copied device is immediately closed, so that end actions, such as
@@ -6016,11 +6001,11 @@ Terminate all graphics devices on the list, except the null device.
 @section Dynamic graphics
 @cindex Dynamic graphics
 
-@R{} does not (currently) have a builtin function for dynamic
-graphics, for example to rotate point clouds or to ``brush''
-(interactively highlight) plots.  However, extensive dynamic graphics
-facilities are available in the system @code{XGobi} by Swayne, Cook and
-Buja available from
+@R{} does not (currently) have a builtin function for dynamic graphics,
+for example to rotate point clouds or to ``brush'' (interactively
+highlight) plots.  However, extensive dynamic graphics facilities are
+available in the system @code{XGobi} by Swayne, Cook and Buja available
+from
 
 @quotation
 @uref{http://www.research.att.com/areas/stat/xgobi/}
@@ -6271,8 +6256,8 @@ want to save it.
 @appendix Invoking R
 
 @menu
-* Invoking R under UNIX::
-* Invoking R under Windows::
+* Invoking R under UNIX::       
+* Invoking R under Windows::    
 @end menu
 
 @node Invoking R under UNIX, Invoking R under Windows, Invoking R, Invoking R
@@ -6422,7 +6407,6 @@ command line options are disregarded, and should instead be given when
 starting the @R{} executable from inside the debugger.
 
 @item --gui=@var{type}
-@itemx -g
 Use @var{type} as graphical user interface (note that this also includes
 interactive graphics).  Currently, possible values for @var{type} are
 @code{X11} (the default) and @code{GNOME} provided that GNOME support
@@ -6625,13 +6609,20 @@ using the startup option @option{--no-readline}.
 Windows versions of @R{} have somewhat simpler command-line editing:
 see @samp{Console} under the @samp{Help} menu of the GUI.
 
-When using @R{} with @strong{readline} capabilities, the following
-options are available.
+When using @R{} with @strong{readline} capabilities, the functions
+described below are available.
 
-The usual typographical conventions apply: @kbd{^M} means ``Hold the
-@key{CTRL} down while you press the @kbd{m} key'', but @kbd{@key{ESC} m}
-means ``First press the @kbd{@key{ESC}} key and then the @kbd{m} key''.
-Note that case is significant after @key{ESC}.
+Many of these use either Control or Meta characters.  Control
+characters, such as @kbd{Control-m}, are obtained by holding the
+@key{CTRL} down while you press the @key{m} key, and are written as
+@kbd{C-m} below.  Meta characters, such as @kbd{Meta-b}, are typed by
+holding down @key{META} and pressing @key{b}, and written as @kbd{M-b}
+in the following.  If your terminal does not have a @key{META} key, you
+can still type Meta characters using two-character sequences starting
+with @kbd{ESC}.  Thus, to enter @kbd{M-b}, you could type
+@key{ESC}@key{b}.  The @kbd{ESC} character sequences are also allowed on
+terminals with real Meta keys.  Note that case is significant for Meta
+characters.
 
 @section Editing actions
 
@@ -6641,9 +6632,9 @@ necessary, and re-submitted as new commands.  In Emacs style command
 line editing any straight typing you do while in this editing phase
 causes the characters to be inserted in the command you are editing,
 displacing any characters to the right of the cursor.  In @emph{vi} mode
-character insertion mode is started by @kbd{@key{ESC} i} or
-@kbd{@key{ESC} a}, characters are typed and insertion mode is finished
-by typing a further @key{ESC}.
+character insertion mode is started by @kbd{M-i} or @kbd{M-a},
+characters are typed and insertion mode is finished by typing a further
+@key{ESC}.
 
 Pressing the @key{RET} command at any time causes the command to be
 re-submitted.
@@ -6657,67 +6648,64 @@ for example, to the arrow keys, which is something of a nuisance.
 
 @subheading Command recall and vertical motion
 
-@quotation
-@multitable {Go to the previous command (backwards in the history)}{@strong{Emacs style and more}}
-@item
-Go to the previous command (backwards in the history) @tab up arrow or @kbd{^P}
-@item
-Go to the next command (forwards in the history) @tab down arrow or @kbd{^N}
-@item
-Find the last command with the @var{text} string in it @tab @kbd{^R
-@var{text}}
-@end multitable
-@end quotation
+@table @kbd
+@item C-p
+Go to the previous command (backwards in the history).
+@item C-n
+Go to the next command (forwards in the history).
+@item C-r @var{text}
+Find the last command with the @var{text} string in it.
+@end table
+
+On most terminals, you can also use the up and down arrow keys instead
+of @kbd{C-p} and @kbd{C-n}, respectively.
 
 @subheading Horizontal motion of the cursor
 
-@quotation
-@multitable {Go to the previous command (backwards in the history)} {@strong{Emacs style and more}}
-@item
-Go to the beginning of the command @tab @kbd{^A}
-@item
-Go to the end of the line @tab @kbd{^E}
-@item
-Go back one word @tab @kbd{@key{ESC} b}
-@item
-Go forward one word @tab @kbd{@key{ESC} f}
-@item
-Go back one character @tab left arrow or @kbd{^B}
-@item
-Go forward one character @tab right arrow or @kbd{^F}
-@end multitable
-@end quotation
+@table @kbd
+@item C-a
+Go to the beginning of the command.
+@item C-e
+Go to the end of the line.
+@item M-b
+Go back one word.
+@item M-f
+Go forward one word.
+@item C-b
+Go back one character.
+@item C-f
+Go forward one character.
+@end table
+
+On most terminals, you can also use the left and right arrow keys
+instead of @kbd{C-b} and @kbd{C-f}, respectively.
 
 @subheading Editing and re-submission
 
-@quotation
-@multitable {Go to the previous command (backwards in the history)} {@strong{Emacs style and more}}
-@item
-Insert @var{text} at the cursor @tab @kbd{@var{text}}
-@item
-Append @var{text} after cursor @tab @kbd{^F @var{text}}
-@item
-Delete the previous character (left of the cursor) @tab @key{DEL}
-@item
-Delete the character under the cursor @tab @kbd{^D}
-@item
-Delete rest of the word under the cursor, and `save' it @tab
-@kbd{@key{ESC} d}
-@item
-Delete from cursor to end of command, and `save' it @tab @kbd{^K}
-@item
-Insert (yank) the last `saved' text here @tab @kbd{^Y}
-@item
-Transpose the character under the cursor with the next @tab @kbd{^T}
-@item
-Change the rest of the word to lower case @tab @kbd{@key{ESC} l}
-@item
-Change the rest of the word to capitals (upper case) @tab @kbd{@key{ESC}
-c}
-@item
-Re-submit the command to @R{} @tab @key{RET}
-@end multitable
-@end quotation
+@table @kbd
+@item @var{text}
+Insert @var{text} at the cursor.
+@item C-f @var{text}
+Append @var{text} after cursor.
+@item @key{DEL}
+Delete the previous character (left of the cursor).
+@item C-d
+Delete the character under the cursor.
+@item M-d
+Delete rest of the word under the cursor, and ``save'' it.
+@item C-k
+Delete from cursor to end of command, and ``save'' it.
+@item C-y
+Insert (yank) the last ``saved'' text here.
+@item C-t
+Transpose the character under the cursor with the next.
+@item M-l
+Change the rest of the word to lower case.
+@item M-c
+Change the rest of the word to upper case.
+@item @key{RET}
+Re-submit the command to @R{}.
+@end table
 
 The final @key{RET} terminates the command line editing sequence.
 
