@@ -863,7 +863,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("libz"));
-#ifdef HAVE_LIBZ
+#if defined(HAVE_LIBZ) && defined(HAVE_ZLIB_H)
     INTEGER(ans)[i++] = 1;
 #else
     INTEGER(ans)[i++] = 0;
