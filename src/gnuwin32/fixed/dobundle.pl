@@ -15,7 +15,7 @@ while(<bundledesc>) {
 close bundledesc;
 
 foreach $pkg (@pkgs) {
-    print "\n---- Building package $pkg from bundle $bundle -----\n";
+    print "\n---- Building package $pkg from bundle $bundle -----";
     open pkgdesc, "> $srcdir/$bundle/$pkg/DESCRIPTION" 
 	|| die "cannot write $pkg/DESCRIPTION";
     if (open pkgdescin, "< $srcdir/$bundle/$pkg/DESCRIPTION.in") {
