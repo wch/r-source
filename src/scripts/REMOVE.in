@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/REMOVE for removing add-on packages
 
-revision='$Revision: 1.16 $'
+revision='$Revision: 1.17 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package remover ${version}
 
@@ -25,14 +25,23 @@ Options:
 
 Report bugs to <r-bugs@r-project.org>."
 
+## <FIXME>
+## This uses
+##   basename
+## which is not portable.
+## We could fix this using suitable shell replacements, but we should
+## really redo as much as we can using R code.
+## </FIXME>
+
 GETWD='@GETWD@'
 NO_PERL5=@NO_PERL5@
 
-## <NOTE>
-## Using ${VAR:-value} is not portable shell programming.
-## But we cannot simply use ${VAR-value}: see the usage info.
-lib=`echo ${R_LIBS:-"${R_HOME}/library"} | cut -f1 -d:`
-## </NOTE>
+if test -n "${R_LIBS}"; then
+  lib=`echo "${R_LIBS}" | cut -f1 -d:`
+else
+  lib="${R_HOME}/library"
+fi
+
 pkgs=
 
 while test -n "${1}"; do

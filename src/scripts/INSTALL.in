@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.95 $'
+revision='$Revision: 1.96 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -26,7 +26,8 @@ Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit
       --configure-args=ARGS
-                        set args for package's configure script (if any)
+                        set arguments for the package's configure script
+			(if any)
       --configure-vars=VARS
                         set variables for the configure script (if any)
   -c, --clean		remove all files created during installation
@@ -50,6 +51,15 @@ Report bugs to <r-bugs@r-project.org>."
 ## According to the R Coding Standards (see R-exts), Perl can be assumed
 ## for *source*, but not for *binary* installations.
 ## </NOTE>
+
+## <FIXME>
+## This uses
+##   mkdir -p
+##   basename
+## which are not portable.
+## We could fix this using suitable shell replacements, but we should
+## really redo as much as we can using R code.
+## </FIXME>
 
 umask 022
 
@@ -109,11 +119,12 @@ get_packages () {
   fi
 }
 
-## <NOTE>
-## Using ${VAR:-value} is not portable shell programming.
-## But we cannot simply use ${VAR-value}: see the usage info.
-lib=`echo ${R_LIBS:-"${R_HOME}/library"} | cut -f1 -d:`
-## </NOTE>
+if test -n "${R_LIBS}"; then
+  lib=`echo "${R_LIBS}" | cut -f1 -d:`
+else
+  lib="${R_HOME}/library"
+fi
+
 pkgs=
 clean=false
 debug=false
@@ -319,10 +330,7 @@ do_install () {
     if test -d src; then
       message "libs"
       if ${debug}; then set -x; fi
-      ## <FIXME>
-      ## Is 'mkdir -p' portable?
       mkdir -p "${lib}/${pkg}/libs"
-      ## </FIXME>
       if test -f src/Makefile; then
         cd src;
         makefiles="-f \"${R_HOME}\"/share/make/shlib.mk -f Makefile"
