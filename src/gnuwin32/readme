@@ -140,7 +140,7 @@ bin/windows/windows-NT/etc.
 options(winhelp=T) or for individual help items by help(topic,
 winhelp=T).  Full text search is available from the Search tab. The
 conversion to this format is a little rough, and tables may be
-incomplete. The help on Japanese fonts has been omitted.
+incomplete. The help on Hershey and Japanese fonts has been omitted.
 
 (iv) HTML help to be displayed in your normal browser.  Set this as
 the default by options(htmlhelp=T) or for individual help items by
