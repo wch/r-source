@@ -28,7 +28,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.8-19, 2003-11-26</h2>
+<h2>Version 1.8-20, 2003-11-27</h2>
 <h2>ISBN 3-900051-01-1</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -490,11 +490,11 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <h3 class="section">2.6 Are there Unix binaries for R?</h3>
 
 <p>The <code>bin/linux</code> directory of a <small>CRAN</small> site contains Debian
-stable/testing packages for the i386 platform (now part of the Debian
-distribution and maintained by Dirk Eddelbuettel), Mandrake 9.0/9.1 i386
-packages by Michele Alzetta, Red Hat 7.x/8.x/9 i386 packages by Martyn
-Plummer, SuSE 7.3/8.0/8.1/8.2/9.0 i386 packages by Detlef Steuer, and
-VineLinux 2.6 i386 packages by Susunu Tanimura.
+stable/testing/unstable packages for the i386 platform (now part of the
+Debian distribution and maintained by Dirk Eddelbuettel), Mandrake
+9.0/9.1 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9 i386
+packages by Martyn Plummer, SuSE 7.3/8.0/8.1/8.2/9.0 i386 packages by
+Detlef Steuer, and VineLinux 2.6 i386 packages by Susunu Tanimura.
 
    <p>The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -3643,10 +3643,11 @@ in the language:
 
      <ol type=1 start=1>
 <li>A <em>syntactic name</em> is a string the parser interprets as this type
-of expression.  It consists of letters, numbers, and the dot character
-and starts with a letter or the dot.
-
-     <li>An <em>object name</em> is a string associated with an object that is
+of expression.  It consists of letters, numbers, and the dot and (for
+version of R at least 1.9.0) underscore characters, and starts with
+either a letter or a dot not followed by a number.  Reserved words are
+not syntactic names. 
+<li>An <em>object name</em> is a string associated with an object that is
 assigned in an expression either by having the object name on the left
 of an assignment operation or as an argument to the <code>assign()</code>
 function.  It is usually a syntactic name as well, but can be any

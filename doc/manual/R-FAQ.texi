@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-19, @value{FAQ-YEAR}-11-26
+@set FAQ-VERSION 1.8-20, @value{FAQ-YEAR}-11-27
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -440,10 +440,11 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-11-26:
+@c Linux binaries as of 2003-11-28:
 @c
 @c debian    woody i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
-@c           sarge i386  1.8.0  Dirk Eddelbuettel <edd@debian.org>
+@c           sarge i386  1.8.1  Dirk Eddelbuettel <edd@debian.org>
+@c           sid   i386  1.8.1  Dirk Eddelbuettel <edd@debian.org>
 @c mandrake  9.0   i386  1.8.0  Michele Alzetta <mikalzet@libero.it>
 @c           9.1   i386  1.8.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat    7.x   i386  1.8.1  Martyn Plummer <plummer@iarc.fr>
@@ -457,11 +458,11 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c vinelinux 2.6   i386  1.8.0  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains Debian
-stable/testing packages for the i386 platform (now part of the Debian
-distribution and maintained by Dirk Eddelbuettel), Mandrake 9.0/9.1 i386
-packages by Michele Alzetta, Red Hat 7.x/8.x/9 i386 packages by Martyn
-Plummer, SuSE 7.3/8.0/8.1/8.2/9.0 i386 packages by Detlef Steuer, and
-VineLinux 2.6 i386 packages by Susunu Tanimura.
+stable/testing/unstable packages for the i386 platform (now part of the
+Debian distribution and maintained by Dirk Eddelbuettel), Mandrake
+9.0/9.1 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9 i386
+packages by Martyn Plummer, SuSE 7.3/8.0/8.1/8.2/9.0 i386 packages by
+Detlef Steuer, and VineLinux 2.6 i386 packages by Susunu Tanimura.
  
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -3623,9 +3624,10 @@ in the language:
 @enumerate
 @item
 A @emph{syntactic name} is a string the parser interprets as this type
-of expression.  It consists of letters, numbers, and the dot character
-and starts with a letter or the dot.
-
+of expression.  It consists of letters, numbers, and the dot and (for
+version of R at least 1.9.0) underscore characters, and starts with
+either a letter or a dot not followed by a number.  Reserved words are
+not syntactic names.
 @item
 An @emph{object name} is a string associated with an object that is
 assigned in an expression either by having the object name on the left
