@@ -130,6 +130,10 @@ NEW FEATURES
     o	ls.str() and lsf.str() now return an object of class "ls_str" which
 	has a print method.
 
+    o	There is now a replacement method for window(), to allow a
+	range of values of time series to be replaced by specifying the
+	start and end times.
+
 
 UTILITIES
 

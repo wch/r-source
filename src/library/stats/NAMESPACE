@@ -60,7 +60,7 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        terms.terms, time, ts, tsp, "tsp<-", TukeyHSD, TukeyHSD.aov,
        uniroot, update, update.default, update.formula, var,
        variable.names, vcov, weighted.mean, weighted.residuals,
-       weights, window, write.ftable, xtabs, pbirthday, qbirthday)
+       weights, window, "window<-", write.ftable, xtabs, pbirthday, qbirthday)
 
 
 importFrom(graphics, identify, lines, plot)
@@ -225,6 +225,7 @@ S3method(weights, default)
 S3method(weights, glm)
 S3method(window, default)
 S3method(window, ts)
+S3method("window<-", ts)
 
 
 ## from ctest
