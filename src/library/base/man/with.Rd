@@ -23,7 +23,7 @@ with(data, expr, \dots)
   simplifying calls to modeling functions.
 }
 \seealso{
-  \code{\link{evalq}}.
+  \code{\link{evalq}}, \code{\link{attach}}.
 }
 \examples{
 #examples from glm:

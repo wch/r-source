@@ -52,7 +52,7 @@ attach(what, pos = 2, name = deparse(substitute(what)))
 }
 \seealso{
   \code{\link{library}}, \code{\link{detach}}, \code{\link{search}},
-  \code{\link{objects}}, \code{\link{environment}}.
+  \code{\link{objects}}, \code{\link{environment}}, \code{\link{with}}.
 }
 \examples{
 data(women)
