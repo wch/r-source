@@ -26,7 +26,8 @@ lchoose <- function(n,k).Internal(lchoose(n,k))
 D <- function(expr, namevec).Internal(D(expr, namevec))
 
 Machine <- function().Internal(Machine())
-Version <- function().Internal(Version())
+R.Version <- function().Internal(Version())
+Version <- function() { .Deprecated("R.Version"); R.Version() }
 machine <- function().Internal(machine())
 colors <- function().Internal(colors())
 colours <- .Alias(colors)

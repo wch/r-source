@@ -24,6 +24,7 @@ save.plot(.)
 \alias{print.tabular}
 \alias{print.plot}
 \alias{save.plot}
+\alias{Version}
 \description{
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as of the next release.
