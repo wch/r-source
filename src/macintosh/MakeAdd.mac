@@ -18,10 +18,10 @@ all Ä library
 
 
 ## ------------- library -----------
-PACKAGES =  tseries #mvtnorm #sn #acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack
-LIBF = tseries #mvtnorm #acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack
+PACKAGES =  gee #ape tseries mvtnorm sn acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack
+LIBF = gee #tseries mvtnorm acepack akima bootstrap deldir EMV evd GenKern gss pcurve qtl sm tree tripack
 
-DATA = tseries ##sn #akima bootstrap EMV evd gss pcurve qtl sm tripack
+DATA = #tseries ##sn #akima bootstrap EMV evd gss pcurve qtl sm tripack
 DEMO = #
 INST = #evd qtl sm
 
