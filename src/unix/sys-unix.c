@@ -85,35 +85,36 @@ FILE *R_OpenInitFile(void)
 
 
 #ifdef HAVE_LIBREADLINE
-  char *tilde_expand(char*);
+char *tilde_expand(char*);
 
-  char *R_ExpandFileName(char *s)
-  {
-      return( tilde_expand(s) );
-  }
+char *R_ExpandFileName(char *s)
+{
+    return( tilde_expand(s) );
+}
 #else
-  static int HaveHOME=-1;
-  static char UserHOME[PATH_MAX];
-  static char newFileName[PATH_MAX];
-  char *R_ExpandFileName(char *s)
-  {
-      char *p;
-
-      if(s[0] != '~') return s;
-      if(HaveHOME < 0) {
-	  p = getenv("HOME");
-	  if(p && strlen(p)) {
-	      strcpy(UserHOME, p);
-	      HaveHOME = 1;
-	  } else
-	      HaveHOME = 0;
-      }
-      if(HaveHOME > 0){
-	  strcpy(newFileName, UserHOME);
-	  strcat(newFileName, s+1);
-	  return newFileName;
-      } else return s;
-  }
+static int HaveHOME=-1;
+static char UserHOME[PATH_MAX];
+static char newFileName[PATH_MAX];
+char *R_ExpandFileName(char *s)
+{
+    char *p;
+    
+    if(s[0] != '~') return s;
+    if(isalpha(s[1])) return s;
+    if(HaveHOME < 0) {
+	p = getenv("HOME");
+	if(p && strlen(p)) {
+	    strcpy(UserHOME, p);
+	    HaveHOME = 1;
+	} else
+	    HaveHOME = 0;
+    }
+    if(HaveHOME > 0) {
+	strcpy(newFileName, UserHOME);
+	strcat(newFileName, s+1);
+	return newFileName;
+    } else return s;
+}
 #endif
 
 
