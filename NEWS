@@ -203,8 +203,14 @@ BUG FIXES
 
     o   rle() can now handle character vectors, as documented.
 
-    o   print.default failed to reset the settings, so, e.g. na.print
+    o   print.default failed to reset its settings, so, e.g. na.print
 	could persist when printing a list.
+
+    o   [cr]bind could sometimes return an invisible value.
+
+    o	axis() and rug() sometimes extended the axis line too far.
+	rug() always clipped x values to the plot region, but now
+	admits to doing so with a warning.
 
 
 	**************************************************

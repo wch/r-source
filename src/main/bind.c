@@ -935,6 +935,7 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     else
 	a = rbind(call, args, mode);
     UNPROTECT(1);
+    R_Visible = 1; /* assignment in arguments would set this to zero */
     return a;
 }
 

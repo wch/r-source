@@ -746,7 +746,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP at, lab;
     int dolabels, logflag=0;
     int col, fg;
-    int i, n, nint=0;
+    int i, n, nint=0, ntmp;
     int side, xtckCoords, ytckCoords, *ind;
     double x, y, tempx, tempy, tnew, tlast;
     double tck;
@@ -836,7 +836,15 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     ind = (int *) R_alloc(n, sizeof(int));
     for(i = 0; i < n; i++) ind[i] = i;
     rsort_with_index(REAL(at), ind, n);
-    R_Visible = 0;
+    /* drop  NA, Inf and -Inf values */
+    ntmp = 0;
+    for(i = 0; i < n; i++) {
+	if(R_FINITE(REAL(at)[i])) ntmp = i;
+    }
+    n = ntmp;
+    if (n == 0)
+	errorcall(call, "no locations are finite");
+
     GSavePars(dd);
     ProcessInlinePars(args, dd);
 
@@ -885,7 +893,8 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    xtckCoords = MAR3;
 	}
 	dd->gp.col = fg;
-	GLine(REAL(at)[0], y, REAL(at)[n - 1], y, USER, dd);
+	GLine(fmax2(low, REAL(at)[0]), y, 
+	      fmin2(high, REAL(at)[n - 1]), y, USER, dd);
 	if (R_FINITE(dd->gp.tck)) {
 	    /* The S way of doing ticks */
 	    double y0, y1;
@@ -943,6 +952,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	for (i = 0; i < n; i++) {
 	    x = REAL(at)[i];
+	    if (!R_FINITE(x)) continue;
 	    tempx = x; tempy = y;
 	    GConvert(&tempx, &tempy, USER, NFC, dd);
 	    if (dolabels) {
@@ -974,7 +984,8 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    ytckCoords = MAR4;
 	}
 	dd->gp.col = fg;
-	GLine(x, REAL(at)[0], x, REAL(at)[n - 1], USER, dd);
+	GLine(x, fmax2(low, REAL(at)[0]), x, 
+	      fmin2(high, REAL(at)[n - 1]), USER, dd);
 	if (R_FINITE(dd->gp.tck)) {
 	    /* The S way of doing ticks */
 	    double x0, x1;
@@ -1033,6 +1044,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	for (i = 0; i < n; i++) {
 	    y = REAL(at)[i];
+	    if (!R_FINITE(y)) continue;
 	    tempx = x; tempy = y;
 	    GConvert(&tempx, &tempy, USER, NFC, dd);
 	    if (dolabels) {

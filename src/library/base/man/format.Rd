@@ -33,8 +33,8 @@ format.pval(x, digits = max(1, getOption("digits") - 2),
   fixed, floating point and very small values (those \code{< eps}).
 
   The function \code{\link{formatC}} provides a rather more flexible
-  formatting facility for numbers, does \emph{not} provide a common
-  format for several numbers, however.
+  formatting facility for numbers, but does \emph{not} provide a common
+  format for several numbers.
 }
 \note{
   Currently \code{format} loses trailing zeroes, so \code{format(6.001,
