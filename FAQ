@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-44, 2003-09-19
+Version 1.7-45, 2003-09-21
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -362,18 +362,25 @@ tool to use.
 2.5.3 How can R be installed (Macintosh)
 ----------------------------------------
 
-The `bin/macos' directory of a CRAN site contains bin-hexed (`hqx') and
+The `bin/macosx' directory of a CRAN site contains a standard Apple
+installer package named `RAqua.pkg.sit' compressed in Aladdin Stuffit
+format.  Once downloaded, uncompressed and executed, the installer will
+install the current non-developer release of R.  RAqua is a native MacOSX
+Darwin version with Aqua GUI.
+
+   Inside `bin/macosx/X.Y' there are prebuilt binary version of packages
+ready to be used with RAqua corresponding to R major release "X.Y". The
+installation of these packages is available through the "Package" menu of
+the RAqua GUI.
+
+   This port of R for MacOSX is maintained by Stefano Iacus
+<Stefano.Iacus@R-project.org>.  The "R for Macintosh FAQ/DOC"
+(http://www.economia.unimi.it/R/rmac-FAQ.html) has more details.
+
+   The `bin/macos' directory of a CRAN site contains bin-hexed (`hqx') and
 stuffit (`sit') archives for a base distribution and a large number of
-add-on packages to run under MacOS 8.6 to MacOS 9.1 or MacOS X natively.
-The Mac version of R and the Mac binaries are maintained by Stefano Iacus
-<Stefano.Iacus@R-project.org>.
-
-   The "R for Macintosh FAQ/DOC"
-(http://www.eco-dip.unimi.it/R/rmac-FAQ.html) has more details.
-
-   Binaries of base distributions for MacOS X (Darwin) with X11 are made
-available by Jan de Leeuw <deleeuw@stat.ucla.edu> in the `bin/macosx'
-directory of a CRAN site.
+add-on packages of R 1.7.1 to run under MacOS 8.6 to MacOS 9.2.2.  This
+port of R for Macintosh is no longer supported.
 
 2.6 Are there Unix binaries for R?
 ==================================
@@ -1477,8 +1484,8 @@ distributions of R.)
      Functions to perform adaptive weights smoothing.
 
 *bim*
-     Bayesian interval mapping diagnostics:  functions to interpret
-     QTLCart/Bmapqtl samples.
+     Bayesian interval mapping diagnostics:  functions to interpret QTLCart
+     and Bmapqtl samples.
 
 *bindata*
      Generation of correlated artificial binary data.

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-44, @value{FAQ-YEAR}-09-19
+@set FAQ-VERSION 1.7-45, @value{FAQ-YEAR}-09-21
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -415,14 +415,16 @@ Windows @acronym{FAQ}''} for more details.
 @node How can R be installed (Macintosh),  , How can R be installed (Windows), How can R be installed?
 @subsection How can R be installed (Macintosh)
 
-The @file{bin/macosx} directory of a @CRAN{} site contains a standard Apple installer package
-named (@file{RAqua.pkg.sit}) compressed in Aladdin Stuffit format. Once downloaded, uncompressed
-and executed, the installer will install the current non-developer release of R.
-RAqua is a native MacOSX Darwin version with Aqua GUI.
+The @file{bin/macosx} directory of a @CRAN{} site contains a standard
+Apple installer package named @file{RAqua.pkg.sit} compressed in Aladdin
+Stuffit format.  Once downloaded, uncompressed and executed, the
+installer will install the current non-developer release of R.  RAqua is
+a native MacOSX Darwin version with Aqua GUI.
 
-Inside @file{bin/macosx/x.y} there are prebuilt binary version of packages ready to be 
-used with RAqua corresponding to R major release ``x.y''. The installation of these 
-packages is available through the ``Package'' menu of the RAqua GUI. 
+Inside @file{bin/macosx/@var{x}.@var{y}} there are prebuilt binary
+version of packages ready to be used with RAqua corresponding to R major
+release ``@var{x}.@var{y}''. The installation of these packages is
+available through the ``Package'' menu of the RAqua GUI.
 
 This port of R for MacOSX is maintained by
 @email{Stefano.Iacus@@R-project.org, Stefano Iacus}.
@@ -431,8 +433,8 @@ The @uref{http://www.economia.unimi.it/R/rmac-FAQ.html, ``R for Macintosh
 
 The @file{bin/macos} directory of a @CRAN{} site contains bin-hexed
 (@file{hqx}) and stuffit (@file{sit}) archives for a base distribution
-and a large number of add-on packages of R-1.7.1 to run under MacOS 8.6 to MacOS
-9.2.2. This port of R for Macintosh is no longer supported.
+and a large number of add-on packages of R 1.7.1 to run under MacOS 8.6
+to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
@@ -1741,8 +1743,8 @@ David Scott's ASH routines for 1D and 2D density estimation.
 @item aws
 Functions to perform adaptive weights smoothing.
 @item bim
-Bayesian interval mapping diagnostics:  functions to interpret
-QTLCart/Bmapqtl samples.
+Bayesian interval mapping diagnostics:  functions to interpret QTLCart
+and Bmapqtl samples.
 @item bindata
 Generation of correlated artificial binary data.
 @item blighty
