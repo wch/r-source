@@ -17,8 +17,6 @@ SUBDIRS = Examples
 
 R = LC_ALL=C $(top_builddir)/bin/R --vanilla
 
-Ex = ./Examples
-
 TESTsrc = simple-true.R arith-true.R arith.R d-p-q-r-tests.R \
 	 print-tests.R is-things.R primitive-funs.R eval-etc.R
 
@@ -34,12 +32,11 @@ TESTout = $(TESTsrc:.R=.Rout)
 	  (mv $@ $@.fail && exit 1)
 	@echo " OK"
 
-test-All: test-Examples strict-tests
-
-strict-tests: $(TESTout)
+test-All: test-Examples test-Specific
 
 test-Examples:
-	@cd $(Ex) && $(MAKE) $@
+	@cd Examples && $(MAKE) $@
+test-Specific: $(TESTout)
 
 stamp-R:: $(top_builddir)/bin/R.binary $(top_builddir)/library/base/R/base
 	@cd $(top_builddir) && $(MAKE) R
@@ -47,11 +44,11 @@ stamp-R:: $(top_builddir)/bin/R.binary $(top_builddir)/library/base/R/base
 
 mostlyclean: clean
 clean:
-	-(cd $(Ex); $(MAKE) $@)
+	-(cd Examples; $(MAKE) $@)
 	rm -f stamp-R
 distclean: clean
 	@rm -f $(TESTout)
-	-(cd $(Ex); $(MAKE) $@)
+	-(cd Examples; $(MAKE) $@)
 	@rm -f Makefile
 maintainer-clean: distclean
 
