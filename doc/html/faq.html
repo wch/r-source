@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.1-29, 2000-11-23</h2>
+<h2>Version 1.1-30, 2000-11-25</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -1727,14 +1727,14 @@ files named <code><var>pkg</var>_<var>version</var>.tar.gz</code>, which may in 
 "bundles" containing more than one package.  Provided that
 <code>tar</code> and <code>gzip</code> are available on your system, type
 
-<pre>$ R INSTALL /path/to/<var>pkg</var>_<var>version</var>.tar.gz
+<pre>$ R CMD INSTALL /path/to/<var>pkg</var>_<var>version</var>.tar.gz
 </pre>
 
 <p>at the shell prompt to install to the default R directory tree (the
 <code>library</code> subdirectory of <code>R_HOME</code>).  To install to another
 tree (e.g., your private one), use
 
-<pre>$ R INSTALL -l <var>lib</var> /path/to/<var>pkg</var>_<var>version</var>.tar.gz
+<pre>$ R CMD INSTALL -l <var>lib</var> /path/to/<var>pkg</var>_<var>version</var>.tar.gz
 </pre>
 
 <p>where <var>lib</var> gives the path to the library tree to install to.
@@ -1830,12 +1830,12 @@ Up:<a rel=up href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <p>To remove the packages <var>pkg_1</var>, <small>...</small>, <var>pkg_n</var> from the
 default library or the library <var>lib</var>, do
 
-<pre>$ R REMOVE <var>pkg_1</var> <small>...</small> <var>pkg_n</var>
+<pre>$ R CMD REMOVE <var>pkg_1</var> <small>...</small> <var>pkg_n</var>
 </pre>
 
 <p>or
 
-<pre>$ R REMOVE -l <var>lib</var> <var>pkg_1</var> <small>...</small> <var>pkg_n</var>
+<pre>$ R CMD REMOVE -l <var>lib</var> <var>pkg_1</var> <small>...</small> <var>pkg_n</var>
 </pre>
 
 <p>respectively.

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-29, 2000-11-23
+@set FAQ-VERSION 1.1-30, 2000-11-25
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -1697,7 +1697,7 @@ files named @code{@var{pkg}_@var{version}.tar.gz}, which may in fact be
 @command{tar} and @command{gzip} are available on your system, type
 
 @example
-$ R INSTALL /path/to/@var{pkg}_@var{version}.tar.gz
+$ R CMD INSTALL /path/to/@var{pkg}_@var{version}.tar.gz
 @end example
 
 @noindent
@@ -1706,7 +1706,7 @@ at the shell prompt to install to the default R directory tree (the
 tree (e.g., your private one), use
 
 @example
-$ R INSTALL -l @var{lib} /path/to/@var{pkg}_@var{version}.tar.gz
+$ R CMD INSTALL -l @var{lib} /path/to/@var{pkg}_@var{version}.tar.gz
 @end example
 
 @noindent
@@ -1800,14 +1800,14 @@ To remove the packages @var{pkg_1}, @dots{}, @var{pkg_n} from the
 default library or the library @var{lib}, do
 
 @example
-$ R REMOVE @var{pkg_1} @dots{} @var{pkg_n}
+$ R CMD REMOVE @var{pkg_1} @dots{} @var{pkg_n}
 @end example
 
 @noindent
 or
 
 @example
-$ R REMOVE -l @var{lib} @var{pkg_1} @dots{} @var{pkg_n}
+$ R CMD REMOVE -l @var{lib} @var{pkg_1} @dots{} @var{pkg_n}
 @end example
 
 @noindent
