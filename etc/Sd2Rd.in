@@ -24,7 +24,7 @@
 
 # Bug reports to Kurt.Hornik@ci.tuwien.ac.at
 
-$VERSION = "0.2-a2";
+$VERSION = "0.2-a3";
 ($NAME = $0) =~ s|.*/||;
 
 $\ = "\n";
@@ -100,7 +100,10 @@ while (<>) {
     }
   }
   if (/^\.sp/) { output("\n"); }
-  if (/^\.TL/) { &section(0, "\\name\{$fun\}\n\\title\{"); }
+  if (/^\.TL/) {
+    &section(0, "\\name\{$fun\}\n\\title\{");
+    $inVerbatim = 1;
+  }
   if (/^\.WR/) {
     &section(0, "");
     print("% Converted by $NAME version $VERSION.");
@@ -141,11 +144,14 @@ sub substitute {
     s/\}/\\\}/g;
     s/&/\\&/g;
   }
-  s/\.\.\./\dots\{\}/g;    
-  s/\\fB/\\textbf\{/g;
+  if ($inVerbatim) {
+    s/\.\.\./\\dots/g;
+  } else {
+    s/\.\.\./\\dots\{\}/g;
+  }
+  s/\\fB/\\bold\{/g;
   s/\\fR/\}/g;
   s/\%/\\%/g;
-  s/\\/\\\\/g;
   s/\\\.(.*)$/# $1)/g;
   if ($inSeeAlso) {
     if ($opt_x) {
@@ -153,7 +159,7 @@ sub substitute {
     } else {
       s/\`([^\']*)\'/\\code{\\link{$1}}/g;
     }
-  } else {
+  } elsif (!$inVerbatim) {
     s/\`([^\']*)\'/\\code{$1}/g;
   }
 }
@@ -175,7 +181,7 @@ sub section {
 
 sub paragraph {
   local($name) = @_;
-  &output("\n\textbf\{$name.\} ");
+  &output("\n\\bold\{$name.\} ");
 }
     
 sub output {
