@@ -6396,6 +6396,7 @@ want to save it.
 @menu
 * Invoking R under UNIX::       
 * Invoking R under Windows::    
+* Invoking R under Macintosh::  
 @end menu
 
 @node Invoking R under UNIX, Invoking R under Windows, Invoking R, Invoking R
@@ -6621,7 +6622,7 @@ R CMD @var{command} --help
 to obtain usage information for each of the tools accessible via the
 @code{R CMD} interface.
 
-@node Invoking R under Windows,  , Invoking R under UNIX, Invoking R
+@node Invoking R under Windows, Invoking R under Macintosh, Invoking R under UNIX, Invoking R
 @section Invoking R under Windows
 
 The startup procedure under Windows is very similar to that under UNIX,
@@ -6817,6 +6818,136 @@ Rcmd @var{command} --help
 @noindent
 to obtain usage information for each of the tools accessible via the
 @code{Rcmd} interface.
+
+@node Invoking R under Macintosh,  , Invoking R under Windows, Invoking R
+@section Invoking R under Macintosh
+
+The @R{} application startup is similar to that of UNIX and Windows
+systems but limited in the fact that there is no equivalent to the
+@code{R CMD} engine.  There exists only the console-based version of
+@R{} for Macintosh.
+ 
+When you double-click with your mouse pointer on the @R{} application
+icon it appears a small window equivalent to a command line where you
+can enter the startup options, as explained below, or simply type
+@key{RET} on the keyboard to start @R{}.
+
+The main @R{} program can be started with a variety of options in the
+form
+
+@display
+@code{R} [@var{options}],
+@end display
+
+The [@code{<}@var{infile}] [@code{>}@var{outfile}] equivalent to UNIX
+can be selected at startup using the standard Macintosh interface but
+they are not currently fully implemented.  So you can ignore these.
+
+Most options control what happens at the beginning and at the end of an
+@R{} session.  The startup mechanism is as follows (see also the on-line
+help for topic @samp{Startup} for more information).
+
+@itemize @bullet
+@item
+Unless @option{--no-environ} was given, @R{} searches for the file
+@file{.Renviron} in the @file{etc} subdirectory of @R{} application
+folder. The file found is sourced to set environment variables. It
+should contain lines of the form @samp{@var{name}=@var{value}}.  (See
+@code{help(Startup)} for a precise description.)
+
+@item
+Then, unless @option{--no-init-file} was given, @R{} searches for a file
+called @file{.Rprofile} in the @file{etc} subdirectory of @R{}
+application folder and sources it.
+
+@item
+It also loads a saved image from @file{.RData} if there is one (unless
+@option{--no-restore} or @option{--no-restore-data} was specified).
+This file is supposed to be found in the @file{etc} subdirectory of @R{}
+application folder.
+
+@item
+Finally, if a function @code{.First} exists, it is executed.  This
+function (as well as @code{.Last} which is executed at the end of the
+@R{} session) can be defined in the appropriate startup profiles, or
+reside in @file{.RData}.
+@end itemize
+
+In addition, there are options for controlling the memory available to
+the @R{} process (see the on-line help for topic @samp{Memory} for more
+information).  Users will not normally need to use these unless they are
+trying to limit the amount of memory used by @R{}.  Please note that,
+under Macintosh, you have to reserve in advance the amount of memory
+assigned to the @R{} application from the `Finder/Information' menu as
+it is usually done for any Macintosh software.  An amount of 32000k is
+sufficient to run all the demos and examples in the base distribution.
+
+@R{} accepts the following command-line options.
+
+@table @option
+@item --version
+Print version information to standard output and exit successfully.
+
+@item --save
+@itemx --no-save
+Control whether data sets should be saved or not at the end of the @R{}
+session.  If neither is given in an interactive session, the user is
+asked for the desired behavior when ending the session with @kbd{q()};
+in batch mode, one of these must be specified.
+
+@item --no-init-file
+Do not read the user's profile at startup.
+
+@item --restore
+@itemx --no-restore
+@itemx --no-restore-data
+Control whether saved images (file @file{:etc:.RData} in the directory
+where @R{} was started) should be restored at startup or not.  The
+default is to restore. (@option{--no-restore} implies all the specific
+@option{--no-restore-*} options.)
+
+@item --no-restore-history
+Control whether the history file (normally file @file{.Rhistory} in the
+directory where @R{} was started, but can be set by the environment
+variable @env{R_HISTFILE}) should be restored at startup or not.  The
+default is to restore.
+
+@item --vanilla
+Combine @option{--no-save}, @option{--no-environ},
+@option{--no-site-file}, @option{--no-init-file} and
+@option{--no-restore}.
+
+@item --min-vsize=@var{N}
+@itemx --max-vsize=@var{N}
+Specify the minimum or maximum amount of memory used for variable size
+objects by setting the ``vector heap'' size to @var{N} bytes.  Here,
+@var{N} must either be an integer or an integer ending with @samp{M},
+@samp{K}, or @samp{k}, meaning `Mega' (2^20), (computer) `Kilo' (2^10),
+or regular `kilo' (1000).
+
+@item --min-nsize=@var{N}
+@itemx --max-nsize=@var{N}
+Specify the amount of memory used for fixed size objects by setting the
+number of ``cons cells'' to @var{N}.  See the previous option for
+details on @var{N}.  A cons cell takes 28 bytes on a 32-bit machine, and
+usually 56 bytes on a 64-bit machine.
+
+@item --quiet
+@itemx --silent
+@itemx -q
+Do not print out the initial copyright and welcome messages.
+
+@item --slave
+Make @R{} run as quietly as possible.  This option is intended to
+support programs which use @R{} to compute results for them.
+
+@item --verbose
+Print more information about progress, and in particular set @R{}'s
+option @code{verbose} to @code{TRUE}.  @R{} code uses this option to
+control the printing of diagnostic messages.
+
+@end table
+
 
 @node The command line editor, Function and variable index, Invoking R, Top
 @appendix The command line editor
