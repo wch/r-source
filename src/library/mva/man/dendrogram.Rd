@@ -1,5 +1,6 @@
 \name{dendrogram}
 \title{General Tree Structures}
+\alias{dendrogram}% the class
 \alias{as.dendrogram}
 \alias{as.dendrogram.hclust}
 \alias{cut.dendrogram}
@@ -19,7 +20,8 @@
 }
 \usage{
 \method{plot}{dendrogram}(x, type=c("rectangle", "triangle"),
-         center=FALSE, xlab="", ylab="", ...)
+         center=FALSE, edge.root= !is.null(attr(x,"edgetext")),
+         nodePar = NULL, edgePar = list(), xlab="", ylab="", ...)
 \method{cut}{dendrogram}(x, h, ...)
 }
 \arguments{
@@ -28,6 +30,16 @@
   \item{center}{logical; if \code{TRUE}, nodes are plotted centered with
     respect to the leaves in the branch.  Otherwise (default), plot them
     in the middle of all direct child nodes.}
+  \item{edge.root}{logical; if true, draw an edge to the root node.}
+  \item{nodePar}{a \code{list} of plotting parameters to use for the
+    nodes (see \code{\link{points}}) or \code{NULL} by default which
+    does not draw symbols at the nodes.  The list may contain components
+    named \code{pch}, \code{cex}, \code{col}, and/or \code{bg} each of
+    which can have length two for specifying separate attributes for
+    \emph{inner} nodes and \emph{leaves}.}
+  \item{edgePar}{a \code{list} of plotting parameters to use for the
+    edge (see \code{\link{lines}}).  The list may contain components
+    named \code{col}, \code{lty} and/or \code{lwd}.}
   \item{h}{height at which the tree is cut.}
   \item{\dots, xlab, ylab}{graphical parameters, or arguments for
     other methods.}
@@ -51,6 +63,14 @@
     \item{\code{text}}{character; the label of the node}
     \item{\code{edgetext}}{character; the label for the edge leading to
       the node}
+    \item{\code{nodePar}}{a named list of length-1 vectors indicating
+      node-specific attributes for \code{\link{points}} plotting, see
+      the \code{nodePar} argument above.}
+    \item{\code{edgePar}}{a named list of length-1 vectors indicating
+      attributes for \code{\link{segments}} plotting of the edge leading
+      to the node, see the \code{edgePar} argument above.}
+    \item{\code{edgetext}}{character; the label for the edge leading to
+      the node}
   }
   Terminal nodes (leaves of the tree) can have arbitrary value but must
   not be a list.
@@ -69,6 +89,10 @@
 
   \code{plotNode()} and \code{plotNodeLimit()} are helper functions.
 }
+\note{
+  When using \code{type = "triangle"}, \code{center = TRUE} often looks
+  better.
+}
 \examples{
 library(mva)
 data(USArrests)
@@ -76,10 +100,15 @@ hc <- hclust(dist(USArrests), "ave")
 (dend1 <- as.dendrogram(hc)) # "print()" method
 str(dend1) # "str()" method
 plot(dend1)
+plot(dend1, nodePar=list(pch = c(1,NA),cex=0.8), type = "t", center=TRUE)
+
 dend2 <- cut(dend1, h=70)
 plot(dend2$upper)
+plot(dend2$upper, nodePar=list(pch = c(1,7), col = 2:1))
 ##  dend2$lower is *NOT* a dendrogram, but a list of .. :
-plot(dend2$lower[[3]])
+plot(dend2$lower[[3]], nodePar=list(col=4))
+plot(dend2$lower[[2]], nodePar=list(col=1),# non empty list
+     edgePar = list(lty=1:2, col=2:1), edge.root=TRUE)
 }
 %FIXME !! -- proper Keyword !!
 \keyword{multivariate}

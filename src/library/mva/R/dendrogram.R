@@ -1,5 +1,7 @@
 as.dendrogram <- function(object, ...) UseMethod("as.dendrogram")
 
+### FIXME: Consider  `hang = -1' or `= 0.1' argument
+### -----  as in plot.hclust() --- would be used for "height" construction!
 as.dendrogram.hclust <- function(object, ...)
 {
     if(is.null(object$labels))
@@ -126,78 +128,113 @@ function (object, max.level = 0, vec.len = 4, digits.d = 3, nchar.max = 128,
 
 plot.dendrogram <-
     function(x, type = c("rectangle", "triangle"),
-             center = FALSE, xlab = "", ylab = "", ...)
+             center = FALSE, edge.root= !is.null(attr(x,"edgetext")),
+             nodePar = NULL, edgePar = list(),
+             xlab = "", ylab = "", ...)
 {
     type <- match.arg(type)
-    plot(0, xlim = c(0, .memberDend(x)+1),
-         ylim = c(0, attr(x, "height")), type = "n",
-         xlab = xlab, ylab = ylab, ...)
-
-    if(center)
-        plotNode(0.5, .memberDend(x)+ 0.5, x, type, center)
-    else
-        plotNode(1,   .memberDend(x),      x, type, center)
+    hgt <- attr(x, "height")
+    if(edge.root && is.logical(edge.root))
+        edge.root <- 0.0625 * hgt
+    mem.x <- .memberDend(x)
+    if(center) { x1 <- 0.5 ; x2 <- mem.x + 0.5 }
+    else       { x1 <- 1   ; x2 <- mem.x }
+    plot(0, xlim = c(x1 - 1/2, x2 + 1/2),
+         ylim = c(0, (yTop <- hgt + edge.root)),
+         type = "n", xlab = xlab, ylab = ylab, ...)
+    if(edge.root) {
+        x0 <- plotNodeLimit(x1, x2, x, center)$ x
+        segments(x0, hgt, x0, yTop)
+        if(!is.null(et <- attr(x,"edgetext")))
+            text(x0, mean(hgt, yTop), et)
+    }
+    plotNode(x1, x2, x, type = type, center = center,
+             nodePar = nodePar, edgePar = edgePar)
 }
 
-### the work horse: plots lines from a node to all children
-plotNode <- function(x1, x2, subtree, type, center) {
 
-    if(is.recursive(subtree) && x1 != x2) {
-        K <- length(subtree)
-        topy <- attr(subtree, "height")
+### the work horse: plot node (if pch) and lines to all children
+plotNode <- function(x1, x2, subtree, type, center, nodePar, edgePar)
+{
+    inner <- is.recursive(subtree) && x1 != x2
+    yTop <- attr(subtree, "height")
+    bx <- plotNodeLimit(x1, x2, subtree, center)
+    xTop <- bx$x
+    if(getOption("verbose")) {
+        cat(if(inner)"inner node"else"leaf", ":",
+            if(inner)paste(" height", formatC(yTop),"; "),
+            "(x1,x2)= (",formatC(x1,wid=4),",",formatC(x2,wid=4),")",
+            "--> xTop=", formatC(xTop, wid=8),"\n", sep="")
+    }
 
-        bx <- plotNodeLimit(x1, x2, subtree, center)
-        topx <- bx$x
-
-        for(k in 1:K) {
-            boty <- attr(subtree[[k]], "height")
-            if(is.null(boty)) boty <- 0
-
-            botx <-
+    Xtract <- function(nam, L, default, indx)
+        rep(if(any(nam == names(L))) L[[nam]] else default, length = indx)[indx]
+    ## node specific parameters
+    hasP <- !is.null(nPar <- attr(subtree, "nodePar"))
+    if(!hasP) nPar <- nodePar
+    if(!is.null(nPar)) { ## draw this node
+        i <- if(inner || hasP) 1 else 2 # only 1 node specific par
+        pch <- Xtract("pch", nPar, default = 1:2,        i)
+        cex <- Xtract("cex", nPar, default = c(1,1),     i)
+        col <- Xtract("col", nPar, default = par("col"), i)
+        bg  <- Xtract("bg",  nPar, default = par("bg"),  i)
+        points(xTop, yTop, pch = pch, bg = bg, col = col, cex = cex)
+    }
+    ## FIXME: Label the node with  attr(subtree, "text")  {if ..}
+    if(inner) {
+        for(k in 1:length(subtree)) {
+            ## draw lines to the children and draw themselves recursively
+            yBot <- attr(child <- subtree[[k]], "height")
+            if(is.null(yBot)) yBot <- 0
+            xBot <-
                 if(center) mean(bx$limit[k:(k+1)])
                 else {
-                    mid <- attr(subtree[[k]],"midpoint")
+                    mid <- attr(child,"midpoint")
                     bx$limit[k] + if(is.null(mid)) 0 else mid
                 }
-
+            hasE <- !is.null(ePar <- attr(child, "edgePar"))
+            if(!hasE) ePar <- edgePar
+            i <- if(is.recursive(child) || hasE) 1 else 2
+            col <- Xtract("col", ePar, default = par("col"), i)
+            lty <- Xtract("lty", ePar, default = par("lty"), i)
+            lwd <- Xtract("lwd", ePar, default = par("lwd"), i)
             if(type == "triangle")
-                lines(c(topx, botx), c(topy, boty))
-            else {
-                lines(c(topx, botx), c(topy, topy))
-                lines(c(botx, botx), c(topy, boty))
+                segments(xTop,yTop, xBot,yBot, col=col, lty=lty, lwd=lwd)
+            else { # rectangle
+                segments(xTop,yTop, xBot,yTop, col=col, lty=lty, lwd=lwd)# h
+                segments(xBot,yTop, xBot,yBot, col=col, lty=lty, lwd=lwd)# v
             }
+            ## FIXME: draw attr(child, "edgetext")  {if ..}
 
             plotNode(bx$limit[k], bx$limit[k+1],
-                     subtree[[k]], type, center)
+                     subtree = child, type, center, nodePar, edgePar)
         }
     }
 }
-
 
 plotNodeLimit <- function(x1, x2, subtree, center)
 {
     ## get the left borders limit[k] of all children k=1..K, and
     ## the handle point `x' for the edge connecting to the parent.
-
-    limit <- c(x1, x2)
-    x <- mean(c(x1,x2))
-    if(is.recursive(subtree) && x1 != x2) {
+    inner <- is.recursive(subtree) && x1 != x2
+    if(inner) {
         K <- length(subtree)
-        topm <- .memberDend(subtree)
+        mTop <- .memberDend(subtree)
         limit <- integer(K)
         xx1 <- x1
         for(k in 1:K) {
             m <- .memberDend(subtree[[k]])
             ##if(is.null(m)) m <- 1
-            limit[k] <- xx1 +
-                (if(center) (x2-x1) * m/topm else m)
-            xx1 <- limit[k]
+            xx1 <- xx1 + (if(center) (x2-x1) * m/mTop else m)
+            limit[k] <- xx1
         }
         limit <- c(x1, limit)
-        if(!center) {
-            x <- x1 + attr(subtree, "midpoint")
-        }
+    } else { ## leaf
+        limit <- c(x1, x2)
     }
+    x <-
+        if(center) mean(c(x1,x2))
+        else x1 + (if(inner) attr(subtree, "midpoint") else 0)
     list(x = x, limit = limit)
 }
 
@@ -208,8 +245,10 @@ cut.dendrogram <- function(x, h, ...)
 
     assignNodes <- function(subtree, h) {
         if(is.recursive(subtree)) {
+            if(!(K <- length(subtree)))
+                warning("`subtree' of length 0 !!")
             new.mem <- 0
-            for(k in seq(along = subtree)) {
+            for(k in 1:K) {
                 if(attr(subtree[[k]], "height") <= h) {
                     ## cut it, i.e. save to LOWER[] and make a leaf
                     sub <- subtree[[k]]

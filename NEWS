@@ -29,9 +29,10 @@ NEW FEATURES
 	  environment of the caller of the generic function rather
 	  than the environment where the generic is defined.
 
-    o	New methods ([[, print, str) for "dendrogram" class.
+    o	New methods ([[, print, str) and extended plot() method
+	for "dendrogram" class.
 
-    o   sprintf() now checks the agreement between formats and object
+    o	sprintf() now checks the agreement between formats and object
 	types, and handles special values (NA, Inf, ...) correctly.
 
     o	chol() now uses a tolerance for non-positive-definiteness and
