@@ -65,7 +65,7 @@ CATALOGS = @CATALOGS@
 	sed -e '/^#/d' $< > t-$@
 	mv t-$@ $@
 
-R: all
+R: 
 	@$(MAKE) install Rsharedir=${top_builddir}/share
 
 all: all-@USE_NLS@
@@ -136,8 +136,8 @@ $(POFILES): $(srcdir)/$(DOMAIN).pot
 install: install-exec install-data
 install-exec:
 install-data: install-data-@USE_NLS@
-install-data-no: all
-install-data-yes: all
+install-data-no:
+install-data-yes:
 	@$(mkinstalldirs) $(Rsharedir)
 	@catalogs='$(CATALOGS)'; \
 	for cat in $$catalogs; do \
