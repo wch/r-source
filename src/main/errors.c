@@ -354,17 +354,14 @@ void jump_to_toplevel()
 	if( !isLanguage(s) &&  ! isExpression(s) )  /* shouldn't happen */
 	    REprintf("invalid option \"error\"\n");
 	else {
-	    c = R_GlobalContext;
-	    while ( !(c->callflag & CTXT_FUNCTION) && c->callflag )
-		c = c->nextcontext;
 	    inError = 3;
 	    if (isLanguage(s))
-		eval(s, c->cloenv);
+		eval(s, R_GlobalEnv);
 	    else /* expression */
 	    {
 		int i, n = LENGTH(s);
 		for (i = 0 ; i < n ; i++)
-		    eval(VECTOR_ELT(s, i), c->cloenv);
+		    eval(VECTOR_ELT(s, i), R_GlobalEnv);
 	    }
 	    inError = 1;
 	}

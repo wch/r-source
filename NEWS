@@ -229,6 +229,9 @@ BUG FIXES
 
     o   Use FILESEP instead of '/' in devPS.c.
 
+    o   Errors in argument matching could cause crashes if error
+    	handler was used
+
     o   Zero the widths of undefined chars in postscript().
 
     o   Make font metrics local to the device in postscript(), so

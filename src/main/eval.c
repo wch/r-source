@@ -379,7 +379,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 
     /*  Set up a context with the call in it so error has access to it */
 
-    begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist);
+    begincontext(&cntxt, CTXT_RETURN, call, savedrho, rho, arglist);
 
     /*  Build a list which matches the actual (unevaluated) arguments
 	to the formal paramters.  Build a new environment which
