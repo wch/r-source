@@ -494,6 +494,9 @@ another directory by using
 make prefix=/path/to/here install
 @end example
 
+@noindent
+at least with GNU @command{make}.
+
 More precise control is available at configure time via options: see
 @command{configure --help} for details.
 
