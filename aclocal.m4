@@ -172,6 +172,57 @@ AC_DEFUN(R_PROG_CC_FLAG,
     fi
   ])
 dnl
+dnl R_PROG_F77_WORKS
+dnl
+dnl Determine whether the Fortran 77 compiler works (in the sense that
+dnl we can create executables, but not necessarily run them).  This
+dnl tests in particular whether all Fortran libraries are available.
+AC_DEFUN(R_PROG_F77_WORKS, [
+    AC_CACHE_CHECK([whether the Fortran 77 compiler (${FC} ${FFLAGS} ${LDFLAGS}) works],
+    r_cv_prog_f77_works, [
+      cat > conftest.f <<EOF    
+      program conftest
+      end
+EOF
+      ${FC} -o conftest ${FFLAGS} ${LDFLAGS} conftest.f ${LIBS} \
+        1>&AC_FD_CC 2>&AC_FD_CC
+      if test ${?} = 0; then
+        r_cv_prog_f77_works=yes
+      else
+        r_cv_prog_f77_works=no
+      fi])
+  rm -rf conftest conftest.* core
+  if test ${r_cv_prog_f77_works} = no; then
+    AC_MSG_WARN([Maybe your Fortran installation is incomplete])
+    AC_MSG_ERROR([Fortran 77 compiler does not work])
+  fi])
+dnl
+dnl R_PROG_F77_GNU
+dnl
+dnl See if ${F77-f77} is the GNU Fortran compiler
+dnl
+AC_DEFUN(R_PROG_F77_GNU,
+  [ AC_CACHE_CHECK([whether ${F77-f77} is the GNU Fortran compiler],
+      r_cv_prog_f77_is_g77,
+      [ if ${use_g77}; then
+	  r_cv_prog_f77_is_g77=yes
+	else
+	  foutput=`${F77-f77} -v 2>&1 | egrep "GNU F77|egcs|g77"`
+	  if test -n "${foutput}"; then
+	    r_cv_prog_f77_is_g77=yes
+	  else
+	    r_cv_prog_f77_is_g77=no
+	  fi
+	fi
+      ])
+    if test "${r_cv_prog_f77_is_g77}" = yes; then
+      G77=yes
+      : ${FFLAGS="-g -O2"}
+    else
+      G77=
+    fi
+  ])
+dnl
 dnl OCTAVE_FLIBS
 dnl
 dnl See what libraries are used by the Fortran compiler.
@@ -355,55 +406,6 @@ changequote([, ])dnl
 octave_cv_flibs="$flibs_result"])
 FLIBS="$octave_cv_flibs"
 AC_MSG_RESULT([$FLIBS])])
-dnl
-dnl R_PROG_F77_FLIBS
-dnl
-dnl Determine the libraries wanted by the Fortran compiler, and whether
-dnl they have all been installed ...
-AC_DEFUN(R_PROG_F77_FLIBS, [
-  AC_REQUIRE([OCTAVE_FLIBS])
-  AC_CACHE_CHECK([whether Fortran libraries work correctly],
-    r_cv_prog_f77_flibs_ok, [
-      echo "      END" > conftest.f
-      ${FC} -c ${FFLAGS} conftest.f 1>&AC_FD_CC 2>&AC_FD_CC
-      ${CC} ${LDFLAGS} -o conftest conftest.o ${FLIBS} \
-        1>&AC_FD_CC 2>&AC_FD_CC
-      if test ${?} = 0; then
-        r_cv_prog_f77_flibs_ok=yes
-      else
-        r_cv_prog_f77_flibs_ok=no
-      fi])
-  rm -rf conftest conftest.* core
-  if test ${r_cv_prog_f77_flibs_ok} = no; then
-    AC_MSG_WARN([Fortran libraries do not work correctly])
-    AC_MSG_ERROR([Maybe your Fortran installation is incomplete])
-  fi])
-dnl
-dnl R_PROG_F77_G77
-dnl
-dnl See if ${F77-f77} is the GNU Fortran compiler
-dnl
-AC_DEFUN(R_PROG_F77_G77,
-  [ AC_CACHE_CHECK([whether ${F77-f77} is the GNU Fortran compiler],
-      r_cv_prog_f77_is_g77,
-      [ if ${use_g77}; then
-	  r_cv_prog_f77_is_g77=yes
-	else
-	  foutput=`${F77-f77} -v 2>&1 | egrep "GNU F77|egcs|g77"`
-	  if test -n "${foutput}"; then
-	    r_cv_prog_f77_is_g77=yes
-	  else
-	    r_cv_prog_f77_is_g77=no
-	  fi
-	fi
-      ])
-    if test "${r_cv_prog_f77_is_g77}" = yes; then
-      G77=yes
-      : ${FFLAGS="-g -O2"}
-    else
-      G77=
-    fi
-  ])
 dnl
 dnl See if the Fortran compiler appends underscores
 dnl
