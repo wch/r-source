@@ -6,13 +6,14 @@ page <- function(x, method = c("dput", "print"), ...)
     if (!is.character(subx) || length(subx) != 1)
 	stop("page requires a name")
     method <- match.arg(method)
-    if(exists(subx, inherits=TRUE)) {
+    parent <- parent.frame()
+    if(exists(subx, envir = parent, inherits=TRUE)) {
         file <- tempfile("Rpage.")
         if(method == "dput")
-            dput(get(subx, inherits=TRUE), file)
+            dput(get(subx, envir = parent, inherits=TRUE), file)
         else {
             sink(file)
-            print(get(subx, inherits=TRUE))
+            print(get(subx, envir = parent, inherits=TRUE))
             sink()
         }
 	file.show(file, title = subx, delete.file = TRUE, ...)

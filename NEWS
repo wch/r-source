@@ -420,9 +420,9 @@ BUG FIXES
     o	Subsetting arrays to a result with 0 dimension(s) failed if
 	the array had dimnames. (PR#2507)
 
-    o	If the call to data.frame() included 0-row arguments, it
-	tried to replicate them to maximum number of rows, and failed
-	if this was 1 or more.
+    o	If the call to data.frame() included 0-row arguments, it tried
+	to replicate them to the maximum number of rows, and failed if
+	this was 1 or more.
 
     o	replicate() now understands data frames to which na.omit() has
 	been applied.
@@ -434,10 +434,16 @@ BUG FIXES
     o	symbols(thermometers=) was often giving a spurious warning about
 	the range.
 
-    o	The automatic search of BLAS libs now trys Sun's libsunperf
+    o	The automatic search of BLAS libs now tries Sun's libsunperf
 	the way the latest versions require. (PR#2530)
 
     o	str(array(1)) now does show the array.
+
+    o	step() nows works somewhat better if called from a function.
+
+    o	page() was searching from the wrong environment, and so
+	searching base before the workspace.
+
 
 
 	**************************************************
