@@ -2,7 +2,7 @@ seq <- function(x, ...) UseMethod("seq")
 
 seq.default <-
 function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
-         length.out = NULL, along.with = NULL) {
+	 length.out = NULL, along.with = NULL) {
 	if(!missing(along.with))
 		length.out <- length(along.with)
 	else if(!missing(length.out))
@@ -18,7 +18,9 @@ function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
 			from:to
 		else {
 			n <- (del <- to - from)/by
-			if(is.na(n)) {
+			if(del == 0)
+				return(from)
+			else if(is.na(n)) {
 				if(by == 0 && del == 0)
 					return(from)
 				else stop("invalid (to - from)/by in seq(.)")
