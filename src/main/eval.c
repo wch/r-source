@@ -40,11 +40,16 @@ SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
 */
 extern RgnHandle sMouseRgn;
 extern UInt32 sSleepTime;
+extern Boolean Interrupt;
+
 void isintrpt()
 {
     EventRecord event;
-
-    WaitNextEvent( everyEvent, &event, sSleepTime, sMouseRgn );
+    
+    if(!Interrupt)
+     return;
+     
+    WaitNextEvent( everyEvent  , &event ,sSleepTime , nil);
     if ((event.modifiers & cmdKey) &&
 	((event.message & charCodeMask) == '.')) {
 	FlushEvents(keyDownMask, 0);
@@ -53,6 +58,7 @@ void isintrpt()
 	raise(SIGINT);
 	return;
     }
+
 }
 
 #endif
