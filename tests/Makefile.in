@@ -38,16 +38,18 @@ test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-src-reg-1 = \
-	reg-tests-1.R reg-tests-2.R
+	reg-tests-1.R reg-tests-2.R reg-IO.R
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
+
+test-src-random = p-r-random-tests.R
 
 DISTFILES = Makefile.in README \
 	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
 	$(test-src-sloppy-1) $(test-src-sloppy-1:.R=.Rout.save) \
 	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
 	$(test-src-reg) reg-tests-2.Rout.save \
-	p-r-random-tests.R  p-r-random-tests.Rout.save
+	$(test-src-random)  p-r-random-tests.Rout.save
 SUBDIRS = Examples
 
 R = LC_ALL=C $(top_builddir)/bin/R --vanilla
@@ -57,8 +59,10 @@ test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
 test-out-gct = $(test-src-gct:.R=.Rout-gct)
 test-out-reg = $(test-src-reg:.R=.Rout)
+test-out-random = $(test-src-random:.R=.Rout)
 
-test-out = $(test-src:.R=.Rout) $(test-out-gct)
+test-out = $(test-src:.R=.Rout) $(test-out-gct) $(test-out-reg) \
+           $(test-out-random)
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct
@@ -104,7 +108,7 @@ FORCE:
 .R.Rout-gct:
 	@echo "running gctorture() + \`$<'"
 	@(echo '.ptime <- proc.time(); gctorture()' ; cat $< ; \
-	  echo 'cat("Time used {gctorture()}:", proc.time() - .ptime, "\n")') \
+	  echo 'cat("Time used {gctorture()}:", proc.time() - .ptime, "\\n")') \
 	 | $(R) > $@
 	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
 	  if test ! -r $$Ro ; then $(MAKE) $$Ro ; fi; \
@@ -127,10 +131,16 @@ test-Specific:
 	@$(MAKE) test-Specific-strict RVAL_IF_DIFF=1
 	@echo "running sloppy specific tests"
 	@$(MAKE) test-Specific-sloppy RVAL_IF_DIFF=0
+
 test-Gct: $(test-out-gct)
+
 test-Reg:
 	@echo "running regression tests"
 	@$(MAKE) $(test-out-reg) RVAL_IF_DIFF=0
+
+test-Random:
+	@echo "running tests of random deviate generation"
+	@$(MAKE) $(test-out-random) RVAL_IF_DIFF=1
 
 test-undoc:
 	@for p in $(R_PKGS); do \
