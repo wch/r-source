@@ -4,6 +4,8 @@
 RHOME=R_HOME_DIR
 export RHOME
 
+RBINARY="R.binary"
+
 ARG="$1"
 case "${ARG}" in
     RHOME)
@@ -12,8 +14,10 @@ case "${ARG}" in
 	shift; PATH="${PATH}:${RHOME}/bin" exec "$@" ;;
     BATCH|COMPILE|INSTALL|REMOVE|SHLIB)
 	shift; exec sh "${RHOME}/bin/${ARG}" "$@" ;;
+    -g|--gnome)
+        shift; RBINARY="R.gnome" ;;
     -d|--debugger)
-	exec "$2" ${RHOME}/bin/R.binary ;;
+	exec "$2" ${RHOME}/bin/${RBINARY} ;;
     -h|--help|-\?)
 	cat <<_EOF_
 
@@ -36,6 +40,7 @@ Options:
   -q, --quiet, --silent     Make R run as quietly as possible.
   --version                 Print version info and exit.
   --verbose                 Print more information about progress.
+  -g, --gnome               Run the gnome binary, if available
   -d NAME, --debugger NAME  Run R through debugger NAME.
 
 Commands:
@@ -74,4 +79,4 @@ LATEX=${LATEX-@LATEX@}
 DVIPS=${DVIPS-@DVIPS@}
 export LATEX DVIPS
 
-exec ${RHOME}/bin/R.binary @R_BATCHSAVE@ "$@"
+exec ${RHOME}/bin/${RBINARY} @R_BATCHSAVE@ "$@"
