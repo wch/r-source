@@ -1,6 +1,6 @@
 
-R : Copyright 2001, The R Development Core Team
-Version 1.5.0 Under development (unstable) (2001-12-26)
+R : Copyright 2002, The R Development Core Team
+Version 1.6.0 Under development (unstable) (2002-05-05)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -24,14 +24,14 @@ Type `q()' to quit R.
 > bpos <- match("package:base",search())
 > nn <- ls(pos=bpos)
 > length(nn) # 844 [R 0.62.0, March 25, 1998;  1067 R 0.64.0 March 1999]
-[1] 1491
+[1] 1529
 > 
 > is.primitive <- function (obj) is.function(obj) && is.null(args(obj))
 > is.special <- function(obj) typeof(obj) == "special"
 > 
 > Primf <- nn[sapply(nn, function(N) is.primitive(get(N, pos=bpos)))]
 > length(Primf) ## 195  R 0.62.0, March 25, 1998
-[1] 150
+[1] 152
 > ## 132	R 0.62.2+
 > Real.primitives <-
 +     list(
@@ -134,7 +134,7 @@ Type `q()' to quit R.
 > table(ncpf)
 ncpf
  5  6  7  8  9 10 11 12 13 14 
- 1  1  5  1  8  4  4  2  2  1 
+ 1  1  6  2  8  4  4  2  2  1 
 > prim.f[ncpf <= 6]#  only is.na, is.nan
 [1] "is.na"  "is.nan"
 > 
@@ -148,15 +148,17 @@ ncpf
 [25] "is.real"        "is.recursive"   "is.single"      "is.symbol"     
 > 
 > length(prim.f2 <- prim.f[! p.isis]) # down to 87   [R 0.62.0, March 25, 1998]
-[1] 1
+[1] 3
 > 					# 61  [March 27]
 > 					# 43  [April 17];  38 [April 22]
 > ##-> 0	[May 1, 1998]
 > 
 > prim.f2 # character(0) --- none left! --
-[1] "reg.finalizer"
+[1] ".subset"       ".subset2"      "reg.finalizer"
 > 
 > for(n in prim.f2)
 +     cat(n," <- function(*) .Internal(",n,"(*))\n", sep="")
+.subset <- function(*) .Internal(.subset(*))
+.subset2 <- function(*) .Internal(.subset2(*))
 reg.finalizer <- function(*) .Internal(reg.finalizer(*))
 > 

@@ -404,11 +404,11 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
     ## explicitly. Also will check for wrong number or empty args
     if(nargs() < 3)
 	(function(x, i)
-	 if(is.matrix(i))
-	 as.matrix(x)[[i]]
-	 else unclass(x)[[i]])(x, ...)
-    else (function(x, i, j)
-	  x[[j]][[i]])(unclass(x), ...)
+	  if(is.matrix(i))
+	  as.matrix(x)[[i]]
+ 	  else .subset2(x,i))(x, ...)
+    else 
+        .subset2(.subset2(x,..1),..2)
 }
 
 "[<-.data.frame" <- function(x, i, j, value)

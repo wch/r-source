@@ -19,6 +19,8 @@
 \alias{[<-.factor}
 \alias{[.noquote}
 \alias{[<-.noquote}
+\alias{.subset}
+\alias{.subset2}
 \description{
   Operators act on vectors, arrays, dataframes and lists to extract or
   replace subsets.
@@ -30,8 +32,11 @@ x[i, j, \dots , drop=TRUE]
 x[[i]]
 x[[i, j, \dots]]
 x$name
+.subset(x, \dots)
+.subset2(x, \dots)
 }
 \arguments{
+  \item{x} object from which to extract elements
   \item{i,j,name}{elements to extract or replace}
   \item{drop}{For data frames, matrices, and arrays.  If \code{TRUE} the
     result is coerced to the lowest possible dimension (see examples
@@ -61,6 +66,12 @@ x$name
   The operators \code{$} and \code{$<-} do not evaluate their second
   argument. It is translated to a string and that string is used to
   locate the correct component of the first argument.
+
+  The functions \code{.subset} and \code{.subset2} are essentially
+  equivalent to the \code{[} and \code{[[} operators, except that 
+  methods dispatch does not take place. This is to avoid expensive
+  unclassing in order to apply the default method to an object. They
+  should not normally be invoked by end users.
 }
 \seealso{
   \code{\link{list}}, \code{\link{array}}, \code{\link{matrix}}.

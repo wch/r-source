@@ -96,6 +96,8 @@ FUNTAB R_FunTab[] =
 {"<<-",		do_set,		2,	100,	-1,	PP_ASSIGN2},
 {"{",		do_begin,	0,	0,	-1,	PP_CURLY},
 {"(",		do_paren,	0,	1,	1,	PP_PAREN},
+{".subset",	do_subset_dflt,	1,	1,	-1,	PP_FUNCALL},
+{".subset2",	do_subset2_dflt,2,	1,	2,	PP_FUNCALL},
 {"[",		do_subset,	1,	0,	-1,	PP_SUBSET},
 {"[[",		do_subset2,	2,	0,	2,	PP_SUBSET},
 {"$",		do_subset3,	3,	0,	2,	PP_DOLLAR},
