@@ -11,7 +11,7 @@ names(stop.list) <- core.pkgs
 ## -- Stop List for "base" :
 edit.int <- c("fix", "edit", "edit.data.frame", "edit.default", "vi",
               "emacs", "pico", "xemacs", "xedit")
-misc.int <- c("browser", "bug.report", "menu")
+misc.int <- c("browser", "bug.report", "menu", "repeat")
 stop.list[["base"]] <-
     if(nchar(getenv("R_TESTLOTS"))) {## SEVERE TESTING, try almost ALL
 	c(edit.int, misc.int)
@@ -49,7 +49,7 @@ for (pkg in core.pkgs) {
   }
   else {
       library(pkg, character = TRUE)
-      cat("library(",pkg,", character = TRUE)\n")
+      cat("library(",pkg,")\n")
       this.pos <- 2
   }
 
