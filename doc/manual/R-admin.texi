@@ -1204,6 +1204,7 @@ from the library.
 
 @node Setting up a package repository,  , Removing packages, Add-on packages
 @section Setting up a package repository
+@cindex Repositories
 
 Utilities such as @code{install.packages} can be pointed at any
 CRAN-style repository, and @R{} users may want to set up their own.  The
@@ -1234,6 +1235,8 @@ needed.  The simplest way to set up such a file is to use function
 @code{write_PACKAGES} in the @pkg{tools} packages, and its help explains
 which fields are needed.
 
+To add your repository to the list offered by @code{setRepositories},
+see the help file for that function.
 
 @node Internationalization, Essential and useful other programs in Unix, Add-on packages, Top
 @chapter Internationalization and Localization

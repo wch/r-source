@@ -19,12 +19,7 @@ setRepositories(graphics = TRUE)
 }
 \details{
   The default list of known repositories is stored in the file
-#ifdef unix
   \file{R\_HOME/etc/repositories}.
-#endif
-#ifdef windows
-  \file{R\_HOME/etc/repositories.win}.
-#endif
   That file can be edited for a site, or a user can have a personal copy
   in \file{HOME/.R/repositories} which will take precedence.
 

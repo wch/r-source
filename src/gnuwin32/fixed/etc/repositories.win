@@ -1,5 +1,0 @@
-menu_name	URL	default
-CRAN	CRAN (auto-built)	@CRAN@	TRUE
-CRANextra	CRAN (extras)	"http://www.stats.ox.ac.uk/pub/RWin"	TRUE
-BioC	Bioconductor	http://www.bioconductor.org	FALSE
-Omegahat	Omegahat	http://www.omegahat.org/R	FALSE

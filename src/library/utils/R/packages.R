@@ -421,11 +421,11 @@ setRepositories <- function(graphics=TRUE)
 {
     p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
     if(!file.exists(p))
-        p <- file.path(R.home(), "etc",
-                       if(.Platform$OS.type == "windows") "repositories.win"
-                       else "repositories")
+        p <- file.path(R.home(), "etc", "repositories")
     a <- read.delim(p, header=TRUE,
-                    colClasses=c(rep("character", 3), "logical"))
+                    colClasses=c(rep("character", 3), rep("logical", 4)))
+    thisType <- a[[getOption("pkgType")]]
+    a <- a[thisType, 1:4]
     repos <- getOption("repos")
     ## Now look for CRAN and any others in getOptions("repos")
     if("CRAN" %in% row.names(a) && !is.na(CRAN <- repos["CRAN"]))
