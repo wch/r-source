@@ -73,7 +73,7 @@ The functions should not be used with multiple devices.}
 \code{dev.*}}}
 
 \examples{
-if (interactive) {
+if (interactive()) {
 
 split.screen(c(2,1))             # split display into two screens
 split.screen(c(1,3), screen = 2) # now split the bottom half into 3
