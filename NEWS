@@ -147,6 +147,9 @@ NEW FEATURES
 	This defaults to false, but can be set (also for base) to true
 	by setting the environment variable R_KEEP_PKG_SOURCE to "yes"
 
+    o	Par `lty' in lines() now defaults to par("lty") not "solid",
+	for consistency with plot().
+
     o	list.files() [aka dir()]: path argument has now default = "."
 
     o	locator() allows inline graphics parameters (for the plotting
