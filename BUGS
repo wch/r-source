@@ -51,7 +51,11 @@ Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
 
 Directory:  Analyses
 
-none
+* PR# 934 *
+Subject: ks.test in ctest package
+From: Murray Smith <mh.smith@auckland.ac.nz>
+Date: Tue, 08 May 2001 16:52:07 +1200
+--code and documentations suggestions
 
 Directory:  Documentation
 
@@ -59,6 +63,7 @@ Directory:  Documentation
 Subject: documentation problems in str.Rd
 From: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>
 Date: Sat, 7 Apr 2001 23:08:23 +0200
+--fixed (both code and documentation) for 1.3  (MM).
 
 Directory:  Graphics
 
@@ -223,6 +228,11 @@ Date: Tue, 14 Mar 2000 10:32:43 +0100 (MET)
 
 Directory:  System-specific
 
+* PR# 935 *
+Subject:  help.start() fails 
+From: "Wilhelm B. Kloke" <wb@vestein.arb-phys.uni-dortmund.de>
+Date: Wed, 9 May 2001 13:43:49 +0200 (MET DST)
+--Report on 1.2.1: on other systems the file is installed with 644.
 * PR# 863 *
 Subject: src/main/arithmetic.c on OpenBSD
 From: ian@darwinsys.com (Ian Darwin)
@@ -294,23 +304,19 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 936 *
-Subject: help.start() failed
-From: "Wilhelm B. Kloke" <wb@vestein.arb-phys.uni-dortmund.de>
-Date: Wed, 9 May 2001 13:46:05 +0200 (MET DST)
-* PR# 933 *
-Subject: read.xport bug of foreign pkg
-From: jorvutom@icaro.dic.uchile.cl
-Date: Sat, 5 May 2001 22:17:37 +0200 (MET DST)
+* PR# 939 *
+Subject: Windows, RCMD INSTALL and path
+From: david.firth@nuf.ox.ac.uk
+Date: Fri, 11 May 2001 17:59:29 +0200 (MET DST)
+* PR# 938 *
+Subject: name creation with index arrays
+From: sint@oeaw.ac.at
+Date: Thu, 10 May 2001 23:39:53 +0200 (MET DST)
+* PR# 937 *
+Subject: name creation with index arrays
+From: sint@oeaw.ac.at
+Date: Thu, 10 May 2001 23:31:58 +0200 (MET DST)
 * PR# 932 *
 Subject: scoping error in xy.coords
 From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
 Date: Fri, 04 May 2001 11:20:57 -0400
-* PR# 935 *
-Subject:  help.start() fails 
-From: "Wilhelm B. Kloke" <wb@vestein.arb-phys.uni-dortmund.de>
-Date: Wed, 9 May 2001 13:43:49 +0200 (MET DST)
-* PR# 934 *
-Subject: ks.test in ctest package
-From: Murray Smith <mh.smith@auckland.ac.nz>
-Date: Tue, 08 May 2001 16:52:07 +1200
