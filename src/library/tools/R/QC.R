@@ -2710,8 +2710,7 @@ function(dfile)
     val <- package_name <- db["Package"]
     if(!is.na(val)) {
         tmp <- character()
-        if(regexpr(paste("^", valid_package_name_regexp, "$",
-                         sep = ""),
+        if(regexpr(sprintf("^%s$", valid_package_name_regexp),
                    val) == -1)
             tmp <- c(tmp, "Malformed package name")
         ## <FIXME>
@@ -2739,8 +2738,7 @@ function(dfile)
     }
     if(!is.na(val <- db["Version"])
        && !is_base_package
-       && (regexpr(paste("^", valid_package_version_regexp, "$",
-                         sep = ""),
+       && (regexpr(sprintf("^%s$", valid_package_version_regexp),
                    val) == -1))
         out$bad_version <- val
     if(!is.na(val <- db["Maintainer"])
@@ -2773,9 +2771,8 @@ function(dfile)
                 ## If not just a valid package name ...
                 if(!sub(dep_regexp, "\\3", dep) %in% c("<=", ">="))
                     bad_dep_op <- c(bad_dep_op, dep)
-                else if(regexpr(paste("^",
-                                      valid_package_version_regexp,
-                                      "$", sep = ""),
+                else if(regexpr(sprintf("^%s$",
+                                        valid_package_version_regexp),
                                 sub(dep_regexp, "\\4", dep)) == -1)
                     bad_dep_version <- c(bad_dep_version, dep)
             }
@@ -3105,21 +3102,32 @@ function(x)
     ## Note how we deal with S3 replacement methods found.
     ## These come out named "\method{GENERIC}{CLASS}<-" which we
     ## need to turn into 'GENERIC<-.CLASS'.
-    sub("\\\\(S3)?method\\{([._[:alnum:]]*|\\$|\\[\\[?)\\}\\{([._[:alnum:]]*)\\}(<-)?",
-        "\\2\\4.\\3",
+    sub(sprintf("%s(<-)?", .S3_method_markup_regexp),
+        "\\3\\5.\\4",
         x)
 }
 
 ### * .S3_method_markup_regexp
 
+## For matching \(S3)?method{GENERIC}{CLASS}.
+## GENERIC can be a syntactically valid name, or one of $ [ [[.
+## Support for S3 Ops group generics may be added eventually, provided
+## we also enhance Rdconv accordingly.
+## See also .functions_with_no_useful_S3_method_markup.
+
 .S3_method_markup_regexp <-
-    "(\\\\(S3)?method\\{([._[:alnum:]]*|\\$|\\[\\[?)\\}\\{([._[:alnum:]]*)\\})"
+    sprintf("(\\\\(S3)?method\\{(%s)\\}\\{(%s)\\})",
+            "[._[:alnum:]]*|\\$|\\[\\[?",
+            "[._[:alnum:]]*")
 
 ### * .S4_method_markup_regexp
 
-.S4_method_markup_regexp <-
-    "(\\\\S4method\\{([._[:alnum:]]*)\\}\\{([._[:alnum:],]*)\\})"
+## For matching \S4method{GENERIC}{SIGLIST}.
 
+.S4_method_markup_regexp <-
+    sprintf("(\\\\S4method\\{(%s)\\}\\{(%s)\\})",
+            "[._[:alnum:]]*",
+            "[._[:alnum:],]*")
 
 ### Local variables: ***
 ### mode: outline-minor ***
