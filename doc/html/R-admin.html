@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.9.0 (2004-05-12).
+   <p>The current version of this document is 1.9.0 (2004-05-23).
 
    ISBN 3-900051-02-X
 
@@ -1332,8 +1332,10 @@ R 1.9.0 under AIX 5.1 in 64-bit mode with
      CXXFLAGS='-O -qstrict'
      </pre>
 
-<p>and the X11() device worked.  His system required the Makeconf file to
-be edited to replace /lib/crt0.o by /lib/crt0_64.o.
+<p>and the <code>X11()</code> device worked.  His system required the
+<code>Makeconf</code> file to be edited to replace <code>/lib/crt0.o</code> by
+<code>/lib/crt0_64.o</code> in <code>R_XTRA_LIBS</code>, and <code>configure</code> now
+tries to detect this.
 
 <a name="Enabling%20search%20in%20HTML%20help"></a>
 
