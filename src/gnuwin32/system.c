@@ -369,6 +369,7 @@ void R_CleanUp(int saveact)
 	break;
     case SA_SUICIDE:
     default:
+	break;
     }
     CleanEd();
     closeAllHlpFiles();

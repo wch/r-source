@@ -1,5 +1,5 @@
-#ifndef PLATFORM_H_
-#define PLATFORM_H_
+#ifndef RCONFIG_H_
+#define RCONFIG_H_
 
 #define Win32
 
@@ -19,7 +19,7 @@
 #undef const
 
 /* Define if you have the ANSI C header files.  */
-#define STDC_HEADERS
+#define STDC_HEADERS 1
 
 /* (Long) Integers */
 
@@ -27,15 +27,15 @@
 
 /* Floating Point Arithmetic */
 #undef HAVE_MATHERR		/* System V */
-#define HAVE_ISNAN		/* IEEE Arith indicator */
-#define HAVE_FINITE
+#define HAVE_ISNAN 1		/* IEEE Arith indicator */
+#define HAVE_FINITE 1
 
 #undef HAVE_IEEEFP_H		/* "-Wall" */
 #undef HAVE_IEEE754_H		/* Linux */
 
 #ifdef HAVE_ISNAN
 #ifdef HAVE_FINITE
-#define IEEE_754
+#define IEEE_754 1
 #endif
 #endif
 extern int _isnan(double);
@@ -63,14 +63,14 @@ extern int _finite(double);
 #undef HAVE_ELF_H
 
 /* Process Timing */
-#define HAVE_TIMES
-#undef HAVE_TIMES_H
+#define HAVE_TIMES 1
 #undef HAVE_SYS_TIME_H
 #undef HAVE_SYS_TIMES_H
 #undef TIME_WITH_SYS_TIME
 
 /* XDR Library Available */
-#define HAVE_RPC_XDR_H
+#define HAVE_RPC_RPC_H 1
+#define HAVE_RPC_XDR_H 1
 
 /* HDF5 Library Available */
 #undef HAVE_HDF5_H
@@ -79,9 +79,9 @@ extern int _finite(double);
 #undef HAVE_STRCOLL
 
 /* Inverse Hyperbolics */
-#define HAVE_ASINH
-#define HAVE_ACOSH
-#define HAVE_ATANH
+#define HAVE_ASINH 1
+#define HAVE_ACOSH 1
+#define HAVE_ATANH 1
 double asinh(double);
 double acosh(double);
 double atanh(double);
@@ -97,7 +97,7 @@ double atanh(double);
 #undef USE_BUILTIN_RINT
 
 /* POSIX Regular Expressions Available */
-#define HAVE_REGCOMP
+#define HAVE_REGCOMP 1
 
 /* Compatibility for "memmove" on older BSD platforms */
 #undef HAVE_MEMMOVE
@@ -105,7 +105,7 @@ double atanh(double);
 #undef HAVE_BCOPY
 
 /* Compatibility for setjmp / longjmp */
-#define HAVE_SIGLONGJMP
+#define HAVE_SIGLONGJMP 1
 
 #ifdef HAVE_SIGLONGJMP
 #define PSIGNAL
@@ -118,12 +118,11 @@ double atanh(double);
 #define LONGJMP(x,i) longjmp(x,i)
 #endif
 
-
 /* Some Linux systems may need this */
 #undef NEED___SETFPUCW
 
 /* Fortran and C Links */
-#define HAVE_F77_UNDERSCORE
+#define HAVE_F77_UNDERSCORE 1
 
 #ifdef HAVE_F77_UNDERSCORE
 #define F77_SYMBOL(x)	x ## _
@@ -136,9 +135,19 @@ double atanh(double);
 /* GNU Readline Library */
 #undef HAVE_LIBREADLINE
 #undef HAVE_READLINE_HISTORY_H
+#undef HAVE_READLINE_READLINE_H
 
-#undef HAVE_LOCALE_H
-#undef HAVE_UNISTD_H
+/* Miscellaneous */ 
+#define HAVE_LOCALE_H 1
+#define HAVE_SYS_STAT_H 1
+#define HAVE_SYS_TYPES_H 1
+#define HAVE_UNISTD_H 1
+
+/* Dirent stuff */
+#define HAVE_DIRENT_H 1
+#undef HAVE_SYS_NDIR_H
+#undef HAVE_SYS_DIR_H
+#undef HAVE_NDIR_H
 
 /* Bug Workarounds */
 #undef HAVE_OSF_SPRINTF_BUG
@@ -168,33 +177,9 @@ double atanh(double);
 
 /* Getting the working directory */
 #undef HAVE_GETCWD
-#if defined(HAVE_GETCWD)
-#define R_GETCWD(x, y) getcwd(x, y)
-#elif defined(Win32)
-#define R_GETCWD(x, y) GetCurrentDirectory(y, x)
-#else
-#undef R_GETCWD
-#endif
 
 /* Maximal length of an entire file name */
-#define HAVE_LIMITS_H
 #undef HAVE_SYS_PARAM_H
-
-#if defined(HAVE_LIMITS_H)
-#  include <limits.h>
-#endif
-#if !defined(PATH_MAX)
-#  if defined(HAVE_SYS_PARAM_H)
-#    include <sys/param.h>
-#  endif
-#  if defined(MAXPATHLEN) && !defined(PATH_MAX)
-#    define PATH_MAX MAXPATHLEN
-#  elif defined(Win32)
-#    define PATH_MAX 260
-#  else
-#    define PATH_MAX 255
-#  endif
-#endif
 
 /* for platform.c to put in .Platform */
 #ifdef Unix
