@@ -78,8 +78,11 @@ NEW FEATURES
     o	sort(x) now produces an error when x is not atomic instead of 
 	just returning x.
 
-    o	new function is.unsorted() the C version of which also
+    o	New function is.unsorted() the C version of which also
 	speeds up .Internal(sort()) for sorted input.
+
+    o	New function integrate() with S-compatible call.
+
 
 
 BUG FIXES
