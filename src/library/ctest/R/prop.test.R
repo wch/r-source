@@ -63,14 +63,13 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
 		    qnorm((1 + conf.level) / 2),
 		    qnorm(conf.level))
 	YATES <- min(YATES, abs(x - n * p))
+        z22n <- z^2 / (2 * n)
 	p.c <- ESTIMATE + YATES / n
-	p.u <- ((p.c + z^2 / (2 * n)
-		 + z * sqrt(p.c * (1 - p.c) / n + z^2 / (4 * n^2)))
-		/ (1 + z^2 / n))
+	p.u <- if(p.c >= 1) 1 else (p.c + z22n
+                  + z * sqrt(p.c * (1 - p.c) / n + z22n / (2 * n))) / (1+2*z22n)
 	p.c <- ESTIMATE - YATES / n
-	p.l <- ((p.c + z^2 / (2 * n)
-		 - z * sqrt(p.c * (1 - p.c) / n + z^2 / (4 * n^2)))
-		/ (1 + z^2 / n))
+	p.l <- if(p.c <= 0) 0 else (p.c + z22n
+                  - z * sqrt(p.c * (1 - p.c) / n + z22n / (2 * n))) / (1+2*z22n)
 	CINT <- switch(alternative,
 		       "two.sided" = c(max(p.l, 0), min(p.u, 1)),
 		       "greater" = c(max(p.l, 0), 1),
@@ -119,16 +118,13 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
     names(STATISTIC) <- "X-squared"
 
     if (alternative == "two.sided")
-	PVAL <- 1 - pchisq(STATISTIC, PARAMETER)
+	PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
     else {
 	if (k == 1)
 	    z <- sign(ESTIMATE - p) * sqrt(STATISTIC)
 	else
 	    z <- sign(DELTA) * sqrt(STATISTIC)
-	if (alternative == "greater")
-	    PVAL <- 1 - pnorm(z)
-	else
-	    PVAL <- pnorm(z)
+	PVAL <- pnorm(z, lower.tail = (alternative == "less"))
     }
 
     RVAL <- list(statistic = STATISTIC,
