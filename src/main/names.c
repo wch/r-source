@@ -78,6 +78,7 @@ SEXP do_filledcontour(SEXP, SEXP, SEXP, SEXP);
 SEXP do_restart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_primitive(SEXP, SEXP, SEXP, SEXP);
 SEXP do_symbols(SEXP, SEXP, SEXP, SEXP);
+SEXP do_attr(SEXP, SEXP, SEXP, SEXP);
 
 FUNTAB R_FunTab[] =
 {
@@ -186,6 +187,7 @@ FUNTAB R_FunTab[] =
 {"attributes<-",do_attributesgets,0,	1,	1,	PP_FUNCALL},
  /*KH {"attr",	do_attr,	0,	1,	2,	PP_FUNCALL},
   */
+{"attr",	do_attr,	0,	1,	2,	PP_FUNCALL},
 {"attr<-",	do_attrgets,	0,	0,	3,	PP_FUNCALL},
 {"comment",	do_comment,	0,	11,	1,	PP_FUNCALL},
 {"comment<-",	do_commentgets,	0,	11,	2,	PP_FUNCALL},

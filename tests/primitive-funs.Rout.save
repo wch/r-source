@@ -30,7 +30,7 @@ Type	"q()" to quit R.
 > 
 > Primf <- nn[sapply(nn, function(N) is.primitive(get(N, pos=bpos)))]
 > length(Primf) ## 195  R 0.62.0, March 25, 1998
-[1] 138
+[1] 139
 > ## 132	R 0.62.2+
 > Real.primitives <-
 +     list(
@@ -61,7 +61,7 @@ Type	"q()" to quit R.
 + 	   "interactive",
 + 	   ".Primitive", ".Internal", ".External", ".Call",
 + 	   ".C", ".Fortran", "symbol.C", "symbol.For",
-+ 	   "globalenv", "pos.to.env", "unclass",
++ 	   "globalenv", "pos.to.env", "unclass", "attr",
 + 
 + 	   ##maybe ? "gc", "gcinfo",
 + 	   ##

@@ -664,18 +664,89 @@ SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     return object;
 }
 
-#ifdef USE_do_attr
+/*  This code replaces an R function defined as
+
+    attr <- function (x, which) 
+    {
+        if (!is.character(which)) 
+            stop("attribute name must be of mode character")
+        if (length(which) != 1) 
+            stop("exactly one attribute name must be given")
+        attributes(x)[[which]]
+   }
+
+The R functions was being called very often and replacing it by
+something more efficient made a noticeable difference on several
+benchmarks.  There is still some inefficiency since using getAttrib
+means the attributes list will be searched twice, but this seems
+fairly minor.  LT */
+
 SEXP do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP s, t;
+    SEXP s, t, tag = R_NilValue, alist;
+    char *str;
+    int n;
+    enum { NONE, PARTIAL, FULL } match = NONE;
 
     s = CAR(args);
     t = CADR(args);
-    if (!isString(t) || length(t) == 0)
+
+    if (!isString(t))
 	error("attribute name must be of mode character");
-    return getAttrib(s, install(CHAR(STRING(t)[0])));
+    if (length(t) != 1)
+	error("exactly one attribute name must be given");
+
+    str = CHAR(STRING_ELT(t, 0));
+    n = strlen(str);
+
+    /* try to find a match among the attributes list */
+    for (alist = ATTRIB(s); alist != R_NilValue; alist = CDR(alist)) {
+	SEXP tmp = TAG(alist);
+	if (! strncmp(CHAR(PRINTNAME(tmp)), str, n)) {
+	    if (strlen(CHAR(PRINTNAME(tmp))) == n) {
+		tag = tmp;
+		match = FULL;
+		break;
+	    }
+	    else if (match == PARTIAL)
+		/* this match is partial and we already have a partial match,
+		   so the query is ambiguous and we return R_NilValue */
+		return R_NilValue;
+	    else {
+		tag = tmp;
+		match = PARTIAL;
+	    }
+	}
+    }
+
+    /* unless a full match has been found, check for a "names" attribute */
+    if (match != FULL && ! strncmp(CHAR(PRINTNAME(R_NamesSymbol)), str, n)) {
+	if (strlen(CHAR(PRINTNAME(R_NamesSymbol))) == n) {
+	    /* we have a full match on "names" */
+	    tag = R_NamesSymbol;
+	    match = FULL;
+	}
+	else if (match == NONE) {
+	    /* no match on other attributes and a partial match on "names" */
+	    tag = R_NamesSymbol;
+	    match = PARTIAL;
+	}
+	else if (match == PARTIAL) {
+	    /* There is a partial match on "names" and on another
+	       attribute. If there really is a "names" attribute, then the
+	       query is ambiguous and we return R_NilValue.  If there is no
+	       "names" attribute, then the partially matched one, which is
+	       the current value of tag, can be used. */
+	    if (getAttrib(s, R_NamesSymbol) != R_NilValue)
+		return R_NilValue;
+	}
+    }
+
+    if (match == NONE)
+	return R_NilValue;
+    else 
+	return getAttrib(s, tag);
 }
-#endif
 
 SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
