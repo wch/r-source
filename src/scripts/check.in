@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.116 $ ';
+my $revision = ' $Revision: 1.117 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -515,6 +515,40 @@ sub check_pkg {
 
     $log->result("OK");
 
+    ## Try figuring out whether the package dependencies can be resolved
+    ## at run time.  Ideally, the installation mechanism would do this,
+    ## and we also do not check versions ...
+    ##
+    ## Need to do this here because we need the 'real' DESCRIPTION file
+    ## (also in the case of bundles), and to know that its 'Depends'
+    ## field is syntactically correct.
+    if($description->{"Depends"} && $opt_install) {
+	$log->checking("package dependencies");
+	my @required_packages = ();
+	my @dependencies = split(/\,/, $description->{"Depends"});
+	foreach my $dep (@dependencies) {
+	    $dep =~ s/^\s*([\w\.]+).*$/\1/;
+	    next if($dep eq "R");
+	    push(@required_packages, $dep);
+	}
+	if($#required_packages >= 0) {
+	    my $Rcmd = "requiredPackages <- c(\"";
+	    $Rcmd .= join("\", \"", @required_packages);
+	    $Rcmd .= "\")\n";
+	    $Rcmd .= "writeLines(requiredPackages[!requiredPackages %in% ";
+	    $Rcmd .= "installed.packages()[ , \"Package\"]])\n";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    @out = grep(!/^\>/, @out);
+	    if($#out >= 0) {
+		$log->error();
+		$log->print("Packages required but not available:\n");
+		$log->print(wrap("  ", "  ", @out) . "\n");
+		exit(1);
+	    }
+	}
+	$log->result("OK");
+    }
+
     ## Check index files.
 
     $log->checking("index files");
@@ -526,15 +560,8 @@ sub check_pkg {
 	push(@badfiles, $index) unless (-s $index);
 	## Could have more tests, e.g. for correct format ...
     }
-    &checkIndex("INDEX");
-    &checkIndex(&file_path("data", "00Index"))
-      if(-d "data" && &list_files_with_exts("data", $data_exts_re));
     &checkIndex(&file_path("demo", "00Index"))
       if(-d "demo" && &list_files_with_exts("demo", $demo_exts_re));
-    &checkIndex(&file_path("inst", "doc", "00Index.dcf"))
-      if(-d &file_path("inst", "doc")
-	 && &list_files_with_exts(&file_path("inst", "doc"),
-				  $vignette_exts_re));
     if($#badfiles >= 0) {
 	$log->warning();
 	$log->print("The following index files are missing " .
@@ -661,7 +688,7 @@ sub check_pkg {
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	@out = grep(!/^\>/, @out);
-	if($#out>=0) {
+	if($#out >= 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
 	}
@@ -686,7 +713,7 @@ sub check_pkg {
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet");
         @out = grep(!/^\>/, @out);
-	if($#out>=0) {
+	if($#out >= 0) {
             ## <FIXME>
             ## Change back from warning() to error() and exit when we
             ## have output from loading packages under control.
@@ -715,7 +742,7 @@ sub check_pkg {
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	@out = grep(!/^\>/, @out);
-	if($#out>=0) {
+	if($#out >= 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
 	}
@@ -913,7 +940,7 @@ sub check_pkg {
 	my @err = grep(/^Error/, @out);
 	@out = grep(!/^\>/, @out);
 	if($#err<0) {
-	    if($#out>=0) {
+	    if($#out >= 0) {
 		$log->warning();
                 $log->print(join("\n", @out) . "\n");
 	    }
@@ -947,7 +974,7 @@ sub check_pkg {
 	## though the documentation is valid.  Change this when we know
 	## what must be valid R code, similar to the above for undoc().
 	@out = grep(!/^\>/, @out);
-	if($#out>=0) {
+	if($#out >= 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
 	}
@@ -973,7 +1000,7 @@ sub check_pkg {
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	@out = grep(!/^\>/, @out);
-	if($#out>=0) {
+	if($#out >= 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
 	}
@@ -1164,7 +1191,7 @@ sub check_pkg {
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	@out = grep(!/^\>/, @out);
-	if($#out>=0) {
+	if($#out >= 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
 	}
