@@ -550,28 +550,7 @@ Subject: svd() very slow for wide matrix X but not for t(X)
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Tue, 9 Jul 2002 11:39:15 -0400 
 --Doesn't happen with the now preferred La.svd.
-* PR# 1964 *
-Subject: The attached function working fine with R 1.3.0 but giving problem with R 1.5.1
-From: stakb@nus.edu.sg
-Date: Fri, 30 Aug 2002 10:10:39 +0200 (MET DST)
-* PR# 1965 *
-Subject: Problem with new R 1.5.1 version
-From: "Kaushik Bhattacharyya" <stakb@nus.edu.sg>
-Date: Fri, 30 Aug 2002 16:16:32 +0800
---Part of 1964
-* PR# 1967 *
-Subject: Maritime Newsletter (Week 35)
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Sat, 31 Aug 2002 01:01:21 +0900
-* PR# 1968 *
-Subject: Chinese Newspaper
-From: staff <staff@sinofeng.com>
-Date: Sat, 31 Aug 2002 01:06:47 +0800 (CST)
-* PR# 1969 *
-Subject: Free, 100% Confidential Help.  No Loans Required!
-From: "DCA Network" <hock@biokemi.aau.dk>
-Date: Fri, 30 Aug 2002 20:58:45 -1900
-* PR# 1970 *
-Subject: bug in garbage collector function gc() documentation
-From: joshi@engr.orst.edu
-Date: Sat, 31 Aug 2002 23:40:52 +0200 (MET DST)
+* PR# 1971 *
+Subject: Bordercolor
+From: cathyhu <cathyhu@mail.gotop.com.tw>
+Date: Mon, 2 Sep 2002 00:06:10 +0800 (CST)
