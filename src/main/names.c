@@ -204,7 +204,7 @@ FUNTAB R_FunTab[] =
 {"log",		do_log,		10003,	11,	1,	PP_FUNCALL},
 {"signif",	do_signif,	10004,	11,	1,	PP_FUNCALL},
 
-{"abs",		do_math1,	0,	1,	1,	PP_FUNCALL},
+/* KH(1999/09/12) {"abs", do_math1, 0, 1, 1, PP_FUNCALL}, */
 {"floor",	do_math1,	1,	1,	1,	PP_FUNCALL},
 {"ceiling",	do_math1,	2,	1,	1,	PP_FUNCALL},
 {"sqrt",	do_math1,	3,	1,	1,	PP_FUNCALL},
@@ -281,7 +281,7 @@ FUNTAB R_FunTab[] =
 {"Mod",		do_cmathfuns,	3,	1,	1,	PP_FUNCALL},
 {"Arg",		do_cmathfuns,	4,	1,	1,	PP_FUNCALL},
 {"Conj",	do_cmathfuns,	5,	1,	1,	PP_FUNCALL},
-
+{"abs",		do_cmathfuns,	6,	1,	1,	PP_FUNCALL},
 
 /* Mathematical Functions of Three Variables */
 
@@ -386,9 +386,7 @@ FUNTAB R_FunTab[] =
 
 {"rhyper",	do_random3,	0,	11,	4,	PP_FUNCALL},
 
-{"sample",	do_sample,	0,	11,	4,	PP_FUNCALL},
-
-{"RNGkind",	do_RNGkind,	0,	11,	1,	PP_FUNCALL},
+{"sample",	do_sample,	0,	11,	4,	PP_FUNCALL},{"RNGkind",	do_RNGkind,	0,	11,	1,	PP_FUNCALL},
 
 /* Data Summaries */
 
