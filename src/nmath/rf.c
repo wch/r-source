@@ -43,7 +43,7 @@ double rf(double n1, double n2)
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
-    v1 = finite(n1) ? (rchisq(n1) / n1) : snorm();
-    v2 = finite(n2) ? (rchisq(n2) / n2) : snorm();
+    v1 = R_FINITE(n1) ? (rchisq(n1) / n1) : snorm();
+    v2 = R_FINITE(n2) ? (rchisq(n2) / n2) : snorm();
     return v1 / v2;
 }

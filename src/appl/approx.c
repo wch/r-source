@@ -82,7 +82,7 @@ void approx(double *x, double *y, int *nxy, double *xout, int *nout,
     case 1:
 	break;
     case 2:
-	if(!FINITE(*f) || *f < 0 || *f > 1)
+	if(!R_FINITE(*f) || *f < 0 || *f > 1)
 	    error("approx(): invalid f value\n");
 	f2 = *f;
 	f1 = 1 - *f;
@@ -93,13 +93,13 @@ void approx(double *x, double *y, int *nxy, double *xout, int *nout,
     }
 
     for(i=0 ; i<*nxy ; i++)
-	if(R_IsNA(x[i]) || R_IsNA(y[i]))
+	if(ISNA(x[i]) || ISNA(y[i]))
 	    error("approx(): attempted to interpolate NA values\n");
 
     ylow = *yleft;
     yhigh = *yright;
 
     for(i=0 ; i<*nout ; i++)
-	if(!R_IsNA(xout[i]))
+	if(!ISNA(xout[i]))
 	    xout[i] = approx1(xout[i], x, y, *nxy, *method);
 }

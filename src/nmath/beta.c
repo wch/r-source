@@ -60,7 +60,7 @@ double beta(double a, double b)
 	return ML_POSINF;
     }
 #ifdef IEEE_754
-    else if (!FINITE(a) || !FINITE(b)) {
+    else if (!R_FINITE(a) || !R_FINITE(b)) {
 	return 0;
     }
 #endif

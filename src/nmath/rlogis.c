@@ -23,7 +23,7 @@ double rlogis(double location, double scale)
 {
     double u;
 /* #ifndef IEEE_754 */
-    if (!finite(location) || !finite(scale)) {
+    if (!R_FINITE(location) || !R_FINITE(scale)) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

@@ -32,7 +32,7 @@ double rweibull(double shape, double scale)
 {
     if (
 #ifdef IEEE_754
-	!finite(shape) || !finite(scale) ||
+	!R_FINITE(shape) || !R_FINITE(scale) ||
 #endif
 	shape <= 0.0 || scale <= 0.0) {
 	ML_ERROR(ME_DOMAIN);

@@ -49,7 +49,7 @@ double dnbinom(double x, double n, double p)
     if (x < 0)
 	return 0;
 #ifdef IEEE_754
-    if (!finite(x))
+    if (!R_FINITE(x))
 	return 0;
 #endif
     return exp(lfastchoose(x + n - 1, x)

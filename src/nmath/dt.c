@@ -39,9 +39,9 @@ double dt(double x, double n)
 	return ML_NAN;
     }
 #ifdef IEEE_754
-    if(!finite(x))
+    if(!R_FINITE(x))
 	return 0;
-    if(!finite(n))
+    if(!R_FINITE(n))
 	return dnorm(x, 0.0, 1.0);
 #endif
     return pow(1.0 + x * x / n, -0.5 * (n + 1.0))

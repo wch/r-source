@@ -37,7 +37,7 @@ double pnbinom(double x, double n, double p)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n) || ISNAN(p))
 	return x + n + p;
-    if(!finite(n) || !finite(p)) {
+    if(!R_FINITE(n) || !R_FINITE(p)) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
@@ -49,7 +49,7 @@ double pnbinom(double x, double n, double p)
     x = floor(x + 1e-7);
     if (x < 0) return 0;
 #ifdef IEEE_754
-    if (!finite(x))
+    if (!R_FINITE(x))
 	return 1;
 #endif
     return pbeta(p, n, x + 1);

@@ -1,27 +1,27 @@
 /*
   Mathlib : A C Library of Special Functions
   Copyright (C) 1999 R Development Core Team
- 
+
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or (at
   your option) any later version.
- 
+
   This program is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
   General Public License for more details.
- 
+
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- 
+
   SYNOPSIS
- 
+
     #include "Mathlib.h"
-    double dwilcox(double x, double m, double n)    
+    double dwilcox(double x, double m, double n)
     double pwilcox(double x, double m, double n)
-    double qwilcox(double x, double m, double n);    
+    double qwilcox(double x, double m, double n);
     double rwilcox(double m, double n)
 
   DESCRIPTION
@@ -63,7 +63,7 @@ static void
 w_init_maybe(int m, int n)
 {
     int i;
-    
+
     if (w && (m > WILCOX_MAX || n > WILCOX_MAX))
 	w_free(WILCOX_MAX, WILCOX_MAX);
 
@@ -98,7 +98,7 @@ cwilcox(int k, int m, int n)
 
     u = m * n;
     c = (int)(u / 2);
-    
+
     if ((k < 0) || (k > u))
 	return(0);
     if (k > c)
@@ -108,7 +108,7 @@ cwilcox(int k, int m, int n)
     } else {
 	i = n; j = m;
     }
-    
+
     if (w[i][j] == 0) {
 	w[i][j] = (double *) calloc(c + 1, sizeof(double));
 	for (l = 0; l <= c; l++)
@@ -120,7 +120,7 @@ cwilcox(int k, int m, int n)
 	else
 	    w[i][j][k] = cwilcox(k - n, m - 1, n)
 		+ cwilcox(k, m, n - 1);
-	
+
     }
     return(w[i][j][k]);
 }
@@ -129,7 +129,7 @@ double
 dwilcox(double x, double m, double n)
 {
     double d;
-    
+
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(m) || ISNAN(n))
@@ -164,7 +164,7 @@ pwilcox(double x, double m, double n)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(m) || ISNAN(n))
 	return(x + m + n);
-    if (!FINITE(m) || !FINITE(n)) {
+    if (!R_FINITE(m) || !R_FINITE(n)) {
 	ML_ERROR(ME_DOMAIN);
 	return(ML_NAN);
     }
@@ -197,7 +197,7 @@ pwilcox(double x, double m, double n)
 	p = 1 - p;
     }
     w_free_maybe(m, n);
-    
+
     return(p);
 }
 
@@ -209,7 +209,7 @@ qwilcox(double x, double m, double n)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(m) || ISNAN(n))
 	return(x + m + n);
-    if(!FINITE(x) || !FINITE(m) || !FINITE(n)) {
+    if(!R_FINITE(x) || !R_FINITE(m) || !R_FINITE(n)) {
 	ML_ERROR(ME_DOMAIN);
 	return(ML_NAN);
     }
@@ -253,7 +253,7 @@ qwilcox(double x, double m, double n)
     w_free_maybe(m, n);
 
     return(q);
-    
+
 }
 
 double
@@ -261,7 +261,7 @@ rwilcox(double m, double n)
 {
     int i, j, k, *x;
     double r;
-  
+
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(m) || ISNAN(n))

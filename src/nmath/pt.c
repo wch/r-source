@@ -21,8 +21,8 @@
 
 double pt(double x, double n)
 {
-/* return  P[ T <= x ]	where  
- * T ~ t_{n}  (t distrib. with n degrees of freedom).	
+/* return  P[ T <= x ]	where
+ * T ~ t_{n}  (t distrib. with n degrees of freedom).
 
  *	--> ./pnt.c for NON-central
  */
@@ -36,9 +36,9 @@ double pt(double x, double n)
 	return ML_NAN;
     }
 #ifdef IEEE_754
-    if(!finite(x))
+    if(!R_FINITE(x))
 	return (x < 0) ? 0 : 1;
-    if(!finite(n))
+    if(!R_FINITE(n))
 	return pnorm(x, 0.0, 1.0);
 #endif
     if (n > 4e5) { /*-- Fixme(?): test should depend on `n' AND `x' ! */

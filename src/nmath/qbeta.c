@@ -143,7 +143,7 @@ double qbeta(double alpha, double p, double q)
 		y = pbeta_raw(xinbta, pp, qq);
 		/* y = pbeta_raw2(xinbta, pp, qq, logbeta) -- to SAVE CPU; */
 #ifdef IEEE_754
-		if(!FINITE(y))
+		if(!R_FINITE(y))
 #else
 		if (errno)
 #endif

@@ -40,7 +40,7 @@ double pcauchy(double x, double location, double scale)
 	}
 	x = (x - location) / scale;
 #ifdef IEEE_754
-	if(!finite(x)) {
+	if(!R_FINITE(x)) {
 	    if(x < 0) return 0;
 	    else return 1;
 	}

@@ -33,7 +33,7 @@ double pnchisq(double x, double f, double theta)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(f) || ISNAN(theta))
 	return x + f + theta;
-    if (!FINITE(f) || !FINITE(theta)) {
+    if (!R_FINITE(f) || !R_FINITE(theta)) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
@@ -46,7 +46,7 @@ double pnchisq(double x, double f, double theta)
     if (x <= zero)
 	return 0;
 #ifdef IEEE_754
-    if(!FINITE(x))
+    if(!R_FINITE(x))
 	return 1;
 #endif
 

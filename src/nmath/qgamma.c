@@ -124,7 +124,7 @@ double qgamma(double p, double alpha, double scale)
 	p1 = 0.5*ch;
 	p2 = p - pgamma(p1, alpha, 1);
 #ifdef IEEE_754
-	if(!finite(p2))
+	if(!R_FINITE(p2))
 #else
 	if(errno != 0)
 #endif

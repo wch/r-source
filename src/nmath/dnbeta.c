@@ -70,7 +70,7 @@ double dnbeta(double x, double a, double b, double lambda)
 	}
 
 #ifdef IEEE_754
-	if (!FINITE(a) || !FINITE(b) || !FINITE(lambda)) {
+	if (!R_FINITE(a) || !R_FINITE(b) || !R_FINITE(lambda)) {
 		ML_ERROR(ME_DOMAIN);
 		return ML_NAN;
 	}

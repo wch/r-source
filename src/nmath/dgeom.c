@@ -44,7 +44,7 @@ double dgeom(double x, double p)
     if (x < 0)
 	return 0;
 #ifdef IEEE_754
-    if(!finite(x)) return 1;
+    if(!R_FINITE(x)) return 1;
 #endif
     return p * pow(1 - p, x);
 }

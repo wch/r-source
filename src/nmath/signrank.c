@@ -22,7 +22,7 @@
  *    double dsignrank(double x, double n)
  *    double psignrank(double x, double n)
  *    double qsignrank(double x, double n)
- *    double rsignrank(double n) 
+ *    double rsignrank(double n)
  *
  *  DESCRIPTION
  *
@@ -136,7 +136,7 @@ psignrank(double x, double n)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n))
     return(x + n);
-    if (!FINITE(n)) {
+    if (!R_FINITE(n)) {
 	ML_ERROR(ME_DOMAIN);
 	return(ML_NAN);
     }
@@ -146,7 +146,7 @@ psignrank(double x, double n)
 	ML_ERROR(ME_DOMAIN);
 	return(ML_NAN);
     }
-    
+
     x = floor(x + 1e-7);
     if (x < 0.0)
 	return(0);
@@ -167,7 +167,7 @@ psignrank(double x, double n)
 	p = 1 - p;
     }
     w_free_maybe(n);
-    
+
     return(p);
 }
 
@@ -179,7 +179,7 @@ qsignrank(double x, double n)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n))
 	return(x + n);
-    if (!FINITE(x) || !FINITE(n)) {
+    if (!R_FINITE(x) || !R_FINITE(n)) {
 	ML_ERROR(ME_DOMAIN);
 	return(ML_NAN);
     }
@@ -229,7 +229,7 @@ rsignrank(double n)
 {
     int i, k;
     double r;
-  
+
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(n)) return(n);

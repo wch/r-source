@@ -33,7 +33,7 @@ double qcauchy(double x, double location, double scale)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(location) || ISNAN(scale))
         return x + location + scale;
-    if(!FINITE(x) || !FINITE(location) || !FINITE(scale)) {
+    if(!R_FINITE(x) || !R_FINITE(location) || !R_FINITE(scale)) {
         ML_ERROR(ME_DOMAIN);
         return ML_NAN;
     }

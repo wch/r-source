@@ -29,7 +29,7 @@ double plogis(double x, double location, double scale)
 		ML_ERROR(ME_DOMAIN);
 		return ML_NAN;
 	}
-	if(!finite(x)) {
+	if(!R_FINITE(x)) {
 		if (x > 0) return 1;
 		else return 0;
 	}

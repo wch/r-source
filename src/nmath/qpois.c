@@ -42,7 +42,7 @@ double qpois(double x, double lambda)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(lambda))
 	return x + lambda;
-    if(!FINITE(lambda)) {
+    if(!R_FINITE(lambda)) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

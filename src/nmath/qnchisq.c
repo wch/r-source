@@ -27,7 +27,7 @@ double qnchisq(double p, double n, double lambda)
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(n) || ISNAN(lambda))
 	return p + n + lambda;
-    if (!FINITE(n)) {
+    if (!R_FINITE(n)) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

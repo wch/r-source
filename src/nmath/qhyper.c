@@ -35,7 +35,7 @@ double qhyper(double x, double NR, double NB, double n)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(NR) || ISNAN(NB) || ISNAN(n))
 	return x + NR + NB + n;
-    if(!finite(x) || !finite(NR) || !finite(NB) || !finite(n)) {
+    if(!R_FINITE(x) || !R_FINITE(NR) || !R_FINITE(NB) || !R_FINITE(n)) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

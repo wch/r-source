@@ -42,7 +42,7 @@ double ppois(double x, double lambda)
     if (x < 0)
 	return 0;
 #ifdef IEEE_754
-    if (!finite(x))
+    if (!R_FINITE(x))
 	return 1;
 #endif
     return  1 - pgamma(lambda, x + 1, 1.0);

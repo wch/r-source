@@ -32,14 +32,14 @@ double runif(double a, double b)
 {
     if (
 #ifdef IEEE_754
-	!finite(a) || !finite(b) ||
+	!R_FINITE(a) || !R_FINITE(b) ||
 #endif
 	b < a) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
-    if (a == b) 
+    if (a == b)
 	return a;
-    else 
+    else
 	return a + (b - a) * sunif();
 }

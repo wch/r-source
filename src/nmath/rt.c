@@ -41,7 +41,7 @@ double rt(double df)
 	df <= 0.0) {
 	ML_ERROR(ME_DOMAIN);
     }
-    if(!finite(df))
+    if(!R_FINITE(df))
 	return snorm();
     else
 	return snorm() / sqrt(rchisq(df) / df);

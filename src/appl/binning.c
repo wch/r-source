@@ -39,7 +39,7 @@ void bincode(double *x, int *pn, double *breaks, int *pnb, int *code,
     lft = !(*right);
 
     for(i=0 ; i<n ; i++)
-	if(FINITE(x[i])) {
+	if(R_FINITE(x[i])) {
 	    lo = 0;
 	    hi = nb1;
 	    if(x[i] <  breaks[lo] || breaks[hi] < x[i] ||
@@ -78,7 +78,7 @@ void bincount(double *x, int *pn, double *breaks, int *pnb, int *count,
 	count[i] = 0;
 
     for(i=0 ; i<n ; i++)
-	if(FINITE(x[i])) {
+	if(R_FINITE(x[i])) {
 	    lo = 0;
 	    hi = nb1;
 	    if(breaks[lo] <= x[i] &&
@@ -109,7 +109,7 @@ void bincode2(double *x, int *pn, double *breaks, int *pnb, int *code,
     nb1 = *pnb - 1;
 
     for(i=0 ; i<n ; i++)
-	if(FINITE(x[i])) {
+	if(R_FINITE(x[i])) {
 	    lo = 0;
 	    hi = nb1;
 	    if(x[i] <  breaks[lo] || breaks[hi] < x[i] ||

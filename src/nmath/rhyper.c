@@ -108,7 +108,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
     /* check parameter validity */
 
 #ifdef IEEE_754
-    if(!finite(nn1in) || !finite(nn2in) || !finite(kkin)) {
+    if(!R_FINITE(nn1in) || !R_FINITE(nn2in) || !R_FINITE(kkin)) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

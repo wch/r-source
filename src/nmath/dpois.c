@@ -45,7 +45,7 @@ double dpois(double x, double lambda)
     if (x < 0)
 	return 0;
 #ifdef IEEE_754
-    if(!finite(x))
+    if(!R_FINITE(x))
 	return 0;
 #endif
     return exp(x * log(lambda) - lambda - lgammafn(x + 1));

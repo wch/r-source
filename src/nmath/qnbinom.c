@@ -47,7 +47,7 @@ double qnbinom(double x, double n, double p)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n) || ISNAN(p))
 	return x + n + p;
-    if (!FINITE(x)) {
+    if (!R_FINITE(x)) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

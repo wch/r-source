@@ -33,7 +33,7 @@ double rexp(double scale)
 {
     if (
 #ifdef IEEE_754
-	!finite(scale) ||
+	!R_FINITE(scale) ||
 #endif
 	scale <= 0.0) {
 	ML_ERROR(ME_DOMAIN);

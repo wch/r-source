@@ -46,7 +46,7 @@ double dnchisq(double x, double df, double lambda)
 	}
 
 #ifdef IEEE_754
-	if (!FINITE(df) || !FINITE(lambda)) {
+	if (!R_FINITE(df) || !R_FINITE(lambda)) {
 		ML_ERROR(ME_DOMAIN);
 		return ML_NAN;
 	}

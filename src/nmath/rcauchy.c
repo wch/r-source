@@ -32,7 +32,7 @@ double rcauchy(double location, double scale)
 {
     if (
 #ifdef IEEE_754
-	!finite(location) || !finite(scale) ||
+	!R_FINITE(location) || !R_FINITE(scale) ||
 #endif
 	scale < 0) {
 	ML_ERROR(ME_DOMAIN);

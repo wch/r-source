@@ -36,7 +36,7 @@ double rchisq(double df)
 {
     if (
 #ifdef IEEE_754
-	!finite(df) ||
+	!R_FINITE(df) ||
 #endif
 	df <= 0.0) {
 	ML_ERROR(ME_DOMAIN);

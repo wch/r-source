@@ -331,7 +331,7 @@ double ptukey(double q, double rr, double cc, double df)
     }
 
 #ifdef IEEE_754
-    if(!FINITE(q))
+    if(!R_FINITE(q))
 	return 1;
 #endif
 

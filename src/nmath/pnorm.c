@@ -122,7 +122,7 @@ double pnorm(double x, double mu, double sigma)
     }
     x = (x - mu) / sigma;
 #ifdef IEEE_754
-    if(!finite(x)) {
+    if(!R_FINITE(x)) {
 	if(x < 0) return 0;
 	else return 1;
     }

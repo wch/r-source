@@ -83,8 +83,8 @@ double pbeta_raw(double x, double pin, double qin)
 	    ans = 1 - ans;
     }
     else {
-	/*___ FIXME ___:  This takes forever (or ends wrongly) 
-	  when (one or) both p & q  are huge 
+	/*___ FIXME ___:  This takes forever (or ends wrongly)
+	  when (one or) both p & q  are huge
 	*/
 
 	/* evaluate the infinite sum first.  term will equal */
