@@ -40,7 +40,7 @@ $p$-value of the test is \Sexpr{format.pval(t1$p.value)}. % $
 
 Now we look at a summary of the famous iris data set, and we want to
 see the commands in the code chunks.  Note that the summary needs to
-be \texttt{print()}ed explicetly, because eval would discard it otherwise. I
+be \texttt{print()}ed explicitly, because eval would discard it otherwise. I
 consider this a feature, because it allows for much finer control on
 what gets into the final report.
 
@@ -74,7 +74,7 @@ boxplot(Sepal.Length~Species, data=iris)
 \end{figure}
 
 
-% R is not Splus, hence this chunk will be ignored:
+% R is not S-PLUS, hence this chunk will be ignored:
 <<engine=S4>>=
 function.that.comes.only.with.Splus(x)
 @
