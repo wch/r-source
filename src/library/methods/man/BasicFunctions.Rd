@@ -78,6 +78,4 @@ for further details and examples.
 \author{
   John Chambers
 }
-\keyword{programming}
-\keyword{classes}
-\keyword{methods}
+\keyword{internal}

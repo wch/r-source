@@ -293,7 +293,7 @@ selectMethod <-
   ## mlist = Optional MethodsList object to use in the search.  Usually omitted, but
   ##         required for a recursive call from within selectMethod.
     function(f, env = new.env(), optional = FALSE,
-             inherited, mlist)
+             useInherited, mlist)
 {
     if(missing(mlist)) {
         mlist <- getMethods(f)
@@ -314,7 +314,7 @@ selectMethod <-
         fEnv <- environment(fEnv)
       else
         fEnv <- NULL
-      mlist <- MethodsListSelect(f, env, mlist, fEnv, evalArgs = FALSE, useInherits = inherited)
+      mlist <- MethodsListSelect(f, env, mlist, fEnv, evalArgs = FALSE, useInherited = useInherited)
       selection <- .Call("R_selectMethod", f, env, mlist, PACKAGE = "methods")
     }
     if(is(selection, "function"))
@@ -498,7 +498,7 @@ setGroupGeneric <-
     name
   }
 
-isGroupGeneric <-
+isGroup <-
   function(f, where = -1, fdef = NULL)
   {
     if(!isGeneric(f, where = where, fdef = fdef))

@@ -2,14 +2,13 @@
 \alias{as}
 \alias{as<-}
 \alias{coerce}
+\alias{coerce<-}
 \alias{setAs}
 \title{Force an Object to Belong to a Class}
 \usage{
 as(object, Class, coerceFlag=TRUE)
 
 as(object, Class, coerceFlag=TRUE) <- value
-
-coerce(from, to)
 
 setAs(from, to, def, replace, where = 1)
 
@@ -80,6 +79,9 @@ calls to the \code{setAs} function.
     \code{to}. (If you want to save \code{setAs} a little work, make
     the name of the argument \code{from}, but don't worry about it,
     \code{setAs} will do the conversion.) }
+  \item{replace}{If supplied, the function to use as a replacement
+    method.
+    }
   \item{where}{ The database on which to store the resulting method for
     \code{coerce}; by default, the global environment. }
 

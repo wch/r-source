@@ -281,7 +281,6 @@ list("!" = function(e1)
     standardGeneric("unclass")
 }
 , "(" = FALSE
-, ".Alias" = FALSE
 , ".Call.graphics" = FALSE
 , ".External" = FALSE
 , ".External.graphics" = FALSE

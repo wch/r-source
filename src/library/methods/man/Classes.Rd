@@ -1,5 +1,6 @@
 \name{Classes}
 \alias{Classes}
+\alias{__ClassMetaData}
 \title{Class Definitions}
 \description{
 Class definitions are objects that contain the formal definition of a

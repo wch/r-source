@@ -1,5 +1,7 @@
 \name{Methods}
+\alias{Methods}
 \alias{isGeneric}
+\alias{isGroup}
 \alias{removeGeneric}
 \alias{standardGeneric}
 \alias{getGenerics}
@@ -15,6 +17,8 @@
 \title{Methods and Generic Functions}
 \usage{
 isGeneric(f, where, fdef, getName = FALSE)
+
+isGroup(f, where, fdef)
 
 removeGeneric(f, where)
 
@@ -297,7 +301,7 @@ superclasses, then the superclasses of these classes.
   \item{def}{ The function object defining the method; if omitted, the
     current method definition corresponding to the signature. }
 
-  \item{includeDefs, inherited}{See the detailed discussion of
+  \item{includeDefs, classes, inherited}{See the detailed discussion of
     \code{showMethods}}
 
   \item{...}{Named or unnamed arguments to form a signature.}
@@ -312,6 +316,12 @@ superclasses, then the superclasses of these classes.
   
   \item{getName}{If \code{TRUE}, \code{isGeneric} returns the name of
     the generic.  By default, it returns \code{TRUE}. }
+  \item{methods}{
+    The methods object containing the methods to be dumped.  By default,
+    the methods defined for this generic (optionally on the specified
+    \code{where} location.
+  }
+  
 }
 
 \details{

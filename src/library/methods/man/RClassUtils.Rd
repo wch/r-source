@@ -11,6 +11,7 @@
 \alias{setProperties}
 \alias{getSlots}
 \alias{getExtends}
+\alias{getAccess}
 \alias{getAllSuperClasses}
 \alias{superClassDepth}
 \alias{setExtends}
@@ -75,6 +76,8 @@ setProperties(ClassDef, value)
 getSlots(x, complete = TRUE)
 
 getExtends(ClassDef)
+
+getAccess(ClassDef)
 
 getAllSuperClasses(ClassDef)
 
@@ -279,6 +282,10 @@ the name of the class)
   }
 \item{\code{getPrototype}:}{ 
   extract the class's Prototype information from the class representation (only, not from
+the name of the class)
+
+\item{\code{getAccess}:}{ 
+  extract the class's Access information from the class representation (only, not from
 the name of the class)
 
   

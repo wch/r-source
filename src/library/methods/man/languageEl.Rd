@@ -38,4 +38,4 @@ the loop.
     grammar.  Don't use this function directly.}
 }
 }
-\keyword{programming}
+\keyword{internal}

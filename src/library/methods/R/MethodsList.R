@@ -130,19 +130,19 @@ MethodsListSelect <-
   ## to resolve using further arguments.  Matching includes using a default selection or
   ## a method specifically linked to class `"missing"'.  Once a function is found, it
   ## is returned as the value.  If matching fails,  NULL is returned.
-    function(fname, ev,
-             mlist = getMethodsForDispatch(fname),
+    function(f, env,
+             mlist = getMethodsForDispatch(f),
              fEnv = NULL,
              finalDefault = finalDefaultMethod(mlist),
              evalArgs = TRUE,
-             useInherits ## supplied when evalArgs is FALSE
+             useInherited ## supplied when evalArgs is FALSE
  )
 {
   if(!is(mlist, "MethodsList")) {
-    if(is.null(fname))
+    if(is.null(f))
       stop("Invalid method sublist")
     else
-      stop(paste("\"", fname, "\" is not a valid generic function", sep=""))
+      stop(paste("\"", f, "\" is not a valid generic function", sep=""))
   }
   ## the C level code turns off some recursive method selection during evaluation
   ## of a call to this function.  Make sure it's turned back on, even if an error occurs.
@@ -150,18 +150,18 @@ MethodsListSelect <-
   argName <- slot(mlist, "argument")
   if(evalArgs) {
     missingThisArg <-
-      eval(substitute(missing(ARGNAME),  list(ARGNAME = argName)), ev)
+      eval(substitute(missing(ARGNAME),  list(ARGNAME = argName)), env)
     if(missingThisArg) {
       arg <- NULL
       thisClass <- "missing"
     }
     else {
-      arg <- eval(as.name(argName), ev)
+      arg <- eval(as.name(argName), env)
       thisClass <- data.class(arg) #really class, but only 1st string.
     }
   }
   else {
-    thisClass <- get(as.character(argName), envir = ev)
+    thisClass <- get(as.character(argName), envir = env)
     arg <- new(thisClass)
   }
   allMethods <- mlist@allMethods
@@ -173,11 +173,10 @@ MethodsListSelect <-
       ## found directly (won't happen if called from C dispatch)
       value <- mlist ## no change
     else {
-      method <- Recall(NULL, ev, selection, finalDefault = finalDefault)
+      method <- Recall(NULL, env, selection, finalDefault = finalDefault)
       if(is(method, "EmptyMethodsList"))
         value <- method
       else {
-        ## not needed ? method <- mergeAllMethods(selection, method, thisClass)
         mlist@allMethods[[which]] <- method
         value <- mlist
       }
@@ -185,7 +184,7 @@ MethodsListSelect <-
   }
   if(inherited || is(value, "EmptyMethodsList"))  {
     ## direct selection failed at this level or below
-    allSelections <- matchArg(arg, thisClass, mlist, ev)
+    allSelections <- matchArg(arg, thisClass, mlist, env)
     allClasses <- names(allSelections)
     method <- NULL
     for(i in seq(along = allSelections)) {
@@ -196,13 +195,13 @@ MethodsListSelect <-
       else if(is(selection, "MethodsList")) {
         ## go on to try matching further arguments
         if(evalArgs)
-          method <- Recall(NULL, ev, selection, finalDefault = finalDefault)
+          method <- Recall(NULL, env, selection, finalDefault = finalDefault)
         else {
-          which <- match(as.character(argName), names(useInherits))
+          which <- match(as.character(argName), names(useInherited))
           if(is.na(which))
             stop("Invalid call to MethodsListSelect with evalArgs==FALSE")
-          method <- Recall(NULL, ev, selection, finalDefault = finalDefault,
-                           evalArgs = FALSE, useInherits = useInherits[-which])
+          method <- Recall(NULL, env, selection, finalDefault = finalDefault,
+                           evalArgs = FALSE, useInherited = useInherited[-which])
         }
         if(is(method, "EmptyMethodsList"))
           selection <- method   ## recursive selection failed
@@ -210,7 +209,7 @@ MethodsListSelect <-
       if(!is(selection, "EmptyMethodsList"))
         break
     }
-    if(is(selection, "EmptyMethodsList") && !is.null(fname) && !is.null(finalDefault)) {
+    if(is(selection, "EmptyMethodsList") && !is.null(f) && !is.null(finalDefault)) {
       ## only use the final default method after exhausting all
       ## other possibilities, at all levels.
       method <- insertMethodInEmptyList(selection, finalDefault)
@@ -220,7 +219,6 @@ MethodsListSelect <-
       value <- emptyMethodsList(mlist, thisClass) ## nothing found
     else {
       ##oldMethods <- elNamed(mlist@allMethods, thisClass)
-      ##newMethods <- mergeAllMethods(oldMethods, method, thisClass)
       allMethods <- mlist@allMethods
       elNamed(allMethods, thisClass) <- method ##newMethods
       which <- match(thisClass, names(allMethods))
@@ -229,7 +227,7 @@ MethodsListSelect <-
       value <- mlist
     }
   }
-  if(!is.null(fname)) {
+  if(!is.null(f)) {
     ## top level
     if(is(value, "EmptyMethodsList")) ## selection failed
       value <- NULL
@@ -261,51 +259,6 @@ insertMethodInEmptyList <-
     value
   }
 
-mergeAllMethods <-
-  ## merge the AllMethods slots in two methods list objects (including special
-  ## cases of NULL and function.
-  function(mlist, update, thisClass, argument) {
-    if(is.null(mlist))
-      return(update)
-    if(!is(mlist, "MethodsList")) {
-      if(!is(update, "MethodsList"))
-        stop("Both original and update can't be functions")
-      temp <- new("MethodsList", argument = update@argument)
-      elNamed(temp@allMethods, "ANY") <- mlist
-      mlist <- temp
-    }
-    mA <- mlist@allMethods
-    if(is(update, "MethodsList"))
-      uA <- update@allMethods
-    else {
-      uA <- list()
-      elNamed(uA, thisClass) <- update
-    }
-    uNames <- names(uA)
-    uClass <- update@fromClass
-    fromClass <- mlist@fromClass
-    for(i in seq(along = uA)) {
-      what <- uNames[[i]]
-      whatEl <- uA[[i]]
-      ## as used from MethodsListSearch, it's asserted that cur
-      ## is a MethodsList object
-      if(is(whatEl, "MethodsList")) {
-        cur <- elNamed(mA, what)
-        if(is(cur, "MethodsList"))
-          ## merge recursively
-          elNamed(mA, what) <- mergeAllMethods(cur, whatEl)
-        else
-          elNamed(mA, what) <- whatEl
-      }
-      else
-        elNamed(mA, what) <- whatEl
-      mi <- match(what, names(mA))
-      fromClass[[mi]] <- uClass[[i]]
-    }
-    mlist@allMethods <- mA
-    mlist@fromClass <- fromClass
-    mlist
-  }
 
     
 

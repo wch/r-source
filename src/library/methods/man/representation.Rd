@@ -2,14 +2,20 @@
 \alias{representation}
 \title{ Describe A Class Representation }
 \description{
-  The call to representation takes arguments that are single character
-  strings.  Unnamed arguments are classes that a newly defined class
-  extends; named arguments name the explicit slots in the new class, and
-  specify what class each slot should have.
+  Constructs a description of a class (without verifying the validity of
+  the description).  A convenience function in calls to \code{\link{setClass}}.
 }
 \usage{
 representation(...)
 }
+\arguments{
+  \item{...}{
+The call to representation takes arguments that are single character
+  strings.  Unnamed arguments are classes that a newly defined class
+  extends; named arguments name the explicit slots in the new class, and
+  specify what class each slot should have.    
+    }
+  }
 \details{
   The \code{representation} function applies tests for the validity of
   the arguments.  Each must specify the name of a class.

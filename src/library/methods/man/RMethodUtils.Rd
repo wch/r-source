@@ -1,9 +1,10 @@
 \name{RMethodUtils}
 \alias{makeGeneric}
 \alias{makeStandardGeneric}
+\alias{getAllMethods}
 \alias{generic.skeleton}
 \alias{defaultDumpName}
-\alias{mergeGenericFunctions}
+\alias{getAllMethods}
 \alias{setAllMethodsSlot}
 \alias{doPrimitiveMethod}
 \alias{conformMethodArgs}
@@ -22,6 +23,8 @@
 \alias{.saveImage}
 \alias{cacheMetaData}
 \alias{cacheGenericsMetaData}
+\alias{setPrimitiveMethods}
+\alias{copyEnvironment}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
 \alias{.EmptyPrimitiveSkeletons}
@@ -36,7 +39,7 @@ generic.skeleton(name, fdef, fdefault)
 
 defaultDumpName(generic, signature)
 
-mergeGenericFunctions(f, libs=search())
+getAllMethods(f, libs=search())
 
 setAllMethodsSlot(mlist)
 
@@ -62,9 +65,13 @@ removeFromMethodMetaData(name)
 
 is.primitive(fdef)
 
+copyEnvironment(object, exceptions)
+
 cacheMetaData(envir, attach = TRUE)
 
 cacheGenericsMetaData(generics, attach = TRUE, envir)
+
+setPrimitiveMethods(f, fdef, code, generic, mlist)
 
 
 }
@@ -92,7 +99,7 @@ that is, it's a primitive or internal
 
   
   }
-\item{\code{mergeGenericFunctions}:}{ 
+\item{\code{getAllMethods}:}{ 
   a generic function (with methods) representing the merge of all the versions
 of \code{f} on the specified packages (anything on the current search path by default).
 
@@ -177,7 +184,13 @@ returns \code{NULL} or throws an error.
     \item{\code{is.primitive}}{
       Is this object a primitive function (either a builtin or special)?
     }
-    \item{\code{cacheMetaData, cacheGenericsMetaData}:}{
+ \item{\code{copyEnvironment}:}{
+  Returns a new environment in which all the objects found in the object's
+  original environment have been assigned.  The environment may be NULL, in
+  which case \code{NULL} is returned.
+  }
+  
+    \item{\code{cacheMetaData, cacheGenericsMetaData, setPrimitiveMethods}:}{
       Utilities for ensuring that the session-scope information about
       class and method definitions is up to date.  Should normally be
       called automatically whenever needed (for example, when a method
@@ -188,6 +201,9 @@ returns \code{NULL} or throws an error.
       current search list; note in particular that even on detaching
       (\code{attach=FALSE}), the environment will normally still be on
       the search list.
+
+      The \code{setPrimitiveMethods} function resets the caching
+      information for a particular primitive function.  Don't call it directly.
       }
 
 \item{\code{.saveImage}}{Flag, used in dynamically initializing the

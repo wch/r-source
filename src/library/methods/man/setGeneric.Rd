@@ -55,7 +55,7 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers, where=1)
     \code{doAssign} to \code{TRUE}.
   }
 
-  \item{\code{knownMembers}:}{
+  \item{knownMembers}{
     (For \code{setGroupGeneric} only)  The names of functions that are known to be
     members of this group.  This information is used to reset cached
     definitions of the member generics when information about the group

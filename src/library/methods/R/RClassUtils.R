@@ -648,7 +648,7 @@ extendsCoerce <-
                           || (length(fromSlots) == length(toSlots) &&
                               !any(is.na(match(fromSlots, toSlots)))))
             if(sameSlots)
-                f <- substitute(function(object){data.class(object) <- CLASS; object},
+                f <- substitute(function(object){class(object) <- CLASS; object},
                                 list(CLASS = Class))
             else
                 f <- substitute(function(object) {
@@ -657,7 +657,7 @@ extendsCoerce <-
                         slot(value, what) <- slot(object, what)
                     value }, list(CLASS=Class, TOSLOTS = toSlots))
             ## bug in R: substitute of a function gives a call
-            mode(f) <- "function"
+            f <- eval(f, .GlobalEnv)
         }
         ## we dropped through because there was no coerce function in the
         ## extends object.  Make one and save it back in the session metadata

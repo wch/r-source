@@ -17,8 +17,8 @@
 \usage{
 validObject(object, test)
 
-getValidity(Class)
-setValidity(Class, method)
+getValidity(ClassDef)
+setValidity(ClassDef, method)
 }
 \arguments{
   \item{object}{ Any object, but not much will happen unless the
@@ -28,7 +28,7 @@ setValidity(Class, method)
     \code{test} is \code{FALSE} (the default) validity failure generates
     an error.}
 
-  \item{Class}{The name of the class whose validity method is to be set.}
+  \item{ClassDef}{The name of the class whose validity method is to be set.}
   \item{method}{A validity method;  that is, either \code{NULL} or a function of one argument
     (the \code{object}).  Like \code{validObject}, the function should return
     \code{TRUE} if the object is valid, and one or more descriptive

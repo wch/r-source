@@ -39,6 +39,17 @@ versions stored there will not override functions in the global environment.
   in the future.  Use the current versions but don't write code that
   depends on them.
 }
+\arguments{
+  \item{what}{
+    The object to be traced or untraced.
+  }
+  \item{tracer, exit}{
+    The code to use at the entrance or exit trace.  Either a function
+    (which will be called with no arguments) or an expression (typically
+    constructed from \code{link{quote}} or \code{\link{substitute}}) to
+    be evaluated.
+    }
+  }
 \details{
   
   \code{sessionData}: 

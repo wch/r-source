@@ -5,20 +5,23 @@
 \alias{MethodsListSelect}
 \title{ Get the Definition of a Method }
 \description{
-  A call to \code{getMethod} or \code{selectMethod} returns the method
+  A call to \code{getMethod} returns the method
   corresponding a particular generic function and signature (set
-  classes for formal arguments); \code{selectMethod} makes use of
-  inheritance, while \code{getMethod} does not.  The function
+  classes for formal arguments). The functions \code{MethodsListSelect}
+  and \code{selectMethod} select methods using an environment in which
+  arguments to the function have been assigned (they differ in the
+  treatment of inheritance).  Neither is intended to be called directly,
+  except perhaps in debugging. The function
   \code{getMethods} returns \emph{all} the methods for the generic function.
 }
 \usage{
 getMethod(f, signature=character(), where=-1, optional=FALSE)
 
-selectMethod(f, signature, optional=False, inherited, mlist=getMethods(f))
-
 getMethods(f, where=-1)
 
-MethodsListSelect(f, ev, mlist, finalDefault, ...)
+MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs, useInherited)
+selectMethod(f, env, optional=False, useInherited, mlist=getMethods(f))
+
 }
 \arguments{
   \item{f}{ The character-string name of the generic function.
@@ -44,49 +47,37 @@ likely to have such a function definition for direct use.)}
       can be explicitly supplied.  (Unlikely to be used, except in the
       recursive call that finds matches to more than one argument.)}
 
-  \item{ev}{The environment in which argument evaluations are done in
+  \item{env}{The environment in which argument evaluations are done in
     \code{MethodsListSelect}.  Currently must be supplied, but should
     usually be \code{sys.frame(sys.parent())} when calling the function explicitly
     for debugging purposes.}
+  \item{fEnv, finalDefault, evalArgs, useInherited}{ Internal-use
+      arguments for the function's environment, the method to use as
+      the overall default, whether to evaluate arguments, and which
+      arguments should use inheritance.}
+
 }
 \details{
-  The functions \code{getMethod} and \code{selectMethod} usually
-  differ only in that the latter includes class inheritance in its
-  search, and the former does not.  For example, if class
-  \code{"trackCurve"} has been defined to extend class \code{"track"},
-  then at any stage of selection, if the signature wants class
-  \code{"trackCurve"}, and the methods list has a \code{"track"}
-  element but no \code{"trackCurve"} element, then \code{selectMethod}
-  will pick that element, but \code{getMethod} will return
-  \code{NULL}.
+  A call to \code{getMethod} returns the method for a particular
+  function and signature.  As with other \code{get} functions,
+  argument \code{where} controls where the function looks (by default
+  anywhere in the search list) and argument \code{optional} controls
+  whether the function returns \code{NULL} or generates an error if
+  the method is not found.  The search for the method makes no use of
+  inheritance.
 
-  The other differences between the two functions have to do with
-  options on where to look:  \code{getMethod} takes an environment or
-  database argument, \code{selectMethod} takes a \code{MethodsList}
-  object.
+  The function \code{getMethods} returns all the methods for a
+  particular generic (in the form of a generic function with the
+  methods information in its environment).  The function is called
+  from the evaluator to merge method information, and is not intended
+  to be called directly.
 
-  When \code{selectMethod} is called with a signature having more than
-  one argument, it does selection recursively.  Look at the source for
-  the function for the precise definition, but the effect is roughly
-  as follows.  An element of the \code{MethodsList} object is selected
-  according to the first element of the signature (an exact match to
-  the corresponding class name, an inherited match, or the default
-  (\code{"ANY"}) element.  The result may be a function, a
-  \code{MethodsList} object, or \code{NULL} (no match).  In the second
-  case, if there are more elements in the signature,
-  \code{selectMethod} drops the first element of the signature, and
-  calls itself recursively, with that object as the \code{mlist}
-  argument.
-
-  The function \code{MethodsListSelect} returns the method selected by
-  the evaluator for the specified function, being called from the
-  supplied environment.  This is usually, but not always, the same as
-  that returned by \code{selectMethod} given the equivalent set of
-  classes (i.e., the classes of the arguments used in defining methods
-  for this function).  The differences come because inheritance
-  relations can be conditional, and \code{selectMethod} does not  have
-  that information, since it uses classes rather than actual objects
-  from those classes.
+  The function \code{MethodsListSelect} performs a full search
+  (including all inheritance and group generic information: see the
+  \link{Methods} documentation page for details on how this works).
+  The call returns a possibly revised methods list object,
+  incorporating any method found as part of the \code{allMethods}
+  slot.
 
   Normally you won't call \code{MethodsListSelect} directly, but it is
   possible to use it for debugging purposes (only for distinctly
@@ -95,9 +86,16 @@ likely to have such a function definition for direct use.)}
   Note that the statement that \code{MethodsListSelect} corresponds to the
   selection done by the evaluator is a fact, not an assertion, in the
   sense that the evaluator code constructs and executes a call to
-  \code{selectMethod} when it does not already have a cached method
+  \code{MethodsListSelect} when it does not already have a cached method
   for this generic function and signature.  (The value returned is
-  stored by the evaluator so that the search is not required next time.)
+  stored by the evaluator so that the search is not required next
+  time.)
+
+  The \code{selectMethod} function is similar to
+  \code{MethodsListSelect} (and calls it) but differs in that it
+  is intended to be used with control over which arguments are allowed
+  to use inheritance.  The restriction is needed to make sensible
+  method selection for coerce methods (the \code{\link{as}} function).
 }
 \value{
   The call to \code{selectMethod} or \code{getMethod} returns a

@@ -14,4 +14,7 @@ is intended as the default method.
 is called for automatic display of the result of an evaluated expression.
 
 }
+\arguments{
+\item{object}{Any R object}
+}
 \keyword{programming}

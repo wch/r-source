@@ -343,12 +343,12 @@ validObject <- function(object, test = FALSE) {
 }
 
 setValidity <-
-  function(Class, method) {
-    if(!is(Class, "classRepEnvironment"))
-      Class <- getClassDef(Class)
+  function(ClassDef, method) {
+    if(!is(ClassDef, "classRepEnvironment"))
+      ClassDef <- getClassDef(ClassDef)
     if(is.null(method) ||
       (is(method, "function") && length(formalArgs(method))==1))
-      setInClassDef(Class, ".Validity", method)
+      setInClassDef(ClassDef, ".Validity", method)
     else
       stop("validity method must be NULL or a function of one argument")
   }

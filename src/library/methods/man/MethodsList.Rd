@@ -27,13 +27,14 @@ matchArg(object, thisClass, mlist, ev)
 
 matchArgClass(Class, classes, methods)
 
-showMlist(mlist, includeDefs=TRUE, inherited = TRUE)
+showMlist(mlist, includeDefs = TRUE, inherited = TRUE,
+   classes, useArgNames )
 
 print.MethodsList(x, ...)
 
 listFromMlist(mlist, prefix = list())
 
-listFromMlistForPrint(mlist, inherited = TRUE)
+linearizeMlist(mlist, inherited = TRUE)
 
 finalDefaultMethod(mlist, fname = "")
 
@@ -117,7 +118,7 @@ selected classes.
   \item{\code{mergeMethods}}{
     Merges the methods in the second MethodsList object into the first,
     and returns the merged result.  Called from
-    \code{\link{mergeGenericFunctions}}
+    \code{\link{getAllMethods}}.
     }
 }
 

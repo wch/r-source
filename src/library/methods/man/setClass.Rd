@@ -36,7 +36,11 @@ getClasses(where)
   \item{validity, access, version}{ Control arguments included for
       compatibility with the S-Plus API, but not currently used.  }
 
-  \item{x}{an arbitrary object.}
+    \item{x}{an arbitrary object.}
+
+    \item{formal}{
+      Should a formal definition be required?
+      }
 }
 
 \details{

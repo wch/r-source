@@ -5,10 +5,11 @@
 \description{
   This function allows the user to browse directly on any of the
   currently active function calls, and is suitable as an error option.
+  The expression \code{options(error=quote(recover()))} will make this
+  the error option.
 }
 \usage{
 recover()
-options(error=quote(recover()))
 }
 \details{
   When called, \code{recover} prints the list of current calls, and

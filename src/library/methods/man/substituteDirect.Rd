@@ -13,20 +13,9 @@ This function differs from the ordinary \code{substitute} in that it treats its 
 in the standard S way, by evaluating it.  In contrast, \code{substitute} does
 not evaluate its first argument.
 
+The goal is to replace this with an \code{eval=} argument to \code{\link{substitute}}.
+
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--         or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (object, frame = sys.frame(-1), cleanFunction = T) 
-{
-    value <- .Call("do_substitute_direct", object, frame)
-    if (cleanFunction && is.function(value)) {
-        environment(value) <- .GlobalEnv
-    }
-    value
-  }
 }
-\keyword{}
+\keyword{internal}

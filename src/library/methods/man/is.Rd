@@ -27,6 +27,25 @@ Returns \code{maybe} if the extension includes a test.
   \code{setIs}: 
   Defines class1 to be an extension of class2.  
 }
+\arguments{
+  \item{object}{Any R object.}
+  \item{class1, class2}{
+    The names of the classes between which \code{is} relations are to be defined.
+  }
+  \item{maybe}{What value to return if the relationship is conditional.
+  }
+  \item{test, coerce, replace}{
+    Functions optionally supplied to test whether the relation is
+    defined, to coerce the object to \code{class2}, and to alter the
+    object so that \code{is(object, class2)} is identical to \code{value}.
+  }
+  \item{where}{
+    Where to store the metadata defining the relationship. Default is
+    the global environment.
+  }
+  
+}
+
 \details{
   
   \code{setIs}: 

@@ -24,6 +24,14 @@ replacing the class this way is strongly deprecated.  The expression
 particular class.
   
 }
+\arguments{
+\item{object}{
+Any R object (including basic objects for which no class is currently
+defined).  When assigning the class, however, it must be possible to
+coerce the object to the specified class:  the semantics of assigning
+a class to \code{object} are equivalent to \code{object <- as(object, value)}.
+}
+}
 \references{
 The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.
 

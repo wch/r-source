@@ -68,4 +68,4 @@ functions.
 }
 }
 
-\keyword{programming}
+\keyword{internal}

@@ -320,6 +320,8 @@ getGenerics <-
     substring(unique(value), n+1)
   }
 
+allGenerics <- getGenerics
+
 is.primitive <-
   function(fdef)
     switch(typeof(fdef),
@@ -362,7 +364,7 @@ cacheGenericsMetaData <-
                reset = setPrimitiveMethods(f, fdef, code, getGeneric(f), NULL),
                clear = setPrimitiveMethods(f, fdef, code, NULL, NULL))
       }
-      else if(isGroupGeneric(f, fdef = fdef)) {
+      else if(isGroup(f, fdef = fdef)) {
         members <- getGroupMembers(f, fdef = fdef)
         ## do the computations for the members as well; important if the
         ## members are primitive functions.

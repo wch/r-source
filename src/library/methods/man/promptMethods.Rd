@@ -8,9 +8,8 @@
   to the \code{\link{prompt}} function.
 }
 \usage{
-promptMethods(f, print=FALSE, inherited=FALSE, useArgName=TRUE)
+promptMethods(f, print=FALSE, inherited=FALSE)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{f}{ The name of the generic function whose methods are to be documented.  }
   \item{print}{ Should a file be written with the documentation shell?
@@ -20,8 +19,6 @@ promptMethods(f, print=FALSE, inherited=FALSE, useArgName=TRUE)
     write the documentation. Default \code{FALSE}.
   }
   \item{inherited}{ Should inherited methods be included?  Default \code{FALSE}. }
-  \item{useArgName}{ Should the argument names be used in the signatures
-  as displayed in the documentation.  Default \code{TRUE}.}
 }
 \value{
   If \code{print} is \code{FALSE}, the text generated; otherwise, the

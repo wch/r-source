@@ -1,6 +1,7 @@
 \name{slot}
 \alias{slot}
 \alias{slot<-}
+\alias{@<-}
 \alias{slotNames}
 \title{ The Slots in an Object from a Formal Class }
 \description{
@@ -8,6 +9,10 @@
   in an object.
 }
 \usage{
+
+object@name
+object@name <- value
+
 slot(object, name)
 slot(object, name) <- value
 
@@ -24,6 +29,18 @@ slotNames(x)
     \code{\link{getClass}(class)} to see the full description of the slots.} 
 }
 \details{
+  The \code{"@"} operator and the \code{slot} function extract or
+  replace the formally defined slots for the object.  The operator
+  takes a fixed name, which can be unquoted if it is syntactically a
+  name in the language.  A slot name can be any non-empty string, but
+  if the name is not made up of letters, numbers, and \code{"."}, it
+  needs to be quoted.
+
+  In the case of the \code{slot} function, the slot name can be any
+  expression that evaluates to a valid slot in the class definition.
+  Generally, the only reason to use the functional form rather than
+  the simpler operator is \emph{because} the slot name has to be computed.
+  
   The definition of the class contains the names of all slots diretly
   and indirectly defined.  Each slot has a name and an associated
   class.  Extracting a slot returns an object from that class.  Setting
