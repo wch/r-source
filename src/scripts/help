@@ -21,11 +21,13 @@ then
     echo
 elif [ "${1}" = "PRINT" ];
 then
+    LATEX=${4}
     if [ "${LATEX}" = "false" ];
     then
 	echo "Cannot print, latex seems to be unavailable"
 	exit 1
     fi
+    DVIPS=${5}
     if [ "${DVIPS}" = "false" ];
     then
 	echo "Cannot print, dvips seems to be unavailable"
