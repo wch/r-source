@@ -376,7 +376,6 @@ SEXP DropDims(SEXP);
 SEXP duplicated(SEXP);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
 void endcontext(RCNTXT*);
-SEXP EnsureString(SEXP);
 int factorsConform(SEXP, SEXP);
 void findcontext(int, SEXP, SEXP);
 SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
