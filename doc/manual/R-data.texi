@@ -700,22 +700,66 @@ resulting data from the database.  A prxoy data frame is set up by a
 call to @code{bind.db.proxy}.
 
 @findex db.execute
-@findex db.results.columns
-@findex db.results.rows
+@findex db.result.columns
+@findex db.result.rows
 @findex db.read.column
 @findex db.fetch.result
 @findex db.result.get.value
 A finer level of control is available via sending SQL queries to the
 PostgreSQL via @code{db.execute}. Once this is done,
 @code{db.fetch.result} can be used to fetch the whole result as a data
-frame.  Functions such as @code{db.results.columns} and
-@code{db.results.rows} will report the number of columns and rows in the
+frame.  Functions such as @code{db.result.columns} and
+@code{db.result.rows} will report the number of columns and rows in the
 resulting table, and @code{db.read.column} will fetch a single column
 (as a vector).  An individual cell in the table can be read by
 @code{db.result.get.value}.
 
 @pkg{RPgSQL} provides a means to extend its mapping of @R{} classes
 within a data frame to PostgreSQL types.
+
+We can explore these functions in a simple example.  The database
+@file{testdb} has already been set up, and as this was running on a
+standalone machine, no authentication was required to connect.
+@example
+> library(RPgSQL)
+> db.connect(dbname="testdb")
+Connected to database "testdb" on ""
+> data(USArrests)
+> db.write.table(USArrests)
+> rm(USArrests)
+# db.ls lists tables in the database.
+> db.ls()
+[1] "USArrests"
+> db.read.table("USArrests")
+   ...
+## set up a proxy data frame. Remember, USArrests has been removed
+> bind.db.proxy("USArrests")
+## USArrests is now a proxy, so all accesses are to the database
+> USArrests[, "Rape"]
+   Rape
+1  21.2
+2  44.5
+   ...
+> db.execute("SELECT State,Murder FROM USArrests WHERE Rape > 30
+             ORDER  BY Murder", clear=FALSE)
+> db.fetch.result()
+       state murder
+1 Colorado      7.9
+2 Arizona       8.1
+3 California    9.0
+4 Alaska       10.0
+5 New Mexico   11.4
+6 Michigan     12.1
+7 Nevada       12.2
+8 Florida      15.4
+## note the columns names got mapped to lower case
+
+> db.rm("USArrests")  # use ask=F to avoid the query
+Destroy table USArrests? y
+> db.ls()
+character(0)
+> db.disconnect()
+@end example
 
 @node RmSQL, RODBC, RPgSQL, Relational Databases
 @section Package RmSQL
@@ -759,9 +803,10 @@ unless the position is reset by a call to @code{msqlDataSeek}. A call to
 
 Package @pkg{RODBC} on CRAN provides an interface to database sources
 supporting the ODBC interface.  Many databases support ODBC, including
-most of those on Windows (such as MicroSoft Access), and unixODBC
-(@url{http://genix.net/unixODBC}), MySQL, Oracle and PostgreSQL on
-Unix/Linux.  @pkg{RODBC} runs on both Linux and Windows.
+most of those on Windows (such as MicroSoft Access), and MySQL, Oracle
+and PostgreSQL on Unix/Linux.  @pkg{RODBC} runs on both Linux and
+Windows.  You need an ODBC Driver Manager such as unixODBC
+(@url{http://www.unixODBC.org}) on Unix.
 
 Two groups of interface functions are provided. The @code{odbc*} group
 provide a low-level interface to the basic ODBC functions: see the help
@@ -794,6 +839,29 @@ used within a loop to retrieve a limited number of rows at a time.
 @code{sqlGetResults} returns a data frame, but the raw results as a
 matrix can be obtained from @code{odbcGetResults}.
 
+Here is an example using PostgreSQL, for which the ODBC driver maps
+column names to lower case.  We use the database @code{testdb} we
+created earlier, and have the DSN (data source name set up, in
+@file{~/.odbc.ini} under @code{unixODBC}.
+
+@example
+library(RODBC)
+## tell it postgresql ODBC is in use, so names are mapped to l/case
+channel <- odbcConnect("test", "", "", "postgresql")
+## load the data frame into the database
+data(USArrests)
+sqlSave(channel, USArrests, rownames="state")
+rm(USArrests)
+## list it
+sqlFetch(channel,"USArrests")
+## an SQL query, originally on one line
+sqlQuery(channel, "select state, murder from USArrests 
+         where rape > 30 order by murder")
+# remove the table
+sqlDrop(channel, USArrests)
+## close the connection
+odbcClose(channel)
+@end example
 
 @node Binary Files, Network Connections, Relational Databases, Top
 @chapter Binary Files
