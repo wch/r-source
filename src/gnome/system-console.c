@@ -26,10 +26,12 @@ void R_gtk_terminal_line_event(GtkWidget *widget)
 int R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
 {
     if(!R_Interactive) {
-	if(!R_Quiet) fputs(prompt, stdout);
+	if (!R_Slave)
+	    fputs(prompt, stdout);
 	if (fgets(buf, len, stdin) == NULL)
 	    return 0;
-	if(!R_Quiet) fputs(buf,stdout);
+	if (!R_Slave)
+	    fputs(buf, stdout);
 	return 1;
     }
     else {
