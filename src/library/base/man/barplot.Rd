@@ -56,9 +56,14 @@ barplot(height, width = 1, space = NULL, names.arg = NULL,
   useful for adding to the graph.
 }
 \seealso{
+  \code{\link{plot}(\dots,type="h")},
   \code{\link{dotplot}}, \code{\link{hist}}.
 }
 \examples{
+tN <- table(Ni <- rpois(100, lambda=5))
+r <- barplot(tN, col='gray')
+points(r, tN, type='h', col='red', lwd=2)#- type = "h" plotting *is* `bar'plot
+
 data(deaths)
 mp <- barplot(deaths) # default
 tot <- apply(deaths,2,sum); text(mp, tot + 3, format(tot))
