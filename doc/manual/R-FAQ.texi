@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-48, 2001-05-01
+@set FAQ-VERSION 1.2-49, 2001-05-03
 @set REL-VERSION 1.2.3
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -402,17 +402,17 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} at
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2001-04-20:
+@c Linux binaries as of 2001-05-03:
 @c
 @c debian   2.2 i386  1.2.2  Doug Bates <bates@stat.wisc.edu>
 @c          2.3 i386  1.2.2  Doug Bates <bates@stat.wisc.edu>
 @c linuxppc 5.0 ppc   1.2.2  Alex Buerkle <buerkle@hawaii.edu>
 @c mandrake 7.2 i386  1.2.2  Michele Alzetta <mikalzet@libero.it>
 @c redhat   6.x alpha 1.2.2  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.2.2  Martyn Plummer <plummer@iarc.fr>
+@c              i386  1.2.3  Martyn Plummer <plummer@iarc.fr>
 @c          7.x alpha 1.2.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c              i386  1.2.2  Martyn Plummer <plummer@iarc.fr>
-@c suse     7.0 i386  1.2.2  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+@c suse     7.0 i386  1.2.3  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
 2.2/2.3 packages for the i386 platform (now part of the Debian
@@ -1784,8 +1784,13 @@ $ R CMD INSTALL /path/to/@var{pkg}_@var{version}.tar.gz
 
 @noindent
 at the shell prompt to install to the default R directory tree (the
-@file{library} subdirectory of @file{R_HOME}).  To install to another
-tree (e.g., your private one), use
+@file{library} subdirectory of @file{R_HOME}).
+@c <FIXME 1.3.0>
+(From R version 1.3.0, this will install into the library tree rooted at
+the first directory given in @env{R_LIBS} (see below) if this is set and
+non-null, and to the default library otherwise.)
+@c </FIXME>
+To install to another tree (e.g., your private one), use
 
 @example
 $ R CMD INSTALL -l @var{lib} /path/to/@var{pkg}_@var{version}.tar.gz
@@ -1887,21 +1892,25 @@ detach("package:@var{pkg}")
 @section How can add-on packages be removed?
 
 To remove the packages @var{pkg_1}, @dots{}, @var{pkg_n} from the
-default library or the library @var{lib}, do
+default library, do
 
 @example
 $ R CMD REMOVE @var{pkg_1} @dots{} @var{pkg_n}
 @end example
 
 @noindent
-or
-
+@c <FIXME 1.3.0>
+(From R version 1.3.0, this will remove from the library tree rooted at
+the first directory given in @env{R_LIBS} if this is set and non-null,
+and from the default library otherwise.)
+@c </FIXME>
+Use
 @example
 $ R CMD REMOVE -l @var{lib} @var{pkg_1} @dots{} @var{pkg_n}
 @end example
 
 @noindent
-respectively.
+to remove from library @var{lib}.
 
 @node How can I create an R package?, How can I contribute to R?, How can add-on packages be removed?, R Add-On Packages
 @section How can I create an R package?
