@@ -36,7 +36,8 @@ provide(name)
   \item{logical.return}{logical.  If it is \code{TRUE},  \code{FALSE} or
       \code{TRUE} is returned to indicate success.}
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
-    printed about \code{\link{conflicts}} from attaching the new package.}
+    printed about \code{\link{conflicts}} from attaching the new
+    package, unless that package contains an object \code{.conflicts.OK}.}
   \item{quietly}{a logical.  If \code{TRUE}, a warning will not be
     printed if the package cannot be found.}
   \item{libname}{a character string giving the library directory where
@@ -105,7 +106,7 @@ provide(name)
   which autoloading has been promised.
 
   \code{.Library} is a character string giving the location of the
-  default library, the ``library'' subdirectory of \code{R\_HOME}.
+  default library, the ``library'' subdirectory of \code{R_HOME}.
   \code{.lib.loc} is a character vector with the locations of all
   library trees that \R should use.  It is initialized at startup from
   the environment variable \code{R_LIBS} (\code{RLIBS} as used by older

@@ -1,3 +1,13 @@
+rw0651
+======
+
+New function savePlot() to save plots to wmf, gif or ps.
+
+Rotated text on a windows/win.* device is placed more accurately.
+
+A windows() device reports itself as `windows' not `X11'.
+
+
 rw0650
 ======
 

@@ -5,7 +5,7 @@
 \description{
     The file \code{Rconsole} configures the R GUI console in this
     Windows port. The file \code{Rdevga} configures the graphics devices
-    \code{x11}, \code{win.graph}, \code{win.metafile} and \code{win.print}.
+    \code{windows}, \code{win.graph}, \code{win.metafile} and \code{win.print}.
 }
 \value{
     Each of the files contains details in comments of how to set the

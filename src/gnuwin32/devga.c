@@ -1623,7 +1623,7 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 	/********************************************************/
 
 
-static double deg2rad = 0.01745329251994329576;
+/*static double deg2rad = 0.01745329251994329576;*/
 
 static void X11_Text(double x, double y, int coords,
 		     char *str, double xc, double yc, double rot, DevDesc *dd)
@@ -1638,14 +1638,9 @@ static void X11_Text(double x, double y, int coords,
     pixs = fontascent(xd->font) + fontdescent(xd->font) - 1;
     xl = xc * X11_StrWidth(str, dd);
     yl = yc * GConvertYUnits(1, CHARS, DEVICE, dd) - pixs;
-    x += -xl * cos(deg2rad * rot) + yl * sin(deg2rad * rot);
-    y -= -xl * sin(deg2rad * rot) - yl * cos(deg2rad * rot);
-
-    /* if ((rot <= 45) || ((rot > 135) && (rot <= 225)) || (rot > 315))
-	y -= pixs;
-    else
-    x -= pixs;*/
-    
+    rot *= 0.01745329251994329576;
+    x += -xl * cos(rot) + yl * sin(rot);
+    y -= -xl * sin(rot) - yl * cos(rot);
     SetFont(dd->gp.font, size, rot, dd);
     SetColor(dd->gp.col, dd);
 #ifdef NOCLIPTEXT
@@ -1879,4 +1874,40 @@ X11DeviceDriver
     dd->displayListOn = 1;
     if (RConsole && xd->kind) show(RConsole);
     return 1;
+}
+
+SEXP do_saveDevga(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP filename, type;
+    char *fn, *tp, display[512];
+    int device;
+    DevDesc* dd;
+
+    checkArity(op, args);
+    device = asInteger(CAR(args));
+    if(device < 1 || device > NumDevices())
+	errorcall(call, "invalid device number");
+    dd = GetDevice(device);
+    if(!dd) errorcall(call, "invalid device");
+    filename = CADR(args);
+    if (!isString(filename) || LENGTH(filename) != 1)
+	errorcall(call, "invalid filename argument\n");
+    fn = CHAR(STRING(filename)[0]);
+    fixslash(fn);
+    type = CADDR(args);
+    if (!isString(type) || LENGTH(type) != 1)
+	errorcall(call, "invalid filename argument\n");
+    tp = CHAR(STRING(type)[0]);
+    Rprintf("device %d fn %s tp %s\n", device, fn, tp);
+    
+    if(!strcmp(tp, "gif")) {
+	SaveAsGif(dd, fn);
+    } else if (!strcmp(tp, "wmf")) {
+	sprintf(display, "win.metafile:%s", fn);
+	SaveAsWin(dd, display);
+    } else if (!strcmp(tp, "ps")) {
+	SaveAsPostscript(dd, fn);
+    } else 
+	errorcall(call, "unknown type\n");
+    return R_NilValue;
 }
