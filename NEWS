@@ -173,7 +173,7 @@ NEW FEATURES
 	on the data frame (needed to distiguish the response, for
 	example).
 
-     o	New generic functions naresid(), napredict() and naprint()
+    o	New generic functions naresid(), napredict() and naprint()
 	(formerly in packages survival5 and MASS, also used in rpart).
 	Also na.exclude(), a variant on na.omit() that is handled
 	differently by naresid() and napredict().
@@ -181,7 +181,7 @@ NEW FEATURES
 	The default, lm and glm methods for fitted, residuals, predict
 	and weights make use of these.
 
-   o	New function oneway.test() in package ctest for testing for
+    o	New function oneway.test() in package ctest for testing for
 	equal means in a one-way layout, assuming normality but not
 	necessarily equal variances.
 
