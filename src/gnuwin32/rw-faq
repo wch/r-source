@@ -91,7 +91,7 @@ files you need.  There are three versions of the distribution.
 
 1) `SetupR.exe' is about 18Mb and gives a complete installation.
 
-2) Directory `miniR' contains `miniR.exe' and eight files
+2) Directory `miniR' contains `miniR.exe' and seven files
 `miniR-?.bin'.  You can put  `miniR.exe' and `miniR-1.bin' on one
 floppy and the remaining `miniR-?.bin' on a floppy each.
 

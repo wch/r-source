@@ -7,9 +7,6 @@ See the file NEWS for changes that affect all versions of R.
 rw1051
 ======
 
-The miniR distribution has grown to 8 floppies (as the recommended
-packages are putting on weight).
-
 file.rename() (which is by default used when saving workspaces) now
 uses Windows API rather than ISO C functions.  This works around a
 reported problem with Windows thinking a file was in use, and on

@@ -63,6 +63,7 @@ Rsmall.iss: JRsmall.pl ../$(RPREFIX)b.zip \
 	done
 	rm -rf $(RPREFIX)/library/*/html $(RPREFIX)/library/*/latex \
 	  $(RPREFIX)/library/*/man
+	rm -rf $(RPREFIX)/library/grid/doc
 	rm -rf $(RPREFIX)/library/rpart/Manuscript
 	rm -rf $(RPREFIX)/library/survival/doc $(RPREFIX)/library/survival/survival.ps.gz
 	perl JRsmall.pl $(RPREFIX)
