@@ -29,19 +29,13 @@
 extern IoBuffer R_ConsoleIob;
 extern int errno;
 
-static int ValidFileSpec(SEXP f)
-{
-    if (isString(f) && length(f) > 0 && CHAR(STRING(f)[0])[0])
-	return 1;
-    return 0;
-}
+/* "do_parse" - the user interface input/output to files.
 
-/* "do_parse" - the user interface input/output to files. */
-/* See parse, below, for the internal function.  The */
-/* arguments are "file", "number", "text", "prompt". */
-/* If there is text then that is read and the other */
-/* arguments are ignored. */
+ The internal R_Parse.. functions are defined in ./gram.y (-> gram.c)
 
+ .Internal( parse(file, n, text, prompt) )
+ If there is text then that is read and the other arguments are ignored.
+*/
 SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP file, text, prompt, s;
@@ -58,7 +52,7 @@ SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     num = asInteger(CAR(args));
     args = CDR(args);
 
-    PROTECT(text = coerceVector(CAR(args), STRSXP)); 
+    PROTECT(text = coerceVector(CAR(args), STRSXP));
     args = CDR(args);
 
     prompt = CAR(args);
@@ -77,7 +71,7 @@ SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(3);
 	return s;
     }
-    else if (ValidFileSpec(file)) {
+    else if (isValidString(file)) {
 	if (num == NA_INTEGER)
 	    num = -1;
 	fp = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "r");
@@ -100,3 +94,5 @@ SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	return s;
     }
 }
+
+
