@@ -1950,7 +1950,8 @@ newX11Desc * Rf_allocNewX11DeviceDesc(double ps)
 }
 
 
-Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
+static
+Rboolean in_R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
 {
     SEXP dev = elt(findVar(install(".Devices"), R_NilValue), d);
 
@@ -1963,7 +1964,8 @@ Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
 	NewDevDesc *dd = ((GEDevDesc *)GetDevice(d))->dev;
 	newX11Desc *xd = dd->deviceSpecific;
 
-	pximage = (void *) XGetImage(display, xd->window, 0, 0,
+	*((XImage**) pximage) =
+            XGetImage(display, xd->window, 0, 0,
 				     xd->windowWidth, xd->windowHeight,
 				     AllPlanes, ZPixmap);
 	*pwidth = xd->windowWidth;
@@ -2181,6 +2183,6 @@ void R_init_R_X11(DllInfo *info)
     }
     tmp->X11 = in_do_X11;
     tmp->de = RX11_dataentry;
-    tmp->image = R_GetX11Image;
+    tmp->image = in_R_GetX11Image;
     R_setX11Routines(tmp);
 }

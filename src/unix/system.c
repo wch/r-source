@@ -86,6 +86,9 @@ void (*ptr_gnome_start)(int ac, char **av, Rstart Rp);
 void R_setStartTime(void); /* in sys-unix.c */
 void R_load_gnome_shlib(void); /* in dynload.c */
 
+Rboolean (*ptr_R_GetX11Image)(int, void *, int *, int *); /* used by package tkrplot */
+
+
 int Rf_initialize_R(int ac, char **av);
 
 
@@ -184,6 +187,7 @@ int Rf_initialize_R(int ac, char **av)
 
     ptr_GnomeDeviceDriver = stub_GnomeDeviceDriver;
     ptr_GTKDeviceDriver = stub_GTKDeviceDriver;
+    ptr_R_GetX11Image = R_GetX11Image;
 #ifdef HAVE_X11
     if(useX11) {
 	if(!usegnome) {
