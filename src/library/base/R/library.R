@@ -1,7 +1,7 @@
 library <-
-    function(package, help, lib.loc = .lib.loc, character.only = FALSE,
-             logical.return = FALSE, warn.conflicts = TRUE,
-             keep.source = getOption("keep.source.pkgs"))
+function(package, help, lib.loc = .lib.loc, character.only = FALSE,
+         logical.return = FALSE, warn.conflicts = TRUE,
+         keep.source = getOption("keep.source.pkgs"))
 {
     fQuote <- function(s) paste("`", s, "'", sep = "")
     if(!missing(package)) {
@@ -106,27 +106,59 @@ library <-
     }
     else {
 	## library():
+        db <- matrix(character(0), nr = 0, nc = 3)
+        nopkgs <- character(0)
+
+        for(lib in lib.loc) {
+            a <- .packages(all.available = TRUE, lib.loc = lib)
+            for(i in sort(a)) {
+                INDEX <- file.path(lib, i, "TITLE")
+                title <- if(file.exists(INDEX))
+                    read.00Index(INDEX)[, 2]
+                else ""
+                db <- rbind(db, cbind(i, lib, title))
+            }
+            if(length(a) == 0)
+                nopkgs <- c(nopkgs, lib)
+        }
+        colnames(db) <- c("Package", "LibPath", "Title")
+
+        ## Output.
 	outFile <- tempfile("Rlibrary")
         outConn <- file(outFile, open = "w")
-	avail <- NULL
-	for(lib in lib.loc) {
-	    cat("\nPackages in library `", lib, "':\n\n", sep = "",
-		file = outConn, append = TRUE)
-            a <- .packages(all.available = TRUE, lib.loc = lib)
-            for (i in sort(a)) {
-                title <- file.path(lib, i, "TITLE")
-                if(file.exists(title))
-                    writeLines(readLines(title), outConn)
-                else
-                    writeLines(i, outConn)
-	    }
-	    avail <- c(avail, a)
-	}
-        close(outConn)
-	file.show(outFile, delete.file = TRUE,
-                  title = "R packages available")
-	return(invisible(avail))
+        first <- TRUE
+        ## Split according to LibPath.
+        out <- lapply(split(1 : nrow(db), db[, "LibPath"]),
+                      function(ind) db[ind, c("Package", "Title"),
+                                       drop = FALSE])
+        for(lib in names(out)) {
+            writeLines(paste(ifelse(first, "", "\n"),
+                             "Packages in library `", lib, "':\n",
+                             sep = ""),
+                       outConn)
+            writeLines(formatDL(out[[lib]][, "Package"],
+                                out[[lib]][, "Title"]),
+                       outConn)
+            first <- FALSE
+        }
+        ## <FIXME>
+        ## Should do something about libraries without packages, as
+	## recorded in nopkgs.
+        ## </FIXME>
+        if(first) {
+            warning("no packages found")
+            close(outConn)
+            unlink(outFile)
+        }
+        else {
+            close(outConn)
+            file.show(outFile, delete.file = TRUE,
+                      title = "R packages available")
+        }
+
+        return(invisible(db))
     }
+
     if (logical.return)
 	TRUE
     else invisible(.packages())
@@ -164,8 +196,9 @@ function(chname, package = .packages(), lib.loc = .lib.loc, verbose =
     invisible(.Dyn.libs)
 }
 
-require <- function(package, quietly = FALSE, warn.conflicts = TRUE,
-                    keep.source = getOption("keep.source.pkgs"))
+require <-
+function(package, quietly = FALSE, warn.conflicts = TRUE,
+         keep.source = getOption("keep.source.pkgs"))
 {
     package <- as.character(substitute(package)) # allowing "require(eda)"
     if (is.na(match(paste("package", package, sep = ":"), search()))) {
@@ -175,7 +208,9 @@ require <- function(package, quietly = FALSE, warn.conflicts = TRUE,
     } else TRUE
 }
 
-.packages <- function(all.available = FALSE, lib.loc = .lib.loc) {
+.packages <-
+function(all.available = FALSE, lib.loc = .lib.loc)
+{
     if(all.available) {
 	ans <- character(0)
         lib.loc <- lib.loc[file.exists(lib.loc)]
@@ -193,7 +228,8 @@ require <- function(package, quietly = FALSE, warn.conflicts = TRUE,
     return(invisible(substring(s[substr(s, 1, 8) == "package:"], 9)))
 }
 
-.path.package <- function(package = .packages(), quiet = FALSE)
+.path.package <-
+function(package = .packages(), quiet = FALSE)
 {
     if(length(package) == 0) return(character(0))
     s <- search()
@@ -214,8 +250,8 @@ require <- function(package, quietly = FALSE, warn.conflicts = TRUE,
 }
 
 .find.package <-
-function(package, lib.loc = .lib.loc, use.attached, quiet = FALSE) {
-
+function(package, lib.loc = .lib.loc, use.attached, quiet = FALSE)
+{
     if(missing(use.attached))
         use.attached <- missing(lib.loc)
     else if(is.null(use.attached))

@@ -89,8 +89,8 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 }
 
 sys.source <-
-    function(file, envir = NULL, chdir = FALSE,
-             keep.source = getOption("keep.source.pkgs"))
+function(file, envir = NULL, chdir = FALSE,
+         keep.source = getOption("keep.source.pkgs"))
 {
     if(!(is.character(file) && file.exists(file)))
 	stop(paste("`", file, "' is not an existing file", sep = ""))
@@ -110,9 +110,10 @@ sys.source <-
     invisible()
 }
 
-demo <- function(topic, device = getOption("device"),
-                 package = .packages(), lib.loc = .lib.loc,
-                 character.only = FALSE)
+demo <-
+function(topic, device = getOption("device"),
+         package = .packages(), lib.loc = .lib.loc,
+         character.only = FALSE)
 {
     fQuote <- function(s) paste("`", s, "'", sep = "")
     
@@ -122,20 +123,36 @@ demo <- function(topic, device = getOption("device"),
     if(missing(topic)) {
         ## List all available demos.
         ## This code could be made more similar to data().
-        first <- TRUE
-        outFile <- tempfile("Rdemo.")
-        outConn <- file(outFile, open = "w")
+
+        ## Build the demo db.
+        db <- matrix(character(0), nr = 0, nc = 4)
         for(path in paths) {
             INDEX <- file.path(path, "demo", "00Index")
-            if(file.exists(INDEX)) {
-                writeLines(paste(ifelse(first, "", "\n"),
-                                 "Demos in package ",
-                                 fQuote(basename(path)),
-                                 ":\n", sep = ""),
-                           outConn)
-                writeLines(readLines(INDEX), outConn)
-                first <- FALSE
-            }
+            if(file.exists(INDEX))
+                db <- rbind(db,
+                            cbind(basename(path),
+                                  dirname(path),
+                                  read.00Index(INDEX)))
+        }
+        colnames(db) <- c("Package", "LibPath", "Item", "Title")
+
+        ## Output.
+        outFile <- tempfile("Rdemo.")
+        outConn <- file(outFile, open = "w")
+        first <- TRUE
+        ## Split according to Package.
+        out <- lapply(split(1 : nrow(db), db[, "Package"]),
+                      function(ind) db[ind, c("Item", "Title"),
+                                       drop = FALSE])
+        for(pkg in names(out)) {
+            writeLines(paste(ifelse(first, "", "\n"),
+                             "Demos in package `", pkg, "':\n",
+                             sep = ""),
+                       outConn)
+            writeLines(formatDL(out[[pkg]][, "Item"],
+                                out[[pkg]][, "Title"]),
+                       outConn)
+            first <- FALSE
         }
         if(first) {
             warning("no demo listings found")
@@ -153,7 +170,8 @@ demo <- function(topic, device = getOption("device"),
             close(outConn)
             file.show(outFile, delete.file = TRUE, title = "R demos")
         }
-        return(invisible(character(0)))
+        
+        return(invisible(db))
     }
             
     if(!character.only)
@@ -192,17 +210,17 @@ demo <- function(topic, device = getOption("device"),
 }
                 
 example <-
-function (topic, package = .packages(), lib.loc = .lib.loc, echo = TRUE,
-	  verbose = getOption("verbose"),
-	  prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
+function(topic, package = .packages(), lib.loc = .lib.loc,
+         echo = TRUE, verbose = getOption("verbose"),
+         prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
 {
     topic <- substitute(topic)
-    if (!is.character(topic))
+    if(!is.character(topic))
 	topic <- deparse(topic)[1]
     INDICES <- .find.package(package, lib.loc, missing(lib.loc),
                              quiet = TRUE)
     file <- index.search(topic, INDICES, "AnIndex", "R-ex")
-    if (file == "") {
+    if(file == "") {
 	warning(paste("No help file found for `", topic, "'", sep = ""))
 	return(invisible())
     }
@@ -215,12 +233,12 @@ function (topic, package = .packages(), lib.loc = .lib.loc, echo = TRUE,
     zfile <- zip.file.extract(file, "Rex.zip")
     if(zfile != file) on.exit(unlink(zfile))
     ## end of experimental code
-    if (!file.exists(zfile)) {
+    if(!file.exists(zfile)) {
 	warning(paste("`", topic, "' has a help file but no examples file",
 		      sep = ""))
 	return(invisible())
     }
-    if (pkg != "base")
+    if(pkg != "base")
 	library(pkg, lib = lib, character.only = TRUE)
     source(zfile, echo = echo, prompt.echo = prompt.echo, verbose =
 	   verbose, max.deparse.length = 250)

@@ -13,8 +13,6 @@ function(..., list = character(0),
 
     if(length(names) == 0) {
         ## Give `index' of all possible data sets.
-        ## Currently always returns character(0).  To change this, we
-        ## would need to parse the `00Index' files ...
 
         ## <FIXME>
         ## This is different from what is done for loading data sets:
@@ -24,12 +22,10 @@ function(..., list = character(0),
         if(missing(lib.loc))
             paths <- c(.path.package(package, TRUE), getwd(), paths)
         paths <- unique(paths[file.exists(paths)])
-        
-        first <- TRUE
-        nodata <- noindex <- character(0)
-        outFile <- tempfile("Rdata.")
-        outConn <- file(outFile, open = "w")
 
+        ## Build the data db.
+        db <- matrix(character(0), nr = 0, nc = 4)
+        nodata <- noindex <- character(0)
         for(path in paths) {
             pkg <- basename(path)
             if(!file.exists(file.path(path, "data"))) {
@@ -37,20 +33,39 @@ function(..., list = character(0),
                 next
             }
             INDEX <- file.path(path, "data", "00Index")
-            if(!file.exists(INDEX))
-                INDEX <- file.path(path, "data", "index.doc")
-            if(file.exists(INDEX)) {
-                writeLines(paste(ifelse(first, "", "\n"),
-                                 "Data sets in package `",
-                                 pkg, "':\n", sep = ""),
-                           outConn)
-                writeLines(readLines(INDEX), outConn)
-                first <- FALSE
-            } else {
+            ## <NOTE>
+            ## Earlier versions also used to check for `index.doc'.
+            ## </NOTE>
+            if(file.exists(INDEX))
+                db <- rbind(db,
+                            cbind(basename(path),
+                                  dirname(path),
+                                  read.00Index(INDEX)))
+            else {
                 ## no index: check for datasets -- won't work if zipped
-                files <- list.files(file.path(path, "data"))
-                if(length(files) > 0) noindex <- c(noindex, pkg)
+                if(length(list.files(file.path(path, "data"))) > 0)
+                    noindex <- c(noindex, pkg)
             }
+        }
+        colnames(db) <- c("Package", "LibPath", "Item", "Title")
+
+        ## Output.
+        outFile <- tempfile("Rdata.")
+        outConn <- file(outFile, open = "w")
+        first <- TRUE
+        ## Split according to Package.
+        out <- lapply(split(1 : nrow(db), db[, "Package"]),
+                      function(ind) db[ind, c("Item", "Title"),
+                                       drop = FALSE])
+        for(pkg in names(out)) {
+            writeLines(paste(ifelse(first, "", "\n"),
+                             "Data sets in package `", pkg, "':\n",
+                             sep = ""),
+                       outConn)
+            writeLines(formatDL(out[[pkg]][, "Item"],
+                                out[[pkg]][, "Title"]),
+                       outConn)
+            first <- FALSE
         }
         if(first) {
             warning("no data listings found")
@@ -69,6 +84,7 @@ function(..., list = character(0),
             file.show(outFile, delete.file = TRUE,
                       title = "R data sets")
         }
+
         if(!missing(package) && (length(package) > 0)) {
             nodata <- nodata[nodata %in% package]
             if(length(nodata) > 1)
@@ -85,7 +101,8 @@ function(..., list = character(0),
         else if(length(noindex) == 1)
             warning(paste("package `", noindex,
                           "' contains datasets but no index", sep=""))
-        return(invisible(character(0)))
+        
+        return(invisible(db))
     }
 
     for(name in names) {
