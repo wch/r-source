@@ -121,6 +121,7 @@ DEPRECATED & DEFUNCT
 
 BUG FIXES
 
+    o   Sys.sleep() was having trouble with waits of less than 0.5s 
 
 
 	**************************************************

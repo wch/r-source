@@ -814,11 +814,7 @@ void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
-#include <setjmp.h>
-static jmp_buf sleep_return;
 
-static int OldTimeout;
-static void (* OldHandler)(void);
 
 
 #ifdef _R_HAVE_TIMING_
@@ -836,63 +832,43 @@ static void (* OldHandler)(void);
 #  endif
 # endif /* not CLK_TCK */
 
-static struct tms timeinfo;
-static double timeint, start, elapsed;
 
-static void SleepHandler(void)
-{
-    elapsed = (times(&timeinfo) - start) / (double)CLK_TCK;
-/*    Rprintf("elapsed %f,  R_wait_usec %d\n", elapsed, R_wait_usec); */
-    if(elapsed >= timeint) longjmp(sleep_return, 100);
-    if(timeint - elapsed < 0.5) 
-	R_wait_usec = 1e6*(timeint - elapsed) + 10000;
-    OldHandler();
-}
-
-static void sleep_cleanup(void *ignored)
-{
-    R_PolledEvents = OldHandler;
-    R_wait_usec = OldTimeout;
-}
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT cntxt;
+    int Timeout;
+    double tm;
+    struct tms timeinfo;
+    double timeint, start, elapsed;
+
     checkArity(op, args);
     timeint = asReal(CAR(args));
     if (ISNAN(timeint) || timeint < 0)
 	errorcall(call, "invalid time value");
-    OldHandler = R_PolledEvents;
-    R_PolledEvents = SleepHandler;
-    OldTimeout = R_wait_usec;
-    if(OldTimeout == 0 || OldTimeout > 500000) R_wait_usec = 500000;
-    R_wait_usec = MIN(timeint*1e6, R_wait_usec);
-
-    /* set up a context to restore R_PolledEvents and R_wait_usec if
-       there is an error or interrupt */
-    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
-		 R_NilValue);
-    cntxt.cend = &sleep_cleanup;
+    tm = timeint * 1e6;
 
     start = times(&timeinfo);
-    if(setjmp(sleep_return) != 100)
-	for (;;) {
-	    fd_set *what = R_checkActivity(R_wait_usec, 1);
-	    R_runHandlers(R_InputHandlers, what);
-	    if(what)
-  	       SleepHandler();/* Potentially don't want to call OldHandler, so may need to
-                                 separate SleepHandler into computation/jump and OldHandler
-                                 call. */
-	}
+    for (;;) {
+        Timeout = R_wait_usec ? MIN(tm, R_wait_usec) : tm;
+	fd_set *what = R_checkActivity(Timeout, 1);
 
-    R_PolledEvents = OldHandler;
-    R_wait_usec = OldTimeout;
+	/* Time up? */
+	elapsed = (times(&timeinfo) - start) / (double)CLK_TCK;
+	if(elapsed >= timeint) break;
 
-    /* end the cleanup context */
-    endcontext(&cntxt);
+	/* Nope, service pending events */
+	R_runHandlers(R_InputHandlers, what);
 
+	/* Servicing events might take some time, so recheck: */
+	elapsed = (times(&timeinfo) - start) / (double)CLK_TCK;
+	if(elapsed >= timeint) break;
+
+	tm = 1e6*(timeint - elapsed); /* old code had "+ 10000;" */ 
+    }
+ 
     return R_NilValue;
 }
 
