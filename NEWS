@@ -71,7 +71,7 @@ BUG FIXES
     o	Document that postscript(file="") sends the output directly to
 	the default printer.
 
-    o	ts.union(, dframe=T) had a long-standing typo, now works.
+    o	ts.union(, dframe=TRUE) had a long-standing typo, now works.
 
     o	save(,ascii=TRUE) had problem with octal escapes in strings
 	when there was a digit following, should work now.
@@ -81,6 +81,13 @@ BUG FIXES
 
     o   The new Perl 5.6 broke our version-detection mechanism. A
         better one has been inserted.
+
+    o   X11(colortype="gray") failed to work on 8-bit screens, and
+	more generally when colour allocation failed X11() did not
+	revert to monochrome correctly (and did not say it was doing so).
+
+	It was not documented in the help that to change the X11 
+	colortype one needs to close all open X11 devices.
 
 
 	*********************************************************

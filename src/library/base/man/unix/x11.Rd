@@ -21,7 +21,8 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
     for high-end displays or Macintoshs.}
   \item{colortype}{the kind of color model to be used.  The
     possibilities are \code{"mono"}, \code{"gray"}, \code{"pseudo"},
-    \code{"pseudo.cube"} and \code{"true"}.}
+    \code{"pseudo.cube"} and \code{"true"}. Ignored if an \code{X11} is
+    already open.}
   \item{maxcubesize}{can be used to limited the size of color
     cube allocated for pseudocolor devices.}
 }
@@ -43,6 +44,11 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   causes a standard color cube to be set up, and requested colors
   are approximated by the closest value in the cube.  The default
   strategy for pseudocolor displays is \code{"pseudo"}.
+
+  \bold{Note:} All \code{X11} devices share a \code{colortype} which is
+  set by the first device to be opened.  To change the \code{colortype}
+  you need to close \emph{all} open \code{X11} devices then open one
+  with the desired \code{colortype}.
 }
 \seealso{
   \code{\link{Devices}}.
