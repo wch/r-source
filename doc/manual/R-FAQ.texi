@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-7, @value{FAQ-YEAR}-05-02
+@set FAQ-VERSION 1.7-8, @value{FAQ-YEAR}-05-11
 @set REL-VERSION 1.7.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1590,10 +1590,6 @@ balloon-borne instrument).
 Creating random fields using various methods.
 @item RmSQL
 An interface between R and the mSQL database system.
-@item Rmpi
-an interface (wrapper) to MPI (Message-Passing Interface) APIs.  It also
-provides interactive R slave functionalities to make MPI programming
-easier in R than in C(++) or FORTRAN.
 @c @item Rnotes
 @c The data sets for the exercises in ``An Introduction to R''
 @c (@pxref{What documentation exists for R?}).
@@ -1819,9 +1815,6 @@ methods.
 Functions for inference in generalised linear spatial models.
 @item gld
 Basic functions for the generalised (Tukey) lambda distribution.
-@item gllm
-Routines for log-linear models of incomplete contingency tables,
-including some latent class models via EM and Fisher scoring approaches.
 @item glmmML
 A Maximum Likelihood approach to generalized linear models with random
 intercept.
@@ -2083,11 +2076,6 @@ Functions for exploratory (statistical) microarray analysis.
 @item sn
 Functions for manipulating skew-normal probability distributions and for
 fitting them to data, in the scalar and the multivariate case.
-@item sna
-A range of tools for social network analysis, including node and
-graph-level indices, structural distance and covariance methods,
-structural equivalence detection, p* modeling, and network
-visualization.
 @c <COMMENT>
 @c Removed ...
 @c @item snns
@@ -2208,6 +2196,7 @@ currently contains
 @table @strong
 @item Dopt
 Finding D-optimal experimental designs.
+
 @c <NOTE>
 @c Moved to Devel for 1.6 as it fails R CMD check.
 @item PHYLOGR
@@ -2215,11 +2204,13 @@ Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
 analyses using GLS.
 @c </NOTE>
+
 @c <NOTE>
 @c Moved to Devel for 1.6 as it fails R CMD check.
 @item RPgSQL
 Provides methods for accessing data stored in PostgreSQL tables.
 @c </NOTE>
+
 @c <COMMENT>
 @c Moved to Attic for 1.5.1 as no longer needed.
 @c (See also the info on rdbi.sourceforge.net.)
@@ -2228,21 +2219,34 @@ Provides methods for accessing data stored in PostgreSQL tables.
 @c @item Rdbi.PgSQL
 @c Provides methods for accessing data stored in PostgreSQL tables.
 @c </COMMENT>
+
+@c <NOTE>
+@c Moved to Devel for 1.7 as it fails R CMD check.
+@item Rmpi
+An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It also
+provides interactive R slave functionalities to make MPI programming
+easier in R than in C(++) or FORTRAN.
+@c </NOTE>
+
 @c <COMMENT>
 @c Moved to Attic for 1.5 (as this contains the summary functions).
 @c @item colSums
 @c Matrix summary functions in C.
 @c </COMMENT>
+
 @c <COMMENT>
 @c Moved to Attic for 1.5.1 as no longer needed.
 @c @item cxx
 @c A small C++ test package.
 @c </COMMENT>
+
 @item dseplus
 Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions.
+
 @item ensemble
 Ensembles of tree classifiers.
+
 @c <COMMENT>
 @c Moved to Devel for 1.5 as it fails R CMD check.
 @c Moved to Attic for 1.5.1 as apparently no longer actively
@@ -2250,21 +2254,42 @@ Ensembles of tree classifiers.
 @c @item event.chart
 @c Package for creating event charts.
 @c </COMMENT>
+
+@c <NOTE>
+@c Moved to Devel for 1.7 as it fails R CMD check.
+@item gllm
+Routines for log-linear models of incomplete contingency tables,
+including some latent class models via EM and Fisher scoring approaches.
+@c </NOTE>
+
 @c <COMMENT>
 @c Moved to Attic for 1.5.1 as no longer maintained.
 @c @item hpower
 @c A suite of functions to compute power and sample size for tests of the
 @c general linear hypothesis.
 @c </COMMENT>
+
 @item pls
 Univariate Partial Least Squares Regression.
+
 @c <COMMENT>
 @c Moved to Attic for 1.5.1 as no longer needed.
 @c @item regexp
 @c Simple regular expression interface.
 @c </COMMENT>
+
 @item runStat
 Running median and mean.
+
+@c <NOTE>
+@c Moved to Devel for 1.7 as it fails R CMD check.
+@item sna
+A range of tools for social network analysis, including node and
+graph-level indices, structural distance and covariance methods,
+structural equivalence detection, p* modeling, and network
+visualization.
+@c </NOTE>
+
 @item write.snns
 Function for writing a @acronym{SNNS} pattern file from a data frame or
 matrix.
@@ -2806,6 +2831,7 @@ dir /opt/R/src/unix
 * How do I produce PNG graphics in batch mode?::  
 * How can I get command line editing to work?::  
 * How can I turn a string into a variable?::  
+* Why do lattice/trellis graphics not work?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -3403,7 +3429,7 @@ needed: users of Linux binary distributions will need to install
 packages such as @code{libreadline-dev} (Debian) or
 @code{readline-devel} (Red Hat).
 
-@node How can I turn a string into a variable?,  , How can I get command line editing to work?, R Miscellanea
+@node How can I turn a string into a variable?, Why do lattice/trellis graphics not work?, How can I get command line editing to work?, R Miscellanea
 @section How can I turn a string into a variable?
 
 If you have
@@ -3466,6 +3492,17 @@ vars[["a"]]
 @noindent
 without any of this messing about.
 
+@node Why do lattice/trellis graphics not work?,  , How can I turn a string into a variable?, R Miscellanea
+@section Why do lattice/trellis graphics not work?
+
+The most likely reason is that you forgot to tell R to display the
+graph.  Lattice functions such as @code{xyplot()} create a graph object,
+but do not display it (the same is true of Trellis graphics in
+@SPLUS{}).  The @code{print()} method for the graph object produces the
+actual display.  When you use these functions interactively at the
+command line, the result is automatically printed, but in
+@code{source()} or inside your own functions you will need an explicit
+@code{print()} statement.
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
