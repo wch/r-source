@@ -20,3 +20,6 @@ probabilities at which to evaluate the inverse distribution.
 ppoints(4)
 ppoints(10)
 }
+\keyword{dplot}
+\keyword{arith}
+\keyword{distribution}

@@ -22,3 +22,4 @@ a vector of plotting symbols and colors to be used in the plots.
 data(judges)
 pairs(judges)
 }
+\keyword{hplot}

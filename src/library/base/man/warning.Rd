@@ -10,3 +10,4 @@ warning(message)
 \examples{
 if(eigenval < 1.e-7) warning("system near singular")
 }
+\keyword{programming}

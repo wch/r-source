@@ -17,3 +17,8 @@ values are stripped from \code{x} before computation takes place.
 If this is not done then an \code{NA} value in
 \code{x} will cause \code{mad} to return \code{NA}.
 }
+\seealso{
+\code{\link{median}}, \code{\link{var}}.
+}
+\keyword{univar}
+\keyword{robust}

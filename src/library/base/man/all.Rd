@@ -28,3 +28,4 @@ range(x <- sort(round(rnorm(10) - 1.2,1)))
 if(any(x < 0)) cat("x contains negative values\n")
 if(all(x < 0)) cat("all x values are negative\n")
 }
+\keyword{logic}

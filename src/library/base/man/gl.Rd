@@ -24,3 +24,5 @@ gl(2, 1, 20)
 # alternating pairs of 1s and 2s
 gl(2, 2, 20)
 }
+\keyword{category}
+\keyword{arith}

@@ -41,3 +41,4 @@ f <- function (x,a) x - a
 xmin <- uniroot(f, c(0, 1), tol = 0.0001, a = 1/3)
 xmin
 }
+\keyword{optimize}

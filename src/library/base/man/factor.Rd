@@ -55,6 +55,7 @@ as.ordered(x)
 \seealso{
   \code{\link{gl}} for construction of ``balanced'' factors;
   \code{\link{levels}} and \code{\link{nlevels}} for accessing the
-  levels, 
+  levels,
   and \code{\link{codes}} to get integer codes.
 }
+\keyword{category}

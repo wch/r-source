@@ -31,3 +31,4 @@ or not.
 \examples{
 dim(as.array(letters))
 }
+\keyword{array}

@@ -1,7 +1,7 @@
 \name{cat}
 \title{Concatenate and Print}
 \usage{
-cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL, 
+cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
     append = FALSE)
 }
 \alias{cat}
@@ -26,3 +26,5 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
 ## print an informative message
 cat("iteration = ", iter <- iter + 1, "\n")
 }
+\keyword{print}
+\keyword{file}

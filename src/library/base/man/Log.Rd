@@ -41,3 +41,4 @@ log2(2^pi) == 2^log2(pi)
 Mod(pi - log(exp(pi*1i)) / 1i) < .Machine$double.eps
 Mod(1+exp(pi*1i)) < .Machine$double.eps
 }
+\keyword{math}

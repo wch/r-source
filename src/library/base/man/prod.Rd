@@ -13,10 +13,11 @@ a value of \code{NA} to be returned, otherwise
 \code{NA} values are ignored.
 }
 \seealso{
-\code{\link{sum}}, 
-\code{\link{cumprod}}, 
+\code{\link{sum}},
+\code{\link{cumprod}},
 \code{\link{cumsum}}.
 }
 \examples{
 print(prod(1:7)) == print(gamma(8))
 }
+\keyword{arith}

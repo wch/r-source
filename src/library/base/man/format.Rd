@@ -20,3 +20,4 @@ formatting facility.
 \examples{
 format(1:10)
 }
+\keyword{character}

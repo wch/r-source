@@ -20,3 +20,5 @@ menu(x)
 switch(menu(c("List letters", "List LETTERS")) + 1,
        cat("Nothing done\n"), letters, LETTERS)
 }
+\keyword{utilities}
+\keyword{programming}

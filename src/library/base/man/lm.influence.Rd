@@ -56,3 +56,4 @@ dfbetas(lm.SR)
 dffits(lm.SR)
 covratio(lm.SR)
 }
+\keyword{regression}

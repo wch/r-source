@@ -108,3 +108,4 @@ anova(lm.D9 <- lm(weight~group))
 summary(lm.D90 <- lm(weight ~ group -1))# omitting intercept
 summary(resid(lm.D9) - resid(lm.D90)) #- residual are practically identical
 }
+\keyword{regression}

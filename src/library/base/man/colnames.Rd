@@ -12,3 +12,5 @@ column labels of a matrix.
 \seealso{
 \code{\link{dimnames}}, \code{\link{rownames}}.
 }
+\keyword{array}
+\keyword{manip}

@@ -12,3 +12,4 @@ value in any of the arguments will cause
 a value of \code{NA} to be returned, otherwise
 \code{NA} values are ignored.
 }
+\keyword{arith}

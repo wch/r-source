@@ -33,5 +33,3 @@ dchisq(x, df=2) == dexp(x, 1/2)
 pchisq(x, df=2) == pexp(x, 1/2)#- only approximately
 }
 \keyword{distribution}
-
-

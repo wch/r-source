@@ -33,7 +33,7 @@ methods(generic.function, class)
   arguments matched as they came in to the generic.  Any local variables
   defined before the call to \code{UseMethod} are retained (!?).  Any
   statements after the call to \code{UseMethod} will not be evaluated as
-  \code{UseMethod} does not return. 
+  \code{UseMethod} does not return.
 
   \code{NextMethod} invokes the next method (determined by the
   class).  It does this by creating a special call frame for that
@@ -61,3 +61,4 @@ print(methods(print))
 cat("methods(class = data.frame):\n")
 print(methods(class = data.frame))
 }
+\keyword{methods}

@@ -1,5 +1,5 @@
 \name{nchar}
-\title{Count The Number of Characters}
+\title{Count the Number of Characters}
 \usage{nchar(x)}
 \alias{nchar}
 \description{
@@ -21,3 +21,4 @@ nchar(x)
 nchar(deparse(mean))
 # 23  1 16 45 11 64  2 17 50 43  2 17  1
 }
+\keyword{character}

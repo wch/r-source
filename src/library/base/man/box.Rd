@@ -23,3 +23,4 @@ plot(1:7,abs(rnorm(7)), type='h', axes = F)
 axis(1, labels = letters[1:7])
 box(lty='137', col = 'red')
 }
+\keyword{aplot}

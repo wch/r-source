@@ -12,7 +12,7 @@ ls.print(ls.out, digits = 4, print.it = TRUE)
 }
 \description{
   Computes basic statistics, including standard errors, t- and p-values
-  for the regression coefficients and prints them if \code{print.it} is 
+  for the regression coefficients and prints them if \code{print.it} is
   \code{TRUE}.
 }
 \value{
@@ -28,8 +28,9 @@ ls.print(ls.out, digits = 4, print.it = TRUE)
 \seealso{
   \code{\link{ls.diag}}, \code{\link{lsfit}};
   \code{\link{lm}}, \code{\link{lm.influence}} which usually are
-  preferable. 
+  preferable.
 }
 \examples{
 ## See help for \link{lsfit}
 }
+\keyword{regression}

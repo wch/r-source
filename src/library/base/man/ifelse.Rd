@@ -23,5 +23,5 @@ sqrt(ifelse(x >= 0, x, NA))# no warning
 ## Note: the following also gives the warning !
 ifelse(x >= 0, sqrt(x), NA)
 }
-
-
+\keyword{logic}
+\keyword{programming}

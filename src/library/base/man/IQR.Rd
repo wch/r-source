@@ -16,9 +16,13 @@ Tukey, J. W. (1977).
 Reading: Addison-Wesley.
 }
 \seealso{
-\code{\link{fivenum}}, \code{\link{quantile}}.
+\code{\link{fivenum}}, \code{\link{range}}, \code{\link{quantile}}.
 }
 \examples{
 data(rivers)
 IQR(rivers)
 }
+\keyword{univar}
+\keyword{robust}
+\keyword{distribution}
+

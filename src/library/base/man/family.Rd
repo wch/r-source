@@ -64,3 +64,4 @@ London: Chapman and Hall.
 \seealso{
 \code{\link{glm}}, \code{\link{power}}.
 }
+\keyword{models}

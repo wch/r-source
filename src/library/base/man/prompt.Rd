@@ -31,3 +31,4 @@ prompt.default(object,
 prompt(plot.default)
 prompt(interactive, force.f=TRUE)
 }
+\keyword{documentation}

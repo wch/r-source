@@ -31,4 +31,4 @@ all(Mod(1 - (cos(x) + 1i*sin(x)) / exp(1i*x)) < 1.1 * .Machine$double.eps)
 all(abs(1 - x / asin(sin(x))) <= .Machine$double.eps) # TRUE (Solaris)
 all(abs(1 - x / atan(tan(x))) <= .Machine$double.eps) # TRUE (Solaris)
 }
-
+\keyword{math}

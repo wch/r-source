@@ -32,3 +32,5 @@ data(cars)
 pts <- list(x=cars[,1], y=cars[,2])
 plot(pts)
 }
+\keyword{list}
+\keyword{manip}

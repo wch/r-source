@@ -49,3 +49,5 @@ my.runif1 <- function(i.seed = .Random.seed)
 rs <- .Random.seed
 R.seed(rs); u <- runif(1); .Random.seed; c(u, my.runif1(rs))
 }
+\keyword{distribution}
+\keyword{sysdata}

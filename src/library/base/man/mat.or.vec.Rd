@@ -13,3 +13,4 @@ mat.or.vec(nr, nc)
 mat.or.vec(3, 1)
 mat.or.vec(3, 2)
 }
+\keyword{array}

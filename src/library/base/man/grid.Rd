@@ -17,3 +17,4 @@ plot(iris$Sepal.L, iris$Sepal.W, col = rep(1:3, rep(50, 3)),
      xlim = c(4, 8), ylim = c(2, 4.5))
 grid(4, 5, lty = "solid")
 }
+\keyword{aplot}

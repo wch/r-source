@@ -22,3 +22,5 @@ is.numeric(x)
   \emph{\R has no single precision data type.  All real numbers are
     stored in double precision format}.
 }
+\keyword{classes}
+\keyword{attribute}

@@ -30,7 +30,7 @@ The implementation is via a modification of the LINPACK subroutines
 which allow for multiple left-hand sides.
 }
 \value{
-A list with the following named components: 
+A list with the following named components:
 \item{coef}{the least squares estimates of the coefficients in
 the model (stated below).}
 \item{residuals}{residuals from the fit.}
@@ -38,7 +38,7 @@ the model (stated below).}
 \item{qr}{the QR decomposition of the design matrix.}
 }
 \seealso{
-\code{\link{lm}} which usually is preferable; 
+\code{\link{lm}} which usually is preferable;
 \code{\link{ls.print}}, \code{\link{ls.diag}}, \code{\link{rreg}}.
 }
 \examples{
@@ -46,3 +46,4 @@ the model (stated below).}
 lsD9 <- lsfit(x = as.numeric(gl(2,10,20)), y = weight)
 ls.print(lsD9)
 }
+\keyword{regression}

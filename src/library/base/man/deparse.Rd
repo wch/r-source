@@ -28,3 +28,6 @@ function(x, y)
     plot(x, y, xlab=deparse(substitute(x)),
         ylab=deparse(substitute(y)))
 }
+\keyword{programming}
+\keyword{manip}
+\keyword{data}

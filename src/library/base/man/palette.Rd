@@ -37,4 +37,4 @@ palette(rainbow(6)) # six color rainbow
 palette("default")  # reset back to the default
 }
 \keyword{color}
-\keyword{graphics}
+\keyword{sysdata}

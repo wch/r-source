@@ -22,7 +22,7 @@ formatC(x, digits = NULL, width = max(0, digits) + 1,
     ``n.dddEnn'' (scientific format); \code{"g"} and \code{"G"} put
     \code{x[i]} into scientific format only if it saves space to do so.}
   \item{flag}{format modifier as in Kernighan and Ritchie, 2nd ed.,
-    page 243. 
+    page 243.
     \code{"0"}  pads leading zeros; \code{"-"} does left adjustment,
     others are \code{"+"}, \code{" "}, and \code{"#"}.}
   \item{mode}{\code{"real"},  \code{"integer"} or \code{"character"}.
@@ -54,3 +54,4 @@ cbind(formatC(xx, dig = 5, wid = 8, format = "f", flag = "0"))
 
 formatC(c("a", "Abc", "no way"), wid = -7)  # <=> flag = "-"
 }
+\keyword{character}

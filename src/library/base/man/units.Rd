@@ -19,3 +19,4 @@ plot(mpg, disp, pch=19)
 text(mpg + xinch(0.12), disp, rownames(mtcars),adj=0, cex = .6, col='blue')
 detach(mtcars)
 }
+\keyword{dplot}

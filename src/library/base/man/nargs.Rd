@@ -7,3 +7,4 @@ When used inside a function body,
 \code{nargs} returns the number of
 arguments supplied to that function.
 }
+\keyword{programming}

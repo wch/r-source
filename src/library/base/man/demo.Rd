@@ -11,7 +11,7 @@
   scripts. \code{demo()} gives the list of available topics.}
 \seealso{\code{\link{source}} which is called by \code{demo}.}
 \examples{
-demo(lm.glm)  
+demo(lm.glm)
 }
 \keyword{documentation}
-\keyword{file}
+\keyword{utilities}

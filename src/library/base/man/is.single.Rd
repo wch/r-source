@@ -6,3 +6,4 @@
 \code{is.single} reports an error. There are no single precision
 values in R.
 }
+\keyword{classes}

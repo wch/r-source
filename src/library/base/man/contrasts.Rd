@@ -25,3 +25,5 @@ functions named the system options are used.
 \code{\link{glm}},
 \code{\link{lm}}.
 }
+\keyword{design}
+\keyword{regression}

@@ -18,3 +18,4 @@ or by clicking outside the graphics window.
 A list containing \code{x} and \code{y} components which are
 the coordinates of the identified points.
 }
+\keyword{iplot}

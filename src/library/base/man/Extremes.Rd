@@ -36,3 +36,5 @@ pmin(5:1, pi)
 x <- sort(rnorm(100));  cH <- 1.35
 plot(x, pmin(cH, pmax(-cH, x)), type='b', main= "Huber's function")
 }
+\keyword{univar}
+\keyword{arith}

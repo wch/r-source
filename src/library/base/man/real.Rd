@@ -22,3 +22,4 @@ depending on whether its argument is of real type or not.
 \emph{\R has no single precision data type.
 All real numbers are stored in double precision format}.
 }
+\keyword{classes}

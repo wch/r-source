@@ -29,4 +29,5 @@ x <- c(0:10, 50)
 xm <- mean(x)
 c(xm, mean(x, trim = .10))
 }
+\keyword{univar}
 

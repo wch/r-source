@@ -15,7 +15,7 @@ boxplot(\dots, range = 1.5, width = NULL, varwidth = FALSE,
     be given, indicating the the observations in the vector \code{x} are
     to be grouped according to the levels of the factor \code{g}.  In
     this case the argument \code{data} can be used to provide values for
-    the variables in the specification. 
+    the variables in the specification.
     \code{NA}s are allowed in the data.}
   \item{range}{this determines how far the plot whiskers extend out from
     the box.  If \code{range} is positive, the whiskers extend to the
@@ -23,20 +23,20 @@ boxplot(\dots, range = 1.5, width = NULL, varwidth = FALSE,
     interquartile range from the box.
     A value of zero causes the whiskers to extend to the data extremes.}
   \item{width}{a vector giving the relative widths of the boxes making
-    up the plot.} 
+    up the plot.}
   \item{varwidth}{if \code{varwidth} is \code{TRUE}, the boxes are drawn
     with widths proportional to the square-roots of the number of
-    observations in the groups.} 
+    observations in the groups.}
   \item{notch}{if \code{notch} is \code{TRUE}, a notch is drawn in each
     side of the boxes.  If the notches of two plots do not overlap then
     the medians are significantly different at the 5 percent level.}
   \item{names}{group labels which while be printed under each boxplot.}
   \item{data}{???}
-  \item{plot}{if \code{TRUE} (the default) then a boxplot is produced.  
+  \item{plot}{if \code{TRUE} (the default) then a boxplot is produced.
     If not, the summaries which the boxplots are based on are returned.}
   \item{border}{an optional vector of colors for the outlines of the
     boxplots.  The values in \code{border} are recycled if the length of
-    \code{border} is less than the number of plots.} 
+    \code{border} is less than the number of plots.}
   \item{col}{if \code{col} is non-null it is assumed to contain colors
     to be used to col the bodies of the box plots.}
   \item{log}{???}
@@ -65,3 +65,4 @@ boxplot(\dots, range = 1.5, width = NULL, varwidth = FALSE,
 data(insects)
 boxplot(count ~ spray, data = insects, col = "lightgray")
 }
+\keyword{hplot}

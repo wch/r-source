@@ -29,3 +29,4 @@ x <- rnorm(20)
 x < 1
 x[x > 0]
 }
+\keyword{logic}

@@ -40,3 +40,4 @@ system("echo 2 3 5 7 >> ex.data")
 system("echo 11 13 17 >> ex.data")
 scan("ex.data", skip = 1)
 }
+\keyword{file}

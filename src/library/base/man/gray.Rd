@@ -18,3 +18,4 @@ The values returned by \code{gray} can be used with a
 \examples{
 gray(0:8 / 8)
 }
+\keyword{color}

@@ -6,3 +6,4 @@
 \code{is.function} returns \code{TRUE} if \code{x} is a function
 and \code{FALSE} otherwise.
 }
+\keyword{programming}

@@ -29,3 +29,4 @@ The function returns \code{TRUE} if the variable is encountered and
 if(!exists("some.fun", mode="function"))
  some.fun <- function(x) { cat("some.fun(x)\n"); x }
 }
+\keyword{data}

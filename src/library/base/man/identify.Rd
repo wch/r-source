@@ -10,7 +10,7 @@ identify(x, y = NULL, labels = seq(along = x), pos = FALSE,
     object which can defines coordinates (a plotting structure, time
     series etc.) can be given as \code{x} and \code{y} left undefined.}
   \item{labels}{an optional vector, the same length as \code{x} and
-    \code{y}, giving labels for the points.} 
+    \code{y}, giving labels for the points.}
   \item{pos}{if \code{pos} is \code{TRUE}, a component is added to the
     return value which indicates where text was plotted relative to each
     identified point (1=below, 2=left, 3=above and 4=right).}
@@ -18,7 +18,7 @@ identify(x, y = NULL, labels = seq(along = x), pos = FALSE,
     (Not yet implemented.)}
   \item{plot}{if \code{plot} is \code{TRUE}, the labels are printed at
     the points and if \code{FALSE} they are omitted.
-    (Not yet implemented.)} 
+    (Not yet implemented.)}
   \item{offset}{the distance (in character widths) which separates the
     label from identified points.
     (Not yet implemented.)}
@@ -37,7 +37,7 @@ identify(x, y = NULL, labels = seq(along = x), pos = FALSE,
   the corresponding element of \code{text}.
 
   The labels are placed either below, to the left, above or to the right
-  of the identified point, depending on where the cursor was. 
+  of the identified point, depending on where the cursor was.
 
   The identification process is terminated by pressing any mouse button
   other than the first, or by clicking outside the graphics window.
@@ -50,3 +50,4 @@ identify(x, y = NULL, labels = seq(along = x), pos = FALSE,
   identified and a component \code{pos}, indicating where the labels
   were placed relative to the identified points.
 }
+\keyword{iplot}

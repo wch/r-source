@@ -28,3 +28,4 @@ save(..., list = character(0), file = "", ascii = FALSE)
 save(x, y, file = "xy.Rdata")
 save(list = ls(), file = "all.Rdata")
 }
+\keyword{file}

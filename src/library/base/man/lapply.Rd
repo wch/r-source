@@ -36,3 +36,5 @@ lapply(x, quantile, probs = 1:3/4)
 sapply(x, quantile)
 sapply(sapply(3:9, seq), fivenum)
 }
+\keyword{iteration}
+\keyword{list}

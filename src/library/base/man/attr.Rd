@@ -23,3 +23,4 @@ the assignment symbol.
 x <- 1:10
 attr(x,"dim") <- c(2,5)
 }
+\keyword{attribute}

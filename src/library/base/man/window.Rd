@@ -23,3 +23,4 @@ Methods are available for time series and point-processes.
 data(presidents)
 sixties <- window(presidents, 1960, c(1969,4))
 }
+\keyword{ts}

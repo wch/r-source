@@ -14,3 +14,4 @@ print when they are not assigned.
 f1 <- function(x) x
 f2 <- function(x) invisible(x)
 }
+\keyword{programming}

@@ -25,3 +25,5 @@ data(attitude)
 med.att <- apply(attitude, 2, median)
 sweep(data.matrix(attitude), 2, med.att)# subtract the column medians
 }
+\keyword{array}
+\keyword{iteration}

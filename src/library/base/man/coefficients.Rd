@@ -25,3 +25,5 @@ functions should provide a \code{coefficients} method.
 \code{\link{fitted.values}}, \code{\link{glm}}, \code{\link{lm}},
 \code{\link{residuals}}.
 }
+\keyword{regression}
+\keyword{models}

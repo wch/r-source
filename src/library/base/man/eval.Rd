@@ -33,7 +33,9 @@ ev <- function() {
 	## evaluate the expression bound to a in e1
 	a <- expression(x+y)
 	list(aa = aa, eval = eval(a, e1))
-}	
+}
 tst.ev <- function(a = 7) { x <- pi; y <- 1; ev() }
 tst.ev()#-> aa : 7,  eval : 4.14
 }
+\keyword{data}
+\keyword{programming}

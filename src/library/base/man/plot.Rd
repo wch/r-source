@@ -11,7 +11,7 @@ Alternatively, a single plotting structure can
 be provided.}
 \item{xlim,ylim}{the ranges to be encompased by the x and y axes.}
 \item{type}{what type of plot should be drawn.
-Possible types are 
+Possible types are
 \code{"p"} for \bold{p}oints,
 \code{"l"} for \bold{l}ines,
 \code{"b"} for \bold{b}oth, \code{"o"} for both "\bold{o}verplotted",
@@ -33,8 +33,9 @@ A longer description will go here eventually.
 }
 \seealso{
 \code{\link{plot.default}}, \code{\link{points}}, \code{\link{lines}}, \code{\link{par}}.
-}	
+}
 \examples{
 plot(cars)
 lines(lowess(cars))
 }
+\keyword{hplot}

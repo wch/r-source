@@ -23,3 +23,4 @@ given value(s).
 dim(diag(3))
 diag(10,3,4) # guess what?
 }
+\keyword{array}

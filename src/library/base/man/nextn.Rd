@@ -20,3 +20,5 @@ The default value for \code{factors} ensures this.
 \seealso{
 \code{\link{convolve}}, \code{\link{fft}}.
 }
+\keyword{math}
+

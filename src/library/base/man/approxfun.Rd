@@ -15,7 +15,7 @@ approxfun(x, y,       method="linear",
   \item{xout}{an optional set of values specifying where interpolation
     is to take place.}
   \item{method}{specifies the interpolation method to be used.  Choices
-    are \code{"linear"} or \code{"constant"}.} 
+    are \code{"linear"} or \code{"constant"}.}
   \item{n}{If \code{xout} is not specified, interpolation takes place at
     \code{n} equally spaced points spanning the interval [\code{min(x)},
     \code{max(x)}].}
@@ -29,7 +29,7 @@ approxfun(x, y,       method="linear",
     outside the interval [\code{min(x)}, \code{max(x)}].
     If \code{rule} is \code{1} then \code{NA}s are returned for such
     points and if it is \code{2}, the value at the closest data extreme
-    is used.} 
+    is used.}
   \item{f}{For \code{method="constant"} a number between 0 and 1
     inclusive, indicating a compromise between left- and
     right-continuous step functions. If \code{y0} and \code{y1} are the
@@ -65,5 +65,5 @@ points(x, y)
 is.function(fc <- approxfun(x, y, method = "const"))  # T
 curve(fc(x), 0, 10, col = "darkblue", add = TRUE)
 }
-\keyword{math}
+\keyword{arith}
 \keyword{dplot}

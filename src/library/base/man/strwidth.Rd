@@ -65,3 +65,4 @@ strheight(sumex)
 rm(sumex); par(op)#- reset to previous setting
 }
 \keyword{dplot}
+\keyword{character}

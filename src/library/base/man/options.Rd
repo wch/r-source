@@ -31,3 +31,6 @@ options()
 # set the editor
 options(editor="nedit")
 }
+\keyword{environment}
+%later, when we'll have an error handler : \keyword{error}
+\keyword{print}%-- even though it's not working ...

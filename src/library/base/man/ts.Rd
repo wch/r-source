@@ -1,7 +1,7 @@
 \name{ts}
 \title{Time-Series Objects}
 \usage{
-ts(data = NA, start = 1, end = numeric(0), frequency = 1, 
+ts(data = NA, start = 1, end = numeric(0), frequency = 1,
    deltat = 1, ts.eps = .Options$ts.eps)
 as.ts(x)
 is.ts(x)
@@ -20,7 +20,7 @@ plot(ts.obj, ...)
   \item{end}{the time of the last observation.}
   \item{frequency}{the number of observations per unit of time.}
   \item{deltat}{the fraction of the sampling period between successive
-    observations; e.g., 1/12 for monthly data. 
+    observations; e.g., 1/12 for monthly data.
     Only one of \code{frequency} or \code{deltat} should be provided.}
   \item{ts.eps}{time series comparison tolerance.  Frequencies are
     considered equal if their absolute difference is less than
@@ -50,7 +50,7 @@ plot(ts.obj, ...)
   Time series have methods associated with the generic \code{print} and
   \code{plot} functions.  The argument \code{calendar} to the print
   method can be used to enable/disable the display of information about
-  month names, quarter names or year when printing. 
+  month names, quarter names or year when printing.
 }
 \seealso{
   \code{\link{frequency}},
@@ -67,3 +67,4 @@ gnp <- ts(cumsum(1 + round(rnorm(100), 2)),
           start = c(1954, 7), frequency = 12)
 plot(gnp) # using `plot.ts' for time-series plot
 }
+\keyword{ts}

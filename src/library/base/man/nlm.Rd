@@ -81,3 +81,4 @@ system of algorithms for unconstrained minimization,
 f <- function(x) sum((x-1:length(x))^2)
 nlm(f, c(10,10))
 }
+\keyword{nonlinear}

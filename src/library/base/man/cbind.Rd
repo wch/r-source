@@ -28,3 +28,5 @@ values recycled or subsetted to achieve this length.
 \examples{
 cbind(1,1:n)
 }
+\keyword{array}
+\keyword{manip}

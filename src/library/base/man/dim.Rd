@@ -19,3 +19,4 @@ vector as an array by specifying its extents.
 nrow0 <- function(x) dim(x)[1]
 ncol0 <- function(x) dim(x)[2]
 }
+\keyword{array}

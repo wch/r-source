@@ -23,3 +23,4 @@ The attributes of \code{x} are removed.
 is a vector (of mode logical, factor, integer, real or character) and
 \code{FALSE} otherwise.
 }
+\keyword{classes}

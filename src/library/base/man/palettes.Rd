@@ -64,3 +64,5 @@ text(2*j,  3*j+dy/4,		 "terrain.colors(n)")
 rect(i-.5, 3*j+dy, i+.4, 4*j, col=topo.colors(n))
 text(2*j,  4*j+dy/4,		 "topo.colors(n)")
 }
+\keyword{color}
+\keyword{dplot}

@@ -42,3 +42,4 @@ xy.coords(fft(c(1:10)), NULL)
 data(cars) ; attach(cars)
 xy.coords(dist ~ speed, NULL)$xlab # = "speed"
 }
+\keyword{dplot}

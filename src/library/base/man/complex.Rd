@@ -41,3 +41,4 @@ z <- complex(real = rnorm(100), imag = rnorm(100))
 ## or also (less efficiently):
 z2 <- 1:2 + 1i*(8:9)
 }
+\keyword{complex}

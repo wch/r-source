@@ -22,3 +22,4 @@ do.call(fun, args)
 \examples{
 do.call("complex", list(imag = 1:3))
 }
+\keyword{programming}

@@ -19,11 +19,11 @@ family(glm.obj)
 fitted.values(glm.obj)
 residuals(glm.obj, type="deviance")
 
-glm.control(epsilon=0.0001, maxit=10, trace=FALSE) 
+glm.control(epsilon=0.0001, maxit=10, trace=FALSE)
 glm.fit(x, y, weights=rep(1, nrow(x)),
         start=NULL, offset=rep(0, nrow(x)),
         family=gaussian(), control=glm.control(),
-        intercept=TRUE) 
+        intercept=TRUE)
 }
 \alias{glm}
 \alias{glm.control}
@@ -131,4 +131,7 @@ print(d.AD <- data.frame(treatment, outcome, counts))
 glm.D93 <- glm(counts ~ outcome + treatment, family=poisson())
 anova(glm.D93)
 summary(glm.D93)
-}	 
+}
+\keyword{models}
+\keyword{regression}
+

@@ -12,7 +12,7 @@ solve(a, b, tol = 1e-7)
     the linear system.  If omitted, \code{b} is taken to be an identity
     matrix and \code{solve} will return the inverse of \code{a}.}
   \item{tol}{the tolerance for detecting linear dependencies in the
-    columns of \code{a}.} 
+    columns of \code{a}.}
 }
 \description{
   This function solves the equation \code{a \%*\% x = b} for \code{x},
@@ -25,6 +25,7 @@ solve(a, b, tol = 1e-7)
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 h8 <- hilbert(8); h8
 solve(h8) # gives error: `singular'
-sh8 <- solve(h8, tol = 1e-10) 
+sh8 <- solve(h8, tol = 1e-10)
 round(sh8 \%*\% h8, 3)
 }
+\keyword{algebra}

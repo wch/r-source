@@ -39,3 +39,4 @@ save.plot(file)
   \code{\link{postscript}}, \code{\link{macintosh}},
   \code{\link{Devices}}.
 }
+\keyword{device}

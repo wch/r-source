@@ -18,3 +18,5 @@ x <- c(9:20, 1:5, 3:7, 0:8)
 x[!duplicated(x)]
 all(0:20  == sort(x[!duplicated(x)]))
 }
+\keyword{logic}
+\keyword{manip}

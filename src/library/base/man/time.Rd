@@ -31,10 +31,11 @@ and \code{frequency} returns the number of samples per unit time.
 It is included for compatibility with the S language.
 }
 \seealso{
-\code{\link{ts}}.
+\code{\link{ts}} and \code{\link{system.time}} for CPU usage.
 }
 \examples{
 data(presidents)
 # a simple series plot
 plot(c(time(presidents)), c(presidents), type="l")
 }
+\keyword{ts}

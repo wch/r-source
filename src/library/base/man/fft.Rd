@@ -22,7 +22,7 @@ mvfft(z, inverse = FALSE)
   By contrast, \code{mvfft} takes a real or complex matrix as argument,
   and returns a similar shaped matrix, but with each column replaced by
   its discrete Fourier transform.  This is useful for analyzing
-  vector-valued series. 
+  vector-valued series.
 
   The FFT is fastest when the length of of the series being transformed
   is highly composite (i.e. has many factors).  If this is not the case,
@@ -48,3 +48,5 @@ periodogram <- function(x) { # simple periodogram
 data(sunspots)
 plot(10*log10(periodogram(sunspots)), type = "b", col = "blue")
 }
+\keyword{math}
+\keyword{dplot}

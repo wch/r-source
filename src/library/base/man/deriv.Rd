@@ -11,7 +11,7 @@ deriv(expr, namevec, function.arg = NULL, tag = ".expr")
 \arguments{
   \item{expr}{expression which should be derivated}
   \item{namevec}{character vector, giving the variable names with
-    respect to which derivatives will be computed.} 
+    respect to which derivatives will be computed.}
   \item{function.arg}{... ?? ...}
   \item{tag}{... ?? ...}
 }
@@ -35,11 +35,11 @@ deriv(expr, namevec, function.arg = NULL, tag = ".expr")
   \code{deriv} returns a \code{\link{call}} object which becomes an
   \code{\link{expression}} when evaluated once.  Evaluation of the
   latter expression returns the function values with a
-  \code{".gradient"} attribute containing the gradient matrix. 
+  \code{".gradient"} attribute containing the gradient matrix.
 }
 \note{
   This help page should be fixed up by one of R\&R or someone else who
-  fluently speaks the language in \code{RHOME/src/main/deriv.c}. 
+  fluently speaks the language in \code{RHOME/src/main/deriv.c}.
 
   It's author, MM, has only got a vague idea and thinks that a help page
   is better than none.
@@ -47,7 +47,7 @@ deriv(expr, namevec, function.arg = NULL, tag = ".expr")
 \references{
 A. Griewank, G. F. Corliss (1991).
 \emph{Automatic Differentiation of Algorithms: Theory, Implementation,
-and Application}. 
+and Application}.
 SIAM proceedings, Philadelphia.
 }
 \seealso{
@@ -56,7 +56,7 @@ SIAM proceedings, Philadelphia.
 }
 \examples{
 ## formula argument :
-dx2x <- deriv(~ x^2, "x") ; dx2x	 
+dx2x <- deriv(~ x^2, "x") ; dx2x
 ##- expression({
 ##-         .value <- x^2
 ##-         .grad <- array(0, c(length(.value), 1), list(NULL, c("x")))
@@ -78,3 +78,5 @@ dxy
 y <- 1
 eval(eval(dxy))
 }
+\keyword{math}
+\keyword{nonlinear}

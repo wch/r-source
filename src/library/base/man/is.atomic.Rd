@@ -8,3 +8,4 @@ is.atomic(x)
 \code{is.atomic} returns \code{TRUE} if \code{x}
 does not have a list structure and \code{FALSE} otherwise.
 }
+\keyword{classes}

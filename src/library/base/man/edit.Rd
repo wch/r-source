@@ -20,7 +20,7 @@ file specified by \code{file} is opened for editing.}
 }
 \description{
 \code{edit} invokes the text editor specified by \code{editor} with the object
-\code{name} to be edited. 
+\code{name} to be edited.
 \code{data.entry} can be used to edit data.
 It is important to realize that \code{edit} does not change
 the object called \code{name}.
@@ -32,8 +32,8 @@ In the form \code{edit(name)},
 \code{edit} deparses \code{name} into a temporary file and invokes the
 editor \code{editor} on this file. Quiting from the editor causes
 \code{file} to be parsed and that value returned.
-Should an error occur in parsing, possibly due to incorrect syntax, no 
-value is returned. Calling \code{edit()}, with no arguments, will 
+Should an error occur in parsing, possibly due to incorrect syntax, no
+value is returned. Calling \code{edit()}, with no arguments, will
 result in the temporary file being reopened for further editing.
 }
 \seealso{
@@ -46,3 +46,4 @@ mean <- edit(mean, editor="xedit")
 # use vi on mean and write the result to file mean.out
 vi(mean, file="mean.out")
 }
+\keyword{utilities}

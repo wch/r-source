@@ -44,7 +44,7 @@ legend(x, y, legend, fill, col= "black", lty, pch, bty = "o",
 }
 \seealso{
   \code{\link{plot}}, \code{\link{barplot}} which uses \code{legend()}, and
-  \code{\link{text}} for examples of math expressions.
+  \code{\link{text}} for more examples of math expressions.
 }
 \examples{
 # Run the example in `?matplot' or the following:
@@ -76,5 +76,15 @@ lines(x, cos(x), col = 3, lty = 2); abline(h=0, v=pi/2*(-6:6), col="gray90")
 ex.cs1 <- expression(plain(sin) * phi,  plain(cos) * phi)
 ex.cs2 <- expression(paste("sin ",phi), paste("cos ",phi))
 legend(-3, .9, ex.cs1, lty=1:2, col=2:3)
-rm(ex.cs1, ex.cs2)
 
+x <- rexp(100, rate = .5)
+hist(x, main = "Mean and Median of a Skewed Distribution")
+abline(v = mean(x),   col=2, lty=2, lwd=2)
+abline(v = median(x), col=3, lty=3, lwd=2)
+ex12 <- expression(bar(x) == sum(over(x[i], n), i==1, n),
+    		   hat(x) == median(x[i], i==1,n))
+legend(4,30, ex12, col = 2:3, lty=2:3) # lwd = 2 does not yet work
+rm(x, ex12, ex.cs1, ex.cs2)
+
+}
+\keyword{aplot}

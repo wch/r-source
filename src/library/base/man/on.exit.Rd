@@ -19,3 +19,4 @@ performing other cleanup actions.
 opar <- par(mai=c(1,1,1,1))
 on.exit(par(opar))
 }
+\keyword{programming}

@@ -23,3 +23,5 @@ the function one line at a time.
 \seealso{
 \code{\link{debug}}.
 }
+\keyword{programming}
+\keyword{environment}

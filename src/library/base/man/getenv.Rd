@@ -9,7 +9,7 @@ getenv(x)
 }
 \description{
   \code{getenv} obtains the values of the environment variables named by
-  \code{x}.  
+  \code{x}.
 }
 \value{
   A vector of the same length as \code{x}, with the variable names as
@@ -20,3 +20,5 @@ getenv(x)
 \examples{
 getenv(c("RHOME", "R_PAPERSIZE", "R_PRINTCMD"))
 }
+\keyword{environment}
+\keyword{utilities}

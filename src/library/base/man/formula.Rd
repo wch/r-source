@@ -41,7 +41,7 @@ on its left are nested within those on the right.
 For example \code{a+b\%in\%a} expands to the
 formula \code{a+a:b}.
 
-While formulae usually involve just variable and factor 
+While formulae usually involve just variable and factor
 names, they can also involve arithmetic expressions.
 The formula \code{log(y)~a+log(x)} is quite legal.
 When such arithmetic expressions involve
@@ -66,3 +66,4 @@ of class \code{formula} which contains a symbolic model formula.
 \seealso{
 \code{\link{lm}}, \code{\link{glm}}, \code{\link{terms}}.
 }
+\keyword{models}

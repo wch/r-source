@@ -18,3 +18,4 @@ side of the assignment, the object's attribute list.
 # strip an objects attributes
 attributes(x) <- NULL
 }
+\keyword{attribute}

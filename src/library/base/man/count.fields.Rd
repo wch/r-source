@@ -27,4 +27,4 @@ count.fields(file, sep = "", skip = 0)
 cat("NAME", "1:John", "2:Paul", file = "foo", sep = "\n")
 count.fields("foo", sep = ":")
 }
-\keyword{}
+\keyword{file}

@@ -32,3 +32,4 @@ pi
   all(nchar(letters) == 1)                    # TRUE
   all(month.abb == substr(month.name, 1, 3))  # TRUE
 }
+\keyword{sysdata}

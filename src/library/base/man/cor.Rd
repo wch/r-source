@@ -28,3 +28,5 @@ of observations on those variables.
 This can result in correlation matrices which are not
 positive semidefinite.
 }
+\keyword{multivariate}
+\keyword{array}

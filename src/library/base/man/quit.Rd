@@ -18,3 +18,4 @@ it is saved and in the third the user is prompted.
 Invoking these functions results in the termination
 of the current \R session.
 }
+\keyword{environment}

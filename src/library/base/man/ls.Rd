@@ -33,9 +33,10 @@ This is useful in conjunction with \code{browser}.
 \seealso{
 \code{\link{apropos}} for finding objects in the whole search path;
 \code{\link{class}}, \code{\link{methods}}, etc. for object-oriented programming.
-} 
+}
 \examples{
 .Ob <- 1
 ls(pat="O")
 ls(pat="O", all = T)#- also shows ".[foo]"
 }
+\keyword{environment}

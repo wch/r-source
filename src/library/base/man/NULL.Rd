@@ -19,3 +19,13 @@ value is undefined.
 \code{is.null} returns \code{TRUE} if its argument
 is \code{NULL} and \code{FALSE} otherwise.
 }
+\examples{
+is.null(list())    # TRUE (not so in S)
+is.null(integer(0))# F
+is.null(logical(0))# F
+as.null(list(a=1,b='c'))
+}
+\keyword{attribute}
+\keyword{manip}
+\keyword{list}
+\keyword{sysdata}

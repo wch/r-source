@@ -27,3 +27,4 @@ draw box plots based on the given summaries.
 It is usually called from \code{boxplot}, abut can be invoked
 directly.
 }
+\keyword{aplot}

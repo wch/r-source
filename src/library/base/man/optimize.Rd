@@ -14,7 +14,7 @@ depending on the value of \code{maximum}.}
 to be searched for the minimum.}
 \item{lower}{the lower end point of the interval
 to be searched.}
-\item{upper}{the upper end point of the interval            
+\item{upper}{the upper end point of the interval
 to be searched.}
 \item{tol}{the desired accuracy.}
 \item{...}{additional arguments to \code{f}.}
@@ -45,3 +45,4 @@ f <- function (x,a) (x-a)^2
 xmin <- optimize(f, c(0, 1), tol=0.0001, a=1/3)
 xmin
 }
+\keyword{optimize}

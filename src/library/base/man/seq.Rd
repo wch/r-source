@@ -22,3 +22,4 @@ The last generates the sequence
 \seealso{
 \code{\link{rep}}, \code{\link{sequence}}, \code{\link{row}}, \code{\link{col}}.
 }
+\keyword{manip}

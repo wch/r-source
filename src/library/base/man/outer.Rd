@@ -24,3 +24,4 @@ This needs to be extended to taking arrays of arbitrary dimension for
 \examples{
 outer(1:5, 1:5, "+")
 }
+\keyword{array}

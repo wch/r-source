@@ -1,8 +1,8 @@
 \name{plot.default}
 \title{The Default Scatterplot Function}
 \usage{
-plot.default(x, y, type = "p", col = par("fg"), bg = NA, 
-             pch = par("pch"), xlim = NULL, ylim = NULL, log = "", 
+plot.default(x, y, type = "p", col = par("fg"), bg = NA,
+             pch = par("pch"), xlim = NULL, ylim = NULL, log = "",
              axes = TRUE, frame.plot = TRUE, panel.first = NULL,
              panel.last = NULL, ann = par("ann"), main = NULL,
              xlab = NULL, ylab = NULL, cex = par("cex"),
@@ -17,7 +17,7 @@ plot.default(x, y, type = "p", col = par("fg"), bg = NA,
   \item{type}{the type of plot desired.  The following possibilities are
     possible; \code{"p"} for points, \code{"l"} for lines, \code{"o"}
     for overplotted points and lines, \code{"b"} or \code{c} for points
-    joined by lines, \code{"s"} and \code{"S"} for step functions and 
+    joined by lines, \code{"s"} and \code{"S"} for step functions and
     \code{"h"} for \emph{high density} vertical lines.}
   \item{col}{The colors for lines and points.  Multiple colors can be
     specified so that each point can be given its own color.  If there
@@ -68,7 +68,8 @@ Speed <- cars$speed
 Distance <- cars$dist
 plot(Speed, Distance, panel.first = grid(8,8),
      pch = 0, cex = 1.2, col = "blue")
-plot(Speed, Distance, 
+plot(Speed, Distance,
      panel.first = lines(lowess(Speed, Distance), lty = "dashed"),
      pch = 0, cex = 1.2, col = "blue")
 }
+\keyword{hplot}

@@ -29,3 +29,4 @@ to create a vector of this length.
 rep(1:4,2)
 rep(1:4,c(2,2,2,2))
 }
+\keyword{manip}

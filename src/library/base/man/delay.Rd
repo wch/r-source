@@ -30,3 +30,5 @@ x <- delay({
     10
 })
 }
+\keyword{programming}
+\keyword{data}

@@ -23,3 +23,4 @@ cumprod(1:10)
 cummin(c(3:1,2:0,4:2))
 cummax(c(3:1,2:0,4:2))
 }
+\keyword{arith}

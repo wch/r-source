@@ -19,7 +19,7 @@ of the matching value is returned; if multiple matches are found then
 returned.
 
 This function is based on Terry Therneau's \code{charmatch} S function.
-In R, \code{charmatch} is synonym to \code{pmatch}.
+In \R, \code{charmatch} is synonym to \code{pmatch}.
 }
 \seealso{
 \code{\link{match}}.
@@ -28,3 +28,4 @@ In R, \code{charmatch} is synonym to \code{pmatch}.
 pmatch("m",   c("mean", "median", "mode")) # returns 0
 pmatch("med", c("mean", "median", "mode")) # returns 2
 }
+\keyword{character}

@@ -16,3 +16,5 @@ If a vector is shortened, extra values are discarded
 and when a vector is lengthened, it is padded out to
 its new length with \code{NA}s.
 }
+\keyword{attribute}
+

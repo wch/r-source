@@ -17,7 +17,7 @@ The function works by first identifying the \emph{left-hand side}
 and \emph{right-hand side} of the \code{old} formula.
 It then examines the \code{new} formula and substitutes
 the \emph{lhs} of the \code{old} formula for any occurence
-of "\code{.}" on the left of \code{new}, and substitutes 
+of "\code{.}" on the left of \code{new}, and substitutes
 the \emph{rhs} of the \code{old} formula for any occurence
 of "\code{.}" on the right of \code{new}.
 
@@ -26,3 +26,4 @@ The updated formula is returned.
 \seealso{
 \code{\link{terms}}, \code{\link{model.matrix}}.
 }
+\keyword{models}

@@ -10,11 +10,11 @@ split(x, f)
 }
 \description{
   \code{split} divides the data in the vector \code{x} into the groups
-  defined by the factor \code{f}. 
+  defined by the factor \code{f}.
 
   The value returned is a list of vectors containing the values for the
   groups.  The components of the list are named by the factor levels of
-  \code{f}. 
+  \code{f}.
 }
 \examples{
 n <- 10; nn <- 100
@@ -28,3 +28,4 @@ sapply(xg, mean)
 ma <- cbind(x = 1:10, y = (-4:5)^2)
 split(ma, col(ma))
 }
+\keyword{category}

@@ -20,3 +20,4 @@ To find out how many levels a factor has user the function
 \seealso{
 \code{\link{factor}}, \code{\link{nlevels}}.
 }
+\keyword{category}

@@ -1,7 +1,7 @@
 \name{anova}
 \title{Anova Tables}
 \usage{
-anova(object, ...)
+anova(object, \dots)
 print(anova.object)
 }
 \alias{anova}
@@ -26,3 +26,5 @@ tables in a ``pretty'' form.
 \code{\link{coefficients}}, \code{\link{effects}},
 \code{\link{fitted.values}}, \code{\link{residuals}}, \code{\link{summary}}.
 }
+\keyword{regression}
+\keyword{models}

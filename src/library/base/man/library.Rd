@@ -142,4 +142,4 @@ library(eda)		    # load package "eda"
 require(eda)		    # the same
 require(nonexistent)	    # FALSE
 }
-\keyword{searchpath}
+\keyword{data}

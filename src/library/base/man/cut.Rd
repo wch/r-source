@@ -24,7 +24,7 @@ The leftmost interval corresponds to level one,
 the next leftmost to level two and so on.
 If a \code{labels} parameter is specified, its values are used
 to name the factor levels. If none is specified, the factor
-level labels are constructed as \code{"(b1, b2]"}, \code{"(b2, b3]"} 
+level labels are constructed as \code{"(b1, b2]"}, \code{"(b2, b3]"}
 etc. for \code{right=TRUE} and as \code{"[b1, b2)"}, \ldots if
 \code{right=FALSE}.
 In this case, \code{dig.lab} indicates how many digits should be used in
@@ -58,3 +58,4 @@ table(cut(y, breaks = pi/3*(-3:3), dig.lab=4))
 table(cut(y, breaks =  1*(-3:3), dig.lab=4))# extra digits don't "harm" here
 table(cut(y, breaks =  1*(-3:3), right = F))#- the same, since no exact INT!
 }
+\keyword{category}

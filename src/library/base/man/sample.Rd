@@ -26,3 +26,4 @@ sample(x,replace=TRUE)
 # 100 Bernoulli trials
 sample(c(0,1), 100, replace = TRUE)
 }
+\keyword{distribution}

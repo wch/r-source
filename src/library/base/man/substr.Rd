@@ -11,7 +11,7 @@ substring(text, first, last = 1000000)
   vector whose elements contain the substring starting with the
   character at position \code{start} up to the character at position
   \code{stop}. If \code{start} is larger than the string length then
-  \code{NA} is returned. If \code{stop} is longer than \code{start} 
+  \code{NA} is returned. If \code{stop} is longer than \code{start}
   and error is signalled.
 
   \code{substring} is compatible with S.  For vector arguments, it
@@ -26,3 +26,4 @@ substr(x, 3, 5)
 substring(x, 3, 5)
 substring(x, 3, 3:5)
 }
+\keyword{character}

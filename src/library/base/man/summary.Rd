@@ -26,7 +26,8 @@ class of its argument.  See the documentation of the
 particular methods for details of what is produced by that method.
 }
 \seealso{
-\code{\link{anova}}, 
+\code{\link{anova}},
 \code{\link{summary.glm}},
 \code{\link{summary.lm}}.
 }
+\keyword{methods}

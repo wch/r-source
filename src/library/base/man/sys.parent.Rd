@@ -52,3 +52,5 @@ them.
 \seealso{
   \code{\link{eval}} for the usage of \code{sys.frame}.
 }
+\keyword{programming}
+\keyword{data}

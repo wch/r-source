@@ -19,7 +19,7 @@ This function provides an interface to the EISPACK routines
 }
 \value{
 The spectral decomposition of \code{x} is returned
-as components of a list. 
+as components of a list.
 \item{values}{a vector containing the eigenvalues of \code{x}, sorted
   \emph{decreasingly}, according to \code{Mod(values)} if they are complex.}
 \item{vectors}{a matrix whose columns contain the eigenvectors of \code{x}.}

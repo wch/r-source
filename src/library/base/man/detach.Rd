@@ -16,7 +16,7 @@ previously.
 }
 \value{
 The attached database is returned invisibly, either as
-\code{\link{data.frame}} or as \code{\link{list}}.  
+\code{\link{data.frame}} or as \code{\link{list}}.
 }
 \seealso{
 \code{\link{attach}}, \code{\link{library}}, \code{\link{search}},
@@ -26,4 +26,4 @@ The attached database is returned invisibly, either as
 require(eda)#package
 detach(package:eda)
 }
-\keyword{ path }
+\keyword{data}

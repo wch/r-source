@@ -15,7 +15,7 @@ switch(EXPR, \dots)
   \code{\dots} is evaluated and the result returned.  If \code{EXPR}
   returns a character string then that string is used to match the names
   of the elements in \code{\dots}.  If there is an exact match then that
-  element is evaluated and the result returned. 
+  element is evaluated and the result returned.
 }
 \examples{
 centre <- function(x, type) {
@@ -29,3 +29,4 @@ centre(x, "mean")
 centre(x, "median")
 centre(x, "trimmed")
 }
+\keyword{programming}

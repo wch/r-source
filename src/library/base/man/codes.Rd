@@ -18,3 +18,5 @@ x <- gl(3,5,15)
 codes(x)[3] <- 2
 all(unique(codes(x)) == 1:nlevels(x))#- should be true for ALL factors
 }
+\keyword{category}
+\keyword{classes}

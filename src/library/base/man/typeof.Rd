@@ -17,3 +17,4 @@ of the object.
 typeof(2)
 mode(2)
 }
+\keyword{attribute}

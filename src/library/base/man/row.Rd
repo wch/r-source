@@ -27,3 +27,4 @@ x <- matrix(0,nr=5,nc=5)
 x[row(x)==col(x)] <- 1
 x
 }
+\keyword{array}

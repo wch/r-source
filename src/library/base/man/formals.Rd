@@ -21,3 +21,4 @@ It is currently not possible to set the formals of a function.
 length(formals(lm))      # the number of formal arguments
 names(formals(boxplot))  # formal arguments names
 }
+\keyword{programming}

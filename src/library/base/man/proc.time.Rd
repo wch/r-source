@@ -24,3 +24,4 @@ ptm <- proc.time()
 for (i in 1:50) mad(runif(500))
 proc.time() - ptm
 }
+\keyword{utilities}

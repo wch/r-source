@@ -45,3 +45,4 @@ piechart(pie.sales,
 piechart(pie.sales,
     col=gray(seq(0.4,1.0,length=6)))
 }
+\keyword{hplot}

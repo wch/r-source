@@ -9,11 +9,11 @@ contour(x=, y=, z, nlevels = 10,
 \arguments{
   \item{x,y}{locations of grid lines at which the values in \code{z} are
     measured.  These must be in ascending order.  By default, equally
-    spaced values from 0 to 1 are used.} 
+    spaced values from 0 to 1 are used.}
   \item{z}{a matrix containing the values to be plotted (\code{NA}s are
     allowed).}
   \item{nlevels}{number of contour levels desired \bold{iff}
-    \code{levels} is not supplied.} 
+    \code{levels} is not supplied.}
   \item{levels}{numeric vector of levels at which to draw contour
     lines.}
   \item{labcex}{\code{cex} for contour labelling. (not yet used)}
@@ -52,3 +52,5 @@ title("A Topographic Map of Maunga Whau", font = 4)
 abline(h = 200*0:4, v = 200*0:4, col = "lightgray", lty = 2, lwd = 0.1)
 par(opar)
 }
+\keyword{hplot}
+\keyword{aplot}

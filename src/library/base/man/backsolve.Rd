@@ -26,3 +26,5 @@ Dongarra, J. J., J. R. Bunch, C. B. Moler and G. W. Stewart (1978).
 \examples{
 # no examples yet
 }
+\keyword{algebra}
+\keyword{array}

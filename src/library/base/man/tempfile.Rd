@@ -30,3 +30,4 @@ fun <- function() {
 }
 fun()
 }
+\keyword{file}

@@ -30,4 +30,4 @@ data(women)
 attach(women)
 summary(height)   #- which belongs to `women'
 }
-\keyword{ path }
+\keyword{data}

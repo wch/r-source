@@ -13,7 +13,7 @@ co.intervals(x, number = 6, overlap = 0.5)
     \code{y} versus \code{x} should be produced conditional on the
     variable \code{a}.  A formula of the form \code{y ~ x| a * b}
     indicates that plots of \code{y} versus \code{x} should be produced
-    conditional on the two variables \code{a} and \code{b}. 
+    conditional on the two variables \code{a} and \code{b}.
 
     \code{x} and lang(y) must be numeric, but \code{a} and \code{b} may
     be either numeric or factors.}
@@ -62,3 +62,5 @@ data(quakes)
 coplot(long ~ lat | depth, data = quakes)
 coplot(long ~ lat | depth * mag, data = quakes)
 }
+\keyword{hplot}
+\keyword{aplot}

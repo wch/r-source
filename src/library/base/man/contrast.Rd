@@ -28,3 +28,6 @@ additional column of ones is prepended to the matrix.
 \code{\link{glm}},
 \code{\link{lm}}.
 }
+\keyword{design}
+\keyword{regression}
+\keyword{array}

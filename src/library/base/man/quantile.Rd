@@ -11,3 +11,4 @@ given probabilities.
 The smallest observation corresponds to
 a probability of 0 and the largest to a probability of 1.
 }
+\keyword{univar}

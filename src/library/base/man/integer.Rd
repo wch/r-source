@@ -21,3 +21,4 @@ integer type.
 \code{is.integer} returns \code{TRUE} or \code{FALSE}
 depending on whether its argument is of integer type or not.
 }
+\keyword{classes}

@@ -27,4 +27,4 @@ na.fail(DF)
 
 options("na.action")
 }
-\keyword{}
+\keyword{NA}

@@ -22,3 +22,4 @@ transporting \R data between machines.
 \examples{
 dump(ls(patt='^[xyz]'), "xyz.Rdmped")
 }
+\keyword{file}

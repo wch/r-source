@@ -22,3 +22,4 @@ u01 <- seq(0,1, length=11); all(rgb(u01,u01,u01) == gray(u01))
 reds <- rgb((0:15)/15, g=0,b=0, names=paste("red",0:15,sep="."))
 reds
 }
+\keyword{color}

@@ -106,3 +106,6 @@ plot(d)
 plot(d, type="n")
 polygon(d, col="wheat")
 }
+\keyword{dplot}
+\keyword{distribution}
+\keyword{smooth}

@@ -5,13 +5,13 @@
 \usage{
 data.class(x)
 }
-\alias{data.class}  
+\alias{data.class}
 \arguments{
   \item{x}{an \R object}
 }
 \value{
   character string giving the ``class'' of \code{x}.
-  
+
   The ``class'' is the (first element) of the class attribute if this is
   non-\code{NULL}, or inferred from the object's \code{dim} attribute if
   this is non-\code{NULL}, or \code{mode(x)}.
@@ -30,3 +30,5 @@ data.class(matrix(x, nc = 13))        # has a dim attribute
 data.class(list(x))                   # the same as mode(x)
 data.class(x)                         # the same as mode(x)
 }
+\keyword{classes}
+\keyword{methods}

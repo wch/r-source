@@ -43,3 +43,5 @@ var(1:10)
 var(1:5,1:5)
 # 2.5
 }
+\keyword{univar}
+\keyword{multivariate}

@@ -19,3 +19,4 @@ a Macintosh application such as \emph{WriteNow} or \emph{Word}.
 \seealso{
 \code{\link{postscript}}, \code{\link{x11}}, \code{\link{device}}.
 }
+\keyword{device}

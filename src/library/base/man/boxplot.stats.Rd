@@ -9,7 +9,7 @@ boxplot.stats(x, coef = 1.5)
 be constructed (\code{NA}s are allowed).}
 \item{coef}{this determines how far the plot ``whiskers''
 extend out from the box.
-If \code{coef} is positive, 
+If \code{coef} is positive,
 the whiskers extend to the most extreme data point which
 is no more than \code{coef} times the interquartile coef
 from the box.
@@ -19,7 +19,7 @@ A value of zero causes the whiskers to extend to the data extremes.}
 This function is typically is called by \code{boxplot} to
 gather the statistics necessary for producing box plots,
 but may be invoked separately.  The value it returns is
-a list with named components as follows: 
+a list with named components as follows:
 \item{stats}{a vector containing the extreme of the
 lower whisker, the lower ``hinge'', the median, the upper ``hinge''
 and the extreme of the upper whisker.}
@@ -36,3 +36,4 @@ boxplot.stats(1:100)
 boxplot.stats(1:100, coef = 3)
 boxplot.stats(1:100, coef = 0)
 }
+\keyword{dplot}

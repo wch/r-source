@@ -1,7 +1,7 @@
 \name{prop.test}
 \title{Test for Equal or Given Proportions}
 \usage{
-prop.test(x, n, p = NULL, alternative = "two.sided", 
+prop.test(x, n, p = NULL, alternative = "two.sided",
           conf.level = 0.95, correct = TRUE)
 }
 \alias{prop.test}
@@ -10,7 +10,7 @@ prop.test(x, n, p = NULL, alternative = "two.sided",
     Only pairs with finite values are used.  The elements of \code{x}
     must be nonnegative and not greater than the corresponding elements
     of \code{n} which must be positive.  All elements should be
-    integers.} 
+    integers.}
   \item{p}{a vector of probabilities of success.  \code{p} must have the
     same length as \code{x} and \code{n}, and its elements must be
     greater than 0 and less than 1.}
@@ -18,11 +18,11 @@ prop.test(x, n, p = NULL, alternative = "two.sided",
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.  You
     can specify just the initial letter.  Only used for testing the null
     that a single proportion equals a given value, or that two
-    proportions are equal;  ignored otherwise.}  
+    proportions are equal;  ignored otherwise.}
   \item{conf.level}{confidence level of the returned confidence
     interval.  Must be a single number between 0 and 1.  Only used when
     testing the null that a single proportion equals a given value, or
-    that two proportions are equal;  ignored otherwise.} 
+    that two proportions are equal;  ignored otherwise.}
   \item{correct}{a logical indicating whether Yates' continuity
     correction should be applied.}
 }
@@ -74,11 +74,12 @@ prop.test(x, n, p = NULL, alternative = "two.sided",
     cases where it is not \code{NULL}, the returned confidence interval
     has an asymptotic confidence level as specified by
     \code{conf.level}, and is appropriate to the specified alternative
-    hypothesis.} 
+    hypothesis.}
   \item{null.value}{the value of \code{p} if specified by the null, or
-    \code{NULL} otherwise.} 
+    \code{NULL} otherwise.}
   \item{alternative}{a character string describing the alternative.}
   \item{method}{a character string indicating the method used, and
     whether Yates' continuity correction was applied.}
   \item{data.name}{a character string giving the names of the data.}
 }
+\keyword{htest}

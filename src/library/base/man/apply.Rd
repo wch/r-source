@@ -7,12 +7,12 @@ apply(x, MARGIN, FUN, \dots)
 \arguments{
   \item{x}{the array to be used.}
   \item{MARGIN}{a vector giving the subscripts which the function will
-    be applied over.  
+    be applied over.
     \code{1} indicates rows, \code{2} indicates columns,
     \code{c(1,2)} indicates rows and columns.}
   \item{FUN}{the function to be applied.
     In the case of functions like \code{+}, \code{\%*\%}, etc., the
-    function name must be quoted.} 
+    function name must be quoted.}
   \item{\dots}{optional arguments to \code{FUN}.}
 }
 \value{
@@ -43,4 +43,5 @@ ma <- matrix(c(1:4, 1, 6:8), nr = 2)
 ma
 apply(ma, 1, table)  #--> a list of length 2
 }
+\keyword{iteration}
 \keyword{array}

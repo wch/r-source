@@ -24,7 +24,9 @@ an expression object and \code{FALSE} otherwise.
 into an expression object.
 }
 \seealso{
-\code{\link{call}}, \code{\link{eval}}, \code{\link{function}}.
+  \code{\link{call}}, \code{\link{eval}}, \code{\link{function}}.
+  Further,\code{\link{text}} and \code{\link{legend}} for plotting math
+  expressions.
 }
 \examples{
 length(ex1 <- expression(1+ 0:9))# 1
@@ -36,3 +38,5 @@ mode(ex3 [3]) # expression
 mode(ex3[[3]])# call
 rm(ex3)
 }
+\keyword{programming}
+\keyword{dplot}

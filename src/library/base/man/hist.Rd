@@ -16,7 +16,7 @@ or a vector giving the breakpoints between histogram cells.}
 \item{freq}{a logical vector indicating whether the
   histogram is to present a representation of frequencies
   (the default \emph{if} \code{breaks} are equidistant) or relative
-  frequencies (``probabilities'').} 
+  frequencies (``probabilities'').}
 \item{col}{a colour to be used to fill the bars.
   The default of \code{NULL} yields unfilled bars.}
 \item{border}{the color of the border around the bars.}
@@ -45,4 +45,5 @@ par(op)
 str(hist(islands, plot= F))
 str(hist(islands, br=12, plot= F))
 }
-
+\keyword{hplot}
+\keyword{distribution}

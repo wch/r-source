@@ -6,7 +6,7 @@ system(command, intern=FALSE)
 \alias{system}
 \arguments{
 \item{command}{the system command to be invoked, as a string.}
-\item{intern}{a logical, indicates whether to make the output of the 
+\item{intern}{a logical, indicates whether to make the output of the
 command an \R object.}
 }
 \description{
@@ -25,7 +25,10 @@ are using.
 # using the -F flag
 system("ls -F")
 
-# t1 contains a vector of strings, each one 
+# t1 contains a vector of strings, each one
 # representing a separate line of output from who
 t1 <- system("who", TRUE)
 }
+\keyword{interface}
+\keyword{file}
+\keyword{utilities}

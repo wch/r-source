@@ -25,3 +25,5 @@ is.matrix(x)
   \code{is.matrix} returns \code{TRUE} if \code{x} is a matrix (i.e., it
   has a \code{dim} attribute of length 2) and \code{FALSE} otherwise.
 }
+\keyword{array}
+\keyword{algebra}

@@ -14,14 +14,14 @@ is.double(x)
   length.  The elements of the vector are all equal to \code{0}.
 
   \code{as.double} attempts to coerce its argument to be of double
-  type. 
+  type.
 
   \code{is.double} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is of double type or not. 
+  whether its argument is of double type or not.
 }
 \note{
   \emph{\R has no single precision data type.  All real numbers are
-    stored in double precision format}. 
+    stored in double precision format}.
 }
 \seealso{
   \code{\link{integer}}.
@@ -30,3 +30,4 @@ is.double(x)
 is.double(1)
 all(double(3) == 0)
 }
+\keyword{classes}

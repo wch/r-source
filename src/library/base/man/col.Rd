@@ -25,3 +25,4 @@ ma[row(ma)==col(ma) + 1]
 x <- matrix(0,nr=5,nc=5)
 x[row(x)==col(x)] <- 1
 }
+\keyword{array}

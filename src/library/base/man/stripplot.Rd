@@ -38,3 +38,4 @@ when sample sizes are small.
 Extensive examples of the use of this kind of plot can be found in
 Box, Hunter and Hunter or Seber and Wild.
 }
+\keyword{hplot}

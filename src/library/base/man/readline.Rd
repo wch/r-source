@@ -19,4 +19,4 @@ fun <- function() {
 }
 fun()
 }
-\keyword{}
+\keyword{utilities}

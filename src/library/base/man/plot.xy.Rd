@@ -26,3 +26,4 @@ and refer to their help pages for explanation of the arguments.
 \examples{
 points.default # just calling "plot.xy(xy.coords(x, y), type = "p", ......)"
 }
+\keyword{aplot}

@@ -24,3 +24,5 @@ dput(mean, "foo")
 ## And read it back into `bar'
 bar <- dget("foo")
 }
+\keyword{file}
+\keyword{programming}

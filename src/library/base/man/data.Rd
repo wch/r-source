@@ -1,7 +1,7 @@
 \name{data}
 \title{Data Sets}
 \usage{
-data(..., list = character(0), package = .packages(), 
+data(..., list = character(0), package = .packages(),
      lib.loc = .lib.loc)
 }
 \alias{data}
@@ -33,3 +33,5 @@ data(package = base)         # list the data sets in the base package
 data(crimes, "deaths")       # load the data sets `crimes' and `deaths'
 help(crimes)                 # give information on data set `crimes'
 }
+\keyword{datasets}
+\keyword{documentation}

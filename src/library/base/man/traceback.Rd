@@ -18,3 +18,4 @@ traceback()
 bar
 ## Ah, this is the culprit ...
 }
+\keyword{programming}

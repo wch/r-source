@@ -16,3 +16,4 @@ used as the basis of the \code{table} function.
 tabulate(c(2,3,5))
 tabulate(c(2,3,5), nb = 10)
 }
+\keyword{arith}

@@ -25,3 +25,4 @@ rm    (..., list = character(0), pos = -1, envir = pos.to.env(pos),
 \seealso{
   \code{\link{ls}}, \code{\link{objects}}
 }
+\keyword{environment}

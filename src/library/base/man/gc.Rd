@@ -21,3 +21,4 @@ prints memory use statistics (\code{verbose=TRUE}).
 gc() #- do it now
 gcinfo(TRUE) #-- in the future, show when you do it
 }
+\keyword{environment}

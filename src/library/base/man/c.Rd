@@ -22,3 +22,4 @@ c(1,7:9)
 c(1:5, 10.5, "next")
 c(options(), recursive=T)
 }
+\keyword{manip}

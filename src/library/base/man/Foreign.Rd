@@ -28,3 +28,4 @@ These calls are typically made in conjunction with
 \seealso{
 \code{\link{dyn.load}}.
 }
+\keyword{programming}

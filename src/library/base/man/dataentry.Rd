@@ -42,3 +42,5 @@ is handled by \code{de.restore}.
 # call data entry with variables x and y
 data.entry(x,y)
 }
+\keyword{utilities}
+\keyword{file}

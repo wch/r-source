@@ -16,3 +16,4 @@ In the future, with \emph{multiple} concurrent devices, things will change
 \code{\link{Devices}}.
 }
 \keyword{device}
+\keyword{iplot}

@@ -24,4 +24,5 @@ default method.
 \examples{
 na.action(c(1,NA))
 }
-\keyword{manip}
+\keyword{NA}
+\keyword{methods}

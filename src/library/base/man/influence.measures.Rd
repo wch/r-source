@@ -25,7 +25,7 @@ hat(xmat)
 \description{
   This suite of functions can be used to compute some of the regression
   diagnostics discussed in Belsley, Kuh and Welsch (1980), and in Cook
-  and Weisberg (1982). 
+  and Weisberg (1982).
 
   The primary function is \code{influence.measures} which produces a
   class \code{"lminf"} object tabular display showing the DFBETAS for
@@ -63,3 +63,4 @@ rstudent(lm.SR)
 dffits(lm.SR)
 covratio(lm.SR)
 }
+\keyword{regression}

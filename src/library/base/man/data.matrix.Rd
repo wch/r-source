@@ -20,3 +20,4 @@ Factors and ordered factors are replaced by their codes.
 \code{\link{data.frame}},
 \code{\link{matrix}}.
 }
+\keyword{array}

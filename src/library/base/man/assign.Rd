@@ -19,14 +19,15 @@ assign(x, value, pos = -1, envir = sys.frame(sys.parent()),
   This function is invoked for its side effect, which is assigning
   \code{value} to the variable \code{x}.  If no \code{envir} is
   specified, then the assignment takes place in the currently active
-  environment. 
+  environment.
 
-  If \code{inherits} is \code{TRUE} then parents of the supplied
+  If \code{inherits} is \code{TRUE}, parents of the supplied
   environment are searched until the variable \code{x} is encountered.
   The value is then assigned in the environment in which the variable is
   encountered.  If the symbol is not encountered then assignment takes
   place in the global environment.
 
-  If \code{inherits} is \code{FALSE} then assigment takes place in the
+  If \code{inherits} is \code{FALSE}, assigment takes place in the
   initial frame of \code{envir}.
 }
+\keyword{data}

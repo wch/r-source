@@ -19,23 +19,23 @@ matlines(x, y, lty = 1:5, pch = NULL, col = 1:6)
     points; \code{"l"}, lines; \code{"b"}, both; \code{"o"}, overplotted
     both; \code{"n"}, none; or \code{"h"}, high-density) should be done
     for each column of \code{y}.  The first character of \code{type}
-    defines the first plot, the second character the second, etc. 
+    defines the first plot, the second character the second, etc.
     Characters in \code{type} are cycled through; e.g., \code{"pl"}
     alternately plots points and lines.}
-  \item{lty}{vector of line types.  
+  \item{lty}{vector of line types.
     The first element is for the first column, the second element for
     the second column, etc., even if lines are not plotted for all
     columns. Line types will be used cyclically until all plots are
-    drawn.} 
+    drawn.}
   \item{pch}{character string (length 1 vector) or vector of 1-character
-    strings for plotting-characters. 
+    strings for plotting-characters.
     The first character is the plotting-character for the first plot,
     the second for the second, etc.  The default is the digits (1
     through 9, 0) then the letters.
 %  To mix special plotting symbols (those specified by integers) and
 %  plotting characters, either use character escapes \code{pch="Xe002"}
 %  or figure out the numeric equivalent of the ASCII character,
-%  \code{pch=c(88,2)}. 
+%  \code{pch=c(88,2)}.
   }
   \item{col}{vector of colors.  Colors are used cyclically.}
   \item{xlim, ylim}{}
@@ -47,7 +47,7 @@ matlines(x, y, lty = 1:5, pch = NULL, col = 1:6)
   \item{add}{logical.  If \code{TRUE}, plots are added to current one,
     using \code{\link{points}} and \code{\link{lines}}.}
   \item{verbose}{logical.  If \code{TRUE}, write one line of what is
-    done.} 
+    done.}
 }
 \section{Side Effects}{Function \code{matplot} generates a new plot;
   \code{matpoints} and \code{matlines} add to the current one.}
@@ -102,5 +102,6 @@ matplot(iris.S[,"Petal.Length",], iris.S[,"Petal.Width",], pch="SCV",
                     sep = "=", collapse= ",  "),
         main = "Fisher's Iris Data")
 }
-\keyword{array}
+\keyword{hplot}
 \keyword{aplot}
+\keyword{array}

@@ -13,3 +13,5 @@ machine()# to see yours
 if (machine() == "Macintosh")
   cat("You are using a Macintosh computer\n")
 }
+\keyword{environment}
+\keyword{programming}

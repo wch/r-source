@@ -23,3 +23,7 @@ An even wider variety of colors can be created with primitives \code{rgb} and
 \examples{
 str(colors())
 }
+\keyword{color}
+\keyword{dplot}
+\keyword{sysdata}
+

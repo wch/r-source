@@ -13,7 +13,7 @@ of factor levels.
 ## Simple frequency distribution
 table(rpois(100,5))
 data(warpbreaks)
-attach(warpbreaks)	 
+attach(warpbreaks)
 ## Check the design:
 table(wool,tension)
 data(state)
@@ -24,3 +24,4 @@ attach(airquality)
 # simple two-way contingency table
 table(cut(Temp, quantile(Temp)), Month)
 }
+\keyword{category}

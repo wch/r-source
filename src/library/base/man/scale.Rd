@@ -49,4 +49,4 @@ x <- matrix(1:10, nc=2)
 centered.x <- scale(x, scale=FALSE)
 centered.scaled.x <- scale(x)
 }
-\keyword{scaling}
+\keyword{array}

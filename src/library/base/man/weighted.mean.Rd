@@ -27,4 +27,4 @@ wt<- c(5/15,5/15,4/15,1/15)
 x <- c(3.7,3.3,3.5,2.8)
 xm <- weighted.mean(x,wt)
 }
-
+\keyword{univar}

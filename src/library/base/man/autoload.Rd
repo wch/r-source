@@ -14,7 +14,7 @@ autoload(name, file)
   \code{.AutoloadEnv} environment.  When \R attempts to evaluate \code{name}
   the package is loaded and \code{name} is re-evaluated in the
   new package's environment.  The result is that \R behaves as if
-  \code{file} was loaded but it does not occupy memory.  
+  \code{file} was loaded but it does not occupy memory.
 }
 \value{
 nothing interesting
@@ -37,4 +37,6 @@ search()
 z<-line(cars)
 search()
 }
-\keyword{ path }
+\keyword{data}
+\keyword{programming}
+

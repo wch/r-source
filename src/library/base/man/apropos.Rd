@@ -43,3 +43,6 @@ apropos("^.{2,4}$")
 apropos("^.{8,}$")
 table(nchar(apropos("^.{8,}$")))
 }
+\keyword{data}
+\keyword{documentation}
+\keyword{environment}

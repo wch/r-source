@@ -26,3 +26,6 @@ on each column separately.
 diff(1:10, 2)
 diff(1:10, 2, 2)
 }
+\keyword{ts}
+\keyword{arith}
+

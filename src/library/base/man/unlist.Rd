@@ -25,3 +25,5 @@ l.ex <- list(a = list(1:5, LETTERS[1:5]), b = "Z", c = NA)
 unlist(l.ex, rec = F)
 unlist(l.ex, rec = T)
 }
+\keyword{list}
+\keyword{manip}

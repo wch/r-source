@@ -17,3 +17,5 @@ sign(x)
 \seealso{
   \code{\link{abs}}
 }
+\keyword{arith}
+

@@ -32,3 +32,4 @@ box() #- to make it look "as usual"
 plot(1:7, rnorm(7), type = 's', xaxt='n', col = 'red')
 axis(1, 1:7, LETTERS[1:7], col.axis = 'blue')
 }
+\keyword{aplot}

@@ -18,3 +18,5 @@ logical type.
 \code{is.logical} returns \code{TRUE} or \code{FALSE}
 depending on whether its argument is of logical type or not.
 }
+\keyword{classes}
+\keyword{logic}

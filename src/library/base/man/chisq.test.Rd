@@ -1,7 +1,7 @@
 \name{chisq.test}
 \title{Pearson's Chi-square Test for Count Data}
 \usage{
-chisq.test(x, y = NULL, correct = TRUE, 
+chisq.test(x, y = NULL, correct = TRUE,
            p = rep(1/length(x), length(x)))
 }
 \alias{chisq.test}
@@ -9,7 +9,7 @@ chisq.test(x, y = NULL, correct = TRUE,
   \item{x}{a vector or matrix.}
   \item{y}{a vector; ignored if \code{x} is a matrix.}
   \item{correct}{a logical indicating whether to apply continuity
-    correction when computing the test statistic.} 
+    correction when computing the test statistic.}
 }
 \description{
   \code{chisq.test} performs chi-square tests on contingency tables.
@@ -52,3 +52,5 @@ chisq.test(insects$count > 7, insects$spray)$obs
 chisq.test(insects$count > 7, insects$spray)$obs
                                 # Counts expected under the null
 }
+\keyword{htest}
+\keyword{distribution}

@@ -6,7 +6,7 @@ interactive()
 \alias{interactive}
 \value{
 This function returns \code{TRUE} when \R is being used interactively
-and \code{FALSE} when not. 
+and \code{FALSE} when not.
 }
 \seealso{
 \code{\link{source}}
@@ -14,3 +14,5 @@ and \code{FALSE} when not.
 \examples{
  .First <- function() if(interactive()) x11()
 }
+\keyword{environment}
+\keyword{programming}

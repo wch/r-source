@@ -17,3 +17,4 @@ of \code{values} appended after the specified element of \code{x}.
 all(append(1:5, 0:1, after=3) ==
     append(1:3, c(0:1, 4:5)))
 }
+\keyword{manip}

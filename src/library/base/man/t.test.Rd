@@ -1,7 +1,7 @@
 \name{t.test}
 \title{Student's t-Test}
 \usage{
-t.test(x, y = NULL, alternative = "two.sided", mu = 0, paired = FALSE, 
+t.test(x, y = NULL, alternative = "two.sided", mu = 0, paired = FALSE,
        var.equal = FALSE, conf.level = 0.95)
 }
 \alias{t.test}
@@ -13,7 +13,7 @@ t.test(x, y = NULL, alternative = "two.sided", mu = 0, paired = FALSE,
     parameter indicates the alternative hypothesis.}
   \item{mu}{a number indicating the true value of the mean (or
     difference in means if you are performing a two sample test).}
-  \item{paired}{a logical indicating whether you want a paired t-test.} 
+  \item{paired}{a logical indicating whether you want a paired t-test.}
   \item{var.equal}{a logical variable indicating whether to treat the
     two variances as being equal. If \code{TRUE} then the pooled
     variance is used to estimate the variance otherwise the Welch
@@ -23,7 +23,7 @@ t.test(x, y = NULL, alternative = "two.sided", mu = 0, paired = FALSE,
 \description{
   t.test performs one and two sample t-tests on vectors of data.
   If \code{paired} is \code{TRUE} then both \code{x} and \code{y} must
-  be specified and they must be the same length. 
+  be specified and they must be the same length.
   Missing values are removed (in pairs if \code{paired} is
   \code{TRUE}).  If \code{var.equal} is \code{TRUE} then the pooled
   estimate of the variance is used. If \code{var.equal} is \code{FALSE}
@@ -48,3 +48,4 @@ t.test(x, y = NULL, alternative = "two.sided", mu = 0, paired = FALSE,
     performed.}
   \item{data.name}{a character string giving the name(s) of the data.}
 }
+\keyword{htest}

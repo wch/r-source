@@ -28,3 +28,5 @@ parse(file = "", n = NULL, text = NULL, prompt = NULL, white = FALSE)
 # parse 3 statements from the file "xyz.Rdmped"
 parse(file = "xyz.Rdmped", n = 3)
 }
+\keyword{file}
+\keyword{programming}

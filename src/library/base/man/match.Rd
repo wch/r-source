@@ -31,3 +31,6 @@ intersect(1:10,7:20)
 sstr <- c("c","ab","B","bba","c","@","bla","a","Ba","\%")
 sstr[sstr \%in\% c(letters,LETTERS)]
 }
+\keyword{manip}
+\keyword{logic}
+

@@ -23,3 +23,4 @@ arc-cosine, arc-sine, arc-tangent.
 \code{\link{cos}}, \code{\link{sin}}, \code{\link{tan}},
 \code{\link{acos}}, \code{\link{asin}}, \code{\link{atan}}.
 }
+\keyword{math}

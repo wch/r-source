@@ -25,3 +25,5 @@ SIAM Publications.
 \seealso{
 \code{\link{chol}}, \code{\link{solve}}.
 }
+\keyword{algebra}
+\keyword{array}

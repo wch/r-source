@@ -15,3 +15,4 @@ sink(file)
 
   \code{sink()} ends the diversion.
 }
+\keyword{file}

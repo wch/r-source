@@ -22,6 +22,10 @@ It is a quick hack which seems to serve a useful purpose,
 but can give bad results for functions which are
 discontinuous.
 }
+\seealso{
+  \code{\link{splinefun}} for spline interpolation, \code{\link{lines}}.
+}
 \examples{
 curve(x^3-3*x, -2, 2)
 }
+\keyword{hplot}

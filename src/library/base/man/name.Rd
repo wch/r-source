@@ -13,8 +13,10 @@ is.name(x)
   symbol) which has that string as a print-name.
 
   \code{as.name} coerces its argument to be a name.  The argument must
-  be of mode \code{"character"}. 
+  be of mode \code{"character"}.
 
   \code{is.name} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is a name or not. 
+  whether its argument is a name or not.
 }
+\keyword{programming}
+\keyword{attribute}

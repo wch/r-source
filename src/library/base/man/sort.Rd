@@ -29,3 +29,6 @@ x <- 100 * swiss$Education[1:25]
 x; sort(x); sort(x, partial = c(10,15))
 median # shows you another example for `partial'
 }
+\keyword{univar}
+\keyword{manip}
+\keyword{arith}

@@ -28,3 +28,6 @@ in any algol-like language.
 \examples{
 for(i in 1:5) print(1:i)
 }
+\keyword{programming}
+\keyword{iteration}
+\keyword{logic}

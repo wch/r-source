@@ -10,3 +10,6 @@ finite.
 At present, IEEE arithmetic is not supported and this is
 simply the same as \code{!is.na(x)}.
 }
+\keyword{programming}
+\keyword{math}
+

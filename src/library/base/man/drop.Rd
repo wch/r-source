@@ -14,3 +14,4 @@ is adjusted and returned with \code{x}.
 Array subsetting typically performs this reduction,
 but sometimes it is useful to invoke \code{drop} directly.
 }
+\keyword{array}

@@ -2,10 +2,10 @@
 \title{Quantile-Quantile Plots}
 \usage{
 qqnorm(y, ylim, main = "Normal Q-Q Plot", xlab = "Theoretical Quantiles",
-       ylab = "Sample Quantiles", ...) 
+       ylab = "Sample Quantiles", ...)
 qqline(y, \dots)
 qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
-       ylab = deparse(substitute(y)), ...) 
+       ylab = deparse(substitute(y)), ...)
 }
 \alias{qqnorm}
 \alias{qqplot}
@@ -28,3 +28,5 @@ qqplot(y, rt(300, df = 5))
 data(precip)
 qqnorm(precip, ylab = "Precipitation [in/yr] for 70 US cities")
 }
+\keyword{hplot}
+\keyword{distribution}

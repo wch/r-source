@@ -55,3 +55,5 @@ table(ind)
 tapply(1:3, ind) #-> the split vector
 tapply(1:3, ind, sum)
 }
+\keyword{iteration}
+\keyword{category}

@@ -16,3 +16,5 @@ form, which will be attached to data.}
 \examples{
 structure(1:6, dim = 2:3)
 }
+\keyword{attribute}
+\keyword{manip}

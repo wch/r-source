@@ -22,3 +22,5 @@ There is no default method for this function.
 \seealso{
 \code{\link{deviance}}, \code{\link{glm}}, \code{\link{lm}}.
 }
+\keyword{models}
+\keyword{regression}

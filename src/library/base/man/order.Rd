@@ -31,3 +31,5 @@ y <- (x - 5)^2
 o <- order(x)
 rbind(x[o], y[o])
 }
+\keyword{univar}
+\keyword{manip}

@@ -15,3 +15,4 @@ with the \code{levels} function.
 \seealso{
 \code{\link{levels}}.
 }
+\keyword{category}

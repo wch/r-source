@@ -9,3 +9,4 @@ Shell wildcards are allowed.}}
 \code{unlink} deletes the files specified by \code{x}.
 }
 \value{The return value of the corresponding system command.}
+\keyword{file}

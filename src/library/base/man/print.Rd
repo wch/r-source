@@ -17,6 +17,7 @@ The default version of print is described in \code{print.default}.
 }
 \examples{
 ts(1:20)#-- print  is the ``Default function'' --
-rr <- for(i in 1:3) print(1:i) 
+rr <- for(i in 1:3) print(1:i)
 rr
 }
+\keyword{print}

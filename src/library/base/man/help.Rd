@@ -17,7 +17,7 @@ help(topic, package = .packages(), lib.loc = .lib.loc)
   Defaults to all libraries currently known.}
 }
 \description{
-These functions provide online access to documentation. 
+These functions provide online access to documentation.
 Documentation on a topic with name \code{name} (typically, an \R object or
 a data set) can be printed on-screen with either \code{help(name)} or
 \code{?name}.
@@ -32,7 +32,7 @@ objects they contain;
 \code{\link{methods}}.
 }
 \examples{
-help()                       
+help()
 help(help)                   # the same
 
 help(lapply)
@@ -44,3 +44,4 @@ help("for")                  # or ?"for", but the quotes are needed
 data()                       # list all available data sets
 ?women                       # information about data set "women"
 }
+\keyword{documentation}

@@ -17,14 +17,14 @@ source(file, local = FALSE, echo = debug, print.eval = echo,
     \code{echo}.}
   \item{debug}{if \code{TRUE}, more diagnostics are printed during
     parsing and evaluation of input, including extra info for
-    \bold{each} expression.} 
+    \bold{each} expression.}
   \item{max.deparse.length}{integer; is used only if \code{echo} is
     \code{TRUE} and gives the maximal length of the ``echo'' of a single
     expression.}
 }
 \description{
   \code{source} causes \R to accept its input from the named file (the
-  name must be quoted).  
+  name must be quoted).
   Input is read from that file until the end of the file is reached.
   \code{\link{parse}} is used to scan the files in, they are then
   evaluated sequentially in the chosen environment.
@@ -34,3 +34,4 @@ source(file, local = FALSE, echo = debug, print.eval = echo,
   \code{\link{eval}}, \code{\link{parse}} and \code{\link{scan}}.
 }
 \keyword{file}
+\keyword{programming}

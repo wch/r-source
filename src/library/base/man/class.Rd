@@ -38,3 +38,5 @@ inherits(x, name)
 \seealso{
   \code{\link{UseMethod}}, \code{\link{NextMethod}}.
 }
+\keyword{methods}
+\keyword{classes}

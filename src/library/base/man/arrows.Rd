@@ -1,9 +1,9 @@
 \name{arrows}
 \title{Add Arrows to a Plot}
 \usage{
-arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2, 
-       col = par("fg"), lty = NULL, xpd = FALSE) 
-segments(x0, y0, x1, y1, col = par("fg"), lty = par("lty")) 
+arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
+       col = par("fg"), lty = NULL, xpd = FALSE)
+segments(x0, y0, x1, y1, col = par("fg"), lty = par("lty"))
 }
 \alias{arrows}
 \alias{segments}
@@ -30,7 +30,7 @@ make up the segments or arrows (\code{col} may be a vector).
 \seealso{
   \code{\link{polygon}} for slightly easier and less flexible line drawing and
   \code{\link{lines}} for the usual polygons.
-}  
+}
 \examples{
 x <- runif(12); y <- rnorm(12)
 i <- order(x,y); x <- x[i]; y <- y[i]

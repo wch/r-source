@@ -59,3 +59,4 @@ for (ch in c("", "l","di","tri","tetra","penta")) {
 }
 par(mfrow = c(2, 2))
 }
+\keyword{math}

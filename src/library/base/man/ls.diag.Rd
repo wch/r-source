@@ -14,7 +14,7 @@ ls.diag(ls.out)
 \value{
   A \code{list} with the following numeric components.
   \item{std.dev}{The standard deviation of the errors, an estimate of
-    \eqn{\sigma}{sigma}.} 
+    \eqn{\sigma}{sigma}.}
   \item{hat}{diagonal entries \eqn{h_{ii}} of the hat matrix \eqn{H}}
   \item{std.res}{standardized residuals}
   \item{stud.res}{studentized residuals}
@@ -42,3 +42,4 @@ dlsD9 <- ls.diag(lsD9)
 plot(dlsD9$hat, dlsD9$stud.res);
 abline(h = 0, lty = 2, col = "lightgray")
 }
+\keyword{regression}

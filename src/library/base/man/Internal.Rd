@@ -12,3 +12,4 @@ Only true \R wizards should even consider using this function.
 \seealso{
 \code{\link{.C}}, \code{\link{.Fortran}}.
 }
+\keyword{interface}

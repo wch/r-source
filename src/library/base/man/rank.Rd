@@ -9,3 +9,4 @@ rank(x)
 Ties result in ranks being averaged.
 \code{NA} values are not allowed in this function.
 }
+\keyword{univar}

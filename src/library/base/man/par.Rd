@@ -191,3 +191,6 @@ op <- par(mfrow = c(2, 2), # 2 x 2 pictures on one plot
 ## At end of plotting, reset to previous settings:
 par(op)
 }
+\keyword{iplot}
+\keyword{dplot}
+\keyword{environment}

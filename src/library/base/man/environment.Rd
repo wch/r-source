@@ -36,3 +36,5 @@ ls(envir=environment(approxfun(1:2,1:2, method="const")))
 
 is.environment(.GlobalEnv)# T
 }
+\keyword{data}
+\keyword{programming}

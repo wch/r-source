@@ -42,5 +42,6 @@ The compatibility code for HP-UX was provided by Luke Tierney.
 \examples{
 is.loaded(symbol.For("hcass2")) #-> probably  FALSE
 library(mva)
-is.loaded(symbol.For("hcass2")) #-> TRUE 
+is.loaded(symbol.For("hcass2")) #-> TRUE
 }
+\keyword{interface}

@@ -73,3 +73,4 @@ barplot(t(deaths)[, 5:1], beside = TRUE,
         main = "Death Rates in Virginia", font.main = 4)
         ## instead of title(.)
 }
+\keyword{hplot}

@@ -19,3 +19,5 @@ San Francisco: Holden-Day.
 \seealso{
 \code{\link{fft}}, \code{\link{nextn}}.
 }
+\keyword{math}
+\keyword{dplot}

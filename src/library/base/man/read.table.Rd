@@ -38,3 +38,4 @@ into R.
 \seealso{
 \code{\link{scan}}, \code{\link{data.frame}}.
 }
+\keyword{file}

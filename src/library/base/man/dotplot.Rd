@@ -2,7 +2,7 @@
 \title{Cleveland Dot Plots}
 \usage{
 dotplot(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
-        pch = 21, gpch = 21, bg = par("bg"), color = par("fg"), 
+        pch = 21, gpch = 21, bg = par("bg"), color = par("fg"),
         gcolor = par("fg"), lcolor = "gray", ...)
 }
 \alias{dotplot}
@@ -17,7 +17,7 @@ dotplot(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
   \item{groups}{an optional factor indicating how the
     elements of \code{x} are grouped.
     If \code{x} is a matrix, \code{groups} will default to the columns
-    of \code{x}.} 
+    of \code{x}.}
   \item{gdata}{data values for the groups.
     This is typically a summary such as the median or mean
     of each group.}
@@ -48,3 +48,4 @@ data(deaths)
 dotplot(deaths, main = "Death Rates in Virginia - 1940")
 dotplot(t(deaths), main = "Death Rates in Virginia - 1940")
 }
+\keyword{hplot}

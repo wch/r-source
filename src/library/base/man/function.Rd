@@ -12,3 +12,4 @@ return(value)
 These functions provide the base mechanisms for defining
 new functions in the \R language.
 }
+\keyword{programming}

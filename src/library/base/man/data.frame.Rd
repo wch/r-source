@@ -30,7 +30,7 @@ print(data.frame.obj)
   most of R's modeling software.  They are tightly coupled collections
   of variables which share many of the properties of matrices.  The main
   difference being that the columns of a data frame may be of differing
-  types (numeric, factor and character). 
+  types (numeric, factor and character).
 
   \code{as.data.frame} attempts to coerce its argument to be a data
   frame.
@@ -41,3 +41,5 @@ print(data.frame.obj)
 \seealso{
   \code{\link{read.table}}.
 }
+\keyword{classes}
+\keyword{methods}

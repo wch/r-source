@@ -32,3 +32,4 @@ the current environment.
 \examples{
 get("\%o\%")
 }
+\keyword{data}

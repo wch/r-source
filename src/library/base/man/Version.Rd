@@ -34,3 +34,6 @@ version
 \examples{
 version$os # to check how lucky you are ...
 }
+\keyword{environment}
+\keyword{sysdata}
+\keyword{programming}

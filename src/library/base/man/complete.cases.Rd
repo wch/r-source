@@ -25,3 +25,5 @@ sum(!ok) # how many are not "ok" ?
 x <- x[ok,]
 y <- y[ok]
 }
+\keyword{NA}
+\keyword{logic}

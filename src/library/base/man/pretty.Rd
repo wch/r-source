@@ -18,3 +18,4 @@ pretty(1:20)
 pretty(1:20, n=2)
 pretty(1:20, n=10)
 }
+\keyword{dplot}

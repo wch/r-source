@@ -19,3 +19,5 @@ dimnames(x) <- nlist
 rownames0 <- function(x) dimnames(x)[[1]]
 colnames0 <- function(x) dimnames(x)[[2]]
 }
+\keyword{array}
+\keyword{manip}

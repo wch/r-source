@@ -23,3 +23,5 @@ can be used with a \code{col=} specification in graphics functions or in
 \examples{
 hsv(.5,.5,.5)
 }
+\keyword{color}
+\keyword{dplot}

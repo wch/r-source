@@ -32,3 +32,4 @@ exT <- function(n = 100) {
 exT()                 #- `1.4' on -O-optimized Ultra1
 system.time(exT())    #~ +/- same
 }
+\keyword{utilities}

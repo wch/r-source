@@ -19,3 +19,4 @@ names(islands)
 # remove the names attribute
 names(islands) <- NULL
 }
+\keyword{attribute}

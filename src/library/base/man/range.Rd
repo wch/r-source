@@ -21,3 +21,6 @@ range(\dots, na.rm = FALSE)
 print(r.x <- range(rnorm(100)))
 diff(r.x) # the SAMPLE range
 }
+\keyword{univar}
+\keyword{arith}
+

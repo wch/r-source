@@ -6,3 +6,4 @@
 \code{is.language} returns \code{TRUE} if \code{x} is either a variable name
 or an expression.
 }
+\keyword{programming}

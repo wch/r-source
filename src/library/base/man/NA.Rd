@@ -23,3 +23,6 @@ of the same length containing \code{TRUE} for those elements marked
 \seealso{
 \code{\link{complete.cases}}.
 }
+\keyword{NA}
+\keyword{logic}
+\keyword{manip}

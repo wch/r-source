@@ -3,9 +3,9 @@
 \usage{
 grep(pattern, x, ignore.case=FALSE, extended=TRUE, value=FALSE)
 sub(pattern, replacement, x,
-        ignore.case=FALSE, extended=TRUE) 
+        ignore.case=FALSE, extended=TRUE)
 gsub(pattern, replacement, x,
-        ignore.case=FALSE, extended=TRUE) 
+        ignore.case=FALSE, extended=TRUE)
 }
 \alias{grep}
 \alias{sub}
@@ -50,3 +50,5 @@ written by Henry Spencer of the University of Toronto.
 \examples{
 grep("[a-z]", letters)
 }
+\keyword{character}
+\keyword{utilities}

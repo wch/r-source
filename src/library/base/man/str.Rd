@@ -80,5 +80,5 @@ lsf.str()#- how do the functions look like which I am using?
 ls.str(mode = "list")#- what are the structured objects I have defined?
 }
 \keyword{print}
-\keyword{data}
+\keyword{documentation}
 \keyword{utilities}

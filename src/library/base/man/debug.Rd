@@ -30,3 +30,5 @@ If you have variables with names that are identical to the controls
 \seealso{
 \code{\link{browser}}.
 }
+\keyword{programming}
+\keyword{environment}

@@ -19,3 +19,5 @@ type.
 \code{is.character} returns \code{TRUE} or \code{FALSE} depending on
 whether its argument is of character type or not.
 }
+\keyword{character}
+\keyword{classes}
