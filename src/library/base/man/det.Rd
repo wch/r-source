@@ -1,11 +1,10 @@
 \name{det}
 \title{Calculate the Determinant of a Matrix}
 \alias{det}
-\alias{ndet}
 \alias{determinant}
 \alias{determinant.matrix}
 \usage{
-ndet(x, \dots)
+det(x, \dots)
 determinant(x, logarithm, \dots)
 }
 \description{
@@ -17,6 +16,9 @@ determinant(x, logarithm, \dots)
   \item{x}{numeric matrix.}
   \item{logarithm}{logical; if \code{TRUE} return the logarithm of the
     modulus of the determinant.  Default is \code{TRUE}.}
+  \item{\dots}{Optional arguments.  At present none are used.  Previous
+    versions of \code{det} allowed an optional \code{method} argument.
+    This argument will be ignored but will not produce an error.}
 }
 \value{
   For \code{det}, the determinant of \code{x}.  For \code{determinant}, a
@@ -42,10 +44,8 @@ determinant(x, logarithm, \dots)
 (x <- matrix(1:4, ncol=2))
 unlist(determinant(x))
 det(x)
-ndet(x)
 
 det(print(cbind(1,1:3,c(2,0,1))))
-ndet(print(cbind(1,1:3,c(2,0,1))))
 }
 
 \keyword{array}
