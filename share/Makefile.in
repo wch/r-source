@@ -14,7 +14,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
 ## subdirectories of R_HOME/share
-SUBDIRS = glade perl sh
+SUBDIRS = glade perl sh texmf
 ## subdirectories of R_HOME/share/perl
 SUBDIRS_PERL = R Text
 
@@ -45,6 +45,7 @@ installdirs:
 	  $(MKINSTALLDIRS) $(rhome)/share/perl/$${d}; \
 	done
 	@$(MKINSTALLDIRS) $(rhome)/share/sh
+	@$(MKINSTALLDIRS) $(rhome)/share/texmf
 install-message:
 	@echo "installing share ..."
 install-sources: installdirs
@@ -63,6 +64,11 @@ install-sources: installdirs
 	done
 	@for f in $(srcdir)/sh/*.sh; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/share/sh; \
+	done
+	@for f in $(srcdir)/texmf/*.sty \
+		  $(srcdir)/texmf/*.cfg \
+		  $(srcdir)/texmf/*.fd; do \
+	  $(INSTALL_DATA) $${f} $(rhome)/share/texmf; \
 	done
 install-strip: install
 

@@ -12,9 +12,7 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 SOURCES_TEXI = R-FAQ.texi R-data.texi R-exts.texi R-intro.texi R-lang.texi
-INSTFILES = Rd.sty hyperref.cfg omsaer.fd omsaett.fd omscmtt.fd
 DISTFILES = \
-	$(INSTFILES) \
 	README \
 	Makefile.in Makefile.win \
 	R-defs.texi dir texinfo.tex \
@@ -58,9 +56,6 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 R: Makefile
-	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  $(MAKE) rhome=$(top_builddir) install-tex; \
-	fi
 
 docs: html
 
@@ -86,7 +81,7 @@ docs: html
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2PDF) $<
 
 dvi: refman.dvi $(OBJECTS_DVI)
-refman.dvi: version.tex $(srcdir)/Rd.sty stamp-refman-dvi
+refman.dvi: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-dvi
 	@if test "$(LATEX)" = false; then \
 	  echo "ERROR: \`latex' needed but missing on your system."; \
 	  exit 1; \
@@ -100,10 +95,10 @@ refman.dvi: version.tex $(srcdir)/Rd.sty stamp-refman-dvi
 	  cat $(srcdir)/refman.top; \
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
-	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
 	@-$(MAKEINDEX) refman
-	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
 	@touch stamp-refman-dvi
 version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
@@ -158,7 +153,7 @@ R-intro.info: $(texiincludes)
 R-lang.info: $(texiincludes)
 
 pdf: refman.pdf $(OBJECTS_PDF)
-refman.pdf: version.tex $(srcdir)/Rd.sty stamp-refman-pdf
+refman.pdf: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-pdf
 	@if test "$(PDFLATEX)" = false; then \
 	  echo "ERROR: \`pdflatex' needed but missing on your system."; \
 	  exit 1; \
@@ -172,14 +167,14 @@ refman.pdf: version.tex $(srcdir)/Rd.sty stamp-refman-pdf
 	  cat $(srcdir)/refman.top; \
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
-	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
 	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@-$(MAKEINDEX) refman
-	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
 	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
-	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
 	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@touch stamp-refman-pdf
@@ -197,7 +192,7 @@ stamp-images-pdf:
 	@touch $@
 R-lang.pdf: $(texiincludes)
 
-install: install-message installdirs install-html install-tex
+install: install-message installdirs install-html
 install-message:
 	@echo "installing $(subdir) ..."
 installdirs:
@@ -236,10 +231,6 @@ install-pdf: pdf installdirs
 	@echo "installing R manuals in PDF format ..."
 	@for f in *.pdf; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/$(subdir); \
-	done
-install-tex:
-	@for f in $(INSTFILES); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/$(subdir) ; \
 	done
 
 $(infodir)/dir:

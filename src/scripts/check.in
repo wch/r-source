@@ -31,7 +31,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.31 $ ';
+my $revision = ' $Revision: 1.32 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -550,10 +550,10 @@ sub check_pkg {
             
     if($opt_latex && (-d "$library/$pkgname/latex")){
         if($WINDOWS){
-            $ENV{'TEXINPUTS'}="$R_HOME/doc/manual;$ENV{'TEXINPUTS'}";
+            $ENV{'TEXINPUTS'}="$R_HOME/share/texmf;$ENV{'TEXINPUTS'}";
         }
         else{
-            $ENV{'TEXINPUTS'}="$R_HOME/doc/manual:$ENV{'TEXINPUTS'}";
+            $ENV{'TEXINPUTS'}="$R_HOME/share/texmf:$ENV{'TEXINPUTS'}";
         }
         $log->creating("${pkgname}-manual.tex");
         open manual, "> ${pkgname}-manual.tex";
