@@ -36,6 +36,8 @@ Options:
                         package is attached; if given, ARGS are passed
                         to R when creating the save image
       --no-save         do not save the package source as an image file
+      --lazy            use lazy loading
+      --no-lazy         do not use lazy loading (current default)
   -d, --debug		turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
       --no-configure    do not use the package's configure script
@@ -172,6 +174,10 @@ while test -n "${1}"; do
       save=true;;
     --save=*)
       save_args=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+    --lazy)
+      lazy=true ;;
+    --no-lazy)
+      lazy=false ;;
     --no-save)
       save=false ;;
     -d|--debug)
@@ -550,6 +556,18 @@ do_install_source () {
       cat install.R >> "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
     fi
   fi
+
+  if ${lazy}; then
+     echo "tools:::makeLazyLoading(\"${pkg_name}\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C "${R_EXE}" --vanilla --slave
+     rm -f ${R_PACKAGE_DIR}/R/all.rda
+     if test -s R_PROFILE.R; then
+       mv ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME} ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}.1
+       cat R_PROFILE.R ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}.1 > ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}
+       rm ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}.1
+     fi
+  fi
+
 
   if test -d man; then
     message "help"

@@ -57,12 +57,14 @@ Makedeps: Makefile
 	@touch $@
 ## </NOTE>
 
+INSTALL-OPTS=@USE_LAZY_LOAD_TRUE@ --lazy
+
 .tgz.ts:
 ## <FIXME>
 ## RG says that with FreeBSD Make calling INSTALL does not work without
 ## explicitly passing down MAKE ('unrecognized option -w ...').  But
 ## what is really going on?
-	MAKE="$(MAKE)" $(R) CMD INSTALL -l $(top_builddir)/library $<
+	MAKE="$(MAKE)" $(R) CMD INSTALL $(INSTALL-OPTS) -l $(top_builddir)/library $<
 ## </FIXME>
 	@touch $@
 

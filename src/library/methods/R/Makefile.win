@@ -6,6 +6,7 @@ $(DPKG)/R:
 	@$(MKDIR) -p $(DPKG)/R
 
 $(DPKG)/R/all.rda: all.R
+#	@$(CP) -p all.R $(DPKG)/R
 	@echo "  dumping R code in package \`$(PKG)'"
 ifeq ($(strip $(BUILD)),CROSS)
 	@ cp `$(R_EXE) RHOME`/library/methods/libs/methods.so $(RHOME)/library/methods/libs
@@ -15,6 +16,7 @@ else
 	@ (cp $< $(RHOME)/library/methods/R/methods; cd $(RHOME)/library/methods; echo "loadNamespace(\"methods\")" | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=NULL)
 endif
 	@$(CP) -p $(RHOME)/share/R/nsrdaload.R $(DPKG)/R/$(PKG)
+	@rm -f $(DPKG)/R/$(PKG).rdb  $(DPKG)/R/$(PKG).rdx
 
 all.R: $(PKGRFILES)
 	@echo "  collecting R files"

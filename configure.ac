@@ -199,6 +199,17 @@ if test x"${use_strict_barrier}" = xyes; then
              violation.])
 fi
 
+
+## Enable lazy-loading of standard and recommended packages.
+AC_ARG_ENABLE([lazy-loading],
+[AC_HELP_STRING([--enable-lazy-loading],
+                [lazy-loading of standard and recommended packages 
+		@<:@yes@:>@])],
+[use_lazy_loading="${enableval}"],
+[use_lazy_loading=yes])
+AM_CONDITIONAL(USE_LAZY_LOAD, [test "x${use_lazy_loading}" = xyes])
+
+
 ### ** Optional packages.
 
 ## BLAS.
@@ -1548,6 +1559,9 @@ if test "${use_maintainer_mode}" = yes; then
 fi
 if test "${use_strict_barrier}" = yes; then
   R_SH_VAR_ADD(r_options, [strict barrier], [, ])
+fi
+if test "${use_lazy_loading}" = yes; then
+  R_SH_VAR_ADD(r_options, [lazy loading], [, ])
 fi
 
 AC_MSG_RESULT(
