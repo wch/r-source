@@ -25,6 +25,7 @@ my $fn, $component, $path;
 my $startdir=cwd();
 my $RVER;
 my $RW=$ARGV[0];
+my $ISVER=$ARGV[1];
 my $iconpars="WorkingDir: \"{app}\"" ;
 ## add to the target command line as in the next example
 # my $iconpars="Parameters: \"--sdi\"; WorkingDir: \"{app}\"" ;
@@ -57,6 +58,9 @@ WizardSmallImageFile=R.bmp
 UsePreviousAppDir=no
 ChangesAssociations=yes
 Compression=bzip
+END
+print insfile "AlwaysCreateUninstallIcon=yes\n" if $ISVER eq 2;
+print insfile <<END;
 
 [Types]
 Name: "user"; Description: "User installation"
@@ -79,7 +83,13 @@ Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "A
 [Icons]
 Name: "{group}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; $iconpars
 Name: "{group}\\R $RVER Help"; Filename: "{app}\\doc\\html\\Rwin.html"; Components: html
+END
+if($ISVER eq 3) {
+    print insfile <<END;
 Name: "{group}\\Uninstall R $RVER"; Filename: "{uninstallexe}"
+END
+}
+print insfile <<END;
 Name: "{userdesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: desktopicon; $iconpars
 
 [Registry] 

@@ -5,7 +5,6 @@ include ../RWVERSION
 
 all: $(RPREFIX).exe miniR.exe
 
-
 R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 ../$(RPREFIX)ch.zip ../$(RPREFIX)d1.zip ../$(RPREFIX)d2.zip \
 ../$(RPREFIX)l.zip ../$(RPREFIX)sp.zip ../$(RPREFIX)w.zip
@@ -36,7 +35,7 @@ R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave
 	$(CP) $(RPREFIX)/doc/html/packages.html $(RPREFIX)w/$(RPREFIX)/doc/html
 	$(RM) $(RPREFIX)/doc/html/packages*
-	perl JRins.pl $(RPREFIX)
+	perl JRins.pl $(RPREFIX) $(IS_VERSION)
 
 
 $(RPREFIX).exe: R.iss
@@ -60,7 +59,7 @@ Rsmall.iss: JRsmall.pl ../$(RPREFIX)b.zip \
 	rm -rf $(RPREFIX)/library/grid/doc
 	rm -rf $(RPREFIX)/library/rpart/Manuscript
 	rm -rf $(RPREFIX)/library/survival/doc $(RPREFIX)/library/survival/survival.ps.gz
-	perl JRsmall.pl $(RPREFIX)
+	perl JRsmall.pl $(RPREFIX) $(IS_VERSION)
 
 miniR.exe: Rsmall.iss
 	"$(ISDIR)/iscc" Rsmall.iss > miniR.log
