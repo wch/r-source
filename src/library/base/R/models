@@ -95,6 +95,7 @@ deviance <- function(x, ...)UseMethod("deviance")
 
 fitted.values <- function(x, ...) UseMethod("fitted.values")
 fitted <- fitted.values
+fitted.values.default <- function(x) x$fitted
 
 anova <- function(x, ...)UseMethod("anova")
 
