@@ -3,7 +3,8 @@ LD=ld
 
 OBJS=	dblcen.o \
 	dist.o \
-	hclust.o
+	hclust.o \
+	kmns.o
 
 $(LIBNAME).so:	$(OBJS)
 	$(LD) $(SHLIBLDFLAGS) -o $@ $(OBJS)
