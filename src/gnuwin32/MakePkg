@@ -86,6 +86,9 @@ Rcode: Rcode0 $(DYNLIB)
 Rcode0:
 	@$(MKDIR) -p $(DPKG) $(DPKG)/R
 	@$(CAT) $(PKGRFILES) > $(DPKG)/R/$(PKG)
+	@if test -f ${SPKG}/NAMESPACE; then \
+	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
+	fi
 	@(cat DESCRIPTION; $(ECHO); $(ECHO) "Built: R" $(RVER)\;  \;  `date`) \
 	  | $(SED) '/^\s*$$/d' > ${DPKG}/DESCRIPTION
 
