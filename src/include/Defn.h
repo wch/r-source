@@ -42,10 +42,10 @@
 #define	R_PPSSIZE	10000L
 #endif
 #ifndef R_NSIZE
-#define	R_NSIZE		200000L
+#define	R_NSIZE		250000L
 #endif
 #ifndef R_VSIZE
-#define	R_VSIZE		2097152L
+#define	R_VSIZE		6291456L
 #endif
 
 #include <math.h>

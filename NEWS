@@ -9,6 +9,12 @@
 
 NEW FEATURES
 
+    o   `vsize' and `nsize' can be set by the environment variables
+	R_VSIZE and R_NSIZE respectively, perhaps most conveniently from
+	`~/.Renviron' under Unix. Command-line settings will take priority.
+
+        The defaults have been increased to 6M and 250k.
+
     o   zip files can be used for storing help and example files. See
 	the help files for "help" and "example" for details.
 
