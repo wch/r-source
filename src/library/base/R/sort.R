@@ -57,7 +57,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE)
         z <- list(...)
         if(any(diff(sapply(z, length)) != 0))
             stop("Argument lengths differ")
-        ok <- !apply(sapply(z, is.na), 1, any)
+        ok <- if(length(z) > 1) !apply(sapply(z, is.na), 1, any) else is.na(z)
         if(all(!ok)) stop("all elements contain an NA")
         z[[1]][!ok] <- NA
         ans <- do.call("order", c(z, decreasing=decreasing))
