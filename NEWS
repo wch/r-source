@@ -71,6 +71,9 @@ NEW FEATURES
      o  ts() now allows arbitrary values for y in start/end = (x, y):
 	it always allowed y < 1 but objected to y > frequency.
 
+     o  Add `difftime' methods for the group generics. (Thereby fixing
+        PR#2345)
+
 
 INSTALLATION CHANGES
 

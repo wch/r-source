@@ -399,6 +399,71 @@ round.difftime <- function (x, digits = 0)
    structure(NextMethod(), units=units, class="difftime")
 }
 
+Ops.difftime <- function(e1, e2)
+{
+    coerceTimeUnit <- function(x)
+    {
+        switch(attr(x,"units"),
+               secs = x, mins = 60*x, hours = 60*60*x,
+               days = 60*60*24*x, weeks = 60*60*24*7*x)
+    }
+    if (nargs() == 1)
+        stop(paste("unary", .Generic, "not defined for difftime objects"))
+    boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
+                      "!=" = , "<=" = , ">=" = TRUE, FALSE)
+    if (boolean) {
+        ## assume user knows what he/she is doing if not both difftime
+        if(inherits(e1, "difftime") && inherits(e2, "difftime")) {
+            e1 <- coerceTimeUnit(e1)
+            e2 <- coerceTimeUnit(e2)
+        }
+        NextMethod(.Generic)
+    } else if(.Generic == "+" || .Generic == "-") {
+        if(!inherits(e1, "difftime") || !inherits(e2, "difftime"))
+            stop("both arguments of ", .Generic, " must be difftime objects")
+        u1 <- attr(e1, "units")
+        if(attr(e2, "units") == u1) {
+            structure(NextMethod(.Generic), units=u1, class="difftime")
+        } else {
+            e1 <- coerceTimeUnit(e1)
+            e2 <- coerceTimeUnit(e2)
+            structure(NextMethod(.Generic), units="secs", class="difftime")
+        }
+    } else {
+        ## `*' is covered by a specific method
+        stop(paste(.Generic, "not defined for difftime objects"))
+    }
+}
+
+"*.difftime" <- function (e1, e2)
+{
+    ## need one scalar, one difftime.
+    if(inherits(e1, "difftime") && inherits(e2, "difftime"))
+        stop("both arguments of * cannot be difftime objects")
+    if(inherits(e2, "difftime")) {tmp <- e1; e1 <- e2; e2 <- tmp}
+    structure(e2 * unclass(e1), units = attr(e1, "units"),
+              class = "difftime")
+}
+
+Math.difftime <- function (x, ...)
+{
+    stop(paste(.Generic, "not defined for difftime objects"))
+}
+
+Summary.difftime <- function (x, ...)
+{
+    coerceTimeUnit <- function(x)
+    {
+        switch(attr(x,"units"),
+               secs = x, mins = 60*x, hours = 60*60*x,
+               days = 60*60*24*x, weeks = 60*60*24*7*x)
+    }
+    ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
+    if (!ok) stop(paste(.Generic, "not defined for difftime objects"))
+    args <- lapply(list(x, ...), coerceTimeUnit)
+    structure(do.call(.Generic, args), units="secs", class="difftime")
+}
+
 ## for back-compatibility only: POSIXt versions are used as from 1.3.0
 
 "-.POSIXct" <- function(e1, e2)

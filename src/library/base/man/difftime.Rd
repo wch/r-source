@@ -31,7 +31,8 @@ as.difftime(tim, format = "%X")
   Function \code{difftime} takes a difference of two date/time objects
   (of either class) and returns an object of class \code{"difftime"}
   with an attribute indicating the units.  There is a \code{\link{round}}
-  method for objects of this class.
+  method for objects of this class, as well as methods for the
+  group-generic (see \code{\link{Ops}}) logical and arithmetic operations.
 
   If \code{units = "auto"}, a suitable set of units is chosen, the largest
   possible (excluding \code{"weeks"}) in which all the absolute
