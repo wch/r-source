@@ -24,8 +24,9 @@ iconvlist()
 
 \details{
   The names of encodings and which ones are available (and indeed, if
-  any are) is platform-dependent.  On most systems you can use \code{""}
-  for the encoding of the current locale.
+  any are) is platform-dependent.  On systems that support \R's
+  \code{iconv} you can use \code{""} for the encoding of the current
+  locale, as well as \code{"latin1"} and \code{"UTF-8"}.
 
 #ifdef unix
   On many platforms \code{iconvlist} provides an alphabetical list of

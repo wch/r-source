@@ -1276,7 +1276,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     LOGICAL(ans)[i++] = FALSE;
 #endif
     SET_STRING_ELT(ansnames, i, mkChar("iconv"));
-#ifdef HAVE_ICONV
+#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
     LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;
