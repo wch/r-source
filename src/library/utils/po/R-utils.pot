@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-05 17:26\n"
+"POT-Creation-Date: 2005-02-06 11:41\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -386,10 +386,19 @@ msgstr ""
 msgid "error in trying to evaluate the expression for argument"
 msgstr ""
 
+msgid "("
+msgstr ""
+
+msgid ")"
+msgstr ""
+
 msgid "no method defined for function"
 msgstr ""
 
 msgid "and signature"
+msgstr ""
+
+msgid "="
 msgstr ""
 
 msgid "no documentation for function"

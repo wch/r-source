@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-05 17:36\n"
+"POT-Creation-Date: 2005-02-06 11:41\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,6 +87,9 @@ msgid "no terms in scope for adding to object"
 msgstr ""
 
 msgid "using the"
+msgstr ""
+
+msgid "/"
 msgstr ""
 
 msgid "rows from a combined fit"
@@ -1313,6 +1316,9 @@ msgstr ""
 msgid "residuals have rank"
 msgstr ""
 
+msgid "<"
+msgstr ""
+
 msgid "NAs are not allowed"
 msgstr ""
 
@@ -1527,6 +1533,9 @@ msgid "`which' must be in 1:4"
 msgstr ""
 
 msgid "`id.n' must be in {1,..,"
+msgstr ""
+
+msgid "}"
 msgstr ""
 
 msgid "exactly one of n, delta, sd, power, and sig.level must be NULL"
@@ -1848,6 +1857,9 @@ msgid "in 0 < cuts < 1"
 msgstr ""
 
 msgid ", but are ="
+msgstr ""
+
+msgid "|"
 msgstr ""
 
 msgid "'symbols' must be unique, but are ="

@@ -8,6 +8,13 @@ make update-po
 
 to recreate R.pot and update the automated `translations'.
 
+Target
+
+make update-pkg-po
+
+updates the message catalogs for the C and R code in the standard packages.
+
+
 To add a new translation, add the lang.po file to this directory and add
 the language to LINGUAS.  Hopefully `make' will do the rest 
 (create lang.gmo and install it as required).

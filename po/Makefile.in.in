@@ -303,6 +303,46 @@ update-po: Makefile
 	$(MAKE) update-gmo
 	$(MAKE) RGui.pot-update
 
+R_PKGS_PO= base grDevices graphics splines stats stats4 tcltk tools utils
+R_PKGS_SRC_PO= grDevices splines stats tools
+R_EXE = $(top_builddir)/bin/R --vanilla
+
+update-pkg-po: remove-potcdate.sed
+	@for pkg in $(R_PKGS_SRC_PO); do \
+	  echo "updating $${pkg}.pot"; \
+	  src=$(top_srcdir)/src/library/$${pkg}; \
+	  if test -d $${src}/src; then \
+	    (cd $${src}/src; $(XGETTEXT) \
+	     --keyword=_ --keyword=N_ \
+	     --add-comments=TRANSLATORS: $(XGETTEXT_OPTIONS) \
+	     --copyright-holder='$(COPYRIGHT_HOLDER)' \
+	     --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
+	     -o - *.c) > $${pkg}.po ; \
+	      sed -f remove-potcdate.sed < $${src}/po/$${pkg}.pot > $${pkg}.1po && \
+	      sed -f remove-potcdate.sed < $${pkg}.po > $${pkg}.2po && \
+	      if cmp $${pkg}.1po $${pkg}.2po >/dev/null 2>&1; then \
+		rm -f $${pkg}.1po $${pkg}.2po $${pkg}.po; \
+	      else \
+		rm -f $${pkg}.1po $${pkg}.2po $${src}/po/$${pkg}.pot && \
+		mv $${pkg}.po $${src}/po/$${pkg}.pot; \
+	      fi; \
+	  fi; \
+	done
+	@for pkg in $(R_PKGS_PO); do \
+	  echo "updating R-$${pkg}.pot"; \
+	  src=$(top_srcdir)/src/library/$${pkg}; \
+	  echo "tools::xgettext2pot('$${src}', 'R-$${pkg}.po')" \
+	    | R_DEFAULT_PACKAGES= $(R_EXE) --slave > /dev/null ; \
+	    sed -f remove-potcdate.sed < $${src}/po/R-$${pkg}.pot > R-$${pkg}.1po && \
+	    sed -f remove-potcdate.sed < R-$${pkg}.po > R-$${pkg}.2po && \
+	    if cmp R-$${pkg}.1po R-$${pkg}.2po >/dev/null 2>&1; then \
+	      rm -f R-$${pkg}.1po R-$${pkg}.2po R-$${pkg}.po; \
+	    else \
+	      rm -f R-$${pkg}.1po R-$${pkg}.2po $${src}/po/R-$${pkg}.pot && \
+	      mv R-$${pkg}.po $${src}/po/R-$${pkg}.pot; \
+	    fi; \
+	done
+
 # General rule for creating PO files.
 
 .nop.po-create:

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-05 17:32\n"
+"POT-Creation-Date: 2005-02-06 11:41\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,6 +65,12 @@ msgstr ""
 msgid "you must specify"
 msgstr ""
 
+msgid ","
+msgstr ""
+
+msgid "dir"
+msgstr ""
+
 msgid "or"
 msgstr ""
 
@@ -107,10 +113,16 @@ msgstr ""
 msgid "Writing R Extensions"
 msgstr ""
 
+msgid "."
+msgstr ""
+
 msgid "missing/empty \\title field in"
 msgstr ""
 
 msgid "Rd files must have a non-empty \\title."
+msgstr ""
+
+msgid "outFile"
 msgstr ""
 
 msgid "does not contain Rd objects"
@@ -125,10 +137,22 @@ msgstr ""
 msgid "section{"
 msgstr ""
 
+msgid "}"
+msgstr ""
+
+msgid "txt"
+msgstr ""
+
 msgid "must be a character string"
 msgstr ""
 
 msgid "unmatched \\item name in"
+msgstr ""
+
+msgid "\\item{"
+msgstr ""
+
+msgid ".*$"
 msgstr ""
 
 msgid "no \\item description for item"
@@ -159,6 +183,9 @@ msgid "cannot read index information in file"
 msgstr ""
 
 msgid "argument 'vignette' must be of length 1"
+msgstr ""
+
+msgid "file:"
 msgstr ""
 
 msgid "not found."
@@ -206,6 +233,9 @@ msgstr ""
 msgid "to"
 msgstr ""
 
+msgid "00Index"
+msgstr ""
+
 msgid "There is no package called"
 msgstr ""
 
@@ -231,6 +261,9 @@ msgid "source must be an environment or a list"
 msgstr ""
 
 msgid "this cannot be used for package"
+msgstr ""
+
+msgid "base"
 msgstr ""
 
 msgid "package contains no R code"
@@ -264,6 +297,12 @@ msgid "is not available"
 msgstr ""
 
 msgid "no or more than one match"
+msgstr ""
+
+msgid "x"
+msgstr ""
+
+msgid "delim"
 msgstr ""
 
 msgid "must specify two single-byte characters"
