@@ -18,8 +18,8 @@ HEADERS = g_cntrlify.h g_control.h g_extern.h g_her_metr.h g_jis.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
-	Makefile.in Makefile.mac Makefile.win $(SOURCES) $(HEADERS) \
-	dllversion.rc vfonts.mcp.hqx
+	Makefile.in Makefile.win $(SOURCES) $(HEADERS) \
+	dllversion.rc
 
 ## <FIXME>
 ## Change to 'vfonts.la' when using libtool for shlibs.
