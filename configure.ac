@@ -852,11 +852,9 @@ case "${host_os}" in
     if test "${G77}" = yes; then
       fpicflags="-fno-common"
     fi
-    ## <FIXME>
-    ## Needed because currently the Quartz device driver gets linked to
-    ## the main binary.  Change once the driver is modularized.
-    main_ldflags="-framework Carbon"
-    ## </FIXME>
+    ## Used to need this for GUI and quartz device, but neither are in
+    ## R or libR.dylib any longer (2.1.0).
+    ## main_ldflags="-framework Carbon"
     ## Want '-mdynamic-no-pic' for GCC 3, says Jan de Leeuw.
     if test "${GCC}" = yes; then
       ## <FIXME>
