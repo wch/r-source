@@ -32,7 +32,7 @@
 
 #include <stdio.h>
 #ifdef Win32
-# include "run.h"
+# include "../gnuwin32/run.h"
 int Rgui_Edit(char *filename, char *title, int modal);
 #endif
 
