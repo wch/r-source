@@ -38,7 +38,7 @@
   \code{--no-restore}).
 
   The command-line flag \code{--vanilla} implies \code{--no-init-file},
-  \code{--no-restore},  \code{--no-restore} and \code{--no-environ}.
+  \code{--no-restore} and \code{--no-environ}.
 }
 \seealso{
   \code{\link{.Last}} for final actions before termination.
