@@ -7,13 +7,14 @@
 }
 \usage{
 body(fun = sys.function(sys.parent()))
-body(fun) <- list
+body(fun, envir = parent.frame()) <- value
 }
 \arguments{
   \item{fun}{a function object or a character string naming the function
     to be manipulated.
     If not specified, the function calling \code{body} is used.}
-  \item{list}{a list of \R expressions.}  
+  \item{envir}{environment in which the function should be defined.}
+  \item{value}{a list of \R expressions.}
 }
 \value{
   \code{body} returns the body of the function specified.

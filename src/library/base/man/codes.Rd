@@ -10,11 +10,12 @@
 }
 \usage{
 codes(x, \dots)
-codes(x) <- value
+codes(x, \dots) <- value
 }
 \arguments{
   \item{x}{an object from which to extract or set the codes.}
   \item{\dots}{further arguments passed to or from other methods.}
+  \item{value}
 }
 \value{
   For an ordered factor, it returns the internal coding (1 for the

@@ -13,12 +13,12 @@
 }
 \usage{
 class(x)
-class(x) <- names
+class(x) <- value
 unclass(x)
 inherits(x, what, which = FALSE)
 
 oldClass(x)
-oldClass(x) <- names
+oldClass(x) <- value
 }
 \arguments{
   \item{x}{a \R object}

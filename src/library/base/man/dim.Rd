@@ -5,7 +5,7 @@
 \title{Dimensions of an Object}
 \usage{
 dim(x)
-dim(x) <- values
+dim(x) <- value
 }
 \description{
   Retrieve or set the dimension of an object.

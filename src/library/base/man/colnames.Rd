@@ -1,15 +1,15 @@
 \name{row/colnames}
-\title{Row and Columnn Names}
+\title{Row and Column Names}
 \alias{rownames}
 \alias{rownames<-}
 \alias{colnames}
 \alias{colnames<-}
 \usage{
 rownames(x, do.NULL = TRUE, prefix = "row")
-rownames(x) <- namevector
+rownames(x) <- value
 
 colnames(x, do.NULL = TRUE, prefix = "col")
-colnames(x) <- namevector
+colnames(x) <- value
 }
 \description{
   Retrieve or set the row or column names of an object (the first or
@@ -17,8 +17,10 @@ colnames(x) <- namevector
 }
 \arguments{
   \item{x}{}
-  \item{do.NULL}{logical. Should this create names if they are \code{NULL}?}
+  \item{do.NULL}{logical.  Should this create names if they are
+    \code{NULL}?}
   \item{prefix}{for created names.}
+  \item{value}{}
 }
 \details{
   If \code{do.NULL} is \code{FALSE}, a character vector (of length
@@ -26,8 +28,10 @@ colnames(x) <- namevector
   case, prepending \code{prefix} to simple numbers, if
   \code{dimnames(x)[[i]]} (\code{i =} 1 or 2) is \code{NULL}. 
 }
-\seealso{\code{\link{dimnames}}, \code{\link{case.names}},
-    \code{\link{variable.names}}.
+\seealso{
+  \code{\link{dimnames}},
+  \code{\link{case.names}},
+  \code{\link{variable.names}}.
 }
 \examples{
 m0 <- matrix(NA, 4, 0)

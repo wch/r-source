@@ -2,8 +2,8 @@
 \title{Object Attribute Lists}
 \usage{
 attributes(obj)
-attributes(obj) <- list
-mostattributes(obj) <- list
+attributes(obj) <- value
+mostattributes(obj) <- value
 }
 \alias{attributes}
 \alias{attributes<-}
@@ -16,6 +16,7 @@ mostattributes(obj) <- list
 }
 \arguments{
   \item{obj}{an object}
+  \item{value}{an appropriate attribute list, or \code{NULL}.}
 }
 \details{
   The \code{mostattributes} assignment takes special care for the
