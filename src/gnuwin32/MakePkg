@@ -44,7 +44,7 @@ endif
 # Others
 OFILES0=$(wildcard $(SPKG)/*)
 OFILES1= DESCRIPTION INDEX TITLE
-OFILES-NO= R r chm data man src src-c Makefile.in inst check orig \
+OFILES-NO= R r chm data man src src-c Makefile.in inst check orig test \
 	DESCRIPTION DESCRIPTION.in INDEX TITLE index title \
 	configure configure.in
 OFILES3=$(foreach i, $(OFILES1), $(SPKG)/$i)
