@@ -27,7 +27,7 @@ fix(x, \dots)
  fix(my.data.frame, factor.mode="char") # use of ...
 }
 \testonly{
- if(.Platform$OS.type != "macintosh") {
+ if(.Platform$OS.type != "mac") {
   oo <- options(editor="touch") # not really changing anything
   fix(pi)
   if(!is.numeric(pi) || length(pi)!=1 ||
