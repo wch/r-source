@@ -91,6 +91,10 @@ If you have libraries and header files, e.g. for GNU readline, in
 non-system directories, use the variables LIBS (for libraries) and
 CPPFLAGS (for header files), respectively, to specify these locations.
 
+If you find you need to alter configure variables, it is worth noting
+that some settings are cached in the file config.cache, and it is a
+good idea to remove that file before re-configuring.
+
 Make will also build plain text help pages as well as HTML and LaTeX
 versions of the documentation (the three kinds can also be generated
 separately using make help, make html and make latex).	Note that you need
