@@ -1011,7 +1011,7 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i,count;
     checkArity(op, args);
     mask = CAR(args);
-    caption = CDR(args);
+    caption = CADR(args);
     if(!isString(mask) || length(mask) != 1 )
 		errorcall(call, "mask must be a character string");
     if(!isString(caption) || length(caption) != 1 )

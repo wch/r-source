@@ -3,10 +3,12 @@ choose.files <- function(mask = '*.*', caption = 'Select files') {
 	if (length(list) < 2) list
 	else {
 		path <- list[1]
+		if (substr(path,nchar(path),nchar(path)) == '\\') sep <- ''
+		else sep <- '\\'
 		list <- list[-1]
 		full <- rep(FALSE, length(list))
 		full[grep(':',list)] <- TRUE
 		full[substr(list,1,1) %in% c('/','\\')] <- TRUE
-		ifelse(full,list,paste(path,list,sep='\\'))
+		ifelse(full,list,paste(path,list,sep=sep))
 	}
 }
