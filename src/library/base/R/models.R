@@ -45,7 +45,8 @@ print.formula <- function(x, ...) {
 
 "[.formula" <- function(x,i) {
     ans <- NextMethod("[")
-    if(as.character(ans[[1]]) == "~"){
+    ## as.character gives a vector.
+    if(as.character(ans[[1]])[1] == "~"){
 	class(ans) <- "formula"
         environment(ans)<-environment(x)
     }
