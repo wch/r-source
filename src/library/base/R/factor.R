@@ -136,20 +136,22 @@ ordered <-
     function(x, levels = sort(unique(x), na.last = TRUE), labels = levels,
 	     exclude = NA, ordered = TRUE)
 {
-    if (length(x) == 0)
-	return(character(0))
-    exclude <- as.vector(exclude, typeof(x))
-    levels <- levels[is.na(match(levels, exclude))]
-    f <- match(as.character(x), levels)
-    names(f) <- names(x)
-    attr(f, "levels") <-
-	if (length(labels) == length(levels))
-	    as.character(labels)
-	else if (length(labels) == 1)
-	    paste(labels, seq(along = levels), sep = "")
-	else
-	    stop("invalid labels argument in \"ordered\"")
-    attr(f, "class") <- c(if (ordered) "ordered", "factor")
+    if (length(x) == 0) 
+        f <- numeric(0)
+    else {
+        exclude <- as.vector(exclude, typeof(x))
+        levels <- levels[is.na(match(levels, exclude))]
+        f <- match(as.character(x), levels)
+        names(f) <- names(x)
+        attr(f, "levels") <-
+            if (length(labels) == length(levels))
+                as.character(labels)
+            else if (length(labels) == 1)
+                paste(labels, seq(along = levels), sep = "")
+            else
+                stop("invalid labels argument in \"ordered\"")
+    }
+    class(f) <- c(if (ordered) "ordered", "factor")
     f
 }
 
