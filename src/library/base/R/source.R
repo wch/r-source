@@ -125,6 +125,7 @@ demo <- function(topic, device = getOption("device"),
         first <- TRUE
         outFile <- tempfile("Rdemo.")
         outConn <- file(outFile, open = "w")
+        on.exit({close(outConn); unlink(outFile)})
         for(path in paths) {
             INDEX <- file.path(path, "demo", "00Index")
             if(file.exists(INDEX)) {
@@ -137,7 +138,6 @@ demo <- function(topic, device = getOption("device"),
                 first <- FALSE
             }
         }
-        close(outConn)
         if(first) {
             warning("no demo listings found")
         }

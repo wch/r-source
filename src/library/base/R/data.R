@@ -90,6 +90,7 @@ function(package = .packages(), lib.loc = .lib.loc)
     nodata <- noindex <- character(0)
     outFile <- tempfile("Rdata.")
     outConn <- file(outFile, open = "w")
+    on.exit({close(outConn); unlink(outFile)})
 
     for (path in paths) {
         pkg <- basename(path)
@@ -114,7 +115,6 @@ function(package = .packages(), lib.loc = .lib.loc)
             if(length(files) > 0) noindex <- c(noindex, pkg)
         }
     }
-    close(outConn)
     if (first) {
         warning("no data listings found")
         unlink(outFile)
