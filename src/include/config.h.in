@@ -230,6 +230,9 @@
 /* Define if you have the bcopy function.  */
 #undef HAVE_BCOPY
 
+/* Define if you have the bzero function.  */
+#undef HAVE_BZERO
+
 /* Define if you have the finite function.  */
 #undef HAVE_FINITE
 
@@ -251,6 +254,9 @@
 /* Define if you have the hypot function.  */
 #undef HAVE_HYPOT
 
+/* Define if you have the isascii function.  */
+#undef HAVE_ISASCII
+
 /* Define if you have the isnan function.  */
 #undef HAVE_ISNAN
 
@@ -262,6 +268,9 @@
 
 /* Define if you have the memmove function.  */
 #undef HAVE_MEMMOVE
+
+/* Define if you have the mempcpy function.  */
+#undef HAVE_MEMPCPY
 
 /* Define if you have the mkfifo function.  */
 #undef HAVE_MKFIFO
@@ -341,6 +350,9 @@
 /* Define if you have the <ieeefp.h> header file.  */
 #undef HAVE_IEEEFP_H
 
+/* Define if you have the <libintl.h> header file.  */
+#undef HAVE_LIBINTL_H
+
 /* Define if you have the <locale.h> header file.  */
 #undef HAVE_LOCALE_H
 
@@ -362,14 +374,14 @@
 /* Define if you have the <readline/readline.h> header file.  */
 #undef HAVE_READLINE_READLINE_H
 
-/* Define if you have the <rpc/rpc.h> header file.  */
-#undef HAVE_RPC_RPC_H
-
 /* Define if you have the <rpc/xdr.h> header file.  */
 #undef HAVE_RPC_XDR_H
 
 /* Define if you have the <string.h> header file.  */
 #undef HAVE_STRING_H
+
+/* Define if you have the <strings.h> header file.  */
+#undef HAVE_STRINGS_H
 
 /* Define if you have the <sys/dir.h> header file.  */
 #undef HAVE_SYS_DIR_H
