@@ -34,7 +34,7 @@ all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
-R: $(Rexecbin_SCRIPTS)
+R: $(SCRIPTS_B) R.fe
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
 	@for f in $(SCRIPTS_S); do \
 	  $(INSTALL_SCRIPT) $(srcdir)/$${f} $(top_builddir)/bin; \
@@ -60,8 +60,8 @@ R.fe: R.sh $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
 	  y=`cut -d/ -f1 < $(top_srcdir)/date-stamp`; \
 	  sed "s@R_HOME_DIR*@`cd $(top_builddir); pwd`@; \
-               s@REPLACE_BY_VERSION@$${v}@; \
-               s@REPLACE_BY_YEAR@$${y}@" < R.sh > $@)
+	       s@REPLACE_BY_VERSION@$${v}@; \
+	       s@REPLACE_BY_YEAR@$${y}@" < R.sh > $@)
 	@chmod +x $@
 
 $(top_builddir)/libtool:
