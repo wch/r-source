@@ -77,7 +77,7 @@ function(x)
 }
 
 ### * .isS3Generic
-           
+
 .isS3Generic <-
 function(fname, envir = NULL)
 {
@@ -191,6 +191,7 @@ function(package)
     switch(package,
            base = c("boxplot.stats",
            "close.screen", "close.socket",
+           "flush.console",
            "format.char", "format.info", "format.pval",
            "plot.new", "plot.window", "plot.xy",
            "split.screen",
