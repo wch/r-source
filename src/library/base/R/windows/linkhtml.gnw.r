@@ -25,14 +25,9 @@ make.packages.html <- function(lib.loc=.libPaths())
     rh <- gsub("\\\\", "/", R.home())
     drive <- substring(rh, 1, 2)
     for (i in  pg) {
-        t.file <- system.file("TITLE", package = i)
-        if (nchar(t.file) > 0)
-            f.t <- scan(t.file, what="c", quiet=TRUE, quote="")
-        else {
-            title <- package.description(i, field="Title")[1]
-            if (is.na(title)) title <- "-- Title is missing --"
-            f.t <- c(i, title)
-        }
+        title <- package.description(i, field="Title")[1]
+        if (is.na(title)) title <- "-- Title is missing --"
+        f.t <- c(i, title)
         lib <- system.file(package=i)
         if(is.na(pmatch(rh, lib))) {
             if(substring(lib, 2, 2) != ":") lib <- paste(drive, lib, sep="")

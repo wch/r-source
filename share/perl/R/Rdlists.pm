@@ -29,6 +29,7 @@ use Cwd;
 use File::Basename;
 use R::Utils;
 use R::Vars;
+use R::Dcf;
 
 if($main::opt_dosnames) { $HTML = ".htm"; } else { $HTML = ".html"; }
 
@@ -119,17 +120,17 @@ sub read_titles {
     foreach $pkg (@libs) {
 	if(-d file_path($lib, $pkg)){
 	    if(! ( ($pkg =~ /^CVS$/) || ($pkg =~ /^\.+$/))){
-		if(-r file_path($lib, $pkg, "TITLE")){
-		    open rtitle, "<" . file_path($lib, $pkg, "TITLE");
-		    $_ = <rtitle>;
-		    /^(\S*)\s*(.*)/;
-		    my $pkgname = $1;
-		    $tit{$pkgname} = $2;
-		    while(<rtitle>){
-			/\s*(.*)/;
-			$tit{$pkgname} = $tit{$pkgname} . "\n" .$1;
+		if(-r file_path($lib, $pkg, "DESCRIPTION")){
+		    my $rdcf = R::Dcf->new(file_path($lib, $pkg, "DESCRIPTION"));
+		    my $pkgname = $pkg;
+		    if($rdcf->{"Package"}) {
+			 $pkgname = $rdcf->{"Package"};
 		    }
-		    close rtitle;
+		    if($rdcf->{"Title"}) {
+			$tit{$pkgname} = $rdcf->{"Title"};
+		    } else {
+			$tit{$pkgname} = "-- Title is missing --";
+		    }
 		}
 	    }
 	}
