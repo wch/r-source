@@ -52,20 +52,25 @@
 #include "Mathlib.h"
 #include "Print.h"
 
-#define BUFSIZE 512
+#define BUFSIZE 8192
+/* FIXME: we shouldn't use a fixed BUFSIZE at all
+   -----  Rather, e.g. use moderate BUFSIZE (e.g. 256), 
+   	  then  ALLOCATE  if we need more.
+ or replace the whole idea of		  sprintf(Encodebuf,..) ?
+ */
 static char Encodebuf[BUFSIZE];
 
 char *EncodeLogical(int x, int w)
 {
-	if (x == NA_LOGICAL) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
-	else if (x) sprintf(Encodebuf, "%*s", w, "TRUE");
+	if(x == NA_LOGICAL) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
+	else if(x) sprintf(Encodebuf, "%*s", w, "TRUE");
 	else sprintf(Encodebuf, "%*s", w, "FALSE");
 	return Encodebuf;
 }
 
 char *EncodeInteger(int x, int w)
 {
-	if (x == NA_INTEGER) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
+	if(x == NA_INTEGER) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
 	else sprintf(Encodebuf, "%*d", w, x);
 	return Encodebuf;
 }
