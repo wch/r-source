@@ -3,12 +3,6 @@
 {
   if (length(x) == 0)
     return(character(0))
-  if(is.factor(x)) {
-    levels <- as.integer(levels)
-    levels <- levels[!is.na(levels)]
-    labels <- attr(x,"levels")[levels]
-    x <- as.integer(x)
-  }
   exclude <- as.vector(exclude, typeof(x))
   levels <- levels[is.na(match(levels, exclude))]
   f <- match(x, levels)
