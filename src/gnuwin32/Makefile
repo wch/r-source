@@ -262,6 +262,10 @@ rpart-ZIPDATA = zip
 survival-HELP = ziponly
 survival-ZIPDATA = zip
 
+# need special-case handling for bundle, as --auto-zip is not enabled
+dse1-HELP = ziponly
+dse2-HELP = ziponly
+
 bundle-%:
 	@$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
