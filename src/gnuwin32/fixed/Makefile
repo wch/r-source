@@ -2,7 +2,7 @@ include ../MkRules
 
 MANOBJS= BATCH.Rd COMPILE.Rd INSTALL.Rd REMOVE.Rd RHOME.Rd SHLIB.Rd x11.Rd
 
-all: profiles fixh fixr fixRd fixbin 
+all: profiles fixh fixr fixRd fixbin fixmake
 
 profiles: ../../../library/base/R/Rprofile ../../../etc/Rprofile
 
@@ -53,6 +53,19 @@ fixRd: $(wildcard man/*.Rd)
 	-$(RM) $(foreach i, $(MANOBJS), ../../library/base/man/$i)
 	$(ECHO) done > fixRd	
 
+fixmake: ../../appl/Makefile
+
+../appl/Makefile: make.appl
+	$(CP) -p $^ $@
+
+../main/Makefile: make.main
+	$(CP) -p $^ $@
+
+../nmath/Makefile: make.nmath
+	$(CP) -p $^ $@
+
+../unix/Makefile: make.unix
+	$(CP) -p $^ $@
 
 clean:
 	$(RM) *~ */*~ fixr fixh fixRd fixbin
