@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 0.99.0 Under development (unstable) (January 20, 2000)
+Version 0.99.0 Under development (unstable) (January 27, 2000)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -376,6 +376,64 @@ n= 50 : ......................
 > all.equal(Rweibull,  qweibull (Pweibull, shape = 3, scale = 1), tol = 1e-14)
 [1] TRUE
 > all.equal(Rwilcox,   qwilcox  (Pwilcox, m = 13, n = 17), tol = 1e-14)
+[1] TRUE
+> 
+> all.equal(log(1 - Pbeta),     pbeta    (Rbeta, shape1 = .8, shape2 = 2,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Pbinom),    pbinom   (Rbinom, size = 55, prob = .25,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Pcauchy),   pcauchy  (Rcauchy, location = 0, scale = 1,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Pchisq),    pchisq   (Rchisq, df = 3,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Pexp),      pexp     (Rexp, rate = 1,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Pf),        pf       (Rf, df1 = 12, df2 = 6,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Pgamma),    pgamma   (Rgamma, shape = 2, scale = 1,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Pgeom),     pgeom    (Rgeom, prob = .4,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Phyper),    phyper   (Rhyper, m = 40, n = 30, k = 20,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Plnorm),    plnorm   (Rlnorm, meanlog = 0, sdlog = 1,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Plogis),    plogis   (Rlogis, location = 0, scale = 1,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Pnbinom),   pnbinom  (Rnbinom, size = 7, prob = .01,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Pnorm),     pnorm    (Rnorm, mean = 0, sd = 1,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Ppois),     ppois    (Rpois, lambda = 12,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Psignrank), psignrank(Rsignrank, n = 47,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Pt),        pt       (Rt, df = 11,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Punif),     punif    (Runif, min = 0, max = 1,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Pweibull),  pweibull (Rweibull, shape = 3, scale = 1,
++                                         lower=F, log=T), tol = 1e-14)
+[1] TRUE
+> all.equal(log(1 - Pwilcox),   pwilcox  (Rwilcox, m = 13, n = 17,
++                                         lower=F, log=T), tol = 1e-14)
 [1] TRUE
 > 
 > dbeta    (Rbeta, shape1 = .8, shape2 = 2)
