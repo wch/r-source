@@ -367,3 +367,23 @@ Date: Tue, 15 Feb 2000 12:18:28 +0100 (MET)
 Subject: html help: dev.xxx
 From: Bill Simpson <wsi@gcal.ac.uk>
 Date: Tue, 15 Feb 2000 12:27:45 +0000 (GMT)
+* PR# 441 *
+Subject: contour() labels
+From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
+Date: Wed, 16 Feb 2000 16:51:27 +1300 (NZDT)
+* PR# 442 *
+Subject:  rug() extends axes instead of clipping 
+From: Berwin Turlach <berwin@maths.uwa.edu.au>
+Date: Wed, 16 Feb 2000 17:37:52 +0800
+* PR# 443 *
+Subject: chron now fails with 4 digit year
+From: jens.oehlschlaegel-akiyoshi@mdfactory.de
+Date: Wed, 16 Feb 2000 13:03:18 +0100 (MET)
+* PR# 444 *
+Subject: rle
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Wed, 16 Feb 2000 14:17:09 +0100 (MET)
+* PR# 445 *
+Subject: Invalid .Random.seed problems:
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Wed, 16 Feb 2000 15:51:33 +0100 (CET)
