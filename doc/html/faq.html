@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 0.65-10, 1999/11/09</h2>
+<h2>Version 0.65-11, 1999/11/10</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -639,26 +639,19 @@ contributed extensions, documentation for R, and binaries.
 <br></tr></table>
 </blockquote>
 
-<p>and is currently being mirrored daily at
+<p>(which is the same as <a href="http://cran.at.r-project.org/">http://cran.at.r-project.org/</a>) and is
+currently being mirrored daily at
 
 <blockquote>
-<p><table><tr align="left"><td><a href="http://mirror.aarnet.edu.au/CRAN/">http://mirror.aarnet.edu.au/CRAN/</a>
-<td>(Australia)
-<br></tr><tr align="left"><td><a href="http://SunSITE.auc.dk/R/">http://SunSITE.auc.dk/R/</a>
+<p><table><tr align="left"><td><a href="http://cran.dk.r-project.org/">http://cran.dk.r-project.org/</a>
 <td>(Denmark)
-<br></tr><tr align="left"><td><a href="http://www.stat.unipg.it/pub/stat/statlib/R/CRAN/">http://www.stat.unipg.it/pub/stat/statlib/R/CRAN/</a>
+<br></tr><tr align="left"><td><a href="http://cran.it.r-project.org/">http://cran.it.r-project.org/</a>
 <td>(Italy)
-<br></tr><tr align="left"><td><a href="ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/">ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/</a>
-<td>(Japan)
-<br></tr><tr align="left"><td><a href="ftp://dola.snu.ac.kr/pub/R/CRAN/">ftp://dola.snu.ac.kr/pub/R/CRAN/</a>
-<td>(South Korea)
-<br></tr><tr align="left"><td><a href="http://stat.ethz.ch/CRAN/">http://stat.ethz.ch/CRAN/</a>
+<br></tr><tr align="left"><td><a href="http://cran.ch.r-project.org/">http://cran.ch.r-project.org/</a>
 <td>(Switzerland)
-<br></tr><tr align="left"><td><a href="http://www.stats.bris.ac.uk/R/">http://www.stats.bris.ac.uk/R/</a>
+<br></tr><tr align="left"><td><a href="http://cran.uk.r-project.org/">http://cran.uk.r-project.org/</a>
 <td>(United Kingdom)
-<br></tr><tr align="left"><td><a href="http://lib.stat.cmu.edu/R/CRAN/">http://lib.stat.cmu.edu/R/CRAN/</a>
-<td>(USA/Pennsylvania)
-<br></tr><tr align="left"><td><a href="http://cran.stat.wisc.edu/">http://cran.stat.wisc.edu/</a>
+<br></tr><tr align="left"><td><a href="http://cran.us.r-project.org/">http://cran.us.r-project.org/</a>
 <td>(USA/Wisconsin)
 <br></tr></table>
 </blockquote>
@@ -666,13 +659,12 @@ contributed extensions, documentation for R, and binaries.
 <p>Please use the CRAN site closest to you to reduce network load.
 
 <p>From CRAN, you can obtain the latest official release of R, daily
-snapshots of R for Unix systems (copy of the current CVS tree), as
-gzipped and bzipped tar files or as two gzipped tar files (ready for
-1.4M floppies), a wealth of additional contributed code, as well as
-prebuilt binaries for various operating systems (Linux, Nextstep, MacOS,
-MSWin) and pre-formatted help pages.  CRAN also provides access to
-documentation on R, existing mailing lists and the R Bug Tracking
-system.
+snapshots of R (copies of the current CVS trees), as gzipped and bzipped
+tar files or as two gzipped tar files (ready for 1.4M floppies), a
+wealth of additional contributed code, as well as prebuilt binaries for
+various operating systems (Linux, Nextstep, MacOS, MSWin) and
+pre-formatted help pages.  CRAN also provides access to documentation on
+R, existing mailing lists and the R Bug Tracking system.
 
 <p>To "submit" to CRAN, simply upload to
 <a href="ftp://cran.r-project.org/incoming">ftp://cran.r-project.org/incoming</a> and send an email to
@@ -1440,7 +1432,9 @@ of <strong>event</strong> (procedures for event history analysis), <strong>gnlm<
 (generalized nonlinear regression models), <strong>growth</strong> (normal
 theory repeated measurements models), <strong>repeated</strong> (models for
 non-normal repeated measurements.), and <strong>rmutil</strong> (tools for
-repeated measurements).  Jim's packages can be obtained via
+repeated measurements).  Jim's packages were used for all analyses in
+the new edition of his book "Models for Repeated Measurements" (1999,
+Oxford University Press), and can be obtained from
 <a href="http://www.luc.ac.be/~jlindsey/rcode.html">http://www.luc.ac.be/~jlindsey/rcode.html</a>.
 
 <a href="mailto:pgilbert@bank-banque-canada.ca">Paul Gilbert</a> has written the
@@ -1450,7 +1444,7 @@ models (using classes and methods in R/S).  The package provides
 state-space models and the Kalman filter, VARMA and cointegration
 models, and numerical differentiation.  It also contains Troll models as
 another class (the Troll interface is not yet functional in R).  Paul's
-package <strong>dse</strong> can be obtained from
+package <strong>dse</strong> can be obtained via
 <a href="http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm">http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm</a>.
 
 <p>More code has been posted to the r-help mailing list, and can be
@@ -1522,7 +1516,7 @@ Up:<a rel=up href="#R%20Add-On%20Packages">R Add-On Packages</a>
 
 <pre>Packages in `/home/me/lib/R':
 
-mystuff      My own R functions, nicely packaged and not documented
+mystuff      My own R functions, nicely packaged but not documented
 
 Packages in `/usr/local/lib/R/library':
 
@@ -1544,7 +1538,7 @@ nnet         Software for feed-forward neural networks with a single
              hidden layer and for multinomial log-linear models.
 splines      Regression spline functions and classes
 stepfun      Step functions, including empirical distributions
-survival5    Survival analysis [needs library(splines)]
+survival5    Survival analysis
 ts           Time series functions
 </pre>
 

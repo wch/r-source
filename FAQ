@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.65-10, 1999/11/09
+Version 0.65-11, 1999/11/10
 Kurt Hornik
 
 
@@ -434,29 +434,26 @@ contributed extensions, documentation for R, and binaries.
 
    The CRAN master site can be found at the URL
 
-     `http://cran.r-project.org/'                   (Austria)
+     `http://cran.r-project.org/'                (Austria)
 
-and is currently being mirrored daily at
+(which is the same as `http://cran.at.r-project.org/') and is currently
+being mirrored daily at
 
-     `http://mirror.aarnet.edu.au/CRAN/'            (Australia)
-     `http://SunSITE.auc.dk/R/'                     (Denmark)
-     `http://www.stat.unipg.it/pub/stat/statlib/R/CRAN/'(Italy)
-     `ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/'      (Japan)
-     `ftp://dola.snu.ac.kr/pub/R/CRAN/'             (South Korea)
-     `http://stat.ethz.ch/CRAN/'                    (Switzerland)
-     `http://www.stats.bris.ac.uk/R/'               (United Kingdom)
-     `http://lib.stat.cmu.edu/R/CRAN/'              (USA/Pennsylvania)
-     `http://cran.stat.wisc.edu/'                   (USA/Wisconsin)
+     `http://cran.dk.r-project.org/'             (Denmark)
+     `http://cran.it.r-project.org/'             (Italy)
+     `http://cran.ch.r-project.org/'             (Switzerland)
+     `http://cran.uk.r-project.org/'             (United Kingdom)
+     `http://cran.us.r-project.org/'             (USA/Wisconsin)
 
 Please use the CRAN site closest to you to reduce network load.
 
    From CRAN, you can obtain the latest official release of R, daily
-snapshots of R for Unix systems (copy of the current CVS tree), as gzipped
-and bzipped tar files or as two gzipped tar files (ready for 1.4M
-floppies), a wealth of additional contributed code, as well as prebuilt
-binaries for various operating systems (Linux, Nextstep, MacOS, MSWin) and
-pre-formatted help pages.  CRAN also provides access to documentation on R,
-existing mailing lists and the R Bug Tracking system.
+snapshots of R (copies of the current CVS trees), as gzipped and bzipped
+tar files or as two gzipped tar files (ready for 1.4M floppies), a wealth
+of additional contributed code, as well as prebuilt binaries for various
+operating systems (Linux, Nextstep, MacOS, MSWin) and pre-formatted help
+pages.  CRAN also provides access to documentation on R, existing mailing
+lists and the R Bug Tracking system.
 
    To "submit" to CRAN, simply upload to
 `ftp://cran.r-project.org/incoming' and send an email to
@@ -1171,7 +1168,9 @@ for nonlinear regression and repeated measurements, consisting of *event*
 (procedures for event history analysis), *gnlm* (generalized nonlinear
 regression models), *growth* (normal theory repeated measurements models),
 *repeated* (models for non-normal repeated measurements.), and *rmutil*
-(tools for repeated measurements).  Jim's packages can be obtained via
+(tools for repeated measurements).  Jim's packages were used for all
+analyses in the new edition of his book "Models for Repeated Measurements"
+(1999, Oxford University Press), and can be obtained from
 `http://www.luc.ac.be/~jlindsey/rcode.html'.
 
    Paul Gilbert <pgilbert@bank-banque-canada.ca> has written the Dynamic
@@ -1181,7 +1180,7 @@ and methods in R/S).  The package provides state-space models and the
 Kalman filter, VARMA and cointegration models, and numerical
 differentiation.  It also contains Troll models as another class (the Troll
 interface is not yet functional in R).  Paul's package *dse* can be
-obtained from `http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm'.
+obtained via `http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm'.
 
    More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.
@@ -1235,7 +1234,7 @@ at the R prompt.
 
      Packages in `/home/me/lib/R':
      
-     mystuff      My own R functions, nicely packaged and not documented
+     mystuff      My own R functions, nicely packaged but not documented
      
      Packages in `/usr/local/lib/R/library':
      
@@ -1257,7 +1256,7 @@ at the R prompt.
                   hidden layer and for multinomial log-linear models.
      splines      Regression spline functions and classes
      stepfun      Step functions, including empirical distributions
-     survival5    Survival analysis [needs library(splines)]
+     survival5    Survival analysis
      ts           Time series functions
 
    You can "load" the installed package PKG by
