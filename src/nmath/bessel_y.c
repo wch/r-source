@@ -140,8 +140,8 @@ void Y_bessel(double *x, double *alpha, long *nb,
     FIVPI = 5*PI
     PIM5 = 5*PI - 15
  ----------------------------------------------------------------------*/
-    static double fivpi = 15.707963267948966192;
-    static double pim5	=   .70796326794896619231;
+    const static double fivpi = 15.707963267948966192;
+    const static double pim5	=   .70796326794896619231;
 
 
 /* *******************************************************************
@@ -205,15 +205,15 @@ void Y_bessel(double *x, double *alpha, long *nb,
 /*    static double xmin = 4.46e-308;
  *    static double xinf = 1.79e308;
  */
-    static double del = 2.1491193328908e-8;/* x < del  <==>  sin(x)/x ~= 1 */
-    static double thresh = 16.;
-    static double xlarge = 1e8;
+    const static double del = 2.1491193328908e-8;/* x < del  <==>  sin(x)/x ~= 1 */
+    const static double thresh = 16.;
+    const static double xlarge = 1e8;
 
     /*----------------------------------------------------------------------
       Coefficients for Chebyshev polynomial expansion of
       1/gamma(1-x), abs(x) <= .5
       ----------------------------------------------------------------------*/
-    static double ch[21] = { -6.7735241822398840964e-24,
+    const static double ch[21] = { -6.7735241822398840964e-24,
 	    -6.1455180116049879894e-23,2.9017595056104745456e-21,
 	    1.3639417919073099464e-19,2.3826220476859635824e-18,
 	    -9.0642907957550702534e-18,-1.4943667065169001769e-15,

@@ -23,6 +23,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double dunif(double x, double a, double b, int give_log)
 {

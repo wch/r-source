@@ -23,6 +23,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double pcauchy(double x, double location, double scale,
 	       int lower_tail, int log_p)

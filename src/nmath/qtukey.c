@@ -41,6 +41,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 /* qinv() :
  *	this function finds percentage point of the studentized range

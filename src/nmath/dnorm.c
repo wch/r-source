@@ -28,6 +28,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double dnorm4(double x, double mu, double sigma, int give_log)
 {
@@ -61,6 +62,6 @@ double pnorm(double x, double mu, double sigma)
 }
 double qnorm(double x, double mu, double sigma)
 {
-    return qnorm5(x, mu, sigma, 1, 0);    
+    return qnorm5(x, mu, sigma, 1, 0);
 }
 #endif

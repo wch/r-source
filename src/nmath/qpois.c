@@ -31,6 +31,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double qpois(double p, double lambda, int lower_tail, int log_p)
 {

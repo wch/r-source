@@ -23,6 +23,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double qweibull(double p, double shape, double scale, int lower_tail, int log_p)
 {

@@ -23,6 +23,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double qcauchy(double p, double location, double scale,
 	       int lower_tail, int log_p)

@@ -23,6 +23,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double dbeta(double x, double a, double b, int give_log)
 {

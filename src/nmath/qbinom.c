@@ -30,6 +30,7 @@
  *	this initial start point.
  */
 #include "Mathlib.h"
+#include "dpq.h"
 
 #ifdef DEBUG_qbinom
 # include "PrtUtil.h"

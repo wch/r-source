@@ -19,6 +19,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double pt(double x, double n, int lower_tail, int log_p)
 {

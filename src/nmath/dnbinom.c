@@ -27,6 +27,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double dnbinom(double x, double n, double p, int give_log)
 {

@@ -47,6 +47,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 double pnorm5(double x, double mu, double sigma, int lower_tail, int log_p)
 {
     double p, cp;

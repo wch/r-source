@@ -23,6 +23,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double dgamma(double x, double shape, double scale, int give_log)
 {

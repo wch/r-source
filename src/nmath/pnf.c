@@ -23,6 +23,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double pnf(double x, double n1, double n2, double ncp,
 	   int lower_tail, int log_p)

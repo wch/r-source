@@ -35,6 +35,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 #ifdef DEBUG_q
 # include "PrtUtil.h"

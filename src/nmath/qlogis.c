@@ -19,6 +19,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double qlogis(double p, double location, double scale, int lower_tail, int log_p)
 {

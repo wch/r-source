@@ -23,6 +23,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double pf(double x, double n1, double n2, int lower_tail, int log_p)
 {

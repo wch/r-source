@@ -23,6 +23,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double dhyper(double x, double NR, double NB, double n, int give_log)
 {

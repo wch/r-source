@@ -40,6 +40,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 /*----------- DEBUGGING -------------
  *

@@ -23,6 +23,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 double qhyper(double p, double NR, double NB, double n,
 	      int lower_tail, int log_p)

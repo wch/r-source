@@ -29,6 +29,7 @@
  */
 
 #include "Mathlib.h"
+#include "dpq.h"
 
 const static double eps = 1.e-12;
 
