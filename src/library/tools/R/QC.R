@@ -119,11 +119,13 @@ function(package, dir, lib.loc = NULL)
             ## <NOTE>
             ## Non-standard evaluation for argument 'package' to data()
             ## gone in R 1.9.0.
-            yy <- try(data(list = f, package = packageName,
-                           lib.loc = libPath, envir = dataEnv),)
+            .tryQuietly(data(list = f, package = packageName,
+                             lib.loc = libPath, envir = dataEnv))
+            ## (We use .tryQuietly() because a .R data file using scan()
+            ## to read in data from some other place may do this without
+            ## 'quiet = TRUE', giving output which R CMD check would
+            ## think to indicate a problem.)
             ## </NOTE>
-            if(inherits(yy, "try-error"))
-                stop(paste("cannot load data set", sQuote(f)))
             new <- ls(envir = dataEnv, all.names = TRUE)
             dataObjs <- c(dataObjs, new)
             rm(list = new, envir = dataEnv)
