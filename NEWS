@@ -452,6 +452,9 @@ BUG FIXES
     o	make install could fail if there were no shared libraries to
 	install (e.g. on vanilla Solaris).
 
+    o   nasty bug caused rpois to generate biased variables in some
+        cases
+
 
 
 	**************************************************

@@ -65,7 +65,7 @@ double rpois(double mu)
 
     static double big_l;/* integer "w/o overflow" */
     static int l, m;
-    static double muprev = 0.;/*, muold	 = 0.*/
+    static double muprev = 0., muprev2 = 0.;/*, muold	 = 0.*/
 
     /* Local Vars  [initialize some for -Wall]: */
     double del, difmuk= 0., E= 0., fk= 0., fx, fy, g, px, py, t, u= 0., v, x;
@@ -160,7 +160,11 @@ double rpois(double mu)
     /* Step P. preparations for steps Q and H.
        (recalculations of parameters if necessary) */
 
-    if (new_big_mu) {
+    if (new_big_mu || mu != muprev2) {
+        /* Careful! muprev2 is not always == muprev
+	   because one might have exited in step I or S
+	   */
+        muprev2 = mu; 
 	omega = M_1_SQRT_2PI / s;
 	/* The quantities b1, b2, c3, c2, c1, c0 are for the Hermite
 	 * approximations to the discrete normal probabilities fk. */
