@@ -98,7 +98,7 @@ BUG FIXES
 	4.4.0 systems.  (This is a bug in their header files but we have
 	added a workaround.)
 
-
+    o   fixed the clipping problem in the quartz device
 
 
 		CHANGES IN R VERSION 1.9.0
