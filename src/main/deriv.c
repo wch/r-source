@@ -633,7 +633,7 @@ static int Accumulate2(SEXP expr, SEXP exprlist)
 static SEXP MakeVariable(int k, SEXP tag)
 {
     char buf[64];
-    sprintf(buf, "%s%d", CHAR(STRING_ELT(tag, 0)), k);
+    snprintf(buf, 64, "%s%d", CHAR(STRING_ELT(tag, 0)), k);
     return install(buf);
 }
 

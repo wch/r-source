@@ -125,7 +125,8 @@ void askchangedir()
     if (!cod[0]) GetCurrentDirectory(MAX_PATH, cod);
     s = askcdstring(" Change working directory to:", cod);
     if (s && (SetCurrentDirectory(s) == FALSE)) {
-	sprintf(msg, "Unable to set '%s' as working directory", s);
+	snprintf(msg, MAX_PATH + 40,
+		 "Unable to set '%s' as working directory", s);
 	askok(msg);
     }
     /* in every case reset cod (to new directory if all went ok
@@ -578,7 +579,7 @@ char *askUserPass(char *title)
 	else return "";
 	if (d->pass) pass = new_string(gettext(d->pass));
 	else return "";
-	sprintf(buf, "%s:%s", user, pass);
+	snprintf(buf, 1000, "%s:%s", user, pass);
 	return buf;
     }
     return ""; /* -Wall */

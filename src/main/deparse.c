@@ -604,7 +604,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	break;
     case SPECIALSXP:
     case BUILTINSXP:
-	sprintf(tpb, ".Primitive(\"%s\")", PRIMNAME(s));
+	snprintf(tpb, 120, ".Primitive(\"%s\")", PRIMNAME(s));
 	print2buff(tpb, d);
 	break;
     case PROMSXP:
@@ -1110,7 +1110,7 @@ static void args2buff(SEXP arglist, int lineb, int formals, LocalParseData *d)
 		print2buff(CHAR(PRINTNAME(s)), d);
 	    else {
 		if( strlen(CHAR(PRINTNAME(s)))< 117 ) {
-		    sprintf(tpb,"\"%s\"",CHAR(PRINTNAME(s)));
+		    snprintf(tpb, 120, "\"%s\"",CHAR(PRINTNAME(s)));
 		    print2buff(tpb, d);
 		}
 		else {

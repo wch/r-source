@@ -95,7 +95,7 @@ static void menusource(control m)
 /*    show(RConsole); */
     if (fn) {
 	fixslash(fn);
-	sprintf(cmd, "source(\"%s\")", fn);
+	snprintf(cmd, 1024, "source(\"%s\")", fn);
 	consolecmd(RConsole, cmd);
     }
 }
@@ -117,7 +117,7 @@ static void menuloadimage(control m)
 /*    show(RConsole); */
     if (fn) {
 	fixslash(fn);
-	sprintf(cmd, "load(\"%s\")", fn);
+	snprintf(cmd, 1024, "load(\"%s\")", fn);
 	consolecmd(RConsole, cmd);
     }
 }
@@ -133,7 +133,7 @@ static void menusaveimage(control m)
 /*    show(RConsole); */
     if (fn) {
 	fixslash(fn);
-	sprintf(cmd, "save.image(\"%s\")", fn);
+	snprintf(cmd, 1024, "save.image(\"%s\")", fn);
 	consolecmd(RConsole, cmd);
     }
 }
@@ -264,10 +264,10 @@ static void menude(control m)
     if(s) {
 	var = findVar(install(s), R_GlobalEnv);
 	if (var != R_UnboundValue) {
-	    sprintf(cmd, "fix(%s)", s);
+	    snprintf(cmd, 1024,"fix(%s)", s);
 	    consolecmd(RConsole, cmd);
 	} else {
-	    sprintf(cmd, "`%s' cannot be found", s);
+	    snprintf(cmd, 1024, "`%s' cannot be found", s);
 	    askok(cmd);
 	}
     }
@@ -373,7 +373,7 @@ static void menuhelp(control m)
     s = askstring("Help on", olds);
 /*    show(RConsole); */
     if (s) {
-	sprintf(cmd, "help(\"%s\")", s);
+	snprintf(cmd, 1024, "help(\"%s\")", s);
 	if (strlen(s) > 256) s[255] = '\0';
 	strcpy(olds, s);
 	consolecmd(RConsole, cmd);
@@ -414,7 +414,7 @@ static void menuapropos(control m)
     s = askstring("Apropos", olds);
 /*    show(RConsole); */
     if (s) {
-	sprintf(cmd, "apropos(\"%s\")", s);
+	snprintf(cmd, 1024, "apropos(\"%s\")", s);
 	if (strlen(s) > 256) s[255] = '\0';
 	strcpy(olds, s);
 	consolecmd(RConsole, cmd);
@@ -711,7 +711,8 @@ void readconsolecfg()
 	if (!done) {
 	    char  buf[128];
 
-	    sprintf(buf, "Error at line %d of file %s", optline(), optfile());
+	    snprintf(buf, 128, "Error at line %d of file %s",
+		     optline(), optfile());
 	    askok(buf);
 	    cfgerr = 1;
 	}
@@ -741,13 +742,13 @@ static void dropconsole(control m, char *fn)
 	if(stricmp(p+1, "R") == 0) {
 	    if(ConsoleAcceptCmd) {
 		fixslash(fn);
-		sprintf(cmd, "source(\"%s\")", fn);
+		snprintf(cmd, 1024, "source(\"%s\")", fn);
 		consolecmd(RConsole, cmd);
 	    }
 	} else if(stricmp(p+1, "RData") == 0 || stricmp(p+1, "rda")) {
 	    if(ConsoleAcceptCmd) {
 		fixslash(fn);
-		sprintf(cmd, "load(\"%s\")", fn);
+		snprintf(cmd, 1024, "load(\"%s\")", fn);
 		consolecmd(RConsole, cmd);
 	    }
 	}

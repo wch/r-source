@@ -477,7 +477,7 @@ LoadEncoding(char *encpath, char *encname, Rboolean isPDF)
     state.p = state.p0 = NULL;
 
     if(strchr(encpath, FILESEP[0])) strcpy(buf, encpath);
-    else sprintf(buf, "%s%safm%s%s", R_Home, FILESEP, FILESEP, encpath);
+    else snprintf(buf, BUFSIZE,"%s%safm%s%s", R_Home, FILESEP, FILESEP, encpath);
 #ifdef DEBUG_PS
     Rprintf("encoding path is %s\n", buf);
 #endif
@@ -487,7 +487,7 @@ LoadEncoding(char *encpath, char *encname, Rboolean isPDF)
     }
     if (GetNextItem(fp, buf, -1, &state)) return 0; /* encoding name */
     strcpy(encname, buf+1);
-    if (!isPDF) sprintf(enccode, "/%s [\n", encname);
+    if (!isPDF) snprintf(enccode, 5000, "/%s [\n", encname);
     else enccode[0] = '\0';
     if (GetNextItem(fp, buf, 0, &state)) { fclose(fp); return 0;} /* [ */
     for(i = 0; i < 256; i++) {
@@ -515,7 +515,7 @@ PostScriptLoadFontMetrics(const char * const fontpath, FontMetricInfo *metrics,
     FILE *fp;
 
     if(strchr(fontpath, FILESEP[0])) strcpy(buf, fontpath);
-    else sprintf(buf, "%s%safm%s%s", R_Home, FILESEP, FILESEP, fontpath);
+    else snprintf(buf, BUFSIZE, "%s%safm%s%s", R_Home, FILESEP, FILESEP, fontpath);
 #ifdef DEBUG_PS
     Rprintf("afmpath is %s\n", buf);
     Rprintf("reencode is %d\n", reencode);
@@ -1505,7 +1505,7 @@ static Rboolean PS_Open(NewDevDesc *dd, PostScriptDesc *pd)
 	}
 #endif
     } else {
-	sprintf(buf, pd->filename, pd->pageno + 1); /* page 1 to start */
+	snprintf(buf, 512, pd->filename, pd->pageno + 1); /* page 1 to start */
 	pd->psfp = R_fopen(R_ExpandFileName(buf), "w");
 	pd->open_type = 0;
     }
@@ -2258,7 +2258,7 @@ static Rboolean XFig_Open(NewDevDesc *dd, XFigDesc *pd)
 	error("empty file name");
 	return FALSE;
     } else {
-	sprintf(buf, pd->filename, pd->pageno + 1); /* page 1 to start */
+	snprintf(buf, 512, pd->filename, pd->pageno + 1); /* page 1 to start */
 	pd->psfp = R_fopen(R_ExpandFileName(buf), "w");
     }
     if (!pd->psfp) return FALSE;
@@ -2316,7 +2316,7 @@ static void XFig_NewPage(int fill, double gamma, NewDevDesc *dd)
 	}
 	fclose(pd->tmpfp);
 	fclose(pd->psfp);
-	sprintf(buf, pd->filename, pd->pageno);
+	snprintf(buf, PATH_MAX, pd->filename, pd->pageno);
 	pd->psfp = R_fopen(R_ExpandFileName(buf), "w");
 	pd->tmpfp = R_fopen(pd->tmpname, "w");
 	XF_FileHeader(pd->psfp, pd->papername, pd->landscape, pd->onefile);
@@ -3055,7 +3055,7 @@ static Rboolean PDF_Open(NewDevDesc *dd, PDFDesc *pd)
 
     /* NB: this must be binary to get tell positions and line endings right */
 
-    sprintf(buf, pd->filename, pd->fileno + 1); /* file 1 to start */
+    snprintf(buf, 512, pd->filename, pd->fileno + 1); /* file 1 to start */
     pd->pdffp = R_fopen(R_ExpandFileName(buf), "wb");
     if (!pd->pdffp) {
 	warning("cannot open `pdf' file argument `%s'", buf);
@@ -3121,7 +3121,7 @@ static void PDF_NewPage(int fill, double gamma, NewDevDesc *dd)
 	if(!pd->onefile) {
 	    PDF_endfile(pd);
 	    pd->fileno++;
-	    sprintf(buf, pd->filename, pd->fileno + 1); /* file 1 to start */
+	    snprintf(buf, 512, pd->filename, pd->fileno + 1); /* file 1 to start */
 	    pd->pdffp = R_fopen(R_ExpandFileName(buf), "wb");
 	    if (!pd->pdffp)
 		error("cannot open `pdf' file argument `%s'\n  please shut down the PDFdevice", buf);

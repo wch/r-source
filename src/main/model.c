@@ -1287,7 +1287,7 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0,j = 0; i < ndots; i++) {
 	if (VECTOR_ELT(dots, i) == R_NilValue)
 	    continue;
-	sprintf(buf, "(%s)", CHAR(STRING_ELT(dotnames, i)));
+	snprintf(buf, 256, "(%s)", CHAR(STRING_ELT(dotnames, i)));
 	SET_VECTOR_ELT(data, nvars + j, VECTOR_ELT(dots, i));
 	SET_STRING_ELT(names, nvars + j,  mkChar(buf));
 	j++;

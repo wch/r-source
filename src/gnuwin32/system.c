@@ -101,7 +101,7 @@ void R_Suicide(char *s)
 {
     char  pp[1024];
 
-    sprintf(pp, "Fatal error: %s\n", s);
+    snprintf(pp, 1024, "Fatal error: %s\n", s);
     R_ShowMessage(pp);
     R_CleanUp(SA_SUICIDE, 2, 0);
 }
@@ -473,19 +473,21 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 			if (del) DeleteFile(file[i]);
 		    }
 		    else {
-			sprintf(buf,"Unable to open file '%s'", file[i]);
+			snprintf(buf, 1024, "Unable to open file '%s'",
+				 file[i]);
 			warning(buf);
 		    }
 		} else {
                     /* Quote path if necessary */
 		    if(pager[0] != '"' && strchr(pager, ' '))
-			sprintf(buf, "\"%s\" \"%s\"", pager, file[i]);
+			snprintf(buf, 1024, "\"%s\" \"%s\"", pager, file[i]);
 		    else
-			sprintf(buf, "%s \"%s\"", pager, file[i]);
+			snprintf(buf, 1024, "%s \"%s\"", pager, file[i]);
 		    runcmd(buf, 0, 1, "");
 		}
 	    } else {
-		sprintf(buf, "file.show(): file %s does not exist\n", file[i]);
+		snprintf(buf, 1024, "file.show(): file %s does not exist\n",
+			 file[i]);
 		warning(buf);
 	    }
 	}
@@ -770,7 +772,7 @@ int cmdlineoptions(int ac, char **av)
 		} else
 		    R_max_memory = value;
 	    } else {
-		sprintf(s, "WARNING: unknown option %s\n", *av);
+		snprintf(s, 1024, "WARNING: unknown option %s\n", *av);
 		R_ShowMessage(s);
 		break;
 	    }
@@ -796,7 +798,7 @@ int cmdlineoptions(int ac, char **av)
 		usedRdata = TRUE;
 		Rp->RestoreAction = SA_RESTORE;
 	    } else {
-		sprintf(s, "ARGUMENT '%s' __ignored__\n", *av);
+		snprintf(s, 1024, "ARGUMENT '%s' __ignored__\n", *av);
 		R_ShowMessage(s);
 	    }
 	}
