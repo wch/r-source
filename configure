@@ -8614,7 +8614,7 @@ else
 #include "confdefs.h"
 #include <alloca.h>
 int main() {
-char *p = alloca(2 * sizeof(int));
+void *p = alloca(2 * sizeof(int));
 ; return 0; }
 EOF
 if { (eval echo configure:8621: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
@@ -9756,7 +9756,7 @@ fi
 fi
 
 echo "$ac_t""$r_cv_func_finite_works" 1>&6
-if test "x${r_cv_func_finite_works}" = yes; then
+if test "x${r_cv_func_finite_works}" = xyes; then
   cat >> confdefs.h <<\EOF
 #define HAVE_WORKING_FINITE 1
 EOF
@@ -10714,7 +10714,7 @@ else
 int main() {
 
 /* Ultrix mips cc rejects this.  */
-typedef int charset[2]; const charset x;
+typedef int charset[2]; const charset x = {0,0};
 /* SunOS 4.1.1 cc rejects this.  */
 char const *const *ccp;
 char **p;
@@ -13934,13 +13934,13 @@ EOF
 
 
 ## POSIX times.
- echo $ac_n "checking whether leap seconds are counted""... $ac_c" 1>&6
-echo "configure:13939: checking whether leap seconds are counted" >&5
-if eval "test \"`echo '$''{'r_cv_uses_leapseconds'+set}'`\" = set"; then
+echo $ac_n "checking whether leap seconds are treated according to POSIX""... $ac_c" 1>&6
+echo "configure:13939: checking whether leap seconds are treated according to POSIX" >&5
+if eval "test \"`echo '$''{'r_cv_sys_posix_leapseconds'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   if test "$cross_compiling" = yes; then
-  r_cv_uses_leapseconds=no
+  r_cv_sys_posix_leapseconds=yes
 else
   cat > conftest.$ac_ext <<EOF
 #line 13947 "configure"
@@ -13963,26 +13963,26 @@ int main () {
 EOF
 if { (eval echo configure:13965: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
 then
-  r_cv_uses_leapseconds=yes
+  r_cv_sys_posix_leapseconds=no
 else
   echo "configure: failed program was:" >&5
   cat conftest.$ac_ext >&5
   rm -fr conftest*
-  r_cv_uses_leapseconds=no
+  r_cv_sys_posix_leapseconds=yes
 fi
 rm -fr conftest*
 fi
 
 fi
 
-echo "$ac_t""$r_cv_uses_leapseconds" 1>&6
-    if test "${r_cv_uses_leapseconds}" = yes; then
-      cat >> confdefs.h <<\EOF
-#define USING_LEAPSECONDS 1
+echo "$ac_t""$r_cv_sys_posix_leapseconds" 1>&6
+if test "x${r_cv_sys_posix_leapseconds}" = xyes; then
+  cat >> confdefs.h <<\EOF
+#define HAVE_POSIX_LEAPSECONDS 1
 EOF
 
-    fi
-  
+fi
+
 
 ## R profiling.
 if test "${want_R_profiling}" = yes; then
