@@ -109,7 +109,7 @@ Wiley.
 
 A. Marazzi (1993) 
 \emph{Algorithms, Routines and S Functions for Robust Statistics.}
-Wadsworth \& Brooks/Cole.
+Wadsworth and Brooks/Cole. 
 
 P. J. Rousseeuw and B. C. van Zomeren (1990) Unmasking
 multivariate outliers and leverage points, 
