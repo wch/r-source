@@ -167,6 +167,10 @@ tkXselection.get    <- function(...) tkcmd("selection", "get", ...)
 tkXselection.handle <- function(...) tkcmd("selection", "handle", ...)
 tkXselection.own    <- function(...) tkcmd("selection", "own", ...)
 
+tkwait.variable  <- function(...) tkcmd("tkwait", "variable", ...)
+tkwait.visibility<- function(...) tkcmd("tkwait", "visibility", ...)
+tkwait.window    <- function(...) tkcmd("tkwait", "window", ...)
+
 ## Tkwinfo actually has a bazillion subcommands, but it's rarely
 ## used, so let's be lazy
 

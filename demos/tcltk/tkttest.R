@@ -41,13 +41,15 @@ dialog.t.test <- function(){
 
     if (tclvar$alt=="") tclvar$alt<-"two.sided"
 
-    tkwm.protocol(tt,"WM_DELETE_WINDOW",function()tclvar$done<-2)
+    ## capture destroy (e.g. from window controls
+    ## otherwise the tkwait hangs with nowhere to go
+    tkbind(tt, "<Destroy>", function()tclvar$done<-2)
      
-    tkcmd("tkwait","variable","done")
+    tkwait.variable("done")
+
+    if(tclvar$done=="2") stop("aborted")
+
     tkdestroy(tt)
-
-    if(tclvar$done==2) stop("aborted")
-
     cmd <- build()
     cat("### Command excuted via Tk ###\n")
     cat(deparse(build()),sep="\n")

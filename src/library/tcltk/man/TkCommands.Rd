@@ -31,6 +31,9 @@
 \alias{tkXselection.get}
 \alias{tkXselection.handle}
 \alias{tkXselection.own}
+\alias{tkwait.variable}
+\alias{tkwait.visibility}
+\alias{tkwait.window}
 \alias{tkwinfo}
 \alias{tkwm.aspect}
 \alias{tkwm.client}
@@ -130,6 +133,10 @@ tkXselection.clear(...)
 tkXselection.get(...)
 tkXselection.handle(...)
 tkXselection.own(...)
+
+tkwait.variable(...)
+tkwait.visibility(...)
+tkwait.window(...)
 
 ## winfo actually has a large number of subcommands, but it's rarely
 ## used, so use tkwinfo("atom", ...) etc. instead.
