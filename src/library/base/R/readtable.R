@@ -152,7 +152,8 @@ read.table <-
 	stop(paste("as.is has the wrong length",
 		   length(as.is),"!= cols =", cols))
     for (i in 1:cols) {
-        if(known[i] || as.is[i]) next
+#        if(known[i] || as.is[i]) next
+        if(known[i]) next
         data[[i]] <-
             if (!is.na(colClasses[i])) as(data[[i]], colClasses[i])
             else type.convert(data[[i]], as.is = as.is[i], dec = dec)

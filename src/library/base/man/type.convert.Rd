@@ -15,9 +15,7 @@ type.convert(x, na.strings = "NA", as.is = FALSE, dec = ".")
     \code{\link{NA}} values.  Blank fields are also considered to be
     missing values.}
 
-  \item{as.is}{logical. The default behavior of is to convert
-    character variables to factors: this suppresses that conversion if
-    false.}
+  \item{as.is}{logical. See Details.}
 
   \item{dec}{the character to be assumed for decimal points.}
 }

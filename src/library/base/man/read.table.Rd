@@ -77,10 +77,11 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     The default is to use \code{"V"} followed by the column number.}
 
   \item{as.is}{the default behavior of \code{read.table} is to convert
-    character variables to factors.  The variable \code{as.is}
+    character variables (which are not converted to logical, numeric or
+    complex) to factors.  The variable \code{as.is}
     controls this conversion.  Its value is either a vector of logicals
     (values are recycled if necessary), or a vector of numeric indices
-    which specify which columns should be left as character strings.
+    which specify which columns should not be converted to factors.
 
     Note: to suppress all conversions including those of numeric
     columns, set \code{colClasses = "character"}.
