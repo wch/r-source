@@ -1810,7 +1810,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	}
 	else {
 	    s = NULL; /* initialize to suppress warning */
-	    if (size >= (LONG_MAX / sizeof(VECREC)) - sizeof(SEXPREC_ALIGN) ||
+	    if (size >= (R_SIZE_T_MAX / sizeof(VECREC)) - sizeof(SEXPREC_ALIGN) ||
 		(s = malloc(sizeof(SEXPREC_ALIGN) + size * sizeof(VECREC)))
 		== NULL) {
 		/* reset the vector heap limit */

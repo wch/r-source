@@ -199,8 +199,8 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 				 "WARNING: %s value is invalid: ignored\n",
 				 *av);
 		    else
-			sprintf(msg, "WARNING: %s=%ld`%c': too large and ignored\n",
-				*av, value,
+			sprintf(msg, "WARNING: %s=%lu`%c': too large and ignored\n",
+				*av, (unsigned long) value,
 				(ierr == 1) ? 'M': ((ierr == 2) ? 'K' : 'k'));
 		    R_ShowMessage(msg);
 

@@ -2045,6 +2045,40 @@ if test "x${r_cv_working_ftell}" = xyes; then
 fi
 ])# R_FUNC_FTELL
 
+AC_DEFUN([R_SIZE_MAX],
+[AC_CACHE_CHECK([whether SIZE_MAX is declared],
+                [r_cv_size_max],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+#ifdef HAVE_INTTYPES_H
+#  include <inttypes.h>
+#endif
+#ifdef HAVE_STDINT_H
+#  include <stdint.h>
+#endif
+#ifdef HAVE_LIMITS_H
+#  include <limits.h>
+#endif
+ 
+int
+main() {
+#ifndef SIZE_MAX
+  char *p = (char *) SIZE_MAX;
+#endif
+
+  ;
+  return 0;
+}
+]])],
+              [r_cv_size_max=yes],
+              [r_cv_size_max=no],
+              [r_cv_size_max=no])])
+if test "x${r_cv_size_max}" = xyes; then
+  AC_DEFINE(HAVE_DECL_SIZE_MAX, 1,
+            [Define to 1 if you have the declaration of `SIZE_MAX', and to 0 if you don't.])
+fi
+])# R_SIZE_MAX
+
 # codeset.m4 serial AM1 (gettext-0.10.40)
 dnl Copyright (C) 2000-2002 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU

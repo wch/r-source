@@ -517,7 +517,7 @@ AC_HEADER_SYS_WAIT
 ## Some of these are also checked for when Autoconf computes the default
 ## includes.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
-  fpu_control.h grp.h ieee754.h ieeefp.h locale.h \
+  fpu_control.h grp.h ieee754.h ieeefp.h limits.h locale.h \
   netdb.h netinet/in.h \
   pwd.h readline/history.h readline/readline.h strings.h \
   sys/param.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
@@ -533,6 +533,7 @@ AC_CHECK_HEADERS(errno.h stdarg.h string.h)
 ## But then we want full gettext support and AM_GNU_GETTEXT.
 ## AC_CHECK_HEADERS(libintl.h)
 ## </NOTE>
+
 case "${host_os}" in
   sunos4*)
     AC_DEFINE(SunOS4, 1,
@@ -548,6 +549,7 @@ R_HEADER_GLIBC2
 AC_TYPE_SIGNAL
 AC_TYPE_PID_T
 AC_TYPE_SIZE_T
+R_SIZE_MAX
 AC_CHECK_TYPE(blkcnt_t, long)
 AH_TEMPLATE([blkcnt_t],
             [Define to 'long' if <sys/types.h> does not define.

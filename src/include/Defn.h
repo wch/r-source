@@ -84,8 +84,27 @@ void R_ProcessEvents(void);
 /*  Heap and Pointer Protection Stack Sizes.  */
 
 /* NB: will need a 64-bit type, ULONG64 or size_t, for Win64 */
-typedef unsigned long R_size_t;
-#define R_SIZE_T_MAX ULONG_MAX
+#if defined HAVE_DECL_SIZE_MAX && HAVE_DECL_SIZE_MAX
+# ifdef HAVE_INTTYPES_H
+#  include <inttypes.h>
+# endif
+# ifdef HAVE_STDINT_H
+#  include <stdint.h>
+# endif
+# ifdef HAVE_LIMITS_H
+#  include <limits.h>
+# endif
+  typedef size_t R_size_t;
+/* final precaution in case we don't have the right headers */
+# ifdef SIZE_MAX
+#  define R_SIZE_T_MAX SIZE_MAX
+# else
+#  define R_SIZE_T_MAX ULONG_MAX
+# endif
+#else
+  typedef unsigned long R_size_t;
+# define R_SIZE_T_MAX ULONG_MAX
+#endif
 
 #define Mega 1048576. /* 1 Mega Byte := 2^20 (= 1048576) Bytes */
 #define Giga 1073741824. /* 1 Giga Byte := 2^30 Bytes */
