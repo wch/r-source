@@ -3,7 +3,7 @@
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
- *  Copyright (C) 2002        The R Foundation
+ *  Copyright (C) 2002--2003  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,9 +15,10 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  A copy of the GNU General Public License is available via WWW at
+ *  http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
+ *  writing to the Free Software Foundation, Inc., 59 Temple Place,
+ *  Suite 330, Boston, MA  02111-1307  USA.
 
 
  *  This is an extensive reworking by Paul Murrell of an original
@@ -3487,7 +3488,7 @@ double GStrWidth(char *str, GUnit units, DevDesc *dd)
     static char *sbuf = NULL;
 
     if (dd->newDevStruct) {
-	/* 
+	/*
 	 * FIXME:  If/When GStrWidth gets passed fontfamily and lineheight
 	 * use these instead of "" and 1 below
 	 */
