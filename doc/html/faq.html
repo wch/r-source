@@ -28,7 +28,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.8-49 2004-03-10</h2>
+<h2>Version 1.8-50 2004-03-11</h2>
 <h2>ISBN 3-900051-01-1</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -3312,6 +3312,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <li><a href="#How%20can%20I%20turn%20a%20string%20into%20a%20variable%3f">How can I turn a string into a variable?</a>: 
 <li><a href="#Why%20do%20lattice%2ftrellis%20graphics%20not%20work%3f">Why do lattice/trellis graphics not work?</a>: 
 <li><a href="#How%20can%20I%20sort%20the%20rows%20of%20a%20data%20frame%3f">How can I sort the rows of a data frame?</a>: 
+<li><a href="#Why%20does%20the%20help.start()%20search%20engine%20not%20work%3f">Why does the help.start() search engine not work?</a>: 
 </ul>
 
 <div class="node">
@@ -4054,6 +4055,7 @@ command line, the result is automatically printed, but in
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="How%20can%20I%20sort%20the%20rows%20of%20a%20data%20frame%3f">How can I sort the rows of a data frame?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Why%20does%20the%20help.start()%20search%20engine%20not%20work%3f">Why does the help.start() search engine not work?</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why%20do%20lattice%2ftrellis%20graphics%20not%20work%3f">Why do lattice/trellis graphics not work?</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <br>
@@ -4063,6 +4065,28 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 
 <p>To sort the rows within a data frame, with respect to the values in one
 or more of the columns, simply use <code>order()</code>.
+
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Why%20does%20the%20help.start()%20search%20engine%20not%20work%3f">Why does the help.start() search engine not work?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20I%20sort%20the%20rows%20of%20a%20data%20frame%3f">How can I sort the rows of a data frame?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
+<br>
+</div>
+
+<h3 class="section">7.26 Why does the help.start() search engine not work?</h3>
+
+<p>The browser-based search engine in <code>help.start()</code> utilizes a Java
+applet.  In order for this to function properly, a compatible version of
+Java must installed on your system and linked to your browser, and both
+Java <em>and</em> JavaScript need to be enabled in your browser.
+
+   <p>There have been a number of compatibility issues with versions of Java
+and of browsers. 
+For further details please consult section "Enabling search in HTML
+help" in <cite>R Installation and Administration</cite>. 
+This manual is included in the R distribution, see <a href="#What%20documentation%20exists%20for%20R%3f">What documentation exists for R?</a>, and its <small>HTML</small> version is linked from the
+<small>HTML</small> search page.
 
 <div class="node">
 <p><hr>

@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-49 2004-03-10
+Version 1.8-50 2004-03-11
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -95,6 +95,7 @@ R FAQ
   7.23 How can I turn a string into a variable?
   7.24 Why do lattice/trellis graphics not work?
   7.25 How can I sort the rows of a data frame?
+  7.26 Why does the help.start() search engine not work?
 
 8 R Programming
   8.1 How should I write summary methods?
@@ -3695,6 +3696,20 @@ will need an explicit `print()' statement.
 
 To sort the rows within a data frame, with respect to the values in one or
 more of the columns, simply use `order()'.
+
+7.26 Why does the help.start() search engine not work?
+======================================================
+
+The browser-based search engine in `help.start()' utilizes a Java applet.
+In order for this to function properly, a compatible version of Java must
+installed on your system and linked to your browser, and both Java _and_
+JavaScript need to be enabled in your browser.
+
+   There have been a number of compatibility issues with versions of Java
+and of browsers.  For further details please consult section "Enabling
+search in HTML help" in `R Installation and Administration'.  This manual
+is included in the R distribution, *note What documentation exists for
+R?::, and its HTML version is linked from the HTML search page.
 
 8 R Programming
 ***************
