@@ -17,7 +17,7 @@ fixh: version h/config.h \
 	@$(CP) -p ./h/config.h ./h/psignal.h ../../include
 	@$(ECHO) done > fixh
 
-../../include/Rconfig.h: h/config.h
+../../include/Rconfig.h: h/config.h ../../../tools/GETCONFIG
 	$(SED) -e 1d ../../../tools/GETCONFIG > GC
 	(cd h; sh ../GC > ../../../include/Rconfig.h)
 	$(RM) GC
