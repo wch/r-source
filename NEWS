@@ -10,6 +10,10 @@
 
 NEW FEATURES
 
+    o	rect(.) has `lwd' argument.
+
+    o	legend() has a `adj' argument and has been streamlined (and fixed up).
+
     o   `unname' convenience function [experimental data.frame behavior].
 
     o   `examples' sections have been added to the documentation
@@ -75,8 +79,6 @@ BUG FIXES
 	wider so there's room for a title. Touchup example.
 
     o	font size fixups for the X11 driver (mainly)
-
-    o   corresponding fixups in legend() -- NOTE: partly changed behavior.
 
     o   some.list[[NA]] is NULL, following S, rather than giving spurious
         error messages

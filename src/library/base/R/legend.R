@@ -1,7 +1,7 @@
 legend <-
     function (x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
 	      bg = par("bg"), cex = 1,
-              xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1,
+              xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = 0,
               text.width = NULL, merge = do.lines && has.pch, trace = FALSE)
 {
     if(is.list(x)) {
@@ -117,12 +117,14 @@ legend <-
     yt <- top - (1:n.leg) * ychar
 
     if (!missing(fill)) {               #- draw filled boxes -------------
+	fill <- rep(fill, length.out=n.leg)
 	rect2(left=xt, top=yt+ybox/2, dx = xbox, dy = ybox, col = fill)
 	xt <- xt + dx.fill
     }
-    col <- rep(col,length.out=n.leg)
+    if(has.pch || do.lines)
+        col <- rep(col,length.out=n.leg)
     if (has.pch) {                      #- draw points -------------------
-	pch <- rep(pch,length.out=n.leg)
+	pch <- rep(pch, length.out=n.leg)
 	ok <- is.character(pch) | pch >= 0
 	x1 <- (xt + ifelse(merge, 0.2, 0) * xchar)[ok]
 	y1 <- yt[ok]
@@ -146,8 +148,7 @@ legend <-
     }
 
     xt <- xt + x.intersp * xchar
-    if(trace) cat("  text(xt=", xt,", yt=", yt,",.. adj=0)\n")
-    text2(xt, yt, labels= legend, adj= 0, cex= cex)
+    text2(xt, yt, labels= legend, adj= adj, cex= cex)
 
     invisible(list(w=w,h=h,xt=xt,yt=yt))
 }
