@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-11, 2000-09-17
+Version 1.1-12, 2000-09-21
 Kurt Hornik
 
 
@@ -854,8 +854,10 @@ the same time being as compatible as possible with S.
    * In R, `dyn.load()' can only load _shared libraries_, as created for
      example by `R SHLIB'.
 
-   * In R, `attach()' currently only works for lists and data frames (not
-     for directories).  Also, you cannot attach at position 1.
+   * In R, `attach()' currently only works for lists and data frames, but
+     not for directories.  (In fact, `attach()' also works for R data files
+     created with `save()', which is analogous to attaching directories in
+     S.)  Also, you cannot attach at position 1.
 
    * Categories do not exist in R, and never will as they are deprecated now
      in S.  Use factors instead.
