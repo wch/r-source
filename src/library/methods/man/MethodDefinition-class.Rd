@@ -1,12 +1,14 @@
 \name{MethodDefinition-class}
 \docType{class}
 \alias{MethodDefinition-class}
-\title{Classes to Represent Method Definitions }
-\description{These classes extend the basic class \code{"function"} when
-functions are to be stored and used as method definitions.}
+\title{Classes to Represent Method Definitions}
+\description{
+  These classes extend the basic class \code{"function"} when
+  functions are to be stored and used as method definitions.
+}
 \section{Objects from the Class}{
-The action of setting a method creates an object of this class.  It's
-unwise to create them directly.
+  The action of setting a method creates an object of this class.  It's
+  unwise to create them directly.
 }
 \section{Slots}{
   \describe{
@@ -20,9 +22,9 @@ unwise to create them directly.
   }
 }
 \section{Extends}{
-Class \code{"function"}, from data part.
-Class \code{"PossibleMethod"}, directly.
-Class \code{"OptionalMethods"}, by class "function".
+  Class \code{"function"}, from data part.\cr
+  Class \code{"PossibleMethod"}, directly.\cr
+  Class \code{"OptionalMethods"}, by class "function".
 }
 \details{
   Method definition objects are functions with additional information
@@ -32,10 +34,11 @@ Class \code{"OptionalMethods"}, by class "function".
   the method was orignally specified (that is, the one that appeared
   in some call to \code{\link{setMethod}}).
 }
-\seealso{ See class \code{\link{MethodsList-class}} for the objects
+\seealso{class \code{\link{MethodsList-class}} for the objects
   defining sets of methods associated with a particular generic
   function.  The individual method definitions stored in these objects
   are from class \code{MethodDefinition}, or an extension.
- \code{\link{MethodWithNext-class}} for an extension used by \code{\link{callNextMethod}}. }
-
+  \code{\link{MethodWithNext-class}} for an extension used by
+  \code{\link{callNextMethod}}.
+}
 \keyword{classes}
