@@ -468,7 +468,7 @@ do_install_source () {
       fi
     fi
   fi
-
+false
   if test -d data; then
     message "data"
     ${MKDIR_P} "${R_PACKAGE_DIR}/data"
@@ -487,7 +487,7 @@ do_install_source () {
     if ${thislazy}; then
       echo "   moving datasets to lazyload DB"
       echo "tools:::data2LazyLoadDB(\"${pkg_name}\")" | \
-        R_DEFAULT_PACKAGES=tools LANG=C "${R_EXE}" --vanilla > /dev/null
+        R_DEFAULT_PACKAGES="tools,${pkg_name}" LANG=C "${R_EXE}" --vanilla > /dev/null
     else
       if test -n "${use_zip_data}" \
 	  && test -n "${R_UNZIPCMD}" \
@@ -652,7 +652,7 @@ do_install_source () {
   fi
 
   echo "tools:::.install_package_indices(\".\", \"${R_PACKAGE_DIR}\")" | \
-    R_DEFAULT_PACKAGES=tools LANG=C "${R_EXE}" --vanilla >/dev/null
+    R_DEFAULT_PACKAGES="tools,${pkg_name}" LANG=C "${R_EXE}" --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package indices failed"
     do_exit_on_error
