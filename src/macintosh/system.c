@@ -980,7 +980,69 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+/* As under Windows. We only handle HTML help files
+   Stefano M. Iacus (Jago Jan 2001)
+*/
+   
+SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+/*
+ * type = 1: launch html file.
+ *        
+ */
 
+    char *item;
+    char *home, buf[PATH_MAX];
+    FILE *ff;
+    int   type;
+    Str255 HelpFileName;
+    FSSpec  fileSpec;
+    OSErr err;
+    char errbuf[512];
+     
+    checkArity(op, args);
+    if (!isString(CAR(args)))
+	errorcall(call, "invalid topic argument");
+    item = CHAR(STRING_ELT(CAR(args), 0));
+    type = asInteger(CADR(args));
+    if (type == 1) {
+	ff = fopen(item, "r");
+	if (!ff) {
+	    sprintf(buf, "%s not found", item);
+	    error(buf);
+	}
+	fclose(ff);
+/*	home = getenv("R_HOME");
+*/	
+	home =  R_Home;
+	if (home == NULL)
+	    error("R_HOME not set");
+	    
+	    
+    if (strlen(item) < 254)
+     strcpy((char *) HelpFileName, item);
+    else {
+     error("file name too long");
+     return R_NilValue;
+     }
+
+    CtoPstr((char *) HelpFileName);
+    err = FSMakeFSSpecFromPath((ConstStr255Param) HelpFileName, &fileSpec);
+    if (err != noErr) {
+     sprintf(errbuf, "error code %d creating file spec for help file %s",
+            err, item);
+     error(errbuf);        
+     return R_NilValue;
+    }
+  
+    err = FinderLaunch(1, &fileSpec);
+    if(err!=noErr)
+     error("Cannot lauch browser");    
+    }
+    else
+	 warning("type not yet implemented");
+    return R_NilValue;
+}
 
 
 
