@@ -33,7 +33,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.15 $ ';
+my $revision = ' $Revision: 1.16 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -179,7 +179,12 @@ foreach $pkg (@ARGV){
 	my $filename = "${pkgname}_" . $description->{"Version"} . ".tar";
 	$log->message("building \`$filename.gz'");
 	chdir("$pkg/..");
-	system("tar chXf $exclude $startdir/$filename $pkgname");
+	my $filepath = "$startdir/$filename";
+	if($WINDOWS) {
+	    ## workaround for paths in Cygwin tar
+	    $filepath =~ s+^([A-Za-x]):+//\1+;
+	}	    
+	system("tar chXf $exclude $filepath $pkgname");
 	chdir($startdir);
 	system("gzip -9f $filename");
 	unlink($exclude);
@@ -262,16 +267,17 @@ sub updateIndex {
     system("${R_CMD} Rdindex $dataopt ${Rdfiles} > ${newindex}");
 
     if(-r $oldindex){
-	if(compare($oldindex,$newindex) != 0){
+	if(compare($oldindex, $newindex) != 0){
 	    $log->result("NO");
 	    if($opt_force){
 		$log->message("overwriting \`${oldindex}' as" .
 			      "\`--force' was given");
-		unlink($oldindex);
+		unlink $oldindex ;
 		rename($newindex, $oldindex);
 	    }
 	    else{
 		$log->message("use \`--force' to overwrite the existing \`${oldindex}'");
+		unlink $newindex;
 	    }
 	}
 	else{
@@ -283,7 +289,7 @@ sub updateIndex {
     else{
 	$log->result("NO");
 	$log->message("creating new $oldindex");
-	unlink($oldindex);
+	unlink $oldindex ;
 	rename($newindex, $oldindex);
     }
     1;
