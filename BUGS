@@ -273,10 +273,7 @@ Date: Wed, 10 Oct 2001 18:24:29 +0200 (MET DST)
 
 Directory:  Models
 
-* PR# 1123 *
-Subject: Pearson residuals
-From: carmen@mcs.st-and.ac.uk
-Date: Wed, 10 Oct 2001 12:05:29 +0200 (MET DST)
+none
 
 Directory:  Startup
 
@@ -344,3 +341,11 @@ Directory:  incoming
 Subject: unary "-" doesn't convert logicals
 From: john_heumann@agilent.com
 Date: Fri, 12 Oct 2001 00:12:50 +0200 (MET DST)
+* PR# 1128 *
+Subject: Gospel for Asia & the All India Christian Council     
+From: <john5873@flashmail.com>
+Date: Fri, 12 Oct 2001 12:29:59
+* PR# 1129 *
+Subject: Unable to use names() to set names on a 'dist' object
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Fri, 12 Oct 2001 23:35:59 +0200 (CEST)
