@@ -42,7 +42,8 @@ http://sourceforge.net/projects/mingw/.  There will be a distribution
 called something like MinGW-3.1.0-1.exe (which is built from
 gcc-3.2.3).  This needs updating with mingw-runtime >= 3.5 and w32api
 >= 3.1.  The release of gcc-3.3.1 and the release candidates of 3.4.1
-and 3.4.2 have also been tested successfully.
+and 3.4.2 have also been tested successfully.  
+Jan 2005: There is now a release candidate of MinGW-3.2.0: please use that.
 
 
 The Windows port of perl5, available via
