@@ -239,9 +239,7 @@ NEW FEATURES
 
     o	tcltk library now has tkpager() which is designed to be used
 	by file.show() and shows help pages etc. in separate text
-	widgets. On the Unix platforms, it is now used for the `pager'
-	option when the library is loaded, unless the `tkpager' option
-	is set otherwise
+	widgets. 
 
     o	tcltk is now more careful about removing the objects
 	representing widgets in the R workspace when the windows are
@@ -253,7 +251,7 @@ NEW FEATURES
 	nonlocal return from R's error handling could bring the Tk
 	system into a strange state.  
 
-    o	New demos for tcltk: tkfaq, tkfilefind, tkcanvas.
+    o	New demos for tcltk: tkfaq, tkfilefind, tkcanvas. 
 
     o	termplot() now has an `ask' argument.
 

@@ -1,4 +1,4 @@
-## Interactive density plots. Based on TCL version by Guido Masarotto
+### Interactive density plots. Based on TCL version by Guido Masarotto
 
 require(tcltk) || stop("tcltk support is absent")
 local({
@@ -84,6 +84,11 @@ local({
     tclvar$dist  <- 1
     tclvar$kernel<- "gaussian"
     tclvar$bw    <- 1
+    cat("******************************************************\n",
+        "The source for this demo can be found in the file:\n", 
+        paste(R.home(),"demos","tkdensity.R", sep=.Platform$file.sep),
+        "\n******************************************************\n")
+
     regen()
 })
 
