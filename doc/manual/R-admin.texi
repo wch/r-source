@@ -172,10 +172,10 @@ Unix-like platforms, including @code{i386-freebsd}, @code{i386-linux},
 @cindex Linux
 @cindex MacOS X
 In addition, binary distributions are available for most common Linux
-distributions, Compaq Alpha systems running OSF1, and for MacOS X.  See
-the @acronym{FAQ} for current details.  These are installed in
-platform-specific ways.  So for the rest of this chapter we consider
-only building from the sources.
+distributions, Compaq Alpha systems running OSF/Tru64, and for MacOS X
+(Darwin) with X11.  See the @acronym{FAQ} for current details.  These
+are installed in platform-specific ways.  So for the rest of this
+chapter we consider only building from the sources.
 
 @menu
 * Simple compilation::          
@@ -435,15 +435,15 @@ cross-compile, see @file{src/gnuwin32/INSTALL}.
 
 The @file{bin/macos} directory of a @acronym{CRAN} site contains
 @command{bin-hex}ed (@file{hqx}) and @command{stuffit} (@file{sit})
-self-extracting binaries for a base distribution and a large number of
-add-on packages to run under MacOS 8.6 to MacOS 9.1 or MacOS X under
-Classic Environment.
-
-Just extract one of these self-extracting binaries in a suitable folder.
+archives for a base distribution and a large number of add-on packages
+to run under MacOS 8.6 to MacOS 9.1 or MacOS X natively.  Just extract
+one of these archives in a suitable folder using standard utilities like
+Aladdin Stuffit Expander (tm).
 
 @cindex MacOS X
 There is also a port to MacOS X which is considered to be a Unix variant
-in this document.
+in this document.  You can find it in the @file{bin/macosx} directory at
+of a @acronym{CRAN} site. 
 
 @node Add-on packages, Essential and useful other programs, Installing R on Classic MacOS, Top
 @chapter Add-on packages
