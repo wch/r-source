@@ -44,11 +44,11 @@ barplot.default <-
     w.m <- w.r - delta
     w.l <- w.m - delta
     if (horiz) {
-	if (missing(xlim)) xlim <- range(-0.01, height)
+	if (missing(xlim)) xlim <- range(-0.01 * height, height)
 	if (missing(ylim)) ylim <- c(min(w.l), max(w.r))
     } else {
 	if (missing(xlim)) xlim <- c(min(w.l), max(w.r))
-	if (missing(ylim)) ylim <- range(-0.01, height)
+	if (missing(ylim)) ylim <- range(-0.01 * height, height)
     }
     if (beside)
 	w.m <- matrix(w.m, nc = NC)
