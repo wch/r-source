@@ -30,7 +30,9 @@ contr.SAS(n, contrasts = TRUE)
   the resulting matrices contain contrasts which can be used for coding
   a factor with \code{n} levels.  The returned value contains the
   computed contrasts.  If the argument \code{contrasts} is \code{FALSE}
-  then a square indicator matrix is returned.
+  a square indicator matrix (the dummy coding) is returned \bold{except}
+  for \code{contr.poly} (which include the 0-degree, i.e. constant,
+  polynomial when \code{contrasts = FALSE}).
 
   \code{cont.helmert} returns Helmert contrasts, which contrast the
   second level with the first, the third with the average of the first

@@ -32,8 +32,11 @@ model.matrix(object, \dots)
   contain columns with the same names as would be created by a call to
   \code{model.frame(formula)} or, more precisely, by evaluating
   \code{attr(terms(formula), "variables")}.  There may be other columns
-  and the order is not important.  If \code{contrasts} is specified it
-  overrides the default factor coding for that variable.
+  and the order is not important.
+
+  If \code{contrasts.arg} is specified for a factor it overrides the
+  default factor coding for that variable and any \code{"contrasts"}
+  attribute set by \code{\link{C}} or \code{\link{contrasts}}.
 
   In interactions, the variable whose levels vary fastest is the first
   one to appear in the formula (and not in the term), so in \code{~ a +
@@ -46,6 +49,16 @@ model.matrix(object, \dots)
 \value{
   The design matrix for a regression model with the specified formula
   and data.
+
+  There is an attribute \code{"assign"}, an integer vector with an entry
+  for each column in the matrix giving the term in the formula which
+  gave rise to the column.
+  
+  If there are any factors in terms in the model, there is an attribute
+  \code{"contrasts"}, a named list with an entry for each factor.  This
+  specifies the contrasts that would be used in terms in which the
+  factor is coded by contrasts (in some terms dummy coding may be used),
+  either as a character vector naming a function or as a numeric matrix.
 }
 \references{
   Chambers, J. M. (1992)
