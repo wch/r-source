@@ -38,9 +38,10 @@ cm(1)# = 2.54
 ## plot labels offset 0.12 inches to the right
 ## of plotted symbols in a plot
 data(mtcars)
-attach(mtcars)
-plot(mpg, disp, pch=19, main= "Motor Trend Cars")
-text(mpg + xinch(0.12), disp, rownames(mtcars),adj=0, cex = .7, col='blue')
-detach(mtcars)
+with(mtcars, {
+    plot(mpg, disp, pch=19, main= "Motor Trend Cars")
+    text(mpg + xinch(0.12), disp, row.names(mtcars),
+         adj = 0, cex = .7, col = 'blue')
+    })
 }
 \keyword{dplot}

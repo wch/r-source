@@ -39,10 +39,10 @@ rug(x, ticksize=0.03, side=1, lwd=0.5, col,
 \seealso{\code{\link{jitter}} which you may want for ties in \code{x}.}
 \examples{
 data(faithful)
-attach(faithful)
-plot(density(eruptions, bw=0.15))
-rug(eruptions)
-rug(jitter(eruptions, amount = .01), side = 3, col = "light blue")
-detach("faithful")
+with(faithful, {
+    plot(density(eruptions, bw=0.15))
+    rug(eruptions)
+    rug(jitter(eruptions, amount = .01), side = 3, col = "light blue")
+})
 }
 \keyword{aplot}

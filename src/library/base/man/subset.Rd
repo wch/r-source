@@ -51,7 +51,6 @@ subset(airquality, Temp > 80, select = c(Ozone, Temp))
 subset(airquality, Day == 1, select = -Temp)
 subset(airquality, select = Ozone:Wind)
 
-attach(airquality)
-subset(Ozone, Temp > 80)
+with(airquality, subset(Ozone, Temp > 80))
 }
 \keyword{manip}
