@@ -30,22 +30,11 @@ AC_CONFIG_AUX_DIR(tools)
 
 ### Platform & Version
 
-## In an ideal world we would use AC_CANONICAL_HOST here, but this fails
-## on platforms like the i686 (aka Pentium-Pro) because of some sort of
-## sanity check written into configure.  We bypass the check by invoking
-## config.guess directly and parsing the results ourselves.
-
-AC_MSG_CHECKING(host system type)
-host=`${srcdir}/tools/config.guess`
-set `echo ${host} | tr '-' ' '`
-host_cpu=${1}
-host_vendor=${2}
-host_os=${3}
+AC_CANONICAL_HOST
 AC_DEFINE_UNQUOTED(R_PLATFORM, "${host}")
 AC_DEFINE_UNQUOTED(R_CPU, "${host_cpu}")
 AC_DEFINE_UNQUOTED(R_VENDOR, "${host_vendor}")
 AC_DEFINE_UNQUOTED(R_OS, "${host_os}")
-AC_MSG_RESULT([${host}])
 
 PACKAGE="R"
 VERSION=`cat ${srcdir}/VERSION | cut -d' ' -f1`
@@ -146,20 +135,16 @@ AC_ARG_WITH(readline,
 
 AC_ARG_WITH(gnome,
   [  --with-gnome            use GNOME, or specify its prefix],
-  if test "${withval}" = yes; then
-    want_gnome=yes
-    dnl Note that an empty true branch is not valid sh syntax.
-    ifelse([$1], [], :, [$1])
-  else
-    if test "${withval}" = no; then
+  [ if test "${withval}" = no; then
       want_gnome=no
+    elif test "${withval}" = yes; then
+      want_gnome=yes
     else
       want_gnome=yes
-      LDFLAGS="$LDFLAGS -L${withval}/lib"
-      CFLAGS="$CFLAGS -I${withval}/include"
+      LIBS="${LIBS} -L${withval}/lib"
+      CPPFLAGS="${CPPFLAGS} -I${withval}/include"
       gnome_prefix=${withval}/lib
-    fi
-  fi,
+    fi],
   want_gnome=no)
 
 ### Programs.
