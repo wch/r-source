@@ -114,7 +114,7 @@ BUG FIXES
 	when nc > 1 and obeys 'ann=FALSE' or 'axes=FALSE'.
 
     o	aggregate(.data.frame) failed if the answer would have had one
-        row.
+	row.
 
     o	recordPlot() and replayPlot() failed to duplicate the display
 	list, so further plotting altered the saved or replayed object.
@@ -126,6 +126,8 @@ BUG FIXES
 	already existed after the first instance.  (PR#6892)
 
     o	arima.sim() allows a null model.
+
+    o	which.min() & which.max()'s C code now PROTECT()'s its result.
 
 
 
