@@ -16,8 +16,9 @@ function (..., list = character(0),
         if(!missing(package)) show.data(package, lib.loc)
         else show.data(lib.loc=lib.loc)
     } else for (name in names) {
-        files <- list.files(system.file("data", pkg = package, lib = lib.loc),
-                            full = TRUE)
+        ## don't make this a single call: list.files sorts all the entries.
+        paths <- system.file("data", pkg = package, lib = lib.loc)
+        files <- unlist(lapply(paths, FUN=list.files, full = TRUE))
         files <- files[grep(name, files)]
         found <- FALSE
         if (length(files) > 0) {
