@@ -1,9 +1,3 @@
-##--- NOTE:
-##    when no device is open, layout() should open the default device,
-## as  par(.) does
-##
-## !!!!
-
 lcm <- function(x) paste(x, "cm")#-> 3 characters (used in layout!)
 
 layout <-
@@ -42,7 +36,7 @@ layout <-
 	}
 	as.numeric(v)
     }
-    widths	<- pad1.rm.cm(widths, cm.widths,  len = num.cols)
+    widths  <- pad1.rm.cm(widths, cm.widths,  len = num.cols)
     heights <- pad1.rm.cm(heights,cm.heights, len = num.rows)
 
     if (is.matrix(respect)) {
@@ -65,9 +59,6 @@ layout <-
 
 layout.show <- function(n=1)
 {
-    ## show the regions that will be allocated to the next
-    ## n figures
-
     ## cheat to make sure that current plot is figure 1
     oma.saved <- par("oma")
     par(oma=rep(0,4))
@@ -75,12 +66,9 @@ layout.show <- function(n=1)
 
     o.par <- par(mar=rep(0,4))
     on.exit(par(o.par))
-    for (i in 1:n) {
+    for (i in seq(length=n)) {
 	plot.new()
 	box()
 	text(0.5, 0.5, i)
     }
-
 }
-
-
