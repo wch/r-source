@@ -489,32 +489,6 @@ SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-#ifdef OLD_PMATCH
-    for (i = 0; i < n_input; i++) {
-	temp = strlen(CHAR(STRING_ELT(input, i)));
-	mtch = 0;
-	mtch_count = 0;
-	if (temp) {
-	    for (j = 0; j < n_target; j++) {
-		k = strncmp(CHAR(STRING_ELT(input, i)),
-			    CHAR(STRING_ELT(target, j)), temp);
-		if (k == 0) {
-		    mtch = j + 1;
-		    if (dups_ok ||
-			strlen(CHAR(STRING_ELT(target, j))) == temp)
-			/* This is odd, effectively sets dups.ok
-			 * for perfect mtches, but that's what
-			 * Splus 3.4 does  --pd
-			 */
-			break;
-		    if (mtch_count++ && !dups_ok)
-			mtch = 0;
-		}
-	    }
-	}
-	INTEGER(ans)[i] = mtch;
-    }
-#endif
     vmaxset(vmax);
     return ans;
 }

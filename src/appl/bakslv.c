@@ -109,28 +109,4 @@ void bakslv(double *t, int *ldt, int *n,
 			t, ldt, x, ldb);
     }
 }
-#ifdef OLD
- * subroutines and functions
-
- *     linpack: dtrsl (t,ldt,n, b,job,info)
- *     blas:	dcopy
- */
-
-    /* INTERNAL VARIABLES. */
-
-    static int c__1 = 1; /* constant */
-    int p, nn, j;
-
-    p = *nb;
-    nn = *ldb;
-
-    for (j = 0; j < p; ++j) {/* for each right-hand side */
-       F77_CALL(dcopy)(n, &b[j * nn], &c__1, &x[j * nn], &c__1);
-       F77_CALL(dtrsl)(t, ldt, n, &x[j * nn], job, info);
-       if (*info != 0) {
-	 return;
-       }
-    }
-}
-#endif
 

@@ -303,15 +303,8 @@ static void ctr_swapseg(SEGP seg)
 	/* ctr_segdir(): Determine the entry direction to the next cell */
 	/* and update the cell indices */
 
-#ifdef OLDcontour
-static double ctr_xtol;
-static double ctr_ytol;
-#define XMATCH(x0,x1) (fabs(x0-x1) < ctr_xtol)
-#define YMATCH(y0,y1) (fabs(y0-y1) < ctr_ytol)
-#else
 #define XMATCH(x0,x1) (fabs(x0-x1) == 0)
 #define YMATCH(y0,y1) (fabs(y0-y1) == 0)
-#endif
 
 static int ctr_segdir(double xend, double yend, double *x, double *y,
 		      int *i, int *j, int nx, int ny)
@@ -1678,13 +1671,6 @@ FindCutPoints(double low, double high,
 	    ++*npt;
 	}
 	if (z2 > low) {
-#ifdef OMIT
-	    /* Don't repeat corner vertices */
-	    x[*npt] = x2;
-	    y[*npt] = y2;
-	    z[*npt] = z2;
-	    ++*npt;
-#endif
 	}
 	else {
 	    c = (z2 -low) / (z2 - z1);
@@ -1963,18 +1949,6 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 	/*  P e r s p e c t i v e   S u r f a c e   P l o t s  */
-
-
-#ifdef NOT_used_currently/*-- out 'def'  (-Wall) --*/
-static void MakeVector (double x, double y, double z, Vector3d v)
-{
-    v[0] = x;
-    v[1] = y;
-    v[2] = z;
-    v[3] = 1;
-}
-#endif
-
 
 
 /* Set up the light source */

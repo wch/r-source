@@ -874,23 +874,6 @@ int StrToInternal(char *s)
     return 0;
 }
 
-#ifdef OLD
-/* string hashing */
-int hashpjw(char *s)
-{
-    char *p;
-    unsigned h = 0, g;
-    for (p = s; *p; p = p + 1) {
-	h = (h << 4) + (*p);
-	if ((g = h & 0xf0000000) != 0) {
-	    h = h ^ (g >> 24);
-	    h = h ^ g;
-	}
-    }
-    return h % HSIZE;
-}
-#endif
-
 static void installFunTab(int i)
 {
     if ((R_FunTab[i].eval % 100 )/10)

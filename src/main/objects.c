@@ -32,9 +32,6 @@
 static SEXP GetObject(RCNTXT *cptr)
 {
     SEXP s, sysp, b, formals, funcall, tag;
-#ifdef OLD
-    s = CAR(cptr->promargs);
-#else
     sysp = R_GlobalContext->sysparent;
 
     PROTECT(funcall = R_syscall(0, cptr));
@@ -86,7 +83,6 @@ static SEXP GetObject(RCNTXT *cptr)
 	s = CAR(cptr->promargs);
 
     UNPROTECT(2);
-#endif
     if (TYPEOF(s) == PROMSXP) {
 	if (PRVALUE(s) == R_UnboundValue)
 	    s = eval(s, R_NilValue);

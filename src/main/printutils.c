@@ -175,12 +175,8 @@ char *EncodeReal(double x, int w, int d, int e)
 
 char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei)
 {
-#if OLD
-    char fmt[64], *efr, *efi;
-#else
     char *Re, *Im, *tmp;
     int  flagNegIm = 0;
-#endif
 
     R_AllocStringBuffer(0, buffer);
     /* IEEE allows signed zeros; strip these here */
@@ -192,13 +188,6 @@ char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei)
 		CHAR(R_print.na_string));
     }
     else {
-#if OLD
-	if(er) efr = "e"; else efr = "f";
-	if(ei) efi = "e"; else efi = "f";
-	sprintf(fmt,"%%%d.%d%s%%+%d.%d%si", wr, dr, efr, wi, di, efi);
-	sprintf(buffer->data, fmt, x.r, x.i);
-#else
-
 	/* EncodeReal returns pointer to static storage so copy */
 
 	tmp = EncodeReal(x.r, wr, dr, er);
@@ -215,20 +204,9 @@ char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei)
 
 	Free(Re); Free(Im);
     }
-#endif
     return buffer->data;
 }
 
-	/* There is a heavy ASCII emphasis here */
-	/* Latin1 types are (rightfully) upset */
-	/* WHAT NEEDS TO CHANGE */
-
-#ifdef OLD
-static int hexdigit(unsigned int x)
-{
-    return ((x <= 9)? '0' :	 'A'-10) + x;
-}
-#endif
 
 /* strlen() using escaped rather than literal form */
 int Rstrlen(char *s, int quote)
@@ -263,11 +241,7 @@ int Rstrlen(char *s, int quote)
 	case '\v':
 	    len += 2; break;
 	default:
-#ifdef OLD
-	    len += 4; break;
-#else
 	    len += 1; break;
-#endif
 	}
 	p++;
     }
@@ -327,16 +301,8 @@ char *EncodeString(char *s, int w, int quote, int right)
 	case '\t': *q++ = '\\'; *q++ = 't'; break;
 	case '\v': *q++ = '\\'; *q++ = 'v'; break;
 
-	    /* Latin1 Swallowed Here */
-
-#ifdef OLD
-	default: *q++ = '0'; *q++ = 'x';
-	    *q++ = hexdigit((*p & 0xF0) >> 4);
-	    *q++ = hexdigit(*p & 0x0F);
-#else
 	default:
 	    *q++ = *p; break;
-#endif
 	}
 	p++;
     }

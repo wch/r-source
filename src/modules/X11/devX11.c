@@ -23,10 +23,6 @@
 # include <config.h>
 #endif
 
-/*
-#define OLD
-*/
-
 #ifdef HAVE_RINT
 #define R_rint(x) rint(x)
 #else
@@ -326,15 +322,9 @@ static int GetColorPalette(Display *dpy, Colormap cmap, int nr, int ng, int nb)
 		RPalette[i].green = (g * 0xff) / (ng - 1);
 		RPalette[i].blue  = (b * 0xff) / (nb - 1);
 		/* Perform Gamma Correction Here */
-#ifdef OLD
-		XPalette[i].red	  = (r * 0xffff) / (nr - 1);
-		XPalette[i].green = (g * 0xffff) / (ng - 1);
-		XPalette[i].blue  = (b * 0xffff) / (nb - 1);
-#else
 		XPalette[i].red	  = pow(r / (nr - 1.0), RedGamma) * 0xffff;
 		XPalette[i].green = pow(g / (ng - 1.0), GreenGamma) * 0xffff;
 		XPalette[i].blue  = pow(b / (nb - 1.0), BlueGamma) * 0xffff;
-#endif
 		/* End Gamma Correction */
 		status = XAllocColor(dpy, cmap, &XPalette[i]);
 		if (status == 0) {
@@ -637,169 +627,6 @@ static void R_ProcessEvents(void *data)
     }
 }
 
-#ifdef OLD
-	/* Font information array. */
-	/* Point sizes: 6-24 */
-	/* Faces: plain, bold, oblique, bold-oblique */
-	/* Symbol may be added later */
-
-#define NFONT 19
-
-static XFontStruct *fontarray[NFONT][5] = {
-    {NULL, NULL, NULL, NULL, NULL},	/*  6 */
-    {NULL, NULL, NULL, NULL, NULL},	/*  7 */
-    {NULL, NULL, NULL, NULL, NULL},	/*  8 */
-    {NULL, NULL, NULL, NULL, NULL},	/*  9 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 10 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 11 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 12 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 13 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 14 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 15 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 16 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 17 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 18 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 19 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 20 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 21 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 22 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 23 */
-    {NULL, NULL, NULL, NULL, NULL},	/* 24 */
-};
-
-static int missingfont[NFONT][5] = {
-    {0, 0, 0, 0, 0},	/*  6 */
-    {0, 0, 0, 0, 0},	/*  7 */
-    {0, 0, 0, 0, 0},	/*  8 */
-    {0, 0, 0, 0, 0},	/*  9 */
-    {0, 0, 0, 0, 0},	/* 10 */
-    {0, 0, 0, 0, 0},	/* 11 */
-    {0, 0, 0, 0, 0},	/* 12 */
-    {0, 0, 0, 0, 0},	/* 13 */
-    {0, 0, 0, 0, 0},	/* 14 */
-    {0, 0, 0, 0, 0},	/* 15 */
-    {0, 0, 0, 0, 0},	/* 16 */
-    {0, 0, 0, 0, 0},	/* 17 */
-    {0, 0, 0, 0, 0},	/* 18 */
-    {0, 0, 0, 0, 0},	/* 19 */
-    {0, 0, 0, 0, 0},	/* 20 */
-    {0, 0, 0, 0, 0},	/* 21 */
-    {0, 0, 0, 0, 0},	/* 22 */
-    {0, 0, 0, 0, 0},	/* 23 */
-    {0, 0, 0, 0, 0},	/* 24 */
-};
-
-static char *fontname_R6 = "-adobe-helvetica-%s-%s-*-*-*-%d-*-*-*-*-*-*";
-static char *fontname_R5 = "-adobe-helvetica-%s-%s-*-*-*-%d-*-*-*-*-*-*";
-static char *symbolname	 = "-adobe-symbol-*-*-*-*-*-%d-*-*-*-*-*-*";
-static char *fontname;
-
-static char *slant[]  = {"r", "o"};
-static char *weight[] = {"medium", "bold"};
-
-	/* attempt to load a font into the fontarray and return the font */
-	/* if the font is already there don't load it again */
-	/* if can't load the font, return NULL */
-
-static XFontStruct *RLoadFont(int face, int size)
-{
-    if (fontarray[size-6][face-1])
-	return fontarray[size-6][face-1];
-    else {
-	char buf[128];
-	XFontStruct *tmp;
-
-	if (face == 5)
-	    sprintf(buf, symbolname, 10 * size);
-	else
-	    sprintf(buf, fontname,
-		    weight[(face-1)%2],
-		    slant[((face-1)/2)%2], 10 * size);
-#ifdef DEBUG_X11
-	Rprintf("loading:\n%s\n",buf);
-#endif
-	tmp = XLoadQueryFont(display, buf);
-#ifdef DEBUG_X11
-	if (tmp) Rprintf("success\n"); else Rprintf("failure\n");
-#endif
-	if (tmp)
-	    fontarray[size-6][face-1] = tmp;
-	return tmp;
-    }
-}
-
-			/* Quiz the server about fonts. */
-			/* 1) Try for 100dpi (X11R6) font */
-			/* 2) Try for *dpi (X11R6) font */
-			/* 3) Try "fixed" and if that fails, bail out */
-
-static int SetBaseFont(newX11Desc *xd)
-{
-    xd->fontface = 1;
-    xd->fontsize = 12;
-    xd->usefixed = 0;
-    fontname = fontname_R6;
-    xd->font = RLoadFont(xd->fontface, xd->fontsize);
-    if (!xd->font) {
-	fontname = fontname_R5;
-	xd->font = RLoadFont(xd->fontface, xd->fontsize);
-    }
-    if (!xd->font) {
-	xd->usefixed = 1;
-	xd->font = xd->fixedfont = XLoadQueryFont(display, "fixed");
-	if (!xd->fixedfont)
-	    return 0;
-    }
-    return 1;
-}
-
-			/* Set the font size and face */
-			/* If the font of this size and at that the specified */
-			/* rotation is not present it is loaded. */
-			/* 0 = plain text, 1 = bold */
-			/* 2 = oblique, 3 = bold-oblique */
-
-#define SMALLEST 8
-#define LARGEST 24
-
-static void SetFont(int face, int size, NewDevDesc *dd)
-{
-    newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
-
-    if (face < 1 || face > 5) face = 1;
-    size = 2 * size / 2;
-    if (size < SMALLEST) size = SMALLEST;
-    if (size > LARGEST) size = LARGEST;
-
-    if (!xd->usefixed && (size != xd->fontsize	|| face != xd->fontface)) {
-	while(size < dd->gp.ps) {
-	    if (fontarray[size-6][face-1]) goto found;
-	    if (!missingfont[size-6][face-1]) {
-		fontarray[size-6][face-1] = RLoadFont(face, size);
-		if (fontarray[size-6][face-1]) goto found;
-		missingfont[size-6][face-1] = 1;
-	    }
-	    size += 2;
-	}
-	while(size >= dd->gp.ps) {
-	    if (fontarray[size-6][face-1]) goto found;
-	    if (!missingfont[size-6][face-1]) {
-		fontarray[size-6][face-1] = RLoadFont(face, size);
-		if (fontarray[size-6][face-1]) goto found;
-		missingfont[size-6][face-1] = 1;
-	    }
-	    size -= 2;
-	}
-	size = dd->gp.ps;
-	face = 1;
-    found:
-	xd->font = fontarray[size-6][face-1];
-	xd->fontface = face;
-	xd->fontsize = size;
-	XSetFont(display, xd->wgc, xd->font->fid);
-    }
-}
-#else /* not OLD */
 static char *fontname = "-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*";
 static char *symbolname	 = "-*-symbol-*-*-*-*-%d-*-*-*-*-*-*-*";
 
@@ -976,7 +803,6 @@ static void SetFont(int face, int size, NewDevDesc *dd)
 	    error("X11 font at size %d could not be loaded", size);
     }
 }
-#endif
 
 
 static void SetColor(int color, NewDevDesc *dd)
@@ -1471,9 +1297,6 @@ static void X11_Close_bitmap(newX11Desc *xd)
 
 static void newX11_Close(NewDevDesc *dd)
 {
-#ifdef OLD
-    int i, j;
-#endif
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
 
     if (xd->type == WINDOW) {
@@ -1496,19 +1319,8 @@ static void newX11_Close(NewDevDesc *dd)
     if (numX11Devices == 0)  {
       int fd = ConnectionNumber(display);
 	/* Free Resources Here */
-#ifdef OLD
-	for(i=0 ; i<NFONT ; i++)
-	    for(j=0 ; j<5 ; j++) {
-		if (fontarray[i][j] != NULL) {
-		    XUnloadFont(display, fontarray[i][j]->fid);
-		    fontarray[i][j] = NULL;
-		}
-		missingfont[i][j] = 0;
-	    }
-#else
 	while (nfonts--)  XFreeFont(display, fontcache[nfonts].font);
 	nfonts = 0;
-#endif
         if(xd->handleOwnEvents == FALSE)
 	    removeInputHandler(&R_InputHandlers,
 			       getInputHandler(R_InputHandlers,fd));
@@ -1598,11 +1410,7 @@ static void newX11_Circle(double x, double y, double r,
     int ir, ix, iy;
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
 
-#ifdef OLD
-    ir = ceil(r);
-#else
     ir = floor(r + 0.5);
-#endif
 
     ix = (int)x;
     iy = (int)y;

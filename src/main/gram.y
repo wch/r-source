@@ -819,17 +819,6 @@ static void PopComment(void)
 	R_CommentSxp = CDR(R_CommentSxp);
 }
 
-#ifdef NOT_used
-int IsComment(SEXP l)
-{
-    if (isList(l) && isString(CAR(l))
-	&& !strncmp(CHAR(STRING(CAR(l))[0]), "#", 1))
-	return 1;
-    else
-	return 0;
-}
-#endif
-
 static void AddComment(SEXP l)
 {
     SEXP tcmt, cmt;

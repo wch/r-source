@@ -1726,15 +1726,6 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Create column labels for the matrix columns. */
 
     PROTECT(xnames = allocVector(STRSXP, nc));
-#ifdef TNAMES
-    tnames = getAttrib(factors, R_DimNamesSymbol);
-    if (nterms > 0) {
-	if (isNull(tnames))
-	    errorcall(call, "invalid terms object!");
-	tnames = CADR(tnames);
-    }
-    else tnames = R_NilValue;
-#endif
 
     /* Here we loop over the terms in the model and, within each */
     /* term, loop over the corresponding columns of the design */

@@ -225,33 +225,19 @@ static SEXP logicalSubscript(SEXP s, int ns, int nx, int *stretch)
     int canstretch, count, i, nmax;
     SEXP indx;
     canstretch = *stretch;
-#ifdef OLD
-    if (ns > nx)
-	error("subscript (%d) out of bounds, should be at most %d",
-	      ns, nx);
-#else
     if (!canstretch && ns > nx)
 	error("(subscript) logical subscript too long");
     nmax = (ns > nx) ? ns : nx;
     *stretch = (ns > nx) ? ns : 0;
-#endif
     if (ns == 0)
 	return(allocVector(INTSXP, 0));
     count = 0;
-#ifdef BROKEN
-    for (i = 0; i < nx; i++)
-#else
     for (i = 0; i < nmax; i++)
-#endif
 	if (LOGICAL(s)[i%ns])
 	    count++;
     indx = allocVector(INTSXP, count);
     count = 0;
-#ifdef OLD
-    for (i = 0; i < nx; i++)
-#else
     for (i = 0; i < nmax; i++)
-#endif
 	if (LOGICAL(s)[i%ns]) {
 	    if (LOGICAL(s)[i%ns] == NA_LOGICAL)
 		INTEGER(indx)[count++] = NA_INTEGER;

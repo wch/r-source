@@ -32,12 +32,7 @@
 #include "dpq.h"
 
 /* set the exponent of accu to -2r-2 for r digits of accuracy */
-#ifdef OLD
-#define acu 1.0e-32
-#define lower 0.0001
-#define upper 0.9999
-
-#else/*---- NEW ---- -- still fails for p = 1e11, q=.5*/
+/*---- NEW ---- -- still fails for p = 1e11, q=.5*/
 
 #define fpu 3e-308
 /* acu_min:  Minimal value for accuracy 'acu' which will depend on (a,p);
@@ -45,8 +40,6 @@
 #define acu_min 1e-300
 #define lower fpu
 #define upper 1-2.22e-16
-
-#endif
 
 #define const1 2.30753
 #define const2 0.27061

@@ -1585,10 +1585,6 @@ SEXP do_segments(SEXP call, SEXP op, SEXP args, SEXP env)
 	{
 	    Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
 	    /* NA color should be ok */
-#ifdef till_R_version_1_3
-	    if (Rf_gpptr(dd)->col == NA_INTEGER)
-		Rf_gpptr(dd)->col = Rf_dpptr(dd)->col;
-#endif
 	    Rf_gpptr(dd)->lty = INTEGER(lty)[i % nlty];
 	    Rf_gpptr(dd)->lwd = REAL(lwd)[i % nlwd];
 	    GLine(xx[0], yy[0], xx[1], yy[1], DEVICE, dd);
@@ -1806,11 +1802,7 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* polygon(x, y, col, border, lty, xpd, ...) */
     SEXP sx, sy, col, border, lty, sxpd;
-#ifdef Older
-    int nx=1, ny=1;
-#else
     int nx;
-#endif
     int ncol, nborder, nlty, xpd, i, start=0;
     int num = 0;
     double *x, *y, xx, yy, xold, yold;
@@ -1821,25 +1813,10 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
     GCheckState(dd);
 
     if (length(args) < 2) errorcall(call, "too few arguments");
-#ifdef Older
-    if (!isNumeric(CAR(args)) || (nx = LENGTH(CAR(args))) <= 0)
-	errorcall(call, "first argument invalid");
-    sx = SETCAR(args, coerceVector(CAR(args), REALSXP));
-    args = CDR(args);
-
-    if (!isNumeric(CAR(args)) || (ny = LENGTH(CAR(args))) <= 0)
-	errorcall(call, "second argument invalid");
-    sy = SETCAR(args, coerceVector(CAR(args), REALSXP));
-    args = CDR(args);
-
-    if (ny != nx)
-	errorcall(call, "x and y lengths differ in polygon");
-#else
     /* (x,y) is checked in R via xy.coords() ; no need here : */
     sx = SETCAR(args, coerceVector(CAR(args), REALSXP));  args = CDR(args);
     sy = SETCAR(args, coerceVector(CAR(args), REALSXP));  args = CDR(args);
     nx = LENGTH(sx);
-#endif
 
     PROTECT(col = FixupCol(CAR(args), NA_INTEGER));	args = CDR(args);
     ncol = LENGTH(col);
@@ -3473,30 +3450,6 @@ SEXP do_replay(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     return R_NilValue;
 }
-
-#ifdef OLD
-SEXP do_getDL(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    DevDesc *dd = CurrentDevice();
-    checkArity(op, args);
-    if (dd->newDevStruct)
-	return ((GEDevDesc*) dd)->dev->displayList;
-    else
-	return dd->displayList;
-}
-
-SEXP do_getGPar(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP GP;
-    int lGPar = 1 + sizeof(GPar) / sizeof(int);
-    DevDesc *dd = CurrentDevice();
-
-    checkArity(op, args);
-    GP = allocVector(INTSXP, lGPar);
-    copyGPar(Rf_dpSavedptr(dd), (GPar *) INTEGER(GP));
-    return GP;
-}
-#endif
 
 SEXP do_playDL(SEXP call, SEXP op, SEXP args, SEXP env)
 {

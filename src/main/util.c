@@ -130,47 +130,6 @@ int asInteger(SEXP x)
     return NA_INTEGER;
 }
 
-#ifdef OLD
-int asInteger(SEXP x)
-{
-    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
-	switch (TYPEOF(x)) {
-	case LGLSXP:
-	    return (LOGICAL(x)[0] == NA_LOGICAL) ?
-		NA_INTEGER : ((LOGICAL(x)[0]) != 0);
-	case INTSXP:
-	    return (INTEGER(x)[0]);
-	case REALSXP:
-	    return R_FINITE(REAL(x)[0]) ?
-		((int)(REAL(x)[0])) : NA_INTEGER;
-	case CPLXSXP:
-	    return R_FINITE(COMPLEX(x)[0].r) ?
-		((int)(COMPLEX(x)[0].r)) : NA_INTEGER;
-	}
-    }
-    return NA_INTEGER;
-}
-#endif
-
-#ifdef OLD
-double asReal(SEXP x)
-{
-    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
-	switch (TYPEOF(x)) {
-	case LGLSXP:
-	case INTSXP:
-	    return (INTEGER(x)[0] == NA_INTEGER) ?
-		NA_REAL : (INTEGER(x)[0]);
-	case REALSXP:
-	    return REAL(x)[0];
-	case CPLXSXP:
-	    return COMPLEX(x)[0].r;
-	}
-    }
-    return NA_REAL;
-}
-#endif
-
 double asReal(SEXP x)
 {
     int warn = 0;
@@ -196,35 +155,6 @@ double asReal(SEXP x)
     }
     return NA_REAL;
 }
-
-#ifdef OLD
-Rcomplex asComplex(SEXP x)
-{
-    Rcomplex z;
-    z.r = NA_REAL;
-    z.i = NA_REAL;
-    if (isVectorAtomic(x) && LENGTH(x) >= 1) {
-	switch (TYPEOF(x)) {
-	case LGLSXP:
-	case INTSXP:
-	    if (INTEGER(x)[0] != NA_INTEGER) {
-		z.r = INTEGER(x)[0];
-		z.i = 0;
-	    }
-	    return z;
-	case REALSXP:
-	    if (REAL(x)[0] != NA_REAL) {
-		z.r = REAL(x)[0];
-		z.i = 0;
-	    }
-	    return z;
-	case CPLXSXP:
-	    return COMPLEX(x)[0];
-	}
-    }
-    return z;
-}
-#endif
 
 Rcomplex asComplex(SEXP x)
 {
@@ -270,15 +200,7 @@ SEXP asChar(SEXP x)
 	    return mkChar(buf);
 	case REALSXP:
 	    formatReal(REAL(x), 1, &w, &d, &e, 0);
-#ifdef OLD
-	    if (e)
-		sprintf(buf, "%*.*e", w, d, REAL(x)[0]);
-	    else
-		sprintf(buf, "%*.*f", w, d, REAL(x)[0]);
-	    return mkChar(buf);
-#else
 	    return mkChar(EncodeReal(REAL(x)[0], w, d, e));
-#endif
         case CPLXSXP:
 	    formatComplex(COMPLEX(x), 1, &w, &d, &e, &wi, &di, &ei, 0);
 	    return mkChar(EncodeComplex(COMPLEX(x)[0], w, d, e, wi, di, ei));
@@ -658,13 +580,6 @@ Rboolean inherits(SEXP s, char *name)
     return FALSE;
 }
 
-
-#ifdef neverUser
-double realNA()
-{
-    return NA_REAL;
-}
-#endif
 
 const static struct {
     const char * const str;

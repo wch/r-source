@@ -1973,11 +1973,7 @@ static void GA_Circle(double x, double y, double r,
     rect  rr;
 
     TRACEDEVGA("circle");
-#ifdef OLD
-    ir = ceil(r);
-#else
     ir = floor(r + 0.5);
-#endif
     if (ir < 1) ir = 1;
     /* In-place conversion ok */
 

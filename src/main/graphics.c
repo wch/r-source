@@ -2195,9 +2195,6 @@ static int	fontmainsave;	/* font.main */
 static int	fontlabsave;	/* font.lab */
 static int	fontsubsave;	/* font.sub */
 static int	fontaxissave;	/* font.axis */
-#ifdef NO
-   static int	csisave;	/* line spacing in inches */
-#endif
 static int	errsave;	/* error mode */
 static int	labsave[3];	/* axis labelling parameters */
 static int	lassave;	/* label style */
@@ -3326,23 +3323,6 @@ void GCircle(double x, double y, int coords,
     }
 }
 
-#ifdef OLD
-/* radius is specified in INCHES */
-void GCircle(double x, double y, int coords,
-	     double radius, int col, int border, DevDesc *dd)
-{
-    double ir;
-    ir = radius/Rf_gpptr(dd)->ipr[0];
-    ir = (ir > 0) ? ir : 1;
-    if (Rf_dpptr(dd)->canClip) {
-	GClip(dd);
-	clipCircle(x, y, coords, ir, col, border, 1, dd);
-    }
-    else
-	clipCircle(x, y, coords, ir, col, border, 0, dd);
-}
-#endif
-
 /* Return a code indicating how the rectangle should be clipped.
    0 means the rectangle is totally outside the clip region
    1 means the rectangle is totally inside the clip region
@@ -3478,12 +3458,6 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
 /* Compute string width. */
 double GStrWidth(char *str, GUnit units, DevDesc *dd)
 {
-#ifdef OLD
-    double w = Rf_dpptr(dd)->strWidth(str, dd);
-    if (units != DEVICE)
-	w = GConvertXUnits(w, DEVICE, units, dd);
-    return w;
-#else
     double w;
     static char *sbuf = NULL;
 
@@ -3530,7 +3504,6 @@ double GStrWidth(char *str, GUnit units, DevDesc *dd)
 	}
     }
     return w;
-#endif
 }
 
 
@@ -4015,12 +3988,9 @@ void GPretty(double *lo, double *up, int *ndiv)
 #define TRC1	1.34677368708859836060		/* TRC0 * sqrt(3) / 2 */
 #define TRC2	0.77756015077810708036		/* TRC0 / 2 */
 #define CMAG	1.0				/* Circle magnifier, now defunct */
-#ifdef OLDSYMSIZE
-#define GSTR_0  GStrWidth("0", INCHES, dd)
-#else
 #define GSTR_0  Rf_dpptr(dd)->cra[1] * 0.5 * Rf_gpptr(dd)->ipr[0] * Rf_gpptr(dd)->cex
 /* NOTE: This cex is already multiplied with cexbase */
-#endif
+
 /* Draw one of the R special symbols. */
 void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 {

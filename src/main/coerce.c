@@ -594,12 +594,6 @@ static SEXP coerceToExpression(SEXP v)
 	    for (i = 0; i < n; i++)
 		SET_VECTOR_ELT(ans, i, ScalarString(STRING_ELT(v, i)));
 	    break;
-#ifdef never_used
-	case VECSXP:
-	    for (i = 0; i < n; i++)
-		SET_VECTOR_ELT(ans, i, VECTOR_ELT(v, i));
-	    break;
-#endif
 	}
     }
     else {/* not used either */
@@ -967,16 +961,6 @@ static SEXP ascommon(SEXP call, SEXP u, int type)
 {
     /* -> as.vector(..) or as.XXX(.) : coerce 'u' to 'type' : */
     SEXP  v;
-#ifdef OLD
-    if (type == SYMSXP) {
-	if (TYPEOF(u) == SYMSXP)
-	    return u;
-	if (!isString(u) || LENGTH(u) < 0 || CHAR(STRING_ELT(u, 0))[0] == '\0')
-	    errorcall(call, "character argument required");
-	return install(CHAR(STRING_ELT(u, 0)));
-    }
-    else
-#endif
     if (type == CLOSXP) {
 	return asFunction(u);
     }
@@ -1097,13 +1081,8 @@ SEXP do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Check the arguments; we need a list and environment. */
 
     arglist = CAR(args);
-#if OLD
-    if (length(arglist) > 1 && !isNewList(arglist))
-	errorcall(call, "list argument expected");
-#else
     if (!isNewList(arglist))
 	errorcall(call, "list argument expected");
-#endif
 
     envir = CADR(args);
     if (!isNull(envir) && !isEnvironment(envir))
@@ -1123,14 +1102,7 @@ SEXP do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 	pargs = CDR(pargs);
     }
     CheckFormals(args);
-#if OLD
-    if( n == 1 )
-	args =  mkCLOSXP(args, arglist, envir);
-    else
-	args =  mkCLOSXP(args, VECTOR_ELT(arglist, n - 1), envir);
-#else
     args =  mkCLOSXP(args, VECTOR_ELT(arglist, n - 1), envir);
-#endif
     UNPROTECT(1);
     return args;
 }
@@ -1755,10 +1727,6 @@ SEXP substitute(SEXP lang, SEXP rho)
 		}
 		while(TYPEOF(t) == PROMSXP);
 		return t;
-#ifdef OLD
-		return substitute(PREXPR(t), rho);
-		return PREXPR(t);
-#endif
 	    }
 	    else if (TYPEOF(t) == DOTSXP) {
 		error("... used in an incorrect context");
@@ -1800,11 +1768,6 @@ SEXP substituteList(SEXP el, SEXP rho)
 	UNPROTECT(2);
 	return t;
     }
-#ifdef OLD
-    else if (CAR(el) == R_MissingArg) {
-	return substituteList(CDR(el), rho);
-    }
-#endif
     else {
 	PROTECT(h = substitute(CAR(el), rho));
 	PROTECT(t = substituteList(CDR(el), rho));

@@ -180,23 +180,6 @@ SEXP do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  version, write down a pipe to a pager.
  */
 
-#ifdef OLD
-SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP fn, tl;
-    checkArity(op, args);
-    fn = CAR(args);
-    tl = CADR(args);
-    if (!isString(fn) || length(fn) < 1 || STRING_ELT(fn, 0) == R_NilValue)
-	errorcall(call, "invalid filename");
-    if (!isString(tl) || length(tl) < 1 || STRING_ELT(tl, 0) == R_NilValue)
-	errorcall(call, "invalid filename");
-    if (!R_ShowFile(R_ExpandFileName(CHAR(STRING_ELT(fn, 0))),
-                    CHAR(STRING_ELT(tl, 0))))
-	error("unable to display file \"%s\"", CHAR(STRING_ELT(fn, 0)));
-    return R_NilValue;
-}
-#else
 SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, tl, hd, pg;
@@ -244,7 +227,6 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     vmaxset(vm);
     return R_NilValue;
 }
-#endif
 
 
 /*  append.file

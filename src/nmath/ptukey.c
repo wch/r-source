@@ -174,16 +174,8 @@ static double wprob(double w, double rr, double cc)
 	    if (qexpo > C3)
 		break;
 
-#ifdef OLD
-	    if (ac > 0.)	pplus = 1.0 + erf(ac / M_SQRT2);
-	    else		pplus = erfc(-(ac / M_SQRT2));
-
-	    if (ac > w) pminus = 1.0 + erf((ac / M_SQRT2) - (w / M_SQRT2));
-	    else	pminus = erfc((w / M_SQRT2) - (ac / M_SQRT2));
-#else
 	    pplus = 2 * pnorm(ac, 0., 1., 1,0);
 	    pminus= 2 * pnorm(ac, w,  1., 1,0);
-#endif
 
 	    /* if rinsum ^ (cc-1) < 9e-14, */
 	    /* then doesn't contribute to integral */

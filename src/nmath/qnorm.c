@@ -73,78 +73,6 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 #endif
 
 
-#ifdef OLD_qnorm
-    /* --- use  AS 111 --- */
-    if (fabs(q) <= 0.42) {
-
-	/* 0.08 <= p <= 0.92 */
-
-	r = q * q;
-	val = q * (((-25.44106049637 * r + 41.39119773534) * r
-		    - 18.61500062529) * r + 2.50662823884)
-	    / ((((3.13082909833 * r - 21.06224101826) * r
-		 + 23.08336743743) * r + -8.47351093090) * r + 1.0);
-    }
-    else {
-
-	/* p < 0.08 or p > 0.92, set r = min(p, 1 - p) */
-
-	if (q > 0)
-	    r = R_DT_CIv(p);/* 1-p */
-	else
-	    r = p_;/* = R_DT_Iv(p) ^=  p */
-#ifdef DEBUG_qnorm
-	REprintf("\t 'middle p': r = %7g\n", r);
-#endif
-
-	if(r > DBL_EPSILON) {
-	    r = sqrt(- ((log_p &&
-			 ((lower_tail && q <= 0) || (!lower_tail && q > 0))) ?
-			p : /* else */ log(r)));
-#ifdef DEBUG_qnorm
-	    REprintf("\t new r = %7g ( =? sqrt(- log(r)) )\n", r);
-#endif
-	    val = (((2.32121276858 * r + 4.85014127135) * r
-		    - 2.29796479134) * r - 2.78718931138)
-		/ ((1.63706781897 * r + 3.54388924762) * r + 1.0);
-	    if (q < 0)
-		val = -val;
-	}
-	else if(r >= DBL_MIN) { /* r = p <= eps : Use Wichura */
-	    val = -2 * (log_p ? R_D_Lval(p) : log(R_D_Lval(p)));
-	    r = log(2 * M_PI * val);
-#ifdef DEBUG_qnorm
-	    REprintf("\t DBL_MIN <= r <= DBL_EPS: val = %g, new r = %g\n",
-		     val, r);
-#endif
-	    p = val * val;
-	    r = r/val + (2 - r)/p + (-14 + 6 * r - r * r)/(2 * p * val);
-	    val = sqrt(val * (1 - r));
-	    if(q < 0.0)
-		val = -val;
-	    return mu + sigma * val;
-	}
-	else {
-#ifdef DEBUG_qnorm
-	    REprintf("\t r < DBL_MIN : giving up (-> +- Inf \n");
-#endif
-	    ML_ERROR(ME_RANGE);
-	    if(q < 0.0) return ML_NEGINF;
-	    else	return ML_POSINF;
-	}
-    }
-/* FIXME: This could be improved when log_p or !lower_tail ?
- *	  (using p, not p_ , and a different derivative )
- */
-#ifdef DEBUG_qnorm
-    REprintf("\t before final step: val = %7g\n", val);
-#endif
-    /* Final Newton step: */
-    val = val -
-	(pnorm(val, 0., 1., /*lower*/TRUE, /*log*/FALSE) - p_) /
-	 dnorm(val, 0., 1., /*log*/FALSE);
-
-#else
 /*-- use AS 241 --- */
 /* double ppnd16_(double *p, long *ifault)*/
 /*      ALGORITHM AS241  APPL. STATIST. (1988) VOL. 37, NO. 3
@@ -219,10 +147,6 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 	    val = -val;
         /* return (q >= 0.)? r : -r ;*/
     }
-
-#endif
-/*-- Switch of AS 111 <-> AS 241 --- */
-
     return mu + sigma * val;
 }
 

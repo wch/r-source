@@ -302,38 +302,6 @@ comparePrimitiveTypes(R_NativePrimitiveArgType type, SEXP s, Rboolean dup)
 /* or Fortran code which is either statically or dynamically linked. */
 
 /* NB: despite its name, this leaves NAOK and DUP arguments on the list */
-#ifdef OLD
-static SEXP naoktrim(SEXP s, int * len, int *naok, int *dup)
-{
-    SEXP value;
-    if(s == R_NilValue) {
-	value = R_NilValue;
-	*naok = 0;
-	*dup = 1;
-	*len = 0;
-    }
-    else if(TAG(s) == NaokSymbol) {
-	value = naoktrim(CDR(s), len, naok, dup);
-	*naok = asLogical(CAR(s));
-	(*len)++;
-    }
-    else if(TAG(s) == DupSymbol) {
-	value = naoktrim(CDR(s), len, naok, dup);
-	*dup = asLogical(CAR(s));
-	(*len)++;
-    }
-    else if(TAG(s) == PkgSymbol) {
-	value = naoktrim(CDR(s), len, naok, dup);
-	strcpy(DLLname, CHAR(STRING_ELT(CAR(s), 0)));
-	return value;
-    }
-    else {
-	CDR(s) = naoktrim(CDR(s), len, naok, dup);
-	(*len)++;
-    }
-    return s;
-}
-#endif
 
 /* find NAOK and DUP, find and remove PACKAGE */
 static SEXP naokfind(SEXP args, int * len, int *naok, int *dup)

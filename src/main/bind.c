@@ -640,13 +640,6 @@ SEXP do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Build and attach the names attribute for the returned object. */
 
     if (data.ans_nnames && data.ans_length > 0) {
-#ifdef OLD
-	PROTECT(ans_names = allocVector(STRSXP, ans_length));
-	data.ans_nnames = 0;
-	ExtractNames(args, recurse, 1, R_NilValue, &data);
-	setAttrib(ans, R_NamesSymbol, ans_names);
-	UNPROTECT(1);
-#else
 	PROTECT(data.ans_names = allocVector(STRSXP, data.ans_length));
 	data.ans_nnames = 0;
 #ifdef EXPT
@@ -670,7 +663,6 @@ SEXP do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif/*EXPT*/
 	setAttrib(ans, R_NamesSymbol, data.ans_names);
 	UNPROTECT(1);
-#endif/* (not) OLD */
     }
     UNPROTECT(2);
     return ans;

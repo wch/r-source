@@ -784,38 +784,6 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
     return call;/* never used; just for -Wall */
 }
 
-
-#ifdef OLD
-/* swap works by finding for a index i, the position */
-/* in the array with dimensions dims1 in terms of */
-/* (i, j, k, l, m, ...); i.e. component-wise position, */
-/* then permute these to the order of the array with */
-/* dimensions dims2 and work backwards to an integer */
-/* offset in this array */
-
-static int swap(int ival, SEXP dims1, SEXP dims2, SEXP perm,
-		SEXP ind1, SEXP ind2)
-{
-    int len, t1, i;
-    len = length(dims1);
-    t1 = ival;
-    for (i = 0; i < len; i++) {
-	INTEGER(ind1)[i] = t1 % INTEGER(dims1)[i];
-	t1 = t1 / INTEGER(dims1)[i];
-    }
-
-    for (i = 0; i < len; i++)
-	INTEGER(ind2)[i] = INTEGER(ind1)[(INTEGER(perm)[i] - 1)];
-
-    t1 = INTEGER(ind2)[(len - 1)];
-    for (i = (len - 2); i >= 0; i--) {
-	t1 *= INTEGER(dims2)[i];
-	t1 += INTEGER(ind2)[i];
-    }
-    return t1;
-}
-#endif
-
 /*
  New version of aperm, using strides for speed.
  Jonathan Rougier <J.C.Rougier@durham.ac.uk>
@@ -858,11 +826,6 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* check the permutation */
 
     PROTECT(perm = coerceVector(CADR(args), INTSXP));
-#ifdef OLD
-    if (!isVector(perm) || (length(perm) != length(dimsa)))
-	errorcall(call,
-	 "invalid second argument, must be a vector of the appropriate length");
-#else
     vmax = vmaxget();
     pp = (int *) R_alloc(n, sizeof(int));
     if (length(perm) == 0) {
@@ -884,7 +847,6 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i=0; i<n; i++)
 	if (iip[i]==0)
 	    errorcall(call, "invalid permutation (`perm')");
-#endif
 
     /* create the stride object and permute */
 
