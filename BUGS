@@ -168,6 +168,18 @@ none
 
 Directory:  incoming
 
+* PR# 530 *
+Subject: rpois hangs
+From: kjetikj@astro.uio.no
+Date: Sun, 30 Apr 2000 21:01:02 +0200 (MET DST)
+* PR# 526 *
+Subject: INSTALL_SCRIPT during installation
+From: "Johnny C. Lam" <lamj@stat.cmu.edu>
+Date: Wed, 19 Apr 2000 11:27:52 -0400
+* PR# 522 *
+Subject: na.omit fails for matrices
+From: Sergei Zuyev <sergei@stams.strath.ac.uk>
+Date: Mon, 17 Apr 2000 11:52:28 +0100
 * PR# 529 *
 Subject: graphics: par(mfg=c(i,j,r,c))
 From: Craig.Mckinstry@pnl.gov
@@ -177,11 +189,3 @@ Subject: Wrong SEs in predict.lm(..., type="terms")
 Subject: Wrong SEs in predict.lm(..., type="terms")
 From: John Maindonald <john.maindonald@anu.edu.au>
 Date: Wed, 26 Apr 2000 12:42:00 +1000 (EST)
-* PR# 526 *
-Subject: INSTALL_SCRIPT during installation
-From: "Johnny C. Lam" <lamj@stat.cmu.edu>
-Date: Wed, 19 Apr 2000 11:27:52 -0400
-* PR# 522 *
-Subject: na.omit fails for matrices
-From: Sergei Zuyev <sergei@stams.strath.ac.uk>
-Date: Mon, 17 Apr 2000 11:52:28 +0100
