@@ -67,7 +67,16 @@ ps.options(paper, horizontal, width, height, family, encoding,
     \code{"Palatino"} or \code{"Times"}, OR a character vector of length
     four. }
   \item{encoding}{the name of an encoding file. Defaults to
-    "ISOLatin1.enc" in the \file{R\_HOME/afm} directory, which is used
+#ifdef unix
+"ISOLatin1.enc"
+#endif
+#ifdef windows
+"WinAnsi.enc"
+#endif
+#ifdef mac
+"MacRoman.enc"
+#endif
+    in the \file{R\_HOME/afm} directory, which is used
     if the path does not contain a path separator.  An extension
     \code{".enc"} can be omitted.}
   \item{pointsize}{the default point size to be used.}

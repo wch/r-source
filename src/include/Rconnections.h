@@ -39,6 +39,7 @@ typedef struct Rconn
     int nPushBack, posPushBack; /* number of lines, position on top line */
     char **PushBack;
     int save, save2;
+    unsigned char encoding[256];
     void *private;
 } *Rconnection;
 

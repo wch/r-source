@@ -51,11 +51,13 @@ close.connection <- function (con, type = "rw")
     invisible(.Internal(close(con, type)))
 }
 
-file <- function(description, open = "", blocking = TRUE)
-    .Internal(file(description, open, blocking))
+file <- function(description, open = "", blocking = TRUE,
+                 encoding = getOption("encoding"))
+    .Internal(file(description, open, blocking, encoding))
 
-pipe <- function(description, open = "")
-    .Internal(pipe(description, open))
+pipe <- function(description, open = "",
+                 encoding = getOption("encoding"))
+    .Internal(pipe(description, open, encoding))
 
 textConnection <- function(object, open = "r")
     .Internal(textConnection(deparse(substitute(object)), object, open))
@@ -135,3 +137,7 @@ writeBin <- function(object, con, size = NA, endian = .Platform$endian)
     }
     invisible(.Internal(writeBin(object, con, size, swap)))
 }
+
+## encoding vectors
+native.enc <- 0:255
+# rest in Rprofile.*

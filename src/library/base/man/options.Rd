@@ -156,6 +156,10 @@ getOption(x)
     to be used in the data editor \code{\link{dataentry}}.  If this is
     unset, 0, negative or \code{NA}, variable cell widths are used.}
 
+  \item{encoding}{An integer vector of length 256 holding an input
+    encoding.  Defaults to \code{native.enc} (= \code{0:255}).
+    See \code{\link{connections}}.}
+
   \item{x}{a character string holding one of the above option names.}
 }
 \description{

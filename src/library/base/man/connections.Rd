@@ -12,13 +12,17 @@
 \alias{seek.connection}
 \alias{print.connection}
 \alias{summary.connection}
+\alias{ISOLatin1}
+\alias{MacRoman}
+\alias{WinAnsi}
+\alias{native.enc}
 \title{Functions to Manipulate Connections}
 \description{
   Functions to create, open, close and position connections.
 }
 \usage{
-file(description, open = "", blocking = TRUE)
-pipe(description, open = "")
+file(description, open = "", blocking = TRUE, encoding = getOption("encoding"))
+pipe(description, open = "", encoding = getOption("encoding"))
 
 open(con, open = "rt", blocking = TRUE)
 close(con, type = "rw")
@@ -36,6 +40,7 @@ isSeekable(con)
   \item{open}{character.  A description of how to open the connection
     (if at all). See Details for possible values.}
   \item{blocking}{logical. Currently ignored.}
+  \item{encoding}{An integer vector of length256.}
   \item{type}{character. Currently ignored.}
   \item{where}{integer.  A file position, or \code{NA}.}
   \item{rw}{character.  Currently ignored.}
@@ -79,6 +84,12 @@ isSeekable(con)
   modes, but there is for file-like connections on Windows, and
   \code{\link{pushBack}} is text-oriented and is only allowed on
   connections open for reading in text mode.
+
+  The encoding vector is used to map the input from a file or pipe to
+  the platform's native character set.  Supplied examples are
+  \code{native.enc} as well as \code{MacRoman}, \code{WinAnsi} and
+  \code{ISOLatin1}, whose actual encoding is platform-dependent. Missing
+  characters are mapped to a space in these encodings.
 }
 \value{
   \code{file} and \code{pipe} return a connection object which inherits
