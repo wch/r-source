@@ -59,6 +59,7 @@
 #include <R_ext/eventloop.h>
 
 #ifdef HAVE_AQUA
+#define __DEBUGGING__
 #include <Carbon/Carbon.h>
 
 #include "Raqua.h"

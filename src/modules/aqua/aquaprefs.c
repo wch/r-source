@@ -30,6 +30,7 @@
 
 
 #ifdef HAVE_AQUA
+#define __DEBUGGING__
 #include <Carbon/Carbon.h>
 
 #include "Raqua.h"

@@ -37,6 +37,7 @@
 #include "Print.h"
 
 #ifdef HAVE_AQUA
+#define __DEBUGGING__
 
 # include <Carbon/Carbon.h>
 
