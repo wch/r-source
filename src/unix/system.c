@@ -49,6 +49,7 @@
 
 #include "Runix.h"
 
+#include <R_ext/GetX11Image.h>  /* for *GetX11Image declarations */
 
 #ifdef HAVE_AQUA
 void R_StartConsole(void) { ptr_R_StartConsole(); }
@@ -85,9 +86,6 @@ void (*ptr_gnome_start)(int ac, char **av, Rstart Rp);
 
 void R_setStartTime(void); /* in sys-unix.c */
 void R_load_gnome_shlib(void); /* in dynload.c */
-
-Rboolean (*ptr_R_GetX11Image)(int, void *, int *, int *); /* used by package tkrplot */
-
 
 int Rf_initialize_R(int ac, char **av);
 

@@ -330,6 +330,11 @@ C-LEVEL FACILITIES
 	defining STRICT_R_HEADERS and/or R_NO_REMAP -- see `Writing R
 	Extensions' for details.
 
+    o	New entry point R_GetX11Image and formerly undocumented
+	ptr_R_GetX11Image are in new header R_ext/GetX11Image.  These
+	are used by package trkplot.
+
+
 BUG FIXES
 
     o	Sys.sleep() on Unix was having trouble with waits of less than 0.5s

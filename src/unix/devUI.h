@@ -6,9 +6,6 @@
 
 #include "Startup.h"		/* for SA_TYPE */
 
-Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight);
-/* pximage is really (XImage **) */
-
 extern Rboolean (*ptr_GnomeDeviceDriver)(DevDesc*, char*, double, double, double);
 
 extern Rboolean (*ptr_GTKDeviceDriver)(DevDesc*, char*, double, double, double);
