@@ -20,7 +20,8 @@ capabilities(what = NULL)
     \item{X11}{(Unix)  Are \code{X11} and the data editor available?}
     \item{GNOME}{(Unix)  Is the GNOME GUI in use and are \code{GTK} and
       \code{GNOME} graphics devices available?}
-    \item{libz}{Is \code{\link{gzfile}} available?}
+    \item{libz}{Is \code{\link{gzfile}} available? As of \R 1.5.0 this
+      will always be true.}
     \item{http/ftp}{Are \code{\link{url}} and the internal method for
       \code{\link{download.file}} available?}
     \item{sockets}{Are \code{\link{make.socket}} and related functions

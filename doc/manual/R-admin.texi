@@ -597,7 +597,7 @@ Unix-like platforms, or which will be used by @R{} if found by
 You need a means of compiling C and FORTRAN (see @ref{Using FORTRAN}).
 Some add-on packages also need a C++ compiler.
 
-You will need Perl version 5, available via
+You will need Perl version 5.004 or later, available via
 @uref{http://www.perl.com/CPAN/}, to build any of the on-line
 documentation.
 
@@ -615,7 +615,9 @@ The typeset documentation needs @command{tex} and @command{latex}, or
 The command-line editing depends on the @code{readline} library
 available from any GNU mirror: you will need a fairly recent version.
 
-Use of @code{gzfile} connections needs @code{zlib} (version 1.1.3 or later).
+Use of @code{gzfile} connections needs @code{zlib} (version 1.1.3 or
+later): if an installed version is not found, that in the @R{} sources
+will be compiled in.
 
 The bitmapped graphics devices @code{jpeg()} and @code{png()} need the 
 appropriate libraries installed: @code{jpeg} (version 6b or later) or
