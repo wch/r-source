@@ -17,7 +17,6 @@ winalloc-CFLAGS=-DDANGER=1
 
 clean:
 	$(RM) *.o *.a *~ \#*\#
-	$(MAKE) -C gifs clean
 
 #dependencies
 arith.o: graphapp.h
