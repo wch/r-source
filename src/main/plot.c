@@ -346,7 +346,7 @@ SEXP FixupVFont(SEXP vfont) {
 	}
 	fontindex = INTEGER(vf)[1];
 	if (fontindex < minindex || fontindex > maxindex)
-	    error("Invalid vfont value");	
+	    error("Invalid vfont value");
 	ans = allocVector(INTSXP, 2);
 	for (i=0; i<2; i++)
 	    INTEGER(ans)[i] = INTEGER(vf)[i];
@@ -1663,7 +1663,7 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP sx, sy, sxy, txt, adj, pos, cex, col, font, vf, vfont;
+    SEXP sx, sy, sxy, txt, adj, pos, cex, col, font, vfont;
     int i, n, ncex, ncol, nfont, ntxt, xpd;
     double adjx = 0, adjy = 0, offset = 0.5;
     double *x, *y;
@@ -1728,7 +1728,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     PROTECT(vfont = FixupVFont(CAR(args)));
-    if (!isNull(vfont)) 
+    if (!isNull(vfont))
 	vectorFonts = 1;
     args = CDR(args);
 
