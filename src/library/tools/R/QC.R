@@ -549,7 +549,7 @@ function(package, dir, lib.loc = NULL,
     db_usages <- lapply(db_usage_texts, .parse_usage_as_much_as_possible)
     ind <- sapply(db_usages,
                   function(x) !is.null(attr(x, "bad_lines")))
-    bad_lines <- sapply(db_usages[ind], attr, "bad_lines")
+    bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
     ## <FIXME>
     ## Currently, there is no useful markup for S3 Ops group methods
@@ -1155,7 +1155,7 @@ function(package, dir, lib.loc = NULL)
     db_usages <- lapply(db_usage_texts, .parse_usage_as_much_as_possible)
     ind <- as.logical(sapply(db_usages,
                              function(x) !is.null(attr(x, "bad_lines"))))
-    bad_lines <- sapply(db_usages[ind], attr, "bad_lines")
+    bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
     dbArgumentNames <-
         .apply_Rd_filter_to_Rd_db(db, .get_Rd_argument_names)
@@ -1330,6 +1330,13 @@ function(x, ...)
 
         writeLines("")
     }
+
+    if(identical(Sys.getenv("_R_CHECK_WARN_BAD_USAGE_LINES_"), "TRUE")
+       && length(bad_lines <- attr(x, "bad_lines"))) {
+        writeLines(paste("Bad \\usage lines found:\n"))
+        print(bad_lines)
+    }
+    
     invisible(x)
 }
 
@@ -1494,7 +1501,7 @@ function(package, dir, lib.loc = NULL)
     db_usages <- lapply(db_usage_texts, .parse_usage_as_much_as_possible)
     ind <- sapply(db_usages,
                   function(x) !is.null(attr(x, "bad_lines")))
-    bad_lines <- sapply(db_usages[ind], attr, "bad_lines")
+    bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
     bad_doc_objects <- list()
 
@@ -2446,6 +2453,7 @@ function(db)
 
     files_with_surely_bad_Rd <- list()
     files_with_likely_bad_Rd <- list()
+    files_with_unknown_encoding <- NULL
     files_with_missing_mandatory_tags <- NULL
     files_with_duplicated_unique_tags <- NULL
     files_with_bad_name <- files_with_bad_title <- NULL
@@ -2459,6 +2467,9 @@ function(db)
         }
         if(length(x$rest))
             files_with_likely_bad_Rd[[f]] <- x$rest
+        if(length(x$meta$encoding) && is.na(x$meta$encoding))
+            files_with_unknown_encoding <-
+                c(files_with_unknown_encoding, f)
         tags <- sapply(x$data$tags, "[[", 1)
         ## Let's not worry about named sections for the time being ...
         bad_tags <- c(mandatory_tags %w/o% tags,
@@ -2474,14 +2485,8 @@ function(db)
                 rbind(files_with_missing_mandatory_tags,
                       cbind(f, bad_tags))
         ind <- which(tags == "name")[1]
-        #if(is.na(ind) ||
-           ## Using LaTeX special characters (# $ % & ~ _ ^ \ { })
-           ## causes the creation of PDF bookmarks to fail.
-         #  (regexpr(paste("(^[[:space:]]*$)|",
-         #                 "(#|\\\$|\%|&|~|_|\\\^|\\\\|\{|\})",
-         #                 sep = ""),
-         #           x$data$vals[[ind]]) != -1))
-        if(is.na(ind)) files_with_bad_name <- c(files_with_bad_name, f)
+        if(is.na(ind))
+            files_with_bad_name <- c(files_with_bad_name, f)
         ind <- which(tags == "title")[1]
         if(is.na(ind) ||
            (regexpr("^[[:space:]]*$", x$data$vals[[ind]]) != -1))
@@ -2500,6 +2505,7 @@ function(db)
 
     val <- list(files_with_surely_bad_Rd,
                 files_with_likely_bad_Rd,
+                files_with_unknown_encoding,
                 files_with_missing_mandatory_tags,
                 files_with_duplicated_unique_tags,
                 files_with_bad_name,
@@ -2508,6 +2514,7 @@ function(db)
     names(val) <-
         c("files_with_surely_bad_Rd",
           "files_with_likely_bad_Rd",
+          "files_with_unknown_encoding",
           "files_with_missing_mandatory_tags",
           "files_with_duplicated_unique_tags",
           "files_with_bad_name",
@@ -2558,15 +2565,17 @@ function(x, ...)
         }
     }
 
+    if(length(x$files_with_unknown_encoding)) {
+        writeLines(c("Rd files with unknown encoding:",
+                     paste(" ", x$files_with_unknown_encoding),
+                     ""))
+    }
+
     if(length(x$files_with_bad_name)) {
-        writeLines(c(paste("Rd files with missing or empty or invalid ",
+        writeLines(c(paste("Rd files with missing or empty ",
                            sQuote("\\name"), ":", sep = ""),
-                     paste(" ", x$files_with_bad_name)))
-        msg <- paste("Note that the \\name must not contain the LaTeX",
-                     "special characters (# $ % & ~ _ ^ \\ { }),",
-                     "as these cause the creation",
-                     "of PDF bookmarks to fail.")
-        writeLines(c(strwrap(msg), ""))
+                     paste(" ", x$files_with_bad_name),
+                     ""))
     }
 
     if(length(x$files_with_bad_title)) {
@@ -2937,6 +2946,10 @@ function(txt)
     txt <- gsub("\\\\%", "%", txt)
     txt <- gsub(.S3_method_markup_regexp, "\"\\\\\\1\"", txt)
     txt <- gsub(.S4_method_markup_regexp, "\"\\\\\\1\"", txt)
+    ## Transform <<see below>> style markup so that we can catch and
+    ## throw it, rather than "basically ignore" it by putting it in the
+    ## bad_lines attribute.
+    txt <- gsub("(<<?see below>>?)", "`\\1`", txt)
     .parse_text_as_much_as_possible(txt)
 }
 
