@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-17, 2000-10-13
+Version 1.1-18, 2000-10-25
 Kurt Hornik
 
 
@@ -340,9 +340,9 @@ distribution is available.  We hope that this will change soon.
 packages for the i386 platform (now part of the Debian distribution and
 maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386 and
 sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer, and Vin
-Everett, respectively), SuSE 5.3/6.4 i386 packages by Albrecht Gebhardt,
-Mandrake 7.1 i386 packages by Michele Alzetta, and Linuxppc 5.0 RPMs by
-Alex Buerkle.
+Everett, respectively), SuSE 5.3/6.4/7.0 i386 packages by Albrecht
+Gebhardt, Mandrake 7.1 i386 packages by Michele Alzetta, and Linuxppc 5.0
+RPMs by Alex Buerkle.
 
    The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -425,6 +425,16 @@ analysis software systems.  See
 provides a comprehensive guide to the use of the *nlme* package for linear
 and nonlinear mixed-effects models.  This has a home page at
 `http://nlme.stat.wisc.edu/MEMSS/'.
+
+   As an example of how R can be used in teaching an advanced introductory
+statistics course, see
+     D. Nolan and T. Speed (2000), "Stat Labs: Mathematical Statistics
+     Through Applications", Springer Texts in Statistics, ISBN 0-387-98974-9
+
+This integrates theory of statistics with the practice of statistics
+through a collection of case studies ("labs"), and uses R to analyze the
+data.  More information can be found at
+`http://www.stat.Berkeley.EDU/users/statlabs/'.
 
    Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in:
@@ -1212,6 +1222,11 @@ works, was published in the Journal of Statistical Software
      additive regression splines (MARS), adaptive back-fitting splines
      (BRUTO), and penalized regression.
 
+*mgcv*
+     Routines for multiple smoothing parameter selection by GCV or UBRE for
+     generalized ridge regression problems (e.g., GAMs) with multiple
+     smoothing parameters.
+
 *mlbench*
      A collection of artificial and real-world machine learning benchmark
      problems, including the Boston housing data.
@@ -1363,11 +1378,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *hdf5*
      Interface to the NCSA HDF5 library.
-
-*mgcv*
-     Routines for multiple smoothing parameter selection by GCV or UBRE for
-     generalized ridge regression problems (e.g., GAMs) with multiple
-     smoothing parameters.
 
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive

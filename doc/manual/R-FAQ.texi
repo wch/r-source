@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-17, 2000-10-13
+@set FAQ-VERSION 1.1-18, 2000-10-25
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -412,14 +412,15 @@ distribution is available.  We hope that this will change soon.
 @c redhat   6.x alpha 1.1.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c              i386  1.1.1  Martyn Plummer <plummer@iarc.fr>
 @c              sparc 1.1.1  Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
-@c suse     5.3 i386  1.0.1  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-@c          6.4 i386  1.1.1  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+@c suse     5.3 i386  1.0.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+@c          6.4 i386  1.1.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+@c          7.0 i386  1.1.1  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
 The @file{bin/linux} directory of a CRAN site contains Debian 2.2/2.3
 packages for the i386 platform (now part of the Debian distribution and
 maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386 and
 sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer, and
-Vin Everett, respectively), SuSE 5.3/6.4 i386 packages by Albrecht
+Vin Everett, respectively), SuSE 5.3/6.4/7.0 i386 packages by Albrecht
 Gebhardt, Mandrake 7.1 i386 packages by Michele Alzetta, and Linuxppc
 5.0 RPMs by Alex Buerkle.
 
@@ -530,6 +531,20 @@ J. C. Pinheiro and D. M. Bates (2000), ``Mixed-Effects Models in S and
 provides a comprehensive guide to the use of the @strong{nlme} package
 for linear and nonlinear mixed-effects models.  This has a home page at
 @uref{http://nlme.stat.wisc.edu/MEMSS/}.
+
+As an example of how R can be used in teaching an advanced introductory
+statistics course, see
+@quotation
+D. Nolan and T. Speed (2000), ``Stat Labs: Mathematical Statistics
+Through Applications'', Springer Texts in Statistics, ISBN
+0-387-98974-9
+@end quotation
+
+@noindent
+This integrates theory of statistics with the practice of statistics
+through a collection of case studies (``labs''), and uses R to analyze
+the data.  More information can be found at
+@uref{http://www.stat.Berkeley.EDU/users/statlabs/}.
 
 Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in:
@@ -1458,6 +1473,10 @@ Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
 additive regression splines (MARS), adaptive back-fitting splines
 (BRUTO), and penalized regression.
+@item mgcv
+Routines for multiple smoothing parameter selection by GCV or UBRE for
+generalized ridge regression problems (e.g., GAMs) with multiple
+smoothing parameters.
 @item mlbench
 A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
@@ -1584,10 +1603,6 @@ An integrated set of functions for fitting curves and surfaces including
 thin plate splines, kriging and neural networks.
 @item hdf5
 Interface to the NCSA HDF5 library.
-@item mgcv
-Routines for multiple smoothing parameter selection by GCV or UBRE for
-generalized ridge regression problems (e.g., GAMs) with multiple
-smoothing parameters.
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
