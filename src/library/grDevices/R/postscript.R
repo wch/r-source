@@ -70,17 +70,17 @@ check.options <-
 		    do.keep <- ii & !override.check
 		    warning(paste(sQuote(paste(fn,"(",names(prev[ii]),")",
                                                sep="")),
-                                  collapse=" and "),
+                                  collapse=" and "), " ",
                             ngettext(as.integer(sum(ii)),
-                                     "differ between new and previous",
-                                     "differs between new and previous"),
+                                     "differs between new and previous",
+                                     "differ between new and previous"),
                             if(any(do.keep)) {
                                 paste("\n\t ==> ",
-                                      gettext("NOT changing ",
+                                      gettext("NOT changing "),
                                       paste(sQuote(names(prev[do.keep])),
                                             collapse=" & "),
-                                      sep = ""))},
-                            domain = NA)
+                                      sep = "")},
+                            domain = NA, call. = FALSE)
 		}
 	    names(new) <- NULL
 	    if(any(doubt)) {
