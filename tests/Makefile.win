@@ -48,6 +48,9 @@ test-src-reg-1 = \
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
 
+all-basic-tests = Specific Reg Demo
+all-extra-tests = Internet Lapack Nafns Postscript Random
+
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
 
@@ -60,9 +63,8 @@ test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
 test-out-ts = $(test-src-ts:.R=.Rout)
 
-all-extra-tests = Lapack Nafns Postscript Random Reg
-
-test-out = $(test-src:.R=.Rout) $(test-out-gct) \
+## This macro is used only for dependencies
+test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) $(test-out-lapack) $(test-out-nafns) \
 	$(test-out-random) $(test-out-postscript) $(test-out-reg) \
 	$(test-out-ts)
