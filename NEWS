@@ -281,11 +281,11 @@ NEW FEATURES
 
     o	The INSTALL command for package installation allows a `--save'
 	option.	 Using it causes a binary image of the package contents
-	to be created at INSTALL time and loaded when the library is
+	to be created at install time and loaded when the package is
 	attached.  This saves time, but also uses a more standard way
 	of source-ing the package.  Packages that do more than just
 	assign object definitions may need to install with `--save'.
-	Putting a file `install.R' in the package directory makes
+	Putting a file `INSTALL.R' in the package directory makes
 	`--save' the default behavior.  If that file is not empty, its
 	contents should be R commands executed at the end of creating
 	the image.
@@ -306,7 +306,8 @@ NEW FEATURES
 	for packages and package bundles.
 
     o	configure now tests for the versions of jpeg (>= 6b), libpng (>=
-	1.0.5) and zlib (>= 1.1.3).
+	1.0.5) and zlib (>= 1.1.3).  It no longer checks for the
+	CXML/DXML BLAS libraries on Alphas.
 
     o	Perl scripts now use Cwd::cwd() in place of Cwd::getcwd(), as
 	cwd() can be much faster.
@@ -340,9 +341,6 @@ NEW FEATURES
     o	The internal ftp/http access code maintains the event loop, so
 	you can download whilst running tcltk or Rggobi, say.  It can
 	be hooked into package XML too.
-
-    o	configure no longer checks for the CXML/DXML BLAS libraries on
-	Alphas.
 
 
 
