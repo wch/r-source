@@ -79,7 +79,7 @@ data <-
 		    }
 		}
 	    if (found)
-		system(paste("$RHOME/cmd/pager", file))
+		system(paste("$RHOME/bin/pager", file))
 	}
 	else for (name in names) {
 	    dn <- paste("data/", name, sep = "")
@@ -157,7 +157,7 @@ help <-
 	    topic <- gsub("\\[","\\\\[", topic) # for cmd/help ..
 	    INDICES <- paste(t(outer(lib.loc, package, paste, sep = "/")),
 			     "help", "AnIndex", sep = "/", collapse = " ")
-	    file <- system(paste("${RHOME}/cmd/help INDEX '", topic, "' ",
+	    file <- system(paste("${RHOME}/bin/help INDEX '", topic, "' ",
 				 INDICES, sep=""),
 			   intern = TRUE)
 	    if (file == "") {			# try data .doc -- this is OUTDATED
@@ -169,7 +169,7 @@ help <-
 		    cat ("\t\t\t\t\t\tHelp file name `", sub(".*/", "", file),
 			 ".Rd'\n", sep = "")
 		if (!offline)
-		    system(paste("${RHOME}/cmd/pager", file))
+		    system(paste("${RHOME}/bin/pager", file))
 		else {
 		    FILE <- tempfile()
 		    ## on.exit(unlink(paste(FILE, "*", sep = "")))
@@ -181,7 +181,7 @@ help <-
 		    system(paste("cat ", sub("help/", "latex/", file), ".tex >>",
 				 FILE, sep = ""))
 		    cat("\\end{document}\n", file = FILE, append = TRUE)
-		    system(paste("${RHOME}/cmd/help PRINT", FILE, topic))
+		    system(paste("${RHOME}/bin/help PRINT", FILE, topic))
 		    return()
 		}
 	    } else
@@ -247,7 +247,7 @@ library <-
 	    stop(paste("No documentation for package `",
 		       help, "'", sep = ""))
 	else
-	    system(paste("$RHOME/cmd/pager", file))
+	    system(paste("$RHOME/bin/pager", file))
 
     } else {
 	file <- tempfile("R.")
@@ -262,7 +262,7 @@ library <-
 			 "2>/dev/null"))
 	    first <- FALSE
 	}
-	system(paste("$RHOME/cmd/pager", file))
+	system(paste("$RHOME/bin/pager", file))
     }
     if (logical.return)
 	TRUE
@@ -298,7 +298,7 @@ unix <- function(call, intern = FALSE) {
 system.file <- function(file = "", pkg = .packages(), lib = .lib.loc) {
     FILES <- paste(t(outer(lib, pkg, paste, sep = "/")),
 		   file, sep = "/", collapse = " ")
-    system(paste("${RHOME}/cmd/filename", FILES), intern = TRUE)
+    system(paste("${RHOME}/bin/filename", FILES), intern = TRUE)
 }
 
 system.time <- function(expr) {
