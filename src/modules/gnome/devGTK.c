@@ -120,8 +120,8 @@ static char *fixedname = "fixed";
 static char *slant[] = {"r", "o"};
 static char *weight[] = {"medium", "bold"};
 
-char *fontname;
-GHashTable *font_htab = NULL;
+static char *fontname;
+static GHashTable *font_htab = NULL;
 
 struct _FontMetricCache {
     gint ascent[255];
