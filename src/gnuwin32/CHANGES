@@ -7,29 +7,82 @@ See the file NEWS for changes that affect all versions of R.
 rw1020
 ======
 
-There are new console menu items `Load History' on the File menu and
-`Clear console' on the Edit menu. (The current line is not cleared.)
+This version has been compiled against msvcrt.dll not libcrt.dll.  This
+give small speed increases and generally more accurate results.
 
-The menu items `Load/Save Image' are now called `Load/Save Workspace'.
 
-The Print menu item on the File menu of a console or pager now prints
-the selection if there is one, and the whole saved contents otherwise.
+This release has a number of changes to bring its behaviour closer to that 
+of Unix versions of R.
 
-Environment variables R_HISTFILE and R_HISTSIZE can be set to specify
-the name of the commands history file (default .Rhistory)
-and its maximum size (in lines, default 512).
+-   The history is only saved when the workspace is  (to be compatible with
+    Unix versions of R) and whether it is restored is controlled by
+    option --no-restore-history (implied by --no-restore and --vanilla).
 
-The RGui console now uses the same history mechanism as Rterm. The
-history limit is now just on the number of lines (rather than on the
-number of lines and the total size).  The mechanism has been altered
-so that Rterm records repeated lines (as Rgui always did).
+-   Environment variables R_HISTFILE and R_HISTSIZE can be set to specify
+    the name of the commands history file (default .Rhistory)
+    and its maximum size (in lines, default 512).
 
-The history is only saved when the workspace is, to be compatible with
-other versions of R, and whether it is restored is controlled by
-option --no-restore-history (implied by --no-restore and --vanilla).
+-   More locale support is now enabled where supported by the version of
+    Windows in use (probably only NT and 2000).  It means that sorting
+    and comparison of character strings will be locale-specific.  You
+    may not want this (the sort order in English is aAbB..., for
+    example) and setting Sys.setlocale("LC_COLLATE", "C") should give
+    the previous behaviour.
 
-There are some extra command-line editing commands: see the
-Help | Console information screen.
+-   make check no longer makes R, just runs the tests (as make test
+    always has).
+
+-   It is possible to make DVI versions of the manuals: see file INSTALL.
+
+-   New utility Rcmd.exe to emulate R CMD : see below.
+
+
+Gui changes
+-----------
+
+-   There are new console menu items `Load History' on the File menu and
+    `Clear console' on the Edit menu. (The current line is not cleared.)
+
+-   The menu items `Load/Save Image' are now called `Load/Save Workspace'.
+
+-   The Print menu item on the File menu of a console or pager now prints
+    the selection if there is one, and the whole saved contents otherwise.
+
+-   The RGui console now uses the same history mechanism as Rterm. The
+    history limit is now just on the number of lines (rather than on the
+    number of lines and the total size).  The mechanism has been altered
+    so that Rterm records repeated lines (as Rgui always did).
+
+-   There are some extra command-line editing commands: see the
+    Help | Console information screen.
+
+
+New utilities
+-------------
+
+    The utilities Rd2dvi.sh Rd2txt Rdconv Rdindex Sd2Rd are no longer
+    batch files but accessed through a new front-end Rcmd.exe, so if this
+    is in your path you can use
+
+	Rcmd Rd2dvi.sh [options] files
+	Rcmd Rd2txt              file
+	Rcmd Rdconv    [options] file
+	Rcmd Rdindex   [options] files
+	Rcmd Sd2Rd     [options] file
+
+    There are new utilities (in rw1020sp.zip) INSTALL, REMOVE, SHLIB
+    which can be used to install a source package, remove a package and
+    make a DLL, and implementations of the Unix R utilities BATCH build
+    and check. Invoke these by
+
+	Rcmd INSTALL [options] pkgdir(s)
+	Rcmd REMOVE  [options] pkg(s)
+	Rcmd SHLIB   [options] file(s)
+	Rcmd build   [options] pkgdir(s)
+	Rcmd check   [options] pkgdir(s)	Rcmd BATCH   [options] infile [outfile]
+
+    Use option --help with any of these for fuller details.
+
 
 Rterm in interactive use sets the title of the window it is running
 in, and unsets it when it terminates.
@@ -45,39 +98,9 @@ so memory usage will usually grow slowly over the course of a session.
 Memory used by large objects will normally be returned at garbage
 collection.
 
-make check no longer makes R, just runs the tests (as make test
-always has).
-
-The utilities Rd2dvi.sh Rd2txt Rdconv Rdindex Sd2Rd are no longer
-batch files but accessed through a new front-end Rcmd.exe, so if this
-is in your path you can use
-
-	Rcmd Rd2dvi.sh [options] files
-	Rcmd Rd2txt              file
-	Rcmd Rdconv    [options] file
-	Rcmd Rdindex   [options] files
-	Rcmd Sd2Rd     [options] file
-
-There are new utilities (in rw1020sp.zip) INSTALL, REMOVE, SHLIB which
-can be used to install a source package, remove a package and make a
-DLL, and close analogues of the Unix R utilities BATCH build and check.
-Invoke these by
-
-	Rcmd INSTALL [options] pkgdir(s)
-	Rcmd REMOVE  [options] pkg(s)
-	Rcmd SHLIB   [options] file(s)
-	Rcmd build   [options] pkgdir(s)
-	Rcmd check   [options] pkgdir(s)
-	Rcmd BATCH   [options] infile [outfile]
-
-Use option --help with any of these for fuller details.
-
-
 DLLs for packages (including standard packages supplied with R)
 automatically gain version information when compiled under this version.
 (Use the Version tab on the Properties dialog box to see it.)
-
-It is possible to make DVI versions of the manuals: see INSTALL.
 
 
 

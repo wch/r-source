@@ -11,6 +11,14 @@ See the file `CHANGES' for the new features of this version.
 [Testing on Windows 2000 has not been extensive, and a few features
 have been reported to not work there.]
 
+As of rw1020 you will need MSVCRT.dll installed.  It is installed on
+all Windows 98, ME, NT4.0 and 2000 machines, but not all 95 machines.
+You can download it from
+
+	ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe
+
+a self-extracting zip archive that contains instructions.
+
 
 Installation
 ============
