@@ -392,6 +392,8 @@ BUG FIXES
 
     o	isoreg() could segfault on monotone input sequences.  (PR#6494)
 
+    o	Rdconv detected \link{\url{}} only very slowly.  (PR#6496)
+
 
 
 	**************************************************

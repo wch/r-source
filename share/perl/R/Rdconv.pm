@@ -745,6 +745,8 @@ sub text2html {
 	my $argkey = $arg;
 	$argkey =~ s/&lt;/</go;
 	$argkey =~ s/&gt;/>/go;
+	die "\nERROR: command (e.g. \\url) inside \\link\n" 
+	    if $arg =~ normal-bracket;
 	$htmlfile = $main::htmlindex{$argkey};
 	if($htmlfile && !length($opt)){
 	    if($using_chm) {
