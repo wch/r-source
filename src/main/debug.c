@@ -36,6 +36,8 @@ SEXP do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 	DEBUG(CAR(args)) = 1;
 	break;
     case 1:
+	if( DEBUG(CAR(args)) != 1 )
+		warningcall(call, "argument is not being debugged\n");
 	DEBUG(CAR(args)) = 0;
 	break;
     }
