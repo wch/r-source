@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.6-25, 2003-01-13
+@set FAQ-VERSION 1.6-27, 2003-01-16
 @set REL-VERSION 1.6.2
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -432,18 +432,18 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-01-12:
+@c Linux binaries as of 2003-01-15:
 @c
 @c debian   woody i386  1.6.2  Dirk Eddelbuettel <edd@debian.org>
-@c          sarge i386  1.6.1  Dirk Eddelbuettel <edd@debian.org>
-@c mandrake 8.*   i386  1.6.1  Michele Alzetta <mikalzet@libero.it>
-@c          9.0   i386  1.6.1  Michele Alzetta <mikalzet@libero.it>
+@c          sarge i386  1.6.2  Dirk Eddelbuettel <edd@debian.org>
+@c mandrake 8.*   i386  1.6.2  Michele Alzetta <mikalzet@libero.it>
+@c          9.0   i386  1.6.2  Michele Alzetta <mikalzet@libero.it>
 @c redhat   7.x   alpha 1.6.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c                i386  1.6.0  Martyn Plummer <plummer@iarc.fr>
-@c          8.x   i386  1.6.1  Martyn Plummer <plummer@iarc.fr>
-@c suse     7.3   i386  1.6.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c          8.0   i386  1.6.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c          8.1   i386  1.6.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c                i386  1.6.2  Martyn Plummer <plummer@iarc.fr>
+@c          8.x   i386  1.6.2  Martyn Plummer <plummer@iarc.fr>
+@c suse     7.3   i386  1.6.2  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c          8.0   i386  1.6.2  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c          8.1   i386  1.6.2  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
 stable/testing packages for the i386 platform (now part of the Debian
@@ -1782,6 +1782,9 @@ Basic functions for the generalised (Tukey) lambda distribution.
 @item gllm
 Routines for log-linear models of incomplete contingency tables,
 including some latent class models via EM and Fisher scoring approaches.
+@item glmmML
+A Maximum Likelihood approach to generalized linear models with random
+intercept.
 @item gpclib
 General polygon clipping routines for R based on Alan Murta's C
 library.

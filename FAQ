@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-25, 2003-01-13
+Version 1.6-27, 2003-01-16
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1569,6 +1569,10 @@ distributions of R.)
      Routines for log-linear models of incomplete contingency tables,
      including some latent class models via EM and Fisher scoring
      approaches.
+
+*glmmML*
+     A Maximum Likelihood approach to generalized linear models with random
+     intercept.
 
 *gpclib*
      General polygon clipping routines for R based on Alan Murta's C
