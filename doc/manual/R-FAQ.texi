@@ -1731,7 +1731,7 @@ Inequality, concentration and poverty measures, and Lorenz curves
 Improved predictive models by direct and indirect bootstrap aggregation
 in classification and regression as well as resampling based estimators
 of prediction error.
-@item knn.in.leaf
+@item knnTree
 Construct or predict with @math{k}-nearest-neighbor classifiers, using
 cross-validation to select @math{k}, choose variables (by forward or
 backwards selection), and choose scaling (from among no scaling, scaling
