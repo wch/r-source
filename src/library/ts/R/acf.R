@@ -46,11 +46,9 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
                          na.action = na.fail, ...)
 {
     series <- deparse(substitute(x))
-    if(is.matrix(x)) {
-        m <- match.call()
-        m[[1]] <- as.name("pacf.mts")
-        return(eval(m, parent.frame()))
-    }
+    if(is.matrix(x))
+        return(pacf(as.ts(x), lag.max=lag.max, plot=plot,
+                    na.action=na.action, ...))
     x <- na.action(as.ts(x))
     if(!is.numeric(x))
         stop("`x' must be numeric")
