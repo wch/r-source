@@ -19,8 +19,12 @@
 
 #include <R_ext/Boolean.h>
 
-typedef struct Rconn 
-{
+/* until we make connections more public this allows the opaque
+   pointer definition to be made available in Rinternals.h */
+#ifndef HAVE_RCONNECTION_TYPEDEF
+typedef struct Rconn  *Rconnection;
+#endif
+struct Rconn {
     char* class;
     char* description;
     char mode[5];
@@ -42,7 +46,7 @@ typedef struct Rconn
     int save, save2;
     unsigned char encoding[256];
     void *private;
-} *Rconnection;
+};
 
 typedef struct fileconn {
     FILE *fp;
