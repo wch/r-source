@@ -192,12 +192,11 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
         else xint <- object$x.intercept
         x <- rbind(sweep(newdata, 2, object$x.mean),
                    matrix(rep(0, nser), n.ahead, nser, byrow=TRUE))
-        ar <- aperm(ar, c(2, 3, 1))
         if(p > 0) {
             for(i in 1:n.ahead) {
-                x[n+i,] <- ar[,,1] %*% x[n+i-1,] + xint
+                x[n+i,] <- ar[1,,] %*% x[n+i-1,] + xint
                 if(p > 1) for(j in 2:p)
-                    x[n+i,] <- x[n+i,] + ar[,,j] %*% x[n+i-j,]
+                    x[n+i,] <- x[n+i,] + ar[j,,] %*% x[n+i-j,]
             }
             pred <- x[n+(1:n.ahead), ]
         } else {
@@ -212,7 +211,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
     } else {
         if(is.null(object$x.intercept)) xint <- 0
         else xint <- object$x.intercept
-        x <- c(newdata-object$x.mean, rep(0, n.ahead))
+        x <- c(newdata - object$x.mean, rep(0, n.ahead))
         if(p > 0) {
             for(i in 1:n.ahead) {
                 x[n+i] <- sum(ar * x[n+i - (1:p)]) + xint
