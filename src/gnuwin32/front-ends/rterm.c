@@ -66,5 +66,6 @@ int AppMain (int argc, char **argv)
     signal(SIGBREAK, my_onintr);
     setup_term_ui();
     mainloop();
+    /* NOTREACHED */
     return 0;
 }

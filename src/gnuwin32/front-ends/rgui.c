@@ -49,5 +49,6 @@ int AppMain (int argc, char **argv)
     cmdlineoptions(argc, argv);
     setupui();
     mainloop();
+    /* NOTREACHED */
     return 0;
 }
