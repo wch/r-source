@@ -127,29 +127,32 @@ function(fname, envir, mustMatch = TRUE) {
     ##             { ... <UME> ... }
     ## then a recognizer for UME might be as follows.
 
-    if(!exists(fname, mode = "function", envir = envir, inherits = FALSE))
-        return(FALSE)
-    f <- get(fname, mode = "function", envir = envir, inherits = FALSE)
+    f <- get(fname, envir = envir, inherits = FALSE)
+    if(!is.function(f)) return(FALSE)
     isUMEbrace <- function(e) {
-        for (ee in as.list(e[-1])) if (isUME(ee)) return(TRUE)
-        FALSE
+        for (ee in as.list(e[-1])) if (nchar(res <- isUME(ee))) return(res)
+        ""
     }
     isUMEif <- function(e) {
         if (length(e) == 3) isUME(e[[3]])
-        else isUME(e[[3]]) || isUME(e[[4]])
+        else {
+            if (nchar(res <- isUME(e[[3]]))) res
+            else if (nchar(res <- isUME(e[[4]]))) res
+            else ""
+        }
+
     }
     isUME <- function(e) {
         if (is.call(e) && (is.name(e[[1]]) || is.character(e[[1]]))) {
-            res <- switch(as.character(e[[1]]),
-                          UseMethod = TRUE,
-                          "{" = isUMEbrace(e),
-                          "if" = isUMEif(e),
-                          FALSE)
-            if(res && mustMatch) res <- as.character(e[[2]]) == fname
-            res
-        } else FALSE
+            switch(as.character(e[[1]]),
+                   UseMethod = as.character(e[[2]]),
+                   "{" = isUMEbrace(e),
+                   "if" = isUMEif(e),
+                   "")
+        } else ""
     }
-    isUME(body(f))
+    res <- isUME(body(f))
+    if(mustMatch) res == fname else nchar(res) > 0
 }
 
 ### * .listFilesWithExts
