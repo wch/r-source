@@ -554,7 +554,8 @@ seq.POSIXt <-
     if (length(by) != 1) stop("`by' must be of length 1")
     valid <- 0
     if (inherits(by, "difftime")) {
-        by <- unclass(by)
+        by <- switch(attr(by,"units"), secs = 1, mins = 60, hours = 3600,
+                     days = 86400, weeks = 7*86400) * unclass(by)
     } else if(is.character(by)) {
         by2 <- strsplit(by, " ")[[1]]
         if(length(by2) > 2 || length(by2) < 1)

@@ -675,11 +675,14 @@ BUG FIXES
 
     o	Sweave() now handles empty chunks at the end of files correctly.
 
-    o	[<- lost the object bit if coercion was involved.
+    o	[<-() lost the object bit if coercion was involved.
 
     o	package::object wasn't being deparsed properly.
 
-    o	rank(c("B",NA)) no longer returns character.
+    o	seq.POSIXt() with `by' an object of class "difftime" ignored
+	the units.
+
+    o	rank(c("B", NA)) no longer returns character.
 
 
 
