@@ -2,6 +2,15 @@
 
 NEW FEATURES
 
+    o	The mathematical annotation code has been reworked.  Italic
+	correction works better.  Additional functionality will be
+	added.
+
+    o	"sample" now has an optional "prob" argument which gives the
+	probabilities of sampling each element in the vector being
+	sampled.  The present implementation is based on some code
+	from E. S. Venkatraman <venkat@biosta.mskcc.org>.
+
     o   The internal data structure used to represent lists has
 	changed from being based on dotted pairs to generic vectors.
 	Users should see no changes as a result (with the exception
@@ -13,9 +22,6 @@ NEW FEATURES
 
     o	Element labelling in "c" and "unlist" should match that of
 	of S.
-
-    o	A leading ! on a line now causes that line to be passed to
-	the "system" subroutine (if it exists).
 
     o	Added split.screen etc functions for manipulating multiple
 	screens on a single device
