@@ -90,6 +90,12 @@ void onsigusr1()
 {
     RCNTXT *c;
 
+    if (R_interrupts_suspended) {
+	/**** ought to save signal and handle after suspend */
+	REprintf("interrupts suspended; signal ignored");
+	return;
+    }
+	
     inError = 1;
 
     if( R_CollectWarnings ) {
@@ -129,6 +135,12 @@ void onsigusr2()
 {
     inError = 1;
 
+    if (R_interrupts_suspended) {
+	/**** ought to save signal and handle after suspend */
+	REprintf("interrupts suspended; signal ignored");
+	return;
+    }
+	
     if( R_CollectWarnings ) {
 	inError = 2;
 	REprintf("In addition: ");
