@@ -51,6 +51,11 @@ NEW FEATURES
 	vector columns.  Using I() will ensure that names are
 	preserved.
 
+    o	Indexing a vector by a character vector was slow if both the
+	vector and index were long (say 10,000).  Now hashing is used
+	and the time should be linear in the longer of the lengths 
+	(but more memory is used).
+
 
 UTILITIES
 

@@ -1283,3 +1283,16 @@ boxplot(count ~ spray, data = InsectSprays, border=2:7)
 x <- quote(b)
 dump("x", "")
 ## doesn't quote b in 1.9.0
+
+
+## some checks of indexing by character, used to test hashing code
+x <- 1:26
+names(x) <- letters
+x[c("a", "aa", "aa")] <- 100:102
+x
+
+x <- 1:26
+names(x) <- rep("", 26)
+x[c("a", "aa", "aa")] <- 100:102
+x
+##

@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Patched (2004-05-05), ISBN 3-900051-00-3
+Version 2.0.0 Under development (unstable) (2004-05-10), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4030,4 +4030,25 @@ Error in try(x[-c(1, NA)]) : only 0's may mix with negative subscripts
 x <-
 quote(b)
 > ## doesn't quote b in 1.9.0
+> 
+> 
+> ## some checks of indexing by character, used to test hashing code
+> x <- 1:26
+> names(x) <- letters
+> x[c("a", "aa", "aa")] <- 100:102
+> x
+  a   b   c   d   e   f   g   h   i   j   k   l   m   n   o   p   q   r   s   t 
+100   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20 
+  u   v   w   x   y   z  aa 
+ 21  22  23  24  25  26 102 
+> 
+> x <- 1:26
+> names(x) <- rep("", 26)
+> x[c("a", "aa", "aa")] <- 100:102
+> x
+                                                                                
+  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20 
+                          a  aa 
+ 21  22  23  24  25  26 100 102 
+> ##
 > 
