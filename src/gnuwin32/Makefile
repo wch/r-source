@@ -24,6 +24,7 @@ PKGD = $(shell perl pwd.pl $(PKGDIR))
 endif
 
 RPREFIX = $(shell perl fixed/rwver.pl ../../VERSION)
+DATE = $(shell date +%F)
 
 PACKAGES = $(filter-out tcltk, $(R_PKGS_BASE))
 
@@ -460,7 +461,8 @@ rinstaller:
 
 crandir:
 	$(MKDIR) -p cran/mini
-	$(CP) installer/rw*.exe CHANGES cran
+	$(CP) installer/rw*.exe cran
+	$(CP) CHANGES cran/CHANGES.$(RPREFIX)
 	(cd cran;\
 	 $(ECHO) 'cat(md5sum("$(RPREFIX).exe"),"*$(RPREFIX).exe")' \
          | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=tools >md5sum.txt)
@@ -471,9 +473,16 @@ crandir:
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g readme > cran/README.$(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
-	  -e s/@RVER@/$(RVER)/g cran/index.in > cran/index.html
+	  -e s/@RVER@/$(RVER)/g cran/ReadMe.in > cran/ReadMe	  
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
-	  -e s/@RVER@/$(RVER)/g cran/ReadMe.in > cran/ReadMe
+	  -e s/@RVER@/$(RVER)/g \
+	  -e 's/@DATE@/$(DATE)/g' cran/index.in > cran/index.html
+	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
+	  -e s/@RVER@/$(RVER)/g \
+	  -e 's/@DATE@/$(DATE)/g' cran/rdevel.in > cran/rdevel.html
+	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
+	  -e s/@RVER@/$(RVER)/g \
+	  -e 's/@DATE@/$(DATE)/g' cran/rpatched.in > cran/rpatched.html	  
 
 distribution:
 	$(MAKE) Rpwd.exe
