@@ -334,6 +334,9 @@ for arg in ${LIBS}; do
 done
 export LD_LIBRARY_PATH
 
+## Tcl/Tk
+R_LIB_TCLTK
+
 AC_CHECK_LIB(m, sin)
 if ${use_libmoto}; then
   AC_CHECK_LIB(moto, sin)
@@ -734,6 +737,11 @@ if test "${use_gnome}" = yes; then
   R_GUIS="${R_GUIS} gnome";
 fi
 
+if test "${use_tcltk}" = yes; then
+  R_GUIS="${R_GUIS} tcltk";
+fi
+
+
 AC_SUBST(R_GUIS)
 
 ### Miscellaneous.
@@ -825,6 +833,7 @@ AC_OUTPUT(Makeconf
   src/unix/Makefile
   src/unix/X11/Makefile
   src/unix/gnome/Makefile
+  src/unix/tcltk/Makefile
   tests/Makefile
   tests/Examples/Makefile
   tools/Makefile
@@ -863,6 +872,7 @@ R is now configured for ${host}
   FORTRAN compiler:         ${FORT}
   X11 support:              ${use_X11}
   Gnome support:            ${use_gnome}
+  Tcl/Tk support:           ${use_tcltk}
 ])
 
 dnl Local Variables: ***

@@ -31,6 +31,7 @@
 
 #define __SYSTEM__
 #include "devX11.h"
+#include "tcltk/tcltk.h"
 #undef __SYSTEM__
 
 #include "Startup.h"
@@ -60,6 +61,9 @@ int DebugInitFile = False;
 
 /* call pointers to allow interface switching */
 
+/* ?? is it necessary to do it this way? Couldn't R_xxxx be functions
+   pointers themselves?  - pd */
+
 void R_Suicide(char *s) { ptr_R_Suicide(s); }
 void R_ShowMessage(char *s) { ptr_R_ShowMessage(s); }
 int R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
@@ -68,6 +72,25 @@ void R_WriteConsole(char *buf, int len) {ptr_R_WriteConsole(buf, len);}
 void R_ResetConsole() { ptr_R_ResetConsole(); }
 void R_FlushConsole() { ptr_R_FlushConsole(); }
 void R_ClearerrConsole() { ptr_R_ClearerrConsole(); }
+
+InputHandler *addInputHandler(InputHandler *handlers, int fd, 
+		       InputHandlerProc handler,
+		       int activity)
+{
+    return ptr_R_addInputHandler(handlers, fd, handler, activity);
+}
+
+int removeInputHandler(InputHandler **handlers, InputHandler *it)
+{
+    return ptr_R_removeInputHandler(handlers, it);
+}
+
+InputHandler *getInputHandler(InputHandler *handlers, int fd)
+{
+    return ptr_R_getInputHandler(handlers, fd);
+}
+
+
 void R_Busy(int which) { ptr_R_Busy(which); }
 void R_CleanUp(int saveact, int status, int runLast)
 { ptr_R_CleanUp(saveact, status, runLast); }
@@ -76,16 +99,22 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 { return ptr_R_ShowFiles(nfile, file, headers, wtitle, del, pager); }
 int R_ChooseFile(int new, char *buf, int len)
 { return ptr_R_ChooseFile(new, buf, len); }
+
+
+
 void (*gnome_start)(int ac, char **av, Rstart Rp);
+void (*tcltk_init)();
 
 void R_setStartTime(); /* in sys-unix.c */
 void R_load_X11_shlib(); /* in dynload.c */
 void R_load_gnome_shlib(); /* in dynload.c */
+void R_load_tcltk_shlib(); /* in dynload.c */
+
 
 
 int main(int ac, char **av)
 {
-    int i, ioff = 1, j, value, ierr, useX11 = 1, usegnome = 0;
+    int i, ioff = 1, j, value, ierr, useX11 = 1, usegnome = 0, usetcltk = 0;
     char *p, msg[1024], **avv;
     structRstart rstart;
     Rstart Rp = &rstart;
@@ -97,6 +126,11 @@ int main(int ac, char **av)
     ptr_R_ResetConsole = Rstd_ResetConsole;
     ptr_R_FlushConsole = Rstd_FlushConsole;
     ptr_R_ClearerrConsole = Rstd_ClearerrConsole;
+
+    ptr_R_addInputHandler = Rstd_addInputHandler;
+    ptr_R_removeInputHandler = Rstd_removeInputHandler;
+    ptr_R_getInputHandler = Rstd_getInputHandler;
+
     ptr_R_Busy = Rstd_Busy;
     ptr_R_CleanUp = Rstd_CleanUp;
     ptr_R_ShowFiles = Rstd_ShowFiles;
@@ -132,7 +166,9 @@ int main(int ac, char **av)
 	    else if(!strcmp(p, "gnome") || !strcmp(p, "GNOME"))
 		usegnome = 1;
 	    else if(!strcmp(p, "X11") || !strcmp(p, "x11"))
-		useX11 = 1;
+		useX11 = 1; /* actually, it is initialized to 1 as well */
+	    else if(!strcmp(p, "Tk") || !strcmp(p, "tk"))
+		usetcltk = 1; 
 	    else {
 #ifdef HAVE_X11
 		sprintf(msg, "WARNING: unknown gui `%s', using X11\n", p);
@@ -172,6 +208,16 @@ int main(int ac, char **av)
 	}
     }
 #endif
+    if (usetcltk) {
+#ifndef HAVE_TCLTK
+	R_Suicide("Tcl/Tk GUI is not available in this version");
+#endif
+	R_load_tcltk_shlib();
+	R_GUIType="Tcl/Tk";
+	tcltk_init();
+    }
+
+
 
     R_common_command_line(&ac, av, Rp);
     while (--ac) {

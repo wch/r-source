@@ -380,6 +380,28 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+#if HAVE_TCLTK
+extern char *(* tk_eval)(char *);
+
+SEXP do_dotTk(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans;
+    char *cmd;
+    char *val;
+    checkArity(op, args);
+    if(!isValidString(CAR(args)))
+	errorcall(call, "invalid argument");
+    if (!tk_eval)
+	error("Tk interface is not available");
+    cmd = CHAR(STRING(CAR(args))[0]);
+    val = tk_eval(cmd);
+    ans = PROTECT(allocVector(STRSXP, 1));
+    STRING(ans)[0] = mkChar(val);
+    UNPROTECT(1);
+    return ans;
+}
+#endif
+
 /*   Call dynamically loaded "internal" functions */
 /*   code by Jean Meloche <jean@stat.ubc.ca> */
 

@@ -107,6 +107,13 @@ static CFunTabEntry CFunTab[] =
 #define RTLD_NOW  2
 #endif
 
+
+/*
+ #ifdef HAVE_TCLTK
+ #include "tcltk/tcltk.h"
+ #endif
+*/
+
 #undef CACHE_DLL_SYM
 #ifdef CACHE_DLL_SYM
 /* keep a record of symbols that have been found */
@@ -475,7 +482,59 @@ void R_load_X11_shlib()
 extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
     ptr_R_WriteConsole, ptr_R_ResetConsole, ptr_R_FlushConsole,
     ptr_R_ClearerrConsole, ptr_R_Busy, ptr_R_CleanUp, ptr_R_ShowFiles,
-    ptr_R_ChooseFile, gnome_start, GnomeDeviceDriver, GTKDeviceDriver;
+    ptr_R_ChooseFile, gnome_start, GnomeDeviceDriver, GTKDeviceDriver, 
+    tcltk_init, tk_eval, ptr_R_addInputHandler, ptr_R_removeInputHandler, 
+    ptr_R_getInputHandler;
+
+void R_load_tcltk_shlib()
+{
+    char tcltk_DLL[PATH_MAX], buf[1000];
+    void *handle;
+    struct stat sb;
+
+    strcpy(tcltk_DLL, getenv("R_HOME"));
+    strcat(tcltk_DLL, "/bin/R_Tk.");
+    strcat(tcltk_DLL, SHLIBEXT); /* from config.h */
+    if(stat(tcltk_DLL, &sb))
+	R_Suicide("Probably no Tcl/Tk support: the shared library was not found");
+/* cannot use computeDLOpenFlag as warnings will crash R at this stage */
+#ifdef RTLD_NOW
+    handle = dlopen(tcltk_DLL, RTLD_NOW);
+#else
+    handle = dlopen(tcltk_DLL, 0);
+#endif
+    if(handle == NULL) {
+	sprintf(buf, "The Tcl/Tk shared library could not be loaded.\n  The error was %s\n", dlerror());
+	R_Suicide(buf);
+    }
+
+    tcltk_init = R_dlsym(handle, "tcltk_init");
+    if (!tcltk_init) 
+	R_Suicide("Cannot load tcltk_init");
+    
+    tk_eval = R_dlsym(handle, "tk_eval");
+    if (!tk_eval) 
+	R_Suicide("Cannot load tk_eval");
+    
+    ptr_R_ReadConsole = R_dlsym(handle, "tcltk_ReadConsole");
+    if (!ptr_R_ReadConsole) 
+	R_Suicide("Cannot load tcltk_ReadConsole");
+
+    ptr_R_addInputHandler = R_dlsym(handle, "tcltk_addInputHandler");
+    if (!ptr_R_addInputHandler) 
+	R_Suicide("Cannot load tcltk_addInputHandler");
+    
+    ptr_R_removeInputHandler = R_dlsym(handle, "tcltk_removeInputHandler");
+    if (!ptr_R_removeInputHandler) 
+	R_Suicide("Cannot load tcltk_removeInputHandler");
+    
+/*
+    tcltkDeviceDriver = R_dlsym(handle, "tcltkDeviceDriver");
+    if(!tcltkDeviceDriver) R_Suicide("Cannot load tcltkDeviceDriver");
+    ptr_dataentry = R_dlsym(handle, "Rtcltk_dataentry");
+    if(!ptr_dataentry) R_Suicide("Cannot load do_dataentry");
+*/
+} 
 
 
 void R_load_gnome_shlib()

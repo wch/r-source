@@ -545,6 +545,9 @@ FUNTAB R_FunTab[] =
 {".Fortran",	do_dotCode,	1,	1,	-1,	PP_FOREIGN},
 {".External",   do_External,    0,      1,      -1,     PP_FOREIGN},
 {".Call",       do_dotcall,     0,      1,      -1,     PP_FOREIGN},
+#if HAVE_TCLTK
+{".Tk",         do_dotTk,       0,      1,      1,     PP_FUNCALL},
+#endif
 {"dyn.load",	do_dynload,	0,	111,	3,	PP_FUNCALL},
 {"dyn.unload",	do_dynunload,	0,	111,	1,	PP_FUNCALL},
 {"ls",		do_ls,		1,	11,	2,	PP_FUNCALL},

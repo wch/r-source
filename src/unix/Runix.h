@@ -1,3 +1,5 @@
+#include "R_ext/eventloop.h"
+
 void R_ShowMessage(char *s);
 void Rstd_read_history(char *s);
 
@@ -9,6 +11,15 @@ void Rstd_WriteConsole(char *buf, int len);
 void Rstd_ResetConsole();
 void Rstd_FlushConsole();
 void Rstd_ClearerrConsole();
+
+InputHandler *Rstd_addInputHandler(InputHandler *handlers, int fd, 
+			      InputHandlerProc handler,
+			      int activity);
+
+int Rstd_removeInputHandler(InputHandler **handlers, InputHandler *it);
+InputHandler *Rstd_getInputHandler(InputHandler *handlers, int fd);
+
+
 void Rstd_Busy(int which);
 void Rstd_CleanUp(int saveact, int status, int runLast);
 int Rstd_ShowFiles(int nfile, char **file, char **headers, char *wtitle,

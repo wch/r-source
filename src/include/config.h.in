@@ -177,6 +177,7 @@
 /* Which GUIs can we use? */
 #undef HAVE_X11
 #undef HAVE_GNOME
+#undef HAVE_TCLTK
 
 /* for platform.c to put in .Platform */
 #ifdef Unix

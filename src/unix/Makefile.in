@@ -23,7 +23,7 @@ DISTFILES = \
 	Makefile.in PSPAPER $(SOURCES) $(HEADERS) \
 	hpdlfcn.c system.txt
 
-SUBDIRS = X11 gnome
+SUBDIRS = X11 gnome tcltk
 
 LIB = libunix.a
 

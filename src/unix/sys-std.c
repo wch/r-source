@@ -114,7 +114,7 @@ InputHandler * initStdinHandler(void)
   BasicInputHandler object.
  */
 InputHandler *
-addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler, 
+Rstd_addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler, 
 		int activity)
 {
     InputHandler *input, *tmp;
@@ -146,7 +146,7 @@ addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler,
   See getInputHandler() for first locating the target handler instance.
  */
 int
-removeInputHandler(InputHandler **handlers, InputHandler *it)
+Rstd_removeInputHandler(InputHandler **handlers, InputHandler *it)
 {
     InputHandler *tmp;
 
@@ -173,7 +173,7 @@ removeInputHandler(InputHandler **handlers, InputHandler *it)
 
 
 InputHandler *
-getInputHandler(InputHandler *handlers, int fd)
+Rstd_getInputHandler(InputHandler *handlers, int fd)
 {
     InputHandler *tmp;
     tmp = handlers;

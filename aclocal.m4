@@ -776,6 +776,17 @@ AC_DEFUN(AM_CONDITIONAL, [
     $1_FALSE=
   fi
 ])
+dnl
+dnl R_LIB_TCLTK
+dnl
+AC_DEFUN(R_LIB_TCLTK,
+  [ AC_CHECK_LIB(tk, Tk_MainLoop,
+      [ AC_DEFINE(HAVE_TCLTK)
+        TCLTK_LIBS="-ltk -ltcl"
+	use_tcltk=yes
+	AC_SUBST(TCLTK_LIBS)
+      ],[use_tcltk=no])
+  ])
 
 dnl Local Variables: ***
 dnl mode: sh ***
