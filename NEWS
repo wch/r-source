@@ -592,6 +592,8 @@ BUG FIXES
 	as.POSIXlt() was corrupted when trying to guess the DST offset
 	at dates the OS was unable to handle.
 
+    o	ave(x, g) didn't work when `g' had unused levels.
+
     o	biplot.default() allows xlim and ylim to be set.  (PR#3168)
 
     o	bgroup with a null (.) delimiter was setting font to Greek.  (PR#3099)
