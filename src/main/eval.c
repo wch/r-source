@@ -207,7 +207,7 @@ static void R_InitProfiling(char * filename, int append, double dinterval)
     if(R_ProfileOutfile != NULL) R_EndProfiling();
     R_ProfileOutfile = fopen(filename, append ? "a" : "w");
     if (R_ProfileOutfile == NULL)
-	R_Suicide("can't open profile file");
+	error("Rprof: can't open profile file '%s'", filename);
     fprintf(R_ProfileOutfile, "sample.interval=%d\n", interval);
 
 #ifdef Win32
