@@ -385,123 +385,157 @@ static struct tms timeinfo;
 
 int main(int ac, char **av)
 {
-  int value;
-  char *p;
+    int value;
+    char *p;
 
 #ifdef HAVE_TIMES
-  StartTime = times(&timeinfo);
+    StartTime = times(&timeinfo);
 #endif
-  R_Quiet = 0;
+    R_Quiet = 0;
 
-  while(--ac) {
-    if(**++av == '-') {
-      if (!strcmp(*av, "-V") || !strcmp(*av, "--version")) {
-	Rprintf("Version %s.%s %s (%s %s, %s)\n",
-		R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
-	exit(0);
-      }
-      else if(!strcmp(*av, "--save")) {
-	DefaultSaveAction = 3;
-      }
-      else if(!strcmp(*av, "--no-save")) {
-	DefaultSaveAction = 2;
-      }
-      else if(!strcmp(*av, "--restore")) {
-	DefaultRestoreAction = 1;
-      }
-      else if(!strcmp(*av, "--no-restore")) {
-	DefaultRestoreAction = 0;
-      }
-      else if(!strcmp(*av, "--no-readline")) {
-	UsingReadline = 0;
-      }
-      else if(!strcmp(*av, "--quiet") || !strcmp(*av, "-q")) {
-	R_Quiet = 1;
-      }
-      else if (!strcmp(*av, "--slave") || !strcmp(*av, "-s")) {
-	R_Quiet = 1;
-	R_Slave = 1;
-	DefaultSaveAction = 2;
-      }
-      else if (!strcmp(*av, "--no-site-file")) {
-	LoadSiteFile = 0;
-      }
-      else if (!strcmp(*av, "--no-init-file")) {
-	LoadInitFile = 0;
-      }
-      else if (!strcmp(*av, "-save") ||
-	       !strcmp(*av, "-nosave") ||
-	       !strcmp(*av, "-restore") ||
-	       !strcmp(*av, "-norestore") ||
-	       !strcmp(*av, "-noreadline") ||
-	       !strcmp(*av, "-quiet")) {
-	REprintf("WARNING: option %s no longer supported\n", *av);
-      }
-      else if((*av)[1] == 'v') {
-	if((*av)[2] == '\0') {
-	  ac--; av++; p = *av;
+    while(--ac) {
+	if(**++av == '-') {
+	    if (!strcmp(*av, "--version")) {
+		Rprintf("Version %s.%s %s (%s %s, %s)\n",
+			R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
+		Rprintf("Copyright (C) %s R Core Team\n", R_YEAR);
+		Rprintf("R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
+		Rprintf("You are welcome to redistribute it under the terms of the\n");
+		Rprintf("GNU General Public License.  For more information about\n");
+		Rprintf("these matters, see http://www.gnu.org/copyleft/gpl.html.\n");
+		exit(0);
+	    }
+	    else if(!strcmp(*av, "--save")) {
+		DefaultSaveAction = 3;
+	    }
+	    else if(!strcmp(*av, "--no-save")) {
+		DefaultSaveAction = 2;
+	    }
+	    else if(!strcmp(*av, "--restore")) {
+		DefaultRestoreAction = 1;
+	    }
+	    else if(!strcmp(*av, "--no-restore")) {
+		DefaultRestoreAction = 0;
+	    }
+	    else if(!strcmp(*av, "--no-readline")) {
+		UsingReadline = 0;
+	    }
+	    else if (!strcmp(*av, "--silent") ||
+		     !strcmp(*av, "--quiet") ||
+		     !strcmp(*av, "-q")) {
+		R_Quiet = 1;
+	    }
+	    else if (!strcmp(*av, "--verbose")) {
+		R_Verbose = 1;
+	    }
+	    else if (!strcmp(*av, "--slave") ||
+		     !strcmp(*av, "-s")) {
+		R_Quiet = 1;
+		R_Slave = 1;
+		DefaultSaveAction = 2;
+	    }
+	    else if (!strcmp(*av, "--no-site-file")) {
+		LoadSiteFile = 0;
+	    }
+	    else if (!strcmp(*av, "--no-init-file")) {
+		LoadInitFile = 0;
+	    }
+	    else if (!strcmp(*av, "-save") ||
+		     !strcmp(*av, "-nosave") ||
+		     !strcmp(*av, "-restore") ||
+		     !strcmp(*av, "-norestore") ||
+		     !strcmp(*av, "-noreadline") ||
+		     !strcmp(*av, "-quiet") ||
+		     !strcmp(*av, "-V")) {
+		REprintf("WARNING: option %s no longer supported\n", *av);
+	    }
+	    else if((*av)[1] == 'v') {
+		REprintf("WARNING: option `-v' is deprecated.  ");
+		REprintf("Use `--vsize' instead.\n");
+		if((*av)[2] == '\0') {
+		    ac--; av++; p = *av;
+		}
+		else p = &(*av)[2];
+		value = strtol(p, &p, 10);
+		if(*p) goto badargs;
+		if(value < 1 || value > 1000)
+		    REprintf("WARNING: invalid vector heap size ignored\n");
+		else
+		    R_VSize = value * 1048576; /* 1 MByte := 2^20 Bytes*/
+	    }
+	    else if (!strcmp(*av, "--vsize")) {
+		ac--; av++; p = *av;
+		value = strtol(p, &p, 10);
+		if(*p) goto badargs;
+		if(value < 1 || value > 1000)
+		    REprintf("WARNING: invalid vector heap size ignored\n");
+		else
+		    R_VSize = value * 1048576; /* 1 MByte := 2^20 Bytes*/
+	    }
+	    else if((*av)[1] == 'n') {
+		REprintf("WARNING: option `-n' is deprecated.  ");
+		REprintf("Use `--nsize' instead.\n");
+		if((*av)[2] == '\0') {
+		    ac--; av++; p = *av;
+		}
+		else p = &(*av)[2];
+		value = strtol(p, &p, 10);
+		if(*p) goto badargs;
+		if(value < R_NSize || value > 1000000)
+		    REprintf("WARNING: invalid language heap size ignored\n");
+		else
+		    R_NSize = value;
+	    }
+	    else if (!strcmp(*av, "--nsize")) {
+		ac--; av++; p = *av;  
+		value = strtol(p, &p, 10);
+		if(*p) goto badargs;
+		if(value < R_NSize || value > 1000000)
+		    REprintf("WARNING: invalid language heap size ignored\n");
+		else
+		    R_NSize = value;
+	    }
+	    else {
+		REprintf("WARNING: unknown option %s\n", *av);
+		break;
+	    }
 	}
-	else p = &(*av)[2];
-	value = strtol(p, &p, 10);
-	if(*p) goto badargs;
-	if(value < 1 || value > 1000)
-	  REprintf("WARNING: invalid vector heap size ignored\n");
-	else
-	  R_VSize = value * 1048576; /* 1 MByte := 2^20 Bytes*/
-      }
-      else if((*av)[1] == 'n') {
-	if((*av)[2] == '\0') {
-	  ac--; av++; p = *av;
+	else {
+	    printf("ARGUMENT %s\n", *av);
 	}
-	else p = &(*av)[2];
-	value = strtol(p, &p, 10);
-	if(*p) goto badargs;
-	if(value < R_NSize || value > 1000000)
-	  REprintf("WARNING: invalid language heap size ignored\n");
-	else
-	  R_NSize = value;
-      }
-      else {
-	REprintf("WARNING: unknown option %s\n", *av);
-	break;
-      }
     }
-    else {
-      printf("ARGUMENT %s\n", *av);
-    }
-  }
-
-  /* On Unix the console is a file; we just use stdio to write on it */
-
-  R_Interactive = isatty(0);
-  R_Consolefile = stdout;
-  R_Outputfile = stdout;
-  R_Sinkfile = NULL;
-
-  if(!R_Interactive && DefaultSaveAction == 0)
-    R_Suicide("you must specify `--save' or `--no-save'");
-
+    
+    /* On Unix the console is a file; we just use stdio to write on it */
+    
+    R_Interactive = isatty(0);
+    R_Consolefile = stdout;
+    R_Outputfile = stdout;
+    R_Sinkfile = NULL;
+    
+    if(!R_Interactive && DefaultSaveAction == 0)
+	R_Suicide("you must specify `--save' or `--no-save'");
+    
 #ifdef __FreeBSD__
-  fpsetmask(0);
+    fpsetmask(0);
 #endif
-
+    
 #ifdef linux
-  __setfpucw(_FPU_IEEE);
+    __setfpucw(_FPU_IEEE);
 #endif
-
+    
 #ifdef HAVE_LIBREADLINE
 #ifdef HAVE_READLINE_HISTORY_H
-  if(isatty(0) && UsingReadline)
-    read_history(".Rhistory");
+    if(isatty(0) && UsingReadline)
+	read_history(".Rhistory");
 #endif
 #endif
-  mainloop();
-  /*++++++  in ../main/main.c */
-  return 0;
-
+    mainloop();
+    /*++++++  in ../main/main.c */
+    return 0;
+    
 badargs:
-  REprintf("invalid argument passed to R\n");
-  exit(1);
+    REprintf("invalid argument passed to R\n");
+    exit(1);
 }
 
 void R_InitialData(void)
