@@ -167,10 +167,10 @@ Non-standard locations
 ======================
 
 You can specify the location of the package source by PKGDIR and the
-library in which to install the package by RLIBS, as in
+library in which to install the package by RLIB, as in
 
-make PKGDIR=/mysources RLIBS=/R/library pkg-mypkg
-make PKGDIR=/mysources RLIBS=/R/library pkgcheck-mypkg
+make PKGDIR=/mysources RLIB=/R/library pkg-mypkg
+make PKGDIR=/mysources RLIB=/R/library pkgcheck-mypkg
 
 installs the package in \mysources\mypkg as \R\library\mypkg and checks its
 examples.

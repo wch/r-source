@@ -1,7 +1,7 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 #
 # process bundle files.
-# args  bundle srcdir destdir
+# args:  bundle srcdir destdir
 
 ($bundle, $srcdir, $destdir) = @ARGV;
 
@@ -32,7 +32,7 @@ foreach $pkg (@pkgs) {
     }
     close bundledesc;
     close pkgdesc;
-    $cmd = "make PKGDIR=$srcdir/$bundle RLIBS=$destdir pkg-$pkg";
+    $cmd = "make PKGDIR=$srcdir/$bundle RLIB=$destdir pkg-$pkg";
 #    print "$cmd\n";
     system($cmd);
 }

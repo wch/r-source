@@ -6,7 +6,7 @@ WINHELP=BOTH # NO, CHM, BOTH
 PACKAGES=base eda lqs modreg mva nls splines stepfun ts
 RPREFIX=rw0901
 RHOME=$(shell cd ../..; pwd)# must be absolute path
-RLIBS=$(RHOME)/library
+RLIB=$(RHOME)/library
 PKGDIR=$(RHOME)/src/library
 PKGD=$(shell cd $(PKGDIR); pwd)# must be absolute path
 
@@ -121,16 +121,16 @@ base-HELP=ziponly
 
 pkg-%:  libR.a #../include/globalvar.h
 	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
-	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIBS=$(RLIBS) \
+	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 ifeq ($(strip $(HELP)),YES)
-	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) $($*-HELP)help-$*
-	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) contents-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 ifeq ($(strip $(WINHELP)),CHM)
-	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) chm-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) chm-$*
 endif
 ifeq ($(strip $(WINHELP)),BOTH)
-	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) winhlp-$* # also makes chm
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) winhlp-$* # also makes chm
 endif
 endif
 
@@ -141,16 +141,16 @@ pkgclean-%:
 pkgcheck-%:
 	@$(ECHO) -------- Testing package $* --------
 	-@mkdir -p $(PKGDIR)/$*/check
-	@$(MAKE) -C $(PKGDIR)/$*/check PKG=$* RHOME=$(RHOME) RLIBS=$(RLIBS) \
+	@$(MAKE) -C $(PKGDIR)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/check/PkgCheck
 
 ziphelp-%:
-	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) ziphelp-$*
-	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) contents-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziphelp-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 
 ziponly-%:
-	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) ziponlyhelp-$*
-	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) contents-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziponlyhelp-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 
 bootstrap-DLLNM=boott
 
@@ -289,12 +289,12 @@ pkgcheck-base:
 	@(cd ../../library/base/R-ex; unzip -oq Rex)
 	-@mkdir -p ../library/base/check
 	-@$(MAKE) -C ../library/base/check \
-	  PKG=base RHOME=$(RHOME) RLIBS=$(RLIBS) \
+	  PKG=base RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f ../../../gnuwin32/check/PkgCheck
 	@(cd ../../library/base/R-ex; rm -f *.R)
 
 bundle-%:
-	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIBS)
+	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 docs manuals:
 	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean

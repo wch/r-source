@@ -5,47 +5,44 @@ CAT=cat
 CP=cp
 RM=rm
 
-RHOME=$(shell cd ../../..; pwd) # must be absolute path
+RHOME=$(shell cd ../../..; pwd)# must be absolute path
 PKGDIR=../../library
-RLIBS=$(RHOME)/library
+RLIB=$(RHOME)/library
 
 indices:
 	$(PERL) build.help ${DOS} -htmllists
 
-help-%: 
-	$(PERL) build.help ${DOS} -nroff -html -example -latex $(PKGDIR)/$* $(RLIBS)
+pkg-% help-%: 
+	$(PERL) build.help ${DOS} -nroff -html -example -latex $(PKGDIR)/$* $(RLIB)
 
 chm-%: 
-	$(PERL) build.help ${DOS} -chm $(PKGDIR)/$*
+	$(PERL) build.help ${DOS} -chm $(PKGDIR)/$* $(RLIB)
 # hhc always gives an error code
 	$(MAKE) -C $(PKGDIR)/$*/chm -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm
-	mkdir -p $(RLIBS)/$*/chtml
-	$(CP) $(PKGDIR)/$*/chm/$*.chm $(RLIBS)/$*/chtml
+	mkdir -p $(RLIB)/$*/chtml
+	$(CP) $(PKGDIR)/$*/chm/$*.chm $(RLIB)/$*/chtml
 
 winhlp-%: chm-%
 	$(MAKE) -C $(PKGDIR)/$*/chm -f $(RHOME)/src/gnuwin32/help/Makefile $*.hlp
-	mkdir -p $(RLIBS)/$*/winhlp
-	$(CP) $(PKGDIR)/$*/chm/$*.cnt $(PKGDIR)/$*/chm/$*.hlp $(RLIBS)/$*/winhlp
+	mkdir -p $(RLIB)/$*/winhlp
+	$(CP) $(PKGDIR)/$*/chm/$*.cnt $(PKGDIR)/$*/chm/$*.hlp $(RLIB)/$*/winhlp
 
 contents-%:
-	$(PERL) Rd2contents $(PKGDIR)/$* $(RLIBS)/$*/CONTENTS
+	$(PERL) Rd2contents $(PKGDIR)/$* $(RLIB)/$*/CONTENTS
 	$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
 
-pkg-%:
-	$(PERL) build.help ${DOS} -nroff -html -example -latex $(PKGDIR)/$*
-
 ziphelp-%:
-	$(MAKE) -C $(RLIBS)/$* -f $(RHOME)/src/gnuwin32/help/Makefile ZIPFLAGS=jqX  PKG=$* zipit
+	$(MAKE) -C $(RLIB)/$* -f $(RHOME)/src/gnuwin32/help/Makefile ZIPFLAGS=jqX  PKG=$* zipit
 
 ziponlyhelp-%:
-	$(MAKE) -C $(RLIBS)/$* -f $(RHOME)/src/gnuwin32/help/Makefile ZIPFLAGS=jqmX PKG=$* zipit
+	$(MAKE) -C $(RLIB)/$* -f $(RHOME)/src/gnuwin32/help/Makefile ZIPFLAGS=jqmX PKG=$* zipit
 
 
 winhelp-%:
 	$(MAKE) -C $(PKGDIR)/$* -f $(RHOME)/src/gnuwin32/help/Makefile PKG=$* win
 
 latex-%:
-	$(MAKE) -C $(RLIBS)/$* -f $(RHOME)/src/gnuwin32/help/Makefile PKG=$* unzipit
+	$(MAKE) -C $(RLIB)/$* -f $(RHOME)/src/gnuwin32/help/Makefile PKG=$* unzipit
 	$(PERL) build.help ${DOS} -latex $(PKGDIR)/$*
 
 clean:

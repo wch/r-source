@@ -4,6 +4,9 @@ rw0901
 It is possible to install packages from any directory (set PKGDIR on
 the make command) and to any directory (set RLIBS on the make command).
 
+RLIBS is no longer accepted for the library directory: use R_LIBS
+(which has been preferred since 0.65.0).
+
 
 rw0900
 ======

@@ -1,6 +1,6 @@
 #-*- Makefile -*-
-RLIBS=../../../library
-DPKG=$(RLIBS)/$(PKG)
+RLIB=../../../library
+DPKG=$(RLIB)/$(PKG)
 SPKG=.
 
 ifeq ($(strip $(DLLNM)),)
