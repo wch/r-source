@@ -96,7 +96,7 @@ NEW FEATURES
 	library detection was extended, with results saved to the Make
 	variable BLAS_LIBS which is also available to add-on packages.
 
-    o	constrasts(, FALSE) now always returns an identity matrix,
+    o	contrasts(, FALSE) now always returns an identity matrix,
 	to make model.matrix compatible with S. This affects models
 	such as lm(y ~ o - 1) where o is an ordered factor.
 
