@@ -176,6 +176,32 @@ installs the package in \mysources\mypkg as \R\library\mypkg and checks its
 examples.
 
 
+Cross-building packages on Linux
+================================
+
+It is straightforward to build a package on a i386-linux system,
+although it is not possible (as far as we know) to cross-build .chm or
+.hlp files.  For a package without compiled code you can just zip up
+the Linux installation of the package.
+
+First you need to set up the cross-compilers and tools (see INSTALL)
+and have them in your path. We will assume that your Linux
+installation has Perl5, nroff, unzip and zip.
+
+Edit MkRules to set BUILD=CROSS and the appropriate paths as needed,
+and check that Makefile has WINHELP set to NO.
+
+Set the environment variable TEMP to, say, /tmp.
+
+Then packages can be made as natively, for example by
+
+cd .../src/gnuwin32
+make PKGDIR=/mysources RLIB=/R/win/library pkg-mypkg
+make PKGDIR=/mysources RLIB=/R/win/library pkgcheck-mypkg
+cd /R/win/library
+zip -rl /dest/mypkg.zip mypkg
+
+
 Feedback
 ========
 
