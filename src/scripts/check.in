@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.156 $ ';
+my $revision = ' $Revision: 1.157 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -295,6 +295,7 @@ foreach my $pkg (@ARGV) {
 		    else {
 			$log->print("OK");
 		    }
+		    print("\n");
 		}
 	    }
 	    else {
