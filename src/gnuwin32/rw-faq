@@ -6,7 +6,7 @@ that version. The main R FAQ can be found at
 http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html.
 
 There are two versions of R for Windows, but only is under active
-development, that described here. It is often called something like rw0650
+development, that described here. It is often called something like rw0900
 (although not officially). The information here applies only to
 recent versions (rw0642 or later).
 
@@ -24,12 +24,12 @@ There is also information on the use of R for Windows in the Venables
            projects in different directories?
      Q1.5. How do I print from R?
      Q1.6. Can I use R BATCH?
-     Q1.7. Can I use rw06xx with ESS and emacs?
+     Q1.7. Can I use rw0xxx with ESS and emacs?
 
 2. Packages
 
      Q2.1. Can I install packages (libraries) in this version?
-     Q2.2. I don't have permission to write to the rw06xx\library directory.
+     Q2.2. I don't have permission to write to the rw0xxx\library directory.
            Is this fatal?
      Q2.3. The packages I installed do not appear in the HTML help system.
      Q2.4. The functions in the packages I installed are not found by the
@@ -71,10 +71,10 @@ Go to any CRAN site (see http://www.ci.tuwien.ac.at/R/mirrors.html for a
 list), navigate to the bin/windows/windows-NT/base directory and collect the
 files you need. You will need at least the files
 
-      rw06xxb.zip rw06xxh.zip
+      rw0xxxb.zip rw0xxxh.zip
 
-and will probably want rw06xxw.zip (the HTML format help files). Optionally,
-you can also download rw06xxl.zip (the LaTeX format help files, used for
+and will probably want rw0xxxw.zip (the HTML format help files). Optionally,
+you can also download rw0xxxl.zip (the LaTeX format help files, used for
 offline printing), and the installer, rwinst.exe.
 
 
@@ -89,10 +89,10 @@ rwinst.exe and navigate its wizard-like pages).  Alternatively, choose
 a location and unzip the zip files (with a tool that preserves long
 file names and the directory structure: we recommend the INFO-ZIP
 project's unzip). All the files will unpack into a directory called
-rw06xx, for some `xx'.
+rw0xxx, for some `xxx'.
 
 Choose a working directory for R. Make a shortcut to
-rw06xx\bin\Rgui.exe on your desktop or somewhere on the Start menu
+rw0xxx\bin\Rgui.exe on your desktop or somewhere on the Start menu
 file tree. Right-click the shortcut, select Properties... and change
 the `Start in' field to your working directory.
 
@@ -138,7 +138,7 @@ might contain (as one line)
 path_to_R\bin\rterm.exe --vsize 10M --nsize 300k --no-restore --no-save < %1 > %1.out
 
 
-1.7) Can I use rw06xx with ESS and emacs?
+1.7) Can I use rw0xxx with ESS and emacs?
 
 Yes. Some time soon versions of ESS will come with support for this
 version of R (5.1.8 has prototype support). If yours does not, try
@@ -161,18 +161,18 @@ mailing lists.
 
 Yes, of course. The easy way is to see if a pre-compiled binary version of
 the package is available: look on CRAN at bin/windows/windows-NT/contrib. If
-there is, download the zip file and unpack it in the rw06xx\library
+there is, download the zip file and unpack it in the rw0xxx\library
 directory, using unzip or similar, or using the installer rwinst.exe.
 
 If there is not a binary version or that is not up-to-date or you prefer
-compiling from source, get rw06xxsp.zip from the distribution (see Q1.1) and
-unpack it in rw06xx. Then cd src\gnuwin32 and read README.packages. You will
+compiling from source, get rw0xxxsp.zip from the distribution (see Q1.1) and
+unpack it in rw0xxx. Then cd src\gnuwin32 and read README.packages. You will
 need to collect and install several tools to use this. Once you have done
 so, installation is easy: just run `make pkg-pkgname'. To check the package
 (run all the examples on its help pages) use `make pkgcheck-pkgname'.
 
 
-2.2) I don't have permission to write to the rw06xx\library directory. Is
+2.2) I don't have permission to write to the rw0xxx\library directory. Is
 this fatal?
 
 You can install packages anywhere and use the environment variable R_LIBS to
@@ -215,7 +215,7 @@ simpler to install a private copy of R to do the building.
 
 2.3) The packages I installed do not appear in the HTML help system.
 
-HTML help only works for packages installed in rw06xx\library.
+HTML help only works for packages installed in rw0xxx\library.
 
 To update the HTML help files after you
 have installed a binary package, run at the R prompt.
@@ -225,7 +225,7 @@ have installed a binary package, run at the R prompt.
 (The source-code installation does this automatically, and
 if you have that installed you can use (preferably)
 
-      cd rw06xx\src\gnuwin32\help
+      cd rw0xxx\src\gnuwin32\help
       make indices
 
 instead.)
@@ -236,7 +236,7 @@ help search system.
 
 The following conditions need to hold:
 
-   * the package is installed in rw06xx\library.
+   * the package is installed in rw0xxx\library.
    * the package contains a CONTENTS file in top-level directory (a few of
      the binary distributions do not).
    * you updated the indices as described in the answer to Q2.2 after
@@ -424,4 +424,4 @@ http://sourceware.cygnus.com/cygwin) and provides a graphical user
 interface to gdb.
 
   ------------------------------------------------------------------------
-Last edited 20 August 1999 by Brian Ripley ripley@stats.ox.ac.uk
+Last edited 27 August 1999 by Brian Ripley ripley@stats.ox.ac.uk

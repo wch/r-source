@@ -3,7 +3,7 @@ include MkRules
 HELP=YES
 
 PACKAGES=base eda lqs modreg mva stepfun ts
-RPREFIX=rw0650
+RPREFIX=rw0900
 
 ifdef DEBUG
  OPTFLAGS=-g -O2
@@ -165,7 +165,7 @@ bindist:
 	$(CP) -p ../../etc/rgb.txt $(RPREFIX)/etc/rgb.txt
 	$(MKDIR) $(RPREFIX)/doc $(RPREFIX)/doc/manual
 	$(CP) -pr ../../doc/html $(RPREFIX)/doc
-	$(CP) -p ../doc/manual/Rd.sty $(RPREFIX)/doc/manual
+	$(CP) -p ../../doc/manual/Rd.sty $(RPREFIX)/doc/manual
 	$(CP) -p ../../COPYING COPYRIGHTS ../../FAQ ../../NEWS \
 		../../Y2K $(RPREFIX)
 	$(CP) -p readme $(RPREFIX)/README
@@ -219,7 +219,7 @@ packagedist:
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32
 	$(MAKE) -C $(RPREFIX)/src/gnuwin32/help clean
-	$(CP) -p $(foreach i,$(SRC_HEADERS) $(OBJ_HEADERS),../include/$i) $(RPREFIX)/src/include
+	$(CP) -p $(foreach i,$(SRC_HEADERS) $(OBJ_HEADERS) $(GW32_HEADERS),../include/$i) $(RPREFIX)/src/include
 	$(CP) readme.packages $(RPREFIX)
 	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
 	$(RM) -r $(RPREFIX)

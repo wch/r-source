@@ -43,7 +43,7 @@ or (under --ess, for use by ESS) Ctrl-C should happen immediately and be
 handled correctly.
 
 The installer can now install correctly in a top-level directory (e.g.
-C:\), fixing a bug in the unzio code used.
+C:\), fixing a bug in the unzip code used.
 
 
 rw0642
