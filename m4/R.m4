@@ -895,7 +895,6 @@ AC_CACHE_CHECK([for BSD networking],
   r_cv_bsd_networking,
   [ if test "${ac_cv_header_netdb_h}" = yes \
         && test "${ac_cv_header_netinet_in_h}" = yes \
-        && test "${ac_cv_header_netinet_tcp_h}" = yes \
         && test "${ac_cv_header_sys_socket_h}" = yes \
         && (test "${ac_cv_func_connect}" = yes \
           || test "${ac_cv_lib_socket_connect}" = yes) \
@@ -1257,12 +1256,16 @@ int main() {
   fi
 ])
 ##
+## R_USES_LEAPSECONDS
 ## See if leap seconds are used.
 ##
 AC_DEFUN([R_USES_LEAPSECONDS],
- [AC_MSG_CHECKING([whether leap seconds are counted])
-  AC_CACHE_VAL(r_cv_uses_leapseconds,
-    [ cat > conftest.c <<EOF
+  [ AC_CACHE_CHECK([whether leap seconds are counted],
+      r_cv_uses_leapseconds,
+      AC_TRY_RUN(
+	changequote(<<, >>)dnl
+	<<
+#include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
 #include "confdefs.h"
@@ -1274,24 +1277,45 @@ int main () {
   ctime(&ct);
   ct = ct - (ct % 60);
   tm = gmtime(&ct);
-  printf("%d", tm->tm_sec);
-  exit(0);
+  if(tm->tm_sec == 0) exit(1); else exit(0);
 }
-EOF
-      if ${CC-cc} ${CFLAGS} -o conftest${ac_exeext} conftest.c; then
-          output=`./conftest${ac_exeext}`
-	  if test ${?} -eq 0; then
-            if test ${output} -gt 0; then
-	      r_cv_uses_leapseconds=yes
-            fi
-	  fi
-      fi
-    ])
-  rm -rf conftest conftest.* core
-  if test -n "${r_cv_uses_leapseconds}"; then
-    AC_MSG_RESULT([yes])
-    AC_DEFINE(USING_LEAPSECONDS, 1)
-  else
-    AC_MSG_RESULT([no])
-  fi
-])
+	>>,
+	changequote([, ])dnl
+	r_cv_uses_leapseconds=yes,
+	r_cv_uses_leapseconds=no,
+	r_cv_uses_leapseconds=no))
+    if test "${r_cv_uses_leapseconds}" = yes; then
+      AC_DEFINE(USING_LEAPSECONDS, 1)
+    fi
+  ])
+
+##
+## R_FUNC_STRPTIME
+##
+AC_DEFUN([R_FUNC_STRPTIME],
+  [ AC_CACHE_CHECK([whether strptime is broken],
+      r_cv_func_strptime_broken,
+      AC_TRY_RUN(
+	changequote(<<, >>)dnl
+	<<
+#include <time.h>
+int main () {
+#ifdef HAVE_STRPTIME
+  struct tm tm;
+  char *p;
+
+  p = strptime("1960-01-01", "%Y-%m-%d", &tm);
+  return(p == 0);
+#else
+  return(1);
+#endif
+}
+	>>,
+	changequote([, ])dnl
+	r_cv_func_strptime_broken=no,
+	r_cv_func_strptime_broken=yes,
+	r_cv_func_strptime_broken=yes))
+    if test "${r_cv_func_strptime_broken}" = yes; then
+      AC_DEFINE(STRPTIME_BROKEN)
+    fi
+  ])

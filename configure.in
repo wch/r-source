@@ -429,6 +429,7 @@ R_FUNC___SETFPUCW
 R_FUNC_CALLOC
 R_FUNC_FINITE
 R_FUNC_LOG
+R_FUNC_STRPTIME
 
 ### Header files.
 
@@ -438,8 +439,8 @@ AC_HEADER_DIRENT
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(dl.h dlfcn.h elf.h errno.h fcntl.h floatingpoint.h \
   fpu_control.h grp.h ieee754.h ieeefp.h locale.h netdb.h netinet/in.h \
-  netinet/tcp.h pwd.h readline/history.h readline/readline.h rpc/rpc.h \
-  rpc/xdr.h string.h sys/param.h sys/select.h sys/socket.h sys/stat.h \
+  pwd.h readline/history.h readline/readline.h rpc/rpc.h rpc/xdr.h \
+  string.h sys/param.h sys/select.h sys/socket.h sys/stat.h \
   sys/time.h sys/times.h sys/utsname.h unistd.h)
 case "${host}" in
   *sunos4*)

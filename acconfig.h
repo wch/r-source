@@ -22,6 +22,9 @@
 /* Define if finite() is wrong for -Inf/NaN/Inf. */
 #undef FINITE_BROKEN
 
+/* Define if strptime() does not exist or fails pre-1970. */
+#undef STRPTIME_BROKEN
+
 /* Define if you have BSD networking headers and libraries. */
 #undef HAVE_BSD_NETWORKING
 

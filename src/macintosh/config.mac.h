@@ -29,9 +29,6 @@
 /* Define if you have <alloca.h> and it should be used (not on Ultrix).  */
 #define HAVE_ALLOCA_H 1
 
-/* Define if you have the <errno.h> header file.  */
-#define HAVE_ERRNO_H 1
-
 /* Define if you don't have vprintf but do have _doprnt.  */
 #undef HAVE_DOPRNT
 
@@ -86,14 +83,30 @@
 #undef Win32
 #define Macintosh 1
 
+/* Define if C's Rcomplex and Fortran's COMPLEX*16 can be interchanged,
+   and can do arithmetic on the latter */
+#undef HAVE_DOUBLE_COMPLEX
+
 /* Define if calloc(0) does not return a null pointer. */
 #undef CALLOC_BROKEN
 
 /* Define if finite() is wrong for -Inf/NaN/Inf. */
 #undef FINITE_BROKEN
 
+/* Define if strptime() does not exist or fails pre-1970. */
+#define STRPTIME_BROKEN 1
+
 /* Define if you have BSD networking headers and libraries. */
 #undef HAVE_BSD_NETWORKING
+
+/* Define if you have support for sockets. */
+#undef HAVE_SOCKETS
+
+/* Define if you have support for ftp/http access. */
+#undef HAVE_INTERNET
+
+/* Define if you provide support for libxml's ftp/http functions. */
+#undef SUPPORT_LIBXML
 
 /* Define if your Fortran compiler appends an underscore to external
    names. */
@@ -128,6 +141,9 @@
 /* Define if you have the X11 headers and libraries, and want the X11
    GUI to be built. */
 #undef HAVE_X11
+
+/* Define if you have the zlib headers and libraries. */
+#undef HAVE_ZLIB
 
 /* Define if you have IEEE 754 floating point arithmetic. */
 #define IEEE_754 1
@@ -186,6 +202,9 @@
    Apparently necessary to fix a GCC bug on AIX? */
 #undef blkcnt_t
 
+/* Type for socket lengths: socklen_t, sock_t, int? */
+#define SOCKLEN_T int
+
 /* The number of bytes in a long.  */
 #define SIZEOF_LONG 4
 
@@ -212,6 +231,9 @@
 
 /* Define if you have the finite function.  */
 #define HAVE_FINITE 1
+
+/* Define if you have the ftruncate function.  */
+#undef HAVE_FTRUNCATE
 
 /* Define if you have the getcwd function.  */
 #define HAVE_GETCWD 1
@@ -240,6 +262,9 @@
 /* Define if you have the memmove function.  */
 #define HAVE_MEMMOVE 1
 
+/* Define if you have the mkfifo function.  */
+#undef HAVE_MKFIFO
+
 /* Define if you have the popen function.  */
 #undef HAVE_POPEN
 
@@ -254,6 +279,9 @@
 
 /* Define if you have the setitimer function.  */
 #undef HAVE_SETITIMER
+
+/* Define if you have the snprintf function.  */
+#undef HAVE_SNPRINTF
 
 /* Define if you have the stat function.  */
 #define HAVE_STAT 1
@@ -291,6 +319,12 @@
 /* Define if you have the <elf.h> header file.  */
 #undef HAVE_ELF_H
 
+/* Define if you have the <errno.h> header file.  */
+#define HAVE_ERRNO_H 1
+
+/* Define if you have the <fcntl.h> header file.  */
+#undef HAVE_FCNTL_H
+
 /* Define if you have the <floatingpoint.h> header file.  */
 #undef HAVE_FLOATINGPOINT_H
 
@@ -318,9 +352,6 @@
 /* Define if you have the <netinet/in.h> header file.  */
 #undef HAVE_NETINET_IN_H
 
-/* Define if you have the <netinet/tcp.h> header file.  */
-#undef HAVE_NETINET_TCP_H
-
 /* Define if you have the <pwd.h> header file.  */
 #undef HAVE_PWD_H
 
@@ -347,6 +378,9 @@
 
 /* Define if you have the <sys/param.h> header file.  */
 #undef HAVE_SYS_PARAM_H
+
+/* Define if you have the <sys/select.h> header file.  */
+#undef HAVE_SYS_SELECT_H
 
 /* Define if you have the <sys/socket.h> header file.  */
 #undef HAVE_SYS_SOCKET_H
