@@ -23,7 +23,7 @@
  *
  *  DESCRIPTION
  *
- *    Compute maximin of two integers.
+ *    Compute maximum of two integers.
  */
 
 #include "Mathlib.h"
