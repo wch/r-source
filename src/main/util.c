@@ -877,9 +877,9 @@ SEXP dcdr(SEXP l)
 /* merge(xinds, yinds, all.x, all.y) */
 SEXP do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP xi, yi, ansx, ansy, ans, ansnames;
-    int y, nx = 0, ny = 0, i, j, k, nans = 0;
-    int all_x = 0, all_y = 0;/* "= 0" : for -Wall */
+    SEXP xi, yi, ansx, ansy, ans, ansnames, x_lone, y_lone;
+    int y, nx = 0, ny = 0, i, j, k, nans = 0, nx_lone = 0, ny_lone = 0;
+    int all_x = 0, all_y = 0, ll = 0/* "= 0" : for -Wall */;
 
     checkArity(op, args);
     xi = CAR(args);
@@ -892,24 +892,48 @@ SEXP do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "`all.x' must be TRUE or FALSE");		 
     if(!LENGTH(ans = CADDDR(args))|| NA_LOGICAL == (all_y = asLogical(ans)))
 	errorcall(call, "`all.y' must be TRUE or FALSE");
+    /* 1. determine result sizes */
+    if(all_x) { 
+	for (i = 0; i < nx; i++)
+	    if (INTEGER(xi)[i] == 0) nx_lone++;
+    }
     for (j = 0; j < ny; j++)
-	if ((y = INTEGER(yi)[j]) > 0)
+	if ((y = INTEGER(yi)[j]) > 0) {
 	    for (i = 0; i < nx; i++) {
 		if (INTEGER(xi)[i] == y) nans++;
 	    }
-    PROTECT(ans = allocVector(VECSXP, 2));
+        } else /* y == 0 */ if (all_y) ny_lone++;
+    /* 2. allocate and store result components */
+    PROTECT(ans = allocVector(VECSXP, 4));
     ansx = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 0, ansx);
     ansy = allocVector(INTSXP, nans);    SET_VECTOR_ELT(ans, 1, ansy);
+    if(all_x) { 
+	x_lone = allocVector(INTSXP, nx_lone);    
+	SET_VECTOR_ELT(ans, 2, x_lone);
+	ll = 0;
+	for (i = 0; i < nx; i++)
+	    if (INTEGER(xi)[i] == 0) INTEGER(x_lone)[ll++] = i + 1;
+    }
+    if(all_y) { 
+	y_lone = allocVector(INTSXP, ny_lone);    
+	SET_VECTOR_ELT(ans, 3, y_lone);
+	ll = 0;
+    } else
+	y_lone = R_NilValue;
     for (j = 0, k = 0; j < ny; j++)
-	if ((y = INTEGER(yi)[j]) > 0)
+	if ((y = INTEGER(yi)[j]) > 0) {
 	    for (i = 0; i < nx; i++) 
 		if (INTEGER(xi)[i] == y) {
 		INTEGER(ansx)[k]   = i + 1;
 		INTEGER(ansy)[k++] = j + 1;
 	    }
-    PROTECT(ansnames = allocVector(STRSXP, 2));
+	} else /* y == 0 */ if (all_y) INTEGER(y_lone)[ll++] = j + 1;
+
+    PROTECT(ansnames = allocVector(STRSXP, 4));
     SET_STRING_ELT(ansnames, 0, mkChar("xi"));
     SET_STRING_ELT(ansnames, 1, mkChar("yi"));
+    SET_STRING_ELT(ansnames, 2, mkChar("x.alone"));
+    SET_STRING_ELT(ansnames, 3, mkChar("y.alone"));
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;

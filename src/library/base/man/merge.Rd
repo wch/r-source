@@ -4,15 +4,18 @@
 \alias{merge.data.frame}
 \title{Merge Two Data Frames}
 \description{
-  Merge two data frames by common columns or row names.
+  Merge two data frames by common columns or row names, or do other
+  versions of database ``join'' operations.
 }
 \usage{
-merge(x, y, by, by.x, by.y, all = FALSE, all.x = all, all.y = all, sort = TRUE)
+merge(x, y, by, by.x, by.y, all = FALSE, all.x = all, all.y = all,
+      sort = TRUE, suffixes = c(".x",".y"))
 }
 \synopsis{
 merge(x, y, \dots)
 merge.date.frame(x, y, by = intersect(names(x), names(y)), by.x= by, by.y= by,
-                 all = FALSE, all.x = all, all.y = all,  sort = TRUE) 
+                 all = FALSE, all.x = all, all.y = all,
+                 sort = TRUE, suffixes = c(".x",".y"))
 }
 \arguments{
   \item{x, y}{data frames, or objects to be coerced to one}
@@ -28,6 +31,8 @@ merge.date.frame(x, y, by = intersect(names(x), names(y)), by.x= by, by.y= by,
   \item{all.y}{logical; analogous to \code{all.x} above.}
   \item{sort}{logical.  Should the results be sorted on the \code{by}
     columns?}
+  \item{suffixes}{character(2) specifying the suffixes to be used for
+    making non-\code{by} \code{names()} unique.}
 }
 \details{
   By default the data frames are merged on the columns with names they
@@ -37,11 +42,18 @@ merge.date.frame(x, y, by = intersect(names(x), names(y)), by.x= by, by.y= by,
   \code{0} specifies the row names.  The rows in the two data frames
   that match on the specified columns are extracted, and joined
   together.  If there is more than one match, all possible matches
-  contribute one row each.
+  contribute one row each.\cr
+  If the \code{by.*} vector are of length 0, the result, \code{r}, is the
+  ``cartesian product'' of \code{x} and \code{y}, i.e.,
+  \code{dim(r) = c(nrow(x)*nrow, ncol(x) + ncol(y))}.
+
+  If \code{all.x} is true, all the non matching cases of \code{x} are
+  appended to the result as well, with \code{NA} filled in the
+  corresponding columns of \code{y};  analogously for \code{all.y}.
 
   If the remaining columns in the data frames have any common names,
-  these have \code{".x"} and \code{".y"} appended to make the names
-  of the result unique.
+  these have \code{suffixes} (\code{".x"} and \code{".y"} by default)
+  appended to make the names of the result unique.
 }
 \value{
   A data frame.  The rows are by default lexicographically sorted on the
@@ -74,8 +86,11 @@ books <- data.frame(
     other.author = c(NA, "Ripley", NA, NA, NA, NA,
                      "Venables & Smith"))
 
-merge(authors, books, by.x = "surname", by.y = "name")
-merge(books, authors, by.x = "name", by.y = "surname")
+(m1 <- merge(authors, books, by.x = "surname", by.y = "name"))
+(m2 <- merge(books, authors, by.x = "name", by.y = "surname"))
+stopifnot(as.character(m1[,1]) == as.character(m2[,1]),
+          all.equal(m1[, -1], m2[, -1][ names(m1)[-1] ]),
+          dim(merge(m1, m2, by = integer(0))) == c(36, 10))
 
 ## "R core" is missing from authors and appears only here :
 merge(authors, books, by.x = "surname", by.y = "name", all = TRUE)

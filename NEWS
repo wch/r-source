@@ -311,6 +311,8 @@ NEW FEATURES
 
     o	?/help() now advertises help.search() if it fails to find a topic.
 
+    o	merge.data.frame() has new arguments, `all[.xy]' and `suffixes',
+	for S compatibility.
 
 
 BUG FIXES
