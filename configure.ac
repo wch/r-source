@@ -441,10 +441,10 @@ AC_CHECK_LIB(ncurses, main, [],
                           AC_CHECK_LIB(termlib, main)))
 case "${host_os}" in
   darwin*)
-    AM_CONDITIONAL(BUILD_DLFCN_DARWIN, 1)
+    AM_CONDITIONAL(BUILD_DLFCN_DARWIN, true)
     ;;
   *)
-    AM_CONDITIONAL(BUILD_DLFCN_DARWIN, 0)
+    AM_CONDITIONAL(BUILD_DLFCN_DARWIN, false)
     AC_CHECK_LIB(dl, dlopen)
     ;;
 esac
@@ -1314,6 +1314,9 @@ AC_CONFIG_FILES(
   src/library/eda/DESCRIPTION
   src/library/eda/Makefile
   src/library/eda/src/Makefile
+  src/library/grid/DESCRIPTION
+  src/library/grid/Makefile
+  src/library/grid/src/Makefile
   src/library/lqs/DESCRIPTION
   src/library/lqs/Makefile
   src/library/lqs/src/Makefile
