@@ -270,7 +270,7 @@ SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
 
-    if (!isString(vars =CAR(args)))
+    if (!isString(vars = CAR(args)))
 	errorcall(call, "wrong type for argument");
 
     n = LENGTH(vars);
@@ -282,6 +282,52 @@ SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 #else
     error("`putenv' is not available on this system");
+    return R_NilValue; /* -Wall */
+#endif
+}
+
+#ifdef HAVE_ICONV
+#include <iconv.h>
+#endif
+
+/* FIXME: remove line limit */
+#define BUFSIZE 1001
+/* iconv(x, from, to) */
+SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+#ifdef HAVE_ICONV
+    SEXP ans, x;
+    iconv_t obj;
+    int i;
+    char *inbuf, *outbuf, buff[BUFSIZE];
+    size_t inb, outb, res;
+    
+    checkArity(op, args);
+    if(TYPEOF(x = CAR(args)) != STRSXP)
+	errorcall(call, "'x' must be a character vector");
+    if(!isString(CADR(args)) || length(CADR(args)) != 1)
+	errorcall(call, "invalid 'from' argument");
+    if(!isString(CADDR(args)) || length(CADDR(args)) != 1)
+	errorcall(call, "invalid 'to' argument");
+    obj = iconv_open(CHAR(STRING_ELT(CADDR(args), 0)),
+		     CHAR(STRING_ELT(CADR(args), 0)));
+    if(obj == (iconv_t)(-1))
+	errorcall(call, "unsupported conversion");
+    PROTECT(ans = duplicate(x));
+    for(i = 0; i < LENGTH(x); i++) {
+	inbuf = CHAR(STRING_ELT(x, i)); inb = strlen(inbuf);
+	outbuf = buff; outb = BUFSIZE;
+	res = iconv(obj, &inbuf , &inb, &outbuf, &outb);
+	*outbuf = '\0';
+	if(res != -1 && inb == 0)
+	    SET_STRING_ELT(ans, i, mkChar(buff));
+	else SET_STRING_ELT(ans, i, NA_STRING);
+    }
+    UNPROTECT(1);
+    iconv_close(obj);
+    return ans;
+#else
+    error("`iconv' is not available on this system");
     return R_NilValue; /* -Wall */
 #endif
 }

@@ -543,7 +543,7 @@ AC_HEADER_SYS_WAIT
 ## Some of these are also checked for when Autoconf computes the default
 ## includes.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
-  fpu_control.h grp.h ieee754.h ieeefp.h limits.h locale.h \
+  fpu_control.h grp.h iconv.h ieee754.h ieeefp.h limits.h locale.h \
   netdb.h netinet/in.h pwd.h strings.h \
   sys/param.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
   sys/times.h sys/utsname.h unistd.h wchar.h wctype.h)
@@ -1608,6 +1608,9 @@ if test "${have_png}" = yes; then
 fi
 if test "${have_jpeg}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [JPEG], [, ])
+fi
+if test "${ac_cv_func_iconv}" = yes; then
+  R_SH_VAR_ADD(r_capabilities, [iconv], [, ])
 fi
 if test "${want_utf8_support}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [UTF-8], [, ])

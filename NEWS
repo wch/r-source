@@ -176,6 +176,10 @@ NEW FEATURES
     o	File-name matching is no longer case-insensitive with unz()
 	connections, even on Windows.
 
+    o	New function iconv() to convert character vectors between
+	encodings, on those OSes which support this.  See the new
+	capabilities("iconv").
+
 
 UTILITIES
 

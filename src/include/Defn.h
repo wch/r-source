@@ -873,6 +873,7 @@ char *EncodeString(SEXP, int, int, Rprt_adj);
 void UNIMPLEMENTED_TYPE(char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
 Rboolean utf8strIsASCII(char *str);
+int utf8clen(char c);
 
 
 /* Macros for suspending interrupts */
