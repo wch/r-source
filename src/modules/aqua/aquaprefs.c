@@ -1042,19 +1042,18 @@ OSStatus MyGetFontSelection (EventRef event)
     instance.fontStyle = normal;
     fontSize = 0;
                                         
-    status = GetEventParameter (event, kEventParamFMFontFamily,
+    if( (status = GetEventParameter (event, kEventParamFMFontFamily,
                                     typeFMFontFamily, NULL,
                                     sizeof (instance.fontFamily), 
-                                    NULL, &(instance.fontFamily));             //2
-    check_noerr (status);            //3
+                                    NULL, &(instance.fontFamily))) != noErr)             //2
+    return status;            //3
 
     status = GetEventParameter (event, kEventParamFMFontSize,
                                     typeFMFontSize, NULL,
                                     sizeof( fontSize), NULL, &fontSize);              //5
                                     
     fprintf(stderr,"\n get selection: family=%d, size=%d",  instance.fontFamily, fontSize);                              
-    check_noerr (status);
-
+    
     return status;
 }
 
