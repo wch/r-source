@@ -2,6 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2003 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -71,6 +72,6 @@ double lbeta(double a, double b)
 		+ (q - 0.5) * log1p(-p / (p + q));
     }
     else
-	/* p and q are small: p <= q > 10. */
+	/* p and q are small: p <= q < 10. */
 	return log(gammafn(p) * (gammafn(q) / gammafn(p + q)));
 }
