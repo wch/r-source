@@ -24,7 +24,7 @@ fix(x)
   fix(pi)
   if(!is.numeric(pi) || length(pi)!=1 ||
      !is.null(attributes(pi)) || abs(pi - 3.1415) > 1e-4)
-	stop("OOPS:  fix() is broken ...")
+        stop("OOPS:  fix() is broken ...")
   rm(pi); options(oo)
  }
 }

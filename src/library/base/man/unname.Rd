@@ -13,7 +13,7 @@ unname(obj, force=FALSE)
  \item{force}{logical; if true, the \code{dimnames} are even removed
      from \code{\link{data.frame}}s.
      \emph{This argument is currently \bold{experimental} and hence
-	 might change!}}
+         might change!}}
 }
 \value{
     Object as \code{obj} but without \code{\link{names}} or

@@ -13,7 +13,7 @@ make.tables.aovprojlist(proj.cols, strata.cols, model.cols, projections,
  \code{\link{model.tables}} and probably not much of use otherwise.
 }
 %% \details{
-%%		___ SOURCE in ../R/model.tables.R ___
+%%              ___ SOURCE in ../R/model.tables.R ___
 %% }
 \seealso{\code{\link{model.tables}}}
 \keyword{models}

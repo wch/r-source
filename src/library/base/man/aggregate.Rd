@@ -17,15 +17,15 @@ aggregate.ts(x, nfrequency = 1, FUN = sum, ndeltat = 1)
 \arguments{
     \item{x}{an R object.}
     \item{by}{a list of grouping elements, each as long as the variables
-	in \code{x}.  Names for the grouping variables are provided if
-	they are not given.}
+        in \code{x}.  Names for the grouping variables are provided if
+        they are not given.}
     \item{FUN}{a scalar function to compute the summary statistics which
-	can be applied to all data subsets.}
+        can be applied to all data subsets.}
     \item{nfrequency}{new number of observations per unit of time; must
-	be a divisor of the frequency of \code{x}.}
+        be a divisor of the frequency of \code{x}.}
     \item{ndeltat}{new fraction of the sampling period between
-	successive observations; must be a divisor of the sampling
-	interval of \code{x}.}
+        successive observations; must be a divisor of the sampling
+        interval of \code{x}.}
     \item{...}{further arguments passed to the method used.}
 }
 \details{

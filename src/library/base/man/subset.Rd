@@ -13,7 +13,7 @@ subset.data.frame(x, subset, select)
     \item{\dots}{How to subset, depends on object}
     \item{subset}{logical expression}
     \item{select}{expression, indicating variables to select from a
-	dataframe}
+        dataframe}
 }
 \details{
     For ordinary vectors, the result is simply 

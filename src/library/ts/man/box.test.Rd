@@ -32,10 +32,10 @@ Box.test (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"))
   Box, G. E. P. and Pierce, D. A. (1970) Distribution of residual
   correlations in autoregressive-integrated moving average time series
   models. \emph{Journal of the American Statistical Association}
-  \bold{65}, 1509-1526.
+  \bold{65}, 1509--1526.
     
   Ljung, G. M. and Box, G. E. P. (1978) On a measure of lack of fit in
-  time series models. \emph{Biometrika} \bold{65}, 553-564.
+  time series models. \emph{Biometrika} \bold{65}, 553--564.
   
   Harvey, A. C. (1993) \emph{Time Series Models},
   2nd Edition, Harvester Wheatsheaf, NY, pp. 44, 45.

@@ -128,14 +128,14 @@ arima0.diag(fit, gof.lag = 10)
     Gardener, G, Harvey, A. C. and Phillips, G. D. A. (1980) Algorithm
     AS154. An algorithm for exact maximum likelihood estimation of
     autoregressive-moving average models by means of Kalman filtering.
-    \emph{Applied Statistics} \bold{29}, 311-322.
+    \emph{Applied Statistics} \bold{29}, 311--322.
 
     Harvey, A. C. (1993) \emph{Time Series Models},
     2nd Edition, Harvester Wheatsheaf, section 4.4.
 
     Harvey, A. C. and McKenzie, C. R. (1982) Algorithm AS182.
     An algorithm for finite sample prediction from ARIMA processes.
-    \emph{Applied Statistics} \bold{31}, 180-187.
+    \emph{Applied Statistics} \bold{31}, 180--187.
 }
 
 \author{B.D. Ripley}

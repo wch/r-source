@@ -17,12 +17,12 @@ deltat(x, \dots)
 \alias{frequency.default}
 \alias{deltat.default}
 \arguments{
-    \item{x}{a univariate or multivariate time-series, or a vector or matrix.}
-    \item{offset}{can be used to indicate when sampling took place
-	in the time unit. \code{0} (the default) indicates the start
-	of the unit, \code{0.5} the middle and \code{1} the end of
-	the interval.}
-    \item{\dots}{extra arguments for future methods.}
+  \item{x}{a univariate or multivariate time-series, or a vector or matrix.}
+  \item{offset}{can be used to indicate when sampling took place
+    in the time unit. \code{0} (the default) indicates the start
+    of the unit, \code{0.5} the middle and \code{1} the end of
+    the interval.}
+  \item{\dots}{extra arguments for future methods.}
 }
 \description{
   \code{time} creates the vector of times at which a time series was sampled.
@@ -34,17 +34,17 @@ deltat(x, \dots)
   \code{\link{ts}}).
 }
 \details{
-    These are all generic functions, which will use the
-    \code{\link{tsp}} attribute of \code{x} if it exists. \code{time}
-    and \code{cycle} have methods for class \code{\link{ts}} that coerce
-    the result to that class.
+  These are all generic functions, which will use the
+  \code{\link{tsp}} attribute of \code{x} if it exists. \code{time}
+  and \code{cycle} have methods for class \code{\link{ts}} that coerce
+  the result to that class.
 }
 \seealso{
-    \code{\link{ts}}, \code{\link{start}}, \code{\link{tsp}},
-    \code{\link{window}}.
+  \code{\link{ts}}, \code{\link{start}}, \code{\link{tsp}},
+  \code{\link{window}}.
 
-    \code{\link{date}} for clock time, \code{\link{system.time}}
-    for CPU usage.
+  \code{\link{date}} for clock time, \code{\link{system.time}}
+  for CPU usage.
 }
 \examples{
 data(presidents)

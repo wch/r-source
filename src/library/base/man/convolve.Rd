@@ -52,7 +52,7 @@ convolve(x, y, conj = TRUE, type = c("circular", "open", "filter"))
 \examples{
 x <- c(0,0,0,100,0,0,0)
 y <- c(0,0,1, 2 ,1,0,0)/4
-zapsmall(convolve(x,y))		#  *NOT* what you first thought..
+zapsmall(convolve(x,y))         #  *NOT* what you first thought..
 zapsmall(convolve(x, y[3:5], type="f")) # rather
 x <- rnorm(50)
 y <- rnorm(50)

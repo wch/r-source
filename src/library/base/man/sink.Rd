@@ -6,10 +6,10 @@ sink(file = NULL, append = FALSE)
 }
 \arguments{
     \item{file}{a character string naming the file to write to, or
-    	\code{NULL} to stop ``sink''ing.}
+        \code{NULL} to stop ``sink''ing.}
     \item{append}{if \code{TRUE}, output will be appended to
-	\code{file}; otherwise, it will overwrite the contents of
-	\code{file}.}
+        \code{file}; otherwise, it will overwrite the contents of
+        \code{file}.}
 }
 \description{
     Diverts all \R output to \code{file}, overwriting the file unless

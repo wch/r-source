@@ -64,7 +64,7 @@ dnbinom(x, size = 1, prob = 1/2) * 2^(1 + x) # == 1
 
 ## Cumulative ('p') = Sum of discrete prob.s ('d');  Relative error :
 summary(1 - cumsum(dnbinom(x, size = 2, prob = 1/2)) /
-	          pnbinom(x, size  = 2, prob = 1/2))
+                  pnbinom(x, size  = 2, prob = 1/2))
 
 x <- 0:15
 size <- (1:20)/4

@@ -7,9 +7,9 @@ plot.factor(x, y, legend.text = levels(y), \dots)
 \arguments{
     \item{x,y}{numeric or factor.  \code{y} may be missing.}
     \item{legend.text}{a vector of text used to construct a legend for
-	the plot. Only used if \code{y} is present and a factor.}
+        the plot. Only used if \code{y} is present and a factor.}
     \item{\dots}{Further arguments to \code{\link{plot}}, see also
-   	\code{\link{par}}.}
+        \code{\link{par}}.}
 }
 \description{
   This functions implements a ``scatterplot'' method for

@@ -12,6 +12,6 @@ arma0f(p)
 is.mts(x)
 }
 \details{
-    These are not to be called by the user.
+  These are not to be called by the user.
 }
 \keyword{ts}

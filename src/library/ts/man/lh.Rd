@@ -4,15 +4,15 @@
 \name{lh}
 \alias{lh}
 \title{
-Luteinizing Hormone in Blood Samples
+  Luteinizing Hormone in Blood Samples
 }
 \description{
-A regular time series giving the luteinizing hormone in blood
-samples at 10 mins intervals from a human female, 48 samples.
+  A regular time series giving the luteinizing hormone in blood
+  samples at 10 mins intervals from a human female, 48 samples.
 }
 \source{
-P.J. Diggle (1990)
-\emph{Time Series: A Biostatistical Introduction.}
-Oxford, table A.1, series 3
+  P.J. Diggle (1990)
+  \emph{Time Series: A Biostatistical Introduction.}
+  Oxford, table A.1, series 3
 }
 \keyword{datasets}

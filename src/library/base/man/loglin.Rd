@@ -46,16 +46,16 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
     \item{lrt}{the Likelihood Ratio Test statistic.}
     \item{pearson}{the Pearson test statistic (X-squared).}
     \item{df}{the degrees of freedom for the fitted model.  There is no
-	adjustment for structural zeros.}
+        adjustment for structural zeros.}
     \item{margin}{list of the margins that were fit.  Basically the same
-    	as the input \code{margin}, but with numbers replaced by names
-	where possible.} 
+        as the input \code{margin}, but with numbers replaced by names
+        where possible.} 
     \item{fit}{An array like \code{table} containing the fitted values.
-    	Only returned if \code{fit} is \code{TRUE}.}
+        Only returned if \code{fit} is \code{TRUE}.}
     \item{param}{A list containing the estimated parameters of the
-	model.  The ``standard'' constraints of zero marginal sums
-	(e.g., zero row and column sums for a two factor parameter) are
-	employed.  Only returned if \code{param} is \code{TRUE}.}
+        model.  The ``standard'' constraints of zero marginal sums
+        (e.g., zero row and column sums for a two factor parameter) are
+        employed.  Only returned if \code{param} is \code{TRUE}.}
 }
 \details{
     The Iterative Proportional Fitting algorithm as presented in

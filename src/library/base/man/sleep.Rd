@@ -9,9 +9,9 @@
 \format{
     A data frame with 20 observations on 2 variables.
     \tabular{rlll}{
-    	[, 1] \tab extra \tab numeric \tab increase in hours of sleep
-	\cr
-	[, 2] \tab group \tab factor  \tab patient group
+        [, 1] \tab extra \tab numeric \tab increase in hours of sleep
+        \cr
+        [, 2] \tab group \tab factor  \tab patient group
     }
 }
 \source{

@@ -9,23 +9,23 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 \arguments{
     \item{file}{character; the name of the file to read from (quoted).}
     \item{local}{if \code{local} is \code{FALSE}, the statements scanned
- 	are evaluated in the global environment, otherwise in the local
-	calling source.}
+        are evaluated in the global environment, otherwise in the local
+        calling source.}
     \item{echo}{logical; if \code{TRUE}, each expression is printed
-	after parsing, before evaluation.}
+        after parsing, before evaluation.}
     \item{print.eval}{logical; if \code{TRUE}, the result of
-	\code{eval(i)} is printed for each expression \code{i}; defaults
-	to \code{echo}.}
+        \code{eval(i)} is printed for each expression \code{i}; defaults
+        to \code{echo}.}
     \item{verbose}{if \code{TRUE}, more diagnostics (than just
-	\code{echo = TRUE}) are printed during parsing and evaluation of
-	input, including extra info for \bold{each} expression.}
+        \code{echo = TRUE}) are printed during parsing and evaluation of
+        input, including extra info for \bold{each} expression.}
     \item{prompt.echo}{character; gives the prompt to be used if
-	\code{echo = TRUE}.}
+        \code{echo = TRUE}.}
     \item{max.deparse.length}{integer; is used only if \code{echo} is
-	\code{TRUE} and gives the maximal length of the ``echo'' of a
-	single expression.}
+        \code{TRUE} and gives the maximal length of the ``echo'' of a
+        single expression.}
     \item{chdir}{logical; if \code{TRUE}, the R working directory is
-	changed to the directory containing \code{file} for evaluating.}
+        changed to the directory containing \code{file} for evaluating.}
 }
 \description{
     \code{source} causes \R to accept its input from the named file (the

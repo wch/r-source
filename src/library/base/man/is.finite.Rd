@@ -58,9 +58,9 @@ pi / 0 ## = Inf a non-zero number divided by zero creates infinity
 1/0 == Inf
 1/Inf == 0
 exp(-Inf) == 0
-##		(actually, the last one seems to give NA on not-very-new
-##		 versions of Linux, which is a Linux bug and seems to be
-##		 corrected in newer 'libc6' based Linuxen).
+##              (actually, the last one seems to give NA on not-very-new
+##               versions of Linux, which is a Linux bug and seems to be
+##               corrected in newer 'libc6' based Linuxen).
 
 is.na(0/0) # T
 !is.na(Inf)# T
@@ -73,14 +73,14 @@ is.nan(0/0)# T
 all(!is.nan(c(1,NA)))
 all(c(F,T,F) == is.nan(c   (1,NaN,NA)))
 all(c(F,T,F) == is.nan(list(1,NaN,NA)))#-> FALSE  'BUGlet' [coerce.c]
-				# However, S is different anyway.
+                                # However, S is different anyway.
 \testonly{
  ( weird.values <- c(-20.9/0, 1/0, 0/0, NA) )
 
  Mmax <- .Machine$double.xmax
  Mmin <- .Machine$double.xmin
  ( X.val <- c(Mmin*c(2^(-10:3),1e5,1e10),
-	      Mmax*c(1e-10,1e-5,2^(-3:0),1.001)) )
+              Mmax*c(1e-10,1e-5,2^(-3:0),1.001)) )
  ( tst.val <- sort(c(X.val, weird.values), na.last = TRUE) )
  ( x2 <- c(-1:1/0,pi,1,NA) )
  ( z2 <- c(x2, 1+1i, Inf -Inf* 1i) )
@@ -114,31 +114,31 @@ all(atan(Inf*pm) == pm*pi/2) # TRUE
 
 
 x <- c(100,-1e-13,Inf,-Inf, NaN, pi, NA)
-x #  1.000000 -3.000000	      Inf      -Inf	   NA  3.141593	       NA
+x #  1.000000 -3.000000       Inf      -Inf        NA  3.141593        NA
 names(x) <- formatC(x, dig=3)
 is.finite(x)
 ##-   100 -1e-13 Inf -Inf NaN 3.14 NA
-##-	T      T   .	.   .	 T  .
+##-     T      T   .    .   .    T  .
 is.na(x)
 ##-   100 -1e-13 Inf -Inf NaN 3.14 NA
-##-	.      .   .	.   T	 .  T
+##-     .      .   .    .   T    .  T
 which(is.na(x) & !is.nan(x))# only 'NA': 7
 
 is.na(x) | is.finite(x)
 ##-   100 -1e-13 Inf -Inf NaN 3.14 NA
-##-	T      T   .	.   T	 T  T
+##-     T      T   .    .   T    T  T
 is.infinite(x)
 ##-   100 -1e-13 Inf -Inf NaN 3.14 NA
-##-	.      .   T	T   .	 .  .
+##-     .      .   T    T   .    .  .
 
-##-- either  finite or infinite	 or  NA:
+##-- either  finite or infinite  or  NA:
 all(is.na(x) != is.finite(x) | is.infinite(x)) # TRUE
 all(is.nan(x) != is.finite(x) | is.infinite(x)) # FALSE: have 'real' NA
 
 ##--- Integer
 (ix <- structure(as.integer(x),names= names(x)))
-##-   100 -1e-13	Inf	   -Inf NaN 3.14 NA
-##-   100      . 2147483647 -2147483648	 NA    3 NA
+##-   100 -1e-13        Inf        -Inf NaN 3.14 NA
+##-   100      . 2147483647 -2147483648  NA    3 NA
 all(is.na(ix) != is.finite(ix) | is.infinite(ix)) # TRUE (still)
 
 ix[3] == (iI <- as.integer(Inf))#> warning: inaccurate integer conversion!

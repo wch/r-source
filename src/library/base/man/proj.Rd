@@ -1,7 +1,7 @@
 \name{proj}
 \title{Projections of Models}
 \usage{
-proj 	 (object, \dots)  
+proj     (object, \dots)  
 proj.aov    (object, onedf = FALSE, unweighted.scale = FALSE)  
 proj.aovlist(object, onedf = FALSE, unweighted.scale = FALSE)  
 proj.default(object, onedf = TRUE, \dots)  

@@ -4,16 +4,15 @@
 \name{nottem}
 \alias{nottem}
 \title{
-    Average Monthly Temperatures at Nottingham, 1920--1939
+  Average Monthly Temperatures at Nottingham, 1920--1939
 }
 \description{
-    A time series object containing average air temperatures at
-    Nottingham Castle in degrees Fahrenheit for 20 years.
+  A time series object containing average air temperatures at
+  Nottingham Castle in degrees Fahrenheit for 20 years.
 }
 \source{
-    Anderson, O.D. (1976)
-    \emph{Time Series Analysis and Forecasting: The Box-Jenkins
-	approach.}
-    Butterworths. Series R.
+  Anderson, O.D. (1976)
+  \emph{Time Series Analysis and Forecasting: The Box-Jenkins approach.}
+  Butterworths. Series R.
 }
 \keyword{datasets}

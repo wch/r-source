@@ -2,7 +2,7 @@
 \alias{ts.plot}
 \title{Plot Multiple Time Series}
 \usage{
-ts.plot(..., gpars=list())
+ts.plot(..., gpars = list())
 }
 \arguments{
   \item{\dots}{one or more univariate or multivariate time series}

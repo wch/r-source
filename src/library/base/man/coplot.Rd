@@ -64,8 +64,8 @@ co.intervals(x, number = 6, overlap = 0.5)
 }
 \value{
     \code{co.intervals(., number, .)} returns a (\code{number} \eqn{\times}{x}
-  	2) \code{\link{matrix}}, say \code{ci},  where \code{ci[k,]} is
-	the \code{\link{range}} of \code{x} values for the \code{k}-th interval.
+        2) \code{\link{matrix}}, say \code{ci},  where \code{ci[k,]} is
+        the \code{\link{range}} of \code{x} values for the \code{k}-th interval.
 }
 \references{
   Cleveland, W. S. (1993).

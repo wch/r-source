@@ -67,7 +67,7 @@ provide(name)
   argument is stored in the list \code{.Provided}.  \code{provide}
   returns \code{FALSE} if the name was already present in
   \code{.Provided} or among the packages in \code{search()}.  The main
-  use for \code{provide} is when multiple packages share code.	This is
+  use for \code{provide} is when multiple packages share code.  This is
   most likely when the code implements features present in S(-PLUS) but
   not in R. For example, the spline functions \code{ns}, \code{bs} and
   so on are not included in the \R distribution.  A package containing
@@ -137,15 +137,15 @@ provide(name)
 #endif
 }
 \examples{
-.packages()	    	    # maybe just "base"
+.packages()                 # maybe just "base"
 .packages(all = TRUE)       # return all available as char.vector
-library()		    # list all available packages
-library(lib = .Library)	    # list all packages in the default library
-library(help = eda)	    # documentation on package "eda"
-library(eda)		    # load package "eda"
-require(eda)		    # the same
+library()                   # list all available packages
+library(lib = .Library)     # list all packages in the default library
+library(help = eda)         # documentation on package "eda"
+library(eda)                # load package "eda"
+require(eda)                # the same
 .packages()                 # "eda", too
-require(nonexistent)	    # FALSE
+require(nonexistent)        # FALSE
 ## Suppose the a package needs to call a shared library named "foo.EXT",
 ## where "EXT" is the system-specific extension.  Then you should use
 .First.lib <- function(lib, pkg) {

@@ -60,7 +60,7 @@ want to set \code{horizontal=FALSE, onefile=FALSE, paper="special"}.
 \seealso{
     \code{\link{Devices}}, 
     {\code{\link{check.options}} which is called from both
-	\code{ps.options} and \code{postscript}.}
+        \code{ps.options} and \code{postscript}.}
 }
 \examples{
 \dontrun{
@@ -70,9 +70,9 @@ want to set \code{horizontal=FALSE, onefile=FALSE, paper="special"}.
 \testonly{
 xx <- seq(0, 7, length=701)
 yy <- sin(xx)/xx; yy[1] <- 1
-plot(xx,yy)			# produce the desired graph(s)
+plot(xx,yy)                     # produce the desired graph(s)
 }
-\dontrun{dev.off()		# turn off the postscript device}
+\dontrun{dev.off()              # turn off the postscript device}
 
 all(unlist(ps.options()) == unlist(.PostScript.Options))
 ps.options(bg = "pink")

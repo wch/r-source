@@ -10,11 +10,11 @@ quit(save = "default", status = 0, runLast = TRUE)
 }
 \arguments{
     \item{save}{a character string indicating whether the environment
-	(workspace) should be saved, one of \code{"no"}, \code{"yes"},
-	\code{"ask"} or \code{"default"}.}
+        (workspace) should be saved, one of \code{"no"}, \code{"yes"},
+        \code{"ask"} or \code{"default"}.}
     \item{status}{the (numerical) error status to be returned to the
-	operating system, where relevant. Conventionally \code{0}
-	indicates successful completion.}
+        operating system, where relevant. Conventionally \code{0}
+        indicates successful completion.}
     \item{runLast}{should \code{.Last()} be executed?}
 }
 \description{
@@ -37,7 +37,7 @@ quit(save = "default", status = 0, runLast = TRUE)
 
     Some error statuses are used by \R itself.  The default error
     handler for non-interactive effectively calls \code{q("no", 1,
-	FALSE)} and returns error code 1. Error status 2 is used for \R
+        FALSE)} and returns error code 1. Error status 2 is used for \R
     `suicide', that is a catastrophic failure, and other small numbers
     are used by specific ports for initialization failures. It is
     recommended that users choose statuses of 10 or more.

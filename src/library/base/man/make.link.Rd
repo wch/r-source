@@ -6,10 +6,10 @@ make.link(link)
 }
 \arguments{
     \item{link}{character or numeric; one of \code{"logit"},
-	\code{"probit"}, \code{"cloglog"}, \code{"identity"},
-	\code{"log"},  \code{"sqrt"},  \code{"1/mu^2"},
-	\code{"inverse"}, or number, say \eqn{\lambda}{lambda} resulting
-	in power link \eqn{=\mu ^ \lambda}{mu ^ lambda}.}
+        \code{"probit"}, \code{"cloglog"}, \code{"identity"},
+        \code{"log"},  \code{"sqrt"},  \code{"1/mu^2"},
+        \code{"inverse"}, or number, say \eqn{\lambda}{lambda} resulting
+        in power link \eqn{=\mu ^ \lambda}{mu ^ lambda}.}
 }
 %%-- implementation in ../R/family.R
 \description{
@@ -25,7 +25,7 @@ make.link(link)
     \item{linkinv}{Inverse link function \code{function(eta)}}
     \item{mu.eta}{Derivative \code{function(eta)} \eqn{d\mu / d\eta}{dmu/deta}}
     \item{valideta}{\code{function(eta)}\{ \code{TRUE} if all of
-	\code{eta} is in the domain of \code{linkinv} \}.}
+        \code{eta} is in the domain of \code{linkinv} \}.}
 }
 \seealso{\code{\link{glm}}, \code{\link{family}}.}
 \examples{

@@ -72,7 +72,7 @@ ltsreg(\ldots)
   the seed to be used for random sampling: see \code{.Random.seed}. The
   current value of \code{.Random.seed} will be preserved if it is set..
 }
-\item{...}{
+\item{\dots}{
   arguments to be passed to \code{lqs.default} or \code{lqs.control}.
 }}
 \value{
@@ -139,17 +139,17 @@ The \code{control} argument is a list with components:
 }
 \author{B.D. Ripley}
 \references{
-P. J. Rousseeuw and A. M. Leroy (1987)
-\emph{Robust Regression and Outlier Detection.}
-Wiley.
+  P. J. Rousseeuw and A. M. Leroy (1987)
+  \emph{Robust Regression and Outlier Detection.}
+  Wiley.
 
-A. Marazzi (1993)
-\emph{Algorithms, Routines and S Functions for Robust Statistics.}
-Wadsworth and Brooks/Cole.
+  A. Marazzi (1993)
+  \emph{Algorithms, Routines and S Functions for Robust Statistics.}
+  Wadsworth and Brooks/Cole.
 
-P. Rousseeuw and M. Hubert (1997) Recent developments in PROGRESS. In
-\emph{L1-Statistical Procedures and Related Topics }
-ed Y. Dodge, IMS Lecture Notes volume \bold{31}, pp. 201-214.
+  P. Rousseeuw and M. Hubert (1997) Recent developments in PROGRESS. In
+  \emph{L1-Statistical Procedures and Related Topics},
+  ed Y. Dodge, IMS Lecture Notes volume \bold{31}, pp. 201--214.
 }
 \seealso{
 \code{\link{predict.lqs}}
@@ -157,9 +157,8 @@ ed Y. Dodge, IMS Lecture Notes volume \bold{31}, pp. 201-214.
 \examples{
 data(stackloss)
 .Random.seed <- 1:4
-lqs(stack.loss ~ ., data=stackloss)
-lqs(stack.loss ~ ., data=stackloss, method="S", nsamp="exact")
+lqs(stack.loss ~ ., data = stackloss)
+lqs(stack.loss ~ ., data = stackloss, method = "S", nsamp = "exact")
 }
 \keyword{models}
 \keyword{robust}
-% Converted by Sd2Rd version 0.3-2.

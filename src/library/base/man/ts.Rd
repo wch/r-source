@@ -18,34 +18,34 @@ lines(ts.obj, ...)
 \alias{plot.mts}
 \alias{lines.ts}
 \arguments{
-    \item{data}{a vector or matrix of the observed time-series values.}
-    \item{start}{the time of the first observation. Either an integer
-	which correspond or a vector of two integers, which give a natural
-	time unit and a (1-based) number of samples into the time unit.}
-    \item{end}{the time of the last observation, specified in the same way
-	as \code{start}.}
-    \item{frequency}{the number of observations per unit of time.}
-    \item{deltat}{the fraction of the sampling period between successive
-	observations; e.g., 1/12 for monthly data.
-	Only one of \code{frequency} or \code{deltat} should be provided.}
-    \item{ts.eps}{time series comparison tolerance.  Frequencies are
-	considered equal if their absolute difference is less than
-	\code{ts.eps}.}
-    \item{class}{class to be given to the result, or none if \code{NULL}
-	or \code{"none"}. The default is \code{"ts"} for a single
-	series, \code{c("mts", "ts")} for multiple series.}
-    \item{names}{a character vector of names for the series in a
-	multiple series: defaults to the colnames of \code{data}, or
-	\code{Series 1}, \code{Series 2}, \dots.}
+  \item{data}{a vector or matrix of the observed time-series values.}
+  \item{start}{the time of the first observation. Either an integer
+    which correspond or a vector of two integers, which give a natural
+    time unit and a (1-based) number of samples into the time unit.}
+  \item{end}{the time of the last observation, specified in the same way
+    as \code{start}.}
+  \item{frequency}{the number of observations per unit of time.}
+  \item{deltat}{the fraction of the sampling period between successive
+    observations; e.g., 1/12 for monthly data.
+    Only one of \code{frequency} or \code{deltat} should be provided.}
+  \item{ts.eps}{time series comparison tolerance.  Frequencies are
+    considered equal if their absolute difference is less than
+    \code{ts.eps}.}
+  \item{class}{class to be given to the result, or none if \code{NULL}
+    or \code{"none"}. The default is \code{"ts"} for a single
+    series, \code{c("mts", "ts")} for multiple series.}
+  \item{names}{a character vector of names for the series in a
+    multiple series: defaults to the colnames of \code{data}, or
+    \code{Series 1}, \code{Series 2}, \dots.}
 
-    \item{calendar}{enable/disable the display of information about
-	month names, quarter names or year when printing. The default is
-	\code{TRUE} for a frequency of 4 or 12, \code{FALSE} otherwise.}
+  \item{calendar}{enable/disable the display of information about
+    month names, quarter names or year when printing. The default is
+    \code{TRUE} for a frequency of 4 or 12, \code{FALSE} otherwise.}
 
-    \item{plot.type}{for multivariate time series, should the series by
-	plotted separately (with a common time axis) or on a single
-	plot?}
-    \item{\dots}{additional arguments to print or plot.}
+  \item{plot.type}{for multivariate time series, should the series by
+    plotted separately (with a common time axis) or on a single
+    plot?}
+  \item{\dots}{additional arguments to print or plot.}
 }
 \description{
   The function \code{ts} is used to create time-series objects.
@@ -97,7 +97,7 @@ gnp <- ts(cumsum(1 + round(rnorm(100), 2)),
 plot(gnp) # using `plot.ts' for time-series plot
 
 ## Multivariate
-z <- ts(matrix(rnorm(300),100,3), start=c(1961,1), frequency=12)
+z <- ts(matrix(rnorm(300), 100, 3), start=c(1961, 1), frequency=12)
 plot(z)
 plot(z, plot.type="single", lty=1:3)
 \testonly{
@@ -109,11 +109,11 @@ all(z-z == 0)
 }
 ## A phase plot:
 data(nhtemp)
-plot(nhtemp, c(nhtemp[-1],NA), cex = .8, col="blue",
-     main="Lag plot of New Haven temperatures")
+plot(nhtemp, c(nhtemp[-1], NA), cex = .8, col="blue",
+     main = "Lag plot of New Haven temperatures")
 ## a clearer way to do this would be
 \dontrun{library(ts)
-plot(nhtemp, lag(nhtemp,1), cex = .8, col="blue",
-     main="Lag plot of New Haven temperatures")
+plot(nhtemp, lag(nhtemp, 1), cex = .8, col="blue",
+     main = "Lag plot of New Haven temperatures")
 }}
 \keyword{ts}

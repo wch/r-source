@@ -13,7 +13,7 @@ new functions in the \R language.
 \arguments{
     \item{arglist}{Empty or one or more name or name=expression terms.}
     \item{value}{An expression, or a series of expressions separated
-	by commas.}
+        by commas.}
 }
 \details{
     In \R (unlike S) the names in an argument list cannot be quoted

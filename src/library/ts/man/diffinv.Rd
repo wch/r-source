@@ -36,7 +36,7 @@ diffinv(x, lag = 1, differences = 1,
 \examples{
 s <- 1:10
 d <- diff(s)
-diffinv(d,xi=1)
+diffinv(d, xi = 1)
 }
 \keyword{ts}
 

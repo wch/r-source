@@ -37,7 +37,7 @@ read.fwf(file, widths, sep=" ", as.is = FALSE,
 \examples{
 ff <- tempfile()
 cat(file=ff, "123456", "987654", sep="\n")
-read.fwf(ff, width=c(1,2,3))	#> 1 23 456 \\ 9 87 654
+read.fwf(ff, width=c(1,2,3))    #> 1 23 456 \\ 9 87 654
 unlink(ff)
 }
 \keyword{file}

@@ -29,7 +29,7 @@ switch(EXPR, \dots)
 \examples{
 centre <- function(x, type) {
   switch(type,
-	mean = mean(x),
+        mean = mean(x),
         median = median(x),
         trimmed = mean(x, trim = .1))
 }
@@ -39,7 +39,7 @@ centre(x, "median")
 centre(x, "trimmed")
 
 ccc <- c("b","QQ","a","A","bb")
-for(ch in ccc) cat(ch,":",switch(ch, a=1,    b=2:3),		"\n")
+for(ch in ccc) cat(ch,":",switch(ch, a=1,    b=2:3),            "\n")
 for(ch in ccc) cat(ch,":",switch(ch, a=,A=1, b=2:3, "Otherwise: last"),"\n")
 
 ## Numeric EXPR don't allow an `otherwise':

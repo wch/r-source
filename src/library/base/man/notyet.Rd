@@ -27,8 +27,8 @@ symbols(\dots)
 \seealso{the contrary, \code{\link{Deprecated}} and
   \code{\link{Defunct}} for outdated code.}
 \examples{
-symbols 		    # to see how the ``NotYetImplemented''
-.NotYetImplemented	    # reference is made automagically
+symbols                     # to see how the ``NotYetImplemented''
+.NotYetImplemented          # reference is made automagically
 
 barplot(1:5, inside = TRUE) # `inside' is not yet used
 }

@@ -23,7 +23,7 @@ given in \code{x} and \code{y}.
 \seealso{
   \code{\link{segments}} for even more flexibility,
   \code{\link{lines}}, \code{\link{rect}}, \code{\link{box}}, \code{\link{abline}}.
-}	
+}       
 \examples{
 n <- 100
 xx <- c(0:n, n:0)

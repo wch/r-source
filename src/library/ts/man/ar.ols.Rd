@@ -85,7 +85,7 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
 
 \references{
     Luetkepohl, H. (1991): \emph{Introduction to Multiple Time Series
-	Analysis.} Springer Verlag, NY, pp. 368-370.
+        Analysis.} Springer Verlag, NY, pp. 368--370.
 }
 
 \examples{

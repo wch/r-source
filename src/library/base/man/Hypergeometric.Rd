@@ -37,7 +37,7 @@ rhyper(nn, m, n, k)
   \eqn{n}, respectively in the reference below) is given by
   \deqn{
     p(x) = \left. {m \choose x}{n \choose k-x} \right/ {m+n \choose k}%
-  }{p(x) =	choose(m, x) choose(n, k-x) / choose(m+n, k)}
+  }{p(x) =      choose(m, x) choose(n, k-x) / choose(m+n, k)}
   for \eqn{x = 0, \ldots, k}{x = 0, ..., k}.
 }
 \references{

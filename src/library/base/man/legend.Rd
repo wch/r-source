@@ -108,7 +108,7 @@ hist(x, main = "Mean and Median of a Skewed Distribution")
 abline(v = mean(x),   col=2, lty=2, lwd=2)
 abline(v = median(x), col=3, lty=3, lwd=2)
 ex12 <- expression(bar(x) == sum(over(x[i], n), i==1, n),
-    		   hat(x) == median(x[i], i==1,n))
+                   hat(x) == median(x[i], i==1,n))
 legend(4.1, 30, ex12, col = 2:3, lty=2:3, lwd=2)
 }
 \keyword{aplot}

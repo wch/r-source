@@ -60,7 +60,7 @@ all(dim(ma) == dim(apply(ma, 1:2, sum)))## wasn't ok before R 0.63.1
 
  d.arr <- 2:5
  arr <- array(1:prod(d.arr), d.arr,
-	  list(NULL,letters[1:d.arr[2]],NULL,paste("V",4+1:d.arr[4],sep="")))
+          list(NULL,letters[1:d.arr[2]],NULL,paste("V",4+1:d.arr[4],sep="")))
  all(apply(arr, 1:2, sum) == t(apply(arr, 2:1, sum)))
  aa <- array(1:20,c(2,2,5))
  all(aa == apply(aa,2:3,function(x) x))

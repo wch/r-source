@@ -52,13 +52,13 @@ x$name
 }
 \examples{
 x <- 1:12; m <- matrix(1:6,nr=2); li <- list(pi=pi, e = exp(1))
-x[10]		      # the tenth element of x
-m[1,]		      # the first row of matrix m
+x[10]                 # the tenth element of x
+m[1,]                 # the first row of matrix m
 m[1, , drop = FALSE]  # is a 1-row matrix
-li[[1]]		      # the first element of list li
+li[[1]]               # the first element of list li
 y <- list(1,2,a=4,5)
-y[c(3,4)]	      # a list containing elements 3 and 4 of y
-y$a		      # the element of y named a
+y[c(3,4)]             # a list containing elements 3 and 4 of y
+y$a                   # the element of y named a
 }
 \keyword{array}
 \keyword{list}

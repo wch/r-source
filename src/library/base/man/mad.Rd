@@ -38,7 +38,7 @@ mad(x, center, constant = 1.4826, na.rm = FALSE)
 \examples{
 mad(c(1:9))
 print(mad(c(1:9),     constant=1)) ==
-      mad(c(1:8,100), constant=1)	# = 2 ; TRUE
+      mad(c(1:8,100), constant=1)       # = 2 ; TRUE
 }
 \keyword{univar}
 \keyword{robust}

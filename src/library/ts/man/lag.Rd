@@ -7,25 +7,25 @@ lag(x, ...)
 lag.default(x, k=1)
 }
 \arguments{
- \item{x}{A vector or matrix or univariate or multivariate time series}
- \item{k}{The number of lags (in units of observations).}
- \item{\dots}{Arguments for future methods.}
+  \item{x}{A vector or matrix or univariate or multivariate time series}
+  \item{k}{The number of lags (in units of observations).}
+  \item{\dots}{Arguments for future methods.}
 }
 \description{
-    Computed a lagged version of a time series, shifting the time base
-    back by \code{k} observations.
+  Computed a lagged version of a time series, shifting the time base
+  back by \code{k} observations.
 }
 \details{
-    Vector or matrix arguments \code{x} are coerced to time series.
+  Vector or matrix arguments \code{x} are coerced to time series.
 }
 \value{
-    A time series object.
+  A time series object.
 }
 \author{B.D. Ripley}
 
 \note{
-    Note the sign of \code{k}: a series lagged by a positive \code{k}
-    starts \emph{earlier}.
+  Note the sign of \code{k}: a series lagged by a positive \code{k}
+  starts \emph{earlier}.
 }
 
 \seealso{\code{\link{diff}}, \code{\link{deltat}} }

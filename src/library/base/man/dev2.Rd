@@ -10,7 +10,7 @@ dev.control(displaylist)
 }
 \arguments{
     \item{device}{A device function (e.g., \code{x11},
-	\code{postscript}, \ldots)}
+        \code{postscript}, \ldots)}
     \item{\dots}{Arguments to the \code{device} function above.
     For \code{dev.print}, this includes \code{which} and by default any
     \code{\link{postscript}} arguments.}

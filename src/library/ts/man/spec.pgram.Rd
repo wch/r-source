@@ -3,8 +3,9 @@
 \title{Estimate Spectral Density of a Time Series from Smoothed
     Periodogram}
 \usage{
-spec.pgram(x, spans=NULL, kernel, taper=0.1, demean=FALSE, detrend=TRUE,
-           pad=0, fast=TRUE, plot=FALSE, na.action, ...)
+spec.pgram(x, spans = NULL, kernel, taper = 0.1,
+           demean = FALSE, detrend =TRUE,
+           pad = 0, fast = TRUE, plot = FALSE, na.action, \dots)
 }
 \arguments{
   \item{x}{A univariate or multivariate time series.}
@@ -88,34 +89,34 @@ spec.pgram(x, spans=NULL, kernel, taper=0.1, demean=FALSE, detrend=TRUE,
 ## Examples from Venables & Ripley
 data(UKLungDeaths)
 spectrum(ldeaths)
-spectrum(ldeaths, spans=c(3,5))
-spectrum(ldeaths, spans=c(5,7))
-spectrum(mdeaths, spans=c(3,3))
-spectrum(fdeaths, spans=c(3,3))
+spectrum(ldeaths, spans = c(3,5))
+spectrum(ldeaths, spans = c(5,7))
+spectrum(mdeaths, spans = c(3,3))
+spectrum(fdeaths, spans = c(3,3))
 
 ## bivariate example
-mfdeaths.spc <- spec.pgram(ts.union(mdeaths, fdeaths), spans=c(3,3))
+mfdeaths.spc <- spec.pgram(ts.union(mdeaths, fdeaths), spans = c(3,3))
 # plots marginal spectra: now plot coherency and phase
-plot(mfdeaths.spc, plot.type="coherency")
-plot(mfdeaths.spc, plot.type="phase")
+plot(mfdeaths.spc, plot.type = "coherency")
+plot(mfdeaths.spc, plot.type = "phase")
 
 ## now impose a lack of alignment
 mfdeaths.spc <- spec.pgram(ts.intersect(mdeaths, lag(fdeaths, 4)),
-   spans=c(3,3), plot=FALSE)
-plot(mfdeaths.spc, plot.type="coherency")
-plot(mfdeaths.spc, plot.type="phase")
+   spans = c(3,3), plot = FALSE)
+plot(mfdeaths.spc, plot.type = "coherency")
+plot(mfdeaths.spc, plot.type = "phase")
 
 data(EuStockMarkets)
 stocks.spc <- spectrum(EuStockMarkets, kernel("daniell", c(30,50)),
-                       plot=FALSE)
-plot(stocks.spc, plot.type="marginal") # the default type
-plot(stocks.spc, plot.type="coherency")
-plot(stocks.spc, plot.type="phase")
+                       plot = FALSE)
+plot(stocks.spc, plot.type = "marginal") # the default type
+plot(stocks.spc, plot.type = "coherency")
+plot(stocks.spc, plot.type = "phase")
 
 data(BJsales)
 sales.spc <- spectrum(ts.union(BJsales, BJsales.lead),
                       kernel("modified.daniell", c(5,7)))
-plot(sales.spc, plot.type="coherency")
-plot(sales.spc, plot.type="phase")
+plot(sales.spc, plot.type = "coherency")
+plot(sales.spc, plot.type = "phase")
 }
 \keyword{ts}

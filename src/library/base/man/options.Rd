@@ -92,7 +92,7 @@ pi
 old.o <- options(editor="nedit")
 old.o
 
-options(op)	# reset (all) initial options
+options(op)     # reset (all) initial options
 options('digits')
 
 \dontrun{## on error, terminate the R session with error status 66

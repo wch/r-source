@@ -35,7 +35,7 @@ ts.union(mdeaths, fdeaths)
 cbind(mdeaths, fdeaths) # same as the previous line
 ts.intersect(window(mdeaths, 1976), window(fdeaths, 1974, 1978))
 data(BJsales)
-sales1 <- ts.union(BJsales, lead=BJsales.lead)
-ts.intersect(sales1, lead3=lag(BJsales.lead, -3))
+sales1 <- ts.union(BJsales, lead = BJsales.lead)
+ts.intersect(sales1, lead3 = lag(BJsales.lead, -3))
 }
 \keyword{ts}

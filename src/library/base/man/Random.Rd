@@ -120,7 +120,7 @@ RNGkind(kind=NULL)
 \author{of RNGkind: Martin Maechler}
 
 \seealso{\code{\link{runif}}, \code{\link{rnorm}}, \ldots.}
-%	this is ./Uniform.Rd
+%       this is ./Uniform.Rd
 \examples{
 runif(1); .Random.seed; runif(1); .Random.seed
 ## If there is no seed,  a ``random'' new one is created:

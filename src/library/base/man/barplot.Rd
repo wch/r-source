@@ -7,8 +7,8 @@ barplot(height, width = 1, space = NULL, names.arg = NULL,
         legend.text = NULL, beside = FALSE, horiz = FALSE,
         col = heat.colors(NR), border = par("fg"),
         main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
-	xlim = NULL, ylim = NULL,
-	axes = TRUE, axisnames = TRUE, inside = TRUE, plot = TRUE, \dots)
+        xlim = NULL, ylim = NULL,
+        axes = TRUE, axisnames = TRUE, inside = TRUE, plot = TRUE, \dots)
 }
 \arguments{
   \item{height}{either a vector or matrix of values describing the

@@ -85,7 +85,7 @@ slam <- lam2[i]
 all(abs(sm \%*\% sV -  sV \%*\% diag(slam))             < 60*Meps)
 all(abs(sm        -  sV \%*\% diag(slam) \%*\% t(sV)) < 60*Meps)
 ## sV  *is* now equal to V  -- up to sign (+-) and rounding errors
-all(abs(c(1 - abs(sV / V)))       < 	1000*Meps) # TRUE (P ~ 0.95)
+all(abs(c(1 - abs(sV / V)))       <     1000*Meps) # TRUE (P ~ 0.95)
 }
 \keyword{algebra}
 \keyword{array}

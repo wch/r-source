@@ -153,7 +153,7 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
 
   Whittle, P. (1963) On the fitting of multivariate autoregressions
   and the approximate canonical factorization of a spectral density
-  matrix. \emph{Biometrika} \bold{40}, 129-134.
+  matrix. \emph{Biometrika} \bold{40}, 129--134.
 }
 
 \examples{
