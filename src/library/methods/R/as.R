@@ -39,8 +39,10 @@ as <-
                     canCache <- (!is(test, "function")) || identical(body(test), TRUE)
                 }
             }
-            if(is.null(asMethod) && extends(Class, thisClass))
+            if(is.null(asMethod) && extends(Class, thisClass)) {
+                ClassDef <- getClassDef(Class, where)
                 asMethod <- .asFromReplace(thisClass, Class, ClassDef, where)
+            }
             if(is.null(asMethod))
                 asMethod <- selectMethod("coerce", sig, TRUE, c(from = TRUE, to = FALSE))
         }

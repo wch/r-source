@@ -112,15 +112,25 @@
                   new("MethodWithNext", method, nextMethod = value,
                       excluded = excluded)
               }, where = envir)
-    if(!isGeneric("initialize", envir)) {
-        setGeneric("initialize",  function(.Object, ...) {
+    .initGeneric <- function(.Object, ...) {
             value <- standardGeneric("initialize")
-            if(!identical(class(value), class(.Object)))
-                stop(paste("Initialize method returned an object of class \"",
+            if(!identical(class(value), class(.Object))) {
+                cv <- class(value)
+                co <- class(.Object)
+                if(.identC(cv, co) && is.null(packageSlot(cv))) {
+                    warning("Missing package slot (", packageSlot(co), ") in object of class \"",
+                            class(.Object), "\" (package info added)")
+                   class(value) <- class(.Object)
+                }
+                else
+                    stop(paste("Initialize method returned an object of class \"",
                            class(value), "\" instead of the required class \"",
                            class(.Object), "\"", sep=""))
+            }
             value
-        }, where = envir, useAsDefault = TRUE)
+        }
+    if(!isGeneric("initialize", envir)) {
+        setGeneric("initialize",  .initGeneric, where = envir, useAsDefault = TRUE)
     }
     .InitTraceFunctions(envir)
     setMethod("initialize", "signature",

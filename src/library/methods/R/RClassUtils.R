@@ -1149,6 +1149,11 @@ setDataPart <- function(object, value) {
     if(length(explicit)>0)
         supplied[names(explicit)] <- explicit
     valueAttrs <- attributes(value)
+    ## names are special.
+    if(length(supplied$names)>0 && length(valueAttrs$names) == 0) {
+        if(length(value) != length(object))
+            length(supplied$names) <- length(value)
+    }
     if(length(valueAttrs) == 0) # nothing to protect
         attributes(value) <- supplied
     else {
