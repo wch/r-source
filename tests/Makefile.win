@@ -137,4 +137,4 @@ test-Reg-run: $(test-out-reg)
 
 
 clean:
-	@rm -f *.Rout *.Rout.fail Rplots.ps reg-plot.ps $(test-src-auto)
+	@rm -f *.Rout *.Rout.fail *.Rout2 Rplots.ps reg-plot.ps $(test-src-auto)
