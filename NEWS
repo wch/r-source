@@ -11,6 +11,10 @@
 
 NEW FEATURES
 
+    o	--vsize & --nsize now both give size in "single units" 
+	(bytes/cons cells) with possible 
+	suffixes "M" (Mega), "K"ilo (1024) and "k"ilo(1000).
+
     o	[pdqr]negbin() now also work with non-integer 'size'.
 
     o	New standard package `lqs' for resistant regression and
