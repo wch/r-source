@@ -460,6 +460,7 @@ static const EventTypeSpec	RCmdEvents[] =
 static const EventTypeSpec	RGlobalWinEvents[] =
 {
 	{ kEventClassWindow, kEventWindowBoundsChanged } ,
+	{ kEventClassWindow, kEventWindowShown} ,
 	{ kEventClassWindow,   kEventWindowZoomed   },
 	{ kEventClassWindow, kEventWindowFocusAcquired },
 	{ kEventClassWindow, kEventWindowFocusRelinquish },
@@ -902,10 +903,17 @@ OSStatus InstallAppHandlers(void){
 void SetUpRAquaMenu(void){
     Str255	menuStr;
     HMGetHelpMenu(&HelpMenu,NULL);
+	int numItems, i;
+	HMHelpContentRec	theContent;
 	
     if (HelpMenu != nil) {
 	    if(myHelpMenu){
-			CopyMenuItems (myHelpMenu, 1, CountMenuItems( myHelpMenu ), HelpMenu, 0);
+			numItems  = CountMenuItems( myHelpMenu );
+			CopyMenuItems (myHelpMenu, 1, numItems , HelpMenu, 0);
+			for(i=1; i<=numItems; i++){
+				HMGetMenuItemHelpContent(myHelpMenu, i, &theContent);
+				HMSetMenuItemHelpContent(HelpMenu, i, &theContent);
+			}
 		}
 	}
 	EnableMenuCommand(NULL, kHICommandPreferences);
@@ -2489,6 +2497,7 @@ void RSetConsoleWidth(void){
 		R_SetOptionWidth(floor((double)WinBounds.right / (double)RFontSizes[CurrentPrefs.RFontSize-1] * 1.61));
 }
 
+
 OSStatus ResizeHelpWindow(WindowRef theWindow);
 
 OSStatus ResizeHelpWindow(WindowRef theWindow){
@@ -2604,7 +2613,12 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 				case kEventWindowZoomed:
 					if( (err = ResizeHelpWindow(EventWindow)) != noErr)
 						err = ResizeEditWindow(EventWindow);
-					break;
+				break;
+				
+				case kEventWindowShown:
+					if( EventWindow == ConsoleWindow)
+							RescaleInOut(0.8);
+				break;
 					
 				case kEventWindowBoundsChanged:  
 					if( RWinCode != 9){ 
