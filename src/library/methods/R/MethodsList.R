@@ -281,7 +281,7 @@ insertMethodInEmptyList <-
   }
 
 
-    
+
 
 finalDefaultMethod <-
   ## The real default method of this `MethodsList' object,

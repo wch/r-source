@@ -277,6 +277,9 @@ BUG FIXES
 	been broken during the driver changes just prior to 1.4.0.
 	(They worked correctly on Windows.)
 
+    o	demo(is.things) didn't work properly when the methods package was
+	attached.
+
 
 		CHANGES IN R VERSION 1.4.1
 

@@ -18,7 +18,9 @@ is.primitive <- function(obj)  is.function(obj) && is.null(args(obj))
 ## Do we have a method (probably)?
 is.method <- function(fname) {
     np <- length(sp <- strsplit(fname, split = "\\.")[[1]])
-    if(np <= 1) return(FALSE)
+    if(np <= 1 ||
+       ## The following is for Sv4 (i.e. when library(methods) is active):
+       (np == 2 && sp[1] %in% c("is","as"))) return(FALSE)
     exists(paste(sp[1:(np-1)], collapse = '.'), mode="function") ||
     (np>=3 &&
      exists(paste(sp[1:(np-2)], collapse = '.'), mode="function"))
@@ -61,16 +63,16 @@ is.ALL <- function(obj, func.names = ls(pos=length(search())),
     if(is.list(r)) structure(r, class = "isList") else r
 }
 
-print.isList <- function(r, ...)
+print.isList <- function(x, ..., verbose = getOption("verbose"))
 {
     ## Purpose:	 print METHOD  for `isList' objects
     ## ------------------------------------------------
     ## Author: Martin Maechler, Date: 12 Mar 1997
-    ## >>>>> needs  cmp.logical <<
-    if(is.list(r)) {
-	nm <- format(names(r))
-	rr <- lapply(r, symnum, na = "NA")
-	for(i in seq(along=r)) cat(nm[i],":",rr[[i]],"\n", ...)
+    if(is.list(x)) {
+        if(verbose) cat("print.isList(): list case (length=",length(x),")\n")
+	nm <- format(names(x))
+	rr <- lapply(x, symnum, na = "NA")
+	for(i in seq(along=x)) cat(nm[i],":",rr[[i]],"\n", ...)
     } else NextMethod("print", ...)
 }
 

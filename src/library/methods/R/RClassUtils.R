@@ -201,7 +201,7 @@ completeSubClass <- function(fromClass, subClass, extendsHow = NULL, byClass = N
         completeSubClass(fromClass, what, byClass = subClass)
     return(TRUE)
 }
-    
+
 
 getFromClassDef <-
   ## Extracts one of the intrinsically defined class definition properties
@@ -259,14 +259,14 @@ getValidity <-
   ## the name of the class)
   function(ClassDef)
     getFromClassDef(ClassDef, ".Validity")
- 
+
 
 getAccess <-
    ## extract the class's Access method (or NULL) from the class representation (only, not from
   ## the name of the class)
   function(ClassDef)
     getFromClassDef(ClassDef, ".Access")
- 
+
 
 getAllSuperClasses <-
   ## Get the names of all the classes that this class definition extends.
@@ -922,7 +922,7 @@ extendsReplace <-
                 body(f) <- quote({from})
                 if(!is.na(dataPart) && extends(Class, objectSlotClasses[dataPart])) {
                     fromClasses <- objectSlots[is.na(match(objectSlots, replaceSlots))]
-                    
+
                     body(f) <- substitute({ value <- as(value, CLASS);
                                             for(what in FROM)
                                                 slot(value, what, FALSE) <- slot(from, what)
