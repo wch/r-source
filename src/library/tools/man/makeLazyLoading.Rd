@@ -34,6 +34,7 @@ makeLazyLoading(package, lib.loc = NULL, compress = TRUE,
 }
 \examples{
   # set up package "base" for lazy loading (must have no packages loaded)
+  # this will by defualt have already been done
   \dontrun{
     source(file.path(.find.package("tools"),"makebasedb.R"))
     tools:::makeLazyLoading("base")
@@ -43,15 +44,6 @@ makeLazyLoading(package, lib.loc = NULL, compress = TRUE,
   \dontrun{
     tools:::makeLazyLoading("splines")
   }
-
-  # set up all base packages for lazy loading
-  \dontrun{
-    for (p in rev(installed.packages(priority="base")[,"Package"])) {
-        cat(paste("converting", p, "..."))
-        tools:::makeLazyLoading(p)
-        cat("done\n")
-    }
-  }
 }
 \keyword{utilities}
-\author{Luke Tierney}
+\author{Luke Tierney and Brian Ripley}
