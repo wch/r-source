@@ -177,7 +177,7 @@ AC_SUBST(R_BROWSER)
 
 AC_DEFUN([R_PROG_PDFVIEWER],
 [AC_PATH_PROGS(R_PDFVIEWER,
-               [${R_PDFVIEWER} acroread acroread4 xpdf gv gnome-gv kghostview open])
+               [${R_PDFVIEWER} acroread acroread4 xpdf gv gnome-gv ggv kghostview open gpdf])
 if test -z "${R_PDFVIEWER}"; then
   warn_pdfviewer="I could not determine a PDF viewer"
   AC_MSG_WARN([${warn_pdfviewer}])

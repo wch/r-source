@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 2.0.0 (2004-04-19).
+   <p>The current version of this document is 2.0.0 (2004-04-30).
 
    ISBN 3-900051-02-X
 
@@ -1228,6 +1228,12 @@ version but not detect that is was incompatible with a 64-bit build.
 check</code> but failed <code>make test-all-extras</code> in the complex LAPACK
 tests.
 
+   <p>George N. White III reports that the <code>strptime</code> tests in 1.9.0 fail
+unless Arthur Olson's timezone data <a href="ftp://elsie.nci.nih.gov/pub/">ftp://elsie.nci.nih.gov/pub/</a>
+(see also: <a href="http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html">http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html</a>)
+are installed and <code>-ltz</code> is added to the list of libraries (for
+example, in environment variable <code>LIBS</code>).
+
 <a name="Alpha%2fOSF1"></a>
 
 <h3 class="subsection">B.7.6 Alpha/OSF1</h4>
@@ -1445,7 +1451,7 @@ of practice at porting R to new platforms <small class="enddots">....</small>
 <li>Installing R under Mac OS X: <a href="#Installing%20R%20under%20Mac%20OS%20X">Installing R under Mac OS X</a>
 <li>Installing under Unix: <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
 <li>Installing under Windows: <a href="#Installing%20R%20under%20Windows">Installing R under Windows</a>
-<li>IRIS: <a href="#IRIX">IRIX</a>
+<li>IRIX: <a href="#IRIX">IRIX</a>
 <li>LAPACK library: <a href="#Solaris">Solaris</a>, <a href="#Mac%20OS%20X">Mac OS X</a>, <a href="#Linear%20algebra">Linear algebra</a>
 <li>Linux: <a href="#Linux">Linux</a>, <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
 <li>Mac OS X: <a href="#Mac%20OS%20X">Mac OS X</a>, <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>

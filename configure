@@ -3540,7 +3540,7 @@ fi
 
 
 ## PDF viewer
-for ac_prog in ${R_PDFVIEWER} acroread acroread4 xpdf gv gnome-gv kghostview open
+for ac_prog in ${R_PDFVIEWER} acroread acroread4 xpdf gv gnome-gv ggv kghostview open gpdf
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
