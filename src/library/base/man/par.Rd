@@ -43,8 +43,9 @@ par(\dots, no.readonly = FALSE)
     \item \code{"xlog"}, \code{"ylog"}
   }
 }
-%% --- The real documentation is the code -- in ../../../main/par.c   ;-)
-%% --- AND (defined AND commented) in ../../../include/Graphics.h
+%% The real documentation is the code	in ../../../main/par.c
+%% AND (defined AND commented)		in ../../../include/Graphics.h
+%% Default initialization by GInit()	in ../../../main/par.c
 \arguments{
   \item{no.readonly}{logical; if \code{TRUE} and there are no other
     arguments,  only parameters are returned which can be set by a
@@ -121,11 +122,10 @@ par(\dots, no.readonly = FALSE)
   \item{font.sub}{The font to be used for plot sub-titles.}
   \item{gamma}{the gamma correction, see \code{\link{hsv}(.., gamma)}.}
   \item{lab}{A numerical vector of the form \code{c(x, y, len)} which
-    modifies the way that axes are annotated.
-    The values of \code{x} and \code{y} give the (approximate) number of
-    tickmarks on the x and y axes and
-    \code{len} specifies the label size.
-    \emph{Currently}, \code{len} \emph{is unimplemented}.}
+    modifies the way that axes are annotated.  The values of \code{x}
+    and \code{y} give the (approximate) number of tickmarks on the x and
+    y axes and \code{len} specifies the label size.  The default is
+    \code{c(5, 5, 7)}.  \emph{Currently}, \code{len} \emph{is unimplemented}.}
   \item{las}{numeric in \{0,1,2,3\}; the style of axis labels.
     \describe{
       \item{0:}{always parallel to the axis [\emph{default}],}
