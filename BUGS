@@ -64,10 +64,14 @@ none
 
 Directory:  Graphics
 
-* PR# 791 *
-Subject:  par(lab= *) / axis(*) bug 
-From: maechler@stat.math.ethz.ch
-Date: Fri, 22 Dec 2000 10:59:26 +0100
+* PR# 817 *
+Subject: colors not cycled in type=h plot
+From: fisk@bowdoin.edu
+Date: Fri, 19 Jan 2001 14:54:39 +0100 (MET)
+* PR# 660 *
+Subject: identify.default ignores any setting of cex.
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -75,26 +79,35 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
-* PR# 726 *
-Subject: par(las=.)  gives wrong "adj" for mtext()
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 7 Nov 2000 13:03:58 +0100
-* PR# 660 *
-Subject: identify.default ignores any setting of cex.
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
-* PR# 776 *
-Subject: strwidth does not take font into account
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
 * PR# 750 *
 Subject: abline() does not obey "xpd" (clipping rules)
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 27 Nov 2000 18:27:11 +0100
+* PR# 726 *
+Subject: par(las=.)  gives wrong "adj" for mtext()
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 7 Nov 2000 13:03:58 +0100
+* PR# 816 *
+Subject: dotplot: character size of labels
+From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
+Date: Thu, 18 Jan 2001 14:54:32 +0100
+* PR# 791 *
+Subject:  par(lab= *) / axis(*) bug 
+From: maechler@stat.math.ethz.ch
+Date: Fri, 22 Dec 2000 10:59:26 +0100
+* PR# 776 *
+Subject: strwidth does not take font into account
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
 
 Directory:  In-Out
 
-none
+* PR# 814 *
+Subject: Memory problem ?
+From: Zoltan Barta <Z.Barta@bristol.ac.uk>
+Date: Mon, 15 Jan 2001 09:54:16 +0000 (GMT Standard Time)
+--scan crashes R on Linux: a memory allocation problem, probably
+--Uses n= or nlines= in scan will use less memory, and read.table does.
 
 Directory:  Installation
 
@@ -177,23 +190,4 @@ none
 
 Directory:  incoming
 
-* PR# 818 *
-Subject: bringToTop() fails
-From: =?iso-8859-1?Q?"Jens=20Oehlschl=E4gel"?= <joehl@web.de>
-Date: Fri, 19 Jan 2001 17:01:15 +0100
-* PR# 815 *
-Subject: Memory problem 2
-From: Zoltan Barta <Z.Barta@bristol.ac.uk>
-Date: Mon, 15 Jan 2001 10:18:14 +0000 (GMT Standard Time)
-* PR# 814 *
-Subject: Memory problem ?
-From: Zoltan Barta <Z.Barta@bristol.ac.uk>
-Date: Mon, 15 Jan 2001 09:54:16 +0000 (GMT Standard Time)
-* PR# 817 *
-Subject: colors not cycled in type=h plot
-From: fisk@bowdoin.edu
-Date: Fri, 19 Jan 2001 14:54:39 +0100 (MET)
-* PR# 816 *
-Subject: dotplot: character size of labels
-From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
-Date: Thu, 18 Jan 2001 14:54:32 +0100
+none
