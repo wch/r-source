@@ -42,15 +42,16 @@ poly <- function(x, degree=1)
 {
     if(is.matrix(x)) stop("poly is only implemented for vectors")
     n <- degree + 1
-    X <- outer(x, seq(length=n) - 1, "^")
+    xbar <- mean(x)
+    x <- x - xbar
+    X <- outer(x, seq(length = n) - 1, "^")
     QR <- qr(X)
     z <- QR$qr
-    z <- z *(row(z) == col(z))
+    z <- z * (row(z) == col(z))
     raw <- qr.qy(QR, z)
     norm2 <- diag(crossprod(raw))
-    alpha <- diag(crossprod(raw, x * raw)) / norm2
-    s <- apply(raw, 2, function(x) sqrt(sum(x^2)))
-    Z <- sweep(raw, 2, s, "/")
+    alpha <- (diag(crossprod(raw, x * raw))/norm2 + xbar)[1:degree]
+    Z <- raw/rep(sqrt(norm2), rep(length(x), n))
     dimnames(Z)[[2]] <- 1:n - 1
     Z <- Z[, -1]
     attr(Z, "degree") <- 1:degree
