@@ -11,8 +11,9 @@ options(editor = as.vector(getenv("EDITOR")))
 if(interactive() && getenv("DISPLAY") != "") {
     options(device = switch(.Platform$GUI,
             "X11" = "X11", "GNOME" = "gtk", "postscript"))
-    options(X11colortype = "true")
 } else options(device = "postscript")
+## this must be set for x11 to be used, even non-interactively
+options(X11colortype = "true")
 options(pager = "${R_HOME}/bin/pager")
 options(browser = "netscape")
 options(mailer = "mailx")
