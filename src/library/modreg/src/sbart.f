@@ -41,13 +41,13 @@
       ax=lspar 
       bx=uspar
       c = 0.5*(3. - sqrt(5e0))
-      eps = 1e0
-10    eps = eps/2e0
-      tol1 = 1e0 + eps
-      if(.not.(tol1 .gt. 1e0))goto 23013
-      go to 10
-23013 continue
-      eps = sqrt(eps)
+c      eps = 1e0
+c10    eps = eps/2e0
+c      tol1 = 1e0 + eps
+c      if(.not.(tol1 .gt. 1e0))goto 23013
+c      go to 10
+c23013 continue
+c      eps = sqrt(eps)
       eps=.000244
       a = ax
       b = bx
@@ -81,15 +81,18 @@
       q = abs(q)
       r = e
       e = d
-30    if(.not.(abs(p) .ge. abs(0.5*q*r)))goto 23021
-      go to 40
-23021 continue
-      if(.not.(p .le. q*(a - x)))goto 23023
-      go to 40
-23023 continue
-      if(.not.(p .ge. q*(b - x)))goto 23025
-      go to 40
-23025 continue
+c  stupid line by KH but currently needed for g77 -O2?
+      call dummy(q)
+c
+c  is parabola acceptable
+c
+30    if (abs(p) .ge. abs(0.5*q*r)) go to 40
+      if (q .eq. 0.0) go to 40
+      if (p .le. q*(a - x)) go to 40
+      if (p .ge. q*(b - x)) go to 40
+c
+c  a parabolic interpolation step
+c
       d = p/q
       u = x + d
       if(.not.((u - a) .lt. tol2))goto 23027
@@ -117,14 +120,15 @@
 &     icrit,spar,ratio,xwy,hs0,hs1,hs2,hs3,sg0,sg1,sg2,sg3,abd,p1ip,
 &     p2ip,ld4,ldnk,ier)
       fu = crit
-      if(.not.(fu .gt. fx))goto 23039
-      go to 60
-23039 continue
-      if(.not.(u .ge. x))goto 23041
-      a = x
-23041 continue
-      if(.not.(u .lt. x))goto 23043
-      b = x
+c
+c  update  a, b, v, w, and x
+c
+      if (fu .gt. fx) go to 60
+      if(u .ge. x) then
+         a = x
+      else
+         b = x
+      endif
 23043 continue
       v = w
       fv = fw
@@ -133,27 +137,17 @@
       x = u
       fx = fu
       go to 20
-60    if(.not.(u .lt. x))goto 23045
-      a = u
-23045 continue
-      if(.not.(u .ge. x))goto 23047
-      b = u
-23047 continue
-      if(.not.(fu .le. fw))goto 23049
-      go to 70
-23049 continue
-      if(.not.(w .eq. x))goto 23051
-      go to 70
-23051 continue
-      if(.not.(fu .le. fv))goto 23053
-      go to 80
-23053 continue
-      if(.not.(v .eq. x))goto 23055
-      go to 80
-23055 continue
-      if(.not.(v .eq. w))goto 23057
-      go to 80
-23057 continue
+60    if(u .lt. x) then
+         a = u
+      else
+         b = u
+      endif
+      if (fu .le. fw) go to 70
+      if (w .eq. x) go to 70
+      if (w .eq. x) go to 70
+      if (fu .le. fv) go to 80
+      if (v .eq. x) go to 80
+      if (v .eq. w) go to 80
       go to 20
 70    v = w
       fv = fw
@@ -168,5 +162,10 @@
       crit = fx
       return
 23012 continue
+      return
+      end
+
+      subroutine dummy(q)
+      double precision q
       return
       end
