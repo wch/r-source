@@ -5,8 +5,8 @@ sink("no-segfault.R")
 cat("options(error.halt = FALSE)",
     "# don't stop on error in batch\n##~~~~~~~~~~~~~~\n")
 
-core.pkgs <- .packages(all=TRUE,lib.loc = .lib.loc[length(.lib.loc)])
-#
+core.pkgs <- ##.packages(all=TRUE,lib.loc = .lib.loc[length(.lib.loc)])
+    c("base", "eda", "lqs", "modreg", "mva", "stepfun", "ts")
 stop.list <- vector("list", length(core.pkgs))
 names(stop.list) <- core.pkgs
 
