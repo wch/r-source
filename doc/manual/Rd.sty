@@ -1,7 +1,7 @@
 %%% Rd.sty ... Style for printing the R manual
 %%%
-%%% Last modified 1998/01/05 by Friedrich.Leisch@ci.tuwien.ac.at
-
+%%% Modified 1998/01/05 by Friedrich.Leisch@ci.tuwien.ac.at
+%%% Last modified 1998/07/07 by Martin Maechler
 
 \RequirePackage{amsbsy}          % AMS boldsymbol: defines `\boldsymbol'
 \RequirePackage{alltt}           % {verbatim} allowing \..
@@ -40,7 +40,12 @@
     \begin{tabular}{c}
       \hline \rule[-0.275cm]{0cm}{0.8cm}
       \makebox[1in][l]{\texttt{#1}}
-      \makebox[\middle]{\emph{#2}}
+      \makebox[\middle]{
+        \begin{minipage}{\middle}
+          \begin{center}
+            \emph{#2}
+          \end{center}
+        \end{minipage}}
       \makebox[1in][r]{\texttt{#1}} \\ \hline
     \end{tabular}
   \end{center}}
