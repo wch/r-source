@@ -12,26 +12,23 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
-R_SRC = error.R foo.R
-EXECS=Rtest Rplot Rpostscript Rerror RNamedCall RParseEval Rpackage
-SRC=\
-  Rtest.c \
-  Rerror.c \
-  Rplot.c \
-  Rpostscript.c \
-  Rerror.c \
-  embeddedRCall.c \
+SRCS_R = error.R foo.R
+SRCS_C = \
   RNamedCall.c \
   RParseEval.c \
-  Rpackage.c
+  Rerror.c \
+  Rpackage.c \
+  Rplot.c \
+  Rpostscript.c \
+  Rtest.c \
+  embeddedRCall.c
 HEADERS = embeddedRCall.h
+EXECS = Rtest Rplot Rpostscript Rerror RNamedCall RParseEval Rpackage
 
 # <FIXME>
-# What about Rshutdown.c configure.in constants.c index.html?
-DISTFILES = Makefile.in $(SRC) $(HEADERS) $(R_SRC)
+# Currently Rshutdown.c is not used.
+DISTFILES = Makefile.in index.html $(SRCS_R) $(SRCS_C) $(HEADERS)
 # </FIXME>
-
-# CFLAGS+= -I../../include -I../../src/include 
 
 R_CMD_LINK = $(top_builddir)/bin/R CMD LINK $(CC)
 LIBR = -L`cd $(top_builddir) && $(GETWD)`/bin -lR
@@ -45,19 +42,19 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 R-sources:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  for f in $(R_SRC); \
+	  for f in $(SRCS_R); \
 	    do $(INSTALL_DATA) $(srcdir)/$${f} .; \
 	  done; \
 	fi
 
 tests: $(EXECS)
-	(R_HOME=../.. ; export R_HOME ; ./Rtest --silent)
-	(R_HOME=../.. ; export R_HOME ; ./RNamedCall --silent)
-	(R_HOME=../.. ; export R_HOME ; ./RParseEval --silent)
-	(R_HOME=../.. ; export R_HOME ; ./Rpackage --silent)
-	(R_HOME=../.. ; export R_HOME ; ./Rerror --silent)
-	(R_HOME=../.. ; export R_HOME ; ./Rplot --silent)
-	(R_HOME=../.. ; export R_HOME ; \
+	(R_HOME=$(top_builddir); export R_HOME; ./Rtest --silent)
+	(R_HOME=$(top_builddir); export R_HOME; ./RNamedCall --silent)
+	(R_HOME=$(top_builddir); export R_HOME; ./RParseEval --silent)
+	(R_HOME=$(top_builddir); export R_HOME; ./Rpackage --silent)
+	(R_HOME=$(top_builddir); export R_HOME; ./Rerror --silent)
+	(R_HOME=$(top_builddir); export R_HOME; ./Rplot --silent)
+	(R_HOME=$(top_builddir); export R_HOME; \
 	  ./Rpostscript --silent --gui=none --no-save)
 
 Rtest: Rtest.o embeddedRCall.o
@@ -78,16 +75,13 @@ RParseEval: RParseEval.o embeddedRCall.o
 R.so: showArgs.o
 	$(SHLIB_LINK) -o $@ showArgs.o
 
-configure: configure.in
-	autoconf
-
 mostlyclean: clean
 clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  rm -f $(R_SRC); \
+	  rm -f $(SRCS_R); \
 	fi
 	@-rm -rf .libs _libs
-	@-rm -f $(SRC:%.c=%.o) $(EXECS) Rplots.ps
+	@-rm -f *.o $(EXECS) Rplots.ps
 distclean: clean
 	@-rm -f Makefile config.*
 maintainer-clean: distclean
