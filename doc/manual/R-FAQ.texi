@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-27, @value{FAQ-YEAR}-12-19
+@set FAQ-VERSION 1.8-28, @value{FAQ-YEAR}-12-24
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1906,6 +1906,9 @@ the Streitberg/Roehmel shift algorithm.
 @item fastICA
 Implementation of FastICA algorithm to perform Independent Component
 Analysis (ICA) and Projection Pursuit.
+@item fda
+Functional Data Analysis: analysis of data where the basic observation
+is a function of some sort.
 @item fdim
 Functions for calculating fractal dimension.
 @item fields

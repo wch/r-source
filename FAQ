@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-27, 2003-12-19
+Version 1.8-28, 2003-12-24
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1690,6 +1690,10 @@ distributions of R.)
 *fastICA*
      Implementation of FastICA algorithm to perform Independent Component
      Analysis (ICA) and Projection Pursuit.
+
+*fda*
+     Functional Data Analysis: analysis of data where the basic observation
+     is a function of some sort.
 
 *fdim*
      Functions for calculating fractal dimension.
