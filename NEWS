@@ -28,6 +28,9 @@ USER-VISIBLE CHANGES
 	in the DESCRIPTION file.  Note that as with --save, any other
 	packages which are required must be already installed.
 
+	As the lazy-loading databases will be consulted often, R
+	will be slower if run from a slow network-mounted disc.
+
     o	All the datasets formerly in packages 'base' and 'stats' have
 	been moved to a new package 'datasets'.	 data() does the
 	appropriate substitution, with a warning.  However, calls to
@@ -42,7 +45,7 @@ USER-VISIBLE CHANGES
 	devices shared between base and grid graphics) and 'graphics'
 	(base graphics).  Each of the 'graphics' and 'grid' packages
 	load 'grDevices' when they are attached.  Note that
-	ps.options has been moved to grDevices and user hooks will
+	ps.options() has been moved to grDevices and user hooks may
 	need to be updated.
 
     o	The semantics of data() have changed (and were incorrectly
