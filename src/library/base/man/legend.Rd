@@ -121,7 +121,7 @@ title("legend(..., lty = c(2, -1, 1), pch = c(-1,3,4), merge = TRUE)",
 legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3,4,6),
        lty = c(2, -1, 1), pch = c(-1, 3, 4), merge = TRUE, bg='gray90')
 
-## right-justifying a set of labels: thanks for Uwe Ligges
+## right-justifying a set of labels: thanks to Uwe Ligges
 x <- 1:5; y1 <- 1/x; y2 <- 2/x
 plot(rep(x, 2), c(y1, y2), type="n", xlab="x", ylab="y")
 lines(x, y1); lines(x, y2, lty=2)
