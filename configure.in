@@ -142,7 +142,7 @@ AC_PROG_INSTALL
 ## AC_CONFIG_AUX_DIR().
 case ${INSTALL} in
   [[!/]]*install-sh*)
-    INSTALL="\$\(top_srcdir\)/tools/install-sh -c" ;;
+    INSTALL="\$\(top_srcdir\)/${INSTALL}" ;;
 esac
 ## Osman says that this is necessary.
 case ${host} in
@@ -308,6 +308,11 @@ else
   fi
   if test -z "${F77}"; then
     AC_CHECK_PROGS(F2C, f2c)
+  else
+    f77_output=`${F77} -v 2>&1 | egrep "GNU F77|egcs|g77"`
+    if test -n "${f77_output}"; then
+      f77_is_g77=true
+    fi
   fi
 fi
 

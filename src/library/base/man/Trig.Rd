@@ -17,9 +17,9 @@ atan2(y, x)
 \alias{atan}
 \alias{atan2}
 \description{
-    These give the obvious trigonometric functions,
-    computing the cosine, sine, tangent, arc-cosine, arc-sine and
-    arc-tangent respectively.
+These functions give the obvious trigonometric functions.  They
+respectively compute the cosine, sine, tangent, arc-cosine, arc-sine,
+arc-tangent, and the two-argument arc-tangent. 
 }
 \details{
     The arc-tangent of two arguments \code{atan2(y,x)} returns the angle

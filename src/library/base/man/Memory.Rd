@@ -25,12 +25,14 @@ R --vsize v --nsize n
     array of ``\bold{cons cells}'' (Lisp programmers will know what they are,
     others may think of them as the building blocks of the language
     itself, parse trees, etc.), and the second are thrown on a
-    ``\bold{heap}''.
+    ``\bold{heap}'' of ``Vcells'' (see
+    \code{\link{gc}()["Vcells","total"]}) of 8 bytes each.  Effectively,
+    the input \code{v} is therefore truncated to the nearest multiple of 8.
 
     The \code{--nsize} option can be used to specify the
     number of cons cells (each occupying 16 bytes) which \R is to use
     (the default is 250000), and the \code{--vsize} option to  specify
-    the size of the vector heap in bytes (the default is 6 MB).  
+    the size of the vector heap in bytes (the default is 6 MB).
     Both options must be integers or integers ending with
     \code{M}, \code{K}, or \code{k} meaning \emph{Mega}
     (= \eqn{2^{20}} = 1048576), (computer) \emph{Kilo} (= \eqn{2^{10}} = 1024),
@@ -40,7 +42,7 @@ R --vsize v --nsize n
     E.g., to read in a table of 10000 observations on 40 numeric
     variables, \code{R --vsize 10M} should do;  For
     \code{\link{source}()}ing a large file, you'd use \code{R --nsize 500k}.
-    
+
     Note that the information on where to find vectors and strings on
     the heap is stored using cons cells.  Thus, it may also be necessary
     to allocate more space for cons cells in order to perform
@@ -53,13 +55,13 @@ R --vsize v --nsize n
     \code{\link{gcinfo}(TRUE)}, automatic garbage collection always
     prints memory use statistics.
     \cr
-    \R will tell you whether you ran out of cons or heap memory. 
+    \R will tell you whether you ran out of cons or heap memory.
 
     The defaults for \code{--nsize} and \code{--vsize} can be changed by
     setting the environment variables \code{R_NSIZE} and \code{R_VSIZE}
     respectively, perhaps most conveniently on Unix in the file
     \file{~/.Renviron}.
-    
+
     When using \code{\link{read.table}}, the memory requirements are in
     fact higher than anticipated, because the file is first read in as
     one long string which is then split again. Use \code{\link{scan}} if

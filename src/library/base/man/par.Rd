@@ -203,8 +203,10 @@ par(\dots, no.readonly = FALSE)
     \code{\link{plot.default}}).
     If \code{TRUE} a logarithmic scale is in use. For a new device, it
     defaults to \code{FALSE}, i.e., linear scale.}
-  \item{xpd}{A logical value.
-    If \code{FALSE}, all plotting is clipped to the plot region.}
+  \item{xpd}{A logical value or NA.
+    If \code{FALSE}, all plotting is clipped to the plot region, if
+    \code{TRUE}, all plotting is clipped to the figure region, and if
+    \code{NA}, all plotting is clipped to the device region.}
   \item{yaxp}{A vector of the form \code{c(y1, y2, n)} giving
     the coordinates of the extreme tick marks and the number of
     intervals between tick-marks.}

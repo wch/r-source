@@ -15,7 +15,7 @@ the contributed extensions, documentation for R, and binaries.
 
 CRAN also contains a DAILY snapshot of the latest R sources.
 
-The CRAN master site can be found at the URL's
+The CRAN master site can be found at the URLs
 
     http://www.ci.tuwien.ac.at/R
 or  ftp://ftp.ci.tuwien.ac.at/pub/R/                  (Austria)
@@ -27,9 +27,8 @@ and is currently being mirrored at
     ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/           (Japan)
     ftp://dola.snu.ac.kr/pub/R/CRAN/                  (South Korea)
     http://stat.ethz.ch/CRAN/			      (Switzerland)
-    http://www.stats.bris.ac.uk/R                     (UK)
+    http://www.stats.bris.ac.uk/R/		      (UK)
     http://lib.stat.cmu.edu/R/CRAN/                   (USA/Pennsylvania)
-    ftp://ftp.biostat.washington.edu/mirrors/R/CRAN/  (USA/Washington)
     http://cran.stat.wisc.edu/	                      (USA/Wisconsin)
 
 

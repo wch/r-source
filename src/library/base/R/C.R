@@ -11,13 +11,14 @@ C <- function(object, contr, how.many, ...)
 			contr
 			)
     if(missing(contr)) {
-	oc <- options("contrasts")$contrasts
-	if(length(oc) < 2)		# should not happen
-	    contr <- if(is.ordered(object)) contr.poly else contr.treatment
-	else contr <- oc[1 + is.ordered(object)]
+	oc <- .Options$contrasts
+	contr <-
+	    if(length(oc) < 2) # should not happen
+		if(is.ordered(object)) contr.poly else contr.treatment
+	    else oc[1 + is.ordered(object)]
     }
-    if(missing(how.many) && !length(...))
-        contrasts(object) <- contr
+    if(missing(how.many) && !length(list(...)))
+	contrasts(object) <- contr
     else {
 	if(is.character(contr)) contr <- get(contr, mode = "function")
 	if(is.function(contr)) contr <- contr(nlevels(object), ...)

@@ -25,7 +25,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
-R: 
+R:
 	@for d in afm demos doc etc src; do \
 	  (cd $${d} && $(MAKE) R) || exit 1; \
 	done
@@ -153,5 +153,5 @@ info:
 TAGS:
 
 check test:: test-All
-test-All test-Examples::
+test-All test-Examples strict-tests::
 	@(cd tests && $(MAKE) $@)

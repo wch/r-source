@@ -34,7 +34,9 @@ TESTout = $(TESTsrc:.R=.Rout)
 	  (mv $@ $@.fail && exit 1)
 	@echo " OK"
 
-test-All: test-Examples $(TESTout)
+test-All: test-Examples strict-tests
+
+strict-tests: $(TESTout)
 
 test-Examples:
 	@cd $(Ex) && $(MAKE) $@

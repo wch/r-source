@@ -1178,6 +1178,7 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 	if (pager == NULL || strlen(pager) == 0)
 	    pager = "internal";
 	for (i = 0; i < nfile; i++) {
+#if 0
 	    if (FindFirstFile(file[i], &fd) != INVALID_HANDLE_VALUE) {
 		if (!strcmp(pager, "internal")) {
 		    newpager(wtitle, file[i], headers[i], del);
@@ -1185,6 +1186,26 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 		    sprintf(buf, "%s  %s", pager, file[i]);
 		    runcmd(buf, 0, 1, "");
 		}
+#else
+	    if (!strcmp(pager, "internal")) {
+		newpager(wtitle, file[i], headers[i], del);
+            } if (!strcmp(pager, "console")) {
+                DWORD len = 1;
+                HANDLE f = CreateFile(file[i], GENERIC_READ, FILE_SHARE_WRITE,
+		   NULL, OPEN_EXISTING, 0, NULL);
+                if (f != INVALID_HANDLE_VALUE) {
+                  while (ReadFile(f,buf,1023,&len,NULL) && len) {
+                    buf[len] = '\0';
+                    R_WriteConsole(buf,strlen(buf));
+                  }
+                  CloseHandle(f);
+                  if (del) DeleteFile(file[i]);
+                }
+                else {
+                  sprintf(buf,"Impossible to open file '%s'. Does it exist?\n",file[i]);
+                  warning(buf);
+                }
+#endif
 	    } else {
 		sprintf(buf, "file.show(): file %s does not exist\n", file[i]);
 		warning(buf);

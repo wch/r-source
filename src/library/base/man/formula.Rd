@@ -79,5 +79,9 @@ class(fo <- y ~ x1*x2) # "formula"
 fo
 typeof(fo)# R internal : "language"
 terms(fo)
+
+## Create a formula for a model with a large number of variables:
+xnam <- paste("x", 1:25, sep="")
+(fmla <- as.formula(paste("y ~ ", paste(xnam, collapse= "+"))))
 }
 \keyword{models}

@@ -61,14 +61,6 @@ BUG FIXES
 
     o	pgamma() gave 0 or 1 too quickly for extreme arguments.
 
-    o	A couple of problems with group generic operations.
-
-    o	A bug which meant that it was not possible to add elements
-	to zero length lists in the obvious way has been fixed.
-		x <- list(); x[[1]] <- 10
-		x <- list(); x[["a"]] <- 11
-	both now work.
-
     o	Some small changes have made in the axis drawing code to
 	ensure that tick-mark label alignment is correct for
 	non-default values of the "las" parameter.
@@ -91,6 +83,18 @@ BUG FIXES
 
 NEW FEATURES
 
+    o	new target for R installation testing :	 make strict-tests.
+
+    o	symnum(x) now nicely codes logical x.
+
+    o	convolve() has a new type = c("circular", "open", "filter")
+	argument allowing more than the only circular convolution.
+
+    o	par(xpd) now has three settings:  FALSE (clip to plot region),
+	TRUE (clip to figure region), or NA (clip to device region).
+
+    o	zapsmall(x) works for complex x.
+
     o	new global variable R.version.string (for plots & reports).
 	Deprecated version & Version for new  R.version & R.Version.
 
@@ -101,27 +105,76 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	power() is now fully implemented and documented.
+
+    o   A couple of problems with group generic operations.
+
+    o   A bug which meant that it was not possible to add elements
+        to zero length lists in the obvious way has been fixed.
+                x <- list(); x[[1]] <- 10
+                x <- list(); x[["a"]] <- 11
+        both now work.
+
+    o	save.image() ignored dot-names. (esp. .First())
+
+    o   lab= argument to plot() misinterpreted by axis() via ... passing
+
+    o	NULL labels in text() caused segfault
+
+    o   matrix(f,...) with f a factor now coerces to character
+
+    o   documentation errors for substitute and is.vector, minor fixups for
+        trig and nlm 
+
+    o	Background colours are set properly on X11 devices with 
+	colortype="pseudo": sometimes they were not allocated separately.
+
+    o	C() works (again?) for a single argument.
+
+    o	is.na() didn't work properly for "list" arguments.
+
+    o	symnum() sometimes failed with arrays of rank >= 3.
+
+    o	in some cases one could get nonblack color instead of
+	black on 2nd x11() window.
+
+    o	influence.measures(.) $ is.influential was wrong on the 
+	cooks.distance.
+
+    o	printing of complex NaN/Inf was wrong as well.
+
+    o	printing of complex named vectors had a wrong initial space.
+
+    o	allow trailing space in character->numeric coercion
+
+    o	library() gave wrong "masked" warnings in some cases.
+
+    o	par(xpd) semantics were not compatible with S.
+
+    o	rect() output was not clipped in PostScript.
+
+    o	par(pin=c(width, height)) was behaving as par(pin=c(width, width)).
+
     o	Non-blank separated data files didn't have their 1st field
 	handled properly.
 
     o	"aux" directory moved to "tools" to avoid difficulties on
-	Windows
+	Windows.
 
-    o	structure() clobbered factors with missing levels
+    o	structure() clobbered factors with missing levels.
 
-    o	pmatch() misbehaved on duplicate matches
+    o	pmatch() misbehaved on duplicate matches.
 
-    o	R CMD Rd2dvi <file.Rd> works again
+    o	R CMD Rd2dvi <file.Rd> works again.
 
-    o	logical binops tried to set time series parameters before dimensions
+    o	logical binops tried to set time series parameters before dimensions.
 
-    o	upped the BUFSIZE in model.c (This is really peeing in the pants
-	to keep warm...)
+    o	upped the BUFSIZE in model.c (NOT proper long-term solution).
 
     o	dput(), dump() and deparse()  now always use DBL_DIG (=15) digits
 	for numeric formatting.
 
-    o	chull() now works for vertical borders, such as in chull(c(1,1,2),3:1)
+    o	chull() now works for vertical borders, such as in chull(c(1,1,2),3:1).
 
 
 		CHANGES IN R VERSION 0.64.1

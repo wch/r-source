@@ -67,5 +67,11 @@ all(dfb == inflm.SR$infmat[, 1:5])
 rstudent(lm.SR)
 dffits(lm.SR)
 covratio(lm.SR)
+
+## Huber's data [Atkinson 1985]
+xh <- c(-4:0, 10)
+yh <- c(2.48, .73, -.04, -1.44, -1.32, 0)
+summary(lmH <- lm(yh ~ xh))
+influence.measures(lmH)
 }
 \keyword{regression}

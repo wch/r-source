@@ -52,19 +52,24 @@ A list containing the following components:
 \item{gradient}{the gradient at the estimated minimum of \code{f}.}
 \item{hessian}{the hessian at the estimated minimum of \code{f} (if requested).}
 \item{code}{an integer indicating why the optimization process terminated.
- \describe{
-    \item{1: }{relative gradient is close to zero, current iterate is
-      probably solution.}
-    \item{2: }{successive iterates within tolerance, current iterate
-      is probably solution.}
-    \item{3: }{last global step failed to locate a point lower than
-      \code{estimate}.  Either \code{estimate} is an approximate local
-      minimum of the function or \code{steptol} is too small.}
-    \item{4: }{iteration limit exceeded.}
-    \item{5: }{maximum step size \code{stepmax} exceeded five consecutive
+
+    1: relative gradient is close to zero, current iterate is
+    probably solution.
+
+    
+    2: successive iterates within tolerance, current iterate
+    is probably solution.
+
+    3: last global step failed to locate a point lower than
+    \code{estimate}.  Either \code{estimate} is an approximate local
+    minimum of the function or \code{steptol} is too small.
+      
+    4: iteration limit exceeded.
+
+    5: maximum step size \code{stepmax} exceeded five consecutive
       times.  Either the function is unbounded below,
       becomes asymptotic to a finite value from above in
-      some direction, of \code{stepmax} is too small.}
+      some direction, of \code{stepmax} is too small.
   }
 }
 \item{iterations}{the number of iterations performed.}

@@ -227,9 +227,13 @@ void printVector(SEXP x, int index, int quote)
 	}
 }
 
-/* The following code prints vectors which have every element named */
-/* Primitives for each type of vector are presented first, followed */
-/* by the main (despatching) function */
+/* The following code prints vectors which have every element named
+ * Primitives for each type of vector are presented first, followed
+ * by the main (dispatching) function.
+
+ * 1) These functions are almost identical... (use Macro to clarify ?)
+ * 2) S prints a _space_ in the first column for named vectors; we dont.
+ */
 
 static void printNamedLogicalVector(int * x, int n, SEXP * names)
 {
@@ -237,7 +241,6 @@ static void printNamedLogicalVector(int * x, int n, SEXP * names)
 
     formatLogical(x, n, &w);
     formatString(names, n, &wn, 0);
-
     if (w < wn) w = wn;
     nperline = R_print.width / (w + R_print.gap);
     if (nperline <= 0) nperline = 1;
@@ -353,7 +356,6 @@ static void printNamedComplexVector(complex *x, int n, SEXP *names)
 static void printNamedStringVector(SEXP * x, int n, int quote, SEXP * names)
 {
     int i, j, k, w, wn, nlines, nperline;
-
 
     formatString(x, n, &w, quote);
     formatString(names, n, &wn, 0);

@@ -15,11 +15,15 @@ other vector type.
 
 The generic function \code{is.na} returns a logical vector
 of the same ``form'' as its argument \code{x}, containing \code{TRUE}
-for those elements marked
-\code{NA} or \code{\link{NaN}} (!) and \code{FALSE} otherwise.
+for those elements marked \code{NA} or \code{\link{NaN}} (!)
+and \code{FALSE} otherwise.
 \code{dim}, \code{dimnames} and \code{names} attributes are preserved.
+}
+\details{
+    \code{is.na(x)} works elementwise when \code{x} is a \code{\link{list}}.
 
-The method dispatching is C-internal, rather than via \code{\link{UseMethod}}.
+    The method dispatching is C-internal, rather than via
+    \code{\link{UseMethod}}.
 }
 \seealso{
   \code{\link{NaN}}, \code{\link{is.nan}}, etc.
@@ -31,6 +35,12 @@ The method dispatching is C-internal, rather than via \code{\link{UseMethod}}.
 \examples{
 is.na(c(1,NA))       #> F TRUE
 is.na(paste(c(1,NA)))#> F FALSE
+\testonly{
+ is.na(list())# logical(0)
+ ll <- list(pi,"C",NaN,Inf, 1:3, c(0,NA), NA)
+ is.na (ll)
+ is.nan(ll)
+}
 }
 \keyword{NA}
 \keyword{logic}

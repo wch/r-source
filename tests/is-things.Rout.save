@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.65.0 Under development (unstable) (May 8, 1999)
+Version 0.65.0 Under development (unstable) (July 03, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -22,20 +22,21 @@ Type	"q()" to quit R.
 +     "\n\t starting with 'is.' :\t ",
 +     length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n")
 
-Number of base objects:		 1081 
-Number of builtin functions:	 1060 
+Number of base objects:		 1093 
+Number of builtin functions:	 1070 
 	 starting with 'is.' :	  37 
 > ## 0.14 : 31
 > ## 0.50 : 33
 > ## 0.60 : 34
 > ## 0.62 : 35
+> ## 0.63 : 37
 > 
 > ## This can be useful:	Which of the  builtin functions are "primitive" ?
 > is.primitive <- function(obj)  is.function(obj) && is.null(args(obj))
 > 
 > is.ALL <- function(obj, func.names = ls(pos=length(search())),
 + 		   not.using = c("is.single", "is.na.data.frame",
-+ 		   "is.loaded", "is.empty.model"),
++ 		   "is.loaded", "is.empty.model", "is.R"),
 + 		   true.only = FALSE, debug = FALSE)
 + {
 +     ## Purpose: show many 'attributes' of  R object __obj__
@@ -50,18 +51,17 @@ Number of builtin functions:	 1060
 +     r <- if(true.only) character(0)
 +     else structure(vector("list", length= length(use.fn)), names= use.fn)
 +     for(f in use.fn) {
-+ 	if(any(f == c("is.na", "is.finite"))) {
-+ 	    if(!is.list(obj) && !is.vector(obj) && !is.array(obj)) {
-+ 		if(!true.only) r[[f]] <- NA
-+ 		next
-+ 	    }
-+ 	}
 + 	if(debug) cat(f,"")
 + 	fn <- get(f)
-+ 	rr <- if(is.primitive(fn) || length(formals(fn))>0)  fn(obj) else fn()
++ 	rr <-
++ 	    if(any(f == c("is.na", "is.nan")) &&
++ 	       ((!is.atomic(obj) && !is.list(obj)) || is.null(obj)))
++ 		NA
++ 	    else
++ 		if(is.primitive(fn) || length(formals(fn))) fn(obj) else fn()
 + 	if(!is.logical(rr)) cat("f=",f," --- rr	 is NOT logical	 = ",rr,"\n")
 + 	##if(1!=length(rr))   cat("f=",f," --- rr NOT of length 1; = ",rr,"\n")
-+ 	if(true.only && length(rr)==1 && rr) r <- c(r, f)
++ 	if(true.only && length(rr)==1 && !is.na(rr) && rr) r <- c(r, f)
 + 	else if(!true.only) r[[f]] <- rr
 +     }
 +     if(debug)cat("\n")
@@ -75,32 +75,15 @@ Number of builtin functions:	 1060
 +     ## Arguments:
 +     ## -------------------------------------------------------------------------
 +     ## Author: Martin Maechler, Date: 12 Mar 97, 15:07
-+     ## >>>>> needs  cmp.logical <<
 +     if(is.list(r)) {
 + 	nm <- format(names(r))
-+ 	rr <- lapply(r,cmp.logical)
++ 	rr <- lapply(r, symnum)
 + 	for(i in seq(along=r)) cat(nm[i],":",rr[[i]],"\n", ...)
 +     } else NextMethod("print", ...)
 + }
 > 
-> cmp.logical <- function(log.v)
-+ {
-+     ## Purpose: compact printing of logicals
-+     ## -------------------------------------------------------------------------
-+     ## Arguments: log.v : logical vector
-+     ## -------------------------------------------------------------------------
-+     ## Author: Martin Maechler, Date: 13 Dec 96, 16:28
-+     if(!is.logical(log.v)) {
-+ 	warning("coercing argument 'log.v' to logical")
-+ 	log.v <- as.logical(log.v)
-+     }
-+     structure(if(length(log.v) == 0) "()" else c(".","|")[ 1+ log.v],
-+ 	      class = "noquote")
-+ }
-> 
 > 
 > is.ALL(NULL)
-is.R           : | 
 is.array       : . 
 is.atomic      : | 
 is.call        : . 
@@ -113,15 +96,15 @@ is.expression  : .
 is.factor      : . 
 is.finite      : NA 
 is.function    : . 
-is.infinite    : () 
+is.infinite    : NA 
 is.integer     : . 
 is.language    : . 
 is.list        : . 
 is.logical     : . 
 is.matrix      : . 
-is.na          : NA 
+is.na          : ? 
 is.name        : . 
-is.nan         : () 
+is.nan         : ? 
 is.null        : | 
 is.numeric     : . 
 is.object      : . 
@@ -133,20 +116,12 @@ is.recursive   : .
 is.symbol      : . 
 is.ts          : . 
 is.vector      : . 
-Warning message: 
-is.nan() applied to non-(list or vector) in: fn(obj) 
-> ##fails: is.ALL(NULL, not.using = c("is.single", "is.loaded"))
 > is.ALL(NULL,   true.only = TRUE)
-[1] "is.R"        "is.atomic"   "is.null"     "is.pairlist"
-Warning message: 
-is.nan() applied to non-(list or vector) in: fn(obj) 
+[1] "is.atomic"   "is.null"     "is.pairlist"
 > is.ALL(list(), true.only = TRUE)
-[1] "is.R"      "is.list"   "is.vector"
-Warning message: 
-is.na() applied to non-(list or vector) in: fn(obj) 
+[1] "is.list"   "is.vector"
 > 
 > is.ALL(1:5)
-is.R           : | 
 is.array       : . 
 is.atomic      : | 
 is.call        : . 
@@ -180,7 +155,6 @@ is.symbol      : .
 is.ts          : . 
 is.vector      : | 
 > is.ALL(array(1:24, 2:4))
-is.R           : | 
 is.array       : | 
 is.atomic      : | 
 is.call        : . 
@@ -214,7 +188,6 @@ is.symbol      : .
 is.ts          : . 
 is.vector      : . 
 > is.ALL(1 + 3)
-is.R           : | 
 is.array       : . 
 is.atomic      : | 
 is.call        : . 
@@ -249,7 +222,6 @@ is.ts          : .
 is.vector      : | 
 > e13 <- expression(1 + 3)
 > is.ALL(e13)
-is.R           : | 
 is.array       : . 
 is.atomic      : . 
 is.call        : . 
@@ -268,9 +240,9 @@ is.language    : |
 is.list        : . 
 is.logical     : . 
 is.matrix      : . 
-is.na          : . 
+is.na          : ? 
 is.name        : . 
-is.nan         : . 
+is.nan         : ? 
 is.null        : . 
 is.numeric     : . 
 is.object      : . 
@@ -282,13 +254,9 @@ is.recursive   : |
 is.symbol      : . 
 is.ts          : . 
 is.vector      : | 
-Warning messages: 
-1: is.na() applied to non-(list or vector) in: fn(obj) 
-2: is.nan() applied to non-(list or vector) in: fn(obj) 
-> ## fails (0.50-a) [is.loaded]
-> ##   is.ALL(e13, not.using=c("is.single", "is.finite", "is.na"))
-> is.ALL(y ~ x) #--> (0.49):  NA	for 'is.na' (& is.finite)
-is.R           : | 
+> is.ALL(substitute(expression(a + 3), list(a=1)), true.only = TRUE)
+[1] "is.call"      "is.language"  "is.recursive"
+> is.ALL(y ~ x)
 is.array       : . 
 is.atomic      : . 
 is.call        : | 
@@ -299,7 +267,7 @@ is.double      : .
 is.environment : . 
 is.expression  : . 
 is.factor      : . 
-is.finite      : NA 
+is.finite      : . . . 
 is.function    : . 
 is.infinite    : . . . 
 is.integer     : . 
@@ -307,9 +275,9 @@ is.language    : |
 is.list        : . 
 is.logical     : . 
 is.matrix      : . 
-is.na          : NA 
+is.na          : ? 
 is.name        : . 
-is.nan         : . . . 
+is.nan         : ? 
 is.null        : . 
 is.numeric     : . 
 is.object      : | 
@@ -321,9 +289,6 @@ is.recursive   : |
 is.symbol      : . 
 is.ts          : . 
 is.vector      : . 
-Warning message: 
-is.nan() applied to non-(list or vector) in: fn(obj) 
-> 
 > 
 > is0 <- is.ALL(numeric(0))
 > is0.ok <- 1 == (lis0 <- sapply(is0, length))
@@ -342,34 +307,30 @@ logical(0)
 
 > is0 <- unlist(is0)
 > is0
-          is.R       is.array      is.atomic        is.call   is.character 
-          TRUE          FALSE           TRUE          FALSE          FALSE 
-    is.complex  is.data.frame      is.double is.environment  is.expression 
-         FALSE          FALSE           TRUE          FALSE          FALSE 
-     is.factor    is.function     is.integer    is.language        is.list 
+      is.array      is.atomic        is.call   is.character     is.complex 
+         FALSE           TRUE          FALSE          FALSE          FALSE 
+ is.data.frame      is.double is.environment  is.expression      is.factor 
+         FALSE           TRUE          FALSE          FALSE          FALSE 
+   is.function     is.integer    is.language        is.list     is.logical 
          FALSE          FALSE          FALSE          FALSE          FALSE 
-    is.logical      is.matrix        is.name        is.null     is.numeric 
-         FALSE          FALSE          FALSE          FALSE           TRUE 
-     is.object     is.ordered    is.pairlist          is.qr        is.real 
-         FALSE          FALSE          FALSE          FALSE           TRUE 
-  is.recursive      is.symbol          is.ts      is.vector 
-         FALSE          FALSE          FALSE           TRUE 
+     is.matrix        is.name        is.null     is.numeric      is.object 
+         FALSE          FALSE          FALSE           TRUE          FALSE 
+    is.ordered    is.pairlist          is.qr        is.real   is.recursive 
+         FALSE          FALSE          FALSE           TRUE          FALSE 
+     is.symbol          is.ts      is.vector 
+         FALSE          FALSE           TRUE 
 > ispi <- unlist(is.ALL(pi))
 > all(ispi[is0.ok] == is0)
 [1] TRUE
 > 
 > is.ALL(numeric(0), true=TRUE)
-[1] "is.R"       "is.atomic"  "is.double"  "is.numeric" "is.real"   
-[6] "is.vector" 
+[1] "is.atomic"  "is.double"  "is.numeric" "is.real"    "is.vector" 
 > is.ALL(array(1,1:3), true=TRUE)
-[1] "is.R"       "is.array"   "is.atomic"  "is.double"  "is.numeric"
-[6] "is.real"   
+[1] "is.array"   "is.atomic"  "is.double"  "is.numeric" "is.real"   
 > is.ALL(cbind(1:3), true=TRUE)
-[1] "is.R"       "is.array"   "is.atomic"  "is.integer" "is.matrix" 
-[6] "is.numeric"
+[1] "is.array"   "is.atomic"  "is.integer" "is.matrix"  "is.numeric"
 > 
 > is.ALL(structure(1:7, names = paste("a",1:7,sep="")))
-is.R           : | 
 is.array       : . 
 is.atomic      : | 
 is.call        : . 
@@ -403,12 +364,12 @@ is.symbol      : .
 is.ts          : . 
 is.vector      : | 
 > is.ALL(structure(1:7, names = paste("a",1:7,sep="")), true.only = TRUE)
-[1] "is.R"       "is.atomic"  "is.integer" "is.numeric" "is.vector" 
+[1] "is.atomic"  "is.integer" "is.numeric" "is.vector" 
 > 
 > x <- 1:20 ; y <- 5 + 6*x + rnorm(20) ; lm.xy <- lm(y ~ x)
-> 					#now (0.62) fails: is.ALL(lm.xy)
+> is.ALL(lm.xy, true.only = TRUE)
+[1] "is.list"   "is.object" "is.qr"    
 > is.ALL(structure(1:7, names = paste("a",1:7,sep="")))
-is.R           : | 
 is.array       : . 
 is.atomic      : | 
 is.call        : . 
@@ -442,5 +403,6 @@ is.symbol      : .
 is.ts          : . 
 is.vector      : | 
 > is.ALL(structure(1:7, names = paste("a",1:7,sep="")), true.only = TRUE)
-[1] "is.R"       "is.atomic"  "is.integer" "is.numeric" "is.vector" 
+[1] "is.atomic"  "is.integer" "is.numeric" "is.vector" 
+> 
 > 
