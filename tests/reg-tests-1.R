@@ -2286,6 +2286,14 @@ for(topic in c("TRUE", "FALSE",  "NULL", "NA", "Inf", "NaN")) {
 ## ?NULL and all the help calls fail in 1.7.x
 
 
+## row names in data frames
+xx <- structure(1:3, names=letters[1:3])
+data.frame(xx)
+data.frame(xx, yy=1:6) # failed with misleading message in 1.7.x
+data.frame(xx, yy=1:6, row.names=NULL) # no warning
+##
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

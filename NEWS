@@ -195,6 +195,12 @@ BUG FIXES
 
     o   biplot.default() allows xlim and ylim to be set. (PR#3168)
 
+    o   data.frame() failed with a nonsensical error message if it
+	grabbed row names from an argument that was subsequently
+	recycled.  Now they are discarded, with a warning.
+
+    o   as.data.frame.matrix() ignored the `row.names' argument.
+
 
 
 

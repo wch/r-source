@@ -158,7 +158,9 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE)
     nrows <- d[1]; ir <- seq(length = nrows)
     ncols <- d[2]; ic <- seq(length = ncols)
     dn <- dimnames(x)
-    row.names <- dn[[1]]
+    ## surely it cannot be right to override the supplied row.names?
+    ## changed in 1.8.0
+    if(missing(row.names)) row.names <- dn[[1]]
     collabs <- dn[[2]]
     if(any(empty <- nchar(collabs)==0))
 	collabs[empty] <- paste("V", ic, sep = "")[empty]
@@ -244,6 +246,7 @@ data.frame <-
 	    } else current
 	}
     object <- as.list(substitute(list(...)))[-1]
+    mrn <- missing(row.names)
     x <- list(...)
     n <- length(x)
     if(n < 1)
@@ -310,18 +313,23 @@ data.frame <-
     if(check.names)
 	vnames <- make.names(vnames)
     names(value) <- vnames
-    if(length(row.names) == 0)
-	row.names <- seq(length = nr)
-    else if(length(row.names) != nr) {
-	if(is.character(row.names))
-	    row.names <- match(row.names, vnames, 0)
-	if(length(row.names)!=1 ||
-	   row.names < 1 || row.names > length(vnames))
-	    stop("row.names should specify one of the variables")
-	i <- row.names
-	row.names <- value[[i]]
-	value <- value[ - i]
+    if(!mrn) { # row.names arg was supplied
+        if(length(row.names) == 1 && nr != 1) {  # one of the variables
+            if(is.character(row.names))
+                row.names <- match(row.names, vnames, 0)
+            if(length(row.names)!=1 ||
+               row.names < 1 || row.names > length(vnames))
+                stop("row.names should specify one of the variables")
+            i <- row.names
+            row.names <- value[[i]]
+            value <- value[ - i]
+        } else if (length(row.names) > 0 && length(row.names) != nr)
+            stop("row names supplied are of the wrong length")
+    } else if(length(row.names) > 0 && length(row.names) != nr) {
+        warning("row names were found from a short variable and have been discarded")
+        row.names <- NULL
     }
+    if(length(row.names) == 0) row.names <- seq(length = nr)
     row.names <- as.character(row.names)
     if(any(is.na(row.names)))
         stop("row names contain missing values")
