@@ -469,7 +469,7 @@ void PrintValueRec(SEXP s,SEXP env)
     case CLOSXP:
     case LANGSXP:
 	t = getAttrib(s, R_SourceSymbol);
-	if ( isNull(t) )
+	if (isNull(t))
 	    t = deparse1(s, 0);
 	for (i = 0; i < LENGTH(t); i++)
 	    Rprintf("%s\n", CHAR(STRING(t)[i]));
