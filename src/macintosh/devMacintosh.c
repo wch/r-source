@@ -88,7 +88,7 @@ SEXP do_Macintosh(SEXP call, SEXP op, SEXP args, SEXP env)
     gsetVar(install(".Device"), mkString("Macintosh"), R_NilValue);
     dd = GEcreateDevDesc(dev);
     addDevice((DevDesc*)dd);
-    initDisplayList((DevDesc*)dd);
+    GEinitDisplayList(dd);
     WinIndex = isGraphicWindow(Working_Window);
     gGReference[WinIndex].gedevdesc = (Ptr)dd;
 

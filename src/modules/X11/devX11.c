@@ -577,7 +577,7 @@ static void handleEvent(XEvent event)
 		     dd);
 	    xd->resize = 0;
 	}
-	GEHandleEvent(GE_Redraw, dd, R_NilValue);
+	GEplayDisplayList((GEDevDesc*) GetDevice(devNumber(dd)));
     }
     else if (event.type == ConfigureNotify) {
 	XFindContext(display, event.xconfigure.window,

@@ -178,7 +178,7 @@ SEXP do_GTK(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd = GEcreateDevDesc(dev);
         dd->newDevStruct = 1;
 	addDevice((DevDesc*) dd);
-	initDisplayList((DevDesc*) dd);
+	GEinitDisplayList(dd);
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
@@ -214,7 +214,7 @@ SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd = GEcreateDevDesc(dev);
         dd->newDevStruct = 1;
 	addDevice((DevDesc*) dd);
-	initDisplayList((DevDesc*) dd);
+	GEinitDisplayList(dd);
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
@@ -308,7 +308,7 @@ Rf_addX11Device(char *display, double width, double height, double ps,
 	gsetVar(install(".Device"), mkString(devname), R_NilValue);
 	dd = GEcreateDevDesc(dev);
 	addDevice((DevDesc*) dd);
-	initDisplayList((DevDesc*) dd);
+	GEinitDisplayList(dd);
     } END_SUSPEND_INTERRUPTS;
     
     return((DevDesc*) dd);

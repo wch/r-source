@@ -650,7 +650,7 @@ static void HelpExpose(window w, rect r)
 	if (xd->resize) {
 	    GA_Resize(dd);
 	    xd->replaying = TRUE;
-	    playDisplayList((DevDesc*) gdd);
+	    GEplayDisplayList((DevDesc*) gdd);
 	    xd->replaying = FALSE;
 	    R_ProcessEvents();
 	} else

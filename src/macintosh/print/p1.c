@@ -411,8 +411,8 @@ void	printLoop(WindowPtr	window)//PMPrintSession printSession, PMPageFormat page
                      dd->bottom = bottom; 
                      
 					 xd->resize=TRUE;
-					 playDisplayList((DevDesc *)gedd);
-                 
+					 GEplayDisplayList(gedd);
+					 
                      WeArePrinting = false;
                      dd->size(&left,&right,&bottom,&top,dd);
                      dd->left = left;

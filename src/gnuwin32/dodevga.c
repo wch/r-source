@@ -100,7 +100,7 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
 		mkString(display[0] ? display : "windows"), R_NilValue);
 	dd = GEcreateDevDesc(dev);
 	addDevice((DevDesc*) dd);
-	initDisplayList((DevDesc*) dd);
+	GEinitDisplayList(dd);
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
