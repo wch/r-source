@@ -10,7 +10,7 @@ subdir = src/gnome
 
 include $(top_builddir)/Makeconf
 
-ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(GNOME_INCLUDEDIR) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
+ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(GNOME_INCLUDEDIR) $(LIBGLADE_CFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
 
 SOURCES = ../unix/dataentry.c \
 	  ../unix/dynload.c \
@@ -31,7 +31,8 @@ SOURCES = ../unix/dataentry.c \
 	  terminal-functions.c \
 	  terminal-menu.c \
 	  terminal-prefs.c \
-	  terminal-toolbar.c
+	  terminal-toolbar.c \
+	  command-grep.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
 HEADERS = dataentry.h \

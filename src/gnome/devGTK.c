@@ -347,7 +347,14 @@ static gint expose_event(GtkWidget *widget, GdkEventExpose *event, gpointer data
     dd->dp.resize(dd);
   }
 
+  
+  gdk_draw_pixmap(gtkd->drawing->window, gtkd->wgc, gtkd->pixmap,
+                 event->area.x, event->area.y, event->area.x, event->area.y,
+                 event->area.width, event->area.height);
+
+#if 0
   playDisplayList(dd);
+#endif
 
   return FALSE;
 }
@@ -451,6 +458,15 @@ static int GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
   /* initialise line params */
   gtkd->lty = -1;
   gtkd->lwd = -1;
+
+  /* create offscreen drawable */
+  gtkd->pixmap = gdk_pixmap_new(gtkd->drawing->window,
+                               gtkd->windowWidth, gtkd->windowHeight,
+                               -1);
+  gdk_gc_set_foreground(gtkd->wgc, &gtkd->gcol_bg);
+  gdk_draw_rectangle(gtkd->pixmap, gtkd->wgc, TRUE, 0, 0,
+                    gtkd->windowWidth, gtkd->windowHeight);
+
 
   /* let other widgets use the default colour settings */
   gtk_widget_pop_visual();
@@ -859,6 +875,12 @@ static void GTK_Text(double x, double y, int coords,
 		    (int) x, (int) y,
 		    gtkd->windowWidth, gtkd->windowHeight,
 		    str, strlen(str), rrot);
+  gdk_draw_text_rot(gtkd->pixmap,
+                    gtkd->font, gtkd->wgc, 
+                    (int) x, (int) y,
+                    gtkd->windowWidth, gtkd->windowHeight,
+                    str, strlen(str), rrot);
+
 }
 
 
