@@ -107,7 +107,7 @@ readCitationFile(file)
 }
 \keyword{misc}
 \examples{
-basecit = system.file("CITATION", package="base")
+basecit <- system.file("CITATION", package="base")
 source(basecit, echo=TRUE)
 readCitationFile(basecit)
 }

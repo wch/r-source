@@ -36,16 +36,16 @@ as.personList(x)
 \keyword{misc}
 \examples{
 ## create a person object directly
-p1 = person("Karl", "Pearson", email="pearson@stats.heaven")
+p1 <- person("Karl", "Pearson", email="pearson@stats.heaven")
 p1
 
 ## convert a string
-p2 = as.person("Ronald Aylmer Fischer")
+p2 <- as.person("Ronald Aylmer Fischer")
 p2
 
 ## create one object holding both
-p = personList(p1,p2)
-ps = as.character(p)
+p <- personList(p1,p2)
+ps <- as.character(p)
 ps
 as.personList(ps)
 }

@@ -54,6 +54,6 @@ citation("lattice")
 citation("foreign")
 
 ## extract the bibtex entry from the return value
-x = citation()
+x <- citation()
 bibtex(x)
 }
