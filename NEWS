@@ -68,6 +68,7 @@ BUG FIXES
 
     o	qchisq(1-e, ..., ncp=.) did not terminate. (PR#6421 (& PR#875))
 
+    o	isoreg() could segfault on monotone input sequences.  (PR#6494)
 
 
 		CHANGES IN R VERSION 1.8.1
