@@ -148,11 +148,15 @@ int sigsuspend(sigset_t* sigset_Info);
    This must be a macro, since we want setjmp working in the
    calling environment
 */
-
+/*
 #define sigsetjmp(jb, sm) (\
                sm?sigprocmask(SIG_SETMASK,NULL,&jb->saved_mask):0,\
                jb->mask_was_saved=sm,\
                setjmp(jb->jmpbuf))
+
+we only currently use the case sm=0, so avoid compiler warnings by */
+
+#define sigsetjmp(jb, sm) (jb->mask_was_saved=0, setjmp(jb->jmpbuf))
 
 
 /* We can transform this in a function but ... */
