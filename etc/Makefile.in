@@ -48,7 +48,7 @@ R: $(OBJECTS)
 $(OBJECTS): $(top_builddir)/config.status
 
 install: installdirs install-gnome
-	@echo "installing etc ..."
+	@echo "installing $(subdir) ..."
 	@for f in $(OBJECTS) $(EXPORTFILE); do \
 	  $(INSTALL_DATA) $${f} $(rhome)/etc; \
 	done
@@ -75,7 +75,7 @@ uninstall:
 
 mostlyclean: clean
 clean:
-	@if test "`cd $(srcdir) && $(GETWD)`" != "`$(GETWD)`" ; then \
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f *.pl $(GNOME_IF_FILES); \
 	fi
 	@rm -f $(EXPORTFILE)

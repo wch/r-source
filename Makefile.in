@@ -42,7 +42,7 @@ libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
 
 R: Makefile
-	@if test "`cd $(srcdir) && $(GETWD)`" != "`$(GETWD)`" ; then \
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  for f in $(INSTFILES); do \
 	    $(INSTALL_DATA) $(srcdir)/$${f} $(top_builddir); \
 	  done; \
@@ -154,7 +154,7 @@ clean:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	@if test "`cd $(srcdir) && $(GETWD)`" != "`$(GETWD)`" ; then \
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(INSTFILES); \
 	fi
 distclean: clean

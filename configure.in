@@ -198,7 +198,18 @@ AC_ARG_WITH(tk-config,
 ##   use_libtool=${withval},
 ##   use_libtool=yes)
 ## </FIXME>
-AM_CONDITIONAL(USE_LIBTOOL, test "${use_libtool}" = yes)    
+AM_CONDITIONAL(USE_LIBTOOL, test "${use_libtool}" = yes)
+
+### Check whether we build in srcdir
+AC_PATH_PROG(GETWD, pwd, pwd)
+AC_MSG_CHECKING([whether builddir is srcdir])
+if test "`cd ${srcdir} && ${GETWD}`" = "`${GETWD}`"; then
+  BUILDDIR_IS_SRCDIR=yes
+else
+  BUILDDIR_IS_SRCDIR=no
+fi
+AC_SUBST(BUILDDIR_IS_SRCDIR)
+AC_MSG_RESULT([${BUILDDIR_IS_SRCDIR}])
 
 ### C compiler.
 
@@ -243,7 +254,6 @@ R_PROG_AR
 R_PROG_ECHO_N
 R_PROG_INSTALL
 AC_PATH_PROG(JAVAC, javac)
-AC_PATH_PROG(GETWD, pwd, pwd)
 
 ## Libtool
 AM_DISABLE_STATIC

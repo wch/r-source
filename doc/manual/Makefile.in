@@ -58,7 +58,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 R: Makefile
-	@if test "`cd $(srcdir) && $(GETWD)`" != "`$(GETWD)`" ; then \
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  $(MAKE) rhome=$(top_builddir) install-tex; \
 	fi
 
@@ -137,7 +137,7 @@ version.texi: Makefile $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	  echo "@set VERSION $${v}" > $@)
 R-intro.dvi: stamp-images-eps $(texiincludes)
 stamp-images-eps:
-	@if test "`cd $(srcdir) && $(GETWD)`" != "`$(GETWD)`" ; then \
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  $(MAKE) rhome=$(top_builddir) install-images-eps; \
 	fi
 	@touch $@
@@ -191,7 +191,7 @@ R-data.pdf: $(texiincludes)
 R-exts.pdf: $(texiincludes)
 R-intro.pdf: stamp-images-pdf $(texiincludes)
 stamp-images-pdf:
-	@if test "`cd $(srcdir) && $(GETWD)`" != "`$(GETWD)`" ; then \
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  $(MAKE) rhome=$(top_builddir) install-images-pdf; \
 	fi
 	@touch $@
@@ -272,7 +272,7 @@ uninstall-pdf:
 
 mostlyclean: clean
 clean:
-	@if test "`cd $(srcdir) && $(GETWD)`" != "`$(GETWD)`" ; then \
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -rf Rd.sty images; \
 	fi
 	@-rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.html *.info* \
