@@ -11,7 +11,9 @@ help <- function(topic, offline = FALSE, package = .packages(),
         if (is.name(y <- substitute(package)))
             package <- as.character(y)
     if (!missing(topic)) {
-        if (!is.character(topic)) topic <- deparse(substitute(topic))
+        ischar<-try(is.character(topic))
+        if (inherits(ischar, "try-error")) ischar<-FALSE
+        if (!ischar) topic <- deparse(substitute(topic))
         # for cmd/help ..
         if (!is.na(match(topic, c("+", "-", "*", "/", "^", "%%"))))
             topic <- "Arithmetic"
