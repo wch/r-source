@@ -400,7 +400,7 @@ static void printcomment(SEXP s)
 static void deparse2buff(SEXP s)
 {
     int fop;
-    RBoolean lookahead = FALSE, lbreak = FALSE;
+    Rboolean lookahead = FALSE, lbreak = FALSE;
     SEXP op, t;
     char tpb[120];
 
