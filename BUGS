@@ -354,3 +354,7 @@ Date: Mon, 21 Jun 1999 09:25:37 +1000 (EST)
 * PR# 214 *
 From: Charles Taylor <charles@amsta.leeds.ac.uk>
 Date: Thu, 24 Jun 1999 11:20:06 +0100 (BST)
+* PR# 215 *
+Subject: plot(..., lab=..) fails in axis() --- wrong "..." propagation
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 29 Jun 1999 10:48:25 +0200
