@@ -18,7 +18,7 @@ DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.lo)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = AquaReadMe.txt AquaInstall.in R.fix Raete.r Makefile.in \
+DISTFILES = AquaReadMe.txt AquaInstall.in R.fix Raete.r Makefile.in Info.plist.in \
   $(SOURCES) $(HEADERS)
 
 SUBDIRS_WITH_NO_BUILD = Contents RAqua
@@ -34,7 +34,7 @@ aqua_la_OBJECTS = $(OBJECTS)
 @USE_LIBTOOL_TRUE@aqua_la_LDFLAGS = -avoid-version -rpath $(Rexecmodulesdir) -module
 aqua_la_LIBADD = $(LIBR)
 
-all: Makefile Makedeps R AquaInstall
+all: Makefile Makedeps R AquaInstall Info.plist
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
@@ -56,6 +56,9 @@ $(aqua_la): $(aqua_la_OBJECTS) $(aqua_la_DEPENDENCIES)
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
 ## </FIXME>
 
+Info.plist: $(srcdir)/Info.plist.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
 AquaInstall: $(srcdir)/AquaInstall.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
@@ -74,7 +77,7 @@ clean:
 	@-rm -rf .libs _libs
 	@-rm -f Makedeps *.d *.o *.a *.lo *.la *$(SHLIB_EXT)
 distclean: clean
-	@-rm -f Makefile AquaInstall
+	@-rm -f Makefile AquaInstall Info.plist
 maintainer-clean: distclean
 
 TAGS info dvi check:
