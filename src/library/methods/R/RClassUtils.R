@@ -227,7 +227,7 @@ completeClassDefinition <-
                 "\" has duplicates in superclasses and subclasses (",
                 paste(bad, collapse = ", "), ")")
     }
-    on.exit() # clear the removal of the class definition 
+    on.exit() # clear the removal of the class definition
     ClassDef
 }
 
@@ -267,14 +267,14 @@ getValidity <-
   ## the name of the class)
   function(ClassDef)
     ClassDef@validity
- 
+
 
 getAccess <-
    ## extract the class's Access method (or NULL) from the class representation (only, not from
   ## the name of the class)
   function(ClassDef)
     ClassDef@access
- 
+
 
 getAllSuperClasses <-
   ## Get the names of all the classes that this class definition extends.
@@ -351,7 +351,7 @@ setExtendsMetaData <-
       elNamed(obj, getClassName(ClassDef2)) <- value
       assign(what, obj, where)
   }
-      
+
 setSubclassMetaData <-
   ## save the metadata defining this sublcass relation
   function(ClassDef1, ClassDef2, where) {
@@ -652,7 +652,7 @@ reconcilePropertiesAndPrototype <-
           pnames <- prototype@slots
           prototype <- prototype@object
       }
-      else 
+      else
           pnames <- allNames(attributes(prototype))
       ## now set the slots not yet in the prototype object.
       ## An important detail is that these are
@@ -858,7 +858,7 @@ completeSubclasses <-
         }
         value
     }
-                    
+
 
 
 .completeExtBreadth <-  function(ClassDef, slotName, soFar = getClassName(ClassDef), level = 1)
@@ -935,7 +935,8 @@ subclassesMetaName <-
 methodsPackageMetaName <-
   ## a name mangling device to simulate the meta-data in S4
   function(prefix, name)
-  paste(".", prefix, name, sep="__")
+  ## paste(".", prefix, name, sep="__") # too slow
+    .Call("R_methodsPackageMetaName", prefix, name, PACKAGE = "methods")
 
 
 
@@ -1110,7 +1111,7 @@ setDataPart <- function(object, value) {
             ff <- byExt@test
             body(ff, envir = environment(ff)) <-
                 substitute((is(object, BY) && is(as(object, BY), TO)),
-                          list(BY = by, TO = to)) 
+                          list(BY = by, TO = to))
             toExt@test <- ff
         }
         toExt@coerce <- f
@@ -1167,7 +1168,7 @@ newClassRepresentation <- function(...) {
         slot(value, slotNames[[i]], FALSE) <- slots[[i]]
     value
 }
-    
+
 ## the real version of newClassRepresentation, assigned in .First.lib
 .newClassRepresentation <- function(...)
     new("classRepresentation", ...)
@@ -1195,7 +1196,7 @@ newClassRepresentation <- function(...) {
     }
     superClasses <- names(classDef@contains)
     for(what in superClasses) {
-        if(isClass(what)) 
+        if(isClass(what))
             removeSubclassMetaData(getClassDef(what), classDef)
     }
     TRUE
@@ -1244,7 +1245,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
                     paste(newArgs, collapse = ", "), ")")
     }
     def
-}    
+}
 
 .makeValidityMethod <- function(Class, validity) {
     if(is.null(validity)) {
