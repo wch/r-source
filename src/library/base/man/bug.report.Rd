@@ -27,9 +27,13 @@ bug.report(subject = "", ccaddress = getenv("USER"),
 \details{
   Currently direct submission of bug reports works only on Unix systems.
   If the submission method is \code{"mailx"}, then the default editor is
-  used to write the bug report which is then mailed using a Unix command
-  line mail utility such as \code{mailx}.  A copy of the mail is sent to
-  current user.
+  used to write the bug report. Which editor is used can be controlled
+  using \code{\link{options}}, type \code{options()$editor} to see what
+  editor is currently defined. Please use the help pages of the
+  respective editor for details of usage. After saving the bug report
+  (in the temporary file opened) and exiting the editor
+  the report is mailed using a Unix command line mail utility such as
+  \code{mailx}.  A copy of the mail is sent to the current user.
 
   If method is \code{"gnuclient"}, then an emacs mail buffer is opened
   and used for sending the email.
