@@ -1,4 +1,4 @@
-/* src/include/config.h.in.  Generated automatically from configure.in by autoheader 2.13.  */
+/* src/include/config.h.in.  Generated automatically from configure.in by autoheader.  */
 /* acconfig.h
    Descriptive text for the C preprocessor macros that are needed by R.
    */
@@ -272,6 +272,9 @@
 
 /* Define if you have the isnan function.  */
 #undef HAVE_ISNAN
+
+/* Define if you have the log1p function.  */
+#undef HAVE_LOG1P
 
 /* Define if you have the matherr function.  */
 #undef HAVE_MATHERR

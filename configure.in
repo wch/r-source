@@ -455,8 +455,8 @@ AC_FUNC_ALLOCA
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(access acosh asinh atanh bcopy bzero finite ftruncate \
-  getcwd getgrgid getpwuid getuid hypot isascii isnan matherr memcpy \
-  memmove mempcpy mkfifo popen putenv rint setenv strcoll \
+  getcwd getgrgid getpwuid getuid hypot isascii isnan log1p matherr \
+   memcpy memmove mempcpy mkfifo popen putenv rint setenv strcoll \
   stat strptime system times unsetenv)
 AC_REPLACE_FUNCS(snprintf strdup vsnprintf)
 AC_SEARCH_LIBS(connect, [socket])

@@ -9343,8 +9343,8 @@ fi
 fi
 
 for ac_func in access acosh asinh atanh bcopy bzero finite ftruncate \
-  getcwd getgrgid getpwuid getuid hypot isascii isnan matherr memcpy \
-  memmove mempcpy mkfifo popen putenv rint setenv strcoll \
+  getcwd getgrgid getpwuid getuid hypot isascii isnan log1p matherr \
+   memcpy memmove mempcpy mkfifo popen putenv rint setenv strcoll \
   stat strptime system times unsetenv
 do
 echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
