@@ -182,7 +182,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 \note{
   \code{library} and \code{require} can only load an \emph{installed}
   package, and this is detected by having a \file{DESCRIPTION} file
-  containing a \code{Built:} field (except on classic MacOS).  Packages
+  containing a \code{Built:} field.  Packages
   installed prior to 1.2.0 (released in December 2000) will need to be
   re-installed.
 
