@@ -17,7 +17,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "Arith.h"
+#include "Mathlib.h"
 #include "Errormsg.h"
 /* instead of #include "Defn.h" : */
 #define NA_INTEGER	R_NaInt

@@ -1,11 +1,19 @@
 /*
  *  Copyright (C) Martin Maechler, 1994, 1998
  *
- *  This code is to be understood as Free Software in the sense of
- *  GNU Copyright.  You can freely use and redistribute this software
- *  for non-commercial purposes only.  You even are allowed to enhance
- *  and improve it as much as you like, as long as you distribute the
- *  source code together with the software.
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  *  I want you to preserve the copyright of the original author(s),
  *  and encourage you to send me any improvements by e-mail. (MM).
@@ -107,7 +115,7 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 			form, wid, dig);
 		if(do_fg) fprintf(stderr, "\t\"fg\": f0=«%s».", f0);
 #endif
-		if (strcmp("double", *type) == 0)
+		if (strcmp("double", *type) == 0) {
 		  if(do_fg) /* do smart "f" : */
 		    for (i=0; i < nn; i++) {
 		      xx = ((double *)x)[i];
@@ -146,7 +154,7 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 		  else
 		    for (i=0; i < nn; i++)
 			sprintf(result[i], form, wid, dig, ((double *)x)[i]);
-		else
+		} else
 			error("`type' must be \"real\" for this format\n");
 	}
 }
