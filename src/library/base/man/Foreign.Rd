@@ -54,22 +54,23 @@ integer \tab int * \tab integer\cr
 real \tab double * \tab double precision\cr
 complex \tab complex * \tab double complex\cr
 logical \tab int * \tab integer \cr
-character \tab char ** \tab [compiler dependent]\cr
-list \tab void * (SEXP *)\tab \cr
-other \tab void * (SEXP)\tab \cr
+character \tab char ** \tab [see below]\cr
+list \tab void * (SEXP *)\tab not allowed\cr
+other \tab void * (SEXP)\tab not allowed\cr
 }
     The C type \code{complex} is defined in \file{Complex.h} as a
     \code{typedef struct {double r; double i;}}. Fortran type
     \code{double complex} is an extension to the Fortran standard, and
-    the availibility of a mapping of \code{complex} to Fortran may be
+    the availability of a mapping of \code{complex} to Fortran may be
     compiler dependent.
 
     \emph{Note:} The C types corresponding to \code{integer} and
     \code{logical} are \code{int}, not \code{long} as in S.
 
-    Character strings are passed as C arrays of character strings to
-    Fortran: the first string may be usable if its length is passed
-    separately.
+    The first character string of a character vector is passed as a C
+    character array to Fortran: that string may be usable
+    as \code{character*255} if its true length is passed separately. Only up
+    to 255 characters of the string are passed.
 
     Lists, functions, expressions, environments and other language
 elements are passed as generic pointers (\code{void *}). R functions can

@@ -1,5 +1,21 @@
 	**************************************************
 	*						 *
+	*	       0.90 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+NEW FEATURES
+
+    o	Character strings can now, on most compilers, be passed
+	on and from Fortran. See ?Foreign for details.
+
+
+BUG FIXES
+
+
+	**************************************************
+	*						 *
 	*	       0.65 SERIES NEWS			 *
 	*						 *
 	**************************************************
