@@ -131,10 +131,7 @@
 #ifdef Unix
 #define OSTYPE      "Unix"
 #define FILESEP     "/"
-#define DYNLOADEXT  ".so"
-/* should be
-#define DYNLOADEXT  ".@SHLIBEXT@"
-*/
+#define DYNLOADEXT  ""
 #endif
 
 #ifdef Macintosh
