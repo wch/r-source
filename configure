@@ -8312,7 +8312,7 @@ else
 #include "confdefs.h"
 #include <alloca.h>
 int main() {
-char *p = alloca(2 * sizeof(int));
+void *p = alloca(2 * sizeof(int));
 ; return 0; }
 EOF
 if { (eval echo configure:8319: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
@@ -10025,7 +10025,7 @@ else
 int main() {
 
 /* Ultrix mips cc rejects this.  */
-typedef int charset[2]; const charset x;
+typedef int charset[2]; const charset x = {0,0};
 /* SunOS 4.1.1 cc rejects this.  */
 char const *const *ccp;
 char **p;
@@ -13300,7 +13300,7 @@ fi
 ## This should not be necessary when using libtool for linking.
 ## In any case, is this really good enough?
 
-for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${BLAS_LIBS}; do
+for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${FLIBS} ${BLAS_LIBS}; do
   case ${arg} in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
