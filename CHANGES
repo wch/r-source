@@ -97,6 +97,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   Bug fix in mva dist.c for method binary (gave "invalid
+        distance").
+
     o	R INSTALL should work (again) now when `pkg' is a relative file
 	name.
 
@@ -117,6 +120,7 @@ BUG FIXES
 
     o	Many small code changes (eliminating extraneous variables, nested comm.)
 	in C code in order to satisfy `gcc -Wall' [Doug Bates].
+
 
 
 		CHANGES IN R VERSION 0.61.1
