@@ -170,7 +170,11 @@ BUG FIXES
 	case, and that and proc.time() have better documentation.
 
     o   a couple of bugs in the data editor spreadsheet have been
-        eliminated. 
+        eliminated.
+
+    o   Elapsed time in proc.time() is no longer rounded to whole
+	seconds under Unix.
+
 
 		CHANGES IN R VERSION 0.90.1
 
