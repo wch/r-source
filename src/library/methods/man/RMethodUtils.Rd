@@ -342,7 +342,7 @@ findNextMethod(method, f, mlist, optional = FALSE, envir)
 
     \item{\code{asMethodDefinition}:}{
       Turn a function definition into a
-      \code{\link{MethodDefiniton-class}} object, corresponding to the
+      \code{\link{MethodDefinition-class}} object, corresponding to the
       given \code{signature} (by default generates a default method
       with empty signature).
     }
