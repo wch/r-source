@@ -250,8 +250,8 @@ port of pdftex.
 Building the installers
 =======================
 
-See installer/INSTALL.  You need to have the files for a complete R build, 
-including bitmap and Tcl/Tk support and the manuals, as well as the 
+See installer/INSTALL.  You need to have the files for a complete R build,
+including bitmap and Tcl/Tk support and the manuals, as well as the
 recommended packages.
 
 Once everything is set up
@@ -259,16 +259,17 @@ Once everything is set up
 	make distribution
 	make check-all
 
-will make all the pieces and the installers and put them in the 
+will make all the pieces and the installers and put them in the
 gnuwin32/cran subdirectory, then check the build.  This works by building
-all the parts in the sequence:  
+all the parts in the sequence:
 
 	Rpwd.exe (a utility needed in the build)
 	rbuild (the executables, the FAQ docs etc.)
-	rpackage (the base packages) 
-	rdocs (the HTML documentation) 	
-	bitmapdll (the bitmap support files)	
-	recommended (the recommended packages)	
+	rpackage (the base packages)
+	rdocs (the HTML documentation)
+	bitmapdll (the bitmap support files)
+	recommended (the recommended packages)
+	vignettes (the vignettes in package grid)
 	docs (the manuals)
 	rinstaller (the install program)
 	crandir (the CRAN distribution directory)

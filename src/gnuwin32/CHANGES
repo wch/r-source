@@ -49,6 +49,10 @@ the console and graphics windows and their popup menus.  Repeated
 addition of the same menu no longer leads to duplicate menus.
 winMenuDel() now deletes all submenus and items within the menu.
 
+Building a complete distribution has an extra step, as the grid
+vignettes depend on lattice (and so were incomplete in R 1.9.x on both
+Unix and Windows).
+
 
 
 rw1091

@@ -146,7 +146,6 @@ endif
 	@$(MAKE) --no-print-directory PKG=datasets RHOME=$(RHOME) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) RLIB=$(RLIB) lazydata
 
-	@$(MAKE) --no-print-directory vignettes
 
 rlibs:
 	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
@@ -570,6 +569,7 @@ distribution:
 	$(MAKE) rdocs
 	$(MAKE) bitmapdll
 	$(MAKE) recommended
+	$(MAKE) vignettes
 	$(MAKE) docs
 	$(MAKE) rinstaller
 	$(MAKE) crandir
