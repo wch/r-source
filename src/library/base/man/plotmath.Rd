@@ -106,7 +106,7 @@
     \code{x^y + z}   \tab normal operator precedence \cr
     \code{x^(y + z)}    \tab visible grouping of operands \cr
     \code{x^{y + z}}  \tab invisible grouping of operands \cr
-    \code{group("(",list(a, b),"]")} \tab specify left and right delimeters \cr
+    \code{group("(",list(a, b),"]")} \tab specify left and right delimiters \cr
     \code{bgroup("(",atop(x,y),")")} \tab use scalable delimiters \cr
     \code{group(lceil, x, rceil)} \tab special delimiters \cr
   }

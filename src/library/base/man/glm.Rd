@@ -1,15 +1,17 @@
 \name{glm}
 \title{Fitting Generalized Linear Models}
 \usage{
-glm(formula, family=gaussian, data, weights=NULL, subset=NULL,
-        na.action=na.fail, start=NULL, offset=NULL,
-        control=glm.control(epsilon=0.0001, maxit=10, trace=FALSE),
-        model = TRUE, method = "glm.fit", x = FALSE, y = TRUE)
-glm.control(epsilon=0.0001, maxit=10, trace=FALSE)
-glm.fit(x, y, weights=rep(1, nrow(x)),
-        start=NULL, etastart = NULL, offset=rep(0, nrow(x)),
-        family=gaussian(), control=glm.control(),
-        intercept=TRUE)
+glm(formula, family = gaussian, data, weights = NULL, subset = NULL,
+    na.action, start = NULL, offset = NULL,
+    control = glm.control(epsilon=0.0001, maxit=10, trace=FALSE),
+    model = TRUE, method = "glm.fit", x = FALSE, y = TRUE,
+    contrasts = NULL, ...)
+glm.control(epsilon = 0.0001, maxit = 10, trace = FALSE)
+glm.fit(x, y, weights = rep(1, nrow(x)),
+        start = NULL, etastart  =  NULL, mustart = NULL,
+        offset = rep(0, nrow(x)),
+        family = gaussian(), control = glm.control(),
+        intercept = TRUE)
 }
 \alias{glm}
 \alias{glm.control}
@@ -18,37 +20,53 @@ glm.fit(x, y, weights=rep(1, nrow(x)),
 \arguments{
   \item{formula}{a symbolic description of the model to be fit.
     The details of model specification are given below.}
+
   \item{family}{a description of the error distribution and link
     function to be used in the model.
     See \code{\link{family}} for details.}
+
   \item{data}{an optional data frame containing the variables
     in the model.  By default the variables are taken from
-    the environment which \code{lm} is called from.}
+    the environment ffrom which \code{glm} is called.}
+
   \item{weights}{an optional vector of weights to be used
     in the fitting process.}
+
   \item{subset}{an optional vector specifying a subset of observations
     to be used in the fitting process.}
+
   \item{na.action}{a function which indicates what should happen
-    when the data contain \code{NA}s.  The default action (\code{na.omit})
-    is to omit any incomplete observations.
-    The alternative action \code{na.fail} causes \code{lm} to
-    print an error message and terminate if there are any incomplete
-    observations.}
+    when the data contain \code{NA}s.  The default is set by
+    the \code{na.action} setting of \code{\link{options}}, and is
+    \code{\link{na.fail}} if that is unset.  The ``factory-fresh''
+    default is \code{\link{na.omit}}.}
+
   \item{start}{starting values for the parameters in the linear predictor.}
+
   \item{etastart}{starting values for the linear predictor.}
-  \item{offset}{this can be used to specify an a-priori
+
+  \item{mustart}{starting values for the vector of means.}
+
+  \item{offset}{this can be used to specify an \emph{a priori}
     known component to be included in the linear predictor
     during fitting.}
+
   \item{control}{a list of parameters for controlling the fitting
     process.  See the documentation for \code{\link{glm.control}} for details.}
+
   \item{model}{a logical value indicating whether \emph{model frame}
     should be included as a component of the returned value.}
+
   \item{method}{the method to be used in fitting the model.
     The default (and presently only) method \code{glm.fit}
     uses iteratively reweighted least squares.}
-  \item{x,y}{logical values indicating whether the response
-    vector and design matrix used in the fitting process
+
+  \item{x, y}{logical values indicating whether the response
+    vector and model matrix used in the fitting process
     should be returned as components of the returned value.}
+
+  \item{contrasts}{an optional list. See the \code{contrasts.arg}
+    of \code{model.matrix.default}.}
 }
 \description{
   \code{glm} is used to fit generalized linear models.
@@ -94,6 +112,11 @@ glm.fit(x, y, weights=rep(1, nrow(x)),
   \code{\link{effects}}, \code{\link{fitted.values}},
   and \code{\link{residuals}}. Further, \code{\link{lm}} for
   non-generalized \emph{linear} models.
+}
+\note{
+  Offsets specified by \code{offset} will not be included in predictions
+  by \code{\link{predict.glm}}, whereas those specified by an offset term
+  in the formula will be.
 }
 \examples{
 ## Annette Dobson (1990) "An Introduction to Generalized Linear Models".

@@ -30,7 +30,7 @@ apply(x, MARGIN, FUN, \dots)
   \code{apply} returns a list of length \code{dim(x)[MARGIN]}.
 }
 \seealso{
-  \code{\link{lapply}}, \code{\link{tapply}}, and conveniency functions
+  \code{\link{lapply}}, \code{\link{tapply}}, and convenience functions
   \code{\link{sweep}} and \code{\link{aggregate}}.
 }
 \examples{

@@ -316,7 +316,8 @@ glm.fit <-
 }
 
 
-print.glm <- function (x, digits= max(3, getOption("digits") - 3), na.print="", ...)
+print.glm <- function(x, digits= max(3, getOption("digits") - 3),
+                      na.print="", ...)
 {
     cat("\nCall: ", deparse(x$call), "\n\n")
     cat("Coefficients")
@@ -335,7 +336,7 @@ print.glm <- function (x, digits= max(3, getOption("digits") - 3), na.print="", 
 }
 
 
-anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
+anova.glm <- function(object, ..., test=NULL)
 {
     ## check for multiple objects
     dotargs <- list(...)
@@ -349,8 +350,7 @@ anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
     is.glm <- unlist(lapply(dotargs,function(x) inherits(x,"glm")))
     dotargs <- dotargs[is.glm]
     if (length(dotargs)>0)
-	return(anova.glmlist(c(list(object),dotargs),test=test,
-			     na.action=na.action))
+	return(anova.glmlist(c(list(object),dotargs),test=test))
     ##args <- function(...) nargs()
     ##if(args(...)) return(anova.glmlist(list(object, ...), test=test))
 
@@ -416,7 +416,7 @@ anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
 }
 
 
-anova.glmlist <- function(object, test=NULL, na.action=na.omit)
+anova.glmlist <- function(object, test=NULL, ...)
 {
 
     ## find responses for all models and remove
@@ -436,7 +436,7 @@ anova.glmlist <- function(object, test=NULL, na.action=na.omit)
 
     nmodels <- length(object)
     if(nmodels==1)
-	return(anova.glm(object[[1]], na.action=na.action, test=test))
+	return(anova.glm(object[[1]], test=test, ...))
 
     ## extract statistics
 
@@ -488,7 +488,7 @@ stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
 }
 
 summary.glm <- function(object, dispersion = NULL,
-			correlation = FALSE, na.action=na.omit, ...)
+			correlation = FALSE, ...)
 {
     Qr <- .Alias(object$qr)
     est.disp <- FALSE

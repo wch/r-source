@@ -1,10 +1,9 @@
 \name{glm.summaries}
 \title{Accessing Generalized Linear Model Fits}
 \usage{
-summary(object, dispersion = NULL, correlation = FALSE,
-        na.action = na.omit)
-anova(object, \dots, test = NULL, na.action = na.omit)
-anova.glmlist(object, test = NULL, na.action = na.omit)
+summary(object, dispersion = NULL, correlation = FALSE, \dots)
+anova(object, \dots, test = NULL)
+anova.glmlist(object, test = NULL, \dots)
 coefficients(x) ; coef(x)
 df.residual(x)
 family(x)
@@ -27,7 +26,7 @@ print.summary(summary.glm.obj, digits = max(3, getOption("digits") - 3),
 \alias{residuals.glm}
 \alias{print.glm}
 \alias{print.glm.null}
-%Deprecated: print.anova.glm
+%Defunct: print.anova.glm
 \alias{print.summary.glm}
 \alias{print.summary.glm.null}
 \arguments{
@@ -37,6 +36,8 @@ print.summary(summary.glm.obj, digits = max(3, getOption("digits") - 3),
     By default it is obtained from \code{glm.obj}.}
   \item{correlation}{logical; if \code{TRUE}, the correlation matrix of
     the estimated parameters is returned and printed.}
+  \item{test}{a character string, matching one of \code{"Chisq"},
+    \code{"F"} or \code{"Cp"}. See \code{\link{stat.anova}}.}
   \item{type}{the type of residuals which should be returned.
     The alternatives are: \code{"deviance"} (default), \code{"pearson"},
     \code{"working"}, \code{"response"}, and \code{"partial"}.}
@@ -52,6 +53,12 @@ print.summary(summary.glm.obj, digits = max(3, getOption("digits") - 3),
   The function \code{summary} can be used to obtain or print
   a summary of the results and the function \code{anova}
   and be used to produce and analysis of variance table.
+}
+\section{Warning}{
+  The comparison between two or more models by \code{anova} or
+  \code{anova.glmlist} will only be valid if they
+  are fitted to the same dataset. This may be a problem if there are
+  missing values and \R's default of \code{na.action = na.omit} is used.
 }
 \seealso{
   \code{\link{glm}} for computing \code{glm.obj};

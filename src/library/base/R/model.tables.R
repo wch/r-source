@@ -248,7 +248,7 @@ make.tables.aovprojlist <-
     tables
 }
 
-replications <- function(formula, data = NULL, na.action = na.fail)
+replications <- function(formula, data = NULL, na.action)
 {
     if(missing(data) && inherits(formula, "data.frame")) {
 	data <- formula
@@ -263,8 +263,13 @@ replications <- function(formula, data = NULL, na.action = na.fail)
 	}
 	formula <- terms(formula, data = data)
     }
-    if(missing(na.action) && !is.null(tj <- attr(data, "na.action")))
-	na.action <- tj
+    if(missing(na.action))
+        if(!is.null(tj <- attr(data, "na.action"))) na.action <- tj
+        else {
+            naa <- getOption("na.action")
+            if(!is.null(naa)) na.action <- match.fun(naa)
+            else  na.action <- na.fail
+        }
     f <- attr(formula, "factors")
     o <- attr(formula, "order")
     labels <- attr(formula, "term.labels")

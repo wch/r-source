@@ -7,8 +7,8 @@ stat.anova(table, test, scale, df.scale, n)
 \arguments{
  \item{table}{numeric matrix as results from
    \code{\link{anova.glm}(\dots, test=NULL)}.}
- \item{test}{a character, matching one of \code{"Chisq"}, \code{"F"} or
-   \code{"Cp"}.}
+ \item{test}{a character string, matching one of \code{"Chisq"},
+   \code{"F"} or \code{"Cp"}.}
  \item{scale}{a weighted residual sum of squares.}
  \item{df.scale}{degrees of freedom corresponding to scale.}
  \item{n}{number of observations.}

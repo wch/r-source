@@ -4,13 +4,16 @@
 \name{replications}
 \title{Number of Replications of Terms}
 \usage{
-replications(formula, data=NULL, na.action=na.fail)
+replications(formula, data=NULL, na.action)
 }
 \alias{replications}
 \arguments{
- \item{formula}{a formula or a terms object or a data frame}
- \item{data}{a data frame used  to  find  the  objects in \code{formula}}
- \item{na.action}{function for handling missing values}
+  \item{formula}{a formula or a terms object or a data frame.}
+  \item{data}{a data frame used  to  find  the  objects in \code{formula}.}
+  \item{na.action}{function for handling missing values.  Defaults to
+    a \code{na.action} attribute of \code{data}, then
+    a setting of the option \code{na.action}, or \code{na.fail} if that
+    is not set.}
 }
 \description{
   Returns a vector or a list of the number of replicates for
@@ -29,7 +32,7 @@ replications(formula, data=NULL, na.action=na.fail)
 
   A test for balance is \code{!is.list(replications(formula,data))}.
 }
-\author{B.D. Ripley}
+\author{B. D. Ripley}
 
 \seealso{\code{\link{model.tables}}}
 
@@ -43,6 +46,6 @@ yield <- c(49.5,62.8,46.8,57.0,59.8,58.5,55.5,56.0,62.8,55.8,69.5,
 
 npk <- data.frame(block=gl(6,4), N=factor(N), P=factor(P),
                   K=factor(K), yield=yield)
-replications(~. - yield, npk)
+replications(~ . - yield, npk)
 }
 \keyword{models}

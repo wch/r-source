@@ -44,7 +44,7 @@ plot(dobj, main = NULL, xlab = NULL, ylab = "Density", type = "l",
   the ``canonical bandwidth'' of the chosen \code{kernel} is returned instead.}
 \item{n}{the number of equally spaced points at which the density
   is to be estimated.  When \code{n > 512}, it is rounded up to the next
-  power of 2 for efficieny reasons (\code{\link{fft}}).}
+  power of 2 for efficiency reasons (\code{\link{fft}}).}
 \item{from,to}{the left and right-most points of the grid at which the
   density is to be estimated.}
 \item{cut}{by default, the values of \code{left} and \code{right} are
@@ -119,7 +119,7 @@ plot(dobj, main = NULL, xlab = NULL, ylab = "Density", type = "l",
   \emph{J. Roy. Statist. Soc.} \bold{B}, 683--690.
 }
 \seealso{
-  \code{\link{convolve}}, \code{\link{hist}}.
+  \code{\link{hist}}.
 }
 \examples{
 plot(density(c(-20,rep(0,98),20)), xlim = c(-4,4))# IQR = 0

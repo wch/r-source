@@ -43,6 +43,11 @@ predict[.lm](object, newdata, se.fit = FALSE, scale = NULL, df = Inf,
   \item{residual.scale}{residual standard deviations}
   \item{df}{degrees of freedom for residual}
 }
+\note{
+  Offsets specified by \code{offset} in the fit by \code{\link{lm}}
+  will not be included in predictions, whereas those specified by an
+  offset term in the formula will be.
+}
 \seealso{
   The model fitting function \code{\link{lm}}, \code{\link{predict}}.
 }

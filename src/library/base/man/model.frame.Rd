@@ -2,8 +2,8 @@
 \title{Extracting the ``Environment'' of a Model Formula}
 \usage{
 model.frame(formula, data, na.action, \dots)
-model.frame.default(formula, data=sys.frame(sys.parent()),
-                    na.action = na.fail, \dots)
+model.frame.default(formula, data = sys.frame(sys.parent()), na.action,
+                    drop.unused.levels = FALSE, xlev = NULL, \dots)
 
 Methods for
         lm      glm     aovlist
@@ -15,15 +15,25 @@ Methods for
 \alias{model.frame.aovlist}
 \arguments{
   \item{formula}{a model formula}
+
   \item{data}{\code{data.frame}, list, \code{environment} or object
-coercible to \code{data.frame} containing the variables in \code{formula}.}
-  \item{na.action}{how \code{NA}s are treated.}
-  \item{drop.unused.levels}{show factors have unused levels dropped?
-      Defaults to \code{FALSE}.}
+    coercible to \code{data.frame} containing the variables in
+    \code{formula}.}
+  
+  \item{na.action}{how \code{NA}s are treated. The default is first,
+    any \code{na.action} attribute of \code{data}, second
+    a \code{na.action} setting of \code{\link{options}}, and third
+    \code{\link{na.fail}} if that is unset.  The ``factory-fresh''
+    default is \code{\link{na.omit}}.}
+
+  \item{drop.unused.levels}{should factors have unused levels dropped?
+    Defaults to \code{FALSE}.}
+  
   \item{xlev}{a named list of character vectors giving the full set of levels
-      to be assumed for each factor.}
-  \item{\dots}{further arguments such as \code{subset} and
-      \code{weights}. \code{NULL} arguments are treated as missing.}
+    to be assumed for each factor.}
+  
+  \item{\dots}{further arguments such as \code{subset}, \code{offset} and
+    \code{weights}. \code{NULL} arguments are treated as missing.}
 }
 \description{
   \code{model.frame} (generic function) and its methods return a

@@ -12,7 +12,7 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
 }
 \alias{persp}
 \arguments{
-  \item{x,y}{locations of grid lines at which the values in \code{z} are
+  \item{x, y}{locations of grid lines at which the values in \code{z} are
     measured.  These must be in ascending order.  By default, equally
     spaced values from 0 to 1 are used.  If \code{x} is a \code{list},
     its components \code{x$x} and \code{x$y} are used for \code{x}
@@ -25,7 +25,7 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
   \item{xlab, ylab, zlab}{titles for the axes.}
   \item{theta, phi}{angles defining the viewing direction.
     \code{theta} gives the azimuthal direction and \code{phi}
-    the colattitude.}
+    the colatitude.}
   \item{r}{the distance of the eyepoint from the centre of the plotting box.}
   \item{d}{a value which can be used to vary the strength of
     the perspective transformation.  Values of \code{d} greater

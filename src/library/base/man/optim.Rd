@@ -61,7 +61,7 @@ optim(par, fn, gr = NULL,
   stochastic global optimization methods. It uses only function values
   but is relatively slow. It will also work for non-differentiable
   functions. This implementation uses the Metropolis function for the
-  acceptance probablity. The next candidate point is generated from a
+  acceptance probability. The next candidate point is generated from a
   Gaussian Markov kernel with scale proportional to the actual temperature. 
   Temperatures are decreased according to the logarithmic cooling
   schedule as given in Belisle (1992, p. 890). Note that the
@@ -160,7 +160,7 @@ optim(par, fn, gr = NULL,
 }
 \references{
   Belisle, C. J. P. (1992) Convergence theorems for a class of simulated
-  annealing algorithms on \eqn{R^d}{Rd}. \emph{J Applied Probabaility},
+  annealing algorithms on \eqn{R^d}{Rd}. \emph{J Applied Probability},
   \bold{29}, 885--895.
   
   Byrd, R. H., Lu, P., Nocedal, J. and Zhu, C.  (1995) A limited

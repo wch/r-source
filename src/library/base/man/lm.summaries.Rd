@@ -2,7 +2,7 @@
 \title{Accessing Linear Model Fits}
 \usage{
 anova(object, \dots)
-anovalist(object, \dots, test = NULL)
+anovalist.lm(object, \dots, test = NULL)
 summary(object, correlation = FALSE)
 coefficients(x) ; coef(x)
 df.residual(x)
@@ -89,6 +89,12 @@ various useful features of the value returned by \code{lm}.
   and if \code{correlation = TRUE} was specified,%- don't need anymore.
   \item{correlation}{the correlation matrix corresponding to the above
     \code{cov.unscaled}, if \code{correlation = TRUE} is specified.}
+}
+\section{Warning}{
+  The comparison between two or more models by \code{anova} or
+  \code{anovalist.lm} will only be valid if they
+  are fitted to the same dataset. This may be a problem if there are
+  missing values and \R's default of \code{na.action = na.omit} is used.
 }
 \seealso{
 The model fitting function \code{\link{lm}}.

@@ -260,6 +260,12 @@ BUG FIXES
 	recorded, and so did not appear when a plot was copied or
 	printed.
 
+    o	The defaults for `na.action' arguments were inconsistently
+	documented. In R the default is taken from the
+	options(na.action) setting, and that defaults to `na.omit'.
+	If there is no `na.action' setting, the default is `na.fail'.
+	For consistency, the default for replications() has been 
+	changed.
 
 
 	**************************************************

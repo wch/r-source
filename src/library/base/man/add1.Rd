@@ -5,19 +5,19 @@
 \title{Add or Drop All Possible Single Terms to a Model}
 \usage{
 add1(object, scope, \dots)
-add1.default(object, scope, scale = 0, test=c("none", "Chisq"),
+add1.default(object, scope, scale = 0, test = c("none", "Chisq"),
              k = 2, trace = FALSE, \dots)
-add1.lm(object, scope, scale = 0, test=c("none", "Chisq", "F"),
+add1.lm(object, scope, scale = 0, test = c("none", "Chisq", "F"),
         x = NULL, k = 2, \dots)
-add1.glm(object, scope, scale = 0, x = NULL, test=c("none", "Chisq"),
+add1.glm(object, scope, scale = 0, x = NULL, test = c("none", "Chisq"),
          k = 2, \dots)
 
 drop1(object, scope, \dots)
-drop1.default(object, scope, scale = 0, test=c("none", "Chisq"),
+drop1.default(object, scope, scale = 0, test = c("none", "Chisq"),
               k = 2, trace = FALSE, \dots)
 drop1.lm(object, scope, scale = 0, all.cols = TRUE,
          test=c("none", "Chisq", "F"),k = 2, \dots)
-drop1.glm(object, scope, scale = 0, test=c("none", "Chisq"),
+drop1.glm(object, scope, scale = 0, test = c("none", "Chisq"),
           k = 2, \dots)
 }
 \alias{add1}
@@ -35,13 +35,13 @@ drop1.glm(object, scope, scale = 0, test=c("none", "Chisq"),
  \item{scope}{a formula giving the terms to be considered for adding or
    dropping.}
  \item{scale}{an estimate of the residual mean square to be used in
-   computing Cp. Ignored if \code{0} or \code{NULL}.}
+   computing \eqn{C_p}{Cp}. Ignored if \code{0} or \code{NULL}.}
  \item{test}{should the results include a test statistic relative to the
    original model?  The F test is only appropriate for \code{\link{lm}} and
    \code{\link{aov}} models. The \eqn{\chi^2}{Chisq} test can be an exact test
    (\code{lm} models with known scale) or a likelihood-ratio test depending
    on the method.}
- \item{k}{the penalty constant in AIC / Cp.}
+ \item{k}{the penalty constant in AIC / \eqn{C_p}{Cp}.}
  \item{trace}{if \code{TRUE}, print out progress reports.}
  \item{x}{a model matrix containing columns for the fitted model and all
    terms in the upper scope.  Useful if \code{add1} is to be called
@@ -69,22 +69,29 @@ drop1.glm(object, scope, scale = 0, test=c("none", "Chisq"),
   The default output table gives AIC, defined as minus twice log
   likelihood plus \eqn{2p} where \eqn{p} is the rank of the model (the
   number of effective parameters).  This is only defined up to an
-  additive constant (like log-likelhoods).  For linear Gaussian models
-  with fixed scale, the constant is chosen to give Mallows' Cp,
-  \eqn{RSS/scale + 2p - n}.  Where Cp is used, the column is labelled as
-  Cp rather than AIC.
+  additive constant (like log-likelihoods).  For linear Gaussian models
+  with fixed scale, the constant is chosen to give Mallows' \eqn{C_p}{Cp},
+  \eqn{RSS/scale + 2p - n}.  Where \eqn{C_p}{Cp} is used,
+  the column is labelled as \code{Cp} rather than \code{AIC}.
 }
 \value{
   An object of class \code{"anova"} summarizing the differences in fit
   between the models.
 }
-\author{B.D. Ripley}
-\note{These are not fully equivalent to the functions in S.  There is no
-    \code{keep} argument, and the methods used are not quite so
-    computationally efficient.
+\author{B. D. Ripley}
+\note{
+  These are not fully equivalent to the functions in S.  There is no
+  \code{keep} argument, and the methods used are not quite so
+  computationally efficient.
     
-    Their authors' definitions of Mallows' Cp and Akaike's AIC are used, not
-    those of the authors of the models chapter of S.
+  Their authors' definitions of Mallows' \eqn{C_p}{Cp} and Akaike's AIC
+  are used, not those of the authors of the models chapter of S.
+}
+\section{Warning}{
+  The model fitting must apply the models to the same dataset. This
+  may be a problem if there are missing values and \R's default of
+  \code{na.action = na.omit} is used, although it is not for methods for
+  \code{"lm"} and \code{"glm"}.
 }
 \seealso{\code{\link{step}}, \code{\link{aov}}, \code{\link{lm}},
     \code{\link{extractAIC}}.}

@@ -54,7 +54,7 @@ This file can then be printed on a suitable device to obtain hard copy.
 
 The postscript produced by \R is EPS (\emph{Encapsulated PostScript})
 compatible, and can be included into other documents, e.g. into LaTeX, using
-\code{\epsfig{file=<filename>}}. For use in this way you will proabbly
+\code{\includegraphics{<filename>}}. For use in this way you will probably
 want to set \code{horizontal=FALSE, onefile=FALSE, paper="special"}.
 }
 \seealso{

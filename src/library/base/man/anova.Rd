@@ -9,7 +9,7 @@ print(anova.object)
 % others in ./lm.summaries.Rd
 \alias{print.anova}
 \description{
-  Compute analysis of variance (or deviance) tables for one or mode
+  Compute analysis of variance (or deviance) tables for one or more
   fitted model objects.
 }
 \arguments{
@@ -28,6 +28,11 @@ print(anova.object)
 
   The print method for \code{anova} objects prints
   tables in a ``pretty'' form.
+}
+\section{Warning}{
+  The comparison between two or more models will only be valid if they
+  are fitted to the same dataset. This may be a problem if there are
+  missing values and \R's default of \code{na.action = na.omit} is used.
 }
 \seealso{
   \code{\link{coefficients}}, \code{\link{effects}},

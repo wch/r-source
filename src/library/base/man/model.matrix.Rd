@@ -4,14 +4,12 @@
 model.matrix   (object, \dots)
 model.matrix.lm(object, \dots)
 model.matrix.default(formula, data, contrasts.arg = NULL, xlev = NULL)
-model.weights(x)
 }
 \alias{model.matrix}
 \alias{model.matrix.default}
 \alias{model.matrix.lm}
 \alias{model.matrix.lm.null}
 \alias{model.matrix.glm.null}
-\alias{model.weights}
 \arguments{
   \item{formula}{a model formula or terms object.}
   \item{data}{a data frame created with \code{\link{model.frame}}.}
@@ -20,11 +18,10 @@ model.weights(x)
     the names of columns of \code{data} containing \code{\link{factor}}s.}
   \item{xlev}{to be used as argument of \code{\link{model.frame}} if
     \code{data} has no \code{"terms"} attribute.}
-  \item{x}{a modle frame.}
+  \item{x}{a model frame.}
 }
 \description{
   \code{model.matrix} creates a design matrix.
-  \code{model.weights} extracts the weights.
 }
 \details{
   \code{model.matrix} creates a design matrix from the description given
@@ -45,7 +42,7 @@ model.weights(x)
   Chapman & Hall, London.
 }
 \seealso{
-  \code{\link{model.frame}},
+  \code{\link{model.frame}}, \code{\link{model.extract}},
   \code{\link{terms}}
 }
 \examples{
