@@ -336,12 +336,16 @@ static int GetKPX(char *buf, int nkp, FontMetricInfo *metrics)
     return (done==2);
 }
 
-static char enccode[5000];
+/* Encode File Parsing.  */
+/* Statics here are OK, as all the calls are in one initialization
+   so no concurrency (until threads?) */
 
+/* read in the next encoding item, separated by white space. */
 static int GetNextItem(FILE *fp, char *dest, int c)
 {
     static char buf[1000], *p = NULL, *p0;
 
+    if (c < 0) p = NULL;
     while (1) {
 	if (feof(fp)) { p = NULL; return 1; }
 	if (!p || *p == '\n' || *p == '\0') {
@@ -358,6 +362,7 @@ static int GetNextItem(FILE *fp, char *dest, int c)
     return 0;
 }
 
+static char enccode[5000];
 
 /* Load encoding array from a file: defaults to the R_HOME/afm directory */
 static int
@@ -372,8 +377,11 @@ LoadEncoding(char *fontpath, char *encname)
 #ifdef DEBUG_PS
     Rprintf("encoding path is %s\n", buf);
 #endif
-    if (!(fp = R_fopen(buf, "r"))) return 0;
-    if (GetNextItem(fp, buf, 0)) return 0; /* encoding name */
+    if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) {
+	strcat(buf, ".enc");
+	if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) return 0;
+    }
+    if (GetNextItem(fp, buf, -1)) return 0; /* encoding name */
     strcpy(encname, buf+1); sprintf(enccode, "/%s [\n", encname);
     if (GetNextItem(fp, buf, 0)) { fclose(fp); return 0;} /* [ */
     for(i = 0; i < 256; i++) {
@@ -406,7 +414,7 @@ PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
     Rprintf("afmpath is %s\n", buf);
 #endif
     
-    if (!(fp = R_fopen(buf, "r"))) return 0;
+    if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) return 0;
 
     mode = 0;
     for (ii = 0; ii < 256; ii++) {

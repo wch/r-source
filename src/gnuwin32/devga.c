@@ -229,7 +229,8 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
 {
     SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
     DevDesc *ndd = (DevDesc *) malloc(sizeof(DevDesc));
-    char family[256], paper[256], bg[256], fg[256], **afmpaths = NULL;
+    char family[256], encoding[256], paper[256], bg[256], fg[256], 
+	**afmpaths = NULL;
 
     if (!ndd) {
 	R_ShowMessage("No enough memory to copy graphics window");
@@ -246,6 +247,7 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
 
     /* Set default values... */
     strcpy(family, "Helvetica");
+    strcpy(encoding, "ISOLatin1.enc");
     strcpy(paper, "default");
     strcpy(bg, "white");
     strcpy(fg, "black");
@@ -272,7 +274,7 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
 	    }
 	}
     }
-    if (PSDeviceDriver(ndd, fn, paper, family, afmpaths, bg, fg,
+    if (PSDeviceDriver(ndd, fn, paper, family, afmpaths, encoding, bg, fg,
 		       GConvertXUnits(1.0, NDC, INCHES, dd),
 		       GConvertYUnits(1.0, NDC, INCHES, dd),
 		       (double)0, dd->gp.ps, 0, 1, 0, ""))

@@ -67,8 +67,9 @@ ps.options(paper, horizontal, width, height, family, encoding,
     \code{"Palatino"} or \code{"Times"}, OR a character vector of length
     four. }
   \item{encoding}{the name of an encoding file. Defaults to
-    "ISOLatin1.enc" in the \file{R\_HOME/afm} directory.  That file has
-    comments giving details of the format.}
+    "ISOLatin1.enc" in the \file{R\_HOME/afm} directory, which is used
+    if the path does not contain a path separator.  An extension
+    \code{".enc"} can be omitted.}
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.}
   \item{fg}{the default foreground color to be used.}
@@ -158,7 +159,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
   If you change the encoding, it is your responsibility to ensure that
   the PostScript font contains the glyphs used .  One issue here is the Euro
   symbol which is in the WinAnsi and MacRoman encodings but may well not
-  be in the PostScript fonts.  (It is in the URW variants.)
+  be in the PostScript fonts.  (It is in the URW variants; it is not in
+  the supplied Adobe Font Metric files.)
 
   There is one exception.  Character 45 (\code{"-"}) is always set
   as minus (its value in Adobe ISOLatin1) even though it is hyphen in
