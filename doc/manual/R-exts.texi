@@ -5,6 +5,8 @@
 @setchapternewpage on
 @c %**end of header
 
+@documentencoding ISO-8859-1
+
 @syncodeindex fn vr
 
 @dircategory Programming
@@ -4987,6 +4989,7 @@ $7 = 5
 * Optimization::                
 * Integration::                 
 * Utility functions::           
+* Internationalization::        
 * Allowing interrupts::         
 * Platform and version information::  
 * Inlining C functions::        
@@ -5449,7 +5452,7 @@ documentation may give further details.
 @menu
 * Distribution functions::      
 * Mathematical functions::      
-* Utilities::                   
+* Numerical Utilities::         
 * Mathematical constants::      
 @end menu
 
@@ -5552,7 +5555,7 @@ The argument names are not all quite the same as the @R{} ones.
 @c ^^^ FIXME ?? (argument names in the C code wouldn't change the API ..) ^^
 @c {don't want to change the R function argument names} -- <<
 
-@node Mathematical functions, Utilities, Distribution functions, Numerical analysis subroutines
+@node Mathematical functions, Numerical Utilities, Distribution functions, Numerical analysis subroutines
 @subsection Mathematical functions
 
 @findex gammafn
@@ -5605,8 +5608,8 @@ values.)
 @end deftypefun
 
 
-@node Utilities, Mathematical constants, Mathematical functions, Numerical analysis subroutines
-@subsection Utilities
+@node Numerical Utilities, Mathematical constants, Mathematical functions, Numerical analysis subroutines
+@subsection Numerical Utilities
 There are a few other numerical utility functions available as entry points.
 
 
@@ -5681,7 +5684,7 @@ This is the function used by @R{}'s @code{signif()}.
 Returns the value of @var{x} truncated (to an integer value) towards zero.
 @end deftypefun
 
-@node Mathematical constants,  , Utilities, Numerical analysis subroutines
+@node Mathematical constants,  , Numerical Utilities, Numerical analysis subroutines
 @subsection Mathematical constants
 @findex M_E
 @findex M_PI
@@ -5911,7 +5914,7 @@ The comments in the source code in @file{src/appl/integrate.c} give
 more details, particularly about reasons for failure (@code{ier >= 1}).
 
 
-@node Utility functions, Allowing interrupts, Integration, The R API
+@node Utility functions, Internationalization, Integration, The R API
 @section Utility functions
 @cindex Sort functions from C
 
@@ -6028,8 +6031,52 @@ it will usually be taken from the environment variable @env{HOME} if
 this is defined.
 @end deftypefun
 
+@node Internationalization, Allowing interrupts, Utility functions, The R API
+@section Internationalization
 
-@node Allowing interrupts, Platform and version information, Utility functions, The R API
+@R{} has its own C-level interface to the the encoding conversion
+capabilities provided by @code{iconv}, for the following reasons
+
+@itemize @bullet
+@item
+These wrapper routines do error-handling when no usable implementation
+of @code{iconv} was available at configure time.
+
+@item
+Under Windows they arrange to load the @file{iconv.dll} at first use.
+
+@item
+There are incompatibilities between the declarations in different
+implementations of @code{iconv}.
+
+@end itemize
+
+These are declared in header file @file{R_ext/Riconv.h}.
+
+@deftypefun void *Riconv_open (char* @var{to}, char* @var{from})
+@end deftypefun
+Set up a pointer to an encoding object to be used to convert between two
+encodings: @code{""} indicates the current locale.
+
+@deftypefun size_t Riconv (void *@var{cd}, char **@var{inbuf}, size_t *@var{inbytesleft}, char  **@var{outbuf}, size_t *@var{outbytesleft})
+@end deftypefun
+Convert as much as possible of @code{inbuf} to @code{outbuf}.  Initially
+the @code{int} variables indicate the number of bytes available in the
+buffers, and they are updated (and the @code{char} pointers are updated
+to point to the next free byte in the buffer).  The return value is the
+number of characters converted, or @code{(size_t)-1} (beware:
+@code{size_t} is usually an unsigned type).  It should be safe to assume
+that an error condition sets @code{errno} to one of @code{E2BIG} (the
+output buffer is full), @code{EILSEQ} (the input cannot be converted,
+and might be illegal in the encoding specified) or @code{EINVAl} (the
+input does not end with a complete multi-byte character).
+
+@deftypefun int Riconv_close (void * @var{cd})
+@end deftypefun
+Free the resources of an encoding object.
+
+
+@node Allowing interrupts, Platform and version information, Internationalization, The R API
 @section Allowing interrupts
 @cindex Interrupts
 
@@ -6198,6 +6245,7 @@ routines, not all of which are included in @R{}
 @item @code{R_ext/RConvertors.h} @tab 
 @item @code{R_ext/Rdynload.h} @tab Needed to register compiled code in packages
 @item @code{R_ext/R-ftp-http.h} @tab interface to internal method of @code{download.file} 
+@item @code{R_ext/Riconv.h} @tab interface to @code{iconv}
 @end multitable
 @end quotation
 

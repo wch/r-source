@@ -38,6 +38,7 @@
 #include <Graphics.h>
 
 #include <R_ext/RConverters.h>
+#include <R_ext/Riconv.h>
 
 #ifndef max
 #define max(a, b) ((a > b)?(a):(b))

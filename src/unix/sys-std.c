@@ -43,6 +43,7 @@
 #include "Rdevices.h"		/* for KillAllDevices */
 #include "Runix.h"
 #include "Startup.h"
+#include <R_ext/Riconv.h>
 
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>		/* for unlink */

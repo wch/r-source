@@ -34,6 +34,7 @@
 #include <R_ext/Complex.h>
 #include <R_ext/R-ftp-http.h>
 #include <R_ext/RS.h>		/* R_chk_calloc and Free */
+#include <R_ext/Riconv.h>
 #undef ERROR			/* for compilation on Windows */
 
 int R_OutputCon;		/* used in printutils.c */

@@ -26,6 +26,7 @@
 #include <config.h>
 #endif
 #include <Defn.h>
+#include <R_ext/Riconv.h>
 
 /*
   See ../unix/system.txt for a description of some of these functions.

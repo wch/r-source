@@ -885,12 +885,6 @@ int	Rstrlen(SEXP, int);
 char *EncodeRaw(Rbyte);
 char *EncodeString(SEXP, int, int, Rprt_adj);
 
-/* from sysutils.c */
-void * Riconv_open (char* tocode, char* fromcode);
-size_t Riconv (void * cd, char **inbuf, size_t *inbytesleft,
-	       char  **outbuf, size_t *outbytesleft);
-int Riconv_close (void * cd);
-
 
 #if defined(HAVE_WCHAR_H) && defined(SUPPORT_MBCS)
 #define __USE_XOPEN 1 /* glibc needs this for wcwidth/wcswidth */
