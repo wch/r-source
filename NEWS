@@ -16,6 +16,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	phyper() now works for larger arguments than before.
+
     o	Missing values didn't work in log plot
 
     o	outer() doesn't produce all-empty dimnames anymore
