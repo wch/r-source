@@ -2,7 +2,7 @@
 \title{Write Text into the Margins of a Plot}
 \usage{
 mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
-      adj = NA, cex = NA, col = NA, font = NA, vfont = NULL, \dots)
+      adj = NA, padj = NA, cex = NA, col = NA, font = NA, vfont = NULL, \dots)
 }
 \alias{mtext}
 \arguments{
@@ -13,12 +13,19 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   \item{at}{give location in user-coordinates.  If \code{length(at)==0}
     (the default), the location will be determined by \code{adj}.
   }
-  \item{adj}{adjustment for each string. For strings parallel
+  \item{adj}{adjustment for each string in reading direction. For strings parallel
     to the axes, \code{adj=0} means left or bottom alignment, and
     \code{adj=1} means right or top alignment.
     If \code{adj} is not a finite value (the default), the value of
     \code{par("las")} determines the adjustment.  For strings plotted
     parallel to the axis the default is to centre the string.}
+  \item{padj}{adjustment for each string perpendicular to the reading direction 
+    (which is controlled by \code{adj}). For strings parallel
+    to the axes, \code{padj=0} means bottom or right alignment, and
+    \code{padj=1} means top or left alignment.
+    If \code{padj} is not a finite value (the default), the value of
+    \code{par("las")} determines the adjustment.  For strings plotted
+    perpendicular to the axis the default is to centre the string.}
   \item{\dots}{Further graphical parameters (see \code{\link{text}} and
     \code{\link{par}}) ; currently supported are:}
   \item{cex}{character expansion factor (default = 1).}

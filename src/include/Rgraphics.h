@@ -345,7 +345,7 @@ void GStartPath(DevDesc*);
 void GEndPath(DevDesc*);
 
 void GMathText(double, double, int, SEXP, double, double, double, DevDesc*);
-void GMMathText(SEXP, int, double, int, double, int, DevDesc*);
+void GMMathText(SEXP, int, double, int, double, int, double, DevDesc*);
 
 
 typedef void (*GVTextRoutine)(double x, double y, int unit, char* s, int typeface, int fontindex,
@@ -382,7 +382,7 @@ void GBox(int, DevDesc*);
 void GPretty(double*, double*, int*);
 void GLPretty(double*, double*, int*);
 /* Draw text in margins. */
-void GMtext(char*, int, double, int, double, int, DevDesc*);
+void GMtext(char*, int, double, int, double, int, double, DevDesc*);
 /* Draw one of the predefined symbols (circle, square, diamond, ...) */
 void GSymbol(double, double, int, int, DevDesc*);
 

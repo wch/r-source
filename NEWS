@@ -77,6 +77,10 @@ NEW FEATURES
     o	There is a new atomic vector type, class "raw".	 See ?raw for
 	full details including the operators and utility functions provided.
 
+    o   There is a new 'padj' argument to mtext() and axis().
+
+	Code patch provided by Uwe Ligges (fixes PR#1659 and PR#7188).
+	
     o	The default barplot() method by default uses a
 	gamma-corrected grey palette (rather than the heat color
 	palette) for coloring its output when given a matrix.

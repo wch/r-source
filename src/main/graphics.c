@@ -3124,7 +3124,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 
 /* Draw text in plot margins. */
 void GMtext(char *str, int side, double line, int outer, double at, int las,
-	    DevDesc *dd)
+	    double yadj, DevDesc *dd)
 {
 /* "las" gives the style of axis labels:
 	 0 = always parallel to the axis [= default],
@@ -3132,7 +3132,7 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	 2 = always perpendicular to the axis.
 	 3 = always vertical.
 */
-    double angle, xadj, yadj;
+    double angle, xadj; 
     int coords, subcoords;
 
     /* Init to keep -Wall happy: */
@@ -3140,7 +3140,6 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
     coords = 0;
 
     xadj = Rf_gpptr(dd)->adj;	/* ALL cases */
-    yadj = 0.;		/* Default; currently all cases */
     if(outer) {
 	switch(side) {
 	case 1:	    coords = OMA1;	break;
@@ -3164,8 +3163,6 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
     switch(side) {
     case 1:
 	if(las == 2 || las == 3) {
-	    at = GConvertX(at, subcoords, LINES, dd) + 0.3;
-	    at = GConvertX(at, LINES, subcoords, dd);
 	    angle = 90;
 	}
 	else {
@@ -3175,17 +3172,6 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	break;
     case 2:
 	if(las == 1 || las == 2) {
-	    /* subcoords could be USER and the user could have set log="y"
-	     * If that's the case then converting a height to USER
-	     * coordinates will not work
-	     * SO to be safe, we convert "at" to a LINES location,
-	     * add the 0.3 and then convert the result back to a USER
-	     * lcoation (ok because converting _locations_ is ok)
-	     * The old, bad way to do it was:
-	     *     at = at - GConvertYUnits(0.3, LINES, subcoords, dd);
-	     */
-	    at = GConvertY(at, subcoords, LINES, dd) - 0.3;
-	    at = GConvertY(at, LINES, subcoords, dd);
 	    angle = 0;
 	}
 	else {
@@ -3195,8 +3181,6 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	break;
     case 3:
 	if(las == 2 || las == 3) {
-	    at = GConvertX(at, subcoords, LINES, dd) + 0.3;
-	    at = GConvertX(at, LINES, subcoords, dd);
 	    angle = 90;
 	}
 	else {
@@ -3206,8 +3190,6 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	break;
     case 4:
 	if(las == 1 || las == 2) {
-	    at = GConvertY(at, subcoords, LINES, dd) - 0.3;
-	    at = GConvertY(at, LINES, subcoords, dd);
 	    angle = 0;
 	}
 	else {

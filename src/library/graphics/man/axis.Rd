@@ -7,7 +7,7 @@
 \usage{
 axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
      pos = NA, outer = FALSE, font = NA, vfont = NULL,
-     lty = "solid", lwd = 1, col = NULL, \dots)
+     lty = "solid", lwd = 1, col = NULL, padj = NA, \dots)
 }
 \arguments{
   \item{side}{an integer specifying which side of the plot the axis is
@@ -35,6 +35,12 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \item{lty, lwd}{line type, width for the axis line and the tick marks.}
   \item{col}{color for the axis line and the tick marks.  The default
     \code{NULL} means to use \code{par("fg")}.}
+  \item{padj}{adjustment for each string perpendicular to the reading direction.
+    For strings parallel to the axes, \code{padj=0} means bottom or right alignment, 
+    and \code{padj=1} means top or left alignment.
+    If \code{padj} is not a finite value (the default), the value of
+    \code{par("las")} determines the adjustment.  For strings plotted
+    perpendicular to the axis the default is to centre the string.}
   \item{\dots}{other graphical parameters may also be passed as arguments to
     this function, particularly, \code{cex.axis}, \code{col.axis} and
     \code{font.axis} for axis annotation, \code{las} for

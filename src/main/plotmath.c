@@ -3077,10 +3077,10 @@ void GMathText(double x, double y, int coords, SEXP expr,
 }
 
 void GMMathText(SEXP str, int side, double line, int outer,
-		double at, int las, DevDesc *dd)
+		double at, int las, double yadj, DevDesc *dd)
 {
     int coords = 0, subcoords;
-    double xadj, yadj = 0, angle = 0;
+    double xadj, angle = 0;
 
 #ifdef BUG61
 #else
@@ -3099,6 +3099,7 @@ void GMMathText(SEXP str, int side, double line, int outer,
      * different situations.
      * Paul
      */
+     /* changed to unify behaviour with changes in GMText. Uwe */
     if(outer) {
 	switch(side) {
 	case 1:	    coords = OMA1;	break;
@@ -3127,7 +3128,6 @@ void GMMathText(SEXP str, int side, double line, int outer,
     case 1:
 	if(las == 2 || las == 3) {
 	    angle = 90;
-	    yadj = 0.5;
 	}
 	else {
 	    /*	    line = line + 1 - Rf_gpptr(dd)->yLineBias;
@@ -3135,39 +3135,33 @@ void GMMathText(SEXP str, int side, double line, int outer,
 		    yadj = NA_REAL; */
 	    line = line + 1;
 	    angle = 0;
-	    yadj = 0;
 	}
 	break;
     case 2:
 	if(las == 1 || las == 2) {
 	    angle = 0;
-	    yadj = 0.5;
 	}
 	else {
 	    /*	    line = line + Rf_gpptr(dd)->yLineBias;
 		    angle = 90;
 		    yadj = NA_REAL; */
 	    angle = 90;
-	    yadj = 0;
 	}
 	break;
     case 3:
 	if(las == 2 || las == 3) {
 	    angle = 90;
-	    yadj = 0.5;
 	}
 	else {
 	    /*   line = line + Rf_gpptr(dd)->yLineBias;
 		 angle = 0;
 		 yadj = NA_REAL; */
 	    angle = 0;
-	    yadj = 0;
 	}
 	break;
     case 4:
 	if(las == 1 || las == 2) {
 	    angle = 0;
-	    yadj = 0.5;
 	}
 	else {
 	    /*   line = line + 1 - Rf_gpptr(dd)->yLineBias;
@@ -3175,7 +3169,6 @@ void GMMathText(SEXP str, int side, double line, int outer,
 		 yadj = NA_REAL; */
 	    line = line + 1;
 	    angle = 90;
-	    yadj = 0;
 	}
 	break;
     }
