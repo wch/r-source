@@ -87,7 +87,8 @@ R.fe: R.sh $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@(v=`cat $(top_srcdir)/VERSION`; \
 	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
 	  y=`cut -d/ -f1 < $(top_srcdir)/date-stamp`; \
-	  sed "s@R_HOME_DIR=.*@R_HOME_DIR=`cd $(top_builddir); pwd`@; \
+	  d=`cd $(top_builddir) ; pwd | sed 's,/,\\\/,g'`; \
+	  sed "s/\\(R_HOME_DIR=\\).*/\\1$${d}/; \
 	       s@REPLACE_BY_VERSION@$${v}@; \
 	       s@REPLACE_BY_YEAR@$${y}@" < R.sh > $@)
 	@chmod +x $@
@@ -97,11 +98,10 @@ $(top_builddir)/libtool:
 	@(cd $(@D); $(MAKE) $(@F))
 
 install: installdirs install-cmds
-	@sed "s@R_HOME_DIR=.*@R_HOME_DIR=$(rhome)@" < R.fe \
-	  > $(Rexecbindir)/R
 	@rm -f $(bindir)/R
-	@sed "s@R_HOME_DIR=.*@R_HOME_DIR=$(rhome)@" < R.fe \
-	  > $(bindir)/R
+	@(d=`echo '$(rhome)' | sed 's,/,\\\/,g';`; \
+	  sed "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" < R.fe > $(Rexecbindir)/R; \
+	  sed "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" < R.fe > $(bindir)/R)
 	@chmod 755 $(bindir)/R $(Rexecbindir)/R
 installdirs:
 	@$(MKINSTALLDIRS) $(bindir)
