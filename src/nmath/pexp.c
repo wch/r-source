@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-2002 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,7 +36,10 @@ double pexp(double x, double scale, int lower_tail, int log_p)
 
     if (x <= 0.)
 	return R_DT_0;
-    if (log_p && !lower_tail)
-	return(-x / scale);
-    return R_DT_Cval(exp(-x / scale));
+    if (lower_tail)
+	return  R_D_val(-expm1(-x / scale));
+    if (log_p) /* && !lower_tail */
+	return (-x / scale);
+    /* else !log_p and !lower_tail :*/
+    return exp(-x / scale);
 }

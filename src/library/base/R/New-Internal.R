@@ -29,6 +29,7 @@ signif <- function(x, digits = 6).Internal(signif(x,digits))
 logb <- log <- function(x, base=exp(1))
     if(missing(base)).Internal(log(x)) else .Internal(log(x,base))
 log1p <- function(x).Internal(log1p(x))
+expm1 <- function(x).Internal(expm1(x))
 
 atan2 <- function(y, x).Internal(atan2(y, x))
 

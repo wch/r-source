@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-2002 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,7 +35,10 @@ double pweibull(double x, double shape, double scale, int lower_tail, int log_p)
 
     if (x <= 0)
 	return R_DT_0;
-    if (log_p && !lower_tail)
-	return		 -pow(x / scale, shape);
-    return R_DT_Cval(exp(-pow(x / scale, shape)));
+    if (lower_tail)
+	return R_D_val(-expm1(-pow(x / scale, shape)));
+    if (log_p) /* && !lower_tail */
+	return 		      -pow(x / scale, shape);
+    /* else !log_p and !lower_tail :*/
+    return                exp(-pow(x / scale, shape));
 }

@@ -171,7 +171,7 @@ int R_finite(double x)
 #ifdef HAVE_WORKING_FINITE
     return finite(x);
 #else
-# if defined(HAVE_DECL_ISFINITE) && HAVE_DECL_ISFINITE 
+# if defined(HAVE_DECL_ISFINITE) && HAVE_DECL_ISFINITE
     return isfinite(x);
 # else
 #  ifdef _AIX
@@ -827,7 +827,7 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 	}
 	break;
     }
-    
+
 
     /* Copy attributes from longer argument. */
 
@@ -858,7 +858,7 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     /* S4-compatibility change: if n1 or n2 is 0, result is of length 0 */
     if (n1 == 0 || n2 == 0) return(allocVector(REALSXP, 0));
 
-    n = (n1 > n2) ? n1 : n2;    
+    n = (n1 > n2) ? n1 : n2;
     ans = allocVector(REALSXP, n);
 
 /*    if (n1 < 1 || n2 < 1) {
@@ -971,7 +971,7 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	}
 	break;
     }
-    
+
 
     /* Copy attributes from longer argument. */
 
@@ -1057,6 +1057,7 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 5: return MATH1(trunc);
 
     case 10: return MATH1(exp);
+    case 11: return MATH1(expm1);
     case 12: return MATH1(log1p);
     case 20: return MATH1(cos);
     case 21: return MATH1(sin);

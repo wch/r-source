@@ -129,6 +129,9 @@ NEW FEATURES
 
    o	plclust() in package mva, for more S-PLUS compatibility.
 
+   o	new function expm1() both in R and in C API, for accurate exp(x)-1;
+	precision improvement in pexp() and pweibull() in some cases; PR#1334-5.
+
 
 DEPRECATED & DEFUNCT
 

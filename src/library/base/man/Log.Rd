@@ -6,6 +6,7 @@ logb(x, base = exp(1))
 log10(x)
 log2(x)
 exp(x)
+expm1(x)
 log1p(x)
 }
 \alias{log}
@@ -14,6 +15,7 @@ log1p(x)
 \alias{log10}
 \alias{log2}
 \alias{exp}
+\alias{expm1}
 \arguments{
   \item{x}{a numeric or complex vector.}
   \item{base}{positive number.  The base with respect to which
@@ -31,6 +33,9 @@ log1p(x)
     -1}{x is approximately -1}).
 
   \code{exp} computes the exponential function.
+
+  \code{expm1(x)} computes \eqn{\exp(x) - 1}{exp(x) - 1} accurately also for
+  \eqn{|x| \ll 1}{|x| << 1}.
 }
 \value{
   A vector of the same length as \code{x} containing the transformed
@@ -55,6 +60,6 @@ Mod(pi - log(exp(pi*1i)) / 1i) < .Machine$double.eps
 Mod(1+exp(pi*1i)) < .Machine$double.eps
 
 x <- 10^-(1+2*1:9)
-cbind(x, log(1+x), log1p(x))
+cbind(x, log(1+x), log1p(x), exp(x)-1, expm1(x))
 }
 \keyword{math}

@@ -116,7 +116,7 @@ FUNTAB R_FunTab[] =
 {"delay",	do_delay,	0,	11,	2,	PP_FUNCALL},
 /*{".Alias",	do_alias,	0,	1,	1,	PP_FUNCALL},*/
 {".Primitive",	do_primitive,	0,	1,	1,	PP_FUNCALL},
-{"identical",	do_ident,	0,	11,	2,	PP_FUNCALL}, 
+{"identical",	do_ident,	0,	11,	2,	PP_FUNCALL},
 
 
 /* Binary Operators */
@@ -219,6 +219,7 @@ FUNTAB R_FunTab[] =
 {"trunc",	do_math1,	5,	1,	1,	PP_FUNCALL},
 
 {"exp",		do_math1,	10,	1,	1,	PP_FUNCALL},
+{"expm1",	do_math1,	11,	11,	1,	PP_FUNCALL},
 {"log1p",	do_math1,	12,	11,	1,	PP_FUNCALL},
 
 {"cos",		do_math1,	20,	1,	1,	PP_FUNCALL},
@@ -716,7 +717,7 @@ FUNTAB R_FunTab[] =
 {"rect",	do_rect,	0,	111,	6,	PP_FUNCALL},
 {"polygon",	do_polygon,	0,	111,	5,	PP_FUNCALL},
 {"par",		do_par,		0,	11,	1,	PP_FUNCALL},
-{"readonly.pars",do_readonlypars,0,	11,	0,	PP_FUNCALL},   
+{"readonly.pars",do_readonlypars,0,	11,	0,	PP_FUNCALL},
 {"segments",	do_segments,	0,	111,	6,	PP_FUNCALL},
 {"arrows",	do_arrows,	0,	111,	9,	PP_FUNCALL},
 {"layout",	do_layout,	0,	111,	10,	PP_FUNCALL},

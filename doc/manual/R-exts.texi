@@ -61,17 +61,17 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Acknowledgements::            
-* Creating R packages::         
-* Writing R documentation::     
-* Tidying and profiling R code::  
-* System and foreign language interfaces::  
-* The R API::                   
-* Generic functions and methods::  
-* R (internal) programming miscellanea::  
-* R coding standards::          
-* Function and variable index::  
-* Concept index::               
+* Acknowledgements::
+* Creating R packages::
+* Writing R documentation::
+* Tidying and profiling R code::
+* System and foreign language interfaces::
+* The R API::
+* Generic functions and methods::
+* R (internal) programming miscellanea::
+* R coding standards::
+* Function and variable index::
+* Concept index::
 @end menu
 
 @node Acknowledgements, Creating R packages, Top, Top
@@ -105,10 +105,10 @@ help pages
 before reading on.
 
 @menu
-* Package structure::           
-* Configure and cleanup::       
-* Checking and building packages::  
-* Submitting a package to CRAN::  
+* Package structure::
+* Configure and cleanup::
+* Checking and building packages::
+* Submitting a package to CRAN::
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -126,10 +126,10 @@ and @file{cleanup} which are executed before and (provided that option
 and cleanup}.
 
 @menu
-* The DESCRIPTION file::        
-* The INDEX file::              
-* Package subdirectories::      
-* Package bundles::             
+* The DESCRIPTION file::
+* The INDEX file::
+* Package subdirectories::
+* Package bundles::
 @end menu
 
 @node The DESCRIPTION file, The INDEX file, Package structure, Package structure
@@ -180,7 +180,7 @@ please use the title field in the @file{DESCRIPTION} file from now on.
 
 The @samp{Maintainer} field should give a @emph{single} name with email
 address in angle brackets (for sending bug reports etc.).  It should not
-end in a period or comma.
+end in a period.
 
 The optional @samp{URL} field may give a list of @acronym{URL}s
 separated by commas or whitespace, for example the homepage of the
@@ -463,7 +463,7 @@ installed is available from the shell variable @env{R_PACKAGE_NAME}.
 
 
 @menu
-* Using Makevars::              
+* Using Makevars::
 @end menu
 
 @node Using Makevars,  , Configure and cleanup, Configure and cleanup
@@ -519,27 +519,20 @@ The package is installed.  This will warn about missing cross-references
 and duplicate aliases in help files.
 
 @item
+The @file{DESCRIPTION} file is checked for completeness.
+
+@item
 The files and directories are checked for sufficient permissions (Unix
 only).
 
 @item
-The @file{DESCRIPTION} file is checked for completeness, and some of its
-entries for correctness.
-
-@item
-The R files are checked for syntax errors.
-
-@item
 The R files are checked for correct calls to @code{library.dynam} (with
-no extension).  In addition, it is checked whether methods have all
-arguments of the corresponding generic, and whether the final argument
-of assignment is called @samp{value}.
+no extension).
 
 @item
 The Rd files are checked for the mandatory (@code{\name}, @code{\alias},
-@code{\title}, @code{\description} and @code{\keyword}) fields, and for
-unbalanced braces (which indicate Rd syntax errors).  The keywords found
-are compared to the standard ones.
+@code{\title}, @code{\description} and @code{\keyword}) fields.  The
+keywords found are compared to the standard ones.
 
 @item
 A check is made for undocumented user-level objects in the package.
@@ -547,15 +540,6 @@ A check is made for undocumented user-level objects in the package.
 @item
 The functions and their documentation are compared, and any differences
 in the call sequences reported.
-
-@item
-It is checked whether all function arguments given in @code{\usage}
-sections of Rd files are documented in the corresponding
-@code{\arguments} section.
-
-@item
-C source and header files are tested for correct (CR-only) line
-endings.
 
 @item
 The examples provided by the package's documentation are run.
@@ -705,15 +689,15 @@ automatically creates valid file names.
 @cindex Documentation, writing
 
 @menu
-* Rd format::                   
-* Sectioning::                  
-* Marking text::                
-* Lists and tables::            
-* Cross-references::            
-* Mathematics::                 
-* Insertions::                  
-* Platform-specific sections::  
-* Processing Rd format::        
+* Rd format::
+* Sectioning::
+* Marking text::
+* Lists and tables::
+* Cross-references::
+* Mathematics::
+* Insertions::
+* Platform-specific sections::
+* Processing Rd format::
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation, Writing R documentation
@@ -1393,8 +1377,8 @@ distribution for installing source packages to be installed.)
 @chapter Tidying and profiling R code
 
 @menu
-* Tidying R code::              
-* Profiling R code::            
+* Tidying R code::
+* Profiling R code::
 @end menu
 
 @R{} code which is worth preserving in a package and perhaps making
@@ -1560,15 +1544,15 @@ output files can be very large if long runs are profiled.
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::     
-* Interface functions .C and .Fortran::  
-* dyn.load and dyn.unload::     
-* Creating shared libraries::   
-* Interfacing C++ code::        
-* Handling R objects in C::     
-* Interface functions .Call and .External::  
-* Evaluating R expressions from C::  
-* Debugging::                   
+* Operating system access::
+* Interface functions .C and .Fortran::
+* dyn.load and dyn.unload::
+* Creating shared libraries::
+* Interfacing C++ code::
+* Handling R objects in C::
+* Interface functions .Call and .External::
+* Evaluating R expressions from C::
+* Debugging::
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -2043,13 +2027,13 @@ needed.  As in interpreted @R{} code, much use is made of coercion to
 force the variant object to the right type.
 
 @menu
-* Garbage Collection::          
-* Allocating storage::          
-* Details of R types::          
-* Attributes::                  
-* Classes::                     
-* Handling lists::              
-* Finding and setting variables::  
+* Garbage Collection::
+* Allocating storage::
+* Details of R types::
+* Attributes::
+* Classes::
+* Handling lists::
+* Finding and setting variables::
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -2542,9 +2526,9 @@ based on the interface of the same name in @Sl{} version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::               
-* Calling .External::           
-* Missing and special values::  
+* Calling .Call::
+* Calling .External::
+* Missing and special values::
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -3201,8 +3185,8 @@ compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 
 
 @menu
-* Finding entry points::        
-* Inspecting R objects::        
+* Finding entry points::
+* Inspecting R objects::
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging, Debugging
@@ -3369,17 +3353,17 @@ $7 = 5
 @chapter The R @acronym{API}: entry points for C code
 
 @menu
-* Memory allocation::           
-* Error handling::              
-* Random numbers::              
-* Missing and IEEE values::     
-* Printing::                    
-* Calling C from FORTRAN and vice versa::  
-* Numerical analysis subroutines::  
-* Optimization::                
-* Utility functions::           
-* Platform and version information::  
-* Standalone Mathlib::          
+* Memory allocation::
+* Error handling::
+* Random numbers::
+* Missing and IEEE values::
+* Printing::
+* Calling C from FORTRAN and vice versa::
+* Numerical analysis subroutines::
+* Optimization::
+* Utility functions::
+* Platform and version information::
+* Standalone Mathlib::
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -3419,8 +3403,8 @@ appropriate header files when using these entry points.
 @cindex Memory allocation from C
 
 @menu
-* Transient::                   
-* User-controlled::             
+* Transient::
+* User-controlled::
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -3762,10 +3746,10 @@ C interfaces to the code behind @R{} functions, so the @R{} function
 documentation may give further details.
 
 @menu
-* Distribution functions::      
-* Mathematical functions::      
-* Utilities::                   
-* Mathematical constants::      
+* Distribution functions::
+* Mathematical functions::
+* Utilities::
+* Mathematical constants::
 @end menu
 
 @node Distribution functions, Mathematical functions, Numerical analysis subroutines, Numerical analysis subroutines
@@ -3944,6 +3928,14 @@ backwards compatibility with @R{} versions prior to 1.5.0, the entry
 point @code{Rf_log1p} is still provided.
 @end deftypefun
 
+@deftypefun double expm1 (@var{x})
+Computes @code{exp(@var{x}) - 1} (@emph{exp x @b{m}inus 1}), accurately
+even for small @var{x}, i.e. @eqn{|x| \ll 1, |x| << 1}.
+
+This may be provided by your platform, in which case it is not
+included in @file{Rmath.h}, but is (probably) in @file{math.h}.
+@end deftypefun
+
 @deftypefun int imax2 (int @var{x}, int @var{y})
 @deftypefunx int imin2 (int @var{x}, int @var{y})
 @deftypefunx double fmax2 (double @var{x}, double @var{y})
@@ -4068,32 +4060,32 @@ at the result.
 The interfaces are
 @example
 Nelder Mead:
-void nmmin(int n, double *xin, double *x, double *Fmin, optimfn fn, 
+void nmmin(int n, double *xin, double *x, double *Fmin, optimfn fn,
 	   int *fail, double abstol, double intol, void *ex,
 	   double alpha, double beta, double gamma, int trace,
 	   int *fncount, int maxit);
 
 BFGS:
-void vmmin(int n, double *x, double *Fmin, 
+void vmmin(int n, double *x, double *Fmin,
 	   optimfn fn, optimgr gr, int maxit, int trace,
 	   int *mask, double abstol, double reltol, int nREPORT,
 	   void *ex, int *fncount, int *grcount, int *fail);
 
 Conjugate gradients:
 void cgmin(int n, double *xin, double *x, double *Fmin,
-	   optimfn fn, optimgr gr, 
+	   optimfn fn, optimgr gr,
 	   int *fail, double abstol, double intol, void *ex,
 	   int type, int trace, int *fncount, int *grcount, int maxit);
 
 Limited-memory BFGS with bounds:
-void lbfgsb(int n, int lmm, double *x, double *lower, double *upper, 
-            int *nbd, double *Fmin, optimfn fn, optimgr gr, int *fail, 
-            void *ex, double factr, double pgtol, 
-            int *fncount, int *grcount, int maxit, char *msg, 
+void lbfgsb(int n, int lmm, double *x, double *lower, double *upper,
+            int *nbd, double *Fmin, optimfn fn, optimgr gr, int *fail,
+            void *ex, double factr, double pgtol,
+            int *fncount, int *grcount, int maxit, char *msg,
             int trace, int nREPORT);
 
 Simulated annealing:
-void samin(int n, double *x, double *Fmin, optimfn fn, int maxit, 
+void samin(int n, double *x, double *Fmin, optimfn fn, int maxit,
 	   int tmax, double temp, int trace, void *ex);
 @end example
 @noindent
@@ -4102,7 +4094,7 @@ the number of parameters, @code{x} or @code{xin} is the starting
 parameters on entry and @code{x} the final parameters on exit, with
 final value returned in @code{Fmin}.  Most of the other parameters can
 be found from the help page for @code{optim}: see the source code
-@file{src/appl/lbfgsb.c} for the values of @code{nbd}, which 
+@file{src/appl/lbfgsb.c} for the values of @code{nbd}, which
 specifies which bounds are to be used.
 
 
@@ -4362,7 +4354,7 @@ Here there might be justifiable exceptions, which will need careful
 documentation.
 
 @menu
-* Adding new generics::         
+* Adding new generics::
 @end menu
 
 @node Adding new generics,  , Generic functions and methods, Generic functions and methods
@@ -4403,8 +4395,8 @@ all precede the base package.
 @appendix R (internal) programming miscellanea
 
 @menu
-* .Internal and .Primitive::    
-* Testing R code::              
+* .Internal and .Primitive::
+* Testing R code::
 @end menu
 
 @node .Internal and .Primitive, Testing R code, R (internal) programming miscellanea, R (internal) programming miscellanea

@@ -279,6 +279,9 @@
 /* Define if you have the log1p function.  */
 #undef HAVE_LOG1P
 
+/* Define if you have the expm1 function. */
+#undef HAVE_EXPM1
+
 /* Define if you have the matherr function.  */
 #undef HAVE_MATHERR
 
