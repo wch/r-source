@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2004-10-21), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2004-10-27), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1481,7 +1481,7 @@ argument is not numeric or logical: returning NA in: mean.default(as.factor(x))
 > z <- table(x = 1:2, y = 1:2)
 > z - 1
    y
-x   1  2 
+x    1  2
   1  0 -1
   2 -1  0
 > unclass(z - 1)
@@ -2291,6 +2291,17 @@ S4 print method
 show method
 > print(foo, digits = 4)
 S4 print method
+> 
+> setClassUnion("integer or NULL", members = c("integer","NULL"))
+[1] "integer or NULL"
+> setClass("c1", representation(x = "integer", code = "integer or NULL"))
+[1] "c1"
+> nc <- new("c1", x = 1:2)
+> str(nc)# gave ^ANULL^A in 2.0.0
+Formal class 'c1' [package ".GlobalEnv"] with 2 slots
+  ..@ x   : int [1:2] 1 2
+  ..@ code: NULL
+> 
 > if(!hasMethods) detach("package:methods")
 > ##
 > 
