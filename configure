@@ -9157,6 +9157,8 @@ trap 'rm -fr `echo "Makeconf
   demos/Makefile
   demos/dynload/Makefile
   doc/Makefile
+  doc/html/Makefile
+  doc/html/search/Makefile
   doc/manual/Makefile
   etc/Makefile
   etc/Makeconf
@@ -9424,6 +9426,8 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   demos/Makefile
   demos/dynload/Makefile
   doc/Makefile
+  doc/html/Makefile
+  doc/html/search/Makefile
   doc/manual/Makefile
   etc/Makefile
   etc/Makeconf
