@@ -14,7 +14,7 @@ test-src = $(test-src-1) $(test-src-auto)
 test-out = $(test-src:.R=.Rout)
 
 R = srcdir=$(srcdir) $(R_HOME)/bin/Rterm.exe --vanilla
-RDIFF = $(R_HOME)/src/scripts/Rdiff
+RDIFF = $(R_HOME)/bin/Rcmd Rdiff.sh
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout
@@ -26,7 +26,7 @@ RDIFF = $(R_HOME)/src/scripts/Rdiff
 .R.Rout:
 	@rm -f $@ $@.fail
 	@echo "  Running \`$<'"
-	@-$(R) R_LIBS=$(R_LIBS) < $< > $@
+	@-$(R) R_LIBS="$(R_LIBS)" < $< > $@
 	@if test -f $(srcdir)/$@.save; then \
 	  mv $@ $@.fail; \
 	  echo -n "  Comparing \`$@' to \`$@.save' ..."; \
@@ -38,7 +38,7 @@ RDIFF = $(R_HOME)/src/scripts/Rdiff
 all:
 	@(out=`echo "$(test-out)" | sed 's/ $$//g'`; \
 	  if test -n "$${out}"; then \
-	    $(MAKE) -f $(R_HOME)/etc/Makeconf-tests VPATH=$(VPATH) R_LIBS=$(R_LIBS) srcdir=$(srcdir) $${out}; \
+	    $(MAKE) -f $(R_HOME)/etc/Makeconf-tests $(makevars) $${out}; \
 	  fi)
 
 clean:
