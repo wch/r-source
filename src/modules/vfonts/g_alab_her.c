@@ -142,8 +142,8 @@ static void _draw_stroke (DevDesc *dd, bool pendown, double deltax, double delta
 /* this is the version of the flabelwidth() method that is specific to the
    case when the current Plotter font is a Hershey font; called in
    g_flabelwidth () */
-double GVStrWidth (const unsigned char *s, int typeface, int fontindex,
-		   int unit, DevDesc *dd)
+double Rvf_GVStrWidth (const unsigned char *s, int typeface, int fontindex,
+		       int unit, DevDesc *dd)
 {
   double label_width;
   unsigned short *codestring;
@@ -180,8 +180,8 @@ static double _label_height_hershey (DevDesc *dd, const unsigned short *label)
     return( HERSHEY_Y_UNITS_TO_USER_UNITS(HERSHEY_LARGE_CAPHEIGHT) );
 }
 
-double GVStrHeight (const unsigned char *s, int typeface, int fontindex,
-		    int unit, DevDesc *dd)
+double Rvf_GVStrHeight (const unsigned char *s, int typeface, int fontindex,
+			int unit, DevDesc *dd)
 {
   double label_height;
   unsigned short *codestring;
@@ -215,10 +215,10 @@ double GVStrHeight (const unsigned char *s, int typeface, int fontindex,
 
 /* this is the version of the falabel() method that is specific
    to the case when the current Plotter font is a Hershey font */
-void GVText (double x, double y, int unit, char *s, 
-	     int typeface, int fontindex,
-	     double x_justify, double y_justify, double rotation,
-	     DevDesc *dd)
+void Rvf_GVText (double x, double y, int unit, char *s, 
+		 int typeface, int fontindex,
+		 double x_justify, double y_justify, double rotation,
+		 DevDesc *dd)
 {
   unsigned short *codestring;
   double label_width, label_height;

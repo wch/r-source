@@ -43,12 +43,9 @@ ssize_t Sock_read(int fd, void *buf, size_t nbytes, Sock_error_t perr);
 ssize_t Sock_write(int fd, const void *buf, size_t nbytes, Sock_error_t perr);
 
 /* R interface (Rsock.c) :*/
-void Rsockopen(int *port);
-void Rsocklisten(int *sock, char **buf, int *len);
-void Rsockconnect(int *port, char **host);
-void Rsockclose(int *sockp);
-void Rsockread (int *sockp, char **buf, int *maxlen);
-void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len);
-#ifdef Unix
-void Rsockfork(int *pidno);
-#endif
+void in_Rsockopen(int *port);
+void in_Rsocklisten(int *sock, char **buf, int *len);
+void in_Rsockconnect(int *port, char **host);
+void in_Rsockclose(int *sockp);
+void in_Rsockread (int *sockp, char **buf, int *maxlen);
+void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len);

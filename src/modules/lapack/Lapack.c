@@ -6,7 +6,7 @@
 
 #include "Lapack.h"
 
-SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
+SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 {
     int *xdims, n, p, lwork, info;
     double *work, tmp;
@@ -48,7 +48,7 @@ SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
     return val;
 }
 
-SEXP La_rs(SEXP x, SEXP only_values)
+SEXP modLa_rs(SEXP x, SEXP only_values)
 {
     int *xdims, n, lwork, info, ov;
     char jobv[1], uplo[1];
@@ -116,7 +116,7 @@ static SEXP unscramble(const double* imaginary, int n,
     return s;
 }
 
-SEXP La_rg(SEXP x, SEXP only_values)
+SEXP modLa_rg(SEXP x, SEXP only_values)
 {
     int i, n, lwork, info, vectors, complexValues, *xdims, ov;
     double *work, *wR, *wI, *left, *right, *xvals, tmp;
@@ -187,7 +187,7 @@ SEXP La_rg(SEXP x, SEXP only_values)
     return ret;
 }
 
-SEXP La_zgesv(SEXP A, SEXP B)
+SEXP modLa_zgesv(SEXP A, SEXP B)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int n, p, info, *ipiv, *Adims, *Bdims;
@@ -218,7 +218,7 @@ SEXP La_zgesv(SEXP A, SEXP B)
 #endif
 }
 
-SEXP La_zgeqp3(SEXP Ain)
+SEXP modLa_zgeqp3(SEXP Ain)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int m, n, *Adims, info, lwork;
@@ -266,7 +266,7 @@ SEXP La_zgeqp3(SEXP Ain)
 #endif
 }
 
-SEXP qr_coef_cmplx(SEXP Q, SEXP Bin)
+SEXP modqr_coef_cmplx(SEXP Q, SEXP Bin)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int n, nrhs, lwork, info, k, *Bdims, *Qdims;
@@ -307,7 +307,7 @@ SEXP qr_coef_cmplx(SEXP Q, SEXP Bin)
 #endif
 }
 
-SEXP qr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
+SEXP modqr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int n, nrhs, lwork, info, k, *Bdims, *Qdims, tr;
@@ -346,7 +346,7 @@ SEXP qr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
 #endif
 }
 
-SEXP La_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
+SEXP modLa_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int *xdims, n, p, lwork, info;
@@ -392,7 +392,7 @@ SEXP La_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 #endif
 }
 
-SEXP La_rs_cmplx(SEXP x, SEXP only_values)
+SEXP modLa_rs_cmplx(SEXP x, SEXP only_values)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int *xdims, n, lwork, info, ov;
@@ -444,7 +444,7 @@ SEXP La_rs_cmplx(SEXP x, SEXP only_values)
 #endif
 }
 
-SEXP La_rg_cmplx(SEXP x, SEXP only_values)
+SEXP modLa_rg_cmplx(SEXP x, SEXP only_values)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int  n, lwork, info, vectors, *xdims, ov;

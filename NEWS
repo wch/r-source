@@ -97,6 +97,8 @@ BUG FIXES
     o	Rd files with ,, inside \code{} were treating this as a
 	ligature in LaTeX: now corrected in Rdconv.
 
+    o	dlopen on Compaq Tru64 was finding the wrong entry points:
+	worked-around by using different names in the modules.
 
 
 
