@@ -1,6 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998--1999  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +20,11 @@
 
 #include "Defn.h"
 #include "FFDecl.h"
-
+/* These are the  R interface routines to the
+ * plain FFT code  in ../appl/fft.c
+ * NOTE: That one     ~~~~~~~~~~~~~  (and hence the code here) uses
+ * ----	 several GLOBAL (static) variables!
+ */
 
 /* Fourier Transform for Univariate Spatial and Time Series */
 
@@ -70,7 +75,7 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 	    fft_work(&(COMPLEX(z)[0].r), &(COMPLEX(z)[0].i),
 		     1, n, 1, inv, work, iwork);
 	}
-	else {                                       /* spatial transform */
+	else {					     /* spatial transform */
 	    maxmaxf = 1;
 	    maxmaxp = 1;
 	    ndims = LENGTH(d);
@@ -160,7 +165,7 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 	    fft_factor(n, &maxf, &maxp);
 	    fft_work(&(COMPLEX(z)[i*n].r), &(COMPLEX(z)[i*n].i),
 		     1, n, 1, inv, work, iwork);
-        }
+	}
 	vmaxset(vmax);
     }
     UNPROTECT(1);
