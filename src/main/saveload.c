@@ -52,6 +52,7 @@ static int *OldOffset;		/* Offsets in previous incarnation */
 static SEXP *NewAddress;	/* Addresses in this incarnation */
 
 static int VersionId;
+static int DLstartup;           /* Allows different error action on startup */
 
 static SEXP DataLoad(FILE*);
 static void DataSave(SEXP, FILE*);
@@ -1015,11 +1016,20 @@ static SEXP DataLoad(FILE *fp)
     /* a gc after this point will be a disaster */
     /* because nothing will have been protected */
 
-    if ((VECREC *)vmaxget() - R_VTop < NVSize)
-	error("vector heap is too small to restore data\n");
+    if(DLstartup) {
+	if ((VECREC *)vmaxget() - R_VTop < NVSize)
+	    R_Suicide("vector heap is too small to restore data\n");
 
-    if (R_Collected < NSave)
-	error("cons heap is too small to restore data\n");
+	if (R_Collected < NSave)
+	    R_Suicide("cons heap is too small to restore data\n");
+    } else {
+	if ((VECREC *)vmaxget() - R_VTop < NVSize)
+	    error("vector heap is too small to restore data\n");
+
+	if (R_Collected < NSave)
+	    error("cons heap is too small to restore data\n");
+    }
+
 
     /* build the full forwarding table */
     /* allocating SEXPs from the free list */
@@ -1070,8 +1080,9 @@ void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
     }
 }
 
-SEXP R_LoadFromFile(FILE *fp)
+SEXP R_LoadFromFile(FILE *fp, int startup)
 {
+    DLstartup = startup; /* different handling of errors */
     switch(R_ReadMagic(fp)) {
 #ifdef HAVE_RPC_XDR_H
     case R_MAGIC_XDR:
@@ -1190,7 +1201,7 @@ static SEXP ConvertPairToVector(SEXP obj)
 void R_LoadSavedData(FILE *fp, SEXP aenv)
 {
     SEXP a, ans, e;
-    ans = R_LoadFromFile(fp);
+    ans = R_LoadFromFile(fp, 0);
 
     /* Store the components of the list in the Global Env */
     /* We either replace the existing objects in the Global */

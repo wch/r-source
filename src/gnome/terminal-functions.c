@@ -83,7 +83,7 @@ static void file_open_ok(GtkWidget *widget, gpointer data)
     return;
   }
 
-  FRAME(R_GlobalEnv) = R_LoadFromFile(fp);
+  FRAME(R_GlobalEnv) = R_LoadFromFile(fp, 0);
   Rprintf("Previously saved workspace restored\n");
   fclose(fp);
 

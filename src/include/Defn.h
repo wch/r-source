@@ -420,7 +420,7 @@ void PrintGreeting(void);
 void PrintVersion(char *);
 void PrintWarnings(void);
 SEXP promiseArgs(SEXP, SEXP);
-SEXP R_LoadFromFile(FILE*);
+SEXP R_LoadFromFile(FILE*, int);
 FILE* R_OpenLibraryFile(char *);
 void R_PreserveObject(SEXP);
 void R_ReleaseObject(SEXP);

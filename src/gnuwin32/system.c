@@ -38,7 +38,7 @@
 #include "Startup.h"
 
 int SaveAction = SA_DEFAULT;
-int RestoreAction = SA_NORESTORE;
+int RestoreAction = SA_RESTORE;
 int LoadSiteFile = True;
 int LoadInitFile = True;
 int DebugInitFile = False;

@@ -7,6 +7,9 @@
 
 NEW FEATURES
 
+    o	Attempting to restore (at startup) too large a .RData is now
+	a fatal error.
+
     o	The handling of q()/quit()/EOF has been changed, with a new option
 	"default".  In interactive use this asks unless --save or --no-save
 	has been specified: if these are specified they set the default.
