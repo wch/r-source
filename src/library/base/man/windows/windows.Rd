@@ -29,7 +29,7 @@ win.print(width = 7, height = 7, pointsize = 12)
   \item{pointsize}{the default pointsize of plotted text.}
   \item{record}{logical: sets the initial state of the flag for
     recording plots.}
-  \item{resize}{controls the action for resizing plots.}
+  \item{rescale}{controls the action for resizing plots.}
   \item{xpinch, ypinch}{double.  Pixels per inch, horizontally and vertically.}
 }
 
