@@ -4108,15 +4108,15 @@ newline
 tab character
 @item \b
 backspace
+@item \\
+backslash itself
 @item \@var{nnn}
 character with given code
 @end table
 
 @noindent
 A single quote may also be embedded directly in a double-quote delimited
-string and vice versa.  The string @code{"NA"} has special meaning as
-the ``missing string''.
-@c FIXME (don't we want to change that?)
+string and vice versa.
 
 @node Identifiers, Reserved words, Literal constants, Tokens
 @subsection Identifiers
