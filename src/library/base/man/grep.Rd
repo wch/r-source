@@ -46,7 +46,7 @@ regexpr(pattern, text,  extended=TRUE)
   \code{extended} argument.
 }
 \value{
-    For \code{gsub} a vector giving either the indices of the elements
+    For \code{grep} a vector giving either the indices of the elements
     of \code{x} that yielded a match or, if \code{value} is \code{TRUE},
     the matched elements.
 
