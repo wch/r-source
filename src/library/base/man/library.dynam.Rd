@@ -1,5 +1,5 @@
 \name{library.dynam}
-\alias{library.dyname}
+\alias{library.dynam}
 \title{Loading Shared Libraries}
 \usage{
 library.dynam(chname, package = .packages(), lib.loc = .lib.loc)
@@ -14,12 +14,13 @@ library.dynam(chname, package = .packages(), lib.loc = .lib.loc)
 \description{
   \code{library.dynam} loads the specified (shared) object file if it
   has not been loaded already.	It is designed to be used inside a
-  package rather than at the command line.  The system-specific
-  extension for shared libraries (e.g., ``.so'' on Unix systems) should
-  not be added.
+  package rather than at the command line, and should really only be
+  used inside .First.lib().  The system-specific extension for shared
+  libraries (e.g., ``.so'' on Unix systems) should not be added.
 }
 \seealso{
-  \code{\link{library}}, \code{\link{dynload}}, \code{\link{.packages}},
+  \code{\link{.First.lib}}, \code{\link{library}},
+  \code{\link{dynload}}, \code{\link{.packages}},
   \code{\link{.lib.loc}}
 }
 \keyword{data}
