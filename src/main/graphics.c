@@ -2738,7 +2738,6 @@ void GPretty(double *lo, double *up, int *ndiv)
     double dx, cell, unit, base, U;
     int ns, nu, nd0;
     short i_small;
-    double x1,x2;/* for checking only */
 
     if(*ndiv <= 0)
 	error("invalid axis extents [GPretty(.,.,n=%d)\n", *ndiv);
@@ -2799,6 +2798,7 @@ void GPretty(double *lo, double *up, int *ndiv)
 	*ndiv = nu - ns;
     }
 #ifdef DEBUG_PLOT
+    double x1,x2;
     x1 = *lo; x2 = *up;
 #endif
     *lo = ns * unit;
