@@ -235,13 +235,12 @@ foreach $pkg (@ARGV){
     my $res;
     ## loop over pkgs in the bundle
     for $pkgname (@bundlepkgs) {
-	my $dpkg = $library. "/" . $pkgname;
 	if($opt_with_package_versions) {
-	    $dpkg = $dpkg . "_" . $description->{"Version"};
 	    $decpkgname = $pkgname . "_" . $description->{"Version"};
 	} else {
 	    $decpkgname = $pkgname;
 	}
+	my $dpkg = $library. "/" . $decpkgname;
 	# if exists, move existing installation to $lockdir
 	system("mv $dpkg $lockdir") if ($safe && -d $dpkg);
 
@@ -348,10 +347,20 @@ foreach $pkg (@ARGV){
 
 	print("\n");
 	if($res) {
-	    rmtree($dpkg);
-	    # move back any previously installed package
-	    $dppkg = $lockdir . "/" . $decpkgname;
-	    system("mv $dppkg $library") if ($safe && -d $dppkg);
+	    if($is_bundle) { # back out the whole bundle
+		for $pkgname (@bundlepkgs) {
+		    $pkgname .= "_" . $description->{"Version"} 
+		    if $opt_with_package_versions;
+		    rmtree($library . "/" . $pkgname);
+		    $dppkg = $lockdir . "/" . $pkgname;
+		    system("mv $dppkg $library") if ($safe && -d $dppkg);
+		}
+	    } else {
+		rmtree($dpkg);
+		# move back any previously installed package
+		$dppkg = $lockdir . "/" . $decpkgname;
+		system("mv $dppkg $library") if ($safe && -d $dppkg);
+	    }
 	    last;
 	}
     } # end of loop over bundle
