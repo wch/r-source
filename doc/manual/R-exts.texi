@@ -67,18 +67,18 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Acknowledgements::            
-* Creating R packages::         
-* Writing R documentation files::  
-* Tidying and profiling R code::  
-* System and foreign language interfaces::  
-* The R API::                   
-* Generic functions and methods::  
-* Linking GUIs and other front-ends to R::  
-* R (internal) programming miscellanea::  
-* R coding standards::          
-* Function and variable index::  
-* Concept index::               
+* Acknowledgements::
+* Creating R packages::
+* Writing R documentation files::
+* Tidying and profiling R code::
+* System and foreign language interfaces::
+* The R API::
+* Generic functions and methods::
+* Linking GUIs and other front-ends to R::
+* R (internal) programming miscellanea::
+* R coding standards::
+* Function and variable index::
+* Concept index::
 @end menu
 
 @node Acknowledgements, Creating R packages, Top, Top
@@ -124,16 +124,16 @@ Other types of extensions are supported as from @R{} 2.1.0:
 @xref{Package types}.
 
 @menu
-* Package structure::           
-* Configure and cleanup::       
-* Checking and building packages::  
-* Writing package vignettes::   
-* Submitting a package to CRAN::  
-* Package name spaces::         
-* Writing portable packages::   
-* Diagnostic messages::         
-* Localization::                
-* Package types::               
+* Package structure::
+* Configure and cleanup::
+* Checking and building packages::
+* Writing package vignettes::
+* Submitting a package to CRAN::
+* Package name spaces::
+* Writing portable packages::
+* Diagnostic messages::
+* Localization::
+* Package types::
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -193,11 +193,11 @@ The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
 
 @menu
-* The DESCRIPTION file::        
-* The INDEX file::              
-* The install.R and R_PROFILE.R files::  
-* Package subdirectories::      
-* Package bundles::             
+* The DESCRIPTION file::
+* The INDEX file::
+* The install.R and R_PROFILE.R files::
+* Package subdirectories::
+* Package bundles::
 @end menu
 
 @node The DESCRIPTION file, The INDEX file, Package structure, Package structure
@@ -774,8 +774,8 @@ the name of the package (e.g., @samp{survival} or @samp{MASS}) being
 installed is available from the shell variable @env{R_PACKAGE_NAME}.
 
 @menu
-* Using Makevars::              
-* Configure example::           
+* Using Makevars::
+* Configure example::
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
@@ -875,7 +875,7 @@ AC_ARG_WITH([odbc-lib],
             [odbc_lib_path=$withval])
 if test [ -n "$odbc_lib_path" ] ; then
    AC_SUBST([LIBS],[" -L$@{odbc_lib_path@} $@{LIBS@}"])
-else 
+else
   if test [ -n "$@{ODBC_LIBS@}" ] ; then
      AC_SUBST([LIBS],["-I$@{ODBC_LIBS@} $@{LIBS@}"])
   fi
@@ -898,7 +898,7 @@ CFLAGS=`"$@{R_HOME@}/bin/R" CMD config CFLAGS`
 
 dnl Check the headers can be found
 AC_CHECK_HEADERS(sql.h sqlext.h)
-if test "$@{ac_cv_header_sql_h@}" = no || 
+if test "$@{ac_cv_header_sql_h@}" = no ||
    test "$@{ac_cv_header_sqlext_h@}" = no; then
    AC_MSG_ERROR("ODBC headers sql.h and sqlext.h not found")
 fi
@@ -934,9 +934,9 @@ A user can then be advised to specify the location of the ODBC driver
 manager files by options like (lines broken for easier reading)
 
 @example
-R CMD INSTALL 
-  --configure-args='--with-odbc-include=/opt/local/include 
-  --with-odbc-libs=/opt/local/lib --with-odbc-manager=iodbc' 
+R CMD INSTALL
+  --configure-args='--with-odbc-include=/opt/local/include
+  --with-odbc-libs=/opt/local/lib --with-odbc-manager=iodbc'
   RODBC
 @end example
 
@@ -953,9 +953,9 @@ this, but you will get more informative error messages doing the checks
 directly.
 
 @menu
-* Checking packages::           
-* Building packages::           
-* Customizing checking and building::  
+* Checking packages::
+* Building packages::
+* Customizing checking and building::
 @end menu
 
 @node Checking packages, Building packages, Checking and building packages, Checking and building packages
@@ -1357,12 +1357,12 @@ analysis and compilation tools to accurately identify the definition
 corresponding to a global variable reference in a function body.
 
 @menu
-* Specifying imports and exports::  
-* Registering S3 methods::      
-* Load hooks::                  
-* An example::                  
-* Summary -- converting an existing package::  
-* Name spaces with formal classes and methods::  
+* Specifying imports and exports::
+* Registering S3 methods::
+* Load hooks::
+* An example::
+* Summary -- converting an existing package::
+* Name spaces with formal classes and methods::
 @end menu
 
 
@@ -1884,8 +1884,8 @@ archive mirrors and packaged with the @code{poEdit} package
 @uref{http://poedit.sourceforge.net/download.php#win32}.
 
 @menu
-* C-level messages::            
-* R messages::                  
+* C-level messages::
+* R messages::
 @end menu
 
 @node C-level messages, R messages, Localization, Localization
@@ -1977,8 +1977,8 @@ so far in this chapter.  Currently two other types are recognized, both
 of which need write permission in the @R{} installation tree.
 
 @menu
-* Frontend::                    
-* Translation::                 
+* Frontend::
+* Translation::
 @end menu
 
 @node Frontend, Translation, Package types, Package types
@@ -2035,17 +2035,17 @@ Licence: GPL Version 2 or later.
 @cindex Documentation, writing
 
 @menu
-* Rd format::                   
-* Sectioning::                  
-* Marking text::                
-* Lists and tables::            
-* Cross-references::            
-* Mathematics::                 
-* Insertions::                  
-* Indices::                     
-* Platform-specific sections::  
-* Encoding::                    
-* Processing Rd format::        
+* Rd format::
+* Sectioning::
+* Marking text::
+* Lists and tables::
+* Cross-references::
+* Mathematics::
+* Insertions::
+* Indices::
+* Platform-specific sections::
+* Encoding::
+* Processing Rd format::
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation files, Writing R documentation files
@@ -2117,9 +2117,9 @@ files''} for guidelines for writing documentation in Rd format which
 should be useful for package writers.
 
 @menu
-* Documenting functions::       
-* Documenting data sets::       
-* Documenting S4 classes and methods::  
+* Documenting functions::
+* Documenting data sets::
+* Documenting S4 classes and methods::
 @end menu
 
 @node Documenting functions, Documenting data sets, Rd format, Rd format
@@ -2935,8 +2935,8 @@ from source as described in @file{README.packages}.
 @chapter Tidying and profiling R code
 
 @menu
-* Tidying R code::              
-* Profiling R code::            
+* Tidying R code::
+* Profiling R code::
 @end menu
 
 @R{} code which is worth preserving in a package and perhaps making
@@ -3127,17 +3127,17 @@ with a profiling run without a preceding call to @code{gc}.
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::     
-* Interface functions .C and .Fortran::  
-* dyn.load and dyn.unload::     
-* Registering native routines::  
-* Creating shared objects::     
-* Interfacing C++ code::        
-* Handling R objects in C::     
-* Interface functions .Call and .External::  
-* Evaluating R expressions from C::  
-* Parsing R code from C::       
-* Debugging::                   
+* Operating system access::
+* Interface functions .C and .Fortran::
+* dyn.load and dyn.unload::
+* Registering native routines::
+* Creating shared objects::
+* Interfacing C++ code::
+* Handling R objects in C::
+* Interface functions .Call and .External::
+* Evaluating R expressions from C::
+* Parsing R code from C::
+* Debugging::
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -3871,14 +3871,14 @@ needed.  As in interpreted @R{} code, much use is made of coercion to
 force the variant object to the right type.
 
 @menu
-* Garbage Collection::          
-* Allocating storage::          
-* Details of R types::          
-* Attributes::                  
-* Classes::                     
-* Handling lists::              
-* Finding and setting variables::  
-* Named objects and copying::   
+* Garbage Collection::
+* Allocating storage::
+* Details of R types::
+* Attributes::
+* Classes::
+* Handling lists::
+* Finding and setting variables::
+* Named objects and copying::
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -4476,9 +4476,9 @@ based on the interface of the same name in @Sl{} version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::               
-* Calling .External::           
-* Missing and special values::  
+* Calling .Call::
+* Calling .External::
+* Missing and special values::
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -4873,8 +4873,8 @@ called) and two argument values, the first unnamed and the second named.
 Setting the type makes this a call which can be evaluated.
 
 @menu
-* Zero-finding::                
-* Calculating numerical derivatives::  
+* Zero-finding::
+* Calculating numerical derivatives::
 @end menu
 
 @node Zero-finding, Calculating numerical derivatives, Evaluating R expressions from C, Evaluating R expressions from C
@@ -5240,8 +5240,8 @@ compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 
 
 @menu
-* Finding entry points::        
-* Inspecting R objects::        
+* Finding entry points::
+* Inspecting R objects::
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging, Debugging
@@ -5417,22 +5417,22 @@ $7 = 5
 @chapter The R @acronym{API}: entry points for C code
 
 @menu
-* Memory allocation::           
-* Error handling::              
-* Random numbers::              
-* Missing and IEEE values::     
-* Printing::                    
-* Calling C from FORTRAN and vice versa::  
-* Numerical analysis subroutines::  
-* Optimization::                
-* Integration::                 
-* Utility functions::           
-* Internationalization::        
-* Allowing interrupts::         
-* Platform and version information::  
-* Inlining C functions::        
-* Standalone Mathlib::          
-* Organization of header files::  
+* Memory allocation::
+* Error handling::
+* Random numbers::
+* Missing and IEEE values::
+* Printing::
+* Calling C from FORTRAN and vice versa::
+* Numerical analysis subroutines::
+* Optimization::
+* Integration::
+* Utility functions::
+* Internationalization::
+* Allowing interrupts::
+* Platform and version information::
+* Inlining C functions::
+* Standalone Mathlib::
+* Organization of header files::
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -5484,8 +5484,8 @@ be eliminated by defining @code{R_NO_REMAP} and prepending @code{Rf_} to
 @cindex Memory allocation from C
 
 @menu
-* Transient::                   
-* User-controlled::             
+* Transient::
+* User-controlled::
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -5629,7 +5629,7 @@ the last two being the forms available in all @Sl{} versions.  Here
 or a format string followed by arguments separated by commas.
 
 @menu
-* Error handling from FORTRAN::  
+* Error handling from FORTRAN::
 @end menu
 
 @node Error handling from FORTRAN,  , Error handling, Error handling
@@ -5771,7 +5771,7 @@ output stream.  Functions @code{Rvprintf} and @code{REvprintf} are
 analogues using the @code{vprintf} interface.
 
 @menu
-* Printing from FORTRAN::       
+* Printing from FORTRAN::
 @end menu
 
 @node Printing from FORTRAN,  , Printing, Printing
@@ -5892,10 +5892,10 @@ C interfaces to the code behind @R{} functions, so the @R{} function
 documentation may give further details.
 
 @menu
-* Distribution functions::      
-* Mathematical functions::      
-* Numerical Utilities::         
-* Mathematical constants::      
+* Distribution functions::
+* Mathematical functions::
+* Numerical Utilities::
+* Mathematical constants::
 @end menu
 
 @node Distribution functions, Mathematical functions, Numerical analysis subroutines, Numerical analysis subroutines
@@ -6084,6 +6084,11 @@ in @file{Rmath.h}, but is (probably) in @file{math.h} which
 prior to 1.5.0, the entry point @code{Rf_log1p} is still provided.
 @end deftypefun
 
+@deftypefun double log1pmx (@var{x})
+Computes @code{log(1 + @var{x}) - x} (@emph{log 1 @b{p}lus x @b{m}inus @b{x}}),
+accurately even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
+@end deftypefun
+
 @deftypefun double expm1 (@var{x})
 Computes @code{exp(@var{x}) - 1} (@emph{exp x @b{m}inus 1}), accurately
 even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
@@ -6091,6 +6096,19 @@ even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 This may be provided by your platform, in which case it is not included
 in @file{Rmath.h}, but is (probably) in @file{math.h} which
 @file{Rmath.h} includes.
+@end deftypefun
+
+@deftypefun double lgamma1p (@var{x})
+Computes @code{log(gamma(@var{x} + 1))} (@emph{log(gamma(1 @b{p}lus x))}),
+accurately even for small @var{x}, i.e., @eqn{0 < x < 0.5, 0 < x < 0.5}.
+@end deftypefun
+
+@deftypefun double logspace_add (double @var{logx}, double @var{logy})
+@deftypefunx double logspace_sub (double @var{logx}, double @var{logy})
+Compute the log of a sum or difference from logs of terms, i.e.,
+``x + y'' as @code{log (exp(@var{logx}) + exp(@var{logy}))} and
+``x - y'' as @code{log (exp(@var{logx}) - exp(@var{logy}))},
+without causing overflows or throwing away too much accuracy.
 @end deftypefun
 
 @deftypefun int imax2 (int @var{x}, int @var{y})
@@ -6849,7 +6867,7 @@ Here there might be justifiable exceptions, which will need careful
 documentation.
 
 @menu
-* Adding new generics::         
+* Adding new generics::
 @end menu
 
 @node Adding new generics,  , Generic functions and methods, Generic functions and methods
@@ -6902,8 +6920,8 @@ foo.default <- base::foo
 @chapter Linking GUIs and other front-ends to R
 
 @menu
-* Embedding R under Unix-alikes::  
-* Embedding R under Windows::   
+* Embedding R under Unix-alikes::
+* Embedding R under Windows::
 @end menu
 
 @node Embedding R under Unix-alikes, Embedding R under Windows, Linking GUIs and other front-ends to R, Linking GUIs and other front-ends to R
@@ -7018,8 +7036,8 @@ setting up various parts of @R{} to talk to our GUI, and arranging for
 our GUI callbacks to be called during the @R{} mainloop.
 
 @menu
-* Setting R callbacks::         
-* Meshing event loops::         
+* Setting R callbacks::
+* Meshing event loops::
 @end menu
 
 @node Setting R callbacks, Meshing event loops, Embedding R under Unix-alikes, Embedding R under Unix-alikes
@@ -7282,8 +7300,8 @@ All Windows interfaces to @R{} call entry points in the DLL
 easier to use the indirect route via @acronym{(D)COM}.
 
 @menu
-* Using (D)COM::                
-* Calling R.dll directly::      
+* Using (D)COM::
+* Calling R.dll directly::
 @end menu
 
 @node Using (D)COM, Calling R.dll directly, Embedding R under Windows, Embedding R under Windows
@@ -7519,8 +7537,8 @@ use multiple threads.
 @appendix R (internal) programming miscellanea
 
 @menu
-* .Internal and .Primitive::    
-* Testing R code::              
+* .Internal and .Primitive::
+* Testing R code::
 @end menu
 
 @node .Internal and .Primitive, Testing R code, R (internal) programming miscellanea, R (internal) programming miscellanea
