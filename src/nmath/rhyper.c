@@ -2,6 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000-2001 The R Development Core Team
+ *  Copyright (C) 2005	The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -13,9 +14,10 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  A copy of the GNU General Public License is available via WWW at
+ *  http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
+ *  writing to the Free Software Foundation, Inc., 59 Temple Place,
+ *  Suite 330, Boston, MA  02111-1307  USA.
  *
  *  SYNOPSIS
  *
@@ -34,6 +36,10 @@
  *    V. Kachitvichyanukul and B. Schmeiser (1985).
  *    ``Computer generation of hypergeometric random variates,''
  *    Journal of Statistical Computation and Simulation 22, 127-145.
+ *
+ *    The original algorithm had a bug -- R bug report PR#7314 --
+ *    giving numbers slightly too small in case III h2pe
+ *    where (m < 100 || ix <= 50) , see below.
  */
 
 #include "nmath.h"
@@ -85,7 +91,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
     int nn1, nn2, kk;
     int i, ix;
     Rboolean reject, setup1, setup2;
-    
+
     double e, f, g, p, r, t, u, v, y;
     double de, dg, dr, ds, dt, gl, gu, nk, nm, ub;
     double xk, xm, xn, y1, ym, yn, yk, alv;
@@ -237,11 +243,11 @@ double rhyper(double nn1in, double nn2in, double kkin)
 
 	if (m < 100 || ix <= 50) {
 	    /* explicit evaluation */
-            /* The original algorithm (and TOMS 668) have 
-                   f = f * i * (n2 - k + i) / (n1 - i) / (k - i);
-	       in the (m > ix) case, but the definition of the 
-               recurrence relation on p134 shows that the +1 is 
-               needed. */
+	    /* The original algorithm (and TOMS 668) have
+		   f = f * i * (n2 - k + i) / (n1 - i) / (k - i);
+	       in the (m > ix) case, but the definition of the
+	       recurrence relation on p134 shows that the +1 is
+	       needed. */
 	    f = 1.0;
 	    if (m < ix) {
 		for (i = m + 1; i <= ix; i++)
@@ -301,7 +307,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 		if (alv < ub - 0.25 * (dr + ds + dt + de)
 		    + (y + m) * (gl - gu) - deltal) {
 		    reject = FALSE;
-		} 
+		}
 		else {
 		    /* * Stirling's formula to machine accuracy
 		     */
