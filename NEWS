@@ -14,6 +14,9 @@ NEW FEATURES
     o	prompt() now also works with a character argument (useful
 	for producing many *.Rd files in a loop).
 
+    o	The Unix front-end shell script now ignores a value for R_HOME
+        found in the environment.
+
 
 BUG FIXES
     

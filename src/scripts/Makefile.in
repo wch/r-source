@@ -65,7 +65,7 @@ R.fe: R.sh $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@(v=`cat $(top_srcdir)/VERSION`; \
 	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
 	  y=`cut -d/ -f1 < $(top_srcdir)/date-stamp`; \
-	  sed "s@R_HOME_DIR*@`cd $(top_builddir); pwd`@; \
+	  sed "s@R_HOME_DIR=.*@R_HOME_DIR=`cd $(top_builddir); pwd`@; \
 	       s@REPLACE_BY_VERSION@$${v}@; \
 	       s@REPLACE_BY_YEAR@$${y}@" < R.sh > $@)
 	@chmod +x $@

@@ -74,8 +74,10 @@ install: installdirs
 ## Automake.
 	@echo "installing executables ..."
 	@$(INSTALL_PROGRAM) bin/R.bin $(rhome)/bin
-	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(rhome)/bin/R
-	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(bindir)/R
+	@sed "s@R_HOME_DIR=.*@R_HOME_DIR=$(rhome)@" < bin/R \
+	  > $(rhome)/bin/R
+	@sed "s@R_HOME_DIR=.*@R_HOME_DIR=$(rhome)@" < bin/R \
+	  > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R
 	@for f in `find bin -type f -print \
 	             | grep -v '^bin/R$$' \

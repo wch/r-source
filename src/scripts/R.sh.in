@@ -1,7 +1,12 @@
 #!/bin/sh
 # Shell wrapper for R executable.
 
-: ${R_HOME=R_HOME_DIR}
+R_HOME_DIR=
+if test -n "${R_HOME}" && \
+   test "${R_HOME}" != "${R_HOME_DIR}"; then
+  echo "WARNING: ignoring environment value of R_HOME"
+fi
+R_HOME=${R_HOME_DIR}
 export R_HOME
 
 ## NOTE:
@@ -119,8 +124,10 @@ done
 
 ## R_HOME may have moved, so check
 ## (or you get "GUI X11 is not supported")
-if [ ! -x ${R_HOME} ]; then
-  echo "R_HOME = \`${R_HOME}' not found"
+if test -x ${R_HOME}; then
+  :
+else
+  echo "R_HOME (\`${R_HOME}') not found"
   exit 1
 fi
 
