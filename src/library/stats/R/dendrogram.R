@@ -3,6 +3,7 @@ as.dendrogram <- function(object, ...) UseMethod("as.dendrogram")
 as.dendrogram.hclust <- function (object, hang = -1, ...)
 ## hang = 0.1  is default for plot.hclust
 {
+    stopifnot(length(object$order) > 0)
     if (is.null(object$labels))
 	object$labels <- (1:length(object$order))
     z <- list()
@@ -12,14 +13,14 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
     hMax <- oHgt[nMerge]
     one <- 1:1;	   two <- 2:2 # integer!
     for (k in 1:nMerge) {
-	x <- sort(object$merge[k, ])
+	x <- object$merge[k, ]# no sort() anymore!
 	if (any(neg <- x < 0))
 	    h0 <- if (hang < 0) 0 else max(0, oHgt[k] - hang * hMax)
 	if (all(neg)) {			# two leaves
-	    zk <- as.list(rev(-x))
+	    zk <- as.list(-x)
 	    attr(zk, "members") <- two
 	    attr(zk, "midpoint") <- 0.5
-	    objlabels <- rev(object$labels[-x])
+	    objlabels <- object$labels[-x]
 	    attr(zk[[1]], "label") <- objlabels[1]
 	    attr(zk[[2]], "label") <- objlabels[2]
 	    attr(zk[[1]], "members") <- attr(zk[[2]], "members") <- one
@@ -28,17 +29,17 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 	}
 	else if (any(neg)) {		# one leaf, one node
 	    X <- as.character(x)
-	    ## For original "hclust" node ordering, the leaf is always left,
-	    ## i.e. x[1]; don't want to assume this
-	    isL <- x[1] < 0 ##is leaf left?
+	    ## Originally had "x <- sort(..) above => leaf always left, x[1];
+            ## don't want to assume this
+	    isL <- x[1] < 0 ## is leaf left?
 	    zk <-
 		if(isL) list(-x[1], z[[X[2]]])
-		else	list(z[[X[1]]], object$labels[-x[2]])
+		else	list(z[[X[1]]], -x[2])
 	    attr(zk, "members") <- attr(z[[X[1 + isL]]], "members") + one
 	    attr(zk, "midpoint") <- (1 + attr(z[[X[1 + isL]]], "midpoint"))/2
 	    attr(zk[[2 - isL]], "members") <- one
 	    attr(zk[[2 - isL]], "height") <- h0
-	    attr(zk[[2 - isL]], "label") <- object$labels[-x[1]]
+	    attr(zk[[2 - isL]], "label") <- object$labels[-x[2 - isL]]
 	    attr(zk[[2 - isL]], "leaf") <- TRUE
 	}
 	else {				# two nodes
@@ -174,6 +175,7 @@ function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
     }
 }
 
+
 ## The ``generic'' method for "[["  (identical to e.g., "[[.POSIXct"):
 ## --> subbranches are dendrograms as well!
 "[[.dendrogram" <- function(x, ..., drop = TRUE)
@@ -186,8 +188,8 @@ function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
 }
 
 
-## Also: need larger par("mar")[1] or [4] for longish labels !
-## [probably don't change, just print a warning or so !!
+## FIXME: need larger par("mar")[1] or [4] for longish labels !
+## {probably don't change, just print a warning ..}
 plot.dendrogram <-
     function (x, type = c("rectangle", "triangle"), center = FALSE,
 	      edge.root = !is.null(attr(x, "edgetext")), nodePar = NULL,
@@ -252,7 +254,7 @@ plotNode <-
 
     Xtract <- function(nam, L, default, indx)
 	rep(if(any(nam == names(L))) L[[nam]] else default, length.out = indx)[indx]
-    asTxt <- function(x)
+    asTxt <- function(x) # to allow 'plotmath' labels:
         if(is.character(x) || is.expression(x)) x else as.character(x)
 
     if(!is.null(nPar)) { ## draw this node
@@ -491,6 +493,7 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 	  margins = c(5, 5), ColSideColors, RowSideColors,
           cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
           labRow = NULL, labCol = NULL, main = NULL, xlab = NULL, ylab = NULL,
+          keep.dendro = FALSE,
           verbose = getOption("verbose"), ...)
 {
     scale <- if(symm && missing(scale)) "none" else match.arg(scale)
@@ -547,10 +550,14 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     ## reorder x
     x <- x[rowInd, colInd]
 
-    if(is.null(labRow))
-	labRow <- if(is.null(rownames(x))) (1:nr)[rowInd] else rownames(x)
-    if(is.null(labCol))
-	labCol <- if(is.null(colnames(x))) (1:nc)[colInd] else colnames(x)
+    labRow <-
+        if(is.null(labRow))
+            if(is.null(rownames(x))) (1:nr)[rowInd] else rownames(x)
+        else labRow[rowInd]
+    labCol <-
+        if(is.null(labCol))
+            if(is.null(colnames(x))) (1:nc)[colInd] else colnames(x)
+        else labCol[colInd]
 
     if(scale == "row") {
 	x <- sweep(x, 1, rowMeans(x, na.rm = na.rm))
@@ -630,7 +637,10 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 	plot(ddc,               axes = FALSE, xaxs = "i", leaflab = "none")
     else if(!is.null(main)) frame()
 
+    ## title
     if(!is.null(main)) title(main, cex.main = 1.5*op[["cex.main"]])
 
-    invisible(list(rowInd = rowInd, colInd = colInd))
+    invisible(list(rowInd = rowInd, colInd = colInd,
+                   Rowv = if(keep.dendro && doRdend) ddr,
+                   Colv = if(keep.dendro && doCdend) ddc ))
 }

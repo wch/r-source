@@ -3053,4 +3053,17 @@ x[, names(info)] <-  info[1,]
 stopifnot(length(installed.packages("mgcv")) == 0)
 ## gave a low-level error message
 
+## as.dendrogram.hclust()
+data(eurodist)
+d <- as.dendrogram(hEU <- hclust(eurodist, "ave"))
+stopifnot(order.dendrogram(d) == hEU$order)# not new
+##N require(gclus); hE1 <- reorder.hclust(hEU, dis)
+## reconstruct without gclus (for R's testing)
+hE2 <- hEU; ii <- c(5,9:11, 13, 15:18); hE2$merge[ii,] <- hEU$merge[ii, 2:1]
+hE2$order <- as.integer(c(1,19,9,12,14,2,15,8,13,16,17,21,6,3,11,4,18,5,10,7,20))
+##N stopifnot(identical(hE1, hE2))
+d1 <- as.dendrogram(hE2)
+stopifnot(order.dendrogram(d1) == hE2$order)
+## not true in 1.9.0
+
 ### end of tests added in 1.9.1 ###

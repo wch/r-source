@@ -2,7 +2,7 @@
 \title{General Tree Structures}
 \alias{dendrogram}% the class
 \alias{as.dendrogram}
-%\alias{as.dendrogram.hclust}
+\alias{as.dendrogram.hclust}
 \alias{cut.dendrogram}
 \alias{[[.dendrogram}
 \alias{print.dendrogram}
@@ -24,6 +24,7 @@
 }
 \usage{
 as.dendrogram(object, \dots)
+\method{as.dendrogram}{hclust}(object, hang = -1, \dots)
 
 \method{plot}{dendrogram}(x, type = c("rectangle", "triangle"),
          center = FALSE, edge.root = !is.null(attr(x,"edgetext")),
@@ -44,6 +45,9 @@ as.dendrogram(object, \dots)
   \item{object}{any \R object that can be made into one of class
     \code{"dendrogram"}.}
   \item{x}{object of class \code{"dendrogram"}.}
+  \item{hang}{numeric scalar indicating how the \emph{height} of leaves
+    should be computed from the heights of their parents; see
+    \code{\link{plot.hclust}}.}
   \item{type}{type of plot.}
   \item{center}{logical; if \code{TRUE}, nodes are plotted centered with
     respect to the leaves in the branch.  Otherwise (default), plot them
@@ -69,8 +73,8 @@ as.dendrogram(object, \dots)
     \code{\link{print.default}}.}
   \item{max.level, digits.d, give.attr, wid, nest.lev, indent.str}{%
     arguments to \code{str}, see \code{\link{str.default}()}.  Note that
-    the default `give.attr = FALSE' still shows \code{height} and
-    \code{members} attributes for each node.}
+    by default \code{give.attr = FALSE}, it still shows \code{height}
+    and \code{members} attributes for each node.}
 }
 \details{
   Warning: This documentation is preliminary.

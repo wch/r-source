@@ -19,6 +19,8 @@ NEW FEATURES
 
     o	plot.ts() has more arguments, particularly 'yax.flip'.
 
+    o	heatmap() has a 'keep.dendro' argument.
+
 
 INSTALLATION ISSUES
 
@@ -135,7 +137,14 @@ BUG FIXES
 	always claimed.
 
     o	update.packages("mgcv") and old.packages(*) now give a better error
-        message; and installed.packages("mgcv") properly returns <empty>.
+	message; and installed.packages("mgcv") properly returns <empty>.
+
+    o	stats:::as.dendrogram.hclust() is documented and no longer re-sorts
+	the two children at each node.  This fixes as.dendrogram(hh) for
+	the case where hh is a "reordered" hclust object.
+
+    o	heatmap(*, labRow=., labCol=.) now also reorders the labels when
+	specified---not only when using default labels.
 
 
 
