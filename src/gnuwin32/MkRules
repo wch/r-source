@@ -37,8 +37,8 @@ TCL_VERSION = 84
 # Internationalization support
 # Define if RGui is to support multi-byte characters.
 # SUPPORT_GUI_MBCS = YES
-# Define if R.dll is to have support of UTF-8 locales.
-# SUPPORT_UTF8 = YES
+# Define if R engine is to support multi-byte characters & also in config.h
+# SUPPORT_MBCS = YES
 # Define to use unicows
 # USE_UNICOWS = YES
 
@@ -79,15 +79,15 @@ AWK=awk
 DEPARG=-M
 endif
 
-ifdef SUPPORT_UTF8
-LIBEXTRAS = -lmsvcp60
-CFLAGS += -DSUPPORT_UTF8
-else
 ifdef SUPPORT_GUI_MBCS
 LIBEXTRAS = -lmsvcp60
-CFLAGS += -DSUPPORT_UTF8
+CFLAGS+=-DSUPPORT_GUI_MBCS
+else
+ifdef SUPPORT_MBCS
+LIBEXTRAS = -lmsvcp60
 endif
 endif
+
 ifdef USE_UNICOWS
 LIBEXTRAS += -lunicows
 endif

@@ -22,6 +22,8 @@
    More safe in case of multiple redrawing
  */
 
+#include <config.h> /* for SUPPORT_UTF8 */
+
 #include "internal.h"
 extern unsigned int TopmostDialogs; /* from dialogs.c */
 #include <winbase.h>

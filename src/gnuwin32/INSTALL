@@ -40,9 +40,9 @@ Put this in R_HOME/modules at the end of the build.
 You need a recent version of the Mingw port of gcc from
 http://sourceforge.net/projects/mingw/.  There will be a distribution
 called something like MinGW-3.1.0-1.exe (which is built from
-gcc-3.2.3).  This needs updating with mingw-runtime >= 3.5 and w32api
->= 3.1.  The release of gcc-3.3.1 and the release candidates of 3.4.1
-and 3.4.2 have also been tested successfully.  
+gcc-3.2.3).  This needs updating with mingw-runtime >= 3.7 and w32api
+>= 3.1.  The releases of gcc-3.3.1, 3.4.1 and 3.4.2 have also been tested 
+successfully.
 Jan 2005: There is now a release candidate of MinGW-3.2.0: please use that.
 
 
@@ -205,19 +205,28 @@ Internationalization
 --------------------
 
 This version of R can be built with support for some multibyte
-character sets such as UTF and (some of) those used in Chinese,
-Japanese and Korean.
+character sets such as UTF-8 and (some of) those used in Chinese,
+Japanese and Korean.  This is experimental and only of interest to
+users in such locales.  It is currently untested under Windows
+95/98/ME.
 
 Define SUPPORT_GUI_MBCS in MkRules to enable support for MBCS in the
-RGui console, pager, data and script editors (this is based on the
-Japanization patches by Nakama and Okada).
+RGui console, pager, data and script editors (this is based loosely on
+the Japanization patches by Nakama and Okada).  You need to also to
+define SUPPORT_MBCS in config.h: see below.
 
-Define SUPPORT_UTF8 in MkRules to enable support in the R engine for
-UTF-8 character sets.  Since there are no UTF-8 locales on Windows, 
-this sets the locale to be UTF-8 and expects input/output in UTF-8.
-[This is unlikely to be something you want at present.]
+Define SUPPORT_UTF8 in config.h to enable support in the R engine and
+in the Windows graphics device for UTF-8 character sets.  Since there
+are no UTF-8 locales on Windows, this sets the locale to be UTF-8 and
+expects input/output in UTF-8 so is only useful with a customized
+front-end to R.dll.
 
-If either of these is defined you need the DLL msvcp60.dll to be
+Define SUPPORT_MBCS in MkRules AND config.h to enable support in the R
+engine for muli-byte character sets.  This is only useful if you have
+an `East Asian' version of Windows, as only those versions have
+multibyte locales.  (It is also needed for UTF-8 support.)
+
+If any of these is defined you need the DLL msvcp60.dll to be
 installed.  It is on recent versions of Windows, and can be obtained
 by an Internet search.
 
@@ -276,7 +285,7 @@ By default the manuals are made for the ISO standard a4 paper size.
 Users living in N. America might want to use
 
 	cd ../../doc/manual
-	make -f Makefile.win R_PAPERSIZE=letter pdf 
+	make -f Makefile.win R_PAPERSIZE=letter pdf
 
 or set R_PAPERSIZE in the environment and use make -e, for example
 
