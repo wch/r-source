@@ -82,7 +82,18 @@ int F77_SYMBOL(rs)(int *nm, int *n, double *a, double *w,
 		   int *matz, double *z, double *fv1, double *fv2, int *ierr);
 
 /* fft.c */
-/* ...............*/
+/* NOTE:  The following functions use GLOBAL (static) variables !! 
+ * ----   some of R-core think that this should be changed, 
+ *        which will INEVITABLY extend the argument lists ...!
+ *-- i.e. don't export these yet!
+ */
+#ifdef NOT_YET
+void fft_factor(int n, int *pmaxf, int *pmaxp);
+
+int fft_work(double *a, double *b, int nseg, int n, int nspn, int isn,
+	     double *work, int *iwork);
+/* returns 1 for success,  0 otherwise */
+#endif
 
 /* fortran.c   is covered by ./Fortran.h */
 

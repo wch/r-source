@@ -27,11 +27,11 @@ chull(x, y=NULL)
 }
 \references{
     Eddy, W. F. (1977) A new convex hull algorithm for planar
-    sets.\emph{ACM Transactions on Mathematical Software}, \bold{3},
+    sets. \emph{ACM Transactions on Mathematical Software}, \bold{3},
     398-403.
 
     Eddy, W. F. (1977) Algorithm 523. CONVEX, A new convex hull
-    algorithm for planar sets[Z].\emph{ACM Transactions on
+    algorithm for planar sets[Z]. \emph{ACM Transactions on
 	Mathematical Software}, \bold{3}, 411-412.
 }
 \author{B. D. Ripley}
@@ -40,11 +40,9 @@ chull(x, y=NULL)
 
 \examples{
 X <- matrix(rnorm(2000), ncol=2)
-plot(X, type="n")
-points(X, cex=0.5)
+plot(X, cex=0.5)
 hpts <- chull(X)
 hpts <- c(hpts, hpts[1])
 lines(X[hpts, ])
 }
-
 \keyword{hplot}

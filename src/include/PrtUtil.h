@@ -33,11 +33,13 @@
 #define adj_right 1
 #define adj_left  0
 
+/* These should all be in a struct ! */
 extern int  R_print_width;
 extern int  print_na_width;
 extern int  print_quote;
 extern int  print_digits;
 extern int  print_gap;
+
 /* Computation of printing formats */
 void formatLogical(int*,int,int*);
 void formatInteger(int*,int,int*);

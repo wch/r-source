@@ -17,13 +17,21 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  *
- *  Object Formatting
+ * Object Formatting
  *
  *  See ./paste.c for do_paste() , do_format() and  do_formatinfo()
  *  See ./printutils.c for general remarks on Printing and the Encode.. utils.
  *  See ./print.c  for do_printdefault, do_printmatrix, etc.
  *
- *  These  formatFOO() functions determine the proper width, digits, etc.
+ * Exports
+ *	formatString 
+ *	formatLogical
+ *	formatFactor 
+ *	formatInteger
+ *	formatReal   
+ *	formatComplex
+ * 
+ * These  formatFOO() functions determine the proper width, digits, etc.
  */
 
 #include "Defn.h"
@@ -135,9 +143,9 @@ void formatInteger(int *x, int n, int *fieldwidth)
  *    nsig		digits altogether
  *    kpower+1		digits to the left of "."
  *    kpower+1+sgn	including sign
- */
-
-/*old #define MAXDIG print_digits */
+ *
+ * Using GLOBAL  print_digits  -- had  #define MAXDIG print_digits 
+*/
 
 static double tbl[] =
 {
@@ -258,9 +266,9 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
     /*-- These	'mxsl' & 'rt'  are	used in	 F Format
      *	 AND in the	 ____ if(.) "F" else "E" ___   below: */
     if (mxl < 0) mxsl = 1 + neg;
-    /* old?? if (mxl != mnl && mxl + rt > MAXDIG) rt = MAXDIG - mxl; */
+    /*old: if (mxl != mnl && mxl + rt > print_digits) rt = print_digits - mxl;*/
     if (rt < 0)		rt = 0;
-    /* NO! else if (rt > MAXDIG)	rt = MAXDIG; */
+    /* NO! else if (rt > print_digits)	rt = print_digits; */
     mF = mxsl + rt + (rt != 0);	   /* width m for F  format */
 
     /*-- 'see' how	"E" Exponential format would be like : */
