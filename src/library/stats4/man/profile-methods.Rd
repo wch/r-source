@@ -3,7 +3,7 @@
 \alias{profile-methods}
 \alias{profile,ANY-method}
 \alias{profile,mle-method}
-\title{Methods for Function profile in Package `mle'}
+\title{Methods for Function profile in Package `stats4'}
 \description{Profile likelihood}
 \section{Methods}{\describe{
 

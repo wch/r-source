@@ -1,4 +1,3 @@
-require(methods)
 setClass("mle", representation(call = "language",
                                coef = "numeric",
                                fullcoef = "numeric",

@@ -3,7 +3,7 @@
 \alias{plot-methods}
 \alias{plot,ANY,ANY-method}
 \alias{plot,profile.mle,missing-method}
-\title{Methods for Function `plot' in Package `mle'}
+\title{Methods for Function `plot' in Package `stats4'}
 \description{
   Plot profile likelihoods for \code{"mle"} objects.
 }

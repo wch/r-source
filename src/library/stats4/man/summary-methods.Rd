@@ -3,7 +3,7 @@
 \alias{summary-methods}
 \alias{summary,ANY-method}
 \alias{summary,mle-method}
-\title{Methods for Function summary in Package `mle'}
+\title{Methods for Function summary in Package `stats4'}
 \description{Summarize objects}
 \section{Methods}{\describe{
 

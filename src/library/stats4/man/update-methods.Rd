@@ -3,7 +3,7 @@
 \alias{update-methods}
 \alias{update,ANY-method}
 \alias{update,mle-method}
-\title{Methods for Function `update' in Package `mle'}
+\title{Methods for Function `update' in Package `stats4'}
 \description{
   Update \code{"mle"} objects.
 }

@@ -3,7 +3,7 @@
 \alias{coef-methods}
 \alias{coef,ANY-method}
 \alias{coef,mle-method}
-\title{Methods for Function `coef' in Package `mle'}
+\title{Methods for Function `coef' in Package `stats4'}
 \description{
   Extract the coefficient vector from \code{"mle"} objects.
 }

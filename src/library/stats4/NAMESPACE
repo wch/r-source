@@ -1,5 +1,7 @@
 export(mle)
 importFrom(graphics, plot)
-importFrom(stats, coef, confint, logLik, optim, profile, qchisq, update, vcov)
+importFrom(stats, AIC, coef, confint, logLik, optim, profile, 
+	   qchisq, update, vcov)
 exportClasses(mle, profile.mle, summary.mle)
-exportMethods(coef, confint, logLik, plot, profile, summary, show, update, vcov)
+exportMethods(AIC, BIC, coef, confint, logLik, plot, profile, 
+              summary, show, update, vcov)
