@@ -46,7 +46,6 @@ SOURCES_C = \
 	gram.c \
 	gram-ex.c \
 	graphics.c \
-	hdf5.c \
 	iosupport.c \
 	list.c \
 	logic.c \

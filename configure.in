@@ -342,7 +342,6 @@ AC_CHECK_LIB(ncurses, main,,
 ))
 AC_CHECK_LIB(dl, dlopen)
 AC_CHECK_LIB(z, main)
-R_LIB_HDF5
 BLAS="blas.o"
 if ${use_dxml}; then
   AC_CHECK_LIB(dxml, main, FLIBS="-ldxml ${FLIBS}" BLAS="")
@@ -394,9 +393,9 @@ AC_HEADER_TIME
 AC_HEADER_DIRENT
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(dl.h dlfcn.h elf.h floatingpoint.h fpu_control.h \
-  hdf5.h ieee754.h ieeefp.h readline/history.h readline/readline.h \
+  ieee754.h ieeefp.h locale.h readline/history.h readline/readline.h \
   rpc/rpc.h rpc/xdr.h sys/param.h sys/stat.h sys/time.h sys/times.h \
-  unistd.h locale.h)
+  unistd.h)
 case "${host}" in
   *sunos4*)
     AC_DEFINE(SunOS4) ;;
@@ -583,8 +582,15 @@ case "${host}" in
     shlibldflags="-shared"
     ;;
   *solaris*)
+    shlibldflags="-G"
     if test "${GCC}" = yes; then
       cpicflags=-fPIC
+      ld=`${CC} -print-prog-name=ld`
+      ldoutput=`${ld} -v 2>&1 | grep GNU`
+      if test -n "${ldoutput}"; then
+	dllflags="-Wl,-export-dynamic"
+	shlibldflags="-shared"
+      fi
     else
       cpicflags=-KPIC
     fi
@@ -593,7 +599,6 @@ case "${host}" in
     else
       fpicflags=-PIC
     fi
-    shlibldflags="-G"
     ;;
 esac
 
