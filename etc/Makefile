@@ -2,7 +2,8 @@
 
 TESTS   = ../tests
 Ex_Tests = $(TESTS)/Examples
-CleanMe = SHLIB COMPILE INSTALL Rdconv Rdindex Rman2Rd Sd2Rd
+CleanMe1 = SHLIB COMPILE INSTALL
+CleanMe = $(CleanMe1) Rdconv Rdindex Rman2Rd Sd2Rd
 
 MANSRC = ../src/library/*/man/*.Rd
 MANbaseDIR = ../src/library/base/man
@@ -15,8 +16,8 @@ build-latex: stamp-latex
 tests: test-Examples
 
 test-Examples: $(Ex_Tests)
-	@cp Makefile-test-Ex $(Ex_Tests)/Makefile
-	-(cd  $(Ex_Tests); make $@)
+	@cp -p Makefile-test-Ex $(Ex_Tests)/Makefile
+	-(cd $(Ex_Tests); make $@)
 
 stamp-help: build-index $(MANSRC)
 	@echo "Building ALL help pages"
@@ -45,10 +46,9 @@ $(Ex_Tests):
 	@if [ ! -d $@ ]; then mkdir -p $@ ; fi
 
 clean:
-	@rm -f COMPILE INSTALL SHLIB
+	@rm -f $(CleanMe1)
 	@(cd $(Ex_Tests); make $@)
 
 distclean realclean:
-	@rm -f COMPILE INSTALL SHLIB
 	@rm -fr $(Ex_Tests) $(CleanMe)
 	@rm -f stamp-*
