@@ -23,7 +23,7 @@ static int      gl_tab();  /* forward reference needed for gl_tab_hook */
 
 /********************* exported interface ********************************/
 
-char           *getline();		/* read a line of input */
+int             getline();		/* read a line of input */
 void            gl_setwidth();		/* specify width of screen */
 void            gl_histadd();		/* adds entries to hist */
 void		gl_strwidth();		/* to bind gl_strlen */
@@ -505,7 +505,7 @@ gl_setwidth(int w)
     }
 }
 
-char *
+int
 getline(char *prompt, char *buf, int buflen)
 {
     int             c, loc, tmp;
@@ -519,7 +519,7 @@ getline(char *prompt, char *buf, int buflen)
     if (setjmp(gl_jmp)) {
        gl_newline();
        gl_cleanup(); 
-       return gl_buf;
+       return 0;
     }
     gl_init();	
     gl_pos = 0;
@@ -550,7 +550,7 @@ getline(char *prompt, char *buf, int buflen)
 	      case '\n': case '\r': 			/* newline */
 		gl_newline();
 		gl_cleanup();
-		return gl_buf;
+		return 0;
 		/*NOTREACHED*/
 		break; 
 	      case '\001': gl_fixup(gl_prompt, -1, 0);		/* ^A */
@@ -568,7 +568,7 @@ getline(char *prompt, char *buf, int buflen)
 		    gl_buf[0] = 0;
 		    gl_cleanup();
 		    gl_putc('\n');
-		    return gl_buf;
+		    return 0;
 		} else {
 		    gl_del(0);
 		}
@@ -618,6 +618,12 @@ getline(char *prompt, char *buf, int buflen)
               case '\027': gl_killword(-1);			/* ^W */
 		break;
 	      case '\031': gl_yank();				/* ^Y */
+		break;
+	      case '\032': 					/* ^Z */
+		gl_newline();
+		gl_cleanup();
+		return 1;
+		/*NOTREACHED*/
 		break;
 	      case '\033':				/* ansi arrow keys */
 		c = gl_getc();
@@ -684,7 +690,7 @@ getline(char *prompt, char *buf, int buflen)
     }
     gl_newline();
     gl_cleanup();
-    return gl_buf;
+    return 0;
 }
 
 static void

@@ -21,6 +21,9 @@ that is in use (with an informative warning).
 Using HTML help has changed slightly: in particular
 help(htmlhelp=TRUE) makes use of the setting of options("browser").
 
+Ctrl-Z in the Rgui or Rterm will signal EOF, and so can be used to
+terminate a read by readLines() or scan(), for example.
+
 The preferred compiler is gcc-3.1: gcc-2.95.3 can still be used but
 up-to-date header files are needed.
 

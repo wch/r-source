@@ -11,7 +11,7 @@
 typedef size_t (*gl_strwidth_proc)(char *);
 
 /* read a line of input */
-char           *getline(char *prompt, char *buf, int maxlen);  
+int             getline(char *prompt, char *buf, int maxlen);  
 
 void            gl_setwidth(int);		/* specify width of screen */
 void            gl_histadd(char *);		/* adds entries to hist */
