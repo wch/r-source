@@ -91,6 +91,6 @@ isGrammarSymbol <-
                  "{" =, "if" = , "for"= ,
                  "while" = , "repeat" = ,
                  "return" = , "next" = ,
-                 "break" = TRUE,
+                 "break" = , "<-" = , "<<-" = TRUE,
                  FALSE)
 }
