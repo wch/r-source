@@ -248,12 +248,24 @@ static int my_yesnocancel(char *s)
 
 
 /*1:*/
+static int R_is_running = 0;
+
+void Rconsolesetwidth(int cols)
+{
+    if(R_is_running && setWidthOnResize)
+	R_SetOptionWidth(cols);
+}
+
 static int GuiReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     char *p;
     char *NormalPrompt =
-    (char *) CHAR(STRING(GetOption(install("prompt"), R_NilValue))[0]);
+	(char *) CHAR(STRING(GetOption(install("prompt"), R_NilValue))[0]);
 
+    if(!R_is_running) {
+	R_is_running = 1;
+	Rconsolesetwidth(consolecols(RConsole));
+    }
     ConsoleAcceptCmd = !strcmp(prompt, NormalPrompt);
     consolereads(RConsole, prompt, buf, len, addtohistory);
     for (p = buf; *p; p++)
@@ -805,6 +817,11 @@ void R_CleanUp(int ask)
 
 void R_Busy(int which)
 {
+/* currently cursor is never set off busy */
+    /*if(!CharacterMode) {
+	if(which == 1) setcursor(WatchCursor);
+	if(which == 0) setcursor(ArrowCursor);
+	}*/
 }
 
 	/* Saving and Restoring the Global Environment */
