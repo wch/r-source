@@ -20,5 +20,7 @@ prints memory use statistics (\code{verbose=TRUE}).
 \examples{
 gc() #- do it now
 gcinfo(TRUE) #-- in the future, show when you do it
+x _ integer(0); for(i in 1:18) x _ c(x,i,x)
+gcinfo(verbose = FALSE)#-- don't show it anymore
 }
 \keyword{environment}

@@ -540,7 +540,7 @@ FROM:	<bates@stat.wisc.edu>
 	nested anonymous functions are welcome.	 I'll try to work out a
 	corresponding all.vars function.
 
-	### $Id: TASKS,v 1.3 1997/11/11 07:58:05 maechler Exp $
+	### $Id: TASKS,v 1.3.4.1 1998/01/12 00:00:47 rgentlem Exp $
 	### Some replacement functions that are missing in R
 
 	### Determine all the names (symbols) occuring in an object.
@@ -586,7 +586,7 @@ FROM:	<bates@stat.wisc.edu>
 
 ----------------------------------------------------------------------
 TASK:	Matrix multiply problems
-STATUS:	Open
+STATUS:	CLOSED
 FROM:	<thomas@biostat.washington.edu>
 	Both of these used to work and seem useful and harmless (and work in S):
 	R> matrix(1,ncol=1)%*%c(1,2)
@@ -1488,7 +1488,7 @@ FROM:	<bates@stat.wisc.edu>
 	nested anonymous functions are welcome.	 I'll try to work out a
 	corresponding all.vars function.
 
-	### $Id: TASKS,v 1.3 1997/11/11 07:58:05 maechler Exp $
+	### $Id: TASKS,v 1.3.4.1 1998/01/12 00:00:47 rgentlem Exp $
 	### Some replacement functions that are missing in R
 
 	### Determine all the names (symbols) occuring in an object.

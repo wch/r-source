@@ -33,7 +33,6 @@
  *
  */
 
-int get1index(SEXP, SEXP);
 
 static void SetArgsforUseMethod(SEXP x)
 {
@@ -315,6 +314,9 @@ SEXP frameSubset(SEXP x, SEXP s, SEXP call, int drop)
 	SEXP sr, sc, a, ap, ss, xp, oat, s1;
 	int nr, nc, ncs;
 	int i;
+
+	if ( !isFrame(x) )
+		errorcall(call, "argument is not a data frame\n");
 
 	nc = length(x);
 	nr = nrows(CAR(x));
@@ -692,7 +694,7 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (isVector(x) || isList(x) || isLanguage(x)) {
 		
 		if(nsubs == 1) {
-			offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol));
+			offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),1);
 			if (offset < 0 || offset >= length(x))
 				/* a bold attempt to get the same behaviour
 				   for $ and [[ */
@@ -710,7 +712,7 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
 			PROTECT(index = allocVector(INTSXP, nsubs));
 			dimnames = getAttrib(x, R_DimNamesSymbol);
 			for (i = 0; i < nsubs; i++) {
-				INTEGER(index)[i] = get1index(CAR(subs), CAR(dimnames));
+				INTEGER(index)[i] = get1index(CAR(subs), CAR(dimnames),1);
 				subs = CDR(subs);
 				dimnames = CDR(dimnames);
 				if (INTEGER(index)[i] < 0 || INTEGER(index)[i] >= INTEGER(dims)[i])

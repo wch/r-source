@@ -116,18 +116,33 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0; i < len; i++) {
 		/* first find out how many splits there will be */
 		strcpy(buff, CHAR(STRING(x)[i]));
-		split = CHAR(STRING(tok)[i % tlen]);
-		ntok = 0;
-		if(strtok(buff, split) != NULL)
-		         do {
-		         	ntok++;
-		         } while (strtok(NULL, split) != NULL);
+		if( tlen > 0 ) {
+			split = CHAR(STRING(tok)[i % tlen]);
+			ntok = 0;
+			if(strtok(buff, split) != NULL)
+			         do {
+			         	ntok++;
+			         } while (strtok(NULL, split) != NULL);
+		}
+		else 
+			ntok=strlen(buff);
+
 		PROTECT(t = allocVector(STRSXP, ntok));
-		strcpy(buff, CHAR(STRING(x)[i]));
-		pt = strtok(buff, split);
-		for (j = 0; j < ntok; j++) {
-			STRING(t)[j] = mkChar(pt);
-			pt = strtok(NULL, split);
+		if( tlen > 0 ) {
+			strcpy(buff, CHAR(STRING(x)[i]));
+			pt = strtok(buff, split);
+			for (j = 0; j < ntok; j++) {
+				STRING(t)[j] = mkChar(pt);
+				pt = strtok(NULL, split);
+			}
+		}
+		else {
+			char bf[2];
+			bf[1]='\0';
+			for (j = 0; j < ntok; j++) {
+				bf[0]=buff[j];
+				STRING(t)[j] = mkChar(bf);
+			}
 		}
 		CAR(w) = t;
 		UNPROTECT(1);
@@ -428,7 +443,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 			offset += regmatch[0].rm_eo;
 			if(s[offset] == '\0' || !global) break;
 		}
-		if(nmatch = 0) STRING(ans)[i] = STRING(vec)[i];
+		if(nmatch == 0) STRING(ans)[i] = STRING(vec)[i];
 		else {
 			STRING(ans)[i] = allocString(ns);
 			offset = 0;

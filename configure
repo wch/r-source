@@ -563,7 +563,7 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_MINOR "60.2"
+#define R_MINOR "61.2"
 EOF
 
 cat >> confdefs.h <<\EOF
@@ -575,15 +575,15 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_DAY "12"
+#define R_DAY "15"
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_MONTH "December"
+#define R_MONTH "March"
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_YEAR "1997"
+#define R_YEAR "1998"
 EOF
 
 cat >> confdefs.h <<EOF
@@ -3915,5 +3915,6 @@ test "$no_create" = yes || ${CONFIG_SHELL-/bin/sh} $CONFIG_STATUS || exit 1
 (cd etc; chmod +x INSTALL REMOVE Rdconv Rdindex Rman2Rd Sd2Rd \
          build-help build-htmlpkglist help.pretty html2dos)
 (cd cmd; chmod +x fwf2table)
+mkdir -p bin include library src/lib
 
 

@@ -21,6 +21,13 @@ is.numeric(x)
 \note{
   \emph{\R has no single precision data type.  All real numbers are
     stored in double precision format}.
+
+  \code{as.numeric} for factors yields the codes underlying the factor
+    levels. 
+}
+\examples{
+as.numeric(c("2","B"))
+as.numeric(factor(5:10))
 }
 \keyword{classes}
 \keyword{attribute}

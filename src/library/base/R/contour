@@ -1,5 +1,6 @@
 contour <- function(x=seq(0,1,len=nrow(z)), y=seq(0,1,len=ncol(z)), z,
 	nlevels=10, levels=pretty(range(z,na.rm=TRUE), nlevels), labcex=0,
+        xlim=range(x,na.rm=TRUE), ylim=range(y,na.rm=TRUE),
 	col=par("fg"), lty=par("lty"), add=FALSE)
 {
 	if(is.list(x)) {
@@ -10,9 +11,11 @@ contour <- function(x=seq(0,1,len=nrow(z)), y=seq(0,1,len=ncol(z)), z,
 		stop("increasing x and y values expected")
 	if(!add) {
 		plot.new()
-		plot.window(range(x), range(y), "")
+		plot.window(xlim, ylim, "")
 	}
-	.Internal(contour(x, y, z, levels, col=col, lty=lty))
+        if(!is.double(z)) storage.mode(z) <- "double"#- don't lose  dim(.)
+	.Internal(contour(as.double(x), as.double(y), z,
+                          as.double(levels), col=col, lty=lty))
 	if(!add) {
 		axis(1)
 		axis(2)
