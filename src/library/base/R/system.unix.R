@@ -180,8 +180,8 @@ help <- function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
 	    else {
 		FILE <- tempfile()
 		## on.exit(unlink(paste(FILE, "*", sep = "")))
-		cat("\\documentclass[", .Options$papersize, "paper]{article}\n",
-		    file = FILE, sep = "")
+		cat("\\documentclass[", .Options$papersize,
+                    "paper]{article}\n", file = FILE, sep = "")
 		.Platform$ append.file(FILE, "${RHOME}/doc/manual/Rd.sty")
 		cat("\\InputIfFileExists{Rhelp.cfg}{}{}\n\\begin{document}\n",
 		    file = FILE, append = TRUE)
@@ -189,7 +189,8 @@ help <- function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
 				       paste(sub("help/","latex/",file),".tex",
 					     sep = ""))
 		cat("\\end{document}\n", file = FILE, append = TRUE)
-		system(paste("${RHOME}/bin/help PRINT", FILE, topic))
+		system(paste("${RHOME}/bin/help PRINT", FILE, topic,
+                             .Options$latexcmd, .Options$dvipscmd))
 		return()
 	    }
 	} else
