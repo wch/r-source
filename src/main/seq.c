@@ -17,12 +17,18 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+/*  The `` x:y ''  primitive calls do_seq(.);
+ *
+ *  do_seq(.) calls  cross(.) if both arguments are factors
+ *	      and    seq(.)   otherwise.
+ */
+
 #include "Defn.h"
 #include "Mathlib.h"
 
 static SEXP seq(SEXP call, SEXP s1, SEXP s2)
 {
-	int i, n;
+	int i, n, in1;
 	double n1, n2;
 	SEXP ans;
 
@@ -37,17 +43,23 @@ static SEXP seq(SEXP call, SEXP s1, SEXP s2)
 	if (!FINITE(n1) || !FINITE(n2))
 		errorcall(call, "NA argument\n");
 
-	if (n1 <= n2) {
-		n = n2 - n1 + 1 + FLT_EPSILON;
+	if (n1 <= INT_MIN || n2 <= INT_MIN || n1 > INT_MAX || n2 > INT_MAX
+	    || abs(n2 - n1) >= INT_MAX)
+		errorcall(call, "argument too large in magnitude\n");
+
+	n = abs(n2 - n1) + 1 + FLT_EPSILON;
+	if (n1 == (in1 = (int)(n1))) {
 		ans = allocVector(INTSXP, n);
-		for (i = 0; i < n; i++)
-			INTEGER(ans)[i] = n1 + i;
-	}
-	else {
-		n = n1 - n2 + 1 + FLT_EPSILON;
-		ans = allocVector(INTSXP, n);
-		for (i = 0; i < n; i++)
-			INTEGER(ans)[i] = n1 - i;
+		if (n1 <= n2)
+			for (i = 0; i < n; i++) INTEGER(ans)[i] = in1 + i;
+		else
+			for (i = 0; i < n; i++) INTEGER(ans)[i] = in1 - i;
+	} else {
+		ans = allocVector(REALSXP, n);
+		if (n1 <= n2)
+			for (i = 0; i < n; i++) REAL(ans)[i] = n1 + i;
+		else
+			for (i = 0; i < n; i++) REAL(ans)[i] = n1 - i;
 	}
 	return ans;
 }
@@ -55,7 +67,7 @@ static SEXP seq(SEXP call, SEXP s1, SEXP s2)
 	/*  cross  -  the "cross" of two factors  */
 
 	/*  Note that this always produces an unordered
-	 *  result.  There is no way to order.  */
+	 *  result.  There is no way to order.	*/
 
 static SEXP cross(SEXP s1, SEXP s2)
 {
@@ -65,7 +77,7 @@ static SEXP cross(SEXP s1, SEXP s2)
 	l1 = LEVELS(s1);
 	l2 = LEVELS(s2);
 	PROTECT(ans = allocVector(FACTSXP, n));
-        LEVELS(ans) = l1 * l2;
+	LEVELS(ans) = l1 * l2;
 	for(i=0 ; i<n ; i++) {
 		v1 = INTEGER(s1)[i];
 		v2 = INTEGER(s2)[i];
