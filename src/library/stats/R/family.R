@@ -96,14 +96,14 @@ make.link <- function (link)
                    valideta <- function(eta) TRUE
                },
                "sqrt" = {
-                   linkfun <- function(mu) mu^0.5
+                   linkfun <- function(mu) sqrt(mu)
                    linkinv <- function(eta) eta^2
                    mu.eta <- function(eta) 2 * eta
                    valideta <- function(eta) all(eta>0)
                },
                "1/mu^2" = {
                    linkfun <- function(mu) 1/mu^2
-                   linkinv <- function(eta) 1/eta^0.5
+                   linkinv <- function(eta) 1/sqrt(eta)
                    mu.eta <- function(eta) -1/(2 * eta^1.5)
                    valideta <- function(eta) all(eta>0)
                },
