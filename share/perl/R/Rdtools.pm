@@ -45,10 +45,11 @@ sub get_usages {
     ##   $delimround->quote("\'");
     ## </FIXME>
 
-    my %usages;			# usages for funs, vars and data
-    my %funs;
-    my @vars;			# names of vars with \usage entry
-    my @data;			# names of data with \usage entry
+    my %usages;
+    my %functions;
+    my @variables;
+    my @data_sets;
+    my %S4methods;
 
     my @text;
     my $name;
@@ -91,18 +92,22 @@ sub get_usages {
 	## Get rid of leading and trailing braces.
 	$usage = substr($usage, 1, -1) if($usage);
 
+	## Remove R comment lines.  (Removing all comments is a bit
+	## tricky as '#' could occur inside a string ...)
+	$usage =~ s/(^|\n)[\s\n]*\#.*(\n|$)//g;
+
 	while($usage) {
 	    $usage =~ s/^[\s\n]*//g;
 
 	    ## Try to match usage for variables (i.e., a syntactic name
 	    ## on a single line).
 	    if($usage =~ /^([\.[:alpha:]][\.[:alnum:]]*)\s*(\n|$)/) {
-		push(@vars, $1);
+		push(@variables, $1);
 		$usage =~ s/^.*(\n|$)//g;
 		next;
 	    }
 
-	    my ($generic, $class);
+	    my ($generic, $class, $siglist);
 
 	    ## Try to match the next '(...)' arglist from $usage.
 	    my ($prefix, $match, $rest) = $delimround->match($usage);
@@ -111,48 +116,73 @@ sub get_usages {
 	    $prefix =~ s/[\s\n]*$//;
 	    $prefix =~ s/^([\s\n\{]*)//;
 	    $prefix =~ s/(.*\n)*//g;
-	    ## <FIXME>
-	    ## Leading semicolons?
-	    ##   $prefix =~ s/^;//;
-	    ## </FIXME>
+	    $prefix =~ s/^\"//;
+	    $prefix =~ s/\"$//;
+
+	    if(!$prefix || ($prefix =~ /.+<-.+/)) {
+		## Ignore matches where $prefix is empty, or contains a
+		## '<-' in the 'middle', most likely from something like
+		## NAME <- FUN(ARGLIST), e.g., Random.Rd.
+		$rest =~ s/^.*(\n|$)//g;
+		$usage = $rest;
+		next;
+	    }
+
 	    if($prefix =~
-	       /\\method\{([[:alnum:].]+)\}\{([[:alnum:].]+)\}/) {
-		## We need a little magic for replacement *methods*, and
-		## hence remember \method{GENERIC}{CLASS} markup found.
-		$generic = $1;
-		$class = $2;
+	       /\\(S3)?method\{([[:alnum:].]+)\}\{([[:alnum:].]+)\}/) {
+		## We need a little magic for S3 replacement *methods*,
+		## and hence remember S3 methods markup found.
+		$generic = $2;
+		$class = $3;
 		$prefix = "$generic.$class" unless($mode eq "style");
+	    }
+	    if($prefix =~
+	       /\\S4method\{([[:alnum:].]+)\}\{([[:alnum:].,]+)\}/) {
+		## We need a little magic for S4 replacement *methods*,
+		## and hence remember S4 methods markup found.
+		$generic = $1;
+		$siglist = $2;
+		$prefix = "\\S4method{${generic}}{${siglist}}";
 	    }
 
 	    ## Play with $match.
 	    $match =~ s/=\s*([,\)])/$1/g;
-	    $match =~ s/<</\"<</g; # foo = <<see below>> style
-	    $match =~ s/>>/>>\"/g; # foo = <<see below>> style
+	    $match =~ s/\<\</\"\<\</g; # foo = <<see below>> style
+	    $match =~ s/\>\>/\>\>\"/g; # foo = <<see below>> style
 	    $match =~ s/\\%/%/g; # comments
 
 	    if($rest =~ /^\s*([\#\n]|$)/) {
 		## Note that we need to allow for R comments in the
 		## above regexp.
-		if($prefix) {
-		    ## $prefix should now be the function name, and
-		    ## $match its arg list.
-		    ## <NOTE>
-		    ## Heuristics for data set documentation once more.
-		    if($maybe_is_data_set_doc
-		       && ($prefix eq "data")
-		       && ($match !~ /\,/)) {
-			push(@data, substr($match, 1, -1));
-			last;
+
+		## <NOTE>
+		## Heuristics for data set documentation once more.
+		if($maybe_is_data_set_doc
+		   && ($prefix eq "data")
+		   && ($match !~ /\,/)) {
+		    push(@data_sets, substr($match, 1, -1));
+		    last;
+		}
+		## </NOTE>
+
+		if($siglist) {
+		    if($S4methods{$prefix}) {
+			print("Multiple usage for S4 method" .
+			      "$generic-$siglist in $name\n");
 		    }
-		    ## </NOTE>
-		    if($funs{$prefix}) {
+		    else {
+			$S4methods{$prefix} = $match;
+		    }
+		}
+		else {
+		    if($functions{$prefix}) {
 			## Multiple usages for a function are trouble.
 			## We could try to build the full arglist for
 			## the function from the usages.  A simple idea
 			## is to do
-			##   chop($funs{$prefix});
+			##   chop($functions{$prefix});
 			##   my $foo = ", " . substr($match, 1);
-			##   $funs{$prefix} .= $foo;
+			##   $functions{$prefix} .= $foo;
 			## which adds the 'new' args to the 'old' ones.
 			## This is not good enough, as it could give
 			## duplicate args which is not allowed.  In
@@ -168,38 +198,49 @@ sub get_usages {
 			## unless in mode 'args', where we can cheat.
 			if(($mode eq "args") || ($mode eq "style")) {
 			    my $save_prefix = $prefix . "0";
-			    while($funs{$save_prefix}) {
+			    while($functions{$save_prefix}) {
 				$save_prefix .= "0";
 			    }
-			    $funs{$save_prefix} = $match;
+			    $functions{$save_prefix} = $match;
 			}
 			else {
 			    print("Multiple usage for $prefix() " .
 				  "in $name\n");
 			}
 		    } else {
-			$funs{$prefix} = $match;
+			$functions{$prefix} = $match;
 		    }
 		}
 	    }
-	    elsif($rest =~ /^\s*<-\s*([[:alpha:]]+)\s*(\n|$)/) {
+	    elsif($rest =~ /^\s*\<-\s*([[:alpha:]]+)\s*(\n|$)/) {
 		## Looks like documentation for a replacement function.
-		if($generic) {
-		    ## Documentation for a replacement *method* in the
+		if($siglist) {
+		    ## Documentaion for an S4 replacement method in the
 		    ## form
-		    ##   \method{GENERIC}{CLASS}(ARGLIST) <- RHS
-		    ## with GENERIC *without* the trailing '<-'.
-		    ## Rewrite as
-		    ##   "GENERIC<-.CLASS" (ARGLIST, VALUE)
-		    ## We could also deal with
-		    ##   \method{GENERIC<-}{CLASS}(ARGLIST) <- RHS
-		    ## here but Rdconv() would not get this right for
-		    ## the time being ...
-		    $prefix = "$generic<-.$class";
-		} else {
-		    $prefix = "$prefix<-";
+		    ##   \S4method{GENERIC}{SIGLIST}(ARGLIST) <- RHS
+		    $prefix = "\\S4method{${generic}<-}{${siglist}}";
+		    $S4methods{$prefix} =
+		      substr($match, 0, -1) . ", $1)";
 		}
-		$funs{"\"$prefix\""} = substr($match, 0, -1) . ", $1)";
+		else {
+		    if($generic) {
+			## Documentation for a replacement *method* in
+			## the form
+			##   \method{GENERIC}{CLASS}(ARGLIST) <- RHS
+			## with GENERIC *without* the trailing '<-'.
+			## Rewrite as
+			##   "GENERIC<-.CLASS" (ARGLIST, VALUE)
+			## We could also deal with
+			##   \method{GENERIC<-}{CLASS}(ARGLIST) <- RHS
+			## here but Rdconv() would not get this right
+			## for the time being ...
+			$prefix = "$generic<-.$class";
+		    } else {
+			$prefix = "$prefix<-";
+		    }
+		    $functions{$prefix} =
+		      substr($match, 0, -1) . ", $1)";
+		}
 	    }
 
 	    $rest =~ s/^.*(\n|$)//g;
@@ -208,9 +249,10 @@ sub get_usages {
 
     }
 
-    @{$usages{"funs"}} = %funs;
-    @{$usages{"vars"}} = @vars;
-    @{$usages{"data"}} = @data;
+    @{$usages{"functions"}} = %functions;
+    @{$usages{"variables"}} = @variables;
+    @{$usages{"data_sets"}} = @data_sets;
+    @{$usages{"S4methods"}} = %S4methods;
 
     %usages;
 }
