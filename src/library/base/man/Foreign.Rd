@@ -97,10 +97,10 @@ safe.
 }
 
 \section{Header files for external code}{
-Writing code for use with \code{.External} will typically require access 
-to the header files in the \code{src/include}. These are not copied by
-\code{make install} and so may not be available in an installed version
-of \R.
+    Writing code for use with \code{.External} will typically use
+    internal \R structures. If possible use just those in
+    \file{Rinternals.h}, as other header files are not installed and are
+    even more likely to be changed.
 }
     
 \seealso{\code{\link{dyn.load}}.}
