@@ -115,6 +115,7 @@ ifeq ($(SPKG0),$(DPKG0))
 	@echo
 	@exit 111
 endif
+	@$(ECHO)
 	@$(ECHO) "---------- Making package $(PKG) ------------"
 	@if test -f ${SPKG}/configure.win; then \
 	  sh ${SPKG}/configure.win; \
@@ -163,7 +164,6 @@ else
 	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win
 endif
 	@echo "  DLL made"
-	@echo
 
 FORCE:
 
