@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-03-03)
+Version 1.7.0 Under development (unstable) (2003-03-07)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -28,41 +28,43 @@ Type `q()' to quit R.
 > # test do_download.
 > nrow(CRAN.packages())
 trying URL `http://cran.r-project.org/src/contrib/PACKAGES'
-Content type `text/plain; charset=iso-8859-1' length 98837 bytes
+Content type `text/plain; charset=iso-8859-1' length 99193 bytes
 opened URL
 .......... .......... .......... .......... ..........
 .......... .......... .......... .......... ......
 downloaded 96Kb
 
-[1] 201
+[1] 202
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
 > readLines(zz)
- [1] "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">"              
- [2] ""                                                              
- [3] "<html>"                                                        
- [4] "<head>"                                                        
- [5] "<title>The Comprehensive R Archive Network</title>"            
- [6] "<link rel=\"stylesheet\" type=\"text/css\" href=\"R.css\">"    
- [7] "</head>"                                                       
- [8] ""                                                              
- [9] "<FRAMESET cols=\"1*, 4*\" border=0>"                           
-[10] "<FRAMESET rows=\"120, 1*\">"                                   
-[11] "<FRAME src=\"logo.html\" name=\"logo\" frameborder=0>"         
-[12] "<FRAME src=\"navbar.html\" name=\"contents\" frameborder=0>"   
-[13] "</FRAMESET>"                                                   
-[14] "<FRAME src=\"banner.shtml\" name=\"banner\" frameborder=0>"    
-[15] "<noframes>"                                                    
-[16] "<h1>The Comprehensive R Archive Network</h1>"                  
-[17] ""                                                              
-[18] "Your browser seems not to support frames,"                     
-[19] "here is the <A href=\"navbar.html\">contents page</A> of CRAN."
-[20] "</noframes>"                                                   
-[21] "</FRAMESET>"                                                   
-[22] ""                                                              
-[23] ""                                                              
-[24] ""                                                              
+ [1] "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">"                       
+ [2] ""                                                                       
+ [3] "<html>"                                                                 
+ [4] "<head>"                                                                 
+ [5] "<title>The Comprehensive R Archive Network</title>"                     
+ [6] "<link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\">"         
+ [7] "<link rel=\"shortcut icon\" href=\"favicon.ico\" type=\"image/x-icon\">"
+ [8] "<link rel=\"stylesheet\" type=\"text/css\" href=\"R.css\">"             
+ [9] "</head>"                                                                
+[10] ""                                                                       
+[11] "<FRAMESET cols=\"1*, 4*\" border=0>"                                    
+[12] "<FRAMESET rows=\"120, 1*\">"                                            
+[13] "<FRAME src=\"logo.html\" name=\"logo\" frameborder=0>"                  
+[14] "<FRAME src=\"navbar.html\" name=\"contents\" frameborder=0>"            
+[15] "</FRAMESET>"                                                            
+[16] "<FRAME src=\"banner.shtml\" name=\"banner\" frameborder=0>"             
+[17] "<noframes>"                                                             
+[18] "<h1>The Comprehensive R Archive Network</h1>"                           
+[19] ""                                                                       
+[20] "Your browser seems not to support frames,"                              
+[21] "here is the <A href=\"navbar.html\">contents page</A> of CRAN."         
+[22] "</noframes>"                                                            
+[23] "</FRAMESET>"                                                            
+[24] ""                                                                       
+[25] ""                                                                       
+[26] ""                                                                       
 > close(zz)
 > 
 > ## check graceful failure:
