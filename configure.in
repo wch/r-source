@@ -506,6 +506,13 @@ R_TYPE_SOCKLEN
 AC_C_BIGENDIAN
 AC_C_CONST
 if test "${cross_compiling}" = yes; then
+  AC_MSG_WARN([assuming C ints are 4 byte on ${host}])
+fi
+AC_CHECK_SIZEOF(int, 4)
+if test "${ac_cv_sizeof_int}" = 4; then
+  AC_DEFINE(INT_32_BITS)
+fi
+if test "${cross_compiling}" = yes; then
   AC_MSG_WARN([assuming C longs are 4 byte on ${host}])
 fi
 AC_CHECK_SIZEOF(long, 4)

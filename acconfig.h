@@ -87,6 +87,9 @@
 /* Define if you have IEEE 754 floating point arithmetic. */
 #undef IEEE_754
 
+/* Define if you have 32 bit ints. */
+#undef INT_32_BITS
+
 /* Define if your system needs __setfpucw() to control FPU rounding.
    This was used to control floating point precision, rounding and
    floating point exceptions on older Linux systems.

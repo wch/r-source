@@ -163,6 +163,9 @@
 /* Define if you have IEEE 754 floating point arithmetic. */
 #define IEEE_754 1
 
+/* Define if you have 32 bit ints. */
+#define INT_32_BITS 1
+
 /* Define if your system needs __setfpucw() to control FPU rounding.
    This was used to control floating point precision, rounding and
    floating point exceptions on older Linux systems.
@@ -213,6 +216,9 @@
 
 /* Type for socket lengths: socklen_t, sock_t, int? */
 #define SOCKLEN_T int
+
+/* The number of bytes in a int.  */
+#define SIZEOF_INT 4
 
 /* The number of bytes in a long.  */
 #define SIZEOF_LONG 4
