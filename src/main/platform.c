@@ -883,6 +883,9 @@ SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_LOCALE_H
 # include <locale.h>
 #endif
+#ifdef HAVE_LANGINFO_H
+# include <langinfo.h>
+#endif
 
 SEXP do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -908,6 +911,9 @@ SEXP do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(p) SET_STRING_ELT(ans, 0, mkChar(p));
     else  SET_STRING_ELT(ans, 0, mkChar(""));
     UNPROTECT(1);
+#ifdef HAVE_NL_LANGINFO
+    utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
+#endif    
     return ans;
 #else
     return R_NilValue;
