@@ -543,12 +543,31 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	    SET_DEBUG(rho, 0);
 	}
 	if (!strcmp(CHAR(PRINTNAME(CExpr)),"Q")) {
-	    /* run onexit/cend code for everything on the stack (for now) */
-	    R_run_onexits(NULL);
+	    RCNTXT *c;
+
+	    /* Find the target for the jump--the first non-browser
+               CTXT_TOPLEVEL. The target will usually usually be
+               &R_Toplevel, but may not be, in particular in embedded
+               uses. */
+	    for (c = R_GlobalContext; c != NULL; c = c->nextcontext)
+		if (c->callflag == CTXT_TOPLEVEL &&
+		    (c->nextcontext == NULL ||
+		     c->nextcontext->callflag != CTXT_BROWSER))
+		    break;
+	    if (c == NULL)
+		error("no toplevel to return to"); /* should never happen */
+
+	    /* Run onexit/cend code for everything above the target.
+               The browser context is still on the stack, so any error
+               will drop us back to the current browser.  */
+	    R_run_onexits(c);
+
 	    /* this is really dynamic state that should be managed as such */
 	    R_BrowseLevel = 0;
-	    R_restore_globals(&R_Toplevel);
-            LONGJMP(R_Toplevel.cjmpbuf, CTXT_TOPLEVEL);
+
+	    R_restore_globals(c);
+	    R_ToplevelContext = R_GlobalContext = c;
+            LONGJMP(c->cjmpbuf, CTXT_TOPLEVEL);
 	}
 	if (!strcmp(CHAR(PRINTNAME(CExpr)),"where")) {
 	    printwhere();
