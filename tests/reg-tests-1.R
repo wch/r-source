@@ -2014,6 +2014,13 @@ str(A.[1, 0, 2, drop = FALSE])
 ## both gave errors in 1.6.2
 
 
+## PR#2541, cbind (and rbind) with zero-length components
+y <- matrix(0,1,0)
+cbind(y, integer(0))
+y <- matrix(0,0,1)
+rbind(y, integer(0))
+## gave fatal error in 1.6.2, since miscalculated no of rows/cols.
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

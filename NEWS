@@ -501,6 +501,13 @@ BUG FIXES
 
     o	La.chol2inv() gave incorrect results unless the matrix was square.
 
+    o	When the POSIXt data functions were required to guess DST,
+	they sometimes guessed correctly that DST was in force but
+	converted a POSIXlt time as if standard time was in given.
+
+    o	c/rbind were not handling zero col/row matrices correctly.
+	(PR#2541 was one symptom.)
+
 
 
 	**************************************************
