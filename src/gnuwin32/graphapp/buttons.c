@@ -902,6 +902,19 @@ field newfield(char *text, rect r)
 	return obj;
 }
 
+
+field newfield_no_border(char *text, rect r)
+{
+	field obj = newchildwin("edit", NULL,
+			ES_LEFT | ES_AUTOHSCROLL,
+			r, NULL);
+	if (obj) {
+		obj->kind = FieldObject;
+		settext(obj, text);
+	}
+	return obj;
+}
+
 field newpassword(char *text, rect r)
 {
 	field obj = newchildwin("edit", NULL,

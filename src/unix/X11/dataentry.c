@@ -31,6 +31,8 @@
 
 
 static void clearwindow(void);
+static int newcol;
+
 
 /*
    The spreadsheet function returns a list of vectors. The types of
@@ -122,8 +124,8 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (indata != R_NilValue) {
 	PROTECT(inputlist = duplicate(indata)); nprotect++;
-	for (tvec = inputlist, tvec2 = colmodes; 
-	     tvec != R_NilValue; 
+	for (tvec = inputlist, tvec2 = colmodes;
+	     tvec != R_NilValue;
 	     tvec = CDR(tvec), tvec2 = CDR(tvec2)) {
 	    type = TYPEOF(CAR(tvec));
 	    if (CAR(tvec2) != R_NilValue)
@@ -198,7 +200,7 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    else
 			REAL(tvec2)[j] = NA_REAL;
 		} else if (TYPEOF(CAR(tvec)) == STRSXP) {
-		    if (!streql(CHAR(STRING(CAR(tvec))[j]), 
+		    if (!streql(CHAR(STRING(CAR(tvec))[j]),
 				CHAR(STRING(ssNA_STRING)[0])))
 			STRING(tvec2)[j] = STRING(CAR(tvec))[j];
 		    else
@@ -286,7 +288,7 @@ static void doSpreadKey(int key, DEEvent * event)
 	jumpwin(1, 1);
     else if (IsModifierKey(iokey)) {
     }
-    else 
+    else
 	handlechar(text);
 }
 
@@ -316,7 +318,8 @@ void drawwindow()
     nhigh = (windowHeight - 2 * bwidth - hwidth) / box_h;
     for (i = 1; i <= nhigh; i++)
 	drawline(0, hwidth + i * box_h, windowWidth, hwidth + i * box_h);
-    colmax = colmin + (nwide - 2);	/* so row 0 and col 0 are reserved for labels */
+    /* so row 0 and col 0 are reserved for labels */
+    colmax = colmin + (nwide - 2);
     rowmax = rowmin + (nhigh - 2);
     printlabs();
     if (inputlist != R_NilValue)
@@ -344,7 +347,7 @@ static void clearwindow()
 }
 
 /* find_coords finds the coordinates of the upper left corner of the
-   given square on the screen */
+   given cell on the screen */
 
 void find_coords(int row, int col, int *xcoord, int *ycoord)
 {
@@ -440,7 +443,7 @@ void drawrow(int whichrow)
 	tvec = CAR(nthcdr(inputlist, i - 1));
 	if (tvec != R_NilValue)
 	    if (whichrow + rowmin - 1 <= (int)LEVELS(tvec))
-		printelt(tvec, whichrow + rowmin - 2, 
+		printelt(tvec, whichrow + rowmin - 2,
 			 whichrow, i - colmin + 1);
     }
 
@@ -527,7 +530,7 @@ static void drawelt(int whichrow, int whichcol)
 		printstring(clab, strlen(clab), 0, whichcol, 0);
 	    }
 	} else
-	    if (CAR(tmp) != R_NilValue && 
+	    if (CAR(tmp) != R_NilValue &&
 		(i = rowmin + whichrow - 2) < (int)LEVELS(CAR(tmp)) )
 		printelt(CAR(tmp), i, whichrow, whichcol);
     }
@@ -579,8 +582,8 @@ void jumppage(int dir)
 void printrect(int lwd)
 {
     setlineattribs(lwd);
-    drawrectangle(ccol * box_w + lwd - 1, 
-		  hwidth + crow * box_h + lwd -1, 
+    drawrectangle(ccol * box_w + lwd - 1,
+		  hwidth + crow * box_h + lwd -1,
 		  box_w - lwd + 1, box_h - lwd + 1);
     Rsync();
 }
@@ -605,7 +608,7 @@ static int checkquit(int xw)
     int wi;
 
     wi = textwidth("Quit", 4);
-    if ((xw < windowWidth - bwidth - 2) 
+    if ((xw < windowWidth - bwidth - 2)
 	&& (xw > windowWidth - bwidth - wi - 6))
 	return 1;
     else
@@ -673,10 +676,12 @@ static SEXP getccol()
     wcol = ccol + colmin - 1;
     wrow = crow + rowmin - 1;
     if (length(inputlist) < wcol)
-	inputlist = listAppend(inputlist, 
+	inputlist = listAppend(inputlist,
 			       allocList(wcol - length(inputlist)));
     tmp = nthcdr(inputlist, wcol - 1);
+    newcol = 0;
     if (CAR(tmp) == R_NilValue) {
+	newcol = 1;
 	len = (wrow < 100) ? 100 : wrow;
 	CAR(tmp) = ssNewVector(REALSXP, len);
 	if (TAG(tmp) == R_NilValue) {
@@ -702,60 +707,75 @@ static SEXP getccol()
 	LEVELS(tmp2) = LEVELS(CAR(tmp));
 	CAR(tmp) = tmp2;
     }
-    return (CAR(tmp));
+    return (tmp);
 }
 
 /* close up the entry to a cell, put the value that has been entered
    into the correct place and as the correct type */
 
+extern double R_strtod(char *c, char **end); /* in coerce.c */
+
 void closerect()
 {
-    SEXP cvec, tvec;
+    SEXP cvec, c0vec, tvec;
+    int wcol = ccol + colmin - 1, wrow = rowmin + crow - 1;
 
     *bufp = '\0';
 
     /* first check to see if anything has been entered */
     if (CellModified) {
 	if (clength != 0) {
-	    if (crow == 0) {  
+	    if (crow == 0) {
 		/* then we are entering a new column name */
-		if (length(inputlist) < ccol + colmin - 1)
-		    inputlist = 
-			listAppend(inputlist, 
-				   allocList((ccol - colmin - 1 
-					      - length(inputlist))));
-		tvec = nthcdr(inputlist, ccol + colmin - 2);
+		if (length(inputlist) < wcol)
+		    inputlist =
+			listAppend(inputlist,
+				   allocList((wcol - length(inputlist))));
+		tvec = nthcdr(inputlist, wcol - 1);
 		TAG(tvec) = install(buf);
-		printstring(buf, strlen(buf), 0, ccol - colmin + 1, 0);
+		printstring(buf, strlen(buf), 0, wcol, 0);
 	    } else {
-		cvec = getccol();
-		if ((crow + rowmin - 1) > (int)LEVELS(cvec))
-		    LEVELS(cvec) = (crow + rowmin - 1);
+	    /* do it this way to ensure NA, Inf, ...  can get set */
+		char *endp;
+		double new = R_strtod(buf, &endp);
+		int warn = !isBlankString(endp);
+		c0vec = getccol(); cvec = CAR(c0vec);
+		if (wrow > (int)LEVELS(cvec)) LEVELS(cvec) = wrow;
 		if (TYPEOF(cvec) == STRSXP) {
 		    tvec = allocString(strlen(buf));
 		    strcpy(CHAR(tvec), buf);
-		    STRING(cvec)[(rowmin + crow - 2)] = tvec;
-		} else 
-		    REAL(cvec)[(rowmin + crow - 2)] = atof(buf);
+		    STRING(cvec)[wrow - 1] = tvec;
+		} else
+		    REAL(cvec)[wrow - 1] = atof(buf);
+		REAL(cvec)[wrow - 1] = new;
+		if (newcol & warn) {
+		    /* change mode to character */
+		    int levs = LEVELS(cvec);
+		    cvec = CAR(c0vec) = coerceVector(cvec, STRSXP);
+		    LEVELS(cvec) = levs;
+		    tvec = allocString(strlen(buf));
+		    strcpy(CHAR(tvec), buf);
+		    STRING(cvec)[wrow - 1] = tvec;
+		}
 		drawelt(crow, ccol);
 	    }
 	}
-	else 
+	else
 	    if (crow == 0) {
 		sprintf(buf, "var%d", ccol);
-		printstring(buf, strlen(buf), 0, ccol - colmin + 1, 0);
+		printstring(buf, strlen(buf), 0, wcol, 0);
 	    } else {
-		cvec = getccol();
-		if ((crow + rowmin - 1) > (int)LEVELS(cvec))
-		    LEVELS(cvec) = (crow + rowmin - 1);
-		if (TYPEOF(cvec) == STRSXP) 
-		    STRING(cvec)[(rowmin + crow - 2)] = NA_STRING;
-		else 
-		    REAL(cvec)[(rowmin + crow - 2)] = NA_REAL;
+		c0vec = getccol(); cvec = CAR(c0vec);
+		if (wrow > (int)LEVELS(cvec)) LEVELS(cvec) = wrow;
+		if (TYPEOF(cvec) == STRSXP)
+		    STRING(cvec)[wrow - 1] = NA_STRING;
+		else
+		    REAL(cvec)[wrow - 1] = NA_REAL;
 		drawelt(crow, ccol);
 	    }
     }
     CellModified = 0;
+    if (newcol) drawcol(wcol); /* to fill in NAs */
 
     downlightrect();
 
@@ -777,9 +797,9 @@ void printstring(char *ibuf, int buflen, int row, int col, int left)
     char buf[45], *pc = buf;
 
     find_coords(row, col, &x_pos, &y_pos);
-    cleararea(col * box_w + 2, 
+    cleararea(col * box_w + 2,
 	      hwidth + row * box_h + 2,
-	      box_w - 3, 
+	      box_w - 3,
 	      box_h - 3);
     strncpy(buf, ibuf, buflen);
     if(left) {
@@ -832,10 +852,10 @@ void handlechar(char *text)
 	    tvec = R_NilValue;
 	if (crow == 0)	                        /* variable name */
 	    currentexp = 3;
-	else if (TYPEOF(CAR(tvec)) == STRSXP)	/* character data */
-	    currentexp = 2;
-	else                                    /* numeric data */
+	else if (TYPEOF(CAR(tvec)) == REALSXP)	/* numeric data */
 	    currentexp = 1;
+	else                                    /* character data */
+	    currentexp = 2;
 	clearrect();
 	highlightrect();
     }
@@ -906,7 +926,7 @@ void printlabs()
     for (i = colmin; i <= colmax; i++)
 	if (TAG(tppoint) != R_NilValue) {
 	    printstring(CHAR(PRINTNAME(TAG(tppoint))),
-			strlen(CHAR(PRINTNAME(TAG(tppoint)))), 
+			strlen(CHAR(PRINTNAME(TAG(tppoint)))),
 			0, i - colmin + 1, 0);
 	    tppoint = CDR(tppoint);
 	}
@@ -1026,7 +1046,7 @@ int initwin()
 
     twidth = textwidth(digits, strlen(digits));
     box_w = twidth + 4;
-    box_h = font_info->max_bounds.ascent 
+    box_h = font_info->max_bounds.ascent
 	+ font_info->max_bounds.descent + 4;
     text_offset = 2 + font_info->max_bounds.descent;
     windowWidth = 6 * box_w;
@@ -1069,7 +1089,7 @@ int initwin()
     setforeground(1);
 
     XSelectInput(iodisplay, iowindow,
-		 ButtonPressMask | KeyPressMask 
+		 ButtonPressMask | KeyPressMask
 		 | ExposureMask | StructureNotifyMask);
     XMapRaised(iodisplay, iowindow);
 
@@ -1080,8 +1100,8 @@ int initwin()
     menuwindow = XCreateSimpleWindow(iodisplay, root, 0, 0, twidth,
 				     4 * box_h, 2, ioblack, iowhite);
     for (i = 0; i < 4; i++) {
-	menupanes[i] = XCreateSimpleWindow(iodisplay, menuwindow, 0, 
-					   box_h * i, twidth, box_h, 
+	menupanes[i] = XCreateSimpleWindow(iodisplay, menuwindow, 0,
+					   box_h * i, twidth, box_h,
 					   1, ioblack, iowhite);
 	XSelectInput(iodisplay, menupanes[i],
 		     ButtonPressMask | ButtonReleaseMask | ExposureMask);
@@ -1091,7 +1111,7 @@ int initwin()
 
 
     winattr.override_redirect = True;
-    XChangeWindowAttributes(iodisplay, menuwindow, 
+    XChangeWindowAttributes(iodisplay, menuwindow,
 			    CWBackingStore | CWOverrideRedirect, &winattr);
     Rsync();
 
@@ -1208,18 +1228,18 @@ void popupmenu(int x_pos, int y_pos, int col, int row)
     /* now fill in the menu panes with the correct information */
 
     if (length(inputlist) < col + colmin - 1)
-	inputlist = listAppend(inputlist, 
-			       allocList(col + colmin - 1 
+	inputlist = listAppend(inputlist,
+			       allocList(col + colmin - 1
 					 - length(inputlist)));
     tvec = nthcdr(inputlist, col + colmin - 2);
     if (TAG(tvec) != R_NilValue)
 	sprintf(name, "  %s", CHAR(PRINTNAME(TAG(tvec))));
     else
 	sprintf(name, " COLUMN %d", col + colmin - 1);
-    XDrawString(iodisplay, 
+    XDrawString(iodisplay,
 		menupanes[0], iogc, 3, box_h - 3, name, strlen(name));
     for (i = 1; i < 4; i++)
-	XDrawString(iodisplay, 
+	XDrawString(iodisplay,
 		    menupanes[i], iogc, 3, box_h - 3,
 		    menu_label[i - 1], strlen(menu_label[i - 1]));
     if (CAR(tvec) == R_NilValue || TYPEOF(CAR(tvec)) == REALSXP)
@@ -1275,7 +1295,7 @@ void popupmenu(int x_pos, int y_pos, int col, int row)
 		    goto done;
 		}
 	    }
-	}		
+	}
         /* this doesn't work and perhaps I should move it up to the
            main control loop */
 	else if (event.type == Expose) {

@@ -2215,17 +2215,18 @@ dataeditor newdataeditor()
 		       DATAEDITOR);
     if (!p) return NULL;
 
+    w = WIDTH ;
+    h = HEIGHT;
     if (ismdi()) {
-	x = y = w = h = 0;
+	RECT *pR = RgetMDIsize();
+	x = (pR->right - w) / 1.5; x = x > 20 ? x:20;
+	y = (pR->bottom - h) / 1.5; y = y > 20 ? y:20;
     } else {
-	w = WIDTH ;
-	h = HEIGHT;
 	x = (devicewidth(NULL) - w) / 1.5;
 	y = (deviceheight(NULL) - h) / 1.5 ;
     }
-    c = (dataeditor) newwindow("R Data Editor", rect(x, y, w, h),
-			       Document | StandardWindow |
-			       TrackMouse | Modal);
+    c = (dataeditor) newwindow(" Data Editor", rect(x, y, w, h),
+			       Document | StandardWindow | TrackMouse | Modal);
     if (!c) {
          freeConsoleData(p);
          return NULL;
@@ -2238,10 +2239,16 @@ dataeditor newdataeditor()
     BORDERX = (WIDTH - COLS*FW) / 2;
     BORDERY = (HEIGHT - ROWS*FH) / 2;
     gsetcursor(c, ArrowCursor);
-    gchangescrollbar(c, VWINSB, 0, 0, ROWS, 0);
-    gchangescrollbar(c, HWINSB, 0, COLS-1, COLS, 1);
     setbackground(c, consolebg);
-    addto(c);
+    if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
+	/* blank toolbar to stop windows jumping around */
+        int btsize = 24;
+        rect r = rect(2, 2, btsize, btsize);
+        control tb;
+        addto(c);
+        MCHECK(tb = newtoolbar(btsize + 4));
+	gsetcursor(tb, ArrowCursor);
+    }
     setdata(c, p);
     setresize(c, deresize);
     setredraw(c, de_redraw);

@@ -119,6 +119,9 @@ static int bwidth;			/* width of the border */
 static int hwidth;			/* width of header  */
 static int text_xoffset, text_yoffset;
 static int CellModified;
+static int CellEditable;
+static field celledit;
+static int newcol;
 
 
 
@@ -416,7 +419,7 @@ void drawrow(int whichrow)
     for (i = 0; i <= nwide; i++)
 	drawrectangle(i * box_w, src_y, box_w, box_h, 1, 1);
 
-    sprintf(rlab, "R %d", whichrow);
+    sprintf(rlab, "row %4d", whichrow);
     printstring(rlab, strlen(rlab), row, 0, 0);
 
     lenip = length(inputlist);
@@ -554,7 +557,9 @@ static SEXP getccol()
 	inputlist = listAppend(inputlist, 
 			       allocList(wcol - length(inputlist)));
     tmp = nthcdr(inputlist, wcol - 1);
+    newcol = 0;
     if (CAR(tmp) == R_NilValue) {
+	newcol = 1;
 	len = (wrow < 100) ? 100 : wrow;
 	CAR(tmp) = ssNewVector(REALSXP, len);
 	if (TAG(tmp) == R_NilValue) {
@@ -580,38 +585,64 @@ static SEXP getccol()
 	LEVELS(tmp2) = LEVELS(CAR(tmp));
 	CAR(tmp) = tmp2;
     }
-    return (CAR(tmp));
+    return (tmp);
 }
 
 /* close up the entry to a cell, put the value that has been entered
    into the correct place and as the correct type */
 
+extern double R_strtod(char *c, char **end); /* in coerce.c */
+
 void closerect()
 {
-    SEXP cvec, tvec;
-
+    SEXP cvec, c0vec, tvec;
+    int wcol = ccol + colmin - 1, wrow = rowmin + crow - 1;
+    
     *bufp = '\0';
 
-    if (CellModified) {
-	cvec = getccol();
-	if ((crow + rowmin - 1) > (int)LEVELS(cvec))
-	    LEVELS(cvec) = (crow + rowmin - 1);
+    if (CellModified || CellEditable) {
+	if (CellEditable) {
+	    strcpy(buf, gettext(celledit));
+	    clength = strlen(buf);
+	    hide(celledit);
+	    del(celledit);
+	}
+	c0vec = getccol();
+	cvec = CAR(c0vec);
+	if (wrow > (int)LEVELS(cvec)) LEVELS(cvec) = wrow;
 	if (clength != 0) {
+	    int warn = 0;
+	    double new;
+	    char *endp;
+	    /* do it this way to ensure NA, Inf, ...  can get set */
+	    new = R_strtod(buf, &endp);
+	    warn = !isBlankString(endp);
 	    if (TYPEOF(cvec) == STRSXP) {
 		tvec = allocString(strlen(buf));
 		strcpy(CHAR(tvec), buf);
-		STRING(cvec)[(rowmin + crow - 2)] = tvec;
+		STRING(cvec)[wrow - 1] = tvec;
 	    } else
-		REAL(cvec)[(rowmin + crow - 2)] = atof(buf);
+		REAL(cvec)[wrow - 1] = new;
+	    if (newcol & warn) {
+		/* change mode to character */
+		int levs = LEVELS(cvec);
+		cvec = CAR(c0vec) = coerceVector(cvec, STRSXP);
+		LEVELS(cvec) = levs;
+		tvec = allocString(strlen(buf));
+		strcpy(CHAR(tvec), buf);
+		STRING(cvec)[wrow - 1] = tvec;
+	    }
 	} else {
 	    if (TYPEOF(cvec) == STRSXP) 
-		STRING(cvec)[(rowmin + crow - 2)] = NA_STRING;
+		STRING(cvec)[wrow - 1] = NA_STRING;
 	    else 
-		REAL(cvec)[(rowmin + crow - 2)] = NA_REAL;
+		REAL(cvec)[wrow - 1] = NA_REAL;
 	}
-	drawelt(crow, ccol); /* to get the scrolling right */
+	drawelt(crow, ccol); /* to get the cell scrolling right */
     }
-    CellModified = 0;
+    CellEditable = CellModified = 0;
+    if (newcol) drawcol(wcol); /* to fill in NAs */
+    
 
     downlightrect();
     gsetcursor(de, ArrowCursor);
@@ -689,12 +720,10 @@ void handlechar(char *text)
 	    tvec = nthcdr(inputlist, ccol + colmin - 2);
 	else
 	    tvec = R_NilValue;
-	if (crow == 0)	                        /* variable name */
-	    currentexp = 3;
-	else if (TYPEOF(CAR(tvec)) == STRSXP)	/* character data */
-	    currentexp = 2;
-	else                                    /* numeric data */
+	if (TYPEOF(CAR(tvec)) == REALSXP)	/* numeric data */
 	    currentexp = 1;
+	else                                    /* character data */
+	    currentexp = 2;
 	clearrect();
 	highlightrect();
     }
@@ -727,16 +756,6 @@ void handlechar(char *text)
 		goto donehc;
 	    break;
 	}
-    if (currentexp == 3) {
-	if (isspace(c))
-	    goto donehc;
-	if (clength == 0) {
-	    if (c != '.' && !isalpha(c))
-		goto donehc;
-	    else if (c != '.' && !isalnum(c))
-		goto donehc;
-	}
-    }
 
     if (clength++ > 29) {
 	warning("spreadsheet: expression too long");
@@ -775,7 +794,7 @@ void printlabs()
 	    printstring(clab, strlen(clab), 0, i - colmin + 1, 0);
 	}
     for (i = rowmin; i <= rowmax; i++) {
-	sprintf(clab, "R %d", i);
+	sprintf(clab, "row %4d", i);
 	printstring(clab, strlen(clab), i - rowmin + 1, 0, 0);
     }
 }
@@ -960,9 +979,43 @@ void de_mousedown(control c, int buttons, point xy)
 		highlightrect();
 		bell();
 	    }
-	} else if (LeftButton) {
+	} else if (buttons & LeftButton) {
 	    ccol = wcol;
 	    crow = wrow;
+	} else if (buttons & RightButton) {
+	    int x, y;
+	    char *prev = "";
+	    SEXP tvec;
+	    rect rr;
+	    
+	    ccol = wcol;
+	    crow = wrow--;
+	    highlightrect();
+	    find_coords(crow, ccol, &x, &y);
+	    if (ccol <= length(inputlist)) {
+		tvec = CAR(nthcdr(inputlist, ccol - 1));
+		if (tvec != R_NilValue && wrow <= (int)LEVELS(tvec)) {
+		    PrintDefaults(R_NilValue);
+		    if (TYPEOF(tvec) == REALSXP) {
+			if (REAL(tvec)[wrow] != ssNA_REAL)
+			    prev = EncodeElement(tvec, wrow, 0);
+		    } else if (TYPEOF(tvec) == STRSXP) {
+			if (!streql(CHAR(STRING(tvec)[wrow]), 
+				    CHAR(STRING(ssNA_STRING)[0])))
+			    prev = EncodeElement(tvec, wrow, 0);
+		    } else error("spreadsheet: internal memory error");
+		}
+	    }
+	    rr = rect(x+text_xoffset, y-text_yoffset-1, 
+		      box_w-text_xoffset-2, box_h-text_yoffset-2);
+	    if (strlen(prev) > FIELDWIDTH)
+		rr.width = (strlen(prev) + 2) * FW;
+	    celledit = newfield_no_border(prev, rr);
+	    setbackground(celledit, p->bg);
+	    setforeground(celledit, p->ufg);
+	    settextfont(celledit, p->f);
+	    show(celledit);
+	    CellEditable = 1;
 	}
 	highlightrect();
 	return;
@@ -1001,7 +1054,7 @@ static int  initwin()
     box_w = FIELDWIDTH*FW + 8;
     box_h = FH + 4;
     text_xoffset = 5;
-    text_yoffset = 0;
+    text_yoffset = -3;
     windowWidth = WIDTH;
     windowHeight = HEIGHT;
     nwide = (windowWidth - 2 * bwidth) / box_w;
@@ -1013,7 +1066,7 @@ static int  initwin()
     r.width = windowWidth + 3;
     r.height = windowHeight + 3;
     resize(de, r);    
-    CellModified = 0;
+    CellModified = CellEditable = 0;
     drawwindow();
     /* set the active cell to be the upper left one */
     crow = 1;
@@ -1063,6 +1116,7 @@ static void popupclose(control c)
     TAG(tvec) = install(buf);
     hide(wconf);
     del(wconf);
+    addto(de);
     drawwindow();
 }
 
