@@ -488,6 +488,7 @@ case "${ac_cv_f77_mangling}" in
     AC_MSG_ERROR([cannot use Fortran])
     ;;
 esac
+AC_MSG_CHECKING([whether ${F77} appends underscores to external names])
 AC_CACHE_VAL([r_cv_prog_f77_append_underscore],
 [case "${ac_cv_f77_mangling}" in
   *", underscore, "*)
@@ -497,7 +498,10 @@ AC_CACHE_VAL([r_cv_prog_f77_append_underscore],
     r_cv_prog_f77_append_underscore=no
     ;;
 esac])
-if test -z "${r_cv_prog_f77_append_underscore}"; then
+if test -n "${r_cv_prog_f77_append_underscore}"; then
+  AC_MSG_RESULT([${r_cv_prog_f77_append_underscore}])
+else
+  AC_MSG_RESULT([unknown])
   AC_MSG_ERROR([cannot use Fortran])
 fi
 if test "${r_cv_prog_f77_append_underscore}" = yes; then

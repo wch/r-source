@@ -14576,6 +14576,8 @@ echo "$as_me: error: cannot use Fortran" >&2;}
    { (exit 1); exit 1; }; }
     ;;
 esac
+echo "$as_me:$LINENO: checking whether ${F77} appends underscores to external names" >&5
+echo $ECHO_N "checking whether ${F77} appends underscores to external names... $ECHO_C" >&6
 if test "${r_cv_prog_f77_append_underscore+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -14589,7 +14591,12 @@ else
 esac
 fi
 
-if test -z "${r_cv_prog_f77_append_underscore}"; then
+if test -n "${r_cv_prog_f77_append_underscore}"; then
+  echo "$as_me:$LINENO: result: ${r_cv_prog_f77_append_underscore}" >&5
+echo "${ECHO_T}${r_cv_prog_f77_append_underscore}" >&6
+else
+  echo "$as_me:$LINENO: result: unknown" >&5
+echo "${ECHO_T}unknown" >&6
   { { echo "$as_me:$LINENO: error: cannot use Fortran" >&5
 echo "$as_me: error: cannot use Fortran" >&2;}
    { (exit 1); exit 1; }; }
