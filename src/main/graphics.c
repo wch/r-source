@@ -1761,7 +1761,7 @@ DevDesc *GNewPlot(Rboolean recording)
     dd = CurrentDevice();
     GRestore(dd);
 
-    /* GNewPlot always starts a new plot UNLESS the user has set 
+    /* GNewPlot always starts a new plot UNLESS the user has set
      * dd->gp.new to TRUE by par(new=TRUE)
      * If dd->gp.new is FALSE, we leave it that way (further GNewPlot's
      * will move on to subsequent plots)
@@ -1810,7 +1810,7 @@ DevDesc *GNewPlot(Rboolean recording)
 	else				\
 	    GText(0.5,0.5,NFC, msg,	\
 		  0.5,0.5,  0, dd)
-    
+
     dd->dp.valid = dd->gp.valid = FALSE;
     if (!validOuterMargins(dd)) {
 	G_ERR_MSG("Outer margins too large (fig.region too small)");
@@ -1940,7 +1940,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     }
     else GPretty(&min, &max, &n);
 
-    if(fabs(max - min) < (temp = fmax2(fabs(max), fabs(min)))* 
+    if(fabs(max - min) < (temp = fmax2(fabs(max), fabs(min)))*
        EPS_FAC_2 * DBL_EPSILON) {
 	/* Treat this case somewhat similar to the (min ~= max) case above */
 	warning("relative range of values = %5g * EPS, is small (axis %d)."
@@ -2011,12 +2011,12 @@ void GSetupAxis(int axis, DevDesc *dd)
  */
 
 
-/* Set default graphics parameter values in a GPar. 
+/* Set default graphics parameter values in a GPar.
  * This initialises the plot state, plus the other graphical
  * parameters that are not the responsibility of the device initialisation.
 
  * Typically called from  do_<dev>(.)  as  GInit(&dd->dp)
- */  
+ */
 void GInit(GPar *dp)
 {
     dp->state = 0;
@@ -2393,7 +2393,7 @@ static void setClipRect(double *x1, double *y1, double *x2, double *y2,
 /* Update the device clipping region (depends on GP->xpd). */
 void GClip(DevDesc *dd)
 {
-    if (dd->gp.xpd != dd->gp.oldxpd) { 
+    if (dd->gp.xpd != dd->gp.oldxpd) {
 	double x1, y1, x2, y2;
 	setClipRect(&x1, &y1, &x2, &y2, DEVICE, dd);
 	dd->dp.clip(x1, x2, y1, y2, dd);
@@ -2444,7 +2444,7 @@ static int clipcode(double x, double y, cliprect *cr)
     return c;
 }
 
-static Rboolean 
+static Rboolean
 CSclipline(double *x1, double *y1, double *x2, double *y2, cliprect *cr,
 	   int *clipped1, int *clipped2, int coords, DevDesc *dd)
 {
@@ -2456,7 +2456,7 @@ CSclipline(double *x1, double *y1, double *x2, double *y2, cliprect *cr,
     *clipped2 = 0;
     c1 = clipcode(*x1, *y1, cr);
     c2 = clipcode(*x2, *y2, cr);
-    if ( !c1 && !c2 ) 
+    if ( !c1 && !c2 )
 	return TRUE;
 
     xl = cr->xl;
@@ -2919,18 +2919,17 @@ int GClipPolygon(double *x, double *y, int n, int coords, int store,
     return (cnt);
 }
 
-/* if bg not specified then draw as polyline rather than polygon
- * to avoid drawing line along border of clipping region
- */
-/* If mode = 0, clip according to dd->gp.xpd
-   If mode = 1, clip to the device extent */
 static void clipPolygon(int n, double *x, double *y, int coords,
                         int bg, int fg, int mode, DevDesc *dd)
 {
+/* If mode = 0, clip according to dd->gp.xpd
+   If mode = 1, clip to the device extent */
     static double *xc = NULL, *yc = NULL;
     double *tmp;
     if (xc != NULL) {tmp = xc; xc = NULL; free(tmp);}
     if (yc != NULL) {tmp = yc; yc = NULL; free(tmp);}
+    /* if bg not specified then draw as polyline rather than polygon
+     * to avoid drawing line along border of clipping region */
     if (bg == NA_INTEGER) {
 	int i;
 	xc = (double*)malloc((n + 1) * sizeof(double));
@@ -3240,7 +3239,7 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
 		dd->gp.col = fg;
 		GPolyline(5, xc, yc, coords, dd);
 	    }
-	    else {
+	    else { /* filled rectangle */
 		int npts;
 		double *xcc, *ycc;
 		xcc = ycc = 0;		/* -Wall */
@@ -3727,20 +3726,20 @@ void GPretty(double *lo, double *up, int *ndiv)
      */
 #define rounding_eps 1e-7
     if(nu >= ns + 1) {
-	if(               ns * unit < *lo - rounding_eps*unit) 
+	if(               ns * unit < *lo - rounding_eps*unit)
 	    ns++;
-	if(nu > ns + 1 && nu * unit > *up + rounding_eps*unit) 
+	if(nu > ns + 1 && nu * unit > *up + rounding_eps*unit)
 	    nu--;
 	*ndiv = nu - ns;
     }
     *lo = ns * unit;
     *up = nu * unit;
 #ifdef non_working_ALTERNATIVE
-    if(ns * unit > *lo)     
+    if(ns * unit > *lo)
 	*lo = ns * unit;
-    if(nu * unit < *up)     
+    if(nu * unit < *up)
 	*up = nu * unit;
-    if(nu - ns >= 1) 
+    if(nu - ns >= 1)
 	*ndiv = nu - ns;
 #endif
 
@@ -4945,7 +4944,8 @@ unsigned int rgb2col(char *rgb)
 unsigned int name2col(char *nm)
 {
     int i;
-    for(i=0 ; ColorDataBase[i].name ; i++) {
+    if(strcmp(nm, "NA") == 0) return NA_INTEGER;
+    for(i = 0; ColorDataBase[i].name ; i++) {
 	if(StrMatch(ColorDataBase[i].name, nm))
 	    return ColorDataBase[i].code;
     }
@@ -5028,13 +5028,13 @@ unsigned int RGBpar(SEXP x, int i)
 	if(INTEGER(x)[i] == NA_INTEGER) return NA_INTEGER;
 	indx = INTEGER(x)[i] - 1;
 	if(indx < 0) return CurrentDevice()->dp.bg;
-	else return R_ColorTable[abs(indx) % R_ColorTableSize];
+	else return R_ColorTable[indx % R_ColorTableSize];
     }
     else if(isReal(x)) {
 	if(!R_FINITE(REAL(x)[i])) return NA_INTEGER;
 	indx = REAL(x)[i] - 1;
 	if(indx < 0) return CurrentDevice()->dp.bg;
-	else return R_ColorTable[abs(indx) % R_ColorTableSize];
+	else return R_ColorTable[indx % R_ColorTableSize];
     }
     return 0;		/* should not occur */
 }
@@ -5371,7 +5371,7 @@ void addDevice(DevDesc *dd)
 
     copyGPar(&(dd->dp), &(dd->gp));
     GReset(dd);
-    
+
     /* In case a device driver did not call R_CheckDeviceAvailable
        before starting its allocation, we complete the allocation and
        then call killDevice here.  This insures that the device gets a

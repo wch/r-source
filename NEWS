@@ -22,6 +22,7 @@ NEW FEATURES
 
     o	New formula interface to cor.test() in package ctest.
 
+    o	"NA" is a valid color name (as NA has been a valid integer color).
 
 
 BUG FIXES
