@@ -930,7 +930,7 @@ SEXP findVarInFrame3(SEXP rho, SEXP symbol, Rboolean doGet)
 
 SEXP findVarInFrame(SEXP rho, SEXP symbol)
 {
-    findVarInFrame3(rho, symbol, TRUE);
+    return findVarInFrame3(rho, symbol, TRUE);
 }
 
 
