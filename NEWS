@@ -241,9 +241,6 @@ NEW FEATURES
     o	The Mac OS X version now produces an R framework for easier linking
 	of R into other programs.  As a result, R.app is now relocatable.
 
-    o	Command-line Mac OS X doesn't attempt to guess whether you are
-	running an X server: the default graphical device is now pdf().
-
     o	Added experimental support for conditionals in NAMESPACE files.
 
     o	Added as.list.environment to coerce environments to lists
@@ -892,14 +889,14 @@ BUG FIXES
 MACOS CHANGES
 
     o	As from this release there is only one R port for the
-	Macintosh, which runs only on MacOS X.	(The `Carbon' port has
+	Macintosh, which runs only on Mac OS X.	(The `Carbon' port has
 	been discontinued, and the `Darwin' port is part of the new
 	version.)   The current version can be run either as a
 	command-line application or as an `Aqua' console.  There is a
 	`Quartz' device quartz(), and the download and installation of
 	both source and binary packages is supported from the Aqua
-	console.  Those CRAN and BioC packages which build under MacOS
-	X have binary versions updated daily.
+	console.  Those CRAN and BioC packages which build under Mac OS X
+	have binary versions updated daily.
 
 
 USER-VISIBLE CHANGES
