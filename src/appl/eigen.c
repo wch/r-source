@@ -2564,7 +2564,7 @@ L200:
  *     this version dated 4/6/83.
  */
 
-double epslon_(double *x)
+static double epslon_(double *x)
 {
     /* System generated locals */
     double ret_val, d__1;
@@ -4008,7 +4008,7 @@ L290:
     return 0;
 } /* htridi_ */
 
-double pythag_(double *a, double *b)
+static double pythag_(double *a, double *b)
 {
     /* System generated locals */
     double ret_val, d__1, d__2, d__3;
