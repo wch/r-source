@@ -17,8 +17,8 @@
  */
 
 #include <math.h>
-#include "R.h" /* vmaxget(), vmaxset() error */
-#include "R_ext/Applic.h" /* Fortran routines */
+#include <R.h>			/* vmaxget(), vmaxset() error */
+#include "R_ext/Applic.h"	/* Fortran routines */
 #include "carray.h"
 
 #include "qr.h"

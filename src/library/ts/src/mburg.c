@@ -34,7 +34,7 @@
    K		Partial correlation coefficient
 */
 
-#include "R.h"
+#include <R.h>
 #include "carray.h"
 #include "qr.h"
 

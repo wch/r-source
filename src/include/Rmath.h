@@ -20,7 +20,7 @@
  * Mathlib.h  should contain ALL headers from R's C code in `src/nmath'
    ---------  such that ``the Math library'' can be used by simply
 
-   ``#include "Rmath.h" ''
+   ``#include <Rmath.h> ''
 
    and nothing else.
 */

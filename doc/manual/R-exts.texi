@@ -3828,7 +3828,7 @@ be built in the directory @file{src/nmath/standalone}. See the file
 
 @smallexample
 #define MATHLIB_STANDALONE
-#include "Rmath.h"
+#include <Rmath.h>
 @end smallexample
 
 @noindent

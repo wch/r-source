@@ -19,7 +19,7 @@
 #ifndef MATHLIB_H
 #define MATHLIB_H
 
-#include "Rmath.h"
+#include <Rmath.h>
 
 /* R-Specific Constants */
 

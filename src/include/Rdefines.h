@@ -39,7 +39,7 @@
  *  And to hide some internal nastiness.
  */
 
-#include "Rinternals.h"
+#include <Rinternals.h>
 
 /*
  *  Added some macros defined in S.h from Splus 5.1

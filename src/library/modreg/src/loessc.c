@@ -19,7 +19,7 @@
  */
 
 #include <string.h>
-#include "R.h"
+#include <R.h>
 
 /* Much cleaner would be a  loess.h !! */
 void loess_workspace(Sint *d, Sint *n, double *span, Sint *degree,

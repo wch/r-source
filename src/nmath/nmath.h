@@ -22,7 +22,7 @@
 #ifndef MATHLIB_PRIVATE_H
 #define MATHLIB_PRIVATE_H
 
-#include "Rconfig.h"
+#include <Rconfig.h>
 #include "R_ext/Mathlib.h"
 #include "R_ext/RS.h"
 

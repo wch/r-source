@@ -38,7 +38,7 @@
 
 #include "config.h"
 
-#include "Rinternals.h"		/*-> Arith.h, Complex.h, Error.h, Memory.h
+#include <Rinternals.h>		/*-> Arith.h, Complex.h, Error.h, Memory.h
 				  PrtUtil.h, Utils.h */
 #include "Internal.h"		/* do_FOO */
 

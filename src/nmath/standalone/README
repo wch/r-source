@@ -9,7 +9,7 @@ import library libRmath.a.
 To use the routines in your own C or C++ programs, include
 
 #define MATHLIB_STANDALONE
-#include "Rmath.h"
+#include <Rmath.h>
 
 and link against -lRmath.  The example file test.c does nothing
 useful, but is provided to test the process.  Note that you will

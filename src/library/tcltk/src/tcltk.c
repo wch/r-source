@@ -10,7 +10,7 @@
 #endif
 */
 
-#include "Rinternals.h"
+#include <Rinternals.h>
 #include "R_ext/PrtUtil.h"
 #ifndef Win32
 #include "R_ext/eventloop.h"
@@ -239,5 +239,3 @@ void tcltk_init(void)
 #endif
 
 }
-
-

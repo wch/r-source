@@ -2,7 +2,7 @@
  *  modreg/src/ksmooth.c by B. D. Ripley  Copyright (C) 1998
  */
 
-#include "R.h" /* for NA_REAL, includes math.h */
+#include <R.h>			/* for NA_REAL, includes math.h */
 
 static double dokern(double x, int kern)
 {

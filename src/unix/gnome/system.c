@@ -32,10 +32,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include <Rversion.h>
+
 #include "Defn.h"
 #include "Fileio.h"
 #include "Devices.h"
-#include "Rversion.h"
 
 #include "../Runix.h"
 

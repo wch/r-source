@@ -20,10 +20,10 @@
 #include <math.h>
 
 #include "Defn.h"
-#include "Rdefines.h" /* for CREATE_STRING_VECTOR */
-#include "R_ext/Random.h"  /* for the random number generation in samin() */
-
-#include "R_ext/Applic.h"  /* setulb() */
+#include <Rdefines.h>		/* for CREATE_STRING_VECTOR */
+#include "R_ext/Random.h"	/* for the random number generation in
+				   samin() */
+#include "R_ext/Applic.h"	/* setulb() */
 
 static SEXP getListElement(SEXP list, char *str)
 {
