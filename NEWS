@@ -240,6 +240,10 @@ NEW FEATURES
 
 	- S4 classes and methods are included in the QC tests.
 
+	- New (experimental) functions codocClasses() and codocData()
+          for code/documentation consistency checking for S4 classes and
+          data sets.
+
     o   GC timing is not enabled until the first call to gc.time; it
 	can be disabled by calling gc.time(FALSE).  This can speed up
 	the garbage collector and reduce system calls on some
@@ -356,6 +360,9 @@ DOCUMENTATION CHANGES
           (like \example but within another section).  (Based on a
           contribution by Greg Warnes.)
 
+	- New markup \concept for concept index entries for use by
+          help.search().
+
     o	Rdconv now produces more informative output from the special
 	\method{GENERIC}{CLASS} markup for indicating the usage of S3
 	methods, providing the CLASS info in a comment.
@@ -385,9 +392,10 @@ UTILITIES
         indices in DCF format (and hence also no longer rebuilds them).
 
     o	R CMD check now tests whether file names are valid across file
-	systems and supported operating system platforms.  Replacement
-	functions and S3 methods in \usage sections are no longer
-	ignored.
+	systems and supported operating system platforms.  There is some
+	support for code/documentation consistency checking for data
+	sets and S4 classes.  Replacement functions and S3 methods in
+	\usage sections are no longer ignored.
 
     o	R CMD Rdindex has been removed.
 
