@@ -95,7 +95,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
             if(any(cols)) {
                 xi <- xi[, cols, drop = FALSE]
                 attr(xi, "assign") <- asgn.t[cols]
-                fiti <- lm.fit(xi, qty[select, ])
+                fiti <- lm.fit(xi, qty[select,,drop=FALSE])
                 fiti$terms <- Terms
             } else {
                 y <- qty[select,,drop=FALSE]
@@ -223,12 +223,15 @@ summary.aov <- function(object, intercept = FALSE, keep.zero.df = TRUE, ...)
     if(!is.null(wt)) resid <- resid * wt^0.5
     nresp <- NCOL(resid)
     ans <- vector("list", nresp)
-    for (y in 1:nresp) {
-        if(nresp > 1) {
+    if(nresp > 1) {
+        names(ans) <- character(nresp)
+        for (y in 1:nresp) {
             cn <- colnames(resid)[y]
             if(is.null(cn) || cn == "") cn <- y
             names(ans)[y] <- paste(" Response", cn)
         }
+    }
+    for (y in 1:nresp) {
         if(is.null(effects)) {
             df <- nterms <- neff <- 0
             ss <- ms <- numeric(0)
@@ -276,7 +279,8 @@ print.summary.aov <- function(x, digits = max(3, .Options$digits - 3),
                               symbolic.cor = p > 4,
                               signif.stars= .Options$show.signif.stars,	...)
 {
-    NextMethod("print",if(length(x) == 1) x[[1]] else x)
+    if (length(x) == 1)  print(x[[1]], ...)
+    else NextMethod()
     invisible(x)
 }
 

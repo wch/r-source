@@ -71,6 +71,11 @@ char problem_buf[PROBLEM_BUFSIZE];
 #define F77_CALL(x)    F77_SYMBOL(x)
 #define F77_NAME(x)    F77_SYMBOL(x)
 
+/* Can't be sure Mathlib.h or math.h is included */
+#ifndef M_PI
+#define M_PI 3.141592653589793238462643383279502884197169399375
+#endif
+
 #define PI             M_PI
 #define SINGLE_EPS     FLT_EPSILON
 #define SINGLE_BASE    FLT_RADIX

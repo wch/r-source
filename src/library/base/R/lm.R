@@ -64,6 +64,8 @@ lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
     if(is.null(n <- nrow(x))) stop("'x' must be a matrix")
     p <- ncol(x)
     ny <- NCOL(y)
+    ## treat one-col matrix as vector
+    if ( is.matrix(y) && ny == 1 ) y <- drop(y)
     if (NROW(y) != n)
 	stop("incompatible dimensions")
     if(method != "qr")
@@ -108,6 +110,8 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
 {
     if(is.null(n <- nrow(x))) stop("'x' must be a matrix")
     ny <- NCOL(y)
+    ## treat one-col matrix as vector
+    if ( is.matrix(y) && ny == 1 ) y <- drop(y)
     if (NROW(y) != n | length(w) != n)
 	stop("incompatible dimensions")
     if (any(w < 0 | is.na(w)))
