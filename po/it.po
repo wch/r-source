@@ -376,15 +376,14 @@ msgstr "ATTENZIONE: valore non valido di  --max-mem-size: verrà ignorato\n"
 #: src/gnuwin32/system.c:882
 #, c-format
 msgid "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
-msgstr ""
-"ATTENZIONE: valore di --max-mem-size=%lu'%c': troppo grande e quindi "
-"ignorato\n"
+msgstr "ATTENZIONE: valore di --max-mem-size=%lu'%c': troppo grande e "
+"quindi ignorato\n"
 
 #: src/gnuwin32/system.c:887
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
-msgstr ""
-"ATTENZIONE: valore di max-mem-size =%4.1fM troppo piccolo e quindi ignorato\n"
+msgstr "ATTENZIONE: valore di max-mem-size =%4.1fM troppo piccolo e quindi "
+"ignorato\n"
 
 #: src/gnuwin32/system.c:897 src/unix/system.c:235
 #, c-format
@@ -557,8 +556,8 @@ msgstr "RNG_Init: RNG di tipo %d non implementato"
 
 #: src/main/RNG.c:285
 msgid ".Random.seed is a missing argument with no default"
-msgstr ""
-"il parametro .Random.seed  non è specificato e non ha un valore di default"
+msgstr "il parametro .Random.seed  non è specificato e non "
+"ha un valore di default"
 
 #: src/main/RNG.c:287
 msgid ".Random.seed is not a vector"
@@ -632,7 +631,8 @@ msgstr "richiesto argomento di tipo character"
 msgid ""
 "unable to load shared library '%s':\n"
 "  %s"
-msgstr ""
+msgstr "impossibile caricare libreria condivisa '%s':\n"
+"  %s"
 
 #: src/main/Rdynload.c:861
 #, c-format
@@ -697,7 +697,8 @@ msgstr "Serie storiche non compatibili"
 msgid ""
 "longer object length\n"
 "\tis not a multiple of shorter object length"
-msgstr ""
+msgstr "lunghezza dell'oggetto più lungho\n"
+"\tnon è un multiplo di quella dell'oggetto più piccolo"
 
 #: src/main/arithmetic.c:495
 msgid "invalid argument to unary operator"
@@ -1020,38 +1021,38 @@ msgstr "tipo di slot non valido"
 
 #: src/main/base.c:165
 msgid "Event UpdatePS requires a single numeric value"
-msgstr ""
+msgstr "L'evento UpdatePS richiede un singolo valore numerico"
 
 #: src/main/bind.c:553
 msgid "repeated formal argument 'recursive'"
-msgstr ""
+msgstr "argomento formale 'recursive' ripetuto"
 
 #: src/main/bind.c:564
 msgid "repeated formal argument 'use.names'"
-msgstr ""
+msgstr "argomento formale 'use.names' ripetuto"
 
 #: src/main/bind.c:775
 msgid "argument not a list"
-msgstr ""
+msgstr "l'argomento non è di tipo list"
 
 #: src/main/bind.c:873 src/main/eval.c:1834 src/main/eval.c:1844
 #, c-format
 msgid "class name too long in %s"
-msgstr ""
+msgstr "nome classe troppo lungo in %s"
 
 #: src/main/bind.c:999
 msgid "cannot create a matrix from these types"
-msgstr ""
+msgstr "non posso creare una matrice a partire da questo tipo di dati"
 
 #: src/main/bind.c:1075
 #, c-format
 msgid "number of rows of matrices must match (see arg %d)"
-msgstr ""
+msgstr "il numero di righe delle matrici deve coincidere (si veda arg %d)"
 
 #: src/main/bind.c:1287
 #, c-format
 msgid "number of columns of matrices must match (see arg %d)"
-msgstr ""
+msgstr "il numero di colonne delle matrici deve coincidere (si veda arg %d)"
 
 #: src/main/builtin.c:62
 msgid "invalid add argument"
@@ -1063,7 +1064,7 @@ msgstr "numero di argomenti non valido"
 
 #: src/main/builtin.c:160
 msgid "replacement object is not an environment"
-msgstr ""
+msgstr "l'oggetto sostitutivo non è un environment"
 
 #: src/main/builtin.c:175
 msgid "'enclos' must be an environment"
@@ -1071,7 +1072,7 @@ msgstr "'enclos' deve essere un environment"
 
 #: src/main/builtin.c:188 src/main/builtin.c:198
 msgid "argument is not an environment"
-msgstr ""
+msgstr "l'argomento non è un environment"
 
 #: src/main/builtin.c:200
 msgid "'parent' is not an environment"
@@ -1091,12 +1092,12 @@ msgstr "argomento 'label' non valido"
 
 #: src/main/builtin.c:307
 msgid "invalid 'append' specification"
-msgstr ""
+msgstr "specificazione di 'append' non valida"
 
 #: src/main/builtin.c:363
 #, c-format
 msgid "argument %d not yet handled by cat"
-msgstr ""
+msgstr "l'argomento %d non ancora supportato da cat"
 
 #: src/main/builtin.c:475
 msgid "vector: zero-length 'type' argument"
@@ -1105,7 +1106,7 @@ msgstr "vector: argomento 'type' di lunghezza zero"
 #: src/main/builtin.c:494
 #, c-format
 msgid "vector: cannot make a vector of mode \"%s\"."
-msgstr ""
+msgstr "vector: non posso creare un vettore in modalità \"%s\"."
 
 #: src/main/builtin.c:524
 msgid "cannot set length of non-vector"
@@ -1121,14 +1122,14 @@ msgstr "length<- secondo argomento non valido"
 
 #: src/main/builtin.c:626
 msgid "length<- missing value for 'length'"
-msgstr ""
+msgstr "length<- valore mancante in 'length'"
 
 #: src/main/builtin.c:652 src/main/coerce.c:1931 src/main/coerce.c:1962
 #: src/main/eval.c:332 src/main/eval.c:425 src/main/eval.c:1380
 #: src/main/eval.c:1429 src/main/eval.c:1483 src/main/eval.c:1701
 #: src/main/eval.c:3036 src/main/eval.c:3128
 msgid "... used in an incorrect context"
-msgstr ""
+msgstr "...usato in un contesto sbagliato"
 
 #: src/main/builtin.c:657
 msgid "invalid parameter in switch()"
@@ -1136,11 +1137,11 @@ msgstr "parametro non valido in switch()"
 
 #: src/main/builtin.c:668
 msgid "switch: EXPR must return a length 1 vector"
-msgstr ""
+msgstr "switch: EXPR deve restituire un vettore di lunghezza 1"
 
 #: src/main/character.c:115
 msgid "nchar() requires a character vector"
-msgstr ""
+msgstr "nchar() richiede un vettore di tipo character"
 
 #: src/main/character.c:119
 msgid "invalid 'type' arg"
@@ -1148,7 +1149,7 @@ msgstr "argomento 'type' non valido"
 
 #: src/main/character.c:210
 msgid "extracting substrings from a non-character object"
-msgstr ""
+msgstr "estraggo una sottostringa da un oggetto che non è di tipo character"
 
 #: src/main/character.c:215
 msgid "invalid substring argument(s) in substr()"
@@ -1156,7 +1157,7 @@ msgstr "argomento(i) in substr() non valido"
 
 #: src/main/character.c:278
 msgid "replacing substrings in a non-character object"
-msgstr ""
+msgstr "rimpiazzo una sottostringa in un oggetto che non è di tipo character"
 
 #: src/main/character.c:283
 msgid "invalid substring argument(s) in substr<-()"
@@ -6470,9 +6471,9 @@ msgid ""
 "'citation()' on how to cite R or R packages in publications.\n"
 "\n"
 msgstr ""
-"R è un progetto di collaborazione con molti contribuit esterni.\n"
+"R è un progetto di collaborazione con molti contributi esterni.\n"
 "Scrivi 'contributors()' per maggiori informazioni e\n"
-"'citation()' per sapre come citare R o i pacchetti di R nelle "
+"'citation()' per sapere come citare R o i pacchetti di R nelle "
 "pubblicazioni.\n"
 "\n"
 
@@ -6609,15 +6610,15 @@ msgstr "impossibile identificare host"
 
 #: src/modules/internet/nanoftp.c:836
 msgid "failed to connect to server"
-msgstr ""
+msgstr "connessione al server non riuscita"
 
 #: src/modules/internet/nanoftp.c:847
 msgid "failed to get response from server"
-msgstr ""
+msgstr "impossibile ottenere una risposta dal server"
 
 #: src/modules/internet/nanoftp.c:1137
 msgid "RxmlNanoFTPGetConnection: failed to create socket"
-msgstr ""
+msgstr "RxmlNanoFTPGetConnection: creazione socket non riuscita"
 
 #: src/modules/internet/nanoftp.c:1182
 msgid "failed to create a data connection"
@@ -6625,7 +6626,7 @@ msgstr "impossibile creare una connessione dati"
 
 #: src/modules/internet/nanoftp.c:1190
 msgid "failed to bind a port"
-msgstr ""
+msgstr "collegamento a una porta fallito"
 
 #: src/modules/internet/nanoftp.c:1197
 #, c-format
@@ -6634,36 +6635,36 @@ msgstr "non è possibile leggere dalla porta %d"
 
 #: src/modules/internet/nanohttp.c:407
 msgid "removing HTTP proxy info"
-msgstr ""
+msgstr "rimuovo informazione proxy HTTP"
 
 #: src/modules/internet/nanohttp.c:409
 #, c-format
 msgid "using HTTP proxy '%s'"
-msgstr ""
+msgstr "uso proxy HTTP '%s'"
 
 #: src/modules/internet/nanohttp.c:980
 #, c-format
 msgid "unable to resolve '%s'."
-msgstr ""
+msgstr "impossibile identificare '%s'."
 
 #: src/modules/internet/nanohttp.c:1007
 #, c-format
 msgid "connected to '%s' on port %d."
-msgstr ""
+msgstr "connesso a '%s' sulla porta %d."
 
 #: src/modules/internet/nanohttp.c:1012
 #, c-format
 msgid "unable to connect to '%s' on port %d."
-msgstr ""
+msgstr "impossibile collegarsi a '%s' sulla porta %d."
 
 #: src/modules/internet/nanohttp.c:1276
 #, c-format
 msgid "redirect to: '%s'"
-msgstr ""
+msgstr "redirigo su: '%s'"
 
 #: src/modules/internet/nanohttp.c:1285
 msgid "too many redirects, aborting ..."
-msgstr ""
+msgstr "troppi reindirizzamenti, annullo..."
 
 #: src/modules/internet/sockconn.c:176 src/modules/internet/sockconn.c:180
 #: src/modules/internet/sockconn.c:186 src/modules/internet/sockconn.c:199
@@ -6719,7 +6720,7 @@ msgstr "'B' deve essere una matrice di tipo complex"
 
 #: src/modules/lapack/Lapack.c:361 src/modules/lapack/Lapack.c:778
 msgid "'A' is 0-diml"
-msgstr ""
+msgstr "'A' è 0-diml"
 
 #: src/modules/lapack/Lapack.c:363 src/modules/lapack/Lapack.c:780
 msgid "no right-hand side in 'B'"
@@ -6769,7 +6770,7 @@ msgstr "'A' deve avere dimensioni > 0"
 #: src/modules/lapack/Lapack.c:712
 #, c-format
 msgid "the leading minor of order %d is not positive definite"
-msgstr ""
+msgstr "il minore principale di ordine %d non è definito positivo"
 
 #: src/modules/lapack/Lapack.c:720 src/modules/lapack/Lapack.c:758
 #: src/modules/lapack/Lapack.c:771 src/modules/lapack/Lapack.c:814
@@ -6808,8 +6809,7 @@ msgstr "Lapack routine dgesv: is sistema è esattamente singolare"
 #: src/modules/lapack/Lapack.c:801
 #, c-format
 msgid "system is computationally singular: reciprocal condition number = %g"
-msgstr ""
-"il sistema è computazionalmente singolare: valore di condizione di "
+msgstr "il sistema è numericamente singolare: valore di condizione di "
 "reciprocità = %g"
 
 #: src/modules/lapack/Lapack.c:934
@@ -7031,7 +7031,7 @@ msgstr "pnchisq(x=%g, ..): diverge nell'iterazione %d."
 #: src/nmath/polygamma.c:473
 #, c-format
 msgid "deriv = %d > %d (= n_max)"
-msgstr ""
+msgstr "deriv = %d > %d (= n_max)"
 
 #: src/nmath/rmultinom.c:74
 #, c-format
