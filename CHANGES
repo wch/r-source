@@ -22,6 +22,14 @@ NEW FEATURES
 	which should substantially improve the speed of (vector)
 	arithmetic.
 
+    o	The modeling formula handler has been expanded so that it
+	accepts y ~ 0 + x as a "through the origin" specification.
+	models with no parameters are now acceptable.
+
+    o	"cov", "cor" and "var" now produce a matrix result if either
+	of their x or y arguments is a matrix.  Dimnames are propagated
+	in a sensible fashion.
+
 BUG FIXES
 
     o	There has been a minor fixup of "model.frame" to ensure that
