@@ -1131,6 +1131,7 @@ static void get_locale_strings(void)
     if(strlen(buff)) strcpy(am_pm[1], buff);
 }
 
+#ifdef SUPPORT_UTF8
 static void get_locale_w_strings(void)
 {
     int i;
@@ -1161,4 +1162,5 @@ static void get_locale_w_strings(void)
     wcsftime(buff, 4, L"%p", &tm);
     if(wcslen(buff)) wcscpy(w_am_pm[1], buff);
 }
+#endif
 #endif
