@@ -50,15 +50,6 @@
 #define GN_(String) String
 #endif
 
-Rboolean 
-PSDeviceDriver(NewDevDesc*, char*, char*, char*, char**,
-	       char*, char*, char*, double, double, Rboolean, double, 
-	       Rboolean, Rboolean, Rboolean, char*, char*, SEXP);
-
-Rboolean
-PDFDeviceDriver(NewDevDesc* dd, char *, char *, char *, char *, 
-		char *, char *, double, double, double,
-		int, int, char*, SEXP, int, int);
 static
 Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 			double height, double pointsize,
