@@ -602,6 +602,7 @@ int get1index(SEXP, SEXP, int, Rboolean);
 SEXP getVar(SEXP, SEXP);
 SEXP getVarInFrame(SEXP, SEXP);
 int hashpjw(char*);
+Rboolean InheritsClass(SEXP, char*);
 void InitArithmetic(void);
 void InitColors(void);
 void InitConnections(void);
