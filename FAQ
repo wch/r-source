@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-48, 2001-05-01
+Version 1.2-49, 2001-05-03
 Kurt Hornik
 
 
@@ -1588,8 +1588,11 @@ system, type
      $ R CMD INSTALL /path/to/PKG_VERSION.tar.gz
 
 at the shell prompt to install to the default R directory tree (the
-`library' subdirectory of `R_HOME').  To install to another tree (e.g.,
-your private one), use
+`library' subdirectory of `R_HOME').  (From R version 1.3.0, this will
+install into the library tree rooted at the first directory given in
+`R_LIBS' (see below) if this is set and non-null, and to the default
+library otherwise.)  To install to another tree (e.g., your private one),
+use
 
      $ R CMD INSTALL -l LIB /path/to/PKG_VERSION.tar.gz
 
@@ -1670,16 +1673,16 @@ at the R prompt.
 5.4 How can add-on packages be removed?
 =======================================
 
-   To remove the packages PKG_1, ..., PKG_N from the default library or the
-library LIB, do
+   To remove the packages PKG_1, ..., PKG_N from the default library, do
 
      $ R CMD REMOVE PKG_1 ... PKG_N
 
-or
-
+(From R version 1.3.0, this will remove from the library tree rooted at the
+first directory given in `R_LIBS' if this is set and non-null, and from the
+default library otherwise.)  Use
      $ R CMD REMOVE -l LIB PKG_1 ... PKG_N
 
-respectively.
+to remove from library LIB.
 
 5.5 How can I create an R package?
 ==================================
