@@ -656,3 +656,21 @@ int F77_SYMBOL(intpr) (char *label, int *nchar, int *data, int *ndata)
     printIntegerVector(data, *ndata, 1);
     return(0);
 }
+
+int F77_SYMBOL(realpr) (char *label, int *nchar, float *data, int *ndata)
+{
+    int k;
+    double *ddata;
+    
+    ddata = malloc((*ndata)*sizeof(double));
+    if(!ddata) error("memory allocation error in realpr");
+    for (k = 0; k < *ndata; k++) ddata[k] = (double) data[k];
+    for (k = 0; k < *nchar; k++) {
+	Rprintf("%c", label[k]);
+    }
+    Rprintf("\n");
+    printRealVector(ddata, *ndata, 1);
+    free(ddata);
+    return(0);
+}
+

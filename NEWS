@@ -6,6 +6,9 @@
 
 NEW FEATURES
 
+    o   New subroutine REALPR callable from Fortran (like DBLEPR but
+	for real arguments): useful if as.single is in use.
+
     o   The scaling of symbols is now linear in cex=, rather than being
 	tied to the available font's size. The fonts on an X11 device
 	also scale linearly with cex= in so far as your X server can do it.
