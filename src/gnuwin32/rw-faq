@@ -141,14 +141,15 @@ existing one and change the `Start in' field of the Properties.
 ====================================================
 
 Indeed there is.  It is set by the command-line flag `--max-mem-size'
-and defaults to the smaller of the amount of physical RAM in the
-machine and 256Mb.  It can be set to any amount over 10M. (R will not
-run in less.)  Be aware though that Windows has (in most versions) a
-maximum amount of user virtual memory of 2Gb, and parts of this can be
-reserved by processes but not used.  R itself reserves on startup the
-maximum of 256Mb and the amount specified by `--max-mem-size'.  Because
-of the way the memory manager works, it is possible that there will be
-free memory but R will not be able to reserve it.
+(*note How do I install R for Windows?::) and defaults to the smaller
+of the amount of physical RAM in the machine and 256Mb.  It can be set
+to any amount over 10M. (R will not run in less.)  Be aware though that
+Windows has (in most versions) a maximum amount of user virtual memory
+of 2Gb, and parts of this can be reserved by processes but not used.  R
+itself reserves on startup the maximum of 256Mb and the amount
+specified by `--max-mem-size'.  Because of the way the memory manager
+works, it is possible that there will be free memory but R will not be
+able to reserve it.
 
 Use `?Memory' and `?memory.size' for information about memory usage.
 The limit can be raised by calling `memory.limit' from a running R
@@ -328,17 +329,11 @@ Extensions'_ manual.
 =======================================================================
 
 You can install packages anywhere and use the environment variable
-`R_LIBS' to point to the library location(s).  You can also set the R
-variable `.lib.loc' in your `.Rprofile' or when running R.
+`R_LIBS' to point to the library location(s).
 
 Suppose your packages are installed in `p:\mylibs'.  Then you can EITHER
 
      set the environment variable R_LIBS to p:\mylibs
-
-OR put in the `.Rprofile' in the working directory or your home
-directory
-
-     .lib.loc <- c("p:/mylibs", .Library)
 
 OR use a package by, e.g.
 
@@ -756,6 +751,6 @@ then `R_ProcessEvents()'.
 
 
 
-Last edited 2001 November 18 by Professor B. D. Ripley
+Last edited 2001 November 30 by Professor B. D. Ripley
 <ripley@stats.ox.ac.uk>
 

@@ -185,15 +185,15 @@ existing one and change the `Start in' field of the Properties.
 @section There seems to be a limit on the memory it uses!
 
 Indeed there is.  It is set by the command-line flag
-@code{--max-mem-size} and defaults to the smaller of the amount of
-physical RAM in the machine and 256Mb.  It can be set to any amount over
-10M. (R will not run in less.)  Be aware though that Windows has (in
-most versions) a maximum amount of user virtual memory of 2Gb, and parts
-of this can be reserved by processes but not used.  R itself reserves on
-startup the maximum of 256Mb and the amount specified by
-@code{--max-mem-size}.  Because of the way the memory manager works, it
-is possible that there will be free memory but R will not be able to
-reserve it.
+@code{--max-mem-size} (@pxref{How do I install R for Windows?}) and
+defaults to the smaller of the amount of physical RAM in the machine and
+256Mb.  It can be set to any amount over 10M. (R will not run in less.)
+Be aware though that Windows has (in most versions) a maximum amount of
+user virtual memory of 2Gb, and parts of this can be reserved by
+processes but not used.  R itself reserves on startup the maximum of
+256Mb and the amount specified by @code{--max-mem-size}.  Because of the
+way the memory manager works, it is possible that there will be free
+memory but R will not be able to reserve it.
 
 Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised by calling @code{memory.limit} from a
@@ -397,19 +397,12 @@ Extensions'} manual.
 @section I don't have permission to write to the @file{@RWVER@\library} directory.
 
 You can install packages anywhere and use the environment variable
-@code{R_LIBS} to point to the library location(s).  You can also set the
-R variable @code{.lib.loc} in your @file{.Rprofile} or when running R.
+@code{R_LIBS} to point to the library location(s).
 
 Suppose your packages are installed in @code{p:\mylibs}.  Then you can EITHER
 
 @example
 set the environment variable R_LIBS to p:\mylibs
-@end example
-@noindent
-OR put in the @code{.Rprofile} in the working directory or your home directory
-
-@example
-.lib.loc <- c("p:/mylibs", .Library)
 @end example
 @noindent
 OR use a package by, e.g.
@@ -934,14 +927,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2001 November 18 by Professor B. D. Ripley
+Last edited 2001 November 30 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2001 November 18 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2001 November 30 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

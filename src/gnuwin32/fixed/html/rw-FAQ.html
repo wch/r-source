@@ -304,7 +304,9 @@ Properties. <a name=
 <h2>2.4 There seems to be a limit on the memory it uses!</h2>
 
 <p>Indeed there is. It is set by the command-line flag <code>
---max-mem-size</code> and defaults to the smaller of the amount of
+--max-mem-size</code> (see <a href=
+"#How%20do%20I%20install%20R%20for%20Windows%3f">How do I install R
+for Windows?</a>) and defaults to the smaller of the amount of
 physical RAM in the machine and 256Mb. It can be set to any amount
 over 10M. (R will not run in less.) Be aware though that Windows
 has (in most versions) a maximum amount of user virtual memory of
@@ -536,22 +538,14 @@ test suite, if any) use <code>Rcmd check pkgname</code>: see the
 rw1040\library</code> directory.</h2>
 
 <p>You can install packages anywhere and use the environment
-variable <code>R_LIBS</code> to point to the library location(s).
-You can also set the R variable <code>.lib.loc</code> in your
-<code>.Rprofile</code> or when running R.</p>
+variable <code>R_LIBS</code> to point to the library
+location(s).</p>
 
 <p>Suppose your packages are installed in <code>p:\mylibs</code>.
 Then you can EITHER</p>
 
 <pre>
 set the environment variable R_LIBS to p:\mylibs
-</pre>
-
-<p>OR put in the <code>.Rprofile</code> in the working directory or
-your home directory</p>
-
-<pre>
-.lib.loc &lt;- c("p:/mylibs", .Library)
 </pre>
 
 <p>OR use a package by, e.g.</p>
@@ -1082,7 +1076,7 @@ console, call <code>R_FlushConsole()</code> and then <code>
 R_ProcessEvents()</code>.</p>
 
 <hr width="100%">
-<address>Last edited 2001 November 18 by Professor B. D. Ripley
+<address>Last edited 2001 November 30 by Professor B. D. Ripley
 <code><a href="mailto:ripley@stats.ox.ac.uk">
 ripley@stats.ox.ac.uk</a></code></address>
 </body>

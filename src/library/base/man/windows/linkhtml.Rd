@@ -5,7 +5,7 @@
 \title{Update HTML documentation files}
 \usage{
 link.html.help(verbose=FALSE, lib.loc=.Library)
-make.packages.html(lib.loc=.lib.loc)
+make.packages.html(lib.loc=.libpaths())
 make.search.html(lib.loc=.Library)
 }
 \description{
@@ -18,16 +18,17 @@ make.search.html(lib.loc=.Library)
 \arguments{
   \item{verbose}{logical. If true, print out a message. For use to
     explain a delay when called from other functions.}
-  \item{lib.loc}{character. List of libraries to be included.}
+  \item{lib.loc}{character vector. List of libraries to be included.}
 }
 \details{
   Only packages in the system library \code{.Library} are included
-  by default, as cross-library links only work on this platform.
+  in the search database by default, as cross-library links do not work
+  on this platform.
 }
 \value{
   No value is returned. The file(s)
   \file{R\_HOME\\doc\\html\\packages.html} and/or
-  \file{R\_HOME\\doc\\html\\search\\index.txt} is (re-)created.
+  \file{R\_HOME\\doc\\html\\search\\index.txt} are (re-)created.
 }
 \author{Guido Masarotto and Brian Ripley}
 \note{You will need write permission in the \file{R\_HOME\\doc\\html}
