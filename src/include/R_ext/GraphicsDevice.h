@@ -44,23 +44,42 @@ typedef struct {
     /* The first element is a boolean indicating whether this is 
      * a new device driver (always 1) -- the old device driver structure
      * has had a similar element added (which will always be 0)
+     *
+     * This needs to be removed once the old DevDesc structure has been
+     * removed from the system.
      */
     int newDevStruct; 
     /********************************************************
-     * Device state variables.
+     * Device physical characteristics
      ********************************************************/
     double left;	        /* left raster coordinate */
     double right;	        /* right raster coordinate */
     double bottom;	        /* bottom raster coordinate */
     double top;		        /* top raster coordinate */
+    /* R only has the notion of a rectangular clipping region
+     */
     double clipLeft;
     double clipRight;
     double clipBottom;
     double clipTop;
-    double gamma;	        /* Device Gamma Correction */
+    /* I hate these next three -- they seem like a real fudge
+     * BUT I'm not sure what to replace them with so they stay for now.
+     */
     double xCharOffset;	        /* x character addressing offset */
     double yCharOffset;	        /* y character addressing offset */
     double yLineBias;	        /* 1/2 interline space as frac of line hght */
+    double ipr[2];	        /* Inches per raster; [0]=x, [1]=y */
+    double asp;		        /* Pixel aspect ratio = ipr[1]/ipr[0] */
+    /* I hate this guy too -- seems to assume that a device can only
+     * have one font size during its lifetime
+     * BUT removing/replacing it would take quite a lot of work
+     * to design and insert a good replacement so it stays for now.
+     */
+    double cra[2];	        /* Character size in rasters; [0]=x, [1]=y */
+    double gamma;	        /* Device Gamma Correction */
+    /********************************************************
+     * Device capabilities
+     ********************************************************/
     Rboolean canResizePlot;	/* can the graphics surface be resized */
     Rboolean canChangeFont;	/* device has multiple fonts */
     Rboolean canRotateText;	/* text can be rotated */
@@ -69,23 +88,36 @@ typedef struct {
     Rboolean canChangeGamma;    /* can the gamma factor be modified */
     int canHAdj;	        /* Can do at least some horiz adjust of text
 			           0 = none, 1 = {0,0.5, 1}, 2 = [0,1] */
-    double ipr[2];	        /* Inches per raster; [0]=x, [1]=y */
-    double asp;		        /* Pixel aspect ratio = ipr[1]/ipr[0] */
-    double cra[2];	        /* Character size in rasters; [0]=x, [1]=y */
+    /********************************************************
+     * Device initial settings
+     ********************************************************/
+    /* These are things that the device must set up when it is created.
+     * The graphics system can modify them and track current values,
+     * but some devices want to know what the original setting was.
+     */
     double startps;             
     int startcol;
     int startfill;
     int startlty;
     int startfont;
     double startgamma;
+    /********************************************************
+     * Device specific information
+     ********************************************************/
     void *deviceSpecific;	/* pointer to device specific parameters */
+    /********************************************************
+     * Device display list
+     ********************************************************/
+    /* I think it would feel nicer if this stuff was part of the 
+     * graphics engine (GEDevDesc), but this is another thing that
+     * needs more time to implement a change properly.
+     */
     Rboolean displayListOn;     /* toggle for display list status */
     SEXP displayList;           /* display list */
     SEXP savedSnapshot;         /* The last value of the display list
 				 * just prior to when the display list
 				 * was last initialised
 				 */
-    Rboolean ask;	        /* User confirmation of ``page eject'' */
     /********************************************************
      * Device procedures.
      ********************************************************/

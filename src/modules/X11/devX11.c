@@ -1876,8 +1876,6 @@ Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd)
     dd->canHAdj = 0;
     dd->canChangeGamma = FALSE;
 
-    dd->ask = FALSE;
-
     dd->startps = xd->basefontsize;
     dd->startcol = xd->col;
     dd->startfill = xd->fill;

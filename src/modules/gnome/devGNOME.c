@@ -1081,8 +1081,6 @@ Rboolean GnomeDeviceDriver(DevDesc *odd, char *display,
     dd->canHAdj = 0;/* not better? {0, 0.5, 1} */
     dd->canChangeGamma = FALSE;
 
-    dd->ask = FALSE;
-
     /* x11 device description stuff */
     gd->cex = 1.0;
     gd->srt = 0.0;
