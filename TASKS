@@ -92,7 +92,7 @@ FROM:	Kurt.Hornik@ci.tuwien.ac.at
 
 ----------------------------------------------------------------------
 TASK:	help file ALIAS() and LINK() constructions
-STATUS:	Open
+STATUS:	Closed
 FROM:	R@stat.auckland.ac.nz
 	How do we know which file to LINK to?  There needs to a step
 	which fills in the file name on the basis of all ALIAS
@@ -101,6 +101,7 @@ FROM:	R@stat.auckland.ac.nz
 	[ of aliases and corresponding file names.  Then we pass   ]
 	[ throught the files building the correct LINK references. ]
 
+	[ The new Rdconv and build-html... solve `everything' ]
 ----------------------------------------------------------------------
 TASK:	"paste" problem
 STATUS:	Closed
@@ -134,7 +135,7 @@ FROM:	maechler@stat.math.ethz.ch
 	options(warn = k)
 	k=  0 : [default]  print warnings
 	k= -1 :	do nothing (maybe append warnings to some temp-file)
-	k=  1 : produce an error ('warning' becomes 'stop'). 
+	k=  1 : produce an error ('warning' becomes 'stop').
 
 ----------------------------------------------------------------------
 TASK:	R has no stderr
@@ -145,7 +146,7 @@ FROM:	Friedrich.Leisch@ci.tuwien.ac.at
 	I would error messages expect to go to the file errlog
 	instead of the screen.
 	[ We don't have standard error.	 This is problematic on ]
-	[ platforms other than Unix.				
+	[ platforms other than Unix.
 
 
 ----------------------------------------------------------------------
@@ -278,8 +279,8 @@ FROM:	<schwarte@feat.mathematik.uni-essen.de>
 	1) Configure does not adapt GETSYMBOLS.in if the Fortran Compiler
 	   does not add underscores to the symbol names.
 	2) There is a name conflict if the Fortran Compiler does not add
-	   underscores because there exist a Fortran function FMIN and a 
-	   C function fmin(). Thus the name of the Fortran FMIN should be 
+	   underscores because there exist a Fortran function FMIN and a
+	   C function fmin(). Thus the name of the Fortran FMIN should be
 	   changed.
 	   [ This is fixed I think. ]
 	Currently I am rewriting my robust location-scale code in C. I
@@ -330,7 +331,7 @@ FROM:	<p.dalgaard@kubism.ku.dk>
 	[At least under SunOS this is fixed. RG]
 
 	[However, 'names(j) <- NULL' has no effect in R, but does in S.	 MM]
-	
+
 ----------------------------------------------------------------------
 TASK:	String NAs Via the Back Door.
 STATUS:	Open
@@ -338,14 +339,14 @@ FROM:	<p.dalgaard@kubism.ku.dk>
 	Ok, the right solution seems to be names(as.list(j)), but then we run
 	into some other fun with NA's... Shouldn't the real NA print without
 	quotes?
-	> ch[1]<-paste("N","A",sep="") 
+	> ch[1]<-paste("N","A",sep="")
 	> is.na(ch)
 	[1] FALSE FALSE FALSE
 	> ch
-	[1] "NA" "a"  "b" 
+	[1] "NA" "a"  "b"
 	> ch[1]=="NA"
 	[1] TRUE
-	> ch[1]<-"NA"		      
+	> ch[1]<-"NA"
 	> is.na(ch)
 	[1]  TRUE FALSE FALSE
 	[ We need a real NA.  At present there is confusion between    ]
@@ -356,7 +357,7 @@ FROM:	<p.dalgaard@kubism.ku.dk>
 
 ----------------------------------------------------------------------
 TASK:	Directory Structure
-STATUS:	Open
+STATUS:	Closed
 FROM:	<Kurt.Hornik@ci.tuwien.ac.at> + Friedrich + Paul Gilbert
 	> Regarding the location of data for libraries it might be easier if
 	> everything for one library is included in one subdirectory. At least
@@ -392,7 +393,7 @@ FROM:	<p.dalgaard@kubism.ku.dk>
 	The x11() window can be a nuisance to have popping up at startup (esp.
 	on small screens) when you're not working with graphics. However,
 	currently you can't get rid of it without modifying the systemwide
-	Rprofile. 
+	Rprofile.
 	Current logic is:
 	Run $RHOME/library/Rprofile
 	if ./.Rprofile exists
@@ -463,7 +464,7 @@ FROM:	<Kurt.Hornik@ci.tuwien.ac.at>
 
 ----------------------------------------------------------------------
 TASK:	New Problems
-STATUS:	Open
+STATUS:	Closed
 FROM:	<Kurt.Hornik@ci.tuwien.ac.at>
 	New minor remarks:
 	* The documentation for `image' still has the old order z, x, y.
@@ -476,8 +477,8 @@ FROM:	<Kurt.Hornik@ci.tuwien.ac.at>
 TASK:	Multiplatform Support
 STATUS:	Open
 FROM:	<warnes@biostat.washington.edu>
-	I've modified the "$RHOME/bin/R" and "$RHOME/cmd/filename" so that you 
-	can use the same directories for multiple machines.  That is, machines 
+	I've modified the "$RHOME/bin/R" and "$RHOME/cmd/filename" so that you
+	can use the same directories for multiple machines.  That is, machines
 	running various flavors of UNIX can access the same directories.
 	The modified structure adds the directories
 		$RHOME/bin/$OSTYPE/
@@ -486,14 +487,14 @@ FROM:	<warnes@biostat.washington.edu>
 	For instance, here the $RHOME directory contains two subdirectories,
 		$RHOME/bin/solaris/
 		$RHOME/bin/sunos4/
-	which each hold the appropriate R.binary file.	
-	These two modified functions assume that the environment variable $OSTYPE 
-	is appropriately set, as is done automatically by the shell tcsh.  If it 
+	which each hold the appropriate R.binary file.
+	These two modified functions assume that the environment variable $OSTYPE
+	is appropriately set, as is done automatically by the shell tcsh.  If it
 	is not set, the directory names collapse to the original values,
 		$RHOME/bin/ and $RHOME/lib/
-	To use them, create the approprate directories and place the correct 
-	binaries therein. ( Note that the makefiles will not do this 
-	automatically!)	 Then replace $RHOME/bin/R and $RHOME/cmd/filename with 
+	To use them, create the approprate directories and place the correct
+	binaries therein. ( Note that the makefiles will not do this
+	automatically!)	 Then replace $RHOME/bin/R and $RHOME/cmd/filename with
 	the modified ones.
 
 ----------------------------------------------------------------------
@@ -508,7 +509,7 @@ FROM:	Friedrich.Leisch@ci.tuwien.ac.at
 	e.g. for exec and dynload-objects.
 	for exec there's a problem though, as some exec's are
 	shell/perl/whatever-scripts and *should* work on any platform
-	...  
+	...
 
 ----------------------------------------------------------------------
 TASK:	Poly
@@ -526,8 +527,8 @@ FROM:	<hornik@ci.tuwien.ac.at>
 	$11
 	[1] 1 2 3 4 5
 	R> unlist(l)
-	111 112 113 114 115 
-	  1   2	  3   4	  5 
+	111 112 113 114 115
+	  1   2	  3   4	  5
 	[ Bug or feature ? ]
 
 ----------------------------------------------------------------------
@@ -539,22 +540,22 @@ FROM:	<bates@stat.wisc.edu>
 	nested anonymous functions are welcome.	 I'll try to work out a
 	corresponding all.vars function.
 
-	### $Id: TASKS,v 1.2 1997/10/04 22:26:29 ihaka Exp $
+	### $Id: TASKS,v 1.3 1997/11/11 07:58:05 maechler Exp $
 	### Some replacement functions that are missing in R
 
 	### Determine all the names (symbols) occuring in an object.
 	### This is probably grossly inefficient.
 	all.names <-
-	  function (x) 
+	  function (x)
 	{
-	  if (mode(x) == "symbol") 
+	  if (mode(x) == "symbol")
 	    return(as.character(x))
-	  if (length(x) == 0) 
+	  if (length(x) == 0)
 	    return(NULL)
-	  if (is.recursive(x)) 
+	  if (is.recursive(x))
 	    return(unlist(lapply(as.list(x), all.names)))
 	  character(0)
-	}   
+	}
 
 ----------------------------------------------------------------------
 TASK:	"sys.function" problem
@@ -569,7 +570,7 @@ FROM:	<bates@stat.wisc.edu>
 	of code looks like
 	  flist <- (function(x) {
 	    if (mode(x) == "call") {
-	      if (x[[1]] == as.name("/")) 
+	      if (x[[1]] == as.name("/"))
 		return(c(sys.function()(x[[2]]), sys.function()(x[[3]])))
 	      if (x[[1]] == as.name("("))	# for R
 		return(sys.function()(x[[2]]))
@@ -587,7 +588,7 @@ FROM:	<bates@stat.wisc.edu>
 TASK:	Matrix multiply problems
 STATUS:	Open
 FROM:	<thomas@biostat.washington.edu>
-	Both of these used to work and seem useful and harmless:
+	Both of these used to work and seem useful and harmless (and work in S):
 	R> matrix(1,ncol=1)%*%c(1,2)
 	Error in matrix(1, ncol = 1) %*% c(1, 2) : non-conformable arguments
 	R> matrix(1,ncol=1)*(1:2)
@@ -627,33 +628,33 @@ FROM:	<thomas@biostat.washington.edu>
 	methods.
 
 	update.glm<-function (glm.obj, formula, data, weights, subset,
-		na.action, offset, family, x) 
+		na.action, offset, family, x)
 	{
 		call <- glm.obj$call
-		if (!missing(formula)) 
+		if (!missing(formula))
 			call$formula <- update.formula(call$formula, formula)
-		if (!missing(data)) 
+		if (!missing(data))
 			call$data <- substitute(data)
-		if (!missing(subset)) 
+		if (!missing(subset))
 			call$subset <- substitute(subset)
-		if (!missing(na.action)) 
+		if (!missing(na.action))
 			call$na.action <- substitute(na.action)
-		if (!missing(weights)) 
+		if (!missing(weights))
 			call$weights <- substitute(weights)
-		if (!missing(offset)) 
+		if (!missing(offset))
 			call$offset <- substitute(offset)
-		if (!missing(family)) 
+		if (!missing(family))
 			call$family <- substitute(family)
-		if (!missing(x)) 
+		if (!missing(x))
 			call$x <- substitute(x)
 		notparent <- c("NextMethod", "update", methods(update))
 		for (i in 1:(1+sys.parent())) {
 			parent <- sys.call(-i)[[1]]
 			if (is.null(parent))
-				break	
+				break
 			if (is.na(match(as.character(parent), notparent)))
 				break
-		}	
+		}
 		eval(call, sys.frame(-i))
 	}
 
@@ -662,9 +663,12 @@ TASK:	Wisdom
 STATUS:	Open
 FROM:	<bates@stat.wisc.edu>
 	Some of the "eternal truths" about the S language are:
-	 - every object has a mode obtainable by mode(object)
-	 - every object has a length obtainable by length(object)
-	 - every object can be coerced to a list of the same length 
+	 - every object has a mode obtainable by mode(object)		[ok]
+	 - every object has a length obtainable by length(object)	[ok]
+	 - every object can be coerced to a list of the same length
+				[not yet, even for expression()s
+				 (and functions)]
+
 	One can imagine that code that messes around with functions and
 	other expressions in R will break fairly quickly when these
 	conditions do not hold.	 I don't know how much work would be
@@ -678,7 +682,7 @@ FROM:	<p.dalgaard@kubism.ku.dk>
 	The following three functions are designed to make manipulation of
 	dataframes easier. I won't write detailed docs just now, but if you
 	follow the example below, you should get the general picture. Comments
-	are welcome, esp. re. naming conventions. 
+	are welcome, esp. re. naming conventions.
 
 	Note that these functions are definitely not portable to S because
 	they rely on R's scoping rules. Not that difficult to fix, though: The
@@ -706,21 +710,21 @@ FROM:	<p.dalgaard@kubism.ku.dk>
 
 	----------------------------------------
 	"select.frame" <-
-	function (dfr, ...) 
+	function (dfr, ...)
 	{
 		subst.call <- function(e) {
-			if (length(e) > 1) 
+			if (length(e) > 1)
 				for (i in 2:length(e)) e[[i]] <- subst.expr(e[[i]])
 			e
 		}
 		subst.expr <- function(e) {
-			if (is.call(e)) 
+			if (is.call(e))
 				subst.call(e)
 			else match.expr(e)
 		}
 		match.expr <- function(e) {
 			n <- match(as.character(e), nm)
-			if (is.na(n)) 
+			if (is.na(n))
 				e
 			else n
 		}
@@ -729,25 +733,25 @@ FROM:	<p.dalgaard@kubism.ku.dk>
 		dfr[, eval(subst.expr(e))]
 	}
 	"modify.frame" <-
-	function (dfr, ...) 
+	function (dfr, ...)
 	{
 		nm <- names(dfr)
 		e <- substitute(list(...))
-		if (length(e) < 2) 
+		if (length(e) < 2)
 			return(dfr)
 		subst.call <- function(e) {
-			if (length(e) > 1) 
+			if (length(e) > 1)
 				for (i in 2:length(e)) e[[i]] <- subst.expr(e[[i]])
 			substitute(e)
 		}
 		subst.expr <- function(e) {
-			if (is.call(e)) 
+			if (is.call(e))
 				subst.call(e)
 			else match.expr(e)
 		}
 		match.expr <- function(e) {
-			if (is.na(n <- match(as.character(e), nm))) 
-				if (is.atomic(e)) 
+			if (is.na(n <- match(as.character(e), nm)))
+				if (is.atomic(e))
 					e
 				else substitute(e)
 			else substitute(dfr[, n])
@@ -757,7 +761,7 @@ FROM:	<p.dalgaard@kubism.ku.dk>
 			ee <- subst.expr(e[[i]])
 			r <- eval(ee)
 			if (!is.na(tags[i])) {
-				if (is.na(n <- match(as.character(tags[i]), 
+				if (is.na(n <- match(as.character(tags[i]),
 					nm))) {
 					n <- length(nm) + 1
 					dfr[[n]] <- numeric(nrow(dfr))
@@ -770,22 +774,22 @@ FROM:	<p.dalgaard@kubism.ku.dk>
 		dfr
 	}
 	"subset.frame" <-
-	function (dfr, expr) 
+	function (dfr, expr)
 	{
 		nm <- names(dfr)
 		e <- substitute(expr)
 		subst.call <- function(e) {
-			if (length(e) > 1) 
+			if (length(e) > 1)
 				for (i in 2:length(e)) e[[i]] <- subst.expr(e[[i]])
 			e
 		}
 		subst.expr <- function(e) {
-			if (is.call(e)) 
+			if (is.call(e))
 				subst.call(e)
 			else match.expr(e)
 		}
 		match.expr <- function(e) {
-			if (is.na(n <- match(as.character(e), nm))) 
+			if (is.na(n <- match(as.character(e), nm)))
 				e
 			else dfr[, n]
 		}
@@ -811,6 +815,7 @@ FROM:	<jlindsey@luc.ac.be>
 	poisson.
 	5. R still does not read my environmental variables to set memory
 	size.
+
 	Suggestions:
 	1. d, p, q, and r functions for inverse Gauss and Laplace
 	distributions.
@@ -833,7 +838,7 @@ STATUS:	Open
 FROM:	Paul Gilbert <la-jassine@aix.pacwan.net>
 	I have	always thought that typing the name of an object generated
 	a call to the print method for the object, however,  (in 0.49)
-	I redefined the generic print method as 
+	I redefined the generic print method as
 		print <- function(x, ...)
 		{if (is.tframe(x))  UseMethod("print.tframe")
 		  else UseMethod("print")
@@ -851,7 +856,7 @@ FROM:	Paul Gilbert <la-jassine@aix.pacwan.net>
 	[1] "c(\"print.ts(structure(c(1981.5, 2006.25, 4), class = c(\\\"ts\\\",
 	\\\"tframe\\\"\", "
 	[2] "c(\"print(structure(c(1981.5, 2006.25, 4), class = c(\\\"ts\\\",
-	\\\"tframe\\\"\", "   
+	\\\"tframe\\\"\", "
 	This is generating a call to the class method print.ts
 	rather than to print.tframe.ts as is done when I use
 	print(z).  If my understanding that typing the name of an
@@ -869,19 +874,23 @@ FROM:	Paul Gilbert <la-jassine@aix.pacwan.net>
 
 ----------------------------------------------------------------------
 TASK:	summary.default
-STATUS:	Open
+STATUS:	Closed
 FROM:	Paul Gilbert <la-jassine@aix.pacwan.net>
 	2/ In summary.default
 		 ...
-			sumry[i, 2] <- if (is.object(ii)) 
+			sumry[i, 2] <- if (is.object(ii))
 				 class(ii)
 	should be changed to
 		...
-			sumry[i, 2] <- if (is.object(ii)) 
+			sumry[i, 2] <- if (is.object(ii))
 				paste(class(ii), collapse=" ")
 	so that it works with lists of lists. (This fix was suppose to be
 	added to Splus 4.)
 
+	[The solution is now different:
+		cls <- class(ii)
+	        sumry[i, 2] <- if (length(cls) > 0) cls[1] else "-none-"
+	]
 ----------------------------------------------------------------------
 TASK:	Time Series Problems
 STATUS:	Open
@@ -892,14 +901,15 @@ FROM:	<la-jassine@aix.pacwan.net>
 	> z <-ts(z)
 	> z[,1,drop=F]
 	Error in [.ts(z, , 1, drop = F) : unused argument to function
+ [ok]
 
 	2/  == and other comparisons with non-ts matrices should work:
 	> z <- matrix( 1:10,5,2)
 	> ts(z)
 	Time-Series:
-	Start = c(1, 1) 
-	End = c(5, 1) 
-	Frequency = 1 
+	Start = c(1, 1)
+	End = c(5, 1)
+	Frequency = 1
 	     [,1] [,2]
 	[1,]	1    6
 	[2,]	2    7
@@ -918,10 +928,10 @@ FROM:	<la-jassine@aix.pacwan.net>
 	4/ In the function start.ts (and in end.ts) ts[1] in the last line
 	is not defined. Perhaps I am missing something?
 	start.ts
-	function (x) 
+	function (x)
 	{
 		ts.eps <- .Options$ts.eps
-		if (is.null(ts.eps)) 
+		if (is.null(ts.eps))
 			ts.eps <- 1e-06
 		tsp <- attr(as.ts(x), "tsp")
 		is <- tsp[1] * tsp[3]
@@ -932,7 +942,7 @@ FROM:	<la-jassine@aix.pacwan.net>
 		}
 		else ts[1]
 	}
- 
+
 
 ----------------------------------------------------------------------
 TASK:	Recycling problems
@@ -968,12 +978,12 @@ FROM:	<Kurt.Hornik@ci.tuwien.ac.at>
 
 	Note that S has a  write(.)  function  which would be our
 		write.default(.)
-	your	write.table	    would be our 
+	your	write.table	    would be our
 		write.data.frame
 	The only addition would be a  'write.matrix' which would be 'like'
 	write.data.frame, the only problem being that  'matrix' is not a class
 	(yet).
-		[Note that in S4, everything has a class; 
+		[Note that in S4, everything has a class;
 	I'm voting for matrices to have a class in R  ..]
 	write.default  could 'despatch' to write.matrix if  x  is a matrix.
 
@@ -993,7 +1003,7 @@ FROM:	<thomas@biostat.washington.edu> + <maechler@stat.math.ethz.ch>
 	if   'NULL==1' returned the same as 'numeric(0)==1'.
 	At the moment, I don't see why compatibility with S should be
 	important here:
-		if( NULL == anything)  
+		if( NULL == anything)
 	or, e.g.,	if( numeric(0) == numeric(0) )
 	give an error anyway, i.e., you have to test for length 0 _anyway_
 	in the cases where one comparison argument may have zero length.
@@ -1068,7 +1078,7 @@ FROM:	 <mikem@stat.cmu.edu>
 	Several bugs (no solutions, yet).  These might be well known.
 	1) If one does, e.g.,  mymod <- lm(y ~ x); formula(mymod)
 	then one does not get back the formula (one gets,
-	Error: invalid formula) 
+	Error: invalid formula)
 	CLOSED (Aug 6, 97, RG).
 	2) if x is of mode numeric, then the model formula
 		mymod <- lm(y ~ x + x^2)
@@ -1087,12 +1097,12 @@ FROM:	<p.dalgaard@kubism.ku.dk>
 	Mike Meyer <mikem@stat.cmu.edu> writes:
 	> Several bugs (no solutions, yet).  These might be well known.
 	> 1) If one does, e.g.,	 mymod <- lm(y ~ x); formula(mymod)
-	> then one does not get back the formula (one gets, Error: invalid formula) 
+	> then one does not get back the formula (one gets, Error: invalid formula)
 	Yep. Seems that we need a
 	formula.lm<-function(x)formula(x$terms)
 	> 2) if x is of mode numeric, then the model formula
 	>	mymod <- lm(y ~ x + x^2)
-	> is not processed as S would do it. The model is fit ignoring the x^2 term, 
+	> is not processed as S would do it. The model is fit ignoring the x^2 term,
 	We had that topic a while back. I think it was concluded
 	that it is a feature, because mixing model formulas and
 	arithmetic ditto is bad practice. (I don't have any strong
@@ -1104,12 +1114,12 @@ TASK:	formula problems
 STATUS:	Open
 FROM:	<wvenable@attunga.stats.adelaide.edu.au>
 	Peter Dalgaard writes:
-	 > > 
+	 > >
 	 > > 2) if x is of mode numeric, then the model formula
 	 > > mymod <- lm(y ~ x + x^2)
 	 > > is not processed as S would do it.	 The model is fit[ted]
 	 > > ignoring the x^2 term...
-	 > 
+	 >
 	 > We had that topic a while back.  I think it was concluded that
 	 > it is a feature, because mixing model formulas and arithmetic
 	 > ditto is bad practice.
@@ -1167,7 +1177,7 @@ FROM:	<p.dalgaard@kubism.ku.dk>
 	the white book said it was (it's not just one level minus the average
 	of the preceding, the parameter is also scaled by the reciprocal of
 	the level number). [There's a split-second solution -- see below --
-	but we sort of didn't think of it at the time...] 
+	but we sort of didn't think of it at the time...]
 	> I presume the reason they were used at all is because if you have
 	> equal replication of everything the Helmert contrasts give you a
 	> model matrix with orthogonal columns, so all estimates are
@@ -1218,7 +1228,7 @@ FROM:	<wvenable@attunga.stats.adelaide.edu.au>
 	 > the white book said it was (it's not just one level minus the average
 	 > of the preceding, the parameter is also scaled by the reciprocal of
 	 > the level number). [There's a split-second solution -- see below --
-	 > but we sort of didn't think of it at the time...] 
+	 > but we sort of didn't think of it at the time...]
 
 	A few weeks ago I gave a fairly detailed discussion of how to
 	relate contrast matrices and their interpretation in s-news.  I
@@ -1232,7 +1242,7 @@ FROM:	<wvenable@attunga.stats.adelaide.edu.au>
 	 > > equal replication of everything the Helmert contrasts give you a
 	 > > model matrix with orthogonal columns, so all estimates are
 	 > > uncorrelated.  Whenever do you get equal replication, though?
-	 > 
+	 >
 	 > Hardly ever. Actually, I though that the point was not so much
 	 > ortogonality, but the successive testing (A=B, A=B=C, A=B=C=D,...).
 	 > However that is just plainly wrong outside of balanced ANOVA's.
@@ -1270,7 +1280,7 @@ FROM:	<wvenable@attunga.stats.adelaide.edu.au>
 	  else structure(diag(n), dimnames = list(lab, lab))
 	}
 	> contr.sdif(4)
-	    2-1	 3-2   4-3 
+	    2-1	 3-2   4-3
 	1 -0.75 -0.5 -0.25
 	2  0.25 -0.5 -0.25
 	3  0.25	 0.5 -0.25
@@ -1308,7 +1318,7 @@ FROM:	<maechler@stat.math.ethz.ch>
 
 	## S-plus 3.4  (being 100% ok):
 	S> sintest(1)
-	  x y	    sin 
+	  x y	    sin
 	  1 2 0.7071068
 	 Warning messages:
 	   looking for function "sin", ignored local non-function in: sintest(1)
@@ -1333,7 +1343,7 @@ FROM:	<maechler@stat.math.ethz.ch>
 	[[3]]
 	<primitive: sin>
 
-	--------------- is almost okay, 
+	--------------- is almost okay,
 			the buglet being that the names have been dropped from the list.
 
 	But watch this:
@@ -1341,7 +1351,7 @@ FROM:	<maechler@stat.math.ethz.ch>
 	function(x = 1, y = 2, sin.x)
 	sin2 = .Internal(sin(x), "do_math", T, 109)
 
-	--- returning a function 
+	--- returning a function
 
 		((now we see, why S's way of treating functions as
 		  lists sometimes badly sucks)).
@@ -1398,7 +1408,7 @@ FROM:	<p.dalgaard@kubism.ku.dk>
 		> x<-list()
 		> x[["f"]]<-1
 		> zz<-"g"
-		> x[[zz]]<-2 
+		> x[[zz]]<-2
 	In R both variants fail unless the name is already on the
 	list. The first one can be replaced by x$f, but there's
 	seems to be no substitute for the other one (oh yes I found
@@ -1445,8 +1455,8 @@ FROM:
 			high <- low
 		}
 		else stop("invalid extrapolation rule in approx")
-		y <- .C("approx", as.double(x), as.double(y), length(x), 
-			xout = as.double(xout), length(xout), as.double(low), 
+		y <- .C("approx", as.double(x), as.double(y), length(x),
+			xout = as.double(xout), length(xout), as.double(low),
 			as.double(high))$xout
 		return(list(x = xout, y = y))
 	If (rule == 2) the values of low and high are set to NA. Immediately
@@ -1465,8 +1475,8 @@ FROM:	hornik@ci.tuwien.ac.at
 	$11
 	[1] 1 2 3 4 5
 	R> unlist(l)
-	111 112 113 114 115 
-	  1   2	  3   4	  5 
+	111 112 113 114 115
+	  1   2	  3   4	  5
 	I ran into this weekend ...
 
 ----------------------------------------------------------------------
@@ -1478,22 +1488,22 @@ FROM:	<bates@stat.wisc.edu>
 	nested anonymous functions are welcome.	 I'll try to work out a
 	corresponding all.vars function.
 
-	### $Id: TASKS,v 1.2 1997/10/04 22:26:29 ihaka Exp $
+	### $Id: TASKS,v 1.3 1997/11/11 07:58:05 maechler Exp $
 	### Some replacement functions that are missing in R
 
 	### Determine all the names (symbols) occuring in an object.
 	### This is probably grossly inefficient.
 	all.names <-
-	  function (x) 
+	  function (x)
 	{
-	  if (mode(x) == "symbol") 
+	  if (mode(x) == "symbol")
 	    return(as.character(x))
-	  if (length(x) == 0) 
+	  if (length(x) == 0)
 	    return(NULL)
-	  if (is.recursive(x)) 
+	  if (is.recursive(x))
 	    return(unlist(lapply(as.list(x), all.names)))
 	  character(0)
-	}   
+	}
 	### Local variables:
 	### mode: R
 	### End:
@@ -1506,16 +1516,16 @@ FROM:	<bates@stat.wisc.edu>
 	seems to have been written with S in your mind;
 	you are exactly demonstrating some of the 'fine' differences between  R & S
 
-	>1> all.names <- function (x) 
+	>1> all.names <- function (x)
 	>2> {
 	>3>   if (mode(x) == "symbol")	return(as.character(x))
 	>4>   if (length(x) == 0)	return(NULL)
 	>5>   if (is.recursive(x))	return(unlist(lapply(as.list(x), all.names)))
 	>6>   character(0)
-	>7> }	
+	>7> }
 
 	1) length(x) is not always defined in R; e.g. it is NOT for functions.
-	   --> Delete line 4  
+	   --> Delete line 4
 
 	2) functions  are NOT lists and cannot be coerced to,
 	   which makes line 5 fail for function objects.
@@ -1552,7 +1562,7 @@ FROM:	<bates@stat.wisc.edu> + <maechler@stat.math.ethz.ch>
 	recursion.  The piece of code looks like
 	  flist <- (function(x) {
 	    if (mode(x) == "call") {
-	      if (x[[1]] == as.name("/")) 
+	      if (x[[1]] == as.name("/"))
 		return(c(sys.function()(x[[2]]), sys.function()(x[[3]])))
 	      if (x[[1]] == as.name("("))	# for R
 		return(sys.function()(x[[2]]))
@@ -1611,18 +1621,18 @@ FROM:	<Kurt.Hornik@ci.tuwien.ac.at>
 	Note that S has a  write(.)  function  which would be our
 	write.default(.)
 
-	your	write.table	    would be our 
+	your	write.table	    would be our
 		write.data.frame
 
 	The only addition would be a  'write.matrix' which would be 'like'
 	write.data.frame, the only problem being that  'matrix' is not a
-	class (yet).  [Note that in S4, everything has a class; 
+	class (yet).  [Note that in S4, everything has a class;
 		   I'm voting for matrices to have a class in R	 ..]
 	write.default  could 'despatch' to write.matrix if  x  is a matrix.
 
 ----------------------------------------------------------------------
 TASK:	"ls.print" problem
-STATUS:	Closed, Aug 6, 97 RG. 
+STATUS:	Closed, Aug 6, 97 RG.
 	<summary does what it should as does ls.print now>
 FROM:	<VENKAT@biosta.mskcc.org>
 	ls.print produces error that I don't seem to be able to
@@ -1658,7 +1668,7 @@ FROM:	<thomas@biostat.washington.edu>
 	Error: comparison is possible only for vector types
 	whereas in S(-PLUS) it gives NA, which seems more sensible.
 	Along similar lines, comparison with a length 0 vector returns
-	logical(0) in R but NA in S. 
+	logical(0) in R but NA in S.
 
 		Martin:
 	Isn't  logical(0)  more	 logical than  NA ?
@@ -1666,7 +1676,7 @@ FROM:	<thomas@biostat.washington.edu>
 	if 'NULL==1' returned the same as 'numeric(0)==1'.
 	At the moment, I don't see why compatibility with S  should be
 	important here:
-			if( NULL == anything)  
+			if( NULL == anything)
 	or, e.g.,	if( numeric(0) == numeric(0) )
 
 	give an error anyway, i.e., you have to test for length 0
@@ -1695,7 +1705,7 @@ FROM:	<thomas@biostat.washington.edu>
 
 		Martin:
 	Ok, given the above argument, returning NA is logical, too.
-	However, I'd also argue that  
+	However, I'd also argue that
 		logical(0) | TRUE	-> TRUE
 		logical(0) & FALSE	-> FALSE
 
@@ -1722,11 +1732,11 @@ FROM:	<la-jassine@aix.pacwan.net>
 
 	2/ In summary.default
 	 ...
-			sumry[i, 2] <- if (is.object(ii)) 
+			sumry[i, 2] <- if (is.object(ii))
 				 class(ii)
 	should be changed to
 	...
-			sumry[i, 2] <- if (is.object(ii)) 
+			sumry[i, 2] <- if (is.object(ii))
 				paste(class(ii), collapse=" ")
 
 	so that it works with lists of lists.
@@ -1758,7 +1768,7 @@ FROM:	<la-jassine@aix.pacwan.net>
 	[1] "c(\"print.ts(structure(c(1981.5, 2006.25, 4), class = c(\\\"ts\\\",
 	\\\"tframe\\\"\", "
 	[2] "c(\"print(structure(c(1981.5, 2006.25, 4), class = c(\\\"ts\\\",
-	\\\"tframe\\\"\", "   
+	\\\"tframe\\\"\", "
 
 	This is generating a call to the class method print.ts
 	rather than to print.tframe.ts as is done when I use
@@ -1784,9 +1794,9 @@ FROM:	<la-jassine@aix.pacwan.net>
 	> z <- matrix( 1:10,5,2)
 	> ts(z)
 	Time-Series:
-	Start = c(1, 1) 
-	End = c(5, 1) 
-	Frequency = 1 
+	Start = c(1, 1)
+	End = c(5, 1)
+	Frequency = 1
 	     [,1] [,2]
 	[1,]	1    6
 	[2,]	2    7
@@ -1795,7 +1805,7 @@ FROM:	<la-jassine@aix.pacwan.net>
 	[5,]	5   10
 	> z == ts(z)
 	Error: invalid time series parameters specified
-	> 
+	>
 
 	3/ The generic functions start and end need default methods
 	to return a result for matrices as previously and in S.
@@ -1809,10 +1819,10 @@ FROM:	<la-jassine@aix.pacwan.net>
 	last line is not defined. Perhaps I am missing something?
 
 	start.ts
-	function (x) 
+	function (x)
 	{
 		ts.eps <- .Options$ts.eps
-		if (is.null(ts.eps)) 
+		if (is.null(ts.eps))
 			ts.eps <- 1e-06
 		tsp <- attr(as.ts(x), "tsp")
 		is <- tsp[1] * tsp[3]
@@ -1823,7 +1833,7 @@ FROM:	<la-jassine@aix.pacwan.net>
 		}
 		else ts[1]
 	}
- 
+
 ----------------------------------------------------------------------
 TASK:	False warnings
 STATUS:	Open
@@ -1834,7 +1844,7 @@ FROM:	<la-jassine@aix.pacwan.net>
 	I have not been able to isolate the exact circumstances.
 
 ----------------------------------------------------------------------
-TASK:	ISO-latin1 characters 
+TASK:	ISO-latin1 characters
 STATUS:	Open
 FROM:	<maechler@stat.math.ethz.ch>
 	There seems to be a problem in print.default with some
@@ -1877,7 +1887,7 @@ FROM:	<maechler@stat.math.ethz.ch>
 	ISO26x <- "°±²³´µ¶· ¸¹º»¼½¾¿" #octal 260..277
 
 	##--- THIS IS a Problem: It gives a SYNTAX error !
-	ISOdiv <- "×÷ Ðð Ññ Þþ ßÿ" 
+	ISOdiv <- "×÷ Ðð Ññ Þþ ßÿ"
 	##-- One of these characters even was producing the same as  'q()' !!
 
 	aa_ function(x) {
@@ -1913,7 +1923,7 @@ FROM:	<maechler@stat.math.ethz.ch>
 ----------------------------------------------------------------------
 TASK:	Fontend
 STATUS:	Open
-FROM:	
+FROM:
 	Some time ago there was the suggestion to add a PLATFORM
 	subdir level for bin (and eventually the library subdirs
 	with `binaries'), and the idea to have the shell wrapper
@@ -1947,7 +1957,7 @@ STATUS:	Open
 FROM:	<maechler@stat.math.ethz.ch>
 	BY THE WAY:
 	  It would be nice to be able to say
-		par(reset = TRUE)  
+		par(reset = TRUE)
 	  (or similar) for resetting all the graphical parameters to their
 	(device-dependent) default values.
 	[ This will require a little work.  Perhaps the easiest thing	]
@@ -1987,11 +1997,11 @@ FROM:	<maechler@stat.math.ethz.ch>
     >>
     >> It is clear that	 options( foo = bar )
     >> sets the option and also updates the builtin()  .Options	 list :
-    >> 
+    >>
     >> > options(myopt = pi)
     >> > .Options$my
     >> [1] 3.14159265
-    >> 
+    >>
     >> In S-plus, it was (is) possible to use .Options locally in a function
     >> frame in order to just affect some options during evaluation of that
     >> function.
