@@ -118,10 +118,6 @@ Date: Fri, 11 Jan 2002 12:30:20 +0100
 Subject: bug in options() - help page
 From: Ole Christensen <o.christensen@lancaster.ac.uk>
 Date: Sat, 23 Feb 2002 16:56:56 +0000
-* PR# 1364 *
-Subject: An introduction to R
-From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
-Date: Thu, 07 Mar 2002 16:02:05 -0400
 
 Directory:  Graphics
 
@@ -344,16 +340,7 @@ Date: Thu, 7 Feb 2002 13:43:19 +0100
 
 Directory:  Macintosh
 
-* PR# 1318 *
-Subject: Multiple macintosh() graphics devices
-From: d.orme@ic.ac.uk
-Date: Wed, 20 Feb 2002 16:41:27 +0100 (MET)
-* PR# 1338 *
-Subject: Setting working directory
-From: jmf@atmiserv.com
-Date: Fri, 1 Mar 2002 16:19:56 +0100 (MET)
--- unistd.c declares an array of length FILENAME_MAX to hold the path. This need
---not be (and isn't) big enough. Perhaps 256 would be better.
+none
 
 Directory:  Misc
 
@@ -466,27 +453,11 @@ Date: Fri, 25 Jan 2002 15:08:33 -0500
 Subject:  itemize/item crashes R CMD check 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Tue, 26 Feb 2002 15:13:04 -0500
-* PR# 1372 *
-Subject: Hi,questionnaire
-From: p1p1p1p <p1p1p1p@p-p.p.p>
-Date: Mon, 11 Mar 2002 02:59:08 +0100 (CET)
-* PR# 1373 *
-Subject: Look,my beautiful girl friend
-From: propst <propst@stolaf.edu>
-Date: Sun, 10 Mar 2002 23:21:45 -0600 (CST)
-* PR# 1374 *
-Subject: Sos!
-From: pearsopi <pearsopi@stolaf.edu>
-Date: Mon, 11 Mar 2002 02:38:12 -0600 (CST)
-* PR# 1375 *
-Subject: Underlying operating system
-From: catellie <catellie@stolaf.edu>
-Date: Mon, 11 Mar 2002 04:31:09 -0600 (CST)
-* PR# 1376 *
-Subject: Contents
-From: "Robert.Gentleman" <Robert.Gentleman@r-project.org>
-Date: Tue, 12 Mar 2002 00:21:31 -0600
-* PR# 1377 *
-Subject:  rbinom silently rounds size argument 
-From: Ben Bolker <bolker@zoo.ufl.edu>
-Date: Tue, 12 Mar 2002 09:46:14 -0500
+* PR# 1378 *
+Subject: rpart error with 0-frequency factor levels (with partial fix)
+From: "Wiener, Matthew" <matthew_wiener@merck.com>
+Date: Wed, 13 Mar 2002 12:03:23 -0500
+* PR# 1379 *
+Subject: ¾?´? ±??? °?¾? °???°???´?±??    [ ?¤   º? ]
+From: º??º±? <xxx0child0xxx@com.ne.kr>
+Date: Thu, 14 Mar 2002 04:24:59 +0900
