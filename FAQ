@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-31, 2003-02-07
+Version 1.6-33, 2003-02-18
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1210,6 +1210,12 @@ distributions of R.)
 *GLMMGibbs*
      Generalised Linear Mixed Models by Gibbs sampling.
 
+*GRASS*
+     Interface between the GRASS geographical information system and R,
+     based on starting R from within the GRASS environment and chosen
+     LOCATION_NAME and MAPSET.  Wrapper and helper functions are provided
+     for a range of R functions to match the interface metadata structures.
+
 *GenKern*
      Functions for generating and manipulating generalised binned kernel
      density estimates.
@@ -1903,6 +1909,9 @@ distributions of R.)
 *splancs*
      Spatial and space-time point pattern analysis functions.
 
+*statmod*
+     Miscellaneous biostatistical modelling functions.
+
 *strucchange*
      Various tests on structural change in linear regression models.
 
@@ -1979,12 +1988,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *Dopt*
      Finding D-optimal experimental designs.
-
-*GRASS*
-     Interface between the GRASS geographical information system and R,
-     based on starting R from within the GRASS environment and chosen
-     LOCATION and MAPSET.  Wrapper and helper functions are provided for a
-     range of R functions to match the interface metadata structures.
 
 *PHYLOGR*
      Manipulation and analysis of phylogenetically simulated data sets (as
