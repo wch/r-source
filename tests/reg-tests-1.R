@@ -3194,3 +3194,16 @@ stopifnot(identical(h, list(a=1,list(b=2, list(B=2,d=4), list(e=5)))))
 stopifnot(identical(as.vector(j), c(1,1,1,2)))
 stopifnot(identical(colnames(j), c(NA,"B")))
 ## gave error 'subscript out of bounds' in 1.x.x
+
+## make sure we don't get cycles out of changes to subassign3.
+x <- list(a=1,y=2)
+x$a <- x
+print(x)
+x$d<-x
+print(x)
+y <- x
+x$b <- y
+print(x)
+x$f<-y
+print(x)
+##
