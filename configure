@@ -12,7 +12,7 @@ ac_help=
 ac_default_prefix=/usr/local
 # Any additions from configure.in:
 ac_help="$ac_help
-  --enable-R-profiling    attempt to compile support for Rprof() [no]"
+  --enable-R-profiling    attempt to compile support for Rprof() [yes]"
 ac_help="$ac_help
   --enable-R-shlibs       build R shared libraries [no]"
 ac_help="$ac_help
@@ -1086,7 +1086,7 @@ if test "${enable_R_profiling+set}" = set; then
       want_R_profiling=yes
     fi
 else
-  want_R_profiling=no
+  want_R_profiling=yes
 fi
 
 
