@@ -1067,7 +1067,7 @@ static void menuprev(control m)
     }
 }
 
-static void menuclear(control m)
+static void menugrclear(control m)
 {
     defineVar(install(".SavedPlots"), R_NilValue, R_GlobalEnv);
 }
@@ -1426,7 +1426,7 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     MCHECK(xd->msvar = newmenuitem("Save to variable...", 0, menusvar));
     MCHECK(xd->mgvar = newmenuitem("Get from variable...", 0, menugvar));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(xd->mclear = newmenuitem("Clear history", 0, menuclear));
+    MCHECK(xd->mclear = newmenuitem("Clear history", 0, menugrclear));
 #endif
     MCHECK(newmenu("Resize"));
     MCHECK(xd->mR = newmenuitem("R mode", 0, menuR));
