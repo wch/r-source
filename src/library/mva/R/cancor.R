@@ -37,9 +37,10 @@ cancor <- function(x, y, xcenter=TRUE, ycenter=TRUE)
     ## compute svd(Qx'Qy)
     z <- La.svd(qr.qty(qx, qr.qy(qy, diag(1, nr, dy)))[1:dx,, drop = FALSE],
                 dx, dy)
-    list(cor = z$d,
-	 xcoef = backsolve((qx$qr)[1:dx, 1:dx, drop = FALSE], z$u),
-	 ycoef = backsolve((qy$qr)[1:dy, 1:dy, drop = FALSE], t(z$vt)),
-	 xcenter = xcenter,
+    xcoef <- backsolve((qx$qr)[1:dx, 1:dx, drop = FALSE], z$u)
+    rownames(xcoef) <- colnames(x)
+    ycoef <-  backsolve((qy$qr)[1:dy, 1:dy, drop = FALSE], t(z$vt))
+    rownames(ycoef) <- colnames(y)
+    list(cor = z$d, xcoef = xcoef, ycoef = ycoef, xcenter = xcenter,
 	 ycenter = ycenter)
 }
