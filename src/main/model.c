@@ -1491,7 +1491,8 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP variable, var_i;
     int fik, first, i, j, k, kk, ll, n, nc, nterms, nVar;
     int intrcept, jstart, jnext, risponse, indx, rhs_response;
-    char buf[BUFSIZE], *bufp, *addp;
+    char buf[BUFSIZE]="\0", *bufp, *addp;
+    
 
     checkArity(op, args);
 

@@ -491,9 +491,10 @@ void VectorIndex(int i, int w)
 void MatrixColumnLabel(SEXP cl, int j, int w)
 {
     int l;
-    SEXP tmp = STRING_ELT(cl, j);
+    SEXP tmp;
 
-    if (!isNull(cl)) {
+    if (!isNull(cl)) { 
+        tmp = STRING_ELT(cl, j);
 	if(tmp == NA_STRING) l = R_print.na_width_noquote;
 	else l = Rstrlen(CHAR(tmp), 0);
 	Rprintf("%*s%s", w-l, "",
@@ -507,9 +508,10 @@ void MatrixColumnLabel(SEXP cl, int j, int w)
 void RightMatrixColumnLabel(SEXP cl, int j, int w)
 {
     int l;
-    SEXP tmp = STRING_ELT(cl, j);
+    SEXP tmp;
 
-    if (!isNull(cl)) {
+    if (!isNull(cl)) { 
+        tmp = STRING_ELT(cl, j);
 	if(tmp == NA_STRING) l = R_print.na_width_noquote;
 	else l = Rstrlen(CHAR(tmp), 0);
 	Rprintf("%*s", R_print.gap+w,
@@ -523,9 +525,10 @@ void RightMatrixColumnLabel(SEXP cl, int j, int w)
 void LeftMatrixColumnLabel(SEXP cl, int j, int w)
 {
     int l;
-    SEXP tmp = STRING_ELT(cl, j);
+    SEXP tmp; 
 
-    if (!isNull(cl)) {
+    if (!isNull(cl)) { 
+        tmp= STRING_ELT(cl, j);
 	if(tmp == NA_STRING) l = R_print.na_width_noquote;
 	else l = Rstrlen(CHAR(tmp), 0);
 	Rprintf("%*s%s%*s", R_print.gap, "",
@@ -539,9 +542,10 @@ void LeftMatrixColumnLabel(SEXP cl, int j, int w)
 void MatrixRowLabel(SEXP rl, int i, int rlabw, int lbloff)
 {
     int l;
-    SEXP tmp = STRING_ELT(rl, i);
+    SEXP tmp;
 
-    if (!isNull(rl)) {
+    if (!isNull(rl)) { 
+        tmp= STRING_ELT(rl, i);
 	if(tmp == NA_STRING) l = R_print.na_width_noquote;
 	else l = Rstrlen(CHAR(tmp), 0);
 	Rprintf("\n%*s%s%*s", lbloff, "",

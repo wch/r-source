@@ -482,9 +482,10 @@ SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     PROTECT(x);
     /* Don't set the dims if one argument is an array of size 0 and the
        other isn't of size zero, cos they're wrong */
+    /* Not if the other argument is a scalar (PR#1979) */
     if (dims != R_NilValue) {
-	if (!((xarray && (nx == 0) && (ny != 0)) ||
-	      (yarray && (ny == 0) && (nx != 0)))){
+	if (!((xarray && (nx == 0) && (ny > 1)) ||
+	      (yarray && (ny == 0) && (nx > 1)))){
 	    setAttrib(x, R_DimSymbol, dims);
 	    if (xnames != R_NilValue)
 		setAttrib(x, R_DimNamesSymbol, xnames);
