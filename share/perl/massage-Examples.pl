@@ -1,6 +1,6 @@
 #-*- perl -*-
 
-## Copyright (C) 2001 R Development Core Team
+## Copyright (C) 2001-2002 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ assign("plot.new",
                      outer = outer, adj = 1, cex = .8, col = "orchid")
 	   }
        },
-       env = .CheckExEnv)
+       env = environment(plot))
 assign("cleanEx",
        function(env = .GlobalEnv) {
 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
