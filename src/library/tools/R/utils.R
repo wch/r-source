@@ -10,7 +10,8 @@ function(x)
     ## Seems the only way we can do this is 'temporarily' change the
     ## working dir and see where this takes us.
     if(!file.exists(epath <- path.expand(x)))
-        stop("file ", sQuote(x), " does not exist")
+        stop(gettextf("file '%s' does not exist", x),
+             domain = NA)
     cwd <- getwd()
     on.exit(setwd(cwd))
     if(file_test("-d", epath)) {
@@ -54,7 +55,8 @@ function(op, x, y)
            "-ot" = (!is.na(mt.x <- file.info(x)$mtime)
                     & !is.na(mt.y <- file.info(y)$mtime)
                     & (mt.x < mt.y)),
-           stop("test ", sQuote(op), " is not available"))
+           stop(gettextf("test '%s' is not available", op),
+                domain = NA))
 }
 
 ### ** list_files_with_exts
@@ -177,7 +179,9 @@ function(file, pdf = FALSE, clean = FALSE,
     yy <- system(paste(shQuote(texi2dvi),
                        quiet, pdf, clean,
                        shQuote(file)))
-    if(yy > 0) stop("running texi2dvi on ", sQuote(file), " failed")
+    if(yy > 0)
+      stop(gettextf("running texi2dvi on '%s' failed", file),
+           domain = NA)
 }
 
 
@@ -519,10 +523,12 @@ function(dfile)
     ## vector.
     ## </NOTE>
     if(!file_test("-f", dfile))
-        stop("file ", sQuote(dfile), " does not exist")
+        stop(gettextf("file '%s' does not exist", dfile),
+             domain = NA)
     db <- try(read.dcf(dfile)[1, ], silent = TRUE)
     if(inherits(db, "try-error"))
-        stop("file ", sQuote(dfile), " is not in valid DCF format")
+        stop(gettextf("file '%s' is not in valid DCF format", dfile),
+             domain = NA)
     db
 }
 

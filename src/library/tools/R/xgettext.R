@@ -45,7 +45,7 @@ xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
     }
 
     for(f in R_files) {
-        if(verbose) cat("parsing ", sQuote(f), "\n", sep="")
+        if(verbose) message(gettextf("parsing '%s'", f), domain = NA)
         strings <- character()
         for(e in parse(file = f)) find_strings(e)
         ## strip leading and trailing white space
@@ -100,7 +100,7 @@ xngettext <- function(dir, verbose = FALSE)
     }
 
     for(f in R_files) {
-        if(verbose) cat("parsing ", sQuote(f), "\n", sep="")
+        if(verbose) message(gettextf("parsing '%s'", f), domain = NA)
         strings <- list()
         for(e in parse(file = f)) find_strings(e)
         out[[f]] <- structure(strings, class="xngettext")

@@ -5,7 +5,8 @@ code2LazyLoadDB <-
 {
     pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(pkgpath) == 0)
-        stop("there is no package called ", sQuote(package))
+        stop(gettextf("there is no package called '%s'", package),
+             domain = NA)
     barepackage <- sub("([^-]+)_.*", "\\1", package)
     loadenv <- new.env(hash=TRUE)
     codeFile <- file.path(pkgpath, "R", barepackage)
@@ -35,10 +36,12 @@ rda2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
 {
     pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(pkgpath) == 0)
-        stop("there is no package called ", sQuote(package))
+        stop(gettextf("there is no package called '%s'", package),
+             domain = NA)
     rdafile <- file.path(pkgpath, "R", "all.rda")
     if (! file.exists(rdafile))
-        stop("package ", sQuote(package), " has no .rda file")
+        stop(gettextf("package '%s' has no .rda file", package),
+             domain = NA)
     dbbase <- file.path(pkgpath, "R", package)
     e <- new.env(hash=TRUE)
     load(rdafile, e)
@@ -57,7 +60,8 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
     if(is.null(dataDir)) {
         pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
         if(length(pkgpath) == 0)
-            stop("there is no package called ", sQuote(package))
+            stop(gettextf("there is no package called '%s'", package),
+                 domain = NA)
         dataDir <- file.path(pkgpath, "data")
     } else {
         pkgpath <- sub("/data$", "", dataDir)
@@ -96,7 +100,8 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
 {
     pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(pkgpath) == 0)
-        stop("there is no package called ", sQuote(package))
+        stop(gettextf("there is no package called '%s'", package),
+             domain = NA)
     dataDir <- file.path(pkgpath, "data")
     if(tools:::file_test("-d", dataDir)) {
         if(file.exists(file.path(dataDir, "Rdata.rds")))
@@ -239,7 +244,8 @@ makeLazyLoading <-
     findpack <- function(package, lib.loc) {
         pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
         if(length(pkgpath) == 0)
-            stop("there is no package called", sQuote(package))
+            stop(gettextf("there is no package called '%s'", package),
+                 domain = NA)
         pkgpath
     }
 
@@ -247,7 +253,7 @@ makeLazyLoading <-
     barepackage <- sub("([^-]+)_.*", "\\1", package)
 
     if (package == "base")
-        stop("this cannot be used for package ", sQuote("base"))
+        stop("this cannot be used for package 'base'")
     else if (packageHasNamespace(package, dirname(pkgpath)))
         loaderFile <- file.path(R.home(), "share", "R", "nspackloader.R")
     else
