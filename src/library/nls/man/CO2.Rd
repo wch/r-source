@@ -32,13 +32,13 @@
 	}
 	\item{uptake}{
 	    a numeric vector of carbon dioxide uptake rates
-	    (\eqn{$\mu$mol/m$^2$}{umol/m^2} sec).
+	    (\eqn{\mu\mbox{mol}/m^2}{umol/m^2} sec).
 	}
     }
 }
 \details{
-    The \eqn{CO$_2$}{CO2} uptake of six plants from Quebec and six plants from
-    Mississippi was measured at several levels of ambient \eqn{CO$_2$}{CO2}
+    The \eqn{CO_2}{CO2} uptake of six plants from Quebec and six plants from
+    Mississippi was measured at several levels of ambient \eqn{CO_2}{CO2}
     concentration.  Half the plants of each type were chilled overnight
     before the experiment was conducted. 
 }
