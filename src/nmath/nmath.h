@@ -43,17 +43,6 @@
 #define ML_NEGINF	R_NegInf
 #define ML_NAN		R_NaN
 
-#ifdef IEEE_754
-#define ML_ERROR(x)	/* nothing */
-#define ML_UNDERFLOW	(DBL_MIN * DBL_MIN)
-#define ML_VALID(x)	(!ISNAN(x))
-#else
-void ml_error(int n);
-#define ML_ERROR(x)	ml_error(x)
-#define ML_UNDERFLOW	0
-#define ML_VALID(x)	(errno == 0)
-#endif
-
 #else
 /* Mathlib standalone */
 
