@@ -142,8 +142,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             dynlibs <- getNamespaceInfo(ns, "dynlibs")
             setNamespaceInfo(ns, "dynlibs", c(dynlibs, newlibs))
         }
-        # **** FIXME: test for methods
-        hadMethods <- "package:methods" %in% search()
+        hadMethods <- .isMethodsDispatchOn()
 
         # find package and check it has a name space
         pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
@@ -172,6 +171,16 @@ loadNamespace <- function (package, lib.loc = NULL,
                                                   c(lib.loc, .libPaths()),
                                                   keep.source), i[[2]])
         }
+        for(imp in nsInfo$importClasses) {
+            namespaceImportClasses(ns, loadNamespace(imp[[1]],
+                                                     c(lib.loc, .libPaths()),
+                                                  keep.source), imp[[2]])
+        }
+        for(imp in nsInfo$importMethods) {
+            namespaceImportMethods(ns, loadNamespace(imp[[1]],
+                                                     c(lib.loc, .libPaths()),
+                                                  keep.source), imp[[2]])
+        }
 
         # dynamic variable to allow/disable .Import and friends
         "__NamespaceDeclarativeOnly__" <- declarativeOnly
@@ -180,15 +189,15 @@ loadNamespace <- function (package, lib.loc = NULL,
         "__LoadingNamespaceInfo__" <- list(libname = package.lib,
                                            pkgname = package)
 
-        # load the code
         env <- asNamespace(ns)
+        # save the package name in the environment
+        assign(".packageName", package, envir = env)
+
+        # load the code
         codeFile <- file.path(package.lib, package, "R", package)
         if (file.exists(codeFile))
             sys.source(codeFile, env, keep.source = keep.source)
         else warning(paste("Package ", sQuote(package), "contains no R code"))
-
-        # save the package name in the environment
-        assign(".packageName", package, envir = env)
 
         # partial loading stops at this point
         if (partial) return(ns)
@@ -214,19 +223,46 @@ loadNamespace <- function (package, lib.loc = NULL,
         exports <- nsInfo$exports
         for (p in nsInfo$exportPatterns)
             exports <- c(ls(env, pat = p, all = TRUE), exports)
+        if(hadMethods) {
+            ## process class definition objects
+            expClasses <- nsInfo$exportClasses
+            if(length(expClasses)>0) {
+                missingClasses <- !sapply(expClasses, isClass, where = ns)
+                if(any(missingClasses))
+                    stop("Classes for export not defined: ",
+                         paste(expClasses[missingClasses], collapse = ", "))
+                expClasses <- paste(classMetaName(""), expClasses, sep="")
+            }
+            ## process methods metadata explicitly exported or
+            ## implied by exporting the generic function.
+            allMethods <- unique(c(getGenerics(ns), getGenerics(parent.env(ns))))
+            expMethods <- nsInfo$exportMethods
+            if(length(allMethods)>0) {
+                expMethods  <- unique(c(expMethods,
+                                       exports[!is.na(match(exports, allMethods))]))
+                missingMethods <- !(expMethods %in% allMethods)
+                if(any(missingMethods))
+                    stop("Methods for export not found: ",
+                         paste(expMethods[missingMethods], collapse = ", "))
+                needMethods <- (exports %in% allMethods) & !(exports %in% expMethods)
+                if(any(needMethods))
+                    expMethods <- c(expMethods, exports[needMethods])
+                for(i in seq(along=expMethods)) {
+                    mi <- expMethods[[i]]
+                    if(!(mi %in% exports) &&
+                       exists(mi, envir = ns, mode = "function", inherits = FALSE))
+                        exports <- c(exports, mi)
+                    expMethods[[i]] <- mlistMetaName(mi, ns)
+                }
+            }
+            else if(length(expMethods) > 0)
+                stop("Methods specified for export, but none defined: ",
+                     paste(expMethods, collapse=", "))
+            exports <- c(exports, expClasses, expMethods)
+        }
         namespaceExport(ns, exports)
         sealNamespace(ns)
-
-        # **** FIXME: process methods but warn of possible problems
-        if (! exists(".noGenerics", envir = env, inherits = FALSE) &&
-            length(objects(env, pattern="^\\.__M", all=TRUE)) != 0 &&
-            hadMethods &&
-            ! identical(package, "package:methods")) {
-            warning("method code may not work in a name space")
-            cacheMetaData(env, TRUE)
-        }
         on.exit()
-
         ns
     }
 }
@@ -440,6 +476,31 @@ namespaceImportFrom <- function(self, ns, vars) {
         else addImports(self, ns, impvars)
     }
 }
+namespaceImportClasses <- function(self, ns, vars) {
+    for(i in seq(along = vars))
+        vars[[i]] <- classMetaName(vars[[i]])
+    namespaceImportFrom(self, asNamespace(ns), vars)
+}
+namespaceImportMethods <- function(self, ns, vars) {
+    allVars <- character()
+    allMlists <- getGenerics(ns)
+    if(any(is.na(match(vars, allMlists))))
+        stop("Requested methods objects not found in environment/package \"",
+                getPackageName(ns), "\": ",
+                paste(vars[is.na(match(vars, allMlists))], collapse = ", "))
+    for(i in seq(along = allMlists)) {
+        ## import methods list objects if asked for
+        ## or if the corresponding generic was imported
+        g <- allMlists[[i]]
+        if(exists(g, envir=self, inherits = FALSE) # already imported
+           || g %in% vars) # requested explicitly
+            allVars <- c(allVars, mlistMetaName(g, ns))
+        if(g %in% vars && !exists(g, envir=self, inherits = FALSE) &&
+           exists(g, envir=ns, inherits = FALSE) && is(get(g, envir = ns), "genericFunction"))
+            allVars <- c(allVars, g)
+    }
+    namespaceImportFrom(self, asNamespace(ns), allVars)
+}
 importIntoEnv <- function(impenv, impnames, expenv, expnames) {
     getInternalExportName <- function(name, ns) {
         exports <- getNamespaceInfo(ns, "exports")
@@ -505,7 +566,11 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
     else directives <- NULL
     exports <- character(0)
     exportPatterns <- character(0)
+    exportClasses <- character(0)
+    exportMethods <- character(0)
     imports <- list()
+    importMethods <- list()
+    importClasses <- list()
     dynlibs <- character(0)
     S3methods <- list()
     for (e in directives)
@@ -519,6 +584,12 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                    pat <- as.character(e[-1])
                    exportPatterns <- c(pat, exportPatterns)
                },
+               exportClass = , exportClasses = {
+                   exportClasses <- c(as.character(e[-1]), exportClasses)
+               },
+               exportMethods = {
+                   exportMethods <- c(as.character(e[-1]), exportMethods)
+               },
                import = imports <- c(imports,as.list(as.character(e[-1]))),
                importFrom = {
                    imp <- e[-1]
@@ -527,6 +598,20 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                    imp <- list(as.character(imp[1]),
                                structure(as.character(ivars), names=inames))
                    imports <- c(imports, list(imp))
+               },
+               importClassFrom = , importClassesFrom = {
+                   imp <- as.character(e[-1])
+                   pkg <- imp[[1]]
+                   impClasses <- imp[-1]
+                   imp <- list(as.character(pkg), as.character(impClasses))
+                   importClasses <- c(importClasses, list(imp))
+               },
+               importMethodsFrom = {
+                   imp <- as.character(e[-1])
+                   pkg <- imp[[1]]
+                   impMethods <- imp[-1]
+                   imp <- list(as.character(pkg), as.character(impMethods))
+                   importMethods <- c(importMethods, list(imp))
                },
                useDynLib = {
                    dyl <- e[-1]
@@ -540,6 +625,8 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
                },
                stop(paste("unknown namespace directive:", deparse(e))))
     list(imports=imports, exports=exports, exportPatterns = exportPatterns,
+         importClasses=importClasses, importMethods=importMethods,
+         exportClasses=exportClasses, exportMethods=exportMethods,
          dynlibs=dynlibs, S3methods = S3methods)
 }
 registerS3method <- function(genname, class, method, envir = parent.frame()) {

@@ -44,6 +44,14 @@ tracingState(on)
     signature for a method for function \code{what}.  In this case, the
     method, and \emph{not} the function itself, is traced. }
 
+\item{where}{the environment from which to look for the function to be
+  traced. By default, will look for the top environment of the call to
+  \code{trace}.  If you put a call to \code{trace} into code in a
+  package, you may need to specify \code{where=.GlobalEnv} if
+  the package has a namespace.  Otherwise you are likely to find the
+  function in a locked namespace, and be unable to insert the traced version.
+  }
+
  \item{on}{A call to \code{tracingState} returns \code{TRUE} if
      tracing is globally turned on, \code{FALSE} otherwise.  An
      argument of one or the other of those values sets the state.  If

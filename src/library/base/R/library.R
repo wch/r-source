@@ -63,7 +63,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         lib.pos <- match(pkgname, sp)
         ## ignore generics not defined for the package
         ob <- objects(lib.pos, all = TRUE)
-        if(!nogenerics && "package:methods" %in% sp) {
+        if(!nogenerics && .isMethodsDispatchOn()) {
             gen <- getGenerics(lib.pos)
             gen <- gen[gen@package != ".GlobalEnv"]
             ob <- ob[!(ob %in% gen)]
@@ -154,7 +154,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## Note for detail: this does _not_ test whether dispatch is
             ## currently on, but rather whether the package is attached
             ## (cf .isMethodsDispatchOn).
-            hadMethods <- "package:methods" %in% search()
+            hadMethods <- .isMethodsDispatchOn()
 
             pkgpath <- .find.package(package, lib.loc, quiet = TRUE,
                                      verbose = verbose)
@@ -214,10 +214,15 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 			else stop("package/namespace load failed")
 		    else {
 			on.exit(do.call("detach", list(name = pkgname)))
+                        ##FIXME:  the next 3 expressions are duplicated in the
+                        ## non-namespace version.  Bad & dangerous style.
 			nogenerics <- checkNoGenerics(env)
 			if(warn.conflicts &&
 			   !exists(".conflicts.OK", envir = env, inherits = FALSE))
-			   checkConflicts(package, pkgname, pkgpath, nogenerics)
+                            checkConflicts(package, pkgname, pkgpath, nogenerics)
+
+                        if(!nogenerics && hadMethods &&
+                           !identical(pkgname, "package:methods")) cacheMetaData(env, TRUE)
 			on.exit()
 			if (logical.return)
 			    return(TRUE)

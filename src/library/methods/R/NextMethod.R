@@ -83,7 +83,7 @@ callNextMethod <- function(...) {
         ## may be a method call for a primitive; not available as .Method
         f <- as.character(mcall[[1]])
         ## check that this could be a basic function with methods
-        if(!is.function(.BasicFunsList[[f]]))
+        if(is.null(genericForPrimitive(f)))
             stop("A call to callNextMethod() appears in a call to \"",
                  f, "\", but the call doesn't seem to come from either a generic function or another callNextMethod.")
         method <- maybeMethod

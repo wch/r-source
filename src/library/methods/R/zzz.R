@@ -1,4 +1,4 @@
-.First.lib  <-
+..First.lib  <-
   ## Initialize the methods library:  the session table of method
   ## definitions.
   ##
@@ -18,7 +18,7 @@
         }
         where <- as.environment(where)
     }
-    initMethodDispatch()
+    initMethodDispatch(where)
     saved <- (if(exists(".saveImage", envir = where, inherits = FALSE))
               get(".saveImage", envir = where)
               else
@@ -37,7 +37,7 @@
         assign("newClassRepresentation", .newClassRepresentation, envir = where)
         assign(".mergeClassDefSlots", ..mergeClassDefSlots, envir = where)
         assign(".requirePackage", ..requirePackage, envir = where)
-        .makeBasicFunsList(where)
+        .makeBasicFuns(where)
         rm(.makeGeneric, .newClassRepresentation, envir = where)
         .InitMethodDefinitions(where)
         .InitShowMethods(where)
@@ -60,8 +60,7 @@
         ## cache metadata for all environments in search path.  The assumption is that
         ## this has not been done, since cacheMetaData is in this package.  library, attach,
         ## and detach functions look for cacheMetaData and call it if it's found.
-        for(i in rev(seq(along = search()))) {
-            ev <- as.environment(i)
+        for(i in rev(seq(along = search()))) {            ev <- as.environment(i)
             if(!exists(".noGenerics", where = ev, inherits = FALSE) &&
                !identical(getPackageName(ev), "methods"))
                 cacheMetaData(ev, TRUE)
@@ -69,8 +68,41 @@
     }
 }
 
+.First.lib <- ..First.lib  ## will be overwritten on loading
+
+.onLoad <- function(libname, pkgName) {
+    env <- environment(sys.function())
+    doSave <- identical(get(".saveImage", envir = env), FALSE)
+    ..First.lib(libname, pkgName, env)
+    if(doSave) {
+        rdafile <- file.path(.Library, "methods", "R", "all.rda")
+        vars <- objects(env, all=TRUE)
+        vars <- vars[vars != ".__NAMESPACE__."]
+        save(list = vars, file = rdafile, envir = env)
+    }
+}
+
+.onAttach <- function(libname, pkgName) {
+    ..First.lib(libname, pkgName)
+    env <- environment(sys.function())
+    ## unlock some bindings that must be modifiable to set methods
+    unlockBinding(".BasicFunsList", env)
+}
+
 ### The following code is only executed when dumping
-assign(".saveImage", FALSE, .GlobalEnv)
-.First.lib("methods", "methods", .GlobalEnv)
-save.image(file = file.path(.Library, "methods", "R", "all.rda"),
-           compress = TRUE, safe = FALSE)
+### with no namespace for "methods"
+local({
+    env <- topenv()
+    rdafile <- file.path(.Library, "methods", "R", "all.rda")
+    libname <- pkgname <- .packageName
+    assign(".saveImage", FALSE, env)
+    if(identical(env, .GlobalEnv)) {
+        .First.lib(libname, pkgname, env)
+        save(list = objects(env, all=TRUE), file = rdafile,
+                   compress = TRUE, envir = env)
+    }
+    else {
+        message("Saving namespace image ...")
+    }
+}
+)

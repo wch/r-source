@@ -1,11 +1,12 @@
-## the executable code to complete the list of basic functions.
+## the executable code to complete the generics corresponding to primitives,
+## and to define the group generics for these functions.
 
 ## uses the primitive list and the function .addBasicGeneric
-## defined (earlier) in BasicFunsList.S
+## defined (earlier) in BasicFunsList.R
 
-.makeBasicFunsList<- function(where)
+.makeBasicFuns<- function(where)
 {
-    env <- new.env()
+    env <- new.env(hash=TRUE, parent=as.environment(where))
     funs <- get(".BasicFunsList", envir=where)
     ## First, set up the existing functions in the list as valid generics.
     curNames <- names(funs)
@@ -14,7 +15,6 @@
       if(is.function(val))
         funs <- .addBasicGeneric(funs, curNames[[i]], val, "", env)
     }
-      
     ## the Math group.
     members <- c("log", "sqrt", "log10", "cumprod", "abs", "acos", "acosh", "asin", "asinh",
                "atan", "atanh", "ceiling", "cos", "cosh", "cumsum", "exp", "floor",
@@ -95,6 +95,7 @@
                               knownMembers = members, package = "base")
 
     assign(".BasicFunsList", funs, envir=where)
+    assign(".BasicFunsEnv", env, envir=where)
     rm(.addBasicGeneric, envir=where)
 }
 

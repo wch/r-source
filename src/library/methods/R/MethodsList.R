@@ -365,7 +365,7 @@ inheritedSubMethodLists <-
   defaultMethod <- elNamed(methods, "ANY")## maybe NULL
   classes <- names(methods)
   value <- list()
-  if(identical(thisClass, "missing")) {
+  if(.identC(thisClass, "missing")) {
         ## no superclasses for "missing"
   }
   else {

@@ -7,7 +7,7 @@ function(object, class2)
     cl <- .class1(object)
     if(missing(class2))
         return(extends(cl))
-    if(identical(cl, class2) || identical(class2, "ANY"))
+    if(.identC(cl, class2) || .identC(class2, "ANY"))
         return(TRUE)
     ext <- possibleExtends(cl, class2)
     if(is.logical(ext))
@@ -47,7 +47,7 @@ extends <-
         else
             return(c(class1,names(ext)))
     }
-    if(identical(class1, class2))
+    if(.identC(class1, class2))
         return(TRUE)
     if(is(class2, "classRepresentation"))
         class2 <- class2@className
@@ -78,15 +78,20 @@ setIs <-
   ## function, this function will be used to implement `as(obj, class2) <- value'.
   function(class1, class2, test = NULL, coerce = NULL,
            replace = NULL, by = character(), where = topenv(parent.frame()),
-           classDef = getClass(class1, TRUE), extensionObject = NULL, doComplete = TRUE)
+           classDef = getClass(class1, TRUE, where = where), extensionObject = NULL, doComplete = TRUE)
 {
     ## class2 should exist
     classDef2 <- getClassDef(class2, where)
     ## check some requirements:
     ## One of the classes must be on the target environment (so that the relation can
     ## be retained by saving the corresponding image)
-    if((classDef@sealed || !exists(classMetaName(class1), where, inherits = FALSE)) &&
-       (classDef2@sealed || !exists(classMetaName(class2), where, inherits = FALSE)) )
+    m1 <- classMetaName(class1)
+    local1 <- exists(m1, where, inherits = FALSE) &&
+    !(classDef@sealed || bindingIsLocked(m1, where))
+    m2 <- classMetaName(class2)
+    local2 <- exists(m2, where, inherits = FALSE) &&
+    !(classDef2@sealed || bindingIsLocked(m2, where))
+    if(!(local1 || local2) )
         stop("Cannot create a setIs relation when neither of the classes (\"",
              class1,"\" and \"", class2, "\") is local and modifiable in this package")
     if(classDef@sealed && !isClassUnion(classDef2))
@@ -94,27 +99,31 @@ setIs <-
              "\" is sealed; new superclasses can not be defined, except by setClassUnion")
     if(is.null(extensionObject))
         obj <- makeExtends(class1, class2, coerce, test, replace, by,
-                       classDef1 = classDef, classDef2 = classDef2,
-                       package = getPackageName(where))
+                           classDef1 = classDef, classDef2 = classDef2,
+                           package = getPackageName(where))
     else
         obj <- extensionObject
-        ## revise the superclass/subclass info in the stored class definition
+    ## revise the superclass/subclass info in the stored class definition
     .validExtends(class1, class2, classDef,  classDef2, obj@simple)
-        if(!classDef@sealed) {
-            where1 <- findClass(class1, where)[[1]]
+    if(!classDef@sealed) {
+        where1 <- findClass(class1, where)[[1]]
+        if(!bindingIsLocked(m1, where1)) {
             ## the direct contains information 
             elNamed(classDef@contains, class2) <- obj
             if(doComplete)
-                classDef@contains <- completeExtends(classDef, class2, obj)
+                classDef@contains <- completeExtends(classDef, class2, obj, where = where)
             assignClassDef(class1, classDef, where1)
         }
-        if(!classDef2@sealed) {
-            where2 <- findClass(class2, where)[[1]]
+    }
+    if(!classDef2@sealed) {
+        where2 <- findClass(class2, where)[[1]]
+        if(!bindingIsLocked(m2, where2)) {
             elNamed(classDef2@subclasses, class1) <- obj
             if(doComplete)
                 classDef2@subclasses <- completeSubclasses(classDef2, class1, obj, where)
             assignClassDef(class2, classDef2, where2)
         }
+    }
     invisible(classDef)
 }
 

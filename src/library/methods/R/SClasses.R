@@ -25,7 +25,7 @@ setClass <-
         superClasses <- c(as.character(representation[!slots]), contains)
         properties <- representation[slots]
         classDef <- makeClassRepresentation(Class, properties,superClasses, prototype, package,
-                                             validity, access, version, sealed)
+                                             validity, access, version, sealed, where = where)
         superClasses <- names(classDef@contains)
     }
     classDef <- completeClassDefinition(Class, classDef, where, doExtends = FALSE)
@@ -110,11 +110,11 @@ makeClassRepresentation <-
   ## The formal definition of the class is set according to the arguments.
   ##
   ## Users should call setClass instead of this function.
-  function(name, slots = list(), superClasses = character(), prototype = NULL, package, validity = NULL, access = list(), version = .newExternalptr(), sealed = FALSE, virtual = NA)
+  function(name, slots = list(), superClasses = character(), prototype = NULL, package, validity = NULL, access = list(), version = .newExternalptr(), sealed = FALSE, virtual = NA, where)
 {
     if(!is.null(prototype) || length(slots)>0 || length(superClasses) >0) {
         ## collect information about slots, create prototype if needed
-        pp <- reconcilePropertiesAndPrototype(name, slots, prototype, superClasses)
+        pp <- reconcilePropertiesAndPrototype(name, slots, prototype, superClasses, where)
         slots <- pp$properties
         prototype <- pp$prototype
     }
@@ -125,7 +125,7 @@ makeClassRepresentation <-
             what <- whatClassDef@className
         }
         else
-            whatClassDef <- getClass(what)
+            whatClassDef <- getClass(what, where = where)
         ## Create the SClassExtension objects (will be simple, possibly dataPart).
         ## The slots are supplied explicitly, since `name' is currently an undefined class
         elNamed(contains, what) <- makeExtends(name, what, slots = slots,
@@ -137,6 +137,10 @@ makeClassRepresentation <-
         if(virtual && !is.na(match("VIRTUAL", superClasses)))
             elNamed(contains, "VIRTUAL") <- NULL
     }
+    ##FIXME:  rather than an attribute, the className should have a formal class
+    ## (but there may be bootstrap problems)
+    if(nchar(package)>0)
+        attr(name, "package") <- package
     newClassRepresentation(className = name, slots = slots,
                            contains = contains,
                            prototype = prototype,
@@ -150,13 +154,13 @@ makeClassRepresentation <-
 
 getClassDef <-
   ## Get the definition of the class supplied as a string.
-  function(Class, where = topenv(parent.frame()), package = "")
+  function(Class, where = topenv(parent.frame()), package = attr(Class, "package"))
 {
     cname <- classMetaName(Class)
-    if(nchar(package)>0)
-        .getFromPackage(cname, package)
-    else if(exists(cname, where))
+    if(exists(cname, where))
         get(cname, where)
+    else if(!is.null(package))
+        .getFromPackage(cname, package)
     else
         NULL
 }
@@ -171,7 +175,7 @@ getClass <-
             if(!.Force)
                 stop(paste("\"", Class, "\" is not a defined class", sep=""))
             else
-                value <- makeClassRepresentation(Class, package = "base", virtual = TRUE)
+                value <- makeClassRepresentation(Class, package = "base", virtual = TRUE, where = where)
       }
     value
 }
@@ -200,7 +204,7 @@ checkSlotAssignment <- function(obj, name, value)
     slot <- elNamed(slotDefs, name)
     if(is.null(slot))
         stop(paste("\"", name, "\" is not a slot in class \"", class(obj), "\"", sep = ""))
-    if(identical(slot, class(value)))
+    if(.identC(slot, class(value)))
        return(value)
     if(is(value, slot))
        return(as(value, slot, strict=FALSE))
@@ -279,13 +283,13 @@ new <-
 {
     ## get the class definition, completing it if this is the first reference
     ## to this class in this session.
-    ClassDef <- getClass(Class)
+    ClassDef <- getClass(Class, where = topenv(parent.frame()))
     if(identical(ClassDef@virtual, TRUE)) {
         stop("Trying to use new() on a virtual class")
     }
     else
         value <- ClassDef@prototype
-    class(value) <- Class
+    class(value) <- ClassDef@className
     initialize(value, ...)
 }
 
@@ -440,7 +444,7 @@ initialize <- function(.Object, ...) {
                 ## test some cases that let information be copied into the
                 ## object, ordered from more to less:  all the slots in the
                 ## first two cases, some in the 3rd, just the data part in 4th
-                if(identical(Classi, Class))
+                if(.identC(Classi, Class))
                     .Object <- obj
                 else if(extends(Classi, Class))
                     .Object <- as(obj, Class, strict=FALSE)
@@ -482,7 +486,7 @@ initialize <- function(.Object, ...) {
                 ## perform non-strict coercion, but leave the error messages for
                 ## values not conforming to the slot definitions to validObject(),
                 ## hence the check = FALSE argument in the slot assignment
-                if(is(slotVal, slotClass) && !identical(class(slotVal), slotClass))
+                if(is(slotVal, slotClass) && !.identC(class(slotVal), slotClass))
                     slotVal <- as(slotVal, slotClass, strict = FALSE)
                 slot(.Object, slotName, check = FALSE) <- slotVal
             }

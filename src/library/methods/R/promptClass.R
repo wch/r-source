@@ -78,7 +78,7 @@ function (clName, filename = NULL, type = "class",
         allslots <- getSlots(clDef) ## establishes all slots, in the right order
         for(j in rev(seq(along=extds))) {
             i <- extds[[j]]
-            slotsi <- getSlots(i)
+            slotsi <- getSlots(getClass(i))
             if(length(slotsi)>0)
                 allslots[names(slotsi)] <- paste0("\"", as.character(slotsi),
                                                   "\", from class \"", i, "\"")
@@ -123,7 +123,7 @@ function (clName, filename = NULL, type = "class",
     .title <- paste0("\\title{Class \"", clName, "\" ~~~ }")
     .desc <- paste0("\\description{", "  ~~ A concise (1-5 lines) description of what the class is.  ~~",
         "}")
-    slotclasses <- getSlots(clName)
+    slotclasses <- getSlots(getClass(clName))
     slotnames <- names(slotclasses)
     slotclasses <- as.character(slotclasses)
     nslots <- length(slotclasses)

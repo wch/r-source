@@ -96,7 +96,7 @@ as <-
   ## and contains the slots of that object. These slots (only) will then be replaced.
   function(object, Class, value) {
     thisClass <- .class1(object)
-    if(!identical(.class1(value), Class))
+    if(!.identC(.class1(value), Class))
       value <- as(value, Class)
     asMethod <- .quickCoerceGetsSelect(thisClass, Class)
     if(is.null(asMethod)) {
@@ -230,13 +230,13 @@ setAs <-
   }
   ## and some hand-coded ones
   body(method) <- quote(as.null(from))
-  setMethod("coerce", c("ANY", "NULL"), method)
+  setMethod("coerce", c("ANY", "NULL"), method, where = where)
   body(method) <- quote({
             if(length(from) != 1)
               warning("ambiguous object (length!=1) to coerce to \"name\"")
             as.name(from)
         })
-  setMethod("coerce", c("ANY","name"), method)
+  setMethod("coerce", c("ANY","name"), method, where = where)
   ## not accounted for and maybe not needed:  real, pairlist, double
 }
 

@@ -21,7 +21,7 @@ all: Makefile DESCRIPTION
           echo ".packageName <- \"$(pkg)\"" >  $${f}; \
 	  cat `ls $(srcdir)/R/*.R` >> $${f}; \
 	  $(top_srcdir)/tools/move-if-change $${f} all.R)
-	@for f in COPYRIGHTS INDEX SOURCES; do \
+	@for f in COPYRIGHTS INDEX SOURCES NAMESPACE; do \
 	  if test -f $(srcdir)/$${f}; then \
 	    $(INSTALL_DATA) $(srcdir)/$${f} \
 	      $(top_builddir)/library/$(pkg); \
@@ -65,12 +65,20 @@ DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg) \
   $(top_builddir)/library/$(pkg)/R/all.rda
 
-$(top_builddir)/library/$(pkg)/R/$(pkg): $(top_srcdir)/share/R/firstlib.R
-	@cp $(top_srcdir)/share/R/firstlib.R $@
+$(top_builddir)/library/$(pkg)/R/$(pkg): install.R
+	@cp install.R $@
 
 $(top_builddir)/library/$(pkg)/R/all.rda: all.R
 	@echo "dumping R code in package '$(pkg)'"
-	@R_DEFAULT_PACKAGES=NULL $(top_builddir)/bin/R --vanilla --slave < all.R
+	if test -f NAMESPACE; then \
+	  $(INSTALL_DATA) all.R  $(top_builddir)/library/$(pkg)/R/$(pkg) ; \
+	  cd $(top_builddir)/library/$(pkg); \
+	  echo "options(error=quote(dump.frames(to.file=TRUE))); loadNamespace(\"$(pkg)\")"  | R_DEFAULT_PACKAGES=NULL ../../bin/R  --slave; \
+	  $(INSTALL_DATA) ../../share/R/nsrdaload.R  ../../library/$(pkg)/R/$(pkg) ; \
+	else R_DEFAULT_PACKAGES=NULL $(top_builddir)/bin/R  --slave < all.R ; \
+	  $(INSTALL_DATA) $(top_builddir)/share/R/firstlib.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
+	  if test -f $(top_builddir)/library/$(pkg)/NAMESPACE; then rm $(top_builddir)/library/$(pkg)/NAMESPACE; fi; \
+	  fi
 
 mostlyclean: clean
 clean:

@@ -7,7 +7,7 @@
     ## hide some functions that would break because the basic
     ## classes are not yet defined
     real.reconcileP <- reconcilePropertiesAndPrototype
-    assign("reconcilePropertiesAndPrototype", function(name, properties, prototype, extends) {
+    assign("reconcilePropertiesAndPrototype", function(name, properties, prototype, extends, where) {
         list(properties=properties, prototype = prototype, extends = extends)
     }, envir)
     clList = character()

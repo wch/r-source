@@ -37,8 +37,8 @@
                             group = "list", valueClass = "character",
                             signature = "character", default = "MethodsList",
                             skeleton = "call"), where = envir); clList <- c(clList, "genericFunction")
-    ## the generic with methods included
-    setClass("genericMethods", representation(.Methods = "MethodsList"), contains = "genericFunction")
+    ## standard generic function -- allows immediate dispatch
+    setClass("standardGeneric",  contains = "genericFunction")
     setClass("nonstandardGeneric", # virtual class to mark special generic/group generic
              where = envir); clList <- c(clList, "nonstandardGeneric")
     setClass("nonstandardGenericFunction",
@@ -71,7 +71,7 @@
                )
         if(is(def, "MethodDefinition"))
             value <- def
-        else
+        else 
             value <- new("MethodDefinition", def)
         if(sealed)
             value <- new("SealedMethodDefinition", value)

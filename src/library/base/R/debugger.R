@@ -102,7 +102,7 @@ recover <-
 }
 
 
-trace <- function(what, tracer, exit, at, print, signature) {
+trace <- function(what, tracer, exit, at, print, signature, where = topenv(parent.frame())) {
     needsAttach <- !.isMethodsDispatchOn()
     if(needsAttach) {
         cat("Tracing functions requires the methods package\n: see ?trace)\n")
@@ -116,6 +116,7 @@ trace <- function(what, tracer, exit, at, print, signature) {
     ## the correct name space (e.g., correct version of class())
     call <- sys.call()
     call[[1]] <- quote(.TraceWithMethods)
+    call$where <- where
     value <- eval.parent(call)
     on.exit() ## no error
     tracingState(tState)
@@ -158,20 +159,19 @@ untrace <- function(what, signature = NULL) {
             f <- getFunction(what, where = where[[1]])
             ## ensure that the version to assign is untraced (should be, but ...)
             if(is(f, "traceable")) {
-                ## FIXME:  needs to deal with locked bindings
-                assign(what, .untracedFunction(f), where[[1]])
+                .untracedFunction(f, what, where[[1]])
             }
             else
                 .primUntrace(what) # to be safe--no way to know if it's traced or not
         }
     }
     else {
-        f <- getMethod(what, signature, where = where)
+        f <- getMethod(what, signature,  where)
         if(is.null(f))
             warning("No method for \"", what, "\" for this signature to untrace")
         else {
             if(is(f, "traceable"))
-                setMethod(what, signature, .untracedFunction(f), where = where)
+                .untracedFunction(f, what, where, signature)
             else
                 warning("The method for \"", what, "\" for this signature was not being traced")
         }

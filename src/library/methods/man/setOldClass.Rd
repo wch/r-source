@@ -165,8 +165,6 @@ stopifnot(identical(dfResidual(myLm), myLm$df.residual))}
 
 rm(myData, myLm)
 removeGeneric("dfResidual")
-removeClass("mlm")
-removeClass("lm")
 }
 \keyword{ programming }
 \keyword{ methods }

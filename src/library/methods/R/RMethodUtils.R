@@ -28,7 +28,7 @@
           fdef <- .ValidateValueClass(fdef, f, valueClass)
       group <- .asGroupArgument(group)
       if(is.null(genericFunction))
-          value <- new("genericMethods")
+          value <- new("standardGeneric")
       else if(is(genericFunction, "genericFunction"))
           value <- genericFunction
       else
@@ -67,8 +67,6 @@
       }
       value@default <- methods
       assign(".Methods", methods, envir = ev)
-      if(is(value, "genericMethods"))
-          value@.Methods <- methods
       value@skeleton <- generic.skeleton(f, fdef, fdefault)
       value
   }
@@ -90,7 +88,7 @@ makeGeneric <-
 ###--------
       value <- fdef
       if(is.null(genericFunction))
-          class(value) <- "genericMethods"
+          class(value) <- "standardGeneric"
       else
           class(value) <- class(genericFunction)
       slot(value, "generic", FALSE) <- f
@@ -120,8 +118,6 @@ makeGeneric <-
 ###--------
       assign(".Methods", methods, envir = ev)
       slot(value, "default", FALSE) <- methods
-      if(is(value, "genericMethods"))
-          slot(value, ".Methods", FALSE) <- methods
       slot(value, "skeleton", FALSE) <- generic.skeleton(f, fdef, fdefault)
 ###--------
       value
@@ -139,7 +135,7 @@ makeStandardGeneric <-
     if(typeof(fdef) != "closure") {
       ## Look in a list of pre-defined functions (and also of functions for which
       ## methods are prohibited)
-      fgen <- elNamed(.BasicFunsList, f)
+      fgen <- genericForPrimitive(f)
       if(identical(fgen, FALSE))
         stop(paste("Special function \"", f, "\" is not permitted to have methods", sep=""))
       if(is.null(fgen)) {
@@ -211,7 +207,7 @@ getAllMethods <-
   ## this is the slot where inherited methods are stored.
   function(f, fdef, where = topenv(parent.frame())) {
       search <- missing(fdef)
-      basicDef <- elNamed(.BasicFunsList, f)
+      basicDef <- genericForPrimitive(f)
       ## for basic functions (primitives), a generic is not on the search list
       if(is.null(basicDef)) {
           gwhere <- findFunction(f, where = where)
@@ -339,7 +335,7 @@ conformMethod <-
     }
     ## remove trailing "ANY"'s
     n <- length(signature)
-    while(identical(signature[[n]], "ANY"))
+    while(.identC(signature[[n]], "ANY"))
         n <- n - 1
     length(signature) <- n
     signature
@@ -393,9 +389,9 @@ unRematchDefinition <- function(definition) {
     ## If we considered the rematching part of the API, a cleaner solution
     ## would be to include the "as given to setMethod" definition as a slot
     bdy <- body(definition)
-    if(identical(class(bdy),"{") && length(bdy) > 1) {
+    if(.identC(class(bdy),"{") && length(bdy) > 1) {
         bdy <- bdy[[2]]
-        if(identical(class(bdy), "<-") &&
+        if(.identC(class(bdy), "<-") &&
            identical(bdy[[2]], as.name(".local")))
             definition <- bdy[[3]]
     }
@@ -415,18 +411,19 @@ getGeneric <-
       ## check for primitives
       baseDef <- get(f, "package:base")
       if(is.primitive(baseDef)) {
-          value <- elNamed(.BasicFunsList, f)
+          value <- genericForPrimitive(f)
           if(is.function(value) && !is(value, "genericFunction")) {
+              ## FIXME:  This should never happen?
               ## initialize the generic function in the list on base
               value <- makeGeneric(f, makeStandardGeneric(f, value), value, package = "base")
-              ## save the modified version:  note the <<-
-              elNamed(.BasicFunsList, f) <<- value
               mlist <- elNamed(.BasicFunsMethods, f)
               if(!is.null(mlist)) {
                   ## initialize the methods for this generic with precomputed mlist
                   where <- find(".BasicFunsMethods")
                   assign(mlistMetaName(value), mlist, where)
               }
+              setGenericForPrimitive(f, value, where, mlist)
+              ## save the modified version
           }
       }
   }
@@ -652,7 +649,7 @@ findUnique <- function(what, message, where = topenv(parent.frame()))
     
 MethodAddCoerce <- function(method, argName, thisClass, methodClass)
 {
-    if(identical(thisClass, methodClass))
+    if(.identC(thisClass, methodClass))
         return(method)
     ext <- possibleExtends(thisClass, methodClass)
     ## if a non-simple coerce is required to get to the target class for
@@ -1043,24 +1040,6 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     primCase <- is.primitive(deflt)
     ev <- environment(fdef)
     assign(".Methods", methods, ev)
-    if(is(fdef, "genericMethods")) {
-        ## only in this case does the generic function need re-assigning
-        fdef@.Methods <- methods
-        if(primCase) {
-            if(!is.null(elNamed(.BasicFunsList, f)))
-                ## save the modified version:  note the <<-
-                elNamed(.BasicFunsList, f) <<- fdef
-            ## primitives are pre-cached in the method metadata (because
-            ## they are not visible as generic functions from the C code).
-            setPrimitiveMethods(f, deflt, "set", fdef, methods)
-        }
-        else {
-            if(!is(try(get(f, where, inherits = FALSE)), "genericFunction"))
-                warning("Possible internal error: assigning a generic version of \"",
-                        f, "\" in \"", getPackageName(where), "\" where there was none before")
-            assign(f, fdef, where)
-        }
-    }
 }
 
 ## Mark the method as derived from a non-generic.
@@ -1074,4 +1053,14 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     }
     else
         fdef
+}
+
+.identC <- function(c1 = NULL, c2 = NULL) {
+    ## are the two objects identical class references?
+    ## FIXME:  without the preliminary test, this segfaults when
+    ## called in the form .identC("logical", FALSE) ????
+    if(is.character(c1) && is.character(c2))
+        .Call("R_identC", c1, c2, PACKAGE="methods")
+    else
+        FALSE
 }

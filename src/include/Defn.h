@@ -540,7 +540,8 @@ extern IStackval *R_BCIntStackBase, *R_BCIntStackTop, *R_BCIntStackEnd;
 /* Pointer  type and utilities for dispatch in the methods package */
 typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP, SEXP); /* typedef */
 R_stdGen_ptr_t R_get_standardGeneric_ptr(); /* get method */
-R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t newValue); /* set method */
+R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t, SEXP); /* set method */
+extern SEXP R_MethodsNamespace;
 SEXP R_deferred_default_method();
 SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef, SEXP mlist);
 SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist);

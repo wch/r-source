@@ -350,7 +350,10 @@ list("!" = function(e1)
     function(funslist, f, fdef, group = list(), env)
 {
     deflt <- get(f, "package:base")
-    ## use the arguments of the base package function, unless it's a primitive
+    ## use the arguments of the base package function
+    ##FIXME:  should also deal with the functions having ... as the first
+    ## argument, but needs to create a generic with different args from the deflt
+    ## => constructing a call to the base function from the default
     if(is.primitive(deflt)) {
         body(fdef, envir = NULL) <-
             substitute(standardGeneric(FNAME, DEFLT), list(FNAME=f, DEFLT=deflt))
@@ -370,3 +373,48 @@ list("!" = function(e1)
 
 .EmptyPrimitiveSkeletons <-
     list( quote(f(x)), quote(fgets(x,value=value)))
+
+## utilities to get and set the primitive generics.
+## Version below uses the environment, not the list
+## in order to work with namespace for methods pacakge
+# genericForPrimitive <- function(f, where = topenv(parent.frame())) {
+#     what <- methodsPackageMetaName("G", f)
+#     if(exists(what, where))
+#         get(what, where)
+#     else
+#         NULL
+# }
+
+# setGenericForPrimitive <-function(f, value, where = topenv(parent.frame()))
+#     assign(methodsPackageMetaName("G", f), value, where)
+
+## temporary versions while primitives are still handled by a global
+## table
+
+genericForPrimitive <- function(f, where = topenv(parent.frame())) {
+    env <- .findBasicFuns(where)
+    funs <- get(".BasicFunsList", envir = env)
+    elNamed(funs, f)
+}
+
+setGenericForPrimitive <- function(f, value, where = topenv(parent.frame()),
+                                   methods = getMethods(value)) {
+    env <- .findBasicFuns(where)
+    funs <- get(".BasicFunsList", envir = env)
+    if(is.null(elNamed(funs, f)))
+        stop("\"", f, "\" is not one of the basic functions")
+    elNamed(funs, f) <- value
+    assign(".BasicFunsList", funs, envir = env)
+    if(is(methods, "MethodsList") && is.primitive(get(f, "package:base")))
+        setPrimitiveMethods(f, finalDefaultMethod(methods), "set", value, methods)
+    f
+}
+
+.findBasicFuns <- function(where) {
+    allWhere <- .findAll(".BasicFunsList", where = where)
+    if(length(allWhere) == 0)
+        as.environment("package:methods")
+    else
+        as.environment(allWhere[[1]])
+}
+    

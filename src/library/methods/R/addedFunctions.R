@@ -84,31 +84,6 @@ formalArgs <-
   function(def)
     names(formals(def))
 
-existsFunction <-
-  ## Is there a function of this name. If `generic==FALSE', generic functions are not counted.
-  function(f, generic=TRUE, where)
-{
-  if(missing(where))
-    return(length(findFunction(f, generic)) > 0)
-  if(is.environment(where) || length(where == 1)) {
-        if(!exists(f, where, inherits = FALSE))
-          return(FALSE)
-        obj <- get(f, where)
-        return(is.function(obj) &&
-               (generic || !isGeneric(f, fdef = obj)))
-    }
-  ## the case of multiple databases supplied.  Unusual, but supported.
-    for(wherei in where) {
-        if(!exists(f, where, inherits=FALSE))
-            next
-        obj <- get(f, wherei)
-        if(is.function(obj) &&
-           generic || is.primitive(obj)
-           || !isGeneric(f, wherei, obj))
-          return(TRUE)
-    }
-    return(FALSE)
-}
 
 findFunction <-
   ## return a list of all the places where a function
@@ -129,6 +104,9 @@ findFunction <-
     }
     allWhere[ok]
   }
+
+existsFunction <- function(f, generic=TRUE, where = topenv(parent.frame()))
+    length(findFunction(f, generic, where))>0
 
 Quote <- get("quote" , mode = "function")
 

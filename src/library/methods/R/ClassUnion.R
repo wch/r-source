@@ -20,7 +20,7 @@ setClassUnion <- function(name, members = character(), where = topenv(parent.fra
                  paste(dQuote(as(members, "character"), collapse=", ")))
     }
     def <- new("ClassUnionRepresentation",
-               makeClassRepresentation(name, package = getPackageName(where)))
+               makeClassRepresentation(name, package = getPackageName(where), where = where))
     prev <- getClassDef(name, where = where)
     value <- setClass(name, def, where = where)
     failed <- character()

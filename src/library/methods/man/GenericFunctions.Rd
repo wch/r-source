@@ -7,7 +7,6 @@
 \alias{getGenerics}
 \alias{allGenerics}
 \alias{dumpMethod}
-\alias{existsFunction}
 \alias{findFunction}
 \alias{dumpMethods}
 \alias{removeMethods}
@@ -25,7 +24,6 @@ isGeneric(f, where, fdef, getName = FALSE)
 isGroup(f, where, fdef)
 removeGeneric(f, where)
 dumpMethod(f, signature, file, where, def)
-existsFunction(f, generic = TRUE, where)
 findFunction(f, generic=TRUE, where)
 dumpMethods(f, file, signature, methods, where)
 signature(\dots)
@@ -45,8 +43,6 @@ removeGeneric(f, where)
 standardGeneric(f)
 
 dumpMethod(f, signature, file, where, def)
-
-existsFunction(f, generic = TRUE, where)
 
 findFunction(f, generic=TRUE)
 
@@ -105,10 +101,6 @@ callGeneric(\dots)
     }
     \item{\code{dumpMethod}:}{ 
       Dump the method for this generic function and signature.  
-    }
-    \item{\code{existsFunction}:}{ 
-      Is there a function of this name.  If \code{generic} is
-      \code{FALSE}, generic functions are not counted.
     }
     \item{\code{findFunction}:}{ 
       return a list of either the positions on the search list, or the

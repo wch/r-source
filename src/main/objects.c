@@ -859,10 +859,16 @@ R_stdGen_ptr_t R_get_standardGeneric_ptr()
     return R_standardGeneric_ptr;
 }
 
-R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t val)
+SEXP R_MethodsNamespace;
+R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t val, SEXP envir)
 {
     R_stdGen_ptr_t old = R_standardGeneric_ptr;
     R_standardGeneric_ptr = val;
+    if(envir && !isNull(envir))
+	R_MethodsNamespace = envir;
+    /* just in case ... */
+    if(!R_MethodsNamespace)
+	R_MethodsNamespace = R_GlobalEnv;
     return old;
 }
 
@@ -874,7 +880,7 @@ SEXP R_isMethodsDispatchOn(SEXP onOff) {
     if(length(onOff) > 0) {
 	    onOffValue = asLogical(onOff);
 	    if(onOffValue == FALSE)
-		    R_set_standardGeneric_ptr(0);
+		    R_set_standardGeneric_ptr(0, 0);
 	    else if(NOT_METHODS_DISPATCH_PTR(old)) {
 		    SEXP call;
 		    PROTECT(call = allocList(2));
@@ -943,7 +949,7 @@ static SEXP dispatchNonGeneric(SEXP name, SEXP env, SEXP fdef)
 static void load_methods_package()
 {
     SEXP e;
-    R_set_standardGeneric_ptr(dispatchNonGeneric);
+    R_set_standardGeneric_ptr(dispatchNonGeneric, NULL);
     PROTECT(e = allocVector(LANGSXP, 2));
     SETCAR(e, install("library"));
     SETCAR(CDR(e), install("methods"));
@@ -959,7 +965,7 @@ SEXP do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP arg, value, fdef; R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr();
     if(!ptr) {
 	warning("standardGeneric called without methods dispatch enabled (will be ignored)");
-	R_set_standardGeneric_ptr(dispatchNonGeneric);
+	R_set_standardGeneric_ptr(dispatchNonGeneric, NULL);
 	ptr = R_get_standardGeneric_ptr();
     }
     PROTECT(args);

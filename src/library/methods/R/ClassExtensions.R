@@ -26,7 +26,7 @@
 .InhSlotNames <- function(Class) {
    ClassDef <- getClass(Class)
     value <- names(ClassDef@slots)
-    if(length(value)==0 && extends(ClassDef, "vector"))
+    if(length(value)==0 && (Class %in% .BasicClasses || extends(ClassDef, "vector")))
         ## No slots, but extends "vector" => usually a basic class; treat as data part
         value <- ".Data"
    value
@@ -63,12 +63,12 @@
 makeExtends <- function(Class, to,
                         coerce = NULL, test = NULL, replace = NULL,
                         by = character(), package,
-                        slots = getSlots(classDef1),
+                        slots = names(getSlots(classDef1)),
                         classDef1 = getClass(Class), classDef2 = getClass(to)) {
     ## test for datapart class:  must be the data part class, except
     ## that extensions within the basic classes are allowed (numeric, integer)
     dataEquiv <- function(cl1, cl2) {
-        identical(cl1, cl2) ||
+        .identC(cl1, cl2) ||
           (extends(cl1, cl2) && !any(is.na(match(c(cl1, cl2), .BasicClasses))))
     }
     class1Defined <- missing(slots) # only at this time can we construct methods
@@ -79,7 +79,7 @@ makeExtends <- function(Class, to,
         coerce <- .simpleExtCoerce
         if(!isVirtualClass(classDef2))
             body(coerce, envir = environment(coerce)) <-
-                 .simpleCoerceExpr(Class, to, slots)
+                 .simpleCoerceExpr(Class, to, slots, classDef2)
     }
     else if(is(coerce, "function")) {
         ## we allow definitions with and without the `strict' argument
@@ -136,7 +136,7 @@ makeExtends <- function(Class, to,
                 toSlots <- classDef2@slots
                 sameSlots <- TRUE
                 for(eclass in ext)
-                    if(!identical(eclass, to) && isClass(eclass) &&
+                    if(!.identC(eclass, to) && isClass(eclass) &&
                        length(getClassDef(eclass)@slots) > 0) {
                         sameSlots <- FALSE
                         break

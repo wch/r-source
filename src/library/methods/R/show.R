@@ -27,7 +27,7 @@ showDefault <-
         ## print the old-style object
         cat("An object of class \"", cl, "\"\n", sep="")
         for( cl2 in rev(extends(cl)))
-            if(!identical(cl2, "oldClass") && extends(cl2, "oldClass")) {
+            if(!.identC(cl2, "oldClass") && extends(cl2, "oldClass")) {
                 print(as(object, cl2), useS4 = FALSE) # see comment NBB below
                 break
             }
@@ -87,7 +87,7 @@ show <- function(object)
               where = envir)
     setMethod("show", "classRepresentation",
               function(object){
-                  if(!identical(class(object), "classRepresentation"))
+                  if(!.identC(class(object), "classRepresentation"))
                       cat("Extended class definition (", dQuote(class(object)),
                           ")\n")
                   print.classRepresentation(object)

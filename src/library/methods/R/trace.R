@@ -1,4 +1,4 @@
-.TraceWithMethods <- function(what, tracer = NULL, exit = NULL, at = numeric(), print = TRUE, signature = NULL) {
+.TraceWithMethods <- function(what, tracer = NULL, exit = NULL, at = numeric(), print = TRUE, signature = NULL, where = .GlobalEnv) {
     if(is.function(what)) {
         fname <- substitute(what)
         if(is.name(fname))
@@ -21,20 +21,20 @@
     if(nargs() == 1)
         return(.primTrace(what)) # for back compatibility
     where <- topenv(parent.frame())
-    if(is.null(signature)) {
-        def <- getFunction(what, where = where)
-        where <- findFunction(what)[[1]]
-    }
-    else {
+        allWhere <- findFunction(what, where = where)
+        if(length(allWhere)==0)
+            stop("No function definition for \"", what, "\" found")
+        whereF <- as.environment(allWhere[[1]])
+        def <- getFunction(what, where = whereF)
+        if(!is.null(signature)) {
         whereM <- findMethod(what, signature, where = where)
         if(length(whereM) == 0) {
             def <- selectMethod(what, signature)
-            where <- findFunction(what)[[1]]
+            whereM <- whereF
         }
         else {
-            whereM <- whereM[[1]]
+            whereM <- as.environment(whereM[[1]])
             def <- getMethod(what, signature, where = whereM)
-            where <- whereM
         }
     }
     fBody <- body(def)
@@ -58,10 +58,18 @@
     def <- .untracedFunction(def)
     newFun <- new(.traceClassName(class(def)), def = def, tracer = tracer, exit = exit, at = at
                   , print = print)
-    if(is.null(signature)) 
-        assign(what, newFun, where)
-    else
-        setMethod(what, signature, newFun, where = where)
+    if(is.null(signature)) {
+        if(bindingIsLocked(what, whereF))
+            .assignOverBinding(what, newFun, whereF)
+        else
+            assign(what, newFun, whereF)
+    }
+    else {
+        if(bindingIsLocked(what, whereM))
+            .setMethodOverBinding(what, signature, newFun, whereM)
+        else
+            setMethod(what, signature, newFun, where = whereM)
+    }
     what
 }
 
@@ -116,9 +124,23 @@
     def
 }
 
-.untracedFunction <- function(f) {
+.untracedFunction <- function(f, what, where, signature = NULL) {
     while(is(f, "traceable"))
         f <- f@original
+    if(!missing(what)) {
+        if(is.null(signature)) {
+            if(bindingIsLocked(what, where))
+                .assignOverBinding(what, f, where)
+            else
+                assign(what, f, where)
+        }
+        else {
+        if(bindingIsLocked(what, where))
+            .setMethodOverBinding(what, signature, f, where)
+        else
+            setMethod(what, signature, f, where = where)
+        }
+    }
     f
 }
         
@@ -128,7 +150,7 @@
              where = envir); clList <- "traceable"
     ## create the traceable classes
     for(cl in c("function", "MethodDefinition", "MethodWithNext", "genericFunction",
-                "genericMethods", "groupGenericFunction")) {
+                "standardGeneric", "nonstandardGeneric", "groupGenericFunction")) {
         setClass(.traceClassName(cl),
                  representation(cl, "traceable"), where = envir)
         clList <- c(clList, .traceClassName(cl))
@@ -140,7 +162,7 @@
                   if(isClass(oldClass) && length(getClass(oldClass)@slots) > 0)
                       as(.Object, oldClass) <- def # to get other slots in def
                   .Object@original <- def
-                  if(!is.null(elNamed(getSlots(class(def)), ".Data")))
+                  if(!is.null(elNamed(getSlots(getClass(class(def))), ".Data")))
                       def <- def@.Data
                   .Object@.Data <- .makeTracedFunction(def, tracer, exit, at, print)
                   .Object
@@ -177,4 +199,57 @@ trySilent <- function(expr) {
     else
       on.exit({options(opt1); options(opt2)})
     eval.parent(call)
+}
+
+.assignOverBinding <- function(what, value, where, warn = TRUE) {
+    pname <- getPackageName(where)
+    if(warn)
+        warning("Assigning over the binding of symbol \"", what,
+                "\" in environment/package \"", pname, "\"")
+    if(is.function(value)) {
+        ## assign in the namespace for the function as well
+        fenv <- environment(value)
+        if(!identical(fenv, where) && exists(what, envir = fenv, inherits = FALSE #?
+                                             ) && bindingIsLocked(what, fenv)) {
+            unlockBinding(what, fenv)
+            assign(what, value, fenv)
+            lockBinding(what, fenv)
+        }
+    }
+    unlockBinding(what, where)
+    assign(what, value, where)
+    lockBinding(what, where)
+}
+
+.setMethodOverBinding <- function(what, signature, method, where, warn = TRUE) {
+    if(warn)
+        warning("Setting a method over the binding of symbol \"", what,
+                "\" in environment/package \"", pname, "\"")
+    if(exists(what, envir = where, inherits = FALSE)) {
+        fdef <- get(what, envir = where)
+        hasFunction <- is(fdef, "genericFunction")
+    }
+    else
+        hasFunction <- FALSE
+    metaName <- mlistMetaName(what)
+    if(hasFunction) {
+        ## find the generic in the corresponding namespace
+        where2 <- findFunction(what, where = environment(fdef))[[1]] # must find it?
+        unlockBinding(metaName, where)
+        unlockBinding(what, where)
+        setMethod(what, signature, method, where = where)
+        lockBinding(what, where)
+        lockBinding(metaName, where)
+        ## assign in the package namespace as well
+        unlockBinding(what, where2)
+        unlockBinding(metaName, where2) # FIXME:  look for sig. ?
+        setMethod(what, signature, method, where = where2)
+        lockBinding(metaName, where2)
+        lockBinding(what, where2)
+    }
+    else {
+        unlockBinding(metaName, where)
+        setMethod(what, signature, method, where = where)
+        lockBinding(metaName, where)
+    }
 }
