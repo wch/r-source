@@ -140,7 +140,7 @@ removeFromClassMetaData(name)
 
 extendsCoerce(fromClass, Class, formFunction)
 
-extendsReplace(fromClass, Class)
+extendsReplace(objectClass, Class)
 
 findExtends(class1, class2)
 

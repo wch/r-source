@@ -21,7 +21,7 @@ makeMethodsList(object, level=1)
 
 SignatureMethod(names, signature, definition)
 
-insertMethod(mlist, signature, args, def, whichMethods, fromClass, envir)
+insertMethod(mlist, signature, args, def, whichMethods)
 
 matchArg(object, thisClass, mlist, ev)
 

@@ -31,6 +31,7 @@
 \alias{printNoClass}
 \alias{print.default}
 \alias{missingArg}
+\alias{balanceMethodsList}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
 \alias{.EmptyPrimitiveSkeletons}
@@ -91,6 +92,8 @@ printNoClass(x, digits, quote, na.print, print.gap, right, ...)
 print.default(x, ...)
 
 missingArg(symbol, envir = parent.frame())
+
+balanceMethodsList(mlist, args, check = TRUE)
 
 }
 \description{
@@ -271,11 +274,31 @@ returns \code{NULL} or throws an error.
       \item{\code{missingArg}: }{
 	Returns \code{TRUE} if the symbol supplied is missing \emph{from
 	the call} corresponding to the environment supplied (by
-        default, environment of the call to \code{missingArg}).  Note
-	that this is the ``blue-book'' sense of the
+      default, environment of the call to \code{missingArg}).
+      If \code{eval} is true, the argument is evaluated to get the name
+      of the symbol to test.  Note
+	that \code{missingArg} is closer to the ``blue-book'' sense of the
 	\code{\link{missing}} function, not that of the current R base
-	package implementation.
-	}
+	package implementation.  But beware that it works reliably only
+	if no assignment has yet been made to the argument.  (For method
+	dispatch this is fine, because computations are done at the
+	begining of the call.)
+      }
+      \item{\code{balanceMethodsList}: }{
+	Called from \code{\link{setMethod}} to ensure that all nodes in
+	the list have the same depth (i.e., the same no. of levels of
+	arguments).  Balance is needed to ensure that all necessary
+	arguments are examined when inherited methods are being found
+	and added to the \code{allMethods} slot.  No actual
+	recomputation is needed usually except when a new method uses a
+	longer signature than has appeared before.
+
+	Balance requires that \emph{all} methods be added to the generic
+	via \code{setMethod} (how else could you do it?) or by the
+	initial \code{setGeneric} call converting the ordinary function.
+      }
+      
+
 }
 \item{\code{.saveImage}:}{Flag, used in dynamically initializing the
     methods package from \code{.First.lib}}

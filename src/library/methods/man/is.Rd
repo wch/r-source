@@ -40,6 +40,11 @@ Returns \code{maybe} if the extension includes a test.
     defined, to coerce the object to \code{class2}, and to alter the
     object so that \code{is(object, class2)} is identical to \code{value}.
   }
+  \item{by}{
+    The name of an intermediary class.  Coercion will proceed by first
+    coercing to this class and from there to the target class.  (The
+    intermediate coercions have to be valid.)
+    }
   \item{where}{
     Where to store the metadata defining the relationship. Default is
     the global environment.

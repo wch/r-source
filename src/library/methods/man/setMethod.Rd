@@ -210,10 +210,53 @@ removeGeneric("plotData")
 
 stopifnot(!exists("plotData", 1))
 
-## Miscellaneous tests
-foo <- function(x,y)x+y
-setMethod("foo", , function(x)x)
-setMethod("foo", signature("character", "character"), function(x,y)paste(x,y))
+##  Tests of method inheritance & multiple dispatch
+setClass("A0", representation(a0 = "numeric"))
+
+setClass("A1", representation("A0", a1 = "character"))
+
+setClass("B0" ,representation(b0 = "numeric"))
+
+setClass("B1", "B0")
+
+setClass("B2", representation("B1", b2 = "logical"))
+
+setClass("AB0", representation("A1", "B2", ab0 = "matrix"))
+
+f1 <- function(x,  y)"ANY"
+
+setGeneric("f1")
+
+setMethod("f1", c("A0", "B1"), function(x, y)"A0 B1")
+setMethod("f1", c("B1", "A0"), function(x, y)"B1 A0")
+
+a0 <- new("A0")
+a1 <- new("A1")
+b0 <- new("B0")
+b1 <- new("B1")
+b2 <- new("B2")
+
+deparseText <- function(expr)
+    paste(deparse(expr), collapse = "\\  ")
+
+mustEqual <- function(e1, e2){
+    if(!identical(e1, e2))
+        stop(paste("!identical(", deparseText(substitute(e1)),
+                   ", ", deparseText(substitute(e2)), ")", sep=""))
+}
+
+mustEqual(f1(a0, b0), "ANY")
+mustEqual(f1(a1,b0), "ANY")
+mustEqual(f1(a1,b1), "A0 B1")
+mustEqual(f1(b1,a1), "B1 A0")
+mustEqual(f1(b1,b1), "ANY")
+
+for(.cl in c("A0", "A1", "B0", "B1", "B2"))
+    removeClass(.cl)
+
+removeGeneric("f1")
+
+
 
 }
 }

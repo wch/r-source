@@ -37,5 +37,4 @@ ftest(y2 = 2, x=1)  ## c(TRUE, TRUE) partial match x1
 
 
 }
-\keyword{ ~kwd1 }% at least one, from doc/KEYWORDS
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ programming }
