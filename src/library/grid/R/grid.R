@@ -96,6 +96,7 @@ downViewport <- function(name, recording=TRUE) {
   } else {
     stop(paste("Viewport", name, "is not currently pushed"))
   }
+  current.viewport()
 }
 
 # Similar to down.viewport() except it starts searching from the
@@ -152,6 +153,7 @@ popViewport <- function(n=1, recording=TRUE) {
       record(n)
     }
   }
+  current.viewport()
 }
 
 up.vp <- function(last.one, recording) {
@@ -183,6 +185,7 @@ upViewport <- function(n=1, recording=TRUE) {
       record(n)
     }
   }
+  current.viewport()
 }
                         
 # Function to obtain the current viewport
