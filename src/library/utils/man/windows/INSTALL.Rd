@@ -44,7 +44,9 @@
   Options \option{--lazy}, \option{--no-lazy}, \option{--lazy-data} and
   \option{--no-lazy-data} control where the \R objects and the datasets
   are made available for lazy loading.  (These options are overridden by
-  any values set in the DESCRIPTION file.)
+  any values set in the DESCRIPTION file.)  The default is
+  \option{--no-lazy --no-lazy-data} except that lazy-loading is used for
+  package with more than 50kB of \R code and no saved image.
 
   Which forms of help are produced is controlled by the \option{--docs}
   option which takes values \code{none} or \code{normal} (text and HTML)

@@ -22,9 +22,10 @@ USER-VISIBLE CHANGES
 	latter is probably unimportant of itself, but reduces
 	commensurately the time spent in garbage collection.
 
-	Packages can be installed to use lazy loading with
-	R CMD INSTALL --lazy.  [This is not currently the default, but
-	it may well be so by release time.]
+	Packages are by default installed using lazy loading if they 
+	have more than 50kB of R code and did not use a saved image.
+	This can be overridden by INSTALL --[no-]lazy or via a field
+	in the DESCRIPTION file.
 
     o	All the datasets formerly in packages 'base' and 'stats' have
 	been moved to a new package 'datasets'.  data() does the
@@ -33,14 +34,15 @@ USER-VISIBLE CHANGES
 	in the 'datasets' package.
 
 	Packages can be installed to make their data objects available
-	via R CMD INSTALL --lazy-data.  [This is experimental.]
+	via R CMD INSTALL --lazy-data or via a field in the
+	DESCRIPTION file.
 
     o   The semantics of data() have changed (and were incorrectly
 	documented in recent releases) and the function has been moved
 	to package 'utils'.  Please read the help page carefully if
 	you use the 'package' or 'lib.loc' arguments.
 
-	data() now lists datasets, and not just names data() accepts.
+	data() now lists datasets, and not just names which data() accepts.
 
     o   Dataset 'phones' has been renamed to 'WorldPhones'.
 
@@ -53,7 +55,7 @@ USER-VISIBLE CHANGES
 	palette) for coloring its output when given a matrix.
 
     o	Package names must now be typed exactly in library() and
-    	require, regardless of whether the underlying file system is
+    	require(), regardless of whether the underlying file system is
     	case-sensitive or not.
 
 

@@ -37,7 +37,7 @@ Options:
                         to R when creating the save image
       --no-save         do not save the package source as an image file
       --lazy            use lazy loading
-      --no-lazy         do not use lazy loading (current default)
+      --no-lazy         do not use lazy loading
       --lazy-data       use lazy loading for data
       --no-lazy-data    do not use lazy loading for data (current default)
   -d, --debug		turn on shell and build-help debugging
@@ -162,7 +162,7 @@ with_package_versions=false
 save="CHECK"
 save_args=
 fake=false
-lazy=false
+lazy="auto"
 lazy_data=false
 
 while test -n "${1}"; do
@@ -468,7 +468,6 @@ do_install_source () {
       fi
     fi
   fi
-false
   if test -d data; then
     message "data"
     ${MKDIR_P} "${R_PACKAGE_DIR}/data"
@@ -533,6 +532,10 @@ false
     *)
       R_SAVE_IMAGE=${save} ;;
   esac
+  ## sanity check
+  if ! test -d R ; then
+    R_SAVE_IMAGE=false
+  fi
   export R_SAVE_IMAGE
 
   if ${R_SAVE_IMAGE}; then
@@ -584,6 +587,18 @@ false
   tmp=`get_dcf_field LazyLoad DESCRIPTION`
   if test "x$tmp" != "x" ; then
     if test "x$tmp" = "xyes"; then
+      thislazy=true
+    else
+      thislazy=false
+    fi
+  fi
+  if ! test -d R ; then
+    thislazy=false
+  fi
+  ## this test is designed to fail if a loader is used.
+  if test "x$thislazy" = "xauto" ; then
+    Rcodesize=`wc -c ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME} | cut -b -8`
+    if test ${Rcodesize} -gt 50000 ; then
       thislazy=true
     else
       thislazy=false

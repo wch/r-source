@@ -173,7 +173,8 @@ foreach $pkg (@ARGV){
     $save = "false" if $opt_no_save;
     $save = "true" if $opt_save;
 
-    my $lazyload = 0;
+    my $lazyload = -1;
+    $lazyload = 0 if $is_bundle; # flunk autotests for bundles
     $lazyload = 1 if $opt_lazy;
     $lazyload = 0 if $opt_no_lazy;
     my $tmp = $description->{"LazyLoad"};
@@ -181,7 +182,6 @@ foreach $pkg (@ARGV){
 	$tmp = lc $tmp;
 	if($tmp eq "yes") {$lazyload = 1;} else {$lazyload = 0;} 
     }
-    print "*** lazyload is $lazyload ***\n" if($opt_debug);
 
     my $lazydata = 0;
     $lazydata = 1 if $opt_lazy_data;
@@ -281,12 +281,21 @@ foreach $pkg (@ARGV){
     if($res) {
 	printf "*** Installation of $pkgname failed ***\n";
     } else {
+	if($lazyload == -1) { # choose based on code size
+	    my $codesize = `wc -c $library/$decpkgname/R/$pkgname`;
+	    $codesize =~ / *([0-9]+)/;
+	    $codesize = $1;
+	    print "*** codesize is $codesize ***\n" if $opt_debug;
+	    if($codesize > 50000) {$lazyload = 1;} else {$lazyload = 0;}
+	    print "*** lazyload is $lazyload ***\n" if($opt_debug);
+	}
 	if($lazyload) {
-	    my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir";
+	    my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32 ";
 	    if($is_bundle) {
+		$cmd .= "PKGDIR=$pkgdir/$pkgname";
 		foreach $ppkg (@bundlepkgs) {$cmd .= " lazyload-$ppkg";}
 	    } else {
-		$cmd .= " lazyload-$pkgname";
+		$cmd .= "PKGDIR=$pkgdir lazyload-$pkgname";
 	    }
 	    system($cmd);
 	}
@@ -376,7 +385,7 @@ Options:
   --no-save             do not save the package source as an image file.
 
   --lazy                use lazy loading
-  --no-lazy             do not use lazy loading (current default)
+  --no-lazy             do not use lazy loading
   --lazy-data           use lazy loading for data
   --no-lazy-data        do not use lazy loading for data (current default)
 
