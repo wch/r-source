@@ -52,7 +52,7 @@ print.default <- function(x, ...) {
               function(object) {
                   cat("Method Definition (Class \"", class(object), "\"):\n\n", sep = "")
                   show(object@.Data)
-                  mm <- methodSignatureMatrix(object)
+                  mm <- .methodSignatureMatrix(object)
                   cat("\nSignatures:\n")
                   print(mm)
               },
@@ -61,10 +61,27 @@ print.default <- function(x, ...) {
               function(object)  {
                   cat("Method Definition (Class \"", class(object), "\"):\n\n", sep = "")
                   show(object@.Data)
-                  mm <- rbind(methodSignatureMatrix(object),
+                  mm <- rbind(.methodSignatureMatrix(object),
                               NextMethod = object@nextMethod@defined)
                   cat("\nSignatures:\n")
                   print(mm)
+              },
+              where = envir)
+    setMethod("show", "genericFunction",
+              function(object)  {
+                  cat(class(object)," for \"", object@generic,
+                      "\" defined from package \"", object@package,
+                      "\"\n", sep = "")
+                  if(length(object@group) > 0)
+                      cat("  belonging to group(s):",
+                          paste(unlist(object@group), collapse =", "), "\n")
+                  if(length(object@valueClass) > 0)
+                      cat("  defined with value class: \"", object@valueClass,
+                          "\"\n", sep="")
+                  cat("\n")
+                  show(object@.Data)
+                  cat("Methods may be defined for arguments:",
+                      paste(object@signature, collapse=", "), "\n\n")
               },
               where = envir)
 }

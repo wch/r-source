@@ -124,7 +124,7 @@ function (clName, filename = paste(topicName(type, clName), ".Rd", sep = ""), ty
         ## but for new() the first argument is the class name
         argNames[[1]] <- paste0('"', clName, '"')
         .usage <- c(paste0(.usage,"{"),
-                    paste0("Objects can be created by calls of the form \\code{", makeCallString(initMethod, "new", argNames), "}."),
+                    paste0("Objects can be created by calls of the form \\code{", .makeCallString(initMethod, "new", argNames), "}."),
                     "    ~~ describe objects here ~~ ", "}")
     }
     if (nslots > 0) {

@@ -23,7 +23,7 @@ is(object, class2)
 extends(class1, class2, maybe=TRUE)
 
 setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
-      by = NULL, where = 1)
+      by = NULL, dataPart, where = 1)
 
 }
 \arguments{
@@ -41,6 +41,9 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
     The name of an intermediary class.  Coercion will proceed by first
     coercing to this class and from there to the target class.  (The
     intermediate coercions have to be valid.)}
+  \item{dataPart}{ Supplied as \code{TRUE} if the relation defines the
+      \code{.Data} slot (don't use this argument directly).
+      }
   \item{where}{
     Where to store the metadata defining the relationship. Default is
     the global environment.}

@@ -17,16 +17,11 @@
 \usage{
 show(object)
 
-showDefault(object, printTo = stdout(), oldMethods = TRUE)
+showDefault(object, oldMethods = TRUE)
 }
 \arguments{
   \item{object}{Any R object}
   
-  \item{printTo}{Either a file or \link{connection}, or else
-    \code{FALSE}.  In the latter case, the lines of text that would
-    have been printed are returned as the value of the call (in a
-    character vector with one element per line of output).
-  }
   \item{oldMethods}{Should old-style print methods be used for this
     object?  \code{TRUE} by default if called directly, but \code{FALSE}
     when called from the methods package for automatic printing (to

@@ -9,10 +9,11 @@
   control.  See the details section.
 }
 \usage{
-setGeneric(name, def, group=NULL, valueClass=NULL, where=1, doAssign,
-           myDispatch = FALSE, useAsDefault)
+setGeneric(name, def, group=NULL, valueClass=NULL, where=1, package, 
+           signature, useAsDefault)
 
-setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers, where=1)
+setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers, 
+                package, where=1)
 }
 \arguments{
   \item{name}{ The character string name of the generic function.  In
@@ -23,10 +24,10 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers, where=1)
   \item{def}{ An optional function object, defining the generic.  This
     argument is usually only needed (and is then required) if there is
     no current function of this name. In that case, the formal arguments
-    and default values for the generic are taken from \code{def}.  The
-    body will be set to the standard dispatch mechanism, unless you want
-    to do something different (use argument \code{myDispatch} in this
-    case.
+    and default values for the generic are taken from \code{def}.  You
+    can also supply this argument if you want the generic function to
+    do something other than just dispatch methods (an advanced topic
+    best left alone unless you are sure you want it).
     
     Note that \code{def} is \emph{not} the default method; use argument
     \code{useAsDefault} if you want to specify the default separately.
@@ -44,25 +45,17 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers, where=1)
       an error is generated.  See the
       details section for supplying an expression.
    }
+  \item{package}{ The name of the package with which this function is
+      associated.  Usually determined automatically (as the package
+      containing the non-generic version if there is one, or else the
+      package where this generic is to be saved).
+      }
   \item{where}{ Where to store the resulting initial methods definition,
     and possibly the generic function; by
-    default, stored into the global environment.
+    default, stored into the top-level environment.
   }
-  \item{doAssign}{ 
-    You can supply \code{doAssign} as \code{TRUE} to force assigning a
-    generic function even if one already exists. See the details
-    section. The rule of not assigning
-    generics for primitives cannot be overriden by setting
-    \code{doAssign} to \code{TRUE}.
-  }
-  \item{myDispatch}{
-    Normally, the body of a generic function does nothing except to
-    dispatch methods (via a call to \code{\link{standardGeneric}}).  The
-    evaluation model, however, allows the generic to do any other
-    computation it wants, it it calls \code{standardGeneric} at
-    some point.  Otherwise, \code{setGeneric} will ignore the body of
-    the supplied generic unless \code{myDispatch} is set to
-    \code{TRUE}. See the details section.
+  \item{package}{ The name of the package to which this generic
+      function belongs.  
   }
   \item{useAsDefault}{
     Override the usual choice of default argument (an existing

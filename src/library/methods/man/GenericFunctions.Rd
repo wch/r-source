@@ -31,8 +31,8 @@ dumpMethods(f, file, signature, methods, where)
 signature(\dots)
 removeMethods(f, where)
 setReplaceMethod(f, \dots)
-getGenerics(where)
-allGenerics(where)
+getGenerics(where, searchForm = FALSE)
+allGenerics(where, searchForm = FALSE)
 callGeneric(\dots)
 }
 \usage{
@@ -58,9 +58,9 @@ removeMethods(f, where)
 
 setReplaceMethod(f, \dots)
 
-getGenerics(where)
+getGenerics(where, searchForm = FALSE)
 
-allGenerics(where)
+allGenerics(where, searchForm = FALSE)
 
 callGeneric(\dots)
 
@@ -127,6 +127,20 @@ callGeneric(\dots)
       Returns a named list of classes to be matched to arguments of a
       generic function.
     }
+      \item{\code{getGenerics}:}{ Returns the names of the generic
+          functions that have methods defined on \code{where}; this
+          argument can be an environment or an index into the search
+          list.  By default, the whole search list is used.
+
+          The methods definitions are stored with
+          package qualifiers; for example, methods for function
+          \code{"initialize"} might refer to two different functions
+          of that name, on different packages.  The package names
+          corresponding to the method list object are contained in the
+           slot \code{package} of the returned object.  The form of
+           the returned name can be plain (e.g., \code{"base"}), or in
+           the form used in the search list (\code{"package:base"})
+           according to the value of \code{searchForm}}
     \item{\code{callGeneric}:}{ 
       In the body of a method, this function will make a call to the
       current generic function.  If no arguments are passed to
@@ -172,6 +186,10 @@ callGeneric(\dots)
     the methods defined for this generic (optionally on the specified
     \code{where} location).
   }
+  \item{searchForm}{In \code{getGenerics}, if  \code{TRUE}, the
+      \code{package} slot of the returned result is in the form used
+      by \code{search()}, otherwise as the simple package name (e.g,
+      \code{"package:base"} vs \code{"base"}). }
   
 }
 

@@ -9,11 +9,11 @@
   These are support routines for computations on formal methods.
 }
 \usage{
-getMethodsForDispatch(f)
+getMethodsForDispatch(f, fdef)
 
-cacheMethod(f, sig, def, args = names(sig))
+cacheMethod(f, sig, def, args, fdef)
 
-resetGeneric(f)
+resetGeneric(f, fdef)
 }
 \section{Summary of Functions}{
   \describe{

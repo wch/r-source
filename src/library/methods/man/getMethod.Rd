@@ -1,26 +1,23 @@
 \name{getMethod}
 \alias{getMethod}
 \alias{findMethod}
+\alias{existsMethod}
 \alias{getMethods}
 \alias{selectMethod}
 \alias{hasMethod}
 \alias{MethodsListSelect}
-\title{ Get the Definition of a Method }
+\title{ Get or Test for the Definition of a Method }
 \description{
-  A call to \code{getMethod} returns the method corresponding a
-  particular generic function and signature; a call to \code{findMethod}
-  returns the vector of package names in which a matching method is found.
-
-  The functions \code{MethodsListSelect} and \code{selectMethod} select
-  methods using an environment in which arguments to the function have
-  been assigned (they differ in the treatment of inheritance).  Neither
-  is intended to be called directly, except perhaps in debugging.  The
-  function \code{getMethods} returns \emph{all} the methods for the
-  generic function.
-
+  The functions \code{getMethod} and \code{selectMethod} get the
+  definition of a particular method; the functions \code{existsMethod}
+  and \code{hasMethod} test for the existence of a method.  In both
+  cases the first function only gets direct definitions and the second
+  uses inheritance.
   The function \code{findMethod} returns the package(s) in the search
   list (or in the packages specified by the \code{where} argument) that
   contain a method for this function and signature.
+
+  The other functions are support functions: see the details below.
 }
 \usage{
 getMethod(f, signature=character(), where, optional=FALSE)
@@ -33,9 +30,11 @@ existsMethod(f, signature = character(), where)
 
 hasMethod(f, signature=character())
 
-selectMethod(f, signature, optional=FALSE, useInherited, mlist=getMethods(f))
+selectMethod(f, signature, optional=FALSE, useInherited,
+             mlist=getMethods(f), fdef = getGeneric(f))
 
-MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs, useInherited)
+MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
+                  useInherited, fdef)
 
 }
 \arguments{
@@ -65,18 +64,18 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs, useInherited)
     more than one method matches this signature, or \code{NULL} if no
     method matches.}
 
-  \item{mlist}{In \code{selectMethod}, the \code{MethodsList} object
-    can be explicitly supplied.  (Unlikely to be used, except in the
+  \item{mlist, fdef}{In \code{selectMethod}, the \code{MethodsList} object
+    and/or the generic function object can be explicitly supplied.  (Unlikely to be used, except in the
     recursive call that finds matches to more than one argument.)}
 
   \item{env}{The environment in which argument evaluations are done in
     \code{MethodsListSelect}.  Currently must be supplied, but should
     usually be \code{sys.frame(sys.parent())} when calling the function
     explicitly for debugging purposes.}
-  \item{fEnv, finalDefault, evalArgs, useInherited}{ Internal-use
+  \item{fEnv, finalDefault, evalArgs, useInherited, fdef}{ Internal-use
     arguments for the function's environment, the method to use as
-    the overall default, whether to evaluate arguments, and which
-    arguments should use inheritance.}
+    the overall default, whether to evaluate arguments, which
+    arguments should use inheritance, and the generic function definition.}
 }
 \details{
   A call to \code{getMethod} returns the method for a particular
@@ -130,7 +129,10 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs, useInherited)
 }
 \value{
   The call to \code{selectMethod} or \code{getMethod} returns a
-  function object, the selected method, if a unique selection exists.
+  \code{\link{MethodDefinition-class}} object, the selected method, if
+  a unique selection exists.
+  (This class extends \code{function}, so you can use the result
+  directly as a function if that is what you want.)
   Otherwise an error is thrown if \code{optional} is \code{FALSE}.  If
   \code{optional} is \code{TRUE}, the value returned is \code{NULL} if
   no method matched, or a \code{MethodsList} object if multiple

@@ -5,8 +5,8 @@
 \description{These classes extend the basic class \code{"function"} when
 functions are to be stored and used as method definitions.}
 \section{Objects from the Class}{
-Objects can be created by calls of the form \code{new("MethodDefinition", ...)}.
-~~ describe objects here ~~ 
+The action of setting a method creates an object of this class.  It's
+unwise to create them directly.
 }
 \section{Slots}{
   \describe{
@@ -24,14 +24,18 @@ Class \code{"function"}, from data part.
 Class \code{"PossibleMethod"}, directly.
 Class \code{"OptionalMethods"}, by class "function".
 }
-\section{Methods}{
-  \describe{
-    \item{findNextMethod}{\code{signature(method = "MethodDefinition")}: ... }
-    \item{loadMethod}{\code{signature(method = "MethodDefinition")}: ... }
-    \item{show}{\code{signature(object = "MethodDefinition")}: ... }
-  }
+\details{
+  Method definition objects are functions with additional information
+  defining how the function is being used as a method.  The
+  \code{target} slot is the class signature for which the method will
+  be dispatched, and the \code{defined} slot the signature for which
+  the method was orignally specified (that is, the one that appeared
+  in some call to \code{\link{setMethod}}).
 }
-\seealso{ See 
+\seealso{ See class \code{\link{MethodsList-class}} for the objects
+  defining sets of methods associated with a particular generic
+  function.  The individual method definitions stored in these objects
+  are from class \code{MethodDefinition}, or an extension.
  \code{\link{MethodWithNext-class}} for an extension used by \code{\link{callNextMethod}}. }
 
 \keyword{classes}

@@ -3,8 +3,7 @@
 \alias{makeMethodsList}
 \alias{SignatureMethod}
 \alias{insertMethod}
-\alias{matchArg}
-\alias{matchArgClass}
+\alias{inheritedSubMethodLists}
 \alias{showMlist}
 \alias{print.MethodsList}
 \alias{emptyMethodsList}
@@ -30,7 +29,7 @@ SignatureMethod(names, signature, definition)
 
 insertMethod(mlist, signature, args, def, whichMethods)
 
-matchArg(object, thisClass, mlist, ev)
+inheritedSubMethodLists(object, thisClass, mlist, ev)
 
 showMlist(mlist, includeDefs = TRUE, inherited = TRUE,
    classes, useArgNames, printTo = stdout() )
@@ -93,7 +92,7 @@ loadMethod(method, fname, envir)
       saved).
     }
 
-    \item{\code{matchArg}:}{ 
+    \item{\code{inheritedSubMethodLists}:}{ 
       Utility function to match the object  or the class (if the object
       is \code{NULL}) to the elements of a methods list.
       Used in finding inherited methods, and not meant to be called

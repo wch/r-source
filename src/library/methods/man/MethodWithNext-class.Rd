@@ -1,11 +1,11 @@
+
 \name{MethodWithNext-class}
 \docType{class}
 \alias{MethodWithNext-class}
-\title{Class MethodWithNext, ~~class for ... ~~ }
-\description{  ~~ A concise (1-5 lines) description of what the class is  ~~}
+\title{Class MethodWithNext }
+\description{ Class of method definitions set up for callNextMethod }
 \section{Objects from the Class}{
-Objects can be created by calls of the form \code{new("MethodWithNext", ...)}.
-~~ describe objects here ~~ 
+Objects from this class are generated as a side-effect of calls to \code{\link{callNextMethod}}.
 }
 \section{Slots}{
   \describe{

@@ -24,7 +24,7 @@
 
 
     setGroupGeneric(where=where,"Math", function(x)NULL,
-                              knownMembers = members)
+                              knownMembers = members, package = "base")
 
     ## The Math2 group (too late now, but it would probably have been better to put "trunc" in
     ## here and call this something like the "Truncation" group)
@@ -35,7 +35,7 @@
                                        function (x, digits = 6)  standardGeneric(""), "Math2", env)
 
     setGroupGeneric(where=where,"Math2", function(x, digits)NULL,
-                              knownMembers = c("round", "signif"))
+                              knownMembers = c("round", "signif"), package = "base")
 
     ## The Arith group
     members <- c("+", "-", "*", "^", "%%", "%/%", "/")
@@ -44,7 +44,7 @@
                                            "Arith", env)
 
     setGroupGeneric(where=where,"Arith", function(e1, e2)NULL,
-                              group = "Ops", knownMembers = members)
+                              group = "Ops", knownMembers = members, package = "base")
 
     ## the Compare group
     members <- c("==", ">", "<", "!=", "<=", ">=")
@@ -53,7 +53,7 @@
                                            "Compare", env)
 
     setGroupGeneric(where=where,"Compare", function(e1, e2)NULL,
-                              group = "Ops", knownMembers = members)
+                              group = "Ops", knownMembers = members, package = "base")
 
     ## R does not currently do the Logic group (! & |) A strange group, since the argument
     ## lists are different.  But perhaps we'll add it sometime.
@@ -61,7 +61,7 @@
     ## the Ops group generic
 
     setGroupGeneric(where=where,"Ops", function(e1, e2)NULL,
-                               knownMembers = c("Arith", "Compare"))
+                               knownMembers = c("Arith", "Compare"), package = "base")
 
 
     ## The Summary group
@@ -77,7 +77,7 @@
                                            "Summary", env)
 
     setGroupGeneric(where=where,"Summary", function(x, ..., na.rm = FALSE )NULL,
-                              knownMembers = members)
+                              knownMembers = members, package = "base")
 
     ## The Complex group
     ##
@@ -92,7 +92,7 @@
                                            "Complex", env)
 
     setGroupGeneric(where=where,"Complex", function(z)NULL,
-                              knownMembers = members)
+                              knownMembers = members, package = "base")
 
     assign(".BasicFunsList", funs, envir=where)
     rm(.addBasicGeneric, envir=where)

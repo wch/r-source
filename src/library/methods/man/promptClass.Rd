@@ -22,7 +22,8 @@ promptClass(clName, filename, type = "class", keywords = "classes", where)
       them.  }
   \item{where}{ where to look for the definition of the class and of
       methods that use it:  by default, anywhere in the current search
-      list.  } }
+      list.  }
+        }
   \details{ 
     The class definition is found on the search list.  Using
     that definition, information about classes extended and slots is
