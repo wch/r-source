@@ -787,6 +787,49 @@ AC_DEFUN(R_LIB_TCLTK,
 	AC_SUBST(TCLTK_LIBS)
       ],[use_tcltk=no])
   ])
+dnl
+dnl R_TCLTK
+dnl
+AC_DEFUN(R_TCLTK,
+  [ have_tcltk=no
+    TCLTK_LIBS=
+    if test "${want_tcltk}" = yes; then
+      AC_CHECK_LIB(tcl, Tcl_Main,
+        AC_CHECK_LIB(tk, Tk_Main,
+          [ TCLTK_LIBS="-ltcl -ltk"
+	    have_tcltk=yes ]))
+      if test "${have_tcltk}" = no; then
+	## Try finding {tcl,tk}Config.sh
+	libpath="${tcltk_prefix}:${LD_LIBRARY_PATH}"
+	libpath="${libpath}:/opt/lib:/usr/local/lib:/usr/lib:/lib"
+	TCL_CONFIG=
+	AC_PATH_PROG(TCL_CONFIG, tclConfig.sh, , ${libpath})
+	if test -n "${TCL_CONFIG}"; then
+	  . ${TCL_CONFIG}	# get TCL_VERSION
+	  AC_CHECK_LIB(tcl${TCL_VERSION}, Tcl_Main,
+	    [ TCLTK_LIBS="-ltcl${TCL_VERSION}" ],
+	    [ want_tcltk=no ])
+	  if test "${want_tcltk}" = yes; then
+	    TK_CONFIG=
+	    AC_PATH_PROG(TK_CONFIG, tkConfig.sh, , ${libpath})
+	    if test -n "${TK_CONFIG}"; then
+	      . ${TK_CONFIG}	# get TK_VERSION
+	      AC_CHECK_LIB(tk${TK_VERSION}, Tk_Main,
+	        [ TCLTK_LIBS="${TCLTK_LIBS} -ltk${TK_VERSION}"
+		  have_tcltk=yes ])
+	    fi
+	  fi
+	fi
+      fi
+    fi
+    if test "${have_tcltk}" = yes; then
+      AC_DEFINE(HAVE_TCLTK)
+      use_tcltk=yes
+    else
+      use_tcltk=no
+    fi
+    AC_SUBST(TCLTK_LIBS)
+  ])
 
 dnl Local Variables: ***
 dnl mode: sh ***
