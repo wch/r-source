@@ -19,6 +19,8 @@ NEW FEATURES
     o	New functions rowSums(), colSums(), rowMeans() and colMeans():
 	versions of apply() optimized for these cases. 
 
+    o	Function arima.sim() in package ts.
+
 
 DEPRECATED & DEFUNCT
 
