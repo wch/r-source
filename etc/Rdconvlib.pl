@@ -22,7 +22,7 @@
 
 
 require "$R_HOME/etc/html-layout.pl";
-
+use Text::Tabs;
 
 # names of unique text blocks, these may NOT appear MORE THAN ONCE!
 @blocknames = ("name", "title", "usage", "arguments", "format",
@@ -90,6 +90,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
     $skipping = 0;
     #-- remove comments (everything after a %)
     while(<rdfile>){
+	$_ = expand $_;
 	if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
 	    if ($1 ne $OSdir) { $skipping = 1; }
 	    next;
@@ -574,7 +575,7 @@ sub text2html {
 	    }
 	}
 	else {
-	    $misslink = $misslink . " " . $arg;
+	    $misslink = $misslink . " " . $argkey unless $opt ne "";
 	    if($using_chm){
 		if($opt ne "") {
 		    $opt =~ s/:.*$//o;
@@ -688,7 +689,7 @@ sub code2html {
 	    }
 	}
 	else{
-	    $misslink = $misslink . " " . $argkey;
+	    $misslink = $misslink . " " . $argkey unless $opt ne "";
 	    if($using_chm){
 		if($opt ne "") {
 		    $opt =~ s/:.*$//o;
