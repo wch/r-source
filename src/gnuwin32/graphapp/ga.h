@@ -89,6 +89,9 @@ rgb     myGetSysColor(int);
 
 /* clipboard.c */
 void    copytoclipboard(drawing src);
+int     copystringtoclipboard(char *str);
+int     getstringfromclipboard(char * str, int n);
+int     clipboardhastext();
 
 /* gimage.c */
 image  bitmaptoimage(bitmap bm);

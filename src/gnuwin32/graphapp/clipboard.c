@@ -57,3 +57,50 @@ void copytoclipboard(drawing sb)
     CloseClipboard();
     return;
 }
+
+int copystringtoclipboard(char *str)
+{
+    HGLOBAL hglb;
+    char *s;
+    int ll = strlen(str) + 1;
+
+    if (!(hglb = GlobalAlloc(GHND, ll))){
+        R_ShowMessage("Insufficient memory: cell not copied to the clipboard");
+	return 1;
+    }
+    if (!(s = (char *)GlobalLock(hglb))){
+        R_ShowMessage("Insufficient memory: cell not copied to the clipboard");
+	return 1;
+    }
+    strcpy(s, str);
+    GlobalUnlock(hglb);
+    if (!OpenClipboard(NULL) || !EmptyClipboard()) {
+        R_ShowMessage("Unable to open the clipboard");
+        GlobalFree(hglb);
+        return 1;
+    }
+    SetClipboardData(CF_TEXT, hglb);
+    CloseClipboard();
+    return 0;
+}
+
+int getstringfromclipboard(char * str, int n)
+{
+    HGLOBAL hglb;
+    char *pc;
+
+    if ( OpenClipboard(NULL) &&
+         (hglb = GetClipboardData(CF_TEXT)) &&
+         (pc = (char *)GlobalLock(hglb))) {
+	strncpy(str, pc, n);
+	str[n+1] = '\0';
+        GlobalUnlock(hglb);
+	CloseClipboard();
+	return 0;
+    } else return 1;
+}
+
+int clipboardhastext()
+{
+    return (int) IsClipboardFormatAvailable(CF_TEXT);
+}
