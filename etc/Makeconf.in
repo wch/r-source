@@ -49,9 +49,14 @@ ALL_CXXFLAGS = $(R_XTRA_CXXFLAGS) $(PKG_CXXFLAGS) $(CXXPICFLAGS) $(SHLIB_CXXFLAG
 ALL_FFLAGS = $(R_XTRA_FFLAGS) $(PKG_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 ALL_LIBS = $(PKG_LIBS) $(LIBPATHS) $(SHLIB_LIBADD) $(LIBR)
 
-.SUFFIXES:
-.SUFFIXES: .c .cc .cpp .C .f .o .lo
+ALL_CFLAGS_LO = $(ALL_CFLAGS)
+ALL_CXXFLAGS_LO = $(ALL_CXXLAGS)
+ALL_FFLAGS_LO = $(ALL_FFLAGS)
 
+.SUFFIXES:
+.SUFFIXES: .c .cc .cpp .C .d .f .lo .o
+
+@depend_rules_frag@
 .c.o:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
 @cc_o_lo_rules_frag@
@@ -61,4 +66,5 @@ ALL_LIBS = $(PKG_LIBS) $(LIBPATHS) $(SHLIB_LIBADD) $(LIBR)
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $@
 .C.o:
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $@
+@cxx_o_lo_rules_frag@
 @f77_rules_frag@
