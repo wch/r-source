@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.1.0 Under development (unstable) (June 7, 2000)
+Version 1.2.0 Under development (unstable) (July 20, 2000)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -151,6 +151,8 @@ Error in as.call(x) : invalid argument list
 > f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+[1] TRUE
+> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
 [1] TRUE
 > f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
 [1] TRUE
@@ -431,6 +433,8 @@ Error in as.call(x) : invalid argument list
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
 [1] TRUE
+> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+Error in y > 0 : comparison (6) is possible only for vector types
 > f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
 [1] TRUE
 > f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
@@ -710,6 +714,8 @@ Error in as.call(x) : illegal length 0 argument
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
 [1] TRUE
+> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+[1] TRUE
 > f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
 Error in as.complex.default(x) : (list) object cannot be coerced to vector type 15
 > f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
@@ -987,6 +993,8 @@ Error in as.call(x) : invalid argument list
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
 [1] TRUE
+> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+Error in y%%8 : non-numeric argument to binary operator
 > f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
 [1] TRUE
 > f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
@@ -1255,6 +1263,8 @@ Error in as.call(x) : invalid argument list
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
 [1] TRUE
+> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+Error in y%%8 : non-numeric argument to binary operator
 > f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
 [1] TRUE
 > f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
@@ -1523,6 +1533,8 @@ Error in as.call(x) : invalid argument list
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
 [1] TRUE
+> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+Error in y%%8 : non-numeric argument to binary operator
 > f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
 [1] TRUE
 > f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
@@ -1791,6 +1803,8 @@ IS: [1] TRUE
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
 [1] TRUE
+> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+Error in y%%8 : non-numeric argument to binary operator
 > f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
 [1] TRUE
 > f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
@@ -2062,6 +2076,11 @@ Error in dimnames<-.data.frame(*tmp*, value = list(n)) :
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
 [1] TRUE
+> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+Error in matrix(unlist(value, recursive = FALSE, use.names = FALSE), nrow = length(rn),  : 
+	negative extents to matrix
+In addition: Warning message: 
+">" not meaningful for factors in: Ops.factor(left, right) 
 > f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
 [1] TRUE
 > f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
@@ -2192,6 +2211,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.76 0.04 1.8 0 0 
+Time elapsed:  5.93 1.12 7.07 0 0 
 > 
 > 
