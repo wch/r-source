@@ -1017,6 +1017,7 @@ AC_OUTPUT(Makeconf
   src/library/lqs/DESCRIPTION
   src/library/lqs/Makefile
   src/library/lqs/src/Makefile
+  src/library/methods/DESCRIPTION
   src/library/methods/Makefile
   src/library/methods/src/Makefile
   src/library/modreg/DESCRIPTION
