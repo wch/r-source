@@ -2783,7 +2783,7 @@ void GPretty(double *lo, double *up, int *ndiv)
     while(ns*unit >= *lo *(1- DBL_EPSILON)) ns--;    ns++;
     while(nu*unit <= *up *(1+ DBL_EPSILON)) nu++;    nu--;
 #ifdef DEBUG_PLOT
-    REprintf("\t -> new (ns,nu) = (%d,%d)", ns,nu);
+    REprintf("\t -> new (ns,nu) = (%d,%d)\n", ns,nu);
 #endif
 
     nd0 = nu - ns;
