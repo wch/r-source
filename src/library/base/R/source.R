@@ -2,7 +2,8 @@ source <-
 function(file, local = FALSE, echo = verbose, print.eval = echo,
 	 verbose = getOption("verbose"),
 	 prompt.echo = getOption("prompt"),
-	 max.deparse.length = 150, chdir = FALSE)
+	 max.deparse.length = 150, chdir = FALSE,
+         encoding = getOption("encoding"))
 {
     eval.with.vis <-
 	function (expr, envir = parent.frame(),
@@ -24,7 +25,32 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	cat(sQuote("envir"), "chosen:")
 	print(envir)
     }
-    Ne <- length(exprs <- parse(n = -1, file = file))
+    if(is.character(file)) {
+        if(capabilities("iconv")) {
+            if(identical(encoding, "unknown")) {
+                enc <- utils::localeToCharset()
+                encoding <- enc[length(enc)]
+            } else enc <- encoding
+            if(length(enc) > 1) {
+                encoding <- NA
+                owarn <- options("warn"); options(warn = 2)
+                for(e in enc) {
+                    if(is.na(e)) next;
+                    zz <- file(file, encoding = e)
+                    res <- try(readLines(zz), silent = TRUE)
+                    close(zz)
+                    if(!inherits(res, "try-error")) { encoding <- e; break }
+                }
+                options(owarn)
+            }
+            if(is.na(encoding))
+                stop("unable to find a plausible encoding")
+            if(verbose) cat("encoding =", dQuote(encoding), "chosen\n")
+        }
+        file <- if(file == "") stdin()
+        else file(file, encoding = encoding)
+    }
+    Ne <- length(exprs <- .Internal(parse(file, n = -1, NULL, "?")))
     if (verbose)
 	cat("--> parsed", Ne, "expressions; now eval(.)ing them:\n")
     if (Ne == 0)

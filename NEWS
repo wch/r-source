@@ -226,8 +226,8 @@ INTERNATIONALIZATION
 	As the new specification is a character string and the old was
 	numeric, this should not cause incorrect operation.
 
-    o	New function localeToCharset() to find/guess encoding from the
-	locale name.
+    o	New function localeToCharset() to find/guess encoding(s) from
+	the locale name.
 
     o	nchar() returns the true number of bytes stored
 	(including any embedded nuls), this being 2 for missing
@@ -240,6 +240,11 @@ INTERNATIONALIZATION
     o	LC_MONETARY is set to the locale, which affects the result of
 	Sys.localeconv(), but nothing else in R itself.  (It could
 	affect addon packages.)
+
+    o	source() now has an 'encoding' argument which can be used to
+	make it try out various possible encodings.  This is made use
+	of by example() which will convert (non-UTF-8) Latin-1 example
+	files in a UTF-8 locale.
 
 
 UTILITIES

@@ -21,10 +21,8 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     }
     pkg <- basename(packagePath)
     lib <- dirname(packagePath)
-    ## experimental code
     zfile <- zip.file.extract(file, "Rex.zip")
     if(zfile != file) on.exit(unlink(zfile))
-    ## end of experimental code
     if(!file.exists(zfile)) {
 	warning(paste(sQuote(topic),
 		      "has a help file but no examples file"))
@@ -48,6 +46,11 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	    set.seed(1)
 	} else eval(setRNG)
     }
+    encoding <-
+        if(length(enc <- localeToCharset()) > 1)
+            c(enc[-length(enc)], "latin1")
+        else ""
     source(zfile, local, echo = echo, prompt.echo = prompt.echo,
-	   verbose = verbose, max.deparse.length = 250)
+	   verbose = verbose, max.deparse.length = 250,
+           encoding = encoding)
 }

@@ -36,7 +36,9 @@ example(topic, package = NULL, lib.loc = NULL,
   \item{prompt.echo}{character; gives the prompt to be used if
     \code{echo = TRUE}.}
 }
-\value{(the value of the last evaluated expression).}
+\value{
+  The value of the last evaluated expression.
+}
 \details{
   If \code{lib.loc} is not specified, the packages are searched for
   amongst those already loaded, then in the specified libraries.
@@ -60,7 +62,11 @@ example(topic, package = NULL, lib.loc = NULL,
       pages, but will be run both by the package checking tools,
       and the \code{example()} function.  This was previously
       \code{testonly}, and that form is still accepted.}
-    }
+  }
+
+  If the examples file contains non-ASCII characters the encoding used
+  will matter.  If in a UTF-8 locale \code{example} first tries UTF-8
+  and then Latin-1.
 }
 \note{
   The examples can be many small files.  On some file systems it is
