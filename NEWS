@@ -97,6 +97,10 @@ BUG FIXES
     o	Options by = "month" and "year" to seq.POSIXt() take account
 	of changes to/from daylight savings time.
 
+    o	match, unique and duplicated were not declaring all NaNs to be
+	equal, yet not always distinguishing NA and NaN.  This was
+	very rare except for data imported as binary numbers.
+
 
 
 	**************************************************

@@ -75,6 +75,9 @@ static int rhash(SEXP x, int indx)
     /* There is a problem with signed 0s under IEEE */
     double tmp = (REAL(x)[indx] == 0.0) ? 0.0 : REAL(x)[indx];
     /* need to use both 32-byte chunks or endianness is an issue */
+#ifdef IEEE_754 /* otherwise always false */
+    if (R_IsNaN(tmp)) tmp = R_NaN; /* we want all NaNs except NA equal */
+#endif
     if (sizeof(double) >= sizeof(unsigned int)*2) {
 	union foo tmpu;
 	tmpu.d = tmp;
@@ -89,6 +92,10 @@ static int chash(SEXP x, int indx)
     unsigned int u;
     tmp.r = (COMPLEX(x)[indx].r == 0.0) ? 0.0 : COMPLEX(x)[indx].r;
     tmp.i = (COMPLEX(x)[indx].i == 0.0) ? 0.0 : COMPLEX(x)[indx].i;
+#ifdef IEEE_754 /* otherwise always false */
+    if (R_IsNaN(tmp.r)) tmp.r = R_NaN; /* we want all NaNs except NA equal */
+    if (R_IsNaN(tmp.i)) tmp.i = R_NaN;
+#endif
     if (sizeof(double) >= sizeof(unsigned int)*2) {
 	union foo tmpu;
 	tmpu.d = tmp.r;
@@ -116,29 +123,34 @@ static int iequal(SEXP x, int i, SEXP y, int j)
     return (INTEGER(x)[i] == INTEGER(y)[j]);
 }
 
+/* BDR 2002-1-17  We don't want NA and other NaNs to be equal */
 static int requal(SEXP x, int i, SEXP y, int j)
 {
-    if (!ISNAN(REAL(x)[i]) && !ISNAN(REAL(y)[j])) {
+    if (!ISNAN(REAL(x)[i]) && !ISNAN(REAL(y)[j]))
 	return (REAL(x)[i] == REAL(y)[j]);
-    }
-    else if (ISNAN(REAL(x)[i]) && ISNAN(REAL(y)[j])) {
-	return 1;
-    }
-    return 0;
+    else if (R_IsNA(REAL(x)[i]) && R_IsNA(REAL(y)[j])) return 1;
+#ifdef IEEE_754 /* otherwise always false */
+    else if (R_IsNaN(REAL(x)[i]) && R_IsNaN(REAL(y)[j])) return 1;
+#endif
+    else return 0;
 }
 
 static int cequal(SEXP x, int i, SEXP y, int j)
 {
     if (!ISNAN(COMPLEX(x)[i].r) && !ISNAN(COMPLEX(x)[i].i)
-       && !ISNAN(COMPLEX(y)[j].r) && !ISNAN(COMPLEX(y)[j].i)) {
+       && !ISNAN(COMPLEX(y)[j].r) && !ISNAN(COMPLEX(y)[j].i))
 	return COMPLEX(x)[i].r == COMPLEX(y)[j].r &&
 	    COMPLEX(x)[i].i == COMPLEX(y)[j].i;
-    }
-    else if ((ISNAN(COMPLEX(x)[i].r) || ISNAN(COMPLEX(x)[i].i))
-	    && (ISNAN(COMPLEX(y)[j].r) || ISNAN(COMPLEX(y)[j].i))) {
+    else if ((R_IsNA(COMPLEX(x)[i].r) || R_IsNA(COMPLEX(x)[i].i))
+	    && (R_IsNA(COMPLEX(y)[j].r) || R_IsNA(COMPLEX(y)[j].i)))
 	return 1;
-    }
-    return 0;
+#ifdef IEEE_754 /* otherwise always false */
+    else if ((R_IsNaN(COMPLEX(x)[i].r) || R_IsNaN(COMPLEX(x)[i].i))
+	    && (R_IsNaN(COMPLEX(y)[j].r) || R_IsNaN(COMPLEX(y)[j].i)))
+	return 1;
+#endif
+    else 
+	return 0;
 }
 
 static int sequal(SEXP x, int i, SEXP y, int j)
