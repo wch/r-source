@@ -112,6 +112,11 @@ static void linerel(double dx, double dy, DevDesc *dd) {
     currY += dy;
 }
 
+/* e.g. for some Windows headers */
+#ifndef M_PI
+#define M_PI		3.141592653589793238462643383279502884197169399375
+#endif
+
 static void _draw_stroke (DevDesc *dd, bool pendown, double deltax, double deltay)
 {
   double dx, dy;
