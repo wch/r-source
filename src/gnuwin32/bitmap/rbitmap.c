@@ -399,12 +399,12 @@ int R_SaveAsBmp(void  *d, int width, int height,
   }
   /* Compute some part of the header */
   if (withpalette) {
-    bfOffBits = HEADERSIZE + 4 * 256;
+    bfOffBits = HEADERSIZE + 4 * 256; 
     bfSize = bfOffBits + width * height ;
     biBitCount = 8;
     biClrUsed = 256;
   } else {
-    bfOffBits = HEADERSIZE ;
+    bfOffBits = HEADERSIZE + 4;
     bfSize = bfOffBits + 3 * width * height ;
     biBitCount = 24;
     biClrUsed = 0;
@@ -427,7 +427,7 @@ int R_SaveAsBmp(void  *d, int width, int height,
   BMPDW(biClrUsed); /* biClrUsed */
   BMPDW(0) ; /* biClrImportant All colours are important */
 
-  /* and now the pixels */
+  /* and now the image */
   if (withpalette) {
     /* 8 bit image; write the palette */
     for ( i=0; i<256; i++) {
@@ -461,7 +461,7 @@ int R_SaveAsBmp(void  *d, int width, int height,
     for ( pad=0 ; ((3*width+pad) & 3) != 0; pad++); /*padding*/    
     for (i=height-1 ; i>=0 ; i--) { 
       for ( j=0 ; j<width ; j++) {
-	col = gp(d, i, j);
+	col = gp(d, i, j)&0xFFFFFFUL;
 	BMPPUTC(GETBLUE(col));
 	BMPPUTC(GETGREEN(col));
 	BMPPUTC(GETRED(col));
