@@ -1,4 +1,4 @@
-chol <- function(x, pivot = FALSE)
+chol <- function(x, pivot = FALSE, LINPACK = pivot)
 {
     if (is.complex(x))
         stop("complex matrices not permitted at present")
@@ -15,6 +15,7 @@ chol <- function(x, pivot = FALSE)
 	    stop("non-matrix argument to chol")
 	n <- as.integer(1)
     }
+    if(!pivot && !LINPACK) return(.Call("La_chol", x, PACKAGE = "base"))
 
     if(!is.double(x)) storage.mode(x) <- "double"
 
@@ -52,10 +53,12 @@ chol <- function(x, pivot = FALSE)
     }
 }
 
-chol2inv <- function(x, size=ncol(x))
+chol2inv <- function(x, size=NCOL(x), LINPACK=FALSE)
 {
     if(!is.numeric(x))
 	stop("non-numeric argument to chol2inv")
+    if(!LINPACK) return(La.chol2inv(x, size))
+
     if(is.matrix(x)) {
 	nr <- nrow(x)
 	nc <- ncol(x)

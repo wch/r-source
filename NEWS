@@ -11,7 +11,7 @@
 
 USER-VISIBLE CHANGES
 
-    o	eigen() and svd() now use LAPACK routines unless a new
+    o	chol(), eigen() and svd() now use LAPACK routines unless a new
 	back-compatibility option is turned on.	 The signs and
 	normalization of eigen/singular vectors may change from
 	earlier versions.
@@ -260,6 +260,11 @@ NEW FEATURES
     o	%*% and crossprod() for complex arguments make use of BLAS
 	routines and so may be much faster on some platforms.
 
+    o	chol() and chol2inv() now use LAPACK routines by default.
+
+    o	La.chol() and La.chol2inv() now give interpretable error
+	messages rather than LAPACK error codes.
+
 
 INSTALLATION CHANGES
 
@@ -468,6 +473,8 @@ BUG FIXES
 	searching base before the workspace.
 
     o	crossprod(Z) for complex Z was returning nonsense.
+
+    o	La.chol2inv() gave incorrect results unless the matrix was square.
 
 
 

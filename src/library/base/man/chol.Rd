@@ -7,12 +7,14 @@
   positive-definite square matrix.
 }
 \usage{
-chol(x, pivot = FALSE)
+chol(x, pivot = FALSE,  LINPACK = pivot)
 La.chol(x)
 }
 \arguments{
   \item{x}{a real symmetric, positive-definite matrix}
   \item{pivot}{Should pivoting be used?}
+  \item{LINPACK}{logical. Should LINPACK be used (for compatibility with
+    \R < 1.7.0)?}
 }
 \value{
   The upper triangular factor of the Choleski decomposition, i.e., the
@@ -22,7 +24,7 @@ La.chol(x)
   \code{"pivot"} and \code{"rank"} are also returned.
 }
 \details{
-  \code{chol} provides an interface to the LINPACK routine DCHDC.
+  \code{chol(pivot = TRUE)} provides an interface to the LINPACK routine DCHDC.
   \code{La.chol} provides an interface to the LAPACK routine DPOTRF.
 
   Note that only the upper triangular part of \code{x} is used, so
@@ -74,8 +76,7 @@ La.chol(x)
 ( m <- matrix(c(5,1,1,3),2,2) )
 ( cm <- chol(m) )
 t(cm) \%*\% cm  #-- = 'm'
-( Lcm <- La.chol(m) )
-crossprod(Lcm)  #-- = 'm'
+crossprod(cm)  #-- = 'm'
 
 # now for something positive semi-definite
 x <- matrix(c(1:5, (1:5)^2), 5, 2)

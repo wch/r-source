@@ -7,7 +7,7 @@
   decomposition.
 }
 \usage{
-chol2inv(x, size = ncol(x))
+chol2inv(x, size = ncol(x), LINPACK = FALSE)
 La.chol2inv(x, size = ncol(x))
 }
 \arguments{
@@ -15,13 +15,15 @@ La.chol2inv(x, size = ncol(x))
     contain the Choleski decomposition of the matrix to be inverted.}
   \item{size}{the number of columns of \code{x} containing the
     Choleski decomposition.}
+  \item{LINPACK}{logical. Should LINPACK be used (for compatibility with
+    \R < 1.7.0)?}
 }
 \value{
   The inverse of the decomposed matrix.
 }
 \details{
-  \code{chol} provides an interface to the LINPACK routine DPODI.
-  \code{La.chol} provides an interface to the LAPACK routine DPOTRI.
+  \code{chol2inv(LINPACK=TRUE)} provides an interface to the LINPACK routine DPODI.
+  \code{La.chol2inv} provides an interface to the LAPACK routine DPOTRI.
 }
 \references{
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
