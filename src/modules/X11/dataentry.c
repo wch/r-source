@@ -19,7 +19,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8-FIXME> works at byte not character level */
+/* <UTF8> used XTextWidth and XDrawText, so need to use fontsets */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -56,7 +56,7 @@ typedef enum {UNKNOWNN, NUMERIC, CHARACTER} CellType;
 SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho);
 
 /* Local Function Definitions */
- 
+
 static void advancerect(DE_DIRECTION);
 static int  CheckControl(DEEvent*);
 static int  CheckShift(DEEvent*);
@@ -91,7 +91,7 @@ static void printrect(int, int);
 static void printstring(char*, int, int, int, int);
 static void printelt(SEXP, int, int, int);
 static void RefreshKeyboardMapping(DEEvent*);
- 
+
 /* Functions to hide Xlib calls */
 static void bell(void);
 static void cleararea(int, int, int, int);
@@ -115,7 +115,7 @@ static SEXP ssNA_STRING;
 static double ssNA_REAL;
 
 /* Global variables needed for the graphics */
- 
+
 static int box_w;                       /* width of a box */
 static int boxw[100];
 static int box_h;                       /* height of a box */
@@ -137,7 +137,7 @@ static char *bufp;
 static int bwidth;			/* width of the border */
 static int hwidth;			/* width of header  */
 static int text_offset;
- 
+
 static SEXP ssNewVector(SEXPTYPE, int);
 static SEXP ssNA_STRING;
 static double ssNA_REAL;
@@ -148,25 +148,31 @@ static Rboolean newcol, CellModified;
 static int nboxchars;
 static int xmaxused, ymaxused;
 static int box_coords[6];
-static char copycontents[30] = "";
+static char copycontents[sizeof(buf)+1] ;
 static int labdigs=4;
 static char labform[6];
 
 
 /* Xwindows Globals */
- 
+
 static Display          *iodisplay;
 static Window           iowindow, menuwindow, menupanes[4];
 static GC               iogc;
 static XSizeHints       iohint;
-static char             *font_name="9x15";
 static XFontStruct      *font_info;
+static char             *font_name="9x15";
+#ifdef SUPPORT_UTF8
+static XFontSet         font_set;
+static XFontStruct	**fs_list;
+static int		font_set_cnt;
+static char             *fontset_name="-alias-fixed-medium-r-normal--10-";
+#endif
 
 #define mouseDown 	ButtonPress
 #define keyDown		KeyPress
 #define activateEvt	MapNotify
 #define updateEvt	Expose
-  
+
 #ifndef max
 #define max(a, b) (((a)>(b))?(a):(b))
 #endif
@@ -180,11 +186,11 @@ static XFontStruct      *font_info;
 
   The data are stored in a list `work', with unused columns having
   NULL entries.  The names for the list are in `names', which should
-  have a name for all displayable columns (up to xmaxused). 
+  have a name for all displayable columns (up to xmaxused).
   The *used* lengths of the columns are in `lens': this needs only be
   set for non-NULL columns.
 
-  If the list was originally length(0), that should work with 
+  If the list was originally length(0), that should work with
   0 pre-defined rows.  (It used to have 1 pre-defined numeric column.)
 
   All row and col numbers are 1-based.
@@ -311,7 +317,7 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    errorcall(call, "invalid type for value");
 	else {
 	    if (TYPEOF(VECTOR_ELT(work, i)) != type)
-		SET_VECTOR_ELT(work, i, 
+		SET_VECTOR_ELT(work, i,
 			       coerceVector(VECTOR_ELT(work, i), type));
 	}
     }
@@ -374,7 +380,7 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
 
-    setAttrib(work2, R_NamesSymbol, names);    
+    setAttrib(work2, R_NamesSymbol, names);
     UNPROTECT(nprotect);
     return work2;
 }
@@ -713,7 +719,7 @@ static void drawelt(int whichrow, int whichcol)
     } else {
 	if (xmaxused >= whichcol + colmin - 1) {
 	    tmp = VECTOR_ELT(work, whichcol + colmin - 2);
-	    if (!isNull(tmp) && (i = rowmin + whichrow - 2) < 
+	    if (!isNull(tmp) && (i = rowmin + whichrow - 2) <
 		INTEGER(lens)[whichcol + colmin - 2] )
 		printelt(tmp, i, whichrow, whichcol);
 	} else
@@ -882,7 +888,7 @@ static void closerect(void)
 		if (newcol & warn) {
 		    /* change mode to character */
 		    SET_VECTOR_ELT(work, wcol - 1, coerceVector(cvec, STRSXP));
-		    SET_STRING_ELT(VECTOR_ELT(work, wcol - 1), wrow - 1, 
+		    SET_STRING_ELT(VECTOR_ELT(work, wcol - 1), wrow - 1,
 				   mkChar(buf));
 		}
 	    } else {
@@ -1089,7 +1095,7 @@ static int findcell(void)
 	    else if (i == 3) pastecell(crow, ccol);
 	    return 0;
 	}
-	    
+
 
 	/* see if it is in the row labels */
 	if (xw < bwidth + boxw[0]) {
@@ -1126,7 +1132,7 @@ static int findcell(void)
     }
     if (keys & Button2Mask) { /* Paste */
 	int row, col = 0;
-	
+
 	if (yw < hwidth + bwidth || xw < bwidth + boxw[0]) return 0;
 
 	/* translate to box coordinates */
@@ -1198,7 +1204,7 @@ static void doSpreadKey(int key, DEEvent * event)
 
     if (CheckControl(event))
 	doControl(event);
-    else if ((iokey == XK_Return)  || (iokey == XK_KP_Enter) || 
+    else if ((iokey == XK_Return)  || (iokey == XK_KP_Enter) ||
 	     (iokey == XK_Linefeed)|| (iokey == XK_Down))
 	advancerect(DOWN);
     else if (iokey == XK_Left)
@@ -1371,16 +1377,45 @@ static Rboolean initwin(void) /* TRUE = Error */
     XSetWindowAttributes winattr;
     XWindowAttributes attribs;
 
-    if ((iodisplay = XOpenDisplay(NULL)) == NULL) 
+    strcpy(copycontents, "");
+
+#ifdef SUPPORT_UTF8
+    if (!XSupportsLocale ()) 
+	warning("locale not supported by Xlib: some X ops will operate in C locale");
+    if (!XSetLocaleModifiers ("")) warning("X cannot set locale modifiers");
+#endif
+
+    if ((iodisplay = XOpenDisplay(NULL)) == NULL) {
+	warning("unable to open display");
 	return TRUE;
+    }
     XSetErrorHandler(R_X11Err);
     XSetIOErrorHandler(R_X11IOErr);
 
     /* Get Font Loaded if we can */
 
-    font_info = XLoadQueryFont(iodisplay, font_name);
-    if (font_info == NULL) 
-	return TRUE; /* ERROR */
+#ifdef SUPPORT_UTF8
+    if(utf8locale) {
+	int  missing_charset_count;
+	char **missing_charset_list;
+	char *def_string;
+	font_set = XCreateFontSet(iodisplay, fontset_name, 
+				  &missing_charset_list, 
+				  &missing_charset_count, &def_string);
+	if (missing_charset_count) XFreeStringList(missing_charset_list);
+	if (font_set == NULL) {
+	    warning("unable to create fontset %s", fontset_name);
+	    return TRUE; /* ERROR */
+	}
+    } else
+#endif
+    {
+	font_info = XLoadQueryFont(iodisplay, font_name);
+	if (font_info == NULL) {
+	    warning("unable to losd font %s", font_name);
+	    return TRUE; /* ERROR */
+	}
+    }
 
     /* find out how wide the input boxes should be and set up the
        window size defaults */
@@ -1391,9 +1426,21 @@ static Rboolean initwin(void) /* TRUE = Error */
     twidth = textwidth(digits, strlen(digits));
     if (nboxchars > 0) twidth = (twidth * nboxchars)/10;
     box_w = twidth + 4;
-    box_h = font_info->max_bounds.ascent
-	+ font_info->max_bounds.descent + 4;
-    text_offset = 2 + font_info->max_bounds.descent;
+#ifdef SUPPORT_UTF8
+    if(utf8locale) {
+	XFontSetExtents *extent = XExtentsOfFontSet(font_set);
+	char **ml;
+	box_h = (extent->max_logical_extent.height)
+	    + (extent->max_logical_extent.height / 5) + 4;
+	font_set_cnt = XFontsOfFontSet(font_set, &fs_list, &ml);
+	text_offset = 2 + fs_list[0]->max_bounds.descent;
+    } else
+#endif
+    {
+	box_h = font_info->max_bounds.ascent
+	    + font_info->max_bounds.descent + 4;
+	text_offset = 2 + font_info->max_bounds.descent;
+    }
     windowHeight = 26 * box_h + hwidth + 2;
     /* this used to presume 4 chars sufficed for row numbering */
     labdigs = max(3, 1+floor(log10((double)ymaxused)));
@@ -1437,8 +1484,10 @@ static Rboolean initwin(void) /* TRUE = Error */
 	iohint.height,
 	bwidth,
 	ioblack,
-	iowhite)) == 0)
+	iowhite)) == 0) {
+	warning("unable to open window for data editor");
 	return TRUE;
+    }
 
     XSetStandardProperties(iodisplay, iowindow, ioname, ioname, None,
 			   (char **)NULL, 0, &iohint);
@@ -1454,7 +1503,13 @@ static Rboolean initwin(void) /* TRUE = Error */
 
 
     iogc = XCreateGC(iodisplay, iowindow, 0, 0);
-    XSetFont(iodisplay, iogc, font_info->fid);
+#ifdef SUPPORT_UTF8
+    if(utf8locale) {
+	for(i = 0; i < font_set_cnt; i++)
+	    XSetFont(iodisplay, iogc, fs_list[i]->fid);
+    } else
+#endif
+	XSetFont(iodisplay, iogc, font_info->fid);
     XSetBackground(iodisplay, iogc, iowhite);
     XSetForeground(iodisplay, iogc, BlackPixel(iodisplay,
 					       DefaultScreen(iodisplay)));
@@ -1562,8 +1617,13 @@ static void drawrectangle(int xpos, int ypos, int width, int height,
 
 static void drawtext(int xpos, int ypos, char *text, int len)
 {
-    XDrawImageString(iodisplay, iowindow, iogc, xpos,
-		     ypos, text, len);
+#ifdef SUPPORT_UTF8
+    if(utf8locale)
+	Xutf8DrawImageString(iodisplay, iowindow, font_set, iogc, xpos, ypos,
+			     text, len);
+    else
+#endif
+	XDrawImageString(iodisplay, iowindow, iogc, xpos, ypos, text, len);
     Rsync();
 }
 
@@ -1574,10 +1634,11 @@ static void Rsync()
 
 static int textwidth(char *text, int nchar)
 {
-    int t1;
-
-    t1 = XTextWidth(font_info, text, nchar);
-    return t1;
+#ifdef SUPPORT_UTF8
+    if(utf8locale)
+	return Xutf8TextEscapement(font_set, text, nchar);
+#endif
+    return XTextWidth(font_info, text, nchar);
 }
 
 /* Menus */
@@ -1647,19 +1708,19 @@ void popupmenu(int x_pos, int y_pos, int col, int row)
 		    bell();
 		    break;
 		case 1:
-		    if (isNull(tvec)) 
-			SET_VECTOR_ELT(work, popupcol - 1, 
+		    if (isNull(tvec))
+			SET_VECTOR_ELT(work, popupcol - 1,
 				       ssNewVector(REALSXP, 100));
 		    else
 			SET_VECTOR_ELT(work, popupcol - 1,
 				       coerceVector(tvec, REALSXP));
 		    goto done;
 		case 2:
-		    if (isNull(tvec)) 
-			SET_VECTOR_ELT(work, popupcol - 1, 
+		    if (isNull(tvec))
+			SET_VECTOR_ELT(work, popupcol - 1,
 				       ssNewVector(STRSXP, 100));
 		    else
-			SET_VECTOR_ELT(work, popupcol - 1, 
+			SET_VECTOR_ELT(work, popupcol - 1,
 				       coerceVector(tvec, STRSXP));
 		    goto done;
 		case 3:
@@ -1698,7 +1759,7 @@ static void copycell(void)
 {
     int i, whichrow = crow + colmin - 1, whichcol = ccol + colmin -1;
     SEXP tmp;
-    
+
     if (whichrow == 0) {
 	/* won't have  cell here */
     } else {
