@@ -75,7 +75,7 @@ void Rstd_Suicide(char *s)
 
 
 
-#include "eventloop.h"
+#include "R_ext/eventloop.h"
 
 /*
    This oject is used for the standard input and its file descriptor
