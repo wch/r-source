@@ -2,15 +2,18 @@
 % copyright (C) 1998 B. D. Ripley
 %
 \name{step}
+\alias{step}
 \title{
 Choose a model by AIC in a Stepwise Algorithm
+}
+\description{
+  Select a formula-based model by AIC.
 }
 \usage{
 step(object, scope, scale = 0,
      direction = c("both", "backward", "forward"), 
      trace = 1, keep = NULL, steps = 1000, k = 2, \dots)
 }
-\alias{step}
 \arguments{
   \item{object}{
     an object representing a model of an appropriate class (mainly
@@ -31,8 +34,8 @@ step(object, scope, scale = 0,
   \item{direction}{
     the mode of stepwise search, can be one of \code{"both"},
     \code{"backward"}, or \code{"forward"}, with a default of \code{"both"}. 
-    If the \code{scope} argument is missing (or the initial model is the
-    upper model) the default for \code{direction} is \code{"backward"}.
+    If the \code{scope} argument is missing the default for
+    \code{direction} is \code{"backward"}.
   }
   \item{trace}{
     if positive, information is printed during the running of \code{step}.
@@ -68,9 +71,6 @@ step(object, scope, scale = 0,
   deviance only in cases where a saturated model is well-defined
   (thus excluding \code{lm}, \code{aov} and \code{survreg} fits,
   for example).
-}
-\description{
-  Select a formula-based model by AIC.
 }
 \details{
   \code{step} uses \code{\link{add1}} and \code{\link{drop1}}

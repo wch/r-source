@@ -122,7 +122,7 @@ DEPRECATED & DEFUNCT
 
     o	piechart() is defunct.
 
-    o	print.ordered() has been removed, so print.factor() is used,
+    o	print.ordered() has been removed, so print.factor() is used.
 
 
 DOCUMENTATION CHANGES
@@ -177,6 +177,9 @@ BUG FIXES
 
     o   Using Q to exit a browser invoked at the top-level could lead to
 	the browser being invoked on all future top-level loops (PR#1721)
+
+    o   step(fit, direction="both") now uses both directions even if 
+	no scope is supplied.
 
 
 

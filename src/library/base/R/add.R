@@ -520,11 +520,12 @@ step <- function(object, scope, scale = 0,
         tmp <- paste("~", paste(tmp, collapse = " + "))
         form <- formula(object) # some formulae have no lhs
         tmp <- if(length(form) > 2) paste(deparse(form[[2]]), tmp)
+        ## must be as.character as deparse gives spurious ()
 	if (length(offset <- attr(tt, "offset")))
-	    tmp <- paste(tmp, deparse(attr(tt, "variables")[offset + 1]),
+	    tmp <- paste(tmp, as.character(attr(tt, "variables")[offset + 1]),
 			 sep = " + ")
-	form<-formula(tmp)
-        environment(form)<-environment(tt)
+	form <- formula(tmp)
+        environment(form) <- environment(tt)
         form
     }
     mydeviance <- function(x, ...)
@@ -553,6 +554,7 @@ step <- function(object, scope, scale = 0,
 	change <- sapply(models, "[[", "change")
 	rd <- sapply(models, "[[", "deviance")
 	dd <- c(NA, diff(rd))
+        dd <- c(NA, abs(diff(rd)))
 	rdf <- sapply(models, "[[", "df.resid")
 	ddf <- c(NA, diff(rdf))
 	AIC <- sapply(models, "[[", "AIC")
@@ -580,13 +582,14 @@ step <- function(object, scope, scale = 0,
     object$call$formula <- object$formula
     attributes(Terms) <- attributes(object$terms)
     object$terms <- Terms
-    ## not needed: if(missing(direction)) direction <- "both" else
+    md <- missing(direction)
     direction <- match.arg(direction)
     backward <- direction == "both" | direction == "backward"
     forward  <- direction == "both" | direction == "forward"
     if(missing(scope)) {
 	fdrop <- numeric(0)
-	fadd <- NULL
+        fadd <- attr(Terms, "factors")
+        if(md) forward <- FALSE
     }
     else {
 	if(is.list(scope)) {
@@ -601,10 +604,6 @@ step <- function(object, scope, scale = 0,
 		attr(terms(update.formula(object, scope)), "factors")
 	    fdrop <- numeric(0)
 	}
-    }
-    if(is.null(fadd)) {
-	backward <- TRUE
-	forward <- FALSE
     }
     models <- vector("list", steps)
     if(!is.null(keep)) {
@@ -686,7 +685,7 @@ step <- function(object, scope, scale = 0,
 		cut.string(deparse(as.vector(formula(fit)))), "\n\n")
 	if(bAIC >= AIC) break
 	nm <- nm + 1
-	edf <- models[[nm]] <-
+	models[[nm]] <-
 	    list(deviance = mydeviance(fit), df.resid = n - edf,
 		 change = change, AIC = bAIC)
 	if(!is.null(keep)) keep.list[[nm]] <- keep(fit, bAIC)
