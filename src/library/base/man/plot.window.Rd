@@ -43,4 +43,5 @@ abline(h=pretty(rx, 10),
        v=pretty(ry, 10), col= "lightgray")
 text(x, y, names(eurodist), cex=0.5)
 \testonly{detach("package:mva")}
+}
 \keyword{aplot}
