@@ -1428,7 +1428,7 @@ all data after that point is lost.
 @cindex Hierarchical Data Format
 @cindex network Common Data Form
 
-Packages @pkg{hdf5} and @pkg{netCDF} in the Devel area on @acronym{CRAN}
+Packages @pkg{hdf5} (in the Devel area) and @pkg{netCDF} on @acronym{CRAN}
 provide experimental interfaces to @acronym{NASA}'s HDF5 (Hierarchical
 Data Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's
 netCDF data files (network Common Data Form, see
