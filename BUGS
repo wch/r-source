@@ -258,23 +258,15 @@ Date: Wed, 21 Apr 1999 19:39:53 +0200
 Subject: R won't compile on Redhat 5.2
 From: pgutwin@us.ibm.com
 Date: Fri, 23 Apr 1999 20:08:55 +0200 (MET DST)
-* PR# 178 *
-Subject: Multivariate ts -- arithmetic bug [ for SOME time-series ]
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 27 Apr 1999 19:33:18 +0200
-* PR# 179 *
-Subject: Problems with setting .Random.seed
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Thu, 29 Apr 1999 09:49:19 +0100 (BST)
 * PR# 180 *
 Subject: nlm on a function in the Math group
 From: Douglas Bates <bates@stat.wisc.edu>
 Date: Thu, 29 Apr 1999 17:11:00 -0500 (CDT)
-* PR# 181 *
-Subject: polygon() help file
-From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
-Date: Fri, 30 Apr 1999 09:49:26 +0100 (BST)
-* PR# 182 *
-Subject: par help page  errors
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Fri, 30 Apr 1999 18:58:30 +0200 (CEST)
+* PR# 183 *
+Subject: compilation of R-0.63.3 on alpha
+From: a.o.jaunsen@astro.uio.no
+Date: Mon, 03 May 1999 11:28:31 +0200
+* PR# 184 *
+Subject: parse error in terms
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Mon, 3 May 1999 19:43:00 +0200 (MET DST)
