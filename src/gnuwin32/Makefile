@@ -33,11 +33,9 @@ else
 endif
 
 R-DLLFLAGS = -mwindows
-R-DLLLIBS =-L. $(FLIBS) -lcomctl32 -lversion
-ifeq ($(strip $(USE_ATLAS)),YES)
-FLIBS +=-L$(ATLAS_PATH) -lcblas -lf77blas -latlas
-endif
-SOURCES = $(filter-out malloc.c,$(wildcard *.c *.f))
+R-DLLLIBS =-L. $(FLIBS) -lcomctl32 -lversion -lRblas
+FLIBS+=-lRblas
+SOURCES = $(filter-out malloc.c blas00.c,$(wildcard *.c *.f))
 OBJS = $(SOURCES:.c=.o)
 MAINLIBS = libmain.a libappl.a libmath.a
 EXTRALIBS = ga.a gl.a xdr.a em.a bitmap/zlib/libz.a
@@ -62,8 +60,9 @@ tcl:
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS = $(OPTFLAGS)
 
-rbuild: fixfiles rlibs makeMakedeps ../../bin/R.dll libR.a \
-	 CHTML front-ends COPYRIGHTS rmodules
+## watch out: R.dll and Rblas.dll depend on each other.
+rbuild: fixfiles rlibs makeMakedeps libRblas.a ../../bin/R.dll libR.a \
+	 ../../bin/Rblas.dll CHTML front-ends COPYRIGHTS rmodules
 
 rpackage: fixed/fixdesc ../../library/R.css
 	$(MAKE) STAMP=NO $(PKGS)
@@ -72,7 +71,7 @@ rinstaller:
 	$(MAKE) -C installer RPREFIX=$(RPREFIX)
 
 rlibs:
-	$(MAKE) -C ../appl  OPTFLAGS='$(OPTFLAGS)' USE_ATLAS=$(USE_ATLAS) -f Makefile.win
+	$(MAKE) -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) -C ../main  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) -C ./graphapp
@@ -82,7 +81,7 @@ rlibs:
 
 rmodules: libRm.a
 	$(MAKE) -C ../modules OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' \
-	  USE_ATLAS=$(USE_ATLAS) ATLAS_PATH=$(ATLAS_PATH) -f Makefile.win
+	  -f Makefile.win
 
 COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
@@ -107,7 +106,7 @@ Rdll: makeMakedeps ../../bin/R.dll
 	$(MKDIR) -p ../../bin
 	$(CP) R.dll ../../bin/
 
-front-ends: libRm.a
+front-ends: libR.a
 	$(MAKE) -C front-ends
 
 R.a: $(OBJS)
@@ -118,7 +117,6 @@ R.a: $(OBJS)
 
 # R.dll exports all global symbols BUT import library (libR.a)
 # only (all functions) + (global vars listed in exported-vars))
-# Only used in the cross-compilation case.
 
 libR.a:  R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
@@ -133,19 +131,16 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 	$(CAT) exported-vars >> $@
 	$(RM) RDefs
 
-# A version needed for the modules that uses R.dll's malloc/.../free
-# Used in all cases.
-# Also used for front-ends, as import from R.dll seems to fail
-
+# An additional import library needed for the modules that uses R.dll's malloc/.../free
 libRm.a:  Rm.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def Rm.exp --output-lib libRm.a
 
 Rm.exp: Rm.exp1
 	(diff Rm.exp Rm.exp1 > /dev/null) || $(CP) Rm.exp1 Rm.exp
 
-Rm.exp1: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) exported-vars
+Rm.exp1: $(OBJS-EXTRA)
 	$(ECHO) EXPORTS > $@
-	$(NM) R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) > RDefs
+	$(NM) $(OBJS-EXTRA) > RDefs
 	$(SED) -n '/^........ [T] _/s/^........ [T] _/ /p' RDefs >> $@
 	$(CAT) exported-vars >> $@
 	$(RM) RDefs
@@ -158,6 +153,41 @@ bitmap/zlib/libz.a:
 
 rdocs:
 	@$(MAKE) -C ../../doc/manual -f Makefile.win html
+
+
+#                          ===== BLAS ======
+
+Rblas: ../../bin/Rblas.dll
+
+Rblas-clean:
+	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o blas2.o cmplxblas.o
+
+Rblas-DLLLIBS=-L. -lR
+
+libRblas.a:  Rblas.def
+	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname Rblas.dll \
+	  --def Rblas.def --output-lib libRblas.a
+
+ifeq ($(strip $(USE_ATLAS)),YES)
+../../bin/Rblas.dll: blas00.o
+	@$(ECHO) -------- Building $@ --------
+	gcc -shared -o $@ blas00.o Rblas.def -L $(ATLAS_PATH) \
+	   -L. -lR -lg2c -lf77blas -lcblas -latlas
+## suppress lots of warnings: this is a dummy
+blas00.o: blas00.c
+	$(CC) -O2  -c $< -o $@
+else
+../../bin/Rblas.dll: blas.o blas2.o cmplxblas.o
+	@$(ECHO) -------- Building $@ --------
+	gcc -shared -o $@ Rblas.def $^ -L. -lR
+
+blas.o: ../appl/blas.f
+	$(F77) $(FFLAGS) -c $< -o $@
+blas2.o: ../modules/lapack/blas2.f
+	$(F77) $(FFLAGS) -c $< -o $@
+cmplxblas.o: ../modules/lapack/cmplxblas.f
+	$(F77) $(FOPTFLAGS) -c $< -o $@
+endif
 
 
 #                          ===== Packages ======
