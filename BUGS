@@ -53,12 +53,6 @@ Date: Wed, 24 Mar 1999 15:48:41 +0100 (MET)
 
 Directory:  Graphics
 
-* PR# 38 *
-Subject: possible bugs
-From: Rashid Nassar <rnassar@acpub.duke.edu>
-Date: Sun, 6 Sep 1998 15:59:34 -0400 (EDT)
---ylim problem which appears solved
---Postscript overflow still with us (22feb99)
 * PR# 61 *
 Subject: points(...,  cex = ..)  is pretty wrong...
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -79,11 +73,6 @@ Date: Fri, 04 Dec 1998 11:42:50 -0000 ()
 Date: 04-Dec-98
 --Various anomalies with text size and alignment. 2B appears to be solved. The 
 --rest is still there (22feb99)
-* PR# 79 *
-Subject: apology: text(locator(),"sometext") works
-From: Rashid Nassar <rnassar@acpub.duke.edu>
-Date: Tue, 15 Dec 1998 19:45:29 -0500 (EST)
---Clipping discrepancy x11/PS
 * PR# 106 *
 Subject: border-arg. in persp
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
@@ -329,3 +318,38 @@ Date: Thu, 3 Jun 1999 14:09:04 +0100
 Subject: IE5 html help search failure
 From: Simon Fear <fears@roycastle.liv.ac.uk>
 Date: Thu, 3 Jun 1999 14:55:24 +0100 
+* PR# 206 *
+Subject: seg fault via text()
+From: P.Herkenrath@rrz.uni-koeln.de
+Date: Sat, 5 Jun 1999 16:18:42 +0200 (MET DST)
+* PR# 207 *
+Subject: Lines longer than ~1000 chars truncated at parsing
+From: msa@biostat.mgh.harvard.edu
+Date: Mon, 7 Jun 1999 22:27:10 +0200 (MET DST)
+* PR# 208 *
+Subject: R correct g77 flags for Linux/Alpha
+From: Naoki Takebayashi <ntakebay@bio.indiana.edu>
+Date: Tue, 8 Jun 1999 19:12:03 -0500 (EST)
+* PR# 209 *
+Subject: Compilation fails
+From: beimfohr@statistik.uni-dortmund.de
+Date: Thu, 10 Jun 1999 13:52:01 +0200 (MET DST)
+* PR# 210 *
+Subject: definition of R_problem_buf in S.h
+From: vogels@ieee.org
+Date: Mon, 14 Jun 1999 17:56:04 +0200 (MET DST)
+* PR# 211 *
+Subject: readline/history size
+From: seniorr@teleport.com
+Date: Tue, 15 Jun 1999 00:08:59 +0200 (MET DST)
+* PR# 212 *
+Subject: Re: save.image()
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 17 Jun 1999 11:29:01 +0200
+* PR# 213 *
+Subject: as.numeric with trailing spaces
+From: John.Peters@tip.csiro.au (John Peters)
+Date: Mon, 21 Jun 1999 09:25:37 +1000 (EST)
+* PR# 214 *
+From: Charles Taylor <charles@amsta.leeds.ac.uk>
+Date: Thu, 24 Jun 1999 11:20:06 +0100 (BST)
