@@ -108,10 +108,6 @@ NEW FEATURES
 
     o	There is now a coef() method for summaries of "nls" objects.
 
-    o	nls() now looks for variables and functions in its formula in
-	the environment of the formula before the usual search path,
-	in the same way lm() etc look for variables in their formulae.
-
     o	ftable.formula() now looks for variables in the environment of
 	the formula before the usual search path.
 
@@ -216,13 +212,22 @@ NEW FEATURES
 
     o	as.Date() now has a method for "POSIXlt" objects.
 
-    o	mean() has a method for "difftime" objects and so summary() works.
+    o	mean() has a method for "difftime" objects and so summary()
+	works for such objects.
 
     o	legend() has a new argument 'pt.cex'.
 
     o	plot.ts() has more arguments, particularly 'yax.flip'.
 
     o	heatmap() has a 'keep.dendro' argument.
+
+    o	The default barplot method now handles vectors and 1-d arrays
+	(e.g., obtained by table()) the same, and uses grey instead of
+	heat color palettes in these cases.  (Also fixes PR#6776.)
+
+    o	nls() now looks for variables and functions in its formula in
+	the environment of the formula before the search path, in the
+	same way lm() etc look for variables in their formulae.
 
 
 INSTALLATION ISSUES
@@ -373,6 +378,7 @@ BUG FIXES
 	to detect if an observation is on a bin boundary.  (PR#6931)
 
     o	jitter(x) now returns x when length(x) == 0.
+
 
 
 		CHANGES IN R VERSION 1.9.0
