@@ -1523,10 +1523,12 @@ char *R_alloc(long nelem, int eltsize)
 
 char *S_alloc(long nelem, int eltsize)
 {
-    R_size_t i, size  = nelem * eltsize;
+    R_size_t /*i,*/ size  = nelem * eltsize;
     char *p = R_alloc(nelem, eltsize);
-    for(i = 0; i < size; i++)
-	p[i] = 0;
+
+    memset(p, 0, size);
+    /* for(i = 0; i < size; i++)
+       p[i] = 0; */
     return p;
 }
 
