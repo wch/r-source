@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-02-03)
+Version 1.7.0 Under development (unstable) (2003-02-05)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -16,7 +16,8 @@ Type `q()' to quit R.
 > #### Regression tests for GRAPHICS & PLOTS
 > 
 > postscript("reg-plot.ps")
-> ## consider doing an ``approximate'' (AFM fonts!) diff  reg*.ps  reg*.ps.save
+> ## since we supply the font metrics, the results depend only on
+> ## the encoding used: Windows is different from Unix.
 > 
 > options(warn = 1)# print them as they occur
 > 
