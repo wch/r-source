@@ -1,4 +1,5 @@
 #### copyright (C) 1998 B. D. Ripley
+#### Copyright (C) 2000 The R Development Core Team
 
 smooth.spline <-
   function(x, y = NULL, w = NULL, df = 5, spar = 0, cv = FALSE,
@@ -87,8 +88,8 @@ smooth.spline <-
 		    ld4= as.integer(4),
 		    ldnk= as.integer(1),
 		    ier = as.integer(1),
-                    DUP = FALSE, PACKAGE="modreg"
-                    )[c("coef","ty","lev","spar","ier")]
+		    DUP = FALSE, PACKAGE="modreg"
+		    )[c("coef","ty","lev","spar","ier")]
     if(fit$ier > 0) {
 	warning("smoothing parameter value too small or too large")
 	fit$ty <- rep(mean(y), nx)
@@ -163,9 +164,11 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 	    end.object <- Recall(object, xrange)$y
 	    end.slopes <- Recall(object, xrange, 1)$y * object$range
 	    if(any(extrap.left))
-		y[extrap.left] <- end.object[1] + end.slopes[1] * (xs[extrap.left] - 0)
+		y[extrap.left] <- end.object[1] +
+		    end.slopes[1] * (xs[extrap.left] - 0)
 	    if(any(extrap.right))
-		y[extrap.right] <- end.object[2] + end.slopes[2] * (xs[extrap.right] - 1)
+		y[extrap.right] <- end.object[2] +
+		    end.slopes[2] * (xs[extrap.right] - 1)
 	} else if(deriv == 1) {
 	    end.slopes <- Recall(object, xrange, 1)$y * object$range
 	    y[extrap.left] <- end.slopes[1]
@@ -179,10 +182,11 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 }
 
 supsmu <-
-  function(x, y, wt = rep(1, length(y)), span = "cv", periodic = FALSE, bass = 0)
+  function(x, y, wt = rep(1, n), span = "cv", periodic = FALSE, bass = 0)
 {
     if(span == "cv") span <- 0
     n <- length(y)
+    if(!n || !is.numeric(y)) stop("`y' must be numeric vector")
     if(length(x) != n) stop("number of observations in x and y must match.")
     if(length(wt) != n)
 	stop("number of weights must match number of observations.")
@@ -211,7 +215,7 @@ supsmu <-
 		    as.double(bass),
 		    smo=double(leno),
 		    double(n*7), double(1),
-                    PACKAGE="modreg")$smo
+		    PACKAGE="modreg")$smo
     ## eliminate duplicate xsort values and corresponding smoothed values
     dupx <- duplicated(xo)
     list(x = xo[!dupx], y = smo[!dupx])

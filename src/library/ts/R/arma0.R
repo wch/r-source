@@ -94,6 +94,7 @@ arima0 <- function(x, order=c(0,0,0),
 
 arma0f <- function(p)
 {
+    if(!length(p)) stop("argument has length 0")
     .C("arma0fa", as.double(p), res=double(1), PACKAGE="ts")$res
 }
 
