@@ -3,7 +3,7 @@
 # Copyright 1997-2001 by Douglas Bates <bates@stat.wisc.edu>, <edd@debian.org>
 # Copyright 2001-2002 by Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.41 2002/06/20 17:52:55 bates Exp $
+# $Id: rules,v 1.42 2002/10/21 21:21:15 bates Exp $
 
 corepackage	= r-base-core
 latexpackage	= r-base-latex
@@ -12,6 +12,8 @@ htmlpackage	= r-doc-html
 gnomepackage	= r-gnome
 nmathpackage	= r-mathlib
 infopackage	= r-doc-info
+## r-recommended support is currently (fresh 1.6.0) broken
+#recdpackage	= r-recommended
 
 # for the standalone library, no sonames are assigned in the upstream Makefiles
 somaj		= 1
@@ -41,7 +43,7 @@ endif
 export DH_COMPAT  = 3
 
 # edd 15 Aug 2001: default to blas, atlas can override it 
-atlas = --with-blas=blas
+atlas 		= --with-blas=blas
 
 # edd 02 Sep 2001: default to g77 but let m68k use f2c
 fortrancompiler	= F77=g77
@@ -53,7 +55,6 @@ compilerflags	= -O2
 # m68k barks when using g77, and when gcc use -O2
 ifeq ($(arch),m68k-linux)
 fortrancompiler	= F2C=f2c
-compilerflags	= -O
 endif
 
 ## edd 09 Nov 2001  ia64 needs gcc-3.0, hppa gets it by default
@@ -69,6 +70,11 @@ ifeq ($(arch),hppa-linux)
 compilerflags   = -O2 -ffunction-sections
 endif
 
+## edd 20 Jun 2002      no optimisation or debugging on baby systems
+ifneq "$(findstring $(arch), m68k-linux arm-linux)" ""
+compilerflags	= -O0 -g0
+endif
+
 ## try gcc-3.0 on i386 -- appears to work
 #ifeq ($(arch),i386-linux)
 #fortrancompiler= F77=g77-3.0
@@ -79,7 +85,7 @@ endif
 
 get-orig-source: upstream
 upstream:
-	links http://cran.us.r-project.org
+	links http://cran.us.r-project.org/src/base
 
 upstreamdevel:
 	links ftp://ftp.stat.math.ethz.ch/Software/R
@@ -119,17 +125,7 @@ configure-stamp:
 		    --enable-R-profiling		\
 		    --enable-R-shlib			\
 		    --host $(arch)
-# this should now be fixed upstream by KH
-#        ## hppa and ia64 really need the PIC version of libg2c
-#        ## for conformity we will use it throughout
-#        perl -p -i -e "s/ -lg2c / -lg2c-pic /" Makeconf
-#        ## same needed for lower-level library files
-#	for i in ctest modreg mva ts; do 			\
-#		perl -p -i -e "s/ -lg2c / -lg2c-pic /" 		\
-#				src/library/$$i/src/Makefile; 	\
-#	done
-#        ## and etc/Makeconf	
-#	perl -p -i -e "s/ -lg2c / -lg2c-pic /" etc/Makeconf
+
 	touch configure-stamp
 
 make-arch: configure make-arch-stamp 
@@ -222,8 +218,9 @@ install-arch-stamp:
 	  < bin/R > $(debtmp)/usr/lib/R/bin/R
 
         # fix permissions (Lintian)
-	chmod a+x 	$(debtmp)/usr/lib/R/share/sh/echo.sh \
-			$(debtmp)/usr/lib/R/share/sh/help-links.sh
+	chmod a+x 	$(debtmp)/usr/lib/R/share/sh/echo.sh 		\
+			$(debtmp)/usr/lib/R/share/sh/help-links.sh	\
+			$(debtmp)/usr/lib/R/share/sh/help-print.sh
 
         # remove unneeded license files, but link them back
 	rm -v 	$(debtmp)/usr/lib/R/COPYING 		\
@@ -231,6 +228,11 @@ install-arch-stamp:
 	(cd $(debtmp)/usr/lib/R/; \
 		ln -s ../../share/common-licenses/GPL COPYING; \
 		ln -s ../../share/common-licenses/LGPL COPYING.LIB)
+
+        # edd 15 Jul 2002 reduce compile load on small machines
+ifneq "$(findstring $(arch), m68k-linux arm-linux)" ""
+	perl -p -i -e 's/-g -O2/-g0 -O0/g' $(debtmp)/usr/lib/R/etc/Makeconf
+endif
 
         # move the GNOME version to the r-gnome package
 ifneq ($(gnome),0)
@@ -245,6 +247,8 @@ endif
         # move files for r-base-latex
 	dh_movefiles	-pr-base-latex
 
+        # move files for r-recommended
+        ## dh_movefiles	-p$(recdpackage)
         # move files for r-base-core
 	dh_movefiles	-p$(corepackage)
 
