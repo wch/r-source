@@ -1,7 +1,5 @@
 require(tcltk) || stop("tcltk support is absent")
 local({
-
-    if(.Platform$OS.type == "windows") flush.console()
     
     tkfilefind<-function(path=getwd(), all.names=FALSE, multiple=FALSE){
         tclRequire("::Utility")
@@ -67,6 +65,8 @@ local({
         paste(R.home(),"demos","tcltk","tkfilefind.R", sep=.Platform$file.sep),
         "\n******************************************************\n")
 
+
+    if(.Platform$OS.type == "windows") flush.console()
 
     tkfilefind(".", multiple=TRUE)
 
