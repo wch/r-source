@@ -10,11 +10,15 @@
   seasonal component.
 }
 \usage{
-decompose(x, type = c("additive", "multiplicative"))
+decompose(x, type = c("additive", "multiplicative"), filter = NULL)
 }
 \arguments{
   \item{x}{A time series.}
   \item{type}{The type of seasonal component.}
+  \item{filter}{A vector of filter coefficients in reverse time order (as for
+    AR or MA coefficients), used for filtering out the seasonal
+    component. If \code{NULL}, a moving average with symmetric window is
+  performed.}
 }
 \details{
 The additive model used is:

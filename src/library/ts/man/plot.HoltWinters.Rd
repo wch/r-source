@@ -8,10 +8,11 @@
 }
 \usage{
 \method{plot}{HoltWinters}(x, predicted.values = NA, intervals = TRUE,
-     separator = TRUE, col = 1, col.predicted = 2,
-     col.intervals = 4, col.separator = 1, lty = 1,
-     lty.predicted = 1, lty.intervals = 1, lty.separator = 3,
-     ylab = "Observed / Fitted", main = "Holt-Winters filtering", \dots)
+        separator = TRUE, col = 1, col.predicted = 2,
+        col.intervals = 4, col.separator = 1, lty = 1,
+        lty.predicted = 1, lty.intervals = 1, lty.separator = 3,
+        ylab = "Observed / Fitted", main = "Holt-Winters filtering",
+        ylim = NULL, ...)
 }
 \arguments{
   \item{x}{Object of class \code{"HoltWinters"}}
@@ -27,6 +28,9 @@
     observed/predicted values separator (default: black dashed).}
   \item{ylab}{Label of the y-axis.}
   \item{main}{Main title.}
+  \item{ylim}{Limits of the y-axis. If \code{NULL}, the range is chosen
+    such that the plot contains the original series, the fitted values,
+    and the predicted values if any.}
   \item{\dots}{Other graphics parametes.}
 }
 \references{

@@ -339,6 +339,12 @@ STANDARD PACKAGES
 	- arima.sim() now checks for inconsistent order specification
 	  (as requested in PR#3495: it was previously documented not to).
 
+	- decompose() has a new argument `filter'.
+
+	- HoltWinters() has new arguments `optim.start' and
+          `optim.control', and returns more components in the fitted
+          values.  The plot method allows `ylim' to be set. 
+
 	- plot.ts() has a new argument `nc' controlling the number of
 	  columns (with default the old behaviour for plot.mts).
 
@@ -707,6 +713,12 @@ BUG FIXES
 	function.  The fix [to C-level coerceVector()] now gives an error
 	instead of passing through. This may catch other potential
 	problems.
+
+    o	HoltWinters() would segfault if only gamma was optimized, and
+	not converge if gamma=0 and seasonal="mult".
+
+    o	decompose() with even frequency used an asymmetric moving
+	average window. 
 
 
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2   The R Development Core Team.
+ *  Copyright (C) 2001-3   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,7 +40,8 @@ void filter2(double *x, int *n, double *filter, int *nfilt, double *out);
 void R_pp_sum (double *u, int *n, int *l, double *sum);
 void HoltWinters (double *x, int *xl, double *alpha, double *beta,
 		  double *gamma, int *start_time, int *seasonal, int *period,
-		  double *a, double *b, double *s, double *SSE, double *xhat);
+		  double *a, double *b, double *s, double *SSE, double *level, 
+		  double *trend, double *season);
 
 void
 F77_SUB(eureka)(int *lr, double *r__, double *g,

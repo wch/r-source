@@ -7,15 +7,14 @@
 }
 \usage{
 \method{predict}{HoltWinters}(object, n.ahead=1, prediction.interval = FALSE,
-        quantile = qnorm(0.975), \dots)
+                    level = 0.95, ...)
 }
 \arguments{
-  \item{object}{An object of class \code{HoltWinters}}
-  \item{n.ahead}{Number of future periods to predict}
+  \item{object}{An object of class \code{HoltWinters}.}
+  \item{n.ahead}{Number of future periods to predict.}
   \item{prediction.interval}{logical. If \code{TRUE}, the lower and
-    upper bounds of the corresponding prediction intervals are computed}
-  \item{quantile}{Quantile used for each one-sided prediction interval
-    (default: the 0.975 quantile to give a two-sided 0.95 interval)}
+    upper bounds of the corresponding prediction intervals are computed.}
+  \item{level}{Confidence level for the prediction interval.}
   \item{\dots}{arguments passed to or from other methods.}
 }
 \value{
