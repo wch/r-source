@@ -18,8 +18,10 @@ pkg = modreg
 all: Makefile
 	@echo "building package \`$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
-	@cat `ls $(srcdir)/R/*.R` \
-	  > $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@(f=/tmp/R$$$$; \
+	  cat `ls $(srcdir)/R/*.R` > $${f}; \
+	  $(top_srcdir)/tools/move-if-change $${f} \
+	    $(top_builddir)/library/$(pkg)/R/$(pkg))
 	@if test -f $(srcdir)/INDEX; then \
 	  $(INSTALL_DATA) $(srcdir)/INDEX \
 	    $(top_builddir)/library/$(pkg); \
