@@ -695,7 +695,7 @@ SEXP do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 #if defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)
     SEXP sfile, sopen, ans, class, enc;
     char *file, *open;
-    int i, ncon, block;
+    int ncon, block;
     Rconnection con = NULL;
 
     checkArity(op, args);

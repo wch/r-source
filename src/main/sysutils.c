@@ -425,13 +425,13 @@ void * Riconv_open (const char* tocode, const char* fromcode)
     return iconv_open(tocode, fromcode);
 }
 
-size_t Riconv (void * cd, const char* * inbuf, size_t *inbytesleft, 
-	       char* * outbuf, size_t *outbytesleft)
+size_t Riconv (void *cd, char **inbuf, size_t *inbytesleft, 
+	       char **outbuf, size_t *outbytesleft)
 {
     return iconv((iconv_t) cd, inbuf, inbytesleft, outbuf, outbytesleft);
 }
 
-int Riconv_close (void * cd)
+int Riconv_close (void *cd)
 {
     return iconv_close((iconv_t) cd);
 }
@@ -442,8 +442,8 @@ void * Riconv_open (const char* tocode, const char* fromcode)
     return (void *)-1;
 }
 
-size_t Riconv (void * cd, const char* * inbuf, size_t *inbytesleft, 
-	       char* * outbuf, size_t *outbytesleft)
+size_t Riconv (void *cd, char **inbuf, size_t *inbytesleft, 
+	       char **outbuf, size_t *outbytesleft)
 {
     error("`iconv' is not available on this system");
     return 0;

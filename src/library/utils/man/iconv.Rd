@@ -25,8 +25,11 @@ iconvlist()
 
 #ifdef unix
   On many platforms running \code{iconv --list} at a shell prompt will
-  give a list of encodings.  So may the \R function \code{iconvlist}
-  (at least on platforms using GNU \code{libiconv}).
+  give a list of encodings.  On others, the information is on the man
+  page for \code{iconv(5)} or elsewhere in the man pages.
+  Another possible source of information is the \R function \code{iconvlist}
+  (at least on platforms using GNU \code{libiconv}).  Unfortunately, the
+  names are rarely common across platforms.
 #endif
 #ifdef windows
   \code{iconvlist} provides an alphabetical list of the supported encodings.
@@ -48,7 +51,7 @@ iconvlist()
 iconvlist()
 
 ## convert from Latin-2 to UTF-8: two of the GNU iconv variants.
-iconv(x, "ISO_8859-2", "UTF-8")
+iconv(x, "ISO_8859-2", "UTF-8")  # 8859-2 on Solaris
 iconv(x, "LATIN2", "UTF-8")
 }}
 \keyword{ character }
