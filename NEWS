@@ -109,6 +109,10 @@ NEW FEATURES
     o	.Platform has a new component GUI specifying the GUI in use
 	(which might be "unknown").
 
+    o	The Wilcoxon and Ansari-Bradley tests now optionally return
+	confidence intervals for the location or scale parameter of
+	interest.
+
 
 BUG FIXES
 
