@@ -132,7 +132,7 @@ R.dll: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 Rdll: makeMakedeps ../../bin/R.dll
 
 ../../bin/R.dll: fixfiles rlibs R.dll
-	$(MKDIR) -p ../../bin
+	@$(MKDIR) -p ../../bin
 	$(CP) R.dll ../../bin/
 
 front-ends: libR.a
@@ -287,7 +287,7 @@ pkgclean-%:
 
 pkgcheck-%:
 	@$(ECHO) -------- Testing package $* --------
-	-@mkdir -p $(PKGDIR)/$*/check
+	-@$(MKDIR) -p $(PKGDIR)/$*/check
 	@$(MAKE) --no-print-directory -C $(PKGDIR)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/check/PkgCheck
 	@if test -d $(PKGDIR)/$*/tests ; then \
@@ -461,7 +461,7 @@ endif
 #	-zip -rm9X $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
 	zip -rm9X $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/share/texmf
 	$(RM) -r $(RPREFIX)/doc
-	mkdir -p  $(RPREFIX)/doc/html
+	$(MKDIR) -p  $(RPREFIX)/doc/html
 	$(CP) -p ../../doc/html/faq.html ../../doc/html/rw-FAQ.html \
 	  $(RPREFIX)/doc/html
 	zip -rm9X $(RPREFIX)m.zip $(RPREFIX)/library/*/man

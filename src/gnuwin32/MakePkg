@@ -135,7 +135,7 @@ endif
 	    $(ECHO) ; \
 	  fi; \
 	fi
-	$(MKDIR) -p $(DPKG)
+	@$(MKDIR) -p $(DPKG)
 ifneq ($(strip $(INSTFILES)),)
 	@$(ECHO) "  installing inst files"
 	-@$(CP) -r inst/* $(DPKG)/
