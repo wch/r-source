@@ -15,8 +15,7 @@ DISTFILES = Makefile.in
 
 R = $(top_builddir)/bin/R --vanilla
 
-PKGS = $(R_PKGS)
-EX_IN = $(PKGS:=-Ex.R)
+EX_IN = $(R_PKGS:=-Ex.R)
 EX_OUT = $(EX_IN:.R=.Rout)
 
 .SUFFIXES:
@@ -30,7 +29,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 Makedeps: Makefile
-	@(for p in $(PKGS); do \
+	@(for p in $(R_PKGS); do \
 	    dep="$${p}-Ex.Rout: $${p}-Ex.R"; \
 	    dep="$${dep} \$$(top_builddir)/library/$${p}/R/$${p}"; \
 	    tmp="library/$${p}/libs/$${p}" ; \
@@ -55,17 +54,19 @@ R:
 	@echo "running code in $< ..."
 	$(R) < $< > $@
 
-$(EX_IN): FORCE
-	@(pkg=`echo $@ | sed -e 's/-Ex.R$$//g'`; \
+%-Ex.R: FORCE
+	@if $(top_builddir)/tools/Rdnewer \
+	    "$(top_srcdir)/src/library/$*" "$@"; then \
 	  if test -f $@.bak ; then mv $@.bak $@.bakk ; fi; \
-	  if test -f $@     ; then cp -p $@     $@.bak  ; fi; \
+	  if test -f $@     ; then cp -p $@  $@.bak  ; fi; \
 	  echo "updating $@ ..."; \
 	  (cd $(top_builddir)/src/library && \
-	    OPTS="--nroff --example" $(MAKE) PKGS="$${pkg}" DOCS); \
+	    OPTS="--nroff --example" $(MAKE) R_PKGS="$*" DOCS); \
 	  f=$${TMPDIR:-/tmp}/R$$$$; \
-	  $(top_builddir)/bin/massage-Examples $${pkg} \
-	    $(top_builddir)/library/$${pkg}/R-ex/*.R > $${f}; \
-	  $(top_srcdir)/tools/move-if-change $${f} $@)
+	  $(top_builddir)/bin/massage-Examples $* \
+	    $(top_builddir)/library/$*/R-ex/*.R > $${f}; \
+	  $(top_srcdir)/tools/move-if-change $${f} $@; \
+	fi
 FORCE:
 
 $(EX_OUT): Makefile \
@@ -84,6 +85,6 @@ distdir: $(DISTFILES)
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
-        done
+	done
 
 ## Automagically generated dependencies:
