@@ -1,5 +1,5 @@
 base:
-	@echo Building R base library
+	@echo Building R base package
 	@if test ! -d ../../../library/base; then mkdir ../../../library/base; fi
 	@if test ! -d ../../../library/base/R; then mkdir ../../../library/base/R; fi
 	@if test ! -d ../../../library/base/data; then mkdir ../../../library/base/data; fi
