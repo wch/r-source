@@ -43,6 +43,7 @@ installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/$(subdir)
 	@$(MKINSTALLDIRS) $(mandir)/man1
 install-man:
+	@rm -f $(mandir)/man1/R.1
 	@$(INSTALL_DATA) $(srcdir)/R.1 $(mandir)/man1
 install-message:
 	@echo "installing $(subdir) ..."
