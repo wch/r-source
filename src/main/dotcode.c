@@ -26,7 +26,7 @@
 #include <stdlib.h>
 
 #include "Defn.h"
-#include <Graphics.h>
+#include "Graphics.h"
 #include "R_ext/Mathlib.h"
 
 #ifndef max
