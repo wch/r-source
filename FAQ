@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-38, 2003-03-12
+Version 1.6-39, 2003-03-16
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -293,8 +293,8 @@ thus created, and issue the following commands (at the shell prompt):
      $ make
 
    If these commands execute successfully, the R binary and a shell script
-font-end called `R' are created and copied to the `bin' directory.  You can
-copy the script to a place where users can invoke it, for example to
+front-end called `R' are created and copied to the `bin' directory.  You
+can copy the script to a place where users can invoke it, for example to
 `/usr/local/bin'.  In addition, plain text help pages as well as HTML and
 LaTeX versions of the documentation are built.
 
@@ -388,9 +388,6 @@ CRAN mirror instead of the master) to the file `/etc/apt/sources.list'.
 Once you have added that line the programs `apt-get', `apt-cache', and
 `dselect' (using the apt access method) will automatically detect and
 install updates of the R packages.
-
-   The `bin/osf' directory of a CRAN site contains RPMs by Albrecht
-Gebhardt for alpha systems running Alpha Unix (OSF/Tru64).
 
    No other binary distributions have thus far been made publically
 available.
@@ -1889,6 +1886,9 @@ distributions of R.)
 
 *serialize*
      Simple interfce for serializing to connections.
+
+*session*
+     Functions for interacting with, saving and restoring R sessions.
 
 *sgeostat*
      An object-oriented framework for geostatistical modeling.
