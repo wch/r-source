@@ -38,14 +38,6 @@ Date: Wed, 26 Dec 2001 13:03:31 +0100
 Subject: possible bug in det using method="qr"
 From: armin@approximity.com
 Date: Sat, 5 Jan 2002 01:48:13 +0100 (MET)
-* PR# 1429 *
-Subject: fft fails for lengths 392, 588, 968, 980 ....
-From: ripley@stats.ox.ac.uk
-From: Gabriel Fricout <Gabriel.FRICOUT@cmm.ensmp.fr>
-Date: Mon, 1 Apr 2002 22:24:26 +0100 (BST)
-Date: Thu, 28 Mar 2002 09:37:34 +0100
---fft(rep(1, 392)) is an even simpler case.
---segfault disappears with gctorture(TRUE)
 
 Directory:  Add-ons
 
@@ -466,11 +458,11 @@ Date: Fri, 4 Jan 2002 12:51:15 +0100 (MET)
 Subject: make check fails when R_HOME env var set
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Fri, 25 Jan 2002 15:08:33 -0500
-* PR# 1431 *
-Subject: persp() crashes with numeric values for [x,y,z]lab 
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Wed, 03 Apr 2002 13:10:27 +0200
-* PR# 1432 *
-Subject: filled.contour(): no check when z dimension dismatch
-From: humbertc@univ-mlv.fr
-Date: Wed, 3 Apr 2002 14:51:02 +0200 (MET DST)
+* PR# 1433 *
+Subject: Re:
+From: "Fredrik Vang" <_fvang@stud.hum.ku.dk>
+Date: Thu,  4 Apr 2002 10:27:48 +0200 (CEST)
+* PR# 1434 *
+Subject: assign, documentation
+From: Martin.Schlather@uni-bayreuth.de
+Date: Thu, 04 Apr 2002 14:35:04 +0200
