@@ -15,9 +15,7 @@ split.default <- function(x, f)
 }
 
 split.data.frame <- function(x, f)
-{
     lapply(split(seq(length=nrow(x)), f), function(ind) x[ind, , drop = FALSE ])
-}
 
 "split<-" <- function(x, f, value) UseMethod("split<-")
 
@@ -27,7 +25,7 @@ split.data.frame <- function(x, f)
     x
 }
 
-"split.data.frame<-" <- "split<-.data.frame" <- function(x, f, value)
+"split<-.data.frame" <- function(x, f, value)
 {
     x[unlist(split(seq(length=nrow(x)), f)),] <- do.call("rbind", value)
     x
