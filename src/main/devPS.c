@@ -34,7 +34,7 @@
 #define PS_minus_default 45
 /* wrongly was 177 (plusminus);
    hyphen = 45 or 173;	(n-dash not available as code!)
-   175 = "¯" (= "overline" (= high 'negative' sign))
+   175 = "¯" (macron)
 */
 static char PS_minus = PS_minus_default;/*-> TODO: make this a ps.option() !*/
 
@@ -369,7 +369,10 @@ int PostScriptLoadFontMetrics(char *fontname, FontMetricInfo *metrics)
     if (!(fp = R_fopen(fontname, "r"))) return 0;
 
     mode = 0;
-    for (ii = 0; ii < 256; ii++) charnames[ii][0] = '\0';
+    for (ii = 0; ii < 256; ii++) {
+	charnames[ii][0] = '\0';
+	metrics->CharInfo[ii].WX = 0;
+    }
     while (fgets(buf, BUFSIZE, fp)) {
 	switch(KeyType(buf)) {
 
@@ -744,10 +747,10 @@ typedef struct {
 	rcolor fill;	         /* fill color */
 	rcolor bg;		 /* color */
     } current;
+
+    FontMetricInfo metrics[5];	/* font metrics */
 }
 PostScriptDesc;
-
-static FontMetricInfo metrics[5];	/* font metrics */
 
 
 /* Device Driver Actions */
@@ -1079,7 +1082,7 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 		FILESEP,
 		Family[pd->fontfamily].font[i].abbr,
 		(i == 4) ? "afm" : Extension[pd->encoding]);
-	if(!PostScriptLoadFontMetrics(buf, &(metrics[i]))) {
+	if(!PostScriptLoadFontMetrics(buf, &(pd->metrics[i]))) {
 	    warning("cannot read afm file %s", buf);
 	    return 0;
 	}
@@ -1247,14 +1250,20 @@ static void PS_Deactivate(DevDesc *dd) {}
 
 static double PS_StrWidth(char *str, DevDesc *dd)
 {
+    PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
+
     return floor(dd->gp.cex * dd->gp.ps + 0.5) *
-	PostScriptStringWidth((unsigned char *)str, &(metrics[dd->gp.font-1]));
+	PostScriptStringWidth((unsigned char *)str, 
+			      &(pd->metrics[dd->gp.font-1]));
 }
 
 static void PS_MetricInfo(int c, double *ascent, double *descent,
 			  double *width, DevDesc *dd)
 {
-    PostScriptMetricInfo(c, ascent, descent, width, &(metrics[dd->gp.font-1]));
+    PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
+
+    PostScriptMetricInfo(c, ascent, descent, width, 
+			 &(pd->metrics[dd->gp.font-1]));
     *ascent = floor(dd->gp.cex * dd->gp.ps + 0.5) * *ascent;
     *descent = floor(dd->gp.cex * dd->gp.ps + 0.5) * *descent;
     *width = floor(dd->gp.cex * dd->gp.ps + 0.5) * *width;
@@ -1486,6 +1495,9 @@ typedef struct {
 
     int onefile;
     int ymax;            /* used to invert coord system */
+
+    FontMetricInfo metrics[5];	/* font metrics */
+
 } XFigDesc;
 
 /* TODO
@@ -1605,6 +1617,8 @@ static void   XFig_Polygon(int, double*, double*, int, int, int, DevDesc*);
 static void   XFig_Polyline(int, double*, double*, int, DevDesc*);
 static void   XFig_Rect(double, double, double, double, int, int, int, DevDesc*);
 static void   XFig_Resize(DevDesc*);
+static double XFig_StrWidth(char*, DevDesc*);
+static void   XFig_MetricInfo(int, double*, double*, double*, DevDesc*);
 static void   XFig_Text(double, double, int, char*, double, double, DevDesc*);
 
 static int XFig_basenums[] = {4, 8, 12, 16, 20, 24, 28, 0};
@@ -1784,8 +1798,8 @@ int XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     dd->dp.newPage    = XFig_NewPage;
     dd->dp.clip	      = XFig_Clip;
     dd->dp.text	      = XFig_Text;
-    dd->dp.strWidth   = PS_StrWidth;
-    dd->dp.metricInfo = PS_MetricInfo;
+    dd->dp.strWidth   = XFig_StrWidth;
+    dd->dp.metricInfo = XFig_MetricInfo;
     dd->dp.rect	      = XFig_Rect;
     dd->dp.circle     = XFig_Circle;
     dd->dp.line	      = XFig_Line;
@@ -1815,7 +1829,7 @@ static int XFig_Open(DevDesc *dd, XFigDesc *pd)
 		FILESEP,
 		Family[pd->fontfamily].font[i].abbr,
 		(i == 4) ? "afm" : Extension[pd->encoding]);
-	if(!PostScriptLoadFontMetrics(buf, &(metrics[i])))
+	if(!PostScriptLoadFontMetrics(buf, &(pd->metrics[i])))
 	    return 0;
     }
 
@@ -2093,4 +2107,25 @@ static void XFig_Mode(int mode, DevDesc* dd)
 
 static void XFig_Hold(DevDesc *dd)
 {
+}
+
+static double XFig_StrWidth(char *str, DevDesc *dd)
+{
+    XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
+
+    return floor(dd->gp.cex * dd->gp.ps + 0.5) *
+	PostScriptStringWidth((unsigned char *)str, 
+			      &(pd->metrics[dd->gp.font-1]));
+}
+
+static void XFig_MetricInfo(int c, double *ascent, double *descent,
+			  double *width, DevDesc *dd)
+{
+    XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
+
+    PostScriptMetricInfo(c, ascent, descent, width, 
+			 &(pd->metrics[dd->gp.font-1]));
+    *ascent = floor(dd->gp.cex * dd->gp.ps + 0.5) * *ascent;
+    *descent = floor(dd->gp.cex * dd->gp.ps + 0.5) * *descent;
+    *width = floor(dd->gp.cex * dd->gp.ps + 0.5) * *width;
 }
