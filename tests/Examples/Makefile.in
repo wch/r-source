@@ -40,7 +40,7 @@ all: test-Examples
 
 test-Examples: All-Ex.Rout
 
-All-Ex.Rout: All-Ex.R
+All-Ex.Rout: All-Ex.R $(Rbinary) $(Rbase)
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Running all help() examples ..."
