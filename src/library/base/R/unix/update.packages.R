@@ -30,7 +30,12 @@ install.packages <- function(pkgs, lib, CRAN=.Options$CRAN,
                     cmd <- paste(file.path(R.home(),"bin","R"),
                                  "INSTALL -l", lib,
                                  foundpkgs[okp, 2])
-                    system(cmd)
+                    status <- system(cmd)
+                    if(status>0){
+                        warning(paste("Installation of package",
+                                      foundpkgs[okp, 1],
+                                      "had non-zero exit status"))
+                    }
                 }
             }
         }
@@ -92,19 +97,23 @@ download.packages <- function(pkgs, destdir, available=NULL,
     for(p in unique(pkgs))
     {
         ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
-        fn <- paste(p, "_", available[ok, "Version"], ".tar.gz", sep="")
-        if(localcran){
-            fn <- paste(substring(contriburl, 6), fn, sep="/")
-            retval <- rbind(retval, c(p, fn))
-        }
+        if(!any(ok))
+            warning(paste("No package \"", p, "\" on CRAN.", sep=""))
         else{
-            url <- paste(contriburl, fn, sep="/")
-            destfile <- file.path(destdir, fn)
-
-            if(download.file(url, destfile, method) == 0)
-                retval <- rbind(retval, c(p, destfile))
-            else
-                warning(paste("Download of package", p, "failed"))
+            fn <- paste(p, "_", available[ok, "Version"], ".tar.gz", sep="")
+            if(localcran){
+                fn <- paste(substring(contriburl, 6), fn, sep="/")
+                retval <- rbind(retval, c(p, fn))
+            }
+            else{
+                url <- paste(contriburl, fn, sep="/")
+                destfile <- file.path(destdir, fn)
+                
+                if(download.file(url, destfile, method) == 0)
+                    retval <- rbind(retval, c(p, destfile))
+                else
+                    warning(paste("Download of package", p, "failed"))
+            }
         }
     }
 
