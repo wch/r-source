@@ -124,10 +124,13 @@ BUG FIXES
 
     o	nargs() was documented incorrectly.
 
-    o	Using seq.POSIXt(by="2 weeks") was stepping by single weeks (PR#1046).
+    o	Using seq.POSIXt(by="2 weeks") was stepping by single weeks 
+	(PR#1046).
 
     o	dummy.coef.lm was not handling complex terms like z:I(x).
 	It now either does or warns and gives NAs (PR#1048).
+
+    o	predict.mlm() was broken (PR#1049).
 
 
 
