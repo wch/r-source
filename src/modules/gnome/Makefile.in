@@ -18,6 +18,7 @@ LIBGLADE_CFLAGS = @LIBGLADE_CFLAGS@
 LIBGLADE_LIBS = @LIBGLADE_LIBS@
 
 CC = @CC@
+CC_M = @CC_M@
 SED = @SED@
 INSTALL = @INSTALL@
 INSTALL_PROGRAM = ${INSTALL}
@@ -37,7 +38,7 @@ LIBR = @LIBR@
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
 .c.d:
 	@echo "making $@ from $<"
-	@gcc -MM $(ALL_CPPFLAGS) $< | \
+	@$(CC_M) $(ALL_CPPFLAGS) $< | \
           $(SED) -e 's/^\([^:]*\)\.o\([         ]\)*:/\1.o \1.lo\2:/' > $@
 
 
@@ -113,6 +114,22 @@ distdir: $(DISTFILES)
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
+
+ACLOCAL_M4 = $(srcdir)/aclocal.m4
+ACINCLUDE_DEPENDENCIES = \
+	m4/R.m4 \
+	m4/gnome-gnorba-check.m4 \
+	m4/gnome-orbit-check.m4 \
+	m4/gnome.m4 \
+	m4/libglade.m4
+$(srcdir)/configure: $(srcdir)/configure.ac $(ACLOCAL_M4)
+	@cd $(srcdir) && autoconf
+$(srcdir)/acinclude.m4: $(ACINCLUDE_DEPENDENCIES)
+	@cd $(srcdir) && cat $(ACINCLUDE_DEPENDENCIES) > $@
+$(ACLOCAL_M4): $(srcdir)/configure.ac $(srcdir)/acinclude.m4
+	@cd $(srcdir) && aclocal
+
+maintainer-build: $(srcdir)/configure
 
 
 ## Automagically generated dependencies:

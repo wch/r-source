@@ -310,7 +310,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS R_HOME config_opts LIBR SED MAKE INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP EGREP GNOME_LIBS GNOMEUI_LIBS GNOMEGNORBA_LIBS GTKXMHTML_LIBS ZVT_LIBS GNOME_LIBDIR GNOME_INCLUDEDIR GNOME_CONFIG ORBIT_CONFIG ORBIT_IDL HAVE_ORBIT_TRUE HAVE_ORBIT_FALSE ORBIT_CFLAGS ORBIT_LIBS HAVE_GNORBA_TRUE HAVE_GNORBA_FALSE GNORBA_CFLAGS GNORBA_LIBS GNOME_APPLETS_LIBS GNOME_CAPPLET_LIBS LIBGLADE_CONFIG LIBGLADE_CFLAGS LIBGLADE_LIBS GNOME_IF_FILES LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS R_HOME config_opts LIBR SED MAKE INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP EGREP CC_M GNOME_LIBS GNOMEUI_LIBS GNOMEGNORBA_LIBS GTKXMHTML_LIBS ZVT_LIBS GNOME_LIBDIR GNOME_INCLUDEDIR GNOME_CONFIG ORBIT_CONFIG ORBIT_IDL HAVE_ORBIT_TRUE HAVE_ORBIT_FALSE ORBIT_CFLAGS ORBIT_LIBS HAVE_GNORBA_TRUE HAVE_GNORBA_FALSE GNORBA_CFLAGS GNORBA_LIBS GNOME_APPLETS_LIBS GNOME_CAPPLET_LIBS LIBGLADE_CONFIG LIBGLADE_CFLAGS LIBGLADE_LIBS GNOME_IF_FILES LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -751,6 +751,10 @@ ac_env_target_alias_set=${target_alias+set}
 ac_env_target_alias_value=$target_alias
 ac_cv_env_target_alias_set=${target_alias+set}
 ac_cv_env_target_alias_value=$target_alias
+ac_env_R_HOME_set=${R_HOME+set}
+ac_env_R_HOME_value=$R_HOME
+ac_cv_env_R_HOME_set=${R_HOME+set}
+ac_cv_env_R_HOME_value=$R_HOME
 ac_env_CC_set=${CC+set}
 ac_env_CC_value=$CC
 ac_cv_env_CC_set=${CC+set}
@@ -851,6 +855,7 @@ Optional Packages:
                           specify location of libglade-config
 
 Some influential environment variables:
+  R_HOME      Home directory of R installation
   CC          C compiler command
   CFLAGS      C compiler flags
   LDFLAGS     linker flags, e.g. -L<lib dir> if you have libraries in a
@@ -1315,6 +1320,8 @@ if test -z "${R_HOME}"; then
 fi
 
 
+echo "Using R Installation in R_HOME=${R_HOME}"
+
 ## We provide these defaults so that headers and libraries in
 ## '/usr/local' are found (by the native tools, mostly).
 ## We do it here because AC_ARG_WITH(gnome) may add to CPPFLAGS and
@@ -1353,11 +1360,10 @@ if test "${LIBR}" = ""; then
   exit 1
 fi
 
-echo LIBR is ${LIBR}
-
 
 CC=`${R_HOME}/bin/R CMD config CC`
 CFLAGS=`${R_HOME}/bin/R CMD config CFLAGS`
+
 ## we would like a POSIX sed, and need one on Solaris
 for ac_prog in sed
 do
@@ -1512,6 +1518,8 @@ test -z "$INSTALL_PROGRAM" && INSTALL_PROGRAM='${INSTALL}'
 test -z "$INSTALL_SCRIPT" && INSTALL_SCRIPT='${INSTALL}'
 
 test -z "$INSTALL_DATA" && INSTALL_DATA='${INSTALL} -m 644'
+
+
 
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
@@ -3086,9 +3094,42 @@ fi
 done
 
 
-## R_GNOME
-## -------
-# R_GNOME
+## need to fathom out if GCC first.
+echo "$as_me:$LINENO: checking whether we can compute C Make dependencies" >&5
+echo $ECHO_N "checking whether we can compute C Make dependencies... $ECHO_C" >&6
+if test "${r_cv_prog_cc_m+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  echo "#include <math.h>" > conftest.c
+cc_minus_MM=false
+if test "${GCC}" = yes; then
+  gcc_version=`${CC} -v 2>&1 | grep "^.*g.. version" | \
+    sed -e 's/^.*g.. version *//'`
+  case "${gcc_version}" in
+    1.*|2.*|3.[01]*) ;;
+    *) cc_minus_MM="${CC} -MM" ;;
+  esac
+fi
+for prog in "${cc_minus_MM}" "${CC} -M" "${CPP} -M" "cpp -M"; do
+  if ${prog} conftest.c 2>/dev/null | \
+      grep 'conftest.o: conftest.c' >/dev/null; then
+    r_cv_prog_cc_m="${prog}"
+    break
+  fi
+done
+fi
+
+if test -z "${r_cv_prog_cc_m}"; then
+  echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+else
+  echo "$as_me:$LINENO: result: yes, using ${r_cv_prog_cc_m}" >&5
+echo "${ECHO_T}yes, using ${r_cv_prog_cc_m}" >&6
+fi
+
+CC_M=${r_cv_prog_cc_m}
+
+
 
 
 
@@ -4135,6 +4176,7 @@ s,@EXEEXT@,$EXEEXT,;t t
 s,@OBJEXT@,$OBJEXT,;t t
 s,@CPP@,$CPP,;t t
 s,@EGREP@,$EGREP,;t t
+s,@CC_M@,$CC_M,;t t
 s,@GNOME_LIBS@,$GNOME_LIBS,;t t
 s,@GNOMEUI_LIBS@,$GNOMEUI_LIBS,;t t
 s,@GNOMEGNORBA_LIBS@,$GNOMEGNORBA_LIBS,;t t

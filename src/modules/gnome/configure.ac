@@ -31,6 +31,8 @@ if test -z "${R_HOME}"; then
   exit 1
 fi
 AC_SUBST(R_HOME)
+AC_ARG_VAR([R_HOME], [Home directory of R installation])
+echo "Using R Installation in R_HOME=${R_HOME}"
 
 ## We provide these defaults so that headers and libraries in
 ## '/usr/local' are found (by the native tools, mostly).
@@ -66,12 +68,11 @@ if test "${LIBR}" = ""; then
   echo "Need a shared R library"
   exit 1
 fi
-
-echo LIBR is ${LIBR}
 AC_SUBST(LIBR)
 
 CC=`${R_HOME}/bin/R CMD config CC`
 CFLAGS=`${R_HOME}/bin/R CMD config CFLAGS`
+
 ## we would like a POSIX sed, and need one on Solaris
 AC_PATH_PROGS(SED, sed, /bin/sed, [/usr/xpg4/bin:$PATH])
 ## Make
@@ -79,26 +80,15 @@ AC_PATH_PROGS(SED, sed, /bin/sed, [/usr/xpg4/bin:$PATH])
 AC_SUBST(MAKE)
 
 AC_PROG_INSTALL
+
+
 AC_CHECK_HEADERS(fcntl.h locale.h string.h strings.h)
 
-## R_GNOME
-## -------
-AC_DEFUN([R_GNOME],
-[ GNOME_INIT_HOOK([], [cont])
-  if test "${GNOMEUI_LIBS}"; then
-    AM_PATH_LIBGLADE([use_gnome="yes"
-                      GNOME_IF_FILES="gnome-interface.glade"],
-                     [warn_libglade_version="GNOME support requires libglade ver
-sion >= 0.3"
-                      AC_MSG_WARN([${warn_libglade_version}])],
-                     [gnome])
-  fi
-if test "${use_gnome}" != yes; then
-  use_gnome="no"
-  GNOME_IF_FILES=
-fi
-AC_SUBST(GNOME_IF_FILES)
-])# R_GNOME
+## need to fathom out if GCC first.
+R_PROG_CC_M
+CC_M=${r_cv_prog_cc_m}
+AC_SUBST(CC_M)
+
 
 R_GNOME
 
