@@ -194,7 +194,7 @@ foreach my $pkg (@ARGV) {
     ## $pkgdir is the corresponding absolute path.
     ## $pkgname is the name of the package (bundle).
     chdir($startdir);
-    $pkg =~ s+/$++;  # string any trailing '/'
+    $pkg =~ s+/$++;  # strip any trailing '/'
     my $pkgname = basename($pkg);
 
     ## is this a tar archive?
