@@ -202,9 +202,8 @@ To make DVI versions of the manuals use
 (assuming you have tex and latex installed and in your path).
 
 
-The fptex distribution of TeX (from
-ftp://ftp.ese-metz.fr/pub/tex/win32-beta/fptex-0.4beta1/ at present)
-includes a suitable port of pdftex.
+The fptex distribution of TeX (via www.fptex.org) includes a suitable
+port of pdftex.
 
 
 
