@@ -47,7 +47,7 @@ NEW FEATURES
 	for unconstrained minimization and maximization with and
 	without derivatives.
 
-	optim() also allows box constraints (interval bounds on 
+	optim() also allows box constraints (interval bounds on
 	individual variables) in its limited-memory BFGS option.
 
     o	strsplit() now uses split regexps, and no longer insists on
@@ -105,7 +105,7 @@ BUG FIXES
 
     o	\enumerate now enumerates in text conversion of .Rd files.
 
-    o	glm no longer fails with name<- errors in cases where
+    o	glm no longer fails with names<- errors in cases where
         observations with fits on the mu.eta boundary have been dropped.
 
 
