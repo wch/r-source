@@ -103,6 +103,15 @@ Changes from grid_1.8.0 to grid_1.9.0:
     convenience functions (they produce "strwidth", "strheight",
     "grobwidth", and "grobheight" unit objects, respectively).
 
+11. Allowed viewports to turn off clipping altogether.  Possible settings
+    for viewport clip arg are now:
+
+      "on"      = clip to the viewport (was TRUE)
+      "inherit" = clip to whatever parent says (was FALSE)
+      "off"     = turn off clipping 
+
+    Still accept logical values (and NA maps to "off")
+
 
 Changes from grid_1.8.0 to grid_1.8.1:
 ------------------------------------

@@ -13,7 +13,7 @@
 viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
          width = unit(1, "npc"), height = unit(1, "npc"),
          default.units = "npc", just = "centre", 
-         gp = gpar(), clip = FALSE,
+         gp = gpar(), clip = "inherit",
          xscale = c(0, 1), yscale = c(0, 1),
          angle = 0,
          layout = NULL, layout.pos.row = NULL, layout.pos.col = NULL,
@@ -39,8 +39,12 @@ vpTree(parent, children)
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically
     a list of graphical parameter settings.}
-  \item{clip}{A logical flag indicating whether to clip to the
-    extent of the viewport.}
+  \item{clip}{One of \code{"on"}, \code{"inherit"}, or
+    \code{"off"}, indicating whether to
+    clip to the extent of this viewport, inherit the clipping region
+    from the parent viewport, or turn clipping off altogether.
+    For back-compatibility, a logical value of \code{TRUE} corresponds
+    to \code{"on"} and \code{FALSE} corresponds to \code{"inherit"}.}
   \item{xscale}{A numeric vector of length two indicating the minimum and
     maximum on the x-scale.}
   \item{yscale}{A numeric vector of length two indicating the minimum
@@ -156,6 +160,16 @@ clip.demo(1, 2, TRUE, FALSE)
 clip.demo(2, 1, FALSE, TRUE)
 clip.demo(2, 2, TRUE, TRUE)
 popViewport()
+# Demonstrate turning clipping off
+grid.newpage()
+pushViewport(viewport(w=.5, h=.5, clip="on"))
+grid.rect()
+grid.circle(r=.6, gp=gpar(lwd=10))
+pushViewport(viewport(clip="inherit"))
+grid.circle(r=.6, gp=gpar(lwd=5, col="grey"))
+pushViewport(viewport(clip="off"))
+grid.circle(r=.6)
+popViewport(3)
 # Demonstrate vpList, vpStack, and vpTree
 grid.newpage()
 tree <- vpTree(viewport(w=0.8, h=0.8, name="A"),

@@ -22,7 +22,12 @@ valid.viewport <- function(x, y, width, height, just,
     stop("`x', `y', `width', and `height' must all be units of length 1")
   if (!is.gpar(gp))
     stop("Invalid graphics parameters")
-  clip <- as.logical(clip)
+  if (!is.logical(clip)) 
+    clip <- switch(as.character(clip),
+                   on=TRUE,
+                   off=NA,
+                   inherit=FALSE,
+                   stop("Invalid clip value"))
   if (!is.numeric(xscale) || length(xscale) != 2)
     stop("Invalid xscale in viewport")
   if (!is.numeric(yscale) || length(yscale) != 2)
@@ -182,7 +187,7 @@ viewport <- function(x = unit(0.5, "npc"),
                      default.units = "npc",
                      just = "centre",
                      gp = gpar(),
-                     clip = FALSE,
+                     clip = "inherit",
                      # FIXME: scales are only linear at the moment 
                      xscale = c(0, 1),
                      yscale = c(0, 1),
