@@ -60,7 +60,7 @@ boxplot.formula <- function(formula, data = NULL, ..., subset)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
     m$... <- NULL
-    m[[1]] <- as.name("model.frame")
+    m[[1]] <- as.name("stats::model.frame")
     mf <- eval(m, parent.frame())
     response <- attr(attr(mf, "terms"), "response")
     boxplot(split(mf[[response]], mf[-response]), ...)

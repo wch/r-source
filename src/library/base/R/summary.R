@@ -18,7 +18,7 @@ summary.default <-
     else if(is.numeric(object)) {
 	nas <- is.na(object)
 	object <- object[!nas]
-	qq <- quantile(object)
+	qq <- stats::quantile(object)
 	qq <- signif(c(qq[1:3], mean(object), qq[4:5]), digits)
 	names(qq) <- c("Min.", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max.")
 	if(any(nas))

@@ -13,7 +13,7 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 	    }
 	    else stop("invalid first argument")
 	}
-	else if(is.ts(x)) {
+	else if(inherits(x, "ts")) {
 	    y <- if(is.matrix(x)) x[,1] else x
 	    x <- time(x)
 	    xlab <- "Time"
@@ -210,7 +210,7 @@ function(formula, data = parent.frame(), ..., subset,
     m$ylab <- m$... <- m$ask <- NULL
     subset.expr <- m$subset
     m$subset <- NULL
-    m[[1]] <- as.name("model.frame")
+    m[[1]] <- as.name("stats::model.frame")
     m <- as.call(c(as.list(m), list(na.action = NULL)))
     mf <- eval(m, parent.frame())
     if (!missing(subset)) {
@@ -271,7 +271,7 @@ function(formula,  data = parent.frame(), ..., subset)
     dots <- m$...
     dots <- lapply(dots, eval, data, parent.frame())
     m$... <- NULL
-    m[[1]] <- as.name("model.frame")
+    m[[1]] <- as.name("stats::model.frame")
     m <- as.call(c(as.list(m), list(na.action = NULL)))
     mf <- eval(m, parent.frame())
     if (!missing(subset)) {
@@ -307,7 +307,7 @@ function(formula, data = parent.frame(), ..., subset)
     dots <- m$...
     dots <- lapply(dots, eval, data, parent.frame())
     m$... <- NULL
-    m[[1]] <- as.name("model.frame")
+    m[[1]] <- as.name("stats::model.frame")
     m <- as.call(c(as.list(m), list(na.action = NULL)))
     mf <- eval(m, parent.frame())
     if (!missing(subset)) {
