@@ -1,6 +1,7 @@
 \name{tools-internal}
 \title{Internal tools Objects}
 \alias{.convertFilePathToAbsolute}
+\alias{.delimMatch}
 \alias{.fileTest}
 \alias{.isS3Generic}
 \alias{.listFilesWithExts}
@@ -50,6 +51,7 @@
 \usage{
 sQuote(s)
 .convertFilePathToAbsolute(path)
+.delimMatch(x, delim = c("{", "}"), syntax = "Rd")
 .fileTest(op, x, y)
 .isS3Generic(fname, envir)
 .listFilesWithExts(dir, exts, path = TRUE)

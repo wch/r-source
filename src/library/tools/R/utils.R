@@ -29,6 +29,21 @@ function(path)
     }
 }
 
+### * .delimMatch
+
+.delimMatch <-
+function(x, delim = c("\{", "\}"), syntax = "Rd")
+{
+    if(!is.character(x))
+        stop("argument x must be a character vector")
+    if((length(delim) != 2) || any(nchar(delim) != 1))
+        stop("incorrect value for delim")
+    if(syntax != "Rd")
+        stop("only Rd syntax is currently supported")
+
+    .Call("delim_match", x, delim, PACKAGE = "tools")
+}
+
 ### * .fileTest
 
 .fileTest <-
