@@ -518,7 +518,7 @@ rsync-recommended:
 
 ../library/%/DESCRIPTION: ../library/RECOMMENDED/%.tgz
 	@echo "---- $*"
-	(cd ../library; tar zxf Recommended/$*.tgz; touch $@)
+	(cd ../library; rm -rf $*; tar zxf Recommended/$*.tgz; touch $@)
 
 unpack-recommended:
 	@echo "--- Unpacking recommended packages"
