@@ -16,8 +16,8 @@ function (formula, data=list(), subset, weights, na.action,
 			      "is not supported. Using \"qr\"."))
 	if(length(list(...)))
 		warning(paste("Extra arguments", deparse(substitute(...)),
-                              "are just disregarded."))
-        if(!singular.ok)
+			      "are just disregarded."))
+	if(!singular.ok)
 		warning("only `singular.ok = TRUE' is currently implemented.")
 	y <- model.response(mf, "numeric")
 	w <- model.weights(mf)
@@ -52,7 +52,7 @@ lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
 			      "is not supported. Using \"qr\"."))
 	if(length(list(...)))
 		warning(paste("Extra arguments", deparse(substitute(...)),
-                              "are just disregarded."))
+			      "are just disregarded."))
 	z <- .Fortran("dqrls", qr = x, n = n, p = p, y = y, ny = ny,
 		tol = tol, coefficients = mat.or.vec(p, ny),
 		residuals = y, effects = y, rank = integer(1),
@@ -93,7 +93,7 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
 			      "is not supported. Using \"qr\"."))
 	if(length(list(...)))
 		warning(paste("Extra arguments", deparse(substitute(...)),
-                              "are just disregarded."))
+			      "are just disregarded."))
 	zero.weights <- any(w == 0)
 	if (zero.weights) {
 		save.r <- y
@@ -237,63 +237,90 @@ summary.lm <- function (z, correlation = FALSE)
 	ans
 }
 
-print.summary.lm <-
-function (x, digits = max(3, .Options$digits - 3), roundfun=round, ...)
+print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
+			      symbolic.cor = p > 4, signif.stars= TRUE,
+			      roundfun=round, ...)
 {
-	cat("\nCall:\n")
+	cat("\nCall:\n")#S: ' ' instead of '\n'
 	cat(paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
+	##0.61: dput(x$call)
 	resid <- x$residuals
 	df <- x$df
 	rdf <- df[2]
+	cat("Residuals:\n")
 	if (rdf > 5) {
-		cat("Residuals:\n")
-		if (length(dim(resid)) == 2) {
-			rq <- apply(t(resid), 1, quantile)
-			dimnames(rq) <- list(c("Min", "1Q", "Median",
-				"3Q", "Max"), dimnames(resid)[[2]])
-		}
-		else {
-			rq <- quantile(resid)
-			names(rq) <- c("Min", "1Q", "Median",
-				"3Q", "Max")
-		}
+		nam <- c("Min", "1Q", "Median", "3Q", "Max")
+		rq <- if (length(dim(resid)) == 2)
+			structure(apply(t(resid), 1, quantile),
+				  dimnames = list(nam, dimnames(resid)[[2]]))
+		else  structure(quantile(resid), names = nam)
 		print(rq, digits = digits, ...)
 	}
 	else if (rdf > 0) {
-		cat("Residuals:\n")
 		print(resid, digits = digits, ...)
 	}
 	if (nsingular <- df[3] - df[1])
 		cat("\nCoefficients: (", nsingular, " not defined because of singularities)\n",
 			sep = "")
 	else cat("\nCoefficients:\n")
-	print(roundfun(x$coefficients, digits = digits), quote = FALSE,
-		...)
+	##O R 0.61:
+	##O print(roundfun(x$coefficients, digits = digits), quote = FALSE, ...)
+	##- Splus3.{1-4}: Coefs <- format(round(x$coef, digits = digits))
+	##- ============   CANNOT be good for funny scales of Y
+	acs <- abs(coef.se <- x$coef[, 1:2, drop=FALSE])
+	digmin <- 1+floor(log10(range(acs[acs != 0], na.rm= TRUE)))
+	## = digits for rounding col 1:2
+	digt <- max(1, min(5, digits - 1))
+	## You need this, e.g., for   "rlm" class from MASS library:
+	has.Pval <- ncol(x$coef)>= 4# or any("Pr(>|t|)" == dimnames(x$coef)[[2]]
+	if(has.Pval)
+		Pv <- x$coef[, 4]
+	Coefs <-
+	  cbind(format(round(coef.se, max(1,digits - digmin)), digits=digits),
+		format(x$coef[, 3], digits=digt),
+		if(has.Pval) format.pval(Pv, digits = digt))
+	dimnames(Coefs) <- dimnames(x$coef)
+	if(any(not.both.0 <- (c(x$coef)==0)!=(as.numeric(Coefs)==0),na.rm=TRUE))
+	  ## not.both.0==T:  one is TRUE, one is FALSE : ==> x$coef != 0
+	  Coefs[not.both.0] <- format(x$coef[not.both.0], digits= min(1,digits-1))# =2
+	if(!has.Pval || !exists("symnum", mode = "function"))
+		signif.stars <- FALSE
+	else if(signif.stars) {
+		Signif <- symnum(x$coef[,"Pr(>|t|)"], corr = FALSE,
+				 cutpoints = c(0,  .001,.01,.05, .1, 1),
+				 symbols   =  c("***","**","*","."," "))
+		Coefs <- cbind(Coefs, Signif)
+	}
+	print(Coefs, quote = FALSE, ...)
+	if(signif.stars) cat("---\nSignif. codes: ",attr(Signif,"legend"),"\n")
+
 	cat("\nResidual standard error:", format(signif(x$sigma,
 		digits)), "on", rdf, "degrees of freedom\n")
 	if (!is.null(x$fstatistic)) {
-		cat("Multiple R-Squared:", format(signif(x$r.squared,
-			digits)))
-		cat(",	Adjusted R-squared:", format(signif(x$adj.r.squared,
-			digits)), "\n")
-		cat("F-statistic:", format(signif(x$fstatistic[1],
-			digits)), "on", x$fstatistic[2], "and",
-			x$fstatistic[3], "degrees of freedom")
-		cat(",	p-value:", format(signif(1 - pf(x$fstatistic[1],
-			x$fstatistic[2], x$fstatistic[3]), digits)),
-			"\n")
+		cat("Multiple R-Squared:", formatC(x$r.squared, digits=digits))
+		cat(",\tAdjusted R-squared:",formatC(x$adj.r.squared,d=digits),
+		    "\nF-statistic:", formatC(x$fstatistic[1], digits=digits),
+		    "on", x$fstatistic[2], "and",
+		    x$fstatistic[3], "degrees of freedom,\tp-value:",
+		    formatC(1 - pf(x$fstatistic[1], x$fstatistic[2],
+				   x$fstatistic[3]), dig=digits),
+		    "\n")
 	}
 	correl <- x$correlation
 	if (!is.null(correl)) {
 		p <- dim(correl)[2]
 		if (p > 1) {
 			cat("\nCorrelation of Coefficients:\n")
-			correl[!lower.tri(correl)] <- NA
-			print(correl[-1, -NCOL(correl)], digits = digits,
-				na = "")
+			if(symbolic.cor)
+				print(symnum(correl)[-1,-p])
+			else {
+				correl[!lower.tri(correl)] <- NA
+				print(correl[-1, -p],
+				      digits = digits, na = "")
+			}
 		}
 	}
-	cat("\n")
+	cat("\n")#- not in S
 	invisible(x)
 }
 
@@ -427,7 +454,7 @@ print.anova.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 	cat("\nAnalysis of Variance:\n\n")
 	print.default(round(unclass(x), digits), na="", print.gap=2)
 	cat("\n")
-        invisible(x)
+	invisible(x)
 }
 
 predict.lm <- function (object, newdata = model.frame(object),
