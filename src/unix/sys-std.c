@@ -50,7 +50,7 @@ void fpu_setup(int);     /* in sys-unix.c */
 #endif
 
 
-extern int UsingReadline;
+extern Rboolean UsingReadline;
 
 /*
  *  1) FATAL MESSAGES AT STARTUP
@@ -695,7 +695,7 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if(what->fileDescriptor != fileno(stdin))
 		    what->handler((void*) NULL);
 		else usleep(R_wait_usec/2);
-	    /* we can't handle console read events here, 
+	    /* we can't handle console read events here,
 	       so just sleep for a while */
 	    }
 	}
