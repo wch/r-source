@@ -135,8 +135,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename)
 	} elsif($type =~ /example/i ) {
 	    ;
 	} else {
-	    warn("\n** Rdconv( type = '%s' ): no valid type specified\n", 
-		 $type);
+	    warn "\n** Rdconv --type '..' : no valid type specified\n";
 	}
 
 	rdoc2html($htmlfile)	if $type =~ /html/i;
