@@ -223,8 +223,8 @@ NEW FEATURES
 	-  sort.list() (and order with just one vector) is several
 	   times faster for numeric, integer and logical vectors.
 
-	-  axis() now omits labels which are NA (but still draws the
-	   tick mark.
+    o   axis() now omits labels which are NA (but still draws the
+	tick mark.
 
 
 DEPRECATED & DEFUNCT
@@ -498,7 +498,7 @@ BUG FIXES
 	- it was order-dependent for a mixture of integer and numeric args.
 
     o	mean() gave (numeric) NA if integer overflow occurred in sum(),
-	but now always works with numeric (or complex) numbers.
+	but now always works internally with numeric (or complex) numbers.
 
     o	sort.list() and order() were treating NA_STRING as "NA".
 
