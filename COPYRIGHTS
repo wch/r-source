@@ -68,6 +68,14 @@ doc/html/search/*.java
 	Copyright (C), 1998 Thomas Baier
 or	Copyright (C), 1998-2000, Thomas Baier, R Core Development Team
 
+doc/manual/texinfo.tex
+
+	Copyright (C) various dates Free Software Foundation, Inc.
+
+share/texmf/upquote.sty
+
+	Copyright 2000 Michael A. Covington.
+	Copyright 2003 Michael A. Covington, Frank Mittelbach.
 
 src/library/base/R/mosaicplot.R
 
