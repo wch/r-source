@@ -1174,11 +1174,12 @@ c
       implicit double precision (a-h, o-z)
       dimension x(n),y(n),w(n),smo(n)
       double precision knot(29), coef(25), work((17+25)*25)
-      double precision df, df1, lambda, gcvpen, lev(250), s
-      double precision dx(250), dy(250), dw(250), dsmo(250)
+      double precision df, df1, lambda, gcvpen, lev(2500), s
+      double precision dx(2500), dy(2500), dw(2500), dsmo(2500)
       integer par(2)
       double precision param(3), crit
       common /BDRspsmooth/ df, gcvpen, ismethod
+      if (n .gt. 2500) call bdrsplerr()
       do 10 i = 1,n
         dx(i) = (x(i)-x(1))/(x(n)-x(1))
         dy(i) = y(i)

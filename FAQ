@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.0-8, 2000/04/26
+Version 1.0-9, 2000/05/08
 Kurt Hornik
 
 
@@ -390,6 +390,14 @@ analysis software systems.  See
      P. Spector (1994), "An introduction to S and S-PLUS", Duxbury Press.
 
      A. Krause and M. Olsen (1997), "The Basics of S and S-PLUS", Springer.
+
+   The book
+     J. C. Pinheiro and D. M. Bates (2000), "Mixed-Effects Models in S and
+     S-PLUS", Springer, ISBN 0-387-98957-0
+
+provides a comprehensive guide to the use of the *nlme* package for linear
+and nonlinear mixed-effects models.  This has a home page at
+`http://nlme.stat.wisc.edu/MEMSS'.
 
    Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in:
@@ -977,6 +985,10 @@ works, was published in the Journal of Statistical Software
 *Devore5*
      Data sets and sample analyses from "Probability and Statistics for
      Engineering and the Sciences (5th ed)" by Jay L. Devore, 2000, Duxbury.
+
+*GenKern*
+     Functions for generating and manipulating generalised binned kernel
+     density estimates.
 
 *KernSmooth*
      Functions for kernel smoothing (and density estimation) corresponding

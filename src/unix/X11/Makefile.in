@@ -13,9 +13,9 @@ include $(top_builddir)/Makeconf
 
 R_XTRA_CFLAGS = $(CPICFLAGS)
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
-ALL_X_LIBS = $(X_PRE_LIBS) $(X_LIBS) $(X_EXTRA_LIBS) -lm
+ALL_X_LIBS = $(X_PRE_LIBS) $(X_LIBS) $(X_EXTRA_LIBS) $(BITMAP_LIBS) -lm
 
-SOURCES = dataentry.c devX11.c rotated.c
+SOURCES = dataentry.c devX11.c rotated.c rbitmap.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
 HEADERS = dataentry.h rotated.h

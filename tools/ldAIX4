@@ -1,20 +1,16 @@
 #! /bin/sh
 
-# This script helps compiling a main program that will use dynamic
-# loading.  It's needed on AIX since the linker has to know the export
-# list of the main program when compiling the shared libs that the
-# main program will load (with dlopen ()).  It creates a file
-# "lib.exp" (or whatever you tell it to name it).  This file contains
-# the export list for the main program (i.e. ".").
+# This script writes an export file, assembling the exported symbols
+# by reading the output of nm.  This file is needed on AIX (4.2 and
+# later) to compile shared libs.
 #
-# For this stage we automatically add "-bE:lib.exp".  For the shared
-# libs you'll have to add "-bI:lib.exp" (maybe with a path).
-#
-# This is only tested for AIX 4.2.
+# For the (main) executable add "-bE:lib.exp" to the linker options
+# and for the shared libs add "-bI:lib.exp" (maybe with a path) if
+# you call the export file "lib.exp".
 
 #set -x
 
-usage="Usage: `basename $0` [-o <expfile>] ld <args for ld ...>"
+usage="Usage: `basename $0` [-o <expfile>] <object files and libs>"
 
 if [ ${1-"-h"} = "-h" ]; then
 	echo 1>&2 "$usage"
@@ -44,14 +40,22 @@ for arg; do
     case $arg in *.a) ofiles="$ofiles $arg";; esac
 done
 
-# Call nm so that it prints only global sympols (unsorted, w/o header)
+# Call nm so that it prints only global symbols (unsorted, w/o header)
 nm=nm
 nmopts="-p -g -h"
 
-# Replace ".funname T adr1 adr2" with "funname"
-regex1='s,^\.\([a-zA-Z][a-zA-Z0-9_]*\)  *T .*$,\1,p'
 # Replace "varname B adr1 adr2" with "varname bss"
-regex2='s,^\([a-zA-Z][a-zA-Z0-9_]*\)  *B .*$,\1 bss,p'
+regex1='s,^\([a-zA-Z][a-zA-Z0-9_]*\)  *B .*$,\1 bss,p'
+
+# Replace "varname D adr1 adr2" with "varname"
+regex2='s,^\([a-zA-Z][a-zA-Z0-9_]*\)  *D .*$,\1,p'
+
+# Note that functions appear as ".funname T" for the text section
+# and as "funname D" for the initialized data section (the function
+# name is a pointer).
+
+## # Replace ".funname T adr1 adr2" with "funname"
+## regex1='s,^\.\([a-zA-Z][a-zA-Z0-9_]*\)  *T .*$,\1,p'
 
 echo "#! ." > $mainexp
 $nm $nmopts $ofiles | sed -n -e "$regex1" -e "$regex2" | \

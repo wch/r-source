@@ -12,10 +12,10 @@ format.default <- function(x, trim=FALSE, digits=NULL)
     }
     switch(mode(x),
 	   NULL = "NULL",
-	   list = sapply(
-	   lapply(x, function(x)
-		  .Internal(format(unlist(x),trim=trim))),
-	   paste, collapse=", "),
+	   list = sapply(lapply(x, function(x)
+				.Internal(format(unlist(x), trim=trim))),
+			 paste, collapse=", "),
+	   call=, expression=, "function"=, "(" = deparse(x),
 	   ##else: numeric, complex, character, ??? :
 	   structure(.Internal(format(x, trim = trim)), names=names(x)))
 }

@@ -309,9 +309,15 @@ static void ComplexAnswer(SEXP x)
 	n = LENGTH(x);
 	for (i = 0; i < n; i++) {
 	    xi = INTEGER(x)[i];
-	    if (xi == NA_INTEGER)
-		REAL(ans_ptr)[ans_length++] = NA_REAL;
-	    else REAL(ans_ptr)[ans_length++] = xi;
+            if (xi == NA_INTEGER) {
+                COMPLEX(ans_ptr)[ans_length].r = NA_REAL;
+                COMPLEX(ans_ptr)[ans_length].i = NA_REAL;
+            }
+            else {
+                COMPLEX(ans_ptr)[ans_length].r = xi;
+                COMPLEX(ans_ptr)[ans_length].i = 0.0;
+            }
+            ans_length++;
 	}
 	break;
     }

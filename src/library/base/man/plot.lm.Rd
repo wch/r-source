@@ -22,7 +22,7 @@ plot.lm(x, which = 1:4,
   \item{sub.caption}{common title---above figures if there are multiple;
     used as \code{sub} (s.\code{\link{title}}) otherwise.}
   \item{main}{title to each plot---in addition to the above
-    \code{caption}.} 
+    \code{caption}.}
   \item{ask}{logical; if \code{TRUE}, the user is \emph{ask}ed before
     each plot, see \code{\link{par}(ask=.)}.}
   \item{\dots}{other parameters to be passed through to plotting
@@ -75,10 +75,9 @@ plot.lm(x, which = 1:4,
 \author{
   John Maindonald and Martin Maechler.
 }
-\seealso{
-  \code{\link{lm.influence}}, \code{\link{cooks.distance}}
+\seealso{\code{\link{termplot}}, \code{\link{lm.influence}},
+  \code{\link{cooks.distance}}.
 }
-
 \examples{
 ## Analysis of the life-cycle savings data
 ## given in Belsley, Kuh and Welsch.

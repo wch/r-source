@@ -36,6 +36,7 @@ enum { UP, DOWN, LEFT, RIGHT };
  
 static void advancerect(int);
 static int  CheckControl(DEEvent*);
+static int  CheckShift(DEEvent*);
 static int  checkquit(int);
 static void clearrect();
 static void closerect();
@@ -50,7 +51,7 @@ static void drawwindow();
 static void drawcol(int);
 static void drawrow(int);
 static void find_coords(int, int, int*, int*);
-static int  findsquare();
+static int  findcell();
 static char GetCharP(DEEvent*);
 static KeySym GetKey(DEEvent*);
 static void handlechar(char*);
@@ -61,18 +62,20 @@ static void jumpwin(int, int);
 static void popdownmenu();
 static void popupmenu(int, int, int, int);
 static void printlabs();
-static void printrect(int);
+static void printrect(int, int);
 static void printstring(char*, int, int, int, int);
 static void printelt(SEXP, int, int, int);
-static void querypointer(int*, int*, int*, int*);
 static void RefreshKeyboardMapping(DEEvent*);
  
 /* Global variables needed for the graphics */
  
 static int box_w;                       /* width of a box */
+static int boxw[100];
 static int box_h;                       /* height of a box */
 static int windowWidth;                 /* current width of the window */
+static int fullwindowWidth;
 static int windowHeight;                /* current height of the window */
+static int fullwindowHeight;
 static int currentexp;                  /* boolean: whether an cell is active */
 static int crow;                        /* current row */
 static int ccol;                        /* current column */
@@ -107,16 +110,14 @@ static XFontStruct      *font_info;
  
 static void bell();
 static void cleararea(int, int, int, int);
+static void copyH(int, int, int);
 static void copyarea(int, int, int, int);
 static void doConfigure(DEEvent *ioevent);
-static void drawline(int, int, int, int);
-static void drawrectangle(int, int, int, int);
+/* static void drawline(int, int, int, int); */
+static void drawrectangle(int, int, int, int, int, int);
 static void drawtext(int, int, char*, int);
 static int  NextEvent(DEEvent *ioevent);
 static void RefreshKeyboardMapping(DEEvent *ioevent);
-static void setforeground(int);
-static void setattribsfromwindow();
-static void setlineattribs( int);
 static void Rsync();
 static int textwidth(char*, int);
 static int WhichEvent(DEEvent ioevent);
@@ -126,6 +127,6 @@ static int WhichEvent(DEEvent ioevent);
  
 static SEXP inputlist;  /* each element is a vector for that row */
 SEXP listAppend(SEXP, SEXP);
-SEXP ssNewVector(SEXPTYPE, int);
+static SEXP ssNewVector(SEXPTYPE, int);
 static SEXP ssNA_STRING;
 static double ssNA_REAL;

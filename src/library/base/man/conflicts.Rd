@@ -31,6 +31,8 @@ conflicts(, TRUE)
 #
 # $package:base
 # [1] "lm"
-#
+
+## Remove things from your "workspace" that mask others:
+remove(list = conflicts())
 }
 \keyword{utilities}

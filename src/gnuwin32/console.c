@@ -2259,3 +2259,141 @@ void Rgui_configure()
     show(wconfig);
     getGUIstate(&curGUI);
 }
+
+/* data editor support */
+
+int R_de_up;
+
+extern void de_redraw(control c, rect r);
+extern void de_normalkeyin(control c, int k);
+extern void de_ctrlkeyin(control c, int k);
+extern void de_mousedown(control c, int buttons, point xy);
+extern void de_mouseup(control c, int buttons, point xy);
+extern void de_closewin();
+extern void de_copy(control c);
+extern void de_paste(control c);
+extern void de_autosize(control c);
+extern void de_sbf(control c, int pos);
+
+
+static void deldataeditor(control m)
+{
+    ConsoleData p = getdata(m);
+    xbufdel(p->lbuf);
+    freeConsoleData(getdata(m));
+}
+
+static void declose(control m)
+{
+    de_closewin();
+    show(RConsole);
+    R_de_up =0;
+}
+
+static void deresize(console c, rect r)
+FBEGIN
+    if (((WIDTH  == r.width) &&
+	 (HEIGHT == r.height)) ||
+	(r.width == 0) || (r.height == 0) ) /* minimize */
+        FVOIDRETURN;
+    WIDTH = r.width;
+    HEIGHT = r.height;
+    clear(c);
+FVOIDEND
+
+static void menudehelp(control m)
+{
+    char s[] = "Navigation.\n  Keyboard: cursor keys move selection\n\tTab move right, Shift+Tab moves left\n\tPgDn or Ctrl+F: move down one screenful\n\tPgUp or Ctrl+B: move up one screenful\n\tHome: move to (1,1) cell\n\tEnd: show last rows of last column.\n   Mouse: left-click in a cell, use the scrollbar(s).\n\nEditing.\n  Type in the currently hightlighted cell\n  Double-click in a cell for an editable field\n\nMisc.\n  Ctrl-L redraws the screen, auto-resizing the columns\n  Ctrl-C copies selected cell\n  Ctrl-V pastes to selected cell\n  Right-click menu for copy, paste, autosize currently selected column\n\n";
+    askok(s);
+}
+
+
+static MenuItem DePopup[28] = {
+    {"Help", menudehelp, 0},
+    {"-", 0, 0},
+    {"Copy selected cell", de_copy, 0},
+    {"Paste selected cell", de_paste, 0},
+    {"Autosize column", de_autosize, 0},
+    {"-", 0, 0},
+    {"Close", declose, 0},
+    LASTMENUITEM
+};
+
+static void demenuact(control m)
+{
+    /* use this to customize the menu */
+}
+
+static void depopupact(control m)
+{
+    /* use this to customize the menu */
+}
+
+dataeditor newdataeditor()
+{
+    ConsoleData p;
+    int w, h, x, y;
+    dataeditor c;
+    menuitem m;
+    
+    p = newconsoledata((consolefn) ? consolefn : FixedFont,
+		       pagerrow, pagercol,
+		       consolefg, consoleuser, consolebg,
+		       DATAEDITOR);
+    if (!p) return NULL;
+
+    w = WIDTH ;
+    h = HEIGHT;
+    if (ismdi()) {
+	RECT *pR = RgetMDIsize();
+	x = (pR->right - w) / 1.5; x = x > 20 ? x:20;
+	y = (pR->bottom - h) / 1.5; y = y > 20 ? y:20;
+    } else {
+	x = (devicewidth(NULL) - w) / 1.5;
+	y = (deviceheight(NULL) - h) / 1.5 ;
+    }
+    c = (dataeditor) newwindow(" Data Editor", rect(x, y, w, h),
+			       Document | StandardWindow | TrackMouse |
+			       VScrollbar | HScrollbar | Modal);
+    if (!c) {
+         freeConsoleData(p);
+         return NULL;
+    }
+    setdata(c, p);
+    if(h == 0) HEIGHT = getheight(c);
+    if(w == 0) WIDTH  = getwidth(c);
+    COLS = WIDTH / FW - 1;
+    ROWS = HEIGHT / FH - 1;
+    BORDERX = (WIDTH - COLS*FW) / 2;
+    BORDERY = (HEIGHT - ROWS*FH) / 2;
+    gsetcursor(c, ArrowCursor);
+    setbackground(c, consolebg);
+    if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
+	/* blank toolbar to stop windows jumping around */
+        int btsize = 24;
+        control tb;
+        addto(c);
+        MCHECK(tb = newtoolbar(btsize + 4));
+	gsetcursor(tb, ArrowCursor);
+    }
+    MCHECK(gpopup(depopupact, DePopup));
+    MCHECK(m = newmenubar(demenuact));
+    MCHECK(newmenu("File"));
+/*    MCHECK(m = newmenuitem("-", 0, NULL));*/
+    MCHECK(m = newmenuitem("Close", 0, declose));
+    newmdimenu();
+    MCHECK(m = newmenu("Help"));
+    MCHECK(newmenuitem("Data editor", 0, menudehelp));
+ 
+    setdata(c, p);
+    setresize(c, deresize);
+    setredraw(c, de_redraw);
+    setdel(c, deldataeditor);
+    setclose(c, declose);
+    sethit(c, de_sbf);
+    setkeyaction(c, de_ctrlkeyin);
+    setkeydown(c, de_normalkeyin);
+    setmousedown(c, de_mousedown);
+    setmouseup(c, de_mouseup);
+    return(c);
+}

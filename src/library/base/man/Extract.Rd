@@ -51,6 +51,10 @@ x$name
   When operating on a list, the \code{[[} operator gives the specified
   element of the list while the \code{[} operator returns a list with
   the specified element(s) in it.
+
+  The operators \code{$} and \code{$<-} do not evaluate their second
+  argument. It is translated to a string and that string is used to
+  locate the correct component of the first argument.
 }
 \seealso{
   \code{\link{list}}, \code{\link{array}}, \code{\link{matrix}}.

@@ -1492,16 +1492,43 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }
 
+/* $<-(x, elt, val), and elt does not get evaluated it gets matched.
+   to get DispatchOrEval to work we need to first translate it
+   to a string
+*/
 SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, nlist, val, t;
+    SEXP x, nlist, val, t, ans, input;
     checkArity(op, args);
     gcall = call;
 
     /* Note the RHS has alreaty been evaluated at this point */
 
+    input = allocVector(STRSXP, 1);
+
+    nlist = CADR(args);
+    if(isSymbol(nlist) )
+	STRING(input)[0] = PRINTNAME(nlist);
+    else if(isString(nlist) )
+	STRING(input)[0] = STRING(nlist)[0];
+    else {
+	errorcall(call, "invalid subscript type");
+	return R_NilValue; /*-Wall*/
+    }
+
+    /* replace the second argument with a string */
+    CADR(args) = input;
+
+    if(DispatchOrEval(call, op, args, env, &ans, 0))
+      return(ans);
+
+#ifdef OLD
     PROTECT(x = eval(CAR(args), env));
     val = eval( CADDR(args), env);
+#else
+    PROTECT(x = CAR(ans));
+    val = CADDR(ans);
+#endif
     if (NAMED(val)) val = duplicate(val);
     PROTECT(val);
 

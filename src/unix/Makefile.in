@@ -48,11 +48,11 @@ R: Makefile
 	@$(MAKE) $(LIB)
 
 DLLs:
-	@if test -n "$(R_GUIS)"; then \
-	  for g in $(R_GUIS); do \
+	@for g in $(R_GUIS) ""; do \
+	  if test -n "$${g}"; then \
 	    (cd $${g} && $(MAKE) R) || exit 1; \
-	  done; \
-	fi
+	  fi; \
+	done
 
 ../include/Rversion.h:
 	(cd ../include; $(MAKE) $(@F))
@@ -66,18 +66,18 @@ $(LIB): $(OBJECTS)
 mostlyclean: clean
 clean:
 	@echo "cleaning in $(subdir)"
-	@if test -n "$(R_GUIS)"; then \
-	  for g in $(R_GUIS); do \
+	@for g in $(R_GUIS) ""; do \
+	  if test -n "$${g}"; then \
 	    (cd $${g} && $(MAKE) $@); \
-	  done; \
-	fi
+	  fi; \
+	done
 	@-rm -f Makedeps *.d *.o *.a
 distclean: clean
-	@if test -n "$(R_GUIS)"; then \
-	  for g in $(R_GUIS); do \
+	@for g in $(R_GUIS) ""; do \
+	  if test -n "$${g}"; then \
 	    (cd $${g} && $(MAKE) $@); \
-	  done; \
-	fi
+	  fi; \
+	done
 	@for d in $(SUBDIRS); do \
 	  rm -f $${d}/Makefile; \
 	done
