@@ -316,7 +316,7 @@ RweaveLatexRuncode <- function(object, chunk, options)
     for(nce in 1:length(chunkexps))
     {
         ce <- chunkexps[[nce]]
-        dce <- deparse(ce)
+        dce <- deparse(ce, width.cutoff=0.75*getOption("width"))
         if(object$debug)
             cat("\nRnw> ", paste(dce, collapse="\n+  "),"\n")
         if(options$echo){
@@ -325,7 +325,9 @@ RweaveLatexRuncode <- function(object, chunk, options)
                     file=chunkout, append=TRUE)
                 openSinput <- TRUE
             }
-            cat("\nR> ", paste(dce, collapse="\n+  "),
+            cat("\n", getOption("prompt"),
+                paste(dce,
+                      collapse=paste("\n", getOption("continue"), sep="")),
                 file=chunkout, append=TRUE, sep="")
         }
 
