@@ -593,10 +593,6 @@ Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
 ..According to Simon Urbanek this is a java security issue.  With RAqua a good
 ..alternative is starting HTML 
 ..help and then using help.search() or  Help|Search Help on...
-* PR# 6438 *
-Subject: R crash 
-From: sstoddar@uiuc.edu
-Date: Fri, 16 Jan 2004 19:41:21 +0100 (CET)
 
 Directory:  Misc
 
@@ -843,3 +839,25 @@ Date: Sun, 29 Feb 2004 01:00:58 +0100 (CET)
 Subject: digamma with negative arguments
 From: cspark@ces.clemson.edu
 Date: Sun, 29 Feb 2004 22:14:32 +0100 (CET)
+* PR# 6627 *
+Subject: Trovato virus nel messaggio "fake"
+From: "Elisa Marini" <e.marini@nuovaedart.it>
+Date: Mon, 1 Mar 2004 08:18:33 +0100
+* PR# 6628 *
+Subject: Trovato virus nel messaggio "fake"
+From: "Lisa Montiani" <l.montiani@nuovaedart.it>
+Date: Mon, 1 Mar 2004 08:28:10 +0100
+* PR# 6629 *
+Subject: Delivery failure to smbadmin@parkwaywest.org
+Subject: [Samba] warning
+From: TZO Mailer <mailer@tzo.com>
+From: "r-bugs@r-project.org"@samba.org
+Date: Mon, 01 Mar 2004 09:32:36 GMT
+Date: Mon, 1 Mar 2004 11:29:05 +0200
+* PR# 6630 *
+Subject: failure notice
+Subject: Important
+From: administrador@provida.org.br
+From: r-bugs@r-project.org
+Date: 1 Mar 2004 15:02:06 -0000
+Date: Mon, 1 Mar 2004 16:04:01 +0100
