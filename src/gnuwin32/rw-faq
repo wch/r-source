@@ -159,6 +159,9 @@ Create a separate shortcut for each project: see Q2.3. All the paths to
 files used by R are relative to the starting directory, so setting the
 `Start in' field automatically helps separate projects.
 
+Alternatively, start R double-clicking a saved `.RData' file in the
+directory for the current project.
+
 2.6 How do I print from R?
 ==========================
 
@@ -240,7 +243,8 @@ Not itself.  The installers set some entries to allow uninstallation.
 In addition they set a Registry key `LOCAL_MACHINE\Software\R-core\R'
 giving the version and install path.  Again, this is not used by R
 itself, but it will be used by the DCOM interface
-(`http://cran.r-project.org/other-software.html').
+(`http://cran.r-project.org/other-software.html').  Finally, a file
+association for extension `.RData' is set in the Registry.
 
 You can add the Registry entries by running `RSetReg.exe' in the `bin'
 folder, and remove them by running this with argument `/U'.  Note that

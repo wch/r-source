@@ -202,6 +202,8 @@ Create a separate shortcut for each project: see Q2.3. All the paths to
 files used by R are relative to the starting directory, so setting the
 `Start in' field automatically helps separate projects.
 
+Alternatively, start R double-clicking a saved @file{.RData} file in the
+directory for the current project.
 
 @node How do I print from R?, Can I use R BATCH?, How can I keep workspaces for different projects in different directories?, Installation and Usage
 @section How do I print from R?
@@ -287,6 +289,8 @@ In addition they set a Registry key
 @code{LOCAL_MACHINE\Software\R-core\R} giving the version and install
 path.  Again, this is not used by R itself, but it will be used by the
 DCOM interface (@uref{http://cran.r-project.org/other-software.html}).
+Finally, a file association for extension @code{.RData} is set in the
+Registry.
 
 You can add the Registry entries by running @code{RSetReg.exe} in the
 @code{bin} folder, and remove them by running this with argument
