@@ -23,11 +23,12 @@ BUG FIXES
 	This showed up in persp, but did not affect other graphics
 	functions.  It is now possible to draw big DEMs.
 
-    o	logLik.nls() gave wrong df (PR#2295).
+    o	logLik.nls() gave wrong df. (PR#2295)
 
     o	rbind() with a mixture of data frames and matrices treated the
 	matrices as vectors. (PR#2266)
 
+    o   stripchart(method="stack") was not handling missing values. (PR#2018)
 
 
 		CHANGES IN R VERSION 1.6.1
