@@ -52,8 +52,8 @@ BUG FIXES
     o   merge() with multiple and differently-named match columns
         failed. (PR#1510)
 
-    o   NAs in right-justified unquoted matrices were being mis-aligned.
-	This mainly affected printing data frames.
+    o   NAs in right-justified unquoted character matrices were being 
+	mis-aligned.  This mainly affected printing data frames.
 
     o	predict.*bSpline() bugs extrapolating for deriv >= 1 (PR#1473),
         and predict.[bn]s bug e.g. for bs(x), reported by Ch.Sangiorgio.
@@ -180,6 +180,9 @@ BUG FIXES
     o	On console-based versions of R (Windows, GNOME, probably
 	MacOS) warning/error messages longer than 8192 chars could
 	crash R. (PR#1651)
+
+    o	HoltWinters() now initializes correctly in the exponential
+	smoothing case, and plot.HoltWinters() allows lty to be set. 
 
 
 

@@ -58,11 +58,15 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
   \eqn{\beta} and/or \eqn{\gamma} by minimizing the squared
   one-step prediction error if they are omitted.
 
-  Start values for \code{a}, \code{b} and \code{s} are detected by
-  performing a simple decomposition in trend and seasonal component using
-  moving averages (see function \code{decompose}) on the
+  For seasonal models, start values for \code{a}, \code{b} and \code{s}
+  are detected by performing a simple decomposition in trend and seasonal
+  component using moving averages (see function \code{decompose}) on the
   \code{start.periods} first periods (a simple linear regression on the
-  trend component is used for starting level and trend.)
+  trend component is used for starting level and trend.). For
+  level/trend-models (no seasonal component), start values for \code{a}
+  and \code{b} are \code{x[2]} and \code{x[2] - x[1]}, respectively. For
+  level-only models (ordinary exponential smoothing), the start value for
+  \code{a} is \code{x[1]}.
 }
 \value{
   An object of class \code{"HoltWinters"}, a list with components:
