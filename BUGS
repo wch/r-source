@@ -281,3 +281,11 @@ Date: Thu, 16 Dec 1999 14:17:26 +0100 (CET)
 Subject: lists of functions
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Fri, 17 Dec 1999 09:10:50 +0100 (MET)
+* PR# 378 *
+Subject: plot()  after split.screen() on postscript() Device produces inconsistent PostScript file
+From: boble@usa.net
+Date: Fri, 17 Dec 1999 21:32:23 +0100 (MET)
+* PR# 379 *
+Subject: strsplit does not conform to documentation
+From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
+Date: Fri, 17 Dec 1999 18:48:14 -0800 (PST)
