@@ -635,9 +635,9 @@ char *PrintUsage(void)
 {
     static char msg[5000];
     char msg0[] =
-"Start R, a system for statistical computation and graphics, with the\nspecified options\n\nEnvVars: Environmental variables can be set by NAME=value strings\n\nOptions:\n  -h, --help            Print usage message and exit\n  --version             Print version info and exit\n  --save                Do save data sets at the end of the session\n  --no-save             Don't save them\n",
+"Start R, a system for statistical computation and graphics, with the\nspecified options\n\nEnvVars: Environmental variables can be set by NAME=value strings\n\nOptions:\n  -h, --help            Print usage message and exit\n  --version             Print version info and exit\n  --save                Do save workspace at the end of the session\n  --no-save             Don't save it\n",
 	msg1[] =
-"  --no-environ          Don't read the site and user environment files\n  --no-site-file        Don't read the site-wide Rprofile\n  --no-init-file        Don't read the .Rprofile or ~/.Rprofile files\n  --restore             Do restore previously saved data sets at startup\n  --no-restore-data     Don't restore previously saved data sets\n  --no-restore-history  Don't restore the R history file\n  --no-restore          Don't restore anything\n",
+"  --no-environ          Don't read the site and user environment files\n  --no-site-file        Don't read the site-wide Rprofile\n  --no-init-file        Don't read the .Rprofile or ~/.Rprofile files\n  --restore             Do restore previously saved objects at startup\n  --no-restore-data     Don't restore previously saved objects\n  --no-restore-history  Don't restore the R history file\n  --no-restore          Don't restore anything\n",
 	msg2[] =
 "  --vanilla             Combine --no-save, --no-restore, --no-site-file,\n                          --no-init-file and --no-environ\n  --min-vsize=N         Set vector heap min to N bytes; '4M' = 4 MegaB\n  --max-vsize=N         Set vector heap max to N bytes;\n  --min-nsize=N         Set min number of cons cells to N\n  --max-nsize=N         Set max number of cons cells to N\n",
 	msg2b[] =
