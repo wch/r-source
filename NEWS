@@ -32,10 +32,10 @@ BUG FIXES
 
     o   x[[i]]<-quote(a) (x generic vector) didn't work
 
-    o   many argument name changes, add ... for method functions for
-	consistency with the gneric function.
+    o   for method functions: many argument name changes, add ... where
+	needed, for consistency with the generic function.
 
-    o   example() will allow aliased topic names. 
+    o   example() will allow (again) aliased topic names. 
 
     o   HTML help file conversions will find hyperlinks in the main 
 	library as well as the current library.
