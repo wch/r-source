@@ -193,7 +193,6 @@ void GEregisterSystem(GEcallback cb, int *systemRegisterIndex) {
 	error("unable to allocate memory (in GEregister)");
     registeredSystems[numGraphicsSystems]->callback = cb;
     numGraphicsSystems += 1;
-    return numGraphicsSystems - 1;
 }
 
 /****************************************************************
