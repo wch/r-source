@@ -21,7 +21,8 @@ rbind(\dots)
   rows) of the result.  If all the arguments are vectors, the number of
   columns (rows) in the result is equal to the length of the longest
   vector.  Values in shorter arguments are recycled to achieve this
-  length.
+  length (with a \code{\link{warning}} when they are recycled only
+  \emph{fractionally}).
 
   When the arguments consist of a mix of matrices and vectors the number
   of columns (rosw) of the result is determined by the number of columns
@@ -38,7 +39,7 @@ rbind(\dots)
 }
 \examples{
 cbind(1,1:7) # the '1' (= shorter vector) is recycled
-cbind(1:7, diag(3))# vector is subset
+cbind(1:7, diag(3))# vector is subset -> warning
 
 cbind(0,rbind(1,1:3))
 
