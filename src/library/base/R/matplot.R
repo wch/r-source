@@ -59,6 +59,7 @@ matplot <- function(x, y, type="p",
     ylim <- if (is.null(ylim)) range(xy$y, finite = TRUE)  else ylim
     if(length(type)< k) type<- rep(type,length= k)
     if(length(lty) < k) lty <- rep(lty, length= k)
+    if(length(lwd) < k) lwd <- rep(lwd, length= k)
     if(length(pch) < k) pch <- rep(pch, length= k)
     if(length(col) < k) col <- rep(col, length= k)
     ii <- 1:k
