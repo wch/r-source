@@ -9,7 +9,7 @@ buildzlib:
 	$(MAKE) -C ../../extra/zlib -f Makefile.win
 
 buildpng:
-	$(MAKE) CC='$(CC)' RANLIB=$(RANLIB) -C libpng -f scripts/makefile.std libpng.a
+	$(MAKE) CC='$(CC)' RANLIB=$(RANLIB) ZLIBLIB=../../../extra/zlib ZLIBINC=../../../extra/zlib -C libpng -f scripts/makefile.std libpng.a
 
 # jconfig.h and Makefile obtained running 'CC="gcc -mno-cygwin" ./configure'
 # under CYGWIN. They are here since the configure script doesn't run 

@@ -16,8 +16,6 @@ IMPORTANT: Tested only with
    If jpeg version is different from 6b, edit 'Makefile' and change 
    the definition of JPEGDIR.
 
-3) Copy src/extra/zlib/*.h to a folder zlib in this directory.
-
-4) Then,
+3) Then,
    > make
    should build  Rbitmap.dll and install it in R_HOME/bin.
