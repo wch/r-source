@@ -102,6 +102,7 @@ FORCE:
 
 $(OBJECTS_DVI): $(srcdir)/texinfo.tex
 R-exts.dvi: version.texi
+R-intro.dvi: R
 version.texi: Makefile $(top_srcdir)/VERSION
 	@echo "creating $(subdir)/$@"
 	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
