@@ -83,6 +83,9 @@ setIs <-
     ## class2 should exist
     where <- as.environment(where)
     classDef2 <- getClassDef(class2, where)
+    if(is.null(classDef2))
+        stop("Class \"", class2, "\" has no visible definition from package or environment \"",
+             getPackageName(where), "\"")
     ## check some requirements:
     ## One of the classes must be on the target environment (so that the relation can
     ## be retained by saving the corresponding image)
