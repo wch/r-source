@@ -3187,14 +3187,26 @@ void GText(double x, double y, int coords, char *str,
 			    height = GStrHeight(sbuf, INCHES, dd);
 			    yc = dd->dp.yCharOffset;
 			} else {
-			    double maxHeight = 0;
-			    double maxDepth = 0;
+			    double maxHeight;
+			    double maxDepth;
 			    char *ss;
+			    int charNum = 0;
 			    for (ss=sbuf; *ss; ss++) {
 				GMetricInfo((unsigned char) *ss, &h, &d, &w,
 					    INCHES, dd);
-				if (h > maxHeight) maxHeight = h;
-				if (d > maxDepth) maxDepth = d;
+				/* Set maxHeight and maxDepth from height
+				   and depth of first char.
+				   Must NOT set to 0 in case there is 
+				   only 1 char and it has negative
+				   height or depth
+				*/
+				if (charNum++ == 0) {
+				    maxHeight = h;
+				    maxDepth = d;
+				} else {
+				    if (h > maxHeight) maxHeight = h;
+				    if (d > maxDepth) maxDepth = d;
+				}
 			    }
 			    height = maxHeight - maxDepth;
 			    yc = 0.5;
