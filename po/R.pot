@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-01-31 09:59+0000\n"
+"POT-Creation-Date: 2005-02-01 09:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3519,7 +3519,7 @@ msgstr ""
 msgid "invalid \\U{xxxxxxxx} sequence"
 msgstr ""
 
-#: src/main/gram.y:1815
+#: src/main/gram.y:1832
 msgid "functions nested too deeply in source code"
 msgstr ""
 
@@ -3860,12 +3860,12 @@ msgstr ""
 msgid "Realloc could not re-allocate (size %d) memory"
 msgstr ""
 
-#: src/main/memory.c:2299
+#: src/main/memory.c:2300
 msgid "not safe to return vector pointer"
 msgstr ""
 
-#: src/main/memory.c:2327 src/main/memory.c:2336 src/main/memory.c:2347
-#: src/main/memory.c:2360 src/main/memory.c:2376 src/main/memory.c:2393
+#: src/main/memory.c:2328 src/main/memory.c:2337 src/main/memory.c:2348
+#: src/main/memory.c:2361 src/main/memory.c:2377 src/main/memory.c:2394
 msgid "bad value"
 msgstr ""
 
