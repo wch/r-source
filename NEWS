@@ -240,6 +240,10 @@ UTILITIES
 	of the package's DESCRIPTION file when testing an installed
 	package.
 
+    o   The DESCRIPTION file of packages may contain a 'Suggests:'
+        field for packages that are only used in examples or
+        vignettes.
+
 
 C-LEVEL FACILITIES
 
