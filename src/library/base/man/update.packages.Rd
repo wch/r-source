@@ -51,8 +51,6 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
     install the packages.}
   \item{ask}{If \code{TRUE}, ask before packages are actually downloaded
     and installed.}
-  \item{a, b}{Version strings of R packages, valid seperators are
-    \code{.} and \code{-}.}
 }
 \details{
   \code{installed.packages} scans the \file{DESCRIPTION} files of each
