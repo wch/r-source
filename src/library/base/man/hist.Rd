@@ -21,7 +21,7 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
       \item a single number giving the number of cells for the histogram,
       \item a character string naming an algorithm to compute the
       number of cells (see Details),
-      \item an function to compute the number of cells.
+      \item a function to compute the number of cells.
     }
     In the last three cases the number is a suggestion only.
   }
@@ -46,7 +46,7 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
   \item{col}{a colour to be used to fill the bars.
     The default of \code{NULL} yields unfilled bars.}
   \item{border}{the color of the border around the bars. The default
-    is to use the standard foregound color.}
+    is to use the standard foreground color.}
   \item{main, xlab, ylab}{these arguments to \code{title} have useful
     defaults here.}
   \item{xlim, ylim}{the range of x and y values with sensible defaults.}
