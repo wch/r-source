@@ -126,6 +126,7 @@ sub get_blocks {
 	    print stderr "found: $block\n" if $opt_debug;
 	    if((($block =~ /usage/) || ($block =~ /examples/))){
 		$blocks{$block} =~ s/^[ \t]+$//; #- multiple empty lines to one
+                $blocks{$block} =~ s/\n\n\n/\n\n/gom;
 		$blocks{$block} =~ s/\n\n/\n/gom;
 	    } else {
 		$blocks{$block} =~ s/^\s*(\S)/$1/;
