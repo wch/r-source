@@ -63,7 +63,7 @@
   \item{lty}{the line type, see \code{\link{par}}.}
   \item{lab}{the specification for the (approximate) numbers of tick
     marks on the x and y axes.}
-  \item{lwd}{the line width \bold{not yet supported for postscript}.}
+  \item{lwd}{the positive line width.}
   \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
   \item{\dots}{graphical parameters as in \code{\link{par}} may also be
     passed as arguments.}
