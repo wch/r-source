@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.0.0 Under development (unstable) (February 11, 2000)
+Version 1.1.0 Under development (unstable) (April 20, 2000)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -32,18 +32,11 @@ Type	"q()" to quit R.
 + 	   true - approx)     # absolute error (e.g. when true=0)
 + }
 > 
-> is.infinite(.Machine$double.base ^ .Machine$double.max.exp)# overflow
-[1] TRUE
 > abs(1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps < 1e3
 [1] TRUE
 > ##P (1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps
 > if(opt.conformance)#fails at least on SGI/IRIX 6.5
 + abs(1- .Machine$double.xmax * 10^(-.Machine$double.max.exp*log10(2)))/Meps < 1e3
-> 
-> log10(.Machine$double.xmax) / log10(2) == .Machine$double.max.exp
-[1] TRUE
-> log10(.Machine$double.xmin) / log10(2) == .Machine$double.min.exp
-[1] TRUE
 > 
 > ## More IEEE  Infinity/NaN checks
 > i1 <- pi / 0

@@ -17,14 +17,10 @@ rErr <- function(approx, true, eps = .Options$rErr.eps)
 	   true - approx)     # absolute error (e.g. when true=0)
 }
 
-is.infinite(.Machine$double.base ^ .Machine$double.max.exp)# overflow
 abs(1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps < 1e3
 ##P (1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps
 if(opt.conformance)#fails at least on SGI/IRIX 6.5
 abs(1- .Machine$double.xmax * 10^(-.Machine$double.max.exp*log10(2)))/Meps < 1e3
-
-log10(.Machine$double.xmax) / log10(2) == .Machine$double.max.exp
-log10(.Machine$double.xmin) / log10(2) == .Machine$double.min.exp
 
 ## More IEEE  Infinity/NaN checks
 i1 <- pi / 0

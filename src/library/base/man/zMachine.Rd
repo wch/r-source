@@ -81,8 +81,15 @@ Machine()
 }
 \examples{
 str(Machine())
-1 +     .Machine$double.eps != 1
-1 + .5* .Machine$double.eps == 1
+(Meps <- .Machine $ double.eps)
+
+stopifnot(
+ 1 +     Meps != 1,
+ 1 + .5* Meps == 1,
+ log2(.Machine$double.xmax) == .Machine$double.max.exp,
+ log2(.Machine$double.xmin) == .Machine$double.min.exp,
+ is.infinite(.Machine$double.base ^ .Machine$double.max.exp)
+)
 }
 \keyword{sysdata}
 \keyword{programming}
