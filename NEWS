@@ -85,6 +85,8 @@ NEW FEATURES
 
     o	capture.output takes arbitrary connections for `file' argument.
 
+    o	Package tcltk is now in a namespace.
+
 
 DEPRECATED & DEFUNCT
 
