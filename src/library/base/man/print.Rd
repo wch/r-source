@@ -43,6 +43,9 @@ print.factor(x, quote = FALSE, max.levels = NULL,
 \seealso{
   The default method \code{\link{print.default}}, and help for the
   methods above; further \code{\link{options}}, \code{\link{noquote}}.
+
+  For more customizable (but cumbersome) printing, see
+  \code{\link{cat}}, \code{\link{format}} or also \code{\link{write}}.
 }
 \examples{
 ts(1:20)#-- print  is the ``Default function'' --> print.ts(.) is called
