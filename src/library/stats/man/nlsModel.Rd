@@ -24,6 +24,9 @@ nlsModel(form, data, start)
   an environment and provides several methods to access characteristics
   of the model.  It forms an important component of the object returned
   by the \code{nls} function.
+
+  See \code{\link{nls}} for where elements of the formula \code{form}
+  are looked for.  In normal use all the variables will be in \code{data}.
 }
 \value{
     The value is a list of functions that share a common environment.
@@ -47,7 +50,9 @@ nlsModel(form, data, start)
 	numeric vector}
     \item{getAllPars}{returns the current value of the model parameters as a
 	numeric vector}
-    \item{getEnv}{returns the environment shared by these functions}
+    \item{getEnv}{returns the environment shared by these functions,
+      which contains copies of all the variables in \code{data} and has
+      as parent the environment of \code{form}.}
     \item{trace}{the function that is called at each iteration if
 	tracing is enabled}
     \item{Rmat}{the upper triangular factor of the gradient array at the
@@ -55,10 +60,14 @@ nlsModel(form, data, start)
     \item{predict}{takes as argument \code{newdata},a \code{data.frame} and
 	returns the predicted response for \code{newdata}.}
 }
-\references{Bates, D.M. and Watts, D.G. (1988), \emph{Nonlinear Regression Analysis
-    and Its Applications}, Wiley}
+\references{
+  Bates, D.M. and Watts, D.G. (1988), \emph{Nonlinear Regression Analysis
+    and Its Applications}, Wiley
+}
 \author{Douglas M. Bates and Saikat DebRoy}
-\seealso{\code{\link{nls}}}
+\seealso{
+  \code{\link{nls}}
+}
 \examples{
 data( DNase )
 DNase1 <- DNase[ DNase$Run == 1, ]

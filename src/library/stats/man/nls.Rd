@@ -69,6 +69,12 @@ nls(formula, data = parent.frame(), start, control = nls.control(),
   for the generic functions \code{\link{coef}}, \code{\link{formula}},
   \code{\link{resid}}, \code{\link{print}}, \code{\link{summary}},
   \code{\link{AIC}}, \code{\link{fitted}} and \code{\link{vcov}}.
+
+  Variables in \code{formula} are looked for first in \code{data}, then
+  the environment of \code{formula} (added in 1.9.1) and finally along
+  the search path.  Functions in \code{formula} are searched for first
+  in the environment of \code{formula} (added in 1.9.1) and then along
+  the search path.
 }
 \value{
   A list of
