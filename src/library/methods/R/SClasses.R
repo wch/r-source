@@ -216,9 +216,6 @@ new <-
   ##
   function(Class, ...)
 {
-    ## the basic classes have fixed definitions
-    if(!is.na(match(Class, .BasicClasses)))
-        return(newBasic(Class, ...))
     ## get the class definition, completing it if this is the first reference
     ## to this class in this session.
     ClassDef <- getClass(Class)
@@ -328,6 +325,9 @@ initialize <- function(object, ...) {
     args <- list(...)
     if(length(args) > 0) {
         Class <- class(object)
+        ## the basic classes have fixed definitions
+        if(!is.na(match(Class, .BasicClasses)))
+            return(newBasic(Class, ...))
         ClassDef <- getClass(Class)
         ## separate the slots, superclass objects
         snames <- allNames(args)

@@ -463,23 +463,21 @@ newBasic <-
                "list" =  as.vector(c(...), Class),
                "expression" = eval(substitute(expression(...))),
                "single" = as.single(c(...)),
-              "environment" = new.env(),
-               "function" = eval(quote(function()NULL), .GlobalEnv),
-               "named" = named(...),
                   ## note on array, matrix:  not possible to be compatible with
                   ## S-Plus on array, unless R allows 0-length .Dim attribute
                "array" = (if(length(list(...)) > 0) array(...) else structure(numeric(), .Dim =0)),
                "matrix" = (if (length(list(...)) > 0) matrix(...) else matrix(0, 0, 0)),
                "ts" = ts(...),
-            ## The language data
-                  "name" = as.name("<UNDEFINED>"), # R won't allow 0 length names
-                  "call" = quote({}), ## general expressions all get data.class=="call"
                   {
-                      if(is.na(match(Class, .BasicClasses)))
+                      args <- list(...)
+                      if(length(args) == 1 && is(args[[1]], Class)) {
+                          value <- as(args[[1]], Class)
+                      }
+                      else if(is.na(match(Class, .BasicClasses)))
                           msg <- paste("Calling new() on an undefined and non-basic class (\"",
                                Class, "\")", sep="")
                       else
-                          msg <- paste("Creating objects from class \"", Class, "\" is not meaningful",
+                          msg <- paste("Initializing objects from class \"", Class, "\" with these arguments is not supported",
                                      sep ="")
                   }
                   )

@@ -109,6 +109,15 @@
                   else
                       .MakeSignature(object, functionDef, list(...))
               }, where = envir)
+        setMethod("initialize", "environment",
+              function(object, ...) {
+                  value <- new.env()
+                  args <- list(...)
+                  objs <- names(args)
+                  for(what in objs)
+                      assign(what, elNamed(args, what), envir = value)
+                  value
+              }, where = envir)
 }
 
 .MakeSignature <- function(object, def, signature) {
