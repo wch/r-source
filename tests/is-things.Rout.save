@@ -275,7 +275,7 @@ is.ordered     : .
 is.pairlist    : . 
 is.qr          : . 
 is.real        : . 
-is.recursive   : . 
+is.recursive   : | 
 is.symbol      : . 
 is.ts          : . 
 is.vector      : | 
