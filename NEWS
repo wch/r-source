@@ -11,6 +11,8 @@
 
 BUG FIXES
 
+    o	Missing values didn't work in log plot
+
     o	outer() doesn't produce all-empty dimnames anymore
 
     o	quantile.default() works when `probs' has zero length
