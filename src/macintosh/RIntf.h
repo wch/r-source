@@ -427,16 +427,18 @@ enum {
 enum {
     kItemShowWSpace  =  1,
 	kItemClrWSpace	 =  2,
-    kItemLoadWSpace  =  4,
-	kItemSaveWSpace	 =  5,
-	kItemLoadHistory =  7,
-	kItemSaveHistory =  8,
-	kItemShowHistory =  9,
-	kItemChangeDir   =  11,
-	kItemShowDir	 =  12,
-	kItemResetDir    =  13,
-	kItemShowLibrary =  15,
-	kItemShowData	 =  16
+	kItemBrowseWSpace =	3,
+	kItemUpdateBrowser =4,
+    kItemLoadWSpace  =  5,
+	kItemSaveWSpace	 =  6,
+	kItemLoadHistory =  9,
+	kItemSaveHistory =  10,
+	kItemShowHistory =  11,
+	kItemChangeDir   =  13,
+	kItemShowDir	 =  14,
+	kItemResetDir    =  15,
+	kItemShowLibrary =  17,
+	kItemShowData	 =  18
 };
 
 /*	Config menu items
@@ -445,6 +447,25 @@ enum {
     kItemAllowInterrupt =  1,
 	kItemOnOpenSource	=  2
 };
+
+
+
+/* for the data browser */
+
+enum {
+	kMyCreator			= 'ERRE',
+	kMyDataBrowser		= 'Brsr',
+	kObjectColumn		= 'objs',
+	kTypeColumn			= 'type',
+	kSizeColumn			= 'size'
+};
+
+ 
+
+
+
+const DataBrowserTableViewColumnID columns[] = 
+	{ kObjectColumn, kTypeColumn, kSizeColumn };
 
 
 /*	Alert & dialog template resource IDs
