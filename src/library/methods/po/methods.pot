@@ -1,0 +1,181 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-01-26 07:53+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: class_support.c:9
+msgid ""
+"calling the C routine used as an initializer for \"externalptr\" objects"
+msgstr ""
+
+#: do_substitute_direct.c:23
+msgid "invalid list for substitution"
+msgstr ""
+
+#: methods_list_dispatch.c:152
+msgid ""
+"Couldn't find the skeleton calls for methods (package  detached?): expect "
+"very bad things to happen"
+msgstr ""
+
+#: methods_list_dispatch.c:253
+#, c-format
+msgid "More than %d nested methods list searches (system error?)"
+msgstr ""
+
+#: methods_list_dispatch.c:276
+#, c-format
+msgid ""
+"No \"allMethods\" slot found in object  of class \"%s\" used as methods list "
+"for function \"%s\""
+msgstr ""
+
+#: methods_list_dispatch.c:357
+#, c-format
+msgid ""
+"S language method selection got an error when called from internal dispatch "
+"for function \"%s\""
+msgstr ""
+
+#: methods_list_dispatch.c:397
+#, c-format
+msgid "retrieved object for \"%s\" was not a function"
+msgstr ""
+
+#: methods_list_dispatch.c:408
+#, c-format
+msgid "No \"%s\" object in environment of function \"%s\""
+msgstr ""
+
+#: methods_list_dispatch.c:461
+#, c-format
+msgid "No generic function definition found for \"%s\""
+msgstr ""
+
+#: methods_list_dispatch.c:464
+#, c-format
+msgid ""
+"No generic function definition found for \"%s\" in the supplied environment"
+msgstr ""
+
+#: methods_list_dispatch.c:483
+#, c-format
+msgid "Invalid generic function for \"%s\": no skeleton slot defined"
+msgstr ""
+
+#: methods_list_dispatch.c:585
+#, c-format
+msgid ""
+"Invalid  generic function object for method selection for function \"%s\": "
+"expected a function or a primitive, got an object of class \"%s\""
+msgstr ""
+
+#: methods_list_dispatch.c:600
+#, c-format
+msgid "No direct or inherited method for function \"%s\" for this call"
+msgstr ""
+
+#: methods_list_dispatch.c:626
+msgid "invalid object (non-function) used as method"
+msgstr ""
+
+#: methods_list_dispatch.c:643
+#, c-format
+msgid "Couldn't find symbol \"%s\" in frame of call"
+msgstr ""
+
+#: methods_list_dispatch.c:650
+#, c-format
+msgid ""
+"invalid symbol in checking for missing argument in method dispatch: expected "
+"a name, got an object of class \"%s\""
+msgstr ""
+
+#: methods_list_dispatch.c:653
+#, c-format
+msgid ""
+"invalid environment in checking for missing argument, \"%s\", in methods "
+"dispatch: got an object of class \"%s\""
+msgstr ""
+
+#: methods_list_dispatch.c:679
+#, c-format
+msgid ""
+"Object of class \"%s\" used as methods list for function \"%s\" ( no "
+"\"argument\" slot)"
+msgstr ""
+
+#: methods_list_dispatch.c:690
+#, c-format
+msgid ""
+"(in selecting a method for function \"%s\") \"...\" and related variables "
+"can't be used for methods dispatch"
+msgstr ""
+
+#: methods_list_dispatch.c:693
+#, c-format
+msgid ""
+"(in selecting a method for function \"%s\") The environment argument for "
+"dispatch must be an R environment; got an object of class \"%s\""
+msgstr ""
+
+#: methods_list_dispatch.c:707 methods_list_dispatch.c:718
+#, c-format
+msgid ""
+"Unable to find the argument \"%s\" in selecting a method for function \"%s\""
+msgstr ""
+
+#: methods_list_dispatch.c:725
+#, c-format
+msgid "No matching method for function \"%s\" (argument \"%s\", with class %s)"
+msgstr ""
+
+#: methods_list_dispatch.c:732
+#, c-format
+msgid ""
+"Recursive use of function \"%s\" in method selection, with no default method"
+msgstr ""
+
+#: methods_list_dispatch.c:763
+msgid ""
+"Internal error in callNextMethod: \".nextMethod\" was not assigned in the "
+"frame of the method call"
+msgstr ""
+
+#: methods_list_dispatch.c:794
+msgid ""
+"In processing callNextMethod, found a \"...\" in the matched call, but no "
+"corresponding ... argument "
+msgstr ""
+
+#: methods_list_dispatch.c:806
+msgid "Error in evaluating a primitive next method"
+msgstr ""
+
+#: methods_list_dispatch.c:862
+#, c-format
+msgid "%s must be a single string (got a character vector of length %d))"
+msgstr ""
+
+#: methods_list_dispatch.c:866
+#, c-format
+msgid "%s must be a non-empty string; got an empty string"
+msgstr ""
+
+#: methods_list_dispatch.c:870
+#, c-format
+msgid "%s must be a single string (got an object of class \"%s\")"
+msgstr ""
