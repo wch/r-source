@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-18, 2000-10-25
+Version 1.1-19, 2000-11-01
 Kurt Hornik
 
 
@@ -1086,6 +1086,9 @@ works, was published in the Journal of Statistical Software
 *RmSQL*
      An interface between R and the mSQL database system.
 
+*Rstreams*
+     Binary file stream support functions.
+
 *SASmixed*
      Data sets and sample linear mixed effects analyses corresponding to the
      examples in "SAS System for Mixed Models" by R. C. Littell, G. A.
@@ -1347,9 +1350,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *RPgSQL*
      An interface between R and the PostgreSQL database system.
-
-*Rstreams*
-     Binary file stream support functions.
 
 *cmprsk*
      Estimation, testing and regression modeling of subdistribution

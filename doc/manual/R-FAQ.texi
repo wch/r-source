@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-18, 2000-10-25
+@set FAQ-VERSION 1.1-19, 2000-11-01
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -403,11 +403,11 @@ distribution is available.  We hope that this will change soon.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2000-10-10:
+@c Linux binaries as of 2000-10-27:
 @c
 @c debian   2.2 i386  1.1.1  Doug Bates
 @c          2.3 i386  1.1.1  Doug Bates
-@c linuxppc 5.0 ppc   1.1.0  Alex Buerkle <buerkle@hawaii.edu>
+@c linuxppc 5.0 ppc   1.1.1  Alex Buerkle <buerkle@hawaii.edu>
 @c mandrake 7.1 i386  1.1.1  Michele Alzetta <mikalzet@libero.it>
 @c redhat   6.x alpha 1.1.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c              i386  1.1.1  Martyn Plummer <plummer@iarc.fr>
@@ -1368,6 +1368,8 @@ An interface between R and the mSQL database system.
 @c @item Rnotes
 @c The data sets for the exercises in ``An Introduction to R''
 @c (@pxref{What documentation exists for R?}).
+@item Rstreams
+Binary file stream support functions.
 @item SASmixed
 Data sets and sample linear mixed effects analyses corresponding to the
 examples in ``SAS System for Mixed Models'' by R. C. Littell,
@@ -1581,8 +1583,6 @@ methods.
 An interface between R and the MySQL database system.
 @item RPgSQL
 An interface between R and the PostgreSQL database system.
-@item Rstreams
-Binary file stream support functions.
 @item cmprsk
 Estimation, testing and regression modeling of subdistribution functions
 in competing risks.
