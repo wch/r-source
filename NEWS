@@ -9,6 +9,13 @@
 		CHANGES IN R VERSION 1.9.0
 
 
+NEW FEATURES
+
+    o	The included PCRE sources have been updated to version 4.4,
+	and the configure check now requires PCRE >= 4.0.  This is in
+	preparation for documenting exactly what grep(perl=TRUE) does.
+
+
 UTILITIES
 
     o	R CMD check  now runs the (Rd) examples with default RNGkind
@@ -27,9 +34,6 @@ DEPRECATED & DEFUNCT
     o	glm.fit.null(), lm.fit.null() and lm.wfit.null() are defunct.
 
     o	print.atomic() is defunct.
-
-    o	The included PCRE sources have been updated to version 4.4.
-
 
 
 

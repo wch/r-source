@@ -236,7 +236,7 @@
    external names. */
 #undef HAVE_NO_SYMBOL_UNDERSCORE
 
-/* Define if you have the PCRE headers and libraries. */
+/* Define if you have the PCRE >= 4.0 headers and libraries. */
 #undef HAVE_PCRE
 
 /* Define to 1 if you have the <pcre.h> header file. */
