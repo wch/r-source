@@ -1,3 +1,5 @@
+require(tcltk) || stop("tcltk support is absent")
+
 tkfilefind<-function(path=getwd(),all.names=FALSE, multiple=FALSE){
     tclRequire("::Utility")
     tclRequire("Hierarchy")
@@ -8,7 +10,7 @@ tkfilefind<-function(path=getwd(),all.names=FALSE, multiple=FALSE){
     tkwm.title(base,"Directory Tree")
     dirtree<-tkwidget(base,"hierarchy_dir",root=path,showparent="Parent",showfiles=1,showall=as.integer(all.names),selectmode=if(multiple) "multiple" else "browse")
     tkpack(dirtree,fill="both",expand=1)
-    
+
     .tclfilename<-NULL
     selected<-function(){
         index<-.Tcl(paste(.Tk.ID(dirtree),"curselection"))
