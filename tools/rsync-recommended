@@ -14,6 +14,7 @@ fi
 (cd "${TOOLS_DIR}"/..
   version=`cut -f1 -d' ' VERSION`
   if test "`cut -f2 -d' ' VERSION`" = "Patched"; then
+    version=`echo ${version} | sed 's/\.[0-9]*$//'`
     version="${version}-patched"
   fi
   PKGS=`grep '^R_PKGS_RECOMMENDED_SOURCES *=' share/make/vars.mk | \
