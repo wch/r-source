@@ -5,19 +5,15 @@ void tcltk_init(void);
 SEXP dotTcl(SEXP args);
 SEXP dotTclcallback(SEXP args);
 
-#ifndef Win32
-void TclHandler(void);
-void addTcl(void);
-void delTcl(void);
-#else
-void tcltk_start(void);
-void tcltk_end(void);
-#endif
-
 /* Used by .C */
 
+#ifdef Win32
+void tcltk_start(void);
+void tcltk_end(void);
+#else
 void delTcl(void);
 void RTcl_ActivateConsole(void);
+#endif
 
 /* Used by .Extern */
 
