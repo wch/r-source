@@ -2997,3 +2997,15 @@ stopifnot(6 == length(print(s1 <- summary(t1))),
           s1== summary(as.POSIXct(t1)),
           6 == length(print(format(as.Date(s1)))) )
 ## gave bizarre "NA's" entry in R 1.8.1 and 1.9.0alpha
+
+
+## as.Date on a factor
+as.Date(factor("2000-01-02"))
+## failed in 1.9.0
+
+
+## as.data.frame.list (PR#6782)
+xx <- list(row.names=1:2,foxglove=3:4,toadflax=5:6)
+foo <- as.data.frame(xx)
+stopifnot(identical(names(xx), names(foo)))
+## 1.9.0 changed the last name to "x".

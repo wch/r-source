@@ -6,6 +6,7 @@
 \alias{as.Date.default}
 \alias{as.Date.factor}
 \alias{as.Date.POSIXct}
+\alias{as.Date.POSIXlt}
 \alias{as.Date.date}
 \alias{as.Date.dates}
 
@@ -40,9 +41,10 @@ as.Date(x, \ldots)
   and months.
 
   The \code{as.Date} methods accept character strings, factors, logical
-  \code{NA} and objects of class \code{"\link{POSIXct}"}, which are
-  converted to days by ignoring the time to be midnight in the
-  representation of the time in UTC.  Also objects of class
+  \code{NA} and objects of classes \code{"\link{POSIXlt}"} and
+  \code{"\link{POSIXlct}"}.  (The last are converted to days by
+  ignoring the time after midnight in the
+  representation of the time in UTC.)  Also objects of class
   \code{"date"} (from package \pkg{\link[date:as.date]{date}} or
   \pkg{\link[survival:as.date]{survival}}) and
   \code{"dates"} (from package \pkg{\link[chron]{chron}}).
