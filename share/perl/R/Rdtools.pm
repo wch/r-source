@@ -34,7 +34,7 @@ sub get_section {
 
 sub get_usages {
 
-    my ($text, $mode) = @_;
+    my ($text, $mode, $verbose) = @_;
 
     ## remove comments
     $text =~ s/([^\\])%.*\n/$1\n/g;
@@ -59,20 +59,20 @@ sub get_usages {
     ## data(FOO) usage for data sets overrides the docs for function
     ## data().  Unless Rd is extended so that there is an Rd type for
     ## data docs, we need to rely on heuristics.  Older versions ignored
-    ## all Rd files having `datasets' as their only keyword.  But this
+    ## all Rd files having 'datasets' as their only keyword.  But this
     ## is a problem: Rd authors might use other keywords to indicate
     ## that a data set is useful for a certain kind of statistical
     ## analysis.  Hence, we do the following: ignore all usages of
-    ## data(FOO) in a file with keyword `datasets' where FOO as only one
-    ## argument in the sense that it does not match `,'.
+    ## data(FOO) in a file with keyword 'datasets' where FOO as only one
+    ## argument in the sense that it does not match ','.
     $maybe_is_data_set_doc = 1 if($text =~ "\\keyword\{datasets\}");
     ## </FIXME>
 
-    ## In `codoc' mode, use \synopsis in case there is one, but warn
-    ## about doing so.
+    ## In 'codoc' mode, use \synopsis in case there is one, but warn
+    ## about doing so if verbose.
     @text = split(/\\synopsis/, $text) if ($mode eq "codoc");
     if($#text > 0) {
-	print "Using synopsis in \`$name'\n";
+	print "Using synopsis in '$name'\n" if ($verbose);
     } else {
 	@text = split(/\\usage/, $text);
     }
@@ -91,7 +91,7 @@ sub get_usages {
 	    ## assignment objects.
 	    ## </FIXME>
 
-	    ## Try to match the next `(...)' arglist from $usage.
+	    ## Try to match the next '(...)' arglist from $usage.
 	    my ($prefix, $match, $rest) = $delimround->match($usage);
 
 	    ## Play with $prefix.
@@ -130,19 +130,19 @@ sub get_usages {
 			##   chop($usages{$prefix});
 			##   my $foo = ", " . substr($match, 1);
 			##   $usages{$prefix} .= $foo;
-			## which adds the `new' args to the `old' ones.
+			## which adds the 'new' args to the 'old' ones.
 			## This is not good enough, as it could give
 			## duplicate args which is not allowed.  In
 			## fact, we would generally need an R parser for
 			## the arglist, as the usages could be as bad as
 			##   foo(a = c("b", "c"), b = ...)
 			##   foo(c = NULL, ...)
-			## so that splitting on `,' is not good enough.
+			## so that splitting on ',' is not good enough.
 			## However, there are really only two functions
 			## with justified multiple usage (abline and
 			## seq), so we simply warn about multiple usage
 			## in case it was not shadowed by a \synopsis
-			## unless in mode `args', where we can cheat.
+			## unless in mode 'args', where we can cheat.
 			if(($mode eq "args") || ($mode eq "style")) {
 			    my $save_prefix = $prefix . "0";
 			    while($usages{$save_prefix}) {
@@ -173,7 +173,7 @@ sub get_arglist {
 
     ## Get the list of all documented arguments, i.e., the first
     ## arguments from the top-level \item{}{}s in section \arguments,
-    ## split on `,'.
+    ## split on ','.
 
     my ($text) = @_;
     my @args = ();
