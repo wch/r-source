@@ -9,6 +9,8 @@ sd(x, na.rm = FALSE)
   \code{x}.
   If \code{na.rm} is \code{TRUE} then missing values are removed before
   computation proceeds.
+  If \code{x} is a matrix or a dataframe, a vector of the standard
+  deviation of the columns is returned.
 }
 \seealso{
   \code{\link{var}} for its square, and \code{\link{mad}}, the most

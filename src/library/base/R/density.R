@@ -6,6 +6,7 @@ density <-
              give.Rkern = FALSE,
              n = 512, from, to, cut = 3, na.rm = FALSE)
 {
+    if (!missing(x)) x <- as.vector(x)
     if(!missing(window) && missing(kernel))
         kernel <- window
     kernel <- match.arg(kernel)
