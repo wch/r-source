@@ -105,7 +105,7 @@ glm.fit <-
     nobs <- NROW(y)
     nvars <- NCOL(x)
     if (nvars == 0) {
-        ## oops, you'd want glm.fit.null, then 
+        ## oops, you'd want glm.fit.null, then
         cc <- match.call()
         cc[[1]] <- as.name("glm.fit.null")
         return(eval(cc, sys.frame(sys.parent())))
@@ -271,7 +271,7 @@ glm.fit <-
     coef[fit$pivot] <- coef
     xxnames <- xnames[fit$pivot]
     residuals <- rep(NA, nobs)
-    residuals[good] <- z - eta[good]
+    residuals[good] <- z - (eta+offset)[good] # z does not have offset in.
     fit$qr <- as.matrix(fit$qr)
     nr <- min(sum(good), nvars)
     if (nr < nvars) {
