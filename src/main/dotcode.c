@@ -1777,6 +1777,7 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (pargs = args ; pargs != R_NilValue ; pargs = CDR(pargs)) {
 	    PROTECT(s = CPtrToRObj(cargs[nargs], CAR(pargs), which));
 	    SET_ATTRIB(s, duplicate(ATTRIB(CAR(pargs))));
+	    SET_OBJECT(s, OBJECT(CAR(pargs)));
 	    if (TAG(pargs) != R_NilValue)
 		havenames = 1;
 	    SET_VECTOR_ELT(ans, nargs, s);

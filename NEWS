@@ -58,6 +58,8 @@ BUG FIXES
 	argument.  Now results are computed to full precision but 
 	formatted using `digits'.
 
+    o   When returning parameters from .C/.Fortran, the OBJECT field was
+    	not copied even though class attributes were (PR #834)
 
 
 		CHANGES IN R VERSION 1.2.1
