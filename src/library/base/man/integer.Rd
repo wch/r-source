@@ -36,6 +36,8 @@ is.integer(x)
   whether its argument is of integer type or not.
   \code{is.integer} is generic: you can write methods to handle
   of specific classes of objects, see \link{InternalMethods}.
+  Note that factors are true for \code{is.integer} but false for
+  \code{\link{is.numeric}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
