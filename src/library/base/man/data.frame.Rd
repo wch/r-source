@@ -63,7 +63,8 @@ plot (x, \dots)
     (by \code{\link{make.names}}) so that they are.}
   \item{data.frame.obj}{objects of class \code{data.frame}.}
   \item{\dots}{optional arguments to \code{print} or \code{plot} methods.}
-  \item{optional}{logical. If true, setting row names is optional.}
+  \item{optional}{logical. If \code{TRUE}, setting row names is
+    optional.}
 }
 \value{
   For \code{data.frame(.)} a data frame, a matrix-like stucture whose
