@@ -23,6 +23,8 @@ function(formula, data=sys.parent(), weights, subset,
     fit <- ppr.default(X, Y, w, ...)
     if(!is.null(na.act)) fit$na.action <- na.act
     fit$terms <- Terms
+    ## fix up call to refer to the generic, but leave arg name as `formula'
+    call[[1]] <- as.name("ppr")
     fit$call <- call
     structure(fit, class=c("ppr.form", "ppr"))
 }

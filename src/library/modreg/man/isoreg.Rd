@@ -3,21 +3,18 @@
 \alias{isoreg}
 %\alias{fitted.isoreg}
 %\alias{residuals.isoreg}
-\alias{as.stepfun.isoreg}
+%\alias{as.stepfun.isoreg}
 \description{
   Compute the isotonic (monotonely increasing nonparametric) least
   squares regression which is piecewise constant.
 }
 \usage{
 isoreg(x, y = NULL)
-
-\method{as.stepfun}{isoreg}(x, \dots)
 }
 \arguments{
   \item{x, y}{in \code{isoreg}, coordinate vectors of the regression
     points.  Alternatively a single \dQuote{plotting} structure can be
     specified: see \code{\link{xy.coords}}.
-    In the \code{as.stepfun} method, \code{x} an \code{"isoreg"} object.
   }
   \item{\dots}{potentially further arguments passed to methods.}
 }
@@ -27,7 +24,8 @@ isoreg(x, y = NULL)
   linear and the result is \eqn{m'(x)}, a step function with level
   changes at locations where the convex \eqn{m(x)} touches the
   cumulative data polygon and changes slope.\cr
-  \code{as.stepfun()} returns a \code{\link[stepfun]{stepfun}} object
+  \code{\link{as.stepfun}()} in \pkg{stepfun}
+  returns a \code{\link[stepfun]{stepfun}} object
   which can be more parsimonious.
 }
 \value{

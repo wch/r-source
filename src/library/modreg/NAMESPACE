@@ -1,17 +1,13 @@
 useDynLib(modreg)
 
-## need ppr.formula to make use of update.
-export(isoreg, ksmooth, loess, loess.control,
-       loess.smooth, ppr, ppr.formula, runmed, scatter.smooth,
-       smooth.spline, smoothEnds, supsmu)
+export(isoreg, ksmooth, loess, loess.control, loess.smooth, ppr,
+       runmed, scatter.smooth, smooth.spline, smoothEnds, supsmu)
 
 # methods which are documented and registered, but not exported
-# export(as.stepfun.isoreg, plot.isoreg, plot.ppr,
+# export(plot.isoreg, plot.ppr,
 #        predict.loess, predict.smooth.spline)
 
 S3method(anova, loess)
-importFrom(stepfun, as.stepfun)
-S3method(as.stepfun, isoreg)
 S3method(fitted, isoreg)
 S3method(plot, isoreg)
 S3method(plot, ppr)

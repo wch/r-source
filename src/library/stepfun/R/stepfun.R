@@ -141,6 +141,12 @@ plot.stepfun <-
 
 lines.stepfun <- function(x, ...) plot(x, add = TRUE, ...)
 
-
+as.stepfun.isoreg <- function(x, ...) {
+    with(x,
+         sf <<- stepfun(x = (if(isOrd) x else x[ord])[iKnots],
+                        y = c(yf[iKnots],yf[length(yf)]), right = TRUE))
+    attr(sf, "call") <- x$call
+    sf
+}
 
 .noGenerics <- TRUE

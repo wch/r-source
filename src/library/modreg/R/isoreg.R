@@ -31,16 +31,6 @@ print.isoreg <- function(x, digits = getOption("digits"), ...) {
   invisible(x)
 }
 
-## as.stepfun() generic autoloads "stepfun" package, set in .First.lib
-as.stepfun.isoreg <- function(x, ...) {
-    require(stepfun)
-    with(x,
-         sf <<- stepfun(x = (if(isOrd) x else x[ord])[iKnots],
-                        y = c(yf[iKnots],yf[length(yf)]), right = TRUE))
-    attr(sf, "call") <- x$call
-    sf
-}
-
 plot.isoreg <-
     function(x, plot.type = c("single", "row.wise", "col.wise"),
 	     main = paste("Isotonic regression",deparse(x$call)),
