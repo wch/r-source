@@ -127,6 +127,9 @@ NEW FEATURES
     o	New argument `recursive' to unlink(). The default behaviour on
 	Unix is now that of rm -f, not rm -rf.
 
+    o	dev.copy2eps and dev2bitmap preserve the aspect ratio of the
+	copied device if just one of `width' and `height' is specified.
+
 
 BUG FIXES
 
@@ -134,14 +137,16 @@ BUG FIXES
         was against the EPSF specifications and broke inclusion of
 	graphics in some documents.
 
-
     o	Help aliases "(" and "{" now work, apart from as PDF hyperlinks.
 
     o   old.packages() now sorts version strings correctly by
 	splitting at "." and "-".
 
+    o   Page sizes for "a4" and "legal" were interchanged in dev.print.
+
     o   data(state)'s  state.abb  has been corrected to use official
         2-letter abbrevations.
+
 
 
 	**************************************************

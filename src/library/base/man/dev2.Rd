@@ -40,7 +40,9 @@ dev.control(displaylist)
   \code{dev.copy2eps} is similar to \code{dev.print} but produces an
   EPSF output file.  Unless otherwise specified \code{width} and
   \code{height} are taken from the current device, but \code{pointsize}
-  is taken from \code{\link{ps.options}}.
+  is taken from \code{\link{ps.options}}.  If just one of \code{width} and
+  \code{height} is specified, the other is adjusted to preserve the
+  aspect ratio of the device being copied.
 
   \code{dev.control} allows the user to control the recording of
   graphics operations in a device.  If \code{displaylist} is "inhibit"

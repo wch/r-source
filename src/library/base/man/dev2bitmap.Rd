@@ -49,6 +49,10 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
 
   Note: despite the name of the functions they can produce PDF via
   \code{type = "pdfwrite"}, and the PDF produced is not bitmapped.
+
+  For \code{dev2bitmap} if just one of \code{width} and \code{height} is
+  specified, the other is chosen to preserve aspect ratio of the
+  device being copied.
 }
 \value{
   None.

@@ -159,8 +159,10 @@ dev.copy2eps <- function(...)
     oc$horizontal <- FALSE
     oc$paper <- "special"
     din <- par("din"); w <- din[1]; h <- din[2]
-    if(is.null(oc$width)) oc$width <- w
-    if(is.null(oc$height)) oc$height <- h
+    if(is.null(oc$width))
+        oc$width <- if(!is.null(oc$height)) w/h * oc$height else w
+    if(is.null(oc$height))
+        oc$height <- if(!is.null(oc$height)) h/w * oc$width else h
     if(is.null(oc$file)) oc$file <- "Rplot.eps"
     dev.off(eval.parent(oc))
     dev.set(current.device)
