@@ -2354,7 +2354,7 @@ and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 @findex \enc
 Text which might need to be represented differently in different
 encodings should be marked by @code{\enc}, e.g. 
-@code{\enc{Jöreskog}{Joreskog}} where the first argument will be used
+@code{\enc@{Jöreskog@}@{Joreskog@}} where the first argument will be used
 where encodings are allowed and the second should be ASCII (and is used
 for e.g. the text conversion).
 
