@@ -209,6 +209,10 @@ UTILITIES
     o   R CMD check now checks for file names in a directory that
 	differ only by case.
 
+    o	R CMD check now checks Rd files using R code from package tools,
+        and gives refined diagnostics about "likely" Rd problems (stray
+	top-level text which is silently discarded by Rdconv).
+
     o	R CMD INSTALL now fails for packages with incomplete/invalid
         DESCRIPTION metadata, using new code from package tools which is
         also used by R CMD check.
