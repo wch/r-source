@@ -30,7 +30,7 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   \emph{The LATEX Companion}.
   Reading, MA: Addison-Wesley.
 }
-\note{
+\author{
   This driver was provided by Valerio Aimalea
   \email{valerio@svpop.com.dist.unige.it}
   of the Department of Internal Medicine, University of Genoa, Italy.
