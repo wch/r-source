@@ -1806,6 +1806,47 @@ static BBOX RenderFraction(SEXP expr, int rule, int draw, mathContext *mc, R_GE_
     return CombineAlignedBBoxes(numBBox, denomBBox);
 }
 
+static BBOX RenderUnderline(SEXP expr, int draw, mathContext *mc,
+	        	    R_GE_gcontext *gc, GEDevDesc *dd)
+{
+    SEXP body = CADR(expr);
+    BBOX BBox;
+    double width, adepth, depth, x[2], y[2];
+    double savedX = mc->CurrentX;
+    double savedY = mc->CurrentY;
+
+    BBox = RenderItalicCorr(RenderElement(body, 0, mc, gc, dd), 0, mc, gc, dd);
+    width = bboxWidth(BBox);
+
+    mc->CurrentX = savedX;
+    mc->CurrentY = savedY;
+    BBox = RenderElement(body, draw, mc, gc, dd);
+    adepth = 0.1 * XHeight(gc, dd);
+    depth = bboxDepth(BBox) + adepth;
+
+    if (draw) {
+        int savedlty = gc->lty;
+        double savedlwd = gc->lwd;
+        mc->CurrentX = savedX;
+        mc->CurrentY = savedY;
+        PMoveUp(-depth, mc);
+        x[0] = ConvertedX(mc, dd);
+        y[0] = ConvertedY(mc, dd);
+        PMoveAcross(width, mc);
+        x[1] = ConvertedX(mc, dd);
+        y[1] = ConvertedY(mc, dd);
+        gc->lty = LTY_SOLID;
+        gc->lwd = 1;
+        GEPolyline(2, x, y, gc, dd);
+        PMoveUp(depth, mc);
+        gc->lty = savedlty;
+        gc->lwd = savedlwd;
+        PMoveTo(savedX + width, savedY, mc);
+    }
+    return EnlargeBBox(BBox, 0.0, adepth, 0.0);
+}
+
+
 static int OverAtom(SEXP expr)
 {
     return NameAtom(expr) &&
@@ -1816,6 +1857,17 @@ static BBOX RenderOver(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, 
 {
     return RenderFraction(expr, 1, draw, mc, gc, dd);
 }
+
+static int UnderlAtom(SEXP expr)
+{
+    return NameAtom(expr) && NameMatch(expr, "underline");
+}
+
+static BBOX RenderUnderl(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *gc, GEDevDesc *dd)
+{
+    return RenderUnderline(expr, draw, mc, gc, dd);
+}
+
 
 static int AtopAtom(SEXP expr)
 {
@@ -2809,6 +2861,8 @@ static BBOX RenderFormula(SEXP expr, int draw, mathContext *mc, R_GE_gcontext *g
 	return RenderAccent(expr, draw, mc, gc, dd);
     else if (OverAtom(head))
 	return RenderOver(expr, draw, mc, gc, dd);
+    else if (UnderlAtom(head))
+        return RenderUnderl(expr, draw, mc, gc, dd);
     else if (AtopAtom(head))
 	return RenderAtop(expr, draw, mc, gc, dd);
     else if (ParenAtom(head))

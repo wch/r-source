@@ -20,6 +20,9 @@ NEW FEATURES
    o	na.contiguous() is now (S3) generic with first argument
 	renamed to 'object'.
 
+   o	Plotmath now allows underline in expressions.  (PR#7286,
+        contributed by Uwe Ligges.)
+
 
 DOCUMENTATION
 

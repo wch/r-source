@@ -91,6 +91,7 @@
     \code{textstyle(x)}  \tab draw x in normal size \cr
     \code{scriptstyle(x)} \tab draw x in small size \cr
     \code{scriptscriptstyle(x)} \tab draw x in very small size \cr
+    \code{underline(x)}   \tab draw x underlined\cr
     \code{x ~~ y}        \tab put extra space between x and y \cr
     \code{x + phantom(0) + y} \tab leave gap for "0", but don't draw it \cr
     \code{x + over(1, phantom(0))} \tab leave vertical gap for "0" (don't draw) \cr
