@@ -1,6 +1,6 @@
 include ../MkRules
 
-CFLAGS=-DWin32
+CFLAGS=-DWin32 -DHIST_SIZE=512
 LINKFLAGS=-s
 
 
@@ -9,7 +9,7 @@ LINKFLAGS=-s
 test: testgl.exe
 	$(ECHO) starting testgl. Hit CRTL+BREAK to stop it.
 	testgl.exe
-	
+
 testgl.exe: testgl.o getline.o	
 
 
