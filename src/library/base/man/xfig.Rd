@@ -18,7 +18,7 @@ xfig(file = "Rplots.fig", onefile = FALSE, \dots)
     \code{command}.  For use with \code{onefile=FALSE} give a
     \code{printf} format such as \code{"Rplot\%d.fig"} (the default in
     that case).}
-  \item{onefile}{logical: if true (the default) allow multiple figures
+  \item{onefile}{logical: if true allow multiple figures
     in one file. If false, assume only one page per file and generate a
     file number containing the page number.}
   \item{\dots}{further options for \code{xfig()}, such as:}
