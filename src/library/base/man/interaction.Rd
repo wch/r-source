@@ -5,7 +5,8 @@ interaction(\dots, drop=FALSE)
 }
 \alias{interaction}
 \arguments{
-  \item{\dots}{The factors for which interaction is to be computed.}
+  \item{\dots}{The factors for which interaction is to be computed, or a
+    single list giving those factors.}
   \item{drop}{If \code{drop} is \code{TRUE}, empty factor levels
     are dropped from the result. The default is to retain all
     factor levels.}
