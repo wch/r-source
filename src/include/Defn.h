@@ -22,8 +22,7 @@
 
 #define COUNTING
 
-#include "Platform.h"
-#include "Arith.h"
+#include "Arith.h"/*-> Platform.h */
 #include "Complex.h"
 #include "Errormsg.h"
 
@@ -321,9 +320,9 @@ enum {
 #define	GEOP	5
 #define	GTOP	6
 
-extern int		errno;
+/* Global Variables ------------------------------------------------------ */
 
-/* Global Variables */
+extern int		errno;
 
 /* Memory Management */
 extern int	R_NSize;	    /* Size of cons cell heap */
@@ -410,7 +409,6 @@ extern FILE*	R_FileRef;	    /* the environment file pointer  */
 /* File Handling */
 
 #define R_EOF	65535
-extern int	R_fgetc(FILE*);
 
 /* MAGIC Numbers for files */
 
@@ -683,13 +681,16 @@ void unbindVar(SEXP, SEXP);
 void UNIMPLEMENTED(char *s);
 void unmarkPhase(void);
 void unprotect(int);
+void unprotect_ptr(SEXP);
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP*);
 char *vmaxget(void);
 void vmaxset(char*);
 void WrongArgCount(char*);
 void warningcall(SEXP, char*,...);
 void WarningMessage(SEXP, int, ...);
+void yyerror(char *);
 void yyinit(void);
+int yylex();
 int yyparse(void);
 void yyprompt(char *format, ...);
 int yywrap(void);
