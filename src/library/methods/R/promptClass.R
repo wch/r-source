@@ -1,6 +1,6 @@
 "promptClass" <-
 function (clName, filename = paste(topicName("class", clName), ".Rd", sep = ""),
-          where = find(classMetaName(clName))) 
+          where = find(classMetaName(clName)))
 {
     classesInSig <- function(g, where) {
     # given a generic g, obtain list of all classes
@@ -9,9 +9,9 @@ function (clName, filename = paste(topicName("class", clName), ".Rd", sep = ""),
         if(is.null(mlist))
             return(NULL)
         tmp <- listFromMlist(mlist)
-        if (length(tmp[[1]]) == 0) 
+        if (length(tmp[[1]]) == 0)
             NULL
-        else if ((lt <- length(tmp[[1]])) == 1) 
+        else if ((lt <- length(tmp[[1]])) == 1)
             unlist(tmp[[1]])
         else {
             o <- list()
@@ -26,30 +26,30 @@ function (clName, filename = paste(topicName("class", clName), ".Rd", sep = ""),
     # one of its signatures
         allgen <- getGenerics()
         o <- list()
-        for (i in seq(along=allgen)) o[[allgen[i]]] <- classesInSig(allgen[i], 
+        for (i in seq(along=allgen)) o[[allgen[i]]] <- classesInSig(allgen[i],
             where)
         genl <- NULL
         nmok <- names(o)
         for (i in seq(along = o)) {
-            if (!all(is.na(match(unlist(o[[i]]), cl)))) 
+            if (!all(is.na(match(unlist(o[[i]]), cl))))
                 genl <- c(genl, nmok[i])
         }
         genl
     }
 
-    sigsMatrix <- function (g, where) 
+    sigsMatrix <- function (g, where)
     # given a generic g, obtain matrix
     # with one row per signature
     # it assumes at present that signatures for a given generic
     # are all of the same length.
     #
     # it would be simple to jettison the matrix construct
-    # replace it by a list 
+    # replace it by a list
     {
         tmp <- listFromMlist(getMethods(g, where))
-        if (length(tmp[[1]]) == 0) 
+        if (length(tmp[[1]]) == 0)
             NULL
-        else if ((lt <- length(tmp[[1]])) == 1) 
+        else if ((lt <- length(tmp[[1]])) == 1)
             matrix(unlist(tmp[[1]]), nr = 1)
         else {
             o <- matrix(" ", nc = length(tmp[[1]][[1]]), nr = length(tmp[[1]]))
@@ -58,15 +58,15 @@ function (clName, filename = paste(topicName("class", clName), ".Rd", sep = ""),
         }
     }
 
-    sigsList <- function (g, where) 
+    sigsList <- function (g, where)
     # given a generic g, obtain list
     # with one element per signature
     #
     {
         tmp <- listFromMlist(getMethods(g, where))
-        if (length(tmp[[1]]) == 0) 
+        if (length(tmp[[1]]) == 0)
             NULL
-        else if ((lt <- length(tmp[[1]])) == 1) 
+        else if ((lt <- length(tmp[[1]])) == 1)
             list(unlist(tmp[[1]]))
         else {
             o <- list()#matrix(" ", nc = length(tmp[[1]][[1]]), nr = length(tmp[[1]]))
@@ -90,7 +90,7 @@ function (clName, filename = paste(topicName("class", clName), ".Rd", sep = ""),
         allslots
     }
     paste0 <- function(...) paste(..., sep = "")
-    pastePar <- function(x) paste("(", paste(x, collapse = ", "), 
+    pastePar <- function(x) paste("(", paste(x, collapse = ", "),
         ")", sep = "")
     if(length(where) == 0)
         stop(paste0("No definition of class \"", clName,"\" found"))
@@ -104,7 +104,7 @@ function (clName, filename = paste(topicName("class", clName), ".Rd", sep = ""),
     .name <- paste0("\\name{", fullName, "}")
     .alias <- paste0("\\alias{", fullName, "}")
     .title <- paste0("\\title{Class ", clName, ", ~~class for ... ~~ }")
-    .desc <- paste0("\\description{", "  ~~ A concise (1-5 lines) description of what the class is  ~~", 
+    .desc <- paste0("\\description{", "  ~~ A concise (1-5 lines) description of what the class is  ~~",
         "}")
     slotclasses <- getSlots(clName)
     slotnames <- names(slotclasses)
@@ -120,15 +120,15 @@ function (clName, filename = paste(topicName("class", clName), ".Rd", sep = ""),
         nslots <- length(slotnames)
         if (nslots > 0) {
             .usage.body <-
-                paste0("\\code{    ", format(slotnames), 
+                paste0("\\code{    ", format(slotnames),
                       " = ...., # Object of class ", slotclasses,"}\\cr")
         }
-        .usage.tail <- "\code{  )}}"
+        .usage.tail <- "\\code{  )}}"
     }
     if (nslots > 0) {
         slotclasses <- slotClassWithSource(clName)
         .slots.head <- c("\\section{Slots}{", "  \\describe{")
-        .slots.body <-  paste0("    \\item{\\code{", slotnames, 
+        .slots.body <-  paste0("    \\item{\\code{", slotnames,
                 "}:}", "{Object of class ", slotclasses, " ~~ }")
         .slots.tail <- c("  }","}")
         .slots <- c(.slots.head,  .slots.body,  .slots.tail)
@@ -151,7 +151,7 @@ function (clName, filename = paste(topicName("class", clName), ".Rd", sep = ""),
             .sigmat <- sigsList(methnms[i], 1)
             for (j in seq(along = .sigmat)) {
                 if (!all(is.na(match(.sigmat[[j]],clName))))
-                .meths.body <- c(.meths.body, paste0("    \\item{", 
+                .meths.body <- c(.meths.body, paste0("    \\item{",
                   methnms[i], "}{", pastePar(.sigmat[[j]]), ": ... }"))
             }
         }
@@ -164,11 +164,11 @@ function (clName, filename = paste(topicName("class", clName), ".Rd", sep = ""),
     }
     .meths.tail <- "}"
     .keywords <- "\\keyword{methods}"
-    cat(.name,  .alias,  .title,  "\\non_function", .desc,  
-        .usage.head,  .usage.body,  .usage.tail,  
-        .slots,  .extends, 
+    cat(.name,  .alias,  .title,  "\\non_function", .desc,
+        .usage.head,  .usage.body,  .usage.tail,
+        .slots,  .extends,
         .meths.head,  .meths.body,  .meths.tail,
-        .keywords, sep ="\n", 
+        .keywords, sep ="\n",
         file = filename)
     if(is.character(filename))
         what <- paste0(" to the file \"", filename, "\"")
