@@ -74,7 +74,7 @@ undoc <- function(pkg, dir)
 
     if(file.exists(codeFile)) {
         codeEnv <- new.env()
-        sys.source(codeFile, env = codeEnv)
+        sys.source(codeFile, envir = codeEnv)
         allObjs <- ls(envir = codeEnv, all.names = TRUE)
     }
     else
@@ -83,8 +83,31 @@ undoc <- function(pkg, dir)
     if(file.exists(dataDir)) {
         dataExts <- c("R", "r", "RData", "rdata", "rda", "TXT", "txt",
                       "tab", "CSV", "csv")
-        dataObjs <- listFilesWithExts(dataDir, dataExts, path = FALSE)
-        allObjs <- c(allObjs, sub("\\.[A-Za-z]*$", "", dataObjs))
+        files <- listFilesWithExts(dataDir, dataExts, path = FALSE)
+        files <- files[!duplicated(sub("\\.[A-Za-z]*$", "", files))]
+        dataEnv <- new.env()
+        dataObjs <- NULL
+        if(any(i <- grep("\\.\(R\|r\)$", files))) {
+            for (f in file.path(dataDir, files[i])) {
+                sys.source(f, envir = dataEnv)
+                new <- ls(all = TRUE, envir = dataEnv)
+                dataObjs <- c(dataObjs, new)
+                rm(list = new, envir = dataEnv)
+            }
+            files <- files[-i]
+        }
+        if(any(i <- grep("\\.\(RData\|rdata\|rda\)$", files))) {
+            for (f in file.path(dataDir, files[i])) {
+                load(f, envir = dataEnv)
+                new <- ls(all = TRUE, envir = dataEnv)
+                dataObjs <- c(dataObjs, new)
+                rm(list = new, envir = dataEnv)
+            }
+            files <- files[-i]
+        }
+        if(length(files) > 0)
+            dataObjs <- c(dataObjs, sub("\\.[A-Za-z]*$", "", files))
+        allObjs <- c(allObjs, dataObjs)
     }
 
     ## Undocumented objects?
