@@ -1,3 +1,7 @@
+rw1010
+======
+
+
 rw1001
 ======
 
@@ -6,6 +10,10 @@ The installer, rwinst.exe, now checks for ZIP files as well as zip files.
 Under rare conditions (lots of very short input lines) the history buffer
 could overrun and so cause crashes. This has been possible since rw0623,
 but first caused reported problems in rw1000 and has now been fixed.
+
+Certain HP printer drivers (e.g. the 6/6MP-Postscript driver) reset the
+FPU and so were causing crashes.  This has been circumvented in this
+version.
 
 
 rw1000
