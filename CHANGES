@@ -60,6 +60,11 @@ NEW FEATURES
     o   New example data sets "esoph", "infert" and "anscombe" (TL) and
 	"iris3" (KH)
 
+    o   source(.) has several new arguments, notably ``echo = FALSE''.
+	This is applied in the new function  demo(.) which runs all the
+	code in demos/ (but dynload).
+
+
 BUG FIXES
 
     o	"approx" and "approxfun", have had some minor adjustments.
@@ -73,7 +78,7 @@ BUG FIXES
 
     o	Model fitting of the form
 
-		lm(y~., data=df)
+		 lm(y~., data=df)
 		glm(y~., data=df)
 
 	will now work.	The RHS of the model will consist of an
@@ -105,7 +110,7 @@ BUG FIXES
     o   legend has new `text.width' argument and now also works with
 	mathematical expressions as text.
 
-    o   hist now works better and also has a `plot = TRUE' argument.
+    o   hist() now works better and also has a `plot = TRUE' argument.
 
     o   Improvement to many (even most ?) documentation (.Rd) files.
 
