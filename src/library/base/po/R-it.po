@@ -434,287 +434,288 @@ msgstr ""
 "si devono specificare esattamente due tra 'to', 'by' e 'length.out' / 'along.with'"
 
 msgid "'by' must be of length 1"
-msgstr ""
+msgstr "'by' deve essere di lunghezza 1"
 
 msgid "invalid 'by' string"
-msgstr ""
+msgstr "stringa 'by' non valida"
 
 msgid "invalid string for 'by'"
-msgstr ""
+msgstr "stringa non valida per 'by'"
 
 msgid "invalid mode for 'by'"
-msgstr ""
+msgstr "modalità non valida per 'by'"
 
 msgid "'by' is NA"
-msgstr ""
+msgstr "'by' è NA"
 
 msgid "'x' must be a date-time object"
-msgstr ""
+msgstr "'x' deve essere un oggetto date-time"
 
 msgid "invalid specification of 'breaks'"
-msgstr ""
+msgstr "specificazione non valida dei 'breaks'"
 
 msgid "'origin' must be of length one"
-msgstr ""
+msgstr "'origin' deve avere lunghezza 1"
 
 msgid "'lag' and 'differences' must be integers >= 1"
-msgstr ""
+msgstr "'lag' e 'differences' devono essere interi >= 1"
 
 msgid "to class \"POSIXlt\""
-msgstr ""
+msgstr "in classe \"POSIXlt\""
 
 msgid "to class \"POSIXct\""
-msgstr ""
+msgstr "in classe \"POSIXct\""
 
 msgid "wrong class"
-msgstr ""
+msgstr "classe sbagliata"
 
 msgid "binary + is not defined for \"POSIXt\" objects"
-msgstr ""
+msgstr "operatore binario + non definito per oggetti \"POSIXt\""
 
 msgid "Can only subtract from POSIXt objects"
-msgstr ""
+msgstr "Posso solo sottrarre da oggetti POSIXt"
 
 msgid "unary - is not defined for \"POSIXt\" objects"
-msgstr ""
+msgstr "operatore unario - non definito per oggetti \"POSIXt\""
 
 msgid "can only subtract numbers from POSIXt objects"
-msgstr ""
+msgstr "posso solo sottrarre numeri da oggetti POSIXt"
 
 msgid "not defined for \"POSIXt\" objects"
-msgstr ""
+msgstr "non definito per oggetti \"POSIXt\""
 
 msgid "not defined for POSIXt objects"
-msgstr ""
+msgstr "non definito per oggetti POSIXt"
 
 msgid "not defined for \"POSIXct\" objects"
-msgstr ""
+msgstr "non definito per oggetti \"POSIXct\""
 
 msgid "not defined for \"POSIXlt\" objects"
-msgstr ""
+msgstr "non definito per oggetti \"POSIXlt\""
 
 msgid "not defined for \"difftime\" objects"
-msgstr ""
+msgstr "non definito per oggetti \"difftime\""
 
 msgid "both arguments of * cannot be \"difftime\" objects"
-msgstr ""
+msgstr "entrambi gli argomenti di * non possono essere oggetti \"difftime\""
 
 msgid "second argument of / cannot be a \"difftime\" object"
-msgstr ""
+msgstr "il secondo argomento di / non può essere un oggetto \"difftime\""
 
 msgid "'from' must be a POSIXt object"
-msgstr ""
+msgstr "'from' deve essere un oggetto POSIXt"
 
 msgid "'to' must be a POSIXt object"
-msgstr ""
+msgstr "'to' deve essere un oggetto POSIXt"
 
 msgid "'file' must be a character string or connection"
-msgstr ""
+msgstr "'file' deve essere una string di caratteri o una connessione"
 
 msgid "x must be a square matrix"
-msgstr ""
+msgstr "x deve essere una matrice quadrata"
 
 msgid "determinant not currently defined for complex matrices"
-msgstr ""
+msgstr "il deteminante di matrici complesse non è definito"
 
 msgid "first argument is array, but not matrix."
-msgstr ""
+msgstr "il primo argomento è un array, ma non una matrice"
 
 msgid "only matrix diagonals can be replaced"
-msgstr ""
+msgstr "si possono sostituire solo le diagonali della matrice"
 
 msgid "replacement diagonal has wrong length"
-msgstr ""
+msgstr "la diagonale sostitutiva ha lunghezza sbagliata"
 
 msgid "MARGIN ="
 msgstr ""
 
 msgid "is invalid for dim ="
-msgstr ""
+msgstr "non è valida come dim ="
 
 msgid "must pass a package name, DLLInfo or DllInfoReference object"
-msgstr ""
+msgstr "indicare il nome di un pacchetto, un oggetto DLLInfo o DLLInfoReference"
 
 msgid "No DLL currently loaded with name or path"
-msgstr ""
+msgstr "Nessuna DLL attualmente caricata con questo nome e path"
 
 msgid "multiple DLLs match '%s'. Using %s"
-msgstr ""
+msgstr "più di una DLL è simile a '%s'. Userò %s"
 
 msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
-msgstr ""
+msgstr "si deve specificare la DLL attravero un oggetto DLLInfo. Si veda getLoadedDLLs()"
 
 msgid "function is not in a namespace, so cannot locate associated DLL"
-msgstr ""
+msgstr "la funzione non è nel namespace, non è quindi possibile individuare la DLL associata"
 
 msgid ""
 "looking for DLL for native routine call, but no DLLs in namespace of call"
 msgstr ""
 
+
 msgid "0 x 0 matrix"
-msgstr ""
+msgstr "matrice 0 x 0"
 
 msgid "non-square matrix in eigen"
-msgstr ""
+msgstr "matrice non quadrata in eigen"
 
 msgid "numeric or complex values required in eigen"
-msgstr ""
+msgstr "valori numeric o complex necessari in eigen"
 
 msgid "ch returned code"
-msgstr ""
+msgstr "ch ha restituito codice"
 
 msgid "in eigen"
-msgstr ""
+msgstr "in eigen"
 
 msgid "rs returned code"
-msgstr ""
+msgstr "rs ha restituito codice"
 
 msgid "cg returned code"
-msgstr ""
+msgstr "cg ha restituito codice"
 
 msgid "rg returned code"
-msgstr ""
+msgstr "rg ha restituito codice"
 
 msgid "invalid labels; length"
-msgstr ""
+msgstr "labels non valide; lunghezza"
 
 msgid "should be 1 or"
-msgstr ""
+msgstr "dovrebbe essere 1 o"
 
 msgid "number of levels differs"
-msgstr ""
+msgstr "il numero dei livelli è differente"
 
 msgid "not meaningful for factors"
-msgstr ""
+msgstr "senza senso per variabili factor"
 
 msgid "level sets of factors are different"
-msgstr ""
+msgstr "gli insiemi dei levels delle due variabili factor differiscono tra loro"
 
 msgid "invalid factor level, NAs generated"
-msgstr ""
+msgstr "livello non valido in factor, sono stati generati degli NA"
 
 msgid "not meaningful for ordered factors"
-msgstr ""
+msgstr "senza senso per le variabili factor ordinali"
 
 msgid "Level sets of factors are different"
-msgstr ""
+msgstr "Gli insiemi dei levels delle due variabili factor differiscono tra loro"
 
 msgid "no files to copy from"
-msgstr ""
+msgstr "nessun file da cui copiare"
 
 msgid "no files to copy to"
-msgstr ""
+msgstr "nessun file su cui copiare"
 
 msgid "more 'from' files than 'to' files"
-msgstr ""
+msgstr "ci sono più file 'from' che file 'to'"
 
 msgid "file can't be copied both from and to"
-msgstr ""
+msgstr "il file non può essere copiato sia da 'from' che su 'to'"
 
 msgid "no files to link from"
-msgstr ""
+msgstr "nessun file cui collegarsi"
 
 msgid "no files/dir to link to"
-msgstr ""
+msgstr "nessun file/directory da collegare"
 
 msgid "calling wrong method"
-msgstr ""
+msgstr "chimata ad un metodo sbagliato"
 
 msgid "'package' must be of length 1"
-msgstr ""
+msgstr "'package' deve avere lunghezza 1"
 
 msgid "'vec' contains NAs"
-msgstr ""
+msgstr "'vec' contiene NA"
 
 msgid "'vec' must be sorted non-decreasingly"
-msgstr ""
+msgstr "'vec' deve essere ordinato in ordine non decrescente"
 
 msgid "format.char: coercing 'x' to 'character'"
-msgstr ""
+msgstr "fomrat.char: trasformo 'x' in 'character'"
 
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
-msgstr ""
+msgstr  "'mode' deve essere \"double\" (\"real\") o \"integer\""
 
 msgid "coercing argument to \"character\" for format=\"s\""
-msgstr ""
+msgstr "trasformo l'argomento in \"character\" in format=\"s\""
 
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
-msgstr ""
+msgstr "'format' deve essere uno tra {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 
 msgid "'flag' can contain only '0+- #'"
-msgstr ""
+msgstr "'flag' può contenre solo '0+- #'"
 
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
-msgstr ""
+msgstr "data frame corrotto: le colonne verranno accorciate o riempite con NA"
 
 msgid "'subset' must evaluate to logical"
-msgstr ""
+msgstr "'subset' deve lavorare su espressioni logiche"
 
 msgid "'subset' must be logical"
-msgstr ""
+msgstr "'subset' deve essere di tipo logico"
 
 msgid "'form' must be a two-sided formula"
-msgstr ""
+msgstr "'form' deve essere una formula con due membri"
 
 msgid "value for \""
-msgstr ""
+msgstr "valore per \""
 
 msgid "\" not found"
-msgstr ""
+msgstr "\" non trovato"
 
 msgid "pattern must be a non-empty character string"
-msgstr ""
+msgstr "il pattern deve essere una stringa di caratteri non vuota"
 
 msgid "max.distance must be non-negative"
-msgstr ""
+msgstr "max.distance deve essere non negativa"
 
 msgid "unknown match distance components ignored"
-msgstr ""
+msgstr "le componenti sconosciute della distanza verranno ignorate"
 
 msgid "max.distance components must be non-negative"
-msgstr ""
+msgstr "le componenti di max.distance devono essere non negative"
 
 msgid "matrix should be square"
-msgstr ""
+msgstr "la matrice deve essere quadrata"
 
 msgid "This is R %s, package '%s' needs %s %s"
-msgstr ""
+msgstr "Questo è R %s, il pacchetto '%s' necessita di %s %s"
 
 msgid "package"
-msgstr ""
+msgstr "pacchetto"
 
 msgid "was built before R 2.0.0: please re-install it"
-msgstr ""
+msgstr "è stato creato prima di R 2.0.0: si prega di re-installarlo"
 
 msgid "was built under R version"
-msgstr ""
+msgstr "è stato creato con R versione"
 
 msgid "was built for"
-msgstr ""
+msgstr "è stato creato per"
 
 msgid "has not been installed properly"
-msgstr ""
+msgstr "non è stato correttamente installato"
 
 msgid "See the Note in ?library"
-msgstr ""
+msgstr "Sia veda 'Note' in ?library"
 
 msgid "has been merged into 'stats'"
-msgstr ""
+msgstr "è stato integrato in 'stats'"
 
 msgid "has been merged into 'stats4'"
-msgstr ""
+msgstr "è stato integrato in 'stats4'"
 
 msgid "package 'lqs' has been moved back to package 'MASS'"
-msgstr ""
+msgstr "il pacchetto 'lqs' è stato reinserito nel pacchetto 'MASS'"
 
 msgid "package 'MASS' has now been loaded"
-msgstr ""
+msgstr "il pacchetto 'MASS' è stato caricato"
 
 msgid "package 'MASS' seems to be missing from this R installation"
-msgstr ""
+msgstr "il pacchetto 'MASS' sembra mancare in questa installazione di R"
 
 msgid "There is no package called"
-msgstr ""
+msgstr "Non c'è nessun pacchetto chiamato"
 
 msgid "is not a valid package -- installed < 2.0.0?"
 msgstr ""
