@@ -32,7 +32,7 @@ at http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
 BEWARE: `Native' ports of make are not suitable (including that at the
 mingw32 site), nor is the make dated 18-Jan-2000 in the Cygwin 1.1 net
 release.  There have been problems with earlier versions of the
-cygwin1.dll and we have used 1.1.3. To avoid frustration, please use
+cygwin1.dll and we have used 1.1.4. To avoid frustration, please use
 our tool set.
 
 It may also be possible to use the compilers from the cygwin 1.1
@@ -194,10 +194,8 @@ There is no provision to make DVI versions of the manuals, although
 ../../doc/manuals/Makefile.win could easily be edited to do so.
 
 The fptex distribution of TeX (from
-ftp://ftp.ese-metz.fr/pub/tex/win32-beta/fptex-0.4alpha3/ at present)
-includes pdftex and makeinfo 4.0 and texindex (in texinfo.zip).  (The
-cygwin makeinfo, even in release 1.1, is 3.12, but the fptex version
-is supplied in our tools.zip.)
+ftp://ftp.ese-metz.fr/pub/tex/win32-beta/fptex-0.4beta1/ at present)
+includes a suitable port of pdftex.
 
 
 

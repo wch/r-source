@@ -7,9 +7,13 @@ See the file NEWS for changes that affect all versions of R.
 rw1020
 ======
 
-There is a new menu item `Load History' on the File menu of the console.
+There are new console menu items `Load History' on the File menu and
+`Clear console' on the Edit menu. (The current line is not cleared.)
 
-The menu items Load/Save Image are now called Load/Save Workspace.
+The menu items `Load/Save Image' are now called `Load/Save Workspace'.
+
+The Print menu item on the File menu of a console or pager now prints
+the selection if there is one, and the whole saved contents otherwise.
 
 Environment variables R_HISTFILE and R_HISTSIZE can be set to specify
 the name of the commands history file (default .Rhistory)
@@ -45,7 +49,7 @@ is in your path you can use
 
 There are new utilities (in rw1020sp.zip) INSTALL, REMOVE, SHLIB which
 can be used to install a source package, remove a package and make a
-DLL, and much closer versions of the Unix R utilities build and check.
+DLL, and close analogues of the Unix R utilities BATCH build and check.
 Invoke these by
 
 	Rcmd INSTALL [options] pkgdir(s)
@@ -53,6 +57,7 @@ Invoke these by
 	Rcmd SHLIB   [options] file(s)
 	Rcmd build   [options] pkgdir(s)
 	Rcmd check   [options] pkgdir(s)
+	Rcmd BATCH   [options] infile [outfile]
 
 Use option --help with any of these for fuller details.
 

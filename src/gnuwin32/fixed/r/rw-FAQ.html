@@ -137,7 +137,7 @@ file tree. Right-click the shortcut, select Properties... and change
 the `Start in' field to your working directory.
 
 <p>You may also want to add command-line arguments at the end of the
-Target field. We use <code>--vsize=10M --nsize=400k</code>. You can also set
+Target field, for example <code>--vsize=10M --nsize=400k</code>. You can also set
 environment variables at the end of the Target field, for
 example <code>R_LIBS=e:/R/library</code>.
 
@@ -177,17 +177,20 @@ latex installed you can print help files by <code>help(fn_name, offline=TRUE)</c
 
 <h2>2.6 Can I use <code>R BATCH</code>?</h2>
 
-<p>No, but you can set up a batch file using <code>Rterm.exe</code>. A sample batch file
-might contain (as one line)
+<p>Yes, if you Perl installed.  The Windows analogue is <code>Rcmd BATCH</code>:
+use <code>Rcmd BATCH --help</code> for full details.
 
-<pre>path_to_R\bin\Rterm.exe --vsize=10M --nsize=500k --no-restore --no-save &lt; %1 &gt; %1.out
+<p>Otherwise you can set up a batch file using <code>Rterm.exe</code>. A sample
+batch file might contain (as one line)
+
+<pre>path_to_R\bin\Rterm.exe --no-restore --no-save &lt; %1 &gt; %1.out
 </pre>
 
 <a name="Can%20I%20use%20rwXxxx%20with%20ESS%20and%20emacs%3f"></a>
 
 <h2>2.7 Can I use rwXxxx with ESS and emacs?</h2>
 
-<p>Yes. The latest versions of ESS (e.g. 5.1.13) come with support for this
+<p>Yes. The latest versions of ESS (e.g. 5.1.16) come with support for this
 version of R, and there is support for interrupting the R process from
 ESS (by <code>C-c C-c</code>).
 
