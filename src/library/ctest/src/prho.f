@@ -57,7 +57,7 @@ c     KH mod/beg
 c     This was `.ne.' in the code but `.eq.' in the paper
       if (js .eq. n * (n * n - 1) / 3) return
 c     KH mod/end
-c      ifr = 0
+      ifr = 0
       do 5 m = 1,nfac
 	ise = 0
 	do 2 i = 1, n
