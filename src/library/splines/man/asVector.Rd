@@ -1,9 +1,10 @@
 \name{asVector}
+\alias{asVector}
 \alias{asVector.xyVector}
 \title{Coerce an Object to a Vector}
 \description{
-This is a generic function.  Methods for this function coerce objects of
-given classes to vectors.
+  This is a generic function.  Methods for this function coerce objects
+  of given classes to vectors.
 }
 \usage{
 asVector(object)

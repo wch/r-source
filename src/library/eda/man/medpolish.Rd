@@ -6,6 +6,7 @@ medpolish(x, eps = 0.01, maxiter = 10, trace.iter = TRUE)
 plot(medpolish.obj)
 print(medpolish.obj)
 }
+\alias{medpolish}
 \alias{plot.medpolish}
 \alias{print.medpolish}
 \arguments{

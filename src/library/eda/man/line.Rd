@@ -8,6 +8,7 @@ residuals(tukeyline.obj)
 fitted.values(tukeyline.obj)
 print(tukeyline.obj)
 }
+\alias{line}
 \alias{coefficients.tukeyline}
 \alias{residuals.tukeyline}
 \alias{fitted.values.tukeyline}
