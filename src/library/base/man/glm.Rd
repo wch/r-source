@@ -75,8 +75,9 @@ glm.fit.null(x, y, weights = rep(1, nrow(x)),
     should be included as a component of the returned value.}
 
   \item{method}{the method to be used in fitting the model.
-    The default (and presently only) method \code{glm.fit}
-    uses iteratively reweighted least squares (IWLS).}
+    The default method \code{"glm.fit"} uses iteratively reweighted
+    least squares (IWLS).  The only current alternative is
+    \code{"model.frame"} which returns the model frame and does no fitting.}
 
   \item{x, y}{For \code{glm}:
     logical values indicating whether the response
