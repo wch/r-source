@@ -982,7 +982,7 @@ SEXP do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(fdef = get_this_generic(args));
 
     if(isNull(fdef))
-      error("Call to standardGeneric(\"", CHAR(STRING_ELT(arg, 0)), "\") apparently not from the body of that generic function");
+      error("Call to standardGeneric(\"%s\") apparently not from the body of that generic function", CHAR(STRING_ELT(arg, 0)));
 
     value = (*ptr)(arg, env, fdef);
 
