@@ -78,7 +78,7 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   strsplit fix broke copy.url. 
+    o   strsplit fix broke copy.url.
 
     o	0 ^ -1 == Inf  &  min(NA,NaN) is NA now always
 
@@ -111,6 +111,9 @@ BUG FIXES
         observations with fits on the mu.eta boundary have been dropped.
 
     o	deviance residuals could be NaN instead of 0 by rounding error.
+
+    o	shapiro.test(x) now gives better error messages (eg. x=rep(1,5))
+	and doesn't print ANYTHING anymore (in some cases).
 
 
 		CHANGES IN R VERSION 0.90.1
