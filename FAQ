@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-46, 2003-09-26
+Version 1.7-47, 2003-10-01
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1289,9 +1289,6 @@ distributions of R.)
      Functions for generating and manipulating generalised binned kernel
      density estimates.
 
-*GeneSOM*
-     Clustering genes using Self-Organizing Maps (SOMs).
-
 *Hmisc*
      Functions useful for data analysis, high-level graphics, utility
      operations, functions for computing sample size and power, importing
@@ -1541,6 +1538,9 @@ distributions of R.)
 
 *clim.pact*
      Climate analysis and downscaling for monthly and daily data.
+
+*clines*
+     Calculates Contour Lines.
 
 *cluster*
      Functions for cluster analysis.  _Recommended_.
@@ -1835,6 +1835,10 @@ distributions of R.)
 *lgtdl*
      A set of methods for longitudinal data objects.
 
+*linprog*
+     Solve linear programming/linear optimization problems by using the
+     simplex algorithm.
+
 *lme4*
      Fit linear and generalized linear mixed-effects models.
 
@@ -1932,6 +1936,9 @@ distributions of R.)
 
 *mvnmle*
      ML estimation for multivariate normal data with missing values.
+
+*mvnormtest*
+     Generalization of the Shapiro-Wilk test for multivariate variables.
 
 *mvtnorm*
      Multivariate normal and t distributions.
@@ -2174,6 +2181,9 @@ distributions of R.)
 *snow*
      Simple Network of Workstations: support for simple parallel computing
      in R.
+
+*som*
+     Self-Organizing Maps (with application in gene clustering).
 
 *sound*
      A sound interface for R: Basic functions for dealing with `.wav' files
