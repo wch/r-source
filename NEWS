@@ -199,6 +199,10 @@ BUG FIXES
     o	hsv() and rgb() now return character(0) when one of their args has
 	length 0.  This also fixes terrain.color(1). (PR#3233)
 
+    o	[[<-.data.frame checked if a replacment was too short, but not
+	if it was too long.  (related to PR#3229)
+
+
 
 		CHANGES IN R VERSION 1.7.0
 
