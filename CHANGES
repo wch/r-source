@@ -1,3 +1,10 @@
+		CHANGES IN R VERSION 0.61.2
+
+BUG FIXES
+
+    o   In 0.61.1, model.matrix was fixed to pay attention to the names of
+	the names of its data arg, but the data arg was defaulting to an
+	unnamed list, so  model.matrix(~x)  failed...
 
 
 		CHANGES IN R VERSION 0.61.1
