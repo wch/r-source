@@ -1426,43 +1426,20 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!LimitCheck(REAL(zlim), &zc, &zs))
 	errorcall(call, "invalid z limits");
 
-    theta = asReal(CAR(args));
-    args = CDR(args);
+    theta = asReal(CAR(args));	args = CDR(args);
+    phi	  = asReal(CAR(args));	args = CDR(args);
+    r	= asReal(CAR(args));	args = CDR(args);
+    d	= asReal(CAR(args));	args = CDR(args);
+    scale  = asLogical(CAR(args)); args = CDR(args);
+    expand = asReal(CAR(args)); args = CDR(args);
+    col	   = CAR(args);		args = CDR(args);
+    border = CAR(args);		args = CDR(args);
+    ltheta = asReal(CAR(args)); args = CDR(args);
+    lphi   = asReal(CAR(args)); args = CDR(args);
+    Shade  = asReal(CAR(args)); args = CDR(args);
+    dobox  = asLogical(CAR(args)); args = CDR(args);
 
-    phi = asReal(CAR(args));
-    args = CDR(args);
-
-    r = asReal(CAR(args));
-    args = CDR(args);
-
-    d = asReal(CAR(args));
-    args = CDR(args);
-
-    scale = asLogical(CAR(args));
-    args = CDR(args);
-
-    expand = asReal(CAR(args));
-    args = CDR(args);
-
-    col = CAR(args);
-    args = CDR(args);
-
-    border = CAR(args);
-    args = CDR(args);
-
-    ltheta = asReal(CAR(args));
-    args = CDR(args);
-
-    lphi = asReal(CAR(args));
-    args = CDR(args);
-
-    Shade = asReal(CAR(args));
     if (R_FINITE(Shade) && Shade <= 0) Shade = 1;
-    args = CDR(args);
-
-    dobox = asLogical(CAR(args));
-    args = CDR(args);
-
     if (R_FINITE(ltheta) && R_FINITE(lphi) && R_FINITE(Shade))
 	DoLighting = 1;
     else
