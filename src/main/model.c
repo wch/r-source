@@ -894,7 +894,7 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (isSymbol(CAR(v)))
 	    STRING(varnames)[i++] = PRINTNAME(CAR(v));
 	else
-	    STRING(varnames)[i++] = STRING(deparse1(CAR(v), 0))[0];
+	    STRING(varnames)[i++] = STRING(deparse1line(CAR(v), 0))[0];
     }
     PROTECT(termlabs = allocVector(STRSXP, nterm));
     n = 0;

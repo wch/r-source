@@ -520,6 +520,7 @@ void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
 void defineVar(SEXP, SEXP, SEXP);
 SEXP deparse1(SEXP,int);
+SEXP deparse1line(SEXP,int);
 SEXP dimgets(SEXP, SEXP);
 SEXP dimnamesgets(SEXP, SEXP);
 int DispatchOrEval(SEXP, SEXP, SEXP, SEXP, SEXP*, int);

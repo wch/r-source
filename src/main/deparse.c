@@ -161,6 +161,23 @@ SEXP deparse1(SEXP call, int abbrev)
     return svec;
 }
 
+/* deparse1line uses the maximum cutoff rather than the default */
+/* This is needed in terms.formula, where we must be able */
+/* to deparse a term label into a single line of text so */
+/* that it can be reparsed correctly */
+SEXP deparse1line(SEXP call, int abbrev)
+{
+   int savecutoff;
+   SEXP temp;
+
+   savecutoff = cutoff;
+   cutoff = MAX_Cutoff;
+   temp = deparse1(call, abbrev);
+   cutoff = savecutoff;
+   return(temp);
+}
+
+
 SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     FILE *fp;
