@@ -62,7 +62,7 @@
 
 #define MAXBACKLOG 5
 
-#if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
+#if defined(Unix) && !defined(HAVE_BSD_NETWORKING)
 static char socket_msg[] = "sockets are not available on this system\n";
 #endif
 
