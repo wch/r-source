@@ -6,7 +6,7 @@ c(\dots, recursive=FALSE)
 \alias{c}
 \description{
   This is a generic function which combines its arguments.
-  
+
   The default method combines its arguments to form a vector.
   All arguments are coerced to a common type which is the type
   of the returned value.
@@ -24,6 +24,14 @@ c(\dots, recursive=FALSE)
 \examples{
 c(1,7:9)
 c(1:5, 10.5, "next")
+
+## append to a list:
+ll <- list(A = 1, c="C")
+## do *not*
+c(ll, d = 1:3) # which is == c(ll, as.list(c(d=1:3))
+\testonly{stopifnot(identical(c(ll, d=1:3), c(ll, as.list(c(d=1:3)))))}
+## but rather
+c(ll, d = list(1:3))# c() combining two lists
 
 c(list(A=c(B=1)), recursive=TRUE)
 
