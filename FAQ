@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-26, 2003-07-15
+Version 1.7-27, 2003-07-16
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1422,6 +1422,9 @@ distributions of R.)
 
 *blighty*
      Function for drawing the coastline of the United Kingdom.
+
+*boolean*
+     Boolean logit and probit: a procedure for testing Boolean hypotheses.
 
 *boot*
      Functions and datasets for bootstrapping from the book "Bootstrap
