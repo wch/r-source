@@ -37,7 +37,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                          call. = FALSE)
             }
         }
-        else if(.Platform$OS.type == "mac")
+        else
             stop(paste("This package has not been installed properly\n",
                        "See the Note in ?library"))
     }
@@ -236,7 +236,7 @@ function(chname, package = .packages(), lib.loc = NULL, verbose =
     ## </NOTE>
 
     sQuote <- function(s) paste("`", s, "'", sep = "")
-    
+
     if(!exists(".Dyn.libs", envir = NULL)) {
         assign(".Dyn.libs", character(0), envir = NULL)
     }
