@@ -576,8 +576,8 @@ on La@TeX{} environments.
 
 @findex \tabular
 The @code{\tabular} command takes two arguments. The first gives for
-each of the columns the required alignment (\code{l} for
-left-justification, \code{r} for right-justification or \code{code} for
+each of the columns the required alignment (@code{l} for
+left-justification, @code{r} for right-justification or @code{c} for
 centring.)  The second argument consists of an arbitrary number of lines
 separated by @code{\cr}, and with fields separated by @code{\tab}. For
 example:
