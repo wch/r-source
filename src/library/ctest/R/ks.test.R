@@ -59,7 +59,8 @@ ks.test <- function(x, y, ..., alternative = c("two.sided", "less", "greater"))
             p[IND] <- .C("pkstwo",
                          as.integer(length(x)),
                          p = as.double(x[IND]),
-                         as.double(tol))$p
+                         as.double(tol),
+                         PACKAGE = "ctest")$p
         }
         return(p)
     }

@@ -209,7 +209,7 @@ supsmu <-
     leno <- length(ord)
     if(diff <- n - leno)
 	warning(paste(diff, "observation(s) with NAs, NaNs and/or Infs deleted"))
-    .Fortran("bdrsetsmu")
+    .Fortran("bdrsetsmu", PACKAGE = "modreg")
     smo <- .Fortran("bdrsupsmu",
 		    as.integer(leno),
 		    as.double(xo),
