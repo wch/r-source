@@ -151,7 +151,7 @@ R_SESSION_TMPDIR="${tmp}"
 export R_SESSION_TMPDIR
 
 ## Startup
-R_binary="${R_HOME}/bin/R.bin"
+R_binary="${R_HOME}/bin/exec/R"
 if test -z "${debugger}"; then
   exec ${R_binary} @R_BATCHSAVE@ ${args}
 else

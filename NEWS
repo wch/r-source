@@ -67,12 +67,16 @@ INSTALLATION CHANGES
     o	The dynamic libraries libR and libRlapack are now installed in
 	R_HOME/lib rather than R_HOME/bin.
 
-    o	When --enable-R-shlib is specified, the main R binary R.bin is
-	a small executable linked against libR.  See the R-admin
+    o	When --enable-R-shlib is specified, the R executable is now
+	a small executable linked against libR: see the R-admin
 	manual for further discussion.  The 'extra' libraries bzip2,
 	pcre, xdr and zlib are now only compiled in a way that allows
 	the code to be included in a shared library if this option is
 	specified, which might improve performance when it is not.
+
+    o   The main R executable is now R_HOME/exec/R not R_HOME/R.bin, to
+	ease issues on MacOS X.  (The location is needed when debugging
+	core dumps.)
 
 
 BUG FIXES

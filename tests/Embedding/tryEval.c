@@ -7,7 +7,7 @@ main(int argc, char *argv[])
 
     SEXP e, val;
     int errorOccurred;
-    argv[0] = "R.bin";
+    argv[0] = "R";
     Rf_initEmbeddedR(argc, argv);
 
     PROTECT(e = allocVector(LANGSXP, 2));

@@ -80,7 +80,8 @@ R_XDR = @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
 RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a $(R_XDR)
 ## </FIXME>
 
-Rexecbin_PROGRAMS = R.bin
+R_binary = R.bin
+Rexecbin_PROGRAMS = $(R_binary)
 R_bin_SOURCES = $(SOURCES)
 R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@ $(OBJECTS)
 ## <FIXME>
@@ -135,7 +136,7 @@ R: Makefile
 ../include/config.h ../include/Rversion.h:
 	(cd $(@D); $(MAKE) $(@F))
 
-R.bin: $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
+$(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
 @WANT_R_SHLIB_FALSE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) $(R_bin_LDADD) $(LIBS)
 @WANT_R_SHLIB_TRUE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) -L../../lib -lR
 ## <FIXME>
@@ -176,21 +177,23 @@ install: installdirs
 	@$(MAKE) install-bin
 	@if test -f $(libR_la); then $(MAKE) install-lib; fi
 installdirs:
-	@$(MKINSTALLDIRS) $(Rexecbindir)
+	@$(MKINSTALLDIRS) $(Rexecbindir) $(Rexecbindir)/exec
 	@$(MKINSTALLDIRS) $(Rexeclibdir)
-install-bin:
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change R.bin $(Rexecbindir)/R.bin
+install-bin:installdirs
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) $(Rexecbindir)/exec/R
 install-lib: installdirs
 @USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexeclibdir)/$(libR_la)
 ## <FIXME>
 ## This is just a temporary expedient for backwards compatibility.
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexecbindir)/$(libR_la)
+## May have an actual libR.so file in R_HOME/bin from earlier builds
+	@rm -f $(Rexecbindir)/$(libR_la)
+	@ln -s $(Rexeclibdir)/$(libR_la) $(Rexecbindir)
 ## </FIXME>
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(libR_la) $(Rexeclibdir)
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -f $(Rexecbindir)/R.bin
+	@rm -f $(Rexecbindir)/exec/R $(Rexecbindir)/R.bin
 	@rmdir $(Rexecbindir) 2>/dev/null \
 	  || echo "  subdir $(Rexecbindir) not removed"
 	@rm -f $(Rexeclibdir)/libR$(DYLIB_EXT)
