@@ -385,3 +385,7 @@ Date: Wed, 24 Oct 2001 11:28:09 +0200 (MET DST)
 Subject: promax rotation matrix
 From: pperkins@ucsd.edu
 Date: Fri, 26 Oct 2001 20:44:07 +0200 (MET DST)
+* PR# 1157 *
+Subject: identify(...plot=F)
+From: Rolf Turner <rolf@maths.uwa.edu.au>
+Date: Fri, 2 Nov 2001 09:43:49 +0800 (WST)
