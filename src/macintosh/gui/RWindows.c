@@ -1007,8 +1007,6 @@ void DoUpdate ( WindowRef window )
 	if(!isGraphicWindow(window)){
 	 WEUpdate ( updateRgn, GetWindowWE ( window ) ) ;
     // tell everything we're done updating
-	 EndUpdate ( window ) ;
-	 DisposeRgn ( updateRgn ) ;
     } else{
     //    if (QDIsPortBuffered(GetWindowPort(window)))
     //    QDFlushPortBuffer(GetWindowPort(window), NULL);
@@ -1024,7 +1022,11 @@ void DoUpdate ( WindowRef window )
 
    
     GEplayDisplayList(gedd);
+
 }
+
+	 EndUpdate ( window ) ;
+	 DisposeRgn ( updateRgn ) ;
 
 	// restore the old graphics port
 	SetPort ( savePort ) ;
