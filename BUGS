@@ -509,10 +509,6 @@ Date: Fri, 28 Jun 2002 11:53:13 +0200 (MET DST)
 Subject: complex numbers in library function
 From: alex.deckmyn@oma.be
 Date: Wed, 3 Jul 2002 14:25:58 +0200 (MET DST)
-* PR# 1743 *
-Subject: Terms Objects
-From: eudora-suggest <eudora-suggest@qualcomm.com>
-Date: Thu, 4 Jul 2002 13:35:04 -0500
 * PR# 1744 *
 Subject: lattice default aspect fails for some data sets
 From: dieter.menne@menne-biomed.de
@@ -521,35 +517,16 @@ Date: Thu, 4 Jul 2002 21:01:08 +0200 (MET DST)
 Subject: nlme: failed augPred with NA in an unused column
 From: dieter.menne@menne-biomed.de
 Date: Fri, 5 Jul 2002 08:32:32 +0200 (MET DST)
-* PR# 1754 *
-Subject: integrate()
-From: tcporco@mathepi.com
-Date: Mon, 8 Jul 2002 02:15:55 +0200 (MET DST)
-* PR# 1756 *
-Subject: çè¨­å®ã
-From: chwanyi <chwanyi@mail.ncku.edu.tw>
-Date: Mon, 8 Jul 2002 18:09:27 +0800 (CST)
-* PR# 1757 *
-Subject: compilation breaks with gnome support on hp-ux 11.00
-From: mgansser@rand.de
-Date: Mon, 8 Jul 2002 13:58:16 +0200 (MET DST)
-* PR# 1758 *
-Subject: ????????! ???­??°?°?º?´? 50%????! µµ??°?°???????±¤°???
-From: µµ?????? <perfume0123@hanmir.com>
-Date: Tue, 9 Jul 2002 03:12:05 +0900
 * PR# 1759 *
 Subject: as.character.octmode() and format.octmode()
 From: hb@maths.lth.se
 Date: Tue, 9 Jul 2002 00:49:33 +0200 (MET DST)
-* PR# 1760 *
-Subject: Your password
-From: jill_cheng <jill_cheng@hotmail.com>
-Date: Tue, 9 Jul 2002 11:52:31 +0800 (CST)
 * PR# 1761 *
 Subject: svd() very slow for wide matrix X but not for t(X)
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Tue, 9 Jul 2002 11:39:15 -0400 
-* PR# 1762 *
-Subject: A  funny game
-From: genlpcm <genlpcm@tld.d>
-Date: Tue, 9 Jul 2002 14:57:04 -0700 (PDT)
+--Doesn't happen with the now preferred La.svd.
+* PR# 1767 *
+Subject: bug in all.equal.character
+From: "David Kane  <David Kane" <a296180@agate.fmr.com>
+Date: Wed, 10 Jul 2002 08:13:42 -0400
