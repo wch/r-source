@@ -32,11 +32,11 @@ RweaveLatexSetup(file, syntax, output=NULL, quiet=FALSE, debug=FALSE,
     The argument is ignored if a \code{\\usepackage\{Sweave\}} is
     already present in the Sweave source file.
   }
-  \item{echo}{set default for option \code{echo}, see defails below.}
-  \item{eval}{set default for option \code{eval}, see defails below.}
-  \item{split}{set default for option \code{split}, see defails below.}
-  \item{pdf}{set default for option \code{pdf}, see defails below.}
-  \item{eps}{set default for option \code{eps}, see defails below.}
+  \item{echo}{set default for option \code{echo}, see details below.}
+  \item{eval}{set default for option \code{eval}, see details below.}
+  \item{split}{set default for option \code{split}, see details below.}
+  \item{pdf}{set default for option \code{pdf}, see details below.}
+  \item{eps}{set default for option \code{eps}, see details below.}
 }
 \section{Supported Options}{
   RweaveLatex supports the following options for code chunks (the values
