@@ -119,6 +119,9 @@ NEW FEATURES
     o	New function capabilities() to report optional capabilities
 	such as jpeg. png, tcltk, gzfile and url support.
 
+    o	split() now allows splitting on a list of factors in which case
+	their interaction defines the grouping.
+
 
 
 BUG FIXES

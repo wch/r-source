@@ -1,7 +1,10 @@
 split <- function(x, f) UseMethod("split")
 
 split.default <- function(x, f) {
-    f <- factor(f)                      # drop extraneous levels
+    if(is.list(f))
+        f <- factor(do.call("interaction", f))
+    else
+        f <- factor(f)                  # drop extraneous levels
     if(is.null(class(x)) && is.null(names(x)))
         return(.Internal(split(x, f)))
     ## else

@@ -1,31 +1,32 @@
 \name{split}
 \title{Divide into Groups}
+\alias{split}
+\alias{split.default}
+\alias{split.data.frame}
+\description{
+  \code{split} divides the data in the vector \code{x} into the groups
+  defined by \code{f}.
+}
 \usage{
 split(x, f)
 split.default(x, f)
 split.data.frame(x, f)
 }
-\alias{split}
-\alias{split.default}
-\alias{split.data.frame}
 \arguments{
-\item{x}{vector containing the values to be divided into groups.}
-\item{f}{a ``factor'' such that \code{as.factor(f)} defines the grouping.}
-}
-\description{
-  \code{split} divides the data in the vector \code{x} into the groups
-  defined by the factor \code{f}.
+  \item{x}{vector containing the values to be divided into groups.}
+  \item{f}{a ``factor'' such that \code{factor(f)} defines the grouping,
+    or a list of such factors in which case their interaction is used
+    for the grouping.}
 }
 \details{ 
-  \code{f} is recycled as necessary and
-  if the length of \code{x} is not a multiple of the length of \code{f}
-  a warning is printed.
+  \code{f} is recycled as necessary and if the length of \code{x} is not
+  a multiple of the length of \code{f} a warning is printed.
 }
 \value{
   The value returned is a list of vectors containing the values for the
-  groups.  The components of the list are named by the factor levels of
-  \code{f}. If \code{f} is longer than \code{x} some of these will be of
-  zero length.
+  groups.  The components of the list are named by the factor levels
+  given be \code{f}.  If \code{f} is longer than \code{x} some of these
+  will be of zero length.
 }
 \seealso{\code{\link{cut}}}
 \examples{

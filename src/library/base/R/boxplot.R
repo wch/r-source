@@ -78,7 +78,7 @@ boxplot.formula <- function(formula, data = NULL, subset, na.action, ...)
     m[[1]] <- as.name("model.frame")
     mf <- eval(m, parent.frame())
     response <- attr(attr(mf, "terms"), "response")
-    boxplot(split(mf[[response]], mf[[-response]]), ...)
+    boxplot(split(mf[[response]], mf[-response]), ...)
 }
 
 boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
