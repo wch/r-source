@@ -69,6 +69,7 @@ remove them.
 
 Do not use paths with spaces in: you can always use the short forms.
 Do not use unnecessary quotes in your PATH variable.
+Do not have our toolset and any other version of cygwin1.dll in your path.
 
 
 BEWARE: if you have Norton Anti-Virus you may need to disable it.

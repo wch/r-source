@@ -79,6 +79,8 @@ zip.exe, unzip.exe, hhc.exe
 
 Do not use spaces nor unnecessary quotes in your PATH variable.
 
+Do not have our toolset and any other version of cygwin1.dll in your path.
+
 
 Building
 --------
