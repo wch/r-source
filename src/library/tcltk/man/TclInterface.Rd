@@ -78,12 +78,19 @@ tclVar(init="")
 \method{tclvalue}{tclVar}(x) <- value
 
 tclArray()
-\method{[[}{tclArray}(x,...)
-\method{[[}{tclArray}(x,...) <- value
-\method{$}{tclArray}(x, i)
-\method{$}{tclArray}(x, i) <- value
-\method{names}{tclArray}
-\method{length}{tclArray}
+% These do not work yet
+%\method{[[}{tclArray}(x,...)
+%\method{[[}{tclArray}(x,...) <- value
+%\method{$}{tclArray}(x, i)
+%\method{$}{tclArray}(x, i) <- value
+# S3 methods for tclArray objects
+x[[...]]
+x[[...]] <- value
+x$i
+x$i <- value
+
+\method{names}{tclArray}(x)
+\method{length}{tclArray}(x)
 
 tclObj(x)
 tclObj(x) <- value
