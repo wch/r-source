@@ -2328,7 +2328,7 @@ sub rdoc2latex {# (filename)
     print $latexout "\}\{";
     print $latexout &ltxstriptitle($blocks{"title"});
     print $latexout "\}\{";
-    print $latexout latex_link_trans0($blocks{"name"});
+    print $latexout &latex_link_trans0($blocks{"name"});
     print $latexout "\}\n";
 
     my $current = $blocks{"name"}, $generic, $cmd;
