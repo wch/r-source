@@ -143,8 +143,10 @@ function (topic, package = .packages(), lib.loc = .lib.loc, echo = TRUE,
     pkg <- comp[length(comp) - 2]
     if(length(file) > 1)
         warning(paste("More than one help file found: using package", pkg))
-    lib <- sub(file.path("", pkg, "help", topic), "", file[1])
-    file <- paste(file.path(lib, pkg, "R-ex", topic), "R", sep=".")
+#    lib <- sub(file.path("", pkg, "help", topic), "", file[1])
+#    file <- paste(file.path(lib, pkg, "R-ex", topic), "R", sep=".")
+    file <- sub("/help/([^/]*)$", "/R-ex/\\1", file)
+    file <- paste(file, ".R", sep = "")
     ## experimental code
     zfile <- zip.file.extract(file, "Rex.zip")
     if(zfile != file) on.exit(unlink(zfile))
