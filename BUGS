@@ -294,6 +294,10 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
+* PR# 934 *
+Subject: ks.test in ctest package
+From: Murray Smith <mh.smith@auckland.ac.nz>
+Date: Tue, 08 May 2001 16:52:07 +1200
 * PR# 933 *
 Subject: read.xport bug of foreign pkg
 From: jorvutom@icaro.dic.uchile.cl
