@@ -13,7 +13,7 @@ gctorture(on = TRUE)
   \emph{very} slowly, unfortunately.
 }
 \value{
-        None
+  Previous value.
 }
 \author{Peter Dalgaard}
 \keyword{environment}

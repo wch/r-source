@@ -975,7 +975,7 @@ SEXP do_gctorture(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     i = asLogical(CAR(args));
-    LOGICAL(old)[0] = gc_reporting;
+    LOGICAL(old)[0] = !gc_inhibit_torture;
     if (i != NA_LOGICAL)
 	gc_inhibit_torture = !i;
     return old;

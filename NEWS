@@ -397,6 +397,10 @@ BUG FIXES
 	boxes, but the space was not actually used in typesetting the 
 	expression (PR#622).
 
+    o	gctorture did return a value although documented not to, that of
+	gcinfo.  It now returns the previous setting of gctorture.
+
+
 
 	**************************************************
 	*						 *
