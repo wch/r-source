@@ -95,6 +95,11 @@ x$name <- value
 
   When  \code{[} and \code{[[} are used with two indices, the
   column will be coerced as necessary to accommodate the value.
+
+  Note that when the replacement value is an array (including a matrix)
+  it is \emph{not} treated as a series of columns (as
+  \code{\link{data.frame}} and \code{\link{as.data.frame}} do) but
+  inserted as a single column.
 }
 \section{Warning}{
   Although the default for \code{drop} is \code{TRUE}, the default

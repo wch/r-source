@@ -163,6 +163,8 @@ NEW FEATURES
 
     o	dist() has a new method to calculate Minkowski distances.
 
+    o	as.data.frame() now has a method for arrays.
+
 
 UTILITIES
 
@@ -175,7 +177,7 @@ UTILITIES
 	function arguments differ between documentation and code.
 	Note that this affects "R CMD check" as well.
 
-    o	Testing examples via massge-examples.pl (as used by R CMD
+    o	Testing examples via massage-examples.pl (as used by R CMD
 	check) now restores the search path after every help file.
 
     o	checkS3methods() in package 'tools' now also looks for generics
@@ -295,6 +297,9 @@ BUG FIXES
     o   The validation code for POSIXlt dates and hence
 	seq(,by="DSTdays") now works for large mday values (not
 	just those in -1000...1000).  (PR#6212)
+
+    o   The print() method for data frames now copes with data frames
+	containing arrays (other than matrices).
 
 
 

@@ -24,6 +24,10 @@ rbind(\dots, deparse.level = 1)
   a data frame and the rest are vectors or matrices.  There can be other
   methods; in particular, there is one for time series objects.
 
+  Data frames can be \code{cbind}-ed with matrices, in which case
+  each matrix forms a single column in the result, unlike calling
+  \code{\link{data.frame}}.
+
   The \code{rbind} data frame method takes the classes of the columns
   from the first
   data frame.  Factors have their levels expanded as necessary (in

@@ -16,6 +16,7 @@
 \alias{as.data.frame.ordered}
 \alias{as.data.frame.ts}
 \alias{as.data.frame.vector}
+\alias{as.data.frame.array}
 
 \title{
   Coerce to a Data Frame
@@ -50,9 +51,16 @@ is.data.frame(x)
   data frame.  Similarly, each column of a matrix is converted separately.
   This can be overridden if the object has a class which has
   a method for \code{as.data.frame}: two examples are
-  matrices of class \code{"\link[stats]{model.matrix}"} (which are included as a
-  single column) and list objects of class \code{"\link{POSIXlt}"} which are
-  coerced to class \code{"\link{POSIXct}"}
+  matrices of class \code{"\link[stats]{model.matrix}"} (which are
+  included as a single column) and list objects of class
+  \code{"\link{POSIXlt}"} which are coerced to class
+  \code{"\link{POSIXct}"}.
+
+  As from \R 1.9.0 arrays can be converted.  One-dimensional arrays are
+  treated like vectors and two-dimensional arrays like matrices.  Arrays
+  with more than two dimensions are converted to matrices by
+  \sQuote{flattening} all dimensions after the first and creating
+  suitable column labels.
 
   Character variables are converted to factor columns unless protected
   by \code{\link{I}}.

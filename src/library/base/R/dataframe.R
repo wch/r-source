@@ -199,6 +199,28 @@ as.data.frame.model.matrix <- function(x, row.names = NULL, optional = FALSE)
     value
 }
 
+as.data.frame.array <- function(x, row.names = NULL, optional = FALSE)
+{
+    d <- dim(x)
+    if(length(d) == 1) { ## same as as.data.frame.vector, but deparsed here
+        value <- as.data.frame.vector(drop(x), row.names, optional)
+        if(!optional) names(value) <- deparse(substitute(x))[[1]]
+        value
+    } else if (length(d) == 2) {
+        as.data.frame.matrix(x, row.names, optional)
+    } else {
+        dn <- dimnames(x)
+        dim(x) <- c(d[1], prod(d[-1]))
+        if(!is.null(dn)) {
+            if(length(dn[[1]])) rownames(x) <- dn[[1]]
+            for(i in 2:length(d))
+                if(is.null(dn[[i]])) dn[[i]] <- seq(len=d[i])
+            colnames(x) <- interaction(expand.grid(dn[-1]))
+        }
+        as.data.frame.matrix(x, row.names, optional)
+    }
+}
+
 ## will always have a class here
 "[.AsIs" <- function(x, i, ...) structure(NextMethod("["), class = class(x))
 

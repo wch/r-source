@@ -1083,3 +1083,32 @@ lm.fit <- lm(y ~ x, data.frame(x=1:10, y=1:10))
 try(predict(lm.fit, data.frame(x=NA)))
 ## wrong answers in 1.8.0, refused to run in 1.8.1
 
+
+
+## failure to print data frame containing arrays
+## raised by John Fox on R-devel on 2004-01-08
+y1 <- array(1:10, dim=10)
+y2 <- array(1:30, dim=c(10,3), dimnames=list(NULL, letters[1:3]))
+y3 <- array(1:40, dim=c(10,2,2),
+            dimnames=list(NULL, letters[1:2], NULL))
+data.frame(y=y1)
+data.frame(y=y2)
+data.frame(y=y3)
+
+as.data.frame(y1)
+as.data.frame(y2)
+as.data.frame(y3)
+
+X <- data.frame(x=1:10)
+X$y <- y1
+X
+sapply(X, dim)
+
+X$y <- y2
+X
+sapply(X, dim)
+
+X$y <- y3
+X
+sapply(X, dim)
+## The last one fails in S.
