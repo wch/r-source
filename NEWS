@@ -62,6 +62,10 @@ NEW FEATURES
 	rather than as double/DOUBLE PRECISION, by setting the
 	attribute "Csingle". See ?Foreign for details.
 
+    o   Comparison of strings uses the current locale on systems where
+	this is available, and so is always consistent with the ordering
+	used by sort(). 
+
 
 BUG FIXES
 
