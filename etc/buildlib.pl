@@ -73,12 +73,29 @@ sub read_titles {
     my $lib = $_[0];
 
     my %tit;
-
-    open rtitles, "cat $lib/*/TITLE |";
-
-    while(<rtitles>){
-	/^(\S*)\s*(.*)/;
-	$tit{$1} = $2;
+    my $pkg;
+    
+    opendir lib, $lib;
+    my @libs = readdir(lib);
+    closedir lib;
+    
+    foreach $pkg (@libs) {
+	if(-d "$lib/$pkg"){
+	    if(! ( ($pkg =~ /^CVS$/) || ($pkg =~ /^\.+$/))){
+		if(-r "$lib/$pkg/TITLE"){
+		    open rtitle, "< $lib/$pkg/TITLE";
+		    $_ = <rtitle>;
+		    /^(\S*)\s*(.*)/;
+		    my $pkgname = $1;
+		    $tit{$pkgname} = $2; 
+		    while(<rtitle>){
+			/\s*(.*)/;
+			$tit{$pkgname} = $tit{$pkgname} . "\n" .$1;
+		    }
+		    close rtitle;
+		}
+	    }
+	}
     }
 
     close titles;
@@ -142,7 +159,7 @@ sub build_htmlpkglist {
     print htmlfile "<P><TABLE>\n";
     
     foreach $key (sort(keys %htmltitles)) {
-	print htmlfile "<TR ALIGN=LEFT>\n";
+	print htmlfile "<TR ALIGN=LEFT VALIGN=TOP>\n";
 	print htmlfile "<TD><A HREF=\"$key/html/00Index.html\">";
 	print htmlfile "$key</A><TD>";
 	print htmlfile $htmltitles{$key};
