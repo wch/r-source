@@ -25,15 +25,15 @@ this list.
 
 R was initially written by Robert Gentleman and Ross Ihaka of the
 Statistics Department of the University of Auckland.  In addition,
-a large group of individuals has contibuted to R by contributing
-code and bug reports.
+a large group of individuals has contributed to R by sending code
+and bug reports. 
 
 Since mid-1997 there has been a core group who can modify the R
 source code CVS archive.  The group currently consists of
 
-	Peter Dalgaard, Robert Gentleman, Kurt Hornik
-	Ross Ihaka, Thomas Lumley, Martin Maechler,
-	Paul Murrell, Heiner Schwarte and Luke Tierney.
+	Peter Dalgaard, Robert Gentleman, Kurt Hornik, Ross Ihaka,
+	Friedrich Leisch, Thomas Lumley, Martin Maechler,
+	Paul Murrell, Heiner Schwarte, and Luke Tierney.
 
 As noted above, discussions of the development process take
 place in the r-devel mailing list.
