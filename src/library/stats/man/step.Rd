@@ -86,7 +86,10 @@ step(object, scope, scale = 0,
   \code{upper} model.
 
   Models specified by \code{scope} can be templates to update
-  \code{object} as used by \code{\link{update.formula}}.
+  \code{object} as used by \code{\link{update.formula}}.  So using
+  \code{.} in a \code{scope} formula means \sQuote{what is
+  already there}, with \code{.^2} indicating all interactions of
+  existing terms.
   
   There is a potential problem in using \code{\link{glm}} fits with a
   variable \code{scale}, as in that case the deviance is not simply

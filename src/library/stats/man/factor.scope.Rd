@@ -31,7 +31,7 @@ factor.scope(factor, scope)
 }
 \value{
   For \code{add.scope} and \code{drop.scope} a character vector of
-  terms labels. For \code{factor.scope}, a list with components
+  terms labels.  For \code{factor.scope}, a list with components
   \code{drop} and \code{add}, character vectors of terms labels.
 }
 
