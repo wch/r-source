@@ -1,9 +1,10 @@
-# needs save lib pkg R_HOME BUILD RX_EXE
+# needs save lib pkg R_HOME BUILD RX_EXE DPKG
 lib=$2
 pkg=$3
 R_HOME=$4
 BUILD=$5
 RX_EXE=$6
+DPKG=$7
 
 case $1 in
     CHECK|'') if test -r install.R; then R_SAVE_IMAGE=true; else R_SAVE_IMAGE=false; fi;;
@@ -37,10 +38,11 @@ if ${R_SAVE_IMAGE}; then
         fi
     fi
     save_image_defaults="list(compress=TRUE, safe=FALSE)"
-    code_file="${lib}/${pkg}/R/${pkg}"
-    rda_file="${lib}/${pkg}/R/all.rda"
+    code_file="${DPKG}/R/${pkg}"
+    rda_file="${DPKG}/R/all.rda"
     if test -f NAMESPACE; then
-        code_cmd="echo invisible(.libPaths(c(.Library,\"${lib1}\",.libPaths()))); .getRequiredPackages(); saveNamespaceImage(\"${pkg}\", \"${rda_file}\", \"${lib1}\")"
+	pkg_name=`basename ${DPKG}`
+        code_cmd="echo invisible(.libPaths(c(.Library,\"${lib1}\",.libPaths()))); .getRequiredPackages(); saveNamespaceImage(\"${pkg_name}\", \"${rda_file}\", \"${lib1}\")"
         loader_file=nsrdaload.R
         R_SAVE_EXE=""
     else

@@ -122,7 +122,7 @@ ifneq ($(strip $(PKGRFILES)),)
 	  | R_DEFAULT_PACKAGES=NULL R_OSTYPE=windows LC_COLLATE=C $(REXE) > /dev/null
 ## install halts here if collater failed
 	@rm -f $(DPKG)/R/$(PKG).rdb $(DPKG)/R/$(PKG).rdx $(DPKG)/R/all.rda
-	@sh $(RHOME)/src/gnuwin32/install-save.sh "$(SAVE)" $(RLIB) $(PKG) $(RHOME) $(BUILD) $(R_EXE)
+	@sh $(RHOME)/src/gnuwin32/install-save.sh "$(SAVE)" $(RLIB) $(PKG) $(RHOME) $(BUILD) $(R_EXE) "$(DPKG)"
 else
 	@$(ECHO) "  no R files in this package"
 endif
