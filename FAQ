@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-6, 2001-06-29
+Version 1.3-7, 2001-06-30
 Kurt Hornik
 
 
@@ -1617,6 +1617,9 @@ Currently, there are
 *RGnumeric*
      A plugin for the Gnumeric spreadsheet that allows R functions to be
      called from cells within the sheet, automatic recalculation, etc.
+
+*RJavaDevice*
+     A graphics device for R that uses Java components and graphics APIs.
 
 *RSMethods*
      An implementation of S version 4 methods and classes for R, consistent
