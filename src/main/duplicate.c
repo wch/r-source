@@ -79,6 +79,9 @@ SEXP duplicate(SEXP s)
     case SPECIALSXP:
     case BUILTINSXP:
     case EXTPTRSXP:
+#ifdef BYTECODE
+    case BCODESXP:
+#endif
     case WEAKREFSXP:
 	return s;
     case CLOSXP:
@@ -146,14 +149,7 @@ SEXP duplicate(SEXP s)
 	   the elements in s.  LT */
 	DUPLICATE_ATOMIC_VECTOR(SEXP, STRING_PTR, t, s);
 	break;
-    case PROMSXP: /* duplication requires that we evaluate the promise */
-#ifdef OLD
-	if (PRVALUE(s) == R_UnboundValue) {
-	    t = eval(PREXPR(s), PRENV(s));
-	    PRVALUE(s) = t;
-	}
-	t = duplicate(PRVALUE(s));
-#endif
+    case PROMSXP:
 	return s;
 	break;
     default:
