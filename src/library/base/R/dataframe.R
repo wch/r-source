@@ -470,7 +470,8 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
     dimv <- dim(value)
     nrowv <- dimv[[1]]
     if(nrowv < n) {
-	if(n %% nrowv == 0) value <- value[rep(1:nrowv, length=n),]
+	if(n %% nrowv == 0)
+	    value <- value[rep(1:nrowv, length=n),,drop = FALSE]
 	else stop(paste(nrowv, "rows in value to replace", n, "rows"))
     }
     else if(nrowv > n)
