@@ -77,7 +77,7 @@ tkStartGUI <- function() {
             s <- as.character(tclObj(txtvar))[1]
             if (length(s) == 0) return
             nm <- as.name(s)
-            eval(substitute(help(nm)))
+            print(eval(substitute(help(nm))))
             tclvalue(txtvar)<-""
         }
         tkpack(label,side="left")
