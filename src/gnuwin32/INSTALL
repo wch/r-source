@@ -33,7 +33,7 @@ use our tool set, and make sure it is at the front of your path.
 
 To compile this version you need a recent version of the Mingw port of
 gcc from http://sourceforge.net/projects/mingw/.  We recommend that
-you use binutils, gcc-3.2, mingw-runtime-2.0 and w32api-1.5 or later.
+you use binutils, gcc-3.2, mingw-runtime-2.1 and w32api-1.5 or later.
 (Earlier versions will probably work, but mingw-runtime >= 1.3 and
 w32api >= 1.5 are essential.)
 
@@ -50,9 +50,9 @@ BEWARE: you do need the *Windows* port and not the Cygwin one.
 zip and unzip from the Info-ZIP project (http://www.info-zip.org and
 mirrors, and included in our tools.zip).
 
-PCRE from ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/.
-Unpack this (we used prce-3.9.tar.bz2) and copy the files into
-src/extra/pcre.
+PCRE from ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/ or
+http://pcre.sourceforge.net/src/.  Unpack this (we used
+prce-3.9.tar.bz2) and copy the files into src/extra/pcre.
 
 bzip2-1.0.2 from http://sources.redhat.com/bzip2.  Unpack this and
 copy the files into src/extra/bzip2.
@@ -65,10 +65,6 @@ and http://www.microsoft.com/office/ork/xp/appndx/appa06.htm
 
 You may need this on the same drive as the other tools. (Although we
 have successfully used it elsewhere, others have reported problems).
-
-If you want to make Window help files you will need hcrtf.exe from a
-Windows compiler installation (this has been available for download at
-ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe).
 
 All of these need to be installed and in your path, and the
 appropriate environment variables set.  You also need `.' in your path.
@@ -86,7 +82,7 @@ Perl\bin
 the latex bin directory
 zip.exe, unzip.exe, hhc.exe
 
-Do not use unnecessary quotes in your PATH variable.
+Do not use spaces nor unnecessary quotes in your PATH variable.
 
 
 Building
@@ -114,7 +110,7 @@ library will check versions of the components needed. You can just
 copy this from a binary distribution.
 
 Note 2: we have had reports that earlier versions of Norton Anti-Virus
-locks up the machine when windres is run, so you may need to disable
+lock up the machine when windres is run, so you may need to disable
 it. (Norton Anti-Virus 2002 causes no problems.)
 
 Note 3: By default Doug Lea's malloc in the file src/gnuwin32/malloc.c is
@@ -216,6 +212,22 @@ The fptex distribution of TeX (via www.fptex.org) includes a suitable
 port of pdftex.
 
 
+Recommended packages
+====================
+
+The recommended packages can be built by
+
+	make recommended
+
+If you are using a cvs/rsync version of the sources, you need to
+put the .tar.gz files for the recommended packages in ../../Recommended.
+If you have rsync installed,
+
+	make get_recommended
+
+does this from the CRAN master.
+
+
 Building the installers
 =======================
 
@@ -231,22 +243,6 @@ Once everything is set up
 	make rinstaller
 
 will make all the pieces and then make the installers.
-
-
-Recommended packages
-====================
-
-The recommended packages can be built by
-
-	make recommended
-
-If you are using a cvs/rsync version of the sources, you need to
-put the .tar.gz files for the recommended packages in ../../Recommended.
-If you hav rsync,
-
-	make get_recommended
-
-does this from the CRAN master.
 
 
 Cross-building on ix86 Linux
@@ -272,7 +268,7 @@ HEADER) as needed.
 
 Edit MkRules to set the type(s) of help that you want built. (You
 will not be able to cross-build .chm or .hlp files,
-so WINHELP is automatically set NO.)
+so WINHELP is automatically set to NO.)
 
 Packages can be made in the same way as natively: see the file
 readme.packages.
