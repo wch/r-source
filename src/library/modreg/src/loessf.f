@@ -1163,7 +1163,7 @@ c        Hermite basis
       ifloor=x
       if(ifloor.gt.x) ifloor=ifloor-1
       end
-      DOUBLE PRECISION functionDSIGN(a1,a2)
+      DOUBLE PRECISION function DSIGN(a1,a2)
       DOUBLE PRECISION a1, a2
       DSIGN=DABS(a1)
       if(a2.ge.0)DSIGN=-DSIGN
