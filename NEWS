@@ -33,6 +33,9 @@ BUG FIXES
      o	Unused entry points in `src/appl/fortran.c' and `Fortran.h'
 	have been removed.
 
+     o	Unused directory src/f2clib and header src/include/R_ext/f2c.h
+	have been removed.
+
 
 
 	**************************************************
