@@ -58,7 +58,7 @@ $LATEX_SPECIAL = $LATEX_SPEC . '%\{\}\\\\';
 $LATEX_DO_MATH = '-+\*/\|<>=!' . $LATEX_SPECIAL;
 $MD = ',,,Math,del;;;'; #-- should NOT contain any characters from $LATEX_..
 $Math_del = "\$"; #UNquoted '$'
-$MAXLOOPS = 1000;
+$MAXLOOPS = 10000;
 
 my $EDASH = "escaped-dash";	# maybe something better?
 my $ECMD = "escaped-command";	# maybe something better?
@@ -226,6 +226,8 @@ sub mark_brackets {
 		    "mismatched or missing braces")
 	  && $complete_text =~ /{([^{}]*)}/s) {
 	my $id = $NB . ++$max_bracket . $BN;
+	die "too many pairs of braces in this file" 
+	  if $max_bracket > $MAXLOOPS;
 	$complete_text =~ s/{([^{}]*)}/$id$1$id/s;
 	print STDERR "." if $debug;
     }
