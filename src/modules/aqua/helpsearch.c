@@ -90,7 +90,7 @@ extern TXNControlData   RReadOnlyData[];
 extern TXNObject	RConsoleInObject;
 
 
-static SEXP dsets, pkg, desc;
+static SEXP dsets, pkg, desc, wtitle;
 
 
 #ifndef max
@@ -146,7 +146,10 @@ Boolean OpenHelpSearchBrowser(void)
                                           RCloseWinEvent, (void *)HelpSearchBrowserWindow, NULL);
                     
  
-     SetWindowTitleWithCFString(HelpSearchBrowserWindow, CFSTR("help.search() results"));
+     SetWindowTitleWithCFString(HelpSearchBrowserWindow,
+				CFStringCreateWithCString(CFAllocatorGetDefault(), 
+							  CHAR(STRING_ELT(wtitle,0)),
+							  kCFStringEncodingMacRoman));
      
     
     /* Create the DataBrowser */
@@ -516,7 +519,7 @@ SEXP Raqua_helpsearchbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
   dsets = CAR(args); args = CDR(args);
   pkg = CAR(args); args = CDR(args);
   desc = CAR(args); args = CDR(args);
-  
+  wtitle = CAR(args);
   
   
 

@@ -554,7 +554,7 @@ FUNTAB R_FunTab[] =
 {"data.manager",	do_datamanger,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"package.manager",	do_packagemanger,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"flush.console",do_flushconsole,0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"hsbrowser",	do_hsbrowser,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"hsbrowser",	do_hsbrowser,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 {"parse",	do_parse,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"save",	do_save,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
