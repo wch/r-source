@@ -146,7 +146,7 @@ smooth.spline <-
 	    weighted.mean(((y - fit$ty[ox])/(1 - (lev[ox] * w)/ww[ox]))^2, w)
 	} else weighted.mean((y - fit$ty[ox])^2, w)/
 	    (1 - (df.offset + penalty * df)/n)^2
-    pen.crit <- sum(wbar * (ybar - fit$ty) * ybar)
+    pen.crit <- sum(wbar * (ybar - fit$ty)^2)
     fit.object <- list(knot = knot, nk = nk, min = ux[1], range = r.ux,
 		       coef = fit$coef)
     class(fit.object) <- "smooth.spline.fit"

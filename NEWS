@@ -325,6 +325,10 @@ BUG FIXES
 	and more precise code, e.g. for phyper(59, 150,150, 60,	lower=FALSE).
 	This also fixes bug (PR#7064) about fisher.test().
 
+    o	smooth.spline(...)$pen.crit had a typo in its computation;
+	note this was printed in print.smooth.spline(*) but not used in
+	other "smooth.spline" methods.
+
 
 
 
@@ -384,10 +388,10 @@ BUG FIXES
         wrong warning anymore.
 
     o	gsub(perl=TRUE) code got the R length of return strings wrong
-	in some circumstances (when the string was shortened).  
+	in some circumstances (when the string was shortened).
 	(Fixed also PR#7108)
 
-    o   summaryRprof was ignoring functions whose name begins with dot, 
+    o   summaryRprof was ignoring functions whose name begins with dot,
 	e.g. .C, .Call, .Fortran. (PR#7137)
 
     o   loglin() could segfault if 'start' was of the wrong length.  (PR#7123)
