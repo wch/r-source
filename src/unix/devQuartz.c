@@ -29,7 +29,8 @@
 #include <Graphics.h>
 #include <Rdevices.h>
 
-#ifdef __APPLE_CC__
+
+#if defined(__APPLE_CC__) && defined(HAVE_AQUA)
 
 #include <Carbon/Carbon.h>
 #include <CoreFoundation/CoreFoundation.h>
@@ -907,6 +908,6 @@ SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning("Quartz device not available on this platform\n");    
     return R_NilValue;
 }
-#endif  /* __APPLE_CC__ */
+#endif  /* __APPLE_CC__  && HAVE_AQUA*/
 
 #endif /* __QUARTZ_DEVICE__ */
