@@ -15,7 +15,7 @@
     \code{:}\tab sequence operator\cr
     \code{\%any\%}\tab special operators\cr
     \code{* /}\tab multiply, divide\cr
-    \code{+ -}\tab add, subtract, documentation\cr
+    \code{+ -}\tab (binary) add, subtract\cr
     \code{< > <= >= == !=}\tab ordering and comparison\cr
     \code{!}\tab negation\cr
     \code{&  &&}\tab and\cr
