@@ -129,7 +129,7 @@ symbol.For(name)
 \value{
   The function \code{dyn.load} is used for its side effect which links
   the specified shared library to the executing \R image.  Calls to
-  \code{.C}, \cpde{.Call}, \code{.Fortran} and \code{.External} can
+  \code{.C}, \code{.Call}, \code{.Fortran} and \code{.External} can
   then be used to execute compiled C functions or Fortran subroutines
   contained in the library. The return value of \code{dyn.load} is
   an object of class \code{DLLInfo}. See \code{\link{getLoadedDLLs}}
