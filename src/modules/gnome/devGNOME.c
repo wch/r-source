@@ -990,12 +990,11 @@ Rboolean GnomeDeviceDriver(DevDesc *odd, char *display,
     ps = 2 * (ps / 2);
     gd->fontface = -1;
     gd->fontsize = -1;
-    //    dd->startfont = 1;
+    /*    dd->startfont = 1; */
     dd->startps = ps;
     dd->startcol = 0;
     dd->startfill = NA_INTEGER;
-    //dd->startlty = LTY_SOLID;
-
+    /* dd->startlty = LTY_SOLID; */
     /* device driver start */
     if(!GNOME_Open(dd, gd, display, width, height)) {
 	free(gd);
@@ -1022,7 +1021,7 @@ Rboolean GnomeDeviceDriver(DevDesc *odd, char *display,
     dd->locator = GNOME_Locator;
     dd->mode = GNOME_Mode;
     dd->hold = GNOME_Hold;
-    dd->metricinfo = GNOME_MetricInfo;
+    dd->metricInfo = GNOME_MetricInfo;
 
     dd->left = 0;
     dd->right = gd->windowWidth;

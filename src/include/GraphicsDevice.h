@@ -78,6 +78,8 @@ typedef struct {
 				 */
     int startcol;
     int startfill;
+    int startlty;
+    int startfont;
     void *deviceSpecific;	/* pointer to device specific parameters */
     Rboolean displayListOn;     /* toggle for display list status */
     SEXP displayList;           /* display list */
@@ -200,7 +202,7 @@ typedef struct {
      *                            double* ascent, double* descent,
      *                            double* width, NewDevDesc *dd);
      */
-    void (*metricinfo)();
+    void (*metricInfo)();
     /*
      * device_Mode is called whenever the graphics engine	
      * starts drawing (mode=1) or stops drawing (mode=0)	
