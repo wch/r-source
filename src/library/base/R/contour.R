@@ -5,8 +5,9 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 	  xlim = range(x, finite = TRUE),
 	      ylim = range(y, finite = TRUE),
 	  zlim = range(z, finite = TRUE),
-	  labcex = 0,
-	  col = par("fg"), lty = par("lty"), add = FALSE, ...)
+	  labcex = 0.4, drawlabels = TRUE, method = 3, vfont = NULL,
+	  col = par("fg"), lty = par("lty"), lwd = par("lwd"), 
+	  add = FALSE, ...)
 {
     ## labcex is disregarded since we do NOT yet put  ANY labels...
     if (missing(z)) {
@@ -34,7 +35,8 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     ##- don't lose  dim(.)
     if (!is.double(z)) storage.mode(z) <- "double"
     .Internal(contour(as.double(x), as.double(y), z, as.double(levels),
-		      col = col, lty = lty))
+		      labcex, drawlabels, method, vfont, 
+		      col = col, lty = lty, lwd = lwd))
     if (!add) {
 	axis(1)
 	axis(2)
