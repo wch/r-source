@@ -11,22 +11,22 @@
 
 NEW FEATURES
 
-   o	Faster algorithm in summaryRprof().
+    o	Faster algorithm in summaryRprof().
 
-   o	update.packages() and old.packages() have a new option
+    o	update.packages() and old.packages() have a new option
 	'checkBuilt' to allow packages installed under earlier
 	versions of R to be updated.
 
-   o	na.contiguous() is now (S3) generic with first argument
+    o	na.contiguous() is now (S3) generic with first argument
 	renamed to 'object'.
 
-   o	Plotmath now allows underline in expressions.  (PR#7286,
+    o	Plotmath now allows underline in expressions.  (PR#7286,
 	contributed by Uwe Ligges.)
 
 
 DOCUMENTATION
 
-   o	File doc/html/faq.html no longer exists, and doc/manual/R-FAQ.html
+    o	File doc/html/faq.html no longer exists, and doc/manual/R-FAQ.html
 	(which has active links to other manuals) is used instead.
 	(If makeinfo >= 4.5 is not available, the version on CRAN is
 	linked to.)
@@ -34,21 +34,21 @@ DOCUMENTATION
 
 INSTALLATION CHANGES
 
-   o	-D__NO_MATH_INLINES is only used on older ix86 glibc-based
+    o	-D__NO_MATH_INLINES is only used on older ix86 glibc-based
 	systems which need it (tested at configure time).
 
-   o	R_XTRA_[CF]FLAGS are now used during the configuration tests,
+    o	R_XTRA_[CF]FLAGS are now used during the configuration tests,
 	and [CF]PICFLAGS if --enable-R-shlib was specified.  This
 	ensures that features such as inlining are only used if the
 	compilation flags specified support them.  (PR#7257)
 
-   o	Files FAQ, RESOURCES, doc/html/resources.html are no longer in
+    o	Files FAQ, RESOURCES, doc/html/resources.html are no longer in
 	the SVN sources but are made by 'make dist'.
 
 
 BUG FIXES
 
-   o	Configuring for Tcl/Tk makes use of ${TK_LIB_SPEC} ${TK_LIBS}
+    o	Configuring for Tcl/Tk makes use of ${TK_LIB_SPEC} ${TK_LIBS}
 	not ${TK_LIB_SPEC} ${TK_XLIBSW}, which is correct for
 	recent versions of Tk, but conceivably not for old
 	tkConfig.sh files.
@@ -65,86 +65,93 @@ BUG FIXES
 		CHANGES IN R VERSION 2.0.0 patched
 
 
+DEPRECATED & DEFUNCT
+
+    o	The aqua module is MacOS X is deprecated.
+
+
 INSTALLATION CHANGES
 
-   o	Building on Alpha OSF/1 no longer forces the C flag -std1,
+    o	Building on Alpha OSF/1 no longer forces the C flag -std1,
 	which appears to be no longer needed.  (PR#7257)
 
-   o	The compiler flag -mieee-fp is no longer used on i386 Linux
+    o	The compiler flag -mieee-fp is no longer used on i386 Linux
 	(these days it is only passed to the linker and was only
 	invoked for compilation steps).
 
-   o	If makeinfo >= 4.5 is not available, warnings are given that
+    o	If makeinfo >= 4.5 is not available, warnings are given that
 	some of the HTML manuals will be missing, and the index page
 	given by help.start() will link to CRAN versions of those manuals.
 
-   o	Files aclocal.m4 and acinclude.m4 used in maintainer builds
+    o	Files aclocal.m4 and acinclude.m4 used in maintainer builds
 	are not longer included in the distribution.
 
 
 BUG FIXES
 
-   o	model.frame.default() takes row names from the response
+    o	model.frame.default() takes row names from the response
 	variable if that has suitable names and there is no 'data'
 	argument.  (This follows S but was not previously implemented
 	in R.)
 
-   o	write.table() was not respecting the 'dec' argument for complex
+    o	write.table() was not respecting the 'dec' argument for complex
 	numbers.
 
-   o	write.table() printed a mixture of numeric and complex numbers
+    o	write.table() printed a mixture of numeric and complex numbers
 	as all complex.	 (PR#7260)
 
-   o	R CMD INSTALL failed with versioned installs on packages which
+    o	R CMD INSTALL failed with versioned installs on packages which
 	save images (only).
 
-   o	dlogis() gave NaN not 0 for large negative arguments.
+    o	dlogis() gave NaN not 0 for large negative arguments.
 
-   o	Importing from another namespace was broken for versioned
+    o	Importing from another namespace was broken for versioned
 	installs, incorrectly reporting something like
 	"package 'imported_from' does not have a name space".
 
-   o	The GNOME interface under Linux/Unix was broken. (PR#7276)
+    o	The GNOME interface under Linux/Unix was broken. (PR#7276)
 
-   o	For the jpeg/png devices under Linux/Unix, under certain rare
+    o	For the jpeg/png devices under Linux/Unix, under certain rare
 	circumstances clipping needed to be cleared before starting a
 	new page.  (PR#7270, which has been the case since the devices
 	were introduced in 1.1.0.)
 
-   o	First lattice plot (first grid.newpage() call) did not start
+    o	First lattice plot (first grid.newpage() call) did not start
 	a new page IF there had been a previous traditional graphics
 	plot (on the same device).
 
-   o	Using install.packages() to install the same package to more
+    o	Using install.packages() to install the same package to more
 	than one library gave an incorrect warning message.
 
-   o	.packages(all.available=TRUE) returned packages with an invalid
+    o	.packages(all.available=TRUE) returned packages with an invalid
 	version field in their DESCRIPTION whereas .find.packages() and
 	packageDescription() did not.  Now all do not.
 
-   o	packageDescription() now correctly reports that a package does
+    o	packageDescription() now correctly reports that a package does
 	not exist, rather than that its DESCRIPTION file is 'missing
 	or broken'.
 
-   o	'make dist' from builddir != sourcedir was copying not linking
+    o	'make dist' from builddir != sourcedir was copying not linking
 	recommended packages to *.tgz.
 
-   o	Slots in prototype objects can inherit from locally defined
+    o	Slots in prototype objects can inherit from locally defined
 	classes (which were not being found correctly before).
 
-   o	Several fixes to the behavior of as() when there are either
+    o	Several fixes to the behavior of as() when there are either
 	coerce= or replace= methods supplied in a call to
 	setIs(). Related fixes to setIs() to handle correctly previous
 	methods, if there were any.
 
-   o	splinefun(1[0], 1[0])(1) doesn't segfault anymore (PR#7290).
+    o	splinefun(1[0], 1[0])(1) doesn't segfault anymore (PR#7290).
 	spline() and splinefun() now also work with missing values by
 	omiting them.
 
-   o	ecdf() was failing on inputs containing NAs. (Part of PR#7292)
+    o	ecdf() was failing on inputs containing NAs. (Part of PR#7292)
 
-   o	tools:::.install_package_description was splitting the Built:
+    o	tools:::.install_package_description was splitting the Built:
 	field across lines on platforms with very long names.
+
+    o	capabilities() was wrong for the Aqua GUI on MacOS X.
 
 
 
