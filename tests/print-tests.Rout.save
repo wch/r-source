@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.65.0 Under development (unstable) (July 14, 1999)
+Version 0.90.0 Under development (unstable) (November 16, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -387,13 +387,13 @@ dig= 11 : [1] 1.6179238214e+308 1.7958954417e+308 1.7976929551e+308 1.7976931348
       a       b 
 1.0+ 1i 1.2+10i
 > (xx <-	rbind(x,  2*x))
-        a       b
-[1,] 1+1i 1.2+10i
-[2,] 2+2i 2.4+20i
+     a       b
+x 1+1i 1.2+10i
+  2+2i 2.4+20i
 > 	rbind(x0, 2*x0)
-     [,1]    [,2]
-[1,] 1+1i 1.2+10i
-[2,] 2+2i 2.4+20i
+   [,1]    [,2]
+x0 1+1i 1.2+10i
+   2+2i 2.4+20i
 > x[4:6] <- c(Inf,Inf*c(-1,1i))
 > x  + pi
             a             b                                                         
@@ -408,11 +408,11 @@ dig= 11 : [1] 1.6179238214e+308 1.7958954417e+308 1.7976929551e+308 1.7976931348
 [2,] 1.2+13.141593i -Inf+     NaNi
 [3,]             NA  NaN+     Infi
 > xx + pi
-               a            b
-[1,] 4.141593+1i 4.341593+10i
-[2,] 5.141593+2i 5.541593+20i
+            a            b
+x 4.141593+1i 4.341593+10i
+  5.141593+2i 5.541593+20i
 > t(cbind(xx, xx+ 1i*c(1,pi)))
-     [,1]           [,2]
+        x               
 a 1.0+ 1i 2.0+ 2.000000i
 b 1.2+10i 2.4+20.000000i
 a 1.0+ 2i 2.0+ 5.141593i

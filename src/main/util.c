@@ -194,12 +194,15 @@ SEXP asChar(SEXP x)
 	    return mkChar(buf);
 	case REALSXP:
 	    formatReal(REAL(x), 1, &w, &d, &e);
+#ifdef OLD
 	    if (e)
 		sprintf(buf, "%*.*e", w, d, REAL(x)[0]);
 	    else
 		sprintf(buf, "%*.*f", w, d, REAL(x)[0]);
 	    return mkChar(buf);
-
+#else
+	    return mkChar(EncodeReal(REAL(x)[0], w, d, e));
+#endif
         /* case CPLXSXP: --- FIXME here */
 
 	case STRSXP:
