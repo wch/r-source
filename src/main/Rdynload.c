@@ -86,6 +86,13 @@
 
 #include <Rdynpriv.h>
 
+/* for HP-UX */
+#ifndef HAVE_DLFCN_H
+# ifdef HAVE_DL_H
+#  define HAVE_DLFCN_H 1
+# endif
+#endif
+
 #ifdef Unix
 # ifndef HAVE_NO_SYMBOL_UNDERSCORE
 #  ifdef HAVE_ELF_H
