@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-10 09:29+0000\n"
+"POT-Creation-Date: 2005-02-13 11:18+0000\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -1586,7 +1586,7 @@ msgid "file truncation failed"
 msgstr ""
 
 #: src/main/connections.c:490
-msgid "file truncation navailable on this platform"
+msgid "file truncation unavailable on this platform"
 msgstr ""
 
 #: src/main/connections.c:535 src/main/connections.c:539
@@ -5960,35 +5960,35 @@ msgstr ""
 msgid "zero-length argument"
 msgstr ""
 
-#: src/main/sprintf.c:117
+#: src/main/sprintf.c:142
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr ""
 
-#: src/main/sprintf.c:130
+#: src/main/sprintf.c:155
 #, c-format
 msgid "use format %d, %i or %x for integer objects"
 msgstr ""
 
-#: src/main/sprintf.c:143
+#: src/main/sprintf.c:168
 #, c-format
 msgid "use format %f, %e or %g for numeric objects"
 msgstr ""
 
-#: src/main/sprintf.c:177
+#: src/main/sprintf.c:202
 #, c-format
 msgid "use format %s for character objects"
 msgstr ""
 
-#: src/main/sprintf.c:179
+#: src/main/sprintf.c:204
 msgid "Likely truncation of character string"
 msgstr ""
 
-#: src/main/sprintf.c:184
+#: src/main/sprintf.c:209
 msgid "unsupported type"
 msgstr ""
 
-#: src/main/sprintf.c:197
+#: src/main/sprintf.c:222
 #, c-format
 msgid "String length exceeds buffer size of %d"
 msgstr ""

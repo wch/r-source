@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-10 09:29+0000\n"
+"POT-Creation-Date: 2005-02-13 11:18+0000\n"
 "PO-Revision-Date: 2005-02-05 13:45+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -371,12 +371,15 @@ msgstr "ATTENZIONE: valore non valido di  --max-mem-size: verrà ignorato\n"
 #: src/gnuwin32/system.c:864
 #, c-format
 msgid "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
-msgstr "ATTENZIONE: valore di --max-mem-size=%lu'%c': troppo grande e quindi ignorato\n"
+msgstr ""
+"ATTENZIONE: valore di --max-mem-size=%lu'%c': troppo grande e quindi "
+"ignorato\n"
 
 #: src/gnuwin32/system.c:869
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
-msgstr "ATTENZIONE: valore di max-mem-size =%4.1fM troppo piccolo e quindi ignorato\n"
+msgstr ""
+"ATTENZIONE: valore di max-mem-size =%4.1fM troppo piccolo e quindi ignorato\n"
 
 #: src/gnuwin32/system.c:879 src/unix/system.c:230
 #, c-format
@@ -427,7 +430,8 @@ msgid "second argument must be a character string"
 msgstr "il secondo parametro deve essere una stringa di caratteri"
 
 #: src/include/Errormsg.h:40
-msgid "second argument must be a list"
+#, fuzzy
+msgid "secong argument must be a list"
 msgstr "il secondo argomento deve essere di tipo list"
 
 #: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:203
@@ -469,7 +473,7 @@ msgstr "ATTENZIONE: nessun valore specificato per %s\n"
 #: src/main/CommandLineArgs.c:205
 #, c-format
 msgid "WARNING: %s value is invalid: ignored\n"
-msgstr "ATTENZIONE: il valore 5s non è valido: verrà ignorato\n"
+msgstr "ATTENZIONE: il valore %s non è valido: verrà ignorato\n"
 
 #: src/main/CommandLineArgs.c:209
 #, c-format
@@ -486,7 +490,8 @@ msgstr "ATTENZIONE: il valore di -max-ppsize è negativo: verrà ignorato\n"
 
 #: src/main/CommandLineArgs.c:233
 msgid "WARNING: -max-ppsize value is too small: ignored\n"
-msgstr "ATTENZIONE: il valore di -max-ppsize è troppo piccolo: verrà ignorato\n"
+msgstr ""
+"ATTENZIONE: il valore di -max-ppsize è troppo piccolo: verrà ignorato\n"
 
 #: src/main/CommandLineArgs.c:236
 msgid "WARNING: -max-ppsize value is too large: ignored\n"
@@ -523,12 +528,12 @@ msgstr "ATTENZIONE:  --nsize=%lu'%c': troppo grande e quindi ignorato\n"
 #: src/main/RNG.c:139
 #, c-format
 msgid "unif_rand: unimplemented RNG kind %d"
-msgstr "unif_rand: RNG di tipo $d non implementato"
+msgstr "unif_rand: RNG di tipo %d non implementato"
 
 #: src/main/RNG.c:202
 #, c-format
 msgid "FixupSeeds: unimplemented RNG kind %d"
-msgstr "FixupSeeds: RNG di tipo $d non implementato"
+msgstr "FixupSeeds: RNG di tipo %d non implementato"
 
 #: src/main/RNG.c:236
 msgid "'user_unif_rand' not in load table"
@@ -536,20 +541,23 @@ msgstr "'user_unif_rand' non presente nella tabella di caricamento"
 
 #: src/main/RNG.c:244
 msgid "cannot read seeds unless 'user_unif_nseed' is supplied"
-msgstr "impossibile leggere i semi finché 'user_unif_nseed' non viene specificato"
+msgstr ""
+"impossibile leggere i semi finché 'user_unif_nseed' non viene specificato"
 
 #: src/main/RNG.c:249
 msgid "seed length must be in 0...625; ignored"
-msgstr "la lunghezza del seme deve essere nell'intervallo 0...625: verrà ignorata"
+msgstr ""
+"la lunghezza del seme deve essere nell'intervallo 0...625: verrà ignorata"
 
 #: src/main/RNG.c:257
 #, c-format
 msgid "RNG_Init: unimplemented RNG kind %d"
-msgstr "RNG_Init: RNG di tipo $d non implementato"
+msgstr "RNG_Init: RNG di tipo %d non implementato"
 
 #: src/main/RNG.c:285
 msgid ".Random.seed is a missing argument with no default"
-msgstr "il parametro .Random.seed  non è specificato e non ha un valore di default"
+msgstr ""
+"il parametro .Random.seed  non è specificato e non ha un valore di default"
 
 #: src/main/RNG.c:287
 msgid ".Random.seed is not a vector"
@@ -578,7 +586,7 @@ msgstr ".Random.seed ha una lunghezza sbagliata"
 #: src/main/RNG.c:374
 #, c-format
 msgid "RNGkind: unimplemented RNG kind %d"
-msgstr "RNGkind: RNG di tipo $d non implementato"
+msgstr "RNGkind: RNG di tipo %d non implementato"
 
 #: src/main/RNG.c:386
 msgid "invalid Normal type in RNGkind"
@@ -594,7 +602,8 @@ msgstr "il seme specificato non è un numero intero valido"
 
 #: src/main/Rdynload.c:236
 msgid "R_RegisterRoutines called with invalid DllInfo object."
-msgstr "R_RegisterRoutines è stata chiamata con un oggetto DllInfo non appropriato"
+msgstr ""
+"R_RegisterRoutines è stata chiamata con un oggetto DllInfo non appropriato"
 
 #: src/main/Rdynload.c:496
 msgid "Maximal number of DLLs reached..."
@@ -757,8 +766,8 @@ msgid ""
 "data length [%d] is not a sub-multiple or multiple of the number of rows [%"
 "d] in matrix"
 msgstr ""
-"la lunghezza [%d] dei dati non è un sottomultiplo o un multiplo del numero"
-"di di righe [%d] in matrix"
+"la lunghezza [%d] dei dati non è un sottomultiplo o un multiplo del numerodi "
+"di righe [%d] in matrix"
 
 #: src/main/array.c:104
 #, c-format
@@ -860,7 +869,8 @@ msgstr "tipo non valido per 'names': deve essere di tipo vector"
 #: src/main/attrib.c:266
 #, c-format
 msgid "names attribute [%d] must be the same length as the vector [%d]"
-msgstr "l'attributo names [$d] deve essere della stessa lunghezza del vettore [%d]"
+msgstr ""
+"l'attributo names [%d] deve essere della stessa lunghezza del vettore [%d]"
 
 #: src/main/attrib.c:268
 msgid "names() applied to a non-vector"
@@ -931,7 +941,8 @@ msgstr "dim: vettori di dimensione di lunghezza 0 non ammissibili"
 #: src/main/attrib.c:788
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
-msgstr "dim<- : dims [prodotto %d] non conformi alla lunghezza dell'oggetto [%d]"
+msgstr ""
+"dim<- : dims [prodotto %d] non conformi alla lunghezza dell'oggetto [%d]"
 
 #: src/main/attrib.c:865
 msgid "attributes must be in a list"
@@ -974,14 +985,16 @@ msgstr "Nessuno slot di nome \"%s\" per questo oggetto di classe \"%s\""
 
 #: src/main/attrib.c:1231
 msgid "formal classes cannot be used without the methods package"
-msgstr "classi formali non possono essere utilizzati senza il pacchetto methods"
+msgstr ""
+"classi formali non possono essere utilizzati senza il pacchetto methods"
 
 #: src/main/attrib.c:1255
 #, c-format
 msgid ""
 "Trying to get slot \"%s\" from an object whose class (\"%s\") is not defined "
 msgstr ""
-"Tentativo di ottere lo slot \"%s\" da un oggetto per il quale la classe (\"%s\") non è definita "
+"Tentativo di ottere lo slot \"%s\" da un oggetto per il quale la classe (\"%s"
+"\") non è definita "
 
 #: src/main/attrib.c:1259
 #, c-format
@@ -989,8 +1002,8 @@ msgid ""
 "Trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr ""
-"Tentativo di ottenre lo slot \"%s\" da un oggetto di classe base (\"%s\") senza "
-"slots"
+"Tentativo di ottenre lo slot \"%s\" da un oggetto di classe base (\"%s\") "
+"senza slots"
 
 #: src/main/attrib.c:1262
 #, c-format
@@ -1599,7 +1612,7 @@ msgid "file truncation failed"
 msgstr ""
 
 #: src/main/connections.c:490
-msgid "file truncation navailable on this platform"
+msgid "file truncation unavailable on this platform"
 msgstr ""
 
 #: src/main/connections.c:535 src/main/connections.c:539
@@ -5982,35 +5995,35 @@ msgstr ""
 msgid "zero-length argument"
 msgstr ""
 
-#: src/main/sprintf.c:117
+#: src/main/sprintf.c:142
 #, c-format
 msgid "use format %d or %i for logical objects"
 msgstr ""
 
-#: src/main/sprintf.c:130
+#: src/main/sprintf.c:155
 #, c-format
 msgid "use format %d, %i or %x for integer objects"
 msgstr ""
 
-#: src/main/sprintf.c:143
+#: src/main/sprintf.c:168
 #, c-format
 msgid "use format %f, %e or %g for numeric objects"
 msgstr ""
 
-#: src/main/sprintf.c:177
+#: src/main/sprintf.c:202
 #, c-format
 msgid "use format %s for character objects"
 msgstr ""
 
-#: src/main/sprintf.c:179
+#: src/main/sprintf.c:204
 msgid "Likely truncation of character string"
 msgstr ""
 
-#: src/main/sprintf.c:184
+#: src/main/sprintf.c:209
 msgid "unsupported type"
 msgstr ""
 
-#: src/main/sprintf.c:197
+#: src/main/sprintf.c:222
 #, c-format
 msgid "String length exceeds buffer size of %d"
 msgstr ""
