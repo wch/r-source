@@ -34,7 +34,7 @@
 ###  stefano.iacus@unimi.it
 ###
 
-if !`Exists "{MPW}tools:sed"`
+if !"`Exists "{MPW}tools:sed"`"
 Alert "You need to install sed tool before continuing"
 end
 
