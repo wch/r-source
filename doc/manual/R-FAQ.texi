@@ -177,7 +177,7 @@ Feedback is of course most welcome.
 
 In particular, note that I do not have access to Windows or Macintosh
 systems.  Features specific to the Windows and Mac OS X ports of R are
-described in the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R
+described in the @uref{http://cran.r-project.org/bin/windows/rw-FAQ.html, ``R
 for Windows @acronym{FAQ}''} and the
 @uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
 Mac OS X @acronym{FAQ}}.  If you have information on Macintosh or Windows
@@ -422,7 +422,7 @@ by @email{murdoch@@stats.uwo.ca, Duncan Murdoch} and
 For most installations the Windows installer program will be the easiest
 tool to use.
 
-See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R for
+See the @uref{http://cran.r-project.org/bin/windows/rw-FAQ.html, ``R for
 Windows @acronym{FAQ}''} for more details.
 
 @node How can R be installed (Macintosh),  , How can R be installed (Windows), How can R be installed?

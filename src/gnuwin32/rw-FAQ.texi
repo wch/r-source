@@ -583,7 +583,7 @@ you prefer compiling from source, make sure you installed the
 necessary files from @code{@RWVER@.exe}.  Then read the file
 @file{readme.packages}.  You will need to collect and install several
 tools to use this: you can download them via the portal at
-@uref{http://www.stats.ox.ac.uk/pub/Rtools/}.  Once you have done so,
+@uref{http://www.murdoch-sutherland.com/Rtools/}.  Once you have done so,
 just run @code{R CMD INSTALL pkgname}.  To check the package (including
 running all the examples on its help pages and in its test suite, if
 any) use @code{R CMD check pkgname}: see the @emph{`Writing R

@@ -6163,7 +6163,7 @@ Under Windows, these tools can be assumed because versions
 @command{grep}, @command{ls}, @command{mkdir}, @command{mv},
 @command{rm}, @command{sed}, @command{sort}, @command{tar},
 @command{touch}, @command{unzip}, @command{wc} and @command{zip}) are
-provided at @url{http://www.stats.ox.ac.uk/pub/Rtools/tools.zip}.  However,
+provided at @url{http://www.murdoch-sutherland.com/Rtools/tools.zip}.  However,
 redirection cannot be assumed to be available via @command{system} as
 this does not use a standard shell (let alone a Bourne shell).
 @end itemize

@@ -448,7 +448,7 @@ The simplest way is to use @file{@value{RWVERSION}.exe} or
 instructions.  If you installed R this way you can uninstall it from the
 Control Panel.
 
-See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
+See the @uref{http://cran.r-project.org/bin/windows/rw-FAQ.html, R Windows
 @acronym{FAQ}} for more details.
 
 @menu
@@ -461,7 +461,7 @@ See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
 If you want to build this port from the sources, see the file
 @file{src/gnuwin32/INSTALL} in the source distribution.  You will need
 to collect, install and test an extensive set of tools: see
-@uref{http://www.stats.ox.ac.uk/pub/Rtools/} for the current locations.
+@uref{http://www.murdoch-sutherland.com/Rtools/} for the current locations.
 
 You may need to compile under a case-honouring file system: we found
 that a @command{samba}-mounted file system (which maps all file names to
@@ -852,7 +852,7 @@ is needed so @code{libsunperf} can be used.
 
 An ATLAS `tuned' BLAS can also be used on Windows: see
 @file{src/gnuwin32/INSTALL} for how to enable this when building from
-source, and @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
+source, and @uref{http://cran.r-project.org/bin/windows/rw-FAQ.html, R Windows
 @acronym{FAQ}} for adding pre-compiled support to binary versions.
 Goto's BLAS can also be used when building from source.
 

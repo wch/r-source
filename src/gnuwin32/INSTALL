@@ -13,7 +13,7 @@ Building From Source on Windows
 [Some further details, including how to debug, are given in the rw-FAQ.]
 
 First collect the tools that you need.  There is a `portal' with
-current links at http://www.stats.ox.ac.uk/pub/Rtools/.
+current links at http://www.murdoch-sutherland.com/Rtools/.
 
 
 Collect the tools
@@ -24,7 +24,7 @@ diff, echo, egrep, expr, grep, ls, mkdir, mv, rm, sed, touch; we use
 those from the cygwin distribution
 (http://www.cygwin.com/mirrors.html) or (gzip, makeinfo, texindex)
 compiled from the sources.  We have packaged a set at
-http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
+http://www.murdoch-sutherland.com/Rtools/tools.zip.
 
 BEWARE: `Native' ports of make are _not_ suitable (including that at
 the mingw site).  There were also problems with several earlier
@@ -193,7 +193,7 @@ Building Tcl/Tk support
 -----------------------
 
 The TclTk support package is not built automatically.  Get
-http://www.stats.ox.ac.uk/pub/Rtools/R_Tcl.zip and unzip it at the top
+http://www.murdoch-sutherland.com/Rtools/R_Tcl.zip and unzip it at the top
 level of the R sources: it will add directories $RHOME/Tcl, $RHOME/Tcl/bin,
 etc.  Then
 
