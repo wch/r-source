@@ -109,6 +109,9 @@ AC_PROG_YACC
 AC_CHECK_PROG(AR, ar, ar)
 AC_CHECK_PROG(RATFOR, ratfor, ratfor)
 
+AC_PATH_PROG(LATEX, latex, false)
+AC_PATH_PROG(DVIPS, dvips, false)
+
 ## Make.
 
 MAKE=${MAKE-make}
@@ -158,7 +161,7 @@ esac
 
 ## FORTRAN compiler
 ##
-### We need these before trying to find libf2c.
+## We need these before trying to find libf2c.
 
 if test -z "${AR}"; then
   AR=ar
@@ -325,9 +328,10 @@ AC_CHECK_LIB(ncurses, main,,
 AC_CHECK_LIB(dl, dlopen)
 BLAS="blas.o"
 if ${use_blas}; then
-  AC_CHECK_LIB(blas, main, LIBS="-lblas ${LIBS}" BLAS="")
+  AC_CHECK_LIB(blas, main, FLIBS="-lblas ${FLIBS}" BLAS="")
 fi
 AC_SUBST(BLAS)
+AC_SUBST(FLIBS)
 if ${use_readline}; then
   AC_CHECK_LIB(readline, rl_callback_read_char)
 fi
@@ -421,7 +425,6 @@ fi
 CPICFLAGS=${CPICFLAGS-${cpicflags}}
 FPICFLAGS=${FPICFLAGS-${CPICFLAGS}}
 SHLIBLDFLAGS=${SHLIBLDFLAGS-${shlibldflags}}
-LIBS="${FLIBS} ${LIBS}"
 
 ## Individual platform overrides.
 
@@ -438,8 +441,6 @@ case "${host}" in
     LIBS="-lf2c ${LIBS}"
     ;;
   *linux)
-    LDCMD=gcc
-    LIBS="-lf2c ${LIBS}"
     DLLFLAGS=-export-dynamic
     ;;
   *sgi*)
