@@ -14,6 +14,8 @@ princomp.formula <- function(formula, data = NULL, subset, na.action, ...)
     na.act <- attr(mf, "na.action")
     x <- model.matrix(mt, mf)
     res <- princomp.default(x, ...)
+    ## fix up call to refer to the generic, but leave arg name as `formula'
+    cl[[1]] <- as.name("princomp")
     res$call <- cl
     if(!is.null(na.act)) {
         res$na.action <- na.act

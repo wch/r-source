@@ -122,7 +122,10 @@ biplot(pc.cr)
 princomp(~ ., data = USArrests, cor = TRUE)
 # NA-handling
 USArrests[1, 2] <- NA
-pc.cr <- princomp(~ ., data = USArrests, na.action=na.exclude, cor = TRUE)
+pc.cr <- princomp(~ Murder + Assault + UrbanPop,
+                  data = USArrests, na.action=na.exclude, cor = TRUE)
 pc.cr$scores
-}
+\testonly{
+update(pc.cr, ~ . + Rape)
+}}
 \keyword{multivariate}

@@ -1,14 +1,13 @@
 useDynLib(mva)
 
 export(as.dendrogram, as.dist, as.hclust, biplot, cancor, cmdscale,
-       cophenetic, cutree, dist, factanal, hclust,
-       heatmap, kmeans, loadings, order.dendrogram, plclust, prcomp,
-       princomp, promax, rect.hclust, reorder, reorder.dendrogram,
-       screeplot, varimax)
+       cophenetic, cutree, dist, factanal, hclust, heatmap, kmeans,
+       loadings, order.dendrogram, plclust, prcomp, princomp, promax,
+       rect.hclust, reorder, screeplot, varimax)
 
 ## <FIXME>
-## This used to be exported ... still needed?
-## export("format.dist", "plot.hclust")
+## These used to be exported ... still needed?
+## export("format.dist", "plot.hclust", "princomp.formula", "reorder.dendrogram, ")
 ## </FIXME>
 
 ## methods which are documented but not exported
@@ -18,11 +17,6 @@ export(as.dendrogram, as.dist, as.hclust, biplot, cancor, cmdscale,
 ##        print.dist, print.factanal,
 ##        print.loadings, print.summary.princomp, str.dendrogram,
 ##        summary.princomp)
-
-## <FIXME>
-## using match.call needs
-export(princomp.formula)
-## </FIXME>
 
 S3method("[[", dendrogram)
 S3method(as.dendrogram, hclust)
