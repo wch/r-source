@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta name="generator" content=
-"HTML Tidy for Windows (vers 1st April 2002 (no joke)), see www.w3.org">
+"HTML Tidy for Windows (vers 1st April 2002), see www.w3.org">
 <title>R for Windows FAQ</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="description" content="R for Windows FAQ">
@@ -1014,7 +1014,12 @@ dyn.load-ed?</h3>
 <p>You will need a suitable version of <code>gdb</code>: we
 normally use that from the Cygwin distribution. Debugging under
 Windows is often a fraught process, and sometimes does not work at
-all.</p>
+all. If all you need is a <em>just-in-time</em> debugger to catch
+crashes, consider <code>Dr. Mingw</code> from <a href=
+"http://mefriss1.swan.ac.uk/~jfonseca/gnu-win32/software/drmingw/">http://mefriss1.swan.ac.uk/~jfonseca/gnu-win32/software/drmingw/</a>.
+That will be able to pinpoint the error, most effectively if you
+build a version of R with debugging information as described
+below.</p>
 
 <p>First, build a version of the R system with debugging
 information by<br>
@@ -1043,8 +1048,8 @@ gdb /path/to/rw1051/bin/Rgui.exe
 <p>However, note</p>
 
 <ul>
-<li>gdb will only be able to find the source code if we run in the
-location where the source was compiled
+<li><code>gdb</code> will only be able to find the source code if
+we run in the location where the source was compiled
 (<code>rw1051/src/gnuwin32</code> for the main system,
 <code>rw1051/src/library/mypkg/src</code> for a package), unless
 told otherwise by the <code>directory</code> command. It is most
