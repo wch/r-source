@@ -1920,6 +1920,7 @@ sub ex_print_exampleblock {
     my ($block,$env) = @_;
 
     if(defined $blocks{$block}){
+	print $Exout "..nameEx <- '", $blocks{"name"}, "'\n";
 	print $Exout "##___ Examples ___:\n", code2examp($blocks{$block}), "\n";
     }
 }
