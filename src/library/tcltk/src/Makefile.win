@@ -36,10 +36,10 @@ $(DLLNAME).a: $(OBJS) #
 
 $(DLLNAME).dll : $(DLLNAME).a tcltk_res.o
 $(RHOME)/library/tcltk/libs/tcltk.dll: $(RHOME)/library/tcltk/libs $(DLLNAME).dll
-	$(CP) $(DLLNAME).dll $@
+	@$(CP) $(DLLNAME).dll $@
 
 $(RHOME)/library/tcltk/libs:
-	$(MKDIR) $@
+	@$(MKDIR) $@
 
 clean:
 	$(RM) $(DLLNAME).dll *.a $(OBJS) $(DLLNAME).def
