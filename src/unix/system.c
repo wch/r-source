@@ -101,11 +101,15 @@ int main(int ac, char **av)
     return 0;
 }
 
+#ifdef HAVE_AQUA
+/* this should be a global variable as it used in unix/devQuartz.c */
+Rboolean useaqua = FALSE;
+#endif
+
 int Rf_initialize_R(int ac, char **av)
 {
     int i, ioff = 1, j, value, ierr;
     Rboolean useX11 = TRUE, usegnome = FALSE, useTk = FALSE;
-    Rboolean useaqua = FALSE;
     char *p, msg[1024], **avv;
     structRstart rstart;
     Rstart Rp = &rstart;
