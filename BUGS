@@ -642,10 +642,6 @@ Date: Fri, 21 May 2004 15:24:05 +0200 (CEST)
 Subject: Crash in OSX
 From: murray.pung@studentmail.newcastle.edu.au
 Date: Sat,  5 Jun 2004 04:36:52 +0200 (CEST)
-* PR# 6982 *
-Subject: out-of-date information in R for Mac OS X FAQ
-From: d.firth@warwick.ac.uk
-Date: Tue, 15 Jun 2004 12:50:38 +0200 (CEST)
 
 Directory:  Misc
 
@@ -907,3 +903,7 @@ Date: Fri, 25 Jun 2004 11:03:31 +0200
 Subject: RE:znvvbi,UPTD - NEW stock pick - last pick up 200% - Set to explode on Monday
 From: "Kelvin " <sbekoau@tiscali.fr>
 Date: Sat, 26 Jun 2004 22:23:11 -0300
+* PR# 7027 *
+Subject: Problem with hasArg and the ... argument
+From: j.j.goeman@lumc.nl
+Date: Mon, 28 Jun 2004 11:12:27 +0200 (CEST)
