@@ -50,22 +50,27 @@ getExportedValue <- function(ns, name) {
     getInternalExportName <- function(name, ns) {
         exports <- getNamespaceInfo(ns, "exports")
         if (! exists(name, env = exports, inherits = FALSE))
-            stop(paste(name, "is not an exported object"))
+            stop(paste(sQuote(name), "is not an exported object from",
+                       sQuote(paste("namespace",
+                                    getNamespaceName(ns), sep=":"))),
+                 call. = FALSE)
         get(name, env = exports, inherits = FALSE)
     }
     ns <- asNamespace(ns)
-    if (isBaseNamespace(ns)) get(name, env = ns)
-    else get(getInternalExportName(name, ns), env = ns)
+    if (isBaseNamespace(ns)) get(name, env = ns, inherits=FALSE)
+    else get(getInternalExportName(name, ns), env = ns, inherits=FALSE)
 }
+
 "::" <- function(pkg,name){
     pkg <- as.character(substitute(pkg))
     name <- as.character(substitute(name))
     getExportedValue(pkg, name)
 }
+
 ":::" <- function(pkg,name){
     pkg <- as.character(substitute(pkg))
     name <- as.character(substitute(name))
-    get(name, env = asNamespace(pkg))
+    get(name, env = asNamespace(pkg), inherits=FALSE)
 }
 
 attachNamespace <- function(ns, pos = 2) {
@@ -73,7 +78,8 @@ attachNamespace <- function(ns, pos = 2) {
         if (exists(hookname, envir = env, inherits = FALSE)) {
             fun <- get(hookname, envir = env, inherits = FALSE)
             if (! is.null(try({ fun(...); NULL})))
-                stop(paste(hookname, "failed"))
+                stop(paste(hookname, "failed in attachNamespace"),
+                     call. = FALSE)
         }
     }
     ns <- asNamespace(ns, base.OK = FALSE)
@@ -123,7 +129,8 @@ loadNamespace <- function (package, lib.loc = NULL,
             if (exists(hookname, envir = env, inherits = FALSE)) {
                 fun <- get(hookname, envir = env, inherits = FALSE)
                 if (! is.null(try({ fun(...); NULL})))
-                    stop(paste(hookname, "failed"))
+                    stop(paste(hookname, "failed in loadNamespace"),
+                         call. = FALSE)
             }
         }
         makeNamespace <- function(name, version = NULL, lib = NULL) {
@@ -148,7 +155,9 @@ loadNamespace <- function (package, lib.loc = NULL,
             namespaceIsSealed <- function(ns)
                environmentIsLocked(ns)
             ns <- asNamespace(ns, base.OK = FALSE)
-            if (namespaceIsSealed(ns)) stop("already sealed")
+            if (namespaceIsSealed(ns))
+                stop("namespace", sQuote(getNamespaceName(ns)),
+                     " is already sealed in loadNamespace", call.=FALSE)
             lockEnvironment(ns, TRUE)
             lockEnvironment(parent.env(ns), TRUE)
         }
@@ -324,7 +333,8 @@ unloadNamespace <- function(ns) {
         if (exists(hookname, envir = env, inherits = FALSE)) {
             fun <- get(hookname, envir = env, inherits = FALSE)
             if (! is.null(try({ fun(...); NULL})))
-                stop(paste(hookname, "failed"))
+                stop(paste(hookname, "failed in unloadNamespace"),
+                     call. = FALSE)
         }
     }
     ns <- asNamespace(ns, base.OK = FALSE)
@@ -573,8 +583,10 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
     ex <- .Internal(ls(exports, TRUE))
     if(!all(expnames %in% ex)) {
         miss <- expnames[! expnames %in% ex]
-        stop("objects ", paste(sQuote(miss), collapse=", "),
-             " are not exported")
+        stop("object(s) ", paste(sQuote(miss), collapse=", "),
+             " are not exported by ",
+             sQuote(paste("namespace", getNamespaceName(expenv), sep=";"))
+             )
     }
 #    expnames <- unlist(lapply(expnames, getInternalExportName, expenv))
     expnames <- unlist(lapply(expnames, get, env = exports, inherits = FALSE))

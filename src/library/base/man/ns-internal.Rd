@@ -57,5 +57,11 @@ setNamespaceInfo(ns, which, val)
 \description{
   Internal name space support functions.  Not intended to be called directly.
 }
+\details{
+  \code{packageHasNamespace} does not indicate if the package has a
+  namespace, rather if it has a \file{NAMESPACE} file, which \code{base}
+  does not.  But then you are not intended to be using it \dots.
+}
+
 \keyword{internal}
 \author{Luke Tierney}

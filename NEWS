@@ -247,6 +247,9 @@ BUG FIXES
     o   object.size() now returns a real (not integer) answer and so
 	can cope with objects occupying more than 2Gb.
 
+    o   Lookups base:: and ::: were not confining their search to the
+	named package/namespace.
+
 
 
 
