@@ -792,7 +792,6 @@ SEXP Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg)
 {
     SEXP matches,ans;
     int i, j, n, p,ng=0,offset,offsetg;
-    double *xptr;
 
     n = LENGTH(g);
     p= INTEGER(ncol)[0];
@@ -809,30 +808,30 @@ SEXP Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg)
 
     switch(TYPEOF(x)){
     case REALSXP:    
-	    ZERODBL(ans,ng*p,i);
-	    for(i=0;i<p;i++){
-		    for(j=0;j<n;j++){
-			    REAL(ans)[INTEGER(matches)[j]-1+offsetg]+=REAL(x)[j+offset];
-		    }
-		    offset+=n;
-		    offsetg+=ng;
+	ZERODBL(ans,ng*p,i);
+	for(i=0;i<p;i++){
+	    for(j=0;j<n;j++){
+		REAL(ans)[INTEGER(matches)[j]-1+offsetg]+=REAL(x)[j+offset];
 	    }
-	    break;
+	    offset+=n;
+	    offsetg+=ng;
+	}
+	break;
     case INTSXP: 
-	    ZEROINT(ans,ng*p,i);
-	    for(i=0;i<p;i++){
-		    for(j=0;j<n;j++){
-			    if (INTEGER(x)[j+offset]==NA_INTEGER)
-				    INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]=NA_INTEGER;
-			    else if  (INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]!=NA_INTEGER)
-				    INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]+=INTEGER(x)[j+offset];
-		    }
-		    offset+=n;
-		    offsetg+=ng;
+	ZEROINT(ans,ng*p,i);
+	for(i=0;i<p;i++){
+	    for(j=0;j<n;j++){
+		if (INTEGER(x)[j+offset]==NA_INTEGER)
+		    INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]=NA_INTEGER;
+		else if  (INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]!=NA_INTEGER)
+		    INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]+=INTEGER(x)[j+offset];
 	    }
-	    break;
+	    offset+=n;
+	    offsetg+=ng;
+	}
+	break;
     default:
-	    error("non-numeric matrix in rowsum: this can't happen");
+	error("non-numeric matrix in rowsum: this can't happen");
     }
 
     UNPROTECT(2); /*HashTable, matches*/
@@ -844,7 +843,6 @@ SEXP Rrowsum_df(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg)
 {
     SEXP matches,ans,col,xcol;
     int i, j, n, p,ng=0,offset,offsetg;
-    double *xptr;
 
     n = LENGTH(g);
     p= INTEGER(ncol)[0];
@@ -860,35 +858,35 @@ SEXP Rrowsum_df(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg)
     offset=0; offsetg=0;
 
     for(i=0; i<p;i++){
-	    xcol=VECTOR_ELT(x,i);
-	    if (!isNumeric(xcol))
-		    error("non-numeric dataframe in rowsum");
-	    switch(TYPEOF(xcol)){
-	    case REALSXP:    
-		    PROTECT(col=allocVector(REALSXP,ng));
-		    ZERODBL(col,ng,i);
-		    for(j=0;j<n;j++){
-			    REAL(col)[INTEGER(matches)[j]-1]+=REAL(xcol)[j];
-		    }
-		    SET_VECTOR_ELT(ans,i,col);
-		    UNPROTECT(1);
-		    break;
-	    case INTSXP: 
-		    PROTECT(col=allocVector(INTSXP,ng));
-		    ZEROINT(col,ng,i);
-		    for(j=0;j<n;j++){
-			    if (INTEGER(xcol)[j]==NA_INTEGER)
-				    INTEGER(col)[INTEGER(matches)[j]-1]=NA_INTEGER;
-			    else if (INTEGER(col)[INTEGER(matches)[j]-1]!=NA_INTEGER)
-				    INTEGER(col)[INTEGER(matches)[j]-1]+=INTEGER(xcol)[j];
-		    }
-		    SET_VECTOR_ELT(ans,i,col);
-		    UNPROTECT(1);
-		    break;
-
-	    default:
-		    error("this can't happen");
+	xcol=VECTOR_ELT(x,i);
+	if (!isNumeric(xcol))
+	    error("non-numeric dataframe in rowsum");
+	switch(TYPEOF(xcol)){
+	case REALSXP:    
+	    PROTECT(col=allocVector(REALSXP,ng));
+	    ZERODBL(col,ng,i);
+	    for(j=0;j<n;j++){
+		REAL(col)[INTEGER(matches)[j]-1]+=REAL(xcol)[j];
 	    }
+	    SET_VECTOR_ELT(ans,i,col);
+	    UNPROTECT(1);
+	    break;
+	case INTSXP: 
+	    PROTECT(col=allocVector(INTSXP,ng));
+	    ZEROINT(col,ng,i);
+	    for(j=0;j<n;j++){
+		if (INTEGER(xcol)[j]==NA_INTEGER)
+		    INTEGER(col)[INTEGER(matches)[j]-1]=NA_INTEGER;
+		else if (INTEGER(col)[INTEGER(matches)[j]-1]!=NA_INTEGER)
+		    INTEGER(col)[INTEGER(matches)[j]-1]+=INTEGER(xcol)[j];
+	    }
+	    SET_VECTOR_ELT(ans,i,col);
+	    UNPROTECT(1);
+	    break;
+
+	default:
+	    error("this can't happen");
+	}
     }
     namesgets(ans,getAttrib(x,R_NamesSymbol));
 
