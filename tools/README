@@ -46,6 +46,9 @@ The files are as follows.
 	writes an export file, assembling the exported symbols by
 	reading the output of nm.  This file is needed on AIX (4.2 and
 	later) to compile shared libs.
+
+  link-recommended
+	create links with simplified names to the recommended packages.
   
   linkcheck.pl
 	comment out links that are not available.
@@ -62,3 +65,6 @@ The files are as follows.
 	create a single `PKGNAME-pkg.tex' file from the package docs in
 	LaTeX format.
 
+  rsync-recommended
+	obtain sources for the recommended packages using rsync, and then
+	create links with simplified names to these.
