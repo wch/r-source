@@ -8,7 +8,7 @@
   \code{"POSIXct"} representing calendar dates and times. 
 }
 \usage{
-\method[plot}{POSIXct}(x, y, xlab = "", ...)
+\method{plot}{POSIXct}(x, y, xlab = "", ...)
 axis.POSIXct(side, x, at, format, ...)
 }
 \synopsis{
