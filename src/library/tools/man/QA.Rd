@@ -4,6 +4,7 @@
 \alias{checkDocArgs}
 \alias{checkDocStyle}
 \alias{checkMethods}
+\alias{print.checkAssignFuns}
 \alias{print.checkDocArgs}
 \alias{print.checkDocStyle}
 \alias{print.checkMethods}
@@ -57,11 +58,7 @@ checkMethods(package, dir, lib.loc = NULL)
   package.
 }
 \value{
-  \code{checkAssignFuns} returns a character vector with the names of
-  assignment functions with final argument \emph{not} named
-  \code{value}.
-
-  The other functions return objects of class the same as the respective
+  The functions return objects of class the same as the respective
   function names containing the information about problems detected.
   There is a \code{print} method for nicely displaying the information
   contained in such objects.
