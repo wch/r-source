@@ -41,6 +41,11 @@
   For checking (via the examples in the help files \file{man/*.Rd},
   use \code{Rcmd check [-l lib] <pkg>}: use \code{Rcmd check --help}
   for more information.
+
+  Which forms of help are produced is controlled by the \code{--docs}
+  option which takes values \code{none} or \code{normal} (text and HTML)
+  or \code{chm} (the default, text, HTML and CHTML) or \code{winhlp} or
+  \code{all} (adding old-style Windows \code{.hlp} files, no longer tested).
 }
 
 \section{Packages using the methods package}{
