@@ -18,8 +18,8 @@ plot(ecdf(x), verticals = FALSE, col.01line = "gray70", \dots)
   \eqn{F_n}{Fn} is a step
   function with jump \eqn{1/n} at each observation (possibly with
   multiple jumps at one place if there are ties).
-  
-  For observations 
+
+  For observations
   \code{x}\eqn{= (}\eqn{x_1,x_2}{x1,x2},\ldots\eqn{x_n)}{xn)},
   \eqn{F_n}{Fn} is the fraction of observations less or equal to \eqn{t},
   i.e.,
@@ -56,7 +56,7 @@ print(knots(Fn12), dig=2)
 summary(Fn12)
 summary.stepfun(Fn12)
 print(ls.Fn12 <- ls(env= environment(Fn12)))
-##[1] "f"      "method" "n"      "x"      "y"      "yleft"  "yright"
+##[1] "f"  "method"  "n"  "ties"   "x"  "y"  "yleft"  "yright"
 
 12 * Fn12((-20:20)/10)
 
@@ -68,7 +68,7 @@ F10 <- ecdf(rnorm(10))
 summary(F10)
 
 plot(F10)
-plot(F10, verticals= TRUE, do.p = F)
+plot(F10, verticals= TRUE, do.p = FALSE)
 
 plot(Fn12)# , lwd=2) dis-regarded
 xx <- unique(sort(c(seq(-3,2, length=201), knots(Fn12))))
