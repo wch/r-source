@@ -3,7 +3,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                              method, available=NULL, destdir=NULL,
                              installWithVers=FALSE)
 {
-    unpackPkg <- function(file, lib, installWithVers=FALSE) {
+    unpackPkg <- function(pkg, pkgname, lib, installWithVers=FALSE) {
         ## Create a temporary directory and unpack the zip to it
         ## then get the real package & version name, copying the
         ## dir over to the appropriate install dir.
@@ -11,12 +11,11 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
         dir.create(tmpDir)
         cDir <- getwd()
         on.exit(setwd(cDir), add=TRUE)
-        res <- zip.unpack(file, tmpDir)
+        res <- zip.unpack(pkg, tmpDir)
         setwd(tmpDir)
 
         ## From original install.packages
         require(tools)
-        pkgname <- sub("\\.zip$", "", basename(pkg))
         checkMD5sums(pkgname)
 
         ## back to changes
@@ -43,7 +42,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
             ## if the directory could not be removed for some reason,
             ## default to old behaviour where it would just copy all
             ## files on top of previous install.
-            zip.unpack(file, lib)
+            zip.unpack(pkg, lib)
         }
         setwd(cDir)
         unlink(tmpDir, recursive=TRUE)
@@ -75,7 +74,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
     }
     if(is.null(CRAN) & missing(contriburl)) {
         for(i in seq(along=pkgs)) {
-            unpackPkg(pkgs[i], lib, installWithVers)
+            unpackPkg(pkgs[i], pkgnames[i], lib, installWithVers)
         }
         link.html.help(verbose=TRUE)
         return(invisible())
@@ -103,9 +102,10 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
             {
                 okp <- p == foundpkgs[, 1]
                 if(length(okp) > 0){
-                    for(pkg in foundpkgs[okp, 2]) {
-                        ## changes begin - JG
-                        unpackPkg(pkg, lib, installWithVers)
+                    fpkgs <- foundpkgs[okp, 2]
+                    fpkgnames <- pkgnames
+                    for(i in 1:length(fpkgs)) {
+                        unpackPkg(fpkgs[i], fpkgnames[i], lib, installWithVers)
                     }
                 }
             }
