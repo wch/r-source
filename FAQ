@@ -2355,6 +2355,9 @@ distributions of R.)
      as surrogates for a full data set, and search for subsets which are
      optimal under various criteria.
 
+*supclust*
+     Methodology for supervised grouping of predictor variables.
+
 *survey*
      Summary statistics, generalized linear models, and general maximum
      likelihood estimation for stratified, cluster-sampled, unequally
