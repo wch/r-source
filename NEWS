@@ -354,6 +354,9 @@ NEW FEATURES
     o   princomp.factor() now has principal argument `formula', so
 	update() can be used.
 
+    o   methods() now looks for registered methods in namespaces, and
+	knows about many objects that look like methods but are not.
+
 
 INSTALLATION CHANGES
 

@@ -25,8 +25,9 @@ predict (object, \dots)
 \seealso{\code{\link{predict.lm}}.
 }
 \examples{
-## All the "predict" methods available in your current search() path:
+## All the "predict" methods visible in your current search() path.
+## NB most of the methods in the base packages are hidden.
 for(fn in methods("predict"))
-   cat(fn,":\n\t",deparse(args(get(fn))),"\n")
+   try(cat(fn,":\n\t",deparse(args(get(fn))),"\n"), silent = TRUE)
 }
 \keyword{methods}
