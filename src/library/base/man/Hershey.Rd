@@ -167,6 +167,9 @@ Hershey
 \examples{
 str(Hershey)
 
+## These examples are only shown in an interactive session
+
+showHershey <- function() {
 ######
 # create tables of vector font functionality
 ######
@@ -565,4 +568,9 @@ for (i in 1:73)
 
 par(oldpar)
 }
+\testonly{if(interactive()) {showHershey()
+} else { ## to have a test of the vfonts module
+plot(1:10); text(6, 2, "A test string", vfont =c ("serif", "bold italic"))
+}
+}}
 \keyword{aplot}
