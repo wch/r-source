@@ -1,4 +1,4 @@
-\name{Platform}
+\name{.Platform}
 \title{Platform Specific Variables}
 \usage{
 .Platform

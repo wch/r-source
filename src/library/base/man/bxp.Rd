@@ -9,8 +9,8 @@
 \usage{
 bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, outline = TRUE,
     notch.frac = 0.5, boxwex = 0.8, border = par("fg"), col = NULL,
-    log = "", pars = NULL, frame.plot = axes, horizontal = FALSE, add = FALSE,
-    at = NULL, show.names=NULL, \dots)
+    log = "", pars = NULL, frame.plot = axes, horizontal = FALSE,
+    add = FALSE, at = NULL, show.names=NULL, \dots)
 }
 \arguments{
   \item{z}{a list containing data summaries to be used in constructing

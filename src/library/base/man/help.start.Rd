@@ -5,7 +5,8 @@
 help.start(gui = "irrelevant", browser = getOption("browser"), remote = NULL)
 #endif
 #ifdef windows  
-help.start(update = TRUE, gui = "irrelevant", browser = getOption("browser"))
+help.start(update = TRUE, gui = "irrelevant",
+           browser = getOption("browser"))
 #endif
 }
 \alias{help.start}
@@ -54,7 +55,7 @@ help.start(update = TRUE, gui = "irrelevant", browser = getOption("browser"))
   specified, but \code{help} will still use the file association mechanism.
 
   \code{help.start} and the Java-based search engine have been tested
-  under Internet Explorer 6, Netscape 6.2.2, Opera 6.01 and Mozilla 0.9.9.
+  under Internet Explorer 6, Netscape 6.2.3/7.0rc1, Opera 6.01 and Mozilla 1.0.
 #endif
 }
 

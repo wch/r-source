@@ -1,4 +1,4 @@
-\name{Machine}
+\name{.Machine}
 \title{Numerical Characteristics of the Machine}
 \usage{
 .Machine
