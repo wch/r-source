@@ -28,7 +28,7 @@
   to and from \code{.Random.seed}.
 }
 \section{Warning}{As with all compiled code, mis-specifying these
-  functions can crash \R. Do include the \file{R_ext/Random.h}
+  functions can crash \R.  Do include the \file{R\_ext/Random.h}
   header file for type checking.
 }
 \examples{\dontrun{
