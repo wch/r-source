@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001   The R Development Core Team.
+ *  Copyright (C) 2001-3   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,11 @@
 
 #include <Defn.h>
 #include <Rconnections.h>
-#include "Rregex.h"
+#ifdef USE_SYSTEM_REGEX
+# include <regex.h>
+#else
+# include "Rregex.h"
+#endif
 
 static SEXP allocMatrixNA(SEXPTYPE, int, int);
 static void transferVector(SEXP s, SEXP t);
