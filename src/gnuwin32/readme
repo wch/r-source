@@ -1,7 +1,7 @@
-R 0.64.1 for Windows 9x and NT
+R 0.64.2 for Windows 9x and NT
 ==============================
 
-This distribution contains a binary distribution of R-0.64.1 to run on
+This distribution contains a binary distribution of R-0.64.2 to run on
 Windows 95, 98 and NT4 (at least) on Intel/clone chips. It is designed to
 be as close as possible to the implementation on Unix, but see the
 list of differences below. The port was by Guido Masarotto with
@@ -17,23 +17,23 @@ Installation
 The simplest way is to run the installer (double-click on the icon for
 rwinst.exe and navigate its wizard-like pages).
 
-To install manually, unpack rw0641b.zip anywhere you like. It will
-unpack to a directory tree under rw0641. The help, HTML and latex help
-files are in separate files rw0641h.zip, rw0641w.zip and rw0641l.zip
+To install manually, unpack rw0642b.zip anywhere you like. It will
+unpack to a directory tree under rw0642. The help, HTML and latex help
+files are in separate files rw0642h.zip, rw0642w.zip and rw0642l.zip
 which should be unpacked in the same directory you unpacked
-rw0641b.zip.
+rw0642b.zip.
 
 Usage
 =====
 
-There are two executables in rw0641\bin:
+There are two executables in rw0642\bin:
 
 GUI:
 
 Rgui.exe runs as a standard Windows GUI executable and provides an R
 console in its own window. It takes the standard R command-line
 arguments; these are most easily set by making a shortcut to 
-...\rw0641\bin\rgui.exe and adding the arguments in the Target field.
+...\rw0642\bin\rgui.exe and adding the arguments in the Target field.
 Set the `Start in' field of the shortcut to the directory you want to use
 as the working directory (where workspaces and files are saved and 
 loaded from).
@@ -149,7 +149,7 @@ Adding packages
 
 Binaries for many packages are available at
 CRAN/bin/windows/windows-NT/contrib. These are zip files which should
-be unpacked in rw0641\library. They are then available for use. You
+be unpacked in rw0642\library. They are then available for use. You
 can also use the installer rwinst.exe to selectively unpack the zip
 files.
 
@@ -159,10 +159,10 @@ search engine can be updated from a running R process by the command
 	link.html.help()
 
 provided the owner of the process has write permission on
-rw0641\doc\html.  If you have the source-package files and Perl
+rw0642\doc\html.  If you have the source-package files and Perl
 installed you can use
 
-	cd ...\rw0641\src\gnuwin32\help
+	cd ...\rw0642\src\gnuwin32\help
 	make indices
 
 Private libraries of packages can be used and can be specified by the
@@ -179,7 +179,7 @@ in the environment or on the command line, or add the line
 to your .Rprofile or at the end of RHOME/etc/Rprofile.
 
 To install a package from source code you need the source-package
-distribution rw0641sp.zip installed (but not the R source). This contains
+distribution rw0642sp.zip installed (but not the R source). This contains
 detailed instructions.
 
 
@@ -249,12 +249,12 @@ groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
 All of these need to be installed and in your path, and the
 appropriate environment variables set.  
 
-You also need: the R source (R-0.64.1.tgz), and to build the installer,
+You also need: the R source (R-0.64.2.tgz), and to build the installer,
 unzip5.40.zip from any Info-Zip mirror.
 
-Then: untar R-0.64.1.tgz somewhere (ignore warnings about the aux directory),
+Then: untar R-0.64.2.tgz somewhere,
 
-	cd /somewhere/R-0.64.1/src/gnuwin32 
+	cd /somewhere/R-0.64.2/src/gnuwin32 
 
 edit MkRules to set the appropriate paths as needed
 
@@ -262,7 +262,7 @@ and run
 
 	make BUILD=EGCS or CYGWIN
 
-Note 1: the file rw0641\unzip\unzip32.dll is not in the source
+Note 1: the file rw0642\unzip\unzip32.dll is not in the source
 distribution, nor are the sources (it is the standard Info-Zip unzip
 5.40, built with MSVC++4.2). You will need to copy it from a binary
 distribution.
@@ -288,12 +288,12 @@ http://www.xraylith.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
 and ensure that these are in your path. You also need Perl and nroff
 installed.
 
-You also need: the R source (R-0.64.1.tgz), and to build the installer,
+You also need: the R source (R-0.64.2.tgz), and to build the installer,
 unzip5.40.zip from any Info-Zip mirror.
 
-Then: untar R-0.64.1.tgz somewhere 
+Then: untar R-0.64.2.tgz somewhere 
 
-	cd /somewhere/R-0.64.1/src/gnuwin32 
+	cd /somewhere/R-0.64.2/src/gnuwin32 
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
 Set the environment variable TEMP to, say, /tmp, and make.

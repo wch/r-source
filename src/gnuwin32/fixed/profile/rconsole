@@ -1,6 +1,6 @@
 # Optional parameters for the console and the pager
 # The system-wide copy is in rwxxxx/etc.
-# A user copy can be installed in ''R_HOME''.
+# A user copy can be installed in `R_HOME'.
 
 ## Style
 # This can be `yes' (for MDI) or `no' (for SDI).
@@ -12,8 +12,8 @@ statusbar = yes
 ## Font.
 # Please use only fixed width font.
 # If font=FixedFont the system fixed font is used; in this case
-# points and style are ignored. If font begin by TT, only 
-# True Type font are searched.
+# points and style are ignored. If font begins with TT, only 
+# True Type fonts are searched for.
 font = TT Courier New
 points = 10
 style = normal # Style can be normal, bold, italic
@@ -28,14 +28,14 @@ pgcolumns = 80
 # should options(width=) be set to the console width?
 setwidthonresize = yes
 
-# Internal pager can displays help on a single window
-# or on multiple windows (one for each topic)
+# The internal pager can displays help in a single window
+# or in multiple windows (one for each topic)
 # pagerstyle can be set to `singlewindow' or `multiplewindows'
-# (but on MDI only `multiplewindows' is supported)
 pagerstyle = multiplewindows
 
 
-## Colours (see rwxxxx/etc/rgb.txt for the known colours).
+## Colours for console and pager(s)
+# (see rwxxxx/etc/rgb.txt for the known colours).
 background = White
 normaltext = NavyBlue
 usertext = Red
