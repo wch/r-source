@@ -1,5 +1,5 @@
 % file lqs/man/lqs.Rd
-% copyright (C) 1998-9 B. D. Ripley    (C) 2001 R Core Development Team
+% copyright (C) 1998-9 B. D. Ripley    (C) 2001-2 R Core Development Team
 %
 \name{lqs}
 \alias{lqs}
@@ -46,7 +46,8 @@ ltsreg(\ldots)
     fitting. (NOTE: If given, this argument must be named exactly.)}
   \item{na.action}{function to specify the action to be taken if
     \code{NA}s are found.  The default action is for the procedure to
-    fail.  An alternative is \code{na.omit}, which leads to omission of
+    fail.  Alternatives include \code{\link{na.omit}} and
+    \code{\link{na.exclude}}, which lead to omission of
     cases with missing values on any required variable.  (NOTE: If
     given, this argument must be named exactly.)
   }
@@ -77,7 +78,20 @@ ltsreg(\ldots)
     \code{lqs.control}.}
 }
 \value{
-  An object of class \code{"lqs"}.
+  An object of class \code{"lqs"}.  This is a list with components
+  \item{crit}{the value of the criterion for the best solution found, in
+    the case of \code{method == "S"} before IWLS refinement.}
+  \item{sing}{character. A message about the number of samples which
+    resulted in singular fits.}
+  \item{coefficients}{of the fitted linear model}
+  \item{bestone}{the indices of those points fitted by the best sample
+    found (prior to adjustment of the intercept, if requested).}
+  \item{fitted.values}{the fitted values.}
+  \item{residuals}{the residuals.}
+  \item{scale}{estimate(s) of the scale of the error. The first is based
+    on the fit criterion.  The second (not present for \code{method ==
+      "S"}) is based on the variance of those residuals whose absolute
+    value is less than 2.5 times the initial estimate.}
 }
 \details{
   Suppose there are \code{n} data points and \code{p} regressors,
@@ -105,7 +119,7 @@ ltsreg(\ldots)
       if \code{"exact"} exhaustive enumeration will be attempted however
       many samples are needed.}
     \item{\code{adjust}:}{should the intercept be optimized for each
-      sample?}
+      sample?  Defaults to \code{TRUE}.}
     }
 }
 \note{
@@ -134,7 +148,7 @@ ltsreg(\ldots)
   regressor and exhaustive search with adjustment. For all other cases
   the minimization is only known to be approximate.
 }
-\author{B.D. Ripley}
+\author{B. D. Ripley}
 \references{
   P. J. Rousseeuw and A. M. Leroy (1987)
   \emph{Robust Regression and Outlier Detection.}
