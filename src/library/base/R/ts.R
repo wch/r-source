@@ -90,41 +90,8 @@ as.ts <- function (x)
     else ts(x)
 }
 
-Ops.ts <- function(e1, e2)
+.cbind.ts <- function(..., dframe = FALSE, union = TRUE)
 {
-    if(missing(e2)) {
-        ## univariate operator
-        NextMethod(.Generic)
-    } else if(any(nchar(.Method) == 0)) {
-        ## one operand is not a ts
-        NextMethod(.Generic)
-    } else {
-        ## use ts.intersect to align e1 and e2
-        ## <FIXME>
-        ## We currently need to load package `ts' for this ...
-        require(ts)
-        ## </FIXME>
-        nc1 <- NCOL(e1)
-        nc2 <- NCOL(e2)
-        e12 <- ts.intersect(e1, e2)
-        e1 <- if(is.matrix(e1)) e12[, 1:nc1, drop = FALSE] else e12[, 1]
-        e2 <- if(is.matrix(e2)) e12[, nc1 + (1:nc2), drop = FALSE]
-        else e12[, nc1 + 1]
-        NextMethod(.Generic)
-    }
-}
-
-cbind.ts <- function(..., deparse.level = 1) {
-    if(deparse.level != 1) .NotYetUsed("deparse.level != 1")
-
-    ## <FIXME>
-    ## This used to be in package ts, with an interface incompatible
-    ## with the cbind generic prototype.  All we did was change the
-    ## interface providing removed `default' values in the body.
-    dframe <- FALSE
-    union <- TRUE
-    ## </FIXME>
-    
     names.dots <- function(...)
     {
         l <- as.list(substitute(list(...)))[-1]
@@ -211,6 +178,35 @@ cbind.ts <- function(..., deparse.level = 1) {
     }
     if(dframe) as.data.frame(x)
     else ts(x, start=st, freq=freq)
+}
+
+Ops.ts <- function(e1, e2)
+{
+    if(missing(e2)) {
+        ## univariate operator
+        NextMethod(.Generic)
+    } else if(any(nchar(.Method) == 0)) {
+        ## one operand is not a ts
+        NextMethod(.Generic)
+    } else {
+        nc1 <- NCOL(e1)
+        nc2 <- NCOL(e2)
+        ## use ts.intersect to align e1 and e2        
+        e12 <- .cbind.ts(e1, e2, union = FALSE)
+        e1 <- if(is.matrix(e1)) e12[, 1:nc1, drop = FALSE] else e12[, 1]
+        e2 <- if(is.matrix(e2)) e12[, nc1 + (1:nc2), drop = FALSE]
+        else e12[, nc1 + 1]
+        NextMethod(.Generic)
+    }
+}
+
+cbind.ts <- function(..., deparse.level = 1) {
+    if(deparse.level != 1) .NotYetUsed("deparse.level != 1")
+    ## <FIXME>
+    ## This is not quite right.  The only named argument of cbind.ts is
+    ## `deparse.level', but `dframe' and `union' are swallowed ...
+    .cbind.ts(..., dframe = FALSE, union = FALSE)
+    ## </FIXME>
 }
 
 diff.ts <- function (x, lag = 1, differences = 1, ...)
