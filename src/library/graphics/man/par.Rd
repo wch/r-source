@@ -86,7 +86,7 @@
 \usage{
 par(\dots, no.readonly = FALSE)
 
-plot> (\dots, <tag> = <value>)
+<highlevel plot> (\dots, <tag> = <value>)
 }
 
 \arguments{
@@ -105,7 +105,7 @@ plot> (\dots, <tag> = <value>)
   \code{par()} (no arguments) or \code{par(no.readonly=TRUE)} is used to
   get \emph{all} the graphical parameters (as a named list).  Their
   names are currently taken from the variable \code{.Pars}.
-rs.readonly} contains the names of the \code{par} arguments
+  \code{.Pars.readonly} contains the names of the \code{par} arguments
   which are \emph{readonly}.
 
   \emph{\bold{R.O.}} indicates \emph{\bold{read-only arguments}}: These
@@ -116,22 +116,22 @@ rs.readonly} contains the names of the \code{par} arguments
   mid-level plot functions, such as \code{\link{plot}},
   \code{\link{points}}, \code{\link{lines}}, \code{\link{axis}},
   \code{\link{title}}, \code{\link{text}}, \code{\link{mtext}}:
-
-item \code{"ask"}
+  \itemize{
+    \item \code{"ask"}
     \item \code{"fig"}, \code{"fin"}
     \item \code{"mai"}, \code{"mar"}, \code{"mex"}
     \item \code{"mfrow"}, \code{"mfcol"}, \code{"mfg"}
     \item \code{"new"}
-code{"oma"}, \code{"omd"}, \code{"omi"}
+    \item \code{"oma"}, \code{"omd"}, \code{"omi"}
     \item \code{"pin"}, \code{"plt"}, \code{"ps"}, \code{"pty"}
-code{"usr"}
+    \item \code{"usr"}
     \item \code{"xlog"}, \code{"ylog"}
   }
 }
 
 \value{
   When parameters are set, their former values are returned in an
-isible named list.  Such a list can be passed as an argument to
+  invisible named list.  Such a list can be passed as an argument to
   \code{par} to restore the parameter values.
   Use \code{par(no.readonly = TRUE)} for the full list of parameters
   that can be restored.
