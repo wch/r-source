@@ -576,6 +576,8 @@ extern int R_dec_min_exponent		INI_as(-308);
 # define DispatchOrEval		Rf_DispatchOrEval
 # define duplicated		Rf_duplicated
 # define dynamicfindVar		Rf_dynamicfindVar
+# define EncodeRaw              Rf_EncodeRaw
+# define EncodeString           Rf_EncodeString
 # define endcontext		Rf_endcontext
 # define errorcall		Rf_errorcall
 # define ErrorMessage		Rf_ErrorMessage
@@ -828,6 +830,7 @@ int yywrap(void);
 
 /* ../../main/printutils.c : */
 int	Rstrlen(SEXP, int);
+char *EncodeRaw(Rbyte);
 char *EncodeString(SEXP, int, int, int);
 
 /* Macros for suspending interrupts */

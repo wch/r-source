@@ -153,14 +153,14 @@ void printRawVector(Rbyte *x, int n, int indx)
     int i, w, labwidth=0, width;
 
     DO_first_lab;
-    w = 2;
+    formatRaw(x, n, &w);
     w += R_print.gap;
 
     for (i = 0; i < n; i++) {
 	if (i > 0 && width + w > R_print.width) {
 	    DO_newline;
 	}
-	Rprintf("%*s%02x", R_print.gap, "", x[i]);
+	Rprintf("%*s%s", R_print.gap, "", EncodeRaw(x[i]));
 	width += w;
     }
     Rprintf("\n");
@@ -297,7 +297,8 @@ static void printNamedStringVector(SEXP * x, int n, int quote, SEXP * names)
 			   R_print.gap, ""))
 
 static void printNamedRawVector(Rbyte * x, int n, SEXP * names)
-    PRINT_N_VECTOR(w = 2, Rprintf("%2x%*s", x[k], R_print.gap,""))
+    PRINT_N_VECTOR(formatRaw(x, n, &w), 
+                   Rprintf("%s%*s", EncodeRaw(x[k]), R_print.gap,""))
 
 void printNamedVector(SEXP x, SEXP names, int quote, char *title)
 {
