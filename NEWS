@@ -215,6 +215,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   Overflow of the pointer protection stack is handled correctly
+
     o	save(1, file = ""[F])  no longer segfaults.
 
     o	read.fwf(character(0),..) no longer starts gobbling standard input.

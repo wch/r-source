@@ -644,10 +644,14 @@ void scanPhase(void)
 
 /* "protect" push a single argument onto R_PPStack */
 
+/* In handling a stack overflow we have to be careful not to 
+   use PROTECT. error("protect(): stack overflow") would call
+   deparse1, which uses PROTECT and segfaults */
+   
 SEXP protect(SEXP s)
 {
     if (R_PPStackTop >= R_PPStackSize)
-	error("protect(): stack overflow");
+	errorcall(R_NilValue,"protect(): stack overflow");
     R_PPStack[R_PPStackTop] = s;
     R_PPStackTop++;
     return s;
