@@ -64,7 +64,7 @@ zip.file.extract <- function(file, zipname="R.zip")
 
 
 ### the following functions are currently only tested on unix, maybe
-### we get them for more platforms soon.   
+### we get them for more platforms soon.
 
 parse.description <- function(desc)
 {
@@ -73,7 +73,7 @@ parse.description <- function(desc)
     if(length(ok)>0){
         desc <- desc[!ok]
     }
-    
+
     ## put continuation lines into single fields\
     ## remove leading whitespace
     lastok <- 1
@@ -96,8 +96,8 @@ parse.description <- function(desc)
     ## all before the first `:' is the field name, the rest is the
     ## value of the field. For Version make sure that only the number
     ## gets extracted (some people put dates or something else on the
-    ## same line). 
-    
+    ## same line).
+
     for(d in desc){
         x <- sub("^([^:]*):.*$", "\\1", d)
         y <- sub("^[^:]*:[ \t]*(.*)$", "\\1", d)
@@ -126,9 +126,9 @@ installed.packages <- function(lib.loc = .lib.loc)
             {
                 desc <- list(Version=NA)
             }
-            
+
             retval <- rbind(retval, c(p, lib, desc$Version))
-            
+
         }
     }
     colnames(retval) <- c("Package", "LibPath", "Version")
@@ -151,7 +151,7 @@ CRAN.packages <- function(CRAN=.Options$CRAN, method="auto")
     alldesc <- scan("", file=tmpf, sep="\n", quiet=TRUE)
     if(!localcran)
         unlink(tmpf)
-    
+
     pkgstart <- c(grep("^Package:", alldesc), length(alldesc)+1)
     retval <- NULL
     for(k in 1:(length(pkgstart)-1)){
@@ -189,7 +189,7 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
     if(!is.null(update)){
         if(is.null(instlib))
             instlib <-  update[,"LibPath"]
-        
+
         install.packages(update[,"Package"], instlib, CRAN=CRAN,
                          method=method, available=cranp)
     }
@@ -208,7 +208,7 @@ install.packages <- function(pkglist, lib, CRAN=.Options$CRAN,
                               CRAN=CRAN, method=method)
     update <- cbind(pkglist, lib)
     colnames(update) <- c("Package", "LibPath")
-    
+
     if(!is.null(pkgs))
     {
         for(lib in unique(update[,"LibPath"]))
@@ -255,7 +255,7 @@ download.file <- function(url, destfile, method="auto")
         else
             stop("No download method found")
     }
-    
+
     if(method=="wget")
         status <- system(paste("wget", url, "-O", destfile))
     else if(method=="lynx")
@@ -266,10 +266,10 @@ download.file <- function(url, destfile, method="auto")
     }
     invisible(status)
 }
-    
-    
-    
-download.packages <- function(pkgs, destdir, available=NULL, 
+
+
+
+download.packages <- function(pkgs, destdir, available=NULL,
                               CRAN=.Options$CRAN, method="auto")
 {
     localcran <- length(grep("^file:", CRAN)) > 0
@@ -288,7 +288,7 @@ download.packages <- function(pkgs, destdir, available=NULL,
         else{
             url <- paste(CRAN, "src/contrib", fn, sep="/")
             destfile <- file.path(destdir, fn)
-        
+
             if(download.file(url, destfile, method) == 0)
                 retval <- rbind(retval, c(p, destfile))
             else
@@ -298,4 +298,34 @@ download.packages <- function(pkgs, destdir, available=NULL,
 
     retval
 }
-        
+
+dev2bitmap <- function(file, type="png256", height=6, width=6, res=72,
+                   pointsize, ...)
+{
+    gsexe <- getenv("R_GSCMD")
+    if(is.null(gsexe) || nchar(gsexe) == 0) {
+        gsexe <- "gs"
+        rc <- system(paste(gsexe, "-help > /dev/null"))
+        if(rc != 0) stop("Sorry, gs cannot be found")
+    }
+    gshelp <- system(paste(gsexe, "-help"), intern=TRUE)
+    st <- grep("^Available", gshelp)
+    en <- grep("^Search", gshelp)
+    gsdevs <- gshelp[(st+1):(en-1)]
+    devs <- c(strsplit(gsdevs, " "), recursive=TRUE)
+    if(match(type, devs, 0) == 0)
+        stop(paste(paste("Device ", type, "is not available"),
+                   "Available devices are",
+                   paste(gsdevs, collapse="\n"), sep="\n"))
+    if(missing(pointsize)) pointsize <- 1.5*min(width, height)
+    tmp <- tempfile("Rbit")
+    on.exit(unlink(tmp))
+    dev.print(device=postscript, file=tmp, width=width, height=height,
+              pointsize=pointsize, paper="special", horizontal=FALSE, ...)
+    cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
+                 " -r", res,
+                 " -g", ceiling(res*width), "x", ceiling(res*height),
+                 " -sOutputFile=", file, " ", tmp, sep="")
+    system(cmd)
+    invisible()
+}
