@@ -124,31 +124,57 @@ and is also available for anonymous rsync at
 It is currently mirrored daily at
 
 @quotation
-@multitable @columnfractions .55 .40
-@item @uref{http://cran.at.r-project.org/}
-@tab TU Wien, Austria
-@item @uref{http://cran.ch.r-project.org/}
-@tab ETH Z@"urich, Switzerland
-@item @uref{http://cran.dk.r-project.org/}
-@tab SunSITE, Denmark
-@item @uref{http://cran.hu.r-project.org/}
-@tab Semmelweis University, Hungary
-@item @uref{http://cran.uk.r-project.org/}
-@tab University of Bristol, UK
-@item @uref{http://cran.us.r-project.org/}
-@tab University of Wisconsin, USA
-@item @uref{http://mirror.aarnet.edu.au/CRAN/}
-@tab University of Queensland, Australia
-@item @uref{ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/}
-@ifinfo
-@tab @item
-@end ifinfo
-@tab University of Aizu, Japan
-@item @uref{ftp://dola.snu.ac.kr/pub/R/CRAN/}
-@tab Seoul, South Korea
-@item @uref{http://lib.stat.cmu.edu/R/CRAN/}
-@tab Statlib, Carnegie Mellon University, USA
-@end multitable
+@table @uref
+@item http://cran.at.r-project.org/
+(TU Wien, Austria)
+@item http://cran.au.r-project.org/
+(PlanetMirror, Australia)
+@item http://cran.ch.r-project.org/
+(ETH Z@"urich, Switzerland)
+@item http://cran.dk.r-project.org/
+(SunSITE, Denmark)
+@item http://cran.hu.r-project.org/
+(Semmelweis University, Hungary)
+@item http://cran.uk.r-project.org/
+(University of Bristol, UK)
+@item http://cran.us.r-project.org/
+(University of Wisconsin, USA)
+@item http://cran.mirror.aarnet.edu.au/
+(AARNet, Australia [accessible only from Australia and New Zealand])
+@item ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/
+University of Aizu, Japan
+@c @item ftp://dola.snu.ac.kr/pub/R/CRAN/
+@c Seoul, South Korea
+@item http://lib.stat.cmu.edu/R/CRAN/
+Statlib, Carnegie Mellon University, USA
+@end table
+@c  @multitable @columnfractions .40 .40
+@c  @item @uref{http://cran.at.r-project.org/}
+@c  @tab (TU Wien, Austria)
+@c  @item @uref{http://cran.au.r-project.org/}
+@c  @tab (PlanetMirror, Australia)
+@c  @item @uref{http://cran.ch.r-project.org/}
+@c  @tab (ETH Z@"urich, Switzerland)
+@c  @item @uref{http://cran.dk.r-project.org/}
+@c  @tab (SunSITE, Denmark)
+@c  @item @uref{http://cran.hu.r-project.org/}
+@c  @tab (Semmelweis University, Hungary)
+@c  @item @uref{http://cran.uk.r-project.org/}
+@c  @tab (University of Bristol, UK)
+@c  @item @uref{http://cran.us.r-project.org/}
+@c  @tab (University of Wisconsin, USA)
+@c  @item @uref{http://cran.mirror.aarnet.edu.au/}
+@c  @tab (AARNet, Australia [accessible only from Australia and New Zealand])
+@c  @item @uref{ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/}
+@c  @ifinfo
+@c  @tab @item
+@c  @end ifinfo
+@c  @tab University of Aizu, Japan
+@c  @item @uref{ftp://dola.snu.ac.kr/pub/R/CRAN/}
+@c  @tab Seoul, South Korea
+@c  @item @uref{http://lib.stat.cmu.edu/R/CRAN/}
+@c  @tab Statlib, Carnegie Mellon University, USA
+@c  @end multitable
 @end quotation
 
 Many of these sites can also be accessed using FTP.  In the interests of
