@@ -44,9 +44,6 @@ D <- function(expr, name) .Internal(D(expr, name))
 
 # Machine <- function().Internal(Machine())
 R.Version <- function().Internal(Version())
-colors <- function().Internal(colors())
-colours <- colors
-col2rgb <- function(col).Internal(col2rgb(col))
 commandArgs <- function() .Internal(commandArgs())
 
 args <- function(name).Internal(args(name))
@@ -90,8 +87,6 @@ gc <- function(verbose = getOption("verbose"))
 }
 gcinfo <- function(verbose).Internal(gcinfo(verbose))
 gctorture <- function(on=TRUE)invisible(.Internal(gctorture(on)))
-gray <- function(level).Internal(gray(level))
-grey <- gray
 
 is.unsorted <- function(x, na.rm = FALSE) {
     if(is.null(x)) return(FALSE)

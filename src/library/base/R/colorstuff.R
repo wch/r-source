@@ -1,6 +1,14 @@
+colors <- function() .Internal(colors())
+colours <- colors
+col2rgb <- function(col) .Internal(col2rgb(col))
+
+gray <- function(level) .Internal(gray(level))
+grey <- gray
+
 rgb <- function(red, green, blue, names=NULL, maxColorValue = 1)
 {
-    ## in the first case, (r,g,b) are (coerced to) integer, otherwise double.
+    ## in the first case, (r,g,b) are (coerced to) integer, otherwise
+    ## double.
     if(maxColorValue == 255)
         .Internal(rgb256(red, green, blue, names))
     else .Internal(rgb(red, green, blue, maxColorValue, names))
