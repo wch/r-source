@@ -12,8 +12,6 @@ vcov.lm <- function(object, ...)
     so$sigma^2 * so$cov.unscaled
 }
 
-vcov.coxph <- vcov.survreg <- function (object, ...) object$var
-
 vcov.gls <- function (object, ...) object$varBeta
 
 vcov.lme <- function (object, ...) object$varFix
