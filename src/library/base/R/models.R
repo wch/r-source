@@ -210,26 +210,24 @@ model.matrix.default <- function(formula, data, contrasts = NULL)
  .Internal(model.matrix(t, data))
 }
 
-model.response <- function(data, type="numeric")
+"model.response" <-
+function (data, type = "any") 
 {
-	if(attr(attr(data,"terms"), "response")) {
-		if(is.list(data) | is.data.frame(data)) {
-			v <- data[[1]]
-			if(type == "numeric" | type == "double") {
-				if(is.factor(v))
-					v <- codes(v) - 1
-				else
-					storage.mode(v) <- "double"
-			}
-			else stop("invalid response type")
-			if(is.matrix(v) && ncol(v) == 1)
-				dim(v) <- NULL
-			return(v)
-		}
-		else stop("invalid data argument")
-	}
-	else
-		return (NULL)
+        if (attr(attr(data, "terms"), "response")) {
+                if (is.list(data) | is.data.frame(data)) {
+                        v <- data[[1]]
+                        if (type == "numeric" | type == "double") {
+                                storage.mode(v) <- "double"
+                        }
+                        else if (type != "any") 
+                                stop("invalid response type")
+                        if (is.matrix(v) && ncol(v) == 1) 
+                                dim(v) <- NULL
+                        return(v)
+                }
+                else stop("invalid data argument")
+        }
+        else return(NULL)
 }
 
 model.extract <- function(frame, component)
@@ -257,4 +255,3 @@ is.empty.model<-function (x)
 	tt <- terms(x)
 	(length(attr(tt, "factors")) == 0) & (attr(tt, "intercept")==0)
 }
-
