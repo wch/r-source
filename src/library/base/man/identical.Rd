@@ -4,7 +4,7 @@
 \description{
   The safe and reliable way to test two objects for being
   \emph{exactly} equal.  It returns \code{TRUE} in this case,
-  \Code{FALSE} in every other case.
+  \code{FALSE} in every other case.
 }
 \usage{
 identical(x, y)
