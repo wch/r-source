@@ -23,8 +23,8 @@ rchisq(n, df, ncp=0)
   \item{p}{vector of probabilities.}
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
-  \item{df}{degrees of freedom.}
-  \item{ncp}{non-centrality parameter.  For \code{rnchisq}, \code{ncp=0}
+  \item{df}{degrees of freedom (positive, but can be non-integer).}
+  \item{ncp}{non-centrality parameter.  For \code{rchisq}, \code{ncp=0}
     is the only possible value.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
