@@ -269,10 +269,10 @@ test-Ts:
 test-DocFiles:
 	@echo "checking Rd usage sections"
 	@for p in $(R_PKGS_BASE); do \
-	  out="package"; \
-	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
-	  out=`echo "checkDocFiles(package = \"$${p}\")" | \
-	       R_DEFAULT_PACKAGES=tools $(R) -q | sed '/^>/d'`; \
+	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`(echo "library(\"tools\")"; \
+	         echo "checkDocFiles(package = \"$${p}\")") | \
+	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "$(ECHO_T) WARNING"; \
 	    echo; \
@@ -285,10 +285,10 @@ test-DocFiles:
 test-DocStyle:
 	@echo "checking S3 method documentation style"
 	@for p in $(R_PKGS_BASE); do \
-	  out="package"; \
-	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
-	  out=`echo "checkDocStyle(package = \"$${p}\")" | \
-	       R_DEFAULT_PACKAGES=tools $(R) -q | sed '/^>/d'`; \
+	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`(echo "library(\"tools\")"; \
+	         echo "checkDocStyle(package = \"$${p}\")") | \
+	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "$(ECHO_T) WARNING"; \
 	    echo; \
@@ -301,10 +301,10 @@ test-DocStyle:
 test-FF:
 	@echo "checking foreign function calls"
 	@for p in $(R_PKGS_BASE); do \
-	  out="package"; \
-	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
-	  out=`echo "checkFF(package = \"$${p}\")" | \
-	       R_DEFAULT_PACKAGES=tools $(R) -q | sed '/^>/d'`; \
+	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`(echo "library(\"tools\")"; \
+	         echo "checkFF(package = \"$${p}\")") | \
+	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "$(ECHO_T) WARNING"; \
 	    echo "$${out}"; \
@@ -315,10 +315,10 @@ test-FF:
 test-S3methods:
 	@echo "checking for S3 generic/method consistency"
 	@for p in $(R_PKGS_BASE); do \
-	  out="package"; \
-	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
-	  out=`echo "checkS3methods(package = \"$${p}\")" | \
-	       R_DEFAULT_PACKAGES=tools $(R) -q | sed '/^>/d'`; \
+	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`(echo "library(\"tools\")"; \
+	         echo "checkS3methods(package = \"$${p}\")") | \
+	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "$(ECHO_T) WARNING"; \
 	    echo; \
@@ -331,10 +331,10 @@ test-S3methods:
 test-codoc:
 	@echo "checking for code/documentation mismatches in functions"
 	@for p in $(R_PKGS_BASE); do \
-	  out="package"; \
-	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
-	  out=`echo "codoc(package = \"$${p}\")" | \
-	       R_DEFAULT_PACKAGES=tools $(R) -q | sed '/^>/d'`; \
+	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`(echo "library(\"tools\")"; \
+	         echo "codoc(package = \"$${p}\")") | \
+	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "$(ECHO_T) WARNING"; \
 	    echo; \
@@ -347,10 +347,10 @@ test-codoc:
 test-undoc:
 	@echo "checking for missing documentation entries"
 	@for p in $(R_PKGS_BASE); do \
-	  out="package"; \
-	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
-	  out=`echo "undoc(package = \"$${p}\")" | \
-	       R_DEFAULT_PACKAGES=tools $(R) -q | sed '/^>/d'`; \
+	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`(echo "library(\"tools\")"; \
+	         echo "undoc(package = \"$${p}\")") | \
+	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "$(ECHO_T) WARNING"; \
 	    echo "$${out}"; \
