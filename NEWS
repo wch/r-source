@@ -349,6 +349,8 @@ BUG FIXES
 
     o	lsfit() was returning incorrect residuals for 0-rank fits.
 
+    o	sort() and unique.default() were failing on 0-level factors.
+
 
 
 

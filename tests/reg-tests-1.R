@@ -2230,6 +2230,20 @@ stopifnot(fit$residuals == 1:10)
 ## zero residuals in 1.7.1.
 
 
+## interval calculations on predict.lm
+x <- 1:10
+y <- rnorm(10)
+predict(lm(y ~ x), type="terms", interval="confidence")
+##
+
+
+## 0-level factors
+f <- factor(numeric(0))
+sort(f)
+unique(f)
+## both failed in 1.7.1
+
+
 ## body() and formals() looked in different places
 bar <- function(x=NULL)
 {
@@ -2355,6 +2369,7 @@ x <- list(a=1:3, b=2:4)
 try(x[[c("c", "d")]])
 try(x[[c("c", "d")]] <- NA)
 ## both segfaulted in 1.7.1
+
 
 
 ## keep at end, as package `methods' has had persistent side effects

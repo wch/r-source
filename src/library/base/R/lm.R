@@ -636,7 +636,7 @@ predict.lm <-
 	predictor <- matrix(ncol = nterms, nrow = NROW(X))
 	dimnames(predictor) <- list(rownames(X), names(asgn))
 
-	if (se.fit||interval != "none") {
+	if (se.fit || interval != "none") {
 	    ip <- matrix(ncol = nterms, nrow = NROW(X))
 	    dimnames(ip) <- list(rownames(X), names(asgn))
 	    Rinv <- qr.solve(qr.R(object$qr)[p1, p1])
@@ -688,7 +688,7 @@ predict.lm <-
 	    upr <- predictor - hwid
 	}
     }
-    if(se.fit) se <- sqrt(ip)
+    if(se.fit || interval != "none") se <- sqrt(ip)
     if(missing(newdata) && !is.null(na.act <- object$na.action)) {
 	predictor <- napredict(na.act, predictor)
 	if(se.fit) se <- napredict(na.act, se)
