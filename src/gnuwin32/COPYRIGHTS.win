@@ -61,10 +61,6 @@ Based on files which are
 	Copyright 1994-1999 The Downhill Project
 	http://www.ede.com/free/u2nt
 
-src/gnuwin32/front-ends/rprx.c
-
-	Copyright (C) 1999 Thomas Baier
-
 src/gnuwin32/front-ends/SC_proxy.h, bdx.[ch], rp*.[ch]
 
 	Copyright (C) 1999 Thomas Baier
