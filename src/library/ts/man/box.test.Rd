@@ -2,7 +2,7 @@
 \alias{Box.test}
 \title{Box-Pierce and Ljung-Box Tests}
 \description{
-  Compute the Box-Pierce or Ljung-Box test statistic for examining the
+  Compute the Box--Pierce or Ljung--Box test statistic for examining the
   null hypothesis of independence in a given time series.
 }
 \usage{
