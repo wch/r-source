@@ -6,13 +6,20 @@ See the file NEWS for changes that affect all versions of R.
 rw1022
 ======
 
-The long-running saga of importing metafiles into Word is over; lines
-are now visible in screen previews in Word.  It was necessary to use
-`geometric' rather than `cosmetic' pens to achieve scalable line
+The long-running saga of importing R metafiles into Word is over;
+lines are now visible in screen previews in Word.  It was necessary to
+use `geometric' rather than `cosmetic' pens to achieve scalable line
 widths in metafiles: Word was failing to show lines drawn with
 `cosmetic' pens.
 
 bringToTop() now works with MDI child windows as well as SDI windows.
+
+Rcmd build/check use a different check for a directory, to work around
+a bug in (some versions of) Windows Perl.
+
+The datetime code has been modified to workaround a problem reported
+on Win98SE machines which caused times to be reported in GMT.
+(This is clearly a Windows bug and few machines seemed affected.)
 
 
 rw1021

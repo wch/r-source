@@ -353,12 +353,7 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     tz = CHAR(STRING_ELT(stz, 0));
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) {
-#ifdef WIN32
-	tzset();
-	strcpy(oldtz, _daylight ? _tzname[1] : _tzname[0]);
-#else
 	strcpy(oldtz, "");
-#endif
 	p = getenv("TZ");
 	if(p) strcpy(oldtz, p);
 #ifdef HAVE_PUTENV
@@ -400,15 +395,20 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(class = allocVector(STRSXP, 1));
     SET_STRING_ELT(class, 0, mkChar("POSIXlt"));
     classgets(ans, class);
-    PROTECT(tzone = allocVector(STRSXP, 3));
-    SET_STRING_ELT(tzone, 0, mkChar(tz));
-    SET_STRING_ELT(tzone, 1, mkChar(tzname[0]));
-    SET_STRING_ELT(tzone, 2, mkChar(tzname[1]));
+    if (isgmt) {
+	PROTECT(tzone = allocVector(STRSXP, 1));
+	SET_STRING_ELT(tzone, 0, mkChar(tz));
+    } else {
+	PROTECT(tzone = allocVector(STRSXP, 3));
+	SET_STRING_ELT(tzone, 0, mkChar(tz));
+	SET_STRING_ELT(tzone, 1, mkChar(tzname[0]));
+	SET_STRING_ELT(tzone, 2, mkChar(tzname[1]));
+    }
     setAttrib(ans, install("tzone"), tzone);
     UNPROTECT(5);
 
-    /* reset timezone */
     if(settz) {
+    /* reset timezone */
 	if(strlen(oldtz)) {
 #ifdef HAVE_PUTENV
 	    strcpy(buff, "TZ="); strcat(buff, oldtz);
@@ -449,12 +449,7 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     tz = CHAR(STRING_ELT(stz, 0));
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(strlen(tz) > 0) {
-#ifdef WIN32
-	tzset();
-	strcpy(oldtz, _daylight ? _tzname[1] : _tzname[0]);
-#else
 	strcpy(oldtz, "");
-#endif
 	if((p = getenv("TZ"))) strcpy(oldtz, p);
 #ifdef HAVE_PUTENV
 	strcpy(buff, "TZ="); strcat(buff, tz);
@@ -503,8 +498,8 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	else REAL(ans)[i] = mktime0(&tm);
     }
 
-    /* reset timezone */
     if(settz) {
+    /* reset timezone */
 	if(strlen(oldtz)) {
 #ifdef HAVE_PUTENV
 	    strcpy(buff, "TZ="); strcat(buff, oldtz);
