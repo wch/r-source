@@ -3,11 +3,9 @@
 
 AIC <- function(object, ..., k = 2) UseMethod("AIC")
 
-
 ## AIC for logLik objects
 AIC.logLik <- function(object, k = 2)
     -2 * c(object) + k * attr(object, "df")
-
 
 ## AIC for various fitted objects
 AIC.lm <- function(object, ..., k = 2)

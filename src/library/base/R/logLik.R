@@ -2,9 +2,9 @@
 logLik <- function(object, ...) UseMethod("logLik")
 
 ## from package:nlme 
-logLik.lm <- 
-  ## log-likelihood for lm objects
-  function(object, REML = FALSE)
+
+## log-likelihood for lm objects
+logLik.lm <- function(object, REML = FALSE)
 {
     res <- resid(object)
     p <- object$rank
