@@ -21,15 +21,19 @@ x[[i, j, \dots]]
 x$name
 }
 \arguments{
-  \item{x}{object from which to extract elements or in which to replace
-    elements.}
-  \item{i, j, \dots, name}{elements to extract or replace. \code{i, j} are
+  \item{x}{
+    object from which to extract elements or in which to replace elements.
+  }
+  \item{i, j, \dots, name}{
+    elements to extract or replace. \code{i, j} are
     \code{numeric} or \code{character} or empty whereas \code{name} must be
     character or an (unquoted) name.  Numeric values are coerced to
-    integer as by \code{\link{as.integer}}.
+    integer as by \code{\link{as.integer}}.  Character strings are
+    partially matched to the (dim)names of the object if exact matching
+    does not succeed.
     
     For \code{[}-indexing only: \code{i, j, \dots} can be
-    logical vectors, indicating elements/slices to select. Such vectors
+    logical vectors, indicating elements/slices to select.  Such vectors
     are recycled if necessary to match the corresponding extent.  When
     indexing arrays, \code{i} can be a (single) matrix with as many
     columns as there are dimensions of \code{x}; the result is then a
