@@ -3,9 +3,9 @@
 \usage{
 symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
           symbols=c(" ", ".", ",", "+", "*", "B"), na="?", eps=1e-5,
-       corr = TRUE, show.max = if(corr)"1", show.min = NULL,
-       lower.triangular = corr & is.matrix(x))
-
+       corr = missing(cutpoints), show.max = if(corr) "1", show.min = NULL,
+       lower.triangular = corr & is.matrix(x),
+       diag.lower.tri = corr & !is.null(show.max))
 }
 \alias{symnum}
 \arguments{
@@ -29,6 +29,8 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
   \item{lower.triangular}{logical. If \code{TRUE} and \code{x} is a
     matrix, only the \emph{lower triangular} part of the matrix is coded
     as non-blank.}
+  \item{diag.lower.tri}{logical. If \code{lower.triangular} \emph{and}
+    this are \code{TRUE}, the \emph{diagonal} part of the matrix is shown.}
 }
 \value{
   An atomic character object of class \code{\link{noquote}} and the same
@@ -43,14 +45,17 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch}}
 \seealso{\code{\link{as.character}}}
 \examples{
-symnum(1:7, cut= 2*(0:4), sym = c(".", "-", "+", "$"), corr=F)
-symnum(0:8, cut= 2*(0:4), sym = c(".", "-", "+", "$"), corr=F, show.max=T)
+ii _ 0:8; names(ii) _ ii
+symnum(ii, cut= 2*(0:4), sym = c(".", "-", "+", "$"))
+symnum(ii, cut= 2*(0:4), sym = c(".", "-", "+", "$"), show.max=T)
 
 ##-- Symbolic correlation matrices:
 symnum(cor(rbind(1, rnorm(25), rnorm(25)^2)))
 symnum(cor(matrix(rexp(30, 1), 5, 18))) # <<-- PATTERN ! --
-symnum(cor(matrix(rnorm(90) ,  5, 18))) # < White Noise SMALL n
-symnum(cor(matrix(rnorm(900), 50, 18))) # < White Noise "BIG" n
+symnum(cm1 <- cor(matrix(rnorm(90) ,  5, 18))) # < White Noise SMALL n
+symnum(cm1, diag=F)
+symnum(cm2 <- cor(matrix(rnorm(900), 50, 18))) # < White Noise "BIG" n
+symnum(cm2, lower=F)
 
 ## NA's:
 Cm <- cor(matrix(rnorm(60),  10, 6)); Cm[c(3,6), 2] <- NA

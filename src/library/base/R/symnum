@@ -1,12 +1,15 @@
 symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 		   symbols =	 c(" ", ".", ",", "+", "*", "B"),
 		   na = "?", eps = 1e-5,
-		   corr = TRUE, show.max = if(corr) "1", show.min = NULL,
-		   lower.triangular = corr & is.matrix(x))
+		   corr = missing(cutpoints),
+		   show.max = if(corr) "1", show.min = NULL,
+		   lower.triangular = corr & is.matrix(x),
+		   diag.lower.tri = corr & !is.null(show.max))
 {
-  ## Martin Maechler, 21 Jan 94;  Dedicated to  Benjamin Schaad,  born that day
+  ## Martin Maechler, 21 Jan 94;  Dedicated to	Benjamin Schaad,  born that day
 
   ##--------------- Argument checking -----------------------------
+  eval(corr)
   cutpoints <- sort(cutpoints)
   if(corr) cutpoints <- c(0, cutpoints, 1)
   if(any(duplicated(cutpoints)) ||
@@ -50,12 +53,12 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
     Scor[!nax] <- symbols[iS[!nax]]
   } else Scor <- symbols[iS]
 
-  if(lower.triangular && is.matrix(x))
-    Scor[!lower.tri(x)] <- ""
   if(!is.null(show.max)) Scor[x >= maxc - eps] <-
     if(is.character(show.max)) show.max else format(maxc, dig=1)
   if(!is.null(show.min)) Scor[x <= minc + eps] <-
     if(is.character(show.min)) show.min else format(minc, dig=1)
+  if(lower.triangular && is.matrix(x))
+    Scor[!lower.tri(x, diag = diag.lower.tri)] <- ""
   attributes(Scor) <- attributes(x)
   if(is.array(Scor)){
     coln <- if(is.null(dimnames(Scor))) {
