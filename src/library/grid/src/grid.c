@@ -671,6 +671,7 @@ SEXP L_unsetviewport(SEXP n)
      */
     {
 	SEXP fcall, false, t;
+	PROTECT(gvp); PROTECT(newvp);
 	PROTECT(false = allocVector(LGLSXP, 1));
 	LOGICAL(false)[0] = FALSE;
 	PROTECT(fcall = lang4(install("remove"), 
@@ -683,7 +684,7 @@ SEXP L_unsetviewport(SEXP n)
 	t = CDR(t);
 	SET_TAG(t, install("inherits")); 
 	eval(fcall, R_gridEvalEnv); 
-	UNPROTECT(2);
+	UNPROTECT(4);
     }
     /* Get the current device size 
      */
