@@ -95,7 +95,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
         res <- .Call("La_svd", jobu, jobv, x, double(min(n,p)), u, v,
                      method, PACKAGE = "base")
         res <- res[c("d", if(nu) "u", if(nv) "vt")]
-        if(nu) res$u <- res$u[, 1:min(n, nu)]
+        if(nu) res$u <- res$u[, 1:min(n, nu), drop = FALSE]
         return(res)
     }
 
