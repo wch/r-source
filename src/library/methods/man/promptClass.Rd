@@ -7,7 +7,7 @@ assembles all relevant slot and method information for a class,
 with minimal markup for Rd processing; no QA facilities at present
 }
 \usage{
-promptClass(clName, filename, where)
+promptClass(clName, filename, type = "class", where)
 }
 %- maybe also `usage' for other objects documented here.
 \arguments{
@@ -16,6 +16,7 @@ promptClass(clName, filename, where)
     shell should be written.  By
       default it is the topic name for the class documentation,
       followed by ".Rd". See the example below.  The argument can also be any writable \link{connection}.}
+  \item{type}{The documentation type to be declared in the output file.}
     \item{where}{
       where to look for the definition of the class and of methods that
       use it.  By default, the function searches for the class

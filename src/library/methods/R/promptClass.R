@@ -1,5 +1,5 @@
 "promptClass" <-
-function (clName, filename = paste(topicName("class", clName), ".Rd", sep = ""),
+function (clName, filename = paste(topicName(type, clName), ".Rd", sep = ""), type = "class",
           where = find(classMetaName(clName)))
 {
     classesInSig <- function(g, where) {
@@ -102,6 +102,7 @@ function (clName, filename = paste(topicName("class", clName), ".Rd", sep = ""),
     fullName <- topicName("class", clName)
     clDef <- getClass(clName)
     .name <- paste0("\\name{", fullName, "}")
+    .type <- paste0("\\docType{", type, "}")
     .alias <- paste0("\\alias{", fullName, "}")
     .title <- paste0("\\title{Class ", clName, ", ~~class for ... ~~ }")
     .desc <- paste0("\\description{", "  ~~ A concise (1-5 lines) description of what the class is  ~~",
@@ -148,7 +149,7 @@ function (clName, filename = paste(topicName("class", clName), ".Rd", sep = ""),
     if (nmeths > 0) {
         .meths.body <- "  \\describe{"
         for (i in 1:nmeths) {
-            .sigmat <- sigsList(methnms[i], 1)
+            .sigmat <- sigsList(methnms[i], where)
             for (j in seq(along = .sigmat)) {
                 if (!all(is.na(match(.sigmat[[j]],clName))))
                 .meths.body <- c(.meths.body, paste0("    \\item{",
@@ -164,7 +165,7 @@ function (clName, filename = paste(topicName("class", clName), ".Rd", sep = ""),
     }
     .meths.tail <- "}"
     .keywords <- "\\keyword{methods}"
-    cat(.name,  .alias,  .title,  "\\non_function", .desc,
+    cat(.name, .type, .alias,  .title, .desc,
         .usage.head,  .usage.body,  .usage.tail,
         .slots,  .extends,
         .meths.head,  .meths.body,  .meths.tail,

@@ -461,14 +461,14 @@ promptMethods <-
   ## `filename' can be a logical or the name of a file to print to.  If `file' is `FALSE',
   ## the methods skeleton is returned, to be included in other printing (typically,
   ## the output from `prompt'.
-  function(f, filename = TRUE, addTo = FALSE, inherited = FALSE) {
+  function(f, filename = TRUE, addTo = FALSE, inherited = FALSE, type = "methods") {
       paste0 <- function(...)paste(..., sep="")
       object <- linearizeMlist(getMethods(f), inherited)
       methods <- object@methods; n <- length(methods)
       args <- object@arguments
       signatures <- object@classes
       labels <- character(n)
-      fullName <- topicName("methods", f)
+      fullName <- topicName(type, f)
       for(i in seq(length = n))
           labels[[i]] <- paste(args[[i]], signatures[[i]], collapse = ", ", sep = " = ")
       text <- paste0("\\item{", labels, "}{ ~~describe this method here }")
@@ -483,8 +483,8 @@ promptMethods <-
           beginText <- addTo
       }
       else {
-          beginText <-  c(paste0("\\name{", fullName, "}"), "\\non_function{}",
-                paste0("\\title{ ~~ Methods for", f, " ~~}"))
+          beginText <-  c(paste0("\\name{", fullName, "}"), paste0("\\docType{", type, "}"),
+                paste0("\\title{ ~~ Methods for Function ", f, " ~~}"))
       }
       if(identical(filename, TRUE))
           filename <- paste0(fullName, ".Rd")

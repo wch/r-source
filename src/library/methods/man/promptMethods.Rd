@@ -7,7 +7,7 @@
   function, with
 }
 \usage{
-promptMethods(f, filename, inherited=FALSE)
+promptMethods(f, filename, inherited=FALSE, type = "methods")
 }
 \arguments{
   \item{f}{ The name of the generic function whose methods are to be documented.  }
@@ -19,7 +19,9 @@ promptMethods(f, filename, inherited=FALSE)
     topic name for these methods (currently \code{"methods_NAME.Rd"},
     where \code{NAMAE} is the function name, argument \code{f}).
   }
-  \item{inherited}{ Should inherited methods be included?  Default \code{FALSE}. }
+  \item{inherited}{ Should inherited methods be included?  Default
+    \code{FALSE}. }
+  \item{type}{The documentation type to be declared in the output file.}
 }
 \value{
   If \code{filename} is \code{FALSE}, the text generated; otherwise, the
