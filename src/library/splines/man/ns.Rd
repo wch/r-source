@@ -1,5 +1,6 @@
 \name{ns}
 \alias{ns}
+\alias{makepredictcall.ns}
 \title{Generate a Basis Matrix for Natural Cubic Splines}
 \description{
   Generate the B-spline basis matrix for a natural cubic spline.
@@ -50,11 +51,16 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
 \seealso{
   \code{\link{bs}},
   \code{\link{poly}},
-  \code{\link{predict.ns}}
+  \code{\link{predict.ns}}, \code{\link{SafePrediction}}
 }
 \examples{
 data(women)
 ns(women$height, df = 5)
 summary(fm1 <- lm(weight ~ ns(height, df = 5), data = women))
+
+## example of safe prediction
+plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
+ht <- seq(57, 73, len = 200)
+lines(ht, predict(fm1, data.frame(height=ht)))
 }
 \keyword{smooth}

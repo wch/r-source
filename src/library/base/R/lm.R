@@ -5,7 +5,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 {
     ret.x <- x
     ret.y <- y
-    mt <- terms(formula, data = data)
+#    mt <- terms(formula, data = data)
     cl <- match.call()
     mf <- match.call(expand.dots = FALSE)
     mf$singular.ok <- mf$model <- mf$method <- NULL

@@ -50,7 +50,8 @@
   offset term in the formula will be.
 }
 \seealso{
-  The model fitting function \code{\link{lm}}, \code{\link{predict}}.
+  The model fitting function \code{\link{lm}}, \code{\link{predict}},
+  \code{\link{SafePrediction}}
 }
 \examples{
 ## Predictions

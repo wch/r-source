@@ -33,5 +33,16 @@ opar <- par(mfrow = c(2, 2), oma = c(0, 0, 1.1, 0),
             mar = c(4.1, 4.1, 2.1, 1.1))
 plot(fm1)
 par(opar)
+
+## An example of polynomial regression
+plot(cars, xlab = "Speed (mph)", ylab = "Stopping distance (ft)",
+    las = 1, xlim = c(0, 25))
+d <- seq(0, 25, len = 200)
+for(degree in 1:4) {
+  fm <- lm(dist ~ poly(speed, degree), data = cars)
+  assign(paste("cars", degree, sep="."), fm)
+  lines(d, predict(fm, data.frame(speed=d)), col = degree)
+}
+anova(cars.1, cars.2, cars.3, cars.4)
 }
 \keyword{datasets}

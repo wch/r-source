@@ -1,5 +1,6 @@
 \name{bs}
 \alias{bs}
+\alias{makepredictcall.bs}
 \title{Generate a Basis for Polynomial Splines}
 \description{
   Generate the B-spline basis matrix for a polynomial spline.
@@ -48,11 +49,16 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
 }
 \seealso{
   \code{\link{ns}}, \code{\link{poly}}, \code{\link[modreg]{smooth.spline}},
-  \code{\link{predict.bs}}.
+  \code{\link{predict.bs}}, \code{\link{SafePrediction}}
 }
 \examples{
 data(women)
 bs(women$height, df = 5)
 summary(fm1 <- lm(weight ~ bs(height, df = 5), data = women))
+
+## example of safe prediction
+plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
+ht <- seq(57, 73, len = 200)
+lines(ht, predict(fm1, data.frame(height=ht)))
 }
 \keyword{smooth}

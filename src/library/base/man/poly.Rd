@@ -1,9 +1,11 @@
 \name{poly}
+\alias{poly}
+\alias{predict.poly}
+\alias{makepredictcall.poly}
 \title{Compute Orthogonal Polynomials}
 \usage{
 poly(x, degree=1, coefs = NULL)
 }
-\alias{poly}
 \description{
   Returns of evaluates orthogonal polynomials of degree 1 to
   \code{degree} over the specified set of points \code{x}. These are all
@@ -21,7 +23,7 @@ poly(x, degree=1, coefs = NULL)
   centring and normalization constants used in constructing the
   orthogonal polynomials.
 
-  The matrix is given class \code{"poly"} as from \R 1.5.0.
+  The matrix is given class \code{c("poly", "matrix")} as from \R 1.5.0.
 }
 \author{B.D. Ripley}
 

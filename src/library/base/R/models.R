@@ -383,26 +383,3 @@ is.empty.model <- function (x)
 makepredictcall <- function(var, call) UseMethod("makepredictcall")
 
 makepredictcall.default  <- function(var, call) call
-
-makepredictcall.ns <- function(var, call)
-{
-    at <- attributes(var)[c("knots", "Boundary.knots", "intercept")]
-    xxx <- call[1:2]
-    xxx[names(at)] <- at
-    xxx
-}
-
-makepredictcall.bs <- function(var, call)
-{
-    at <- attributes(var)[c("degree", "knots", "Boundary.knots",
-                            "intercept")]
-    xxx <- call[1:2]
-    xxx[names(at)] <- at
-    xxx
-}
-
-makepredictcall.poly  <- function(var, call)
-{
-    call$coefs <- attr(var, "cf")
-    call
-}

@@ -1,4 +1,4 @@
-### $Id: splines.R,v 1.3 2000/08/06 03:30:52 bates Exp $
+### $Id: splines.R,v 1.4 2002/01/19 11:13:00 ripley Exp $
 
 bs <-
     function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
@@ -152,6 +152,26 @@ predict.ns <-
                 c("knots", "Boundary.knots", "intercept")])
     do.call("ns", a)
 }
+
+makepredictcall.ns <- function(var, call)
+{
+    if(as.character(call)[1] != "ns") return(call)
+    at <- attributes(var)[c("knots", "Boundary.knots", "intercept")]
+    xxx <- call[1:2]
+    xxx[names(at)] <- at
+    xxx
+}
+
+makepredictcall.bs <- function(var, call)
+{
+    if(as.character(call)[1] != "bs") return(call)
+    at <- attributes(var)[c("degree", "knots", "Boundary.knots",
+                            "intercept")]
+    xxx <- call[1:2]
+    xxx[names(at)] <- at
+    xxx
+}
+
 
 spline.des <- function(knots, x, ord = 4, derivs = integer(length(x)))
 {

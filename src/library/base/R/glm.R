@@ -19,7 +19,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
     }
 
     ## extract x, y, etc from the model formula and frame
-    mt <- terms(formula, data=data)
+#    mt <- terms(formula, data=data)
     if(missing(data)) data <- environment(formula)
     mf <- match.call(expand.dots = FALSE)
     mf$family <- mf$start <- mf$control <- mf$maxit <- NULL

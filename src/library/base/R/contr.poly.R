@@ -70,3 +70,16 @@ poly <- function(x, degree = 1, coefs = NULL)
     }
 }
 
+predict.poly <- function(object, newdata, ...)
+{
+    if(missing(newdata)) return(object)
+    poly(newdata, degree = max(attr(object, "degree")),
+         coefs = attr(object, "cf"))
+}
+
+makepredictcall.poly  <- function(var, call)
+{
+    if(as.character(call)[1] != "poly") return(call)
+    call$coefs <- attr(var, "cf")
+    call
+}
