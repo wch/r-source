@@ -7,12 +7,12 @@
   Tukey's smoothers, \emph{3RS3R}, \emph{3RSS}, \emph{3R}, etc.
 }
 \usage{
-smooth(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"), 
+smooth(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
        twiceit = FALSE,
        endrule = "Tukey", do.ends = FALSE)
 
-  print(smoothobj, \dots)
-summary(smoothobj, \dots)
+  \method{print}{tukeysmooth}(x, \dots)
+\method{summary}{tukeysmooth}(object, \dots)
 }
 \arguments{
   \item{x}{a vector or time series}
@@ -36,12 +36,12 @@ summary(smoothobj, \dots)
   convergence, and
   \cr
   \emph{\code{S}} for \bold{S}plitting of horizontal stretches of length 2 or 3.
-  
+
   Hence, \emph{\code{3RS3R}} is a concatenation of \code{3R}, \code{S}
   and \code{3R}, \emph{\code{3RSS}} similarly,
-  whereas \emph{\code{3RSR}} means first \code{3R} 
+  whereas \emph{\code{3RSR}} means first \code{3R}
   and then \code{(S and 3)} \bold{R}epeated until convergence -- which
-  can be bad. 
+  can be bad.
 }
 \value{
   An object of class \code{"tukeysmooth"} (which has \code{print} and
@@ -50,7 +50,7 @@ summary(smoothobj, \dots)
 }
 \note{
   S and S-PLUS use a different (somewhat better) Tukey smoother in
-  \code{smooth(*)}. 
+  \code{smooth(*)}.
   Note that there are other smoothing methods which provide
   rather better results.  These were designed for hand calculations
   and may be used mainly for didactical purposes.
@@ -81,8 +81,8 @@ x1 <- c(4, 1, 3, 6, 6, 4, 1, 6, 2, 4, 2) # very artificial
 smooth(x3R, kind = "S")
 
 sm.3RS <- function(x, ...)
-   smooth(smooth(x, "3R", ...), "S", ...)  
-  
+   smooth(smooth(x, "3R", ...), "S", ...)
+
 y <- c(1,1, 19:1)
 plot(y, main = "misbehaviour of \"3RSR\"", col.main = 3)
 lines(sm.3RS(y))
@@ -92,15 +92,15 @@ lines(smooth(y, "3RSR"), col = 3, lwd = 2)# the horror
 x <- c(8:10,10, 0,0, 9,9)
 plot(x, main = "breakdown of  3R  and  S  and hence  3RSS")
 matlines(cbind(smooth(x,"3R"),smooth(x,"S"), smooth(x,"3RSS"),smooth(x)))
-   
+
 data(presidents)
 presidents[is.na(presidents)] <- 0 # silly
 summary(sm3 <- smooth(presidents, "3R"))
 summary(sm2 <- smooth(presidents,"3RSS"))
 summary(sm  <- smooth(presidents))
 
-all.equal(c(sm2),c(smooth(smooth(sm3, "S"), "S"))) # 3RSS  === 3R S S 
-all.equal(c(sm), c(smooth(smooth(sm3, "S"), "3R")))# 3RS3R === 3R S 3R  
+all.equal(c(sm2),c(smooth(smooth(sm3, "S"), "S"))) # 3RSS  === 3R S S
+all.equal(c(sm), c(smooth(smooth(sm3, "S"), "3R")))# 3RS3R === 3R S 3R
 
 plot(presidents, main = "smooth(presidents0, *) :  3R and default 3RS3R")
 lines(sm3,col = 3, lwd = 1.5)
