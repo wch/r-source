@@ -82,7 +82,7 @@ start.ts <- function(x)
     ts.eps <- .Options$ts.eps
     tsp <- attr(as.ts(x), "tsp")
     is <- tsp[1]*tsp[3]
-    if(abs(is-round(is)) < ts.eps) {
+    if(tsp[3] > 1 && abs(is-round(is)) < ts.eps) {
 	is <- floor(tsp[1])
 	fs <- floor(tsp[3]*(tsp[1] - is)+0.001)
 	c(is, fs+1)
@@ -95,7 +95,7 @@ end.ts <- function(x)
     ts.eps <- .Options$ts.eps
     tsp <- attr(as.ts(x), "tsp")
     is <- tsp[2]*tsp[3]
-    if(abs(is-round(is)) < ts.eps) {
+    if(tsp[3] > 1 && abs(is-round(is)) < ts.eps) {
 	is <- floor(tsp[2])
 	fs <- floor(tsp[3]*(tsp[2] - is)+0.001)
 	c(is, fs+1)
@@ -147,7 +147,7 @@ print.ts <- function (x, calendar, ...)
         attr(x, "tsp") <- NULL
         attr(x, "class") <- NULL
     }
-    print(x, quote=F)
+    print(drop(x), quote=F)
     invisible(x.orig)
 }
 

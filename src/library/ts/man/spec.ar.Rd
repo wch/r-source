@@ -20,10 +20,24 @@ spec.ar(x, n.freq, order=NULL, plot=TRUE, na.action, ...)
 }
 \value{
     An object of class \code{\link{spec}}.
-  }
+}
+\references{
+    Thompson, D.J. (1990) Time series analysis of Holocene climate data.
+    \emph{Phil. Trans. Roy. Soc. A} \bold{330}, 601-616.
+
+    Venables, W.N. and Ripley, B.D. (1997) \emph{Modern Applied
+	Statistics with S-PLUS.} Second edition. Springer. (Especially
+        p. 448.)
+    }
+\section{Warning}{Some authors, for example Thomson (1990) warn strongly
+    that AR spectra can be misleading.}
+
 \author{B.D. Ripley}
+
 \seealso{\code{\link{ar}}, \code{\link{spectrum}}.}
+
 \note{The multivariate case is not yet implemented.}
+
 \examples{
 data(lh)
 spec.ar(lh)

@@ -39,9 +39,9 @@ The generic function \code{plot} has a method for \code{spec} objects.
 \value{
   An object of class \code{spec}, which is a list containing at
   least the following elements:
-  \item{freq}{vector of fourier frequencies at which the spectral
-     density is estimated.}
-  \item{spec}{Vector (for univarite series) or matrix (for multivariate
+  \item{freq}{vector of frequencies at which the spectral
+     density is estimated. (Possibly approximate Fourier frequencies.)}
+  \item{spec}{Vector (for univariate series) or matrix (for multivariate
      series) of estimates of the spectral density at frequencies
      corresponding to \code{freq}.}
   \item{coh}{\code{NULL} for univariate series. For multivariate time
@@ -56,12 +56,29 @@ The generic function \code{plot} has a method for \code{spec} objects.
   \item{method}{The method used to calculate the spectrum.}
 
 }
+\details{
+    The spectrum here is defined with divisor 2*\pi*frequency(x),
+    following S-PLUS. This makes the spectral density a density over the
+    range \code{(-frequency(x)/2, +frequency(x)/2]}, whereas a more
+    common scaling is 2*\pi and range (-0.5, 0.5]
+    (e.g. Bloomfield) or 1 and range (-\pi, \pi]. 
+}
 \note{
 The default plot for \code{spec} objects is quite complex, including an
 error bar and default title, subtitle and axis labels. The defaults can
 all be overridden by supplying the appropriate graphical parameters.
 }
-%\references{ ~put references to the literature/web site here ~ }
+\references{
+    Bloomfield, P. (1976) \emph{Fourier Analysis of Time Series: An
+	Introduction.} Wiley.
+
+    Brockwell, P.J. and Davis, R.A. (1991) \emph{Time Series: Theory and
+	Methods.} Second edition. Springer.
+
+    Venables, W.N. and Ripley, B.D. (1997) \emph{Modern Applied
+	Statistics with S-PLUS.} Second edition. Springer. (Especially
+        pp. 437-442.)
+}
 \author{Martyn Plummer, B.D. Ripley}
 \seealso{\code{\link{spec.pgram}}}
 

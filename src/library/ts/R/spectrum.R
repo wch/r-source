@@ -137,8 +137,7 @@ spec.pgram <-
     m <- floor(length(filter)/2)
     bandwidth <- sqrt(sum((1/12 + (0:(2 * m) - m)^2) * filter)) * xfreq/nrow(x)
     spec <- matrix(NA, nrow = Nspec, ncol = nser)
-    ## correct for tapering
-    for (i in 1:nser) spec[, i] <- Re(pgram[1:Nspec, i, i])/u2
+    for (i in 1:nser) spec[, i] <- Re(pgram[1:Nspec, i, i])
     if (nser == 1) {
         coh <- phase <- NULL
         spec <- drop(spec)
@@ -147,14 +146,13 @@ spec.pgram <-
         for (i in 1:(nser - 1)) {
             for (j in (i + 1):nser) {
                 coh[, i + (j - 1) * (j - 2)/2] <-
-                    Mod(pgram[1:Nspec, i, j])^2/(spec[, i] * spec[j])
-                ph <- Arg(pgram[1:Nspec, i, j])
-                dph <- diff(ph)
-                ph <- c(0, sign(dph) * (abs(dph)%%pi)) + ph[1]
-                phase[, i + (j - 1) * (j - 2)/2] <- ph
+                    Mod(pgram[1:Nspec, i, j])^2/(spec[, i] * spec[, j])
+                phase[, i + (j - 1) * (j - 2)/2] <- Arg(pgram[1:Nspec, i, j])
             }
         }
     }
+    ## correct for tapering
+    for (i in 1:nser) spec[, i] <- spec[, i]/u2
     spg.out <-
         list(freq = freq, spec = spec, coh = coh, phase = phase,
              spans = spans, filter = filter, df = df,

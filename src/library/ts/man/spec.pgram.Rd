@@ -53,6 +53,17 @@ the \code{fast} and not the \code{pad} argument.
    \item{demean}{The value of the \code{demean} argument}
 }
 
+\references{
+    Bloomfield, P. (1976) \emph{Fourier Analysis of Time Series: An
+	Introduction.} Wiley.
+
+    Brockwell, P.J. and Davis, R.A. (1991) \emph{Time Series: Theory and
+	Methods.} Second edition. Springer.
+
+    Venables, W.N. and Ripley, B.D. (1997) \emph{Modern Applied
+	Statistics with S-PLUS.} Second edition. Springer. (Especially
+        pp. 437-442.)
+}
 \author{Martyn Plummer}
 \seealso{\code{\link{spectrum}}, \code{\link{spec.taper}},
     \code{\link{plot.spec}}, \code{\link{fft}}}
@@ -61,5 +72,48 @@ data(deaths)
 spectrum(deaths)
 spectrum(deaths, spans=c(3,5))
 spectrum(deaths, spans=c(5,7))
+spectrum(mdeaths, spans=c(3,3))
+spectrum(fdeaths, spans=c(3,3))
+
+## bivariate example
+mfdeaths.spc <- spec.pgram(ts.union(mdeaths, fdeaths), 
+   spans=c(3,3))
+plot(mfdeaths.spc)  # plot both marginal spectra
+
+# plot coherency
+plot(mfdeaths.spc$freq, mfdeaths.spc$coh, type="l", 
+   ylim=c(0,1), xlab="coherency", ylab="")
+gg <- 2/mfdeaths.spc$df
+se <- sqrt(gg/2)
+lines(mfdeaths.spc$freq, tanh(atanh(mfdeaths.spc$coh) + 
+   1.96*se), lty=3)
+lines(mfdeaths.spc$freq, tanh(atanh(mfdeaths.spc$coh) - 
+   1.96*se), lty=3)
+#plot phase
+plot(mfdeaths.spc$freq, mfdeaths.spc$phase, type="l", 
+   ylim=c(-pi, pi), xlab="phase spectrum", ylab="")
+cl <- asin( pmin( 0.9999, qt(0.95, 2/gg-2)*
+   sqrt(gg*(mfdeaths.spc$coh^{-2} - 1)/(2*(1-gg)) ) ) )
+lines(mfdeaths.spc$freq, mfdeaths.spc$phase + cl, lty=3)
+lines(mfdeaths.spc$freq, mfdeaths.spc$phase - cl, lty=3)
+
+## now impose a lack of alignment
+mfdeaths.spc <- spec.pgram(ts.intersect(mdeaths, lag(fdeaths, 4)),
+   spans=c(3,3))
+plot(mfdeaths.spc$freq, mfdeaths.spc$coh, type="l", 
+   ylim=c(0,1), xlab="coherency", ylab="")
+gg <- 2/mfdeaths.spc$df
+se <- sqrt(gg/2)
+lines(mfdeaths.spc$freq, tanh(atanh(mfdeaths.spc$coh) + 
+   1.96*se), lty=3)
+lines(mfdeaths.spc$freq, tanh(atanh(mfdeaths.spc$coh) - 
+   1.96*se), lty=3)
+phase <- (mfdeaths.spc$phase + pi)%%(2*pi) - pi
+plot(mfdeaths.spc$freq, phase, type="l", 
+   ylim=c(-pi, pi), xlab="phase spectrum", ylab="")
+cl <- asin( pmin( 0.9999, qt(0.95, 2/gg-2)*
+   sqrt(gg*(mfdeaths.spc$coh^{-2} - 1)/(2*(1-gg)) ) ) )
+lines(mfdeaths.spc$freq, phase + cl, lty=3)
+lines(mfdeaths.spc$freq, phase - cl, lty=3)
 }
 \keyword{ts}

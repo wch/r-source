@@ -22,18 +22,23 @@ function (x, lag.max = NULL, plot = TRUE, type = c("correlation",
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1
     acf <- array(NA, c(lag.max + 1, nser, nser))
-    xp <- rbind(x, matrix(0, ncol = nser,
-                          nrow = nextn(sampleT + lag.max) - sampleT))
-    for (i in 1:nser) for (j in 1:nser) {
-        acf[, i, j] <- convolve(xp[, i], xp[, j])[1:(lag.max + 1)]/sampleT
-    }
-    if (type == "correlation") {
-        if(nser > 1) {
-            var0 <- diag(acf[1, , ])
-            acf0 <- sqrt(var0 %*% t(var0))
-            acf <- sweep(acf, c(2, 3), acf0, "/")
-        } else acf <- acf/acf[1, , ]
-    }
+#    xp <- rbind(x, matrix(0, ncol = nser,
+#                          nrow = nextn(sampleT + lag.max) - sampleT))
+#    for (i in 1:nser) for (j in 1:nser) {
+#        acf[, i, j] <- convolve(xp[, i], xp[, j])[1:(lag.max + 1)]/sampleT
+#    }
+#     if (type == "correlation") {
+#         if(nser > 1) {
+#             var0 <- diag(acf[1, , ])
+#             acf0 <- sqrt(var0 %*% t(var0))
+#             acf <- sweep(acf, c(2, 3), acf0, "/")
+#         } else acf <- acf/acf[1, , ]
+#     }
+    acf <- array(.C("acf",
+                    as.double(x), as.integer(sampleT), as.integer(nser),
+                    as.integer(lag.max), as.integer(type=="correlation"),
+                    acf=double((lag.max+1) * nser * nser)
+                    )$acf, c(lag.max + 1, nser, nser))
     lag <- outer(0:lag.max, lag/x.freq)
     acf.out <- structure(.Data = list(acf = acf, type = type,
         n.used = sampleT, lag = lag, series = series, snames = colnames(x)),
@@ -95,7 +100,8 @@ pacf.mts <- function(x, lag.max = NULL, plot = TRUE, na.action = na.fail, ...)
     acf <- ar.yw(x, order.max = lag.max)$partialacf
     lag <- outer(1:lag.max, lag/x.freq)
     acf.out <- structure(.Data = list(acf = acf, type = "partial",
-                         n.used = sampleT, lag = lag, series = series, snames = colnames(x)),
+                         n.used = sampleT, lag = lag, series = series,
+                         snames = colnames(x)),
                          class = "acf")
     if (plot) {
         plot.acf(acf.out, ...)

@@ -59,8 +59,8 @@ plot.acf(acf.obj, ci, ...)
   \item{series}{The name of the series \code{x}.}
   \item{snames}{The series names for multivariate time series.}
 }
-\author{Original: Paul Gilbert, Martyn Plummer.  Modifications and
-univaraite case of pacf by B.D. Ripley.}
+\author{Original: Paul Gilbert, Martyn Plummer.  Extensive modifications and
+univariate case of pacf by B.D. Ripley.}
 
 \note{The confidence interval plotted in \code{plot.acf} is based on
 an \emph{uncorrelated} series and should be treated with appropriate

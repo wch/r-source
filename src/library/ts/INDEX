@@ -2,7 +2,8 @@ Preliminary time-series package for R 0.65
 ==========================================
 
 This is a preliminary version of a time-series package; at present
-the functionality is somewhat limited.
+the functionality is somewhat limited in that not all the options are
+yet implemented or may be very slow.
 
 Functions in base R:
 -------------------
@@ -33,6 +34,7 @@ cycle		Create time series giving the positions in a cycle
 		of a time series
 deltat		Return time interval between observations
 embed           Embedding a time series
+filter		Linear filtering on a time series
 lag		Compute lagged version of time series
 na.omit.ts	na.omit method for time series
 pacf		Partial autocorrelation function
@@ -46,13 +48,11 @@ stl		Seasonal decomposition using loess
 ts.intersect	Bind time series as multivariate ts over the common time base
 ts.union	Bind time series as multivariate ts over their total time base
 
-TODO
+TO DO
 
 ar.burg		maybe
 arima.forecast
 arima.mle
-arima.sim
-filter		Linear filtering
 
 
 Datasets in base R:
