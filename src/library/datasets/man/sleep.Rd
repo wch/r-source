@@ -1,5 +1,6 @@
 \name{sleep}
 \docType{data}
+\encoding{latin1}
 \alias{sleep}
 \title{Student's Sleep Data}
 \description{

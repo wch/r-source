@@ -1,6 +1,7 @@
 \name{runmed}
 \title{Running Medians -- Robust Scatter Plot Smoothing}
 \alias{runmed}
+\encoding{latin1}
 \description{
   Compute running medians of odd span.  This is the \dQuote{most robust}
   scatter plot smoothing possible.  For efficiency (and historical

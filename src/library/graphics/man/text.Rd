@@ -1,5 +1,6 @@
 \name{text}
 \title{Add Text to a Plot}
+\encoding{latin1}
 \usage{
 text(x, \dots)
 

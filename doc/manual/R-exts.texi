@@ -1610,6 +1610,7 @@ CMD check} checks for.
 * Insertions::                  
 * Indices::                     
 * Platform-specific sections::  
+* Encoding::                    
 * Processing Rd format::        
 @end menu
 
@@ -2381,7 +2382,7 @@ Spearman's @eqn{\rho, rho}.
 objects with no additional markup.)
 
 
-@node  Platform-specific sections, Processing Rd format, Indices, Writing R documentation files
+@node  Platform-specific sections, Encoding, Indices, Writing R documentation files
 @section Platform-specific documentation
 @cindex Platform-specific documentation
 
@@ -2415,13 +2416,32 @@ If the differences between platforms are extensive or the @R{} objects
 documented are only relevant to one platform, platform-specific Rd files
 can be put in a @file{unix} or @file{windows} subdirectory.
 
-@node Processing Rd format,  , Platform-specific sections, Writing R documentation files
+@node Encoding, Processing Rd format, Platform-specific sections, Writing R documentation files
+@section Encoding
+@cindex encoding
+
+@code{Rd} files are text files and so it is impossible to deduce the
+encoding they are written in: ASCII, UTF-8, Latin-1, Latin-9 @emph{etc}.
+So the @code{\encoding@{@}} directive can be used to specify the
+encoding: if not present the processing assumes that the file is in
+Latin-1 (ISO-8859-1).  This is used when creating the header of the
+HTML conversion and to make a comment in the examples file. It may in
+future be used to convert the encoding of the output files.
+
+Wherever possible, avoid non-ASCII chars in @code{Rd} files.  At present
+Latin-1 files work reasonably well, but other encodings will definitely
+give problems with the La@TeX{} conversion and may with others.
+
+For convenience, encoding names @code{latin1} and @code{latin2} are
+recognized: these are @code{UTF-8} and likely to work fairly widely.
+
+
+@node Processing Rd format,  , Encoding, Writing R documentation files
 @section Processing Rd format
 @cindex Processing Rd format
 
-Under UNIX versions of @R{} there are several commands to process Rd
-files.  Windows equivalents are described at the end of the section.
-All of these need Perl to be installed.
+There are several commands to process Rd files from the system command
+line.  All of these need Perl to be installed.
 
 @findex R CMD Rdconv
 Using @code{R CMD Rdconv} one can convert @R{} documentation format to
@@ -2455,11 +2475,11 @@ above commands can be obtained by running @code{R CMD @var{command}
 --help}, e.g., @kbd{R CMD Rdconv --help}.  All available commands can be
 listed using @kbd{R --help}.
 
-All of these have Windows equivalents.  For most the identical command works.
-One exception that it is @code{R CMD Rd2dvi.sh}
-(and that needs the tools to build packages from source to be
-installed).  (You will need the files in the @R{} binary Windows
-distribution for installing source packages to be installed.)
+All of these work under Windows. You will need the files in the @R{}
+binary Windows distribution for installing source packages to be
+installed, and for @code{R CMD Rd2dvi} also the tools to build packages
+from source as described in @file{README.packages}.
+
 
 @node Tidying and profiling R code, System and foreign language interfaces, Writing R documentation files, Top
 @chapter Tidying and profiling R code

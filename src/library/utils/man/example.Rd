@@ -66,7 +66,8 @@ example(topic, package = NULL, lib.loc = NULL,
 
   If the examples file contains non-ASCII characters the encoding used
   will matter.  If in a UTF-8 locale \code{example} first tries UTF-8
-  and then Latin-1.
+  and then Latin-1.  (This can be overridden by setting the encoding in
+  the \code{.Rd} file.)
 }
 \note{
   The examples can be many small files.  On some file systems it is

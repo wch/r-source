@@ -1,5 +1,6 @@
 \name{power.t.test}
 \alias{power.t.test}
+\encoding{latin1}
 \title{Power calculations for one and two sample t tests}
 \usage{
 power.t.test(n = NULL, delta = NULL, sd = 1, sig.level = 0.05,

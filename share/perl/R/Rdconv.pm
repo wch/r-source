@@ -39,7 +39,7 @@ if($main::opt_dosnames) { $HTML = ".htm"; } else { $HTML = ".html"; }
 @blocknames = ("name", "title", "usage", "arguments", "format",
 	       "description", "details", "value", "references",
 	       "source", "seealso", "examples", "author", "note",
-	       "synopsis", "docType");
+	       "synopsis", "docType", "encoding");
 
 ## These may appear multiply but are of simple structure:
 @multiblocknames = ("alias", "keyword");
@@ -618,6 +618,7 @@ sub striptitle { # text
 sub rdoc2html { # (filename) ; 0 for STDOUT
 
     local $htmlout;
+    local $encoding = "iso-8859-1";
     if($_[0]) {
 	$htmlout = new FileHandle;
 	open $htmlout, "> $_[0]";  # will be closed when goes out of scope
@@ -625,9 +626,14 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
 	$htmlout = "STDOUT";
     }
     $using_chm = 0;
+    $encoding = $blocks{"encoding"} if defined $blocks{"encoding"};
+    $encoding = "iso-8859-1" if lc($encoding) eq "latin1";
+    $encoding = "iso-8859-2" if lc($encoding) eq "latin2";
     print $htmlout (html_functionhead(html_striptitle($blocks{"title"}),
 				      $pkgname, 
-				      &html_escape_name($blocks{"name"})));
+				      &html_escape_name($blocks{"name"}),
+				      $encoding,
+				      ));
 
     html_print_block("description", "Description");
     html_print_codeblock("usage", "Usage");
@@ -1186,10 +1192,10 @@ sub html_title3
 
 sub html_functionhead
 {
-    my ($title, $pkgname, $name) = @_;
+    my ($title, $pkgname, $name, $enc) = @_;
 
     my $retval = "<html><head><title>R: $title</title>\n" .
-	"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n" .
+	"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$enc\">\n" .
 	"<link rel=\"stylesheet\" type=\"text/css\" href=\"../../R.css\">\n" .
 	"</head><body>\n\n";
 
@@ -2261,6 +2267,10 @@ sub rdoc2ex { # (filename)
 	}
 
 	$tit =~ s/\s+/ /g;
+	
+	if (defined $blocks{"encoding"}) {
+	    $Exout->print("### Encoding: ", $blocks{"encoding"}, "\n\n");
+	}
 
 	$Exout->print(wrap("### Name: ", "###   ", $blocks{"name"}),
 		      "\n",

@@ -50,6 +50,10 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
         if(length(enc <- localeToCharset()) > 1)
             c(enc[-length(enc)], "latin1")
         else ""
+    ## peek at the file
+    zz <- readLines(zfile, n=1)
+    if(length(grep("^### Encoding: ", zz)) > 0)
+    encoding <- substring(zz, 15)
     source(zfile, local, echo = echo, prompt.echo = prompt.echo,
 	   verbose = verbose, max.deparse.length = 250,
            encoding = encoding)

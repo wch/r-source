@@ -2,6 +2,7 @@
 \alias{nclass.Sturges}
 \alias{nclass.scott}
 \alias{nclass.FD}
+\encoding{latin1}
 \title{
 Compute the Number of Classes for a Histogram
 }

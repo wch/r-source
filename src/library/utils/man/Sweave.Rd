@@ -3,6 +3,7 @@
 \alias{Stangle}
 \alias{SweaveSyntaxLatex}
 \alias{SweaveSyntaxNoweb}
+\encoding{latin1}
 \title{Automatic Generation of Reports}
 \description{
   \code{Sweave} provides a flexible framework for mixing text and S code
