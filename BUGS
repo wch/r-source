@@ -118,11 +118,6 @@ Date: 28 Feb 1999 21:45:43 +0100
 Subject: plot.formula and pch=
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 25 Mar 1999 21:22:44 +0100
-* PR# 150 *
-Subject: R: error report
-From: Adelchi Azzalini <adelchi.azzalini@jrc.it>
-Date: Fri, 26 Mar 1999 09:39:05 +0000
---Really  pictex() bug -- resurfaced as # 173
 * PR# 153 *
 Subject: image + x11
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
@@ -155,11 +150,6 @@ Date: Tue, 13 Apr 1999 12:03:42 +0200 (CEST)
 
 Directory:  Language
 
-* PR# 40 *
-Subject:  fac1 : fac2 -- fails {no "cross" anymore in seq.c} 
-From: maechler@stat.math.ethz.ch
-Date: Wed, 16 Sep 1998 08:42:12 +0200
---still there 17feb99
 * PR# 85 *
 Subject:  A bug in data.entry? 
 From: Yusuke Uchiyama <me@naxgul.kais.kyoto-u.ac.jp>
@@ -190,10 +180,6 @@ Date: Wed, 10 Feb 1999 13:42:01 +0000 (GMT)
 Subject: Re: [R] zero-offset matrices
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 02 Mar 1999 16:59:48 +0100
-* PR# 139 *
-Subject: : for factors
-From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
-Date: Thu, 11 Mar 1999 09:30:04 +0100
 * PR# 148 *
 Subject: Missing Warning in :
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
@@ -293,10 +279,6 @@ none
 
 Directory:  incoming
 
-* PR# 173 *
-Subject: GConvert error when using pictex
-From: pwhiting@sprint.net
-Date: Wed, 21 Apr 1999 13:37:45 +0200
 * PR# 174 *
 Subject:  do.call() mangles expressions in arguments 
 From: Peter Dalgaard BSA <pd@biostat.ku.dk>
@@ -305,3 +287,7 @@ Date: Wed, 21 Apr 1999 19:39:53 +0200
 Subject: Assigning to a list within a loop
 From: Bill Venables <wvenable@arcola.stats.adelaide.edu.au>
 Date: Thu, 22 Apr 1999 13:16:38 +0930 (CST)
+* PR# 176 *
+Subject: mvfft
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Thu, 22 Apr 1999 18:59:44 +0200 (CEST)
