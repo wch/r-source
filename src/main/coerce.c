@@ -571,8 +571,8 @@ static SEXP coerceToRaw(SEXP v)
     case LGLSXP:
 	for (i = 0; i < n; i++) {
 	    tmp = IntegerFromLogical(LOGICAL(v)[i], &warn);
-	    if(tmp == NA_INTEGER) { 
-		tmp = 0; 
+	    if(tmp == NA_INTEGER) {
+		tmp = 0;
 		warn |= WARN_RAW;
 	    }
 	    RAW(ans)[i] = (Rbyte) tmp;
@@ -581,8 +581,8 @@ static SEXP coerceToRaw(SEXP v)
     case INTSXP:
 	for (i = 0; i < n; i++) {
 	    tmp = INTEGER(v)[i];
-	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) { 
-		tmp = 0; 
+	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) {
+		tmp = 0;
 		warn |= WARN_RAW;
 	    }
 	    RAW(ans)[i] = (Rbyte) tmp;
@@ -591,8 +591,8 @@ static SEXP coerceToRaw(SEXP v)
     case REALSXP:
 	for (i = 0; i < n; i++) {
 	    tmp = IntegerFromReal(REAL(v)[i], &warn);
-	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) { 
-		tmp = 0; 
+	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) {
+		tmp = 0;
 		warn |= WARN_RAW;
 	    }
 	    RAW(ans)[i] = (Rbyte) tmp;
@@ -601,8 +601,8 @@ static SEXP coerceToRaw(SEXP v)
     case CPLXSXP:
 	for (i = 0; i < n; i++) {
 	    tmp = IntegerFromComplex(COMPLEX(v)[i], &warn);
-	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) { 
-		tmp = 0; 
+	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) {
+		tmp = 0;
 		warn |= WARN_RAW;
 	    }
 	    RAW(ans)[i] = (Rbyte) tmp;
@@ -611,8 +611,8 @@ static SEXP coerceToRaw(SEXP v)
     case STRSXP:
 	for (i = 0; i < n; i++) {
 	    tmp = IntegerFromString(STRING_ELT(v, i), &warn);
-	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) { 
-		tmp = 0; 
+	    if(tmp == NA_INTEGER || tmp < 0 || tmp > 255) {
+		tmp = 0;
 		warn |= WARN_RAW;
 	    }
 	    RAW(ans)[i] = (Rbyte) tmp;
@@ -1084,7 +1084,7 @@ SEXP CreateTag(SEXP x)
 	&& length(STRING_ELT(x, 0)) >= 1)
 	x = install(CHAR(STRING_ELT(x, 0)));
     else
-	x = install(CHAR(STRING_ELT(deparse1(x, 1, TRUE, FALSE), 0)));
+	x = install(CHAR(STRING_ELT(deparse1(x, 1, SIMPLEDEPARSE), 0)));
     return x;
 }
 

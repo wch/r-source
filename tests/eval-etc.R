@@ -31,11 +31,11 @@ eval(e3)
 ## The first failed in 0.65.0 :
 attach(list(x=1))
 evalq(dim(x) <- 1,as.environment(2))
-dput(get("x", env=as.environment(2)), forDisplay=FALSE)
+dput(get("x", env=as.environment(2)), control="all")
 
 e <- local({x <- 1;environment()})
 evalq(dim(x) <- 1,e)
-dput(get("x",env=e), forDisplay=FALSE)
+dput(get("x",env=e), control="all")
 
 ### Substitute, Eval, Parse, etc
 

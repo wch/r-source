@@ -67,12 +67,29 @@ rbind <- function(..., deparse.level=1) {
     .Internal(rbind(...))
 }
 
-deparse <-
-    function(expr, width.cutoff = 60,
-	     backtick = mode(expr) %in% c("call","expression","("),
-	     forDisplay = TRUE, useSource = FALSE)
-	.Internal(deparse(expr, width.cutoff, backtick, forDisplay, useSource))
+# convert deparsing options to bitmapped integer
 
+.deparseOpts <- function(control) {
+    opts <- pmatch(as.character(control), c("keepInteger", "quoteExpressions", 
+                   "showAttributes", "useSource", "warnIncomplete", "all"))
+    if (any(is.na(opts))) stop(paste("deparse options ", 
+                               paste('"',control[is.na(opts)],'"', sep=""), 
+     			       collapse=" "), " not recognized", call. = FALSE)
+    if (any(opts == 6)) {
+	if (length(opts) != 1) 
+	    stop("all can not be used with other deparse options",
+	       	call. = FALSE)
+	else
+	    return(31)
+    } else return(sum(2^(opts-1)))
+}
+
+deparse <- function(expr, width.cutoff = 60,
+	     backtick = mode(expr) %in% c("call","expression","("),
+	     control = "showAttributes") {
+    opts <- .deparseOpts(control)
+    .Internal(deparse(expr, width.cutoff, backtick, opts))
+}
 
 do.call <- function(what,args).Internal(do.call(what,args))
 drop <- function(x).Internal(drop(x))
