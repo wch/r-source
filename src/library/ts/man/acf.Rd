@@ -25,8 +25,8 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
   \item{x, y}{a univariate or multivariate (not \code{ccf}) numeric time
     series object or a numeric vector or matrix.}
   \item{lag.max}{maximum number of lags at which to calculate the acf.
-    Default is \eqn{10\log_{10}(N)}{10*log10(N)} where \eqn{N} is the
-    number of observations.}
+    Default is \eqn{10\log_{10}(N/m)}{10*log10(N/m)} where \eqn{N} is the
+    number of observations and \eqn{m} the number of series.}
   \item{type}{character string giving the type of acf to be computed.
     Allowed values are
     \code{"correlation"} (the default), \code{"covariance"} or

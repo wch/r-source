@@ -49,8 +49,10 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
     x <- drop(na.action(as.ts(x)))  # use univariate code for a single series
     if(!is.numeric(x)) stop("`x' must be numeric")
     x.freq <- frequency(x)
-    sampleT <- length(x)
-    if (is.null(lag.max)) lag.max <- floor(10 * (log10(sampleT)))
+    sampleT <- NROW(x)
+    if (is.null(lag.max))
+        lag.max <- if(is.matrix(x)) floor(10 * (log10(sampleT) - log10(ncol(x))))
+        else floor(10 * (log10(sampleT)))
     lag.max <- min(lag.max, sampleT - 1)
     if (lag.max < 1) stop("lag.max must be at least 1")
 
