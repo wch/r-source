@@ -249,6 +249,8 @@ NEW FEATURES
     o	The postscript output makes use of relative moves, and so is
 	somewhat more compact.
 
+    o	New function md5sum() in package tools to calculate MD5
+	checksums on files (e.g. on parts of the R installation).
 
 INSTALLATION CHANGES
 

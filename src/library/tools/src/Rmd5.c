@@ -17,12 +17,42 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef R_TOOLS_H
-#define R_TOOLS_H
+#include <R.h>
+#include "tools.h"
+#include "md5.h"
 
-#include <Rinternals.h>
+SEXP Rmd5(SEXP files)
+{
+    SEXP ans;
+    int i, j, nfiles = length(files), res;
+    char *path, out[33];
+    FILE *fp;
+    unsigned char resblock[16];
 
-SEXP delim_match(SEXP x, SEXP delims);
-SEXP R_md5(SEXP files);
-
+    if(!isString(files)) error("argument `files' must be character");
+    PROTECT(ans = allocVector(STRSXP, nfiles));
+    for(i = 0; i < nfiles; i++) {
+	path = CHAR(STRING_ELT(files, i));
+#ifdef WIN32
+	fp = fopen(path, "rb");
+#else
+	fp = fopen(path, "r");
 #endif
+	if(!fp) {
+	    SET_STRING_ELT(ans, i, NA_STRING);
+	} else {
+	    res = md5_stream(fp, &resblock);
+	    if(res) {
+		warning("md5 failed on file `%s'", path);
+		SET_STRING_ELT(ans, i, NA_STRING);
+	    } else {
+		for(j = 0; j < 16; j++)
+		    sprintf (out+2*j, "%02x", resblock[j]);
+		SET_STRING_ELT(ans, i, mkChar(out));
+	    }
+	    fclose(fp);
+	}
+    }
+    UNPROTECT(1);
+    return ans;
+}
