@@ -398,9 +398,9 @@ int StrMatch(char *s, char *t);
 
 double R_Log10(double);
 
-#include "devapi.h"
-#include "engine.h"
-#include "base.h"
+#include "GraphicsDevice.h"
+#include "GraphicsEngine.h"
+#include "GraphicsBase.h"
 
 /* FIXME: Make this a macro to avoid function call overhead?
  */
