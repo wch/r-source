@@ -1,7 +1,6 @@
 #! /bin/sh
 
 USER_R_HOME=$1/.R; shift
-SEARCHINDEX="${USER_R_HOME}/doc/html/search/index.txt"
 rm -rf ${USER_R_HOME}
 
 dirs="${USER_R_HOME} ${USER_R_HOME}/doc ${USER_R_HOME}/doc/html ${USER_R_HOME}/doc/html/search ${USER_R_HOME}/library"
@@ -38,40 +37,8 @@ for f in ${R_HOME}/doc/html/search/*.html; do
 	ln -s ${f} ${USER_R_HOME}/doc/html/search
     fi
 done
-ln -s ${R_HOME}/doc/html/search/index.txt ${USER_R_HOME}/doc/html/search
-
-rm -f ${SEARCHINDEX}
-
-get_unique () {
-  if test -r ${1}; then
-    x="1"
-    while test -r ${1}.${x}; do
-      x=`echo "$x+1" | bc`
-    done
-    echo ${1}.${x}           
-  else
-    echo $1
-  fi
-}
-     
-
-for lib in $*; do
-    if test -d ${lib}; then
-      for pkg in `ls -d ${lib}/* | sed '/CVS$/d; /profile$/d'`; do
-	if test -d ${pkg}; then
-	    pkgname=`basename ${pkg}`
-	    target=`get_unique ${USER_R_HOME}/library/${pkgname}`
-	    targetname=`basename ${target}`
-	    ln -s ${pkg} ${target}	    
-
-	    if test -r ${pkg}/CONTENTS; then
-		cat ${pkg}/CONTENTS | \
-		    sed "s/\/library\/${pkgname}\//\/library\/${targetname}\//;"  >> ${SEARCHINDEX}
-	    fi
-	fi
-      done
-    fi
-done
+# we are going to recreate this in R code
+rm -f ${USER_R_HOME}/doc/html/search/index.txt
 
 ln -s ${R_HOME}/doc/html/R.css ${USER_R_HOME}/library
 

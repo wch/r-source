@@ -60,31 +60,48 @@ make.packages.html <- function(lib.loc=.libPaths())
 {
     f.tg <- file.path(tempdir(), ".R/doc/html/packages.html")
     if(!file.create(f.tg)) {
-        warning("cannot update HTML package index")
+        warning("cannot create HTML package index")
+        return(FALSE)
+    }
+    searchindex <- file.path(tempdir(), ".R/doc/html/search/index.txt")
+    if(!file.create(searchindex)) {
+        warning("cannot create HTML search index")
         return(FALSE)
     }
     file.append(f.tg, file.path(R.home(), "doc/html/packages-head.html"))
     out <- file(f.tg, open="a")
+    search <- file(searchindex, open="w")
     known <- character(0)
     for (lib in lib.loc) {
-        cat("<p><h3>Packages in ", lib, "</h3>\n<p><table width=\"100%\">\n",
+        cat("<p><h3>Packages in ", lib, '</h3>\n<p><table width="100%">\n',
             sep = "", file=out)
         pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
         for (i in pg) {
             ## links are set up to break ties of package names
             before <- sum(i %in% known)
-            link <- if(before == 0) i else paste(i, before-1, sep=".")
+            link <- if(before == 0) i else paste(i, before, sep=".")
+            from <- file.path(lib, i)
+            to <- file.path(tempdir(), ".R", "library", link)
+            file.symlink(from, to)
             title <- package.description(i, lib.loc = lib, field="Title")
             if (is.na(title)) title <- "-- Title is missing --"
             cat('<tr align="left" valign="top">\n',
                 '<td width="25%"><a href="../../library/', link,
                 '/html/00Index.html">', i, "</a></td><td>", title,
                 "</td></tr>\n", file=out, sep="")
+            contentsfile <- file.path(from, "CONTENTS")
+            if(!file.exists(contentsfile)) next
+            contents <- readLines(contentsfile)
+            contents <- gsub(paste("/library/", i, sep = ""),
+                             paste("/library/", link, sep = ""),
+                             contents)
+            writeLines(contents, search)
         }
         cat("</table>\n\n", file=out)
         known <- c(known, pg)
     }
     cat("</body></html>\n", file=out)
     close(out)
+    close(search)
     invisible(TRUE)
 }
