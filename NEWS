@@ -19,6 +19,8 @@ BUG FIXES
     o	The substitution code for strptime in the sources no longer
 	follows glibc in silently `correcting' invalid inputs.
 
+    o   The cor() function did not remove missing values in the
+    	non-Pearson case
 
 
 		CHANGES IN R VERSION 1.8.1
