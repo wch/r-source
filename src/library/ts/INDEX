@@ -1,9 +1,7 @@
-EPreliminary time-series package for R 0.65
-==========================================
+EPreliminary time-series package for R
+======================================
 
-This is a preliminary version of a time-series package; at present
-the functionality is limited in that not all the options are
-yet implemented or may be slow.
+This is a preliminary version of a time-series package.
 
 Functions in base R:
 -------------------
@@ -37,6 +35,7 @@ ar.mle		Estimate autoregression model by maximum likelihood
 ar.yw		Estimate autoregression model by solving Yule-Walker equations
 arima0		ARIMA modelling -- provisional version
 Box.test	Box-Pierce and Ljung-Box tests of independence
+cbind.ts	cbind method for time series (aligns time bases)
 ccf		Cross-covariance and cross-correlations for two series
 cpgram		Plot cumulative periodogram of univariate time series
 diffinv		Discrete integration, the inverse of diff()
