@@ -9,15 +9,19 @@ top_builddir = .
 
 include $(top_builddir)/Makeconf
 
-base_src = `ls $(top_srcdir)/src/*/*.[chf] \
-	       $(top_srcdir)/src/library/*/R/*.R`
+all: Makefile R docs
 
-all: R docs
+Makefile:
+	$(srcdir)/Makefile.in $(top_builddir)/config.status
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 R: stamp-R
-stamp-R: $(top_builddir)/src/include/Platform.h $(base_src)
+stamp-R: $(top_builddir)/src/include/Platform.h \
+	  $(top_srcdir)/src/*/*.[chf] \
+	  $(top_srcdir)/src/library/*/R/*.R
 	@for d in afm demos doc etc src; do \
-	  cd $$d; $(MAKE) R; cd ..; \
+	  (cd $$d && $(MAKE) R); \
 	done
 	@if [ ! -f src/library/stamp-docs ]; then \
 	  echo "You should \`make docs' now ..."; \
@@ -27,68 +31,77 @@ stamp-R: $(top_builddir)/src/include/Platform.h $(base_src)
 $(top_builddir)/src/include/Platform.h: $(srcdir)/date-stamp
 	$(top_srcdir)/configure --srcdir $(top_srcdir)
 
-$(base_src):
-
-docs help html latex dvi:: FORCE
-	-@cd src/library; $(MAKE) $@
-
+docs help html latex examples:: FORCE
+	-@(cd src/library && $(MAKE) $@)
 FORCE:
 
 install: all installdirs
-	$(INSTALL_DATA) $(srcdir)/R.1 $(mandir)/man1
-	$(INSTALL_DATA) $(srcdir)/Rdconv.1 $(mandir)/man1
-	(cd $(mandir)/man1; \
-		for f in Rd2txt.1 Rdindex.1 Sd2Rd.1; \
-			do rm -f $$f; $(LN_S) Rdconv.1 $$f; \
-		done)
+	@for d in afm demos doc etc; do \
+	  (cd $$d && $(MAKE) $@); \
+	done
 	@(cd $(srcdir); \
 	  for f in COPYING COPYRIGHTS MIRROR-SITES RESOURCES; do \
 	    $(INSTALL_DATA) $$f $(rhome); \
 	  done)
-	cd afm; $(MAKE) $@
-	$(INSTALL_PROGRAM) bin/R.binary $(rhome)/bin
-	cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(rhome)/bin/R
-	cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(bindir)/R
-	chmod 755 $(bindir)/R $(rhome)/bin
+	@echo "Installing executables ..."
+	@$(INSTALL_PROGRAM) bin/R.binary $(rhome)/bin
+	@cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(rhome)/bin/R
+	@cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(bindir)/R
+	@chmod 755 $(bindir)/R $(rhome)/bin
 	@for f in `ls bin/* | grep -v '^R\|R.binary'`; do \
 	  $(INSTALL) $$f $(rhome)/bin; \
 	done
 	@for f in Rd2txt Rdconv Rdindex Sd2Rd; do \
 	  $(INSTALL) bin/$$f $(bindir); \
 	done
-	cd demos; $(MAKE) $@
-	cd doc; $(MAKE) $@
-	cd etc; $(MAKE) $@
+	@echo "Installing headers ..."
 	@for f in include/*.h; do \
 	  $(INSTALL_DATA) $$f $(rhome)/include; \
 	done
 	@echo "Installing library ..."
-	cd library; tar cf - [a-z]* | (cd $(rhome)/library; tar xf -)
-	(cd $(rhome)/library; cat */TITLE > LibIndex 2> /dev/null)
-	$(rhome)/bin/build-help --rhome $(rhome) --htmllists
-
+	@cd library; tar cf - [a-z]* | (cd $(rhome)/library; tar xf -)
+	@echo "  Building help index ..."
+	@(cd $(rhome)/library; cat */TITLE > LibIndex 2> /dev/null)
+	@echo "  Building HTML index ..."
+	@$(rhome)/bin/build-help --rhome $(rhome) --htmllists
 installdirs:
 	@$(MKINSTALLDIRS) $(bindir)
-	@$(MKINSTALLDIRS) $(mandir)/man1
 	@$(MKINSTALLDIRS) $(rhome)/bin
-	@$(MKINSTALLDIRS) $(rhome)/etc
 	@$(MKINSTALLDIRS) $(rhome)/include
 	@$(MKINSTALLDIRS) $(rhome)/library
-
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
-
 uninstall:
+	@echo "Uninstalling library ..."
+	@(cd $(rhome)/library; \
+	  for p in base eda mva stepfun; do rm -rf $$p; done)
+	@echo "  Rebuilding help index ..."
+	@(cd $(rhome)/library; cat */TITLE > LibIndex 2> /dev/null)
+	@echo "  Rebuilding HTML index ..."
+	@$(rhome)/bin/build-help --rhome $(rhome) --htmllists
+	@echo "Uninstalling headers ..."
+	@rm -rf $(rhome)/include
+	@echo "Uninstalling executables ..."
+	@rm -rf $(rhome)/bin
+	@for f in R Rd2txt Rdconv Rdindex Sd2Rd; do \
+	  rm -f $(bindir)/$$f; \
+	done
+	@for f in COPYING COPYRIGHTS MIRROR-SITES RESOURCES; do \
+	  rm -f $(rhome)/$$f; \
+	done
+	@for d in afm demos doc etc; do \
+	  (cd $$d && $(MAKE) $@); \
+	done
 
 mostlyclean: clean
 clean:
 	@for d in afm demos doc etc src; do \
-	  cd $$d; $(MAKE) $@; cd ..; \
+	  (cd $$d && $(MAKE) $@); \
 	done
 	@rm -f stamp-R
 distclean: clean
 	@for d in afm demos doc etc src; do \
-	  cd $$d; $(MAKE) $@; cd ..; \
+	  (cd $$d && $(MAKE) $@); \
 	done
 	@rm -rf bin/* include/* library/*
 	@rm -f Makeconf Makefile Makefile.bak Makefrag.f77 \
@@ -97,11 +110,12 @@ maintainer-clean: distclean
 
 dist:
 
+dvi:
+	-@(cd doc && $(MAKE) $@)
 info:
 
 TAGS:
 
 check test:: test-Examples
-
 test-All test-Examples::
-	-@cd tests; $(MAKE) $@
+	-@(cd tests && $(MAKE) $@)
