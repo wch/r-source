@@ -246,7 +246,9 @@ static int R_SocketWait(int sockfd, int write)
 	}
 
 #ifdef Unix
-	if(!FD_ISSET(sockfd, &rfd) || howmany > 1) {
+	if((!write && !FD_ISSET(sockfd, &rfd)) ||
+	   (write && !FD_ISSET(sockfd, &wfd)) ||
+	   howmany > 1) {
 	    /* was one of the extras */
 	    what = getSelectedHandler(R_InputHandlers, &rfd);
 	    if(what != NULL) what->handler((void*) NULL);
@@ -419,11 +421,26 @@ int R_SockListen(int sockp, char *buf, int len)
 
 int R_SockWrite(int sockp, const void *buf, int len)
 {
-    int res;
+    int res, out = 0;
 
     /* Rprintf("socket %d writing |%s|\n", sockp, buf); */
-    res = (int) send(sockp, buf, len, 0);
-    return (res >= 0) ? res : -socket_errno();
+    /* This function is not passed a `blocking' argument so the code
+       here is equivalent to blocking == TRUE; it's not clear
+       non-blocking writes make much sense with the current connection
+       interface since there is no way to tell how much, if anything,
+       has been written.  LT */
+    do {
+	if(/*blocking && */R_SocketWait(sockp, 1) != 0) return out;
+	res = (int) send(sockp, buf, len, 0);
+	if (res < 0 && socket_errno() != EWOULDBLOCK)
+	    return -socket_errno();
+	else {
+	    { const char *cbuf = buf; cbuf += res; buf = cbuf; }
+	    len -= res;
+	    out += res;
+	}
+    } while (/* ! blocking && */len > 0);
+    return out;
 }
 
 #endif
