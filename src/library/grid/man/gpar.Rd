@@ -64,19 +64,23 @@ gpar(...)
 }
 \author{Paul Murrell}
 \examples{
-gpar(col="red")
-gpar(col="blue", lty="solid", lwd=3, fontsize=16)
+gpar(col = "red")
+gpar(col = "blue", lty = "solid", lwd = 3, fontsize = 16)
 grid.newpage()
-vp <- viewport(w=.8, h=.8, gp=gpar(col="blue"))
-grid.collection(grid.rect(gp=gpar(col="red"), draw=FALSE),
-                grid.text("The rect is its own colour (red)\nbut this text is the colour\nset by the collection (green)", draw=FALSE),
-                gp=gpar(col="green"), vp=vp)
+vp <- viewport(w = .8, h = .8, gp = gpar(col="blue"))
+grid.collection(grid.rect(gp = gpar(col="red"), draw = FALSE),
+                grid.text(paste("The rect is its own colour (red)",
+                                "but this text is the colour",
+                                "set by the collection (green)", sep = "\n"),
+                          draw = FALSE),
+                gp = gpar(col="green"), vp = vp)
 grid.text("This text is the colour set by the viewport (blue)",
-          y=1, just=c("center", "bottom"), gp=gpar(fontsize=20), vp=vp)
+          y = 1, just = c("center", "bottom"),
+          gp = gpar(fontsize=20), vp = vp)
 grid.newpage()
 ## example with multiple values for a parameter
 push.viewport(viewport())
-grid.points(1:10/11, 1:10/11, gp=gpar(col=1:10))
+grid.points(1:10/11, 1:10/11, gp = gpar(col=1:10))
 pop.viewport()
 }
 \keyword{ dplot }
