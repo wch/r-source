@@ -1,11 +1,11 @@
 #
 # ${RHOME}/tools/GETCONFIG
 
-echo "/* src/include/Rver.h.  Generated automatically */"
-echo "#ifndef R_EXT_RVER_H"
-echo "#define R_EXT_RVER_H"
+echo "/* src/include/Rconfig.h.  Generated automatically */"
+echo "#ifndef R_VERSION_H"
+echo "#define R_VERSION_H"
 echo
-echo "#ifndef RCONFIG_H_"
+echo "#ifndef _CONFIG_H"
 echo
 us=`sed -n /HAVE_F77_UNDERSCORE/p h/config.h | sed -n 1p | sed s/.\*HAVE_F77_UNDERSCORE//`
 if [ ${us} -eq 1 ] ; then
