@@ -16,30 +16,27 @@ at the minimum is returned.}
 at the minimum.}
 \item{fscale}{an estimate of the size of \code{f} at the minimum.}
 \item{print.level}{this argument determines the level of printing
-which is done during the minimization process.  The default
-value of \code{0} means that no printing occurs, a value of \code{1}
-means that initial and final details are printed and a value
-of 2 means that full tracing information is printed.}
+  which is done during the minimization process.  The default
+  value of \code{0} means that no printing occurs, a value of \code{1}
+  means that initial and final details are printed and a value
+  of 2 means that full tracing information is printed.}
 \item{ndigit}{the number of significant digits in the function \code{f}.}
 \item{gradtol}{a positive scalar giving the tolerance at which the
-scaled gradient is considered close enough to zero to
-terminate the algorithm.  The scaled gradient is a
-measure of the relative change in \code{f} in each direction
+  scaled gradient is considered close enough to zero to
+  terminate the algorithm.  The scaled gradient is a
+  measure of the relative change in \code{f} in each direction
 \code{p[i]} divided by the relative change in \code{p[i]}.}
 \item{stepmax}{a positive scalar which gives the maximum allowable
-scaled step length.  \code{stepmax} is used to prevent steps
-which would cause the optimization function to
-overflow, to prevent the algorithm from leaving the
-area of interest in parameter space, or to detect
-divergence in the algorithm. \code{stepmax} would be chosen
-small enough to prevent the first two of these
-occurrences, but should be larger than any anticipated
-reasonable step.}
+  scaled step length.  \code{stepmax} is used to prevent steps which
+  would cause the optimization function to overflow, to prevent the
+  algorithm from leaving the area of interest in parameter space, or to
+  detect divergence in the algorithm. \code{stepmax} would be chosen
+  small enough to prevent the first two of these occurrences, but should
+  be larger than any anticipated reasonable step.}
 \item{steptol}{A positive scalar providing the minimum allowable
 relative step length.}
 \item{iterlim}{a positive integer specifying the maximum number of
-iterations to be performed before the program in
-terminated.}
+  iterations to be performed before the program is terminated.}
 }
 \description{
 This function carries out a minimization of the function \code{f}
@@ -55,18 +52,22 @@ A list containing the following components:
 \item{gradient}{the gradient at the estimated minimum of \code{f}.}
 \item{hessian}{the hessian at the estimated minimum of \code{f} (if requested).}
 \item{code}{an integer indicating why the optimization process terminated.
-1 = relative gradient is close to zero, current iterate is
-probably solution.
-2 = successive iterates within tolerance, current iterate
-is probably solution.
-3 = last global step failed to locate a point lower than
-\code{estimate}.  Either \code{estimate} is an approximate local minimum of
-the function or \code{steptol} is too small.
-4 = iteration limit exceeded.
-5 = maximum step size \code{stepmax} exceeded five consecutive
-times.  Either the function is unbounded below,
-becomes asymptotic to a finite value from above in
-some direction, of \code{stepmax} is too small.}
+ \describe{
+    \item{1: }{relative gradient is close to zero, current iterate is
+      probably solution.}
+    \item{2: }{successive iterates within tolerance, current iterate
+      is probably solution.}
+    \item{3: }{last global step failed to locate a point lower than
+      \code{estimate}.  Either \code{estimate} is an approximate local
+      minimum of the function or \code{steptol} is too small.}
+    \item{4: }{iteration limit exceeded.}
+    \item{5: }{maximum step size \code{stepmax} exceeded five consecutive
+      times.  Either the function is unbounded below,
+      becomes asymptotic to a finite value from above in
+      some direction, of \code{stepmax} is too small.}
+  }
+}
+\item{iterations}{the number of iterations performed.}
 }
 \references{
 Dennis, J. E. and Schnabel, R. B. (1983) \emph{Numerical Methods for
@@ -80,9 +81,11 @@ system of algorithms for unconstrained minimization,
 \seealso{
 \code{\link{optimize}} for one-dimensional
 minimization and \code{\link{uniroot}} for root finding.
+\code{demo(nlm)} for more examples.
 }
 \examples{
 f <- function(x) sum((x-1:length(x))^2)
 nlm(f, c(10,10))
+nlm(f, c(10,10), print.level = 2)
 }
 \keyword{nonlinear}

@@ -18,8 +18,24 @@ equally spaced values from
 \code{from} to \code{to}.
 The last generates the sequence
 \code{1, 2}, \ldots, \code{length(along)}.
+
+If \code{from} and \code{to} are factors of the same length,
+the ``cross'' of the two is returned.
 }
 \seealso{
 \code{\link{rep}}, \code{\link{sequence}}, \code{\link{row}}, \code{\link{col}}.
+}
+\examples{
+1:4
+seq(0,1, length=11)
+seq(1,9, by = 2) # match
+seq(1,9, by = pi)# stay below
+
+for (x in list(NULL, letters[1:6], list(1,pi)))
+  cat("x=",deparse(x),";  seq(along = x):",seq(along = x),"\n")
+
+f1_ gl(2,3); f1
+f2_ gl(3,2); f2
+f1:f2 # a factor, the ``cross''  f1 x f2
 }
 \keyword{manip}
