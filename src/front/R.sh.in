@@ -25,12 +25,15 @@ case ${ARG} in
         echo "  --no-readline              Don't use readline for command-line editing."
         echo "  --no-site-file             Don't read the site-wide Rprofile."
         echo "  --no-init-file             Don't read the .Rprofile or ~/.Rprofile files."
-        echo "  -v N                       Set the vector heap size to N megabytes."
-        echo "  -n N                       Set the number of cons cells to N."
+        echo "  --vsize N                  Set the vector heap size to N megabytes."
+        echo "  --nsize N                  Set the number of cons cells to N."
         echo "  -h, --help, -?             Print short help message and exit."
-        echo "  -q, --quiet                Make R run as quietly as possible."
-        echo "  -V, --version              Print version info and exit."
+        echo "  -q, --quiet, --silent      Make R run as quietly as possible."
+        echo "  --version                  Print version info and exit."
+	echo "  --verbose                  Print more information about progress."
         echo "  -d NAME, --debugger NAME   Run R through debugger NAME."
+	echo ""
+	echo "Report bugs to R-bugs@biostat.ku.dk."
 	exit 0 ;;
 esac	
 
