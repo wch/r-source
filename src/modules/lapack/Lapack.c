@@ -133,7 +133,7 @@ static SEXP modLa_rs(SEXP xin, SEXP only_values, SEXP method)
 	
 	range[0] = 'A';
 	if (!ov) PROTECT(z = allocMatrix(REALSXP, n, n));
-	isuppz = (int *) R_alloc(n, sizeof(int));
+	isuppz = (int *) R_alloc(2*n, sizeof(int));
 	/* ask for optimal size of work arrays */
 	lwork = -1; liwork = -1;
 	F77_CALL(dsyevr)(jobv, range, uplo, &n, rx, &n, 
