@@ -19,7 +19,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* finds dsqrt(a**2+b**2) without overflow or destructive underflow */
+/* finds sqrt(a^2 + b^2) without overflow or destructive underflow */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -35,7 +35,7 @@ double pythag(double a, double b)
     p = fmax2(fabs(a), fabs(b));
     if (p != 0.0) {
 
-	/* r = (fmin(fabs(a), fabs(b))/p)**2 */
+	/* r = (fmin(fabs(a), fabs(b))/p)^2 */
 
 	tmp = fmin2(fabs(a), fabs(b))/p;
 	r = tmp * tmp;
@@ -47,7 +47,7 @@ double pythag(double a, double b)
 	    u = 1.0 + 2.0 * s;
 	    p = u * p;
 
-	    /* r = (s / u)**2 * r */
+	    /* r = (s / u)^2 * r */
 
 	    tmp = (s / u);
 	    r = tmp * tmp * r;
