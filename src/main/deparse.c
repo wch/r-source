@@ -1090,6 +1090,8 @@ static void args2buff(SEXP arglist, int lineb, int formals, LocalParseData *d)
     Rboolean lbreak = FALSE;
 
     while (arglist != R_NilValue) {
+	if (TYPEOF(arglist) != LISTSXP && TYPEOF(arglist) != LANGSXP)
+            error("badly formed function expression");
 	if (TAG(arglist) != R_NilValue) {
 #if 0
 	    deparse2buff(TAG(arglist));
