@@ -204,7 +204,7 @@ test-Specific:
 
 test-Packages:
 	@for p in $(R_PKGS_BASE); do \
-	  echo "* checking package '$${p}'"; \
+	  echo "checking package '$${p}'"; \
 	  R_CHECK_FF_CALLS=yes $(top_builddir)/bin/R CMD check \
 	    $(top_srcdir)/src/library/$${p} || echo; \
 	done
@@ -372,9 +372,9 @@ test-Packages-Recommended:
 	    (cd Packages && $(TAR) xf -) ; \
 	  if grep "^Contains:" "Packages/$${p}/DESCRIPTION" >/dev/null; \
 	  then \
-	    echo "* checking bundle '$${p}'"; \
+	    echo "checking bundle '$${p}'"; \
 	  else \
-	    echo "* checking package '$${p}'"; \
+	    echo "checking package '$${p}'"; \
 	  fi; \
 	  R_LIBS= R_CHECK_SKIP_INSTALL=yes R_CHECK_FF_CALLS=yes \
 	    $(top_builddir)/bin/R CMD check \
