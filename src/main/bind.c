@@ -290,6 +290,7 @@ static SEXP TagName(SEXP tag, SEXP base, int i)
 		tag = STRING(tag)[0];
 		break;
 	case CHARSXP:
+	        break;
 	case NILSXP:
 		tag = t;
 		break;
@@ -335,6 +336,86 @@ static SEXP TagName(SEXP tag, SEXP base, int i)
 	return ans;
 }
 
+static SEXP blank; /* defined on entry into ExtractNames */
+static int offset;
+static void ExtractNames(SEXP args, int recurse, int check, SEXP base);
+
+static void ExtractVectorNames(SEXP v, SEXP tag, SEXP base)
+{
+    int i;
+    SEXP s;
+
+    if( !isNull(tag) ) 
+	if(isNull(s = getAttrib(v, R_NamesSymbol))) {
+	    switch( length(v) ) {
+	    case 0:
+		break;
+	    case 1:
+		STRING(ans_names)[ans_nnames++] = TagName(tag, base, offset);
+		break;
+	    default:
+		for(i=0 ; i<length(v) ; i++)
+		    STRING(ans_names)[ans_nnames++] 
+			= TagName(tag, base, i+1+offset);
+	    }
+	}
+	else {
+	    base = TagName(tag, base, 0);
+	    for(i=0 ; i<length(v) ; i++)
+		STRING(ans_names)[ans_nnames++] 
+		    = TagName(STRING(s)[i], base, offset);
+	}
+	    
+    else {
+	if(base == R_NilValue) {
+	    if(isNull(s = getAttrib(v, R_NamesSymbol))) {
+		for(i=0 ; i<length(v) ; i++)
+		    STRING(ans_names)[ans_nnames++] = blank;
+	    }
+	    else {
+		for(i=0 ; i<length(v) ; i++)
+		    STRING(ans_names)[ans_nnames++] = STRING(s)[i];
+	    }
+	} else {
+	    if(isNull(s = getAttrib(v, R_NamesSymbol))) {
+		for(i=0 ; i<length(v) ; i++)
+		    STRING(ans_names)[ans_nnames++] 
+			= TagName(base, R_NilValue, i+1+offset);
+	    } else {
+		for(i=0 ; i<length(v) ; i++)
+		    STRING(ans_names)[ans_nnames++] 
+			= TagName(STRING(s)[i], base, offset);
+	    }
+	    offset+=i;
+	}
+    }
+}
+
+
+static void ExtractListNames(SEXP l, SEXP tag, int recurse, SEXP base)
+{
+    int i;
+
+    base = TagName(tag, base, 0);
+    if(recurse) {
+	ExtractNames(l, recurse, 0, base);
+    } else {
+	for ( i = 1 ; l != R_NilValue ; i++, l = CDR(l)) {
+	    if( isNull(base) ) {
+		if(!isNull(TAG(l)))
+		    STRING(ans_names)[ans_nnames++] = TagName(TAG(l),base,0);
+		else
+		    STRING(ans_names)[ans_nnames++] = blank;
+	    } else {
+		if( !isNull(TAG(l)) )
+		    STRING(ans_names)[ans_nnames++] = TagName(TAG(l),base,0);
+		else
+		    STRING(ans_names)[ans_nnames++] = TagName(TAG(l),base,i);
+	    }
+	}
+    }
+}
+
 /*
    since ExtractNames is done recursively and it contains a check on the
    names found there must be some mechanism for saying not to check to them;
@@ -342,86 +423,37 @@ static SEXP TagName(SEXP tag, SEXP base, int i)
 */
 static void ExtractNames(SEXP args, int recurse, int check, SEXP base)
 {
-	SEXP blank, s;
-	int i, offset=0;
+    PROTECT(blank = mkChar(""));
+    offset = 0;
 
-	PROTECT(blank=mkChar(""));
+    for ( ; args != R_NilValue ; args = CDR(args) ) {
 
-	while(args != R_NilValue) {
-	  if(!isNull(CAR(args))) {
-	    if(isVector(CAR(args))) {
-		if(!isNull(TAG(args))) {
-		  switch(length(CAR(args))) {
-		  case 0:
-		    break;
-		  case 1:
-		    STRING(ans_names)[ans_nnames++] = TagName(TAG(args),base, offset);
-		    break;
-		  default:
-		    for(i=0 ; i<length(CAR(args)) ; i++)
-		      STRING(ans_names)[ans_nnames++] = TagName(TAG(args), base, i+1+offset);
-		  }
-		} else {
-		  if(base == R_NilValue) {
-		    if(isNull(s = getAttrib(CAR(args), R_NamesSymbol))) {
-		      for(i=0 ; i<length(CAR(args)) ; i++)
-			STRING(ans_names)[ans_nnames++] = blank;
-		    }
-		    else {
-		      for(i=0 ; i<length(CAR(args)) ; i++)
-			STRING(ans_names)[ans_nnames++] = STRING(s)[i];
-		    }
-		  } else {
-		    if(isNull(s = getAttrib(CAR(args), R_NamesSymbol))) {
-		      for(i=0 ; i<length(CAR(args)) ; i++)
-			STRING(ans_names)[ans_nnames++] = TagName(base,R_NilValue,i+1+offset);
-		    } else {
-		      for(i=0 ; i<length(CAR(args)) ; i++)
-			STRING(ans_names)[ans_nnames++] = TagName(STRING(s)[i],base,offset);
-		    }
-		    offset+=i;
-		  }
-		}
-	    } else if(isList(CAR(args))) {
-		base = TAG(args);
-		if(recurse) {
-		  ExtractNames(CAR(args), recurse, 0, base);
-		} else {
-		  i = 1;
-		  s = CAR(args);
-		  while(s != R_NilValue) {
-		    if( isNull(base) ) {
-		      if(!isNull(TAG(s)))
-			STRING(ans_names)[ans_nnames++] = TagName(TAG(s),base,0);
-		      else
-			STRING(ans_names)[ans_nnames++] = blank;
-		    } else {
-		      if( !isNull(TAG(s)) )
-			STRING(ans_names)[ans_nnames++] = TagName(TAG(s),base,0);
-		      else
-			STRING(ans_names)[ans_nnames++] = TagName(TAG(s),base,i);
-		    }
-		    s = CDR(s);
-		    i++;
-		  }
-		}
-		base = R_NilValue;
-	    } else { /* neither	 Vector	 nor  List */
-		if(!isNull(TAG(args)))
-		  STRING(ans_names)[ans_nnames++] = PRINTNAME(TAG(args));
-		else
-		  STRING(ans_names)[ans_nnames++] = blank;
-	    }
-	  } /* if(! null...) */
-	  args = CDR(args);
-	} /* while */
-	if( check && ans_nnames != ans_length) {
-		printf("INTERNAL ERROR: ans_nnames = %d	   ans_length = %d\n",
-		       ans_nnames, ans_length);
-		error("incorrect names vector length\n");
+	if(isNull(CAR(args)))
+	    continue;
+
+	if(isVector(CAR(args))) 
+	    ExtractVectorNames(CAR(args), TAG(args), base);
+	    
+	else if(isList(CAR(args))) 
+	    ExtractListNames(CAR(args), TAG(args), recurse, base);
+
+	else { /* neither	 Vector	 nor  List */
+	    if(!isNull(TAG(args)))
+		STRING(ans_names)[ans_nnames++] = PRINTNAME(TAG(args));
+	    else
+		STRING(ans_names)[ans_nnames++] = blank;
 	}
-	UNPROTECT(1);
+    } /* for */
+
+    if( check && ans_nnames != ans_length) {
+	printf("INTERNAL ERROR: ans_nnames = %d	   ans_length = %d\n",
+	       ans_nnames, ans_length);
+	error("incorrect names vector length\n");
+    }
+    UNPROTECT(1);
 }
+
+
 
 static SEXP ExtractOptionals(SEXP ans, int *recurse, int *usenames)
 {

@@ -16,6 +16,9 @@ BUG FIXES
     o	Changes to the PostScript device driver mean that the volume
 	of output has been reduced to about a third of what it was.
 
+    o   Fixes and restructuring to name generation in connection with 
+	unlist() and c().
+
 
 		CHANGES IN R VERSION 0.62.2
 
