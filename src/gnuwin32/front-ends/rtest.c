@@ -1,7 +1,9 @@
 #include <windows.h>
 #include <stdio.h>
+#include "Rconfig.h"
 #include "Rversion.h"
 #include "Startup.h"
+/* for askok and askyesnocancel */
 #include "graphapp/graphapp.h"
 
 /* for signal-handling code */
@@ -37,8 +39,11 @@ extern int R_ReplDLLdo1();
 extern void run_Rmainloop(void);
 
 
-/* getline-based input, simple output */
+/* simple input, simple output */
 
+/* This version blocks all events: a real one needs to call ProcessEvents
+   frequently. See rterm.c and ../system.c for one approach using
+   a separate thread for input */
 int myReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     fputs(prompt, stdout);
@@ -71,8 +76,8 @@ int main (int argc, char **argv)
 {
     structRstart rp;
     Rstart Rp = &rp;
-    char Rversion[25];
-    
+    char Rversion[25], RUser[MAX_PATH], RHome[MAX_PATH], *p;
+
     sprintf(Rversion, "%s.%s", R_MAJOR, R_MINOR);
     if(strcmp(getDLLVersion(), Rversion) != 0) {
 	fprintf(stderr, "Error: R.DLL version does not match\n");
@@ -80,8 +85,27 @@ int main (int argc, char **argv)
     }
 
     R_DefParams(Rp);
-    Rp->rhome = "c:/R/rw0651";
-    Rp->home = "c:/bdr";
+    if(getenv("R_HOME")) {
+	strcpy(RHome, getenv("R_HOME"));
+    } else {
+	strcpy(RHome, "c:/R/R-release");
+    }
+    Rp->rhome = RHome;
+/*
+ * try R_USER then HOME then working directory
+ */
+    if (getenv("R_USER")) {
+	strcpy(RUser, getenv("R_USER"));
+    } else if (getenv("HOME")) {
+	strcpy(RUser, getenv("HOME"));
+    } else if (getenv("HOMEDIR")) {
+	strcpy(RUser, getenv("HOMEDIR"));
+	strcat(RUser, getenv("HOMEPATH"));
+    } else
+	GetCurrentDirectory(MAX_PATH, RUser);
+    p = RUser + (strlen(RUser) - 1);
+    if (*p == '/' || *p == '\\') *p = '\0';
+    Rp->home = RUser;
     Rp->CharacterMode = LinkDLL;
     Rp->ReadConsole = myReadConsole;
     Rp->WriteConsole = myWriteConsole;
@@ -94,8 +118,11 @@ int main (int argc, char **argv)
     Rp->R_Interactive = 0;
     Rp->RestoreAction = SA_RESTORE;
     Rp->SaveAction = SA_NOSAVE;
-    Rp->nsize = 300000;
-    Rp->vsize = 6e6;
+    /* Rp->nsize = 300000;
+       Rp->vsize = 6e6; */
+    R_SetParams(Rp); /* so R_ShowMessage is set */
+    R_SizeFromEnv(Rp);
+    R_SetParams(Rp);
     R_SetParams(Rp);
 
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));

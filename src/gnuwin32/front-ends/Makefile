@@ -8,7 +8,7 @@ else
   LINKFLAGS=-s
 endif
 
-all: ../../../bin/Rgui.exe ../../../bin/Rterm.exe
+all: ../../../bin/Rgui.exe ../../../bin/Rterm.exe ../../../bin/Rproxy.dll
 
 ../../../bin/Rgui.exe: Rgui.exe
 	$(MKDIR) -p ../../../bin
@@ -32,9 +32,18 @@ Rgui.exe: graphappmain.o  rgui.o rgico.o
 
 Rterm.exe: graphappmain.o rterm.o rtico.o
 
-rgui.o rterm.o rproxy.o: ../../include/Rversion.h
+rgui.o rterm.o rproxy_impl.o: ../../include/Rversion.h
 
 clean:
-	$(RM) *.o *.exe *~ *.exp
+	$(RM) *.o *.obj *.exe *~ *.exp *.def *.dll *.lib
 
+rproxy-CFLAGS=-I../../include -Wall
+rproxy_impl-CFLAGS=-I../../include -Wall
+bdx-CFLAGS=-I../../include -I.. -Wall
+rproxy-DLLFLAGS=-mwindows -L.. -Wall
+rproxy-DLLLIBS=-lR
+rproxy.dll: rproxy.o rproxy_impl.o bdx.o rtico.o
 
+../../../bin/Rproxy.dll: rproxy.dll
+	$(MKDIR) -p ../../../bin
+	$(CP) $^ $@	

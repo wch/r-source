@@ -118,6 +118,7 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0, e = envir; strlen(e) > 0; i++, e += strlen(e)+1) {
 	    STRING(ans)[i] = mkChar(e);
 	}
+	FreeEnvironmentStrings(envir);
     } else {
 	PROTECT(ans = allocVector(STRSXP, i));
 	for (j = 0; j < i; j++) {

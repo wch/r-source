@@ -11,7 +11,7 @@ endif
 LIBS=-L.. -lR
 CFLAGS=-Wall
 
-rtest-CFLAGS=-I.. -I../../include -DWin32
+rtest-CFLAGS=-I.. -I../../include
 Rtest.exe: rtest.o R.dll
 	$(CC) -o $@ rtest.o -L.. -lR
 
@@ -21,6 +21,6 @@ R.dll: ../R.dll
 	$(CP) -p $^ $@
 
 clean:
-	$(RM) *.o *.exe *~ *.exp
+	$(RM) rtest.o Rtest.exe *~ R.dll
 
 

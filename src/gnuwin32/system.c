@@ -715,7 +715,7 @@ int cmdlineoptions(int ac, char **av)
  * try R_USER then HOME then working directory
  */
     if (getenv("R_USER")) {
-	strcpy(RUser, getenv("HOME"));
+	strcpy(RUser, getenv("R_USER"));
     } else if (getenv("HOME")) {
 	    strcpy(RUser, getenv("HOME"));
     } else if (getenv("HOMEDIR")) {
