@@ -1289,7 +1289,7 @@ AC_EGREP_CPP([yes],
 AC_DEFUN([_R_PATH_TCL_CONFIG],
 [AC_MSG_CHECKING([for tclConfig.sh in library (sub)directories])
 AC_CACHE_VAL([r_cv_path_TCL_CONFIG],
-[for ldir in /opt/lib /sw/lib /usr/local/lib /usr/lib /lib /usr/lib64 ; do
+[for ldir in /opt/lib /sw/lib /usr/local/lib /usr/lib /lib; do
   for dir in \
       ${ldir} \
       `ls -d ${ldir}/tcl[[8-9]].[[0-9]]* 2>/dev/null | sort -r`; do
@@ -1309,7 +1309,7 @@ fi
 AC_DEFUN([_R_PATH_TK_CONFIG],
 [AC_MSG_CHECKING([for tkConfig.sh in library (sub)directories])
 AC_CACHE_VAL([r_cv_path_TK_CONFIG],
-[for ldir in /opt/lib /sw/lib /usr/local/lib /usr/lib /lib /usr/lib64 ; do
+[for ldir in /opt/lib /sw/lib /usr/local/lib /usr/lib /lib; do
   for dir in \
       ${ldir} \
       `ls -d ${ldir}/tk[[8-9]].[[0-9]]* 2>/dev/null | sort -r`; do
