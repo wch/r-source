@@ -2345,7 +2345,11 @@ void GCheckState(DevDesc *dd)
     if(Rf_gpptr(dd)->state == 0)
 	error("plot.new has not been called yet");
     if (!Rf_gpptr(dd)->valid)
+#ifdef OLD
 	onintr();
+#else
+        error("invalid graphics state");
+#endif
 }
 
 /*-------------------------------------------------------------------
