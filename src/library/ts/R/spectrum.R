@@ -1,3 +1,4 @@
+## based on code by Martyn Plummer
 spectrum <- function (..., method = c("pgram", "ar"))
 {
     switch(match.arg(method),
@@ -6,6 +7,7 @@ spectrum <- function (..., method = c("pgram", "ar"))
            )
 }
 
+## spec.taper based on code by Kurt Hornik
 spec.taper <- function (x, p = 0.1)
 {
     if (any(p < 0) || any(p > 0.5))
@@ -46,7 +48,7 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
             stop("x must be a time series or an ar() fit")
         series <- x$series
         xfreq <- x$frequency
-        if(is.arrary(x$ar)) nser <- dim(x$ar)[2] else nser <- 1
+        if(is.array(x$ar)) nser <- dim(x$ar)[2] else nser <- 1
     }
     n <- x$n.used
     order <- x$order
@@ -69,9 +71,9 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
     } else return(spg.out)
 }
 
-
 spec.pgram <-
-    function (x, spans = 1, taper = 0.1, pad = 0, fast = TRUE,
+    function (x, spans = NULL, kernel = NULL, taper = 0.1,
+              pad = 0, fast = TRUE,
               demean = FALSE, detrend = TRUE,
               plot = TRUE, na.action = na.fail, ...)
 {
@@ -82,6 +84,9 @@ spec.pgram <-
     x <- as.matrix(x)
     N <- nrow(x)
     nser <- ncol(x)
+    if(!is.null(spans)) kernel <- modified.daniell.kernel(spans %/% 2)
+    if(!is.null(kernel) && !is.kernel(kernel))
+        stop("must specify spans or a valid kernel")
     if (detrend) {
         t <- 1:N - (N + 1)/2
         sumt2 <- N * (N^2 - 1)/12
@@ -92,6 +97,9 @@ spec.pgram <-
         x <- sweep(x, 2, apply(x, 2, mean))
     }
     x <- spec.taper(x, taper)
+    ## to correct for tapering: Bloomfield (1976, p. 194)
+    u2 <- (1 - (5/8)*taper)
+    u4 <- (1 - (93/128)*taper)
     if (pad > 0) {
         x <- rbind(x, matrix(0, nrow = N * pad, ncol = ncol(x)))
         N <- nrow(x)
@@ -108,39 +116,46 @@ spec.pgram <-
             pgram[, i, j] <- xfft[, i] * Conj(xfft[, j])/(N*2*pi*xfreq)
         }
     }
-    filter.list <- vector("list", length(spans))
-    for (i in 1:length(spans)) {
-        m <- floor(spans[i]/2)
-        spans[i] <- 2 * m + 1
-        filter.list[[i]] <-
-            if (m > 0) c(0.5, rep(1, 2 * m - 1), 0.5)/(2 * m) else 1
-    }
-    filter <- filter.list[[1]]
-    if (length(spans) > 1)
-        for (i in 2:length(spans)) filter <- convolve(filter.list[[i]],
-                                                      filter, type="open")
-    if (length(filter) > 1) {
-        ndiff <- nrow(pgram) - length(filter)
-        m <- floor(length(filter)/2)
-        if (ndiff < 0)
-            stop("filter too long!")
-        else for (i in 1:ncol(x)) for (j in 1:ncol(x)) {
-            pgram[, i, j] <- convolve(pgram[, i, j],
-                                      c(filter[(m + 1):(2 * m + 1)],
-                                        rep(0, ndiff), filter[1:m]))
+    if(length(spans) > 0) {
+        filter.list <- vector("list", length(spans))
+        for (i in 1:length(spans)) {
+            m <- floor(spans[i]/2)
+            spans[i] <- 2 * m + 1
+            filter.list[[i]] <-
+                if (m > 0) c(0.5, rep(1, 2 * m - 1), 0.5)/(2 * m) else 1
         }
+        filter <- filter.list[[1]]
+        if (length(spans) > 1)
+            for (i in 2:length(spans)) filter <- convolve(filter.list[[i]],
+                                                          filter, type="open")
+        if (length(filter) > 1) {
+            ndiff <- nrow(pgram) - length(filter)
+            m <- floor(length(filter)/2)
+            if (ndiff < 0)
+                stop("filter too long!")
+            else for (i in 1:ncol(x)) for (j in 1:ncol(x)) {
+                pgram[, i, j] <- convolve(pgram[, i, j],
+                                          c(filter[(m + 1):(2 * m + 1)],
+                                            rep(0, ndiff), filter[1:m]))
+            }
+        }
+        df <- 2/(sum(filter^2) * u4/u2^2)
+        m <- floor(length(filter)/2)
+        bandwidth <- sqrt(sum((1/12 + (-m:m)^2) * filter)) * xfreq/N
+    } else if(!is.null(kernel)) {
+        for (i in 1:ncol(x)) for (j in 1:ncol(x))
+                pgram[, i, j] <- apply.kernel(pgram[, i, j], kernel,
+                                              circular = TRUE)
+        df <- df.kernel(kernel)/(u4/u2^2)
+        bandwidth <- bandwidth.kernel(kernel) * xfreq/N
+    } else {
+        df <- 2/(u4/u2^2)
+        bandwidth <- sqrt(1/12) * xfreq/N
     }
-    ## correct for tapering: Bloomfield (1976, p. 194)
-    u2 <- (1 - (5/8)*taper)
-    u4 <- (1 - (93/128)*taper)
-    df <- 2/(sum(filter^2) * u4/u2^2)
-    m <- floor(length(filter)/2)
-    bandwidth <- sqrt(sum((1/12 + (0:(2 * m) - m)^2) * filter)) * xfreq/nrow(x)
     spec <- matrix(NA, nrow = Nspec, ncol = nser)
     for (i in 1:nser) spec[, i] <- Re(pgram[1:Nspec, i, i])
     if (nser == 1) {
         coh <- phase <- NULL
-        spec <- drop(spec)
     } else {
         coh <- phase <- matrix(NA, nrow = Nspec, ncol = nser * (nser - 1)/2)
         for (i in 1:(nser - 1)) {
@@ -153,12 +168,14 @@ spec.pgram <-
     }
     ## correct for tapering
     for (i in 1:nser) spec[, i] <- spec[, i]/u2
+    spec <- drop(spec)
     spg.out <-
         list(freq = freq, spec = spec, coh = coh, phase = phase,
-             spans = spans, filter = filter, df = df,
+             kernel = kernel, df = df,
              bandwidth = bandwidth, n.used = nrow(x),
              series = series,
-             method = ifelse(length(filter) > 1, "Smoothed Periodogram", "Raw Periodogram"),
+             method = ifelse(!is.null(kernel), "Smoothed Periodogram",
+                             "Raw Periodogram"),
              taper = taper, pad = pad, detrend = detrend, demean = demean)
     class(spg.out) <- "spec"
     if(plot) {

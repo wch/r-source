@@ -1,5 +1,4 @@
-# file MASS/cpgram.q
-# copyright (C) 1994-9 W. N. Venables and B. D. Ripley
+# from MASS library: (C) 1994-9 B.D. Ripley
 #
 cpgram <- function(ts, taper=0.1,
    main=paste("Series: ", deparse(substitute(ts))) )

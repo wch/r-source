@@ -1,3 +1,13 @@
+c
+c     from netlib/a/stl: no authorship nor copyright claim in the source;
+c     presumably by the authors of 
+c
+c     R.B. Cleveland, W.S.Cleveland, J.E. McRae, and I. Terpenning,
+c     STL: A Seasonal-Trend Decomposition Procedure Based on Loess, 
+c     Statistics Research Report, AT&T Bell Laboratories.
+c
+c     converted to double precision by B.D. Ripley 1999
+c
       subroutine stl(y,n,np,ns,nt,nl,isdeg,itdeg,ildeg,nsjump,ntjump,
      &nljump,ni,no,rw,season,trend,work)
       integer n, np, ns, nt, nl, isdeg, itdeg, ildeg, nsjump, ntjump, 

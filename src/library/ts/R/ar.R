@@ -1,3 +1,4 @@
+## based on, especially multivariate case, code by Martyn Plummer
 ar <-
     function (x, aic = TRUE, order.max = NULL, method=c("yule-walker","burg"),
               na.action = na.fail)

@@ -111,7 +111,7 @@ pacf.mts <- function(x, lag.max = NULL, plot = TRUE, na.action = na.fail, ...)
 
 plot.acf <-
     function (x, ci = 0.95, type = "h", xlab = "Lag", ylab = NULL,
-              ylim = NULL, main = NULL, ci.col="red", ...)
+              ylim = NULL, main = NULL, ci.col="blue", ...)
 {
     opar <- NULL
     on.exit(par(opar))
