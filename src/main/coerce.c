@@ -454,6 +454,10 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 			x = CDR(x);
 		}
 		break;
+	default:
+		warningcall(call, "is.na() applied to non-(list or vector)\n");
+		for(i=0 ; i<n ; i++)
+			LOGICAL(ans)[i] = 0;
 	}
 	if (dims != R_NilValue)
 		setAttrib(ans, R_DimSymbol, dims);
@@ -486,6 +490,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 	ans = allocVector(LGLSXP, length(CAR(args)));
 	x = CAR(args);
+	n = length(x);
 	if (isVector(x)) {
 		PROTECT(dims = getAttrib(x, R_DimSymbol));
 		if (isArray(x))
@@ -498,11 +503,11 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case LGLSXP:
 	case INTSXP:
 	case STRSXP:
-		for (i = 0; i < length(x); i++)
+		for (i = 0; i < n; i++)
 			LOGICAL(ans)[i] = 0;
 		break;
 	case REALSXP:
-		for (i = 0; i < length(x); i++)
+		for (i = 0; i < n; i++)
 #ifdef IEEE_754
 			LOGICAL(ans)[i] = R_IsNaN(REAL(x)[i]);
 #else
@@ -510,7 +515,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 		break;
 	case CPLXSXP:
-		for (i = 0; i < length(x); i++)
+		for (i = 0; i < n; i++)
 #ifdef IEEE_754
 			LOGICAL(ans)[i] = (R_IsNaN(COMPLEX(x)[i].r)
 					|| R_IsNaN(COMPLEX(x)[i].i));
@@ -519,7 +524,6 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 		break;
 	case LISTSXP:
-		n = length(x);
 		for (i = 0; i < n; i++) {
 			if (!isVector(CAR(x)) || length(CAR(x)) > 1)
 				LOGICAL(ans)[i] = 0;
@@ -550,6 +554,10 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 			x = CDR(x);
 		}
 		break;
+	default:
+		warningcall(call, "is.nan() applied to non-(list or vector)\n");
+		for(i=0 ; i<n ; i++)
+			LOGICAL(ans)[i] = 0;
 	}
 	if (dims != R_NilValue)
 		setAttrib(ans, R_DimSymbol, dims);
@@ -589,19 +597,19 @@ SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
   case LGLSXP:
   case INTSXP:
     for(i=0 ; i<n ; i++)
-	INTEGER(ans)[i] = (INTEGER(x)[i] != NA_INTEGER);
+	LOGICAL(ans)[i] = (INTEGER(x)[i] != NA_INTEGER);
     break;
   case REALSXP:
     for(i=0 ; i<n ; i++)
-	INTEGER(ans)[i] = FINITE(REAL(x)[i]);
+	LOGICAL(ans)[i] = FINITE(REAL(x)[i]);
     break;
   case CPLXSXP:
     for(i=0 ; i<n ; i++)
-	INTEGER(ans)[i] = (FINITE(COMPLEX(x)[i].r) && FINITE(COMPLEX(x)[i].i));
+	LOGICAL(ans)[i] = (FINITE(COMPLEX(x)[i].r) && FINITE(COMPLEX(x)[i].i));
     break;
   default:
     for(i=0 ; i<n ; i++)
-	INTEGER(ans)[i] = 0;
+	LOGICAL(ans)[i] = 0;
   }
   if (dims != R_NilValue)
     setAttrib(ans, R_DimSymbol, dims);
@@ -641,9 +649,9 @@ SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(i=0 ; i<n ; i++) {
       xr = REAL(x)[i];
       if (xr != xr /*NaN*/|| FINITE(xr))
-	INTEGER(ans)[i] = 0;
+	LOGICAL(ans)[i] = 0;
       else
-	INTEGER(ans)[i] = 1;
+	LOGICAL(ans)[i] = 1;
     }
     break;
   case CPLXSXP:
@@ -651,18 +659,18 @@ SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
       xr = COMPLEX(x)[i].r;
       xi = COMPLEX(x)[i].i;
       if ((xr != xr || FINITE(xr)) && (xi != xi || FINITE(xi)))
-	INTEGER(ans)[i] = 0;
+	LOGICAL(ans)[i] = 0;
       else
-	INTEGER(ans)[i] = 1;
+	LOGICAL(ans)[i] = 1;
     }
     break;
   default:
     for(i=0 ; i<n ; i++)
-	INTEGER(ans)[i] = 0;
+	LOGICAL(ans)[i] = 0;
   }
 #else
   for(i=0 ; i<n ; i++)
-    INTEGER(ans)[i] = 0;
+    LOGICAL(ans)[i] = 0;
 #endif
   if (!isNull(dims))
     setAttrib(ans, R_DimSymbol, dims);
