@@ -1,6 +1,7 @@
 /*
  *  Mathlib - A Mathematical Function Library
  *  Copyright (C) 1998  Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,10 +17,11 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  */
- 
-#include "Mathlib.h"
 
-int i1mach(int i)
+#include "Mathlib.h"
+#undef i1mach
+
+int Rf_i1mach(int i)
 {
     switch(i) {
 
@@ -49,7 +51,7 @@ int i1mach(int i)
     }
 }
 
-int i1mach_(int *i)
+int F77_SYMBOL(i1mach)(int *i)
 {
-	return i1mach(*i);
+    return Rf_i1mach(*i);
 }

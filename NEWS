@@ -253,6 +253,9 @@ BUG FIXES
     o	Assignment with unknown string index caused memory corruption
         when used on matrices.
 
+    o	It is now possible to call Fortran routines d1mach and 11mach
+	on platforms which do not append underscores.
+
 
 	**************************************************
 	*						 *
