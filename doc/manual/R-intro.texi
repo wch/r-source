@@ -6443,10 +6443,7 @@ disappear.
 
 @table @code
 @item
-Login, start your windowing system.  You should also have the file
-@file{morley.tab} in your working directory.  If not, seek the local
-expert (or get it yourself from the @file{datasets/data} subdirectory of the
-default @R{} library tree).  If you have, proceed.
+Login, start your windowing system.  
 @item $ R
 Start @R{} as appropriate for your platform.
 
@@ -6536,13 +6533,19 @@ Clean up again.
 @end table
 
 The next section will look at data from the classical experiment of
-Michaelson and Morley to measure the speed of light.
+Michaelson and Morley to measure the speed of light.  This dataset
+is available in the @code{morley} object, but we will read it
+to illustrate the @code{read.table} function.
 
 @table @code
-@item file.show("morley.tab")
+@item filename <- file.path(.find.package("datasets"), "intro", "morley.tab")
+@itemx filename
+Get the path to the data file.
+
+@item file.show(filename)
 Optional.  Look at the file.
 
-@item mm <- read.table("morley.tab")
+@item mm <- read.table(filename)
 @itemx mm
 Read in the Michaelson and Morley data as a data frame, and look at it.
 There are five experiments (column @code{Expt}) and each has 20 runs
