@@ -17,12 +17,12 @@
 }
 \arguments{
   \item{x}{a \code{histogram} object, or a list with components
-    \code{intensities}, \code{mid}, etc, see \code{\link{hist}} for
+    \code{density}, \code{mid}, etc, see \code{\link{hist}} for
     information about the components of \code{x}.}
   \item{freq}{logical; if \code{TRUE}, the
     histogram graphic is to present a representation of frequencies, i.e,
     \code{x$counts}; if \code{FALSE}, \emph{relative} frequencies
-    (``probabilities''), i.e., \code{x$intensities}, are plotted.  The
+    (``probabilities''), i.e., \code{x$density}, are plotted.  The
     default is true for equidistant \code{breaks} and false otherwise.}
   \item{col}{a colour to be used to fill the bars.  The default of
     \code{NULL} yields unfilled bars.}
@@ -36,7 +36,7 @@
   \item{axes}{logical, indicating if axes should be drawn.}
   \item{labels}{logical or character.  Additionally draw labels on top of bars,
     if not \code{FALSE}; if \code{TRUE}, draw the counts or rounded
-    intensities; if \code{labels} is a \code{character}, draw itself.}
+    densities; if \code{labels} is a \code{character}, draw itself.}
   \item{add}{logical.  If \code{TRUE}, only the bars are added to the
     current plot.  This is what \code{lines.histogram(*)} does.}
   \item{\dots}{further graphical parameters to \code{title} and \code{axis}.}
