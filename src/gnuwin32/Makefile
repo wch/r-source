@@ -4,6 +4,7 @@ HELP = YES
 WINHELP = CHM # NO, CHM, BOTH
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
+ALLPACKAGES = $(PACKAGES) tcltk
 RPREFIX = rw1010
 
 RHOME = $(shell perl pwd.pl ../..)# must be absolute path
@@ -26,9 +27,9 @@ OBJS = $(foreach i, $(SOURCES), $(basename $i).o)
 MAINLIBS = libmain.a libappl.a libmath.a
 EXTRALIBS = ga.a gl.a xdr.a em.a
 
-LIBFILES = $(foreach i, $(PACKAGES), ../../library/$i)
+LIBFILES = $(foreach i, $(ALLPACKAGES), ../../library/$i)
 PKGS = $(foreach i, $(PACKAGES), pkg-$i)
-PKGCLEAN = $(foreach i, $(PACKAGES), pkgclean-$i)
+PKGCLEAN = $(foreach i, $(ALLPACKAGES), pkgclean-$i)
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
@@ -111,8 +112,7 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 
 tcl:
 	sh fixed/GETDESC tcltk
-	$(MAKE) -C ../library/tcltk RHOME=$(RHOME) PKG=tcltk \
-	  -f $(RHOME)/src/gnuwin32/MakePkg
+	$(MAKE) pkg-tcltk
 
 
 CHTML:
