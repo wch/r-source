@@ -4,7 +4,7 @@
   <object name="rootObject" class="NSCustomObject" id="1">
     <string name="customClass">NSApplication</string>
   </object>
-  <array count="151" name="allObjects">
+  <array count="152" name="allObjects">
     <object class="IBCarbonMenu" id="29">
       <string name="title">main</string>
       <array count="7" name="items">
@@ -229,7 +229,7 @@
               <object class="IBCarbonMenuItem" id="218">
                 <string name="title">Package Manager</string>
                 <ostype name="command">ipkg</ostype>
-                <string name="helpTagText">Shows the list of currently installed packages and allow for loading them in the current session</string>
+                <string name="helpTagText">Shows the list of currently installed packages and allow for loading and unloading them in the current session</string>
               </object>
               <object class="IBCarbonMenuItem" id="219">
                 <string name="title">Datasets Manager</string>
@@ -286,18 +286,22 @@
                     <object class="IBCarbonMenuItem" id="367">
                       <string name="title">Download all</string>
                       <ostype name="command">bial</ostype>
+                      <string name="helpTagText">Get all BioConductor packages</string>
                     </object>
                     <object class="IBCarbonMenuItem" id="368">
                       <string name="title">Download Affy bundle</string>
                       <ostype name="command">biaf</ostype>
+                      <string name="helpTagText">Get BioConductor packages for analyzing Affymetrix expression arrays</string>
                     </object>
                     <object class="IBCarbonMenuItem" id="370">
                       <string name="title">Download cDNA bundle</string>
                       <ostype name="command">bicd</ostype>
+                      <string name="helpTagText">Get BioConductor packages for analyzing cDNA arrays</string>
                     </object>
                     <object class="IBCarbonMenuItem" id="376">
                       <string name="title">Update BioConductor</string>
                       <ostype name="command">bcup</ostype>
+                      <string name="helpTagText">Update to the most recent version of BioConductor packages</string>
                     </object>
                     <object class="IBCarbonMenuItem" id="372">
                       <string name="title">Individual packages</string>
@@ -314,6 +318,7 @@
                           </object>
                         </array>
                       </object>
+                      <string name="helpTagText">Download individual packages from Bioconductor</string>
                     </object>
                   </array>
                 </object>
@@ -418,6 +423,7 @@
       <object name="rootControl" class="IBCarbonRootControl" id="167">
         <string name="bounds">0 0 364 569 </string>
       </object>
+      <int name="windowPosition">7</int>
     </object>
     <reference idRef="167"/>
     <reference idRef="184"/>
@@ -528,7 +534,7 @@
             <array count="3" name="subviews">
               <object class="IBCarbonUserPane" id="377">
                 <string name="bounds">42 20 362 460 </string>
-                <array count="5" name="subviews">
+                <array count="6" name="subviews">
                   <object class="IBCarbonStaticText" id="378">
                     <string name="bounds">120 53 136 129 </string>
                     <string name="title">CRAN</string>
@@ -558,6 +564,13 @@
                   <object class="IBCarbonGroupBox" id="385">
                     <string name="bounds">72 31 249 440 </string>
                     <string name="title">Internet package archives</string>
+                  </object>
+                  <object class="IBCarbonCheckBox" id="390">
+                    <string name="bounds">287 58 301 430 </string>
+                    <ostype name="controlSignature">PREF</ostype>
+                    <int name="controlID">4503</int>
+                    <string name="title">New packages go in global RAqua directory</string>
+                    <string name="helpTagText">When cleared, packages are installed in the default location, when set, they are installed in the RAqua application for all users (usually requires administrator access)</string>
                   </object>
                 </array>
                 <ostype name="controlSignature">PRTB</ostype>
@@ -884,42 +897,42 @@
     <reference idRef="278"/>
     <reference idRef="279"/>
     <object class="IBCarbonUserPane" id="280">
-      <string name="bounds">-3667 -18601 -3369 -18161 </string>
+      <string name="bounds">-3667 -31363 -3369 -30923 </string>
       <array count="9" name="subviews">
         <object class="IBCarbonCheckBox" id="281">
-          <string name="bounds">10223 -9971 10225 -9967 </string>
+          <string name="bounds">-7057 13665 -7055 13669 </string>
           <string name="title">AntiAliasing</string>
         </object>
         <object class="IBCarbonCheckBox" id="282">
-          <string name="bounds">10223 -15689 10225 -15683 </string>
+          <string name="bounds">-7057 -29859 -7055 -29857 </string>
           <string name="title">Auto Refresh</string>
         </object>
         <object class="IBCarbonStaticText" id="284">
-          <string name="bounds">10109 -15254 10125 -14861 </string>
+          <string name="bounds">-7171 -29046 -7155 -28653 </string>
           <string name="title">Font Name</string>
         </object>
         <object class="IBCarbonButton" id="283">
-          <string name="bounds">10149 -14448 10169 -14444 </string>
+          <string name="bounds">-7131 -27862 -7111 -27858 </string>
           <string name="title">Choose Font</string>
         </object>
         <object class="IBCarbonEditText" id="285">
-          <string name="bounds">10156 -13461 10154 -13462 </string>
+          <string name="bounds">-7124 -26501 -7126 -26502 </string>
           <string name="title">12</string>
         </object>
         <object class="IBCarbonStaticText" id="286">
-          <string name="bounds">10147 -12875 10163 -12799 </string>
+          <string name="bounds">-7133 -25555 -7117 -25479 </string>
           <string name="title">Point Size</string>
         </object>
         <object class="IBCarbonEditText" id="287">
-          <string name="bounds">10027 -12217 10025 -12223 </string>
+          <string name="bounds">-7253 -24517 -7255 -24523 </string>
           <string name="title">5</string>
         </object>
         <object class="IBCarbonStaticText" id="288">
-          <string name="bounds">10019 -11578 10035 -11531 </string>
+          <string name="bounds">-7261 -23520 -7245 -23473 </string>
           <string name="title">Width:</string>
         </object>
         <object class="IBCarbonStaticText" id="290">
-          <string name="bounds">10019 -10698 10035 -10651 </string>
+          <string name="bounds">-7261 -22268 -7245 -22221 </string>
           <string name="title">Height:</string>
         </object>
       </array>
@@ -1026,8 +1039,9 @@
     <reference idRef="380"/>
     <reference idRef="381"/>
     <reference idRef="385"/>
+    <reference idRef="390"/>
   </array>
-  <array count="151" name="allParents">
+  <array count="152" name="allParents">
     <reference idRef="1"/>
     <reference idRef="29"/>
     <reference idRef="131"/>
@@ -1179,6 +1193,7 @@
     <reference idRef="377"/>
     <reference idRef="377"/>
     <reference idRef="377"/>
+    <reference idRef="377"/>
   </array>
   <dictionary count="5" name="nameTable">
     <string>AboutWindow</string>
@@ -1192,5 +1207,5 @@
     <string>PrefsWindow</string>
     <reference idRef="247"/>
   </dictionary>
-  <unsigned_int name="nextObjectID">390</unsigned_int>
+  <unsigned_int name="nextObjectID">391</unsigned_int>
 </object>

@@ -174,20 +174,30 @@ install.from.file <- function(pkg=file.choose()){
 "package.manager" <- function(){
   .packages() -> loaded.pkgs
   library() -> x
-  x$results[,1] -> pkgs
-  x$results[,3] -> pkgs.desc
+  x<-x$results[x$results[,1] != "base",]
+  x[,1] -> pkgs
+  x[,3] -> pkgs.desc
 
   is.loaded <- !is.na(match(pkgs,loaded.pkgs))
   pkgs.status <- character(length(is.loaded))
   pkgs.status[which(is.loaded)] <- "loaded"
   pkgs.status[which(!is.loaded)] <- " "
   
-  load.idx <- which(.Internal(package.manager(pkgs.status,pkgs,pkgs.desc)))
- 
-   for(i in load.idx){
+  load.idx <- .Internal(package.manager(is.loaded,pkgs,pkgs.desc))
+
+  toload<- which(load.idx & !is.loaded)
+  tounload<- which(is.loaded & !load.idx)
+
+
+  for(i in tounload){
+    cat("unloading package:", pkgs[i],"\n")
+    do.call("detach",list(paste("package", pkgs[i], sep=":")))
+  }
+  for(i in toload){
     cat("loading package:", pkgs[i],"\n")
     library(pkgs[i],character.only = TRUE)
-   }
+  }
+  
 }
 
 
@@ -210,6 +220,7 @@ install.from.file <- function(pkg=file.choose()){
  
  x11 <- X11
 
+ ## FIXME
  CRAN.binaries<-CRAN.packages
  
 }

@@ -989,6 +989,9 @@ NavUserAction WantToSave(WindowRef window, char *title, char *msg){
 }
 
 
+
+
+
 NavUserAction YesOrNot(char *title, char *msg, char *actionlab, char *canclab){
     OSStatus			err = noErr;
     NavDialogCreationOptions	dialogOptions;

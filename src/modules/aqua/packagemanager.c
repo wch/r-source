@@ -148,7 +148,7 @@ Boolean OpenPackageManager(void)
                                           RCloseWinEvent, (void *)PackageManagerWindow, NULL);
                     
  
-     SetWindowTitleWithCFString(PackageManagerWindow, CFSTR("Raqua: Load Packages"));
+     SetWindowTitleWithCFString(PackageManagerWindow, CFSTR("Raqua: Load/Unload Packages"));
      
      
     
@@ -180,7 +180,7 @@ Boolean OpenPackageManager(void)
    LoadThese = (Boolean*)malloc(NumOfAllPkgs * sizeof(Boolean));
    for(i=1;i<=NumOfAllPkgs;i++){
     PNameID[i-1] = i;
-    LoadThese[i-1] = false;
+    LoadThese[i-1] = LOGICAL(pkgstatus)[i-1] ? true : false;
    }
   AddDataBrowserItems(PackageManagerControl, kDataBrowserNoItem, 
 				NumOfAllPkgs, PNameID, kDataBrowserItemNoProperty);
@@ -243,7 +243,7 @@ static void CreatePackageManager(WindowRef window, ControlRef *browser)
 		sizeof(frameAndFocus), &frameAndFocus);
 }
 
-char *pmNames[] = { "Load It", "Status", "Package", "Description"};
+char *pmNames[] = { "Load/Unload", "Status", "Package", "Description"};
 
 
 static void ConfigurePackageManager(ControlRef browser)
@@ -407,7 +407,10 @@ static pascal OSStatus pmGetSetItemData(ControlRef browser,
                     strcpy( buf, CHAR(STRING_ELT(pkgname, row-1)) );
                 break;
                 case 2000:
-                    strcpy( buf, CHAR(STRING_ELT(pkgstatus, row-1)) );
+		  if (LOGICAL(pkgstatus)[row-1])
+                    strcpy( buf, "loaded" );
+		  else 
+		    strcpy(buf, " ");
                 break;
                 case 3000:
                     strcpy( buf, CHAR(STRING_ELT(pkgdesc, row-1)) );
@@ -422,6 +425,9 @@ static pascal OSStatus pmGetSetItemData(ControlRef browser,
          }
                    
          
+	 if(property == 10000){
+	   err = SetDataBrowserItemDataBooleanValue(itemData, LOGICAL(pkgstatus)[row-1]); 
+	 }  
         } else {
         
         if(property == 10000){
@@ -517,15 +523,15 @@ SEXP Raqua_packagemanger(SEXP call, SEXP op, SEXP args, SEXP env)
   checkArity(op, args);
 
   vm = vmaxget();
-  pkgname = CAR(args); args = CDR(args);
   pkgstatus = CAR(args); args = CDR(args);
+  pkgname = CAR(args); args = CDR(args);
   pkgdesc = CAR(args); args = CDR(args);
   
   
   
 
    
-  if(!isString(pkgname) | !isString(pkgstatus) | !isString(pkgdesc) )
+  if(!isString(pkgname) | !isLogical(pkgstatus) | !isString(pkgdesc) )
 	errorcall(call, "invalid arguments");
    
   TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadOnlyTag, RReadOnlyData);

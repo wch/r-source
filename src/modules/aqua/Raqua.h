@@ -63,6 +63,7 @@ typedef struct
   int           BufferSize;
   char          CRANmirror[255];
   char          BIOCmirror[255];
+  int           GlobalPackages;
 }  RAquaPrefs, *RAquaPrefsPointer, **RAquaPrefsHandle;
 
 
