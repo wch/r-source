@@ -867,7 +867,8 @@ the buffer and so update the console.
 
 They only @strong{seem} to be truncated: that $ at the end indicates you
 can scroll the window to see the rest of the line.  Use the horizontal
-scrollbar or the @key{CTRL + left/right arrow} keys to scroll horizontally.
+scrollbar or the @key{CTRL + left/right arrow} keys to scroll
+horizontally. (The @key{left/right arrow} keys work in the pager too.)
 
 
 
