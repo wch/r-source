@@ -32,7 +32,7 @@
 \section{Extended Regular Expressions}{
   This section covers the regular expressions allowed
   if \code{extended = TRUE} in \code{grep}, \code{regexpr}, \code{sub},
-  \code{gsub} and \code{strsplit}.  They are the GNU implementation of
+  \code{gsub} and \code{strsplit}.  They use the GNU implementation of
   the standard POSIX 1003.2.
   
   Regular expressions are constructed analogously to arithmetic
@@ -173,9 +173,9 @@
 }
 \section{Perl Regular Expressions}{
   The \code{perl=TRUE} argument to \code{grep}, \code{regexpr}, \code{sub} 
-  and \code{gsub} switches to the PCRE library, that implement regular
-  expression pattern matching using the same syntax and semantics as Perl
-  5, with just a few differences.
+  and \code{gsub} switches to the PCRE library that \sQuote{implements regular
+    expression pattern matching using the same syntax and semantics as Perl
+    5, with just a few differences}.
   
   A complete description will be added to this help page soon.
   Meanwhile please consult the man pages for PCRE (especially
@@ -184,10 +184,72 @@
   \url{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}.
   If PCRE support was compiled from the sources within \R, the PCRE
   version is 4.4: PCRE < 4.0 supports less of the Perl regular expressions.
+
+  Perl-like matching can work in several modes, set by the options
+  \code{(?i)} (caseless, equivalent to Perl's \code{/i}), \code{(?m)}
+  (multiline, equivalent to Perl's \code{/m}), \code{(?s)} (dotall, so a
+  dot matches all characters, even new lines: equivalent to Perl's \code{/s})
+  and \code{(?x)} (extended, whitespace data characters are ignored
+  unless escaped: equivalent to Perl's \code{/x}).  These can be
+  concatenated, so for example, \code{(?im)} sets caseless multiline
+  matching. It is also possible to unset these options by preceding the
+  letter with a hyphen, and a combined setting and unsetting such as
+  \code{(?im-sx)}.  These settings can be applied within patterns, and
+  then apply to the remainder of the pattern.  Additional options not in
+  Perl include \code{(?U} to set \sQuote{ungreedy} mode (so matching is
+  minimal unless \code{?} is used, when it is greedy).
+
+  If you want to remove the special meaning from a sequence of
+  characters, you can do so by putting them between \code{\\Q} and
+  \code{\\E}. This is different from Perl in that \code{$} and \code{@} are
+  handled as literals in \code{\\Q...\\E} sequences in PCRE, whereas in
+  Perl, \code{$} and \code{@} cause variable interpolation.
+
+  The escape sequences \code{\\d}, \code{\\s} and \code{\\w} represent any
+  decimal digit, and space character and and \sQuote{word} character
+  (letter, digit or underscore in the current locale) respectively, and
+  their upper-case versions represent their negation.
+  Unlike POSIX, vertical tab is not regarded as a whitespace character.
+
+  Escape sequence \code{\\a} is BEL, \code{\\e} ESC, \code{\\f}
+  FF, \code{\\n} LF, \code{\\r} CR and \code{\\t} is TAB. In addition
+  \code{\\cx} is \code{cntrl-x} for any \code{x}, \code{\\ddd} is the
+  octal character \code{ddd} (unless interpretable as a backreference),
+  and \code{\\xhh} specifies a character in hex.
+
+  Outside a character class, \code{\\b} matches a word boundary,
+  \code{\\B} is its negation, \code{\\A} matches at start of subject (even
+  in multiline mode, unlike \code{^}),
+  \code{\\Z} matches at end of a subject or before newline at end, \code{\\z}
+  matches at end of a subject. and \code{\\G} matches at first matching
+  position in a subject. \code{\\C} matches a single byte. including a
+  newline.
+  
+  The same repeat quantifiers as extended POSIX are supported.  However,
+  if a quantifier is followed by \code{?}, the match is
+  \sQuote{ungreedy}, that is as short as possible rather than as long as
+  possible.  (Unless reversed by the \code{(?U)} option.)
+  
+  The backreference \code{\\N}, where N is one or two digits, matches the
+  substring previously matched by the Nth parenthesized subexpression of
+  the regular expression.
+
+  The sequence \code{(?#} marks the start of a comment which continues
+  up to the next closing parenthesis. Nested parentheses are not
+  permitted.  The characters that make up a comment play no part in the
+  pattern matching at all.
+
+  If the extended option is set, an unescaped \code{#} character outside
+  a character class introduces a comment that continues up to the next
+  newline character in the pattern.
+
+  Named subpatterns, possessive qualifiers, assertions and conditional
+  patterns are not covered here.
 }
 \author{
   This help page is based on the documentation of GNU grep 2.4.2, from
-  which the C code used by \R has been taken.
+  which the C code used by \R has been taken, and the
+  \code{pcrepattern} man page from PCRE 4.4.
 }
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},
