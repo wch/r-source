@@ -212,15 +212,15 @@ setMethod <-
       setGeneric(f, where = where)
     }
     allMethods <- getMethodsMetaData(f, where = where) # may be NULL
-    names <- formalArgs(fdef)
+    fnames <- formalArgs(fdef)
     snames <- names(signature)
     if(length(snames)>0)
-        signature <- matchSignature(names, signature, definition)
+        signature <- matchSignature(fnames, signature, definition)
     switch(typeof(definition),
-           closure = 
-           if(!identical(names, formalArgs(definition))) {
-             warning("Method and generic have different arguments: a revised version of the method will be generated")
-             definition <- conformMethodArgs(definition, fdef)
+           closure = {
+               mnames <- formalArgs(definition)
+               if(!identical(mnames, fnames)) 
+                   signature <- conformMethod(signature, mnames, fnames)
            },
            builtin = , special = {
              ## the only primitive methods allowed are those equivalent
@@ -231,7 +231,7 @@ setMethod <-
                 stop("Primitive functions cannot be methods; they must be enclosed in a regular function")
            },
            stop("Invalid method definition: not a function"))
-    allMethods <- insertMethod(allMethods, signature, names, definition)
+    allMethods <- insertMethod(allMethods, signature, fnames, definition)
     ## assign the methods (also updates the session info)
     assignMethodsMetaData(f, allMethods, where = where)
     f
@@ -365,11 +365,6 @@ dumpMethods <-
         else
             dumpMethods(f, "", c(signature, what), el, where)
     }
-    el <- attr(methods, ".Default")
-    if(is.function(el))
-        dumpMethod(f, signature, file = "", def = el)
-    else if(!is.null(el))
-        dumpMethods(f, "", c(signature, ""), el, where)
 }
 
 signature <-

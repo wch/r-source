@@ -912,54 +912,77 @@ SEXP GetArrayDimnames(SEXP x)
 static SEXP pseudo_NULL = 0;
 
 static void init_pseudo_NULL() {
-  /* create and preserve an object that is NOT R_NilValue, and is used
-     to represent slots that are NULL (which an attribute can not
-     be).  The point is not just to store NULL as a slot, but also to
-     provide a check on invalid slot names (see get_slot below).
+    /* create and preserve an object that is NOT R_NilValue, and is used
+       to represent slots that are NULL (which an attribute can not
+       be).  The point is not just to store NULL as a slot, but also to
+       provide a check on invalid slot names (see get_slot below).
 
-     The object has to be a symbol if we're going to check identity by
-     just looking at referential equality. */
-  pseudo_NULL = install("\001NULL\001");
+       The object has to be a symbol if we're going to check identity by
+       just looking at referential equality. */
+    pseudo_NULL = install("\001NULL\001");
 }
 
 SEXP R_do_slot(SEXP obj, SEXP name) {
-  /* currently we just use attributes, with all the current semantics
-     (except of course for no partial matching).  (So all the vagaries
-     of name, dimnames, etc carray over.)  Probably reasonable for
-     back compatibility. */
-  SEXP value = getAttrib(obj, name);
-  if(value == R_NilValue)
-    /* not there.  But since even NULL really does get stored, this
-       implies that there is no slot of this name.  Or somebody
-       screwed up by using atttr(..) <- NULL */
-    error("\"%s\" is not a valid slot for this object (or was mistakenly deleted)",
-	  CHAR(asChar(name)));
-  else if(value == pseudo_NULL)
-    value = R_NilValue;
-  return value;
+  /* Slots are stored as attributes to
+     provide some back-compatibility
+  */
+    SEXP value = NULL; int nprotect = 0;
+    SEXP input = name;
+    if(isSymbol(name) ) {
+	input = PROTECT(allocVector(STRSXP, 1));  nprotect++;
+	SET_STRING_ELT(input, 0, PRINTNAME(name));
+    }
+    else if(!(isString(name) && LENGTH(name) == 1))
+	error("invalid type or length for slot name");
+    value = getAttrib(obj, input);
+    if(value == R_NilValue)
+	/* not there.  But since even NULL really does get stored, this
+	   implies that there is no slot of this name.  Or somebody
+	   screwed up by using atttr(..) <- NULL */
+	error("\"%s\" is not a valid slot for this object (or was mistakenly deleted)",
+	      CHAR(asChar(input)));
+    else if(value == pseudo_NULL)
+	value = R_NilValue;
+    UNPROTECT(nprotect);
+    return value;
 }
 
 SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP check, SEXP value) {
-  if(check == R_NilValue || LOGICAL_VALUE(check))
-    /*  an error will occur in getting the slot if it's not defined */
-    R_do_slot(obj, name);
-  if(value == R_NilValue) {
-    /* slots, but not attributes, can be NULL.  Store a special symbol
-       instead. */
-    if(pseudo_NULL == 0)
-      init_pseudo_NULL();
-    value = pseudo_NULL;
-  }
-  PROTECT(obj);
-  setAttrib(obj, name, value);
-  UNPROTECT(1);
-  return obj;
+    SEXP input = name; int nprotect = 0;
+    Rboolean do_check = (R_has_methods(NULL) && 
+			 (check == R_NilValue || 
+			  LOGICAL_VALUE(check)));
+    if(do_check)
+	/* call the S language checker:  it will generate an error if
+	   the check fails, and return a possibly coerced value otherwise */
+	value = R_do_slot_check(obj, name, value);
+    if(isSymbol(name) ) {
+	input = PROTECT(allocVector(STRSXP, 1)); nprotect++;
+	SET_STRING_ELT(input, 0, PRINTNAME(name));
+    }
+    else if(!(isString(name) && LENGTH(name) == 1))
+	error("invalid type or length for slot name");
+    if(do_check)
+	/* check that the slot is currently there. Will generate an
+	   error if the name is a non-slot. */
+	R_do_slot(obj, input);
+    if(value == R_NilValue) {
+	/* slots, but not attributes, can be NULL.  Store a special symbol
+	   instead. */
+	if(pseudo_NULL == 0)
+	    init_pseudo_NULL();
+	value = pseudo_NULL;
+    }
+    PROTECT(obj); nprotect++;
+    setAttrib(obj, input, value);
+    UNPROTECT(nprotect);
+    return obj;
 }
 
 SEXP R_pseudo_null() {
-  if(pseudo_NULL == 0)
-    init_pseudo_NULL();
-  return pseudo_NULL;
+    if(pseudo_NULL == 0)
+	init_pseudo_NULL();
+    return pseudo_NULL;
 }
 
 
@@ -969,20 +992,12 @@ SEXP R_pseudo_null() {
 
 SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP input, nlist, object, ans;
-    input = PROTECT(allocVector(STRSXP, 1));
+    SEXP  nlist, object, ans;
 
     nlist = CADR(args);
-    if(isSymbol(nlist) )
-	SET_STRING_ELT(input, 0, PRINTNAME(nlist));
-    else if(isString(nlist) )
-	SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
-    else {
-	errorcall_return(call, "invalid slot type");
-    }
     PROTECT(object = eval(CAR(args), env));
-    ans = R_do_slot(object, input);
-    UNPROTECT(2);
+    ans = R_do_slot(object, nlist);
+    UNPROTECT(1);
     return ans;
 }
 
@@ -997,7 +1012,8 @@ SEXP do_AT_assign(SEXP call, SEXP op, SEXP args, SEXP env)
        this is not quite right.  It can, at the least, be a promise
        for the "@" case. */
     value = eval(CADDR(args), env);
-    ans = R_do_slot_assign(object, nlist, R_NilValue, value);
+    ans = R_do_slot_assign(object, nlist, R_NilValue/* force check */
+			   , value);
     UNPROTECT(1);
     return ans;
 }

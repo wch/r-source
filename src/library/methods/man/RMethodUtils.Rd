@@ -7,7 +7,7 @@
 \alias{getAllMethods}
 \alias{setAllMethodsSlot}
 \alias{doPrimitiveMethod}
-\alias{conformMethodArgs}
+\alias{conformMethod}
 \alias{getGeneric}
 \alias{getGroup}
 \alias{getGroupMembers}
@@ -25,6 +25,8 @@
 \alias{cacheGenericsMetaData}
 \alias{setPrimitiveMethods}
 \alias{copyEnvironment}
+\alias{printNoClass}
+\alias{print.default}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
 \alias{.EmptyPrimitiveSkeletons}
@@ -45,7 +47,7 @@ setAllMethodsSlot(mlist)
 
 doPrimitiveMethod(name, def, call=sys.call(-1), ev=sys.frame(-2))
 
-conformMethodArgs(def, fdef, envir)
+conformMethodArgs(signature, mnames, fnames)
 
 getGeneric(f, mustFind=FALSE)
 
@@ -73,6 +75,9 @@ cacheGenericsMetaData(generics, attach = TRUE, envir)
 
 setPrimitiveMethods(f, fdef, code, generic, mlist)
 
+printNoClass(x, digits, quote, na.print, print.gap, right, ...)
+
+print.default(x, ..., printTo = stdout())
 
 }
 \description{
@@ -94,6 +99,21 @@ that is, it's a primitive or internal
 
   
   }
+\item{\code{conformMethod}:}{
+    If the formal arguments, \code{mnames}, are not identical to the
+    formal arguments to the function, \code{fnames},
+    \code{conformMethod} determines whether the signature and the two
+    sets of arguments conform, and returns the signature, possibly
+    extended.
+
+    The method assignment conforms if either method and function have
+    identical formal argument lists.  It can also conform if the
+    method omits some of the formal arguments of the function but: (1)
+    the non-omitted arguments are a subset of the function arguments,
+    appearing in the same order; (2) there are no arguments to the
+    method that are not arguments to the function; and (3) the omitted
+    formal arguments do not appear as explicit classes in the signature.
+}
 \item{\code{defaultDumpName}:}{ 
   the default name to be used for dumping a method.
 
@@ -206,7 +226,14 @@ returns \code{NULL} or throws an error.
       information for a particular primitive function.  Don't call it directly.
       }
 
-\item{\code{.saveImage}}{Flag, used in dynamically initializing the
+      \item{\code{printNoClass},\code{print.default} :}{
+        \code{printNoClass} is equivalent to the version of \code{print.default} in the base
+        package.  The methods package overrides the latter function to provide
+        meaningful printing for formally defined classes, and
+        \code{printNoClass} is used to get the original default printing.
+      }
+}
+\item{\code{.saveImage}:}{Flag, used in dynamically initializing the
     methods package from \code{.First.lib}}
 }
 }

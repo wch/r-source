@@ -84,6 +84,12 @@ insertMethod <-
   ## the signature, and return the modified MethodsList.
   function(mlist, signature, args, def)
 {
+    if(identical(args[1], "...")) {
+        if(!identical(signature[1], "ANY"))
+            warning("Saw but ignored class \"", signature[1], "\" corresponding to ... argument(!)")
+        args <- args[-1]
+        signature <- signature[-1]
+    }
     if(length(signature) == 0)
         signature <- "ANY"
     Class <- el(signature, 1)
@@ -215,7 +221,7 @@ MethodsListSelect <-
       method <- insertMethodInEmptyList(selection, finalDefault)
       fromClass <- "ANY"
     }
-    if(is.null(method))
+    if(is.null(method) || is(method, "EmptyMethodsList"))
       value <- emptyMethodsList(mlist, thisClass) ## nothing found
     else {
       ##oldMethods <- elNamed(mlist@allMethods, thisClass)
@@ -392,20 +398,27 @@ showMlist <-
   ##
   ## If `includeDefs' is `TRUE', the currently known inherited methods are included;
   ## otherwise, only the directly defined methods.
-function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgNames = TRUE) {
+function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgNames = TRUE,
+         printTo = stdout()) {
+      if(identical(printTo, FALSE)) {
+          tmp <- tempfile()
+          con <- file(tmp, "w")
+      }
+      else
+          con <- printTo
   object <- linearizeMlist(mlist, inherited)
   methods <- object@methods
   signatures <- object@classes
   args <- object@arguments
   from <- object@fromClasses
-  if(!is.null(classes)) {
+  if(!is.null(classes) && length(signatures)>0) {
     keep <- !sapply(signatures, function(x, y)all(is.na(match(x, y))), classes)
     methods <- methods[keep]
     signatures <- signatures[keep]
     args <- args[keep]
   }
   if(length(methods) == 0)
-    cat("<Empty Methods List>\n")
+    cat(file=con, "<Empty Methods List>\n")
   else {
    n <- length(methods)
     labels <- character(n)
@@ -425,98 +438,112 @@ function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgName
         labels[[i]] <- paste(signatures[[i]], collapse = ", ")
     }
     for(i in seq(length=length(methods))) {
-      cat(labels[[i]])
+      cat(file=con, labels[[i]])
       if(includeDefs) {
-        cat(":\n")
-        print(methods[[i]])
+        cat(file=con, ":\n")
+        cat(file=con, deparse(methods[[i]]), sep="\n")
       }
-      cat("\n")
+      cat(file=con, "\n")
     }
   }
+    if(identical(printTo, FALSE)) {
+        close(con)
+        value <- readLines(tmp)
+        unlink(tmp)
+        value
+    }
 }
 
 promptMethods <-
   ## generate information in the style of `prompt' for the methods of the generic
   ## named `f'.
   ##
-  ## `file' can be a logical or the name of a file to print to.  If `file' is `FALSE',
+  ## `filename' can be a logical or the name of a file to print to.  If `file' is `FALSE',
   ## the methods skeleton is returned, to be included in other printing (typically,
   ## the output from `prompt'.
-  function(f, print = FALSE, inherited = FALSE) {
-    object <- linearizeMlist(getMethods(f), inherited)
-    methods <- object@methods; n <- length(methods)
-    args <- object@arguments
-    signatures <- object@classes
-    labels <- character(n)
-    for(i in seq(length = n))
-      labels[[i]] <- paste(args[[i]], signatures[[i]], sep = " = ", collapse = ", ")
-    text <- paste("\\item{", labels, "}{ ~~describe this method here }")
-    text <- c(paste("\\alias{methods_", f, "}", sep=""), "\\describe{", text, "}")
-    if(identical(print, FALSE))
-      return(text)
-    name <- paste("methods", f, sep="_")
-    if(identical(print, TRUE))
-      file <- paste(f, ".Rd", sep="")
-    else
-      file <- as.character(print)
-    text <- c(paste("\\name{", name, "}", sep=""), "\\non_function{}",
-              paste("\\title{ ~~Methods for", f, "}"), text,
-              "\\keyword{methods}", "\\keyword{ ~~ other possible keyword(s)}")
-    cat(text, file = file, sep="\n")
-    file
+  function(f, filename = TRUE, addTo = FALSE, inherited = FALSE) {
+      paste0 <- function(...)paste(..., sep="")
+      object <- linearizeMlist(getMethods(f), inherited)
+      methods <- object@methods; n <- length(methods)
+      args <- object@arguments
+      signatures <- object@classes
+      labels <- character(n)
+      fullName <- topicName("methods", f)
+      for(i in seq(length = n))
+          labels[[i]] <- paste(args[[i]], signatures[[i]], collapse = ", ", sep = " = ")
+      text <- paste0("\\item{", labels, "}{ ~~describe this method here }")
+      text <- c("\\section{Methods}{\\describe{", text, "}}")
+      aliasText <- paste0("\\alias{", fullName, "}")
+      endText <- c("\\keyword{methods}", "\\keyword{ ~~ other possible keyword(s)}")
+      if(identical(filename, FALSE))
+          return(c(aliasText, text))
+      if(identical(addTo, TRUE))
+          beginText <- readLines(paste0(f, ".Rd"))
+      else if(is(addTo, "character")) {
+          beginText <- addTo
+      }
+      else {
+          beginText <-  c(paste0("\\name{", fullName, "}"), "\\non_function{}",
+                paste0("\\title{ ~~ Methods for", f, " ~~}"))
+      }
+      if(identical(filename, TRUE))
+          filename <- paste0(fullName, ".Rd")
+      text <-c(beginText, aliasText, text, endText)
+      cat(text, file = filename, sep="\n")
+      filename
   }
 
 
 linearizeMlist <-
-  ## Undo the recursive nature of the methods list, making a list of function
-  ## defintions, with the names of the list being the corresponding signatures
-  ## (designed for printing; for looping over the methods, use `listFromMlist' instead).
-  ##
-  ## The function calls itself recursively.  `prev' is the previously selected class names
-  ##
-  ## If argument `classes' is provided, only signatures containing one of these classes
-  ## will be included.
-  function(mlist, inherited = TRUE) {
-    methods <- mlist@methods
-    allMethods <- mlist@allMethods
-    if(inherited && length(allMethods) >= length(methods)) {
-        anames <- names(allMethods)
-        inh <- is.na(match(anames, names(methods)))
-        methods <- allMethods
-        actualClasses <- mlist@fromClass
-    }
-    else
-      actualClasses <- names(methods)
-    preC <- function(y, x)c(x,y) # used with lapply below
-    cnames <- names(methods)
-    value <- list()
-    classes <- list()
-    arguments <- list()
-    fromClasses <- list()
-    argname <- mlist@argument
-    for(i in seq(along = cnames)) {
-        mi <- methods[[i]]
-        if(is.function(mi)) {
-          value <- c(value, list(mi))
-          classes <- c(classes, list(cnames[[i]]))
-          fromClasses <- c(fromClasses, list(actualClasses[[i]]))
-          arguments <- c(arguments, list(argname))
-        }
-        else if(is(mi, "MethodsList")) {
-          mi <- Recall(mi, inherited)
-          value <- c(value, mi@methods)
-          classes <- c(classes, lapply(mi@classes, preC, cnames[[i]]))
-          fromClasses <- c(fromClasses, lapply(mi@fromClasses, preC, actualClasses[[i]]))
-          arguments <- c(arguments, lapply(mi@arguments, preC, argname))
+    ## Undo the recursive nature of the methods list, making a list of function
+    ## defintions, with the names of the list being the corresponding signatures
+    ## (designed for printing; for looping over the methods, use `listFromMlist' instead).
+    ##
+    ## The function calls itself recursively.  `prev' is the previously selected class names
+    ##
+    ## If argument `classes' is provided, only signatures containing one of these classes
+    ## will be included.
+    function(mlist, inherited = TRUE) {
+        methods <- mlist@methods
+        allMethods <- mlist@allMethods
+        if(inherited && length(allMethods) >= length(methods)) {
+            anames <- names(allMethods)
+            inh <- is.na(match(anames, names(methods)))
+            methods <- allMethods
+            actualClasses <- mlist@fromClass
         }
         else
-          warning("Skipping methods list element ", paste(ci, collapse = ", "),
-              " of unexpected class \"", data.class(mi),
-              "\"\n\n")
-      }
-    new("LinearMethodsList", methods = value, classes = classes, arguments = arguments,
-        fromClasses = fromClasses)
-}
+            actualClasses <- names(methods)
+        preC <- function(y, x)c(x,y) # used with lapply below
+        cnames <- names(methods)
+        value <- list()
+        classes <- list()
+        arguments <- list()
+        fromClasses <- list()
+        argname <- mlist@argument
+        for(i in seq(along = cnames)) {
+            mi <- methods[[i]]
+            if(is.function(mi)) {
+                value <- c(value, list(mi))
+                classes <- c(classes, list(cnames[[i]]))
+                fromClasses <- c(fromClasses, list(actualClasses[[i]]))
+                arguments <- c(arguments, list(argname))
+            }
+            else if(is(mi, "MethodsList")) {
+                mi <- Recall(mi, inherited)
+                value <- c(value, mi@methods)
+                classes <- c(classes, lapply(mi@classes, preC, cnames[[i]]))
+                fromClasses <- c(fromClasses, lapply(mi@fromClasses, preC, actualClasses[[i]]))
+                arguments <- c(arguments, lapply(mi@arguments, preC, argname))
+            }
+            else
+                warning("Skipping methods list element ", paste(cnames[i], collapse = ", "),
+                        " of unexpected class \"", data.class(mi),
+                        "\"\n\n")
+        }
+        new("LinearMethodsList", methods = value, classes = classes, arguments = arguments,
+            fromClasses = fromClasses)
+    }
 
 print.MethodsList <- function(x, ...)
     showMlist(x)

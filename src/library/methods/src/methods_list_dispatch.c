@@ -17,6 +17,13 @@ SEXP setVarInFrame(SEXP, SEXP, SEXP);
 #define streql(s, t)	(!strcmp((s), (t)))
 void R_PreserveObject(SEXP);
 
+/* environment cell access */
+typedef struct R_varloc_st *R_varloc_t;
+R_varloc_t R_findVarLocInFrame(SEXP, SEXP);
+SEXP R_GetVarLocValue(R_varloc_t);
+SEXP R_GetVarLocSymbol(R_varloc_t);
+void R_SetVarLocValue(R_varloc_t, SEXP);
+
 /* from Defn.h */
 typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP);
 R_stdGen_ptr_t R_get_standardGeneric_ptr(); /* get method */
@@ -35,7 +42,8 @@ SEXP R_deferred_default_method();
 SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef, 
 		       SEXP mlist);
 SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist);
-void R_set_quick_method_check(R_stdGen_ptr_t); 
+void R_set_quick_method_check(R_stdGen_ptr_t);
+SEXP R_do_slot(SEXP obj, SEXP name); 
 
 /* the following utilities are included here for now, as statics.  But
    they will eventually be C implementations of slot, data.class,
@@ -49,7 +57,8 @@ static int initialized = 0;
 static SEXP s_dot_Arguments, s_expression, s_function,
   s_getAllMethods, s_objectsEnv, s_MethodsListSelect,
   s_sys_dot_frame, s_sys_dot_call, s_sys_dot_function, s_dot_Methods,
-  s_missing, s_generic_dot_skeleton, s_subset_gets, s_element_gets;
+  s_missing, s_generic_dot_skeleton, s_subset_gets, s_element_gets,
+    s_argument, s_allMethods;
 static SEXP R_FALSE, R_TRUE;
 
 /* precomputed skeletons for special primitive calls */
@@ -78,6 +87,8 @@ void R_initMethodDispatch()
     s_generic_dot_skeleton = Rf_install("generic.skeleton");
     s_subset_gets = Rf_install("[<-");
     s_element_gets = Rf_install("[[<-");
+    s_argument = Rf_install("argument");
+    s_allMethods = Rf_install("allMethods");
 
     R_FALSE = PROTECT(NEW_LOGICAL(1));
     LOGICAL_POINTER(R_FALSE)[0] = FALSE;
@@ -111,20 +122,6 @@ void R_initMethodDispatch()
     initialized = 1;
 }
 
-/* a quick version of attribute (== slot) lookup.  Note that,
-   unlike the attr function in R, this does NOT do partial
-   matching. Also, no special interpretations are made
-   (e.g. "names", "dim", or other reserved attribute names). */
-static SEXP R_get_attr(SEXP obj, char *what) 
-{
-    SEXP alist;
-    for (alist = ATTRIB(obj); alist != R_NilValue; alist = CDR(alist)) {
-	SEXP tmp = TAG(alist);
-	if(!strcmp(CHAR(PRINTNAME(tmp)), what))
-	    return(CAR(alist));
-    }
-    return(R_NilValue);
-}
 
 #ifdef UNUSED
 /* return a symbol containing mode (well, actually, typeof) obj */
@@ -206,9 +203,9 @@ static SEXP R_find_method(SEXP mlist, char *class, SEXP fname)
     /* find the element of the methods list that matches this class,
        but not including inheritance. */
     SEXP value, methods;
-    methods = R_get_attr(mlist, "allMethods");
+    methods = R_do_slot(mlist, s_allMethods);
     if(methods == R_NilValue) {
-	error("No \"methods\" slot found in \"mlist\" object for %s!",
+	error("No \"allMethods\" slot found in \"mlist\" object for %s!",
 	      CHAR_STAR(fname));
 	return(R_NilValue); /* -Wall */
     }
@@ -223,7 +220,7 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist)
     char *class;
     if(!mlist)
 	return R_NilValue;
-    methods = R_get_attr(mlist, "allMethods");
+    methods = R_do_slot(mlist, s_allMethods);
     if(methods == R_NilValue)
       {  return R_NilValue;}
     while(!isNull(args) && !isNull(methods)) {
@@ -233,7 +230,7 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist)
 	if(isNull(value) || isFunction(value))
 	    return value;
 	/* continue matching args down the tree */
-	methods = R_get_attr(value, "allMethods");
+	methods = R_do_slot(value, s_allMethods);
     }
     return(R_NilValue);
 }
@@ -634,6 +631,28 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
     return val;
 }
 
+/* this is a partial implementation of isMissing in envir.c
+   The use of opaque pointers to findVarLocInFrame, etc. seems to
+   prevent external code from doing a correct implementation.
+*/
+Rboolean is_missing_arg(SEXP arg, SEXP symbol, SEXP ev)
+{
+    if(arg == NULL) {
+	arg = findVarInFrame(ev, symbol);
+	if(arg == R_NilValue)
+	    error("Couldn't find variable needed for dispatch: \"%s\"",
+		  CHAR_STAR(symbol));
+    }
+    if(arg == R_MissingArg)
+	return TRUE;
+    if(TYPEOF(arg) == PROMSXP &&
+	TYPEOF(PREXPR(arg)) == SYMSXP)
+	return is_missing_arg(NULL, PREXPR(arg), PRENV(arg));
+    else
+	return FALSE;
+}
+    
+
 SEXP R_selectMethod(SEXP fname, SEXP ev, SEXP mlist)
 {
     return do_dispatch(fname, ev, mlist, TRUE, FALSE);
@@ -643,9 +662,9 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 			int evalArgs)
 {
     char *arg_name, *class;
-    SEXP arg_slot, arg_sym, arg, method, value = R_NilValue;
+    SEXP arg_slot, arg_sym, argLoc, arg, method, value = R_NilValue;
     int nprotect = 0;
-    PROTECT(arg_slot = R_get_attr(mlist, "argument")); nprotect++;
+    PROTECT(arg_slot = R_do_slot(mlist, s_argument)); nprotect++;
     if(arg_slot == R_NilValue) {
 	error("methods list had no \"argument\" slot");
 	return(R_NilValue); /* -Wall */
@@ -658,6 +677,8 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	   "name" */
 	arg_sym = install(arg_name);
     }
+    if(arg_sym == R_DotsSymbol || DDVAL(arg_sym) > 0)
+	error("... and related variables can't be used for methods dispatch");
     if(TYPEOF(ev) != ENVSXP) {
 	error("The environment argument for dispatch must be an R environment");
 	return(R_NilValue); /* -Wall */
@@ -672,15 +693,15 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	      CHAR(PRINTNAME(arg_sym)));
 	return(R_NilValue); /* -Wall */
       }
-      if(arg == R_MissingArg) {
-	arg = R_NilValue;
+      if(is_missing_arg(arg, arg_sym, ev)) {
 	class_obj = s_missing;
       }
       else {
 	/* should be a formal argument in the frame, get its class */
-	PROTECT(class_obj = R_data_class(eval(arg_sym, ev), TRUE)); nprotect++;
+	  PROTECT(arg = eval(arg_sym, ev)); nprotect++;
+	  PROTECT(class_obj = R_data_class(arg, TRUE)); nprotect++;
       }
-      class = CHAR(asChar(class_obj));
+      class = CHAR_STAR(class_obj);
     }
     else {
       if(arg == R_UnboundValue)

@@ -229,16 +229,30 @@ doPrimitiveMethod <-
     eval(call, ev)
 }
 
-conformMethodArgs <-
-  function(def, fdef, envir = environment(fdef))
+conformMethod <-
+  function(signature, mnames, fnames)
 {
-    newDef <- fdef
-    newCall <- get(".Arguments",  envir=envir)
-    languageEl(newCall, 1) <- as.name(".Method")
-    body(newDef) <- substitute({.Method <- DEF; CALL},
-                               list(DEF = def, CALL = newCall))
-    environment(newDef) <- NULL
-    newDef
+    if(any(is.na(match(mnames, fnames))))
+        stop(paste("Method has formal arguments not in generic function:",
+                   paste(mnames[is.na(match(mnames, fnames))], collapse = ", ")))
+    omitted <- is.na(match(fnames, mnames))
+    if(!all(diff(seq(along=fnames)[!omitted]) > 0))
+        stop("Formal arguments in method and function don't appear in the same order")
+    specified <- omitted[seq(length=length(signature))]
+    if(any(specified) &&
+       any(is.na(match(signature[specified], c("ANY", "missing")))))
+        stop(paste("Formal arguments omitted in the method definition cannot be in the signature:",
+                   paste(fnames[is.na(match(signature[omitted], c("ANY", "missing")))], collapse = ", ")))
+    ## TO DO:  arrange for "missing" to be a valid for "..." in a signature
+    ## until then, allow an omitted "..." w/o checking
+    if(!is.na(match("...", fnames[omitted])))
+        omitted[match("...", fnames)] <- FALSE
+    message("Expanding the signature to include omitted arguments in definition: ",
+            paste(fnames[omitted], "= \"missing\"",collapse = ", "))
+    signature[omitted] <- "missing"
+    ## there may have been some unspecified, but included, args; they go to "ANY"
+    signature[nchar(signature) == 0] <- "ANY"
+    signature
 }
 
 getGeneric <-
@@ -308,7 +322,7 @@ assignMethodsMetaData <-
   ## Also updates cached information about this generic.
   function(f, value, where) {
     assign(mlistMetaName(f), value, where)
-    cacheGenericsMetaData(f, TRUE)
+    cacheGenericsMetaData(f, TRUE, where)
   }
 
 mlistMetaName <-
@@ -352,11 +366,15 @@ cacheMetaData <-
 cacheGenericsMetaData <-
   function(generics, attach = TRUE, envir = NULL) {
     for(f in generics) {
+        ## Some tests: don't cache generic if no methods defined        
       if(!isGeneric(f))
           next
-      methods <- getMethods(f)@methods
+      methods <- getMethods(f)
+      if(is.null(methods))
+         next
+      methods <- methods@methods
       if(length(methods)==0)
-          next ## don't cache if no methods defined
+          next
       if(!is.null(getFromMethodMetaData(f)))
         removeFromMethodMetaData(f)
       ## find the function.  It may be a generic, but will be a primitive

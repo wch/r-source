@@ -4,7 +4,10 @@ copyEnvironment <-
   ## which case `NULL' is returned.  Objects named in the exceptions argument are not copied.
   function(object, exceptions = character())
 {
-    env <- environment(object)
+    if(is.environment(object))
+        env <- object
+    else
+        env <- environment(object)
     if(is.null(env))
         return(NULL)
     value <- new.env()

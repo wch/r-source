@@ -1,6 +1,3 @@
-"data.class<-" <-
-  .Primitive("class<-")
-
 
 testVirtual <-
   ## Test for a Virtual Class.
@@ -25,7 +22,7 @@ testVirtual <-
 }
 
 makePrototypeFromClassDef <-
-  ## Makes the prototype implied by
+  ## completes the prototype implied by
   ## the class definition.
   ##
   ##  The following three rules are applied in this order.
@@ -47,6 +44,8 @@ makePrototypeFromClassDef <-
         if(!is.null(prototype))
             return(prototype)
         ## try for a single superclass that is not virtual
+        ## This code will rarely be applied (since reconcilePropertiesAndPrototype
+        ## will have created one unless superclasses were undefined.
         supers <- names(extends)
         for(i in seq(along=extends)) {
             if(!is.logical(el(extends, i)))
@@ -64,32 +63,22 @@ makePrototypeFromClassDef <-
         }
         return(prototype)
     }
-    ## make the prototype into a named list if it is
-    ## currently a structure with attributes.
-    pattrs <- attributes(prototype)
-    if(length(pattrs)>0) {
-        pattrs$class <- NULL
-        pattrs$names <- NULL
-    }
-    if(length(pattrs) > 0 || length(names(prototype)) == 0)
-        prototype <- pattrs
-    pnames <- names(prototype)
+    if(is.environment(prototype))
+        pnames <- objects(prototype, all=TRUE)
+    else
+        pnames <- names(attributes(prototype))
     snames <- names(properties)
-    value <- newEmptyObject()
     for(j in seq(along = properties)) {
         name <- el(snames, j)
-        el(snames, j) <- ""             ## for check later
         i <- match(name, pnames)
         if(is.na(i))
-            slot(value, name, check=FALSE) <- tryNew(el(properties, j))
-        else
-            slot(value, name, check=FALSE) <- el(prototype, i)
+            slot(prototype, name, check=FALSE) <- tryNew(el(properties, j))
     }
-    snames <- snames[nchar(snames)>0]
-    if(length(snames)>0)
-        warning(paste("Slots ignored in prototype and not in class:",
-                      paste(snames, collapse=", ")))
-    value
+    pnames <- pnames[is.na(match(pnames, snames))]
+    if(length(pnames)>0)
+        warning(paste("Slots in prototype and not in class:",
+                      paste(pnames, collapse=", ")))
+    prototype
 }
 
 newEmptyObject <-
@@ -292,10 +281,12 @@ isVirtualClass <-
   ## Is the named class a virtual class?  A class is virtual if explicitly declared to
   ## be, and also if the class is not formally defined.
   function(Class) {
-    if(isClass(Class))
-      getVirtual(getClass(Class))
-    else
-      TRUE
+      if(isClassDef(Class))
+          getVirtual(Class)
+      else if(isClass(Class))
+          getVirtual(getClass(Class))
+      else
+          TRUE
   }
 
 setVirtual <-
@@ -377,16 +368,19 @@ newBasic <-
             ## The language data
                   "name" = as.name("<UNDEFINED>"), # R won't allow 0 length names
                   "call" = quote({}), ## general expressions all get data.class=="call"
-                  if(.Force)
-                    ## create an empty object, even though this class is undefined
-                  ## for why this is not NULL, see the documentation for `new'.
-                  ## note that this is the only case where class is not set to Class
-                    return(newEmptyObject())
-                  else
-                    stop(paste("Calling new() on an undefined and non-basic class (\"",
+                  {
+                      if(.Force)
+                          ## create an empty object, even though this class is undefined
+                          ## for why this is not NULL, see the documentation for `new'.
+                          return(newEmptyObject())
+                      else if(is.na(Class, .BasicClasses))
+                          stop(paste("Calling new() on an undefined and non-basic class (\"",
                                Class, "\")", sep=""))
+                      else
+                          stop(paste("Basic class \"", Class, "\" cannot be instantiated by calling new()",
+                                     sep =""))
+                  }
                   )
-## not needed ??  class(value) <- Class
   value
 }
 
@@ -423,51 +417,82 @@ reconcilePropertiesAndPrototype <-
   ## `new(classi)' for the class, `classi' of the slot if that succeeds, and `NULL'
   ## otherwise.
   ##
-  ## The prototype may imply slots not in the properties list, since properties does not
-  ## include inherited slots (these are left unresolved until the class is used in a
-  ## session).
-  function(name, properties, prototype) {
-    Class <- data.class(prototype)
-    if(identical(Class, "list")) {
-      slots <- prototype
-      prototype <- list()
-    }
-    else if(isClass(Class) && length(slotNames(Class))>0 && length(properties)>0) {
-      slots <- attributes(unClass(prototype))
-      prototype <- list()
-    }
-    else if(length(attributes(prototype))>1) {
-      slots <- attributes(prototype)
-      what <- match(names(slots), properties)
-      slots <- slots[!is.na(what)]
-      prototype <- list()
-    }
-    else
-      slots <- list()
-    ## now set slots in the prototype object.  An important detail is that these are
-    ## set using slot<- with check=FALSE (because the slot won't be there already)
-    ## Another related detail is that the value in the protype may be NULL.  If the supplied
-    ## prototype was generated as a list, the NULL values aren't there.  This will only cause
-    ## a problem if the default value for the corresponding class is not NULL.  In this case,
-    ## the programmer needs to set the prototype element to nullSymbol(), which gets converted
-    ## to NULL when returned as a slot.
-    what <- names(slots)
-    pnames <- names(properties)
-    for(i in seq(along=what)) {
-      prop <- el(what, i)
-      j <- match(prop, pnames)
-      if(!is.na(j))
-        sloti <- as(el(slots,i), el(properties, j))
-      else
-        sloti <- el(slots, i)
-      slot(prototype, prop, FALSE) <- sloti
-    }
-    for(i in seq(along=pnames)) {
-      prop <- el(pnames, i)
-      if(is.na(match(prop, what)))
-        slot(prototype, prop, FALSE) <- tryNew(el(properties, i))
-    }
-    prototype
+  ## The prototype may imply slots not in the properties list.  It is not required that
+    ## the extends classes be define at this time.  Should it be?
+  function(name, properties, prototype, extends) {
+      ## the StandardPrototype should really be a type that doesn't behave like
+      ## a vector.  But none of the existing types work.  Someday ...
+      StandardPrototype <- list()
+      superClasses <- names(extends)
+      undefined <- rep(FALSE, length(superClasses))
+      slots <-  allNames(properties)
+      allSlots <- character()
+      for(i in seq(along=superClasses)) {
+          cl <- superClasses[[i]]
+          if(isClass(cl))
+              allSlots <- c(allSlots, slotNames(cl))
+          else
+              undefined[[i]] <- TRUE
+      }
+      if(any(undefined)) {
+          warning("Prototype may be incomplete, not all superclasses defined (",
+                  paste(superClasses[undefined], collapse = ", "), ")")
+      }
+      undefined <- any(undefined) ## used as  a test later.
+      ## check for conflicts in the slot names
+      if(any(duplicated(allSlots))) {
+          warning("The inherited slots contain duplicates (",
+                  paste(allSlots[duplicated(allSlots)], collapse = ", "),
+                  ")")
+          allSlots <- unique(allSlots)
+      }
+      if(any(!is.na(match(slots, allSlots)))) {
+          ## representation catches this already, but for completeness:
+          warning("Class \"", name, "\" overrides some inherited slot definitions (",
+                  paste(allSlots[!is.na(match(slots, allSlots))], collapse = ", "),
+                  ")")
+          allSlots <- unique(slots, allSlots)
+      }
+      ## A rule is needed to decide whether the environment should be hashed.
+      ## decide on a prototype, if one was not provided
+      if(is.null(prototype) && is.na(match("VIRTUAL", superClasses))) {
+          basicSuperClasses <- .BasicClasses[!is.na(match(superClasses, .BasicClasses))]
+          if(length(basicSuperClasses) > 0) {
+              if(length(basicSuperClasses) > 1) {
+                  warning("Class \"",name,"\" extends more than one basic class (",
+                          paste(basicSuperClasses, collapse = ", "), "), using ",
+                          basicSuperClasses[1])
+                  basicSuperClasses <- basicSuperClasses[1]
+              }
+              prototype <- newBasic(basicSuperClasses)
+          }
+          else if(any(!is.na(match(superClasses, c("vector", "structure")))))
+              prototype <- newBasic("logical")
+          if(is.null(prototype)) { ## non-vector (may extend NULL)
+              prototype <- StandardPrototype
+          }
+      }
+      else if(is.list(prototype) && length(names(prototype)) > 0) {
+          ## the prototype as a named list is allowed, mostly for S-Plus compatibility
+          pnames <- names(prototype)
+          realP <- StandardPrototype
+          for(i in seq(along=pnames))
+              slot(realP, pnames[[i]], FALSE) <- realP
+          prototype <- realP
+      }
+      ## pnames will be the names explicitly defined in the prototype
+      pnames <- allNames(attributes(prototype))
+      ## now set the slots not yet in the prototype object.
+      ## An important detail is that these are
+      ## set using slot<- with check=FALSE (because the slot will not be there already)
+      what <- is.na(match(slots, pnames))
+      props <- properties[what]
+      what <- slots[what]
+      for(i in seq(along=what)) {
+          propName <- el(what, i)
+          slot(prototype, propName, FALSE) <- tryNew(el(props, i))
+      }
+      prototype
   }
 
 tryNew <-
@@ -498,12 +523,21 @@ empty.dump <-
   function()
   list()
 
+isClassDef <-
+    function(object)
+    is(object, "classRepEnvironment")
 
 showClass <-
   ## print the information about a class definition.  If complete==TRUE, include the
   ## indirect information about extensions.
-  function(Class, complete = TRUE, propertiesAreCalled = "Properties") {
-    if(is(Class, "classRepEnvironment")) {
+  function(Class, complete = TRUE, printTo = stdout(), propertiesAreCalled = "Properties") {
+      if(identical(printTo, FALSE)) {
+          tmp <- tempfile()
+          con <- file(tmp, "w")
+      }
+      else
+          con <- printTo
+    if(isClassDef(Class)) {
       ClassDef <- Class
       Class <- getClassName(ClassDef)
     }
@@ -512,36 +546,49 @@ showClass <-
     else
       ClassDef <- getClassDef(Class)
     if(identical(getVirtual(ClassDef), TRUE))
-      cat("Virtual Class\n")
+      cat(file = con, "Virtual Class\n")
     x <- getProperties(ClassDef)
     if(length(x)>0) {
-      cat("\n",propertiesAreCalled, ":\n", sep="")
-      xx <- as.character(x)
-      names(xx) <- names(x)
-      print(xx)
+        n <- length(x)
+        cat(file = con, "\n",propertiesAreCalled, ":\n", sep="")
+        text <- format(c(names(x), as.character(x)), justify="right")
+        cat(file = con, paste(c("Name: ", text[seq(length=n)]), collapse=" "), "\n")
+        cat(file = con, paste(c("Class:", text[seq(n+1, length=n)]), collapse=" "), "\n")
     }
     else
-      cat("\nNo ", propertiesAreCalled, ", prototype of class \"",
+      cat(file = con, "\nNo ", propertiesAreCalled, ", prototype of class \"",
           data.class(getPrototype(ClassDef)), "\"\n", sep="")
     ext <- getExtends(ClassDef)
     if(length(ext)>0) {
-      cat("\nExtends:\n")
-      showExtends(ext)
+      cat(file = con, "\nExtends:\n")
+      showExtends(ext, con)
     }
     ext <- getSubclasses(ClassDef)
     if(length(ext)>0) {
-      cat("\nKnown Subclasses:\n")
-      showExtends(ext)
+      cat(file = con, "\nKnown Subclasses:\n")
+      showExtends(ext, con)
+    }
+    if(identical(printTo, FALSE)) {
+        close(con)
+        value <- readLines(tmp)
+        unlink(tmp)
+        value
     }
   }
 
 showExtends <-
   ## print the elements of the list of extensions.  Also used to print
   ## extensions recorded in the opposite direction, via a subclass list
-  function(ext) {
+  function(ext, printTo = stdout()) {
+      if(identical(printTo, FALSE)) {
+          tmp <- tempfile()
+          con <- file(tmp, "w")
+      }
+      else
+          con <- printTo
     what <- names(ext)
     for(i in seq(along=ext)) {
-      cat("Class \"", el(what, i), "\" ", sep="")
+      cat(file = con, "Class \"", el(what, i), "\" ", sep="")
       eli <- el(ext, i)
       if(length(eli$by) > 0)
         how <- paste("by class", paste("\"", eli$by, "\"", sep="", collapse = ", "))
@@ -549,13 +596,19 @@ showExtends <-
         how <- "directly"
       if(is.function(eli$test)) {
         if(is.function(eli$coerce))
-          how <- paste(how, "with explicit test and coerce")
+          how <- paste(how, ", with explicit test and coerce", sep="")
         else
-          how <- pate(how, "with explicit test")
+          how <- paste(how, ", with explicit test", sep="")
       }
       else if(is.function(eli$coerce))
-        how <- paste(how, "with explicit coerce")
-      cat(how, "\n")
+        how <- paste(how, ", with explicit coerce", sep="")
+      cat(file = con, how, ".\n", sep="")
+    }
+    if(identical(printTo, FALSE)) {
+        close(con)
+        value <- readLines(tmp)
+        unlink(tmp)
+        value
     }
   }
 
@@ -881,9 +934,41 @@ requireMethods <-
 }
 
 getSlots <- function(x, complete = TRUE) {
-  classDef <- if(complete) getClass(x) else getClassDef(x)
-  props <- getProperties(classDef)
-  value <- as(props, "character")
-  names(value) <- names(props)
-  value
+    if(isClassDef(x))
+        classDef <- x
+    else
+        classDef <- (if(complete) getClass(x) else getClassDef(x))
+    props <- getProperties(classDef)
+    value <- as(props, "character")
+    names(value) <- names(props)
+    value
 }
+
+print.environment <-
+    function(x, ...) {
+        if(is.null(attr(x, "class")))
+            print.default(x, ...)
+        else
+            showNonVector(x, ...)
+    }
+
+showNonVector <-
+    function(object, printTo = stdout()) {
+        if(identical(printTo, FALSE)) {
+            tmp <- tempfile()
+            con <- file(tmp, "w")
+        }
+        else
+            con <- printTo
+        cat(file = con, "Object of class:", class(object))
+        for(what in objects( object)) {
+            cat(file = con, "\nSlot \"", what, "\":\n")
+            show(get(what, object), con)
+        }
+        if(identical(printTo, FALSE)) {
+            close(con)
+            value <- readLines(tmp)
+            unlink(tmp)
+            value
+        }
+    }

@@ -16,6 +16,7 @@ help(topic, offline = FALSE, package = .packages(),
 #endif
      pager = getOption("pager"))
 ?topic
+type?topic
 }
 \alias{help}
 \alias{?}
@@ -54,6 +55,10 @@ help(topic, offline = FALSE, package = .packages(),
     \code{.hlp} file will be used if one is available.}
 #endif
   \item{pager}{the pager to be used for \code{\link{file.show}}.}
+  \item{type}{the special type of documentation to use for this topic;
+      for example, if the type is \code{class}, documentation is
+      provided for the class with name \code{topic}.  The function
+      \code{\link{topicName}} returns the actual name used in this case.}
 }
 \description{
   These functions provide access to documentation.

@@ -28,7 +28,7 @@ matchArg(object, thisClass, mlist, ev)
 matchArgClass(Class, classes, methods)
 
 showMlist(mlist, includeDefs = TRUE, inherited = TRUE,
-   classes, useArgNames )
+   classes, useArgNames, printTo = stdout() )
 
 print.MethodsList(x, ...)
 

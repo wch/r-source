@@ -33,7 +33,9 @@
 \alias{empty.dump}
 \alias{showClass}
 \alias{showExtends}
+\alias{showNonVector}
 \alias{print.classRepEnvironment}
+\alias{print.environment}
 \alias{getFromClassMetaData}
 \alias{assignToClassMetaData}
 \alias{removeFromClassMetaData}
@@ -46,6 +48,7 @@
 \alias{methodsMetaName}
 \alias{as.data.frame}
 \alias{requireMethods}
+\alias{checkSlotAssignment}
 %% not explicitly documented here
 \alias{.BasicClasses}
 \alias{.BasicVectorClasses}
@@ -112,17 +115,20 @@ newBasic(Class, ..., .Force=FALSE)
 
 makeExtends(extends)
 
-reconcilePropertiesAndPrototype(name, properties, prototype)
+reconcilePropertiesAndPrototype(name, properties, prototype, extends)
 
 tryNew(Class)
 
 empty.dump()
 
-showClass(Class, complete=TRUE, propertiesAreCalled="Properties")
+showClass(Class, complete=TRUE, propertiesAreCalled="Properties",
+          printTo=stdout())
 
-showExtends(ext)
+showExtends(ext, printTo = stdout())
 
 print.classRepEnvironment(x, ...)
+
+print.environment(x, ...)
 
 getFromClassMetaData(name)
 
@@ -147,6 +153,8 @@ methodsMetaName(prefix, name)
 as.data.frame(x, row.names=NULL, optional=FALSE)
 
 requireMethods(functions, signature, message)
+
+checkSlotAssignment(obj, name, value)
 
 }
 \description{
@@ -396,6 +404,13 @@ indirect information about extensions.
 extensions recorded in the opposite direction, via a subclass list
 
   }
+\item{\code{print.environment, showNonVector}:}{ 
+  These routines provide a default printing mechanism for objects from
+  non-vector classes, implemented as environments.  The
+  \code{print.environment} function exists to intercept printing based
+  on S3-style methods; it calls \code{showNonVector} to do the work.
+
+  }
 \item{\code{unsetClass}:}{ 
   remove this class name from the internal table for this session.
 
@@ -468,6 +483,17 @@ for the virtual class.
 be called, resulting in less helpful error messages or (worse still) silently incorrect
 results.
 
+}
+\item{\code{checkSlotAssignment}:}{
+    Check that the value provided is allowed for this slot, by
+    consulting the definition of the class.  Called from the C code
+    that assigns slots.
+
+    For privileged slots (those that can only be set by accesor functions
+    defined along with the class itself), the class designer may
+    choose to improve efficiency by validating the value to be
+    assigned in the accessor function and then calling \code{slot<-} with
+    the argument \code{check=FALSE}, to prevent the call to \code{checkSlotAssignment}.
 }
 \item{SessionClassMetaData:}{ Contains the name of the special table in which
     class information is cached during the session.}

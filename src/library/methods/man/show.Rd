@@ -2,7 +2,7 @@
 \alias{show}
 \title{Show an Object}
 \usage{
-show(object)
+show(object, printTo = stdout())
 }
 \description{
   display the object, by printing, plotting or whatever suits its class.
@@ -16,5 +16,27 @@ is called for automatic display of the result of an evaluated expression.
 }
 \arguments{
 \item{object}{Any R object}
+\item{printTo}{Either a file or \link{connection}, or else
+    \code{FALSE}.  In the latter case, the lines of text that would
+    have been printed are returned as the value of the call.
+}
+}
+\value{ Usually an invisible \code{NULL}, but if \code{printTo} is
+  \code{FALSE}, a character vector containing the lines that would
+  otherwise have been printed.
+}
+\details{
+  The argument \code{printTo} allowing redirection is an extension to
+  the API definition (and to the S-Plus function).  It applies to the
+  default version of \code{show} and to the methods provided for class
+  definitions and method lists (see below).  This is a trial; if it
+  turns out to be useful, we will define a standard mechanism for
+  honoring non-printing in user-written methods.  Meantime, if you
+  want to write such methods, see the code for \code{show} for one way
+  to do it.
+}
+\seealso{ \code{\link{showMlist}} prints methods lists;
+  \code{\link{showClassDef}} prints class definitions.  Neither of
+  these normally needs to be called directly.
 }
 \keyword{programming}

@@ -1,4 +1,4 @@
-"?" <- function(e1, e2, topicSeparator = "_")
+"?" <- function(e1, e2)
 {
   if(is.name(substitute(e1)))
     e1 <- substitute(e1)
@@ -7,10 +7,12 @@
     if(is.name(substitute(e2)))
       e2 <- substitute(e2)
     e2 <- as.character(e2)
-    e1 <- paste(e1, e2, sep=topicSeparator)
+    e1 <- topicName(e1, e2)
   }
   eval(substitute(help(TOPIC), list(TOPIC = e1)))
 }
 
-  
+topicName <- function(type, topic)
+    paste(type, topic, sep = "_")
+
    

@@ -1,3 +1,5 @@
+.conflicts.OK <- TRUE
+
 .First.lib  <-
   ## Initialize the methods library:  the session table of method
   ## definitions. 
@@ -29,6 +31,7 @@
         .InitMethodsListClass(where)
         .makeBasicFunsList(where)
         .setCoerceGeneric(where)
+        setGeneric("show", where = where)
         assign(".saveImage", TRUE, envir = where)
     }
     ## cache metadata for all environments in search path.  The assumption is that

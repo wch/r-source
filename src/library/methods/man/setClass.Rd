@@ -1,22 +1,28 @@
 \name{setClass}
 \alias{setClass}
 \alias{removeClass}
+\alias{resetClass}
 \alias{isClass}
 \alias{getClasses}
 \title{Create a Class Definition}
 \description{
 Create a formally defined class with specified slots and/or
-relationships to other classes.  Also functions to test whether a
-class has been defined, and to remove a class definition}
+relationships to other classes.  Also functions to remove a class
+definition, to test whether a
+class has been defined, to test whether an object is a class definition,
+and to reset the internal definition of a class.}
 \usage{
 setClass(Class, representation, prototype,
          contains=character(), validity, access, where=1, version=FALSE)
-isClass(Class, formal=TRUE)
 
 removeClass(Class, where=-1)
 
+isClass(Class, formal=TRUE)
+isClassDef(object)
 
 getClasses(where)
+
+resetClass(Class)
 
 }
 \arguments{
@@ -40,7 +46,12 @@ getClasses(where)
 
     \item{formal}{
       Should a formal definition be required?
-      }
+    }
+
+    \item{object}{
+      any R object.
+    }
+    
 }
 
 \details{
@@ -73,6 +84,13 @@ getClasses(where)
       compatibility and is ignored.)
     }
 
+    \item{\code{isClassDef}:}{ 
+      Is this object a class definition (it will be, for example, if it
+      is the value of a call to \code{\link{getClass}}, the complete
+      definition of a class with its extensions, or to \code{\link{getClassDef}}, the local
+      definition  of the class).
+    }
+
     \item{\code{getClasses}:}{
       The names of all the classes formally defined on `where'.
       If called with no argument, all the classes currently known in the session
@@ -88,6 +106,17 @@ getClasses(where)
       For classes that extend a single other class (e.g., a basic class
       such as \code{"numeric"}) the result is an object of that class.
     }
+    \item{\code{resetClass}:}{
+      Reset the internal definition of a class.  The effect is that
+      the next time the definition of this class is needed, it will be
+      recomputed from the information on the attached databases.
+
+      This function is called when aspects of the class definition are
+      changed.  You would need to call it explicitly if you changed the
+      definition of a class that this class extends (but doing that in
+      the  middle of a session is living dangerously, since it may
+      invalidate existing objects).
+      }
   }
 }
 \section{Inheritance and Prototypes}{

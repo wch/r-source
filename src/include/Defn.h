@@ -467,7 +467,13 @@ R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t new); /* set method */
 SEXP R_deferred_default_method();
 SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef, SEXP mlist);
 SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist);
-void R_set_quick_method_check(R_stdGen_ptr_t); 
+void R_set_quick_method_check(R_stdGen_ptr_t);
+
+/* slot management (in attrib.c) */
+SEXP R_do_slot(SEXP obj, SEXP name);
+SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP check, SEXP value);
+/* (in objects.c) */
+SEXP R_do_slot_check(SEXP obj, SEXP name, SEXP value);
 
 #ifdef __MAIN__
 #undef extern
@@ -627,7 +633,7 @@ void InitConnections(void);
 void InitEd(void);
 void InitFunctionHashing(void);
 void InitGlobalEnv(void);
-int R_has_methods(SEXP);
+Rboolean R_has_methods(SEXP);
 void R_InitialData(void);
 SEXP R_possible_dispatch(SEXP, SEXP, SEXP, SEXP);
 void InitMemory(void);

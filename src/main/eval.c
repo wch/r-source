@@ -1498,16 +1498,9 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
       /* try for formal method */
       if(R_has_methods(op)) {
 	SEXP value, argValue;
-	/* evaluate all the arguments. Eventually, a more subtle
-	   strategy may be possible, avoiding any chance of evaluating
-	   the arg. twice.  See objects.c */
+	/* create a promise to pass down to applyClosure  */
 	if(!argsevald) {
-	  if (dots)
-	    argValue = EvalArgs(args, rho, dropmissing);
-	  else {
-	    argValue = CONS(x, EvalArgs(CDR(args), rho, dropmissing));
-	    SET_TAG(argValue, CreateTag(TAG(args)));
-	  }
+	    argValue = promiseArgs(args, rho);
 	}
 	else
 	  argValue = args;
@@ -1522,8 +1515,17 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	else {
 	  /* go on, with the evaluated args.  Not guaranteed to have
 	     the same semantics as if the arguments were not
-	     evaluated, in special cases (e.g., arg values that are LANGSXP)
+	     evaluated, in special cases (e.g., arg values that are
+	     LANGSXP).
+	     The use of the promiseArgs is supposed to prevent
+	     multiple evaluation after the call to possible_dispatch.
 	  */
+	  if (dots)
+	    argValue = EvalArgs(argValue, rho, dropmissing);
+	  else {
+	    argValue = CONS(x, EvalArgs(CDR(argValue), rho, dropmissing));
+	    SET_TAG(argValue, CreateTag(TAG(args)));
+	  }
 	  args = argValue;
 	  argsevald = 1;
 	}

@@ -137,9 +137,9 @@ setAs <-
  "list",  "logical",  "matrix",  "name",  "null",  "numeric",  "ordered", 
  "pairlist",  "real",  "single",  "symbol",  "table",  "ts",  "vector")
   for(what in basics) {
-    method <- eval(substitute(function(from, to)AS(from),
-                              list(AS = as.name(paste("as.", what, sep="")))),
-                   .GlobalEnv)
-    setMethod("coerce", c("ANY", what), method, where = where)
+      method  <- eval(function(from, to)NULL, .GlobalEnv)
+      body(method) <- substitute(AS(from),
+                              list(AS = as.name(paste("as.", what, sep=""))))
+      setMethod("coerce", c("ANY", what), method, where = where)
   }
 }

@@ -46,19 +46,19 @@ list("!" = function(e1)
     standardGeneric("<<-")
 }
 , "UseMethod" = FALSE
-, "[" = function(x, i = NULL, j = NULL, ..., drop = TRUE)
+, "[" = function(x, i, j, ..., drop)
 {
     standardGeneric("[")
 }
-, "[<-" = function(x, i = NULL, j = NULL, ..., value)
+, "[<-" = function(x, i, j, ..., value)
 {
     standardGeneric("[<-")
 }
-, "[[" = function(x, i = NULL, ...)
+, "[[" = function(x, i, j, ...)
 {
     standardGeneric("[[")
 }
-, "[[<-" = function(x, i = NULL, ..., value)
+, "[[<-" = function(x, i, j, ..., value)
 {
     standardGeneric("[[<-")
 }
@@ -176,7 +176,7 @@ list("!" = function(e1)
 {
     standardGeneric("dimnames")
 }
-, "invisible" = function(x = NULL)
+, "invisible" = function(x)
 {
     standardGeneric("invisible")
 }

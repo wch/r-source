@@ -1025,16 +1025,18 @@ SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
 /* Could there be methods for this op?  Checks
    only whether methods are currently being dispatched and, if so,
    whether methods are currently defined for this op. */
-int R_has_methods(SEXP op)
+Rboolean R_has_methods(SEXP op)
 {
     R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr(); int offset;
     if(!ptr || ptr == dispatchNonGeneric)
-	return(0);
+	return(FALSE);
+    if(!op) /* just testing for the package */
+	return(TRUE);
     offset = PRIMOFFSET(op);
     if(offset > curMaxOffset || prim_methods[offset] == NO_METHODS
        || prim_methods[offset] == SUPPRESSED)
-	return(0);
-    return(1);
+	return(FALSE);
+    return(TRUE);
 }
 
 static SEXP deferred_default_object;
@@ -1093,4 +1095,44 @@ SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args,
     return NULL;
   else
     return value;
+}
+
+/* check a candidate object for slot assignment. Calls the R function
+   checkSlotAssignment, and so has significant overhead.  On the other
+   hand, assigning a bad value to a slot is worse than inefficient.
+
+   Privileged slots may be assigned by functions that assure validity
+   and then call slot()<- with check=FALSE, so R_do_slot_check will
+   not be called.
+
+*/
+SEXP R_do_slot_check(SEXP obj, SEXP name, SEXP value)
+{
+    SEXP e, val;
+    static SEXP fname = NULL;
+    static int temp_shutoff = 0;
+    R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr();
+    if(!temp_shutoff)
+       return(value);
+    if(!ptr || ptr == dispatchNonGeneric)
+	return(value);
+    if(!fname)
+	fname = install("checkSlotAssignment");
+    PROTECT(e = allocVector(LANGSXP, 4));
+    SETCAR(e, fname);
+    val = CDR(e);
+    if(TYPEOF(obj) == PROMSXP)
+	obj = eval(obj, R_NilValue);
+    SETCAR(val, obj);
+    val = CDR(val);
+    if(TYPEOF(name) == PROMSXP)
+	name = eval(name, R_NilValue);
+    SETCAR(val, name);
+    val = CDR(val);
+    if(TYPEOF(value) == PROMSXP)
+	value = eval(value, R_NilValue);
+    SETCAR(val, value);
+    val = eval(e, R_GlobalEnv);
+    UNPROTECT(1);
+    return val;
 }

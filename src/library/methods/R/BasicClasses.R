@@ -1,11 +1,18 @@
 .InitBasicClasses <-
   function(envir)
 {
+    ## setClass won't allow redefining basic classes,
+    ## so make the list of these empty for now.
+    assign(".BasicClasses", character(), envir)
     setClass("VIRTUAL", where = envir)
     setClass("ANY", where = envir)
 
     setClass("vector", where = envir)
-    for(.class in .BasicVectorClasses) {
+    clList <- c("logical", "numeric", "character",
+                "complex", "integer", "single",
+                "expression", "list")
+    assign(".BasicVectorClasses",  clList, envir)
+    for(.class in clList) {
         setClass(.class, prototype = newBasic(.class), where = envir)
         setIs(.class, "vector")
     }
@@ -29,5 +36,10 @@
     setClass("matrix", where = envir)
     setClass("array", where = envir)
     setClass("ts", where = envir)
-    
+    clList <- c(clList,
+                "double", "language", "{", "if", "<-",
+                "function", "environment", "named"," array",
+                "matrix", "name", "call", "NULL" ,
+                "VIRTUAL", "ANY", "vector", "structure")
+    assign(".BasicClasses", clList, envir)
 }

@@ -129,5 +129,25 @@ Quote <- get("quote" , mode = "function")
 
 message <-
   ## output all the arguments, pasted together with no intervening spaces.
-  function(...)
-    cat(paste(..., collapse="", sep=""), "\n")
+  function(...) {
+      ## the junk below is just til cat honors fill=TRUE on a single string.
+      text <- paste(..., collapse="", sep="")
+      pos <- max(2*options()$width%/%3, 20)
+      while(nchar(text) > pos) {
+          line <- substr(text, 1, pos)
+          text <- substr(text, pos+1, nchar(text))
+          word <- regexpr(" ", text)
+          if(word < 0) {
+              line <- paste(line, text, sep="")
+              text <- ""
+          }
+          else {
+              line <- paste(line, substr(text, 1, word -1), sep="")
+              text <- substr(text, word+1, nchar(text))
+          }
+          cat(line, "\n")
+      }
+      if(nchar(text) > 0)
+          cat(text, "\n")
+  }
+
