@@ -260,6 +260,10 @@ successfully used the variant of mingw32 that uses the MSVCRT run-time
 system (under gcc-2.95 but not earlier versions).
 Be aware that not all Windows machines have MSVCRT.DLL installed.
 
+(If you want to use cygwin, we suggest you upgrade to gcc-2.95 by
+installing the files gcc-2.95-cygb20.tar.gz and gcc-2.95-mingw-extra.tar.gz
+from ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32.)
+
 perl5, available via http://www.perl.com/CPAN/ports.
 
 groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
@@ -272,7 +276,8 @@ Microsoft HTML Help Workshop, available for download at
 http://msdn.microsoft.com/workshop/author/htmlhelp.
 
 If you want to make Windows (.hlp) files you will need a Windows help
-compiler, preferably hcrtf.exe.
+compiler, preferably hcrtf.exe. This is available for download at
+ftp://ftp.microsoft.com/support/MSLFILES/HCWSETUP.EXE.
 
 All of these need to be installed and in your path, and the
 appropriate environment variables set.
