@@ -10,9 +10,11 @@ CRAN.packages <- function(CRAN=getOption("CRAN"), method,
         download.file(url=paste(contriburl, "PACKAGES", sep="/"),
                       destfile=tmpf, method=method, cacheOK=FALSE)
     }
-    read.dcf(file = tmpf,
-             fields = c("Package", "Version", "Priority", "Bundle", "Depends",
-             "Suggests", "Contains"))
+    res <- read.dcf(file = tmpf,
+                    fields = c("Package", "Version", "Priority", "Bundle",
+                    "Depends", "Suggests", "Contains"))
+    if(length(res)) rownames(res) <- res[, "Package"]
+    res
 }
 
 update.packages <- function(lib.loc=NULL, CRAN=getOption("CRAN"),
@@ -154,8 +156,10 @@ installed.packages <- function(lib.loc = NULL, priority = NULL)
             retval <- rbind(retval, c(p, lib, desc))
         }
     }
-    if (length(retval))
+    if (length(retval)) {
         colnames(retval) <- c("Package", "LibPath", pkgFlds)
+        rownames(retval) <- retval[, "Package"]
+    }
     retval
 }
 
