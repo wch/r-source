@@ -9,7 +9,7 @@
 \usage{data(eurodist)}
 \format{
   A \code{dist} object based on 21 objects.
-  (You must have the \pkg{mva} package loaded to have the methods for this
+  (You must have the \pkg{stats} package loaded to have the methods for this
   kind of object available).
 }
 \source{

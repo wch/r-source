@@ -102,7 +102,6 @@ getNativeSymbolInfo(name, PACKAGE)
 library(stats) # normally loaded
 getNativeSymbolInfo("dansari")
 
-library(mva)   # normally loaded
 getNativeSymbolInfo(symbol.For("hcass2"))
 }
 \keyword{interface}

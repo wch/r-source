@@ -147,7 +147,7 @@ test-Packages:
 	done
 
 test-Demo:
-	@echo "running demos from base and eda"
+	@echo "running demos from base and stats"
 	@$(MAKE) -f Makefile.win $(test-out-demo) RVAL_IF_DIFF=0
 
 internet.Rout2:

@@ -89,8 +89,8 @@ src/library/base/R/expand.grid.R
 src/library/base/R/predict.glm.R
 src/library/base/R/update.R
 src/library/base/*/max.col.R*
-src/library/mva/R/biplot.R
-src/library/mva/R/princomp-add.R
+src/library/stats/R/biplot.R
+src/library/stats/R/princomp-add.R
 src/appl/bandwidths.c
 src/appl/maxcol.c
 
@@ -132,7 +132,7 @@ src/library/stats/src/chisqsim.c
 src/library/stats/src/nscor.c
 src/library/stats/src/prho.c
 src/library/stats/src/swilk.c
-src/library/mva/src/kmns.f
+src/library/stats/src/kmns.f
 src/library/ts/src/starma.c
 src/nmath/pgamma.c
 src/nmath/pnbeta.c
@@ -152,13 +152,12 @@ src/nmath/dpois.c
   are now partly based on Clive Loader's (1999) work, and are
   (C) 1999-2000 Lucent Technologies, Bell Laboratories.
 
-src/gnome/devGNOME.c
-src/gnome/devGTK.c
-src/gnome/gdkrotated.c
-src/gnome/gnome-find-dialog.c
-src/gnome/gtkconsole.c
-src/gnome/system-*.c
-src/gnome/terminal*.c
+src/modules/gnome/devGNOME.c
+src/modules/gnome/gdkrotated.c
+src/modules/gnome/gnome-find-dialog.c
+src/modules/gnome/gtkconsole.c
+src/modules/gnome/system-*.c
+src/modules/gnome/terminal*.c
 
 	Copyright (C) 1998-1999	  Lyndon Drake
 		and the R Development Core Team

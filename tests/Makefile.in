@@ -212,7 +212,7 @@ test-Packages:
 test-Gct: $(test-out-gct)
 
 test-Demo:
-	@echo "running demos from base and eda"
+	@echo "running demos from base and stats"
 	@$(MAKE) $(test-out-demo) RVAL_IF_DIFF=0
 
 ## <NOTE>

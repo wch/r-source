@@ -175,6 +175,6 @@ symbol.For(name)
   \code{\link{.Call}}.
 }
 \examples{
-is.loaded(symbol.For("hcass2")) #-> probably TRUE, as mva is loaded
+is.loaded(symbol.For("hcass2")) #-> probably TRUE, as stats is loaded
 }
 \keyword{interface}

@@ -21,6 +21,7 @@
 #include "ctest.h"
 #include "eda.h"
 #include "modreg.h"
+#include "mva.h"
 #include <R_ext/Rdynload.h>
 
 #include <Rinternals.h>
@@ -77,6 +78,9 @@ static const R_CMethodDef CEntries[]  = {
     {"Rsm_3", (DL_FUNC) &Rsm_3, 5},  
     {"Rsm_S", (DL_FUNC) &Rsm_S, 5},  
     {"tukeyline", (DL_FUNC) &tukeyline, 6},  
+    {"dblcen", (DL_FUNC) &dblcen, 2},  
+    {"R_cutree", (DL_FUNC) &R_cutree, 2},  
+    {"R_distance", (DL_FUNC) &R_distance, 6},  
     {NULL, NULL, 0}
 };
 
@@ -94,6 +98,9 @@ static R_FortranMethodDef FortEntries[] = {
     {"qsbart", (DL_FUNC) &F77_SUB(qsbart), 21},
     {"bvalus", (DL_FUNC) &F77_SUB(bvalus), 7},
     {"supsmu", (DL_FUNC) &F77_SUB(supsmu), 10},
+    {"hclust", (DL_FUNC) &F77_SUB(hclust), 11}, 
+    {"hcass2", (DL_FUNC) &F77_SUB(hcass2), 6},  
+    {"kmns", (DL_FUNC) &F77_SUB(kmns), 17},
     {NULL, NULL, 0}
 };
 /*

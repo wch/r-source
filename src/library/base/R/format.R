@@ -52,7 +52,7 @@ format.default <-
                  attributes(r) <- a
              r })
 }
-## NOTE: Currently need non-default format.dist() -> ../../mva/R/dist.R
+## NOTE: Currently need non-default format.dist() -> ../../stats/R/dist.R
 
 
 ## MM: This should also happen in C(.) :

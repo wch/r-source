@@ -39,7 +39,7 @@ predict (object, \dots)
   \code{\link{predict.loess}},
   \code{\link[nls]{predict.nls}},
   \code{\link{predict.poly}},
-  \code{\link[mva:princomp]{predict.princomp}},
+  \code{\link[stats:princomp]{predict.princomp}},
   \code{\link{predict.smooth.spline}}.
 
   For time-series prediction,

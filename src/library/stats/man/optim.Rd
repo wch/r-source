@@ -248,7 +248,7 @@ res
 points(r2$par, r2$val, pch = 8, col = "red", cex = 2)
 
 ## Combinatorial optimization: Traveling salesman problem
-library(mva) # normally loaded
+library(stats) # normally loaded
 library(ts)  # for embed, normally loaded
 
 data(eurodist)

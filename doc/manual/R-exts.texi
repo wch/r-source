@@ -93,7 +93,7 @@ provided information on the C++ interface) are gratefully acknowledged.
 
 Packages provide a mechanism for loading optional code and attached
 documentation as needed.  The @R{} distribution provides several
-packages, such as @pkg{eda}, @pkg{mva}, and @pkg{stepfun}.
+packages.
 
 In the following, we assume that you know the @samp{library()} command,
 including its @samp{lib.loc} argument, and we also assume basic
@@ -1205,9 +1205,8 @@ installation scripts for packages.
 
 The @R{} distribution contains about 1000 such files which can be found
 in the @file{src/library/@var{pkg}/man} directories of the @R{} source
-tree, where @var{pkg} stands for package @pkg{base} where all the
-standard objects are, and for the standard packages such as @pkg{eda}
-and @pkg{mva} which are included in the @R{} distribution.
+tree, where @var{pkg} stands for the standard packages which are
+included in the @R{} distribution.
 
 As an example, let us look at the file
 @file{src/library/base/man/load.Rd} which documents the @R{} function
@@ -2632,7 +2631,7 @@ a symbol.
 
 
 Examples of registering routines can be found in the different packages
-in the R source tree (e.g., @pkg{mva}, @pkg{stats}).  Also, there is a
+in the R source tree (e.g., @pkg{stats}).  Also, there is a
 brief, high-level introduction in @emph{R News} (volume 1/3, September
 2001, pages 20-23).
 
@@ -4479,7 +4478,7 @@ char* R_alloc(long @var{n}, int @var{size})
 
 @noindent
 which allocates @var{n} units of @var{size} bytes each.  A typical usage
-(from package @pkg{mva}) is
+(from package @pkg{stats}) is
 
 @smallexample
 x = (int *) R_alloc(nrows(merge)+2, sizeof(int));

@@ -2551,7 +2551,7 @@ options(op)# reset to previous
 ## Didn't work before 1.8.0
 
 
-library(mva)
+library(stats)
 ## cmdscale
 ## failed in versions <= 1.4.0 :
 data(eurodist)

@@ -57,7 +57,7 @@ Further tests are run by the target `make check-devel', including
 
 	make test-Demo
 
-runs all the demos in packages base and eda (but not tcltk), except
+runs all the demos in packages base and stats (but not tcltk), except
 demo(lm.glm) which is run by example(demo) and so not run again.
 
 
