@@ -249,6 +249,10 @@ none
 
 Directory:  incoming
 
+* PR# 612 *
+Subject:  Installing R-1.1.0 
+From: Berwin Turlach <berwin@maths.uwa.edu.au>
+Date: Thu, 20 Jul 2000 14:50:21 +0800
 * PR# 611 *
 Subject: bug in loess
 From: hdrees@statlab.uni-heidelberg.de
