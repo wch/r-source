@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# ${RHOME}/aux/GETSYMBOLS
+
+# This code assembles the table of statically loaded C and Fortran
+# code which is to be accessed via .C and .Fortran calls.
+
+AUXDIR=`echo $0 | sed 's%/[^/][^/]*$%%'`
+ROUTINES=${AUXDIR}/../src/appl/ROUTINES
+
+sed '
+s/F77_SUBROUTINE(\(.*\))/int F77_SYMBOL(\1)();/
+s/C_FUNCTION(\(.*\))/int \1();/
+' ${ROUTINES} > /tmp/FFDecl.h
+
+${AUXDIR}/move-if-change /tmp/FFDecl.h FFDecl.h
+
+sed '
+s/F77_SUBROUTINE(\(.*\))/	{ F77_QSYMBOL(\1),	F77_SYMBOL(\1)},/
+s/C_FUNCTION(\(.*\))/	{ "\1",	\1 },/
+' ${ROUTINES} > /tmp/FFTab.h
+
+${AUXDIR}/move-if-change /tmp/FFTab.h  FFTab.h
