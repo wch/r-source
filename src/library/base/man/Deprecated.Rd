@@ -3,7 +3,7 @@
 \title{Deprecated Functions}
 \alias{Deprecated}
 \alias{.Deprecated}
-\alias{printNoCLass}
+\alias{printNoClass}
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of
