@@ -927,17 +927,13 @@ static void NewMakeLists (SEXP obj, SEXP sym_list, SEXP env_list)
     case ENVSXP:
 	if (NewLookup(obj, env_list))
 	    return;
-#ifdef EXPERIMENTAL_NAMESPACES
 	if (obj == R_BaseNamespace)
 	    warning("base namespace is not preserved in version 1 workspaces");
 	else if (R_IsNamespaceEnv(obj))
 	    error("cannot save namespace in version 1 workspaces");
-#endif
-#ifdef FANCY_BINDINGS
 	if (R_HasFancyBindings(obj))
 	    error("cannot save environment with locked/active bindings"
 		  " in version 1 workspaces");
-#endif
 	HashAdd(obj, env_list);
 	/* FALLTHROUGH */
     case LISTSXP:

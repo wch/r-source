@@ -458,22 +458,16 @@ SEXP do_sockconn(SEXP, SEXP, SEXP, SEXP);
 SEXP do_nsl(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gzcon(SEXP, SEXP, SEXP, SEXP);
 
-#ifdef ENVIRONMENT_LOCKING
 SEXP do_lockEnv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_envIsLocked(SEXP, SEXP, SEXP, SEXP);
-#endif
-#ifdef FANCY_BINDINGS
 SEXP do_lockBnd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bndIsLocked(SEXP, SEXP, SEXP, SEXP);
 SEXP do_mkActiveBnd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bndIsActive(SEXP, SEXP, SEXP, SEXP);
 SEXP do_mkUnbound(SEXP, SEXP, SEXP, SEXP);
-#endif
-#ifdef EXPERIMENTAL_NAMESPACES
 SEXP do_isNSEnv(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_regNS(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_unregNS(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_getRegNS(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_getNSRegistry(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho);
-#endif

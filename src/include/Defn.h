@@ -460,9 +460,7 @@ extern int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
 
 extern int	R_Expressions	INI_as(500);	/* options(expressions) */
 extern Rboolean	R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
-#ifdef EXPERIMENTAL_NAMESPACES
 extern int	R_UseNamespaceDispatch INI_as(TRUE);
-#endif
 extern int	R_WarnLength	INI_as(1000);	/* Error/warning max length */
 
 /* File Input/Output */
@@ -754,12 +752,9 @@ void unbindVar(SEXP, SEXP);
 #ifdef ALLOW_OLD_SAVE
 void unmarkPhase(void);
 #endif
-#ifdef EXPERIMENTAL_NAMESPACES
 SEXP R_LookupMethod(SEXP, SEXP, SEXP, SEXP);
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP*);
-#else
-int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP*);
-#endif
+
 /* ../main/errors.c : */
 void errorcall(SEXP, const char*, ...);
 void warningcall(SEXP, const char*,...);

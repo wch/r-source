@@ -459,11 +459,7 @@ void setup_Rmainloop(void)
 
     R_Warnings = R_NilValue;
 
-#ifdef EXPERIMENTAL_NAMESPACES
     baseEnv = R_BaseNamespace;
-#else
-    baseEnv = R_NilValue;
-#endif
 
     /* Set up some global variables */
     Init_R_Variables(baseEnv);

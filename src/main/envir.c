@@ -44,7 +44,8 @@
  *
  */
 
-/* Some experimental options:
+/* R 1.8.0: namespaces are no longer experimental, so the following
+ *  are no longer `experimental options':
  *
  * EXPERIMENTAL_NAMESPACES: When this is defined the variable
  *     R_BaseNamespace holds an environment that has R_GlobalEnv as
@@ -79,9 +80,6 @@
  *     locked/active bindings in workspaces written for older versions
  *     of R to read.
  *
- *     This code is experimental; if it doesn't seem useful it can be
- *     removed.
- *
  * LT */
 
 /* This is needed for now for the write barrier test to work.  But
@@ -99,20 +97,10 @@
 #define IS_USER_DATABASE(rho)  OBJECT((rho)) && inherits((rho), "UserDefinedDatabase")
 
 
-#ifdef ENVIRONMENT_LOCKING
 #define FRAME_LOCK_MASK (1<<14)
 #define FRAME_IS_LOCKED(e) (ENVFLAGS(e) & FRAME_LOCK_MASK)
 #define LOCK_FRAME(e) SET_ENVFLAGS(e, ENVFLAGS(e) | FRAME_LOCK_MASK)
 /*#define UNLOCK_FRAME(e) SET_ENVFLAGS(e, ENVFLAGS(e) & (~ FRAME_LOCK_MASK))*/
-#endif
-
-#ifdef FANCY_BINDINGS
-#ifndef NEW_BINDING_FLAGS
-#error need NEW_BINDING_FLAGS to be defined
-#endif
-#ifndef NEW_SYMBOL_FLAGS
-#error need NEW_SYMBOL_FLAGS to be defined
-#endif
 
 /* use the same bits (15 and 14) in symbols and bindings */
 #define ACTIVE_BINDING_MASK (1<<15)
@@ -168,12 +156,6 @@ static SEXP getActiveValue(SEXP fun)
     UNPROTECT(1);
     return expr;
 }
-#else /* no FANCY_BINDINGS */
-#define BINDING_VALUE(b) CAR(b)
-#define SYMBOL_BINDING_VALUE(s) SYMVALUE(s)
-#define SET_BINDING_VALUE(b,val) SETCAR(b,val)
-#define SET_SYMBOL_BINDING_VALUE(sym, val) SET_SYMVALUE(sym,val)
-#endif /* FANCY_BINDINGS */
 
 /*----------------------------------------------------------------------
 
@@ -229,22 +211,14 @@ extern int R_Newhashpjw(char *s)
 
 */
 
-#ifdef ENVIRONMENT_LOCKING
 static void R_HashSet(int hashcode, SEXP symbol, SEXP table, SEXP value,
 		      Rboolean frame_locked)
-#else
-static void R_HashSet(int hashcode, SEXP symbol, SEXP table, SEXP value)
-#endif
 {
     SEXP chain;
 
     /* Grab the chain from the hashtable */
     chain = VECTOR_ELT(table, hashcode);
-#ifndef ENVIRONMENT_LOCKING
-    if (isNull(chain)) {
-	SET_HASHPRI(table, HASHPRI(table) + 1);
-    }
-#endif
+
     /* Add the value into the chain */
     for (; !isNull(chain); chain = CDR(chain)) {
 	if (TAG(chain) == symbol) {
@@ -252,13 +226,11 @@ static void R_HashSet(int hashcode, SEXP symbol, SEXP table, SEXP value)
 	    return;
 	}
     }
-#ifdef ENVIRONMENT_LOCKING
     if (frame_locked)
 	error("can't add bindings to a locked environment");
     if (isNull(chain)) {
 	SET_HASHPRI(table, HASHPRI(table) + 1);
     }
-#endif
     SET_VECTOR_ELT(table, hashcode, CONS(value, VECTOR_ELT(table, hashcode)));
     SET_TAG(VECTOR_ELT(table, hashcode), symbol);
     return;
@@ -579,7 +551,7 @@ static SEXP R_HashFrame(SEXP rho)
    cache integrity is a bit tricky and since it might complicate
    threading a bit (I'm not sure it will but it needs to be thought
    through if nothing else) it might make sense to remove caching at
-   that time.  To make that easier, the idfef's should probably be
+   that time.  To make that easier, the ifdef's should probably be
    left in place.
 
    L. T. */
@@ -595,9 +567,7 @@ static SEXP R_HashFrame(SEXP rho)
 
 static SEXP R_GlobalCache, R_GlobalCachePreserve;
 #endif
-#ifdef EXPERIMENTAL_NAMESPACES
 static SEXP R_BaseNamespaceName;
-#endif
 
 void InitGlobalEnv()
 {
@@ -611,7 +581,6 @@ void InitGlobalEnv()
     R_GlobalCachePreserve = CONS(R_GlobalCache, R_NilValue);
     R_PreserveObject(R_GlobalCachePreserve);
 #endif
-#ifdef EXPERIMENTAL_NAMESPACES
     R_BaseNamespace = NewEnvironment(R_NilValue, R_NilValue, R_GlobalEnv);
     R_PreserveObject(R_BaseNamespace);
     SET_SYMVALUE(install(".BaseNamespaceEnv"), R_BaseNamespace);
@@ -621,7 +590,6 @@ void InitGlobalEnv()
     R_PreserveObject(R_NamespaceRegistry);
     defineVar(install("base"), R_BaseNamespace, R_NamespaceRegistry);
     /**** need to properly initialize the base name space */
-#endif
 }
 
 #ifdef USE_GLOBAL_CACHE
@@ -674,12 +642,8 @@ static void R_FlushGlobalCacheFromUserTable(SEXP udb)
 static void R_AddGlobalCache(SEXP symbol, SEXP place)
 {
   int oldpri = HASHPRI(R_GlobalCache);
-#ifdef ENVIRONMENT_LOCKING
   R_HashSet(hashIndex(symbol, R_GlobalCache), symbol, R_GlobalCache, place,
 	    FALSE);
-#else
-  R_HashSet(hashIndex(symbol, R_GlobalCache), symbol, R_GlobalCache, place);
-#endif
   if (oldpri != HASHPRI(R_GlobalCache) && 
       HASHPRI(R_GlobalCache) > 0.85 * HASHSIZE(R_GlobalCache)) {
     R_GlobalCache = R_HashResize(R_GlobalCache);
@@ -749,16 +713,12 @@ void unbindVar(SEXP symbol, SEXP rho)
 {
     int hashcode;
     SEXP c;
-#ifdef EXPERIMENTAL_NAMESPACES
     if (rho == R_BaseNamespace)
 	error("can't unbind in the base environment");
-#endif
-#ifdef ENVIRONMENT_LOCKING
     if (rho == R_NilValue)
 	error("can't unbind in the NULL environment");
     if (FRAME_IS_LOCKED(rho))
 	error("can't remove bindings from a locked environment");
-#endif
 #ifdef USE_GLOBAL_CACHE
     if (IS_GLOBAL_FRAME(rho))
 	R_FlushGlobalCache(symbol);
@@ -800,12 +760,10 @@ static SEXP findVarLocInFrame(SEXP rho, SEXP symbol, Rboolean *canCache)
     int hashcode;
     SEXP frame, c;
 
-#ifdef EXPERIMENTAL_NAMESPACES
     if (rho == R_NilValue)
         error("can't get binding from NULL environment");
     if (rho == R_BaseNamespace)
         error("can't get binding from base namespace");
-#endif
 
     if(IS_USER_DATABASE(rho)) {
         R_ObjectTable *table;
@@ -898,10 +856,8 @@ SEXP findVarInFrame3(SEXP rho, SEXP symbol, Rboolean doGet)
     int hashcode;
     SEXP frame, c;
 
-#ifdef EXPERIMENTAL_NAMESPACES
     if (rho == R_BaseNamespace)
 	return SYMBOL_BINDING_VALUE(symbol);
-#endif
 
     if(IS_USER_DATABASE(rho)) {
 	/* Use the objects function pointer for this symbol. */
@@ -1254,11 +1210,7 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
     int hashcode;
     SEXP frame, c;
     R_DirtyImage = 1;
-#ifdef EXPERIMENTAL_NAMESPACES
     if (rho != R_BaseNamespace && rho != R_NilValue) {
-#else
-    if (rho != R_NilValue) {
-#endif
 #ifdef USE_GLOBAL_CACHE
 	if (IS_GLOBAL_FRAME(rho))
 	    R_FlushGlobalCache(symbol);
@@ -1283,10 +1235,8 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 		}
 		frame = CDR(frame);
 	    }
-#ifdef ENVIRONMENT_LOCKING
 	    if (FRAME_IS_LOCKED(rho))
 		error("can't add bindings to a locked environment");
-#endif
 	    SET_FRAME(rho, CONS(value, FRAME(rho)));
 	    SET_TAG(FRAME(rho), symbol);
 	}
@@ -1297,12 +1247,8 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 		SET_HASHASH(c, 1);
 	    }
 	    hashcode = HASHVALUE(c) % HASHSIZE(HASHTAB(rho));
-#ifdef ENVIRONMENT_LOCKING
 	    R_HashSet(hashcode, symbol, HASHTAB(rho), value,
 		      FRAME_IS_LOCKED(rho));
-#else
-	    R_HashSet(hashcode, symbol, HASHTAB(rho), value);
-#endif
 	    if (R_HashSizeCheck(HASHTAB(rho)))
 		SET_HASHTAB(rho, R_HashResize(HASHTAB(rho)));
 	}
@@ -1338,7 +1284,6 @@ SEXP setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
         return(table->assign(CHAR(PRINTNAME(symbol)), value, table));      
     }
 
-#ifdef EXPERIMENTAL_NAMESPACES
     if (rho == R_BaseNamespace) {
 #ifdef USE_GLOBAL_CACHE
 	R_FlushGlobalCache(symbol);
@@ -1346,9 +1291,7 @@ SEXP setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
 	SET_SYMBOL_BINDING_VALUE(symbol, value);
 	return symbol;
     }
-    else
-#endif
-    if (HASHTAB(rho) == R_NilValue) {
+    else if (HASHTAB(rho) == R_NilValue) {
 	frame = FRAME(rho);
 	while (frame != R_NilValue) {
 	    if (TAG(frame) == symbol) {
@@ -1394,15 +1337,11 @@ void setVar(SEXP symbol, SEXP value, SEXP rho)
     SEXP vl;
     while (rho != R_NilValue) {
 	R_DirtyImage = 1;
-#ifdef EXPERIMENTAL_NAMESPACES
         if (rho == R_BaseNamespace && SYMVALUE(symbol) == R_UnboundValue)
 	    /* do not assign into base unless variable binding exists */
 	    vl = R_NilValue;
 	else
 	    vl = setVarInFrame(rho, symbol, value);
-#else
-	vl = setVarInFrame(rho, symbol, value);
-#endif
 	if (vl != R_NilValue) {
 	    return;
 	}
@@ -1483,15 +1422,11 @@ static int RemoveVariable(SEXP name, int hashcode, SEXP env)
     int found;
     SEXP list;
 
-#ifdef EXPERIMENTAL_NAMESPACES
     if (env == R_BaseNamespace)
 	error("can't remove variables from base namespace");
-#endif
 
-#ifdef ENVIRONMENT_LOCKING
     if (FRAME_IS_LOCKED(env))
 	error("can't remove bindings from a locked environment");
-#endif	
 
     if(IS_USER_DATABASE(env)) {
 	R_ObjectTable *table;
@@ -1692,13 +1627,8 @@ static int isMissing(SEXP symbol, SEXP rho)
     else
 	s = symbol;
 
-#ifdef EXPERIMENTAL_NAMESPACES
     if (rho == R_NilValue || rho == R_BaseNamespace)
 	return 0;  /* is this really the right thing to do? LT */
-#else
-    if (rho == R_NilValue)
-	return 0;  /* is this really the right thing to do? LT */
-#endif
 
     vl = findVarLocInFrame(rho, s, NULL);
     if (vl != R_NilValue) {
@@ -2087,10 +2017,8 @@ SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     envp = CAR(args);
 
-#ifdef EXPERIMENTAL_NAMESPACES
     if (envp == R_BaseNamespace)
 	envp = R_NilValue;
-#endif
 
     if (isNull(envp) || !isNewList(envp)) {
 	PROTECT(env = allocVector(VECSXP, 1));
@@ -2309,7 +2237,6 @@ SEXP do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
   }
 }
 
-#ifdef ENVIRONMENT_LOCKING
 void R_LockEnvironment(SEXP env, Rboolean bindings)
 {
     if (env == R_NilValue)
@@ -2317,7 +2244,6 @@ void R_LockEnvironment(SEXP env, Rboolean bindings)
     if (TYPEOF(env) != ENVSXP)
 	error("not an environment");
     if (bindings) {
-#ifdef FANCY_BINDINGS
 	if (IS_HASHED(env)) {
 	    SEXP table, chain;
 	    int i, size;
@@ -2334,9 +2260,6 @@ void R_LockEnvironment(SEXP env, Rboolean bindings)
 	    for (frame = FRAME(env); frame != R_NilValue; frame = CDR(frame))
 		LOCK_BINDING(frame);
 	}
-#else
-	error("locking bindings is not supported");
-#endif
     }
     LOCK_FRAME(env);
 }
@@ -2367,19 +2290,14 @@ SEXP do_envIsLocked(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     return ScalarLogical(R_EnvironmentIsLocked(CAR(args)));
 }
-#endif
-#ifdef FANCY_BINDINGS
+
 void R_LockBinding(SEXP sym, SEXP env)
 {
     if (TYPEOF(sym) != SYMSXP)
 	error("not a symbol");
     if (env != R_NilValue && TYPEOF(env) != ENVSXP)
 	error("not an environment");
-#ifdef EXPERIMENTAL_NAMESPACES
     if (env == R_NilValue || env == R_BaseNamespace)
-#else
-    if (env == R_NilValue)
-#endif
 	LOCK_BINDING(sym);
     else {
 	SEXP binding = findVarLocInFrame(env, sym, NULL);
@@ -2397,11 +2315,7 @@ static void R_unLockBinding(SEXP sym, SEXP env)
 	error("not a symbol");
     if (env != R_NilValue && TYPEOF(env) != ENVSXP)
 	error("not an environment");
-#ifdef EXPERIMENTAL_NAMESPACES
     if (env == R_NilValue || env == R_BaseNamespace)
-#else
-    if (env == R_NilValue)
-#endif
 	UNLOCK_BINDING(sym);
     else {
 	SEXP binding = findVarLocInFrame(env, sym, NULL);
@@ -2419,11 +2333,7 @@ void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env)
 	error("not a function");
     if (env != R_NilValue && TYPEOF(env) != ENVSXP)
 	error("not an environment");
-#ifdef EXPERIMENTAL_NAMESPACES
     if (env == R_NilValue || env == R_BaseNamespace) {
-#else
-    if (env == R_NilValue) {
-#endif
 	if (SYMVALUE(sym) != R_UnboundValue && ! IS_ACTIVE_BINDING(sym))
 	    error("symbol already has a regular binding");
 	else if (BINDING_IS_LOCKED(sym))
@@ -2455,11 +2365,7 @@ Rboolean R_BindingIsLocked(SEXP sym, SEXP env)
 	error("not a symbol");
     if (env != R_NilValue && TYPEOF(env) != ENVSXP)
 	error("not an environment");
-#ifdef EXPERIMENTAL_NAMESPACES
     if (env == R_NilValue || env == R_BaseNamespace)
-#else
-    if (env == R_NilValue)
-#endif
 	return BINDING_IS_LOCKED(sym);
     else {
 	SEXP binding = findVarLocInFrame(env, sym, NULL);
@@ -2475,11 +2381,7 @@ Rboolean R_BindingIsActive(SEXP sym, SEXP env)
 	error("not a symbol");
     if (env != R_NilValue && TYPEOF(env) != ENVSXP)
 	error("not an environment");
-#ifdef EXPERIMENTAL_NAMESPACES
     if (env == R_NilValue || env == R_BaseNamespace)
-#else
-    if (env == R_NilValue)
-#endif
 	return IS_ACTIVE_BINDING(sym);
     else {
 	SEXP binding = findVarLocInFrame(env, sym, NULL);
@@ -2576,7 +2478,6 @@ SEXP do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_SYMVALUE(sym, R_UnboundValue);
     return R_NilValue;
 }
-#endif
 
 void R_RestoreHashCount(SEXP rho)
 {
@@ -2645,7 +2546,6 @@ SEXP R_FindPackageEnv(SEXP info)
     }
 }
 
-#ifdef EXPERIMENTAL_NAMESPACES
 Rboolean R_IsNamespaceEnv(SEXP rho)
 {
     if (rho == R_BaseNamespace)
@@ -2835,4 +2735,3 @@ SEXP do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     return R_NilValue;
 }
-#endif

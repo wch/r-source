@@ -1190,10 +1190,8 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	in the computation.  For efficiency reasons we record the
 	location where this variable is stored.  */
 
-#ifdef EXPERIMENTAL_NAMESPACES
     if (rho == R_BaseNamespace)
 	errorcall(call, "cannot do complex assignments in base namespace");
-#endif
     if (rho == R_NilValue)
 	errorcall(call, "cannot do complex assignments in NULL environment");
     defineVar(R_TmpvalSymbol, R_NilValue, rho);
@@ -1702,11 +1700,7 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	    PROTECT(pargs = promiseArgs(args, rho)); nprotect++;
 	    SET_PRVALUE(CAR(pargs), x);
 	    begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs, op);
-#ifdef EXPERIMENTAL_NAMESPACES
 	    if(usemethod(generic, x, call, pargs, rho, rho, R_NilValue, ans))
-#else
-	    if(usemethod(generic, x, call, pargs, rho, ans))
-#endif
 	    {
 		endcontext(&cntxt);
 		UNPROTECT(nprotect);
@@ -1746,11 +1740,7 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	    /* PROTECT(args = promiseArgs(args, rho)); */
 	    SET_PRVALUE(CAR(args), x);
 	    begincontext(&cntxt, CTXT_RETURN, call, rho, rho, args, op);
-#ifdef EXPERIMENTAL_NAMESPACES
 	    if(usemethod(generic, x, call, args, rho, rho, R_NilValue, ans)) {
-#else
-	    if(usemethod(generic, x, call, args, rho, ans)) {
-#endif
 		endcontext(&cntxt);
 		UNPROTECT(nprotect);
 		return 1;
@@ -1782,11 +1772,7 @@ static void findmethod(SEXP class, char *group, char *generic,
     for (whichclass = 0 ; whichclass < len ; whichclass++) {
 	sprintf(buf, "%s.%s", generic, CHAR(STRING_ELT(class, whichclass)));
 	*meth = install(buf);
-#ifdef EXPERIMENTAL_NAMESPACES
 	*sxp = R_LookupMethod(*meth, rho, rho, R_NilValue);
-#else
-	*sxp = findVar(*meth, rho);
-#endif
 	if (isFunction(*sxp)) {
 	    *gr = mkString("");
 	    break;
@@ -1935,12 +1921,10 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	SET_STRING_ELT(t, j, duplicate(STRING_ELT(lclass, lwhich++)));
     defineVar(install(".Class"), t, newrho);
     UNPROTECT(1);
-#ifdef EXPERIMENTAL_NAMESPACES
     if (R_UseNamespaceDispatch) {
 	defineVar(install(".GenericCallEnv"), rho, newrho);
 	defineVar(install(".GenericDefEnv"), R_NilValue, newrho);
     }
-#endif
 
     PROTECT(t = LCONS(lmeth,CDR(call)));
 

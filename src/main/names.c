@@ -826,26 +826,21 @@ FUNTAB R_FunTab[] =
 {"setToCConverterActiveStatus", do_setToCConverterActiveStatus, 0, 11, 2, {PP_FUNCALL, PREC_FN, 0}},
 {"removeToCConverterActiveStatus", do_setToCConverterActiveStatus, 1, 11, 1, {PP_FUNCALL, PREC_FN, 0}},
 
-#ifdef ENVIRONMENT_LOCKING
 {"lockEnvironment", do_lockEnv,		0, 11,  2,      {PP_FUNCALL, PREC_FN,	0}},
 {"environmentIsLocked",	do_envIsLocked,	0, 11,  1,      {PP_FUNCALL, PREC_FN,	0}},
-#endif
-#ifdef FANCY_BINDINGS
 {"lockBinding", do_lockBnd,		0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
 {"unlockBinding", do_lockBnd,		1, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
 {"bindingIsLocked", do_bndIsLocked,	0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
 {"makeActiveBinding", do_mkActiveBnd,	0, 11,	3,      {PP_FUNCALL, PREC_FN,	0}},
 {"bindingIsActive", do_bndIsActive,	0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
 {"mkUnbound",	do_mkUnbound,		0, 11,	1,      {PP_FUNCALL, PREC_FN,	0}},
-#endif
-#ifdef EXPERIMENTAL_NAMESPACES
 {"isNamespaceEnv",do_isNSEnv,		0, 11,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"registerNamespace",do_regNS,		0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
 {"unregisterNamespace",do_unregNS,	0, 11,  1,      {PP_FUNCALL, PREC_FN,	0}},
 {"getRegisteredNamespace",do_getRegNS,	0, 11,  1,      {PP_FUNCALL, PREC_FN,	0}},
 {"getNamespaceRegistry",do_getNSRegistry, 0, 11, 0,     {PP_FUNCALL, PREC_FN,	0}},
 {"importIntoEnv",do_importIntoEnv, 0, 11, 4,     {PP_FUNCALL, PREC_FN,	0}},
-#endif
+
 
 {NULL,		NULL,		0,	0,	0,	{0,	PREC_FN,	0}},
 };

@@ -664,9 +664,7 @@ static SEXP GetPersistentName(R_outpstream_t stream, SEXP s)
 	case EXTPTRSXP: break;
 	case ENVSXP:
 	    if (s == R_GlobalEnv ||
-#ifdef EXPERIMENTAL_NAMESPACES
 		R_IsNamespaceEnv(s) ||
-#endif
 		R_IsPackageEnv(s))
 		return R_NilValue;
 	    else
@@ -697,9 +695,7 @@ static int SaveSpecialHook(SEXP item)
     if (item == R_GlobalEnv)     return GLOBALENV_SXP;
     if (item == R_UnboundValue)  return UNBOUNDVALUE_SXP;
     if (item == R_MissingArg)    return MISSINGARG_SXP;
-#ifdef EXPERIMENTAL_NAMESPACES
     if (item == R_BaseNamespace) return BASENAMESPACE_SXP;
-#endif
     return 0;
 }
 
@@ -767,20 +763,14 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    OutInteger(stream, PACKAGESXP);
 	    OutStringVec(stream, name, ref_table);
 	}
-#ifdef EXPERIMENTAL_NAMESPACES
 	else if (R_IsNamespaceEnv(s)) {
 	    warning("namespaces may not be available when loading");
 	    OutInteger(stream, NAMESPACESXP);
 	    OutStringVec(stream, R_NamespaceEnvSpec(s), ref_table);
 	}
-#endif
 	else {
 	    OutInteger(stream, ENVSXP);
-#ifdef ENVIRONMENT_LOCKING
 	    OutInteger(stream, R_EnvironmentIsLocked(s) ? 1 : 0);
-#else
-	    OutInteger(stream, 0);
-#endif
 	    WriteItem(ENCLOS(s), ref_table, stream);
 	    WriteItem(FRAME(s), ref_table, stream);
 	    WriteItem(TAG(s), ref_table, stream);
@@ -971,13 +961,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
     case UNBOUNDVALUE_SXP:  return R_UnboundValue;
     case MISSINGARG_SXP:    return R_MissingArg;
     case BASENAMESPACE_SXP:
-#ifdef EXPERIMENTAL_NAMESPACES
 	return R_BaseNamespace;
-#else
-	warning("base namespace not available in this verison;"
-		" using .GlobalEnv");
-	return R_GlobalEnv;
-#endif
     case REFSXP:
 	return GetReadRef(ref_table, InRefIndex(stream, flags));
     case PERSISTSXP:
@@ -999,14 +983,10 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	AddReadRef(ref_table, s);
 	return s;
     case NAMESPACESXP:
-#ifdef EXPERIMENTAL_NAMESPACES
 	PROTECT(s = InStringVec(stream, ref_table));
 	s = R_FindNamespace(s);
 	AddReadRef(ref_table, s);
 	UNPROTECT(1);
-#else
-	error("namespaces not available in this version");
-#endif
 	return s;
     case ENVSXP:
 	{
@@ -1028,9 +1008,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 		   so reconstruct it here if needed. */
 		SET_OBJECT(s, 1);
 	    R_RestoreHashCount(s);
-#ifdef ENVIRONMENT_LOCKING
 	    if (locked) R_LockEnvironment(s, FALSE);
-#endif
 	    UNPROTECT(1);
 	    return s;
 	}
