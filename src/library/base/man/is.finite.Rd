@@ -13,36 +13,47 @@ is.nan(x)
 \alias{NaN}
 \alias{is.nan}
 \description{
-\code{is.finite} and \code{is.infinite} return a vector of the same
-length as \code{x}, indicating which elements are finite or not.
+  \code{is.finite} and \code{is.infinite} return a vector of the same
+  length as \code{x}, indicating which elements are finite (not infinite
+  and not missing).
 
-\code{Inf} and \code{-Inf} are positive and negative `infinity' whereas
-\code{NaN} means ``Not a Number''.
+  \code{Inf} and \code{-Inf} are positive and negative `infinity' whereas
+  \code{NaN} means ``Not a Number''.
 }
 \arguments{
   \item{x}{(numerical) object to be tested.}
 }
 \details{
-\code{is.finite} returns a vector of the same length as \code{x}
-the jth element of which is \code{TRUE} if \code{x[j]} is
-finite (i.e. it is not one of the values \code{NA}, \code{NaN},
-\code{Inf} or \code{-Inf}).
+  \code{is.finite} returns a vector of the same length as \code{x}
+  the jth element of which is \code{TRUE} if \code{x[j]} is
+  finite (i.e. it is not one of the values \code{NA}, \code{NaN},
+  \code{Inf} or \code{-Inf}).  All elements of character and
+  generic (list) vectors are false, so \code{is.finite} is only useful for
+  logical, integer, numeric and complex vectors.  Complex numbers are
+  finite if both the real and imaginary parts are.
 
-\code{is.infinite} returns a vector of the same length as \code{x}
-the jth element of which is \code{TRUE} if \code{x[j]} is
-infinite (i.e. equal to one of \code{Inf} or \code{-Inf}).
+  \code{is.infinite} returns a vector of the same length as \code{x}
+  the jth element of which is \code{TRUE} if \code{x[j]} is
+  infinite (i.e. equal to one of \code{Inf} or \code{-Inf}).
+
+  \code{is.nan} tests if a numeric value is \code{NaN}.  Do not test
+  equality to \code{NaN}, or even use \code{\link{identical}},
+  since systems typically have many different NaN values.
+  In most ports of \R one of these is used for the numeric missing
+  value \code{NA}.
 }
 \note{
-    In \R, basically all mathematical functions (including basic
-    \code{\link{Arithmetic}}), are supposed to work properly with
-    \code{+/- Inf} and \code{NaN} as input or output.
+  In \R, basically all mathematical functions (including basic
+  \code{\link{Arithmetic}}), are supposed to work properly with
+  \code{+/- Inf} and \code{NaN} as input or output.
 
-    The basic rule should be that calls and relations with \code{Inf}s
-    really are statements with a proper mathematical \emph{limit}, see the many
-    examples below.
+  The basic rule should be that calls and relations with \code{Inf}s
+  really are statements with a proper mathematical \emph{limit}.
 }
-\seealso{\code{\link{NA}}, \emph{`Not Available'} which is not a number
-    as well, however usually used for missing values.
+\seealso{
+  \code{\link{NA}}, \emph{`Not Available'} which is not a number
+  as well, however usually used for missing values and applies to many
+  modes, not just numeric.
 }
 \references{
 %%- better ones ?!??
