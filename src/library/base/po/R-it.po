@@ -241,7 +241,7 @@ msgid "for a data frame with"
 msgstr "per un data frame con"
 
 msgid "row.names"
-msgstr ""
+msgstr "row.names"
 
 msgid "rows"
 msgstr "righe"
@@ -259,7 +259,7 @@ msgid "some row.names duplicated:"
 msgstr "alcuni row.names doppi:"
 
 msgid ","
-msgstr ""
+msgstr ","
 
 msgid "--> row.names NOT used"
 msgstr "--> row.names NON verrà usato"
@@ -336,7 +336,7 @@ msgid "rows to replace"
 msgstr "righe da sostituire"
 
 msgid "rows in value to replace"
-msgstr ""
+msgstr "righe in 'value' da sostituire"
 
 msgid "replacement data has"
 msgstr "dati sostitutivi contengono"
@@ -527,7 +527,7 @@ msgid "replacement diagonal has wrong length"
 msgstr "la diagonale sostitutiva ha lunghezza sbagliata"
 
 msgid "MARGIN ="
-msgstr ""
+msgstr "MARGIN ="
 
 msgid "is invalid for dim ="
 msgstr "non è valida come dim ="
@@ -550,7 +550,7 @@ msgstr "la funzione non è nel namespace, non è quindi possibile individuare la
 msgid ""
 "looking for DLL for native routine call, but no DLLs in namespace of call"
 msgstr ""
-
+"cerco la DDL per la routine di 'call' residente, ma nessuna DLL presente nel namespace di 'call'"
 
 msgid "0 x 0 matrix"
 msgstr "matrice 0 x 0"
@@ -697,7 +697,7 @@ msgid "has not been installed properly"
 msgstr "non è stato correttamente installato"
 
 msgid "See the Note in ?library"
-msgstr "Sia veda 'Note' in ?library"
+msgstr "Si veda 'Note' in ?library"
 
 msgid "has been merged into 'stats'"
 msgstr "è stato integrato in 'stats'"
@@ -718,628 +718,632 @@ msgid "There is no package called"
 msgstr "Non c'è nessun pacchetto chiamato"
 
 msgid "is not a valid package -- installed < 2.0.0?"
-msgstr ""
+msgstr "non è un pacchetto valido -- installato < 2.0.0?"
 
 msgid "not found on search path, using pos = 2"
-msgstr ""
+msgstr "non trovato nel percorso di ricerca, uso pos = 2"
 
 msgid "package/namespace load failed for"
-msgstr ""
+msgstr "caricamento pacchetto/namespace fallito per"
 
 msgid "unable to load R code in package"
-msgstr ""
+msgstr "impossibile caricare il codice R del pacchetto"
 
 msgid "contains no R code"
-msgstr ""
+msgstr "non contiene codice R"
 
 msgid ".First.lib failed for"
-msgstr ""
+msgstr ".First.lib fallita per"
 
 msgid "already present in search()"
-msgstr ""
+msgstr "già presente in search()"
 
 msgid "shared library '%s' not found"
-msgstr ""
+msgstr "libraria condivisa '%s' non trovata"
 
 msgid "shared library '%s' already loaded"
-msgstr ""
+msgstr "libreria condivisa '%s' già caricata"
 
 msgid "now dyn.load(\"%s\") ..."
-msgstr ""
+msgstr "eseguo dyn.load(\"%s\") ..."
 
 msgid "no shared library was specified"
-msgstr ""
+msgstr "non è stata specificata alcuna libreria condivisa"
 
 msgid "shared library '%s' was not loaded"
-msgstr ""
+msgstr "libreria condivisa '%s' non caricata"
 
 msgid "now dyn.unload(\"%s\") ..."
-msgstr ""
+msgstr "eseguo dyn.unload(\"%s\") ..."
 
 msgid "Loading required package: %s"
-msgstr ""
+msgstr "Carico il pacchetto richiesto: %s"
 
 msgid "none of the packages are loaded"
-msgstr ""
+msgstr "nessuno dei pacchetti è stato caricato"
 
 msgid "found more than once,"
-msgstr ""
+msgstr "trovato più di una volta,"
 
 msgid "using the one found in"
-msgstr ""
+msgstr "uso quello trovato in"
 
 msgid "none of the packages were found"
-msgstr ""
+msgstr "nessuno dei pacchetti è stato trovato"
 
 msgid "there is no package called"
-msgstr ""
+msgstr "non c'è alcun pacchetto chiamato"
 
 msgid "required by"
-msgstr ""
+msgstr "richiesto da"
 
 msgid "could not be found"
-msgstr ""
+msgstr "non può essere trovato"
 
 msgid "was found, but"
-msgstr ""
+msgstr "trovato, ma"
 
 msgid "could not be loaded"
-msgstr ""
+msgstr "non può essere caricato"
 
 msgid "is loaded, but"
-msgstr ""
+msgstr "caricato, ma"
 
 msgid "bad file argument"
-msgstr ""
+msgstr "argomento file non corretto"
 
 msgid "no input is available"
-msgstr ""
+msgstr "nessun input disponibile"
 
 msgid "input has been corrupted, with LF replaced by CR"
-msgstr ""
+msgstr "l'input è stato danneggiato, LF sostituiti da CR"
 
 msgid ""
 "the input does not start with a magic number compatible with loading from a "
 "connection"
 msgstr ""
+"l'input non inizia con un identificativo compatibile con il caricamento da"
+"una connessione"
 
 msgid "'file' must be specified"
-msgstr ""
+msgstr "'file' deve essere specificato"
 
 msgid "'file' must be non-empty string"
-msgstr ""
+msgstr "'file' deve essere una stringa non vuota"
 
 msgid "can only save to a binary connection"
-msgstr ""
+msgstr "posso salvare solo su connessioni di tipo binario"
 
 msgid "`file' must be non-empty string"
-msgstr ""
+msgstr "'file' deve essere una stringa non vuota"
 
 msgid "image could not be renamed and is left in"
-msgstr ""
+msgstr "l'immagine non può essere rinominata ed è stata lasciata in"
 
 msgid "[Previously saved workspace restored]"
-msgstr ""
+msgstr "[Workspace precedentemente salvato ripristinato]"
 
 msgid "invalid 'category' argument"
-msgstr ""
+msgstr "argomento 'category' non valido"
 
 msgid "'arg' should be one of"
-msgstr ""
+msgstr "'arg' deve essere uno tra"
 
 msgid "there is more than one match in match.arg"
-msgstr ""
+msgstr "c'è più di un 'match' in match.arg"
 
 msgid "no match"
-msgstr ""
+msgstr "nessun match"
 
 msgid "input must have length 1"
-msgstr ""
+msgstr "l'input deve avere lunghezza 1"
 
 msgid "input and target must be character vectors"
-msgstr ""
+msgstr "l'input e la destinazione devono essere vettori di caratteri"
 
 msgid "not function, character, or symbol:"
-msgstr ""
+msgstr "nessuna oggetto function, character o symbol:"
 
 msgid "found non-function:"
-msgstr ""
+msgstr "trovata una non-function:"
 
 msgid "attempt to set rownames on object with no dimensions"
-msgstr ""
+msgstr "tentativo di impostare rownames per un oggetto senza dimensioni"
 
 msgid "attempt to set colnames on object with less than two dimensions"
-msgstr ""
+msgstr "tentativo di impostare colnames per un oggetto con meno di due dimensioni"
 
 msgid "argument is not numeric or logical: returning NA"
-msgstr ""
+msgstr "l'argomento non è numerico o logico: restituisco NA"
 
 msgid "trimmed means are not defined for complex data"
-msgstr ""
+msgstr "le medie troncate non sono definite per dati complex"
 
 msgid "'by' must match numbers of columns"
-msgstr ""
+msgstr "'by' deve essere compatibile col numero di colonne"
 
 msgid "'by' must match number of columns"
-msgstr ""
+msgstr "'by' deve essere compatibile col numero di colonne"
 
 msgid "'by' must specify column(s)"
-msgstr ""
+msgstr "'by' deve specificare la colonna(e)"
 
 msgid "'by' must specify valid column(s)"
-msgstr ""
+msgstr "'by' deve specificare colonne(a) valide"
 
 msgid "no rows to match"
-msgstr ""
+msgstr "nessuna riga da corrispondere"
 
 msgid "by.x and by.y specify different numbers of columns"
-msgstr ""
+msgstr "by.x e by.y specificano numeri di colonne differenti"
 
 msgid ""
 "Tracing functions requires the methods package, but unable to load methods "
 "namespace"
 msgstr ""
+"Il 'trace' delle funzioni richiede il pacchetto method, ma non è possibile caricare "
+"il namespace methods"
 
 msgid "is not an exported object from"
-msgstr ""
+msgstr "non è un oggetto esportato da"
 
 msgid "failed in attachNamespace"
-msgstr ""
+msgstr "non riuscito in attachNamespace"
 
 msgid "name space is already attached"
-msgstr ""
+msgstr "il namespace è già agganciato"
 
 msgid "not found"
-msgstr ""
+msgstr "non trovato"
 
 msgid "cyclic name space dependencies are not supported"
-msgstr ""
+msgstr "dipendenze circolari nel namespace non sono supportate"
 
 msgid "failed in loadNamespace for"
-msgstr ""
+msgstr "non riuscito in loadNamespace per"
 
 msgid "namespace"
-msgstr ""
+msgstr "namespace"
 
 msgid "is already sealed in loadNamespace"
-msgstr ""
+msgstr "già sigillato in loadNamespace"
 
 msgid "does not have a name space"
-msgstr ""
+msgstr "non ha un namespace"
 
 msgid "Unable to load R code in package"
-msgstr ""
+msgstr "Impossibile caricare il codice R nel pacchetto"
 
 msgid "In"
-msgstr ""
+msgstr "In"
 
 msgid "classes for export not defined:"
-msgstr ""
+msgstr "classi da esportare non definite:"
 
 msgid "methods for export not found:"
-msgstr ""
+msgstr "metodi da esportare non trovati:"
 
 msgid "methods specified for export, but none defined:"
-msgstr ""
+msgstr "metodi da esportare specificati, ma nessuno definito:"
 
 msgid "not loading a name space"
-msgstr ""
+msgstr "non sto caricando un namespace"
 
 msgid "name space"
-msgstr ""
+msgstr "namespace"
 
 msgid "is loaded"
-msgstr ""
+msgstr "è caricato"
 
 msgid "failed in"
-msgstr ""
+msgstr "non riuscito in"
 
 msgid "is still used by:"
-msgstr ""
+msgstr "ancora in uso da:"
 
 msgid "imperative name space directives are disabled"
-msgstr ""
+msgstr "direttive imperative del namespace disabilitate"
 
 msgid "all objects in base name space are currently exported."
-msgstr ""
+msgstr "tutti gli oggetti del namespace base sono attualmente esportati."
 
 msgid "can only export from a name space"
-msgstr ""
+msgstr "posso solo esportare da un namespace"
 
 msgid "not a name space"
-msgstr ""
+msgstr "non è un namespace"
 
 msgid "operation not allowed on base name space"
-msgstr ""
+msgstr "operazione non permessa sul namespace base"
 
 msgid "duplicate import names"
-msgstr ""
+msgstr "nomi importati doppi"
 
 msgid "cannot import into a sealed name space"
-msgstr ""
+msgstr "non posso importare in un namespace sigillato"
 
 msgid "invalid import target"
-msgstr ""
+msgstr "destinazione per importazione non valida"
 
 msgid "Requested methods objects not found in environment/package"
-msgstr ""
+msgstr "Oggetti del metodo richiesti non trovati nel pacchetto/environment"
 
 msgid ":"
-msgstr ""
+msgstr ":"
 
 msgid "object(s)"
-msgstr ""
+msgstr "oggetto(i)"
 
 msgid "are not exported by"
-msgstr ""
+msgstr "non sono esportati da"
 
 msgid "cannot add to exports of a sealed name space"
-msgstr ""
+msgstr "non è possibile aggiungere esportazioni ad un namespace sigillato"
 
 msgid "previous export(s)"
-msgstr ""
+msgstr "esportazioni precedenti"
 
 msgid "are being replaced"
-msgstr ""
+msgstr "stanno per essere sostituiti"
 
 msgid "undefined exports :"
-msgstr ""
+msgstr "esportazioni indefinite :"
 
 msgid "has no NAMESPACE file"
-msgstr ""
+msgstr "non ha il file NAMESPACE"
 
 msgid "bad S3method directive:"
-msgstr ""
+msgstr "direttiva S3method sbagliata:"
 
 msgid "too many S3method directives"
-msgstr ""
+msgstr "troppe direttive S3method"
 
 msgid "unknown namespace directive:"
-msgstr ""
+msgstr "direttiva namespace sconosciuta:"
 
 msgid "S3 method"
-msgstr ""
+msgstr "metodo S3"
 
 msgid "was declared in NAMESPACE but not found"
-msgstr ""
+msgstr "dichiarato in NAMESPACE ma non trovato"
 
 msgid "bad method"
-msgstr ""
+msgstr "metodo non corretto"
 
 msgid "object"
-msgstr ""
+msgstr "oggetto"
 
 msgid "not found whilst loading namespace"
-msgstr ""
+msgstr "non trovato durante il caricamento del namespace"
 
 msgid "found an S4 version of"
-msgstr ""
+msgstr "trovata una versione S4 di"
 
 msgid "so it has not been imported correctly"
-msgstr ""
+msgstr "quindi non è stato importato correttamente"
 
 msgid "S3 method(s)"
-msgstr ""
+msgstr "metodo(i) S3"
 
 msgid "were declared in NAMESPACE but not found"
-msgstr ""
+msgstr "dichiarati in NAMESPACE ma non trovati"
 
 msgid "is not implemented yet"
-msgstr ""
+msgstr "non ancora implementato"
 
 msgid "invalid version spec"
-msgstr ""
+msgstr "versione specificata non valida"
 
 msgid "wrong arg"
-msgstr ""
+msgstr "argomento sbagliato"
 
 msgid "not defined for package_version objects"
-msgstr ""
+msgstr "non definito per oggetti package_version"
 
 msgid "x must be numeric"
-msgstr ""
+msgstr "x deve essere di tipo numeric"
 
 msgid "invalid n value"
-msgstr ""
+msgstr "valore n non valido"
 
 msgid "'shrink.sml' must be numeric > 0"
-msgstr ""
+msgstr "'shrink.sml' deve essere numeric > 0"
 
 msgid "'min.n' must be non-negative integer <= n"
-msgstr ""
+msgstr "'min.n' deve essere un intero non negativo <= n"
 
 msgid "'high.u.bias' must be non-negative numeric"
-msgstr ""
+msgstr "'high.u.bias' deve essere numeric non negativo"
 
 msgid "'u5.bias' must be non-negative numeric"
-msgstr ""
+msgstr "'u5.bias' deve essere numeric non negativo"
 
 msgid "'eps.correct' must be 0, 1, or 2"
-msgstr ""
+msgstr "'eps.correct' deve essere 0, 1, o 2"
 
 msgid "first argument must be a QR decomposition"
-msgstr ""
+msgstr "il primo argomento deve essere una decomposizione QR"
 
 msgid "qr and y must have the same number of rows"
-msgstr ""
+msgstr "qr e y devono avere lo stesso numero di righe"
 
 msgid "exact singularity in qr.coef"
-msgstr ""
+msgstr "singolarità perfetta in qr.coef"
 
 msgid "argument is not a QR decomposition"
-msgstr ""
+msgstr "l'argomento non è una decomposizione QR"
 
 msgid "implemented for complex qr"
-msgstr ""
+msgstr "implementato per qr complex"
 
 msgid "not supported for LAPACK QR"
-msgstr ""
+msgstr "non supportato per LAPACK QR"
 
 msgid "k is too large"
-msgstr ""
+msgstr "k è troppo grande"
 
 msgid "need larger value of ncol as pivoting occurred"
-msgstr ""
+msgstr "c'è bisogno di un valore più grande di ncol poiché si utilizzato il pivoting"
 
 msgid "file' must be a character string or connection"
-msgstr ""
+msgstr "'file' deve essere una stringa di caratteri o una connessione"
 
 msgid "no lines available in input"
-msgstr ""
+msgstr "nessuna linea disponibile in input"
 
 msgid "empty beginning of file"
-msgstr ""
+msgstr "inizio del file vuoto"
 
 msgid "header and 'col.names' are of different lengths"
-msgstr ""
+msgstr "header e 'col.names' sono di lunghezza differente"
 
 msgid "more columns than column names"
-msgstr ""
+msgstr "più colonne dei nomi colonna"
 
 msgid "more column names than columns"
-msgstr ""
+msgstr "più nomi colonna che colonne"
 
 msgid "first five rows are empty: giving up"
-msgstr ""
+msgstr "le prime cinque righe sono vuote: ci rinuncio"
 
 msgid "not all columns named in 'colClasses' exist"
-msgstr ""
+msgstr "non tutte le colonne indicate in 'colClasses' esistono"
 
 msgid "invalid numeric 'as.is' expression"
-msgstr ""
+msgstr "espressione numerica 'as.is' non valida"
 
 msgid "not all columns named in 'as.is' exist"
-msgstr ""
+msgstr "non tutte le colonne nominati in 'as.is' esistono"
 
 msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr ""
+msgstr "'as.is' ha la lunghezza sbagliata %d  != cols = %d"
 
 msgid "invalid 'row.names' specification"
-msgstr ""
+msgstr "specificazione di 'row.names' non valida"
 
 msgid "x must be a vector"
-msgstr ""
+msgstr "x deve essere un vettore"
 
 msgid "invalid 'rle' structure"
-msgstr ""
+msgstr "'struttura 'rle' non valida"
 
 msgid "incorrect length for 'group'"
-msgstr ""
+msgstr "lunghezza per 'group' non corretta"
 
 msgid "missing values for 'group'"
-msgstr ""
+msgstr "valori mancanti in 'group'"
 
 msgid "not a data frame"
-msgstr ""
+msgstr "non è un data frame"
 
 msgid "length of 'center' must equal the number of columns of 'x'"
-msgstr ""
+msgstr "la lunghezza di 'center' deve essere uguale al numero di colonne di 'x'"
 
 msgid "length of 'scale' must equal the number of columns of 'x'"
-msgstr ""
+msgstr "la lunghezza di 'scale' deve essere uguale al numero di colonne di 'x'"
 
 msgid "either specify 'nmax' or 'n', but not both."
-msgstr ""
+msgstr "si specifichi 'nmax' o 'n', ma non entrambi"
 
 msgid "invalid (to - from)/by in seq(.)"
-msgstr ""
+msgstr "specificazione di (to - from)/by non valida in seq(.)"
 
 msgid "wrong sign in 'by' argument"
-msgstr ""
+msgstr "segno sgbagliato nell'argomento 'by'"
 
 msgid "'by' argument is much too small"
-msgstr ""
+msgstr "l'argomento 'by' è veramente troppo piccolo"
 
 msgid "length must be non-negative number"
-msgstr ""
+msgstr "la lunghezza deve essere un numero non negativo"
 
 msgid "too many arguments"
-msgstr ""
+msgstr "troppi argomenti"
 
 msgid "bad 'file' argument"
-msgstr ""
+msgstr "argomento 'file' sbagliato"
 
 msgid "'connection' must be a connection"
-msgstr ""
+msgstr "'connection' deve essere una connessione"
 
 msgid "'file' must be NULL or an already open connection"
-msgstr ""
+msgstr "'file' deve essere NULL o una connessione già aperta"
 
 msgid "cannot split the message connection"
-msgstr ""
+msgstr "non possono suddividere la conessione messaggio"
 
 msgid "'file' must be NULL, a connection or a character string"
-msgstr ""
+msgstr "'file' deve essere NULL, una connessione o una stringa di caratteri"
 
 msgid "this is the \"qr\" method for the generic function solve()"
-msgstr ""
+msgstr "questo è il metodo \"qr\" per la funzione generica solve()"
 
 msgid "singular matrix 'a' in solve"
-msgstr ""
+msgstr "matrice singolare 'a' in solve"
 
 msgid "only square matrices can be inverted"
-msgstr ""
+msgstr "solo le matrici quadrate si possono invertire"
 
 msgid "solve.default called with a qr object: use qr.solve"
-msgstr ""
+msgstr "solve.default è stato usato con un oggetto qr: usare qr.solve"
 
 msgid "index.return only for non-factors"
-msgstr ""
+msgstr "index.return solo per oggetti non factor"
 
 msgid "'x' must be atomic"
-msgstr ""
+msgstr "'x' deve essere atomico"
 
 msgid "index.return only for na.last = NA"
-msgstr ""
+msgstr "index.return solo per na.last = NA"
 
 msgid "unsupported options for partial sorting"
-msgstr ""
+msgstr "opzione non supportata nel sort parziale"
 
 msgid "non-finite 'partial'"
-msgstr ""
+msgstr "'partial' non finito"
 
 msgid "argument lengths differ"
-msgstr ""
+msgstr "la lunghezza degli argomenti differisce"
 
 msgid "method=\"quick\" is only for numeric x"
-msgstr ""
+msgstr "method=\"quick\" è solo per x di tipo numeric"
 
 msgid "method=\"radix\" is only for integer x"
-msgstr ""
+msgstr "method=\"radix\" è solo per x interi"
 
 msgid "echo must be logical"
-msgstr ""
+msgstr "echo deve essere di tpo logico"
 
 msgid "verbose is TRUE, echo not; ... coercing echo <- TRUE"
-msgstr ""
+msgstr "verbose è TRUE, echo no; ... impongo echo <- TRUE"
 
 msgid "unable to find a plausible encoding"
-msgstr ""
+msgstr "non posso trovare un encoding plausibile"
 
 msgid "is not an existing file"
-msgstr ""
+msgstr "non è un file esistente"
 
 msgid "is not TRUE"
-msgstr ""
+msgstr "non è TRUE"
 
 msgid "incorrect value for 'x'"
-msgstr ""
+msgstr "valore non corretto per 'x'"
 
 msgid "'x' and 'y' must have the same length"
-msgstr ""
+msgstr "'x' e 'y' devono avere la stessa lunghezza"
 
 msgid "incorrect values of i'ndent' and 'width'"
-msgstr ""
+msgstr "valori non corretti per 'indent' e 'width'"
 
 msgid "argument to svd must be numeric"
-msgstr ""
+msgstr "l'argomento di svd deve essere numeric"
 
 msgid "nv must be 0 or ncol(x)"
-msgstr ""
+msgstr "nv deve essere 0 o ncol(x)"
 
 msgid "error %d in 'dsvdc'"
-msgstr ""
+msgstr "errore %d in 'dsvdc'"
 
 msgid "nothing to tabulate"
-msgstr ""
+msgstr "nulla da tabulare"
 
 msgid "all arguments must have the same length"
-msgstr ""
+msgstr "tutti gli argomenti devono avere la stessa lunghezza"
 
 msgid "object must inherit from class \"table\""
-msgstr ""
+msgstr "l'oggetto deve ereditare dalla classe \"table\""
 
 msgid "'x' must inherit from class \"summary.table\""
-msgstr ""
+msgstr "'x' deve ereditare dalla classe \"summary.table\""
 
 msgid "cannot coerce into a table"
-msgstr ""
+msgstr "non posso trasformarlo in una table"
 
 msgid "x is not an array"
-msgstr ""
+msgstr "x non è un array"
 
 msgid "invalid argument 'n'"
-msgstr ""
+msgstr "argomento 'n' non valido"
 
 msgid "invalid argument 'r'"
-msgstr ""
+msgstr "argomento 'r' non valido"
 
 msgid "invalid argument 'c'"
-msgstr ""
+msgstr "argomento 'c' non valido"
 
 msgid "arguments 'r' and 'c' must have the same sums"
-msgstr ""
+msgstr "argomenti 'r' e 'c' devono avere la stessa somma"
 
 msgid "'bin' must be numeric or a factor"
-msgstr ""
+msgstr "'bin' deve essere numeric o factor"
 
 msgid "arguments must have same length"
-msgstr ""
+msgstr "gli argomenti devono avere la stessa lunghezza"
 
 msgid "handler must be a function"
-msgstr ""
+msgstr "handler deve essere una funzione"
 
 msgid "No such element"
-msgstr ""
+msgstr "No trovo questo elemento"
 
 msgid "Removing"
-msgstr ""
+msgstr "Rimozione"
 
 msgid "Registering evaluate as low-level callback"
-msgstr ""
+msgstr "Registering lavora come callback di basso livello"
 
 msgid "width must be positive"
-msgstr ""
+msgstr "width deve essere positiva"
 
 msgid "No traceback available"
-msgstr ""
+msgstr "Nessun traceback disponibile"
 
 msgid "argument to 'which' is not logical"
-msgstr ""
+msgstr "l'argomento di 'which' non è di tipo logico"
 
 msgid "invalid numbers in 'quote'"
-msgstr ""
+msgstr "numeri non validi in 'quote'"
 
 msgid "invalid 'quote' specification"
-msgstr ""
+msgstr "specificazione di 'quote' non valida"
 
 msgid "invalid 'col.names' specification"
-msgstr ""
+msgstr "specificazione di 'col.names' non valida"
 
 msgid "appending column names to file"
-msgstr ""
+msgstr "accodo nomi colonna al file"
 
 msgid "invalid 'row.names 'specification"
-msgstr ""
+msgstr "specificazione di 'row.names' non valida"
 
 msgid "invalid 'digits'"
-msgstr ""
+msgstr "'digits' non valido"
 
 msgid "argument must be character"
-msgstr ""
+msgstr "l'argomento deve essere di tipo character"
 
 msgid "cmd could not be run"
-msgstr ""
+msgstr "cmd non può essere eseguito"
 
 msgid "cmd execution failed with error code"
-msgstr ""
+msgstr "l'esecuzione di cmd non è fallita con errore"
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "opzione di deparse %s non riconosciuta"
+msgstr[1] "opzioni di deparse %s non riconosciute"
 
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "la libreria %s non contiene pacchetti"
+msgstr[1] "le librerie %s non contengono pacchetti"
 
 msgid "package %s is not loaded"
 msgid_plural "packages %s are not loaded"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "pacchetto %s non caricato"
+msgstr[1] "pacchetti %s non caricati"
 
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Messaggio di avvertimento:\n"
+msgstr[1] "Messaggi di avvertimento:\n"
