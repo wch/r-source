@@ -972,6 +972,11 @@ stopifnot(is.null(cbind(NULL)), is.null(cbind(NULL,NULL)),
           is.null(rbind(NULL)), is.null(rbind(NULL,NULL)))
 ## gave error from 0.63 till 1.5.1
 
+## seq.POSIXt() had rounding problem:
+stopifnot(4 == length(seq(from=ISOdate(2000,1,1), to=ISOdate(2000,1,4),
+                          length.out=4)))
+## length was 5 till 1.6.0
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

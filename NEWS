@@ -18,6 +18,8 @@ BUG FIXES
     o	summary(x) gives more when `x' is a logical (or a data frame with a
 	logical column which is now quite customary).
 
+    o	seq.POSIXt(from, to, length.out= . ) could give too long results
+
 
 		CHANGES IN R VERSION 1.6.0
 

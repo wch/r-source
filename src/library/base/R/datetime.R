@@ -458,8 +458,10 @@ seq.POSIXt <-
     if (missing(by)) {
         from <- unclass(as.POSIXct(from))
         to <- unclass(as.POSIXct(to))
-        incr <- (to - from)/length.out
-        res <- seq.default(from, to, incr)
+        ## Till (and incl.) 1.6.0 :
+        ##- incr <- (to - from)/length.out
+        ##- res <- seq.default(from, to, incr)
+        res <- seq.default(from, to, length.out = length.out)
         return(structure(res, class = c("POSIXt", "POSIXct")))
     }
 
