@@ -45,6 +45,9 @@ USER-VISIBLE CHANGES
 ****    This last change breaks several packages: look on CRAN for
 	updates.
 
+    o   summary.factor() now uses a stable sort, so the output will
+	change where there are ties in the frequencies.
+
 
 NEW FEATURES
 
