@@ -29406,37 +29406,13 @@ case "${host_os}" in
   darwin*)
     DYLIB_EXT=".dylib"
     dylib_ldflags="-dynamiclib"
-    ## <NOTE>
-    ## Earlier versions had '-flat_namespace -undefined suppress' in
-    ## LIBR_LDFLAGS ... not clear whether needed or in fact wanted.
-    ##
-    ## When running AQUA this has to be a fixed place, not under /usr/local
-    ## <FIXME>
-    ## I'm using want_aqua instead of use_aqua as the latter is not yet
-    ## at this point. S.I.
-    ## </FIXME>
-    ## </NOTE>
-    ##    if test "x${want_aqua}" = xyes; then
-    ##      LIBR_LDFLAGS="-dynamiclib -install_name /Applications/StartR.app/RAqua.app/Contents/Frameworks/libR.dylib"
-    ##    else
-    ##      LIBR_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libR.dylib"
-    ##     LIBR_LDFLAGS="-dynamiclib"
-
-    ## LIBR_LDFLAGS="-dynamiclib -install_name ${R_FRAMEWORK_DIR}/Versions/${PACKAGE_VERSION}/Resources/bin/libR.dylib -compatibility_version ${PACKAGE_VERSION}  -current_version ${PACKAGE_VERSION}"
     MAJR_VERSION=`echo "${PACKAGE_VERSION}" | sed  -e "s/[\.][1-9]$/.0/"`
     LIBR_LDFLAGS="-dynamiclib -install_name libR.dylib -compatibility_version ${MAJR_VERSION}  -current_version ${PACKAGE_VERSION}  -headerpad_max_install_names"
-    ##    fi
     ## <FIXME>
     ## We need '-framework Carbon' because currently the Quartz device
     ## driver gets linked to the main binary and hence also the R dylib.
     ## Change once the driver is modularized.
-    separator=""
-test -z "${separator}" && separator=" "
-if test -z "${LIBR_LDFLAGS}"; then
-  LIBR_LDFLAGS="-framework Carbon"
-else
-  LIBR_LDFLAGS="${LIBR_LDFLAGS}${separator}-framework Carbon"
-fi
+    ## R_SH_VAR_ADD(LIBR_LDFLAGS, [-framework Carbon])
     ## </FIXME>
     RLAPACK_LDFLAGS="-install_name \$(Rexeclibdir)/libRlapack.dylib"
     ;;
