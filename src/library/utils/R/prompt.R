@@ -136,10 +136,11 @@ function(object, filename = NULL, name = NULL,
     if(is.na(filename)) return(Rdtxt)
 
     cat(unlist(Rdtxt), file = filename, sep = "\n")
-    cat(strwrap(c(paste(gettext("Created file named "), sQuote(filename),
-                        ".", sep=""),
-      gettext("Edit the file and move it to the appropriate directory."))),
-        sep = "\n")
+
+    message(gettextf("Created file named '%s'.", filename),
+            "\n",
+            gettext("Edit the file and move it to the appropriate directory."),
+            domain = NA)
 
     invisible(filename)
 }
@@ -155,9 +156,10 @@ function(object, filename = NULL, name = NULL, ...)
                 object
             else {
                 name <- substitute(object)
-                if(is.language(name) && !is.name(name))
-                    name <- eval(name)
-                as.character(name)
+                if(is.name(name))
+                    as.character(name)
+                else
+                    stop("cannot determine a usable name")
             }
     if(is.null(filename))
         filename <- paste0(name, ".Rd")
@@ -186,9 +188,10 @@ function(object, filename = NULL, name = NULL)
                 object
             else {
                 name <- substitute(object)
-                if(is.language(name) && !is.name(name))
-                    name <- eval(name)
-                as.character(name)
+                if(is.name(name))
+                    as.character(name)
+                else
+                    stop("cannot determine a usable name")
             }
     if(is.null(filename))
         filename <- paste0(name, ".Rd")
@@ -276,10 +279,11 @@ function(object, filename = NULL, name = NULL)
     if(is.na(filename)) return(Rdtxt)
 
     cat(unlist(Rdtxt), file = filename, sep = "\n")
-    cat(strwrap(c(paste(gettext("Created file named "), sQuote(filename),
-                        ".", sep=""),
-      gettext("Edit the file and move it to the appropriate directory."))),
-        sep = "\n")
+
+    message(gettextf("Created file named '%s'.", filename),
+            "\n",
+            gettext("Edit the file and move it to the appropriate directory."),
+            domain = NA)
 
     invisible(filename)
 }
