@@ -788,7 +788,7 @@ nullSymbol <-
   ## Returns the special name which is the symbol used to represent NULL slots as (non-NULL)
   ## attributes.
   function()
-  .Call("R_pseudo_null")
+  .Call("R_pseudo_null", PACKAGE = "base")
 
 requireMethods <-
   ## Require a subclass to implement methods for the generic functions, for this signature.
