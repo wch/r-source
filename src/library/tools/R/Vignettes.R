@@ -10,7 +10,7 @@ function(package, dir, lib.loc = NULL,
 {
     vigns <- pkgVignettes(package=package, dir=dir, lib.loc=lib.loc)
     if(is.null(vigns)) return(NULL)
-    
+
     workdir <- match.arg(workdir)
     wd <- getwd()
     if(workdir=="tmp"){
@@ -22,11 +22,11 @@ function(package, dir, lib.loc = NULL,
         keepfiles <- TRUE
         if(workdir=="src") setwd(vigns$dir)
     }
-    
+
     outConn <- textConnection("out", "w")
     sink(outConn, type = "output")
     sink(outConn, type = "message")
-    
+
     on.exit({sink(type = "output")
              sink(type = "message")
              setwd(wd)
@@ -34,18 +34,18 @@ function(package, dir, lib.loc = NULL,
          })
 
     result <- list(tangle=list(), weave=list(), source=list())
-    
+
     for(f in vigns$docs){
         if(tangle){
             yy <- try(Stangle(f, quiet=TRUE))
             if(inherits(yy, "try-error"))
                 result$tangle[[f]] <- yy
         }
-        
+
         if(weave){
             yy <- try(Sweave(f, quiet=TRUE))
             if(inherits(yy, "try-error"))
-                result$weave[[f]] <- yy                
+                result$weave[[f]] <- yy
         }
     }
 
@@ -54,18 +54,18 @@ function(package, dir, lib.loc = NULL,
         for(f in rfiles){
             yy <- try(source(f))
             if(inherits(yy, "try-error"))
-                result$source[[f]] <- yy                                
+                result$source[[f]] <- yy
         }
     }
 
     class(result) <- "checkVignettes"
     result
 }
-    
+
 print.checkVignettes <-
 function(x, ...)
 {
-    mycat <- function(y, title){    
+    mycat <- function(y, title){
         if(length(y)>0){
             cat("\n", title, "\n\n", sep="")
             for(k in 1:length(y)){
@@ -80,7 +80,7 @@ function(x, ...)
     mycat(x$source, "*** Source Errors ***")
 
     invisible(x)
-}    
+}
 
 ### * pkgVignettes
 ###
@@ -106,7 +106,7 @@ pkgVignettes <- function(package, dir, lib.loc = NULL)
             ## maybe perform tilde expansion on @code{dir}
             docdir <- file.path(dirname(dir), basename(dir), "inst", "doc")
     }
-    
+
     if(!.fileTest("-d", docdir)) return(NULL)
 
     docs <- .listFilesWithType(docdir, "vignette")
@@ -125,7 +125,7 @@ buildVignettes <-function(package, dir, lib.loc = NULL)
 {
     vigns <- pkgVignettes(package=package, dir=dir, lib.loc=lib.loc)
     if(is.null(vigns)) return(NULL)
-    
+
     wd <- getwd()
     setwd(vigns$dir)
 
@@ -136,12 +136,12 @@ buildVignettes <-function(package, dir, lib.loc = NULL)
 
     pdfs <- character(0)
     for(f in vigns$docs){
-            
+
         f <- basename(f)
         bf <- sub("\\..[^\\.]*$", "", f)
         bft <- paste(bf, ".tex", sep="")
         pdfs <- c(pdfs, paste(bf, ".pdf", sep=""))
-            
+
         yy <- try(Sweave(f, quiet=TRUE))
         if(inherits(yy, "try-error")) stop(yy)
         if(!have.makefile){
@@ -151,7 +151,7 @@ buildVignettes <-function(package, dir, lib.loc = NULL)
                 stop(paste("running texi2dvi on", bft, "failed"))
         }
     }
-    
+
     if(have.makefile) {
         yy <- system(Sys.getenv("MAKE"))
         if(yy>0) stop("running make failed")
@@ -212,12 +212,13 @@ function(vignetteDir)
         contents[i, ] <- vignetteInfo(vignetteFiles[i])
     colnames(contents) <- c("File", "Title", "Depends", "Keywords")
 
-    vignettePDFs <- 
-        paste(gsub("\\.[[:alpha:]]+$", "", vignetteFiles), ".pdf",
-              sep = "")
+    ## paste will give length 1 result with a 0-length argument
+    vignettePDFs <- if(length(vignetteFiles))
+        paste(gsub("\\.[[:alpha:]]+$", "", vignetteFiles), ".pdf", sep = "")
+    else character(0)
 
     vignetteTitles <- unlist(contents[, "Title"])
-    
+
     ## Compatibility code for transition from old-style to new-style
     ## indexing.  If we have @file{00Index.dcf}, use it when computing
     ## the vignette index, but let the index entries in the vignettes
