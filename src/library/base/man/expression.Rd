@@ -11,10 +11,10 @@ as.expression(expr)
 \alias{as.expression}
 \value{
 
-\code{expression} returns a vector of mode ``expression''
-containing its arguments as unevaluated ``calls''.
+\code{expression} returns a vector of mode \code{"expression"}
+containing its arguments as unevaluated ``\link{call}s''.
 
-\code{is.expression} returns \code{TRUE} if expr is
+\code{is.expression} returns \code{TRUE} if \code{expr} is
 an expression object and \code{FALSE} otherwise.
 
 \code{as.expression} attempts to coerce its argument
@@ -22,7 +22,7 @@ into an expression object.
 }
 \seealso{
   \code{\link{call}}, \code{\link{eval}}, \code{\link{function}}.
-  Further,\code{\link{text}} and \code{\link{legend}} for plotting math
+  Further, \code{\link{text}} and \code{\link{legend}} for plotting math
   expressions.
 }
 \examples{
