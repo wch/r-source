@@ -173,7 +173,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid fill argument\n");
     if (isLogical(fill)) {
 	if (asLogical(fill) == 1)
-	    pwidth = PRINT_WIDTH;
+	    pwidth = R_print.width;
 	else
 	    pwidth = INT_MAX;
     }

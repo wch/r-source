@@ -16,28 +16,22 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *
- * Generally useful print utilities *NOT* relying on R internals (from Defn.h)
  */
 
+/*
+ * Generally useful print utilities *NOT* relying on R internals (from Defn.h)
+ *
+ * (not useful anymore; use  R_print struct with SEXP) --> Print.h
+ */
 #ifndef PRTUTIL_H_
 #define PRTUTIL_H_
 
 #include "Complex.h"
 #include <stdarg.h>
 
-#define PRINT_GAP	print_gap
-#define PRINT_WIDTH	R_print_width
-
 #define adj_right 1
 #define adj_left  0
 
-extern int  R_print_width;
-extern int  print_na_width;
-extern int  print_quote;
-extern int  print_digits;
-extern int  print_gap;
 /* Computation of printing formats */
 void formatLogical(int*,int,int*);
 void formatInteger(int*,int,int*);

@@ -23,7 +23,16 @@
 #include "PrtUtil.h"
 #include "Defn.h"
 
-extern SEXP print_na_string;
+typedef struct {
+    int width;
+    int na_width;
+    int digits;
+    int gap;
+    int quote;
+    int right;
+    SEXP na_string;
+} R_print_par_t;
+extern R_print_par_t R_print;
 
 /* Computation of printing formats */
 void formatString(SEXP*, int, int*, int);

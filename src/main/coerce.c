@@ -498,20 +498,18 @@ static SEXP coerceToString(SEXP v)
 	break;
     case REALSXP:
 	PrintDefaults(R_NilValue);
-	savedigits = print_digits;
-	print_digits = DBL_DIG;		     /*- MAXIMAL precision */
+	savedigits = R_print.digits; R_print.digits = DBL_DIG;/* MAX precision */
 	for (i = 0; i < n; i++)
 	    STRING(ans)[i] = StringFromReal(REAL(v)[i], &warn);
 	break;
-	print_digits = savedigits;
+	R_print.digits = savedigits;
     case CPLXSXP:
 	PrintDefaults(R_NilValue);
-	savedigits = print_digits;
-	print_digits = DBL_DIG;		     /*- MAXIMAL precision */
+	savedigits = R_print.digits; R_print.digits = DBL_DIG;/* MAX precision */
 	for (i = 0; i < n; i++)
 	    STRING(ans)[i] = StringFromComplex(COMPLEX(v)[i], &warn);
 	break;
-	print_digits = savedigits;
+	R_print.digits = savedigits;
     }
     UNPROTECT(1);
     return (ans);

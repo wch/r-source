@@ -146,8 +146,8 @@ SEXP deparse1(SEXP call, int abbrev)
     int savedigits;
 
     PrintDefaults(R_NilValue);/* from global options() */
-    savedigits = print_digits; 
-    print_digits = DBL_DIG;/* MAX precision */
+    savedigits = R_print.digits; 
+    R_print.digits = DBL_DIG;/* MAX precision */
 
     svec = R_NilValue;
     deparse2(call, svec);/* just to determine linenumber..*/
@@ -161,7 +161,7 @@ SEXP deparse1(SEXP call, int abbrev)
 	    strcat(buff, "...");
 	svec = mkString(buff);
     }
-    print_digits = savedigits;
+    R_print.digits = savedigits;
     return svec;
 }
 

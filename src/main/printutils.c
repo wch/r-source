@@ -90,7 +90,7 @@ long Decode2Long(char *p, int *ierr)
 
 char *EncodeLogical(int x, int w)
 {
-    if(x == NA_LOGICAL) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
+    if(x == NA_LOGICAL) sprintf(Encodebuf, "%*s", w, CHAR(R_print.na_string));
     else if(x) sprintf(Encodebuf, "%*s", w, "TRUE");
     else sprintf(Encodebuf, "%*s", w, "FALSE");
     return Encodebuf;
@@ -98,7 +98,7 @@ char *EncodeLogical(int x, int w)
 
 char *EncodeInteger(int x, int w)
 {
-    if(x == NA_INTEGER) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
+    if(x == NA_INTEGER) sprintf(Encodebuf, "%*s", w, CHAR(R_print.na_string));
     else sprintf(Encodebuf, "%*d", w, x);
     return Encodebuf;
 }
@@ -110,12 +110,12 @@ char *EncodeReal(double x, int w, int d, int e)
     if (x == 0.0) x = 0.0;
     if (!FINITE(x)) {
 #ifdef IEEE_754
-	if(ISNA(x)) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
+	if(ISNA(x)) sprintf(Encodebuf, "%*s", w, CHAR(R_print.na_string));
 	else if(ISNAN(x)) sprintf(Encodebuf, "%*s", w, "NaN");
 	else if(x > 0) sprintf(Encodebuf, "%*s", w, "Inf");
 	else sprintf(Encodebuf, "%*s", w, "-Inf");
 #else
-	sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
+	sprintf(Encodebuf, "%*s", w, CHAR(R_print.na_string));
 #endif
     }
     else if (e) {
@@ -158,8 +158,8 @@ char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
     if (x.i == 0.0) x.i = 0.0;
 
     if (ISNA(x.r) || ISNA(x.i)) {
-	sprintf(Encodebuf, "%*s%*s", PRINT_GAP, "", wr+wi+2,
-		CHAR(print_na_string));
+	sprintf(Encodebuf, "%*s%*s", R_print.gap, "", wr+wi+2,
+		CHAR(R_print.na_string));
     }
     else {
 	if(er) efr = "e";
@@ -239,7 +239,7 @@ char *EncodeString(char *s, int w, int quote, int right)
     }
     if(quote) *q++ = quote;
     if (s == CHAR(NA_STRING) )
-	p = CHAR(print_na_string);
+	p = CHAR(R_print.na_string);
     else	p = s;
     while(*p) {
 
@@ -419,11 +419,11 @@ void RightMatrixColumnLabel(SEXP cl, int j, int w)
 
     if (!isNull(cl)) {
 	l = Rstrlen(CHAR(STRING(cl)[j]));
-	Rprintf("%*s", PRINT_GAP+w,
+	Rprintf("%*s", R_print.gap+w,
 		EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_right));
     }
     else {
-	Rprintf("%*s[,%ld]%*s", PRINT_GAP, "", j+1, w-IndexWidth(j+1)-3, "");
+	Rprintf("%*s[,%ld]%*s", R_print.gap, "", j+1, w-IndexWidth(j+1)-3, "");
     }
 }
 
@@ -433,10 +433,10 @@ void LeftMatrixColumnLabel(SEXP cl, int j, int w)
 
     if (!isNull(cl)) {
 	l = Rstrlen(CHAR(STRING(cl)[j]));
-	Rprintf("%*s%s%*s", PRINT_GAP, "", EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_left), w-l, "");
+	Rprintf("%*s%s%*s", R_print.gap, "", EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_left), w-l, "");
     }
     else {
-	Rprintf("%*s[,%ld]%*s", PRINT_GAP, "", j+1, w-IndexWidth(j+1)-3, "");
+	Rprintf("%*s[,%ld]%*s", R_print.gap, "", j+1, w-IndexWidth(j+1)-3, "");
     }
 }
 

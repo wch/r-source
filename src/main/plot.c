@@ -1,3 +1,4 @@
+
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
@@ -467,8 +468,8 @@ static SEXP labelformat(SEXP labels)
     int save_digits, i, n, w, d, e, wi, di, ei;
     char *strp;
     n = length(labels);
-    save_digits = print_digits;
-    print_digits = 7;
+    save_digits = R_print.digits;
+    R_print.digits = 7;
     switch(TYPEOF(labels)) {
     case LGLSXP:
 	PROTECT(ans = allocVector(STRSXP, n));

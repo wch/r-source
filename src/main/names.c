@@ -751,7 +751,7 @@ void InitNames()
 
     NA_STRING = allocString(strlen("NA"));
     strcpy(CHAR(NA_STRING), "NA");
-    print_na_string = NA_STRING;
+    R_print.na_string = NA_STRING;
 
     R_BlankString = mkChar("");
 
