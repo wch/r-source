@@ -17,6 +17,11 @@ NEW FEATURES
     o   bxp() has a show.names argument allowing labels on a single
 	boxplot
 
+    o   Function nsl() to look up IP addresses of hosts: intended as
+	a way to test for internet connectivity.
+
+
+
 BUG FIXES
 
 

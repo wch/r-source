@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.3.0 Under development (unstable) (2001-06-21)
+Version 1.4.0 Under development (unstable) (2001-08-04)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -15,45 +15,51 @@ Type `q()' to quit R.
 
 > ## These are tests that require socket and internet functionality, and
 > ## a working Internet connection.
+> ## We attempt to test for those.
 > 
-> if(!capabilities()["http/ftp"]) stop("no internet capabilities")
+> if(!capabilities()["http/ftp"]) {
++     warning("no internet capabilities")
++     q()
++ }
+> 
+> if(is.null(nsl("cran.r-project.org"))) q()
 > 
 > # test do_download.
 > CRAN.packages()[, 1]
 trying URL `http://cran.r-project.org/src/contrib/PACKAGES'
-Content type `text/plain' length 47532 bytes
+Content type `text/plain' length 50361 bytes
 opened URL
-.......... .......... .......... .......... ......
-downloaded 46Kb
+.......... .......... .......... .......... .........
+downloaded 49Kb
 
   [1] "AnalyzeIO"      "CoCoAn"         "Devore5"        "GLMMGibbs"     
-  [5] "GenKern"        "GeneSOM"        "KernSmooth"     "Matrix"        
-  [9] "NISTnls"        "Oarray"         "PHYLOGR"        "PTAk"          
- [13] "RArcInfo"       "RMySQL"         "RODBC"          "RPgSQL"        
- [17] "RandomFields"   "RmSQL"          "Rstreams"       "SASmixed"      
+  [5] "GeneSOM"        "KernSmooth"     "Matrix"         "NISTnls"       
+  [9] "Oarray"         "PHYLOGR"        "PTAk"           "RArcInfo"      
+ [13] "RMySQL"         "RODBC"          "RPgSQL"         "RandomFields"  
+ [17] "RmSQL"          "Rstreams"       "Rwave"          "SASmixed"      
  [21] "SuppDists"      "VR"             "XML"            "acepack"       
- [25] "akima"          "ash"            "bindata"        "blighty"       
- [29] "boot"           "bootstrap"      "bqtl"           "cclust"        
- [33] "cfa"            "chron"          "cluster"        "cmprsk"        
- [37] "coda"           "conf.design"    "cramer"         "date"          
- [41] "dse"            "e1071"          "ellipse"        "event.chart"   
- [45] "exactRankTests" "fdim"           "foreign"        "fracdiff"      
- [49] "gafit"          "gee"            "geoR"           "gld"           
- [53] "gregmisc"       "gss"            "ineq"           "integrate"     
- [57] "leaps"          "lgtdl"          "lmtest"         "locfit"        
- [61] "logspline"      "lokern"         "lpridge"        "maptree"       
- [65] "mclust"         "mda"            "meanscore"      "mgcv"          
- [69] "mlbench"        "muhaz"          "multiv"         "mvnmle"        
- [73] "mvtnorm"        "netCDF"         "nlme"           "nlrq"          
- [77] "norm"           "odesolve"       "oz"             "panel"         
- [81] "permax"         "pinktoe"        "pls"            "polymars"      
- [85] "polynom"        "princurve"      "pspline"        "quadprog"      
- [89] "quantreg"       "rmeta"          "rpart"          "scatterplot3d" 
- [93] "sgeostat"       "sm"             "sma"            "sn"            
- [97] "sna"            "splancs"        "stable"         "survival5"     
-[101] "tensor"         "tree"           "tripack"        "tseries"       
-[105] "twostage"       "wavethresh"     "wle"            "xgobi"         
-[109] "xtable"         "zmatrix"       
+ [25] "adapt"          "akima"          "ash"            "bindata"       
+ [29] "blighty"        "boot"           "bootstrap"      "bqtl"          
+ [33] "cclust"         "cfa"            "chron"          "cluster"       
+ [37] "cmprsk"         "coda"           "conf.design"    "cramer"        
+ [41] "date"           "diamonds"       "dse"            "e1071"         
+ [45] "ellipse"        "event.chart"    "exactRankTests" "fdim"          
+ [49] "fields"         "foreign"        "fracdiff"       "gafit"         
+ [53] "gee"            "geoR"           "gld"            "gregmisc"      
+ [57] "gss"            "ineq"           "leaps"          "lgtdl"         
+ [61] "lmtest"         "logspline"      "lokern"         "lpridge"       
+ [65] "maptree"        "maxstat"        "mclust"         "mda"           
+ [69] "meanscore"      "mgcv"           "mlbench"        "multiv"        
+ [73] "mvnmle"         "mvtnorm"        "netCDF"         "nlme"          
+ [77] "nlrq"           "norm"           "odesolve"       "oz"            
+ [81] "panel"          "pcurve"         "permax"         "pinktoe"       
+ [85] "polymars"       "polynom"        "princurve"      "pspline"       
+ [89] "quadprog"       "quantreg"       "rmeta"          "rpart"         
+ [93] "scatterplot3d"  "sgeostat"       "sm"             "sma"           
+ [97] "sn"             "sna"            "splancs"        "stable"        
+[101] "strucchange"    "survival"       "tensor"         "tree"          
+[105] "tripack"        "tseries"        "twostage"       "wavethresh"    
+[109] "wle"            "xgobi"          "xtable"         "zmatrix"       
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")

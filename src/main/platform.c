@@ -916,3 +916,46 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(2);
     return ans;
 }
+
+#ifdef HAVE_BSD_NETWORKING
+#include <netdb.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
+SEXP do_nsl(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans = R_NilValue;
+    char *name, ip[] = "xxx.xxx.xxx.xxx";
+    struct hostent *hp;
+
+    checkArity(op, args);
+    if(!isString(CAR(args)) || length(CAR(args)) != 1)
+	error("hostname must be a character vector of length 1");
+    name = CHAR(STRING_ELT(CAR(args), 0));
+    
+    hp = gethostbyname(name);
+
+    if(hp == NULL) { /* cannot resolve the address */
+	warning("nsl() was unable to resolve host `%s'", name);
+    } else {
+	if (hp->h_addrtype == AF_INET) {
+	    struct in_addr in;
+	    memcpy(&in.s_addr, *(hp->h_addr_list), sizeof (in.s_addr));
+	    strcpy(ip, inet_ntoa(in));
+	} else {
+	    warningcall(call, "unknown format returned by gethostbyname");
+	}
+	PROTECT(ans = allocVector(STRSXP, 1));
+	SET_STRING_ELT(ans, 0, mkChar(ip));
+	UNPROTECT(1);
+    }
+    return ans;
+}
+#else
+SEXP do_nsl(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error("nsl is not supported on this platform");
+    return R_NilValue; /* never reached */
+}
+#endif

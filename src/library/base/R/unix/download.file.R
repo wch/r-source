@@ -41,3 +41,5 @@ download.file <- function(url, destfile, method,
     invisible(status)
 }
 
+nsl <- function(hostname)
+    .Internal(nsl(hostname))
