@@ -22,27 +22,32 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
   \item{onefile}{logical: if true allow multiple figures
     in one file. If false, assume only one page per file and generate a
     file number containing the page number.}
-  \item{\dots}{further options for \code{xfig()}, such as:}
-  \item{paper}{the size of paper in the printer.  The choices are
-    \code{"A4"}, \code{"Letter"} and \code{"Legal"} (and these can be
-    lowercase).  A further choice is \code{"default"}, which is the
-    default.  If this is selected, the papersize is taken from the
-    option \code{"papersize"} if that is set and to \code{"A4"} if it is
-    unset or empty.}
-  \item{horizontal}{the orientation of the printed image, a logical.
-    Defaults to true, that is landscape orientation.}
-  \item{width, height}{the width and height of the graphics region in
-    inches.  The default is to use the entire page less a 0.25 inch
-    border.}
-  \item{family}{the font family to be used.  This must be one of
-    \code{"AvantGarde"}, \code{"Bookman"}, \code{"Courier"},
-    \code{"Helvetica"}, \code{"Helvetica-Narrow"},
-    \code{"NewCenturySchoolbook"}, \code{"Palatino"} or \code{"Times"}.}
-  \item{pointsize}{the default point size to be used.}
-  \item{bg}{the default background color to be used.}
-  \item{fg}{the default foreground color to be used.}
-  \item{pagecentre}{logical: should the device region be centred on the
-    page: defaults to \code{TRUE}.}
+  \item{\dots}{further arguments to \code{\link{ps.options}} accepted by
+    \code{xfig()}:
+    \describe{
+      \item{\code{paper}}{the size of paper in the printer.  The choices
+	are \code{"A4"}, \code{"Letter"} and \code{"Legal"} (and these
+	can be lowercase).  A further choice is \code{"default"}, which
+	is the default.  If this is selected, the papersize is taken
+	from the option \code{"papersize"} if that is set and to
+	\code{"A4"} if it is unset or empty.}
+      \item{\code{horizontal}}{the orientation of the printed image, a
+	logical.  Defaults to true, that is landscape orientation.}
+      \item{\code{width}, \code{height}}{the width and height of the
+	graphics region in inches.  The default is to use the entire
+	page less a 0.25 inch border.}
+      \item{\code{family}}{the font family to be used.  This must be one
+	of \code{"AvantGarde"}, \code{"Bookman"}, \code{"Courier"},
+	\code{"Helvetica"}, \code{"Helvetica-Narrow"},
+	\code{"NewCenturySchoolbook"}, \code{"Palatino"} or
+	\code{"Times"}.}
+      \item{\code{pointsize}}{the default point size to be used.}
+      \item{\code{bg}}{the default background color to be used.}
+      \item{\code{fg}}{the default foreground color to be used.}
+      \item{\code{pagecentre}}{logical: should the device region be
+	centred on the page: defaults to \code{TRUE}.}
+    }
+  }
 }
 %%>>> REAL DOC in SOURCE:    ../../../main/devices.c  &   ../../../unix/devPS.c
 \details{
@@ -59,6 +64,8 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
   There is a limit of 512 colours (plus white and black) per file.
 }
 \seealso{
-  \code{\link{Devices}}, \code{postscript}.
+  \code{\link{Devices}},
+  \code{postscript},
+  \code{\link{ps.options}}.
 }
 \keyword{device}
