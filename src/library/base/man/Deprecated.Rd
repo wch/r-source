@@ -8,6 +8,7 @@
 \alias{codes.factor}
 \alias{codes.ordered}
 \alias{codes<-}
+\alias{anovalist.lm}
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of
@@ -28,6 +29,8 @@ print.coefmat(x, digits=max(3, getOption("digits") - 2),
 
 codes(x, \dots)
 codes(x, \dots) <- value
+
+anovalist.lm(object, ..., test = NULL)
 % </Deprecated 1.8.0>
 }
 \details{
@@ -43,6 +46,9 @@ codes(x, \dots) <- value
   \code{as.integer}.  For \emph{ordered} factors, \code{codes} was
   equivalent to these, but for \emph{unordered} factors it assumed an
   an alphabetical ordering of the levels in the locale in use.
+
+  \code{anovalist.lm} was replaced by \code{\link{anova.lmlist}} in
+  \R 1.2.0.
 }
 \seealso{
   \code{\link{Defunct}},

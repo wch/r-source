@@ -31,6 +31,7 @@ print.coefmat <-
     eval.parent(Call)
 }
 ## </entry>
+
 ## <entry>
 ## Deprecated in 1.8.0
 codes <- function(x, ...) UseMethod("codes")
@@ -63,3 +64,56 @@ codes.ordered <- function(x, ...)
 }
 ## </entry>
 
+## <entry>
+## Deprecated in 1.8.0: unused since 1.2.0
+anovalist.lm <- function (object, ..., test = NULL)
+{
+    objects <- list(object, ...)
+    responses <- as.character(lapply(objects,
+				     function(x) as.character(x$terms[[2]])))
+    sameresp <- responses == responses[1]
+    if (!all(sameresp)) {
+	objects <- objects[sameresp]
+	warning("Models with response ", deparse(responses[!sameresp]),
+                " removed because response differs from ", "model 1")
+    }
+    ## calculate the number of models
+    nmodels <- length(objects)
+    if (nmodels == 1)
+	return(anova.lm(object))
+
+    models <- as.character(lapply(objects, function(x) x$terms))
+
+    ## extract statistics
+    df.r <- unlist(lapply(objects, df.residual))
+    ss.r <- unlist(lapply(objects, deviance))
+    df <- c(NA, -diff(df.r))
+    ss <- c(NA, -diff(ss.r))
+    ms <- ss/df
+    f <- p <- rep.int(NA, nmodels)
+    for(i in 2:nmodels) {
+	if(df[i] > 0) {
+	    f[i] <- ms[i]/(ss.r[i]/df.r[i])
+	    p[i] <- pf(f[i], df[i], df.r[i], lower.tail = FALSE)
+	}
+	else if(df[i] < 0) {
+	    f[i] <- ms[i]/(ss.r[i-1]/df.r[i-1])
+	    p[i] <- pf(f[i], -df[i], df.r[i-1], lower.tail = FALSE)
+	}
+	else { # df[i] == 0
+	    ss[i] <- 0
+	}
+    }
+    table <- data.frame(df.r,ss.r,df,ss,f,p)
+    dimnames(table) <- list(1:nmodels, c("Res.Df", "Res.Sum Sq", "Df",
+					 "Sum Sq", "F value", "Pr(>F)"))
+    ## construct table and title
+    title <- "Analysis of Variance Table\n"
+    topnote <- paste("Model ", format(1:nmodels),": ",
+		     models, sep="", collapse="\n")
+
+    ## calculate test statistic if needed
+    structure(table, heading = c(title, topnote),
+	      class= c("anova", "data.frame"))# was "tabular"
+}
+## </entry>

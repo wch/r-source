@@ -105,6 +105,8 @@ DEPRECATED & DEFUNCT
     o	The use of multi-argument return() calls is deprecated: use a
 	(named) list instead.
 
+    o	anovalist.lm (replaced in 1.2.0) is now deprecated.
+
 
 INSTALLATION CHANGES
 
