@@ -118,6 +118,8 @@ TU Wien, Austria
 Universidade Federal do Paraná, Brasil
 @item @uref{http://www.termix.ufv.br/CRAN/}
 Federal University of Vicosa, Brasil
+@item @uref{http://lmq.esalq.usp.br/CRAN/}
+University of Sao Paulo, Piracicaba, Brasil
 
 @item @uref{ http://probability.ca/cran/}
 University of Toronto, Canada
@@ -133,6 +135,9 @@ University of Aizu, Japan
 
 @item @uref{http://cran.za.r-project.org/}
 Rhodes University, South Africa
+
+@item @uref{http://cran.es.r-project.org/}
+Spanish National Research Network, Madrid, Spain
 
 @item @uref{http://cran.ch.r-project.org/}
 ETH Zurich, Switzerland
