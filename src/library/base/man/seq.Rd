@@ -14,10 +14,12 @@ seq.default(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
 \usage{
 from:to
    a:b
+
 seq(from, to)
 seq(from, to, by=)
 seq(from, to, length=)
-seq(along)
+seq(along=)
+seq(from)
 }
 \arguments{
   \item{from}{starting value of sequence.}
@@ -40,17 +42,22 @@ seq(along)
   Function \code{seq} is generic, and only the default method is
   described here.
 
-  The operator \code{:} and the first \code{seq(.)} form generate the
-  sequence \code{from, from+1}, \ldots, \code{to}.
+  The operator \code{:} and the \code{seq(from, to)} form generate the
+  sequence \code{from, from+1, \dots, to}.
 
-  The second form generates \code{from, from+by}, \ldots, \code{to}.
+  The second form generates \code{from, from+by}, \ldots, up to the
+  sequence value less than or equal to \code{to}.
 
   The third generates a sequence of \code{length} equally spaced values
   from \code{from} to \code{to}.
 
-  The last generates the sequence \code{1, 2}, \ldots,
-  \code{length(along)}, unless the argument is of length 1 when it is
-  interpreted as a \code{length} argument.
+  The fourth form generates the sequence \code{1, 2, \dots, length(along)}.
+
+  The last generates the sequence \code{1, 2, \dots, length(from)}
+  (as if argument \code{along} had been specified),
+  \emph{unless} the argument is numeric of length 1 when it is
+  interpreted as \code{1:from} (even for \code{seq(0)} for
+  compatibility with S).
 
   If \code{from} and \code{to} are factors of the same length, then
   \code{from : to} returns the \dQuote{cross} of the two.
