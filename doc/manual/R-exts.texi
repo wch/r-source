@@ -3675,11 +3675,11 @@ supported by all versions of @command{grep} or @command{sed}.
 Under Windows, these tools can be assumed because versions
 (specifically, of @command{cat}, @command{cp}, @command{cut},
 @command{diff}, @command{echo}, @command{egrep}, @command{expr},
-@command{gawk}, @command{grep}, @command{ls}, @command{mkdir},
-@command{mv}, @command{rm} and @command{sed}) are provided at
-CRAN. However, redirection cannot be assumed to be available via
-@command{system} as this does not use a standard shell (let alone
-a Bourne shell).
+@command{find},@command{gawk}, @command{grep}, @command{ls},
+@command{mkdir}, @command{mv}, @command{rm}, @command{sed} and
+@command{sort}) are provided at CRAN.  However, redirection cannot be
+assumed to be available via @command{system} as this does not use a
+standard shell (let alone a Bourne shell).
 @end itemize
 
 In addition, the following tools are needed for certain tasks.
@@ -3697,7 +3697,7 @@ not a clear one.  Without Perl, installing an add-on package leaves it
 without documentation, and thus in fact mostly useless.  (Note that CRAN
 no longer provides pre-built documentation.  This decision was partially
 motivated by the fact that Perl is needed anyway for updating the HTML
-index.)  Also the R function @code{read.fwf} requires Perl.
+index.)
 
 The @R{} Core Team is currently investigating the following possible
 scenarios.  Either declare Perl 5 as ``generally safe'' (also at

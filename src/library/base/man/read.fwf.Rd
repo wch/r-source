@@ -1,7 +1,7 @@
 \name{read.fwf}
 \title{Read Fixed Width Format Files}
 \usage{
-read.fwf(file, widths, sep=" ", as.is = FALSE,
+read.fwf(file, widths, sep="\t", as.is = FALSE,
          skip = 0, row.names, col.names)
 }
 \alias{read.fwf}
@@ -10,9 +10,8 @@ read.fwf(file, widths, sep=" ", as.is = FALSE,
   Each row of the table appears as one line of the file.}
  \item{widths}{integer vector, giving the widths of the fixed-width
    fields (of one line).}
- \item{sep}{character; the separator used internally; should be irrelevant.}
-%%--   === and therefore  'sep' shouldn't be an argument of read.fwf(.) ?!
-%%--  Martin M.
+ \item{sep}{character; the separator used internally; should be a
+   character that does not occur in the file.}
  \item{as.is}{see \code{\link{read.table}}.}
  \item{skip}{number of initial lines to skip; see \code{\link{read.table}}.}
  \item{row.names}{see \code{\link{read.table}}.}
@@ -23,21 +22,24 @@ read.fwf(file, widths, sep=" ", as.is = FALSE,
   into a \code{\link{data.frame}}.
 }
 \value{
-  A \code{\link{data.frame}} as by \code{\link{read.table}}
+  A \code{\link{data.frame}} as produced by \code{\link{read.table}}
   which is called internally.
 }
-\note{This function currently relies on the \code{Perl} script
-  \file{\$R\_HOME/bin/fwf2table}.
-  Therefore, it will only work in an environment with
-  \code{Perl 5} installed, see \file{INSTALL} in the top-level directory
-  of the sources.
+\details{
+  Fields that are of zero-width or are wholly beyond the end of the line
+  in \code{file} are replaced by \code{NA}.
 }
-\author{Kurt Hornik \email{hornik@ci.tuwien.ac.at}}
+\author{
+  Brian Ripley for \R version: original \code{Perl} by Kurt Hornik.
+}
 \seealso{\code{\link{scan}} and \code{\link{read.table}}.}
 \examples{
 ff <- tempfile()
 cat(file=ff, "123456", "987654", sep="\n")
 read.fwf(ff, width=c(1,2,3))    #> 1 23 456 \\ 9 87 654
+unlink(ff)
+cat(file=ff, "123", "987654", sep="\n")
+read.fwf(ff, width=c(1,0, 2,3))    #> 1 NA 23 NA \\ 9 NA 87 654
 unlink(ff)
 }
 \keyword{file}

@@ -115,6 +115,8 @@ NEW FEATURES
 	confidence intervals for the location or scale parameter of
 	interest.
 
+    o	read.fwf() is no longer dependent on Perl.
+
 
 BUG FIXES
 
