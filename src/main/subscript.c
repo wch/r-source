@@ -455,7 +455,7 @@ SEXP vectorSubscript(int nx, SEXP s, int *stretch, AttrGetter dng,
 		     SEXP x) 
 {
     int ns;
-    SEXP ans, tmp;
+    SEXP ans=R_NilValue, tmp;
 
     ns = length(s);
     /* special case for simple indices -- does not duplicate */

@@ -879,7 +879,7 @@ SEXP R_pseudo_null() {
 
 SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP input, nlist, slotName, object, ans;
+    SEXP input, nlist, object, ans;
     input = PROTECT(allocVector(STRSXP, 1));
 
     nlist = CADR(args);
