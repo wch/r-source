@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-41, @value{FAQ-YEAR}-02-16
+@set FAQ-VERSION 1.8-42, @value{FAQ-YEAR}-02-19
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2166,8 +2166,11 @@ Maximally selected rank and Gauss statistics with several p-value
 approximations.
 @item mclust
 Model-based cluster analysis: the 2002 version of MCLUST.
-@item mclust1998
-Model-based cluster analysis: the 1998 version of MCLUST.
+@c <COMMENT>
+@c Moved to Archive on 2004-02-19 as requested by the maintainer.
+@c @item mclust1998
+@c Model-based cluster analysis: the 1998 version of MCLUST.
+@c </COMMENT>
 @item mda
 Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -2211,6 +2214,9 @@ Multiple comparison procedures for the one-way layout.
 @item multidim
 Multidimensional descriptive statistics: factorial methods and
 classification.
+@item multinomRob
+Overdispersed multinomial regression using robust (LQD and tanh)
+estimation.
 @item multiv
 Functions for hierarchical clustering, partitioning, bond energy
 algorithm, Sammon mapping, PCA and correspondence analysis.
@@ -2355,6 +2361,10 @@ Breiman's random forest classifier.
 @c @item ratetables
 @c US national and state mortality data (requires @strong{survival4} and
 @c @strong{date}), for use with @strong{survival4}.
+@item ref
+Functions for creating references, reading from and writing ro
+references and a memory efficient refdata type that transparently
+encapsulates matrices and data frames.
 @item relimp
 Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model.

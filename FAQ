@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-41, 2004-02-16
+Version 1.8-42, 2004-02-19
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2034,9 +2034,6 @@ distributions of R.)
 *mclust*
      Model-based cluster analysis: the 2002 version of MCLUST.
 
-*mclust1998*
-     Model-based cluster analysis: the 1998 version of MCLUST.
-
 *mda*
      Code for mixture discriminant analysis (MDA), flexible discriminant
      analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -2092,6 +2089,10 @@ distributions of R.)
 *multidim*
      Multidimensional descriptive statistics: factorial methods and
      classification.
+
+*multinomRob*
+     Overdispersed multinomial regression using robust (LQD and tanh)
+     estimation.
 
 *multiv*
      Functions for hierarchical clustering, partitioning, bond energy
@@ -2274,6 +2275,11 @@ distributions of R.)
 
 *randomForest*
      Breiman's random forest classifier.
+
+*ref*
+     Functions for creating references, reading from and writing ro
+     references and a memory efficient refdata type that transparently
+     encapsulates matrices and data frames.
 
 *relimp*
      Functions to facilitate inference on the relative importance of
