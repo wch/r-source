@@ -300,16 +300,17 @@ library <-
                 ## title.  For such an index, we give the names of the
                 ## vignettes, their titles, and indicate whether PDFs
                 ## are available.
-                if(is.data.frame(txt))
-                    txt <-
-                        cbind(basename(gsub("\\.[[:alpha:]]+$", "",
-                                            txt$File)),
-                              paste(txt$Title,
-                                    paste(rep("(source", NROW(txt)),
-                                          ifelse(txt$PDF != "",
-                                                 ", pdf",
-                                                 ""),
-                                          ")", sep = "")))
+                ## The index might have zero rows.
+                txt <- if(is.data.frame(txt) && nrow(txt))
+                    cbind(basename(gsub("\\.[[:alpha:]]+$", "",
+                                        txt$File)),
+                          paste(txt$Title,
+                                paste(rep("(source", NROW(txt)),
+                                      ifelse(txt$PDF != "",
+                                             ", pdf",
+                                             ""),
+                                      ")", sep = "")))
+                else NULL
             }
             ## </FIXME>
             else
