@@ -145,7 +145,7 @@ NEW FEATURES
 	details: the R usage already protected against the
 	reported `weakness'.
 
-   o    changes in package "methods"
+   o    Changes in package "methods"
 
        -  New function validSlotNames().
 
@@ -159,6 +159,10 @@ NEW FEATURES
           callNextMethod.  This calls the method that would have been
           selected if the currently active method didn't exist.  See
           the online documentation.  This is an extension to the API.
+
+   o    New function TukeyHSD for multiple comparisons in the results
+	of aov().  (Formerly function Tukey in package Devore5 by
+	Douglas Bates.)
 
 
 DEPRECATED & DEFUNCT
@@ -310,6 +314,8 @@ BUG FIXES
 	for kind = "default").
 
     o	logLik.lm() now uses  "df = p + 1" again (`+ sigma'!).
+
+    o	logLik.glm() was incorrect for families with estimated dispersion.
 
     o	Added strptime() workaround for those platforms (such as
 	Solaris) that returned missing components as 0.  Missing
