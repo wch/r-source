@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-12-03)
+Version 1.4.0 Under development (unstable) (2001-12-17)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -28,7 +28,7 @@ Type `q()' to quit R.
 > # test do_download.
 > CRAN.packages()[, 1]
 trying URL `http://cran.r-project.org/src/contrib/PACKAGES'
-Content type `text/plain' length 59062 bytes
+Content type `text/plain' length 58872 bytes
 opened URL
 .......... .......... .......... .......... ..........
 .......
@@ -59,14 +59,14 @@ downloaded 57Kb
  [89] "quantreg"       "RandomFields"   "RArcInfo"       "rmeta"         
  [93] "RmSQL"          "RMySQL"         "RODBC"          "ROracle"       
  [97] "rpart"          "RPgSQL"         "rpvm"           "RSQLite"       
-[101] "Rstreams"       "Rwave"          "SASmixed"       "scatterplot3d" 
-[105] "sem"            "sgeostat"       "sm"             "sma"           
-[109] "sn"             "sna"            "splancs"        "sptests"       
-[113] "spweights"      "strucchange"    "SuppDists"      "survival"      
-[117] "tensor"         "tree"           "tripack"        "tseries"       
-[121] "twostage"       "vegan"          "VR"             "waveslim"      
-[125] "wavethresh"     "wle"            "xgobi"          "XML"           
-[129] "xtable"         "zmatrix"       
+[101] "Rwave"          "SASmixed"       "scatterplot3d"  "sem"           
+[105] "sgeostat"       "sm"             "sma"            "sn"            
+[109] "sna"            "splancs"        "sptests"        "spweights"     
+[113] "strucchange"    "SuppDists"      "survival"       "tensor"        
+[117] "tree"           "tripack"        "tseries"        "twostage"      
+[121] "vegan"          "VR"             "waveslim"       "wavethresh"    
+[125] "wle"            "xgobi"          "XML"            "xtable"        
+[129] "zmatrix"       
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
