@@ -38,6 +38,7 @@ approxfun <-
     if (missing(yright))
 	yright <- if(rule == 1) NA else y[length(y)]
     rm(ok, rule)
+    n<-as.integer(length(x)) ## may have been changed by tie removal
     function(v) .C("R_approx", as.double(x), as.double(y),
 		   n, xout = as.double(v), length(v), as.integer(method),
 		   as.double(yleft), as.double(yright),
