@@ -108,29 +108,31 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
                           fQuote(which.lib.loc)))
         }
         outFile <- tempfile("Rlibrary")
+        outConn <- file(outFile, open = "w")
         docFiles <- file.path(which.lib.loc, help,
                               c("TITLE", "DESCRIPTION", "INDEX"))
         headers <- c("", "Description:\n\n", "Index:\n\n")
         footers <- c("\n", "\n", "")
         for(i in which(file.exists(docFiles))) {
-            cat(headers[i], file = outFile, append = TRUE)
-            file.append(outFile, docFiles[i])
-            cat(footers[i], file = outFile, append = TRUE)
+            cat(headers[i], file = outConn, append = TRUE)
+            writeLines(readLines(docFiles[i]), outConn)
+            cat(footers[i], file = outConn, append = TRUE)
         }
+        close(outConn)
         file.show(outFile, delete.file = TRUE,
                   title = paste("Documentation for package",
                   fQuote(help)))
     }
     else {
 	## library():
-	libfil <- tempfile("R.")
+	outFile <- tempfile("Rlibrary")
+        outConn <- file(outFile, open = "w")
 	avail <- NULL
 	for (lib in lib.loc) {
 	    cat("\nPackages in library `", lib, "':\n\n", sep = "",
-		file = libfil, append = TRUE)
-	    if (file.exists(libind <- file.path(lib, "LibIndex")))
-	    {
-		file.append(libfil, libind)
+		file = outConn, append = TRUE)
+	    if (file.exists(libind <- file.path(lib, "LibIndex"))) {
+                writeLines(readLines(libind), outConn)
 		## This gives warnings and partly garbage,
 		## since contrib's LibIndex isn't really "clean":
 		## scan(libind, what=list("",""), sep="\t",
@@ -141,13 +143,16 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 		for (i in sort(a)) {
 		    title <- file.path(lib, i, "TITLE")
 		    if(file.exists(title))
-			file.append(libfil, title)
-		    else cat(i, "\n", file = libfil, append = TRUE)
+                        writeLines(readLines(title), outConn)
+		    else
+                        cat(i, "\n", file = outConn, append = TRUE)
 		}
 	    }
 	    avail <- c(avail, a)
 	}
-	file.show(libfil, delete.file = TRUE, title = "R packages available")
+        close(outConn)
+	file.show(outFile, delete.file = TRUE,
+                  title = "R packages available")
 	return(invisible(avail))
     }
     if (logical.return)
