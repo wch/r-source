@@ -47,7 +47,7 @@ R-DLLFLAGS = -mwindows
 endif
 
 ## only need -lmsvcp60 if we use SUPPORT_UTF8
-R-DLLLIBS =-L. $(LIBUNICOWS) $(FLIBS) -lRblas -liconv -lcomctl32 -lversion -lmsvcp60
+R-DLLLIBS =-L. $(LIBUNICOWS) $(FLIBS) -lRblas -lcomctl32 -lversion -lmsvcp60
 dllversion-RESFLAGS =--include-dir ../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c extra.c \
@@ -86,7 +86,7 @@ rbuild:
 	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
 	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
 	@$(MAKE) --no-print-directory makeMakedeps
-	@$(MAKE) --no-print-directory libRblas.a libiconv.a
+	@$(MAKE) --no-print-directory libRblas.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll
 	@$(MAKE) --no-print-directory libR.a
 	@$(MAKE) --no-print-directory ../../bin/Rblas.dll CHTML
@@ -235,10 +235,6 @@ htmldocs:
 	@$(ECHO)
 	@$(ECHO) "------ Making HTML documentation ------"
 	@$(MAKE) --no-print-directory -C ../../doc/manual -f Makefile.win html BUILD=$(BUILD)
-
-libiconv.a:  iconv.def
-	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname iconv.dll \
-	  --def $< --output-lib $@
 
 
 #                          ===== BLAS ======

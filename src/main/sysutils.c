@@ -286,6 +286,7 @@ SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
+
 /* Unfortunately glibc and Solaris diff in the const in the iopen decl.
    libiconv agrees with Solaris here.
  */
@@ -295,6 +296,44 @@ SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
 #undef const
 #endif
 
+#ifdef Win32
+DL_FUNC ptr_iconv, ptr_iconv_open, ptr_iconv_close, ptr_iconvlist;
+
+static void iconv_Init(void)
+{
+    static int initialized = 0;
+    char dllpath[PATH_MAX];
+    HINSTANCE dll;
+    snprintf(dllpath, PATH_MAX, "%s%smodules%s%s%s", getenv("R_HOME"), 
+	     FILESEP, FILESEP, "iconv", SHLIB_EXT);
+    if(!initialized) {
+	int res = moduleCdynload("iconv", 1, 1);
+	initialized = res ? 1 : -1;
+	if(initialized > 0) {
+	    ptr_iconv = R_FindSymbol("libiconv", "iconv", NULL);
+	    ptr_iconv_open = R_FindSymbol("libiconv_open", "iconv", NULL);
+	    ptr_iconv_close = R_FindSymbol("libiconv_close", "iconv", NULL);
+	    ptr_iconvlist = R_FindSymbol("libiconvlist", "iconv", NULL);
+	    Rprintf("iconv is at %p\n", ptr_iconv);
+	    if(!ptr_iconv)
+		error("failed to find symbols in iconv.dll");
+	}
+    }
+    if(initialized < 0)
+	error("iconv.dll is not available on this system");
+}
+#undef iconv
+#undef iconv_open
+#undef iconv_close
+#undef iconvlist
+#define iconv (*ptr_iconv)
+#define iconv_open (*ptr_iconv_open)
+#define iconv_close (*ptr_iconv_close)
+#define iconvlist (*ptr_iconvlist)
+#endif
+
+
+#ifdef HAVE_ICONVLIST
 static unsigned int cnt;
 
 static int 
@@ -314,7 +353,7 @@ write_one (unsigned int namescount, const char * const *names, void *data)
       SET_STRING_ELT(ans, cnt++, mkChar(names[i]));
   return 0;
 }
-
+#endif
 
 /* FIXME: remove line limit */
 #define BUFSIZE 1001
@@ -330,6 +369,9 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     size_t inb, outb, res;
     
     checkArity(op, args);
+#ifdef Win32
+    iconv_Init();
+#endif
     if(isNull(x)) {  /* list locales */
 #ifdef HAVE_ICONVLIST
 	cnt = 0;
@@ -339,6 +381,7 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	iconvlist(write_one, (void *)ans);
 #else
     error("`iconvlist' is not available on this system");
+    ans = R_NiValue; /* -Wall */
 #endif
     } else {
 	if(TYPEOF(x) != STRSXP)
