@@ -354,8 +354,10 @@ static SEXP modLa_zgesv(SEXP A, SEXP Bin)
     /* work on a copy of x */
     Memcpy(avals, COMPLEX(A), (size_t) (n * n));
     F77_CALL(zgesv)(&n, &p, avals, &n, ipiv, COMPLEX(B), &n, &info);
-    if (info != 0)
-	error("error code %d from Lapack routine zgesv", info);
+    if (info < 0)
+	error("argument %d of Lapack routine zgesv had illegal value", -info);
+    if (info > 0)
+	error("Lapack routine zgesv: system is exactly singular");
     UNPROTECT(1);
     return B;
 #else
@@ -753,8 +755,10 @@ static SEXP modLa_dgesv(SEXP A, SEXP Bin)
     /* work on a copy of x */
     Memcpy(avals, REAL(A), (size_t) (n * n));
     F77_CALL(dgesv)(&n, &p, avals, &n, ipiv, REAL(B), &n, &info);
-    if (info != 0)
-	error("error code %d from Lapack routine dgesv", info);
+    if (info < 0)
+	error("argument %d of Lapack routine dgesv had illegal value", -info);
+    if (info > 0)
+	error("Lapack routine dgesv: system is exactly singular");
     UNPROTECT(1);
     return B;
 }
