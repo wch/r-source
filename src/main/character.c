@@ -1179,6 +1179,8 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 			memcpy(cbuff.data, CHAR(STRING_ELT(text, i))+st, mlen);
 			cbuff.data[mlen] = '\0';
 			INTEGER(matchlen)[i] = mbstowcs(NULL, cbuff.data, 0);
+			if(INTEGER(matchlen)[i] < 0) /* an invalid string */
+			    INTEGER(matchlen)[i] = NA_INTEGER;
 		    } else
 #endif
 			INTEGER(matchlen)[i] = regmatch[0].rm_eo - st;

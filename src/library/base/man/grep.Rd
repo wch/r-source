@@ -76,6 +76,10 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE)
   giving the starting position of the first match, or \eqn{-1} if there
   is none, with attribute \code{"match.length"} giving the length of the
   matched text (or \eqn{-1} for no match).
+
+  If the input is invalid in a multi-byte locale, the results differ by
+  the arguments so perhaps no match will be found or the match length
+  may be \code{NA} or an error may be generated.
 }
 \section{Warning}{
   The standard regular-expression code has been reported to be very slow
