@@ -700,7 +700,8 @@ BUG FIXES
     o	write.table() failed if asked to quote a numerical matrix with
 	no row names. (PR#1219)
 
-    o	rlnorm( *, *, sd=0) now returns the mean (PR#1218).
+    o	rlnorm( *, *, sd=0) now returns the mean,
+     	rnbinom(*, *, prob=1) gives 0, (PR#1218).
 
 
 	**************************************************

@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000--2001  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
  *  SYNOPSIS
  *
  *    #include "Rmath.h"
- *    double dnbinom(double x, double n, double p);
+ *    double rnbinom(double n, double p)
  *
  *  DESCRIPTION
  *
@@ -44,9 +44,10 @@
 
 #include "nmath.h"
 
-double rnbinom(double n, double p)
+double rnbinom(double n /* size */, double p /* prob */)
 {
-    if(!R_FINITE(n) || !R_FINITE(p) || n <= 0 || p <= 0 || p >= 1)
+    if(!R_FINITE(n) || !R_FINITE(p) || n <= 0 || p <= 0 || p > 1)
+	/* p = 1 is ok, PR#1218 */
 	ML_ERR_return_NAN;
 
     return rpois(rgamma(n, (1 - p) / p));
