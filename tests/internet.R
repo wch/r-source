@@ -10,6 +10,8 @@ if(!capabilities()["http/ftp"]) {
 if(.Platform$OS.type == "unix" &&
    is.null(nsl("cran.r-project.org"))) q()
 
+if(.Platform$OS.type == "windows") options(CRAN="http://cran.r-project.org")
+
 # test do_download.
 nrow(CRAN.packages())
 
