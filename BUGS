@@ -243,22 +243,30 @@ none
 
 Directory:  incoming
 
-* PR# 874 *
-Subject: FREE Biotech Stock Info!    710
-From: biotechstox25@excite.com
-Date: Thu, 8 Mar 2001 21:02:03
-* PR# 861 *
-Subject: histogram of frequencies
-From: bernd.winkler@genedata.com
-Date: Mon, 5 Mar 2001 15:01:49 +0100 (MET)
-* PR# 869 *
-Subject:  inconsistent results when calling functions with other func
-From: "White, Paul" <Paul.White@dsto.defence.gov.au>
-Date: Thu, 8 Mar 2001 18:26:35 +1100 
+* PR# 875 *
+Subject: Re: [R] Bug in qchisq?
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 10 Mar 2001 02:26:11 +0100
 * PR# 866 *
 Subject: mkString
 From: Timothy.Keitt@StonyBrook.Edu
 Date: Wed, 7 Mar 2001 19:23:01 +0100 (MET)
+* PR# 861 *
+Subject: histogram of frequencies
+From: bernd.winkler@genedata.com
+Date: Mon, 5 Mar 2001 15:01:49 +0100 (MET)
+* PR# 870 *
+Subject: as.numeric - Possible error
+From: harald.fekjar@basalmed.uio.no
+Date: Thu, 8 Mar 2001 16:20:20 +0100 (MET)
+* PR# 869 *
+Subject:  inconsistent results when calling functions with other func
+From: "White, Paul" <Paul.White@dsto.defence.gov.au>
+Date: Thu, 8 Mar 2001 18:26:35 +1100 
+* PR# 874 *
+Subject: FREE Biotech Stock Info!    710
+From: biotechstox25@excite.com
+Date: Thu, 8 Mar 2001 21:02:03
 * PR# 873 *
 Subject: long formulas in terms()
 From: jerome@stat.ubc.ca
@@ -267,7 +275,3 @@ Date: Thu, 8 Mar 2001 22:30:05 +0100 (MET)
 Subject: surprising behavior of match.arg()
 From: Setzer.Woodrow@epamail.epa.gov
 Date: Thu, 08 Mar 2001 13:23:43 -0500
-* PR# 870 *
-Subject: as.numeric - Possible error
-From: harald.fekjar@basalmed.uio.no
-Date: Thu, 8 Mar 2001 16:20:20 +0100 (MET)
