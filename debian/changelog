@@ -5,6 +5,12 @@ r-base (0.90.0-0) unstable; urgency=low
 
  -- Douglas Bates <bates@stat.wisc.edu>  Tue, 26 Oct 1999 10:07:14 -0500
 
+r-base (0.65.1-2) unstable; urgency=low
+
+  * Changed from use of zip/unzip to minizip/miniunzip (Bug#48742)
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Sat, 30 Oct 1999 15:04:42 -0500
+
 r-base (0.65.1-1) unstable; urgency=low
 
   * New upstream release
