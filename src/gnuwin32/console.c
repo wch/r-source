@@ -131,7 +131,7 @@ static int xbufmakeroom(xbuf p, xlong size)
     return 1;
 }
 
-#define XPUTC(c) {if (!p->av) xbufmakeroom(p,1); *p->free++=c; p->av-=1;}
+#define XPUTC(c) {if (!p->av) xbufmakeroom(p,1); *p->free++=c; p->av--;}
 
 static void xbufaddc(xbuf p, char c)
 {
@@ -143,23 +143,22 @@ static void xbufaddc(xbuf p, char c)
 	break;
       case '\b':
 	if (strlen(p->s[p->ns - 1])) {
-	    p->free -= 1;
-	    p->av += 1;
+	    p->free--;
+	    p->av++;
 	}
 	break;
       case '\r':
 	break;
       case '\t':
 	XPUTC(' ');
+	*p->free = '\0';
 	for (i = strlen(p->s[p->ns - 1]); (i % TABSIZE); i++)
 	    XPUTC(' ');
 	break;
       case '\n':
 	XPUTC('\0');
-	xbufmakeroom(p, 1);
 	p->s[p->ns] = p->free;
-	p->user[p->ns] = -1;
-	p->ns += 1;
+	p->user[p->ns++] = -1;
 	break;
       default:
 	XPUTC(c);
