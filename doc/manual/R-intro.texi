@@ -6396,7 +6396,7 @@ controlling the memory available for fixed and variable sized objects.
 
 @R{} accepts the following command-line options.
 
-@table @code
+@table @option
 @item --help
 @itemx -h
 Print short help message to standard output and exit successfully.
@@ -6611,7 +6611,7 @@ controlling the memory available for fixed and variable sized objects.
 
 @R{} for Windows accepts the following command line options.
 
-@table @code
+@table @option
 @item --version
 Print version info and exit.
 
@@ -6644,8 +6644,9 @@ Suppress reading of the directory or user's @file{.Rprofile} file.
 Suppress reading of @file{.Renviron}.
 
 @item --vanilla
-Combine @code{--no-save}, @code{--no-restore}, @code{--no-site-file},
-@code{--no-init-file} and @code{--no-environ}.
+Combine @option{--no-save}, @option{--no-restore},
+@option{--no-site-file}, @option{--no-init-file} and
+@option{--no-environ}.
 
 @item -q
 @itemx --quiet
