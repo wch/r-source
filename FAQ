@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-9, 2002-06-11
+Version 1.5-10, 2002-06-13
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -235,7 +235,7 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current released version is 1.5.0.  Conforming to this
+   The current released version is 1.5.1.  Conforming to this
 `major.minor.patchlevel' numbering scheme, there are three development
 versions of R, working towards the next patch (`r-patched'), minor
 (`r-devel'), and major (`r-ng') releases of R, respectively.  Version
@@ -1681,8 +1681,16 @@ works, was published in the Journal of Statistical Software
 *quantreg*
      Quantile regression and related methods.
 
+*qvcalc*
+     Functions to compute quasi-variances and associated measures of
+     approximation error.
+
 *randomForest*
      Breiman's random forest classifier.
+
+*relimp*
+     Functions to facilitate inference on the relative importance of
+     predictors in a linear or generalized linear model.
 
 *rmeta*
      Functions for simple fixed and random effects meta-analysis for
