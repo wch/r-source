@@ -184,6 +184,16 @@ function()
       )
 }
 
+### ** .getNamespacePackageDepends
+
+.getNamespacePackageDepends <- function(dir) {
+    nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
+    depends <- c(sapply(nsInfo$imports, "[[", 1),
+                 sapply(nsInfo$importClasses, "[[", 1),
+                 sapply(nsInfo$importMethods, "[[", 1))
+    unique(sort(as.character(depends)))
+}
+
 ### ** .getNamespaceS3methodsList
 
 .getNamespaceS3methodsList <-
