@@ -19,7 +19,7 @@
 
 /* NOTE:
    This file exports a part of the current internal parse interface.
-   It is subject to change at any major version of R.
+   It is subject to change at any minor (x.y.0) version of R.
  */
 
 #ifndef R_EXT_PARSE_H_
