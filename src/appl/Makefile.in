@@ -53,6 +53,7 @@ OBJS = \
 	massdist.o \
 	pretty.o \
 	pythag.o \
+	rowsum.o \
 	splines.o \
 	stem.o \
 	strsignif.o \

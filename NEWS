@@ -1,6 +1,8 @@
 		CHANGES IN R VERSION 0.63.1
 
 NEW FEATURES
+    
+    o   rowsum() and improved na.omit() added from survival4
 
     o	xy.coords(.) has a  "recycle = FALSE" argument,	 used in text().
 

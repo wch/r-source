@@ -47,6 +47,7 @@
   Martyn Plummer,
   Brian Ripley,
   Bill Simpson,
+  Terry Therneau,
   Bill Venables, and
   Andreas Weingessel.
 
