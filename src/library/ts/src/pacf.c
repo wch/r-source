@@ -125,7 +125,7 @@ void Dotrans(double *x, double *y)
 
 void arma0fa(double *inparams, double *res)
 {
-    int i, j, ifault, it, iupd, streg;
+    int i, j, ifault, it, streg;
     double sumlog, ssq, tmp;
 
     /*for(i=0; i < mp+mq+msp+msq+m; i++)
@@ -166,14 +166,13 @@ void arma0fa(double *inparams, double *res)
 	}
     }
 
-    starma(&ip, &iq, &ir, &np, phi, theta, a, p, v, thetab,
-	   xnext, xrow, rbar, &nrbar, &ifault);
+    starma(ip, iq, ir, np, phi, theta, a, p, v, thetab,
+	   xnext, xrow, rbar, nrbar, &ifault);
     sumlog = 0.0;
     ssq = 0.0;
     it = 0;
-    iupd = 1;
-    karma(&ip, &iq, &ir, &np, phi, theta, a, p, v, &n, w, resid,
-	  &sumlog, &ssq, &iupd, &delta, &it);
+    karma(ip, iq, ir, np, phi, theta, a, p, v, n, w, resid,
+	  &sumlog, &ssq, 1, delta, &it);
     *res = 0.5*(log(ssq/(double)n) + sumlog/(double)n);
     s2 = ssq/(double)n;
 }
@@ -219,13 +218,9 @@ void arma0_kfore(int *pd, int *psd, int *n_ahead, double *x, double *var)
     p1 = (double *) R_alloc(irz, sizeof(double));
     store = (double *) R_alloc(ird, sizeof(double));
 
-    forkal(&ip, &iq, &ir, &np, &ird, 
-		     &irz, &d, &il, &n, &nrbar, 
-		     phi, theta, del+1, 
-		     w, x, var, a1, 
-		     p1, v, resid, 
-		     xnext, xrow, rbar, 
-		     thetab, store, &ifault);
+    forkal(ip, iq, ir, np, ird, irz, d, il, n, nrbar, 
+	   phi, theta, del+1, w, x, var, a1, p1, v, resid, xnext, 
+	   xrow, rbar, thetab, store, &ifault);
 }
 
 void artoma(int *pp, double *phi, double *psi, int *npsi)
