@@ -75,6 +75,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	diag and diag<- now handle correctly matrices with zero rows or cols.
+
     o   split.default() now uses subscripting for x with a non-null
 	class, this preserves, e.g., the class of factors
 
