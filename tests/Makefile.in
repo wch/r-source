@@ -119,16 +119,16 @@ FORCE:
 
 .R.Rout:
 	@rm -f $@ $@.fail
-	@echo @ECHO_N@ "running code in '$<' ...@ECHO_C@"
+	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
-	@echo "@ECHO_T@ OK"
+	@echo "$(ECHO_T) OK"
 	@if [ -f $(srcdir)/$@.save ] ; then \
 	  mv $@ $@.fail; \
-	  echo @ECHO_N@ \
-	    "comparing '$@' to '$(srcdir)/$@.save' ...@ECHO_C@"; \
+	  echo $(ECHO_N) \
+	    "comparing '$@' to '$(srcdir)/$@.save' ...$(ECHO_C)"; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
 	  mv $@.fail $@; \
-	  echo "@ECHO_T@ OK"; \
+	  echo "$(ECHO_T) OK"; \
 	fi
 
 .R.Rout-gct:
@@ -137,10 +137,10 @@ FORCE:
 	  cat $< $(srcdir)/gct-foot.R) | $(R) > $@
 	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
 	  if test ! -r $$Ro ; then $(MAKE) $$Ro ; fi; \
-	  echo @ECHO_N@ "comparing '$@' to '$$Ro' ...@ECHO_C@"; \
+	  echo $(ECHO_N) "comparing '$@' to '$$Ro' ...$(ECHO_C)"; \
 	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $$Ro  1 || exit 1; \
 	  mv $@.fail $@; \
-	  echo "@ECHO_T@ OK"
+	  echo "$(ECHO_T) OK"
 
 test-all-basics: Makefile
 	@for name in $(all-basic-tests); do \
@@ -190,98 +190,98 @@ test-DocArgs:
 	@echo "checking whether arguments from usage are documented"
 	@for p in $(R_PKGS); do \
 	  out="package"; \
-	  echo @ECHO_N@ "$${out} '$${p}' ...@ECHO_C@"; \
+	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
 	  out=`(echo "library(tools)"; \
                 echo "checkDocArgs(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
-	    echo "@ECHO_T@ WARNING"; \
+	    echo "$(ECHO_T) WARNING"; \
 	    echo; \
 	    echo "$${out}"; \
 	    echo; \
 	  else \
-	    echo "@ECHO_T@ OK"; \
+	    echo "$(ECHO_T) OK"; \
 	  fi; \
 	done
 test-DocStyle:
 	@echo "checking usages for method documentation style"
 	@for p in $(R_PKGS); do \
 	  out="package"; \
-	  echo @ECHO_N@ "$${out} '$${p}' ...@ECHO_C@"; \
+	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
 	  out=`(echo "library(tools)"; \
 	        echo "checkDocStyle(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
-	    echo "@ECHO_T@ WARNING"; \
+	    echo "$(ECHO_T) WARNING"; \
 	    echo; \
 	    echo "$${out}"; \
 	    echo; \
 	  else \
-	    echo "@ECHO_T@ OK"; \
+	    echo "$(ECHO_T) OK"; \
 	  fi; \
 	done
 test-FF:
 	@echo "checking foreign function calls"
 	@for p in $(R_PKGS); do \
 	  out="package"; \
-	  echo @ECHO_N@ "$${out} '$${p}' ...@ECHO_C@"; \
+	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
 	  out=`(echo "library(tools)"; \
 	        echo "checkFF(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
-	    echo "@ECHO_T@ WARNING"; \
+	    echo "$(ECHO_T) WARNING"; \
 	    echo "$${out}"; \
 	  else \
-	    echo "@ECHO_T@ OK"; \
+	    echo "$(ECHO_T) OK"; \
 	  fi; \
 	done
 test-Methods:
 	@echo "checking generic/method consistency"
 	@for p in $(R_PKGS); do \
 	  out="package"; \
-	  echo @ECHO_N@ "$${out} '$${p}' ...@ECHO_C@"; \
+	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
 	  out=`(echo "library(tools)"; \
 	        echo "checkMethods(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
-	    echo "@ECHO_T@ WARNING"; \
+	    echo "$(ECHO_T) WARNING"; \
 	    echo; \
 	    echo "$${out}"; \
 	    echo; \
 	  else \
-	    echo "@ECHO_T@ OK"; \
+	    echo "$(ECHO_T) OK"; \
 	  fi; \
 	done
 test-codoc:
 	@echo "checking code/documentation mismatches"
 	@for p in $(R_PKGS); do \
 	  out="package"; \
-	  echo @ECHO_N@ "$${out} '$${p}' ...@ECHO_C@"; \
+	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
 	  out=`(echo "library(tools)"; \
 	        echo "codoc(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
-	    echo "@ECHO_T@ WARNING"; \
+	    echo "$(ECHO_T) WARNING"; \
 	    echo; \
 	    echo "$${out}"; \
 	    echo; \
 	  else \
-	    echo "@ECHO_T@ OK"; \
+	    echo "$(ECHO_T) OK"; \
 	  fi; \
 	done
 test-undoc:
 	@echo "checking undocumented objects"
 	@for p in $(R_PKGS); do \
 	  out="package"; \
-	  echo @ECHO_N@ "$${out} '$${p}' ...@ECHO_C@"; \
+	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
 	  out=`(echo "library(tools)"; \
 	        echo "undoc(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
-	    echo "@ECHO_T@ WARNING"; \
+	    echo "$(ECHO_T) WARNING"; \
 	    echo "$${out}"; \
 	  else \
-	    echo "@ECHO_T@ OK"; \
+	    echo "$(ECHO_T) OK"; \
 	  fi; \
 	done
 
