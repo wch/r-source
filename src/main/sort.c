@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2000   The R Development Core Team.
+ *  Copyright (C) 1998-2001   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -76,31 +76,31 @@ Rboolean isUnsorted(SEXP x)
     if (!isVectorAtomic(x))
 	error("only atomic vectors can be tested to be sorted");
     n = LENGTH(x);
-    if(n >= 2) 
-	switch (TYPEOF(x)) { 
-	    
-	    /* NOTE: x must have no NAs {is.na(.) in R}; 
+    if(n >= 2)
+	switch (TYPEOF(x)) {
+
+	    /* NOTE: x must have no NAs {is.na(.) in R};
 	       hence be faster than `rcmp()', `icmp()' for these two cases */
 
 	case LGLSXP:
 	case INTSXP:
-	    for(i = 0; i+1 < n ; i++) 
+	    for(i = 0; i+1 < n ; i++)
 		if(INTEGER(x)[i] > INTEGER(x)[i+1])
 		    return TRUE;
 	    break;
 	case REALSXP:
-	    for(i = 0; i+1 < n ; i++) 
+	    for(i = 0; i+1 < n ; i++)
 		if(REAL(x)[i] > REAL(x)[i+1])
 		    return TRUE;
 	    break;
 	case CPLXSXP:
-	    for(i = 0; i+1 < n ; i++) 
+	    for(i = 0; i+1 < n ; i++)
 		if(ccmp(COMPLEX(x)[i], COMPLEX(x)[i+1], TRUE) > 0)
 		    return TRUE;
 	    break;
 	case STRSXP:
-	    for(i = 0; i+1 < n ; i++) 
-		if(scmp(STRING_ELT(x, i ), 
+	    for(i = 0; i+1 < n ; i++)
+		if(scmp(STRING_ELT(x, i ),
 			STRING_ELT(x,i+1), TRUE) > 0)
 		    return TRUE;
 	    break;
@@ -124,10 +124,10 @@ SEXP do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 			/*--- Part II: Complete (non-partial) Sorting ---*/
 
 
-/* SHELLsort -- corrected from R. Sedgewick `Algorithms in C' 
+/* SHELLsort -- corrected from R. Sedgewick `Algorithms in C'
  *		(version of BDR's lqs():*/
 #define sort_body					\
-    Rboolean nalast=TRUE;                               \
+    Rboolean nalast=TRUE;				\
     int i, j, h;					\
 							\
     for (h = 1; h <= n / 9; h = 3 * h + 1);		\
@@ -208,12 +208,12 @@ void revsort(double *a, int *ib, int n)
     ir = n;
 
     for (;;) {
-        if (l > 1) {
+	if (l > 1) {
 	    l = l - 1;
 	    ra = a[l];
 	    ii = ib[l];
-        }
-        else {
+	}
+	else {
 	    ra = a[ir];
 	    ii = ib[ir];
 	    a[ir] = a[1];
@@ -223,10 +223,10 @@ void revsort(double *a, int *ib, int n)
 		ib[1] = ii;
 		return;
 	    }
-        }
-        i = l;
-        j = l << 1;
-        while (j <= ir) {
+	}
+	i = l;
+	j = l << 1;
+	while (j <= ir) {
 	    if (j < ir && a[j] > a[j + 1]) ++j;
 	    if (ra > a[j]) {
 		a[i] = a[j];
@@ -235,9 +235,9 @@ void revsort(double *a, int *ib, int n)
 	    }
 	    else
 		j = ir + 1;
-        }
-        a[i] = ra;
-        ib[i] = ii;
+	}
+	a[i] = ra;
+	ib[i] = ii;
     }
 }
 
@@ -275,21 +275,21 @@ SEXP do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ans = duplicate(CAR(args));
 	sortVector(ans);
 	return(ans);
-    } 
+    }
     else return(CAR(args));
 }
 
 			/*--- Part III: Partial Sorting ---*/
 
-/* 
+/*
    Partial sort so that x[k] is in the correct place, smaller to left,
    larger to right
 
    NOTA BENE:  k < n  required, and *not* checked here but in do_psort();
-               -----  infinite loop possible otherwise!
+	       -----  infinite loop possible otherwise!
  */
 #define psort_body						\
-    Rboolean nalast=TRUE;                                       \
+    Rboolean nalast=TRUE;					\
     int L, R, i, j;						\
 								\
     for (L = 0, R = n - 1; L < R; ) {				\
@@ -432,6 +432,7 @@ static int greater(int i, int j, SEXP x, Rboolean nalast)
     return 0;
 }
 
+/* listgreater(): used as greater_sub in orderVector() in do_order(...) */
 static int listgreater(int i, int j, SEXP key, Rboolean nalast)
 {
     SEXP x;
@@ -465,7 +466,7 @@ static int listgreater(int i, int j, SEXP key, Rboolean nalast)
     return 1;
 }
 
-static void orderVector(int *indx, int n, SEXP key, Rboolean nalast, 
+static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 			int greater_sub())
 {
     int i, j, h;
