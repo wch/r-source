@@ -34,20 +34,21 @@ codes <- function(x, ...) UseMethod("codes")
 
 codes.factor <- function(x)
 {
-  attributes(x) <- NULL
-  x
+  ## This is the S-plus semantics.
+  ## The deeper meaning? Search me...
+  order(levels(x))[x]
 }
 
 "codes<-" <- function(x, value)
 {
-  .not.yet.implemented()
-  ## not so clear how this is done in interpreted code.
-  ## It could be done before, and is still documented..
-
-  ## An even bigger problem is  ``codes(x)[i] <- value''.
-  ## which should be handled in primitive  "[<-"
-
-  x
+  if ( length(value) == 1 )
+    value <- rep(value, length(x))
+  else if ( length(x) != length(value) )
+    stop("Length mismatch in \"codes<-\"")
+  ## S-plus again...
+  value<-rank(levels(x))[value]
+  attributes(value)<-attributes(x)
+  value
 }
 
 "as.factor" <- function (x) if (is.factor(x)) x else factor(x)
