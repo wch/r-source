@@ -5,14 +5,14 @@
 <title>R for Windows FAQ</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="description" content="R for Windows FAQ">
-<meta name="generator" content="makeinfo 4.0b">
+<meta name="generator" content="makeinfo 4.0">
 <link href="http://texinfo.org/" rel="generator-home">
 <title>R for Windows FAQ</title>
 </head>
 <body>
 <h1 align="center">R for Windows FAQ</h1>
 
-<h2>Version for <tt>rw1031</tt></h2>
+<h2>Version for <tt>rw1032</tt></h2>
 
 <address>B. D. Ripley</address>
 
@@ -54,8 +54,8 @@ print from R?</a></li>
 BATCH</code>?</a></li>
 
 <li><a href=
-"#Can%20I%20use%20rw1031%20with%20ESS%20and%20emacs%3f">2.8 Can I
-use rw1031 with ESS and emacs?</a></li>
+"#Can%20I%20use%20rw1032%20with%20ESS%20and%20emacs%3f">2.8 Can I
+use rw1032 with ESS and emacs?</a></li>
 
 <li><a href=
 "#What%20are%20HOME%20and%20working%20directories%3f">2.9 What are
@@ -81,9 +81,9 @@ certain characters crashes Rgui.</a></li>
 3.1 Can I install packages (libraries) in this version?</a></li>
 
 <li><a href=
-"#I%20don't%20have%20permission%20to%20write%20to%20the%20rw1031%5clibrary%20directory">
+"#I%20don't%20have%20permission%20to%20write%20to%20the%20rw1032%5clibrary%20directory">
 3.2 I don't have permission to write to the
-<code>rw1031\library</code> directory.</a></li>
+<code>rw1032\library</code> directory.</a></li>
 
 <li><a href=
 "#The%20packages%20I%20installed%20do%20not%20appear%20in%20the%20HTML%20help%20system">
@@ -223,7 +223,7 @@ specific to that version. The main R FAQ can be found at</p>
 
 <p>The information here applies only to recent versions of R for
 Windows, (<code>rw1020</code> or later); the current version is
-often called something like <code>rw1031</code> (although not
+often called something like <code>rw1032</code> (although not
 officially).</p>
 
 <hr>
@@ -253,13 +253,13 @@ and the remaining <code>miniR-?.bin</code> on a floppy each.</p>
 least the files</p>
 
 <pre>
-      rw1031b1.zip rw1031b2.zip
-      rw1031h.zip (text help) or rw1031ch.zip (Compiled HTML help)
+      rw1032b1.zip rw1032b2.zip
+      rw1032h.zip (text help) or rw1032ch.zip (Compiled HTML help)
 </pre>
 
-<p>and you may want <code>rw1031w.zip</code> (the HTML format help
-files), <code>rw1031l.zip</code> (the LaTeX format help files, used
-for offline printing), or <code>rw1031d?.zip</code> (the draft
+<p>and you may want <code>rw1032w.zip</code> (the HTML format help
+files), <code>rw1032l.zip</code> (the LaTeX format help files, used
+for offline printing), or <code>rw1032d?.zip</code> (the draft
 manuals, in PDF). <a name=
 "How%20do%20I%20install%20R%20for%20Windows%3f"></a></p>
 
@@ -279,12 +279,12 @@ group for R).</p>
 <p>For a manual installation, choose a location and unzip the zip
 files (with a tool that preserves long file names and the directory
 structure: we recommend the INFO-ZIP project's <code>unzip</code>).
-All the files will unpack into a directory <code>rw1031</code>.</p>
+All the files will unpack into a directory <code>rw1032</code>.</p>
 
 <p>Choose a working directory for R. Unless you used
 <code>SetupR.exe</code> or <code>miniR.exe</code> (which did this
 for you by default), make a shortcut to
-<code>rw1031\bin\Rgui.exe</code> on your desktop or somewhere on
+<code>rw1032\bin\Rgui.exe</code> on your desktop or somewhere on
 the Start menu file tree. Right-click the shortcut, select
 Properties... and change the `Start in' field to your working
 directory.</p>
@@ -367,7 +367,7 @@ have LaTeX installed you can print help files by
 <h2>2.7 Can I use <code>R BATCH</code>?</h2>
 
 <p>Yes, if you have Perl and the files for making source packages
-(from <code>SetupR.exe</code> or <code>rw1031sp.zip</code>)
+(from <code>SetupR.exe</code> or <code>rw1032sp.zip</code>)
 installed. The Windows analogue is <code>Rcmd BATCH</code>: use
 <code>Rcmd BATCH --help</code> for full details.</p>
 
@@ -379,10 +379,10 @@ line)</p>
 path_to_R\bin\Rterm.exe --no-restore --no-save &lt; %1 &gt; %1.out
 </pre>
 
-<a name="Can%20I%20use%20rw1031%20with%20ESS%20and%20emacs%3f"></a>
+<a name="Can%20I%20use%20rw1032%20with%20ESS%20and%20emacs%3f"></a>
 
 
-<h2>2.8 Can I use rw1031 with ESS and emacs?</h2>
+<h2>2.8 Can I use rw1032 with ESS and emacs?</h2>
 
 <p>Yes. The latest versions of ESS (e.g. 5.1.18) come with support
 for this version of R, and there is support for interrupting the R
@@ -421,7 +421,7 @@ If all of these fail, the current working directory is used.</p>
 
 <p>How did you specify it? Backslashes have to be doubled in R
 character strings, so for example one needs
-<code>"d:\\rw1031\\library\\xgobi\\scripts\\xgobi.bat"</code>. Make
+<code>"d:\\rw1032\\library\\xgobi\\scripts\\xgobi.bat"</code>. Make
 life easier for yourself by using forward slashes as path
 separators: they do work under Windows.</p>
 
@@ -460,7 +460,7 @@ have solved have been traced to faulty versions of
 <code>msvcrt.dll</code>. Try extracting the one to be found in the
 self-extracting archive <a href=
 "ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe">ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe</a>
-and put it in the <code>rw1031\bin</code> directory. Removing
+and put it in the <code>rw1032\bin</code> directory. Removing
 <code>msvcrt.dll</code> from that directory reverts to the standard
 behaviour.</p>
 
@@ -494,21 +494,21 @@ point-and-click interface to package installation.</p>
 "http://cran.r-project.org/bin/windows/contrib/ReadMe">http://cran.r-project.org/bin/windows/contrib/ReadMe</a>.</p>
 
 <p>If there is not a pre-compiled version or that is not up-to-date
-or you prefer compiling from source, get <code>rw1031sp.zip</code>
+or you prefer compiling from source, get <code>rw1032sp.zip</code>
 from the distribution (see Q1.1; you may already have installed
 this from <code>SetupR.exe</code>) and unpack it in the parent of
-<code>rw1031</code>. Then read the file
+<code>rw1032</code>. Then read the file
 <code>readme.packages</code>. You will need to collect and install
 several tools to use this. Once you have done so, just run
 <code>Rcmd INSTALL pkgname</code>. To check the package (including
 running all the examples on its help pages and in its test suite,
 if any) use <code>Rcmd check pkgname</code>: see the <em>`Writing R
 Extensions'</em> manual. <a name=
-"I%20don't%20have%20permission%20to%20write%20to%20the%20rw1031%5clibrary%20directory">
+"I%20don't%20have%20permission%20to%20write%20to%20the%20rw1032%5clibrary%20directory">
 </a></p>
 
 <h2>3.2 I don't have permission to write to the
-<code>rw1031\library</code> directory.</h2>
+<code>rw1032\library</code> directory.</h2>
 
 <p>You can install packages anywhere and use the environment
 variable <code>R_LIBS</code> to point to the library location(s).
@@ -565,7 +565,7 @@ environment. <a name=
 system.</h2>
 
 <p>The HTML search only works for packages installed in
-<code>rw1031\library</code>.</p>
+<code>rw1032\library</code>.</p>
 
 <p>To update the HTML indices after you have installed a
 pre-compiled package, run at the R prompt.</p>
@@ -586,7 +586,7 @@ system.</h2>
 you installed.</p>
 
 <ul>
-<li>the package is installed in <code>rw1031\library</code>.</li>
+<li>the package is installed in <code>rw1032\library</code>.</li>
 
 <li>the package contains a <code>CONTENTS</code> file in its
 top-level directory.</li>
@@ -881,7 +881,7 @@ file names to lower case) did not work. <a name=
 <p>We strongly encourage you to do this <em>via</em> building an R
 package: see the <em>`Writing R Extensions'</em> manual. In any
 event you should install the parts of the R system for building R
-packages (in <code>SetupR.exe</code> or <code>rw1031sp.zip</code>),
+packages (in <code>SetupR.exe</code> or <code>rw1032sp.zip</code>),
 and get and install the tools (including Perl) and compilers
 mentioned in the file <code>readme.packages</code> contained
 therein. Then you can use</p>
@@ -920,7 +920,7 @@ make DEBUG=T pkg-mypkg
 <p>Then you can debug by</p>
 
 <pre>
-gdb /path/to/rw1031/bin/Rgui.exe
+gdb /path/to/rw1032/bin/Rgui.exe
 </pre>
 
 <p>However, note</p>
@@ -928,8 +928,8 @@ gdb /path/to/rw1031/bin/Rgui.exe
 <ul>
 <li>gdb will only be able to find the source code if we run in the
 location where the source was compiled
-(<code>rw1031/src/gnuwin32</code> for the main system,
-<code>rw1031/src/library/mypkg/src</code> for a package), unless
+(<code>rw1032/src/gnuwin32</code> for the main system,
+<code>rw1032/src/library/mypkg/src</code> for a package), unless
 told otherwise by the <code>directory</code> command. It is most
 convenient to set a list of code locations via
 <code>directory</code> commands in the file <code>.gdbinit</code>
