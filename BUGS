@@ -590,6 +590,14 @@ From: socrates@mail.ru
 Date: Thu, 27 Jun 2002 10:30:51 +0200 (MET DST)
 ..A crash that is *very* hard to trigger (after several
 ..minutes of continuous resizing)
+* PR# 2816 *
+Subject: Handling of upper/lowercase in package names
+From: "Philippe Grosjean" <phgrosjean@sciviews.org>
+Date: Tue, 22 Apr 2003 14:33:04 +0200
+* PR# 2817 *
+Subject: Weird Windows startup menu display problem in 1.7.0
+From: "Gunter, Bert" <bert_gunter@merck.com>
+Date: Tue, 22 Apr 2003 11:23:01 -0400
 
 Directory:  incoming
 
@@ -643,38 +651,10 @@ Date: Sat, 19 Apr 2003 18:56:25 EDT
 Subject: You and your COLON                                             Ujcfjy
 From: <lgvix@yahoo.com>
 Date: Sun, 20 Apr 2003 04:34:56 -0200
-* PR# 2800 *
-Subject: Order V i a g r a , Diet Pills, and other drugs online!  No prior prescription needed
-From: "Adeline Ponce" <joy1474@msn.com>
-Date: Sun, 20 Apr 03 06:13:09 GMT
 * PR# 2801 *
 Subject: Rgui crashes after setting par(ask=TRUE) and using lattice
 From: smcnary@charm.net
 Date: Sun, 20 Apr 2003 21:01:40 +0200 (MET DST)
-* PR# 2802 *
-Subject: URGENT
-From: "Mr Silai Wongo" <Silai11@netscape.net>
-Date: Mon, 21 Apr 2003 01:54:46
-* PR# 2803 *
-Subject: ;-)
-From: "Kari Mcdonald" <joy1491@aol.com>
-Date: Mon, 21 Apr 03 06:48:17 GMT
-* PR# 2804 *
-Subject: wasjing ueturn
-From: "Madeleine Lanier" <hlejm5flu3h@msn.com>
-Date: Sun, 20 Apr 03 10:37:36 GMT
-* PR# 2805 *
-Subject: Bulk Email Advertise to 27 MILLION People - $129
-From: "Jana Whitten" <c6n6ozpnj92@nmerha17.bnr.ca>
-Date: Mon, 21 Apr 03 13:36:04 GMT
-* PR# 2806 *
-Subject: Urgent Assistance
-From: Joseph Mobutu Sese-Seko  <josephmobutu432@rediffmail.com>
-Date: Mon, 21 Apr 2003 17:51:14 +0200
-* PR# 2807 *
-Subject: Become A Testimonial Tomorrow                 Hbqbfxtlkl
-From: <cddslaughterjakm@earthlink.net>
-Date: Mon, 21 Apr 2003 04:58:17 +1100
 * PR# 2808 *
 Subject: building R 1.7.0 under RH7.3
 From: Tim Hoar <thoar@cgd.ucar.edu>
@@ -683,3 +663,19 @@ Date: Mon, 21 Apr 2003 13:16:16 -0600 (MDT)
 Subject: sweave provoked segfault
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Mon, 21 Apr 2003 17:01:53 -0400
+* PR# 2813 *
+Subject: Search Engine
+From: leroy@ucsd.edu
+Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
+* PR# 2818 *
+Subject: zip.unpack() crashes R
+From: hb@maths.lth.se
+Date: Tue, 22 Apr 2003 17:23:27 +0200 (MET DST)
+* PR# 2822 *
+Subject: "LAPACK routine DGESDD gave error code -12" with Debian
+From: Ramon Diaz <rdiaz@cnio.es>
+Date: Tue, 22 Apr 2003 20:06:21 +0200
+* PR# 2823 *
+Subject: Re: [Rd] 
+From: Kurt Hornik <hornik@ci.tuwien.ac.at>
+Date: Tue, 22 Apr 2003 20:15:19 +0200
