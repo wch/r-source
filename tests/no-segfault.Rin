@@ -36,7 +36,7 @@ inet.list <- c(apropos("download\."),
 socket.fun <- apropos("socket")
 ## "Interactive" ones:
 dev.int <- c("X11", "x11", "windows", "postscript",
-             "xfig", "jpeg", "png", "pictex")
+             "xfig", "jpeg", "png", "pictex", "quartz")
 misc.2 <- c("help.start", "browseEnv",
             "gctorture", "q", "quit", "restart", "try",
             "read.fwf", "source",## << MM thinks "FIXME"
