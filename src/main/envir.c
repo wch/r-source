@@ -810,6 +810,8 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 	}
 	hashcode = HASHVALUE(c) % HASHSIZE(HASHTAB(rho));
 	R_HashSet(hashcode, symbol, HASHTAB(rho), value);
+	if (R_HashSizeCheck(HASHTAB(rho)))
+	  HASHTAB(rho) = R_HashResize(HASHTAB(rho));
     }
 }
 
