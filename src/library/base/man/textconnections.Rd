@@ -5,10 +5,10 @@
   Input and output text connections.
 }
 \usage{
-textConnection(description, open = "r")
+textConnection(object, open = "r")
 }
 \arguments{
-  \item{description}{character.  A description of the connection. 
+  \item{object}{character.  A description of the connection. 
     For an input is an \R character vector object, and for an output
     connection the name for the \R character vector to receive the
     output.
