@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-49, 2003-10-03
+Version 1.8-0, 2003-10-07
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -245,7 +245,7 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-The current released version is 1.7.1.  Based on this
+The current released version is 1.8.0.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, working towards the next patch (`r-patched') and minor or
 eventually major (`r-devel') releases of R, respectively.  Version
@@ -2267,6 +2267,9 @@ distributions of R.)
 *twostage*
      Functions for optimal design of two-stage-studies using the Mean Score
      method.
+
+*udunits*
+     Interface to Unidata's routines to convert units.
 
 *vardiag*
      Interactive variogram diagnostics.
