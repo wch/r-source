@@ -4273,7 +4273,7 @@ routine, normally used to carry auxiliary information.
 Some of the methods also require a gradient function
 
 @smallexample
-typedef double optimgr(int n, double *par, double *gr, void *ex);
+typedef void optimgr(int n, double *par, double *gr, void *ex);
 @end smallexample
 
 @noindent

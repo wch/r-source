@@ -390,7 +390,8 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
     }
     if(!drop) {
 	names(x) <- cols
-	if(any(duplicated(rows)))
+        ## might have NAs, which make.names eliminates.
+	if(any(is.na(rows) | duplicated(rows)))
 	    rows <- make.names(rows, unique = TRUE)
 	attr(x, "row.names") <- rows
 	class(x) <- cl
@@ -695,7 +696,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 		paste(nmi, ri, sep = ".")
 	    else nmi
 	}
-	else if(nrow > 0 && all(ri == 1:ni))
+	else if(nrow > 0 && identical(ri, 1:ni))
 	    seq(from = nrow + 1, length = ni)
 	else ri
     }

@@ -875,6 +875,10 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
     int i = 0;
+#ifdef Unix
+    Rboolean X11 = (strcmp(R_GUIType, "X11") == 0) || 
+	(strcmp(R_GUIType, "GNOME") == 0);
+#endif
     
     checkArity(op, args);
     PROTECT(ans = allocVector(LGLSXP, 13));
@@ -883,7 +887,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
 #ifdef Unix
-    LOGICAL(ans)[i++] = strcmp(R_GUIType, "X11") == 0;
+    LOGICAL(ans)[i++] = X11;
 #else
     LOGICAL(ans)[i++] = TRUE;
 #endif
@@ -894,7 +898,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ansnames, i, mkChar("png"));
 #ifdef HAVE_PNG
 #ifdef Unix
-    LOGICAL(ans)[i++] = strcmp(R_GUIType, "X11") == 0;
+    LOGICAL(ans)[i++] = X11;
 #else
     LOGICAL(ans)[i++] = TRUE;
 #endif
@@ -911,7 +915,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SET_STRING_ELT(ansnames, i, mkChar("X11"));
 #ifdef Unix
-    LOGICAL(ans)[i++] = strcmp(R_GUIType, "X11") == 0;
+    LOGICAL(ans)[i++] = X11;
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif
