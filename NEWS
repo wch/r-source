@@ -282,8 +282,7 @@ C-LEVEL FACILITIES
 	and S_realloc, since current S versions use these forms.
 
     o	The type used for vector lengths is now R_len_t rather than
-	int, to allow this to de defined as long and so allow vectors
-	longer than 2^31 - 1 elements on 64-bit platforms.
+	int, to allow for a future change.
 
 
 DEPRECATED & DEFUNCT
@@ -323,7 +322,62 @@ INSTALLATION CHANGES
 
 BUG FIXES
 
-    o   minor copy-paste error in example(names) (PR#6594)
+    o	When lm.{w}fit() disregarded arguments in ... they reported
+	the values and not the names.
+
+    o	lm(singular.ok = FALSE) was looking for 0 rank, not rank < p.
+
+    o	The substitution code for strptime in the sources no longer
+	follows glibc in silently `correcting' invalid inputs.
+
+    o	The cor() function did not remove missing values in the
+	non-Pearson case.
+
+    o	[l]choose() use a more accurate formula which also slightly
+	improves p- and qhyper(); choose(n, k) now returns 0 instead
+	of NaN for k < 0 or > n.
+
+    o	find(simple.words=TRUE) (the default) was still using regular
+	expressions for e.g. "+" and "*".  Also, it checked the mode
+	only of the first object matching a regular expression found
+	in a package.
+
+    o	Memory leaks in [dpq]wilcox and [dqr]signrank have been plugged.
+	These only occurred when multiple values of m or n > 50 were
+	used in a single call. (PR#5314, plus another potential leak.)
+
+    o	Non-finite input values to eigen(), La.eigen(), svd() and
+	La.svd() are now errors: they often caused infinite
+	looping.  (PR#5406, PR#4366, PR#3723: the fix for 3723/4366
+	returned a vector of NAs, not a matrix, for the eigenvectors.)
+
+    o	stepfun(x,y) now gives an error when `x' has length 0 instead
+	of an invalid result (that could lead to a segmentation
+	fault).
+
+    o	buildVignettes() uses file.remove() instead of unlink() to
+	remove temporary files.
+
+    o	methods(class = "lqs") does not produce extraneous entries anymore.
+
+    o	Calling a method that uses NextMethod() no longer produces the
+	erroneous error message 'function is not a closure'.
+
+    o	chisq.test(x, simulate.p.value = TRUE) could hang in an infinite
+	loop or segfault, as r2dtable() did, when the entries in x where
+	large. (PR#5701)
+
+    o	fisher.test(x) could give a P-value of 'Inf' in similar cases which
+	now result in an error (PR#4688).  It silently truncated
+	non-integer 'x' instead of rounding.
+
+    o	cutree(a, h=h) silently gave wrong results when 'a' was an
+	agnes object; now gives an error and reminds of as.hclust().
+
+    o	postscript() could crash if given a font value outside the
+	valid range 1...5.
+
+    o	qchisq(1-e, .., ncp=.) did not terminate for small e (PR#6421 (PR#875))
 
     o	contrasts() turns a logical variable into a factor.  This now
 	always has levels c("FALSE", "TRUE") even if only one (or
@@ -388,7 +442,7 @@ BUG FIXES
 	sync with the citation() command.
 
     o	The validation code for POSIXlt dates and hence
-	seq(,by="DSTdays") now works for large mday values (not
+	seq(, by="DSTdays") now works for large mday values (not
 	just those in -1000...1000).  (PR#6212)
 
     o	The print() method for data frames now copes with data frames
@@ -431,6 +485,8 @@ BUG FIXES
 	report correctly that the number of elements specified was too
 	large (rather than reporting it as negative).
 
+    o   minor copy-paste error in example(names).  (PR#6594)
+
     o   length<- now works correctly on factors (and is now generic
 	with a method for factors).
 
@@ -442,70 +498,6 @@ BUG FIXES
 	*	       1.8 SERIES NEWS			 *
 	*						 *
 	**************************************************
-
-
-		CHANGES IN R VERSION 1.8.2
-
-
-BUG FIXES
-
-    o	When lm.{w}fit() disregarded arguments in ... they reported
-	the values and not the names.
-
-    o	lm(singular.ok = FALSE) was looking for 0 rank, not rank < p.
-
-    o	The substitution code for strptime in the sources no longer
-	follows glibc in silently `correcting' invalid inputs.
-
-    o	The cor() function did not remove missing values in the
-	non-Pearson case.
-
-    o	[l]choose() use a more accurate formula which also slightly
-	improves p- and qhyper(); choose(n, k) now returns 0 instead
-	of NaN for k < 0 or > n.
-
-    o	find(simple.words=TRUE) (the default) was still using regular
-	expressions for e.g. "+" and "*".  Also, it checked the mode
-	only of the first object matching a regular expression found
-	in a package.
-
-    o	Memory leaks in [dpq]wilcox and [dqr]signrank have been plugged.
-	These only occurred when multiple values of m or n > 50 were
-	used in a single call. (PR#5314, plus another potential leak.)
-
-    o	Non-finite input values to eigen(), La.eigen(), svd() and
-	La.svd() are now errors: they often caused infinite
-	looping.  (PR#5406, PR#4366, PR#3723: the fix for 3723/4366
-	returned a vector of NAs, not a matrix, for the eigenvectors.)
-
-    o	stepfun(x,y) now gives an error when `x' has length 0 instead
-	of an invalid result (that could lead to a segmentation
-	fault).
-
-    o	buildVignettes() uses file.remove() instead of unlink() to
-	remove temporary files.
-
-    o	methods(class = "lqs") does not produce extraneous entries anymore.
-
-    o	Calling a method that uses NextMethod() no longer produces the
-	erroneous error message 'function is not a closure'.
-
-    o	chisq.test(x, simulate.p.value = TRUE) could hang in an infinite
-	loop or segfault, as r2dtable() did, when the entries in x where
-	large. (PR#5701)
-
-    o	fisher.test(x) could give a P-value of 'Inf' in similar cases which
-	now result in an error (PR#4688).  It silently truncated
-	non-integer 'x' instead of rounding.
-
-    o	cutree(a, h=h) silently gave wrong results when 'a' was an
-	agnes object; now gives an error and reminds of as.hclust().
-
-    o	postscript() could crash if given a font value outside the
-	valid range 1...5.
-
-    o	qchisq(1-e, .., ncp=.) did not terminate for small e (PR#6421 (PR#875))
-
 
 
 		CHANGES IN R VERSION 1.8.1
