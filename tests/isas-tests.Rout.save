@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (July 20, 2000)
+Version 1.2.0 Under development (unstable) (2000-08-14)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -67,6 +67,8 @@ Error in as.qr(x) : you cannot be serious
 Error in is.single(as.single(x)) : type "single" unimplemented in R
 > is.symbol(as.symbol( x ))
 Error in as.symbol(x) : Invalid data of mode "integer" (too short)
+> is.table(as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > is.ts(as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
 > is.vector(as.vector( x ))
@@ -138,6 +140,9 @@ Error in is.single(x) : type "single" unimplemented in R
 > if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
 + } else   !isall.equal(x, as.symbol( x ))
 Error in as.symbol(x) : Invalid data of mode "integer" (too short)
+> if(is.table(x)) { cat('IS: ');all.equal(x, as.table( x ), tol=0)
++ } else   !isall.equal(x, as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
@@ -214,6 +219,8 @@ Error in 1:nrows : NA/NaN argument
 [3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
 [4] "Components not in target: f"                                                           
 [5] "Components not in current: x"                                                          
+> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
  [1] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
  [2] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
@@ -293,6 +300,12 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
 Error in as.symbol(x) : Invalid data of mode "integer" (too short)
+> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+Error in as.table.ftable(x) : x must be an `ftable'
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 Error in ts(x) : ts object must have one or more observations
 > f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
@@ -347,6 +360,8 @@ Error in as.qr(x) : you cannot be serious
 Error in is.single(as.single(x)) : type "single" unimplemented in R
 > is.symbol(as.symbol( x ))
 Error in as.symbol(x) : invalid type/length (1/0) in vector allocation
+> is.table(as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > is.ts(as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
 > is.vector(as.vector( x ))
@@ -419,6 +434,9 @@ Error in is.single(x) : type "single" unimplemented in R
 > if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
 + } else   !isall.equal(x, as.symbol( x ))
 Error in as.symbol(x) : invalid type/length (1/0) in vector allocation
+> if(is.table(x)) { cat('IS: ');all.equal(x, as.table( x ), tol=0)
++ } else   !isall.equal(x, as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
@@ -495,6 +513,8 @@ Error in 1:nrows : NA/NaN argument
 [3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
 [4] "Components not in target: f"                                                           
 [5] "Components not in current: x"                                                          
+> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
  [1] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
  [2] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
@@ -575,6 +595,12 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
 Error in as.symbol(x) : invalid type/length (1/0) in vector allocation
+> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+Error in as.table.ftable(x) : x must be an `ftable'
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 Error in ts(x) : ts object must have one or more observations
 > f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
@@ -629,6 +655,8 @@ Error in structure(.Internal(as.vector(x, "double")), Csingle = TRUE) :
 	(list) object cannot be coerced to vector type 14
 > is.symbol(as.symbol( x ))
 Error in as.symbol(x) : (list) object cannot be coerced to vector type 1
+> is.table(as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > is.ts(as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
 > is.vector(as.vector( x ))
@@ -700,6 +728,9 @@ Error in is.single(x) : type "single" unimplemented in R
 > if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
 + } else   !isall.equal(x, as.symbol( x ))
 Error in as.symbol(x) : (list) object cannot be coerced to vector type 1
+> if(is.table(x)) { cat('IS: ');all.equal(x, as.table( x ), tol=0)
++ } else   !isall.equal(x, as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
@@ -775,6 +806,8 @@ Error in 1:nrows : NA/NaN argument
 [3] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
 [4] "Components not in target: f"                                                           
 [5] "Components not in current: x"                                                          
+> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
 [1] "Attributes: < Component row.names: Lengths: 0, 1 >"                                    
 [2] "Attributes: < Component row.names: Lengths (0, 1) differ (string compare on first 0) >"
@@ -855,6 +888,12 @@ Error in structure(.Internal(as.vector(x, "double")), Csingle = TRUE) :
 	(list) object cannot be coerced to vector type 14
 > f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
 Error in as.symbol(x) : (list) object cannot be coerced to vector type 1
+> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+Error in as.table.ftable(x) : x must be an `ftable'
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 Error in ts(x) : ts object must have one or more observations
 > f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
@@ -908,6 +947,8 @@ Error in as.qr(x) : you cannot be serious
 Error in is.single(as.single(x)) : type "single" unimplemented in R
 > is.symbol(as.symbol( x ))
 [1] TRUE
+> is.table(as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > is.ts(as.ts( x ))
 [1] TRUE
 > is.vector(as.vector( x ))
@@ -979,6 +1020,9 @@ Error in is.single(x) : type "single" unimplemented in R
 > if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
 + } else   !isall.equal(x, as.symbol( x ))
 [1] TRUE
+> if(is.table(x)) { cat('IS: ');all.equal(x, as.table( x ), tol=0)
++ } else   !isall.equal(x, as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 [1] TRUE
@@ -1049,6 +1093,8 @@ Error in 1:nrows : NA/NaN argument
 [2] "Attributes: < Component row.names: 1 string mismatches >"
 [3] "Components not in target: f"                             
 [4] "Components not in current: x"                            
+> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
 [1] "Attributes: < Component row.names: 1 string mismatches >"         
 [2] "Component x: Modes: numeric, list"                                
@@ -1125,6 +1171,12 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
 [1] TRUE
+> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+Error in as.table.ftable(x) : x must be an `ftable'
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 [1] TRUE
 > f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
@@ -1178,6 +1230,8 @@ Error in as.qr(x) : you cannot be serious
 Error in is.single(as.single(x)) : type "single" unimplemented in R
 > is.symbol(as.symbol( x ))
 [1] TRUE
+> is.table(as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > is.ts(as.ts( x ))
 [1] TRUE
 > is.vector(as.vector( x ))
@@ -1249,6 +1303,9 @@ Error in is.single(x) : type "single" unimplemented in R
 > if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
 + } else   !isall.equal(x, as.symbol( x ))
 [1] TRUE
+> if(is.table(x)) { cat('IS: ');all.equal(x, as.table( x ), tol=0)
++ } else   !isall.equal(x, as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 [1] TRUE
@@ -1319,6 +1376,8 @@ Error in 1:nrows : NA/NaN argument
 [2] "Attributes: < Component row.names: 1 string mismatches >"
 [3] "Components not in target: f"                             
 [4] "Components not in current: x"                            
+> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
 [1] "Attributes: < Component row.names: 1 string mismatches >"         
 [2] "Component x: Modes: numeric, list"                                
@@ -1395,6 +1454,12 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
 [1] TRUE
+> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+Error in as.table.ftable(x) : x must be an `ftable'
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 [1] TRUE
 > f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
@@ -1448,6 +1513,8 @@ Error in as.qr(x) : you cannot be serious
 Error in is.single(as.single(x)) : type "single" unimplemented in R
 > is.symbol(as.symbol( x ))
 [1] TRUE
+> is.table(as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > is.ts(as.ts( x ))
 [1] TRUE
 > is.vector(as.vector( x ))
@@ -1519,6 +1586,9 @@ Error in is.single(x) : type "single" unimplemented in R
 > if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
 + } else   !isall.equal(x, as.symbol( x ))
 [1] TRUE
+> if(is.table(x)) { cat('IS: ');all.equal(x, as.table( x ), tol=0)
++ } else   !isall.equal(x, as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 [1] TRUE
@@ -1589,6 +1659,8 @@ Error in 1:nrows : NA/NaN argument
 [2] "Attributes: < Component row.names: 1 string mismatches >"
 [3] "Components not in target: f"                             
 [4] "Components not in current: x"                            
+> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
 [1] "Attributes: < Component row.names: 1 string mismatches >"         
 [2] "Component x: Modes: character, list"                              
@@ -1665,6 +1737,12 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
 [1] TRUE
+> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+Error in as.table.ftable(x) : x must be an `ftable'
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 [1] TRUE
 > f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
@@ -1718,6 +1796,8 @@ Error in as.qr(x) : you cannot be serious
 Error in is.single(as.single(x)) : type "single" unimplemented in R
 > is.symbol(as.symbol( x ))
 Error in as.symbol(x) : invalid type/length (1/1) in vector allocation
+> is.table(as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > is.ts(as.ts( x ))
 [1] TRUE
 > is.vector(as.vector( x ))
@@ -1789,6 +1869,9 @@ Error in is.single(x) : type "single" unimplemented in R
 > if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
 + } else   !isall.equal(x, as.symbol( x ))
 Error in as.symbol(x) : invalid type/length (1/1) in vector allocation
+> if(is.table(x)) { cat('IS: ');all.equal(x, as.table( x ), tol=0)
++ } else   !isall.equal(x, as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 [1] TRUE
@@ -1858,6 +1941,8 @@ Error in 1:nrows : NA/NaN argument
 [2] "Attributes: < Component row.names: 1 string mismatches >"
 [3] "Components not in target: f"                             
 [4] "Components not in current: x"                            
+> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
 [1] "Attributes: < Component row.names: 1 string mismatches >"                      
 [2] "Component x: Names: 1 string mismatches"                                       
@@ -1933,6 +2018,12 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
 Error in as.symbol(x) : invalid type/length (1/1) in vector allocation
+> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+Error in as.table.ftable(x) : x must be an `ftable'
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 [1] TRUE
 > f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
@@ -1987,6 +2078,8 @@ Error in as.qr(x) : you cannot be serious
 Error in is.single(as.single(x)) : type "single" unimplemented in R
 > is.symbol(as.symbol( x ))
 Error in as.symbol(x) : invalid type/length (1/1) in vector allocation
+> is.table(as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > is.ts(as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
 > is.vector(as.vector( x ))
@@ -2061,6 +2154,9 @@ Error in is.single(x) : type "single" unimplemented in R
 > if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
 + } else   !isall.equal(x, as.symbol( x ))
 Error in as.symbol(x) : invalid type/length (1/1) in vector allocation
+> if(is.table(x)) { cat('IS: ');all.equal(x, as.table( x ), tol=0)
++ } else   !isall.equal(x, as.table( x ))
+Error in as.table.default(x) : cannot coerce into a table
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
@@ -2128,6 +2224,8 @@ Error in unique(x) : unique() applies only to vectors
 [2] "Attributes: < Component row.names: 1 string mismatches >"
 [3] "Components not in target: f"                             
 [4] "Components not in current: x"                            
+> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
 > f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
 [1] "Attributes: < Component row.names: 1 string mismatches >"                                           
 [2] "Component x: Names: 1 string mismatches"                                                            
@@ -2201,6 +2299,12 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
 Error in as.symbol(x) : invalid type/length (1/1) in vector allocation
+> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+Error in as.table.default(x) : cannot coerce into a table
+> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+Error in as.table.ftable(x) : x must be an `ftable'
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 Error in ts(x) : ts object must have one or more observations
 > f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
@@ -2208,6 +2312,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  2.92 0.07 3.04 NA NA 
+Time elapsed:  3.73 0.06 3.79 0 0 
 > 
 > 
