@@ -920,24 +920,21 @@ href=
 The savings can be appreciable: on a 366MHz PIIM and a 1000 x 1000
 matrix <code>La.svd</code> took 182 sec with the standard BLAS and
 59 sec with ATLAS. Because ATLAS is tuned to a particular chip we
-can't use generally: the optimal routines for a PIII or an Athlon
-XP are quite different and neither will not run at all on a
+can't use it generally: the optimal routines for a PIII or an
+Athlon XP are quite different and neither will not run at all on a
 PII.</p>
 
-<p>In the main <code>Makefile</code> there are macros <code>
+<p>In the file <code>MkRules</code> there are macros <code>
 USE_ATLAS</code> and <code>ATLAS_PATH</code>. Set <code>USE_ATLAS =
 YES</code> and <code>ATLAS_PATH</code> to where the ATLAS libraries
 are located. You will need to make the libraries yourself: none of
 the binaries we have seen are compiled for the correct
 compiler.</p>
 
-<p>Note that you may need to re-compile many of the packages to
-make use of the fast BLAS (and they will not work at all unless you
-do).</p>
-
-<p>We plan to make it easier to use a different BLAS in a future
-release by separating the functionality into a separate DLL. <a
-name="How%20do%20I%20include%20compiled%20C%20code%3f"></a></p>
+<p>The BLAS support is compiled into just the DLL <code>
+R_HOME\bin\Rblas.dll</code>, and you can add a fast BLAS just by
+replacing that. <a name=
+"How%20do%20I%20include%20compiled%20C%20code%3f"></a></p>
 
 <h2>7.3 How do I include compiled C code?</h2>
 
@@ -950,7 +947,7 @@ mentioned in the file <code>readme.packages</code> contained
 therein. Then you can use</p>
 
 <pre>
-...\bin\Rcmd SHLIB foo.c bar.c
+...\bin\Rcmd SHLIB foo.c bar.f
 </pre>
 
 <p>to make <code>foo.dll</code>. Use <code>...\bin\Rcmd SHLIB
@@ -1028,7 +1025,7 @@ tukeyline</code> in package <code>eda</code> might be
 <li>Windows has little support for signals, so the usual idea of
 running a program under a debugger and sending it a signal to
 interrupt it and drop control back to the debugger does not work
-with a <code>mingw32</code> version of <code>gdb</code>. It does
+with a <code>mingw</code> version of <code>gdb</code>. It does
 often work with the <code>cygwin</code> version.</li>
 </ul>
 

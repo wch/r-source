@@ -767,21 +767,20 @@ there is support for the `tuned' BLAS called ATLAS
 (@uref{http://www.netlib.org/atlas/}).  The savings can be appreciable:
 on a 366MHz PIIM and a 1000 x 1000 matrix @code{La.svd} took 182 sec
 with the standard BLAS and 59 sec with ATLAS.  Because ATLAS is tuned to
-a particular chip we can't use generally: the optimal routines for a
+a particular chip we can't use it generally: the optimal routines for a
 PIII or an Athlon XP are quite different and neither will not run at all
 on a PII.
 
-In the main @code{Makefile} there are macros @code{USE_ATLAS} and
+In the file @file{MkRules} there are macros @code{USE_ATLAS} and
 @code{ATLAS_PATH}.  Set @code{USE_ATLAS = YES} and @code{ATLAS_PATH} to
 where the ATLAS libraries are located.  You will need to make the
 libraries yourself: none of the binaries we have seen are compiled for
 the correct compiler.
 
-Note that you may need to re-compile many of the packages to make use of
-the fast BLAS (and they will not work at all unless you do).
+The BLAS support is compiled into just the DLL
+@file{R_HOME\bin\Rblas.dll}, and you can add a fast BLAS just by
+replacing that.
 
-We plan to make it easier to use a different BLAS in a future release
-by separating the functionality into a separate DLL.
 
 @node  How do I include compiled C code?, How do I debug code that I have compiled and dyn.load-ed?, Can I use a fast BLAS?, Building from Source
 @section How do I include compiled C code?
@@ -793,7 +792,7 @@ install the parts of the R system for building R packages (in
 tools (including Perl) and compilers mentioned in the file
 @file{readme.packages} contained therein.  Then you can use
 @example
-...\bin\Rcmd SHLIB foo.c bar.c
+...\bin\Rcmd SHLIB foo.c bar.f
 @end example
 @noindent
 to make @code{foo.dll}.  Use @code{...\bin\Rcmd SHLIB --help} for
@@ -871,7 +870,7 @@ Fortran symbols need an underline appended.
 @item
 Windows has little support for signals, so the usual idea of running a
 program under a debugger and sending it a signal to interrupt it and
-drop control back to the debugger does not work with a @code{mingw32}
+drop control back to the debugger does not work with a @code{mingw}
 version of @code{gdb}.  It does often work with the @code{cygwin} version.
 
 @end itemize
