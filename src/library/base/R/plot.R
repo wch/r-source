@@ -88,10 +88,17 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
     return(list(x=as.real(x), y=as.real(y), xlab=xlab, ylab=ylab))
 }
 
-plot <- function(x, y, ...) {
-    if(is.null(attr(x, "class")) && is.function(x)) {
-	if("ylab" %in% names(list(...)))
-	    plot.function(x, y, ...)
+plot <- function (x, y, ...)
+{
+    if (is.null(attr(x, "class")) && is.function(x)) {
+	nms <- names(list(...))
+	## need to pass `y' to plot.function() when positionally matched
+	if(missing(y)) # set to defaults {could use formals(plot.default)}:
+	    y <- { if (!"from" %in% nms) 0 else
+		   if (!"to"   %in% nms) 1 else
+		   if (!"xlim" %in% nms) NULL }
+	if ("ylab" %in% nms)
+	    plot.function(x,  y, ...)
 	else
 	    plot.function(x, y, ylab=paste(deparse(substitute(x)),"(x)"), ...)
     }
