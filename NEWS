@@ -11,22 +11,22 @@
 
 USER-VISIBLE CHANGES
 
-    o   sub, gsub, grep, regexpr, chartr, tolower, toupper, substr,
-        substring, abbreviate and strsplit now handle missing values
-        differently from "NA".
+    o	sub, gsub, grep, regexpr, chartr, tolower, toupper, substr,
+	substring, abbreviate and strsplit now handle missing values
+	differently from "NA".
 
     o	Saving data containing name space references no longer warns
 	about name spaces possibly being unavailable on load.
 
-    o   det() uses an LU decomposition and LAPACK.  The `method'
-        argument to det no longer has any effect.
+    o	det() uses an LU decomposition and LAPACK.  The `method'
+	argument to det no longer has any effect.
 
 NEW FEATURES
 
-    o   There is a GUI (RAqua) for Mac OS X
+    o	There is a GUI (RAqua) for Mac OS X
 
-    o   eval of a promise forces the promise and printing a promise forces
-        the promise
+    o	eval of a promise forces the promise and printing a promise forces
+	the promise
 
     o	rep() is now a generic function, with default, POSIXct and
 	POSIXlt methods.  For efficiency, the base code uses rep.int()
@@ -70,14 +70,14 @@ NEW FEATURES
 
     o	gamma(n) is very slightly more precise for integer n in 11:50.
 
-    o   New option `locatorBell' to control the confirmation beep
+    o	New option `locatorBell' to control the confirmation beep
 	during the use of locator() and identify().
 
-    o   methods() has a print method which asterisks functions which
+    o	methods() has a print method which asterisks functions which
 	are not user-visible.  methods(class = "foo") now lists
 	non-visible functions, and checks that there is a matching generic.
 
-    o   library() has a pos argument, controlling where the package is
+    o	library() has a pos argument, controlling where the package is
 	attached (defaulting to pos=2 as before).
 
     o	The predict() methods for classes lm, glm, mlm and lqs take a
@@ -87,10 +87,10 @@ NEW FEATURES
 	this by default omitted cases with missing values, even if set
 	to `na.exclude'.]
 
-    o   xy.coords() coerces "POSIXt" objects to "POSIXct", allowing
+    o	xy.coords() coerces "POSIXt" objects to "POSIXct", allowing
 	lines etc to added to plot.POSIXlt() plots.
 
-    o   plot.ts() has a new argument `nc' controlling the number of
+    o	plot.ts() has a new argument `nc' controlling the number of
 	columns (with default the old behaviour for plot.mts).
 
     o	capture.output() takes arbitrary connections for `file' argument.
@@ -125,36 +125,36 @@ NEW FEATURES
 	  subscripting.
 
 	- adf$name <- value now checks for the correct length of
-          `value', replicating a whole number of times if needed.
+	  `value', replicating a whole number of times if needed.
 
 	- adf[j] <- value and adf[[j]] <- value did not convert
 	  character vectors to factors, but adf[,j] <- value did.
-	  Now none do.  Nor is a list `value' coerced to a data frame
+	  Now none do.	Nor is a list `value' coerced to a data frame
 	  (thereby coercing character elements to factors).
 
 	- Where replicating the replacement value a whole number of
-          times will produce the right number of values, this is
-          always done (rather than some times but not others).
+	  times will produce the right number of values, this is
+	  always done (rather than some times but not others).
 
 	- Replacement list values can include NULL elements.
 
 	- Subsetting a data frame can no longer produce duplicate
-          column names.
+	  column names.
 
 	- Subsetting with drop=TRUE no longer sometimes drops
-          dimensions on matrix or data frame columns of the data frame.
+	  dimensions on matrix or data frame columns of the data frame.
 
 	- Attributes are no longer stripped when replacing part of a column.
 
 	- Columns added in replacement operations will always be
-          named, using the names of a list value if appropriate.
+	  named, using the names of a list value if appropriate.
 
 	- as.data.frame.list() did not cope with list names such as
-          `check.rows',  and formatting/printing data frames with such
-          column names now works.
+	  `check.rows',	 and formatting/printing data frames with such
+	  column names now works.
 
 	- Row names in extraction are still made unique, but without
-          forcing them to be syntactic names.
+	  forcing them to be syntactic names.
 
 	- adf[x] <- list() failed if x was of length zero.
 
@@ -162,30 +162,30 @@ NEW FEATURES
 	variables in a name space (i.e. a:::b is the value of the internal
 	variable b in name space a).
 
-    o   file.path() now returns an empty character vector if given at
+    o	file.path() now returns an empty character vector if given at
 	least one zero-length argument.
 
     o	make.names() has improvements, and there is a new auxiliary
-	function make.unique().  (Based on code contributed by Tom
+	function make.unique().	 (Based on code contributed by Tom
 	Minka, since converted to a .Internal function.)  In
 	particular make.names() now recognises that names beginning
 	with a dot are valid and that reserved words are not.
 
-    o   format() and hence print() make an effort to handle corrupt
+    o	format() and hence print() make an effort to handle corrupt
 	data frames, with a warning.
 
-    o   dump() only quotes object names in the file where necessary.
+    o	dump() only quotes object names in the file where necessary.
 
-    o   New function replicate() for repeated evaluation of expression
-        and collection of results, wrapping a common use of sapply()
-        for simulation purposes.
+    o	New function replicate() for repeated evaluation of expression
+	and collection of results, wrapping a common use of sapply()
+	for simulation purposes.
 
-    o   read.table's `as.is' argument can be character, naming columns
+    o	read.table's `as.is' argument can be character, naming columns
 	not to be converted.
 
-    o   Packages with name spaces can now be installed using --save.
+    o	Packages with name spaces can now be installed using --save.
 
-    o   Adding to NULL with [[ ]] generates a list if more than one
+    o	Adding to NULL with [[ ]] generates a list if more than one
 	element is added (as S does).
 
     o	Empty lm() and glm() fits are now handled by the normal
@@ -200,15 +200,15 @@ NEW FEATURES
 	a loaded DLL and tidy up.  This is called for all the standard
 	packages in namespaces with DLLs if their namespaces are unloaded.
 
-    o   Non-syntactic variable names can now be specified by inclusion
-        between backticks `Like This`. The deparse() code has been
-        changed to output non-syntactical names with this convention,
-        when they occur as operands in expressions. This is controlled
-        by a `backtick' argument, which is by default TRUE for
-        composite expressions and FALSE for single symbols. This
-        should give minimal interference with existing code.
+    o	Non-syntactic variable names can now be specified by inclusion
+	between backticks `Like This`. The deparse() code has been
+	changed to output non-syntactical names with this convention,
+	when they occur as operands in expressions. This is controlled
+	by a `backtick' argument, which is by default TRUE for
+	composite expressions and FALSE for single symbols. This
+	should give minimal interference with existing code.
 
-    o   In the tcltk package, as.tclObj() has gained a `drop' argument
+    o	In the tcltk package, as.tclObj() has gained a `drop' argument
 	to decide what should happen for vectors of length one.
 
     o	New argument fixed = TRUE for grep() and regexpr() to avoid the
@@ -222,36 +222,36 @@ NEW FEATURES
     o	Changes in package 'tools':
 
 	- Utilities for testing and listing files, manipulating file
-          paths, and delimited pattern matching are now exported.
+	  paths, and delimited pattern matching are now exported.
 
 	- Functions checkAssignFuns(), checkDocArgs() and checkMethods()
 	  have been renamed to checkReplaceFuns(), checkDocFiles(), and
 	  checkS3methods, to given better descriptions of what they do.
 
 	- R itself is now used for analyzing the markup in the \usage
-          sections.  Hence in particular, replacement functions or S3
-          replacement methods are no longer ignored.
+	  sections.  Hence in particular, replacement functions or S3
+	  replacement methods are no longer ignored.
 
 	- checkDocFiles() now also determines 'over-documented' arguments
-          which are given in the \arguments section but not in \usage.
+	  which are given in the \arguments section but not in \usage.
 
 	- checkDocStyle() and checkS3Methods() now know about internal S3
-          generics and S3 group generics.
+	  generics and S3 group generics.
 
 	- S4 classes and methods are included in the QC tests.
 
 	- New (experimental) functions codocClasses() and codocData()
-          for code/documentation consistency checking for S4 classes and
-          data sets.
+	  for code/documentation consistency checking for S4 classes and
+	  data sets.
 
-    o   GC timing is not enabled until the first call to gc.time; it
+    o	GC timing is not enabled until the first call to gc.time; it
 	can be disabled by calling gc.time(FALSE).  This can speed up
 	the garbage collector and reduce system calls on some
 	platforms.
 
-    o   On Unix-like systems interrupt signals now set a flag that is
+    o	On Unix-like systems interrupt signals now set a flag that is
 	checked periodically rather than calling longjmp from the
-	signal handler.  This is analogous to the behavior on Windows.
+	signal handler.	 This is analogous to the behavior on Windows.
 	This reduces responsiveness to interrupts but prevents bugs
 	caused by interrupting computations in a way that leaves the
 	system in an inconsistent state.  It also reduces the number
@@ -260,15 +260,15 @@ NEW FEATURES
 
     o	New function vignette() for viewing or listing vignettes.
 
-    o   arima.sim() now checks for inconsistent order specification
+    o	arima.sim() now checks for inconsistent order specification
 	(as requested in PR#3495: it was previously documented not to).
 
-    o   The "?" operator has new forms for querying documentation on
-        S4 methods.  See the online documentation.
+    o	The "?" operator has new forms for querying documentation on
+	S4 methods.  See the online documentation.
 
-    o   sort(method = "quick", decreasing = TRUE) is now implemented.
+    o	sort(method = "quick", decreasing = TRUE) is now implemented.
 
-    o   sort.list() has methods "quick" (a wrapper for sort(method =
+    o	sort.list() has methods "quick" (a wrapper for sort(method =
 	"quick", index.return = TRUE) and "radix" (a very fast method
 	for small integers).  The default "shell" method works faster
 	on long vectors with many ties.
@@ -276,7 +276,7 @@ NEW FEATURES
     o	data() now has an 'envir' argument.
 
     o	Error and warning handling has been modified to incorporate a
-	flexible condition handling mechanism.  See the online
+	flexible condition handling mechanism.	See the online
 	documentation of 'tryCatch' and 'signalCondition'.  Code that
 	does not use these new facilities should remain unaffected.
 
@@ -305,23 +305,25 @@ NEW FEATURES
 
     o	dt(*, ncp = V)	is now implemented, thanks to Claus Ekstroem.
 
-    o   packages that use S4 classes and methods should now work with
-        or without saved images (saved images are still recommended
-        for efficiency), writing setMethod(), etc. calls with the
-        default for argument `where'.  The topenv() function and
-        sys.source() have been changed correspondingly.  See the
-        online help.
+    o	packages that use S4 classes and methods should now work with
+	or without saved images (saved images are still recommended
+	for efficiency), writing setMethod(), etc. calls with the
+	default for argument `where'.  The topenv() function and
+	sys.source() have been changed correspondingly.	 See the
+	online help.
 
-    o   require() now maintains a list of required packages in the
-        toplevel environment (typically, .GlobalEnv).  Two features
-        use this:  detach() now warns if a package is detached that is
-        required by an attached package, and packages that install
-        with saved images no longer need to use require() in the
-        .First as well as in the main source.
+    o	require() now maintains a list of required packages in the
+	toplevel environment (typically, .GlobalEnv).  Two features
+	use this:  detach() now warns if a package is detached that is
+	required by an attached package, and packages that install
+	with saved images no longer need to use require() in the
+	.First as well as in the main source.
 
-    o   S4 generic functions and method dispatch have been modified to
-        make the generic functions more self-contained (e.g., usable
-        in apply-type operations) and potentially to speed dispatch.
+    o	S4 generic functions and method dispatch have been modified to
+	make the generic functions more self-contained (e.g., usable
+	in apply-type operations) and potentially to speed dispatch.
+
+    o	new utility cov2cor() {Cov -> Corr matrix}.
 
 
 DEPRECATED & DEFUNCT
@@ -375,11 +377,11 @@ DOCUMENTATION CHANGES
 	  \pkg, \samp, \var).
 
 	- New markup \preformatted for pre-formatted blocks of text
-          (like \example but within another section).  (Based on a
-          contribution by Greg Warnes.)
+	  (like \example but within another section).  (Based on a
+	  contribution by Greg Warnes.)
 
 	- New markup \concept for concept index entries for use by
-          help.search().
+	  help.search().
 
     o	Rdconv now produces more informative output from the special
 	\method{GENERIC}{CLASS} markup for indicating the usage of S3
@@ -403,11 +405,11 @@ INSTALLATION CHANGES
 UTILITIES
 
     o	R CMD INSTALL (Unix only) is now 'safe': if the attempt to
-	install a package fails, leftovers are removed.  If the package
+	install a package fails, leftovers are removed.	 If the package
 	was already installed, the old version is restored.
 
     o	R CMD build excludes possible (obsolete) data and vignette
-        indices in DCF format (and hence also no longer rebuilds them).
+	indices in DCF format (and hence also no longer rebuilds them).
 
     o	R CMD check now tests whether file names are valid across file
 	systems and supported operating system platforms.  There is some
@@ -432,28 +434,28 @@ BUG FIXES
 	dispatches on a name other than its own.  (The cases of
 	coefficients() and fitted.values() were fixed in 1.7.1.)
 
-    o   body() and formals() were looking for named functions in
+    o	body() and formals() were looking for named functions in
 	different places: they now both look starting at the
 	environment in which they are called.  Several documentation
 	errors for these functions have been corrected.
 
-    o   as.double(list()) etc was regarded as an error, because of a
+    o	as.double(list()) etc was regarded as an error, because of a
 	bug in isVectorizable.
 
-    o   biplot.default() allows xlim and ylim to be set. (PR#3168)
+    o	biplot.default() allows xlim and ylim to be set. (PR#3168)
 
-    o   data.frame() failed with a nonsensical error message if it
+    o	data.frame() failed with a nonsensical error message if it
 	grabbed row names from an argument that was subsequently
 	recycled.  Now they are discarded, with a warning.
 
-    o   as.data.frame.matrix() ignored the `row.names' argument.
+    o	as.data.frame.matrix() ignored the `row.names' argument.
 
-    o   paste() applied to 0-length vectors gave "" not a 0-length vector.
+    o	paste() applied to 0-length vectors gave "" not a 0-length vector.
 
-    o   as.data.frame.list(optional = TRUE) was converting names, and
+    o	as.data.frame.list(optional = TRUE) was converting names, and
 	hence data.frame(list(...), check.names = FALSE) was.  (PR#3280)
 
-    o   Functions anova.glm(), contrasts(), getS3method(), glm() and
+    o	Functions anova.glm(), contrasts(), getS3method(), glm() and
 	make.tables() were applying get() without asking for a
 	function and/or not starting the search in the environment of
 	the caller.
@@ -465,7 +467,7 @@ BUG FIXES
 	but now handles them correctly.
 
     o	lm.influence() now handles 0-rank models, and names its output
-	appropriately.  It also ensures that hat values are not greater
+	appropriately.	It also ensures that hat values are not greater
 	than one, and rounds values within rounding error of one.
 
     o	ARMAacf() sometimes gave too many results or failed if `lag.max'
@@ -474,37 +476,37 @@ BUG FIXES
     o	filter(method="recursive") was unnecessarily requiring the
 	time series to be longer than the filter.
 
-    o   In the tcltk package, the tkimage.*() commands were defined
-        nonsensically as widget commands. They have been redefined to be
-        more useful now.
+    o	In the tcltk package, the tkimage.*() commands were defined
+	nonsensically as widget commands. They have been redefined to be
+	more useful now.
 
-    o   Printing `nls' objects misbehaved when `data' was a composite
-        expression.
+    o	Printing `nls' objects misbehaved when `data' was a composite
+	expression.
 
-    o   getS3method(f, cl, optional=TRUE) now returns NULL if `f' does
+    o	getS3method(f, cl, optional=TRUE) now returns NULL if `f' does
 	not exist.
 
-    o   The png(), jpeg(), png() and win.metafile() devices now
+    o	The png(), jpeg(), png() and win.metafile() devices now
 	enforce the length limit on the filename.  (PR#3466)
 
-    o   step() adds a fuzz for reduction in AIC for 0-df terms.  (PR#3491)
+    o	step() adds a fuzz for reduction in AIC for 0-df terms.	 (PR#3491)
 
-    o   Using write.table() setting the dec argument and with no
-	numeric columns failed.  (PR#3532)
+    o	Using write.table() setting the dec argument and with no
+	numeric columns failed.	 (PR#3532)
 
-    o   Registered group generics were not being used. (PR#3536)
+    o	Registered group generics were not being used. (PR#3536)
 
-    o   Subsetting data frames did not always correctly detect that
+    o	Subsetting data frames did not always correctly detect that
 	non-existent columns were specified.
 
-    o   legend() allows shading without filling again.
+    o	legend() allows shading without filling again.
 
-    o   There are many more checks for over-running internal buffers,
+    o	There are many more checks for over-running internal buffers,
 	almost always reporting errors.
 
-    o   demo() was using `topic' as a regexp rather than an exact match.
+    o	demo() was using `topic' as a regexp rather than an exact match.
 
-    o   Added some buffer overflow checking in gram.y.
+    o	Added some buffer overflow checking in gram.y.
 
     o	qqnorm()'s result now keeps NAs from it's input. (PR#3750)
 
@@ -580,7 +582,7 @@ BUG FIXES
 
     o	str(x) gives better output when x is of mode "(".
 
-    o   Lapack error messages (PR#3494) and call to DGEQP3 (PR#2867) are
+    o	Lapack error messages (PR#3494) and call to DGEQP3 (PR#2867) are
 	corrected.
 
     o	format(*, nsmall = m) with m > 0 now returns exponential format

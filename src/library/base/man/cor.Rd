@@ -4,16 +4,21 @@
 var(x, y = NULL, na.rm = FALSE, use)
 cor(x, y = NULL, use = "all.obs")
 cov(x, y = NULL, use = "all.obs")
+cov2cor(V)
 }
 \alias{var}
 \alias{cor}
 \alias{cov}
+\alias{cov2cor}
 \description{
   \code{var}, \code{cov} and \code{cor} compute the variance of \code{x}
   and the covariance or correlation of \code{x} and \code{y} if these
   are vectors.  If \code{x} and \code{y} are matrices then the
   covariances (or correlations) between the columns of \code{x} and the
   columns of \code{y} are computed.
+
+  \code{cov2cor} scales a covariance matrix into the corresponding
+  correlation matrix \emph{efficiently}.
 }
 \arguments{
   \item{x}{a numeric vector, matrix or data frame.}
@@ -26,6 +31,8 @@ cov(x, y = NULL, use = "all.obs")
     \code{"all.obs"}, \code{"complete.obs"}
     or \code{"pairwise.complete.obs"}.}
   \item{na.rm}{logical. Should missing values be removed?}
+  \item{V}{symmetric numeric matrix, usually positive definite such as a
+    covariance matrix.}
 }
 \value{For \code{r <- cor(*, use = "all.obs")}, it is now guaranteed that
   \code{all(r <= 1)}.
@@ -56,6 +63,13 @@ cov(x, y = NULL, use = "all.obs")
   These functions return \code{\link{NA}} when there is only one
   observation (whereas S-plus has been returning \code{NaN}),
   and from \R 1.2.3 fail if \code{x} has length zero.
+
+  Scaling a covariance matrix into a correlation one can be achieved in
+  many ways, mathematically most appealing by multiplication with a
+  diagonal matrix from left and right, or more efficiently by using
+  \code{\link{sweep}(.., FUN = "/")} twice.  The \code{cov2cor} function
+  is even a bit more efficient, and provided mostly for didactical
+  reasons.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -81,6 +95,11 @@ data(longley)
 (Cl <- cor(longley))
 ## Graphical Correlation Matrix:
 symnum(Cl) # highly correlated
+
+## cov2cor() scales a covariance matrix by its diagonal
+##           to become the correlation matrix.
+cov2cor # see the function definition {and learn ..}
+stopifnot(all.equal(Cl, cov2cor(cov(longley))))
 
 ##--- Missing value treatment:
 data(swiss)
