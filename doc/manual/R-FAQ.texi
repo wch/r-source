@@ -4,9 +4,12 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-21, 2002-09-12
+@set FAQ-VERSION 1.5-22, 2002-09-17
 @set REL-VERSION 1.5.1
 @set FAQ-ISBN 3-901167-51-X
+@c <FIXME 1.6.0> SetupR.exe => rw1060.exe
+@set WINDOWS-INSTALLER-PROGRAM SetupR.exe
+@c </FIXME>
 @c %**end of header
 
 @dircategory Programming
@@ -394,8 +397,9 @@ and maintained by @email{murdoch@@stats.uwo.ca, Duncan Murdoch} and
 @c aware that some decompression programs do not preserve long file names
 @c properly.
 
-For most installations the installer @command{SetupR.exe} will be the
-easiest tool to use.
+For most installations the installer
+@command{@value{WINDOWS-INSTALLER-PROGRAM}} will be the easiest tool to
+use.
 
 See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R for
 Windows @acronym{FAQ}''} for more details.
@@ -2042,6 +2046,8 @@ invited to give these a try, of course.  This area of @acronym{CRAN}
 currently contains
 
 @table @strong
+@item Dopt
+Finding D-optimal experimental designs.
 @item GRASS
 Interface between the GRASS geographical information system and R, based
 on starting R from within the GRASS environment and chosen LOCATION and
@@ -2072,8 +2078,6 @@ An @acronym{ODBC} database interface.
 @c @item cxx
 @c A small C++ test package.
 @c </COMMENT>
-@item dopt
-Finding D-optimal experimental designs.
 @item dseplus
 Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions.
@@ -2609,6 +2613,7 @@ dir /opt/R/src/unix
 * Why does the output from anova() depend on the order of factors in the model?::  
 * How do I produce PNG graphics in batch mode?::  
 * How can I get command line editing to work?::  
+* How can I turn a string into a variable?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -3194,7 +3199,7 @@ installations this produces ugly output, on others it is perfectly
 satisfactory.  In theory one could also use Xvfb, which provides an X
 server with no display.
 
-@node How can I get command line editing to work?,  , How do I produce PNG graphics in batch mode?, R Miscellanea
+@node How can I get command line editing to work?, How can I turn a string into a variable?, How do I produce PNG graphics in batch mode?, R Miscellanea
 @section How can I get command line editing to work?
 
 The Unix command-line interface to R can only provide the inbuilt
@@ -3205,6 +3210,69 @@ available at the time R is configured for compilation.  Note that the
 needed: users of Linux binary distributions will need to install
 packages such as @code{libreadline-dev} (Debian) or
 @code{readline-devel} (Red Hat).
+
+@node How can I turn a string into a variable?,  , How can I get command line editing to work?, R Miscellanea
+@section How can I turn a string into a variable?
+
+If you have
+
+@smallexample
+varname <- c("a", "b", "d")
+@end smallexample
+
+@noindent
+you can do
+
+@smallexample
+get(varname[1]) + 2
+@end smallexample
+
+@noindent
+for
+
+@smallexample
+a + 2
+@end smallexample
+
+@noindent
+or
+
+@smallexample
+assign(varname[1], 2 + 2)
+@end smallexample
+
+@noindent
+for
+
+@smallexample
+a <- 2 + 2
+@end smallexample
+
+@noindent
+or
+
+@smallexample
+eval(substitute(lm(y ~ x + variable),
+                list(variable = as.name(varname[1]))
+@end smallexample
+
+@noindent
+for
+
+@smallexample
+lm(y ~ x + a)
+@end smallexample
+
+At least in the first two cases it is often easier to just use a list,
+and then you can easily index it by name
+
+@smallexample
+vars <- list(a = 1:10, b = rnorm(100), d = LETTERS)
+vars[["a"]]
+@end smallexample
+
+@noindent
+without any of this messing about.
 
 
 @node R Programming, R Bugs, R Miscellanea, Top
