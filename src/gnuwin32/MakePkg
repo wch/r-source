@@ -121,7 +121,7 @@ ifneq ($(strip $(PKGRFILES)),)
 	@$(ECHO) "tools:::.install_package_code_files('"$(SPKG)"', '"$(DPKG)"')" \
 	  | R_DEFAULT_PACKAGES=NULL R_OSTYPE=windows LC_COLLATE=C $(REXE) > /dev/null
 ## install halts here if collater failed
-	@rm -f $(DPKG)/R/$(PKG).rdb  $(DPKG)/R/$(PKG).rdx $(DPKG)/R/all.rda
+	@rm -f $(DPKG)/R/$(PKG).rdb $(DPKG)/R/$(PKG).rdx $(DPKG)/R/all.rda
 	@sh $(RHOME)/src/gnuwin32/install-save.sh "$(SAVE)" $(RLIB) $(PKG) $(RHOME) $(BUILD) $(R_EXE)
 else
 	@$(ECHO) "  no R files in this package"
@@ -131,6 +131,7 @@ else
 	@$(ECHO) "  installing R files"
 	@$(MKDIR) -p $(DPKG)/R
 	@$(CAT) $(PKGRFILES) > $(DPKG)/R/$(PKG)
+	@rm -f $(DPKG)/R/$(PKG).rdb $(DPKG)/R/$(PKG).rdx
 endif
 
 $(DPKG)/demo: $(PKGDEMOS)
