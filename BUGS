@@ -137,6 +137,10 @@ Date: Sun, 28 Feb 1999 08:53:34 +0000 (GMT)
 Subject: scan() + error interferes with count.fields() in some cases
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 13 Aug 1999 17:44:48 +0200
+* PR# 304 *
+Subject: bugs in scan()
+From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
+Date: Mon, 1 Nov 1999 12:20:33 +1300 (NZDT)
 
 Directory:  Installation
 
@@ -183,6 +187,11 @@ Subject: dimnames and subscripting
 From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
 Date: Fri, 8 Oct 1999 09:43:51 +0100 (BST)
 --same as PR#257
+* PR# 305 *
+Subject: bug in sample
+From: Robert Gentleman <rgentlem@jimmy.harvard.edu>
+Date: Mon, 1 Nov 1999 16:32:15 -0500
+--Is this a bug? Seesm to be as documented and as the prototype
 
 Directory:  Low-level
 
@@ -304,47 +313,7 @@ none
 
 Directory:  incoming
 
-* PR# 303 *
-Subject: read.table problem on Linux/Alpha (seg faults caused by isspace(R_EOF))
-From: ntakebay@bio.indiana.edu
-Date: Sun, 31 Oct 1999 01:29:05 +0200 (MET DST)
-* PR# 304 *
-Subject: bugs in scan()
-From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
-Date: Mon, 1 Nov 1999 12:20:33 +1300 (NZDT)
-* PR# 305 *
-Subject: bug in sample
-From: Robert Gentleman <rgentlem@jimmy.harvard.edu>
-Date: Mon, 1 Nov 1999 16:32:15 -0500
-* PR# 307 *
-Subject: bugs in scan()
-From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
-Date: Wed, 3 Nov 1999 10:05:26 +1300 (NZDT)
-* PR# 314 *
-Subject: arima0()
-From: hammour@msn.com
-Date: Sun, 7 Nov 1999 17:56:46 +0100 (MET)
-* PR# 315 *
-Subject: R.bug.report
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Tue, 9 Nov 1999 20:27:06 -0500 (EST)
-* PR# 316 *
-Subject: data.frame, cbind is inconsistent with S on logicals
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Wed, 10 Nov 1999 10:39:01 +0000 (GMT)
-* PR# 317 *
-Subject: plot() bugs
-From: wsi@gcal.ac.uk
-Date: Wed, 10 Nov 1999 14:19:25 +0100 (MET)
-* PR# 318 *
-Subject: dimname'less array breaks apply
-From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
-Date: Wed, 10 Nov 1999 16:49:33 -0800 (PST)
-* PR# 319 *
-Subject:  expand.grid returns vector for single arg 
-From: cberry@tajo.ucsd.edu (Charles C. Berry)
-Date: Wed, 10 Nov 1999 18:41:22 -0800 (PST)
-* PR# 320 *
-Subject: tapply not simplifying to vector?
-From: Matthew Wiener <mcw@ln.nimh.nih.gov>
-Date: Wed, 10 Nov 1999 22:54:37 -0500 (EST)
+* PR# 321 *
+Subject: configure script error
+From: zeitler@corecomm.net
+Date: Sat, 13 Nov 1999 14:55:43 +0100 (MET)
