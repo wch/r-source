@@ -1611,12 +1611,14 @@ if test -z "${no_x}"; then
             [Define if you have the X11 headers and libraries, and want
              the X11 GUI to be built.])
   r_save_LIBS=${LIBS}
-  LIBS="${LIBS} ${X_LIBS}"
-  AC_CHECK_FUNCS(Xutf8DrawString Xutf8DrawImageString Xutf8LookupString \
-                 Xutf8TextEscapement Xutf8TextExtents \
-                 XmbDrawString XmbDrawImageString XmbLookupString \
-                 XmbTextEscapement XmbTextExtents)
-  LIBS=${r_save_LIBS}
+  if test "$want_utf8_support" == yes ; then
+    LIBS="${LIBS} ${X_LIBS}"
+    AC_CHECK_FUNCS(Xutf8DrawString Xutf8DrawImageString Xutf8LookupString \
+                   Xutf8TextEscapement Xutf8TextExtents \
+                   XmbDrawString XmbDrawImageString XmbLookupString \
+                   XmbTextEscapement XmbTextExtents)
+    LIBS=${r_save_LIBS}
+  fi
 else
   use_X11="no"
   if test "x${with_x}" != "xno"; then
@@ -2694,6 +2696,33 @@ if test "${ac_cv_header_iconv_h}" = yes; then
   AC_CHECK_LIB(iconv, libiconv)
 fi
 ])# R_ICONV
+
+
+## R_UTF8
+## -------------
+## UTF-8 locales - support for MBCS and specifically UTF-8
+AC_DEFUN([R_UTF8],
+[
+if test "$want_utf8_support" == yes ; then
+## Wide character support -- need to include headers in case of macros?
+AC_CHECK_HEADERS(wchar.h wctype.h)
+AC_CHECK_FUNCS(mbrlen mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
+               wcswidth wctrans wcwidth)
+fi
+## can manage without wc[s]width
+for ac_func in mbrlen mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
+               wctrans
+do
+this=`echo "ac_cv_func_$ac_func"`
+if test "x$this" = xno; then
+  want_utf8_support=no
+fi
+done
+if test "x${want_utf8_support}" = xyes; then
+AC_DEFINE(SUPPORT_UTF8, 1, [Define this to enable support for UTF-8 locales.])
+fi
+AC_SUBST(SUPPORT_UTF8)
+])# R_UTF8
 
 
 ### Local variables: ***

@@ -1228,10 +1228,6 @@ AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
 ## might report corresponding HAVE_FOO conditionals.
 ## </NOTE>
 
-## Wide character support -- need to include headers in case of macros?
-AC_CHECK_HEADERS(wchar.h wctype.h)
-AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs wcswidth \
-	       wctrans wcwidth)
 
 if test $ac_cv_type_off_t=yes -a $ac_cv_func_fseeko=yes -a $ac_cv_func_ftello=yes; then
    AC_DEFINE(HAVE_OFF_T, 1,
@@ -1310,6 +1306,9 @@ AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
 
 AC_SUBST(R_MODULES)
 
+## UTF-8 locales - support for MBCS and specifically UTF-8
+R_UTF8
+
 ## iconv headers and function.
 R_ICONV
 
@@ -1365,12 +1364,6 @@ AC_SUBST(R_PROFILING)
 if test "x${want_linux_lfs}" = xyes; then
 R_LARGE_FILES
 fi
-
-## UTF-8 locales -- unchecked at present
-if test "x${want_utf8_support}" = xyes; then
-AC_DEFINE(SUPPORT_UTF8, 1, [Define this to enable support for UTF-8 locales.])
-fi
-AC_SUBST(SUPPORT_UTF8)
 
 
 ### * Miscellaneous.
