@@ -127,10 +127,7 @@ and the .win equivalents do not.  Such files included in package
 sources are usually designed for use under Unix and are best removed.
 
 BEWARE: references to variables in R.dll are converted to the
-right form by including "globalvar.h" in the C source.  If you use
-your own Makefile.win or set CFLAGS (rather than append to it) you may
-need to include "globalvar.h" explicitly.  (References to exported
-variables may lurk inside the macros of Rinternals.h and Rdefines.h.)
+right form by using the header files.  You must include them.
 
 
 Using zipped help files
@@ -210,8 +207,8 @@ executable to be debugged as the full path to the R front-end.
 
 Extra care is needed when referencing variables (rather than
 functions) exported from R.dll.  These must be declared
-__declspec(dllimport).  A list of the relevant variables is in the
-file `exported-vars'.
+__declspec(dllimport) (as in R's own header files).  A list of the
+relevant variables is in the file `exported-vars'.
 
 
 Using Borland C++
@@ -337,6 +334,10 @@ unzip and zip.
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed, and check that Makefile has WINHELP set to NO.
+
+Make the import library by
+
+	make libR.a
 
 Then packages can be made as natively, for example by
 

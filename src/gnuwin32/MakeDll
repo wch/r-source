@@ -25,7 +25,8 @@ else
   DEBUGFLAG=-Wall
 endif
 
-CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/src/include -include $(RHOME)/src/include/globalvar.h 
+CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/src/include
+# -include $(RHOME)/src/include/globalvar.h 
 CFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CFLAGS)
 CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CXXFLAGS)
 FFLAGS=-O2 $(DEBUGFLAG)
