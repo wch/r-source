@@ -6,7 +6,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     ret.x <- x
     ret.y <- y
     mt <- terms(formula, data = data)
-    mf <- match.call()
+    mf <- cl <- match.call()
     mf$singular.ok <- mf$model <- mf$method <- NULL
     mf$x <- mf$y <- mf$qr <- mf$contrasts <- NULL
     mf$drop.unused.levels <- TRUE
@@ -54,7 +54,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     z$offset <- offset
     z$contrasts <- attr(x, "contrasts")
     z$xlevels <- xlev
-    z$call <- match.call()
+    z$call <- cl
     z$terms <- mt
     if (model)
 	z$model <- mf
