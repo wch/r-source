@@ -36,14 +36,6 @@ help.start(update = TRUE, gui = "irrelevant",
   re-made each time \code{help.start} is run, which should be done
   after packages are installed, updated or removed.
 
-  If \code{browser} supports remote control and \R knows how to perform
-  it, the hypertext \R help interface is opened in any already running
-  browser or a new one if necessary.  This mechanism currently is
-  available for browsers which support the \code{"-remote openURL(...)"}
-  interface (which includes Netscape 4.x, 6.2.x, 7.0pr1 (but not 6.0/1),
-  Opera 5/6 and Mozilla >= 0.9.5), Galeon, KDE konqueror (via kfmclient)
-  and the GNOME interface to Mozilla.
-
   If the browser given by the \code{browser} argument is different from
   the default browser as specified by \code{options("browser")}, the
   default is changed to the given browser so that it gets used for all
@@ -69,6 +61,8 @@ help.start(update = TRUE, gui = "irrelevant",
 \seealso{
   \code{\link{help}()} for on- and off-line help in ASCII/Editor or
   PostScript format.
+
+  \code{\link{browseURL}} for how the help file is displayed.
 }
 \examples{
 \dontrun{help.start()

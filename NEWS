@@ -146,6 +146,10 @@ NEW FEATURES
 	per-session temporary directory and not ~/.R.  A side effect
 	is that ~/.R is now never deleted by R.
 
+	This now uses the remote control mechanism only if the X
+	display is local to the R process (as otherwise it might use a
+	browser running on an arbitrary machine).
+
     o	*very* experimental browseEnv() for browsing objects in an
 	environment.
 
@@ -158,7 +162,6 @@ NEW FEATURES
     o	read.table(stdin()) will now work.
 
     o	plot.spec(x) now also works for other x than AR and Pgram results.
-
 
 
 DEPRECATED & DEFUNCT

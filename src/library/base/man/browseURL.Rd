@@ -24,9 +24,24 @@ browseURL(url, browser = getOption("browser"))
     The \code{NULL} is allowed (and is the default) which implies
     that the standard system browser will be used.
 #endif
-
-    }
+  }
 }
+#ifdef unix
+\details{
+  If \code{browser} supports remote control and \R knows how to perform
+  it, the URL is opened in any already running
+  browser or a new one if necessary.  This mechanism currently is
+  available for browsers which support the \code{"-remote openURL(...)"}
+  interface (which includes Netscape 4.x, 6.2.x, 7.0pr1 (but not 6.0/1),
+  Opera 5/6 and Mozilla >= 0.9.5), Galeon, KDE konqueror (via kfmclient)
+  and the GNOME interface to Mozilla.
+
+  Because \code{"-remote"} will use any browser displaying on the X
+  server (whatever machine it is running on), the remote control
+  mechanism is only used if \code{DISPLAY} points to the local host.
+  This may not allow displaying more than one URL at a time.
+}
+#endif
 #ifdef windows
 \examples{
 \dontrun{browseURL("http://www.r-project.org")

@@ -39,8 +39,9 @@ type?topic
  \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (which is the
    default after \code{\link{help.start}} has been called), the HTML
    version of the help will be shown in the browser specified by
-   \code{options("browser")}. See \code{\link{help.start}} for details
-   of the browsers that are supported. }
+   \code{options("browser")}.  See \code{\link{browseURL}} for details
+   of the browsers that are supported.  Where possible an existing
+   browser window is re-used.}
 #endif
 #ifdef mac
   \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the HTML

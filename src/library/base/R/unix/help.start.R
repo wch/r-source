@@ -26,24 +26,27 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
     options(htmlhelp = TRUE)
 }
 
-browseURL <- function(url, browser = getOption("browser")) {
+browseURL <- function(url, browser = getOption("browser"))
+{
     if(!is.character(url) || !(length(url) == 1) || (nchar(url) == 0))
         stop("url must be a non-empty character string")
     if(!is.character(browser)
        || !(length(browser) == 1)
        || (nchar(browser) == 0))
         stop("browser must be a non-empty character string")
-    remoteCmd <-
+    isLocal <- length(grep("^(localhost|):", Sys.getenv("DISPLAY"))) > 0
+    remoteCmd <- if(isLocal)
         switch(basename(browser),
                "gnome-moz-remote" =, "open" = url,
                "galeon" = paste("-x", url),
-               "kfmclient" = paste("openURL", url),               
+               "kfmclient" = paste("openURL", url),
                "netscape" =, "mozilla" =, "opera" =, {
                    paste("-remote \"openURL(",
                          ## Quote ',' and ')' ...
                          gsub("([,)])", "%\\1", url), ")\"",
                          sep = "")
                })
+    else url
     system(paste(browser, remoteCmd, "2>/dev/null ||",
                  browser, url, "&"))
 }
