@@ -60,8 +60,8 @@ list_data_in_pkg <- function(package, lib.loc = NULL)
             dataEnv <- new.env(hash=TRUE)
             names(ans) <- files
             for(f in files) {
-                data(list = f, package = package, lib.loc = lib.loc,
-                     envir = dataEnv)
+                utils::data(list = f, package = package, lib.loc = lib.loc,
+                            envir = dataEnv)
                 ans[[f]] <- ls(envir = dataEnv, all = TRUE)
                 rm(list = ans[[f]], envir = dataEnv)
             }
@@ -87,10 +87,10 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
         names(dlist) <- files
         loaded <- character(0)
         for(f in files) {
-            data(list = f, package = package, lib.loc = lib.loc,
-                 envir = dataEnv)
-            data(list = f, package = package, lib.loc = lib.loc,
-                 envir = tmpEnv)
+            utils::data(list = f, package = package, lib.loc = lib.loc,
+                        envir = dataEnv)
+            utils::data(list = f, package = package, lib.loc = lib.loc,
+                        envir = tmpEnv)
             tmp <- ls(envir = tmpEnv, all.names = TRUE)
             rm(list = tmp, envir = tmpEnv)
             dlist[[f]] <- tmp
