@@ -1,40 +1,46 @@
 \name{Hershey}
 \alias{Hershey}
 \title{Hershey Vector Fonts in R}
+\usage{
+Hershey
+}
 \description{
   If the \code{vfont} argument to one of the text-drawing functions
-  (\code{\link{text}} and \code{\link{contour}})
+  (\code{\link{text}}, \code{\link{mtext}}, \code{\link{title}},
+  \code{\link{axis}}, and \code{\link{contour}})
   is a character vector of length 2, hershey vector fonts are used to
   render the text.
 
-  These fonts have two advantages:
-
+  These fonts have two advantages:\cr
   \enumerate{
-  \item vector fonts describe each
-  character in terms of a set of points;  \R renders the character by
-  joining up the points with straight lines.  This intimate knowledge of
-  the outline of each character means that \R can arbitrarily transform
-  the characters, which can mean that the vector fonts look better
-  for rotated and 3d text.
-  \item this implementation was adapted from the GNU libplot library
-  which provides support for non-ASCII and non-English fonts.  This means
-  that it is possible, for example, to produce wierd plotting symbols and
-  Japanese characters.
+    \item vector fonts describe each
+    character in terms of a set of points;  \R renders the character by
+    joining up the points with straight lines.  This intimate knowledge of
+    the outline of each character means that \R can arbitrarily transform
+    the characters, which can mean that the vector fonts look better
+    for rotated and 3d text.
+    \item this implementation was adapted from the GNU libplot library
+    which provides support for non-ASCII and non-English fonts.  This means
+    that it is possible, for example, to produce wierd plotting symbols and
+    Japanese characters.
   }
+
+  Drawback:\cr
+  You cannot use mathematical expressions (\code{\link{plotmath}}) with
+  Hershey fonts.
 }
 \details{
   The Hershey characters are organised into a set of fonts, which are
   specified by a typeface (e.g., \code{serif} or \code{sans serif})
-  and a fontindex
-  (e.g., \code{plain} or \code{italic}).
+  and a fontindex or ``style'' (e.g., \code{plain} or \code{italic}).
   The first element of \code{vfont} specifies the typeface and the second
   element specifies the fontindex.  The first table
   produced by \code{example(Hershey)} shows the character \code{a} produced
   by each of the different fonts.
 
-
-  The available values for \code{(typeface, fontindex)} for Hershey
-  vector fonts are:
+  The available \code{typeface} and \code{fontindex} values are
+  available as list components of the variable \code{Hershey}.
+  The allowed pairs for \code{(typeface, fontindex)} are:
   \tabular{ll}{
     serif \tab plain \cr
     serif \tab italic \cr
