@@ -1321,7 +1321,7 @@ FBEGIN
     setcursor(cur);
 FVOIDEND
 
-void consolesavefile(console c)
+void consolesavefile(console c, int pager)
 FBEGIN
     char *fn;
     cursor cur;

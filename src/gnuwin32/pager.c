@@ -147,7 +147,7 @@ static void pagerprint(control m)
 
 static void pagersavefile(control m)
 {
-    consolesavefile(getdata(m));
+    consolesavefile(getdata(m), 1);
 }
 
 static void pagercopy(control m)
