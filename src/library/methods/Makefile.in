@@ -53,7 +53,7 @@ $(top_builddir)/library/$(pkg)/R/all.rda: $(top_builddir)/$(subdir)/R/$(pkg)
 	$(top_builddir)/bin/R --vanilla --slave < $<
 
 $(top_builddir)/$(subdir)/R/$(pkg):
-	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
+	@$(MKINSTALLDIRS) $(top_builddir)/$(subdir)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  cat `ls $(srcdir)/R/*.R` > $${f}; \
 	  $(top_srcdir)/tools/move-if-change $${f} $@)
