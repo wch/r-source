@@ -142,7 +142,11 @@ Date: Fri, 20 Dec 2002 12:59:07 -0500
 
 Directory:  Analyses
 
-none
+* PR# 2432 *
+Subject: Determining the break points by hist() leads to errors
+From: Volker Franz <volker.franz@tuebingen.mpg.de>
+Date: Wed, 8 Jan 2003 19:11:13 +0100
+..will fix for 1.7.0 by returning un-fuzzed breakpoints.
 
 Directory:  Documentation
 
@@ -256,10 +260,6 @@ Date: Thu, 7 Feb 2002 11:05:15 -0500
 Subject: mgp parameter in par()
 From: mh.smith@niwa.cri.nz
 Date: Tue, 19 Mar 2002 06:11:49 +0100 (MET)
-* PR# 1470 *
-Subject: color of axis lines
-From: gray@jimmy.harvard.edu
-Date: Sat, 20 Apr 2002 22:21:44 +0200 (MET DST)
 * PR# 1476 *
 Subject: Bug: persp and colors
 From: oliver.niggemann@acterna.com
@@ -560,15 +560,15 @@ Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
 Subject: Mean and var inconsistency
 From: Kevin.Wright@pioneer.com
 Date: Wed, 2 Oct 2002 16:19:27 +0200 (MET DST)
-* PR# 2430 *
-Subject: Undocumented bahavior of as.integer()
-From: "Philippe Grosjean" <phgrosjean@sciviews.org>
-Date: Wed, 8 Jan 2003 11:22:37 +0100
-* PR# 2432 *
-Subject: Determining the break points by hist() leads to errors
-From: Volker Franz <volker.franz@tuebingen.mpg.de>
-Date: Wed, 8 Jan 2003 19:11:13 +0100
-* PR# 2433 *
-Subject: 最新國際行銷email名單  三千七百五十萬筆
-From: 521g5e1v110c@detemobil.de
-Date: 09 Jan 2003 02:10:27 +0800
+* PR# 2436 *
+Subject: NASDAQ ALERT - NATK Revenues UP 1594% - Signs $55 Million Deal............................................................ etj
+From: Nasdaq Newsdesk 717 <Nasdaq_Newsdesk_69@idt.net>
+Date: Thu, 9 Jan 2003 13:53:21 -0600
+* PR# 2437 *
+Subject: RNG.c: unif_rand, MARSAGLIA_MULTICARRY
+From: simardr@IRO.UMontreal.CA
+Date: Thu, 9 Jan 2003 23:32:02 +0100 (MET)
+* PR# 2438 *
+Subject: typo in documentation for lda in MASS
+From: htang@hpl.hp.com
+Date: Fri, 10 Jan 2003 00:07:19 +0100 (MET)
