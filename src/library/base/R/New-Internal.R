@@ -84,11 +84,6 @@ nchar <- function(x).Internal(nchar(x))
 ##-  .Internal(on.exit(expression))
 ##- }
 
-order <- function(..., na.last = TRUE) {
-    if(!is.logical(na.last) || !na.last)
-	stop("order(.., na.last != TRUE) does not yet work in R.")
-    .Internal(order(...))
-}
 plot.window <- function(xlim, ylim, log = "", asp = NA, ...)
     .Internal(plot.window(xlim, ylim, log, asp, ...))
 polyroot <- function(z).Internal(polyroot(z))

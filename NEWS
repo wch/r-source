@@ -4,7 +4,11 @@
 	*						 *
 	**************************************************
 
+
 NEW FEATURES
+
+    o   New function sort.list, for S compatibility. (This has argument
+	partial, but always sorts completely.)
 
     o   New function regexpr, similar to grep but returns the position
 	of the match in each string. (For S-PLUS compatibility.)
@@ -13,7 +17,7 @@ NEW FEATURES
 	installed.packages and package.description will work with them.
 
     o   The R-external manual describes programming for the
-	.Call and .External interfaces.
+	.Call and .External interfaces is in the doc/manual directory.
 
     o   optimization with nlm can use analytic gradients and Hessians
         if they are supplied.
@@ -42,7 +46,7 @@ NEW FEATURES
         the help file and the package. The description section now
         comes first.
 
-    o	on.exit allows add=TRUE
+    o	on.exit allows add=TRUE.
 
     o	storage.mode<- can be used to set "single", and if setting
 	anything other than "single" it removes the "Csingle" attribute.
@@ -86,7 +90,7 @@ NEW FEATURES
 	allowing suppression of bar labeling.
 
     o	predict.{g}lm has a type="terms" option, and residual.glm has
-	type="partial" as a step towards plot.gam()
+	type="partial" as a step towards plot.gam().
 
 
 BUG FIXES
@@ -94,15 +98,15 @@ BUG FIXES
     o	apply should now work for all un-dimnamed arrays (PR#318).
 
     o   help page for gc gives correct size of cons cells (20 bytes
-	for 32-bit systems, 36 or more for 64-bit systems)
+	for 32-bit systems, 36 or more for 64-bit systems).
 
-    o   gcinfo reports correct percentages of heap even for vsize > 200M
+    o   gcinfo reports correct percentages of heap even for vsize > 200M.
 
-    o   expand.grid returns a data frame even for one arg
+    o   expand.grid returns a data frame even for one arg.
 
-    o   Protect R_fopen against NULL filename in Unix
+    o   Protect R_fopen against NULL filename in Unix.
 
-    o   Stored-source was dropped by dump()
+    o   Stored-source was dropped by dump().
 
     o	When documentation is "compiled" (build-help), you now get warnings
 	for multiple (conflicting) \alias{.} or \name{.}s.
@@ -120,11 +124,11 @@ BUG FIXES
     o	ts.union, cbind.ts, arithmetic on ts objects now allow
 	non-integer frequencies.
 
-    o	Math text in outer margins didn't work
+    o	Math text in outer margins didn't work.
 
-    o	Text clipping now works in the X11 driver
+    o	Text clipping now works in the X11 driver.
 
-    o	str() is quite a bit nicer with factors
+    o	str() is quite a bit nicer with factors.
 
     o	require() now has the warn.conflicts argument of library().
 
@@ -133,15 +137,16 @@ BUG FIXES
 	ordered does NOT allow an `ordered' argument anymore
 	and is now defined as trivial call to factor.
 
-    o	gl(6,3,12) and gl(6,3,2) now both work
+    o	gl(6,3,12) and gl(6,3,2) now both work.
 
-    o	split(x,f) now works even when f is a factor with unused levels (PR#294)
+    o	split(x,f) now works even when f is a factor with unused levels
+	(PR#294).
 
-    o	plot.factor {plot(<factor>)} now obeys axes=FALSE and xaxt="n"
+    o	plot.factor {plot(<factor>)} now obeys axes=FALSE and xaxt="n".
 
-    o	Problems with realloc on some systems in AllocBuffer
+    o	Problems with realloc on some systems in AllocBuffer.
 
-    o	Problem with formatReal on non-IEEE systems
+    o	Problem with formatReal on non-IEEE systems.
 
     o	Switch to <tt> in HTML pages since Linux Netscape mangles
 	Courier.
@@ -154,7 +159,8 @@ BUG FIXES
     o	density() should work better with NAs and infinite values. See
 	?density for the current definitions of how these are handled.
 
-    o	R CMD check had a typo which made the final message fail
+    o	R CMD check had a typo which made the final message fail.
+
 
 
 	**************************************************
