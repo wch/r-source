@@ -79,6 +79,7 @@ function(demoDir)
     demoFiles <- .listFilesWithType(demoDir, "demo")
     demoTopics <-
         unique(basename(gsub("\\.[[:alpha:]]+$", "", demoFiles)))
+    if(!length(demoTopics)) return(matrix("", 0, 2))
     demoIndex <- cbind(demoTopics, "")
     if(.fileTest("-f", INDEX <- file.path(demoDir, "00Index"))) {
         demoEntries <- try(read.00Index(INDEX))
