@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.118 $ ';
+my $revision = ' $Revision: 1.119 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -59,19 +59,11 @@ my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
 R::Vars::error("R_HOME", "R_CMD", "R_EXE");
 
-## <FIXME>
-## This should really be in R::Utils so that it can be kept in sync
-## between R CMD check and R CMD build.
-my $data_exts_re = "(R|r|RData|rdata|rda|TXT|txt|tab|csv|CSV)";
-my $demo_exts_re = "[Rr]";
-my $vignette_exts_re = "[RrSs](nw|tex)";
-## </FIXME>
-
-my @knownoptions = ("help|h", "version|v", "outdir|o:s", "library|l:s",
+my @known_options = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		    "no-clean", "no-examples", "no-tests", "no-latex",
 		    "use-gct" => \$opt_use_gct, "no-codoc", "no-perms",
 		    "no-install", "no-vignettes");
-GetOptions (@knownoptions) or usage();
+GetOptions(@known_options) or usage();
 
 R_version("R add-on package checker", $version) if $opt_version;
 usage() if $opt_help;
@@ -113,7 +105,7 @@ if($opt_latex) {
       or die "Error: cannot write to Rtextest$$.tex\n";
     print TEXFILE "\\documentclass\{article\}\\begin\{document\}" .
 	"test\\end\{document\}\n";
-    close TEXFILE;
+    close(TEXFILE);
     chdir($R::Vars::TMPDIR);
     if(R_system("${R::Vars::LATEX} Rtextest$$ > Rtextest$$.out")) {
 	$log->result("NO");
@@ -136,10 +128,10 @@ while(<KEYWORDS>) {
 	$standard_keywords{$1} = 1;
     }
 }
-close KEYWORDS;
+close(KEYWORDS);
 
-## this is the main loop over all packages to be checked
-$#ARGV >= 0 or die "Error: no packages were specified";
+## This is the main loop over all packages to be checked.
+($#ARGV >= 0) or die "Error: no packages were specified";
 foreach my $pkg (@ARGV) {
     ## $pkg should be the path to the package (bundle) root source
     ## directory, either absolute or relative to $startdir.
@@ -156,8 +148,8 @@ foreach my $pkg (@ARGV) {
 
     my $pkgoutdir = &file_path($outdir, "$pkgname.Rcheck");
     rmtree($pkgoutdir) if ($opt_clean && (-d $pkgoutdir)) ;
-    if(! -d $pkgoutdir) {
-	if(! mkdir($pkgoutdir, 0755)) {
+    if(!(-d $pkgoutdir)) {
+	if(!mkdir($pkgoutdir, 0755)) {
 	    die("Error: cannot create directory '$pkgoutdir'\n");
 	    exit(1);
 	}
@@ -166,7 +158,7 @@ foreach my $pkg (@ARGV) {
     $log = new R::Logfile(&file_path($pkgoutdir, "00check.log"));
     $log->message("using log directory '$pkgoutdir'");
 
-    if(! $opt_library) {
+    if(!$opt_library) {
 	$library = $pkgoutdir;
 	$ENV{'R_LIBS'} = env_path($library, $R_LIBS);
     }
@@ -257,8 +249,7 @@ foreach my $pkg (@ARGV) {
     print("\n");
 }
 
-#**********************************************************
-
+
 sub check_pkg {
 
     my ($pkg, $pkgoutdir, $startdir, $library,
@@ -290,8 +281,9 @@ sub check_pkg {
 
     ## Check for sufficient file permissions (Unix only).
 
-    ## This is a bit controversial, and hence has an option '--no-perms'
-    ## to turn this off.  In fact, the code below does a bit too much.
+    ## This is a bit controversial, and hence there is a command line
+    ## option '--no-perms' to turn this off.  In fact, the code below
+    ## does a bit too much.
     ## What would really be needed is the following:
     ## * All dirs or files must be at least 555 or 444, respectively.
     ## * Everything that gets installed must be writeable.  This
@@ -303,30 +295,30 @@ sub check_pkg {
 
     if($opt_perms && ($R::Vars::OSTYPE eq "unix")) {
 	$log->checking("for sufficient/correct file permissions");
-	my @badfiles = ();
+	my @bad_files = ();
 	my @excludepatterns = R::Utils::get_exclude_patterns();
 	## <FIXME>
 	## This is not right for bundles where the build ignore pattern
 	## file is in the top-level bundle dir.  We could fix this by
 	## using '../.Rbuildignore' instead, but then
-	##   find(\&findWrongPermsA, ".");
-	##   find(\&findWrongPermsB, ".");
+	##   find(\&find_wrong_perms_A, ".");
+	##   find(\&find_wrong_perms_B, ".");
 	## are wrong because the exclude patterns are relative to '..'.
 	if(-f "./.Rbuildignore") {
 	    open(RBUILDIGNORE, "./.Rbuildignore");
 	    while(<RBUILDIGNORE>) {
 		chop;
-		push(@excludepatterns, $_) if $_;
+		push(@exclude_patterns, $_) if $_;
 	    }
 	    close(RBUILDIGNORE);
 	}
 	## </FIXME>
 
 	## Phase A.  Directories at least 755, files at least 644.
-	sub findWrongPermsA {
+	sub find_wrong_perms_A {
 	    my $filename = $File::Find::name;
 	    $filename =~ s/^[^\/]*\///;
-	    foreach my $p (@excludepatterns) {
+	    foreach my $p (@exclude_patterns) {
 		if($WINDOWS) {
  		    ## Argh: Windows is case-honoring but not
 		    ## case-insensitive ...
@@ -337,18 +329,18 @@ sub check_pkg {
 		}
 	    }
 	    if(-d $_ && (((stat $_)[2] & 00755) < oct("755"))) {
-		push @badfiles, $File::Find::name;
+		push(@bad_files, $File::Find::name);
 	    }
 	    if(-f $_ && (((stat $_)[2] & 00644) < oct("644"))) {
-		push @badfiles, $File::Find::name;
+		push(@bad_files, $File::Find::name);
 	    }
 	}
-        find(\&findWrongPermsA, ".");
-        if($#badfiles >= 0) {
+        find(\&find_wrong_perms_A, ".");
+        if($#bad_files >= 0) {
 	    $log->error();
 	    $log->print("Found the following files with " .
 			"insufficient permissions:\n");
-	    $log->print("  " . join("\n  ", @badfiles) . "\n");
+	    $log->print("  " . join("\n  ", @bad_files) . "\n");
 	    $log->print(wrap("", "",
 			     ("Permissions should be at least 755",
 			      "for directories and 644 for files.\n")));
@@ -358,34 +350,34 @@ sub check_pkg {
 
 	## Phase B.  Text files (as determined by their extensions)
 	## should really be mode 644.
-	@badfiles = ();
+	@bad_files = ();
 	my @textfile_patterns =
 	  ("\\.[RSdqr]\$",	# R source code
 	   "\\.[Rr]d\$",	# Rd files
 	   "\\.([Ccfh]|cc|cpp)\$",
 				# C/C++/FORTRAN sources and headers
 	   "^(DESCRIPTION|INDEX|README)\$");
-	sub findWrongPermsB {
+	sub find_wrong_perms_B {
 	    my $filename = $File::Find::name;
 	    $filename =~ s/^[^\/]*\///;
-	    foreach my $p (@excludepatterns) {
+	    foreach my $p (@exclude_patterns) {
 		return 0 if($filename =~ /$p/);
 	    }
 	    if(-f $_ && (((stat $_)[2] & 00777) != oct("644"))) {
 		foreach my $p (@textfile_patterns) {
 		    if($filename =~ /$p/) {
-			push @badfiles, $File::Find::name;
+			push(@bad_files, $File::Find::name);
 			last;
 		    }
 		}
 	    }
 	}
-	find(\&findWrongPermsB, ".");
-	if($#badfiles >= 0) {
+	find(\&find_wrong_perms_B, ".");
+	if($#bad_files >= 0) {
 	    $log->warning();
 	    $log->print("Found the following text files with " .
 			"incorrect permissions:\n");
-	    $log->print("  " . join("\n  ", @badfiles) . "\n");
+	    $log->print("  " . join("\n  ", @bad_files) . "\n");
 	    $log->print(wrap("", "",
 			     ("Permissions for text files",
 			      "(including R, Rd, and C/C++/FORTRAN",
@@ -406,8 +398,8 @@ sub check_pkg {
 	    foreach my $key (keys(%$description)) {
 		$description_in->{$key} = $description->{$key};
 	    }
-	    ## from now on use $description_in instead of $description
-	    ## in this subroutine
+	    ## From now on use $description_in instead of $description
+	    ## in this subroutine.
 	    $description = $description_in;
 	    $log->result("OK");
 	    $log->message("joining DESCRIPTION and DESCRIPTION.in");
@@ -429,11 +421,21 @@ sub check_pkg {
     ##   Package, Version, License, Description, Title, Author,
     ##   Maintainer.
 
-    if(! $description->{"Package"}) {
+    foreach my $field (qw(Package Version License Description Title
+			  Author Maintainer)) {
+	if(!$description->{$field}) {
+	    $log->error();
+	    $log->print("No DESCRIPTION $field field found.\n");
+	    $log->print(wrap("", "", @msg_DESCRIPTION));
+	    exit(1);
+	}
+    }
+
+    if($description->{"Package"} !~ /^[a-z][a-z\d\.]*$/i) {
 	$log->error();
-	$log->print("No DESCRIPTION Package field found.\n");
+	$log->print("Malformed package name.\n");
 	$log->print(wrap("", "", @msg_DESCRIPTION));
-        exit(1);
+	exit(1);
     }
     if($description->{"Package"} ne $pkgname) {
 	$log->error();
@@ -441,19 +443,7 @@ sub check_pkg {
 	$log->print(wrap("", "", @msg_DESCRIPTION));
 	exit(1);
     }
-    if($description->{"Package"} !~ /^[a-z][a-z\d\.]*$/i) {
-	$log->error();
-	$log->print("Malformed package name.\n");
-	$log->print(wrap("", "", @msg_DESCRIPTION));
-	exit(1);
-    }
 
-    if(! $description->{"Version"}) {
-	$log->error();
-	$log->print("No DESCRIPTION Version field found.\n");
-	$log->print(wrap("", "", @msg_DESCRIPTION));
-	exit(1);
-    }
     if(($description->{"Version"} !~ /^\d+([.-]\d+)+$/)
        && !$is_base_pkg) {
 	## Package sources from the R distribution have '@VERSION@' in
@@ -464,21 +454,6 @@ sub check_pkg {
 	exit(1);
     }
 
-    foreach my $field (qw(License Description Title Author)) {
-	if(! $description->{$field}) {
-	    $log->error();
-	    $log->print("No DESCRIPTION $field field found.\n");
-	    $log->print(wrap("", "", @msg_DESCRIPTION));
-	    exit(1);
-	}
-    }
-
-    if(!$description->{"Maintainer"}) {
-	$log->error();
-	$log->print("No DESCRIPTION Maintainer field found.\n");
-	$log->print(wrap("", "", @msg_DESCRIPTION));
-	exit(1);
-    }
     if($description->{"Maintainer"} !~ /^[^<>]*<[^<>]+> *$/) {
 	$log->error();
 	$log->print("Malformed Maintainer field.\n");
@@ -552,21 +527,21 @@ sub check_pkg {
     ## Check index files.
 
     $log->checking("index files");
-    my @badfiles = ();
-    sub checkIndex {
+    my @bad_files = ();
+    sub check_index {
 	my $index = $_[0];
 	## Currently, only test whether the index exists and has size
 	## greater than 0.
-	push(@badfiles, $index) unless (-s $index);
+	push(@bad_files, $index) unless (-s $index);
 	## Could have more tests, e.g. for correct format ...
     }
-    &checkIndex(&file_path("demo", "00Index"))
-      if(-d "demo" && &list_files_with_exts("demo", $demo_exts_re));
-    if($#badfiles >= 0) {
+    &check_index(&file_path("demo", "00Index"))
+      if((-d "demo") && &list_files_with_type("demo", "demo"));
+    if($#bad_files >= 0) {
 	$log->warning();
 	$log->print("The following index files are missing " .
 		    "or have zero length:\n");
-	$log->print("  " . join("\n  ", @badfiles) . "\n");
+	$log->print("  " . join("\n  ", @bad_files) . "\n");
 	$log->print(wrap("", "",
 			 ("See the information on INDEX files and package",
 			  "subdirectories in section 'Creating R packages'",
@@ -585,7 +560,7 @@ sub check_pkg {
 	my @bad_dirs = ();
 	foreach my $dir (@R_system_subdirs) {
 	    push(@bad_dirs, $dir)
-	      if(-d &file_path("inst", $dir)
+	      if((-d &file_path("inst", $dir))
 		 && &list_files(file_path("inst", $dir)));
 	}
 	if($#bad_dirs >= 0) {
@@ -605,12 +580,15 @@ sub check_pkg {
 
     ## Check R code for syntax errors.
 
-    if(!$is_base_pkg && -d "R") {
+    if(!$is_base_pkg && (-d "R")) {
 	$log->checking("R files for syntax errors");
-	my @Rfiles = &list_files_with_exts("R", "[RrSsq]");
-	my $Rcmd = "Rfiles <- c(\"";
-	$Rcmd .= join("\",\n\"", @Rfiles) . "\")\n";
-	$Rcmd .= "for(f in Rfiles)\n";
+	## <NOTE>
+	## We could/should really check *all* OS specific subdirs here.
+	my @R_files = &list_files_with_type("R", "code");
+	## </NOTE>
+	my $Rcmd = "RFiles <- c(\"";
+	$Rcmd .= join("\",\n\"", @R_files) . "\")\n";
+	$Rcmd .= "for(f in RFiles)\n";
 	$Rcmd .= "if(inherits(try(parse(f)), \"try-error\")) stop(f)\n";
         my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	@out = grep(/^Error:/, @out);
@@ -628,25 +606,28 @@ sub check_pkg {
 
     ## Check usage of library.dynam (if any).
 
-    if(!$is_base_pkg && -d "R") {
+    if(!$is_base_pkg && (-d "R")) {
 	$log->checking("R files for library.dynam");
-	my @Rfiles;
+	my @R_files;
 	if($opt_install) {
 	    ## Only need to check the installed file (if installed).
-	    @Rfiles = (&file_path($library, $pkgname, "R", $pkgname));
+	    @R_files = (&file_path($library, $pkgname, "R", $pkgname));
 	}
 	else {
 	    ## Otherwise (if the package was not installed), we need to
 	    ## check all R code files.
-	    @Rfiles = &list_files_with_exts("R", "[RrSsq]");
+	    ## <NOTE>
+	    ## We could/should really check all OS specific subdirs here.
+	    @R_files = &list_files_with_type("R", "code");
+	    ## </NOTE>
 	}
 	my $any = 0;
 	my $ext;
-	foreach my $Rfile (@Rfiles) {
+	foreach my $file (@R_files) {
 	    last if $any;
-	    open(RFILE, "< $Rfile")
-	      or die "Error: cannot open file '$Rfile' for reading";
-	    while(<RFILE>) {
+	    open(FILE, "< $file")
+	      or die "Error: cannot open file '$file' for reading";
+	    while(<FILE>) {
 		if(/library.dynam\(\"(.*?)\"/o) {
 		    my $arg = $1;
 		    if($arg =~ /\.(so|sl|dll)$/) {
@@ -656,7 +637,7 @@ sub check_pkg {
 		    }
 		}
 	    }
-	    close(RFILE);
+	    close(FILE);
 	}
 	if($any == 0) {
 	    $log->result("OK");
@@ -714,13 +695,9 @@ sub check_pkg {
         my @out = R_runR($Rcmd, "${R_opts} --quiet");
         @out = grep(!/^\>/, @out);
 	if($#out >= 0) {
-            ## <FIXME>
-            ## Change back from warning() to error() and exit when we
-            ## have output from loading packages under control.
-	    $log->warning();
+	    $log->error();
 	    $log->print(join("\n", @out) . "\n");
-	    ## exit(1);
-            ## </FIXME>
+	    exit(1);
 	}
 	else {
 	    $log->result("OK");
@@ -729,7 +706,7 @@ sub check_pkg {
 
     ## Check foreign function calls.
 
-    if(-d "R" && $ENV{'R_CHECK_FF_CALLS'}) {
+    if((-d "R") && $ENV{'R_CHECK_FF_CALLS'}) {
 	$log->checking("foreign function calls");
 
 	my $Rcmd = "library(tools)\n";
@@ -755,51 +732,66 @@ sub check_pkg {
 
     if(-d "man") {
 	$log->checking("Rd files");
-	my @rdfiles = &list_files_with_exts("man", "[Rr]d");
-	my $manOSdir = &file_path("man", $R::Vars::OSTYPE);
-	if(-d $manOSdir) {
-	    @rdfiles = (@rdfiles,
-			&list_files_with_exts($manOSdir, "[Rr]d"));
-	}
-	my @badfiles = grep(/</, @rdfiles);
-	if($#badfiles >= 0) {
+
+	my @Rd_files =
+	  &list_files_with_type("man", "docs", $R::Vars::OSTYPE);
+
+	## Rd files with illegal file names?
+
+	my @bad_files = grep(/</, @Rd_files);
+	if($#bad_files >= 0) {
 	    $log->error();
 	    $log->print("Cannot handle Rd file names containing '<'.\n" .
 			"These are not legal file names on all R " .
 			"platforms.\n" .
 			"Please rename the following files and " .
 			"try again:\n");
-	    $log->print("  " . join("\n  ", @badfiles) . "\n");
+	    $log->print("  " . join("\n  ", @bad_files) . "\n");
 	    exit(1);
 	}
 
-	@rdfiles = sort(@rdfiles);
-	my $file;
-	my @mandatoryTags = qw(name alias title description keyword);
-	my @uniqueTags = qw(name title description usage arguments
-			    format details value references source
-			    seealso examples note author synopsis);
-	my @badbraces;
-	my %badmandatory;
-	my %badunique;
-	my %badkeywords;
+	@Rd_files = sort(@Rd_files);
 
-	## create hash allTags with all tags found in mandatory Tags and
-	## uniqueTags
-	my %allTags;
-	foreach my $tag (@mandatoryTags, @uniqueTags) {
-	    $allTags{$tag}++;
+	## <FIXME>
+	## The code below tries to deal with common problems in Rd
+	## files, such as unbalanced braces, missing mandatory tags or
+	## duplicated tags which must be unique, etc.  This is tricky:
+	## in particular, one needs to deal with Rd preprocessing (which
+	## could e.g. eliminate mandatory tags or duplicated tags which
+	## must be unique).  So at least in theory, for Rd files which
+	## use preprocessor conditionals, one would need to repeat the
+	## tests for at least all supported OS types.  Argh ...
+	## </FIXME>
+
+	my @mandatory_tags = qw(name alias title description keyword);
+	my @unique_tags = qw(name title description usage arguments
+			     format details value references source
+			     seealso examples note author synopsis);
+	my @bad_braces;
+	my @bad_names;
+	my @bad_titles;
+	my %bad_keywords;
+	my %bad_mandatory_tags;
+	my %bad_unique_tags;
+
+	## Create hash all_tags with all tags found in mandatory_tags
+	## and unique_tags.
+	my %all_tags;
+	foreach my $tag (@mandatory_tags, @unique_tags) {
+	    $all_tags{$tag}++;
 	}
 
-	foreach my $rdfile (@rdfiles) {
-	    open(RDFILE, "< $rdfile")
-	      or die "Error: cannot open '$rdfile' for reading\n";
+	foreach my $file (@Rd_files) {
+	    ## Call the Rd preprocessor first.
+	    my $text = &Rdpp($file, $R::Vars::OSTYPE);
+	    ## And split into lines again.
+	    my @lines = split(/\n/, $text);
 
+	    ## Check tags and keywords.
 	    my %keywords;
 	    my %tagcount;
-	    while(<RDFILE>) {
-		my $line = $_;
-		foreach my $tag (keys %allTags) {
+	    foreach my $line (@lines) {
+		foreach my $tag (keys %all_tags) {
 		    if($line =~ /^\s*\\$tag\{/) {
 			$tagcount{$tag}++;
 		    }
@@ -808,28 +800,33 @@ sub check_pkg {
                     $keywords{$1} = 1;
                 }
 	    }
-	    close RDFILE;
-
-	    foreach my $tag (@mandatoryTags) {
-		push(@{$badmandatory{$tag}}, $rdfile)
-		    unless $tagcount{$tag}>0;
+	    foreach my $tag (@mandatory_tags) {
+		push(@{$bad_mandatory_tags{$tag}}, $file)
+		    unless ($tagcount{$tag} > 0);
 	    }
-	    foreach my $tag (@uniqueTags) {
-		push(@{$badunique{$tag}}, $rdfile)
-		    unless $tagcount{$tag}<=1;
+	    foreach my $tag (@unique_tags) {
+		push(@{$bad_unique_tags{$tag}}, $file)
+		    unless ($tagcount{$tag} <= 1);
 	    }
             foreach my $key (keys(%keywords)) {
-                push(@{$badkeywords{$rdfile}}, $key)
+                push(@{$bad_keywords{$file}}, $key)
                     unless $standard_keywords{$key};
             }
 
+	    ## Check name and title.
+	    ## Note that the code here is based on Rd::info().
+	    ## (Not entirely safe ...)
+	    $text =~ /\\name\{\s*([^\}]+)\s*\}/s;
+	    push(@bad_names, $file) if($1 =~ /^\s*$/);
+	    $text =~ /\\title\{\s*([^\}]+)\s*\}/s;
+	    push(@bad_titles, $file) if($1 =~ /^\s*$/);
+
 	    ## Check for unbalanced braces.
-	    my $text = "";
-	    ## Read the Rd file via Rdpp, and get rid of the \alias
-	    ## entries as these may have unbalanced braces (Paren.Rd).
-	    my @lines = split(/\n/, &Rdpp($rdfile, $R::Vars::OSTYPE));
+	    $text = "";
+	    ## Get rid of the \alias entries as these may have
+	    ## unbalanced braces (Paren.Rd).
 	    foreach my $line (@lines) {
-		$text .= "\n$line" unless ($line =~ /^\\alias/);
+		$text .= "\n$line" unless ($line =~ /^\s*\\alias/);
 	    }
 	    $text .= "\n";
 	    my $delimcurly = new Text::DelimMatch;
@@ -845,17 +842,20 @@ sub check_pkg {
 	    $text =~ s/\n%.*\n/\n/gs;
 	    ## Anything left in $text means unbalanced.
 	    if(!($text =~ /^\s*$/)) {
-		push(@badbraces, $rdfile);
+		push(@bad_braces, $file);
 	    }
 
 	}
 
 	my $any = 0;
+	my @msg_writing_Rd
+	  = ("See chapter 'Writing R documentation'",
+	     "in manual 'Writing R Extensions'.\n");
 
-	if($#badbraces >= 0) {
+	if($#bad_braces >= 0) {
 	    $log->error();
 	    $log->print("Rd files with unbalanced braces:\n");
-	    $log->print("  " . join("\n  ", @badbraces) . "\n");
+	    $log->print("  " . join("\n  ", @bad_braces) . "\n");
 	    $log->print(wrap("", "",
 			     ("Unbalanced braces are Rd syntax",
 			      "errors, and result in incorrect",
@@ -863,19 +863,30 @@ sub check_pkg {
 	    exit(1);
 	}
 
-	my @msg_writing_Rd
-	  = ("See chapter 'Writing R documentation'",
-	     "in manual 'Writing R Extensions'.\n");
+	if($#bad_names >= 0) {
+	    $log->error();
+	    $log->print("Rd files with missing or empty '\\name':\n");
+	    $log->print("  " . join("\n  ", @bad_names) . "\n");
+	    $log->print(wrap("", "", @msg_writing_Rd));
+	    exit(1);
+	}
+	if($#bad_titles >= 0) {
+	    $log->error();
+	    $log->print("Rd files with missing or empty '\\title':\n");
+	    $log->print("  " . join("\n  ", @bad_titles) . "\n");
+	    $log->print(wrap("", "", @msg_writing_Rd));
+	    exit(1);
+	}
 
 	my $any_missing_mandatory_tag = 0;
-	foreach my $tag (@mandatoryTags) {
-	    if(exists $badmandatory{$tag}) {
+	foreach my $tag (@mandatory_tags) {
+	    if(exists $bad_mandatory_tags{$tag}) {
 		$log->warning("") unless $any;
 		$any++;
 		$any_missing_mandatory_tag++;
 		$log->print("Rd files without '${tag}':\n");
 		$log->print("  " .
-			    join("\n  ", @{$badmandatory{$tag}}) .
+			    join("\n  ", @{$bad_mandatory_tags{$tag}}) .
 			    "\n");
 	    }
 	}
@@ -885,14 +896,14 @@ sub check_pkg {
 	}
 
 	my $any_duplicate_unique_tag = 0;
-	foreach my $tag (@uniqueTags) {
-	    if(exists $badunique{$tag}) {
+	foreach my $tag (@unique_tags) {
+	    if(exists $bad_unique_tags{$tag}) {
 		$log->warning("") unless $any;
 		$any++;
 		$any_duplicate_unique_tag++;
 		$log->print("Rd files with duplicate '${tag}':\n");
 		$log->print("  " .
-			    join("\n  ", @{$badunique{$tag}}) .
+			    join("\n  ", @{$bad_unique_tags{$tag}}) .
 			    "\n");
 	    }
 	}
@@ -901,14 +912,14 @@ sub check_pkg {
 	    $log->print(wrap("", "", @msg_writing_Rd));
 	}
 
-        if(keys(%badkeywords)) {
+        if(keys(%bad_keywords)) {
 	    $log->warning("") unless $any;
 	    $any++;
 	    $log->print("Rd files with non-standard keywords:\n");
-            foreach my $file (keys(%badkeywords)) {
+            foreach my $file (keys(%bad_keywords)) {
                 $log->print(wrap("  ", "    ",
 				   ("'$file':",
-				    @{$badkeywords{$file}},
+				    @{$bad_keywords{$file}},
 				    "\n")));
             }
 	    $log->print(wrap("", "",
@@ -939,7 +950,7 @@ sub check_pkg {
         my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	my @err = grep(/^Error/, @out);
 	@out = grep(!/^\>/, @out);
-	if($#err<0) {
+	if($#err < 0) {
 	    if($#out >= 0) {
 		$log->warning();
                 $log->print(join("\n", @out) . "\n");
@@ -1013,26 +1024,26 @@ sub check_pkg {
 
     if(-d "src") {
 	$log->checking("for CRLF line endings in C sources/headers");
-	my @srcfiles = &list_files_with_exts("src", "[ch]");
-	my @badfiles = ();
-	foreach my $file (@srcfiles) {
-	    open(SRCFILE, "< $file")
+	my @src_files = &list_files_with_exts("src", "[ch]");
+	my @bad_files = ();
+	foreach my $file (@src_files) {
+	    open(FILE, "< $file")
 	      or die "Error: cannot open '$file' for reading\n";
-            binmode(SRCFILE);	# for Windows
-	    while(<SRCFILE>) {
+            binmode(FILE);	# for Windows
+	    while(<FILE>) {
 		chop;
 		if($_ =~ /\r$/) {
-		    push(@badfiles, $file);
+		    push(@bad_files, $file);
 		    last;
 		}
 	    }
-	    close(SRCFILE);
+	    close(FILE);
 	}
-	if($#badfiles >= 0) {
+	if($#bad_files >= 0) {
 	    $log->warning();
 	    $log->print("Found the following C sources/headers with " .
 			"CRLF line endings:\n");
-	    $log->print("  " . join("\n  ", @badfiles) . "\n");
+	    $log->print("  " . join("\n  ", @bad_files) . "\n");
 	    $log->print("ISO C requires CR line endings.\n");
 	}
 	else {
@@ -1044,7 +1055,7 @@ sub check_pkg {
 
     ## Run the examples.
 
-    if($opt_examples && -d &file_path($library, $pkgname, "R-ex")) {
+    if($opt_examples && (-d &file_path($library, $pkgname, "R-ex"))) {
 	$log->creating("${pkgname}-Ex.R");
 	my $Rexdir = &file_path($library, $pkgname, "R-ex");
         my $iszipped = 0;
@@ -1109,8 +1120,8 @@ sub check_pkg {
         $log->checking("tests");
         my $testsrcdir = &file_path($pkgdir, "tests");
         my $testdir = &file_path($pkgoutdir, "tests");
-        if(! -d $testdir) {
-            if(! mkdir($testdir, 0755)) {
+        if(!(-d $testdir)) {
+            if(!mkdir($testdir, 0755)) {
 	        die "Error: cannot create directory $testdir\n";
 	        exit(1);
 	    }
@@ -1138,7 +1149,7 @@ sub check_pkg {
             $makevars = " -f " . &file_path($testsrcdir, "Makevars");
         }
         else {
-            open MAKEVARS, "> Makevars";
+            open(MAKEVARS, "> Makevars");
             print MAKEVARS "makevars = -f Makevars\n";
             print MAKEVARS "srcdir = $testsrcdir\n";
             ## at least windows does not pass env correctly to make
@@ -1156,7 +1167,7 @@ sub check_pkg {
             }
             print MAKEVARS "\n";
 	    print MAKEVARS "USE_GCT = $opt_use_gct\n";
-            close MAKEVARS;
+            close(MAKEVARS);
             $makevars = " -f Makevars";
         }
         print "\n";
@@ -1172,8 +1183,8 @@ sub check_pkg {
 
     if($opt_vignettes
        && (-d &file_path($pkgdir, "inst", "doc"))
-       && &list_files_with_exts(&file_path($pkgdir, "inst", "doc"),
-				$vignette_exts_re)) {
+       && &list_files_with_type(&file_path($pkgdir, "inst", "doc"),
+				"vignette")) {
 	$log->checking(join("",
 			    ("Sweave files in '",
 			     &file_path("inst", "doc"),
@@ -1208,23 +1219,25 @@ sub check_pkg {
 	      env_path(&file_path($R::Vars::R_HOME, "share", "texmf"),
 		       $ENV{'TEXINPUTS'});
 	    $log->creating("${pkgname}-manual.tex");
-	    open MANUAL, "> ${pkgname}-manual.tex";
+	    open(MANUAL, "> ${pkgname}-manual.tex")
+	      or die("Error: cannot open file '${pkgname}-manual.tex'" .
+		     "for writing");
 	    print MANUAL "\\documentclass\{article\}\n" .
 	      "\\usepackage[ae,hyper]\{Rd\}\n\\begin\{document\}\n";
-	    my @texfiles =
+	    my @tex_files =
 	      &list_files_with_exts(&file_path($library, $pkgname,
 					       "latex"),
 				    "tex");
-	    foreach my $file (@texfiles) {
+	    foreach my $file (@tex_files) {
 		open(FILE, "< $file")
 		  or die("Error: cannot open file '$file' for reading");
 		while(<FILE>) {
 		    print MANUAL $_;
 		}
-		close FILE;
+		close(FILE);
 	    }
 	    print MANUAL "\\end\{document\}\n";
-	    close MANUAL;
+	    close(MANUAL);
 	    $log->result("OK");
 	    if($HAVE_LATEX) {
 		$log->checking("${pkgname}-manual.tex");
@@ -1268,8 +1281,7 @@ sub check_pkg {
     }
 }
 
-#**********************************************************
-
+
 sub usage {
     print STDERR <<END;
 Usage: R CMD $name [options] pkgdirs
