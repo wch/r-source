@@ -85,7 +85,7 @@ static gint R_gtk_os_signal_ok;
 
 void R_gtk_terminal_interrupt()
 {
-  kill(getpid(), SIGINT);
+  onintr();
 }
 
 void R_gtk_terminal_quit()
