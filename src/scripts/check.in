@@ -34,7 +34,7 @@ use Text::DelimMatch;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.62 $ ';
+my $revision = ' $Revision: 1.63 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -68,6 +68,13 @@ $opt_tests = 0 if $opt_no_tests;
 $opt_latex = 0 if $opt_no_latex;
 $opt_codoc = 0 if $opt_no_codoc;
 $opt_install = 0 if $opt_no_install;
+
+sub env_path {
+    my @args = @_;
+    my $filesep = ":";
+    $filesep = ";" if($WINDOWS);
+    join($envsep, @args);
+}
 
 my $startdir = cwd();
 $opt_outdir = $startdir unless $opt_outdir;
@@ -106,12 +113,7 @@ if($opt_library) {
     chdir($opt_library) ||
 	die "Error: cannot change to directory \`$opt_library'\n";
     $library = cwd();
-    if($WINDOWS) {
-	$ENV{'R_LIBS'} = "$library;$R_LIBS";
-    }
-    else {
-	$ENV{'R_LIBS'} = "$library:$R_LIBS";
-    }
+    $ENV{'R_LIBS'} = env_path($library, $R_LIBS);
 	
     chdir($startdir);
 }
@@ -180,12 +182,7 @@ foreach my $pkg (@ARGV) {
     
     if(! $opt_library) {
 	$library = $pkgoutdir;
-	if($WINDOWS) {
-	    $ENV{'R_LIBS'} = "$library;$R_LIBS";
-	}
-	else {
-	    $ENV{'R_LIBS'} = "$library:$R_LIBS";
-	}
+	$ENV{'R_LIBS'} = env_path($library, $R_LIBS);
     }
 
     my $description;
@@ -914,12 +911,8 @@ sub check_pkg {
     ## Run LaTeX on the manual.
             
     if($opt_latex && (-d "$library/$pkgname/latex")) {
-        if($WINDOWS) {
-            $ENV{'TEXINPUTS'} = "$R_HOME/share/texmf;$ENV{'TEXINPUTS'}";
-        }
-        else {
-            $ENV{'TEXINPUTS'} = "$R_HOME/share/texmf:$ENV{'TEXINPUTS'}";
-        }
+	$ENV{'TEXINPUTS'} = 
+            env_path("$R_HOME/share/texmf", $ENV{'TEXINPUTS'});
         $log->creating("${pkgname}-manual.tex");
         open manual, "> ${pkgname}-manual.tex";
         print manual "\\documentclass\{article\}\n" .
