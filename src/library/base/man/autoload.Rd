@@ -1,7 +1,7 @@
 \name{autoload}
 \title{On-demand Loading of Packages}
 \usage{
-autoload(name, package, \dots)
+autoload(name, package, reset = FALSE, \dots)
 autoloader(name, package, \dots)
 .AutoloadEnv
 }
@@ -11,6 +11,7 @@ autoloader(name, package, \dots)
 \arguments{
   \item{name}{string giving the name of an object.}
   \item{package}{string giving the name of a package containing the object.}
+  \item{reset}{logical: for internal use by \code{autoloader}.}
   \item{\dots}{other arguments to \code{\link{library}}.}
 }
 \description{
@@ -34,7 +35,7 @@ autoload("interpSpline", "splines")
 search()
 ls("Autoloads")
 
-x <- sort(stats::rnorm(12))
+x <- sort(rnorm(12))
 y <- x^2
 is <- interpSpline(x,y)
 search() ## now has splines
