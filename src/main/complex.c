@@ -775,7 +775,7 @@ SEXP do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(fail) errorcall(call, "root finding code failed");
 	UNPROTECT(2);
 	r = allocVector(CPLXSXP, degree);
-	for(i=0 ; i<n ; i++) {
+	for(i=0 ; i<degree ; i++) {
 	    COMPLEX(r)[i].r = REAL(rr)[i];
 	    COMPLEX(r)[i].i = REAL(ri)[i];
 	}
