@@ -169,7 +169,7 @@ src/main/RNG.c
   and is used unchanged.
 
 
-src/modules/lapack/double.f, cmplx.f, rgeev.f, rsyev.f
+src/modules/lapack/dlapack?.f, cmplx.f, rgeev.f, rsyev.f
 
   Extracted from
   *  -- LAPACK routine (version 3.0) --
@@ -194,11 +194,20 @@ src/main/vsnprintf.c
    * on all source code distributions
    */
 
+
+src/main/regex.c
+src/main/Rregex.h
+
+   Copyright (C) 1993, 94, 95, 96, 97, 98, 99 Free Software Foundation, Inc.
+   Copyright (C) 1985,89,90,91,92,93,95,96,97,98 Free Software Foundation, Inc.
+
+
 src/extra/xdr/*
 
 	Copyright (undated) Sun Microsystems, Inc.
 
 	See the file src/extra/xdr/copyrght.txt
+
 
 src/extra/zlib/README, *.c, *.h
 
@@ -210,6 +219,7 @@ src/main/dounzip.c, unzip.h
 
   Contains code Copyright (C) 1998 Gilles Vollant from contrib/minizip
   in the zlib 1.1.3 distribution.
+
 
 src/main/acosh.c, asinh.c, atanh.c
 
@@ -249,3 +259,8 @@ src/extra/bzip2/huffman.c
 src/extra/bzip2/randtable.c
 
    copyright (C) 1996-2002 Julian R Seward.
+
+
+src/library/tools/src/md5.{c,h}
+
+    Copyright (C) 1995, 1996, 2001 Free Software Foundation, Inc.
