@@ -238,6 +238,14 @@ Date: Thu, 7 Feb 2002 11:05:15 -0500
 Subject: interaction.plot (with misplaced legend)
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Fri, 08 Feb 2002 14:27:01 +0100
+* PR# 1395 *
+Subject: mgp parameter in par()
+From: mh.smith@niwa.cri.nz
+Date: Tue, 19 Mar 2002 06:11:49 +0100 (MET)
+* PR# 1398 *
+Subject: barplots & ylim
+From: Jan Malte Wiener <jan.wiener@tuebingen.mpg.de>
+Date: Wed, 20 Mar 2002 09:06:57 +0100
 
 Directory:  In-Out
 
@@ -333,10 +341,6 @@ Date: Tue, 11 Dec 2001 17:34:07 -0500 (EST)
 Subject: Mishandling missing "..."
 From: David Brahm  <brahm@alum.mit.edu>
 Date: Mon, 7 Jan 2002 10:52:09 -0500
-* PR# 1301 *
-Subject: incorrect handling of arrays of list elements
-From: =?iso-8859-1?Q?Jens=20Oehlschl=E4gel?= <joehl@web.de>
-Date: Thu, 7 Feb 2002 13:43:19 +0100
 
 Directory:  Macintosh
 
@@ -453,11 +457,15 @@ Date: Fri, 25 Jan 2002 15:08:33 -0500
 Subject:  itemize/item crashes R CMD check 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Tue, 26 Feb 2002 15:13:04 -0500
-* PR# 1395 *
-Subject: mgp parameter in par()
-From: mh.smith@niwa.cri.nz
-Date: Tue, 19 Mar 2002 06:11:49 +0100 (MET)
-* PR# 1396 *
-Subject: truehist (MASS) nbins problem
-From: rechung@aol.com
-Date: Tue, 19 Mar 2002 21:50:04 +0100 (MET)
+* PR# 1397 *
+Subject: solve() benchmark in R-1.4.1
+From: hyu@stats.uwo.ca
+Date: Wed, 20 Mar 2002 04:50:38 +0100 (MET)
+* PR# 1399 *
+Subject: Have a good Lady Day
+From: "t.lockx" <t.lockx@liftoff.nl>
+Date: Wed, 20 Mar 2002 06:04:37 -0600
+* PR# 1400 *
+Subject: RMySQL integer range bug
+From: matthias.piksa@web.de
+Date: Wed, 20 Mar 2002 13:41:37 +0100 (MET)
