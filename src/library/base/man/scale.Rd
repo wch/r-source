@@ -9,10 +9,6 @@
 \usage{
 scale(x, center = TRUE, scale = TRUE)
 }
-\synopsis{
-scale.default(x, center = TRUE, scale = TRUE)
-scale(x, center = TRUE, scale = TRUE)
-}
 \arguments{
   \item{x}{a numeric matrix(like object).}
   \item{center}{either a logical value or a numeric vector of length

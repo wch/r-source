@@ -342,13 +342,17 @@ par(\dots, no.readonly = FALSE)
   Line types can either be specified by giving an index into a small
   built in table of line types (1 = solid, 2 = dashed, etc, see
   \code{lty} above) or directly as the lengths of on/off stretches of
-  line.  This is done with a string of up to eight characters, namely
-  (hexadesimal) digits which give the lengths in consecutive positions
+  line.  This is done with a string of an even number (up to eight)
+  of characters, namely non-zero
+  (hexadecimal) digits which give the lengths in consecutive positions
   in the string.  For example, the string \code{"33"} specifies three
   units on followed by three off and \code{"3313"} specifies three units
   on followed by three off followed by one on and finally three off.
   The \sQuote{units} here are (on most devices) proportional to
   \code{lwd}, and with \code{lwd = 1} are in pixels or points.
+
+  The five standard dash-dot line types (\code{lty = 2:6}) correspond to
+  \code{c("44", "13", "1343", "73", "2262")}.
 }
 
 \note{

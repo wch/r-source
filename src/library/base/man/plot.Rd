@@ -1,12 +1,8 @@
 \name{plot}
 \title{Generic X-Y Plotting}
 \alias{plot}
-\synopsis{
-plot(x, y, \dots)
-}
 \usage{
-plot(x, y, xlim=range(x), ylim=range(y), type="p",
-     main, xlab, ylab, \dots)
+plot(x, y, \dots)
 }
 \arguments{
   \item{x}{the coordinates of points in the plot. Alternatively, a
@@ -14,29 +10,31 @@ plot(x, y, xlim=range(x), ylim=range(y), type="p",
           \code{plot} method} can be provided.}
   \item{y}{the y coordinates of points in the plot, \emph{optional}
       if \code{x} is an appropriate structure.}
-  \item{xlim, ylim}{the ranges to be encompassed by the x and y axes.}
-  \item{type}{what type of plot should be drawn.  Possible types are
-    \itemize{
-      \item \code{"p"} for \bold{p}oints,
-      \item \code{"l"} for \bold{l}ines,
-      \item \code{"b"} for \bold{b}oth,
-      \item \code{"c"} for the lines part alone of \code{"b"},
-      \item \code{"o"} for both \dQuote{\bold{o}verplotted},
-      \item \code{"h"} for \dQuote{\bold{h}istogram} like (or
-      \dQuote{high-density}) vertical lines,
-      \item \code{"s"} for stair \bold{s}teps,
-      \item \code{"S"} for other \bold{s}teps, see \emph{Details} below,
-      \item \code{"n"} for no plotting.
-    }
-    All other \code{type}s give a warning or an error; using, e.g.,
-    \code{type = "punkte"} being equivalent to \code{type = "p"} for S
-    compatibility.
-  }
-  \item{main}{an overall title for the plot.}
-  \item{xlab}{a title for the x axis.}
-  \item{ylab}{a title for the y axis.}
   \item{\dots}{graphical parameters can be given as arguments to
-    \code{plot}.}
+    \code{plot}.  Many methods will also accept the following arguments:
+    
+    \item{type}{what type of plot should be drawn.  Possible types are
+      \itemize{
+	\item \code{"p"} for \bold{p}oints,
+	\item \code{"l"} for \bold{l}ines,
+	\item \code{"b"} for \bold{b}oth,
+	\item \code{"c"} for the lines part alone of \code{"b"},
+	\item \code{"o"} for both \dQuote{\bold{o}verplotted},
+	\item \code{"h"} for \dQuote{\bold{h}istogram} like (or
+	\dQuote{high-density}) vertical lines,
+	\item \code{"s"} for stair \bold{s}teps,
+	\item \code{"S"} for other \bold{s}teps, see \emph{Details} below,
+	\item \code{"n"} for no plotting.
+      }
+      All other \code{type}s give a warning or an error; using, e.g.,
+      \code{type = "punkte"} being equivalent to \code{type = "p"} for S
+      compatibility.
+    }
+    \item{main}{an overall title for the plot: see \code{\link{title}}.}
+    \item{sub}{a sub title for the plot: see \code{\link{title}}.}
+    \item{xlab}{a title for the x axis: see \code{\link{title}}.}
+    \item{ylab}{a title for the y axis: see \code{\link{title}}.}
+  }
 }
 \description{
   Generic function for plotting of \R objects.  For more details about

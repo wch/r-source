@@ -1,4 +1,4 @@
-\name{codes}
+\name{codes-deprecated}
 \alias{codes-deprecated}
 \title{Factor Codes}
 \description{

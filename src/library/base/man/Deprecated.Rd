@@ -39,7 +39,8 @@ lm.fit.null(x, y, method = "qr", tol = 1e-07, \dots)
 lm.wfit.null(x, y, w, method = "qr", tol = 1e-07, \dots)
 glm.fit.null(x, y, weights = rep(1, nobs), start = NULL,
              etastart = NULL, mustart = NULL, offset = rep(0, nobs),
-             family = gaussian(), control = glm.control(), intercept = FALSE)
+             family = gaussian(), control = glm.control(),
+             intercept = FALSE)
 % </Deprecated 1.8.0>
 }
 \details{

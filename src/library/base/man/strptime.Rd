@@ -12,21 +12,9 @@
   classes \code{"POSIXlt"} and \code{"POSIXct"} representing calendar
   dates and times.
 }
-\synopsis{
+\usage{
 \method{format}{POSIXct}(x, format = "", tz = "", usetz = FALSE, \dots)
 \method{format}{POSIXlt}(x, format = "", usetz = FALSE, \dots)
-
-\method{as.character}{POSIXt}(x, \dots)
-
-strftime(x, format="", usetz = FALSE, \dots)
-strptime(x, format)
-
-ISOdatetime(year, month, day, hour, min, sec, tz = "")
-ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
-}
-\usage{
-format.POSIXct(x, format = "", tz = "", usetz = FALSE, \dots)
-format.POSIXlt(x, format = "", usetz = FALSE, \dots)
 
 \method{as.character}{POSIXt}(x, \dots)
 

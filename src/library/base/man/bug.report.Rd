@@ -139,13 +139,16 @@ bug.report(subject = "", ccaddress = Sys.getenv("USER"),
   bug.  This ensures that the site profile and saved data files are not
   read.
 
-  On some systems a bug report can be generated using the
+  A bug report can be generated using the
   \code{bug.report()} function.  This automatically includes the version
   information and sends the bug to the correct address.  Alternatively
   the bug report can be emailed to \email{r-bugs@r-project.org} or
   submitted to the Web page at \url{http://bugs.r-project.org}.
+
+  Bug reports on \strong{contributed packages} should perhaps be sent to the
+  package maintainer rather than to r-bugs.
 }
 \seealso{R FAQ} 
-\author{This help page is adapted from the Emacs manual}
+\author{This help page is adapted from the Emacs manual and the R FAQ}
 \keyword{utilities}
 \keyword{error}

@@ -12,8 +12,8 @@ model.weights(x)
 \alias{model.weights}
 \arguments{
  \item{frame, x, data}{A model frame.}
- \item{component}{The name of a components to extract, such as
-   \code{"weights"}, \code{"subset"}.}
+ \item{component}{literal character string or name. The name of a
+   component to extract, such as \code{"weights"}, \code{"subset"}.}
  \item{type}{One of \code{"any"}, \code{"numeric"}, \code{"double"}.
    Using the either of latter two coerces the result to have
    storage mode \code{"double"}.}
@@ -23,6 +23,9 @@ model.weights(x)
   \code{\link{model.frame}}.
 }
 \details{
+  \code{model.extract} is provided for compatibility with S, which does
+  not have the more specific functions.
+
   \code{model.offset} and
   \code{model.response} are equivalent to \code{model.frame(, "offset")}
   and \code{model.frame(, "response")} respectively.

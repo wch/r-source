@@ -14,10 +14,9 @@
 %\alias{weights.nls}
 %\alias{vcov.nls}
 \title{Nonlinear Least Squares}
-\synopsis{
-nls(formula, data = parent.frame(), start, control,
-    algorithm = "default", trace = FALSE, subset,
-    weights, na.action)
+\description{
+  Determine the nonlinear least-squares estimates of the nonlinear model
+  parameters and return a class \code{nls} object.
 }
 \usage{
 nls(formula, data = parent.frame(), start, control = nls.control(),
@@ -49,10 +48,6 @@ nls(formula, data = parent.frame(), start, control = nls.control(),
      yet implemented}}
 \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.}
-}
-\description{
-  Determine the nonlinear least squares estimates of the nonlinear model
-  parameters and return a class \code{nls} object.
 }
 \details{
   \bold{Do not use \code{nls} on artificial "zero-residual" data.}

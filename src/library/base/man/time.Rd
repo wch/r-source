@@ -1,23 +1,4 @@
 \name{time}
-\title{Sampling Times of Time Series}
-\usage{
-time(x, offset=0, \dots)
-cycle(x, \dots)
-frequency(x, \dots)
-deltat(x, \dots)
-}
-\synopsis{
-time(x, \dots)
-time.default(x, offset=0, \dots)
-time.ts(x, \dots)
-cycle(x, \dots)
-cycle.ts(x, \dots)
-cycle.default(x, \dots)
-frequency(x, \dots)
-frequency.default(x, \dots)
-deltat(x, \dots)
-deltat.default(x, \dots)
-}
 \alias{time}
 \alias{cycle}
 \alias{frequency}
@@ -28,14 +9,7 @@ deltat.default(x, \dots)
 \alias{cycle.ts}
 \alias{frequency.default}
 \alias{deltat.default}
-\arguments{
-  \item{x}{a univariate or multivariate time-series, or a vector or matrix.}
-  \item{offset}{can be used to indicate when sampling took place
-    in the time unit. \code{0} (the default) indicates the start
-    of the unit, \code{0.5} the middle and \code{1} the end of
-    the interval.}
-  \item{\dots}{extra arguments for future methods.}
-}
+\title{Sampling Times of Time Series}
 \description{
   \code{time} creates the vector of times at which a time series was sampled.
 
@@ -44,6 +18,23 @@ deltat.default(x, \dots)
   \code{frequency} returns the number of samples per unit time and
   \code{deltat} the time interval between observations (see
   \code{\link{ts}}).
+}
+\usage{
+time(x, \dots)
+time.ts(x, \dots)
+\method{time}{default}(x, offset=0, \dots)
+
+cycle(x, \dots)
+frequency(x, \dots)
+deltat(x, \dots)
+}
+\arguments{
+  \item{x}{a univariate or multivariate time-series, or a vector or matrix.}
+  \item{offset}{can be used to indicate when sampling took place
+    in the time unit. \code{0} (the default) indicates the start
+    of the unit, \code{0.5} the middle and \code{1} the end of
+    the interval.}
+  \item{\dots}{extra arguments for future methods.}
 }
 \details{
   These are all generic functions, which will use the

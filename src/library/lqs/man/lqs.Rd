@@ -16,31 +16,19 @@ Resistant Regression
   achieving a regression estimator with a high breakdown point.
   \code{lmsreg} and \code{ltsreg} are compatibility wrappers.
 }
-\synopsis{
-lqs(x, \dots)
-lqs.formula(formula, data, \dots,
-            method = c("lts", "lqs", "lms", "S", "model.frame"),
-            subset, na.action = na.fail, model = TRUE,
-            x.ret = FALSE, y.ret = FALSE, contrasts = NULL)
-lqs.default(x, y, intercept = TRUE, method = c("lts", "lqs", "lms", "S"),
-            quantile, control = lqs.control(\dots), k0 = 1.548, seed, \dots)
-
-lmsreg(\ldots)
-ltsreg(\ldots)
-}
 \usage{
 lqs(x, \dots)
 
 \method{lqs}{formula}(formula, data, \dots,
     method = c("lts", "lqs", "lms", "S", "model.frame"),
     subset, na.action = na.fail, model = TRUE,
-    x = FALSE, y = FALSE, contrasts = NULL)
+    x.ret = FALSE, y.ret = FALSE, contrasts = NULL)
 
 \method{lqs}{default}(x, y, intercept = TRUE, method = c("lts", "lqs", "lms", "S"),
     quantile, control = lqs.control(\dots), k0 = 1.548, seed, \dots)
 
-lmsreg(\ldots)
-ltsreg(\ldots)
+lmsreg(\dots)
+ltsreg(\dots)
 }
 \arguments{
   \item{formula}{a formula of the form \code{y ~ x1 + x2 + \dots}.}
@@ -55,7 +43,8 @@ ltsreg(\ldots)
     cases with missing values on any required variable.  (NOTE: If
     given, this argument must be named exactly.)
   }
-  \item{model}{logical. If \code{TRUE} the model frame is returned.}
+  \item{model, x.ret, y.ret}{logical. If \code{TRUE} the model frame,
+    the model matrix and the response are returned, respectively.}
   \item{contrasts}{an optional list.  See the \code{contrasts.arg}
     of \code{\link{model.matrix.default}}.}
   \item{x}{a matrix or data frame containing the explanatory variables.}

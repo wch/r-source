@@ -24,9 +24,9 @@
 \usage{
 as.dendrogram(object, \dots)
 
-\method{plot}{dendrogram}(x, type=c("rectangle", "triangle"),
-         center=FALSE, edge.root= !is.null(attr(x,"edgetext")),
-         nodePar = NULL, edgePar = list(), xlab="", ylab="",
+\method{plot}{dendrogram}(x, type = c("rectangle", "triangle"),
+         center = FALSE, edge.root = !is.null(attr(x,"edgetext")),
+         nodePar = NULL, edgePar = list(), xlab = "", ylab = "",
          horiz = FALSE, \dots)
 
 \method{cut}{dendrogram}(x, h, \dots)
@@ -38,9 +38,20 @@ as.dendrogram(object, \dots)
 % Also: 'object' has different meaning here
 }
 \synopsis{
-str.dendrogram(object, max.level = 0, vec.len = 4, digits.d= 3, nchar.max= 128,
-    give.attr = TRUE, give.length = TRUE, wid = getOption("width"),
-    nest.lev = 0, indent.str = "", \dots)
+as.dendrogram(object, \dots)
+
+\method{plot}{dendrogram}(x, type = c("rectangle", "triangle"),
+         center = FALSE, edge.root = !is.null(attr(x,"edgetext")),
+         nodePar = NULL, edgePar = list(), xlab = "", ylab = "",
+         horiz = FALSE, \dots)
+
+\method{cut}{dendrogram}(x, h, \dots)
+
+\method{print}{dendrogram}(x, digits, \dots)
+
+str.dendrogram(object, max.level = 0, vec.len = 4, digits.d = 3,
+    nchar.max = 128, give.attr = TRUE, give.length = TRUE,
+    wid = getOption("width"), nest.lev = 0, indent.str = "", \dots)
 }
 \arguments{
   \item{object}{any \R object that can be made into one of class

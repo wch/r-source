@@ -6,7 +6,8 @@
 \usage{
 se.contrast(object, \dots)
 \method{se.contrast}{aov}(object, contrast.obj,
-  coef = contr.helmert(ncol(contrast))[, 1], data = NULL, \dots)
+           coef = contr.helmert(ncol(contrast))[, 1],
+           data = NULL, \dots)
 }
 \arguments{
  \item{object}{A suitable fit, usually from \code{aov}.}

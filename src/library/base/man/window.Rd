@@ -1,23 +1,16 @@
 \name{window}
+\alias{window}
+\alias{window.default}
+\alias{window.ts}
 \title{Time Windows}
 \usage{
 window(x, \dots)
 
+\method{window}{ts}(x, \dots)
+
 \method{window}{default}(x, start = NULL, end = NULL,
       frequency = NULL, deltat = NULL, extend = FALSE, \dots)
-
-\method{window}{ts}(x, start = NULL, end = NULL,
-     frequency = NULL, deltat = NULL, extend = FALSE, \dots)
 }
-\synopsis{
-window(x, \dots)
-window.default(x, start = NULL, end = NULL,
-               frequency = NULL, deltat = NULL, extend = FALSE, \dots)
-window.ts(x, \dots)
-}
-\alias{window}
-\alias{window.default}
-\alias{window.ts}
 \arguments{
   \item{x}{a time-series or other object.}
   \item{start}{the start time of the period of interest.}

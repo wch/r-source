@@ -15,8 +15,8 @@ axis.POSIXct(side, x, at, format, \dots)
 \method{plot}{POSIXlt}(x, y, xlab = "", \dots)
 }
 \synopsis{
-plot.POSIXct(x, y, xlab = "", xaxt = par("xaxt"), ...)
-plot.POSIXlt(x, y, xlab = "", xaxt = par("xaxt"), ...)
+plot.POSIXct(x, y, xlab = "", axes = TRUE, frame.plot = axes, xaxt = par("xaxt"), ...)
+plot.POSIXlt(x, y, xlab = "", axes = TRUE, frame.plot = axes, xaxt = par("xaxt"), ...)
 axis.POSIXct(side, x, at, format, ...)
 }
 \arguments{
@@ -26,7 +26,8 @@ axis.POSIXct(side, x, at, format, ...)
   \item{side}{See \code{\link{axis}}.}
   \item{format}{See \code{\link{strptime}}.}
   \item{\dots}{Further arguments to be passed from or to other methods,
-    typically graphical parameters.}
+    typically graphical parameters or arguments of
+    \code{\link{plot.default}}.}
 }
 \details{
   The functions plot against an x-axis of date-times.

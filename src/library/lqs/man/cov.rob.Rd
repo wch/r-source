@@ -17,45 +17,40 @@
 \usage{
 cov.rob(x, cor = FALSE, quantile.used = floor((n + p + 1)/2),
         method = c("mve", "mcd", "classical"), nsamp = "best", seed)
-cov.mve(x, cor = FALSE, quantile.used = floor((n + p + 1)/2),
-        nsamp = "best", seed)
-cov.mcd(x, cor = FALSE, quantile.used = floor((n + p + 1)/2),
-        nsamp = "best", seed)
-}
-\synopsis{
-cov.rob(x, cor = FALSE, quantile.used = floor((n + p + 1)/2),
-        method = c("mve", "mcd", "classical"), nsamp = "best", seed)
+
 cov.mve(\dots)
 cov.mcd(\dots)
 }
 \arguments{
-\item{x}{
-  a matrix or data frame.
+  \item{x}{
+    a matrix or data frame.
+  }
+  \item{cor}{
+    should the returned result include a correlation matrix?
+  }
+  \item{quantile.used}{
+    the minimum number of the data points regarded as \code{good} points.
+  }
+  \item{method}{
+    the method to be used -- minimum volume ellipsoid, minimum
+    covariance determinant or classical product-moment. Using
+    \code{cov.mve} or \code{cov.mcd} forces \code{mve} or \code{mcd}
+    respectively.
+  }
+  \item{nsamp}{
+    the number of samples or \code{"best"} or \code{"exact"} or
+    \code{"sample"}.
+    If \code{"sample"} the number chosen is \code{min(5*p, 3000)}, taken
+    from Rousseeuw and Hubert (1997). If \code{"best"} exhaustive
+    enumeration is done up to 5000 samples: if \code{"exact"}
+    exhaustive enumeration will be attempted however many samples are needed.
+  }
+  \item{seed}{
+    the seed to be used for random sampling: see \code{\link{RNGkind}}. The
+    current value of \code{.Random.seed} will be preserved if it is set.
+  }
+  \item{\dots}{arguments to \code{cov.rob} other than \code{method}.}
 }
-\item{cor}{
-  should the returned result include a correlation matrix?
-}
-\item{quantile.used}{
-  the minimum number of the data points regarded as \code{good} points.
-}
-\item{method}{
-  the method to be used -- minimum volume ellipsoid, minimum
-  covariance determinant or classical product-moment. Using
-  \code{cov.mve} or \code{cov.mcd} forces \code{mve} or \code{mcd}
-  respectively.
-}
-\item{nsamp}{
-  the number of samples or \code{"best"} or \code{"exact"} or
-  \code{"sample"}.
-  If \code{"sample"} the number chosen is \code{min(5*p, 3000)}, taken
-  from Rousseeuw and Hubert (1997). If \code{"best"} exhaustive
-  enumeration is done up to 5000 samples: if \code{"exact"}
-  exhaustive enumeration will be attempted however many samples are needed.
-}
-\item{seed}{
-  the seed to be used for random sampling: see \code{\link{RNGkind}}. The
-  current value of \code{.Random.seed} will be preserved if it is set.
-}}
 \value{
   A list with components
 
