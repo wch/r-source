@@ -25,19 +25,19 @@ validDetails.axis <- function(x) {
     x$at <- as.numeric(x$at)
     if (length(x$at) < 1 ||
         !is.finite(x$at))
-      stop("Invalid at location in axis")
+      stop("Invalid 'at' location in 'axis'")
   }
   if (!is.logical(x$label)) {
     # labels specified
     # Can only spec labels if at is not NULL
     if (is.null(x$at))
-      stop("Illegal to specify axis labels when at is NULL")
+      stop("Invalid to specify axis labels when 'at' is NULL")
     # Must be either language object or string
     if (!is.language(x$label))
       x$label <- as.character(x$label)
     # Must be same number of labels as "at" locations
     if (length(x$label) != length(x$at))
-      stop("labels and at locations must have same length")
+      stop("'labels' and 'at' locations must have same length")
   }
   x$main <- as.logical(x$main)
   x
@@ -129,14 +129,14 @@ make.xaxis.labels <- function(at, label, main) {
 }
 
 updateXlabels <- function(x) {
-  if (is.logical(x$label) && !x$label) 
+  if (is.logical(x$label) && !x$label)
     removeGrob(x, "labels", warn=FALSE)
   else
     addGrob(x, make.xaxis.labels(x$at, x$label, x$main))
 }
 
 xaxisGrob <- function(at=NULL, label=TRUE, main=TRUE,
-                      edits=NULL, 
+                      edits=NULL,
                       name=NULL, gp=gpar(), vp=NULL) {
   grid.xaxis(at=at, label=label, main=main,
              edits=edits,
@@ -255,7 +255,7 @@ make.yaxis.labels <- function(at, label, main) {
 }
 
 updateYlabels <- function(x) {
-  if (is.logical(x$label) && !x$label) 
+  if (is.logical(x$label) && !x$label)
     removeGrob(x, "labels", warn=FALSE)
   else
     addGrob(x, make.yaxis.labels(x$at, x$label, x$main))
@@ -287,7 +287,7 @@ grid.yaxis <- function(at=NULL, label=TRUE, main=TRUE,
     else
       labels <- make.yaxis.labels(at, label, main)
   }
-  yg <- applyEdits(gTree(at=at, label=label, main=main, 
+  yg <- applyEdits(gTree(at=at, label=label, main=main,
                          children=gList(major, ticks, labels),
                          edits=edits,
                          name=name, gp=gp, vp=vp,

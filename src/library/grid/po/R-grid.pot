@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-18 07:49\n"
+"POT-Creation-Date: 2005-03-02 22:05\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,64 +11,61 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
-msgid "Invalid at location in axis"
+msgid "Invalid 'at' location in 'axis'"
 msgstr ""
 
-msgid "Illegal to specify axis labels when at is NULL"
+msgid "Invalid to specify axis labels when 'at' is NULL"
 msgstr ""
 
-msgid "labels and at locations must have same length"
+msgid "'labels' and 'at' locations must have same length"
 msgstr ""
 
-msgid "Invalid edit information"
+msgid "Invalid 'edit' information"
 msgstr ""
 
-msgid "gEditList can only contain gEdit objects"
+msgid "'gEditList' can only contain 'gEdit' objects"
 msgstr ""
 
-msgid "Invalid frame"
+msgid "Invalid 'frame'"
 msgstr ""
 
-msgid "Invalid grob"
+msgid "Invalid 'grob'"
 msgstr ""
 
-msgid "Invalid row and/or col (no such cell in frame layout)"
+msgid "Invalid 'row' and/or 'col' (no such cell in frame layout)"
 msgstr ""
 
-msgid "`col' can only be a range of existing columns"
+msgid "'col' can only be a range of existing columns"
 msgstr ""
 
-msgid "Invalid column specification"
+msgid "Invalid 'col' specification"
 msgstr ""
 
-msgid "`row' can only be a range of existing rows"
+msgid "'row' can only be a range of existing rows"
 msgstr ""
 
-msgid "Invalid row specification"
+msgid "Invalid 'row' specification"
 msgstr ""
 
-msgid "Cannot specify more than one of side=[\"left\", \"right\"], col, col.before, or col.after"
+msgid "Cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
 msgstr ""
 
-msgid "Must specify exactly one of side=[\"top\", \"bottom\"], row, row.before, or row.after"
+msgid "Must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
 msgstr ""
 
-msgid "gpar element"
+msgid "gpar element '%s' must not be length 0"
 msgstr ""
 
-msgid "must not be length 0"
+msgid "'gamma' gpar is deprecated"
 msgstr ""
 
-msgid "gamma gpar is deprecated"
+msgid "Invalid 'linemitre' value"
 msgstr ""
 
-msgid "Invalid linemitre value"
+msgid "Invalid 'alpha' value"
 msgstr ""
 
-msgid "Invalid alpha value"
-msgstr ""
-
-msgid "Must specify only one of font and fontface"
+msgid "Must specify only one of 'font' and 'fontface'"
 msgstr ""
 
 msgid "Invalid font face"
@@ -77,7 +74,7 @@ msgstr ""
 msgid "Argument must be a 'gpar' object"
 msgstr ""
 
-msgid "Must specify only valid gpar names"
+msgid "Must specify only valid 'gpar' names"
 msgstr ""
 
 msgid "WILL not be faithful"
@@ -98,10 +95,7 @@ msgstr ""
 msgid "Must specify at least one viewport"
 msgstr ""
 
-msgid "Viewport"
-msgstr ""
-
-msgid "was not found"
+msgid "Viewport '%s' was not found"
 msgstr ""
 
 msgid "Must pop at least one viewport"
@@ -113,112 +107,100 @@ msgstr ""
 msgid "The vp argument is deprecated"
 msgstr ""
 
-msgid "Invalid ask value"
+msgid "Invalid 'ask' value"
 msgstr ""
 
 msgid "Invalid object inserted on the display list"
 msgstr ""
 
-msgid "Invalid vp slot"
+msgid "Invalid 'vp' slot"
 msgstr ""
 
-msgid "Invalid gp slot"
+msgid "Invalid 'gp' slot"
 msgstr ""
 
-msgid "Invalid grob class"
+msgid "Invalid 'grob' class"
 msgstr ""
 
 msgid "grid.grob() is deprecated; please use grob() instead"
 msgstr ""
 
-msgid "A grob path must contain at least one grob name"
+msgid "A 'grob' path must contain at least one 'grob' name"
 msgstr ""
 
-msgid "Invalid grob name(s)"
+msgid "Invalid 'grob' name(s)"
 msgstr ""
 
-msgid "Only grobs allowed in gList"
+msgid "Only 'grobs' allowed in 'gList'"
 msgstr ""
 
-msgid "Invalid element to add to gList"
+msgid "Invalid element to add to 'gList'"
 msgstr ""
 
-msgid "Can only set children for a gTree"
+msgid "Can only set 'children' for a 'gTree'"
 msgstr ""
 
-msgid "Children must be a gList"
+msgid "'children' must be a 'gList'"
 msgstr ""
 
-msgid "It is only valid to get children from a gTree"
+msgid "It is only valid to get 'children' from a 'gTree'"
 msgstr ""
 
-msgid "Invalid gTree class"
+msgid "Invalid 'gTree' class"
 msgstr ""
 
-msgid "allDevices not yet implemented"
+msgid "'allDevices' not yet implemented"
 msgstr ""
 
-msgid "Invalid path"
+msgid "Invalid 'gPath'"
 msgstr ""
 
-msgid "Invalid grep value"
+msgid "Invalid 'grep' value"
 msgstr ""
 
-msgid "It is only valid to get a child from a gTree"
+msgid "It is only valid to get a child from a 'gTree'"
 msgstr ""
 
-msgid "gPath does not specify a valid child"
+msgid "'gPath' does not specify a valid child"
 msgstr ""
 
-msgid "It is only valid to set a child of a gTree"
+msgid "It is only valid to set a child of a 'gTree'"
 msgstr ""
 
-msgid "It is only valid to set a grob as child of a gTree"
+msgid "It is only valid to set a 'grob' as child of a 'gTree'"
 msgstr ""
 
-msgid "New grob name ("
+msgid "New 'grob' name (%s) does not match 'gPath' (%s)"
 msgstr ""
 
-msgid ") does not match gPath ("
+msgid "It is only valid to add a 'grob' to a 'gTree'"
 msgstr ""
 
-msgid ")"
+msgid "It is only valid to add a child to a 'gTree'"
 msgstr ""
 
-msgid "It is only valid to add a grob to a gTree"
+msgid "It is only valid to remove a child from a 'gTree'"
 msgstr ""
 
-msgid "It is only valid to add a child to a gTree"
+msgid "It is only valid to edit a child of a 'gTree'"
 msgstr ""
 
-msgid "It is only valid to remove a child from a gTree"
+msgid "It is invalid to directly edit the 'children' or 'childrenOrder' slot"
 msgstr ""
 
-msgid "It is only valid to edit a child of a gTree"
+msgid "Invalid 'result'"
 msgstr ""
 
-msgid "It is invalid to directly edit the children or childrenOrder slot"
-msgstr ""
-
-msgid "Invalid result"
-msgstr ""
-
-msgid "The new grob must have the same name as the old grob"
+msgid "The new 'grob' must have the same name as the old 'grob'"
 msgstr ""
 
 msgid "Slot %d not found"
 msgstr ""
 
-msgid "gPath ("
+msgid "gPath (%s) not found"
 msgstr ""
 
-msgid ") not found"
-msgstr ""
-
-msgid "Grob"
-msgstr ""
-
-msgid "not found"
+msgid "Grob '%s' not found"
 msgstr ""
 
 msgid "Invalid element in the display list"
@@ -227,16 +209,16 @@ msgstr ""
 msgid "This function is redundant and will disappear in future versions."
 msgstr ""
 
-msgid "l must be a layout"
+msgid "'l' must be a layout"
 msgstr ""
 
-msgid "pch and labels not the same length"
+msgid "'pch' and 'labels' not the same length"
 msgstr ""
 
-msgid "hgap must be single unit"
+msgid "'hgap' must be single unit"
 msgstr ""
 
-msgid "vgap must be single unit"
+msgid "'vgap' must be single unit"
 msgstr ""
 
 msgid "Invalid justification"
@@ -251,94 +233,91 @@ msgstr ""
 msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
 msgstr ""
 
-msgid "Invalid origin"
+msgid "Invalid 'origin'"
 msgstr ""
 
-msgid "x and y must be units"
+msgid "'x' and 'y' must be units"
 msgstr ""
 
-msgid "x and y must have length 1"
+msgid "'x' and 'y' must have length 1"
 msgstr ""
 
-msgid "x0, y0, x1, and y1 must be units"
+msgid "'x0', 'y0', 'x1', and 'y1' must be units"
 msgstr ""
 
-msgid "x and y must be units or NULL"
+msgid "'x' and 'y' must be units or NULL"
 msgstr ""
 
-msgid "Length must be a unit object"
+msgid "'length' must be a unit object"
 msgstr ""
 
-msgid "Invalid ends or type argument"
+msgid "Invalid 'ends' or 'type' argument"
 msgstr ""
 
-msgid "Corrupt arrows object"
+msgid "Corrupt 'arrows' object"
 msgstr ""
 
-msgid "The grob argument must be a line.to, lines, or segments grob"
+msgid "The 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 msgstr ""
 
-msgid "It is invalid to specify both id and id.lenths"
+msgid "It is invalid to specify both 'id' and 'id.lengths"
 msgstr ""
 
-msgid "x and y must be same length"
+msgid "'x' and 'y' must be same length"
 msgstr ""
 
-msgid "x and y and id must all be same length"
+msgid "'x' and 'y' and 'id' must all be same length"
 msgstr ""
 
-msgid "x and y and id.lengths must specify same overall length"
+msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
 msgstr ""
 
-msgid "x, y, and r must be units"
+msgid "'x', 'y', and 'r' must be units"
 msgstr ""
 
-msgid "x, y, width, and height must be units"
+msgid "'x', 'y', 'width', and 'height' must be units"
 msgstr ""
 
-msgid "Invalid rot value"
+msgid "Invalid 'rot' value"
 msgstr ""
 
-msgid "zero-length pch"
+msgid "zero-length 'pch'"
 msgstr ""
 
-msgid "x, y and size must be units"
+msgid "'x', 'y' and 'size' must be units"
 msgstr ""
 
-msgid "x and y must be unit objects and have the same length"
+msgid "'x' and 'y' must be unit objects and have the same length"
 msgstr ""
 
-msgid "x must be numeric"
+msgid "'x' must be numeric"
 msgstr ""
 
-msgid "x and units must have length > 0"
+msgid "'x' and 'units' must have length > 0"
 msgstr ""
 
-msgid "`x' argument must be a unit object"
+msgid "'x' argument must be a unit object"
 msgstr ""
 
-msgid "Invalid axis or type"
+msgid "Invalid 'axis' or 'type'"
 msgstr ""
 
-msgid "No string supplied for `strwidth' unit"
+msgid "No string supplied for 'strwidth' unit"
 msgstr ""
 
-msgid "No string supplied for `strheight' unit"
+msgid "No string supplied for 'strheight' unit"
 msgstr ""
 
-msgid "No grob supplied for `grobwidth' unit"
+msgid "No 'grob' supplied for 'grobwidth' unit"
 msgstr ""
 
-msgid "gPath must have depth 1 in grobwidth/height units"
+msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr ""
 
-msgid "No grob supplied for `grobheight' unit"
+msgid "No 'grob' supplied for 'grobheight' unit"
 msgstr ""
 
-msgid "Operator"
-msgstr ""
-
-msgid "not meaningful for units"
+msgid "Operator '%s' not meaningful for units"
 msgstr ""
 
 msgid "Only one operand may be a unit"
@@ -350,7 +329,7 @@ msgstr ""
 msgid "Both operands must be units"
 msgstr ""
 
-msgid "Summary function"
+msgid "'Summary' function '%s' not meaningful for units"
 msgstr ""
 
 msgid "Zero arguments where at least one expected"
@@ -368,43 +347,43 @@ msgstr ""
 msgid "It is invalid to combine unit objects with other types"
 msgstr ""
 
-msgid "range must be numeric"
+msgid "'range' must be numeric"
 msgstr ""
 
-msgid "`x', `y', `width', and `height' must all be units of length 1"
+msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
 msgstr ""
 
 msgid "Invalid graphics parameters"
 msgstr ""
 
-msgid "Invalid clip value"
+msgid "Invalid 'clip' value"
 msgstr ""
 
-msgid "Invalid xscale in viewport"
+msgid "Invalid 'xscale' in viewport"
 msgstr ""
 
-msgid "Invalid yscale in viewport"
+msgid "Invalid 'yscale' in viewport"
 msgstr ""
 
-msgid "Invalid angle in viewport"
+msgid "Invalid 'angle' in viewport"
 msgstr ""
 
-msgid "Invalid layout in viewport"
+msgid "Invalid 'layout' in viewport"
 msgstr ""
 
-msgid "Invalid layout.pos.row in viewport"
+msgid "Invalid 'layout.pos.row' in viewport"
 msgstr ""
 
-msgid "Invalid layout.pos.col in viewport"
+msgid "Invalid 'layout.pos.col' in viewport"
 msgstr ""
 
-msgid "Only viewports allowed in vpList"
+msgid "Only viewports allowed in 'vpList'"
 msgstr ""
 
-msgid "Only viewports allowed in vpStack"
+msgid "Only viewports allowed in 'vpStack'"
 msgstr ""
 
-msgid "Parent must be viewport and children must be vpList in vpTree"
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
 msgstr ""
 
 msgid "A viewport path must contain at least one viewport name"
@@ -413,8 +392,8 @@ msgstr ""
 msgid "Invalid viewport name(s)"
 msgstr ""
 
-msgid "Must specify at least one of x or xscale"
+msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr ""
 
-msgid "Must specify at least one of y or yscale"
+msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr ""

@@ -4,9 +4,9 @@
 # NOTE: make framevp separate slot (rather than combining with
 # normal vp slot) so that it can be edited (e.g., by grid.pack)
 frameGrob <- function(layout=NULL, name=NULL, gp=gpar(), vp=NULL) {
-  if (!is.null(layout)) 
+  if (!is.null(layout))
     framevp <- viewport(layout=layout)
-  else 
+  else
     framevp <- NULL
   gTree(framevp=framevp, name=name, gp=gp, vp=vp,
         cl="frame")
@@ -102,14 +102,14 @@ grid.place <- function(gPath, grob,
            placeGrob(grid.get(gPath), grob, row, col),
            redraw)
 }
-  
+
 # ... for a grob description
 placeGrob <- function(frame, grob,
                       row=NULL, col=NULL) {
   if (!inherits(frame, "frame"))
-    stop("Invalid frame")
+    stop("Invalid 'frame'")
   if (!is.grob(grob))
-    stop("Invalid grob")
+    stop("Invalid 'grob'")
   dim <- frameDim(frame)
   if (is.null(row))
     row <- c(1, dim[1])
@@ -121,7 +121,7 @@ placeGrob <- function(frame, grob,
     col <- rep(col, 2)
   if (min(row) < 1 || max(row) > dim[1] ||
       min(col) < 1 || max(col) > dim[2])
-    stop("Invalid row and/or col (no such cell in frame layout)")
+    stop("Invalid 'row' and/or 'col' (no such cell in frame layout)")
   cgrob <- cellGrob(col, row, NULL, grob, FALSE,
                     cellViewport(col, row, NULL))
   addGrob(frame, cgrob)
@@ -158,15 +158,15 @@ new.col <- function(side, col, col.before, col.after, ncol) {
   result <- TRUE
   if (!is.null(col)) {
     # It is an error to specify a range for col which is outside 1..ncol
-    if (length(col) == 2) 
+    if (length(col) == 2)
       if (col[1] < 1 || col[2] > ncol)
-        stop("`col' can only be a range of existing columns")
+        stop("'col' can only be a range of existing columns")
       else
         result <- FALSE
     # It is also an error to specify a single col outside 1..ncol+1
     else
       if (col < 1 || col > ncol + 1)
-        stop("Invalid column specification")
+        stop("Invalid 'col' specification")
       else
         result <- col == ncol+1
   }
@@ -201,15 +201,15 @@ new.row <- function(side, row, row.before, row.after, nrow) {
   result <- TRUE
   if (!is.null(row)) {
     # It is an error to specify a range for row which is outside 1..nrow
-    if (length(row) == 2) 
+    if (length(row) == 2)
       if (row[1] < 1 || row[2] > nrow)
-        stop("`row' can only be a range of existing rows")
+        stop("'row' can only be a range of existing rows")
       else
         result <- FALSE
     # It is also an error to specify a single row outside 1..nrow+1
     else
       if (row < 1 || row > nrow + 1)
-        stop("Invalid row specification")
+        stop("Invalid 'row' specification")
       else
         result <- row == nrow+1
   }
@@ -271,7 +271,7 @@ updateRow <- function(row, added.row) {
 }
 
 # FIXME:  Allow specification of respect for new row/col
-# Pack a child grob within a frame grob ... 
+# Pack a child grob within a frame grob ...
 # (a special sort of editing just for frame grobs)
 # ... for a grob on the display list
 grid.pack <- function(gPath, grob, redraw=TRUE,
@@ -298,9 +298,9 @@ packGrob <- function(frame, grob,
                      force.width=FALSE, force.height=FALSE,
                      border=NULL, dynamic=FALSE) {
   if (!inherits(frame, "frame"))
-    stop("Invalid frame")
+    stop("Invalid 'frame'")
   if (!is.grob(grob))
-    stop("Invalid grob")
+    stop("Invalid 'grob'")
   # col/row can be given as a range, but I only want to know
   # about the min and max
   if (!is.null(col) & length(col) > 1) {
@@ -315,7 +315,7 @@ packGrob <- function(frame, grob,
   }
   else
     row.range <- FALSE
-  
+
   frame.vp <- frame$framevp
   if (is.null(frame.vp))
     frame.vp <- viewport()
@@ -324,10 +324,10 @@ packGrob <- function(frame, grob,
     ncol <- 0
     nrow <- 0
   } else {
-    ncol <- layout.ncol(lay) 
-    nrow <- layout.nrow(lay) 
+    ncol <- layout.ncol(lay)
+    nrow <- layout.nrow(lay)
   }
-  
+
   # (i) Check that the specifications of the location of the grob
   # give a unique location
   ncs <- num.col.specs(side, col, col.before, col.after)
@@ -342,8 +342,8 @@ packGrob <- function(frame, grob,
       col <- 1
     ncs <- 1
   }
-  if (ncs != 1) 
-    stop("Cannot specify more than one of side=[\"left\", \"right\"], col, col.before, or col.after")
+  if (ncs != 1)
+    stop("Cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'")
   nrs <- num.row.specs(side, row, row.before, row.after)
   # If user does not specify a row, assume it is all rows
   if (nrs == 0) {
@@ -357,7 +357,7 @@ packGrob <- function(frame, grob,
     nrs <- 1
   }
   if (nrs != 1)
-    stop("Must specify exactly one of side=[\"top\", \"bottom\"], row, row.before, or row.after")
+    stop("Must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'")
 
   # (ii) Determine that location and check that it is valid
   new.col <- new.col(side, col, col.before, col.after, ncol)
@@ -371,7 +371,7 @@ packGrob <- function(frame, grob,
   if (!is.null(grob))
     cgrob <- cellGrob(col, row, border, grob, dynamic,
                       cellViewport(col, row, border))
-  
+
   # (iii) If width and height are not given, take them from the child
   #       NOTE:  if dynamic is TRUE then use a gPath to the child
   if (is.null(width))
@@ -395,7 +395,7 @@ packGrob <- function(frame, grob,
     width <- sum(border[2], width, border[4])
     height <- sum(border[1], height, border[3])
   }
-  
+
   # (iv) Update the frame.vp of the frame (possibly add new row/col,
   # possibly update existing widths/heights and respect)
   if (new.col) ncol <- ncol + 1
@@ -444,7 +444,7 @@ packGrob <- function(frame, grob,
   if (!is.null(grob)) {
     frame <- addGrob(frame, cgrob)
   }
-  
+
   editGrob(frame, framevp=frame.vp)
 }
 
