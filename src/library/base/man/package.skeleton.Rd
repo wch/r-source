@@ -22,6 +22,13 @@ package.skeleton(name="anRpackage", list, environment=.GlobalEnv,
 \value{
   used for its side-effects.
 }
+\details{
+  This tries to create filenames valid for all OSes known to run R.
+  Invalid characters are replaced by \code{_}, invalid names are
+  preceeded by \code{zz}, and finally the converted names are made
+  unique by \code{\link{make.unique}}.  This can be done for code and
+  help files but not data files (which are looked for by name).
+}
 
 \references{Read the \emph{Writing R Extensions} manual for more details }
 \seealso{\code{\link{install.packages}}}
@@ -32,7 +39,7 @@ package.skeleton(name="anRpackage", list, environment=.GlobalEnv,
     g<-function(x,y) x-y
     d<-data.frame(a=1,b=2)
     e<-rnorm(1000)
-    package.skeleton(list=c("f","g","d","e"),name="AnExample")
+    package.skeleton(list=c("f","g","d","e"), name="AnExample")
 }
 }
 

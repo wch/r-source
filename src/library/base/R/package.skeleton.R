@@ -31,7 +31,7 @@ function(name = "anRpackage", list, environment = .GlobalEnv,
         "License: What license is it under?\n",
         file = description, sep = "")
     close(description)
-    
+
     ## READMEs
     cat("Creating READMEs ...\n")
 
@@ -49,7 +49,7 @@ function(name = "anRpackage", list, environment = .GlobalEnv,
         "You may want to combine the help files for multiple functions.\n",
         file = readme, sep = "")
     close(readme)
-    
+
     readme <- file(file.path(path, name, "README"), "wt")
     cat("1. Put any C/C++/Fortran code in 'src'\n",
         "2. If you have compiled code, add a .First.lib() function in 'R'\n",
@@ -67,6 +67,14 @@ function(name = "anRpackage", list, environment = .GlobalEnv,
     if(any(internalObjInds))
         list <- list[-internalObjInds]
 
+    ## Some object names may not be valid file names, especially replacement
+    ## function names. And if we start changing them they may collide.
+    list0 <- gsub("[[:cntrl:]\"*/:<>?\\|]", "_", list)
+    wrong <- grep("^(con|prn|aux|clock\\$|nul|lpt[1-3]|com[1-4])", list0)
+    if(length(wrong)) list0[wrong] <- paste("zz", list0[wrong], sep="")
+    list0 <- make.unique(list0)
+    names(list0) <- list
+
     ## Dump the items in 'data' or 'R'
     cat("Saving functions and data ...\n")
     if(any(internalObjInds))
@@ -77,11 +85,11 @@ function(name = "anRpackage", list, environment = .GlobalEnv,
         if(is.function(get(item)))
             dump(item,
                  file = file.path(path, name, "R",
-                                  paste(item, "R", sep = ".")))
-        else
-            save(list = item,
-                 file = file.path(path, name, "data",
-                                  paste(item, "rda", sep = ".")))
+                                  paste(list0[item], "R", sep = ".")))
+        else # we cannot guarantee this is a valid file name
+            try(save(list = item,
+                     file = file.path(path, name, "data",
+                                      paste(item, "rda", sep = "."))))
     }
 
     ## Make help file skeletons in 'man'
@@ -111,14 +119,14 @@ function(name = "anRpackage", list, environment = .GlobalEnv,
                      function(item) {
                          prompt(item,
                                 filename = file.path(path, name, "man",
-                                paste(item, "Rd", sep=".")))
+                                paste(list0[item], "Rd", sep=".")))
                      }))
     sink(type = "output")
     close(outConn)
     unlink(outFile)
-    if(inherits(yy, "try-error")) 
+    if(inherits(yy, "try-error"))
         stop(yy)
-    
+
     cat("Done.\n")
     cat(paste("Further steps are described in",
               file.path(path, name, "README"),
