@@ -159,8 +159,8 @@ foreach $manfile (@mandir) {
 	if($opt_chm){
 	    my $targetfile = $filenm{$manfilebase};
 	    $misslink = "";
-	    $destfile = "../chm/$targetfile.$HTML";
-	    print hhpfile "$targetfile.$HTML\n";
+	    $destfile = "../chm/$targetfile$HTML";
+	    print hhpfile "$targetfile$HTML\n";
 	    if(fileolder($destfile,$manage)) {
 		$chmflag = "chm";
 		print "\t$destfile" if $opt_debug;
