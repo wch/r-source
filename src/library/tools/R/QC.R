@@ -1212,15 +1212,25 @@ function(package, dir, lib.loc = NULL)
             argNamesInArgList[!argNamesInArgList %in% argNamesInUsage]
         if(length(argNamesInArgListMissingInUsage) > 0) {
             usageText <- dbUsageTexts[[docObj]]
+            badArgs <- argNamesInArgListMissingInUsage
             ## In the case of 'over-documented' arguments, try to be
-            ## defensive and reduce to arguments that do not match the
-            ## \usage text (modulo word boundaries).
+            ## defensive and reduce to arguments which either are not
+            ## syntactically valid names of do not match the \usage text
+            ## (modulo word boundaries).
+            bad <- regexpr("^[[:alnum:]._]+$",
+                           argNamesInArgListMissingInUsage) == -1
+            if(any(bad)) {
+                badArgs <- argNamesInArgListMissingInUsage[bad]
+                argNamesInArgListMissingInUsage <-
+                    argNamesInArgListMissingInUsage[!bad]
+            }
             bad <- sapply(argNamesInArgListMissingInUsage,
                           function(x)
                           regexpr(paste("\\b", x, "\\b", sep = ""),
                                   usageText) == -1)
             argNamesInArgListMissingInUsage <-
-                argNamesInArgListMissingInUsage[bad]
+                c(badArgs,
+                  argNamesInArgListMissingInUsage[as.logical(bad)])
             ## Note that the fact that we can parse the raw \usage does
             ## not imply that over-documented arguments are a problem:
             ## this works for Rd files documenting e.g. shell utilities
