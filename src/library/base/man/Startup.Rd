@@ -90,11 +90,24 @@
   \code{\link{.Last}} for final actions before termination.
 }
 \examples{
+## Some examples with a Unix flavour
+# ~/.Renviron
+R_LIBS=~/R/library
+PAGER=/usr/local/bin/less
+
+# .Rprofile
+options(width=65, digits=5)
+options(show.signif.stars=FALSE)
+ps.options(horizontal=FALSE)
+set.seed(1234)
+.First <- function() cat("\n   Welcome to R!\n\n")
+.Last <- function()  cat("\n   Goodbye!\n\n")
+
 \dontrun{## if .Renviron contains
 FOOBAR="coo\bar"doh\\ex"abc\"def'"
 
 ## then we get
-> cat(Sys.getenv("FOOBAR3"), "\n")
+> cat(Sys.getenv("FOOBAR"), "\n")
 coo\bardoh\exabc"def'
 }}
 \keyword{environment}
