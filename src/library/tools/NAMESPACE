@@ -10,7 +10,7 @@ export(".installMD5sums", "Rdindex",
        "getDepList", "installFoundDepends", "vignetteDepends")
 
 ## <FIXME>
-## Remove in 2.1
+## Remove in 2.1.
 export("filePathAsAbsolute", "filePathSansExt", "fileTest",
        "listFilesWithExts", "listFilesWithType")
 ## </FIXME>
@@ -30,3 +30,4 @@ S3method("print", "undoc")
 S3method("print", "check_demo_index")
 S3method("print", "check_package_depends")
 S3method("print", "check_vignette_index")
+S3method("print", "check_Rd_files_in_man_dir")

@@ -2363,6 +2363,161 @@ print.check_package_depends <- function(x, ...) {
     invisible(x)
 }
 
+### * check_Rd_files_in_man_dir
+
+check_Rd_files_in_man_dir <-
+function(dir)
+{
+    if(!file_test("-d", dir))
+        stop(paste("directory", sQuote(dir), "does not exist"))
+    else
+        dir <- file_path_as_absolute(dir)
+
+    standard_keywords <- .get_standard_Rd_keywords()
+    mandatory_tags <- c("name", "title", "description")
+    ## We also need
+    ##   alias keyword
+    ## but we handle these differently ...
+    unique_tags <-
+        c("name", "title", "description", "usage", "arguments",
+          "format", "details", "value", "references", "source",
+          "seealso", "examples", "note", "author", "synopsis")
+    
+    files_with_surely_bad_Rd <- NULL
+    files_with_likely_bad_Rd <- NULL
+    files_with_missing_mandatory_tags <- NULL
+    files_with_duplicated_unique_tags <- NULL
+    files_with_bad_name <- files_with_bad_title <- NULL
+    files_with_bad_keywords <- NULL
+
+    Rd_files <- list_files_with_type(file.path(dir), "docs")
+
+    for(f in Rd_files) {
+        x <- try(Rd_parse(f), silent = TRUE)
+        if(inherits(x, "try-error")) {
+            files_with_surely_bad_Rd <-
+                c(files_with_surely_bad_Rd, f)
+            next
+        }
+        tags <- sapply(x$data$tags, "[[", 1)
+        ## Let's not worry about named sections for the time being ...
+        bad_tags <- c(mandatory_tags %w/o% tags,
+                      if(!length(x$meta$aliases)) "alias",
+                      if(!length(x$meta$keywords)) "keyword")
+        if(length(bad_tags))
+            files_with_missing_mandatory_tags <-
+                rbind(files_with_missing_mandatory_tags,
+                      cbind(f, bad_tags))
+        ind <- which(tags == "name")[1]
+        if(is.na(ind) ||
+           ## Using LaTeX special characters (# $ % & ~ _ ^ \ { })
+           ## causes the creation of PDF bookmarks to fail.
+           (regexpr(paste("(^[[:space:]]*$)|",
+                          "(#|\\\$|\%|&|~|_|\\\^|\\\\|\{|\})",
+                          sep = ""),
+                    x$data$vals[[ind]]) != -1))
+            files_with_bad_name <- c(files_with_bad_name, f)
+        ind <- which(tags == "title")[1]
+        if(is.na(ind) ||
+           (regexpr("^[[:space:]]*$", x$data$vals[[ind]]) != -1))
+            files_with_bad_title <- c(files_with_bad_title, f)
+        bad_tags <-  intersect(tags[duplicated(tags)], unique_tags)
+        if(length(bad_tags))
+            files_with_duplicated_unique_tags <-
+                rbind(files_with_duplicated_unique_tags,
+                      cbind(f, bad_tags))
+        bad_keywords <- x$meta$keywords %w/o% standard_keywords
+        if(length(bad_keywords))
+            files_with_bad_keywords <-
+                rbind(files_with_bad_keywords,
+                      cbind(f, bad_keywords))
+    }
+
+    val <- list(files_with_surely_bad_Rd,
+                files_with_likely_bad_Rd,
+                files_with_missing_mandatory_tags,
+                files_with_duplicated_unique_tags,
+                files_with_bad_name,
+                files_with_bad_title,
+                files_with_bad_keywords)
+    names(val) <-
+        c("files_with_surely_bad_Rd",
+          "files_with_likely_bad_Rd",
+          "files_with_missing_mandatory_tags",
+          "files_with_duplicated_unique_tags",
+          "files_with_bad_name",
+          "files_with_bad_title",
+          "files_with_bad_keywords")
+    class(val) <- "check_Rd_files_in_man_dir"
+    val
+}
+
+print.check_Rd_files_in_man_dir <- function(x, ...) {
+    if(length(x$files_with_surely_bad_Rd)) {
+        writeLines("Rd files with syntax errors:")
+        .prettyPrint(x$files_with_surely_bad_Rd)
+        writeLines("")
+    }
+    ## files_with_likely_bad_Rd
+    if(length(x$files_with_bad_name)) {
+        writeLines(c(paste("Rd files with missing or empty or invalid ",
+                           sQuote("\\name"), ":", sep = ""),
+                     paste(" ", x$files_with_bad_name)))
+        msg <- paste("Note that the \\name must not contain the LaTeX",
+                     "special characters (# $ % & ~ _ ^ \\ { }),",
+                     "as these cause the creation",
+                     "of PDF bookmarks to fail.")
+        writeLines(c(strwrap(msg), ""))
+    }
+    if(length(x$files_with_bad_title)) {
+        writeLines(c(paste("Rd files with missing or empty ",
+                           sQuote("\\title"), ":", sep = ""),
+                     paste(" ", x$files_with_bad_title),
+                     ""))
+    }
+    if(length(x$files_with_missing_mandatory_tags)) {
+        bad <- x$files_with_missing_mandatory_tags
+        bad <- split(bad[, 1], bad[, 2])
+        for(i in seq(along = bad)) {
+            writeLines(c(paste("Rd files without ",
+                               sQuote(names(bad)[i]), ":", sep = ""),
+                         paste(" ", bad[[i]])))
+        }
+        writeLines("These tags are required in an Rd file.\n")
+    }
+    if(length(x$files_with_duplicated_unique_tags)) {
+        bad <- x$files_with_duplicated_unique_tags
+        bad <- split(bad[, 1], bad[, 2])
+        for(i in seq(along = bad)) {
+            writeLines(c(paste("Rd files with duplicate ",
+                               sQuote(names(bad)[i]), ":", sep = ""),
+                         paste(" ", bad[[i]])))
+        }
+        writeLines("These tags must be unique in an Rd file.\n")
+    }
+    
+    if(length(x$files_with_bad_keywords)) {
+        writeLines("Rd files with non-standard keywords:")
+        bad <- x$files_with_bad_keywords
+        bad <- split(bad[, 2], bad[, 1])
+        for(i in seq(along = bad)) {
+            writeLines(strwrap(paste(names(bad)[i], ": ",
+                                     paste(bad[[i]], collapse = " "),
+                                     "\n", sep = ""),
+                               indent = 2, exdent = 4))
+        }
+        msg <- paste("Each", sQuote("\\keyword"),
+                     "entry should specify one of the standard",
+                     "keywords (as listed in file",
+                     sQuote("KEYWORDS.db"), "in the",
+                     sQuote("doc"), "subdirectory of the",
+                     "R home directory).")
+        writeLines(c(strwrap(msg), ""))
+    }
+    invisible(x)
+}
+
+
 ### * as.alist.call
 
 as.alist.call <-
