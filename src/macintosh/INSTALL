@@ -1,21 +1,21 @@
 Macintosh porting of R
 ======================
 
-In this directory you can find all the files needed
-to compile a specific version of R for MacOS.
-The original code for MacOS was written by Ross Ihaka and
-Wing Kwong (Tiki) WAN. Most of the files have been
-modified or simply updated to work with current versions of R
-sources (from 1.1.1) and the
-Waste Text Engine (c) 1993-2000 Marco Piovanelli.
+In this directory you can find all the files needed to compile a
+specific version of R for MacOS.  The original code for MacOS was
+written by Ross Ihaka and Wing Kwong (Tiki) Wan. Most of the files
+have been modified or simply updated to work with current versions of
+R sources and the Waste Text Engine.
 
 Before building R
 =================
 
 There are only two files that must be uncompressed before
 starting compiling R. These are 
+
 src/macintosh/res/R.rsrc.hqx	-  the R application resource file
 src/macintosh/cwpro/R.mcp.hqx	-  the CodeWarrior Project file
+
 and you need to expand them via any hqx decoding utility.
 
 
@@ -27,7 +27,7 @@ subsequently, by simply opening the file "R.mcp" in the "cwpro" directory.
 To build the R application you need version 2.x of the Waste Library
 by Marco Piovanelli. This should be included in the CW6 distribution.
 In case you don't have this, please download the full archive at the
-official Waste library site: http://www.merzwaren.com/waste
+official Waste library site,  http://www.merzwaren.com/waste.
 
 You also need a fortran compiler or an F2C tool to compile the
 *.f fortran files in src/appl directory.
@@ -50,39 +50,54 @@ tests/		(dir)
 Before building R :
 ===================
 
-1) Please rename the file "src/include/macintosh/config.mac.h" to 
+1) Please copy the file "src/include/macintosh/config.mac.h" to 
    "src/include/config.h" and copy it over
    "src/include/macintosh/Rconfig.h" 
    before you build the R application.
 
-2) if you do not use F2C you need a fortran compiler
+2) if you do not use F2C you need a Fortran compiler
    and also to change the R.mcp project.
 
 
 Building packages
 =================
 
-To build packages, refer to the respective "src/<pkg>/src/macintosh/"
-directory where you can find a CW project.  Once you have built a package
-you should move the resulting file to the "libs" directory in the
-"library/package" folder.
+To build compiled code for the standard packages, refer to the
+respective "src/<pkg>/src/macintosh/" directory where you can find a
+CW project.  Once you have built a package you should move the
+resulting file to the "libs" directory in the "library/package"
+folder.
 
 There is still no "makefile" to build the R application, configure it,
-build help and doc files etc. You can take the help and examples files from
-the Windows version by simply copying the whole directories in their
-respective counterparts of the R distribution for MacOS.
+build help and doc files etc.  You can take the help and examples files
+from the Windows version by simply copying the whole directories
+{help, html, R-ex} from the Windows distribution to the pacakge
+directory here.
 
-Most of the files in the scr/macintosh directory are only partially
+At present this applies to the data and R directories too.
+
+For the base package, you will need to create a file library/base/R/Rprofile
+by concatenating (in an editor) the files
+
+src/library/profile/Common.R
+src/library/profile/Rprofile.mac
+
+This means that the files in src/library/base/R/mac are currently unused.
+
+
+Futher directions
+=================
+
+Most of the files in the src/macintosh directory are only partially
 commented. This will change in the near future. The GUI sources are adapted
 from the WasteDemo application from the Waste Text Engine distribution.
 Thanks to Marco Piovanelli for providing these sources for free.
 
+Note that the process of building R for the Macintosh is still not
+satisfactory to us, and we are working on improvements.
+
 ---------
 
-Note that the process of building R for the Macintosh is
-still not satisfactory to us, and bound to be improved.
-This will hopefully change in v 1.3.x of R.
- 
 For comments and feedback, please contact either the 
 R Core Development Team (and Stefano Iacus) at
   
