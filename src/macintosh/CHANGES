@@ -22,3 +22,4 @@ rm160
   with the TZ (Time Zone) settings.
 * fixed a bug in Locator of Macintosh device. Now it is possible
   to interrupt it.
+* From this version WasteLib 2.1x is required
