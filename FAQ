@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.4-7, 2002-01-16
+Version 1.4-8, 2002-01-18
 Kurt Hornik
 
 
@@ -1339,6 +1339,10 @@ works, was published in the Journal of Statistical Software
      Functions for illustrating aperture-4 diamond partitions in the plane,
      or on the surface of an octahedron or icosahedron, for use as analysis
      or sampling grids.
+
+*dr*
+     Functions, methods, and datasets for fitting dimension reduction
+     regression, including pHd and inverse regression methods SIR and SAVE.
 
 *dse*
      Dynamic System Estimation, a multivariate time series package.

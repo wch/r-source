@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-7, 2002-01-16
+@set FAQ-VERSION 1.4-8, 2002-01-18
 @set REL-VERSION 1.4.0
 @c %**end of header
 
@@ -1591,6 +1591,9 @@ any mixture of these.
 Functions for illustrating aperture-4 diamond partitions in the plane,
 or on the surface of an octahedron or icosahedron, for use as analysis
 or sampling grids.
+@item dr
+Functions, methods, and datasets for fitting dimension reduction
+regression, including pHd and inverse regression methods SIR and SAVE.
 @item dse
 Dynamic System Estimation, a multivariate time series package.  Contains
 @strong{dse1} (DSE kernel plus ARMA and state space models),
