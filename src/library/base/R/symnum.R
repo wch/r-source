@@ -6,7 +6,6 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 		   lower.triangular = corr & is.matrix(x),
 		   diag.lower.tri = corr & !is.null(show.max))
 {
-  ## Martin Maechler, 21 Jan 94;  Dedicated to	Benjamin Schaad,  born that day
 
   ##--------------- Argument checking -----------------------------
   eval(corr)
@@ -81,3 +80,5 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
   attr(Scor,"legend") <- paste(legend[-2*(ns+1)], collapse="  ")
   noquote(Scor)
 }
+## Martin Maechler, 21 Jan 94;  Dedicated to	Benjamin Schaad,  born that day
+
