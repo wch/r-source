@@ -18,7 +18,7 @@ promax(x, m = 4)
     rotation, and scaled back afterwards.}
 }
 \details{
-  These seek a `rotation' of the factors \code{x %*% T} that aims to
+  These seek a `rotation' of the factors \code{x \%*\% T} that aims to
   clarify the structure of the loadings matrix.  The matrix \code{T}
   is a rotation (possibly with reflection) for \code{varimax}, but a
   general linear transformation for \code{promax}, with the variance of
@@ -26,7 +26,7 @@ promax(x, m = 4)
 }
 \value{
   A list with components
-  \item{loadings}{The `rotated' loadings matrix, \code{x %*% rotmat}.}
+  \item{loadings}{The `rotated' loadings matrix, \code{x \%*\% rotmat}.}
   \item{rotmat}{The `rotation matrix.}
 }
 \references{
