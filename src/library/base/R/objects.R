@@ -8,7 +8,7 @@ NextMethod <- function(generic=NULL, object=NULL, ...)
 
 methods <- function (generic.function, class)
 {
-    S3MethodsStopList <- tools::.makeS3MethodsStopList("all")
+    S3MethodsStopList <- tools::.makeS3MethodsStopList(NULL)
     S3groupGenerics <- c("Ops", "Math", "Summary")
 
     an <- lapply(seq(along=(sp <- search())), ls)
@@ -26,6 +26,7 @@ methods <- function (generic.function, class)
         genfun <- get(generic.function)
         gf <- paste(deparse(genfun), collapse="\n")
         if(length(grep("UseMethod", gf))) {
+            ## look for the generic dispatched on: not 100% reliable!
             truegf <- sub('(.*)UseMethod\\(\"([^"]*)(.*)', "\\2", gf)
             if(truegf != generic.function) {
                 warning(paste("Generic `", generic.function,
@@ -99,6 +100,7 @@ getS3method <-  function(f, class, optional = FALSE)
     groupGenerics <- c("Ops", "Math", "Summary")
     gf <- paste(deparse(get(f)), collapse="\n")
     if(length(grep("UseMethod", gf))) {
+        ## look for the generic dispatched on: not 100% reliable!
         truegf <- sub('(.*)UseMethod\\(\"([^"]*)(.*)', "\\2", gf)
         if(truegf != f) f <- truegf
     }

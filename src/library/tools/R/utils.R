@@ -215,6 +215,7 @@ function(package)
 {
     ## Return a character vector with the names of the functions in
     ## @code{package} which 'look' like S3 methods, but are not.
+    ## using package=NULL returns all known examples
     stopList <- list(base = c("boxplot.stats",
 	   "close.screen", "close.socket",
 	   "flush.console",
@@ -228,7 +229,7 @@ function(package)
 	   quadprog = c("solve.QP", "solve.QP.compact"),
 	   sm = "print.graph",
 	   ts = "lag.plot")
-    if(package == "all") return(unlist(stopList))
+    if(is.null(package)) return(unlist(stopList))
     thisPkg <- stopList[[package]]
     if(!length(thisPkg)) character(0) else thisPkg
 }
