@@ -5174,8 +5174,8 @@ most cases, interactive use is more productive.  Interactive use is also
 easy because at startup time @R{} initiates a graphics @emph{device
 driver} which opens a special @emph{graphics window} for the display of
 interactive graphics.  Although this is done automatically, it is useful
-to know that the command used is @code{X11()} under UNIX and
-@code{windows()} under Windows.
+to know that the command used is @code{X11()} under UNIX,
+@code{windows()} under Windows and @code{macintosh()} on MacOS 8/9.
 
 Once the device driver is running, @R{} plotting commands can be used to
 produce a variety of graphical displays and to create entirely new kinds
@@ -6103,6 +6103,8 @@ meanings are as follows:
 [Unix]
 @item windows()
 [Windows]
+@item Macintosh()
+[MaxOS 8/9]
 @item postscript()
 @itemx pictex()
 @itemx @dots{}
