@@ -643,7 +643,7 @@ PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics, int face)
 #endif
 		if (wc < 256)
 		    wx = metrics->CharInfo[wc].WX;
-		else wx == NA_SHORT);
+		else wx = NA_SHORT;
 	    if(wx == NA_SHORT)
 		warning("font width unknown for character 0x%x", wc);
 	    else sum += wx;
