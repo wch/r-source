@@ -279,7 +279,7 @@ function(x, ...)
 }
 
 
-### * .writeVignetteHTMLIndex
+### * .writeVignetteHtmlIndex
 
 .writeVignetteHtmlIndex <- function(pkg, con, vignetteIndex=NULL)
 {
