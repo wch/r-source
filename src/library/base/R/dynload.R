@@ -29,12 +29,12 @@ getNativeSymbolInfo <- function(name, PACKAGE)
       pkgName <- character()
     } else
       stop("must pass a package name, DLLInfo or DllInfoReference object")
-    
+
     v <- .Call("R_getSymbolInfo", as.character(name), PACKAGE, PACKAGE = "base")
 
     if(is.null(v)) {
         msg <- paste("no such symbol", name)
-        if(length(pkgName) && nchar(pkkName))
+        if(length(pkgName) && nchar(pkgName))
             msg <- paste(msg, "in package", pkgName)
         stop(msg)
     }
@@ -51,7 +51,7 @@ getLoadedDLLs <- function()
 }
 
 getDLLRegisteredRoutines <-
-function(dll)  
+function(dll)
 {
    # Provide methods for the different types.
  if(!inherits(dll, "DLLInfo"))
@@ -73,17 +73,17 @@ function(dll)
 
 
 getCallingDLL <-
-function(f = sys.function(1), doStop = FALSE)  
+function(f = sys.function(1), doStop = FALSE)
 {
   e = environment(f)
-  
+
   if(!isNamespace(e)) {
     if(doStop)
       stop("function is not in a namespace, so can't locate associated DLL")
     else
       return(NULL)
   }
-  
+
    # Please feel free to replace with a more encapsulated way to do this.
   if(exists("DLLs", envir = e$".__NAMESPACE__.") && length(e$".__NAMESPACE__."$DLLs))
     return(e$".__NAMESPACE__."$DLLs[[1]])
