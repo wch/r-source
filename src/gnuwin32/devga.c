@@ -2402,7 +2402,7 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 
     xd->resize = (resize == 3);
     xd->locator = FALSE;
-    dd->displayListOn = TRUE;
+    dd->displayListOn = (xd->kind == SCREEN);
     if (RConsole && (xd->kind!=SCREEN)) show(RConsole);
     return TRUE;
 }
