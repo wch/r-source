@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.9.0 (2004-02-18).
+   <p>The current version of this document is 1.9.0 (2004-02-22).
 
    ISBN 3-900051-02-X
 
@@ -77,10 +77,10 @@ users).
 subdirectory <code>R</code> of the current directory, where <var>module</var>
 specifies one of the four existing flavors of the R sources, and can be
 one of <code>r-release</code> (current released version), <code>r-patched</code>
-(patched released version), and <code>r-devel</code> (development version).
+(patched released version), and <code>r-devel</code> (development version). 
 (These flavors are described in the R FAQ,
 <a href="http://www.ci.tuwien.ac.at/~hornik/R/">http://www.ci.tuwien.ac.at/~hornik/R/</a>.)  The rsync trees are
-created directly from the master CVS archive and are updated hourly.
+created directly from the master CVS archive and are updated hourly. 
 The <code>-C</code> option in the <code>rsync</code> command is to cause it to
 skip the CVS directories.  Further information on <code>rsync</code> is
 available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
@@ -91,7 +91,7 @@ available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsyn
 
 <p>R will configure and build under a number of common Unix platforms
 including i386-freebsd, <var>cpu</var>-linux-gnu for the i386, alpha, arm,
-hppa, ia64, m68k, powerpc, and sparc CPUs (see e.g.
+hppa, ia64, m68k, powerpc, and sparc CPUs (see e.g. 
 <a href="http://buildd.debian.org/build.php?&amp;pkg=r-base">http://buildd.debian.org/build.php?&amp;pkg=r-base</a>),
 i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4,
 rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
@@ -152,7 +152,7 @@ directory.  You can copy this script to a place where users can invoke
 it, for example to <code>/usr/local/bin/R</code>.  You could also copy the man
 page <code>R.1</code> to a place where your <code>man</code> reader finds it,
 such as <code>/usr/local/man/man1</code>.  If you want to install the complete
-R tree to, e.g., <code>/usr/local/lib/R</code>, see <a href="#Installation">Installation</a>.
+R tree to, e.g., <code>/usr/local/lib/R</code>, see <a href="#Installation">Installation</a>. 
 Note: you do not <em>need</em> to install R: you can run it from where
 it was built.
 
@@ -190,19 +190,19 @@ the latest version).
 
      <dl>
 <dt><code>refman</code>
-     <dd>Printed versions of all the help pages.
+     <dd>Printed versions of all the help pages. 
 <br><dt><code>R-FAQ</code>
-     <dd>R <small>FAQ</small> (which is already built for you).
+     <dd>R <small>FAQ</small> (which is already built for you). 
 <br><dt><code>R-intro</code>
-     <dd>"An Introduction to R".
+     <dd>"An Introduction to R". 
 <br><dt><code>R-data</code>
-     <dd>"R Data Import/Export".
+     <dd>"R Data Import/Export". 
 <br><dt><code>R-admin</code>
-     <dd>"R Installation and Administration", this manual.
+     <dd>"R Installation and Administration", this manual. 
 <br><dt><code>R-exts</code>
-     <dd>"Writing R Extensions".
+     <dd>"Writing R Extensions". 
 <br><dt><code>R-lang</code>
-     <dd>"The R Language Definition".
+     <dd>"The R Language Definition". 
 </dl>
 
 <p>To make these, use
@@ -341,7 +341,7 @@ setting the environment variable <code>R_LIBS</code> or using the R function
 
 <h3 class="section">4.1 Installing packages</h3>
 
-<p>Packages may be distributed in source form or compiled binary form.
+<p>Packages may be distributed in source form or compiled binary form. 
 Installing source packages requires that compilers and tools
 (including Perl 5.004 or later) be installed.  Binary packages
 are platform specific and generally need
@@ -362,10 +362,8 @@ first library in <code>R_LIBS</code> is used if set, otherwise the main
 library <code></code><var>R_HOME</var><code>/library</code> is used.  (<code>R_LIBS</code> is looked
 for in the environment: <code>.Renviron</code> is not read by <code>R CMD</code>.)
 
-   <p>The Windows equivalent is<a rel="footnote" href="#fn-1"><sup>1</sup></a>
-
-<pre class="smallexample">     R CMD INSTALL -l /path/to/library <var>pkg1</var> <var>pkg2</var> ...
-     </pre>
+   <p>The same command works in Windows if you have the source-code package
+files installed.
 
    <p>Alternatively, packages can be downloaded and installed from within
 R.  First set the option <code>CRAN</code> to your nearest <small>CRAN</small>
@@ -424,13 +422,6 @@ can be removed by
 
 <pre class="smallexample">     R CMD REMOVE -l /path/to/library <var>pkg1</var> <var>pkg2</var> ...
      </pre>
-
-<p>(Unix) or
-
-<pre class="smallexample">     R CMD REMOVE -l /path/to/library <var>pkg1</var> <var>pkg2</var> ...
-     </pre>
-
-<p>(Windows).
 
    <p>From a running R process they can be removed by
 
@@ -534,7 +525,7 @@ no longer supported.
 <p>The linear algebra routines in R can make use of enhanced BLAS (Basic
 Linear Algebra Subprograms, <a href="http://www.netlib.org/blas/faq.html">http://www.netlib.org/blas/faq.html</a>)
 routines.  Some are compiler-system-specific (<code>libsunperf</code> on Sun
-Sparc<a rel="footnote" href="#fn-2"><sup>2</sup></a>, <code>libessl</code> on IBM, <code>vecLib</code> on MacOS
+Sparc<a rel="footnote" href="#fn-1"><sup>1</sup></a>, <code>libessl</code> on IBM, <code>vecLib</code> on MacOS
 X) but ATLAS (<a href="http://math-atlas.sourceforge.net/">http://math-atlas.sourceforge.net/</a>) is a "tuned"
 BLAS that runs on a wide range of Unix-alike platforms.  If no more
 specific library is found, a <code>libblas</code> library in the library path
@@ -582,7 +573,7 @@ but not single-precision nor complex routines.
 
    <p>Provision is made for using an external LAPACK library, principally to
 cope with BLAS libraries which contain a copy of LAPACK (such as
-<code>libsunperf</code> on Solaris and <code>vecLib</code> on MacOS 10.2.2).
+<code>libsunperf</code> on Solaris and <code>vecLib</code> on MacOS 10.2.2). 
 However, the likely performance gains are thought to be small (and may
 be negative), and the default is not to search for a suitable LAPACK
 library.  You can specify a specific LAPACK library or a search for a
@@ -616,11 +607,11 @@ is needed so <code>libsunperf</code> can be used.
 
    <p>An ATLAS `tuned' BLAS can also be used on Windows: see
 <code>src/gnuwin32/INSTALL</code> for how to enable this when building from
-source, and <a href="http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html">R Windows <small>FAQ</small></a> for adding pre-compiled support to binary versions.
+source, and <a href="http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html">R Windows <small>FAQ</small></a> for adding pre-compiled support to binary versions. 
 Goto's BLAS can also be used when building from source.
 
    <p>Note that under Unix (but not under Windows) if R is compiled
-against a non-default BLAS, then all BLAS-using packages must also be.
+against a non-default BLAS, then all BLAS-using packages must also be. 
 So if R is re-built after ATLAS is installed, then packages such as
 <strong>quantreg</strong> will need to be re-installed.
 
@@ -710,7 +701,7 @@ a full path.
 
    <p>If you find you need to alter configure variables, it is worth noting
 that some settings may be cached in the file <code>config.cache</code>, and it
-is a good idea to remove that file (if it exists) before re-configuring.
+is a good idea to remove that file (if it exists) before re-configuring. 
 Note that caching is turned <em>off</em> by default; use the command line
 option <code>--config-cache</code> (or <code>-C</code>) to enable caching.
 
@@ -746,7 +737,7 @@ is to search for <code>g77</code>, <code>f77</code>, <code>xlf</code>,
 <code>fort77</code>, <code>f90</code>, <code>xlf90</code>, <code>pgf90</code>,
 <code>epcf90</code>, <code>f95</code>, <code>fort</code>, <code>xlf95</code>,
 <code>lf95</code>, <code>g95</code>, and <code>fc</code> (in that
-order)<a rel="footnote" href="#fn-3"><sup>3</sup></a>, and
+order)<a rel="footnote" href="#fn-2"><sup>2</sup></a>, and
 then for <code>f2c</code>, and use whichever is found first; if none is
 found, R cannot be compiled.  The search mechanism can be changed
 using the configure variables <code>F77</code> and <code>F2C</code> which specify
@@ -769,11 +760,11 @@ pointer.  This is checked during the configuration process.
 
    <p>Some of the FORTRAN code makes use of <code>COMPLEX*16</code> variables, which
 is a FORTRAN 90 extension.  This is checked for at configure
-time<a rel="footnote" href="#fn-4"><sup>4</sup></a>, but you may need to avoid
-compiler flags<a rel="footnote" href="#fn-5"><sup>5</sup></a> asserting
+time<a rel="footnote" href="#fn-3"><sup>3</sup></a>, but you may need to avoid
+compiler flags<a rel="footnote" href="#fn-4"><sup>4</sup></a> asserting
 FORTRAN 77 compliance.
 
-   <p>For performance reasons<a rel="footnote" href="#fn-6"><sup>6</sup></a> you may want to choose a FORTRAN 90/95 compiler.
+   <p>For performance reasons<a rel="footnote" href="#fn-5"><sup>5</sup></a> you may want to choose a FORTRAN 90/95 compiler.
 
    <p>If you use <code>f2c</code> you may need to ensure that the FORTRAN type
 <code>integer</code> is translated to the C type <code>int</code>.  Normally
@@ -899,7 +890,7 @@ packages in order to compile the R-GNOME interface.
 
 <p>This section provides some notes on building R on different Unix-like
 platforms.  These notes are based on tests run on one or two systems in
-each case with particular sets of compilers and support libraries.
+each case with particular sets of compilers and support libraries. 
 Success in building R depends on the proper installation and functioning
 of support software; your results may differ if you have other versions
 of compilers and support libraries.
@@ -957,7 +948,7 @@ configuration options
 <pre class="smallexample">     --with-blas="-framework vecLib" --with-lapack
      </pre>
 
-<p>to provide higher-performance versions of the BLAS and LAPACK routines.
+<p>to provide higher-performance versions of the BLAS and LAPACK routines. 
 With <code>gcc 3.1</code> that appears to be the only way to build R, as
 the Fortran support routines in <code>libg2c</code> cannot be linked into a
 dynmaic library.  (We have had reports of success with pre-release
@@ -1251,7 +1242,7 @@ many compilers these reduce the degree of compliance to the
 SunPro compilers causes R's <code>NaN</code> to be set incorrectly.
 
    <p><strong>Shared Libraries</strong>: There seems to be very little agreement
-across platforms on what needs to be done to build shared libraries.
+across platforms on what needs to be done to build shared libraries. 
 there are many different combinations of flags for the compilers and
 loaders.  GNU libtool cannot be used (yet), as it currently does not
 fully support FORTRAN (and will most likely never support <code>f2c</code>:
@@ -1320,26 +1311,22 @@ of practice at porting R to new platforms <small class="enddots">....</small>
 <h4>Footnotes</h4>
 <ol type="1">
 <li><a name="fn-1"></a>
-<p>if you have the source-code package
-files installed</p>
-
-   <li><a name="fn-2"></a>
 <p>Using the SunPro aka Forte aka Sun ONE <code>cc</code> and
 <code>f95</code> compilers</p>
 
-   <li><a name="fn-3"></a>
+   <li><a name="fn-2"></a>
 <p>On HP-UX <code>fort77</code> is the <small>POSIX</small>
 compliant FORTRAN compiler, and comes second in the search list.</p>
 
-   <li><a name="fn-4"></a>
+   <li><a name="fn-3"></a>
 <p>as well as its equivalence to the <code>Rcomplex</code>
 structure defined in <code>R_ext/Complex.h</code>.</p>
 
-   <li><a name="fn-5"></a>
+   <li><a name="fn-4"></a>
 <p>In particular, avoid <code>g77</code>'s
 <code>-pedantic</code>, which gives confusing error messages.</p>
 
-   <li><a name="fn-6"></a>
+   <li><a name="fn-5"></a>
 <p>e.g., to use an optimized BLAS on
 Sun/Sparc</p>
 
