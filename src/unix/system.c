@@ -157,7 +157,9 @@
 
 #include "Defn.h"
 #include "Fileio.h"
-#include "Graphics.h"/* KillAllDevices() [nothing else?] */
+#include "Graphics.h"		/* KillAllDevices() [nothing else?] */
+#include "Version.h"
+
 #include "devX11.h"
 
 #ifdef HAVE_LIBREADLINE

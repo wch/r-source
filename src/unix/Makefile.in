@@ -35,6 +35,7 @@ all: Makefile Makedeps R
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
+  ../include/Version.h \
   ../include/FFDecl.h \
   ../include/FFTab.h \
   $(DEPS)
@@ -50,6 +51,8 @@ R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(LIB)
 
+../include/Version.h:
+	(cd ../include; $(MAKE) $(@F))
 ../include/FFDecl.h ../include/FFTab.h: $(top_srcdir)/src/appl/ROUTINES
 	(cd ../include; $(top_srcdir)/tools/GETSYMBOLS)
 

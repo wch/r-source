@@ -37,6 +37,7 @@ all: Makefile Makedeps R
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
   ../include/Platform.h \
+  ../include/Version.h \
   ../include/FFDecl.h \
   $(DEPS)
 	@cd $(top_builddir) && \
@@ -54,7 +55,8 @@ R: Makefile
 
 ../include/Platform.h:
 	(cd ../include; $(MAKE) $(@F))
-
+../include/Version.h:
+	(cd ../include; $(MAKE) $(@F))
 ../include/FFDecl.h: $(top_srcdir)/src/appl/ROUTINES
 	(cd ../include; $(top_srcdir)/tools/GETSYMBOLS)
 

@@ -181,11 +181,5 @@
 #define R_CPU		"UNKNOWN"
 #define R_VENDOR	"UNKNOWN"
 #define R_OS		"UNKNOWN"
-#define R_MAJOR		"UNKNOWN"
-#define R_MINOR		"UNKNOWN"
-#define R_STATUS	"UNKNOWN"
-#define R_STATUS_REV	"UNKNOWN"
-
-#include "Version.h"
 
 #endif

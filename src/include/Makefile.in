@@ -11,7 +11,8 @@ subdir = src/include
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = $(shell cd $(srcdir) && ls Makefile.in Platform.h.in *.h)
+DISTFILES = $(shell cd $(srcdir) \
+	  && ls Makefile.in Platform.h.in Version.h.in *.h)
 
 SRC_HEADERS = S.h S_compat.h f2c.h Arith.h Complex.h Error.h Errormsg.h \
 	 Fortran.h Applic.h Blas.h Linpack.h Mathlib.h Memory.h PrtUtil.h \
@@ -41,12 +42,13 @@ Platform.h: $(top_srcdir)/configure $(srcdir)/Platform.h.in
 FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES
 	$(top_srcdir)/tools/GETSYMBOLS
 
-Version.h: $(top_srcdir)/date-stamp
+Version.h: $(srcdir)/Version.h.in $(top_srcdir)/date-stamp
+	@cp $(srcdir)/Version.h.in $@
 	@awk -F/ '{ \
 	    printf "#define R_DAY\t\"%s\"\n",   $$3; \
 	    printf "#define R_MONTH\t\"%s\"\n", $$2; \
 	    printf "#define R_YEAR\t\"%s\"\n",  $$1 }' \
-	  $(top_srcdir)/date-stamp > $@
+	  $(top_srcdir)/date-stamp >> $@
 
 mostlyclean:
 clean:
