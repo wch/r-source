@@ -45,7 +45,8 @@ model.tables.aovlist(x, type = "effects", se = FALSE, \dots)
 
 \seealso{
   \code{\link{aov}}, \code{\link{proj}},
-  \code{\link{replications}}, \code{\link{TukeyHSD}}
+  \code{\link{replications}}, \code{\link{TukeyHSD}},
+  \code{\link{se.contrast}}
 }
 
 \examples{
