@@ -1,6 +1,6 @@
 
 R : Copyright 1998, The R Development Core Team
-Version 0.63.0 Unstable (September 21, 1998)
+Version 0.63.0 Unstable (October 10, 1998)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -22,7 +22,7 @@ Type	"demo()" for some demos, "help()" for on-line help, or
 > bpos <- match("package:base",search())
 > nn <- ls(pos=bpos)
 > length(nn) # 844  [R 0.62.0, March 25, 1998]
-[1] 934
+[1] 937
 > 
 > is.primitive <- function (obj) is.function(obj) && is.null(args(obj))
 > 
