@@ -409,7 +409,6 @@ if test -z "$@{R_HOME@}"; then
   exit 1
 fi
 CC=`grep "^CC" $@{R_HOME@}/etc/Makeconf | sed "s/^CC *= *//"`
-AC_PROG_CC
 CFLAGS=`grep "^CFLAGS" $@{R_HOME@}/etc/Makeconf | sed "s/^CFLAGS *= *//"`
 @end smallexample
 @noindent
