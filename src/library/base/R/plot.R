@@ -220,6 +220,9 @@ function(formula, data = parent.frame(), ..., subset,
 	dots <- lapply(dots, dosub)
 	mf <- mf[s,]
     }
+    ## check for horizontal arg
+    horizontal <- FALSE
+    if("horizontal" %in% names(dots)) horizontal <- dots[["horizontal"]]
     response <- attr(attr(mf, "terms"), "response")
     if (response) {
 	varnames <- names(mf)
@@ -244,40 +247,17 @@ function(formula, data = parent.frame(), ..., subset,
 	    on.exit(par(opar))
 	}
 	xn <- varnames[-response]
-	if (is.null(dots[["xlab"]])) {
-	    for (i in xn)
-		if( length(dots) > 0 )
-		    do.call(funname,
-			    c(list(mf[[i]], y, ylab = ylab, xlab = i),
-			      dots))
-		else
-		    do.call(funname,
-			    c(list(mf[[i]], y, ylab = ylab, xlab = i)))
-	} else {
-	    for (i in xn)
-		if( length(dots) > 0 )
-		    do.call(funname,
-			    c(list(mf[[i]], y, ylab = ylab), dots))
-		else
-		    do.call(funname,
-			    c(list(mf[[i]], y, ylab = ylab)))
-	}
-	if (length(xn) == 0)
-	    if (is.null(dots[["xlab"]])) {
-		if( length(dots) > 0 )
-		    do.call(funname,
-			    c(list(y, ylab = ylab, xlab = i), dots))
-		else
-		    do.call(funname,
-			    c(list(y, ylab = ylab, xlab = i)))
-	    } else {
-		if(length(dots) > 0 )
-		    do.call(funname,
-			    c(list(y, ylab = ylab), dots))
-		else
-		   do.call(funname,
-			    c(list(y, ylab = ylab)))
-	    }
+        if(length(xn) > 0) {
+            if( !is.null(xlab<- dots[["xlab"]]) )
+                dots <- dots[-match("xlab", names(dots))]
+            for (i in xn) {
+                xl <- if(is.null(xlab)) i else xlab
+                yl <- ylab
+                if(horizontal && is.factor(mf[[i]])) {yl <- xl; xl <- ylab}
+                   do.call(funname,
+                           c(list(mf[[i]], y, ylab = yl, xlab = xl), dots))
+               }
+	} else do.call(funname, c(list(y, ylab = ylab), dots))
     }
     else plot.data.frame(mf)
 }

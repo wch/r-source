@@ -148,6 +148,10 @@ NEW FEATURES
 	printing of numbers in fixed-point or exponential notation.
 	(Contributed by David Brahm.)
 
+    o	plot.formula() now accepts horizontal=TRUE and works correctly
+	when boxplots are produced.  (Wishlist PR#1207)  The code has
+	been much simplified and corrected.
+
     o	polygon() and rect() now interpret density < 0 or NA to mean
 	filling (by colour) is desired: this allows filling and
 	shading to be mixed in one call, e.g. from legend().
