@@ -27,7 +27,7 @@
 #ifdef HAVE_ALLOCA_H
 #include <alloca.h>
 #endif
-    
+
 #include "IOStuff.h"		/*-> Defn.h */
 #include "Fileio.h"
 #include "Parse.h"
@@ -82,7 +82,7 @@ static unsigned char SourceLine[MAXLINESIZE];
 static unsigned char *FunctionStart[MAXNEST], *SourcePtr;
 static int FunctionLevel = 0;
 static int KeepSource;
- 
+
 /* Soon to be defunct entry points */
 
 void		R_SetInput(int);
@@ -264,7 +264,7 @@ static int (*ptr_getc)(void);
 static int (*ptr_ungetc)(int);
 
 static int xxgetc(void)
-{      
+{
     int c = ptr_getc();
     if (c == EOF) {
         EndOfFile = 1;
@@ -277,7 +277,7 @@ static int xxgetc(void)
     xxcharcount++;
     return c;
 }
-       
+
 static int xxungetc(int c)
 {
     if (c == '\n') R_ParseError -= 1;
@@ -285,7 +285,7 @@ static int xxungetc(int c)
 	SourcePtr--;
     xxcharcount--;
     return ptr_ungetc(c);
-}      
+}
 
 static int xxvalue(SEXP v, int k)
 {
@@ -579,12 +579,12 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
     SEXP ans, sav_expr = expr;
     if(GenerateCode) {
 	if (isString(expr))
-	    expr = install(CHAR(STRING_ELT(expr, 0))); 
+	    expr = install(CHAR(STRING_ELT(expr, 0)));
 	PROTECT(expr);
 	if (length(CDR(args)) == 1 && CADR(args) == R_MissingArg && TAG(CDR(args)) == R_NilValue )
 	    ans = lang1(expr);
-	else    
-	    ans = LCONS(expr, CDR(args));   
+	else
+	    ans = LCONS(expr, CDR(args));
 	UNPROTECT(1);
 	PROTECT(ans);
     }
@@ -603,16 +603,16 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
     SEXP source;
 
     if (GenerateCode) {
-	if (!KeepSource) 
+	if (!KeepSource)
 	    PROTECT(source = R_NilValue);
 	else {
 	    unsigned char *p, *p0, *end;
 	    int lines = 0, nc;
-	    
+
 	    /*  If the function ends with an endline comment,  e.g.
 
 		function()
-	            print("Hey") # This comment 
+	            print("Hey") # This comment
 
 		we need some special handling to keep it from getting
 		chopped off. Normally, we will have read one token too
@@ -624,7 +624,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 	    for (p = end ; p < SourcePtr && (*p == ' ' || *p == '\t') ; p++)
 		;
 	    if (*p == '#') {
-		while (p < SourcePtr && *p != '\n') 
+		while (p < SourcePtr && *p != '\n')
 		    p++;
 		end = p;
 	    }
@@ -638,11 +638,12 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 	    for (p = FunctionStart[FunctionLevel]; p < end ; p++)
 		if (*p == '\n' || p == end - 1) {
 		    nc = p - p0;
-		    if (*p != '\n') 
-			nc++; 
-		    strncpy(SourceLine, p0, nc);
+		    if (*p != '\n')
+			nc++;
+		    strncpy((char *)SourceLine, (char *)p0, nc);
 		    SourceLine[nc] = '\0';
-		    SET_STRING_ELT(source, lines++, mkChar(SourceLine));
+		    SET_STRING_ELT(source, lines++,
+				   mkChar((char *)SourceLine));
 		    p0 = p + 1;
 		}
 	    /* PrintValue(source); */
@@ -764,7 +765,7 @@ static SEXP GrowList(SEXP l, SEXP s)
     return l;
 }
 
-#if 0 
+#if 0
 /* Comment Handling :R_CommentSxp is of the same form as an expression */
 /* list, each time a new { is encountered a new element is placed in the */
 /* R_CommentSxp and when a } is encountered it is removed. */
@@ -928,7 +929,7 @@ static SEXP R_Parse1(int *status)
     case 4:                     /* Valid expr ';' terminated */
         *status = PARSE_OK;
         break;
-    }  
+    }
     return R_CurrentExpr;
 }
 
@@ -1042,7 +1043,7 @@ SEXP R_Parse(int n, int *status)
         }
         UNPROTECT(1);
         return rval;
-    }  
+    }
     else {
         PROTECT(t = NewList());
         for(;;) {
@@ -1072,7 +1073,7 @@ SEXP R_Parse(int n, int *status)
                 break;
             }
         }
-    }  
+    }
 }
 
 SEXP R_ParseFile(FILE *fp, int n, int *status)
@@ -1088,14 +1089,20 @@ SEXP R_ParseFile(FILE *fp, int n, int *status)
 #include "Rconnections.h"
 static Rconnection con_parse;
 
+/* need to handle incomplete last line */
 static int con_getc(void)
 {
-    return con_parse->fgetc(con_parse);
+    int c;
+    static int last=-1000;
+    
+    c = Rconn_fgetc(con_parse);
+    if (c == EOF && last != '\n') c = '\n';
+    return (last = c);
 }
 
 static int con_ungetc(int c)
 {
-    return con_parse->ungetc(c, con_parse);
+    return Rconn_ungetc(c, con_parse);
 }
 
 SEXP R_ParseConn(Rconnection con, int n, int *status)
@@ -1165,7 +1172,8 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, int *status, SEXP prompt)
 	try_again:
 	    if(!*bufp) {
 		if(R_ReadConsole(Prompt(prompt, prompt_type),
-				 buf, 1024, 1) == 0) return R_NilValue;
+				 (unsigned char *)buf, 1024, 1) == 0)
+		    return R_NilValue;
 		bufp = buf;
 	    }
 	    while ((c = *bufp++)) {
@@ -1198,7 +1206,8 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, int *status, SEXP prompt)
 	for (;;) {
 	    if (!*bufp) {
 		if(R_ReadConsole(Prompt(prompt, prompt_type),
-				 buf, 1024, 1) == 0) return R_NilValue;
+				 (unsigned char *)buf, 1024, 1) == 0)
+		   return R_NilValue;
 		bufp = buf;
 	    }
 	    while ((c = *bufp++)) {
@@ -1643,7 +1652,7 @@ static int SymbolValue(int c)
     if ((kw = KeywordLookup(yytext))) {
 	if ( kw == FUNCTION ) {
 	    if ( FunctionLevel++ == 0 && GenerateCode) {
-		strcpy(FunctionSource, "function");
+		strcpy((char *)FunctionSource, "function");
 		SourcePtr = FunctionSource + 8;
 	    }
 	    FunctionStart[FunctionLevel] = SourcePtr - 8;

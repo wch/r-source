@@ -175,7 +175,7 @@ int R_IoBufferUngetc(int c, IoBuffer *iob)
 
 	/* Initialization code for text buffers */
 
-static void transferChars(char *p, char *q)
+static void transferChars(unsigned char *p, char *q)
 {
     while (*q) *p++ = *q++;
     *p++ = '\n';
@@ -196,7 +196,7 @@ int R_TextBufferInit(TextBuffer *txtb, SEXP text)
 	    }
 	}
 	txtb->vmax = vmaxget();
-	txtb->buf = R_alloc(l+2, sizeof(char));	/* '\n' and '\0' */
+	txtb->buf = (unsigned char *)R_alloc(l+2, sizeof(char)); /* '\n' and '\0' */
 	txtb->bufp = txtb->buf;
 	txtb->text = text;
 	txtb->ntext = n;

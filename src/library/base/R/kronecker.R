@@ -1,34 +1,47 @@
-##---  the argument `make.dimnames'  is  not yet documented
-##--- and it doesn't work when TRUE mostly..
-##--- (very unclear debugging however ...)  --- Martin Maechler
-
-kronecker <- function (X, Y, FUN = "*", make.dimnames = FALSE, ...)
+"kronecker" <-
+function (X, Y, FUN = "*", make.dimnames = FALSE, ...) 
 {
-    dX <- dim(X <- as.array(X))
-    dY <- dim(Y <- as.array(Y))
+    X <- as.array(X)
+    Y <- as.array(Y)
+    if (make.dimnames) {
+      dnx <- dimnames(X)
+      dny <- dimnames(Y)
+    }
+    dX <- dim(X)
+    dY <- dim(Y)
     ld <- length(dX) - length(dY)
-    ## pad with unit dims if required:
-    if (ld<0)
+    if (ld < 0) 
         dX <- dim(X) <- c(dX, rep(1, -ld))
-    else if(ld > 0)
+    else if (ld > 0) 
         dY <- dim(Y) <- c(dY, rep(1, ld))
     opobj <- outer(X, Y, FUN, ...)
-    dp <- seq(along = c(dX, dY))
-    ld <- length(dX)
-    dp <- as.vector(t(matrix(dp, ncol=2)[, 2:1]))# e.g. = 3 1 4 2
+    dp <- as.vector(t(matrix(1:(2*length(dX)), ncol = 2)[, 2:1]))
     opobj <- aperm(opobj, dp)
-    if(make.dimnames)
-        dn <- dimnames(opobj)
     dim(opobj) <- dX * dY
-    if(make.dimnames) {
-        outerPaste <- function(x,y) {
-            if((iNx <- is.null(x)) && (iNy <- is.null(y))) 
-                NULL
-            else outer(if(iNx) "" else x,
-                       if(iNy) "" else y, FUN="paste", sep=":")
+
+    if (make.dimnames && !(is.null(dnx) && is.null(dny))) {
+
+        if (is.null(dnx))
+            dnx <- rep(list(NULL), length(dX))
+        else if (ld < 0)
+            dnx <- c(dnx, rep(list(NULL), -ld))
+        tmp <- which(sapply(dnx, is.null))
+        dnx[tmp] <- lapply(tmp, function(i) rep("", dX[i]))
+
+        if (is.null(dny))
+            dny <- rep(list(NULL), length(dY))
+        else if (ld > 0)
+            dny <- c(dny, rep(list(NULL), ld))
+        tmp <- which(sapply(dny, is.null))
+        dny[tmp] <- lapply(tmp, function(i) rep("", dY[i]))
+
+        k <- length(dim(opobj))
+        dno <- vector("list", k)
+        for (i in 1:k) {
+            tmp <- outer(dnx[[i]], dny[[i]], FUN="paste", sep=":")
+            dno[[i]] <- as.vector(t(tmp))
         }
-        dimnames(opobj) <-
-            lapply(0:1, function(i)do.call("outerPaste", dn[i*ld + (1:ld)]))
+        dimnames(opobj) <- dno
     }
     opobj
 }

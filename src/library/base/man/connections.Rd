@@ -132,6 +132,14 @@ unlink("ex.data")
 # read listing of current directory
 readLines(pipe("ls -1"))
 
+# remove trailing commas. Suppose
+% cat data2
+450, 390, 467, 654,  30, 542, 334, 432, 421,
+357, 497, 493, 550, 549, 467, 575, 578, 342,
+446, 547, 534, 495, 979, 479
+# Then read this by
+scan(pipe("sed -e s/,$// data2"), sep=",")
+
 # convert decimal point to comma in output 
 zz <- pipe(paste("sed s/\\\\./,/ >", "outfile"), "w")
 cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)

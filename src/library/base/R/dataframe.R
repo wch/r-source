@@ -320,8 +320,10 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	    return(x)
 	if(is.matrix(i))
 	    return(as.matrix(x)[i])
-	return(structure(NextMethod("["), class = class(x),
-			 row.names = row.names(x)))
+        y <- NextMethod("[")
+        if(any(names(y) == "NA"))
+            stop("undefined columns selected")
+	return(structure(y, class = class(x), row.names = row.names(x)))
     }
 
     ## preserve the attributes for later use ...
@@ -337,7 +339,7 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	x <- x[j]
 	cols <- names(x)
 	if(is.null(cols) || any(nchar(cols) == 0))
-	    stop("undefined columns selected")
+	    stop("not all specified columns exist")
     }
     else {
 	if(is.character(i))

@@ -316,8 +316,8 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    warning("Sys,info is not implemented on this system");
-    return R_NilValue; /* -Wall */
+    warning("Sys.info is not implemented on this system");
+    return R_NilValue;		/* -Wall */
 }
 #endif
 

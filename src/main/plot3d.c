@@ -737,10 +737,12 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 
 	    if (vectorFonts) {
 		/* 1, 1 => sans serif, basic font */
-		labelDistance = GVStrWidth(buffer, typeface, fontindex,
-					   INCHES, dd);
-		labelHeight = GVStrHeight(buffer, typeface, fontindex,
-					  INCHES, dd);
+		labelDistance = 
+		    GVStrWidth((unsigned char *)buffer, typeface, fontindex,
+			       INCHES, dd);
+		labelHeight = 
+		    GVStrHeight((unsigned char *)buffer, typeface, fontindex,
+				INCHES, dd);
 	    }
 	    else {
 		labelDistance = GStrWidth(buffer, INCHES, dd);
@@ -1890,30 +1892,31 @@ static void PerspAxis(double *x, double *y, double *z,
 		      char *label, DevDesc *dd) {
     Vector3d u1, u2, u3, v1, v2, v3;
     double tickLength = .03; /* proportion of axis length */
-    double min, max;
+    double min, max, d_frac;
     double *range = NULL; /* -Wall */
     double axp[3];
     int nint, i;
     SEXP at, lab;
     switch (axisType) {
     case 0:
-	min = x[0];
-	max = x[1];
-	range = x;
-	break;
+	min = x[0];	max = x[1];	range = x;	break;
     case 1:
-	min = y[0];
-	max = y[1];
-	range = y;
-	break;
+	min = y[0];	max = y[1];	range = y;	break;
     case 2:
-	min = z[0];
-	max = z[1];
-	range = z;
-	break;
+	min = z[0];	max = z[1];	range = z;	break;
     }
-    nint = nTicks-1;
+    d_frac = 0.1*(max - min);
+    nint = nTicks - 1; if(!nint) nint++;
+    i = nint;
     GPretty(&min, &max, &nint);
+    /* GPretty() rarely gives values too much outside range ..
+       2D axis() clip these, we play cheaper */ 
+    while((min < range[0] - d_frac || range[1] + d_frac < max) && i < 20) {
+	nint = ++i;
+	min = range[0];
+	max = range[1];
+	GPretty(&min, &max, &nint);
+    }
     axp[0] = min;
     axp[1] = max;
     axp[2] = nint;
@@ -2109,7 +2112,7 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, j, scale, ncol, dobox, doaxes, nTicks, tickType;
     DevDesc *dd;
 
-    if (length(args) < 18)
+    if (length(args) < 24)
 	errorcall(call, "too few parameters");
     gcall = call;
     originalArgs = args;
@@ -2245,9 +2248,8 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     DepthOrder(REAL(z), REAL(x), REAL(y), nrows(z), ncols(z),
 	       REAL(depth), INTEGER(indx));
 
-    /* Now we order the facets by depth */
-    /* and then draw them back to front. */
-    /* This is the "painters" algorithm. */
+    /* Now we order the facets by depth and then draw them back to front.
+     * This is the "painters" algorithm. */
 
     GMode(1, dd);
 
@@ -2276,9 +2278,8 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(x = allocVector(REALSXP, 16));
     PROTECT(y = allocVector(INTSXP, 2));
     for (i = 0; i < 4; i++)
-      for (j = 0; j < 4; j++) {
-        REAL(x)[i + j * 4] = VT[i][j];
-      }
+	for (j = 0; j < 4; j++)
+	    REAL(x)[i + j * 4] = VT[i][j];
     INTEGER(y)[0] = 4;
     INTEGER(y)[1] = 4;
     setAttrib(x, R_DimSymbol, y);

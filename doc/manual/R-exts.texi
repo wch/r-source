@@ -45,9 +45,20 @@ notice identical to this one except for the removal of this paragraph
 Copyright @copyright{} 1999, 2000 R Development Core Team
 @end titlepage
 
+@ifnothtml
 @contents
+@end ifnothtml
 
+@ifnottex
 @node Top, Acknowledgements, (dir), (dir)
+@top Writing R Extensions
+
+This is a guide to extending R, describing the process of creating R
+add-on packages, writing R documentation, R's system and foreign
+language interfaces, and the R @acronym{API}.
+
+The current version of this document is @value{VERSION}.
+@end ifnottex
 
 @menu
 * Acknowledgements::            
@@ -120,12 +131,14 @@ in the following format:
 @smallexample
 Package: pkgname
 Version: 0.5-1
-Date: 2000/01/04
+Date: 2000-01-04
 Title: My first collection of functions
-Author: Friedrich Leisch <F.Leisch@@ci.tuwien.ac.at>.
+Author: Friedrich Leisch <F.Leisch@@ci.tuwien.ac.at>, with
+  contributions from A. User <A.User@@whereever.net>.
+Maintainer: Friedrich Leisch <F.Leisch@@ci.tuwien.ac.at>
 Depends: R (>= 0.99), nlme
 Description: A short (one paragraph) description of what
-        the package does and why it may be useful.
+  the package does and why it may be useful.
 License: GPL version 2 or newer
 URL: http://www.r-project.org, http://www.another.url
 @end smallexample
@@ -136,10 +149,11 @@ URL: http://www.r-project.org, http://www.another.url
 Continuation lines (for example, for descriptions longer than one line)
 start with a space or tab.  The @samp{Package}, @samp{Version},
 @samp{Author}, and @samp{Description} fields are mandatory, the
-remaining fields (@samp{Date}, @samp{Depends}, @samp{Address},
-@samp{URL}, @dots{}) are optional.  The @samp{Author} field should
-contain an email address in angle brackets (for sending bug reports
-etc.).
+@samp{Maintainer} field is recommended and will be required in @R{}
+version 1.3.0,
+@c FIXME: 1.3.0
+the remaining fields (@samp{Date}, @samp{Depends}, @samp{Address},
+@samp{URL}, @dots{}) are optional.
 
 The @samp{License} field should contain an explicit statement or a
 well-known abbreviation (such as @samp{GPL}, @samp{LGPL}, @samp{BSD}, or
@@ -152,6 +166,9 @@ The @samp{Title} field should give a short description of the package
 and not have any continuation lines.  This information has been
 contained in a separate @file{TITLE} file in older versions of @R{},
 please use the title field in the @file{DESCRIPTION} file from now on.
+
+The @samp{Maintainer} field should give a @emph{single} name with email
+address in angle brackets (for sending bug reports etc.).
 
 The optional @samp{URL} field may give a list of @acronym{URL}s
 separated by commas or whitespace, for example the homepage of the
@@ -468,11 +485,23 @@ build them if they do not) and can be assumed to be up-to-date.
 Run-time checks whether the package works correctly should be performed
 using @code{R CMD check} prior to invoking the build procedure.
 
+To exclude files from being put into the package, one can specify a list
+of exclude patterns in file @file{.Rbuildignore} in the top-level source
+directory.  These patterns should be Perl regexps, one per line, to be
+matched against the file names relative to the top-level source
+directory.  In addition, files called @file{CVS} or @file{GNUMakefile}
+or with names ending in @samp{~} are excluded by default.
+
 Use @kbd{R CMD build --help} (@kbd{Rcmd build --help} on Windows) to
 obtain more information about the usage of the @R{} package builder.
 
 @code{R CMD build} can also build pre-compiled version of packages for
 binary distributions.
+
+Note to Windows users: @code{Rcmd check} and @code{Rcmd build} work well
+under Windows NT4/2000 but may not work correctly on Windows 95/98/ME
+because of problems with some versions of Perl on those limited OSes.
+Experiences vary.
 
 @node Submitting a package to CRAN,  , Checking and building packages, Creating R packages
 @section Submitting a package to @acronym{CRAN}
@@ -1151,20 +1180,22 @@ used to automatically create these indices when building a package.
 
 @findex R CMD Sd2Rd
 Finally, @code{R CMD Sd2Rd} converts @Sl{} version 3 documentation files
-(which use an extended Nroff format) to Rd format.  This is useful when
-porting a package originally written for the @Sl{} system to @R{}.
+(which use an extended Nroff format) and @Sl{} version 4 documentation
+(which uses SGML markup) to Rd format.  This is useful when porting a
+package originally written for the @Sl{} system to @R{}.  @Sl{} version
+3 files usually have extension @file{.d}, whereas version 4 ones have
+extension @file{.sgml} or @file{.sgm}.
 
 The exact usage and a detailed list of available options for each of the
-above commands can be obtained by running @code{R CMD @var{command}
---help}, e.g., @kbd{R CMD Rdconv --help}.  All available commands can be
+above commands can be obtained by running @code{R CMD @var{command} --help},
+e.g., @kbd{R CMD Rdconv --help}.  All available commands can be
 listed using @kbd{R --help}.
 
 All of these have Windows equivalents.  For most just replace @code{R
 CMD} by @code{Rcmd}, with the exception that it is @code{Rcmd Rd2dvi.sh}
 (and that needs the tools to build packages from source to be
-installed).  For each of these @kbd{R CMD @var{cmd} --help} will give
-full details on usage. (You will need the files in the @R{} binary
-Windows distribution for installing source packages to be installed.)
+installed). (You will need the files in the @R{} binary Windows
+distribution for installing source packages to be installed.)
 
 
 @node Tidying and profiling R code, System and foreign language interfaces, Writing R documentation, Top
@@ -1245,8 +1276,8 @@ recommended for the source code of @R{} itself.
 As from @R{} version 1.2.0 it is possible to profile @R{} code on most
 Unix-like versions of @R{}.  @R{} has to be built to enable this, by
 supplying the option @option{--enable-R-profiling}, profiling being
-disabled in a default build.  Unfortunately, profiling relies on OS
-facilities not available on Windows.
+enabled in a default build.  Unfortunately, the way profiling is
+currently implemented relies on OS facilities not available on Windows.
 
 The command @code{Rprof} is used to control profiling, and its help page
 can be consulted for full details.  Profiling works by recording at
@@ -1270,7 +1301,7 @@ storm.bf <- function(rs, i) @{
                start = coef(storm.fm))
     tmp$m$getAllPars()
 @}
-rs <- scale(resid(storm.fm), scale = F) # remove the mean
+rs <- scale(resid(storm.fm), scale = FALSE) # remove the mean
 Rprof("boot.out")
 storm.boot <- boot(rs, storm.bf, R = 4999) # pretty slow
 Rprof()
@@ -3366,11 +3397,12 @@ enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
 @findex R_NegInf
 @findex NA_REAL
 
-It is possible to compile @R{} on a platform without @acronym{IEEE}
-754-compatible arithmetic, so users should not assume that it is
-available.  Rather a set of functions is provided to test for @code{NA},
-@code{Inf}, @code{-Inf} (which exists on all platforms) and @code{NaN}.
-These functions are accessed via macros:
+It is possible to compile @R{} on a platform without @acronym{IEC} 559
+(more commonly known as @acronym{IEEE} 754)-compatible arithmetic, so
+users should not assume that it is available.  Rather a set of functions
+is provided to test for @code{NA}, @code{Inf}, @code{-Inf} (which exists
+on all platforms) and @code{NaN}.  These functions are accessed via
+macros:
 
 @example
 ISNA(@var{x})        @r{True for R's @code{NA} only}

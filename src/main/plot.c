@@ -606,12 +606,15 @@ void GetAxisLimits(double left, double right, double *low, double *high)
 
 SEXP labelformat(SEXP labels)
 {
+    /* format(labels): i.e. from numbers to strings */
     SEXP ans = R_NilValue;/* -Wall*/
     int save_digits, i, n, w, d, e, wi, di, ei;
     char *strp;
     n = length(labels);
     save_digits = R_print.digits;
-    R_print.digits = 7;
+    R_print.digits = 7;/* maximally 7 digits -- ``burnt in'';
+			  S-PLUS <= 5.x has about 6 
+			  (but really uses single precision..) */
     switch(TYPEOF(labels)) {
     case LGLSXP:
 	PROTECT(ans = allocVector(STRSXP, n));
@@ -982,9 +985,9 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     RecordGraphicsCall(call);
     ProcessInlinePars(args, dd);
 
-    /* At this point we know the value of "xaxt" and "yaxt" */
-    /* so we test to see whether the relevant one is "n". */
-    /* If it is, we just bail out at this point. */
+    /* At this point we know the value of "xaxt" and "yaxt",
+     * so we test to see whether the relevant one is "n".
+     * If it is, we just bail out at this point. */
 
     if (((side == 1 || side == 3) && dd->gp.xaxt == 'n') ||
 	((side == 2 || side == 4) && dd->gp.yaxt == 'n')) {
@@ -993,16 +996,15 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
     }
 
-    /* I can't think of a good reason to allow axes */
-    /* with a non-solid line-type, so I override any */
-    /* value the user may have specified.  This may */
-    /* need to be revisited, but this should cover */
-    /* 99.99% of the cases. */
+    /* I can't think of a good reason to allow axes with a non-solid line-type, 
+     * so I override any value the user may have specified.  
+     * This may need to be revisited, but this should 
+     * cover 99.99% of the cases. */
 
     dd->gp.lty = LTY_SOLID;
 
-    /* Override par("xpd") and force clipping to figure region */
-    /* NOTE: don't override to _reduce_ clipping region */
+    /* Override par("xpd") and force clipping to figure region.
+     * NOTE: don't override to _reduce_ clipping region */
 
     dd->gp.xpd = 2;
 

@@ -38,7 +38,7 @@ newerVersion(a, b)
   \item{lib.loc}{A character vector describing the location of R
     library trees to search through (and update packages therein).}
   \item{CRAN}{The base URL of the CRAN mirror to use, i.e., the URL of a
-    CRAN root such as \code{"http://www.r-project.org"} (the default) or
+    CRAN root such as \code{"http://cran.r-project.org"} (the default) or
     its Statlib mirror, \code{"http://lib.stat.cmu.edu/R/CRAN"}.}
   \item{contriburl}{URL of the contrib section of CRAN. Use this argument
     only if your CRAN mirror is incomplete, e.g., because you burned

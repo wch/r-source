@@ -256,6 +256,11 @@ AC_PATH_PROGS(R_ZIPCMD, [${ZIP} zip], "")
 
 ### FORTRAN compiler
 
+## This is needed for setting up LIBM and in the FORTRAN tests, hence we
+## do it here rather than later when we do all the library checking.
+AC_CHECK_LIBM
+AC_SUBST(LIBM)
+
 ## If we have not been forced to use a particular FORTRAN compiler, try
 ## to find one using one of the several common names.
 ##
@@ -481,6 +486,8 @@ if test "${cross_compiling}" = yes; then
   AC_MSG_WARN([assuming C longs are 4 byte on ${host}])
 fi
 AC_CHECK_SIZEOF(long, 4)
+AC_CHECK_SIZEOF(long long, 0)
+AC_CHECK_SIZEOF(long double, 0)
 R_C_IEEE_754
 
 case "${host}" in
@@ -593,18 +600,23 @@ AC_SUBST(R_XTRA_LIBS)
 ## approach.  In case we cannot figure out {MAIN,SHLIB}_LDFLAGS and the
 ## user did not provide defaults, an error results.  A warning is given
 ## if nothing was obtained for SHLIB_CXXLDFLAGS.
+##
+## Note also that some systems (notably AIX) do not allow for unresolved
+## symbols at link time.  For such systems, we link against -lm (in case
+## it exists) when building a shlib module via SHLIB_LIBADD.
 
 main_ld=${CC}
 shlib_ld=${CC}
 shlib_cxxld=${CXX}
 SHLIB_EXT="so"
+SHLIB_LIBADD=
 
 ## Step 1.  Ask imake.
 AC_PATH_PROG(XMKMF, xmkmf, [],
   ${PATH}:/usr/bin/X11:/usr/X11R6/bin:/usr/openwin/bin)
 if test -n "${XMKMF}"; then
   echo > Imakefile
-  ${XMKMF} > /dev/null
+  ${XMKMF} > /dev/null || touch Makefile
   cc=`${srcdir}/tools/GETMAKEVAL CC`
   cc=`echo ${cc} | sed "s/ .*//"`
   if test "`which ${cc}`" = "`which ${CC}`"; then
@@ -652,6 +664,7 @@ case "${host}" in
     #     fi
     shlib_ldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry \
       ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
+    SHLIB_LIBADD="\$(LIBM)"
     ;;
   alpha*osf*)
     cpicflags=
@@ -821,12 +834,13 @@ fi
 AC_SUBST(MAIN_LD)
 AC_SUBST(MAIN_LDFLAGS)
 AC_SUBST(CPICFLAGS)
-AC_SUBST(FPICFLAGS)
 AC_SUBST(CXXPICFLAGS)
-AC_SUBST(SHLIB_LD)
-AC_SUBST(SHLIB_LDFLAGS)
+AC_SUBST(FPICFLAGS)
 AC_SUBST(SHLIB_CXXLD)
 AC_SUBST(SHLIB_CXXLDFLAGS)
+AC_SUBST(SHLIB_LD)
+AC_SUBST(SHLIB_LDFLAGS)
+AC_SUBST(SHLIB_LIBADD)
 AC_SUBST(SHLIB_EXT)
 AC_DEFINE_UNQUOTED(SHLIB_EXT, "${SHLIB_EXT}")
 AC_SUBST(EXPORTFILE)
@@ -932,7 +946,7 @@ AC_SUBST(LIBPATHS)
 ## This should not be necessary when using libtool for linking.
 ## In any case, is this really good enough?
 
-for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${BLAS_LIBS}; do
+for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${FLIBS} ${BLAS_LIBS}; do
   case ${arg} in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
@@ -1042,18 +1056,9 @@ AC_OUTPUT(Makeconf
   tests/Makefile
   tests/Examples/Makefile
   tools/Makefile
-  tools/Rdnewer
-  tools/help2man
-  tools/install-info
-  tools/pkg2tex
 )
 
 AC_OUTPUT_COMMANDS(
-  chmod +x \
-  tools/Rdnewer \
-  tools/help2man \
-  tools/install-info \
-  tools/pkg2tex
   test -f src/include/stamp-h || echo timestamp > src/include/stamp-h
 )
 

@@ -19,16 +19,17 @@ as.POSIXlt(x, tz = "")
 }
 \arguments{
   \item{x}{An object to be converted.}
-  \item{tz}{A timezone specification to be used for the conversion.
-    System-specific, but \code{""} is the current timezone, and
-    \code{"GMT"} is UTC (Coordinated Universal Time, in French).}
+  \item{tz}{A timezone specification to be used for the conversion,
+    \emph{if one is required}.  System-specific, but \code{""}
+    is the current timezone, and \code{"GMT"} is UTC
+    (Coordinated Universal Time, in French).}
 }
 \details{
   The \code{as.POSIX*} functions convert an object to one of the two
   classes used to represent date/times (calendar dates plus time to the
   nearest second).  They can take convert a wide variety of objects,
   including objects of the other class and of classes \code{"date"}
-  (from package \code{\link[date]{date}}), \code{"chron"} and
+  (from package \code{\link[date:as.date]{date}}), \code{"chron"} and
   \code{"dates"} (from package \code{\link[chron]{chron}}) to these
   classes.  They can also convert character strings of the formats
   \code{"2001-02-03"} and \code{"2001/02/03"} optionally followed by
@@ -39,7 +40,8 @@ as.POSIXlt(x, tz = "")
 }
 \value{
   \code{as.POSIXct} and \code{as.POSIXlt} return an object of the
-  appropriate class.
+  appropriate class.  If \code{tz} was specified, \code{as.POSIXlt}
+  will give an appropriate \code{"tzone"} attribute.
 }
 \note{
   If you want to extract specific aspects of a time (such as the day of
@@ -47,6 +49,9 @@ as.POSIXlt(x, tz = "")
   relevant component(s) of the list, or if you want a character
   representation (such as a named day of the week) use
   \code{\link{format.POSIXlt}} or \code{\link{format.POSIXct}}.
+
+  If a timezone is needed and that specified is invalid on your system,
+  what happens is system-specific but it will probably be ignored. 
 }
 \seealso{
   \link{DateTimeClasses} for details of the classes;

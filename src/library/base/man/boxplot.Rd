@@ -11,7 +11,8 @@ boxplot(x, \dots)
 boxplot.default(x, \dots, range = 1.5, width = NULL,
         varwidth = FALSE, notch = FALSE, names, boxwex = 0.8,
         data = parent.frame(), plot = TRUE,
-        border = par("fg"), col = NULL, log = "", pars = NULL)
+        border = par("fg"), col = NULL, log = "", pars = NULL,
+        horizontal = FALSE, add = FALSE)
 boxplot.formula(formula, data = NULL, subset, na.action, \dots)
 }
 \arguments{
@@ -59,9 +60,11 @@ boxplot.formula(formula, data = NULL, subset, na.action, \dots)
     to be used to col the bodies of the box plots.}
   \item{log}{character indicating if x or y or both coordinates should
     be plotted in log scale.}
-  \item{pars, \dots}{graphical parameters can also be passed as
-    arguments to \code{boxplot}.}
-
+  \item{pars}{graphical parameters can also be passed as arguments to
+    \code{boxplot}.}
+  \item{horizontal}{logical indicating if the  boxplots should be
+    horizontal; default \code{FALSE} means vertical boxes.}
+  \item{add}{logical, if true \emph{add} boxplot to current plot.}
 
   \item{formula}{a formula, such as \code{y ~ x}.}
   \item{data}{a data.frame (or list) from which the variables in
@@ -75,9 +78,8 @@ boxplot.formula(formula, data = NULL, subset, na.action, \dots)
     \code{\link{par}}.}
 }
 \details{
-    This is a generic function.  It currently has a default method
-    (\code{boxplot.default}) and a formula interface
-    (\code{boxplot.formula}).
+  This is a generic function.  It currently has a default method
+  (\code{boxplot.default}) and a formula interface (\code{boxplot.formula}).
 }
 \value{
   List with the following components:
@@ -102,6 +104,9 @@ boxplot.formula(formula, data = NULL, subset, na.action, \dots)
 ## boxplot on a formula:
 data(InsectSprays)
 boxplot(count ~ spray, data = InsectSprays, col = "lightgray")
+# *add* notches (somewhat funny here):
+boxplot(count ~ spray, data = InsectSprays,
+        notch = TRUE, add = TRUE, col = "blue")
 
 data(OrchardSprays)
 boxplot(decrease ~ treatment, data = OrchardSprays,
@@ -111,5 +116,8 @@ boxplot(decrease ~ treatment, data = OrchardSprays,
 mat <- cbind(Uni05 = (1:100)/21, Norm = rnorm(100),
              T5 = rt(100, df = 5), Gam2 = rgamma(100, shape = 2))
 boxplot(data.frame(mat), main = "boxplot(data.frame(mat), main = ...)")
+par(las=1)# all axis labels horizontal
+boxplot(data.frame(mat), main = "boxplot(*, horizontal = TRUE)",
+        horizontal = TRUE)
 }
 \keyword{hplot}

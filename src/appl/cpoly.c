@@ -148,6 +148,8 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
     nn++;
     /*-- Now, global var.  nn := #{coefficients} = (relevant degree)+1 */
 
+    if (nn == 1) return;
+
     /* make a copy of the coefficients and shr[] = | p[] | */
     for (i = 0; i < nn; i++) {
 	pr[i] = opr[i];

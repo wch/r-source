@@ -1,7 +1,7 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 #
 
-# Copyright (C) 1997-2000 R Development Core Team
+# Copyright (C) 1997-2001 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -161,7 +161,7 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile,$manage)) {
 		$chmflag = "chm";
 		print "\t$destfile" if $opt_debug;
-		Rdconv($manfile, "chm", "", "$destfile");
+		Rdconv($manfile, "chm", "", "$destfile", $pkg);
 	    }
 	}
 

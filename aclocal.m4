@@ -136,7 +136,7 @@ AC_DEFUN([R_PROG_TEXMF],
     MAKEINFO=false
   fi
   if test "${PERL}" != false; then
-    INSTALL_INFO="\$(top_builddir)/tools/install-info"
+    INSTALL_INFO="\$(PERL) \$(top_srcdir)/tools/install-info.pl"
     AC_SUBST(INSTALL_INFO)
   else
     AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
@@ -322,10 +322,7 @@ EOF
   fi
 ])
 AC_DEFUN([R_PROG_F77_CC_COMPAT],
- [## FIXME:
-  ## This should be in a separate macro, a la libtool AC_CHECK_LIBM
-  AC_CHECK_LIB(m, sin, LIBM="-lm", LIBM=)
-  ## </FIXME>
+ [AC_REQUIRE([AC_CHECK_LIBM])
   AC_MSG_CHECKING([whether ${F77-f77} and ${CC-cc} agree on int and double])
   AC_CACHE_VAL(r_cv_prog_f77_cc_compat,
     [ cat > conftestf.f <<EOF
@@ -418,10 +415,7 @@ EOF
 ])
 AC_DEFUN([R_PROG_F2C_FLIBS],
  [AC_REQUIRE([AC_PROG_RANLIB])
-  ## FIXME:
-  ## This should be in a separate macro, a la libtool AC_CHECK_LIBM
-  AC_CHECK_LIB(m, sin, LIBM="-lm", LIBM=)
-  ## </FIXME>
+  AC_REQUIRE([AC_CHECK_LIBM])
   AC_CACHE_VAL(r_cv_f2c_flibs,
     [## This seems to be necessary on some Linux system. -- you bet! -pd
       cat > conftest.${ac_ext} << EOF
@@ -449,6 +443,8 @@ EOF
   if test -z "${FLIBS}"; then
     warn_f2c_flibs="I found f2c but not libf2c, or libF77 and libI77"
     AC_MSG_WARN(${warn_f2c_flibs})
+  else
+    FLIBS="${FLIBS} ${LIBM}"
   fi])
 AC_DEFUN([R_FUNC___SETFPUCW],
   [ AC_CHECK_FUNC(__setfpucw,
@@ -706,11 +702,13 @@ if test -z "${TCLTK_CPPFLAGS}"; then
       fi
     fi
     if test "${found_tcl_h}" = no; then
+      AC_MSG_CHECKING([for tcl.h])
       AC_EGREP_CPP(yes, [
 #include <tcl.h>
 #if (TCL_MAJOR_VERSION >= 8)
   yes
-#endif], , have_tcltk=no)
+#endif], found_tcl_h=yes, have_tcltk=no)
+      AC_MSG_RESULT([${found_tcl_h}])
     fi
     unset found_tcl_h
   fi
@@ -738,11 +736,13 @@ if test -z "${TCLTK_CPPFLAGS}"; then
       CPPFLAGS="${save_CPPFLAGS}"
     fi
     if test "${found_tk_h}" = no; then
+      AC_MSG_CHECKING([for tk.h])
       AC_EGREP_CPP(yes, [
 #include <tk.h>
 #if (TK_MAJOR_VERSION >= 8)
   yes
-#endif], , have_tcltk=no)
+#endif], found_tk_h=yes, have_tcltk=no)
+      AC_MSG_RESULT([${found_tk_h}])
     fi
     unset found_tk_h
   fi

@@ -13,7 +13,13 @@ R_HOME = $(top_builddir)
 
 OBJS = dblcen.o hclust.o hclust-utils.o kmns.o
 SHLIB = $(pkg).@SHLIB_EXT@
-SHLIB_LIBADD = $(FLIBS)
+
+## FIXME:
+## We should really add FLIBS to SHLIB_LIBADD, but we need to include
+## the shlib Makeconf at a later stage, and its default value would
+## override our setting.
+PKG_LIBS = @FLIBS@
+## </FIXME>
 
 all: Makefile $(SHLIB)
 	@$(top_srcdir)/tools/mkinstalldirs \

@@ -18,9 +18,15 @@ INSTFILES = \
 	faq.html \
 	packages-foot.html \
 	packages-head.html \
-	resource.html \
+	resources.html \
 	template.html \
 	thanks.html
+## FIXME:
+## Remove resource.html when releasing 1.3.0
+## build-help really should not create function.html and package.html
+## in *this* directory.
+CLEANFILES = $(INSTFILES) function.html packages.html resource.html
+## </FIXME>
 DISTFILES = Makefile.in $(INSTFILES) index-default.html
 SUBDIRS = search
 
@@ -69,6 +75,11 @@ uninstall:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
+	@for f in $(CLEANFILES) $(OBJECTS); do \
+	  rm -f $(rhome)/$(subdir)/$${f}; \
+	done
+	@rmdir $(rhome)/$(subdir) 2>/dev/null \
+	  || echo "  subdir $(subdir) not removed"
 
 mostlyclean:
 clean:
@@ -76,7 +87,7 @@ clean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	@if [ "$(srcdir)" != "." ]; then \
-	  rm -f $(INSTFILES); \
+	  rm -f $(CLEANFILES); \
 	fi
 	@rm -f $(OBJECTS)
 distclean: clean

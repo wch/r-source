@@ -112,3 +112,26 @@ closeAllConnections <- function()
     for(i in seq(along=set)) close(set[i])
     invisible()
 }
+
+readBin <- function(con, what, n = 1, size = NA, endian = .Platform$endian)
+{
+    if(is.character(con)) {
+        con <- file(con, "rb")
+        on.exit(close(con))
+    }
+    swap <- endian != .Platform$endian
+    if(!is.character(what) || length(what) != 1) what <- typeof(what)
+    .Internal(readBin(con, what, n, size, swap))
+}
+
+writeBin <- function(object, con, size = NA, endian = .Platform$endian)
+{
+    swap <- endian != .Platform$endian
+    if(!is.vector(object) || mode(object) == "list")
+        stop("can only write vector objects")
+    if(is.character(con)) {
+        con <- file(con, "wb")
+        on.exit(close(con))
+    }
+    invisible(.Internal(writeBin(object, con, size, swap)))
+}

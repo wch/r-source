@@ -6,28 +6,27 @@ Sys.timezone <- function() as.vector(Sys.getenv("TZ"))
 as.POSIXlt <- function(x, tz = "")
 {
     fromchar <- function(x) {
-        xx <- x[1]
-        if(!is.na(strptime(xx, "%Y-%m-%d")))
-            return(strptime(x, "%Y-%m-%d"))
-        if(!is.na(strptime(xx, "%Y/%m/%d")))
-            return(strptime(x, "%Y/%m/%d"))
-        if(!is.na(strptime(xx, "%Y-%m-%d %H:%M")))
-            return(strptime(x, "%Y-%m-%d% %H:%M"))
-        if(!is.na(strptime(xx, "%Y/%m/%d %H:%M")))
-            return(strptime(x, "%Y/%m/%d %H:%M"))
-        if(!is.na(strptime(xx, "%Y-%m-%d %H:%M:%S")))
-            return(strptime(x, "%Y-%m-%d% %H:%M:%S"))
-        if(!is.na(strptime(xx, "%Y/%m/%d %H:%M:%S")))
-            return(strptime(x, "%Y/%m/%d %H:%M:%S"))
-        stop("character string is not in a standard unambiguous format")
+	xx <- x[1]
+	if(!is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%S")) ||
+	   !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%S")) ||
+	   !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M")) ||
+	   !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M")) ||
+	   !is.na(strptime(xx, f <- "%Y-%m-%d")) ||
+	   !is.na(strptime(xx, f <- "%Y/%m/%d")))
+        {
+	    res <- strptime(x, f)
+            if(nchar(tz)) attr(res, "tzone") <- tz
+            return(res)
+        }
+	stop("character string is not in a standard unambiguous format")
     }
 
     if(inherits(x, "POSIXlt")) return(x)
     if(inherits(x, "date") || inherits(x, "dates")) x <- as.POSIXct(x)
     if(is.character(x)) return(fromchar(x))
     if(!inherits(x, "POSIXct"))
-        stop(paste("Don't know how to convert `", deparse(substitute(x)),
-                   "' to class \"POSIXlt\"", sep=""))
+	stop(paste("Don't know how to convert `", deparse(substitute(x)),
+		   "' to class \"POSIXlt\"", sep=""))
     .Internal(as.POSIXlt(x, tz))
 }
 
@@ -58,18 +57,19 @@ as.POSIXct.dates <- function(x, ...)
 
 as.POSIXct.POSIXlt <- function(x, tz = "")
 {
+    if(missing(tz) && !is.null(attr(x, "tzone"))) tz <- attr(x, "tzone")[1]
     structure(.Internal(as.POSIXct(x, tz)), class = "POSIXct")
 }
 
 as.POSIXct.default <- function(x, tz = "")
 {
     if(inherits(x, "POSIXct")) return(x)
-    if(is.character(x)) return(as.POSIXct(as.POSIXlt(x)))
+    if(is.character(x)) return(as.POSIXct(as.POSIXlt(x), tz))
     stop(paste("Don't know how to convert `", deparse(substitute(x)),
                "' to class \"POSIXct\"", sep=""))
 }
 
-format.POSIXlt <- function(x, format = "", ...)
+format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
 {
     if(!inherits(x, "POSIXlt")) stop("wrong class")
     if(format == "") {
@@ -77,7 +77,7 @@ format.POSIXlt <- function(x, format = "", ...)
         format <- if(all(times[!is.na(times)] == 0)) "%Y-%m-%d"
         else "%Y-%m-%d %H:%M:%S"
     }
-    .Internal(format.POSIXlt(x, format))
+    .Internal(format.POSIXlt(x, format, usetz))
 }
 
 strftime <- .Alias(format.POSIXlt)
@@ -86,32 +86,35 @@ strptime <- function(x, format)
     .Internal(strptime(x, format))
 
 
-format.POSIXct <- function(x, format = "", tz = "", ...)
+format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
 {
     if(!inherits(x, "POSIXct")) stop("wrong class")
-    structure(format.POSIXlt(as.POSIXlt(x, tz), format, ...), names=names(x))
+    structure(format.POSIXlt(as.POSIXlt(x, tz), format, usetz, ...),
+              names=names(x))
 }
 
 print.POSIXct <- function(x, ...)
 {
-    print(format(x), ...)
+    print(format(x, usetz=TRUE), ...)
     invisible(x)
 }
 
 print.POSIXlt <- function(x, ...)
 {
-    print(format(x), ...)
+    print(format(x, usetz=TRUE), ...)
     invisible(x)
 }
 
-summary.POSIXct <- function(object, digits, ...)
+summary.POSIXct <- function(object, digits=15, ...)
 {
-    x <- summary.default(unclass(object), digits=15, ...)
+    x <- summary.default(unclass(object), digits=digits, ...)
     class(x) <- class(object)
     x
 }
 
-summary.POSIXlt <- function(object, ...) summary(as.POSIXct(x), ...)
+summary.POSIXlt <- function(object, digits = 15, ...)
+    summary(as.POSIXct(object), digits = digits, ...)
+
 
 "+.POSIXct" <- function(e1, e2)
 {
@@ -331,3 +334,9 @@ as.matrix.POSIXlt <- function(x)
 {
     as.matrix(as.data.frame(unclass(x)))
 }
+
+mean.POSIXct <- function (x, ...)
+    structure(mean(unclass(x), ...), class = "POSIXct")
+
+mean.POSIXlt <- function (x, ...)
+    as.POSIXlt(mean(as.POSIXct(x), ...))

@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.52 $'
+revision='$Revision: 1.52.2.1 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -37,6 +37,7 @@ Report bugs to <r-bugs@r-project.org>."
 
 R_VERSION='@VERSION@'
 INSTALL='@INSTALL@'
+AWK=${AWK-@AWK@}
 MAKE=${MAKE-@MAKE@}
 NO_PERL5=@NO_PERL5@
 NO_PERL5_MSG="\
@@ -296,7 +297,8 @@ do_install () {
     done
     title=`grep -s "^Title:" DESCRIPTION | sed "s/^Title:[ \t]*//"`
     if test "${title}"; then
-      ${R_HOME}/bin/maketitle > ${lib}/${pkg}/TITLE
+      ${AWK} -f ${R_HOME}/bin/maketitle.awk DESCRIPTION \
+        > ${lib}/${pkg}/TITLE
     elif test -f TITLE; then
       cp TITLE ${lib}/${pkg}
     fi

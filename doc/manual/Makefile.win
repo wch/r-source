@@ -38,12 +38,6 @@ texiincludes = version.texi R-defs.texi
 
 all: pdf
 
-pkg2tex.pl: $(top_srcdir)/tools/pkg2tex.in
-	@sed -e 1d  $^ > $@
-
-Rdnewer.pl: $(top_srcdir)/tools/Rdnewer.in
-	@sed -e 1d  $^ > $@
-
 .texi.dvi:
 	$(TEX) $<
 	$(TEX) $<
@@ -129,12 +123,12 @@ version.tex: ../../bin/Rterm.exe $(top_srcdir)/VERSION
 	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
 	  echo "$${v}") > $@
 
-%-pkg.tex: FORCE Rdnewer.pl pkg2tex.pl
-	@if perl Rdnewer.pl \
+%-pkg.tex: FORCE
+	@if perl ../../tools/Rdnewer.pl \
 	    "$(top_srcdir)/src/library/$*" "$@"; then \
 	  echo "collecting LaTeX docs for package \`$*' ..."; \
-	  (cd ../../src/gnuwin32/help && $(MAKE) RHOME=$(RHOME) latex-$*); \
-	  perl pkg2tex.pl $*; \
+	  (cd ../../src/gnuwin32/help && $(MAKE)  --no-print-directory RHOME=$(RHOME) latex-$*); \
+	  perl ../../tools/pkg2tex.pl $*; \
 	fi
 FORCE:
 
@@ -171,12 +165,11 @@ version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 
 mostlyclean: clean
 clean:
-	@echo cleaning in doc/manual
 	@-rm -f *.aux *.toc refman.i?? *.out *.log
 	@-rm -f *.cp *.cps *.fn *.fns *.ky *.kys \
 	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs \
 	  version.tex version.texi refman.tex *-pkg.tex 
 distclean: clean
-	@-rm -f pkg2tex.pl Rdnewer.pl *.pdf *.dvi *.info* *.html
+	@-rm -f *.pdf *.dvi *.info* *.html
 maintainer-clean: distclean
 

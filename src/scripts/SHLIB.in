@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.18 $'
+revision='$Revision: 1.18.2.1 $'
 version=`set - ${revision}; echo ${2}`
 version="R shared library builder ${version}
 
@@ -26,10 +26,9 @@ Options:
 
 Report bugs to <r-bugs@r-project.org>."
 
-lib=
 objs=
+shlib=
 MAKE=${MAKE-@MAKE@}
-makeargs=
 makefiles="-f ${R_HOME}/etc/Makeconf"
 with_cxx=false
 with_f77=false
@@ -41,26 +40,26 @@ while test -n "${1}"; do
     -v|--version)
        echo "${version}"; exit 0 ;;
     -o)
-      lib=${2}; shift ;;
+      shlib=${2}; shift ;;
     --output=*)
-      lib=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+      shlib=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     *.cc|*.cpp|.*C)
       with_cxx=true
-      if test -z "${lib}"; then
-	lib="`echo ${1} | sed 's/\.[^\.][^\.]*$/.@SHLIB_EXT@/'`"
+      if test -z "${shlib}"; then
+	shlib="`echo ${1} | sed 's/\.[^\.][^\.]*$/.@SHLIB_EXT@/'`"
       fi
       objs="${objs} `echo ${1} | sed 's/\.[^\.][^\.]*$/.o/'`"
       ;;
     *.f)
       with_f77=true
-      if test -z "${lib}"; then
-	lib="`echo ${1} | sed 's/\.[^\.][^\.]*$/.@SHLIB_EXT@/'`"
+      if test -z "${shlib}"; then
+	shlib="`echo ${1} | sed 's/\.[^\.][^\.]*$/.@SHLIB_EXT@/'`"
       fi
       objs="${objs} `echo ${1} | sed 's/\.[^\.][^\.]*$/.o/'`"
       ;;
     *.[co])
-      if test -z "${lib}"; then
-	lib="`echo ${1} | sed 's/\.[^\.][^\.]*$/.@SHLIB_EXT@/'`"
+      if test -z "${shlib}"; then
+	shlib="`echo ${1} | sed 's/\.[^\.][^\.]*$/.@SHLIB_EXT@/'`"
       fi
       objs="${objs} `echo ${1} | sed 's/\.[^\.][^\.]*$/.o/'`"
       ;;
@@ -68,11 +67,15 @@ while test -n "${1}"; do
   shift
 done
 
+makeobjs="OBJS=\"${objs}\""
 if test -r Makevars; then
   makefiles="-f Makevars ${makefiles}"
+  if grep '^ *OBJS *=' Makevars >/dev/null; then
+    makeobjs=
+  fi
 fi
 
-makeargs="SHLIB=\"${lib}\" OBJS=\"${objs}\""
+makeargs="SHLIB=\"${shlib}\""
 if ${with_cxx}; then
   makeargs="SHLIB_LDFLAGS='\$(SHLIB_CXXLDFLAGS)' ${makeargs}"
   makeargs="SHLIB_LD='\$(SHLIB_CXXLD)' ${makeargs}"
@@ -81,7 +84,7 @@ if ${with_f77}; then
   makeargs="${makeargs} SHLIB_LIBADD='\$(FLIBS)'"
 fi
 
-eval ${MAKE} ${makefiles} ${makeargs}
+eval ${MAKE} ${makefiles} ${makeargs} ${makeobjs}
 
 ### Local Variables: ***
 ### mode: sh ***
