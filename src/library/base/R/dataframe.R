@@ -197,7 +197,7 @@ as.data.frame.model.matrix <- function(x, row.names = NULL, optional = FALSE)
     value
 }
 
-"[.AsIs" <- function(x, i) structure(NextMethod("["), class = class(x))
+"[.AsIs" <- function(x, i, ...) structure(NextMethod("["), class = class(x))
 
 as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE)
 {
