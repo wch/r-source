@@ -102,6 +102,10 @@
 
 /* S Like Memory Management */
 
+extern void *R_chk_calloc(size_t, size_t);
+extern void *R_chk_realloc(void *, size_t);
+extern void R_chk_free(void *);
+
 #define Calloc(n, t)   (t *) R_chk_calloc( (size_t) (n), sizeof(t) )
 #define Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (size_t)((n) * sizeof(t)) )
 /* S-PLUS 3.x but not 5.x NULLs the pointer in the following */
