@@ -810,9 +810,7 @@ do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho) {
     const char *path;
 
     checkArity(op, args);
-
-    s = CAR(args);
-    if (!isString(s))
+    if (!isPairList(args) || !isValidString(s = CAR(args)))
 	errorcall(call, "character argument expected\n");
     path = R_ExpandFileName(CHAR(STRING(s)[0]));
     if(chdir(path) < 0)
@@ -828,8 +826,7 @@ do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
     char  buf[PATH_MAX], *p, fsp = FILESEP[0];
 
     checkArity(op, args);
-    s = CAR(args);
-    if (!isString(s))
+    if (!isPairList(args) || !isValidString(s = CAR(args)))
 	errorcall(call, "character argument expected\n");
     strcpy (buf, R_ExpandFileName(CHAR(STRING(s)[0])));
 #ifdef Win32
@@ -854,8 +851,7 @@ do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
     char  buf[PATH_MAX], *p, fsp = FILESEP[0];
 
     checkArity(op, args);
-    s = CAR(args);
-    if(!isString(s))
+    if (!isPairList(args) || !isValidString(s = CAR(args)))
 	errorcall(call, "character argument expected\n");
     strcpy(buf, R_ExpandFileName(CHAR(STRING(s)[0])));
 #ifdef Win32
