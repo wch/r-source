@@ -6,7 +6,7 @@
   format to another Sweave syntax definition. 
 }
 \usage{
-SweaveSyntConv(file, target, output=NULL)
+SweaveSyntConv(file, syntax, output=NULL)
 }
 \arguments{
   \item{file}{Name of Sweave source file.}
