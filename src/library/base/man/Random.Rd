@@ -21,7 +21,8 @@ RNGkind(kind=NULL)
 	string, set \R's RNG to the kind desired, if it's \code{NULL},
 	return the currently used RNG.}
     \item{rng.kind}{integer code in \code{0:k} for the above \code{kind}.}
-    \item{n1,n2,\dots}{integers.}
+    \item{n1,n2,\dots}{integers. See the details for how many are required
+	(which depends on \code{rng.kind}).}
 }
 \details{
         
@@ -31,7 +32,7 @@ Currently available RNG kinds
      \item "Wichmann-Hill": \code{.Random.seed[1] == 0} 
      
      The seed, \code{.Random.seed[-1] == r[1:3]} is an integer vector of
-     length 3, where each \code{r[i]} is in \code{1:p[i]}, where
+     length 3, where each \code{r[i]} is in \code{1:(p[i] - 1)}, where
      \code{p} is the length 3 vector of primes,
      \code{p = (30269, 30307, 30323)}. 
      The Wichmann-Hill generator has a cycle length of
@@ -44,13 +45,16 @@ Currently available RNG kinds
     George Marsaglia in his post to the mailing list
     \file{sci.stat.math} on September 29, 1997.  It has a period of
     \eqn{> 2^60} and has passed all tests (according to Marsaglia).
+    The seed is two integers (all values allowed).
 
     \item "Super-Duper": \code{.Random.seed[1] == 2} 
 
     Marsaglia's famous Super-Duper from the 70's.  This is the original
     version which does \emph{not} pass the MTUPLE test of the Diehard
     battery.
-    It has a period of \eqn{\approx 4.6\times 10^{18}}{about 4.6*10^18}.
+    It has a period of \eqn{\approx 4.6\times 10^{18}}{about 4.6*10^18}
+    for most initial seeds. The seed is two integers (all values allowed
+    for the first seed: the second must be odd).
     
     We use the implementation as by Reeds et al. (1982-'83), with the
     additional non-0 seed measure (see note below).
@@ -58,7 +62,8 @@ Currently available RNG kinds
     The two seeds are the Tausworthe and Congruence long integers,
     respectively.
     A one-to-one mapping to S's \code{.Random.seed[1:12]} is possible
-    but hasn't been done yet.
+    but we will not publish one, not least as this generator is
+    \bold{not} exactly the same as that in recent versions of S-PLUS.
     
 %%BUG 'stack ...' \item "Rand": \code{.Random.seed[1] == 3}
 %%BUG 'stack ...'
@@ -80,7 +85,7 @@ Currently available RNG kinds
  "Eichenauer-..."))
  
  \bold{Note}: If any of \code{.Random.seed[i]} (\eqn{i>1}) is set to
- \code{0}, it will be substituted with \code{1}, in the next call to a
+ \code{0}, it will be substituted with \code{1} in the next call to a
  random number generator, such as \code{\link{runif}}.
 }
 \value{
@@ -93,13 +98,13 @@ Currently available RNG kinds
     \code{.Random.seed[i]} can therefore be negative for \eqn{i > 1}. 
 
     \code{RNGkind} returns the RNG in use \emph{before} the call, invisibly
-    if \code{kind} isn't \code{NULL}.
+    if \code{kind} is not \code{NULL}.
 }
 \references{
-  B.A. Wichmann and I. D. Hill (1982).
+  B. A. Wichmann and I. D. Hill (1982).
   \emph{Algorithm AS 183: An Efficient and Portable Pseudo-random Number
     Generator}, Applied Statistics, \bold{31}, 188-190; Remarks:
-  \bold{34},p.198 and \bold{35}, p.89.
+  \bold{34}, 198 and \bold{35}, 89.
 
   A. De Matteis and S. Pagnutti (1993).
   \emph{Long-range Correlation Analysis of the Wichmann-Hill Random
