@@ -14,6 +14,9 @@ ln -s MacOS bin
 ./R.fix
 rm R.fix
 cd ${here}
-cp  -R src/modules/aqua/Contents/ /Applications/RAqua.app/Contents
+cp -R src/modules/aqua/Contents/Resources /Applications/RAqua.app/Contents
+cp src/modules/aqua/Contents/PkgInfo /Applications/RAqua.app/Contents
+cp src/modules/aqua/Contents/Info.plist/Applications/RAqua.app/Contents
+
 echo "Note: execute this script one time only!"
 echo "type >>  sh /Applications/RAqua.app/Contents/MacOS/R --gui-aqua  << to run R"
