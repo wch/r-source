@@ -1625,7 +1625,7 @@ SEXP cons(SEXP car, SEXP cdr)
   the namelist argument to be shorter than the valuelist; in this
   case the remaining values must be named already.  (This is useful
   in cases where the entire valuelist is already named--namelist can
-  then be R_NilValue
+  then be R_NilValue.)
 
   The valuelist is destructively modified and used as the
   environment's frame.
