@@ -21,7 +21,8 @@ legend(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
   \item{legend}{a vector of text values or an \code{\link{expression}}
     of length \eqn{\ge 1}{>= 1} to appear in the legend.}
   \item{fill}{if specified, this argument will cause boxes filled
-    with the specified colors to appear beside the legend text.}
+    with the specified colors (or shaded in the specified colors)
+    to appear beside the legend text.}
   \item{col}{the color of points or lines appearing in the legend.}
   \item{lty,lwd}{the line types and widths for lines appearing in the
     legend.  One of these two \emph{must} be specified for line drawing.}
@@ -29,9 +30,13 @@ legend(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
     vector of 1-character strings, or one (multi character)
     string. \emph{Must} be specified for symbol drawing.}
   \item{angle}{angle of shading lines.}
-  \item{density}{the density of shading lines, if numeric and positive.}
-  \item{bty}{the type of box to be drawn around the legend.}
-  \item{bg}{the background color for the legend box.}
+  \item{density}{the density of shading lines, if numeric and
+    positive. If \code{NULL} or negative or \code{NA} color filling
+    is assumed.}
+  \item{bty}{the type of box to be drawn around the legend.  The allowed
+    values are \code{"o"} (the default) and \code{"n"}.}
+  \item{bg}{the background color for the legend box.  (Note that this is
+    only used if \code{bty = "n"}.)}
   \item{pt.bg}{the background color for the \code{\link{points}}.}
   \item{cex}{character expansion factor \bold{relative} to current
     \code{par("cex")}.}
@@ -72,7 +77,7 @@ legend(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
   legend.  If it gives the coordinates of two points, these specify
   opposite corners of the rectangle (either pair of corners, in any
   order).
-  
+
   \dQuote{Attribute} arguments such as \code{col}, \code{pch}, \code{lty},
   etc, are recycled if necessary.  \code{merge} is not.
 
@@ -160,6 +165,7 @@ for(ll in c("","x","y","xy")) {
 par(mfrow=c(1,1))
 
 ##-- Math expressions:  ------------------------------
+x <- seq(-pi, pi, len = 65)
 plot(x, sin(x), type="l", col = 2,xlab=expression(phi),ylab=expression(f(phi)))
 abline(h=-1:1, v=pi/2*(-6:6), col="gray90")
 lines(x, cos(x), col = 3, lty = 2)
@@ -176,9 +182,11 @@ ex12 <- expression(bar(x) == sum(over(x[i], n), i==1, n),
 str(legend(4.1, 30, ex12, col = 2:3, lty=2:3, lwd=2))
 
 ## 'Filled' boxes -- for more, see example(plotfactor)
+op <- par(bg="white") # to get an opaque box for the legend
 data(PlantGrowth)
 plot(cut(weight, 3) ~ group, data = PlantGrowth,
      col = NULL, density = 16*(1:3))
+par(op)
 
 ## Using 'ncol' :
 x <- 0:64/64

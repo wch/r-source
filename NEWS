@@ -283,6 +283,10 @@ NEW FEATURES
 	documentation of 'tryCatch' and 'signalCondition'.  Code that
 	does not use these new facilities should remain unaffected.
 
+    o	polygon() and rect() now interpret density < 0 or NA to mean
+	filling is desired: this allows filling and shading to be
+	mixed in one call, e.g. from legend(). 
+
 
 DEPRECATED & DEFUNCT
 
@@ -433,6 +437,8 @@ BUG FIXES
 
     o   Subsetting data frames did not always correctly detect that
 	non-existent columns were specified.
+
+    o   legend() allows shading without filling again.
 
 
 

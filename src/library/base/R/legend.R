@@ -1,5 +1,5 @@
 legend <-
-function(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
+function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	 angle = NULL, density = NULL, bty = "o",
 	 bg = par("bg"), pt.bg = NA, cex = 1,
 	 xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = 0,
@@ -12,6 +12,8 @@ function(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
         legend <- y
         y <- NULL
     }
+    mfill <- !missing(fill) || !missing(density)
+
     xy <- xy.coords(x, y); x <- xy$x; y <- xy$y
     nx <- length(x)
     if (nx < 1 || nx > 2) stop("invalid coordinate lengths")
@@ -19,7 +21,7 @@ function(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
     xlog <- par("xlog")
     ylog <- par("ylog")
 
-    rect2 <- function(left, top, dx, dy, angle, ...) {
+    rect2 <- function(left, top, dx, dy, density = NULL, angle, ...) {
 	r <- left + dx; if(xlog) { left <- 10^left; r <- 10^r }
 	b <- top  - dy; if(ylog) {  top <- 10^top;  b <- 10^b }
 	rect(left, top, r, b, angle = angle, density = density, ...)
@@ -61,7 +63,7 @@ function(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
     ychar <- yextra + ymax
     if(trace) catn("  xchar=", xchar, "; (yextra,ychar)=", c(yextra,ychar))
 
-    if(!missing(fill)) {
+    if(mfill) {
 	##= sizes of filled boxes.
 	xbox <- xc * 0.8
 	ybox <- yc * 0.5
@@ -117,7 +119,7 @@ function(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
 	## -- (w,h) := (width,height) of the box to draw -- computed in steps
 	h <- n.legpercol * ychar + yc
 	w0 <- text.width + (x.intersp + 1) * xchar
-	if(!missing(fill))	w0 <- w0 + dx.fill
+	if(mfill)	w0 <- w0 + dx.fill
 	if(has.pch && !merge)	w0 <- w0 + dx.pch
 	if(do.lines)		w0 <- w0 + (2+x.off) * xchar
 	w <- ncol*w0 + .5* xchar
@@ -129,7 +131,7 @@ function(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
     if (plot && bty != "n") { ## The legend box :
 	if(trace)
 	    catn("  rect2(",left,",",top,", w=",w,", h=",h,", ...)",sep="")
-	rect2(left, top, dx = w, dy = h, col = bg, angle = NULL)
+	rect2(left, top, dx = w, dy = h, col = bg, density = NULL)
     }
     ## (xt[],yt[]) := `current' vectors of (x/y) legend text
     xt <- left + xchar + (w0 * rep.int(0:(ncol-1),
@@ -137,11 +139,12 @@ function(x, y = NULL, legend, fill, col = "black", lty, lwd, pch,
     yt <- top - (rep.int(1:n.legpercol,ncol)[1:n.leg]-1) * ychar -
         0.5 * yextra - ymax
 
-    if (!missing(fill)) {		#- draw filled boxes -------------
+    if (mfill) {		#- draw filled boxes -------------
 	if(plot) {
-	    fill <- rep(fill, length.out=n.leg)
-	    rect2(left=xt, top=yt+ybox/2, dx = xbox, dy = ybox,
-		  col = fill, angle = angle)
+	    fill <- rep(fill, length.out = n.leg)
+	    rect2(left = xt, top=yt+ybox/2, dx = xbox, dy = ybox,
+		  col = fill,
+                  density = density, angle = angle, border = "black")
 	}
 	xt <- xt + dx.fill
     }

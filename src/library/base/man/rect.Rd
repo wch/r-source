@@ -13,12 +13,13 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
   \item{ytop}{a vector (or scalar) of top y positions.}
   \item{density}{the density of shading lines, in lines per inch.
     The default value of \code{NULL} means that no shading lines are drawn.
-    Non-positive values of \code{density} also inhibit the drawing
-    of shading lines.}
+    A zero value of \code{density} means no shading lines whereas
+    negative values (and \code{NA}) suppress shading (and so allow
+    color filling).}
   \item{angle}{angle (in degrees) of the shading lines.}
   \item{col}{color(s) to fill or shade the rectangle(s) with.
     The default \code{NULL}, or also \code{\link{NA}} do not fill,
-    i.e., draw transparent rectangles.}
+    i.e., draw transparent rectangles, unless \code{density} is specified.}
   \item{border}{color for rectangle border(s).}
   \item{lty}{line type for borders; defaults to \code{"solid"}.}
   \item{lwd}{width for borders.}
@@ -49,7 +50,7 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
 \examples{
 ## set up the plot region:
 op <- par(bg = "thistle")
-plot(c(100, 250), c(300, 450), type = "n", xlab="",
+plot(c(100, 250), c(300, 450), type = "n", xlab="", ylab="",
      main = "2 x 11 rectangles; 'rect(100+i,300+i,  150+i,380+i)'")
 i <- 4*(0:10)
 ## draw rectangles with bottom left (100, 300)+i and top right (150, 380)+i
@@ -60,6 +61,19 @@ j <- 10*(0:5)
 rect(125+j, 360+j,   141+j, 405+j/2, col = c(NA,0), border = "gold", lwd = 2)
 rect(125+j, 296+j/2, 141+j, 331+j/5, col = c(NA,"midnightblue"))
 mtext("+  2 x 6 rect(*, col = c(NA,0)) and  col = c(NA,\"m..blue\"))")
+
+## an example showing colouring and shading
+plot(c(100, 200), c(300, 450), type= "n", xlab="", ylab="")
+rect(100, 300, 125, 350) # transparent
+rect(100, 400, 125, 450, col="green", border="blue") # coloured
+rect(115, 375, 150, 425, col=par("bg"), border="transparent")
+rect(150, 300, 175, 350, density=10, border="red")
+rect(150, 400, 175, 450, density=30, col="blue",
+     angle=-30, border="transparent")
+
+legend(180, 450, legend=1:4, fill=c(NA, "green", par("fg"), "blue"),
+       density=c(NA, NA, 10, 30), angle=c(NA, NA, 30, -30))
+
 par(op)
 }
 \keyword{aplot}

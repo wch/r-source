@@ -19,8 +19,9 @@ polygon(x, y = NULL, density = NULL, angle = 45,
     of the polygon.}
   \item{density}{the density of shading lines, in lines per inch.  The
     default value of \code{NULL} means that no shading lines are drawn.
-    Non-positive values of \code{density} also inhibit the drawing
-    of shading lines.}
+    A zero value of \code{density} means no shading lines whereas
+    negative values (and \code{NA}) suppress shading (and so allow
+    color filling).}
   \item{angle}{the slope of shading lines, given as an angle
      in degrees (counter-clockwise).}
   \item{col}{the color for filling the polygon.
