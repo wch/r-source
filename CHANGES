@@ -25,6 +25,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   replicating factors now yields factors (again)
+
     o   print.summary.xxx  functions more consistent, using new function
 	print.coefmat().
 
