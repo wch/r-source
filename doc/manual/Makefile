@@ -43,6 +43,12 @@ Man.dvi: Man.tex Version.tex Rd.sty $(Packages)
 	-latex '\nonstopmode\input{Man.tex}'
 	-makeindex Man
 	-latex '\nonstopmode\input{Man.tex}'
+
+ABOUT.dvi: ABOUT.tex writing-Rd.tex Rd.sty
+	-latex ABOUT
+	-latex ABOUT
+ABOUT.ps: ABOUT.dvi
+	-dvips -f $< -o $@
 ##-- need \nonstopmode, since we still have some 'alias' problems in Index
 Version.tex: $(rRHOME)/bin/R
 	$^ --version > $@
@@ -70,7 +76,7 @@ Man-plotmath.ps: Man.dvi
 Man_2on1.dvi: Man.dvi
 	-dvidvi -m "2:0,1(21.1cm,0)" $^ $@
 Man.ps-2: Man_2on1.dvi
-	-dvips $^ -x 707 -t landscape -O -0.69cm,-0.70cm -o $@
+	-dvips -f $< -x 707 -t landscape -O -0.69cm,-0.70cm -o $@
 Man-index.ps-2: Man.ps-2
 	P=`perl -ne 'next unless /\bbop\b.*\bIndex\b/; @_=split; printf "%s\n", int(.5+$$_[1]/2)' Man.ps`; psselect -p"$$P"- $^ > $@
 
