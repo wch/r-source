@@ -18,9 +18,14 @@
  */
 
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include <windows.h>
 #include <string.h>		/* for strrchr(...) */
 #include <stdio.h>
+#include <ctype.h>
 #include "Rversion.h"
 
 static char rhomebuf[MAX_PATH];
@@ -28,7 +33,7 @@ static char rhomebuf[MAX_PATH];
 #define GOBACKONESLASH \
   p = strrchr(rhomebuf,'\\'); \
   if (!p) { \
-    MessageBox(NULL,"Installation problem","Terminating", \
+    MessageBox(NULL, "Installation problem", "Terminating", \
 		MB_TASKMODAL | MB_ICONSTOP | MB_OK);\
    exit(1); \
   } \
@@ -38,10 +43,16 @@ char *getRHOME()
 {
     DWORD nc;
     char *p;
+    int hasspace = 0;
 
     nc = GetModuleFileName(NULL, rhomebuf, MAX_PATH);
     GOBACKONESLASH;
     GOBACKONESLASH;
+    /* make sure no spaces in path */
+    for (p = rhomebuf; *p; p++) 
+	if (isspace(*p)) { hasspace = 1; break; }
+    if (hasspace)
+	GetShortPathName(rhomebuf, rhomebuf, MAX_PATH);
     return (rhomebuf);
 }
 

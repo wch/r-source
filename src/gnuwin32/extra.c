@@ -40,12 +40,20 @@ static char DefaultFileName[MAX_PATH];
  */
 char * tmpnam(char * str)
 {
-    char *tmp, *tmp2;
+    char *tmp, tmp1[MAX_PATH], *tmp2, *p;
+    int hasspace = 0;
 
     if(str) tmp2 = str; else tmp2 = DefaultFileName;
     tmp = getenv("TMP");
     if (!tmp) tmp = getenv("TEMP");
-    if (!tmp) tmp = getenv("R_USER");
+    if (!tmp) tmp = getenv("R_USER"); /* this one will succeed */
+    /* make sure no spaces in path */
+    for (p = tmp; *p; p++) 
+	if (isspace(*p)) { hasspace = 1; break; }
+    if (hasspace)
+	GetShortPathName(tmp, tmp1, MAX_PATH);
+    else
+	strcpy(tmp1, tmp);
     sprintf(tmp2, "%s/RtmpXXXXXX", tmp);
     mktemp(tmp2); /* Windows function to replace X's */
     return(tmp2);
@@ -55,8 +63,9 @@ char * tmpnam(char * str)
 SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  ans;
-    char *tmp, *tn, tm[MAX_PATH], tmp1[MAX_PATH];
+    char *tmp, *tn, tm[MAX_PATH], tmp1[MAX_PATH], *p;
     unsigned int n, done = 0;
+    int hasspace = 0;
 
     WIN32_FIND_DATA fd;
     HANDLE h;
@@ -68,7 +77,13 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     tmp = getenv("TMP");
     if (!tmp) tmp = getenv("TEMP");
     if (!tmp) tmp = getenv("R_USER"); /* this one will succeed */
-    GetShortPathName(tmp, tmp1, MAX_PATH); /* make sure no spaces in path */
+    /* make sure no spaces in path */
+    for (p = tmp; *p; p++) 
+	if (isspace(*p)) { hasspace = 1; break; }
+    if (hasspace)
+	GetShortPathName(tmp, tmp1, MAX_PATH);
+    else
+	strcpy(tmp1, tmp);
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end */
         sprintf(tm, "%s\\%s%d", tmp1, tn, rand());
