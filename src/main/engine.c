@@ -1787,7 +1787,11 @@ void GESymbol(double x, double y, int pch, double size,
 
     /* Special cases for plotting pch="." or pch=<character>
      */
+#ifdef SUPPORT_MBCS
+    if(' ' <= pch && (mbcslocale || pch <= 255)) {
+#else
     if(' ' <= pch && pch <= 255) {
+#endif
 	if (pch == '.') {
 	    /*
 	     * NOTE:  we are *filling* a rect with the current
@@ -2065,6 +2069,8 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[2] = x-xc; yy[2] = y+yc;
 	    GEPolygon(3, xx, yy, gc, dd);
 	    break;
+	default:
+	    warning("unimplemented pch value '%d'", pch);
 	}
     }
 }
