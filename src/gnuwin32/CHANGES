@@ -78,6 +78,10 @@ Gui changes
     the last character on the line the (invisible) CRLF is made part of
     the selection, but not if only up to the last character is selected.
 
+-   The data editor is no longer modal (which seems not to have worked
+    properly in the GraphApp toolkit) and this allows its popups to be
+    modal.
+
 
 New utilities for preparing packages
 ------------------------------------
@@ -110,7 +114,7 @@ New utilities for preparing packages
 
 
 The default for options("papersize") is set according to the locale,
-and so might well be set to "letter" under US or Canadian versions of
+and so might be set to "letter" under US or Canadian versions of
 Windows.
 
 Rterm in interactive use sets the title of the window it is running
@@ -126,7 +130,9 @@ garbage collection.
 
 New command-line option --max-mem-size to limit the maximum memory
 allocation: it is by default unlimited (except by system constraints)
-and has a minimum allowed value of 10M.
+and has a minimum allowed value of 10M.  This is intended to catch
+attempts to allocate excessive amounts of memory which may cause other
+process to run out of resources.
 
 DLLs for packages (including standard packages supplied with R)
 automatically gain version information when compiled under this
@@ -154,9 +160,13 @@ Interactive use of Rterm.exe on Windows 2000 systems is now possible
 Better rendering of wide (lwd > 1) and dashed (lty != "solid") lines
 on the windows/win.print device.
 
-The installer rwinst.exe tries when asked to install a package to find
-a current installation of R, first from R_HOME if set, then from the
-PATH (it looks for rw1020\bin).
+The installer rwinst.exe tries when first asked to install a package
+to find a current installation of R, first from R_HOME if set, then
+from the PATH (it looks for rw1020\bin).
+
+The GUI console copes much better with receiving output (e.g. from
+tcltk) during input.
+
 
 
 rw1011

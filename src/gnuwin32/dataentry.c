@@ -1336,7 +1336,7 @@ static void de_popupmenu(int x_pos, int y_pos, int col)
     blah = get_col_name(popupcol);
     wconf = newwindow("Variable editor",
 		      rect(x_pos + r.x-150, y_pos + r.y-50, 300, 100),
-		      Titlebar | Closebox);
+		      Titlebar | Closebox | Modal);
     setclose(wconf, popupclose);
     setbackground(wconf, bbg);
     lwhat = newlabel("variable name", rect(10, 22, 90, 20), AlignLeft);
@@ -1442,7 +1442,7 @@ static void de_popup_vw()
 
     devw = newwindow("Cell width(s)",
 		      rect(0, 0, 250, 60),
-		      Titlebar | Centered | Closebox);
+		      Titlebar | Centered | Closebox | Modal);
     setclose(devw, vw_close);
     setbackground(devw, bbg);
     lwhat = newlabel("Cell width", rect(10, 20, 70, 20), AlignLeft);
@@ -1544,7 +1544,7 @@ static dataeditor newdataeditor()
 #endif
     c = (dataeditor) newwindow(" Data Editor", rect(x, y, w, h),
 			       Document | StandardWindow | TrackMouse |
-			       VScrollbar | HScrollbar | Modal);
+			       VScrollbar | HScrollbar);
     if (!c) {
          freeConsoleData(p);
          return NULL;
