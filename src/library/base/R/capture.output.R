@@ -4,7 +4,7 @@
     args<-substitute(list(...))[-1]
 
     if (is.null(file)){
-      file<-textConnection("rval",ifelse(append,"a","w"))
+      file<-textConnection("rval",ifelse(append,"a","w"), local=TRUE)
       sink(file)
       on.exit({sink();close(file)})
     }else if (inherits(file,"connection")){
