@@ -79,217 +79,235 @@ function (x, y, weights = rep(1, nobs), start = NULL,
 	etastart = NULL, mustart = NULL, offset = rep(0, nobs),
 	family = gaussian(), control = glm.control(), intercept = TRUE)
 {
-	xnames <- dimnames(x)[[2]]
-	ynames <- names(y)
-	conv <- FALSE
-	nobs <- NROW(y)
-	nvars <- NCOL(x)
-	## define weights and offset if needed
-	if (is.null(weights))
-		weights <- rep(1, nobs)
-	if (is.null(offset))
-		offset <- rep(0, nobs)
-	## get family functions:
-	variance <- family$variance
-	dev.resids <- family$dev.resids
-	aic <- family$aic
-	linkinv <- family$linkinv
-	mu.eta <- family$mu.eta
-	if (!is.function(variance) || !is.function(linkinv) )
-	  stop("illegal 'family' argument")
-	valideta<-family$valideta
-	if (is.null(valideta))
-	  valideta<-function(eta) TRUE
-	validmu<-family$validmu
-	if (is.null(validmu))
-	  validmu<-function(mu) TRUE
-	eval(family$initialize, sys.frame(sys.nframe()))
-	if (NCOL(y) > 1)
-	  stop("y must be univariate unless binomial")
-	eta <-
-	  if(!is.null(etastart)) etastart
-	  else {
-	      if (is.null(start)) {
-		  ## calculate initial estimate of eta and mu:
-		  start <- c(0.5, rep(0, nvars - 1))
-		  linkfun <- family$linkfun
-		  if (validmu(mustart)) {
-		      etastart <- linkfun(mustart)
-		      if (valideta(etastart)) {
-			  z <- etastart + (y - mustart)/mu.eta(etastart) - offset
-			  w <- sqrt((weights * mu.eta(etastart)^2)/variance(mustart))
-			  fit <- qr(x * w)
-			  start <- qr.coef(fit, w * z)
-			  start[is.na(start)] <- 0
-		      }
-		  }
-	      } else if (length(start) != nvars)
-		stop(paste("Length of start should equal", nvars,
-			   "and correspond to initial coefs for",
-			   deparse(xnames)))
-	      as.vector(if (NCOL(x) == 1) x * start else x %*% start)
-	  }
-	mu <- linkinv(eta + offset)
-	if (!(validmu(mu) && valideta(eta)))
-	  stop("Can't find valid starting values: please specify with start=")
-	## calculate initial deviance and coefficient
-	devold <- sum(dev.resids(y, mu, weights))
-	coefold <- start
-	boundary<-FALSE
+        xnames <- dimnames(x)[[2]]
+        ynames <- names(y)
+        conv <- FALSE
+        nobs <- NROW(y)
+        nvars <- NCOL(x)
+        ## define weights and offset if needed
+        if (is.null(weights))
+        	weights <- rep(1, nobs)
+        if (is.null(offset))
+                offset <- rep(0, nobs)
+        ## get family functions:
+        variance <- family$variance
+        dev.resids <- family$dev.resids
+        aic <- family$aic
+        linkinv <- family$linkinv
+        mu.eta <- family$mu.eta
+        if (!is.function(variance) || !is.function(linkinv) )
+          stop("illegal 'family' argument")
+        valideta<-family$valideta
+        if (is.null(valideta))
+          valideta<-function(eta) TRUE
+        validmu<-family$validmu
+        if (is.null(validmu))
+          validmu<-function(mu) TRUE
+        eval(family$initialize, sys.frame(sys.nframe()))
+        if (NCOL(y) > 1)
+          stop("y must be univariate unless binomial")
+        eta <-
+          if(!is.null(etastart)) etastart
+          else {
+              if (is.null(start)) {
+                  ## calculate initial estimate of eta and mu:
+                  start <- c(0.5, rep(0, nvars - 1))
+                  linkfun <- family$linkfun
+                  if (validmu(mustart)) {
+                      etastart <- linkfun(mustart)
+                      if (valideta(etastart)) {
+                          z <- etastart + (y - mustart)/mu.eta(etastart) - offset
+                          w <- sqrt((weights * mu.eta(etastart)^2)/variance(mustart))
+                          fit <- qr(x * w)
+                          start <- qr.coef(fit, w * z)
+                          start[is.na(start)] <- 0
+                      }
+                  }
+              } else if (length(start) != nvars)
+                stop(paste("Length of start should equal", nvars,
+                           "and correspond to initial coefs for",
+                           deparse(xnames)))
+              as.vector(if (NCOL(x) == 1) x * start else x %*% start)
+          }
+        mu <- linkinv(eta + offset)
+        if (!(validmu(mu) && valideta(eta)))
+          stop("Can't find valid starting values: please specify with start=")
+        ## calculate initial deviance and coefficient
+        devold <- sum(dev.resids(y, mu, weights))
+        coefold <- start
+        boundary<-FALSE
 
-	##------------- THE Iteratively Reweighting L.S. iteration -----------
-	for (iter in 1:control$maxit) {
-		mu.eta.val <- mu.eta(eta + offset)
-		if (any(ina <- is.na(mu.eta.val)))
-		  mu.eta.val[ina] <- mu.eta(mu)[ina]
-		if (any(is.na(mu.eta.val)))
-		  stop("NAs in d(mu)/d(eta)")
+        ##------------- THE Iteratively Reweighting L.S. iteration -----------
+        for (iter in 1:control$maxit) {
+                mu.eta.val <- mu.eta(eta + offset)
+                if (any(ina <- is.na(mu.eta.val)))
+                  mu.eta.val[ina] <- mu.eta(mu)[ina]
+                if (any(is.na(mu.eta.val)))
+                  stop("NAs in d(mu)/d(eta)")
 
-		## calculate z and w using only values where mu.eta != 0
-		good <- mu.eta.val != 0
-		if (all(!good)) {
-			conv <- FALSE
-			warning(paste("No observations informative at iteration",
-				      iter))
-			break
-		}
-		z <- eta[good] + (y - mu)[good]/mu.eta.val[good]
-		w <- sqrt((weights * mu.eta.val^2)[good]/variance(mu)[good])
-		x <- as.matrix(x)
-		ngoodobs <- as.integer(nobs - sum(!good))
-		ncols <- as.integer(1)
-		## call linpack code
-		fit <- .Fortran("dqrls",
-				qr = x[good, ] * w, n = as.integer(ngoodobs),
-				p = nvars, y = w * z, ny = ncols,
-				tol = min(1e-7, control$epsilon/1000),
-				coefficients = mat.or.vec(nvars, 1),
-				residuals = mat.or.vec(ngoodobs, 1),
-				effects = mat.or.vec(ngoodobs, 1),
-				rank = integer(1),
-				pivot = 1:nvars, qraux = double(nvars),
-				work = double(2 * nvars)
-		)
-		## stop if not enough parameters
-		if (nobs < fit$rank)
-		  stop(paste("X matrix has rank", fit$rank, "but only",
-			     nobs, "observations"))
-		## calculate updated values of eta and mu with the new coef:
-		start <- coef <- fit$coefficients
-		start[fit$pivot] <- coef
-		eta[good] <-
-		  if (nvars == 1) x[good] * start else as.vector(x[good, ] %*% start)
-		mu <- linkinv(eta + offset)
-		if (family$family == "binomial") {
-			if (any(mu == 1) || any(mu == 0))
-			  warning("fitted probabilities of 0 or 1 occurred")
-			mu0 <- 0.5 * control$epsilon/length(mu)
-			mu[mu == 1] <- 1 - mu0
-			mu[mu == 0] <- mu0
-		}
-		else if (family$family == "poisson") {
-			if (any(mu == 0))
-			  warning("fitted rates of 0 occured")
-			mu[mu == 0] <- 0.5 * control$epsilon/length(mu)^2
-		}
-		dev <- sum(dev.resids(y, mu, weights))
-		if (control$trace)
-		  cat("Deviance =", dev, "Iterations -", iter, "\n")
-		## check for divergence
-		boundary<-FALSE
-		if (any(is.na(dev)) || any(is.na(coef))) {
-			warning("Step size truncated due to divergence")
-			ii <- 1
-			while ((any(is.na(dev)) || any(is.na(start)))) {
-				if (ii > control$maxit)
-				  stop("inner loop 1; can't correct step size")
-				ii <-ii+1
-				start <- (start + coefold)/2
-				eta[good] <-
-				  if (nvars == 1) x[good] * start else as.vector(x[good, ] %*% start)
-				mu <- linkinv(eta + offset)
-				dev <- sum(dev.resids(y, mu, weights))
-			}
-			boundary<-TRUE
-			coef<-start
-			if (control$trace)
-			  cat("New Deviance =", dev, "\n")
-		}
-		## check for fitted values outside domain.
-		if (!(valideta(eta) && validmu(mu))) {
-			warning("Step size truncated: out of bounds.")
-			ii <- 1
-			while (!(valideta(eta) && validmu(mu))) {
-				if (ii > control$maxit)
-				  stop("inner loop 2; can't correct step size")
-				ii <-ii + 1
-				start <- (start + coefold)/2
-				eta[good] <-
-				  if (nvars == 1) x[good] * start else as.vector(x[good, ] %*% start)
-				mu <- linkinv(eta + offset)
-			}
-			boundary <-TRUE
-			coef <-start
-			dev <- sum(dev.resids(y, mu, weights))
-			if (control$trace)
-			  cat("New Deviance =", dev, "\n")
-		}
-		## check for convergence
-		if (abs(dev - devold)/(0.1 + abs(dev)) < control$epsilon) {
-			conv <- TRUE
-			break
-		} else {
-			devold <- dev
-			coefold <- coef
-		}
-	}#-------------- end IRLS iteration -------------------------------
+                ## calculate z and w using only values where mu.eta != 0
+                good <- mu.eta.val != 0
+                if (all(!good)) {
+                        conv <- FALSE
+                        warning(paste("No observations informative at iteration",
+                                      iter))
+                        break
+                }
+                z <- eta[good] + (y - mu)[good]/mu.eta.val[good]
+                w <- sqrt((weights * mu.eta.val^2)[good]/variance(mu)[good])
+                x <- as.matrix(x)
+                ngoodobs <- as.integer(nobs - sum(!good))
+                ncols <- as.integer(1)
+                ## call linpack code
+                fit <- .Fortran("dqrls",
+                                qr = x[good, ] * w, n = as.integer(ngoodobs),
+                                p = nvars, y = w * z, ny = ncols,
+                                tol = min(1e-7, control$epsilon/1000),
+                                coefficients = mat.or.vec(nvars, 1),
+                                residuals = mat.or.vec(ngoodobs, 1),
+                                effects = mat.or.vec(ngoodobs, 1),
+                                rank = integer(1),
+                                pivot = 1:nvars, qraux = double(nvars),
+                                work = double(2 * nvars)
+                )
+                ## stop if not enough parameters
+                if (nobs < fit$rank)
+                  stop(paste("X matrix has rank", fit$rank, "but only",
+                             nobs, "observations"))
+                ## calculate updated values of eta and mu with the new coef:
+                start <- coef <- fit$coefficients
+                start[fit$pivot] <- coef
+                eta[good] <-
+                  if (nvars == 1) x[good] * start else as.vector(x[good, ] %*% start)
+                mu <- linkinv(eta + offset)
+                if (family$family == "binomial") {
+                        if (any(mu == 1) || any(mu == 0))
+                          warning("fitted probabilities of 0 or 1 occurred")
+                        mu0 <- 0.5 * control$epsilon/length(mu)
+                        mu[mu == 1] <- 1 - mu0
+                        mu[mu == 0] <- mu0
+                }
+                else if (family$family == "poisson") {
+                        if (any(mu == 0))
+                          warning("fitted rates of 0 occured")
+                        mu[mu == 0] <- 0.5 * control$epsilon/length(mu)^2
+                }
+                dev <- sum(dev.resids(y, mu, weights))
+                if (control$trace)
+                  cat("Deviance =", dev, "Iterations -", iter, "\n")
+                ## check for divergence
+                boundary<-FALSE
+                if (any(is.na(dev)) || any(is.na(coef))) {
+                        warning("Step size truncated due to divergence")
+                        ii <- 1
+                        while ((any(is.na(dev)) || any(is.na(start)))) {
+                                if (ii > control$maxit)
+                                  stop("inner loop 1; can't correct step size")
+                                ii <-ii+1
+                                start <- (start + coefold)/2
+                                eta[good] <-
+                                  if (nvars == 1) x[good] * start else as.vector(x[good, ] %*% start)
+                                mu <- linkinv(eta + offset)
+                                dev <- sum(dev.resids(y, mu, weights))
+                        }
+                        boundary<-TRUE
+                        coef<-start
+                        if (control$trace)
+                          cat("New Deviance =", dev, "\n")
+                }
+                ## check for fitted values outside domain.
+                if (!(valideta(eta) && validmu(mu))) {
+                        warning("Step size truncated: out of bounds.")
+                        ii <- 1
+                        while (!(valideta(eta) && validmu(mu))) {
+                                if (ii > control$maxit)
+                                  stop("inner loop 2; can't correct step size")
+                                ii <-ii + 1
+                                start <- (start + coefold)/2
+                                eta[good] <-
+                                  if (nvars == 1) x[good] * start else as.vector(x[good, ] %*% start)
+                                mu <- linkinv(eta + offset)
+                        }
+                        boundary <-TRUE
+                        coef <-start
+                        dev <- sum(dev.resids(y, mu, weights))
+                        if (control$trace)
+                          cat("New Deviance =", dev, "\n")
+                }
+                ## check for convergence
+                if (abs(dev - devold)/(0.1 + abs(dev)) < control$epsilon) {
+                        conv <- TRUE
+                        break
+                } else {
+                        devold <- dev
+                        coefold <- coef
+                }
+        }#-------------- end IRLS iteration -------------------------------
 
-	if (!conv) warning("Algorithm did not converge")
-	if (boundary) warning("Algorithm stopped at boundary value")
-	## If X matrix was not full rank then columns were pivoted,
-	## hence we need to re-label the names:
-	if (fit$rank != nvars) {
-		xnames <- xnames[fit$pivot]
-		dimnames(fit$qr) <- list(NULL, xnames)
-	}
-	residuals <- rep(NA, nobs)
-	residuals[good] <- z - eta[good]
-	fit$qr <- as.matrix(fit$qr)
-	nr <- min(sum(good), nvars)
-	if (nr < nvars) {
-		Rmat <- diag(nvars)
-		Rmat[1:nr,1:nvars] <- fit$qr[1:nr,1:nvars]
-	}
-	else Rmat <- fit$qr[1:nvars, 1:nvars]
-	Rmat <- as.matrix(Rmat)
-	Rmat[row(Rmat) > col(Rmat)] <- 0
-	names(coef) <- xnames
-	colnames(fit$qr) <- xnames
-	dimnames(Rmat) <- list(xnames, xnames)
-	names(residuals) <- ynames
-	names(mu) <- ynames
-	names(eta) <- ynames
-	names(w) <- ynames
-	names(weights) <- ynames
-	names(y) <- ynames
-	## calculate null deviance
-	wtdmu <-
-	  if (intercept) sum(weights * y)/sum(weights) else linkinv(offset)
-	nulldev <- sum(dev.resids(y, wtdmu, weights))
-	## calculate df
-	n.ok <- nobs - sum(weights==0)
-	nulldf <- n.ok - as.integer(intercept)
-	resdf  <- n.ok - fit$rank
-	## calculate AIC
-	aic.model <-
-	  if(resdf>0) aic(y, n, mu, weights, dev) + 2*fit$rank else -Inf
-	list(coefficients = coef, residuals = residuals, fitted.values = mu,
-	     effects = fit$effects, R = Rmat, rank = fit$rank,
-	     qr = fit[c("qr", "rank", "qraux", "pivot", "tol")], family = family,
-	     linear.predictors = eta, deviance = dev, aic = aic.model,
-	     null.deviance = nulldev, iter = iter, weights = w^2,
-	     prior.weights = weights, df.residual = resdf, df.null = nulldf,
-	     y = y, converged = conv, boundary = boundary)
+        if (!conv) warning("Algorithm did not converge")
+        if (boundary) warning("Algorithm stopped at boundary value")
+        ## If X matrix was not full rank then columns were pivoted,
+        ## hence we need to re-label the names:
+        if (fit$rank != nvars) {
+                xnames <- xnames[fit$pivot]
+                dimnames(fit$qr) <- list(NULL, xnames)
+        }
+        residuals <- rep(NA, nobs)
+        residuals[good] <- z - eta[good]
+        fit$qr <- as.matrix(fit$qr)
+        nr <- min(sum(good), nvars)
+        if (nr < nvars) {
+                Rmat <- diag(nvars)
+                Rmat[1:nr,1:nvars] <- fit$qr[1:nr,1:nvars]
+        }
+        else Rmat <- fit$qr[1:nvars, 1:nvars]
+        Rmat <- as.matrix(Rmat)
+        Rmat[row(Rmat) > col(Rmat)] <- 0
+        names(coef) <- xnames
+        colnames(fit$qr) <- xnames
+        dimnames(Rmat) <- list(xnames, xnames)
+        names(residuals) <- ynames
+        names(mu) <- ynames
+        names(eta) <- ynames
+        names(w) <- ynames
+        names(weights) <- ynames
+        names(y) <- ynames
+        ## calculate null deviance
+        wtdmu <-
+          if (intercept) sum(weights * y)/sum(weights) else linkinv(offset)
+        nulldev <- sum(dev.resids(y, wtdmu, weights))
+        ## calculate df
+        n.ok <- nobs - sum(weights==0)
+        nulldf <- n.ok - as.integer(intercept)
+        resdf  <- n.ok - fit$rank
+        ## calculate AIC
+        aic.model <-
+          if(resdf>0) aic(y, n, mu, weights, dev) + 2*fit$rank else -Inf
+        list(coefficients = coef, residuals = residuals, fitted.values = mu,
+             effects = fit$effects, R = Rmat, rank = fit$rank,
+             qr = fit[c("qr", "rank", "qraux", "pivot", "tol")], family = family,
+             linear.predictors = eta, deviance = dev, aic = aic.model,
+             null.deviance = nulldev, iter = iter, weights = w^2,
+             prior.weights = weights, df.residual = resdf, df.null = nulldf,
+             y = y, converged = conv, boundary = boundary)
+}
+
+
+print.glm <- function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
+{
+	cat("\nCall: ", deparse(x$call), "\n\n")
+	cat("Coefficients")
+	if(is.character(co <- x$contrasts))
+		cat("  [contrasts: ",
+			apply(cbind(names(co),co), 1, paste, collapse="="), "]")
+	cat(":\n")
+	print.default(round(x$coefficients, digits), print.gap = 2)
+	cat("\nDegrees of Freedom:", x$df.null, "Total (i.e. Null); ",
+		 x$df.residual, "Residual\n")
+	cat("Null Deviance:    ", format(signif(x$null.deviance, digits)), "\n")
+	cat("Residual Deviance:", format(signif(x$deviance, digits)), "\t")
+	cat("AIC:", format(signif(x$aic, digits)), "\n")
+	invisible(x)
 }
 
 
@@ -674,28 +692,29 @@ residuals.glm <- function(x, type="deviance")
 		)
 }
 
-update.glm <- function (glm.obj, formula, data, weights, subset, na.action,
-			offset, family, x)
-{
-	call <- glm.obj$call
-	if (!missing(formula))
-	  call$formula <- update.formula(call$formula, formula)
-	if (!missing(data))	call$data <- substitute(data)
-	if (!missing(subset))	call$subset <- substitute(subset)
-	if (!missing(na.action))call$na.action <- substitute(na.action)
-	if (!missing(weights))	call$weights <- substitute(weights)
-	if (!missing(offset))	call$offset <- substitute(offset)
-	if (!missing(family))	call$family <- substitute(family)
-	if (!missing(x))	call$x <- substitute(x)
-##	notparent <- c("NextMethod", "update", methods(update))
-##	for (i in 1:(1+sys.parent())) {
-##		parent <- sys.call(-i)[[1]]
-##		if (is.null(parent))
-##		break
-##	if (is.na(match(as.character(parent), notparent)))
-##			break
-##	}
-##	eval(call, sys.frame(-i))
-	eval(call, sys.frame(sys.parent()))
-}
-
+## Commented by KH on 1998/06/22
+## update.default() should be more general now ...
+##update.glm <- function (glm.obj, formula, data, weights, subset, na.action,
+##			offset, family, x)
+##{
+##	call <- glm.obj$call
+##	if (!missing(formula))
+##	  call$formula <- update.formula(call$formula, formula)
+##	if (!missing(data))	call$data <- substitute(data)
+##	if (!missing(subset))	call$subset <- substitute(subset)
+##	if (!missing(na.action))call$na.action <- substitute(na.action)
+##	if (!missing(weights))	call$weights <- substitute(weights)
+##	if (!missing(offset))	call$offset <- substitute(offset)
+##	if (!missing(family))	call$family <- substitute(family)
+##	if (!missing(x))	call$x <- substitute(x)
+####	notparent <- c("NextMethod", "update", methods(update))
+####	for (i in 1:(1+sys.parent())) {
+####		parent <- sys.call(-i)[[1]]
+####		if (is.null(parent))
+####		break
+####	if (is.na(match(as.character(parent), notparent)))
+####			break
+####	}
+####	eval(call, sys.frame(-i))
+##	eval(call, sys.frame(sys.parent()))
+##}

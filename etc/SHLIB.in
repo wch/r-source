@@ -3,6 +3,7 @@
 # ${RHOME}/etc/SHLIB
 
 OBJS=
+MAKE=${MAKE-make}
 
 if [ ${1} = "-o" ]; then
   lib=${2}; shift 2
@@ -12,7 +13,7 @@ fi
 
 for i in ${*}; do
   obj=`echo $i|sed 's/\.[^\.]\+$/.o/'`
-  make -f ${RHOME}/etc/Makeconf ${obj}
+  ${MAKE} -f ${RHOME}/etc/Makeconf ${obj}
   OBJS="${OBJS} ${obj}"
 done
 

@@ -12,10 +12,6 @@ src/unix/rotated.[ch]
 
 	Copyright (c) 1993 Alan Richardson
 
-src/math/pbeta.c
-
-	Copyright 1984, 1995 by Stephen L. Moshier
-
 afm/*
 
 	Copyright (c) 1984 Adobe Systems Incorporated.

@@ -57,7 +57,7 @@ make.names <- function(names, unique=FALSE)
 {
 	names <- .Internal(make.names(as.character(names)))
 	if(unique) {
-		while(any(dups <- duplicated(new))) {
+		while(any(dups <- duplicated(names))) {
 			names[dups] <- paste(names[dups], seq(length = sum(dups)), sep = "")
 		}
         }

@@ -11,11 +11,19 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   The Rd format has a new section \details{} (needed for proper
+        Sd2Rd translation). \R was not understood for nroff
+	conversions, longer dashes (-- and --- in latex syntax) are
+	now converted properly. 
+
     o   Accidentally shipped R-0.62 without the tests and  etc/Rdoc 
 	directories.
 
-    o   R SHLIB was broken on some Solaris systems due to use of bash
-        syntax. 
+    o   R [ SHLIB | COMPILE ] were broken on some Solaris systems
+        due to use of bash syntax. R [ INSTALL | COMPILE | SHLIB ]
+        now use a MAKE environment variable if present.
+        R INSTALL only rebuilds man pages if they are not already
+        up to date.
 
     
 		CHANGES IN R VERSION 0.62

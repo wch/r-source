@@ -64,10 +64,11 @@ plot <- function(x, ...)
 UseMethod("plot")
 
 plot.default <-
-function (x, y=NULL, type="p", col=par("fg"), bg=NA, pch=par("pch"), xlim=NULL,
-	ylim=NULL, log="", axes=TRUE, frame.plot=axes, panel.first=NULL,
-	panel.last=NULL, ann=par("ann"), main=NULL, xlab=NULL, ylab=NULL,
-	cex=par("cex"), lty=par("lty"), lwd=par("lwd"), asp=NA, ...)
+function (x, y=NULL, type="p", main=NULL, col=par("fg"), bg=NA,
+          pch=par("pch"), xlim=NULL, ylim=NULL, log="", axes=TRUE,
+          frame.plot=axes, panel.first=NULL, panel.last=NULL,
+          ann=par("ann"), xlab=NULL, ylab=NULL, cex=par("cex"),
+          lty=par("lty"), lwd=par("lwd"), asp=NA, ...)
 {
  xlabel <- if (!missing(x)) deparse(substitute(x))	else NULL
  ylabel <- if (!missing(y)) deparse(substitute(y))	else NULL

@@ -126,28 +126,24 @@ codes.factor <- function(x)
 
 ## ordered factors ...
 
-ordered <- function (x, levels = sort(unique(x), na.last = TRUE),
-	labels=levels, exclude = NA, ordered = TRUE)
+ordered <- 
+function (x, levels = sort(unique(x), na.last = TRUE), labels = levels, 
+          exclude = NA, ordered = TRUE) 
 {
-  if (is.ordered(x)) return(x)
-  if (is.factor(x)) {
-    class(x) <- c("ordered", class(x))
-    return(x)
-  }
   if (length(x) == 0)
     return(character(0))
   exclude <- as.vector(exclude, typeof(x))
   levels <- levels[is.na(match(levels, exclude))]
-
-  f <- match(x, levels)
+  f <- match(as.character(x), levels)
   names(f) <- names(x)
-  attr(f, "levels") <- if (length(labels) == length(levels))
-    as.character(labels)
-  else if(length(labels) == 1)
-    paste(labels, seq(along = levels), sep = "")
-  else
-    stop("invalid labels argument in \"ordered\"")
-  attr(f, "class") <- c(if(ordered)"ordered", "factor")
+  attr(f, "levels") <-
+    if (length(labels) == length(levels))
+      as.character(labels)
+    else if (length(labels) == 1)
+      paste(labels, seq(along = levels), sep = "")
+    else
+      stop("invalid labels argument in \"ordered\"")
+  attr(f, "class") <- c(if (ordered) "ordered", "factor")
   f
 }
 
