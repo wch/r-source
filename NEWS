@@ -329,6 +329,9 @@ NEW FEATURES
 	that link a variable to a function (useful for example for linking
 	an R variable to an internal C global).
 
+    o   The internal download.file() etc now allow URLs of the form
+	ftp://user@foo.bar/ and ftp://user:pass@foo.bar/
+
 
 
 BUG FIXES
@@ -452,6 +455,9 @@ BUG FIXES
     o	Arithmetic which coerced types could lose the class
 	information, for example `table - real' had a class attribute
 	but was not treated as a classed object.
+
+    o	Internal ftp client could crash R under error conditions such
+	as failing to parse the URL.
 
 
 
