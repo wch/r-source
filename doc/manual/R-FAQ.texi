@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-12, 2001-07-27
+@set FAQ-VERSION 1.3-13, 2001-07-31
 @set REL-VERSION 1.3.0
 @set DEV-VERSION 1.4.0
 @c %**end of header
@@ -1769,9 +1769,6 @@ Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions.
 @item ensemble
 Ensembles of tree classifiers.
-@item funfits
-An integrated set of functions for fitting curves and surfaces including
-thin plate splines, kriging and neural networks.
 @item grid
 The Grid graphics package, a rewrite of the graphics layout
 capabilities, plus some support for interaction.

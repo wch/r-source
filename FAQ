@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-12, 2001-07-27
+Version 1.3-13, 2001-07-31
 Kurt Hornik
 
 
@@ -1580,10 +1580,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *ensemble*
      Ensembles of tree classifiers.
-
-*funfits*
-     An integrated set of functions for fitting curves and surfaces
-     including thin plate splines, kriging and neural networks.
 
 *grid*
      The Grid graphics package, a rewrite of the graphics layout
