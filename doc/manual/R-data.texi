@@ -354,6 +354,13 @@ If a separator is specified, leading and trailing white space in
 character fields is regarded as part of the field.  To strip the space,
 use argument @code{strip.white = TRUE}.
 
+@item @strong{Blank lines}
+
+By default, @code{read.table} ignores empty lines. This can be changed
+by setting @code{blank.lines.skip = FALSE}, which will only be useful
+in connection with @code{fill = TRUE}, perhaps to indicate missing
+data in a regular layout.
+
 @end enumerate
 
 @findex read.csv
@@ -427,6 +434,11 @@ scan(file="ex.dat", what=list(x=0, y="", z=0), flush=TRUE)
 @noindent
 returns a list with three components and discards the fourth column in
 the file.
+
+@findex readLines
+There is a function @code{readLines} that will be more convenient if
+all you want is to read whole lines into @R{} for further processing.
+
 
 @node Re-shaping Data,  , Using scan directly, Spreadsheet-like Data
 @section Re-shaping Data
@@ -665,6 +677,7 @@ query result, as a list. The function @code{hasCompleted} indicates if
 all the rows have been fetched, and @code{getRowCount} returns the
 number of rows in the result.
 
+There is no simple way to load a data frame into the database.
 
 @node RPgSQL, RmSQL, RMySQL, Relational Databases
 @section Package RPgSQL
@@ -717,20 +730,29 @@ resulting table, and @code{db.read.column} will fetch a single column
 @pkg{RPgSQL} provides a means to extend its mapping of @R{} classes
 within a data frame to PostgreSQL types.
 
+One disadvantage is that SQL queries get mapped to lower case, so
+for maximal flexibility, only use lower case in @R{} names.
+
 We can explore these functions in a simple example.  The database
-@file{testdb} has already been set up, and as this was running on a
+@file{testdb} had already been set up, and as this was running on a
 standalone machine, no authentication was required to connect.
 @example
 > library(RPgSQL)
 > db.connect(dbname="testdb")
 Connected to database "testdb" on ""
 > data(USArrests)
-> db.write.table(USArrests)
-> rm(USArrests)
+> usarrests <- USArrests
+> names(usarrests) <- tolower(names(USArrests))
+> db.write.table(USArrests, write.row.names = TRUE)
+> db.write.table(usarrests, write.row.names = TRUE)
+> rm(USArrests, usarrests)
 # db.ls lists tables in the database.
 > db.ls()
 [1] "USArrests"
 > db.read.table("USArrests")
+               Murder Assault UrbanPop Rape
+Alabama          13.2     236       58 21.2
+Alaska           10.0     263       48 44.5
    ...
 ## set up a proxy data frame. Remember, USArrests has been removed
 > bind.db.proxy("USArrests")
@@ -740,22 +762,22 @@ Connected to database "testdb" on ""
 1  21.2
 2  44.5
    ...
-> db.execute("SELECT State,Murder FROM USArrests WHERE Rape > 30
-             ORDER  BY Murder", clear=FALSE)
+> rm(USArrests) # remove proxy
+> db.execute("SELECT murder FROM usarrests WHERE rape > 30",
+             "ORDER  BY murder", clear=FALSE)
 > db.fetch.result()
-       state murder
-1 Colorado      7.9
-2 Arizona       8.1
-3 California    9.0
-4 Alaska       10.0
-5 New Mexico   11.4
-6 Michigan     12.1
-7 Nevada       12.2
-8 Florida      15.4
-## note the columns names got mapped to lower case
-
-> db.rm("USArrests")  # use ask=F to avoid the query
+  murder
+1    7.9
+2    8.1
+3    9.0
+4   10.0
+5   11.4
+6   12.1
+7   12.2
+8   15.4
+> db.rm("USArrests", "usarrests")  # use ask=F to avoid the query
 Destroy table USArrests? y
+Destroy table usarrests? y
 > db.ls()
 character(0)
 > db.disconnect()
@@ -803,7 +825,7 @@ unless the position is reset by a call to @code{msqlDataSeek}. A call to
 
 Package @pkg{RODBC} on CRAN provides an interface to database sources
 supporting the ODBC interface.  Many databases support ODBC, including
-most of those on Windows (such as MicroSoft Access), and MySQL, Oracle
+most of those on Windows (such as Microsoft Access), and MySQL, Oracle
 and PostgreSQL on Unix/Linux.  @pkg{RODBC} runs on both Linux and
 Windows.  You need an ODBC Driver Manager such as unixODBC
 (@url{http://www.unixODBC.org}) on Unix.
@@ -815,9 +837,11 @@ interface between @R{} data frames and SQL tables.
 
 @findex odbcConnect
 @findex odbcClose
+@findex sqlTables
 Up to 16 simultaneous connections are possible.  A connection is opened
 by a call to @code{odbcConnect} and returns a handle used for subsequent
 access to the database.  A connection is closed by @code{odbcClose}.
+Details of the tables on a connection can be found using @code{sqlTables}.
 
 @findex sqlFetch
 @findex sqlSave
@@ -840,28 +864,50 @@ used within a loop to retrieve a limited number of rows at a time.
 matrix can be obtained from @code{odbcGetResults}.
 
 Here is an example using PostgreSQL, for which the ODBC driver maps
-column names to lower case.  We use the database @code{testdb} we
-created earlier, and have the DSN (data source name set up, in
+column names to lower case.  We use a database @code{testdb} we
+created earlier, and have the DSN (data source name) set up, in
 @file{~/.odbc.ini} under @code{unixODBC}.
 
 @example
-library(RODBC)
+> library(RODBC)
 ## tell it postgresql ODBC is in use, so names are mapped to l/case
-channel <- odbcConnect("test", "", "", "postgresql")
+> channel <- odbcConnect("testdb", uid="ripley", case="postgresql")
+## check it worked
+> channel
+[1] 0
 ## load the data frame into the database
-data(USArrests)
-sqlSave(channel, USArrests, rownames="state")
-rm(USArrests)
+> data(USArrests)
+> sqlSave(channel, USArrests, rownames="state")
+> rm(USArrests)
+## look at the tables in the database
+> sqlTables(channel)
+  TABLE_QUALIFIER TABLE_OWNER TABLE_NAME TABLE_TYPE REMARKS
+1              NA          NA  usarrests      TABLE      NA
 ## list it
-sqlFetch(channel,"USArrests")
+> sqlFetch(channel,"USArrests")
+            state murder assault urbanpop rape
+1         Alabama   13.2     236       58 21.2
+2          Alaska   10.0     263       48 44.5
+    ...
 ## an SQL query, originally on one line
-sqlQuery(channel, "select state, murder from USArrests 
-         where rape > 30 order by murder")
-# remove the table
-sqlDrop(channel, USArrests)
+> sqlQuery(channel, "select state, murder from USArrests 
+           where rape > 30 order by murder")
+       state murder
+1 Colorado      7.9
+2 Arizona       8.1
+3 California    9.0
+4 Alaska       10.0
+5 New Mexico   11.4
+6 Michigan     12.1
+7 Nevada       12.2
+8 Florida      15.4
+## remove the table
+> sqlDrop(channel, "usarrests")
 ## close the connection
-odbcClose(channel)
+> odbcClose(channel)
 @end example
+
+
 
 @node Binary Files, Network Connections, Relational Databases, Top
 @chapter Binary Files
