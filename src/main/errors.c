@@ -263,6 +263,8 @@ void jump_to_toplevel()
 	    inError = 1;
 	}
     }
+    else if ( !R_Interactive )
+	R_CleanUp(SA_NOSAVE);
 
     if (R_Inputfile != NULL)
 	fclose(R_Inputfile);

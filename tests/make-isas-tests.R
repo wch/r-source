@@ -1,3 +1,4 @@
+options(error=expression(NULL))
 #### Produce an R test script
 ls.base <- ls(pos=length(search()))#- something more elegant ?
 base.is.f <- sapply(ls.base, function(x) is.function(get(x)))

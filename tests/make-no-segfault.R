@@ -4,7 +4,7 @@
 ###--- because "error --> jump_to_toplevel", i.e., outside any loop.
 sink("no-segfault.R")
 
-cat('options(pager = "cat")',
+cat('options(pager = "cat", error=expression(NULL))',
     "# don't stop on error in batch\n##~~~~~~~~~~~~~~\n")
 
 core.pkgs <- ##.packages(all=TRUE,lib.loc = .lib.loc[length(.lib.loc)])
