@@ -66,6 +66,7 @@ typedef control field;        /* one-line text field */
 typedef control textbox;      /* multi-line text box */
 typedef control scrollbar;    /* scroll-bar */
 typedef control listbox;      /* list of text */
+typedef control progressbar;  /* progress bar */
 
 typedef control menubar;      /* contains menus */
 typedef control menu;         /* pull-down menu contains menuitems */
@@ -650,6 +651,12 @@ int 	  isselected(listbox b, int index);
 void	  setlistitem(listbox b, int index);
 int 	  getlistitem(listbox b);
 void	  changelistbox(listbox b, char *new_list[]);
+
+progressbar newprogressbar(rect r, int pmin, int pmax, int incr, int smooth);
+void setprogressbar(progressbar obj, int n);
+void stepprogressbar(progressbar obj, int n);
+void setprogressbarrange(progressbar obj, int pbmin, int pbmax);
+
 
 menubar	  newmenubar(actionfn adjust_menus);
 menu	  newsubmenu(menu parent, char *name);

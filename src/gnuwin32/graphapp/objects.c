@@ -532,6 +532,7 @@ static void print_objects(FILE *f, object obj, int indent)
 	case FieldObject:	s = "FieldObject"; break;
 	case TextboxObject:	s = "TextboxObject"; break;
 	case ListboxObject:	s = "ListboxObject"; break;
+	case ProgressbarObject:	s = "ProgressbarObject"; break;
 	case MultilistObject:	s = "MultilistObject"; break;
 	case DroplistObject:	s = "DroplistObject"; break;
 	case DropfieldObject:	s = "DropfieldObject"; break;

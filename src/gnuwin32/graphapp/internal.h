@@ -168,6 +168,7 @@ extern "C" {
 	#define MultilistObject   0x1021
 	#define DroplistObject    0x1022
 	#define DropfieldObject   0x1023
+	#define ProgressbarObject 0x1024
 
 	#define MenubarObject     0x0041
 	#define MenuObject        0x0042

@@ -1326,3 +1326,58 @@ void handle_control(HWND hwnd, UINT message)
 	/* activate the control's callback */
 	activatecontrol(obj);
 }
+
+#include <commctrl.h>
+/* smooth  != 0 gives continuous not segmented bar */
+progressbar newprogressbar(rect r, int pbmin, int pbmax, int incr, int smooth)
+{
+	HWND hwnd;
+	progressbar obj;
+	int sm;
+
+	ensure_window();
+	r = rcanon(r);
+	sm = smooth ? PBS_SMOOTH : 0 ;
+	hwnd = CreateWindowEx(0, PROGRESS_CLASS, NULL,
+		(WS_CHILD | WS_VISIBLE | sm),
+		r.x, r.y, r.width, r.height,
+		current_window->handle,
+		(HMENU) child_id, this_instance, NULL);
+	obj = new_object(ControlObject, hwnd, current_window);
+	if (! obj) {
+		DestroyWindow(hwnd);
+		return NULL;
+	}
+	obj->die = private_delcontrol;
+	obj->rect = r;
+	obj->id = child_id++;
+	obj->action = NULL;
+	obj->state = (Visible | Enabled);
+	obj->flags = ChildWindow;
+	set_new_winproc(obj); /* set custom winproc */
+	settextfont(obj, SystemFont);
+	obj->kind = ListboxObject;
+	SendMessage(hwnd, PBM_SETRANGE32, (WPARAM) pbmin, (LPARAM) pbmax); 
+	SendMessage(hwnd, PBM_SETSTEP, (WPARAM) incr, 0);
+
+	return obj;
+}
+
+void setprogressbar(progressbar obj, int n)
+{
+	if (! obj) return;
+        SendMessage(obj->handle, PBM_SETPOS, (WPARAM) n, 0); 
+}
+
+void stepprogressbar(progressbar obj, int n)
+{
+	if (! obj) return;
+        SendMessage(obj->handle, PBM_STEPIT, 0, 0); 
+}
+
+void setprogressbarrange(progressbar obj, int pbmin, int pbmax)
+{
+	if (! obj) return;
+	SendMessage(obj->handle, PBM_SETRANGE32, (WPARAM) pbmin, 
+		    (LPARAM) pbmax); 
+}
