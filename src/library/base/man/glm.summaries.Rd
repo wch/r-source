@@ -6,7 +6,6 @@ summary(object, dispersion = NULL, correlation = FALSE,
 anova(object, \dots, test = NULL, na.action = na.omit)
 anova.glmlist(object, test = NULL, na.action = na.omit)
 coefficients(x) ; coef(x)
-deviance(x)
 df.residual(x)
 family(x)
 fitted.values(x) ; fitted(x)
@@ -22,7 +21,6 @@ print.summary(summary.glm.obj, digits = max(3, .Options$digits - 3),
 \alias{anova.glmlist}
 \alias{anova.glm.null}
 \alias{coefficients.glm}
-\alias{deviance.glm}
 \alias{df.residual.glm}
 \alias{family.glm}
 \alias{fitted.values.glm}
@@ -59,8 +57,8 @@ and be used to produce and analysis of variance table.
 \seealso{
 \code{\link{glm}} for computing \code{glm.obj};
 the corresponding \emph{generic} functions, \code{\link{summary}},
-\code{\link{anova}}, \code{\link{coefficients}}, \code{\link{effects}},
-\code{\link{fitted.values}}, \code{\link{residuals}}.
+\code{\link{anova}}, \code{\link{coefficients}}, \code{\link{deviance}},
+\code{\link{effects}}, \code{\link{fitted.values}}, \code{\link{residuals}}.
 }
 \examples{
 ## --- Continuing the Example from  ``?glm'':%\code{\link{glm}}:

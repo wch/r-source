@@ -4,12 +4,14 @@
 \name{se.contrast}
 \title{Standard Errors for Contrasts in Model Terms}
 \usage{
-se.contrast(object, ...)
+se.contrast(object, \dots)
 se.contrast.aov(x, contrast.obj,
   coef = contr.helmert(ncol(contrast))[, 1], data = NULL) 
+se.contrast.aovlist(\dots)
 }
 \alias{se.contrast}
 \alias{se.contrast.aov}
+\alias{se.contrast.aovlist}
 \arguments{
  \item{object}{A suitable fit, usually from \code{aov}.}
  \item{contrast.obj}{The contrasts for which standard errors are

@@ -1,4 +1,3 @@
-% file aov.Rd
 % copyright (C) 1998 B. D. Ripley
 %
 \name{aov}
@@ -7,6 +6,9 @@
 aov(formula, data=sys.parent(), projections=FALSE, contrasts=NULL, ...)
 }
 \alias{aov}
+\alias{print.aov}
+\alias{summary.aov}
+\alias{print.summary.aov}
 \arguments{
  \item{formula}{A formula specifying the model.}
  \item{data}{A data frame in which the variables specified in the

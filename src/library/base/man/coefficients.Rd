@@ -9,6 +9,8 @@ coefficients(x, \dots)
 \alias{coef.default}
 \alias{coef.lm}
 \alias{coef.glm}
+\alias{coef.aov}
+\alias{coef.listof}
 \arguments{
   \item{x}{an object for which the extraction of model coefficients is
     meaningful.}
@@ -20,15 +22,15 @@ coefficients(x, \dots)
 \description{
   \code{coef} is a generic function which extracts model coefficents
   from objects returned by modeling functions.  \code{coefficients} is
-  an alias for it.
-
+  an \emph{alias} (\code{\link{.Alias}}) for it.
+}
+\details{
   All object classes which are returned by model fitting functions
-  should provide a \code{coef} method.  (Note that method is `coef' and
-  not `coefficients'.)
+  should provide a \code{coef} method.  (Note that the method is \code{coef} and
+  not \code{coefficients}.)
 }
 \seealso{
-  \code{\link{fitted.values}} and \code{\link{residuals}} for related
-  methods;
+  \code{\link{fitted.values}} and \code{\link{residuals}} for related methods;
   \code{\link{glm}}, \code{\link{lm}} for model fitting.
 }
 \examples{

@@ -2,8 +2,17 @@
 \title{Model Deviance}
 \usage{
 deviance(x, ...)
+
+deviance.lm (x, ...)
+deviance.glm(x, ...)
+deviance.mlm(x, ...)
+deviance.default(x, ...)
 }
 \alias{deviance}
+\alias{deviance.default}
+\alias{deviance.lm}
+\alias{deviance.glm}
+\alias{deviance.mlm}
 \arguments{
 \item{x}{an object for which the deviance is desired.}
 \item{...}{additional optional argument.}

@@ -9,6 +9,7 @@ terms.default(anything)
 \alias{terms}
 \alias{terms.formula}
 \alias{terms.terms}
+\alias{terms.aovlist}
 \alias{terms.default}
 \alias{print.terms}
 \description{

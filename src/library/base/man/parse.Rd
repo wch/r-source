@@ -26,8 +26,7 @@ parse(file = "", n = NULL, text = NULL, prompt = NULL, white = FALSE)
   \code{\link{deparse}}.
 }
 \examples{
-\testonly{
-  cat("x <- c(1,4)\n  x ^ 3 -10 ; outer(1:7,5:9)\n", file="xyz.Rdmped")}
+cat("x <- c(1,4)\n  x ^ 3 -10 ; outer(1:7,5:9)\n", file="xyz.Rdmped")
 # parse 3 statements from the file "xyz.Rdmped"
 parse(file = "xyz.Rdmped", n = 3)
 }

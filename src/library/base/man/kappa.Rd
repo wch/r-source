@@ -5,12 +5,16 @@
 \title{Estimate the Condition Number of a Matrix, QR Decomposition or Fit}
 \usage{
 kappa(z, \dots)
-kappa.lm(z, \dots)
+kappa.lm     (z, \dots)
 kappa.default(z, exact = FALSE)
+kappa.qr     (z, \dots) 
+kappa.tri    (z, exact = FALSE, \dots)
 }
 \alias{kappa}
-\alias{kappa.lm}
 \alias{kappa.default}
+\alias{kappa.lm}
+\alias{kappa.qr}
+\alias{kappa.tri}
 \arguments{
  \item{z}{A matrix or a the result of \code{\link{qr}} or a fit from a class
    inheriting from \code{"lm"}.}

@@ -24,10 +24,12 @@ drop1.glm(object, scope, scale = 0, test=c("none", "Chisq"),
 \alias{add1.default}
 \alias{add1.lm}
 \alias{add1.glm}
+\alias{add1.mlm}
 \alias{drop1}
 \alias{drop1.default}
 \alias{drop1.lm}
 \alias{drop1.glm}
+\alias{drop1.mlm}
 \arguments{
  \item{object}{a fitted models object.}
  \item{scope}{a formula giving the terms to be considered for adding or

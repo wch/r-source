@@ -4,13 +4,17 @@
 \name{dummy.coef}
 \title{Extract Coefficients in Original Coding}
 \usage{
-dummy.coef(object, ...)
-dummy.coef.lm(object,)
-dummy.coef.aovlist(object, )
+dummy.coef(object, \dots)
+dummy.coef.lm(object, use.na = FALSE)
+dummy.coef.aovlist(object, use.na = FALSE)
+
+print.dummy.coef[.list](x, \dots, title)
 }
 \alias{dummy.coef}
 \alias{dummy.coef.lm}
 \alias{dummy.coef.aovlist}
+\alias{print.dummy.coef}
+\alias{print.dummy.coef.list}
 \arguments{
  \item{object}{a linear model fit}
  \item{use.na}{logical flag for coefficients in a singular model. If
@@ -18,7 +22,7 @@ dummy.coef.aovlist(object, )
    false they will get one possible value.}
 }
 \description{
- This extract coefficients in terms of the original levels of the
+ These extract coefficients in terms of the original levels of the
  coefficients rather than the coded variables.
 }
 \details{
@@ -32,8 +36,9 @@ dummy.coef.aovlist(object, )
  coefficients are by definition zero.
 }
 \value{
-  A list giving for each term the values of the coefficients. For a
-  multistratum \code{aov} model, such a list for each stratum.
+  A class \code{"dummy.coef"} list giving for each term the values of
+  the coefficients.  For a multistratum \code{aov} model, such a list
+  (class \code{"dummy.coef.list"}) for each stratum. 
 }
 \author{B.D. Ripley}
 
