@@ -16,14 +16,16 @@ DISTFILES = INDEX TITLE Makefile.in
 all: Makefile
 	@echo "building package \`base'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/base/R
-	@cat `ls $(srcdir)/R/*.R | sed '/system.*/d'` \
-	     $(srcdir)/R/system.unix.R | \
-	 sed '/^[ 	]*$$/d'  > $(top_builddir)/library/base/R/base
-#		   ^^ = TAB + Space
+	@(f=/tmp/R$$$$; \
+	  cat `ls $(srcdir)/R/*.R | sed '/system.*/d'` \
+	      $(srcdir)/R/system.unix.R | \
+	  sed '/^[ 	]*$$/d' > $${f}; \
+          $(top_srcdir)/tools/move-if-change $${f} \
+	    $(top_builddir)/library/base/R/base)
 	@$(INSTALL_DATA) $(srcdir)/INDEX $(top_builddir)/library/base
 	@$(INSTALL_DATA) $(srcdir)/TITLE $(top_builddir)/library/base
 	@$(MKINSTALLDIRS) $(top_builddir)/library/base/data
-	@for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
+	@for f in `ls -d $(srcdir)/data/* | sed '/data\/CVS/d'`; do \
 	  $(INSTALL_DATA) $${f} $(top_builddir)/library/base/data; \
 	done
 
