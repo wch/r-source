@@ -250,6 +250,11 @@ NEW FEATURES
 	`tclObj' class, and this is now the return value from .Tcl() and
 	tkcmd().
 
+    o   min/max of integer(0) (or NULL) is now Inf/-Inf, not an
+	extreme integer.
+
+    o   range() gave c(1, 1).
+
 
 DEPRECATED & DEFUNCT
 
@@ -536,6 +541,8 @@ BUG FIXES
 
     o	persp(shade=) was not working correctly with the default
 	col=NULL if this was transparent. (PR#1419)
+
+    o	min/max(complex(0)) was returning a random value.
 
 
 	**************************************************

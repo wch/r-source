@@ -557,6 +557,24 @@ x <- seq.POSIXt(from=t0,to=t0+15,by='1 sec')
 stopifnot(length(x) == 16)
 
 
+## whilst reading the code BDR 2002-03-31
+z <- try(max(complex(0)))
+stopifnot(inherits(z, "try-error"))
+z <- try(min(complex(0)))
+stopifnot(inherits(z, "try-error"))
+## 1.4.1 gave +-Inf + random imaginary part
+
+
+## PR#1238  min/max(NULL) or (integer(0))
+z <- min(NULL)
+stopifnot(!is.na(z), mode(z) == "numeric", z == Inf)
+z <- min(integer(0))
+stopifnot(!is.na(z), mode(z) == "numeric", z == Inf)
+z <- max(NULL)
+stopifnot(!is.na(z), mode(z) == "numeric", z == -Inf)
+z <- max(integer(0))
+stopifnot(!is.na(z), mode(z) == "numeric", z == -Inf)
+
 
 ## This example last: needed < 1.5.0 ##
 
