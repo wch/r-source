@@ -10281,7 +10281,7 @@ else
   echo "$ac_t""${r_cv_type_socklen} *" 1>&6
 fi
 cat >> confdefs.h <<EOF
-#define SOCKLEN_T "${r_cv_type_socklen}"
+#define SOCKLEN_T ${r_cv_type_socklen}
 EOF
 
 
