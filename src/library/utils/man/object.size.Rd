@@ -27,6 +27,9 @@ object.size(x)
 \value{
   An estimate of the memory allocation attributable to the object, in bytes.
 }
+\seealso{
+  \code{\link{Memory-limits}} for the design limitations on object size.
+}
 
 \examples{
 object.size(letters)

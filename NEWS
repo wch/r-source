@@ -304,6 +304,9 @@ DOCUMENTATION
 
     o	The reference manual now omits 'internal' help pages.
 
+    o	There is a new help page shown by help("Memory-limits") which
+	documents the current design limitations on large objects.
+
 
 C-LEVEL FACILITIES
 

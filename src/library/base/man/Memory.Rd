@@ -100,6 +100,8 @@ mem.limits(nsize = NA, vsize = NA)
 }
 
 \seealso{
+  \code{\link{Memory-limits}} for the design limitations.
+  
   \code{\link{gc}} for information on the garbage collector,
   \code{\link{object.size}(a)} for the (approximate) size of \R object
   \code{a}.  \code{\link{memory.profile}} for profiling the usage of
