@@ -423,8 +423,8 @@ distclean veryclean: clean clean-recommended
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
 	$(RM) rw-FAQ fixed/html/rw-FAQ.html
-	$(RM) -r cran/*.html cran/ReadMe cran/README* cran/*.exe cran/md5sum.txt \
-	  cran/mini
+	$(RM) -r cran/*.html cran/*.htm cran/ReadMe cran/README* cran/*.exe \
+		cran/md5sum.txt cran/*.$(RPREFIX) cran/mini
 	$(RM) -r .vignettes # it gets left behind sometimes
 	$(RM) ../../FAQ ../../RESOURCES ../../doc/html/resources.html # not in SVN sources
 	$(RM) XINSTALL # from cross-building
