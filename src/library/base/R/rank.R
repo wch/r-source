@@ -1,9 +1,11 @@
-rank <- function(x, na.last = TRUE, ties.method=c("average", "first", "random"))
+rank <- function(x, na.last = TRUE,
+                 ties.method=c("average", "first", "random", "max", "min"))
 {
     nas <- is.na(x)
     ties.method <- match.arg(ties.method)
     y <- switch(ties.method,
-                "average" = .Internal(rank(   x[!nas])),
+                "average"= , "min"= , "max" =
+                .Internal(rank(   x[!nas], ties.method)),
                 "first" = sort.list(sort.list(x[!nas])),
                 "random" = sort.list(order(   x[!nas], runif(sum(!nas)))))
     if(!is.na(na.last) && any(nas)) {
