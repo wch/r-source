@@ -43,6 +43,32 @@ NEW FEATURES
 	particular, the "classRepresentation" objects follow the description
 	in "Programming with Data" (section 7.6).
 
+    o   Other additions and changes to the methods package:
+
+        - The function setOldClass() has been added, following the
+          description on page 450 of "Programming with Data".  Use it
+          if old-style classes are to be supplied in signatures for
+          setMethod, particularly if the old-style classes have
+          inheritance.
+
+        - The setGeneric() function applies some heuristics to warn
+          about possibly erroneous generic function definitions.
+          (Before, obscure bugs could result.)
+
+        - The function promptMethods() has been revised to work better
+          and to provide aliases for individual methods.
+
+        - The behavior of the as() function has been generalized, in
+          particular with a strict= argument, the general goal being
+          to let simple extensions of classes pass through in method
+          dispatch and related computations without altering the
+          objects. More to make method behavior more "natural" than
+          for direct use.
+
+        - Some inconsistencies following detach("package:methods")
+          have been removed, so it _should_ be possible to
+          detach/re-attach the methods package.
+
     o	New methods ([[, print, str) and extended plot() method
 	(incl. logical `horiz') for "dendrogram" class.
 
@@ -208,6 +234,9 @@ NEW FEATURES
     o   termplot() uses factor levels rather than 1,2,3... for x-axis.
 
     o   Workaround for optimization bugs on gcc 3.1/2 on 32-bit Solaris.
+
+    o   The trace() function has been robustified and a new function
+        tracingState() added to turn tracing temporarily on and off.
 
 
 DEPRECATED & DEFUNCT
@@ -4453,6 +4482,12 @@ BUG FIXES
     o	guard against segfault in dataentry(0,0) (or, more
 	realistically, when mistyping data.entry(x,y) as
 	dataentry(x,y))
+
+    o   fixed special cases that caused bad behavior for methods,
+        particularly with nested use of primitive operators when
+        setMethod had been called.  Also fixed some situations that
+        prevented caching methods (and therfore slowed down dispatch
+        seriously) in similar cases.
 
 
 	*********************************************************
