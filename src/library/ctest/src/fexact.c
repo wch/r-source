@@ -8,6 +8,8 @@
 
 #include <R.h>
 
+#include "ctest.h"
+
 #undef min
 #undef max
 #define	max(a, b)		((a) < (b) ? (b) : (a))

@@ -3,6 +3,8 @@
  */
 #include <Rmath.h>
 
+#include "ctest.h"
+
 #ifndef min
 # define min(a, b)		((a) > (b) ? (b) : (a))
 #endif

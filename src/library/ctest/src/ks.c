@@ -6,6 +6,9 @@
 
 #include <R.h>
 
+
+#include "ctest.h"
+
 static void
 errmsg(char *s) {
     PROBLEM "%s", s RECOVER(NULL_ENTRY);

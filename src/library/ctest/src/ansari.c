@@ -5,6 +5,8 @@
 #include <R.h>
 #include <Rmath.h> /* uses choose() */
 
+#include "ctest.h"
+
 static double ***w;
 
 static void

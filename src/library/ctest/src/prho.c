@@ -21,6 +21,8 @@
 
 #include <Rmath.h>
 
+#include "ctest.h"
+
 /* Was
 	double precision function prho(n, is, ifault)
 

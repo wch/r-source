@@ -7,6 +7,8 @@
 #include <R.h>
 #include <Rmath.h>
 
+#include "ctest.h"
+
 static double **w;
 
 static void
