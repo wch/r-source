@@ -20,6 +20,6 @@
 }
 \note{This function is for R internal use only.}
 \examples{
-.Script("perl", "maketitle.pl", file.path(.Library, "base", "TITLE"))
+.Script("perl", "maketitle.pl", file.path(.Library, "base", "DESCRIPTION"))
 }
 \keyword{interface}
