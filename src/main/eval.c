@@ -732,11 +732,22 @@ SEXP R_execMethod(SEXP op, SEXP rho)
 
     /* copy the bindings for the formal environment from the top frame
        of the internal environment of the generic call to the new
-       frame */
+       frame.  need to make sure missingness information is preserved
+       and the environments for any default expression promises are
+       set to the new environment.  should move this to envir.c where
+       it can be done more efficiently. */
     for (next = FORMALS(op); next != R_NilValue; next = CDR(next)) {
-	val = findVarInFrame(rho, TAG(next));
-	/**** check for unbound value--should not happen */
-	defineVar(TAG(next), val, newrho);
+	SEXP symbol =  TAG(next);
+	R_varloc_t loc = R_findVarLocInFrame(rho,symbol);
+	int missing = R_GetVarLocMISSING(loc);
+	val = R_GetVarLocValue(loc);
+	SET_FRAME(newrho, CONS(val, FRAME(rho)));
+	SET_TAG(FRAME(newrho), symbol);
+	if (missing) {
+	    SET_MISSING(FRAME(newrho), missing);
+	    if (TYPEOF(val) == PROMSXP && PRENV(val) == rho)
+		SET_PRENV(val, newrho);
+	}
     }
 
     /* copy the bindings of the spacial dispatch variables in the top

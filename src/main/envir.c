@@ -867,6 +867,11 @@ SEXP R_GetVarLocSymbol(R_varloc_t vl)
     return TAG((SEXP) vl);
 }
 
+int R_GetVarLocMISSING(R_varloc_t vl)
+{
+    return MISSING((SEXP) vl);
+}
+
 void R_SetVarLocValue(R_varloc_t vl, SEXP value)
 {
     SET_BINDING_VALUE((SEXP) vl, value);
