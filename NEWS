@@ -27,6 +27,7 @@ NEW FEATURES
 
      o	New function checkFF() for checking foreign function calls.
 
+     o  package.skeleton() helps with creating new packages.
 
 BUG FIXES
 
