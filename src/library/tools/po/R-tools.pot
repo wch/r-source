@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-06 11:41\n"
+"POT-Creation-Date: 2005-02-07 18:33\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "cannot source package code"
 msgstr ""
 
-msgid "Neither code nor data objects found"
+msgid "neither code nor data objects found"
 msgstr ""
 
 msgid "does not contain R code"
@@ -77,10 +77,7 @@ msgstr ""
 msgid "parse error in examples from file"
 msgstr ""
 
-msgid "Package Rd sources were installed"
-msgstr ""
-
-msgid "without preserving Rd file names."
+msgid "Package Rd sources were installed without preserving Rd file names."
 msgstr ""
 
 msgid "Please reinstall using a current version of R."
@@ -167,6 +164,12 @@ msgstr ""
 msgid "unclosed \\dontshow or \\testonly"
 msgstr ""
 
+msgid "Rd syntax errors found"
+msgstr ""
+
+msgid "Syntax error in documentation object"
+msgstr ""
+
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr ""
 
@@ -236,7 +239,7 @@ msgstr ""
 msgid "00Index"
 msgstr ""
 
-msgid "There is no package called"
+msgid "there is no package called"
 msgstr ""
 
 msgid "name space must not be loaded."
@@ -272,7 +275,7 @@ msgstr ""
 msgid "package seems to be using lazy loading already"
 msgstr ""
 
-msgid "Argument 'pkg' must be of length 1"
+msgid "argument 'pkg' must be of length 1"
 msgstr ""
 
 msgid "was not found."
