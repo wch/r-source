@@ -204,6 +204,10 @@ Directory:  Low-level
 Subject: "[.data.frame" allows un-named 3rd subscript
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
 Date: Mon, 18 Jun 2001 13:13:46 -0700 (PDT)
+* PR# 1008 *
+Subject: ReleaseLargeFreeVectors SIGSEGV (?)
+From: Roger.Bivand@nhh.no
+Date: Mon, 2 Jul 2001 15:27:55 +0200 (MET DST)
 
 Directory:  Misc
 
@@ -248,11 +252,11 @@ none
 
 Directory:  incoming
 
-* PR# 1008 *
-Subject: ReleaseLargeFreeVectors SIGSEGV (?)
-From: Roger.Bivand@nhh.no
-Date: Mon, 2 Jul 2001 15:27:55 +0200 (MET DST)
-* PR# 1007 *
-Subject: ks.test doesn't compute correct empirical distribution if there are ties in the data
-From: mcdowella@mcdowella.demon.co.uk
-Date: Sun, 1 Jul 2001 07:53:53 +0200 (MET DST)
+* PR# 1011 *
+Subject: R-intro suggestions part II
+From: "Paul E. Johnson" <pauljohn@ukans.edu>
+Date: Tue, 03 Jul 2001 15:50:06 -0500
+* PR# 1010 *
+Subject: plot.mts() with type="p"
+From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
+Date: Wed, 4 Jul 2001 08:35:43 +1200 (NZST)
