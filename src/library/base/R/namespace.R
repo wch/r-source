@@ -165,7 +165,6 @@ loadNamespace <- function (package, lib.loc = NULL,
             dynlibs <- getNamespaceInfo(ns, "dynlibs")
             setNamespaceInfo(ns, "dynlibs", c(dynlibs, newlibs))
         }
-        hadMethods <- .isMethodsDispatchOn()
 
         # find package and check it has a name space
         pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
@@ -243,7 +242,7 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         for (p in nsInfo$exportPatterns)
             exports <- c(ls(env, pat = p, all = TRUE), exports)
-        if(hadMethods) {
+        if(.isMethodsDispatchOn()) {
             ## process class definition objects
             expClasses <- nsInfo$exportClasses
             if(length(expClasses) > 0) {

@@ -153,10 +153,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## Only if it is _already_ here do we do cacheMetaData.
             ## The methods package caches all other libs when it is
             ## attached.
-            ## Note for detail: this does _not_ test whether dispatch is
-            ## currently on, but rather whether the package is attached
-            ## (cf .isMethodsDispatchOn).
-            hadMethods <- .isMethodsDispatchOn()
 
             pkgpath <- .find.package(package, lib.loc, quiet = TRUE,
                                      verbose = verbose)
@@ -221,9 +217,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 			   !exists(".conflicts.OK", envir = env, inherits = FALSE))
                             checkConflicts(package, pkgname, pkgpath, nogenerics)
 
-                        if(!nogenerics && hadMethods &&
+                        if(!nogenerics && .isMethodsDispatchOn() &&
                            !identical(pkgname, "package:methods"))
-                            cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
+                            methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
 			on.exit()
 			if (logical.return)
 			    return(TRUE)
@@ -273,9 +269,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		   !exists(".conflicts.OK", envir = env, inherits = FALSE))
 		    checkConflicts(package, pkgname, pkgpath, nogenerics)
 
-		if(!nogenerics && hadMethods &&
+		if(!nogenerics && .isMethodsDispatchOn() &&
 		   !identical(pkgname, "package:methods"))
-                    cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
+                    methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
 		on.exit()
 	    }
 	}
