@@ -505,6 +505,8 @@ findClass <- function(Class, where, unique = "") {
         else
             where <- .topLevelEnv()
     }
+    else
+        where <- as.environment(where)
     what <- classMetaName(Class)
     where <- .findAll(what, where)
     if(length(where) != 1 && nchar(unique)>0) {
