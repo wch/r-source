@@ -141,7 +141,7 @@ NEW FEATURES
 	for tree-like structures (plotting, cutting, ...).
 
     o	New argument `recursive' to unlink(). The default behaviour on
-	Unix is now that of rm -f, not rm -rf.  unlink() is now
+	Unix is now that of rm -f, not rm -rf.	unlink() is now
 	compatible across platforms.
 
     o	dev.copy2eps() and dev2bitmap() preserve the aspect ratio of the
@@ -173,7 +173,7 @@ NEW FEATURES
     o	Date-time support functions with classes "POSIXct" and
 	"POSIXlt" to represent dates/times (resolution 1 second) in
 	the POSIX formats.  Functions include Sys.time(), as.POSIXct(),
-	strftime(), strptime(),  and methods for format, plot, c, ....
+	strftime(), strptime(),	 and methods for format, plot, c, ....
 	There are conversion functions for objects from packages
 	`date' and `chron'; unlike those packages these support
 	functions know about time zones (if the OS does).
@@ -209,45 +209,45 @@ NEW FEATURES
 
     o	save(, oldstyle=TRUE) has been withdrawn.
 
-    o   scan() and read.table() have a new argument `fill' which can
-        be set TRUE to allow reading files with unequal number of
-        fields per line. (Programs like Excel has a habit of creating
-        such files when exporting.)
+    o	scan() and read.table() have a new argument `fill' which can
+	be set TRUE to allow reading files with unequal number of
+	fields per line. (Programs like Excel has a habit of creating
+	such files when exporting.)
 
-    o   New functions read.delim() and read.delim2() to make it
-        easier to read delimited files as Windows programs tend to
-        create (usually TAB separated).
+    o	New functions read.delim() and read.delim2() to make it
+	easier to read delimited files as Windows programs tend to
+	create (usually TAB separated).
 
-    o   tcltk library has had several canvas functions implemented.
+    o	tcltk library has had several canvas functions implemented.
     
-    o   tcltk now wraps callbacks to R in a try() construct - the
-        nonlocal return from R's error handling could bring the Tk
-        system into a strange state.  
+    o	tcltk now wraps callbacks to R in a try() construct - the
+	nonlocal return from R's error handling could bring the Tk
+	system into a strange state.  
 
-    o   New `tkfaq' demo for tcltk: displays the R FAQ in a text widget.
+    o	New `tkfaq' demo for tcltk: displays the R FAQ in a text widget.
 
-    o   New function object.size() to give approximate memory allocation.
+    o	New function object.size() to give approximate memory allocation.
 
-    o   New primitive gc.time() to report on time spent in garbage
-        collection.
+    o	New primitive gc.time() to report on time spent in garbage
+	collection.
 
-    o   gc() now reports the space allocated, not the space free,
+    o	gc() now reports the space allocated, not the space free,
 	since the total space is now variable.
 
-    o   prop.table() and margin.table() now work with an empty `margin'.
+    o	prop.table() and margin.table() now work with an empty `margin'.
 
-    o   file.show() allows `pager' argument to be an R function, and
-        consequently, the `pager' option can be an R function. 
+    o	file.show() allows `pager' argument to be an R function, and
+	consequently, the `pager' option can be an R function. 
 
-    o   tcltk library now has tkpager() which is designed to be used
-        by file.show() and shows help pages etc. in separate text
-        widgets. On the Unix platforms, it is now used for the `pager'
-        option when the library is loaded, unless the `tkpager' option
-        is set otherwise
+    o	tcltk library now has tkpager() which is designed to be used
+	by file.show() and shows help pages etc. in separate text
+	widgets. On the Unix platforms, it is now used for the `pager'
+	option when the library is loaded, unless the `tkpager' option
+	is set otherwise
 
-    o   tcltk is now more careful about removing the objects
-        representing widgets in the R workspace when the windows are
-        destroyed (e.g. using window manager controls)  
+    o	tcltk is now more careful about removing the objects
+	representing widgets in the R workspace when the windows are
+	destroyed (e.g. using window manager controls)	
 
 BUG FIXES
 
@@ -374,6 +374,8 @@ BUG FIXES
 	terms, as terms() and the prototype do (PR#701).
 
     o	strsplit had two memory leaks.
+
+    o	The `ask' argument of plot.new() can now be used... <<<<not yet>>
 
 
 	**************************************************
