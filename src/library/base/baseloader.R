@@ -21,7 +21,6 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter) {
     getFromFrame <- function (x, env) .Internal(get(x, env, "any", FALSE))
     set <- function (x, value, env) .Internal(assign(x, value, env, FALSE))
     environment <- function () .Internal(environment(NULL))
-    mkpromise <- function(expr, env) .Internal(delay(expr, env))
     mkenv <- function() .Internal(new.env(TRUE, NULL))
     names <- function(x) .Internal(names(x))
     lazyLoadDBfetch <- function(key, file, compressed, hook)
@@ -56,18 +55,18 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter) {
         }
     }
     expr <- quote(lazyLoadDBfetch(key, datafile, compressed, envhook))
-    wrap<-function(key) {
-        key <- key # force evaluation
-        mkpromise(expr, environment())
-    }
+    setWrapped <- function(x, value, env) {
+    	key <- value
+    	.Internal(delayedAssign(x, expr, environment(), env))
+    }	
     if (! missing(filter)) {
         for (i in along(vars))
             if (filter(vars[i]))
-                set(vars[i], wrap(map$variables[[i]]), envir)
+		setWrapped(vars[i], map$variables[[i]], envir)
     }
     else {
         for (i in along(vars))
-            set(vars[i], wrap(map$variables[[i]]), envir)
+	    setWrapped(vars[i], map$variables[[i]], envir)
     }
 
     # reduce memory use **** try some more trimming

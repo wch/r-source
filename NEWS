@@ -312,7 +312,8 @@ NEW FEATURES
     o	slotNames() is better documented and there's new .slotNames() {for
 	rare use}.
 	
-    o	Added delayedAssign() function to (eventually) replace delay().
+    o	Added delayedAssign() function to replace delay(), which is now
+    	deprecated.
 
 
 INTERNATIONALIZATION
@@ -517,6 +518,8 @@ DEPRECATED & DEFUNCT
     o	Option "repositories" is no longer used and so not set.
 
     o	loadURL() is now deprecated.
+    
+    o 	delay() is now deprecated.
 
 
 INSTALLATION CHANGES

@@ -188,7 +188,7 @@ The following table describes the possible values returned by
 @item @code{closure} @tab a function
 @item @code{environment} @tab an environment
 @cindex evaluation, lazy
-@item @code{promise}  @tab an object used to implement lazy evaluation
+@item @code{promise}  @tab an object used to implement lazy evaluation 
 @item @code{language} @tab an @R{} language construct
 @item @code{special}  @tab a built-in function that does not evaluate its
 arguments
@@ -538,7 +538,9 @@ of the expression slot.  This allows the programmer to
 access either the value or the expression associated with the promise.
 
 Within the @R{} language, promise objects are almost only seen
-implicitly.  Actual function arguments are of this type.
+implicitly.  (In an upcoming release they will never be visible to
+@R{} code, as they will always be evaluated when accessed.) 
+Actual function arguments are of this type.
 There is also a @code{delayedAssign} function
 that will make a promise out of an expression.  There is generally no 
 way in @R{} code to check whether an object is a promise or not, nor is there a

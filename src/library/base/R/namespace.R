@@ -856,17 +856,17 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
                envir = defenv)
     table <- get(".__S3MethodsTable__.", envir = defenv, inherits = FALSE)
     if (is.character(method)) {
-        wrap <- function(method, home) {
+        assignWrapped <- function(x, method, home, envir) {
             method <- method            # force evaluation
-            home <- home                # force evaluation
-            delay(get(method, env = home), env = environment())
+            home <- home                # force evaluation 
+            delayedAssign(x, get(method, env = home), assign.env = envir)
         }
         if(!exists(method, env = envir)) {
             warning(gettextf("S3 method '%s' was declared in NAMESPACE but not found",
                              method), call. = FALSE)
         } else {
-            assign(paste(genname, class, sep = "."), wrap(method, envir),
-                   envir = table)
+	    assignWrapped(paste(genname, class, sep = "."), method, home = envir, 
+	    	    envir = table)
         }
     }
     else if (is.function(method))
@@ -905,10 +905,10 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
 
 registerS3methods <- function(info, package, env)
 {
-    wrap <- function(method, home) {
-        method <- method            # force evaluation
-        home <- home                # force evaluation
-        delay(get(method, env = home), env = environment())
+    assignWrapped <- function(x, method, home, envir) {
+	method <- method            # force evaluation
+	home <- home                # force evaluation 
+	delayedAssign(x, get(method, env = home), assign.env = envir)
     }
     .registerS3method <- function(genname, class, method, nm, envir)
     {
@@ -937,7 +937,7 @@ registerS3methods <- function(info, package, env)
             assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = NULL),
                    envir = defenv)
         table <- get(".__S3MethodsTable__.", envir = defenv, inherits = FALSE)
-        assign(nm, wrap(method, envir), envir = table)
+	assignWrapped(nm, method, home = envir, envir = table)
     }
 
     n <- NROW(info)

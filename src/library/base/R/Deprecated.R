@@ -25,3 +25,11 @@ loadURL <- function (url, envir = parent.frame(), quiet = TRUE, ...)
     load(tmp, envir = envir)
 }
 ## </entry>
+
+## <entry>
+## Deprecated in 2.1.0
+delay <- function(x, env=.GlobalEnv) {
+    .Deprecated("delayedAssign")
+    .Internal(delay(substitute(x), env))
+}
+## </entry>

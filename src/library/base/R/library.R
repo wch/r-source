@@ -314,7 +314,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             on.exit(do.call("detach", list(name = pkgname)))
             attr(env, "path") <- file.path(which.lib.loc, package)
             ## the actual copy has to be done by C code to avoid forcing
-            ## promises that might have been created using delay().
+            ## promises that might have been created using delayedAssign().
             .Internal(lib.fixup(loadenv, env))
 
             ## Do this before we use any code from the package

@@ -22,7 +22,7 @@ lazyLoad(filebase, envir = parent.frame(), filter)
 
   The objects are not themselves loaded into \code{envir}: rather
   promises are created that will load the object from the database on
-  first access. (See \code{\link{delay}}.)
+  first access. (See \code{\link{delayedAssign}}.)
 }
 \author{Luke Tierney}
 \seealso{

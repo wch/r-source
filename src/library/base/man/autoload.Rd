@@ -34,7 +34,7 @@ autoloader(name, package, \dots)
   of \R 1.7.0.
 }
 \seealso{
-  \code{\link{delay}}, \code{\link{library}}
+  \code{\link{delayedAssign}}, \code{\link{library}}
 }
 \examples{
 require(stats)

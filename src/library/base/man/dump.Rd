@@ -55,7 +55,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
 
   Promises will normally only be encountered by users as a result of
   lazy-loading (when the default \code{evaluate = TRUE} is essential)
-  and after the use of \code{\link{delay}}, when \code{evaluate = FALSE}
+  and after the use of \code{\link{delayedAssign}}, when \code{evaluate = FALSE}
   might be intended.
 }
 \note{
