@@ -61,7 +61,7 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
-
+#include "R_ext/Error.h" /* error */
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -77,7 +77,6 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 	int iex, j, jL;
 
 
-	void error(char*);
 	char f0[12], form[12]; /* ---- Really, instead :
 	  char *form;
 	  form = Calloc(strlen(*flag)+strlen(*format)+ 4+1, char);

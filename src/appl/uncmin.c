@@ -27,6 +27,7 @@
 #include "R.h"
 #include "Applic.h"
 #include "Linpack.h"
+#include "Mathlib.h" /* d1mach i1mach */
 #include "PrtUtil.h" /* Rprintf and printRealVector */
 
 #ifndef max
@@ -35,9 +36,6 @@
 #ifndef min
 #define min(a, b) ((a) > (b) ? (b) : (a))
 #endif
-
-extern double d1mach(int);
-extern int i1mach(int);
 
 /*
 extern double F77_NAME(ddot)(int *, double *, int *, double *, 
