@@ -656,29 +656,110 @@ static char *TypeFaceDef[] = { "R", "B", "I", "BI", "S" };
 static void PSEncodeFont(FILE *fp, char *encname)
 {
     int i;
-    SEXP fontreencoding;
 
     /* include encoding unless it is ISOLatin1Encoding, which is predefined */
     if (strcmp(encname, "ISOLatin1Encoding"))
 	fprintf(fp, "%% begin encoding\n%s def\n%% end encoding\n", enccode);
 
-    /* allow user to specify ps fragment for encoding */
-    fontreencoding = findVar(install(".ps.fontreencoding"), R_GlobalEnv);
-    if(fontreencoding != R_UnboundValue) {
-	if(!isString(fontreencoding))
-	    error("Object `.ps.fontreencoding' is not a character vector");
-	for (i = 0; i < length(fontreencoding); i++)
-	    fprintf(fp, "%s\n", CHAR(STRING_ELT(fontreencoding, i)));
-    } else if(strcmp(familyname[4], "CMSY10 CMBSY10 CMMI10") == 0) {
+    if(strcmp(familyname[4], "CMSY10 CMBSY10 CMMI10") == 0) {
 	/* use different ps fragment for CM fonts */
-	fontreencoding = findVar(install(".ps.cm.fontreencoding"),
-				 R_GlobalEnv);
-	if(!isString(fontreencoding))
-	    error("Object `.ps.fontreencoding' is not a character vector");
-	for (i = 0; i < length(fontreencoding); i++)
-	    fprintf(fp, "%s\n", CHAR(STRING_ELT(fontreencoding, i)));
+	fprintf(fp, "%% begin encoding\n");
+	fprintf(fp, "/SymbolEncoding [\n");
+	fprintf(fp, " /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef\n");
+	fprintf(fp, " /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef\n");
+	fprintf(fp, " /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef\n");
+	fprintf(fp, " /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef\n");
+	fprintf(fp, " /space /exclam /universal /numbersign /existential /percent /ampersand /suchthat\n");
+	fprintf(fp, " /parenleft /parenright /asteriskmath /plus /comma /minus /period /slash\n");
+	fprintf(fp, " /zero /one /two /three /four /five /six /seven\n");
+	fprintf(fp, " /eight /nine /colon /semicolon /less /equal /greater /question\n");
+	fprintf(fp, " /congruent /Alpha /Beta /Chi /Delta /Epsilon /Phi /Gamma\n");
+	fprintf(fp, " /Eta /Iota /theta1 /Kappa /Lambda /Mu /Nu /Omicron\n");
+	fprintf(fp, " /Pi /Theta /Rho /Sigma /Tau /Upsilon /sigma1 /Omega\n");
+	fprintf(fp, " /Xi /Psi /Zeta /bracketleft /therefore /bracketright /perpendicular /underscore\n");
+	fprintf(fp, " /radicalex /alpha /beta /chi /delta /epsilon /phi /gamma\n");
+	fprintf(fp, " /eta /iota /phi1 /kappa /lambda /mu /nu /omicron\n");
+	fprintf(fp, " /pi /theta /rho /sigma /tau /upsilon /omega1 /omega\n");
+	fprintf(fp, " /xi /psi /zeta /braceleft /bar /braceright /similar /.notdef\n");
+	fprintf(fp, " /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef\n");
+	fprintf(fp, " /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef\n");
+	fprintf(fp, " /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef\n");
+	fprintf(fp, " /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef\n");
+	fprintf(fp, " /Euro /Upsilon1 /minute /lessequal /fraction /infinity /florin /club\n");
+	fprintf(fp, " /diamond /heart /spade /arrowboth /arrowleft /arrowup /arrowright /arrowdown\n");
+	fprintf(fp, " /degree /plusminus /second /greaterequal /multiply /proportional /partialdiff /bullet\n");
+	fprintf(fp, " /divide /notequal /equivalence /approxequal /ellipsis /arrowvertex /arrowhorizex /carriagereturn\n");
+	fprintf(fp, " /aleph /Ifraktur /Rfraktur /weierstrass /circlemultiply /circleplus /emptyset /intersection\n");
+	fprintf(fp, " /union /propersuperset /reflexsuperset /notsubset /propersubset /reflexsubset /element /notelement\n");
+	fprintf(fp, " /angle /gradient /registerserif /copyrightserif /trademarkserif /product /radical /dotmath\n");
+	fprintf(fp, " /logicalnot /logicaland /logicalor /arrowdblboth /arrowdblleft /arrowdblup /arrowdblright /arrowdbldown\n");
+	fprintf(fp, " /lozenge /angleleft /registersans /copyrightsans /trademarksans /summation /parenlefttp /parenleftex\n");
+	fprintf(fp, " /parenleftbt /bracketlefttp /bracketleftex /bracketleftbt /bracelefttp /braceleftmid /braceleftbt /braceex\n");
+	fprintf(fp, " /.notdef /angleright /integral /integraltp /integralex /integralbt /parenrighttp /parenrightex\n");
+	fprintf(fp, " /parenrightbt /bracketrighttp /bracketrightex /bracketrightbt /bracerighttp /bracerightmid /bracerightbt /.notdef\n");
+	fprintf(fp, "] def\n");
+	fprintf(fp, "%% end encoding\n");
+	fprintf(fp, "/mergefonts\n");
+	fprintf(fp, "{ /targetencoding exch def\n");
+	fprintf(fp, "  /fontarray exch def\n");
+	fprintf(fp, "  fontarray 0 get dup maxlength dict begin\n");
+	fprintf(fp, "  { 1 index /FID ne { def } { pop pop } ifelse } forall\n");
+	fprintf(fp, "  %% Create a new dictionary\n");
+	fprintf(fp, "  /CharStrings 256 dict def\n");
+	fprintf(fp, "  %% Add a definition of .notdef\n");
+	fprintf(fp, "  fontarray\n");
+	fprintf(fp, "  { /CharStrings get dup /.notdef known\n");
+	fprintf(fp, "    { /.notdef get /result exch def exit }\n");
+	fprintf(fp, "    { pop } ifelse\n");
+	fprintf(fp, "  } forall\n");
+	fprintf(fp, "  CharStrings /.notdef result put\n");
+	fprintf(fp, "  %% Add in the other definitions\n");
+	fprintf(fp, "  targetencoding\n");
+	fprintf(fp, "  { /code exch def\n");
+	fprintf(fp, "    %% Check that it is not a .notdef\n");
+	fprintf(fp, "    code /.notdef eq\n");
+	fprintf(fp, "    { /.notdef }\n");
+	fprintf(fp, "    { fontarray\n");
+	fprintf(fp, "      { /CharStrings get dup code known\n");
+	fprintf(fp, "        { code get /result exch def /found true def exit }\n");
+	fprintf(fp, "        { pop /found false def } ifelse\n");
+	fprintf(fp, "      } forall\n");
+	fprintf(fp, "      %% define character if it was found and accumulate encoding\n"); 
+	fprintf(fp, "      found { CharStrings code result put code } { /.notdef } ifelse\n");
+	fprintf(fp, "    } ifelse\n");
+	fprintf(fp, "  } forall\n");
+	fprintf(fp, "  %% grab new encoding off of stack\n");
+	fprintf(fp, "  256 array astore /Encoding exch def\n");
+	fprintf(fp, "  %% Undefine some local variables\n");
+	fprintf(fp, "  currentdict /fontarray undef\n");
+	fprintf(fp, "  currentdict /targetencoding undef\n");
+	fprintf(fp, "  currentdict /code undef\n");
+	fprintf(fp, "  currentdict /result undef\n");
+	fprintf(fp, "  currentdict /found undef\n");
+	fprintf(fp, "  %% Leave new font on the stack\n");
+	fprintf(fp, "  currentdict\n");
+	fprintf(fp, "  end\n");
+	fprintf(fp, "} def\n");
+	fprintf(fp, "%%%%IncludeResource: font CMR10\n");
+	fprintf(fp, "%%%%IncludeResource: font CMSY10\n");
+	fprintf(fp, "[ /CMR10 findfont /CMSY10 findfont ] %s mergefonts\n", encname);
+	fprintf(fp, "/Font1 exch definefont pop\n");
+	fprintf(fp, "%%%%IncludeResource: font CMBX10\n");
+	fprintf(fp, "%%%%IncludeResource: font CMBSY10\n");
+	fprintf(fp, "[ /CMBX10 findfont /CMBSY10 findfont ] %s mergefonts\n", encname);
+	fprintf(fp, "/Font2 exch definefont pop\n");
+	fprintf(fp, "%%%%IncludeResource: font CMSL10\n");
+	fprintf(fp, "[ /CMSL10 findfont /CMSY10 findfont ] %s mergefonts\n", encname);
+	fprintf(fp, "/Font3 exch definefont pop\n");
+	fprintf(fp, "%%%%IncludeResource: font CMBXSL10\n");
+	fprintf(fp, "[ /CMBXSL10 findfont /CMBSY10 findfont ] %s mergefonts\n", encname);
+	fprintf(fp, "/Font4 exch definefont pop\n");
+	fprintf(fp, "%%%%IncludeResource: font CMMI10\n");
+	fprintf(fp, "[ /CMR10 findfont /CMSY10 findfont /CMMI10 findfont ] SymbolEncoding mergefonts\n");
+	fprintf(fp, "/Font5 exch definefont pop\n");
     } else {
   	for (i = 0; i < 4 ; i++) {
+	    fprintf(fp, "%%%%IncludeResource: font %s\n", familyname[i]);
 	    fprintf(fp, "/%s findfont\n", familyname[i]);
 	    fprintf(fp, "dup length dict begin\n");
 	    fprintf(fp, "  {1 index /FID ne {def} {pop pop} ifelse} forall\n");
@@ -687,6 +768,7 @@ static void PSEncodeFont(FILE *fp, char *encname)
 	    fprintf(fp, "  end\n");
 	    fprintf(fp, "/Font%d exch definefont pop\n", i + 1);
    	}
+	fprintf(fp, "%%%%IncludeResource: font %s\n", familyname[4]);
    	fprintf(fp, "/%s findfont\n", familyname[4]);
    	fprintf(fp, "dup length dict begin\n");
    	fprintf(fp, "  {1 index /FID ne {def} {pop pop} ifelse} forall\n");

@@ -70,8 +70,8 @@ NEW FEATURES
 
     o	One can register R functions and C routines to be called at the
         end of the successful evaluation of each top-level expression,
-        for example to perform auto-saves, update dipslays, etc. See
-        addTaskCallback() and taskCallbackManager(). See 
+        for example to perform auto-saves, update displays, etc. See
+        addTaskCallback() and taskCallbackManager(). See
 	http://developer.r-project.org/TaskHandlers.pdf.
 
     o	length() is now generic.
@@ -86,6 +86,7 @@ NEW FEATURES
     o	bxp() has a show.names argument allowing labels on a single
 	boxplot; it and hence boxplot() now makes use of pch, cex, and bg
 	for outlier points().
+
 	bxp() and boxplot() also have an argument `outline' to suppress
 	outlier drawing {S-PLUS compatibly}.
 
@@ -221,7 +222,7 @@ NEW FEATURES
 	error messages in several situations.
 
 	Note that spar = 0 is no longer the default and no longer entails
-	crossvalidation.
+	cross-validation.
 
     o	page() has a new `method' argument allowing `method = print'.
 
@@ -264,18 +265,21 @@ NEW FEATURES
         still need to have library(methods) in the .Rprofile file in
         this case.
 
-    o   save() now takes an envir argument for specifying where items to
-	be saved are to be found.
+    o   Changes to save() and friends:
 
-    o   A new default format for saved workspaces has been introduced.
-	This format provides support for some new internal data types,
-	produces smaller save files when saving code, and provides a basis
-	for a more flexible serialization mechanism.
+        - save() now takes an envir argument for specifying where
+	  items to be saved are to be found.
 
-    o	save() and save.image() now take a `version' argument to specify
-        the workspace file-format version to use.  The version used from
-        R 0.99.0 to 1.3.1 is version 1.  The new default format is
-	version 2.
+        - A new default format for saved workspaces has been
+	  introduced.  This format provides support for some new
+	  internal data types, produces smaller save files when saving
+	  code, and provides a basis for a more flexible serialization
+	  mechanism.
+
+    	- save() and save.image() now take a `version' argument to
+	  specify the workspace file-format version to use.  The
+	  version used from R 0.99.0 to 1.3.1 is version 1.  The new
+	  default format is version 2.
 
     o   New function reg.finalizer() to provide R interface to
         finalization.
@@ -334,7 +338,7 @@ NEW FEATURES
 
     o	.Alias has been removed from all R sources and deprecated.
 
-    o	symbols() now has automatical xlab and ylab and a main argument
+    o	symbols() now has automatic xlab and ylab and a main argument
 	which eliminates an incorrect warning.	It better checks wrongly
 	scaled arguments.
 
@@ -348,20 +352,24 @@ NEW FEATURES
 	"ucv", "bcv", "SJ-ste" and "SJ-dpi" are supplied (based on
 	functions in package MASS).
 
-    o	The symbol font can now be set on a postscript() device, and
-	support has been added for using Computer Modern type-1 fonts
-	(including for symbols). (Contributed by Brian D'Urso.)
+    o   Changes to the postscript() device:
 
-    o	There is now support for URW font families in the postscript()
-	device: this will give access to more characters and more
-	appropriate metrics on PostScript devices using URW fonts (such
-	as ghostscript).
+    	- The symbol font can now be set on a postscript() device, and
+	  support has been added for using Computer Modern type-1
+	  fonts (including for symbols). (Contributed by Brian D'Urso.)
 
-    o	stars() has been enhanced; new `mar' argument uses smaller mar(gins)
-	by default; further `nrow and `ncol' as S-PLUS, `frame.plot',
-	`flip.labels', `lty' and explicit `main', `sub', `xlab' and `ylab'.
-	Note that `colors' has been replaced by `col.segments' and there's
-	a new `col.stars'.
+    	- There is now support for URW font families: this will give
+	  access to more characters and more appropriate metrics on
+	  PostScript devices using URW fonts (such as ghostscript).
+
+	- %%IncludeResource comments have been added to the output.
+	  (Contributed by Brian D'Urso.)
+
+    o	stars() has been enhanced; new `mar' argument uses smaller
+	mar(gins) by default; further `nrow and `ncol' as S-PLUS,
+	`frame.plot', `flip.labels', `lty' and explicit `main', `sub',
+	`xlab' and `ylab'.  Note that `colors' has been replaced by
+	`col.segments' and there's a new `col.stars'.
 
 	stars() now returns the locations invisibly.
 
@@ -373,7 +381,7 @@ NEW FEATURES
     o	Sys.setlocale() now issues a warning if it fails.
 
     o   GNOME interface now has separate colours for input and output
-        (like the windoaws GUI). These can be modified via the
+        text (like the windows GUI). These can be modified via the
         properties dialogue.
 
     o   Output from the GNOME console is block buffered for increased
@@ -382,11 +390,6 @@ NEW FEATURES
     o	New function .libPaths() for getting or setting the paths to the
 	library trees R knows about.  This is still stored in .lib.loc,
 	which however should no longer be accessed directly.
-
-    o	R_tryEval() added for evaluating expressions from C code with
-	errors handled but guaranteed to return to the calling C
-	routine. This is used in embedding R in other applications and
-	languages.
 
     o	La.eigen() and La.svd() have optional methods to use later
 	(and supposedly much faster) LAPACK routines.  If these prove
@@ -447,10 +450,15 @@ C-LEVEL FACILITIES
     o	New Fortran entry points rwarn() and rexit() for warnings and
 	error exits from compiled Fortran code.
 
-    o   A new serialization mechanism is available that can be used to
-        serialize R objects to connections or to strings.  This mechanism
-	is used for the version 2 save format.  For now, only an internal
-	C interface is available.
+    o	A new serialization mechanism is available that can be used to
+        serialize R objects to connections or to strings.  This
+        mechanism is used for the version 2 save format.  For now,
+        only an internal C interface is available.
+
+    o	R_tryEval() added for evaluating expressions from C code with
+	errors handled but guaranteed to return to the calling C
+	routine. This is used in embedding R in other applications and
+	languages.
 
 
 

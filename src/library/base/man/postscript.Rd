@@ -3,8 +3,6 @@
 \alias{ps.options}
 \alias{.PostScript.Options}
 \alias{.ps.prolog}
-\alias{.ps.fontreencoding}
-\alias{.ps.cm.fontreencoding}
 \title{PostScript Graphics}
 \description{
   \code{postscript} starts the graphics device driver for producing
@@ -133,9 +131,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   Most of the PostScript prologue used is taken from the \R character
   vector \code{.ps.prolog}.  This is marked in the output, and can be
   changed by changing that vector.  (This is only advisable for
-  PostScript experts.)  The font encoding can be changed by setting
-  \code{.ps.fontreencoding} to a character vector.
-  (\code{.ps.cm.fontreencoding} provides an example.)
+  PostScript experts.)
 
   As ISOLatin1 encoding is used, \code{-} is set as a minus and not
   as a hyphen.  Supply a hyphen (character 173) if that is what you
