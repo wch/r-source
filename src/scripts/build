@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/build
 
-revision='$Revision: 1.5 $'
+revision='$Revision: 1.6 $'
 version=`set - ${revision}; echo ${2}`
 version="R package builder ${version}
 
@@ -153,12 +153,43 @@ buildpkg () {
   result "OK"
 
   ## Check for `TITLE'
-  checking "for \`TITLE'"
-  if test -r TITLE; then
-    result "OK"
+  checking "\`DESCRIPTION' title entry"
+  title=`grep -s "^Title:" DESCRIPTION | sed "s/^Title:[ \t]*//"`
+  if test -z "${title}"; then
+    result "WARNING: No Title field in Description"
+    if test -r TITLE; then
+      echo "using \`TITLE' file"
+    else
+      result "ERROR: file \`TITLE' not found"
+      exit 1
+    fi
   else
-    result "ERROR: file \`TITLE' not found"
-    exit 1
+    result "OK"
+    if test -f TITLE; then
+      if ${force}; then
+        echo "writing \`TITLE' file as \`--force' was given"
+        awk "BEGIN{printf(\"%-23s %s\n\", \"$package\", \"$title\");}" \
+          > TITLE
+      else 
+        checking "if TITLE agrees with DESCRIPTION"
+        foo=`cat TITLE`
+        package1=`set - ${foo}; echo ${1}`
+        title1=`set - ${foo}; shift; echo ${*}`
+        if test "${package}" != "${package1}"; then
+          result "ERROR: package names do not match"
+	  exit 1
+        fi
+        if test "${title}" != "${title1}"; then
+          result "ERROR: titles do not match"
+	  exit 1
+        fi
+	result "OK"
+      fi
+    else
+      echo "writing \`TITLE' file"
+      awk "BEGIN{printf(\"%-23s %s\n\", \"$package\", \"$title\");}" \
+        > TITLE
+    fi
   fi
 
   ## Check R documentation files
