@@ -714,7 +714,7 @@ sub check_pkg {
     ## validated the package DESCRIPTION metadata.  Otherwise, let us be
     ## defensive about this ...
 
-    &R::Utils::check_package_description($pkgname, $pkgdir, $log,
+    &R::Utils::check_package_description($pkgdir, $pkgname, $log,
 					 $in_bundle, $is_base_pkg)
 	if(!$opt_install || ($opt_install eq "skip") || $is_base_pkg);
     
