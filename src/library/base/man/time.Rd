@@ -1,17 +1,19 @@
 \name{time}
 \title{Sampling Times of Time Series}
 \usage{
-time(x, offset=0, ...)
-cycle(x, ...)
-frequency(x, ...)
-deltat(x, ...)
+time(x, offset=0, \dots)
+cycle(x, \dots)
+frequency(x, \dots)
+deltat(x, \dots)
 }
 \alias{time}
 \alias{cycle}
 \alias{frequency}
 \alias{deltat}
 \alias{time.default}
+\alias{time.ts}
 \alias{cycle.default}
+\alias{cycle.ts}
 \alias{frequency.default}
 \alias{deltat.default}
 \arguments{

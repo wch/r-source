@@ -15,6 +15,7 @@ lines(ts.obj, ...)
 \alias{is.ts}
 \alias{print.ts}
 \alias{plot.ts}
+\alias{plot.mts}
 \alias{lines.ts}
 \arguments{
     \item{data}{a vector or matrix of the observed time-series values.}
