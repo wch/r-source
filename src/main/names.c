@@ -515,7 +515,7 @@ FUNTAB R_FunTab[] =
 {"load",	do_load,	0,	111,	2,	PP_FUNCALL},
 {"deparse",	do_deparse,	0,	11,	2,	PP_FUNCALL},
 {"dput",	do_dput,	0,	111,	2,	PP_FUNCALL},
-{"dump",	do_dump,	0,	111,	3,	PP_FUNCALL},
+{"dump",	do_dump,	0,	111,	2,	PP_FUNCALL},
 {"substitute",	do_substitute,	0,	0,	-1,	PP_FUNCALL},
 {"quit",	do_quit,	0,	111,	3,	PP_FUNCALL},
 {"interactive",	do_interactive,	0,	0,	0,	PP_FUNCALL},

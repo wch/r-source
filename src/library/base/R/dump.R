@@ -7,8 +7,8 @@ function (list, file = "dumpdata.R", append = FALSE)
     if(is.character(file))
         if(nchar(file) > 0) {
             file <- file(file, ifelse(append, "a", "w"))
-            on.exit(close(file))
+            on.exit(close(file), add = TRUE)
         } else file <- stdout()
-    .Internal(dump(list, file, append))
+    .Internal(dump(list, file))
 }
 
