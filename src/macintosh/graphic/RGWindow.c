@@ -1,0 +1,157 @@
+#include "RIntf.h"
+
+/* ************************************************************************************************
+Constant, Global variables and prototype
+************************************************************************************************ */
+#define MIN(a,b) 			   ((a) < (b) ? (a) : (b))
+
+extern WindowPtr		Console_Window;
+extern WindowPtr		Edit_Window;
+extern WindowPtr		Graphic_Window[MAX_NUM_G_WIN + 1];
+extern SInt16			Current_Window;
+extern Graphic_Ref		gGReference[MAX_NUM_G_WIN + 1];
+
+void					doWindowsMenu(SInt16 menuItem);
+void					doActivate(EventRecord*);
+void					doActivateWindow(WindowPtr,Boolean);
+Boolean					EqualNumString(Str255 Str1, Str255 Str2, SInt16 Num);
+
+
+/* ************************************************************************************************
+isGraphicWindow : This function is used to check whether the 'window' is a graphic window or not. 
+If not, return 0. If yes, return the WinIndex
+************************************************************************************************ */
+int isGraphicWindow(WindowPtr window)
+{
+	SInt16 i;
+    for(i = 1; i < Current_Window; i++) {
+       if (window == Graphic_Window[i]) {
+          return i;
+       }
+    }
+    return 0;
+}
+
+
+/* ************************************************************************************************
+changeGWinPtr : Adjust the winIndex when some Graphic window is closed.
+************************************************************************************************ */
+void changeGWinPtr(WindowPtr window, Str255 Cur_Title)
+{
+	MenuHandle windowMenu;
+	Str255 Menu_Title;
+	Boolean EqString;
+    int j, i = isGraphicWindow(window);
+
+	Kill_G_History(i);
+	for (j = i; j < Current_Window; j++){
+		Graphic_Window[j] = Graphic_Window[j+1];
+		gGReference[j] = gGReference[j+1];
+	}
+	Current_Window--;
+	windowMenu = GetMenu(mWindows);
+    
+	for(i = 1; i <= CountMenuItems(windowMenu); i++){
+		GetMenuItemText(windowMenu, i , (unsigned char*)&Menu_Title);
+		EqString = EqualNumString(Menu_Title, Cur_Title, Menu_Title[0]);
+		if (EqString) {
+			DeleteMenuItem(windowMenu, i); 
+			break;
+		}
+	}  
+}
+
+
+/* ************************************************************************************************
+GWdoConcatPStrings : Attach two Pascal string together, which is used to set the Title of the 
+Graphic window
+************************************************************************************************ */
+void  GWdoConcatPStrings(Str255 targetString, Str255 appendString)
+{
+	SInt16 appendLength;
+	appendLength = MIN(appendString[0], 255 - targetString[0]);
+	if(appendLength > 0) {
+		BlockMoveData(appendString+1,targetString+targetString[0]+1,(SInt32) appendLength);
+		targetString[0] += appendLength;
+	}
+}
+
+
+
+/* ************************************************************************************************
+doActivate : Handle the addition Activate event of the Graphic window
+************************************************************************************************ */
+void doActivate(EventRecord *eventStrucPtr)
+{
+	WindowPtr windowPtr;
+	Boolean	 becomingActive;
+	windowPtr = (WindowPtr) eventStrucPtr->message;
+	becomingActive = ((eventStrucPtr->modifiers & activeFlag) == activeFlag);
+	doActivateWindow(windowPtr, becomingActive);
+}
+
+
+/* ************************************************************************************************
+doActivateWindow
+************************************************************************************************ */
+void  doActivateWindow(WindowPtr windowPtr,Boolean becomingActive)
+{
+#ifdef FFFFF
+	MenuHandle	windowsMenu;
+	SInt16			menuItem, a = 1;
+
+	windowsMenu = GetMenuHandle(mWindows);
+
+	while(Graphic_Window[a] != windowPtr)
+		a++;		
+	menuItem = a;
+	
+	if(becomingActive)
+		CheckMenuItem(windowsMenu,menuItem,true);
+	else
+		CheckMenuItem(windowsMenu,menuItem,false);
+#endif
+}
+
+
+/* ************************************************************************************************
+doWindowsMenu
+************************************************************************************************ */
+void doWindowsMenu(SInt16 menuItem)
+{
+	WindowPtr	windowPtr;
+	SInt16 i;
+	Str255 Cur_Title, Menu_Title;
+	MenuHandle windowsMenu;
+	Boolean EqString;
+
+	windowsMenu = GetMenu(mWindows);
+	GetMenuItemText(windowsMenu, menuItem, (unsigned char*)&Menu_Title);
+	for(i = 1; i < Current_Window; i++){
+		GetWTitle(Graphic_Window[i], (unsigned char *) &Cur_Title);
+		EqString = EqualNumString(Menu_Title, Cur_Title, Menu_Title[0]);
+		if (EqString) {
+			windowPtr = Graphic_Window[i];
+			SelectWindow(windowPtr);
+		}
+	}  
+}
+
+
+/* ************************************************************************************************
+Get_Graphic_Window: Using the WinIndex to query the Window Ptr.
+************************************************************************************************ */
+WindowPtr Get_Graphic_Window(int windNum)
+{
+	return Graphic_Window[windNum];
+}
+
+
+Boolean EqualNumString(Str255 Str1, Str255 Str2, SInt16 Num)
+{
+	Str255 ComStr1, ComStr2; 
+	ComStr1[0] = ComStr2[0] = Num;
+	strncpy((char*)(&ComStr1[1]), (char*)(&Str1[1]), Num);
+	strncpy((char*)(&ComStr2[1]), (char*)(&Str2[1]), Num);
+	return EqualString(ComStr1, ComStr2, true, true);
+}
