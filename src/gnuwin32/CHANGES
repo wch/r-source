@@ -9,8 +9,8 @@ rw1021
 
 Pipe connections now work under RGui and embedded R.dll, although
 slower than under Rterm, and as they run with no stdin or stdout to
-inherit what you can do with them is limited.  They better for reading
-than writing.
+inherit what you can do with them is limited.  They work better for
+reading than writing.
 
 The installer will no longer crash trying to install addons with a
 long PATH and R_HOME not set.  Similarly, Rcmd accepts long paths.
@@ -35,7 +35,7 @@ suppress printing out the warning).
 There is a new make target test-Reg to run the regression tests (which
 now do I/0, so might give different results on Windows).
 
-Rcmd build  with the latest tar.exe will exclude files as intended.
+Rcmd build with the latest tar.exe will exclude files as intended.
 
 There are further improvements in the GUI console receiving output
 (e.g. from tcltk interactive functions) during input.  If you can,
@@ -43,6 +43,10 @@ arrange to send output in a single piece, or at least a whole line at
 a time (although partial lines will now work).  For example, don't use
 print() but capture the output in a text connection and use something
 like cat(paste(outlines, "", collapse="\n)) to output a single string.
+
+The initial rescaling is no longer done for windows(rescale="fixed"),
+and the scrollbars in that mode are more responsive but move the
+viewport 20 pixels at a time.
 
 
 rw1020
