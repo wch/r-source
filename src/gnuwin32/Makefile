@@ -7,8 +7,8 @@ HELP = YES
 WINHELP = CHM# NO, CHM, BOTH
 
 LEA_MALLOC=YES
-#USE_LIBXML=YES
-USE_WININET=YES
+USE_LIBXML=YES
+#USE_WININET=YES
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -220,7 +220,6 @@ distclean veryclean: clean
 	$(RM) -f ../library/*/src/*.dll
 	$(RM) -rf ../library/*/check
 	$(RM) -f ../../doc/html/search/index.txt \
-	../../doc/html/function.html ../../doc/html/function-head.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
 	$(RM) -f ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile \
@@ -278,9 +277,9 @@ SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 INSTALL: INSTALL.in ../../VERSION
 	$(SED) $(SEDVER) INSTALL.in > INSTALL
 
-FAQs: rw-faq fixed/r/rw-FAQ.html
+FAQs: rw-faq fixed/html/rw-FAQ.html
 
-fixed/r/rw-FAQ.html: rw-FAQ.texi ../../VERSION
+fixed/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION
 	@$(SED) $(SEDVER) $< > tmp.texi
 	makeinfo --html --no-headers --number-sections -o tmp.html tmp.texi
 	-tidy tmp.html > $@ 2> nul
@@ -341,7 +340,7 @@ endif
 	-zip -rm9X $(RPREFIX)ch.zip $(RPREFIX)/library/*/chtml \
 	  $(RPREFIX)/bin/Rchtml.dll
 	$(RM) $(RPREFIX)/library/*/winhlp/*.GID
-	-zip -rm9X $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
+#	-zip -rm9X $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
 	zip -rm9X $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/doc/manual
 	$(RM) -r $(RPREFIX)/doc
 	mkdir -p  $(RPREFIX)/doc/html

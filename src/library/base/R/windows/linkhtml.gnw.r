@@ -7,7 +7,6 @@ link.html.help <- function(verbose=FALSE, lib.loc=.Library)
         flush.console()
     }
     make.packages.html(lib.loc)
-    make.function.html(lib.loc)
     make.search.html(lib.loc)
 }
 
@@ -42,53 +41,6 @@ make.packages.html <- function(lib.loc=.Library)
 }
 
 
-make.function.html <- function(lib.loc=.Library)
-{
-    f.tg <- file.path(R.home(), "/doc/html/function.html")
-    f.hd <- file.path(R.home(), "/doc/html/function-head.html")
-    file.create(f.tg)
-    file.append(f.tg,f.hd)
-    out <- file(f.tg, open="a")
-    pg <- .packages(all.available=TRUE, lib.loc=lib.loc)
-    for (p in pg) {
-        f1 <- system.file("help", "AnIndex", package = p)
-        if (f1=="") next
-        b <- scan(f1, what="c", sep="\t", quiet = TRUE, quote="")
-        b <- matrix(b, ncol=2, byrow=TRUE)
-        f1 <- system.file("help", "00Titles", package = p)
-        d <- scan(f1, what="c", sep="\t", quiet = TRUE, quote="")
-        d <- matrix(d, ncol=2, byrow=TRUE)
-        m <- match(b[, 1], d[, 1])
-        b <- cbind(b, d[m, 2], p)
-        if (p == pg[1]) fun <- b
-        else            fun <- rbind(fun, b)
-    }
-    for (which in 0:length(letters)) {
-        i <- 0
-        if (which==0) {
-            i <- grep("^[^a-z,^A-Z]", fun[,1])
-            tl <- "-- Operators, Global Variables, ... --"
-        } else {
-            cat('<a name="', LETTERS[which], '"></a>\n', file=out, sep="")
-            i <- grep(paste("^[", letters[which], LETTERS[which],"]", sep=""),
-                      fun[,1])
-            tl <- paste("--", LETTERS[which],"--")
-        }
-        if (i==0) break
-        cat('<h2>', tl,'</h2>\n\n<table width="100%">\n', file=out, sep="")
-        ll <- i[order(substring(fun[i,1], 1 + (which > 0)))]
-        for (l in ll)
-            cat('<tr><td width="25%"><a href="../../library/',
-                fun[l,4], "/html/", fun[l,2], '.html">',
-                fun[l,1], "</a></td>\n<td>",
-                fun[l,3], " (", fun[l,4], ")</td></tr>\n",
-                file=out, sep="")
-        cat("</table>\n", file=out)
-    }
-    cat("</body>", file=out)
-    close(out)
-    invisible(fun)
-}
 
 make.search.html <- function(lib.loc=.Library)
 {

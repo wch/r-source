@@ -18,7 +18,6 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-
 use File::Basename;
 use Cwd;
 use Getopt::Long;
@@ -61,7 +60,7 @@ if($opt_htmllists){
     %anindex = read_anindex("$R_HOME/library");
     %htmlindex = read_htmlindex("$R_HOME/library");
 
-    build_htmlfctlist("$R_HOME/library");
+    # build_htmlfctlist("$R_HOME/library");
 
     exit 0;
 }
@@ -115,7 +114,7 @@ print "\n";
 %anindex = read_anindex($lib);
 if($opt_html){
     %htmlindex = read_htmlindex($lib);
-    build_htmlfctlist($lib);
+#    build_htmlfctlist($lib);
 } elsif ($opt_chm) {
     %htmlindex = read_htmlindex($lib);
 }

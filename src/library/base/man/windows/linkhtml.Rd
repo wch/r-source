@@ -1,22 +1,19 @@
-\name{make.function.html}
+\name{link.html.help}
 \alias{link.html.help}
-\alias{make.function.html}
 \alias{make.packages.html}
 \alias{make.search.html}
 \title{Update HTML documentation files}
 \usage{
 link.html.help(verbose=FALSE, lib.loc=.Library)
-make.function.html(lib.loc=.Library)
 make.packages.html(lib.loc=.Library)
 make.search.html(lib.loc=.Library)
 }
 \description{
   Functions to re-create the HTML documentation files to reflect all
-  installed packages. \code{make.function.html} creates the
-  alphabetical list of functions, \code{make.packages.html} creates
-  the list of packages, and \code{make.search.html} creates the
+  installed packages. \code{make.packages.html} creates
+  the list of packages and \code{make.search.html} creates the
   database used by the Java search engine. \code{link.html.help} runs
-  all three.
+  both
 }
 \arguments{
   \item{verbose}{logical. If true, print out a message. For use to
@@ -28,8 +25,8 @@ make.search.html(lib.loc=.Library)
   by default, as cross-library links do not work on this platform.
 }
 \value{
-  No value is returned. The file \code{R\_HOME\\doc\\html\\function.html},
-  \code{R\_HOME\\doc\\html\\packages.html} or
+  No value is returned. The file(s)
+  \code{R\_HOME\\doc\\html\\packages.html} and/or
   \code{R\_HOME\\doc\\html\\search\\index.txt} is (re-)created.
 }
 \author{Guido Masarotto and Brian Ripley}
