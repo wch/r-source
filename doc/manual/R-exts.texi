@@ -2676,8 +2676,8 @@ $7 = 5
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
-can be called from C code (and some that be called from Fortran code).
-Only those documented here are stable enough that will only be changed
+can be called from C code (and some that can be called from Fortran code).
+Only those documented here are stable enough that they will only be changed
 with considerable notice.
 
 The recommended procedure to use these is to include the header file
@@ -2973,7 +2973,7 @@ for example numerical linear algebra computations and densities,
 cumulative distribution functions and quantile functions.
 
 The header file @file{R_ext/Linpack.h} contains details of the LINPACK
-and EISPACK linear algebra algebra functions include in @R{}.  These are
+and EISPACK linear algebra functions include in @R{}.  These are
 expressed as calls to Fortran subroutines, and they will also be usable
 from users' Fortran code.  Although not part of the official API, this
 set of subroutines is unlikely to change (but might be supplemented).
@@ -3005,7 +3005,7 @@ void rsort_with_index(double* x, int* index, int n);
 
 The first three sort integer, real (double) and complex data
 respectively.  (Complex numbers are sorted by the real part first then
-the imaginary part.)  @code{rsort_with_index} sort on @code{x}, and
+the imaginary part.)  @code{rsort_with_index} sorts on @code{x}, and
 applies the same permutation to @code{index}.
 
 @example
@@ -3037,13 +3037,14 @@ The header files define @code{USING_R}, which should be used to test if
 the code is indeed being used with @R{}.
 
 @file{R.h} defines a macro @code{R_VERSION} giving the version number as
-a four-digit number, for example @code{0990}. This can be used to test
-if the version of @R{} is late enough, or to include back-compatibility
-features. For protection against earlier versions of @R{} which did not
-have this macro, use a construction such as
+a three or four digit number, for example @code{990} or
+@code{1012}. This can be used to test if the version of @R{} is late
+enough, or to include back-compatibility features. For protection
+against earlier versions of @R{} which did not have this macro, use a
+construction such as
 
 @example
-#if( defined(R_VERSION) && R_VERSION >= 0990)
+#if( defined(R_VERSION) && R_VERSION >= 990)
   ...
 #endif
 @end example
