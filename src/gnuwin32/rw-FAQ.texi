@@ -510,9 +510,6 @@ library(MASS, lib.loc="p:/myRlib")
 @node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the @RWVER@\library directory, Packages
 @section The packages I installed do not appear in the HTML help system.
 
-The HTML search only works for packages installed in
-@file{@RWVER@\library}.
-
 To update the HTML indices after you have installed a pre-compiled
 package, run at the R prompt.
 
@@ -522,7 +519,10 @@ package, run at the R prompt.
 
 This is done automatically when installing from the Packages menu or
 by @code{install.packages()}, and when @code{help.start} is run,
-provided you have write permission in @file{@RWVER@\library}.
+provided you have write permission in @file{@RWVER@}.
+
+Prior to R 1.7.0 the HTML indices and search databases only covered
+packages installed in @file{@RWVER@\library}.
 
 
 @node My functions are not found by the HTML help search system., Loading a package fails., The packages I installed do not appear in the HTML help system, Packages
@@ -537,7 +537,8 @@ The following conditions need to hold for functions in a package you installed.
 installing the package.
 @end itemize
 @noindent
-If those all hold true, this works for us.
+If those all hold true, this works for us.  As from R 1.7.0 the search
+should find topics in packages in other library trees.
 
 If the help search system does not work @emph{at all}, this probably
 indicates that Java support is either not installed or not enabled in
@@ -596,7 +597,8 @@ inside R by something like
 
 They may well not work between packages installed in different
 libraries.  This is solved under Unix using symbolic links which Windows
-does not implement.
+does not implement.  As from R 1.7.0 links from other library trees to
+the base package will work.
 
 @node update.packages() fails,  , Hyperlinks in Compiled HTML do not work., Packages
 @section @code{update.packages()} fails
@@ -636,8 +638,7 @@ Console' will give details.  For @code{Rterm.exe} see file
 @item Using @code{help.start()} does not automatically send help
 requests to the browser: use @code{options(htmlhelp=TRUE)} to turn this on.
 
-@item The HTML help system can only access packages installed in the standard
-library.
+@item The HTML help system has limitations in supporting cross-library links.
 
 @item Paths to files (e.g. in @code{source()}) can be specified with
 either "/" or "\\".
@@ -1056,14 +1057,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2002 June 01 by Professor B. D. Ripley
+Last edited 2002 December 18 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2002 July 26 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2002 December 18 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
