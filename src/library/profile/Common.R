@@ -19,5 +19,5 @@ options(show.signif.stars = TRUE)
 options(show.coef.Pvalues = TRUE)
 options(keep.source = TRUE)
 options(warn = 0)
-options(CRAN = "http://www.ci.tuwien.ac.at/R")
+options(CRAN = "http://cran.r-project.org")
 
