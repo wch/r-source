@@ -866,6 +866,7 @@ FUNTAB R_FunTab[] =
 {"unregisterNamespace",do_unregNS,	0, 11,  1,      {PP_FUNCALL, PREC_FN,	0}},
 {"getRegisteredNamespace",do_getRegNS,	0, 11,  1,      {PP_FUNCALL, PREC_FN,	0}},
 {"getNamespaceRegistry",do_getNSRegistry, 0, 11, 0,     {PP_FUNCALL, PREC_FN,	0}},
+{"importIntoEnv",do_importIntoEnv, 0, 11, 4,     {PP_FUNCALL, PREC_FN,	0}},
 #endif
 
 {NULL,		NULL,		0,	0,	0,	{0,	PREC_FN,	0}},

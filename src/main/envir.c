@@ -2717,4 +2717,64 @@ SEXP do_getNSRegistry(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     return R_NamespaceRegistry;
 }
+
+SEXP do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP impenv, impnames, expenv, expnames;
+    SEXP impsym, expsym, binding, env, val;
+    int i, n;
+
+    checkArity(op, args);
+
+    impenv = CAR(args); args = CDR(args);
+    impnames = CAR(args); args = CDR(args);
+    expenv = CAR(args); args = CDR(args);
+    expnames = CAR(args); args = CDR(args);
+
+    if (TYPEOF(impenv) != ENVSXP && impenv != R_NilValue)
+	errorcall(call, "bad import environment argument");
+    if (TYPEOF(expenv) != ENVSXP && expenv != R_NilValue)
+	errorcall(call, "bad export environment argument");
+    if (TYPEOF(impnames) != STRSXP || TYPEOF(expnames) != STRSXP)
+	errorcall(call, "bad names argument");
+    if (LENGTH(impnames) != LENGTH(expnames))
+	errorcall(call, "length of import and export names must match");
+
+    n = LENGTH(impnames);
+    for (i = 0; i < n; i++) {
+	impsym = install(CHAR(STRING_ELT(impnames, i)));
+	expsym = install(CHAR(STRING_ELT(expnames, i)));
+
+	/* find the binding--may be a CONS cell or a symbol */
+	for (env = expenv, binding = R_NilValue;
+	     env != R_NilValue && binding == R_NilValue;
+	     env = ENCLOS(env))
+	    if (env == R_BaseNamespace) {
+		if (SYMVALUE(expsym) != R_UnboundValue)
+		    binding = expsym;
+	    }
+	    else
+		binding = findVarLocInFrame(env, expsym, NULL);
+	if (binding == R_NilValue)
+	    binding = expsym;
+
+	/* get value of the binding; do not force promises */
+	if (TYPEOF(binding) == SYMSXP) {
+	    if (SYMVALUE(expsym) == R_UnboundValue)
+		errorcall(call, "exported symbol '%s' has no value",
+			  CHAR(PRINTNAME(expsym)));
+	    val = SYMVALUE(expsym);
+	}
+	else val = CAR(binding);
+
+	/* import the binding */
+	if (IS_ACTIVE_BINDING(binding))
+	    R_MakeActiveBinding(impsym, val, impenv);
+	else if (impenv == R_BaseNamespace || impenv == R_NilValue)
+	    gsetVar(impsym, val, impenv);
+	else 
+	    defineVar(impsym, val, impenv);
+    }
+    return R_NilValue;
+}
 #endif
