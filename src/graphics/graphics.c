@@ -3496,7 +3496,7 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 				 LINES, USER, dd);
 	line = line + dd->gp.yLineBias;
 	a = 90.0;
-	xadj = 1.0;
+	xadj = dd->gp.adj;
 	yadj = 0.5;
       }
       else {
@@ -3513,7 +3513,7 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 				 LINES, USER, dd);
 	line = line + dd->gp.yLineBias;
 	a = 0.0;
-	xadj = 1.0;
+	xadj = dd->gp.adj;
 	yadj = 0.5;
       }
       else {
@@ -3530,7 +3530,7 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 				 LINES, USER, dd);
 	line = line + dd->gp.yLineBias;
 	a = 90.0;
-	xadj = 0.0;
+	xadj = dd->gp.adj;
 	yadj = 0.5;
       }
       else {
@@ -3547,7 +3547,7 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 				 LINES, USER, dd);
 	line = line + dd->gp.yLineBias;
 	a = 0.0;
-	xadj = 0.0;
+	xadj = dd->gp.adj;
 	yadj = 0.5;
       }
       else {
