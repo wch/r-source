@@ -1563,6 +1563,8 @@ The R distribution comes with the following packages:
 Base R functions (and datasets before R 2.0).
 @item datasets
 Base R datasets (added in R 2.0).
+@item grDevices
+Graphics devices for base and grid graphics (added in R 2.0).
 @c </FIXME>
 @item graphics
 R functions for base graphics.
@@ -2207,6 +2209,10 @@ t-regression.
 @item hier.part
 Hierarchical Partitioning: variance partition of a multivariate data
 set.
+@item hierfstat
+Estimation of hierarchical F-statistics from haploid or diploid genetic
+data with any numbers of levels in the hierarchy, and tests for the
+significance of each F and variance components.
 @item homals
 Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.
 @item httpRequest
