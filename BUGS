@@ -377,3 +377,7 @@ Date: Fri, 10 Sep 1999 16:08:39 +0900
 Subject: axis() produces junk on DEC alpha
 From: albrecht.gebhardt@uni-klu.ac.at
 Date: Mon, 13 Sep 1999 03:02:20 +0200 (MET DST)
+* PR# 275 *
+Subject: Re: R with a broken finite() (was [R] Problems with R-0.65.0)
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Tue, 14 Sep 1999 15:17:17 +0100 (BST)
