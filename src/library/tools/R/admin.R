@@ -19,7 +19,7 @@ function(dir, outDir)
                          collapse = "\n"),
                    sep = "\n\n"))
     }
-        
+
     db <- .read_description(file.path(dir, "DESCRIPTION"))
     OS <- Sys.getenv("R_OSTYPE")
     OStype <- if(nchar(OS) && OS == "windows")
@@ -41,16 +41,41 @@ function(dir, outDir)
               "; ",
               .OStype(),
               sep = "")
-    
+
     writeLines(formatDL(names(db), db, style = "list"),
                file.path(outDir, "DESCRIPTION"))
 
     outMetaDir <- file.path(outDir, "Meta")
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
          stop(paste("cannot open directory", sQuote(outMetaDir)))
-    .saveRDS(db, file.path(outMetaDir, "package.rds"))
-    
+    saveInfo <- .split_description(db)
+    .saveRDS(saveInfo, file.path(outMetaDir, "package.rds"))
+
     invisible()
+}
+
+### * .split_description
+
+.split_description <-
+function(db)
+{
+    if(!is.na(Built <- db["Built"])) {
+        Built <- as.list(strsplit(Built, "; ")[[1]])
+        names(Built) <- c("R", "Platform", "Date", "OStype")
+        Built[["R"]] <- package_version(sub("^R ([0-9.]+)", "\\1",
+                                            Built[["R"]]))
+    } else Built <- NULL
+    ## might perhaps have multiple entries
+    Depends <- .split_dependencies(db[names(db) %in% "Depends"])
+    if("R" %in% names(Depends)) {
+        Rdeps <- Depends[["R"]]
+        Depends <- Depends[-match("R", names(Depends))]
+    } else Rdeps <- NULL
+    Rdeps <- as.vector(Rdeps)
+    Suggests <- .split_dependencies(db[names(db) %in% "Suggests"])
+    structure(list(DESCRIPTION = db, Built = Built, Rdepends = Rdeps,
+                   Depends = Depends, Suggests = Suggests),
+              class = "packageDescription2")
 }
 
 ### * .vinstall_package_descriptions_as_RDS
@@ -62,7 +87,7 @@ function(dir, packages)
     ## DESCRIPTION package metadata as R metadata.
     ## Really only useful for base packages under Unix.
     ## See @file{src/library/Makefile.in}.
-    
+
     for(p in unlist(strsplit(packages, "[[:space:]]+"))) {
         meta_dir <- file.path(dir, p, "Meta")
         if(!file_test("-d", meta_dir) && !dir.create(meta_dir))
@@ -73,10 +98,29 @@ function(dir, packages)
                      package_info_rds_file,
                      package_info_dcf_file))
             next
-        .saveRDS(.read_description(package_info_dcf_file),
-                 package_info_rds_file)
+        .saveRDS(.split_description(.read_description(package_info_dcf_file)), package_info_rds_file)
     }
     invisible()
+}
+
+### * .update_package_rds
+
+.update_package_rds <-
+function(lib.loc = NULL)
+{
+    ## rebuild the dumped package descriptions for all packages in lib.loc
+    if (is.null(lib.loc)) lib.loc <- .libPaths()
+    lib.loc <- lib.loc[file.exists(lib.loc)]
+    for (lib in lib.loc) {
+        a <- list.files(lib, all.files = FALSE, full.names = TRUE)
+        for (nam in a) {
+            dfile <- file.path(nam, "DESCRIPTION")
+            if (file.exists(dfile)) {
+                print(nam)
+                .install_package_description(nam, nam)
+            }
+        }
+    }
 }
 
 ### * .install_package_code_files
@@ -106,7 +150,7 @@ function(dir, outDir)
 
     ## We definitely need a valid DESCRIPTION file.
     db <- .read_description(file.path(dir, "DESCRIPTION"))
-    
+
     codeDir <- file.path(dir, "R")
     if(!file_test("-d", codeDir)) return(invisible())
 
@@ -229,7 +273,7 @@ function(dir, outDir)
     if(!file_test("-d", docsDir)) return(invisible())
 
     dataDir <- file.path(dir, "data")
-    outDir <- file_path_as_absolute(outDir)    
+    outDir <- file_path_as_absolute(outDir)
     ## <FIXME>
     ## Not clear whether we should use the basename of the directory we
     ## install to, or the package name as obtained from the DESCRIPTION
@@ -274,7 +318,7 @@ function(dir, outDir)
     if(!file_test("-f", file.path(dir, "INDEX")))
         writeLines(formatDL(.build_Rd_index(contents)),
                    file.path(outDir, "INDEX"))
-    ## </NOTE>    
+    ## </NOTE>
 
     if(file_test("-d", dataDir)) {
         .saveRDS(.build_data_index(dataDir, contents),
@@ -294,7 +338,7 @@ function(dir, outDir)
     if(!file_test("-d", vignetteDir))
         return(invisible())
 
-    outDir <- file_path_as_absolute(outDir)    
+    outDir <- file_path_as_absolute(outDir)
     ## <FIXME>
     ## Not clear whether we should use the basename of the directory we
     ## install to, or the package name as obtained from the DESCRIPTION
@@ -495,7 +539,7 @@ function(dir, packages)
     ## NAMESPACE file, install the namespace info as R metadata.
     ## Really only useful for base packages under Unix.
     ## See @file{src/library/Makefile.in}.
-    
+
     for(p in unlist(strsplit(packages, "[[:space:]]+")))
         .install_package_namespace_info(file.path(dir, p),
                                         file.path(dir, p))

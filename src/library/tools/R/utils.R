@@ -524,7 +524,36 @@ function(dir, env)
         stop("unable to write code files")
     .source_assignments(con, env)
 }
-    
+
+### * .split_dependencies
+
+.split_dependencies <- function(x)
+{
+    ## given one or more Depends: or Suggests: fields from DESCRIPTION
+    ## return a named list of list (name, [op, version])
+    if(!length(x)) return(list())
+    x <- unlist(strsplit(x, ","))
+    x <- unique(sub("^[[:space:]]*(.*)[[:space:]]*$", "\\1" , x))
+    names(x) <- sub("^([[:alnum:].]+).*$", "\\1" , x)
+    lapply(x, .split_op_version)
+}
+
+### * .split_op_version
+
+.split_op_version <- function(x)
+{
+    ## given a single piece of dependency
+    ## return a list of components (name, [op, version])
+    pat <- "^([^\\([:space:]]+)[[:space:]]*\\(([^\\)]+)\\).*"
+    x1 <- sub(pat, "\\1", x)
+    x2 <- sub(pat, "\\2", x)
+    if(x2 != x1) {
+        pat <- "[[:space:]]*([[<>=]+)[[:space:]]+(.*)"
+        list(name = x1, op = sub(pat, "\\1", x2),
+             version = package_version(sub(pat, "\\2", x2)))
+    } else list(name=x1)
+}
+
 ### ** .strip_whitespace
 
 .strip_whitespace <-
