@@ -327,39 +327,6 @@ int Mac_initialize_R(int ac, char **av)
 
     R_set_command_line_arguments(ac, av, Rp);
 
-/*
-    for(i = 0, avv = av; i < ac; i++, avv++) {
-	if(!strncmp(*avv, "--gui", 5) || !strncmp(*avv, "-g", 2)) {
-	    if(!strncmp(*avv, "--gui", 5) && strlen(*avv) >= 7)
-		p = &(*avv)[6];
-	    else {
-		if(i+1 < ac) {
-		    avv++; p = *avv; ioff++;
-		} else {
-		    sprintf(msg, "WARNING: --gui or -g without value ignored");
-		    R_ShowMessage(msg);
-		    p = "X11";
-		}
-	    }
-	    if(!strcmp(p, "none"))
-		useX11 = FALSE;
-	    else if(!strcmp(p, "gnome") || !strcmp(p, "GNOME"))
-		usegnome = TRUE;
-	    else if(!strcmp(p, "X11") || !strcmp(p, "x11"))
-		useX11 = TRUE;
-	    else {
-
-	    // now remove it/them 
-	    for(j = i; j < ac-ioff; j++) {
-		av[j] = av[j + ioff];
-	    }
-	    ac -= ioff;
-	    break;
-	}
-    }
-*/
-
-
     R_common_command_line(&ac, av, Rp);
 
 
@@ -522,7 +489,6 @@ void R_RestoreGlobalEnv(void)
     FILE *fp;
     SEXP img, lst;
     int i;
-//    int RestoreAction = SA_RESTORE;
 
     if(RestoreAction == SA_RESTORE) {
 	if(!(fp = R_fopen(":etc:.RData", "rb"))) { /* binary file */
@@ -542,7 +508,6 @@ void R_RestoreGlobalEnv(void)
 	    break;
 	case VECSXP:
 	    for (i = 0; i < LENGTH(img); i++) {
-//		lst = VECTOR(img)[i];
 		lst = VECTOR_ELT(img,i);
 		while (lst != R_NilValue) {
 		    defineVar(TAG(lst), CAR(lst), R_GlobalEnv);
@@ -721,7 +686,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 #define MAC_SIZE FILENAME_MAX
 #define MAC_READ_OR_WRITE	0x0 /* fake a UNIX mode */
    
-static char * Rmac_tmpnam(char * prefix)
+char *Rmac_tmpnam(char * prefix)
 {
     char *tmp, tm[PATH_MAX], tmp1[PATH_MAX], *res;
     char curFolder[MAC_SIZE], newFolder[MAC_SIZE];
@@ -870,7 +835,7 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-/* As under Windows. We only handle HTML help files
+/* Similar to Windows. We only handle HTML help files
    Stefano M. Iacus (Jago Jan 2001)
 */
    
@@ -882,7 +847,7 @@ SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
  */
 
     char *item;
-    char *home, buf[PATH_MAX];
+    char buf[PATH_MAX];
     FILE *ff;
     int   type;
     Str255 HelpFileName;
@@ -902,32 +867,26 @@ SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(buf);
 	}
 	fclose(ff);
-/*	home = getenv("R_HOME");
-*/	
-	home =  R_Home;
-	if (home == NULL)
-	    error("R_HOME not set");
 	    
-	    
-    if (strlen(item) < 254)
-     strcpy((char *) HelpFileName, item);
-    else {
-     error("file name too long");
-     return R_NilValue;
-     }
+	if (strlen(item) < 254)
+	    strcpy((char *) HelpFileName, item);
+	else {
+	    error("file name too long");
+	    return R_NilValue;
+	}
 
-    CtoPstr((char *) HelpFileName);
-    err = FSMakeFSSpecFromPath((ConstStr255Param) HelpFileName, &fileSpec);
-    if (err != noErr) {
-     sprintf(errbuf, "error code %d creating file spec for help file %s",
-            err, item);
-     error(errbuf);        
-     return R_NilValue;
-    }
+	CtoPstr((char *) HelpFileName);
+	err = FSMakeFSSpecFromPath((ConstStr255Param) HelpFileName, &fileSpec);
+	if (err != noErr) {
+	    sprintf(errbuf, "error code %d creating file spec for help file %s",
+		    err, item);
+	    error(errbuf);        
+	    return R_NilValue;
+	}
   
-    err = FinderLaunch(1, &fileSpec);
-    if(err!=noErr)
-     error("Cannot lauch browser");    
+	err = FinderLaunch(1, &fileSpec);
+	if(err!=noErr)
+	    error("Cannot lauch browser");    
     }
     else
 	 warning("type not yet implemented");
@@ -935,18 +894,10 @@ SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-
-
-
-
-
-
-
 SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	errorcall(call, "unimplemented function\n");
 }
-
 
 
 SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -982,7 +933,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /* Adapted from Windows code for Macintosh
-   It does not allow wildcars and only files/dirs
+   It does not allow wildcards and only files/dirs
    created in the current session can be removed.
    (Stefano M. Iacus) Jago Nov-00
 */
@@ -1646,5 +1597,15 @@ void process_users_Renviron()
 }
 
 
+SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error("Sys.sleep is not implemented on this system");
+    return R_NilValue;		/* -Wall */
+}
 
+SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    warning("Sys.info is not implemented on this system");
+    return R_NilValue;		/* -Wall */
+}
 
