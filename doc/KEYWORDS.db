@@ -43,6 +43,7 @@ Programming|internal: Internal Objects (not part of API)
 Programming|utilities: Utilities
 Programming|misc: Miscellaneous
 Programming|documentation: Documentation
+Programming|debugging: Debugging Tools
 Statistics: Statistics
 Statistics|datagen: Functions for generating data sets
 Statistics|distribution: Probability Distributions and Random Numbers
