@@ -8,5 +8,5 @@ setdiff <- function(x, y)
 ## Faster versions, see R-devel, Jan.4-6, 2000;  optimize later...
 setequal <- function(x, y) all(c(match(x, y, 0) > 0, match(y, x, 0) > 0))
 
-## the same as %in% which was there first --> ./match.R
-is.element <- function(x, y) match(x, y, 0) > 0
+##  same as %in% ( ./match.R ) but different arg names:
+is.element <- function(el, set) match(el, set, 0) > 0

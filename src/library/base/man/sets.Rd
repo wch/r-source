@@ -10,11 +10,11 @@ union(x, y)
 intersect(x, y)
 setdiff(x, y)
 setequal(x, y)
-is.element(x, y)
+is.element(el, set)
 }
 \arguments{
-  \item{x, y}{vectors (of the same type) contain a sequence of items
-    with no duplicated values.}
+  \item{x, y, el, set}{vectors (of the same mode) containing a sequence of items
+    (conceptually) with no duplicated values.}
 }
 \description{
   Performs \bold{set} union, intersection, (asymmetric!) difference,
@@ -23,6 +23,10 @@ is.element(x, y)
 \details{
   Each of \code{union}, \code{intersect} and \code{setdiff} will remove
   any duplicated values in the arguments.
+
+  \code{is.element(x,y)} is identical to \code{x \%in\% y}.
+  %% BUG in Rdconvlib:                   \code{x \link{\%in\%} y}
+  %% gives	"ERROR: found `HYPERLINK(' in $code: 'x HYPERLINK(%in%) y'"
 }
 \value{
   A vector of the same \code{\link{mode}} as \code{x} or \code{y} for
