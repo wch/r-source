@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/build
 
-revision='$Revision: 1.8 $'
+revision='$Revision: 1.9 $'
 version=`set - ${revision}; echo ${2}`
 version="R package builder ${version}
 
@@ -82,8 +82,8 @@ result () { echo "${ECHO_T} $@"; }
 updateIndex () {
   oldindex=${1}
   newindex=${TMPDIR:-/tmp}/Rbuild${$}
-  R CMD Rdindex ${Rdfiles} > ${newindex}
-  if cmp ${newindex} ${oldindex} > /dev/null; then
+  ${R_HOME}/bin/Rdindex ${Rdfiles} > ${newindex}
+  if diff -b ${newindex} ${oldindex} > /dev/null; then
     result "OK"
   else
     result "NO"
@@ -101,7 +101,7 @@ updateIndex () {
 updateTitle () {
   oldtitle=TITLE
   newtitle=${TMPDIR:-/tmp}/Rbuild${$}
-  awk "BEGIN{printf(\"%-15s %s\n\", \"${1}\", \"${2}\");}" > ${newtitle}  
+  ${R_HOME}/bin/maketitle > ${newtitle}
   foo=`cat TITLE`
   package=`set - ${foo}; echo ${1}`
   title=`set - ${foo}; shift; echo ${*}`
@@ -115,16 +115,7 @@ updateTitle () {
       echo "use \`--force' to overwrite the existing \`${oldtitle}'"
       exit 1
     fi
-  elif test "${title}" != "${2}"; then
-    if ${force}; then
-      result "NO"
-      echo "overwriting \`${oldtitle} as \`--force' was given"
-      cp ${newtitle} ${oldtitle}
-    else
-      result "WARNING: titles do not match"
-      echo "use \`--force' to overwrite the existing \`${oldtitle}'"
-    fi      
-  elif cmp ${newtitle} ${oldtitle} > /dev/null; then
+  elif diff -b ${newtitle} ${oldtitle} > /dev/null; then
     result "OK"
   else
     result "NO"
@@ -206,14 +197,13 @@ buildpkg () {
     result "OK"
     if test -n "${title}"; then
       checking "whether \`TITLE' is up-to-date"
-      updateTitle "${package}" "${title}"
+      updateTitle "${package}"
     fi
   else
     result "NO"
     if test -n "${title}"; then
       message "creating \`TITLE' from \`DESCRIPTION' title entry"
-      awk "BEGIN{printf(\"%-15s %s\n\", \"${package}\", \"${title}\");}" \
-        > TITLE
+      ${R_HOME}/bin/maketitle > TITLE
       if test ${?} -ne 0; then
 	result "ERROR"
 	exit 1
@@ -260,7 +250,7 @@ buildpkg () {
     result "NO"
     if test -n "${Rdfiles}"; then
       message "creating \`INDEX' from Rd files"
-      R CMD Rdindex ${Rdfiles} > INDEX
+      ${R_HOME}/bin/Rdindex ${Rdfiles} > INDEX
       if test ${?} -ne 0; then
 	result "ERROR"
 	exit 1
@@ -287,7 +277,7 @@ buildpkg () {
       result "NO"
       if test -n "${Rdfiles}"; then
 	message "creating \`data/00Index' from Rd files"
-	R CMD Rdindex ${Rdfiles} > data/00Index
+	${R_HOME}/bin/Rdindex ${Rdfiles} > data/00Index
 	if test ${?} -ne 0; then
 	  result "ERROR"
 	  exit 1
